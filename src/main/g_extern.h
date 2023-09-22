@@ -48,9 +48,9 @@
 /* PAUL MURRELL
    This type def taken from sys-defines.h
 */
-typedef int bool;
-#define false 0
-#define true 1
+typedef int bool0;
+#define false_ 0
+#define true_ 1
 
 /*************************************************************************/
 /* DEFINITIONS RELATED TO OUR FONT DATABASE (g_fontdb.c and g_fontd2.c)  */
@@ -68,9 +68,9 @@ struct plHersheyFontInfoStruct
   short chars[256];		/* array of vector glyphs */
   int typeface_index;		/* default typeface for the font */
   int font_index;		/* which font within typeface this is */
-  bool obliquing;		/* whether to apply obliquing */
-  bool iso8859_1;		/* whether font encoding is iso8859-1 */
-  bool visible;			/* whether font is visible, i.e. not internal*/
+  bool0 obliquing;		/* whether to apply obliquing */
+  bool0 iso8859_1;		/* whether font encoding is iso8859-1 */
+  bool0 visible;			/* whether font is visible, i.e. not internal*/
 };
 
 extern const struct plHersheyFontInfoStruct _hershey_font_info[];

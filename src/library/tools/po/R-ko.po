@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-11-06 17:18\n"
+"POT-Creation-Date: 2023-07-31 14:59\n"
 "PO-Revision-Date: 2018-04-09 12:11-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team: \n"
@@ -142,9 +142,6 @@ msgid ""
 msgstr ""
 "파일 '%s'내에서 파싱에러가 발생했습니다:\n"
 "%s"
-
-msgid "declared S3 method '%s' not found"
-msgstr "선언된 S3 메소드 '%s'를 찾을 수 없습니다"
 
 msgid "cannot check R code installed as image"
 msgstr "이미지로서 설치된 R 코드는 확인할 수 없습니다"
@@ -292,6 +289,9 @@ msgid "License components with restrictions not permitted:"
 msgstr "다음은 허용되지 않는 제한을 가지고 있는 라이센스 구성요소들입니다:"
 
 msgid "License components which are templates and need '+ file LICENSE':"
+msgstr ""
+
+msgid "Uses ACM license: only appropriate for pre-2013 ACM TOMS code"
 msgstr ""
 
 msgid "Non-portable flags in variable '%s':"
@@ -458,11 +458,22 @@ msgstr "다음은 중복된 이름 '%s'를 가진 Rd 파일들입니다:"
 msgid "Rd files with duplicated alias '%s':"
 msgstr "다음은 중복된 에일리어스 '%s'를 가진 Rd 파일들입니다:"
 
+#, fuzzy
+msgid "Rd files without \\alias:"
+msgstr "다음은 중복된 에일리어스 '%s'를 가진 Rd 파일들입니다:"
+
+#, fuzzy
+msgid "Invalid package aliases in Rd file '%s':"
+msgstr "파일 '%s'에서 파싱에러가 발생했습니다:"
+
 msgid "Argument items with no description in Rd object '%s':"
 msgstr "다음은 Rd 객체 '%s'에 아무런 설명이 없는 인자항목들입니다:"
 
 msgid "Auto-generated content requiring editing in Rd object '%s':"
 msgstr "다음은 Rd 객체 '%s'를 편집하는데 필요한 자동으로 생성된 컨텐츠입니다:"
+
+msgid "Rd objects without \\description:"
+msgstr ""
 
 msgid "no Rd sections specified"
 msgstr "Rd 섹션들이 지정되지 않았습니다"
@@ -473,6 +484,9 @@ msgid ""
 "\n"
 "%s\n"
 "in NAMESPACE."
+msgstr ""
+
+msgid "concordance is not valid"
 msgstr ""
 
 msgid "Rd object required"
@@ -517,8 +531,17 @@ msgstr ""
 msgid "No Rd macros in package '%s'."
 msgstr "패키지 %s로부터 Rd macro를 찾을 수 없습니다."
 
+msgid "links not supported for 'standalone = FALSE' when _R_HELP_LINKS_TO_TOPICS_=false"
+msgstr ""
+
 msgid "more than one \\examples section, using the first"
 msgstr "한 개이상의 \\examples 섹션이 발견되었기 때문에 첫 번째 것을 이용합니다."
+
+msgid "alias:"
+msgstr ""
+
+msgid "is not one line"
+msgstr ""
 
 msgid "Converting Rd files to LaTeX ..."
 msgstr "Rd 파일들을 LaTeX 로 변환하고 있습니다..."
@@ -588,6 +611,10 @@ msgstr "비니에트 %1$s은 다음의 %2$s 출력물을 비니에트 %3$s에 �
 #, fuzzy
 msgid "Detected vignette source files (%s) with shared names (%s) and therefore risking overwriting each other's output files"
 msgstr "같은 이름들 (%2$s)을 가지고 있는 비니에트 소스 파일들 (%1$s)이 발견되었기 때문에 출력된 파일들이 서로 덮어쓸 위험이 있습니다"
+
+#, fuzzy
+msgid "Note: skipping %s"
+msgstr "%s를 처리중입니다"
 
 #, fuzzy
 msgid "Error: Vignette '%s' is non-ASCII but has no declared encoding"
@@ -728,9 +755,6 @@ msgstr "에러: 현재 버전의 R은 %s인데 필요한 것은 R %s %s입니다
 msgid "loading failed"
 msgstr "로딩에 실패했습니다"
 
-msgid "assertConditon: Successfully caught a condition"
-msgstr ""
-
 msgid "Got %s in evaluating %s; wanted %s"
 msgstr "%2$s를 평가시 %3$s을 기대했으나 %1$s를 얻었습니다"
 
@@ -740,14 +764,8 @@ msgstr "%2$s를 평가로부터 %1$s를 얻는데 실패했습니다"
 msgid "Failed to get error in evaluating %s"
 msgstr "%s 평가로부터 에러를 얻는데 실패했습니다"
 
-msgid "Asserted error: %s"
-msgstr ""
-
 msgid "Got warning in evaluating %s, but also an error"
 msgstr "%s를 평가시에 경고를 얻었지만 이는 또한 에러입니다"
-
-msgid "Asserted warning: %s"
-msgstr ""
 
 msgid "Changes require specified 'style'"
 msgstr ""
@@ -821,6 +839,21 @@ msgstr "잘못된 클래스입니다"
 msgid "non-ASCII input in a CITATION file without a declared encoding"
 msgstr "미리 선언된 인코딩없이 ASCII가 아닌 입력이 CITATION 파일에 사용되었습니다"
 
+msgid "<p><code class='language-R'>%s</code> was run in the console.</p>"
+msgstr ""
+
+msgid "<p>To view output in the browser, the <a href='https://CRAN.R-project.org/package=knitr'>knitr</a> package must be installed.</p>"
+msgstr ""
+
+msgid "<p>To view output in the browser, the <a href='https://CRAN.R-project.org/package=knitr'>knitr</a> package must be installed and the environment variable <code>_R_HELP_ENABLE_ENHANCED_HTML_</code> must be set to TRUE.</p>"
+msgstr ""
+
+msgid "HTTPD-REQUEST %s%s"
+msgstr ""
+
+msgid "="
+msgstr ""
+
 msgid "No files in this directory"
 msgstr "이 디렉토리에는 아무런 파일이 없습니다"
 
@@ -835,6 +868,9 @@ msgstr "코드 설명: "
 
 msgid "Help pages:"
 msgstr "도움말 페이지:"
+
+msgid "HTTPD-ERROR %s %s"
+msgstr ""
 
 msgid "No package named %s could be found"
 msgstr "%s이라는 이름의 패키지를 찾을 수없습니다"
@@ -856,6 +892,16 @@ msgstr "패키지 %s에 대한 문서를 찾을 수 없습니다"
 
 msgid "URL %s was not found"
 msgstr "URL %s을 찾을 수 없습니다"
+
+msgid "HTTPD-DEMO %s::%s"
+msgstr ""
+
+msgid "HTTPD-EXAMPLE %s::%s"
+msgstr ""
+
+#, fuzzy
+msgid "No NEWS found for package %s"
+msgstr "패키지 %s에 관한 도움말을 찾을 수 없습니다"
 
 msgid "Only help files, %s, %s and files under %s and %s in a package can be viewed"
 msgstr "오로지 도움말 파일들, %s, %s 그리고 %s 내에 있는 파일들과 패키지내에 있는 %s만을 볼 수 있습니다"
@@ -883,6 +929,9 @@ msgstr "완료"
 
 msgid "failed to start the httpd server"
 msgstr "httpd 서버를 시작하는데 실패했습니다"
+
+msgid "* Package: %s"
+msgstr ""
 
 msgid "cannot read index information in file '%s'"
 msgstr "파일 '%s'에 있는 인덱스 정보를 읽을 수 없습니다"
@@ -940,6 +989,32 @@ msgstr ""
 msgid "staged installation is only possible with locking"
 msgstr ""
 
+msgid "WARNING: installation-time patches will not be applied, could not get the patches index"
+msgstr ""
+
+msgid "patch utility is needed for installation-time patching"
+msgstr ""
+
+msgid "NOTE: Skipping installation-time patch"
+msgstr ""
+
+#, fuzzy
+msgid "which seems to be already applied."
+msgstr "네임스페이스가 반드시 먼저 로드되어져야 합니다"
+
+msgid "WARNING: failed to apply patch"
+msgstr ""
+
+msgid "Applied installation-time patch"
+msgstr ""
+
+msgid "and saved it as"
+msgstr ""
+
+#, fuzzy
+msgid "in package installation"
+msgstr "올바른 패키지 레이아웃(package layout)이 아닙니다."
+
 msgid "R include directory is empty -- perhaps need to install R-devel.rpm or similar"
 msgstr ""
 
@@ -977,6 +1052,27 @@ msgid "ERROR: no permission to install to directory"
 msgstr "에러: 디렉토리에 설치할 권한이 없습니다"
 
 msgid "building a fake installation is disallowed"
+msgstr ""
+
+msgid "using C compiler:"
+msgstr ""
+
+msgid "using Fortran compiler:"
+msgstr ""
+
+msgid "using C++ compiler:"
+msgstr ""
+
+msgid "using C++"
+msgstr ""
+
+msgid "using SDK:"
+msgstr ""
+
+msgid "WARNING: failed to revert patch"
+msgstr ""
+
+msgid "Reverted installation-time patch"
 msgstr ""
 
 msgid ""
@@ -1031,7 +1127,10 @@ msgid ""
 "%s"
 msgstr ""
 
-msgid "Cannot extract version info from the following section titles:"
+#, fuzzy
+msgid ""
+"Cannot extract version info from the following section titles:\n"
+"%s"
 msgstr "다음의 섹션 제목으로부터 버전정보를 추출할 수 없습니다:"
 
 msgid ""
@@ -1086,6 +1185,12 @@ msgstr ""
 msgid "no native symbols were extracted"
 msgstr ""
 
+msgid "not a PDF file"
+msgstr ""
+
+msgid "'diff' is not available so useDiff = FALSE will be used"
+msgstr ""
+
 msgid "testing '%s' failed"
 msgstr "'%s'를 테스팅하는 것은 실패했습니다"
 
@@ -1128,10 +1233,14 @@ msgstr ""
 msgid "FAILED"
 msgstr "실패했습니다"
 
+#, fuzzy
+msgid "directory %s is not writeable"
+msgstr "디렉토리 '%s'는 존재하지 않습니다"
+
 msgid "DIFFERED"
 msgstr ""
 
-msgid "running tests of random deviate generation -- fails occasionally"
+msgid "running tests of random deviate generation (should no longer ever fail)"
 msgstr ""
 
 msgid "unknown header specification"
@@ -1241,6 +1350,9 @@ msgstr "'DESCRIPTION'과 'DESCRIPTION.in' 파일들을 찾을 수 없습니다."
 msgid "invalid package layout"
 msgstr "올바른 패키지 레이아웃(package layout)이 아닙니다."
 
+msgid "*not* using 'C' for LC_COLLATE locale"
+msgstr ""
+
 msgid "file '%s' is not in valid DCF format"
 msgstr "파일 '%s'는 유효한 DCF 형식을 가지고 있지 않습니다."
 
@@ -1252,6 +1364,9 @@ msgstr "ASCII가 아닌 데이터에 대한 인코딩을 알 수 없으므로 AS
 
 msgid "cannot source package code:"
 msgstr "패키지 코드를 읽어들일 수 없습니다:"
+
+msgid "inferior call failed"
+msgstr ""
 
 msgid "'text' must be a character vector"
 msgstr "'text'는 반드시 문자형 벡터이어야 합니다."
@@ -1349,10 +1464,6 @@ msgid_plural ""
 "%s"
 msgstr[0] ""
 
-msgid "duplicated vignette title:"
-msgid_plural "duplicated vignette titles:"
-msgstr[0] ""
-
 msgid "SUMMARY: processing the following file failed:"
 msgid_plural "SUMMARY: processing the following files failed:"
 msgstr[0] ""
@@ -1384,6 +1495,9 @@ msgstr[0] ""
 msgid "Corresponding BibTeX entry:"
 msgid_plural "Corresponding BibTeX entries:"
 msgstr[0] ""
+
+#~ msgid "declared S3 method '%s' not found"
+#~ msgstr "선언된 S3 메소드 '%s'를 찾을 수 없습니다"
 
 #~ msgid "package %s exists but was not installed under R >= 2.10.0 so xrefs cannot be checked"
 #~ msgstr "패키지 %s는 존재하지만 버전 2.10.0 이상의 R에 설치되어 있기 않기 때문에 xrefs를 확인할 수 없습니다"

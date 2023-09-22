@@ -213,8 +213,15 @@ references.
 There are now a number of books which describe how to use @R{} for data
 analysis and statistics, and documentation for @Sl{}/@SPLUS{} can
 typically be used with @R{}, keeping the differences between the @Sl{}
-implementations in mind.  @xref{What documentation exists for R?, , ,
-R-FAQ, The R statistical system FAQ}.
+implementations in mind.  
+@ifset UseExternalXrefs
+@xref{What documentation exists for R?, , , R-FAQ, R FAQ}.
+@end ifset
+@ifclear UseExternalXrefs
+See section `What documentation exists for R?' in the `R FAQ' manual for
+more information.
+@end ifclear
+
 
 @node R and statistics, R and the window system, Related software and documentation, Introduction and preliminaries
 @section R and statistics
@@ -488,8 +495,14 @@ You can find out how to do this by reading the manual entry for the
 
 Alternatively, the Emacs text editor provides more general support
 mechanisms (via @acronym{ESS}, @emph{Emacs Speaks Statistics}) for
-working interactively with @R{}.  @xref{R and Emacs, , , R-FAQ, The R
-statistical system FAQ}.
+working interactively with @R{}.  
+@ifset UseExternalXrefs
+@xref{R and Emacs, , , R-FAQ, R FAQ}.
+@end ifset
+@ifclear UseExternalXrefs
+See section `R and Emacs' in the `R FAQ' manual for more information.
+@end ifclear
+
 
 @node Executing commands from or diverting output to a file, Data permanency and removing objects, Recall and correction of previous commands, Introduction and preliminaries
 @section Executing commands from or diverting output to a file
@@ -2594,7 +2607,7 @@ frame in their own right.  At this point an assignment such as
 
 @noindent
 does not replace the component @code{u} of the data frame, but rather
-masks it with another variable @code{u} in the working directory at
+masks it with another variable @code{u} in the workspace at
 @w{position 1} on the search path.  To make a permanent change to the
 data frame itself, the simplest way is to resort once again to the
 @code{$} notation:
@@ -2631,7 +2644,7 @@ original list or data frame is unchanged.
 @subsection Working with data frames
 
 A useful convention that allows you to work with many different problems
-comfortably together in the same working directory is
+comfortably together in the same workspace is
 
 @itemize @bullet
 @item
@@ -2639,14 +2652,14 @@ gather together all variables for any well defined and separate problem
 in a data frame under a suitably informative name;
 @item
 when working with a problem attach the appropriate data frame at
-@w{position 2}, and use the working directory at @w{level 1} for
+@w{position 2}, and use the workspace at @w{level 1} for
 operational quantities and temporary variables;
 @item
 before leaving a problem, add any variables you wish to keep for future
 reference to the data frame using the @code{$} form of assignment, and
 then @code{detach()};
 @item
-finally remove all unwanted variables from the working directory and
+finally remove all unwanted variables from the workspace and
 keep it as clean of left-over temporary variables as possible.
 @end itemize
 
@@ -2718,7 +2731,7 @@ facilities are simple and their requirements are fairly strict and even
 rather inflexible.  There is a clear presumption by the designers of
 @R{} that you will be able to modify your input files using other tools,
 such as file editors or Perl@footnote{Under UNIX, the utilities
-@command{sed} or@command{awk} can be used.} to fit in with the
+@command{sed} or @command{awk} can be used.} to fit in with the
 requirements of @R{}.  Generally this is very simple.
 
 If variables are to be held mainly in data frames, as we strongly
@@ -3576,7 +3589,14 @@ tricky to use directly and it pays to have a simple function such as the
 following to use it safely.
 
 Thus given a @math{n} by @math{1} vector @math{y} and an @math{n} by
-@math{p} matrix @math{X} then @math{X \ y} is defined as
+@math{p} matrix @math{X} then
+@ifnottex
+@math{X \ y}
+@end ifnottex
+@tex
+@math{X \\ y}
+@end tex
+is defined as
 @ifnottex
 (X'X)^@{-@}X'y, where (X'X)^@{-@}
 @end ifnottex
@@ -5760,7 +5780,7 @@ provide certain symbols that may not be available
 in the standard fonts.  In particular, there are zodiac signs, cartographic
 symbols and astronomical symbols.
 @item
-Hershey fonts provide cyrillic and japanese (Kana and Kanji) characters.
+Hershey fonts provide Cyrillic and Japanese (Kana and Kanji) characters.
 @end itemize
 
 More information, including tables of Hershey characters can be obtained from
@@ -6419,9 +6439,14 @@ when a package is loaded are its contents available.  This is done both
 for efficiency (the full list would take more memory and would take
 longer to search than a subset), and to aid package developers, who are
 protected from name clashes with other code.  The process of developing
-packages is described in @ref{Creating R packages, , Creating R
-packages, R-exts, Writing R Extensions}.  Here, we will describe them
-from a user's point of view.
+packages is described in
+@ifset UseExternalXrefs
+@ref{Creating R packages, , Creating R packages, R-exts, Writing R Extensions}.
+@end ifset
+@ifclear UseExternalXrefs
+section `Creating R packages' in the `Writing R Extensions' manual.
+@end ifclear
+Here, we will describe them from a user's point of view.
 
 To see which packages are installed at your site, issue the command
 
@@ -6484,8 +6509,15 @@ The standard (or @emph{base}) packages are considered part of the @R{}
 source code.  They contain the basic functions that allow @R{} to work,
 and the datasets and standard statistical and graphical functions that
 are described in this manual.  They should be automatically available in
-any @R{} installation.  @xref{Which add-on packages exist for R?, , R
-packages, R-FAQ, R FAQ}, for a complete list.
+any @R{} installation.  
+For a complete list, see
+@ifset UseExternalXrefs
+@ref{Which add-on packages exist for R?, , R packages, R-FAQ, R FAQ}.
+@end ifset
+@ifclear UseExternalXrefs
+section `Which add-on packages exist for R?' in the `R FAQ' manual.
+@end ifclear
+
 
 @node Contributed packages and CRAN, Namespaces, Standard packages, Packages
 @section Contributed packages and @acronym{CRAN}
@@ -6702,7 +6734,7 @@ the current OS.
 
 Recent versions of @R{} have extensive facilities to read and write
 compressed files, often transparently.  Reading of files in @R{} is to a
-vey large extent done by @emph{connections}, and the @code{file}
+very large extent done by @emph{connections}, and the @code{file}
 function which is used to open a connection to a file (or a URL) and is
 able to identify the compression used from the `magic' header of the
 file.

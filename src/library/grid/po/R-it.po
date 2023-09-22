@@ -1,14 +1,14 @@
 # R Italian translation
 # Copyright (C) The R Foundation
 # This file is distributed under the same license as the R package.
-# Daniele Medri <dmedri@gmail.com>, 2005-2021.
+# Daniele Medri <dmedri@gmail.com>, 2005-2023.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R-grid 4.1.0\n"
+"Project-Id-Version: R-4-3-BRANCH\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-11-06 17:17\n"
-"PO-Revision-Date: \n"
+"POT-Creation-Date: 2023-07-31 14:59\n"
+"PO-Revision-Date: 2022-10-14 10:27+0200\n"
 "Last-Translator: Daniele Medri <dmedri@gmail.com>\n"
 "Language-Team: Italian https://github.com/dmedri/R-italian-lang\n"
 "Language: it\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.2.1\n"
+"X-Generator: Poedit 3.1.1\n"
 
 msgid "invalid 'at' location in 'axis'"
 msgstr "posizione 'at' non valida in 'axis'"
@@ -29,6 +29,18 @@ msgstr "le posizioni 'labels' e 'at' devono avere la medesima lunghezza"
 
 msgid "logical 'label' supplied of length 0"
 msgstr "'label' logica passata di lunghezza 0"
+
+msgid "Invalid coordinates"
+msgstr "Coordinate non valide"
+
+msgid "Invalid grob coordinates"
+msgstr "Coordinate grob non valide"
+
+msgid "Invalid gTree coordinates"
+msgstr "Coordinate gTree non valide"
+
+msgid "Closed must not be a missing value"
+msgstr "Closed non dev'essere un valore nullo"
 
 msgid "end points must not be identical"
 msgstr "i punti finali non devono essere identici"
@@ -94,10 +106,13 @@ msgid "'gpar' element '%s' must not be length 0"
 msgstr "l'elemento 'gpar' '%s' dev'essere di lunghezza 0"
 
 msgid "mixture of missing and non-missing values for %s"
-msgstr "mistura di valori mancanti e non-mancanti per %s"
+msgstr "insieme di valori mancanti e non-mancanti per %s"
 
 msgid "'gamma' 'gpar' element is defunct"
 msgstr "l'elemento 'gamma' 'gpar' è rimosso"
+
+msgid "'fill' gpar list components must all be patterns"
+msgstr "i componenti di lista gpar 'fill' devono essere tutti pattern"
 
 msgid "invalid 'linemitre' value"
 msgstr "valore 'linemitre' non valido"
@@ -150,9 +165,8 @@ msgstr "bisogna restare almeno in una viewport"
 msgid "Invalid number of generations"
 msgstr "Numero di generazioni non valido"
 
-#, fuzzy
 msgid "Invalid 'clearGroups' argument"
-msgstr "argomento 'arrow' non valido"
+msgstr "Argomento 'clearGroups' non valido"
 
 msgid "invalid object inserted on the display list"
 msgstr "oggetto non valido inserito nella lista display"
@@ -269,28 +283,22 @@ msgid "Invalid 'order'"
 msgstr "'order' non valido"
 
 msgid "Group definition failed"
-msgstr ""
+msgstr "Definizione del gruppo non riuscita"
 
-#, fuzzy
 msgid "Invalid source"
-msgstr "'order' non valido"
+msgstr "Sorgente non valida"
 
-#, fuzzy
 msgid "Invalid destination"
-msgstr "giustificazione non valida"
-
-msgid "Invalid compositing operator"
-msgstr ""
+msgstr "Destinazione non valida"
 
 msgid "Unknown group:"
-msgstr ""
+msgstr "Gruppo sconosciuto:"
 
 msgid "Invalid transform (nothing drawn)"
-msgstr ""
+msgstr "Trasformazione non valida (nessun disegno)"
 
-#, fuzzy
 msgid "Invalid transform"
-msgstr "'order' non valido"
+msgstr "Trasformazione non valida"
 
 msgid "'l' must be a layout"
 msgstr "'l' dev'essere un layout"
@@ -337,36 +345,42 @@ msgstr "listing non valido"
 msgid "invalid 'listing'"
 msgstr "'listing' non valido"
 
+msgid "Only a grob can be converted to a mask"
+msgstr "Solo un grob può essere convertito in una maschera"
+
 msgid "invalid 'origin'"
 msgstr "'origin' non valido"
 
 msgid "Only a grob can be converted to a path"
-msgstr ""
+msgstr "Solo un grob può essere convertito in un tracciato"
 
-#, fuzzy
 msgid "colours and stops must be at least length 1"
-msgstr "'x' e 'y' devono essere della medesima lunghezza"
+msgstr "colours e stops devono essere almeno di lunghezza 1"
 
-#, fuzzy
 msgid "x1, y1, x2, and y2 must all be length 1"
-msgstr "'x1', 'y1', 'x2' e 'y2' devono essere unità"
+msgstr "x1, y1, x2 e y2 devono essere di lunghezza 1"
 
-#, fuzzy
 msgid "cx1, cy1, cx2, cy2, r1, and r2 must all be length 1"
-msgstr "'x1', 'y1', 'x2' e 'y2' devono essere unità"
+msgstr "cx1, cy1, cx2, cy2, r1 e r2 devono essere almeno di lunghezza 1"
 
-#, fuzzy
 msgid "x, y, width, and height must all be length 1"
-msgstr "'x', 'y', 'width' e 'height' devono avere lunghezza 1"
+msgstr "x, y, width e height devono avere tutti lunghezza 1"
 
 msgid "Pattern must be based on grob"
-msgstr ""
+msgstr "Il pattern deve essere basato su grob"
 
 msgid "Missing pattern fill has been set to transparent"
 msgstr "Il pattern di riempimento mancante è stato impostato a trasparente"
 
-msgid "Gradient fill applied to object with no inside"
-msgstr "Riempimento a gradiente applicato all'oggetto senza interno"
+msgid ""
+"grob drawing produces more shapes than grob coords\n"
+"(recycling coords)"
+msgstr ""
+"il disegno grob produce più forme delle coordinate grob\n"
+"(riuso coordinate)"
+
+msgid "Pattern fill applied to object with no inside"
+msgstr "Motivo di riempimento applicato all'oggetto senza interno"
 
 msgid "'length' must be a 'unit' object"
 msgstr "'length' dev'essere un oggetto 'unit'"
@@ -446,11 +460,45 @@ msgstr "'r' dev'essere un oggetto 'unit'"
 msgid "'x', 'y', 'width', and 'height' must have length 1"
 msgstr "'x', 'y', 'width' e 'height' devono avere lunghezza 1"
 
+#, fuzzy
+msgid "Invalid glyph info"
+msgstr "Trasformazione non valida"
+
+#, fuzzy
+msgid "'x' and 'y' must have length > 0"
+msgstr "'x' e 'y' devono avere lunghezza 1"
+
+msgid "'hjust' and 'vjust' must be glyphJust() values"
+msgstr ""
+
+#, fuzzy
+msgid "'hjust' and 'vjust' must have length 1"
+msgstr "'x' e 'y' devono avere lunghezza 1"
+
+msgid "Unknown width; using first width"
+msgstr ""
+
+#, fuzzy
+msgid "Unknown anchor; using left justification"
+msgstr "giustificazione orizzontale non valida"
+
+msgid "Unknown height; using first height"
+msgstr ""
+
+msgid "Unknown anchor; using bottom justification"
+msgstr ""
+
 msgid "'x' and 'units' must have length > 0"
 msgstr "'x' e 'units' devono avere lunghezza > 0"
 
 msgid "invalid 'axis' or 'type'"
 msgstr "'axis' o 'type' non valido"
+
+msgid "'x' and 'y' must be units and 'device' must be logical"
+msgstr "'x' e 'y' devono essere unità e 'device' dev'essere logico"
+
+msgid "'w' and 'h' must be units and 'device' must be logical"
+msgstr "'w' e 'h' devono essere unità e 'device' dev'essere logico"
 
 msgid "Not a unit object"
 msgstr "Non è un oggetto unità"
@@ -551,39 +599,3 @@ msgid "invalid viewport name"
 msgid_plural "invalid viewport names"
 msgstr[0] "nome viewport non valido"
 msgstr[1] "nomi viewport non validi"
-
-#~ msgid "'x' argument must be a unit object"
-#~ msgstr "l'argomento 'x' dev'essere un oggetto unità"
-
-#~ msgid "no string supplied for 'strwidth/height' unit"
-#~ msgstr "nessuna stringa passata per le unità 'strwidth/height'"
-
-#~ msgid "no 'grob' supplied for 'grobwidth/height' unit"
-#~ msgstr "nessun 'grob' passato per unità 'grobwidth/height'"
-
-#~ msgid "'gPath' must have depth 1 in 'grobwidth/height' units"
-#~ msgstr "'gPath' deve avere profondità 1 nelle unità 'grobwidth/height'"
-
-#~ msgid "non-NULL value supplied for plain unit"
-#~ msgstr "valore non-NULL passato per unità normale"
-
-#~ msgid "no arguments where at least one expected"
-#~ msgstr "nessun argomento quando ne era atteso almeno uno"
-
-#~ msgid "Zero arguments where at least one expected"
-#~ msgstr "Zero argomenti quando ne era atteso almeno uno"
-
-#~ msgid "cannot mix signs of indices"
-#~ msgstr "non si possono mischiare i segni degli indici"
-
-#~ msgid "index out of bounds (unit arithmetic subsetting)"
-#~ msgstr "indice fuori limite (subsetting unità aritmetiche)"
-
-#~ msgid "index out of bounds (unit list subsetting)"
-#~ msgstr "indice fuori limite (subsetting elenco unità)"
-
-#~ msgid "Value being assigned must be a unit"
-#~ msgstr "Il valore assegnato dev'essere un'unità"
-
-#~ msgid "it is invalid to combine 'unit' objects with other types"
-#~ msgstr "non è valido combinare oggetti 'unit' con quelli di altri tipi"

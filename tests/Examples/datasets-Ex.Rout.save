@@ -1,6 +1,6 @@
 
-R Under development (unstable) (2021-10-13 r81047) -- "Unsuffered Consequences"
-Copyright (C) 2021 The R Foundation for Statistical Computing
+R Under development (unstable) (2023-03-28 r84086) -- "Unsuffered Consequences"
+Copyright (C) 2023 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -2176,12 +2176,14 @@ Response: cbind(ncases, ncontrols)
 Terms added sequentially (first to last)
 
 
-            Df Deviance Resid. Df Resid. Dev
-NULL                           87     367.95
-agegp        5  121.045        82     246.91
-tobgp        3   36.639        79     210.27
-alcgp        3  127.933        76      82.34
-tobgp:alcgp  9    5.451        67      76.89
+            Df Deviance Resid. Df Resid. Dev  Pr(>Chi)    
+NULL                           87     367.95              
+agegp        5  121.045        82     246.91 < 2.2e-16 ***
+tobgp        3   36.639        79     210.27 5.485e-08 ***
+alcgp        3  127.933        76      82.34 < 2.2e-16 ***
+tobgp:alcgp  9    5.451        67      76.89    0.7934    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 > ## Try a linear effect of alcohol and tobacco
 > model2 <- glm(cbind(ncases, ncontrols) ~ agegp + unclass(tobgp)
 +                                          + unclass(alcgp),
@@ -2191,10 +2193,6 @@ tobgp:alcgp  9    5.451        67      76.89
 Call:
 glm(formula = cbind(ncases, ncontrols) ~ agegp + unclass(tobgp) + 
     unclass(alcgp), family = binomial(), data = esoph)
-
-Deviance Residuals: 
-    Min       1Q   Median       3Q      Max  
--2.3018  -0.7234  -0.2306   0.5737   2.4290  
 
 Coefficients:
                Estimate Std. Error z value Pr(>|z|)    
@@ -2410,10 +2408,6 @@ Call:
 glm(formula = case ~ spontaneous + induced, family = binomial(), 
     data = infert)
 
-Deviance Residuals: 
-    Min       1Q   Median       3Q      Max  
--1.6678  -0.8360  -0.5772   0.9030   1.9362  
-
 Coefficients:
             Estimate Std. Error z value Pr(>|z|)    
 (Intercept)  -1.7079     0.2677  -6.380 1.78e-10 ***
@@ -2437,10 +2431,6 @@ Number of Fisher Scoring iterations: 4
 Call:
 glm(formula = case ~ age + parity + education + spontaneous + 
     induced, family = binomial(), data = infert)
-
-Deviance Residuals: 
-    Min       1Q   Median       3Q      Max  
--1.7603  -0.8162  -0.4956   0.8349   2.6536  
 
 Coefficients:
                  Estimate Std. Error z value Pr(>|z|)    
@@ -2480,13 +2470,35 @@ Number of Fisher Scoring iterations: 4
 > 
 > ### ** Examples
 > 
+> summary(iris)
+  Sepal.Length    Sepal.Width     Petal.Length    Petal.Width   
+ Min.   :4.300   Min.   :2.000   Min.   :1.000   Min.   :0.100  
+ 1st Qu.:5.100   1st Qu.:2.800   1st Qu.:1.600   1st Qu.:0.300  
+ Median :5.800   Median :3.000   Median :4.350   Median :1.300  
+ Mean   :5.843   Mean   :3.057   Mean   :3.758   Mean   :1.199  
+ 3rd Qu.:6.400   3rd Qu.:3.300   3rd Qu.:5.100   3rd Qu.:1.800  
+ Max.   :7.900   Max.   :4.400   Max.   :6.900   Max.   :2.500  
+       Species  
+ setosa    :50  
+ versicolor:50  
+ virginica :50  
+                
+                
+                
+> 
+> ## Fisher's (1936) research question: whether (compound measurements of)
+> ## Iris versicolor "differs twice as much from I. setosa as from I. virginica"
+> pairs(iris[1:4], col = iris$Species)
+> legend(0.5, 1, levels(iris$Species), fill = 1:3, bty = "n",
++        horiz = TRUE, xjust = 0.5, yjust = 0, xpd = TRUE)
+> 
+> ## equivalence of legacy array (iris3) and data.frame (iris) representation
 > dni3 <- dimnames(iris3)
 > ii <- data.frame(matrix(aperm(iris3, c(1,3,2)), ncol = 4,
 +                         dimnames = list(NULL, sub(" L.",".Length",
 +                                         sub(" W.",".Width", dni3[[2]])))),
 +     Species = gl(3, 50, labels = sub("S", "s", sub("V", "v", dni3[[3]]))))
-> all.equal(ii, iris) # TRUE
-[1] TRUE
+> stopifnot(all.equal(ii, iris))
 > 
 > 
 > 
@@ -2729,10 +2741,6 @@ Call:
 glm(formula = Freq ~ origin + destination + Diag + Rscore:Cscore, 
     family = poisson, data = occupationalStatus)
 
-Deviance Residuals: 
-    Min       1Q   Median       3Q      Max  
--2.6521  -0.6267   0.0000   0.5913   2.0964  
-
 Coefficients:
               Estimate Std. Error z value Pr(>|z|)    
 (Intercept)   0.568592   0.183358   3.101 0.001929 ** 
@@ -2957,6 +2965,100 @@ Residual standard error: 3.243 on 17 degrees of freedom
 Multiple R-squared:  0.9136,	Adjusted R-squared:  0.8983 
 F-statistic:  59.9 on 3 and 17 DF,  p-value: 3.016e-09
 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("state")
+> ### * state
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Encoding: UTF-8
+> 
+> ### Name: state
+> ### Title: US State Facts and Figures
+> ### Aliases: state state.abb state.area state.center state.division
+> ###   state.name state.region state.x77
+> ### Keywords: datasets
+> 
+> ### ** Examples
+> 
+> (dst <- dxy <- data.frame(state.center, row.names=state.abb))
+           x       y
+AL  -86.7509 32.5901
+AK -127.2500 49.2500
+AZ -111.6250 34.2192
+AR  -92.2992 34.7336
+CA -119.7730 36.5341
+CO -105.5130 38.6777
+CT  -72.3573 41.5928
+DE  -74.9841 38.6777
+FL  -81.6850 27.8744
+GA  -83.3736 32.3329
+HI -126.2500 31.7500
+ID -113.9300 43.5648
+IL  -89.3776 40.0495
+IN  -86.0808 40.0495
+IA  -93.3714 41.9358
+KS  -98.1156 38.4204
+KY  -84.7674 37.3915
+LA  -92.2724 30.6181
+ME  -68.9801 45.6226
+MD  -76.6459 39.2778
+MA  -71.5800 42.3645
+MI  -84.6870 43.1361
+MN  -94.6043 46.3943
+MS  -89.8065 32.6758
+MO  -92.5137 38.3347
+MT -109.3200 46.8230
+NE  -99.5898 41.3356
+NV -116.8510 39.1063
+NH  -71.3924 43.3934
+NJ  -74.2336 39.9637
+NM -105.9420 34.4764
+NY  -75.1449 43.1361
+NC  -78.4686 35.4195
+ND -100.0990 47.2517
+OH  -82.5963 40.2210
+OK  -97.1239 35.5053
+OR -120.0680 43.9078
+PA  -77.4500 40.9069
+RI  -71.1244 41.5928
+SC  -80.5056 33.6190
+SD  -99.7238 44.3365
+TN  -86.4560 35.6767
+TX  -98.7857 31.3897
+UT -111.3300 39.1063
+VT  -72.5450 44.2508
+VA  -78.2005 37.5630
+WA -119.7460 47.4231
+WV  -80.6665 38.4204
+WI  -89.9941 44.5937
+WY -107.2560 43.0504
+> ## Alaska and Hawaii are placed just off the West Coast (for compact map drawing):
+> dst[c("AK", "HI"),]
+         x     y
+AK -127.25 49.25
+HI -126.25 31.75
+> ## state.center2 := version of state.center with "correct" coordinates for AK & HI:
+> ## From https://pubs.usgs.gov/gip/Elevations-Distances/elvadist.html#Geographic%20Centers
+> ##   Alaska   63°50' N., 152°00' W., 60 miles northwest of Mount McKinley
+> ##   Hawaii   20°15' N., 156°20' W., off Maui Island
+> dxy["AK",] <- c(-152.  , 63.83) # or  c(-152.11, 65.17)
+> dxy["HI",] <- c(-156.33, 20.25) # or  c(-156.69, 20.89)
+> state.center2 <- as.list(dxy)
+> 
+> plot(dxy, asp=1.2, pch=3, col=2)
+> text(state.center2, state.abb, cex=1/2, pos=4, offset=1/4)
+> i <- c("AK","HI")
+> do.call(arrows, c(setNames(c(dst[i,], dxy[i,]), c("x0","y0", "x1","y1")),
++                   col=adjustcolor(4, .7), length=1/8))
+> points(dst[i,], col=2)
+> if(FALSE) { # if(require("maps")) {
++    map("state", interior = FALSE,          add = TRUE)
++    map("state", boundary = FALSE, lty = 2, add = TRUE)
++ }
 > 
 > 
 > 
@@ -3512,7 +3614,7 @@ c0   -5.14
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  3.094 0.064 3.175 0 0 
+Time elapsed:  1.134 0.029 1.167 0 0 
 > grDevices::dev.off()
 null device 
           1 

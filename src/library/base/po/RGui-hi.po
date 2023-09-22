@@ -1,0 +1,1203 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR The R Core Team
+# This file is distributed under the same license as the R package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: R 4.2.0\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2023-07-31 15:00+0200\n"
+"PO-Revision-Date: 2023-02-05 19:05+0000\n"
+"Last-Translator: Debartha Paul <pauldeep102@gmail.com>\n"
+"Language-Team: none\n"
+"Language: hi\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 4.13.1\n"
+
+#: src/gnuwin32/console.c:1200 src/gnuwin32/console.c:1242
+msgid "Not enough memory"
+msgstr "पर्याप्त मेमोरी नहीं हैं"
+
+#: src/gnuwin32/console.c:1289 src/gnuwin32/console.c:1293
+msgid "Insufficient memory: text not copied to the clipboard"
+msgstr "अपर्याप्त मेमोरी: टेक्स्ट क्लिपबोर्ड पर कॉपी नहीं हुआ"
+
+#: src/gnuwin32/console.c:1331 src/extra/graphapp/clipboard.c:53
+#: src/extra/graphapp/clipboard.c:79
+msgid "Unable to open the clipboard"
+msgstr "क्लिपबोर्ड खोलने में अक्षम"
+
+#: src/gnuwin32/console.c:1977
+msgid "Insufficient memory. Please close the console"
+msgstr "अपर्याप्त मेमोरी: कृपया कंसोल बंद करें"
+
+#: src/gnuwin32/console.c:2033 src/gnuwin32/console.c:2087
+#: src/gnuwin32/preferences.c:342
+#, c-format
+msgid ""
+"Font %s-%d-%d  not found.\n"
+"Using system fixed font"
+msgstr ""
+"फॉण्ट %s-%d-%d नहीं मिला |\n"
+"सिस्टम नियत फॉण्ट का उपयोग किया जा रहा है"
+
+#: src/gnuwin32/console.c:2192
+msgid "Save selection to"
+msgstr "सिलेक्शन यहाँ सेव करें"
+
+#: src/gnuwin32/console.c:2194
+msgid "Save console contents to"
+msgstr "कंसोल के कंटेन्टस यहाँ सेव करें"
+
+#: src/gnuwin32/console.c:2301
+msgid "Scrolling.\n"
+msgstr "स्क्रोलिंग |\n"
+
+#: src/gnuwin32/console.c:2302
+msgid "  Keyboard: PgUp, PgDown, Ctrl+Arrows, Ctrl+Home, Ctrl+End,\n"
+msgstr "  कीबोर्ड: पेज अप, पेज डाउन, कंट्रोल+एरोज , कंट्रोल+होम , कंट्रोल+एन्ड ,\n"
+
+#: src/gnuwin32/console.c:2303
+msgid ""
+"  Mouse: use the scrollbar(s).\n"
+"\n"
+msgstr ""
+"  माउस: स्क्रॉलबार(स) का उपयोग करें\n"
+"\n"
+
+#: src/gnuwin32/console.c:2304
+msgid "Editing.\n"
+msgstr "एडिटिंग |\n"
+
+#: src/gnuwin32/console.c:2305
+msgid "  Moving the cursor: \n"
+msgstr "  कर्सर को मूव करना: \n"
+
+#: src/gnuwin32/console.c:2306
+msgid "     Left arrow or Ctrl+B: move backward one character;\n"
+msgstr "     बायाँ एरो या कंट्रोल+बी: एक कैरेक्टर पीछे जाएँ;\n"
+
+#: src/gnuwin32/console.c:2307
+msgid "     Right arrow or Ctrl+F: move forward one character;\n"
+msgstr "     दाहिना एरो या कंट्रोल+एफ: एक कैरेक्टर आगे जाएँ;\n"
+
+#: src/gnuwin32/console.c:2308
+msgid "     Home or Ctrl+A: go to beginning of line;\n"
+msgstr "     होम या कंट्रोल+ए: लाइन के शुरुआत पर जाएं;\n"
+
+#: src/gnuwin32/console.c:2309
+msgid "     End or Ctrl+E: go to end of line;\n"
+msgstr "     एन्ड या कंट्रोल+इ: लाइन के अंत पर जाएं;\n"
+
+#: src/gnuwin32/console.c:2310
+msgid "  History: Up and Down Arrows, Ctrl+P, Ctrl+N\n"
+msgstr "  इतिहास: अप और डाउन एरोज , कंट्रोल+पी, कंट्रोल+एन\n"
+
+#: src/gnuwin32/console.c:2311
+msgid "  Deleting:\n"
+msgstr "  डिलीटिंग:\n"
+
+#: src/gnuwin32/console.c:2312
+msgid "     Del or Ctrl+D: delete current character or selection;\n"
+msgstr "     डिलीट या कंट्रोल+डी: मौजूदा कैरेक्टर या सिलेक्शन डिलीट करें;\n"
+
+#: src/gnuwin32/console.c:2313
+msgid "     Backspace: delete preceding character;\n"
+msgstr "     बैकस्पेस: पिछला कैरेक्टर डिलीट करें;\n"
+
+#: src/gnuwin32/console.c:2314
+msgid "     Ctrl+Del or Ctrl+K: delete text from current character to end of line.\n"
+msgstr "     कंट्रोल+डिलीट या कंट्रोल+के: मौजूदा कैरेक्टर से लेकर लाइन के अंत तक का टेक्स्ट डिलीट करें |\n"
+
+#: src/gnuwin32/console.c:2315
+msgid "     Ctrl+U: delete all text from current line.\n"
+msgstr "     कंट्रोल+यू: मौजूदा लाइन से प्रत्येक टेक्स्ट डिलीट करें |\n"
+
+#: src/gnuwin32/console.c:2316
+msgid "  Copy and paste.\n"
+msgstr "  कॉपी करें और पेस्ट करें |\n"
+
+#: src/gnuwin32/console.c:2317
+msgid "     Use the mouse (with the left button held down) to mark (select) text.\n"
+msgstr "     टेक्स्ट उल्लेखित (चयन) करने हेतु माउस (बायाँ बटन दबाते हुए) का प्रयोग करें |\n"
+
+#: src/gnuwin32/console.c:2318
+msgid "     Use Shift+Del (or Ctrl+C) to copy the marked text to the clipboard and\n"
+msgstr "     उल्लेखित टेक्स्ट क्लिपबोर्ड में कॉपी करने हेतु शिफ्ट+डिलीट (या कंट्रोल+सी) का उपयोग करें एवं\n"
+
+#: src/gnuwin32/console.c:2319
+msgid "     Shift+Ins (or Ctrl+V or Ctrl+Y) to paste the content of the clipboard (if any)  \n"
+msgstr "     क्लिपबोर्ड के कंटेंट (यदि हो तो) को पेस्ट करने के लिए Shift+Ins (या Ctrl+V या Ctrl+Y) का उपयोग करें  \n"
+
+#: src/gnuwin32/console.c:2320
+msgid "     to the console, Ctrl+X first copy then paste\n"
+msgstr "     कंसोल पर, Ctrl +X पहले कॉपी करें फिर पेस्ट करें\n"
+
+#: src/gnuwin32/console.c:2321
+msgid "  Misc:\n"
+msgstr "  विविध:\n"
+
+#: src/gnuwin32/console.c:2322
+msgid "     Ctrl+L: Clear the console.\n"
+msgstr "     Ctrl+L: कंसोल साफ़ करें |\n"
+
+#: src/gnuwin32/console.c:2323
+msgid "     Ctrl+O or INS: Toggle overwrite mode: initially off.\n"
+msgstr "     Ctrl +O या INS: टॉगल ओवरराइट मोड: आरंभ में बंद।\n"
+
+#: src/gnuwin32/console.c:2324
+msgid "     Ctrl+T: Interchange current char with one to the left.\n"
+msgstr "     Ctrl+T: मौजूदा कैरेक्टर की बाएँ ओर वाले कैरेक्टर के साथ अदला-बदली कर दें |\n"
+
+#: src/gnuwin32/console.c:2325
+msgid ""
+"\n"
+"Note: Console is updated only when some input is required.\n"
+msgstr ""
+"\n"
+"टिप्पणी: कंसोल केवल तभी अद्यतन किया जाता है जब कुछ इनपुट की आवश्यकता होती है।\n"
+
+#: src/gnuwin32/console.c:2326
+msgid ""
+"  Use Ctrl+W to toggle this feature off/on.\n"
+"\n"
+msgstr ""
+"  इस सुविधा को ऑफ़/ऑन करने के लिए Ctrl+W का उपयोग करें |\n"
+"\n"
+
+#: src/gnuwin32/console.c:2327
+msgid ""
+"Use ESC to stop the interpreter.\n"
+"\n"
+msgstr ""
+"दुभाषिया को रोकने के लिए ESC का उपयोग करें।\n"
+"\n"
+
+#: src/gnuwin32/console.c:2328
+msgid ""
+"TAB starts completion of the current word.\n"
+"\n"
+msgstr ""
+"TAB वर्तमान शब्द का पूरा होना शुरू करता है।\n"
+"\n"
+
+#: src/gnuwin32/console.c:2329
+msgid "Standard Windows hotkeys can be used to switch to the\n"
+msgstr "मानक विंडोज हॉटकीज़ का उपयोग स्विच करने के लिए किया जा सकता है\n"
+
+#: src/gnuwin32/console.c:2330
+msgid "graphics device (Ctrl+Tab or Ctrl+F6 in MDI, Alt+Tab in SDI)"
+msgstr "ग्राफिक्स डिवाइस (MDI में Ctrl+Tab या Ctrl+F6, SDI में Alt+Tab)"
+
+#: src/gnuwin32/editor.c:89 src/gnuwin32/editor.c:91
+msgid "R Editor"
+msgstr "R एडीटर"
+
+#: src/gnuwin32/editor.c:162
+#, c-format
+msgid "unable to open file %s for reading"
+msgstr "पढ़ने के लिए फ़ाइल %s खोलने में असमर्थ"
+
+#: src/gnuwin32/editor.c:187
+#, c-format
+msgid "Could not read from file '%s'"
+msgstr "फ़ाइल '%s' से नहीं पढ़ सकें"
+
+#: src/gnuwin32/editor.c:220
+#, c-format
+msgid "Could not save file '%s'"
+msgstr "'%s' फ़ाइल को सेव नहीं कर पाए"
+
+#: src/gnuwin32/editor.c:240
+msgid "Save script as"
+msgstr "स्क्रिप्ट को इस रूप में सेव करें"
+
+#: src/gnuwin32/editor.c:439 src/gnuwin32/editor.c:765 src/gnuwin32/pager.c:441
+#: src/gnuwin32/rui.c:1164
+msgid "Open script"
+msgstr "स्क्रिप्ट खोलें"
+
+#: src/gnuwin32/editor.c:571 src/gnuwin32/pager.c:195 src/gnuwin32/pager.c:215
+msgid "No RGui console to paste to"
+msgstr "पेस्ट करने के लिए कोई RGui कंसोल नहीं"
+
+#: src/gnuwin32/editor.c:673
+msgid "R EDITOR\n"
+msgstr "R एडीटर\n"
+
+#: src/gnuwin32/editor.c:675
+msgid "A standard text editor for editing and running R code.\n"
+msgstr "R कोड को संपादित करने और चलाने के लिए एक मानक टेक्स्ट एडीटर |\n"
+
+#: src/gnuwin32/editor.c:677
+msgid "RUNNING COMMANDS\n"
+msgstr "कमांडस रन करना\n"
+
+#: src/gnuwin32/editor.c:678
+msgid "To run a line or section of R code, select the code and either\n"
+msgstr "R कोड की कोई पंक्ति या अनुभाग चलाने के लिए, कोड का चयन करें और या तो\n"
+
+#: src/gnuwin32/editor.c:679
+msgid "     Press Ctrl-R\n"
+msgstr "     Ctrl-R दबाएँ\n"
+
+#: src/gnuwin32/editor.c:680
+msgid "     Select \"Run line or selection\" from the \"Edit\" menu\n"
+msgstr "     \"एडिट\" मेनू से \"रन लाइन या चयन\" का चयन करें\n"
+
+#: src/gnuwin32/editor.c:681
+msgid "     Press the \"Run line or selection\" icon on the toolbar\n"
+msgstr "     उपकरण पट्टी पर \"रन लाइन या चयन\" आइकन दबाएँ\n"
+
+#: src/gnuwin32/editor.c:682
+msgid "This will copy the selected commands to the console and evaluate them.\n"
+msgstr "यह चयनित आदेशों को कंसोल पर कॉपी करेगा और उनका मूल्यांकन करेगा।\n"
+
+#: src/gnuwin32/editor.c:683
+msgid "If there is no selection, this will just run the current line and advance\n"
+msgstr "यदि कोई चयन नहीं है, तो यह सिर्फ वर्तमान लाइन चलाएगा और अग्रिम करेगा\n"
+
+#: src/gnuwin32/editor.c:684
+msgid "the cursor by one line.\n"
+msgstr "एक पंक्ति से कर्सर।\n"
+
+#: src/gnuwin32/editor.c:696 src/gnuwin32/editor.c:773
+#: src/gnuwin32/editor.c:831
+msgid "Run line or selection"
+msgstr "रन लाइन या चयन"
+
+#: src/gnuwin32/editor.c:698 src/gnuwin32/editor.c:816
+msgid "Undo"
+msgstr "पूर्ववत् करें"
+
+#: src/gnuwin32/editor.c:700 src/gnuwin32/editor.c:819
+msgid "Cut"
+msgstr "कट"
+
+#: src/gnuwin32/editor.c:701 src/gnuwin32/editor.c:821 src/gnuwin32/pager.c:315
+#: src/gnuwin32/pager.c:488 src/gnuwin32/rui.c:936 src/gnuwin32/rui.c:1176
+#: src/gnuwin32/rui.c:1232
+msgid "Copy"
+msgstr "कॉपी"
+
+#: src/gnuwin32/editor.c:702 src/gnuwin32/editor.c:823 src/gnuwin32/rui.c:937
+#: src/gnuwin32/rui.c:1180 src/gnuwin32/rui.c:1233
+msgid "Paste"
+msgstr "पेस्ट"
+
+#: src/gnuwin32/editor.c:703 src/gnuwin32/editor.c:825
+msgid "Delete"
+msgstr "डिलीट"
+
+#: src/gnuwin32/editor.c:705 src/gnuwin32/editor.c:827 src/gnuwin32/pager.c:318
+#: src/gnuwin32/pager.c:494 src/gnuwin32/rui.c:943 src/gnuwin32/rui.c:1237
+msgid "Select all"
+msgstr "सभी का चयन करें"
+
+#: src/gnuwin32/editor.c:769
+msgid "Save script"
+msgstr "स्क्रिप्ट को सेव करें"
+
+#: src/gnuwin32/editor.c:777 src/gnuwin32/pager.c:461
+#: src/library/grDevices/src/devWindows.c:1607
+msgid "Return focus to Console"
+msgstr "कंसोल पर फ़ोकस वापस करें"
+
+#: src/gnuwin32/editor.c:780
+msgid "Print script"
+msgstr "स्क्रिप्ट प्रिंट करें"
+
+#: src/gnuwin32/editor.c:782 src/gnuwin32/pager.c:456 src/gnuwin32/rui.c:1192
+#: src/library/grDevices/src/devWindows.c:1601
+msgid "Print"
+msgstr "प्रिंट"
+
+#: src/gnuwin32/editor.c:800 src/gnuwin32/pager.c:477 src/gnuwin32/rui.c:1210
+#: src/library/utils/src/windows/dataentry.c:1793
+#: src/library/grDevices/src/devWindows.c:1639
+msgid "File"
+msgstr "फ़ाइल"
+
+#: src/gnuwin32/editor.c:801 src/gnuwin32/pager.c:478 src/gnuwin32/rui.c:1212
+msgid "New script"
+msgstr "नई स्क्रिप्ट"
+
+#: src/gnuwin32/editor.c:803 src/gnuwin32/pager.c:479 src/gnuwin32/rui.c:1213
+msgid "Open script..."
+msgstr "स्क्रिप्ट खोलें..."
+
+#: src/gnuwin32/editor.c:805
+msgid "Save"
+msgstr "सेव"
+
+#: src/gnuwin32/editor.c:807
+msgid "Save as..."
+msgstr "इस रूप में सेव करें ..."
+
+#: src/gnuwin32/editor.c:810 src/gnuwin32/pager.c:480 src/gnuwin32/rui.c:1226
+#: src/library/grDevices/src/devWindows.c:1660
+#: src/library/grDevices/src/devWindows.c:1702
+msgid "Print..."
+msgstr "प्रिंट..."
+
+#: src/gnuwin32/editor.c:813
+msgid "Close script"
+msgstr "स्क्रिप्ट बंद करें"
+
+#: src/gnuwin32/editor.c:815 src/gnuwin32/pager.c:487 src/gnuwin32/rui.c:1231
+#: src/library/utils/src/windows/dataentry.c:1799
+msgid "Edit"
+msgstr "एडिट"
+
+#: src/gnuwin32/editor.c:829 src/gnuwin32/rui.c:1238
+msgid "Clear console"
+msgstr "कंसोल साफ करें"
+
+#: src/gnuwin32/editor.c:833
+msgid "Run all"
+msgstr "सब कुछ चलाओ"
+
+#: src/gnuwin32/editor.c:836
+msgid "Find..."
+msgstr "खोजो..."
+
+#: src/gnuwin32/editor.c:838
+msgid "Replace..."
+msgstr "बदलें..."
+
+#: src/gnuwin32/editor.c:841 src/gnuwin32/rui.c:1242
+msgid "GUI preferences..."
+msgstr "जीयूआई प्राथमिकताएं ..."
+
+#: src/gnuwin32/editor.c:851 src/gnuwin32/rui.c:1274
+#: src/library/utils/src/windows/dataentry.c:1700
+#: src/library/utils/src/windows/dataentry.c:1810
+msgid "Help"
+msgstr "मदद"
+
+#: src/gnuwin32/editor.c:852
+msgid "Editor"
+msgstr "एडीटर"
+
+#: src/gnuwin32/editor.c:911
+msgid "Maximum number of editors reached"
+msgstr "एडिटरस की अधिकतम संख्या तक पहुँच गया"
+
+#: src/gnuwin32/editor.c:916
+msgid "Unable to create editor window"
+msgstr "एडिटर विंडो बनाने में असमर्थ"
+
+#: src/gnuwin32/editor.c:924
+msgid "Untitled"
+msgstr "शीर्षकहीन"
+
+#: src/gnuwin32/extra.c:1050
+msgid "Select file"
+msgstr "फ़ाइल का चयन करें"
+
+#: src/gnuwin32/pager.c:83 src/gnuwin32/pager.c:99
+msgid "Error opening file"
+msgstr "फ़ाइल खोलने में त्रुटि"
+
+#: src/gnuwin32/pager.c:88 src/gnuwin32/pager.c:106
+msgid "Insufficient memory to display file in internal pager"
+msgstr "आंतरिक पेजर में फ़ाइल प्रदर्शित करने के लिए अपर्याप्त मेमोरी"
+
+#: src/gnuwin32/pager.c:187 src/gnuwin32/pager.c:199 src/gnuwin32/pager.c:219
+#: src/gnuwin32/rui.c:306 src/gnuwin32/rui.c:333
+msgid "No selection"
+msgstr "कोई चयन नहीं"
+
+#: src/gnuwin32/pager.c:316 src/gnuwin32/pager.c:446 src/gnuwin32/pager.c:490
+msgid "Paste to console"
+msgstr "कंसोल पर पेस्ट करें"
+
+#: src/gnuwin32/pager.c:317 src/gnuwin32/pager.c:451 src/gnuwin32/pager.c:492
+msgid "Paste commands to console"
+msgstr "कंसोल में आदेश पेस्ट करें"
+
+#: src/gnuwin32/pager.c:320 src/gnuwin32/rui.c:946
+#: src/library/utils/src/windows/dataentry.c:1706
+#: src/library/grDevices/src/devWindows.c:1699
+msgid "Stay on top"
+msgstr "शीर्ष पर रहें"
+
+#: src/gnuwin32/pager.c:322 src/gnuwin32/pager.c:485
+#: src/library/utils/src/windows/dataentry.c:1708
+#: src/library/utils/src/windows/dataentry.c:1795
+msgid "Close"
+msgstr "बंद करना"
+
+#: src/gnuwin32/pager.c:482 src/gnuwin32/rui.c:1227
+msgid "Save to File..."
+msgstr "फ़ाइल में सेव करें..."
+
+#: src/gnuwin32/pager.c:497 src/gnuwin32/rui.c:1244
+msgid "View"
+msgstr "देखो"
+
+#: src/gnuwin32/pager.c:529
+msgid "Unable to create pager window"
+msgstr "पेजर विंडो बनाने में असमर्थ"
+
+#: src/gnuwin32/preferences.c:307
+msgid ""
+"The overall console properties cannot be changed\n"
+"on a running console.\n"
+"\n"
+"Save the preferences and restart Rgui to apply them.\n"
+msgstr ""
+"समग्र कंसोल गुण परिवर्तित नहीं किए जा सकते\n"
+"चल रहे कंसोल पर।\n"
+"\n"
+"प्राथमिकताओं को सेव करें और उन्हें लागू करने के लिए Rgui को पुनरारंभ करें।\n"
+
+#: src/gnuwin32/preferences.c:311
+msgid ""
+"The language for menus cannot be changed on a\n"
+" running console.\n"
+"\n"
+"Save the preferences and restart Rgui to apply to menus.\n"
+msgstr ""
+"मेनू की भाषा चलते हुए कंसोल पर परिवर्तित नहीं की जा सकती |\n"
+"\n"
+"प्राथमिकताओं को सेव करें और मेनू पर लागू करने के लिए Rgui को पुनरारंभ करें।\n"
+
+#: src/gnuwin32/preferences.c:380
+msgid "Changes in pager size will not apply to any open pagers"
+msgstr "पेजर आकार में परिवर्तन किसी भी खुले पेजर पर लागू नहीं होगा"
+
+#: src/gnuwin32/preferences.c:386
+msgid ""
+"Do not change pager type if any pager is open\n"
+"Proceed?"
+msgstr ""
+"यदि कोई पेजर खुला है तो पेजर प्रकार न बदलें\n"
+"आगे बढ़ना?"
+
+#: src/gnuwin32/preferences.c:420
+msgid "Select directory for file 'Rconsole'"
+msgstr "फ़ाइल 'Rconsole' के लिए डायरेक्टरी का चयन करें"
+
+#: src/gnuwin32/preferences.c:515
+msgid "Select 'Rconsole' file"
+msgstr "'Rconsole' फ़ाइल का चयन करें"
+
+#: src/gnuwin32/preferences.c:703
+#, c-format
+msgid "Ignored '%s' at line %d of file %s"
+msgstr "फ़ाइल %s की पंक्ति %d पर '%s' को अनदेखा किया गया"
+
+#: src/gnuwin32/preferences.c:804
+msgid "Rgui Configuration Editor"
+msgstr "Rgui कॉन्फ़िगरेशन एडीटर"
+
+#: src/gnuwin32/rui.c:215
+msgid "Select file to source"
+msgstr "सोर्स के लिए फ़ाइल का चयन करें"
+
+#: src/gnuwin32/rui.c:233
+msgid "Select image to load"
+msgstr "लोड करने के लिए छवि का चयन करें"
+
+#: src/gnuwin32/rui.c:245
+msgid "Save image in"
+msgstr "इमेज यहाँ सेव करें"
+
+#: src/gnuwin32/rui.c:259
+msgid "Load history from"
+msgstr "इतिहास यहाँ से लोड करें"
+
+#: src/gnuwin32/rui.c:268
+msgid "Save history in"
+msgstr "इतिहास यहाँ सेव करें"
+
+#: src/gnuwin32/rui.c:315 src/gnuwin32/rui.c:324
+msgid "No text available"
+msgstr "कोई टेक्स्ट उपलब्ध नहीं है"
+
+#: src/gnuwin32/rui.c:373
+msgid "Name of data frame or matrix"
+msgstr "डेटा फ्रेम या मैट्रिक्स का नाम"
+
+#: src/gnuwin32/rui.c:380
+#, c-format
+msgid "'%s' cannot be found"
+msgstr "'%s' नहीं मिला"
+
+#: src/gnuwin32/rui.c:524
+msgid "Are you sure?"
+msgstr "क्या आपको यकीन है?"
+
+#: src/gnuwin32/rui.c:619
+msgid "Help on"
+msgstr "मदद करें"
+
+#: src/gnuwin32/rui.c:675
+msgid "Search help"
+msgstr "खोज सहायता"
+
+#: src/gnuwin32/rui.c:690
+msgid "Search for words in help list archives and documentation"
+msgstr "अभिलेखागार और प्रलेखन सूची में शब्दों की खोज करें"
+
+#: src/gnuwin32/rui.c:705
+msgid "Apropos"
+msgstr "अनुरूप"
+
+#: src/gnuwin32/rui.c:932
+msgid "Can only drag-and-drop .R, .RData and .rda files"
+msgstr "केवल ड्रैग-एंड-ड्रॉप कर सकते हैं .R, .RData और .rda फ़ाइलें"
+
+#: src/gnuwin32/rui.c:938 src/gnuwin32/rui.c:1234
+msgid "Paste commands only"
+msgstr "केवल आदेश पेस्ट करें"
+
+#: src/gnuwin32/rui.c:939 src/gnuwin32/rui.c:1184
+msgid "Copy and paste"
+msgstr "कॉपी करें और पेस्ट करें"
+
+#: src/gnuwin32/rui.c:941
+msgid "Clear window"
+msgstr "विंडो साफ़ करें"
+
+#: src/gnuwin32/rui.c:945 src/gnuwin32/rui.c:1257
+msgid "Buffered output"
+msgstr "बफर्ड आउटपुट"
+
+#: src/gnuwin32/rui.c:985
+msgid "Packages"
+msgstr "पैकेजेस"
+
+#: src/gnuwin32/rui.c:986
+msgid "Load package..."
+msgstr "लोड पैकेज..."
+
+#: src/gnuwin32/rui.c:988
+msgid "Set CRAN mirror..."
+msgstr "CRAN मिरर सेट करें ..."
+
+#: src/gnuwin32/rui.c:990
+msgid "Select repositories..."
+msgstr "रिपॉजिटरी का चयन करें..."
+
+#: src/gnuwin32/rui.c:992
+msgid "Install package(s)..."
+msgstr "पैकेज इनस्टॉल करें..."
+
+#: src/gnuwin32/rui.c:994
+msgid "Update packages..."
+msgstr "पैकेज अद्यतन करें..."
+
+#: src/gnuwin32/rui.c:997
+msgid "Install package(s) from local files..."
+msgstr "स्थानीय फ़ाइलों से पैकेज इनस्टॉल करें..."
+
+#: src/gnuwin32/rui.c:1021
+msgid "FAQ on R"
+msgstr "R पर अक्सर पूछे जाने वाले प्रश्न"
+
+#: src/gnuwin32/rui.c:1023
+msgid "FAQ on R for &Windows"
+msgstr "&Windows के लिए R पर अक्सर पूछे जाने वाले प्रश्न"
+
+#: src/gnuwin32/rui.c:1029 src/gnuwin32/rui.c:1032
+msgid "Manuals (in PDF)"
+msgstr "मैनुअल (पीडीएफ में)"
+
+#: src/gnuwin32/rui.c:1062
+msgid "R functions (text)..."
+msgstr "R फ़ंक्शन (टेक्स्ट)..."
+
+#: src/gnuwin32/rui.c:1064
+msgid "Html help"
+msgstr "Html मदद"
+
+#: src/gnuwin32/rui.c:1066
+msgid "Search help..."
+msgstr "खोज सहायता..."
+
+#: src/gnuwin32/rui.c:1071
+msgid "Apropos..."
+msgstr "अनुरूप..."
+
+#: src/gnuwin32/rui.c:1073
+msgid "R Project home page"
+msgstr "R प्रोजेक्ट होम पेज"
+
+#: src/gnuwin32/rui.c:1074
+msgid "CRAN home page"
+msgstr "CRAN होम पेज"
+
+#: src/gnuwin32/rui.c:1076
+msgid "About"
+msgstr "के बारे में"
+
+#: src/gnuwin32/rui.c:1085 src/extra/graphapp/gmenus.c:52
+msgid "Windows"
+msgstr "विंडोज़"
+
+#: src/gnuwin32/rui.c:1086 src/extra/graphapp/gmenus.c:53
+msgid "Cascade"
+msgstr "कैस्केड"
+
+#: src/gnuwin32/rui.c:1087 src/extra/graphapp/gmenus.c:54
+msgid "Tile &Horizontally"
+msgstr "टाइल और क्षैतिज रूप से"
+
+#: src/gnuwin32/rui.c:1088 src/extra/graphapp/gmenus.c:55
+msgid "Tile &Vertically"
+msgstr "टाइल और लंबवत"
+
+#: src/gnuwin32/rui.c:1089
+msgid "Minimize group"
+msgstr "समूह को छोटा करें"
+
+#: src/gnuwin32/rui.c:1090
+msgid "Restore group"
+msgstr "समूह पुनर्स्थापित करें"
+
+#: src/gnuwin32/rui.c:1168
+msgid "Load workspace"
+msgstr "लोड कार्यस्थान"
+
+#: src/gnuwin32/rui.c:1172
+msgid "Save workspace"
+msgstr "कार्यस्थान सेव करें"
+
+#: src/gnuwin32/rui.c:1188
+msgid "Stop current computation"
+msgstr "वर्तमान गणना बंद करें"
+
+#: src/gnuwin32/rui.c:1211
+msgid "Source R code..."
+msgstr "सोर्स R कोड..."
+
+#: src/gnuwin32/rui.c:1214
+msgid "Display file(s)..."
+msgstr "फ़ाइल प्रदर्शित करें..."
+
+#: src/gnuwin32/rui.c:1216
+msgid "Load Workspace..."
+msgstr "कार्यस्थान लोड करें..."
+
+#: src/gnuwin32/rui.c:1217
+msgid "Save Workspace..."
+msgstr "कार्यस्थान सेव करें..."
+
+#: src/gnuwin32/rui.c:1219
+msgid "Load History..."
+msgstr "लोड इतिहास..."
+
+#: src/gnuwin32/rui.c:1221
+msgid "Save History..."
+msgstr "इतिहास सेव करें..."
+
+#: src/gnuwin32/rui.c:1224
+msgid "Change dir..."
+msgstr "डायरेक्टरी बदलें..."
+
+#: src/gnuwin32/rui.c:1229
+msgid "Exit"
+msgstr "निकास"
+
+#: src/gnuwin32/rui.c:1236
+msgid "Copy and Paste"
+msgstr "कॉपी करें और पेस्ट करें"
+
+#: src/gnuwin32/rui.c:1240
+msgid "Data editor..."
+msgstr "डेटा एडीटर..."
+
+#: src/gnuwin32/rui.c:1245
+msgid "Toolbar"
+msgstr "उपकरण पट्टी"
+
+#: src/gnuwin32/rui.c:1246
+msgid "Statusbar"
+msgstr "स्थिति पट्टी"
+
+#: src/gnuwin32/rui.c:1250
+msgid "Misc"
+msgstr "विविध"
+
+#: src/gnuwin32/rui.c:1251
+msgid "Stop current computation           \tESC"
+msgstr "वर्तमान गणना बंद करें           \tESC"
+
+#: src/gnuwin32/rui.c:1253
+msgid "Stop all computations"
+msgstr "सभी गणनाओं को रोकें"
+
+#: src/gnuwin32/rui.c:1255
+msgid "Break to debugger"
+msgstr "डीबगर को तोड़ना"
+
+#: src/gnuwin32/rui.c:1258
+msgid "Word completion"
+msgstr "शब्द पूर्णता"
+
+#: src/gnuwin32/rui.c:1260
+msgid "Filename completion"
+msgstr "फ़ाइल नाम पूरा होना"
+
+#: src/gnuwin32/rui.c:1267
+msgid "List objects"
+msgstr "ऑब्जेक्ट्स की सूची"
+
+#: src/gnuwin32/rui.c:1268
+msgid "Remove all objects"
+msgstr "सभी ऑब्जेक्ट्स निकालें"
+
+#: src/gnuwin32/rui.c:1269
+msgid "List search &path"
+msgstr "सूची खोज और पाथ"
+
+#: src/gnuwin32/rui.c:1275
+msgid "Console"
+msgstr "कंसोल"
+
+#: src/gnuwin32/rui.c:1336
+msgid "'mname' is limited to 1000 bytes"
+msgstr "'mname' 1000 बाइट्स तक सीमित है"
+
+#: src/gnuwin32/rui.c:1381
+#, c-format
+msgid "menu %s does not exist"
+msgstr "मेनू %s मौजूद नहीं है"
+
+#: src/gnuwin32/rui.c:1434
+msgid "'menu' is limited to 500 bytes"
+msgstr "'मेनू' 500 बाइट्स तक सीमित है"
+
+#: src/gnuwin32/rui.c:1444
+msgid "base menu does not exist"
+msgstr "बेस मेनू मौजूद नहीं है"
+
+#: src/gnuwin32/rui.c:1459
+msgid "failed to allocate menu"
+msgstr "मेनू आवंटित करने में विफल"
+
+#: src/gnuwin32/rui.c:1476 src/gnuwin32/rui.c:1600
+msgid "menu + item is limited to 1000 bytes"
+msgstr "मेनू + आइटम 1000 बाइट्स तक सीमित है"
+
+#: src/gnuwin32/rui.c:1484 src/gnuwin32/rui.c:1567
+msgid "menu does not exist"
+msgstr "मेनू मौजूद नहीं है"
+
+#: src/gnuwin32/rui.c:1502 src/gnuwin32/rui.c:1525 src/gnuwin32/rui.c:1530
+msgid "failed to allocate char storage"
+msgstr "कैरेक्टर संचयन आवंटित करने में विफल"
+
+#: src/gnuwin32/rui.c:1538
+msgid "failed to allocate menuitem"
+msgstr "मेनूआइटम आवंटित करने में विफल"
+
+#: src/gnuwin32/rui.c:1590
+msgid "menu not found"
+msgstr "मेनू नहीं मिला"
+
+#: src/gnuwin32/rui.c:1608
+msgid "menu or item does not exist"
+msgstr "मेनू या आइटम मौजूद नहीं है"
+
+#: src/gnuwin32/system.c:558
+msgid "Save workspace image?"
+msgstr "कार्यस्थान की इमेज सेव करनी है?"
+
+#: src/extra/graphapp/clipboard.c:69 src/extra/graphapp/clipboard.c:73
+msgid "Insufficient memory: cell not copied to the clipboard"
+msgstr "अपर्याप्त मेमोरी: सेल क्लिपबोर्ड पर कॉपी नहीं हुआ"
+
+#: src/extra/graphapp/dialogs.c:144 src/extra/graphapp/dialogs.c:161
+#: src/extra/graphapp/dialogs.c:178
+msgid "Question"
+msgstr "प्रश्न"
+
+#: src/extra/graphapp/dialogs.c:249
+msgid " Change working directory to:"
+msgstr " कार्यशील डायरेक्टरी को निम्न में बदलें:"
+
+#: src/extra/graphapp/dialogs.c:251
+#, c-format
+msgid "Unable to set '%s' as working directory"
+msgstr "कार्यशील डायरेक्टरी के रूप में '%s' सेट करने में असमर्थ"
+
+#: src/extra/graphapp/dialogs.c:705 src/extra/graphapp/dialogs.c:723
+#: src/extra/graphapp/dialogs.c:729 src/extra/graphapp/dialogs.c:839
+#: src/extra/graphapp/dialogs.c:853 src/extra/graphapp/dialogs.c:859
+#: src/library/utils/src/windows/widgets.c:127
+msgid "Cancel"
+msgstr "रद्द करना"
+
+#: src/extra/graphapp/dialogs.c:725 src/extra/graphapp/dialogs.c:855
+#: src/library/utils/src/windows/widgets.c:126
+msgid "OK"
+msgstr "ठीक है"
+
+#: src/extra/graphapp/dialogs.c:847
+msgid "User"
+msgstr "उपभोक्ता"
+
+#: src/extra/graphapp/dialogs.c:848
+msgid "Password"
+msgstr "पासवर्ड"
+
+#: src/extra/graphapp/dialogs.c:1034 src/extra/graphapp/dialogs.c:1040
+#, c-format
+msgid "\"%s\" not found"
+msgstr "\"%s\" नहीं मिला"
+
+#: src/extra/graphapp/gmenus.c:56
+msgid "Arrange Icons"
+msgstr "चिह्न व्यवस्थित करें"
+
+#: src/extra/graphapp/metafile.c:55
+msgid "Unable to save metafile to the clipboard"
+msgstr "मेटाफ़ाइल को क्लिपबोर्ड पर सेव करने में असमर्थ"
+
+#: src/extra/graphapp/metafile.c:117
+msgid "Unable to create metafile"
+msgstr "मेटाफ़ाइल बनाने में असमर्थ"
+
+#: src/extra/graphapp/metafile.c:122
+msgid "Insufficient memory to create metafile"
+msgstr "मेटाफ़ाइल बनाने के लिए अपर्याप्त मेमोरी"
+
+#: src/extra/graphapp/printer.c:111
+msgid "Unable to choose printer"
+msgstr "प्रिंटर चुनने में असमर्थ"
+
+#: src/extra/graphapp/printer.c:139
+msgid "Insufficient memory for new printer"
+msgstr "नए प्रिंटर के लिए अपर्याप्त मेमोरी"
+
+#: src/extra/graphapp/printer.c:175
+msgid "Unable to start the print job"
+msgstr "प्रिंट कार्य प्रारंभ करने में असमर्थ"
+
+#: src/library/utils/src/windows/dataentry.c:225
+#: src/library/utils/src/windows/dataentry.c:1853
+#: src/library/utils/src/windows/dataentry.c:1856
+#: src/library/utils/src/windows/dataentry.c:1887
+msgid "invalid argument"
+msgstr "अमान्य आर्गुमेंट"
+
+#: src/library/utils/src/windows/dataentry.c:272
+msgid "invalid type for value"
+msgstr "मान के लिए अमान्य प्रकार"
+
+#: src/library/utils/src/windows/dataentry.c:283
+msgid "Data Editor"
+msgstr "डेटा एडीटर"
+
+#: src/library/utils/src/windows/dataentry.c:333
+msgid "dataentry: internal memory problem"
+msgstr "डेटाएंट्री: आंतरिक मेमोरी समस्या"
+
+#: src/library/utils/src/windows/dataentry.c:636
+#: src/library/utils/src/windows/dataentry.c:1224
+msgid "dataentry: internal memory error"
+msgstr "डेटाएंट्री: आंतरिक मेमोरी त्रुटि"
+
+#: src/library/utils/src/windows/dataentry.c:759
+#: src/library/utils/src/windows/dataentry.c:772
+msgid "internal type error in dataentry"
+msgstr "डेटाएंट्री में आंतरिक प्रकार त्रुटि"
+
+#: src/library/utils/src/windows/dataentry.c:855
+msgid "dataentry: parse error on string"
+msgstr "डेटाएंट्री: string पर पार्स त्रुटि"
+
+#: src/library/utils/src/windows/dataentry.c:998
+msgid "dataentry: expression too long"
+msgstr "डेटाएंट्री: अभिव्यक्ति बहुत लंबी"
+
+#: src/library/utils/src/windows/dataentry.c:1475
+msgid "column names cannot be blank"
+msgstr "स्तंभ नाम रिक्त नहीं हो सकते"
+
+#: src/library/utils/src/windows/dataentry.c:1521
+msgid "Variable editor"
+msgstr "वेरिएबल एडीटर"
+
+#: src/library/utils/src/windows/dataentry.c:1526
+msgid "variable name"
+msgstr "वेरिएबल का नाम"
+
+#: src/library/utils/src/windows/dataentry.c:1528
+msgid "type"
+msgstr "प्रकार"
+
+#: src/library/utils/src/windows/dataentry.c:1642
+msgid "Cell width(s)"
+msgstr "सेल की चौड़ाई(ओं)"
+
+#: src/library/utils/src/windows/dataentry.c:1648
+msgid "Cell width"
+msgstr "सेल की चौड़ाई"
+
+#: src/library/utils/src/windows/dataentry.c:1651
+msgid "variable"
+msgstr "वेरिएबल"
+
+#: src/library/utils/src/windows/dataentry.c:1694
+msgid ""
+"Navigation.\n"
+"  Keyboard: cursor keys move selection\n"
+"\tTab move right, Shift+Tab moves left\n"
+"\tPgDn or Ctrl+F: move down one screenful\n"
+"\tPgUp or Ctrl+B: move up one screenful\n"
+"\tHome: move to (1,1) cell\n"
+"\tEnd: show last rows of last column.\n"
+"   Mouse: left-click in a cell, use the scrollbar(s).\n"
+"\n"
+"Editing.\n"
+"  Type in the currently hightlighted cell\n"
+"  Double-click in a cell for an editable field\n"
+"\n"
+"Misc.\n"
+"  Ctrl-L redraws the screen, auto-resizing the columns\n"
+"  Ctrl-C copies selected cell\n"
+"  Ctrl-V pastes to selected cell\n"
+"  Right-click menu for copy, paste, autosize currently selected column\n"
+"\n"
+msgstr ""
+"नेविगेशन।\n"
+"  कीबोर्ड: कर्सर कुंजियाँ चयन को स्थानांतरित करती हैं\n"
+"\tटैब दाएं करें, Shift+Tab बाईं ओर चलता है\n"
+"\tPgDn या Ctrl +F: एक स्क्रीनफुल नीचे ले जाएं\n"
+"\tPgUp या Ctrl+B: एक स्क्रीनफुल ऊपर ले जाएं\n"
+"\tHome: (1,1) सेल में जाएं\n"
+"\t\tEnd: अंतिम स्तंभ की अंतिम पंक्तियाँ दिखाएँ |\n"
+"   माउस: किसी कक्ष में बाएँ क्लिक करें, स्क्रॉलबार का उपयोग करें |\n"
+"\n"
+"एडिटिंग।\n"
+"  वर्तमान में प्रमुखता से प्रदर्शित सेल में टाइप करें\n"
+"  संपादन योग्य फ़ील्ड के लिए सेल में डबल-क्लिक करें\n"
+"\n"
+"विविध।\n"
+"  Ctrl-L स्क्रीन को फिर से बनाता है, कॉलम को ऑटो-आकार देता है\n"
+"  Ctrl-C चयनित सेल कॉपी करता हैं\n"
+"  Ctrl-V चयनित सेल में पेस्ट करता हैं\n"
+"  वर्तमान में चयनित स्तंभ को कॉपी करने, पेस्ट करने, स्वत: आकार देने के लिए मेनू पर राइट-क्लिक करें\n"
+"\n"
+
+#: src/library/utils/src/windows/dataentry.c:1702
+msgid "Copy selected cell"
+msgstr "चयनित सेल कॉपी करें"
+
+#: src/library/utils/src/windows/dataentry.c:1703
+msgid "Paste to selected cell"
+msgstr "चयनित सेल में पेस्ट करें"
+
+#: src/library/utils/src/windows/dataentry.c:1704
+msgid "Autosize column"
+msgstr "स्वत: आकार स्तंभ"
+
+#: src/library/utils/src/windows/dataentry.c:1800
+msgid "Copy  \tCTRL+C"
+msgstr "कॉपी   \tCTRL+C"
+
+#: src/library/utils/src/windows/dataentry.c:1802
+msgid "Paste \tCTRL+V"
+msgstr "पेस्ट \tCTRL+V"
+
+#: src/library/utils/src/windows/dataentry.c:1804
+msgid "Delete\tDEL"
+msgstr "डिलीट \tDEL"
+
+#: src/library/utils/src/windows/dataentry.c:1807
+msgid "Cell widths ..."
+msgstr "सेल की चौड़ाई ..."
+
+#: src/library/utils/src/windows/dataentry.c:1811
+msgid "Data editor"
+msgstr "डेटा एडीटर"
+
+#: src/library/grDevices/src/devWindows.c:943
+msgid "Portable network graphics file"
+msgstr "पोर्टेबल नेटवर्क ग्राफ़िक्स फ़ाइल"
+
+#: src/library/grDevices/src/devWindows.c:946
+msgid "Windows bitmap file"
+msgstr "Windows बिटमैप फ़ाइल"
+
+#: src/library/grDevices/src/devWindows.c:949
+msgid "TIFF file"
+msgstr "TIFF फ़ाइल"
+
+#: src/library/grDevices/src/devWindows.c:952
+msgid "Jpeg file"
+msgstr "Jpeg फ़ाइल"
+
+#: src/library/grDevices/src/devWindows.c:974
+msgid "Postscript file"
+msgstr "पोस्टस्क्रिप्ट फ़ाइल"
+
+#: src/library/grDevices/src/devWindows.c:986
+msgid "PDF file"
+msgstr "पीडीएफ फ़ाइल"
+
+#: src/library/grDevices/src/devWindows.c:998
+msgid "Enhanced metafiles"
+msgstr "एन्हांस्ड मेटाफाइल्स"
+
+#: src/library/grDevices/src/devWindows.c:1001
+#: src/library/grDevices/src/devWindows.c:3557
+msgid "file path selected is too long: only 512 bytes are allowed"
+msgstr "चयनित फ़ाइल पाथ बहुत लंबा है: केवल 512 बाइट्स की अनुमति है"
+
+#: src/library/grDevices/src/devWindows.c:1212
+msgid "No plot to replace!"
+msgstr "बदलने के लिए कोई प्लॉट नहीं है!"
+
+#: src/library/grDevices/src/devWindows.c:1262
+msgid "Variable name"
+msgstr "वेरिएबल का नाम"
+
+#: src/library/grDevices/src/devWindows.c:1271
+msgid "Variable doesn't contain any plots!"
+msgstr "वेरिएबल में कोई प्लॉट नहीं है!"
+
+#: src/library/grDevices/src/devWindows.c:1286
+msgid "Name of variable to save to"
+msgstr "सेव करने के लिए वेरिएबल का नाम"
+
+#: src/library/grDevices/src/devWindows.c:1595
+msgid "Copy to the clipboard as a metafile"
+msgstr "क्लिपबोर्ड पर मेटाफ़ाइल के रूप में कॉपी करें"
+
+#: src/library/grDevices/src/devWindows.c:1613
+#: src/library/grDevices/src/devWindows.c:1624
+msgid "Stop locator"
+msgstr "स्टॉप लोकेटर"
+
+#: src/library/grDevices/src/devWindows.c:1623
+#: src/library/grDevices/src/devWindows.c:1627
+msgid "Stop"
+msgstr "स्टॉप"
+
+#: src/library/grDevices/src/devWindows.c:1629
+msgid "Continue"
+msgstr "जारी रखना"
+
+#: src/library/grDevices/src/devWindows.c:1633
+msgid "Next"
+msgstr "अगला"
+
+#: src/library/grDevices/src/devWindows.c:1634
+msgid "Next plot"
+msgstr "अगला प्लॉट"
+
+#: src/library/grDevices/src/devWindows.c:1640
+msgid "Save as"
+msgstr "के रूप में सेव करें"
+
+#: src/library/grDevices/src/devWindows.c:1649
+#: src/library/grDevices/src/devWindows.c:1651
+#: src/library/grDevices/src/devWindows.c:1653
+#, c-format
+msgid "%s quality..."
+msgstr "%s गुणवत्ता ..."
+
+#: src/library/grDevices/src/devWindows.c:1655
+msgid "Copy to the clipboard"
+msgstr "क्लिपबोर्ड पर कॉपी करें"
+
+#: src/library/grDevices/src/devWindows.c:1656
+msgid "as a Bitmap\tCTRL+C"
+msgstr "बिटमैप के रूप में\tCTRL+C"
+
+#: src/library/grDevices/src/devWindows.c:1657
+msgid "as a Metafile\tCTRL+W"
+msgstr "मेटाफाइल के रूप में\tCTRL+W"
+
+#: src/library/grDevices/src/devWindows.c:1662
+msgid "close Device"
+msgstr "डिवाइस बंद करें"
+
+#: src/library/grDevices/src/devWindows.c:1663
+msgid "History"
+msgstr "इतिहास"
+
+#: src/library/grDevices/src/devWindows.c:1664
+msgid "Recording"
+msgstr "रिकॉर्डिंग"
+
+#: src/library/grDevices/src/devWindows.c:1667
+msgid "Add\tINS"
+msgstr "INS जोड़ें"
+
+#: src/library/grDevices/src/devWindows.c:1668
+msgid "Replace"
+msgstr "बदलें"
+
+#: src/library/grDevices/src/devWindows.c:1670
+msgid "Previous\tPgUp"
+msgstr "पिछला PgUp"
+
+#: src/library/grDevices/src/devWindows.c:1671
+msgid "Next\tPgDown"
+msgstr "अगला PgDown"
+
+#: src/library/grDevices/src/devWindows.c:1673
+msgid "Save to variable..."
+msgstr "वेरिएबल में सेव करें..."
+
+#: src/library/grDevices/src/devWindows.c:1674
+msgid "Get from variable..."
+msgstr "वेरिएबल से प्राप्त करें ..."
+
+#: src/library/grDevices/src/devWindows.c:1676
+msgid "Clear history"
+msgstr "इतिहास साफ करें"
+
+#: src/library/grDevices/src/devWindows.c:1677
+msgid "Resize"
+msgstr "आकार बदलें"
+
+#: src/library/grDevices/src/devWindows.c:1678
+msgid "R mode"
+msgstr "R मोड"
+
+#: src/library/grDevices/src/devWindows.c:1680
+msgid "Fit to window"
+msgstr "विंडो में फिट करो"
+
+#: src/library/grDevices/src/devWindows.c:1682
+msgid "Fixed size"
+msgstr "निश्चित आकार"
+
+#: src/library/grDevices/src/devWindows.c:1689
+msgid "Copy as metafile"
+msgstr "metafile के रूप में कॉपी करें"
+
+#: src/library/grDevices/src/devWindows.c:1691
+msgid "Copy as bitmap"
+msgstr "bitmap के रूप में कॉपी करें"
+
+#: src/library/grDevices/src/devWindows.c:1694
+msgid "Save as metafile..."
+msgstr "मेटाफ़ाइल के रूप में सेव करें..."
+
+#: src/library/grDevices/src/devWindows.c:1696
+msgid "Save as postscript..."
+msgstr "पोस्टस्क्रिप्ट के रूप में सेव करें..."
+
+#: src/library/grDevices/src/devWindows.c:3214
+msgid "Locator is active"
+msgstr "लोकेटर सक्रिय है"
+
+#: src/library/grDevices/src/devWindows.c:3884
+msgid "Waiting to confirm page change..."
+msgstr "पृष्ठ परिवर्तन की पुष्टि करने के लिए प्रतीक्षा कर रहा हूं..."
+
+#: src/library/grDevices/src/devWindows.c:3896
+msgid "Click or hit ENTER for next page"
+msgstr "अगले पेज के लिए ENTER क्लिक करें या दबाएँ"

@@ -1072,7 +1072,8 @@ stopifnot(identical(model.frame(~V), model.frame(~V, xlev = list(V=levels(V)))))
 
 
 ## ks.test gave p=1 rather than p=0.9524 because abs(1/2-4/5)>3/10 was TRUE
-stopifnot(all.equal(ks.test(1:5, c(2.5,4.5))$p.value, 20/21))
+ks5 <- ks.test(1:5, c(2.5,4.5))
+stopifnot(all.equal(20/21, ks5$p.value, tol=1e-15))
 
 
 ## NAs in utf8ToInt and v.v.
@@ -1211,6 +1212,13 @@ char.comp <- memCompress(char, type="xz")
 char.dec <- memDecompress(char.comp, type="xz", asChar=TRUE)
 stopifnot(nchar(char.dec) == nchar(char))
 ## short in R <= 2.11.0
+
+
+## right-to-left assignment/removal of columns (PR#14263)
+X <- data.frame(A1 = 1, A2 = 2, A3 = 3, A4 = 4)
+X[3:2] <- list(NULL)
+stopifnot(identical(names(X), c("A1", "A4")))
+## R <= 2.11.0 removed columns 2 and 4
 
 
 ## rbeta() with mass very close to 1 -- bug PR#14291

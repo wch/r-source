@@ -1,7 +1,7 @@
 #  File src/library/base/R/files.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2020 The R Core Team
+#  Copyright (C) 1995-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -128,8 +128,11 @@ file.copy <- function(from, to,
             warning("cannot overwrite a non-directory with a directory")
             okay[okay] <- !dirtofile
         }
-        # note: could also warn whenever "from" is a directory as it will
-        # be copied into an empty file, or support creating of directories
+    }
+    fromdir <- dir.exists(from[okay])
+    if (any(fromdir)) {
+        warning("directories are omitted unless 'recursive = TRUE'")
+        okay[okay] <- !fromdir
     }
     if (any(from[okay] %in% to[okay]))
         stop("file can not be copied both 'from' and 'to'")

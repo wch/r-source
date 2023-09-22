@@ -28,6 +28,8 @@ stderr()
 nullfile()
 
 isatty(con)
+
+getAllConnections()
 }
 \arguments{
   \item{all}{logical: if true all connections, including closed ones
@@ -71,6 +73,11 @@ isatty(con)
   \code{"terminal"} connections and it is apparently connected to a
   terminal, otherwise false.  This may not be reliable in embedded
   applications, including GUI consoles.
+
+  \code{getAllConnections} returns a sequence of integer connection
+  descriptors for use with \code{getConnection}, corresponding to the
+  row names of the table returned by \code{showConnections(all =
+  TRUE)}. 
 }
 \note{
   \code{stdin()} refers to the \sQuote{console} and not to the C-level

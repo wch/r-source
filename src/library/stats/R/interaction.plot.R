@@ -1,7 +1,7 @@
 #  File src/library/stats/R/interaction.plot.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2022 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -54,10 +54,9 @@ interaction.plot <-
             col = col, lty = lty, pch = pch)
     if(axes && xaxt != "n") {
 	## swallow ... arguments intended for matplot():
-	axisInt <- function(x, main, sub, lwd, bg, log, asp, ...)
-	    axis(1, x, ...)
-	mgp. <- par("mgp") ; if(!xtick) mgp.[2L] <- 0
-	axisInt(1, at = xvals, labels = xlabs, tick = xtick, mgp = mgp.,
+	axisInt <- function(main, sub, lwd, bg, log, asp, ...)
+	    axis(...)
+	axisInt(side = 1, at = xvals, labels = xlabs, tick = xtick,
 		xaxt = xaxt, ...)
     }
     if(legend) {

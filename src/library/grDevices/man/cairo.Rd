@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/cairo.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2021 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{cairo}
@@ -34,7 +34,8 @@ cairo_ps(filename = if(onefile) "Rplots.ps" else "Rplot\%03d.ps",
 \arguments{
   \item{filename}{the name of the output file.
     The page number is substituted if a C integer format is included in
-    the character string, as in the default.  (The result must be less
+    the character string, as in the default.  (Depending on the platform,
+    the result must be less
     than \code{PATH_MAX} characters long, and may be truncated if not.
     See \code{\link{postscript}} for further details.)  Tilde expansion
     is performed where supported by the platform.}

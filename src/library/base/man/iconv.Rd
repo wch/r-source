@@ -1,6 +1,6 @@
 % File src/library/base/man/iconv.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2021 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{iconv}
@@ -19,16 +19,18 @@ iconvlist()
 }
 
 \arguments{
-  \item{x}{A character vector, or an object to be converted to a character
+  \item{x}{a character vector, or an object to be converted to a character
     vector by \code{\link{as.character}}, or a list with \code{NULL} and
     \code{raw} elements as returned by \code{iconv(toRaw = TRUE)}.}
-  \item{from}{A character string describing the current encoding.}
-  \item{to}{A character string describing the target encoding.}
+  \item{from}{a character string describing the current encoding.}
+  \item{to}{a character string describing the target encoding.}
   \item{sub}{character string.  If not \code{NA} it is used to replace
     any non-convertible bytes in the input.  (This would normally be a
     single character, but can be more.)  If \code{"byte"}, the indication is
     \code{"<xx>"} with the hex code of the byte.  If \code{"Unicode"}
-    and converting from UTF-8, the Unicode point in the form \code{"<U+xxxx>"}.}
+    and converting from UTF-8, the Unicode point in the form
+    \code{"<U+xxxx>"}, or if \code{c99}, a C99-style escape
+    \code{"\\uxxxx"}.}
   \item{mark}{logical, for expert use.  Should encodings be marked?}
   \item{toRaw}{logical.  Should a list of raw vectors be returned rather
     than a character vector?}
@@ -55,26 +57,28 @@ iconvlist()
   \samp{//TRANSLIT} to the \code{to} encoding: see the examples.
 
   Encoding \code{"ASCII"} is accepted, and on most systems \code{"C"}
-  and \code{"POSIX"} are synonyms for ASCII.
+  and \code{"POSIX"} are synonyms for ASCII.  Where
+  \code{"ASCII/TRANSLIT"} is unsupported by the OS, \code{"ASCII"} is
+  used with \code{sub = "c99"} if from UTF-8, else \code{sub =
+  "?"}. (However, musl's version of \code{"ASCII"} substitutes
+  \code{*}.)
 
-  Any encoding bits (see \code{\link{Encoding}}) on elements of \code{x}
-  are ignored: they will always be translated as if from encoding
-  \code{from} even if declared otherwise.  \code{\link{enc2native}} and
-  \code{\link{enc2utf8}} provide alternatives which do take declared
-  encodings into account.
+  With \code{from = ""}, elements of \code{x} with a declared encoding
+  (UTF-8 or latin1, see \code{\link{Encoding}}) are converted from that
+  encoding.
 
   Note that implementations of \code{iconv} typically do not do much
   validity checking and will often mis-convert inputs which are invalid
   in encoding \code{from}.
 
-  If \code{sub = "Unicode"} is used for a non-UTF-8 input it is the same
-  as \code{sub = "byte"}.
+  If \code{sub = "Unicode"} or \code{sub = "c99"} is used for a
+  non-UTF-8 input it is the same as \code{sub = "byte"}.
 }
 
 \section{Implementation Details}{
   There are three main implementations of \code{iconv} in use.  Linux's
   most common C runtime, \samp{glibc}, contains one.  Several platforms
-  supply GNU \samp{libiconv}, including macOS, FreeBSD and Cygwin, in
+  supply GNU \samp{libiconv}, including macOS and FreeBSD, in
   some cases with additional encodings.  On Windows we use a version of
   Yukihiro Nakadaira's \samp{win_iconv}, which is based on Windows'
   codepages.  (We have added many encoding names for compatibility with
@@ -107,7 +111,8 @@ iconvlist()
 
   Some of the implementations have interesting extra encodings: for
   example GNU \samp{libiconv} allows \code{to = "C99"} to use
-  \samp{\\uxxxx} escapes for non-ASCII characters.
+  \samp{\\uxxxx} escapes (or if needed \samp{\Uuxxxxxxxx}) for
+  non-ASCII characters.
 }
 
 \section{Byte Order Marks}{
@@ -134,7 +139,8 @@ iconvlist()
 \value{
   If \code{toRaw = FALSE} (the default), the value is a character vector
   of the same length and the same attributes as \code{x} (after
-  conversion to a character vector).
+  conversion to a character vector).  If conversion fails for an element
+  that element of the result is set to \code{NA_character_}.
 
   If \code{mark = TRUE} (the default) the elements of the result have a
   declared encoding if \code{to} is \code{"latin1"} or \code{"UTF-8"},
@@ -159,6 +165,11 @@ iconvlist()
   for e.g.\sspace{}\code{fileEncoding} arguments.  \code{"macintosh"} is
   the official (and most widely supported) name for \sQuote{Mac Roman}
   (\url{https://en.wikipedia.org/wiki/Mac_OS_Roman}).
+
+  Using \code{sub} substitutes each non-convertible \emph{byte} in the
+  input, so when converting from UTF-8 a non-convertible character may
+  be replaced by two or more bytes.  Using \code{sub = "c99"} or
+  \code{sub = "Unicode"} will be clearer.
 }
 
 \seealso{
@@ -176,17 +187,18 @@ iconv(x, "LATIN2", "UTF-8")
 
 ## Both x below are in latin1 and will only display correctly in a
 ## locale that can represent and display latin1.
-x <- "fa\xE7ile"
+x <- "fran\xE7ais"
 Encoding(x) <- "latin1"
 x
 charToRaw(xx <- iconv(x, "latin1", "UTF-8"))
 xx
 
-iconv(x, "latin1", "ASCII")          #   NA
-iconv(x, "latin1", "ASCII", "?")     # "fa?ile"
-iconv(x, "latin1", "ASCII", "")      # "faile"
-iconv(x, "latin1", "ASCII", "byte")  # "fa<e7>ile"
-iconv(xx, "UTF-8", "ASCII", "Unicode") # "fa<U+00E7>ile"
+iconv(x, "latin1", "ASCII")           #   NA
+iconv(x, "latin1", "ASCII", "?")      # "fran?ais"
+iconv(x, "latin1", "ASCII", "")       # "franais"
+iconv(x, "latin1", "ASCII", "byte")   # "fran<e7>ais"
+iconv(xx, "UTF-8", "ASCII", "Unicode")# "fran<U+00E7>ais"
+iconv(xx, "UTF-8", "ASCII", "c99")    # "fran\\\\u00e7ais"
 
 ## Extracts from old R help files (they are nowadays in UTF-8)
 x <- c("Ekstr\xf8m", "J\xf6reskog", "bi\xdfchen Z\xfcrcher")

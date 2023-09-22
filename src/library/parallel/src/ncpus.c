@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2011-2018   The R Core Team.
+ *  Copyright (C) 2011-2023   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -31,9 +31,6 @@
 #ifndef _W64
 # include "glpi.h"
 #endif
-
-typedef BOOL 
-(WINAPI *LPFN_GLPI)(PSYSTEM_LOGICAL_PROCESSOR_INFORMATION, PDWORD);
 
 typedef BOOL 
 (WINAPI *LPFN_GLPI_EX)(LOGICAL_PROCESSOR_RELATIONSHIP,
@@ -159,8 +156,7 @@ SEXP ncpus(SEXP virtual)
 	UNPROTECT(1);
 	return ans;
     }
-	
-    LPFN_GLPI glpi;
+
     BOOL done = FALSE;
     PSYSTEM_LOGICAL_PROCESSOR_INFORMATION buffer = NULL;
     PSYSTEM_LOGICAL_PROCESSOR_INFORMATION ptr = NULL;
@@ -169,18 +165,10 @@ SEXP ncpus(SEXP virtual)
     DWORD numaNodeCount = 0;
     DWORD processorCoreCount = 0;
     DWORD byteOffset = 0;
-    /* XP SP3 and later, but reports physical CPUs before Vista */
     /* Reports only processors within the group in which R is running */
-    glpi = (LPFN_GLPI) 
-	GetProcAddress(GetModuleHandle(TEXT("kernel32")),
-		       "GetLogicalProcessorInformation");
-    if (NULL == glpi) {
-	warning("GetLogicalProcessorInformation is not supported on this OS.");
-        return ans;
-    }
 
     while (!done) {
-        DWORD rc = glpi(buffer, &returnLength);
+        DWORD rc = GetLogicalProcessorInformation(buffer, &returnLength);
         if (rc == FALSE) {
             if (buffer) {
 		free(buffer);

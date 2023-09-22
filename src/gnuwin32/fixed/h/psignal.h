@@ -75,6 +75,12 @@ typedef	void (*sighandler_t)(int nSig);
 #ifndef _SIGSET_T_
 #define	_SIGSET_T_
 typedef int sigset_t;
+#else
+  /* recently when _POSIX is not defined (which it is not during normal
+     R build on Windows), mingw-w64 defines _sigset_t, but not sigset_t */
+# ifndef _POSIX
+typedef int sigset_t;
+# endif
 #endif	/* Not _SIGSET_T_ */
 
 

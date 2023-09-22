@@ -1,7 +1,7 @@
 #  File src/library/tools/R/packages.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2020 The R Core Team
+#  Copyright (C) 1995-2022 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -26,7 +26,7 @@ function(dir = ".", fields = NULL,
     if(missing(type) && .Platform$OS.type == "windows")
         type <- "win.binary"
     type <- match.arg(type)
- 
+
     paths <- ""
     if(is.logical(subdirs) && subdirs) {
         owd <- setwd(dir)
@@ -57,7 +57,7 @@ function(dir = ".", fields = NULL,
                                                          latestOnly)
         if(NROW(desc))
             db <- rbind(db, desc)
-    
+
     }
 
     np <- .write_repository_package_db(db, dir, rds_compress)
@@ -83,7 +83,7 @@ function(db, dir, rds_compress)
        rownames(db) <- db[, "Package"]
        saveRDS(db, file.path(dir, "PACKAGES.rds"), compress = rds_compress)
    }
-   
+
    invisible(np)
 }
 
@@ -91,7 +91,7 @@ function(db, dir, rds_compress)
 function(desc, path, addFiles, addPaths, latestOnly)
 {
     desc <- Filter(length, desc)
-    
+
     if(length(desc)) {
         Files <- names(desc)
         fields <- names(desc[[1L]])
@@ -100,7 +100,7 @@ function(desc, path, addFiles, addPaths, latestOnly)
         if(addFiles) desc <- cbind(desc, File = Files)
         if(addPaths) desc <- cbind(desc, Path = path)
         if(latestOnly) desc <- .remove_stale_dups(desc)
-        
+
         ## Standardize licenses or replace by NA.
         license_info <- analyze_licenses(desc[, "License"])
             desc[, "License"] <-
@@ -120,7 +120,7 @@ function(desc, path, addFiles, addPaths, latestOnly)
     type <- match.arg(type)
     ## FIXME: might the source pattern be more general?
     ## was .tar.gz prior to 2.10.0
- 
+
     ret = switch(type,
                  "source" = "_.*\\.tar\\.[^_]*$",
                  "mac.binary" = "_.*\\.tgz$",
@@ -148,8 +148,9 @@ function(dir, fields = NULL,
 
     if(!length(files))
         return(list())
+    type <- match.arg(type)
     db <- .process_package_files_for_repository_db(files,
-                                                   type, 
+                                                   type,
                                                    fields,
                                                    verbose,
                                                    validate)
@@ -165,7 +166,7 @@ function(files, type, fields, verbose, validate = FALSE)
     ## PACKAGES file:
     fields <- unique(c(.get_standard_repository_db_fields(type), fields))
     ## files was without path at this point in original code,
-    ## use filetbs instead to compute pkg names and set db names 
+    ## use filetbs instead to compute pkg names and set db names
     filetbs <- basename(files)
     packages <- sapply(strsplit(filetbs, "_", fixed = TRUE), `[`, 1L)
     db <- vector(length(files), mode = "list")
@@ -330,6 +331,13 @@ function(ap)
     ## (Also works for data frame package repository dbs.)
     pkgs <- ap[ , "Package"]
     dup_pkgs <- pkgs[duplicated(pkgs)]
+    if (length(dup_pkgs) > 100) {
+        ## Some packages may be in multiple repositories in the same
+        ## version. Handle those specially for performance reasons.
+        ap <- ap[!duplicated(ap[, c("Package", "Version")]), , drop = FALSE]
+        pkgs <- ap[ , "Package"]
+        dup_pkgs <- pkgs[duplicated(pkgs)]
+    }
     stale_dups <- integer(length(dup_pkgs))
     i <- 1L
     for (dp in dup_pkgs) {
@@ -351,9 +359,7 @@ function(packages = NULL, db = NULL, which = "strong",
          recursive = FALSE, reverse = FALSE,
          verbose = getOption("verbose"))
 {
-    ## <FIXME>
-    ## What about duplicated entries?
-    ## </FIXME>
+    packages1 <- unique(packages)
 
     if(is.null(db)) db <- utils::available.packages()
 
@@ -366,22 +372,16 @@ function(packages = NULL, db = NULL, which = "strong",
             fields <- unique(c(fields, recursive))
     }
 
-    ## For given packages which are not found in the db, return "list
-    ## NAs" (i.e., NULL entries), as opposed to character() entries
-    ## which indicate no dependencies.
-    out_of_db_packages <- character()
+    ind <- if(!is.character(recursive) && !recursive && !reverse &&
+              !is.null(packages)) {
+               ## For forward non-recursive depends, we can simplify
+               ## matters by subscripting the db right away---modulo
+               ## boundary cases.
+               match(packages1, db[, "Package"], nomatch = 0L)
+           } else !duplicated(db[, "Package"])
 
-    ## For forward non-recursive depends, we can simplify matters by
-    ## subscripting the db right away---modulo boundary cases.
-    if(!is.character(recursive) && !recursive && !reverse) {
-        if(!is.null(packages)) {
-            ind <- match(packages, db[, "Package"], nomatch = 0L)
-            db <- db[ind, , drop = FALSE]
-            out_of_db_packages <- packages[ind == 0L]
-        }
-    }
+    db <- as.data.frame(db[ind, c("Package", fields), drop = FALSE])
 
-    db <- as.data.frame(db[, c("Package", fields), drop = FALSE])
     ## Avoid recomputing package dependency names in recursive
     ## invocations.
     for(f in fields) {
@@ -414,11 +414,9 @@ function(packages = NULL, db = NULL, which = "strong",
 
     if(!recursive && !reverse) {
         names(depends) <- db$Package
-        if(length(out_of_db_packages)) {
-            depends <-
-                c(depends,
-                  structure(vector("list", length(out_of_db_packages)),
-                            names = out_of_db_packages))
+        if(!is.null(packages)) {
+            depends <- depends[match(packages, names(depends))]
+            names(depends) <- packages
         }
         return(depends)
     }
@@ -461,23 +459,33 @@ function(packages = NULL, db = NULL, which = "strong",
 	      factor(matchP, levels = seq_along(all_packages)))
     if(is.null(packages)) {
         if(reverse) {
-            packages <- all_packages
+            packages1 <- all_packages
             p_L <- seq_along(all_packages)
         } else {
-            packages <- db$Package
-            p_L <- match(packages, all_packages)
+            packages1 <- db$Package
+            p_L <- match(packages1, all_packages)
         }
     } else {
-        p_L <- match(packages, all_packages, nomatch = 0L)
+        p_L <- match(packages1, all_packages, nomatch = 0L)
         if(any(ind <- (p_L == 0L))) {
-            out_of_db_packages <- packages[ind]
-            packages <- packages[!ind]
             p_L <- p_L[!ind]
         }
     }
     p_R <- tab[p_L]
     pos <- cbind(rep.int(p_L, lengths(p_R)), unlist(p_R))
     ctr <- 0L
+
+    ## posunique() speeds up computing "unique(pos)" in the following loop.
+    ## When the number of packages is small enough, we can easily represent
+    ## an edge from i to j by a single integer number. Finding duplicates in
+    ## a vector of integers is much faster than in rows of a matrix.
+    shift <- as.integer(2^15)  ## allows to fit two numbers to an integer
+    if (length(pos) && max(pos) < shift)
+        posunique <- function(p)
+            p[!duplicated(p[,1L]*shift + p[,2L]), , drop = FALSE]
+    else
+        posunique <- function(p) unique(p)
+
     repeat {
         if(verbose) cat("Cycle:", (ctr <- ctr + 1L))
         p_L <- split(pos[, 1L], pos[, 2L])
@@ -486,7 +494,10 @@ function(packages = NULL, db = NULL, which = "strong",
                            cbind(rep.int(i, length(k)),
                                  rep(k, each = length(i))),
                            p_L, tab[as.integer(names(p_L))]))
-        npos <- unique(rbind(pos, new))
+
+        ## could be just posunique(rbind(pos, new)), but computing this
+        ## iteratively is faster
+        npos <- posunique(rbind(pos, posunique(new)))
         nnew <- nrow(npos) - nrow(pos)
         if(verbose) cat(" NNew:", nnew, "\n")
         if(!nnew) break
@@ -494,13 +505,10 @@ function(packages = NULL, db = NULL, which = "strong",
     }
     depends <-
         split(all_packages[pos[, 2L]],
-              factor(all_packages[pos[, 1L]],
-                     levels = unique(packages)))
-    if(length(out_of_db_packages)) {
-        depends <-
-            c(depends,
-              structure(vector("list", length(out_of_db_packages)),
-                        names = out_of_db_packages))
+              factor(all_packages[pos[, 1L]], levels = packages1))
+    if(!is.null(packages)) {
+        depends <- depends[match(packages, names(depends))]
+        names(depends) <- packages
     }
     depends
 }

@@ -1,7 +1,7 @@
 #  File src/library/tools/R/parseLatex.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2017 The R Core Team
+#  Copyright (C) 1995-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -16,8 +16,6 @@
 #  A copy of the GNU General Public License is available at
 #  https://www.R-project.org/Licenses/
 
-## This is called during package installation via makeLatex()
-## so we can't use the symbol C_parseLatex here
 parseLatex <- function(text, filename = deparse1(substitute(text)),
                      verbose = FALSE, verbatim = c("verbatim", "verbatim*",
                      "Sinput", "Soutput") )
@@ -25,8 +23,7 @@ parseLatex <- function(text, filename = deparse1(substitute(text)),
     ## the internal function must get some sort of srcfile
     srcfile <- srcfilecopy(filename, text, file.mtime(filename))
     text <- paste(text, collapse="\n")
-    .External2("parseLatex", text, srcfile, verbose, as.character(verbatim),
-               PACKAGE = "tools")
+    .External2(C_parseLatex, text, srcfile, verbose, as.character(verbatim))
 }
 
 
@@ -236,5 +233,20 @@ makeLatexTable <- function(utf8table)
     }
     table[["\\textemdash"]] <- "\u2014"
     latexArgCount[["\\textemdash"]] <<- 0
+
+    ## Variants of latin A/a with ring above.
+    table[["\\AA"]] <- "\u00c5"
+    latexArgCount[["\\AA"]] <<- 0
+    table[["\\aa"]] <- "\u00e5"
+    latexArgCount[["\\aa"]] <<- 0
+
+    ## Also handle (some) LaTeX specials:
+    table[["\\&"]] <- "&"
+    latexArgCount[["\\&"]] <<- 0    
+    table[["\\~"]] <- "~"
+    latexArgCount[["\\~"]] <<- 0
+    table[["\\%"]] <- "%"
+    latexArgCount[["\\%"]] <<- 0    
+    
     table
 }

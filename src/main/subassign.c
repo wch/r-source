@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997-2021   The R Core Team
+ *  Copyright (C) 1997--2023  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -273,7 +273,7 @@ static SEXP EnlargeNames(SEXP names, R_xlen_t len, R_xlen_t newlen)
 }
 
 /* used instead of coerceVector to embed a non-vector in a list for
-   purposes of SubassignTypeFix, for cases in wich coerceVector should
+   purposes of SubassignTypeFix, for cases in which coerceVector should
    fail; namely, S4SXP */
 static SEXP embedInVector(SEXP v, SEXP call)
 {
@@ -475,7 +475,7 @@ static int SubassignTypeFix(SEXP *x, SEXP *y, R_xlen_t stretch, int level,
 
     default:
 	error(_("incompatible types (from %s to %s) in subassignment type fix"),
-	      type2char(which%100), type2char(which/100));
+	      R_typeToChar(*x), R_typeToChar(*y));
     }
 
     if (stretch) {
@@ -1122,7 +1122,7 @@ static SEXP MatrixAssign(SEXP call, SEXP rho, SEXP x, SEXP s, SEXP y)
 
     default:
 	error(_("incompatible types (from %s to %s) in matrix subset assignment"),
-		  type2char(which%100), type2char(which/100));
+		  R_typeToChar(x), R_typeToChar(y));
     }
     UNPROTECT(2);
     return x;
@@ -1356,7 +1356,7 @@ static SEXP ArrayAssign(SEXP call, SEXP rho, SEXP x, SEXP s, SEXP y)
 
     default:
 	error(_("incompatible types (from %s to %s) in array subset assignment"),
-	      type2char(which%100), type2char(which/100));
+	      R_typeToChar(x), R_typeToChar(y));
     }
 
     UNPROTECT(3);
@@ -1555,7 +1555,7 @@ int R_DispatchOrEvalSP(SEXP call, SEXP op, const char *generic, SEXP args,
 /* and the remainder of args have not.  If this was called directly */
 /* the CAR(args) and the last arg won't have been. */
 
-SEXP attribute_hidden do_subassign(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_subassign(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans;
 
@@ -1571,7 +1571,7 @@ SEXP attribute_hidden do_subassign(SEXP call, SEXP op, SEXP args, SEXP rho)
     return do_subassign_dflt(call, op, ans, rho);
 }
 
-static void NORET errorNotSubsettable(SEXP x)
+NORET static void errorNotSubsettable(SEXP x)
 {
     SEXP call = R_CurrentExpression; /* behave like error() */
     SEXP cond = R_makeNotSubsettableError(x, call);
@@ -1579,10 +1579,18 @@ static void NORET errorNotSubsettable(SEXP x)
     UNPROTECT(1); /* cond; not reached */
 }
 
-SEXP attribute_hidden do_subassign_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
+NORET static void errorMissingSubscript(SEXP x)
+{
+    SEXP call = R_CurrentExpression; /* behave like error() */
+    SEXP cond = R_makeMissingSubscriptError(x, call);
+    R_signalErrorCondition(cond, call);
+    UNPROTECT(1); /* cond; not reached */
+}
+
+attribute_hidden SEXP do_subassign_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP subs, x, y;
-    int nsubs, oldtype; Rboolean S4;
+    int nsubs, oldtype;
 
     PROTECT(args);
 
@@ -1610,8 +1618,7 @@ SEXP attribute_hidden do_subassign_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	((! IS_ASSIGNMENT_CALL(call)) && MAYBE_REFERENCED(CAR(args))))
 	x = SETCAR(args, shallow_duplicate(CAR(args)));
 
-    S4 = IS_S4_OBJECT(x);
-
+    Rboolean S4 = IS_S4_OBJECT(x);
     oldtype = 0;
     if (TYPEOF(x) == LISTSXP || TYPEOF(x) == LANGSXP) {
 	oldtype = TYPEOF(x);
@@ -1719,7 +1726,7 @@ static SEXP DeleteOneVectorListItem(SEXP x, R_xlen_t which)
  * args[1] =: x    = object being subscripted
  * args[2] =: subs = list of subscripts
  * args[3] =: y    = replacement values */
-SEXP attribute_hidden do_subassign2(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_subassign2(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans;
 
@@ -1731,7 +1738,7 @@ SEXP attribute_hidden do_subassign2(SEXP call, SEXP op, SEXP args, SEXP rho)
     return do_subassign2_dflt(call, op, ans, rho);
 }
 
-static void NORET errorOutOfBoundsSEXP(SEXP x, int subscript, SEXP sindex)
+NORET static void errorOutOfBoundsSEXP(SEXP x, int subscript, SEXP sindex)
 {
     SEXP call = R_CurrentExpression; /* default behaves like error() */
     SEXP cond = R_makeOutOfBoundsError(x, subscript, sindex, call, "[[ ]]");
@@ -1740,19 +1747,17 @@ static void NORET errorOutOfBoundsSEXP(SEXP x, int subscript, SEXP sindex)
     UNPROTECT(1); /* cond; not reached */
 }
 
-SEXP attribute_hidden
+attribute_hidden SEXP
 do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP dims, indx, names, newname, subs, x, xtop, xup, y, thesub = R_NilValue, xOrig = R_NilValue;
     int i, ndims, nsubs, which, len = 0 /* -Wall */;
     R_xlen_t  stretch, offset, off = -1; /* -Wall */
-    Rboolean S4, recursed=FALSE;
 
     PROTECT(args);
 
     nsubs = SubAssignArgs(args, &x, &subs, &y);
     PROTECT(y); /* gets cut loose in SubAssignArgs */
-    S4 = IS_S4_OBJECT(x);
 
     /* Handle NULL left-hand sides.  If the right-hand side */
     /* is NULL, just return the left-hand size otherwise, */
@@ -1779,6 +1784,7 @@ do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	SETCAR(args, x = shallow_duplicate(x));
 
     /* code to allow classes to extend ENVSXP */
+    Rboolean S4 = IS_S4_OBJECT(x);
     if(TYPEOF(x) == S4SXP) {
 	xOrig = x; /* will be an S4 object */
 	x = R_getS4DataSlot(x, ANYSXP);
@@ -1811,6 +1817,7 @@ do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     /* new case in 1.7.0, one vector index for a list,
        more general as of 2.10.0 */
+    Rboolean recursed = FALSE;
     if (nsubs == 1) {
 	thesub = CAR(subs);
 	len = length(thesub); /* depth of recursion, small */
@@ -1835,7 +1842,7 @@ do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if (!isVectorList(x) && LENGTH(y) > 1)
 	    error(_("more elements supplied than there are to replace"));
 	if (nsubs == 0 || CAR(subs) == R_MissingArg)
-	    error(_("[[ ]] with missing subscript"));
+	    errorMissingSubscript(x);
 	if (nsubs == 1) {
 	    offset = OneIndex(x, thesub, xlength(x), 0, &newname,
 			      recursed ? len-1 : -1, R_NilValue);
@@ -2011,7 +2018,7 @@ do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 	default:
 	    error(_("incompatible types (from %s to %s) in [[ assignment"),
-		  type2char(which%100), type2char(which/100));
+		  R_typeToChar(x), R_typeToChar(y));
 	}
 	/* If we stretched, we may have a new name. */
 	/* In this case we must create a names attribute */
@@ -2095,7 +2102,7 @@ do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
    to get DispatchOrEval to work we need to first translate it
    to a string
 */
-SEXP attribute_hidden do_subassign3(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_subassign3(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans, nlist = R_NilValue;
 

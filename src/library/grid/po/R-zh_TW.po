@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.5.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-11-06 17:17\n"
+"POT-Creation-Date: 2023-07-31 14:59\n"
 "PO-Revision-Date: 2018-09-16 23:38+0800\n"
 "Last-Translator: Wei-Lun Chao <bluebat@member.fsf.org>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -29,6 +29,21 @@ msgstr "'labels' 和 'at' 的位置量必須有相同的長度"
 
 msgid "logical 'label' supplied of length 0"
 msgstr "提供的邏輯 'label' 的長度為零"
+
+#, fuzzy
+msgid "Invalid coordinates"
+msgstr "'order' 的值無效"
+
+#, fuzzy
+msgid "Invalid grob coordinates"
+msgstr "'grob' 名稱無效"
+
+#, fuzzy
+msgid "Invalid gTree coordinates"
+msgstr "\"gTree\"的類別無效"
+
+msgid "Closed must not be a missing value"
+msgstr ""
 
 msgid "end points must not be identical"
 msgstr "端點兩頭的值是不能相等的"
@@ -98,6 +113,9 @@ msgstr "%s 出現缺少值與非缺少值的混合"
 
 msgid "'gamma' 'gpar' element is defunct"
 msgstr "'gamma' gpar 已經不再有用"
+
+msgid "'fill' gpar list components must all be patterns"
+msgstr ""
 
 msgid "invalid 'linemitre' value"
 msgstr "'linemitre' 的值無效"
@@ -280,9 +298,6 @@ msgstr "'order' 的值無效"
 msgid "Invalid destination"
 msgstr "定位無效"
 
-msgid "Invalid compositing operator"
-msgstr ""
-
 msgid "Unknown group:"
 msgstr ""
 
@@ -338,6 +353,9 @@ msgstr "表無效"
 msgid "invalid 'listing'"
 msgstr "'listing' 無效"
 
+msgid "Only a grob can be converted to a mask"
+msgstr ""
+
 msgid "invalid 'origin'"
 msgstr "'origin' 的值無效"
 
@@ -366,7 +384,12 @@ msgstr ""
 msgid "Missing pattern fill has been set to transparent"
 msgstr ""
 
-msgid "Gradient fill applied to object with no inside"
+msgid ""
+"grob drawing produces more shapes than grob coords\n"
+"(recycling coords)"
+msgstr ""
+
+msgid "Pattern fill applied to object with no inside"
 msgstr ""
 
 msgid "'length' must be a 'unit' object"
@@ -448,11 +471,47 @@ msgstr "'' 的值必須是 'unit' 物件"
 msgid "'x', 'y', 'width', and 'height' must have length 1"
 msgstr "'x'，'y'，'width' 和 'height' 的長度都應該是為一"
 
+#, fuzzy
+msgid "Invalid glyph info"
+msgstr "'order' 的值無效"
+
+#, fuzzy
+msgid "'x' and 'y' must have length > 0"
+msgstr "'x' 和 'y' 的長度必須為一"
+
+msgid "'hjust' and 'vjust' must be glyphJust() values"
+msgstr ""
+
+#, fuzzy
+msgid "'hjust' and 'vjust' must have length 1"
+msgstr "'x' 和 'y' 的長度必須為一"
+
+msgid "Unknown width; using first width"
+msgstr ""
+
+#, fuzzy
+msgid "Unknown anchor; using left justification"
+msgstr "水平定位無效"
+
+msgid "Unknown height; using first height"
+msgstr ""
+
+msgid "Unknown anchor; using bottom justification"
+msgstr ""
+
 msgid "'x' and 'units' must have length > 0"
 msgstr "'x' 和 'unit' 的長度必須大於零"
 
 msgid "invalid 'axis' or 'type'"
 msgstr "'axis' 或 'type' 的值無效"
+
+#, fuzzy
+msgid "'x' and 'y' must be units and 'device' must be logical"
+msgstr "'x' 和 'y' 必須為 'unit' 物件，而且它們的長度必須相同"
+
+#, fuzzy
+msgid "'w' and 'h' must be units and 'device' must be logical"
+msgstr "'x' 和 'y' 必須為 'unit' 物件，而且它們的長度必須相同"
 
 #, fuzzy
 msgid "Not a unit object"

@@ -1,12 +1,13 @@
 % File src/library/stats/man/ks.test.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2020 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{ks.test}
 \alias{ks.test}
 \alias{ks.test.default}
 \alias{ks.test.formula}
+\encoding{UTF-8}
 \title{Kolmogorov-Smirnov Tests}
 \description{
   Perform a one- or two-sample Kolmogorov-Smirnov test.
@@ -15,7 +16,7 @@
 ks.test(x, \dots)
 \method{ks.test}{default}(x, y, \dots,
         alternative = c("two.sided", "less", "greater"),
-        exact = NULL)
+        exact = NULL, simulate.p.value = FALSE, B = 2000)
 \method{ks.test}{formula}(formula, data, subset, na.action, \dots)
 }
 \arguments{
@@ -34,8 +35,12 @@ ks.test(x, \dots)
     See \sQuote{Details} for the meanings of the possible values.}
   \item{exact}{\code{NULL} or a logical indicating whether an exact
     p-value should be computed.  See \sQuote{Details} for the meaning of
-    \code{NULL}.  Not available in the two-sample case for a one-sided
-    test or if ties are present.}
+    \code{NULL}.}
+  \item{simulate.p.value}{a logical indicating whether to compute
+    p-values by Monte Carlo simulation.  (Ignored for the one-sample
+    test.)}
+  \item{B}{an integer specifying the number of replicates used in the
+    Monte Carlo test.}
   \item{formula}{a formula of the form \code{lhs ~ rhs} where \code{lhs}
     is a numeric variable giving the data values and \code{rhs} either
     \code{1} for a one-sample test or a factor with two levels giving
@@ -51,17 +56,16 @@ ks.test(x, \dots)
     \code{getOption("na.action")}.}
 }
 \details{
-  If \code{y} is numeric, a two-sample test of the null hypothesis
-  that \code{x} and \code{y} were drawn from the same \emph{continuous}
+  If \code{y} is numeric, a two-sample (Smirnov) test of the null
+  hypothesis that \code{x} and \code{y} were drawn from the same
   distribution is performed.
 
   Alternatively, \code{y} can be a character string naming a continuous
   (cumulative) distribution function, or such a function.  In this case,
-  a one-sample test is carried out of the null that the distribution
-  function which generated \code{x} is distribution \code{y} with
-  parameters specified by \code{\dots}.
-
-  The presence of ties always generates a warning, since continuous
+  a one-sample (Kolmogorov) test is carried out of the null that the
+  distribution function which generated \code{x} is distribution
+  \code{y} with parameters specified by \code{\dots}.
+  The presence of ties always generates a warning in the one-sample case, as continuous
   distributions do not generate them.  If the ties arose from rounding
   the tests may be approximately valid, but even modest amounts of
   rounding can have a significant effect on the calculated statistic.
@@ -71,11 +75,10 @@ ks.test(x, \dots)
 
   The possible values \code{"two.sided"}, \code{"less"} and
   \code{"greater"} of \code{alternative} specify the null hypothesis
-  that the true distribution function of \code{x} is equal to, not less
-  than or not greater than the hypothesized distribution function
-  (one-sample case) or the distribution function of \code{y} (two-sample
-  case), respectively.  This is a comparison of cumulative distribution
-  functions, and the test statistic is the maximum difference in value,
+  that the true cumulative distribution function (CDF) of \code{x} is equal
+  to, not less than or not greater than the hypothesized CDF (one-sample
+  case) or the CDF of \code{y} (two-sample case), respectively.  The test
+  compares the CDFs taking their maximal difference as test statistic,
   with the statistic in the \code{"greater"} alternative being
   \eqn{D^+ = \max_u [ F_x(u) - F_y(u) ]}{D^+ = max[F_x(u) - F_y(u)]}.
   Thus in the two-sample case \code{alternative = "greater"} includes
@@ -84,26 +87,31 @@ ks.test(x, \dots)
   for \code{y}), in contrast to \code{\link{t.test}} or
   \code{\link{wilcox.test}}.
 
-  Exact p-values are not available for the two-sample case if one-sided
-  or in the presence of ties.  If \code{exact = NULL} (the default), an
+  Exact p-values are not available for the one-sample case in the
+  presence of ties.
+  If \code{exact = NULL} (the default), an
   exact p-value is computed if the sample size is less than 100 in the
   one-sample case \emph{and there are no ties}, and if the product of
-  the sample sizes is less than 10000 in the two-sample case.
-  Otherwise, asymptotic distributions are used whose approximations may
+  the sample sizes is less than 10000 in the two-sample case, with or
+  without ties (using the algorithm described in Schröer and Trenkler, 1995).
+  Otherwise, the p-value is computed via Monte Carlo simulation in the
+  two-sample case if \code{simulate.p.value} is \code{TRUE}, or else
+  asymptotic distributions are used whose approximations may
   be inaccurate in small samples.  In the one-sample two-sided case,
   exact p-values are obtained as described in Marsaglia, Tsang & Wang
   (2003) (but not using the optional approximation in the right tail, so
   this can be slow for small p-values).  The formula of Birnbaum &
   Tingey (1951) is used for the one-sample one-sided case.
 
-  If a single-sample test is used, the parameters specified in
+  If a one-sample test is used, the parameters specified in
   \code{\dots} must be pre-specified and not estimated from the data.
   There is some more refined distribution theory for the KS test with
   estimated parameters (see Durbin, 1973), but that is not implemented
   in \code{ks.test}.
 }
 \value{
-  A list with class \code{"htest"} containing the following components:
+  A list inheriting from classes \code{"ks.test"} and \code{"htest"}
+  containing the following components:
   \item{statistic}{the value of the test statistic.}
   \item{p.value}{the p-value of the test.}
   \item{alternative}{a character string describing the alternative
@@ -115,6 +123,10 @@ ks.test(x, \dots)
 \source{
   The two-sided one-sample distribution comes \emph{via}
   Marsaglia, Tsang and Wang (2003).
+
+  Exact distributions for the two-sample (Smirnov) test are computed
+  by the algorithm proposed by Schröer (1991) and Schröer & Trenkler (1995)
+  using numerical improvements along the lines of Viehmann (2021).
 }
 \references{
   Z. W. Birnbaum and Fred H. Tingey (1951).
@@ -133,12 +145,36 @@ ks.test(x, \dots)
     function}.
   SIAM.
 
+  W. Feller (1948).
+  On the Kolmogorov-Smirnov limit theorems for empirical distributions.
+  \emph{The Annals of Mathematical Statistics}, \bold{19}(2), 177--189.
+  \doi{10.1214/aoms/1177730243}.
+
   George Marsaglia, Wai Wan Tsang and Jingbo Wang (2003).
   Evaluating Kolmogorov's distribution.
   \emph{Journal of Statistical Software}, \bold{8}/18.
   \doi{10.18637/jss.v008.i18}.
+
+  Gunar Schröer (1991).
+  Computergestützte statistische Inferenz am Beispiel der
+  Kolmogorov-Smirnov Tests.
+  Diplomarbeit Universität Osnabrück.
+
+  Gunar Schröer and Dietrich Trenkler (1995).
+  Exact and Randomization Distributions of Kolmogorov-Smirnov Tests for
+  Two or Three Samples.
+  \emph{Computational Statistics & Data Analysis}, \bold{20}(2),
+  185--202.
+  \doi{10.1016/0167-9473(94)00040-P}.
+
+  Thomas Viehmann (2021).
+  Numerically more stable computation of the p-values for the two-sample
+  Kolmogorov-Smirnov test.
+  \url{https://arxiv.org/abs/2102.08037}.
 }
 \seealso{
+  \code{\link{psmirnov}}.
+
   \code{\link{shapiro.test}} which performs the Shapiro-Wilk test for
   normality.
 }
@@ -161,6 +197,11 @@ plot(ecdf(x2), add = TRUE, lty = "dashed")
 t.test(x, x2, alternative = "g")
 wilcox.test(x, x2, alternative = "g")
 ks.test(x, x2, alternative = "l")
+
+# with ties, example from Schröer and Trenkler (1995)
+# D = 3/7, p = 8/33 = 0.242424..
+ks.test(c(1, 2, 2, 3, 3),
+        c(1, 2, 3, 3, 4, 5, 6))# -> exact
 
 # formula interface, see ?wilcox.test
 ks.test(Ozone ~ Month, data = airquality,

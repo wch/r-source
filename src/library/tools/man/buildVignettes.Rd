@@ -1,6 +1,6 @@
 % File src/library/tools/man/buildVignettes.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2019 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{buildVignettes}
@@ -14,7 +14,8 @@
 }
 \usage{
 buildVignettes(package, dir, lib.loc = NULL, quiet = TRUE,
-               clean = TRUE, tangle = FALSE, ser_elibs = NULL)
+               clean = TRUE, tangle = FALSE, skip = NULL,
+               ser_elibs = NULL)
 
 pkgVignettes(package, dir, subdirs = NULL, lib.loc = NULL,
 	     output = FALSE, source = FALSE, check = FALSE)
@@ -37,6 +38,11 @@ pkgVignettes(package, dir, subdirs = NULL, lib.loc = NULL,
     were copies there before.}
   \item{tangle}{logical.
     Do tangling as well as weaving.}
+  \item{skip}{a character vector of names of vignettes (without file
+    extension, matching the \code{names} returned from
+    \code{pkgVignettes}) which should be skipped, or \code{TRUE}
+    to skip those with unavailable \samp{\VignetteDepends}
+    (from \code{\link{vignetteInfo}}).}
   \item{ser_elibs}{For use from \command{R CMD check}.}
   \item{subdirs}{a character vector of subdirectories of \code{dir} in
     which to look for vignettes.  The first which exists is used.

@@ -1,6 +1,6 @@
 % File src/library/base/man/matrix.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2020 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{matrix}
@@ -34,7 +34,7 @@ is.matrix(x)
   \item{ncol}{the desired number of columns.}
   \item{byrow}{logical. If \code{FALSE} (the default) the matrix is
     filled by columns, otherwise the matrix is filled by rows.}
-  \item{dimnames}{A \code{\link{dimnames}} attribute for the matrix:
+  \item{dimnames}{a \code{\link{dimnames}} attribute for the matrix:
     \code{NULL} or a \code{list} of length 2 giving the row and column
     names respectively.  An empty list is treated as \code{NULL}, and a
     list of length one as row names.  The list can be named, and the
@@ -104,8 +104,7 @@ is.matrix(x)
   matrix.
 
   A matrix is the special case of a two-dimensional \code{\link{array}}.
-  Since \R 4.0.0, \code{\link{inherits}(m, "array")} is true for a
-  \code{matrix} \code{m}.
+  \code{\link{inherits}(m, "array")} is true for a \code{matrix} \code{m}.
 }
 \examples{
 is.matrix(as.matrix(1:10))

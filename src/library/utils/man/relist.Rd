@@ -1,6 +1,6 @@
 % File src/library/utils/man/relist.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2008 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{relist}
@@ -86,7 +86,7 @@ is.relistable(x)
   does not apply to the example here, as \code{\link{optim}} is creating
   a new vector to pass to \code{ll} and not its \code{par} argument.)
 
-  As long as \code{skeleton} has the right shape, it should be a precise inverse
+  As long as \code{skeleton} has the right shape, it should be an inverse
   of \code{\link{unlist}}.  These equalities hold:
 \preformatted{   relist(unlist(x), x) == x
    unlist(relist(y, skeleton)) == y
@@ -94,6 +94,11 @@ is.relistable(x)
    x <- as.relistable(x)
    relist(unlist(x)) == x
 }
+  Note however that the relisted object might not be
+  \emph{\link{identical}} to the skeleton because of implicit coercions
+  performed during the unlisting step.  All elements of the relisted
+  objects have the same type as the unlisted object.  \code{NULL} values
+  are coerced to empty vectors of that type.
 }% details
 \value{
   an object of (S3) class \code{"relistable"} (and \code{"\link{list}"}).

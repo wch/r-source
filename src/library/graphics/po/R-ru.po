@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.10.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-02-01 13:58\n"
+"POT-Creation-Date: 2023-07-31 14:59\n"
 "PO-Revision-Date: 2020-08-27 19:05+0900\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -18,8 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=KOI8-R\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-SourceCharset: iso-8859-1\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Poedit 1.8.7.1\n"
 
 msgid "'a' is overridden by 'reg'"
@@ -34,12 +33,8 @@ msgstr "'a' и 'b' отвергнуты в пользу 'coef'"
 msgid "one of 'x1' and 'y1' must be given"
 msgstr "надо указать одно из 'x1' или 'y1'"
 
-msgid ""
-"'length', 'angle', or 'code' greater than length 1; values after the first "
-"are ignored"
-msgstr ""
-"'length', 'angle', или 'code' длиной больше 1; значения после первого будут "
-"проигнорированы"
+msgid "'length', 'angle', or 'code' greater than length 1; values after the first are ignored"
+msgstr "'length', 'angle', или 'code' длиной больше 1; значения после первого будут проигнорированы"
 
 msgid "'x' must be a 2-d contingency table"
 msgstr "'x' должна быть a двумерной таблицей сопряженности"
@@ -75,12 +70,10 @@ msgid "'height' must be a vector or a matrix"
 msgstr "'height' должен быть вектором или матрицей"
 
 msgid "Cannot use shading lines in bars when log scale is used"
-msgstr ""
-"Не могу затенять линии в столбиках, если используется логарифмическая шкала"
+msgstr "Не могу затенять линии в столбиках, если используется логарифмическая шкала"
 
 msgid "log scale error: at least one 'height + offset' value <= 0"
-msgstr ""
-"Ошибка логарифмической шкалы: at least one 'height + offset' значение <= 0"
+msgstr "Ошибка логарифмической шкалы: at least one 'height + offset' значение <= 0"
 
 msgid "log scale error: 'xlim' <= 0"
 msgstr "Ошибка логарифмической шкалы: 'xlim' <= 0"
@@ -98,9 +91,7 @@ msgid "formula must specify 1 or 2 categorical variables"
 msgstr "формула должна включать 1 или 2 качественные переменные"
 
 msgid "duplicated categorical values - try another formula or subset"
-msgstr ""
-"повторяющиеся качественные значения -- попробуйте другую формулу или "
-"подмножество"
+msgstr "повторяющиеся качественные значения -- попробуйте другую формулу или подмножество"
 
 msgid "formula with cbind() must specify 1 categorical variable"
 msgstr "формула с cbind() должна включать 1 качественную переменную"
@@ -115,9 +106,7 @@ msgid "invalid boxplot widths"
 msgstr "неправильные ширины у ящиков-с-усами"
 
 msgid "some notches went outside hinges ('box'): maybe set notch=FALSE"
-msgstr ""
-"некоторые notches ушли за пределы hinges ('box'): наверное, надо сделать "
-"notch=FALSE"
+msgstr "некоторые notches ушли за пределы hinges ('box'): наверное, надо сделать notch=FALSE"
 
 msgid "'formula' should specify exactly two variables"
 msgstr "'formula' должна определять в точности две переменные"
@@ -126,8 +115,7 @@ msgid "dependent variable should be a factor"
 msgstr "зависимая переменная должна быть фактором"
 
 msgid "y axis is on a cumulative probability scale, 'ylim' must be in [0,1]"
-msgstr ""
-"ось y -- в шкале суммарной вероятности, 'ylim' должен быть в пределах [0,1]"
+msgstr "ось y -- в шкале суммарной вероятности, 'ylim' должен быть в пределах [0,1]"
 
 msgid "no 'z' matrix specified"
 msgstr "не указана матрица 'z'"
@@ -139,8 +127,7 @@ msgid "no proper 'z' matrix specified"
 msgstr "не указано подходящей матрицы 'z' "
 
 msgid "'labels' is length zero.  Use 'drawlabels = FALSE' to suppress labels."
-msgstr ""
-"'labels' нулевой длины.  Использую 'drawlabels = FALSE' для удаления меток."
+msgstr "'labels' нулевой длины.  Использую 'drawlabels = FALSE' для удаления меток."
 
 msgid "invalid conditioning formula"
 msgstr "неправильная условная формула"
@@ -248,8 +235,7 @@ msgid "'probability' is an alias for '!freq', however they differ."
 msgstr "'probability' является псевдонимом для '!freq', однако они отличаются."
 
 msgid "some 'x' not counted; maybe 'breaks' do not span range of 'x'"
-msgstr ""
-"некоторые 'x' не подсчитаны; возможно, 'breaks' не занимают всего размаха 'x'"
+msgstr "некоторые 'x' не подсчитаны; возможно, 'breaks' не занимают всего размаха 'x'"
 
 msgid "the AREAS in the plot are wrong -- rather use 'freq = FALSE'"
 msgstr "неправильные AREAS на графике -- лучше используйте 'freq=FALSE'"
@@ -291,9 +277,7 @@ msgid "integer colors must be non-negative"
 msgstr "целочисленные цвета должны быть неотрицательными"
 
 msgid "'respect' must be logical or matrix with same dimension as 'mat'"
-msgstr ""
-"'respect' должен быть логическим или матрицей с той же размерностью, что и "
-"'mat'"
+msgstr "'respect' должен быть логическим или матрицей с той же размерностью, что и 'mat'"
 
 msgid ""
 "layout matrix must contain at least one reference\n"
@@ -311,11 +295,12 @@ msgstr "'legend' нулевой длины"
 msgid "invalid coordinate lengths"
 msgstr "неправильные длины координат"
 
-msgid "'text.width' must be numeric, >= 0"
-msgstr "'text.width' должен быть числовым и >= 0"
-
 msgid "horizontal specification overrides: Number of columns := %d"
 msgstr "горизонтальное указание превышено: Число колонок := %d"
+
+#, fuzzy
+msgid "'text.width' must be numeric, >= 0, or a scalar NA"
+msgstr "'text.width' должен быть числовым и >= 0"
 
 msgid "'merge = TRUE' has no effect when no line segments are drawn"
 msgstr "'merge = TRUE' не дает результата, покуда не нарисованы сегменты линии"
@@ -330,12 +315,10 @@ msgid "'x' and 'y' must have same number of rows"
 msgstr "'x' и 'y' должны иметь одинаковое количество строк"
 
 msgid "'x' and 'y' must have only 1 or the same number of columns"
-msgstr ""
-"'x' и 'y' должны иметь только 1 колонку или одинаковое количество колонок"
+msgstr "'x' и 'y' должны иметь только 1 колонку или одинаковое количество колонок"
 
 msgid "default 'pch' is smaller than number of columns and hence recycled"
-msgstr ""
-"умалчиваемое значение 'pch' меньше количества колонок и поэтому повторяется"
+msgstr "умалчиваемое значение 'pch' меньше количества колонок и поэтому повторяется"
 
 msgid "missing values in contingency table"
 msgstr "пропущенные значения в таблице сопряженности"
@@ -382,16 +365,14 @@ msgstr "не могу взять больше чем одну координату 'x'"
 msgid "must have a response variable"
 msgstr "нужна зависимая переменная"
 
-#, fuzzy
 msgid "invalid plot type"
-msgstr "неправильные ширины у ящиков-с-усами"
+msgstr "неверный тип графика"
 
 msgid "plot type '%s' will be truncated to first character"
 msgstr ""
 
-#, fuzzy
 msgid "invalid plot type '%s'"
-msgstr "неправильные ширины у ящиков-с-усами"
+msgstr "неверный тип графика '%s'"
 
 msgid "'plot.data.frame' applied to non data frame"
 msgstr "'plot.data.frame' применена не к таблице данных"
@@ -444,9 +425,11 @@ msgstr "'nrpoints' должен быть неотрицательным числовым скаляром."
 msgid "a 2-way table has to be specified"
 msgstr "надо указать двумерную таблицу"
 
-msgid "x axis is on a cumulative probability scale, 'xlim' must be in [0,1]"
+msgid "weights are not supported for 2-way table specification"
 msgstr ""
-"ось х -- в шкале суммарной вероятности, 'xlim' должен быть в пределах [0,1]"
+
+msgid "x axis is on a cumulative probability scale, 'xlim' must be in [0,1]"
+msgstr "ось х -- в шкале суммарной вероятности, 'xlim' должен быть в пределах [0,1]"
 
 msgid "'x' must be a matrix or a data frame"
 msgstr "'x' должен быть матрицей или таблицей данных"

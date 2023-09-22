@@ -66,6 +66,6 @@ void attribute_visible R_init_tcltk(DllInfo *dll)
 {
     R_registerRoutines(dll, CEntries, NULL, NULL, ExternEntries);
     R_useDynamicSymbols(dll, FALSE);
-    R_forceSymbols(dll, FALSE);
+    R_forceSymbols(dll, TRUE);
 }
 

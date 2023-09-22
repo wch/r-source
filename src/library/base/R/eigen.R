@@ -45,8 +45,8 @@ eigen <- function(x, symmetric, only.values = FALSE, EISPACK = FALSE)
 {
     x <- unname(as.matrix(x))
     n <- nrow(x)
-    if (!n) stop("0 x 0 matrix")
     if (n != ncol(x)) stop("non-square matrix in 'eigen'")
+    if (!n) stop("0 x 0 matrix")
     n <- as.integer(n)
     if(is.na(n)) stop("invalid nrow(x)")
 

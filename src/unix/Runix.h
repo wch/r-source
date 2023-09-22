@@ -14,7 +14,7 @@ void Rstd_ResetConsole(void);
 void Rstd_FlushConsole(void);
 void Rstd_ClearerrConsole(void);
 void Rstd_Busy(int which);
-void NORET Rstd_CleanUp(SA_TYPE saveact, int status, int runLast);
+NORET void Rstd_CleanUp(SA_TYPE saveact, int status, int runLast);
 int  Rstd_ShowFiles(int nfile, const char **file, const char **headers,
 		    const char *wtitle, Rboolean del, const char *pager);
 int  Rstd_ChooseFile(int _new, char *buf, int len);

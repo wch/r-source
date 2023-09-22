@@ -45,7 +45,7 @@ integrate(f, lower, upper, \dots, subdivisions = 100L,
     0.5e-28)} if \code{abs.tol <= 0}.
 
   Note that the comments in the C source code in
-  \file{<R>/src/appl/integrate.c} give more details, particularly about
+  \file{\var{R}/src/appl/integrate.c} give more details, particularly about
   reasons for failure (internal error code \code{ier >= 1}).
 
   In \R versions \eqn{\le}{<=} 3.2.x, the first entries of

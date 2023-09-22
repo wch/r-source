@@ -67,6 +67,7 @@ p {
     margin-bottom: 1.2ex;
 }
 
-#Top > .header, #Top > h1 {     /* for Texinfo 6.8 */
+/* hide top navigation bar in Texinfo >= 6.8 output */
+#Top > .header, #Top > .nav-panel {
     display: none
 }

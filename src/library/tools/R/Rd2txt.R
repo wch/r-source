@@ -1,7 +1,7 @@
 #  File src/library/tools/R/Rd2txt.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2021 The R Core Team
+#  Copyright (C) 1995-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -354,11 +354,23 @@ Rd2txt <-
     }
 
     ## Use display widths as used by cat not print.
-    frmt <- function(x, justify="left", width = 0L) {
+    ## This may receive length(x) > 1 lines.
+    ## Optionally format only if the input can be collapsed into a single line.
+    frmt <- function(x, justify = "left", width = 0L, collapsed = FALSE) {
         justify <- match.arg(justify, c("left", "right", "centre", "none"))
-        w <- sum(nchar(x, "width")) # copes with 0-length x
-        if(w < width && justify != "none") {
-            excess <- width - w
+        if(justify == "none" || !length(x))
+            return(x)
+        if(collapsed) { # also trims single-line input
+            y <- paste0(trim(x), collapse = " ")
+            w <- nchar(y, "width")
+            if(w < width)
+                x <- y
+            else return(x)
+        } else {
+            w <- nchar(x, "width")
+        }
+        if(any(w < width)) {
+            excess <- pmax(0, width - w)
             left <- right <- 0L
             if(justify == "left") right <- excess
             else if(justify == "right")  left <- excess
@@ -366,7 +378,7 @@ Rd2txt <-
                 left <- excess %/% 2
                 right <- excess-left
             }
-            paste(c(rep_len(" ", left), x, rep_len(" ", right)), collapse = "")
+            paste0(strrep(" ", left), x, strrep(" ", right))
         } else x
     }
 
@@ -457,13 +469,11 @@ Rd2txt <-
          ((li$codepage >= 1250 && li$codepage <= 1258) || li$codepage == 874)) ||
         li[["UTF-8"]]
 
-    if(!isFALSE(getOption("useFancyQuotes")) &&
-       use_fancy_quotes) {
-        ## On Windows, Unicode literals are translated to local code page
-    	LSQM <- intToUtf8("0x2018") # Left single quote
-    	RSQM <- intToUtf8("0x2019") # Right single quote
-    	LDQM <- intToUtf8("0x201c") # Left double quote
-    	RDQM <- intToUtf8("0x201d") # Right double quote
+    if(!isFALSE(getOption("useFancyQuotes")) && use_fancy_quotes) {
+    	LSQM <- "\u2018"                # Left single quote
+    	RSQM <- "\u2019"                # Right single quote
+    	LDQM <- "\u201c"                # Left double quote
+    	RDQM <- "\u201d"                # Right double quote
     } else {
         LSQM <- RSQM <- "'"
         LDQM <- RDQM <- '"'
@@ -599,24 +609,28 @@ Rd2txt <-
                    else writeContent(block,tag)
                },
                "\\email" = {
-                   put("<email: ", lines2str(as.character(block)), ">")
+                   # for legibility, do not URLencode: some use ". at ." etc
+                   put("<mailto:", lines2str(as.character(block)), ">")
                },
                "\\url" = {
-                   put("<URL: ", lines2str(as.character(block)), ">")
+                   put("<", utils::URLencode(lines2str(as.character(block))), ">")
                },
                "\\href" = {
                    opts <- Rd2txt_options()
                    writeContent(block[[2L]], tag)
                    if (opts$showURLs)
-  			put(" (URL: ", lines2str(as.character(block[[1L]])), ")")
+  			put(" <", utils::URLencode(lines2str(as.character(block[[1L]]))), ">")
                },
                "\\Sexpr"= put(as.character.Rd(block, deparse=TRUE)),
                "\\acronym" =,
                "\\cite"=,
                "\\dfn"= ,
-               "\\special" = ,
-               "\\var" = writeContent(block, tag),
-
+               "\\special" = writeContent(block, tag),
+               "\\var" = {
+                   put("<")
+                   writeContent(block, tag)
+                   put(">")
+               },
                "\\bold"=,
                "\\strong"= {
                    put("*")
@@ -636,10 +650,20 @@ Rd2txt <-
                    writeCodeBlock(block, tag)
                    blankLine()
                },
-               "\\verb"= put(block),
+               "\\verb"= {
+                   writeContent(block[1L], tag)
+                   if (length(block) > 1L) {
+                       wrap(FALSE) # flush and keep subsequent linebreaks/formatting
+                       writeContent(block[-1L], tag)
+                   }
+               },
                "\\linkS4class" =,
                "\\link" = writeContent(block, tag),
                "\\cr" = {
+                   if (!length(buffer)) { # \cr\cr
+                       dropBlank <<- FALSE
+                       put("\n")
+                   }
                    ## we want to print out what we have, and if
                    ## followed immediately by \n (as it usually is)
                    ## discard that.  This is not entirely correct,
@@ -672,7 +696,11 @@ Rd2txt <-
                    inEqn <<- TRUE
                    writeContent(block, tag)
                    eqn <- endCapture(save)
-                   eqn <- frmt(eqn, justify="centre", width=WIDTH-indent)
+                   ## try collapsing into a single centred line (as in R < 4.4.0)
+                   ## but only if the source block spans at most 3 lines
+                   if(length(eqn) <= 3L)
+                       eqn <- frmt(eqn, justify = "centre",
+                                   width = WIDTH - indent, collapsed = TRUE)
                    putf(paste(eqn, collapse="\n"))
     		   blankLine()
                },
@@ -682,10 +710,10 @@ Rd2txt <-
                    writeContent(block[[length(block)]], tag)
                    alt <- endCapture(save)
                    if (length(alt)) {
-                   	alt <- frmt(alt, justify = "centre",
-                                    width = WIDTH - indent)
-                   	putf(paste(alt, collapse = "\n"))
-                   	blankLine()
+                       alt <- frmt(alt, justify = "centre",
+                                   width = WIDTH - indent)
+                       putf(paste(alt, collapse = "\n"))
+                       blankLine()
                    }
                },
                "\\tabular" = writeTabular(block),
@@ -724,7 +752,7 @@ Rd2txt <-
             switch(tags[i],
                   "\\tab" = {
                   	newEntry()
-                   	col <- col + 1
+                   	col <- col + 1L
                    	if (col > length(formats))
                    	    stopRd(content[[i]], Rdfile,
                                    sprintf("too many columns for format '%s'",
@@ -749,7 +777,7 @@ Rd2txt <-
                     })
         if(!length(entries)) return()
         rows <- entries[[length(entries)]]$row
-        cols <- max(sapply(entries, function(e) e$col))
+        cols <- max(vapply(entries, function(e) e$col, 1L))
         widths <- rep_len(0L, cols)
         lines <- rep_len(1L, rows)
         for (i in seq_along(entries)) {
@@ -760,6 +788,11 @@ Rd2txt <-
             }
             if (any(nzchar(e$text)))
             	widths[e$col] <- max(widths[e$col], max(nchar(e$text, "w")))
+            ## NOTE: if an entry spanned multiple Rd lines, length(e$text) > 1.
+            ## Whereas Rd lines are collapsed in both HTML (which auto-wraps)
+            ## and PDF output, line breaks are preserved here (even though
+            ## this is unusual for a LaTeX-like context) and the width
+            ## is determined by the longest (trimmed) line of the column.
             lines[e$row] <- max(lines[e$row], length(e$text))
         }
         result <- matrix("", sum(lines), cols)
@@ -843,15 +876,14 @@ Rd2txt <-
                                   save <- startCapture()
                                   dropBlank <<- TRUE
                                   writeContent(block[[1L]], tag)
-                                  DLlab <- endCapture(save)
+                                  DLlab <- trim(endCapture(save))
                                   indent0 <- indent
                                   opts <- Rd2txt_options()
                                   indent <<- max(opts$minIndent,
                                                  indent + opts$extraIndent)
                                   keepFirstIndent <<- TRUE
                                   putw(strrep(" ", indent0),
-                                       frmt(paste0(DLlab),
-                                            justify="left", width=indent),
+                                       DLlab,
                                        " ")
                                   writeContent(block[[2L]], tag)
 			  	  blankLine(0L)
@@ -862,12 +894,13 @@ Rd2txt <-
                                   blankLine()
                                   save <- startCapture()
                                   dropBlank <<- TRUE
-                                  writeContent(block[[1L]], tag)
-                                  DLlab <- endCapture(save)
+                                  writeItemAsCode(tag, block[[1L]])
+                                  DLlab <- trim(endCapture(save))
                                   indent0 <- indent
                                   opts <- Rd2txt_options()
                                   indent <<- max(opts$minIndent, indent + opts$extraIndent)
                                   keepFirstIndent <<- TRUE
+                                  DLlab <- paste0(DLlab[nzchar(DLlab)], collapse = " ")
                                   putw(frmt(paste0(DLlab, ": "),
                                               justify="right", width=indent))
                                   writeContent(block[[2L]], tag)
@@ -897,6 +930,9 @@ Rd2txt <-
                        if (tag == "TEXT") {
                            txt <- psub("^ ", "", as.character(tabExpand(block)))
                            put(txt)
+                           if (!haveBlanks &&
+                               blocktag %in% c("\\describe", "\\value", "\\arguments"))
+                           dropBlank <<- FALSE  # keep blank line for following text
                        } else writeBlock(block, tag, blocktag) # should not happen
                    } else writeBlock(block, tag, blocktag)
                })
@@ -958,6 +994,22 @@ Rd2txt <-
     	out <- summary(con)$description
     }
 
+    writeItemAsCode <- function(blocktag, block) {
+        ## Keep this in rsync with writeItemAsCode() in Rd2HTML.R!
+        
+        ## Argh.  Quite a few packages put the items in their value
+        ## section inside \code.
+        for(i in which(RdTags(block) == "\\code"))
+            attr(block[[i]], "Rd_tag") <- "Rd"
+
+        s <- as.character.Rd(block)
+        s[s %in% c("\\dots", "\\ldots")] <- "..."
+        s <- trimws(strsplit(paste(s, collapse = ""), ",", fixed = TRUE)[[1]])
+        s <- s[nzchar(s)]
+        s <- paste0(s, collapse = ", ")
+        putf(s)
+    }
+        
     Rd <- prepare_Rd(Rd, defines=defines, stages=stages, fragment=fragment, ...)
     Rdfile <- attr(Rd, "Rdfile")
     sections <- RdTags(Rd)

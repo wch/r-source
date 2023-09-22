@@ -24,7 +24,7 @@
 */
 
 /* Copyright (C) 2004, 2009	The R Foundation
-   Copyright (C) 2013		The R Core Team
+   Copyright (C) 2013-2023	The R Core Team
 
    Changes for R, Chris Jackson, 2004
    Handle find-and-replace modeless dialogs
@@ -33,6 +33,10 @@
    Handle mouse wheel scrolling
    Remove assumption that current->dest is non-NULL
    Add waitevent() function
+   Caret handling improvements (see comments in controls.c)
+   Allow to leave a dropfield (combo box) with TAB key
+   Allow navigating to previous controls with Shift+TAB key
+   Path length limitations
  */
 
 #include "internal.h"
@@ -60,6 +64,7 @@ static	long	mouse_msec = 0;
 
 TIMERPROC app_timer_proc;
 WNDPROC   app_control_proc;
+WNDPROC   edit_control_proc;
 
 static object frontwindow = NULL; /* the window receiving events */
 
@@ -330,16 +335,26 @@ static void handle_focus(object obj, int gained_focus)
 {
     if (gained_focus) {
 	obj->state |= GA_Focus;
-	if (obj->caretwidth < 0) {
-	    setcaret(obj, 0,0, -obj->caretwidth, obj->caretheight);
+	if ((!obj->caretexists) && obj->caretwidth == 0 && (obj->flags & SetUpCaret)) {
+	    /* set up a dummy caret to help NVDA initialization, see comment in
+	       console.c, newconsole */
+	    setcaret(obj, 0, 0, 2, 10);
 	    showcaret(obj, 1);
+	}	
+	if (obj->caretwidth < 0) {
+	    /* creates the caret object and restores obj->caretshowing */
+	    setcaret(obj, obj->caretx, obj->carety, -obj->caretwidth, obj->caretheight);
+	    if (obj->caretshowing)
+		/* redraw the caret in case it has been destroyed by a recursive redraw
+		   of the screen, e.g. via disable() when using the menu; such a redraw
+		   can happen while waiting for keyboard input */
+	        ShowCaret(obj->handle);
 	}
     } else {
 	obj->state &= ~GA_Focus;
-	if (obj->caretwidth > 0) {
-	    setcaret(obj, 0,0, -obj->caretwidth, obj->caretheight);
-	    showcaret(obj, 0);
-	}
+	if (obj->caretwidth > 0)
+	    /* destroys the caret object and preserves obj->caretshowing */	
+	    setcaret(obj, obj->caretx, obj->carety, -obj->caretwidth, obj->caretheight);
     }
     if ((! USE_NATIVE_BUTTONS) && (obj->kind == ButtonObject))
 	InvalidateRect(obj->handle, NULL, 0);
@@ -444,18 +459,19 @@ static void handle_colour(HDC dc, object obj)
    #endif
 #endif
 
-static char dfilename[MAX_PATH + 1];
 static void handle_drop(object obj, HANDLE dropstruct)
 {
     if (obj->call && obj->call->drop) {
 	int len = DragQueryFile(dropstruct, 0, NULL, 0);
-	if (len > MAX_PATH) {
+	char *dfilename = (char*)malloc(len + 1);
+	if (!dfilename) {
 	    DragFinish(dropstruct);
 	    return;
 	}
-	DragQueryFile(dropstruct, 0, dfilename, MAX_PATH);
+	DragQueryFile(dropstruct, 0, dfilename, len + 1);
 	DragFinish(dropstruct);
 	obj->call->drop(obj, dfilename);
+	free(dfilename);
     }
 }
 
@@ -530,46 +546,116 @@ static long handle_message(HWND hwnd, UINT message,
 	handle_keydown(LOWORD(wParam));
 	handle_virtual_keydown(obj, LOWORD(wParam));
 
-	if(obj->flags & UseUnicode) {
+	if((obj->flags & UseUnicode) && LOWORD(wParam) == VK_PACKET) {
+	    /* This handling of VK_PACKET is inspired by gdkevents-win32.c.
+	       Handling the WM_CHAR messages, instead, would be more reliable,
+	       but Unicode windows were designed to not handle those, so it
+	       would require bigger changes. VK_PACKET messages are used
+	       e.g. by Dasher via SendInput/KEYEVENTF_UNICODE. */
+	    int result;
+	    BYTE sta[256];
+	    wchar_t wcs[3];
+	    static wchar_t high = L'\0';
+
+	    GetKeyboardState(sta);
+	    result = ToUnicodeEx(VK_PACKET, HIWORD(lParam), sta,
+			         wcs, /* 3 */ sizeof(wcs)/sizeof(wchar_t),
+			         1, 0);
+	    if (result == 1) {
+		if (IsSurrogatePairsHi(wcs[0]))
+		    high = wcs[0];
+		else if (IsSurrogatePairsLo(wcs[0]) && high != L'\0') {
+		    /* Surrogate pairs block */
+		    handle_char(obj, L'?');
+		    handle_char(obj, L'?');
+		    high = L'\0';
+		} else {
+		    handle_char(obj, wcs[0]);
+		    high = L'\0';
+		}
+	    }
+	} else if(obj->flags & UseUnicode) {
 	    BYTE           sta[256];
 	    wchar_t        wcs[3];
 	    HKL            dwhkl;
 	    static wchar_t deadkey = L'\0';
+	    int result;
 
 	    dwhkl = GetKeyboardLayout((DWORD) 0);
 	    GetKeyboardState(sta);
-	    if(ToUnicodeEx(wParam, lParam, sta,
-			   wcs, /* 3 */ sizeof(wcs)/sizeof(wchar_t),
-			   0, dwhkl) == 1) {
+	    result = ToUnicodeEx(wParam, lParam, sta,
+			         wcs, /* 3 */ sizeof(wcs)/sizeof(wchar_t),
+			         0, dwhkl);
+	    if(result == 1) {
 		if(deadkey != L'\0') {
 		    wchar_t wcs_in[3];
 		    wchar_t wcs_out[3];
 		    wcs_in[0] = wcs[0];
-		    wcs_in[1] = deadkey;
+		    /* convert an accent to a combining version */
+		    switch(deadkey) {
+		    case 0x5e:          /* circumflex */
+			wcs_in[1] = 0x302;  break;
+		    case 0x60:          /* grave accent */
+			wcs_in[1] = 0x300;  break;
+		    case 0xa8:          /* diaeresis */
+		    case 0x22:
+			wcs_in[1] = 0x308;  break;
+		    case 0xb4:          /* acute accent */
+		    case 0x27:
+			wcs_in[1] = 0x301;  break;
+		    case 0xb8:          /* cedilla */
+			wcs_in[1] = 0x327;  break;
+		    case 0x2c7:         /* caron */
+			wcs_in[1] = 0x30c;  break;
+		    case 0xaf:          /* macron */
+			wcs_in[1] = 0x304;  break; 
+		    case 0x2d8:         /* breve */
+			wcs_in[1] = 0x306;  break;
+		    case 0x2dd:         /* double accute */
+			wcs_in[1] = 0x30b;  break;
+		    case 0x2db:         /* ogonek */
+			wcs_in[1] = 0x328;  break;
+		    case 0x7e:          /* tilde */
+			wcs_in[1] = 0x303;  break;
+		    case 0x2d9:         /* dot above */
+			wcs_in[1] = 0x307;  break;
+		    case 0xb0:         /* ring above */
+			wcs_in[1] = 0x30a;  break;
+		    default:
+			wcs_in[1] = deadkey;
+			break;
+		    }
 		    wcs_in[2] = L'\0';
 		    /* from accent char to unicode */
-		    if (FoldStringW(MAP_PRECOMPOSED, wcs_in, 3, wcs_out, 3))
+		    int nchars = FoldStringW(MAP_PRECOMPOSED, wcs_in, 3,
+		                             wcs_out, 3);
+		    if (nchars == 2)
 			handle_char(obj, wcs_out[0]);
+		    else if (nchars == 3 && wcs_in[0] == L' ' &&
+			     wcs_out[0] == wcs_in[0] &&
+			     wcs_out[1] == wcs_in[1])
+			/* accent followed by space prints the accent */
+			handle_char(obj, deadkey);
+		    else if (nchars > 2) {
+			/* accent followed by non-composable character, 
+			   matches R 4.1 behavior with non-Unicode Window */
+			handle_char(obj, deadkey);
+			handle_char(obj, wcs_out[0]);
+		    }
 		    /* deadchar convert failure to skip. */
 		} else
 		    handle_char(obj, wcs[0]);
 		deadkey = L'\0';
-	    } else {
-		switch(wcs[0]) {
-		case 0x5e:          /* circumflex */
-		    deadkey = 0x302;  break;
-		case 0x60:          /* grave accent */
-		    deadkey = 0x300;  break;
-		case 0xa8:          /* diaeresis */
-		    deadkey = 0x308;  break;
-		case 0xb4:          /* acute accent */
-		    deadkey = 0x301;  break;
-		case 0xb8:          /* cedilla */
-		    deadkey = 0x327;  break;
-		default:
+	    } else if (result != 0) {
+		if (deadkey == L'\0')
 		    deadkey = wcs[0];
-		    break;
-		}
+		else {
+		    /* cancel the effect of previous dead key and print
+		       non-combining versions of both */
+		    handle_char(obj, deadkey);
+		    handle_char(obj, wcs[0]);
+		    deadkey = L'\0';
+		} 
 	    }
 	}
 	break;
@@ -841,7 +927,7 @@ app_control_procedure (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
     int prevent_activation = 0;
     int key;
     long result;
-    object obj, next;
+    object obj, next, prev;
 
     /* Find the library object associated with the hwnd. */
     obj = find_by_handle(hwnd);
@@ -852,7 +938,8 @@ app_control_procedure (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
     if (! obj->winproc)
 	return 0; /* Nowhere to send events! */
 
-    next = find_valid_sibling(obj->next);
+    next = find_next_valid_sibling(obj->next);
+    prev = find_prev_valid_sibling(obj->prev);
 
     if (message == WM_KEYDOWN)
 	handle_keydown(key);
@@ -864,14 +951,22 @@ app_control_procedure (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
     case WM_KEYDOWN:
 	if (obj->kind == TextboxObject) {
 	    handle_virtual_keydown(obj, key); /* call user's virtual key handler */
-	    if ((key == VK_TAB) && (keystate & CtrlKey)) {
-		SetFocus(next->handle);
-		return 0;
+	    if (key == VK_TAB) {
+		if (keystate & ShiftKey) {
+		    SetFocus(prev->handle);
+		    return 0;
+		} else if (keystate & CtrlKey) {
+		    SetFocus(next->handle);
+		    return 0;
+		}
 	    }
 	    break;
 	}
 	if (key == VK_TAB) {
-	    SetFocus(next->handle);
+	    if (keystate & ShiftKey)
+		SetFocus(prev->handle);
+	    else
+		SetFocus(next->handle);
 	    return 0;
 	}
 	else if ((key == VK_RETURN) || (key == VK_ESCAPE)) {
@@ -942,6 +1037,56 @@ app_control_procedure (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
     if (prevent_activation)
 	obj->state |= GA_Enabled;
     return result;
+}
+
+long WINAPI
+edit_control_procedure (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
+{
+    int key;
+    object obj, next, prev;
+    HANDLE hwndCombo;
+
+    /* Find the library (dropfield/combo box) object associated
+       with the hwnd. */
+    hwndCombo = GetParent(hwnd);
+    if (! hwndCombo)
+	return 0;
+    obj = find_by_handle(hwndCombo);
+    key = LOWORD(wParam);
+
+    if (! obj) /* Not a library object ... */
+	return 0; /* ... so do nothing. */
+    if (! obj->edit_winproc)
+	return 0; /* Nowhere to send events! */
+
+    next = find_next_valid_sibling(obj->next);
+    prev = find_prev_valid_sibling(obj->prev);
+
+    if (message == WM_KEYDOWN)
+	handle_keydown(key);
+    else if (message == WM_KEYUP)
+	handle_keyup(key);
+
+    switch (message)
+    {
+    case WM_KEYDOWN:
+	if (key == VK_TAB) {
+	    if (keystate & ShiftKey)
+		SetFocus(prev->handle);
+	    else
+		SetFocus(next->handle);
+	    return 0;
+	}
+	break;
+
+    case WM_KEYUP:
+    case WM_CHAR:
+	if (key == VK_TAB) 
+	    return 0;
+	break;
+    }
+
+    return CallWindowProc((obj->edit_winproc), hwnd, message, wParam, lParam);
 }
 
 /*
@@ -1169,6 +1314,8 @@ void init_events(void)
     setmousetimer(100); /* start 1/10 second mouse-down auto-repeat */
 
     app_control_proc = (WNDPROC) MakeProcInstance((FARPROC) app_control_procedure,
+						  this_instance);
+    edit_control_proc = (WNDPROC) MakeProcInstance((FARPROC) edit_control_procedure,
 						  this_instance);
 }
 

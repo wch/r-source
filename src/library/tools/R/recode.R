@@ -32,8 +32,8 @@ encoded_text_to_latex <-
         paste(latin9table[as.integer(xx)], collapse="")}
     do_utf8 <- function(x) {
         xx <- utf8ToInt(x)
-        y <- rep.int("?", length(x))
-        y[xx < 512] <- utf8table[xx]
+        y <- rep.int("?", length(xx))
+        y[xx < 512] <- utf8table[xx[xx < 512]]
         y[xx == 0x02C6] <- "{\\textasciicircum}"
         y[xx == 0x02C7] <- "{\\textasciicaron}"
         y[xx == 0x02CA] <- "{\\textasciitilde}"

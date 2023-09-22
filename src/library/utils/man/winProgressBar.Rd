@@ -57,6 +57,7 @@ setWinProgressBar(pb, value, title = NULL, label = NULL)
   On all platforms,
   \code{\link{txtProgressBar}}, \code{\link{tkProgressBar}}
 }
+#ifdef windows
 \examples{\donttest{% popups are irritating
 pb <- winProgressBar("test progress bar", "Some information in \%",
                      0, 100, 50)
@@ -70,4 +71,5 @@ for(i in u) {
 Sys.sleep(5)
 close(pb)
 }}
+#endif
 \keyword{utilities}

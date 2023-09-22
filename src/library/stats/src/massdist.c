@@ -3,8 +3,7 @@
  *  Copyright (C) 1996-2020	The R Core Team
  *  Copyright (C) 2005		The R Foundation
 
- *  "HACKED" to allow weights by Adrian Baddeley
- *  Changes indicated by 'AB'
+ *  "HACKED" to allow weights by Adrian Baddeley (commit r34130, 2005-04-30)
  * -------
  *  FIXME   Does he want 'COPYRIGHT' ?
  * -------
@@ -34,7 +33,7 @@
 /* NB: this only works on the lower half of y, but pads with zeros. */
 SEXP BinDist(SEXP sx, SEXP sw, SEXP slo, SEXP shi, SEXP sn)
 {
-    PROTECT(sx = coerceVector(sx, REALSXP)); 
+    PROTECT(sx = coerceVector(sx, REALSXP));
     PROTECT(sw = coerceVector(sw, REALSXP));
     int n = asInteger(sn);
     if (n == NA_INTEGER || n <= 0) error("invalid '%s' argument", "n");

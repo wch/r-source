@@ -1,6 +1,6 @@
 % File src/library/graphics/man/image.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2019 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{image}
@@ -68,7 +68,7 @@ image(x, \dots)
 
   \emph{NOTE:} the grid is drawn as a set of rectangles by default;
   see the \code{useRaster} argument to draw the grid as a raster image.
-  
+
   The function \code{\link{hcl.colors}} provides a broad range of sequential
   color palettes that are suitable for displaying ordered data, with
   \code{n} giving the number of colors desired.
@@ -153,9 +153,20 @@ image(z, axes = FALSE, main = "Math can be beautiful ...",
       xlab = expression(cos(r^2) * e^{-r/6}))
 contour(z, add = TRUE, drawlabels = FALSE)
 
-# Volcano data visualized as matrix. Need to transpose and flip
-# matrix horizontally.
-image(t(volcano)[ncol(volcano):1,])
+# Visualize as matrix.  Need to transpose matrix and then flip it horizontally:
+tf <- function(m) t(m)[, nrow(m):1]
+imageM <- function(m, grid = max(dim(m)) <= 25, asp = (nrow(m)-1)/(ncol(m)-1), ...) {
+    image(tf(m), asp=asp, axes = FALSE, ...)
+    mAxis <- function(side, at, ...) # using 'j'
+        axis(side, at=at, labels=as.character(j+1L), col="gray", col.axis=1, ...)
+    n <- ncol(m); n1 <- n-1L; j <- 0L:n1; mAxis(1, at= j/n1)
+    if(grid) abline(v = (0:n - .5)/n1, col="gray77", lty="dotted")
+    n <- nrow(m); n1 <- n-1L; j <- 0L:n1; mAxis(2, at=1-j/n1, las=1)
+    if(grid) abline(h = (0:n - .5)/n1, col="gray77", lty="dotted")
+}
+(m <- outer(1:5, 1:14))
+imageM(m, main = "image(<5 x 14 matrix>)   with rows and columns")
+imageM(volcano)
 
 # A prettier display of the volcano
 x <- 10*(1:nrow(volcano))

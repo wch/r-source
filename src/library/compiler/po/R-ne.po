@@ -1,0 +1,130 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: R 4.2.0\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2021-05-03 09:56\n"
+"PO-Revision-Date: 2023-03-15 03:05+0000\n"
+"Last-Translator: Binod Jung Bogati <m1s1ng@outlook.com>\n"
+"Language-Team: none\n"
+"Language: ne\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.13.1\n"
+
+msgid "namespace found within local environments"
+msgstr "नेम्स्पेस लोक्क्ल इन्वरोन्मेन्ट भित्र फेला परेको छ"
+
+msgid "not a proper evaluation environment"
+msgstr "उचित मूल्याङ्कनको इन्वरोन्मेन्ट छैन"
+
+msgid "non-namespace found within namespace environments"
+msgstr "गैरनेम्स्पेस लोक्क्ल इन्वरोन्मेन्ट भित्र फेला परेको छ"
+
+msgid "namespace found within global environments"
+msgstr "नेमस्पेस ग्लोबल इन्वरोन्मेन्ट भित्र फेला परेको छ"
+
+msgid "bad assignment: %s"
+msgstr "खराब असाइनमेन्ट: %s"
+
+msgid "cannot constant fold literal promises"
+msgstr "लिटेरल प्रोमिसेस निरन्तर फोल्ड गर्न सक्दैन"
+
+msgid "cannot constant fold literal bytecode objects"
+msgstr ""
+
+msgid "no offset recorded for label \"%s\""
+msgstr ""
+
+msgid "cannot compile byte code literals in code"
+msgstr ""
+
+msgid "cannot compile promise literals in code"
+msgstr ""
+
+msgid "possible error in '%s': %s"
+msgstr ""
+
+msgid "bad namespace import frame"
+msgstr ""
+
+msgid "bad assignment 1"
+msgstr ""
+
+msgid "bad assignment 2"
+msgstr ""
+
+msgid "invalid function in complex assignment"
+msgstr ""
+
+msgid "missing arguments are not allowed"
+msgstr ""
+
+msgid "empty alternative in numeric switch"
+msgstr ""
+
+msgid "no visible global function definition for '%s'"
+msgstr ""
+
+msgid "no visible binding for global variable '%s'"
+msgstr ""
+
+msgid "no visible binding for '<<-' assignment to '%s'"
+msgstr ""
+
+msgid "wrong number of arguments to '%s'"
+msgstr ""
+
+msgid "more than one default provided in switch() call"
+msgstr ""
+
+msgid "'switch' with no alternatives"
+msgstr ""
+
+msgid "Error: compilation failed -"
+msgstr ""
+
+msgid "cannot compile a non-function"
+msgstr ""
+
+msgid "compiling '%s'"
+msgstr ""
+
+msgid "saving to file \"%s\" ..."
+msgstr ""
+
+msgid "done"
+msgstr ""
+
+msgid "'env' must be a top level environment"
+msgstr ""
+
+msgid "input and output file names are the same"
+msgstr ""
+
+msgid "empty input file; no output written"
+msgstr ""
+
+msgid "file '%s' does not exist"
+msgstr ""
+
+msgid "'%s' is not a valid compiler option"
+msgstr ""
+
+msgid "invalid environment variable value: %s==%s"
+msgstr ""
+
+msgid "invalid compiler options: optimize(==%d)<2 and jitEnabled(==%d)>2"
+msgstr ""
+
+msgid "function is not compiled"
+msgstr ""
+
+msgid "cannot compile this expression"
+msgstr ""
+
+msgid "local assignment to syntactic function: "
+msgid_plural "local assignments to syntactic functions: "
+msgstr[0] ""
+msgstr[1] ""

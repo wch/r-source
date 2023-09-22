@@ -1,7 +1,7 @@
 #  File src/library/methods/R/Methods.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2020 The R Core Team
+#  Copyright (C) 1995-2022 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -290,8 +290,9 @@ isGeneric <-
 	    TRUE
     }
     else {
-        warning(gettextf("function %s appears to be a generic function, but with generic name %s",
-                         sQuote(f), sQuote(gen)),
+        warning(gettextf(
+	    "fdef appears to be a generic function, but with generic name %s instead of %s",
+			 sQuote(gen), sQuote(f)),
                 domain = NA)
         FALSE
     }
@@ -1630,7 +1631,7 @@ findMethodSignatures <- function(..., target = TRUE, methods = findMethods(...))
         sigs <- lapply(methods, function(x)
                        if(is.primitive(x)) anySig else as.character(x@defined))
     }
-    lens <- unique(vapply(sigs, length, 1, USE.NAMES=FALSE))
+    lens <- unique(lengths(sigs, use.names=FALSE))
     if(length(lens) == 0)
         return(matrix(character(), 0, length(methods@arguments)))
     if(length(lens) > 1L) {

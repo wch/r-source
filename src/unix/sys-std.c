@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2022  The R Core Team
+ *  Copyright (C) 1997--2023  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -67,7 +67,7 @@ extern FILE* ifp; /* from system.c */
  *  1) FATAL MESSAGES AT STARTUP
  */
 
-void attribute_hidden Rstd_Suicide(const char *s)
+attribute_hidden void Rstd_Suicide(const char *s)
 {
     REprintf("Fatal error: %s\n", s);
     /* Might be called before translation is running */
@@ -106,7 +106,7 @@ static void (*oldSigintHandler)(int) = SIG_DFL;
 
 typedef void (*sel_intr_handler_t)(void);
 
-static void NORET handleSelectInterrupt(int dummy)
+NORET static void handleSelectInterrupt(int dummy)
 {
     signal(SIGINT, oldSigintHandler);
     SIGLONGJMP(seljmpbuf, 1);
@@ -138,8 +138,8 @@ int R_SelectEx(int  n,  fd_set  *readfds,  fd_set  *writefds,
 	    myintr();
 
 	    if (timeout != NULL) {
-		/* Ajdust timeout for elapsed complete seconds; ignore
-		   microseconde for now. This modifies the data pointed to
+		/* Adjust timeout for elapsed complete seconds; ignore
+		   microseconds for now. This modifies the data pointed to
 		   by timeval, which is what select() on Linux does as
 		   well. */
 		double new_time = currentTime();
@@ -498,9 +498,13 @@ attribute_hidden
 char *R_ExpandFileName_readline(const char *s, char *buff)
 {
     char *s2 = tilde_expand_word(s);
+    size_t len = strlen(s2);
 
-    strncpy(buff, s2, PATH_MAX);
-    if(strlen(s2) >= PATH_MAX) buff[PATH_MAX-1] = '\0';
+    strncpy(buff, s2, R_PATH_MAX);
+    if(len >= R_PATH_MAX) {
+	buff[R_PATH_MAX-1] = '\0';
+	warning(_("expanded path length %d would be too long for\n%s\n"), len, s);
+    }
     free(s2);
     return buff;
 }
@@ -516,8 +520,8 @@ char *R_ExpandFileName_readline(const char *s, char *buff)
 
 /*
 
-There has been a general problem with asynchonous calls to browser and
-anything that uses the standard console reading facilties asynchronously
+There has been a general problem with asynchronous calls to browser and
+anything that uses the standard console reading facilities asynchronously
 (e.g. scan(), parse(), menu()).  The basic problem is as follows.  We
 are in the usual input loop awaiting characters typed by the user.  Then
 asynchronously, we enter the browser due to a callback that is invoked
@@ -656,6 +660,15 @@ static void readline_handler(char *line)
 {
     R_size_t buflen = rl_top->readline_len;
 
+#if defined(RL_READLINE_VERSION) && RL_READLINE_VERSION >= 0x0802
+    /* In this version of readline, rl_redisplay called from
+       popReadline -> rl_free_line_state (-> rl_clear_message -> rl_redisplay)
+       wipes the prompt and moves the cursor accordingly, causing
+       undesirable indentation here when the input is empty, but the
+       cursor has been moved to the next line.
+       As a work-around, clear the prompt. */
+    if (line && !line[0]) rl_set_prompt("");
+#endif
     popReadline();
 
     if ((rl_top->readline_eof = !line)) /* Yes, I don't mean ==...*/
@@ -762,7 +775,7 @@ static void initialize_rlcompletion(void)
 	    SEXP cmdSexp, cmdexpr;
 	    ParseStatus status;
 	    int i;
-	    char *p = "try(loadNamespace('rcompgen'), silent=TRUE)";
+	    char *p = "try(loadNamespace('utils'), silent=TRUE)";
 
 	    PROTECT(cmdSexp = mkString(p));
 	    cmdexpr = PROTECT(R_ParseVector(cmdSexp, -1, &status, R_NilValue));
@@ -949,7 +962,7 @@ handleInterrupt(void)
 /* Fill a text buffer from stdin or with user typed console input. */
 static void *cd = NULL;
 
-int attribute_hidden
+attribute_hidden int
 Rstd_ReadConsole(const char *prompt, unsigned char *buf, int len,
 		 int addtohistory)
 {
@@ -1098,7 +1111,7 @@ Rstd_ReadConsole(const char *prompt, unsigned char *buf, int len,
 	/* Write a text buffer to the console. */
 	/* All system output is filtered through this routine (unless R_Consolefile is used). */
 
-void attribute_hidden Rstd_WriteConsole(const char *buf, int len)
+attribute_hidden void Rstd_WriteConsole(const char *buf, int len)
 {
     printf("%s", buf);
     fflush(stdout);
@@ -1106,7 +1119,7 @@ void attribute_hidden Rstd_WriteConsole(const char *buf, int len)
 
 /* The extended version allows the distinction of errors and warnings.
    It is not enabled by default unless pretty-printing is desired. */
-void attribute_hidden Rstd_WriteConsoleEx(const char *buf, int len, int otype)
+attribute_hidden void Rstd_WriteConsoleEx(const char *buf, int len, int otype)
 {
     if (otype)
       printf("\033[1m%s\033[0m", buf);
@@ -1118,21 +1131,21 @@ void attribute_hidden Rstd_WriteConsoleEx(const char *buf, int len, int otype)
 
 	/* Indicate that input is coming from the console */
 
-void attribute_hidden Rstd_ResetConsole()
+attribute_hidden void Rstd_ResetConsole(void)
 {
 }
 
 
 	/* Stdio support to ensure the console file buffer is flushed */
 
-void attribute_hidden Rstd_FlushConsole()
+attribute_hidden void Rstd_FlushConsole(void)
 {
     /* fflush(stdin);  really work on Solaris on pipes */
 }
 
 	/* Reset stdin if the user types EOF on the console. */
 
-void attribute_hidden Rstd_ClearerrConsole()
+attribute_hidden void Rstd_ClearerrConsole(void)
 {
     clearerr(stdin);
 }
@@ -1141,7 +1154,7 @@ void attribute_hidden Rstd_ClearerrConsole()
  *  3) ACTIONS DURING (LONG) COMPUTATIONS
  */
 
-void attribute_hidden Rstd_Busy(int which)
+attribute_hidden void Rstd_Busy(int which)
 {
 }
 
@@ -1160,28 +1173,8 @@ void attribute_hidden Rstd_Busy(int which)
    If ask = SA_SUICIDE, no save, no .Last, possibly other things.
  */
 
-/* Note: now there is R_unlink(), but rm -Rf may be optimized for specific
-   file-systems. Some file systems allow to delete directory trees without
-   explicit/synchronous traversal so that deletion appears to be very
-   fast (see e.g. zfs). */
-void R_CleanTempDir(void)
-{
-    char buf[1024];
-
-    if((Sys_TempDir)) {
-// Only __sun is neeed on Solaris >= 10 (2005).
-#if defined(__sun) || defined(sun)
-	/* On Solaris the working directory must be outside this one */
-	chdir(R_HomeDir());
-#endif
-	snprintf(buf, 1024, "rm -Rf %s", Sys_TempDir);
-	buf[1023] = '\0';
-	R_system(buf);
-    }
-}
-
-
-void attribute_hidden NORET Rstd_CleanUp(SA_TYPE saveact, int status, int runLast)
+attribute_hidden NORET
+void Rstd_CleanUp(SA_TYPE saveact, int status, int runLast)
 {
     if(saveact == SA_DEFAULT) /* The normal case apart from R_Suicide */
 	saveact = SaveAction;
@@ -1259,7 +1252,7 @@ void attribute_hidden NORET Rstd_CleanUp(SA_TYPE saveact, int status, int runLas
 
 # include <errno.h>
 
-int attribute_hidden
+attribute_hidden int
 Rstd_ShowFiles(int nfile,		/* number of files */
 	       const char **file,		/* array of filenames */
 	       const char **headers,	/* the `headers' args of file.show.
@@ -1326,8 +1319,9 @@ Rstd_ShowFiles(int nfile,		/* number of files */
     */
 
 
+#include <ctype.h>  /* for isspace */
 
-int attribute_hidden Rstd_ChooseFile(int _new, char *buf, int len)
+attribute_hidden int Rstd_ChooseFile(int _new, char *buf, int len)
 {
     size_t namelen;
     char *bufp;
@@ -1340,13 +1334,13 @@ int attribute_hidden Rstd_ChooseFile(int _new, char *buf, int len)
 }
 
 
-void attribute_hidden Rstd_ShowMessage(const char *s)
+attribute_hidden void Rstd_ShowMessage(const char *s)
 {
     REprintf("%s\n", s);
 }
 
 
-void attribute_hidden Rstd_read_history(const char *s)
+attribute_hidden void Rstd_read_history(const char *s)
 {
 #if defined(HAVE_LIBREADLINE) && defined(HAVE_READLINE_HISTORY_H)
     if(R_Interactive && UsingReadline) {
@@ -1355,17 +1349,17 @@ void attribute_hidden Rstd_read_history(const char *s)
 #endif
 }
 
-void attribute_hidden Rstd_loadhistory(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden void Rstd_loadhistory(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP sfile;
-    char file[PATH_MAX];
+    char file[R_PATH_MAX];
     const char *p;
 
     sfile = CAR(args);
     if (!isString(sfile) || LENGTH(sfile) < 1)
 	errorcall(call, _("invalid '%s' argument"), "file");
     p = R_ExpandFileName(translateCharFP(STRING_ELT(sfile, 0)));
-    if(strlen(p) > PATH_MAX - 1)
+    if(strlen(p) > R_PATH_MAX - 1)
 	errorcall(call, _("'file' argument is too long"));
     strcpy(file, p);
 #if defined(HAVE_LIBREADLINE) && defined(HAVE_READLINE_HISTORY_H)
@@ -1378,17 +1372,17 @@ void attribute_hidden Rstd_loadhistory(SEXP call, SEXP op, SEXP args, SEXP env)
 #endif
 }
 
-void attribute_hidden Rstd_savehistory(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden void Rstd_savehistory(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP sfile;
-    char file[PATH_MAX];
+    char file[R_PATH_MAX];
     const char *p;
 
     sfile = CAR(args);
     if (!isString(sfile) || LENGTH(sfile) < 1)
 	errorcall(call, _("invalid '%s' argument"), "file");
     p = R_ExpandFileName(translateCharFP(STRING_ELT(sfile, 0)));
-    if(strlen(p) > PATH_MAX - 1)
+    if(strlen(p) > R_PATH_MAX - 1)
 	errorcall(call, _("'file' argument is too long"));
     strcpy(file, p);
 #if defined(HAVE_LIBREADLINE) && defined(HAVE_READLINE_HISTORY_H)
@@ -1409,7 +1403,7 @@ void attribute_hidden Rstd_savehistory(SEXP call, SEXP op, SEXP args, SEXP env)
 #endif
 }
 
-void attribute_hidden Rstd_addhistory(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden void Rstd_addhistory(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP stamp;
     int i;

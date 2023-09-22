@@ -41,7 +41,7 @@ shQuote(string, type = c("sh", "csh", "cmd", "cmd2"))
   In Windows, command line interpretation is done by the application as well
   as the shell.  It may depend on the compiler used: Microsoft's rules for
   the C run-time are given at
-  \url{https://docs.microsoft.com/en-us/cpp/c-language/parsing-c-command-line-arguments?view=msvc-160}. 
+  \url{https://learn.microsoft.com/en-us/cpp/c-language/parsing-c-command-line-arguments?view=msvc-160}. 
   It may depend on the whim of the programmer of the application: check its
   documentation.  The \code{type = "cmd"} prepares the string for parsing as
   an argument by the Microsoft's rules and makes \code{shQuote} safe for use

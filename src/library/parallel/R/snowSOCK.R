@@ -1,7 +1,7 @@
 #  File src/library/parallel/R/snowSOCK.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2020 The R Core Team
+#  Copyright (C) 1995-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -109,12 +109,13 @@ newPSOCKnode <- function(machine = "localhost", ...,
             ## necessary.
             ##
             ## (Not clear if that is the current behaviour: works for me)
-            system(cmd, wait = FALSE, input = "")
+            system(cmd, wait = FALSE, input = "",
+                   receive.console.signals = TRUE)
         }
         else {
             ## If workers are running a different R version, avoid a WARNING
             cmd <- paste("R_HOME=", cmd)
-            system(cmd, wait = FALSE)
+            system(cmd, wait = FALSE, receive.console.signals = TRUE)
         }
     }
 
@@ -174,11 +175,12 @@ makePSOCKcluster <- function(names, ...)
         if (.Platform$OS.type == "windows") {
             for(i in seq_along(cl))
                 ## see newPSOCKnode for the input = ""
-                system(cmd, wait = FALSE, input = "")
+                system(cmd, wait = FALSE, input = "",
+                       receive.console.signals = TRUE)
         } else {
             ## Asynchronous lists are defined by POSIX
             cmd <- paste(rep(cmd, length(cl)), collapse = " & ")
-            system(cmd, wait = FALSE)
+            system(cmd, wait = FALSE, receive.console.signals = TRUE)
         }
 
         ## Accept connections and send the first command as initial

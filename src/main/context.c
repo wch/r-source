@@ -88,7 +88,7 @@
  *
  *	void findcontext(int mask, SEXP env, SEXP val)
  *
- *  This causes "val" to be stuffed into a globally accessable place and
+ *  This causes "val" to be stuffed into a globally accessible place and
  *  then a search to take place back through the context list for an
  *  appropriate context.  The kind of context sort is determined by the
  *  value of "mask".  The value of mask should be the logical OR of all
@@ -117,7 +117,7 @@
    determines the argument is responsible for making sure
    CTXT_TOPLEVEL's are not crossed unless appropriate. */
 
-void attribute_hidden R_run_onexits(RCNTXT *cptr)
+attribute_hidden void R_run_onexits(RCNTXT *cptr)
 {
     RCNTXT *c;
 
@@ -211,7 +211,7 @@ static RCNTXT *first_jump_target(RCNTXT *cptr, int mask)
 
 /* R_jumpctxt - jump to the named context */
 
-void attribute_hidden NORET R_jumpctxt(RCNTXT * targetcptr, int mask, SEXP val)
+attribute_hidden void NORET R_jumpctxt(RCNTXT * targetcptr, int mask, SEXP val)
 {
     Rboolean savevis = R_Visible;
     RCNTXT *cptr;
@@ -315,7 +315,7 @@ void endcontext(RCNTXT * cptr)
     }
     if (R_ExitContext == cptr)
 	R_ExitContext = NULL;
-    /* continue jumping if this was reached as an intermetiate jump */
+    /* continue jumping if this was reached as an intermediate jump */
     if (jumptarget)
 	/* cptr->returnValue is undefined */
 	R_jumpctxt(jumptarget, cptr->jumpmask, R_ReturnedValue);
@@ -326,7 +326,7 @@ void endcontext(RCNTXT * cptr)
 
 /* findcontext - find the correct context */
 
-void attribute_hidden NORET findcontext(int mask, SEXP env, SEXP val)
+attribute_hidden void NORET findcontext(int mask, SEXP env, SEXP val)
 {
     RCNTXT *cptr;
     cptr = R_GlobalContext;
@@ -348,7 +348,7 @@ void attribute_hidden NORET findcontext(int mask, SEXP env, SEXP val)
     }
 }
 
-void attribute_hidden NORET R_JumpToContext(RCNTXT *target, int mask, SEXP val)
+attribute_hidden void NORET R_JumpToContext(RCNTXT *target, int mask, SEXP val)
 {
     RCNTXT *cptr;
     for (cptr = R_GlobalContext;
@@ -369,7 +369,7 @@ void attribute_hidden NORET R_JumpToContext(RCNTXT *target, int mask, SEXP val)
 /* negative n counts back from the current frame */
 /* positive n counts up from the globalEnv */
 
-SEXP attribute_hidden R_sysframe(int n, RCNTXT *cptr)
+attribute_hidden SEXP R_sysframe(int n, RCNTXT *cptr)
 {
     if (n == 0)
 	return(R_GlobalEnv);
@@ -471,7 +471,7 @@ static SEXP getCallWithSrcref(RCNTXT *cptr)
     return result;
 }
 
-SEXP attribute_hidden R_syscall(int n, RCNTXT *cptr)
+attribute_hidden SEXP R_syscall(int n, RCNTXT *cptr)
 {
     /* negative n counts back from the current frame */
     /* positive n counts up from the globalEnv */
@@ -496,7 +496,7 @@ SEXP attribute_hidden R_syscall(int n, RCNTXT *cptr)
     return R_NilValue;	/* just for -Wall */
 }
 
-SEXP attribute_hidden R_sysfunction(int n, RCNTXT *cptr)
+attribute_hidden SEXP R_sysfunction(int n, RCNTXT *cptr)
 {
     if (n > 0)
 	n = framedepth(cptr) - n;
@@ -544,7 +544,7 @@ int countContexts(int ctxttype, int browser) {
 /* functions to support looking up information about the browser */
 /* contexts that are in the evaluation stack */
 
-SEXP attribute_hidden do_sysbrowser(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_sysbrowser(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP rval=R_NilValue;
     RCNTXT *cptr;
@@ -620,22 +620,42 @@ SEXP attribute_hidden do_sysbrowser(SEXP call, SEXP op, SEXP args, SEXP rho)
 /* We don't want to count the closure that do_sys is contained in, so the */
 /* indexing is adjusted to handle this. */
 
-SEXP attribute_hidden do_sys(SEXP call, SEXP op, SEXP args, SEXP rho)
+/* Return first `CTXT_FUNCTION` context whose execution
+   env matches `rho` */
+attribute_hidden RCNTXT *getLexicalContext(SEXP rho)
 {
-    int i, n  = -1, nframe;
-    SEXP rval, t;
-    RCNTXT *cptr;
+    RCNTXT *cptr = R_GlobalContext;
 
-    checkArity(op, args);
-    /* first find the context that sys.xxx needs to be evaluated in */
-    cptr = R_GlobalContext;
-    t = cptr->sysparent;
-    while (cptr != R_ToplevelContext) {
-	if (cptr->callflag & CTXT_FUNCTION )
-	    if (cptr->cloenv == t)
-		break;
+    while (cptr && cptr != R_ToplevelContext) {
+	if (cptr->callflag & CTXT_FUNCTION && cptr->cloenv == rho)
+	    break;
 	cptr = cptr->nextcontext;
     }
+
+    return cptr;
+}
+
+/* Return call of the first `CTXT_FUNCTION` context whose
+   execution env matches `rho` */
+attribute_hidden SEXP getLexicalCall(SEXP rho)
+{
+    RCNTXT *cptr = getLexicalContext(rho);
+    if (cptr)
+	return cptr->call;
+    else
+	return R_NilValue;
+}
+
+attribute_hidden SEXP do_sys(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    int i, n  = -1, nframe;
+    SEXP rval;
+
+    checkArity(op, args);
+
+    /* first find the context that sys.xxx needs to be evaluated in */
+    SEXP t = R_GlobalContext->sysparent;
+    RCNTXT *cptr = getLexicalContext(t);
 
     if (length(args) == 1) n = asInteger(CAR(args));
 
@@ -701,7 +721,7 @@ SEXP attribute_hidden do_sys(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
 }
 
-SEXP attribute_hidden do_parentframe(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_parentframe(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);
 
@@ -747,7 +767,7 @@ RCNTXT *R_findParentContext(RCNTXT *cptr, int n)
 }
 
 /* R_ToplevelExec - call fun(data) within a top level context to
-   insure that this functin cannot be left by a LONGJMP.  R errors in
+   insure that this function cannot be left by a LONGJMP.  R errors in
    the call to fun will result in a jump to top level. The return
    value is TRUE if fun returns normally, FALSE if it results in a
    jump to top level. */
@@ -793,7 +813,7 @@ Rboolean R_ToplevelExec(void (*fun)(void *), void *data)
 }
 
 /* Return the current environment. */
-SEXP R_GetCurrentEnv() {
+SEXP R_GetCurrentEnv(void) {
     return R_GlobalContext->sysparent;
 }
 
@@ -897,14 +917,14 @@ typedef struct {
     RCNTXT *jumptarget;
 } unwind_cont_t;
 
-SEXP R_MakeUnwindCont()
+SEXP R_MakeUnwindCont(void)
 {
     return CONS(R_NilValue, allocVector(RAWSXP, sizeof(unwind_cont_t)));
 }
 
 #define RAWDATA(x) ((void *) RAW0(x))
 
-void NORET R_ContinueUnwind(SEXP cont)
+NORET void R_ContinueUnwind(SEXP cont)
 {
     SEXP retval = CAR(cont);
     unwind_cont_t *u = RAWDATA(CDR(cont));
@@ -919,7 +939,7 @@ SEXP R_UnwindProtect(SEXP (*fun)(void *data), void *data,
     SEXP result;
     Rboolean jump;
 
-    /* Allow simple usage with a NULL continuotion token. This _could_
+    /* Allow simple usage with a NULL continuation token. This _could_
        result in a failure in allocation or exceeding the PROTECT
        stack limit before calling fun(), so fun() and cleanfun should
        be written accordingly. */

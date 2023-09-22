@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/quartz.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2018 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{quartz}
@@ -71,7 +71,8 @@ quartz.save(file, type = "png", device = dev.cur(), dpi = 100, ...)
   file is only created when the device is closed (e.g., using
   \code{dev.off()}).  For the bitmap devices, the page number is
   substituted if a C integer format is included in the character string,
-  e.g.\sspace{}\code{Rplot\%03d.png}.  (The result must be less than
+  e.g.\sspace{}\code{Rplot\%03d.png}.  (Depending on the platform,
+  the result should be less than
   \code{PATH_MAX} characters long, and may be truncated if not. See
   \code{\link{postscript}} for further details.)  If a \code{file}
   argument is not supplied, the default is \code{Rplots.pdf} or

@@ -10,14 +10,19 @@ subdir = src/extra/blas
 R_HOME = $(top_builddir)
 
 include $(top_builddir)/Makeconf
+.SUFFIXES:
+.SUFFIXES: .c .f .f90 .d .o
+.f90.o:
+	$(FC) $(ALL_FCFLAGS) -c @FCFLAGS_f90@ $< -o $@
 
 ALL_CFLAGS = $(ALL_CFLAGS_LO)
 ALL_FFLAGS = $(ALL_FFLAGS_LO)
+ALL_FCFLAGS = $(ALL_FFLAGS_LO)
 
-SOURCES = blas00.c blas.f cmplxblas.f
+SOURCES = blas00.c blas.f cmplxblas.f blas2.f90 cmplxblas2.f90\
+lsame.f newAccelerate.c zdotc.f zdotu.f
 
-@BUILD_LTO_CHECK_FALSE@Rblas_la = libRblas$(R_DYLIB_EXT)
-@BUILD_LTO_CHECK_TRUE@Rblas_la = libRblas.a
+Rblas_la = libRblas$(R_DYLIB_EXT)
 ## @RBLAS_LDFLAGS@ is used on macOS
 ## first for internal BLAS
 Rblas_la_LIBADD = @RBLAS_LDFLAGS@ $(FLIBS_IN_SO)
@@ -33,10 +38,26 @@ R:
 	@$(MAKE) $(Rblas_la)
 	@$(MAKE) rhome="$(abs_top_builddir)" Rblas_install
 
-blas_OBJS=blas.o @COMPILE_FORTRAN_DOUBLE_COMPLEX_FALSE@ cmplxblas.o
+blas2.o: blas2.f90
+	$(FC) $(ALL_FCFLAGS) -c @FCFLAGS_f90@ $< -o $@
+cmplxblas2.o: cmplxblas2.f90
+	$(FC) $(ALL_FCFLAGS) -c @FCFLAGS_f90@ $< -o $@
+
+## Section for macOS Accelerate
+lsame.o: lsame.f
+newAccelerate.o: newAccelerate.c
+## FIXME: there are versions of zdot[cu] in Accelerate, but the
+## ABI for double complex return values does not match gfortran.
+## We could use wrappers (as src/modules/lapack does) but the gains
+## are likely to be small and these functions are rarely used.
+zdotc.o: zdotc.f
+zdotu.o: zdotu.f
+@BUILD_NEW_ACCELERATE_TRUE@ blas_OBJS = lsame.o newAccelerate.o zdotc.o zdotu.o
+@BUILD_NEW_ACCELERATE_TRUE@ Rblas_la_LIBADD = @RBLAS_LDFLAGS@ $(FLIBS_IN_SO) -framework Accelerate
+
+@BUILD_NEW_ACCELERATE_FALSE@ blas_OBJS=blas.o blas2.o @COMPILE_FORTRAN_DOUBLE_COMPLEX_FALSE@ cmplxblas.o cmplxblas2.o
 @USE_EXTERNAL_BLAS_FALSE@$(Rblas_la): $(blas_OBJS)
-	@USE_EXTERNAL_BLAS_FALSE@@BUILD_LTO_CHECK_FALSE@$(DYLIB_LINK) -o $(Rblas_la) $(blas_OBJS) $(Rblas_la_LIBADD)
-	@USE_EXTERNAL_BLAS_FALSE@@BUILD_LTO_CHECK_TRUE@$(AR) -cr $(Rblas_la) $(blas_OBJS)
+	@USE_EXTERNAL_BLAS_FALSE@$(DYLIB_LINK) -o $(Rblas_la) $(blas_OBJS) $(Rblas_la_LIBADD)
 
 @USE_EXTERNAL_BLAS_TRUE@$(Rblas_la): blas00.o
 @USE_EXTERNAL_BLAS_TRUE@	$(DYLIB_LINK) -o $(Rblas_la) $^ @BLAS_LIBS0@ $(Rblas_la_LIBADD0)
@@ -66,7 +87,7 @@ install-strip: @BLAS_SHLIB_TRUE@ Rblas_install-strip
 uninstall TAGS info dvi check:
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
-DISTFILES = Makefile.in Makefile.win Rblas.def \
+DISTFILES = Makefile.in Makefile.win README Rblas.def \
   $(SOURCES) $(HEADERS)
 
 distdir: $(DISTFILES)

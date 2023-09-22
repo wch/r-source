@@ -20,7 +20,7 @@ rapply(object, f, classes = "ANY", deflt = NULL,
     passing further arguments via \code{\dots}.}
   \item{classes}{character vector of \code{\link{class}} names, or
     \code{"ANY"} to match any class.}
-  \item{deflt}{The default result (not used if \code{how = "replace"}).}
+  \item{deflt}{the default result (not used if \code{how = "replace"}).}
   \item{how}{character string partially matching the three possibilities given:
     see \sQuote{Details}.}
   \item{\dots}{additional arguments passed to the call to \code{f}.}

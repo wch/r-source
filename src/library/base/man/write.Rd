@@ -1,18 +1,33 @@
 % File src/library/base/man/write.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2018 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{write}
 \title{Write Data to a File}
+\alias{write}
 \usage{
 write(x, file = "data",
       ncolumns = if(is.character(x)) 1 else 5,
       append = FALSE, sep = " ")
 }
-\alias{write}
+\description{
+  Write data \code{x} to a file or other \code{\link{connection}}.
+  \cr
+  As it simply calls \code{\link{cat}()}, less formatting happens than
+  with \code{\link{print}()}ing.
+  If \code{x} is a matrix you need to transpose it (and typically set
+  \code{ncolumns}) to get the columns in \code{file} the same as those in
+  the internal representation.
+
+  Whereas atomic vectors (\code{\link{numeric}}, \code{\link{character}},
+  etc, including matrices) are written plainly, i.e., without any names,
+  less simple vector-like objects such as \code{"\link{factor}"},
+  \code{"\link{Date}"}, or \code{"\link{POSIXt}"} may be
+  \code{\link{format}}ted to character before writing.
+}
 \arguments{
-  \item{x}{the data to be written out, usually an atomic vector.}
+  \item{x}{the data to be written out. }
   \item{file}{a \code{\link{connection}}, or a character string naming
     the file to write to.  If \code{""}, print to the standard output
     connection.
@@ -27,11 +42,6 @@ write(x, file = "data",
   \item{sep}{a string used to separate columns.  Using \code{sep = "\t"}
     gives tab delimited output; default is \code{" "}.}
 }
-\description{
-  The data (usually a matrix) \code{x} are written to file \code{file}.
-  If \code{x} is a two-dimensional matrix you need to transpose it to get the
-  columns in \code{file} the same as those in the internal representation.
-}
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
@@ -41,24 +51,26 @@ write(x, file = "data",
   \code{write} is a wrapper for \code{\link{cat}}, which gives further
   details on the format used.
 
-  \code{\link{save}} for writing any \R objects,
-  \code{\link{write.table}} for data frames,
+  \code{\link{write.table}} for matrix and data frame objects,
+  \code{\link{writeLines}} for lines of text,
   and \code{\link{scan}} for reading data.
+
+  \code{\link{saveRDS}} and \code{\link{save}} are often preferable (for
+  writing any \R objects).
 }
 \examples{
-# create a 2 by 5 matrix
-x <- matrix(1:10, ncol = 5)
+# Demonstrate default ncolumns, writing to the console
+write(month.abb,  "")  # 1 element  per line for "character"
+write(stack.loss, "")  # 5 elements per line for "numeric"
 
+# Build a file with sequential calls
 fil <- tempfile("data")
-# the file data contains x, two rows, five cols
-# 1 3 5 7 9 will form the first row
-write(t(x), fil)
+write("# Model settings", fil)
+write(month.abb, fil, ncolumns = 6, append = TRUE)
+write("\n# Initial parameter values", fil, append = TRUE)
+write(sqrt(stack.loss), fil, append = TRUE)
 if(interactive()) file.show(fil)
 unlink(fil) # tidy up
-
-# Writing to the "console" 'tab-delimited'
-# two rows, five cols but the first row is 1 2 3 4 5
-write(x, "", sep = "\t")
 }
 \keyword{file}
 \keyword{connection}

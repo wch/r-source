@@ -1,6 +1,6 @@
 % File src/library/base/man/files.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2019 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{files}
@@ -56,8 +56,11 @@ Sys.junction(from, to)
 }
 \details{
   The \code{\dots} arguments are concatenated to form one character
-  string: you can specify the files separately or as one vector.
-  All of these functions expand path names: see \code{\link{path.expand}}.
+  string: you can specify the files separately or as one vector.  All of
+  these functions expand path names: see
+  \code{\link{path.expand}}.  (\code{file.exists} silently reports false
+  for paths that would be too long after expansion: the rest will give a
+  warning.)
 
   \code{file.create} creates files with the given names if they do not
   already exist and truncates them if they do.  They are created with

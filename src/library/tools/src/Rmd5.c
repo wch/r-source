@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2003-2019   The R Core Team.
+ *  Copyright (C) 2003-2022   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -67,7 +67,7 @@ SEXP Rmd5(SEXP files)
 		SET_STRING_ELT(ans, i, NA_STRING);
 	    } else {
 		for(j = 0; j < 16; j++)
-		    sprintf (out+2*j, "%02x", resblock[j]);
+		    snprintf (out+2*j, 33-2*j, "%02x", resblock[j]);
 		SET_STRING_ELT(ans, i, mkChar(out));
 	    }
 	    fclose(fp);

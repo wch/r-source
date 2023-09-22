@@ -1,6 +1,6 @@
 % File src/library/stats/man/family.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2018 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{family}
@@ -158,7 +158,10 @@ quasipoisson(link = "log")
     called by the \code{"lm"} method of \code{\link{simulate}}.  It will
     normally return a matrix with \code{nsim} columns and one row for
     each fitted value, but it can also return a list of length
-    \code{nsim}. Clearly this will be missing for \sQuote{quasi-} families.}
+    \code{nsim}. Clearly this will be missing for \sQuote{quasi-}
+    families.}
+  \item{dispersion}{(optional since \R version 4.3.0) numeric: value of the
+    dispersion parameter, if fixed, or \code{NA_real_} if free.}
 }
 \references{
   McCullagh P. and Nelder, J. A. (1989)

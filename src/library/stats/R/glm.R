@@ -431,7 +431,7 @@ anova.glm <- function(object, ..., dispersion = NULL, test = NULL)
 			     dispersion = dispersion, test = test))
 
     ## score tests require a bit of extra computing
-    doscore <- !is.null(test) && test=="Rao"
+    doscore <- !is.null(test) && isTRUE(test=="Rao")
     ## extract variables from model
 
     varlist <- attr(object$terms, "variables")
@@ -532,17 +532,34 @@ anova.glm <- function(object, ..., dispersion = NULL, test = NULL)
 
     ## calculate test statistics if needed
 
-    df.dispersion <- Inf
-    if(is.null(dispersion)) {
-	dispersion <- summary(object, dispersion=dispersion)$dispersion
-	df.dispersion <- if (dispersion == 1) Inf else object$df.residual
+    fam <- object$family
+    if (is.null(test)) {
+        ## Attempt to determine default test statistic
+        test <- if (!is.null(dispersion)) "Chisq"
+                else if (!is.null(fam$dispersion))
+                    if (is.na(fam$dispersion)) "F" else "Chisq"
+                else FALSE
     }
-    if(!is.null(test)) {
-        if(test == "F" && df.dispersion == Inf) {
-            fam <- object$family$family
-            if(fam == "binomial" || fam == "poisson")
+
+    if (!isFALSE(test)) {
+        if (is.null(dispersion)) {
+            dispersion <- summary(object)$dispersion
+        }
+        df.dispersion <- if (is.null(fam$dispersion))
+                             if (isTRUE(dispersion == 1)) Inf else object$df.residual
+                         else if (is.na(fam$dispersion)) object$df.residual
+                         else Inf
+        if (isTRUE(test=="F") && df.dispersion == 0) {
+            test <- FALSE
+        }
+    }
+    
+    if (!isFALSE(test)) {
+        if(isTRUE(test == "F") && df.dispersion == Inf) {
+            fname <- fam$family
+            if(fname == "binomial" || fname == "poisson")
                 warning(gettextf("using F test with a '%s' family is inappropriate",
-                                 fam),
+                                 fname),
                         domain = NA)
             else
                 warning("using F test with a fixed dispersion is inappropriate")
@@ -557,10 +574,10 @@ anova.glm <- function(object, ..., dispersion = NULL, test = NULL)
 anova.glmlist <- function(object, ..., dispersion=NULL, test=NULL)
 {
 
-    doscore <- !is.null(test) && test=="Rao"
+    doscore <- !is.null(test) && isTRUE(test=="Rao")
 
     ## find responses for all models and remove
-    ## any models with a different response
+    ## any models with a different response or a different family
 
     responses <- as.character(lapply(object, function(x) {
 	deparse(formula(x)[[2L]])} ))
@@ -626,11 +643,31 @@ anova.glmlist <- function(object, ..., dispersion=NULL, test=NULL)
 
     ## calculate test statistic if needed
 
-    if(!is.null(test)) {
-	bigmodel <- object[[order(resdf)[1L]]]
-	dispersion <- summary(bigmodel, dispersion=dispersion)$dispersion
-	df.dispersion <- if (dispersion == 1) Inf else min(resdf)
-        if(test == "F" && df.dispersion == Inf) {
+    bigmodel <- object[[order(resdf)[1L]]]
+    bigdispersion <- bigmodel$family$dispersion
+    if (is.null(test)) {
+        ## Try to determine default test statistic
+        test <- if (!is.null(dispersion)) "Chisq"
+                else if (!is.null(bigdispersion))
+                    if (is.na(bigdispersion)) "F" else "Chisq"
+                else FALSE
+    }
+
+    if (!isFALSE(test)) {
+        if (is.null(dispersion)) {
+            dispersion <- summary(bigmodel)$dispersion
+        }
+        df.dispersion <- if (!is.null(bigdispersion))
+                             if (is.na(bigdispersion)) bigmodel$df.residual else Inf
+                         else
+                             if (isTRUE(dispersion==1)) Inf else min(resdf)
+        if (isTRUE(test == "F") && df.dispersion == 0) {
+            test <- FALSE
+        }
+    }
+
+    if (!isFALSE(test)) {
+        if(isTRUE(test == "F") && df.dispersion == Inf) {
             fam <- bigmodel$family$family
             if(fam == "binomial" || fam == "poisson")
                 warning(gettextf("using F test with a '%s' family is inappropriate",
@@ -647,15 +684,16 @@ anova.glmlist <- function(object, ..., dispersion=NULL, test=NULL)
 	      class = c("anova", "data.frame"))
 }
 
-
 summary.glm <- function(object, dispersion = NULL,
 			correlation = FALSE, symbolic.cor = FALSE, ...)
 {
     est.disp <- FALSE
     df.r <- object$df.residual
-    if(is.null(dispersion))	# calculate dispersion if needed
+    if(is.null(dispersion)) {	# calculate dispersion if needed
+        fam <- object$family
 	dispersion <-
-	    if(object$family$family %in% c("poisson", "binomial"))  1
+            if (!is.null(fam$dispersion) && !is.na(fam$dispersion)) fam$dispersion
+            else if(fam$family %in% c("poisson", "binomial"))  1
 	    else if(df.r > 0) {
                 est.disp <- TRUE
 		if(any(object$weights==0))
@@ -665,7 +703,7 @@ summary.glm <- function(object, dispersion = NULL,
                 est.disp <- TRUE
                 NaN
             }
-
+    }
     ## calculate scaled and unscaled covariance matrix
 
     aliased <- is.na(coef(object))  # used in print method
@@ -737,18 +775,20 @@ summary.glm <- function(object, dispersion = NULL,
 print.summary.glm <-
     function (x, digits = max(3L, getOption("digits") - 3L),
 	      symbolic.cor = x$symbolic.cor,
-	      signif.stars = getOption("show.signif.stars"), ...)
+	      signif.stars = getOption("show.signif.stars"),
+              show.residuals = FALSE, ...)
 {
     cat("\nCall:\n",
-	paste(deparse(x$call), sep = "\n", collapse = "\n"), "\n\n", sep = "")
-    cat("Deviance Residuals: \n")
-    if(x$df.residual > 5) {
-	x$deviance.resid <- setNames(quantile(x$deviance.resid, na.rm = TRUE),
-				     c("Min", "1Q", "Median", "3Q", "Max"))
+	paste(deparse(x$call), sep = "\n", collapse = "\n"), "\n", sep = "")
+    if (show.residuals) {
+        cat("\nDeviance Residuals: \n")
+        if(x$df.residual > 5) {
+            x$deviance.resid <- setNames(quantile(x$deviance.resid, na.rm = TRUE),
+                                         c("Min", "1Q", "Median", "3Q", "Max"))
+        }
+        xx <- zapsmall(x$deviance.resid, digits + 1L)
+        print.default(xx, digits = digits, na.print = "", print.gap = 2L)
     }
-    xx <- zapsmall(x$deviance.resid, digits + 1L)
-    print.default(xx, digits = digits, na.print = "", print.gap = 2L)
-
     if(length(x$aliased) == 0L) {
         cat("\nNo Coefficients\n")
     } else {

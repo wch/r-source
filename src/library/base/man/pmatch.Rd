@@ -16,7 +16,7 @@ pmatch(x, table, nomatch = NA_integer_, duplicates.ok = FALSE)
     vector.  \link{Long vectors} are not supported.}
   \item{nomatch}{the value to be returned at non-matching or multiply
     partially matching positions.  Note that it is coerced to \code{integer}.}
-  \item{duplicates.ok}{should elements be in \code{table} be used more
+  \item{duplicates.ok}{should elements in \code{table} be used more
     than once?}
 }
 \description{

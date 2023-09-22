@@ -1,6 +1,6 @@
 % File src/library/base/man/EnvVar.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2007-2021 R Core Team
+% Copyright 2007-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{EnvVar}
@@ -24,10 +24,12 @@
 \alias{R_SHARE_DIR}
 \alias{R_SUPPORT_OLD_TARS}
 \alias{R_TEXI2DVICMD}
+\alias{R_TIDYCMD}
 \alias{R_UNZIPCMD}
 \alias{R_ZIPCMD}
 \alias{TMPDIR}
 
+% R_REPOSITORIES is in ?setRepositories
 % R_PROFILE, R_ENVIRON are in ?Startup
 % R_LIBS* are in ?.libPaths
 % TZ, TZDIR are in ?Sys.timezone
@@ -117,7 +119,7 @@
     \item{\env{R_PDFVIEWER}:}{The path to the default PDF viewer.  Used
       by \command{R CMD Rd2pdf}.}
     \item{\env{R_PLATFORM}:}{The platform -- a string of the form
-      \code{\var{cpu}-\var{vendor}-\var{os}}, see \code{\link{R.Version}}.}
+      \code{"\var{cpu}-\var{vendor}-\var{os}"}, see \code{\link{R.Version}}.}
     \item{\env{R_PROFILE}:}{Optional.  The path to the site profile
       file: see \link{Startup}.  Consulted at startup.}
     \item{\env{R_RD4PDF}:}{Options for \command{pdflatex} processing of
@@ -133,6 +135,9 @@
       \code{\link{options}("texi2dvi")}, used by
       \code{\link{texi2dvi}} and \code{\link{texi2pdf}} in package \pkg{tools}.
     }
+    \item{\env{R_TIDYCMD}:}{The path to HTML \command{tidy}. Used by
+      \command{R CMD check} if \env{_R_CHECK_RD_VALIDATE_RD2HTML_} is
+      set to a true value (as it is by \option{--as-cran}.}
     \item{\env{R_UNZIPCMD}:}{The path to \command{unzip}.  Sets the
       initial value for \code{\link{options}("unzip")} on a Unix-alike
       when namespace \pkg{utils} is loaded.}
@@ -141,7 +146,7 @@
     \item{\env{TMPDIR}, \env{TMP}, \env{TEMP}:}{Consulted (in that
       order) when setting the temporary directory for the session: see
       \code{\link{tempdir}}.  \env{TMPDIR} is also used by some of the
-      utilities see the help for \code{\link{build}}.}
+      utilities: see the help for \code{\link{build}}.}
     \item{\env{TZ}:}{Optional.  The current time zone.  See
       \code{\link{Sys.timezone}} for the system-specific
       formats.  Consulted as needed.}

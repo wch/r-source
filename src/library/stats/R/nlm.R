@@ -1,7 +1,7 @@
 #  File src/library/stats/R/nlm.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -135,22 +135,24 @@ uniroot <- function(f, interval, ...,
 	if(trace && trace < 2)
             cat(sprintf("extended to [%g, %g] in %d steps\n", lower, upper, it))
     }
-    ## this might have names
-    if(!isTRUE(as.vector(sign(f.lower) * sign(f.upper) <= 0)))
+    if(!isTRUE(sign(f.lower) * sign(f.upper) <= 0))
 	stop(if(doX)
 	"did not succeed extending the interval endpoints for f(lower) * f(upper) <= 0"
 	     else "f() values at end points not of opposite sign")
-
+    if(doX && it) { # need update (at least one)
+        f.low. <- truncate(f.lower)
+        f.upp. <- truncate(f.upper)
+    }
     if(check.conv) {
 	val <- tryCatch(.External2(C_zeroin2, function(arg) f(arg, ...),
-				   lower, upper, f.lower, f.upper,
+				   lower, upper, f.low., f.upp.,
 				   tol, as.integer(maxiter)),
 			warning = function(w)w)
 	if(inherits(val, "warning"))
 	    stop("convergence problem in zero finding: ", conditionMessage(val))
     } else {
 	val <- .External2(C_zeroin2, function(arg) f(arg, ...),
-			  lower, upper, f.lower, f.upper,
+			  lower, upper, f.low., f.upp.,
 			  tol, as.integer(maxiter))
     }
     iter <- as.integer(val[2L])

@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2022-01-01 r81419) -- "Unsuffered Consequences"
-Copyright (C) 2022 The R Foundation for Statistical Computing
-Platform: aarch64-apple-darwin21.2.0 (64-bit)
+R Under development (unstable) (2023-08-17 r84982) -- "Unsuffered Consequences"
+Copyright (C) 2023 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -218,7 +218,8 @@ Levels: a b <NA>
 > id_epd <- function(expr, control = "all", ...) eval(pd0(expr, 
 +     control = control, ...))
 
-> dPut <- function(x, control = "all") dput(x, control = control)
+> dPut <- function(x, control = c("quoteExpression", 
++     "showAttributes", "niceNames", "keepInteger")) dput(x, control = control)
 
 > hasReal <- function(x) {
 +     if (is.double(x) || is.complex(x)) 
@@ -279,37 +280,10 @@ Warning message:
 In deparse(lf, control = "all") : deparse may be incomplete
 > abc <- setNames(letters[1:4], c("one", "recursive", "use.names", "four"))
 > r13 <- i13 <- setNames(1:3, names(abc)[3:1]); mode(r13) <- "double"
-> if(getRversion() >= "3.5.0") {
-+     ## Creating a collection of S4 objects, ensuring deparse <-> parse are inverses
-+ library(methods)
-+ example(new) # creating t1 & t2 at least
-+ ## an S4 object of type "list" of "mp1" objects [see pkg 'Rmpfr']:
-+ setClass("mp1", slots = c(prec = "integer", d = "integer"))
-+ setClass("mp", contains = "list", ## of "mp" entries:
-+          validity = function(object) {
-+ 	     if(all(vapply(object@.Data, class, "") == "mp1"))
-+ 		 return(TRUE)
-+ 	     ## else
-+ 		 "Not all components are of class 'mp'"
-+ 	 })
-+ validObject(m0 <- new("mp"))
-+ validObject(m1 <- new("mp", list(new("mp1"), new("mp1", prec=1L, d = 3:5))))
-+ typeof(m1)# "list", not "S4"
-+ dput(m1) # now *is* correct -- will be check_EPD()ed below
-+ ##
-+ mList <- setClass("mList", contains = "list")
-+ mForm <- setClass("mForm", contains = "formula")
-+ mExpr <- setClass("mExpr", contains = "expression")
-+ ## more to come
-+ attrS4 <- function(x)
-+     c(S4 = isS4(x), obj= is.object(x), type.S4 = typeof(x) == "S4")
-+ attrS4(ml <- mList(list(1, letters[1:3])))# use *unnamed* list
-+ attrS4(mf <- mForm( ~ f(x)))
-+ attrS4(E2 <- mExpr(expression(x^2)))
-+ ## Now works, but fails for  deparse(*, control="all"):  __FIXME__
-+ stopifnot(identical(mf, eval(parse(text=deparse(mf)))))
-+ ##
-+ }# S4 deparse()ing only since R 3.5.0
+> 
+> ## Creating a collection of S4 objects, ensuring deparse <-> parse are inverses
+> library(methods)
+> example(new) # creating t1 & t2 at least
 
 new> ## using the definition of class "track" from setClass
 new> 
@@ -363,8 +337,45 @@ new> ## End(Don't show)
 new> 
 new> 
 new> 
+> ## an S4 object of type "list" of "mp1" objects [see pkg 'Rmpfr']:
+> setClass("mp1", slots = c(prec = "integer", d = "integer"))
+> setClass("mp", contains = "list", ## of "mp1" entries:
++          validity = function(object) {
++ 	     if(all(vapply(object@.Data, class, "") == "mp1"))
++ 		 return(TRUE)
++ 	     ## else
++ 		 "Not all components are of class 'mp1'"
++ 	 })
+> validObject(m0 <- new("mp"))
+[1] TRUE
+> validObject(m1 <- new("mp", list(new("mp1"), new("mp1", prec=1L, d = 3:5))))
+[1] TRUE
+> typeof(m1)# "list", not "S4"
+[1] "list"
+> dput(m1) # now *is* correct -- will be check_EPD()ed below
 new("mp", .Data = list(new("mp1", prec = integer(0), d = integer(0)), 
     new("mp1", prec = 1L, d = 3:5)))
+> ##
+> mList <- setClass("mList", contains = "list")
+> mForm <- setClass("mForm", contains = "formula")
+> mExpr <- setClass("mExpr", contains = "expression")
+> ## more to come
+> attrS4 <- function(x)
++     c(S4 = isS4(x), obj= is.object(x), type.S4 = typeof(x) == "S4")
+> attrS4(ml <- mList(list(1, letters[1:3])))# use *unnamed* list
+     S4     obj type.S4 
+   TRUE    TRUE   FALSE 
+> attrS4(mf <- mForm( ~ f(x)))
+     S4     obj type.S4 
+   TRUE    TRUE   FALSE 
+> attrS4(E2 <- mExpr(expression(x^2)))
+     S4     obj type.S4 
+   TRUE    TRUE   FALSE 
+> stopifnot(identical(mf, eval(parse(text=deparse(mf)))))
+> stopifnot(identical(mf, eval(parse(text=deparse(mf, control="all"))))) # w/ a warning
+Warning message:
+In deparse(mf, control = "all") : deparse may be incomplete
+> 
 > 
 > ## Action!  Check deparse <--> parse  consistency for *all* objects:
 > runEPD_checks()
@@ -586,21 +597,22 @@ as.pairlist(alist(obj = , show = quote(!hasReal(obj)), oNam = quote(deparse(subs
     "t2", "ydata")), eq.tol = quote(if (noLdbl) 2 * .Machine$double.eps else 0)))
 __ not parse()able __: hasMissObj(.) is true 
 --=--=--=--=--
-dPut: function (x, control = "all") 
+dPut: function (x, control = c("quoteExpression", "showAttributes", 
+    "niceNames", "keepInteger")) 
 dput(x, control = control)
  --> checking list(*): Ok
 checking body(.):
 quote(dput(x, control = control))
  --> checking list(*): Ok
 checking formals(.):
-as.pairlist(alist(x = , control = "all"))
+as.pairlist(alist(x = , control = quote(c("quoteExpression", 
+    "showAttributes", "niceNames", "keepInteger"))))
 __ not parse()able __: hasMissObj(.) is true 
 --=--=--=--=--
 e: <environment>
 __ not parse()able __: environment 
 --=--=--=--=--
-e1: quote(c(F = (f <- 0.29999999999999999), `Tail area` = 2 * if (f < 
-    1) 30 else 90))
+e1: quote(c(F = (f <- 0.3), `Tail area` = 2 * if (f < 1) 30 else 90))
  --> checking list(*): Ok
 --=--=--=--=--
 e2: quote(c(`a b c` = 1, b = 2))
@@ -867,7 +879,7 @@ r1: list(value = quote({
         exprs <- substitute(exprs)
         if (is.call(exprs)) {
             if (exprs[[1]] == quote(`{`)) 
-                exprs <- as.list(exprs[-1])
+                exprs <- as.list(exprs)[-1]
         }
     }
     source(exprs = exprs, local = local, print.eval = print., 
@@ -886,7 +898,7 @@ r2: list(value = quote({
         exprs <- substitute(exprs)
         if (is.call(exprs)) {
             if (exprs[[1]] == quote(`{`)) 
-                exprs <- as.list(exprs[-1])
+                exprs <- as.list(exprs)[-1]
         }
     }
     source(exprs = exprs, local = local, print.eval = print., 
@@ -979,26 +991,21 @@ ysmooth: 1:10
  --> checking list(*): Ok
 --=--=--=--=--
 Warning messages:
-1: In dput(x, control = control) : deparse may be incomplete
-2: In dput(x, control = control) : deparse may be incomplete
+1: In deparse(expr, backtick = backtick, ...) : deparse may be incomplete
+2: In deparse(expr, backtick = backtick, ...) : deparse may be incomplete
 3: In deparse(expr, backtick = backtick, ...) : deparse may be incomplete
 4: In deparse(expr, backtick = backtick, ...) : deparse may be incomplete
-5: In dput(x, control = control) : deparse may be incomplete
+5: In deparse(expr, backtick = backtick, ...) : deparse may be incomplete
 6: In deparse(expr, backtick = backtick, ...) : deparse may be incomplete
-7: In deparse(expr, backtick = backtick, ...) : deparse may be incomplete
-8: In dput(x, control = control) : deparse may be incomplete
-9: In deparse(expr, backtick = backtick, ...) : deparse may be incomplete
-10: In deparse(expr, backtick = backtick, ...) : deparse may be incomplete
 > 
 > summary(warnings())
-Summary of (a total of 10) warning messages:
-4x : In dput(x, control = control) : deparse may be incomplete
-6x : In deparse(expr, backtick = backtick, ...) : deparse may be incomplete
+6 identical warnings:
+In deparse(expr, backtick = backtick, ...) : deparse may be incomplete
 > ## "dput    may be incomplete"
 > ## "deparse may be incomplete"
 > 
 > 
 > ## at the very end
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  0.103 0.006 0.11 0 0 
+Time elapsed:  0.103 0.009 0.112 0 0 
 > 

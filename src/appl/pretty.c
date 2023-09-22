@@ -72,8 +72,7 @@
 attribute_hidden
 double R_pretty(double *lo, double *up, int *ndiv, int min_n,
 		double shrink_sml,
-		const double high_u_fact[],
-		// (h, h5) = c(high.u.bias, u5.bias) in base::pretty.default()
+		const double high_u_fact[], // = (h, h5, f_min) below 
 		int eps_correction, int return_bounds)
 {
 /* From version 0.65 on, we had rounding_eps := 1e-5, before, r..eps = 0
@@ -81,6 +80,7 @@ double R_pretty(double *lo, double *up, int *ndiv, int min_n,
  * where it was changed to 1e-10 for seq*(), and in 2017-08-14 for pretty(): */
 #define rounding_eps 1e-10
 
+// (h, h5, f_min) = c(high.u.bias, u5.bias, f.min) in base::pretty.default():
 #define h     high_u_fact[0]
 #define h5    high_u_fact[1]
 #define f_min high_u_fact[2]

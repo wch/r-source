@@ -1,6 +1,6 @@
 % File src/library/base/man/source.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2017 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{source}
@@ -39,8 +39,8 @@ withAutoprint(exprs, evaluated = FALSE, local = parent.frame(),
 }
 \arguments{
   \item{file}{a \link{connection} or a character string giving the
-    pathname of the file or URL to read from.  \code{""} indicates the
-    connection \code{\link{stdin}()}.}
+    pathname of the file or URL to read from.  The \code{\link{stdin}()}
+    connection reads from the console when interactive.}
   \item{local}{\code{TRUE}, \code{FALSE} or an environment, determining
     where the parsed expressions are evaluated.  \code{FALSE} (the
     default) corresponds to the user's workspace (the global
@@ -144,7 +144,7 @@ withAutoprint(exprs, evaluated = FALSE, local = parent.frame(),
   be read on Windows (or \emph{vice versa}).
 
   The rest of this paragraph applies if \code{file} is an actual
-  filename or URL (and not \code{""} nor a connection).  If
+  filename or URL (and not a connection).  If
   \code{encoding = "unknown"}, an attempt is made to guess the encoding:
   the result of \code{\link{localeToCharset}()} is used as a guide.  If
   \code{encoding} has two or more elements, they are tried in turn until
@@ -154,7 +154,7 @@ withAutoprint(exprs, evaluated = FALSE, local = parent.frame(),
   in the result will be translated to the current encoding and marked as
   such (see \code{\link{Encoding}}).
 
-  If \code{file} is a connection (including one specified by \code{""}),
+  If \code{file} is a connection,
   it is not possible to re-encode the input inside \code{source}, and so
   the \code{encoding} argument is just used to mark character strings in the
   parsed input in Latin-1 and UTF-8 locales: see \code{\link{parse}}.

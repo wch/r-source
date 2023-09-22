@@ -497,7 +497,10 @@ function(x)
     restricts_use <- NA
 
     ## Try splitting into the individual components.
-    components <- trimws(unlist(strsplit(x, "|", fixed = TRUE)))
+    components <-
+        trimws(unlist(strsplit(gsub("[[:space:]]*\\+[[:space:]]*",
+                                    " + ", x),
+                               "|", fixed = TRUE)))
 
     ## Now analyze the individual components.
     ok <- grepl(R_license_db_vars()$re_component, components)

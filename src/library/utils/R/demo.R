@@ -19,9 +19,28 @@
 demo <-
 function(topic, package = NULL, lib.loc = NULL,
 	 character.only = FALSE, verbose = getOption("verbose"),
-	 echo = TRUE, ask = getOption("demo.ask"),
+	 type = c("console", "html"), echo = TRUE, ask = getOption("demo.ask"),
          encoding = getOption("encoding"))
 {
+    type <- match.arg(type)
+    html <- type == "html" ## only two options for now
+    if (html) {
+        enhancedHTML <- str2logical(Sys.getenv("_R_HELP_ENABLE_ENHANCED_HTML_", "TRUE"))
+        ## silently ignore (but note in documentation)
+        if (!interactive() || !enhancedHTML || !requireNamespace("knitr", quietly = TRUE))
+            html <- FALSE
+    }
+    if (html) {
+        port <- tools::startDynamicHelp(NA)
+        if (port <= 0L) html <- FALSE # silently fall back to console output
+        else {
+            if (!is.null(lib.loc)) lib.loc <- NULL
+            browser <- if (.Platform$GUI == "AQUA") {
+                           get("aqua.browser", envir = as.environment("tools:RGUI"))
+                       } else getOption("browser")
+        }
+    }
+
     paths <- find.package(package, lib.loc, verbose = verbose)
 
     ## Find the directories with a 'demo' subdirectory.
@@ -32,7 +51,17 @@ function(topic, package = NULL, lib.loc = NULL,
     if(missing(topic)) {
 	## List all possible demos.
 
-	## Build the demo db.
+        if (html)
+        {
+            browseURL(paste0("http://127.0.0.1:", port,
+                             "/doc/html/Search?package=",
+                             paste(unique(basename(paths)), collapse=";"),
+                             "&agrep=0&types.demo=1&pattern="),
+                      browser)
+            return(invisible())
+        }
+        ## else
+        ## Build the demo db.
 	db <- matrix(character(), nrow = 0L, ncol = 4L)
 	for(path in paths) {
 	    entries <- NULL
@@ -87,9 +116,16 @@ function(topic, package = NULL, lib.loc = NULL,
 	warning(gettextf("Demo for topic %s' found more than once,\nusing the one found in %s",
                 sQuote(topic), sQuote(dirname(available[1L]))), domain = NA)
     }
-
-    ## now figure out if the package has an encoding
     pkgpath <- dirname(dirname(available))
+    if (html) {
+        browseURL(paste0("http://127.0.0.1:", port,
+                         "/library/", basename(pkgpath), "/Demo/",
+                         tools::file_path_sans_ext(basename(available))),
+                  browser)
+        return(invisible())
+    }
+    ## else
+    ## now figure out if the package has an encoding
     if (file.exists(file <- file.path(pkgpath, "Meta", "package.rds"))) {
         desc <- readRDS(file)$DESCRIPTION
         if (length(desc) == 1L) {

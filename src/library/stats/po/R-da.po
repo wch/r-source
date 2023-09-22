@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-11-06 17:17\n"
+"POT-Creation-Date: 2023-07-31 14:59\n"
 "PO-Revision-Date: 2012-01-28 01:18+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -160,10 +160,15 @@ msgstr ""
 msgid "arguments must have same length"
 msgstr "argumenter skal have samme længde"
 
-msgid "'formula' missing or incorrect"
-msgstr "»formula« mangler eller er ukorrekt"
+msgid "argument 'x' is  missing -- it has been renamed from 'formula'"
+msgstr ""
 
-msgid "'formula' must have both left and right hand sides"
+#, fuzzy
+msgid "argument 'x' must be a formula"
+msgstr "argumenter skal have samme længde"
+
+#, fuzzy
+msgid "formula 'x' must have both left and right hand sides"
 msgstr "»formula« skal have både venstre og højre hånds sider"
 
 msgid "cannot change frequency from %g to %g"
@@ -213,6 +218,9 @@ msgstr "kan ikke beregne præcis p-værdi med bindinger"
 
 msgid "cannot compute exact confidence intervals with ties"
 msgstr ""
+
+msgid "'formula' missing or incorrect"
+msgstr "»formula« mangler eller er ukorrekt"
 
 msgid "grouping factor must have exactly 2 levels"
 msgstr "grupperingsfaktor skal have præcis 2 niveauer"
@@ -492,7 +500,13 @@ msgstr ""
 msgid "only %d of the first %d eigenvalues are > 0"
 msgstr ""
 
-msgid "package 'MASS' must be installed"
+msgid "Waiting for profiling to be done..."
+msgstr ""
+
+msgid "Reprofiling for"
+msgstr ""
+
+msgid "statistic. Waiting..."
 msgstr ""
 
 msgid "initial value is not in the interior of the feasible region"
@@ -705,6 +719,9 @@ msgstr ""
 msgid "need at least 2 points to select a bandwidth automatically"
 msgstr ""
 
+msgid "Selecting bandwidth *not* using 'weights'"
+msgstr ""
+
 msgid "unknown bandwidth rule"
 msgstr ""
 
@@ -736,6 +753,9 @@ msgid "incorrect dimensions for 'xi'"
 msgstr ""
 
 msgid "'x' is not a vector or matrix"
+msgstr ""
+
+msgid "x[1] != r[1]; using x[1] for diagonal"
 msgstr ""
 
 msgid "invalid distance method"
@@ -938,6 +958,9 @@ msgstr ""
 msgid "incorrect specification for 'col.vars'"
 msgstr ""
 
+msgid "'formula' must have both left and right hand sides"
+msgstr "»formula« skal have både venstre og højre hånds sider"
+
 msgid "interactions are not allowed"
 msgstr ""
 
@@ -967,6 +990,18 @@ msgid "'row.var.names' missing"
 msgstr ""
 
 msgid "'col.vars' missing or incorrect"
+msgstr ""
+
+msgid "Parameter:"
+msgstr ""
+
+msgid "down"
+msgstr ""
+
+msgid "up"
+msgstr ""
+
+msgid "profiling has found a better solution, so original fit had not converged"
 msgstr ""
 
 msgid "'family' not recognized"
@@ -1203,6 +1238,12 @@ msgstr ""
 msgid "not enough 'x' data"
 msgstr ""
 
+msgid "Parameter(s)"
+msgstr ""
+
+msgid "ignored"
+msgstr ""
+
 msgid "not enough 'y' data"
 msgstr ""
 
@@ -1212,8 +1253,26 @@ msgstr ""
 msgid "'y' must be numeric or a function or a string naming a valid function"
 msgstr ""
 
-msgid "ties should not be present for the Kolmogorov-Smirnov test"
+msgid "ties should not be present for the one-sample Kolmogorov-Smirnov test"
 msgstr ""
+
+msgid "invalid arguments"
+msgstr ""
+
+#, fuzzy
+msgid "argument 'sizes' must be a vector of length 2"
+msgstr "argumenter skal have samme længde"
+
+#, fuzzy
+msgid "argument 'q' must be numeric"
+msgstr "»x« skal være numerisk"
+
+msgid "computation of exact probability failed, returning Monte Carlo approximation"
+msgstr ""
+
+#, fuzzy
+msgid "argument 'p' must be numeric"
+msgstr "»x« skal være numerisk"
 
 msgid ""
 "numeric y must be supplied.\n"
@@ -1275,7 +1334,19 @@ msgstr ""
 msgid "calling predict.lm(<fake-lm-object>) ..."
 msgstr ""
 
-msgid "prediction from a rank-deficient fit may be misleading"
+msgid "prediction from rank-deficient fit"
+msgstr ""
+
+msgid "%s; consider predict(., rankdeficient=\"NA\")"
+msgstr ""
+
+msgid "lower-rank qr: determining non-estimable cases"
+msgstr ""
+
+msgid "%s; attr(*, \"non-estim\") has doubtful cases"
+msgstr ""
+
+msgid "%s: NAs produced for non-estimable cases"
 msgstr ""
 
 msgid "predictions on current data refer to _future_ responses"
@@ -1500,13 +1571,11 @@ msgstr ""
 msgid "'termlabels' must be a character vector of length at least one"
 msgstr ""
 
+#, fuzzy
+msgid "'%s' must be a character string"
+msgstr "»A« skal være en array eller tabel"
+
 msgid "Unparseable 'response' \"%s\"; use is deprecated.  Use as.name(.) or `..`!"
-msgstr ""
-
-msgid "reformulate"
-msgstr ""
-
-msgid "deprecatedWarning"
 msgstr ""
 
 msgid "'termobj' must be a object of class %s"
@@ -1525,6 +1594,12 @@ msgid "'data' must be a data.frame, environment, or list"
 msgstr ""
 
 msgid "variable '%s' is not a factor"
+msgstr ""
+
+msgid "contrasts dropped from factor %s"
+msgstr ""
+
+msgid "contrasts dropped from factor %s due to missing levels"
 msgstr ""
 
 msgid "'offset' must be numeric"
@@ -1723,6 +1798,9 @@ msgstr ""
 msgid "'id.n' must be in {1,..,%d}"
 msgstr ""
 
+msgid "y is empty or has only NAs"
+msgstr ""
+
 msgid ""
 "hat values (leverages) are all = %s\n"
 " and there are no factor predictors; no plot no. 5"
@@ -1843,7 +1921,7 @@ msgstr ""
 msgid "elements of 'p' must be in (0,1)"
 msgstr ""
 
-msgid "y is empty or has only NAs"
+msgid "'conf.level' is not a probability"
 msgstr ""
 
 msgid "'formula' missing"
@@ -1886,9 +1964,6 @@ msgid "'ref' must be an existing level"
 msgstr ""
 
 msgid "ref = %d must be in 1L:%d"
-msgstr ""
-
-msgid "'sep' must be a character string"
 msgstr ""
 
 msgid "failed to guess time-varying variables from their names"
@@ -1934,6 +2009,9 @@ msgid "bandwidth 'k' must be >= 1 and odd!"
 msgstr ""
 
 msgid "argument 'object' has an impossible length"
+msgstr ""
+
+msgid "right-hand side of formula is not a call"
 msgstr ""
 
 msgid "no 'getInitial' method found for \"%s\" objects"

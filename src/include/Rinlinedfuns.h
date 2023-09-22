@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1999-2017  The R Core Team.
+ *  Copyright (C) 1999-2023  The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -108,7 +108,7 @@ INLINE_FUN void CHKVEC(SEXP x) {
     case WEAKREFSXP:
 	break;
     default:
-	error("cannot get data pointer of '%s' objects", type2char(TYPEOF(x)));
+	error("cannot get data pointer of '%s' objects", R_typeToChar(x));
     }
 }
 #else
@@ -189,12 +189,12 @@ INLINE_FUN const double *REAL_OR_NULL(SEXP x) {
     return ALTREP(x) ? ALTVEC_DATAPTR_OR_NULL(x) : STDVEC_DATAPTR(x);
 }
 
-INLINE_FUN const double *COMPLEX_OR_NULL(SEXP x) {
+INLINE_FUN const Rcomplex *COMPLEX_OR_NULL(SEXP x) {
     CHECK_VECTOR_CPLX(x);
     return ALTREP(x) ? ALTVEC_DATAPTR_OR_NULL(x) : STDVEC_DATAPTR(x);
 }
 
-INLINE_FUN const double *RAW_OR_NULL(SEXP x) {
+INLINE_FUN const Rbyte *RAW_OR_NULL(SEXP x) {
     CHECK_VECTOR_RAW(x);
     return ALTREP(x) ? ALTVEC_DATAPTR_OR_NULL(x) : STDVEC_DATAPTR(x);
 }
@@ -471,9 +471,9 @@ SEXP STRING_ELT(SEXP x, R_xlen_t i);
 #endif
 
 #ifdef INLINE_PROTECT
-extern int R_PPStackSize;
-extern int R_PPStackTop;
-extern SEXP* R_PPStack;
+LibExtern int R_PPStackSize;
+LibExtern int R_PPStackTop;
+LibExtern SEXP* R_PPStack;
 
 INLINE_FUN SEXP protect(SEXP s)
 {
@@ -991,7 +991,7 @@ INLINE_FUN Rboolean isNumber(SEXP s)
 /* As from R 2.4.0 we check that the value is allowed. */
 INLINE_FUN SEXP ScalarLogical(int x)
 {
-    extern SEXP R_LogicalNAValue, R_TrueValue, R_FalseValue;
+    LibExtern SEXP R_LogicalNAValue, R_TrueValue, R_FalseValue;
     if (x == NA_LOGICAL) return R_LogicalNAValue;
     else if (x != 0) return R_TrueValue;
     else return R_FalseValue;

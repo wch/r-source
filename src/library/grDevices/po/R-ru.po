@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-11-06 17:17\n"
+"POT-Creation-Date: 2023-07-31 14:59\n"
 "PO-Revision-Date: 2020-08-27 18:56+0900\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -164,12 +164,83 @@ msgstr "для postscript() не нашлось подходящего неиспользованного имени файла"
 msgid "dev.new(): using postscript(file=\"%s\")"
 msgstr "dev.new(): использую postscript(file=\"%s\")"
 
+msgid "Invalid capabilities - alert the device maintainer"
+msgstr ""
+
+#, fuzzy
+msgid "Invalid span weight"
+msgstr "Неправильный тип паттерна"
+
+msgid "length of arguments must match (and be greater than 0)"
+msgstr ""
+
+msgid "Invalid glyph width(s)"
+msgstr ""
+
+msgid "Invalid glyph width"
+msgstr ""
+
+msgid "Unknown width; using left anchor"
+msgstr ""
+
+msgid "Invalid glyph height(s)"
+msgstr ""
+
+msgid "Invalid glyph height"
+msgstr ""
+
+msgid "Unknown height; using bottom anchor"
+msgstr ""
+
+msgid "Invalid glyph anchor"
+msgstr ""
+
+msgid "Font file longer than 500 will be truncated"
+msgstr ""
+
+msgid "Font family longer than 200 will be truncated"
+msgstr ""
+
+msgid "PostScript font name longer than 200 will be truncated"
+msgstr ""
+
+msgid "Font information is inconsistent"
+msgstr ""
+
+msgid "List must include at least one font"
+msgstr ""
+
+#, fuzzy
+msgid "Invalid glyph font"
+msgstr "Неправильный тип шрифта"
+
+#, fuzzy
+msgid "Invalid font list"
+msgstr "Неправильный тип шрифта"
+
+#, fuzzy
+msgid "Unknown font"
+msgstr "неизвестный шрифт"
+
+msgid "There must be anchors named \"left\" and \"bottom\""
+msgstr ""
+
+msgid "Invalid glyph info"
+msgstr ""
+
+#, fuzzy
+msgid "Invalid compositing operator"
+msgstr "неправильный формат вывода"
+
 msgid "wrong 'type'; should never happen, please report!"
 msgstr "неправильный 'type'; так быть не должно, сообщите об ошибке!"
 
 #, fuzzy
+msgid "Invalid mask type"
+msgstr "Неправильный тип шрифта"
+
 msgid "Invalid fill rule"
-msgstr "неправильный 'file'"
+msgstr "Неправильное правило заполнения"
 
 msgid "Invalid pattern type"
 msgstr "Неправильный тип паттерна"
@@ -249,7 +320,8 @@ msgstr "неизвестный шрифт"
 msgid "font encoding mismatch '%s'/'%s'"
 msgstr "несоответствие кодировки шрифта '%s'/'%s'"
 
-msgid "'file' must be a non-empty character string"
+#, fuzzy
+msgid "'%s' must be a non-empty character string"
 msgstr "'file' должен быть непустой символьной строкой"
 
 msgid "GhostScript was not found"
@@ -260,6 +332,13 @@ msgstr "неправильный формат вывода"
 
 msgid "status %d in running command '%s'"
 msgstr "статус %d выполняющейся команды '%s'"
+
+msgid "'file' must be a non-empty character string"
+msgstr "'file' должен быть непустой символьной строкой"
+
+#, fuzzy
+msgid "Invalid 'glyphInfo'"
+msgstr "неправильный 'file'"
 
 msgid "failed to add more ticks; 'min.n' too large?"
 msgstr "не удалось добавить больше делений; слишком большое 'min.n'?"
@@ -321,6 +400,9 @@ msgstr "Надо обязательно поставить (из 'Recommended') пакет \"KernSmooth\""
 msgid "'r' must be a \"range\", hence of length 2"
 msgstr "'r' должен быть \"range\", то есть длины 2"
 
+msgid "points cut off after point[%d]"
+msgstr ""
+
 msgid "invalid first argument"
 msgstr "неправильный первый аргумент"
 
@@ -358,8 +440,20 @@ msgstr ""
 "Доступные устройства:\n"
 "%s"
 
+#, fuzzy
+msgid "invalid width"
+msgstr "неправильный 'title'"
+
+#, fuzzy
+msgid "invalid height"
+msgstr "неправильный 'title'"
+
 msgid "'res' must be specified unless 'units = \"px\"'"
 msgstr "'res' должен быть определен до тех пор пока 'units = \"px\"'"
+
+#, fuzzy
+msgid "'filename' must be a non-empty character string"
+msgstr "'file' должен быть непустой символьной строкой"
 
 msgid "type = \"quartz\" is unavailable. trying \"Xlib\""
 msgstr ""
@@ -448,23 +542,24 @@ msgstr[0] "отличие между старым и новым"
 msgstr[1] "отличия между старыми и новыми"
 msgstr[2] "отличия между старыми и новыми"
 
-msgid "%d x value <= 0 omitted from logarithmic plot"
-msgid_plural "%d x values <= 0 omitted from logarithmic plot"
+#, fuzzy
+msgid "%d %s value <= 0 omitted from logarithmic plot"
+msgid_plural "%d %s values <= 0 omitted from logarithmic plot"
 msgstr[0] "%d значение x <= 0 пропущено на логарифмическом графике"
 msgstr[1] "%d значения x <= 0 пропущены на логарифмическом графике"
 msgstr[2] "%d значения x <= 0 пропущены на логарифмическом графике"
 
-msgid "%d y value <= 0 omitted from logarithmic plot"
-msgid_plural "%d y values <= 0 omitted from logarithmic plot"
-msgstr[0] "%d значение y <= 0 пропущено на логарифмическом графике"
-msgstr[1] "%d значения y <= 0 пропущены на логарифмическом графике"
-msgstr[2] "%d значения y <= 0 пропущены на логарифмическом графике"
+#~ msgid "%d y value <= 0 omitted from logarithmic plot"
+#~ msgid_plural "%d y values <= 0 omitted from logarithmic plot"
+#~ msgstr[0] "%d значение y <= 0 пропущено на логарифмическом графике"
+#~ msgstr[1] "%d значения y <= 0 пропущены на логарифмическом графике"
+#~ msgstr[2] "%d значения y <= 0 пропущены на логарифмическом графике"
 
-msgid "%d z value <= 0 omitted from logarithmic plot"
-msgid_plural "%d z values <= 0 omitted from logarithmic plot"
-msgstr[0] "%d значение z <= 0 пропущено на логарифмическом графике"
-msgstr[1] "%d значения z <= 0 пропущены на логарифмическом графике"
-msgstr[2] "%d значения z <= 0 пропущены на логарифмическом графике"
+#~ msgid "%d z value <= 0 omitted from logarithmic plot"
+#~ msgid_plural "%d z values <= 0 omitted from logarithmic plot"
+#~ msgstr[0] "%d значение z <= 0 пропущено на логарифмическом графике"
+#~ msgstr[1] "%d значения z <= 0 пропущены на логарифмическом графике"
+#~ msgstr[2] "%d значения z <= 0 пропущены на логарифмическом графике"
 
 #~ msgid "range too small for 'min.n'"
 #~ msgstr "размах слишком мал для 'min.n'"

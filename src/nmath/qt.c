@@ -1,7 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
- *  Copyright (C) 2000-2013 The R Core Team
- *  Copyright (C) 2003-2013 The R Foundation
+ *  Copyright (C) 2000-2022 The R Core Team
+ *  Copyright (C) 2003-2022 The R Foundation
  *  Copyright (C) 1998 Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -191,16 +191,26 @@ double qt(double p, double ndf, int lower_tail, int log_p)
 	 *	Probably also improvable when  lower_tail = FALSE */
 
 	if(P_ok1) {
+	    double M = fabs(sqrt(DBL_MAX/2.) - ndf);
 	    int it=0;
 	    while(it++ < 10 && (y = dt(q, ndf, FALSE)) > 0 &&
 		  R_FINITE(x = (pt(q, ndf, FALSE, FALSE) - P/2) / y) &&
-		  fabs(x) > 1e-14*fabs(q))
+		  fabs(x) > 1e-14*fabs(q)) {
 		/* Newton (=Taylor 1 term):
 		 *  q += x;
 		 * Taylor 2-term : */
-		q += x * (1. + x * q * (ndf + 1) / (2 * (q * q + ndf)));
+		double F = (fabs(q) < M) ?
+		    q * (ndf + 1) / (2 * (q * q + ndf)) :
+		        (ndf + 1) / (2 * (q     + ndf/q)),
+		    del_q = x * (1. + x * F);
+		if(R_FINITE(del_q) && R_FINITE(q + del_q))
+		    q += del_q;
+		else if(R_FINITE(x) && R_FINITE(q + x))
+		    q += x;
+		else // FIXME??  if  q+x = +/-Inf is *better* than q should use it
+		    break; // cannot improve  q  with a Newton/Taylor step
+	    }
 	}
     }
-    if(neg) q = -q;
-    return q;
+     return neg ? -q : q;
 }

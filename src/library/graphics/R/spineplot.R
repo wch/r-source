@@ -28,15 +28,15 @@ function(formula, data = NULL,
          col = NULL, main = "", xlab = NULL, ylab = NULL,
          xaxlabels = NULL, yaxlabels = NULL,
          xlim = NULL, ylim = c(0, 1), axes = TRUE, ...,
-         subset = NULL, drop.unused.levels = FALSE)
+         subset = NULL, weights = NULL, drop.unused.levels = FALSE)
 {
     ## extract x, y from formula
     m <- match.call(expand.dots = FALSE)
-    m <- m[c(1L, match(c("formula", "data", "subset", "drop.unused.levels"), names(m), 0L))]
+    m <- m[c(1L, match(c("formula", "data", "subset", "weights", "drop.unused.levels"), names(m), 0L))]
     ## need stats:: for non-standard evaluation
     m[[1L]] <- quote(stats::model.frame)
     mf <- eval.parent(m)
-    if(NCOL(mf) != 2L)
+    if(length(setdiff(names(mf), "(weights)")) != 2L)
         stop("'formula' should specify exactly two variables")
     y <- mf[,1L]
     if(!is.factor(y))
@@ -44,6 +44,7 @@ function(formula, data = NULL,
     if(!is.null(ylevels))
       y <- factor(y, levels = if(is.numeric(ylevels)) levels(y)[ylevels] else ylevels)
     x <- mf[,2L]
+    w <- if("(weights)" %in% names(mf)) mf[,"(weights)"] else NULL
 
     ## graphical parameters
     if(is.null(xlab)) xlab <- names(mf)[2L]
@@ -53,7 +54,7 @@ function(formula, data = NULL,
     spineplot(x, y, breaks = breaks, tol.ylab = tol.ylab, off = off, ylevels = NULL,
               col = col, main = main, xlab = xlab, ylab = ylab,
               xaxlabels = xaxlabels, yaxlabels = yaxlabels,
-              xlim = xlim, ylim = ylim, axes = axes, ...)
+              xlim = xlim, ylim = ylim, axes = axes, weights = w, ...)
 }
 
 spineplot.default <-
@@ -61,7 +62,7 @@ function(x, y = NULL,
          breaks = NULL, tol.ylab = 0.05, off = NULL, ylevels = NULL,
          col = NULL, main = "", xlab = NULL, ylab = NULL,
          xaxlabels = NULL, yaxlabels = NULL,
-         xlim = NULL, ylim = c(0, 1), axes = TRUE, ...)
+         xlim = NULL, ylim = c(0, 1), axes = TRUE, weights = NULL, ...)
 {
     ## either supply a 2-way table (i.e., both y and x are categorical)
     ## or two variables (y has to be categorical - x can be categorical
@@ -69,6 +70,8 @@ function(x, y = NULL,
     if(missing(y)) {
         if(length(dim(x)) != 2L)
             stop("a 2-way table has to be specified")
+        if(!is.null(weights))
+            stop("weights are not supported for 2-way table specification")
         tab <- x
         x.categorical <- TRUE
         if(is.null(xlab)) xlab <- names(dimnames(tab))[1L]
@@ -85,7 +88,12 @@ function(x, y = NULL,
         if(is.null(xlab)) xlab <- deparse1(substitute(x))
         if(is.null(ylab)) ylab <- deparse1(substitute(y))
         if(x.categorical) {
-            tab <- table(x, y)
+            if(is.null(weights)) {
+                tab <- table(x, y)
+            } else {
+                tab <- as.table(tapply(weights, list(x, y), FUN = sum, na.rm = TRUE))
+                tab[is.na(tab)] <- 0
+            }
             xnam <- levels(x)
             nx <- NROW(tab)
         }
@@ -110,19 +118,30 @@ function(x, y = NULL,
 	    x <- as.numeric(x)
 	}
         ## compute breaks for x
-        if(is.null(breaks)) {
-	    breaks <- list()
-	} else {
-	    breaks <- as.numeric(breaks)
+        if (is.null(breaks)) {
+            breaks <- if(is.null(weights)) nclass.Sturges(x) else ceiling(log2(sum(weights)) + 1)
 	}
-        if(!is.list(breaks)) breaks <- list(breaks = breaks)
-        breaks <- c(list(x = x), breaks)
-        breaks$plot <- FALSE
-        breaks <- do.call("hist", breaks)$breaks
+        breaks <- as.numeric(breaks)
+        if (length(breaks) == 1L) {
+            if (!is.numeric(breaks) || !is.finite(breaks) || breaks < 1L) {
+                stop("invalid number of 'breaks'")
+            }
+            if (breaks > 1e+06) {
+                warning(gettextf("'breaks = %g' is too large and set to 1e6", breaks), domain = NA)
+                breaks <- 1000000L
+            }
+            rg <- if (is.null(weights)) range(x, na.rm = TRUE) else range(x[weights > 0], na.rm = TRUE)
+            breaks <- pretty(rg, n = breaks, min.n = 1)        
+        }
         ## categorize x
         x1 <- cut(x, breaks = breaks, include.lowest = TRUE)
         ## construct table
-        tab <- table(x1, y)
+        if(is.null(weights)) {
+            tab <- table(x1, y)
+        } else {
+            tab <- as.table(tapply(weights, list(x1, y), FUN = sum, na.rm = TRUE))
+            tab[is.na(tab)] <- 0
+        }
         ## compute rectangle positions on x axis
         xat <- c(0, cumsum(proportions(marginSums(tab, 1)))) # c(0, cumsum(proportions(table(x1))))
         nx <- NROW(tab)

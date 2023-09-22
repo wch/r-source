@@ -1,14 +1,14 @@
 # R Italian translation
 # Copyright (C) The R Foundation
 # This file is distributed under the same license as the R package.
-# Daniele Medri <dmedri@gmail.com>, 2005-2021.
+# Daniele Medri <dmedri@gmail.com>, 2005-2023.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R-methods 4.1.0\n"
+"Project-Id-Version: R-4-3-BRANCH\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-05-03 09:56\n"
-"PO-Revision-Date: \n"
+"POT-Creation-Date: 2022-10-13 09:29\n"
+"PO-Revision-Date: 2022-10-14 10:31+0200\n"
 "Last-Translator: Daniele Medri <dmedri@gmail.com>\n"
 "Language-Team: Italian https://github.com/dmedri/R-italian-lang\n"
 "Language: it\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.2.1\n"
+"X-Generator: Poedit 3.1.1\n"
 
 msgid "OOPS: something wrong with '.OldClassesPrototypes[[%d]]'"
 msgstr "OOPS: qualcosa è andato storto con '.OldClassesPrototypes[[%d]]'"
@@ -188,10 +188,10 @@ msgstr ""
 "non è ammessa alcuna versione generica di %s nel pacchetto %s;\n"
 "   una nuova generica sarà assegnata per %s"
 
-msgid "function %s appears to be a generic function, but with generic name %s"
+msgid ""
+"fdef appears to be a generic function, but with generic name %s instead of %s"
 msgstr ""
-"la funzione %s sembra essere una funzione generica, ma con il nome generico "
-"%s"
+"fdef appare come una funzione generica, ma con il nome generico %s anzichè %s"
 
 msgid "generic function %s not found for removal"
 msgstr "la funzione generica %s non è stata trovata per la rimozione"
@@ -849,11 +849,6 @@ msgstr "nessun argomento adatto per il dispatch di metodi in questa funzione"
 msgid "making a generic for special function %s"
 msgstr "creando una generico per una  funzione speciale %s"
 
-msgid "invalid call in method dispatch to '%s' (no default method)"
-msgstr ""
-"chiamata non valida nel dispatch del metodo a '%s' (nessun metodo "
-"predefinito)"
-
 msgid "in method for %s with signature %s:"
 msgstr "nel metodo per %s con firma %s:"
 
@@ -1196,6 +1191,9 @@ msgstr ""
 "l'argomento %s dev'essere una lista o un vettore di caratteri; si è ottenuto "
 "un oggetto della classe %s"
 
+msgid "expected a non-empty character string for argument 'name'"
+msgstr "attesa una stringa di caratteri non-vuota per l'argomento 'name'"
+
 msgid "no function %s found"
 msgstr "nessuna funzione %s trovata"
 
@@ -1210,8 +1208,8 @@ msgstr "nessun metodo o predefinito per la coercizione di %s in %s"
 
 msgid "no method or default for as() replacement of %s with Class=\"%s\""
 msgstr ""
-"nessun metodo o valore predefinito per una sostituzione as() di %s con Class="
-"\"%s\""
+"nessun metodo o valore predefinito per una sostituzione as() di %s con "
+"Class=\"%s\""
 
 msgid "trying to set an 'as' relation from %s to itself"
 msgstr "cercando di impostare una relazione 'as' da %s a se stesso"
@@ -1827,8 +1825,8 @@ msgstr ""
 
 msgid "cannot find an environment corresponding to package name '%s\""
 msgstr ""
-"non è possibile trovare un ambiente corrispondente al nome del pacchetto '%s"
-"\""
+"non è possibile trovare un ambiente corrispondente al nome del pacchetto "
+"'%s\""
 
 msgid "supplied package, %s, differs from package inferred from source, %s"
 msgstr ""
@@ -1969,10 +1967,10 @@ msgid_plural ""
 "class %s is missing slots from class %s (%s), and no coerce method was "
 "supplied"
 msgstr[0] ""
-"Nella classe %s manca lo slot della classe %s (%s) e non è stato fornito "
+"nella classe %s manca lo slot della classe %s (%s) e non è stato fornito "
 "alcun metodo di coercizione"
 msgstr[1] ""
-"Nella classe %s mancano gli slot della classe %s (%s) e non è stato fornito "
+"nella classe %s mancano gli slot della classe %s (%s) e non è stato fornito "
 "alcun metodo di coercizione"
 
 msgid ""
@@ -2022,13 +2020,7 @@ msgstr[1] ""
 "non è stata trovata alcuna definizione per la classe %s nella posizione "
 "specificata, %s, definizioni su: %s"
 
-#~ msgid "From .checkSubclasses(): subclass %s of class %s is not local and"
+#~ msgid "invalid call in method dispatch to '%s' (no default method)"
 #~ msgstr ""
-#~ "Da .checkSubclasses (): la sottoclasse %s della classe %s non è locale e"
-
-#~ msgid "is not updated for new inheritance information currently;"
-#~ msgstr ""
-#~ "non è attualmente aggiornata per le nuove informazioni sull'eredità;"
-
-#~ msgid "[where=%s, where2=%s]"
-#~ msgstr "[where=%s, where2=%s]"
+#~ "chiamata non valida nel dispatch del metodo a '%s' (nessun metodo "
+#~ "predefinito)"

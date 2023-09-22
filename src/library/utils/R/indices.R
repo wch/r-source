@@ -1,7 +1,7 @@
 #  File src/library/utils/R/indices.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2017 The R Core Team
+#  Copyright (C) 1995-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -83,9 +83,9 @@ packageDescription <-
 	    if(encoding != enc) { # try to translate from 'enc' to 'encoding' --------
 		## might have an invalid encoding ...
 		newdesc <- try(lapply(desc, iconv, from = enc, to = encoding))
-		dOk <- function(nd) !inherits(nd, "error") && !anyNA(nd)
+		dOk <- function(nd) !inherits(nd, "try-error") && !anyNA(nd)
 		ok <- dOk(newdesc)
-		if(!ok) # try again
+		if(!ok && !endsWith(encoding, "//TRANSLIT")) # try again
 		    ok <- dOk(newdesc <- try(lapply(desc, iconv, from = enc,
 						    to = paste0(encoding,"//TRANSLIT"))))
 		if(!ok) # try again
@@ -176,6 +176,8 @@ packageDate <- function(pkg, lib.loc = NULL,
 	desc = packageDescription(pkg, lib.loc=lib.loc, fields=date.fields))
 {
     useDesc <- is.list(desc) && length(names(desc)) >= 1
+    if(!useDesc && is.na(desc)) # also got warning
+        return(.Date(NA))
     for (fld in date.fields) {
 	res <- if(useDesc) {
 		   r <- desc[[fld]]
@@ -189,7 +191,7 @@ packageDate <- function(pkg, lib.loc = NULL,
 				NA_character_
 			    })
 	       else as.Date(res, tryFormats=tryFormats,
-			    optional = TRUE)# NA instead of errror
+			    optional = TRUE)# NA instead of error
 	if (!is.na(res))
 	    break
     }

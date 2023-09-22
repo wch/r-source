@@ -15,9 +15,9 @@ with indices given in \code{list} by those given in \code{values}.
 If necessary, the values in \code{values} are recycled.
 }
 \arguments{
-  \item{x}{vector}
-  \item{list}{an index vector}
-  \item{values}{replacement values}
+  \item{x}{a vector.}
+  \item{list}{an index vector.}
+  \item{values}{replacement values.}
 }
 \value{
   A vector with the values replaced.

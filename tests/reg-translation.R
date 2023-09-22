@@ -1,9 +1,11 @@
 #### Regression test of translation not working outside packages for R < 4.1.0.
 #### We try French (set in Makefile.common).
 
-### First off, message translation needs to be supported.
-if (!capabilities("NLS")) { ## e.g. when R was configured with --disable-nls
-    message("no natural language support")
+### First off, message translation needs to be supported
+### (it is not when, e.g., R was configured with --disable-nls)
+### and base translations need to be installed (optional on Windows).
+if (!capabilities("NLS") || is.na(.popath)) {
+    message("no natural language support or missing translations")
     q("no")
 }
 
@@ -14,7 +16,14 @@ str(l10n_info())
 
 #### Skip locales that do not support French (especially C)
 OK <- l10n_info()[["UTF-8"]] || l10n_info()[["Latin-1"]]
-if (!OK) {
+if(OK) {
+    locale <- Sys.getlocale("LC_MESSAGES")
+    if(!is.character(locale) || !nzchar(locale))
+        locale <- Sys.getenv("LANG")
+    if(nzchar(locale) && 
+       (startsWith(locale, "C.") || (locale == "C")))
+        OK <- FALSE
+} else {
     if(.Platform$OS.type == "windows") {
         OK <- l10n_info()[["codepage"]] == 28605 ## Latin-9
     } else {

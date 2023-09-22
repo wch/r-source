@@ -1,7 +1,7 @@
 % File src/library/base/man/Extract.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2021 R Core Team
-% Copyright 2002-2012 The R Foundation
+% Copyright 1995-2022 R Core Team
+% Copyright 2002-2022 The R Foundation
 % Distributed under GPL 2 or later
 
 \name{Extract}
@@ -19,7 +19,7 @@
 \alias{[[<-}
 \alias{$<-}
 \concept{delete}
-
+\concept{subscript}% code in ../../../main/subscript.c
 \description{
   Operators acting on vectors, matrices, arrays and lists to extract or
   replace parts.
@@ -46,8 +46,9 @@ x$name <- value
   \item{i, j, \dots}{
     indices specifying elements to extract or replace.  Indices are
     \code{numeric} or \code{character} vectors or empty (missing) or
-    \code{NULL}.  Numeric values are coerced to integer as by
-    \code{\link{as.integer}} (and hence truncated towards zero).
+    \code{NULL}.  Numeric values are coerced to integer or whole numbers as
+    by \code{\link{as.integer}} or for large values by \code{\link{trunc}}
+    (and hence truncated towards zero).
     Character vectors will be matched to the \code{\link{names}} of the
     object (or for matrices/arrays, the \code{\link{dimnames}}):
     see \sQuote{Character indices} below for further details.
@@ -66,17 +67,17 @@ x$name <- value
     An index value of \code{NULL} is treated as if it were \code{integer(0)}.
   }
   \item{name}{
-    A literal character string or a \link{name} (possibly \link{backtick}
+    a literal character string or a \link{name} (possibly \link{backtick}
     quoted).  For extraction, this is normally (see under
     \sQuote{Environments}) partially matched to the \code{\link{names}}
     of the object.
   }
-  \item{drop}{For matrices and arrays.  If \code{TRUE} the result is
+  \item{drop}{relevant for matrices and arrays.  If \code{TRUE} the result is
     coerced to the lowest possible dimension (see the examples).  This
     only works for extracting elements, not for the replacement.  See
     \code{\link{drop}} for further details.
   }
-  \item{exact}{Controls possible partial matching of \code{[[} when
+  \item{exact}{controls possible partial matching of \code{[[} when
     extracting by a character vector (for most objects, but see under
     \sQuote{Environments}).  The default is no partial matching.  Value
     \code{NA} allows partial matching but issues a warning when it
@@ -98,6 +99,9 @@ x$name <- value
   The most important distinction between \code{[}, \code{[[} and
   \code{$} is that the \code{[} can select more than one element whereas
   the other two select a single element.
+
+  Note that \code{x[[]]} is always erroneous.
+  % even for \code{\link{NULL}}, where otherwise all subsetting returns \code{NULL}.
 
   The default methods work somewhat differently for atomic vectors,
   matrices/arrays and for recursive (list-like, see
@@ -381,7 +385,7 @@ op <- options(warnPartialMatchDollar = TRUE)
 stopifnot( identical(li$p, pi), #-- a warning
   inherits(tryCatch (li$p, warning = identity), "warning"))
 ## revert the warning option:
-if(is.null(op[[1]])) op[[1]] <- FALSE; options(op)
+options(op)
 }
 \keyword{array}
 \keyword{list}

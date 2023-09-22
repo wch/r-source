@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1999--2018  The R Core Team.
+ *  Copyright (C) 1999--2023  The R Core Team.
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -27,6 +27,7 @@
 #include <R_ext/Itermacros.h>
 
 /* interval at which to check interrupts, a guess */
+/*   if re-enabling, consider a power of two */
 // #define NINTERRUPT 10000000
 
 
@@ -37,7 +38,7 @@ static SEXP binaryLogic2(int code, SEXP s1, SEXP s2);
 
 
 /* & | ! */
-SEXP attribute_hidden do_logic(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_logic(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP arg1 = CAR(args); //, arg2 = CADR(args)
     Rboolean attr1 = ATTRIB(arg1) != R_NilValue;
@@ -265,7 +266,7 @@ static SEXP lunary(SEXP call, SEXP op, SEXP arg)
 }
 
 /* && || */
-SEXP attribute_hidden do_logic2(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_logic2(SEXP call, SEXP op, SEXP args, SEXP env)
 {
 /*  &&	and  ||	 */
     SEXP s1, s2;
@@ -283,7 +284,7 @@ SEXP attribute_hidden do_logic2(SEXP call, SEXP op, SEXP args, SEXP env)
 	errorcall(call, _("invalid 'x' type in 'x %s y'"),
 		  PRIMVAL(op) == 1 ? "&&" : "||");
 
-    x1 = asLogical2(s1, /*checking*/ 1, call, env);
+    x1 = asLogical2(s1, /*checking*/ 1, call);
     UNPROTECT(1); /* s1 */
 
 #define get_2nd							\
@@ -291,7 +292,7 @@ SEXP attribute_hidden do_logic2(SEXP call, SEXP op, SEXP args, SEXP env)
 	if (!isNumber(s2))					\
 	    errorcall(call, _("invalid 'y' type in 'x %s y'"),	\
 		      PRIMVAL(op) == 1 ? "&&" : "||");		\
-	x2 = asLogical2(s2, 1, call, env);			\
+	x2 = asLogical2(s2, 1, call);			\
 	UNPROTECT(1); /* s2 */
 
     switch (PRIMVAL(op)) {
@@ -439,7 +440,7 @@ static int checkValues(int op, int na_rm, SEXP x, R_xlen_t n)
 }
 
 /* all, any */
-SEXP attribute_hidden do_logic3(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_logic3(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans, s, t, call2;
     int narm, has_na = 0;
@@ -464,7 +465,7 @@ SEXP attribute_hidden do_logic3(SEXP call, SEXP op, SEXP args, SEXP env)
     R_try_clear_args_refcnt(args);
 
     ans = matchArgExact(R_NaRmSymbol, &args);
-    narm = asLogical2(ans, /*warn_level*/ 1, call, env);
+    narm = asLogical2(ans, /*warn_level*/ 1, call);
 
     for (s = args; s != R_NilValue; s = CDR(s)) {
 	t = CAR(s);
@@ -481,7 +482,7 @@ SEXP attribute_hidden do_logic3(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if(TYPEOF(t) != INTSXP)
 		warningcall(call,
 			    _("coercing argument of type '%s' to logical"),
-			    type2char(TYPEOF(t)));
+			    R_typeToChar(t));
 	    t = coerceVector(t, LGLSXP);
 	}
 	val = checkValues(PRIMVAL(op), narm, t, XLENGTH(t));

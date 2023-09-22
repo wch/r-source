@@ -49,6 +49,7 @@
 \alias{is.tkwin}
 \alias{tkdestroy}
 \alias{.TkRoot}
+\alias{.TkUp}
 \alias{addTclPath}
 \alias{tclRequire}
 \alias{tclVersion}
@@ -69,6 +70,7 @@
 .Tk.newwin(ID)
 .Tk.subwin(parent)
 .TkRoot
+.TkUp
 
 tkdestroy(win)
 is.tkwin(x)
@@ -190,6 +192,9 @@ tclVersion()
   \code{.Tk.subwin} creates a new window which is a sub-window of a given
   parent window.
 
+  \code{.TkUp} is a logical flag to indicate whether the Tk widget
+system is active; if \code{FALSE}, only the Tcl interpreter is available.
+
   \code{tkdestroy} destroys a window and also removes the reference to a
   window from its parent.
 
@@ -244,7 +249,7 @@ tclVersion()
   \code{tclObj(x)} which also allows an assignment form, in which the
   right hand side of the assignment is automatically converted using
   \code{as.tclObj}.  There is a print method for \code{tclObj} objects;
-  it prints \code{<Tcl>} followed by the string representation of the
+  it prints \samp{<Tcl>} followed by the string representation of the
   object.  Notice that \code{as.character} on a \code{tclVar} object is
   the \emph{name} of the corresponding Tcl variable and not the value.
 

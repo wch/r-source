@@ -638,19 +638,19 @@ stopifnot(identical(check2(one, , three), c(FALSE, TRUE, FALSE)))
 
 ### envRefClass check moved to methods package
 
-
+### This is an error in R 4.2.0
 ## takes too long with JIT enabled:
-.jit.lev <- compiler::enableJIT(0)
-Sys.getenv("_R_CHECK_LENGTH_1_CONDITION_") -> oldV
-Sys.setenv("_R_CHECK_LENGTH_1_CONDITION_" = "false") # only *warn*
-## while did not protect its argument, which caused an error
-## under gctorture, PR#15990
-gctorture()
-suppressWarnings(while(c(FALSE, TRUE)) 1)
-gctorture(FALSE)
-## gave an error because the test got released when the warning was generated.
-compiler::enableJIT(.jit.lev)# revert
-Sys.setenv("_R_CHECK_LENGTH_1_CONDITION_" = oldV)
+## .jit.lev <- compiler::enableJIT(0)
+## Sys.getenv("_R_CHECK_LENGTH_1_CONDITION_") -> oldV
+## Sys.setenv("_R_CHECK_LENGTH_1_CONDITION_" = "false") # only *warn*
+## ## while did not protect its argument, which caused an error
+## ## under gctorture, PR#15990
+## gctorture()
+## suppressWarnings(while(c(FALSE, TRUE)) 1)
+## gctorture(FALSE)
+## ## gave an error because the test got released when the warning was generated.
+## compiler::enableJIT(.jit.lev)# revert
+## Sys.setenv("_R_CHECK_LENGTH_1_CONDITION_" = oldV)
 
 
 ## hist(x, breaks =) with too large bins, PR#15988
@@ -846,9 +846,9 @@ stopifnot(identical("3.141593", fpi <- format(pi)))
 options(OutDec = ",")
 stopifnot(identical("3,141593", cpi <- format(pi)))
 ## warnings, but it "works" (for now):
-tools::assertWarning(options(OutDec = ".1."))
+tools::assertWarning(options(OutDec = ".1."), verbose=TRUE)
 stopifnot(identical("3.1.141593", format(pi)))
-tools::assertWarning(options(OutDec = ""))
+tools::assertWarning(options(OutDec = ""), verbose=TRUE)
 tools::assertWarning(stopifnot(identical("3141593", format(pi))))
 options(op)# back to sanity
 ## No warnings in R versions <= 3.2.1
@@ -1233,11 +1233,11 @@ x$y <- 10 ## failed prior to R 3.3.0
 stopifnot(identical(attr(x, "modified"), "yes"))
 
 
-## illegal 'row.names' for as.data.frame():  -- for now just a warning --
-tools::assertWarning(
+## illegal 'row.names' for as.data.frame(): was just warning; error since R 4.3.0:
+tools::assertError(
     d3 <- as.data.frame(1:3, row.names = letters[1:2])
 )
-stopifnot(dim(d3) == c(3,1)) ## was (2, 1) in R <= 3.2.3
+## stopifnot(dim(d3) == c(3,1)) ## was (2, 1) in R <= 3.2.3
 ## 'row.names' were not checked and produced a "corrupted" data frame in R <= 3.2.3
 
 
@@ -1411,7 +1411,7 @@ stopifnot(
 proc.time() - .pt; .pt <- proc.time()
 
 
-## prettyDate() for subsecond ranges
+## prettyDate() for subsecond ranges (and more)
 ##' checking pretty():
 chkPretty <- function(x, n = 5, min.n = NULL, ..., max.D = 1) {
     if(is.null(min.n)) {
@@ -1449,7 +1449,7 @@ set.seed(7)
 for(n in c(1:7, 12)) replicate(32, chkPretty(sTime + .001*rlnorm(1) * 0:9, n = n))
 ## failed in R <= 3.2.3
 seqD  <- function(d1,d2) seq.Date(as.Date(d1), as.Date(d2), by = "1 day")
-seqDp <- function(d1,d2) { s <- seqD(d1,d2); structure(s, labels=format(s,"%b %d")) }
+seqDp <- function(d1,d2) { s <- seqD(d1,d2); structure(s, labels=format(s,"%b %d"), format="%b %d") }
 time2d <- function(i) sprintf("%02d", i %% 60)
 MTbd <- as.Date("1960-02-10")
 (p1   <- chkPretty(MTbd))
@@ -1465,7 +1465,7 @@ stopifnot(
 (p2 <- chkPretty(as.POSIXct("2002-02-02 02:02", tz = "GMT-1"), n = 5, min.n = 5))
 stopifnot(length(p2) >= 5+1,
 	  identical(p2, structure(1012611717 + (0:5), class = c("POSIXct", "POSIXt"),
-				  tzone = "GMT-1", labels = time2d(57 + (0:5)))))
+				  tzone = "GMT-1", labels = time2d(57 + (0:5)), format = "%S")))
 ## failed in R 3.2.4
 (T3 <- structure(1460019857.25, class = c("POSIXct", "POSIXt")))# typical Sys.date()
 chkPretty(T3, 1) # error in svn 70438
@@ -1481,7 +1481,7 @@ x5 <- as.POSIXct("2002-02-02 02:02", tz = "EST5EDT")
 atU <- chkPretty(seq(xU, by = "30 mins", length = 2), n = 5)
 at5 <- chkPretty(seq(x5, by = "30 mins", length = 2), n = 5)
 stopifnot(length(at) >= 4,
-	  identical(sort(names(aat <- attributes(at))), c("class", "labels", "tzone")),
+	  identical(sort(names(aat <- attributes(at))), c("class", "format", "labels", "tzone")),
 	  identical(aat$labels, time2d(59+ 0:3)),
           identical(x5 - xU, structure(5, units = "hours", class = "difftime")),
           identical(attr(at5, "labels"), attr(atU, "labels") -> lat),
@@ -1491,6 +1491,7 @@ nns <- c(1:9, 15:17); names(nns) <- paste0("n=",nns)
 prSeq <- function(x, n, st, ...) pretty(seq(x, by = st, length = 2), n = n, ...)
 pps <- lapply(nns, function(n)
 	      lapply(steps, function(st) prSeq(x=t02, n=n, st=st)))
+## (FIXME) relies on LC_TIME="C" (or "English",..):
 Ls.ok <- list(
     `10 secs`  = c("00", "02", "04", "06", "08", "10"),
     `1 min`    = sprintf("%02d", 10*((0:6) %% 6)),

@@ -55,6 +55,12 @@ extern "C" {
 #include <stdint.h>
 typedef uint64_t ZPOS64_T;
 
+/* Maximum unsigned 32-bit value used as placeholder for zip64 */
+/* cherry-picked to fix PR18390 */
+#ifndef MAXU32
+#define MAXU32 (0xffffffff)
+#endif
+
 /* apparently needed for zlib > 1.2.5 with --with-system-zlib, PR#14951 */
 #ifndef OF
 # define OF(x) x

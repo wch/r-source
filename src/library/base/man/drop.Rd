@@ -1,6 +1,6 @@
 % File src/library/base/man/drop.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2008 R Core Team
+% Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{drop}
@@ -29,7 +29,8 @@ drop(x)
   \code{drop} directly.
 }
 \seealso{
-  \code{\link{drop1}} which is used for dropping terms in models.
+  \code{\link{drop1}} which is used for dropping terms in models, and
+  \code{\link{droplevels}} used for dropping unused levels from a \code{\link{factor}}.
 }
 \examples{
 dim(drop(array(1:12, dim = c(1,3,1,1,2,1,2)))) # = 3 2 2

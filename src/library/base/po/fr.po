@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: R-4.0.4\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2022-01-14 11:27+0000\n"
-"PO-Revision-Date: 2021-02-10 17:30+0100\n"
-"Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
+"PO-Revision-Date: 2023-06-03 12:25+0200\n"
+"Last-Translator: Hugo Gruson <hugo.gruson@normalesup.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 2.4.2\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 4.16.4\n"
 
 #: src/appl/optim.c:60
 msgid "non-finite value supplied by 'optim'"
@@ -67,7 +67,7 @@ msgstr "trace, REPORT doit être >= 0 (method = \"SANN\")"
 #: src/appl/pretty.c:127
 #, c-format
 msgid "R_pretty(): infinite range; *ndiv=%d, should have ndiv >= 2"
-msgstr ""
+msgstr "R_pretty() : gamme infinie  ; *ndiv=%d, devrait avoir ndiv >= 2"
 
 #: src/appl/pretty.c:142
 #, fuzzy, c-format
@@ -580,7 +580,7 @@ msgstr "'.Random.seed' de taille incorrecte"
 
 #: src/main/RNG.c:463
 msgid "RNGkind: Marsaglia-Multicarry has poor statistical properties"
-msgstr "RNGkind: Marsaglia-Multicarry a des mauvaises propriétés statistiques"
+msgstr "RNGkind : Marsaglia-Multicarry a des mauvaises propriétés statistiques"
 
 #: src/main/RNG.c:473
 #, c-format
@@ -592,14 +592,14 @@ msgid ""
 "RNGkind: severe deviations from normality for Kinderman-Ramage + Marsaglia-"
 "Multicarry"
 msgstr ""
-"RNGkind: forts écarts à la normalité pour Kinderman-Ramage + Marsaglia-"
+"RNGkind : forts écarts à la normalité pour Kinderman-Ramage + Marsaglia-"
 "Multicarry"
 
 #: src/main/RNG.c:495
 msgid ""
 "RNGkind: deviations from normality for Ahrens-Dieter + Marsaglia-Multicarry"
 msgstr ""
-"RNGkind: écarts à la normalité pour Ahrens-Dieter + Marsaglia-Multicarry"
+"RNGkind : écarts à la normalité pour Ahrens-Dieter + Marsaglia-Multicarry"
 
 #: src/main/RNG.c:499
 msgid "invalid Normal type in 'RNGkind'"
@@ -684,7 +684,7 @@ msgid ""
 "unable to load shared object '%s':\n"
 "  %s"
 msgstr ""
-"impossible de charger l'objet partagé '%s':\n"
+"impossible de charger l'objet partagé '%s' :\n"
 "  %s"
 
 #: src/main/Rdynload.c:1094
@@ -1268,7 +1268,7 @@ msgstr "dims [produit %d] ne correspond pas à la longueur de l'objet [%d]"
 #: src/main/attrib.c:1314
 #, c-format
 msgid "factor level [%d] is duplicated"
-msgstr "le niveau [%d] dal la variable facteur est dupliqué"
+msgstr "le niveau [%d] de la variable facteur est dupliqué"
 
 #: src/main/attrib.c:1342
 msgid "attributes must be a list or NULL"
@@ -1469,7 +1469,7 @@ msgstr "impossible de définir l'environnement parent d’un espace de noms"
 #: src/main/builtin.c:415
 msgid "can not set the parent environment of package imports"
 msgstr ""
-"impossible de définit l’environnement parent d’une importation de package"
+"impossible de définir l’environnement parent d’une importation de package"
 
 #: src/main/builtin.c:423
 msgid "'parent' is not an environment"
@@ -1496,7 +1496,7 @@ msgstr "l'argument 'fill' négatif ou nul sera ignoré"
 #: src/main/builtin.c:666
 #, c-format
 msgid "argument %d (type '%s') cannot be handled by 'cat'"
-msgstr "argument %d (type '%s') pas encore traité par cat"
+msgstr "argument %d (type '%s') pas encore traité par 'cat'"
 
 #: src/main/builtin.c:810
 #, c-format
@@ -1587,9 +1587,9 @@ msgid "width is not computable for %s in \"bytes\" encoding"
 msgstr "largeur impossible à calculer pour %s dans l'encodage \"bytes\""
 
 #: src/main/character.c:345
-#, fuzzy, c-format
+#, c-format
 msgid "invalid multibyte string, element %ld"
-msgstr "chaîne de charactères multioctets incorrecte %d"
+msgstr "chaîne de charactères multioctets incorrecte %ld"
 
 #: src/main/character.c:348
 #, fuzzy, c-format
@@ -1850,7 +1850,7 @@ msgid ""
 "\"%s\" can only be set as the class if the object has this type; found \"%s\""
 msgstr ""
 "\"%s\" peut être attribué comme classe seulement si l'objet est de ce type ; "
-"type trouvé : \"%s\""
+"\"%s\" trouvé"
 
 #: src/main/coerce.c:3031
 #, c-format
@@ -3599,7 +3599,7 @@ msgstr "Dans %s :"
 #, c-format
 msgid "There was %d warning (use warnings() to see it)"
 msgid_plural "There were %d warnings (use warnings() to see them)"
-msgstr[0] "Il y a eu %d avis (utilisez warnings() pour les visionner)"
+msgstr[0] "Il y a eu %d avis (utilisez warnings() pour le visionner)"
 msgstr[1] "Il y a eu %d avis (utilisez warnings() pour les visionner)"
 
 #: src/main/errors.c:667
@@ -4720,7 +4720,7 @@ msgstr "le profilage de la mémoire n'est pas disponible sur ce système"
 #: src/main/memory.c:4586
 #, c-format
 msgid "Rprofmem: cannot open output file '%s'"
-msgstr "Rprofmem: impossible d'ouvrir le fichier '%s'"
+msgstr "Rprofmem : impossible d'ouvrir le fichier '%s'"
 
 #: src/main/memory.c:4700
 #, c-format
@@ -5055,7 +5055,7 @@ msgstr "argument incorrect"
 #, c-format
 msgid "%d argument passed to .Internal(%s) which requires %d"
 msgid_plural "%d arguments passed to .Internal(%s) which requires %d"
-msgstr[0] "%d arguments passés à .Internal(%s) qui en exige %d"
+msgstr[0] "%d argument passé à .Internal(%s) qui en exige %d"
 msgstr[1] "%d arguments passés à .Internal(%s) qui en exige %d"
 
 #: src/main/paste.c:103 src/main/paste.c:345
@@ -5286,7 +5286,7 @@ msgstr ""
 #: src/main/platform.c:2559
 #, c-format
 msgid "problem creating directory %ls: %s"
-msgstr "problème lors de la création du répertoire %ls: %s"
+msgstr "problème lors de la création du répertoire %ls : %s"
 
 #: src/main/platform.c:2581
 #, c-format
@@ -5296,7 +5296,7 @@ msgstr "problème lors de la lecture du répertoire %ls : %s"
 #: src/main/platform.c:2600
 #, c-format
 msgid "problem copying %ls to %ls: %s"
-msgstr "problème lors de la copie de %ls vers %ls: %s"
+msgstr "problème lors de la copie de %ls vers %ls : %s"
 
 #: src/main/platform.c:2816
 #, c-format
@@ -5308,17 +5308,17 @@ msgstr ""
 #: src/main/platform.c:2821
 #, c-format
 msgid "problem creating directory %s: %s"
-msgstr "problème lors de la création du répertoire %s: %s"
+msgstr "problème lors de la création du répertoire %s : %s"
 
 #: src/main/platform.c:2843
 #, c-format
 msgid "problem reading directory %s: %s"
-msgstr "problème lors de la lecture du répertoire %s: %s"
+msgstr "problème lors de la lecture du répertoire %s : %s"
 
 #: src/main/platform.c:2863
 #, c-format
 msgid "problem copying %s to %s: %s"
-msgstr "problème lors de la copie de %s vers %s: %s"
+msgstr "problème lors de la copie de %s vers %s : %s"
 
 #: src/main/platform.c:3022
 msgid "'mode' must be of length at least one"
@@ -5727,7 +5727,7 @@ msgstr "erreur xdr de lecture de données de complexes"
 #: src/main/saveload.c:1805 src/main/serialize.c:2333 src/main/serialize.c:2960
 #: src/modules/internet/internet.c:390 src/modules/internet/internet.c:463
 msgid "write failed"
-msgstr "échec d'écriture"
+msgstr "échec de l'écriture"
 
 #: src/main/saveload.c:1964
 msgid "restore file may be empty -- no data loaded"
@@ -6242,7 +6242,7 @@ msgstr "NA ou indices infinis"
 #: src/main/sort.c:799
 #, c-format
 msgid "index %ld outside bounds"
-msgstr "indice  %ld en dehors des limites"
+msgstr "indice %ld en dehors des limites"
 
 #: src/main/sort.c:804 src/main/sort.c:817
 msgid "NA index"
@@ -7230,7 +7230,7 @@ msgstr "format TIFF indisponible dans cette version de R"
 
 #: src/modules/X11/devX11.c:1396
 msgid "filename too long in tiff() call"
-msgstr "nom de fichier trop long dans un appel à tiff()"
+msgstr "nom de fichier trop long dans l'appel tiff()"
 
 #: src/modules/X11/devX11.c:1408
 msgid "filename too long in bmp() call"
@@ -7289,7 +7289,7 @@ msgstr "famille de police introuvable dans la base de données des polices X11"
 #: src/modules/X11/devX11.c:1857
 #, c-format
 msgid "invalid use of %d < 0 in '%s'"
-msgstr "usage incorrect de %d < 0 dans  '%s'"
+msgstr "usage incorrect de %d < 0 dans '%s'"
 
 #: src/modules/X11/devX11.c:1978
 #, c-format
@@ -7544,7 +7544,7 @@ msgstr ""
 #: src/modules/lapack/Lapack.c:91
 #, c-format
 msgid "argument type[1]='%s' must be one of '1','O', or 'I'"
-msgstr "l'argument type[1]='%s' doit être une des options  '1', 'O' ou 'I'"
+msgstr "l'argument type[1]='%s' doit être une des options '1', 'O' ou 'I'"
 
 #: src/modules/lapack/Lapack.c:131 src/modules/lapack/Lapack.c:138
 #: src/modules/lapack/Lapack.c:197 src/modules/lapack/Lapack.c:208

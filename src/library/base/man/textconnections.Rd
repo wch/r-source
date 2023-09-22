@@ -33,7 +33,7 @@ textConnectionValue(con)
   \item{encoding}{character string, partially matched.  Used only for input connections.  How
     marked strings in \code{object} should be handled: converted to the
     current locale, used byte-by-byte or translated to UTF-8.}
-  \item{con}{An output text connection.}
+  \item{con}{an output text connection.}
 }
 \details{
   An input text connection is opened and the character vector is copied

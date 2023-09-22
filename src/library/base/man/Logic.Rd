@@ -1,6 +1,6 @@
 % File src/library/base/man/Logic.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2018 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Logic}
@@ -38,12 +38,14 @@ isFALSE(x)
   \code{!} indicates logical negation (NOT).
 
   \code{&} and \code{&&} indicate logical AND and \code{|} and \code{||}
-  indicate logical OR.  The shorter form performs elementwise
+  indicate logical OR.  The shorter forms performs elementwise
   comparisons in much the same way as arithmetic operators.  The longer
-  form evaluates left to right examining only the first element of each
-  vector.  Evaluation proceeds only until the result is determined.  The
-  longer form is appropriate for programming control-flow and typically
-  preferred in \code{\link{if}} clauses.
+  forms evaluates left to right, proceeding only until the result is
+  determined.  The longer form is appropriate for programming
+  control-flow and typically preferred in \code{\link{if}} clauses.
+
+  Using vectors of more than one element in \code{&&} or \code{||} will
+  give  an error.
 
   \code{xor} indicates elementwise exclusive OR.
 

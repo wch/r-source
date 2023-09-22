@@ -1,6 +1,6 @@
 A first try at de-obfuscate the structure, mainly in ./loessf.f :
 
-  ehg182(): warning(message) generator, defined in ./loessc.c
+  loesswarn(), formerly ehg182() : warning(message) generator, defined in ./loessc.c
 	    called from almost any non-trivial function in loessf.f
 	    and hence *NOT* in the following calling structure
 

@@ -17,7 +17,7 @@ NON_SVN_INSTFILES = SVN-REVISION
 DISTFILES = $(INSTFILES) \
 	ChangeLog INSTALL README VERSION VERSION-NICK \
 	Makeconf.in Makefile.in Makefile.fw \
-	config.site configure configure.ac
+	config.site configure configure.ac configure.patch
 SUBDIRS = m4 tools doc etc share src tests
 SUBDIRS_WITH_NO_BUILD = po
 
@@ -45,8 +45,9 @@ ACINCLUDE_DEPENDENCIES = \
 CONFIGURE_DEPENDENCIES = $(srcdir)/VERSION
 config.status: $(srcdir)/configure
 	@$(SHELL) ./config.status --recheck
-$(srcdir)/configure: @MAINTAINER_MODE_TRUE@ $(srcdir)/configure.ac $(ACLOCAL_M4) $(CONFIGURE_DEPENDENCIES)
-	@BD=`pwd`; cd $(srcdir) && $(AUTOCONF) -B $${BD}
+$(srcdir)/configure: @MAINTAINER_MODE_TRUE@ $(srcdir)/configure.ac $(ACLOCAL_M4) $(CONFIGURE_DEPENDENCIES) $(srcdir)/configure.patch
+	@BD=`pwd`; cd $(srcdir) && $(AUTOCONF) -f -B $${BD}
+	-@($(AUTOCONF) --version | sed -n 1p | grep -F 2.71) && (cd $(srcdir); patch -p0 < configure.patch)
 $(ACLOCAL_M4): $(srcdir)/configure.ac acinclude.m4
 	@BD=`pwd`; cd $(srcdir) && $(ACLOCAL) --output=$${BD}/$@ -I $${BD}
 acinclude.m4: $(srcdir)/configure.ac $(ACINCLUDE_DEPENDENCIES)
@@ -105,7 +106,6 @@ install install-strip: installdirs svnonly
 
 svnonly:
 	@if test ! -f "$(srcdir)/doc/FAQ" || test -f non-tarball ; then \
-	  (cd doc/manual && $(MAKE) front-matter html-non-svn) ; \
 	  touch non-tarball ; \
 	  (cd $(srcdir); LC_ALL=C TZ=GMT $(GIT) svn info || cat SVNINFO || $(ECHO) "Revision: -99") 2> /dev/null \
 	    | sed -n -e '/^Revision/p' -e '/^Last Changed Date/'p \
@@ -116,6 +116,7 @@ svnonly:
 	  fi; \
 	  $(SHELL) $(top_srcdir)/tools/move-if-change SVN-REVISION-tmp SVN-REVISION ; \
 	  rm -f SVN-REVISION-tmp ; \
+	  (cd doc/manual && $(MAKE) front-matter html-non-svn) ; \
 	else \
 	  if test "$(BUILDDIR_IS_SRCDIR)" = no ; then \
 	    for f in $(NON_SVN_INSTFILES); do \
@@ -170,6 +171,8 @@ distclean: clean
 	-@rm -f Makeconf Makefile Makefile.bak Makefrag.* \
 	  config.cache config.log config.status libtool stamp-java \
 	  $(ACLOCAL_M4) acinclude.m4 $(distdir).tar.gz
+## left behind by the Intel compilers from configuring.
+	-@rm -f *.f90 *.mod
 maintainer-clean: distclean
 	@$(ECHO) "This command is intended for maintainers to use; it"
 	@$(ECHO) "deletes files that may need special rules to rebuild"
@@ -177,6 +180,7 @@ maintainer-clean: distclean
 	  for d in $${rsd}; do (cd $${d} && $(MAKE) $@); done)
 	-@(cd $(srcdir) && rm -Rf autom4te.cache)
 
+## make dist should be preceded by make all
 dist: dist-unix
 ## GNU gzip 1.8 warns that env var GZIP is obsolescent for gzip, so use as arg
 dist-unix: distdir
@@ -187,6 +191,7 @@ dist-unix: distdir
           if test $(distdir) != $${dirname} ; then \
             mv $(distdir) $${dirname}; \
           fi ; \
+	  rm -f $${distname}.tar.gz; \
 	  $(TAR) cf $${distname}.tar $${dirname} && $(R_GZIPCMD) $(GZIP) $${distname}.tar; \
 	  rm -Rf $${dirname}
 dist-win:
@@ -288,7 +293,7 @@ checkdistcomplete:
 
 info pdf:
 	-@(cd doc && $(MAKE) $@)
-install-info install-pdf:
+install-info install-pdf compact-pdf:
 	-@(cd doc/manual && $(MAKE) $@)
 uninstall-info uninstall-pdf:
 	-@(cd doc/manual && $(MAKE) $@)

@@ -1,6 +1,6 @@
 % File src/library/base/man/hexmode.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2021 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{hexmode}
@@ -27,14 +27,16 @@
 \usage{
 as.hexmode(x)
 
-\method{as.character}{hexmode}(x, \dots)
+\method{as.character}{hexmode}(x, keepStr = FALSE, \dots)
 
 \method{format}{hexmode}(x, width = NULL, upper.case = FALSE, \dots)
 
 \method{print}{hexmode}(x, \dots)
 }
 \arguments{
-  \item{x}{An object, for the methods inheriting from class \code{"hexmode"}.}
+  \item{x}{an object, for the methods inheriting from class \code{"hexmode"}.}
+  \item{keepStr}{a \code{\link{logical}} indicating that names and
+    dimensions should be kept; set \code{TRUE} for back compatibility, if needed.}
   \item{width}{\code{NULL} or a positive integer specifying the minimum
     field width to be used, with padding by leading zeroes.}
   \item{upper.case}{a logical indicating whether to use upper-case
@@ -47,7 +49,9 @@ as.hexmode(x)
   Subsetting (\code{\link{[}}) works too, as do arithmetic or
   other mathematical operations, albeit truncated to integer.
 
-  \code{as.character(x)} converts each entry individually, hence with no
+  \code{as.character(x)} drops all \code{\link{attributes}} (unless when
+  \code{keepStr=TRUE} where it keeps, \code{dim}, \code{dimnames} and
+  \code{names} for back compatibility) and converts each entry individually, hence with no
   leading zeroes, whereas in \code{format()}, when \code{width = NULL} (the
   default), the output is padded with leading zeroes to the smallest width
   needed for all the non-missing elements.

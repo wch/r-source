@@ -35,11 +35,11 @@ C------------------------------------------------------------C
 c Args
       INTEGER N, LEN, IOPT
       INTEGER IA(N),IB(N), NN(N)
-      LOGICAL FLAG(N), isWard
       DOUBLE PRECISION CRIT(N), MEMBR(N),DISS(LEN), DISNN(N)
 c Var
       INTEGER IM, JJ, JM, I, NCL, J, IND, I2, J2, K, IND1, IND2
       DOUBLE PRECISION INF, DMIN, D12
+      LOGICAL FLAG(N), isWard
 c External function
       INTEGER IOFFST
 c
@@ -173,10 +173,11 @@ C
 c	     FIX: the rest of the else clause is a fix by JB to ensure
 c            correct nearest neighbours are found when a non-monotone
 c            clustering method (e.g. the centroid methods) are used
-               if(DISS(IND1) .lt. DISNN(K)) then ! find nearest neighbour of i2
+               if(DISS(IND1) .lt. DISNN(K)) then
+c                 find nearest neighbour of i2
                   DISNN(K) = DISS(IND1)
                   NN(K) = I2
-               end if
+               endif
             ENDIF
          ENDIF
       END DO

@@ -78,17 +78,7 @@ Sweave("customgraphics.Rnw")
 ### ------------------------------------ 4 ----------------------------------
 ## SweaveOpts + \Sexpr --> \verb... output
 Sweave(f <- "Sexpr-verb-ex.Rnw")
-require(tools) # <<------------------------- from here on -----
-texi2pdf(sub("Rnw$","tex", f))# used to fail
-
-### ------------------------------------ 5 ----------------------------------
-## \Sexpr[stage=build, results=hide]{ <a dozen "empty" lines> }
-tf <- textConnection("RdTeX", "w")
-Rd2latex("Sexpr-hide-empty.Rd", tf, stages="build")
-tex <- textConnectionValue(tf); close(tf); rm(tf)
-(H2end <- tex[grep("^Hello", tex):length(tex)])
-stopifnot((n <- length(H2end)) <= 4, # currently '3'; was 13 in R <= 4.1.1
-          H2end[-c(1L,n)] == "")     # also had \\AsIs{ .. }  " "  "   "
+tools::texi2pdf(sub("Rnw$","tex", f))# used to fail
 
 
 cat('Time elapsed: ', proc.time() - .proctime00,'\n')

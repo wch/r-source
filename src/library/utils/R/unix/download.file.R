@@ -1,7 +1,7 @@
 #  File src/library/utils/R/unix/download.file.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2020 The R Core Team
+#  Copyright (C) 1995-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -22,10 +22,10 @@ download.file <-
              headers = NULL, ...)
 {
     destfile # check supplied
-    method <- if (missing(method))
-	getOption("download.file.method", default = "auto")
-    else
-        match.arg(method, c("auto", "internal", "libcurl", "wget", "curl", "lynx"))
+    if (missing(method))
+	method <- getOption("download.file.method", default = "auto")
+    method <- match.arg(method, c("auto", "internal",
+                                  "libcurl", "wget", "curl", "lynx"))
 
     if(method == "auto") {
         if(length(url) != 1L || typeof(url) != "character")
@@ -79,7 +79,9 @@ download.file <-
                if(status) stop("'curl' call had nonzero exit status")
 	   },
 	   "lynx" =
-	       stop("method 'lynx' is defunct", domain = NA))
+	       stop("method 'lynx' is defunct", domain = NA),
+           ## otherwise {should never happen}
+           stop("invalid method: ", method))
 
     if(status) warning("download had nonzero exit status")
 

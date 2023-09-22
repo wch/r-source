@@ -1,6 +1,6 @@
 % File src/library/utils/man/install.packages.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2021 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{install.packages}
@@ -30,7 +30,7 @@ install.packages(pkgs, lib, repos = getOption("repos"),
     \describe{
       \item{on Windows,}{
     file paths of \file{.zip} files containing binary builds of
-    packages.  (\code{http://} and \code{file://} URLs are also accepted
+    packages.  (\samp{http://} and \samp{file://} URLs are also accepted
     and the files will be downloaded and installed from local copies.)
     Source directories or file paths or URLs of archives may be
     specified with \code{type = "source"}, but some packages need
@@ -38,7 +38,7 @@ install.packages(pkgs, lib, repos = getOption("repos"),
       }
       \item{On Unix-alikes,}{these file paths can be source directories or archives
     or binary package archive files (as created by \command{R CMD build
-      --binary}).  (\code{http://} and \code{file://} URLs are also
+      --binary}).  (\samp{http://} and \samp{file://} URLs are also
     accepted and the files will be downloaded and installed from local
     copies.)  On a CRAN build of \R for macOS these can be \file{.tgz}
     files containing binary package archives.
@@ -67,7 +67,7 @@ install.packages(pkgs, lib, repos = getOption("repos"),
   \item{contriburl}{
     URL(s) of the contrib sections of the repositories.  Use this
     argument if your repository mirror is incomplete, e.g., because
-    you burned only the \file{contrib} section on a CD, or only have
+    you mirrored only the \file{contrib} section, or only have
     binary packages.  Overrides argument \code{repos}.
     Incompatible with \code{type = "both"}.
   }
@@ -147,7 +147,7 @@ install.packages(pkgs, lib, repos = getOption("repos"),
     install of more than one source package.  Values greater than one
     are supported if the \command{make} command specified by
     \code{Sys.getenv("MAKE", "make")} accepts argument
-    \code{-k -j \var{Ncpus}}.
+    \option{-k -j \var{Ncpus}}.
   }
   \item{verbose}{
     a logical indicating if some \dQuote{progress report} should be given.
@@ -305,7 +305,7 @@ install.packages(pkgs, lib, repos = getOption("repos"),
 
   Note that it is possible for the package installation to fail so badly
   that the lock directory is not removed: this inhibits any further
-  installs to the library directory (or for \code{--pkglock}, of the
+  installs to the library directory (or for \option{--pkglock}, of the
   package) until the lock directory is removed manually.
 }
 
@@ -313,7 +313,7 @@ install.packages(pkgs, lib, repos = getOption("repos"),
   Parallel installs are attempted if \code{pkgs} has length greater than
   one and \code{Ncpus > 1}.  It makes use of a parallel \command{make},
   so the \code{make} specified (default \command{make}) when \R was
-  built must be capable of supporting \code{make -j \var{n}}: GNU make,
+  built must be capable of supporting \option{make -j \var{n}}: GNU make,
   \command{dmake} and \command{pmake} do, but Solaris \command{make} and
   older FreeBSD \command{make} do not: if necessary environment variable
   \env{MAKE} can be set for the current session to select a suitable
@@ -340,7 +340,10 @@ install.packages(pkgs, lib, repos = getOption("repos"),
   installs \emph{via} the OS's \command{timeout} command.  (The one
   tested is from GNU \pkg{coreutils}, commonly available on Linux but
   not other Unix-alikes.  If no such command is available the timeout
-  request is ignored, with a warning.)  For parallel installs a
+  request is ignored, with a warning. On Windows, one needs to specify
+  a suitable \command{timeout} command via environment variable
+  \env{R_TIMEOUT}, because \file{c:/Windows/system32/timeout.exe} is
+  not.)  For parallel installs a
   \samp{Error 124} message from \command{make} indicates that timeout
   occurred.
 

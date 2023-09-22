@@ -220,7 +220,11 @@ pdf(file = if(onefile) "Rplots.pdf" else "Rplot\%03d.pdf",
 \preformatted{    pdf("|lp -o landscape", paper = "a4r")}
   This forces \code{onefile = TRUE}.
 }
-
+\note{
+  If you have drawn any typeset glyphs (see \code{\link{glyphInfo}})
+  then it is \emph{highly} recommended that you use
+  \code{\link{embedGlyphs}} to embed the relevant fonts.
+}
 \note{
   If you see problems with PDF output, do remember that the problem is
   much more likely to be in your viewer than in \R.  Try another
@@ -282,7 +286,7 @@ pdf(file = if(onefile) "Rplots.pdf" else "Rplot\%03d.pdf",
 
 \seealso{
   \code{\link{pdfFonts}}, \code{\link{pdf.options}},
-  \code{\link{embedFonts}},
+  \code{\link{embedFonts}}, \code{\link{glyphInfo}},
   \code{\link{Devices}},
   \code{\link{postscript}}.
 

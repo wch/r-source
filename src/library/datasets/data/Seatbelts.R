@@ -158,7 +158,9 @@
 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-1, 1, 1, 1, 1, 1, 1, 1, 1, 1), 192, 8, dimnames =
-list(NULL, c("DriversKilled", "drivers", "front", "rear", "kms",
-             "PetrolPrice", "VanKilled", "law"))),
-1969, 1984.91666666667, 12, class = c("mts", "ts"))
+1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+nrow = 192, ncol = 8,
+dimnames = list(NULL, c("DriversKilled", "drivers", "front", "rear", "kms",
+                        "PetrolPrice", "VanKilled", "law"))
+) # matrix(.)
+, start = 1969, end = 1984.91666666667, frequency = 12)

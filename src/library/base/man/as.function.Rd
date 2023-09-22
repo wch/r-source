@@ -14,9 +14,8 @@ as.function(x, \dots)
 \alias{as.function.default}
 \arguments{
   \item{x}{object to convert, a list for the default method.}
-  \item{\dots}{additional arguments, depending on object}
-
-  \item{envir}{environment in which the function should be defined}
+  \item{\dots}{additional arguments to be passed to or from methods.}
+  \item{envir}{environment in which the function should be defined.}
 }
 \description{
   \code{as.function} is a generic function which is used to convert
@@ -27,12 +26,6 @@ as.function(x, \dots)
   object of mode \code{"\link{call}"} which will become the function body.
   The function will be defined in a specified environment, by default
   that of the caller.
-}
-\note{
-  For ancient historical reasons, \code{envir = NULL} uses the global
-  environment rather than the base environment.
-  Please use \code{envir = \link{globalenv}()} instead if this is what you want,
-  as the special handling of \code{NULL} may change in a future release.
 }
 \value{
   The desired function.

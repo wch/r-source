@@ -1,6 +1,6 @@
 
-R Under development (unstable) (2021-10-13 r81047) -- "Unsuffered Consequences"
-Copyright (C) 2021 The R Foundation for Statistical Computing
+R Under development (unstable) (2022-03-19 r81942) -- "Unsuffered Consequences"
+Copyright (C) 2022 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -70,7 +70,7 @@ Type 'q()' to quit R.
 [1] "C"
 > stopifnot(!is.na(strptime("11-August-1903", "%d-%b-%Y")))
 > 
-> ## Prior to R 4.0.0 this oveflowed an array.  Now gives a warning
+> ## Prior to R 4.0.0 this overflowed an array.  Now gives a warning
 > 
 > z <- paste("2017", c(1,365,366), sep = "-")
 > (zz <- strptime(z, "%Y-%j"))

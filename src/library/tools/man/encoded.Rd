@@ -34,7 +34,7 @@ encoded_text_to_latex(x,
   \code{\link{iconv}}
 }
 \examples{
-x <- "fa\xE7ile"
+x <- "fran\xE7ais"
 encoded_text_to_latex(x, "latin1")
 \dontrun{
 ## create a tex file to show the upper half of 8-bit charsets

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.9.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-11-06 17:17+0100\n"
+"POT-Creation-Date: 2023-07-31 14:59+0200\n"
 "PO-Revision-Date: 2020-08-27 19:22+0900\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -20,70 +20,81 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Poedit 1.8.7.1\n"
 
-#: gpar.c:523
+#: gpar.c:621
 msgid "updateGContext must only be called after initGContext"
 msgstr "updateGContext можно вызывать только после initGContext"
 
 #: grid.c:199
-#, fuzzy
 msgid "Turning clipping on or off within a (clipping) path is no honoured"
-msgstr "Нехорошо включать или выключать отсечение внутри контура отсечения"
+msgstr "Включение или выключение отсечения внутри контура отсечения игнорируется"
 
 #: grid.c:241
 msgid "cannot clip to rotated viewport"
 msgstr "не могу обрезать до повернутой оконницы"
 
-#: grid.c:455
-#, fuzzy
+#: grid.c:456
 msgid "Clipping paths within a (clipping) path are not honoured"
-msgstr "Нехорошо делать контуры отсечения внутри контуров отсечения"
+msgstr "Контуры отсечения внутри других контуров отсечения игнорируются"
 
-#: grid.c:474
-#, fuzzy
+#: grid.c:475
 msgid "Masks within a (clipping) path are not honoured"
-msgstr "Нехорошо делать маску внутри контура отсечения"
+msgstr "Маски внутри контуров отсечения игнорируются"
 
-#: grid.c:916 grid.c:921 grid.c:1040 grid.c:1045
+#: grid.c:917 grid.c:922 grid.c:1043 grid.c:1048
 msgid "cannot pop the top-level viewport ('grid' and 'graphics' output mixed?)"
 msgstr "не могу извлечь оконницу верхнего уровня (выводы 'grid' и 'graphics' смешались?)"
 
-#: grid.c:1246
+#: grid.c:1249
 msgid "attempt to plot on null device"
 msgstr "попытка чертить на нулевом устройстве"
 
-#: grid.c:1702
+#: grid.c:1719
 msgid "there is no layout defined"
 msgstr "нет заданного эскиза"
 
-#: grid.c:1922
+#: grid.c:1941
 msgid "polygon edge not found (zero-width or zero-height?)"
 msgstr "край многоугольника не найден (нулевая ширина или высота?)"
 
-#: grid.c:1931
+#: grid.c:1950
 msgid "polygon edge not found"
 msgstr "край многоугольника не найден"
 
-#: grid.c:2085
+#: grid.c:2104
 msgid "require at least two points to draw arrow"
 msgstr "надо как минимум две точки, чтобы нарисовать стрелку"
 
-#: grid.c:2408
+#: grid.c:2475
 msgid "non-finite control point in Xspline"
 msgstr "не-конечная контрольная точка в Xspline"
 
-#: grid.c:3333
+#: grid.c:3444
 msgid "non-finite x or y in graphics path"
 msgstr "бесконечный x или y в кривой крафика"
 
-#: grid.c:3383
+#: grid.c:3495
 msgid "Empty raster"
 msgstr "Пустой растр"
 
-#: grid.c:3869
+#: grid.c:4046 grid.c:4102
+msgid "Coordinates for text pch not yet supported"
+msgstr ""
+
+#: grid.c:4107
+#, c-format
+msgid "pch value '%d' is invalid in this locale"
+msgstr ""
+
+#: grid.c:4928
+#, c-format
+msgid "unimplemented pch value '%d'"
+msgstr ""
+
+#: grid.c:5087
 msgid "invalid plotting symbol"
 msgstr "неправильный символ графика"
 
-#: grid.c:3963
+#: grid.c:5205
 msgid "unable to clip to rotated rectangle"
 msgstr "не могу обрезать до повернутого четырехугольника"
 
@@ -99,7 +110,7 @@ msgstr "неправильный 'layout.pos.col'"
 msgid "singular transformation matrix"
 msgstr "сингулярная трансформационная матрица"
 
-#: state.c:192
+#: state.c:191
 msgid "unable to store 'grid' state.  Too many devices open?"
 msgstr "не могу сохранить состояние 'grid'. Открыто слишком много устройств?"
 
@@ -166,6 +177,10 @@ msgstr "объект не является единицей"
 #: unit.c:1840
 msgid "units can only be multiplied with numerics and integers"
 msgstr "единицы можно умножать только на целые или десятичные числа"
+
+#: util.c:216
+msgid "Unable to calculate text width/height (using zero)"
+msgstr ""
 
 #: viewport.c:56
 msgid "Mask is not logical value ('none' or 'inherit')"

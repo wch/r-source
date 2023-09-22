@@ -33,8 +33,8 @@ x
 ## Splitting by margin 2 gives a 1-d list array of length 3
 ## consisting of 2 x 4 arrays:
 asplit(x, 2)
-## Spltting by margins 1 and 2 gives a 2 x 3 list array
-## consisting of 1-d arrays of length 4:a
+## Splitting by margins 1 and 2 gives a 2 x 3 list array
+## consisting of 1-d arrays of length 4:
 asplit(x, c(1, 2))
 ## Compare to
 split(x, slice.index(x, c(1, 2)))

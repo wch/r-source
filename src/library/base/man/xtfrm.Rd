@@ -1,6 +1,6 @@
 % File src/library/base/man/xtfrm.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2008-2015 R Core Team
+% Copyright 2008-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{xtfrm}
@@ -47,6 +47,8 @@ xtfrm(x)
 
   This is an \link{internal generic} \link{primitive}, so S3 or S4
   methods can be written for it.
+  Differently to other internal generics, the default method is called
+  explicitly when no other dispatch has happened.
 }
 \value{
   A numeric (usually integer) vector of the same length as \code{x}.

@@ -1,7 +1,7 @@
 #   File src/library/utils/R/Sweave.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2019 The R Core Team
+#  Copyright (C) 1995-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -30,7 +30,7 @@
 ### drivers re-encode the output back to 'encoding', and preserve the
 ### "UTF-8" encoding on both input and output.  (Up to 3.6, the Rtangle
 ### driver left things in the encoding of the current locale and recorded
-### what that was in a comment.) 
+### what that was in a comment.)
 ###
 ### SweaveReadFile first looks for a call to one of the LaTeX packages
 ### inputen[cx] and deduces the vignette encoding from that, falling
@@ -437,8 +437,8 @@ SweaveHooks <- function(options, run = FALSE, envir = .GlobalEnv)
             "  --engine=pkg::engine  use named vignette engine",
             "  --encoding=enc  default encoding 'enc' for file",
 	    "  --clean         corresponds to --clean=default",
-	    "  --clean=        remove some of the created files:",
-            '                  "default" removes those the same initial name;',
+	    "  --clean=        remove some of the files created in the working directory:",
+            '                  "default" removes intermediate files;',
             '                  "keepOuts" keeps e.g. *.tex even when PDF is produced',
             "  --options=      comma-separated list of Sweave/engine options",
             "  --pdf           convert to PDF document",
@@ -477,7 +477,7 @@ SweaveHooks <- function(options, run = FALSE, envir = .GlobalEnv)
                 R.version[["major"]], ".",  R.version[["minor"]],
                 " (r", R.version[["svn rev"]], ")\n", sep = "")
             cat("",
-                "Copyright (C) 2006-2014 The R Core Team.",
+                tools:::.R_copyright_msg(2006),
                 "This is free software; see the GNU General Public License version 2",
                 "or later for copying conditions.  There is NO warranty.",
                 sep = "\n")
@@ -599,7 +599,7 @@ SweaveHooks <- function(options, run = FALSE, envir = .GlobalEnv)
                 R.version[["major"]], ".",  R.version[["minor"]],
                 " (r", R.version[["svn rev"]], ")\n", sep = "")
             cat("",
-                "Copyright (C) 2006-2011 The R Core Team.",
+                tools:::.R_copyright_msg(2006),
                 "This is free software; see the GNU General Public License version 2",
                 "or later for copying conditions.  There is NO warranty.",
                 sep = "\n")
@@ -627,6 +627,12 @@ SweaveHooks <- function(options, run = FALSE, envir = .GlobalEnv)
         args <- c(args, opts)
     }
     output <- do.call(tools::buildVignette, args)
-    message("Output file:  ", output)
+    ## == names of all files there in 'keep'; e.g. source()d ones.
+    ##   'Output/used' was 'Output' :
+    message(ngettext(length(output),
+                     "Output/used file:  ",
+                     "Output/used files:  "),
+            paste(output, collapse=", "),
+            domain = NA)
     do_exit()
 }

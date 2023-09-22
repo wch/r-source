@@ -28,7 +28,7 @@ casefold(x, upper = FALSE)
   \item{new}{a character string specifying the translations. If a
     character vector of length 2 or more is supplied, the first element
     is used with a warning.}
-  \item{upper}{logical: translate to upper or lower case?.}
+  \item{upper}{logical: translate to upper or lower case?}
 }
 \details{
   \code{chartr} translates each character in \code{x} that is specified

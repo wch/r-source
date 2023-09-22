@@ -1,6 +1,6 @@
 % File src/library/base/man/base-internal.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2021 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{base-internal}
@@ -8,6 +8,7 @@
 \alias{.subset2}
 \alias{.getRequiredPackages}
 \alias{.getRequiredPackages2}
+\alias{.formula2varlist}
 % removed for R 3.6.
 %\alias{testPlatformEquivalence}
 \alias{.isMethodsDispatchOn}
@@ -30,8 +31,6 @@
 \alias{.POSIXlt}
 \alias{.difftime}
 \alias{.cache_class}
-\alias{.Firstlib_as_onLoad}
-\alias{.methodsNamespace} % created by the methods package ....
 \alias{.popath}
 \alias{.detach}
 \alias{.maskedMsg}
@@ -58,6 +57,18 @@
 
 \alias{.doWrap}
 \alias{.doSortWrap}
+
+\alias{.amatch_bounds}
+\alias{.amatch_costs}
+\alias{.check_tzones}
+\alias{.encode_numeric_version}
+\alias{.decode_numeric_version}
+\alias{.make_numeric_version}
+\alias{.expand_R_libs_env_var}
+\alias{.kronecker}
+\alias{.packageStartupMessage}
+\alias{.rmpkg}
+
 \title{Internal Objects in Package \pkg{base}}
 \description{% 'most': see e.g., .detach
   Internal objects in the base package most of which are only user-visible
@@ -110,6 +121,21 @@ lazyLoadDBfetch(key, file, compressed, hook)
 ## Only on Windows:
 .fixupGFortranStdout()
 .fixupGFortranStderr()
+
+.doWrap(vec, decr, nalast, noNA = NA) 
+.doSortWrap(vec, decr, nalast, noNA = NA)
+
+.amatch_bounds(x = 0.1) 
+.amatch_costs(x = NULL)
+.check_tzones(...)
+.decode_numeric_version(x)
+.encode_numeric_version(x) 
+.make_numeric_version(x, strict = TRUE, regexp, classes = NULL) 
+.expand_R_libs_env_var(x) 
+.kronecker(X, Y, FUN = "*", make.dimnames = FALSE, ...) 
+.packageStartupMessage(message, call = NULL) 
+.rmpkg(pkg) 
+.formula2varlist(formula, data, warnLHS = TRUE, ignoreLHS = warnLHS)
 }
 \arguments{
   \item{x}{an object
@@ -121,9 +147,9 @@ lazyLoadDBfetch(key, file, compressed, hook)
     }
   }
   \item{file}{\describe{
-      \item{.getRequiredPackages():}{The full path to the
+      \item{for \code{.getRequiredPackages()}:}{the full path to the
 	\file{DESCRIPTION} file of a package.}
-      \item{lazyLoadDBfetch():}{the filepath to a lazyload database.}
+      \item{for \code{lazyLoadDBfetch()}:}{the filepath to a lazyload database.}
     }
   }
   \item{lib.loc}{a character vector describing the location of \R
@@ -134,9 +160,9 @@ lazyLoadDBfetch(key, file, compressed, hook)
     if the package(s) are not found?}
   \item{useImports}{logical.  Should  the \code{Imports} field be processed?}
   \item{quietly}{logical: should message(s) be printed.}
-  \item{pkginfo}{A processed \file{DESCRIPTION} file of class
+  \item{pkgInfo}{a processed \file{DESCRIPTION} file of class
     \code{"packageDescription2"}.}
-  \item{built, run}{platform strings of the form \code{"cpu-vendor-os"}.}
+  %% \item{built, run}{platform strings of the form \code{"cpu-vendor-os"}.}
   \item{name}{name of image file to save or load.}
   \item{type}{integer.  Currently \code{type = 0} returns the internal
     \code{"row.names"} attribute (possibly \code{NULL}), \code{type = 2}
@@ -146,7 +172,7 @@ lazyLoadDBfetch(key, file, compressed, hook)
   \item{info}{character string such as \code{"package:MASS"}.}
   \item{key}{the object name in a lazyload database.}
   \item{compressed}{logical: are the values in the database compressed?}
-  \item{refhook}{a load hook: see \code{\link{unserialize}}.}
+  \item{hook}{a load hook: see \code{\link{unserialize}}.}
   \item{seed}{a length-one integer vector.}
   \item{i, j}{indices.}
   \item{strictly}{logical.}
@@ -156,13 +182,19 @@ lazyLoadDBfetch(key, file, compressed, hook)
   \item{cl}{an optional character vector of classes \emph{containing}
     the default classes.}
   \item{units}{see \code{\link{difftime}}.}
-  \item{\dots}{Arguments passed to non-dot name versions.}
+  \item{\dots}{arguments passed to non-dot name versions.}
   \item{pos}{an integer.}
 
   \item{same}{character vector of \emph{same} objects, masking others.}
   \item{pkg}{character string naming the package which is masked from or by.}
   \item{by}{logical indicating if the masking happens \emph{by}
-  \code{pkg}, or (\code{by = FALSE}) from \code{pkg}.}
+    \code{pkg}, or (\code{by = FALSE}) from \code{pkg}.}
+  \item{formula}{typically a one sided formula, with no LHS.}
+  \item{data}{a data frame where terms in the formula are to be evaluated.}
+  \item{warnLHS}{logical flag, indicating whether the presence of an LHS
+    should trigger a warning.}
+  \item{ignoreLHS}{logical flag, indicating whether variables in the LHS
+    should be ignored.}
 }
 \details{
   The functions \code{.subset} and \code{.subset2} are essentially
@@ -236,8 +268,8 @@ lazyLoadDBfetch(key, file, compressed, hook)
   S3 method dispatch.  With \code{NULL} second argument it returns the
   cached inheritance, for diagnostic use.
 
-  \code{.popath} is a variable created at startup which records where
-  the \pkg{translations} package in use is.
+  \code{.popath} is a character string created at startup which records where
+  the \pkg{translations} package in use is, possibly \code{NA_character_}.
 
   \code{.detach} is a \sQuote{bare-bones} version of \code{\link{detach}} for
   use in other \R packages.
@@ -258,6 +290,11 @@ lazyLoadDBfetch(key, file, compressed, hook)
   \code{.getRequiredPackages} and \code{.getRequiredPackages2}
   return \code{invisible()}.
 
-  \code{testPlatformEquivalence} returns \code{TRUE} or \code{FALSE}.
-}
+  %% \code{testPlatformEquivalence} returns \code{TRUE} or \code{FALSE}.
+
+  \code{.formula2varlist} returns a list of variables found in
+  \code{formula}, evaluated in \code{data}, following standard
+  non-standard evaluation rules. Used in \code{\link{split}} and
+  \code{\link{tapply}} to interpret a formula as a list of categorical
+  variables to split on. }
 \keyword{internal}

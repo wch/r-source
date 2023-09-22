@@ -491,6 +491,10 @@ tre_tnfa_run_approx(const tre_tnfa_t *tnfa, const void *string, int len,
 	    if (deque_end >= (ringbuffer + rb_size)) {
 	      tre_tnfa_approx_reach_t **larger_buf;
 	      rb_size += 512;
+	      size_t os = deque_start - ringbuffer,
+		  oe = deque_end - ringbuffer;
+	      // GCC complained here that ringbuffer is still used.
+	      // Although realloc could free it, it does not change the pointer.
 	      larger_buf = (tre_tnfa_approx_reach_t **)
 		((ringbuffer == static_ringbuffer) ?
 		 xmalloc(sizeof(tre_tnfa_approx_reach_t *) * rb_size) :
@@ -505,8 +509,8 @@ tre_tnfa_run_approx(const tre_tnfa_t *tnfa, const void *string, int len,
 #endif /* !TRE_USE_ALLOCA */
 		return REG_ESPACE;
 	      }
-	      deque_start = deque_start - ringbuffer + larger_buf;
-	      deque_end = deque_end - ringbuffer + larger_buf;
+	      deque_start = larger_buf + os;
+	      deque_end = larger_buf + oe;
 	      if (ringbuffer == static_ringbuffer) /* when switching from stack to heap we need to copy */
 		memcpy(larger_buf, ringbuffer, sizeof(static_ringbuffer));
 	      ringbuffer = larger_buf;

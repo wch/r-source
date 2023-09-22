@@ -140,6 +140,10 @@ getParseData <- function(x, includeText = NA) {
     	return(NULL)
     else
     	data <- srcfile$parseData
+    
+    if (is.null(data) && !is.null(srcfile$original))
+        data <- srcfile$original$parseData
+        
     if (!is.null(data)) {
         tokens <- attr(data, "tokens")
         data <- t(unclass(data))

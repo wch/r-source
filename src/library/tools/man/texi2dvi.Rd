@@ -30,7 +30,7 @@ texi2pdf(file, clean = FALSE, quiet = TRUE,
   \item{texi2dvi}{character string (or \code{NULL}).  Script or program
     used to compile a TeX file to dvi or PDF. The default (selected
     by \code{""} or \code{"texi2dvi"} or \code{NULL}) is to look
-    for a program or script named \file{texi2dvi} on the path and
+    for a program or script named \command{texi2dvi} on the path and
     otherwise emulate the script with \code{system2} calls (which
     can be selected by the value \code{"emulation"}).  See also
     \sQuote{Details}.} 
@@ -46,8 +46,8 @@ texi2pdf(file, clean = FALSE, quiet = TRUE,
   specifically those generated from vignettes and by the
   \code{\link{Rd2pdf}} script (used for package reference manuals).  It
   ensures that the \file{\var{\link{R_HOME}}/share/texmf} directory is
-  in the \env{TEXINPUTS} path, so \R style files such as \file{Sweave}
-  and \file{Rd} will be found.  The TeX search path used is first the
+  in the \env{TEXINPUTS} path, so \R style files such as \file{Sweave.sty}
+  and \file{Rd.sty} will be found.  The TeX search path used is first the
   existing \env{TEXINPUTS} setting (or the current directory if unset),
   then elements of argument \code{texinputs}, then
   \file{\var{R_HOME}/share/texmf} and finally the default path.

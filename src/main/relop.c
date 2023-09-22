@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997--2021  The R Core Team
+ *  Copyright (C) 1997--2022  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -48,7 +48,7 @@ static SEXP raw_relop    (RELOP_TYPE code, SEXP s1, SEXP s2);
 	}						\
     } while (0)
 
-SEXP attribute_hidden do_relop(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_relop(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans, arg1, arg2;
     int argc;
@@ -74,7 +74,7 @@ SEXP attribute_hidden do_relop(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 // also called from cmp_relop() in eval.c :
-SEXP attribute_hidden do_relop_dflt(SEXP call, SEXP op, SEXP x, SEXP y)
+attribute_hidden SEXP do_relop_dflt(SEXP call, SEXP op, SEXP x, SEXP y)
 {
     /* handle the REALSXP/INTSXP simple scalar case quickly */
     if (IS_SIMPLE_SCALAR(x, INTSXP)) {
@@ -160,11 +160,13 @@ SEXP attribute_hidden do_relop_dflt(SEXP call, SEXP op, SEXP x, SEXP y)
     if (isNull(y)) REPROTECT(y = allocVector(INTSXP,0), ypi);
     if (!isVector(x) || !isVector(y))
 	errorcall(call,
-		  _("comparison (%d) is possible only for atomic and list types"),
-		  PRIMVAL(op));
+		  _("comparison (%s) is possible only for atomic and list types"),
+		  PRIMNAME(op));
 
+#ifdef previous_R_versions
     if (TYPEOF(x) == EXPRSXP || TYPEOF(y) == EXPRSXP)
 	errorcall(call, _("comparison is not allowed for expressions"));
+#endif
 
     /* ELSE :  x and y are both atomic or list */
 
@@ -739,7 +741,7 @@ static SEXP bitwiseShiftR(SEXP a, SEXP b)
     return ans;
 }
 
-SEXP attribute_hidden do_bitwise(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_bitwise(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     checkArity(op, args);
     SEXP ans = R_NilValue; /* -Wall */

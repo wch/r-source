@@ -1,6 +1,6 @@
 % File src/library/base/man/UseMethod.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{UseMethod}
@@ -35,15 +35,18 @@ NextMethod(generic = NULL, object = NULL, \dots)
   attribute (and this can be tested by \code{\link{is.object}}).
   A class attribute is a character vector giving the names of
   the classes from which the object \emph{inherits}.
-  If the object does not have a class attribute, it has an implicit
-  class.  Matrices and arrays have class \code{"matrix"}
-  or\code{"array"} followed by the class of the underlying vector.
+
+  If the object does not have a class attribute, it has an
+  \emph{implicit class}.  Matrices and arrays have class \code{"matrix"}
+  or \code{"array"} followed by the class of the underlying vector.
   Most vectors have class the result of \code{\link{mode}(x)}, except
   that integer vectors have class \code{c("integer", "numeric")} and
   real vectors have class \code{c("double", "numeric")}.
+  Function \code{\link{.class2}(x)} (since \R 4.0.x) returns the full
+  implicit (or explicit) class vector of \code{x}.
 
   When a function calling \code{UseMethod("fun")} is applied to an
-  object with class attribute \code{c("first", "second")}, the system
+  object with class vector \code{c("first", "second")}, the system
   searches for a function called \code{fun.first} and, if it finds it,
   applies it to the object.  If no such function is found a function
   called \code{fun.second} is tried.  If no class name produces a
@@ -171,7 +174,7 @@ NextMethod(generic = NULL, object = NULL, \dots)
 \seealso{
   The draft \sQuote{R Language Definition}.
 
-  \code{\link{methods}}, \code{\link{class}},
+  \code{\link{methods}}, \code{\link{class}} incl \code{\link{.class2}()};
   \code{\link{getS3method}}, \code{\link{is.object}}.
 }
 \references{

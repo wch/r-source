@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001-2014  The R Core Team
+ *  Copyright (C) 2001-2023  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -919,7 +919,7 @@ void Rdqags(integr_fn f, void *ex, double *a, double *b,
 
            last  - int
                    on return, last equals the number of subintervals
-                   produced in the subdivision process, detemines the
+                   produced in the subdivision process, determines the
                    number of significant elements actually in the work
                    arrays.
 
@@ -1441,25 +1441,24 @@ void rdqagse(integr_fn f, void *ex, double *a, double *b, double *
 /*		------------------------------------ */
 
     if (*abserr == oflow) 	goto L115;
-    if (*ier + ierro == 0) 	goto L110;
-    if (ierro == 3)
-	*abserr += correc;
-    if (*ier == 0)
-	*ier = 3;
-    if (*result == 0. || area == 0.) {
-	if (*abserr > errsum) 	goto L115;
-	if (area == 0.) 	goto L130;
-    }
-    else { /* L105:*/
-	if (*abserr / fabs(*result) > errsum / fabs(area))
-	    goto L115;
+    if (*ier + ierro != 0) {
+	if (ierro == 3)
+	    *abserr += correc;
+	if (*ier == 0)
+	    *ier = 3;
+	if (*result == 0. || area == 0.) {
+	    if (*abserr > errsum) 	goto L115;
+	    if (area == 0.) 		goto L130;
+	}
+	else { /* L105:*/
+	    if (*abserr / fabs(*result) > errsum / fabs(area))
+		goto L115;
+	}
     }
 
-L110:/*		test on divergence. */
-    if (ksgn == -1 && fmax2(fabs(*result), fabs(area)) <= defabs * .01) {
-	goto L130;
-    }
-    if (.01 > *result / area || *result / area > 100. || errsum > fabs(area)) {
+    /* L110: test on divergence. */
+    if (!(ksgn == -1 && fmax2(fabs(*result), fabs(area)) <= defabs * .01) &&
+	(.01 > *result / area || *result / area > 100. || errsum > fabs(area))) {
 	*ier = 5;
     }
     goto L130;
@@ -1470,7 +1469,6 @@ L115:/*		compute global integral sum. */
 	*result += rlist[k];
     *abserr = errsum;
 L130:
-    if (*ier > 2)
 L140:
     *neval = *last * 42 - 21;
     return;

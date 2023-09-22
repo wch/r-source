@@ -78,7 +78,7 @@ loadingNamespaceInfo()
   \item{val}{any object.}
   \item{\dots}{character arguments.}
   \item{metaname}{the methods table name.}
-  \item{name}{symbol: name of namespace}
+  \item{name}{symbol: name of namespace.}
   \item{except}{character vector naming symbols to exclude from the
     import, particularly useful when \code{vars} is missing.
   }
@@ -112,13 +112,10 @@ getNamespaceInfo(ns, "spec")[["name"]] ## -> "stats"
 \dontshow{stopifnot(identical(nsName,
                       getNamespaceInfo(ns, "spec")[["name"]]))}
 
-## Only for for the daring ones, trying to get into the bowels :
-
-lsNamespaceInfo <- function(ns, ...) {
-    ns <- asNamespace(ns, base.OK = FALSE)
-    ls(..., envir = get(".__NAMESPACE__.", envir = ns, inherits = FALSE))
-}
-allinfoNS <- function(ns) sapply(lsNamespaceInfo(ns), getNamespaceInfo, ns=ns)
+## Only for the daring ones, getting into the bowels (non-API!):
+.nsInfEnv <- function(ns)   asNamespace(ns, base.OK = FALSE)[[".__NAMESPACE__."]]
+lsNSInfo  <- function(ns, ...) ls(..., envir = .nsInfEnv(ns))
+allinfoNS <- function(ns)      as.list(.nsInfEnv(ns), sorted=TRUE)
 
 utils::str(allinfoNS("stats"))
 utils::str(allinfoNS("stats4"))

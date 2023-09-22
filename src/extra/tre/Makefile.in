@@ -14,9 +14,10 @@ include $(top_builddir)/Makeconf
 TRE_CPPFLAGS = -I$(srcdir)
 ALL_CPPFLAGS = $(TRE_CPPFLAGS) $(R_XTRA_CPPFLAGS) $(CPPFLAGS) $(DEFS)
 
+# xmalloc.c (only for debugging)
 SOURCES = regcomp.c regerror.c regexec.c tre-ast.c tre-compile.c \
   tre-match-approx.c tre-match-backtrack.c tre-match-parallel.c \
-  tre-mem.c tre-parse.c tre-stack.c xmalloc.c 
+  tre-mem.c tre-parse.c tre-stack.c 
 
 HEADERS = tre.h tre-ast.h tre-compile.h tre-config.h tre-internal.h \
   tre-match-utils.h tre-mem.h tre-parse.h tre-stack.h xmalloc.h
@@ -26,8 +27,9 @@ OBJECTS = $(SOURCES:.c=.o)
 @WANT_R_SHLIB_TRUE@ALL_CFLAGS = $(ALL_CFLAGS_LO) @C_VISIBILITY@
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
+# xmalloc.c (only for debugging)
 DISTFILES = LICENSE Makefile.in Makefile.win R_changes \
-  $(SOURCES) $(HEADERS)
+  $(SOURCES) $(HEADERS) xmalloc.c
 noinst_LIBRARIES = libtre.a
 libtre_a_SOURCES = $(SOURCES)
 libtre_a_OBJECTS = $(OBJECTS)

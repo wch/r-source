@@ -348,18 +348,16 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
             else canMaskEnv <- NULL
 
             if (attach.required)
-                .getRequiredPackages2(pkgInfo, quietly = quietly)
-
+                .getRequiredPackages2(pkgInfo, quietly = quietly,
+                                      lib.loc = c(lib.loc, .libPaths()))
             cr <- conflictRules(package)
             if (missing(mask.ok))
                 mask.ok <- cr$mask.ok
             if (missing(exclude))
                 exclude <- cr$exclude
 
-            ## If the namespace mechanism is available and the package
-            ## has a namespace, then the namespace loading mechanism
-            ## takes over.
-            if (packageHasNamespace(package, which.lib.loc)) {
+            ## The namespace loading mechanism takes over.
+
 		if (isNamespaceLoaded(package)) {
                     ## Already loaded.  Does the version match?
                     newversion <- as.numeric_version(pkgInfo$DESCRIPTION["Version"])
@@ -416,9 +414,6 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                     else
                         return(invisible(.packages()))
                 }
-            } else
-		stop(gettextf("package %s does not have a namespace and should be re-installed",
-			      sQuote(package)), domain = NA)
 	}
 	if (verbose && !newpackage)
             warning(gettextf("package %s already present in search()",
@@ -991,7 +986,7 @@ function(x)
     s <- Sys.info()
 
     R_LIBS_USER_default <- function() {
-        home <- normalizePath("~")
+        home <- normalizePath("~", mustWork = FALSE)  # possibly /nonexistent
         ## FIXME: could re-use v from "above".
         x.y <- paste0(R.version$major, ".",
                       sub("[.].*", "", R.version$minor))

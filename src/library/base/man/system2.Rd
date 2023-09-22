@@ -1,6 +1,6 @@
 % File src/library/base/man/system.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2018 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{system2}
@@ -13,7 +13,8 @@
 system2(command, args = character(),
         stdout = "", stderr = "", stdin = "", input = NULL,
         env = character(), wait = TRUE,
-        minimized = FALSE, invisible = TRUE, timeout = 0)
+        minimized = FALSE, invisible = TRUE, timeout = 0,
+        receive.console.signals = wait)
 }
 \arguments{
   \item{command}{the system command to be invoked, as a character string.}
@@ -40,6 +41,11 @@ system2(command, args = character(),
   \item{timeout}{timeout in seconds, ignored if 0.  This is a limit for the
     elapsed time running \code{command} in a separate process.   Fractions
     of seconds are ignored.}
+  \item{receive.console.signals}{a logical (not \code{NA}) indicating whether
+    the command should receive events from the terminal/console that \R runs
+    from, particularly whether it should be interrupted by \kbd{Ctrl-C}. This
+    will be ignored and events will always be received when
+    \code{intern = TRUE} or \code{wait = TRUE}.}
 #ifdef unix
   \item{minimized, invisible}{arguments that are accepted on Windows but
     ignored on this platform, with a warning.}
@@ -82,6 +88,10 @@ system2(command, args = character(),
   it usually is by default, the executed command may write to standard
   output and standard error.
 #endif
+
+  \code{receive.console.signals = TRUE} is useful when running asynchronous
+  processes (using \code{wait = FALSE}) to implement a synchronous operation.
+  In all other cases it is recommended to use the default.
 }
 %% We use popen, and that pipes stdout only
 

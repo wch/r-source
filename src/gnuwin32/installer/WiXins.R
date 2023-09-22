@@ -40,7 +40,7 @@
 .make_R.wxs <- function(RW, srcdir, personal = "0")
 {
     have64bit <- file_test("-d", file.path(srcdir, "bin", "x64"))
-    have32bit <- file_test("-d", file.path(srcdir, "bin", "i386"))
+    have32bit <- file_test("-d", file.path(srcdir, "bin", "i386")) # from R 4.2.0 always FALSE
 
     personal <- personal == "1"
     ## need DOS-style paths

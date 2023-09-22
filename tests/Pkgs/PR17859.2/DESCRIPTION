@@ -1,0 +1,9 @@
+Package: PR17859.2
+Title: Seeing Parsing Error in file it happens
+Version: 1.0
+Author: Martin Maechler
+Maintainer: R Core <R-core@almost.r-project.org>
+Description: Example package with a parsing (syntax) error spanning > 1 R/*.R file.
+License: GPL (>= 2)
+NeedsCompilation: no
+

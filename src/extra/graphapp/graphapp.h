@@ -6,7 +6,7 @@
  *  This header file is designed to be platform-independent.
  *
  *  Copyright 2006-8	The R Foundation
- *  Copyright 2013-20	The R Core Team
+ *  Copyright 2013-23	The R Core Team
  *
  */
 
@@ -239,6 +239,7 @@ typedef void (*imfn)(control c, font *f, point *xy);
 #define checklimittext		GA_checklimittext
 #define clear		GA_clear
 #define cleartext		GA_cleartext
+#define clickbutton            GA_clickbutton
 #define clipboardhastext		GA_clipboardhastext
 #define clipr		GA_clipr
 #define compare_strings		GAI_compare_strings
@@ -265,6 +266,7 @@ typedef void (*imfn)(control c, font *f, point *xy);
 #define cuttext		GA_cuttext
 #define darker		GA_darker
 #define decrease_refcount	GAI_decrease_refcount
+#define default_font_charset	GAI_default_font_charset
 #define del_all_contexts	GAI_del_all_contexts
 #define del_context		GAI_del_context
 #define del_string		GAI_del_string
@@ -310,7 +312,8 @@ typedef void (*imfn)(control c, font *f, point *xy);
 #define fillrect		GA_fillrect
 #define fillroundrect		GA_fillroundrect
 #define find_object		GAI_find_object
-#define find_valid_sibling	GAI_find_valid_sibling
+#define find_next_valid_sibling	GAI_find_next_valid_sibling
+#define find_prev_valid_sibling	GAI_find_prev_valid_sibling
 #define finddialog		GA_finddialog
 #define finish_contexts		GAI_finish_contexts
 #define finish_events		GAI_finish_events
@@ -623,8 +626,10 @@ typedef void (*imfn)(control c, font *f, point *xy);
 #define current_menubar		GAI_current_menubar
 #define current_window		GAI_current_window
 #define dc			GAI_dc
+#define edit_control_proc	GAI_edit_control_proc
+#define edit_control_procedure	GAI_edit_control_procedure
 #define hAccel			GAI_hAccel
-#define hwndClient		GAI_hwndClient
+#define hwndClient		GA_hwndClient
 #define hwndFrame		GAI_hwndFrame
 #define hwndMain		GAI_hwndMain
 #define is_NT			GA_isNT
@@ -661,6 +666,16 @@ typedef void (*imfn)(control c, font *f, point *xy);
 #define print_image		GA_print_image
 #define save_image		GA_save_image
 #define stop_image		GA_stop_image
+
+#define askfilenameW		GA_askfilenameW
+#define askfilenamesW		GA_askfilenamesW
+#define askfilesaveW		GA_askfilesaveW
+#define gcopyalpha2		GA_gcopyalpha2
+#define gdrawimage		GA_gdrawimage
+#define gfillpolypolygon	GA_gfillpolypolygon
+#define gmaskimage		GAI_gmaskimage
+#define gstrwidth1		GA_gstrwidth1
+#define setuserfilterW		GA_setuserfilterW
 #endif
 
 /*
@@ -789,9 +804,9 @@ void	setdrawmode(int mode);
 #define DnandS	 0x07
 #define DandS	 0x08
 #define DxnorS	 0x09
-#define D	 0x0A
+#define GA_D	 0x0A
 #define DornotS	 0x0B
-#define S	 0x0C
+#define GA_S	 0x0C
 #define notDorS	 0x0D
 #define DorS	 0x0E
 #define Ones	 0x0F
@@ -976,7 +991,7 @@ rect    GetCurrentWinPos(window obj);
 #define Minimize	0x00000200L
 #define HScrollbar	0x00000400L
 #define VScrollbar	0x00000800L
-#define CanvasSize	0x00200000L
+#define CanvasSize	0x00400000L
 
 #define Modal		0x00001000L
 #define Floating	0x00002000L
@@ -991,6 +1006,8 @@ rect    GetCurrentWinPos(window obj);
 
 #define UsePalette	0x00100000L
 #define UseUnicode	0x00200000L
+
+#define SetUpCaret	0x00400000L
 
 #define StandardWindow	(Titlebar|Closebox|Resize|Maximize|Minimize)
 
@@ -1181,6 +1198,7 @@ char *	askfilename(const char *title, const char *default_name);
 char *  askfilenamewithdir(const char *title, const char *default_name, const char *dir);
 char *	askfilesave(const char *title, const char *default_name);
 char *	askUserPass(const char *title);
+void    clickbutton(window w, button b);
 
 /*
  *  Time functions.

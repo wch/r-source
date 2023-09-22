@@ -32,7 +32,7 @@
     \item The environment may impose limitations on the resources
     available to a single process: Windows' versions of \R do so directly.
   }
-  Error messages beginning \code{cannot allocate vector of size}
+  Error messages beginning \samp{cannot allocate vector of size}
   indicate a failure to obtain memory, either because the size exceeded
   the address-space limit for a process or, more likely, because the
   system was unable to provide the memory.  Note that on a 32-bit build
@@ -41,7 +41,7 @@
 
   There are also limits on individual objects. The storage space
   cannot exceed the address limit, and if you try to exceed that limit,
-  the error message begins \code{cannot allocate vector of length}.
+  the error message begins \samp{cannot allocate vector of length}.
   The number of bytes in a character string is limited to
   \eqn{2^{31} - 1 \approx 2\thinspace 10^9}{2^31 - 1 ~ 2*10^9},
   which is also the limit on each dimension of an array.

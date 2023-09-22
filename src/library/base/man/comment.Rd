@@ -12,7 +12,7 @@ comment(x) <- value
 \alias{comment}
 \alias{comment<-}
 \arguments{
- \item{x}{any \R object}
+ \item{x}{any \R object.}
  \item{value}{a \code{character} vector, or \code{NULL}.}
 }
 \description{

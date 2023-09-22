@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2018-03-29 07:06\n"
+"POT-Creation-Date: 2023-07-31 14:59\n"
 "PO-Revision-Date: 2012-01-28 15:52+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -32,9 +32,7 @@ msgstr "skal mindst være 2*ord -1 (=%d) knob"
 
 #, fuzzy
 msgid "the 'x' data must be in the range %g to %g unless you set '%s'"
-msgstr ""
-"»x-dataene« skal være i intervallet %g til %g med mindre du angiver »outer."
-"ok = TRUE«"
+msgstr "»x-dataene« skal være i intervallet %g til %g med mindre du angiver »outer.ok = TRUE«"
 
 msgid "%s needs package 'Matrix' correctly installed"
 msgstr ""
@@ -86,6 +84,17 @@ msgstr "»degree« skal være heltal >= 1"
 msgid "'df' was too small; have used %d"
 msgstr "»df« var for lille; har brugt"
 
-msgid "some 'x' values beyond boundary knots may cause ill-conditioned bases"
+msgid "non-finite knots"
 msgstr ""
-"nogle »x-værdier« udenfor grænseknob kan medføre ugyldigt betingede basiser"
+
+msgid "all interior knots match left boundary knot"
+msgstr ""
+
+msgid "all interior knots match right boundary knot"
+msgstr ""
+
+msgid "shoving 'interior' knots matching boundary knots to inside"
+msgstr ""
+
+msgid "some 'x' values beyond boundary knots may cause ill-conditioned bases"
+msgstr "nogle »x-værdier« udenfor grænseknob kan medføre ugyldigt betingede basiser"

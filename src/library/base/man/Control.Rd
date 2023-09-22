@@ -1,6 +1,6 @@
 % File src/library/base/man/Control.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2019 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Control}
@@ -31,17 +31,14 @@ next
 }
 \arguments{
   \item{cond}{A length-one logical vector that is not \code{NA}.
-    Conditions of length greater than one are currently accepted with a
-    warning, but only the first element is used.  An error is signalled
-    instead when the environment variable \env{_R_CHECK_LENGTH_1_CONDITION_}
-    is set to true.  Other types are coerced to logical
-    if possible, ignoring any class.
+    Other types are coerced to logical if possible, ignoring any class.
+    (Conditions of length greater than one are an error.) 
   }
   \item{var}{A syntactical name for a variable.}
   \item{seq}{An expression evaluating to a vector (including a list and
     an \link{expression}) or to a \link{pairlist} or \code{NULL}.  A
-    factor value will be coerced to a character vector.  As from \R
-    4.0.0 this can be a long vector.}
+    factor value will be coerced to a character vector.  This can be a
+    long vector.}
   \item{expr, cons.expr, alt.expr}{
     An \emph{expression} in a formal sense.  This is either a
     simple expression or a so-called \emph{compound expression}, usually

@@ -1,6 +1,6 @@
 % File src/library/stats/man/TDist.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{TDist}
@@ -46,8 +46,8 @@ rt(n, df, ncp)
 
   The length of the result is determined by \code{n} for
   \code{rt}, and is the maximum of the lengths of the
-  numerical arguments for the other functions.  
-  
+  numerical arguments for the other functions.
+
   The numerical arguments other than \code{n} are recycled to the
   length of the result.  Only the first elements of the logical
   arguments are used.
@@ -91,6 +91,13 @@ rt(n, df, ncp)
   \code{df}\eqn{{} = n-1}{= n - 1}
   degrees of freedom and \bold{n}on-\bold{c}entrality \bold{p}arameter
   \code{ncp}\eqn{{} = (\mu - \mu_0) \sqrt{n}/\sigma}{ = (\mu - m0) * sqrt(n)/\sigma}.
+
+  The \eqn{t} distribution's cumulative distribution function (cdf),
+  \eqn{F_{\nu}}{F_n} fulfills
+  \eqn{F_{\nu}(t) = 1 - I_x(\nu/2, 1/2) = I_{1-x}(1/2, \nu/2),}{%
+       F_{n}(t)   = 1 - I_x(n/2,   1/2) = I_{1-x}(1/2, n/2),}   where
+  \eqn{x := \nu/(\nu + t^2)}{x := n/(n + t^2)}, and \eqn{I_x(a,b)} is the
+  incomplete beta function, in \R this is \code{\link{pbeta}(x, a,b)}.
 }
 \source{
   The central \code{dt} is computed via an accurate formula
@@ -116,12 +123,12 @@ rt(n, df, ncp)
   For central \code{qt}, a C translation of
 
   Hill, G. W. (1970) Algorithm 396: Student's t-quantiles.
-  \emph{Communications of the ACM}, \bold{13(10)}, 619--620.
+  \emph{Communications of the ACM}, \bold{13(10)}, 619--620. % \doi{10.1145/355598.355599}
 
   altered to take account of
 
   Hill, G. W. (1981) Remark on Algorithm 396, \emph{ACM Transactions on
-    Mathematical Software}, \bold{7}, 250--1.
+    Mathematical Software}, \bold{7}, 250--1. % \doi{10.1145/355945.355956}
 
   The non-central case is done by inversion.
 }

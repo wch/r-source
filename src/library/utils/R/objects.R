@@ -1,7 +1,7 @@
 #  File src/library/utils/R/objects.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2020 The R Core Team
+#  Copyright (C) 1995-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -69,7 +69,7 @@ function()
     c(names(.knownS3Generics), tools:::.get_internal_S3_generics())
 
 .S3methods <-
-function(generic.function, class, envir=parent.frame())
+function(generic.function, class, envir=parent.frame(), all.names = FALSE, dropPath = FALSE)
 {
     rbindSome <- function(df, nms, msg) {
         ## rbind.data.frame() -- dropping rows with duplicated names
@@ -89,13 +89,9 @@ function(generic.function, class, envir=parent.frame())
     S3MethodsStopList <- tools::nonS3methods(NULL)
     knownGenerics <- getKnownS3generics()
     sp <- search()
-    if(nzchar(lookup <-
-                  Sys.getenv("_R_S3_METHOD_LOOKUP_BASEENV_AFTER_GLOBALENV_"))) {
-        lookup <- tools:::config_val_to_logical(lookup)
-        if(lookup) sp <- sp[c(1L, length(sp))]
-    }
+    if(dropPath) sp <- sp[c(1L, length(sp))]
     methods.called <- identical(sys.call(-1)[[1]], as.symbol("methods"))
-    an <- lapply(seq_along(sp), ls)
+    an <- lapply(sp, ls, all.names = all.names)
     lens <- lengths(an)
     an <- unlist(an, use.names=FALSE)
     names(an) <- rep.int(sp, lens)
@@ -108,7 +104,7 @@ function(generic.function, class, envir=parent.frame())
 	    generic.function <- deparse1(substitute(generic.function))
         ## else
         if(!exists(generic.function, mode = "function", envir = envir) &&
-           !any(generic.function == c("Math", "Ops", "Complex", "Summary")))
+           !any(generic.function == c("Math", "Ops", "Complex", "Summary", "matrixOps")))
             stop(gettextf("no function '%s' is visible", generic.function),
                  domain = NA)
         warn.not.generic <- FALSE
@@ -145,7 +141,7 @@ function(generic.function, class, envir=parent.frame())
                 genfun <- methods::finalDefaultMethod(genfun@default)
             .defenv_for_S3_registry(genfun)
         }
-	S3reg <- names(get(".__S3MethodsTable__.", envir = defenv))
+	S3reg <- names(get(".__S3MethodsTable__.", envir = defenv)) # may climb up search()
 	S3reg <- S3reg[startsWith(S3reg, paste0(generic.function,"."))]
         if(length(S3reg))
             info <- rbindSome(info, S3reg, msg =
@@ -175,8 +171,7 @@ function(generic.function, class, envir=parent.frame())
                 where <- find(nm, mode = "function")
 		if(length(where))
 		    any(vapply(where, function(w)
-			nzchar(findGeneric(nm, envir=as.environment(w))),
-			       logical(1)))
+			nzchar(findGeneric(nm, envir=as.environment(w))), NA))
 		else FALSE
 	    }, logical(1))
             info <- info[keep, ]
@@ -188,7 +183,8 @@ function(generic.function, class, envir=parent.frame())
         ## Note that the generic will not necessarily be visible,
         ## as the package may not be loaded.
         S3reg <- unlist(lapply(loadedNamespaces(), function(i)
-	    ls(get(".__S3MethodsTable__.", envir = asNamespace(i)), pattern = name)))
+	    ls(getNamespace(i)[[".__S3MethodsTable__."]],
+               pattern = name, all.names = all.names)))
         ## now methods like print.summary.aov will be picked up,
         ## so we do look for such mismatches.
         if(length(S3reg))
@@ -212,7 +208,7 @@ function(generic.function, class, envir=parent.frame())
 }
 
 methods <-
-function(generic.function, class)
+function(generic.function, class, all.names = FALSE, dropPath = FALSE)
 {
     envir <- parent.frame()
     if(!missing(generic.function) && !is.character(generic.function)) {
@@ -231,7 +227,7 @@ function(generic.function, class)
     if (!missing(class) && !is.character(class))
         class <- deparse1(substitute(class))
 
-    s3 <- .S3methods(generic.function, class, envir)
+    s3 <- .S3methods(generic.function, class, envir, all.names=all.names, dropPath=dropPath)
     s4 <- if(.isMethodsDispatchOn()) methods::.S4methods(generic.function, class)
 
     .MethodsFunction(s3, s4, missing(generic.function))
@@ -299,7 +295,7 @@ getS3method <- function(f, class, optional = FALSE, envir = parent.frame())
 		genfun <- methods::selectMethod(genfun, "ANY")
             .defenv_for_S3_registry(genfun)
 	}
-    S3Table <- get(".__S3MethodsTable__.", envir = defenv)
+    S3Table <- get(".__S3MethodsTable__.", envir = defenv)# climb search()
     if(!is.null(m <- get0(method, envir = S3Table, inherits = FALSE)))
 	m
     else if(optional)
@@ -315,7 +311,7 @@ isS3method <- function(method, f, class, envir = parent.frame())
     } else { # determine (f, class) from 'method'
 	f.c <- strsplit(method, ".", fixed=TRUE)[[1]]
 	nfc <- length(f.c)
-	if(nfc < 2 || !is.character(f.c))
+	if(nfc < 2 || !is.character(f.c) || f.c[[1L]] == "")
 	    return(FALSE) ## stop("Invalid 'method' specification; must be  \"<fun>.<class>\"")
 	if(nfc == 2) {
 	    f     <- f.c[[1L]]
@@ -352,7 +348,7 @@ isS3method <- function(method, f, class, envir = parent.frame())
 		genfun <- methods::selectMethod(genfun, "ANY")
             .defenv_for_S3_registry(genfun)
 	}
-    S3Table <- get(".__S3MethodsTable__.", envir = defenv)
+    S3Table <- defenv[[".__S3MethodsTable__."]]
     ## return
     exists(method, envir = S3Table, inherits = FALSE)
 }
@@ -415,7 +411,7 @@ function(x, value)
             if(.isMethodsDispatchOn() && methods::is(genfun, "genericFunction"))
                 genfun <- methods::slot(genfun, "default")@methods$ANY
             defenv <- .defenv_for_S3_registry(genfun)
-            S3Table <- get(".__S3MethodsTable__.", envir = defenv)
+            S3Table <- defenv[[".__S3MethodsTable__."]]
             remappedName <- paste(S3[i, 1L], S3[i, 2L], sep = ".")
             if(exists(remappedName, envir = S3Table, inherits = FALSE))
                 assign(remappedName, value, S3Table)
@@ -475,7 +471,7 @@ function(x, value, ns, pos = -1, envir = as.environment(pos))
             if(.isMethodsDispatchOn() && methods::is(genfun, "genericFunction"))
                 genfun <- methods::slot(genfun, "default")@methods$ANY
             defenv <- .defenv_for_S3_registry(genfun)
-            S3Table <- get(".__S3MethodsTable__.", envir = defenv)
+            S3Table <- defenv[[".__S3MethodsTable__."]]
             remappedName <- paste(S3[i, 1L], S3[i, 2L], sep = ".")
             if(exists(remappedName, envir = S3Table, inherits = FALSE))
                 assign(remappedName, value, S3Table)
@@ -612,14 +608,7 @@ function(x)
 function(genfun)
 {
     if (typeof(genfun) == "closure") {
-        lookup <- Sys.getenv("_R_S3_METHOD_LOOKUP_USE_TOPENV_AS_DEFENV_",
-                             "TRUE")
-        lookup <- tools:::config_val_to_logical(lookup)
-        if(lookup) {
-            topenv(environment(genfun))
-        } else {
-            environment(genfun)
-        }
+        topenv(environment(genfun))
     }
     else .BaseNamespaceEnv
 }

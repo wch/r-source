@@ -13,6 +13,7 @@ model.matrix(object, \dots)
 
 \method{model.matrix}{default}(object, data = environment(object),
              contrasts.arg = NULL, xlev = NULL, \dots)
+\method{model.matrix}{lm}(object, \dots)
 }
 \arguments{
   \item{object}{an object of an appropriate class.  For the default

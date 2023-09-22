@@ -1,6 +1,6 @@
 % File src/library/base/man/system.time.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2020 R Core Team
+% Copyright 1995-2020, 2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{system.time}
@@ -22,7 +22,8 @@ system.time(expr, gcFirst = TRUE)
   returning the difference between the two \code{proc.time} calls.
 
   \code{unix.time} has been an alias of \code{system.time}, for
-  compatibility with S, and has finally been deprecated in 2016.
+  compatibility with S, has been deprecated in 2016 and finally became
+  defunct in 2022.
 
   Timings of evaluations of the same expression can vary considerably
   depending on whether the evaluation triggers a garbage collection.  When

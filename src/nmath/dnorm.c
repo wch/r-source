@@ -77,7 +77,7 @@ double dnorm4(double x, double mu, double sigma, int give_log)
      */
     if (x > sqrt(-2*M_LN2*(DBL_MIN_EXP + 1-DBL_MANT_DIG))) return 0.;
 
-    /* Now, to get full accurary, split x into two parts,
+    /* Now, to get full accuracy, split x into two parts,
      *  x = x1+x2, such that |x2| <= 2^-16.
      * Assuming that we are using IEEE doubles, that means that
      * x1*x1 is error free for x<1024 (but we have x < 38.6 anyway).

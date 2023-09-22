@@ -26,12 +26,17 @@
 */
 
 /*  Copyright (C) 2004	The R Foundation
+    Copyright (C) 2022  The R Core Team
 
     Changes for R:
 
     sort out resize (confused screen and client coords)
     add printer and metafile handling
     Remove assumption of current->dest being non-NULL
+    Improve caret handling (destroy when not in focus, do not hide/show
+      non-existent caret, prevent against corruption via recursive
+      redraw while not in focus, preserve coordinates when not in focus,
+      ensure caret exists when a new window first gets focus)
 
  */
 
@@ -784,7 +789,8 @@ char *GA_gettext(control obj)
 	len_msg = WM_GETTEXTLENGTH;
 	gettext_msg = WM_GETTEXT;
 	arg1 = 0;
-	arg2 = sendmessage(hwnd, len_msg, 0, 0L)+1;
+	/* FIXME: INT in wine/riched20, unsigned types in other */
+	arg2 = (LRESULT) sendmessage(hwnd, len_msg, 0, 0L)+1;
 	break;
     }
 
@@ -792,7 +798,8 @@ char *GA_gettext(control obj)
     if (obj->text)
 	discard(obj->text);
     /* Find the length of the string. */
-    length = sendmessage(obj->handle, len_msg, arg1, 0L);
+    /* FIXME: properly cast the result */
+    length = (LRESULT) sendmessage(obj->handle, len_msg, arg1, 0L);
     if (length == 0)
 	return (obj->text = new_string(NULL));
     /* Copy the text from the object. */
@@ -948,23 +955,43 @@ void setcaret(object obj, int x, int y, int width, int height)
 {
     if (! obj)
     	return;
+    if (width > 0 && !(obj->state & GA_Focus)) {
+	/* prevent against accidental corruption of caret data while not in focus,
+	   such as during a screen redraw triggered by disabling the window when
+	   using the menu (e.g. when accessing GUI preferences from the console) */
+	return;
+    }
     if (width != obj->caretwidth || height != obj->caretheight) {
-	if (obj->caretwidth > 0 && (obj->state & GA_Focus)) DestroyCaret();
+	if (obj->caretwidth > 0) {
+	  if (obj->caretshowing) /* preserve caretshowing */
+              HideCaret(obj->handle);
+	  /* we destroy the WinAPI caret also when loosing focus, as suggested */
+	  /* in Microsoft documentation */
+	  DestroyCaret();
+	  obj->caretexists = 0;
+        }
 	obj->caretwidth = width;
 	obj->caretheight = height;
 	if (width > 0) {
-	    if (obj->state & GA_Focus)
+	    if (obj->state & GA_Focus) {
 		CreateCaret(obj->handle, (HBITMAP) NULL, width, height);
-	    obj->caretshowing = 0;
+		obj->caretexists = 1;
+	        if (obj->caretshowing)
+		    /* match preserved caretshowing */
+		    ShowCaret(obj->handle);
+            }
 	}
     }
-    if (obj->state & GA_Focus)
+    if (obj->state & GA_Focus) {
     	SetCaretPos(x, y);
+	obj->caretx = x;
+	obj->carety = y;
+    }
 }
 
 void showcaret(object obj, int showing)
 {
-    if (! obj || showing == obj->caretshowing)
+    if (! obj || ! obj->caretexists || showing == obj->caretshowing)
     	return;
     obj->caretshowing = showing;
     if (showing)

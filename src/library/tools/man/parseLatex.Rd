@@ -1,6 +1,6 @@
 % File src/library/tools/man/parseLatex.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{parseLatex}
@@ -72,7 +72,7 @@ The \code{latexToUtf8()} function returns a modified version of the
 Duncan Murdoch
 }
 \examples{\donttest{
-latex <- parseLatex("fa\\\\c{c}ile")
+latex <- parseLatex("fran\\\\c{c}ais")
 deparseLatex(latexToUtf8(latex))
 }}
 \keyword{ utilities }

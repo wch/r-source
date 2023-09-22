@@ -26,7 +26,7 @@
   Campbell, M. J. and Walker, A. M. (1977).
   A Survey of statistical work on the Mackenzie River series of annual
   Canadian lynx trappings for the years 1821--1934 and  a new analysis.
-  \emph{Journal of the Royal Statistical Society series A}, \bold{140},
+  \emph{Journal of the Royal Statistical Society Series A}, \bold{140},
   411--431.
   \doi{10.2307/2345277}.
 }

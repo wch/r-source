@@ -1,7 +1,7 @@
 #  File src/library/utils/R/relist.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2022 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -122,9 +122,12 @@ relist.list <- function(flesh, skeleton=attr(flesh, "skeleton"))
     ind <- 1L
     result <- skeleton
     for (i in seq_along(skeleton)) {
-	size <- length(unlist(result[[i]]))
+	skel_i <- result[[i]]
+	if (is.null(skel_i))
+	    skel_i <- flesh[0]
+	size <- length(unlist(skel_i))
 	result[[i]] <-
-	    relist(flesh[seq.int(ind, length.out = size)], result[[i]])
+	    relist(flesh[seq.int(ind, length.out = size)], skel_i)
 	ind <- ind + size
     }
     result

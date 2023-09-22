@@ -1,7 +1,7 @@
 #  File src/library/base/R/serialize.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2019 The R Core Team
+#  Copyright (C) 1995-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -21,7 +21,8 @@ saveRDS <-
              compress = TRUE, refhook = NULL)
 {
     if(is.character(file)) {
-	if(file == "") stop("'file' must be non-empty string")
+        if(length(file) != 1 || file == "")
+            stop(gettextf("'%s' must be a non-empty string", "file"), domain = NA)
 	object <- object # do not create corrupt file if object does not exist
 	mode <- if(ascii %in% FALSE) "wb" else "w"
 	con <- if (is.logical(compress))

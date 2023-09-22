@@ -300,7 +300,7 @@ int R_SocketWaitMultiple(int nsock, int *insockfd, int *ready, int *write,
 	} else if (mytimeout >= 0) {
 	    tv.tv_sec = (int)(mytimeout - used);
 	    tv.tv_usec = (int)ceil(1e6 * (mytimeout - used - tv.tv_sec));
-	} else {  /* always poll occationally--not really necessary */
+	} else {  /* always poll occasionally--not really necessary */
 	    tv.tv_sec = 60;
 	    tv.tv_usec = 0;
 	}

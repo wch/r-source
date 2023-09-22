@@ -1,0 +1,40 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: R 4.2.0\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2021-05-03 09:56\n"
+"PO-Revision-Date: 2023-04-05 09:17+0000\n"
+"Last-Translator: Richard Detomasi <richard.detomasi@gmail.com>\n"
+"Language-Team: none\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.13.1\n"
+
+msgid "named list expected"
+msgstr "se espera lista con nombres"
+
+msgid "some named values are not arguments to the supplied log-likelihood"
+msgstr ""
+"algunos valores con nombres no son argumentos para la verosimilitud "
+"logarítmica brindada"
+
+msgid "Mismatch in length of start values"
+msgstr "Discordancia en la longitud de los valores de inicio"
+
+msgid "fixed values violate constraints"
+msgstr "Los valores fijados no cumplen con las restricciones"
+
+msgid "start values do not satisfy constraints"
+msgstr "los valores de inicio no cumples las restriciones"
+
+msgid "profiling has found a better solution, so original fit had not converged"
+msgstr ""
+
+msgid "levels truncated to positive values only"
+msgstr "Niveles limitados únicamente a valores positivos"
+
+msgid "extra arguments discarded"
+msgstr "descartados los argumentos extra"

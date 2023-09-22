@@ -1,6 +1,6 @@
 % File src/library/grid/man/grid.text.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2020 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{grid.text}
@@ -40,7 +40,7 @@ textGrob(label, x = unit(0.5, "npc"), y = unit(0.5, "npc"),
     If specified, overrides the \code{just} setting.}
   \item{rot}{The angle to rotate the text.}
   \item{check.overlap}{A logical value to indicate whether to
-    check for and omit overlapping text.}
+    check for and omit overlapping text (within that grob).}
   \item{default.units}{A string indicating the default units to use
     if \code{x} or \code{y}
     are only given as numeric vectors.}
@@ -79,6 +79,11 @@ grid.text("SOMETHING NICE AND BIG", x=x, y=y, rot=rot,
           gp=gpar(fontsize=20, col="grey"))
 grid.text("SOMETHING NICE AND BIG", x=x, y=y, rot=rot,
           gp=gpar(fontsize=20), check.overlap=TRUE)
+
+grid.newpage() ## plotmath example
+grid.text(quote(frac(e^{-x^2/2}, sqrt(2*pi))), x=x, y=y, rot=stats::runif(20, -45,45),
+          gp=gpar(fontsize=17, col=4), check.overlap=TRUE)
+
 grid.newpage()
 draw.text <- function(just, i, j) {
   grid.text("ABCD", x=x[j], y=y[i], just=just)

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-11-06 17:17\n"
+"POT-Creation-Date: 2023-07-31 14:59\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -26,6 +26,21 @@ msgstr "argument 'labels' oraz położenia 'at' muszą mieć tę samą długoś�
 
 msgid "logical 'label' supplied of length 0"
 msgstr "dostarczono logiczną wartość argumentu 'label' o długości 0"
+
+#, fuzzy
+msgid "Invalid coordinates"
+msgstr "niepoprawna wartość 'order'"
+
+#, fuzzy
+msgid "Invalid grob coordinates"
+msgstr "niepoprawna nazwa 'grob'"
+
+#, fuzzy
+msgid "Invalid gTree coordinates"
+msgstr "niepoprawna klasa \"gTree\""
+
+msgid "Closed must not be a missing value"
+msgstr ""
 
 msgid "end points must not be identical"
 msgstr "punkty końcowe nie mogą być identyczne"
@@ -95,6 +110,9 @@ msgstr "kombinacja brakujących i niebrakujących wartości dla %s"
 
 msgid "'gamma' 'gpar' element is defunct"
 msgstr "'gamma' w 'gpar' jest przestarzałe"
+
+msgid "'fill' gpar list components must all be patterns"
+msgstr ""
 
 msgid "invalid 'linemitre' value"
 msgstr "niepoprawna wartość 'linemitre'"
@@ -277,9 +295,6 @@ msgstr "niepoprawna wartość 'order'"
 msgid "Invalid destination"
 msgstr "niepoprawne justowanie"
 
-msgid "Invalid compositing operator"
-msgstr ""
-
 msgid "Unknown group:"
 msgstr ""
 
@@ -335,6 +350,9 @@ msgstr "niepoprawna wartość 'listing'"
 msgid "invalid 'listing'"
 msgstr "niepoprawna wartość 'listing'"
 
+msgid "Only a grob can be converted to a mask"
+msgstr ""
+
 msgid "invalid 'origin'"
 msgstr "niepoprawna wartość \"origin\""
 
@@ -363,7 +381,12 @@ msgstr ""
 msgid "Missing pattern fill has been set to transparent"
 msgstr ""
 
-msgid "Gradient fill applied to object with no inside"
+msgid ""
+"grob drawing produces more shapes than grob coords\n"
+"(recycling coords)"
+msgstr ""
+
+msgid "Pattern fill applied to object with no inside"
 msgstr ""
 
 msgid "'length' must be a 'unit' object"
@@ -445,11 +468,47 @@ msgstr "'r' musi być obiektem klasy \"unit\""
 msgid "'x', 'y', 'width', and 'height' must have length 1"
 msgstr "'x', 'y', 'width', oraz 'height' muszą mieć długość 1"
 
+#, fuzzy
+msgid "Invalid glyph info"
+msgstr "niepoprawna wartość 'order'"
+
+#, fuzzy
+msgid "'x' and 'y' must have length > 0"
+msgstr "argumenty 'x' oraz 'y' muszą mieć długość 1"
+
+msgid "'hjust' and 'vjust' must be glyphJust() values"
+msgstr ""
+
+#, fuzzy
+msgid "'hjust' and 'vjust' must have length 1"
+msgstr "argumenty 'x' oraz 'y' muszą mieć długość 1"
+
+msgid "Unknown width; using first width"
+msgstr ""
+
+#, fuzzy
+msgid "Unknown anchor; using left justification"
+msgstr "niepoprawne poziome justowanie"
+
+msgid "Unknown height; using first height"
+msgstr ""
+
+msgid "Unknown anchor; using bottom justification"
+msgstr ""
+
 msgid "'x' and 'units' must have length > 0"
 msgstr "argumenty 'x' oraz 'units' muszą mieć długość > 0"
 
 msgid "invalid 'axis' or 'type'"
 msgstr "niepoprawna wartość 'axis' lub 'type'"
+
+#, fuzzy
+msgid "'x' and 'y' must be units and 'device' must be logical"
+msgstr "komponenty 'x' oraz 'y' argumentu 'x' muszą być obiektami klasy \"unit\" oraz muszą mieć tę samą długość"
+
+#, fuzzy
+msgid "'w' and 'h' must be units and 'device' must be logical"
+msgstr "komponenty 'x' oraz 'y' argumentu 'x' muszą być obiektami klasy \"unit\" oraz muszą mieć tę samą długość"
 
 #, fuzzy
 msgid "Not a unit object"

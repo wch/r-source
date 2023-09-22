@@ -1,7 +1,7 @@
 #  File src/library/tools/R/build.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2021 The R Core Team
+#  Copyright (C) 1995-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -157,39 +157,28 @@ inRbuildignore <- function(files, pkgdir) {
             "  --md5                 add MD5 sums",
             "  --log                 log to file 'pkg-00build.log' when processing ",
             "                        the pkgdir with basename 'pkg'",
+            "  --user=               explicitly set the tarball creator name (for 'Packaged:')",
+            "                        instead of 'Sys.info()[\"user\"]' or the \"LOGNAME\" env variable",
             "",
             "Report bugs at <https://bugs.R-project.org>.", sep = "\n")
     }
 
-    add_build_stamp_to_description_file <- function(ldpath, pkgdir)
+    add_build_stamp_to_description_file <- function(ldpath, pkgdir, user)
     {
         db <- .read_description(ldpath)
         if(dir.exists(file.path(pkgdir, "src")))
             db["NeedsCompilation"] <- "yes"
         else if(is.na(db["NeedsCompilation"]))
             db["NeedsCompilation"] <- "no"
-        ## this is an optional function, so could fail
-        user <- Sys.info()["user"]
-        if(user == "unknown") user <- Sys.getenv("LOGNAME")
         db["Packaged"] <-
             sprintf("%s; %s",
                     format(Sys.time(), "%Y-%m-%d %H:%M:%S",
                            tz = 'UTC', usetz = TRUE),
                     user)
-        .write_description(db, ldpath)
-    }
-
-    ## <FIXME>
-    ## This should really be combined with
-    ## add_build_stamp_to_description_file().
-    ## Also, the build code reads DESCRIPTION files too often ...
-    add_expanded_R_fields_to_description_file <- function(ldpath) {
-        db <- .read_description(ldpath)
+        ## also add_expanded_R_fields -- when not empty:
         fields <- .expand_package_description_db_R_fields(db)
-        if(length(fields))
-            .write_description(c(db, fields), ldpath)
+        .write_description(if(length(fields)) c(db, fields) else db, ldpath)
     }
-    ## </FIXME>
 
     temp_install_pkg <- function(pkgdir, libdir) {
 	dir.create(libdir, mode = "0755", showWarnings = FALSE)
@@ -206,7 +195,7 @@ inRbuildignore <- function(files, pkgdir) {
             depends <- package_dependencies(package, available,
                                             which = install_dependencies)
             depends <- setdiff(unlist(depends),
-                               utils::installed.packages())
+                               rownames(utils::installed.packages()))
             if(length(depends)) {
                 message(paste(strwrap(sprintf("installing dependencies %s",
                                               paste(sQuote(sort(depends)),
@@ -580,13 +569,28 @@ inRbuildignore <- function(files, pkgdir) {
                            os = c("unix", "windows"), step = 1)
     	if (!length(db)) return(FALSE)
 
-    	# Strip the pkgdir off the names
+    	## Strip the pkgdir off the names
     	names(db) <- substring(names(db),
                                nchar(file.path(pkgdir, "man")) + 2L)
 
-	containsSexprs <-
-            which(sapply(db, function(Rd) getDynamicFlags(Rd)["\\Sexpr"]))
-	if (!length(containsSexprs)) return(FALSE)
+        btinfo <- do.call(rbind,
+                          lapply(db, .Rd_get_Sexpr_build_time_info))
+        if(!any(btinfo[, "\\Sexpr"])) {
+            return(FALSE)
+        } else {
+            ## <FIXME>
+            ## Remove eventually.
+            ## If we only have Sexprs we never process when building,
+            ## for now create an empty partial db to make older versions
+            ## of the CRAN incoming check code happy.
+            if(!any(btinfo[, c("build", "later")])) {
+                dir.create("build", showWarnings = FALSE)
+                saveRDS(structure(list(), names = character()),
+                        build_partial_Rd_db_path, version = 2L)
+                return(FALSE)
+            }
+            ## </FIXME>
+        }
 
 	messageLog(Log, "installing the package to process help pages")
 
@@ -597,29 +601,44 @@ inRbuildignore <- function(files, pkgdir) {
 
         temp_install_pkg(pkgdir, libdir)
 
-	containsBuildSexprs <-
-            which(sapply(db, function(Rd) getDynamicFlags(Rd)["build"]))
-
-	if (length(containsBuildSexprs)) {
-	    for (i in containsBuildSexprs)
+        containsBuildSexprs <- which(btinfo[, "build"])
+	if(length(containsBuildSexprs)) {
+	    for (i in containsBuildSexprs) {
 		db[[i]] <- prepare_Rd(db[[i]], stages = "build",
                                       stage2 = FALSE, stage3 = FALSE)
+                ## There could be build Sexprs giving install/render
+                ## Sexprs ...
+                btinfo[i, ] <- .Rd_get_Sexpr_build_time_info(db[[i]])
+            }
 	    messageLog(Log, "saving partial Rd database")
 	    partial <- db[containsBuildSexprs]
 	    dir.create("build", showWarnings = FALSE)
 	    ## version = 2L for maximal back-compatibility
 	    saveRDS(partial, build_partial_Rd_db_path, version = 2L)
 	}
+
+        containsLaterSexprs <- which(btinfo[, "later"])
+        if(length(containsLaterSexprs)) {
+	    for (i in containsLaterSexprs) {
+		db[[i]] <- prepare_Rd(db[[i]], stages = c("install", "render"),
+                                      stage2 = FALSE, stage3 = FALSE)
+            }
+            stage23 <- db[containsLaterSexprs]
+            dir.create("build", showWarnings = FALSE)
+            build_stage23_Rd_db_path <-
+                file.path("build", "stage23.rdb")
+            if(file.exists(build_stage23_Rd_db_path))
+                unlink(build_stage23_Rd_db_path)
+            saveRDS(stage23, build_stage23_Rd_db_path, version = 2L)
+        }
+
 	needRefman <- manual &&
             parse_description_field(desc, "BuildManual", TRUE) &&
-            any(vapply(db,
-                       function(Rd)
-                           any(getDynamicFlags(Rd)[c("install", "render")]),
-                       NA))
+            any(btinfo[, "later"])
 	if (needRefman) {
 	    messageLog(Log, "building the PDF package manual")
 	    dir.create("build", showWarnings = FALSE)
-	    ..Rd2pdf(c("--force", "--no-preview",
+	    ..Rd2pdf(c("--force", "--no-preview", "--quiet",
 	               paste0("--output=", build_refman_path),
 	               pkgdir), quit = FALSE)
         }
@@ -870,6 +889,7 @@ inRbuildignore <- function(files, pkgdir) {
         args <- strsplit(args,'nextArg', fixed = TRUE)[[1L]][-1L]
     }
 
+    user <- NULL
     compression <- "gzip"
     while(length(args)) {
         a <- args[1L]
@@ -919,6 +939,8 @@ inRbuildignore <- function(files, pkgdir) {
         } else if (substr(a, 1, 14) == "--compression=") {
             compression <- match.arg(substr(a, 15, 1000),
                                      c("none", "gzip", "bzip2", "xz"))
+        } else if (substr(a, 1, 7) == "--user=") {
+            user <- substr(a, 8, 64)
         } else if (startsWith(a, "-")) {
             message("Warning: unknown option ", sQuote(a))
         } else pkgs <- c(pkgs, a)
@@ -930,6 +952,10 @@ inRbuildignore <- function(files, pkgdir) {
                          "\"qpdf\""),
                 domain = NA)
         compact_vignettes <-"qpdf"
+    }
+    if(is.null(user)) { # not set by --user=*
+        user <- Sys.info()[["user"]]
+        if(user == "unknown") user <- Sys.getenv("LOGNAME")
     }
 
     Sys.unsetenv("R_DEFAULT_PACKAGES")
@@ -1079,12 +1105,9 @@ inRbuildignore <- function(files, pkgdir) {
         ## Fix permissions for all files to be at least 644, and dirs 755
         ## Not restricted by umask.
 	if (!WINDOWS) .Call(C_dirchmod, pkgname, group.writable=FALSE)
-        ## Add build stamp to the DESCRIPTION file.
+        ## Add build stamp *and* expaned R fields to the DESCRIPTION file:
         add_build_stamp_to_description_file(file.path(pkgname, "DESCRIPTION"),
-                                            pkgdir)
-        ## Add expanded R fields to the DESCRIPTION file.
-        add_expanded_R_fields_to_description_file(file.path(pkgname,
-                                                            "DESCRIPTION"))
+                                            pkgdir, user)
         messageLog(Log,
                    "checking for LF line-endings in source and make files and shell scripts")
         fix_nonLF_in_source_files(pkgname, Log)

@@ -11,7 +11,6 @@
 \alias{R_LIBS}
 \alias{R_LIBS_SITE}
 \alias{R_LIBS_USER}
-\alias{.expand_R_libs_env_var}
 \description{
   \code{.libPaths} gets/sets the library trees within which packages are
   looked for.
@@ -62,24 +61,22 @@
   semicolon-separated on Windows.  For the latter two, a value of
   \code{NULL} indicates an empty list of directories. (Note that as from
   \R 4.2.0, both are set by \R start-up code if not already set or empty
-  so can be interrogated from an \R session to find the their defaults:
+  so can be interrogated from an \R session to find their defaults:
   in earlier versions this was true only for \env{R_LIBS_USER}.)
 
   First, \code{.Library.site} is initialized from \env{R_LIBS_SITE}.  If
   this is unset or empty, the \file{site-library} subdirectory of
   \env{R_HOME} is used.  Only directories which exist at the time of
-  initialization are retained.
-  Then, \code{.libPaths()} is called with the combination of the
-  directories given by \env{R_LIBS} and \env{R_LIBS_USER}.
-  By default \env{R_LIBS} is unset, and
-  if \env{R_LIBS_USER} is unset or empty, it is set to directory
-  \file{R/\var{R.version$platform}-library/\var{x.y}} of the home directory
-  on Unix-alike systems
-  (or \file{Library/R/\var{m}/\var{x.y}/library} for CRAN macOS
-  builds, with \var{m} \code{\link{Sys.info}()["machine"]})
-  and \file{R/win-library/\var{x.y}} subdirectory of \env{LOCALAPPDATA} on Windows
-  (before \R 4.2.0, it was a subdirectory of the home directory even on
-  Windows), for \R \var{x.y.z}.
+  initialization are retained.  Then, \code{.libPaths()} is called with
+  the combination of the directories given by \env{R_LIBS} and
+  \env{R_LIBS_USER}.  By default \env{R_LIBS} is unset, and if
+  \env{R_LIBS_USER} is unset or empty, it is set to directory
+  \file{R/\var{R.version$platform}-library/\var{x.y}} of the home
+  directory on Unix-alike systems (or
+  \file{Library/R/\var{m}/\var{x.y}/library} for CRAN macOS builds, with
+  \var{m} \code{\link{Sys.info}()["machine"]}) and
+  \file{R/win-library/\var{x.y}} subdirectory of \env{LOCALAPPDATA} on
+  Windows, for \R \var{x.y.z}.
 
   Both \env{R_LIBS_USER} and \env{R_LIBS_SITE} feature possible
   expansion of specifiers for \R-version-specific information as part of

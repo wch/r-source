@@ -11,8 +11,8 @@
 #   Check for baseline language coverage in the compiler for the specified
 #   version of the C++ standard.  If necessary, add switches to CXX and
 #   CXXCPP to enable support.  VERSION may be '11' (for the C++11 standard),
-#   '14' (for the C++14 standard), '17' (for the C++17 standard) or
-#   '20' (for the C++20 standard) 
+#   '14' (for the C++14 standard), '17' (for the C++17 standard),
+#   '20' (for the C++20 standard)  or '23' (for the C++23 standard)
 #
 #   The second argument, if specified, indicates whether you insist on an
 #   extended mode (e.g. -std=gnu++11) or a strict conformance mode (e.g.
@@ -36,13 +36,15 @@
 #   Copyright (c) 2015 Moritz Klammler <moritz@klammler.eu>
 #   Copyright (c) 2016, 2018 Krzesimir Nowak <qdlacz@gmail.com>
 #   Copyright (c) 2019 Enji Cooper <yaneurabeya@gmail.com>
+#   Copyright (c) 2020 Jason Merrill <jason@redhat.com>
+#   Copyright (c) 2021 Jörn Heusipp <osmanx@problemloesungsmaschine.de>
 #
 #   Copying and distribution of this file, with or without modification, are
 #   permitted in any medium without royalty provided the copyright notice
 #   and this notice are preserved.  This file is offered as-is, without any
 #   warranty.
 
-# cxx_compile_stdcxx serial 11
+# cxx_compile_stdcxx serial 15
 
 dnl  This macro is based on the code from the AX_CXX_COMPILE_STDCXX_11 macro
 dnl  (serial version number 13).
@@ -52,13 +54,14 @@ dnl  For C++11 we check that the date on the
 dnl  __cplusplus macro is not too recent so that a C++14 compiler does not
 dnl  pass as a C++11, for example.
 dnl  If e.g. CXX11STD is set, test it first not last.
-dnl  Add support for C++20, with no new tests
+dnl  Add support for C++20 and C++23, with no new tests (nor does ax_cxx_compile_stdcxx.m4)
 
 AC_DEFUN([AX_CXX_COMPILE_STDCXX], [dnl
   m4_if([$1], [11], [ax_cxx_compile_alternatives="11 0x"],
         [$1], [14], [ax_cxx_compile_alternatives="14 1y"],
         [$1], [17], [ax_cxx_compile_alternatives="17 1z"],
         [$1], [20], [ax_cxx_compile_alternatives="20 2a"],
+        [$1], [23], [ax_cxx_compile_alternatives="23 2b"],
         [m4_fatal([invalid first argument `$1' to AX_CXX_COMPILE_STDCXX])])dnl
   m4_if([$2], [], [],
         [$2], [ext], [],
@@ -116,7 +119,7 @@ dnl If e.g. CXX11STD is set, test it first.  Otherwise test default last.
     dnl Cray's crayCC needs "-h std=c++11"
     dnl Both omitted here
     for alternative in ${ax_cxx_compile_alternatives}; do
-      for switch in -std=c++${alternative} -std=sun${alternative}; do
+      for switch in -std=c++${alternative} +std=c++${alternative}; do
         cachevar=AS_TR_SH([ax_cv_cxx_compile_cxx$1_$switch])
         AC_CACHE_CHECK(whether $CXX supports C++$1 features with $switch,
                        $cachevar,
@@ -197,7 +200,7 @@ dnl R modification to exclude C++17 compilers
 #elif __cplusplus < 201402L
 # error "This is not a C++14 compiler"
 #elif __cplusplus >= 201703L
-# error "This is a C++17 compiler"
+# error "This is a C++17 or later compiler"
 #else
   _AX_CXX_COMPILE_STDCXX_testbody_new_in_11
   _AX_CXX_COMPILE_STDCXX_testbody_new_in_14
@@ -211,6 +214,8 @@ m4_define([_AX_CXX_COMPILE_STDCXX_testbody_17],
 #error "This is not a C++ compiler"
 #elif __cplusplus < 201703L
 #error "This is not a C++17 compiler"
+#elif __cplusplus >= 202002L
+# error "This is a C++20 or later compiler"
 #else
   _AX_CXX_COMPILE_STDCXX_testbody_new_in_11
   _AX_CXX_COMPILE_STDCXX_testbody_new_in_14
@@ -223,9 +228,22 @@ dnl Test body for checking C++20 support: R modification
 m4_define([_AX_CXX_COMPILE_STDCXX_testbody_20],
 #ifndef __cplusplus
 #error "This is not a C++ compiler"
-dnl value from 2020-01-14 draft, clang 11 has 202002L
-#elif __cplusplus < 201703L
-#error "This is not a C++20 compiler"
+#elif __cplusplus < 202002L
+#error "This is not a C++20 or later compiler"
+#else
+  _AX_CXX_COMPILE_STDCXX_testbody_new_in_11
+  _AX_CXX_COMPILE_STDCXX_testbody_new_in_14
+  _AX_CXX_COMPILE_STDCXX_testbody_new_in_17
+#endif  
+)
+
+dnl Test body for checking C++23 support: R modification
+m4_define([_AX_CXX_COMPILE_STDCXX_testbody_23],
+#ifndef __cplusplus
+#error "This is not a C++ compiler"
+dnl Reject if value is that of C++20 or earlier
+#elif __cplusplus <= 202002L
+#error "This is not a C++23 compiler"
 #else
   _AX_CXX_COMPILE_STDCXX_testbody_new_in_11
   _AX_CXX_COMPILE_STDCXX_testbody_new_in_14

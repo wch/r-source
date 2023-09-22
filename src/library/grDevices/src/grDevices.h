@@ -42,7 +42,7 @@ SEXP CIDFontInUse(SEXP, SEXP);
 
 #ifndef _WIN32
 SEXP Quartz(SEXP);
-SEXP makeQuartzDefault();
+SEXP makeQuartzDefault(void);
 
 SEXP X11(SEXP call, SEXP op, SEXP args, SEXP rho);
 SEXP savePlot(SEXP call, SEXP op, SEXP args, SEXP rho);
@@ -120,5 +120,5 @@ SEXP setClipPath(SEXP args);
 SEXP setMask(SEXP args);
 SEXP defineGroup(SEXP args);
 SEXP useGroup(SEXP args);
-SEXP devUp();
+SEXP devUp(void);
 SEXP stroke(SEXP args);

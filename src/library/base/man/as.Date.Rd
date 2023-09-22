@@ -1,6 +1,6 @@
 % File src/library/base/man/as.Date.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2020 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{as.Date}
@@ -44,7 +44,8 @@ as.Date(x, \dots)
   \item{optional}{\code{\link{logical}} indicating to return \code{NA}
     (instead of signalling an error) if the format guessing does not succeed.}
   \item{origin}{a \code{Date} object, or something which can be coerced by
-    \code{as.Date(origin, \dots)} to such an object.}
+    \code{as.Date(origin, \dots)} to such an object or
+    \code{\link{missing}}.  In that case, \code{"1970-01-01"} is used.}
   \item{tz}{a time zone name.}
   \item{\dots}{further arguments to be passed from or to other methods,
     including \code{format} for \code{as.character} and \code{as.Date}
@@ -70,7 +71,7 @@ as.Date(x, \dots)
   are ignored.
 
   \code{as.Date} will accept numeric data (the number of days since an
-  epoch), but \emph{only} if \code{origin} is supplied.
+  epoch), since \R 4.3.0 also when \code{origin} is not supplied.
 
   The \code{format} and \code{as.character} methods ignore any
   fractional part of the date.
@@ -165,7 +166,7 @@ as.Date(34519, origin = "1904-01-01") # 1998-07-05
 ## Experiment shows that Matlab's origin is 719529 days before ours,
 ## (it takes the non-existent 0000-01-01 as day 1)
 ## so Matlab day 734373 can be imported as
-as.Date(734373, origin = "1970-01-01") - 719529 # 2010-08-23
+as.Date(734373) - 719529 # 2010-08-23
 ## (value from
 ## http://www.mathworks.de/de/help/matlab/matlab_prog/represent-date-and-times-in-MATLAB.html)
 

@@ -1,6 +1,6 @@
 % File src/library/base/man/zMachine.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2021 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{.Machine}
@@ -78,28 +78,33 @@
     the smallest positive power of \code{double.base} that overflows.  Normally
     \code{1024}.}
   \item{integer.max}{the largest integer which can be represented.
-    Always \eqn{2^31 - 1 = 2147483647}.}
-  \item{sizeof.long}{the number of bytes in a C \code{long} type:
+    Always \eqn{2^{31} - 1 = 2147483647}{2^31 - 1 = 2147483647}.}
+  \item{sizeof.long}{the number of bytes in a C \samp{long} type:
     \code{4} or \code{8} (most 64-bit systems, but not Windows).}
-  \item{sizeof.longlong}{the number of bytes in a C \code{long long}
+  \item{sizeof.longlong}{the number of bytes in a C \samp{long long}
     type.  Will be zero if there is no such type, otherwise usually
     \code{8}.}
-  \item{sizeof.longdouble}{the number of bytes in a C \code{long double}
+  \item{sizeof.longdouble}{the number of bytes in a C \samp{long double}
     type.  Will be zero if there is no such type (or its use was
     disabled when \R was built), otherwise possibly
     \code{12} (most 32-bit builds),  \code{16} (most 64-bit builds) or 8
+    (CPUs such as ARM where for most compilers \samp{long double} is
+    identical to \code{double}).}
     % 64-bit ARM Linux compilers have a software-implemented
     % quad-precison as long double
-    (CPUs such as ARM where for most compilers \code{long double} is
-    identical to \code{double}).}
-  \item{sizeof.pointer}{the number of bytes in a C \code{SEXP}
+  \item{sizeof.pointer}{the number of bytes in the C \code{SEXP}
     type.  Will be \code{4} on 32-bit builds and \code{8} on 64-bit
     builds of \R.}
+  \item{sizeof.time_t}{the number of \emph{bytes} in the C \code{time_t}
+    type: a  64-bit \code{time_t} (value \code{8}) is much preferred these
+    days.  Note that this is the type used by code in \R itself, not
+    necessarily the \emph{system} type if \R was configured with
+    \option{--with-internal-tzcode} as also used on Windows.}
 
   \item{longdouble.eps, longdouble.neg.eps, longdouble.digits, ...}{
     introduced in \R 4.0.0. When
     \code{\link{capabilities}("long.double")} is true, there are 10 such
-    \code{"longdouble.<kind>"} values, specifying the \code{long double}
+    \code{"longdouble.\var{kind}"} values, specifying the \samp{long double}
     property corresponding to its \code{"double.*"} counterpart.  See
     also \sQuote{Note}.}
 }
@@ -116,10 +121,10 @@
 }
 \note{
   In the (typical) case where \code{\link{capabilities}("long.double")} is
-  true, \R uses the \code{long double} C type in quite a few places internally
+  true, \R uses the \samp{long double} C type in quite a few places internally
   for accumulators in e.g.\sspace{}\code{\link{sum}}, reading non-integer
   numeric constants into (binary) double precision numbers, or arithmetic
-  such as \code{x \%\% y}; also, \code{long double} can be read by
+  such as \code{x \%\% y}; also, \samp{long double} can be read by
   \code{\link{readBin}}.
   \cr%--------------------------------
   For this reason, in that case, \code{.Machine} contains ten further components,
@@ -135,11 +140,11 @@
   using ix86 and x86_64 chips.  There are other implementation of long
   double, usually in software for example on Sparc Solaris and AIX.
 
-  Note that it is legal for a platform to have a \code{long double} C
-  type which is identical to the \code{double} type --- this happens on
+  Note that it is legal for a platform to have a \samp{long double} C
+  type which is identical to the \samp{double} type --- this happens on
   ARM cpus.  In that case \code{\link{capabilities}("long.double")} will
   be false but on versions of \R prior to 4.0.4, \code{.Machine} may contain
-  \code{"longdouble.<kind>"} elements.
+  \code{"longdouble.\var{kind}"} elements.
 }
 \source{
   Uses a C translation of Fortran code in the reference, modified by the

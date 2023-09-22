@@ -1,6 +1,6 @@
 % File src/library/base/man/Sys.setenv.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2020 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Sys.setenv}
@@ -57,6 +57,10 @@ Sys.unsetenv(x)
 
   \code{\link{setwd}} for the working directory.
 
+  \code{\link{Sys.setlocale}} to set (and get) language locale variables,
+  and notably \code{\link{Sys.setLanguage}} to set the \env{LANGUAGE}
+  environment variable which is used for \code{\link{conditionMessage}}
+  translations.
 
   The help for \sQuote{\link{environment variables}} lists many of the
   environment variables used by \R.

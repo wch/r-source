@@ -61,6 +61,8 @@ showMlist(mlist, includeDefs = TRUE, inherited = TRUE,
 \method{print}{MethodsList}(x, ...)
 
 mergeMethods(m1, m2, genericLabel)
+
+emptyMethodsList(mlist, thisClass = "ANY", sublist = list()) 
 }
 
 \section{Details}{

@@ -1,6 +1,6 @@
 % File src/library/graphics/man/matplot.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2020 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{matplot}
@@ -29,9 +29,9 @@ matlines (x, y, type = "l", lty = 1:5, lwd = 1, pch = NULL,
   \item{x,y}{vectors or matrices of data for plotting.  The number of
     rows should match.  If one of them are missing, the other is taken
     as \code{y} and an \code{x} vector of \code{1:n} is used.
-    Missing values (\code{NA}s) are allowed.  Since \R 4.0.0,
+    Missing values (\code{NA}s) are allowed. Typically,
     \code{\link{class}(.)}es of \code{x} and \code{y} such as
-    \code{"\link{Date}"} are typically preserved.}
+    \code{"\link{Date}"} are preserved.}
   \item{type}{character string (length 1 vector) or vector of 1-character
     strings indicating the type of plot for each
     column of \code{y}, see \code{\link{plot}} for all possible
@@ -81,7 +81,7 @@ matlines (x, y, type = "l", lty = 1:5, lwd = 1, pch = NULL,
     \item calling (the generic) \code{\link{lines}(x[,j], y[,j], ..)} for
     subsequent columns.
   }
-  Since \R 4.0.0, care is taken to keep the \code{\link{class}(.)} of
+  Care is taken to keep the \code{\link{class}(.)} of
   \code{x} and \code{y}, such that the corresponding \code{plot()} and
   \code{lines()} \emph{methods} will be called.
 

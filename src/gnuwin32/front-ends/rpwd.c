@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-7  R Core Team
+ *  Copyright (C) 2000-2023  R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -34,22 +34,45 @@ int main (int argc, char **argv)
        convert to short name if contains spaces
        print it to stdout.
      */
-    char *p, buf[MAX_PATH];
-    int hasspace = 0;
 
     if(argc == 2) {
-	if(chdir(argv[1])) exit(1);
+	if(!SetCurrentDirectory(argv[1])) exit(1);
     }
     if(argc <= 2) {
-	getcwd(buf, MAX_PATH);
+	char *p, *buf;
+	int hasspace = 0;
+	DWORD res = GetCurrentDirectory(0, NULL);
+
+	if (!res)
+	    exit(1);
+	buf = (char *)malloc(res);
+	if (!buf || !GetCurrentDirectory(res, buf))
+	    exit(1);
+
 	for (p = buf; *p; p++) 
 	    if (isspace(*p)) { hasspace = 1; break; }
-	if (hasspace)
+
+	if (hasspace) {
 	    /* NOTE: short names are not always enabled */
-	    GetShortPathName(buf, buf, MAX_PATH);
+	    res = GetShortPathName(buf, NULL, 0);
+	    if (res > 0) {
+		char *sbuf = (char *)malloc(res);
+		if (!sbuf)
+		    exit(1);
+		DWORD res1 = GetShortPathName(buf, sbuf, res);
+		if (res1 > 0 && res1 < res) {
+		    free(buf);
+		    buf = sbuf;
+		    sbuf = NULL;
+		} else
+		    free(sbuf);
+	    }
+	}
 	for (p = buf; *p; p++)
 	    if (*p == '\\') *p = '/';
 	printf("%s", buf);
+	free(buf);
 	exit(0);
     } else exit(2);
 }
+

@@ -1,7 +1,7 @@
 #  File src/library/base/R/windows/system.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2019 The R Core Team
+#  Copyright (C) 1995-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -41,7 +41,7 @@ system <- function(command, intern = FALSE,
                    ignore.stdout = FALSE, ignore.stderr = FALSE,
                    wait = TRUE, input = NULL,
                    show.output.on.console = TRUE, minimized = FALSE,
-                   invisible = TRUE, timeout = 0)
+                   invisible = TRUE, timeout = 0, receive.console.signals = wait)
 {
     if(!is.logical(intern) || is.na(intern))
         stop("'intern' must be TRUE or FALSE")
@@ -57,6 +57,8 @@ system <- function(command, intern = FALSE,
         stop("'minimized' must be TRUE or FALSE")
     if(!is.logical(invisible) || is.na(invisible))
         stop("'invisible' must be TRUE or FALSE")
+    if(!is.logical(receive.console.signals) || is.na(receive.console.signals))
+        stop("'receive.console.signals' must be TRUE or FALSE")
     stdout <- ifelse(ignore.stdout, FALSE, "")
     stderr <- ifelse(ignore.stderr, FALSE, "")
 
@@ -94,7 +96,8 @@ system <- function(command, intern = FALSE,
 	on.exit(Sys.setenv(GFORTRAN_STDOUT_UNIT = "-1"), add = TRUE)
     if (.fixupGFortranStderr())
 	on.exit(Sys.setenv(GFORTRAN_STDERR_UNIT = "-1"), add = TRUE)
-    rval <- .Internal(system(command, as.integer(flag), f, stdout, stderr, timeout))
+    rval <- .Internal(system(command, as.integer(flag), f, stdout, stderr,
+                             timeout, receive.console.signals))
     if (!internNothing)
         rval
     else {
@@ -114,7 +117,7 @@ system2 <- function(command, args = character(),
                     stdout = "", stderr = "", stdin = "", input = NULL,
                     env = character(),
                     wait = TRUE, minimized = FALSE, invisible = TRUE,
-                    timeout = 0)
+                    timeout = 0, receive.console.signals = wait)
 {
     if(!is.logical(wait) || is.na(wait))
         stop("'wait' must be TRUE or FALSE")
@@ -122,6 +125,9 @@ system2 <- function(command, args = character(),
         stop("'minimized' must be TRUE or FALSE")
     if(!is.logical(invisible) || is.na(invisible))
         stop("'invisible' must be TRUE or FALSE")
+    if(!is.logical(receive.console.signals) || is.na(receive.console.signals))
+        stop("'receive.console.signals' must be TRUE or FALSE")
+
     command <- paste(c(shQuote(command), env, args), collapse = " ")
 
     if(is.null(stdout)) stdout <- FALSE
@@ -164,7 +170,8 @@ system2 <- function(command, args = character(),
 	on.exit(Sys.setenv(GFORTRAN_STDOUT_UNIT = "-1"), add = TRUE)
     if (.fixupGFortranStderr())
 	on.exit(Sys.setenv(GFORTRAN_STDERR_UNIT = "-1"), add = TRUE) 
-    rval <- .Internal(system(command, flag, f, stdout, stderr, timeout))
+    rval <- .Internal(system(command, flag, f, stdout, stderr, timeout,
+                             receive.console.signals))
 
     if (is.null(rf)) {
         if (is.integer(rval))

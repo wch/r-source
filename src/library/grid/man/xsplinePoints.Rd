@@ -8,7 +8,7 @@
 \alias{bezierPoints}
 \title{
   Return the points that would be used to draw an Xspline
-  (or a Bezier curve).
+  (or a Bezier curve)
 }
 \description{
   Rather than drawing an Xspline (or Bezier curve), this function returns

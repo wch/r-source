@@ -16,6 +16,7 @@
 #  A copy of the GNU General Public License is available at
 #  https://www.R-project.org/Licenses/
 
+## interfacing to ALTREP meta data about "sorted"ness and presence of NAs:
 .doSortWrap <- local({
     ## this matches the enum in Rinternals.h
     INCR_NA_1ST <-  2
@@ -52,6 +53,7 @@
     }
 })
 ## temporary, for sort.int and sort.list captured as S4 default methods
+## .doWrap introduced in r74405 | 2018-03-14   replaced by .doSortWrap in r74504 | 2018-04-02
 .doWrap <- .doSortWrap
 
 sort <- function(x, decreasing = FALSE, ...)
@@ -80,7 +82,7 @@ sort.int <-
              method = c("auto", "shell", "quick", "radix"),
              index.return = FALSE)
 {
-    ## fastpass
+    ## fastpass {for "known to be sorted" x (ALTREP meta data; see .doSortWrap()}
     decreasing <- as.logical(decreasing)
     if (is.null(partial) && !index.return && is.numeric(x)) {
         if (.Internal(sorted_fpass(x, decreasing, na.last))) {
@@ -135,11 +137,21 @@ sort.int <-
         if(index.return || decreasing || isfact || method != "shell")
 	    stop("unsupported options for partial sorting")
         if(!all(is.finite(partial))) stop("non-finite 'partial'")
+	if(has.na && !is.na(na.last))
+	    partial <-
+		if(na.last) ## NA's will be appended; rm entries matching NA:
+		    partial[partial <= length(x)]
+		else { ## NA's will be prepended
+		    k <- sum(ina)
+		    partial[partial > k] - k
+		}
         y <- if(length(partial) <= 10L) {
-            partial <- .Internal(qsort(partial, FALSE))
-            .Internal(psort(x, partial))
-        } else if (is.double(x)) .Internal(qsort(x, FALSE))
-        else .Internal(sort(x, FALSE))
+		 partial <- .Internal(qsort(partial, FALSE))
+		 .Internal(psort(x, partial))
+	     } else if(is.double(x))
+                 .Internal(qsort(x, FALSE))
+	     else
+                 .Internal(sort(x, FALSE))
     } else {
         nms <- names(x)
 	switch(method,
@@ -171,10 +183,10 @@ sort.int <-
     if (isfact)
         y <- (if (isord) ordered else factor)(y, levels = seq_len(nlev),
             labels = lev)
-    if (is.null(partial)) {
-        y <- .doSortWrap(y, decreasing, na.last)
-    }
-    y
+    if (is.null(partial))
+        .doSortWrap(y, decreasing, na.last)
+    else
+        y
 }
 
 order <- function(..., na.last = TRUE, decreasing = FALSE,
@@ -182,7 +194,7 @@ order <- function(..., na.last = TRUE, decreasing = FALSE,
 {
     z <- list(...)
 
-    ## fastpass, take advantage of ALTREP metadata
+    ## fastpass, take advantage of ALTREP metadata, see .doSortWrap()
     decreasing <- as.logical(decreasing)
     if (length(z) == 1L && is.numeric(x <- z[[1L]]) && !is.object(x) && length(x) > 0) {
         if (.Internal(sorted_fpass(x, decreasing, na.last)))
@@ -205,6 +217,8 @@ order <- function(..., na.last = TRUE, decreasing = FALSE,
     }
 
     if(method != "radix" && !is.na(na.last)) {
+        if(length(decreasing) > 1L)
+            stop("'decreasing' of length > 1 is only for method = \"radix\"")
         return(.Internal(order(na.last, decreasing, ...)))
     }
 

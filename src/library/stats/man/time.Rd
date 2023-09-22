@@ -1,6 +1,6 @@
 % File src/library/stats/man/time.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{time}
@@ -26,7 +26,7 @@
 }
 \usage{
 time(x, \dots)
-\method{time}{default}(x, offset = 0, \dots)
+\method{time}{default}(x, offset = 0, ts.eps = getOption("ts.eps"), \dots)
 
 cycle(x, \dots)
 frequency(x, \dots)
@@ -38,6 +38,9 @@ deltat(x, \dots)
     in the time unit. \code{0} (the default) indicates the start
     of the unit, \code{0.5} the middle and \code{1} the end of
     the interval.}
+  \item{ts.eps}{time series comparison tolerance, used in \code{time()} to
+    determine if values close than \code{ts.eps} to an integer should be
+    \code{\link{round}()}ed to it in order to preserve the \dQuote{year}.}
   \item{\dots}{extra arguments for future methods.}
 }
 \details{
@@ -45,6 +48,10 @@ deltat(x, \dots)
   \code{\link{tsp}} attribute of \code{x} if it exists. \code{time}
   and \code{cycle} have methods for class \code{\link{ts}} that coerce
   the result to that class.
+
+  \code{time()} \code{\link{round}()}s values close to an integer, i.e.,
+  closer than \code{ts.eps}, since \R 4.3.0.  For previous behaviour,
+  you can call it with \code{ts.eps = 0}.
 }
 \seealso{
   \code{\link{ts}}, \code{\link{start}}, \code{\link{tsp}},

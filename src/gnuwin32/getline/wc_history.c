@@ -153,13 +153,12 @@ void wgl_savehistory(const char *file, int size)
 void wgl_loadhistory(const char *file)
 {
     FILE *fp;
-    int i;
     wchar_t buf[1000];
 
     if (wgl_init_done || !file) return;
     fp = fopen(file, "r");
     if (!fp) return;
-    for(i = 0;; i++) {
+    for(;;) {
 	if(!fgetws(buf, 1000, fp)) break;
 	wgl_histadd(buf);
     }
@@ -189,13 +188,12 @@ void wgl_savehistoryW(const wchar_t *file, int size)
 void wgl_loadhistoryW(const wchar_t *file)
 {
     FILE *fp;
-    int i;
     wchar_t buf[1000];
 
     if (wgl_init_done || !file) return;
     fp = _wfopen(file, L"r");
     if (!fp) return;
-    for(i = 0;; i++) {
+    for(;;) {
 	if(!fgetws(buf, 1000, fp)) break;
 	wgl_histadd(buf);
     }

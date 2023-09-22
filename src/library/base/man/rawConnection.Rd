@@ -21,7 +21,7 @@ rawConnectionValue(con)
     connection the name for the connection.
   }
   \item{open}{character.  Any of the standard connection open modes.}
-  \item{con}{An output raw connection.}
+  \item{con}{an output raw connection.}
 }
 \details{
   An input raw connection is opened and the raw vector is copied

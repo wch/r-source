@@ -1,7 +1,7 @@
 #  File src/library/tools/R/dynamicHelp.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2019 The R Core Team
+#  Copyright (C) 1995-2022 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -17,6 +17,87 @@
 #  https://www.R-project.org/Licenses/
 
 
+## Helper function used to declare mime-type for files served by
+## dynamic help, and for base64-encoded files embedded in example
+## output (see code2html.R).
+
+mime_type <- function(path, ext = NULL)
+{
+    stopifnot(length(path) == 1L)
+    if (missing(ext)) ext <- file_ext(path)
+    switch(ext,
+           "css" = "text/css",
+           "js" = "text/javascript",  # for katex etc
+           "sgml" = "text/sgml",    # in RGtk2
+           "xml" = "text/xml",      # in RCurl (RFC 7303 recommends "application/xml") 
+           "html" = "text/html",
+           "htm" = "text/html",
+           "xhtml" = "application/xhtml+xml",
+           "php" = "application/x-httpd-php",
+           "epub" = "application/epub+zip",
+           "csv" = "text/csv",
+           "json" = "application/json",
+           "jsonld"  = "application/ld+json",
+           "mjs" = "text/javascript",
+
+           ## common <img> types (see https://developer.mozilla.org/en-US/docs/Web/Media/Formats/Image_types)
+           "gif" = "image/gif",     # in R2HTML
+           "jpg" = "image/jpeg",
+           "jpeg" = "image/jpeg",
+           "png" = "image/png",
+           "svg" = "image/svg+xml",
+           "apng" = "image/apng",
+           "avif" = "image/avif",
+           "webp" = "image/webp",
+           "bmp" = "image/bmp",
+           "ico" = "image/x-icon",
+           "tiff" = "image/tiff",
+           "tif" = "image/tiff",
+
+           "pdf" = "application/pdf",
+           "eps" =,
+           "ps" = "application/postscript", # in GLMMGibbs, mclust
+
+           ## fonts
+           "eot" = "application/vnd.ms-fontobject",
+           "otf" = "font/otf",
+           "ttf" = "font/ttf",
+           "woff" = "font/woff",
+           "woff2" = "font/woff2",
+
+           ## media
+           "aac" = "audio/aac",
+           "avi" = "video/x-msvideo",
+           "cda" = "application/x-cdf",
+           "mid" = "audio/x-midi",
+           "midi" = "audio/x-midi",
+           "mp3" = "audio/mpeg",
+           "mp4" = "video/mp4",
+           "mpeg" = "video/mpeg",
+           "oga" = "audio/ogg",
+           "ogv" = "video/ogg",
+           "ogx" = "application/ogg",
+           "opus" = "audio/opus",
+           "3gp" = "video/3gpp",
+           "3g2" = "video/3gpp2",
+           "wav" = "audio/wav",
+           "weba" = "audio/webm",
+           "webm" = "video/webm",
+
+           ## archive / compression
+           "bz" = "application/x-bzip",
+           "bz2" = "application/x-bzip2",
+           "gz" = "application/gzip",
+           "rar" = "application/vnd.rar",
+           "zip" = "application/zip",
+           "7z" = "application/x-7z-compressed",
+           "tar" = "application/x-tar",
+
+           ## default
+           "text/plain")
+}
+
+
 ## This may be asked for
 ##  R.css, favicon.ico
 ##  searches with path = "/doc/html/Search"
@@ -25,8 +106,26 @@
 ##  Running demos, using path "/Demo/*"
 ##  html help, either by topic, /library/<pkg>/help/<topic> (pkg=NULL means any)
 ##             or by file, /library/<pkg>/html/<file>.html
+##
+##  As any R function, httpd() needs to produce R strings valid in their
+##  declared encoding (or valid in the native encoding if they have no
+##  encoding flag).  The C code of the server converts the response strings
+##  which are given as R strings to UTF-8, and hence the Content-type
+##  charset specified in the responses returned by httpd() must also be UTF-8
+##  (for errors and results passed as strings inside a list, this must be in
+##  sync with Rhttpd.c). 
 httpd <- function(path, query, ...)
 {
+    logHelpRequests <-
+        config_val_to_logical(Sys.getenv("_R_HTTPD_LOG_MESSAGES_", "FALSE"))
+    if (logHelpRequests) {
+        message(sprintf("HTTPD-REQUEST %s%s", path,
+                        if (is.null(query)) ""
+                        else { # query is a named chr vector 
+                            paste(paste(names(query), query, sep = "="),
+                                  collapse = ",")
+                        }))
+    }
     linksToTopics <-
         config_val_to_logical(Sys.getenv("_R_HELP_LINKS_TO_TOPICS_", "TRUE"))
     .HTMLdirListing <- function(dir, base, up) {
@@ -168,11 +267,11 @@ httpd <- function(path, query, ...)
             c(HTMLheader("Help search concepts"),
               c("",
                 "<table>",
-                "<tr><th style=\"text-align: left\">Concept</th><th>Frequency</th><th>Packages</th><tr>",
+                "<tr><th style=\"text-align: left\">Concept</th><th>Frequency</th><th>Packages</th></tr>",
                 paste0("<tr><td>",
                        "<a href=\"/doc/html/Search?pattern=",
                        utils::URLencode(reQuote(s), reserved = TRUE),
-                       "&fields.concept=1&agrep=0\">",
+                       "&amp;fields.concept=1&amp;agrep=0\">",
                        shtmlify(substr(s, 1L, 80L)),
                        "</a>",
                        "</td><td style=\"text-align: right\">",
@@ -192,7 +291,7 @@ httpd <- function(path, query, ...)
             c(HTMLheader("Help search keywords"),
               c("",
                 "<table>",
-                "<tr><th style=\"text-align: left\">Keyword</th><th style=\"text-align: left\">Concept</th><th>Frequency</th><th>Packages</th><tr>",
+                "<tr><th style=\"text-align: left\">Keyword</th><th style=\"text-align: left\">Concept</th><th>Frequency</th><th>Packages</th></tr>",
                 paste0("<tr><td>",
                        "<a href=\"/doc/html/Search?category=",
                        keywords$Keyword,
@@ -212,38 +311,12 @@ httpd <- function(path, query, ...)
         list(payload = paste(out, collapse = "\n"))
     }
 
-    unfix <- function(file) {
-        ## we need to re-fix links altered by fixup.package.URLs
-        ## in R < 2.10.0
-        fixedfile <- sub("/html/.*", "/fixedHTMLlinks", file)
-        if(file.exists(fixedfile)) {
-            top <- readLines(fixedfile)
-            lines <- readLines(file)
-            lines <- gsub(paste0(top, "/library"),
-                          "../../", lines, fixed = TRUE)
-            lines <- gsub(paste0(top, "/doc/"),
-                          "../../../doc/", lines, fixed = TRUE)
-            return(list(payload=paste(lines, collapse="\n")))
-        }
-        list(file = file)
-    }
-
-    mime_type <- function(path) {
-        ext <- strsplit(path, ".", fixed = TRUE)[[1L]]
-        if(n <- length(ext)) ext <- ext[n] else ""
-        switch(ext,
-               "css" = "text/css",
-               "gif" = "image/gif",     # in R2HTML
-               "jpg" = "image/jpeg",
-               "png" = "image/png",
-               "svg" = "image/svg+xml",
-               "html" = "text/html",
-               "pdf" = "application/pdf",
-               "eps" =,
-               "ps" = "application/postscript", # in GLMMGibbs, mclust
-               "sgml" = "text/sgml",    # in RGtk2
-               "xml" = "text/xml",      # in RCurl
-               "text/plain")
+    .HTML_package_description <- function(descfile) {
+        pkg <- basename(dirname(descfile))
+        out <- c(HTMLheader(sprintf("Package &lsquo;%s&rsquo;", pkg)),
+                 .DESCRIPTION_to_HTML(descfile, dynamic = TRUE),
+                 "</div></body></html>")
+        list(payload = paste(out, collapse = "\n"))
     }
 
     charsetSetting <- function(pkg) {
@@ -260,16 +333,21 @@ httpd <- function(path, query, ...)
     mono <- function(text)
         paste0('<span class="samp">', text, "</span>")
 
-    error_page <- function(msg)
+    error_page <- function(msg) {
+        if (logHelpRequests) {
+            message(sprintf("HTTPD-ERROR %s %s", path, paste(msg, collapse = " ")))
+        }
         list(payload =
              paste(c(HTMLheader("httpd error"), msg, "\n</div></body></html>"), collapse = "\n"))
-
+    }
+        
     cssRegexp <- "^/library/([^/]*)/html/R.css$"
     if (grepl("R\\.css$", path) && !grepl(cssRegexp, path))
         return(list(file = file.path(R.home("doc"), "html", "R.css"),
                     "content-type" = "text/css"))
     else if(path == "/favicon.ico")
-        return(list(file = file.path(R.home("doc"), "html", "favicon.ico")))
+        return(list(file = file.path(R.home("doc"), "html", "favicon.ico"),
+                    "content-type" = "image/x-icon"))
     else if(path == "/NEWS")
          return(list(file = file.path(R.home("doc"), "html", "NEWS.html"),
                      "content-type" = "text/html"))
@@ -282,6 +360,11 @@ httpd <- function(path, query, ...)
     	formatted <- toHTML(news, title = "R News")
         return( list(payload = paste(formatted, collapse="\n")) )
     }
+    else if(grepl("^/licenses/([^/.]*)$", path) &&
+            file.exists(file <- file.path(R.home("share"), "licenses",
+                                          basename(path))))
+        return(list(file = file,
+                    "content-type" = "text/plain; charset=utf-8"))
     else if(!grepl("^/(doc|library|session)/", path))
         return(error_page(paste("Only NEWS and URLs under", mono("/doc"),
                                 "and", mono("/library"), "are allowed")))
@@ -292,7 +375,6 @@ httpd <- function(path, query, ...)
     else if(path == "/doc/html/hsearch_db_keywords.html")
         return(.HTML_hsearch_db_keywords())
 
-
     ## ----------------------- per-package documentation ---------------------
     ## seems we got ../..//<pkg> in the past
     fileRegexp <- "^/library/+([^/]*)/html/([^/]*)\\.html$"
@@ -301,9 +383,12 @@ httpd <- function(path, query, ...)
     demoRegexp <- "^/library/([^/]*)/demo$"
     demosRegexp <- "^/library/([^/]*)/demo/([^/]*)$"
     DemoRegexp <- "^/library/([^/]*)/Demo/([^/]*)$"
+    ExampleRegexp <- "^/library/([^/]*)/Example/([^/]*)$"
     newsRegexp <- "^/library/([^/]*)/NEWS$"
     figureRegexp <- "^/library/([^/]*)/(help|html)/figures/([^/]*)$"
     sessionRegexp <- "^/session/"
+    packageIndexRegexp <- "^/library/([^/]*)$"
+    packageLicenseFileRegexp <- "^/library/([^/]*)/(LICEN[SC]E$)"
 
     file <- NULL
     if (grepl(topicRegexp, path)) {
@@ -378,7 +463,14 @@ httpd <- function(path, query, ...)
                                collapse = "\n")
 
             return(list(payload =
-                        paste0("<p>",
+                        paste0("<!DOCTYPE html>",
+                               "<html>",
+                               "<head>",
+                               "<title>R: help</title>",
+                               "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />",
+                               "</head>",
+                               "<body>",
+                                "<p>",
                                ## for languages with multiple plurals ....
                                sprintf(ngettext(length(paths),
                                                 "Help on topic '%s' was found in the following package:",
@@ -386,6 +478,8 @@ httpd <- function(path, query, ...)
                                                 ), topic),
                                "</p><dl>\n",
                                packages, "</dl>",
+                               "</body>",
+                               "</html>",
                                collapse = "\n")
                         ))
         }
@@ -405,7 +499,6 @@ httpd <- function(path, query, ...)
                              mono(pkg))
                 return(error_page(msg))
             } else {
-                if(.Platform$OS.type == "windows") return(unfix(file))
                 return(list(file = file))
             }
     	}
@@ -456,9 +549,10 @@ httpd <- function(path, query, ...)
         outfile <- tempfile("Rhttpd")
         Rd2HTML(utils:::.getHelpFile(file.path(path, helpdoc)),
                 out = outfile, package = dirpath,
-                dynamic = TRUE)
+                dynamic = TRUE, outputEncoding = "UTF-8")
         on.exit(unlink(outfile))
-        return(list(payload = paste(readLines(outfile), collapse = "\n")))
+        return(list(payload = paste(readLines(file(outfile, encoding="UTF-8")),
+                                    collapse = "\n")))
     } else if (grepl(docRegexp, path)) {
         ## ----------------------- package doc directory ---------------------
     	pkg <- sub(docRegexp, "\\1", path)
@@ -509,12 +603,19 @@ httpd <- function(path, query, ...)
     } else if (grepl(DemoRegexp, path)) {
     	pkg <- sub(DemoRegexp, "\\1", path)
     	demo <- sub(DemoRegexp, "\\2", path)
-    	demo(demo, package=pkg, character.only=TRUE, ask=FALSE)
-	return( list(payload = paste0("Demo '", pkg, "::", demo,
-				"' was run in the console.",
-				" To repeat, type 'demo(",
-				pkg, "::", demo,
-				")' in the console.")) )
+        if (logHelpRequests) {
+            message(sprintf("HTTPD-DEMO %s::%s", pkg, demo))
+        }
+        else return(demo2html(demo, pkg))
+    } else if (grepl(ExampleRegexp, path)) {
+    	pkg <- sub(ExampleRegexp, "\\1", path)
+    	topic <- sub(ExampleRegexp, "\\2", path)
+        if (logHelpRequests) {
+            message(sprintf("HTTPD-EXAMPLE %s::%s", pkg, topic))
+        }
+        else return(example2html(topic, pkg,
+                                 env = if (identical(query["local"], "FALSE")) .GlobalEnv
+                                       else NULL))
     } else if (grepl(newsRegexp, path)) {
     	pkg <- sub(newsRegexp, "\\1", path)
         if(identical(names(query), c("objects", "port")))
@@ -531,10 +632,13 @@ httpd <- function(path, query, ...)
                                                        length(rle))),
                                  class = "rle")
                 news <- news(inverse.rle(rle)[-1L], package = pkg)
+            ## </FIXME>
             } else
                 news <- news(package = pkg)
-            ## </FIXME>
         }
+        if(!inherits(news, "news_db"))
+            return(error_page(gettextf("No NEWS found for package %s",
+                                       mono(pkg))))
     	formatted <- toHTML(news,
     		            title=paste("NEWS in package", sQuote(pkg)),
     			    up="html/00Index.html")
@@ -556,12 +660,28 @@ httpd <- function(path, query, ...)
     	pkg <- sub(cssRegexp, "\\1", path)
         return( list(file = system.file("html", "R.css", package = pkg),
                      "content-type" = "text/css") )
+    } else if(grepl(packageIndexRegexp, path)) {
+        ## <FIXME>
+        ## Can we do this better?
+        url <- paste0(path, "/html/00Index.html")
+        return(list(payload = paste0('Redirect to <a href="', url, '">"',
+                                     url, '"</a>'),
+                    "content-type" = 'text/html',
+                    header = paste0('Location: ', url),
+                    "status code" = 302L)) # temporary redirect
+        ## </FIXME>
+    } else if(grepl(packageLicenseFileRegexp, path) &&
+              file.exists(file <- system.file(basename(path),
+                                              package =
+                                                  basename(dirname(path))))) {
+        return(list(file = file,
+                    "content-type" = "text/plain; charset=utf-8"))
     } else if (startsWith(path, "/library/")) {
         descRegexp <- "^/library/+([^/]+)/+DESCRIPTION$"
         if(grepl(descRegexp, path)) {
             pkg <- sub(descRegexp, "\\1", path)
             file <- system.file("DESCRIPTION", package = pkg)
-            return(list(file = file, "content-type" = paste0("text/plain", charsetSetting(pkg))))
+            return(.HTML_package_description(file))
         } else
             return(error_page(gettextf("Only help files, %s, %s and files under %s and %s in a package can be viewed", mono("NEWS"),
                               mono("DESCRIPTION"), mono("doc/"), mono("demo/"))))

@@ -5,7 +5,7 @@
  *
  *  Merge in to R (and much more):
 
- *	Copyright (C) 2000-2021 The R Core Team
+ *	Copyright (C) 2000-2022 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -217,7 +217,7 @@ static const float bd0_scale[128 + 1][4] = {
 	{ +0x1.7dc474p-7, +0x1.f810a8p-31, -0x1.245b5cp-56, -0x1.a1f4f8p-80 }, /* 253: log(1036/1024.) */
 	{ +0x1.fe02a8p-8, -0x1.4ef988p-32, +0x1.1f86ecp-57, +0x1.20723cp-81 }, /* 254: log(1032/1024.) */
 	{ +0x1.ff00acp-9, -0x1.d4ef44p-33, +0x1.2821acp-63, +0x1.5a6d32p-87 }, /* 255: log(1028/1024.) */
-	{ 0, 0, 0, 0 }
+	{ 0, 0, 0, 0 } /* log(1024/1024) = log(1) = 0 */
 };
 
 
@@ -253,8 +253,8 @@ void attribute_hidden ebd0(double x, double M, double *yh, double *yl)
 	double f = floor (S / (0.5 + i / (2.0 * N)) + 0.5);
 	double fg = ldexp (f, -(e + Sb)); // ldexp(f, E) := f * 2^E
 #ifdef DEBUG_bd0
-	REprintf("ebd0(%g, %g): M/x = (r=%.15g) * 2^(e=%d); i=%d, f=%g, fg=f*2^-(e+10)=%g\n",
-		 x, M, r,e, i, f, fg);
+	REprintf("ebd0(x=%g, M=%g): M/x = (r=%.15g) * 2^(e=%d); i=%d,\n  f=%g, fg=f*2^-(e+%d)=%g\n",
+		 x, M, r,e, i, f, Sb, fg);
 	if (fg == ML_POSINF) {
 	    REprintf(" --> fg = +Inf --> return( +Inf )\n");
 	    *yh = fg; return;
@@ -289,9 +289,9 @@ void attribute_hidden ebd0(double x, double M, double *yh, double *yl)
 	 */
 
 #define ADD1(d_) do {				\
-	    double d = (d_);			\
+   volatile double d = (d_);			\
 	    double d1 = floor (d + 0.5);	\
-	    double d2 = d - d1;			\
+	    double d2 = d - d1;/* in [-.5,.5) */ \
 	    *yh += d1;				\
 	    *yl += d2;				\
 	} while(0)
@@ -310,11 +310,11 @@ void attribute_hidden ebd0(double x, double M, double *yh, double *yl)
             return;
         }
 	// else  [ fg != 1 ]
-	REprintf(" 2:  A(x*b[i,j]) and A(-x*b[0,j]), j=1:4:\n");
+	REprintf(" 2:  A(x*b[i,j]) and A(-x*e*b[0,j]), j=1:4:\n");
 	for (int j = 0; j < 4; j++) {
-	    ADD1( x     * bd0_scale[i][j]);  /* handles  x*log(fg*2^e) */
+ 	    ADD1( x * bd0_scale[i][j]);     // handles  x*log(fg*2^e)
 	    REprintf(" j=%d: (%13g, %13g);", j, *yl, *yh);
-	    ADD1(-x * e * bd0_scale[0][j]);  /* handles  x*log(1/ 2^e) */
+	    ADD1(-x * bd0_scale[0][j] * e); // handles  x*log(1/ 2^e)
 	    REprintf(" (%13g, %13g); yl+yh= %g\n", *yl, *yh, (*yl)+(*yh));
             if(!R_FINITE(*yh)) {
                 REprintf(" non-finite yh --> return((yh=Inf, yl=0))\n");
@@ -326,8 +326,9 @@ void attribute_hidden ebd0(double x, double M, double *yh, double *yl)
         if(fg == 1) return;
 	// else (fg != 1) :
 	for (int j = 0; j < 4; j++) {
-	    ADD1( x     * bd0_scale[i][j]);  /* handles  x*log(fg*2^e) */
-	    ADD1(-x * e * bd0_scale[0][j]);  /* handles  x*log(1/ 2^e) */
+	    ADD1( x * bd0_scale[i][j]);     // handles  x*log(fg*2^e)
+	    ADD1(-x * bd0_scale[0][j] * e); // handles  x*log(1/ 2^e)
+	    //                        ^^^ at end prevents overflow in  ebd0(1e307, 1e300)
             if(!R_FINITE(*yh)) { *yh = ML_POSINF; *yl = 0; return; }
 	}
 #endif

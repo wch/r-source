@@ -60,7 +60,7 @@ cut.default <-
     } else if (is.logical(labels) && !labels)
         codes.only <- TRUE
     else if (length(labels) != nb - 1L)
-        stop("lengths of 'breaks' and 'labels' differ")
+        stop("number of intervals and length of 'labels' differ")
     code <- .bincode(x, breaks, right, include.lowest)
     if(codes.only) code
     else factor(code, seq_along(labels), labels, ordered = ordered_result)

@@ -1,6 +1,6 @@
 % File src/library/base/man/traceback.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2019 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{traceback}
@@ -75,9 +75,9 @@
 }
 \section{Warning}{
   It is undocumented where \code{.Traceback} is stored nor that it is
-  visible, and this is subject to change.  As of \R 4.0.0
+  visible, and this is subject to change.  Currently
   \code{.Traceback} contains the \code{\link{call}}s as language
-  objects, whereas previously these calls were deparsed.
+  objects.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

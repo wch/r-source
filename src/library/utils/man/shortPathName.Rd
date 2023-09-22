@@ -24,7 +24,7 @@ shortPathName(path)
   path names when the long-name path will be returned instead.
 }
 \value{
-  A character vector.  The path separator will be \code{\\}.  If a
+  A character vector.  The path separator will be \samp{\\}.  If a
   file path does not exist, the supplied path will be returned with slashes
   replaced by backslashes.
 }

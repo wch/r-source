@@ -48,12 +48,12 @@ env.profile(env)
 \arguments{
   \item{fun}{a \code{\link{function}}, a \code{\link{formula}}, or
     \code{NULL}, which is the default.}
-  \item{value}{an environment to associate with the function}
+  \item{value}{an environment to associate with the function.}
   \item{x}{an arbitrary \R object.}
   \item{hash}{a logical, if \code{TRUE} the environment will use a hash table.}
   \item{parent}{an environment to be used as the enclosure of the
     environment created.}
-  \item{env}{an environment}
+  \item{env}{an environment.}
   \item{size}{an integer specifying the initial size for a hashed
     environment.  An internal default value will be used if
     \code{size} is \code{NA} or zero.  This argument is ignored if

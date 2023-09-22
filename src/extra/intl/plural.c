@@ -1224,7 +1224,7 @@ YYSTYPE yylval;
 yylval.num = 0; /* -Wall */
 
 /* Number of syntax errors so far.  */
-int yynerrs;
+//int yynerrs;
 
   int yystate;
   int yyn;
@@ -1277,7 +1277,7 @@ int yynerrs;
 
   yystate = 0;
   yyerrstatus = 0;
-  yynerrs = 0;
+//  yynerrs = 0;
   yychar = YYEMPTY;		/* Cause a token to be read.  */
 
   /* Initialize stack pointers.
@@ -1603,7 +1603,7 @@ yyerrlab:
   /* If not already recovering from an error, report this error.  */
   if (!yyerrstatus)
     {
-      ++yynerrs;
+//      ++yynerrs;
 #if ! YYERROR_VERBOSE
       yyerror (YY_("syntax error"));
 #else

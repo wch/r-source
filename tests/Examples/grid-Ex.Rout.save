@@ -1,6 +1,6 @@
 
-R Under development (unstable) (2021-11-24 r81238) -- "Unsuffered Consequences"
-Copyright (C) 2021 The R Foundation for Statistical Computing
+R Under development (unstable) (2023-02-17 r83864) -- "Unsuffered Consequences"
+Copyright (C) 2023 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -57,7 +57,7 @@ Type 'q()' to quit R.
 > flush(stderr()); flush(stdout())
 > 
 > ### Name: arrow
-> ### Title: Describe arrows to add to a line.
+> ### Title: Describe arrows to add to a line
 > ### Aliases: arrow
 > ### Keywords: dplot
 > 
@@ -232,7 +232,7 @@ viewport[C]->(viewport[D])
 > flush(stderr()); flush(stdout())
 > 
 > ### Name: depth
-> ### Title: Determine the number of levels in an object.
+> ### Title: Determine the number of levels in an object
 > ### Aliases: depth depth.viewport depth.path
 > ### Keywords: dplot
 > 
@@ -321,7 +321,7 @@ $y
 > flush(stderr()); flush(stdout())
 > 
 > ### Name: explode
-> ### Title: Explode a path into its components.
+> ### Title: Explode a path into its components
 > ### Aliases: explode explode.character explode.path
 > ### Keywords: dplot
 > 
@@ -1057,7 +1057,12 @@ grandparent::parent::child
 +                width=unit(1, "cm"), height=unit(1, "cm"),
 +                extend="repeat")
 > grid.rect(gp=gpar(col=NA, fill=pat))
-> mask <- rectGrob(gp=gpar(col=NA, fill=rgb(0,0,0,.5)))
+> masks <- dev.capabilities()$masks
+> if (is.character(masks) && "luminance" %in% masks) {
++   mask <- as.mask(rectGrob(gp=gpar(col=NA, fill="grey50")), type="luminance")
++ } else {
++   mask <- rectGrob(gp=gpar(col=NA, fill=rgb(0,0,0,.5)))
++ }
 > pushViewport(viewport(mask=mask))
 > pushViewport(viewport(y=.5, height=.5, just="bottom"))
 > grid.circle(1:2/3, r=.45, gp=gpar(fill=2:3))
@@ -1667,6 +1672,11 @@ List of 6
 +           gp=gpar(fontsize=20, col="grey"))
 > grid.text("SOMETHING NICE AND BIG", x=x, y=y, rot=rot,
 +           gp=gpar(fontsize=20), check.overlap=TRUE)
+> 
+> grid.newpage() ## plotmath example
+> grid.text(quote(frac(e^{-x^2/2}, sqrt(2*pi))), x=x, y=y, rot=stats::runif(20, -45,45),
++           gp=gpar(fontsize=17, col=4), check.overlap=TRUE)
+> 
 > grid.newpage()
 > draw.text <- function(just, i, j) {
 +   grid.text("ABCD", x=x[j], y=y[i], just=just)
@@ -1826,7 +1836,7 @@ List of 6
 > flush(stderr()); flush(stdout())
 > 
 > ### Name: showGrob
-> ### Title: Label grid grobs.
+> ### Title: Label grid grobs
 > ### Aliases: showGrob
 > ### Keywords: dplot
 > 
@@ -1889,7 +1899,7 @@ List of 6
 > flush(stderr()); flush(stdout())
 > 
 > ### Name: showViewport
-> ### Title: Display grid viewports.
+> ### Title: Display grid viewports
 > ### Aliases: showViewport
 > ### Keywords: dplot
 > 
@@ -1921,7 +1931,7 @@ List of 6
 > 
 > ### Name: unit
 > ### Title: Function to Create a Unit Object
-> ### Aliases: unit
+> ### Aliases: unit is.unit
 > ### Keywords: dplot
 > 
 > ### ** Examples
@@ -2398,7 +2408,7 @@ vp1::vp2
 > 
 > ### Name: xsplinePoints
 > ### Title: Return the points that would be used to draw an Xspline (or a
-> ###   Bezier curve).
+> ###   Bezier curve)
 > ### Aliases: xsplinePoints bezierPoints
 > ### Keywords: dplot
 > 
@@ -2436,7 +2446,7 @@ vp1::vp2
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  2.212 0.024 2.232 0 0 
+Time elapsed:  4.911 0.016 4.927 0 0 
 > grDevices::dev.off()
 null device 
           1 

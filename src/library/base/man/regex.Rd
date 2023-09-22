@@ -1,6 +1,6 @@
 % File src/library/base/man/regex.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2021 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{regex}
@@ -95,8 +95,8 @@
       \samp{[:upper:]}.}
 
     \item{\samp{[:blank:]}}{Blank characters: space and tab, and
-      possibly other locale-dependent characters such as non-breaking
-      space.}
+      possibly other locale-dependent characters, but on most platforms
+      not including non-breaking space.}
 
     \item{\samp{[:cntrl:]}}{
       Control characters.  In ASCII, these characters have octal codes
@@ -119,7 +119,8 @@
 
     \item{\samp{[:space:]}}{
       Space characters: tab, newline, vertical tab, form feed, carriage
-      return, space and possibly other locale-dependent characters.}
+      return, space and possibly other locale-dependent characters -- on
+      most platforms this does not include non-breaking spaces.}
 
     \item{\samp{[:upper:]}}{Upper-case letters in the current locale.}
 
@@ -308,7 +309,11 @@
   \samp{\p{xx}} and \samp{\P{xx}} which match characters with and
   without property \samp{xx} respectively.  For a list of supported
   properties see the PCRE documentation, but for example \samp{Lu} is
-  \sQuote{upper case letter} and \samp{Sc} is \sQuote{currency symbol}.
+  \sQuote{upper case letter} and \samp{Sc} is \sQuote{currency symbol}. Note
+  that properties such as \samp{\w}, \samp{\W}, \samp{\d}, \samp{\D}, \samp{\s},
+  \samp{\S}, \samp{\b} and \samp{\B} by default do not refer to full
+  Unicode, but one can override this by starting a pattern with \samp{(*UCP)}
+  (which comes with a performance penalty).
   (This support depends on the PCRE library being compiled with
   \sQuote{Unicode property support} which can be checked \emph{via}
   \code{\link{pcre_config}}. PCRE2 when compiled with Unicode support always

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-11-06 17:17+0100\n"
+"POT-Creation-Date: 2023-07-31 14:59+0200\n"
 "PO-Revision-Date: 2014-03-26 10:02+0200 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -18,7 +18,7 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0; \n"
 "X-Generator: Pootle 2.0.5 \n"
 
-#: gpar.c:523
+#: gpar.c:621
 msgid "updateGContext must only be called after initGContext"
 msgstr ""
 
@@ -30,55 +30,69 @@ msgstr ""
 msgid "cannot clip to rotated viewport"
 msgstr " rotated viewport のクリップは出来ません "
 
-#: grid.c:455
+#: grid.c:456
 msgid "Clipping paths within a (clipping) path are not honoured"
 msgstr ""
 
-#: grid.c:474
+#: grid.c:475
 msgid "Masks within a (clipping) path are not honoured"
 msgstr ""
 
-#: grid.c:916 grid.c:921 grid.c:1040 grid.c:1045
+#: grid.c:917 grid.c:922 grid.c:1043 grid.c:1048
 msgid "cannot pop the top-level viewport ('grid' and 'graphics' output mixed?)"
 msgstr " トップレベルの viewport は pop することが出来ません ('grid' と 'graphics' の出力を混同していませんか?) "
 
-#: grid.c:1246
+#: grid.c:1249
 msgid "attempt to plot on null device"
 msgstr " ナルデバイスにプロットしようとしています "
 
-#: grid.c:1702
+#: grid.c:1719
 msgid "there is no layout defined"
 msgstr " レイアウトが定義されていません "
 
-#: grid.c:1922
+#: grid.c:1941
 msgid "polygon edge not found (zero-width or zero-height?)"
 msgstr " 多角形の頂点が見付かりません (幅もしくは高さがゼロ？) "
 
-#: grid.c:1931
+#: grid.c:1950
 msgid "polygon edge not found"
 msgstr " 多角形の頂点が見付かりません "
 
-#: grid.c:2085
+#: grid.c:2104
 msgid "require at least two points to draw arrow"
 msgstr " 矢印を書くためには少なくとも二つの点が必要です "
 
-#: grid.c:2408
+#: grid.c:2475
 msgid "non-finite control point in Xspline"
 msgstr " Xspline 中に有限でない制御点 "
 
-#: grid.c:3333
+#: grid.c:3444
 msgid "non-finite x or y in graphics path"
 msgstr " グラフィックパスに有限でない x か y があります "
 
-#: grid.c:3383
+#: grid.c:3495
 msgid "Empty raster"
 msgstr " ラスターが空です "
 
-#: grid.c:3869
+#: grid.c:4046 grid.c:4102
+msgid "Coordinates for text pch not yet supported"
+msgstr ""
+
+#: grid.c:4107
+#, c-format
+msgid "pch value '%d' is invalid in this locale"
+msgstr ""
+
+#: grid.c:4928
+#, c-format
+msgid "unimplemented pch value '%d'"
+msgstr ""
+
+#: grid.c:5087
 msgid "invalid plotting symbol"
 msgstr " 不正なプロット記号です "
 
-#: grid.c:3963
+#: grid.c:5205
 msgid "unable to clip to rotated rectangle"
 msgstr " 回転された矩形へクリップ出来ません "
 
@@ -94,7 +108,7 @@ msgstr " 不正な 'layout.pos.col' です "
 msgid "singular transformation matrix"
 msgstr " 特異な変換行列です "
 
-#: state.c:192
+#: state.c:191
 msgid "unable to store 'grid' state.  Too many devices open?"
 msgstr " 現在の 'grid' の状態を保持することが出来ません。デバイスを開きすぎていませんか? "
 
@@ -160,6 +174,10 @@ msgstr ""
 
 #: unit.c:1840
 msgid "units can only be multiplied with numerics and integers"
+msgstr ""
+
+#: util.c:216
+msgid "Unable to calculate text width/height (using zero)"
 msgstr ""
 
 #: viewport.c:56

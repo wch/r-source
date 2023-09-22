@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: R 4.2.0\n"
+"Project-Id-Version: R 4.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-05-03 09:56+0200\n"
+"POT-Creation-Date: 2023-07-31 14:59+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,99 +17,99 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: fork.c:215
+#: fork.c:223
 #, c-format
 msgid "unable to terminate child process: %s"
 msgstr ""
 
-#: fork.c:242
+#: fork.c:250
 #, c-format
 msgid "unable to terminate child: %s"
 msgstr ""
 
-#: fork.c:321 fork.c:608 ncpus.c:90 ncpus.c:126 ncpus.c:191
+#: fork.c:329 fork.c:620 ncpus.c:87 ncpus.c:123 ncpus.c:179
 msgid "memory allocation error"
 msgstr ""
 
-#: fork.c:377 fork.c:381 fork.c:385
+#: fork.c:385 fork.c:389 fork.c:393
 #, c-format
 msgid "invalid '%s' argument"
 msgstr ""
 
-#: fork.c:443
+#: fork.c:451
 msgid ""
 "Error while shutting down parallel: unable to terminate some child "
 "processes\n"
 msgstr ""
 
-#: fork.c:532 fork.c:535
+#: fork.c:544 fork.c:547
 msgid "unable to create a pipe"
 msgstr ""
 
-#: fork.c:557
+#: fork.c:569
 #, c-format
 msgid "unable to fork, possible reason: %s"
 msgstr ""
 
-#: fork.c:749
+#: fork.c:761
 msgid "only children can send data to the master process"
 msgstr ""
 
-#: fork.c:751
+#: fork.c:763
 msgid "there is no pipe to the master process"
 msgstr ""
 
-#: fork.c:753
+#: fork.c:765
 msgid "content to send must be RAW, use serialize() if needed"
 msgstr ""
 
-#: fork.c:762 fork.c:770 fork.c:1180
+#: fork.c:774 fork.c:785 fork.c:1198
 msgid "write error, closing pipe to the master"
 msgstr ""
 
-#: fork.c:780
+#: fork.c:795
 msgid "only the master process can send data to a child process"
 msgstr ""
 
-#: fork.c:788
+#: fork.c:803
 #, c-format
 msgid "child %d does not exist"
 msgstr ""
 
-#: fork.c:794
+#: fork.c:809
 msgid "write error"
 msgstr ""
 
-#: fork.c:880
+#: fork.c:895
 #, c-format
 msgid "cannot wait for child %d as it does not exist"
 msgstr ""
 
-#: fork.c:939 fork.c:1059
+#: fork.c:954 fork.c:1077
 #, c-format
 msgid "error '%s' in select"
 msgstr ""
 
-#: fork.c:1149
+#: fork.c:1167
 msgid "'mckill' failed"
 msgstr ""
 
-#: fork.c:1162
+#: fork.c:1180
 msgid "'mcexit' can only be used in a child process"
 msgstr ""
 
-#: fork.c:1194
+#: fork.c:1212
 msgid "'mcexit' failed"
 msgstr ""
 
-#: fork.c:1223 fork.c:1232
+#: fork.c:1241 fork.c:1250
 msgid "invalid CPU affinity specification"
 msgstr ""
 
-#: fork.c:1243
+#: fork.c:1261
 msgid "requested CPU set is too large for this system"
 msgstr ""
 
-#: fork.c:1266
+#: fork.c:1284
 msgid "retrieving CPU affinity set failed"
 msgstr ""

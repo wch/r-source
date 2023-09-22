@@ -46,7 +46,7 @@
   Sex bias in graduate admissions: Data from Berkeley.
   \emph{Science}, \bold{187}, 398--403.
   \doi{10.1126/science.187.4175.398}.
-  \url{https://www.jstor.org/stable/1739581}.
+  %% \url{https://www.jstor.org/stable/1739581}.
 }
 \examples{
 require(graphics)

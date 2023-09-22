@@ -1,6 +1,6 @@
 % File src/library/base/man/logical.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2020 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{logical}
@@ -32,12 +32,15 @@ is.logical(x)
   variables whose initial values set to these.  All four are
   \code{logical(1)} vectors.
 
+  \code{as.logical} is a generic function.  Methods should return an object
+  of type \code{"logical"}.
+
   Logical vectors are coerced to integer vectors in contexts where a
   numerical value is required, with \code{TRUE} being mapped to
   \code{1L}, \code{FALSE} to \code{0L} and \code{NA} to \code{NA_integer_}.
 }
 \arguments{
-  \item{length}{A non-negative integer specifying the desired length.
+  \item{length}{a non-negative integer specifying the desired length.
     Double values will be coerced to integer:
     supplying an argument of length other than one is an error.}
   \item{x}{object to be coerced or tested.}

@@ -77,7 +77,7 @@ TRUE || (TRUE && FALSE) # and different from
 
 ## '=' has lower precedence than '<-' ... so you should not mix them
 ##     (and '<-' is considered better style anyway):
-\donttest{## Consequently, this gives a ("non-catchable") error
+\dontrun{## Consequently, this gives a ("non-catchable") error
  x <- y = 5  #->  Error in (x <- y) = 5 : ....
 }
 }

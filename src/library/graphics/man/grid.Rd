@@ -1,6 +1,6 @@
 % File src/library/graphics/man/grid.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{grid}
@@ -57,5 +57,16 @@ with(iris,
     )
 par(op)
 
+plot(1:64)
+gr <- grid() # now *invisibly* returns the grid "at" locations
+str(gr)
+stopifnot(length(gr) == 2, identical(gr[[1]], gr[[2]]),
+          gr[["atx"]] == 10*(0:6))
+
+## In log-scale plots :
+plot(8:270, log="xy") ; grid() # at (1, 10, 100); if preferring "all" grid lines:
+plot(8:270, log="xy") ; grid(equilogs = FALSE) -> grll
+stopifnot(identical(grll, list(atx = c(1, 2, 5, 10, 20, 50, 100, 200),
+                               aty = c(         10, 20, 50, 100, 200))))
 }
 \keyword{aplot}

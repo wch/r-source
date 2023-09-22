@@ -17,7 +17,7 @@ isS3method(method, f, class, envir = parent.frame())
 }
 \arguments{
   \item{method}{a character string, typically of the form
-    \code{"<fn>.<class>"}.  If omitted, \code{f} and \code{class} have
+    \code{"\var{fn}.\var{class}"}.  If omitted, \code{f} and \code{class} have
     to be specified instead.}
   \item{f}{optional character string, typically specifying an S3 generic
     function.  Used, when \code{method} is not specified.}
@@ -26,8 +26,6 @@ isS3method(method, f, class, envir = parent.frame())
   \item{envir}{the \code{\link{environment}} in which the method and its
     generic are searched first, as in \code{\link{getS3method}()}.}
 }
-%% \details{
-%% }
 \value{
   \code{\link{logical}} \code{TRUE} or \code{FALSE}
 }

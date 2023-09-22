@@ -85,7 +85,7 @@ expm1(x)
   \code{log1p} and \code{expm1} may be taken from the operating system,
   but if not available there then they are based on the Fortran subroutine
   \code{dlnrel} by W. Fullerton of Los Alamos Scientific Laboratory (see
-  \url{https://www.netlib.org/slatec/fnlib/dlnrel.f}) and (for small x) a
+  \url{https://netlib.org/slatec/fnlib/dlnrel.f}) and (for small x) a
   single Newton step for the solution of \code{log1p(y) = x}
   respectively.
 }
@@ -109,6 +109,7 @@ log(exp(3))
 log10(1e7) # = 7
 
 x <- 10^-(1+2*1:9)
-cbind(x, log(1+x), log1p(x), exp(x)-1, expm1(x))
+cbind(deparse.level=2, # to get nice column names
+      x, log(1+x), log1p(x), exp(x)-1, expm1(x))
 }
 \keyword{math}

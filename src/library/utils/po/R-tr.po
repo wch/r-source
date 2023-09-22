@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-11-06 17:18\n"
+"POT-Creation-Date: 2023-07-31 15:00\n"
 "PO-Revision-Date: 2011-04-02 \n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -27,6 +27,12 @@ msgid "no documentation for %s found in package %s"
 msgstr ""
 
 msgid "document not found"
+msgstr ""
+
+msgid "some options in argument 'restrict' were not recognized and hence ignored"
+msgstr ""
+
+msgid "argument 'format' is deprecated and has no affect on search results"
 msgstr ""
 
 msgid "A search query has been submitted to %s"
@@ -184,7 +190,7 @@ msgstr ""
 msgid "%s should be one of %s"
 msgstr ""
 
-msgid "Argument '%s' is deprecated; rather set '%s' instead."
+msgid "To cite package %s in publications use:"
 msgstr ""
 
 msgid "A BibTeX entry for LaTeX users is"
@@ -195,13 +201,7 @@ msgid ""
 "%s"
 msgstr ""
 
-msgid "no date field in DESCRIPTION file of package %s"
-msgstr ""
-
 msgid "could not determine year for %s from package DESCRIPTION file"
-msgstr ""
-
-msgid "To cite package %s in publications use:"
 msgstr ""
 
 msgid "ATTENTION: This citation information has been auto-generated from the package DESCRIPTION file and may need manual editing, see %s."
@@ -213,13 +213,7 @@ msgstr ""
 msgid "cannot handle S4 methods yet"
 msgstr ""
 
-msgid "'package' must be a character string or NULL"
-msgstr ""
-
-msgid "datasets have been moved from package 'base' to package 'datasets'"
-msgstr ""
-
-msgid "datasets have been moved from package 'stats' to package 'datasets'"
+msgid "'package' must be a character vector or NULL"
 msgstr ""
 
 msgid "data index for package %s is invalid and will be ignored"
@@ -362,7 +356,13 @@ msgstr ""
 msgid "'form' must be a two-sided formula with one term on each side"
 msgstr ""
 
-msgid "invalid 'n' -  must contain at least one non-missing element, got none."
+msgid "invalid object for 'as.environment'"
+msgstr ""
+
+msgid "invalid 'n' - must contain at least one non-missing element, got none."
+msgstr ""
+
+msgid "invalid 'n' - must be numeric, possibly NA."
 msgstr ""
 
 msgid "invalid 'n' - must have length one when dim(x) is NULL, got %d"
@@ -444,7 +444,7 @@ msgstr ""
 msgid "Unable to connect to CRAN to check R version."
 msgstr ""
 
-msgid "argument %s must be a single character string"
+msgid "argument %s must be a character string"
 msgstr ""
 
 msgid "incorrect field specification"
@@ -488,10 +488,7 @@ msgstr ""
 msgid "Otherwise, be patient ..."
 msgstr ""
 
-msgid "'url' must be a non-empty character string"
-msgstr ""
-
-msgid "'browser' must be a non-empty character string"
+msgid "'%s' must be a non-empty character string"
 msgstr ""
 
 msgid "no package '%s' was found"
@@ -516,6 +513,9 @@ msgid "cannot update HTML package index"
 msgstr ""
 
 msgid "done"
+msgstr ""
+
+msgid "Source must be a seekable connection"
 msgstr ""
 
 msgid "menu() cannot be used non-interactively"
@@ -671,6 +671,12 @@ msgstr ""
 msgid "invalid options(\"pkgType\"); must be a character string"
 msgstr ""
 
+msgid "No matching repositories found for"
+msgstr ""
+
+msgid ","
+msgstr ""
+
 msgid "--- Please select repositories for use in this session ---"
 msgstr "--- Lütfen bu oturumda kullanılacak depoları seçin ---"
 
@@ -686,6 +692,9 @@ msgstr ""
 msgid ""
 "Do not know which element of 'lib' to install dependencies into\n"
 "skipping dependencies"
+msgstr ""
+
+msgid "'%s' must be a character string"
 msgstr ""
 
 msgid "type 'binary' is not supported on this platform"
@@ -754,12 +763,21 @@ msgstr ""
 msgid "files: %s"
 msgstr ""
 
+msgid "Windows default 'timeout' command is not usable for parallel installs"
+msgstr ""
+
 msgid "timeouts for parallel installs require the 'timeout' command"
 msgstr ""
 
+msgid "installation of package %s failed"
+msgstr ""
+
+msgid "installation of %d packages failed:  %s"
+msgstr ""
+
 msgid ""
-"installation of one or more packages failed,\n"
-"  probably %s"
+"installation of %d packages failed:\n"
+"  %s"
 msgstr ""
 
 msgid ""
@@ -1108,13 +1126,7 @@ msgstr ""
 msgid "attempt to set '%s' ignored"
 msgstr ""
 
-msgid "'unzip' must be a single character string"
-msgstr ""
-
 msgid "'files' must be a character vector specifying one or more filepaths"
-msgstr ""
-
-msgid "argument 'zip' must be a non-empty character string"
 msgstr ""
 
 msgid "cannot find program to open 'mailto:' URIs: reverting to 'method=\"none\"'"
@@ -1145,6 +1157,9 @@ msgid "'wget' call had nonzero exit status"
 msgstr ""
 
 msgid "'curl' call had nonzero exit status"
+msgstr ""
+
+msgid "invalid method:"
 msgstr ""
 
 msgid "download had nonzero exit status"
@@ -1227,6 +1242,11 @@ msgid_plural "%d Sweave files for basename %s found"
 msgstr[0] ""
 msgstr[1] ""
 
+msgid "Output/used file:  "
+msgid_plural "Output/used files:  "
+msgstr[0] ""
+msgstr[1] ""
+
 msgid "%d occurrence in %s"
 msgid_plural "%d occurrences in %s"
 msgstr[0] ""
@@ -1259,6 +1279,11 @@ msgstr[1] ""
 
 msgid "object '%s' not found"
 msgid_plural "objects '%s' not found"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "package %s is a base package, and cannot be removed"
+msgid_plural "packages %s are base packages, and cannot be removed"
 msgstr[0] ""
 msgstr[1] ""
 

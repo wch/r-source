@@ -23,7 +23,7 @@
 #include <config.h>
 #endif
 
-#include "Defn.h"
+#include <Defn.h>
 
 #include <R_ext/RS.h> /* S4 bit */
 
@@ -123,7 +123,7 @@ get_duplicate_counter(void)
     return duplicate_counter;
 }
 
-void attribute_hidden reset_duplicate_counter(void)
+attribute_hidden void reset_duplicate_counter(void)
 {
     duplicate_counter = 0;
     return;
@@ -485,7 +485,7 @@ void copyMatrix(SEXP s, SEXP t, Rboolean byrow)
 }
 
 #define COPY_WITH_RECYCLE(VALTYPE, TNAME) \
-void attribute_hidden \
+attribute_hidden void \
 xcopy##TNAME##WithRecycle(VALTYPE *dst, VALTYPE *src, R_xlen_t dstart, R_xlen_t n, R_xlen_t nsrc) { \
 							\
     if (nsrc >= n) { /* no recycle needed */		\
@@ -515,7 +515,7 @@ COPY_WITH_RECYCLE(Rbyte, Raw)		/* xcopyRawWithRecycle */
 COPY_WITH_RECYCLE(double, Real)		/* xcopyRealWithRecycle */
 
 #define COPY_ELT_WITH_RECYCLE(TNAME, GETELT, SETELT) \
-void attribute_hidden \
+attribute_hidden void \
 xcopy##TNAME##WithRecycle(SEXP dst, SEXP src, R_xlen_t dstart, R_xlen_t n, R_xlen_t nsrc) { \
 							\
     if (nsrc >= n) { /* no recycle needed */		\
@@ -542,7 +542,7 @@ COPY_ELT_WITH_RECYCLE(String, STRING_ELT, SET_STRING_ELT) /* xcopyStringWithRecy
 COPY_ELT_WITH_RECYCLE(Vector, VECTOR_ELT_LD, SET_VECTOR_ELT) /* xcopyVectorWithRecycle */
 
 #define FILL_WITH_RECYCLE(VALTYPE, TNAME) \
-void attribute_hidden xfill##TNAME##MatrixWithRecycle(VALTYPE *dst, VALTYPE *src,	\
+attribute_hidden void xfill##TNAME##MatrixWithRecycle(VALTYPE *dst, VALTYPE *src,	\
     R_xlen_t dstart, R_xlen_t drows, R_xlen_t srows,		\
     R_xlen_t cols, R_xlen_t nsrc) {				\
 								\
@@ -557,7 +557,7 @@ FILL_WITH_RECYCLE(Rbyte, Raw)		/* xfillRawMatrixWithRecycle */
 FILL_WITH_RECYCLE(double, Real)		/* xfillRealMatrixWithRecycle */
 
 #define FILL_ELT_WITH_RECYCLE(TNAME, GETELT, SETELT) \
-void attribute_hidden xfill##TNAME##MatrixWithRecycle(SEXP dst, SEXP src,	\
+attribute_hidden void xfill##TNAME##MatrixWithRecycle(SEXP dst, SEXP src,	\
     R_xlen_t dstart, R_xlen_t drows, R_xlen_t srows,		\
     R_xlen_t cols, R_xlen_t nsrc) {				\
 								\
@@ -571,7 +571,7 @@ FILL_ELT_WITH_RECYCLE(Vector, VECTOR_ELT, SET_VECTOR_ELT) /* xfillVectorMatrixWi
 /* For duplicating before modifying attributes duplicate_attr tries to
    wrap a larger vector object with an ALTREP wrapper, and falls back
    to duplicate or shallow_duplicate if the object can't be
-   wrapped. The size threshold used seems to be reaonable but could be
+   wrapped. The size threshold used seems to be reasonable but could be
    tested more extensively. */
 #define WRAP_THRESHOLD 64
 static SEXP duplicate_attr(SEXP x, Rboolean deep)

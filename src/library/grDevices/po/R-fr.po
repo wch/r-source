@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.0.4\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-11-06 17:17\n"
+"POT-Creation-Date: 2023-07-31 14:59\n"
 "PO-Revision-Date: 2021-02-10 17:40+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -162,8 +162,80 @@ msgstr "pas de nom de fichier utilisable disponible pour postscript()"
 msgid "dev.new(): using postscript(file=\"%s\")"
 msgstr "dev.new() : utilisation de postscript(file=\"%s\")"
 
+msgid "Invalid capabilities - alert the device maintainer"
+msgstr ""
+
+#, fuzzy
+msgid "Invalid span weight"
+msgstr "Type de pattern incorrect"
+
+msgid "length of arguments must match (and be greater than 0)"
+msgstr ""
+
+msgid "Invalid glyph width(s)"
+msgstr ""
+
+msgid "Invalid glyph width"
+msgstr ""
+
+msgid "Unknown width; using left anchor"
+msgstr ""
+
+msgid "Invalid glyph height(s)"
+msgstr ""
+
+msgid "Invalid glyph height"
+msgstr ""
+
+msgid "Unknown height; using bottom anchor"
+msgstr ""
+
+msgid "Invalid glyph anchor"
+msgstr ""
+
+msgid "Font file longer than 500 will be truncated"
+msgstr ""
+
+msgid "Font family longer than 200 will be truncated"
+msgstr ""
+
+msgid "PostScript font name longer than 200 will be truncated"
+msgstr ""
+
+msgid "Font information is inconsistent"
+msgstr ""
+
+msgid "List must include at least one font"
+msgstr ""
+
+#, fuzzy
+msgid "Invalid glyph font"
+msgstr "Type de police incorrect"
+
+#, fuzzy
+msgid "Invalid font list"
+msgstr "Type de police incorrect"
+
+#, fuzzy
+msgid "Unknown font"
+msgstr "fonte inconnue"
+
+msgid "There must be anchors named \"left\" and \"bottom\""
+msgstr ""
+
+msgid "Invalid glyph info"
+msgstr ""
+
+#, fuzzy
+msgid "Invalid compositing operator"
+msgstr "format de sortie incorrect"
+
 msgid "wrong 'type'; should never happen, please report!"
 msgstr "'type' incorrect ; Cela ne devrait pas se produire, veuillez reporter l’erreur, s’il-vous-plait !"
+
+#, fuzzy
+msgid "Invalid mask type"
+msgstr "Type de police incorrect"
 
 #, fuzzy
 msgid "Invalid fill rule"
@@ -247,7 +319,8 @@ msgstr "fonte inconnue"
 msgid "font encoding mismatch '%s'/'%s'"
 msgstr "incohérence d'encodage pour la police '%s/%s'"
 
-msgid "'file' must be a non-empty character string"
+#, fuzzy
+msgid "'%s' must be a non-empty character string"
 msgstr "'file' doit être une chaîne de caractère non vide"
 
 msgid "GhostScript was not found"
@@ -258,6 +331,13 @@ msgstr "format de sortie incorrect"
 
 msgid "status %d in running command '%s'"
 msgstr "statut %d dans la commande en cours d'exécution '%s'"
+
+msgid "'file' must be a non-empty character string"
+msgstr "'file' doit être une chaîne de caractère non vide"
+
+#, fuzzy
+msgid "Invalid 'glyphInfo'"
+msgstr "argument 'file' incorrect"
 
 msgid "failed to add more ticks; 'min.n' too large?"
 msgstr "impossible d’ajouter des traits d’axes supplémentaires ; 'min.n' trop large ?"
@@ -319,6 +399,9 @@ msgstr "Le package ('Recommended') \"KernSmooth\" doit être installé"
 msgid "'r' must be a \"range\", hence of length 2"
 msgstr "'r' doit indiquer une étendue des valeurs, donc être de longueur 2"
 
+msgid "points cut off after point[%d]"
+msgstr ""
+
 msgid "invalid first argument"
 msgstr "premier argument incorrect"
 
@@ -356,8 +439,20 @@ msgstr ""
 "Les périphériques disponibles sont :\n"
 "%s"
 
+#, fuzzy
+msgid "invalid width"
+msgstr "'title' incorrect"
+
+#, fuzzy
+msgid "invalid height"
+msgstr "'title' incorrect"
+
 msgid "'res' must be specified unless 'units = \"px\"'"
 msgstr "'res' doit être spécifié à moins que 'units = \"px\""
+
+#, fuzzy
+msgid "'filename' must be a non-empty character string"
+msgstr "'file' doit être une chaîne de caractère non vide"
 
 msgid "type = \"quartz\" is unavailable. trying \"Xlib\""
 msgstr "type = \"quartz\" n’est pas disponible. Essai de \"Xlib\""
@@ -444,20 +539,21 @@ msgid_plural "differ between new and previous"
 msgstr[0] "diffère entre le nouveau et le précédent"
 msgstr[1] "diffèrent entre le nouveau et le précédent"
 
-msgid "%d x value <= 0 omitted from logarithmic plot"
-msgid_plural "%d x values <= 0 omitted from logarithmic plot"
+#, fuzzy
+msgid "%d %s value <= 0 omitted from logarithmic plot"
+msgid_plural "%d %s values <= 0 omitted from logarithmic plot"
 msgstr[0] "%d valeur x <= 0 est ignorée pour le graphe logarithmique"
 msgstr[1] "%d valeurs x <= 0 sont ignorées pour le graphe logarithmique"
 
-msgid "%d y value <= 0 omitted from logarithmic plot"
-msgid_plural "%d y values <= 0 omitted from logarithmic plot"
-msgstr[0] "%d valeur y <= 0 est ignorée pour le graphe logarithmique"
-msgstr[1] "%d valeurs y <= 0 sont ignorées pour le graphe logarithmique"
+#~ msgid "%d y value <= 0 omitted from logarithmic plot"
+#~ msgid_plural "%d y values <= 0 omitted from logarithmic plot"
+#~ msgstr[0] "%d valeur y <= 0 est ignorée pour le graphe logarithmique"
+#~ msgstr[1] "%d valeurs y <= 0 sont ignorées pour le graphe logarithmique"
 
-msgid "%d z value <= 0 omitted from logarithmic plot"
-msgid_plural "%d z values <= 0 omitted from logarithmic plot"
-msgstr[0] "%d valeur z <= 0 est ignorée pour le graphe logarithmique"
-msgstr[1] "%d valeurs z <= 0 sont ignorées pour le graphe logarithmique"
+#~ msgid "%d z value <= 0 omitted from logarithmic plot"
+#~ msgid_plural "%d z values <= 0 omitted from logarithmic plot"
+#~ msgstr[0] "%d valeur z <= 0 est ignorée pour le graphe logarithmique"
+#~ msgstr[1] "%d valeurs z <= 0 sont ignorées pour le graphe logarithmique"
 
 #~ msgid "range too small for 'min.n'"
 #~ msgstr "étendue des valeurs trop petite pour 'min.n'"

@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/pretty.Date.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2010-2016 R Core Team
+% Copyright 2010-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{pretty.Date}
@@ -33,7 +33,8 @@
 %% }
 \value{
   A vector (of the suitable class) of locations, with attribute
-  \code{"labels"} giving corresponding formatted character labels.
+  \code{"labels"} giving corresponding formatted character labels and attribute
+  \code{"format"} giving the format specification that was used.
 }
 \seealso{
   \code{\link{pretty}} for the default method.
@@ -48,8 +49,7 @@ pretty(Sys.time(), n = 10)
 pretty(as.Date("2000-03-01")) # R 1.0.0 came in a leap year
 
 ## time ranges in diverse scales:% also in ../../../../tests/reg-tests-1c.R
-require(stats)
-steps <- setNames(,
+steps <- stats::setNames(,
     c("10 secs", "1 min", "5 mins", "30 mins", "6 hours", "12 hours",
       "1 DSTday", "2 weeks", "1 month", "6 months", "1 year",
       "10 years", "50 years", "1000 years"))

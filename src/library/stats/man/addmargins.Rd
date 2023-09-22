@@ -43,7 +43,7 @@ addmargins(A, margin = seq_along(dim(A)), FUN = sum, quiet = FALSE)
 }
 
 \details{
-  If the functions used to form margins are not commutative the result
+  If the functions used to form margins are not commutative, the result
   depends on the order in which margins are computed.  Annotation
   of margins is done via naming the \code{FUN} list.
 }

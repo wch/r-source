@@ -2,7 +2,7 @@
 ### Additional commands can be placed in site or user Rprofile files
 ### (see ?Rprofile).
 
-### Copyright (C) 1995-2020 The R Core Team
+### Copyright (C) 1995-2022 The R Core Team
 
 ### Notice that it is a bad idea to use this file as a template for
 ### personal startup files, since things will be executed twice and in
@@ -40,14 +40,7 @@ options(scipen = 0)
 options(max.print = 99999)# max. #{entries} in internal printMatrix()
 options(add.smooth = TRUE)# currently only used in 'plot.lm'
 
-if(isFALSE(as.logical(Sys.getenv("_R_OPTIONS_STRINGS_AS_FACTORS_",
-                                 "FALSE")))) {
-    options(stringsAsFactors = FALSE)
-} else {
-    options(stringsAsFactors = TRUE)
-}
-
-if(!interactive() && is.null(getOption("showErrorCalls")))
+if(!interactive())
     options(showErrorCalls = TRUE)
 
 local({dp <- Sys.getenv("R_DEFAULT_PACKAGES")

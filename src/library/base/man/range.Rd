@@ -1,16 +1,21 @@
 % File src/library/base/man/range.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{range}
+\title{Range of Values}
 \alias{range}
 \alias{range.default}
-\title{Range of Values}
+\alias{range.Date}
+\alias{range.POSIXct}
+\alias{.rangeNum}
 \usage{
 range(\dots, na.rm = FALSE)
-
 \method{range}{default}(\dots, na.rm = FALSE, finite = FALSE)
+## same for classes 'Date' and 'POSIXct'
+
+.rangeNum(\dots, na.rm, finite, isNumeric)
 }
 \arguments{
   \item{\dots}{any \code{\link{numeric}} or character objects.}
@@ -18,6 +23,9 @@ range(\dots, na.rm = FALSE)
     omitted.}
   \item{finite}{logical, indicating if all non-finite elements should
     be omitted.}
+  \item{isNumeric}{a \code{\link{function}} returning \code{TRUE} or
+    \code{FALSE} when called on \code{c(\dots, recursive = TRUE)},
+    \code{\link{is.numeric}()} for the default \code{range()} method.}
 }
 \description{
   \code{range} returns a vector containing the minimum and maximum of

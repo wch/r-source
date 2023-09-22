@@ -1,6 +1,6 @@
 % File src/library/base/man/extSoftVersion.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2014-2020 R Core Team
+% Copyright 2014-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{extSoftVersion}
@@ -27,6 +27,8 @@ extSoftVersion()
   \item{zlib}{The version of \code{zlib} in use.}
   \item{bzlib}{The version of \code{bzlib} (from \command{bzip2}) in use.}
   \item{xz}{The version of \code{liblzma} (from \command{xz}) in use.}
+  \item{libdeflate}{The version of \code{libdeflate} (if any otherwise
+    \code{""}) used when \R was built.}
   \item{PCRE}{The version of \code{PCRE} in use. PCRE1 has versions < 10.00,
   PCRE2 has versions >= 10.00.}
   \item{ICU}{The version of \code{ICU} in use (if any, otherwise \code{""}).}
@@ -59,7 +61,10 @@ extSoftVersion()
   an external BLAS implementation that had been copied, hard-linked or
   renamed by the system administrator.  For an external BLAS, a shared
   object file will be given and its path/name may indicate the
-  vendor/version. The detection does not work on Windows.
+  vendor/version. The detection does not work on Windows nor for some
+  uses of the Accelerate framework on macOS.
+  %% it works for --with-blas="-framework Accelerate'
+  %% but not for --with-newAccelerate
 }
 \seealso{
   \code{\link{libcurlVersion}} for the version of \code{libCurl}.
@@ -70,7 +75,7 @@ extSoftVersion()
 
   \code{\link{grSoftVersion}} for third-party graphics software.
 
-  \code{\link{tclVersion}} for the version of Tcl/Tk.
+  \code{\link{tclVersion}} in package \pkg{tcltk} for the version of Tcl/Tk.
   
   \code{\link{pcre_config}} for PCRE configuration options.
 }

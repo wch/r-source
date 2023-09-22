@@ -21,9 +21,7 @@ determinant(x, logarithm = TRUE, \dots)
   \item{x}{numeric matrix: logical matrices are coerced to numeric.}
   \item{logarithm}{logical; if \code{TRUE} (default) return the
     logarithm of the modulus of the determinant.}
-  \item{\dots}{Optional arguments.  At present none are used.  Previous
-    versions of \code{det} allowed an optional \code{method} argument.
-    This argument will be ignored but will not produce an error.}
+  \item{\dots}{optional arguments, currently unused.}
 }
 \details{
   The \code{determinant} function uses an LU decomposition and the

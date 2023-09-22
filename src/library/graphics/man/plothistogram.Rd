@@ -1,6 +1,6 @@
 % File src/library/graphics/man/plothistogram.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2021 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{plot.histogram}
@@ -32,8 +32,7 @@
     (probabilities), i.e., \code{x$density}, are plotted.  The
     default is true for equidistant \code{breaks} and false otherwise.}
   \item{col}{a colour to be used to fill the bars.  The default has been
-    changed from \code{NULL} (unfilled bars) only for \R 4.2.0 for
-    consistency with the change in \code{\link{hist.default}} for \R 4.0.0.}
+    changed from \code{NULL} (unfilled bars) only as from \R 4.2.0.}
   \item{border}{the color of the border around the bars.}
   \item{angle, density}{select shading of bars by lines:
     see \code{\link{rect}}.}

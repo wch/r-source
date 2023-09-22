@@ -1,6 +1,6 @@
 % File src/library/base/man/formals.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2020 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{formals}
@@ -28,7 +28,11 @@ formals(fun, envir = environment(fun)) <- value
   frame.  If it is not specified, the function calling \code{formals} is
   used.
 
-  Only \emph{closures} have formals, not primitive functions.
+  Only \emph{closures}, i.e., non-primitive functions, have formals, not
+  primitive functions.
+  \cr
+  Note that \code{formals(args(f))} gives a formal argument list for
+  all functions \code{f}, primitive or not.
 }
 \value{
   \code{formals} returns the formal argument list of the function
@@ -41,7 +45,9 @@ formals(fun, envir = environment(fun)) <- value
 }
 \seealso{
   \code{\link{formalArgs}} (from \pkg{methods}), a shortcut for \code{names(formals(.))}.
-  \code{\link{args}} for a human-readable version,
+  \code{\link{args}} for a human-readable version, \emph{and} as
+  intermediary to get formals of a primitive function.
+  \cr
   \code{\link{alist}} to \emph{construct} a typical formals \code{value},
   see the examples.
 

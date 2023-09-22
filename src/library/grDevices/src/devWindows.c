@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2004-2021   The R Core Team
+ *  Copyright (C) 2004-2023   The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *  Copyright (C) 1998--2003  Guido Masarotto and Brian Ripley
  *  Copyright (C) 2004        The R Foundation
@@ -41,10 +41,6 @@
 #include "console.h"
 #include "rui.h"
 #define WIN32_LEAN_AND_MEAN 1
-/* Mingw-w64 defines this to be 0x0502 */
-#ifndef _WIN32_WINNT
-# define _WIN32_WINNT 0x0500
-#endif
 #include <windows.h>
 #include "devWindows.h"
 #define DEVWINDOWS 1
@@ -3620,6 +3616,20 @@ static void SaveAsBitmap(pDevDesc dd, int res)
     xd->fp = NULL;
 }
 
+static void err_cannot_open(const char *fn)
+{
+    char *msg = (char *)malloc(strlen(fn) + 32 + 1);
+    if (!msg)
+	R_ShowMessage("Not enough memory to create error message.");
+    else {
+	strcpy(msg, _("Impossible to open "));
+	strcat(msg, fn);
+	R_ShowMessage(msg);
+	free(msg);
+    }
+    return;
+}
+
 /* These are the menu item versions */
 static void SaveAsPng(pDevDesc dd, const char *fn)
 {
@@ -3629,11 +3639,7 @@ static void SaveAsPng(pDevDesc dd, const char *fn)
     gadesc *xd = (gadesc *) dd->deviceSpecific;
 
     if ((fp = R_fopen(fn, "wb")) == NULL) {
-	char msg[MAX_PATH+32];
-
-	strcpy(msg, "Impossible to open ");
-	strncat(msg, fn, MAX_PATH);
-	R_ShowMessage(msg);
+	err_cannot_open(fn);
 	return;
     }
     r = ggetcliprect(xd->bm);
@@ -3658,10 +3664,7 @@ static void SaveAsJpeg(pDevDesc dd, int quality, const char *fn)
     gadesc *xd = (gadesc *) dd->deviceSpecific;
 
     if ((fp = R_fopen(fn,"wb")) == NULL) {
-	char msg[MAX_PATH+32];
-	strcpy(msg, "Impossible to open ");
-	strncat(msg, fn, MAX_PATH);
-	R_ShowMessage(msg);
+	err_cannot_open(fn);
 	return;
     }
     r = ggetcliprect(xd->bm);
@@ -3687,11 +3690,7 @@ static void SaveAsBmp(pDevDesc dd, const char *fn)
     gadesc *xd = (gadesc *) dd->deviceSpecific;
 
     if ((fp = R_fopen(fn, "wb")) == NULL) {
-	char msg[MAX_PATH+32];
-
-	strcpy(msg, _("Impossible to open "));
-	strncat(msg, fn, MAX_PATH);
-	R_ShowMessage(msg);
+	err_cannot_open(fn);
 	return;
     }
     r = ggetcliprect(xd->bm);
@@ -3824,16 +3823,15 @@ SEXP devga(SEXP args)
     R_CheckDeviceAvailable();
     BEGIN_SUSPEND_INTERRUPTS {
 	pDevDesc dev;
-	char type[100], *file = NULL, fn[MAX_PATH];
+	char type[100], *file = NULL;
 	strcpy(type, "windows");
 	if (display[0]) {
 	    strncpy(type, display, 100 - 1);
 	    type[100 - 1] = '\0';
 	    char *p = strchr(display, ':');
 	    if (p) {
-		strncpy(fn, p+1, MAX_PATH - 1);
-		fn[MAX_PATH - 1] = '\0';
-		file = fn;
+		file = R_alloc(strlen(p+1) + 1, 1);
+		strcpy(file, p+1);
 	    }
 	    // Package tkrplot assumes the exact form here,
 	    // but remove suffix for all the others.
@@ -3937,7 +3935,7 @@ static void GA_eventHelper(pDevDesc dd, int code)
 
 #define WIN32_LEAN_AND_MEAN 1
 #include <windows.h>
-typedef int (*R_SaveAsBitmap)(/* variable set of args */);
+typedef int (*R_SaveAsBitmap)(SEXP);
 static R_SaveAsBitmap R_devCairo;
 static int RcairoAlreadyLoaded = 0;
 static HINSTANCE hRcairoDll;
@@ -3952,11 +3950,26 @@ static R_cairoFT_t R_cairoFT = NULL;
 static int Load_Rcairo_Dll()
 {
     if (!RcairoAlreadyLoaded) {
-	char szFullPath[PATH_MAX];
+	size_t needed = strlen(R_HomeDir())
+	                + strlen("/library/grDevices/libs/")
+#ifdef R_ARCH
+			+ strlen(R_ARCH)
+#endif
+			+ strlen("/winCairo.dll") + 1;
+	char *szFullPath = malloc(needed);
+	if (!szFullPath) {
+	    R_ShowMessage("Not enough memory to create buffer for path.");
+	    return -1;
+	}
 	strcpy(szFullPath, R_HomeDir());
 	strcat(szFullPath, "/library/grDevices/libs/");
-	strcat(szFullPath, R_ARCH);
-	strcat(szFullPath, "/winCairo.dll");
+#ifdef R_ARCH
+	if (strlen(R_ARCH) > 0) {
+	    strcat(szFullPath, R_ARCH);
+	    strcat(szFullPath, "/");
+	}
+#endif
+	strcat(szFullPath, "winCairo.dll");
 	if (((hRcairoDll = LoadLibrary(szFullPath)) != NULL) &&
 	    ((R_devCairo =
 	      (R_SaveAsBitmap)GetProcAddress(hRcairoDll, "in_Cairo"))
@@ -3975,6 +3988,7 @@ static int Load_Rcairo_Dll()
 	    snprintf(buf, 1000, "Unable to load '%s'", szFullPath);
 	    R_ShowMessage(buf);
 	}
+	free(szFullPath);
     }
     return (RcairoAlreadyLoaded > 0);
 }

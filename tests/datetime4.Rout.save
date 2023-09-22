@@ -1,0 +1,386 @@
+
+R Under development (unstable) (2023-03-21 r84017) -- "Unsuffered Consequences"
+Copyright (C) 2023 The R Foundation for Statistical Computing
+Platform: aarch64-apple-darwin22.1.0 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> ### more date-time tests where the output is to be checked.
+> 
+> ## Expect differences, especially for platforms without tm_zone/tm_gmtoff.
+> 
+> options(warn = 1L)
+> 
+> ## tests of "POSIXlt" objects
+> xU <- strptime("2022-01-01", "%Y-%m-%d", tz = "UTC")
+> xU
+[1] "2022-01-01 UTC"
+> str(unclass(xU))
+List of 11
+ $ sec   : num 0
+ $ min   : int 0
+ $ hour  : int 0
+ $ mday  : int 1
+ $ mon   : int 0
+ $ year  : int 122
+ $ wday  : int 6
+ $ yday  : int 0
+ $ isdst : int 0
+ $ zone  : chr "UTC"
+ $ gmtoff: int 0
+ - attr(*, "tzone")= chr "UTC"
+ - attr(*, "balanced")= logi TRUE
+> 
+> x0 <- strptime("2022-01-01", "%Y-%m-%d")
+> x0
+[1] "2022-01-01 GMT"
+> str(unclass(x0))
+List of 11
+ $ sec   : num 0
+ $ min   : int 0
+ $ hour  : int 0
+ $ mday  : int 1
+ $ mon   : int 0
+ $ year  : int 122
+ $ wday  : int 6
+ $ yday  : int 0
+ $ isdst : int 0
+ $ zone  : chr "GMT"
+ $ gmtoff: int NA
+ - attr(*, "tzone")= chr [1:3] "" "GMT" "BST"
+ - attr(*, "balanced")= logi TRUE
+> 
+> x1 <- strptime("2022-07-01", "%Y-%m-%d", tz = "Europe/London")
+> x1
+[1] "2022-07-01 BST"
+> str(unclass(x1)) # gmtoff is NA
+List of 11
+ $ sec   : num 0
+ $ min   : int 0
+ $ hour  : int 0
+ $ mday  : int 1
+ $ mon   : int 6
+ $ year  : int 122
+ $ wday  : int 5
+ $ yday  : int 181
+ $ isdst : int 1
+ $ zone  : chr "BST"
+ $ gmtoff: int NA
+ - attr(*, "tzone")= chr [1:3] "Europe/London" "GMT" "BST"
+ - attr(*, "balanced")= logi TRUE
+> 
+> ## give offset value -- makes most sense in UTC
+> x2 <- strptime("2022-07-01 10:55:03 +0300", "%Y-%m-%d %H:%M:%S %z", tz = "UTC")
+> x2
+[1] "2022-07-01 07:55:03 UTC"
+> str(unclass(x2))
+List of 11
+ $ sec   : num 3
+ $ min   : int 55
+ $ hour  : int 7
+ $ mday  : int 1
+ $ mon   : int 6
+ $ year  : int 122
+ $ wday  : int 5
+ $ yday  : int 181
+ $ isdst : int 0
+ $ zone  : chr "UTC"
+ $ gmtoff: int 0
+ - attr(*, "tzone")= chr "UTC"
+ - attr(*, "balanced")= logi TRUE
+> ## in another tzone it will report the time in that zone, with its DST ....
+> x3 <- strptime("2022-07-01 10:55:03 +0300", "%Y-%m-%d %H:%M:%S %z",
++                tz = "Europe/Vienna")
+> x3
+[1] "2022-07-01 09:55:03"
+> str(unclass(x3))
+List of 11
+ $ sec   : num 3
+ $ min   : int 55
+ $ hour  : int 9
+ $ mday  : int 1
+ $ mon   : int 6
+ $ year  : int 122
+ $ wday  : int 5
+ $ yday  : int 181
+ $ isdst : int 1
+ $ zone  : chr ""
+ $ gmtoff: int NA
+ - attr(*, "tzone")= chr [1:3] "Europe/Vienna" "CET" "CEST"
+ - attr(*, "balanced")= logi TRUE
+> 
+> x4 <- strptime("2022-07-01", "%Y-%m-%d", tz ="Pacific/Fiji")
+> x4
+[1] "2022-07-01 +12"
+> str(unclass(x4)) # abbreviations may be numbers.
+List of 11
+ $ sec   : num 0
+ $ min   : int 0
+ $ hour  : int 0
+ $ mday  : int 1
+ $ mon   : int 6
+ $ year  : int 122
+ $ wday  : int 5
+ $ yday  : int 181
+ $ isdst : int 0
+ $ zone  : chr "+12"
+ $ gmtoff: int NA
+ - attr(*, "tzone")= chr [1:3] "Pacific/Fiji" "+12" "+13"
+ - attr(*, "balanced")= logi TRUE
+> # Kiribati does/did not have DST, so second abbreviation may be repeat or empty
+> x5 <- strptime("2022-07-01", "%Y-%m-%d", tz ="Pacific/Kiritimati")
+> x5
+[1] "2022-07-01 +14"
+> str(unclass(x5)) # does not have DST, hence no DST abbreviation on some platforms
+List of 11
+ $ sec   : num 0
+ $ min   : int 0
+ $ hour  : int 0
+ $ mday  : int 1
+ $ mon   : int 6
+ $ year  : int 122
+ $ wday  : int 5
+ $ yday  : int 181
+ $ isdst : int 0
+ $ zone  : chr "+14"
+ $ gmtoff: int NA
+ - attr(*, "tzone")= chr [1:3] "Pacific/Kiritimati" "+14" "   "
+ - attr(*, "balanced")= logi TRUE
+> 
+> ## edge of range and out of range offsets
+> strptime("2022-01-01 +1400", "%Y-%m-%d %z", tz = "UTC")
+[1] "2021-12-31 10:00:00 UTC"
+> strptime("2022-01-01 -1400", "%Y-%m-%d %z", tz = "UTC")
+[1] "2022-01-01 14:00:00 UTC"
+> strptime("2022-01-01 +1500", "%Y-%m-%d %z", tz = "UTC")
+Warning in strptime("2022-01-01 +1500", "%Y-%m-%d %z", tz = "UTC") :
+  values for %z outside +/-1400 are an error
+[1] NA
+> strptime("2022-01-01 -1500", "%Y-%m-%d %z", tz = "UTC")
+Warning in strptime("2022-01-01 -1500", "%Y-%m-%d %z", tz = "UTC") :
+  values for %z outside +/-1400 are an error
+[1] NA
+> 
+> 
+> ## extreme values for as.Date (negative ones were wrong in R 4.2.2)
+> as.Date(2^(30:33))
+[1] "2941775-04-07"  "5881580-07-12"  "11761191-01-21" "23520412-02-10"
+> as.Date(-2^(30:33))
+[1] "-2937836-09-26"  "-5877641-06-23"  "-11757252-12-12" "-23516473-11-23"
+> ## tm$year will overflow ints in less than 800 milion years from present.
+> as.Date(c(7e11, 8e11, -7e11, -8e11))
+[1] "1916536874-11-22 00:00:00"  NA                          
+[3] "-1916532935-02-09 00:00:00" NA                          
+> 
+> 
+> ## handling of names
+> # conversion of R objects
+> x <- seq(as.Date("2022-09-01"), by = "weeks", length = 10)
+> names(x) <- paste("week", 1:10)
+> x
+      week 1       week 2       week 3       week 4       week 5       week 6 
+"2022-09-01" "2022-09-08" "2022-09-15" "2022-09-22" "2022-09-29" "2022-10-06" 
+      week 7       week 8       week 9      week 10 
+"2022-10-13" "2022-10-20" "2022-10-27" "2022-11-03" 
+> (xl <- as.POSIXlt(x))
+          week 1           week 2           week 3           week 4 
+"2022-09-01 UTC" "2022-09-08 UTC" "2022-09-15 UTC" "2022-09-22 UTC" 
+          week 5           week 6           week 7           week 8 
+"2022-09-29 UTC" "2022-10-06 UTC" "2022-10-13 UTC" "2022-10-20 UTC" 
+          week 9          week 10 
+"2022-10-27 UTC" "2022-11-03 UTC" 
+> str(unclass(xl))
+List of 11
+ $ sec   : num [1:10] 0 0 0 0 0 0 0 0 0 0
+ $ min   : int [1:10] 0 0 0 0 0 0 0 0 0 0
+ $ hour  : int [1:10] 0 0 0 0 0 0 0 0 0 0
+ $ mday  : int [1:10] 1 8 15 22 29 6 13 20 27 3
+ $ mon   : int [1:10] 8 8 8 8 8 9 9 9 9 10
+ $ year  : Named int [1:10] 122 122 122 122 122 122 122 122 122 122
+  ..- attr(*, "names")= chr [1:10] "week 1" "week 2" "week 3" "week 4" ...
+ $ wday  : int [1:10] 4 4 4 4 4 4 4 4 4 4
+ $ yday  : int [1:10] 243 250 257 264 271 278 285 292 299 306
+ $ isdst : int [1:10] 0 0 0 0 0 0 0 0 0 0
+ $ zone  : chr [1:10] "UTC" "UTC" "UTC" "UTC" ...
+ $ gmtoff: int [1:10] 0 0 0 0 0 0 0 0 0 0
+ - attr(*, "tzone")= chr "UTC"
+ - attr(*, "balanced")= logi TRUE
+> xx <- as.POSIXct(x, tz = "Europe/London")
+> xx
+                   week 1                    week 2                    week 3 
+"2022-09-01 01:00:00 BST" "2022-09-08 01:00:00 BST" "2022-09-15 01:00:00 BST" 
+                   week 4                    week 5                    week 6 
+"2022-09-22 01:00:00 BST" "2022-09-29 01:00:00 BST" "2022-10-06 01:00:00 BST" 
+                   week 7                    week 8                    week 9 
+"2022-10-13 01:00:00 BST" "2022-10-20 01:00:00 BST" "2022-10-27 01:00:00 BST" 
+                  week 10 
+"2022-11-03 00:00:00 GMT" 
+> as.POSIXlt(xx)
+                   week 1                    week 2                    week 3 
+"2022-09-01 01:00:00 BST" "2022-09-08 01:00:00 BST" "2022-09-15 01:00:00 BST" 
+                   week 4                    week 5                    week 6 
+"2022-09-22 01:00:00 BST" "2022-09-29 01:00:00 BST" "2022-10-06 01:00:00 BST" 
+                   week 7                    week 8                    week 9 
+"2022-10-13 01:00:00 BST" "2022-10-20 01:00:00 BST" "2022-10-27 01:00:00 BST" 
+                  week 10 
+"2022-11-03 00:00:00 GMT" 
+> as.Date(xl)
+      week 1       week 2       week 3       week 4       week 5       week 6 
+"2022-09-01" "2022-09-08" "2022-09-15" "2022-09-22" "2022-09-29" "2022-10-06" 
+      week 7       week 8       week 9      week 10 
+"2022-10-13" "2022-10-20" "2022-10-27" "2022-11-03" 
+> 
+> # character vector -> R objects
+> y <- format(x)
+> as.Date(y)
+      week 1       week 2       week 3       week 4       week 5       week 6 
+"2022-09-01" "2022-09-08" "2022-09-15" "2022-09-22" "2022-09-29" "2022-10-06" 
+      week 7       week 8       week 9      week 10 
+"2022-10-13" "2022-10-20" "2022-10-27" "2022-11-03" 
+> ## IGNORE_RDIFF_BEGIN
+> as.POSIXct(y)
+          week 1           week 2           week 3           week 4 
+"2022-09-01 BST" "2022-09-08 BST" "2022-09-15 BST" "2022-09-22 BST" 
+          week 5           week 6           week 7           week 8 
+"2022-09-29 BST" "2022-10-06 BST" "2022-10-13 BST" "2022-10-20 BST" 
+          week 9          week 10 
+"2022-10-27 BST" "2022-11-03 GMT" 
+> (yy <- as.POSIXlt(y))
+          week 1           week 2           week 3           week 4 
+"2022-09-01 BST" "2022-09-08 BST" "2022-09-15 BST" "2022-09-22 BST" 
+          week 5           week 6           week 7           week 8 
+"2022-09-29 BST" "2022-10-06 BST" "2022-10-13 BST" "2022-10-20 BST" 
+          week 9          week 10 
+"2022-10-27 BST" "2022-11-03 GMT" 
+> unclass(yy)
+$sec
+ [1] 0 0 0 0 0 0 0 0 0 0
+
+$min
+ [1] 0 0 0 0 0 0 0 0 0 0
+
+$hour
+ [1] 0 0 0 0 0 0 0 0 0 0
+
+$mday
+ [1]  1  8 15 22 29  6 13 20 27  3
+
+$mon
+ [1]  8  8  8  8  8  9  9  9  9 10
+
+$year
+ week 1  week 2  week 3  week 4  week 5  week 6  week 7  week 8  week 9 week 10 
+    122     122     122     122     122     122     122     122     122     122 
+
+$wday
+ [1] 4 4 4 4 4 4 4 4 4 4
+
+$yday
+ [1] 243 250 257 264 271 278 285 292 299 306
+
+$isdst
+ [1] 1 1 1 1 1 1 1 1 1 0
+
+$zone
+ [1] "BST" "BST" "BST" "BST" "BST" "BST" "BST" "BST" "BST" "GMT"
+
+$gmtoff
+ [1] NA NA NA NA NA NA NA NA NA NA
+
+attr(,"tzone")
+[1] ""    "GMT" "BST"
+attr(,"balanced")
+[1] TRUE
+> 
+> strptime(y, "%Y-%m-%d")
+          week 1           week 2           week 3           week 4 
+"2022-09-01 BST" "2022-09-08 BST" "2022-09-15 BST" "2022-09-22 BST" 
+          week 5           week 6           week 7           week 8 
+"2022-09-29 BST" "2022-10-06 BST" "2022-10-13 BST" "2022-10-20 BST" 
+          week 9          week 10 
+"2022-10-27 BST" "2022-11-03 GMT" 
+> strftime(y, "%Y-%m-%d")
+      week 1       week 2       week 3       week 4       week 5       week 6 
+"2022-09-01" "2022-09-08" "2022-09-15" "2022-09-22" "2022-09-29" "2022-10-06" 
+      week 7       week 8       week 9      week 10 
+"2022-10-13" "2022-10-20" "2022-10-27" "2022-11-03" 
+> y2 <- paste(y, "10:01:02"); names(y2) <- names(y)
+> fmt <- c("%Y-%m-%d", "%Y-%m-%d %H:%M:%S", "%Y-%m-%d %H:%M:%S %Z")
+>  (strptime(y2, fmt[1:2]) -> sy2)
+                   week 1                    week 2                    week 3 
+"2022-09-01 00:00:00 BST" "2022-09-08 10:01:02 BST" "2022-09-15 00:00:00 BST" 
+                   week 4                    week 5                    week 6 
+"2022-09-22 10:01:02 BST" "2022-09-29 00:00:00 BST" "2022-10-06 10:01:02 BST" 
+                   week 7                    week 8                    week 9 
+"2022-10-13 00:00:00 BST" "2022-10-20 10:01:02 BST" "2022-10-27 00:00:00 BST" 
+                  week 10 
+"2022-11-03 10:01:02 GMT" 
+> ## IGNORE_RDIFF_END
+> sy2.15 <- strptime(y2, rep(fmt[1:2], length = 15)) # failed to recycle names
+> stopifnot(suppressWarnings(sy2 == sy2.15))
+> 
+> xl. <- xl[1:9] # length(fmt) == 3 -- fully recycles in xl.
+> (strftime(xl., fmt) -> sx)
+                  week 1                    week 2                    week 3 
+             "2022-09-01"     "2022-09-08 00:00:00" "2022-09-15 00:00:00 UTC" 
+                   week 4                    week 5                    week 6 
+             "2022-09-22"     "2022-09-29 00:00:00" "2022-10-06 00:00:00 UTC" 
+                   week 7                    week 8                    week 9 
+             "2022-10-13"     "2022-10-20 00:00:00" "2022-10-27 00:00:00 UTC" 
+> (strftime(xl., rep(fmt, length = 15)) -> sx15)
+                   week 1                    week 2                    week 3 
+             "2022-09-01"     "2022-09-08 00:00:00" "2022-09-15 00:00:00 UTC" 
+                   week 4                    week 5                    week 6 
+             "2022-09-22"     "2022-09-29 00:00:00" "2022-10-06 00:00:00 UTC" 
+                   week 7                    week 8                    week 9 
+             "2022-10-13"     "2022-10-20 00:00:00" "2022-10-27 00:00:00 UTC" 
+                   week 1                    week 2                    week 3 
+             "2022-09-01"     "2022-09-08 00:00:00" "2022-09-15 00:00:00 UTC" 
+                   week 4                    week 5                    week 6 
+             "2022-09-22"     "2022-09-29 00:00:00" "2022-10-06 00:00:00 UTC" 
+> stopifnot(exprs = { # with warnings  ".. length is not a multiple of shorter .."
++     sx == sx15
++     names(sx) == names(sx15)
++ })
+Warning in sx == sx15 :
+  longer object length is not a multiple of shorter object length
+Warning in names(sx) == names(sx15) :
+  longer object length is not a multiple of shorter object length
+> 
+> x2 <- xl[1:5]
+> x2$year <- xl$year[1:3]
+> x2                # correctly has missing names as NA
+          week 1           week 2           week 3             <NA> 
+"2022-09-01 UTC" "2022-09-08 UTC" "2022-09-15 UTC" "2022-09-22 UTC" 
+            <NA> 
+"2022-09-29 UTC" 
+> balancePOSIXlt(x2) # recycles names
+          week 1           week 2           week 3           week 1 
+"2022-09-01 UTC" "2022-09-08 UTC" "2022-09-15 UTC" "2022-09-22 UTC" 
+          week 2 
+"2022-09-29 UTC" 
+> strftime(x2, fmt)
+                   week 1                    week 2                    week 3 
+             "2022-09-01"     "2022-09-08 00:00:00" "2022-09-15 00:00:00 UTC" 
+                     <NA>                      <NA> 
+             "2022-09-22"     "2022-09-29 00:00:00" 
+> strftime(x2, rep(fmt, length = 10))
+                   week 1                    week 2                    week 3 
+             "2022-09-01"     "2022-09-08 00:00:00" "2022-09-15 00:00:00 UTC" 
+                     <NA>                      <NA>                    week 1 
+             "2022-09-22"     "2022-09-29 00:00:00" "2022-09-01 00:00:00 UTC" 
+                   week 2                    week 3                      <NA> 
+             "2022-09-08"     "2022-09-15 00:00:00" "2022-09-22 00:00:00 UTC" 
+                     <NA> 
+             "2022-09-29" 
+> 

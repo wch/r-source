@@ -387,13 +387,13 @@ inc.display.list <- function() {
 #   (i) turn on AND INITIALISE the display list or ...
 #   (ii) turn off AND ERASE the display list
 grid.display.list <- function(on=TRUE) {
-  grid.Call(C_setDLon, as.logical(on))
-  if (on) {
-    grid.Call(C_setDisplayList, vector("list", 100L))
-    grid.Call(C_setDLindex, 0L)
-  }
-  else
-    grid.Call(C_setDisplayList, NULL)
+    grid.Call(C_setDLon, as.logical(on))
+    if (on) {
+        .Call(C_initDisplayList)
+    } else {
+        .Call(C_setDisplayList, NULL)
+        .Call(C_setDLindex, 0L)
+    }
 }
 
 record <- function(x) {

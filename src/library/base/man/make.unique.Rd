@@ -14,7 +14,7 @@
 make.unique(names, sep = ".")
 }
 \arguments{
-  \item{names}{a character vector}
+  \item{names}{a character vector.}
   \item{sep}{a character string used to separate a duplicate name from
     its sequence number.}
 }

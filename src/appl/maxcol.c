@@ -35,7 +35,7 @@
 #include <R_ext/Random.h>	/* ..RNGstate */
 #include <R_ext/Error.h>	/* for error */
 
-#include <R_ext/Applic.h>	/* NA handling */
+#include <R_ext/Applic.h>
 
 #define RELTOL 1e-5
 

@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997--2021  The R Core Team
+ *  Copyright (C) 1997--2023  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -28,7 +28,7 @@
 #include <config.h>
 #endif
 
-#include "Defn.h"
+#include <Defn.h>
 #include <Internal.h>
 
 #define imax2(x, y) ((x < y) ? y : x)
@@ -37,11 +37,21 @@
 #include "RBufferUtils.h"
 static R_StringBuffer cbuff = {NULL, 0, MAXELTSIZE};
 
+#ifndef HAVE_STPCPY
+static char *R_stpcpy(char *dest, const char *src)
+{
+    while ((*dest++ = *src++) != '\0');
+    return dest - 1;
+}
+#else
+# define R_stpcpy stpcpy
+#endif
+
 /*
   .Internal(paste (args, sep, collapse, recycle0))
   .Internal(paste0(args,      collapse, recycle0))
 */
-SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 {
 /* do_paste uses two passes to paste the arguments (in CAR(args)) together.
  * The first pass calculates the width of the paste buffer,
@@ -104,7 +114,7 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 	sep = STRING_ELT(sep, 0);
 	csep = translateChar(sep);
 	u_sepw = sepw = (int) strlen(csep); // will be short
-	sepASCII = strIsASCII(csep);
+	sepASCII = IS_ASCII(sep);
 	sepKnown = ENC_KNOWN(sep) > 0;
 	sepUTF8 = IS_UTF8(sep);
 	sepBytes = IS_BYTES(sep);
@@ -222,13 +232,11 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 		SEXP cs = STRING_ELT(VECTOR_ELT(x, j), i % k);
 		if (use_UTF8) {
 		    const char *s = translateCharUTF8(cs);
-		    strcpy(buf, s);
-		    buf += strlen(s);
+		    buf = R_stpcpy(buf, s);
 		} else {
 		    const char *s = use_Bytes ? CHAR(cs) : translateChar(cs);
-		    strcpy(buf, s);
-		    buf += strlen(s);
-		    allKnown = allKnown && (strIsASCII(s) || (ENC_KNOWN(cs)> 0));
+		    buf = R_stpcpy(buf, s);
+		    allKnown = allKnown && (IS_ASCII(cs) || (ENC_KNOWN(cs)> 0));
 		    anyKnown = anyKnown || (ENC_KNOWN(cs)> 0);
 		}
 	    }
@@ -272,7 +280,7 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 	    csep = translateChar(sep);
 	sepw = (int) strlen(csep);
 	anyKnown = ENC_KNOWN(sep) > 0;
-	allKnown = anyKnown || strIsASCII(csep);
+	allKnown = anyKnown || IS_ASCII(sep);
 	R_xlen_t pwidth = 0;
 	const void *vmax = vmaxget();
 	for (R_xlen_t i = 0; i < nx; i++)
@@ -293,16 +301,14 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 		buf += sepw;
 	    }
 	    const char *s;
+	    SEXP el = STRING_ELT(ans, i);
 	    if(use_UTF8)
-		s = translateCharUTF8(STRING_ELT(ans, i));
+		s = translateCharUTF8(el);
 	    else /* already translated */
-		s = CHAR(STRING_ELT(ans, i));
-	    strcpy(buf, s);
-	    while (*buf)
-		buf++;
-	    allKnown = allKnown &&
-		(strIsASCII(s)  || (ENC_KNOWN(STRING_ELT(ans, i)) > 0));
-	    anyKnown = anyKnown || (ENC_KNOWN(STRING_ELT(ans, i)) > 0);
+		s = CHAR(el);
+	    buf = R_stpcpy(buf, s);
+	    allKnown = allKnown && (IS_ASCII(el) || (ENC_KNOWN(el) > 0));
+	    anyKnown = anyKnown || (ENC_KNOWN(el) > 0);
 	    if(use_UTF8) vmaxset(vmax);
 	}
 	UNPROTECT(1);
@@ -328,7 +334,7 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 
   This should not do translations with escapes.
  */
-SEXP attribute_hidden do_filepath(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_filepath(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     checkArity(op, args);
 
@@ -414,8 +420,7 @@ SEXP attribute_hidden do_filepath(SEXP call, SEXP op, SEXP args, SEXP env)
 		s = trCharUTF8(cs);
 	    else
 		s = translateCharFP(cs);
-	    strcpy(buf, s);
-	    buf += strlen(s);
+	    buf = R_stpcpy(buf, s);
 	    if (j != nx - 1 && sepw != 0) {
 		strcpy(buf, csep);
 		buf += sepw;
@@ -440,7 +445,7 @@ SEXP attribute_hidden do_filepath(SEXP call, SEXP op, SEXP args, SEXP env)
 
 /* format.default(x, trim, digits, nsmall, width, justify, na.encode,
 		  scientific, decimal.mark) */
-SEXP attribute_hidden do_format(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_format(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP l, x, y, swd;
     int il, digits, trim = 0, nsmall = 0, wd = 0, adj = -1, na, sci = 0;
@@ -677,7 +682,7 @@ SEXP attribute_hidden do_format(SEXP call, SEXP op, SEXP args, SEXP env)
  * for complex : 2 x 3 integers for (Re, Im)
  */
 
-SEXP attribute_hidden do_formatinfo(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_formatinfo(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP x;
     int digits, nsmall, no = 1, w, d, e, wi, di, ei;

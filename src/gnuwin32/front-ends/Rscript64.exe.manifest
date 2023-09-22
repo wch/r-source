@@ -6,6 +6,13 @@
     name="Rscript.exe"
     type="win32"
 />
+<application>
+  <windowsSettings>
+    <activeCodePage xmlns="http://schemas.microsoft.com/SMI/2019/WindowsSettings">UTF-8</activeCodePage>
+    <longPathAware xmlns="http://schemas.microsoft.com/SMI/2016/WindowsSettings">true</longPathAware>
+    <heapType xmlns="http://schemas.microsoft.com/SMI/2020/WindowsSettings">SegmentHeap</heapType>
+  </windowsSettings>
+</application>
 <description>R utility</description>
 <dependency>
     <dependentAssembly>

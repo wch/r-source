@@ -1,7 +1,7 @@
 #  File src/library/utils/R/data.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2022 The R Core Team
+#  Copyright (C) 1995-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -135,21 +135,7 @@ function(..., list = character(), package = NULL, lib.loc = NULL,
 				    name, paste(names(rds), collapse=",")),
 				domain=NA)
             }
-            ## check for zipped data dir
-            if (file_test("-f", file.path(p, "Rdata.zip"))) {
-                warning("zipped data found for package ",
-                        sQuote(basename(dirname(p))),
-                        ".\nThat is defunct, so please re-install the package.",
-                        domain = NA)
-                if (file_test("-f", fp <- file.path(p, "filelist")))
-                    files <- file.path(p, scan(fp, what = "", quiet = TRUE))
-                else {
-                    warning(gettextf("file 'filelist' is missing for directory %s", sQuote(p)), domain = NA)
-                    next
-                }
-            } else {
-                files <- list.files(p, full.names = TRUE)
-            }
+            files <- list.files(p, full.names = TRUE)
             files <- files[grep(name, files, fixed = TRUE)]
             if (length(files) > 1L) {
                 ## more than one candidate
@@ -172,39 +158,29 @@ function(..., list = character(), package = NULL, lib.loc = NULL,
                         found <- FALSE
                     else {
                         found <- TRUE
-                        zfile <- file
-                        zipname <- file.path(dirname(file), "Rdata.zip")
-                        if (file.exists(zipname)) {
-                            Rdatadir <- tempfile("Rdata")
-                            dir.create(Rdatadir, showWarnings=FALSE)
-                            topic <- basename(file)
-                            rc <- .External(C_unzip, zipname, topic, Rdatadir, FALSE, TRUE, FALSE, FALSE)
-                            if (rc == 0L) zfile <- file.path(Rdatadir, topic)
-                        }
-                        if (zfile != file) on.exit(unlink(zfile))
                         switch(ext,
                                R = , r = {
                                    ## ensure utils is visible
                                    library("utils")
-                                   sys.source(zfile, chdir = TRUE,
+                                   sys.source(file, chdir = TRUE,
                                               envir = tmp_env)
                                },
                                RData = , rdata = , rda =
-                               load(zfile, envir = tmp_env),
+                               load(file, envir = tmp_env),
                                TXT = , txt = , tab = ,
                                tab.gz = , tab.bz2 = , tab.xz = ,
                                txt.gz = , txt.bz2 = , txt.xz =
                                assign(name,
                                       ## ensure default for as.is has not been
                                       ## overridden by options(stringsAsFactor)
-                                      my_read_table(zfile,
+                                      my_read_table(file,
                                                     header = TRUE,
                                                     as.is = FALSE),
                                       envir = tmp_env),
                                CSV = , csv = ,
                                csv.gz = , csv.bz2 = , csv.xz =
                                assign(name,
-                                      my_read_table(zfile,
+                                      my_read_table(file,
                                                     header = TRUE,
                                                     sep = ";",
                                                     as.is = FALSE),

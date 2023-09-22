@@ -2,7 +2,8 @@
 #
 # ${R_HOME}/tests/Makefile.common
 
-## If you add test scripts here, review  ../src/library/tools/R/testing.R <<<<<<<<<<<<
+## If you add test scripts here, review
+## >>>> ../src/library/tools/R/testing.R -> testInstalledBasic() <<<<<<<<<<<<
 
 test-src-gct = \
 	eval-etc.R \
@@ -35,12 +36,12 @@ test-src-auto = $(test-src-strict-auto) $(test-src-sloppy-auto) \
   ${test-src-isas} ${test-src-segfault}
 test-src-sloppy = $(test-src-sloppy-1) $(test-src-sloppy-auto)
 test-src-strict = $(test-src-strict-1) $(test-src-strict-auto)
-test-src = $(test-src-strict) $(test-src-sloppy)
 
-test-src-dt = datetime2.R
+test-src-dt = datetime2.R datetime3.R datetime4.R datetime5.R
 test-src-demo = demos.R demos2.R
 test-src-internet = internet.R
 test-src-internet2 = internet2.R libcurl.R
+test-src-internet-dev = download.file.R sockets.R
 test-src-CRANtools = CRANtools.R
 test-src-large = reg-large.R
 test-src-isas = isas-tests.R
@@ -50,19 +51,22 @@ test-src-regexp = utf8-regex.R PCRE.R
 test-src-segfault = no-segfault.R
 test-src-tz = timezone.R
 test-src-cond = conditions.R
+test-src-misc-dev = misc-devel.R
 
 test-src-reg-1 = array-subset.R \
-  reg-tests-1a.R reg-tests-1b.R reg-tests-1c.R reg-tests-1d.R reg-tests-2.R \
-  reg-examples1.R reg-examples2.R reg-packages.R p-qbeta-strict-tst.R d-p-q-r-tst-2.R \
+  classes-methods.R \
+  reg-tests-1a.R reg-tests-1b.R reg-tests-1c.R reg-tests-1d.R \
+  reg-tests-1e.R reg-tests-2.R \
+  reg-examples1.R reg-examples2.R reg-packages.R \
+  p-qbeta-strict-tst.R d-p-q-r-tst-2.R \
   r-strict-tst.R \
-  reg-IO.R reg-IO2.R reg-plot.R reg-S4-examples.R reg-BLAS.R
+  reg-IO.R reg-IO2.R reg-plot.R reg-S4.R reg-S4-examples.R reg-BLAS.R
 ## added to in Makefile.win
 test-src-reg-1e =
 test-src-reg = $(test-src-reg-1) $(test-src-reg-1e)
 ## overridden in Makefile if recommended packages are not installed.
 ## *-src-reg3 are sloppy (*.Rout may differ from *.Rout.save):
-## reg-S4 has to be a sloppy test, as output differs if Matrix is absent.
-test-src-reg3 = reg-tests-3.R reg-examples3.R reg-plot-latin1.R reg-S4.R
+test-src-reg3 = reg-tests-3.R reg-examples3.R reg-plot-latin1.R
 
 test-out-strict = $(test-src-strict:.R=.Rout)
 test-out-sloppy = $(test-src-sloppy:.R=.Rout)
@@ -75,6 +79,7 @@ test-out-dt = $(test-src-dt:.R=.Rout)
 test-out-demo = $(test-src-demo:.R=.Rout)
 test-out-internet = $(test-src-internet:.R=.Rout)
 test-out-internet2 = $(test-src-internet2:.R=.Rout)
+test-out-internet-dev = $(test-src-internet-dev:.R=.Rout)
 test-out-isas = $(test-src-isas:.R=.Rout)
 test-out-primitive = $(test-src-primitive:.R=.Rout)
 test-out-large = $(test-src-large:.R=.Rout)
@@ -85,14 +90,17 @@ test-out-reg3 = $(test-src-reg3:.R=.Rout)
 test-out-segfault = $(test-src-segfault:.R=.Rout)
 test-out-tz = $(test-src-tz:.R=.Rout)
 test-out-cond = $(test-src-cond:.R=.Rout)
+test-out-misc-dev = $(test-src-misc-dev:.R=.Rout)
 
 ## This macro is used only for dependencies and for distclean
-test-out = $(test-src:.R=.Rout) $(test-out-demo) $(test-out-gct) \
+test-out = $(test-out-strict) $(test-out-sloppy) $(test-out-demo) $(test-out-gct) \
 	$(test-out-internet) \
 	$(test-out-random) $(test-out-reg) $(test-out-reg3) \
-	$(test-out-segfault) $(test-out-isas) $(test-out-internet2) \
+	$(test-out-segfault) $(test-out-isas) \
+	$(test-out-internet2) $(test-out-internet-dev) \
 	$(test-out-CRANtools) $(test-out-large) $(test-out-primitive) $(test-out-dt) \
-	utf8-regex.Rout PCRE.Rout utf8.Rout
+	$(test-out-regexp) $(test-out-tz) $(test-out-cond) $(test-out-misc-dev) \
+	utf8.Rout reg-translation.Rout iconv.Rout
 
 .SUFFIXES:
 .SUFFIXES: .R .Rin .Rout .Rout-gct .Rout-valgct .trin .tsin .log
@@ -186,10 +194,11 @@ test-all-basics:
 	  $(MK) test-$${name} || exit 1; \
 	done
 
-## if you change this, also edit Makefile.install
+## if you change this, also edit *both* Makefile.install{,.win}
 ## The definitions for Standalone are in Makefile.{in,win}.
+##  'Packages' slow ==> last
 all-devel-tests = DateTime Docs IsAs Random Demo Primitive Regexp Translation \
-    Internet2 CRANtools Segfault Standalone Conditions Packages
+    Internet2 CRANtools Segfault Standalone Conditions Misc-dev Packages
 test-all-devel:
 	@for name in $(all-devel-tests); do \
 	  $(MK) test-$${name} || exit 1; \
@@ -210,8 +219,6 @@ test-Specific:
 	@$(MK) test-TimeZone
 
 test-Packages:
-	@$(ECHO) "building NEWS database [for news() example]"; \
-	  (cd $(top_builddir)/doc ; $(MK) NEWS.rds; ls -l NEWS.rds )
 	@if test -n "${TEST_MC_CORES}"; then \
 	  $(ECHO) "Using ${TEST_MC_CORES} cores to check packages"; \
 	  $(MK) -j ${TEST_MC_CORES} test-Packages2; \
@@ -255,13 +262,11 @@ test-Vgct: $(test-out-valgct)
 test-DateTime:
 	@$(ECHO) "running tests of date-time printing"
 	@$(ECHO) "  expect platform-specific differences"
-	@$(RM) -f $(test-out-dt)
 	@$(MK) $(test-out-dt) RVAL_IF_DIFF=0
 
 ## This should be allowed to fail, visibly.
 test-TimeZone:
 	@$(ECHO) "checking Sys.timezone ..."
-	@$(RM) -f $(test-out-tz)
 	@$(MK) $(test-out-tz) || $(ECHO) "  Sys.timezone() appears unknown"
 
 test-Docs:
@@ -283,14 +288,22 @@ test-IsAs:
 
 ## As for test-Internet, allow to fail, possibly slowly
 test-Internet2:
-	@$(ECHO) "running more Internet and socket tests"
+	@$(ECHO) "running more Internet tests"
 	-@$(MK) $(test-out-internet2) RVAL_IF_DIFF=0
+
+## This is intended to be run as a standalone target
+test-Internet-dev:
+	@$(ECHO) "running Internet tests for developers"
+	-@$(MK) $(test-out-internet-dev) RVAL_IF_DIFF=0
 
 test-CRANtools:
 	@$(ECHO) "running tests of CRAN tools"
 	@$(ECHO) "  (can be slow unless mirror is local)"
 	@$(MK) $(test-out-CRANtools) RVAL_IF_DIFF=0
 
+## Not part of any other target.
+## On x86_64 Linux uses up to 220GB of VM and takes the best part of an hour.
+## On Linux tests are skipped if there is no enough memory.
 test-Large:
 	@$(ECHO) "running tests needing large amounts of processor memory"
 	@$(ECHO) "  (is slow, notably when memory is available)"
@@ -326,17 +339,25 @@ test-Segfault:
 
 test-Translation:
 	@$(ECHO) "running tests of translation"
-	@rm -f reg-translation.Rout
 	@$(MK) reg-translation.Rout RVAL_IF_DIFF=0
+
+test-Misc-dev:
+	@$(ECHO) "running other miscellaneous devel tests"
+	@$(MK) $(test-out-misc-dev) RVAL_IF_DIFF=1
+
 
 ## Not run by any other target
 test-UTF-8:
 	@$(ECHO) "running regression tests for UTF-8 <--> int conversion (slow)"
 	@$(R2) < $(srcdir)/utf8.R > utf8.Rout 2>&1 || (mv utf8.Rout utf8.Rout.fail && exit 1)
 
+## Not part of any other target
+test-Iconv:
+	@$(ECHO) "running regression tests for iconv()"
+	@$(R2) < $(srcdir)/iconv.R > iconv.Rout 2>&1 || (mv iconv.Rout iconv.Rout.fail && exit 1)
+
 test-Conditions:
 	@$(ECHO) "running unit tests for the condition system"
-	@rm -f $(test-out-cond)
 	@$(MK) $(test-out-cond) RVAL_IF_DIFF=0
 
 ## Avoid site library, which could be very large
@@ -346,25 +367,27 @@ no-segfault.Rout: no-segfault.R
 	@R_LIBS_SITE=no-such-dir $(R) < $< > $@ 2>&1 || (mv $@ $@.fail && exit 1)
 	@$(ECHO) "$(ECHO_T) OK"
 
-test-Rd: $(srcdir)/testit.Rd $(srcdir)/ver20.Rd
+## Not run by any other target
+test-Rd:
 	@$(ECHO) "testing Rd conversion"
-	@$(RDCONV) -t txt $(srcdir)/testit.Rd > testit.txt
-	@$(RDCONV) -t html $(srcdir)/testit.Rd > testit.html 2> /dev/null
-	@$(RDCONV) -t latex $(srcdir)/testit.Rd > testit.tex
-	@$(RDCONV) -t example $(srcdir)/testit.Rd > testit-Ex.R
-	@diff -bw testit.txt $(srcdir)/testit.txt.save
-	@diff -bw testit.html $(srcdir)/testit.html.save
-	@diff -bw testit.tex $(srcdir)/testit.tex.save
-	@diff -bw testit-Ex.R $(srcdir)/testit-Ex.R.save
-	@$(RDCONV) -t txt $(srcdir)/ver20.Rd > ver20.txt
-	@$(RDCONV) -t html $(srcdir)/ver20.Rd > ver20.html
-	@$(RDCONV) -t latex $(srcdir)/ver20.Rd > ver20.tex
-	@$(RDCONV) -t example $(srcdir)/ver20.Rd > ver20-Ex.R
-	@diff -bw ver20.txt $(srcdir)/ver20.txt.save
-	@diff -bw ver20.html $(srcdir)/ver20.html.save
-	@diff -bw ver20.tex $(srcdir)/ver20.tex.save
-	@diff -bw ver20-Ex.R $(srcdir)/ver20-Ex.R.save
+	@for name in testit ver20; do \
+	  $(RDCONV) -t txt     -o $${name}.txt  $(srcdir)/$${name}.Rd || exit 1; \
+	  $(RDCONV) -t html    -o $${name}.html $(srcdir)/$${name}.Rd || exit 1; \
+	  $(RDCONV) -t latex   -o $${name}.tex  $(srcdir)/$${name}.Rd || exit 1; \
+	  $(RDCONV) -t example -o $${name}-Ex.R $(srcdir)/$${name}.Rd || exit 1; \
+	  diff -U 0 -b $(srcdir)/$${name}.txt.save  $${name}.txt  || $(ECHO); \
+	  diff -U 0 -b $(srcdir)/$${name}.html.save $${name}.html || $(ECHO); \
+	  diff -U 0 -b $(srcdir)/$${name}.tex.save  $${name}.tex  || $(ECHO); \
+	  diff -U 0 -b $(srcdir)/$${name}-Ex.R.save $${name}-Ex.R || $(ECHO); \
+	done
+	@$(ECHO) "running Rd2pdf"
+	@for name in testit ver20; do \
+	  $(RD2PDF) -o $${name}.pdf $(srcdir)/$${name}.Rd || exit 1; \
+	done
+	@$(RD2PDF) --no-index --output=Rd2.pdf $(srcdir)/Pkgs/pkgC/man \
+	  && rm -f Rd2.pdf || exit 1
 
+## The following 6 tests are covered by test-Packages
 test-DocFiles:
 	@$(ECHO) "checking Rd usage sections"
 	@for p in $(R_PKGS_BASE); do \
@@ -508,9 +531,10 @@ INSTFILES = README \
 	$(test-src-strict-1) $(test-src-strict-1:.R=.Rout.save) \
 	$(test-src-sloppy-1) $(test-src-sloppy-1:.R=.Rout.save) \
 	$(test-src-auto:.R=.Rin) isas-tests.Rout.save \
-	$(test-src-dt) datetime2.Rout.save \
+	$(test-src-dt) datetime2.Rout.save datetime4.Rout.save datetime5.Rout.save \
 	$(test-src-demo) demos.Rout.save \
-	$(test-src-internet) $(test-src-internet2) internet.Rout.save \
+	$(test-src-internet) $(test-src-internet2) \
+	$(test-src-internet-dev) internet.Rout.save \
 	$(test-src-primitive) \
 	$(test-src-random) p-r-random-tests.Rout.save \
 	$(test-src-reg) $(test-src-reg3) \
@@ -518,6 +542,7 @@ INSTFILES = README \
 	  reg-IO.Rout.save reg-IO2.Rout.save \
 	  reg-plot.pdf.save reg-tests-2.Rout.save reg-tests-3.Rout.save \
 	  reg-examples3.Rout.save reg-plot-latin1.pdf.save \
-	  encodings.R utf8-regex.R PCRE.R CRANtools.R \
-	  timezone.R conditions.R \
-	  nanbug.rda WinUnicode.dat arima.rda EmbeddedNuls.csv
+	  $(test-src-regexp) $(test-src-CRANtools) \
+	  $(test-src-tz) $(test-src-cond) reg-translation.R iconv.R \
+	  $(test-src-misc-dev) \
+	  nanbug.rda WinUnicode.dat arima.rda EmbeddedNuls.csv eval-fns.R

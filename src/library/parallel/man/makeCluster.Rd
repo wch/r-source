@@ -1,6 +1,6 @@
 % File src/library/parallel/man/makePSOCKcluster.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2003-2020 R Core Team
+% Copyright 2003-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{makeCluster}
@@ -8,6 +8,10 @@
 \alias{makePSOCKcluster}
 \alias{makeForkCluster}
 \alias{stopCluster}
+\alias{closeNode}
+\alias{recvData}
+\alias{recvOneData}
+\alias{sendData}
 \alias{setDefaultCluster}
 \alias{getDefaultCluster}
 \alias{R_PARALLEL_PORT}
@@ -160,6 +164,11 @@ getDefaultCluster()
   
   For the very common usage of running both master and worker on a
   single multi-core host, the default settings are the appropriate ones.
+
+  A socket \link{connection} is used to communicate from the master to
+  each worker so the maximum number of connections (default 128 but some
+  will be in use) may need to be increased when the master process is
+  started.  
 }
 
 \author{

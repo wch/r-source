@@ -30,10 +30,10 @@
 
 SEXP R_M_setPrimitiveMethods(SEXP fname, SEXP op, SEXP code_vec,
 			     SEXP fundef, SEXP mlist);
-SEXP R_clear_method_selection();
-SEXP NORET R_dummy_extern_place();
+SEXP R_clear_method_selection(void);
+NORET SEXP R_dummy_extern_place(void);
 SEXP R_el_named(SEXP object, SEXP what);
-SEXP R_externalptr_prototype_object();
+SEXP R_externalptr_prototype_object(void);
 SEXP R_getGeneric(SEXP name, SEXP mustFind, SEXP env, SEXP package);
 SEXP R_get_slot(SEXP obj, SEXP name);
 SEXP R_getClassFromCache(SEXP class, SEXP table);
@@ -51,7 +51,7 @@ SEXP R_set_el_named(SEXP object, SEXP what, SEXP value);
 SEXP R_set_slot(SEXP obj, SEXP name, SEXP value);
 SEXP R_standardGeneric(SEXP fname, SEXP ev, SEXP fdef);
 SEXP do_substitute_direct(SEXP f, SEXP env);
-SEXP Rf_allocS4Object();
+SEXP Rf_allocS4Object(void);
 SEXP R_set_method_dispatch(SEXP onOff);
 SEXP R_get_primname(SEXP object);
 SEXP new_object(SEXP class_def);

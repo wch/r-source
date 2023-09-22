@@ -1,6 +1,6 @@
 %%% Rd.sty ... Style for printing the R manual
 %%% Part of the R package, https://www.R-project.org
-%%% Copyright (C) 2003-2014 The R Foundation
+%%% Copyright (C) 2003-2022 The R Foundation
 %%% Distributed under GPL 2 or later
 %%%
 %%% Modified 1998/01/05 by Friedrich Leisch
@@ -13,22 +13,19 @@
 \ProvidesPackage{Rd}{}
 
 \RequirePackage{ifthen}
-\newboolean{Rd@has@ae}
-\newboolean{Rd@use@ae}
 \newboolean{Rd@use@hyper}
 \setboolean{Rd@use@hyper}{true}
 \newboolean{Rd@has@times}
 \newboolean{Rd@use@times}
-\newboolean{Rd@use@cm-super}
 \newboolean{Rd@has@lm}
 \newboolean{Rd@use@lm}
 \newboolean{Rd@use@beramono}
 \newboolean{Rd@use@inconsolata}
-\DeclareOption{ae}{\setboolean{Rd@use@ae}{true}}
+\DeclareOption{ae}{}        % no-op, retained for backward compatibility
 \DeclareOption{hyper}{\setboolean{Rd@use@hyper}{true}}
 \DeclareOption{times}{\setboolean{Rd@use@times}{true}}
 \DeclareOption{lm}{\setboolean{Rd@use@lm}{true}}
-\DeclareOption{cm-super}{\setboolean{Rd@use@cm-super}{true}}
+\DeclareOption{cm-super}{}  % no-op, retained for backward compatibility
 \DeclareOption{beramono}{\setboolean{Rd@use@beramono}{true}}
 \DeclareOption{inconsolata}{\setboolean{Rd@use@inconsolata}{true}}
 \ProcessOptions
@@ -44,6 +41,15 @@
 \RequirePackage{verbatim}        % small example code
 \RequirePackage{url}             % set urls
 \RequirePackage{textcomp}        % for \textquotesingle etc
+
+\RequirePackage{amsmath}         % for \lVert, \text etc, and KaTeX consistency
+\RequirePackage{amsfonts,amssymb}
+\newboolean{Rd@has@rsfs}
+\IfFileExists{mathrsfs.sty}{\IfFileExists{rsfs/scrload.tex}%
+  {\setboolean{Rd@has@rsfs}{true}}{}}{}
+\ifthenelse{\boolean{Rd@has@rsfs}}%
+  {\RequirePackage{mathrsfs}}%
+  {\usepackage[mathscr]{eucal}}% part of amsfonts
 
 
 \addtolength{\textheight}{12mm}
@@ -116,6 +122,8 @@
 \newcommand{\ldescriptionlabel}[1]{%
   \settowidth{\ldescriptionwidth}{{#1}}%
   \ifdim\ldescriptionwidth>\labelwidth
+    % FIXME: labels can become very long for combined arguments
+    % (e.g., in format.Rd) and need line wrapping
     {\parbox[b]{\labelwidth}%
       {\makebox[0pt][l]{#1}\\[1pt]\makebox{}}}%
   \else
@@ -132,7 +140,7 @@
 
 \newenvironment{Rdsection}[1]{%
   \ifx\@empty#1\else\subsubsection*{#1}\fi
-  \begin{list}{}{\setlength{\leftmargin}{0.25in}}\item}
+  \begin{list}{}{\setlength{\leftmargin}{0.25in}}\item\relax}
   {\end{list}}
 
 \newenvironment{Arguments}{%
@@ -169,11 +177,8 @@
 
 \newenvironment{ExampleCode}{\small\verbatim}{\endverbatim}
 
-\ifx\textbackslash\undefined%-- e.g. for MM
-  \newcommand{\bsl}{\ifmmode\backslash\else$\backslash$\fi}
-\else
   \newcommand{\bsl}{\ifmmode\backslash\else\textbackslash\fi}
-\fi
+
 %fails for index (but is not used there...)
 \newcommand{\SIs}{\relax\ifmmode\leftarrow\else$\leftarrow$\fi}
 \newcommand{\SIIs}{\relax\ifmmode<\leftarrow\else$<\leftarrow$\fi}
@@ -181,7 +186,7 @@
 %
 \newcommand{\deqn}[2]{\[#1\]}
 \newcommand{\eqn}[2]{$#1$}
-\newcommand{\bold}[1]{\ifmmode\bm{#1}\else\textbf{#1}\fi}
+\renewcommand{\bold}[1]{\ifmmode\bm{#1}\else\textbf{#1}\fi}
 %% as from R 2.12.0 set \file in monospaced font, not sans-serif
 \newcommand{\file}[1]{`\texttt{#1}'}
 
@@ -279,22 +284,17 @@
 \newcommand{\sQuote}[1]{`#1'}
 \newcommand{\dQuote}[1]{``#1''}
 
-\IfFileExists{ae.sty}{\setboolean{Rd@has@ae}{true}}{}
-\ifthenelse{\boolean{Rd@use@ae}\and\boolean{Rd@has@ae}}{%
-  \usepackage[T1]{fontenc}
-  \usepackage{ae}
-  \input{t1aett.fd}
-  \DeclareFontShape{T1}{aett}{bx}{n}{<->ssub*aett/m/n}{}}{}
+%% load fontenc (with ec fonts) unless we detect that we are not running pdfTeX
+\IfFileExists{iftex.sty}{\RequirePackage{iftex}}{}
+\@ifpackageloaded{iftex}{\ifPDFTeX\usepackage[T1]{fontenc}\fi}{%
+  \usepackage[T1]{fontenc}}
+
 \IfFileExists{times.sty}{\setboolean{Rd@has@times}{true}}{}
 \ifthenelse{\boolean{Rd@use@times}\and\boolean{Rd@has@times}}{%
-  \usepackage[T1]{fontenc}
   \usepackage{times}}{}
 \IfFileExists{lmodern.sty}{\setboolean{Rd@has@lm}{true}}{}
 \ifthenelse{\boolean{Rd@use@lm}\and\boolean{Rd@has@lm}}{%
-  \usepackage[T1]{fontenc}
   \usepackage{lmodern}}{}
-\ifthenelse{\boolean{Rd@use@cm-super}}{%
-  \usepackage[T1]{fontenc}}{}
 \ifthenelse{\boolean{Rd@use@beramono}}{%
   \usepackage[scaled=.8]{beramono}}{}
 %% it appears that all versions of zi4.sty support [noupquote],
@@ -326,15 +326,11 @@
   \DeclareTextCommand{\Rpercent}{PD1}{\045} % percent
   %% <NOTE>
   %% Formerly in R's hyperref.cfg, possibly to be shared with Sweave.sty
-  %% as well (but without setting pagebackref as this can give trouble
-  %% for .bib entries containing URLs with '#' characters).
   \AtBeginDocument{%
     \definecolor{Blue}{rgb}{0,0,0.8}
     \definecolor{Red}{rgb}{0.7,0,0}}
   \hypersetup{%
-    hyperindex,%
     colorlinks,%
-    pagebackref,%
     linktocpage,%
     plainpages=false,%
     linkcolor=Blue,%

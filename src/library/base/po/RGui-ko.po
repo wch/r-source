@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-11-06 17:18+0100\n"
+"POT-Creation-Date: 2023-07-31 15:00+0200\n"
 "PO-Revision-Date: 2018-04-09 12:05-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team: \n"
@@ -18,25 +18,25 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: src/gnuwin32/console.c:1176 src/gnuwin32/console.c:1218
+#: src/gnuwin32/console.c:1200 src/gnuwin32/console.c:1242
 msgid "Not enough memory"
 msgstr "메모리가 부족합니다"
 
-#: src/gnuwin32/console.c:1265 src/gnuwin32/console.c:1269
+#: src/gnuwin32/console.c:1289 src/gnuwin32/console.c:1293
 msgid "Insufficient memory: text not copied to the clipboard"
 msgstr "메모리 부족: 텍스트를 클립보드에 복사할 수 없습니다"
 
-#: src/gnuwin32/console.c:1307 src/extra/graphapp/clipboard.c:53
+#: src/gnuwin32/console.c:1331 src/extra/graphapp/clipboard.c:53
 #: src/extra/graphapp/clipboard.c:79
 msgid "Unable to open the clipboard"
 msgstr "클립보드를 열 수 없습니다"
 
-#: src/gnuwin32/console.c:1943
+#: src/gnuwin32/console.c:1977
 msgid "Insufficient memory. Please close the console"
 msgstr "메모리가 부족합니다.  콘솔을 닫아주세요"
 
-#: src/gnuwin32/console.c:1998 src/gnuwin32/console.c:2052
-#: src/gnuwin32/preferences.c:338
+#: src/gnuwin32/console.c:2033 src/gnuwin32/console.c:2087
+#: src/gnuwin32/preferences.c:342
 #, c-format
 msgid ""
 "Font %s-%d-%d  not found.\n"
@@ -45,23 +45,23 @@ msgstr ""
 "폰트 %s-%d-%d를 찾을 수 없습니다.\n"
 "시스템고정폰트를 사용합니다"
 
-#: src/gnuwin32/console.c:2157
+#: src/gnuwin32/console.c:2192
 msgid "Save selection to"
 msgstr "선택한 부분을 다음 위치에 저장합니다"
 
-#: src/gnuwin32/console.c:2159
+#: src/gnuwin32/console.c:2194
 msgid "Save console contents to"
 msgstr "콘솔의 내용을 다음의 위치에 저장합니다"
 
-#: src/gnuwin32/console.c:2258
+#: src/gnuwin32/console.c:2301
 msgid "Scrolling.\n"
 msgstr "스크롤링.\n"
 
-#: src/gnuwin32/console.c:2259
+#: src/gnuwin32/console.c:2302
 msgid "  Keyboard: PgUp, PgDown, Ctrl+Arrows, Ctrl+Home, Ctrl+End,\n"
 msgstr "  키보드: PgUp, PgDown, Ctrl+Arrows, Ctrl+Home, Ctrl+End,\n"
 
-#: src/gnuwin32/console.c:2260
+#: src/gnuwin32/console.c:2303
 msgid ""
 "  Mouse: use the scrollbar(s).\n"
 "\n"
@@ -69,91 +69,91 @@ msgstr ""
 "  마우스: 스크롤바를 사용하세요.\n"
 "\n"
 
-#: src/gnuwin32/console.c:2261
+#: src/gnuwin32/console.c:2304
 msgid "Editing.\n"
 msgstr "편집.\n"
 
-#: src/gnuwin32/console.c:2262
+#: src/gnuwin32/console.c:2305
 msgid "  Moving the cursor: \n"
 msgstr "  커서를 이동중: \n"
 
-#: src/gnuwin32/console.c:2263
+#: src/gnuwin32/console.c:2306
 msgid "     Left arrow or Ctrl+B: move backward one character;\n"
 msgstr "     좌로 이동화살표 또는 Ctrl+B: 한 문자 뒤로 이동합니다;\n"
 
-#: src/gnuwin32/console.c:2264
+#: src/gnuwin32/console.c:2307
 msgid "     Right arrow or Ctrl+F: move forward one character;\n"
 msgstr "     우로 이동화살표 또는 Ctrl+F: 한 문자 앞으로 이동합니다;\n"
 
-#: src/gnuwin32/console.c:2265
+#: src/gnuwin32/console.c:2308
 msgid "     Home or Ctrl+A: go to beginning of line;\n"
 msgstr "     Home 또는 Ctrl+A: 라인의 맨 처음으로 이동합니다;\n"
 
-#: src/gnuwin32/console.c:2266
+#: src/gnuwin32/console.c:2309
 msgid "     End or Ctrl+E: go to end of line;\n"
 msgstr "     End 또는 Ctrl+E: 라인의 맨 끝으로 이동합니다;\n"
 
-#: src/gnuwin32/console.c:2267
+#: src/gnuwin32/console.c:2310
 msgid "  History: Up and Down Arrows, Ctrl+P, Ctrl+N\n"
 msgstr "  작업기록: 위로 이동과 아래로 이동 화살표들, Ctrl+P, Ctrl+N\n"
 
-#: src/gnuwin32/console.c:2268
+#: src/gnuwin32/console.c:2311
 msgid "  Deleting:\n"
 msgstr "  삭제:\n"
 
-#: src/gnuwin32/console.c:2269
+#: src/gnuwin32/console.c:2312
 msgid "     Del or Ctrl+D: delete current character or selection;\n"
 msgstr "     Del 또는 Ctrl+D: 현재 문자 또는 선택 영역을 삭제합니다;\n"
 
-#: src/gnuwin32/console.c:2270
+#: src/gnuwin32/console.c:2313
 msgid "     Backspace: delete preceding character;\n"
 msgstr "     Backspace: 바로 이전문자를 삭제합니다;\n"
 
-#: src/gnuwin32/console.c:2271
+#: src/gnuwin32/console.c:2314
 msgid "     Ctrl+Del or Ctrl+K: delete text from current character to end of line.\n"
 msgstr "     Ctrl+Del 또는 Ctrl+K: 현재 문자부터 라인의 끝까지 삭제합니다.\n"
 
-#: src/gnuwin32/console.c:2272
+#: src/gnuwin32/console.c:2315
 msgid "     Ctrl+U: delete all text from current line.\n"
 msgstr "     Ctrl+U: 현재 라인의 모든 텍스트를 삭제합니다.\n"
 
-#: src/gnuwin32/console.c:2273
+#: src/gnuwin32/console.c:2316
 msgid "  Copy and paste.\n"
 msgstr "  복사하여 붙여넣기.\n"
 
-#: src/gnuwin32/console.c:2274
+#: src/gnuwin32/console.c:2317
 msgid "     Use the mouse (with the left button held down) to mark (select) text.\n"
 msgstr "     복사할 텍스트를 선택하기 위해서는 (좌측 버튼을 누른채로) 마우스를 이용하세요. \n"
 
-#: src/gnuwin32/console.c:2275
+#: src/gnuwin32/console.c:2318
 msgid "     Use Shift+Del (or Ctrl+C) to copy the marked text to the clipboard and\n"
 msgstr "     선택된 텍스트를 클립보드에 복사하기 위해서는 Shift+Del (또는 Ctrl+C)를 사용합니다. \n"
 
-#: src/gnuwin32/console.c:2276
+#: src/gnuwin32/console.c:2319
 msgid "     Shift+Ins (or Ctrl+V or Ctrl+Y) to paste the content of the clipboard (if any)  \n"
 msgstr "     클립보드에 있는 내용을 콘솔에 붙여넣고자 한다면 Shift+Ins (또는 Ctrl+V 혹은 Ctrl+Y)를 사용할 수 있습니다.\n"
 
-#: src/gnuwin32/console.c:2277
+#: src/gnuwin32/console.c:2320
 msgid "     to the console, Ctrl+X first copy then paste\n"
 msgstr "     Ctrl+X를 이용하여 복사한 뒤 붙여넣을수도 있습니다.\n"
 
-#: src/gnuwin32/console.c:2278
+#: src/gnuwin32/console.c:2321
 msgid "  Misc:\n"
 msgstr "  기타:\n"
 
-#: src/gnuwin32/console.c:2279
+#: src/gnuwin32/console.c:2322
 msgid "     Ctrl+L: Clear the console.\n"
 msgstr "     Ctrl+L: 콘솔화면을 깨끗하게 정리해 줍니다.\n"
 
-#: src/gnuwin32/console.c:2280
+#: src/gnuwin32/console.c:2323
 msgid "     Ctrl+O or INS: Toggle overwrite mode: initially off.\n"
 msgstr "     Ctrl+O 또는 INS: 덮어쓰기 모드로 전환합니다: 처음에는 꺼져있습니다.\n"
 
-#: src/gnuwin32/console.c:2281
+#: src/gnuwin32/console.c:2324
 msgid "     Ctrl+T: Interchange current char with one to the left.\n"
 msgstr "     Ctrl+T: 현재의 문자와 좌측에 있는 문자를 서로 교환합니다.\n"
 
-#: src/gnuwin32/console.c:2282
+#: src/gnuwin32/console.c:2325
 msgid ""
 "\n"
 "Note: Console is updated only when some input is required.\n"
@@ -161,7 +161,7 @@ msgstr ""
 "\n"
 "참고: 콘솔은 오로지 어떤 입력이 요구되어 질 때만 갱신됩니다.\n"
 
-#: src/gnuwin32/console.c:2283
+#: src/gnuwin32/console.c:2326
 msgid ""
 "  Use Ctrl+W to toggle this feature off/on.\n"
 "\n"
@@ -169,7 +169,7 @@ msgstr ""
 "  이 기능을 켜거나 혹은 끄고 싶을 때 Ctrl+W 를 이용하세요.\n"
 "\n"
 
-#: src/gnuwin32/console.c:2284
+#: src/gnuwin32/console.c:2327
 msgid ""
 "Use ESC to stop the interpreter.\n"
 "\n"
@@ -177,7 +177,7 @@ msgstr ""
 "인터프리터를 중단하기 위해서는 ESC 키를 이용하세요.\n"
 "\n"
 
-#: src/gnuwin32/console.c:2285
+#: src/gnuwin32/console.c:2328
 msgid ""
 "TAB starts completion of the current word.\n"
 "\n"
@@ -185,264 +185,264 @@ msgstr ""
 "TAB키를 이용하여 현재 입력중인 단어에 대한 자동완성기능을 살펴볼 수 있습니다.\n"
 "\n"
 
-#: src/gnuwin32/console.c:2286
+#: src/gnuwin32/console.c:2329
 msgid "Standard Windows hotkeys can be used to switch to the\n"
 msgstr "표준 윈도우즈 핫키들이 그래픽 장치 전환에 사용될 수 있습니다 \n"
 
-#: src/gnuwin32/console.c:2287
+#: src/gnuwin32/console.c:2330
 msgid "graphics device (Ctrl+Tab or Ctrl+F6 in MDI, Alt+Tab in SDI)"
 msgstr "(MDI의 경우 Ctrl+Tab 또는 Ctrl+F6를, SDI의 경우 Alt+Tab을 사용할 수 있습니다)"
 
-#: src/gnuwin32/editor.c:91 src/gnuwin32/editor.c:93
+#: src/gnuwin32/editor.c:89 src/gnuwin32/editor.c:91
 msgid "R Editor"
 msgstr "R 편집기"
 
-#: src/gnuwin32/editor.c:123
+#: src/gnuwin32/editor.c:162
 #, c-format
 msgid "unable to open file %s for reading"
 msgstr "파일 %s를 열 수 없습니다"
 
-#: src/gnuwin32/editor.c:139
+#: src/gnuwin32/editor.c:187
 #, c-format
 msgid "Could not read from file '%s'"
 msgstr "파일 '%s'로부터 읽어올 수 없었습니다"
 
-#: src/gnuwin32/editor.c:171
+#: src/gnuwin32/editor.c:220
 #, c-format
 msgid "Could not save file '%s'"
 msgstr "파일 '%s'를 저장할 수 없었습니다"
 
-#: src/gnuwin32/editor.c:187
+#: src/gnuwin32/editor.c:240
 msgid "Save script as"
 msgstr "다른 이름으로 스크립트를 저장"
 
-#: src/gnuwin32/editor.c:379 src/gnuwin32/editor.c:696 src/gnuwin32/pager.c:431
-#: src/gnuwin32/rui.c:1078
+#: src/gnuwin32/editor.c:439 src/gnuwin32/editor.c:765 src/gnuwin32/pager.c:441
+#: src/gnuwin32/rui.c:1164
 msgid "Open script"
 msgstr "스크립트 열기"
 
-#: src/gnuwin32/editor.c:502 src/gnuwin32/pager.c:185 src/gnuwin32/pager.c:205
+#: src/gnuwin32/editor.c:571 src/gnuwin32/pager.c:195 src/gnuwin32/pager.c:215
 msgid "No RGui console to paste to"
 msgstr "붙여넣기를 할 RGui 콘솔이 없습니다"
 
-#: src/gnuwin32/editor.c:604
+#: src/gnuwin32/editor.c:673
 msgid "R EDITOR\n"
 msgstr "R 편집기\n"
 
-#: src/gnuwin32/editor.c:606
+#: src/gnuwin32/editor.c:675
 msgid "A standard text editor for editing and running R code.\n"
 msgstr "R 코드의 편집과 실행을 위한 표준 텍스트 편집기.\n"
 
-#: src/gnuwin32/editor.c:608
+#: src/gnuwin32/editor.c:677
 msgid "RUNNING COMMANDS\n"
 msgstr "명령들을 실행중입니다\n"
 
-#: src/gnuwin32/editor.c:609
+#: src/gnuwin32/editor.c:678
 msgid "To run a line or section of R code, select the code and either\n"
 msgstr "R 코드 한 줄 또는 선택한 영역을 실행하고자 한다면, 코드를 먼저 선택한 뒤 \n"
 
-#: src/gnuwin32/editor.c:610
+#: src/gnuwin32/editor.c:679
 msgid "     Press Ctrl-R\n"
 msgstr "     Ctrl-R 을 눌러주세요\n"
 
-#: src/gnuwin32/editor.c:611
+#: src/gnuwin32/editor.c:680
 msgid "     Select \"Run line or selection\" from the \"Edit\" menu\n"
 msgstr "     \"편집\" 메뉴에서 \"줄 또는 선택영역 실행\"을 선택해 주세요\n"
 
-#: src/gnuwin32/editor.c:612
+#: src/gnuwin32/editor.c:681
 msgid "     Press the \"Run line or selection\" icon on the toolbar\n"
 msgstr "     툴바에 있는 \"줄 또는 선택영역 실행\" 아이콘을 눌러 주세요\n"
 
-#: src/gnuwin32/editor.c:613
+#: src/gnuwin32/editor.c:682
 msgid "This will copy the selected commands to the console and evaluate them.\n"
 msgstr "이것은 선택된 명령어들을 콘솔로 복사하고 평가할 것입니다.\n"
 
-#: src/gnuwin32/editor.c:614
+#: src/gnuwin32/editor.c:683
 msgid "If there is no selection, this will just run the current line and advance\n"
 msgstr "만약 선택된 명령어들이 없다면, 이것은 단순히 커서가 놓인 라인을 실행하고\n"
 
-#: src/gnuwin32/editor.c:615
+#: src/gnuwin32/editor.c:684
 msgid "the cursor by one line.\n"
 msgstr "그 다음라인으로 커서를 이동시킬 것입니다.\n"
 
-#: src/gnuwin32/editor.c:627 src/gnuwin32/editor.c:704
-#: src/gnuwin32/editor.c:762
+#: src/gnuwin32/editor.c:696 src/gnuwin32/editor.c:773
+#: src/gnuwin32/editor.c:831
 msgid "Run line or selection"
 msgstr "줄 또는 선택영역 실행"
 
-#: src/gnuwin32/editor.c:629 src/gnuwin32/editor.c:747
+#: src/gnuwin32/editor.c:698 src/gnuwin32/editor.c:816
 msgid "Undo"
 msgstr "실행취소"
 
-#: src/gnuwin32/editor.c:631 src/gnuwin32/editor.c:750
+#: src/gnuwin32/editor.c:700 src/gnuwin32/editor.c:819
 msgid "Cut"
 msgstr "잘라내기"
 
-#: src/gnuwin32/editor.c:632 src/gnuwin32/editor.c:752 src/gnuwin32/pager.c:305
-#: src/gnuwin32/pager.c:478 src/gnuwin32/rui.c:859 src/gnuwin32/rui.c:1090
-#: src/gnuwin32/rui.c:1146
+#: src/gnuwin32/editor.c:701 src/gnuwin32/editor.c:821 src/gnuwin32/pager.c:315
+#: src/gnuwin32/pager.c:488 src/gnuwin32/rui.c:936 src/gnuwin32/rui.c:1176
+#: src/gnuwin32/rui.c:1232
 msgid "Copy"
 msgstr "복사하기"
 
-#: src/gnuwin32/editor.c:633 src/gnuwin32/editor.c:754 src/gnuwin32/rui.c:860
-#: src/gnuwin32/rui.c:1094 src/gnuwin32/rui.c:1147
+#: src/gnuwin32/editor.c:702 src/gnuwin32/editor.c:823 src/gnuwin32/rui.c:937
+#: src/gnuwin32/rui.c:1180 src/gnuwin32/rui.c:1233
 msgid "Paste"
 msgstr "붙여넣기"
 
-#: src/gnuwin32/editor.c:634 src/gnuwin32/editor.c:756
+#: src/gnuwin32/editor.c:703 src/gnuwin32/editor.c:825
 msgid "Delete"
 msgstr "삭제하기"
 
-#: src/gnuwin32/editor.c:636 src/gnuwin32/editor.c:758 src/gnuwin32/pager.c:308
-#: src/gnuwin32/pager.c:484 src/gnuwin32/rui.c:866 src/gnuwin32/rui.c:1151
+#: src/gnuwin32/editor.c:705 src/gnuwin32/editor.c:827 src/gnuwin32/pager.c:318
+#: src/gnuwin32/pager.c:494 src/gnuwin32/rui.c:943 src/gnuwin32/rui.c:1237
 msgid "Select all"
 msgstr "모두 선택하기"
 
-#: src/gnuwin32/editor.c:700
+#: src/gnuwin32/editor.c:769
 msgid "Save script"
 msgstr "스크립트 저장하기"
 
-#: src/gnuwin32/editor.c:708 src/gnuwin32/pager.c:451
-#: src/library/grDevices/src/devWindows.c:1619
+#: src/gnuwin32/editor.c:777 src/gnuwin32/pager.c:461
+#: src/library/grDevices/src/devWindows.c:1607
 msgid "Return focus to Console"
 msgstr "콘솔로 돌아가기"
 
-#: src/gnuwin32/editor.c:711
+#: src/gnuwin32/editor.c:780
 msgid "Print script"
 msgstr "스크립트 인쇄하기"
 
-#: src/gnuwin32/editor.c:713 src/gnuwin32/pager.c:446 src/gnuwin32/rui.c:1106
-#: src/library/grDevices/src/devWindows.c:1613
+#: src/gnuwin32/editor.c:782 src/gnuwin32/pager.c:456 src/gnuwin32/rui.c:1192
+#: src/library/grDevices/src/devWindows.c:1601
 msgid "Print"
 msgstr "인쇄하기"
 
-#: src/gnuwin32/editor.c:731 src/gnuwin32/pager.c:467 src/gnuwin32/rui.c:1124
+#: src/gnuwin32/editor.c:800 src/gnuwin32/pager.c:477 src/gnuwin32/rui.c:1210
 #: src/library/utils/src/windows/dataentry.c:1793
-#: src/library/grDevices/src/devWindows.c:1651
+#: src/library/grDevices/src/devWindows.c:1639
 msgid "File"
 msgstr "파일"
 
-#: src/gnuwin32/editor.c:732 src/gnuwin32/pager.c:468 src/gnuwin32/rui.c:1126
+#: src/gnuwin32/editor.c:801 src/gnuwin32/pager.c:478 src/gnuwin32/rui.c:1212
 msgid "New script"
 msgstr "새 스크립트"
 
-#: src/gnuwin32/editor.c:734 src/gnuwin32/pager.c:469 src/gnuwin32/rui.c:1127
+#: src/gnuwin32/editor.c:803 src/gnuwin32/pager.c:479 src/gnuwin32/rui.c:1213
 msgid "Open script..."
 msgstr "스크립트 열기..."
 
-#: src/gnuwin32/editor.c:736
+#: src/gnuwin32/editor.c:805
 msgid "Save"
 msgstr "저장하기"
 
-#: src/gnuwin32/editor.c:738
+#: src/gnuwin32/editor.c:807
 msgid "Save as..."
 msgstr "다른 이름으로 저장..."
 
-#: src/gnuwin32/editor.c:741 src/gnuwin32/pager.c:470 src/gnuwin32/rui.c:1140
-#: src/library/grDevices/src/devWindows.c:1672
-#: src/library/grDevices/src/devWindows.c:1714
+#: src/gnuwin32/editor.c:810 src/gnuwin32/pager.c:480 src/gnuwin32/rui.c:1226
+#: src/library/grDevices/src/devWindows.c:1660
+#: src/library/grDevices/src/devWindows.c:1702
 msgid "Print..."
 msgstr "인쇄하기..."
 
-#: src/gnuwin32/editor.c:744
+#: src/gnuwin32/editor.c:813
 msgid "Close script"
 msgstr "스크립트 닫기"
 
-#: src/gnuwin32/editor.c:746 src/gnuwin32/pager.c:477 src/gnuwin32/rui.c:1145
+#: src/gnuwin32/editor.c:815 src/gnuwin32/pager.c:487 src/gnuwin32/rui.c:1231
 #: src/library/utils/src/windows/dataentry.c:1799
 msgid "Edit"
 msgstr "편집"
 
-#: src/gnuwin32/editor.c:760 src/gnuwin32/rui.c:1152
+#: src/gnuwin32/editor.c:829 src/gnuwin32/rui.c:1238
 msgid "Clear console"
 msgstr "콘솔 지우기"
 
-#: src/gnuwin32/editor.c:764
+#: src/gnuwin32/editor.c:833
 msgid "Run all"
 msgstr "전부 실행하기"
 
 # reported by 양민혁 <didalsgur85@naver.com> on 15-DEC-2014
 # status: fixed (closed on 29-JAN-2015)
-#: src/gnuwin32/editor.c:767
+#: src/gnuwin32/editor.c:836
 msgid "Find..."
 msgstr "찾기..."
 
-#: src/gnuwin32/editor.c:769
+#: src/gnuwin32/editor.c:838
 msgid "Replace..."
 msgstr "바꾸기..."
 
-#: src/gnuwin32/editor.c:772 src/gnuwin32/rui.c:1156
+#: src/gnuwin32/editor.c:841 src/gnuwin32/rui.c:1242
 msgid "GUI preferences..."
 msgstr "GUI 설정..."
 
-#: src/gnuwin32/editor.c:782 src/gnuwin32/rui.c:1188
+#: src/gnuwin32/editor.c:851 src/gnuwin32/rui.c:1274
 #: src/library/utils/src/windows/dataentry.c:1700
 #: src/library/utils/src/windows/dataentry.c:1810
 msgid "Help"
 msgstr "도움말"
 
-#: src/gnuwin32/editor.c:783
+#: src/gnuwin32/editor.c:852
 msgid "Editor"
 msgstr "편집기"
 
-#: src/gnuwin32/editor.c:842
+#: src/gnuwin32/editor.c:911
 msgid "Maximum number of editors reached"
 msgstr "편집기의 개수가 주어진 최대값에 도달했습니다"
 
-#: src/gnuwin32/editor.c:847
+#: src/gnuwin32/editor.c:916
 msgid "Unable to create editor window"
 msgstr "편집기 윈도우를 생성할 수 없습니다"
 
-#: src/gnuwin32/editor.c:855
+#: src/gnuwin32/editor.c:924
 msgid "Untitled"
 msgstr "제목없음"
 
-#: src/gnuwin32/extra.c:1064
+#: src/gnuwin32/extra.c:1050
 msgid "Select file"
 msgstr "파일선택"
 
-#: src/gnuwin32/pager.c:89
+#: src/gnuwin32/pager.c:83 src/gnuwin32/pager.c:99
 msgid "Error opening file"
 msgstr "파일을 여는 도중 에러가 발생했습니다"
 
-#: src/gnuwin32/pager.c:96
+#: src/gnuwin32/pager.c:88 src/gnuwin32/pager.c:106
 msgid "Insufficient memory to display file in internal pager"
 msgstr "내부페이저에 파일을 표시하기 위한 메모리가 부족합니다"
 
-#: src/gnuwin32/pager.c:177 src/gnuwin32/pager.c:189 src/gnuwin32/pager.c:209
-#: src/gnuwin32/rui.c:237 src/gnuwin32/rui.c:264
+#: src/gnuwin32/pager.c:187 src/gnuwin32/pager.c:199 src/gnuwin32/pager.c:219
+#: src/gnuwin32/rui.c:306 src/gnuwin32/rui.c:333
 msgid "No selection"
 msgstr "선택된 것이 없습니다"
 
-#: src/gnuwin32/pager.c:306 src/gnuwin32/pager.c:436 src/gnuwin32/pager.c:480
+#: src/gnuwin32/pager.c:316 src/gnuwin32/pager.c:446 src/gnuwin32/pager.c:490
 msgid "Paste to console"
 msgstr "콘솔에 붙여넣기"
 
-#: src/gnuwin32/pager.c:307 src/gnuwin32/pager.c:441 src/gnuwin32/pager.c:482
+#: src/gnuwin32/pager.c:317 src/gnuwin32/pager.c:451 src/gnuwin32/pager.c:492
 msgid "Paste commands to console"
 msgstr "콘솔에 명령어를 붙여넣기"
 
-#: src/gnuwin32/pager.c:310 src/gnuwin32/rui.c:869
+#: src/gnuwin32/pager.c:320 src/gnuwin32/rui.c:946
 #: src/library/utils/src/windows/dataentry.c:1706
-#: src/library/grDevices/src/devWindows.c:1711
+#: src/library/grDevices/src/devWindows.c:1699
 msgid "Stay on top"
 msgstr "맨 위에 있도록 합니다"
 
-#: src/gnuwin32/pager.c:312 src/gnuwin32/pager.c:475
+#: src/gnuwin32/pager.c:322 src/gnuwin32/pager.c:485
 #: src/library/utils/src/windows/dataentry.c:1708
 #: src/library/utils/src/windows/dataentry.c:1795
 msgid "Close"
 msgstr "닫기"
 
-#: src/gnuwin32/pager.c:472 src/gnuwin32/rui.c:1141
+#: src/gnuwin32/pager.c:482 src/gnuwin32/rui.c:1227
 msgid "Save to File..."
 msgstr "파일에 저장..."
 
-#: src/gnuwin32/pager.c:487 src/gnuwin32/rui.c:1158
+#: src/gnuwin32/pager.c:497 src/gnuwin32/rui.c:1244
 msgid "View"
 msgstr "보기"
 
-#: src/gnuwin32/pager.c:519
+#: src/gnuwin32/pager.c:529
 msgid "Unable to create pager window"
 msgstr "페이저 윈도우를 생성할 수 없습니다"
 
@@ -470,11 +470,11 @@ msgstr ""
 "\n"
 "메뉴에 적용하기 위해서는 먼저 설정을 저장한 뒤 Rgui를 다시 시작해주세요.\n"
 
-#: src/gnuwin32/preferences.c:376
+#: src/gnuwin32/preferences.c:380
 msgid "Changes in pager size will not apply to any open pagers"
 msgstr "페이저 크기조절은 열려있는 페이저들에는 적용되지 않을 것입니다"
 
-#: src/gnuwin32/preferences.c:382
+#: src/gnuwin32/preferences.c:386
 msgid ""
 "Do not change pager type if any pager is open\n"
 "Proceed?"
@@ -482,334 +482,334 @@ msgstr ""
 "만약 페이저가 열려 있다면 페이저 유형을 변경하지 말아주세요\n"
 "진행하시겠나요?"
 
-#: src/gnuwin32/preferences.c:416
+#: src/gnuwin32/preferences.c:420
 msgid "Select directory for file 'Rconsole'"
 msgstr "'Rconsole' 파일을 위한 디렉토리를 선택"
 
-#: src/gnuwin32/preferences.c:511
+#: src/gnuwin32/preferences.c:515
 msgid "Select 'Rconsole' file"
 msgstr "'Rconsole' 파일을 선택"
 
-#: src/gnuwin32/preferences.c:699
+#: src/gnuwin32/preferences.c:703
 #, c-format
 msgid "Ignored '%s' at line %d of file %s"
 msgstr "파일 '%3$s'의 라인 %2$d에서 %1$s가 무시되었습니다"
 
-#: src/gnuwin32/preferences.c:800
+#: src/gnuwin32/preferences.c:804
 msgid "Rgui Configuration Editor"
 msgstr "Rgui 구성 편집기"
 
-#: src/gnuwin32/rui.c:140
+#: src/gnuwin32/rui.c:215
 msgid "Select file to source"
 msgstr "불러올 파일을 선택하세요"
 
-#: src/gnuwin32/rui.c:161
+#: src/gnuwin32/rui.c:233
 msgid "Select image to load"
 msgstr "불러올 이미지를 선택하세요"
 
-#: src/gnuwin32/rui.c:176
+#: src/gnuwin32/rui.c:245
 msgid "Save image in"
 msgstr "이미지를 다음의 위치에 저장합니다"
 
-#: src/gnuwin32/rui.c:190
+#: src/gnuwin32/rui.c:259
 msgid "Load history from"
 msgstr "다음의 위치로부터 작업기록을 불러옵니다"
 
-#: src/gnuwin32/rui.c:199
+#: src/gnuwin32/rui.c:268
 msgid "Save history in"
 msgstr "다음의 위치에 작업기록을 저장합니다"
 
-#: src/gnuwin32/rui.c:246 src/gnuwin32/rui.c:255
+#: src/gnuwin32/rui.c:315 src/gnuwin32/rui.c:324
 msgid "No text available"
 msgstr "사용가능한 텍스트가 없습니다"
 
-#: src/gnuwin32/rui.c:304
+#: src/gnuwin32/rui.c:373
 msgid "Name of data frame or matrix"
 msgstr "데이터프레임 혹은 행렬의 이름"
 
-#: src/gnuwin32/rui.c:311
+#: src/gnuwin32/rui.c:380
 #, c-format
 msgid "'%s' cannot be found"
 msgstr "'%s'를 찾을 수 없습니다"
 
-#: src/gnuwin32/rui.c:451
+#: src/gnuwin32/rui.c:524
 msgid "Are you sure?"
 msgstr "확실한가요?"
 
-#: src/gnuwin32/rui.c:546
+#: src/gnuwin32/rui.c:619
 msgid "Help on"
 msgstr "다음과 같은 주제에 대한 도움말"
 
-#: src/gnuwin32/rui.c:602
+#: src/gnuwin32/rui.c:675
 msgid "Search help"
 msgstr "도움말 검색"
 
-#: src/gnuwin32/rui.c:617
+#: src/gnuwin32/rui.c:690
 msgid "Search for words in help list archives and documentation"
 msgstr "과거의 도움말 리스트들과 문서로부터 관련어를 검색"
 
-#: src/gnuwin32/rui.c:632
+#: src/gnuwin32/rui.c:705
 msgid "Apropos"
 msgstr "객체검색"
 
-#: src/gnuwin32/rui.c:855
+#: src/gnuwin32/rui.c:932
 msgid "Can only drag-and-drop .R, .RData and .rda files"
 msgstr ".R, .RData 그리고 .rda 파일들만이 드래그-앤-드랍 될 수 있습니다"
 
-#: src/gnuwin32/rui.c:861 src/gnuwin32/rui.c:1148
+#: src/gnuwin32/rui.c:938 src/gnuwin32/rui.c:1234
 msgid "Paste commands only"
 msgstr "명령어만 붙여넣기"
 
-#: src/gnuwin32/rui.c:862 src/gnuwin32/rui.c:1098
+#: src/gnuwin32/rui.c:939 src/gnuwin32/rui.c:1184
 msgid "Copy and paste"
 msgstr "복사 후 붙여넣기"
 
-#: src/gnuwin32/rui.c:864
+#: src/gnuwin32/rui.c:941
 msgid "Clear window"
 msgstr "윈도우 내용을 지우기"
 
-#: src/gnuwin32/rui.c:868 src/gnuwin32/rui.c:1171
+#: src/gnuwin32/rui.c:945 src/gnuwin32/rui.c:1257
 msgid "Buffered output"
 msgstr "버퍼된 출력"
 
-#: src/gnuwin32/rui.c:908
+#: src/gnuwin32/rui.c:985
 msgid "Packages"
 msgstr "패키지들"
 
-#: src/gnuwin32/rui.c:909
+#: src/gnuwin32/rui.c:986
 msgid "Load package..."
 msgstr "패키지 불러오기..."
 
-#: src/gnuwin32/rui.c:911
+#: src/gnuwin32/rui.c:988
 msgid "Set CRAN mirror..."
 msgstr "CRAN 미러 설정..."
 
-#: src/gnuwin32/rui.c:913
+#: src/gnuwin32/rui.c:990
 msgid "Select repositories..."
 msgstr "저장소 선택..."
 
-#: src/gnuwin32/rui.c:915
+#: src/gnuwin32/rui.c:992
 msgid "Install package(s)..."
 msgstr "패키지(들) 설치하기..."
 
-#: src/gnuwin32/rui.c:917
+#: src/gnuwin32/rui.c:994
 msgid "Update packages..."
 msgstr "패키지 업데이트..."
 
-#: src/gnuwin32/rui.c:920
+#: src/gnuwin32/rui.c:997
 msgid "Install package(s) from local files..."
 msgstr "로컬에 저장된 파일을 사용하여 패키지(들)를 설치합니다..."
 
-#: src/gnuwin32/rui.c:944
+#: src/gnuwin32/rui.c:1021
 msgid "FAQ on R"
 msgstr "R에 대한 FAQ"
 
-#: src/gnuwin32/rui.c:946
+#: src/gnuwin32/rui.c:1023
 msgid "FAQ on R for &Windows"
 msgstr "R에 대한 FAQ (&Windows 버전)"
 
-#: src/gnuwin32/rui.c:952 src/gnuwin32/rui.c:955
+#: src/gnuwin32/rui.c:1029 src/gnuwin32/rui.c:1032
 msgid "Manuals (in PDF)"
 msgstr "PDF 형식의 매뉴얼"
 
-#: src/gnuwin32/rui.c:985
+#: src/gnuwin32/rui.c:1062
 msgid "R functions (text)..."
 msgstr "R 함수들 (텍스트)..."
 
-#: src/gnuwin32/rui.c:987
+#: src/gnuwin32/rui.c:1064
 msgid "Html help"
 msgstr "Html 도움말"
 
-#: src/gnuwin32/rui.c:989
+#: src/gnuwin32/rui.c:1066
 msgid "Search help..."
 msgstr "도움말 검색..."
 
-#: src/gnuwin32/rui.c:994
+#: src/gnuwin32/rui.c:1071
 msgid "Apropos..."
 msgstr "객체 검색..."
 
-#: src/gnuwin32/rui.c:996
+#: src/gnuwin32/rui.c:1073
 msgid "R Project home page"
 msgstr "R 프로젝트 홈페이지"
 
-#: src/gnuwin32/rui.c:997
+#: src/gnuwin32/rui.c:1074
 msgid "CRAN home page"
 msgstr "CRAN 홈페이지"
 
-#: src/gnuwin32/rui.c:999
+#: src/gnuwin32/rui.c:1076
 msgid "About"
 msgstr "R에 대해서"
 
-#: src/gnuwin32/rui.c:1008 src/extra/graphapp/gmenus.c:52
+#: src/gnuwin32/rui.c:1085 src/extra/graphapp/gmenus.c:52
 msgid "Windows"
 msgstr "윈도우즈"
 
-#: src/gnuwin32/rui.c:1009 src/extra/graphapp/gmenus.c:53
+#: src/gnuwin32/rui.c:1086 src/extra/graphapp/gmenus.c:53
 msgid "Cascade"
 msgstr "계단식"
 
-#: src/gnuwin32/rui.c:1010 src/extra/graphapp/gmenus.c:54
+#: src/gnuwin32/rui.c:1087 src/extra/graphapp/gmenus.c:54
 msgid "Tile &Horizontally"
 msgstr "창을 가로로 정렬"
 
-#: src/gnuwin32/rui.c:1011 src/extra/graphapp/gmenus.c:55
+#: src/gnuwin32/rui.c:1088 src/extra/graphapp/gmenus.c:55
 msgid "Tile &Vertically"
 msgstr "창을 세로로 정렬"
 
-#: src/gnuwin32/rui.c:1012
+#: src/gnuwin32/rui.c:1089
 msgid "Minimize group"
 msgstr "그룹을 축소합니다."
 
-#: src/gnuwin32/rui.c:1013
+#: src/gnuwin32/rui.c:1090
 msgid "Restore group"
 msgstr "그룹복원"
 
-#: src/gnuwin32/rui.c:1082
+#: src/gnuwin32/rui.c:1168
 msgid "Load workspace"
 msgstr "작업공간을 불러오기"
 
-#: src/gnuwin32/rui.c:1086
+#: src/gnuwin32/rui.c:1172
 msgid "Save workspace"
 msgstr "작업공간을 저장하기"
 
-#: src/gnuwin32/rui.c:1102
+#: src/gnuwin32/rui.c:1188
 msgid "Stop current computation"
 msgstr "현재 수행중인 연산을 중단합니다"
 
-#: src/gnuwin32/rui.c:1125
+#: src/gnuwin32/rui.c:1211
 msgid "Source R code..."
 msgstr "R 코드를 소스..."
 
-#: src/gnuwin32/rui.c:1128
+#: src/gnuwin32/rui.c:1214
 msgid "Display file(s)..."
 msgstr "파일(들)을 표시..."
 
-#: src/gnuwin32/rui.c:1130
+#: src/gnuwin32/rui.c:1216
 msgid "Load Workspace..."
 msgstr "작업공간 불러오기..."
 
-#: src/gnuwin32/rui.c:1131
+#: src/gnuwin32/rui.c:1217
 msgid "Save Workspace..."
 msgstr "작업공간 저장하기..."
 
-#: src/gnuwin32/rui.c:1133
+#: src/gnuwin32/rui.c:1219
 msgid "Load History..."
 msgstr "작업기록 불러오기..."
 
-#: src/gnuwin32/rui.c:1135
+#: src/gnuwin32/rui.c:1221
 msgid "Save History..."
 msgstr "작업기록 저장하기..."
 
-#: src/gnuwin32/rui.c:1138
+#: src/gnuwin32/rui.c:1224
 msgid "Change dir..."
 msgstr "작업 디렉토리 변경..."
 
-#: src/gnuwin32/rui.c:1143
+#: src/gnuwin32/rui.c:1229
 msgid "Exit"
 msgstr "종료"
 
-#: src/gnuwin32/rui.c:1150
+#: src/gnuwin32/rui.c:1236
 msgid "Copy and Paste"
 msgstr "복사 후 붙여넣기"
 
-#: src/gnuwin32/rui.c:1154
+#: src/gnuwin32/rui.c:1240
 msgid "Data editor..."
 msgstr "데이터 편집기..."
 
-#: src/gnuwin32/rui.c:1159
+#: src/gnuwin32/rui.c:1245
 msgid "Toolbar"
 msgstr "툴바"
 
-#: src/gnuwin32/rui.c:1160
+#: src/gnuwin32/rui.c:1246
 msgid "Statusbar"
 msgstr "상태바"
 
-#: src/gnuwin32/rui.c:1164
+#: src/gnuwin32/rui.c:1250
 msgid "Misc"
 msgstr "기타"
 
-#: src/gnuwin32/rui.c:1165
+#: src/gnuwin32/rui.c:1251
 msgid "Stop current computation           \tESC"
 msgstr "현재 수행중인 계산을 중단           \tESC"
 
-#: src/gnuwin32/rui.c:1167
+#: src/gnuwin32/rui.c:1253
 msgid "Stop all computations"
 msgstr "모든 연산을 중단"
 
-#: src/gnuwin32/rui.c:1169
+#: src/gnuwin32/rui.c:1255
 msgid "Break to debugger"
 msgstr "디버거에 브레이크 지정"
 
-#: src/gnuwin32/rui.c:1172
+#: src/gnuwin32/rui.c:1258
 msgid "Word completion"
 msgstr "단어 완성"
 
-#: src/gnuwin32/rui.c:1174
+#: src/gnuwin32/rui.c:1260
 msgid "Filename completion"
 msgstr "파일명 완성"
 
-#: src/gnuwin32/rui.c:1181
+#: src/gnuwin32/rui.c:1267
 msgid "List objects"
 msgstr "객체들을 나열"
 
-#: src/gnuwin32/rui.c:1182
+#: src/gnuwin32/rui.c:1268
 msgid "Remove all objects"
 msgstr "모든 객체들을 삭제"
 
-#: src/gnuwin32/rui.c:1183
+#: src/gnuwin32/rui.c:1269
 msgid "List search &path"
 msgstr "검색 경로를 나열"
 
-#: src/gnuwin32/rui.c:1189
+#: src/gnuwin32/rui.c:1275
 msgid "Console"
 msgstr "콘솔"
 
-#: src/gnuwin32/rui.c:1250
+#: src/gnuwin32/rui.c:1336
 msgid "'mname' is limited to 1000 bytes"
 msgstr "'mname'은 1000 바이트로 제한되어 있습니다"
 
-#: src/gnuwin32/rui.c:1295
+#: src/gnuwin32/rui.c:1381
 #, c-format
 msgid "menu %s does not exist"
 msgstr "메뉴 %s는 존재하지 않습니다"
 
-#: src/gnuwin32/rui.c:1348
+#: src/gnuwin32/rui.c:1434
 msgid "'menu' is limited to 500 bytes"
 msgstr "'menu'는 500 바이트로 제한되어 있습니다"
 
-#: src/gnuwin32/rui.c:1358
+#: src/gnuwin32/rui.c:1444
 msgid "base menu does not exist"
 msgstr "기본메뉴가 존재하지 않습니다"
 
-#: src/gnuwin32/rui.c:1373
+#: src/gnuwin32/rui.c:1459
 msgid "failed to allocate menu"
 msgstr "메뉴를 할당하는데 실패했습니다"
 
-#: src/gnuwin32/rui.c:1390 src/gnuwin32/rui.c:1514
+#: src/gnuwin32/rui.c:1476 src/gnuwin32/rui.c:1600
 msgid "menu + item is limited to 1000 bytes"
 msgstr "메뉴와 항목은 1000 바이트로 제한되어 있습니다"
 
-#: src/gnuwin32/rui.c:1398 src/gnuwin32/rui.c:1481
+#: src/gnuwin32/rui.c:1484 src/gnuwin32/rui.c:1567
 msgid "menu does not exist"
 msgstr "메뉴가 존재하지 않습니다"
 
-#: src/gnuwin32/rui.c:1416 src/gnuwin32/rui.c:1439 src/gnuwin32/rui.c:1444
+#: src/gnuwin32/rui.c:1502 src/gnuwin32/rui.c:1525 src/gnuwin32/rui.c:1530
 msgid "failed to allocate char storage"
 msgstr "저장소에 문자를 할당하지 못했습니다."
 
-#: src/gnuwin32/rui.c:1452
+#: src/gnuwin32/rui.c:1538
 msgid "failed to allocate menuitem"
 msgstr "메뉴 항목을 할당하는데 실패했습니다"
 
-#: src/gnuwin32/rui.c:1504
+#: src/gnuwin32/rui.c:1590
 msgid "menu not found"
 msgstr "메뉴를 찾을 수 없습니다"
 
-#: src/gnuwin32/rui.c:1522
+#: src/gnuwin32/rui.c:1608
 msgid "menu or item does not exist"
 msgstr "메뉴 또는 항목이 존재하지 않습니다"
 
-#: src/gnuwin32/system.c:446
+#: src/gnuwin32/system.c:558
 msgid "Save workspace image?"
 msgstr "작업공간 이미지를 저장하시겠습니까?"
 
@@ -817,41 +817,41 @@ msgstr "작업공간 이미지를 저장하시겠습니까?"
 msgid "Insufficient memory: cell not copied to the clipboard"
 msgstr "메모리 부족: 클립보드에 셀을 복사할 수 없습니다"
 
-#: src/extra/graphapp/dialogs.c:148 src/extra/graphapp/dialogs.c:165
-#: src/extra/graphapp/dialogs.c:182
+#: src/extra/graphapp/dialogs.c:144 src/extra/graphapp/dialogs.c:161
+#: src/extra/graphapp/dialogs.c:178
 msgid "Question"
 msgstr "질문"
 
-#: src/extra/graphapp/dialogs.c:203
+#: src/extra/graphapp/dialogs.c:249
 msgid " Change working directory to:"
 msgstr "작업디렉토리를 다음의 위치로 변경:"
 
-#: src/extra/graphapp/dialogs.c:206
+#: src/extra/graphapp/dialogs.c:251
 #, c-format
 msgid "Unable to set '%s' as working directory"
 msgstr "'%s'를 작업디렉토리로 지정할 수 없습니다"
 
-#: src/extra/graphapp/dialogs.c:604 src/extra/graphapp/dialogs.c:622
-#: src/extra/graphapp/dialogs.c:628 src/extra/graphapp/dialogs.c:729
-#: src/extra/graphapp/dialogs.c:743 src/extra/graphapp/dialogs.c:749
-#: src/library/utils/src/windows/widgets.c:122
+#: src/extra/graphapp/dialogs.c:705 src/extra/graphapp/dialogs.c:723
+#: src/extra/graphapp/dialogs.c:729 src/extra/graphapp/dialogs.c:839
+#: src/extra/graphapp/dialogs.c:853 src/extra/graphapp/dialogs.c:859
+#: src/library/utils/src/windows/widgets.c:127
 msgid "Cancel"
 msgstr "취소"
 
-#: src/extra/graphapp/dialogs.c:624 src/extra/graphapp/dialogs.c:745
-#: src/library/utils/src/windows/widgets.c:121
+#: src/extra/graphapp/dialogs.c:725 src/extra/graphapp/dialogs.c:855
+#: src/library/utils/src/windows/widgets.c:126
 msgid "OK"
 msgstr "OK"
 
-#: src/extra/graphapp/dialogs.c:737
+#: src/extra/graphapp/dialogs.c:847
 msgid "User"
 msgstr "사용자"
 
-#: src/extra/graphapp/dialogs.c:738
+#: src/extra/graphapp/dialogs.c:848
 msgid "Password"
 msgstr "비밀번호"
 
-#: src/extra/graphapp/dialogs.c:904 src/extra/graphapp/dialogs.c:910
+#: src/extra/graphapp/dialogs.c:1034 src/extra/graphapp/dialogs.c:1040
 #, c-format
 msgid "\"%s\" not found"
 msgstr "\"%s\"를 찾을 수 없습니다"
@@ -865,27 +865,27 @@ msgstr "아이콘 배열"
 msgid "Unable to save metafile to the clipboard"
 msgstr "클립보드를 열 수 없습니다"
 
-#: src/extra/graphapp/metafile.c:108
+#: src/extra/graphapp/metafile.c:117
 #, fuzzy
 msgid "Unable to create metafile"
 msgstr "편집기 윈도우를 생성할 수 없습니다"
 
-#: src/extra/graphapp/metafile.c:113
+#: src/extra/graphapp/metafile.c:122
 #, fuzzy
 msgid "Insufficient memory to create metafile"
 msgstr "메모리가 부족합니다.  콘솔을 닫아주세요"
 
-#: src/extra/graphapp/printer.c:90
+#: src/extra/graphapp/printer.c:111
 #, fuzzy
 msgid "Unable to choose printer"
 msgstr "페이저 윈도우를 생성할 수 없습니다"
 
-#: src/extra/graphapp/printer.c:118
+#: src/extra/graphapp/printer.c:139
 #, fuzzy
 msgid "Insufficient memory for new printer"
 msgstr "내부페이저에 파일을 표시하기 위한 메모리가 부족합니다"
 
-#: src/extra/graphapp/printer.c:151
+#: src/extra/graphapp/printer.c:175
 #, fuzzy
 msgid "Unable to start the print job"
 msgstr "페이저 윈도우를 생성할 수 없습니다"
@@ -1029,184 +1029,184 @@ msgstr "셀 너비 ..."
 msgid "Data editor"
 msgstr "데이터 편집기"
 
-#: src/library/grDevices/src/devWindows.c:955
+#: src/library/grDevices/src/devWindows.c:943
 msgid "Portable network graphics file"
 msgstr "휴대 네트워크 그래픽스 파일"
 
-#: src/library/grDevices/src/devWindows.c:958
+#: src/library/grDevices/src/devWindows.c:946
 msgid "Windows bitmap file"
 msgstr "윈도우즈 비트맵 파일"
 
-#: src/library/grDevices/src/devWindows.c:961
+#: src/library/grDevices/src/devWindows.c:949
 msgid "TIFF file"
 msgstr "TIFF 파일"
 
-#: src/library/grDevices/src/devWindows.c:964
+#: src/library/grDevices/src/devWindows.c:952
 msgid "Jpeg file"
 msgstr "Jpeg 파일"
 
-#: src/library/grDevices/src/devWindows.c:986
+#: src/library/grDevices/src/devWindows.c:974
 msgid "Postscript file"
 msgstr "포스트스크립트 형식의 파일"
 
-#: src/library/grDevices/src/devWindows.c:998
+#: src/library/grDevices/src/devWindows.c:986
 msgid "PDF file"
 msgstr "PDF 파일"
 
-#: src/library/grDevices/src/devWindows.c:1010
+#: src/library/grDevices/src/devWindows.c:998
 msgid "Enhanced metafiles"
 msgstr "확장형 메타파일"
 
-#: src/library/grDevices/src/devWindows.c:1013
-#: src/library/grDevices/src/devWindows.c:3559
+#: src/library/grDevices/src/devWindows.c:1001
+#: src/library/grDevices/src/devWindows.c:3557
 msgid "file path selected is too long: only 512 bytes are allowed"
 msgstr "선택된 파일경로는 너무 깁니다: 512 바이트만 허용합니다"
 
-#: src/library/grDevices/src/devWindows.c:1224
+#: src/library/grDevices/src/devWindows.c:1212
 msgid "No plot to replace!"
 msgstr "대체할 플랏이 없습니다!"
 
-#: src/library/grDevices/src/devWindows.c:1274
+#: src/library/grDevices/src/devWindows.c:1262
 msgid "Variable name"
 msgstr "변수명"
 
-#: src/library/grDevices/src/devWindows.c:1283
+#: src/library/grDevices/src/devWindows.c:1271
 msgid "Variable doesn't contain any plots!"
 msgstr "변수가 어떠한 플랏들도 포함하고 있지 않습니다!"
 
-#: src/library/grDevices/src/devWindows.c:1298
+#: src/library/grDevices/src/devWindows.c:1286
 msgid "Name of variable to save to"
 msgstr "다음의 위치에 저장될 변수의 이름"
 
-#: src/library/grDevices/src/devWindows.c:1607
+#: src/library/grDevices/src/devWindows.c:1595
 msgid "Copy to the clipboard as a metafile"
 msgstr "클립보드에 메타파일로서 복사"
 
-#: src/library/grDevices/src/devWindows.c:1625
-#: src/library/grDevices/src/devWindows.c:1636
+#: src/library/grDevices/src/devWindows.c:1613
+#: src/library/grDevices/src/devWindows.c:1624
 msgid "Stop locator"
 msgstr "로케이터의 사용을 중지합니다."
 
-#: src/library/grDevices/src/devWindows.c:1635
-#: src/library/grDevices/src/devWindows.c:1639
+#: src/library/grDevices/src/devWindows.c:1623
+#: src/library/grDevices/src/devWindows.c:1627
 msgid "Stop"
 msgstr "중지"
 
-#: src/library/grDevices/src/devWindows.c:1641
+#: src/library/grDevices/src/devWindows.c:1629
 msgid "Continue"
 msgstr "계속"
 
-#: src/library/grDevices/src/devWindows.c:1645
+#: src/library/grDevices/src/devWindows.c:1633
 msgid "Next"
 msgstr "다음"
 
-#: src/library/grDevices/src/devWindows.c:1646
+#: src/library/grDevices/src/devWindows.c:1634
 msgid "Next plot"
 msgstr "다음 플랏"
 
-#: src/library/grDevices/src/devWindows.c:1652
+#: src/library/grDevices/src/devWindows.c:1640
 msgid "Save as"
 msgstr "다른 이름으로 저장"
 
-#: src/library/grDevices/src/devWindows.c:1661
-#: src/library/grDevices/src/devWindows.c:1663
-#: src/library/grDevices/src/devWindows.c:1665
+#: src/library/grDevices/src/devWindows.c:1649
+#: src/library/grDevices/src/devWindows.c:1651
+#: src/library/grDevices/src/devWindows.c:1653
 #, c-format
 msgid "%s quality..."
 msgstr "%s 품질..."
 
-#: src/library/grDevices/src/devWindows.c:1667
+#: src/library/grDevices/src/devWindows.c:1655
 msgid "Copy to the clipboard"
 msgstr "클립보드에 복사"
 
-#: src/library/grDevices/src/devWindows.c:1668
+#: src/library/grDevices/src/devWindows.c:1656
 msgid "as a Bitmap\tCTRL+C"
 msgstr "비트맵으로\tCTRL+C"
 
-#: src/library/grDevices/src/devWindows.c:1669
+#: src/library/grDevices/src/devWindows.c:1657
 msgid "as a Metafile\tCTRL+W"
 msgstr "메타파일로\tCTRL+W"
 
-#: src/library/grDevices/src/devWindows.c:1674
+#: src/library/grDevices/src/devWindows.c:1662
 msgid "close Device"
 msgstr "장치를 닫습니다"
 
-#: src/library/grDevices/src/devWindows.c:1675
+#: src/library/grDevices/src/devWindows.c:1663
 msgid "History"
 msgstr "작업기록"
 
-#: src/library/grDevices/src/devWindows.c:1676
+#: src/library/grDevices/src/devWindows.c:1664
 msgid "Recording"
 msgstr "기록"
 
-#: src/library/grDevices/src/devWindows.c:1679
+#: src/library/grDevices/src/devWindows.c:1667
 msgid "Add\tINS"
 msgstr "삽입\tINS"
 
-#: src/library/grDevices/src/devWindows.c:1680
+#: src/library/grDevices/src/devWindows.c:1668
 msgid "Replace"
 msgstr "변경"
 
-#: src/library/grDevices/src/devWindows.c:1682
+#: src/library/grDevices/src/devWindows.c:1670
 msgid "Previous\tPgUp"
 msgstr "이전\tPgUp"
 
-#: src/library/grDevices/src/devWindows.c:1683
+#: src/library/grDevices/src/devWindows.c:1671
 msgid "Next\tPgDown"
 msgstr "다음\tPgDown"
 
-#: src/library/grDevices/src/devWindows.c:1685
+#: src/library/grDevices/src/devWindows.c:1673
 msgid "Save to variable..."
 msgstr "변수에 저장..."
 
-#: src/library/grDevices/src/devWindows.c:1686
+#: src/library/grDevices/src/devWindows.c:1674
 msgid "Get from variable..."
 msgstr "변수로부터 가져옴..."
 
-#: src/library/grDevices/src/devWindows.c:1688
+#: src/library/grDevices/src/devWindows.c:1676
 msgid "Clear history"
 msgstr "작업기록을 지우기"
 
-#: src/library/grDevices/src/devWindows.c:1689
+#: src/library/grDevices/src/devWindows.c:1677
 msgid "Resize"
 msgstr "크기변경"
 
-#: src/library/grDevices/src/devWindows.c:1690
+#: src/library/grDevices/src/devWindows.c:1678
 msgid "R mode"
 msgstr "R 모드"
 
-#: src/library/grDevices/src/devWindows.c:1692
+#: src/library/grDevices/src/devWindows.c:1680
 msgid "Fit to window"
 msgstr "윈도우 사이즈에 맞추기"
 
-#: src/library/grDevices/src/devWindows.c:1694
+#: src/library/grDevices/src/devWindows.c:1682
 msgid "Fixed size"
 msgstr "고정 크기 사용하기"
 
-#: src/library/grDevices/src/devWindows.c:1701
+#: src/library/grDevices/src/devWindows.c:1689
 msgid "Copy as metafile"
 msgstr "메타파일 형식으로 복사"
 
-#: src/library/grDevices/src/devWindows.c:1703
+#: src/library/grDevices/src/devWindows.c:1691
 msgid "Copy as bitmap"
 msgstr "비트맵 형식으로 복사"
 
-#: src/library/grDevices/src/devWindows.c:1706
+#: src/library/grDevices/src/devWindows.c:1694
 msgid "Save as metafile..."
 msgstr "메타파일 형식으로 저장..."
 
-#: src/library/grDevices/src/devWindows.c:1708
+#: src/library/grDevices/src/devWindows.c:1696
 msgid "Save as postscript..."
 msgstr "포스트스크립트 형식으로 저장..."
 
-#: src/library/grDevices/src/devWindows.c:3225
+#: src/library/grDevices/src/devWindows.c:3214
 msgid "Locator is active"
 msgstr "로케이터가 활성화되었습니다."
 
-#: src/library/grDevices/src/devWindows.c:3885
+#: src/library/grDevices/src/devWindows.c:3884
 msgid "Waiting to confirm page change..."
 msgstr "페이지 변경을 확인하기 위해 기다리는 중..."
 
-#: src/library/grDevices/src/devWindows.c:3897
+#: src/library/grDevices/src/devWindows.c:3896
 msgid "Click or hit ENTER for next page"
 msgstr "다음 페이지로 이동하기 위해서는 클릭 또는 엔터키를 누르세요"

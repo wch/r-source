@@ -149,7 +149,7 @@ extern int errno;
 # define tfind __tfind
 #else
 # if !defined HAVE_GETCWD
-char *getwd ();
+char *getwd (char *);
 #  define getcwd(buf, max) getwd (buf)
 # else
 #  if VMS
@@ -157,7 +157,7 @@ char *getwd ();
 #  else
 /* This is naughty if already declared, but harmful on Win64 */
 #   ifndef _WIN64
-char *getcwd ();
+char *getcwd (char *, size_t);
 #   endif
 #  endif
 # endif
@@ -192,6 +192,9 @@ static void *mempcpy (void *dest, const void *src, size_t n);
 /* Non-POSIX BSD systems might have gcc's limits.h, which doesn't define
    PATH_MAX but might cause redefinition warnings when sys/param.h is
    later included (as on MORE/BSD 4.3).  */
+
+/* NOTE: PATH_MAX below is only used as initial buffer size for getcwd(),
+   it doesn't have to be precise, any positive number should do */
 #if defined _POSIX_VERSION || (defined HAVE_LIMITS_H && !defined __GNUC__)
 # include <limits.h>
 #endif
@@ -325,11 +328,11 @@ transcmp (const void *p1, const void *p2)
 
 /* Name of the default domain used for gettext(3) prior any call to
    textdomain(3).  The default value for this is "messages".  */
-const char _nl_default_default_domain[] attribute_hidden = "messages";
+attribute_hidden const char _nl_default_default_domain[] = "messages";
 
 #ifndef IN_LIBGLOCALE
 /* Value used as the default domain for gettext(3).  */
-const char *_nl_current_default_domain attribute_hidden
+attribute_hidden const char *_nl_current_default_domain
      = _nl_default_default_domain;
 #endif
 

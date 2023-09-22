@@ -1,7 +1,7 @@
 #  File src/library/graphics/R/screen.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -16,22 +16,21 @@
 #  A copy of the GNU General Public License is available at
 #  https://www.R-project.org/Licenses/
 
-utils::globalVariables(c(".split.valid.screens", ".split.cur.screen",
-                         ".split.saved.pars", ".split.screens",
-                         ".split.par.list"))
+
 ## An environment not exported from namespace:graphics used to
 ## store the split.screen settings
 .SSenv <- new.env()
 
-.SSget <- function(x) get(paste(x, dev.cur(), sep=":"), envir=.SSenv, inherits=FALSE)
-.SSexists <- function(x) exists(paste(x, dev.cur(), sep=":"), envir=.SSenv, inherits=FALSE)
-.SSassign <- function(x, value) assign(paste(x, dev.cur(), sep=":"), value, envir=.SSenv)
-assign("par.list",
+.SSname <- function(x) paste(x, dev.cur(), sep=":")
+.SSget    <- function(x)           get(.SSname(x), envir=.SSenv, inherits=FALSE)
+.SSexists <- function(x)        exists(.SSname(x), envir=.SSenv, inherits=FALSE)
+.SSassign <- function(x, value) assign(.SSname(x), value, envir=.SSenv)
+.SSenv$par.list <-
        c("xlog","ylog",
          "adj", "bty", "cex", "col", "crt", "err", "font", "lab",
          "las", "lty", "lwd", "mar", "mex", "mfg", "mgp", "pch",
          "pty", "smo", "srt", "tck", "usr", "xaxp", "xaxs", "xaxt", "xpd",
-         "yaxp", "yaxs", "yaxt", "fig"), envir=.SSenv)
+         "yaxp", "yaxs", "yaxt", "fig")
 
 split.screen <-
     function(figs, screen, erase = TRUE)
@@ -68,7 +67,7 @@ split.screen <-
     if (first.split) {
         if (erase) plot.new()
 	## save the current graphics state
-	split.saved.pars <- par(get("par.list", envir=.SSenv))
+	split.saved.pars <- par(.SSenv$par.list)
 	split.saved.pars$fig <- NULL
 	## NOTE: remove all margins when split screens
 	split.saved.pars$omi <- par(omi=rep.int(0,4))$omi
@@ -77,7 +76,7 @@ split.screen <-
 	split.screens <- vector(mode="list", length=num.screens)
 	new.screens <- 1L:num.screens
 	for (i in new.screens) {
-	    split.screens[[i]] <- par(get("par.list", envir=.SSenv))
+	    split.screens[[i]] <- par(.SSenv$par.list)
 	    split.screens[[i]]$fig <- figs[i,]
 	}
 	valid.screens <- new.screens
@@ -99,7 +98,7 @@ split.screen <-
                                  c(2,2))
 	new.screens <- (max.screen+1):new.max.screen
 	for (i in new.screens) {
-	    split.screens[[i]] <- par(get("par.list", envir=.SSenv))
+	    split.screens[[i]] <- par(.SSenv$par.list)
 	    split.screens[[i]]$fig <- figs[i-max.screen,]
 	}
 	valid.screens <- c(.valid.screens, new.screens)
@@ -124,7 +123,7 @@ screen <- function(n = cur.screen, new = TRUE)
     if (!(n %in% .SSget("sp.valid.screens")))
 	stop("invalid screen number")
     split.screens <- .SSget("sp.screens")
-    split.screens[[cur.screen]] <- par(get("par.list", envir=.SSenv))
+    split.screens[[cur.screen]] <- par(.SSenv$par.list)
     .SSassign("sp.screens", split.screens)
     .SSassign("sp.cur.screen", n)
     par(split.screens[[n]])
@@ -164,8 +163,8 @@ close.screen <- function(n, all.screens=FALSE)
     if (all.screens || all(valid.screens %in% n)) {
 	par(.SSget("sp.saved.pars") )
 	par(mfrow=c(1,1), new=FALSE)
-	rm(list=paste(c("sp.screens", "sp.cur.screen", "sp.saved.pars",
-           "sp.valid.screens"), dev.cur(), sep=":"), envir=.SSenv)
+	rm(list=.SSname(c("sp.screens", "sp.cur.screen", "sp.saved.pars", "sp.valid.screens")),
+           envir=.SSenv)
 	invisible()
     } else {
         valid.screens <- valid.screens[-sort(match(n, valid.screens))]

@@ -10,7 +10,6 @@
 \alias{summary.packageStatus}
 \alias{update.packageStatus}
 \alias{upgrade.packageStatus}
-\alias{upgrade}
 \description{
   Summarize information about installed packages and packages
   available at various repositories, and automatically upgrade outdated

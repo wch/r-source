@@ -1,6 +1,6 @@
 % File src/library/base/man/Encoding.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2021 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Encoding}
@@ -77,6 +77,11 @@ enc2utf8(x)
   \code{\link{sub}} and \code{gsub} will give a marked UTF-8 result if
   any of the inputs are UTF-8.
 
+ %% \code{\link{strsplit}}, \code{\link{sub}} 
+ %%  and \code{gsub} will mark their result \code{"bytes"} if it is non-ASCII
+ %%  and any of the inputs are marked \code{"bytes"} or \code{useBytes = TRUE}
+ %% was used.
+
   \code{\link{paste}} and \code{\link{sprintf}} return elements marked
   as bytes if any of the corresponding inputs is marked as bytes, and
   otherwise marked as UTF-8 if any of the inputs is marked as UTF-8.
@@ -84,6 +89,9 @@ enc2utf8(x)
   \code{\link{match}}, \code{\link{pmatch}}, \code{\link{charmatch}},
   \code{\link{duplicated}} and \code{\link{unique}} all match in UTF-8
   if any of the elements are marked as UTF-8.
+
+  Changing the current encoding from a running R session may lead to
+  confusion (see \code{\link{Sys.setlocale}}).
 
   There is some ambiguity as to what is meant by a \sQuote{Latin-1}
   locale, since some OSes (notably Windows) make use of character
@@ -101,7 +109,7 @@ enc2utf8(x)
 }
 \examples{
 ## x is intended to be in latin1
-x. <- x <- "fa\xE7ile"
+x. <- x <- "fran\xE7ais"
 Encoding(x.) # "unknown" (UTF-8 loc.) | "latin1" (8859-1/CP-1252 loc.) | ....
 Encoding(x) <- "latin1"
 x

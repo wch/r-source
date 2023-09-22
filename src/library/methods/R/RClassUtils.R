@@ -1088,7 +1088,7 @@ completeSubclasses <-
         for(i in seq_along(contains)) {
             obji <- contains[[i]]
             cli <- contains[[i]]@superClass
-            cliDef <- getClassDef(cli, package=packageSlot(obji))
+            cliDef <- getClassDef(cli)
             subcl <- cliDef@subclasses[[class2]]
             if (is.null(subcl)) {
                 exti <- extends(classDef2, cliDef, fullInfo = TRUE)

@@ -1,7 +1,7 @@
 #  File src/library/utils/R/zip.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2020 The R Core Team
+#  Copyright (C) 1995-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -34,8 +34,8 @@ unzip <-
     } else {
         WINDOWS <- .Platform$OS.type == "windows"
         if(!is.character(unzip) || length(unzip) != 1L || !nzchar(unzip))
-            stop("'unzip' must be a single character string")
-        zipfile <- path.expand(zipfile)
+            stop(gettextf("'%s' must be a non-empty character string", "unzip"),
+                 domain = NA)
         if (list) {
             ## -q to suppress per-file and per-archive comments (since 5.52)
             ## it also suppresses the first line "Archive: filename"
@@ -103,8 +103,8 @@ zip <- function(zipfile, files, flags = "-r9X", extras = "",
     if (missing(flags) && (!is.character(files) || !length(files)))
         stop("'files' must be a character vector specifying one or more filepaths")
     if(!is.character(zip) || length(zip) != 1L || !nzchar(zip))
-        stop("argument 'zip' must be a non-empty character string")
-
+        stop(gettextf("'%s' must be a non-empty character string", "zip"),
+             domain = NA)
     args <- c(flags, shQuote(path.expand(zipfile)),
               shQuote(files), extras)
     if (sum(nchar(c(args, Sys.getenv()))) + length(args) > 8000) {

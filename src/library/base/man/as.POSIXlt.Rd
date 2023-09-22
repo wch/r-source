@@ -1,6 +1,6 @@
 % File src/library/base/man/as.POSIXlt.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2020 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{as.POSIX*}
@@ -43,15 +43,19 @@ as.POSIXlt(x, tz = "", \dots)
            optional = FALSE, \dots)
 \method{as.POSIXlt}{numeric}(x, tz = "", origin, \dots)
 
+\method{as.POSIXct}{Date}(x, tz = "UTC", \dots)
+\method{as.POSIXlt}{Date}(x, tz = "UTC", \dots)
+\method{as.POSIXct}{numeric}(x, tz = "", origin, \dots)
+
 \method{as.double}{POSIXlt}(x, \dots)
 }
 \arguments{
   \item{x}{\R  object to be converted.}
-  \item{tz}{time zone specification to be used for the conversion,
-    \emph{if one is required}.  System-specific (see \link{time zones}),
-    but \code{""} is the current time zone, and \code{"GMT"} is UTC
-    (Universal Time, Coordinated).  Invalid values are most commonly
-    treated as UTC, on some platforms with a warning.}
+  \item{tz}{a character string.  The time zone specification to be used
+    for the conversion, \emph{if one is required}.  System-specific (see
+    \link{time zones}), but \code{""} is the current time zone, and
+    \code{"GMT"} is UTC (Universal Time, Coordinated).  Invalid values
+    are most commonly treated as UTC, on some platforms with a warning.}
   \item{\dots}{further arguments to be passed to or from other methods.}
   \item{format}{character string giving a date-time format as used
     by \code{\link{strptime}}.}
@@ -60,13 +64,14 @@ as.POSIXlt(x, tz = "", \dots)
   \item{optional}{\code{\link{logical}} indicating to return \code{NA}
     (instead of signalling an error) if the format guessing does not succeed.}
   \item{origin}{a date-time object, or something which can be coerced by
-    \code{as.POSIXct(tz = "GMT")} to such an object.}
+    \code{as.POSIXct(tz = "GMT")} to such an object.  Optional since \R
+    4.3.0, where the equivalent of \code{"1970-01-01"} is used.}
 }
 \details{
   The \code{as.POSIX*} functions convert an object to one of the two
   classes used to represent date/times (calendar dates plus time to the
   nearest second).  They can convert objects of the other class and of
-  class \code{"Date"} to these classes.  Dates without times are
+  class \code{"\link{Date}"} to these classes.  Dates without times are
   treated as being at midnight UTC.
 
   They can also convert character strings of the formats
@@ -83,6 +88,7 @@ as.POSIXlt(x, tz = "", \dots)
   specifications are locale-specific, and you may need to set the
   \code{LC_TIME} category appropriately \emph{via}
   \code{\link{Sys.setlocale}}.  This most often affects the use of
+  \code{\%a}, \code{\%A} (weekday names),
   \code{\%b}, \code{\%B} (month names) and \code{\%p} (AM/PM).
 
   Logical \code{NA}s can be converted to either of the classes, but no
@@ -123,10 +129,10 @@ as.POSIXct(strptime("2010-10-31 01:30:00", "\%Y-\%m-\%d \%H:\%M:\%S"))
   time for the \code{"POSIXct"} class, \sQuote{1970-01-01 00:00.00 UTC},
   is before UTC was defined.  More importantly, conversion is done
   assuming the Gregorian calendar which was introduced in 1582 and not
-  used universally until the 20th century.  One of the
+  used near-universally until the 20th century.  One of the
   re-interpretations assumed by ISO 8601:2004 is that there was a year
   zero, even though current year numbering (and zero) is a much later
-  concept (525 AD for year numbers from 1 AD).
+  concept (525 CE for year numbers from 1 CE).
 
   Conversions between \code{"POSIXlt"} and \code{"POSIXct"} of future
   times are speculative except in UTC.  The main uncertainty is in the
@@ -163,9 +169,9 @@ as.POSIXct(strptime("2010-10-31 01:30:00", "\%Y-\%m-\%d \%H:\%M:\%S"))
 unclass(z)                    # a large integer
 floor(unclass(z)/86400)       # the number of days since 1970-01-01 (UTC)
 (now <- as.POSIXlt(Sys.time())) # the current datetime, as class "POSIXlt"
-unlist(unclass(now))          # a list shown as a named vector
+str(unclass(now))             # the internal list ; use now$hour, etc :
 now$year + 1900               # see ?DateTimeClasses
-months(now); weekdays(now)    # see ?months
+months(now); weekdays(now)    # see ?months; using LC_TIME locale
 
 ## suppose we have a time in seconds since 1960-01-01 00:00:00 GMT
 ## (the origin used by SAS)
@@ -202,9 +208,9 @@ as.POSIXlt(Sys.time(), "Australia/Darwin")
 }
 
 tab <- file.path(R.home("share"), "zoneinfo", "zone1970.tab")
-if(file.exists(tab)) {
+if(file.exists(tab)) { # typically on Windows; *not* on Linux
   cols <- c("code", "coordinates", "TZ", "comments")
-  tmp <- read.delim(file.path(R.home("share"), "zoneinfo", "zone1970.tab"),
+  tmp <- read.delim(tab,
                     header = FALSE, comment.char = "#", col.names = cols)
   if(interactive()) View(tmp)
   head(tmp, 10)

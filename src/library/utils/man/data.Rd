@@ -83,7 +83,7 @@ data(\dots, list = character(), package = NULL, lib.loc = NULL,
   Where the datasets have a different name from the argument that should
   be used to retrieve them the index will have an entry like
   \code{beaver1 (beavers)} which tells us that dataset \code{beaver1}
-  can be retrieved by the call \code{data(beaver)}.
+  can be retrieved by the call \code{data(beavers)}.
 
   If \code{lib.loc} and \code{package} are both \code{NULL} (the
   default), the data sets are searched for in all the currently loaded

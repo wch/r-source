@@ -1,6 +1,6 @@
 % File src/library/base/man/function.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2021 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{function}
@@ -19,9 +19,11 @@
   new functions in the \R language.
 }
 \arguments{
-    \item{arglist}{Empty or one or more name or name=expression terms.}
-    \item{expr}{An expression.}
-    \item{value}{An expression.}
+  \item{arglist}{empty or one or more (comma-separated) \samp{name} or
+    \samp{\var{name} = \var{expression}} terms
+    and/or the special token \code{\link{...}}.}
+  \item{expr}{an expression.}
+  \item{value}{an expression.}
 }
 \details{
   The names in an argument list can be back-quoted non-standard names

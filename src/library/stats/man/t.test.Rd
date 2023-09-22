@@ -1,6 +1,6 @@
 % File src/library/stats/man/t.test.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2019 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{t.test}
@@ -19,7 +19,7 @@ t.test(x, \dots)
        mu = 0, paired = FALSE, var.equal = FALSE,
        conf.level = 0.95, \dots)
 
-\method{t.test}{formula}(formula, data, subset, na.action, \dots)
+\method{t.test}{formula}(formula, data, subset, na.action = na.pass, \dots)
 }
 \arguments{
   \item{x}{a (non-empty) numeric vector of data values.}
@@ -41,7 +41,8 @@ t.test(x, \dots)
     is a numeric variable giving the data values and \code{rhs} either 
     \code{1} for a one-sample or paired test or a factor
     with two levels giving the corresponding groups. If \code{lhs} is of 
-    class \code{"Pair"} and \code{rhs} is \code{1}, a paired test is done}
+    class \code{"\link{Pair}"} and \code{rhs} is \code{1}, a paired test
+    is done, see Examples.}
   \item{data}{an optional matrix or data frame (or similar: see
     \code{\link{model.frame}}) containing the variables in the
     formula \code{formula}.  By default the variables are taken from
@@ -49,9 +50,10 @@ t.test(x, \dots)
   \item{subset}{an optional vector specifying a subset of observations
     to be used.}
   \item{na.action}{a function which indicates what should happen when
-    the data contain \code{NA}s.  Defaults to
-    \code{getOption("na.action")}.}
-  \item{\dots}{further arguments to be passed to or from methods.}
+    the data contain \code{\link{NA}}s.}
+  \item{\dots}{further arguments to be passed to or from methods.
+    For the \code{formula} method, this includes arguments of the
+    default method, but not \code{paired}.}
 }
 \details{
   \code{alternative = "greater"} is the alternative that \code{x} has a
@@ -92,26 +94,32 @@ t.test(x, \dots)
   \code{\link{prop.test}}
 }
 \examples{
-require(graphics)
-
+## Two-sample t-test
 t.test(1:10, y = c(7:20))      # P = .00001855
 t.test(1:10, y = c(7:20, 200)) # P = .1245    -- NOT significant anymore
 
-## Classical example: Student's sleep data
-plot(extra ~ group, data = sleep)
 ## Traditional interface
-with(sleep, t.test(extra[group == 1], extra[group == 2]))
+with(mtcars, t.test(mpg[am == 0], mpg[am == 1]))
 
 ## Formula interface
-t.test(extra ~ group, data = sleep)
+t.test(mpg ~ am, data = mtcars)
 
-## Formula interface to one-sample test
+## One-sample t-test
+## Traditional interface
+t.test(sleep$extra)
+
+## Formula interface
 t.test(extra ~ 1, data = sleep)
 
-## Formula interface to paired test
-## The sleep data are actually paired, so could have been in wide format:
-sleep2 <- reshape(sleep, direction = "wide", 
+## Paired t-test
+## The sleep data is actually paired, so could have been in wide format:
+sleep2 <- reshape(sleep, direction = "wide",
                   idvar = "ID", timevar = "group")
+
+## Traditional interface
+t.test(sleep2$extra.1, sleep2$extra.2, paired = TRUE)
+
+## Formula interface
 t.test(Pair(extra.1, extra.2) ~ 1, data = sleep2)
 }
 \keyword{htest}

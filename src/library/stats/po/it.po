@@ -1,14 +1,14 @@
 # R Italian translation
 # Copyright (C) The R Foundation
 # This file is distributed under the same license as the R package.
-# Daniele Medri <dmedri@gmail.com>, 2005-2021.
+# Daniele Medri <dmedri@gmail.com>, 2005-2023.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: stats 4.1.0\n"
+"Project-Id-Version: R-4-3-BRANCH\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-11-06 17:18+0100\n"
-"PO-Revision-Date: \n"
+"POT-Creation-Date: 2023-07-31 14:59+0200\n"
+"PO-Revision-Date: 2023-01-19 18:31+0100\n"
 "Last-Translator: Daniele Medri <dmedri@gmail.com>\n"
 "Language-Team: Italian https://github.com/dmedri/R-italian-lang\n"
 "Language: it\n"
@@ -16,11 +16,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.2.1\n"
+"X-Generator: Poedit 3.2.2\n"
 
 #: Srunmed.c:63
 msgid "bandwidth/span of running medians is larger than n"
-msgstr "ampiezza/copertura mediane più grande di n"
+msgstr "ampiezza/copertura delle mediane più grande di n"
 
 #: Srunmed.c:262
 #, c-format
@@ -141,11 +141,15 @@ msgstr "solo il primo elemento è utilizzato come nome di variabile"
 msgid "invalid expression in '%s'"
 msgstr "espressione non valida in '%s'"
 
-#: deriv.c:1085 model.c:99
+#: deriv.c:872
+msgid "too many variables"
+msgstr "troppe variabili"
+
+#: deriv.c:1087 model.c:99
 msgid "invalid variable names"
 msgstr "nomi variabili non validi"
 
-#: deriv.c:1094
+#: deriv.c:1095 deriv.c:1097
 msgid "invalid tag"
 msgstr "'tag' non valido"
 
@@ -161,11 +165,11 @@ msgstr "distance(): p non valido"
 msgid "distance(): invalid distance"
 msgstr "distance(): distanza non valida"
 
-#: distn.c:44
+#: distn.c:47
 msgid "NaNs produced"
 msgstr "Si è prodotto un NaN"
 
-#: distn.c:45
+#: distn.c:48
 msgid "Non-numeric argument to mathematical function"
 msgstr "Argomento non numerico in una funzione matematica"
 
@@ -184,12 +188,12 @@ msgstr "L'argomento %s dev'essere un vettore numerico non vuoto"
 msgid "argument %s must be a numeric vector of length 1 or length %d"
 msgstr "l'argomento %s dev'essere un vettore numerico di lunghezza 1 o lunghezza %d"
 
-#: fexact.c:273
+#: fexact.c:276
 #, c-format
 msgid "integer overflow would happen in 'mult * ldkey' = %g"
 msgstr "un integer overflow potrebbe accadere in 'mult * ldkey' = %g"
 
-#: fexact.c:653
+#: fexact.c:656
 #, c-format
 msgid ""
 "FEXACT error 6.  LDKEY=%d is too small for this problem,\n"
@@ -200,12 +204,16 @@ msgstr ""
 "  (ii := key2[itp=%d] = %d, ldstp=%d)\n"
 "Prova ad incrementare la dimensione dell'area di lavoro e possibilmente 'mult'"
 
-#: fexact.c:1037
+#: fexact.c:1040
 #, c-format
-msgid "Bug in fexact3, it[i=%d]=%d: negative key %d (kyy=%d)\n"
-msgstr "Bug in fexact3, it[i=%d]=%d: chiave negativa %d (kyy=%d)\n"
+msgid ""
+"FEXACT[f3xact()] error: hash key %.0g > INT_MAX, kyy=%d, it[i (= nco = %d)]= %d.\n"
+"Rather set 'simulate.p.value=TRUE'\n"
+msgstr ""
+"FEXACT[f3xact()] errore: chiave hash %.0g > INT_MAX, kyy=%d, it[i (= nco = %d)]= %d.\n"
+"Piuttosto si usi 'simulate.p.value=TRUE'\n"
 
-#: fexact.c:1069
+#: fexact.c:1073
 #, c-format
 msgid ""
 "FEXACT error 30.  Stack length exceeded in f3xact,\n"
@@ -216,7 +224,7 @@ msgstr ""
 "  (ldst=%d, key=%d, ipn=%d, itp=%d, ist[ii=%d]=%d).\n"
 "Si incrementi l'area di lavoro o si consideri l'utilizzo di 'simulate.p.value=TRUE'"
 
-#: fexact.c:1404
+#: fexact.c:1407
 #, c-format
 msgid ""
 "FEXACT error 6 (f5xact).  LDKEY=%d is too small for this problem: kval=%d.\n"
@@ -225,7 +233,7 @@ msgstr ""
 "FEXACT errore 6 (f5xact).  LDKEY=%d è troppo piccolo per questo problema: kval=%d.\n"
 "Prova ad incrementare la dimensione dell'area di lavoro."
 
-#: fexact.c:1417
+#: fexact.c:1420
 #, c-format
 msgid ""
 "FEXACT error 7(%s). LDSTP=%d is too small for this problem,\n"
@@ -236,7 +244,7 @@ msgstr ""
 "  (kval=%d, itop-ldstp=%d).\n"
 "Si incrementi l'area di lavoro o si consideri l'utilizzo di 'simulate.p.value=TRUE'."
 
-#: fexact.c:1454
+#: fexact.c:1458
 #, c-format
 msgid ""
 "FEXACT error 7(%s). LDSTP=%d is too small for this problem,\n"
@@ -965,8 +973,6 @@ msgstr "regola finale non valida per calcolare la mediana di 3: %d"
 msgid "missing value in last %d observations"
 msgstr "valori mancanti nelle ultime %d osservazioni"
 
-#~ msgid "'x' is a factor"
-#~ msgstr "'x' è un factor"
-
-#~ msgid "'y' is a factor"
-#~ msgstr "'y' è un factor"
+#, c-format
+#~ msgid "Bug in fexact3, it[i=%d]=%d: negative key %d (kyy=%d)\n"
+#~ msgstr "Bug in fexact3, it[i=%d]=%d: chiave negativa %d (kyy=%d)\n"

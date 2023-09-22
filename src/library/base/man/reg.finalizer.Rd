@@ -15,8 +15,8 @@
   reg.finalizer(e, f, onexit = FALSE)
 }
 \arguments{
-  \item{e}{Object to finalize.  Must be an environment or an external pointer.}
-  \item{f}{Function to call on finalization. Must accept a single argument,
+  \item{e}{object to finalize.  Must be an environment or an external pointer.}
+  \item{f}{function to call on finalization. Must accept a single argument,
     which will be the object to finalize.}
   \item{onexit}{logical: should the finalizer be run if the object is
     still uncollected at the end of the \R session?}

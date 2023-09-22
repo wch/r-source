@@ -1,6 +1,6 @@
 % File src/library/base/man/rm.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2010 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{remove}
@@ -17,7 +17,7 @@ rm    (\dots, list = character(), pos = -1,
 \arguments{
   \item{\dots}{the objects to be removed, as names (unquoted) or
     character strings (quoted).}
-  \item{list}{a character vector naming objects to be removed.}
+  \item{list}{a character vector (or \code{\link{NULL}}) naming objects to be removed.}
   \item{pos}{where to do the removal.  By default, uses the
     current environment.  See \sQuote{details} for other possibilities.}
   \item{envir}{the \code{\link{environment}} to use.  See \sQuote{details}.}
@@ -25,7 +25,8 @@ rm    (\dots, list = character(), pos = -1,
     inspected?}
 }
 \description{
-  \code{remove} and \code{rm} can be used to remove objects.  These can
+  \code{remove} and \code{rm} are identical \R functions that
+  can be used to remove objects.  These can
   be specified successively as character strings, or in the character
   vector \code{list}, or through a combination of both.  All objects
   thus specified will be removed.

@@ -68,9 +68,7 @@ asDateBuilt(built)
   \code{lib.loc} are not made use of.
 }
 \note{The default behavior of \code{packageDate()}, notably for
-  \code{date.fields}, is somewhat experimental and may change.  Using
-  \code{date.fields = <string>}
-  single
+  \code{date.fields}, is somewhat experimental and may change.
 }
 \value{
   If a \file{DESCRIPTION} file for the given package is found and can
@@ -101,10 +99,10 @@ packageDescription("stats", fields = c("Package", "Version"))
 
 packageDescription("stats", fields = "Version")
 packageDescription("stats", fields = "Version", drop = FALSE)
-
-if(packageVersion("MASS") < "7.3.29")
-  message("you need to update 'MASS'")
 }%dont
+if(requireNamespace("MASS") && packageVersion("MASS") < "7.3.29")
+  message("you need to update 'MASS'")
+
 pu <- packageDate("utils")
 \donttest{str(pu)}
 stopifnot(identical(pu, packageDate(desc = packageDescription("utils"))),

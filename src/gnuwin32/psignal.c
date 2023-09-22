@@ -82,8 +82,8 @@ void raise(int signal_Number)
 	    }
 	}
 	else if (
-	    (downhill_Signal_Info[signal_Number].signal_Handler ==
-	     SIG_IGN)
+	    downhill_Signal_Info[signal_Number].signal_Handler ==
+	    SIG_IGN
 	    )
 	{/* IGNORE */}
 	else

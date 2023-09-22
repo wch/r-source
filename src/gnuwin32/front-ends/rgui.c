@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998--2013  R Core Team
+ *  Copyright (C) 1998--2023  R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -21,8 +21,6 @@
    requires XP or later, not 2000 or later.
    Mingw-w64 has it included unconditionally.
 */
-/* Mingw-w64 defines this to be 0x0502 */
-#define _WIN32_WINNT 0x0501
 #define WIN32_LEAN_AND_MEAN 1
 #include <windows.h>
 #include <stdio.h>
@@ -33,7 +31,7 @@
 extern void cmdlineoptions(int, char **);
 extern int setupui(void);
 extern void Rf_mainloop(void);
-__declspec(dllimport) extern UImode CharacterMode;
+extern UImode CharacterMode;
 extern void GA_exitapp(void);
 
 extern char *getDLLVersion(void);
@@ -51,6 +49,9 @@ typedef BOOL (*AC)(DWORD);
 int AppMain(int argc, char **argv)
 {
     CharacterMode = RGui;
+    /* NOTE: localeCP is set in setupui(), but already used by MessageBox
+       here and in cmdlineoptions(). MessageBox will hence use the
+       compile-time default, and hence usually the *W interface. */
     if(strcmp(getDLLVersion(), getRVersion()) != 0) {
 	MessageBox(0, "R.DLL version does not match", "Terminating",
 		   MB_TASKMODAL | MB_ICONSTOP | MB_OK);

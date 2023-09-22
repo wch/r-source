@@ -1,6 +1,6 @@
 #-*- Makefile -*-
 
-## Copyright (C) 2005-12 R Core Team
+## Copyright (C) 2005-2023 R Core Team
 
 VPATH = @srcdir@
 srcdir = @srcdir@
@@ -13,8 +13,9 @@ include $(top_builddir)/Makeconf
 
 R_EXE = $(top_builddir)/bin/R --vanilla --no-echo
 
-LANGS = `cd $(srcdir); ls *.po | sed -e 's/\.po//' -e /^RGui/d`
-## LANGS = da en en_GB es fr de it ja ko nn pl pt_BR ru tr zh_CN zh_TW en@quot
+# LANGS=`ls -1 src/library/*/po/*.po | grep -F -v RGui | sed -e 's/.*[/]po[/]//; s/R-//; s/\.po//' | sort -u`
+# echo $LANGS
+# bn da de en en_GB es fa fr hi id it ja ko lt ne nn pl pt_BR ru sq tr ur zh_CN zh_TW
 
 ## datasets does not have any translations
 R_PKGS_PO = base compiler grDevices graphics grid methods parallel splines stats stats4 tcltk tools utils

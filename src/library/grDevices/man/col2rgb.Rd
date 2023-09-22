@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/col2rgb.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2019 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{col2rgb}
@@ -15,9 +15,8 @@ col2rgb(col, alpha = FALSE)
 \arguments{
   \item{col}{vector of any of the three kinds of \R color specifications,
     i.e., either a color name (as listed by \code{\link{colors}()}), a
-    hexadecimal string of the form \code{"#rrggbb"} or
-    \code{"#rrggbbaa"} (see \code{\link{rgb}}), or a positive integer
-    \code{i} meaning \code{\link{palette}()[i]}.}
+    hexadecimal string (see Details),
+    or a positive integer \code{i} meaning \code{\link{palette}()[i]}.}
   \item{alpha}{logical value indicating whether the alpha channel (opacity)
     values should be returned.}
 }
@@ -29,6 +28,12 @@ col2rgb(col, alpha = FALSE)
   vectors are coerced to integer and other types to character.  (factors
   are coerced to character: in all other cases the class is
   ignored when doing the coercion.)
+
+  Hexadecimal string colors can be in the long hexadecimal form (e.g., 
+  \code{"#rrggbb"} or \code{"#rrggbbaa"}) or the short form (e.g, \code{"#rgb"}
+  or \code{"#rgba"}). The short form is expanded to the long form by 
+  replicating digits (not by adding zeroes), e.g., \code{"#rgb"} becomes
+  \code{"#rrggbb"}. 
 
   Zero and negative values of \code{col} are an error.
 }
@@ -58,6 +63,11 @@ col2rgb("#08a0ff")
 col2rgb(c(red = "red", hex = "#abcdef"))
 col2rgb(c(palette = 1:3))
 
+# long and short form of hexadecimal notation
+col2rgb(c(long = "#559955", short = "#595"))
+# with alpha
+col2rgb(c(long = "#559955BB", short = "#595B"), alpha = TRUE)
+
 ##-- NON-INTRODUCTORY examples --
 
 grC <- col2rgb(paste0("gray", 0:100))
@@ -71,21 +81,44 @@ crgb <- col2rgb(cc <- colors())
 colnames(crgb) <- cc
 t(crgb)  # The whole table
 
-ccodes <- c(256^(2:0) \%*\% crgb)  # = internal codes
-## How many names are 'aliases' of each other:
-table(tcc <- table(ccodes))
-length(uc <- unique(sort(ccodes))) # 502
+## How many names are 'aliases' of each other?
+ccodes <- c(256^(2:0) \%*\% crgb)% = internal codes
+cl <- split(cc, ccodes)
+length(cl) # 502 distinct colors
+table(tcc <- lengths(cl))
 ## All the multiply named colors:
-mult <- uc[tcc >= 2]
-cl <- lapply(mult, function(m) cc[ccodes == m])
-names(cl) <- apply(col2rgb(sapply(cl, function(x)x[1])),
-                   2, function(n)paste(n, collapse = ","))
-utils::str(cl)
-\dontrun{
- if(require(xgobi)) { ## Look at the color cube dynamically :
-   tc <- t(crgb[, !duplicated(ccodes)])
-   table(is.gray <- tc[,1] == tc[,2] & tc[,2] == tc[,3])  # (397, 105)
-   xgobi(tc, color = c("gold", "gray")[1 + is.gray])
+clmult <- cl[tcc >= 2]
+names(clmult) <- sapply(clmult, function(x) paste(crgb[,x[1]], collapse = ","))
+utils::str(clmult)
+
+## Look at the color cube:
+tc <- t(crgb[, !duplicated(ccodes)])
+cNms <- rownames(tc)
+if(requireNamespace("lattice", quietly = TRUE))
+    lattice::cloud(blue ~ red + green, data = as.data.frame(tc), col = cNms)
+## The 8 corners of the color cube:
+isC <- rowSums(tc == 0 | tc == 255) == 3
+cNms[isC] # "white" "black" "blue" "cyan" "green" "magenta" "red" "yellow"
+\dontshow{stopifnot(setequal(cNms[isC],
+     c("white","black","blue","cyan","green","magenta","red","yellow")))}
+table(is.gray <- tc[,1] == tc[,2] & tc[,2] == tc[,3])  # (397, 105)
+
+\dontrun{## Look at the color cube dynamically:% only interactively %
+ if(require("rgl")) {
+   open3d(windowRect = c(50,50, 950, 950)) # large, so we see details
+   plot3d (tc, col = cNms, size = 11) # --> rotate w/ mouse; enlarged corners:
+   points3d(tc[isC,], col = cNms[isC], size=22)
+   bg3d("darkgray") # (to "see more"); rotate around gray-axis:
+   play3d(spin3d(axis = c(1, 1, 1), rpm = 2), duration = 30)
+   if(FALSE) # add all names {zoom in with 2nd mouse button!}
+     text3d(tc[!is.gray,], texts = cNms[!is.gray],
+                             col = cNms[!is.gray], adj=-1/4, cex = 1/2)
+   if(FALSE) { ## next version of {rgl}
+     hover3d(tc, labels = cNms)
+     message("Move mouse over plot to identify points.")
+   } else { ##  click on blob to see colors()' name:
+     identify3d(tc, labels=cNms)
+   }
  }
 }
 }

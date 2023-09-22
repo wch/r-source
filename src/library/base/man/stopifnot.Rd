@@ -1,6 +1,6 @@
 % File src/library/base/man/stopifnot.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2020 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{stopifnot}
@@ -54,7 +54,7 @@ stopifnot(\dots, exprs, exprObject, local = TRUE)
   Since \R version 3.6.0, \code{stopifnot()} no longer handles potential
   errors or warnings (by \code{\link{tryCatch}()} etc) for each single
   expression
-  and may use \code{\link{sys.call}(<n>)} to get a meaningful and short
+  and may use \code{\link{sys.call}(\var{n})} to get a meaningful and short
   error message in case an expression did not evaluate to all TRUE.  This
   provides considerably less overhead.
 
@@ -75,7 +75,10 @@ stopifnot(\dots, exprs, exprObject, local = TRUE)
   Since \R version 3.4.0, when an expression (from \code{\dots}) is not
   true \emph{and} is a call to \code{\link{all.equal}}, the error
   message will report the (first part of the) differences reported by
-  \code{\link{all.equal}(*)}.
+  \code{\link{all.equal}(*)}; since \R 4.3.0, this happens for all calls
+  where \code{"all.equal"} \code{\link{pmatch}()}es the function called,
+  e.g., when that is called \code{all.equalShow}, see the example in
+  \code{\link{all.equal}}.
 }
 \note{
  Trying to use the \code{stopifnot(exprs = ..)} version via a shortcut,
@@ -98,41 +101,52 @@ stopifnot(\dots, exprs, exprObject, local = TRUE)
   \code{stopifnot()} for testing warnings and errors.
 }
 \examples{
+## NB: Some of these examples are expected to produce an error. To
+##     prevent them from terminating a run with example() they are
+##     piped into a call to try().
+
 stopifnot(1 == 1, all.equal(pi, 3.14159265), 1 < 2) # all TRUE
 
 m <- matrix(c(1,3,3,1), 2, 2)
 stopifnot(m == t(m), diag(m) == rep(1, 2)) # all(.) |=>  TRUE
 
-op <- options(error = expression(NULL))
-# "disabling stop(.)"  << Use with CARE! >>
-
-stopifnot(length(10)) # gives an error: '1' is *not* TRUE
+stopifnot(length(10)) |> try() # gives an error: '1' is *not* TRUE
 ## even when   if(1) "ok"   works
 
-stopifnot(all.equal(pi, 3.141593),  2 < 2, (1:10 < 12), "a" < "b")
+stopifnot(all.equal(pi, 3.141593),  2 < 2, (1:10 < 12), "a" < "b") |> try()
 ## More convenient for interactive "line by line" evaluation:
 stopifnot(exprs = {
   all.equal(pi, 3.1415927)
   2 < 2
   1:10 < 12
   "a" < "b"
-})
+}) |> try()
 
 eObj <- expression(2 < 3, 3 <= 3:6, 1:10 < 2)
-stopifnot(exprObject = eObj)
+stopifnot(exprObject = eObj) |> try()
 stopifnot(exprObject = quote(3 == 3))
 stopifnot(exprObject = TRUE)
 
 
 # long all.equal() error messages are abbreviated:
-stopifnot(all.equal(rep(list(pi),4), list(3.1, 3.14, 3.141, 3.1415)))
+stopifnot(all.equal(rep(list(pi),4), list(3.1, 3.14, 3.141, 3.1415))) |> try()
 
 # The default error message can be overridden to be more informative:
 m[1,2] <- 12
-stopifnot("m must be symmetric"= m == t(m))
+stopifnot("m must be symmetric"= m == t(m)) |> try()
 #=> Error: m must be symmetric
 
-options(op)  # revert to previous error handler
+##' warnifnot(): a "only-warning" version of stopifnot()
+##'   {Yes, learn how to use do.call(substitute, ...) in a powerful manner !!}
+warnifnot <- stopifnot ; N <- length(bdy <- body(warnifnot))
+bdy        <- do.call(substitute, list(bdy,   list(stopifnot = quote(warnifnot))))
+bdy[[N-1]] <- do.call(substitute, list(bdy[[N-1]], list(stop = quote(warning))))
+body(warnifnot) <- bdy
+warnifnot(1 == 1, 1 < 2, 2 < 2) # => warns " 2 < 2 is not TRUE  "
+warnifnot(exprs = {
+    1 == 1
+    3 < 3  # => warns "3 < 3 is not TRUE"
+})
 }
 \keyword{environment}
 \keyword{programming}

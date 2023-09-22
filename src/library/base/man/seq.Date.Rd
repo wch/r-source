@@ -14,7 +14,7 @@
 \method{seq}{Date}(from, to, by, length.out = NULL, along.with = NULL, \dots)
 }
 \arguments{
-  \item{from}{starting date.  Required}
+  \item{from}{starting date.  Required.}
   \item{to}{end date.  Optional.}
   \item{by}{increment of the sequence.  Optional.  See \sQuote{Details}.}
   \item{length.out}{integer, optional.  Desired length of the sequence.}

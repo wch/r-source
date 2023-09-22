@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-11-06 17:17\n"
+"POT-Creation-Date: 2023-07-31 14:59\n"
 "PO-Revision-Date: 2020-08-27 19:13+0900\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -31,6 +31,21 @@ msgstr "положения 'labels' и 'at' должны иметь одинаковую длину"
 
 msgid "logical 'label' supplied of length 0"
 msgstr "предложенная логическая 'label' нулевой длины"
+
+#, fuzzy
+msgid "Invalid coordinates"
+msgstr "неправильный 'order'"
+
+#, fuzzy
+msgid "Invalid grob coordinates"
+msgstr "Неправильное имя 'grob'"
+
+#, fuzzy
+msgid "Invalid gTree coordinates"
+msgstr "неправильный класс \"gTree\""
+
+msgid "Closed must not be a missing value"
+msgstr ""
 
 msgid "end points must not be identical"
 msgstr "конечные точки не должны быть одинаковы"
@@ -101,6 +116,9 @@ msgstr "в %s сместь пропущенных и непропущенных значений"
 msgid "'gamma' 'gpar' element is defunct"
 msgstr "элемент 'gamma' 'gpar' больше не существует"
 
+msgid "'fill' gpar list components must all be patterns"
+msgstr ""
+
 msgid "invalid 'linemitre' value"
 msgstr "неправильное значение 'linemitre'"
 
@@ -152,9 +170,8 @@ msgstr "нужно управлять как минимум одной оконницей"
 msgid "Invalid number of generations"
 msgstr "Неправильное количество генераций"
 
-#, fuzzy
 msgid "Invalid 'clearGroups' argument"
-msgstr "неправильный аргумент 'arrow'"
+msgstr "Неправильный аргумент 'clearGroups'"
 
 msgid "invalid object inserted on the display list"
 msgstr "неправильный объект вставлен в список изображений"
@@ -273,16 +290,11 @@ msgstr "неправильный 'order'"
 msgid "Group definition failed"
 msgstr ""
 
-#, fuzzy
 msgid "Invalid source"
-msgstr "неправильный 'order'"
+msgstr "Неправильный источник"
 
-#, fuzzy
 msgid "Invalid destination"
-msgstr "неправильное выравнивание"
-
-msgid "Invalid compositing operator"
-msgstr ""
+msgstr "Неправильное назначение"
 
 msgid "Unknown group:"
 msgstr ""
@@ -290,9 +302,8 @@ msgstr ""
 msgid "Invalid transform (nothing drawn)"
 msgstr ""
 
-#, fuzzy
 msgid "Invalid transform"
-msgstr "неправильный 'order'"
+msgstr "Неверное преобразование"
 
 msgid "'l' must be a layout"
 msgstr "'l' должен быть эскизом"
@@ -339,35 +350,40 @@ msgstr "неправильный 'listing'"
 msgid "invalid 'listing'"
 msgstr "неправильный список"
 
+msgid "Only a grob can be converted to a mask"
+msgstr ""
+
 msgid "invalid 'origin'"
 msgstr "неправильный 'origin'"
 
 msgid "Only a grob can be converted to a path"
 msgstr ""
 
-#, fuzzy
 msgid "colours and stops must be at least length 1"
-msgstr "'x' и 'y' должны быть одной длины"
+msgstr "'colours' и 'stops' должны быть длины 1 или больше"
 
-#, fuzzy
 msgid "x1, y1, x2, and y2 must all be length 1"
-msgstr "'x1', 'y1' ,'x2', и 'y2' должны быть единицами"
+msgstr "x1, y1, x2 и y2 все должны быть длины 1"
 
-#, fuzzy
 msgid "cx1, cy1, cx2, cy2, r1, and r2 must all be length 1"
-msgstr "'x1', 'y1' ,'x2', и 'y2' должны быть единицами"
+msgstr "cx1, cy1, cx2 и cy2 все должны быть длины 1"
 
-#, fuzzy
 msgid "x, y, width, and height must all be length 1"
 msgstr "'x', 'y', 'width', и 'height' должны иметь длину 1"
 
 msgid "Pattern must be based on grob"
-msgstr ""
+msgstr "Паттерн должен основываться на grob"
 
 msgid "Missing pattern fill has been set to transparent"
 msgstr "Пропущенный паттерн заливки определен как прозрачный"
 
-msgid "Gradient fill applied to object with no inside"
+msgid ""
+"grob drawing produces more shapes than grob coords\n"
+"(recycling coords)"
+msgstr ""
+
+#, fuzzy
+msgid "Pattern fill applied to object with no inside"
 msgstr "Градиентная заливка применена к объекту без внутренностей"
 
 msgid "'length' must be a 'unit' object"
@@ -448,11 +464,47 @@ msgstr "'r' должен быть объектом-единицей"
 msgid "'x', 'y', 'width', and 'height' must have length 1"
 msgstr "'x', 'y', 'width', и 'height' должны иметь длину 1"
 
+#, fuzzy
+msgid "Invalid glyph info"
+msgstr "Неверное преобразование"
+
+#, fuzzy
+msgid "'x' and 'y' must have length > 0"
+msgstr "'x' и 'y' должны иметь длину 1"
+
+msgid "'hjust' and 'vjust' must be glyphJust() values"
+msgstr ""
+
+#, fuzzy
+msgid "'hjust' and 'vjust' must have length 1"
+msgstr "'x' и 'y' должны иметь длину 1"
+
+msgid "Unknown width; using first width"
+msgstr ""
+
+#, fuzzy
+msgid "Unknown anchor; using left justification"
+msgstr "неправильное горизонтальное выравнивание"
+
+msgid "Unknown height; using first height"
+msgstr ""
+
+msgid "Unknown anchor; using bottom justification"
+msgstr ""
+
 msgid "'x' and 'units' must have length > 0"
 msgstr "'x' и 'units' должен иметь длину > 0"
 
 msgid "invalid 'axis' or 'type'"
 msgstr "неправильный 'axis' или 'type'"
+
+#, fuzzy
+msgid "'x' and 'y' must be units and 'device' must be logical"
+msgstr "'x' и 'y'  должны быть единицами и иметь одну длину"
+
+#, fuzzy
+msgid "'w' and 'h' must be units and 'device' must be logical"
+msgstr "'x' и 'y'  должны быть единицами и иметь одну длину"
 
 msgid "Not a unit object"
 msgstr "Неправильный единичный объект"
@@ -610,7 +662,6 @@ msgstr[2] "Неправильные имена оконниц"
 #~ msgid "Cannot mix signs of indices"
 #~ msgstr "Не могу смешивать знаки индексов"
 
-#, fuzzy
 #~ msgid "It is only valid to remove a child from a \"gTree\""
 #~ msgstr "Правильно лишь удалять 'child' из 'gTree'"
 
@@ -632,7 +683,6 @@ msgstr[2] "Неправильные имена оконниц"
 #~ msgid "unit.length has been deprecated in favour of a unit method for the generic length function"
 #~ msgstr "'unit.length' не одобряется, используйте единичный метод для общей функции 'length'"
 
-#, fuzzy
 #~ msgid "invalid graphics parameters"
 #~ msgstr "Неправильные графические параметры"
 

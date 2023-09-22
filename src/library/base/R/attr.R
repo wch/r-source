@@ -33,7 +33,7 @@
         ## Be careful to set dim before dimnames.
 	if(h.dim && L == prod(d1)) attr(x, "dim") <- dm <- d1
 	if(h.dmn && !is.null(dm)) {
-            ddn <- vapply(dn1, length, 1, USE.NAMES=FALSE)
+            ddn <- lengths(dn1, use.names=FALSE)
             if( all((dm == ddn)[ddn > 0]) ) attr(x, "dimnames") <- dn1
         }
         ## don't set if it has 'dim' now

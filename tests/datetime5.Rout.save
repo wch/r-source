@@ -1,0 +1,92 @@
+
+R Under development (unstable) (2022-12-12 r83438) -- "Unsuffered Consequences"
+Copyright (C) 2022 The R Foundation for Statistical Computing
+Platform: aarch64-apple-darwin22.1.0 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> ### tests of strftime (formatting POSIXlt objects).
+> 
+> Sys.setenv(TZ = "Europe/Rome")
+> 
+> dt <- as.POSIXlt("2022-12-11 09:03;04")
+> 
+> ff <- c(LETTERS, letters)
+> ff <- setdiff(c(LETTERS, letters),
++               c("E", "J", "K", "L", "N", "P", "O", "Q",
++                 "f", "i", "k", "l",  "o", "q",
++                 "r", # %r is locale- and implementation-dependent.
++                 "s", "v")
++               )
+> 
+> for (f in ff) {
++     f <- paste0("%", f)
++     cat(sprintf("%s: %s\n", f, format(dt, f)))
++ }
+%A: Sunday
+%B: December
+%C: 20
+%D: 12/11/22
+%F: 2022-12-11
+%G: 2022
+%H: 09
+%I: 09
+%M: 03
+%R: 09:03
+%S: 00
+%T: 09:03:00
+%U: 50
+%V: 49
+%W: 49
+%X: 09:03:00
+%Y: 2022
+%Z: CET
+%a: Sun
+%b: Dec
+%c: Sun Dec 11 09:03:00 2022
+%d: 11
+%e: 11
+%g: 22
+%h: Dec
+%j: 345
+%m: 12
+%n: 
+
+%p: AM
+%t: 	
+%u: 7
+%w: 0
+%x: 12/11/22
+%y: 22
+%z: +0100
+> 
+> ## 'not in the standards and less widely implemented'
+> ## %P is a glibc extension which we added to IANA tzcode for R. Not in macOS.
+> for (f in c("P", "k", "l", "s")) {
++     f <- paste0("%", f)
++     cat(sprintf("%s: %s\n", f, format(dt, f)))
++ }
+%P: am
+%k:  9
+%l:  9
+%s: 1670745780
+> 
+> ## week numbers
+> dt2 <- as.POSIXlt(sprintf("%d-01-01 09:03;04", 2015:2018))
+> cat(format(dt2, "%Y: %U %V %W"), sep = "\n")
+2015: 00 01 00
+2016: 00 53 00
+2017: 01 52 00
+2018: 00 01 01
+> 
+> 

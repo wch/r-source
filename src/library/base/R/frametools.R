@@ -1,7 +1,7 @@
 #  File src/library/base/R/frametools.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -18,6 +18,7 @@
 
 subset.data.frame <- function (x, subset, select, drop = FALSE, ...)
 {
+    chkDots(...)
     r <- if(missing(subset))
 	rep_len(TRUE, nrow(x)) # cannot rely on recycling in 0-row case
     else {
@@ -72,11 +73,13 @@ transform.data.frame <- function (`_data`, ...)
     matched <- !is.na(inx)
     if (any(matched)) {
 	`_data`[inx[matched]] <- e[matched]
-	`_data` <- data.frame(`_data`)
+	`_data` <- data.frame(`_data`, check.names = FALSE)
     }
-    if (!all(matched))  # add as separate arguments to get replication
-	do.call("data.frame", c(list(`_data`), e[!matched]))
-    else `_data`
+    if (!all(matched)) { # add as separate arguments to get replication
+	args <- e[!matched]
+	args[["check.names"]] <- FALSE # PR#17890
+	do.call("data.frame", c(list(`_data`), args))
+    } else `_data`
 }
 
 transform <- function(`_data`,...) UseMethod("transform")
@@ -85,4 +88,4 @@ transform <- function(`_data`,...) UseMethod("transform")
 ## The default converts its argument to a dataframe and transforms
 ## that. This is probably marginally useful at best. --pd
 transform.default <- function(`_data`,...)
-    transform.data.frame(data.frame(`_data`),...)
+    transform.data.frame(as.data.frame(`_data`),...)

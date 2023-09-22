@@ -1,6 +1,6 @@
 /*
  *   R : A Computer Language for Statistical Data Analysis
- *   Copyright (C) 1997-2021   The R Core Team
+ *   Copyright (C) 1997-2023   The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -27,6 +27,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#ifdef HAVE_SYS_TYPES_H
+# include <sys/types.h> // for size_t
+#endif
 
 /* RENVIRON_WIN32_STANDALONE is set when compiling for use in Rcmd Windows
    front-end, which is not linked against the R library. The locale is not
@@ -96,6 +99,13 @@ static void Renviron_error(const char *msg)
 }
 
 #endif
+
+static void *Renviron_malloc(size_t size)
+{
+    void *buf = malloc(size);
+    if(!buf) Renviron_error("allocation failure in reading Renviron");
+    return buf;
+}
 
 
 /* remove leading and trailing space */
@@ -196,12 +206,10 @@ static void Putenv(char *a, char *b)
     int failed = 0;
 
 #ifdef HAVE_SETENV
-    buf = (char *) malloc((strlen(b) + 1) * sizeof(char));
-    if(!buf) Renviron_error("allocation failure in reading Renviron");
+    buf = (char *) Renviron_malloc((strlen(b) + 1) * sizeof(char));
     value = buf;
 #else
-    buf = (char *) malloc((strlen(a) + strlen(b) + 2) * sizeof(char));
-    if(!buf) Renviron_error("allocation failure in reading Renviron");
+    buf = (char *) Renviron_malloc((strlen(a) + strlen(b) + 2) * sizeof(char));
     strcpy(buf, a); strcat(buf, "=");
     value = buf+strlen(buf);
 #endif
@@ -342,28 +350,36 @@ static int process_Renviron(const char *filename)
 #ifndef RENVIRON_WIN32_STANDALONE
 
 /* try system Renviron: R_HOME/etc/Renviron.  Unix only. */
-void process_system_Renviron()
+void process_system_Renviron(void)
 {
-    char buf[PATH_MAX];
+    char *buf;
+    int res;
+    size_t needed =  strlen(R_Home) + strlen("/etc/Renviron") + 1;
 
 #ifdef R_ARCH
-    if(strlen(R_Home) + strlen("/etc/Renviron") + strlen(R_ARCH) + 1 > PATH_MAX - 1) {
+    needed += strlen(R_ARCH) + 1;
+#endif
+
+#ifdef Unix
+    if(needed > R_PATH_MAX) {
 	Renviron_warning("path to system Renviron is too long: skipping");
 	return;
     }
+#endif
+    buf = (char *) Renviron_malloc(needed);
+
+#ifdef R_ARCH
     strcpy(buf, R_Home);
     strcat(buf, "/etc/");
     strcat(buf, R_ARCH);
     strcat(buf, "/Renviron");
 #else
-    if(strlen(R_Home) + strlen("/etc/Renviron") > PATH_MAX - 1) {
-	Renviron_warning("path to system Renviron is too long: skipping");
-	return;
-    }
     strcpy(buf, R_Home);
     strcat(buf, "/etc/Renviron");
 #endif
-    if(!process_Renviron(buf))
+    res = process_Renviron(buf);
+    free(buf);
+    if (!res)
 	Renviron_warning("cannot find system Renviron");
 }
 
@@ -372,41 +388,83 @@ void process_system_Renviron()
 #endif
 
 /* try site Renviron: R_ENVIRON, then R_HOME/etc/Renviron.site. */
-void process_site_Renviron ()
+void process_site_Renviron (void)
 {
-    char buf[PATH_MAX], *p = getenv("R_ENVIRON");
+    char *buf, *p = getenv("R_ENVIRON");
+    size_t needed;
 
     if(p) {
 	if(*p) process_Renviron(p);
 	return;
     }
 #ifdef R_ARCH
-    if(strlen(R_Home) + strlen("/etc/Renviron.site") + strlen(R_ARCH) > PATH_MAX - 2) {
+    needed = strlen(R_Home) + strlen("/etc/Renviron.site") + 2 + strlen(R_ARCH);
+    int skip = 0;
+# ifdef Unix
+    if(needed > R_PATH_MAX) {
 	Renviron_warning("path to arch-specific Renviron.site is too long: skipping");
-    } else {
-	snprintf(buf, PATH_MAX, "%s/etc/%s/Renviron.site", R_Home, R_ARCH);
+	skip = 1;
+    } 
+# endif
+    if(!skip) {
+	buf = (char *) Renviron_malloc(needed);
+	snprintf(buf, needed, "%s/etc/%s/Renviron.site", R_Home, R_ARCH);
 	if(access(buf, R_OK) == 0) {
 	    process_Renviron(buf);
+	    free(buf);
 	    return;
 	}
+	free(buf);
     }
 #endif
-    if(strlen(R_Home) + strlen("/etc/Renviron.site") > PATH_MAX - 1) {
+
+    needed = strlen(R_Home) + strlen("/etc/Renviron.site") + 1;
+# ifdef Unix
+    if(needed > R_PATH_MAX) {
 	Renviron_warning("path to Renviron.site is too long: skipping");
 	return;
     }
-    snprintf(buf, PATH_MAX, "%s/etc/Renviron.site", R_Home);
+# endif
+    buf = (char *) Renviron_malloc(needed);
+    snprintf(buf, needed, "%s/etc/Renviron.site", R_Home);
     process_Renviron(buf);
+    free(buf);
 }
 
 #ifdef Win32
 extern char *getRUser(void);
+extern void freeRUser(char *);
 #endif
 
+static void process_arch_specific_user_Renviron(const char *s)
+{
+#ifdef R_ARCH
+    size_t needed = strlen(s) + 1 + strlen(R_ARCH) + 1;
+    int skip = 0;
+# ifdef Unix
+    if (needed > R_PATH_MAX) {
+	Renviron_warning("path to arch-specific user Renviron is too long: skipping");
+	skip = 1;
+    }
+# endif
+    if (!skip) {
+	char *buf = (char *) Renviron_malloc(needed);
+	snprintf(buf, needed, "%s.%s", s, R_ARCH);
+	int res = process_Renviron(buf);
+	free(buf);
+	if (res) return;
+    }
+#endif
+    process_Renviron(s);
+}
+
 /* try user Renviron: ./.Renviron, then ~/.Renviron */
-void process_user_Renviron()
+void process_user_Renviron(void)
 {
     const char *s = getenv("R_ENVIRON_USER");
+    size_t needed;
+    int skip, res;
+    char *buf;
 
     if(s) {
 	if (*s) process_Renviron(R_ExpandFileName(s));
@@ -414,30 +472,41 @@ void process_user_Renviron()
     }
 
 #ifdef R_ARCH
-    char buff[100];
-    snprintf(buff, 100, ".Renviron.%s", R_ARCH);
-    if(process_Renviron(buff)) return;
-#endif
-    if(process_Renviron(".Renviron")) return;
-#ifdef Unix
-    s = R_ExpandFileName("~/.Renviron");
-#endif
-#ifdef Win32
-    {
-	char buf[1024]; /* MAX_PATH is less than this */
-	/* R_USER is not necessarily set yet, so we have to work harder */
-	snprintf(buf, 1024, "%s/.Renviron", getRUser());
-	s = buf;
+    needed = strlen(".Renviron.") + strlen(R_ARCH) + 1;
+    skip = 0;
+# ifdef Unix
+    if(needed > R_PATH_MAX) {
+	Renviron_warning("path to user Renviron is too long: skipping");
+	skip = 1;
+    }
+# endif
+    if (!skip) {
+	buf = (char *) Renviron_malloc(needed);
+	snprintf(buf, needed, ".Renviron.%s", R_ARCH);
+	res = process_Renviron(buf);
+	free(buf);
+	if (res) return;
     }
 #endif
-#ifdef R_ARCH
-    snprintf(buff, 100, "%s.%s", s, R_ARCH);
-    if( process_Renviron(buff)) return;
+
+    if(process_Renviron(".Renviron")) return;
+
+#ifdef Unix
+    process_arch_specific_user_Renviron(R_ExpandFileName("~/.Renviron"));
 #endif
-    process_Renviron(s);
+#ifdef Win32
+    /* R_USER is not necessarily set yet, so we have to work harder */
+    char *RUser = getRUser();
+    needed = strlen(RUser) + strlen("/.Renviron") + 1;
+    buf = (char *) Renviron_malloc(needed);
+    snprintf(buf, needed, "%s/.Renviron", RUser);
+    process_arch_specific_user_Renviron(buf);
+    freeRUser(RUser);
+    free(buf);
+#endif
 }
 
-SEXP attribute_hidden do_readEnviron(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_readEnviron(SEXP call, SEXP op, SEXP args, SEXP env)
 {
 
     checkArity(op, args);

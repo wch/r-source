@@ -1,7 +1,7 @@
 ##  File src/library/tools/R/doitools.R
 ##  Part of the R package, https://www.R-project.org
 ##
-##  Copyright (C) 2015-2016 The R Core Team
+##  Copyright (C) 2015-2023 The R Core Team
 ##
 ##  This program is free software; you can redistribute it and/or modify
 ##  it under the terms of the GNU General Public License as published by
@@ -34,7 +34,10 @@ function(meta)
         m <- gregexpr(pattern, v)
         dois <- c(dois, .gregexec_at_pos(pattern, v, m, 3L))
     }
-    doi_db(dois, rep.int("DESCRIPTION", length(dois)))
+    ## DOI names may contain ">", but we need this as a delimiter when
+    ## writing the names in <doi:name> style.  So at least ">" and hence
+    ## also "%" must be percent encoded ...
+    doi_db(utils::URLdecode(dois), rep.int("DESCRIPTION", length(dois)))
 }
 
 doi_db_from_package_citation <-
@@ -87,7 +90,7 @@ function(x)
 doi_db_from_package_sources <-
 function(dir, add = FALSE, Rd = FALSE)
 {
-    meta <- .read_description(file.path(dir, "DESCRIPTION"))
+    meta <- .get_package_metadata(dir, FALSE)
     db <- rbind(doi_db_from_package_metadata(meta),
                 doi_db_from_package_citation(dir, meta),
                 if(Rd) {
@@ -127,12 +130,6 @@ function(packages, lib.loc = NULL, verbose = FALSE, Rd = FALSE)
 check_doi_db <-
 function(db, verbose = FALSE, parallel = FALSE, pool = NULL)
 {
-    use_curl <-
-        !parallel &&
-        config_val_to_logical(Sys.getenv("_R_CHECK_URLS_USE_CURL_",
-                                         "TRUE")) &&
-        requireNamespace("curl", quietly = TRUE)
-
     if(parallel && is.null(pool))
         pool <- curl::new_pool()    
     
@@ -153,34 +150,15 @@ function(db, verbose = FALSE, parallel = FALSE, pool = NULL)
             function(urls, dois)
                 .fetch_headers_via_base(urls, verbose, dois)
 
-    .check <- function(d, u, h) {
+    .check <- function(h) {
         if(inherits(h, "error")) {
-            s <- "-1"
-            msg <- sub("[[:space:]]*$", "", conditionMessage(h))
+            s <- "Error"
+            m <- sub("[[:space:]]*$", "", conditionMessage(h))
         } else {
             s <- as.character(attr(h, "status"))
-            msg <- table_of_HTTP_status_codes[s]
+            m <- table_of_HTTP_status_codes[s]
         }
-
-        ## Similar to URLs, see e.g.
-        ##   curl -I -L https://doi.org/10.1016/j.csda.2009.12.005
-        ## (As of 2016-12, this actually gives 400 Bad Request.)
-        if(any(grepl("301 Moved Permanently", h, useBytes = TRUE))) {
-            ind <- grep("^[Ll]ocation: ", h, useBytes = TRUE)
-            new <- sub("^[Ll]ocation: ([^\r]*)\r\n", "\\1", h[max(ind)])
-            if((s == "503") && grepl("www.sciencedirect.com", new))
-                s <- "405"
-        }
-
-        if((s != "200") && use_curl) {
-            g <- .curl_GET_status(u)
-            if(g == "200") {
-                s <- g
-                msg <- "OK"
-            }
-        }
-
-        c(s, msg)
+        c(s, m)
     }
 
     bad <- .gather()
@@ -196,41 +174,58 @@ function(db, verbose = FALSE, parallel = FALSE, pool = NULL)
         dois <- names(parents)
     }
 
-    ## See <https://www.doi.org/doi_handbook/2_Numbering.html#2.2>:
+    ## <FIXME>
+    ## According to <https://www.iana.org/assignments/urn-formal/doi>,
+    ##   The 2022 edition of ISO 26324 has amended the syntax of the
+    ##   prefix by removing the requirement for the directory indicator
+    ##   to be "10" and allow also DOI names without a registrant code.
+    ## (ISO 26324 is the DOI standard).
+    ## As of 2023-06-06, this is not yet reflected in the DOI Handbook
+    ## (<https://doi.org/10.1000/182>) last updated on 2019-12-19, which
+    ## still says in
+    ## <https://www.doi.org/the-identifier/resources/handbook/2_numbering#2.2>
+    ## that
     ##   The DOI prefix shall be composed of a directory indicator
     ##   followed by a registrant code. These two components shall be
     ##   separated by a full stop (period).
     ##   The directory indicator shall be "10".
-    ind <- !startsWith(dois, "10")
+    ## Nevertheless, let us drop the check below:
+    ## <CODE>
+    ## ind <- !startsWith(dois, "10")
+    ## </CODE>
+    ## But do at least minimal tests for formal validity (could do
+    ## more):
+    ind <- !grepl("/", dois, fixed = TRUE)
     if(any(ind)) {
         len <- sum(ind)
         bad <- rbind(bad,
-                     .gather(dois[ind],
-                             parents[ind],
+                     .gather(dois[ind], parents[ind],
                              m = rep.int("Invalid DOI", len)))
     }
-
     pos <- which(!ind)
+    ## </FIXME>
+
+    ## See <https://www.doi.org/the-identifier/resources/handbook/3_resolution#3.8.3>:
+    ##   Ideally we would perform GET requests and would look at the
+    ##   responseCode in the JSON response.  However, we cannot do this
+    ##   with base, and at least for now we can also check using HEAD
+    ##   requests and looking at the status code (200 vs 404).
     if(length(pos)) {
         doispos <- dois[pos]
-        urlspos <- paste0("https://doi.org/", doispos)
+        urlspos <- paste0("https://doi.org/api/handles/",
+                          vapply(doispos, urlify_doi, ""))
         ## Do we need to percent encode parts of the DOI name?
         headers <- .fetch_headers(urlspos, doispos)
-        results <- do.call(rbind,
-                           Map(.check, doispos, urlspos, headers))
-        status <- as.numeric(results[, 1L])
-        ind <- (status %notin% c(200L, 405L))
+        results <- do.call(rbind, lapply(headers, .check))
+        status <- results[, 1L]
+        ind <- (status != "200")
         if(any(ind)) {
             pos <- pos[ind]
-            s <- as.character(status[ind])
-            s[s == "-1"] <- "Error"
+            s <- status[ind]
             m <- results[ind, 2L]
             m[is.na(m)] <- ""
             bad <- rbind(bad,
-                         .gather(dois[pos],
-                                 parents[pos],
-                                 m,
-                                 s))
+                         .gather(dois[pos], parents[pos], s, m))
         }
     }
 

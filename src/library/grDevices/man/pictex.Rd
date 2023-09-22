@@ -78,7 +78,7 @@ pictex(file = "Rplots.tex", width = 5, height = 4, debug = FALSE,
   \code{\link{postscript}}, \code{\link{pdf}}, \code{\link{Devices}}.
 
   The \code{tikzDevice} in the CRAN package of that name for more modern
-  TeX-based graphics (\url{http://pgf.sourceforge.net/}, although
+  TeX-based graphics (\url{https://pgf.sourceforge.net/}, although
   including PDF figures \emph{via} \command{pdftex} is most common
   in (La)TeX documents).
 }

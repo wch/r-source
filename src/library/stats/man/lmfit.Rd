@@ -1,6 +1,6 @@
 % File src/library/stats/man/lmfit.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{lm.fit}
@@ -20,9 +20,9 @@ lm.wfit(x, y, w, offset = NULL, method = "qr", tol = 1e-7,
 \description{
   These are the basic computing engines called by \code{\link{lm}} used
   to fit linear models.  These should usually \emph{not} be used
-  directly unless by experienced users.  \code{.lm.fit()} is bare bone
+  directly unless by experienced users.  \code{.lm.fit()} is a bare-bones
   wrapper to the innermost QR-based C code, on which
-  \code{\link{glm.fit}} and \code{\link{lsfit}} are based as well, for
+  \code{\link{glm.fit}} and \code{\link{lsfit}} are also based, for
   even more experienced users.
 }
 \arguments{
@@ -45,6 +45,11 @@ lm.wfit(x, y, w, offset = NULL, method = "qr", tol = 1e-7,
     error.}
 
   \item{\dots}{currently disregarded.}
+}
+\details{
+  If \code{y} is a matrix, \code{offset} can be a numeric matrix of the
+  same dimensions, in which case each column is applied to the
+  corresponding column of \code{y}.
 }
 \value{
   a \code{\link{list}} with components (for \code{lm.fit} and \code{lm.wfit})
@@ -93,9 +98,14 @@ str(lm. <- lm.fit (x = X, y = y))
   stopifnot(id(unname(lm.$coef), lm..$coef),
 	    id(unname(lmw$coef), lm.w$coef))
 }
+## fits w/o intercept:
+all.equal(unname(coef(lm(y ~ X-1))),
+          unname(coef( lm.fit(X,y))))
+all.equal(unname(coef( lm.fit(X,y))),
+                 coef(.lm.fit(X,y)))
 \donttest{
 if(require("microbenchmark")) {
-  mb <- microbenchmark(lm(y~X), lm.fit(X,y), .lm.fit(X,y))
+  mb <- microbenchmark(lm(y~X-1), lm.fit(X,y), .lm.fit(X,y))
   print(mb)
   boxplot(mb, notch=TRUE)
 }

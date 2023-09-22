@@ -1,10 +1,12 @@
 % File src/library/datasets/man/state.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{state}
+\title{US State Facts and Figures}
 \docType{data}
+\encoding{UTF-8}
 \alias{state}
 \alias{state.abb}
 \alias{state.area}
@@ -13,9 +15,9 @@
 \alias{state.name}
 \alias{state.region}
 \alias{state.x77}
-\title{US State Facts and Figures}
-\description{Data sets related to the 50 states of the United States of
-  America.}
+\description{
+  Data sets related to the 50 states of the United States of America.
+}
 \usage{
 state.abb
 state.area
@@ -37,14 +39,14 @@ state.x77
     \item{\code{state.center}:}{ list with components named \code{x} and
       \code{y} giving the approximate geographic center of each state in
       negative longitude and latitude.  Alaska and Hawaii are placed
-      just off the West Coast.}
-    \item{\code{state.division}:}{factor giving state divisions (New
+      just off the West Coast.  See \sQuote{Examples} on how to \dQuote{correct}.}
+    \item{\code{state.division}:}{\code{\link{factor}} giving state divisions (New
       England, Middle Atlantic, South Atlantic, East South Central, West
       South Central, East North Central, West North Central, Mountain,
       and Pacific).}
     \item{\code{state.name}:}{character vector giving the full state
       names.}
-    \item{\code{state.region}:}{factor giving the region (Northeast,
+    \item{\code{state.region}:}{\code{\link{factor}} giving the region (Northeast,
       South, North Central, West) that each state belongs to.}
     \item{\code{state.x77}:}{matrix with 50 rows and 8 columns giving
       the following statistics in the respective columns.
@@ -64,6 +66,9 @@ state.x77
        \item{\code{Area}:}{land area in square miles}
     }}
   }
+  Note that a square mile is by definition exactly
+  \code{(cm(1760 * 3 * 12) / 100 / 1000)^2} \eqn{km^2}, i.e.,
+  \eqn{2.589988110336 km^2}.
 }
 \source{
   U.S. Department of Commerce, Bureau of the Census (1977)
@@ -77,4 +82,27 @@ state.x77
   \emph{The New S Language}.
   Wadsworth & Brooks/Cole.
 }
+\examples{
+(dst <- dxy <- data.frame(state.center, row.names=state.abb))
+## Alaska and Hawaii are placed just off the West Coast (for compact map drawing):
+dst[c("AK", "HI"),]
+## state.center2 := version of state.center with "correct" coordinates for AK & HI:
+## From https://pubs.usgs.gov/gip/Elevations-Distances/elvadist.html#Geographic\%20Centers
+##   Alaska   63°50' N., 152°00' W., 60 miles northwest of Mount McKinley
+##   Hawaii   20°15' N., 156°20' W., off Maui Island
+dxy["AK",] <- c(-152.  , 63.83) # or  c(-152.11, 65.17)
+dxy["HI",] <- c(-156.33, 20.25) # or  c(-156.69, 20.89)
+state.center2 <- as.list(dxy)
+
+plot(dxy, asp=1.2, pch=3, col=2)
+text(state.center2, state.abb, cex=1/2, pos=4, offset=1/4)
+i <- c("AK","HI")
+do.call(arrows, c(setNames(c(dst[i,], dxy[i,]), c("x0","y0", "x1","y1")),
+                  col=adjustcolor(4, .7), length=1/8))
+points(dst[i,], col=2)
+if(FALSE) { # if(require("maps")) \{
+   map("state", interior = FALSE,          add = TRUE)
+   map("state", boundary = FALSE, lty = 2, add = TRUE)
+}
+}% ex.
 \keyword{datasets}

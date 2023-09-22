@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-11-06 17:17\n"
+"POT-Creation-Date: 2023-07-31 14:59\n"
 "PO-Revision-Date: 2011-04-02 \n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -163,10 +163,15 @@ msgstr "'by' bir liste olmalı"
 msgid "arguments must have same length"
 msgstr "argümanlar aynı uzunluğa sahip olmalı"
 
-msgid "'formula' missing or incorrect"
-msgstr "'formula' eksik veya hatalı"
+msgid "argument 'x' is  missing -- it has been renamed from 'formula'"
+msgstr ""
 
-msgid "'formula' must have both left and right hand sides"
+#, fuzzy
+msgid "argument 'x' must be a formula"
+msgstr "'x' argümanı nümerik olmalı"
+
+#, fuzzy
+msgid "formula 'x' must have both left and right hand sides"
 msgstr "'formula' hem sol hem sağ taraf içermeli"
 
 msgid "cannot change frequency from %g to %g"
@@ -216,6 +221,9 @@ msgstr ""
 
 msgid "cannot compute exact confidence intervals with ties"
 msgstr ""
+
+msgid "'formula' missing or incorrect"
+msgstr "'formula' eksik veya hatalı"
 
 msgid "grouping factor must have exactly 2 levels"
 msgstr ""
@@ -502,7 +510,13 @@ msgstr "'k' {1, 2, ..  n - 1} içinde olmalı"
 msgid "only %d of the first %d eigenvalues are > 0"
 msgstr ""
 
-msgid "package 'MASS' must be installed"
+msgid "Waiting for profiling to be done..."
+msgstr ""
+
+msgid "Reprofiling for"
+msgstr ""
+
+msgid "statistic. Waiting..."
 msgstr ""
 
 msgid "initial value is not in the interior of the feasible region"
@@ -719,6 +733,9 @@ msgstr ""
 msgid "need at least 2 points to select a bandwidth automatically"
 msgstr ""
 
+msgid "Selecting bandwidth *not* using 'weights'"
+msgstr ""
+
 msgid "unknown bandwidth rule"
 msgstr ""
 
@@ -752,6 +769,9 @@ msgstr "'xi' için hatalı boyutlar"
 
 msgid "'x' is not a vector or matrix"
 msgstr "'x' bir vektör veya matris değil"
+
+msgid "x[1] != r[1]; using x[1] for diagonal"
+msgstr ""
 
 msgid "invalid distance method"
 msgstr "geçersiz uzaklık metodu"
@@ -965,6 +985,9 @@ msgstr "'row.vars' için geçersiz özellik"
 msgid "incorrect specification for 'col.vars'"
 msgstr "'col.vars' için geçersiz özellik"
 
+msgid "'formula' must have both left and right hand sides"
+msgstr "'formula' hem sol hem sağ taraf içermeli"
+
 msgid "interactions are not allowed"
 msgstr ""
 
@@ -996,6 +1019,18 @@ msgstr "'row.var.names' eksik"
 
 msgid "'col.vars' missing or incorrect"
 msgstr "'col.vars' eksik veya hatalı"
+
+msgid "Parameter:"
+msgstr ""
+
+msgid "down"
+msgstr ""
+
+msgid "up"
+msgstr ""
+
+msgid "profiling has found a better solution, so original fit had not converged"
+msgstr ""
 
 msgid "'family' not recognized"
 msgstr "'family' tanınmadı"
@@ -1240,6 +1275,13 @@ msgstr ""
 msgid "not enough 'x' data"
 msgstr "yetersiz 'x' verisi"
 
+msgid "Parameter(s)"
+msgstr ""
+
+#, fuzzy
+msgid "ignored"
+msgstr "' görmezden gelindi"
+
 msgid "not enough 'y' data"
 msgstr "yetersiz 'y' verisi"
 
@@ -1249,8 +1291,27 @@ msgstr ""
 msgid "'y' must be numeric or a function or a string naming a valid function"
 msgstr ""
 
-msgid "ties should not be present for the Kolmogorov-Smirnov test"
+msgid "ties should not be present for the one-sample Kolmogorov-Smirnov test"
 msgstr ""
+
+#, fuzzy
+msgid "invalid arguments"
+msgstr "geçersiz argüman 'n'"
+
+#, fuzzy
+msgid "argument 'sizes' must be a vector of length 2"
+msgstr "'interval' 2 uzunluğunda bir vektör olmalı"
+
+#, fuzzy
+msgid "argument 'q' must be numeric"
+msgstr "'x' argümanı nümerik olmalı"
+
+msgid "computation of exact probability failed, returning Monte Carlo approximation"
+msgstr ""
+
+#, fuzzy
+msgid "argument 'p' must be numeric"
+msgstr "'x' argümanı nümerik olmalı"
 
 msgid ""
 "numeric y must be supplied.\n"
@@ -1312,7 +1373,19 @@ msgstr ""
 msgid "calling predict.lm(<fake-lm-object>) ..."
 msgstr ""
 
-msgid "prediction from a rank-deficient fit may be misleading"
+msgid "prediction from rank-deficient fit"
+msgstr ""
+
+msgid "%s; consider predict(., rankdeficient=\"NA\")"
+msgstr ""
+
+msgid "lower-rank qr: determining non-estimable cases"
+msgstr ""
+
+msgid "%s; attr(*, \"non-estim\") has doubtful cases"
+msgstr ""
+
+msgid "%s: NAs produced for non-estimable cases"
 msgstr ""
 
 msgid "predictions on current data refer to _future_ responses"
@@ -1550,13 +1623,11 @@ msgstr ""
 msgid "'termlabels' must be a character vector of length at least one"
 msgstr "'termlabels' en az bir uzunluğunda bir karakter vektörü olmalı"
 
+#, fuzzy
+msgid "'%s' must be a character string"
+msgstr "'file' bir karakter dizesi veya bağlantı olmalı"
+
 msgid "Unparseable 'response' \"%s\"; use is deprecated.  Use as.name(.) or `..`!"
-msgstr ""
-
-msgid "reformulate"
-msgstr ""
-
-msgid "deprecatedWarning"
 msgstr ""
 
 #, fuzzy
@@ -1578,6 +1649,12 @@ msgstr "'data' bir liste veya bir çevrebirim olmalı"
 
 msgid "variable '%s' is not a factor"
 msgstr "değişken '%s' bir faktör değil"
+
+msgid "contrasts dropped from factor %s"
+msgstr ""
+
+msgid "contrasts dropped from factor %s due to missing levels"
+msgstr ""
 
 msgid "'offset' must be numeric"
 msgstr "'offset' sayısal olmalı"
@@ -1782,6 +1859,9 @@ msgstr "'which' 1:6 içinde olmalı"
 msgid "'id.n' must be in {1,..,%d}"
 msgstr "'id.n' {1,..,%d} içinde olmalı"
 
+msgid "y is empty or has only NAs"
+msgstr ""
+
 msgid ""
 "hat values (leverages) are all = %s\n"
 " and there are no factor predictors; no plot no. 5"
@@ -1903,7 +1983,7 @@ msgstr "'p', 'x' ve 'n' ile aynı uzunluğa sahip olmalı"
 msgid "elements of 'p' must be in (0,1)"
 msgstr "'p' nin öğeleri (0,1) içinde olmalı"
 
-msgid "y is empty or has only NAs"
+msgid "'conf.level' is not a probability"
 msgstr ""
 
 msgid "'formula' missing"
@@ -1947,9 +2027,6 @@ msgid "'ref' must be an existing level"
 msgstr ""
 
 msgid "ref = %d must be in 1L:%d"
-msgstr ""
-
-msgid "'sep' must be a character string"
 msgstr ""
 
 msgid "failed to guess time-varying variables from their names"
@@ -1999,6 +2076,10 @@ msgstr ""
 
 msgid "argument 'object' has an impossible length"
 msgstr ""
+
+#, fuzzy
+msgid "right-hand side of formula is not a call"
+msgstr "geçersiz formül"
 
 msgid "no 'getInitial' method found for \"%s\" objects"
 msgstr ""
@@ -2706,9 +2787,6 @@ msgstr[1] "'start.innov' çok kısa: %d nokta gerekli"
 
 #~ msgid "<"
 #~ msgstr "<"
-
-#~ msgid "' ignored"
-#~ msgstr "' görmezden gelindi"
 
 #, fuzzy
 #~ msgid "invalid length(xout)"

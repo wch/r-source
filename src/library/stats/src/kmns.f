@@ -351,6 +351,7 @@ C
       INTEGER ICOUN,ISTEP,I,L1,L2,J
       DOUBLE PRECISION BIG,DA,DB,DD,AL1,ALW,AL2,ALT,R2,DE
       external kmnsQpr
+      INTEGER iMaxQtr
 C
 C     Define BIG to be a very large positive number
 C
@@ -365,7 +366,8 @@ c   Repeat {
  10   continue
 
       DO I = 1, M
-        if(iTrace .gt. 0 .and. ISTEP .ge. 1 .and. I .eq. 1) ! only from second "round" on
+       if(iTrace .gt. 0 .and. ISTEP .ge. 1 .and. I .eq. 1)
+c     only from second "round" on
      +       call kmnsQpr(ISTEP, ICOUN, NCP, K, iTrace)
         ICOUN = ICOUN + 1
         ISTEP = ISTEP + 1

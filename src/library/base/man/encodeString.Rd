@@ -18,7 +18,7 @@ encodeString(x, width = 0, quote = "", na.encode = TRUE,
              justify = c("left", "right", "centre", "none"))
 }
 \arguments{
-  \item{x}{A character vector, or an object that can be coerced to one
+  \item{x}{a character vector, or an object that can be coerced to one
     by \code{\link{as.character}}.}
   \item{width}{integer: the minimum field width.  If \code{NULL} or
     \code{NA}, this is taken to be the largest field width needed for

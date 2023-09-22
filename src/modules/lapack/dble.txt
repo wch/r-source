@@ -33,13 +33,13 @@ dlar2v.f	dlarf.f		dlarfb.f	dlarfg.f	dlarfgp.f
 dlarft.f	dlarfx.f	dlargv.f	dlarnv.f	dlarra.f
 dlarrb.f	dlarrc.f	dlarrd.f	dlarre.f	dlarrf.f
 dlarrj.f	dlarrk.f	dlarrr.f	dlarrv.f	dlarscl2.f
-dlartg.f	dlartgp.f	dlartgs.f	dlartv.f	dlaruv.f
+dlartgp.f	dlartgs.f	dlartv.f	dlaruv.f
 dlarz.f		dlarzb.f	dlarzt.f	dlas2.f		dlascl.f
 dlascl2.f	dlasd0.f	dlasd1.f	dlasd2.f	dlasd3.f
 dlasd4.f	dlasd5.f	dlasd6.f	dlasd7.f	dlasd8.f
 dlasda.f	dlasdq.f	dlasdt.f	dlaset.f	dlasq1.f
 dlasq2.f	dlasq3.f	dlasq4.f	dlasq5.f	dlasq6.f
-dlasr.f		dlasrt.f	dlassq.f	dlasv2.f	dlaswp.f
+dlasr.f		dlasrt.f	dlasv2.f	dlaswp.f
 dlasy2.f	dlasyf.f	dlatbs.f	dlatdf.f	dlatps.f
 dlatrd.f	dlatrs.f	dlatrz.f	dlauu2.f	dlauum.f
 dopgtr.f	dopmtr.f	dorbdb.f	dorcsd.f	dorg2l.f
@@ -81,4 +81,3 @@ dtrevc3.f
 DEPRECATED/dgeqpf.f DEPRECATED/dgegv.f DEPRECATED/dggsvd.f DEPRECATED/dggsvp.f
 DEPRECATED/dgegs.f DEPRECATED/dgelsx.f DEPRECATED/dlahrd.f DEPRECATED/dlatzm.f
 DEPRECATED/dtzrqf.f
-dcombssq.f

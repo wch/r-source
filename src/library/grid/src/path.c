@@ -48,7 +48,7 @@ SEXP L_fill(SEXP path, SEXP rule)
      */
     pGEDevDesc dd = getDevice();
     currentgp = gridStateElement(dd, GSS_GPAR);
-    PROTECT(resolvedFill = resolveGPar(currentgp));
+    PROTECT(resolvedFill = resolveGPar(currentgp, FALSE));
     gcontextFromgpar(currentgp, 0, &gc, dd);
     
     GEMode(1, dd);
@@ -78,7 +78,7 @@ SEXP L_fillStroke(SEXP path, SEXP rule)
      */
     pGEDevDesc dd = getDevice();
     currentgp = gridStateElement(dd, GSS_GPAR);
-    PROTECT(resolvedFill = resolveGPar(currentgp));
+    PROTECT(resolvedFill = resolveGPar(currentgp, FALSE));
     gcontextFromgpar(currentgp, 0, &gc, dd);
     
     GEMode(1, dd);

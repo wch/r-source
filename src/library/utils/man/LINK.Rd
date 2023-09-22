@@ -24,7 +24,7 @@
   \R shared or static library: see the examples.
 
   The actual linking command is constructed by the version of
-  \command{libtool} installed at \file{\env{R_HOME}/bin}.
+  \command{libtool} installed at \file{\var{\link{R_HOME}}/bin}.
 
   \command{R CMD LINK --help} gives usage information.
 }

@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Modifications copyright (C) 2007-2020  The R Core Team
+ *  Modifications copyright (C) 2007-2022  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -19,12 +19,20 @@
 
 
 /*
+Added 2007-12-30, priginally for use on Windows.  Derived from 
+http://www.iana.org/time-zones at that time.
+protoize-d in 2008
+Some updates in 2013
+Some changes mergged from tzcode2015f to avoid clang warnings.
+Lots of casts (even 2022f needs casts).
+
 The orginal version of this file stated
 
 ** This file is in the public domain, so clarified as of
 ** 1996-06-05 by Arthur David Olson.
 
 The modified version is copyrighted.  Modifications include:
+how the system timezone is found
 setting EOVERFLOW
 where to find the zi database
 Mingw-w64 changes
@@ -32,6 +40,18 @@ removing ATTRIBUTE_PURE, conditional parts for e.g. ALL_STATE
 use of 'unknown' isdst
 use of 64-bit time_t irrespective of platform.
 use of tm_zone and tm_gmtoff on all platforms.
+using R_ prefix for exported entry points.
+
+Despite its name, this file provides
+R_gmtime
+R_gmtime_r
+R_localtime
+R_localtime_r
+R_mktime
+R_timegm
+R_tzname
+R_tzset
+R_tzsetwall
 */
 
 #include <config.h>
@@ -176,16 +196,16 @@ static const char	gmt[] = "GMT";
 #endif /* !defined TZDEFDST */
 
 struct ttinfo {				/* time type information */
-	int_fast32_t	tt_gmtoff;	/* UT offset in seconds */
-	int		tt_isdst;	/* used to set tm_isdst */
-	int		tt_abbrind;	/* abbreviation list index */
-	int		tt_ttisstd;	/* TRUE if transition is std time */
-	int		tt_ttisgmt;	/* TRUE if transition is UT */
+    int_fast32_t tt_gmtoff;	/* UT offset in seconds */
+    int		tt_isdst;	/* used to set tm_isdst */
+    int		tt_abbrind;	/* abbreviation list index */
+    int		tt_ttisstd;	/* TRUE if transition is std time */
+    int		tt_ttisgmt;	/* TRUE if transition is UT */
 };
 
 struct lsinfo {				/* leap second information */
-	time_t		ls_trans;	/* transition time */
-	int_fast64_t	ls_corr;	/* correction to apply */
+    time_t		ls_trans;	/* transition time */
+    int_fast64_t	ls_corr;	/* correction to apply */
 };
 
 #define BIGGEST(a, b)	(((a) > (b)) ? (a) : (b))
@@ -369,6 +389,7 @@ differ_by_repeat(const time_t t1, const time_t t0)
     return (int_fast64_t)t1 - (int_fast64_t)t0 == SECSPERREPEAT;
 }
 
+// from main/util.c (Unix) or registryTZ.c (Windows)
 extern const char *getTZinfo(void);
 extern void Rf_warning(const char *, ...);
 

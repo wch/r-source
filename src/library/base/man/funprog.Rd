@@ -1,6 +1,6 @@
 % File src/library/base/man/funprog.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2021 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 \name{funprog}
 \alias{Filter}
@@ -11,17 +11,19 @@
 \alias{Position}
 \title{Common Higher-Order Functions in Functional Programming Languages}
 \description{
-  \code{Reduce} uses a binary function to successively combine the
-  elements of a given vector and a possibly given initial value.
-  \code{Filter} extracts the elements of a vector for which a predicate
-  (logical) function gives true.  \code{Find} and \code{Position} give
-  the first or last such element and its position in the vector,
-  respectively.  \code{Map} applies a function to the corresponding
-  elements of given vectors.  \code{Negate} creates the negation of a
-  given function.
+  \describe{
+    \item{\code{Reduce}}{uses a binary function to successively combine the
+      elements of a given vector and a possibly given initial value.}
+    \item{\code{Filter}}{extracts the elements of a vector for which a predicate
+      (logical) function gives true.}
+    \item{\code{Find} and \code{Position}}{give the first or last such
+      element and its position in the vector, respectively.}
+    \item{\code{Map}}{applies a function to the corresponding elements of given vectors.}
+    \item{\code{Negate}}{creates the negation of a given function.}
+  }
 }
 \usage{
-Reduce(f, x, init, right = FALSE, accumulate = FALSE)
+Reduce(f, x, init, right = FALSE, accumulate = FALSE, simplify = TRUE)
 Filter(f, x)
 Find(f, x, right = FALSE, nomatch = NULL)
 Map(f, ...)
@@ -42,9 +44,13 @@ Position(f, x, right = FALSE, nomatch = NA_integer_)
   \item{accumulate}{a logical indicating whether the successive reduce
     combinations should be accumulated.  By default, only the final
     combination is used.}
+  \item{simplify}{a logical indicating whether accumulated results
+    should be simplified (by unlisting) in case they all are length
+    one.}
   \item{nomatch}{the value to be returned in the case when
     \dQuote{no match} (no element satisfying the predicate) is found.}
-  \item{\dots}{vectors.}
+  \item{\dots}{vectors to which the function is \code{Map()}ped, and other
+    arguments of \code{\link{mapply}} passed to it, e.g., \code{MoreArgs}.}
 }
 \details{
   If \code{init} is given, \code{Reduce} logically adds it to the start
@@ -75,11 +81,11 @@ Position(f, x, right = FALSE, nomatch = NA_integer_)
   subset of \code{x} for which this gives true.  Note that possible
   \code{NA} values are currently always taken as false; control over
   \code{NA} handling may be added in the future.  \code{Filter}
-  corresponds to \code{filter} in Haskell or \code{remove-if-not} in
+  corresponds to \code{filter} in Haskell or \samp{remove-if-not} in
   Common Lisp.
 
   \code{Find} and \code{Position} are patterned after Common Lisp's
-  \code{find-if} and \code{position-if}, respectively.  If there is an
+  \samp{find-if} and \samp{position-if}, respectively.  If there is an
   element for which the predicate function gives true, then the first or
   last such element or its position is returned depending on whether
   \code{right} is false (default) or true, respectively.  If there is no

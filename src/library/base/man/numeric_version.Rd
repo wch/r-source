@@ -35,10 +35,6 @@
 \alias{unique.numeric_version}
 \alias{xtfrm.numeric_version}
 \alias{$.package_version}
-% Internal.
-\alias{.encode_numeric_version}
-\alias{.decode_numeric_version}
-\alias{.make_numeric_version}
 \title{Numeric Versions}
 \description{A simple S3 class for representing numeric versions
   including package versions, and associated methods.}
@@ -47,11 +43,21 @@ numeric_version(x, strict = TRUE)
 package_version(x, strict = TRUE)
 R_system_version(x, strict = TRUE)
 getRversion()
+as.numeric_version(x)
+as.package_version(x)
+is.numeric_version(x)
+is.package_version(x)
 }
 \arguments{
-  \item{x}{a character vector with suitable numeric version strings (see
-    \sQuote{Details}); for \code{package_version}, alternatively an R
-    version object as obtained by \code{\link{R.version}}.}
+  \item{x}{for the creators, a character vector with suitable numeric
+    version strings (see \sQuote{Details});
+    for \code{package_version}, alternatively an R
+    version object as obtained by \code{\link{R.version}}.
+    For \code{as.numeric_version} and \code{as.package_version},
+    suitable character vectors as above, or numeric version objects.
+    For \code{is.numeric_version} and \code{is.package_version},
+    arbitrary R objects.
+  }
   \item{strict}{a logical indicating whether invalid numeric versions
     should results in an error (default) or not.}
 }

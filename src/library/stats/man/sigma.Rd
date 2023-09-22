@@ -3,6 +3,7 @@
 \alias{sigma}
 \alias{sigma.default}% lm, nls, glm
 \alias{sigma.mlm}
+\alias{sigma.glm}
 \description{
   Extract the estimated standard deviation of the errors, the
   \dQuote{residual standard deviation} (misnamed also
@@ -28,8 +29,9 @@ sigma(object, ...)
     methods.  Passed to \code{\link{deviance}(*, ...)} for the default method.}
 }
 \details{
- The \pkg{stats} package provides the S3 generic and a default method.
- The latter is correct typically for (asymptotically / approximately)
+ The \pkg{stats} package provides the S3 generic, a default method,
+ and a method for objects of class "glm".  
+ The default method is correct typically for (asymptotically / approximately)
  generalized gaussian (\dQuote{least squares}) problems, since it is
  defined as
  \preformatted{
@@ -42,17 +44,22 @@ sigma(object, ...)
  case of undetermined coefficients, e.g., for rank deficient model fits.
 }
 \value{
-  typically a number, the estimated standard deviation of the
+  Typically a number, the estimated standard deviation of the
   errors (\dQuote{residual standard deviation}) for Gaussian
   models, and---less interpretably---the square root of the residual
   deviance per degree of freedom in more general models.
-  In some generalized linear modelling (\code{\link{glm}}) contexts,
-  \eqn{sigma^2} (\code{sigma(.)^2}) is called \dQuote{dispersion
-    (parameter)}.  Consequently, for well-fitting binomial or Poisson
-  GLMs, \code{sigma} is around 1.
 
   Very strictly speaking, \eqn{\hat{\sigma}}{\sigma^} (\dQuote{\eqn{\sigma} hat})
   is actually \eqn{\sqrt{\widehat{\sigma^2}}}{\sqrt(hat(\sigma^2))}.
+
+  For generalized linear models (class \code{"glm"}), the
+  \code{sigma.glm} method returns the square root of the dispersion
+  parameter (See \code{\link{summary.glm}}). For families with free
+  dispersion parameter, \eqn{sigma} is estimated from the root mean
+  square of the Pearson residuals.  For families with fixed dispersion,
+  \code{sigma} is not estimated from the residuals but extracted directly
+  from the family of the fitted model.  Consequently, for binomial or
+  Poisson GLMs, \code{sigma} is exactly 1.
 
   For multivariate linear models (class \code{"mlm"}), a \emph{vector}
   of sigmas is returned, each corresponding to one column of \eqn{Y}.
@@ -62,7 +69,8 @@ sigma(object, ...)
   too many \R (and S) outputs to be easily changed there.
 }
 \seealso{
-  \code{\link{deviance}}, \code{\link{nobs}}, \code{\link{vcov}}.
+  \code{\link{deviance}}, \code{\link{nobs}}, \code{\link{vcov}},
+  \code{\link{summary.glm}}.
 }
 \examples{
 ## -- lm() ------------------------------
@@ -91,11 +99,11 @@ counts <- c(18,17,15,20,10,20,25,13,12)
 outcome <- gl(3,1,9)
 treatment <- gl(3,3)
 sigma(glm.D93 <- glm(counts ~ outcome + treatment, family = poisson()))
-## (currently) *differs* from
-summary(glm.D93)$dispersion # == 1
+## equal to
+sqrt(summary(glm.D93)$dispersion) # == 1
 ## and the *Quasi*poisson's dispersion
 sigma(glm.qD93 <- update(glm.D93, family = quasipoisson()))
-sigma (glm.qD93)^2 # 1.282285 is close, but not the same
+sigma (glm.qD93)^2 # 1.2933 equal to
 summary(glm.qD93)$dispersion # == 1.2933
 
 ## -- Multivariate lm() "mlm" -----------

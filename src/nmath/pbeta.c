@@ -1,6 +1,6 @@
 /*
  *  Mathlib : A C Library of Special Functions
- *  Copyright (C) 2006 The R Core Team
+ *  Copyright (C) 2022 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -52,6 +52,9 @@ double pbeta_raw(double x, double a, double b, int lower_tail, int log_p)
 	// else, remaining case:  a = b = Inf : point mass 1 at 1/2
 	if (x < 0.5) return R_DT_0; else return R_DT_1;
     }
+    if (x >= 1) // may happen when called from qbeta()
+	return R_DT_1;
+
     // Now:  0 < a < Inf;  0 < b < Inf
 
     double x1 = 0.5 - x + 0.5, w, wc;
@@ -61,8 +64,8 @@ double pbeta_raw(double x, double a, double b, int lower_tail, int log_p)
     //====
     // ierr in {10,14} <==> bgrat() error code ierr-10 in 1:4; for 1 and 4, warned *there*
     if(ierr && ierr != 11 && ierr != 14)
-	MATHLIB_WARNING4(_("pbeta_raw(%g, a=%g, b=%g, ..) -> bratio() gave error code %d"),
-			x, a,b, ierr);
+	MATHLIB_WARNING6(_("pbeta_raw(%g, a=%g, b=%g, lower=%d, log=%d) -> bratio() gave error code %d"),
+			 x, a,b, lower_tail, log_p, ierr);
     return lower_tail ? w : wc;
 } /* pbeta_raw() */
 
@@ -77,8 +80,6 @@ double pbeta(double x, double a, double b, int lower_tail, int log_p)
 
     if (x <= 0)
 	return R_DT_0;
-    if (x >= 1)
-	return R_DT_1;
 
     return pbeta_raw(x, a, b, lower_tail, log_p);
 }

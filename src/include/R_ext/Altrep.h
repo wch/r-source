@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2016  The R Core Team.
+ *  Copyright (C) 2016-2023  The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -50,6 +50,8 @@ R_altrep_class_t
 R_make_altraw_class(const char *cname, const char *pname, DllInfo *info);
 R_altrep_class_t
 R_make_altcomplex_class(const char *cname, const char *pname, DllInfo *info);
+R_altrep_class_t
+R_make_altlist_class(const char *cname, const char *pname, DllInfo *info);
 
 Rboolean R_altrep_inherits(SEXP x, R_altrep_class_t);
 
@@ -96,6 +98,7 @@ typedef Rbyte (*R_altraw_Elt_method_t)(SEXP, R_xlen_t);
 typedef R_xlen_t
 (*R_altraw_Get_region_method_t)(SEXP, R_xlen_t, R_xlen_t, Rbyte *);
 
+#include <R_ext/Complex.h>
 typedef Rcomplex (*R_altcomplex_Elt_method_t)(SEXP, R_xlen_t);
 typedef R_xlen_t
 (*R_altcomplex_Get_region_method_t)(SEXP, R_xlen_t, R_xlen_t, Rcomplex *);
@@ -104,6 +107,9 @@ typedef SEXP (*R_altstring_Elt_method_t)(SEXP, R_xlen_t);
 typedef void (*R_altstring_Set_elt_method_t)(SEXP, R_xlen_t, SEXP);
 typedef int (*R_altstring_Is_sorted_method_t)(SEXP);
 typedef int (*R_altstring_No_NA_method_t)(SEXP);
+
+typedef SEXP (*R_altlist_Elt_method_t)(SEXP, R_xlen_t);
+typedef void (*R_altlist_Set_elt_method_t)(SEXP, R_xlen_t, SEXP);
 
 #define DECLARE_METHOD_SETTER(CNAME, MNAME)				\
     void								\
@@ -155,6 +161,9 @@ DECLARE_METHOD_SETTER(altstring, Elt)
 DECLARE_METHOD_SETTER(altstring, Set_elt)
 DECLARE_METHOD_SETTER(altstring, Is_sorted)
 DECLARE_METHOD_SETTER(altstring, No_NA)
+
+DECLARE_METHOD_SETTER(altlist, Elt)
+DECLARE_METHOD_SETTER(altlist, Set_elt)
 
 #ifdef  __cplusplus
 }

@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/xy.coords.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2016 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{xy.coords}
@@ -21,7 +21,7 @@ xy.coords(x, y = NULL, xlab = NULL, ylab = NULL, log = NULL,
   \item{xlab, ylab}{names for the x and y variables to be extracted.}
   \item{log}{character, \code{"x"}, \code{"y"} or both, as for
     \code{\link{plot}}.  Sets negative values to \code{\link{NA}} and
-    gives a warning.}
+    gives a warning of class \code{"log_le_0"}.}
   \item{recycle}{logical; if \code{TRUE}, recycle (\code{\link{rep}})
     the shorter of \code{x} or \code{y} if their lengths differ.}
   \item{setLab}{logical indicating if the resulting \code{xlab} and
@@ -90,5 +90,10 @@ with(cars, xy.coords(dist ~ speed, NULL)$xlab ) # = "speed"
 xy.coords(1:3, 1:2, recycle = TRUE) # otherwise error "lengths differ"
 xy.coords(-2:10, log = "y")
 ##> xlab: "Index"  \\\  warning: 3 y values <= 0 omitted ..
+op <- options(warn = 2)# ==> warnings would be errors, we suppress the one "we know":
+suppressWarnings(xy.coords(-2:10, log = "y"), classes="log_le_0") -> xy
+options(op) # revert
+stopifnot(is.list(xy), identical (1:13 +0,  xy$x),
+          identical(c(rep(NA, 3), 1:10 +0), xy$y))
 }
 \keyword{dplot}

@@ -1,6 +1,6 @@
 % File src/library/stats/man/Hypergeometric.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2020 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Hypergeometric}
@@ -111,7 +111,9 @@ m <- 10; n <- 7; k <- 8
 x <- 0:(k+1)
 rbind(phyper(x, m, n, k), dhyper(x, m, n, k))
 all(phyper(x, m, n, k) == cumsum(dhyper(x, m, n, k)))  # FALSE
-\donttest{## but error is very small:
+\donttest{## but errors are very small:
 signif(phyper(x, m, n, k) - cumsum(dhyper(x, m, n, k)), digits = 3)
-}}
+}
+stopifnot(abs(phyper(x, m, n, k) - cumsum(dhyper(x, m, n, k))) < 5e-16)
+}
 \keyword{distribution}

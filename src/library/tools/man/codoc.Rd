@@ -61,9 +61,7 @@ codocData(package, lib.loc = NULL)
   files are extracted and parsed \sQuote{as much as possible} to give
   the formals documented.  For interpreted functions in the code
   environment, the formals are compared between code and documentation
-  according to the values of the argument \code{use.values}.  Synopsis
-  sections are used if present; their occurrence is reported if
-  \code{verbose} is true.
+  according to the values of the argument \code{use.values}.
 
   If a package has a namespace both exported and unexported objects are
   checked, as well as registered S3 methods.  (In the unlikely event of

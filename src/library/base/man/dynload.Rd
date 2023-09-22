@@ -1,6 +1,6 @@
 % File src/library/base/man/dynload.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2018 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{dyn.load}
@@ -35,7 +35,7 @@ is.loaded(symbol, PACKAGE = "", type = "")
 #endif
   }
   \item{now}{a logical controlling whether all symbols are resolved (and
-    relocated) immediately the library is loaded or deferred until they
+    relocated) immediately when the library is loaded or deferred until they
     are used.  This control is useful for developers testing whether a
     library is complete and has all the necessary symbols, and for users
     to ignore missing symbols.  Whether this has any effect is system-dependent.
@@ -54,9 +54,9 @@ is.loaded(symbol, PACKAGE = "", type = "")
     \file{.so}, \file{.sl}, \file{.dll}, \dots).  This is intended to
     add safety for packages, which can ensure by using this argument
     that no other package can override their external symbols.  This is
-    used in the same way as in \code{\link{.C}}, \code{\link{.Call}},
+    used in the same way as in the \code{\link{.C}}, \code{\link{.Call}},
     \code{\link{.Fortran}} and \code{\link{.External}} functions.}
-  \item{type}{The type of symbol to look for: can be any (\code{""}, the
+  \item{type}{the type of symbol to look for: can be any (\code{""}, the
     default), \code{"Fortran"}, \code{"Call"} or \code{"External"}.}
 }
 \details{
@@ -72,7 +72,7 @@ is.loaded(symbol, PACKAGE = "", type = "")
   \sQuote{R Installation and Administration} manuals for how to create
   and install a suitable DLL.
 
-  Unfortunately a very few platforms (e.g., Compaq Tru64) do not handle
+  Unfortunately some rare platforms (e.g., Compaq Tru64) do not handle
   the \code{PACKAGE} argument correctly, and may incorrectly find
   symbols linked into \R.
 
@@ -92,17 +92,17 @@ is.loaded(symbol, PACKAGE = "", type = "")
   operating system, certain libraries must have their symbols loaded
   globally to successfully resolve all symbols.
 
-  One should be careful of the potential side-effect of using lazy
-  loading via the \code{now} argument as \code{FALSE}.  If a routine is
+  One should be careful of one potential side-effect of using lazy
+  loading via \code{now = FALSE}: if a routine is
   called that has a missing symbol, the process will terminate
-  immediately.  The intended use is for library developers to call with
+  immediately.  The intended use is for library developers to call this with
   value \code{TRUE} to check that all symbols are actually resolved and
-  for regular users to call with \code{FALSE} so that missing symbols
+  for regular users to call it with \code{FALSE} so that missing symbols
   can be ignored and the available ones can be called.
 
   The initial motivation for adding these was to avoid such termination
   in the \code{_init()} routines of the Java virtual machine library.
-  However, symbols loaded locally may not be (read probably) available
+  However, symbols loaded locally may not be (read: probably) available
   to other DLLs.  Those added to the global table are available to all
   other elements of the application and so can be shared across two
   different DLLs.
@@ -116,7 +116,7 @@ is.loaded(symbol, PACKAGE = "", type = "")
 
   There is a short discussion of these additional arguments with some
   example code available at
-  \url{http://www.stat.ucdavis.edu/~duncan/R/dynload/}.
+  \url{https://www.stat.ucdavis.edu/~duncan/R/dynload/}.
 #endif
 #ifdef windows
 
@@ -145,23 +145,25 @@ is.loaded(symbol, PACKAGE = "", type = "")
 
   The function \code{dyn.unload} unlinks the DLL.  Note that unloading a
   DLL and then re-loading a DLL of the same name may or may not work: on
-  Solaris it uses the first version loaded. Note also that some DLLs cannot
+  Solaris it used the first version loaded. Note also that some DLLs cannot
   be safely unloaded at all: unloading a DLL which implements C finalizers
   but does not unregister them on unload causes R to crash.
 
   \code{is.loaded} checks if the symbol name is loaded \emph{and
   searchable} and hence available for use as a character string value
-  for argument \code{.NAME} in \code{.C} or \code{.Fortran} or
-  \code{.Call} or \code{.External}.  It will succeed if any one of the
+  for argument \code{.NAME} in \code{.C}, \code{.Fortran},
+  \code{.Call}, or \code{.External}.  It will succeed if any one of the
   four calling functions would succeed in using the entry point unless
   \code{type} is specified.  (See \code{\link{.Fortran}} for how Fortran
   symbols are mapped.)  Note that symbols in base packages are not
   searchable, and other packages can be so marked.
 }
 \note{
-  \code{is.loaded} requires the name you would give to \code{.C} etc
-  and \strong{not} (as in S) that remapped by the defunct functions
-  \code{symbol.C} or \code{symbol.For}.
+  \code{is.loaded} requires the name you would give to \code{.C} etc.
+  It must be a character string and so cannot be an \R object as used
+  for registered native symbols (see \dQuote{Writing R Extensions}
+  section 5.4.).  Some registered symbols are available by name but most are
+  not, including those in the examples below.
 
   By default, the maximum number of DLLs that can be loaded is now 614
   when the OS limit on the number of open files allows or can be
@@ -177,7 +179,8 @@ is.loaded(symbol, PACKAGE = "", type = "")
   modified using command \command{ulimit -n} (\command{sh},
   \command{bash}) or \command{limit descriptors} (\command{csh}) in the
   shell used to launch \R{}.  Increasing \env{R_MAX_NUM_DLLS} comes with
-  some memory overhead.
+  some memory overhead, and be aware that many types of
+  \link{connections} also use file descriptors.
 
   If the OS limit on the number of open files cannot be determined, the
   DLL limit is 100 and cannot be changed \emph{via} \env{R_MAX_NUM_DLLS}.
@@ -256,7 +259,8 @@ is.loaded(symbol, PACKAGE = "", type = "")
   \code{\link{.Call}}.
 }
 \examples{
-## expect all of these to be false in R >= 3.0.0.
+## expect all of these to be false in R >= 3.0.0 as these can only be
+## used via registered symbols.
 is.loaded("supsmu") # Fortran entry point in stats
 is.loaded("supsmu", "stats", "Fortran")
 is.loaded("PDF", type = "External") # pdf() device in grDevices

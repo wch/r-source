@@ -1,7 +1,7 @@
 #  File src/library/stats/R/dist.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2020 The R Core Team
+#  Copyright (C) 1995-2022 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -49,8 +49,10 @@ as.matrix.dist <- function(x, ...)
 {
     size <- attr(x, "Size")
     df <- matrix(0, size, size)
-    df[row(df) > col(df)] <- x
-    df <- df + t(df)
+    lower <- row(df) > col(df)
+    df[lower] <- x ## preserving NAs in x
+    df <- t(df)
+    df[lower] <- x
     labels <- attr(x, "Labels")
     dimnames(df) <-
 	if(is.null(labels)) list(seq_len(size), seq_len(size)) else list(labels,labels)

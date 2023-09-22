@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: utils 4.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-11-06 17:18\n"
+"POT-Creation-Date: 2023-07-31 15:00\n"
 "PO-Revision-Date: 2020-11-29 17:00+0200\n"
 "Last-Translator: <r.zakauskas@gmail.com;gabriele.dauksaite@gmail.com>\n"
 "Language-Team: Lithuanian\n"
@@ -24,6 +24,12 @@ msgstr "jokių dokumentų, skirtų %s pakete %s nerasta"
 
 msgid "document not found"
 msgstr "dokumentas nerastas"
+
+msgid "some options in argument 'restrict' were not recognized and hence ignored"
+msgstr ""
+
+msgid "argument 'format' is deprecated and has no affect on search results"
+msgstr ""
 
 msgid "A search query has been submitted to %s"
 msgstr "Paieškos užklausa pateikta %s"
@@ -188,8 +194,8 @@ msgstr "indeksas nepatenka į sritis"
 msgid "%s should be one of %s"
 msgstr "%s turi būti vienas iš %s"
 
-msgid "Argument '%s' is deprecated; rather set '%s' instead."
-msgstr "Argumentas '%s' nebenaudojamas; vietoj to nustatyti '%s'."
+msgid "To cite package %s in publications use:"
+msgstr "Norėdami nurodyti paketą %s leidiniuose, naudokite:"
 
 msgid "A BibTeX entry for LaTeX users is"
 msgstr "BibTeX įrašas, skirtas LaTeX vartotojams yra"
@@ -201,14 +207,8 @@ msgstr ""
 "Praleidžiamas netinkamas įrašas %d:\n"
 "%s"
 
-msgid "no date field in DESCRIPTION file of package %s"
-msgstr "paketo %s DESCRIPTION faile nėra datos lauko"
-
 msgid "could not determine year for %s from package DESCRIPTION file"
 msgstr "nepavyko nustatyti %s metų iš paketo DESCRIPTION failo"
-
-msgid "To cite package %s in publications use:"
-msgstr "Norėdami nurodyti paketą %s leidiniuose, naudokite:"
 
 msgid "ATTENTION: This citation information has been auto-generated from the package DESCRIPTION file and may need manual editing, see %s."
 msgstr "DĖMESIO: Ši citatos informacija buvo sugeneruota automatiškai iš paketo DESCRIPTION failo ir gali reikėti redaguoti rankiniu būdu, žr. %s."
@@ -219,14 +219,9 @@ msgstr "'FUN' turi būti funkcija arba NULL"
 msgid "cannot handle S4 methods yet"
 msgstr "dar negalima apdoroti S4 metodų"
 
-msgid "'package' must be a character string or NULL"
+#, fuzzy
+msgid "'package' must be a character vector or NULL"
 msgstr "'package' turi būti simbolių eilutė arba NULL"
-
-msgid "datasets have been moved from package 'base' to package 'datasets'"
-msgstr "duomenų rinkiniai buvo perkelti iš paketo 'base' į paketą 'datasets'"
-
-msgid "datasets have been moved from package 'stats' to package 'datasets'"
-msgstr "duomenų rinkiniai buvo perkelti iš paketo 'stats' į paketą 'datasets'"
 
 msgid "data index for package %s is invalid and will be ignored"
 msgstr "paketo %s duomenų indeksas neleistinas ir bus ignoruojamas"
@@ -370,8 +365,16 @@ msgstr "'form' turi būti dvipusė formulė"
 msgid "'form' must be a two-sided formula with one term on each side"
 msgstr "'form' turi būti dvipusė formulė su vienu nariu kiekvienoje pusėje"
 
-msgid "invalid 'n' -  must contain at least one non-missing element, got none."
+#, fuzzy
+msgid "invalid object for 'as.environment'"
+msgstr "neleistinas 'socket' argumentas"
+
+#, fuzzy
+msgid "invalid 'n' - must contain at least one non-missing element, got none."
 msgstr "neteisingas 'n' - turi būti bent vienas netrūkstamas elementas, negaunamas nė vienas."
+
+msgid "invalid 'n' - must be numeric, possibly NA."
+msgstr ""
 
 msgid "invalid 'n' - must have length one when dim(x) is NULL, got %d"
 msgstr "neleistinas 'n' - ilgis turi būti vienetas, kai dim(x) yra NULL, gaunamas %d"
@@ -456,7 +459,8 @@ msgstr "Atšaukta vartotojo"
 msgid "Unable to connect to CRAN to check R version."
 msgstr "Neįmanoma prisijungti prie CRAN, kad patikrinti R versiją."
 
-msgid "argument %s must be a single character string"
+#, fuzzy
+msgid "argument %s must be a character string"
 msgstr "argumentas %s turi būti viena simbolių eilutė"
 
 msgid "incorrect field specification"
@@ -502,11 +506,9 @@ msgstr "Jei naršyklė, kurią paleido '%s', jau paleista, ji yra *ne* iš naujo
 msgid "Otherwise, be patient ..."
 msgstr "Priešingu atveju būkite kantrūs ..."
 
-msgid "'url' must be a non-empty character string"
+#, fuzzy
+msgid "'%s' must be a non-empty character string"
 msgstr "'url' turi būti netuščia simbolių eilutė"
-
-msgid "'browser' must be a non-empty character string"
-msgstr "'browser' turi būti netuščia simbolių eilutė"
 
 msgid "no package '%s' was found"
 msgstr "nerastas paketas '%s'"
@@ -531,6 +533,10 @@ msgstr "negali atnaujinti HTML paketo rodyklės"
 
 msgid "done"
 msgstr "atlikta"
+
+#, fuzzy
+msgid "Source must be a seekable connection"
+msgstr "'file' turi būti simbolių eilutė arba ryšys"
 
 msgid "menu() cannot be used non-interactively"
 msgstr "meniu() negalima naudoti neinteraktyviai"
@@ -685,6 +691,12 @@ msgstr "negali nustatyti saugyklų neinteraktyviai"
 msgid "invalid options(\"pkgType\"); must be a character string"
 msgstr "netinkamos options(\"pkgType\"); turi būti simbolių eilutė"
 
+msgid "No matching repositories found for"
+msgstr ""
+
+msgid ","
+msgstr ""
+
 msgid "--- Please select repositories for use in this session ---"
 msgstr "--- Pasirinkite saugyklas, skirtas naudoti šiame seanse ---"
 
@@ -703,6 +715,10 @@ msgid ""
 msgstr ""
 "Nežinia, kuris 'lib' elementas turi įdiegti priklausomybes\n"
 " į praleidžiančias priklausomybes"
+
+#, fuzzy
+msgid "'%s' must be a character string"
+msgstr "'unzip' turi būti vieno simbolio eilutė"
 
 msgid "type 'binary' is not supported on this platform"
 msgstr "tipas 'binary' nepalaikomas šioje platformoje"
@@ -774,12 +790,26 @@ msgstr "foundpkgs: %s"
 msgid "files: %s"
 msgstr "failai: %s"
 
+msgid "Windows default 'timeout' command is not usable for parallel installs"
+msgstr ""
+
 msgid "timeouts for parallel installs require the 'timeout' command"
 msgstr "lygiagrečių diegimų laukimas laikas reikalauja 'timeout' komandos"
 
+#, fuzzy
+msgid "installation of package %s failed"
+msgstr "nepavyko atsisiųsti paketo %s"
+
+#, fuzzy
+msgid "installation of %d packages failed:  %s"
+msgstr ""
+"nepavyko įdiegti vieno ar daugiau paketų,\n"
+"  tikriausiai %s"
+
+#, fuzzy
 msgid ""
-"installation of one or more packages failed,\n"
-"  probably %s"
+"installation of %d packages failed:\n"
+"  %s"
 msgstr ""
 "nepavyko įdiegti vieno ar daugiau paketų,\n"
 "  tikriausiai %s"
@@ -1134,16 +1164,9 @@ msgstr "stulpelių pavadinimų pridėjimas prie failo"
 msgid "attempt to set '%s' ignored"
 msgstr "bandymas nustatyti '%s' ignoruojamas"
 
-msgid "'unzip' must be a single character string"
-msgstr "'unzip' turi būti vieno simbolio eilutė"
-
 #, fuzzy
 msgid "'files' must be a character vector specifying one or more filepaths"
 msgstr "'files' turi būti tekstinis vektorius nurodantis vieną ar daugiau failo kelių"
-
-#, fuzzy
-msgid "argument 'zip' must be a non-empty character string"
-msgstr "'url' turi būti netuščia simbolių eilutė"
 
 msgid "cannot find program to open 'mailto:' URIs: reverting to 'method=\"none\"'"
 msgstr "nepavyksta rasti programos, kad atidarytumėte 'mailto:' URI: grįžtate prie 'method=\"none\"'"
@@ -1174,6 +1197,10 @@ msgstr "'wget' iškvietimas turėjo nenulinio išėjimo būseną"
 
 msgid "'curl' call had nonzero exit status"
 msgstr "'curl' iškvietimas turėjo nenulinio išėjimo būseną"
+
+#, fuzzy
+msgid "invalid method:"
+msgstr "neleistinas formatas"
 
 msgid "download had nonzero exit status"
 msgstr "atsisiuntimas turėjo nenulinio išėjimo būseną"
@@ -1260,6 +1287,13 @@ msgstr[0] "Rastas %d Sweave failas, skirtas pagrindiniam vardui %s"
 msgstr[1] "Rasti %d Sweave failai, skirti pagrindiniam vardui %s"
 msgstr[2] "Rasta %d Sweave failų, skirtų pagrindiniam vardui %s"
 
+#, fuzzy
+msgid "Output/used file:  "
+msgid_plural "Output/used files:  "
+msgstr[0] "Išvesties failas:"
+msgstr[1] "Išvesties failas:"
+msgstr[2] "Išvesties failas:"
+
 msgid "%d occurrence in %s"
 msgid_plural "%d occurrences in %s"
 msgstr[0] "%d egzempliorius, esantis %s"
@@ -1301,6 +1335,13 @@ msgid_plural "objects '%s' not found"
 msgstr[0] "objektas '%s' nerastas"
 msgstr[1] "objektai '%s' nerasti"
 msgstr[2] "objektų '%s' nerasta"
+
+#, fuzzy
+msgid "package %s is a base package, and cannot be removed"
+msgid_plural "packages %s are base packages, and cannot be removed"
+msgstr[0] "paketas %s yra pagrindinis paketas ir nebus atnaujintas"
+msgstr[1] "paketai %s yra pagrindiniai paketai ir nebus atnaujinti"
+msgstr[2] "%s paketų yra pagrindiniai paketai ir nebus atnaujinti"
 
 msgid ""
 "Removing package from %s\n"
@@ -1428,6 +1469,25 @@ msgid_plural "invalid roman numerals: %s"
 msgstr[0] "neteisingas romėniškas skaitmuo: %s"
 msgstr[1] "neteisingi romėniški skaitmenys: %s"
 msgstr[2] "neteisingų romėniškų skaitmenų: %s"
+
+#~ msgid "Argument '%s' is deprecated; rather set '%s' instead."
+#~ msgstr "Argumentas '%s' nebenaudojamas; vietoj to nustatyti '%s'."
+
+#~ msgid "no date field in DESCRIPTION file of package %s"
+#~ msgstr "paketo %s DESCRIPTION faile nėra datos lauko"
+
+#~ msgid "datasets have been moved from package 'base' to package 'datasets'"
+#~ msgstr "duomenų rinkiniai buvo perkelti iš paketo 'base' į paketą 'datasets'"
+
+#~ msgid "datasets have been moved from package 'stats' to package 'datasets'"
+#~ msgstr "duomenų rinkiniai buvo perkelti iš paketo 'stats' į paketą 'datasets'"
+
+#~ msgid "'browser' must be a non-empty character string"
+#~ msgstr "'browser' turi būti netuščia simbolių eilutė"
+
+#, fuzzy
+#~ msgid "argument 'zip' must be a non-empty character string"
+#~ msgstr "'url' turi būti netuščia simbolių eilutė"
 
 #~ msgid "bad argument"
 #~ msgstr "blogas argumentas"

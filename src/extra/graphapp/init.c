@@ -22,6 +22,10 @@
    See the file COPYLIB.TXT for details.
 */
 
+/* Copyright (C) 2023      The R Core Team
+   Path length limitations
+ */
+
 #include "internal.h"
 
 /*
@@ -138,13 +142,40 @@ static void setappname(char *title)
  */
 static void getappname(HANDLE Instance)
 {
-    char exename[MAX_PATH];
-    char title[MAX_PATH];
+    char *exename = NULL;
+    char *title = NULL;
+    DWORD rc;
 
     /* find out executable name */
-    GetModuleFileName(Instance, exename, sizeof(exename));
-    GetFileTitle(exename, title, sizeof(title));
-    setappname(title);
+
+    /* GetModuleFileName doesn't return the needed buffer size. */
+    DWORD size = 1;
+    for(;;) {
+	exename = (char *)malloc(size);
+	if (!exename)
+            return;
+        DWORD rc = GetModuleFileName(Instance, exename, size);
+        if (rc > 0 && rc < size) /* success */
+            break;
+        free(exename);
+        if (rc != size) /* error */
+            return;
+        size *= 2; /* try again with 2x larger buffer */
+    }
+
+    rc = GetFileTitle(exename, NULL, 0);
+    if (!rc)
+	return;
+    title = (char *)malloc(rc);
+    if (!title) {
+	free(exename);
+	return;
+    }
+    DWORD rc1 = GetFileTitle(exename, title, rc);
+    free(exename);
+    if (!rc1)
+	setappname(title);
+    free(title);
 }
 
 

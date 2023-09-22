@@ -2,7 +2,7 @@
  *  R : A Computer Language for Statistical Data Analysis
  *  file run.c: a simple 'reading' pipe (and a command executor)
  *  Copyright  (C) 1999-2001  Guido Masarotto and Brian Ripley
- *             (C) 2007-2021  The R Core Team
+ *             (C) 2007-2023  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -30,6 +30,7 @@
 
 #define WIN32_LEAN_AND_MEAN 1
 #include <windows.h>
+#include <versionhelpers.h>
 #include <mmsystem.h> /* for timeGetTime */
 #include <string.h>
 #include <stdlib.h>
@@ -48,10 +49,10 @@ static char RunError[501] = "";
 static char *expandcmd(const char *cmd, int whole)
 {
     char c = '\0';
-    char *s, *p, *q = NULL, *f, *dest, *src;
-    int   d, ext, len = strlen(cmd)+1;
-    char buf[len], fl[len], fn[MAX_PATH];
-    DWORD res = 0;
+    char *s = NULL, *p, *q = NULL, *f, *dest, *src, *fn = NULL;
+    int  ext, len = strlen(cmd)+1;
+    char buf[len], fl[len + 4];
+    DWORD d, res = 0;
 
     /* make a copy as we manipulate in place */
     strcpy(buf, cmd);
@@ -69,13 +70,7 @@ static char *expandcmd(const char *cmd, int whole)
 	    return NULL;
 	}
 	c = *q; /* character after the command, normally a space */
-	*q = '\0';
-    }
-
-    // This is the return value.
-    if (!(s = (char *) malloc(MAX_PATH + strlen(cmd)))) {
-	strcpy(RunError, "Insufficient memory (expandcmd)");
-	return NULL;
+	*q = '\0'; /* modifies buf */
     }
 
     /*
@@ -97,20 +92,40 @@ static char *expandcmd(const char *cmd, int whole)
 	 * it might get an error after; but maybe sometimes
 	 * in the future every extension will be executable
 	 */
-	d = SearchPath(NULL, fl, NULL, MAX_PATH, fn, &f);
+	d = SearchPath(NULL, fl, NULL, 0, NULL, &f);
     } else {
 	int iexts = 0;
+	/* update the size of fl above if adding extensions longer than 3 chars */
 	const char *exts[] = { ".exe" , ".com" , ".cmd" , ".bat" , NULL };
 	while (exts[iexts]) {
-	    strcpy(dest, exts[iexts]);
-	    if ((d = SearchPath(NULL, fl, NULL, MAX_PATH, fn, &f))) break;
+	    strcpy(dest, exts[iexts]); /* modifies fl */
+	    if ((d = SearchPath(NULL, fl, NULL, 0, NULL, &f))) break;
 	    iexts++ ;
 	}
     }
-    if (!d) {
-	free(s);
+    if (d > 0) {
+	/* perform the search again with the right buffer size */
+
+	/* The +10 below is a hack to work-around what appears to be a bug
+	   observed on Windows 10 (build 19045). When the corresponding PATH
+	   entry ends with one or more extra separators (e.g. dir\/,
+	   dir\\ or dir//), the nBufferLength argument must be increased by
+	   that number, otherwise SearchPath reports the path doesn't fit.
+	   When the number is increased, the path is returned correctly
+	   without the extra separators. */
+	if (!(fn = (char *) malloc(d + 10))) {
+	    strcpy(RunError, "Insufficient memory (expandcmd)");
+	    return NULL;
+	}
+	DWORD oldd = d;
+	d = SearchPath(NULL, fl, NULL, d + 10, fn, &f);
+	if (d >= oldd)
+	    /* treat as error when path doesn't fit now */
+	    d = 0;
+    }
+    if (!d)    {
+	if (fn) free(fn);
 	snprintf(RunError, 500, "'%s' not found", p);
-	if(!whole) *q = c;
 	return NULL;
     }
     /*
@@ -122,17 +137,37 @@ static char *expandcmd(const char *cmd, int whole)
     */
     /* NOTE: short names are not always enabled/available. In that case,
        GetShortPathName may succeed and return the original (long) name. */
-    res = GetShortPathName(fn, s, MAX_PATH);
-    if (res == 0) 
+
+    res = GetShortPathName(fn, NULL, 0);
+    if (res > 0) {
+	/* perform the translation again with sufficient buffer size */
+	// This is the return value.
+	if (!(s = (char *) malloc(res + len))) { /* over-estimate */
+	    if (fn) free(fn);
+	    strcpy(RunError, "Insufficient memory (expandcmd)");
+	    return NULL;
+	}
+	res = GetShortPathName(fn, s, res);
+    }
+    if (res == 0) {
 	/* Use full name if GetShortPathName fails, i.e. due to insufficient
 	   permissions for some component of the path. */
+	if (s) free(s);
+	// This is the return value.
+	if (!(s = (char *) malloc(d + len))) { /* over-estimate */
+	    if (fn) free(fn);
+	    strcpy(RunError, "Insufficient memory (expandcmd)");
+	    return NULL;
+	}
         strncpy(s, fn, d + 1);
+    }
 
     /* FIXME: warn if the path contains space? */
     if (!whole) {
-	*q = c;
-	strcat(s, q);
+	*q = c;         /* restore character after command */
+	strcat(s, q);   /* add the rest of input (usually arguments) */
     }
+    if (fn) free(fn);
     return s;
 }
 
@@ -151,7 +186,7 @@ extern size_t Rf_utf8towcs(wchar_t *wc, const char *s, size_t n);
 static void pcreate(const char* cmd, cetype_t enc,
 		      int newconsole, int visible,
 		      HANDLE hIN, HANDLE hOUT, HANDLE hERR,
-		      pinfo *pi)
+		      pinfo *pi, int consignals)
 {
     DWORD ret;
     STARTUPINFO si;
@@ -256,16 +291,20 @@ static void pcreate(const char* cmd, cetype_t enc,
 
        In addition, we try to be easy on applications coded to rely on that
        they do not run in a job, when running in old Windows that do not
-       support nested jobs. With nested jobs support, it might make sense
-       to not breakaway to better support nested R processes.
+       support nested jobs. On newer versions of Windows, we use nested jobs.
     */
 
     /* Creating the process with CREATE_BREAKAWAY_FROM_JOB is safe when
        the process is not in any job or when it is in a job that allows it.
        The documentation does not say what would happen if we set the flag,
-       but run in a job that does not allow it, so better don't. */
+       but run in a job that does not allow it, so better don't.
+
+       Do not consider breakaway on Windows 8 (Windows Server 2012) and newer,
+       but instead use nested jobs.
+    */
     breakaway = FALSE;
-    if (IsProcessInJob(GetCurrentProcess(), NULL, &inJob) && inJob) {
+    if (!IsWindows8OrGreater() &&
+        IsProcessInJob(GetCurrentProcess(), NULL, &inJob) && inJob) {
 	/* The documentation does not say that it would be ok to use
 	   QueryInformationJobObject when the process is not in the job,
 	   so we have better tested that upfront. */
@@ -285,7 +324,11 @@ static void pcreate(const char* cmd, cetype_t enc,
     job = CreateJobObject(NULL, NULL);
     if (job) {
 	ZeroMemory(&jeli, sizeof(JOBOBJECT_EXTENDED_LIMIT_INFORMATION));
-	jeli.BasicLimitInformation.LimitFlags = JOB_OBJECT_LIMIT_BREAKAWAY_OK;
+	jeli.BasicLimitInformation.LimitFlags =
+	    /* JOB_OBJECT_LIMIT_KILL_ON_JOB_CLOSE helps to terminate grand
+	       child processes when the child process executed is R
+	       and breakaway is used. */
+	    JOB_OBJECT_LIMIT_BREAKAWAY_OK | JOB_OBJECT_LIMIT_KILL_ON_JOB_CLOSE;
 	ret = SetInformationJobObject(
 		job,
 		JobObjectExtendedLimitInformation,
@@ -326,6 +369,9 @@ static void pcreate(const char* cmd, cetype_t enc,
 	flags |= CREATE_SUSPENDED; /* assign to job before it runs */
     if (newconsole && (visible == 1))
 	flags |= CREATE_NEW_CONSOLE;
+    else if (newconsole && !consignals)
+	/* prevent interruption of background processes by Ctrl-C, PR#17764 */
+	flags |= CREATE_NEW_PROCESS_GROUP;
     if (job && breakaway)
 	flags |= CREATE_BREAKAWAY_FROM_JOB;
 
@@ -532,8 +578,10 @@ static void terminate_process(void *p)
 	TerminateProcess(pi->pi.hProcess, 99);
     }
 
-    if (pi->job)
+    if (pi->job) {
+	TerminateJobObject(pi->job, 99);
 	waitForJob(pi, 2000, NULL);
+    }
 }
 
 static int pwait2(pinfo *pi, DWORD timeoutMillis, int* timedout)
@@ -554,6 +602,8 @@ static int pwait2(pinfo *pi, DWORD timeoutMillis, int* timedout)
 		    *timedout = 1;
 		/* wait up to 10s for the process to actually terminate */
 		WaitForSingleObject(pi->pi.hProcess, 10000);
+		if (pi->job)
+		    TerminateJobObject(pi->job, 124);
 		break;
 	    }
 	}
@@ -580,12 +630,12 @@ static int pwait2(pinfo *pi, DWORD timeoutMillis, int* timedout)
 int runcmd(const char *cmd, cetype_t enc, int wait, int visible,
 	   const char *fin, const char *fout, const char *ferr)
 {
-    return runcmd_timeout(cmd, enc, wait, visible, fin, fout, ferr, 0, NULL);
+    return runcmd_timeout(cmd, enc, wait, visible, fin, fout, ferr, 0, NULL, 1);
 }
 
 int runcmd_timeout(const char *cmd, cetype_t enc, int wait, int visible,
                    const char *fin, const char *fout, const char *ferr,
-                   int timeout, int *timedout)
+                   int timeout, int *timedout, int consignals)
 {
     if (!wait && timeout)
 	error("Timeout with background running processes is not supported.");
@@ -609,7 +659,7 @@ int runcmd_timeout(const char *cmd, cetype_t enc, int wait, int visible,
 
 
     memset(&(pi.pi), 0, sizeof(PROCESS_INFORMATION));
-    pcreate(cmd, enc, !wait, visible, hIN, hOUT, hERR, &pi);
+    pcreate(cmd, enc, !wait, visible, hIN, hOUT, hERR, &pi, consignals);
     if (pi.pi.hProcess) {
 	if (wait) {
 	    RCNTXT cntxt;
@@ -644,13 +694,16 @@ int runcmd_timeout(const char *cmd, cetype_t enc, int wait, int visible,
 rpipe * rpipeOpen(const char *cmd, cetype_t enc, int visible,
 		  const char *finput, int io,
 		  const char *fout, const char *ferr,
-		  int timeout)
+		  int timeout, int newconsole)
 {
     rpipe *r;
     HANDLE hTHIS, hIN, hOUT, hERR, hReadPipe, hWritePipe;
     DWORD id;
     BOOL res;
     int close1 = 0, close2 = 0, close3 = 0;
+    /* newconsole (~"!wait") means ignore Ctrl handler attribute
+       is set for child. When also visible==1, an actual text
+       console is created. */
 
     if (!(r = (rpipe *) malloc(sizeof(struct structRPIPE)))) {
 	strcpy(RunError, _("Insufficient memory (rpipeOpen)"));
@@ -668,46 +721,41 @@ rpipe * rpipeOpen(const char *cmd, cetype_t enc, int visible,
 	strcpy(RunError, "CreatePipe failed");
 	return NULL;
     }
-    if(io == 1) { /* pipe for R to write to */
-	hTHIS = GetCurrentProcess();
+    hTHIS = GetCurrentProcess();
+    if (io == 1) { /* pipe for R to write to */
 	r->read = hReadPipe;
 	DuplicateHandle(hTHIS, hWritePipe, hTHIS, &r->write,
 			0, FALSE, DUPLICATE_SAME_ACCESS);
 	CloseHandle(hWritePipe);
-	CloseHandle(hTHIS);
-	/* This sends stdout and stderr to NUL: */
-	pcreate(cmd, enc, 1, visible,
-		r->read, INVALID_HANDLE_VALUE, INVALID_HANDLE_VALUE,
-		&(r->pi));
-	r->active = 1;
-	if (!r->pi.pi.hProcess) return NULL; else return r;
+    } else { /* pipe for R to read from */
+	r->write = hWritePipe;
+	DuplicateHandle(hTHIS, hReadPipe, hTHIS, &r->read,
+			0, FALSE, DUPLICATE_SAME_ACCESS);
+	CloseHandle(hReadPipe);
     }
-
-    /* pipe for R to read from */
-    hTHIS = GetCurrentProcess();
-    r->write = hWritePipe;
-    DuplicateHandle(hTHIS, hReadPipe, hTHIS, &r->read,
-		    0, FALSE, DUPLICATE_SAME_ACCESS);
-    CloseHandle(hReadPipe);
     CloseHandle(hTHIS);
 
-    hIN = getInputHandle(finput); /* a file or (usually NUL:) */
-    
-    if (hIN && finput && finput[0]) close1 = 1;
-    
-    if ((io == 0 || io == 3)) 
+    if (io == 1)
+	hIN = r->read;
+    else {
+	hIN = getInputHandle(finput); /* a file or (usually NUL:) */
+	if (hIN && finput && finput[0]) close1 = 1;
+    }    
+    if (io == 0 || io == 3) 
 	hOUT = r->write;
     else {
-	if (fout && fout[0]) close2 = 1;
  	hOUT = getOutputHandle(fout, 0);
+	if (hOUT && fout && fout[0]) close2 = 1;
     }
     if (io >= 2) 
 	hERR = r->write;
     else {
-	if (ferr && ferr[0]) close3 = 1;
 	hERR = getOutputHandle(ferr, 1);
+	if (hERR && ferr && ferr[0]) close3 = 1;
     }
-    pcreate(cmd, enc, 0, visible, hIN, hOUT, hERR, &(r->pi));
+    
+    pcreate(cmd, enc, newconsole, visible, hIN, hOUT, hERR, &(r->pi), 0);
+
     if (close1) CloseHandle(hIN);
     if (close2) CloseHandle(hOUT);
     if (close3) CloseHandle(hERR);
@@ -715,10 +763,13 @@ rpipe * rpipeOpen(const char *cmd, cetype_t enc, int visible,
     r->active = 1;
     if (!r->pi.pi.hProcess)
 	return NULL;
-    if (!(r->thread = CreateThread(NULL, 0, threadedwait, r, 0, &id))) {
-	rpipeClose(r, NULL);
-	strcpy(RunError, "CreateThread failed");
-	return NULL;
+    if (io != 1) {
+	/* FIXME: if still needed, should it be used also for io == 1? */
+	if (!(r->thread = CreateThread(NULL, 0, threadedwait, r, 0, &id))) {
+	    rpipeClose(r, NULL);
+	    strcpy(RunError, "CreateThread failed");
+	    return NULL;
+	}
     }
     return r;
 }
@@ -852,11 +903,24 @@ typedef struct Wpipeconn {
 static Rboolean Wpipe_open(Rconnection con)
 {
     rpipe *rp;
-    int visible = -1, io, mlen;
+    int visible = -1, io, mlen, newconsole;
+    const char *fin = NULL, *fout = NULL, *ferr = NULL;
 
-    io = con->mode[0] == 'w';
-    if(io) visible = 1; /* Somewhere to put the output */
-    rp = rpipeOpen(con->description, con->enc, visible, NULL, io, NULL, NULL, 0);
+    io = con->mode[0] == 'w'; /* 1 for write, 0 for read */
+    if (CharacterMode == RTerm) {
+	fin = fout = ferr = "";
+	newconsole = 1; /* ensures the child process runs in a new
+	                   process group (ignores Ctrl handler),
+	                   PR#17764 */
+    } else if(io) {
+	/* FIXME: this opens the extra console in Rgui, but it does not
+	   get the output */
+	visible = 1; /* Somewhere to put the output */
+	newconsole = 1;
+    } else
+	newconsole = 0;
+    rp = rpipeOpen(con->description, con->enc, visible, fin, io, fout, ferr, 0,
+                   newconsole);
     if(!rp) {
 	warning("cannot open cmd `%s'", con->description);
 	return FALSE;
@@ -1031,7 +1095,9 @@ SEXP do_syswhich(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP nm, ans;
     int i, n;
+    const void *vmax = NULL;
 
+    vmax = vmaxget();
     checkArity(op, args);
     nm = CAR(args);
     if(!isString(nm))
@@ -1042,13 +1108,14 @@ SEXP do_syswhich(SEXP call, SEXP op, SEXP args, SEXP env)
 	if (STRING_ELT(nm, i) == NA_STRING) {
 	    SET_STRING_ELT(ans, i, NA_STRING);
 	} else {
-	    const char *this = CHAR(STRING_ELT(nm, i));
+	    const char *this = translateChar(STRING_ELT(nm, i));
 	    char *that = expandcmd(this, 1);
 	    SET_STRING_ELT(ans, i, mkChar(that ? that : ""));
 	    free(that);
 	}
     }
     setAttrib(ans, R_NamesSymbol, nm);
+    vmaxset(vmax);
     UNPROTECT(1);
     return ans;
 }

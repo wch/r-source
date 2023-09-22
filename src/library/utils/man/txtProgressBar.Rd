@@ -52,7 +52,7 @@ setTxtProgressBar(pb, value, title = NULL, label = NULL)
   \code{style = 1} and \code{style = 2} just shows a line of
   \code{char}. They differ in that \code{style = 2} redraws the line
   each time, which is useful if other code might be writing to the \R
-  console.  \code{style = 3} marks the end of the range by \code{|} and
+  console.  \code{style = 3} marks the end of the range by \samp{|} and
   gives a percentage to the right of the bar.
 }
 \value{

@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1995--2021  The R Core Team.
+ *  Copyright (C) 1995--2023  The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -70,7 +70,7 @@ static int noBreakWarning = 0;
 
 static void try_jump_to_restart(void);
 // The next is crucial to the use of NORET attributes.
-static void NORET
+NORET static void 
 jump_to_top_ex(Rboolean, Rboolean, Rboolean, Rboolean, Rboolean);
 static void signalInterrupt(void);
 static char * R_ConciseTraceback(SEXP call, int skip);
@@ -90,7 +90,7 @@ static char * R_ConciseTraceback(SEXP call, int skip);
   WarningMessage()-> warningcall (but with message from WarningDB[]).
 */
 
-void NORET R_SignalCStackOverflow(intptr_t usage)
+NORET void R_SignalCStackOverflow(intptr_t usage)
 {
     /* We do need some stack space to process error recovery, so
        temporarily raise the limit.  We have 5% head room because we
@@ -111,7 +111,7 @@ void NORET R_SignalCStackOverflow(intptr_t usage)
     UNPROTECT(1); /* cond; not reached */
 }
 
-void (R_CheckStack)(void)
+void attribute_no_sanitizer_instrumentation (R_CheckStack)(void)
 {
     int dummy;
     intptr_t usage = R_CStackDir * (R_CStackStart - (uintptr_t)&dummy);
@@ -121,7 +121,7 @@ void (R_CheckStack)(void)
 	R_SignalCStackOverflow(usage);
 }
 
-void R_CheckStack2(size_t extra)
+void attribute_no_sanitizer_instrumentation R_CheckStack2(size_t extra)
 {
     int dummy;
     intptr_t usage = R_CStackDir * (R_CStackStart - (uintptr_t)&dummy);
@@ -154,7 +154,8 @@ void R_CheckUserInterrupt(void)
     if (R_interrupts_pending) onintr();
 }
 
-static SEXP getInterruptCondition();
+static SEXP getInterruptCondition(void);
+static void addInternalRestart(RCNTXT *, const char *);
 
 static void onintrEx(Rboolean resumeOK)
 {
@@ -177,7 +178,7 @@ static void onintrEx(Rboolean resumeOK)
 	    endcontext(&restartcontext);
 	    return;
 	}
-	R_InsertRestartHandlers(&restartcontext, "resume");
+	addInternalRestart(&restartcontext, "resume");
 	signalInterrupt();
 	endcontext(&restartcontext);
     }
@@ -196,8 +197,8 @@ static void onintrEx(Rboolean resumeOK)
     jump_to_top_ex(TRUE, tryUserError, TRUE, TRUE, FALSE);
 }
 
-void onintr()  { onintrEx(TRUE); }
-void onintrNoResume() { onintrEx(FALSE); }
+void onintr(void)  { onintrEx(TRUE); }
+void onintrNoResume(void) { onintrEx(FALSE); }
 
 /* SIGUSR1: save and quit
    SIGUSR2: save and quit, don't run .Last or on.exit().
@@ -205,7 +206,7 @@ void onintrNoResume() { onintrEx(FALSE); }
    These do far more processing than is allowed in a signal handler ....
 */
 
-void attribute_hidden onsigusr1(int dummy)
+attribute_hidden void onsigusr1(int dummy)
 {
     if (R_interrupts_suspended) {
 	/**** ought to save signal and handle after suspend */
@@ -240,7 +241,7 @@ void attribute_hidden onsigusr1(int dummy)
 }
 
 
-void attribute_hidden onsigusr2(int dummy)
+attribute_hidden void onsigusr2(int dummy)
 {
     inError = 1;
 
@@ -372,7 +373,7 @@ static R_INLINE void RprintTrunc(char *buf, int truncated)
     }
 }
 
-static SEXP getCurrentCall()
+static SEXP getCurrentCall(void)
 {
     RCNTXT *c = R_GlobalContext;
 
@@ -401,14 +402,16 @@ void warning(const char *format, ...)
     p = buf + strlen(buf) - 1;
     if(strlen(buf) > 0 && *p == '\n') *p = '\0';
     RprintTrunc(buf, pval >= psize);
-    warningcall(getCurrentCall(), "%s", buf);
+    SEXP call = PROTECT(getCurrentCall());
+    warningcall(call, "%s", buf);
+    UNPROTECT(1);
 }
 
 /* declarations for internal condition handling */
 
 static void vsignalError(SEXP call, const char *format, va_list ap);
 static void vsignalWarning(SEXP call, const char *format, va_list ap);
-static void NORET invokeRestart(SEXP, SEXP);
+NORET static void invokeRestart(SEXP, SEXP);
 
 static void reset_inWarning(void *data)
 {
@@ -714,7 +717,7 @@ static char errbuf[BUFSIZE + 1]; /* add 1 to leave room for a null byte */
 
 #define ERRBUFCAT(txt) Rstrncat(errbuf, txt, BUFSIZE - strlen(errbuf))
 
-const char *R_curErrorBuf() {
+const char *R_curErrorBuf(void) {
     return (const char *)errbuf;
 }
 
@@ -737,7 +740,7 @@ static int allowedConstsChecks = 1000;
 
 /* Construct newline terminated error message, write it to global errbuf, and
    possibly display with REprintf. */
-static void NORET
+NORET static void
 verrorcall_dflt(SEXP call, const char *format, va_list ap)
 {
     if (allowedConstsChecks > 0) {
@@ -889,7 +892,7 @@ verrorcall_dflt(SEXP call, const char *format, va_list ap)
     inError = oldInError;
 }
 
-static void NORET errorcall_dflt(SEXP call, const char *format,...)
+NORET static void errorcall_dflt(SEXP call, const char *format,...)
 {
     va_list(ap);
 
@@ -898,7 +901,7 @@ static void NORET errorcall_dflt(SEXP call, const char *format,...)
     va_end(ap);
 }
 
-void NORET errorcall(SEXP call, const char *format,...)
+NORET void errorcall(SEXP call, const char *format,...)
 {
     va_list(ap);
 
@@ -928,7 +931,7 @@ void NORET errorcall(SEXP call, const char *format,...)
 /* Like errorcall, but copies all data for the error message into a buffer
    before doing anything else. */
 attribute_hidden
-void NORET errorcall_cpy(SEXP call, const char *format, ...)
+NORET void errorcall_cpy(SEXP call, const char *format, ...)
 {
     char buf[BUFSIZE];
 
@@ -941,7 +944,7 @@ void NORET errorcall_cpy(SEXP call, const char *format, ...)
 }
 
 // geterrmessage(): Return (the global) 'errbuf' as R string
-SEXP attribute_hidden do_geterrmessage(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_geterrmessage(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     checkArity(op, args);
     SEXP res = PROTECT(allocVector(STRSXP, 1));
@@ -1083,7 +1086,7 @@ static void jump_to_top_ex(Rboolean traceback,
     R_jumpctxt(R_ToplevelContext, 0, NULL);
 }
 
-void NORET jump_to_toplevel()
+NORET void jump_to_toplevel(void)
 {
     /* no traceback, no user error option; for now, warnings are
        printed here and console is reset -- eventually these should be
@@ -1181,7 +1184,7 @@ static const char * determine_domain_gettext(SEXP domain_, Rboolean up)
 
 
 /* gettext(domain, string, trim) */
-SEXP attribute_hidden do_gettext(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_gettext(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
 #ifdef _gettext_3_args_only_
     checkArity(op, args);
@@ -1275,7 +1278,7 @@ SEXP attribute_hidden do_gettext(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 /* ngettext(n, msg1, msg2, domain) */
-SEXP attribute_hidden do_ngettext(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_ngettext(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP msg1 = CADR(args), msg2 = CADDR(args);
     int n = asInteger(CAR(args));
@@ -1306,7 +1309,7 @@ SEXP attribute_hidden do_ngettext(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 
 /* bindtextdomain(domain, dirname) */
-SEXP attribute_hidden do_bindtextdomain(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_bindtextdomain(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
 #ifdef ENABLE_NLS
     checkArity(op, args);
@@ -1343,7 +1346,7 @@ static SEXP findCall(void)
     return R_NilValue;
 }
 
-SEXP attribute_hidden NORET do_stop(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden NORET SEXP do_stop(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
 /* error(.) : really doesn't return anything; but all do_foo() must be SEXP */
     SEXP c_call;
@@ -1367,7 +1370,7 @@ SEXP attribute_hidden NORET do_stop(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* never called: */
 }
 
-SEXP attribute_hidden do_warning(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_warning(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP c_call;
     checkArity(op, args);
@@ -1405,13 +1408,13 @@ SEXP attribute_hidden do_warning(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 /* Error recovery for incorrect argument count error. */
 attribute_hidden
-void NORET WrongArgCount(const char *s)
+NORET void WrongArgCount(const char *s)
 {
     error(_("incorrect number of arguments to \"%s\""), s);
 }
 
 
-void NORET UNIMPLEMENTED(const char *s)
+NORET void UNIMPLEMENTED(const char *s)
 {
     error(_("unimplemented feature in %s"), s);
 }
@@ -1446,7 +1449,7 @@ WarningDB[] = {
 
 
 attribute_hidden
-void NORET ErrorMessage(SEXP call, int which_error, ...)
+NORET void ErrorMessage(SEXP call, int which_error, ...)
 {
     int i;
     char buf[BUFSIZE];
@@ -1520,7 +1523,7 @@ void R_ReturnOrRestart(SEXP val, SEXP env, Rboolean restart)
     }
 }
 
-void NORET R_JumpToToplevel(Rboolean restart)
+NORET void R_JumpToToplevel(Rboolean restart)
 {
     RCNTXT *c;
 
@@ -1618,7 +1621,7 @@ SEXP R_GetTraceback(int skip)
     return u;
 }
 
-SEXP attribute_hidden do_traceback(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_traceback(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     int skip;
 
@@ -1717,7 +1720,7 @@ static SEXP mkHandlerEntry(SEXP klass, SEXP parentenv, SEXP handler, SEXP rho,
 #define CLEAR_ENTRY_CALLING_ENVIR(e) SET_VECTOR_ELT(e, 1, R_NilValue)
 #define CLEAR_ENTRY_TARGET_ENVIR(e) SET_VECTOR_ELT(e, 3, R_NilValue)
 
-SEXP attribute_hidden R_UnwindHandlerStack(SEXP target)
+attribute_hidden SEXP R_UnwindHandlerStack(SEXP target)
 {
     SEXP hs;
 
@@ -1743,7 +1746,7 @@ SEXP attribute_hidden R_UnwindHandlerStack(SEXP target)
 
 static SEXP R_HandlerResultToken = NULL;
 
-void attribute_hidden R_FixupExitingHandlerResult(SEXP result)
+attribute_hidden void R_FixupExitingHandlerResult(SEXP result)
 {
     /* The internal error handling mechanism stores the error message
        in 'errbuf'.  If an on.exit() action is processed while jumping
@@ -1764,7 +1767,7 @@ void attribute_hidden R_FixupExitingHandlerResult(SEXP result)
     }
 }
 
-SEXP attribute_hidden do_addCondHands(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_addCondHands(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP classes, handlers, parentenv, target, oldstack, newstack, result;
     int calling, i, n;
@@ -1811,7 +1814,7 @@ SEXP attribute_hidden do_addCondHands(SEXP call, SEXP op, SEXP args, SEXP rho)
     return oldstack;
 }
 
-SEXP attribute_hidden do_resetCondHands(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_resetCondHands(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);
     R_HandlerStack = CAR(args);
@@ -1852,7 +1855,7 @@ static void vsignalWarning(SEXP call, const char *format, va_list ap)
     else vwarningcall_dflt(call, format, ap);
 }
 
-static void NORET gotoExitingHandler(SEXP cond, SEXP call, SEXP entry)
+NORET static void gotoExitingHandler(SEXP cond, SEXP call, SEXP entry)
 {
     SEXP rho = ENTRY_TARGET_ENVIR(entry);
     SEXP result = ENTRY_RETURN_RESULT(entry);
@@ -1926,7 +1929,7 @@ static SEXP findConditionHandler(SEXP cond)
     return R_NilValue;
 }
 
-SEXP attribute_hidden do_signalCondition(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_signalCondition(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP list, cond, msg, ecall, oldstack;
 
@@ -2018,11 +2021,9 @@ static void signalInterrupt(void)
     }
 }
 
-void attribute_hidden
-R_InsertRestartHandlers(RCNTXT *cptr, const char *cname)
-{
-    SEXP klass, rho, entry, name;
 
+static void checkRestartStacks(RCNTXT *cptr)
+{
     if ((cptr->handlerstack != R_HandlerStack ||
 	 cptr->restartstack != R_RestartStack)) {
 	if (IS_RESTART_BIT_SET(cptr->callflag))
@@ -2030,13 +2031,13 @@ R_InsertRestartHandlers(RCNTXT *cptr, const char *cname)
 	else
 	    error(_("handler or restart stack mismatch in old restart"));
     }
+}
 
-    /**** need more here to keep recursive errors in browser? */
-    rho = cptr->cloenv;
-    PROTECT(klass = mkChar("error"));
-    entry = mkHandlerEntry(klass, rho, R_RestartToken, rho, R_NilValue, TRUE);
-    R_HandlerStack = CONS(entry, R_HandlerStack);
-    UNPROTECT(1);
+static void addInternalRestart(RCNTXT *cptr, const char *cname)
+{
+    checkRestartStacks(cptr);
+    SEXP entry, name;
+
     PROTECT(name = mkString(cname));
     PROTECT(entry = allocVector(VECSXP, 2));
     SET_VECTOR_ELT(entry, 0, name);
@@ -2046,7 +2047,26 @@ R_InsertRestartHandlers(RCNTXT *cptr, const char *cname)
     UNPROTECT(2);
 }
 
-SEXP attribute_hidden do_dfltWarn(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden void
+R_InsertRestartHandlers(RCNTXT *cptr, const char *cname)
+{
+    SEXP klass, rho, entry;
+
+    checkRestartStacks(cptr);
+
+    /**** need more here to keep recursive errors in browser? */
+    SEXP h = GetOption1(install("browser.error.handler"));
+    if (! isFunction(h)) h = R_RestartToken;
+    rho = cptr->cloenv;
+    PROTECT(klass = mkChar("error"));
+    entry = mkHandlerEntry(klass, rho, h, rho, R_NilValue, TRUE);
+    R_HandlerStack = CONS(entry, R_HandlerStack);
+    UNPROTECT(1);
+
+    addInternalRestart(cptr, cname);
+}
+
+attribute_hidden SEXP do_dfltWarn(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);
 
@@ -2059,7 +2079,7 @@ SEXP attribute_hidden do_dfltWarn(SEXP call, SEXP op, SEXP args, SEXP rho)
     return R_NilValue;
 }
 
-SEXP attribute_hidden NORET do_dfltStop(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden NORET SEXP do_dfltStop(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);
 
@@ -2076,7 +2096,7 @@ SEXP attribute_hidden NORET do_dfltStop(SEXP call, SEXP op, SEXP args, SEXP rho)
  * Restart Handling
  */
 
-SEXP attribute_hidden do_getRestart(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_getRestart(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     int i;
     SEXP list;
@@ -2108,7 +2128,7 @@ SEXP attribute_hidden do_getRestart(SEXP call, SEXP op, SEXP args, SEXP rho)
 	error(_("bad restart")); \
 } while (0)
 
-SEXP attribute_hidden do_addRestart(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_addRestart(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);
     CHECK_RESTART(CAR(args));
@@ -2118,7 +2138,7 @@ SEXP attribute_hidden do_addRestart(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 #define RESTART_EXIT(r) VECTOR_ELT(r, 1)
 
-static void NORET invokeRestart(SEXP r, SEXP arglist)
+NORET static void invokeRestart(SEXP r, SEXP arglist)
 {
     SEXP exit = RESTART_EXIT(r);
 
@@ -2141,14 +2161,15 @@ static void NORET invokeRestart(SEXP r, SEXP arglist)
     }
 }
 
-SEXP attribute_hidden NORET do_invokeRestart(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden NORET
+SEXP do_invokeRestart(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);
     CHECK_RESTART(CAR(args));
     invokeRestart(CAR(args), CADR(args));
 }
 
-SEXP attribute_hidden do_addTryHandlers(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_addTryHandlers(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);
     if (R_GlobalContext == R_ToplevelContext ||
@@ -2159,7 +2180,7 @@ SEXP attribute_hidden do_addTryHandlers(SEXP call, SEXP op, SEXP args, SEXP rho)
     return R_NilValue;
 }
 
-SEXP attribute_hidden do_seterrmessage(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_seterrmessage(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP msg;
 
@@ -2171,7 +2192,7 @@ SEXP attribute_hidden do_seterrmessage(SEXP call, SEXP op, SEXP args, SEXP env)
     return R_NilValue;
 }
 
-SEXP attribute_hidden
+attribute_hidden SEXP
 do_printDeferredWarnings(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     checkArity(op, args);
@@ -2179,7 +2200,7 @@ do_printDeferredWarnings(SEXP call, SEXP op, SEXP args, SEXP env)
     return R_NilValue;
 }
 
-SEXP attribute_hidden
+attribute_hidden SEXP
 do_interruptsSuspended(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     int orig_value = R_interrupts_suspended;
@@ -2188,10 +2209,11 @@ do_interruptsSuspended(SEXP call, SEXP op, SEXP args, SEXP env)
     return ScalarLogical(orig_value);
 }
 
-void attribute_hidden
+#if 0
+attribute_hidden void
 R_BadValueInRCode(SEXP value, SEXP call, SEXP rho, const char *rawmsg,
                   const char *errmsg, const char *warnmsg,
-                  const char *varname, Rboolean warnByDefault)
+                  const char *varname, Rboolean errByDefault)
 {
     /* disable GC so that use of this temporary checking code does not
        introduce new PROTECT errors e.g. in asLogical() use */
@@ -2234,6 +2256,12 @@ R_BadValueInRCode(SEXP value, SEXP call, SEXP rho, const char *rawmsg,
 	    }
 	if (spkg != R_NilValue)
 	    pkgname = translateChar(STRING_ELT(spkg, 0));
+	/* Sometimes pkgname is like 
+	      package:MoTBFs,
+	   so we need tp strip it off.
+	   This is independent of pprefix.
+	*/
+	if (strstr(pkgname, "package:"))  pkgname += 8;
 
 	while (check[0] != '\0') {
 	    if (!strncmp(pprefix, check, lpprefix)) {
@@ -2247,13 +2275,39 @@ R_BadValueInRCode(SEXP value, SEXP call, SEXP rho, const char *rawmsg,
 		    arglen = strlen(check);
 		ignore = TRUE;
 		if (pkgname) {
+		    // a named package
 		    if (!strncmp(check, pkgname, arglen) && strlen(pkgname) == arglen)
 			ignore = FALSE;
-		    if (!strncmp(check, cpname, arglen) && lcpname == arglen) {
+		    // 'this package' 
+		    else if (!strncmp(check, cpname, arglen) && lcpname == arglen) {
 			/* package name specified in _R_CHECK_PACKAGE_NAME */
 			const char *envpname = getenv(cpname);
 			if (envpname && !strcmp(envpname, pkgname))
 			    ignore = FALSE;
+		    }
+		    // "all_base" , that is all standard packages.
+		    else if (!strncmp(check, "all_base", arglen) && arglen == 8) {
+			char *std[] = {
+			    "base",
+			    "compiler",
+			    // datasets has no code
+			    "grDevies",
+			    "graphics",
+			    "grid",
+			    "methods",
+			    "parallel",
+			    "splines",
+			    "stats",
+			    "stats4",
+			    "utils",
+			    "tools"
+			};
+			int nstd = sizeof(std)/sizeof(char *);
+			for (int i = 0; i < nstd; i++)
+			    if(!strcmp(std[i], pkgname)) {
+				ignore = FALSE;
+				break;
+			    }
 		    }
 		}
 		check += arglen;
@@ -2273,7 +2327,8 @@ R_BadValueInRCode(SEXP value, SEXP call, SEXP rho, const char *rawmsg,
 		check++;
 	    } else
 		error("invalid value of %s", varname);
-	}
+	} // end of while (check[0] != '\0')
+ 
 	if (ignore) {
 	    abort = FALSE; /* err is FALSE */
 	    verbose = FALSE;
@@ -2302,7 +2357,7 @@ R_BadValueInRCode(SEXP value, SEXP call, SEXP rho, const char *rawmsg,
 	REprintf(" --- R stacktrace ---\n");
 	printwhere();
 	REprintf(" --- value of length: %d type: %s ---\n",
-		 length(value), type2char(TYPEOF(value)));
+		 length(value), R_typeToChar(value));
 	PrintValue(value);
 	REprintf(" --- function from context --- \n");
 	if (R_GlobalContext->callfun != NULL &&
@@ -2318,15 +2373,15 @@ R_BadValueInRCode(SEXP value, SEXP call, SEXP rho, const char *rawmsg,
     }
     if (abort)
 	R_Suicide(rawmsg);
-    else if (err)
-	errorcall(call, errmsg);
-    else if (warn || warnByDefault)
+    else if (warn)
 	warningcall(call, warnmsg);
+    else if (err || errByDefault)
+	errorcall(call, errmsg);
     vmaxset(vmax);
     UNPROTECT(nprotect);
     R_GCEnabled = enabled;
 }
-
+#endif
 
 /* These functions are to be used in error messages, and available for others to use in the API
    GetCurrentSrcref returns the first non-NULL srcref after skipping skip of them.  If it
@@ -2476,6 +2531,7 @@ SEXP R_tryCatch(SEXP (*body)(void *), void *bdata,
     return val;
 }
 
+attribute_hidden
 SEXP do_tryCatchHelper(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP eptr = CAR(args);
@@ -2581,9 +2637,15 @@ SEXP R_withCallingErrorHandler(SEXP (*body)(void *), void *bdata,
     return val;
 }
 
-SEXP attribute_hidden do_addGlobHands(SEXP call, SEXP op,SEXP args, SEXP rho)
+attribute_hidden SEXP do_addGlobHands(SEXP call, SEXP op,SEXP args, SEXP rho)
 {
+    /* check for handlers on the stack before proceeding (PR1826). */
     SEXP oldstk = R_ToplevelContext->handlerstack;
+    for (RCNTXT *cptr = R_GlobalContext;
+	 cptr != R_ToplevelContext;
+	 cptr = cptr->nextcontext)
+	if (cptr->handlerstack != oldstk)
+	    error("should not be called with handlers on the stack");
 
     R_HandlerStack = R_NilValue;
     do_addCondHands(call, op, args, rho);
@@ -2592,19 +2654,13 @@ SEXP attribute_hidden do_addGlobHands(SEXP call, SEXP op,SEXP args, SEXP rho)
        restore the handler stack to the value when begincontext was
        called. This function should only be called in a context where
        there are no handlers on the stack. */
-#ifdef DODO
-    for (RCNTXT *cptr = R_GlobalContext;
-	 cptr != R_ToplevelContext;
-	 cptr = cptr->nextcontext)
-	if (cptr->handlerstack == R_NilValue)
-	    cptr->handlerstack = R_HandlerStack;
-#endif
     for (RCNTXT *cptr = R_GlobalContext;
 	 cptr != R_ToplevelContext;
 	 cptr = cptr->nextcontext)
 	if (cptr->handlerstack == oldstk)
 	    cptr->handlerstack = R_HandlerStack;
-	else error("should not be called with handlers on the stack");
+	else /* should not happen after the check above */
+	    error("should not be called with handlers on the stack");
 
     R_ToplevelContext->handlerstack = R_HandlerStack;
     return R_NilValue;
@@ -2647,7 +2703,7 @@ static void R_signalCondition(SEXP cond, SEXP call,
 }
 
 attribute_hidden /* for now */
-void NORET R_signalErrorConditionEx(SEXP cond, SEXP call, int exitOnly)
+NORET void R_signalErrorConditionEx(SEXP cond, SEXP call, int exitOnly)
 {
     /* caller must make sure that 'cond' and 'call' are protected. */
     R_signalCondition(cond, call, FALSE, exitOnly);
@@ -2665,7 +2721,7 @@ void NORET R_signalErrorConditionEx(SEXP cond, SEXP call, int exitOnly)
 }
 
 attribute_hidden /* for now */
-void NORET R_signalErrorCondition(SEXP cond, SEXP call)
+NORET void R_signalErrorCondition(SEXP cond, SEXP call)
 {
     R_signalErrorConditionEx(cond, call, FALSE);
 }
@@ -2685,7 +2741,7 @@ SEXP R_vmakeErrorCondition(SEXP call,
     if (call == R_CurrentExpression)
 	/* behave like error() */
 	call = getCurrentCall();
-
+    PROTECT(call);
     int nelem = nextra + 2;
     SEXP cond = PROTECT(allocVector(VECSXP, nelem));
 
@@ -2712,7 +2768,7 @@ SEXP R_vmakeErrorCondition(SEXP call,
 	SET_STRING_ELT(klass, 3, mkChar("condition"));
     }
 
-    UNPROTECT(1); /* cond */
+    UNPROTECT(2); /* cond, call */
 
     return cond;
 }
@@ -2754,11 +2810,29 @@ attribute_hidden
 SEXP R_makeNotSubsettableError(SEXP x, SEXP call)
 {
     SEXP cond = R_makeErrorCondition(call, "notSubsettableError", NULL, 1,
-				     R_MSG_ob_nonsub, type2char(TYPEOF(x)));
+				     R_MSG_ob_nonsub, R_typeToChar(x));
     PROTECT(cond);
     R_setConditionField(cond, 2, "object", x);
-    UNPROTECT(1); /* cond */
+    UNPROTECT(1);
     return cond;
+}
+
+attribute_hidden
+SEXP R_makeMissingSubscriptError(SEXP x, SEXP call)
+{
+    SEXP cond = R_makeErrorCondition(call, "MissingSubscriptError", NULL, 1,
+				     R_MSG_miss_subs);
+    PROTECT(cond);
+    R_setConditionField(cond, 2, "object", x);
+    UNPROTECT(1);
+    return cond;
+}
+
+attribute_hidden
+SEXP R_makeMissingSubscriptError1(SEXP call) // "1" arg.: no 'x'
+{
+    return R_makeErrorCondition(call, "MissingSubscriptError", NULL, 0,
+				R_MSG_miss_subs);
 }
 
 attribute_hidden
@@ -2782,11 +2856,12 @@ SEXP R_makeOutOfBoundsError(SEXP x, int subscript, SEXP sindex,
        probably do better, but for now report 'subscript' as NA in the
        condition objec. */
     SEXP ssub = ScalarInteger(subscript >= 0 ? subscript + 1 : NA_INTEGER);
+    PROTECT(ssub);
 
     R_setConditionField(cond, 2, "object", x);
     R_setConditionField(cond, 3, "subscript", ssub);
     R_setConditionField(cond, 4, "index", sindex);
-    UNPROTECT(1); /* cond */
+    UNPROTECT(2); /* cond, ssub */
 
     return cond;
 }
@@ -2795,7 +2870,7 @@ SEXP R_makeOutOfBoundsError(SEXP x, int subscript, SEXP sindex,
 static const char *C_SO_msg_fmt =
     "C stack usage  %ld is too close to the limit";
 
-SEXP attribute_hidden R_makeCStackOverflowError(SEXP call, intptr_t usage)
+attribute_hidden SEXP R_makeCStackOverflowError(SEXP call, intptr_t usage)
 {
     SEXP cond = R_makeErrorCondition(call, "stackOverflowError",
 				     "CStackOverflowError", 1,
@@ -2807,19 +2882,19 @@ SEXP attribute_hidden R_makeCStackOverflowError(SEXP call, intptr_t usage)
 }
 
 static SEXP R_protectStackOverflowError = NULL;
-SEXP attribute_hidden R_getProtectStackOverflowError()
+attribute_hidden SEXP R_getProtectStackOverflowError(void)
 {
     return R_protectStackOverflowError;
 }
 
 static SEXP R_expressionStackOverflowError = NULL;
-SEXP attribute_hidden R_getExpressionStackOverflowError()
+attribute_hidden SEXP R_getExpressionStackOverflowError(void)
 {
     return R_expressionStackOverflowError;
 }
 
 static SEXP R_nodeStackOverflowError = NULL;
-SEXP attribute_hidden R_getNodeStackOverflowError()
+attribute_hidden SEXP R_getNodeStackOverflowError(void)
 {
     return R_nodeStackOverflowError;
 }
@@ -2829,7 +2904,7 @@ SEXP attribute_hidden R_getNodeStackOverflowError()
 #define NODE_SO_MSG _("node stack overflow")
 
 attribute_hidden
-void R_InitConditions()
+void R_InitConditions(void)
 {
     R_protectStackOverflowError =
 	R_makeErrorCondition(R_NilValue, "stackOverflowError",

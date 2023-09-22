@@ -68,7 +68,7 @@ void printVector(SEXP, int, int);
 // void PrintClosure(SEXP, Rboolean);
 // void PrintLanguage(SEXP, Rboolean);
 
-/* Utilities for S compatibility and debuggging */
+/* Utilities for S compatibility and debugging */
 void R_PV(SEXP s);
 
 /* Offset for rowlabels if there are named dimnames */

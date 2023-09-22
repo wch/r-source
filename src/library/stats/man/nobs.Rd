@@ -7,7 +7,7 @@
 \alias{nobs}
 \alias{nobs.default}
 \title{
-  Extract the Number of Observations from a Fit.
+  Extract the Number of Observations from a Fit
 }
 \description{
   Extract the number of \sQuote{observations} from a model fit.  This is
@@ -19,10 +19,10 @@ nobs(object, ...)
 \method{nobs}{default}(object, use.fallback = FALSE, ...)
 }
 \arguments{
-  \item{object}{A fitted model object.}
+  \item{object}{a fitted model object.}
   \item{use.fallback}{logical: should fallback methods be used to try to
     guess the value?}
-  \item{\dots}{Further arguments to be passed to methods.}
+  \item{\dots}{further arguments to be passed to methods.}
 }
 \details{
   This is a generic function, with an S4 generic in package \pkg{stats4}.

@@ -20,7 +20,7 @@ clearPushBack(connection)
 }
 \arguments{
   \item{data}{a character vector.}
-  \item{connection}{A \link{connection}.}
+  \item{connection}{a \link{connection}.}
   \item{newLine}{logical.  If true, a newline is appended to each string
     pushed back.}
   \item{encoding}{character string, partially matched.  See details.}

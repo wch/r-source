@@ -23,7 +23,7 @@ R_EXE = R_ENABLE_JIT=0 TZ=UTC $(top_builddir)/bin/R --vanilla --no-echo
 ## For people who do make -C ../src/library/tools
 update:
 	@$(MAKE) all
-	@$(MAKE) mklazycomp
+	@R_SYSTEM_ABI='@R_SYSTEM_ABI@' $(MAKE) mklazycomp
 
 ## This is deliberately conservative: -nt seems to work differently in some shells
 ## We first use mkdesc2 (with date) to install the DESCRIPTION, then re-install
@@ -47,12 +47,14 @@ mkR: mkR1
 include $(top_srcdir)/share/make/basepkg.mk
 
 ## Note that R_COMPILER_SUPPRESS_ALL is now on by default
-$(top_builddir)/library/$(pkg)/R/$(pkg).rdb: all.R $(top_srcdir)/share/licenses/license.db
+## Depends on Makefile for @R_SYSTEM_ABI@
+$(top_builddir)/library/$(pkg)/R/$(pkg).rdb: Makefile all.R $(top_srcdir)/share/licenses/license.db
 	@$(ECHO) "byte-compiling package '$(pkg)'"
 	@$(INSTALL_DATA) all.R $(top_builddir)/library/$(pkg)/R/$(pkg)
 	@(cat $(srcdir)/R/makeLazyLoad.R; \
 	  $(ECHO) "makeLazyLoading(\"$(pkg)\")") | \
 	  _R_COMPILE_PKGS_=1 R_COMPILER_SUPPRESS_ALL=1 \
+	  R_SYSTEM_ABI='@R_SYSTEM_ABI@' \
 	  R_DEFAULT_PACKAGES=NULL LC_ALL=C $(R_EXE) > /dev/null
 
 Rsimple: mkR mkRsimple
@@ -61,6 +63,7 @@ Rlazy: mkR mkRsimple
 	@$(INSTALL_DATA) all.R $(top_builddir)/library/$(pkg)/R/$(pkg)
 	@(cat $(srcdir)/R/makeLazyLoad.R; \
 	  $(ECHO) "makeLazyLoading(\"$(pkg)\")") | \
+	  R_SYSTEM_ABI='@R_SYSTEM_ABI@' \
 	  R_DEFAULT_PACKAGES=NULL LC_ALL=C $(R_EXE) > /dev/null
 
 Rlazycomp: mkR mkRsimple mklazycomp

@@ -1,6 +1,6 @@
 % File src/library/base/man/double.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{double}
@@ -23,7 +23,7 @@ single(length = 0)
 as.single(x, \dots)
 }
 \arguments{
-  \item{length}{A non-negative integer specifying the desired length.
+  \item{length}{a non-negative integer specifying the desired length.
     Double values will be coerced to integer:
     supplying an argument of length other than one is an error.}
   \item{x}{object to be coerced or tested.}
@@ -76,9 +76,8 @@ as.single(x, \dots)
   \eqn{2 \times 10^{308}}{2e+308}.  It also has special values
   \code{\link{NaN}} (many of them), plus and minus infinity and plus and
   minus zero (although \R acts as if these are the same).  There are
-  also \emph{denormal(ized)} (or \emph{subnormal}) numbers with absolute
-  values above or below the range given above but represented to less
-  precision.
+  also \emph{denormal(ized)} (or \emph{subnormal}) numbers with values
+  below the range given above but represented to less precision.
 
   See \code{\link{.Machine}} for precise information on these limits.
   Note that ultimately how double precision numbers are handled is down

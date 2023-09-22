@@ -5,15 +5,21 @@
 
 \name{embedFonts}
 \alias{embedFonts}
+\alias{embedGlyphs}
 \concept{encoding}
 \title{Embed Fonts in PostScript and PDF}
 \description{
   Runs Ghostscript to process a PDF or PostScript file and
   embed all fonts in the file.
+
+  Use \code{embedGlyphs()} if you have drawn typeset glyphs
+  (see \code{\link{glyphInfo}}), which is only relevant for PDF files.
 }
 \usage{
 embedFonts(file, format, outfile = file,
            fontpaths = character(), options = character())
+
+embedGlyphs(file, glyphInfo, outfile = file, options = character())
 }
 \arguments{
   \item{file}{a character string giving the name of the original file.}
@@ -25,6 +31,8 @@ embedFonts(file, format, outfile = file,
     Ghostscript will search for fonts.}
   \item{options}{a character vector containing further options to
     Ghostscript.}
+  \item{glyphInfo}{typeset glyph information produced by
+    \code{glyphInfo()}, or a list of the same.}
 }
 \details{
   This function is not necessary if you just use the standard
@@ -60,6 +68,10 @@ embedFonts(file, format, outfile = file,
   Some other options which can be useful (see your Ghostscript
   documentation) are \option{-dMaxSubsetPct=100},
   \option{-dSubsetFonts=true} and  \option{-dEmbedAllFonts=true}.
+
+  \code{embedGlyphs()} is recommended for \code{pdf()} files
+  that contain typeset glyphs (see \code{\link{glyphInfo}}),
+  but it will only work for TrueType fonts.
 }
 \value{
   The shell command used to invoke Ghostscript is returned

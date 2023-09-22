@@ -1,8 +1,8 @@
 %%
 %% This is file `jss.cls',
-\def\fileversion{3.3}
+\def\fileversion{3.4}
 \def\filename{jss}
-\def\filedate{2021/12/10}
+\def\filedate{2023/03/05}
 %%
 %% Package `jss' to use with LaTeX2e for JSS publications (https://www.jstatsoft.org/)
 %% License: GPL-2 | GPL-3
@@ -51,7 +51,7 @@
 \ProcessOptions
 \LoadClass[11pt,a4paper,twoside]{article}
 %% required packages
-\RequirePackage{graphicx,xcolor,ae,fancyvrb}
+\RequirePackage{graphicx,xcolor,fancyvrb}
 \RequirePackage[T1]{fontenc}
 \IfFileExists{upquote.sty}{\RequirePackage{upquote}}{}
 \IfFileExists{lmodern.sty}{\RequirePackage{lmodern}}{}
@@ -115,7 +115,7 @@
 \newcommand{\Seconddate}[1]{\def\@Seconddate{#1}}
 \newcommand{\Reviewauthor}[1]{\def\@Reviewauthor{#1}}
 %% defaults
-\author{Firstname Lastname\\Affiliation}
+\author{Givenname Familyname\\Affiliation}
 \title{Title}
 \Abstract{---!!!---an abstract is required---!!!---}
 \Plainauthor{\@author}
@@ -126,15 +126,15 @@
 \Submitdate{yyyy-mm-dd}
 \Acceptdate{yyyy-mm-dd}
 \Address{
-  Firstname Lastname\\
+  Givenname Familyname\\
   Affiliation\\
   Address, Country\\
   E-mail: \email{name@address}\\
   URL: \url{https://link/to/webpage/}
 }
 
-\Reviewer{Firstname Lastname\\Affiliation}
-\Plainreviewer{Firstname Lastname}
+\Reviewer{Givenname Familyname\\Affiliation}
+\Plainreviewer{Givenname Familyname}
 \Booktitle{Book Title}
 \Bookauthor{Book Author}
 \Publisher{Publisher}
@@ -423,7 +423,6 @@
 }
 \if@review
   \hypersetup{%
-    hyperindex = {true},
     colorlinks = {true},
     linktocpage = {true},
     plainpages = {false},
@@ -436,7 +435,6 @@
   }
 \else
   \hypersetup{%
-    hyperindex = {true},
     colorlinks = {true},
     linktocpage = {true},
     plainpages = {false},

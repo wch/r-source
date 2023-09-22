@@ -1,7 +1,7 @@
 #  File src/library/base/R/range.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2017 The R Core Team
+#  Copyright (C) 1995-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -16,10 +16,13 @@
 #  A copy of the GNU General Public License is available at
 #  https://www.R-project.org/Licenses/
 
-range.default <- function(..., na.rm = FALSE, finite = FALSE)
+### MM: ........ *OR*  introduce an  allow.infinite()  generic (semantically <==> allow.finite() )
+###     as Davis proposes on May 9 on the R-devel mailing list
+
+.rangeNum <- function(..., na.rm, finite, isNumeric)
 {
     x <- c(..., recursive = TRUE)
-    if(is.numeric(x)) {
+    if(isNumeric(x)) {
         if(finite) x <- x[is.finite(x)]
         else if(na.rm) x <- x[!is.na(x)]
 	c(min(x), max(x))
@@ -28,3 +31,9 @@ range.default <- function(..., na.rm = FALSE, finite = FALSE)
         c(min(x, na.rm=na.rm), max(x, na.rm=na.rm))
     }
 }
+
+range.default <- function(..., na.rm = FALSE, finite = FALSE)
+    .rangeNum(..., na.rm=na.rm, finite=finite, isNumeric = is.numeric)
+
+range.POSIXct <- range.Date <- function(..., na.rm = FALSE, finite = FALSE)
+    .rangeNum(..., na.rm=na.rm, finite=finite, isNumeric = function(.)TRUE)

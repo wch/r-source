@@ -1,7 +1,7 @@
 #  File src/library/utils/R/help.start.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2019 The R Core Team
+#  Copyright (C) 1995-2022 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -55,14 +55,16 @@ browseURL <- function(url, browser = getOption("browser"), encodeIfNeeded=FALSE)
     WINDOWS <- .Platform$OS.type == "windows"
 
     if (!is.character(url) || length(url) != 1L|| !nzchar(url))
-        stop("'url' must be a non-empty character string")
+        stop(gettextf("'%s' must be a non-empty character string", "url"),
+             domain = NA)
     if(identical(browser, "false")) return(invisible())
     if(WINDOWS && is.null(browser)) return(shell.exec(url))
     if (is.function(browser))
         return(invisible(browser(if(encodeIfNeeded) URLencode(url) else url)))
 
     if (!is.character(browser) || length(browser) != 1L || !nzchar(browser))
-        stop("'browser' must be a non-empty character string")
+        stop(gettextf("'%s' must be a non-empty character string", "browser"),
+             domain = NA)
     if (WINDOWS) {
         ## No shell used, but spaces are possible
         return(system(paste0('"', browser, '" ',

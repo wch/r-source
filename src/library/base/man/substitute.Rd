@@ -1,6 +1,6 @@
 % File src/library/base/man/substitute.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{substitute}
@@ -26,7 +26,7 @@ enquote(cl)
   is typically used to protect a \code{\link{call}} from early evaluation.
 }
 \arguments{
-  \item{expr}{any syntactically valid \R expression}
+  \item{expr}{any syntactically valid \R expression.}
   \item{cl}{a \code{\link{call}}, i.e., an \R object of
     \code{\link{class}} (and \code{\link{mode}}) \code{"call"}.}
   \item{env}{an environment or a list object.  Defaults to the
@@ -75,7 +75,9 @@ enquote(cl)
   \code{\link{missing}} for argument \sQuote{missingness},
   \code{\link{bquote}} for partial substitution,
   \code{\link{sQuote}} and \code{\link{dQuote}} for adding quotation
-  marks to strings,
+  marks to strings.
+  \code{\link{Quotes}} about forward, back, and double quotes \samp{'},
+  \samp{`}, and \samp{"}. % parseRd : can *not* use \code{"} nor \code{\"}; ditto for ' and `
 
   \code{\link{all.names}} to retrieve the symbol names from an expression
   or call.

@@ -1,7 +1,7 @@
 #  File src/library/tools/R/utils.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2021 The R Core Team
+#  Copyright (C) 1995-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -132,16 +132,8 @@ function(dir, exts, all.files = FALSE, full.names = TRUE)
 {
     ## Return the paths or names of the files in @code{dir} with
     ## extension in @code{exts}.
-    ## Might be in a zipped dir on Windows.
-    if(file.exists(file.path(dir, "filelist")) &&
-       any(file.exists(file.path(dir, c("Rdata.zip", "Rex.zip", "Rhelp.zip")))))
-    {
-        files <- readLines(file.path(dir, "filelist"))
-        if(!all.files)
-            files <- grep("^[^.]", files, value = TRUE)
-    } else {
-        files <- list.files(dir, all.files = all.files)
-    }
+
+    files <- list.files(dir, all.files = all.files)
     ## does not cope with exts with '.' in.
     ## files <- files[sub(".*\\.", "", files) %in% exts]
     patt <- paste0("\\.(", paste(exts, collapse="|"), ")$")
@@ -203,7 +195,7 @@ reQuote <-
 function(x)
 {
     escape <- function(s) paste0("\\", s)
-    re <- "[.*?+^$\\[]"
+    re <- "[.*?+^$\\()[]"
     m <- gregexpr(re, x)
     regmatches(x, m) <- lapply(regmatches(x, m), escape)
     x
@@ -253,9 +245,11 @@ function(x, delim = c("{", "}"), syntax = "Rd")
 
 ### ** lines2str
 lines2str <-
-function(txt, sep = "")
-    trimws(gsub("\n", sep, paste(txt, collapse = sep),
-                fixed = TRUE, useBytes = TRUE))
+function(txt, sep = "") {
+    bytes <- gsub("\n", sep, paste(txt, collapse = sep),
+                  fixed = TRUE, useBytes = TRUE)
+    trimws(iconv(bytes, to = "UTF-8", sub = "byte"))
+}
 
 
 ### * LaTeX utilities
@@ -554,13 +548,6 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
 
 ### * Internal utility variables.
 
-### ** .BioC_version_associated_with_R_version
-
-.BioC_version_associated_with_R_version <-
-    function() numeric_version(Sys.getenv("R_BIOC_VERSION", "3.14"))
-## Things are more complicated from R-2.15.x with still two BioC
-## releases a year, so we do need to set this manually.
-
 ### ** .ORCID_iD_regexp
 
 .ORCID_iD_regexp <-
@@ -574,7 +561,7 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
 .ORCID_iD_db_from_package_sources <-
 function(dir)
 {
-    meta <- .read_description(file.path(dir, "DESCRIPTION"))
+    meta <- .get_package_metadata(dir, FALSE)
     ids1 <- ids2 <- character()
     if(!is.na(aar <- meta["Authors@R"])) {
         aar <- tryCatch(utils:::.read_authors_at_R_field(aar),
@@ -691,7 +678,7 @@ function() {
 ### ** config_val_to_logical
 
 config_val_to_logical <-
-function(val) utils:::str2logical(val)
+function(val, na.ok=TRUE) utils:::str2logical(val, na.ok=na.ok)
 
 ### ** .canonicalize_doi
 
@@ -711,10 +698,8 @@ function(txt)
     txt <- as.character(txt)
     if(!length(txt)) return(txt)
     enc <- Encoding(txt)
-    txt <- gsub(paste0("(", intToUtf8(0x2018), "|", intToUtf8(0x2019), ")"),
-                "'", txt, perl = TRUE, useBytes = TRUE)
-    txt <- gsub(paste0("(", intToUtf8(0x201c), "|", intToUtf8(0x201d), ")"),
-                '"', txt, perl = TRUE, useBytes = TRUE)
+    txt <- gsub("(\u2018|\u2019)", "'", txt, perl = TRUE, useBytes = TRUE)
+    txt <- gsub("(\u201c|\u201d)", '"', txt, perl = TRUE, useBytes = TRUE)
     Encoding(txt) <- enc
     txt
 }
@@ -765,8 +750,8 @@ function(expr, type = NULL)
 
     value <- eval(expr)
     list(value = value,
-         output = readLines(outcon, encoding = "UTF-8", warn = FALSE),
-         message = readLines(msgcon, encoding = "UTF-8", warn = FALSE))
+         output = readLines(outcon, warn = FALSE),
+         message = readLines(msgcon, warn = FALSE))
 }
 
 ### ** .expand_anchored_Rd_xrefs
@@ -821,21 +806,35 @@ function(x, dir, add = FALSE)
 .find_calls <-
 function(x, predicate = NULL, recursive = FALSE)
 {
-    x <- if(is.call(x)) list(x) else as.list(x)
+    calls <- list()
+
+    if(!is.recursive(x) || isS4(x)) return(calls)
+
+    x <- if(is.call(x))
+             list(x)
+         else {
+             if(is.object(x))
+                 class(x) <- NULL
+             as.list(x)
+         }
 
     f <- if(is.null(predicate))
         function(e) is.call(e)
-    else
-        function(e) is.call(e) && predicate(e)
+    else ## no check predicate returns a scalar, so any() added for 4.2.0
+        function(e) is.call(e) && any(predicate(e))
 
     if(!recursive) return(Filter(f, x))
 
-    calls <- list()
     gatherer <- function(e) {
         if(f(e)) calls <<- c(calls, list(e))
-        if(is.recursive(e))
+        if(is.recursive(e) && !is.environment(e) && !isS4(e)) {
+            if(is.object(e))
+                class(e) <- NULL
+            e <- as.list(e)
             for(i in seq_along(e)) gatherer(e[[i]])
+        }
     }
+
     gatherer(x)
 
     calls
@@ -852,7 +851,8 @@ function(file, encoding = NA, predicate = NULL, recursive = FALSE)
 ### ** .find_calls_in_package_code
 
 .find_calls_in_package_code <-
-function(dir, predicate = NULL, recursive = FALSE, .worker = NULL)
+function(dir, predicate = NULL, recursive = FALSE, .worker = NULL,
+         which = "code")
 {
     dir <- file_path_as_absolute(dir)
 
@@ -864,14 +864,53 @@ function(dir, predicate = NULL, recursive = FALSE, .worker = NULL)
         .worker <- function(file, encoding)
             .find_calls_in_file(file, encoding, predicate, recursive)
 
+    which <- match.arg(which,
+                       c("code", "vignettes", "tests",
+                         "NAMESPACE", "CITATION"),
+                       several.ok = TRUE)
     code_files <-
-        list_files_with_type(file.path(dir, "R"), "code",
-                             OS_subdirs = c("unix", "windows"))
+        c(character(),
+          if("code" %in% which)
+              list_files_with_type(file.path(dir, "R"), "code",
+                                   OS_subdirs = c("unix", "windows")),
+          if(("vignettes" %in% which) &&
+             dir.exists(file.path(dir, "vignettes")) &&
+             dir.exists(fp <- file.path(dir, "inst", "doc")))
+              list_files_with_type(fp, "code"),
+          ## cf. .check_packages_used_in_tests() ...
+          if(("tests" %in% which) &&
+             dir.exists(fp <- file.path(dir, "tests")))
+              c(list.files(fp, pattern = "\\.[rR]$",
+                           full.names = TRUE),
+                if(dir.exists(fp <- file.path(fp, "testthat")))
+                    list.files(fp, pattern = "\\.[rR]$",
+                               full.names = TRUE)),
+          if(("NAMESPACE" %in% which) &&
+             file.exists(fp <- file.path(dir, "NAMESPACE")))
+              fp,
+          if(("CITATION" %in% which) &&
+             file.exists(fp <- file.path(dir, "inst", "CITATION")))
+              fp)
+
     calls <- lapply(code_files, .worker, encoding)
     names(calls) <-
         .file_path_relative_to_dir(code_files, dirname(dir))
 
     calls
+}
+
+.predicate_for_calls_with_names <-
+function(nms)
+{
+    function(e) {
+        (is.call(e) &&
+         ((is.name(x <- e[[1L]]) &&
+           as.character(x) %in% nms)) ||
+         ((is.call(x <- e[[1L]]) &&
+           is.name(x[[1L]]) &&
+           (as.character(x[[1L]]) %in% c("::", ":::")) &&
+           as.character(x[[3L]]) %in% nms)))
+    }
 }
 
 ### ** .find_owner_env
@@ -944,19 +983,16 @@ function(con, n = 4L)
 .get_internal_S3_generics <-
 function(primitive = TRUE) # primitive means 'include primitives'
 {
-    out <-
-        ## Get the names of R internal S3 generics (via DispatchOrEval(),
-        ## cf. ?InternalMethods).
-        c("[", "[[", "$", "[<-", "[[<-", "$<-", "@<-",
-          "as.vector", "cbind", "rbind", "unlist",
-          "is.unsorted", "lengths", "nchar", "rep.int", "rep_len",
-          .get_S3_primitive_generics()
-          ## ^^^^^^^ now contains the members of the group generics from
-          ## groupGeneric.Rd.
-          )
-    if(!primitive)
-        out <- out[!vapply(out, .is_primitive_in_base, NA)]
-    out
+    c(.internalGenerics,
+      if(primitive)
+          c("[", "[[", "$", "[<-", "[[<-", "$<-", "@", "@<-",
+            ## The above are actually primitive but not listed in
+            ## base::.S3PrimitiveGenerics et al: not sure why?
+            .get_S3_primitive_generics()
+            ## ^^^^^^^ now contains the members of the group generics
+            ## from groupGeneric.Rd.
+            )
+      )
 }
 
 ### ** .get_namespace_package_depends
@@ -988,7 +1024,7 @@ function(nsInfo)
     ## names of the generic, class and method (as a function).
     S3_methods_db <- nsInfo$S3methods
     if(!length(S3_methods_db))
-        return(matrix(character(), ncol = 3L))
+        return(matrix(character(), ncol = 4L))
     idx <- is.na(S3_methods_db[, 3L])
     S3_methods_db[idx, 3L] <-
         paste(S3_methods_db[idx, 1L],
@@ -1073,20 +1109,6 @@ function(dir, installed = FALSE)
     stop("invalid package layout")
 }
 
-### ** .get_repositories
-
-.get_repositories <-
-function()
-{
-    rfile <- Sys.getenv("R_REPOSITORIES", unset = NA_character_)
-    if(is.na(rfile) || !file_test("-f", rfile)) {
-        rfile <- file.path(Sys.getenv("HOME"), ".R", "repositories")
-        if(!file_test("-f", rfile))
-            rfile <- file.path(R.home("etc"), "repositories")
-    }
-    .read_repositories(rfile)
-}
-
 ### ** .get_requires_from_package_db
 
 .get_requires_from_package_db <-
@@ -1123,51 +1145,79 @@ function(db,
 
 ### ** .get_S3_generics_as_seen_from_package
 
-.get_S3_generics_as_seen_from_package <-
-function(dir, installed = TRUE, primitive = FALSE)
+## .get_S3_generics_as_seen_from_package <-
+## function(dir, installed = TRUE, primitive = FALSE)
+## {
+##     ## Get the S3 generics "as seen from a package" rooted at
+##     ## @code{dir}.  Tricky ...
+##     if(basename(dir) == "base")
+##         env_list <- list()
+##     else {
+##         ## Always look for generics in the whole of the former base.
+##         ## (Not right, but we do not perform run time analyses when
+##         ## working off package sources.)  Maybe change this eventually,
+##         ## but we still cannot rely on packages to fully declare their
+##         ## dependencies on base packages.
+##         env_list <-
+##             list(baseenv(),
+##                  as.environment("package:graphics"),
+##                  as.environment("package:stats"),
+##                  as.environment("package:utils"))
+##         if(installed) {
+##             ## Also use the loaded namespaces and attached packages
+##             ## listed in the DESCRIPTION Depends and Imports fields.
+##             ## Not sure if this is the best approach: we could also try
+##             ## to determine which namespaces/packages were made
+##             ## available by loading the package (which should work at
+##             ## least when run from R CMD check), or we could simply
+##             ## attach every package listed as a dependency ... or
+##             ## perhaps do both.
+##             db <- .read_description(file.path(dir, "DESCRIPTION"))
+##             depends <- .get_requires_from_package_db(db, "Depends")
+##             imports <- .get_requires_from_package_db(db, "Imports")
+##             reqs <- intersect(c(depends, imports), loadedNamespaces())
+##             if(length(reqs))
+##                 env_list <- c(env_list, lapply(reqs, getNamespace))
+##             reqs <- intersect(setdiff(depends, loadedNamespaces()),
+##                               .packages())
+##             if(length(reqs))
+##                 env_list <- c(env_list, lapply(reqs, .package_env))
+##             env_list <- unique(env_list)
+##         }
+##     }
+##     ## some BioC packages warn here
+##     suppressWarnings(
+##     unique(c(.get_internal_S3_generics(primitive),
+##              unlist(lapply(env_list, .get_S3_generics_in_env))))
+##     )
+## }
+
+### ** .get_S3_generics_in_base
+
+.get_S3_generics_in_base <-
+function()
 {
-    ## Get the S3 generics "as seen from a package" rooted at
-    ## @code{dir}.  Tricky ...
-    if(basename(dir) == "base")
-        env_list <- list()
-    else {
-        ## Always look for generics in the whole of the former base.
-        ## (Not right, but we do not perform run time analyses when
-        ## working off package sources.)  Maybe change this eventually,
-        ## but we still cannot rely on packages to fully declare their
-        ## dependencies on base packages.
-        env_list <-
-            list(baseenv(),
-                 as.environment("package:graphics"),
-                 as.environment("package:stats"),
-                 as.environment("package:utils"))
-        if(installed) {
-            ## Also use the loaded namespaces and attached packages
-            ## listed in the DESCRIPTION Depends and Imports fields.
-            ## Not sure if this is the best approach: we could also try
-            ## to determine which namespaces/packages were made
-            ## available by loading the package (which should work at
-            ## least when run from R CMD check), or we could simply
-            ## attach every package listed as a dependency ... or
-            ## perhaps do both.
-            db <- .read_description(file.path(dir, "DESCRIPTION"))
-            depends <- .get_requires_from_package_db(db, "Depends")
-            imports <- .get_requires_from_package_db(db, "Imports")
-            reqs <- intersect(c(depends, imports), loadedNamespaces())
-            if(length(reqs))
-                env_list <- c(env_list, lapply(reqs, getNamespace))
-            reqs <- intersect(setdiff(depends, loadedNamespaces()),
-                              .packages())
-            if(length(reqs))
-                env_list <- c(env_list, lapply(reqs, .package_env))
-            env_list <- unique(env_list)
-        }
-    }
-    ## some BioC packages warn here
-    suppressWarnings(
-    unique(c(.get_internal_S3_generics(primitive),
-             unlist(lapply(env_list, .get_S3_generics_in_env))))
-    )
+    ## .get_S3_generics_in_env(.BaseNamespaceEnv) gets all UseMethod
+    ## generics.
+    ## .get_internal_S3_generics() gets the internal S3 generics.  By
+    ## default this also adds the primitive generics.
+    ## .get_S3_group_generics() gets the S3 group generics.
+    ## Note that
+    ##   .make_S3_group_generic_env()
+    ## generates an env with the group generics and appropriate
+    ## signatures, so we should always have
+    ##    identical(sort(.get_S3_group_generics()),
+    ##              sort(names(.make_S3_group_generic_env())))
+    ## and that
+    ##    .make_S3_primitive_generic_env()
+    ##  generates and env with the primitive generics and appropriate
+    ##  signatures (in turn using base::.GenericArgsEnv), so we should
+    ##  always have
+    ##    identical(sort(.get_S3_primitive_generics()),
+    ##              sort(names(.make_S3_primitive_generic_env())))
+    c(.get_S3_generics_in_env(.BaseNamespaceEnv),
+      .get_internal_S3_generics(),
+      .get_S3_group_generics())
 }
 
 ### ** .get_S3_generics_in_env
@@ -1187,7 +1237,7 @@ function(env, nms = NULL)
 
 .get_S3_group_generics <-
 function()
-    c("Ops", "Math", "Summary", "Complex")
+    c("Ops", "Math", "Summary", "Complex", "matrixOps")
 
 ### ** .get_S3_primitive_generics
 
@@ -1218,7 +1268,9 @@ function(include_group_generics = TRUE)
           ## Group 'Summary':
           "all", "any", "sum", "prod", "max", "min", "range",
           ## Group 'Complex':
-          "Arg", "Conj", "Im", "Mod", "Re")
+          "Arg", "Conj", "Im", "Mod", "Re",
+          ## Group 'matrixOps'
+          "%*%")
     else
         base::.S3PrimitiveGenerics
 }
@@ -1245,7 +1297,7 @@ local({
     out <- strsplit(sub("^R_PKGS_[[:upper:]]+ *= *", "", lines), " +")
     names(out) <-
         tolower(sub("^R_PKGS_([[:upper:]]+) *=.*", "\\1", lines))
-    eval(substitute(function() {out}, list(out=out)), envir=NULL)
+    eval(substitute(function() {out}, list(out=out)), envir = topenv())
     })
 
 ### ** .get_standard_package_dependencies
@@ -1270,30 +1322,42 @@ function(reverse = FALSE, recursive = FALSE)
 
 ### ** .get_standard_repository_URLs
 
+## Usage in e.g. CRAN_baseurl_for_web_area assumes this returns a
+## valid CRAN mirror as its first element.
+## That used not to be guaranteed, and it is still unchecked.
 .get_standard_repository_URLs <-
-function()
-{
-    repos <- Sys.getenv("_R_CHECK_XREFS_REPOSITORIES_", "")
-    if(nzchar(repos)) {
-        repos <-
-            .expand_BioC_repository_URLs(strsplit(repos, " +")[[1L]])
-    } else {
-        nms <- c("CRAN", "BioCsoft", "BioCann", "BioCexp")
-        repos <- getOption("repos")
-        ## This is set by utils:::.onLoad(), hence may be NULL.
-        if(!is.null(repos) &&
-           !anyNA(repos[nms]) &&
-           (repos["CRAN"] != "@CRAN@"))
-            repos <- repos[nms]
-        else {
-            repos <- .get_repositories()[nms, "URL"]
-            names(repos) <- nms
-            if(repos["CRAN"] == "@CRAN@")
-                repos["CRAN"] <- "https://CRAN.R-project.org"
-        }
-    }
-    repos
+function(ForXrefs = FALSE)
+ {
+     if(ForXrefs &&
+        nzchar(repos <- Sys.getenv("_R_CHECK_XREFS_REPOSITORIES_", "")))
+         return(utils:::.expand_BioC_repository_URLs(strsplit(repos, " +")[[1L]]))
+
+     nms <- c("CRAN", "BioCsoft", "BioCann", "BioCexp")
+     repos <- getOption("repos")
+     ## This is set by utils:::.onLoad(), hence may be NULL.
+     if(!is.null(repos) && !anyNA(repos[nms]) && (repos["CRAN"] != "@CRAN@"))
+         repos <- repos[nms]
+     else {
+         repos <- utils:::.get_repositories()[nms, "URL"]
+         names(repos) <- nms
+         ## That might not contain an entry for CRAN
+         if(is.na(repos["CRAN"]) || repos["CRAN"] == "@CRAN@")
+             repos["CRAN"] <- "https://CRAN.R-project.org"
+     }
+     repos
 }
+
+.get_CRAN_repository_URL <-
+function()
+ {
+     repos <- getOption("repos")
+     if(!is.null(repos) && !is.na(cr <- repos["CRAN"]) && (cr != "@CRAN@"))
+         return(cr)
+     cr <- utils:::.get_repositories()["CRAN", "URL"]
+     ## That might not contain an entry for CRAN
+     if(is.na(cr) || cr == "@CRAN@") cr <- "https://CRAN.R-project.org"
+     cr
+ }
 
 ### ** .get_standard_repository_db_fields
 
@@ -1510,7 +1574,7 @@ function(fname)
 {
     ## Determine whether object named 'fname' found in the base
     ## environment is a primitive function.
-    is.primitive(get(fname, envir = baseenv(), inherits = FALSE))
+    is.primitive(baseenv()[[fname]])
 }
 
 ### ** .is_S3_generic
@@ -1568,6 +1632,14 @@ function(fname, envir, mustMatch = TRUE)
     }
     res <- isUME(body(f))
     if(mustMatch) res == fname else nzchar(res)
+}
+
+### ** .load_namespace_quietly
+
+.load_namespace_quietly <-
+function(package, lib.loc) {
+    if(package != "base")
+        .try_quietly(loadNamespace(package, lib.loc))
 }
 
 ### ** .load_namespace_rather_quietly
@@ -1648,7 +1720,7 @@ function(type = c("code", "data", "demo", "docs", "vignette"))
                     "csv", "CSV",
                     "csv.gz", "csv.bz2", "csv.xz"),
            demo = c("R", "r"),
-           docs = c("Rd", "rd", "Rd.gz", "rd.gz"),
+           docs = c("Rd", "rd"),
            vignette = c(outer(c("R", "r", "S", "s"), c("nw", "tex"),
                               paste0),
                         "Rmd"))
@@ -1665,6 +1737,8 @@ function(parent = parent.frame())
     assign("Math", function(x, ...) UseMethod("Math"),
            envir = env)
     assign("Ops", function(e1, e2) UseMethod("Ops"),
+           envir = env)
+    assign("matrixOps", function(x, y) UseMethod("matrixOps"),
            envir = env)
     assign("Summary", function(..., na.rm = FALSE) UseMethod("Summary"),
            envir = env)
@@ -1706,6 +1780,26 @@ function(parent = parent.frame())
              hash=TRUE, parent=parent)
 }
 
+### ** .make_KaTeX_checker
+
+.make_KaTeX_checker <- local({
+    fun <- NULL
+    ctx <- NULL
+    function() {
+        if(is.null(fun) && requireNamespace("V8", quietly = TRUE)) {
+            dir <- file.path(R.home("doc"), "html")
+            ctx <<- V8::v8("window")
+            ctx$source(file.path(dir, "katex", "katex.js"))
+            ## Provides additional macros:
+            ctx$source(file.path(dir, "katex-config.js"))
+            ## Provides checkTex():
+            ctx$source(file.path(dir, "katex-check.js"))
+            fun <<- function(tex) ctx$call('checkTex', tex)
+        }
+        fun
+    }
+})
+
 ### ** nonS3methods [was .make_S3_methods_stop_list ]
 
 nonS3methods <- function(package)
@@ -1715,17 +1809,18 @@ nonS3methods <- function(package)
     ## Using package = NULL returns all known examples
 
     stopList <-
-        list(base = c("all.equal", "all.names", "all.vars", "expand.grid",
-             "format.char", "format.info", "format.pval",
+        list(base = c("all.equal", "all.names", "all.vars",
+             "as.data.frame.vector",
+             "format.info", "format.pval",
              "max.col",
-             "pmax.int", "pmin.int",
              ## the next two only exist in *-defunct.Rd.
-             "print.atomic", "print.coefmat",
+             ## "print.atomic", "print.coefmat",
              "qr.Q", "qr.R", "qr.X", "qr.coef", "qr.fitted", "qr.qty",
              "qr.qy", "qr.resid", "qr.solve",
-             "rep.int", "sample.int", "seq.int", "sort.int", "sort.list"),
+             "rep.int", "seq.int", "sort.int", "sort.list"),
              AMORE = "sim.MLPnet",
              BSDA = "sign.test",
+             BiocGenerics = "rep.int",
              ChemometricsWithR = "lda.loofun",
              ElectoGraph = "plot.wedding.cake",
              FrF2 = "all.2fis.clear.catlg",
@@ -1825,7 +1920,7 @@ function()
     ind <- grepl("^[[:alpha:]]", generics)
     generics <- c(generics[!ind], generics[ind])
     ## The foo.bar objects in base:
-    objects <- grep("[^.]+[.]", objects, value = TRUE)
+    objects <- grep("[^.]+[.][[:alpha:]]", objects, value = TRUE)
     ## Make our lives easier ...
     objects <- setdiff(objects, nonS3methods("base"))
     ## Find the ones matching GENERIC.CLASS from the list of generics.
@@ -1845,6 +1940,8 @@ function()
 .deparse_S3_methods_table_for_base <-
 function()
 {
+    if(!identical("C", Sys.getlocale("LC_COLLATE")))
+        warning("*not* using 'C' for LC_COLLATE locale")
     mdb <- .make_S3_methods_table_for_base()
     n <- nrow(mdb)
     c(sprintf("%s\"%s\", \"%s\"%s",
@@ -1859,7 +1956,7 @@ function()
 ### ** .package_apply
 
 .package_apply <-
-function(packages = NULL, FUN, ...,
+function(packages = NULL, FUN, ..., pattern = "*", verbose = TRUE,
          Ncpus = getOption("Ncpus", 1L))
 {
     ## Apply FUN and extra '...' args to all given packages.
@@ -1869,12 +1966,20 @@ function(packages = NULL, FUN, ...,
         packages <-
             unique(utils::installed.packages(priority = "high")[ , 1L])
 
-    one <- function(p)
-        tryCatch(FUN(p, ...),
-                 error = function(e)
-                     noquote(paste("Error:",
-                                   conditionMessage(e))))
-    ## (Just don't throw the error ...)
+    ## For consistency with .unpacked_source_repository_apply(), take
+    ## 'pattern' as a wildcard pattern.
+    if(pattern != "*")
+        packages <- packages[grepl(utils::glob2rx(pattern), packages)]
+
+    ## Keep in sync with .unpacked_source_repository_apply().
+    ## <FIXME>
+    ## Should we really catch errors?
+    one <- function(p) {
+        if(verbose)
+            message(sprintf("processing %s", p))
+        tryCatch(FUN(p, ...), error = identity)
+    }
+    ## </FIXME>
 
     ## Would be good to have a common wrapper ...
     if(Ncpus > 1L) {
@@ -1928,21 +2033,6 @@ function(file, encoding = NA, keep.source = getOption("keep.source"))
             parse(file,
                   keep.source = keep.source)
     })
-}
-
-
-### ** .read_Rd_lines_quietly
-
-.read_Rd_lines_quietly <-
-function(con)
-{
-    ## Read lines from a connection to an Rd file, trying to suppress
-    ## "incomplete final line found by readLines" warnings.
-    if(is.character(con)) {
-        con <- if(endsWith(con, ".gz")) gzfile(con, "r") else file(con, "r")
-        on.exit(close(con))
-    }
-    .try_quietly(readLines(con, warn=FALSE))
 }
 
 ### ** .read_additional_repositories_field
@@ -2082,32 +2172,6 @@ function(x, dfile)
     }
 }
 
-### ** .read_repositories
-
-.read_repositories <-
-function(file)
-{
-    db <- utils::read.delim(file, header = TRUE, comment.char = "#",
-                            colClasses =
-                            c(rep.int("character", 3L),
-                              rep.int("logical", 4L))) # allow for win64.binary
-    db[, "URL"] <- .expand_BioC_repository_URLs(db[, "URL"])
-    db
-}
-
-### default changed to https: for R 3.3.0
-.expand_BioC_repository_URLs <-
-function(x)
-{
-    x <- sub("%bm",
-             as.character(getOption("BioC_mirror",
-                                    "https://bioconductor.org")),
-             x, fixed = TRUE)
-    sub("%v",
-        as.character(.BioC_version_associated_with_R_version()),
-        x, fixed = TRUE)
-}
-
 .expand_package_description_db_R_fields <-
 function(x)
 {
@@ -2176,7 +2240,8 @@ function(file, envir, enc = NA)
     exprs <- parse(n = -1L, file = con)
     exprs <- exprs[lengths(exprs) > 0L]
     for(e in exprs) {
-	if(is.call(e) && as.character(e[[1L]]) %in% assignmentSymbols)
+	if(is.call(e) &&
+           as.character(e[[1L]])[1L] %in% assignmentSymbols)
             tryCatch(eval(e, envir), error = identity)
     }
     invisible()
@@ -2345,11 +2410,15 @@ function(dir, FUN, ..., pattern = "*", verbose = FALSE,
     dfiles <- Sys.glob(file.path(dir, pattern, "DESCRIPTION"))
     paths <- dirname(dfiles)
 
+    ## Keep in sync with .package_apply().
+    ## <FIXME>
+    ## Should we really catch errors?
     one <- function(p) {
         if(verbose)
             message(sprintf("processing %s", basename(p)))
-        FUN(p, ...)
+        tryCatch(FUN(p, ...), error = identity)
     }
+    ## </FIXME>
 
     ## Would be good to have a common wrapper ...
     if(Ncpus > 1L) {
@@ -2404,7 +2473,7 @@ function(fun, args = list(), opts = character(), env = character(),
             x[i] <- y["CRAN"]
         c(x, y[match(names(y), names(x), 0L) == 0L])
     }
-    
+
     tfi <- tempfile("runri")
     tfo <- tempfile("runro")
     wrk <- c(sprintf("x <- readRDS(\"%s\")", tfi),
@@ -2417,6 +2486,8 @@ function(fun, args = list(), opts = character(), env = character(),
             tfi)
     cmd <- if(.Platform$OS.type == "windows") {
                if(nzchar(arch))
+                   ## R.home("bin") might be better, but Windows
+                   ## installation is monolithic
                    file.path(R.home(), "bin", arch, "Rterm.exe")
                else
                    file.path(R.home("bin"), "Rterm.exe")

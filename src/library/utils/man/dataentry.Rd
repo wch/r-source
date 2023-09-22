@@ -13,9 +13,6 @@ de(\dots, Modes = list(), Names = NULL)
 \alias{data.entry}
 \alias{dataentry}
 \alias{de}
-\alias{de.ncols}
-\alias{de.restore}
-\alias{de.setup}
 \description{
   A spreadsheet-like editor for entering or editing data.
 }
@@ -35,13 +32,14 @@ de(\dots, Modes = list(), Names = NULL)
   Notes section.
 
   \code{data.entry} has side effects, any changes made in the
-  spreadsheet are reflected in the variables.  The functions \code{de},
-  \code{de.ncols}, \code{de.setup} and \code{de.restore} are designed to
-  help achieve these side effects. If the user passes in a matrix,
+  spreadsheet are reflected in the variables.  Function \code{de} and
+  the internal functions \code{\link{de.ncols}}, \code{\link{de.setup}}
+  and \code{\link{de.restore}} are designed to 
+  help achieve these side effects.  If the user passes in a matrix,
   \code{X} say, then the matrix is broken into columns before
   \code{dataentry} is called. Then on return the columns are collected
   and glued back together and the result assigned to the variable
-  \code{X}.  If you don't want this behaviour use dataentry directly.
+  \code{X}.  If you don't want this behaviour use \code{dataentry} directly.
 
   The primitive function is \code{dataentry}. It takes a list of
   vectors of possibly different lengths and modes (the second argument)

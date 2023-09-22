@@ -28,15 +28,15 @@ function(formula, data = list(),
          bw = "nrd0", n = 512, from = NULL, to = NULL,
          col = NULL, border = 1, main = "", xlab = NULL, ylab = NULL,
          yaxlabels = NULL, xlim = NULL, ylim = c(0, 1), ...,
-         subset = NULL)
+         subset = NULL, weights = NULL)
 {
     ## extract x, y from formula
     m <- match.call(expand.dots = FALSE)
-    m <- m[c(1L, match(c("formula", "data", "subset"), names(m), 0L))]
+    m <- m[c(1L, match(c("formula", "data", "subset", "weights"), names(m), 0L))]
     ## need stats:: for non-standard evaluation
     m[[1L]] <- quote(stats::model.frame)
     mf <- eval.parent(m)
-    if(NCOL(mf) != 2L)
+    if(length(setdiff(names(mf), "(weights)")) != 2L)
         stop("'formula' should specify exactly two variables")
     y <- mf[,1L]
     if(!is.factor(y))
@@ -44,6 +44,7 @@ function(formula, data = list(),
     if(!is.null(ylevels))
       y <- factor(y, levels = if(is.numeric(ylevels)) levels(y)[ylevels] else ylevels)
     x <- mf[,2L]
+    w <- if("(weights)" %in% names(mf)) mf[,"(weights)"] else NULL
 
     ## graphical parameters
     if(is.null(xlab)) xlab <- names(mf)[2L]
@@ -54,7 +55,7 @@ function(formula, data = list(),
     cdplot(x, y, plot = plot, tol.ylab = tol.ylab, bw = bw, n = n,
            from = from, to = to, col = col, border = border, main = main,
            xlab = xlab, ylab = ylab, yaxlabels = yaxlabels, xlim = xlim,
-           ylim = ylim, ...)
+           ylim = ylim, weights = w, ...)
 }
 
 cdplot.default <-
@@ -62,7 +63,7 @@ function(x, y,
          plot = TRUE, tol.ylab = 0.05, ylevels = NULL,
          bw = "nrd0", n = 512, from = NULL, to = NULL,
          col = NULL, border = 1, main = "", xlab = NULL, ylab = NULL,
-         yaxlabels = NULL, xlim = NULL, ylim = c(0, 1), ...)
+         yaxlabels = NULL, xlim = NULL, ylim = c(0, 1), weights = NULL, ...)
 {
     ## graphical parameters
     if(is.null(xlab)) xlab <- deparse1(substitute(x))
@@ -76,6 +77,9 @@ function(x, y,
     x <- as.numeric(x)
     if(!is.factor(y)) stop("dependent variable should be a factor")
 
+    ## normalize weights (if any)
+    w <- if (is.null(weights)) NULL else weights/sum(weights)
+
     ## reverse ordering on y-axis compared to R < 4.0.0
     ylevels <- if(is.null(ylevels)) nlevels(y):1L else rev(ylevels)
     y <- factor(y, levels = if(is.numeric(ylevels)) levels(y)[ylevels] else ylevels)
@@ -83,22 +87,29 @@ function(x, y,
 
     ## unconditional density of x
     dx <- if(is.null(from) && is.null(to))
-        stats::density(x, bw = bw, n = n, ...)
+        stats::density(x, bw = bw, n = n, weights = w, ...)
     else
-        stats::density(x, bw = bw, from = from, to = to, n = n, ...)
+        stats::density(x, bw = bw, from = from, to = to, n = n, weights = w, ...)
     x1 <- dx$x
 
     ## setup conditional values
     ny <- length(levels(y))
-    yprop <- cumsum(proportions(table(y)))
+    if(is.null(weights)) {
+      yprop <- cumsum(proportions(table(y)))
+    } else {
+      yprop <- cumsum(proportions(tapply(weights, y, FUN = sum, na.rm = TRUE)))
+      yprop[is.na(yprop)] <- 0
+    }
     y1 <- matrix(rep(0, n * (ny - 1L)), nrow = (ny - 1L))
 
     ## setup return value
     rval <- list()
 
     for(i in seq_len(ny-1L)) {
-        dxi <- stats::density(x[y %in% levels(y)[seq_len(i)]], bw = dx$bw, n = n,
-                              from = min(dx$x), to = max(dx$x), ...)
+        yi <- y %in% levels(y)[seq_len(i)]
+        wi <- if (is.null(weights)) NULL else weights[yi] / sum(weights[yi])
+        dxi <- stats::density(x[yi], bw = dx$bw, n = n,
+                              from = min(dx$x), to = max(dx$x), weights = wi, ...)
         y1[i,] <- dxi$y/dx$y * yprop[i]
         rval[[i]] <- stats::approxfun(x1, y1[i,], rule = 2)
     }

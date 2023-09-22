@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998-2005   The R Core Team
+ *  Copyright (C) 1998-2023   The R Core Team
  *
  *  This header file is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -30,15 +30,27 @@
 extern "C" {
 #endif
 
-#if defined(__GNUC__) && __GNUC__ >= 3
-#define NORET __attribute__((noreturn))
+/* C23 has a [[noreturn]] attribute supported in GCC 13 and LLVM clang
+ * 15 with -std=c2x but not Apple clang 14.  All have version 202000L.
+ * In C11 there is _Noreturn * (or noreturn in header <stdnoreturn.h>).
+ */
+#if defined NORET
+#elif (defined(__STDC_VERSION__) && __STDC_VERSION__ >= 202301L)
+# define NORET [[noreturn]]
+#elif defined(__STDC_VERSION__) && __STDC_VERSION__ >= 201102L
+# define NORET _Noreturn
+#elif defined(__GNUC__) && __GNUC__ >= 3
+// LLVM and Apple clang identify themselves as 4.
+// But Mandriva (or OpenMandriva) is said to patch clang to 11.
+// Boost also uses this for __SUNPRO_CC >= 0x590
+# define NORET __attribute__((noreturn))
 #else
-#define NORET
+# define NORET
 #endif
 
-void NORET Rf_error(const char *, ...);
-void NORET UNIMPLEMENTED(const char *);
-void NORET WrongArgCount(const char *);
+NORET void Rf_error(const char *, ...);
+NORET void UNIMPLEMENTED(const char *);
+NORET void WrongArgCount(const char *);
 
 void	Rf_warning(const char *, ...);
 void 	R_ShowMessage(const char *s);

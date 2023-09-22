@@ -1069,7 +1069,7 @@ function(dir, ignore = character(),
     defaults <-
         Sys.getenv("_R_ASPELL_USE_DEFAULTS_FOR_PACKAGE_DESCRIPTION_",
                    "TRUE")
-    defaults <- if(tools:::config_val_to_logical(defaults)) {
+    defaults <- if(str2logical(defaults)) {
                     .aspell_package_defaults(dir, encoding)$description
                 } else NULL
     if(!is.null(defaults)) {

@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996, 1997 Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998-2015 The R Core Team
+ *  Copyright (C) 1998-2022 The R Core Team
  *
  *  This source code module:
  *  Copyright (C) 1997, 1998 Paul Murrell and Ross Ihaka
@@ -827,8 +827,8 @@ static int TranslatedSymbol(SEXP expr)
 	code == 0260			||   /* degree */
 	code == 0262			||   /* second */
 	code == 0266                    ||   /* partialdiff */
-	code == 0321                    ||   /* nabla */
-	0)
+	code == 0321                         /* nabla */
+	)
 	return code;
     else // not translated
 	return 0;
@@ -1377,7 +1377,7 @@ static BBOX RenderBin(SEXP expr, int draw, mathContext *mc,
 
 /*----------------------------------------------------------------------
  *
- *  Code for Subscript and Superscipt Expressions
+ *  Code for Subscript and Superscript Expressions
  *
  *  Rules 18, 18a, ..., 18f of the TeXBook.
  *
@@ -1670,7 +1670,7 @@ static int AccentAtom(SEXP expr)
     return NameAtom(expr) && (AccentCode(expr) != 0);
 }
 
-static void NORET InvalidAccent(SEXP expr)
+NORET static void InvalidAccent(SEXP expr)
 {
     errorcall(expr, _("invalid accent"));
 }
@@ -2395,7 +2395,7 @@ static BBOX RenderOp(SEXP expr, int draw, mathContext *mc,
  *
  *  Code for radical expressions (root, sqrt)
  *
- *  Tunable parameteters :
+ *  Tunable parameters :
  *
  *  RADICAL_GAP	   The gap between the nucleus and the radical extension.
  *  RADICAL_SPACE  Extra space to the left and right of the nucleus.

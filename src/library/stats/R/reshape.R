@@ -28,7 +28,7 @@ reshape <-
 {
 
     if (!is.character(sep) || length(sep) != 1L)
-        stop("'sep' must be a character string")
+        stop(gettextf("'%s' must be a character string", "sep"), domain = NA)
 
     ix2names <- function(ix)
         if (is.character(ix)) ix else names(data)[ix]
@@ -93,7 +93,7 @@ reshape <-
 
             if (is.null(v.names))
                 v.names <- vapply(varying, `[`, 1L, FUN.VALUE=character(1L))
-                
+
             rval <- do.call(rbind, lapply(seq_along(times), function(i) {
                 d[, timevar] <- times[i]
                 varying.i <- vapply(varying, `[`, i, FUN.VALUE=character(1L))

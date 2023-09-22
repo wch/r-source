@@ -26,7 +26,7 @@ rtags(path = ".", pattern = "\\\\.[RrSs]$",
   \item{path, pattern, recursive}{
     Arguments passed on to \code{\link{list.files}} to determine the
     files to be tagged.  By default, these are all files with extension
-    \code{.R}, \code{.r}, \code{.S}, and \code{.s} in the current
+    \file{.R}, \file{.r}, \file{.S}, and \file{.s} in the current
     directory.  These arguments are ignored if \code{src} is specified.
   }
   \item{src}{
@@ -35,7 +35,7 @@ rtags(path = ".", pattern = "\\\\.[RrSs]$",
   \item{keep.re}{ A regular expression further restricting \code{src}
     (the files to be indexed).  For example, specifying
     \code{keep.re = "/R/[^/]*\\\\.R$"} will only retain files with
-    extension \code{.R} inside a directory named \code{R}.
+    extension \file{.R} inside a directory named \file{R}.
   }
 
   \item{ofile}{ Passed on to \code{\link{cat}} as the \code{file}
@@ -75,7 +75,7 @@ rtags(path = ".", pattern = "\\\\.[RrSs]$",
   \PR{17214}.
 
   It may be more convenient to use the command-line wrapper script
-  \code{R CMD rtags}.
+  \command{R CMD rtags}.
 }
 
 \references{

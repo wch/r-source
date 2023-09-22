@@ -1,6 +1,6 @@
 % File src/library/stats/man/NegBinomial.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2020 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{NegBinomial}
@@ -90,7 +90,7 @@ rnbinom(n, size, prob, mu)
 
   \code{rnbinom} returns a vector of type \link{integer} unless generated
   values exceed the maximum representable integer when \code{\link{double}}
-  values are returned since R version 4.0.0.
+  values are returned.
 }
 \source{
   \code{dnbinom} computes via binomial probabilities, using code

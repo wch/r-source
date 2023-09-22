@@ -18,7 +18,7 @@ writeChar(object, con, nchars = nchar(object, type = "chars"),
           eos = "", useBytes = FALSE)
 }
 \arguments{
-  \item{con}{A \link{connection} object, or a character string naming a file,
+  \item{con}{a \link{connection} object, or a character string naming a file,
     or a raw vector.}
 
   \item{nchars}{integer vector, giving the lengths in characters of
@@ -29,7 +29,7 @@ writeChar(object, con, nchars = nchar(object, type = "chars"),
     regarded as a number of bytes not characters in a multi-byte
     locale?  For \code{writeChar}, see \code{\link{writeLines}}.}
 
-  \item{object}{A character vector to be written to the connection, at
+  \item{object}{a character vector to be written to the connection, at
     least as long as \code{nchars}.}
 
   \item{eos}{\sQuote{end of string}: character string.  The terminator

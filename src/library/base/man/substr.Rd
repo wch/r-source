@@ -1,6 +1,6 @@
 % File src/library/base/man/substr.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2021 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{substr}
@@ -52,7 +52,7 @@ substring(text, first, last = 1000000L) <- value
   is either Latin-1 or UTF-8.
 
   If an input element has declared \code{"bytes"} encoding (see
-  \code{\link{Encoding}}, the subsetting is done in units of bytes not
+  \code{\link{Encoding}}), the subsetting is done in units of bytes not
   characters.
 }
 \value{
@@ -79,7 +79,7 @@ substring(text, first, last = 1000000L) <- value
   display.  That does not really work (you want to limit the width, not
   the number of characters, so it would be better to use
   \code{\link{strtrim}}), but at least make sure you use the default
-  \code{nchar(type = "c")}.
+  \code{nchar(type = "chars")}.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

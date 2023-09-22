@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997--2021  The R Core Team
+ *  Copyright (C) 1997--2023  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -409,12 +409,15 @@ static Rboolean cprod(SEXP sx, Rcomplex *value, Rboolean narm)
 attribute_hidden
 SEXP fixup_NaRm(SEXP args)
 {
-    SEXP t, na_value;
-
     /* Need to make sure na.rm is last and exists */
-    na_value = ScalarLogical(FALSE);
+    SEXP na_value = ScalarLogical(FALSE);
+    Rboolean seen_NaRm = FALSE;
     for(SEXP a = args, prev = R_NilValue; a != R_NilValue; a = CDR(a)) {
 	if(TAG(a) == R_NaRmSymbol) {
+	    if(seen_NaRm)
+	        error(_("formal argument \"%s\" matched by multiple actual arguments"),
+		      "na.rm");
+	    seen_NaRm = TRUE;
 	    if(CDR(a) == R_NilValue) return args;
 	    na_value = CAR(a);
 	    if(prev == R_NilValue) args = CDR(a);
@@ -424,7 +427,7 @@ SEXP fixup_NaRm(SEXP args)
     }
 
     PROTECT(na_value);
-    t = CONS(na_value, R_NilValue);
+    SEXP t = CONS(na_value, R_NilValue);
     UNPROTECT(1);
     PROTECT(t);
     SET_TAG(t, R_NaRmSymbol);
@@ -534,11 +537,11 @@ static R_INLINE SEXP complex_mean(SEXP x)
 	}
 	s += t/n; si += ti/n;
     }
-    Rcomplex val = { (double)s, (double)si };
+    Rcomplex val = { .r = (double)s, .i = (double)si };
     return ScalarComplex(val);
 }
 
-SEXP attribute_hidden do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     checkArity(op, args);
     if(PRIMVAL(op) == 1) { /* mean */
@@ -549,7 +552,7 @@ SEXP attribute_hidden do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
 	case REALSXP: return real_mean(x);
 	case CPLXSXP: return complex_mean(x);
 	default:
-	    error(R_MSG_type, type2char(TYPEOF(x)));
+	    error(R_MSG_type, R_typeToChar(x));
 	    return R_NilValue; // -Wall on clang 4.2
 	}
     }
@@ -618,7 +621,7 @@ SEXP attribute_hidden do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
 	   or *value ([ir]min / max) is assigned;  */
     SEXP a;
     double tmp = 0.0, s;
-    Rcomplex ztmp, zcum={0.0, 0.0} /* -Wall */;
+    Rcomplex ztmp, zcum={.r = 0.0, .i = 0.0} /* -Wall */;
     int itmp = 0, icum = 0, warn = 0 /* dummy */;
     Rboolean use_isum = TRUE; // indicating if isum() should used; otherwise irsum()
     isum_INT iLtmp = (isum_INT)0, iLcum = iLtmp; // for isum() only
@@ -987,12 +990,12 @@ na_answer: /* only sum(INTSXP, ...) case currently used */
     return ans;
 
 invalid_type:
-    errorcall(call, R_MSG_type, type2char(TYPEOF(a)));
+    errorcall(call, R_MSG_type, R_typeToChar(a));
     return R_NilValue;
 }/* do_summary */
 
 
-SEXP attribute_hidden do_range(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_range(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans, a, b, prargs, call2;
 
@@ -1014,7 +1017,7 @@ SEXP attribute_hidden do_range(SEXP call, SEXP op, SEXP args, SEXP env)
     PROTECT(op = findFun(install("range.default"), env));
     PROTECT(prargs = promiseArgs(args, R_GlobalEnv));
     for (a = args, b = prargs; a != R_NilValue; a = CDR(a), b = CDR(b))
-	SET_PRVALUE(CAR(b), CAR(a));
+	IF_PROMSXP_SET_PRVALUE(CAR(b), CAR(a));
     ans = applyClosure(call, op, prargs, env, R_NilValue);
 #ifdef ADJUST_ENVIR_REFCNTS
     unpromiseArgs(prargs);
@@ -1025,7 +1028,7 @@ SEXP attribute_hidden do_range(SEXP call, SEXP op, SEXP args, SEXP env)
 
 // which.min(x) : The index (starting at 1), of the first min(x) in x
 // which.max(x) : The index (starting at 1), of the first max(x) in x
-SEXP attribute_hidden do_first_min(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_first_min(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP sx = CAR(args), ans;
     int nprot = 1;
@@ -1119,7 +1122,7 @@ SEXP attribute_hidden do_first_min(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 
 /* which(x) : indices of non-NA TRUE values in x */
-SEXP attribute_hidden do_which(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_which(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);
     SEXP v = CAR(args);
@@ -1193,7 +1196,7 @@ SEXP attribute_hidden do_which(SEXP call, SEXP op, SEXP args, SEXP rho)
 /* op = 0 is pmin, op = 1 is pmax
    NULL and logicals are handled as if they had been coerced to integer.
  */
-SEXP attribute_hidden do_pmin(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_pmin(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     int narm = asLogical(CAR(args));
     if(narm == NA_LOGICAL)

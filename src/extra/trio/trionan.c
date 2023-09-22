@@ -103,7 +103,7 @@
  *     implicitly (the so-called "hidden bit"), which leaves us with
  *     the ability to represent 53 bits wide mantissa.
  */
-#if defined(__STDC_IEC_559__)
+#if defined(__STDC_IEC_60559_BFP__) || defined(__STDC_IEC_559__)
 # define TRIO_IEEE_754
 #else
 # if (FLT_RADIX - 0 == 2) && (DBL_MAX_EXP - 0 == 1024) && (DBL_MANT_DIG - 0 == 53)
@@ -153,7 +153,7 @@
  * Determine how to generate positive infinity.
  */
 #if defined(TRIO_FUNC_PINF)
-# if defined(INFINITY) && defined(__STDC_IEC_559__)
+# if defined(INFINITY) && defined(TRIO_IEEE_754)
 #  define TRIO_PINF_C99_MACRO
 # else
 #  if defined(TRIO_IEEE_754)
@@ -171,7 +171,7 @@
 # if defined(PREDEF_STANDARD_C99) && !defined(TRIO_COMPILER_DECC)
 #  define TRIO_NAN_C99_FUNCTION
 # else
-#  if defined(NAN) && defined(__STDC_IEC_559__)
+#  if defined(NAN) && defined(TRIO_IEEE_754)
 #   define TRIO_NAN_C99_MACRO
 #  else
 #   if defined(TRIO_IEEE_754)

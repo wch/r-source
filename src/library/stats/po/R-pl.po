@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-11-06 17:17\n"
+"POT-Creation-Date: 2023-07-31 14:59\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -156,10 +156,15 @@ msgstr "argument 'by' musi być listą"
 msgid "arguments must have same length"
 msgstr "argumenty muszą mieć tę samą długość"
 
-msgid "'formula' missing or incorrect"
-msgstr "brakuje argumentu 'formula' lub jest niepoprawny"
+msgid "argument 'x' is  missing -- it has been renamed from 'formula'"
+msgstr ""
 
-msgid "'formula' must have both left and right hand sides"
+#, fuzzy
+msgid "argument 'x' must be a formula"
+msgstr "argument 'x' musi być liczbą"
+
+#, fuzzy
+msgid "formula 'x' must have both left and right hand sides"
 msgstr "'formula' musi mieć jednocześnie lewą i prawą stronę"
 
 msgid "cannot change frequency from %g to %g"
@@ -209,6 +214,9 @@ msgstr "nie można obliczyć dokładnej wartości prawdopodobieństwa z powtórz
 
 msgid "cannot compute exact confidence intervals with ties"
 msgstr "nie można obliczyć dokładnych przedziałów ufności z powtórzonymi wartościami"
+
+msgid "'formula' missing or incorrect"
+msgstr "brakuje argumentu 'formula' lub jest niepoprawny"
 
 msgid "grouping factor must have exactly 2 levels"
 msgstr "grupujący czynnik musi mieć dokładnie 2 poziomy"
@@ -486,8 +494,14 @@ msgstr "'k' musi być w zakresie {1, 2, ..  n - 1}"
 msgid "only %d of the first %d eigenvalues are > 0"
 msgstr "tylko %d pierwszych %d wartości własnych jest > 0"
 
-msgid "package 'MASS' must be installed"
-msgstr "pakiet 'MASS' musi być zainstalowany"
+msgid "Waiting for profiling to be done..."
+msgstr ""
+
+msgid "Reprofiling for"
+msgstr ""
+
+msgid "statistic. Waiting..."
+msgstr ""
 
 msgid "initial value is not in the interior of the feasible region"
 msgstr "wartość początkowa nie jest wewnątrz możliwego regionu"
@@ -699,6 +713,9 @@ msgstr "'sum(weights)  !=  1' -- nie uzyska się prawdziwej gęstości"
 msgid "need at least 2 points to select a bandwidth automatically"
 msgstr "co najmniej 2 punkty są potrzebne aby automatycznie wybrać szerokość pasma"
 
+msgid "Selecting bandwidth *not* using 'weights'"
+msgstr ""
+
 msgid "unknown bandwidth rule"
 msgstr "nieznana reguła szerokości pasma"
 
@@ -731,6 +748,9 @@ msgstr "niepoprawne wymiary dla 'xi'"
 
 msgid "'x' is not a vector or matrix"
 msgstr "argument 'x' nie jest wektorem ani macierzą"
+
+msgid "x[1] != r[1]; using x[1] for diagonal"
+msgstr ""
 
 msgid "invalid distance method"
 msgstr "niepoprawna metoda wyznaczania odległości"
@@ -937,6 +957,9 @@ msgstr "niepoprawne określenie dla argumentu 'row.vars'"
 msgid "incorrect specification for 'col.vars'"
 msgstr "niepoprawne określenie dla argumentu 'col.vars'"
 
+msgid "'formula' must have both left and right hand sides"
+msgstr "'formula' musi mieć jednocześnie lewą i prawą stronę"
+
 msgid "interactions are not allowed"
 msgstr "interakcje nie są dozwolone"
 
@@ -966,6 +989,18 @@ msgstr "brakuje 'row.var.names'"
 
 msgid "'col.vars' missing or incorrect"
 msgstr "brakuje argumentu 'col.vars' lub jest niepoprawny"
+
+msgid "Parameter:"
+msgstr ""
+
+msgid "down"
+msgstr ""
+
+msgid "up"
+msgstr ""
+
+msgid "profiling has found a better solution, so original fit had not converged"
+msgstr ""
 
 msgid "'family' not recognized"
 msgstr "argument 'family' nie został rozpoznany"
@@ -1201,6 +1236,12 @@ msgstr "niektóre elementy 'x' nie są liczbami, więc zostaną przekształcone 
 msgid "not enough 'x' data"
 msgstr "zbyt mało danych 'x'"
 
+msgid "Parameter(s)"
+msgstr ""
+
+msgid "ignored"
+msgstr ""
+
 msgid "not enough 'y' data"
 msgstr "zbyt mało danych 'y'"
 
@@ -1210,8 +1251,28 @@ msgstr "wartość prawdopodobieństwa w obecności powtórzonych wartości będz
 msgid "'y' must be numeric or a function or a string naming a valid function"
 msgstr "'y' musi być liczbą lub funkcją lub łańcuchem o poprawnej nazwie funkcji"
 
-msgid "ties should not be present for the Kolmogorov-Smirnov test"
+#, fuzzy
+msgid "ties should not be present for the one-sample Kolmogorov-Smirnov test"
 msgstr "wartości powtórzone nie powinny być obecne w teście Kolmogorowa-Smirnowa"
+
+#, fuzzy
+msgid "invalid arguments"
+msgstr "niepoprawny argument 'n'"
+
+#, fuzzy
+msgid "argument 'sizes' must be a vector of length 2"
+msgstr "argument 'interval' musi być wektorem liczbowym o długości 2"
+
+#, fuzzy
+msgid "argument 'q' must be numeric"
+msgstr "argument 'x' musi być liczbą"
+
+msgid "computation of exact probability failed, returning Monte Carlo approximation"
+msgstr ""
+
+#, fuzzy
+msgid "argument 'p' must be numeric"
+msgstr "argument 'x' musi być liczbą"
 
 msgid ""
 "numeric y must be supplied.\n"
@@ -1273,8 +1334,21 @@ msgstr "Testy ANOVA Fishera w istocie na idealnym dopasowaniu są niewiarygodne"
 msgid "calling predict.lm(<fake-lm-object>) ..."
 msgstr "wywoływanie 'predict.lm(<fake-lm-object>)' ..."
 
-msgid "prediction from a rank-deficient fit may be misleading"
+#, fuzzy
+msgid "prediction from rank-deficient fit"
 msgstr "predykcja z dopasowania z niedoborem rang może być myląca"
+
+msgid "%s; consider predict(., rankdeficient=\"NA\")"
+msgstr ""
+
+msgid "lower-rank qr: determining non-estimable cases"
+msgstr ""
+
+msgid "%s; attr(*, \"non-estim\") has doubtful cases"
+msgstr ""
+
+msgid "%s: NAs produced for non-estimable cases"
+msgstr ""
 
 msgid "predictions on current data refer to _future_ responses"
 msgstr "predykcje na bieżących danych odnoszą się do _przyszłych_ wartości zmiennej zależnej"
@@ -1505,13 +1579,11 @@ msgstr "brak komponentu 'terms' oraz atrybutu"
 msgid "'termlabels' must be a character vector of length at least one"
 msgstr "argument 'termlabels' musi być wektorem tekstowym o długości co najmniej 1"
 
+#, fuzzy
+msgid "'%s' must be a character string"
+msgstr "'sep' musi być łańcuchem tekstowym"
+
 msgid "Unparseable 'response' \"%s\"; use is deprecated.  Use as.name(.) or `..`!"
-msgstr ""
-
-msgid "reformulate"
-msgstr ""
-
-msgid "deprecatedWarning"
 msgstr ""
 
 msgid "'termobj' must be a object of class %s"
@@ -1532,6 +1604,14 @@ msgstr "'data' musi być listą albo środowiskiem"
 
 msgid "variable '%s' is not a factor"
 msgstr "zmienna '%s' nie jest czynnikiem"
+
+#, fuzzy
+msgid "contrasts dropped from factor %s"
+msgstr "kontrasty mają zastosowanie jedynie do czynników"
+
+#, fuzzy
+msgid "contrasts dropped from factor %s due to missing levels"
+msgstr "kontrasty można zastosować jedynie do czynników z dwoma lub więcej poziomami"
 
 msgid "'offset' must be numeric"
 msgstr "argument 'offset' musi być liczbą"
@@ -1732,6 +1812,9 @@ msgstr "'which' musi być w przedziale 1:6"
 msgid "'id.n' must be in {1,..,%d}"
 msgstr "argument 'id.n' musi być w przedziale {1,..,%d}"
 
+msgid "y is empty or has only NAs"
+msgstr "argument 'y' jest pusty lub posiada jedynie wartości NA"
+
 msgid ""
 "hat values (leverages) are all = %s\n"
 " and there are no factor predictors; no plot no. 5"
@@ -1856,8 +1939,8 @@ msgstr "argumenty 'p' musi mieć tę samą długość co 'x' oraz 'n'"
 msgid "elements of 'p' must be in (0,1)"
 msgstr "elementy 'p' muszą być w przedziale (0,1)"
 
-msgid "y is empty or has only NAs"
-msgstr "argument 'y' jest pusty lub posiada jedynie wartości NA"
+msgid "'conf.level' is not a probability"
+msgstr ""
 
 msgid "'formula' missing"
 msgstr "brakuje argumentu 'formula'"
@@ -1901,9 +1984,6 @@ msgstr "'ref' musi być istniejącym poziomem"
 
 msgid "ref = %d must be in 1L:%d"
 msgstr "ref = %d musi być w przedziale 1L:%d"
-
-msgid "'sep' must be a character string"
-msgstr "'sep' musi być łańcuchem tekstowym"
 
 msgid "failed to guess time-varying variables from their names"
 msgstr "nie udało się odgadnąć zmiennych zależnych od czasu z ich nazw"
@@ -1949,6 +2029,10 @@ msgstr "pasmo 'k' musi być >= 1 i musi być nieparzyste!"
 
 msgid "argument 'object' has an impossible length"
 msgstr "argument 'object' ma nieprawdopodobną długość"
+
+#, fuzzy
+msgid "right-hand side of formula is not a call"
+msgstr "niepoprawna formuła w 'deriv()'"
 
 msgid "no 'getInitial' method found for \"%s\" objects"
 msgstr "nie znaleziono metody 'getInitial()' dla obiektów klasy \"%s\""
@@ -2529,6 +2613,9 @@ msgid_plural "'start.innov' is too short: need %d points"
 msgstr[0] "argument 'start.innov' jest zbyt krótki: potrzeba %d punktu"
 msgstr[1] "argument 'start.innov' jest zbyt krótki: potrzeba %d punktów"
 msgstr[2] "argument 'start.innov' jest zbyt krótki: potrzeba %d punktów"
+
+#~ msgid "package 'MASS' must be installed"
+#~ msgstr "pakiet 'MASS' musi być zainstalowany"
 
 #~ msgid "all group levels must be finite"
 #~ msgstr "wszystkie poziomy grup muszą być skończone"

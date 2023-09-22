@@ -151,7 +151,7 @@ install-strip: installdirs install-header install-pc
 	fi
 	@!(test -f libRmath.a) || $(SHELL) $(top_srcdir)/tools/copy-if-change libRmath.a $(DESTDIR)$(libdir)/libRmath.a
 
-install-header:
+install-header: installdirs
 	@(cd ../../include; $(MAKE) Rmath.h)
 @WANT_R_FRAMEWORK_FALSE@	@$(SHELL) $(top_srcdir)/tools/copy-if-change ../../include/Rmath.h $(DESTDIR)$(includedir)/Rmath.h
 @WANT_R_FRAMEWORK_TRUE@	@$(SHELL) $(top_srcdir)/tools/copy-if-change ../../include/Rmath.h $(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/include/Rmath.h

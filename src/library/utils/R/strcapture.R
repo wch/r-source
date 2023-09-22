@@ -1,7 +1,7 @@
 ##  File src/library/utils/R/strcapture.R
 ##  Part of the R package, https://www.R-project.org
 ##
-##  Copyright (C) 1995-2019 The R Core Team
+##  Copyright (C) 1995-2023 The R Core Team
 ##
 ##  This program is free software; you can redistribute it and/or modify
 ##  it under the terms of the GNU General Public License as published by
@@ -72,15 +72,17 @@ strslice <- function(x, split, proto, fixed = FALSE, perl = FALSE,
 }
 
 ## not yet exported; called from tools:::config_val_to_logical()
-str2logical <- function(x) {
+str2logical <- function(x, na.ok=TRUE) {
     if(!is.character(x)) x <- as.character(x)
+    stopifnot(length(x) == 1L)
+    if(na.ok && (is.na(x) || x == "NA")) return(NA)
     if(!is.na(v <- as.logical(x))) # via fast C code, e.g. for "True"
         return(v)
     v <- tolower(x)
     if      (v %in% c("1", "yes")) TRUE
     else if (v %in% c("0", "no")) FALSE
     else {
-        warning(gettextf("cannot coerce %s to logical", sQuote(x)),
+        warning(gettextf("cannot coerce %s to TRUE or FALSE", sQuote(x)),
                 domain = NA)
         NA
     }

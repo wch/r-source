@@ -141,3 +141,10 @@ local({
     for(m in methods)
         assignWrapped(m, m, env, table)
 })
+
+## Lock .ArgsEnv, .GenericArgsEnv, and their bindings.
+## This has to do this here, not in zzz.R, since lazy laoding doesn't
+## preserve binding locks (or environment locks for environments in
+## base).
+lockEnvironment(.ArgsEnv, bindings = TRUE)
+lockEnvironment(.GenericArgsEnv, bindings = TRUE)

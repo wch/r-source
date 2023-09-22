@@ -1,6 +1,6 @@
 % File src/library/base/man/options.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2020 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{options}
@@ -111,7 +111,7 @@ getOption(x, default = NULL)
 
     %%  default is set in ../../profile/Common.R :
     \item{\code{defaultPackages}:}{the packages that are attached by
-      default when \R starts up.  Initially set from value of the
+      default when \R starts up.  Initially set from the value of the
       environment variable \env{R_DEFAULT_PACKAGES}, or if that is unset
       to \code{c("datasets", "utils", "grDevices", "graphics", "stats",
         "methods")}.  (Set \env{R_DEFAULT_PACKAGES} to \code{NULL} or
@@ -141,7 +141,8 @@ getOption(x, default = NULL)
 
     \item{\code{digits.secs}:}{controls the maximum number of digits to
       print when formatting time values in seconds.  Valid values
-      are 0\dots6 with default 0.  See \code{\link{strftime}}.}
+      are 0\dots6 with default 0 (equivalent to \code{NULL} which is used
+      when it is undefined as on vanilla startup).  See \code{\link{strftime}}.}
 
     \item{\code{download.file.extra}:}{Extra command-line argument(s) for
       non-default methods: see \code{\link{download.file}}.}
@@ -257,9 +258,10 @@ getOption(x, default = NULL)
     \item{\code{OutDec}:}{character string containing a single
       character.  The preferred character to be used as the decimal
       point in output conversions, that is in printing, plotting,
-      \code{\link{format}} and \code{\link{as.character}} but not when
-      deparsing nor by \code{\link{sprintf}} nor \code{\link{formatC}}
-      (which are sometimes used prior to printing.)
+      \code{\link{format}}, \code{\link{formatC}} and
+      \code{\link{as.character}} but not when 
+      deparsing nor by \code{\link{sprintf}}
+      (which is sometimes used prior to printing).
     }
 
     \item{\code{pager}:}{the command used for displaying text files by
@@ -368,7 +370,7 @@ getOption(x, default = NULL)
 
     \item{\code{showNCalls}:}{integer.  Controls how long the sequence
       of calls must be (in bytes) before ellipses are used.  Defaults to
-      40 and should be at least 30 and no more than 500.}
+      50 and should be at least 30 and no more than 500.}
 
     \item{\code{show.error.locations}:}{Should source locations of
       errors be printed?  If set to \code{TRUE} or \code{"top"}, the
@@ -386,10 +388,10 @@ getOption(x, default = NULL)
       be printed?  Intended for use with \code{\link{try}} or a
       user-installed error handler.}
 
-    \item{\code{stringsAsFactors}:}{The default setting for
-      \code{\link{default.stringsAsFactors}}, which in \R < 4.1.0 was
-      used to provide the default values of the \code{stringsAsFactors}
-      argument of \code{\link{data.frame}} and \code{\link{read.table}}.}
+    %% \item{\code{stringsAsFactors}:}{The default setting for
+    %%   \code{\link{default.stringsAsFactors}}, which in \R < 4.1.0 was
+    %%   used to provide the default values of the \code{stringsAsFactors}
+    %%   argument of \code{\link{data.frame}} and \code{\link{read.table}}.}
 
     \item{\code{texi2dvi}:}{used by functions
       \code{\link{texi2dvi}} and \code{\link{texi2pdf}} in package \pkg{tools}.
@@ -654,13 +656,20 @@ getOption(x, default = NULL)
     \item{\code{help_type}:}{default for an argument of
     \code{\link{help}}, used also as the help type by \code{\link{?}}.}
 
+    \item{\code{help.htmlmath}:}{default for the \code{texmath} argument
+      of \code{\link{Rd2HTML}}, controlling how LaTeX-like mathematical
+      equations are displayed in R help pages (if enabled). Useful
+      values are \code{"katex"} (equivalent to \code{NULL}, the default)
+      and \code{"mathjax"}; for all other values basic substitutions are
+      used. }
+
     \item{\code{HTTPUserAgent}:}{string used as the \sQuote{user agent} in
       HTTP(S) requests by \code{\link{download.file}}, \code{\link{url}}
       and \code{\link{curlGetHeaders}}, or \code{NULL} when requests will
       be made without a user agent header.  The default is
-      \code{R (<version> <platform> <arch> <os>)}
+      \code{"R (\var{version} \var{platform} \var{arch} \var{os})"}
       except when \samp{libcurl} is used when it is
-      \code{libcurl/7.<xx>.<y>} for the \samp{libcurl} version in use.}
+      \code{"libcurl/\var{version}"} for the \samp{libcurl} version in use.}
 
     \item{\code{install.lock}:}{logical: should per-directory package
       locking be used by \code{\link{install.packages}}?  Most useful
@@ -700,7 +709,7 @@ getOption(x, default = NULL)
       \code{\link{help.request}}.}
 
     \item{\code{menu.graphics}:}{Logical: should graphical menus be used
-      if available?.  Defaults to \code{TRUE}.  Currently applies to
+      if available?  Defaults to \code{TRUE}.  Currently applies to
       \code{\link{select.list}}, \code{\link{chooseCRANmirror}},
       \code{\link{setRepositories}} and to select from multiple (text)
       help files in \code{\link{help}}.}
@@ -723,7 +732,7 @@ getOption(x, default = NULL)
 	  \code{"both"} (the default for CRAN macOS builds).
 	  (\code{"mac.binary.el-capitan"},
 	  \code{"mac.binary.mavericks"}, \code{"mac.binary.leopard"}
-	  and \code{"mac.binary.universal"} are no longer in use.)} 
+	  and \code{"mac.binary.universal"} are no longer in use.)}
       }
       Value \code{"binary"} is a synonym for the native binary type (if
       there is one); \code{"both"} is used by
@@ -731,18 +740,35 @@ getOption(x, default = NULL)
       installs.
     }
 
-    \item{\code{repos}:}{URLs of the repositories for use by
-      \code{\link{update.packages}}.  Defaults to
+    \item{\code{repos}:}{character vector of repository URLs for use by
+      \code{\link{available.packages}} and related functions.  Initially
+      set from entries marked as default in the
+      \file{\link[=R_REPOSITORIES]{repositories}} file,
+      whose path is configurable via environment variable \env{R_REPOSITORIES}
+      (set this to \code{NULL} to skip initialization at startup).
+      The \sQuote{factory-fresh} setting from the file in \code{R.home("etc")} is
       \code{c(CRAN="@CRAN@")}, a value that causes some utilities to
       prompt for a CRAN mirror.  To avoid this do set the CRAN mirror,
-      by something like
-      \code{local({r <- getOption("repos"); r["CRAN"] <- "http://my.local.cran";
-                   options(repos = r)})}.
+      by something like \preformatted{
+local({
+    r <- getOption("repos")
+    r["CRAN"] <- "https://my.local.cran"
+    options(repos = r)
+})
+}
+      in your \file{\link{.Rprofile}},
+      or use a personal \file{repositories} file.
 
       Note that you can add more repositories (Bioconductor,
-      R-Forge, Rforge.net \dots)
+      R-Forge, RForge.net, \dots) for the current session
       using \code{\link{setRepositories}}.
     }
+
+    \item{\code{str}:}{a list of options controlling the default
+      \code{\link{str}} display. Defaults to \code{\link{strOptions}()}.}
+
+    \item{\code{str.dendrogram.last}:}{see \code{\link{str.dendrogram}}.}
+
     \item{\code{SweaveHooks}, \code{SweaveSyntax}:}{
       see \code{\link{Sweave}}.
     }
@@ -765,7 +791,7 @@ getOption(x, default = NULL)
   These will be set when package \pkg{parallel} (or its namespace)
   is loaded if not already set.
   \describe{
-    \item{\code{mc.cores}:}{a integer giving the maximum allowed number
+    \item{\code{mc.cores}:}{an integer giving the maximum allowed number
       of \emph{additional} \R processes allowed to be run in parallel to
       the current \R process.  Defaults to the setting of the
       environment variable \env{MC_CORES} if set.  Most applications

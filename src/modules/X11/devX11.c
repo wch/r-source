@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2015  The R Core Team
+ *  Copyright (C) 1997--2023  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -676,7 +676,7 @@ static void FreeX11Colors(void)
 static Rboolean SetupX11Color(void)
 {
     if (depth <= 1) {
-	/* On monchome displays we must use black/white */
+	/* On monochrome displays we must use black/white */
 	model = MONOCHROME;
 	SetupMonochrome();
     }
@@ -985,16 +985,16 @@ static void *RLoadFont(pX11Desc xd, char* family, int face, int size)
      * Always use a standard font for font face 5
      */
     if (face == SYMBOL_FONTFACE - 1) /* NB: face-- above */
-	sprintf(buf, xd->symbolfamily,  pixelsize);
+	snprintf(buf, BUFSIZ, xd->symbolfamily,  pixelsize);
     else
       if (mbcslocale && *slant[(face & 2) >> 1] == 'o') {
-	sprintf(buf, family, weight[face & 1], slant[(face & 2) >> 1],
+	snprintf(buf, BUFSIZ, family, weight[face & 1], slant[(face & 2) >> 1],
 		pixelsize);
-	sprintf(buf1, family, weight[face & 1], "i",  pixelsize);
+	snprintf(buf1, BUFSIZ, family, weight[face & 1], "i",  pixelsize);
 	strcat(buf,",");
 	strcat(buf,buf1);
       } else
-	  sprintf(buf, family, weight[face & 1], slant[(face & 2) >> 1],
+	  snprintf(buf, BUFSIZ, family, weight[face & 1], slant[(face & 2) >> 1],
 		  pixelsize);
 #ifdef DEBUG_X11
     Rprintf("loading:\n%s\n",buf);
@@ -1047,9 +1047,9 @@ static void *RLoadFont(pX11Desc xd, char* family, int face, int size)
 
 
 	if (face == SYMBOL_FONTFACE - 1)
-	    sprintf(buf, symbolname, pixelsize);
+	    snprintf(buf, BUFSIZ, symbolname, pixelsize);
 	else
-	    sprintf(buf, fontname,
+	    snprintf(buf, BUFSIZ, fontname,
 		    weight[face & 1],
 		    slant[(face & 2) >> 1 ],  pixelsize);
 #ifdef DEBUG_X11
@@ -1067,9 +1067,9 @@ static void *RLoadFont(pX11Desc xd, char* family, int face, int size)
 	/* final try, size 24 */
 	pixelsize = 24;
 	if (face == 4)
-	    sprintf(buf, symbolname, 24);
+	    snprintf(buf, BUFSIZ, symbolname, 24);
 	else
-	    sprintf(buf, fontname,
+	    snprintf(buf, BUFSIZ, fontname,
 		    weight[face & 1],
 		    slant[(face & 2) >> 1 ],  24);
 #ifdef DEBUG_X11
@@ -1252,18 +1252,20 @@ static int R_X11Err(Display *dsp, XErrorEvent *event)
     if (event->error_code == BadWindow) return 0;
 
     XGetErrorText(dsp, event->error_code, buff, 1000);
-    warning(_("X11 protocol error: %s"), buff);
+    /* Unsafe to use warning() as it can be escalated to error() */
+    REprintf(_("X11 protocol error: %s"), buff);
+    REprintf("\n");
     return 0;
 }
 
-static int NORET R_X11IOErrSimple(Display *dsp)
+NORET static int R_X11IOErrSimple(Display *dsp)
 {
     char *dn = XDisplayName(dspname);
     strcpy(dspname, "");
     error(_("X11 I/O error while opening X11 connection to '%s'"), dn);
 }
 
-static int NORET R_X11IOErr(Display *dsp)
+NORET static int R_X11IOErr(Display *dsp)
 {
     int fd = ConnectionNumber(display);
     /*
@@ -1340,12 +1342,12 @@ X11_Open(pDevDesc dd, pX11Desc xd, const char *dsp,
 	warning(_("no png support in this version of R"));
 	return FALSE;
 #else
-	char buf[PATH_MAX]; /* allow for pageno formats */
+	char buf[R_PATH_MAX]; /* allow for pageno formats */
 	FILE *fp;
-	if(strlen(dsp+5) >= PATH_MAX)
+	if(strlen(dsp+5) >= R_PATH_MAX)
 	    error(_("filename too long in png() call"));
 	strcpy(xd->filename, dsp+5);
-	snprintf(buf, PATH_MAX, dsp+5, 1); /* page 1 to start */
+	snprintf(buf, R_PATH_MAX, dsp+5, 1); /* page 1 to start */
 	if (!(fp = R_fopen(R_ExpandFileName(buf), "w"))) {
 	    warning(_("could not open PNG file '%s'"), buf);
 	    return FALSE;
@@ -1362,16 +1364,16 @@ X11_Open(pDevDesc dd, pX11Desc xd, const char *dsp,
 	warning(_("no jpeg support in this version of R"));
 	return FALSE;
 #else
-	char buf[PATH_MAX]; /* allow for pageno formats */
-	char tmp[PATH_MAX], *pp;
+	char buf[R_PATH_MAX]; /* allow for pageno formats */
+	char tmp[R_PATH_MAX], *pp;
 	FILE *fp;
 	strcpy(tmp, dsp+6);
 	pp = strchr(tmp, ':'); *pp='\0';
 	xd->quality = atoi(dsp+6);
-	if(strlen(pp+1) >= PATH_MAX)
+	if(strlen(pp+1) >= R_PATH_MAX)
 	    error(_("filename too long in jpeg() call"));
 	strcpy(xd->filename, pp+1);
-	snprintf(buf, PATH_MAX, pp+1, 1); /* page 1 to start */
+	snprintf(buf, R_PATH_MAX, pp+1, 1); /* page 1 to start */
 	if (!(fp = R_fopen(R_ExpandFileName(buf), "w"))) {
 	    warning(_("could not open JPEG file '%s'"), buf);
 	    return FALSE;
@@ -1388,11 +1390,11 @@ X11_Open(pDevDesc dd, pX11Desc xd, const char *dsp,
 	warning(_("no tiff support in this version of R"));
 	return FALSE;
 #else
-	char tmp[PATH_MAX], *pp;
+	char tmp[R_PATH_MAX], *pp;
 	strcpy(tmp, dsp+6);
 	pp = strchr(tmp, ':'); *pp='\0';
 	xd->quality = atoi(dsp+6);
-	if(strlen(pp+1) >= PATH_MAX)
+	if(strlen(pp+1) >= R_PATH_MAX)
 	    error(_("filename too long in tiff() call"));
 	strcpy(xd->filename, pp+1);
 	xd->fp = NULL;
@@ -1402,12 +1404,12 @@ X11_Open(pDevDesc dd, pX11Desc xd, const char *dsp,
 	dd->displayListOn = FALSE;
 #endif
     } else if (!strncmp(dsp, "bmp::", 5)) {
-	char buf[PATH_MAX]; /* allow for pageno formats */
+	char buf[R_PATH_MAX]; /* allow for pageno formats */
 	FILE *fp;
-	if(strlen(dsp+5) >= PATH_MAX)
+	if(strlen(dsp+5) >= R_PATH_MAX)
 	    error(_("filename too long in bmp() call"));
 	strcpy(xd->filename, dsp+5);
-	snprintf(buf, PATH_MAX, dsp+5, 1); /* page 1 to start */
+	snprintf(buf, R_PATH_MAX, dsp+5, 1); /* page 1 to start */
 	if (!(fp = R_fopen(R_ExpandFileName(buf), "w"))) {
 	    warning(_("could not open BMP file '%s'"), buf);
 	    return FALSE;
@@ -1543,8 +1545,8 @@ X11_Open(pDevDesc dd, pX11Desc xd, const char *dsp,
 			char gstr[40];
 			int bitmask;
 
-			sprintf(gstr, "%dx%d+%d+%d", hint->width,
-				hint->height, hint->x, hint->y);
+			snprintf(gstr, 40, "%dx%d+%d+%d", hint->width,
+				 hint->height, hint->x, hint->y);
 			bitmask = XWMGeometry(display, DefaultScreen(display),
 					      xdev.geometry, gstr,
 					      1,
@@ -1971,8 +1973,8 @@ static void X11_NewPage(const pGEcontext gc, pDevDesc dd)
 	    if (xd->type != XIMAGE) X11_Close_bitmap(xd);
 	    if (xd->type != XIMAGE && xd->fp != NULL) fclose(xd->fp);
 	    if (xd->type == PNG || xd->type == JPEG || xd->type == BMP) {
-		char buf[PATH_MAX];
-		snprintf(buf, PATH_MAX, xd->filename, xd->npages);
+		char buf[R_PATH_MAX];
+		snprintf(buf, R_PATH_MAX, xd->filename, xd->npages);
 		xd->fp = R_fopen(R_ExpandFileName(buf), "w");
 		if (!xd->fp)
 		    error(_("could not open file '%s'"), buf);
@@ -2071,8 +2073,8 @@ static void X11_Close_bitmap(pX11Desc xd)
 	R_SaveAsBmp(xi, xd->windowWidth, xd->windowHeight,
 		    bitgp, 0, xd->fp, xd->res_dpi);
     else if (xd->type == TIFF) {
-	char buf[PATH_MAX];
-	snprintf(buf, PATH_MAX, xd->filename, xd->npages);
+	char buf[R_PATH_MAX];
+	snprintf(buf, R_PATH_MAX, xd->filename, xd->npages);
 	R_SaveAsTIFF(xi, xd->windowWidth, xd->windowHeight,
 		     bitgp, 0, R_ExpandFileName(buf), xd->res_dpi,
 		     xd->quality);
@@ -2150,7 +2152,7 @@ static void X11_Activate(pDevDesc dd)
 	snprintf(t, 140, xd->title, ndevNumber(dd) + 1);
 	t[139] = '\0';
     } else {
-	sprintf(t, "R Graphics: Device %d", ndevNumber(dd) + 1);
+	snprintf(t, 140, "R Graphics: Device %d", ndevNumber(dd) + 1);
     }
     strcat(t, " (ACTIVE)");
     XStoreName(display, xd->window, t);
@@ -2167,7 +2169,7 @@ static void X11_Deactivate(pDevDesc dd)
 	snprintf(t, 140, xd->title, ndevNumber(dd) + 1);
 	t[139] = '\0';
     } else {
-	sprintf(t, "R Graphics: Device %d", ndevNumber(dd) + 1);
+	snprintf(t, 140 ,"R Graphics: Device %d", ndevNumber(dd) + 1);
     }
     strcat(t, " (inactive)");
     XStoreName(display, xd->window, t);
@@ -2681,7 +2683,7 @@ static void X11_eventHelper(pDevDesc dd, int code)
 	    int keycode;
 	    if (event.xkey.state & ControlMask) {
 	    	keystart += 5; 
-	    	sprintf(keybuffer, "ctrl-"); /* report control keys using labels like "ctrl-A" */
+	    	snprintf(keybuffer, 13, "ctrl-"); /* report control keys using labels like "ctrl-A" */
 	    	event.xkey.state &= ~ControlMask;
 	    	event.xkey.state |= ShiftMask;
 	    }
@@ -2932,8 +2934,9 @@ Rf_setX11DeviceData(pDevDesc dd, double gamma_fac, pX11Desc xd)
         dd->fill = Cairo_Fill;
         dd->fillStroke = Cairo_FillStroke;
         dd->capabilities = Cairo_Capabilities;
+        dd->glyph = Cairo_Glyph;
 
-        dd->deviceVersion = R_GE_group;
+        dd->deviceVersion = R_GE_glyphs;
     } else
 #endif
     {
@@ -3233,7 +3236,7 @@ static SEXP in_do_X11(SEXP call, SEXP op, SEXP args, SEXP env)
     display = CHAR(STRING_ELT(CAR(args), 0)); args = CDR(args);
     width = asReal(CAR(args));	args = CDR(args);
     height = asReal(CAR(args)); args = CDR(args);
-    if (width <= 0 || height <= 0)
+    if (R_IsNaN(width) || R_IsNaN(height) || width <= 0 || height <= 0)
 	errorcall(call, _("invalid 'width' or 'height'"));
     ps = asReal(CAR(args)); args = CDR(args);
     gamma = asReal(CAR(args)); args = CDR(args);

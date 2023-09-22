@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001-2022   The R Core Team.
+ *  Copyright (C) 2001-2023   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -127,7 +127,7 @@ static SEXP R_conditionMessage(SEXP cond)
     /* Type check return value so callers can safely extract a C string */
     if (TYPEOF(out) != STRSXP)
 	error(_("unexpected type '%s' for condition message"),
-	      type2char(TYPEOF(out)));
+	      R_typeToChar(out));
     if (length(out) != 1)
 	error(_("condition message must be length 1"));
 
@@ -135,7 +135,7 @@ static SEXP R_conditionMessage(SEXP cond)
     return out;
 }
 
-static void init_loadMethod()
+static void init_loadMethod(void)
 {
     R_target = install("target");
     R_defined = install("defined");
@@ -263,7 +263,7 @@ SEXP R_set_el_named(SEXP object, SEXP what, SEXP value)
 /*  */
 static int n_ov = 0;
 
-SEXP R_clear_method_selection()
+SEXP R_clear_method_selection(void)
 {
     n_ov = 0;
     return R_NilValue;
@@ -499,11 +499,9 @@ SEXP R_getGeneric(SEXP name, SEXP mustFind, SEXP env, SEXP package)
     value = get_generic(name, env, package);
     if(value == R_UnboundValue) {
 	if(asLogical(mustFind)) {
-	    if(env == R_GlobalEnv)
-		error(_("no generic function definition found for '%s'"),
-		  CHAR(asChar(name)));
-	    else
-		error(_("no generic function definition found for '%s' in the supplied environment"),
+	    error((env == R_GlobalEnv)
+		  ? _("no generic function definition found for '%s'")
+		  : _("no generic function definition found for '%s' in the supplied environment"),
 		  CHAR(asChar(name)));
 	}
 	value = R_NilValue;

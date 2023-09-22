@@ -31,7 +31,7 @@ buildVignette(file, dir = ".", weave = TRUE, latex = TRUE, tangle = TRUE,
   \item{keep}{a list of file names to keep in any case when cleaning.  Note
     that \dQuote{target} files are kept anyway.}
   \item{engine}{\code{NULL} or character; name of vignette engine to
-    use.  Overrides any \code{\\VignetteEngine\{\}} markup in the vignette.}
+    use.  Overrides any \samp{\\VignetteEngine\{\}} markup in the vignette.}
   \item{buildPkg}{\code{NULL} or a character vector; optional packages
     in which to find the vignette engine.}
   \item{encoding}{the encoding to assume for the file.  If not
@@ -56,7 +56,7 @@ buildVignette(file, dir = ".", weave = TRUE, latex = TRUE, tangle = TRUE,
   the vignette is processed and will be used as the default packages in
   the search for a vignette engine, but an explicitly specified package
   in the vignette source (e.g., using
-  \code{\\VignetteEngine\{utils::Sweave\}} to specify the \code{Sweave}
+  \samp{\\VignetteEngine\{utils::Sweave\}} to specify the \code{Sweave}
   engine in the \pkg{utils} package) will override it.  In contrast, if
   the \code{engine} argument is given, it will override the vignette
   source.

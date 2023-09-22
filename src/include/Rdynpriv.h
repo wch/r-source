@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001-2017  The R Core Team.
+ *  Copyright (C) 2001-2023  The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -41,6 +41,7 @@
 typedef void *HINSTANCE;
 #endif
 
+#include <stddef.h>
 
 #include <Defn.h>
 #include <R_ext/Rdynload.h>
@@ -155,8 +156,9 @@ typedef struct {
     DL_FUNC (*lookupCachedSymbol)(const char *name, const char *pkg, int all,
                                   DllInfo **dll);
 
-    void  (*fixPath)(char *path);
-    void  (*getFullDLLPath)(SEXP call, char *buf, const char * const path);
+    void (*fixPath)(char *path);
+    size_t (*getFullDLLPath)(SEXP call, char *buf, size_t bufsize,
+                             const char * const path);
 
 } OSDynSymbol;
 

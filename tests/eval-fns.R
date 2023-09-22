@@ -5,7 +5,11 @@ pd0 <- function(expr, backtick = TRUE, ...)
     parse(text = deparse(expr, backtick=backtick, ...))
 id_epd <- function(expr, control = "all", ...)
     eval(pd0(expr, control=control, ...))
-dPut <- function(x, control = "all") dput(x, control=control)
+## "digits17" ("all") causes different results on x86_64 and
+## Windows/aarch64
+dPut <- function(x, control = c("quoteExpression", "showAttributes",
+                                "niceNames", "keepInteger"))
+    dput(x, control=control)
 ##' Does 'x' contain "real" numbers
 ##' with > 3 digits after "." where deparse may be platform dependent?
 hasReal <- function(x) {

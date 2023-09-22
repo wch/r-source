@@ -1,6 +1,6 @@
 % File src/library/tools/man/update_pkg_po.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2012-2021 R Core Team
+% Copyright 2012-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{update_pkg_po}
@@ -9,11 +9,14 @@
   Prepare Translations for a Package
 }
 \description{
-  Prepare the \file{po} directory of a package and compile and install
+  Prepare the \file{po} directory of a package and optionally compile and install
   the translations.
 }
 \usage{
-update_pkg_po(pkgdir, pkg = NULL, version = NULL, mergeOpts = "", copyright, bugs)
+update_pkg_po(pkgdir, pkg = NULL, version = NULL,
+              pot_make = TRUE, mo_make = TRUE,
+              verbose = getOption("verbose"),
+              mergeOpts = "", copyright, bugs)
 }
 \arguments{
   \item{pkgdir}{The path to the package directory.}
@@ -21,7 +24,12 @@ update_pkg_po(pkgdir, pkg = NULL, version = NULL, mergeOpts = "", copyright, bug
     \file{DESCRIPTION} file.}
   \item{version}{The package version: if \code{NULL} it is read from the
     package's \file{DESCRIPTION} file.}
-  \item{mergeOpts}{a string, by default empty, of options to
+  \item{pot_make, mo_make}{\code{\link{logical}}s indicating if a new
+    \file{*.pot} file or new binary translations \file{*.mo} should be
+    (re)created.}
+  \item{verbose}{\code{\link{logical}} indicating if extra information
+    about the updating process should be printed to the console.}
+  \item{mergeOpts}{a string, by default empty, of space-separated options to
     \command{msgmerge} in addition to \code{"--update"}.  Since \R 4.2.0,
     \code{"--no-wrap"} is used when called from
     \code{file.path(R.home("po"), "Makefile")}.}

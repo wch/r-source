@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2022-01-14 11:27\n"
+"POT-Creation-Date: 2023-08-03 18:20\n"
 "PO-Revision-Date: 2020-08-19 21:47+0900\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -17,8 +17,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=koi8-r\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Poedit 1.8.7.1\n"
 
 msgid "'%s' is defunct."
@@ -33,9 +32,6 @@ msgstr "См. help(\"Defunct\") и help(\"%s-defunct\")."
 msgid "See help(\"Defunct\")"
 msgstr "См. help(\"Defunct\")"
 
-msgid "defunctError"
-msgstr "defunctError"
-
 msgid "'%s' is deprecated."
 msgstr "'%s' устарел"
 
@@ -44,9 +40,6 @@ msgstr "См. help(\"Deprecated\") и help(\"%s-deprecated\")."
 
 msgid "See help(\"Deprecated\")"
 msgstr "См. help(\"Deprecated\")"
-
-msgid "deprecatedWarning"
-msgstr "deprecatedWarning"
 
 msgid "argument to 'La.svd' must be numeric or complex"
 msgstr "аргумент 'La.svd' должен быть действительным или комплексным числом"
@@ -216,9 +209,8 @@ msgstr "могу записать только текстовые объекты"
 msgid "'headers' must have names and must not be NA"
 msgstr "'headers' должен иметь имена и не должен быть NA"
 
-#, fuzzy
 msgid "'name' must be a single character string"
-msgstr "аргумент 'object' должно быть возможно сконвертировать в строку"
+msgstr "'name' должно быть строкой-скаляром"
 
 msgid "'origin' must be one of 'start', 'current' or 'end'"
 msgstr "'origin' должен быть одним из: 'start', 'current' или 'end'"
@@ -247,7 +239,8 @@ msgstr "неправильное количество интервалов"
 msgid "'breaks' are not unique"
 msgstr "'breaks' не уникальны"
 
-msgid "lengths of 'breaks' and 'labels' differ"
+#, fuzzy
+msgid "number of intervals and length of 'labels' differ"
 msgstr "длины 'breaks' и 'labels' отличаются"
 
 msgid "invalid 'row.names' length"
@@ -268,14 +261,9 @@ msgstr "для таблицы данных предложены неправильные 'dimnames'"
 msgid "cannot coerce class %s to a data.frame"
 msgstr "не могу перевести класс %s в data.frame"
 
-msgid ""
-"'row.names' is not a character vector of length %d -- omitting it. Will be "
-"an error!"
-msgstr ""
-"'row.names' не текстовый вектор длиной %d -- пропускаю его. Будет ошибка!"
-
-msgid "options(\"stringsAsFactors\") not set to TRUE or FALSE"
-msgstr "options(\"stringsAsFactors\") не установлены в TRUE или FALSE"
+#, fuzzy
+msgid "'row.names' is not a character or integer vector of length %d"
+msgstr "'row.names' не текстовый вектор длиной %d -- пропускаю его. Будет ошибка!"
 
 msgid "mismatch of row names in arguments of 'data.frame', item %d"
 msgstr "несоответствие имен строк в аргументах 'data.frame', позиция %d"
@@ -328,10 +316,8 @@ msgstr "неподдерживаемый индекс матрицы в замене"
 msgid "need 0, 1, or 2 subscripts"
 msgstr "нужны 0, 1, или 2 индекса"
 
-msgid ""
-"missing values are not allowed in subscripted assignments of data frames"
-msgstr ""
-"пропущенные значения не разрешены в индексированных присвоениях таблиц данных"
+msgid "missing values are not allowed in subscripted assignments of data frames"
+msgstr "пропущенные значения не разрешены в индексированных присвоениях таблиц данных"
 
 msgid "non-existent rows not allowed"
 msgstr "несуществующие строки не разрешены"
@@ -346,8 +332,7 @@ msgid "duplicate subscripts for columns"
 msgstr "одинаковые индексы колонок"
 
 msgid "only valid calls are x[[j]] <- value or x[[i,j]] <- value"
-msgstr ""
-"правильны лишь такие вызовы: x[[j]] <- значение или x[[i,j]] <- значение"
+msgstr "правильны лишь такие вызовы: x[[j]] <- значение или x[[i,j]] <- значение"
 
 msgid "replacing element in non-existent column: %s"
 msgstr "замена элемента в несуществующей колонке: %s"
@@ -364,13 +349,16 @@ msgstr "количество колонок аргументов не соответствует друг другу"
 msgid "invalid list argument: all variables should have the same length"
 msgstr "неправильный аргумент списка: длины всех переменных должны быть равны"
 
+#, fuzzy
+msgid "number of columns of result, %d, is not a multiple of vector length %d of arg %d"
+msgstr "количество элементов для замены не кратно длине замены"
+
 msgid "<0 rows> (or 0-length row.names)"
 msgstr "<0 строк> (или 'row.names' нулевой длины)"
 
 msgid "invalid 'max' / getOption(\"max.print\"):"
 msgstr "неправильный 'max' / getOption(\"max.print\"):"
 
-#, fuzzy
 msgid "non-numeric-alike variable(s) in data frame:"
 msgstr "нечисловая переменн(ая) в таблице данных:"
 
@@ -383,23 +371,17 @@ msgstr "%s определено только для таблиц данных одинаковых размеров"
 msgid "list of length %d not meaningful"
 msgstr "список длины %d не значим"
 
-#, fuzzy
 msgid "only defined on a data frame with all numeric-alike variables"
 msgstr "определено только для таблиц данных со всеми числовыми переменными"
 
-#, fuzzy
 msgid "cannot xtfrm data frames"
-msgstr "не таблица данных"
+msgstr "xtfrm не реализовано для таблиц данных"
 
-#, fuzzy
 msgid "all variables should have the same length"
-msgstr "неправильный аргумент списка: длины всех переменных должны быть равны"
+msgstr "длины всех переменных должны быть равны"
 
 msgid "character string is not in a standard unambiguous format"
 msgstr "текстовая строка не относится к стандартному однозначному формату"
-
-msgid "'origin' must be supplied"
-msgstr "надо указать 'origin'"
 
 msgid "do not know how to convert '%s' to class %s"
 msgstr "не знаю как конвертировать '%s' в класс %s"
@@ -440,10 +422,8 @@ msgstr "'to' должен быть длиной 1"
 msgid "'length.out' must be of length 1"
 msgstr "'length.out' должен быть длиной 1"
 
-msgid ""
-"exactly two of 'to', 'by' and 'length.out' / 'along.with' must be specified"
-msgstr ""
-"нужно указать в точности два из: 'to', 'by' и 'length.out' / 'along.with'"
+msgid "exactly two of 'to', 'by' and 'length.out' / 'along.with' must be specified"
+msgstr "нужно указать в точности два из: 'to', 'by' и 'length.out' / 'along.with'"
 
 msgid "'by' must be of length 1"
 msgstr "'by' должен быть длиной 1"
@@ -498,6 +478,13 @@ msgstr "'%s' не определен для объектов \"POSIXt\""
 
 msgid "'tzone' attributes are inconsistent"
 msgstr "противоречивые атрибуты 'tzone'"
+
+msgid "as.character(td, ..) no longer obeys a 'format' argument; use format(td, ..) ?"
+msgstr ""
+
+#, fuzzy
+msgid "'digits' must be numeric, integer valued"
+msgstr "'trim' должен быть числовым объектом длины 1"
 
 msgid "'tim' is not character or numeric"
 msgstr "'tim' не является функцией или буквой"
@@ -602,16 +589,14 @@ msgstr "надо определить DLL через объект %s. См. getLoadedDLLs()"
 msgid "function is not in a namespace, so cannot locate associated DLL"
 msgstr "функция не в пространстве имен, поэтому не могу найти связанный DLL"
 
-msgid ""
-"looking for DLL for native routine call, but no DLLs in namespace of call"
-msgstr ""
-"ищу DLL для данного внутреннего вызова, но в пространстве имен вызова его нет"
-
-msgid "0 x 0 matrix"
-msgstr "0 x 0 матрица"
+msgid "looking for DLL for native routine call, but no DLLs in namespace of call"
+msgstr "ищу DLL для данного внутреннего вызова, но в пространстве имен вызова его нет"
 
 msgid "non-square matrix in 'eigen'"
 msgstr "неквадратная матрица в 'eigen'"
+
+msgid "0 x 0 matrix"
+msgstr "0 x 0 матрица"
 
 msgid "invalid nrow(x)"
 msgstr "неправильное nrow(x)"
@@ -637,12 +622,8 @@ msgstr "'%s' не значим для упорядоченных факторов"
 msgid "'%s' not defined for ordered factors"
 msgstr "'%s' не определен для упорядоченных факторов"
 
-msgid ""
-"'%s' is only meaningful for ordered factors if all arguments have the same "
-"level sets"
-msgstr ""
-"'%s' имеет смысл только для упорядоченных факторов если все аргументы имеют "
-"одинаковые наборы градаций"
+msgid "'%s' is only meaningful for ordered factors if all arguments have the same level sets"
+msgstr "'%s' имеет смысл только для упорядоченных факторов, если все аргументы имеют одинаковые наборы градаций"
 
 msgid "no files to copy to"
 msgstr "нет файлов, чтобы скопировать на"
@@ -654,12 +635,13 @@ msgid "more 'from' files than 'to' files"
 msgstr "больше файлов 'from', чем 'to'"
 
 msgid "'recursive' will be ignored as 'to' is not a single existing directory"
-msgstr ""
-"'recursive' будет проигнорирован, так как 'to' не является одиночным "
-"каталогом"
+msgstr "'recursive' будет проигнорирован, так как 'to' не является одиночным каталогом"
 
 msgid "cannot overwrite a non-directory with a directory"
 msgstr "не могу переписать не-директорию поверх директории"
+
+msgid "directories are omitted unless 'recursive = TRUE'"
+msgstr ""
 
 msgid "file can not be copied both 'from' and 'to'"
 msgstr "файл не может быть скопирован одновременно 'from' и 'to'"
@@ -707,15 +689,13 @@ msgid "'flag' should contain only characters from [0+- #'I]"
 msgstr "'flag' может содержать лишь символы только из  [0+- #'I]"
 
 msgid "'mode' must be \"double\" (\"real\"), \"integer\" or \"character\""
-msgstr ""
-"'mode' должна быть \"double\" (\"real\"), \"integer\" или \"character\""
+msgstr "'mode' должна быть \"double\" (\"real\"), \"integer\" или \"character\""
 
 msgid "coercing argument to \"character\" for format=\"s\""
 msgstr "преобразую аргумент в \"character\" для format=\"s\""
 
 msgid "'format' must be one of {\"f\",\"e\",\"E\",\"g\",\"G\", \"fg\", \"s\"}"
-msgstr ""
-"'format' должен быть одним из {\"f\",\"e\",\"E\",\"g\",\"G\", \"fg\", \"s\"}"
+msgstr "'format' должен быть одним из {\"f\",\"e\",\"E\",\"g\",\"G\", \"fg\", \"s\"}"
 
 msgid "'digits' reduced to %d"
 msgstr "'digits' сокращено до %d"
@@ -729,12 +709,8 @@ msgstr "'zero.print' имеет длину > 1"
 msgid "'zero.print' must be character, logical or NULL"
 msgstr "'zero.print' должен быть символом, логическим или NULL"
 
-msgid ""
-"'zero.print' is truncated to fit into formatted zeros; consider "
-"'replace=TRUE'"
-msgstr ""
-"'zero.print' обрезан, чтобы поместиться в отформатированные нули; попробуйте "
-"'replace=TRUE'"
+msgid "'zero.print' is truncated to fit into formatted zeros; consider 'replace=TRUE'"
+msgstr "'zero.print' обрезан, чтобы поместиться в отформатированные нули; попробуйте 'replace=TRUE'"
 
 msgid "'big.mark' and 'decimal.mark' are both '%s', which could be confusing"
 msgstr "'big.mark' и 'decimal.mark' оба '%s', что может быть неправильно"
@@ -751,9 +727,8 @@ msgstr "значение '%s' не найдено"
 msgid "all arguments must be named"
 msgstr "все аргументы должны быть именованы"
 
-#, fuzzy
 msgid "argument '%s' will be ignored"
-msgstr "аргумент 'drop' не будет учтен"
+msgstr "аргумент '%s' не будет учтен"
 
 msgid "match distance components must be non-negative"
 msgstr "компоненты соответствий расстояний должны быть неотрицательными"
@@ -828,9 +803,6 @@ msgstr ""
 "Конфликты при присоединении пакета: %s\n"
 "%s"
 
-msgid "packageConflictError"
-msgstr "packageConflictError"
-
 msgid "Attaching package: %s"
 msgstr "Присоединяю пакет: %s"
 
@@ -865,9 +837,6 @@ msgid ""
 msgstr ""
 "не удалась загрузка пакета или пространства имен для %s%s:\n"
 "%s"
-
-msgid "package %s does not have a namespace and should be re-installed"
-msgstr "пакет %s не имеет пространства имен и должен быть инсталлирован заново"
 
 msgid "package %s already present in search()"
 msgstr "пакет %s уже есть в search()"
@@ -933,8 +902,7 @@ msgstr ""
 "пакет %s найден больше одного раза, использую тот, который найден первым в\n"
 " %s"
 
-msgid ""
-"Further information is available in the following vignettes in directory %s:"
+msgid "Further information is available in the following vignettes in directory %s:"
 msgstr "Дальнейшая информация доступна в следующих миниатюрах из папки %s:"
 
 msgid "Description:"
@@ -973,7 +941,8 @@ msgstr "должен быть указан 'file'"
 msgid "nothing specified to be save()d"
 msgstr "ничего не задано для save()d"
 
-msgid "'file' must be non-empty string"
+#, fuzzy
+msgid "'%s' must be a non-empty string"
 msgstr "'file' должен быть непустой строкой"
 
 msgid "'compress' must be logical or character"
@@ -1021,9 +990,6 @@ msgstr "'arg' должен быть длиной 1"
 msgid "'arg' must be of length >= 1"
 msgstr "'arg' должен быть длиной >= 1"
 
-msgid "'arg' should be one of %s"
-msgstr "'arg' должен быть одним из %s"
-
 msgid "there is more than one match in 'match.arg'"
 msgstr "более одного соответствия для 'match.arg'"
 
@@ -1036,9 +1002,8 @@ msgstr "'input' должен иметь длину 1"
 msgid "'input' and 'target' must be character vectors"
 msgstr "'input' и 'target' должны быть текстовыми векторами"
 
-#, fuzzy
 msgid "cannot mtfrm"
-msgstr "не таблица данных"
+msgstr "не удаётся выполнить mtfrm"
 
 msgid "'%s' is not a function, character or symbol"
 msgstr "'%s' не является функцией, буквой или символом"
@@ -1050,8 +1015,7 @@ msgid "attempt to set 'rownames' on an object with no dimensions"
 msgstr "попытка установить имена строк для объекта без измерений"
 
 msgid "attempt to set 'colnames' on an object with less than two dimensions"
-msgstr ""
-"попытка установить имена колонок для объекта с менее чем двумя измерениями"
+msgstr "попытка установить имена колонок для объекта с менее чем двумя измерениями"
 
 msgid "argument is not numeric or logical: returning NA"
 msgstr "аргумент не является числовым или логическим: возвращаю NA"
@@ -1069,9 +1033,7 @@ msgid "'by' must match number of columns"
 msgstr "'by' должен соответствовать числу колонок"
 
 msgid "'by' must specify one or more columns as numbers, names or logical"
-msgstr ""
-"'by' должен определять одну или более колонок как числа, имена или "
-"логические данные"
+msgstr "'by' должен определять одну или более колонок как числа, имена или логические данные"
 
 msgid "long vectors are not supported"
 msgstr "длинные векторы не поддерживаются"
@@ -1085,12 +1047,8 @@ msgstr "'incomparables' поддерживается для merge в одну колонку"
 msgid "additional arguments ignored in message()"
 msgstr "дополнительные аргументы пропущены в message()"
 
-msgid ""
-"tracing functions requires the 'methods' package, but unable to load the "
-"'methods' namespace"
-msgstr ""
-"трассировка функций требует пакета 'methods', но я не могу загрузить его "
-"пространство имен"
+msgid "tracing functions requires the 'methods' package, but unable to load the 'methods' namespace"
+msgstr "трассировка функций требует пакета 'methods', но я не могу загрузить его пространство имен"
 
 msgid "invalid to change the storage mode of a factor"
 msgstr "неправильно менять тип хранения фактора"
@@ -1126,26 +1084,14 @@ msgstr ""
 msgid "namespace %s is already sealed in 'loadNamespace'"
 msgstr "пространство имен %s уже запечатано в 'loadNamespace'"
 
-msgid ""
-"failed to assign RegisteredNativeSymbol for %s to %s since %s is already "
-"defined in the %s namespace"
-msgstr ""
-"не удалось присвоить RegisteredNativeSymbol для %s в %s поскольку %s уже "
-"определено в пространстве имен %s"
+msgid "failed to assign RegisteredNativeSymbol for %s to %s since %s is already defined in the %s namespace"
+msgstr "не удалось присвоить RegisteredNativeSymbol для %s в %s поскольку %s уже определено в пространстве имен %s"
 
-msgid ""
-"failed to assign NativeSymbolInfo for %s to %s since %s is already defined "
-"in the %s namespace"
-msgstr ""
-"не получилось присвоить NativeSymbolInfo из %s в %s поскольку %s уже "
-"определен в пространстве имен %s"
+msgid "failed to assign NativeSymbolInfo for %s to %s since %s is already defined in the %s namespace"
+msgstr "не получилось присвоить NativeSymbolInfo из %s в %s поскольку %s уже определен в пространстве имен %s"
 
-msgid ""
-"failed to assign NativeSymbolInfo for %s since %s is already defined in the "
-"%s namespace"
-msgstr ""
-"не получилось присвоить NativeSymbolInfo для %s поскольку %s уже определен в "
-"пространстве имен %s"
+msgid "failed to assign NativeSymbolInfo for %s since %s is already defined in the %s namespace"
+msgstr "не получилось присвоить NativeSymbolInfo для %s поскольку %s уже определен в пространстве имен %s"
 
 msgid "package %s does not have a namespace"
 msgstr "пакет %s не имеет пространства имен"
@@ -1159,10 +1105,8 @@ msgstr "пространство имен %s %s загружается, но нужно %s %s"
 msgid "package %s has no 'package.rds' in Meta/"
 msgstr "пакет %s не имеет 'package.rds' в Meta/"
 
-msgid ""
-"package %s has a license that you need to accept in an interactive session"
-msgstr ""
-"у пакета %s есть лицензия, которую Вам нужно принять в инерактивной сессии"
+msgid "package %s has a license that you need to accept in an interactive session"
+msgstr "у пакета %s есть лицензия, которую Вам нужно принять в инерактивной сессии"
 
 msgid "package %s has a license that you need to accept after viewing"
 msgstr "пакет %s имеет лицензию, которую Вам нужно принять после просмотра"
@@ -1179,12 +1123,8 @@ msgstr "%s"
 msgid "license for package %s not accepted"
 msgstr "лицензия для пакета %s не принята"
 
-msgid ""
-"package %s was installed by an R version with different internals; it needs "
-"to be reinstalled for use with this R version"
-msgstr ""
-"пакет %s установлен версией R с другими внутренними правилами; его нужно "
-"переустановить для того, чтобы использовать в этой версии R"
+msgid "package %s was installed by an R version with different internals; it needs to be reinstalled for use with this R version"
+msgstr "пакет %s установлен версией R с другими внутренними правилами; его нужно переустановить для того, чтобы использовать в этой версии R"
 
 msgid "-- processing imports for"
 msgstr ""
@@ -1228,16 +1168,11 @@ msgstr ""
 msgid "--- done caching metadata"
 msgstr ""
 
-#, fuzzy
 msgid "--- processing classes"
-msgstr "неправильный класс"
+msgstr "--- обработка классов"
 
-msgid ""
-"'exportClassPattern' specified in 'NAMESPACE' but no matching classes in "
-"package %s"
-msgstr ""
-"в NAMESPACE указан 'exportClassPattern', но отсутствуют соответствующие "
-"классы в пакете %s"
+msgid "'exportClassPattern' specified in 'NAMESPACE' but no matching classes in package %s"
+msgstr "в NAMESPACE указан 'exportClassPattern', но отсутствуют соответствующие классы в пакете %s"
 
 msgid "in package %s classes %s were specified for export but not defined"
 msgstr "в пакете '%s' классы %s указаны для экспорта, но не определены"
@@ -1308,12 +1243,8 @@ msgstr "найдены методы импорта для функции %s но они сами не общие"
 msgid "replacing previous import %s by %s when loading %s"
 msgstr "заменяю предыдущий импорт %s на %s во время загрузки %s"
 
-msgid ""
-"No generic function %s found corresponding to requested imported methods "
-"from package %s when loading %s (malformed exports?)"
-msgstr ""
-"Не найдено общей функции %s, соответствующей запрошенным методам импорта для "
-"%s из пакета %s (испорчен вывод?)"
+msgid "No generic function %s found corresponding to requested imported methods from package %s when loading %s (malformed exports?)"
+msgstr "Не найдено общей функции %s, соответствующей запрошенным методам импорта для %s из пакета %s (испорчен вывод?)"
 
 msgid "cannot add to exports of a sealed namespace"
 msgstr "не могу добавить к экспорту из запечатанного пространства имен"
@@ -1348,11 +1279,8 @@ msgstr "неправильный метод"
 msgid "object '%s' not found whilst loading namespace '%s'"
 msgstr "в процессе загрузки пространства имен '%s' объект '%s' не найден"
 
-msgid ""
-"While loading namespace \"%s\": \"%s\" differ in ncol(.), env=%d, newNS=%d."
-msgstr ""
-"Загружая пространство имен \"%s\": \"%s\" отличается ncol(.), env=%d, newNS="
-"%d."
+msgid "While loading namespace \"%s\": \"%s\" differ in ncol(.), env=%d, newNS=%d."
+msgstr "Загружая пространство имен \"%s\": \"%s\" отличается ncol(.), env=%d, newNS=%d."
 
 msgid "Maybe package installed with version of R newer than %s ?"
 msgstr "Может быть, пакет установлен с версией R новее, чем %s ?"
@@ -1421,8 +1349,7 @@ msgid "'k' is too large"
 msgstr "'k' слишком велик"
 
 msgid "need larger value of 'ncol' as pivoting occurred"
-msgstr ""
-"нужно большее значение 'ncol', так как происходит выбор ведущего элемента"
+msgstr "нужно большее значение 'ncol', так как происходит выбор ведущего элемента"
 
 msgid "invalid NCOL(R)"
 msgstr "неправильное NCOL(R)"
@@ -1539,6 +1466,9 @@ msgstr "неподдерживаемые опции для частичной сортировки"
 msgid "non-finite 'partial'"
 msgstr "не конечная 'partial'"
 
+msgid "'decreasing' of length > 1 is only for method = \"radix\""
+msgstr ""
+
 msgid "argument lengths differ"
 msgstr "длины аргументов различаются"
 
@@ -1562,8 +1492,10 @@ msgid "'echo' must be logical"
 msgstr "'echo' должно быть логическим"
 
 msgid "'verbose' is TRUE, 'echo' not; ... coercing 'echo <- TRUE'"
+msgstr "'verbose' является TRUE, а 'echo' -- нет; ... преобразую 'echo <- TRUE'"
+
+msgid "empty file/url name"
 msgstr ""
-"'verbose' является TRUE, а 'echo' -- нет; ... преобразую 'echo <- TRUE'"
 
 msgid "unable to find a plausible encoding"
 msgstr "не могу найти правдоподобную кодировку"
@@ -1585,6 +1517,16 @@ msgstr "укажите либо 'file', либо exprsn', но не оба"
 
 msgid "'%s' is not an existing file"
 msgstr "'%s' не является существующим файлом"
+
+#, fuzzy
+msgid "'formula' must be a formula"
+msgstr "'from' должен быть raw либо текстовой строкой"
+
+msgid "Unexpected LHS in 'formula' has been ignored."
+msgstr ""
+
+msgid "Unexpected LHS in 'formula' has been combined with RHS."
+msgstr ""
 
 msgid "Timestamp of %s has changed"
 msgstr "ВременнАя маска %s изменилась"
@@ -1615,8 +1557,7 @@ msgid ""
 "Calling 'structure(NULL, *)' is deprecated, as NULL cannot have attributes.\n"
 "  Consider 'structure(list(), *)' instead."
 msgstr ""
-"'structure(NULL, *)' не рекомендуется, потому что NULL не может иметь "
-"атрибутов.\n"
+"'structure(NULL, *)' не рекомендуется, потому что NULL не может иметь атрибутов.\n"
 "  Попробуйте 'structure(list(), *)'."
 
 msgid "incorrect value for 'x'"
@@ -1638,9 +1579,7 @@ msgid "length(STATS) or dim(STATS) do not match dim(x)[MARGIN]"
 msgstr "length(STATS) или dim(STATS) не соответствует dim(x)[MARGIN]"
 
 msgid "'exclude' containing NA and 'useNA' != \"no\"' are a bit contradicting"
-msgstr ""
-"'exclude', содержащая как NA, так и 'useNA' != \"no\"', несколько "
-"противоречива"
+msgstr "'exclude', содержащая как NA, так и 'useNA' != \"no\"', несколько противоречива"
 
 msgid "nothing to tabulate"
 msgstr "нечего табулировать"
@@ -1668,6 +1607,9 @@ msgstr "'bin' должен быть числом или фактором"
 
 msgid "invalid value of %s"
 msgstr "неправильное значение %s"
+
+msgid "'X' must be a data frame when 'INDEX' is a formula"
+msgstr ""
 
 msgid "'INDEX' is of length zero"
 msgstr "'INDEX' нулевой длины"
@@ -1717,6 +1659,13 @@ msgstr "'width' должна быть положительной"
 msgid "No traceback available"
 msgstr "Трассировка недоступна"
 
+#, fuzzy
+msgid "invalid non-character version specification 'x' (type: %s)"
+msgstr "неправильное указание версии %s"
+
+msgid "Calls"
+msgstr ""
+
 msgid "invalid version specification %s"
 msgstr "неправильное указание версии %s"
 
@@ -1744,12 +1693,11 @@ msgstr "Конспект (из %d) предупреждений:"
 msgid "invalid 'digits'"
 msgstr "неправильные 'digits'"
 
-msgid ""
-"arguments 'show.output.on.console', 'minimized' and 'invisible' are for "
-"Windows only"
+msgid "Direct call of '%s()' is deprecated.  Use '%s()' or '%s()' instead"
 msgstr ""
-"аргументы у 'show.output.on.console', 'minimized' и 'invisible' только для "
-"Windows"
+
+msgid "arguments 'show.output.on.console', 'minimized' and 'invisible' are for Windows only"
+msgstr "аргументы у 'show.output.on.console', 'minimized' и 'invisible' только для Windows"
 
 msgid "'intern' must be TRUE or FALSE"
 msgstr "'intern' должен быть TRUE или FALSE"
@@ -1762,6 +1710,10 @@ msgstr "'ignore.stderr' должен быть TRUE или FALSE"
 
 msgid "'wait' must be TRUE or FALSE"
 msgstr "'wait' должен быть TRUE или FALSE"
+
+#, fuzzy
+msgid "'receive.console.signals' must be TRUE or FALSE"
+msgstr "'intern' должен быть TRUE или FALSE"
 
 msgid "'input' must be a character vector or 'NULL'"
 msgstr "'input' должен быть текстовым вектором либо 'NULL'"
@@ -1843,12 +1795,9 @@ msgstr[2] "Следующие объекты скрыты от %s:"
 
 msgid "invalid 'row.names', length %d for a data frame with %d row"
 msgid_plural "invalid 'row.names', length %d for a data frame with %d rows"
-msgstr[0] ""
-"неправильные 'row.names', длиной %d для таблицы данных с %d строками"
-msgstr[1] ""
-"неправильные 'row.names', длиной %d для таблицы данных с %d строками"
-msgstr[2] ""
-"неправильные 'row.names', длиной %d для таблицы данных с %d строками"
+msgstr[0] "неправильные 'row.names', длиной %d для таблицы данных с %d строками"
+msgstr[1] "неправильные 'row.names', длиной %d для таблицы данных с %d строками"
+msgstr[2] "неправильные 'row.names', длиной %d для таблицы данных с %d строками"
 
 msgid "supplied %d row name for %d rows"
 msgid_plural "supplied %d row names for %d rows"
@@ -1869,8 +1818,7 @@ msgstr[1] "у замены %d элемента, а надо %d"
 msgstr[2] "у замены %d элементов, а надо %d"
 
 msgid "replacement element %d is a matrix/data frame of %d row, need %d"
-msgid_plural ""
-"replacement element %d is a matrix/data frame of %d rows, need %d"
+msgid_plural "replacement element %d is a matrix/data frame of %d rows, need %d"
 msgstr[0] "элемент замены %d -- матрица/таблица данных из %d строк, а надо %d"
 msgstr[1] "элемент замены %d -- матрица/таблица данных из %d строк, а надо %d"
 msgstr[2] "элемент замены %d -- матрица/таблица данных из %d строк, а надо %d"
@@ -1935,44 +1883,36 @@ msgstr[0] "%s не найден"
 msgstr[1] "%s не найден"
 msgstr[2] "%s не найден"
 
+#, fuzzy
+msgid "'arg' should be %s"
+msgid_plural "'arg' should be one of %s"
+msgstr[0] "'arg' должен быть одним из %s"
+msgstr[1] "'arg' должен быть одним из %s"
+msgstr[2] "'arg' должен быть одним из %s"
+
 msgid "'by' must specify a uniquely valid column"
 msgid_plural "'by' must specify uniquely valid columns"
 msgstr[0] "'by' должен определять правильные колонку"
 msgstr[1] "'by' должен определять правильные колонки"
 msgstr[2] "'by' должен определять правильные колонки"
 
-msgid ""
-"Function found when exporting methods from the namespace %s which is not S4 "
-"generic: %s"
-msgid_plural ""
-"Functions found when exporting methods from the namespace %s which are not "
-"S4 generic: %s"
-msgstr[0] ""
-"Во время экспорта из пространства имен %s найдена не S4-общая функция: %s"
-msgstr[1] ""
-"Во время экспорта из пространства имен %s найдены не S4-общие функции: %s"
-msgstr[2] ""
-"Во время экспорта из пространства имен %s найдены не S4-общие функции: %s"
+msgid "Function found when exporting methods from the namespace %s which is not S4 generic: %s"
+msgid_plural "Functions found when exporting methods from the namespace %s which are not S4 generic: %s"
+msgstr[0] "Во время экспорта из пространства имен %s найдена не S4-общая функция: %s"
+msgstr[1] "Во время экспорта из пространства имен %s найдены не S4-общие функции: %s"
+msgstr[2] "Во время экспорта из пространства имен %s найдены не S4-общие функции: %s"
 
 msgid "No methods found in package %s for request: %s when loading %s"
 msgid_plural "No methods found in package %s for requests: %s when loading %s"
-msgstr[0] ""
-"В пакете %s не найдено методов для запросов: %s во время загрузки %s"
-msgstr[1] ""
-"В пакете %s не найдено методов для запросов: %s во время загрузки %s"
-msgstr[2] ""
-"В пакете %s не найдено методов для запросов: %s во время загрузки %s"
+msgstr[0] "В пакете %s не найдено методов для запросов: %s во время загрузки %s"
+msgstr[1] "В пакете %s не найдено методов для запросов: %s во время загрузки %s"
+msgstr[2] "В пакете %s не найдено методов для запросов: %s во время загрузки %s"
 
-msgid ""
-"requested method not found in environment/package %s: %s when loading %s"
-msgid_plural ""
-"requested methods not found in environment/package %s: %s when loading %s"
-msgstr[0] ""
-"запрошенные методы не найдены в окружении/пакете %s: %s во время загрузки %s"
-msgstr[1] ""
-"запрошенные методы не найдены в окружении/пакете %s: %s во время загрузки %s"
-msgstr[2] ""
-"запрошенные методы не найдены в окружении/пакете %s: %s во время загрузки %s"
+msgid "requested method not found in environment/package %s: %s when loading %s"
+msgid_plural "requested methods not found in environment/package %s: %s when loading %s"
+msgstr[0] "запрошенные методы не найдены в окружении/пакете %s: %s во время загрузки %s"
+msgstr[1] "запрошенные методы не найдены в окружении/пакете %s: %s во время загрузки %s"
+msgstr[2] "запрошенные методы не найдены в окружении/пакете %s: %s во время загрузки %s"
 
 msgid "class %s is not exported by 'namespace:%s'"
 msgid_plural "classes %s are not exported by 'namespace:%s'"
@@ -2026,8 +1966,23 @@ msgstr[2] ""
 "В %s :\n"
 " дополнительные аргументы %s не будут учтены"
 
-#~ msgid "argument 'object' must deparse to a single character string"
-#~ msgstr "аргумент 'object' должно быть возможно сконвертировать в строку"
+#~ msgid "defunctError"
+#~ msgstr "defunctError"
+
+#~ msgid "deprecatedWarning"
+#~ msgstr "deprecatedWarning"
+
+#~ msgid "options(\"stringsAsFactors\") not set to TRUE or FALSE"
+#~ msgstr "options(\"stringsAsFactors\") не установлены в TRUE или FALSE"
+
+#~ msgid "'origin' must be supplied"
+#~ msgstr "надо указать 'origin'"
+
+#~ msgid "packageConflictError"
+#~ msgstr "packageConflictError"
+
+#~ msgid "package %s does not have a namespace and should be re-installed"
+#~ msgstr "пакет %s не имеет пространства имен и должен быть инсталлирован заново"
 
 #~ msgid "'%s' is not an exported object from 'namespace:%s'"
 #~ msgstr "'%s' не является объектом, экспортированным из 'namespace:%s'"

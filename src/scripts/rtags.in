@@ -3,7 +3,7 @@
 ## Examples:
 ##  R CMD rtags -o TAGS /path/to/Rsrc/
 
-revision='$Rev: 47214 $'
+revision='$Rev$'
 version=`set - ${revision}; echo ${2}`
 version="rtags/etags front-end: ${R_VERSION} (r${version})
 

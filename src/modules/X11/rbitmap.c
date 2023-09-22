@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1999       Guido Masarotto
- *  Copyright (C) 1999-2014  The R Core Team
+ *  Copyright (C) 1999-2022  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -70,7 +70,7 @@
    (2) we can be arrived here from a button or menuitem callback maybe
    in a different thread from the one where R runs.
 */
-static void NORET my_png_error(png_structp png_ptr, png_const_charp msg)
+NORET static void my_png_error(png_structp png_ptr, png_const_charp msg)
 {
     R_ShowMessage((char *) msg);
 #if PNG_LIBPNG_VER < 10400
@@ -325,7 +325,7 @@ typedef struct my_error_mgr * my_error_ptr;
  * Here's the routine that will replace the standard error_exit method:
 */
 
-static void NORET my_error_exit (j_common_ptr cinfo)
+NORET static void my_error_exit (j_common_ptr cinfo)
 {
     /* cinfo->err really points to a my_error_mgr struct, so coerce pointer */
     my_error_ptr myerr = (my_error_ptr) cinfo->err;
@@ -719,9 +719,9 @@ const char * in_R_jpegVersion(void)
 #ifdef HAVE_JPEG
     static char ans[10];
 #ifdef JPEG_LIB_VERSION_MAJOR
-    sprintf(ans, "%d.%d", JPEG_LIB_VERSION_MAJOR, JPEG_LIB_VERSION_MINOR);
+    snprintf(ans, 10, "%d.%d", JPEG_LIB_VERSION_MAJOR, JPEG_LIB_VERSION_MINOR);
 #else
-    sprintf(ans, "%d.%d", JPEG_LIB_VERSION/10, JPEG_LIB_VERSION%10);
+    snprintf(ans, 10, "%d.%d", JPEG_LIB_VERSION/10, JPEG_LIB_VERSION%10);
 #endif
     return ans;
 #else

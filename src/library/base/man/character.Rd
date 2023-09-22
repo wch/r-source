@@ -1,6 +1,6 @@
 % File src/library/base/man/character.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2020 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{character}
@@ -19,7 +19,7 @@ as.character(x, \dots)
 is.character(x)
 }
 \arguments{
-  \item{length}{A non-negative integer specifying the desired length.
+  \item{length}{a non-negative integer specifying the desired length.
     Double values will be coerced to integer:
     supplying an argument of length other than one is an error.}
   \item{x}{object to be coerced or tested.}
@@ -29,7 +29,8 @@ is.character(x)
   \code{as.character} and \code{is.character} are generic: you can
   write methods to handle specific classes of objects,
   see \link{InternalMethods}.  Further, for \code{as.character} the
-  default method calls \code{\link{as.vector}}, so dispatch is first on
+  default method calls \code{\link{as.vector}}, so, only
+  \code{if(is.object(x))} is true, dispatch is first on
   methods for \code{as.character} and then for methods for \code{as.vector}.
 
   \code{as.character} represents real and complex numbers to 15 significant
@@ -50,7 +51,8 @@ is.character(x)
   like \code{\link{as.vector}} it strips attributes including names.
   For lists and pairlists (including \link{language objects} such as
   calls) it deparses the elements individually, except that it extracts
-  the first element of length-one character vectors.
+  the first element of length-one character vectors, see the \code{Abc}
+  example.
 
   \code{is.character} returns \code{TRUE} or \code{FALSE} depending on
   whether its argument is of character type or not.
@@ -61,9 +63,9 @@ is.character(x)
   truncated.
 }
 \seealso{
-  \code{\link{options}}: option \code{scipen} affects the conversion of
-  numbers.
-  
+  \code{\link{options}}: options \code{scipen} and \code{OutDec} affect the
+  conversion of numbers.
+
   \code{\link{paste}}, \code{\link{substr}} and \code{\link{strsplit}}
   for character concatenation and splitting,
   \code{\link{chartr}} for character translation and casefolding (e.g.,
@@ -89,11 +91,14 @@ deparse(form)       ## like the input
 
 a0 <- 11/999          # has a repeating decimal representation
 (a1 <- as.character(a0))
-format(a0, digits = 16) # shows one more digit
+format(a0, digits = 16) # shows 1 to 2 more digit(s)
 a2 <- as.numeric(a1)
 a2 - a0               # normally around -1e-17
-as.character(a2)      # normally different from a1
+as.character(a2)      # possibly different from a1
 print(c(a0, a2), digits = 16)
+
+as.character(list(A = "Abc", xy = c("x", "y"))) # "Abc"  "c(\"x\", \"y\")"
+## i.e., "Abc" directly instead of deparsing to "\"Abc\""
 }
 \keyword{character}
 \keyword{classes}

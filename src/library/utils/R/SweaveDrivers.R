@@ -530,35 +530,18 @@ RweaveLatexFinish <- function(object, error = FALSE)
     if (length(object$chunkout))
         for (con in object$chunkout) close(con)
     if (object$haveconcordance) {
-    	## This output format is subject to change.  Currently it contains
-    	## three or four parts, separated by colons:
-    	## 1.  The output .tex filename
-    	## 2.  The input .Rnw filename
-    	## 3.  Optionally, the starting line number of the output coded as "ofs nn",
-    	##     where nn is the offset to the first output line.  This is omitted if nn is 0.
-    	## 4.  The input line numbers corresponding to each output line.
-    	##     This are compressed using the following simple scheme:
-    	##     The first line number, followed by
-    	##     a run-length encoded diff of the rest of the line numbers.
-        linesout <- object$linesout
-        filenumout <- object$filenumout
-        filenames <- object$srcFilenames[filenumout]
-	if (!is.null(filenames)) {  # Might be NULL if an error occurred
-	    filegps <- rle(filenames)
-	    offset <- 0L
-	    for (i in seq_along(filegps$lengths)) {
-		len <- filegps$lengths[i]
-		inputname <- filegps$values[i]
-		vals <- rle(diff(linesout[offset + seq_len(len)]))
-		vals <- c(linesout[offset + 1L], as.numeric(rbind(vals$lengths, vals$values)))
-		concordance <- paste(strwrap(paste(vals, collapse = " ")), collapse = " %\n")
-		special <- paste0("\\Sconcordance{concordance:", outputname, ":",
-			     inputname, ":",
-			     if (offset) paste0("ofs ", offset, ":") else "",
-			     "%\n",
-			     concordance,"}\n")
-		cat(special, file = object$concordfile, append=offset > 0L)
-		offset <- offset + len
+        concordance <- list(srcLine = object$linesout,
+                            srcFile = object$srcFilenames[object$filenumout],
+        	            offset = 0)
+        class(concordance) <- "Rconcordance"
+        if (!is.null(concordance$srcFile)) { # Might be NULL if an error occurred
+	    concordance <- as.character(concordance, targetfile = outputname)
+	    for (i in seq_along(concordance)) {
+	        special <- paste0("\\Sconcordance{",
+		                  paste(strwrap(concordance[i]),
+		                        collapse = " %\n"),
+		                  "}\n")
+		cat(special, file = object$concordfile, append = (i > 1L))
 	    }
 	}
     }

@@ -1,6 +1,6 @@
 /*
  *  Mathlib : A C Library of Special Functions
- *  Copyright (C) 2013-2016 The R Core Team
+ *  Copyright (C) 2013-2022 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -68,13 +68,9 @@ double sinpi(double x) {
 }
 #endif
 
-// tan(pi * x)  -- exact when x = k/2  for all integer k
-#if defined(HAVE_TANPI) || defined(HAVE___TANPI)
-// for use in arithmetic.c, half-values documented to give NaN
+// tan(pi * x)  -- exact when x = k/4  for all integer k and half-values give NaN
+// ----------- e.g. used in ../main/arithmetic.c : 
 double Rtanpi(double x)
-#else
-double tanpi(double x)
-#endif
 {
 #ifdef IEEE_754
     if (ISNAN(x)) return x;
@@ -82,13 +78,26 @@ double tanpi(double x)
     if(!R_FINITE(x)) ML_WARN_return_NAN;
 
     x = fmod(x, 1.); // tan(pi(x + k)) == tan(pi x)  for all integer k
-    // map (-1,1) --> (-1/2, 1/2] :
+    // map (-1,1] --> (-1/2, 1/2] :
     if(x <= -0.5) x++; else if(x > 0.5) x--;
-    return (x == 0.) ? 0. : ((x == 0.5) ? ML_NAN : tan(M_PI * x));
+    return (x == 0.) ? 0. :
+	((x ==  0.5 ) ? ML_NAN :
+	((x ==  0.25) ?  1. :
+	((x == -0.25) ? -1. :
+			tan(M_PI * x)
+	    )));
 }
+
+#if defined(HAVE_TANPI) || defined(HAVE___TANPI)
+#else
+double tanpi(double x) {
+    return Rtanpi(x);
+}
+#endif
 
 #if !defined(HAVE_TANPI) && defined(HAVE___TANPI)
 double tanpi(double x) {
     return __tanpi(x);
 }
+/* #else tanpi() defined from C standard math lib */
 #endif

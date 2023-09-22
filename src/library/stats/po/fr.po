@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.0.4\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-11-06 17:18+0100\n"
+"POT-Creation-Date: 2023-07-31 14:59+0200\n"
 "PO-Revision-Date: 2021-02-10 18:07+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -141,11 +141,16 @@ msgstr "seul le premier élément est utilisé comme nom de variable"
 msgid "invalid expression in '%s'"
 msgstr "expression incorrecte dans '%s'"
 
-#: deriv.c:1085 model.c:99
+#: deriv.c:872
+#, fuzzy
+msgid "too many variables"
+msgstr "trop de facteurs"
+
+#: deriv.c:1087 model.c:99
 msgid "invalid variable names"
 msgstr "noms des variables incorrects"
 
-#: deriv.c:1094
+#: deriv.c:1095 deriv.c:1097
 msgid "invalid tag"
 msgstr "marque (tag) incorrecte"
 
@@ -161,11 +166,11 @@ msgstr "distance() : p incorrect"
 msgid "distance(): invalid distance"
 msgstr "distance() : distance incorrecte"
 
-#: distn.c:44
+#: distn.c:47
 msgid "NaNs produced"
 msgstr "Production de NaN"
 
-#: distn.c:45
+#: distn.c:48
 msgid "Non-numeric argument to mathematical function"
 msgstr "Argument non numérique pour une fonction mathématique"
 
@@ -184,12 +189,12 @@ msgstr "L'argument %s doit être un vecteur numérique non vide"
 msgid "argument %s must be a numeric vector of length 1 or length %d"
 msgstr "l'argument %s doit être un vecteur numérique de longueur 1 ou %d"
 
-#: fexact.c:273
+#: fexact.c:276
 #, c-format
 msgid "integer overflow would happen in 'mult * ldkey' = %g"
 msgstr "un dépassement de pile vers le haut dans un calcul d’entiers va apparaître dans 'mult * ldkey' = %g"
 
-#: fexact.c:653
+#: fexact.c:656
 #, c-format
 msgid ""
 "FEXACT error 6.  LDKEY=%d is too small for this problem,\n"
@@ -200,12 +205,14 @@ msgstr ""
 "  (ii := key2[itp=%d] = %d, ldstp=%d)\n"
 "Essayez d’augmenter la taille de l’environnement de travail et peut-être aussi 'mult'"
 
-#: fexact.c:1037
+#: fexact.c:1040
 #, c-format
-msgid "Bug in fexact3, it[i=%d]=%d: negative key %d (kyy=%d)\n"
-msgstr "Bogue dans fexact3, it[i=%d]=%d: clé négative %d (kyy=%d)\n"
+msgid ""
+"FEXACT[f3xact()] error: hash key %.0g > INT_MAX, kyy=%d, it[i (= nco = %d)]= %d.\n"
+"Rather set 'simulate.p.value=TRUE'\n"
+msgstr ""
 
-#: fexact.c:1069
+#: fexact.c:1073
 #, c-format
 msgid ""
 "FEXACT error 30.  Stack length exceeded in f3xact,\n"
@@ -216,7 +223,7 @@ msgstr ""
 "  (ldst=%d, key=%d, ipn=%d, itp=%d, ist[ii=%d]=%d).\n"
 "Augmentez la taille de l’environnement de travail ou considérez d’utiliser 'simulate.p.value=TRUE'"
 
-#: fexact.c:1404
+#: fexact.c:1407
 #, c-format
 msgid ""
 "FEXACT error 6 (f5xact).  LDKEY=%d is too small for this problem: kval=%d.\n"
@@ -225,7 +232,7 @@ msgstr ""
 "FEXACT erreur 6 (f5xact).  LDKEY=%d est trop petit pour ce problème : kval=%d.\n"
 "Essayez d’augmenter la taille de l’environnement de travail."
 
-#: fexact.c:1417
+#: fexact.c:1420
 #, c-format
 msgid ""
 "FEXACT error 7(%s). LDSTP=%d is too small for this problem,\n"
@@ -236,7 +243,7 @@ msgstr ""
 "  (kval=%d, itop-ldstp=%d).\n"
 "Augmentez la taille de l’environnement de travail ou considérez l’utilisation de 'simulate.p.value=TRUE’."
 
-#: fexact.c:1454
+#: fexact.c:1458
 #, c-format
 msgid ""
 "FEXACT error 7(%s). LDSTP=%d is too small for this problem,\n"
@@ -964,6 +971,10 @@ msgstr "règle finale incorrecte pour une médiane mobile de 3 : %d"
 #, c-format
 msgid "missing value in last %d observations"
 msgstr "valeur manquante dans les %d dernières observations"
+
+#, c-format
+#~ msgid "Bug in fexact3, it[i=%d]=%d: negative key %d (kyy=%d)\n"
+#~ msgstr "Bogue dans fexact3, it[i=%d]=%d: clé négative %d (kyy=%d)\n"
 
 #, fuzzy
 #~ msgid "'x' is a factor"

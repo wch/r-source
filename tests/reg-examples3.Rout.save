@@ -1,6 +1,6 @@
 
-R Under development (unstable) (2021-10-13 r81047) -- "Unsuffered Consequences"
-Copyright (C) 2021 The R Foundation for Statistical Computing
+R Under development (unstable) (2022-03-19 r81942) -- "Unsuffered Consequences"
+Copyright (C) 2022 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -284,10 +284,6 @@ Call:
 glm(formula = Postwt ~ Prewt + Treat + offset(Prewt), family = gaussian, 
     data = anorexia)
 
-Deviance Residuals: 
-     Min        1Q    Median        3Q       Max  
--14.1083   -4.2773   -0.5484    5.4838   15.2922  
-
 Coefficients:
             Estimate Std. Error t value Pr(>|t|)    
 (Intercept)  49.7711    13.3910   3.717 0.000410 ***
@@ -506,32 +502,6 @@ inner A B C E
     w . 3 . .
     x . . 3 .
     y 2 . . .
-> 
-> ## From utils
-> example(packageDescription)
-
-pckgDs> ## No test: 
-pckgDs> ##D packageDescription("stats")
-pckgDs> ##D packageDescription("stats", fields = c("Package", "Version"))
-pckgDs> ##D 
-pckgDs> ##D packageDescription("stats", fields = "Version")
-pckgDs> ##D packageDescription("stats", fields = "Version", drop = FALSE)
-pckgDs> ##D 
-pckgDs> ##D if(packageVersion("MASS") < "7.3.29")
-pckgDs> ##D   message("you need to update 'MASS'")
-pckgDs> ## End(No test)
-pckgDs> pu <- packageDate("utils")
-
-pckgDs> ## No test: 
-pckgDs> ##D str(pu)
-pckgDs> ## End(No test)
-pckgDs> stopifnot(identical(pu, packageDate(desc = packageDescription("utils"))),
-pckgDs+           identical(pu, packageDate("stats"))) # as "utils" and "stats" are
-
-pckgDs>                                    # both 'base R' and "Built" at same time
-pckgDs> 
-pckgDs> 
-pckgDs> 
 > 
 > 
 > ## From splines

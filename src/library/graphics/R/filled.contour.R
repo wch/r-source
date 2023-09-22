@@ -1,7 +1,7 @@
 #  File src/library/graphics/R/filled.contour.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -26,7 +26,7 @@ function (x = seq(0, 1, length.out = nrow(z)),
           levels = pretty(zlim, nlevels), nlevels = 20,
           color.palette = function(n) hcl.colors(n, "YlOrRd", rev = TRUE),
           col = color.palette(length(levels) - 1),
-          plot.title, plot.axes, key.title, key.axes,
+          plot.title, plot.axes, key.title, key.axes, key.border = NULL,
           asp = NA, xaxs = "i", yaxs = "i", las = 1, axes = TRUE,
           frame.plot = axes, ...)
 {
@@ -65,7 +65,7 @@ function (x = seq(0, 1, length.out = nrow(z)),
     par(mar = mar)
     plot.new()
     plot.window(xlim = c(0,1), ylim = range(levels), xaxs = "i", yaxs = "i")
-    rect(0, levels[-length(levels)], 1, levels[-1L], col = col)
+    rect(0, levels[-length(levels)], 1, levels[-1L], col = col, border = key.border)
     if (missing(key.axes)) {
         if (axes)
             axis(4)

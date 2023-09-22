@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2021-11-29 r81261) -- "Unsuffered Consequences"
-Copyright (C) 2021 The R Foundation for Statistical Computing
-Platform: x86_64-pc-linux-gnu (64-bit)
+R Under development (unstable) (2023-08-28 r85029) -- "Unsuffered Consequences"
+Copyright (C) 2023 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -165,7 +165,7 @@ $allowed
 > flush(stderr()); flush(stdout())
 > 
 > ### Name: adjustcolor
-> ### Title: Adjust Colors in One or More Directions Conveniently.
+> ### Title: Adjust Colors in One or More Directions Conveniently
 > ### Aliases: adjustcolor
 > 
 > ### ** Examples
@@ -715,6 +715,20 @@ blue    0 239
 red          0      223       97
 green        0       83      208
 blue         0      107       79
+> 
+> # long and short form of hexadecimal notation
+> col2rgb(c(long = "#559955", short = "#595"))
+      long short
+red     85    85
+green  153   153
+blue    85    85
+> # with alpha
+> col2rgb(c(long = "#559955BB", short = "#595B"), alpha = TRUE)
+      long short
+red     85    85
+green  153   153
+blue    85    85
+alpha  187   187
 > 
 > ##-- NON-INTRODUCTORY examples --
 > 
@@ -1397,20 +1411,19 @@ yellow3              205   205    0
 yellow4              139   139    0
 yellowgreen          154   205   50
 > 
-> ccodes <- c(256^(2:0) %*% crgb)  # = internal codes
-> ## How many names are 'aliases' of each other:
-> table(tcc <- table(ccodes))
+> ## How many names are 'aliases' of each other?
+> ccodes <- c(256^(2:0) %*% crgb)
+> cl <- split(cc, ccodes)
+> length(cl) # 502 distinct colors
+[1] 502
+> table(tcc <- lengths(cl))
 
   1   2   3   4 
 352 146   3   1 
-> length(uc <- unique(sort(ccodes))) # 502
-[1] 502
 > ## All the multiply named colors:
-> mult <- uc[tcc >= 2]
-> cl <- lapply(mult, function(m) cc[ccodes == m])
-> names(cl) <- apply(col2rgb(sapply(cl, function(x)x[1])),
-+                    2, function(n)paste(n, collapse = ","))
-> utils::str(cl)
+> clmult <- cl[tcc >= 2]
+> names(clmult) <- sapply(clmult, function(x) paste(crgb[,x[1]], collapse = ","))
+> utils::str(clmult)
 List of 150
  $ 0,0,0      : chr [1:3] "black" "gray0" "grey0"
  $ 0,0,128    : chr [1:2] "navy" "navyblue"
@@ -1512,11 +1525,43 @@ List of 150
  $ 189,189,189: chr [1:2] "gray74" "grey74"
  $ 190,190,190: chr [1:2] "gray" "grey"
   [list output truncated]
+> 
+> ## Look at the color cube:
+> tc <- t(crgb[, !duplicated(ccodes)])
+> cNms <- rownames(tc)
+> if(requireNamespace("lattice", quietly = TRUE))
++     lattice::cloud(blue ~ red + green, data = as.data.frame(tc), col = cNms)
+> ## The 8 corners of the color cube:
+> isC <- rowSums(tc == 0 | tc == 255) == 3
+> cNms[isC] # "white" "black" "blue" "cyan" "green" "magenta" "red" "yellow"
+[1] "white"   "black"   "blue"    "cyan"    "green"   "magenta" "red"    
+[8] "yellow" 
+> ## Don't show: 
+> stopifnot(setequal(cNms[isC],
++      c("white","black","blue","cyan","green","magenta","red","yellow")))
+> ## End(Don't show)
+> table(is.gray <- tc[,1] == tc[,2] & tc[,2] == tc[,3])# (397, 105)
+
+FALSE  TRUE 
+  397   105 
+> 
 > ## Not run: 
-> ##D  if(require(xgobi)) { ## Look at the color cube dynamically :
-> ##D    tc <- t(crgb[, !duplicated(ccodes)])
-> ##D    table(is.gray <- tc[,1] == tc[,2] & tc[,2] == tc[,3])  # (397, 105)
-> ##D    xgobi(tc, color = c("gold", "gray")[1 + is.gray])
+> ##D ## Look at the color cube dynamically:##D 
+> ##D  if(require("rgl")) {
+> ##D    open3d(windowRect = c(50,50, 950, 950)) # large, so we see details
+> ##D    plot3d (tc, col = cNms, size = 11) # --> rotate w/ mouse; enlarged corners:
+> ##D    points3d(tc[isC,], col = cNms[isC], size=22)
+> ##D    bg3d("darkgray") # (to "see more"); rotate around gray-axis:
+> ##D    play3d(spin3d(axis = c(1, 1, 1), rpm = 2), duration = 30)
+> ##D    if(FALSE) # add all names {zoom in with 2nd mouse button!}
+> ##D      text3d(tc[!is.gray,], texts = cNms[!is.gray],
+> ##D                              col = cNms[!is.gray], adj=-1/4, cex = 1/2)
+> ##D    if(FALSE) { ## next version of {rgl}
+> ##D      hover3d(tc, labels = cNms)
+> ##D      message("Move mouse over plot to identify points.")
+> ##D    } else { ##  click on blob to see colors()' name:
+> ##D      identify3d(tc, labels=cNms)
+> ##D    }
 > ##D  }
 > ## End(Not run)
 > 
@@ -2037,6 +2082,9 @@ $transformations
 [1] TRUE
 
 $paths
+[1] TRUE
+
+$glyphs
 [1] TRUE
 
 > 
@@ -2972,7 +3020,8 @@ pdf
 +  "     second: {f * second}(x) "        == {f * second}(x)), adj = 0)
 > 
 > 
-> plot(1:10, 1:10)
+> ## note the "{ .. }" trick to get "chained" equations:
+> plot(1:10, 1:10, main = quote(1 <= {1 < 2}))
 > text(4, 9, expression(hat(beta) == (X^t * X)^{-1} * X^t * y))
 > text(4, 8.4, "expression(hat(beta) == (X^t * X)^{-1} * X^t * y)",
 +      cex = .8)
@@ -3549,15 +3598,15 @@ attr(,"class")
 > ## time-dependent ==> ignore diffs:
 > ## IGNORE_RDIFF_BEGIN
 > pretty(Sys.Date())
-[1] "2021-11-28" "2021-11-29" "2021-11-30" "2021-12-01" "2021-12-02"
-[6] "2021-12-03"
+[1] "2023-07-29" "2023-07-30" "2023-07-31" "2023-08-01" "2023-08-02"
+[6] "2023-08-03"
 > pretty(Sys.time(), n = 10)
- [1] "2021-11-30 16:08:37 NZDT" "2021-11-30 16:08:38 NZDT"
- [3] "2021-11-30 16:08:39 NZDT" "2021-11-30 16:08:40 NZDT"
- [5] "2021-11-30 16:08:41 NZDT" "2021-11-30 16:08:42 NZDT"
- [7] "2021-11-30 16:08:43 NZDT" "2021-11-30 16:08:44 NZDT"
- [9] "2021-11-30 16:08:45 NZDT" "2021-11-30 16:08:46 NZDT"
-[11] "2021-11-30 16:08:47 NZDT"
+ [1] "2023-07-31 10:42:05 CEST" "2023-07-31 10:42:06 CEST"
+ [3] "2023-07-31 10:42:07 CEST" "2023-07-31 10:42:08 CEST"
+ [5] "2023-07-31 10:42:09 CEST" "2023-07-31 10:42:10 CEST"
+ [7] "2023-07-31 10:42:11 CEST" "2023-07-31 10:42:12 CEST"
+ [9] "2023-07-31 10:42:13 CEST" "2023-07-31 10:42:14 CEST"
+[11] "2023-07-31 10:42:15 CEST"
 > ## IGNORE_RDIFF_END
 > 
 > pretty(as.Date("2000-03-01")) # R 1.0.0 came in a leap year
@@ -3565,8 +3614,7 @@ attr(,"class")
 [6] "2000-03-04"
 > 
 > ## time ranges in diverse scales:% also in ../../../../tests/reg-tests-1c.R
-> require(stats)
-> steps <- setNames(,
+> steps <- stats::setNames(,
 +     c("10 secs", "1 min", "5 mins", "30 mins", "6 hours", "12 hours",
 +       "1 DSTday", "2 weeks", "1 month", "6 months", "1 year",
 +       "10 years", "50 years", "1000 years"))
@@ -3925,6 +3973,34 @@ v 0.98039216 0.7647059 0.4588235 0.8549020 0.9960784
 > ## See  help(persp) {after attaching the 'graphics' package}
 > ##      -----------
 > 
+> ## Example for 'continuous = TRUE' (vs default):
+> require(graphics)
+> x <- -10:10/10 # [-1, 1]
+> y <- -16:16/16 # [-1, 1] ==> z = fxy := outer(x,y) is also in [-1,1]
+> 
+> p <- persp(x, y, fxy <- outer(x,y), phi = 20, theta = 15, r = 3, ltheta = -75,
++            shade = 0.8, col = "green3", ticktype = "detailed")
+> ## 5 axis-parallel auxiliary lines in x-y  and y-z planes :
+> lines(trans3d(-.5 , y=-1:1, z=min(fxy),  pmat=p), lty=2)
+> lines(trans3d(  0 , y=-1:1, z=min(fxy),  pmat=p), lty=2)
+> lines(trans3d(-1:1, y= -.7, z=min(fxy),  pmat=p), lty=2)
+> lines(trans3d( -1,  y= -.7, z=c(-1,1) ,  pmat=p), lty=2)
+> lines(trans3d( -1,  y=-1:1, z= -.5    ,  pmat=p), lty=2)
+> ## 2 pillars to carry the horizontals below:
+> lines(trans3d(-.5 , y= -.7, z=c(-1,-.5), pmat=p), lwd=1.5, col="gray10")
+> lines(trans3d( 0  , y= -.7, z=c(-1,-.5), pmat=p), lwd=1.5, col="gray10")
+> ## now some "horizontal rays" (going from center to very left or very right):
+> doHor <- function(x1, x2, z, CNT=FALSE, ...)
++     lines(trans3d(x=seq(x1, x2, by=0.5), y= -0.7, z = z, pmat = p, continuous = CNT),
++           lwd = 3, type="b", xpd=NA, ...)
+> doHor(-10,  0, z = -0.5, col = 2)  # x in [-10, 0] -- to the very left : fine
+> doHor(-.5,  2, z = -0.52,col = 4) # x in [-0.5, 2] only {to the right} --> all fine
+> ## but now, x in [-0.5, 20] -- "too far" ==> "wrap around" problem (without 'continuous=TRUE'):
+> doHor(-.5, 20, z = -0.58, col = "steelblue", lty=2)
+> ## but it is fixed with continuous = CNT = TRUE:
+> doHor(-.5, 20, z = -0.55, CNT=TRUE, col = "skyblue")
+points cut off after point[39]
+> 
 > 
 > 
 > cleanEx()
@@ -4167,6 +4243,11 @@ $ylab
 NULL
 
 > ##> xlab: "Index"  \\  warning: 3 y values <= 0 omitted ..
+> op <- options(warn = 2)# ==> warnings would be errors, we suppress the one "we know":
+> suppressWarnings(xy.coords(-2:10, log = "y"), classes="log_le_0") -> xy
+> options(op) # revert
+> stopifnot(is.list(xy), identical (1:13 +0,  xy$x),
++           identical(c(rep(NA, 3), 1:10 +0), xy$y))
 > 
 > 
 > 
@@ -4210,8 +4291,7 @@ $number
 > ## Don't show: 
 > set.seed(1)
 > ## End(Don't show)
-> require(stats)
-> xy <- data.frame(x = round(sort(rnorm(100))), y = rnorm(100))
+> xy <- data.frame(x = round(sort(stats::rnorm(100))), y = stats::rnorm(100))
 > xyTable(xy, digits = 1)
 $x
  [1] -2 -2 -2 -2 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1  0  0  0  0  0  0  0  0
@@ -4329,6 +4409,27 @@ $zlab
 [1] "z"
 
 > ##> Warning message: 2 x values <= 0 omitted ...
+> ## Suppress this specific warning:
+> suppressWarnings(xyz.coords(x = -1:9, y = 2:12, z = 3:13, log = "xy"),
++                  classes = "log_le_0")
+$x
+ [1] NA NA  1  2  3  4  5  6  7  8  9
+
+$y
+ [1]  2  3  4  5  6  7  8  9 10 11 12
+
+$z
+ [1]  3  4  5  6  7  8  9 10 11 12 13
+
+$xlab
+NULL
+
+$ylab
+NULL
+
+$zlab
+NULL
+
 > 
 > 
 > 
@@ -4337,7 +4438,7 @@ $zlab
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  42.004 0.516 44.6 0 0 
+Time elapsed:  38.446 0.619 39.236 0 0 
 > grDevices::dev.off()
 null device 
           1 

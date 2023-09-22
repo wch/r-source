@@ -63,36 +63,35 @@
         c(FALSE, TRUE, TRUE, FALSE, FALSE, TRUE, TRUE, FALSE, TRUE),
         charClass(testCodepoints[["ASCII"]], "alnum")))
 }
-{
+
+# In principle, this can be locale dependent.
+# Ubuntu in C locale (without internal iswxxxxx) gives different results. 
+
+if (Sys.getlocale("LC_CTYPE") != "C") {
+
     stopifnot(all.equal(
         c(TRUE, TRUE, TRUE, TRUE, FALSE, TRUE, TRUE),
         charClass(testCodepoints[["Cyrillic"]], "alpha")))
-}
-{
+
     stopifnot(all.equal(
         c(TRUE, FALSE, FALSE, FALSE, FALSE, TRUE, TRUE),
         charClass(testCodepoints[["Cyrillic"]], "upper")))
-}
-{
+
     stopifnot(all.equal(
         c(FALSE, TRUE, TRUE, TRUE, FALSE, FALSE, FALSE),
         charClass(testCodepoints[["Cyrillic"]], "lower")))
-}
-{
+
     stopifnot(all.equal(
         c(FALSE, FALSE, FALSE, FALSE, TRUE, FALSE, FALSE),
         charClass(testCodepoints[["Cyrillic"]], "space")))
-}
-{
+
     # Ubuntu & Windows 10 disagree about diacritacals
     stopifnot(all(
         charClass(testCodepoints[["Hebrew"]], "alpha")[-c(2,3,6)]))
-}
-{
+
     # no cases in Hebrew alphabet
     stopifnot(!any(charClass(testCodepoints[["Hebrew"]], "lower")))
-}
-{
+
     # no cases in Hebrew alphabet
     stopifnot(!any(charClass(testCodepoints[["Hebrew"]], "upper")))
 }

@@ -17,7 +17,7 @@ cat(\dots , file = "", sep = " ", fill = FALSE, labels = NULL,
 \arguments{
   \item{\dots}{\R objects (see \sQuote{Details} for the types of objects
     allowed).}
-  \item{file}{A \link{connection}, or a character string naming the file
+  \item{file}{a \link{connection}, or a character string naming the file
     to print to.  If \code{""} (the default), \code{cat} prints to the
     standard output connection, the console unless redirected by
     \code{\link{sink}}.

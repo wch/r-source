@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-02-01 13:58\n"
+"POT-Creation-Date: 2023-07-31 14:59\n"
 "PO-Revision-Date: 2015-03-27 14:16+0900 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -27,9 +27,7 @@ msgstr " 'a' と 'b' は 'coef' により置き換えられます "
 msgid "one of 'x1' and 'y1' must be given"
 msgstr " 'x1' と 'y1' のどちらかは必要です "
 
-msgid ""
-"'length', 'angle', or 'code' greater than length 1; values after the first "
-"are ignored"
+msgid "'length', 'angle', or 'code' greater than length 1; values after the first are ignored"
 msgstr ""
 
 msgid "'x' must be a 2-d contingency table"
@@ -104,9 +102,7 @@ msgid "invalid boxplot widths"
 msgstr " boxplot の幅が無効です "
 
 msgid "some notches went outside hinges ('box'): maybe set notch=FALSE"
-msgstr ""
-" いくつかのノッチがヒンジの外に置かれました('box'): おそらく notch=FALSE とす"
-"べきです "
+msgstr " いくつかのノッチがヒンジの外に置かれました('box'): おそらく notch=FALSE とすべきです "
 
 msgid "'formula' should specify exactly two variables"
 msgstr " 'formula' は丁度二つの変数を特定すべきです "
@@ -115,9 +111,7 @@ msgid "dependent variable should be a factor"
 msgstr " 従属変数は因子でなければなりません "
 
 msgid "y axis is on a cumulative probability scale, 'ylim' must be in [0,1]"
-msgstr ""
-" y 軸のメモリは累積確率のスケールです、 'ylim' は区間 [0, 1] 中になければなり"
-"ません "
+msgstr " y 軸のメモリは累積確率のスケールです、 'ylim' は区間 [0, 1] 中になければなりません "
 
 msgid "no 'z' matrix specified"
 msgstr " 'z' 行列が指定されていません "
@@ -180,8 +174,7 @@ msgid "'x' must be a numeric vector or matrix"
 msgstr " 'x' は数値ベクトル又は行列でなければなりません "
 
 msgid "'x' is neither a vector nor a matrix: using as.numeric(x)"
-msgstr ""
-" 'x' はベクトルでも行列でもありません: as.numeric(x) を使用してください "
+msgstr " 'x' はベクトルでも行列でもありません: as.numeric(x) を使用してください "
 
 msgid "'x' must be an array"
 msgstr " 'x' は配列でなければなりません "
@@ -238,9 +231,7 @@ msgid "'probability' is an alias for '!freq', however they differ."
 msgstr " 'probability' は '!freq' の別名ですが、それらは異なっています "
 
 msgid "some 'x' not counted; maybe 'breaks' do not span range of 'x'"
-msgstr ""
-" 'x' の一部分が数えられていません。多分 'breaks' が 'x' の範囲全体をカバーし"
-"ていません "
+msgstr " 'x' の一部分が数えられていません。多分 'breaks' が 'x' の範囲全体をカバーしていません "
 
 msgid "the AREAS in the plot are wrong -- rather use 'freq = FALSE'"
 msgstr " プロットの領域が誤まりです。むしろ 'freq = FALSE' を使用して下さい "
@@ -282,8 +273,7 @@ msgid "integer colors must be non-negative"
 msgstr " 整数によりパレットから色を指定する場合、正の整数を指定してください "
 
 msgid "'respect' must be logical or matrix with same dimension as 'mat'"
-msgstr ""
-" 'respect' は 'mat' と同じ次元の、論理値または行列でなければなりません "
+msgstr " 'respect' は 'mat' と同じ次元の、論理値または行列でなければなりません "
 
 msgid ""
 "layout matrix must contain at least one reference\n"
@@ -301,11 +291,12 @@ msgstr " 'legend' が長さが 0 です "
 msgid "invalid coordinate lengths"
 msgstr " 無効な座標長です "
 
-msgid "'text.width' must be numeric, >= 0"
-msgstr " 'text.width' は非負の数値でなければなりません "
-
 msgid "horizontal specification overrides: Number of columns := %d"
 msgstr " 水平方向の指定は無効とされました: 列の数 := %d "
+
+#, fuzzy
+msgid "'text.width' must be numeric, >= 0, or a scalar NA"
+msgstr " 'text.width' は非負の数値でなければなりません "
 
 msgid "'merge = TRUE' has no effect when no line segments are drawn"
 msgstr " 'merge = TRUE' はいかなる線分も描かれないときは効果がありません "
@@ -432,9 +423,11 @@ msgstr " 'nrpoints' は 0 以上の数値のスカラーでなければなりま
 msgid "a 2-way table has to be specified"
 msgstr " 二元分割表を指定しなければなりません "
 
-msgid "x axis is on a cumulative probability scale, 'xlim' must be in [0,1]"
+msgid "weights are not supported for 2-way table specification"
 msgstr ""
-" x 軸の目盛は累積確率です、'xlim' は区間 [0, 1] 中になければなりません "
+
+msgid "x axis is on a cumulative probability scale, 'xlim' must be in [0,1]"
+msgstr " x 軸の目盛は累積確率です、'xlim' は区間 [0, 1] 中になければなりません "
 
 msgid "'x' must be a matrix or a data frame"
 msgstr " 'x' は行列かデータフレームでなければなりません "
@@ -501,8 +494,7 @@ msgid_plural "arguments %s are not made use of"
 msgstr[0] " 引数 %s は使用されていません "
 
 #~ msgid "negative 'counts'. Internal Error in C-code for \"bincount\""
-#~ msgstr ""
-#~ " 負の 'counts' です。\"bincount\" のための C コードの内部エラーです "
+#~ msgstr " 負の 'counts' です。\"bincount\" のための C コードの内部エラーです "
 
 #~ msgid "explanatory variable should be numeric"
 #~ msgstr " 説明変数は数値でなければなりません "

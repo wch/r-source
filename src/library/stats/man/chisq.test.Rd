@@ -1,6 +1,6 @@
 % File src/library/stats/man/chisq.test.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2018 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{chisq.test}
@@ -26,7 +26,7 @@ chisq.test(x, y = NULL, correct = TRUE,
     half is subtracted from all \eqn{|O - E|} differences; however, the
     correction will not be bigger than the differences themselves.  No correction
     is done if \code{simulate.p.value = TRUE}.}
-  \item{p}{a vector of probabilities of the same length of \code{x}.
+  \item{p}{a vector of probabilities of the same length as \code{x}.
     An error is given if any entry of \code{p} is negative.}
   \item{rescale.p}{a logical scalar; if TRUE then \code{p} is rescaled
     (if necessary) to sum to 1.  If \code{rescale.p} is FALSE, and
@@ -59,9 +59,10 @@ chisq.test(x, y = NULL, correct = TRUE,
   from the asymptotic chi-squared distribution of the test statistic;
   continuity correction is only used in the 2-by-2 case (if \code{correct}
   is \code{TRUE}, the default).  Otherwise the p-value is computed for a
-  Monte Carlo test (Hope, 1968) with \code{B} replicates.
+  Monte Carlo test (Hope, 1968) with \code{B} replicates. The default
+  \code{B = 2000} implies a minimum p-value of about 0.0005 (\eqn{1/(B+1)}).
 
-  In the contingency table case simulation is done by random sampling
+  In the contingency table case, simulation is done by random sampling
   from the set of all contingency tables with given marginals, and works
   only if the marginals are strictly positive.  Continuity correction is
   never used, and the statistic is quoted without it.  Note that this is
@@ -108,7 +109,7 @@ chisq.test(x, y = NULL, correct = TRUE,
   \emph{Journal of the Royal Statistical Society Series B}, \bold{30},
   582--598.
   \doi{10.1111/j.2517-6161.1968.tb00759.x}.
-  \url{https://www.jstor.org/stable/2984263}.
+  %% \url{https://www.jstor.org/stable/2984263}.
 
   Patefield, W. M. (1981).
   Algorithm AS 159: An efficient method of generating r x c tables

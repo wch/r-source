@@ -22,12 +22,12 @@
 \special{date1 lop date2}
 }
 \arguments{
-  \item{date}{date objects}
+  \item{date}{an object of class \code{"\link{Date}"}.}
   \item{date1, date2}{date objects or character vectors.  (Character
     vectors are converted by \code{\link{as.Date}}.)}
   \item{x}{a numeric vector (in days) \emph{or} an object of class
     \code{"\link{difftime}"}, rounded to the nearest whole day.}
-  \item{lop}{One of \code{==}, \code{!=}, \code{<}, \code{<=}, \code{>}
+  \item{lop}{one of \code{==}, \code{!=}, \code{<}, \code{<=}, \code{>}
     or \code{>=}.}
 }
 \details{

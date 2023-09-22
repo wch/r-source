@@ -1,6 +1,6 @@
 % File src/library/base/man/paste.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2020 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{paste}
@@ -17,12 +17,12 @@ paste0(\dots,            collapse = NULL, recycle0 = FALSE)
   \item{sep}{a character string to separate the terms.  Not
     \code{\link{NA_character_}}.}
   \item{collapse}{an optional character string to separate the results.  Not
-    \code{\link{NA_character_}}.}
+    \code{\link{NA_character_}}.  When \code{collapse} is a string,
+    the result is always a string (\code{\link{character}} of length 1).}
   \item{recycle0}{\code{\link{logical}} indicating if zero-length
-    character arguments should lead to the zero-length
-    \code{\link{character}(0)} after the \code{sep}-phase (which turns into
-    \code{""} in the \code{collapse}-phase, i.e., when \code{collapse} is
-    not \code{NULL}).}
+    character arguments should result in the zero-length
+    \code{\link{character}(0)}.  Note that when \code{collapse} is
+    a string, \code{recycle0} has no effect.}
 }
 \description{
   Concatenate vectors after converting to character.
@@ -30,12 +30,12 @@ paste0(\dots,            collapse = NULL, recycle0 = FALSE)
 \details{
   \code{paste} converts its arguments (\emph{via}
   \code{\link{as.character}}) to character strings, and concatenates
-  them (separating them by the string given by \code{sep}).  If the
-  arguments are vectors, they are concatenated term-by-term to give a
-  character vector result.  Vector arguments are recycled as needed,
-  with zero-length arguments being recycled to \code{""} only if
-  \code{recycle0} is not true \emph{or} \code{collapse} is not
-  \code{NULL}.
+  them (separating them by the string given by \code{sep}).
+
+  If the arguments are vectors, they are concatenated term-by-term to give a
+  character vector result.  Vector arguments are recycled as needed.
+  Zero-length arguments are recycled as \code{""} unless \code{recycle0}
+  is \code{TRUE} and \code{collapse} is \code{NULL}.
 
   Note that \code{paste()} coerces \code{\link{NA_character_}}, the
   character missing value, to \code{"NA"} which may seem
@@ -120,18 +120,23 @@ paste(month.abb, nth, sep = ": ", collapse = "; ")
     width = 30), collapse = "\n"))
 plot(dist ~ speed, cars, main = title)
 
-## 'recycle0 = TRUE' allows more vectorized behaviour, i.e. zero-length recycling :
+## zero length arguments recycled as `""` -- NB: `{}` <==> character(0)  here
+paste({}, 1:2)
+
+## 'recycle0 = TRUE' allows standard vectorized behaviour, i.e., zero-length
+##                   recycling resulting in zero-length result character(0):
 valid <- FALSE
 val <- pi
-paste("The value is", val[valid], "-- not so good!")
+paste("The value is", val[valid], "-- not so good!") # ->  ".. value is  -- not .."
 paste("The value is", val[valid], "-- good: empty!", recycle0=TRUE) # -> character(0)
-## When  'collapse = <string>',  the result is a length-1 string :
-paste("foo", {}, "bar", collapse="|")                  # |-->  "foo  bar"
-paste("foo", {}, "bar", collapse="|", recycle0 = TRUE) # |-->  ""
-## all empty args
-paste(	  collapse="|")                  # |-->  ""  as do all these:
-paste(	  collapse="|", recycle0 = TRUE)
-paste({}, collapse="|")
-paste({}, collapse="|", recycle0 = TRUE)
+
+## When 'collapse = <string>',  result is (length 1) string in all cases
+paste("foo", {}, "bar", collapse = "|")                  # |-->  "foo  bar"
+paste("foo", {},        collapse = "|", recycle0 = TRUE) # |-->  ""
+## If all arguments are empty (and collapse a string),   ""  results always
+paste(    collapse = "|")
+paste(    collapse = "|", recycle0 = TRUE)
+paste({}, collapse = "|")
+paste({}, collapse = "|", recycle0 = TRUE)
 }
 \keyword{character}

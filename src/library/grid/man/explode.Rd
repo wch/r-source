@@ -3,7 +3,7 @@
 \alias{explode.character}
 \alias{explode.path}
 \title{
-  Explode a path into its components.
+  Explode a path into its components
 }
 \description{
   Explode a viewport path or grob path into its components.

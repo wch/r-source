@@ -1,7 +1,7 @@
 #  File src/library/base/R/factor.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2020 The R Core Team
+#  Copyright (C) 1995-2022 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -144,8 +144,8 @@ as.logical.factor <- function(x,...) as.logical(levels(x))[x]
 as.list.factor <- function(x,...)
 {
     res <- vector("list", length(x))
-    for(i in seq_along(x)) res[[i]] <- x[i]
-    res
+    for(i in seq_along(x)) res[[i]] <- x[[i]]
+    if(is.null(names(x))) res else `names<-`(res, names(x))
 }
 
 ## for `factor' *and* `ordered' :
@@ -154,7 +154,7 @@ print.factor <- function (x, quote = FALSE, max.levels = NULL,
 {
     ord <- is.ordered(x)
     if (length(x) == 0L)
-        cat(if(ord)"ordered" else "factor", "(0)\n", sep = "")
+        cat(if(ord)"ordered" else "factor", "()\n", sep = "")
     else {
         xx <- character(length(x))
         xx[] <- as.character(x)
@@ -305,7 +305,7 @@ Ops.factor <- function(e1, e2)
 
 ## ordered factors ...
 
-ordered <- function(x, ...) factor(x, ..., ordered=TRUE)
+ordered <- function(x = character(), ...) factor(x, ..., ordered=TRUE)
 
 is.ordered <- function(x) inherits(x, "ordered")
 as.ordered <- function(x) if(is.ordered(x)) x else ordered(x)

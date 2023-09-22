@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-11-06 17:17\n"
+"POT-Creation-Date: 2023-07-31 14:59\n"
 "PO-Revision-Date: 2014-03-26 10:01+0200 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -24,6 +24,21 @@ msgstr " 'labels' と、位置 'at' は同じ長さでなければなりませ�
 
 msgid "logical 'label' supplied of length 0"
 msgstr " 長さ 0 の論理型 'label' が与えられました "
+
+#, fuzzy
+msgid "Invalid coordinates"
+msgstr " 不正な 'order' です "
+
+#, fuzzy
+msgid "Invalid grob coordinates"
+msgstr " 不正な grob 名です "
+
+#, fuzzy
+msgid "Invalid gTree coordinates"
+msgstr " 不正な \"gTree\" クラスです "
+
+msgid "Closed must not be a missing value"
+msgstr ""
 
 msgid "end points must not be identical"
 msgstr " 端点は同じであってはなりません "
@@ -93,6 +108,9 @@ msgstr ""
 
 msgid "'gamma' 'gpar' element is defunct"
 msgstr " 'gamma' 'gpar' 要素は廃止されました "
+
+msgid "'fill' gpar list components must all be patterns"
+msgstr ""
 
 msgid "invalid 'linemitre' value"
 msgstr " 'linemitre' の値が不正です "
@@ -275,9 +293,6 @@ msgstr " 不正な 'order' です "
 msgid "Invalid destination"
 msgstr " 不正な位置決め指定 (justification) です "
 
-msgid "Invalid compositing operator"
-msgstr ""
-
 msgid "Unknown group:"
 msgstr ""
 
@@ -333,6 +348,9 @@ msgstr " 不正なリスティング "
 msgid "invalid 'listing'"
 msgstr " 不正な 'listing' "
 
+msgid "Only a grob can be converted to a mask"
+msgstr ""
+
 msgid "invalid 'origin'"
 msgstr " 不正な 'origin' です "
 
@@ -361,7 +379,12 @@ msgstr ""
 msgid "Missing pattern fill has been set to transparent"
 msgstr ""
 
-msgid "Gradient fill applied to object with no inside"
+msgid ""
+"grob drawing produces more shapes than grob coords\n"
+"(recycling coords)"
+msgstr ""
+
+msgid "Pattern fill applied to object with no inside"
 msgstr ""
 
 msgid "'length' must be a 'unit' object"
@@ -443,11 +466,47 @@ msgstr " 'r' は 'units' オブジェクトでなければなりません "
 msgid "'x', 'y', 'width', and 'height' must have length 1"
 msgstr " 'x', 'y', 'width', 'height' は全て長さ 1 でなければなりません "
 
+#, fuzzy
+msgid "Invalid glyph info"
+msgstr " 不正な 'order' です "
+
+#, fuzzy
+msgid "'x' and 'y' must have length > 0"
+msgstr " 'x' と 'y' は長さ 1 でなければならない "
+
+msgid "'hjust' and 'vjust' must be glyphJust() values"
+msgstr ""
+
+#, fuzzy
+msgid "'hjust' and 'vjust' must have length 1"
+msgstr " 'x' と 'y' は長さ 1 でなければならない "
+
+msgid "Unknown width; using first width"
+msgstr ""
+
+#, fuzzy
+msgid "Unknown anchor; using left justification"
+msgstr " 不正な水平方向の位置決め指定 (justification) です "
+
+msgid "Unknown height; using first height"
+msgstr ""
+
+msgid "Unknown anchor; using bottom justification"
+msgstr ""
+
 msgid "'x' and 'units' must have length > 0"
 msgstr " 'x' と 'units' は 0 より大きい長さでなければなりません "
 
 msgid "invalid 'axis' or 'type'"
 msgstr " 不正な 'axis' または 'type' です "
+
+#, fuzzy
+msgid "'x' and 'y' must be units and 'device' must be logical"
+msgstr " 'x' と 'y' は 'units' オブジェクトで，同じ長さでなければなりません "
+
+#, fuzzy
+msgid "'w' and 'h' must be units and 'device' must be logical"
+msgstr " 'x' と 'y' は 'units' オブジェクトで，同じ長さでなければなりません "
 
 #, fuzzy
 msgid "Not a unit object"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-11-06 14:45\n"
+"POT-Creation-Date: 2023-07-31 14:59\n"
 "PO-Revision-Date: 2021-11-06 22:40+0100\n"
 "Last-Translator: Wei-Lun Chao <bluebat@member.fsf.org>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -142,9 +142,6 @@ msgid ""
 msgstr ""
 "檔案 '%s' 裡句法分析不正確：\n"
 "%s"
-
-msgid "declared S3 method '%s' not found"
-msgstr "找不到公布的 S3 方法 '%s'"
 
 msgid "cannot check R code installed as image"
 msgstr "因為影像安裝無法檢查 R 編碼"
@@ -293,6 +290,9 @@ msgstr "不允許有限制的使用授權元件："
 
 msgid "License components which are templates and need '+ file LICENSE':"
 msgstr "是範本且需要 '+ file LICENSE' 的使用授權元件："
+
+msgid "Uses ACM license: only appropriate for pre-2013 ACM TOMS code"
+msgstr ""
 
 msgid "Non-portable flags in variable '%s':"
 msgstr "變數 '%s' 裡有不可攜的標記："
@@ -458,11 +458,22 @@ msgstr "有重複名稱 '%s' 的 Rd 檔案："
 msgid "Rd files with duplicated alias '%s':"
 msgstr "Rd 檔案不能有重複的別名 '%s'："
 
+#, fuzzy
+msgid "Rd files without \\alias:"
+msgstr "Rd 檔案不能有重複的別名 '%s'："
+
+#, fuzzy
+msgid "Invalid package aliases in Rd file '%s':"
+msgstr "變數 '%s' 裡有不可攜的標記："
+
 msgid "Argument items with no description in Rd object '%s':"
 msgstr "Rd 物件 '%s' 裡存在沒有描述的引數："
 
 msgid "Auto-generated content requiring editing in Rd object '%s':"
 msgstr "在 Rd 物件 '%s' 裡自動產生的內容需要修改："
+
+msgid "Rd objects without \\description:"
+msgstr ""
 
 msgid "no Rd sections specified"
 msgstr "沒有指定 Rd 區段"
@@ -479,6 +490,9 @@ msgstr ""
 "\n"
 "%s\n"
 "在命名空間。"
+
+msgid "concordance is not valid"
+msgstr ""
 
 msgid "Rd object required"
 msgstr "需要 Rd 物件"
@@ -522,8 +536,17 @@ msgstr "Rd 巨集套件 %s 尚未安裝。"
 msgid "No Rd macros in package '%s'."
 msgstr "套件 '%s' 中沒有 Rd 巨集。"
 
+msgid "links not supported for 'standalone = FALSE' when _R_HELP_LINKS_TO_TOPICS_=false"
+msgstr ""
+
 msgid "more than one \\examples section, using the first"
 msgstr "多個\\example 段，取用第一段"
+
+msgid "alias:"
+msgstr ""
+
+msgid "is not one line"
+msgstr ""
 
 msgid "Converting Rd files to LaTeX ..."
 msgstr "把 Rd 檔案轉化成 LaTeX…"
@@ -593,6 +616,10 @@ msgstr "簡介 %s 覆寫以下的 %s 輸出經由簡介 %s：%s"
 #, fuzzy
 msgid "Detected vignette source files (%s) with shared names (%s) and therefore risking overwriting each other's output files"
 msgstr "簡介原始碼檔案 (%s) 偵測到分享的名稱 (%s) 因此可以冒險各個輸出檔案"
+
+#, fuzzy
+msgid "Note: skipping %s"
+msgstr "處理 %s "
 
 #, fuzzy
 msgid "Error: Vignette '%s' is non-ASCII but has no declared encoding"
@@ -733,9 +760,6 @@ msgstr "錯誤：R 的版本是 %s，需要的是版本為 %s %s 的 R"
 msgid "loading failed"
 msgstr "載入失敗"
 
-msgid "assertConditon: Successfully caught a condition"
-msgstr "assertConditon：成功擷取到條件"
-
 msgid "Got %s in evaluating %s; wanted %s"
 msgstr "求值 %2$s 時取得 %1$s；原本是要 %3$s"
 
@@ -745,14 +769,8 @@ msgstr "無法於求值 %2$s 時獲取 %1$s"
 msgid "Failed to get error in evaluating %s"
 msgstr "無法於求值 %s 時獲取錯誤"
 
-msgid "Asserted error: %s"
-msgstr "所主張的錯誤：%s"
-
 msgid "Got warning in evaluating %s, but also an error"
 msgstr "求值 %s 時取得警告，但同時也有錯誤"
-
-msgid "Asserted warning: %s"
-msgstr "所主張的警告：%s"
 
 msgid "Changes require specified 'style'"
 msgstr "改動需要特別 'style'"
@@ -826,6 +844,21 @@ msgstr "類別錯了"
 msgid "non-ASCII input in a CITATION file without a declared encoding"
 msgstr "CITATION 檔案沒有宣告編碼，但檔案裡出現了非 ASCII 的輸入"
 
+msgid "<p><code class='language-R'>%s</code> was run in the console.</p>"
+msgstr ""
+
+msgid "<p>To view output in the browser, the <a href='https://CRAN.R-project.org/package=knitr'>knitr</a> package must be installed.</p>"
+msgstr ""
+
+msgid "<p>To view output in the browser, the <a href='https://CRAN.R-project.org/package=knitr'>knitr</a> package must be installed and the environment variable <code>_R_HELP_ENABLE_ENHANCED_HTML_</code> must be set to TRUE.</p>"
+msgstr ""
+
+msgid "HTTPD-REQUEST %s%s"
+msgstr ""
+
+msgid "="
+msgstr ""
+
 msgid "No files in this directory"
 msgstr "目錄裡沒有任何檔案"
 
@@ -840,6 +873,9 @@ msgstr "程式碼展示"
 
 msgid "Help pages:"
 msgstr "說明頁面："
+
+msgid "HTTPD-ERROR %s %s"
+msgstr ""
 
 msgid "No package named %s could be found"
 msgstr "找不到叫 %s 的程式套件"
@@ -861,6 +897,16 @@ msgstr "程式套件 %s 裡沒有任何檔案"
 
 msgid "URL %s was not found"
 msgstr "找不到 %s 這個 URL"
+
+msgid "HTTPD-DEMO %s::%s"
+msgstr ""
+
+msgid "HTTPD-EXAMPLE %s::%s"
+msgstr ""
+
+#, fuzzy
+msgid "No NEWS found for package %s"
+msgstr "%s 的程式套件沒有求助檔案"
 
 msgid "Only help files, %s, %s and files under %s and %s in a package can be viewed"
 msgstr "能夠檢視的檔案限制於求助檔案，%s，%s 和 %s 下的檔案和程式套件 %s 裡的檔案"
@@ -888,6 +934,9 @@ msgstr "好了"
 
 msgid "failed to start the httpd server"
 msgstr "打不開 httpd 伺服器"
+
+msgid "* Package: %s"
+msgstr ""
 
 msgid "cannot read index information in file '%s'"
 msgstr "無法從檔案 '%s' 中讀取索引資訊"
@@ -945,6 +994,32 @@ msgstr ""
 msgid "staged installation is only possible with locking"
 msgstr ""
 
+msgid "WARNING: installation-time patches will not be applied, could not get the patches index"
+msgstr ""
+
+msgid "patch utility is needed for installation-time patching"
+msgstr ""
+
+msgid "NOTE: Skipping installation-time patch"
+msgstr ""
+
+#, fuzzy
+msgid "which seems to be already applied."
+msgstr "這看起來好像是梱綁軟體 -- 已經不存在了"
+
+msgid "WARNING: failed to apply patch"
+msgstr ""
+
+msgid "Applied installation-time patch"
+msgstr ""
+
+msgid "and saved it as"
+msgstr ""
+
+#, fuzzy
+msgid "in package installation"
+msgstr "套件版面設置無效"
+
 msgid "R include directory is empty -- perhaps need to install R-devel.rpm or similar"
 msgstr "R 包含目錄是空的 -- 也許您需要安裝 R-devel.rpm 或類似的程式套件"
 
@@ -983,6 +1058,27 @@ msgstr "錯誤：沒有在這個目錄裡安裝的許可"
 
 msgid "building a fake installation is disallowed"
 msgstr "不充許偽造安裝"
+
+msgid "using C compiler:"
+msgstr ""
+
+msgid "using Fortran compiler:"
+msgstr ""
+
+msgid "using C++ compiler:"
+msgstr ""
+
+msgid "using C++"
+msgstr ""
+
+msgid "using SDK:"
+msgstr ""
+
+msgid "WARNING: failed to revert patch"
+msgstr ""
+
+msgid "Reverted installation-time patch"
+msgstr ""
 
 msgid ""
 "See\n"
@@ -1043,7 +1139,10 @@ msgstr ""
 "文字塊 %s:\n"
 "%s"
 
-msgid "Cannot extract version info from the following section titles:"
+#, fuzzy
+msgid ""
+"Cannot extract version info from the following section titles:\n"
+"%s"
 msgstr "無法從下面的段標題找到關於版本的資訊"
 
 msgid ""
@@ -1113,6 +1212,12 @@ msgstr "找到了 %s, 可能是從 %s 來的"
 msgid "no native symbols were extracted"
 msgstr "沒有任何原生的符號被抽出"
 
+msgid "not a PDF file"
+msgstr ""
+
+msgid "'diff' is not available so useDiff = FALSE will be used"
+msgstr ""
+
 msgid "testing '%s' failed"
 msgstr "試用 '%s' 失敗了"
 
@@ -1155,10 +1260,15 @@ msgstr "找不到句法分析過的檔案"
 msgid "FAILED"
 msgstr "失敗"
 
+#, fuzzy
+msgid "directory %s is not writeable"
+msgstr "不存在 '%s' 這個檔案目錄"
+
 msgid "DIFFERED"
 msgstr "相異"
 
-msgid "running tests of random deviate generation -- fails occasionally"
+#, fuzzy
+msgid "running tests of random deviate generation (should no longer ever fail)"
 msgstr "執行隨機偏離檢驗 -- 偶爾會失敗"
 
 msgid "unknown header specification"
@@ -1268,6 +1378,9 @@ msgstr "缺少 'DESCRIPTION' 和 'DESCRIPTION.in' 這兩個檔案"
 msgid "invalid package layout"
 msgstr "套件版面設置無效"
 
+msgid "*not* using 'C' for LC_COLLATE locale"
+msgstr ""
+
 msgid "file '%s' is not in valid DCF format"
 msgstr "檔案 '%s' 不含正確的 DCF 格式"
 
@@ -1279,6 +1392,9 @@ msgstr "不明帶非 ASCII 資料的編碼: 轉換為 ASCII "
 
 msgid "cannot source package code:"
 msgstr "無法讀取套件來源編碼"
+
+msgid "inferior call failed"
+msgstr ""
 
 msgid "'text' must be a character vector"
 msgstr "'text' 必須是字元向量"
@@ -1337,8 +1453,7 @@ msgid_plural "Found .Internal calls in methods for the following S4 generics:"
 msgstr[0] "下面的 S4 泛型函式的方法呼叫了.Internal:"
 
 msgid "Found a .Internal call in methods for the following reference class:"
-msgid_plural ""
-"Found .Internal calls in methods for the following reference classes:"
+msgid_plural "Found .Internal calls in methods for the following reference classes:"
 msgstr[0] "下面的參照類別裡的方法呼叫了.Internal:"
 
 msgid "Found an obsolete/platform-specific call in the following function:"
@@ -1379,10 +1494,6 @@ msgstr[0] ""
 "Rd 檔案裡缺少或有空白的\\name 欄位\n"
 "%s"
 
-msgid "duplicated vignette title:"
-msgid_plural "duplicated vignette titles:"
-msgstr[0] ""
-
 msgid "SUMMARY: processing the following file failed:"
 msgid_plural "SUMMARY: processing the following files failed:"
 msgstr[0] ""
@@ -1415,6 +1526,18 @@ msgstr[0] "%d 項套件測試失敗"
 msgid "Corresponding BibTeX entry:"
 msgid_plural "Corresponding BibTeX entries:"
 msgstr[0] "相關的 BibTeX 條目："
+
+#~ msgid "declared S3 method '%s' not found"
+#~ msgstr "找不到公布的 S3 方法 '%s'"
+
+#~ msgid "assertConditon: Successfully caught a condition"
+#~ msgstr "assertConditon：成功擷取到條件"
+
+#~ msgid "Asserted error: %s"
+#~ msgstr "所主張的錯誤：%s"
+
+#~ msgid "Asserted warning: %s"
+#~ msgstr "所主張的警告：%s"
 
 #~ msgid "package %s exists but was not installed under R >= 2.10.0 so xrefs cannot be checked"
 #~ msgstr "%s 程式套件存在但沒有在 R >= 2.10.0 下安裝，因此無法對 xrefs 進行檢查"

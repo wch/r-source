@@ -31,7 +31,7 @@ save.image(file = ".RData", version = NULL, ascii = FALSE,
 \arguments{
   \item{\dots}{the names of the objects to be saved (as symbols or
     character strings).}
-  \item{list}{A character vector containing the names of objects to be
+  \item{list}{a character vector (or \code{\link{NULL}}) containing the names of objects to be
     saved.}
   \item{file}{a (writable binary-mode) \link{connection} or the name of the
     file where the data will be saved (when \link{tilde expansion}

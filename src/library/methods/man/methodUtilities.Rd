@@ -25,15 +25,18 @@
   (e.g., element matching by name), or add compatibility with S-Plus, or both.
 }
 \usage{
-functionBody(fun=sys.function(sys.parent()))
+functionBody(fun = sys.function(sys.parent()))
+functionBody(fun, envir = environment(fun)) <- value
 
 allNames(x)
 
-getFunction(name, generic=TRUE, mustFind=TRUE, where)
+existsFunction(f, generic = TRUE, where = topenv(parent.frame()))
+getFunction(name, generic = TRUE, mustFind = TRUE, where)
 
 el(object, where)
 
-elNamed(x, name, mustFind=FALSE)
+elNamed(x, name, mustFind = FALSE)
+elNamed(x, name) <- value
 
 formalArgs(def)
 

@@ -1,7 +1,7 @@
 /*
  *  A simple 'reading' pipe (and a command executor)
  *  Copyright (C) 1999  Guido Masarotto
- *            (C) 2004-2019  The R Core Team
+ *            (C) 2004-2023  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -48,12 +48,12 @@ int runcmd(const char *cmd, cetype_t enc, int wait, int visible,
 
 int runcmd_timeout(const char *cmd, cetype_t enc, int wait, int visible, 
                    const char *fin, const char *fout, const char *ferr,
-                   int timeout, int *timedout);
+                   int timeout, int *timedout, int consignals);
 
 rpipe *rpipeOpen(const char *cmd, cetype_t enc, int visible, 
 		 const char *finput, int io,
 		 const char *fout, const char *ferr,
-		 int timeout);
+		 int timeout, int console);
 char  *rpipeGets(rpipe *r, char *buf, int len);
 int rpipeGetc(rpipe *r);
 int rpipeClose(rpipe *r, int *timedout);

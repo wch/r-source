@@ -1,6 +1,6 @@
 % File src/library/tools/man/showNonASCII.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2008-11 R Core Team
+% Copyright 2008-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{showNonASCII}
@@ -34,7 +34,7 @@ showNonASCIIfile(file)
 }
 \examples{
 out <- c(
-"fa\xE7ile test of showNonASCII():",
+"fran\xE7ais: test of showNonASCII():",
 "\\\\details{",
 "   This is a good line",
 "   This has an \xfcmlaut in it.",

@@ -1,6 +1,6 @@
 % File src/library/base/man/ns-load.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2021 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{ns-load}
@@ -36,8 +36,8 @@ isNamespaceLoaded(name)
   \item{package}{string naming the package/name space to load.}
   \item{lib.loc}{character vector specifying library search path (the location
     of \R library trees to search through.}
-  \item{keep.source}{Now ignored except during package installation.}
-  \item{keep.parse.data}{Ignored except during package installation.}
+  \item{keep.source}{now ignored except during package installation.}
+  \item{keep.parse.data}{ignored except during package installation.}
   \item{partial}{logical; if true, stop just after loading code.}
   \item{versionCheck}{\code{NULL} or a version specification (a list
     with components \code{op} and \code{version}).}
@@ -145,7 +145,7 @@ isNamespaceLoaded(name)
 hasS <- isNamespaceLoaded("splines") # (to restore if needed)
 Sns <- asNamespace("splines") # loads it if not already
 stopifnot(   isNamespaceLoaded("splines"))
-unloadNamespace(Sns) # unloading the NS 'object'
+if (is.null(try(unloadNamespace(Sns)))) # try unloading the NS 'object'
 stopifnot( ! isNamespaceLoaded("splines"))
 if (hasS) loadNamespace("splines") # (restoring previous state)
 }

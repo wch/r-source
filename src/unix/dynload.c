@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995-1996 Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997-2021 The R Core Team
+ *  Copyright (C) 1997-2023 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -48,12 +48,13 @@ static void *loadLibrary(const char *path, int asLocal, int now,
 			 const char *search);
 static void closeLibrary(void *handle);
 static DL_FUNC R_local_dlsym(DllInfo *info, char const *name);
-static void getFullDLLPath(SEXP call, char *buf, const char *path);
+static size_t getFullDLLPath(SEXP call, char *buf, size_t bufsize,
+                             const char *path);
 static void getSystemError(char *buf, int len);
 
 static int computeDLOpenFlag(int asLocal, int now);
 
-void attribute_hidden InitFunctionHashing()
+attribute_hidden void InitFunctionHashing(void)
 {
     R_osDynSymbol->loadLibrary = loadLibrary;
     R_osDynSymbol->dlsym = R_local_dlsym;
@@ -190,20 +191,37 @@ static DL_FUNC R_local_dlsym(DllInfo *info, char const *name)
  */
 
 
-
-static void getFullDLLPath(SEXP call, char *buf, const char *path)
+/* Retuns the number of bytes (excluding the terminator) needed in buf.
+   When bufsize is at least that + 1, buf contains the result
+   with terminator. */
+static size_t
+getFullDLLPath(SEXP call, char *buf, size_t bufsize, const char *path)
 {
-    if(path[0] == '~')
-	strcpy(buf, R_ExpandFileName(path));
-    else if(path[0] != '/') {
+    size_t needed = 0;
+
+    if(path[0] == '~') {
+	const char *expanded = R_ExpandFileName(path);
+	needed = strlen(expanded);
+	if (bufsize >= needed + 1)
+	    strcpy(buf, expanded);
+    } else if(path[0] != '/') {
 #ifdef HAVE_GETCWD
-	if(!getcwd(buf, PATH_MAX))
+	if(!getcwd(buf, bufsize))
 #endif
+	    /* NOTE: also when bufsize is small */
 	    errorcall(call, _("cannot get working directory!"));
-	strcat(buf, "/");
-	strcat(buf, path);
+	needed = strlen(buf) + 1 + strlen(path);
+	if (bufsize >= needed + 1) {
+	    strcat(buf, "/");
+	    strcat(buf, path);
+	}
     }
-    else strcpy(buf, path);
+    else {
+	needed = strlen(path);
+	if (bufsize >= needed + 1) 
+	    strcpy(buf, path);
+    }
+    return needed;
 }
 
 #endif /* end of `ifdef HAVE_DYNAMIC_LOADING' */

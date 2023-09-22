@@ -22,11 +22,11 @@ SOURCES_C = \
 	dcf.c datetime.c debug.c deparse.c devices.c \
 	dotcode.c dounzip.c dstruct.c duplicate.c \
 	edit.c engine.c envir.c errors.c eval.c \
-	format.c \
+	flexiblas.c format.c \
 	gevents.c gram.c gram-ex.c graphics.c grep.c \
 	identical.c inlined.c inspect.c internet.c iosupport.c \
 	lapack.c list.c localecharset.c logic.c \
-	main.c mapply.c mask.c match.c memory.c \
+	machine.c main.c mapply.c mask.c match.c memory.c \
 	names.c \
 	objects.c options.c \
 	paste.c patterns.c platform.c plot.c plot3d.c plotmath.c \
@@ -84,6 +84,7 @@ ALL_CPPFLAGS = $(TRE_CPPFLAGS) $(XDR_CPPFLAGS) $(R_XTRA_CPPFLAGS) \
   $(CURL_CPPFLAGS) $(CPPFLAGS) -I$(top_srcdir)/src/nmath $(DEFS)
 @WANT_R_SHLIB_TRUE@ALL_CFLAGS = $(ALL_CFLAGS_LO)
 @WANT_R_SHLIB_TRUE@ALL_FFLAGS = $(ALL_FFLAGS_LO)
+@WANT_R_SHLIB_FALSE@ALL_FFLAGS = $(ALL_FFLAGS_PIE)
 
 
 ## use an explicit library: there might be an unsatisfactory -lintl around
@@ -97,7 +98,7 @@ MAIN_OBJS = `ls ../unix/*.o ../appl/*.o ../nmath/*.o`
 EXTRA_STATIC_LIBS = $(R_TRE) $(R_XDR) $(R_LIBINTL) $(R_TZONE)
 STATIC_LIBS = $(MAIN_LIBS) $(EXTRA_STATIC_LIBS)
 
-EXTRA_LIBS = $(BLAS_LIBS) $(FLIBS) @R_XTRA_LIBS@ @LIBINTL@ $(READLINE_LIBS) $(LIBS)
+EXTRA_LIBS = $(BLAS_LIBS) $(FLIBS) @R_XTRA_LIBS@ @LIBINTL@ $(READLINE_LIBS) $(LIBS) @BUILD_NEW_ACCELERATE_TRUE@ -framework Accelerate
 
 R_binary = R.bin
 R_bin_OBJECTS = Rmain.o @WANT_R_SHLIB_FALSE@$(OBJECTS)
@@ -169,9 +170,7 @@ $(top_builddir)/etc/R.exp: $(OBJECTS) $(MAIN_LIBS)
 $(MAIN_LIBS):
 	(cd $(@D); $(MAKE) $(@F))
 
-../extra/bzip2/libbz2.a ../extra/pcre/libpcre.a ../extra/pcre/libtre.a\
-  ../extra/xdr/libxdr.a ../extra/zlib/libz.a ../extra/xz/liblzma.a \
-  ../extra/intl/libintl.a:
+../extra/intl/libintl.a:
 	(cd $(@D); $(MAKE))
 
 

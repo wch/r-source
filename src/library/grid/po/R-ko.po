@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-11-06 17:17\n"
+"POT-Creation-Date: 2023-07-31 14:59\n"
 "PO-Revision-Date: 2018-04-09 12:06-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team: \n"
@@ -28,6 +28,21 @@ msgid "'labels' and 'at' locations must have same length"
 msgstr "'labels'과 'at'는 반드시 같은 길이를 가져야 합니다"
 
 msgid "logical 'label' supplied of length 0"
+msgstr ""
+
+#, fuzzy
+msgid "Invalid coordinates"
+msgstr "유효하지 않은 'order'입니다"
+
+#, fuzzy
+msgid "Invalid grob coordinates"
+msgstr "유효하지 않은 'grob' 클래스입니다"
+
+#, fuzzy
+msgid "Invalid gTree coordinates"
+msgstr "유효하지 않은 \"gTree\" 클래스 입니다"
+
+msgid "Closed must not be a missing value"
 msgstr ""
 
 msgid "end points must not be identical"
@@ -98,6 +113,9 @@ msgstr ""
 
 msgid "'gamma' 'gpar' element is defunct"
 msgstr "'gamma' 'gpar' 요소는 더이상 지원되지 않습니다"
+
+msgid "'fill' gpar list components must all be patterns"
+msgstr ""
 
 msgid "invalid 'linemitre' value"
 msgstr "유효하지 않은 'linemitre' 값입니다"
@@ -280,9 +298,6 @@ msgstr "유효하지 않은 'order'입니다"
 msgid "Invalid destination"
 msgstr "유효하지 않은 'edit'정보입니다"
 
-msgid "Invalid compositing operator"
-msgstr ""
-
 msgid "Unknown group:"
 msgstr ""
 
@@ -338,6 +353,9 @@ msgstr "유효하지 않은 listing입니다"
 msgid "invalid 'listing'"
 msgstr "유효하지 않은 'listing'입니다"
 
+msgid "Only a grob can be converted to a mask"
+msgstr ""
+
 msgid "invalid 'origin'"
 msgstr "유효하지 않은 'origin'입니다"
 
@@ -365,7 +383,12 @@ msgstr ""
 msgid "Missing pattern fill has been set to transparent"
 msgstr ""
 
-msgid "Gradient fill applied to object with no inside"
+msgid ""
+"grob drawing produces more shapes than grob coords\n"
+"(recycling coords)"
+msgstr ""
+
+msgid "Pattern fill applied to object with no inside"
 msgstr ""
 
 msgid "'length' must be a 'unit' object"
@@ -447,11 +470,46 @@ msgstr "'r'은 반드시 'unit'객체이어야 합니다"
 msgid "'x', 'y', 'width', and 'height' must have length 1"
 msgstr "'x', 'y', 'width', 그리고 'height'는 반드시 길이가 1 이어야 합니다"
 
+#, fuzzy
+msgid "Invalid glyph info"
+msgstr "유효하지 않은 'order'입니다"
+
+#, fuzzy
+msgid "'x' and 'y' must have length > 0"
+msgstr "'x'와 'y'느느 반드시 길이 1을 가져야 합니다"
+
+msgid "'hjust' and 'vjust' must be glyphJust() values"
+msgstr ""
+
+#, fuzzy
+msgid "'hjust' and 'vjust' must have length 1"
+msgstr "'x'와 'y'느느 반드시 길이 1을 가져야 합니다"
+
+msgid "Unknown width; using first width"
+msgstr ""
+
+msgid "Unknown anchor; using left justification"
+msgstr ""
+
+msgid "Unknown height; using first height"
+msgstr ""
+
+msgid "Unknown anchor; using bottom justification"
+msgstr ""
+
 msgid "'x' and 'units' must have length > 0"
 msgstr "'x'와 'units'은 반드시 길이가 0보다 커야 합니다"
 
 msgid "invalid 'axis' or 'type'"
 msgstr "유효하지 않은 'axis' 또는 'type'입니다"
+
+#, fuzzy
+msgid "'x' and 'y' must be units and 'device' must be logical"
+msgstr "'x'와 'y'는 반드시 'unit' 객체이어야 하며 같은 길이를 가져야 합니다"
+
+#, fuzzy
+msgid "'w' and 'h' must be units and 'device' must be logical"
+msgstr "'x'와 'y'는 반드시 'unit' 객체이어야 하며 같은 길이를 가져야 합니다"
 
 #, fuzzy
 msgid "Not a unit object"

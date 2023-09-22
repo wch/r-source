@@ -27,7 +27,7 @@ md5sum(files)
   mode (almost always text mode where there is more than one).
 
   MD5 sums are used as a check that \R packages have been unpacked
-  correctly and not subsequently modified.
+  correctly and not subsequently accidentally modified.
 }
 \value{
   A character vector of the same length as \code{files}, with names

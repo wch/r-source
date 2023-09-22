@@ -1,6 +1,6 @@
 % File src/library/stats/man/model.extract.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2021 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{model.extract}
@@ -16,10 +16,10 @@ model.weights(x)
 \alias{model.response}
 \alias{model.weights}
 \arguments{
- \item{frame, x, data}{A model frame.}
- \item{component}{literal character string or name. The name of a
-   component to extract, such as \code{"weights"}, \code{"subset"}.}
- \item{type}{One of \code{"any"}, \code{"numeric"}, \code{"double"}.
+ \item{frame, x, data}{a model frame, see \code{\link{model.frame}}.}
+ \item{component}{literal character string or name.  The name of a
+   component to extract, such as \code{"weights"} or \code{"subset"}.}
+ \item{type}{One of \code{"any"}, \code{"numeric"} or \code{"double"}.
    Using either of latter two coerces the result to have storage mode
    \code{"double"}.}
 }
@@ -46,6 +46,8 @@ model.weights(x)
 \value{The specified component of the model frame, usually a vector.
   \code{model.response()} now \emph{drops} a possible \code{"Asis"} class
   (stemming from \code{\link{I}(.)}).
+
+  \code{model.offset} returns \code{NULL} if no offset was specified.
 }
 
 \seealso{\code{\link{model.frame}}, \code{\link{offset}}}

@@ -1,6 +1,6 @@
 % File src/library/utils/man/hashtab.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2009-2021 R Core Team
+% Copyright 2009-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{hashtab}
@@ -118,16 +118,16 @@ is.hashtab(x)
   exceptions:
 
   \itemize{
-    \item{Closure environments are not ignored when comparing closures.
+    \item Closure environments are not ignored when comparing closures.
       This corresponds to calling \code{\link{identical}()} with
       \code{ignore.environment = FALSE}, which is the default for
-      \code{\link{identical}()}.}
+      \code{\link{identical}()}.
 
-    \item{External pointer objects are compared as reference objects,
+    \item External pointer objects are compared as reference objects,
       corresponding to calling \code{\link{identical}()} with
       \code{extptr.as.ref = TRUE}. This ensures that hash tables with
       keys containing external pointers behave reasonably when
-      serialized and unserialized.}
+      serialized and unserialized.
   }
 
   As an experimental feature, the element operator \code{[[} can also be
@@ -139,7 +139,9 @@ is.hashtab(x)
 \examples{
 ## Create a new empty hash table.
 h1 <- hashtab()
+## IGNORE_RDIFF_BEGIN
 h1
+## IGNORE_RDIFF_END
 
 ## Add some key/value pairs.
 sethash(h1, NULL, 1)
@@ -175,7 +177,9 @@ identical(h1, h2)
 ## set in one, see in the "other"  <==> really one object with 2 names
 sethash(h2, NULL, 77)
 gethash(h1, NULL)
+## IGNORE_RDIFF_BEGIN
 str(h1)
+## IGNORE_RDIFF_END
 
 ## An example of using  maphash():  get all hashkeys of a hash table:
 hashkeys <- function(h) {

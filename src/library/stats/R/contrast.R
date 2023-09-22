@@ -50,7 +50,7 @@ contrasts <- function (x, contrasts = TRUE, sparse = FALSE)
 	stop("contrasts apply only to factors")
     if(nlevels(x) < 2L)
         stop("contrasts can be applied only to factors with 2 or more levels")
-    if(is.function(value)) value <- value(nlevels(x))
+    if(is.function(value)) value <- value(levels(x))
     if((is.n <- is.numeric(value)) ||
         (isS4(value) && methods::is(value, "Matrix"))) {
 	## also work for "sparseMatrix"

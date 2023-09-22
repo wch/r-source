@@ -100,7 +100,7 @@ all.equal.numeric <-
     function(target, current, tolerance = sqrt(.Machine$double.eps),
              scale = NULL, countEQ = FALSE,
              formatFUN = function(err, what) format(err),
-             ..., check.attributes = TRUE)
+             ..., check.attributes = TRUE, giveErr = FALSE)
 {
     if (!is.numeric(tolerance))
         stop("'tolerance' should be numeric")
@@ -170,7 +170,8 @@ all.equal.numeric <-
     if(is.na(xy) || xy > tolerance)
         msg <- c(msg, paste("Mean", what, "difference:", formatFUN(xy, what)))
 
-    if(is.null(msg)) TRUE else msg
+    r <- if(is.null(msg)) TRUE else msg
+    if(giveErr) structure(r, err = xy, what = what) else r
 }
 
 all.equal.character <-
@@ -501,15 +502,15 @@ all.equal.POSIXt <- function(target, current, ..., tolerance = 1e-3, scale,
         return("'target' is not a POSIXt")
     if(!inherits(current, "POSIXt"))
         return("'current' is not a POSIXt")
-    target <- as.POSIXct(target)
+    target  <- as.POSIXct(target)
     current <- as.POSIXct(current)
     msg <- NULL
     if(check.tzone) {
-        ## See check_tzones():
+        ## See .check_tzones():
         tz <- function(dt) {
             if(is.null(tz <- attr(dt, "tzone"))) "" else tz[1L]
         }
-        ## FIXME: check_tzones() ignores differences with "" as time zone,
+        ## FIXME: .check_tzones() ignores differences with "" as time zone,
         ## regardless of whether that other time zone is the current one.
         ## However, this code does not handle "" at all, so that it is
         ## treated as "inconsistent" even with the current time zone,

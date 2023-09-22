@@ -6,7 +6,6 @@
 \name{kronecker}
 
 \alias{kronecker}
-\alias{.kronecker} % an internal version.
 \alias{\%x\%}
 
 \title{Kronecker Products on Arrays}
@@ -23,10 +22,10 @@ X \%x\% Y
 }
 
 \arguments{
- \item{X}{A vector or array.}
- \item{Y}{A vector or array.}
+ \item{X}{a vector or array.}
+ \item{Y}{a vector or array.}
  \item{FUN}{a function; it may be a quoted string.}
- \item{make.dimnames}{Provide dimnames that are the product of the
+ \item{make.dimnames}{logical: provide dimnames that are the product of the
    dimnames of \code{X} and \code{Y}.}
  \item{\dots}{optional arguments to be passed to \code{FUN}.}
 }

@@ -1,7 +1,7 @@
 #  File src/library/tools/R/RdHelpers.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 2019-2021 The R Core Team
+#  Copyright (C) 2019-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -15,6 +15,12 @@
 #
 #  A copy of the GNU General Public License is available at
 #  https://www.R-project.org/Licenses/
+
+Rd_escape_specials <-
+function(x)
+{
+    gsub("([%{}\\])", "\\\\\\1", x)
+}
 
 Rd_expr_PR <-
 function(x)
@@ -36,9 +42,10 @@ Rd_package_title <-
 function(pkg, dir = Rd_macros_package_dir())
 {
     desc <- .read_description(file.path(dir, "DESCRIPTION"))
+    
     if (pkg != desc["Package"])
     	stop(gettextf("DESCRIPTION file is for package '%s', not '%s'", desc["Package"], pkg))
-    desc["Title"]
+    Rd_escape_specials(desc["Title"])
 }
 
 Rd_package_description <-
@@ -47,7 +54,7 @@ function(pkg, dir = Rd_macros_package_dir())
     desc <- .read_description(file.path(dir, "DESCRIPTION"))
     if (pkg != desc["Package"])
     	stop(gettextf("DESCRIPTION file is for package '%s', not '%s'", desc["Package"], pkg))
-    desc["Description"]
+    Rd_escape_specials(desc["Description"])
 }
 
 Rd_package_author <-
@@ -56,7 +63,8 @@ function(pkg, dir = Rd_macros_package_dir())
     desc <- .read_description(file.path(dir, "DESCRIPTION"))
     if (pkg != desc["Package"])
     	stop(gettextf("DESCRIPTION file is for package '%s', not '%s'", desc["Package"], pkg))
-    desc["Author"]
+    desc <- c(desc, .expand_package_description_db_R_fields(desc))
+    Rd_escape_specials(desc["Author"])
 }
 
 Rd_package_maintainer <-
@@ -65,7 +73,8 @@ function(pkg, dir = Rd_macros_package_dir())
     desc <- .read_description(file.path(dir, "DESCRIPTION"))
     if (pkg != desc["Package"])
     	stop(gettextf("DESCRIPTION file is for package '%s', not '%s'", desc["Package"], pkg))
-    desc["Maintainer"]
+    desc <- c(desc, .expand_package_description_db_R_fields(desc))
+    Rd_escape_specials(desc["Maintainer"])
 }
 
 Rd_package_DESCRIPTION <-
@@ -81,7 +90,7 @@ function(pkg, lib.loc = Sys.getenv("R_BUILD_TEMPLIB"))
 	if (pkg != desc[["Package"]])
 	    stop(gettextf("DESCRIPTION file is for package '%s', not '%s'", desc["Package"], pkg))
 	desc <- desc[names(desc) != "Built"] # Probably a stale value
-	tabular(paste0(names(desc), ":"), unlist(desc))
+	tabular(paste0(names(desc), ":"), Rd_escape_specials(unlist(desc)))
     }
 }
 
@@ -100,9 +109,11 @@ function(pkg, lib.loc = Sys.getenv("R_BUILD_TEMPLIB"))
 	result <- NULL
 	# FIXME:  these indices should contain links...
 	if (!is.null(info$info[[2L]]))
+	    ## this is readLines(system.file("INDEX", package = pkg, lib.loc = lib.loc))
 	    result <- c("", "Index of help topics:", "\\preformatted{",
 				  info$info[[2L]], "}")
 	if (!is.null(info$info[[3L]]))
+	    ## FIXME: unreachable in build stage as vignettes get only built after partial.rdb
 	    result <- c(result, "",
 			"Further information is available in the following vignettes:\\cr\\cr",
 			tabular(paste0("\\code{", info$info[[3L]][,1], "}"),
@@ -117,17 +128,19 @@ function(x)
     ## Be nice ...
     x <- .canonicalize_doi(x)
 
+    u <- Rd_escape_specials(urlify_doi(x))
+    x <- Rd_escape_specials(x)
     ## Poor person's way to allow LaTeX to break lines at slashes and
     ## dashes:
-    y <- gsub("/", "\\out{\\slash{}}", fixed=TRUE,
-              gsub("-", "\\out{\\-}", x, fixed=TRUE))
+    y <- gsub("/", "\\out{\\slash{}}", fixed = TRUE,
+              gsub("-", "\\out{\\-}", x, fixed = TRUE))
 
     sprintf("\\ifelse{text}{%s}{\\ifelse{latex}{%s}{%s}}",
-            sprintf("doi: %s (URL: https://doi.org/%s)",
-                    x, x),
-            sprintf("doi:\\out{\\nobreakspace{}}\\href{https://doi.org/%s}{%s}",
-                    x, y),
-            sprintf("doi: \\href{https://doi.org/%s}{%s}",
-                    x, x)
+            sprintf("doi:%s <https://doi.org/%s>",  # same format as showURLs=TRUE
+                    x, u),
+            sprintf("\\href{https://doi.org/%s}{doi:%s}",
+                    u, y),
+            sprintf("\\href{https://doi.org/%s}{doi:%s}",
+                    u, x)
             )
 }

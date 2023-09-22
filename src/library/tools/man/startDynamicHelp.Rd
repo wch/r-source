@@ -22,7 +22,7 @@ startDynamicHelp(start = TRUE)
 }
 \details{
   This function starts the internal HTTP server, which runs on the
-  loopback interface (\code{127.0.0.1}).  If \code{options("help.ports")}
+  loopback interface (\samp{127.0.0.1}).  If \code{options("help.ports")}
   is set to a vector of non-zero integer values, \code{startDynamicHelp} will try
   those ports in order; otherwise, it tries up to 10 random ports to
   find one not in use.  It can be disabled by setting the environment
@@ -43,7 +43,7 @@ startDynamicHelp(start = TRUE)
   The browser in use does need to be able to connect to the loopback
   interface: occasionally it is set to use a proxy for HTTP on all
   interfaces, which will not work -- the solution is to add an exception
-  for \code{127.0.0.1}.
+  for \samp{127.0.0.1}.
 }
 \value{
   The chosen port number is returned invisibly (which will be \code{0}

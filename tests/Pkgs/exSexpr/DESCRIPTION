@@ -2,8 +2,9 @@ Package: exSexpr
 Version: 1.1
 Title: Sexpr Bug Demo
 Description: Just a container for a bug demo.
-Author: Duncan Murdoch
-Maintainer: Duncan Murdoch <dmurdoch@abc.def>
+Authors@R: c(
+  person("Duncan", "Murdoch", role = "aut"),
+  person("R Core Team", role = c("aut", "cre"),
+         email = "R-core@almost.r-project.org")
+  )
 License: GPL-2
-
-

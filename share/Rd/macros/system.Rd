@@ -44,7 +44,7 @@
 \newcommand{\packageIndices}{\Sexpr[results=rd,stage=build]{tools:::Rd_package_indices("#1")}}
 
 % To indicate a DOI.
-\newcommand{\doi}{\Sexpr[results=rd,stage=build]{tools:::Rd_expr_doi("#1")}}
+\newcommand{\doi}{\Sexpr[results=rd]{tools:::Rd_expr_doi("#1")}}
 
 % To indicate LaTeX.
 \newcommand{\LaTeX}{\ifelse{latex}{\out{{\LaTeX}}}{LaTeX}}

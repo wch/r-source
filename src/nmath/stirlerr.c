@@ -4,7 +4,7 @@
  *    October 23, 2000.
  *
  *  Merge in to R:
- *	Copyright (C) 2000, The R Core Team
+ *	Copyright (C) 2000-2021, The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -41,8 +41,9 @@
  *             = log Gamma(n+1) - (n + 1/2) * log(n) + n - log(2*pi)/2
  *
  * see also lgammacor() in ./lgammacor.c  which computes almost the same!
+ *
+ * NB: stirlerr(n/2) is called from dt() *and* gamma(n/2) when n is integer and n/2 <= 50
  */
-
 double attribute_hidden stirlerr(double n)
 {
 
@@ -53,7 +54,7 @@ double attribute_hidden stirlerr(double n)
 #define S4 0.0008417508417508417508417508/* 1/1188 */
 
 /*
-  error for 0, 0.5, 1.0, 1.5, ..., 14.5, 15.0.
+  exact values for 0, 0.5, 1.0, 1.5, ..., 14.5, 15.0.
 */
     const static double sferr_halves[31] = {
 	0.0, /* n=0 - wrong, place holder only */

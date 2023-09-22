@@ -1432,7 +1432,7 @@ widthDetails.text <- function(x) {
                       x$x, x$y,
                       resolveHJust(x$just, x$hjust),
                       resolveVJust(x$just, x$vjust),
-                      x$rot, 0)
+                      x$rot, as.numeric(NA))
   if (is.null(bounds))
     unit(0, "inches")
   else
@@ -1444,7 +1444,7 @@ heightDetails.text <- function(x) {
                       x$x, x$y,
                       resolveHJust(x$just, x$hjust),
                       resolveVJust(x$just, x$vjust),
-                      x$rot, 0)
+                      x$rot, as.numeric(NA))
   if (is.null(bounds))
     unit(0, "inches")
   else

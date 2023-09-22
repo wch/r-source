@@ -15,7 +15,7 @@
 #  https://www.R-project.org/Licenses/
 
 # Statlib code by John Chambers, Bell Labs, 1994
-# Changes Copyright (C) 1998-2021 The R Core Team
+# Changes Copyright (C) 1998-2023 The R Core Team
 
 
 ## As from R 2.4.0, row.names can be either character or integer.
@@ -181,10 +181,18 @@ as.data.frame <- function(x, row.names = NULL, optional = FALSE, ...)
     UseMethod("as.data.frame")
 }
 
-as.data.frame.default <- function(x, ...)
+as.data.frame.default <- function(x, ...) {
+    isVectorLike <- function(x) {
+        (is.atomic(x) && !is.null(x)) ##  # <== should be new  is.atomic(x) (!)
+        ## || (is.vector(x) && !is.object(x))
+    }
+    if(isVectorLike(x))
+        as.data.frame.vector(x, ...)
+    else
     stop(gettextf("cannot coerce class %s to a data.frame",
                   sQuote(deparse(class(x))[1L])),
          domain = NA)
+}
 
 ###  Here are methods ensuring that the arguments to "data.frame"
 ###  are in a form suitable for combining into a data frame.
@@ -243,23 +251,15 @@ as.data.frame.vector <- function(x, row.names = NULL, optional = FALSE, ...,
 {
     force(nm)
     nrows <- length(x)
-    ## ## row.names -- for now warn about and "forget" illegal row.names
-    ## ##           -- can simplify much (move this *after* the is.null(.) case) once we stop() !
-### FIXME: allow  integer [of full length]
-    if(!(is.null(row.names) || (is.character(row.names) && length(row.names) == nrows))) {
-	warning(gettextf(
-	    "'row.names' is not a character vector of length %d -- omitting it. Will be an error!",
-	    nrows), domain = NA)
-	row.names <- NULL
-    }
     if(is.null(row.names)) {
 	if (nrows == 0L)
 	    row.names <- character()
 	else if(length(row.names <- names(x)) != nrows || anyDuplicated(row.names))
 	    row.names <- .set_row_names(nrows)
     }
-    ## else if(length(row.names) != nrows) # same behavior as the 'matrix' method
-    ##     row.names <- .set_row_names(nrows)
+    else if(!(is.character(row.names) || is.integer(row.names)) || length(row.names) != nrows)
+	stop(gettextf("'row.names' is not a character or integer vector of length %d", nrows),
+             domain = NA)
     if(!is.null(names(x))) names(x) <- NULL # remove names as from 2.0.0
     value <- list(x)
     if(!optional) names(value) <- nm
@@ -283,15 +283,6 @@ as.data.frame.numeric <- as.data.frame.vector
 as.data.frame.complex <- as.data.frame.vector
 
 
-default.stringsAsFactors <- function()
-{
-    val <- getOption("stringsAsFactors")
-    if(is.null(val)) val <- FALSE
-    if(!is.logical(val) || is.na(val) || length(val) != 1L)
-        stop('options("stringsAsFactors") not set to TRUE or FALSE')
-    val
-}
-
 ## in case someone passes 'nm'
 as.data.frame.character <-
     function(x, ..., stringsAsFactors = FALSE)
@@ -311,8 +302,6 @@ as.data.frame.matrix <- function(x, row.names = NULL, optional = FALSE, make.nam
     ncols <- d[[2L]]
     ic <- seq_len(ncols)
     dn <- dimnames(x)
-    ## surely it cannot be right to override the supplied row.names?
-    ## changed in 1.8.0
     if(is.null(row.names)) row.names <- dn[[1L]]
     collabs <- dn[[2L]]
     ## These might be NA
@@ -1063,12 +1052,7 @@ data.frame <-
             }
 	}
     else if(p > 0L)
-      for(jjj in p:1L) { # we might delete columns with NULL
-        ## ... and for that reason, we'd better ensure that jseq is increasing!
-        o <- order(jseq)
-        jseq <- jseq[o]
-        jvseq <- jvseq[o]
-
+      for(jjj in order(jseq)[p:1L]) { # we might delete columns with NULL
         jj <- jseq[jjj]
         v <- value[[ jvseq[[jjj]] ]]
         ## This is consistent with the have.i case rather than with
@@ -1448,11 +1432,16 @@ rbind.data.frame <- function(..., deparse.level = 1, make.row.names = TRUE,
         }
     }
 
-    for(i in seq_len(n)) { ## add arg [[i]] to result
+    for(i in seq_len(n)) { ## add arg [[i]] to result  (part 2)
 	xi <- unclass(allargs[[i]])
 	if(!is.list(xi))
-	    if(length(xi) != nvar)
-		xi <- rep(xi, length.out = nvar)
+	    if((ni <- length(xi)) != nvar) {
+		if(ni && nvar %% ni != 0)
+		    warning(gettextf(
+		"number of columns of result, %d, is not a multiple of vector length %d of arg %d",
+                		nvar, ni, i), domain = NA)
+		xi <- rep_len(xi, nvar)
+            }
 	ri <- rows[[i]]
 	pi <- perm[[i]]
 	if(is.null(pi)) pi <- pseq
@@ -1708,13 +1697,7 @@ Summary.data.frame <- function(..., na.rm)
 }
 
 xtfrm.data.frame <- function(x) {
-    if(tolower(Sys.getenv("_R_STOP_ON_XTFRM_DATA_FRAME_")) %in%
-       c("1", "yes", "true"))
-        stop("cannot xtfrm data frames")
-    else {
-        warning("cannot xtfrm data frames")
-        NextMethod("xtfrm")
-    }
+    stop("cannot xtfrm data frames")
 }
 
 list2DF <-

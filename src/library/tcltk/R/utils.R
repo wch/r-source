@@ -196,7 +196,15 @@ tk_choose.files <-
         fff <- paste0("{", ff, "}")
         args <- c(args, filetypes = paste(fff, collapse = " "))
     }
-    as.character(do.call(tcl, args))
+    ## Be careful here: If multi is FALSE, tk_getOpenFile() returns a single unquoted string
+    ## which is interpreted as a list by as.character() if it contains spaces.
+    res <- do.call(tcl, args)
+    if (multi)
+        as.character(res)
+    else {
+        res <- tclvalue(res)
+        if(nzchar(res)) res else character(0)
+    }
 }
 
 

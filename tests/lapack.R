@@ -5,6 +5,7 @@
 ## especially when alternative BLAS are used.
 
 options(digits = 4L)
+tryCmsg <- function(expr) tryCatch(expr, error = conditionMessage) # typically == *$message
 
 ##    -------  examples from ?svd ---------
 
@@ -102,8 +103,15 @@ rcond(A, "I")
 rcond(A, "1")
 
 eigen(A)
-svd(A)
-La.svd(A)
+## The signs of the 'u' and 'v/vt' components can vary in the next two
+A0 <- svd(A)
+A1 <- La.svd(A)
+## OK to test == as these are the same Fortran calls.
+stopifnot(A1$d == A0$d, A1$u == A0$u, A1$vt == t(A0$v))
+## Fix the signs before printing.
+s <- rep(sign(A0$u[1,]), each=5); A0$u <- s * A0$u; A0$v <- s * A0$v
+A0
+
 
 As <- crossprod(A)
 E <- eigen(As)
@@ -153,4 +161,28 @@ solve(As)
 Ac <- A; Ac[] <- as.logical(diag(5))
 chol(Ac)
 
+##  -------  tests of non-finite values  -----------------
 
+a <- matrix(NaN, 3, 3,, list(one=1:3, two=letters[1:3]))
+b <- cbind(1:3, NA)
+dimnames(b) <- list(One=4:6, Two=11:12)
+bb <- 1:3; names(bb) <- 11:12
+## gave error with LAPACK 3.11.0
+solve(a, b)
+solve(a, bb)
+
+A <- a + 0i
+solve(A, b)
+
+
+## PR#18541 by Mikael Jagan -- chol()  error & warning message:
+x <- diag(-1, 5L)
+(chF <- tryCmsg(chol(x, pivot = FALSE))) # dpotrf
+(chT <- withCallingHandlers(warning = function(w) ..W <<- conditionMessage(w),
+                chol(x, pivot = TRUE ))) # dpstrf
+stopifnot(exprs = {
+    grepl(" minor .* not positive$", chF) # was "not positive *definite*
+    grepl("rank-deficient or not positive definite$", ..W) # was "indefinite*
+    ## platform dependent, Mac has several NaN's  chT == -diag(5)
+    attr(chT, "rank") %in% 0:1
+})

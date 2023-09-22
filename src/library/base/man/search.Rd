@@ -7,7 +7,6 @@
 \title{Give Search Path for R Objects}
 \alias{search}
 \alias{searchpaths}
-\alias{.rmpkg}% not yet: to get pkg name from search()
 \usage{
 search()
 searchpaths()

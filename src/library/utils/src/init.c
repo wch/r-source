@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2012-2021   The R Core Team.
+ *  Copyright (C) 2012-2023   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -40,6 +40,7 @@ static const R_CallMethodDef CallEntries[] = {
     CALLDEF(processevents, 0),
     CALLDEF(octsize, 1),
     CALLDEF(charClass, 2),
+    CALLDEF(tzcode_type, 0),
 
     /* Sockets */
     CALLDEF(sockconnect, 2),
@@ -79,12 +80,12 @@ static const R_ExternalMethodDef ExtEntries[] = {
     EXTDEF(download, 6),
 #endif
     EXTDEF(unzip, 7),
-    EXTDEF(Rprof, 9),
+    EXTDEF(Rprof, 10),
     EXTDEF(Rprofmem, 3),
 
     EXTDEF(countfields, 6),
     EXTDEF(readtablehead, 7),
-    EXTDEF(typeconvert, 5),
+    EXTDEF(typeconvert, 6),
     EXTDEF(writetable, 11),
 
     EXTDEF(addhistory, 1),

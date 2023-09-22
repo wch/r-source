@@ -5,7 +5,7 @@
 
 \name{arrow}
 \alias{arrow}
-\title{ Describe arrows to add to a line. }
+\title{ Describe arrows to add to a line }
 \description{
   Produces a description of what arrows to add to a line.
   The result can be passed to a function that draws a line,

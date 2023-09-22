@@ -1,7 +1,7 @@
 #  File src/library/tools/R/assertCondition.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 2013-2020 The R Core Team
+#  Copyright (C) 2013-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -33,13 +33,14 @@ assertCondition <-
                 conds <<- c(conds, list(cond)))
 	conds
     }
-    conds <- if(nargs() > 1) c(...) # else NULL
-    .Wanted <- if(nargs() > 1) paste(c(...), collapse = " or ") else "any condition"
+    conds <- c(...)
+    .Wanted <- if(length(conds)) paste(conds, collapse = " or ")
+               else "any condition"
     res <- getConds(expr)
     if(length(res)) {
 	if(is.null(conds)) {
             if(verbose)
-                message("assertConditon: Successfully caught a condition\n")
+                message("assertConditon: successfully caught a condition", domain = NA)
 	    invisible(res)
         }
 	else {
@@ -48,24 +49,24 @@ assertCondition <-
                          NA)
 	    if(any(ii)) {
                 if(verbose) {
-                    found <-
-                        unique(sapply(res, function(cond) class(cond)[class(cond) %in% conds]))
+                    found <- unique(unlist(lapply(res[ii], function(cond)
+                        class(cond)[class(cond) %in% conds])))
                     message(sprintf("assertCondition: caught %s",
                                     paste(dQuote(found), collapse =", ")), domain = NA)
                 }
 		invisible(res)
             }
 	    else {
-                .got <- paste(unique((sapply(res, function(obj)class(obj)[[1]]))),
-                                     collapse = ", ")
+                .got <- unique(unlist(lapply(res, function(obj) class(obj)[[1L]])))
 		stop(gettextf("Got %s in evaluating %s; wanted %s",
-			      .got, .exprString, .Wanted))
+			      paste(.got, collapse = ", "), .exprString, .Wanted),
+                     domain = NA)
             }
 	}
     }
     else
 	stop(gettextf("Failed to get %s in evaluating %s",
-		      .Wanted, .exprString))
+		      .Wanted, .exprString), domain = NA)
 }
 
 assertError <- function(expr, classes = "error", verbose = FALSE) {
@@ -73,13 +74,14 @@ assertError <- function(expr, classes = "error", verbose = FALSE) {
     tryCatch(res <- assertCondition(expr, classes, .exprString = d.expr),
              error = function(e)
                  stop(gettextf("Failed to get error in evaluating %s", d.expr),
-                      call. = FALSE)
+                      call. = FALSE, domain = NA)
              )
     if(verbose) {
         error <- res[vapply(res,
                             function(cond) any(match(classes, class(cond), 0L) > 0L),
                             NA)]
-        message(sprintf("Asserted error: %s", error[[1]]$message))
+        message(sprintf("Asserted error: %s", error[[1L]]$message),
+                domain = NA)
     }
     invisible(res)
 }
@@ -90,12 +92,14 @@ assertWarning <- function(expr, classes = "warning", verbose = FALSE) {
     if(any(vapply(res,
                   function(cond) "error" %in% class(cond),
                   NA)))
-        stop(gettextf("Got warning in evaluating %s, but also an error", d.expr))
+        stop(gettextf("Got warning in evaluating %s, but also an error", d.expr),
+             domain = NA)
     if(verbose) {
         warning <- res[vapply(res,
                               function(cond) any(match(classes, class(cond), 0L) > 0L),
                               NA)]
-        message(sprintf("Asserted warning: %s", warning[[1]]$message))
+        message(sprintf("Asserted warning: %s", warning[[1L]]$message),
+                domain = NA)
     }
     invisible(res)
 }

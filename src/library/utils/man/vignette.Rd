@@ -44,7 +44,7 @@ vignette(topic, package = NULL, lib.loc = NULL, all = TRUE)
   print method opens a viewer for it.
 
   On Unix-alikes,
-  The program specified by the \code{pdfviewer} option is used for
+  the program specified by the \code{pdfviewer} option is used for
   viewing PDF versions of vignettes.
 
   If several vignettes have PDF/HTML versions with base name identical
@@ -63,7 +63,7 @@ vignette(topic, package = NULL, lib.loc = NULL, all = TRUE)
 }
 \seealso{
   \code{\link{browseVignettes}} for an HTML-based vignette browser;
-  \code{\link{RShowDoc}(<basename>, package = "<pkg>")} displays a
+  \code{\link{RShowDoc}("\var{basename}", package = "\var{pkgname}")} displays a
   \dQuote{rendered} vignette (pdf or html).
 }
 \examples{

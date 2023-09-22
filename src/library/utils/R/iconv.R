@@ -1,7 +1,7 @@
 #  File src/library/utils/R/iconv.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2021 The R Core Team
+#  Copyright (C) 1995-2022 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -135,6 +135,7 @@ localeToCharset <- function(locale = Sys.getlocale("LC_CTYPE"))
             if(enc == "utf8") return(c("UTF-8", guess(ll)))
             else return(guess(ll))
         }
+        if (enc == "utf8") return("UTF-8") # fallback for ???.UTF-8
         return(NA_character_)
     }
 }

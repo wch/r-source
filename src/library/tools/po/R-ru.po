@@ -1,7 +1,7 @@
 # Russian translations for R
 # Русский перевод для R
 #
-# Copyright (C) 2008-2021 The R Foundation
+# Copyright (C) 2008 The R Foundation
 # This file is distributed under the same license as the R package.
 # Alexey Shipunov <dactylorhiza at gmail.com> 2010
 #
@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-11-06 17:18\n"
-"PO-Revision-Date: 2021-11-08 10:13+0100\n"
+"POT-Creation-Date: 2023-07-31 14:59\n"
+"PO-Revision-Date: 2020-08-28 16:44+0900\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
 "Language: ru\n"
@@ -144,9 +144,6 @@ msgstr ""
 "ошибка разбора в файле '%s':\n"
 "%s"
 
-msgid "declared S3 method '%s' not found"
-msgstr "заявленный S3-метод '%s' не найден"
-
 msgid "cannot check R code installed as image"
 msgstr "не могу проверить код R, установленный как 'image'"
 
@@ -277,7 +274,7 @@ msgid "Non-standard license specification:"
 msgstr "Нестандартная лицензия:"
 
 msgid "Standardizable: %s"
-msgstr "Стандартизируемо:: %s"
+msgstr "Стандартизируемо: %s"
 
 msgid "Standardized license specification:"
 msgstr "Стандартизованная спецификация лицензии:"
@@ -293,6 +290,9 @@ msgstr "Компоненты лицензии с ограничениями не разрешены:"
 
 msgid "License components which are templates and need '+ file LICENSE':"
 msgstr "Компоненты лицензии, являющиеся образцами, и нужно '+ file LICENSE':"
+
+msgid "Uses ACM license: only appropriate for pre-2013 ACM TOMS code"
+msgstr ""
 
 msgid "Non-portable flags in variable '%s':"
 msgstr "Непереносимые флаги в переменной '%s':"
@@ -456,11 +456,23 @@ msgstr "Rd-файлы с повторяющимся именем '%s':"
 msgid "Rd files with duplicated alias '%s':"
 msgstr "Rd-файлы с двойным псевдонимом '%s':"
 
+#, fuzzy
+msgid "Rd files without \\alias:"
+msgstr "Rd-файлы без '%s':"
+
+#, fuzzy
+msgid "Invalid package aliases in Rd file '%s':"
+msgstr "Непереносимые флаги в файле '%s':"
+
 msgid "Argument items with no description in Rd object '%s':"
 msgstr "Части аргумента без определения в Rd объекте '%s':"
 
 msgid "Auto-generated content requiring editing in Rd object '%s':"
-msgstr "Автоматические сгенерированное содержание требует редактирования в оббъекте Rd '%s':"
+msgstr "Автоматические сгенерированное содержание требует редактирования в объекте Rd '%s':"
+
+#, fuzzy
+msgid "Rd objects without \\description:"
+msgstr "Rd-файлы с пустыми разделами:"
 
 msgid "no Rd sections specified"
 msgstr "не указаны разделы Rd"
@@ -477,6 +489,9 @@ msgstr ""
 "\n"
 "%s\n"
 "в NAMESPACE."
+
+msgid "concordance is not valid"
+msgstr ""
 
 msgid "Rd object required"
 msgstr "Нужен Rd объект"
@@ -520,8 +535,18 @@ msgstr "Rd макропакет '%s' не инсталлирован."
 msgid "No Rd macros in package '%s'."
 msgstr "У пакета '%s' нет Rd макроса."
 
+msgid "links not supported for 'standalone = FALSE' when _R_HELP_LINKS_TO_TOPICS_=false"
+msgstr ""
+
 msgid "more than one \\examples section, using the first"
 msgstr "более чем одна \\секция примеров, использую первую"
+
+msgid "alias:"
+msgstr ""
+
+#, fuzzy
+msgid "is not one line"
+msgstr "не зарегистрировано"
 
 msgid "Converting Rd files to LaTeX ..."
 msgstr "Конвертирую  Rd файлы в LaTeX ..."
@@ -589,6 +614,10 @@ msgstr "Очерк %s переписывает вывод %s от очерка %s: %s"
 msgid "Detected vignette source files (%s) with shared names (%s) and therefore risking overwriting each other's output files"
 msgstr "Обнаружены исходные файлы очерка (%s) с общими именами (%s) и поэтому есть риск переписывания выходных файлов друг друга"
 
+#, fuzzy
+msgid "Note: skipping %s"
+msgstr "обрабатываю %s"
+
 msgid "Error: Vignette '%s' is non-ASCII but has no declared encoding"
 msgstr "Ошибка: Очерк '%s' не ASCII, а кодировка не указана"
 
@@ -637,7 +666,7 @@ msgid "Unsupported engine name"
 msgstr "Неподдерживаемое имя устройства"
 
 msgid "None of packages %s have registered vignette engines"
-msgstr "Ни один из пакетов %s не имеет зарегистированных движков очерков"
+msgstr "Ни один из пакетов %s не имеет зарегистрированных движков очерков"
 
 msgid "Vignette engine %s is not registered"
 msgstr "Движок очерка %s не зарегистрирован"
@@ -670,7 +699,7 @@ msgid "cannot open directory '%s'"
 msgstr "не могу открыть папку '%s'"
 
 msgid "WARNING: omitting pointless dependence on 'R' without a version requirement"
-msgstr "ПРЕДУПРЕЖДЕНИЕ: пробускаю бессмысленную зависимость от 'R' без указания требуемой версии"
+msgstr "ПРЕДУПРЕЖДЕНИЕ: пропускаю бессмысленную зависимость от 'R' без указания требуемой версии"
 
 msgid "cannot turn off locale-specific sorting via LC_COLLATE"
 msgstr "не могу включить локаль-специфичную сортировку через LC_COLLATE"
@@ -725,9 +754,6 @@ msgstr "ОШИБКА: это R версии %s, а требуется R %s %s"
 msgid "loading failed"
 msgstr "загрузка не удалась"
 
-msgid "assertConditon: Successfully caught a condition"
-msgstr "assertConditon: Условие успешно захвачено"
-
 msgid "Got %s in evaluating %s; wanted %s"
 msgstr "Получил %s проверяя %s; нужно %s"
 
@@ -737,14 +763,8 @@ msgstr "Не удалось получить %s проверяя %s"
 msgid "Failed to get error in evaluating %s"
 msgstr "Не удалось получить ошибку, проверяя %s"
 
-msgid "Asserted error: %s"
-msgstr "Утвержденная ошибка: %s"
-
 msgid "Got warning in evaluating %s, but also an error"
 msgstr "Получил предупреждение, проверяя %s, но еще и ошибку"
-
-msgid "Asserted warning: %s"
-msgstr "Утвержденное предупреждение: %s"
 
 msgid "Changes require specified 'style'"
 msgstr "Изменения требуют определенного 'style'"
@@ -818,6 +838,21 @@ msgstr "неправильный класс"
 msgid "non-ASCII input in a CITATION file without a declared encoding"
 msgstr "не-ASCII символы в файле CITATION без объявленной кодировки"
 
+msgid "<p><code class='language-R'>%s</code> was run in the console.</p>"
+msgstr ""
+
+msgid "<p>To view output in the browser, the <a href='https://CRAN.R-project.org/package=knitr'>knitr</a> package must be installed.</p>"
+msgstr ""
+
+msgid "<p>To view output in the browser, the <a href='https://CRAN.R-project.org/package=knitr'>knitr</a> package must be installed and the environment variable <code>_R_HELP_ENABLE_ENHANCED_HTML_</code> must be set to TRUE.</p>"
+msgstr ""
+
+msgid "HTTPD-REQUEST %s%s"
+msgstr ""
+
+msgid "="
+msgstr "="
+
 msgid "No files in this directory"
 msgstr "В этой папке нет файлов"
 
@@ -832,6 +867,9 @@ msgstr "Примеры работы кода:"
 
 msgid "Help pages:"
 msgstr "Страницы помощи:"
+
+msgid "HTTPD-ERROR %s %s"
+msgstr ""
 
 msgid "No package named %s could be found"
 msgstr "Не найден пакет %s"
@@ -853,6 +891,16 @@ msgstr "Не могу найти документации для пакета %s"
 
 msgid "URL %s was not found"
 msgstr "URL %s не найден"
+
+msgid "HTTPD-DEMO %s::%s"
+msgstr ""
+
+msgid "HTTPD-EXAMPLE %s::%s"
+msgstr ""
+
+#, fuzzy
+msgid "No NEWS found for package %s"
+msgstr "Не найдено помощи для пакета %s"
 
 msgid "Only help files, %s, %s and files under %s and %s in a package can be viewed"
 msgstr "Только файлы помощи, %s, %s и файлы внутри %s и %s в пакете могут быть просмотрены"
@@ -880,6 +928,9 @@ msgstr "готово"
 
 msgid "failed to start the httpd server"
 msgstr "не удалось запустить httpd сервер"
+
+msgid "* Package: %s"
+msgstr ""
 
 msgid "cannot read index information in file '%s'"
 msgstr "не могу прочитать индексную информацию из файла '%s'"
@@ -933,7 +984,34 @@ msgid "not using staged install with --libs-only"
 msgstr "не использую ступенчатую инсталляцию с --libs-only"
 
 msgid "staged installation is only possible with locking"
-msgstr "степенцатая инсталляция возможна только с блокировкой"
+msgstr "ступенчатая инсталляция возможна только с блокировкой"
+
+msgid "WARNING: installation-time patches will not be applied, could not get the patches index"
+msgstr ""
+
+msgid "patch utility is needed for installation-time patching"
+msgstr ""
+
+msgid "NOTE: Skipping installation-time patch"
+msgstr ""
+
+#, fuzzy
+msgid "which seems to be already applied."
+msgstr "похоже, что это сборник -- они отключены"
+
+msgid "WARNING: failed to apply patch"
+msgstr ""
+
+#, fuzzy
+msgid "Applied installation-time patch"
+msgstr "пакетная установка"
+
+msgid "and saved it as"
+msgstr ""
+
+#, fuzzy
+msgid "in package installation"
+msgstr "пакетная установка"
 
 msgid "R include directory is empty -- perhaps need to install R-devel.rpm or similar"
 msgstr "Включаемая папка R пуста -- возможно, надо установить R-devel.rpm или похожее"
@@ -954,7 +1032,7 @@ msgid "cannot create unique directory for build"
 msgstr "не могу особую директорию для сборки"
 
 msgid "cannot create temporary directory"
-msgstr "Не могу создать врЕменную"
+msgstr "не могу создать временную директорию"
 
 msgid "ERROR: '--merge-multiarch' applies only to a single tarball"
 msgstr "ОШИБКА: '--merge-multiarch' применим только к одному tar-архиву"
@@ -973,6 +1051,27 @@ msgstr "ОШИБКА: нет прав для установочной папки"
 
 msgid "building a fake installation is disallowed"
 msgstr "сборка ложной установки не разрешается"
+
+msgid "using C compiler:"
+msgstr ""
+
+msgid "using Fortran compiler:"
+msgstr ""
+
+msgid "using C++ compiler:"
+msgstr ""
+
+msgid "using C++"
+msgstr ""
+
+msgid "using SDK:"
+msgstr ""
+
+msgid "WARNING: failed to revert patch"
+msgstr ""
+
+msgid "Reverted installation-time patch"
+msgstr ""
 
 msgid ""
 "See\n"
@@ -1033,7 +1132,10 @@ msgstr ""
 "Единица %s:\n"
 "%s"
 
-msgid "Cannot extract version info from the following section titles:"
+#, fuzzy
+msgid ""
+"Cannot extract version info from the following section titles:\n"
+"%s"
 msgstr "Не могу выделить информацию о версии из следующих заголовков секции:"
 
 msgid ""
@@ -1100,7 +1202,13 @@ msgid "Found %s, possibly from %s"
 msgstr "Нашел %s, возможно, из %s"
 
 msgid "no native symbols were extracted"
-msgstr "не выявлено нативных знаков"
+msgstr "не выявлено зарегистрированных функций"
+
+msgid "not a PDF file"
+msgstr ""
+
+msgid "'diff' is not available so useDiff = FALSE will be used"
+msgstr ""
 
 msgid "testing '%s' failed"
 msgstr "тестирование '%s' не удалось"
@@ -1144,10 +1252,15 @@ msgstr "не анализированных файлов"
 msgid "FAILED"
 msgstr "НЕ УДАЛОСЬ"
 
+#, fuzzy
+msgid "directory %s is not writeable"
+msgstr "папка '%s' не существует"
+
 msgid "DIFFERED"
 msgstr "РАЗЛИЧНЫ"
 
-msgid "running tests of random deviate generation -- fails occasionally"
+#, fuzzy
+msgid "running tests of random deviate generation (should no longer ever fail)"
 msgstr "запускаю тесты на генерацию случайных отклонений -- иногда не удаются"
 
 msgid "unknown header specification"
@@ -1172,7 +1285,7 @@ msgid "Existing PACKAGES file contained no rows and/or no columns"
 msgstr "Имеющийся в наличии файл PACKAGES не имеет строк и/или колонок"
 
 msgid "Specified fields no present in existing PACKAGES file:"
-msgstr "Указанные поля отстутствуют в имеющемся файле PACKAGES:"
+msgstr "Указанные поля отсутствуют в имеющемся файле PACKAGES:"
 
 msgid "Unable to update existing PACKAGES file. Calling write_PACKAGES directly."
 msgstr "Не могу обновить имеющийся файл PACKAGES. Приступаю к записи _PACKAGES напрямую."
@@ -1259,6 +1372,9 @@ msgstr "Файлы 'DESCRIPTION' и 'DESCRIPTION.in' пропущены."
 msgid "invalid package layout"
 msgstr "неправильная структура пакета"
 
+msgid "*not* using 'C' for LC_COLLATE locale"
+msgstr ""
+
 msgid "file '%s' is not in valid DCF format"
 msgstr "файл '%s' не является правильным форматом DCF"
 
@@ -1270,6 +1386,9 @@ msgstr "Неизвестная кодировка с не-ASCII данными: конвертирую в ASCII"
 
 msgid "cannot source package code:"
 msgstr "не могу выполнить код пакета:"
+
+msgid "inferior call failed"
+msgstr ""
 
 msgid "'text' must be a character vector"
 msgstr "'text' должен быть текстовым вектором"
@@ -1321,7 +1440,7 @@ msgstr[2] "Предупреждения в файле %s"
 
 msgid "Found possibly global 'T' or 'F' in the following function:"
 msgid_plural "Found possibly global 'T' or 'F' in the following functions:"
-msgstr[0] "Найдены возможные глобальные T или F в следующей функциии:"
+msgstr[0] "Найдены возможные глобальные T или F в следующей функции:"
 msgstr[1] "Найдены возможные глобальные T или F в следующих функциях:"
 msgstr[2] "Найдены возможные глобальные T или F в следующих функциях:"
 
@@ -1331,12 +1450,11 @@ msgstr[0] "Найдены возможные глобальные 'T' или 'F' в следующем Rd-файле примеро
 msgstr[1] "Найдены возможные глобальные 'T' или 'F' в следующих Rd-файлах примеров:"
 msgstr[2] "Найдены возможные глобальные 'T' или 'F' в следующих Rd-файлах примеров:"
 
-#, fuzzy
 msgid "Possibly missing '()' after 'return' in the following function:"
 msgid_plural "Possibly missing '()' after 'return' in the following functions:"
-msgstr[0] "Найдены возможные глобальные T или F в следующей функциии:"
-msgstr[1] "Найдены возможные глобальные T или F в следующих функциях:"
-msgstr[2] "Найдены возможные глобальные T или F в следующих функциях:"
+msgstr[0] "Возможно, пропущены '()' после 'return' в следующей функции:"
+msgstr[1] "Возможно, пропущены '()' после 'return' в следующих функциях:"
+msgstr[2] "Возможно, пропущены '()' после 'return' в следующих функциях:"
 
 msgid "Found a .Internal call in the following function:"
 msgid_plural "Found .Internal calls in the following functions:"
@@ -1405,20 +1523,14 @@ msgid_plural ""
 "missing/empty \\name field in Rd files\n"
 "%s"
 msgstr[0] ""
-"пропущенное/пустое \\nполе имени в Rd-файле\n"
+"пропущенное/пустое поле \\name в Rd-файле\n"
 "%s"
 msgstr[1] ""
-"пропущенное/пустое \\nполе имени в Rd-файлах\n"
+"пропущенное/пустое поле \\name в Rd-файлах\n"
 "%s"
 msgstr[2] ""
-"пропущенное/пустое \\nполе имени в Rd-файлах\n"
+"пропущенное/пустое поле \\name в Rd-файлах\n"
 "%s"
-
-msgid "duplicated vignette title:"
-msgid_plural "duplicated vignette titles:"
-msgstr[0] "повторяющийся заголовок очерк(ов):"
-msgstr[1] "повторяющиеся заголовки очерков:"
-msgstr[2] "повторяющиеся заголовки очерков:"
 
 msgid "SUMMARY: processing the following file failed:"
 msgid_plural "SUMMARY: processing the following files failed:"
@@ -1434,7 +1546,7 @@ msgstr[2] "не могу перекодировать %s строки %s"
 
 msgid "%s file\n"
 msgid_plural "%s files\n"
-msgstr[0] "%s файлы\n"
+msgstr[0] "%s файл\n"
 msgstr[1] "%s файлы\n"
 msgstr[2] "%s файлы\n"
 
@@ -1467,6 +1579,66 @@ msgid_plural "Corresponding BibTeX entries:"
 msgstr[0] "Соответствующая запись BibTeX:"
 msgstr[1] "Соответствующие записи BibTeX:"
 msgstr[2] "Соответствующие записи BibTeX:"
+
+#~ msgid "declared S3 method '%s' not found"
+#~ msgstr "заявленный S3-метод '%s' не найден"
+
+#~ msgid "assertConditon: Successfully caught a condition"
+#~ msgstr "assertConditon: Условие успешно захвачено"
+
+#~ msgid "Asserted error: %s"
+#~ msgstr "Утвержденная ошибка: %s"
+
+#~ msgid "Asserted warning: %s"
+#~ msgstr "Утвержденное предупреждение: %s"
+
+#~ msgid "duplicated vignette title:"
+#~ msgid_plural "duplicated vignette titles:"
+#~ msgstr[0] "повторяющийся заголовок очерк(ов):"
+#~ msgstr[1] "повторяющиеся заголовки очерков:"
+#~ msgstr[2] "повторяющиеся заголовки очерков:"
+
+#~ msgid "package %s exists but was not installed under R >= 2.10.0 so xrefs cannot be checked"
+#~ msgstr "пакет %s в наличии, но не был установлен под R >= 2.10.0, поэтому xrefs не могут быть проверены"
+
+#~ msgid "No news found in given file using old-style R-like format."
+#~ msgstr "В используемом формате, похожем на старый R, нет новостей."
+
+#~ msgid "argument 'pkg' must be of length 1"
+#~ msgstr "аргумент 'pkg' должен быть единичной длины"
+
+#~ msgid "the 'lib.loc' argument has always been unused and is deprecated now"
+#~ msgstr "аргумент 'lib.loc' никогда не использовался и сейчас не рекомендуется"
+
+#~ msgid "bad operand"
+#~ msgstr "плохой операнд"
+
+#~ msgid "Package '%s' had its dependencies reduced to a minimal set."
+#~ msgstr "Пакет '%s' имеет зависимости, сокращенные до минимального набора."
+
+#~ msgid "argument 'vignette' must be of length 1"
+#~ msgstr "аргумент 'vignette' должен быть единичной длины"
+
+#~ msgid "file"
+#~ msgstr "файл"
+
+#~ msgid "files"
+#~ msgstr "файлы"
+
+#~ msgid "C++17 standard requested but CXX17 is not defined"
+#~ msgstr "запрошен C++17 стандарт, но CXX17 не определен"
+
+#~ msgid "C++14 standard requested but CXX14 is not defined"
+#~ msgstr "запрошен C++14 стандарт, но CXX14 не определен"
+
+#~ msgid "C++11 standard requested but CXX11 is not defined"
+#~ msgstr "запрошен C++11 стандарт, но CXX11 не определен"
+
+#~ msgid "C++98 standard requested but CXX98 is not defined"
+#~ msgstr "запрошен C++98 стандарт, но CXX98 не определен"
+
+#~ msgid "there is no package called '%s'"
+#~ msgstr "нет пакета по имени '%s'"
 
 #~ msgid "%s must be a character string or a file/raw connection"
 #~ msgstr "%s должен быть текстовой строкой или файлом/простым соединением"
@@ -1543,32 +1715,8 @@ msgstr[2] "Соответствующие записи BibTeX:"
 #~ msgid "unsupported PNG filter %d"
 #~ msgstr "неподдерживаемый фильтр PNG %d"
 
-#~ msgid "argument 'pkg' must be of length 1"
-#~ msgstr "аргумент 'pkg' должен быть единичной длины"
-
 #~ msgid "package '%s' was not found"
 #~ msgstr "пакет '%s' не найден"
-
-#~ msgid "the 'lib.loc' argument has always been unused and is deprecated now"
-#~ msgstr "аргумент 'lib.loc' никогда не использовался и сейчас не рекомендуется"
-
-#~ msgid "bad operand"
-#~ msgstr "плохой операнд"
-
-#~ msgid "Package '%s' had its dependencies reduced to a minimal set."
-#~ msgstr "Пакет '%s' имеет зависимости, сокращенные до минимального набора."
-
-#~ msgid "package %s exists but was not installed under R >= 2.10.0 so xrefs cannot be checked"
-#~ msgstr "пакет %s в наличии, но не был установлен под R >= 2.10.0, поэтому xrefs не могут быть проверены"
-
-#~ msgid "No news found in given file using old-style R-like format."
-#~ msgstr "В используемом формате, похожем на старый R, нет новостей."
-
-#~ msgid "argument 'vignette' must be of length 1"
-#~ msgstr "аргумент 'vignette' должен быть единичной длины"
-
-#~ msgid "there is no package called '%s'"
-#~ msgstr "нет пакета по имени '%s'"
 
 #~ msgid "cannot coerce %s to logical"
 #~ msgstr "нельзя перевести %s в логический тип"
@@ -1588,6 +1736,12 @@ msgstr[2] "Соответствующие записи BibTeX:"
 #~ msgid "installing dependencies %s"
 #~ msgstr "устанавливаю зависимости %s"
 
+#~ msgid "%s"
+#~ msgstr "%s"
+
+#~ msgid ":"
+#~ msgstr ":"
+
 #~ msgid "latin1"
 #~ msgstr "latin1"
 
@@ -1597,9 +1751,8 @@ msgstr[2] "Соответствующие записи BibTeX:"
 #~ msgid "byte"
 #~ msgstr "байт"
 
-#, fuzzy
 #~ msgid "Inconsistent encoding specifications: %s with %%\\SweaveUTF8"
-#~ msgstr "Нестандартная лицензия:"
+#~ msgstr "Противоречивое указание кодировки: %s, но %%\\SweaveUTF8"
 
 #~ msgid "argument 'file' must be a character string or connection"
 #~ msgstr "аргумент 'file' должен быть текстовой строкой  или соединением"
@@ -1610,11 +1763,17 @@ msgstr[2] "Соответствующие записи BibTeX:"
 #~ msgid "Vignette product"
 #~ msgstr "Продукт миниатюры"
 
+#~ msgid ")"
+#~ msgstr ")"
+
 #~ msgid "Failed to locate the"
 #~ msgstr "Не могу найти"
 
 #~ msgid "output file (by engine"
 #~ msgstr "файл вывода (в соответствии с устройством"
+
+#~ msgid "%s::%s"
+#~ msgstr "%s::%s"
 
 #~ msgid ") for vignette with name"
 #~ msgstr ") для очерка с именем"
@@ -1646,9 +1805,6 @@ msgstr[2] "Соответствующие записи BibTeX:"
 #~ msgid "Vignette engine"
 #~ msgstr "Устройство очерка"
 
-#~ msgid "is not registered"
-#~ msgstr "не зарегистрировано"
-
 #~ msgid "Engine name"
 #~ msgstr "Имя устройства"
 
@@ -1679,44 +1835,38 @@ msgstr[2] "Соответствующие записи BibTeX:"
 #~ msgid "'file' must be a character string or connection"
 #~ msgstr "'file' должен быть текстовой строкой или соединением"
 
-#, fuzzy
 #~ msgid "not found"
 #~ msgstr "не найден"
 
-#, fuzzy
 #~ msgid "Foreign function call without 'PACKAGE' argument:"
 #~ msgid_plural "Foreign function calls without 'PACKAGE' argument:"
 #~ msgstr[0] "Вызов чужой функции без аргумента 'PACKAGE':"
-#~ msgstr[1] "Вызов чужой функции без аргумента 'PACKAGE':"
-#~ msgstr[2] "Вызов чужой функции без аргумента 'PACKAGE':"
+#~ msgstr[1] "Вызовы чужой функции без аргумента 'PACKAGE':"
+#~ msgstr[2] "Вызовы чужой функции без аргумента 'PACKAGE':"
 
-#, fuzzy
 #~ msgid "Foreign function call with empty 'PACKAGE' argument:"
 #~ msgid_plural "Foreign function calls with empty 'PACKAGE' argument:"
-#~ msgstr[0] "Вызов чужой функции без аргумента 'PACKAGE':"
-#~ msgstr[1] "Вызов чужой функции без аргумента 'PACKAGE':"
-#~ msgstr[2] "Вызов чужой функции без аргумента 'PACKAGE':"
+#~ msgstr[0] "Вызов чужой функции с пустым аргументом 'PACKAGE':"
+#~ msgstr[1] "Вызовы чужой функции с пустым аргументом 'PACKAGE':"
+#~ msgstr[2] "Вызовы чужой функции с пустым аргументом 'PACKAGE':"
 
-#, fuzzy
 #~ msgid "Foreign function call with 'PACKAGE' argument in a base package:"
 #~ msgid_plural "Foreign function calls with 'PACKAGE' argument in a base package:"
-#~ msgstr[0] "Вызов чужой функции без аргумента 'PACKAGE':"
-#~ msgstr[1] "Вызов чужой функции без аргумента 'PACKAGE':"
-#~ msgstr[2] "Вызов чужой функции без аргумента 'PACKAGE':"
+#~ msgstr[0] "Вызов чужой функции с аргументом 'PACKAGE' в базовом пакете:"
+#~ msgstr[1] "Вызовы чужой функции с аргументом 'PACKAGE' в базовом пакете:"
+#~ msgstr[2] "Вызовы чужой функции с аргументом 'PACKAGE' в базовом пакете:"
 
-#, fuzzy
 #~ msgid "Foreign function call with 'PACKAGE' argument in a different package:"
 #~ msgid_plural "Foreign function calls with 'PACKAGE' argument in a different package:"
-#~ msgstr[0] "Вызов чужой функции без аргумента 'PACKAGE':"
-#~ msgstr[1] "Вызов чужой функции без аргумента 'PACKAGE':"
-#~ msgstr[2] "Вызов чужой функции без аргумента 'PACKAGE':"
+#~ msgstr[0] "Вызов чужой функции с аргументом 'PACKAGE' в другом пакете:"
+#~ msgstr[1] "Вызовы чужой функции с аргументом 'PACKAGE' в другом пакете:"
+#~ msgstr[2] "Вызовы чужой функции с аргументом 'PACKAGE' в другом пакете:"
 
-#, fuzzy
 #~ msgid "Warning: found non-ASCII string"
 #~ msgid_plural "Warning: found non-ASCII strings"
-#~ msgstr[0] "Предупреждение: неизвестная опция"
-#~ msgstr[1] "Предупреждение: неизвестная опция"
-#~ msgstr[2] "Предупреждение: неизвестная опция"
+#~ msgstr[0] "Предупреждение: найдена не-ASCII строка"
+#~ msgstr[1] "Предупреждение: найдены не-ASCII строки"
+#~ msgstr[2] "Предупреждение: найдены не-ASCII строки"
 
 #~ msgid "name"
 #~ msgstr "имя"
@@ -1727,9 +1877,8 @@ msgstr[2] "Соответствующие записи BibTeX:"
 #~ msgid "docs"
 #~ msgstr "документы"
 
-#, fuzzy
 #~ msgid "\\VignetteDepends{}"
-#~ msgstr "Миниатюры:"
+#~ msgstr "\\VignetteDepends{}"
 
 #~ msgid "Invalid package name."
 #~ msgstr "Неправильное имя пакета."
@@ -1755,10 +1904,6 @@ msgstr[2] "Соответствующие записи BibTeX:"
 #~ msgid "Good practice"
 #~ msgstr "Хорошо сделано"
 
-#, fuzzy
-#~ msgid "\\name"
-#~ msgstr "имя"
-
 #~ msgid "NEWS"
 #~ msgstr "НОВОСТИ"
 
@@ -1783,18 +1928,14 @@ msgstr[2] "Соответствующие записи BibTeX:"
 #~ msgid "processing"
 #~ msgstr "обрабытываю"
 
-#, fuzzy
 #~ msgid "package directory"
-#~ msgstr "директория пакетов"
+#~ msgstr "директория пакета"
 
 #~ msgid "Unrecognized search field:"
 #~ msgstr "Неизвестное поле поиска:"
 
 #~ msgid "running 'zip' failed"
 #~ msgstr "не удался запуск 'zip'"
-
-#~ msgid "packaged installation of"
-#~ msgstr "пакетная установка"
 
 #~ msgid "as"
 #~ msgstr "как"
@@ -1805,7 +1946,6 @@ msgstr[2] "Соответствующие записи BibTeX:"
 #~ msgid "installing to"
 #~ msgstr "устанавливаю в"
 
-#, fuzzy
 #~ msgid "running 'src/Makefile.win' ..."
 #~ msgstr "запускаю src/Makefile.win ..."
 
@@ -1909,9 +2049,8 @@ msgstr[2] "Соответствующие записи BibTeX:"
 #~ msgid "running tests to possibly trigger segfaults"
 #~ msgstr "запускаю тесты на возможное переключение ошибок сегментации"
 
-#, fuzzy
 #~ msgid "not installing"
-#~ msgstr "устанавливаю в"
+#~ msgstr "не устанавливаю"
 
 #~ msgid "Generics g in env ="
 #~ msgstr "Общие 'g' в env ="
@@ -1928,25 +2067,17 @@ msgstr[2] "Соответствующие записи BibTeX:"
 #~ msgid "in NAMESPACE."
 #~ msgstr "в NAMESPACE."
 
-#, fuzzy
-#~ msgid "not insttalling"
-#~ msgstr "устанавливаю в"
-
-#, fuzzy
 #~ msgid "running msgmerge failed"
-#~ msgstr "не удался запуск 'make'"
+#~ msgstr "не удался запуск 'msgmerge'"
 
-#, fuzzy
 #~ msgid "running msginit failed"
-#~ msgstr "не удался запуск 'zip'"
+#~ msgstr "не удался запуск 'msginit'"
 
-#, fuzzy
 #~ msgid "running msgconv failed"
-#~ msgstr "не удался запуск 'make'"
+#~ msgstr "не удался запуск 'msgconv'"
 
-#, fuzzy
 #~ msgid "running xgettext failed"
-#~ msgstr "не удался запуск 'make'"
+#~ msgstr "не удался запуск 'xgettext'"
 
 #~ msgid "ERROR: --merge-multiarch can only be used on i386/x64 installations"
 #~ msgstr "ERROR: --merge-multiarch можно использовать только на i386/x64-инсталляциях"
@@ -2000,16 +2131,11 @@ msgstr[2] "Соответствующие записи BibTeX:"
 #~ msgid "DVI output from Rd2dvi is deprecated"
 #~ msgstr "Вывод DVI из Rd2dvi не рекомендуется"
 
-#, fuzzy
-#~ msgid "installing a top-level 'COPYING' file is deprecated -- see the 'Writing R Extensions' manual'"
-#~ msgstr "См. информацию о файлах DESCRIPTION в секции  'Creating R пакетs' руководства 'Writing R Extensions'."
-
 #~ msgid "Malformed NEWS.Rd file."
 #~ msgstr "Плохо сформированный файл NEWS.Rd."
 
-#, fuzzy
 #~ msgid "cannot read boolean object"
-#~ msgstr "нельзя открыть"
+#~ msgstr "нельзя прочитать логический объект"
 
 #~ msgid "no examples found"
 #~ msgstr "не найдено примеров"
@@ -2080,10 +2206,6 @@ msgstr[2] "Соответствующие записи BibTeX:"
 #~ msgid "Bundle 'DESCRIPTION' is missing."
 #~ msgstr "У связки пакетов отсутствует 'DESCRIPTION'."
 
-#, fuzzy
-#~ msgid "No package of named %s could be found"
-#~ msgstr "должен быть загружен пакет"
-
 #~ msgid "*** 'hhc.exe' not found: not building CHM help"
 #~ msgstr "*** 'hhc.exe' не найден: не собираю CHM помощь"
 
@@ -2114,9 +2236,6 @@ msgstr[2] "Соответствующие записи BibTeX:"
 #~ msgid "Rd files with missing or empty '\\title':"
 #~ msgstr "Rd-файлы с пропущенными или пустыми \\title':"
 
-#~ msgid "Rd files without '%s':"
-#~ msgstr "Rd-файлы без '%s':"
-
 #~ msgid "These entries are required in an Rd file."
 #~ msgstr "Эти пункты требуются для Rd-файла."
 
@@ -2132,12 +2251,8 @@ msgstr[2] "Соответствующие записи BibTeX:"
 #~ msgid "Each '\\keyword' entry should specify one of the standard keywords (as listed in file 'KEYWORDS' in the R documentation directory)."
 #~ msgstr "Каждый вход '\\keyword' должен определять одно из стандартных ключевых слов (как перечислено в файле 'KEYWORDS' в папке документации R)."
 
-#~ msgid "Rd files with empty sections:"
-#~ msgstr "Rd-файлы с пустыми разделами:"
-
-#, fuzzy
 #~ msgid "checkRd is designed for Rd version 2 or higher"
-#~ msgstr "Rd2HTML разработан для Rd версии 2 или выше."
+#~ msgstr "checkRd разработан для Rd версии 2 или выше."
 
 #~ msgid "there are no help pages in this package"
 #~ msgstr "в пакете нет файлов помощи"
@@ -2199,9 +2314,8 @@ msgstr[2] "Соответствующие записи BibTeX:"
 #~ msgid "should not get here"
 #~ msgstr "сюда не должно дойти"
 
-#, fuzzy
 #~ msgid "there is a 'man' dir but no help pages in this package"
-#~ msgstr "в пакете нет файлов помощи"
+#~ msgstr "найдена директория 'man', но не файлы помощи"
 
 #~ msgid "multiple \\encoding lines in file"
 #~ msgstr "несколько \\строк кодировок в файле"

@@ -180,7 +180,7 @@ const struct plHersheyFontInfoStruct _hershey_font_info[] =
       /*      2115, ACC0, ACC0, ACC0, ACC0, ACC0, UNDE, ACC0, */
       ACC0, ACC0, ACC0, ACC0, ACC0, ACC0, UNDE, ACC0,
     },
-    0, 1, false, true, true
+    0, 1, false_, true_, true_
   },
   {
     "HersheySerif-Italic",	/* #1 */
@@ -223,7 +223,7 @@ const struct plHersheyFontInfoStruct _hershey_font_info[] =
       UNDE, ACC0, ACC0, ACC0, ACC0, ACC0, ACC0, 2237,
       2165, ACC0, ACC0, ACC0, ACC0, ACC0, UNDE, ACC0,
     },
-    0, 2, false, true, true
+    0, 2, false_, true_, true_
   },
   {
     "HersheySerif-Bold",		/* #2 */
@@ -266,7 +266,7 @@ const struct plHersheyFontInfoStruct _hershey_font_info[] =
       UNDE, ACC0, ACC0, ACC0, ACC0, ACC0, ACC0, 2237,
       3115, ACC0, ACC0, ACC0, ACC0, ACC0, UNDE, ACC0,
     },
-    0, 3, false, true, true
+    0, 3, false_, true_, true_
   },
   {
     "HersheySerif-BoldItalic",	/* #3 */
@@ -309,7 +309,7 @@ const struct plHersheyFontInfoStruct _hershey_font_info[] =
       UNDE, ACC0, ACC0, ACC0, ACC0, ACC0, ACC0, 2237,
       3165, ACC0, ACC0, ACC0, ACC0, ACC0, UNDE, ACC0,
     },
-    0, 4, false, true, true
+    0, 4, false_, true_, true_
   },
   {
     "HersheyCyrillic",		/* #4 */
@@ -353,7 +353,7 @@ const struct plHersheyFontInfoStruct _hershey_font_info[] =
       2816, 2832, 2817, 2818, 2819, 2820, 2807, 2803,
       2829, 2828, 2808, 2825, 2830, 2826, 2824, 2827,
     },
-    0, 5, false, false, true
+    0, 5, false_, false_, true_
   },
   {
     "HersheyCyrillic-Oblique",	/* #5 */
@@ -397,7 +397,7 @@ const struct plHersheyFontInfoStruct _hershey_font_info[] =
       2816, 2832, 2817, 2818, 2819, 2820, 2807, 2803,
       2829, 2828, 2808, 2825, 2830, 2826, 2824, 2827,
     },
-    0, 6, true, false, true
+    0, 6, true_, false_, true_
   },
   {
     "HersheyHiragana",		/* #6 */
@@ -438,7 +438,7 @@ const struct plHersheyFontInfoStruct _hershey_font_info[] =
       0, 0, 0, 0, 0, 0, 0, 0,
       0, 0, 0, 0, 0, 0, 0, 0,
     },
-    0, 6, false, false, false
+    0, 6, false_, false_, false_
   },
   {
     "HersheyKatakana",		/* #7 */
@@ -479,7 +479,7 @@ const struct plHersheyFontInfoStruct _hershey_font_info[] =
       0, 0, 0, 0, 0, 0, 0, 0,
       0, 0, 0, 0, 0, 0, 0, 0,
     },
-    0, 7, false, false, false
+    0, 7, false_, false_, false_
   },
   {
     "HersheyEUC",			/* #8 */
@@ -522,7 +522,7 @@ const struct plHersheyFontInfoStruct _hershey_font_info[] =
 	 0,    0,    0,	   0,	 0,    0,    0,	   0,
 	 0,    0,    0,	   0,	 0,    0,    0,	   0,
     },
-    0, 7, false, false, true
+    0, 7, false_, false_, true_
   },
   {
     "HersheySans",		/* #9 */
@@ -577,7 +577,7 @@ const struct plHersheyFontInfoStruct _hershey_font_info[] =
       /*      615, ACC0, ACC0, ACC0, ACC0, ACC0, UNDE, ACC0, */
       ACC0, ACC0, ACC0, ACC0, ACC0, ACC0, UNDE, ACC0,
     },
-    1, 1, false, true, true
+    1, 1, false_, true_, true_
   },
   {
     "HersheySans-Oblique",	/* #10 */
@@ -620,7 +620,7 @@ const struct plHersheyFontInfoStruct _hershey_font_info[] =
       UNDE, ACC0, ACC0, ACC0, ACC0, ACC0, ACC0, 2237,
        615, ACC0, ACC0, ACC0, ACC0, ACC0, UNDE, ACC0,
     },
-    1, 2, true, true, true
+    1, 2, true_, true_, true_
   },
   {
     "HersheySans-Bold",		/* #11 */
@@ -663,7 +663,7 @@ const struct plHersheyFontInfoStruct _hershey_font_info[] =
       UNDE, ACC0, ACC0, ACC0, ACC0, ACC0, ACC0, 2237,
       2615, ACC0, ACC0, ACC0, ACC0, ACC0, UNDE, ACC0,
     },
-    1, 3, false, true, true
+    1, 3, false_, true_, true_
   },
   {
     "HersheySans-BoldOblique",	/* #12 */
@@ -706,7 +706,7 @@ const struct plHersheyFontInfoStruct _hershey_font_info[] =
       UNDE, ACC0, ACC0, ACC0, ACC0, ACC0, ACC0, 2237,
       2615, ACC0, ACC0, ACC0, ACC0, ACC0, UNDE, ACC0,
     },
-    1, 4, true, true, true
+    1, 4, true_, true_, true_
   },
   {
     "HersheyScript",		/* #13 */
@@ -749,7 +749,7 @@ const struct plHersheyFontInfoStruct _hershey_font_info[] =
       UNDE, 664, 665, 665, 665, 665, 665, 2237,
       665, 671, 671, 671, 671, 675, UNDE, 675
     },
-    2, 1, false, true, true
+    2, 1, false_, true_, true_
   },
   {
     "HersheyScript-Bold",		/* #14 */
@@ -792,7 +792,7 @@ const struct plHersheyFontInfoStruct _hershey_font_info[] =
       UNDE, 2664, 2665, 2665, 2665, 2665, 2665, 2237,
       2665, 2671, 2671, 2671, 2671, 2675, UNDE, 2675
     },
-    2, 3, false, true, true
+    2, 3, false_, true_, true_
   },
   {
     "HersheyGothicEnglish",	/* #15 */
@@ -835,7 +835,7 @@ const struct plHersheyFontInfoStruct _hershey_font_info[] =
       UNDE, ACC0, ACC0, ACC0, ACC0, ACC0, ACC0, 2237,
       3615, ACC0, ACC0, ACC0, ACC0, ACC0, UNDE, ACC0,
     },
-    3, 1, false, true, true
+    3, 1, false_, true_, true_
   },
   {
     "HersheyGothicGerman",	/* #16 */
@@ -878,7 +878,7 @@ const struct plHersheyFontInfoStruct _hershey_font_info[] =
       UNDE, ACC0, ACC0, ACC0, ACC0, ACC0, 3431, 2237,
       3615, ACC0, ACC0, ACC0, 3432, ACC0, UNDE, ACC0,
     },
-    4, 1, false, true, true
+    4, 1, false_, true_, true_
   },
   {
     "HersheyGothicItalian",	/* #17 */
@@ -921,7 +921,7 @@ const struct plHersheyFontInfoStruct _hershey_font_info[] =
       UNDE, ACC0, ACC0, ACC0, ACC0, ACC0, ACC0, 2237,
       3915, ACC0, ACC0, ACC0, ACC0, ACC0, UNDE, ACC0,
     },
-    5, 1, false, true, true
+    5, 1, false_, true_, true_
   },
   {
     "HersheySerifSymbol",		/* #18 */
@@ -969,7 +969,7 @@ const struct plHersheyFontInfoStruct _hershey_font_info[] =
       UNDE, 2228, 2268, UNDE, UNDE, UNDE, UNDE, UNDE,
       UNDE, 4177, UNDE, 4175, UNDE, UNDE, UNDE,	   0
     },
-    6, 1, false, false, true
+    6, 1, false_, false_, true_
   },
   {
     "HersheySerifSymbol-Oblique",	/* #19 */
@@ -1017,7 +1017,7 @@ const struct plHersheyFontInfoStruct _hershey_font_info[] =
       UNDE, 2228, 2268, UNDE, UNDE, UNDE, UNDE, UNDE,
       UNDE, 4177, UNDE, 4175, UNDE, UNDE, UNDE,	   0
     },
-    6, 2, true, false, true
+    6, 2, true_, false_, true_
   },
   {
     "HersheySerifSymbol-Bold",	/* #20 */
@@ -1065,7 +1065,7 @@ const struct plHersheyFontInfoStruct _hershey_font_info[] =
       UNDE, 2228, 2268, UNDE, UNDE, UNDE, UNDE, UNDE,
       UNDE, 4177, UNDE, 4175, UNDE, UNDE, UNDE,	   0
     },
-    6, 3, false, false, true
+    6, 3, false_, false_, true_
   },
   {
     "HersheySerifSymbol-BoldOblique", /* #21 */
@@ -1113,7 +1113,7 @@ const struct plHersheyFontInfoStruct _hershey_font_info[] =
       UNDE, 2228, 2268, UNDE, UNDE, UNDE, UNDE, UNDE,
       UNDE, 4177, UNDE, 4175, UNDE, UNDE, UNDE,	   0
     },
-    6, 4, true, false, true
+    6, 4, true_, false_, true_
   },
   {
     "HersheySansSymbol",		/* #22 */
@@ -1161,7 +1161,7 @@ const struct plHersheyFontInfoStruct _hershey_font_info[] =
       UNDE, 2228, 2268, UNDE, UNDE, UNDE, UNDE, UNDE,
       UNDE, 4173, UNDE, 4171, UNDE, UNDE, UNDE,	   0
     },
-    7, 1, false, false, true
+    7, 1, false_, false_, true_
   },
   {
     "HersheySansSymbol-Oblique",	/* #23 */
@@ -1209,7 +1209,7 @@ const struct plHersheyFontInfoStruct _hershey_font_info[] =
       UNDE, 2228, 2268, UNDE, UNDE, UNDE, UNDE, UNDE,
       UNDE, 4173, UNDE, 4171, UNDE, UNDE, UNDE,	   0
     },
-    7, 2, true, false, true
+    7, 2, true_, false_, true_
   },
   {
     NULL,			/* DUMMY */
@@ -1243,7 +1243,7 @@ const struct plHersheyFontInfoStruct _hershey_font_info[] =
       0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
       0, 0, 0, 0, 0, 0
     },
-    0, 0, false, false, false
+    0, 0, false_, false_, false_
   }
 };
 

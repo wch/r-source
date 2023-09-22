@@ -1,6 +1,6 @@
 % File src/library/base/man/trace.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright (C) 1995-2020 R Core Team
+% Copyright (C) 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{trace}
@@ -48,10 +48,10 @@ returnValue(default = NULL)
     will be called just before the corresponding step in the body of the
     function.
     See the details section. }
-  \item{print}{If \code{TRUE} (as per default), a descriptive line is
+  \item{print}{if \code{TRUE} (as per default), a descriptive line is
     printed before any trace expression is evaluated.}
-  \item{signature}{ If this argument is supplied, it should be a
-    signature for a method for function \code{what}.  In this case, the
+  \item{signature}{an optional
+    signature for a method for function \code{what}.  If supplied, the
     method, and \emph{not} the function itself, is traced.}
   \item{edit}{ For complicated tracing, such as tracing within a loop
     inside the function, you will need to insert the desired calls by
@@ -91,7 +91,7 @@ returnValue(default = NULL)
     \code{browser()}), and \code{msg} is a string identifying the
     place where the trace action occurs.
   }
-  \item{default}{If \code{returnValue} finds no return value (e.g.
+  \item{default}{if \code{returnValue} finds no return value (e.g., when
     a function exited because of an error, restart or as a result
     of evaluating a return from a caller function), it will return
     \code{default} instead.
@@ -332,11 +332,10 @@ untrace(expression(ar.yw, ar.yw.default), where = ar)
 \dontrun{
 ## trace calls to the function lm() that come from
 ## the nlme package.
-## (The function nlme is in that package, and the package
-## has a namespace, so the where= argument must be used
-## to get the right version of lm)
-
-trace(lm, exit = recover, where = asNamespace("nlme"))
+trace("lm", where = asNamespace("nlme"))
+      lm    (len ~ log(dose) * supp, ToothGrowth) -> fit1  # NOT traced
+nlme::lmList(len ~ log(dose) | supp, ToothGrowth) -> fit2  # traced
+untrace("lm", where = asNamespace("nlme"))
 }
 %%}% only if 'methods'
 }

@@ -65,7 +65,7 @@
 }
 \references{
   Garson, J.G. (1900).
-  The metric system of identification of criminals, as used in in Great
+  The metric system of identification of criminals, as used in Great
   Britain and Ireland.
   \emph{The Journal of the Anthropological Institute of Great Britain
     and Ireland}, \bold{30}, 161--198.

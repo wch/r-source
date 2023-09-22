@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-11-06 17:17+0100\n"
+"POT-Creation-Date: 2023-07-31 14:59+0200\n"
 "PO-Revision-Date: 2011-03-26 08:54-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Pootle 2.0.5\n"
 
-#: gpar.c:523
+#: gpar.c:621
 msgid "updateGContext must only be called after initGContext"
 msgstr ""
 
@@ -30,61 +30,75 @@ msgstr ""
 msgid "cannot clip to rotated viewport"
 msgstr "Não é possível cortar sobre uma viewport rotacionada"
 
-#: grid.c:455
+#: grid.c:456
 msgid "Clipping paths within a (clipping) path are not honoured"
 msgstr ""
 
-#: grid.c:474
+#: grid.c:475
 msgid "Masks within a (clipping) path are not honoured"
 msgstr ""
 
-#: grid.c:916 grid.c:921 grid.c:1040 grid.c:1045
+#: grid.c:917 grid.c:922 grid.c:1043 grid.c:1048
 #, fuzzy
 msgid "cannot pop the top-level viewport ('grid' and 'graphics' output mixed?)"
 msgstr "Não é possível mostrar a viewport de nível máximo (saidas gráficas e grid misturadas?) "
 
-#: grid.c:1246
+#: grid.c:1249
 msgid "attempt to plot on null device"
 msgstr "tentativa de fazer um gráfico no dispositivo nulo"
 
-#: grid.c:1702
+#: grid.c:1719
 #, fuzzy
 msgid "there is no layout defined"
 msgstr "Não há layout definido"
 
-#: grid.c:1922
+#: grid.c:1941
 #, fuzzy
 msgid "polygon edge not found (zero-width or zero-height?)"
 msgstr "Limite do polígono não encontrado (largura ou altura zero?)"
 
-#: grid.c:1931
+#: grid.c:1950
 #, fuzzy
 msgid "polygon edge not found"
 msgstr "Limite do polígono não encontrado"
 
-#: grid.c:2085
+#: grid.c:2104
 #, fuzzy
 msgid "require at least two points to draw arrow"
 msgstr "Pelo menos dois pontos são necessários para desenhar uma seta"
 
-#: grid.c:2408
+#: grid.c:2475
 #, fuzzy
 msgid "non-finite control point in Xspline"
 msgstr "Ponto de controle não-finito em Xspline"
 
-#: grid.c:3333
+#: grid.c:3444
 msgid "non-finite x or y in graphics path"
 msgstr "valores não-finitos de x ou y no caminho do gráfico"
 
-#: grid.c:3383
+#: grid.c:3495
 msgid "Empty raster"
 msgstr ""
 
-#: grid.c:3869
+#: grid.c:4046 grid.c:4102
+msgid "Coordinates for text pch not yet supported"
+msgstr ""
+
+#: grid.c:4107
+#, c-format
+msgid "pch value '%d' is invalid in this locale"
+msgstr ""
+
+#: grid.c:4928
+#, c-format
+msgid "unimplemented pch value '%d'"
+msgstr ""
+
+#: grid.c:5087
 msgid "invalid plotting symbol"
 msgstr "simbolo para gráfico inválido"
 
-#: grid.c:3963
+#: grid.c:5205
 #, fuzzy
 msgid "unable to clip to rotated rectangle"
 msgstr "Não é possível cortar sobre um retângulo rotacionado"
@@ -103,7 +117,7 @@ msgstr "layout.pos.col inválido"
 msgid "singular transformation matrix"
 msgstr "matriz de transformação singular"
 
-#: state.c:192
+#: state.c:191
 #, fuzzy
 msgid "unable to store 'grid' state.  Too many devices open?"
 msgstr "Não foi possível guardar o estado do grid. Muitos dispositivos abertos?"
@@ -173,6 +187,10 @@ msgstr ""
 
 #: unit.c:1840
 msgid "units can only be multiplied with numerics and integers"
+msgstr ""
+
+#: util.c:216
+msgid "Unable to calculate text width/height (using zero)"
 msgstr ""
 
 #: viewport.c:56

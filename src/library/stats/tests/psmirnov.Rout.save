@@ -1,0 +1,159 @@
+
+R Under development (unstable) (2023-09-19 r85175) -- "Unsuffered Consequences"
+Copyright (C) 2023 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> set.seed(290875)
+> B <- 1e5
+> 
+> ### note: psmirnov(, z = NULL) uses stats:::C_pSmirnov2x, z = something
+> ### trigger Schröer-Trenkler algo
+> all.equal(psmirnov(1:999/1000, sizes = c(10, 20), z = 1:30), 
++           psmirnov(1:999/1000, sizes = c(10, 20)))
+[1] TRUE
+> 
+> ### examples by Schröer & Trenkler (1995) without ties
+> all.equal(psmirnov(3 / 7, sizes = c(7, 5), z = 1:12), 
++           psmirnov(3 / 7, sizes = c(7, 5)))
+[1] TRUE
+> 
+> all.equal(psmirnov(sizes = c(m = 3, n = 4), q = 1/2, z = 1:7, lower.tail = FALSE),
++           psmirnov(sizes = c(m = 3, n = 4), q = 1/2, lower.tail = FALSE))
+[1] TRUE
+> psmirnov(sizes = c(m = 3, n = 4), q = 1/6, z = 1:7, lower.tail = FALSE, alternative = "greater")
+[1] 0.8
+> psmirnov(sizes = c(m = 4, n = 3), q = 1/2, z = 1:7, lower.tail = FALSE, alternative = "greater")
+[1] 0.3428571
+> 
+> all.equal(psmirnov(sizes = c(m = 5, n = 7), q = 3 / 7, z = 1:12, lower.tail = FALSE),
++           psmirnov(sizes = c(m = 5, n = 7), q = 3 / 7, z = 1:12, lower.tail = FALSE))
+[1] TRUE
+> 
+> all.equal(psmirnov(sizes = c(m = 300, n = 520), q = 1/8, z = 1:820, lower.tail = FALSE),
++           psmirnov(sizes = c(m = 300, n = 520), q = 1/8, lower.tail = FALSE))
+[1] TRUE
+> psmirnov(z = round(rnorm(820)), sizes = c(m = 300, n = 520), 
++          q = 1/8, lower.tail = FALSE)
+[1] 0.00038641
+> 
+> ### tied example by Schröer & Trenkler (1995)
+> x <- c(1, 2, 2, 3, 3, 1, 2, 3, 3, 4, 5, 6)
+> psmirnov(z = x, sizes = c(m = 5, n = 7), q = 3 / 7, lower.tail = FALSE)
+[1] 0.2424242
+> psmirnov(z = x, sizes = c(m = 5, n = 7), q = 3 / 7, lower.tail = FALSE, 
++          exact = FALSE, simulate = TRUE, B = B)
+[1] 0.24239
+> psmirnov(z = x, sizes = c(m = 5, n = 7), q = 3 / 7, lower.tail = FALSE, alternative = "greater")
+[1] 0.1780303
+> psmirnov(z = x, sizes = c(m = 5, n = 7), q = 3 / 7, lower.tail = FALSE, alternative = "greater",
++          exact = FALSE, simulate = TRUE, B = B)
+[1] 0.17847
+> psmirnov(z = x, sizes = c(m = 5, n = 7), q = 3 / 7, lower.tail = TRUE, alternative = "greater")
+[1] 0.8219697
+> psmirnov(z = x, sizes = c(m = 5, n = 7), q = 3 / 7, lower.tail = TRUE, alternative = "greater",
++          exact = FALSE, simulate = TRUE, B = B)
+[1] 0.8232
+> 
+> ### check quantiles
+> ### Kim & Jennrich (1973) in Selected Tables in Mathematical Statistics, Vol 1
+> ### (ed. Harter) Institute of Mathematical Statistics, page 129
+> all.equal(qsmirnov(1 - .05, sizes = c(m = 8, n = 6)) * 8 * 6, 34)
+[1] TRUE
+> all.equal(qsmirnov(1 - .01, sizes = c(m = 8, n = 6)) * 8 * 6, 40)
+[1] TRUE
+> all.equal(qsmirnov(1 - .001, sizes = c(m = 8, n = 6)) * 8 * 6, 48)
+[1] TRUE
+> all.equal(qsmirnov(1 - .05, sizes = c(m = 14, n = 10)) * 140, 74)
+[1] TRUE
+> all.equal(qsmirnov(1 - .01, sizes = c(m = 14, n = 10)) * 140, 90)
+[1] TRUE
+> all.equal(qsmirnov(1 - .001, sizes = c(m = 14, n = 10)) * 140, 106)
+[1] TRUE
+> ### Schröer algo
+> all.equal(qsmirnov(1 - .05, sizes = c(m = 8, n = 6), z = 1:14) * 8 * 6, 34)
+[1] TRUE
+> all.equal(qsmirnov(1 - .01, sizes = c(m = 8, n = 6), z = 1:14) * 8 * 6, 40)
+[1] TRUE
+> all.equal(qsmirnov(1 - .001, sizes = c(m = 8, n = 6), z = 1:14) * 8 * 6, 48)
+[1] TRUE
+> all.equal(qsmirnov(1 - .05, sizes = c(m = 14, n = 10), z = 1:24) * 140, 74)
+[1] TRUE
+> all.equal(qsmirnov(1 - .01, sizes = c(m = 14, n = 10), z = 1:24) * 140, 90)
+[1] TRUE
+> all.equal(qsmirnov(1 - .001, sizes = c(m = 14, n = 10), z = 1:24) * 140, 106)
+[1] TRUE
+> ### Monte Carlo
+> all.equal(qsmirnov(1 - .05, sizes = c(m = 8, n = 6), z = 1:14, exact = FALSE, simulate = TRUE, B = B) * 8 * 6, 34)
+[1] TRUE
+> all.equal(qsmirnov(1 - .01, sizes = c(m = 8, n = 6), z = 1:14, exact = FALSE, simulate = TRUE, B = B) * 8 * 6, 40)
+[1] TRUE
+> all.equal(qsmirnov(1 - .001, sizes = c(m = 8, n = 6), z = 1:14, exact = FALSE, simulate = TRUE, B = B) * 8 * 6, 48)
+[1] TRUE
+> all.equal(qsmirnov(1 - .05, sizes = c(m = 14, n = 10), z = 1:24, exact = FALSE, simulate = TRUE, B = B) * 140, 74)
+[1] TRUE
+> all.equal(qsmirnov(1 - .01, sizes = c(m = 14, n = 10), z = 1:24, exact = FALSE, simulate = TRUE, B = B) * 140, 90)
+[1] TRUE
+> all.equal(qsmirnov(1 - .001, sizes = c(m = 14, n = 10), z = 1:24, exact = FALSE, simulate = TRUE, B = B) * 140, 106)
+[1] TRUE
+> 
+> ### without ties
+> q <- qsmirnov(1:9/10, sizes = c(5, 7))
+> p <- psmirnov(q, sizes = c(5, 7))
+> all.equal(qsmirnov(p, sizes = c(5, 7)), q)
+[1] TRUE
+> 
+> ### with ties
+> obs <- c(1, 2, 2, 3, 3, 1, 2, 3, 3, 4, 5, 6)
+> q <- qsmirnov(1:9/10, sizes = c(5, 7), z = obs)
+> p <- psmirnov(q, sizes = c(5, 7), z = obs)
+> all.equal(qsmirnov(p, sizes = c(5, 7), z = obs), q)
+[1] TRUE
+> 
+> ### without ties
+> q <- qsmirnov(1:9/10, sizes = c(5, 7), alternative = "greater")
+> p <- psmirnov(q, sizes = c(5, 7), alternative = "greater")
+> all.equal(qsmirnov(p, sizes = c(5, 7), alternative = "greater"), q)
+[1] TRUE
+> 
+> ### with ties
+> obs <- c(1, 2, 2, 3, 3, 1, 2, 3, 3, 4, 5, 6)
+> q <- qsmirnov(1:9/10, sizes = c(5, 7), z = obs, alternative = "greater")
+> p <- psmirnov(q, sizes = c(5, 7), z = obs, alternative = "greater")
+> all.equal(qsmirnov(p, sizes = c(5, 7), z = obs, alternative = "greater"), q)
+[1] TRUE
+> 
+> ## PR#18582
+> ## <https://bugs.r-project.org/show_bug.cgi?id=18582>
+> ## KS.Test with specific data contradicts itself
+> ## See explanations in the PR: the permutation distributions of the
+> ## one-sided statistics can be different in the case of ties.
+> ## The C code for the exact and MC simulations only implements one-sided
+> ## D_{xy}^+ ("greater"); the R code now knows that D_{xy}^- = D_{yx}^+
+> ## ("less").
+> 
+> x <- scan(text="4.7 5.5 6.7 7.1")
+Read 4 items
+> y <- scan(text="2.3 3.4 4.0 4.3 4.3 4.3 4.5 5.0")
+Read 8 items
+> all.equal(ks.test(x, y, alternative = "less")$p.value,
++           ks.test(y, x, alternative = "greater")$p.value)
+[1] TRUE
+> all.equal(ks.test(y, x, alternative = "less")$p.value,
++           ks.test(x, y, alternative = "greater")$p.value)
+[1] TRUE
+> 
+> proc.time()
+   user  system elapsed 
+  0.762   0.021   0.774 

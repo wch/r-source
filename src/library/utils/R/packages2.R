@@ -1,7 +1,7 @@
 #  File src/library/utils/R/packages2.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2022 The R Core Team
+#  Copyright (C) 1995-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -20,7 +20,7 @@ if (.Platform$OS.type == "windows")
     .install.macbinary <- function(...) NULL	# globalVariables isn't available, so use this to suppress the warning
 
 isBasePkg <- function(pkg) {
-  priority <- tryCatch(packageDescription(pkg, fields = "Priority"),
+  priority <- tryCatch(packageDescription(pkg, fields = "Priority", encoding = NA),
                        error = function(e) e, warning = function(e) e)
   identical(priority, "base")
 }
@@ -168,8 +168,8 @@ install.packages <-
              keep_outputs = FALSE,
              ...)
 {
-    if (!is.character(type))
-        stop("invalid 'type'; must be a character string")
+    if(!(is.character(type) && length(type) == 1L))
+        stop(gettextf("'%s' must be a character string", "type"), domain = NA)
     type2 <- .Platform$pkgType
     if (type == "binary") {
         if (type2 == "source")
@@ -467,6 +467,14 @@ install.packages <-
         action <- getOption("install.packages.compile.from.source",
                             "interactive")
         if(!nzchar(Sys.which(Sys.getenv("MAKE", "make")))) action <- "never"
+
+        ## Combining sources and binaries is currently broken (#18396), so
+        ## at least on macOS we want to avoid it as much as we can. If
+        ## binaries exist for all desired packages (regardless of version),
+        ## sources will be ignored.
+        if (grepl("darwin", R.version$platform) && !length(srcOnly))
+            later[later] <- FALSE
+
         if(any(later)) {
             msg <- ngettext(sum(later),
                             "There is a binary version available but the source version is later",
@@ -497,6 +505,8 @@ install.packages <-
         }
         bins <- bins[!later]
 
+        ## This is unsafe (see above), but if there is no binary, there is really no choice.
+        ## If this fails, the user can still use type='source' to recover.
         if(length(srcOnly)) {
             s2 <- srcOnly[!( available[srcOnly, "NeedsCompilation"] %in% "no" )]
             if(length(s2)) {
@@ -648,7 +658,7 @@ install.packages <-
     env <- character()
 
     tlim <- Sys.getenv("_R_INSTALL_PACKAGES_ELAPSED_TIMEOUT_")
-    tlim <- if(is.na(tlim)) 0 else tools:::get_timeout(tlim)
+    tlim <- if(!nzchar(tlim)) 0 else tools:::get_timeout(tlim)
 
     outdir <- getwd()
     if(is.logical(keep_outputs)) {
@@ -792,7 +802,14 @@ install.packages <-
         if (Ncpus > 1L && nrow(update) > 1L) {
             tlim_cmd <- character()
             if(tlim > 0) {
-                if(nzchar(timeout <- Sys.which("timeout"))) {
+                if(.Platform$OS.type == "windows" &&
+                   !nzchar(Sys.getenv("R_TIMEOUT")) &&
+                   grepl("\\windows\\system32\\", tolower(Sys.which("timeout")),
+                         fixed=TRUE)) {
+
+                    warning("Windows default 'timeout' command is not usable for parallel installs")
+
+                } else if(nzchar(timeout <- Sys.which(Sys.getenv("R_TIMEOUT", "timeout")))) {
                     ## SIGINT works better and is used for system.
                     tlim_cmd <- c(shQuote(timeout), "-s INT", tlim)
                 } else
@@ -864,9 +881,21 @@ install.packages <-
                 tss <- sub("[.]ts$", "", dir(".", pattern = "[.]ts$"))
                 failed <- pkgs[!pkgs %in% tss]
 		for (pkg in failed) system(paste0("cat ", pkg, ".out"))
-                warning(gettextf("installation of one or more packages failed,\n  probably %s",
-                                 paste(sQuote(failed), collapse = ", ")),
-                        domain = NA)
+                n <- length(failed)
+                if (n == 1L)
+                    warning(gettextf("installation of package %s failed",
+                                     sQuote(failed)), domain = NA)
+                else if (n > 1L) {
+                    msg <- paste(sQuote(failed), collapse = ", ")
+                    if(nchar(msg) < 40)
+                        warning(gettextf( "installation of %d packages failed:  %s",
+                                         n, msg),
+                                domain = NA)
+                    else
+                        warning(gettextf( "installation of %d packages failed:\n  %s",
+                                         n, msg),
+                                domain = NA)
+                     }
             }
             if(keep_outputs)
                 file.copy(paste0(update[, 1L], ".out"), outdir)

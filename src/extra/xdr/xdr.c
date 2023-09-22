@@ -113,9 +113,9 @@ xdr_void(/* xdrs, addr */)
  * XDR integers: always 32-bit in R
  */
 bool_t
-xdr_int(xdrs, ip)
-	XDR *xdrs;
-	int *ip;
+xdr_int(
+	XDR *xdrs,
+	int *ip)
 {
 //    return (xdr_long(xdrs, (int32_t *)ip));
 
@@ -132,9 +132,9 @@ xdr_int(xdrs, ip)
  * XDR unsigned integers: always 32-bit in R
  */
 bool_t
-xdr_u_int(xdrs, up)
-	XDR *xdrs;
-	u_int *up;
+xdr_u_int(
+	XDR *xdrs,
+	u_int *up)
 {
 //    return (xdr_u_long(xdrs, (uint32_t *)up));
 
@@ -347,10 +347,10 @@ xdr_enum(xdrs, ep)
  * cp points to the opaque object and cnt gives the byte length.
  */
 bool_t
-xdr_opaque(xdrs, cp, cnt)
-	register XDR *xdrs;
-	caddr_t cp;
-	register u_int cnt;
+xdr_opaque(
+	register XDR *xdrs,
+	caddr_t cp,
+	register u_int cnt)
 {
 	register u_int rndup;
 	static int crud[BYTES_PER_XDR_UNIT];
@@ -374,7 +374,7 @@ xdr_opaque(xdrs, cp, cnt)
 		}
 		if (rndup == 0)
 			return (TRUE);
-		return (XDR_GETBYTES(xdrs, crud, rndup));
+		return (XDR_GETBYTES(xdrs, (caddr_t)crud, rndup));
 	}
 
 	if (xdrs->x_op == XDR_ENCODE) {
@@ -399,11 +399,11 @@ xdr_opaque(xdrs, cp, cnt)
  * If *cpp is NULL maxsize bytes are allocated
  */
 bool_t
-xdr_bytes(xdrs, cpp, sizep, maxsize)
-	register XDR *xdrs;
-	char **cpp;
-	register u_int *sizep;
-	u_int maxsize;
+xdr_bytes(
+	register XDR *xdrs,
+	char **cpp,
+	register u_int *sizep,
+	u_int maxsize)
 {
 	register char *sp = *cpp;  /* sp is the actual string pointer */
 	register u_int nodesize;
@@ -524,10 +524,10 @@ xdr_union(xdrs, dscmp, unp, choices, dfault)
  * of the string as specified by a protocol.
  */
 bool_t
-xdr_string(xdrs, cpp, maxsize)
-	register XDR *xdrs;
-	char **cpp;
-	u_int maxsize;
+xdr_string(
+	register XDR *xdrs,
+	char **cpp,
+	u_int maxsize)
 {
 	register char *sp = *cpp;  /* sp is the actual string pointer */
 	u_int size;

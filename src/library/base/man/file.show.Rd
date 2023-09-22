@@ -27,7 +27,7 @@ file.show(\dots, header = rep("", nfiles),
     and the file-specific header.}
   \item{delete.file}{should the files be deleted after display?  Used
     for temporary files.}
-  \item{pager}{the pager to be used: not used on all platforms}
+  \item{pager}{the pager to be used, see \sQuote{Details}.}
   \item{encoding}{character string giving the encoding to be assumed for
     the file(s).}
 }
@@ -66,10 +66,12 @@ file.show(\dots, header = rep("", nfiles),
 }
 \author{Ross Ihaka, Brian Ripley.}
 \seealso{
-  \code{\link{files}}, \code{\link{list.files}},
-  \code{\link{help}};
-  \code{\link{RShowDoc}} call \code{file.show()} for \code{type =
-  "text"}.  Consider \code{\link{getOption}("pdfviewer")} and
+  \code{\link{file.exists}}, \code{\link{list.files}}.
+
+  Text-type \code{\link{help}} and
+  \code{\link{RShowDoc}} call \code{file.show}.
+
+  Consider \code{\link{getOption}("pdfviewer")} and,
   e.g., \code{\link{system}} for displaying pdf files.
 
   \code{\link{file.edit}}.

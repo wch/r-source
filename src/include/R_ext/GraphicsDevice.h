@@ -788,6 +788,13 @@ struct _DevDesc {
 #else
     SEXP (*capabilities)();
 #endif
+#if R_USE_PROTOTYPES
+    void (*glyph)(int n, int *glyphs, double *x, double *y, 
+                  SEXP font, double size,
+                  int colour, double rot, pDevDesc dd);
+#else
+    void (*glyph)();
+#endif
 
     /* Area for future expansion.
        By zeroing this, devices are more likely to work if loaded

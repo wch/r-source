@@ -1,6 +1,6 @@
 % File src/library/base/man/strsplit.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2017 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{strsplit}
@@ -69,6 +69,13 @@ strsplit(x, split, fixed = FALSE, perl = FALSE, useBytes = FALSE)
   if there is a match at the end of the string, the output is the same
   as with the match removed.
 
+  Note also that if there is an empty match at the beginning of a non-empty
+  string, the first character is returned and the algorithm continues with
+  the rest of the string.  This needs to be kept in mind when designing the
+  regular expressions.  For example, when looking for a word boundary
+  followed by a letter (\code{"[[:<:]]"} with \code{perl = TRUE}), one can
+  disallow a match at the beginning of a string (via \code{"(?!^)[[:<:]]"}).
+
   Invalid inputs in the current locale are warned about up to 5 times.
 }
 \value{
@@ -82,6 +89,19 @@ strsplit(x, split, fixed = FALSE, perl = FALSE, useBytes = FALSE)
   Latin-1 locale.)
   For \code{perl = TRUE, useBytes = FALSE} all non-ASCII strings in a
   multibyte locale are translated to UTF-8.
+
+  If any element of \code{x} or \code{split} is marked as \code{"bytes"}
+  (see \code{\link{Encoding}}), all non-ASCII character strings created by
+  the splitting in the result will be marked as \code{"bytes"}, but encoding
+  of the resulting character strings not split is unspecified (may be
+  \code{"bytes"} or the original).  If no element of \code{x} or
+  \code{split} is marked as \code{"bytes"}, but \code{useBytes = TRUE}, even
+  the encoding of the resulting character strings created by splitting is
+  unspecified (may be \code{"bytes"} or \code{"unknown"}, possibly invalid
+  in the current encoding).  Mixed use of \code{"bytes"} and other marked
+  encodings is discouraged, but if still desired one may use
+  \code{\link{iconv}} to re-encode the result e.g.  to UTF-8 with suitably
+  substituted invalid bytes.
 }
 
 \seealso{

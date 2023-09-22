@@ -1,7 +1,7 @@
 #  File src/library/base/R/dates.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2020 The R Core Team
+#  Copyright (C) 1995-2022 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -28,12 +28,17 @@ as.Date <- function(x, ...) UseMethod("as.Date")
 
 as.Date.POSIXct <- function(x, tz = "UTC", ...)
 {
-    if(tz == "UTC") {
+    switch(tz,
+           "UTC" =, "GMT" =, "Etc/UTC" =, "Etc/GMT" =,
+           "UTC0" =, "UTC+0" =, "UTC-0" =,
+           "GMT0" =, "GMT+0" =, "GMT-0" =
+      {
         z <- floor(unclass(x)/86400)
         attr(z, "tzone") <- NULL
         .Date(z)
-    } else
+      }, # all other timezones:
         as.Date(as.POSIXlt(x, tz = tz))
+      )
 }
 
 as.Date.POSIXlt <- function(x, ...) .Internal(POSIXlt2Date(x))
@@ -46,14 +51,14 @@ as.Date.character <- function(x, format,
                               optional = FALSE, ...)
 {
     charToDate <- function(x) {
-	is.na(x) <- !nzchar(x) # PR#17909
-	xx <- x[1L]
+    is.na(x) <- !nzchar(x) # PR#17909
+    xx <- x[1L]
         if(is.na(xx)) {
             j <- 1L
             while(is.na(xx) && (j <- j+1L) <= length(x)) xx <- x[j]
             if(is.na(xx)) f <- "%Y-%m-%d" # all NAs
         }
-	if(is.na(xx))
+    if(is.na(xx))
             strptime(x, f)
         else {
             for(ff in tryFormats)
@@ -70,30 +75,21 @@ as.Date.character <- function(x, format,
 }
 
 as.Date.numeric <- function(x, origin, ...)
-{
-    if(missing(origin)) {
-        if(!length(x))
-            return(.Date(numeric()))
-        if(!any(is.finite(x)))
-            return(.Date(x))
-        stop("'origin' must be supplied")
-    }
-    as.Date(origin, ...) + x
-}
+    if(missing(origin)) .Date(x) else as.Date(origin, ...) + x
 
 as.Date.default <- function(x, ...)
 {
     if(inherits(x, "Date"))
-	x
+    x
     else if(is.null(x))
         .Date(numeric())
     else if(is.logical(x) && all(is.na(x)))
-	.Date(as.numeric(x))
+    .Date(as.numeric(x))
     else
-	stop(gettextf("do not know how to convert '%s' to class %s",
-		      deparse1(substitute(x)),
-		      dQuote("Date")),
-	     domain = NA)
+    stop(gettextf("do not know how to convert '%s' to class %s",
+              deparse1(substitute(x)),
+              dQuote("Date")),
+         domain = NA)
 }
 
 ## ## Moved to package date
@@ -119,25 +115,20 @@ as.Date.default <- function(x, ...)
 ##                          deparse1(substitute(x)) ))
 ## }
 
-format.Date <- function(x, ...)
-{
-    xx <- format(as.POSIXlt(x), ...)
-    names(xx) <- names(x)
-    xx
-}
+format.Date <- function(x, ...) format(as.POSIXlt(x), ...) # does keep names
 
 ## keep in sync with  print.POSIX?t()  in ./datetime.R
 print.Date <- function(x, max = NULL, ...)
 {
     if(is.null(max)) max <- getOption("max.print", 9999L)
     if(max < length(x)) {
-	print(format(x[seq_len(max)]), max=max+1, ...)
-	cat(" [ reached 'max' / getOption(\"max.print\") -- omitted",
-	    length(x) - max, 'entries ]\n')
+    print(format(x[seq_len(max)]), max=max+1, ...)
+    cat(" [ reached 'max' / getOption(\"max.print\") -- omitted",
+        length(x) - max, 'entries ]\n')
     } else if(length(x))
-	print(format(x), max = max, ...)
+    print(format(x), max = max, ...)
     else
-	cat(class(x)[1L], "of length 0\n")
+    cat(class(x)[1L], "of length 0\n")
     invisible(x)
 }
 
@@ -234,7 +225,7 @@ Summary.Date <- function (..., na.rm)
 `length<-.Date` <- function(x, value)
     .Date(NextMethod(), oldClass(x))
 
-as.character.Date <- function(x, ...) format(x, ...)
+as.character.Date <- function(x, ...) as.character(as.POSIXlt(x), ...)
 
 as.data.frame.Date <- as.data.frame.vector
 
@@ -345,84 +336,84 @@ cut.Date <-
     x <- as.Date(x)
 
     if (inherits(breaks, "Date")) {
-	breaks <- sort(as.Date(breaks))
+    breaks <- sort(as.Date(breaks))
     } else if(is.numeric(breaks) && length(breaks) == 1L) {
-	## specified number of breaks
+    ## specified number of breaks
     } else if(is.character(breaks) && length(breaks) == 1L) {
-	by2 <- strsplit(breaks, " ", fixed = TRUE)[[1L]]
-	if(length(by2) > 2L || length(by2) < 1L)
-	    stop("invalid specification of 'breaks'")
-	valid <-
-	    pmatch(by2[length(by2)],
-		   c("days", "weeks", "months", "years", "quarters"))
-	if(is.na(valid)) stop("invalid specification of 'breaks'")
-	start <- as.POSIXlt(min(x, na.rm=TRUE))
-	if(valid == 1L) incr <- 1L
-	if(valid == 2L) {		# weeks
-	    start$mday <- start$mday - start$wday
-	    if(start.on.monday)
-		start$mday <- start$mday + ifelse(start$wday > 0L, 1L, -6L)
+    by2 <- strsplit(breaks, " ", fixed = TRUE)[[1L]]
+    if(length(by2) > 2L || length(by2) < 1L)
+        stop("invalid specification of 'breaks'")
+    valid <-
+        pmatch(by2[length(by2)],
+           c("days", "weeks", "months", "years", "quarters"))
+    if(is.na(valid)) stop("invalid specification of 'breaks'")
+    start <- as.POSIXlt(min(x, na.rm=TRUE))
+    if(valid == 1L) incr <- 1L
+    if(valid == 2L) {       # weeks
+        start$mday <- start$mday - start$wday
+        if(start.on.monday)
+        start$mday <- start$mday + ifelse(start$wday > 0L, 1L, -6L)
             start$isdst <- -1L
-	    incr <- 7L
-	}
-	if(valid == 3L) {		# months
-	    start$mday <- 1L
+        incr <- 7L
+    }
+    if(valid == 3L) {       # months
+        start$mday <- 1L
             start$isdst <- -1L
             maxx <- max(x, na.rm = TRUE)
-	    end <- as.POSIXlt(maxx)
-	    step <- if(length(by2) == 2L) as.integer(by2[1L]) else 1L
-	    end <- as.POSIXlt(end + (31 * step * 86400))
-	    end$mday <- 1L
+        end <- as.POSIXlt(maxx)
+        step <- if(length(by2) == 2L) as.integer(by2[1L]) else 1L
+        end <- as.POSIXlt(end + (31 * step * 86400))
+        end$mday <- 1L
             end$isdst <- -1L
-	    breaks <- as.Date(seq(start, end, breaks))
+        breaks <- as.Date(seq(start, end, breaks))
             ## 31 days ahead could give an empty level, so
-	    lb <- length(breaks)
-	    if(maxx < breaks[lb-1]) breaks <- breaks[-lb]
-	} else if(valid == 4L) {	# years
-	    start$mon <- 0L
-	    start$mday <- 1L
+        lb <- length(breaks)
+        if(maxx < breaks[lb-1]) breaks <- breaks[-lb]
+    } else if(valid == 4L) {    # years
+        start$mon <- 0L
+        start$mday <- 1L
             start$isdst <- -1L
             maxx <- max(x, na.rm = TRUE)
-	    end <- as.POSIXlt(maxx)
-	    step <- if(length(by2) == 2L) as.integer(by2[1L]) else 1L
-	    end <- as.POSIXlt(end + (366 * step * 86400))
-	    end$mon <- 0L
-	    end$mday <- 1L
+        end <- as.POSIXlt(maxx)
+        step <- if(length(by2) == 2L) as.integer(by2[1L]) else 1L
+        end <- as.POSIXlt(end + (366 * step * 86400))
+        end$mon <- 0L
+        end$mday <- 1L
             end$isdst <- -1L
-	    breaks <- as.Date(seq(start, end, breaks))
+        breaks <- as.Date(seq(start, end, breaks))
             ## 366 days ahead could give an empty level, so
-	    lb <- length(breaks)
-	    if(maxx < breaks[lb-1]) breaks <- breaks[-lb]
-	} else if(valid == 5L) {	# quarters
-	    qtr <- rep(c(0L, 3L, 6L, 9L), each = 3L)
-	    start$mon <- qtr[start$mon + 1L]
-	    start$mday <- 1L
+        lb <- length(breaks)
+        if(maxx < breaks[lb-1]) breaks <- breaks[-lb]
+    } else if(valid == 5L) {    # quarters
+        qtr <- rep(c(0L, 3L, 6L, 9L), each = 3L)
+        start$mon <- qtr[start$mon + 1L]
+        start$mday <- 1L
             start$isdst <- -1L
-	    maxx <- max(x, na.rm = TRUE)
-	    end <- as.POSIXlt(maxx)
-	    step <- if(length(by2) == 2L) as.integer(by2[1L]) else 1L
-	    end <- as.POSIXlt(end + (93 * step * 86400))
-	    end$mon <- qtr[end$mon + 1L]
-	    end$mday <- 1L
+        maxx <- max(x, na.rm = TRUE)
+        end <- as.POSIXlt(maxx)
+        step <- if(length(by2) == 2L) as.integer(by2[1L]) else 1L
+        end <- as.POSIXlt(end + (93 * step * 86400))
+        end$mon <- qtr[end$mon + 1L]
+        end$mday <- 1L
             end$isdst <- -1L
-	    breaks <- as.Date(seq(start, end, paste(step * 3L, "months")))
-	    ## 93 days ahead could give an empty level, so
-	    lb <- length(breaks)
-	    if(maxx < breaks[lb-1]) breaks <- breaks[-lb]
-	} else {
-	    start <- as.Date(start)
-	    if (length(by2) == 2L) incr <- incr * as.integer(by2[1L])
-	    maxx <- max(x, na.rm = TRUE)
-	    breaks <- seq(start, maxx + incr, breaks)
-	    breaks <- breaks[seq_len(1L+max(which(breaks <= maxx)))]
-	}
+        breaks <- as.Date(seq(start, end, paste(step * 3L, "months")))
+        ## 93 days ahead could give an empty level, so
+        lb <- length(breaks)
+        if(maxx < breaks[lb-1]) breaks <- breaks[-lb]
+    } else {
+        start <- as.Date(start)
+        if (length(by2) == 2L) incr <- incr * as.integer(by2[1L])
+        maxx <- max(x, na.rm = TRUE)
+        breaks <- seq(start, maxx + incr, breaks)
+        breaks <- breaks[seq_len(1L+max(which(breaks <= maxx)))]
+    }
     } else stop("invalid specification of 'breaks'")
     res <- cut(unclass(x), unclass(breaks), labels = labels,
-	       right = right, ...)
+           right = right, ...)
     if(is.null(labels)) {
-	levels(res) <-
-	    as.character(if (is.numeric(breaks)) x[!duplicated(res)]
-			 else breaks[-length(breaks)])
+    levels(res) <-
+        as.character(if (is.numeric(breaks)) x[!duplicated(res)]
+             else breaks[-length(breaks)])
     }
     res
 }
@@ -452,8 +443,14 @@ round.Date <- function(x, ...)
 }
 
 ## must avoid truncating forwards dates prior to 1970-01-01.
-trunc.Date <- function(x, ...)
-    round(x - 0.4999999)
+trunc.Date <- function(x, units = c("secs", "mins", "hours", "days", "months", "years"), ...)
+{
+    units <- match.arg(units)
+    if (units == "months" || units == "years")
+        as.Date(trunc.POSIXt(x, units, ...))
+    else
+        round(x - 0.4999999)
+}
 
 rep.Date <- function(x, ...)
 {
@@ -475,6 +472,9 @@ diff.Date <- function (x, lag = 1L, differences = 1L, ...)
             r[-nrow(r):-(nrow(r) - lag + 1L), , drop = FALSE]
     else for (i in seq_len(differences))
         r <- r[i1] - r[-length(r):-(length(r) - lag + 1L)]
+    dots <- list(...)
+    if("units" %in% names(dots) && dots$units != "auto")
+        units(r) <- match.arg(dots$units,  choices = setdiff(eval(formals(difftime)$units), "auto"))
     r
 }
 

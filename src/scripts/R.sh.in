@@ -70,6 +70,7 @@ Options:
   --vanilla		Combine --no-save, --no-restore, --no-site-file,
 			--no-init-file and --no-environ
   --no-readline         Don't use readline for command-line editing
+  --max-connections=N   Set max number of connections to N
   --max-ppsize=N        Set max size of protect stack to N
   --min-nsize=N         Set min number of fixed size obj's (\"cons cells\") to N
   --min-vsize=N         Set vector heap minimum to N bytes; '4M' = 4 MegaB
@@ -190,9 +191,10 @@ while test -n "${1}"; do
       fi
       ;;
     -e)
+      TAB=`printf "\t"`
       if test -n "`echo ${2} | ${SED} 's/^-.*//'`"; then
 	a=`(echo "${2}" && echo) | ${SED} -e 's/ /~+~/g' | \
-          ${SED} -e :a -e N -e '$!ba' -e 's/\n/~n~/g' -e 's/~n~$//g'`
+          ${SED} -e :a -e N -e '$!ba' -e 's/\n/~n~/g' -e 's/~n~$//g' -e "s/$TAB/~t~/g"`
         shift
       else
 	error "option '${1}' requires a non-empty argument"

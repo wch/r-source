@@ -27,9 +27,7 @@ sort.int(x, partial = NULL, na.last = NA, decreasing = FALSE,
     complex, character or logical vector.  For \code{sort.int}, a
     numeric, complex, character or logical vector, or a factor.}
   \item{decreasing}{logical.  Should the sort be increasing or decreasing?
-    For the \code{"radix"} method, this can be a vector of
-    length equal to the number of arguments in \code{\dots}. For the
-    other methods, it must be length one. Not available for partial sorting.}
+    Not available for partial sorting.}
   \item{\dots}{arguments to be passed to or from methods or (for the
     default methods and objects without a class) to \code{sort.int}.}
   \item{na.last}{for controlling the treatment of \code{NA}s.
@@ -115,17 +113,15 @@ sort.int(x, partial = NULL, na.last = NA, decreasing = FALSE,
 
   However, there are some caveats for the radix sort:
   \itemize{
-    \item{
+    \item
       If \code{x} is a \code{character} vector, all elements must share
       the same encoding.  Only UTF-8 (including ASCII) and Latin-1
       encodings are supported.  Collation follows that with
       \env{LC_COLLATE=C}, that is lexicographically byte-by-byte using
       numerical ordering of bytes.
-    }
-    \item{
+    \item
       \link{Long vectors} (with \eqn{2^{31}}{2^31} or more elements)
       and \code{complex} vectors are not supported.
-    }
   }
 }
 

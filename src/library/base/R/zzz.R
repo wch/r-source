@@ -1,7 +1,7 @@
 #  File src/library/base/R/zzz.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2021 The R Core Team
+#  Copyright (C) 1995-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -25,7 +25,7 @@ is.name <- is.symbol
 .knownS3Generics <- local({
 
     ## include the S3 group generics here
-    baseGenerics <- c("Math", "Ops", "Summary", "Complex",
+    baseGenerics <- c("Math", "Ops", "Summary", "Complex", "matrixOps",
         "as.character", "as.data.frame", "as.environment", "as.matrix", "as.vector",
         "cbind", "labels", "print", "rbind", "rep", "seq", "seq.int",
         "plot", "sequence", "solve", "summary", "t")
@@ -58,7 +58,6 @@ is.name <- is.symbol
 
 assign("::", function(pkg, name) NULL, envir = .ArgsEnv)
 assign(":::", function(pkg, name) NULL, envir = .ArgsEnv)
-assign("%*%", function(x, y) NULL, envir = .ArgsEnv)
 assign("...length", function() NULL, envir = .ArgsEnv)
 assign("...names",  function() NULL, envir = .ArgsEnv)
 assign("...elt", function(n) NULL, envir = .ArgsEnv)
@@ -95,6 +94,7 @@ assign("call", function(name, ...) NULL, envir = .ArgsEnv)
 assign("class", function(x) NULL, envir = .ArgsEnv)
 assign("class<-", function(x, value) NULL, envir = .ArgsEnv)
 assign(".cache_class", function(class, extends) NULL, envir = .ArgsEnv)
+assign("declare", function(...) NULL, envir = .ArgsEnv)
 assign("emptyenv", function() NULL, envir = .ArgsEnv)
 assign("enc2native", function(x) NULL, envir = .ArgsEnv)
 assign("enc2utf8", function(x) NULL, envir = .ArgsEnv)
@@ -104,7 +104,7 @@ assign("forceAndCall", function(n, FUN, ...) NULL, envir = .ArgsEnv)
 assign("gc.time", function(on = TRUE) NULL, envir = .ArgsEnv)
 assign("globalenv", function() NULL, envir = .ArgsEnv)
 assign("interactive", function() NULL, envir = .ArgsEnv)
-assign("invisible", function(x) NULL, envir = .ArgsEnv)
+assign("invisible", function(x = NULL) NULL, envir = .ArgsEnv)
 assign("is.atomic", function(x) NULL, envir = .ArgsEnv)
 assign("is.call", function(x) NULL, envir = .ArgsEnv)
 assign("is.character", function(x) NULL, envir = .ArgsEnv)
@@ -146,6 +146,7 @@ assign("storage.mode<-", function(x, value) NULL, envir = .ArgsEnv)
 assign("substitute", function(expr, env) NULL, envir = .ArgsEnv)
 assign("switch", function(EXPR, ...) NULL, envir = .ArgsEnv)
 assign("tracemem", function(x) NULL, envir = .ArgsEnv)
+assign("unCfillPOSIXlt", function(x) NULL, envir = .ArgsEnv)
 assign("unclass", function(x) NULL, envir = .ArgsEnv)
 assign("untracemem", function(x) NULL, envir = .ArgsEnv)
 
@@ -159,7 +160,9 @@ assign("untracemem", function(x) NULL, envir = .ArgsEnv)
     "c", "dim", "dim<-", "dimnames", "dimnames<-",
     "is.array", "is.finite",
     "is.infinite", "is.matrix", "is.na", "is.nan", "is.numeric",
-    "length", "length<-", "levels<-", "names", "names<-", "rep",
+    "length", "length<-", "levels<-",
+    "log2", "log10",
+    "names", "names<-", "rep",
     "seq.int", "xtfrm")
 
 .GenericArgsEnv <- local({
@@ -190,6 +193,13 @@ assign("untracemem", function(x) NULL, envir = .ArgsEnv)
     fx <- function(e1, e2) {}
     for(f in c("+", "-", "*", "/", "^", "%%", "%/%", "&", "|",
                "==", "!=", "<", "<=", ">=", ">")) {
+        body(fx) <- substitute(UseMethod(ff), list(ff=f))
+        environment(fx) <- .BaseNamespaceEnv
+        assign(f, fx, envir = env)
+    }
+
+    fx <- function(x, y) {} ## "matrixOps"
+    for(f in c("%*%")) {
         body(fx) <- substitute(UseMethod(ff), list(ff=f))
         environment(fx) <- .BaseNamespaceEnv
         assign(f, fx, envir = env)
@@ -243,7 +253,7 @@ assign("log", function(x, base=exp(1)) UseMethod("log"),
 assign("names<-", function(x, value) UseMethod("names<-"),
        envir = .GenericArgsEnv)
 assign("rep", function(x, ...) UseMethod("rep"), envir = .GenericArgsEnv)
-assign("round", function(x, digits=0) UseMethod("round"),
+assign("round", function(x, digits = 0, ...) UseMethod("round"),
        envir = .GenericArgsEnv)
 assign("seq.int", function(from, to, by, length.out, along.with, ...)
        UseMethod("seq.int"), envir = .GenericArgsEnv)
@@ -253,20 +263,20 @@ assign("trunc", function(x, ...) UseMethod("trunc"), envir = .GenericArgsEnv)
 #assign("xtfrm", function(x) UseMethod("xtfrm"), envir = .GenericArgsEnv)
 
 ## make this the same object as as.double
-assign("as.numeric", get("as.double", envir = .GenericArgsEnv),
-       envir = .GenericArgsEnv)
+assign("as.numeric", .GenericArgsEnv$as.double, envir = .GenericArgsEnv)
 
 ## Keep this in sync with ../../tools/R/utils.R
 ##   tools:::.make_S3_methods_table_for_base()
 ## for computing the methods table and
 ##   tools:::.deparse_S3_methods_table_for_base()
 ## for obtaining the representation used.
-## Always sort with LC_COLLATE=C.
-.S3_methods_table <-
+## The sorting is "special" (LC_COLLATE = "C", but more), use :
+.S3_methods_table <- ## ==  Sys.setlocale("LC_COLLATE","C"); writeLines(tools:::.deparse_S3_methods_table_for_base())
 matrix(c("!", "hexmode",
          "!", "octmode",
          "$", "DLLInfo",
          "$", "package_version",
+         "$<-", "POSIXlt",
          "$<-", "data.frame",
          "&", "hexmode",
          "&", "octmode",
@@ -403,7 +413,6 @@ matrix(c("!", "hexmode",
          "as.data.frame", "raw",
          "as.data.frame", "table",
          "as.data.frame", "ts",
-         "as.data.frame", "vector",
          "as.double", "POSIXlt",
          "as.double", "difftime",
          "as.expression", "default",
@@ -441,6 +450,7 @@ matrix(c("!", "hexmode",
          "c", "warnings",
          "cbind", "data.frame",
          "chol", "default",
+         "chooseOpsMethod", "default",
          "close", "connection",
          "close", "srcfile",
          "close", "srcfilealias",
@@ -483,12 +493,15 @@ matrix(c("!", "hexmode",
          "format", "summaryDefault",
          "getDLLRegisteredRoutines", "DLLInfo",
          "getDLLRegisteredRoutines", "character",
+         "is.finite", "POSIXlt",
+         "is.infinite", "POSIXlt",
          "is.na", "POSIXlt",
          "is.na", "data.frame",
          "is.na", "numeric_version",
          "is.na<-", "default",
          "is.na<-", "factor",
          "is.na<-", "numeric_version",
+         "is.nan", "POSIXlt",
          "is.numeric", "Date",
          "is.numeric", "POSIXt",
          "is.numeric", "difftime",
@@ -517,6 +530,7 @@ matrix(c("!", "hexmode",
          "months", "Date",
          "months", "POSIXt",
          "mtfrm", "default",
+         "nameOfClass", "default",
          "names", "POSIXlt",
          "names<-", "POSIXlt",
          "open", "connection",
@@ -563,6 +577,8 @@ matrix(c("!", "hexmode",
          "qr", "default",
          "quarters", "Date",
          "quarters", "POSIXt",
+         "range", "Date",
+         "range", "POSIXct",
          "range", "default",
          "rbind", "data.frame",
          "rep", "Date",
@@ -645,3 +661,30 @@ matrix(c("!", "hexmode",
          "xtfrm", "numeric_version"),
        ncol = 2L, byrow = TRUE,
        dimnames = list(NULL, c("generic", "class")))
+
+## Create .as.data.frame.vector :=  deprecated version  as.data.frame.vector
+## which will be used for the now-deprecated as.data.frame.<foo> methods:
+local({
+    bdy <- body(as.data.frame.vector)
+    bdy <- bdy[c(1:2, seq_along(bdy)[-1L])] # taking [(1,2,2:n)] to insert at [2]:
+    ## deprecation warning only when not called by method dispatch from as.data.frame():
+    bdy[[2L]] <- quote(if((sys.nframe() <= 1L ||
+                           (!identical(sys.function(-1L), as.data.frame))
+                          ) && nzchar(Sys.getenv("_R_CHECK_AS_DATA_FRAME_EXPLICIT_METHOD_")))
+	.Deprecated(
+	    msg = gettextf(
+		"Direct call of '%s()' is deprecated.  Use '%s()' or '%s()' instead",
+		"PLACEHOLDER", "as.data.frame.vector", "as.data.frame")))
+    ii <- c(2L, 3L,2L, 3L)
+    stopifnot(identical(bdy[[ii]], "PLACEHOLDER"))
+    ASDFV <- function(fn) {## = our deprecated AS.Data.Frame.Vector()
+        bdy[[ii]] <- fn  # now basically calling `body(.) <- bdy` :
+        as.function(c(as.list(formals(as.data.frame.vector)), list(bdy)), .BaseNamespaceEnv)
+    }
+    ## now replace all the as.data.frame.<foo> methods which were := as.data.frame.vector :
+    for(f in paste0("as.data.frame.",
+                    c("raw", "logical", "integer", "numeric", "complex",
+                      "factor", "ordered", "Date", "difftime", "POSIXct",
+                      "noquote", "numeric_version")))
+        assign(f, ASDFV(f), .BaseNamespaceEnv)
+})

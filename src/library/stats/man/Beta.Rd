@@ -1,6 +1,6 @@
 % File src/library/stats/man/Beta.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2022 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Beta}
@@ -37,21 +37,22 @@ rbeta(n, shape1, shape2, ncp = 0)
   The Beta distribution with parameters \code{shape1} \eqn{= a} and
   \code{shape2} \eqn{= b} has density
   \deqn{f(x)=\frac{\Gamma(a+b)}{\Gamma(a)\Gamma(b)}{x}^{a-1} {(1-x)}^{b-1}%
-  }{\Gamma(a+b)/(\Gamma(a)\Gamma(b))x^(a-1)(1-x)^(b-1)}
+  }{\Gamma(a+b)/(\Gamma(a)\Gamma(b)) x^(a-1) (1-x)^(b-1)}
   for \eqn{a > 0}, \eqn{b > 0} and \eqn{0 \le x \le 1}
   where the boundary values at \eqn{x=0} or \eqn{x=1} are defined as
   by continuity (as limits).
   \cr
   The mean is \eqn{a/(a+b)} and the variance is \eqn{ab/((a+b)^2 (a+b+1))}.
-  These moments and all distributional properties can be defined as
+  If \eqn{a,b > 1}, (or one of them \eqn{=1}), the mode is \eqn{(a-1)/(a+b-2)}.
+  These and all other distributional properties can be defined as
   limits (leading to point masses at 0, 1/2, or 1) when \eqn{a} or
   \eqn{b} are zero or infinite, and the corresponding
   \code{[dpqr]beta()} functions are defined correspondingly.
 
   \code{pbeta} is closely related to the incomplete beta function.  As
   defined by Abramowitz and Stegun 6.6.1
-  \deqn{B_x(a,b) = \int_0^x t^{a-1} (1-t)^{b-1} dt,}{B_x(a,b) =
-    integral_0^x t^(a-1) (1-t)^(b-1) dt,}
+  \deqn{B_x(a,b) = \int_0^x t^{a-1} (1-t)^{b-1} dt,}{
+    B_x(a,b) = integral_0^x t^(a-1) (1-t)^(b-1) dt,}
   and 6.6.2 \eqn{I_x(a,b) = B_x(a,b) / B(a,b)} where
   \eqn{B(a,b) = B_1(a,b)} is the Beta function (\code{\link{beta}}).
 
@@ -61,6 +62,9 @@ rbeta(n, shape1, shape2, ncp = 0)
   is defined (Johnson \emph{et al}, 1995, pp.\sspace{}502) as the distribution of
   \eqn{X/(X+Y)} where \eqn{X \sim \chi^2_{2a}(\lambda)}{X ~ chi^2_2a(\lambda)}
   and \eqn{Y \sim \chi^2_{2b}}{Y ~ chi^2_2b}.
+  There, \eqn{\chi^2_n(\lambda)}{chi^2_n(\lambda)} is the noncentral
+  chi-squared distribution with \eqn{n} degrees of freedom and
+  non-centrality parameter \eqn{\lambda}, see \link{Chisquare}.
 }
 \value{
   \code{dbeta} gives the density, \code{pbeta} the distribution
@@ -97,12 +101,14 @@ rbeta(n, shape1, shape2, ncp = 0)
   Didonato, A. and Morris, A., Jr, (1992)
   Algorithm 708: Significant digit computation of the incomplete beta
   function ratios,
-  \emph{ACM Transactions on Mathematical Software}, \bold{18}, 360--373.
+  \emph{ACM Transactions on Mathematical Software}, \bold{18}, 360--373,
+  \doi{10.1145/131766.131776}.
   (See also\cr
   Brown, B. and Lawrence Levy, L. (1994)
   Certification of algorithm 708: Significant digit computation of the
   incomplete beta,
-  \emph{ACM Transactions on Mathematical Software}, \bold{20}, 393--397.)
+  \emph{ACM Transactions on Mathematical Software}, \bold{20}, 393--397,
+  \doi{10.1145/192115.192155}.)
   \cr %%
   We have slightly tweaked the original \dQuote{TOMS 708} algorithm, and
   enhanced for \code{log.p = TRUE}.  For that (log-scale) case,

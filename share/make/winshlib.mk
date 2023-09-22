@@ -26,7 +26,7 @@ $(SHLIB): $(OBJECTS)
 	  fi \
 	fi
 
-.PHONY: all shlib-clean
+.PHONY: all shlib-clean compilers
 shlib-clean:
 	@rm -f $(OBJECTS) symbols.rds
 
@@ -34,3 +34,8 @@ shlib-clean:
 symbols.rds: $(OBJECTS)
 	@$(ECHO) "tools:::.shlib_objects_symbol_tables()" | \
 	  $(R_HOME)/bin$(R_ARCH)/Rterm.exe --vanilla --no-echo --args $(OBJECTS)
+
+compilers:
+	@$(ECHO) "CC = $(CC)"
+	@$(ECHO) "CXX = $(CXX)"
+	@$(ECHO) "FC = $(FC)"

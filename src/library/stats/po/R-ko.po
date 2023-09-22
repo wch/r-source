@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-11-06 17:17\n"
+"POT-Creation-Date: 2023-07-31 14:59\n"
 "PO-Revision-Date: 2018-04-09 12:10-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team: \n"
@@ -160,10 +160,15 @@ msgstr "'by'는 반드시 리스트이어야 합니다"
 msgid "arguments must have same length"
 msgstr "인자들은 반드시 동일한 길이를 가지고 있어야 합니다"
 
-msgid "'formula' missing or incorrect"
-msgstr "'formula'가 누락되었거나 잘못되었습니다"
+msgid "argument 'x' is  missing -- it has been renamed from 'formula'"
+msgstr ""
 
-msgid "'formula' must have both left and right hand sides"
+#, fuzzy
+msgid "argument 'x' must be a formula"
+msgstr "인자 'x'는 반드시 수치형이어야 합니다"
+
+#, fuzzy
+msgid "formula 'x' must have both left and right hand sides"
 msgstr "'formula'는 반드시 좌변과 우변이 함께 있어야 합니다"
 
 msgid "cannot change frequency from %g to %g"
@@ -213,6 +218,9 @@ msgstr "tie가 있어 정확한 p값을 계산할 수 없습니다"
 
 msgid "cannot compute exact confidence intervals with ties"
 msgstr "tie가 있어 정확한 신뢰구간을 계산할 수 없습니다"
+
+msgid "'formula' missing or incorrect"
+msgstr "'formula'가 누락되었거나 잘못되었습니다"
 
 msgid "grouping factor must have exactly 2 levels"
 msgstr "grouping factor는 반드시 2개의 수준을 가지고 있어야만 합니다"
@@ -490,8 +498,14 @@ msgstr "'k'는 반드시 {1, 2, .. n - 1} 내에 있어야 합니다"
 msgid "only %d of the first %d eigenvalues are > 0"
 msgstr "처음 %2$d개의 고유치들 중 %1$d개만이 양수입니다"
 
-msgid "package 'MASS' must be installed"
-msgstr "패키지 'MASS'가 반드시 설치되어야 합니다."
+msgid "Waiting for profiling to be done..."
+msgstr ""
+
+msgid "Reprofiling for"
+msgstr ""
+
+msgid "statistic. Waiting..."
+msgstr ""
 
 msgid "initial value is not in the interior of the feasible region"
 msgstr "초기값이 feasible region의 내부에 있지 않습니다"
@@ -703,6 +717,9 @@ msgstr "sum(weights) != 1 이므로 이것으로부터 확률밀도를 얻을 �
 msgid "need at least 2 points to select a bandwidth automatically"
 msgstr "bandwidth를 자동으로 선택하기 위해서 적어도 2개의 포인트들이 필요합니다"
 
+msgid "Selecting bandwidth *not* using 'weights'"
+msgstr ""
+
 msgid "unknown bandwidth rule"
 msgstr "알 수 없는 bandwidth rule입니다"
 
@@ -735,6 +752,9 @@ msgstr "'xi'의 차원이 잘못되었습니다"
 
 msgid "'x' is not a vector or matrix"
 msgstr "'x'는 벡터 또는 행렬이 아닙니다"
+
+msgid "x[1] != r[1]; using x[1] for diagonal"
+msgstr ""
 
 msgid "invalid distance method"
 msgstr "유효하지 않은 distance method입니다"
@@ -943,6 +963,9 @@ msgstr "'row.vars' 지정이 잘못되었습니다"
 msgid "incorrect specification for 'col.vars'"
 msgstr "'col.vars' 지정이 잘못되었습니다"
 
+msgid "'formula' must have both left and right hand sides"
+msgstr "'formula'는 반드시 좌변과 우변이 함께 있어야 합니다"
+
 msgid "interactions are not allowed"
 msgstr "interactions을 허용하지 않습니다"
 
@@ -972,6 +995,18 @@ msgstr "'row.var.names'이 빠져있습니다"
 
 msgid "'col.vars' missing or incorrect"
 msgstr "'col.vars'이 빠져있거나 잘못되었습니다"
+
+msgid "Parameter:"
+msgstr ""
+
+msgid "down"
+msgstr ""
+
+msgid "up"
+msgstr ""
+
+msgid "profiling has found a better solution, so original fit had not converged"
+msgstr ""
 
 msgid "'family' not recognized"
 msgstr "인식할 수 없는 'family'입니다"
@@ -1207,6 +1242,12 @@ msgstr ""
 msgid "not enough 'x' data"
 msgstr "충분하지 않은 'x' 데이터입니다"
 
+msgid "Parameter(s)"
+msgstr ""
+
+msgid "ignored"
+msgstr ""
+
 msgid "not enough 'y' data"
 msgstr "충분하지 않은 'y' 데이터입니다"
 
@@ -1216,8 +1257,28 @@ msgstr "tie때문에 p-값은 근사치로 계산될 것입니다"
 msgid "'y' must be numeric or a function or a string naming a valid function"
 msgstr "'y'는 반드시 수치형이거나 함수 또는 유효한 함수를 이름짓는 문자열이어야 합니다"
 
-msgid "ties should not be present for the Kolmogorov-Smirnov test"
+#, fuzzy
+msgid "ties should not be present for the one-sample Kolmogorov-Smirnov test"
 msgstr "Kolmogorov-Smirnov 테스트를 이용할 때는 ties가 있으면 안됩니다"
+
+#, fuzzy
+msgid "invalid arguments"
+msgstr "유효하지 않은 인자 'n'입니다"
+
+#, fuzzy
+msgid "argument 'sizes' must be a vector of length 2"
+msgstr "'interval'은 반드시 길이가 2인 벡터이어야 합니다"
+
+#, fuzzy
+msgid "argument 'q' must be numeric"
+msgstr "인자 'x'는 반드시 수치형이어야 합니다"
+
+msgid "computation of exact probability failed, returning Monte Carlo approximation"
+msgstr ""
+
+#, fuzzy
+msgid "argument 'p' must be numeric"
+msgstr "인자 'x'는 반드시 수치형이어야 합니다"
 
 msgid ""
 "numeric y must be supplied.\n"
@@ -1281,7 +1342,19 @@ msgstr ""
 msgid "calling predict.lm(<fake-lm-object>) ..."
 msgstr "predict.lm(<fake-lm-object>) ...를 호출합니다"
 
-msgid "prediction from a rank-deficient fit may be misleading"
+msgid "prediction from rank-deficient fit"
+msgstr ""
+
+msgid "%s; consider predict(., rankdeficient=\"NA\")"
+msgstr ""
+
+msgid "lower-rank qr: determining non-estimable cases"
+msgstr ""
+
+msgid "%s; attr(*, \"non-estim\") has doubtful cases"
+msgstr ""
+
+msgid "%s: NAs produced for non-estimable cases"
 msgstr ""
 
 msgid "predictions on current data refer to _future_ responses"
@@ -1512,13 +1585,11 @@ msgstr ""
 msgid "'termlabels' must be a character vector of length at least one"
 msgstr "'termlabels'는 반드시 적어도 길이가 1인 문자형 벡터이어야 합니다"
 
+#, fuzzy
+msgid "'%s' must be a character string"
+msgstr "'sep'은 반드시 문자열이어야 합니다"
+
 msgid "Unparseable 'response' \"%s\"; use is deprecated.  Use as.name(.) or `..`!"
-msgstr ""
-
-msgid "reformulate"
-msgstr ""
-
-msgid "deprecatedWarning"
 msgstr ""
 
 msgid "'termobj' must be a object of class %s"
@@ -1539,6 +1610,14 @@ msgstr "'data'는 반드시 리스트 또는 environment이어야 합니다"
 
 msgid "variable '%s' is not a factor"
 msgstr "변수 '%s'는 요인이 아닙니다"
+
+#, fuzzy
+msgid "contrasts dropped from factor %s"
+msgstr "contrasts는 요인들에만 적용합니다"
+
+#, fuzzy
+msgid "contrasts dropped from factor %s due to missing levels"
+msgstr "contrasts는 오로지 2 또는 그 이상의 level들을 가진 요인들에만 적용할 수 있습니다"
 
 msgid "'offset' must be numeric"
 msgstr "'offset'은 반드시 수치형이어야 합니다"
@@ -1737,6 +1816,9 @@ msgstr "'which'는 반드시 1:6내에 있어야 합니다"
 msgid "'id.n' must be in {1,..,%d}"
 msgstr "'id.n'는 반드시 {1,..,%d}내에 있어야 합니다"
 
+msgid "y is empty or has only NAs"
+msgstr "y는 비어 있거나 오로지 NA만을 가집니다"
+
 msgid ""
 "hat values (leverages) are all = %s\n"
 " and there are no factor predictors; no plot no. 5"
@@ -1857,8 +1939,8 @@ msgstr "'p'는 'x'와 'n'과 같은 길이를 가지고 있어야 합니다"
 msgid "elements of 'p' must be in (0,1)"
 msgstr "'p'의 구성요소들은 반드시 (0,1)내에 있어야 합니다"
 
-msgid "y is empty or has only NAs"
-msgstr "y는 비어 있거나 오로지 NA만을 가집니다"
+msgid "'conf.level' is not a probability"
+msgstr ""
 
 msgid "'formula' missing"
 msgstr "'formula'가 없습니다"
@@ -1902,9 +1984,6 @@ msgstr "'ref'는 반드시 존재하는 level이어야 합니다"
 
 msgid "ref = %d must be in 1L:%d"
 msgstr "ref = %d은 반드시 1L:%d 내에 있어야 합니다"
-
-msgid "'sep' must be a character string"
-msgstr "'sep'은 반드시 문자열이어야 합니다"
 
 msgid "failed to guess time-varying variables from their names"
 msgstr ""
@@ -1950,6 +2029,10 @@ msgstr "bandwidth 'k'는 반드시 1 보다 크거나 같아야 하며 홀수이
 
 msgid "argument 'object' has an impossible length"
 msgstr "인수 'object'는 가질 수 없는 길이를 가지고 있습니다"
+
+#, fuzzy
+msgid "right-hand side of formula is not a call"
+msgstr "deriv에 유효하지 않은 formula입니다"
 
 msgid "no 'getInitial' method found for \"%s\" objects"
 msgstr "\"%s\" 객체들에 대한 'getInitial' 메소드를 찾을 수 없습니다"
@@ -2474,6 +2557,9 @@ msgstr[0] "NA, NaNs 그리고/또는 Infs를 가지는 %d 개의 관측치들이
 msgid "'start.innov' is too short: need %d point"
 msgid_plural "'start.innov' is too short: need %d points"
 msgstr[0] ""
+
+#~ msgid "package 'MASS' must be installed"
+#~ msgstr "패키지 'MASS'가 반드시 설치되어야 합니다."
 
 #~ msgid "link \"%s\" not available for quasipoisson family; available links are %s"
 #~ msgstr "링크 \"%s\"는 쿼시포아송 페밀리에서 사용할 수 없습니다.  사용가능한 링크들은 %s입니다"

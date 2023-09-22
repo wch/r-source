@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/postscript.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2019 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{postscript}
@@ -104,7 +104,9 @@ postscript(file = if(onefile) "Rplots.ps" else "Rplot\%03d.ps",
   \item{command}{the command to be used for \sQuote{printing}.  Defaults
     to \code{"default"}, the value of option \code{"printcmd"}.  The
     length limit is \code{2*PATH_MAX},
-    typically 8096 bytes on Unix-alikes and 520 bytes on Windows.
+    typically 8096 bytes on Unix-alikes and 520 bytes on Windows. Recent
+    Windows systems may be configured to use long paths, raising this
+    limit currently to 10000.
   }
   \item{colormodel}{a character string describing the color model:
     currently allowed values as \code{"srgb"}, \code{"srgb+gray"},
@@ -133,7 +135,7 @@ postscript(file = if(onefile) "Rplots.ps" else "Rplot\%03d.ps",
 
   The postscript produced for a single \R plot is EPS (\emph{Encapsulated
     PostScript}) compatible, and can be included into other documents,
-  e.g., into LaTeX, using \code{\\includegraphics{<filename>}}.  For use
+  e.g., into LaTeX, using \samp{\includegraphics{<filename>}}.  For use
   in this way you will probably want to use \code{\link{setEPS}()} to
   set the defaults as \code{horizontal = FALSE, onefile = FALSE, paper =
     "special"}.  Note that the bounding box is for the \emph{device}
@@ -171,7 +173,7 @@ postscript(file = if(onefile) "Rplots.ps" else "Rplot\%03d.ps",
   (conventionally plain, bold, italic, bold-italic and symbol) selected
   by the graphics parameter \code{\link{par}(font = )} or the grid
   parameter \code{\link{gpar}(fontface = )}.  Font families can be
-  specified either as an an initial/default font family for the device
+  specified either as an initial/default font family for the device
   via the \code{family} argument or after the device is opened by
   the graphics parameter \code{\link{par}(family = )} or the grid
   parameter \code{\link{gpar}(fontfamily = )}.  Families which will be

@@ -38,20 +38,20 @@ as.call(x)
     \item{\code{is.call} }{is used to determine whether \code{x} is a call (i.e.,
       of mode \code{"call"} or \code{"("}).  Note that
       \itemize{
-	\item{\code{is.call(x)} is strictly equivalent to
-	  \code{typeof(x) == "language"}.}
-	\item{\code{\link{is.language}()} is also true for calls (but also
+	\item \code{is.call(x)} is strictly equivalent to
+	  \code{typeof(x) == "language"}.
+	\item \code{\link{is.language}()} is also true for calls (but also
 	  for \code{\link{symbol}}s and \code{\link{expression}}s where
-	  \code{is.call()} is false).}
+	  \code{is.call()} is false).
       }
     }
     \item{\code{as.call(x)}: }{Objects of mode \code{"list"} can be coerced to mode \code{"call"}.
       The first element of the list becomes the function part of the call,
       so should be a function or the name of one (as a symbol; a character string will not do).
 
-      If you think of using \code{as.call(<string>)}, consider using
-      \code{\link{str2lang}(*)} which is an efficient version of
-      \code{\link{parse}(text=*)}.
+      If you think of using \code{as.call(\var{string})}, consider using
+      \code{\link{str2lang}(\var{string})} which is an efficient version of
+      \code{\link{parse}(text=\var{string})}.
       Note that \code{\link{call}()} and \code{\link{as.call}()}, when
       applicable, are much preferable to these \code{\link{parse}()} based
       approaches.

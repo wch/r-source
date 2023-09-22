@@ -1,7 +1,7 @@
 #  File src/library/methods/R/methodsTable.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2021 The R Core Team
+#  Copyright (C) 1995-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -72,7 +72,8 @@
            next # empty environment, ignore
        isDef <- vapply(objsWhat, is, logical(1L), "MethodDefinition")
        if (any(isDef)) {
-           sig <- objsWhat[[utils::tail(which(isDef), 1L)]]@defined
+           obj <- objsWhat[[utils::tail(which(isDef), 1L)]]
+           sig <- obj@defined
        } else {
            sig <- anySig
        }
@@ -751,11 +752,13 @@
   if(length(methods) == 1L)
     return(methods[[1L]]) # the method
   else if(length(methods) == 0L) {
-    cnames <- paste0("\"", vapply(classes, as.character, ""), "\"",
+    cnames <- paste0(fdef@signature[seq_along(classes)], ' = "',
+                     vapply(classes, as.character, ""), "\"",
 		     collapse = ", ")
     stop(gettextf("unable to find an inherited method for function %s for signature %s",
                   sQuote(fdef@generic),
                   sQuote(cnames)),
+         call. = FALSE,
          domain = NA)
   }
   else
@@ -1556,8 +1559,7 @@ testInheritedMethods <- function(f, signatures, test = TRUE,  virtual = FALSE,
         mg <- findMethods(fg)
         sigsg <- findMethodSignatures(methods = mg)
         newSigs <- is.na(match(names(mg), mnames))
-        mg <- mg[newSigs]
-        mdefs <- c(mdefs, mg[newSigs])
+        ## mdefs <- c(mdefs, mg[newSigs])
         sigs <- rbind(sigs, sigsg[newSigs,])
         mnames <- c(mnames, names(mg)[newSigs])
       }

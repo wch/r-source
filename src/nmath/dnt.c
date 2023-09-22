@@ -1,6 +1,6 @@
 /*
  *  AUTHOR
- *    Claus Ekstrøm, ekstrom@dina.kvl.dk
+ *    Claus EkstrÃ¸m, ekstrom@dina.kvl.dk
  *    July 15, 2003.
  *
  *  Merge in to R:

@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-11-06 17:17+0100\n"
+"POT-Creation-Date: 2023-07-31 14:59+0200\n"
 "PO-Revision-Date: 2020-08-27 19:07+0900\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -60,9 +60,9 @@ msgid "plot region too large"
 msgstr "область графика слишком велика"
 
 #: graphics.c:1946
-#, fuzzy, c-format
+#, c-format
 msgid "nonfinite axis=%d limits [GScale(%g,%g,..); log=%s] -- corrected now"
-msgstr "неопределенные границы осей [GScale(%g,%g,%d, .); log=%d]"
+msgstr "бесконечные границы для оси=%d [GScale(%g,%g,..); log=%s] -- исправлено"
 
 #: graphics.c:2023
 #, c-format
@@ -159,21 +159,26 @@ msgstr "графический параметр \"%s\" устарел"
 msgid "\"%s\" is not a graphical parameter"
 msgstr "\"%s\" -- не графический параметр"
 
-#: par.c:1116
+#: par.c:1109
+#, fuzzy, c-format
+msgid "argument %d does not name a graphical parameter"
+msgstr "\"%s\" -- не графический параметр"
+
+#: par.c:1117
 msgid "invalid argument passed to par()"
 msgstr "par() передан неправильный аргумент"
 
-#: par.c:1160
+#: par.c:1161
 #, c-format
 msgid "too many rows in layout, limit %d"
 msgstr "слишком много строк в разметке, надо не больше %d"
 
-#: par.c:1166
+#: par.c:1167
 #, c-format
 msgid "too many columns in layout, limit %d"
 msgstr "слишком много колонок в разметке, надо не больше %d"
 
-#: par.c:1168
+#: par.c:1169
 #, c-format
 msgid "too many cells in layout, limit %d"
 msgstr "слишком много ячеек в разметке, надо не больше %d"
@@ -578,7 +583,6 @@ msgstr "все значения z являются NA"
 msgid "long vector '%s' is not supported"
 msgstr "длинный вектор '%s' не поддерживается"
 
-#, c-format
 #~ msgid "plot type '%s' will be truncated to first character"
 #~ msgstr "тип графика '%s' будет обрезан до первого знака"
 

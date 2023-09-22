@@ -4,7 +4,7 @@
 \title{Disappearing Paragraphs When Rendering Sexpr from '*.Rd'}
 \description{An example of \dQuote{disappearing paragraphs} when a
   \verb{\Sexpr} in \file{*.Rd} is rendered to HTML, via
-  \code{\pkg{tools}::\link{Rd2HTML}("...../a0.Rd", stages = "build")}.
+  \code{tools::\link{Rd2HTML}("...../a0.Rd", stages = "build")}.
 }
 \details{
   The following result:

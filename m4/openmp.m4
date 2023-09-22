@@ -1,7 +1,7 @@
 # This file is part of Autoconf.			-*- Autoconf -*-
 # Programming languages support.
 # Copyright (C) 2001-2012 Free Software Foundation, Inc.
-# Copyright (C) 2015-2018 R Core Team
+# Copyright (C) 2015-2023 R Core Team
 
 # This file is part of Autoconf.  This program is free
 # software; you can redistribute it and/or modify it under the
@@ -29,9 +29,10 @@
 # Roland McGrath, Noah Friedman, david d zuhn, and many others.
 
 # [a small part, modified for clang and Intel in 2015,6, Solaris in 2017.]
+# [Change for Intel preferring -fiopenmp and deprecating -fopenmp in 2023.]
 
 # _AC_LANG_OPENMP is a language-dependent program defined in c.m4 in
-# the autoconf library.
+# the autoconf library.  And this is a modification of its AC_OPENMP
 
 # R_OPENMP
 # --------
@@ -56,29 +57,30 @@ AC_DEFUN([R_OPENMP],
 	 [ac_cv_prog_[]_AC_LANG_ABBREV[]_openmp='none needed'],
 	 [ac_cv_prog_[]_AC_LANG_ABBREV[]_openmp='unsupported'
 	  dnl Try these flags:
-	  dnl   GCC >= 4.2, clang >= 3.8 -fopenmp
+	  dnl   GCC >= 4.2, clang >= 3.8, flang-new -fopenmp
 	  dnl   clang 3.7.x	      -fopenmp=libomp
-	  dnl   (-fopenmp is accepted but does not work)
+	  dnl   (-fopenmp was accepted but does not work)
 	  dnl   Oracle C, Fortran     -xopenmp
           dnl   (also accepts -fopenmp as from 12.4, but does not work in 12.5)
-	  dnl   Intel C, Fortran      -qopenmp
+	  dnl   'Classic' Intel C, Fortran      -qopenmp
 	  dnl   Intel                 -openmp (deprecated)
           dnl   (https://software.intel.com/en-us/node/581863,
 	  dnl    https://software.intel.com/en-us/node/525020)
+	  dnl   2023 Intel: prefers -fiopenmp
 	  dnl   SGI C, PGI C          -mp
 	  dnl   Tru64 Compaq C        -omp
 	  dnl   IBM C (AIX, Linux)    -qsmp=omp
           dnl   Cray CCE              -homp
           dnl   NEC SX                -Popenmp
           dnl   Lahey Fortran (Linux) --openmp
-	  dnl   flang                 -mp, also -fopenmp
+	  dnl   Classic flang          -mp, also -fopenmp
 	  dnl If in this loop a compiler is passed an option that it doesn't
 	  dnl understand or that it misinterprets, the AC_LINK_IFELSE test
 	  dnl will fail (since we know that it failed without the option),
 	  dnl therefore the loop will continue searching for an option, and
 	  dnl no output file called 'penmp' or 'mp' is created.
-	  dnl Sept 2017: Solaris needs -xopenmp before -fopenmp
-	  for ac_option in -xopenmp -fopenmp -qopenmp \
+	  dnl Sept 2017: Solaris needs -xopenmp tested before -fopenmp
+	  for ac_option in -xopenmp -fiopenmp -fopenmp -qopenmp \
                            -openmp -mp -omp -qsmp=omp -homp \
 			   -fopenmp=libomp \
                            -Popenmp --openmp; do

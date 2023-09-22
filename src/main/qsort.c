@@ -41,7 +41,7 @@ static void R_qsort_int_R(int *v, double *I, size_t i, size_t j);
 #endif
 
 /* R function  qsort(x, index.return) */
-SEXP attribute_hidden do_qsort(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_qsort(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP x, sx;
     int indx_ret;
@@ -106,7 +106,7 @@ SEXP attribute_hidden do_qsort(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 
-/* These are exposed in Utils.h and are misguidely in the API */
+/* These are exposed in Utils.h and are misguidedly in the API */
 void F77_SUB(qsort4)(double *v, int *indx, int *ii, int *jj)
 {
     R_qsort_I(v, indx, *ii, *jj);

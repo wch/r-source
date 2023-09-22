@@ -1,7 +1,7 @@
 #  File src/library/utils/R/apropos.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2016 The R Core Team
+#  Copyright (C) 1995-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -16,18 +16,26 @@
 #  A copy of the GNU General Public License is available at
 #  https://www.R-project.org/Licenses/
 
-## a list from base-internal.Rd
+## a list from ../../base/man/base-internal.Rd
 .dot_internals <- c(".subset", ".subset2", ".getRequiredPackages",
-                    ".getRequiredPackages2", ".isMethodsDispatchOn",
+                    ".getRequiredPackages2", ".formula2varlist",
+                    ".isMethodsDispatchOn",
                     ".row_names_info", ".set_row_names", ".ArgsEnv",
-                    ".genericArgsEnv", ".TAOCP1997init", ".gt",
+                    ".GenericArgsEnv", ".TAOCP1997init", ".gt",
                     ".gtn", ".primTrace", ".primUntrace",
-                    ".POSIXct", ".POSIXlt", ".cache_class",
-                    ".Firstlib_as_onload",
-                    ".popath", ".mapply", ".detach", ".maskedMsg")
+                    ".Date", ".POSIXct", ".POSIXlt", ".difftime",
+                    ".cache_class",
+                    ".popath", ".detach", ".maskedMsg",
+                    ".doWrap", ".doSortWrap",
+                    ".amatch_bounds", ".amatch_costs", ".check_tzones",
+                    ".encode_numeric_version", ".decode_numeric_version",
+                    ".make_numeric_version",
+                    ".expand_R_libs_env_var", ".kronecker",
+                    ".packageStartupMessage", ".rmpkg")
 
 
-apropos <- function (what, where = FALSE, ignore.case = TRUE, mode = "any")
+apropos <- function (what, where = FALSE, ignore.case = TRUE,
+                     dot_internals=FALSE, mode = "any")
 {
     stopifnot(is.character(what))
     x <- character(0L)
@@ -41,8 +49,8 @@ apropos <- function (what, where = FALSE, ignore.case = TRUE, mode = "any")
 
         ## Treat anything starting with .__, .C_R or .F_ as internal
         li <- grep("^[.](__|C_|F_)", li, invert = TRUE, value = TRUE)
-        if(sp[i] == "package:base") li <- li[! li %in% .dot_internals]
-
+        if(!dot_internals && sp[i] == "package:base")
+	    li <- li[! li %in% .dot_internals]
 	if(length(li)) {
 	    if(check.mode)
 		li <- li[vapply(li, exists, NA, where = i,

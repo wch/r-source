@@ -1,7 +1,7 @@
 #  File src/library/base/R/print.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2020 The R Core Team
+#  Copyright (C) 1995-2022 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -99,13 +99,13 @@ print.noquote <- function(x, quote = FALSE, right = FALSE, ...) {
 }
 
 ## for alias.lm, aov
-print.listof <- function(x, ...)
+print.listof <- function(x, nl = TRUE, ...)
 {
     nn <- names(x)
     ll <- length(x)
     if(length(nn) != ll) nn <- paste("Component", seq.int(ll))
     for(i in seq_len(ll)) {
-	cat(nn[i], ":\n"); print(x[[i]], ...); cat("\n")
+	cat(nn[i], if(nl) ":\n" else ": "); print(x[[i]], ...); if(nl) cat("\n")
     }
     invisible(x)
 }

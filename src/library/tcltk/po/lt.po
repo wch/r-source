@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tcltk 4.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-02-01 13:59+0000\n"
+"POT-Creation-Date: 2023-07-31 14:59+0200\n"
 "PO-Revision-Date: 2020-11-29 16:51+0200\n"
 "Last-Translator: <r.zakauskas@gmail.com;gabriele.dauksaite@gmail.com>\n"
 "Language-Team: Lithuanian\n"
@@ -15,8 +15,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n"
-"%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #: tcltk.c:70
 msgid "parse error in R expression"
@@ -41,8 +40,7 @@ msgstr "neteisingas tclObj - galbūt išsaugota iš kito seanso?"
 
 #: tcltk.c:646
 msgid "argument list is too long in tcltk internal function 'callback_closure'"
-msgstr ""
-"argumentų sąrašas yra per ilgas tcltk vidinėje funkcijoje 'callback_closure'"
+msgstr "argumentų sąrašas yra per ilgas tcltk vidinėje funkcijoje 'callback_closure'"
 
 #: tcltk.c:679
 msgid "argument is not of correct type"
@@ -52,10 +50,10 @@ msgstr "argumentas nėra tinkamo tipo"
 msgid "no DISPLAY variable so Tk is not available"
 msgstr "nėra DISPLAY kintamojo, todėl Tk nėra prieinamas"
 
-#: tcltk_unix.c:94
+#: tcltk_unix.c:111
 msgid "Tcl is not loaded"
 msgstr "Tcl neįkelta"
 
-#: tcltk_unix.c:98
+#: tcltk_unix.c:115
 msgid "Tcl is not last loaded handler"
 msgstr "Tcl nėra paskutinė įkelta apdorojimo programa"

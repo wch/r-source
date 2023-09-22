@@ -383,12 +383,12 @@ that class itself, but then you could just overrwite the object).
  in order to trace a method in a generator object (e.g., "new") rather than
  in the objects generated from that class.
 '
-             .TraceWithMethods(..., where = .self, classMethod = classMethod)
+             methods:::.TraceWithMethods(..., where = .self, classMethod = classMethod)
          },
          untrace = function(..., classMethod = FALSE) {
              ' Untrace the method given as the first argument.
 '
-             .TraceWithMethods(..., untrace=TRUE, where = .self, classMethod=classMethod)
+             methods:::.TraceWithMethods(..., untrace=TRUE, where = .self, classMethod=classMethod)
          },
          show = function() {
 	     if(is.null(cl <- tryCatch(class(.self), error=function(e)NULL))) {

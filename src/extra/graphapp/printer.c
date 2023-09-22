@@ -17,6 +17,10 @@
  *  https://www.R-project.org/Licenses/
  */
 
+/* Copyright (C) 2023      The R Core Team
+   Path length limitations
+ */
+
 /* Support for printer
  *  printer newprinter()  - return a printer object - to draw to the
  *                          printer use drawto(...) and the drawXXX
@@ -27,6 +31,8 @@
 #include "win-nls.h"
 #include "internal.h"
 #include "rui.h"
+
+#include <stdlib.h>
 
 
 /*
@@ -59,9 +65,20 @@ static HDC chooseprinter(void)
     PRINTDLG pd;
     HDC dc;
     DWORD rc;
-    char cwd[MAX_PATH];
+    char *cwd = NULL;
 
-    GetCurrentDirectory(MAX_PATH,cwd);
+    /* FIXME: can PrintDlg change the current directory? */
+    rc = GetCurrentDirectory(0, NULL);
+    if (rc) {
+	cwd = (char *)malloc(rc);
+	if (cwd) {
+	    DWORD rc1 = GetCurrentDirectory(rc, cwd);
+	    if (rc1 <= 0 || rc1 >= rc) {
+		free(cwd);
+		cwd = NULL;
+	    }
+	}
+    }
 
     pd.lStructSize = sizeof( PRINTDLG );
     pd.hwndOwner = NULL;
@@ -83,8 +100,12 @@ static HDC chooseprinter(void)
     pd.hPrintTemplate = (HGLOBAL)0;
     pd.hSetupTemplate = (HGLOBAL)0;
 
+    /* FIXME: use PrintDlgEx? */
     dc = PrintDlg( &pd ) ? pd.hDC : NULL;
-    SetCurrentDirectory(cwd);
+    if (cwd) {
+	SetCurrentDirectory(cwd);
+	free(cwd);
+    }
     if (!dc) {
 	rc = CommDlgExtendedError(); /* 0 means user cancelled */
 	if (rc) R_ShowMessage(G_("Unable to choose printer"));
@@ -147,6 +168,9 @@ printer newprinter(double width, double height, const char *name)
     docinfo.lpszDatatype = 0;
     docinfo.fwType = 0;
 
+    /* Note: this fails when trying to print to a file using a long path,
+       seen on Windows 10 19045, "Microsoft Print to PDF". However, this is
+       the same as with other applications, seems to be a Windows issue. */
     if (StartDoc(hDC, &docinfo) <= 0) {
 	R_ShowMessage(G_("Unable to start the print job"));
 	del(obj);

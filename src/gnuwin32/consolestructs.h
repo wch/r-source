@@ -2,6 +2,7 @@
  *  R : A Computer Language for Statistical Data Analysis
  *  file consolestructs.h
  *  Copyright (C) 2004-8      The R Foundation
+ *  Copyright (C) 2023        The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -65,7 +66,7 @@ struct structConsoleData {
 	prompt_len, prompt_wid; /* editing */
 
     char  chbrk, modbrk;	/* hook for user's break */
-    void  (*fbrk) ();
+    actionfn fbrk;
     
     int cursor_blink;
 
@@ -134,7 +135,7 @@ extern int pagerrow, pagercol;
 #define DIMLBUF 250000          /* console buffer size in chars */
 #define MLBUF   8000            /* console buffer size in lines */
 #define SLBUF   512             /* console buffer shift in lines */
-#define NKEYS   512		/* key input buffer */
+#define NKEYS   5000		/* key input buffer */
 #define TABSIZE 8
 
 xbuf newxbuf(xlong dim, xint ms, xint shift);

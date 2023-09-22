@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: graphics 4.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-11-06 17:17+0100\n"
+"POT-Creation-Date: 2023-07-31 14:59+0200\n"
 "PO-Revision-Date: 2020-12-09 13:20+0200\n"
 "Last-Translator: r.zakauskas@gmail.com;gabriele.dauksaite@gmail.com\n"
 "Language-Team: Lithuanian\n"
@@ -155,21 +155,26 @@ msgstr "grafinis parametras \"%s\" yra nebenaudojamas"
 msgid "\"%s\" is not a graphical parameter"
 msgstr "\"%s\" nėra grafinis parametras"
 
-#: par.c:1116
+#: par.c:1109
+#, fuzzy, c-format
+msgid "argument %d does not name a graphical parameter"
+msgstr "\"%s\" nėra grafinis parametras"
+
+#: par.c:1117
 msgid "invalid argument passed to par()"
 msgstr "netinkamas argumentas perduotas į par()"
 
-#: par.c:1160
+#: par.c:1161
 #, c-format
 msgid "too many rows in layout, limit %d"
 msgstr "per daug eilučių išdėstyme, riba %d"
 
-#: par.c:1166
+#: par.c:1167
 #, c-format
 msgid "too many columns in layout, limit %d"
 msgstr "per daug stulpelių išdėstyme, riba %d"
 
-#: par.c:1168
+#: par.c:1169
 #, c-format
 msgid "too many cells in layout, limit %d"
 msgstr "per daug langelių išdėstyme, riba %d"

@@ -229,12 +229,6 @@ lm(formula, data, subset, weights, na.action,
   in Chambers (1992).  The implementation of model formula by Ross Ihaka
   was based on Wilkinson & Rogers (1973).
 }
-
-\note{
-  Offsets specified by \code{offset} will not be included in predictions
-  by \code{\link{predict.lm}}, whereas those specified by an offset term
-  in the formula will be.
-}
 \examples{
 require(graphics)
 

@@ -26,6 +26,7 @@ C These now all call C functions via F77_NAME(.) in ./print.c :
       character*(*) label
       integer data(ndata)
       integer nc
+      EXTERNAL intpr0
       nc = nchar
       if(nc .lt. 0) nc = len(label)
       call intpr0(label, nc, data, ndata)
@@ -36,6 +37,7 @@ C These now all call C functions via F77_NAME(.) in ./print.c :
       character*(*) label
       real data(ndata)
       integer nc
+      EXTERNAL realp0
       nc = nchar
       if(nc .lt. 0) nc = len(label)
       call realp0(label, nc, data, ndata)
@@ -46,6 +48,7 @@ C These now all call C functions via F77_NAME(.) in ./print.c :
       character*(*) label
       double precision data(ndata)
       integer nc
+      EXTERNAL dblep0
       nc = nchar
       if(nc .lt. 0) nc = len(label)
       call dblep0(label, nc, data, ndata)
@@ -57,6 +60,7 @@ c Avoid 'Rank mismatch warning from gcc 10'
       character*(*) label
       integer var, data(1)
       integer nc
+      EXTERNAL intpr0
       nc = nchar
       if(nc .lt. 0) nc = len(label)
       data(1) = var
@@ -68,6 +72,7 @@ c Avoid 'Rank mismatch warning from gcc 10'
       character*(*) label
       real var, data(1)
       integer nc
+      EXTERNAL realp0
       nc = nchar
       if(nc .lt. 0) nc = len(label)
       data(1) = var
@@ -79,6 +84,7 @@ c Avoid 'Rank mismatch warning from gcc 10'
       character*(*) label
       double precision var, data(1)
       integer nc
+      EXTERNAL dblep0
       nc = nchar
       if(nc .lt. 0) nc = len(label)
       data(1) = var
@@ -90,6 +96,7 @@ c Avoid 'Rank mismatch warning from gcc 10'
       character*(*) label
       integer data(1)
       integer nc
+      EXTERNAL intpr0
       nc = nchar
       if(nc .lt. 0) nc = len(label)
       data(1) = 0
@@ -99,10 +106,12 @@ c Avoid 'Rank mismatch warning from gcc 10'
 C R-only Fortran versions of error and warning
       subroutine rexit(msg)
       character*(*) msg
+      EXTERNAL rexitc
       call rexitc(msg, len(msg))
       end
 
       subroutine rwarn(msg)
       character*(*) msg
+      EXTERNAL rwarnc
       call rwarnc(msg, len(msg))
       end

@@ -1,7 +1,7 @@
 #  File src/library/stats/R/selfStart.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 2001-2021 The R Core Team
+#  Copyright (C) 2001-2023 The R Core Team
 #  Copyright (C) 1997,1999 Jose C. Pinheiro and Douglas M. Bates
 #
 #  This program is free software; you can redistribute it and/or modify
@@ -73,22 +73,17 @@ getInitial.formula <-
     if(!is.null(attr(data, "parameters"))) {
         return(attr(data, "parameters"))
     }
-    #obj <- object                       # kluge to create a copy inside this
-    #object[[1L]] <- as.name("~")	 # function. match.call() is misbehaving
-    switch (length(object),
-            stop("argument 'object' has an impossible length"),
-        {				# one-sided formula
-	    func <- get(as.character(object[[2L]][[1L]]))
-	    getInitial(func, data,
-		       mCall = as.list(match.call(func, call = object[[2L]])),
-                       ...)
-        },
-        {				# two-sided formula
-	    func <- get(as.character(object[[3L]][[1L]]))
-	    getInitial(func, data,
-		       mCall = as.list(match.call(func, call = object[[3L]])),
-		       LHS = object[[2L]], ...)
-        })
+    len <- length(object)
+    if(len == 1L)
+        stop("argument 'object' has an impossible length")
+    LHS <- if(len == 3L) object[[2L]] # else NULL
+    RHS <- object[[len]]
+    if (!is.call(RHS))
+        stop("right-hand side of formula is not a call")
+    func <- eval(RHS[[1L]], environment(object))
+    getInitial(func, data,
+               mCall = as.list(match.call(func, call = RHS)),
+               LHS = LHS, ...)
 }
 
 getInitial.selfStart <-

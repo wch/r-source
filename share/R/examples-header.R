@@ -34,13 +34,15 @@ assign("grid_plot_hook",
 setHook("plot.new",     get("base_plot_hook", pos = "CheckExEnv"))
 setHook("persp",        get("base_plot_hook", pos = "CheckExEnv"))
 setHook("grid.newpage", get("grid_plot_hook", pos = "CheckExEnv"))
-assign("cleanEx",
+assign("cleanEx", evalq(
        function(env = .GlobalEnv) {
 	   rm(list = ls(envir = env, all.names = TRUE), envir = env)
            RNGkind("default", "default", "default")
 	   set.seed(1)
    	   options(warn = 1)
 	   .CheckExEnv <- as.environment("CheckExEnv")
+           if(identical(Sys.getenv("_R_CHECK_SCREEN_DEVICE_"), "stop"))
+               options(editor = function(...) utils:::check_screen_device("editor"))
 	   delayedAssign("T", stop("T used instead of TRUE", domain = NA),
 		  assign.env = .CheckExEnv)
 	   delayedAssign("F", stop("F used instead of FALSE", domain = NA),
@@ -72,7 +74,7 @@ assign("cleanEx",
                }
            }
        },
-       pos = "CheckExEnv")
+       as.environment("CheckExEnv")), pos = "CheckExEnv")
 assign("ptime", proc.time(), pos = "CheckExEnv")
 ## Do this before loading the package,
 ## since packages have been known to change settings.

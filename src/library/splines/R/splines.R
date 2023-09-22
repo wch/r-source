@@ -1,7 +1,7 @@
 #  File src/library/splines/R/splines.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2018 The R Core Team
+#  Copyright (C) 1995-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -17,7 +17,7 @@
 #  https://www.R-project.org/Licenses/
 
 bs <- function(x, df = NULL, knots = NULL, degree = 3, intercept = FALSE,
-               Boundary.knots = range(x))
+               Boundary.knots = range(x), warn.outside = TRUE)
 {
     ord <- 1L + (degree <- as.integer(degree))
     if(ord <= 1) stop("'degree' must be integer >= 1")
@@ -31,7 +31,7 @@ bs <- function(x, df = NULL, knots = NULL, degree = 3, intercept = FALSE,
         (ol <- x < Boundary.knots[1L]) | (or <- x > Boundary.knots[2L])
     } else FALSE
 
-    if(!is.null(df) && is.null(knots)) {
+    if(mk.knots <- !is.null(df) && is.null(knots)) {
 	nIknots <- df - ord + (1L - intercept) # ==  #{inner knots}
         if(nIknots < 0L) {
             nIknots <- 0L
@@ -42,12 +42,31 @@ bs <- function(x, df = NULL, knots = NULL, degree = 3, intercept = FALSE,
             if(nIknots > 0L) {
                 knots <- seq.int(from = 0, to = 1,
                                  length.out = nIknots + 2L)[-c(1L, nIknots + 2L)]
-                quantile(x[!outside], knots)
+                quantile(x[!outside], knots, names=FALSE)
             }
+    }
+    else if(!all(is.finite(knots))) stop("non-finite knots")
+    if(mk.knots && length(knots) && any(lrEq <- range(knots) %in% Boundary.knots)) {
+        if(lrEq[1L]) {
+            aE <- all(i <- knots == (piv <- Boundary.knots[1L]))
+            if(aE)
+                warning("all interior knots match left boundary knot")
+            else
+                knots[i] <- knots[i] + (min(knots[knots > piv]) - piv)/8
+        }
+        if(lrEq[2L]) {
+            aE2 <- all(i <- knots == (piv <- Boundary.knots[2L]))
+            if(aE2)
+                warning("all interior knots match right boundary knot")
+            else
+                knots[i] <- knots[i] - (piv - max(knots[knots < piv]))/8
+        }
+        if(!(lrEq[1L] && aE || lrEq[2L] && aE2)) # haven't warned yet
+            warning("shoving 'interior' knots matching boundary knots to inside")
     }
     Aknots <- sort(c(rep(Boundary.knots, ord), knots))
     if(any(outside)) {
-        warning("some 'x' values beyond boundary knots may cause ill-conditioned bases")
+        if(warn.outside) warning("some 'x' values beyond boundary knots may cause ill-conditioned bases")
         derivs <- 0:degree
         scalef <- gamma(1L:ord)# factorials
         basis <- array(0, c(length(x), length(Aknots) - degree - 1L))
@@ -103,7 +122,7 @@ ns <- function(x, df = NULL, knots = NULL, intercept = FALSE,
 	    Boundary.knots <- x*c(7,9)/8 # symmetrically around x
 	FALSE # rep(FALSE, length = length(x))
     }
-    if(!is.null(df) && is.null(knots)) {
+    if(mk.knots <- !is.null(df) && is.null(knots)) {
         ## df = number(interior knots) + 1 + intercept
         nIknots <- df - 1L - intercept
         if(nIknots < 0L) {
@@ -115,9 +134,25 @@ ns <- function(x, df = NULL, knots = NULL, intercept = FALSE,
             if(nIknots > 0L) {
                 knots <- seq.int(from = 0, to = 1,
                                  length.out = nIknots + 2L)[-c(1L, nIknots + 2L)]
-                quantile(x[!outside], knots)
+                quantile(x[!outside], knots, names=FALSE)
             }
-    } else nIknots <- length(knots)
+    } else {
+        if(!all(is.finite(knots))) stop("non-finite knots")
+        nIknots <- length(knots)
+    }
+    if(mk.knots && length(knots) && any(lrEq <- range(knots) %in% Boundary.knots)) {
+        if(lrEq[1L]) {
+            i <- knots == (piv <- Boundary.knots[1L])
+            if(all(i)) stop("all interior knots match left boundary knot")
+            knots[i] <- knots[i] + (min(knots[knots > piv]) - piv)/8
+        }
+        if(lrEq[2L]) {
+            i <- knots == (piv <- Boundary.knots[2L])
+            if(all(i)) stop("all interior knots match right boundary knot")
+            knots[i] <- knots[i] - (piv - max(knots[knots < piv]))/8
+        }
+        warning("shoving 'interior' knots matching boundary knots to inside")
+    }
     Aknots <- sort(c(rep(Boundary.knots, 4L), knots))
     if(any(outside)) {
         basis <- array(0, c(length(x), nIknots + 4L))

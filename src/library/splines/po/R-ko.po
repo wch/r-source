@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2018-03-29 07:06\n"
+"POT-Creation-Date: 2023-07-31 14:59\n"
 "PO-Revision-Date: 2018-04-09 12:10-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team: \n"
@@ -34,9 +34,7 @@ msgid "need at least %s (=%d) knots"
 msgstr "적어도 %s (=%d) 놋트를 필요로 합니다"
 
 msgid "the 'x' data must be in the range %g to %g unless you set '%s'"
-msgstr ""
-"만약 '%3$s'를 정하지 않았다면, 'x' 데이터는 반드시 %1$g에서 %2$g 범위내에 "
-"있어야 합니다"
+msgstr "만약 '%3$s'를 정하지 않았다면, 'x' 데이터는 반드시 %1$g에서 %2$g 범위내에 있어야 합니다"
 
 msgid "%s needs package 'Matrix' correctly installed"
 msgstr "%s는 올바르게 설치된 패키지 'Matrix'를 필요로 합니다"
@@ -86,7 +84,17 @@ msgstr "'degree'는 반드시 1 보다 크거나 같은 정수이어야 합니�
 msgid "'df' was too small; have used %d"
 msgstr "'df'가 너무 작아 %d의 값이 사용되고 있습니다"
 
-msgid "some 'x' values beyond boundary knots may cause ill-conditioned bases"
+msgid "non-finite knots"
 msgstr ""
-"boundary knots를 넘어서는 일부 'x'값들은 올바르지 ill-conditioned bases를 "
-"유발할 수 있습니다"
+
+msgid "all interior knots match left boundary knot"
+msgstr ""
+
+msgid "all interior knots match right boundary knot"
+msgstr ""
+
+msgid "shoving 'interior' knots matching boundary knots to inside"
+msgstr ""
+
+msgid "some 'x' values beyond boundary knots may cause ill-conditioned bases"
+msgstr "boundary knots를 넘어서는 일부 'x'값들은 올바르지 ill-conditioned bases를 유발할 수 있습니다"

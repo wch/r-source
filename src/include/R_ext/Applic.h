@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998-2018   The R Core Team
+ *  Copyright (C) 1998-2023   The R Core Team
  *
  *  This header file is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -38,7 +38,6 @@
 
 #include <R_ext/Boolean.h>
 #include <R_ext/RS.h>		/* F77_... */
-#include <R_ext/BLAS.h>
 
 #ifdef  __cplusplus
 extern "C" {

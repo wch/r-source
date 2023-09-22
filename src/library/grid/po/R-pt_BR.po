@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-11-06 17:17\n"
+"POT-Creation-Date: 2023-07-31 14:59\n"
 "PO-Revision-Date: 2011-03-26 08:56-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -27,6 +27,21 @@ msgstr "localizações de 'labels' e 'at' devem ter o mesmo comprimento"
 #, fuzzy
 msgid "logical 'label' supplied of length 0"
 msgstr "'label' lógica fornecida com comprimento 0"
+
+#, fuzzy
+msgid "Invalid coordinates"
+msgstr "'frame' inválido"
+
+#, fuzzy
+msgid "Invalid grob coordinates"
+msgstr "Nome(s) de 'grob' inválido(s)"
+
+#, fuzzy
+msgid "Invalid gTree coordinates"
+msgstr "Classe 'gTree' inválida"
+
+msgid "Closed must not be a missing value"
+msgstr ""
 
 #, fuzzy
 msgid "end points must not be identical"
@@ -112,6 +127,9 @@ msgstr ""
 #, fuzzy
 msgid "'gamma' 'gpar' element is defunct"
 msgstr "'gamma' gpar é extinto"
+
+msgid "'fill' gpar list components must all be patterns"
+msgstr ""
 
 #, fuzzy
 msgid "invalid 'linemitre' value"
@@ -339,9 +357,6 @@ msgstr "'frame' inválido"
 msgid "Invalid destination"
 msgstr "Justificação inválida"
 
-msgid "Invalid compositing operator"
-msgstr ""
-
 msgid "Unknown group:"
 msgstr ""
 
@@ -406,6 +421,9 @@ msgstr "listing inválido"
 msgid "invalid 'listing'"
 msgstr "listing inválido"
 
+msgid "Only a grob can be converted to a mask"
+msgstr ""
+
 #, fuzzy
 msgid "invalid 'origin'"
 msgstr "'origin' inválido"
@@ -435,7 +453,12 @@ msgstr ""
 msgid "Missing pattern fill has been set to transparent"
 msgstr ""
 
-msgid "Gradient fill applied to object with no inside"
+msgid ""
+"grob drawing produces more shapes than grob coords\n"
+"(recycling coords)"
+msgstr ""
+
+msgid "Pattern fill applied to object with no inside"
 msgstr ""
 
 #, fuzzy
@@ -524,12 +547,48 @@ msgstr "'r' deve ser um objeto unitário"
 msgid "'x', 'y', 'width', and 'height' must have length 1"
 msgstr "'x', 'y', 'width', e 'height' devem ter comprimento 1"
 
+#, fuzzy
+msgid "Invalid glyph info"
+msgstr "'frame' inválido"
+
+#, fuzzy
+msgid "'x' and 'y' must have length > 0"
+msgstr "'x' e 'y' devem ter comprimento 1"
+
+msgid "'hjust' and 'vjust' must be glyphJust() values"
+msgstr ""
+
+#, fuzzy
+msgid "'hjust' and 'vjust' must have length 1"
+msgstr "'x' e 'y' devem ter comprimento 1"
+
+msgid "Unknown width; using first width"
+msgstr ""
+
+#, fuzzy
+msgid "Unknown anchor; using left justification"
+msgstr "Justificação horizontal inválida"
+
+msgid "Unknown height; using first height"
+msgstr ""
+
+msgid "Unknown anchor; using bottom justification"
+msgstr ""
+
 msgid "'x' and 'units' must have length > 0"
 msgstr "'x' e 'units' devem ter comprimentos > 0"
 
 #, fuzzy
 msgid "invalid 'axis' or 'type'"
 msgstr "'axis' ou 'type' inválido"
+
+#, fuzzy
+msgid "'x' and 'y' must be units and 'device' must be logical"
+msgstr "'x' e 'y' devem ser objetos unitários e devem ter os mesmos comprimentos"
+
+#, fuzzy
+msgid "'w' and 'h' must be units and 'device' must be logical"
+msgstr "'x' e 'y' devem ser objetos unitários e devem ter os mesmos comprimentos"
 
 #, fuzzy
 msgid "Not a unit object"

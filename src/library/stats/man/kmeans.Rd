@@ -1,6 +1,6 @@
 % File src/library/stats/man/kmeans.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2018 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{kmeans}
@@ -16,7 +16,7 @@ K-Means Clustering
 \usage{
 kmeans(x, centers, iter.max = 10, nstart = 1,
        algorithm = c("Hartigan-Wong", "Lloyd", "Forgy",
-                     "MacQueen"), trace=FALSE)
+                     "MacQueen"), trace = FALSE)
 \method{fitted}{kmeans}(object, method = c("centers", "classes"), ...)
 }
 \arguments{
@@ -63,7 +63,7 @@ kmeans(x, centers, iter.max = 10, nstart = 1,
   returning \code{ifault = 4}).  Slight
   rounding of the data may be advisable in that case.
 
-  For ease of programmatic exploration, \eqn{k=1} is allowed, notably
+  For ease of programmatic exploration, \eqn{k = 1} is allowed, notably
   returning the center and \code{withinss}.
 
   Except for the Lloyd--Forgy method, \eqn{k} clusters will always be
@@ -71,6 +71,11 @@ kmeans(x, centers, iter.max = 10, nstart = 1,
   If an initial matrix of centres is supplied, it is possible that
   no point will be closest to one or more centres, which is currently
   an error for the Hartigan--Wong method.
+}
+\note{
+  The clusters are numbered in the returned object, but they are a
+  \emph{set} and no ordering is implied.  (Their apparent ordering may
+  differ by platform.)
 }
 \value{
   \code{kmeans} returns an object of class \code{"kmeans"} which has a
@@ -153,7 +158,10 @@ kmeans(x,1)$withinss # trivial one-cluster, (its W.SS == ss(x))
 
 ## random starts do help here with too many clusters
 ## (and are often recommended anyway!):
+## The ordering of the clusters may be platform-dependent.
+## IGNORE_RDIFF_BEGIN
 (cl <- kmeans(x, 5, nstart = 25))
+## IGNORE_RDIFF_END
 plot(x, col = cl$cluster)
 points(cl$centers, col = 1:5, pch = 8)
 }

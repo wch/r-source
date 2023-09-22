@@ -38,8 +38,7 @@ xyTable(iris[, 3:4], digits = 6)
 
 ## Discretized uncorrelated Gaussian:
 \dontshow{set.seed(1)}
-require(stats)
-xy <- data.frame(x = round(sort(rnorm(100))), y = rnorm(100))
+xy <- data.frame(x = round(sort(stats::rnorm(100))), y = stats::rnorm(100))
 xyTable(xy, digits = 1)
 }
 \keyword{dplot}

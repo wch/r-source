@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2021-10-28 r81109) -- "Unsuffered Consequences"
-Copyright (C) 2021 The R Foundation for Statistical Computing
-Platform: x86_64-pc-linux-gnu (64-bit)
+R Under development (unstable) (2023-07-11 r84677) -- "Unsuffered Consequences"
+Copyright (C) 2023 The R Foundation for Statistical Computing
+Platform: aarch64-apple-darwin22.5.0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -33,7 +33,7 @@ Type 'q()' to quit R.
 > ### Name: CRANtools
 > ### Title: CRAN Package Repository Tools
 > ### Aliases: CRAN_package_db CRAN_check_results CRAN_check_details
-> ###   CRAN_check_issues CRAN_memtest_notes summarize_CRAN_check_status
+> ###   CRAN_check_issues summarize_CRAN_check_status R_CRAN_WEB R_CRAN_SRC
 > 
 > ### ** Examples
 > 
@@ -52,8 +52,8 @@ Type 'q()' to quit R.
 > ### ** Examples
 > 
 > cat(HTMLheader("This is a sample header"), sep="\n")
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head><title>R: This is a sample header</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
@@ -198,20 +198,22 @@ Error in assertWarning(ff()) :
 +     year = 1964,
 +     title = "An Analysis of Transformations",
 +     journal = "Journal of the Royal Statistical Society, Series B",
-+     volume = 26,
-+     pages = "211-252"))
++     volume = 26, number = 2, pages = "211--243",
++     doi = "10.1111/j.2517-6161.1964.tb00553.x"))
 > 
 > bibstyle("unsorted", sortKeys = function(refs) seq_along(refs),
 +     fmtPrefix = function(paper) paste0("[", paper$.index, "]"),
 +        .init = TRUE)
-<environment: 0x10c9b80>
+<environment: 0x126cbf4f8>
 > print(refs, .bibstyle = "unsorted")
 [1] R Core Team (2013). _R: A Language and Environment for Statistical
 Computing_. R Foundation for Statistical Computing, Vienna, Austria.
-<URL: https://www.R-project.org>.
+<https://www.R-project.org>.
 
 [2] Box GEP, Cox DR (1964). "An Analysis of Transformations." _Journal
-of the Royal Statistical Society, Series B_, *26*, 211-252.
+of the Royal Statistical Society, Series B_, *26*(2), 211-243.
+doi:10.1111/j.2517-6161.1964.tb00553.x
+<https://doi.org/10.1111/j.2517-6161.1964.tb00553.x>.
 > 
 > 
 > 
@@ -421,6 +423,32 @@ of the Royal Statistical Society, Series B_, *26*, 211-252.
 > 
 > 
 > cleanEx()
+> nameEx("checkRd")
+> ### * checkRd
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: checkRd
+> ### Title: Check an Rd Object
+> ### Aliases: checkRd
+> ### Keywords: utilities documentation
+> 
+> ### ** Examples
+> 
+> ## parsed Rd from the installed version of _this_ help file
+> rd <- Rd_db("tools")[["checkRd.Rd"]]
+> stopifnot(length(checkRd(rd)) == 0)  # there should be no issues
+> 
+> ## make up \tabular issues
+> bad <- r"(\name{bad}\title{bad}\description{\tabular{p}{1 \tab 2}})"
+> (res <- checkRd(parse_Rd(textConnection(bad))))
+checkRd: (7) <connection>:1: Unrecognized \tabular format: p
+checkRd: (7) <connection>:1: Only 1 column allowed in this table
+> stopifnot(length(res) > 0)
+> 
+> 
+> 
+> cleanEx()
 > nameEx("checkRdaFiles")
 > ### * checkRdaFiles
 > 
@@ -531,9 +559,9 @@ attr(,"match.length")
 > 
 > ### ** Examples
 > 
-> x <- "fa\xE7ile"
+> x <- "fran\xE7ais"
 > encoded_text_to_latex(x, "latin1")
-[1] "fa{\\c c}ile"
+[1] "fran{\\c c}ais"
 > ## Not run: 
 > ##D ## create a tex file to show the upper half of 8-bit charsets
 > ##D x <- rawToChar(as.raw(160:255), multiple = TRUE)
@@ -635,6 +663,23 @@ attr(,"match.length")
 > 
 > ### ** Examples
 > 
+> f <- tempfile()
+> writeLines(r"(
++ \newcommand{\Rlogo}{
++   \if{html}{\figure{Rlogo.svg}{options: width=100 alt="R logo"}}
++   \if{latex}{\figure{Rlogo.pdf}{options: width=0.5in}}
++ }
++ )", f)
+> m <- loadRdMacros(f)
+> ls(m)
+[1] "\\Rlogo"
+> ls(parent.env(parent.env(m)))
+character(0)
+> parse_Rd(textConnection(r"(\Rlogo)"), fragment = TRUE, macros = m)
+
+  \if{html}{\figure{Rlogo.svg}{options: width=100 alt="R logo"}}
+  \if{latex}{\figure{Rlogo.pdf}{options: width=0.5in}}
+
 > 
 > 
 > 
@@ -811,7 +856,7 @@ function (x, ...)
 > ### ** Examples
 > 
 > out <- c(
-+ "fa\xE7ile test of showNonASCII():",
++ "fran\xE7ais: test of showNonASCII():",
 + "\\details{",
 + "   This is a good line",
 + "   This has an \xfcmlaut in it.",
@@ -821,7 +866,7 @@ function (x, ...)
 > cat(out, file = f, sep = "\n")
 > 
 > showNonASCIIfile(f)
-1: fa<e7>ile test of showNonASCII():
+1: fran<e7>ais: test of showNonASCII():
 4:    This has an <fc>mlaut in it.
 > unlink(f)
 > 
@@ -841,8 +886,8 @@ function (x, ...)
 > ### ** Examples
 > 
 > cat(toHTML(demo(package = "base")), sep = "\n")
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head><title>R: R</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
@@ -856,7 +901,7 @@ function (x, ...)
 <a href="/doc/html/index.html"><img class="arrow" src="/doc/html/up.jpg" alt="[Top]" /></a>
 </div>
 <h2>Demos in package &lsquo;base&rsquo;</h2>
-<table cols="2" width="100%">
+<table cols="2" style="width: 100%;">
 <tr>
  <td style="text-align: left; vertical-align: top; width: 10%;">
 error.catching
@@ -954,7 +999,18 @@ An illustration of lexical scoping.
 > 
 > ## IGNORE_RDIFF_BEGIN
 > R_user_dir("FOO", "cache")
-[1] "/data/gannet/ripley/.cache/R/FOO"
+[1] "/Users/ripley/Library/Caches/org.R-project.R/R/FOO"
+> ## Create one, platform agnostically, must work if <normal> :
+> (Rdb <- R_user_dir("base"))
+[1] "/Users/ripley/Library/Application Support/org.R-project.R/R/base"
+> if(noD <- !dir.exists(Rdb)) # should work user specifically:
++     dir.create(Rdb, recursive=TRUE)
+> stopifnot(dir.exists(Rdb)) # "everywhere"
+> dir(Rdb) # typically empty
+character(0)
+> if(noD) unlink(Rdb) # cleaning up
+> list.files(R_user_dir("grid"), full.names = TRUE)
+character(0)
 > ## IGNORE_RDIFF_END
 > 
 > 
@@ -1067,23 +1123,28 @@ List of 5
 +   "  # calls with domain=NA are skipped",
 +   "  if (x == 0) cat(gettext('x is 0!\n', domain=NA))",
 +   "  # gettext strings may be ignored due to 'outer' domain=NA",
-+   "  if (x > 10) stop('x is ', gettextf('%.2f', x), domain=NA)",
++   "  if (x > 10) warning('x is ', gettextf('%.2f', x), domain=NA)",
++   "  # using a custom condition class",
++   "  if (x == 42)",
++   "    stop(errorCondition(gettext('needs Deep Thought'), class='myError'))",
 +   "  x",
 +   "}")
 > 
 > writeLines(fnChar, con = file.path(tmpRDir, "foo.R"))
 > 
 > ## [[1]] : suppressing (tmpfile) name to make example Rdiff-able
-> xgettext(tmpPkg, asCall=TRUE )[[1]] # default; shows  ' sqrt(as.complex(x)) '
+> xgettext(tmpPkg, asCall=TRUE )[[1]] # default; shows calls
 too small
 sqrt(x) is
 sqrt(as.complex(x))
 , which may be too small
+errorCondition(gettext("needs Deep Thought"), class = "myError")
 > xgettext(tmpPkg, asCall=FALSE)[[1]] # doesn't ; but then ' %.2f '
 too small
 sqrt(x) is
 , which may be too small
 %.2f
+needs Deep Thought
 > 
 > unlink(tmpRDir, recursive=TRUE)
 > 
@@ -1094,7 +1155,7 @@ sqrt(x) is
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  0.194 0.035 0.289 0 0 
+Time elapsed:  0.132 0.012 0.145 0 0 
 > grDevices::dev.off()
 null device 
           1 

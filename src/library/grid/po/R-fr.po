@@ -7,16 +7,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.0.4\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-11-06 17:17\n"
-"PO-Revision-Date: 2021-02-10 17:42+0100\n"
-"Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
+"POT-Creation-Date: 2023-07-31 14:59\n"
+"PO-Revision-Date: 2022-08-31 15:04+0000\n"
+"Last-Translator: Marcel Ramos <marcel.ramos@sph.cuny.edu>\n"
 "Language-Team: French <R-core@r-project.org>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 2.4.2\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 4.13.1\n"
 
 msgid "invalid 'at' location in 'axis'"
 msgstr "position 'at' incorrecte dans 'axis'"
@@ -29,6 +29,21 @@ msgstr "'labels' et 'at' doivent être de même longueur"
 
 msgid "logical 'label' supplied of length 0"
 msgstr "la valeur logique 'label' est de longueur nulle"
+
+#, fuzzy
+msgid "Invalid coordinates"
+msgstr "'order' incorrect"
+
+#, fuzzy
+msgid "Invalid grob coordinates"
+msgstr "nom de 'grob' incorrect"
+
+#, fuzzy
+msgid "Invalid gTree coordinates"
+msgstr "classe \"gTree\" incorrecte"
+
+msgid "Closed must not be a missing value"
+msgstr ""
 
 msgid "end points must not be identical"
 msgstr "les points extrêmes ne peuvent être identiques"
@@ -98,6 +113,9 @@ msgstr "mélange de valeurs et de valeurs manquantes pour %s"
 
 msgid "'gamma' 'gpar' element is defunct"
 msgstr "'gamma' 'gpar' n'existe plus"
+
+msgid "'fill' gpar list components must all be patterns"
+msgstr ""
 
 msgid "invalid 'linemitre' value"
 msgstr "valeur 'linemitre' incorrecte"
@@ -263,34 +281,28 @@ msgid "Invalid revert target"
 msgstr "Cible incorrecte pour 'revert'"
 
 msgid "can only reorder 'children' for a \"gTree\""
-msgstr "il est seulement possible de définir 'children' dans  un objet \"gTree\""
+msgstr "ne peut réorganiser les 'children' que pour un \"gTree\""
 
 msgid "Invalid 'order'"
 msgstr "'order' incorrect"
 
 msgid "Group definition failed"
-msgstr ""
+msgstr "la définition du groupe a échoué"
 
-#, fuzzy
 msgid "Invalid source"
-msgstr "'order' incorrect"
+msgstr "Source invalide"
 
-#, fuzzy
 msgid "Invalid destination"
-msgstr "justification incorrecte"
-
-msgid "Invalid compositing operator"
-msgstr ""
+msgstr "Destination invalide"
 
 msgid "Unknown group:"
-msgstr ""
+msgstr "Groupe inconnu :"
 
 msgid "Invalid transform (nothing drawn)"
-msgstr ""
+msgstr "Transformation invalide (rien de dessiné)"
 
-#, fuzzy
 msgid "Invalid transform"
-msgstr "'order' incorrect"
+msgstr "Transformation invalide"
 
 msgid "'l' must be a layout"
 msgstr "'l' doit être une mise en page (layout)"
@@ -337,11 +349,15 @@ msgstr "listing incorrect"
 msgid "invalid 'listing'"
 msgstr "'listing' incorrect"
 
+#, fuzzy
+msgid "Only a grob can be converted to a mask"
+msgstr "Seul un grob peut être converti en chemin"
+
 msgid "invalid 'origin'"
 msgstr "'origin' incorrecte"
 
 msgid "Only a grob can be converted to a path"
-msgstr ""
+msgstr "Seul un grob peut être converti en chemin"
 
 #, fuzzy
 msgid "colours and stops must be at least length 1"
@@ -360,12 +376,18 @@ msgid "x, y, width, and height must all be length 1"
 msgstr "'x', 'y', 'width' et 'height' doivent tous de longueur 1"
 
 msgid "Pattern must be based on grob"
-msgstr ""
+msgstr "Le modèle doit être basé sur le grob"
 
 msgid "Missing pattern fill has been set to transparent"
 msgstr "Le pattern de remplissage manquant est remplacé par un remplissage transparent"
 
-msgid "Gradient fill applied to object with no inside"
+msgid ""
+"grob drawing produces more shapes than grob coords\n"
+"(recycling coords)"
+msgstr ""
+
+#, fuzzy
+msgid "Pattern fill applied to object with no inside"
 msgstr "Remplissage en gradient appliqué à un objet qui n’a pas de contenu"
 
 msgid "'length' must be a 'unit' object"
@@ -446,11 +468,47 @@ msgstr "'r' doit être un objet 'unit'"
 msgid "'x', 'y', 'width', and 'height' must have length 1"
 msgstr "'x', 'y', 'width' et 'height' doivent tous de longueur 1"
 
+#, fuzzy
+msgid "Invalid glyph info"
+msgstr "Transformation invalide"
+
+#, fuzzy
+msgid "'x' and 'y' must have length > 0"
+msgstr "'x' et 'y' doivent être de longueur unitaire"
+
+msgid "'hjust' and 'vjust' must be glyphJust() values"
+msgstr ""
+
+#, fuzzy
+msgid "'hjust' and 'vjust' must have length 1"
+msgstr "'x' et 'y' doivent être de longueur unitaire"
+
+msgid "Unknown width; using first width"
+msgstr ""
+
+#, fuzzy
+msgid "Unknown anchor; using left justification"
+msgstr "justification horizontale incorrecte"
+
+msgid "Unknown height; using first height"
+msgstr ""
+
+msgid "Unknown anchor; using bottom justification"
+msgstr ""
+
 msgid "'x' and 'units' must have length > 0"
 msgstr "'x' et 'units' doivent avoir une longueur positive"
 
 msgid "invalid 'axis' or 'type'"
 msgstr "'axis' ou 'type' incorrect"
+
+#, fuzzy
+msgid "'x' and 'y' must be units and 'device' must be logical"
+msgstr "'x' et 'y' doivent être des objets 'unit' et doivent avoir la même longueur"
+
+#, fuzzy
+msgid "'w' and 'h' must be units and 'device' must be logical"
+msgstr "'x' et 'y' doivent être des objets 'unit' et doivent avoir la même longueur"
 
 msgid "Not a unit object"
 msgstr "Ce n’est pas un objet 'unit'"
@@ -551,6 +609,9 @@ msgid "invalid viewport name"
 msgid_plural "invalid viewport names"
 msgstr[0] "nom de vue incorrect"
 msgstr[1] "noms de vues incorrects"
+
+#~ msgid "Invalid compositing operator"
+#~ msgstr "Opérateur de composition invalide"
 
 #~ msgid "'x' argument must be a unit object"
 #~ msgstr "l'argument 'x' doit être un objet unité"

@@ -1,7 +1,7 @@
 #  File src/library/utils/R/citation.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2022 The R Core Team
+#  Copyright (C) 1995-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -40,7 +40,7 @@ function(given = NULL, family = NULL, middle = NULL,
                          paste(names(args)[!args_length_ok],
                                collapse = ", ")),
                 domain = NA)
-    args <- lapply(args, function(x) rep_len(x, max(args_length)))
+    args <- lapply(args, rep_len, max(args_length))
 
     ## <COMMENT Z>
     ## We could do this more elegantly, but let's just go through the
@@ -81,20 +81,24 @@ function(given = NULL, family = NULL, middle = NULL,
             family <- last
         }
 
-        ## Set all empty arguments to NULL.
-        if(.is_not_nonempty_text(given)) given <- NULL
-        if(.is_not_nonempty_text(family)) family <- NULL
-        if(.is_not_nonempty_text(email)) email <- NULL
-        if(.is_not_nonempty_text(role)) {
-            if(!is.null(role))
-                warning(sprintf(ngettext(length(role),
-                                         "Invalid role specification: %s.",
-                                         "Invalid role specifications: %s."),
-                                paste(sQuote(role), collapse = ", ")),
-                        domain = NA)
-            role <- NULL
-        }
-        if(.is_not_nonempty_text(comment)) comment <- NULL
+        ## Canonicalize: set all empty arguments to NULL, and remove
+        ## leading/trailing whitespace otherwise (which in turn coerces
+        ## to character).
+        ## In principle, all non-NULL arguments whould be character:
+        ## maybe this should be checked for?
+        .canonicalize <- function(s)
+            if(.is_not_nonempty_text(s)) NULL else trimws(s)
+        given <- .canonicalize(given)
+        family <- .canonicalize(family)
+        email <- .canonicalize(email)
+        if(.is_not_nonempty_text(role) && !is.null(role))
+            warning(sprintf(ngettext(length(role),
+                                     "Invalid role specification: %s.",
+                                     "Invalid role specifications: %s."),
+                            paste(sQuote(role), collapse = ", ")),
+                    domain = NA)
+        role <- .canonicalize(role)
+        comment <- .canonicalize(comment)
 
         ## <FIXME>
         ## Use something along the lines of
@@ -191,7 +195,7 @@ function(x, i)
 print.person <-
 function(x, ...)
 {
-    if(length(x)) print(format(x, ...))
+    if(length(x)) print(format(x, ...)) else cat("person()\n")
     invisible(x)
 }
 
@@ -427,7 +431,7 @@ function(x,
     if(style == "R") return(.format_person_as_R_code(x))
 
     args <- c("given", "family", "email", "role", "comment")
-    include <- sapply(include, match.arg, args)
+    include <- vapply(include, match.arg, "", args)
 
     ## process defaults
     braces <- braces[args]
@@ -482,7 +486,7 @@ function(x,
 	paste(do.call(c, rval), collapse = " ")
     }
 
-    sapply(x, format_person1)
+    vapply(x, format_person1, "")
 }
 
 as.character.person <-
@@ -490,13 +494,17 @@ function(x, ...)
     format(x, ...)
 
 toBibtex.person <-
-function(object, ...)
+function(object, escape = FALSE, ...)
 {
-    object <- sapply(object, function(p) {
+    object <- vapply(object, function(p) {
          br <- if(is.null(p$family)) c("{", "}") else c("", "")
-         format(p, include = c("family", "given"),
-                braces = list(given = br, family = c("", ",")))
-    })
+         s <- format(p, include = c("family", "given"),
+                     braces = list(given = br, family = c("", ",")))
+         if(isTRUE(escape) &&
+            (Encoding(s <- enc2utf8(s)) == "UTF-8"))
+             tools::encoded_text_to_latex(s, "UTF-8")
+         else s
+    }, "")
     paste(object[nzchar(object)], collapse = " and ")
 }
 
@@ -518,6 +526,8 @@ function(x)
     x
 }
 
+as.data.frame.person <- as.data.frame.vector
+
 ######################################################################
 
 bibentry <-
@@ -529,7 +539,7 @@ function(bibtype, textVersion = NULL, header = NULL, footer = NULL, key = NULL,
 
     args <- c(list(...), other)
     if(!length(args))
-        return(.bibentry())
+        return(.bibentry(list(), mheader, mfooter))
     if(any(vapply(names(args), .is_not_nonempty_text, NA)))
         stop("all fields have to be named")
 
@@ -546,7 +556,7 @@ function(bibtype, textVersion = NULL, header = NULL, footer = NULL, key = NULL,
                          paste(names(args)[!args_length_ok],
                                collapse = ", ")),
                 domain = NA)
-    args <- lapply(args, function(x) rep_len(x, max_length))
+    args <- lapply(args, rep_len, max_length)
 
     other_length <- lengths(other)
     if(!all(other_length_ok <- other_length %in% c(1L, max_length)))
@@ -554,7 +564,7 @@ function(bibtype, textVersion = NULL, header = NULL, footer = NULL, key = NULL,
                          paste(names(other)[!other_length_ok],
                                collapse = ", ")),
                 domain = NA)
-    other <- lapply(other, function(x) rep_len(x, max_length))
+    other <- lapply(other, rep_len, max_length)
 
     bibentry1 <-
     function(bibtype, textVersion, header = NULL, footer = NULL, key = NULL, ..., other = list())
@@ -583,10 +593,23 @@ function(bibtype, textVersion = NULL, header = NULL, footer = NULL, key = NULL,
         ## canonicalize
         pos <- fields %in% c("author", "editor")
 	if(any(pos)) {
-            for(i in which(pos)) rval[[i]] <- as.person(rval[[i]])
+            for(i in which(pos))
+                rval[[i]] <- as.person(rval[[i]])
 	}
 	if(any(!pos)) {
-            for(i in which(!pos)) rval[[i]] <- as.character(rval[[i]])
+            for(i in which(!pos)) {
+                s <- trimws(as.character(rval[[i]]))
+                ## <NOTE>
+                ## Further above we did
+                ##   rval <- rval[!vapply(rval, .is_not_nonempty_text, NA)]
+                ## which filters out args with *any* NA.
+                ## We could perhaps change this to test with not all NA
+                ## instead, in which case the NA test below would come
+                ## into action.
+                rval[[i]] <- paste(s[!is.na(s) & nzchar(s)],
+                                   collapse = " ")
+                ## </NOTE>
+            }
 	}
 
         ## set attributes
@@ -608,19 +631,18 @@ function(bibtype, textVersion = NULL, header = NULL, footer = NULL, key = NULL,
                            c(lapply(args, `[[`, i),
                              list(other = lapply(other, `[[`, i)))))
 
-    ## add main header/footer for overall bibentry vector
-    if(!.is_not_nonempty_text(mheader))
-        attr(rval, "mheader") <- paste(mheader, collapse = "\n")
-    if(!.is_not_nonempty_text(mfooter))
-        attr(rval, "mfooter") <- paste(mfooter, collapse = "\n")
-
-    .bibentry(rval)
+    .bibentry(rval, mheader, mfooter)
 }
 
 .bibentry <-
-function(x = list())
+function(x = list(), mheader = NULL, mfooter = NULL)
 {
     class(x) <- "bibentry"
+    ## add main header/footer for overall bibentry vector
+    if(!.is_not_nonempty_text(mheader))
+        attr(x, "mheader") <- paste(mheader, collapse = "\n")
+    if(!.is_not_nonempty_text(mfooter))
+        attr(x, "mfooter") <- paste(mfooter, collapse = "\n")
     x
 }
 
@@ -655,7 +677,7 @@ function(x)
 {
     if(!length(x)) return(character())
     keys <- lapply(unclass(x), attr, "key")
-    keys[!vapply(keys, length, 0L)] <- ""
+    keys[!lengths(keys)] <- ""
     unlist(keys)
 }
 
@@ -705,8 +727,8 @@ function(style)
 
 format.bibentry <-
 function(x, style = "text", .bibstyle = NULL,
-         citation.bibtex.max = getOption("citation.bibtex.max", 1),
-         bibtex = length(x) <= citation.bibtex.max,
+         bibtex = length(x) <= 1, # *NOT* using option("citation.bibtex.max") here
+         citMsg = missing(bibtex),
          sort = FALSE,
          macros = NULL,
          ...)
@@ -717,10 +739,6 @@ function(x, style = "text", .bibstyle = NULL,
 
     if(sort) x <- sort(x, .bibstyle = .bibstyle)
     x$.index <- as.list(seq_along(x))
-    if(!missing(citation.bibtex.max))
-	warning(gettextf("Argument '%s' is deprecated; rather set '%s' instead.",
-			 "citation.bibtex.max", "bibtex=*"),
-                domain = NA)
 
     format_via_Rd <- function(f) {
         out <- file()
@@ -729,13 +747,13 @@ function(x, style = "text", .bibstyle = NULL,
         permissive <-
             Sys.getenv("_R_UTILS_FORMAT_BIBENTRY_VIA_RD_PERMISSIVE_",
                        "TRUE")
-        permissive <- tools:::config_val_to_logical(permissive)
-        macros <- if(is.null(macros))
-		      tools:::initialRdMacros()
-                  else if(is.character(macros))
-		      tools::loadRdMacros(macros,
+        permissive <- str2logical(permissive)
+        if(is.null(macros))
+            macros <- tools:::initialRdMacros()
+        else if(is.character(macros))
+            macros <- tools::loadRdMacros(macros,
                                           tools:::initialRdMacros())
-        sapply(.bibentry_expand_crossrefs(x),
+        vapply(.bibentry_expand_crossrefs(x),
                function(y) {
                    txt <- tools::toRd(y, style = .bibstyle)
                    ## <FIXME>
@@ -750,24 +768,25 @@ function(x, style = "text", .bibstyle = NULL,
                                          permissive = permissive,
                                          macros = macros)
                    rd <- tools:::processRdSexprs(rd,
-                                                 "build",
+                                                 "install",
                                                  macros = attr(rd, "macros"))
-                   f(rd, fragment = TRUE, out = out, ...)
-                   paste(readLines(out), collapse = "\n")
-               })
+                   f(rd, fragment = TRUE, out = out,
+                     outputEncoding = "UTF-8", ...)
+                   paste(readLines(out, encoding = "UTF-8"),
+                         collapse = "\n")
+               },
+               "")
     }
 
-    format_as_citation <- function(x, msg) {
+    format_as_citation <- function(x, msg) { # also (.., bibtex)
         m <- attr(x, "mheader")
         if(is.null(m) &&
-           is.null(x$header) &&
+           is.null(unlist(x$header)) &&
            !is.null(p <- attr(x, "package")))
             m <- gettextf("To cite package %s in publications use:",
                           sQuote(p))
         i <- !is.null(m)
-        c(character(),
-          if(i)
-              paste(strwrap(m), collapse = "\n"),
+        c(paste(strwrap(m), collapse = "\n"),
           unlist(lapply(x, function(y) {
               h <- y$header
               j <- !is.null(h)
@@ -788,10 +807,16 @@ function(x, style = "text", .bibstyle = NULL,
           })),
 	  paste(strwrap(c(attr(x, "mfooter"),
 			  if(!bibtex && msg)
-  "To see these entries in BibTeX format, use 'print(<citation>, bibtex=TRUE)',
-  'toBibtex(.)', or set 'options(citation.bibtex.max=999)'."
-		)), collapse = "\n")
-          )
+                          {
+			      prt <- sys.nframe() > 4L && sys.call(-4L)[[1L]] == quote(print.bibentry)
+			      c(if(!is.null(attr(x, "mfooter"))) "",
+                                paste0(
+		"To see these entries in BibTeX format, use '", if(prt) "print" else "format",
+		"(<citation>, bibtex=TRUE)', ",
+		if(prt)"'toBibtex(.)', or set 'options(citation.bibtex.max=999)'." else "or 'toBibtex(.)'."))
+                          }
+                )), collapse = "\n")
+         )
     }
 
     out <-
@@ -809,9 +834,7 @@ function(x, style = "text", .bibstyle = NULL,
                    out[!lengths(out)] <- ""
                    unlist(out)
                },
-               "citation" = format_as_citation(.bibentry(x),
-                                               msg = missing(bibtex) &&
-                                                   missing(citation.bibtex.max)),
+               "citation" = format_as_citation(.bibentry(x), msg = citMsg),
                "R" = .format_bibentry_as_R_code(x, ...)
                )
     as.character(out)
@@ -829,7 +852,7 @@ function(x, more = list())
     y <- unclass(y)
 
     crossrefs <- lapply(x, `[[`, "crossref")
-    pc <- which(vapply(crossrefs, length, 0L) > 0L)
+    pc <- which(lengths(crossrefs) > 0L)
 
     if(length(pc)) {
         pk <- match(unlist(crossrefs[pc]), .bibentry_get_key(y))
@@ -871,31 +894,42 @@ function(x, more = list())
 }
 
 print.bibentry <-
-function(x, style = "text", .bibstyle = NULL, ...)
+function(x, style = "text", .bibstyle = NULL,
+         bibtex = length(x) <= getOption("citation.bibtex.max", 1L), # using option() here
+         ...)
 {
     style <- .bibentry_match_format_style(style)
 
-    if(style == "R") {
-	writeLines(format(x, "R", collapse = TRUE, ...))
-    } else if(length(x)) {
-	y <- format(x, style, .bibstyle, ...)
+    n <- length(x)
+    if(!n) {
+        cat(switch((cl <- class(x)[[1L]]),
+                   "bibentry" = "bibentry()",
+                   sprintf("<0-length %s>", cl)), sep="", "\n")
+    } else if(style == "R") {
+	writeLines(format(x, "R", bibtex=bibtex, collapse = TRUE, ...))
+    } else {
+	y <- format(x, style, .bibstyle, bibtex=bibtex, citMsg = missing(bibtex), ...)
         if(style == "citation") {
             ## Printing in citation style does extra headers/footers
             ## (which however may be empty), so it is handled
             ## differently.
-            n <- length(y)
-            if(nzchar(header <- y[1L]))
-                header <- c("", header, "")
-            if(nzchar(footer <- y[n]))
-                footer <- c("", footer, "")
-            writeLines(c(header,
-                         paste(y[-c(1L, n)], collapse = "\n\n"),
-                         footer))
+            ## Old-style with extra empty lines before/after outer
+            ## footer/header:
+            ##   n <- length(y)
+            ##   if(nzchar(header <- y[1L]))
+            ##       header <- c("", header, "")
+            ##   if(nzchar(footer <- y[n]))
+            ##       footer <- c("", footer, "")
+            ##   writeLines(c(header,
+            ##                paste(y[-c(1L, n)], collapse = "\n\n"),
+            ##                footer))
+            ## New-style without:
+            writeLines(paste(y[nzchar(y)], collapse = "\n\n"))
+            ## Which could be used for all print styles ...?
         } else {
             writeLines(paste(y, collapse = "\n\n"))
         }
     }
-
     invisible(x)
 }
 
@@ -998,7 +1032,7 @@ function(x)
                 function(e) {
                     e <- e[!vapply(e, is.null, NA)]
                     cargs <-
-                        sprintf("%s = %s", names(e), sapply(e, deparse))
+                        sprintf("%s = %s", names(e), sapply(e, deparse1))
                     .format_call_RR("person", cargs)
                 })
     if(length(s) > 1L)
@@ -1072,25 +1106,40 @@ function(x, name, value)
 
 `$<-.citation` <-
 function(x, name, value)
-    .citation(NextMethod("$<-"))
+    .citation(NextMethod("$<-"), attr(x, "package"))
 
 c.bibentry <-
 function(..., recursive = FALSE)
 {
+    ## only bibentry objects can be combined
     args <- list(...)
     if(!all(vapply(args, inherits, NA, "bibentry")))
         warning(gettextf("method is only applicable to %s objects",
                          sQuote("bibentry")),
                 domain = NA)
+
+    ## combine raw lists
     args <- lapply(args, unclass)
     rval <- do.call(c, args)
+
+    ## preserve mheader/mfooter if any
+    mheader <- unlist(lapply(args, attr, "mheader"))
+    if(length(mheader) >= 1L) {
+        attr(rval, "mheader") <- paste(mheader, collapse = "\n")
+    }
+    mfooter <- unlist(lapply(args, attr, "mfooter"))
+    if(length(mfooter) >= 1L) {
+        attr(rval, "mfooter") <- paste(mfooter, collapse = "\n")
+    }
+
+    ## return as bibentry object
     .bibentry(rval)
 }
 
 toBibtex.bibentry <-
-function(object, ...)
+function(object, escape = FALSE, ...)
 {
-    format_author <- function(author) paste(sapply(author, function(p) {
+    format_author <- function(author) paste(vapply(author, function(p) {
 	fnms <- p$family
 	only_given_or_family <-
             (is.null(fnms) || is.null(p$given)) &&
@@ -1101,7 +1150,7 @@ function(object, ...)
 	gbrc <- if(only_given_or_family) c("{", "}") else ""
         format(p, include = c("given", "family"),
                braces = list(given = gbrc, family = fbrc))
-    }), collapse = " and ")
+    }, ""), collapse = " and ")
 
     format_bibentry1 <- function(object) {
 	object <- unclass(object)[[1L]]
@@ -1112,9 +1161,17 @@ function(object, ...)
             object$editor <- format_author(object$editor)
 
         rval <- c(rval,
-                  sapply(names(object), function (n)
-                         paste0("  ", n, " = {", object[[n]], "},")),
+                  vapply(names(object),
+                         function (n)
+                             paste0("  ", n, " = {", object[[n]], "},"),
+                         ""),
                   "}", "")
+        if(isTRUE(escape)) {
+            rval <- enc2utf8(rval)
+            ind <- (Encoding(rval) == "UTF-8")
+            rval[ind] <-
+                tools::encoded_text_to_latex(rval[ind], "UTF-8")
+        }
         return(rval)
     }
 
@@ -1151,27 +1208,48 @@ function(x, ...)
     y
 }
 
+as.data.frame.bibentry <- as.data.frame.vector
+
+transform.bibentry <-
+function(`_data`, ...)
+{
+    tags <- unique(unlist(lapply(unclass(`_data`), names)))
+    vals <- lapply(tags, function(e) eval(call("$", `_data`, e)))
+    ## Or use eval(substitute(`$`(`_data`, e), list(e = e))) ...
+    names(vals) <- tags
+
+    e <- eval(substitute(list(...)), vals, parent.frame())
+
+    for(i in setdiff(names(e), c("mheader", "mfooter"))) {
+        `_data` <- eval(call("$<-", `_data`, i, e[[i]]))
+    }
+    ## Or use eval(substitute(`$<-`(`_data`, i, e[[i]]), list(i = i))) ...
+
+    if("mheader" %in% names(e))
+        attr(`_data`, "mheader") <- e[["mheader"]]
+    if("mfooter" %in% names(e))
+        attr(`_data`, "mfooter") <- e[["mfooter"]]
+
+    return(`_data`)
+}
+
 ######################################################################
 
 citEntry <-
-function(entry, textVersion, header = NULL, footer = NULL, ...)
+function(entry, textVersion = NULL, header = NULL, footer = NULL, ...)
     bibentry(bibtype = entry, textVersion = textVersion,
              header = header, footer = footer, ...)
 
 citHeader <-
 function(...)
 {
-    rval <- paste(...)
-    class(rval) <- "citationHeader"
-    rval
+    .bibentry(mheader = paste(...))
 }
 
 citFooter <-
 function(...)
 {
-    rval <- paste(...)
-    class(rval) <- "citationFooter"
-    rval
+    .bibentry(mfooter = paste(...))
 }
 
 readCitationFile <-
@@ -1191,10 +1269,6 @@ function(file, meta = NULL)
         x <- eval(expr, envir = envir)
         if(inherits(x, "bibentry"))
             rval <- c(rval, list(x))
-        else if(identical(class(x), "citationHeader"))
-            mheader <- c(mheader, x)
-        else if(identical(class(x), "citationFooter"))
-            mfooter <- c(mfooter, x)
     }
 
     rlen <- length(rval)
@@ -1202,10 +1276,6 @@ function(file, meta = NULL)
         rval <- rval[[1L]]
     else if(rlen > 1L)
         rval <- do.call(c, rval)
-    if(!.is_not_nonempty_text(mheader))
-        attr(rval, "mheader") <- paste(mheader, collapse = "\n")
-    if(!.is_not_nonempty_text(mfooter))
-        attr(rval, "mfooter") <- paste(mfooter, collapse = "\n")
 
     .citation(rval, meta$Package)
 }
@@ -1259,17 +1329,11 @@ function(package = "base", lib.loc = NULL, auto = NULL)
         return(.citation(cit, package))
     }
 
-    year <- sub("-.*", "", meta$`Date/Publication`)
-    if(!length(year)) {
-        if(is.null(meta$Date)) {
-            warning(gettextf("no date field in DESCRIPTION file of package %s",
-                             sQuote(package)),
-                    domain = NA)
-        } else {
-            date <- trimws(as.vector(meta$Date))[1L]
-            date <- strptime(date, "%Y-%m-%d", tz = "GMT")
-            if(!is.na(date)) year <- format(date, "%Y")
-        }
+    year <- sub("-.*", "", meta[["Date/Publication"]])
+    if(!length(year) && !is.null(date <- meta[["Date"]])) {
+        date <- trimws(as.vector(date))[1L]
+        date <- strptime(date, "%Y-%m-%d", tz = "GMT")
+        if(!is.na(date)) year <- format(date, "%Y")
     }
     ## If neither Date/Publication nor Date work, try Packaged (build
     ## time stamp): if this fails too, use NA (PR #16550).
@@ -1313,7 +1377,7 @@ function(package = "base", lib.loc = NULL, auto = NULL)
         has_authors_at_R_field <- TRUE
     } else {
         has_authors_at_R_field <- FALSE
-        author <- as.personList(meta$Author)
+        author <- as.person(meta$Author)
     }
     ## </NOTE>
 
@@ -1323,6 +1387,7 @@ function(package = "base", lib.loc = NULL, auto = NULL)
               note = paste("R package version", meta$Version)
               )
 
+    ## CRAN-style repositories: CRAN, R-Forge, Bioconductor
     if(identical(meta$Repository, "CRAN"))
         z$url <-
             sprintf("https://CRAN.R-project.org/package=%s", package)
@@ -1336,12 +1401,52 @@ function(package = "base", lib.loc = NULL, auto = NULL)
             z$note <- paste(z$note, rfr, sep = "/r")
     }
 
+    if((is.null(meta$Repository) ||
+        identical(meta$Repository, "Bioconductor")) &&
+       !is.null(meta$git_url) &&
+       startsWith(meta$git_url,
+                  "https://git.bioconductor.org/packages")) {
+        z$url <-
+            sprintf("https://bioconductor.org/packages/%s", package)
+        z$doi <-
+            sprintf("10.18129/B9.bioc.%s", package)
+    }
+    
+    ## Git repositories: GitHub, GitLab, ...
+    if(identical(meta$RemoteType, "github") && identical(meta$RemoteHost, "api.github.com")) {
+        if(!is.null(meta$RemoteUsername) && !is.null(meta$RemoteRepo)) {
+            z$url <- sprintf("https://github.com/%s/%s", meta$RemoteUsername, meta$RemoteRepo)
+        }
+        if(!is.null(meta$RemoteSha)) {
+            z$note <- sprintf("%s, commit %s", z$note, meta$RemoteSha)
+        }
+    }
+
+    if(identical(meta$RemoteType, "gitlab")) {
+        if(!is.null(meta$RemoteHost) && !is.null(meta$RemoteUsername) && !is.null(meta$RemoteRepo)) {
+            z$url <- sprintf("https://%s/%s/%s", meta$RemoteHost, meta$RemoteUsername, meta$RemoteRepo)
+        }
+        if(!is.null(meta$RemoteSha)) {
+            z$note <- sprintf("%s, commit %s", z$note, meta$RemoteSha)
+        }
+    }
+
+    if(identical(meta$RemoteType, "git") || identical(meta$RemoteType, "xgit")) {
+        z$url <- meta$RemoteUrl
+        if(!is.null(meta$RemoteSha)) {
+            z$note <- sprintf("%s, commit %s", z$note, meta$RemoteSha)
+        }
+    }
+
     if(!length(z$url) && !is.null(url <- meta$URL)) {
         ## Cannot have several URLs in BibTeX and bibentry object URL
         ## fields (PR #16240).
-        if(grepl("[, ]", url))
-            z$note <- url
-        else
+        if(grepl("[, ]", url)) {
+            ## Show the first URL as the BibTeX url, and add the others
+            ## to the note (PR#18547).
+            z$url <- sub(",.*", "", url)
+            z$note <- paste0(z$note, sub("^[^,]*, ?", ", ", url))
+        } else
             z$url <- url
     }
 
@@ -1450,7 +1555,7 @@ function(x)
         x <- .read_authors_at_R_field(x)
     header <- attr(x, "header")
     footer <- attr(x, "footer")
-    x <- sapply(x, .format_person_for_plain_author_spec)
+    x <- vapply(x, .format_person_for_plain_author_spec, "")
     ## Drop persons with irrelevant roles.
     x <- x[nzchar(x)]
     ## And format.
@@ -1496,7 +1601,7 @@ function(x)
     address <- format(x, include = c("email"),
                       collapse = list(email = FALSE))
     ## Need to quote display names at least when they contain commas
-    ## (RFC 5322 <https://tools.ietf.org/html/rfc5322>).
+    ## (RFC 5322 <https://www.rfc-editor.org/rfc/rfc5322>).
     if(any(ind <- grepl(",", display))) {
         display[ind] <- sprintf("\"%s\"",
                                 gsub("\"", "\\\"", display[ind], fixed=TRUE))
@@ -1537,7 +1642,7 @@ local({
 	}
 
 	authorList <- function(paper)
-	    sapply(paper$author, shortName)
+	    vapply(paper$author, shortName, "")
 
 	if (!missing(previous))
 	    cited <<- previous

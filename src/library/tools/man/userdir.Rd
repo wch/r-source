@@ -49,5 +49,13 @@ R_user_dir(package, which = c("data", "config", "cache"))
 \examples{
 ## IGNORE_RDIFF_BEGIN
 R_user_dir("FOO", "cache")
+## Create one, platform agnostically, must work if <normal> :
+(Rdb <- R_user_dir("base"))
+if(noD <- !dir.exists(Rdb)) # should work user specifically:
+    dir.create(Rdb, recursive=TRUE)
+stopifnot(dir.exists(Rdb)) # "everywhere"
+dir(Rdb) # typically empty
+if(noD) unlink(Rdb) # cleaning up
+list.files(R_user_dir("grid"), full.names = TRUE)
 ## IGNORE_RDIFF_END
 }

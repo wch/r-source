@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: stats 4.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-11-06 17:17\n"
+"POT-Creation-Date: 2023-07-31 14:59\n"
 "PO-Revision-Date: 2021-10-15 18:44+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -155,10 +155,15 @@ msgstr "'by' turi būti sąrašas"
 msgid "arguments must have same length"
 msgstr "argumentai turi būti tokio paties ilgio"
 
-msgid "'formula' missing or incorrect"
-msgstr "trūksta 'formula' arba ji neteisinga"
+msgid "argument 'x' is  missing -- it has been renamed from 'formula'"
+msgstr ""
 
-msgid "'formula' must have both left and right hand sides"
+#, fuzzy
+msgid "argument 'x' must be a formula"
+msgstr "argumentas 'x' turi būti skaitinis"
+
+#, fuzzy
+msgid "formula 'x' must have both left and right hand sides"
 msgstr "'formula' privalo turėti kairę ir dešinę puses"
 
 msgid "cannot change frequency from %g to %g"
@@ -208,6 +213,9 @@ msgstr "nepavyko apskaičiuoti tikslios p-reikšmės su ryšiais"
 
 msgid "cannot compute exact confidence intervals with ties"
 msgstr "negali tiksliai apskaičiuoti pasitikėjimo intervalą su ryšiais"
+
+msgid "'formula' missing or incorrect"
+msgstr "trūksta 'formula' arba ji neteisinga"
 
 msgid "grouping factor must have exactly 2 levels"
 msgstr "grupavimo faktorius turi būti lygiai 2 lygių"
@@ -485,8 +493,14 @@ msgstr "'k' turi būti {1, 2, ..  n - 1}"
 msgid "only %d of the first %d eigenvalues are > 0"
 msgstr "tik %d pirmųjų %d tikrinių reikšmių yra > 0"
 
-msgid "package 'MASS' must be installed"
-msgstr "paketas 'MASS' turi būti įdiegtas"
+msgid "Waiting for profiling to be done..."
+msgstr ""
+
+msgid "Reprofiling for"
+msgstr ""
+
+msgid "statistic. Waiting..."
+msgstr ""
 
 msgid "initial value is not in the interior of the feasible region"
 msgstr "pradinė reikšmė nėra matomos srities viduje"
@@ -698,6 +712,9 @@ msgstr "sum(weights) != 1 -- negaus tikrojo tankio"
 msgid "need at least 2 points to select a bandwidth automatically"
 msgstr "norint automatiškai pasirinkti pralaidumą, reikia bent 2 taškų"
 
+msgid "Selecting bandwidth *not* using 'weights'"
+msgstr ""
+
 msgid "unknown bandwidth rule"
 msgstr "nežinoma pralaidumo taisyklė"
 
@@ -730,6 +747,9 @@ msgstr "neteisingi 'xi' matavimo skaičiai"
 
 msgid "'x' is not a vector or matrix"
 msgstr "'x' nėra vektorius ar matrica"
+
+msgid "x[1] != r[1]; using x[1] for diagonal"
+msgstr ""
 
 msgid "invalid distance method"
 msgstr "neteisingas atstumo metodas"
@@ -933,6 +953,9 @@ msgstr "neteisinga 'row.vars' specifikacija"
 msgid "incorrect specification for 'col.vars'"
 msgstr "neteisinga 'col.vars' specifikacija"
 
+msgid "'formula' must have both left and right hand sides"
+msgstr "'formula' privalo turėti kairę ir dešinę puses"
+
 msgid "interactions are not allowed"
 msgstr "sąveikos negalimos"
 
@@ -962,6 +985,18 @@ msgstr "trūksta 'row.var.names'"
 
 msgid "'col.vars' missing or incorrect"
 msgstr "nėra 'col.vars' arba neteisingas"
+
+msgid "Parameter:"
+msgstr ""
+
+msgid "down"
+msgstr ""
+
+msgid "up"
+msgstr ""
+
+msgid "profiling has found a better solution, so original fit had not converged"
+msgstr ""
 
 msgid "'family' not recognized"
 msgstr "'family' nežinomas"
@@ -1197,6 +1232,12 @@ msgstr "kai kurie 'x' elementai nėra skaitiniai ir bus verčiami skaitiniais"
 msgid "not enough 'x' data"
 msgstr "nepakanka 'x' duomenų"
 
+msgid "Parameter(s)"
+msgstr ""
+
+msgid "ignored"
+msgstr ""
+
 msgid "not enough 'y' data"
 msgstr "nepakanka 'y' duomenų"
 
@@ -1206,8 +1247,28 @@ msgstr "p-reikšmė bus apytikslė esant ryšiams"
 msgid "'y' must be numeric or a function or a string naming a valid function"
 msgstr "'y' turi būti skaitinė arba funkcija arba eilutė, įvardijanti tinkamą funkciją"
 
-msgid "ties should not be present for the Kolmogorov-Smirnov test"
+#, fuzzy
+msgid "ties should not be present for the one-sample Kolmogorov-Smirnov test"
 msgstr "ryšiai neturėtų būti pristatomi Kolmogorovo-Smirnovo testui"
+
+#, fuzzy
+msgid "invalid arguments"
+msgstr "neteisingas argumentas 'n'"
+
+#, fuzzy
+msgid "argument 'sizes' must be a vector of length 2"
+msgstr "'interval' turi būti 2 ilgio vektorius"
+
+#, fuzzy
+msgid "argument 'q' must be numeric"
+msgstr "argumentas 'x' turi būti skaitinis"
+
+msgid "computation of exact probability failed, returning Monte Carlo approximation"
+msgstr ""
+
+#, fuzzy
+msgid "argument 'p' must be numeric"
+msgstr "argumentas 'x' turi būti skaitinis"
 
 msgid ""
 "numeric y must be supplied.\n"
@@ -1271,8 +1332,21 @@ msgstr "Iš esmės nepriekaištingi ANOVA F-testai yra nepatikimi"
 msgid "calling predict.lm(<fake-lm-object>) ..."
 msgstr "kreiptis predict.lm(<fake-lm-object>) ..."
 
-msgid "prediction from a rank-deficient fit may be misleading"
+#, fuzzy
+msgid "prediction from rank-deficient fit"
 msgstr "prognozė dėl netinkamo rango gali būti klaidinanti"
+
+msgid "%s; consider predict(., rankdeficient=\"NA\")"
+msgstr ""
+
+msgid "lower-rank qr: determining non-estimable cases"
+msgstr ""
+
+msgid "%s; attr(*, \"non-estim\") has doubtful cases"
+msgstr ""
+
+msgid "%s: NAs produced for non-estimable cases"
+msgstr ""
 
 msgid "predictions on current data refer to _future_ responses"
 msgstr "dabartinių duomenų prognozės nurodo _future_ responses"
@@ -1497,14 +1571,12 @@ msgstr "nėra termų komponento nei atributo"
 msgid "'termlabels' must be a character vector of length at least one"
 msgstr "'termlabels' turi būti tekstinis vektorius, kurio ilgis bent 1"
 
+#, fuzzy
+msgid "'%s' must be a character string"
+msgstr "'sep' turi būti simbolių eilutė"
+
 msgid "Unparseable 'response' \"%s\"; use is deprecated.  Use as.name(.) or `..`!"
 msgstr "Nepalyginamas 'response' \"%s\"; naudojimas prieštarauja.  Naudokite as.name(.) arba '..'!"
-
-msgid "reformulate"
-msgstr "performuluoti"
-
-msgid "deprecatedWarning"
-msgstr "deprecatedWarning"
 
 msgid "'termobj' must be a object of class %s"
 msgstr "'termobj' turi būti klasės %s objektas"
@@ -1524,6 +1596,14 @@ msgstr "'data' turi būti sąrašas ar aplinka"
 
 msgid "variable '%s' is not a factor"
 msgstr "kintamasis '%s' nėra faktorius"
+
+#, fuzzy
+msgid "contrasts dropped from factor %s"
+msgstr "kontrastai taikomi tik faktoriams"
+
+#, fuzzy
+msgid "contrasts dropped from factor %s due to missing levels"
+msgstr "kontrastai gali būti taikomi tik faktoriams su 2 ar daugiau lygių"
 
 msgid "'offset' must be numeric"
 msgstr "'offset' turi būti skaitinis"
@@ -1722,6 +1802,9 @@ msgstr "'which' turi būti 1:6"
 msgid "'id.n' must be in {1,..,%d}"
 msgstr "'id.n' turi būti {1,..,%d}"
 
+msgid "y is empty or has only NAs"
+msgstr "y yra tuščios arba turi tik reikšmes NA"
+
 msgid ""
 "hat values (leverages) are all = %s\n"
 " and there are no factor predictors; no plot no. 5"
@@ -1844,8 +1927,8 @@ msgstr "'p' privalo būti tokio paties ilgio kaip 'x' ir 'n'"
 msgid "elements of 'p' must be in (0,1)"
 msgstr "'p' elementai turi būti intervale (0,1)"
 
-msgid "y is empty or has only NAs"
-msgstr "y yra tuščios arba turi tik reikšmes NA"
+msgid "'conf.level' is not a probability"
+msgstr ""
 
 msgid "'formula' missing"
 msgstr "trūksta 'formula'"
@@ -1889,9 +1972,6 @@ msgstr "'ref' turi būti esamo lygio"
 
 msgid "ref = %d must be in 1L:%d"
 msgstr "ref = %d turi būti 1L:%d"
-
-msgid "'sep' must be a character string"
-msgstr "'sep' turi būti simbolių eilutė"
 
 msgid "failed to guess time-varying variables from their names"
 msgstr "nepavyko atspėti pagal laiką skirtingų kintamųjų iš jų pavadinimų"
@@ -1937,6 +2017,10 @@ msgstr "pralaidumas 'k' turi būti >= 1 ir nelyginis!"
 
 msgid "argument 'object' has an impossible length"
 msgstr "argumento 'object' ilgis neteisingas"
+
+#, fuzzy
+msgid "right-hand side of formula is not a call"
+msgstr "neleistina formulė %s: ne iškvietimas"
 
 msgid "no 'getInitial' method found for \"%s\" objects"
 msgstr "nėra 'getInitial' metodo surasto \"%s\" objektams"
@@ -2513,6 +2597,15 @@ msgid_plural "'start.innov' is too short: need %d points"
 msgstr[0] "'start.innov' per trumpas: reikia %d taško"
 msgstr[1] "'start.innov' per trumpas: reikia %d taškus"
 msgstr[2] "'start.innov' per trumpas: reikia %d taškų"
+
+#~ msgid "package 'MASS' must be installed"
+#~ msgstr "paketas 'MASS' turi būti įdiegtas"
+
+#~ msgid "reformulate"
+#~ msgstr "performuluoti"
+
+#~ msgid "deprecatedWarning"
+#~ msgstr "deprecatedWarning"
 
 #~ msgid "2. %d factors are too many for %d variables"
 #~ msgstr "2. %d faktoriai yra per dideli %d kintamiesiems"

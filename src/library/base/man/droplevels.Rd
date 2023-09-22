@@ -16,6 +16,7 @@
   \code{\link{factor}} or, more commonly, from factors in a data frame.
 }
 \usage{
+droplevels(x, \dots)
 \S3method{droplevels}{factor}(x, exclude = if(anyNA(levels(x))) NULL else NA, \dots)
 \S3method{droplevels}{data.frame}(x, except, exclude, \dots)
 }
@@ -26,8 +27,8 @@
     was \emph{implicitly} \code{NA} in \R <= 3.3.1 which did drop
     \code{NA} levels even when present in \code{x}, contrary to the
     documentation.  The current default is compatible with \code{x[ , drop=TRUE]}.}
-  \item{\dots}{further arguments passed to methods}
-  \item{except}{indices of columns from which \emph{not} to drop levels}
+  \item{\dots}{further arguments passed to methods.}
+  \item{except}{indices of columns from which \emph{not} to drop levels.}
 }
 \value{
   \code{droplevels} returns an object of the same class as \code{x}}
@@ -38,7 +39,7 @@
   columns; rather the default uses the same factor-specific
   \code{exclude} as the factor method itself.
 
-  The \code{except} argument follow the usual indexing rules.
+  The \code{except} argument follows the usual indexing rules.
 }
 
 \note{ This function was introduced in R 2.12.0.  It is primarily

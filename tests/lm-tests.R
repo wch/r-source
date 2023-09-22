@@ -18,45 +18,43 @@ roller.glm0<- glm(weight~depression, data=roller, weights= 0:9)
 
 predict(roller.glm0, type="terms")# failed till 2003-03-31
 
-## FIXME : glm()$residual [1] is NA,  lm()'s is ok.
-## all.equal(residuals(roller.glm0, type = "partial"),
-##          residuals(roller.lm0,  type = "partial") )
-
-
-all.equal(deviance(roller.lm),
-          deviance(roller.glm))
-all.equal(weighted.residuals(roller.lm),
-          residuals         (roller.glm))
-
-all.equal(deviance(roller.lm0),
-          deviance(roller.glm0))
-all.equal(weighted.residuals(roller.lm0, drop=FALSE),
-          residuals         (roller.glm0))
+stopifnot(exprs = {
+    all.equal(residuals(roller.glm0, type = "partial"),
+              residuals(roller.lm0,  type = "partial"), tol = 1e-14)  # 4.0e-16
+    all.equal(deviance(roller.lm),
+              deviance(roller.glm), tol = 1e-14) # 2.4e-16
+    all.equal(weighted.residuals(roller.lm),
+              residuals         (roller.glm), tol = 2e-14) # 9.17e-16
+    all.equal(deviance(roller.lm0),
+              deviance(roller.glm0), tol = 1e-14) # 2.78e-16
+    all.equal(weighted.residuals(roller.lm0, drop=FALSE),
+              residuals         (roller.glm0),  tol = 2e-14) # 6.378e-16
+})
 
 (im.lm0 <- influence.measures(roller.lm0))
 
-all.equal(unname(im.lm0 $ infmat),
-          unname(cbind(  dfbetas      (roller.lm0)
-                       , dffits       (roller.lm0)
-                       , covratio     (roller.lm0)
-                       ,cooks.distance(roller.lm0)
-                       ,lm.influence  (roller.lm0)$hat)
-                 ))
+stopifnot(exprs = {
+    all.equal(unname(im.lm0 $ infmat),
+              unname(cbind(  dfbetas      (roller.lm0)
+                         , dffits       (roller.lm0)
+                         , covratio     (roller.lm0)
+                          ,cooks.distance(roller.lm0)
+                          ,lm.influence  (roller.lm0)$hat)
+                     ))
+    all.equal(rstandard(roller.lm9),
+              rstandard(roller.lm0),tolerance = 1e-14)
+    all.equal(rstudent(roller.lm9),
+              rstudent(roller.lm0),tolerance = 1e-14)
+    all.equal(rstudent(roller.lm),
+              rstudent(roller.glm))
+    all.equal(cooks.distance(roller.lm),
+              cooks.distance(roller.glm))
 
-all.equal(rstandard(roller.lm9),
-          rstandard(roller.lm0),tolerance = 1e-14)
-all.equal(rstudent(roller.lm9),
-          rstudent(roller.lm0),tolerance = 1e-14)
-all.equal(rstudent(roller.lm),
-          rstudent(roller.glm))
-all.equal(cooks.distance(roller.lm),
-          cooks.distance(roller.glm))
-
-
-all.equal(summary(roller.lm0)$coefficients,
-          summary(roller.lm9)$coefficients, tolerance = 1e-14)
-all.equal(print(anova(roller.lm0), signif.st=FALSE),
-                anova(roller.lm9), tolerance = 1e-14)
+    all.equal(summary(roller.lm0)$coefficients,
+              summary(roller.lm9)$coefficients, tolerance = 1e-14)
+    all.equal(print(anova(roller.lm0), signif.st=FALSE),
+                    anova(roller.lm9), tolerance = 1e-14)
+})
 
 
 ###  more regression tests for lm(), glm(), etc :
@@ -66,8 +64,10 @@ lm.SR <- lm(sr ~ pop15 + pop75 + dpi + ddpi, data = LifeCycleSavings)
 (IM <- influence.measures(lm.SR))
 summary(IM)
 ## colnames will differ in the next line
-all.equal(dfbetas(lm.SR), IM$infmat[, 1:5], check.attributes = FALSE,
-          tolerance = 1e-12)
+stopifnot(
+    all.equal(dfbetas(lm.SR), IM$infmat[, 1:5], check.attributes = FALSE,
+              tolerance = 1e-12)
+)
 signif(dfbeta(lm.SR), 3)
 covratio (lm.SR)
 

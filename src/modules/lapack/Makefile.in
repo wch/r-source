@@ -10,51 +10,68 @@ subdir = src/modules/lapack
 R_HOME = $(top_builddir)
 
 include $(top_builddir)/Makeconf
+.SUFFIXES:
+.SUFFIXES: .c .f .f90 .d .o
+.f90.o:
+	$(FC) $(ALL_FCFLAGS) -c @FCFLAGS_f90@ $< -o $@
 
 SOURCES_C = Lapack.c @USE_VECLIB_G95FIX_TRUE@ vecLibg95c.c
 SOURCES_F = @USE_VECLIB_G95FIX_TRUE@ vecLibg95f.f
 
-## BUILD_LTO_CHECK_TRUE relies on using the internal LAPACK
 DEPENDS = $(SOURCES_C:.c=.d)
-SOURCES = $(SOURCES_C) $(SOURCES_F)
-OBJECTS = $(SOURCES_C:.c=.o) $(SOURCES_F:.f=.o)
+SOURCES = $(SOURCES_C) $(SOURCES_F) $(SOURCES_F90)
+OBJECTS = $(SOURCES_C:.c=.o) $(SOURCES_F:.f=.o) flexiblas.o
 HEADERS = Lapack.h
 
-## Sources for the -lRlapack.  On OSX this may be linked directly to
-## vecLib/Accelerate, so needs the zdot* fix.
+## Sources for -lRlapack.
+## On macOS this will be linked directly to the vecLib/Accelerate
+## framework if --with-blas=Acceleraate --with-lapack is used, so
+## needs the zdot* fix in lapack.so.
 LIBSOURCES = dlamch.f dlapack.f \
   @COMPILE_FORTRAN_DOUBLE_COMPLEX_FALSE@ cmplx.f
-LIBOBJECTS = $(LIBSOURCES:.f=.o) @USE_VECLIB_G95FIX_TRUE@ vecLibg95f.o vecLibg95c.o
+LIBSOURCES90 = dlartg.f90 dlassq.f90 la_constants.f90 la_xisnan.f90 \
+  @COMPILE_FORTRAN_DOUBLE_COMPLEX_FALSE@ zlartg.f90 zlassq.f90
+LIBOBJECTS = $(LIBSOURCES:.f=.o) $(LIBSOURCES90:.f90=.o) \
+  @USE_VECLIB_G95FIX_TRUE@ vecLibg95f.o vecLibg95c.o
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = \
 	LICENSE README Makefile.in Makefile.win \
 	Rlapackrc.rc dllversion.rc \
 	$(HEADERS) Lapack.c init_win.c \
-	vecLibg95c.c vecLibg95f.f \
+	vecLibg95c.c vecLibg95f.f accelerateLapack.c \
 	cmplx.f dlapack.f dlamch.f \
-	dble.txt cmplx.txt
+	dlartg.f90 dlassq.f90 la_constants.f90 la_xisnan.f90 \
+	zlartg.f90 zlassq.f90 \
+	dble.txt cmplx.txt R.patch
 
 lapack_la = lapack$(SHLIB_EXT)
 lapack_la_OBJECTS = $(OBJECTS)
 ## Formerly used for passing '+s' to SHLIB_LINK on HP-UX.
 lapack_la_LDFLAGS = @LAPACK_LDFLAGS@
+EXTRA_LIBS = @LAPACK_LIBS@ @BLAS_LIBS@ $(FLIBS_IN_SO)
+
 lapack_la_LIBADD = $(LIBR1) @DYLIB_UNDEFINED_ALLOWED_FALSE@ $(LIBINTL)
 
-@BUILD_LTO_CHECK_FALSE@Rlapack_la = libRlapack$(R_DYLIB_EXT)
-@BUILD_LTO_CHECK_TRUE@Rlapack_la = libRlapack.a
-Rlapack_la_OBJECTS = $(LIBOBJECTS)
+Rlapack_la = libRlapack$(R_DYLIB_EXT)
+
+@BUILD_NEW_ACCELERATE_LAPACK_TRUE@Rlapack_la_OBJECTS = accelerateLapack.o
+@BUILD_NEW_ACCELERATE_LAPACK_FALSE@Rlapack_la_OBJECTS = $(LIBOBJECTS)
 ## This used to skip FLIBS, but that relied on all the functions
 ## needed being loaded into R.bin/libR.so, and that need not be the
 ## case for a static libfortran or if a package is compiled under a
 ## different compiler.
-Rlapack_la_LIBADD =  $(FLIBS_IN_SO) @DYLIB_UNDEFINED_ALLOWED_FALSE@ $(LIBR)
+@BUILD_NEW_ACCELERATE_LAPACK_FALSE@Rlapack_la_LIBADD =  $(FLIBS_IN_SO) @DYLIB_UNDEFINED_ALLOWED_FALSE@ $(LIBR)
+@BUILD_NEW_ACCELERATE_LAPACK_TRUE@Rlapack_la_LIBADD = -framework Accelerate
 
 ALL_CFLAGS = $(ALL_CFLAGS_LO)
 ALL_FFLAGS = $(ALL_FFLAGS_LO)
-
+ALL_FCFLAGS = $(ALL_FFLAGS_LO)
 
 all: R
+
+flexiblas.o: ../../main/flexiblas.c
+	$(CC) $(ALL_CPPFLAGS) $(ALL_CFLAGS) -c  $< -o $@
 
 Makefile: $(srcdir)/Makefile.in \
   $(top_builddir)/config.status \
@@ -73,12 +90,17 @@ DLAMC_FFLAGS=$(FPICFLAGS) $(SHLIB_FFLAGS) @SAFE_FFLAGS@ $(LTO_FC)
 dlamch.o: dlamch.f
 	$(FC) $(DLAMC_FFLAGS) -c $< -o $@
 
+la_constants.mod: la_constants.o
+la_xisnan.mod: la_xisnan.o
+dlartg.o dlassq.o zlartg.o zlassq.o la_xisnan.o: la_constants.o
+dlassq.o zlassq.o: la_xisnan.o
+
 R: Makedeps
 @USE_EXTERNAL_LAPACK_FALSE@	@$(MAKE) rhome="$(abs_top_builddir)" $(Rlapack_la) Rlapack_install
 	@$(MAKE) $(lapack_la)
 
 $(lapack_la): $(lapack_la_OBJECTS)
-	$(SHLIB_LINK) -o $@ $(lapack_la_LDFLAGS) $(lapack_la_OBJECTS) $(lapack_la_LIBADD) @LAPACK_LIBS@ @BLAS_LIBS@ $(FLIBS_IN_SO)
+	$(SHLIB_LINK) -o $@ $(lapack_la_LDFLAGS) $(lapack_la_OBJECTS) $(lapack_la_LIBADD) $(EXTRA_LIBS)
 ## <FIXME>
 ## Not sure if we want to do this ...
 	@$(MAKE) rhome="$(abs_top_builddir)" install
@@ -86,9 +108,9 @@ $(lapack_la): $(lapack_la_OBJECTS)
 
 ## Include BLAS here, as with (static) ATLAS that pulls all the
 ## BLAS routines into one place.
-$(Rlapack_la): $(LIBOBJECTS)
-	@BUILD_LTO_CHECK_FALSE@$(DYLIB_LINK) -o $@ $(LIBOBJECTS) @RLAPACK_LDFLAGS@ @BLAS_LIBS@ $(Rlapack_la_LIBADD)
-	@BUILD_LTO_CHECK_TRUE@$(AR) -cr $@ $(LIBOBJECTS)
+## FIXME:  @BLAS_LIBS@ is probably  not needed for newAccelerate.
+$(Rlapack_la): $(Rlapack_la_OBJECTS)
+	$(DYLIB_LINK) -o $@ $(Rlapack_la_OBJECTS) @RLAPACK_LDFLAGS@ @BLAS_LIBS@ $(Rlapack_la_LIBADD)
 
 Rlapack_install: $(Rlapack_la) 
 	@$(MKINSTALLDIRS) "$(DESTDIR)$(Rexeclibdir)"
@@ -116,7 +138,7 @@ uninstall:
 mostlyclean: clean
 clean:
 	@-rm -Rf .libs _libs
-	@-rm -f Makedeps *.d *.o *.a *.lo *.la \
+	@-rm -f Makedeps *.d *.o *.a *.lo *.la *.mod \
 	  $(lapack_la) $(Rlapack_la)
 distclean: clean
 	@-rm -f Makefile

@@ -75,7 +75,7 @@ intToUtf8(x, multiple = FALSE, allow_surrogate_pairs = FALSE)
   Invalid and \code{NA} inputs are mapped to \code{NA} output.
 }
 \references{
-  \url{https://tools.ietf.org/html/rfc3629}, the current standard for UTF-8.
+  \url{https://www.rfc-editor.org/rfc/rfc3629}, the current standard for UTF-8.
   
   \url{https://www.unicode.org/versions/corrigendum9.html} for non-characters.
 }

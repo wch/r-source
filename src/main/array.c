@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998-2022   The R Core Team
+ *  Copyright (C) 1998-2023   The R Core Team
  *  Copyright (C) 2002-2015   The R Foundation
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
@@ -27,7 +27,18 @@
 #include <Internal.h>
 #include <Rmath.h>
 #include <R_ext/RS.h>     /* for R_Calloc/R_Free, F77_CALL */
+
+// calls BLAS routines dgemm dgemv zgemm
+#ifdef USE_NEW_ACCELERATE
+# define ACCELERATE_NEW_LAPACK
+// avoid conflicts over COMPLEX
+# define USE_NON_APPLE_STANDARD_DATATYPES 0
+# include <Accelerate/Accelerate.h>
+# define FCONE
+# pragma clang diagnostic ignored "-Wincompatible-pointer-types"
+#else
 #include <R_ext/BLAS.h>
+#endif
 #include <R_ext/Itermacros.h>
 
 #include "duplicate.h"
@@ -64,7 +75,7 @@ SEXP GetColNames(SEXP dimnames)
 }
 
 // .Internal(matrix(data, nrow, ncol, byrow, dimnames, missing(nrow), missing(ncol)))
-SEXP attribute_hidden do_matrix(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_matrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP vals, ans, snr, snc, dimnames;
     int nr = 1, nc = 1, byrow, miss_nr, miss_nc;
@@ -84,7 +95,7 @@ SEXP attribute_hidden do_matrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    break;
 	default:
 	    error(_("'data' must be of a vector type, was '%s'"),
-		type2char(TYPEOF(vals)));
+		R_typeToChar(vals));
     }
     lendat = XLENGTH(vals);
     snr = CAR(args); args = CDR(args);
@@ -100,7 +111,7 @@ SEXP attribute_hidden do_matrix(SEXP call, SEXP op, SEXP args, SEXP rho)
     static int nowarn = -1;
     if (nowarn == -1) {
 	char *p = getenv("_R_CHECK_MATRIX_DATA_");
-	nowarn = (p && StringTrue(p)) ? 1 : 0;
+	nowarn = (p && StringTrue(p)) ? 1 : 0; // if(nowarn) <error>
     }
     if (!miss_nr) {
 	if (!isNumeric(snr)) error(_("non-numeric matrix extent"));
@@ -411,7 +422,7 @@ SEXP DropDims(SEXP x)
     return x;
 }
 
-SEXP attribute_hidden do_drop(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_drop(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP x, xdims;
     int i, n, shorten;
@@ -433,7 +444,7 @@ SEXP attribute_hidden do_drop(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 /* Length of Primitive Objects */
 
-SEXP attribute_hidden do_length(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_length(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);
     check1arg(args, call, "x");
@@ -464,7 +475,7 @@ SEXP attribute_hidden do_length(SEXP call, SEXP op, SEXP args, SEXP rho)
     return ScalarInteger(length(x));
 }
 
-R_len_t attribute_hidden dispatch_length(SEXP x, SEXP call, SEXP rho) {
+attribute_hidden R_len_t dispatch_length(SEXP x, SEXP call, SEXP rho) {
     R_xlen_t len = dispatch_xlength(x, call, rho);
 #ifdef LONG_VECTOR_SUPPORT
     if (len > INT_MAX) return R_BadLongVector(x, __FILE__, __LINE__);
@@ -472,7 +483,7 @@ R_len_t attribute_hidden dispatch_length(SEXP x, SEXP call, SEXP rho) {
     return (R_len_t) len;
 }
 
-R_xlen_t attribute_hidden dispatch_xlength(SEXP x, SEXP call, SEXP rho) {
+attribute_hidden R_xlen_t dispatch_xlength(SEXP x, SEXP call, SEXP rho) {
     static SEXP length_op = NULL;
     if (isObject(x)) {
         SEXP len, args;
@@ -517,7 +528,7 @@ static SEXP do_lengths_long(SEXP x, SEXP call, SEXP rho)
 }
 #endif
 
-SEXP attribute_hidden do_lengths(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_lengths(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);
     SEXP x = CAR(args), ans;
@@ -578,7 +589,7 @@ SEXP attribute_hidden do_lengths(SEXP call, SEXP op, SEXP args, SEXP rho)
     return ans;
 }
 
-SEXP attribute_hidden do_rowscols(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_rowscols(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);
     SEXP dim = CAR(args);
@@ -797,7 +808,7 @@ static void matprod(double *x, int nrx, int ncx,
 	    break;
 	case MATPROD_DEFAULT_SIMD:
 	    if (mayHaveNaNOrInf_simd(x, NRX*ncx) ||
-		    mayHaveNaNOrInf_simd(y, NRY*ncy)) {
+		mayHaveNaNOrInf_simd(y, NRY*ncy)) {
 		simple_matprod(x, nrx, ncx, y, nry, ncy, z);
 		return;
 	    }
@@ -944,7 +955,7 @@ static void cmatprod(Rcomplex *x, int nrx, int ncx,
 	    break;
 	case MATPROD_DEFAULT_SIMD:
 	    if (cmayHaveNaNOrInf_simd(x, NRX*ncx) ||
-		    cmayHaveNaNOrInf_simd(y, NRY*ncy)) {
+		cmayHaveNaNOrInf_simd(y, NRY*ncy)) {
 		simple_cmatprod(x, nrx, ncx, y, nry, ncy, z);
 		return;
 	    }
@@ -1025,7 +1036,7 @@ static void crossprod(double *x, int nrx, int ncx,
 	    break;
 	case MATPROD_DEFAULT_SIMD:
 	    if (mayHaveNaNOrInf_simd(x, NRX*ncx) ||
-		    mayHaveNaNOrInf_simd(y, NRY*ncy)) {
+		mayHaveNaNOrInf_simd(y, NRY*ncy)) {
 		simple_crossprod(x, nrx, ncx, y, nry, ncy, z);
 		return;
 	    }
@@ -1080,7 +1091,7 @@ static void ccrossprod(Rcomplex *x, int nrx, int ncx,
 	    break;
 	case MATPROD_DEFAULT_SIMD:
 	    if (cmayHaveNaNOrInf_simd(x, NRX*ncx) ||
-		    cmayHaveNaNOrInf_simd(y, NRY*ncy)) {
+		cmayHaveNaNOrInf_simd(y, NRY*ncy)) {
 		simple_ccrossprod(x, nrx, ncx, y, nry, ncy, z);
 		return;
 	    }
@@ -1159,7 +1170,7 @@ static void tcrossprod(double *x, int nrx, int ncx,
 	    break;
 	case MATPROD_DEFAULT_SIMD:
 	    if (mayHaveNaNOrInf_simd(x, NRX*ncx) ||
-		    mayHaveNaNOrInf_simd(y, NRY*ncy)) {
+		mayHaveNaNOrInf_simd(y, NRY*ncy)) {
 		simple_tcrossprod(x, nrx, ncx, y, nry, ncy, z);
 		return;
 	    }
@@ -1213,7 +1224,7 @@ static void tccrossprod(Rcomplex *x, int nrx, int ncx,
 	    break;
 	case MATPROD_DEFAULT_SIMD:
 	    if (cmayHaveNaNOrInf_simd(x, NRX*ncx) ||
-		    cmayHaveNaNOrInf_simd(y, NRY*ncy)) {
+		cmayHaveNaNOrInf_simd(y, NRY*ncy)) {
 		simple_tccrossprod(x, nrx, ncx, y, nry, ncy, z);
 		return;
 	    }
@@ -1231,20 +1242,24 @@ static void tccrossprod(Rcomplex *x, int nrx, int ncx,
 
 
 /* "%*%" (op = 0), crossprod (op = 1) or tcrossprod (op = 2) */
-SEXP attribute_hidden do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     int ldx, ldy, nrx, ncx, nry, ncy, mode;
     SEXP x = CAR(args), y = CADR(args), xdims, ydims, ans;
     Rboolean sym;
 
     if (PRIMVAL(op) == 0 && /* %*% is primitive, the others are .Internal() */
-       (IS_S4_OBJECT(x) || IS_S4_OBJECT(y))
-       && R_has_methods(op)) {
+	(OBJECT(x) || OBJECT(y))) {
 	SEXP s, value;
 	/* Remove argument names to ensure positional matching */
 	for(s = args; s != R_NilValue; s = CDR(s)) SET_TAG(s, R_NilValue);
-	value = R_possible_dispatch(call, op, args, rho, FALSE);
-	if (value) return value;
+
+	if ((IS_S4_OBJECT(x) || IS_S4_OBJECT(y)) && R_has_methods(op)){
+	    value = R_possible_dispatch(call, op, args, rho, FALSE);
+	    if (value) return value;
+	}
+	else if (DispatchGroup("matrixOps", call, op, args, rho, &ans))
+	    return ans;
     }
 
     checkArity(op, args);
@@ -1379,7 +1394,7 @@ SEXP attribute_hidden do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
     SETCAR(args, coerceVector(CAR(args), mode));
     SETCADR(args, coerceVector(CADR(args), mode));
 
-    if (PRIMVAL(op) == 0) {			/* op == 0 : matprod() */
+    if (PRIMVAL(op) == 0) {			/* op == 0 : matprod() =~= %*% */
 
 	PROTECT(ans = allocMatrix(mode, nrx, ncy));
 	if (mode == CPLXSXP)
@@ -1393,12 +1408,14 @@ SEXP attribute_hidden do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
 	PROTECT(ydims = getAttrib(CADR(args), R_DimNamesSymbol));
 
 	if (xdims != R_NilValue || ydims != R_NilValue) {
-	    SEXP dimnames, dimnamesnames, dnx=R_NilValue, dny=R_NilValue;
+#define ALLOC_DIMNAMES_NAMES						\
+	    SEXP dimnames, dimnamesnames, dnx=R_NilValue, dny=R_NilValue; \
+									\
+	    /* allocate dimnames and dimnamesnames */			\
+	    PROTECT(dimnames = allocVector(VECSXP, 2));			\
+	    PROTECT(dimnamesnames = allocVector(STRSXP, 2))
 
-	    /* allocate dimnames and dimnamesnames */
-
-	    PROTECT(dimnames = allocVector(VECSXP, 2));
-	    PROTECT(dimnamesnames = allocVector(STRSXP, 2));
+	    ALLOC_DIMNAMES_NAMES;
 	    if (xdims != R_NilValue) {
 		if (ldx == 2 || ncx == 1) {
 		    SET_VECTOR_ELT(dimnames, 0, VECTOR_ELT(xdims, 0));
@@ -1407,6 +1424,16 @@ SEXP attribute_hidden do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
 			SET_STRING_ELT(dimnamesnames, 0, STRING_ELT(dnx, 0));
 		}
 	    }
+
+/* Since R 2.1.0, no longer attach a dimnames attribute whose elements are all NULL: */
+#define SET_DIMNAMES_NAMES						\
+	    if (VECTOR_ELT(dimnames,0) != R_NilValue ||			\
+		VECTOR_ELT(dimnames,1) != R_NilValue) {			\
+		if (dnx != R_NilValue || dny != R_NilValue)		\
+		    setAttrib(dimnames, R_NamesSymbol, dimnamesnames);	\
+		setAttrib(ans, R_DimNamesSymbol, dimnames);		\
+	    }								\
+	    UNPROTECT(2)
 
 #define YDIMS_ET_CETERA							\
 	    if (ydims != R_NilValue) {					\
@@ -1422,18 +1449,8 @@ SEXP attribute_hidden do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
 			SET_STRING_ELT(dimnamesnames, 1, STRING_ELT(dny, 0)); \
 		}							\
 	    }								\
-									\
-	    /* We sometimes attach a dimnames attribute			\
-	     * whose elements are all NULL ...				\
-	     * This is ugly but causes no real damage.			\
-	     * Now (2.1.0 ff), we don't anymore: */			\
-	    if (VECTOR_ELT(dimnames,0) != R_NilValue ||			\
-		VECTOR_ELT(dimnames,1) != R_NilValue) {			\
-		if (dnx != R_NilValue || dny != R_NilValue)		\
-		    setAttrib(dimnames, R_NamesSymbol, dimnamesnames);	\
-		setAttrib(ans, R_DimNamesSymbol, dimnames);		\
-	    }								\
-	    UNPROTECT(2)
+	    SET_DIMNAMES_NAMES;
+
 
 	    YDIMS_ET_CETERA;
 	}
@@ -1464,13 +1481,8 @@ SEXP attribute_hidden do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    PROTECT(ydims = getAttrib(CADR(args), R_DimNamesSymbol));
 
 	if (xdims != R_NilValue || ydims != R_NilValue) {
-	    SEXP dimnames, dimnamesnames, dnx=R_NilValue, dny=R_NilValue;
 
-	    /* allocate dimnames and dimnamesnames */
-
-	    PROTECT(dimnames = allocVector(VECSXP, 2));
-	    PROTECT(dimnamesnames = allocVector(STRSXP, 2));
-
+	    ALLOC_DIMNAMES_NAMES;
 	    if (xdims != R_NilValue) {
 		if (ldx == 2) {/* not nrx==1 : .. fixed, ihaka 2003-09-30 */
 		    SET_VECTOR_ELT(dimnames, 0, VECTOR_ELT(xdims, 1));
@@ -1509,13 +1521,8 @@ SEXP attribute_hidden do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    PROTECT(ydims = getAttrib(CADR(args), R_DimNamesSymbol));
 
 	if (xdims != R_NilValue || ydims != R_NilValue) {
-	    SEXP dimnames, dimnamesnames, dnx=R_NilValue, dny=R_NilValue;
 
-	    /* allocate dimnames and dimnamesnames */
-
-	    PROTECT(dimnames = allocVector(VECSXP, 2));
-	    PROTECT(dimnamesnames = allocVector(STRSXP, 2));
-
+	    ALLOC_DIMNAMES_NAMES;
 	    if (xdims != R_NilValue) {
 		if (ldx == 2) {
 		    SET_VECTOR_ELT(dimnames, 0, VECTOR_ELT(xdims, 0));
@@ -1532,14 +1539,7 @@ SEXP attribute_hidden do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
 			SET_STRING_ELT(dimnamesnames, 1, STRING_ELT(dny, 0));
 		}
 	    }
-	    if (VECTOR_ELT(dimnames,0) != R_NilValue ||
-		VECTOR_ELT(dimnames,1) != R_NilValue) {
-		if (dnx != R_NilValue || dny != R_NilValue)
-		    setAttrib(dimnames, R_NamesSymbol, dimnamesnames);
-		setAttrib(ans, R_DimNamesSymbol, dimnames);
-	    }
-
-	    UNPROTECT(2);
+            SET_DIMNAMES_NAMES;
 	}
     }
     UNPROTECT(3);
@@ -1547,7 +1547,7 @@ SEXP attribute_hidden do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 #undef YDIMS_ET_CETERA
 
-SEXP attribute_hidden do_transpose(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_transpose(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP a, r, dims, dimnames, dimnamesnames = R_NilValue,
 	ndimnamesnames, rnames, cnames;
@@ -1694,7 +1694,7 @@ SEXP attribute_hidden do_transpose(SEXP call, SEXP op, SEXP args, SEXP rho)
 	lj += iip[itmp] * stride[itmp];
 
 /* aperm (a, perm, resize = TRUE) */
-SEXP attribute_hidden do_aperm(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_aperm(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP a, perm, r, dimsa, dimsr, dna;
     int i, j, n, itmp;
@@ -1874,7 +1874,7 @@ SEXP attribute_hidden do_aperm(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 /* colSums(x, n, p, na.rm) and friends */
-SEXP attribute_hidden do_colsum(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_colsum(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP x, ans = R_NilValue;
     int type;
@@ -1899,7 +1899,7 @@ SEXP attribute_hidden do_colsum(SEXP call, SEXP op, SEXP args, SEXP rho)
     default:
 	error(_("'x' must be numeric"));
     }
-    if (n * (double)p > XLENGTH(x))
+    if ((double)n * (double)p > XLENGTH(x))
 	error(_("'x' is too short")); /* PR#16367 */
 
     int OP = PRIMVAL(op);
@@ -2047,7 +2047,7 @@ SEXP attribute_hidden do_colsum(SEXP call, SEXP op, SEXP args, SEXP rho)
 */
 
 /* array(data, dim, dimnames) */
-SEXP attribute_hidden do_array(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_array(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP vals, ans, dims, dimnames;
     R_xlen_t lendat, i, nans;
@@ -2067,7 +2067,7 @@ SEXP attribute_hidden do_array(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    break;
 	default:
 	    error(_("'data' must be of a vector type, was '%s'"),
-		type2char(TYPEOF(vals)));
+		R_typeToChar(vals));
     }
     lendat = XLENGTH(vals);
     dims = CADR(args);
@@ -2161,7 +2161,7 @@ SEXP attribute_hidden do_array(SEXP call, SEXP op, SEXP args, SEXP rho)
     return ans;
 }
 
-SEXP attribute_hidden do_diag(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_diag(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans, x, snr, snc;
     int nr = 1, nc = 1, nprotect = 1;
@@ -2256,7 +2256,7 @@ SEXP attribute_hidden do_diag(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 
 /* backsolve(r, b, k, upper.tri, transpose) */
-SEXP attribute_hidden do_backsolve(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_backsolve(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     int nprot = 1;
     checkArity(op, args);
@@ -2302,7 +2302,7 @@ SEXP attribute_hidden do_backsolve(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 /* max.col(m, ties.method) */
-SEXP attribute_hidden do_maxcol(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_maxcol(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);
     SEXP m = CAR(args);

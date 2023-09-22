@@ -1,7 +1,7 @@
 #  File src/library/base/R/New-Internal.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2021 The R Core Team
+#  Copyright (C) 1995-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -73,6 +73,7 @@ lchoose <- function(n, k) .Internal(lchoose(n, k))
 
 ##-- 2nd part --
 R.Version <- function() .Internal(Version())
+R_compiled_by <- function() .Internal(compilerVersion())
 
 commandArgs <- function(trailingOnly = FALSE) {
     args <- .Internal(commandArgs())
@@ -89,19 +90,6 @@ cbind <- function(..., deparse.level = 1)
 
 rbind <- function(..., deparse.level = 1)
     .Internal(rbind(deparse.level, ...))
-
-## methods:::bind_activation defunct as of 2018-02-05 (R >= 3.5.0)
-## Deprecating these aliases now
-.__H__.cbind <- function(..., deparse.level = 1) {
-    .Deprecated("base::cbind")
-    .Internal(cbind(deparse.level, ...))
-}
-.__H__.rbind <- function(..., deparse.level = 1) {
-    .Deprecated("base::rbind")
-    .Internal(rbind(deparse.level, ...))
-}
-
-
 
 # convert deparsing options to bitmapped integer
 ..deparseOpts <-
@@ -329,6 +317,11 @@ lengths <- function(x, use.names=TRUE) .Internal(lengths(x, use.names))
 
 mem.maxVSize <- function(vsize = 0) .Internal(mem.maxVSize(vsize))
 mem.maxNSize <- function(nsize = 0) .Internal(mem.maxNSize(nsize))
+
+## The *non*-primitive internal generics; .Primitive ones = .S3PrimitiveGenerics ( ./zzz.R )
+.internalGenerics <-
+    c("as.vector", "cbind", "rbind", "unlist",
+      "is.unsorted", "lengths", "nchar", "rep.int", "rep_len")
 
 ## base has no S4 generics
 .noGenerics <- TRUE

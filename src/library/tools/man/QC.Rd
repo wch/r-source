@@ -1,6 +1,6 @@
 % File src/library/tools/man/QC.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2020 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{QC}
@@ -23,11 +23,11 @@
   and documentation, notably on R packages.
 }
 \usage{
-checkDocFiles   (package, dir, lib.loc = NULL, chkInternal = FALSE)
+checkDocFiles   (package, dir, lib.loc = NULL, chkInternal = NULL)
 checkDocStyle   (package, dir, lib.loc = NULL)
 checkReplaceFuns(package, dir, lib.loc = NULL)
 checkS3methods  (package, dir, lib.loc = NULL)
-checkRdContents (package, dir, lib.loc = NULL, chkInternal = FALSE)
+checkRdContents (package, dir, lib.loc = NULL, chkInternal = NULL)
 
 langElts
 nonS3methods(package)
@@ -43,16 +43,16 @@ nonS3methods(package)
     libraries currently known.  The specified library trees are used to
     search for \code{package}.}
   \item{chkInternal}{logical indicating if Rd files marked with keyword
-    \code{internal} should be checked as well.}
+    \code{internal} should be checked as well.  If \code{NULL}
+    (default), these are checked \dQuote{specially}, ignoring missing
+    documentation of arguments.}
 }
 \details{
   \code{checkDocFiles} checks, for all Rd files in a package, whether all
   arguments shown in the usage sections of the Rd file are documented in
   its arguments section.  It also reports duplicated entries in the
   arguments section, and \sQuote{over-documented} arguments which are
-  given in the arguments section but not in the usage.  Note that the
-  match is for the usage section and not a possibly existing synopsis
-  section, as the usage is what gets displayed.
+  given in the arguments section but not in the usage.
 
   \code{checkDocStyle} investigates how (S3) methods are shown in the
   usages of the Rd files in a package.  It reports the methods shown by
@@ -80,11 +80,9 @@ nonS3methods(package)
   (see \link{InternalMethods}), and S3 group generics (see
   \code{\link[=S3groupGeneric]{Math}}).  Possible dispatch under a
   different name is not taken into account.  The generics are sought
-  first in the given package, then in the \pkg{base} package and
-  (currently) the packages \pkg{graphics}, \pkg{stats}, and \pkg{utils}
-  added in R 1.9.0 by splitting the former \pkg{base}, and, if an
-  installed package is tested, also in the loaded namespaces/packages
-  listed in the package's \file{DESCRIPTION} Depends field.
+  first in the given package, then (if given an installed package) in
+  the package imports, and finally the namespace environment for the
+  \pkg{base} package.
 
   \code{checkRdContents()} checks Rd content, e.g., whether arguments of
   functions in the usage section have non empty descriptions.
@@ -97,7 +95,7 @@ nonS3methods(package)
   \code{langElts} is a character vector of names of \dQuote{language
     elements} of \R.  These are implemented as \dQuote{very primitive}
   functions (no argument list; \code{\link{print}()}ing as
-  \code{.Primitive("<name>")}).
+  \code{.Primitive("\var{name}")}).
 
   If using an installed package, the checks needing access to all \R
   objects of the package will load the package (unless it is the

@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2022-01-03 r81435) -- "Unsuffered Consequences"
-Copyright (C) 2022 The R Foundation for Statistical Computing
-Platform: aarch64-apple-darwin21.2.0 (64-bit)
+R Under development (unstable) (2023-08-17 r84982) -- "Unsuffered Consequences"
+Copyright (C) 2023 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -1790,35 +1790,11 @@ Degrees of Freedom: 99 Total (i.e. Null);  98 Residual
 Null Deviance:	    317.2 
 Residual Deviance: 228.5 	AIC: 344.7
 There were 27 warnings (use warnings() to see them)
-> warnings()
-Warning messages:
-1: step size truncated: out of bounds
-2: step size truncated: out of bounds
-3: step size truncated: out of bounds
-4: step size truncated: out of bounds
-5: step size truncated: out of bounds
-6: step size truncated: out of bounds
-7: step size truncated: out of bounds
-8: step size truncated: out of bounds
-9: step size truncated: out of bounds
-10: step size truncated: out of bounds
-11: step size truncated: out of bounds
-12: step size truncated: out of bounds
-13: step size truncated: out of bounds
-14: step size truncated: out of bounds
-15: step size truncated: out of bounds
-16: step size truncated: out of bounds
-17: step size truncated: out of bounds
-18: step size truncated: out of bounds
-19: step size truncated: out of bounds
-20: step size truncated: out of bounds
-21: step size truncated: out of bounds
-22: step size truncated: out of bounds
-23: step size truncated: out of bounds
-24: step size truncated: out of bounds
-25: step size truncated: out of bounds
-26: glm.fit: algorithm did not converge
-27: glm.fit: algorithm stopped at boundary value
+> summary(warnings())
+Summary of (a total of 27) warning messages:
+25x : step size truncated: out of bounds
+ 1x : glm.fit: algorithm did not converge
+ 1x : glm.fit: algorithm stopped at boundary value
 > 
 > 
 > ## extending char arrrays
@@ -2468,10 +2444,6 @@ Residual Deviance: 4.551 	AIC: 28.51
 Call:
 glm(formula = y ~ x1 + x2 + x3)
 
-Deviance Residuals: 
-    Min       1Q   Median       3Q      Max  
--1.0572  -0.4836   0.0799   0.4424   1.2699  
-
 Coefficients: (1 not defined because of singularities)
             Estimate Std. Error t value Pr(>|t|)
 (Intercept)   1.4719     0.9484   1.552    0.165
@@ -2574,6 +2546,7 @@ In `[.data.frame`(women, "height", drop = TRUE) :
  [1] 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72
 > ## second and third were interpreted as women["height", , drop] in 1.7.x
 > 
+> op <- options(warn = 2) # *no* warnings (for now)
 > 
 > ## make.names
 > make.names("")
@@ -2764,10 +2737,16 @@ Residuals 10 2.7404 0.27404
 > predict(fit)
  1  2  3  4  5  6  7  8  9 10 
  0  0  0  0  0  0  0  0  0  0 
-> predict(fit, data.frame(x=x), se=TRUE)
+> tools::assertWarning(
++  predict(fit, data.frame(x=x), se=TRUE) -> p0
++ )
+> p0
 $fit
  1  2  3  4  5  6  7  8  9 10 
  0  0  0  0  0  0  0  0  0  0 
+attr(,"non-estim")
+ 1  2  3  4  5  6  7  8  9 10 
+ 1  2  3  4  5  6  7  8  9 10 
 
 $se.fit
  [1] 0 0 0 0 0 0 0 0 0 0
@@ -2778,9 +2757,8 @@ $df
 $residual.scale
 [1] 0.5234843
 
-Warning message:
-In predict.lm(fit, data.frame(x = x), se = TRUE) :
-  prediction from a rank-deficient fit may be misleading
+> if(FALSE)## not yet:
++ stopifnot(identical(p0$fit, predict(fit, data.frame(x=x), rankdeficient = "NA")))
 > predict(fit, type="terms", se=TRUE)
 $fit
    x
@@ -2848,10 +2826,6 @@ Residual Deviance: 2.74 	AIC: 17.43
 Call:
 glm(formula = y ~ 0)
 
-Deviance Residuals: 
-     Min        1Q    Median        3Q       Max  
--1.36919  -0.21073   0.00840   0.08437   0.55292  
-
 No Coefficients
 
 (Dispersion parameter for gaussian family taken to be 0.2740358)
@@ -2872,8 +2846,8 @@ Response: y
 Terms added sequentially (first to last)
 
 
-     Df Deviance Resid. Df Resid. Dev
-NULL                    10     2.7404
+     Df Deviance Resid. Df Resid. Dev F Pr(>F)
+NULL                    10     2.7404         
 > predict(fit)
  1  2  3  4  5  6  7  8  9 10 
  0  0  0  0  0  0  0  0  0  0 
@@ -2937,10 +2911,6 @@ Residual Deviance: 2.74 	AIC: 17.43
 Call:
 glm(formula = y ~ x + 0)
 
-Deviance Residuals: 
-     Min        1Q    Median        3Q       Max  
--1.36919  -0.21073   0.00840   0.08437   0.55292  
-
 Coefficients: (1 not defined because of singularities)
   Estimate Std. Error t value Pr(>|t|)
 x       NA         NA      NA       NA
@@ -2963,16 +2933,22 @@ Response: y
 Terms added sequentially (first to last)
 
 
-     Df Deviance Resid. Df Resid. Dev
-NULL                    10     2.7404
-x     0        0        10     2.7404
+     Df Deviance Resid. Df Resid. Dev F Pr(>F)
+NULL                    10     2.7404         
+x     0        0        10     2.7404         
 > predict(fit)
  1  2  3  4  5  6  7  8  9 10 
  0  0  0  0  0  0  0  0  0  0 
-> predict(fit, data.frame(x=x), se=TRUE)
+> tools::assertWarning(
++  predict(fit, data.frame(x=x), se=TRUE) -> p0
++ )
+> p0
 $fit
  1  2  3  4  5  6  7  8  9 10 
  0  0  0  0  0  0  0  0  0  0 
+attr(,"non-estim")
+ 1  2  3  4  5  6  7  8  9 10 
+ 1  2  3  4  5  6  7  8  9 10 
 
 $se.fit
  [1] 0 0 0 0 0 0 0 0 0 0
@@ -2980,9 +2956,8 @@ $se.fit
 $residual.scale
 [1] 0.5234843
 
-Warning message:
-In predict.lm(object, newdata, se.fit, scale = residual.scale, type = if (type ==  :
-  prediction from a rank-deficient fit may be misleading
+> if(FALSE)## not yet:
++ stopifnot(identical(p0$fit, predict(fit, data.frame(x=x), rankdeficient = "NA")))
 > predict(fit, type="terms", se=TRUE)
 $fit
    x
@@ -3724,6 +3699,7 @@ probability of success
              0.9876543 
 
 > 
+> options(op) # revert: warnings allowed
 > 
 > ## aov with a singular error model
 > rd <- c(16.53, 12.12, 10.04, 15.32, 12.33, 10.1, 17.09, 11.69, 11.81, 14.75,
@@ -3737,7 +3713,7 @@ probability of success
 +                         f1=factor(rep(rep(c("f1","f2","f3"),each=6),3)),
 +                         f2=factor(rep(c("g1","g2","g3"),each=18))
 + )
-> sample.aov <- aov(dep.variable ~ f1 * f2 + Error(subject/(f1+f2)), data=sample.df)
+> sample.aov <- aov(dep.variable ~ f1 * f2 + Error(subject/(f1+f2)), data=sample.df) # warning: singular
 Warning message:
 In aov(dep.variable ~ f1 * f2 + Error(subject/(f1 + f2)), data = sample.df) :
   Error() model is singular
@@ -5095,6 +5071,7 @@ Reaction ~ Days + (Days | Subject) + I(Days^2)
 > 
 > 
 > ## Limiting lines on deparse (wishlist PR#8638)
+> Sys.unsetenv("_R_CHECK_BROWSER_NONINTERACTIVE_")
 > op <- options(deparse.max.lines = 3)
 > f <- function(...) browser()
 > do.call(f, mtcars)
@@ -5116,6 +5093,8 @@ Calls: do.call -> <Anonymous>
    19.2, 17.8, 16.4, 17.3, 15.2, 10.4, 10.4, 14.7, 32.4, 30.4, 33.9, 
     ...
 1: do.call(f, mtcars)
+> ## unlimited < 2.3.0
+> options(op)
 > 
 > ## Debugger can handle a function that has a single function call as its body
 > g <- function(fun) fun(1)
@@ -5123,11 +5102,17 @@ Calls: do.call -> <Anonymous>
 > g(function(x) x+1)
 debugging in: g(function(x) x + 1)
 debug: fun(1)
-Browse[2]> 
+Browse[2]> c
 exiting from: g(function(x) x + 1)
 [1] 2
-> options(op)
-> ## unlimited < 2.3.0
+> 
+> ## Trap debugger in non-interactive sessions
+> if (!interactive()) {
++     Sys.setenv("_R_CHECK_BROWSER_NONINTERACTIVE_" = "true")
++     tools::assertError(browser())
++     browser(expr = FALSE) # but this passes (with no output)
++     Sys.unsetenv("_R_CHECK_BROWSER_NONINTERACTIVE_")
++ }
 > 
 > 
 > ## row names in as.table (PR#8652)
@@ -5175,10 +5160,6 @@ D1 30 60
 Call:
 glm(formula = y ~ x, weights = w)
 
-Deviance Residuals: 
-    Min       1Q   Median       3Q      Max  
--1.7806  -0.1416   0.1863   0.5690   1.2057  
-
 Coefficients:
             Estimate Std. Error t value Pr(>|t|)
 (Intercept)  -0.7532     0.7862  -0.958    0.370
@@ -5199,10 +5180,6 @@ In summary.glm(glm(y ~ x, weights = w)) :
 
 Call:
 glm(formula = y ~ x, subset = w > 0)
-
-Deviance Residuals: 
-    Min       1Q   Median       3Q      Max  
--1.7806  -0.1582   0.3726   0.5896   1.2057  
 
 Coefficients:
             Estimate Std. Error t value Pr(>|t|)
@@ -5711,7 +5688,7 @@ $y
 > 
 > 
 > ## tests of deparsing
-> x <-list(a = NA, b = as.integer(NA), c=0+NA, d=0i+NA,
+> x <-list(a = NA, b = NA_integer_, c = NA_real_, d = NA_complex_,
 +          e = 1, f = 1:1, g = 1:3, h = c(NA, 1:3),
 +          i = as.character(NA), j = c("foo", NA, "bar")
 +          )
@@ -6042,7 +6019,7 @@ numeric(0)
 [11] "1982-07-01" "1983-07-01" "1982-07-01" "1981-07-01" "1980-01-01"
 [16] "1979-01-01" "1978-01-01" "1977-01-01" "1976-01-01" "1975-01-01"
 [21] "1974-01-01" "1973-01-01" "1972-07-01"
-> class(pmin(x, y))
+> class (pmin(y, x))  ## (updating "filled")
 [1] "POSIXlt" "POSIXt" 
 > stopifnot(identical(pmin(x, y), pmin(y, x)))
 > format(pmin(x, y, na.rm=TRUE), tz="GMT")
@@ -6066,7 +6043,7 @@ numeric(0)
 [16] "1991-01-01" "1992-07-01" "1993-07-01" "1994-07-01" "1996-01-01"
 [21] "1997-07-01" "1999-01-01" "2006-01-01"
 > stopifnot(identical(pmax(x, y, na.rm=TRUE), pmax(y, x, na.rm=TRUE)))
-> ## regresion tests
+> ## regression tests
 > 
 > 
 > ## regression tests on names of 1D arrays
@@ -6377,7 +6354,7 @@ function(given = NULL) {
     if (is.null(given)) callObj$default <- TRUE
     callObj
 }
-<bytecode: 0x138577838>
+<bytecode: 0x5555f08>
 > print(foo, useSource = FALSE)
 function (given = NULL) 
 {
@@ -6388,7 +6365,7 @@ function (given = NULL)
         callObj$default <- TRUE
     callObj
 }
-<bytecode: 0x138577838>
+<bytecode: 0x5555f08>
 > attr(foo, "srcref") <- NULL
 > foo
 function (given = NULL) 
@@ -6400,7 +6377,7 @@ function (given = NULL)
         callObj$default <- TRUE
     callObj
 }
-<bytecode: 0x138577838>
+<bytecode: 0x5555f08>
 > (f <- structure(function(){}, note = "just a note",
 +                 yada = function() "not the same"))
 function(){}
@@ -6632,8 +6609,7 @@ Error in complete.cases(list(), list()) :
 > ## error messages from (C-level) evalList
 > tst <- function(y) { stopifnot(is.numeric(y)); y+ 1 }
 > try(tst()) # even nicer since R 3.5.0's change to sequential stopifnot()
-Error in stopifnot(is.numeric(y)) : 
-  argument "y" is missing, with no default
+Error in tst() : argument "y" is missing, with no default
 > try(c(1,,2))
 Error in c(1, , 2) : argument 2 is empty
 > ## change in 2.8.0 made these less clear
@@ -7164,7 +7140,7 @@ g(y)(x)
 [1] 1
 Warning message:
 In pl$ab : partial match of 'ab' to 'abc'
->   if (!is.null(saveopt[["warnPartialMatchDollar"]])) options(saveopt)
+>   options(saveopt)
 > ## 'abc' was just ''
 > 
 > 
@@ -8233,4 +8209,124 @@ a$b
 > quote(`=`(`$`(1, `$`(2, repeat 3)), 4))
 `$`(1, `$`(2, repeat 3)) = 4
 > ## these were really bad in  R <= 4.1.x
+> 
+> 
+> ## Deparsing of !  -- PR#18284
+> ## no parens in 3.5.0 <= R <= 4.1.x:
+> quote(1 +  `!`(2) + 3) -> x; x
+1 + (!2) + 3
+> quote(1 + +`!`(2) + 3)
+1 + +(!2) + 3
+> quote(1 + `!`(!2) + 3)
+1 + (!!2) + 3
+> quote(1 + `!`(if(L) 2) + 3)
+1 + (!if (L) 2) + 3
+> ## ok in 3.5.0 <= R <= 4.1.x:
+> quote(`&`(a < !b, d))
+a < !b & d
+> ## deparse--parse roundtrip is stable (basically)
+> stopifnot(eval(x) == 4, eval(parse(text = deparse(x))) == 4)
+> ## eval()ed to 1 since R 3.5.0 {also because of the weak precedence of `!`}
+> 
+> 
+> ## packageDate(<pkg>) w/o valid package
+> dput(packageDate("foo"))
+structure(NA, class = "Date")
+Warning message:
+In packageDescription(pkg, lib.loc = lib.loc, fields = date.fields) :
+  no package 'foo' was found
+> ## gave *five* warnings* in R <= 4.2.x
+> 
+> 
+> ## object not found error mentions lexical call
+> if (exists("foo")) rm(foo)
+> ## Should not mention call because called at top level
+> try(identity(foo))
+Error : object 'foo' not found
+> try(do.call("identity", alist(foo)))
+Error : object 'foo' not found
+> ##
+> ## Should mention `f()` call
+> f <- function() identity(foo)
+> try(f())
+Error in f() : object 'foo' not found
+> f <- compiler::cmpfun(f)
+> try(f())
+Error in f() : object 'foo' not found
+> f <- function() do.call("identity", alist(foo))
+> try(f())
+Error in f() : object 'foo' not found
+> f <- compiler::cmpfun(f)
+> try(f())
+Error in f() : object 'foo' not found
+> ##
+> ## Should not mention call because there is no matching execution env
+> try(do.call("identity", alist(foo), envir = new.env()))
+Error : object 'foo' not found
+> f <- function() do.call("identity", alist(foo), envir = new.env())
+> try(f())
+Error : object 'foo' not found
+> f <- compiler::cmpfun(f)
+> try(f())
+Error : object 'foo' not found
+> 
+> 
+> ## Missing argument error mentions lexical call
+> ## Local evaluation: Mentions `identity()`
+> try(identity())
+Error in identity() : argument "x" is missing, with no default
+> f <- function() identity()
+> try(f())
+Error in identity() : argument "x" is missing, with no default
+> f <- compiler::cmpfun(f)
+> try(f())
+Error in identity() : argument "x" is missing, with no default
+> ##
+> ## Promise evaluation: Mentions `f()` or `g()`
+> f <- function(arg) is.factor(arg)
+> g <- function(x) f(x)
+> try(f())
+Error in f() : argument "arg" is missing, with no default
+> try(g())
+Error in g() : argument "x" is missing, with no default
+> f <- compiler::cmpfun(f)
+> g <- compiler::cmpfun(g)
+> try(f())
+Error in f() : argument "arg" is missing, with no default
+> try(g())
+Error in g() : argument "x" is missing, with no default
+> ##
+> ## Direct evaluation, `eval()` wrapper: Mentions `eval()`
+> f <- function() eval(quote(expr = ))
+> try(f())
+Error in eval(quote(expr = )) : argument is missing, with no default
+> f <- compiler::cmpfun(f)
+> try(f())
+Error in eval(quote(expr = )) : argument is missing, with no default
+> ##
+> ## Direct evaluation, no `eval()` wrapper: Mentions `f()`
+> f <- function() {
++     eval(bquote(delayedAssign("go", .(quote(expr = )))))
++     go
++ }
+> try(f())
+Error in f() : argument is missing, with no default
+> f <- compiler::cmpfun(f)
+> try(f())
+Error in f() : argument is missing, with no default
+> 
+> 
+> ## withAutoprint({ ... }}  -- losing srcrefs - PR#18572
+> show.srcref <- function() str(sys.call())
+> {
++ #line 1 "file1.R"
++     withAutoprint({ show.srcref() })
++ }
+> {
+> #line 1 "file1.R"
+>     withAutoprint({ show.srcref() })
+ language show.srcref()
+ - attr(*, "srcref")= 'srcref' int [1:8] 1 21 1 33 21 33 3 3
+  ..- attr(*, "srcfile")=Classes 'srcfilealias', 'srcfile' <environment: 0xfeef070> 
+> ## no   attr(*, "src..")   in R <= 4.3.1
 > 

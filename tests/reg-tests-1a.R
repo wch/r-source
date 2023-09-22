@@ -12,6 +12,7 @@ envLst <- c(t(outer(c("R_ENVIRON","R_PROFILE"), c("","_USER"), paste0)),
 cbind(Sys.getenv(envLst))
 .libPaths()
 
+(have_cat <- nzchar(Sys.which("cat")))
 assertError <- tools::assertError
 
 ## regression test for PR#376
@@ -353,14 +354,16 @@ stopifnot(identical(it, as.integer(rowSums(outer(tt, X, ">=")))),
 	  is.na(it[ina]))
 
 
+if (have_cat) {
 ## fix
-oo <- options(editor="touch") # not really changing anything
+oo <- options(editor="cat") # not really changing anything
 fix(pi)
 if(!is.numeric(pi) || length(pi)!=1 ||
    !is.null(attributes(pi)) || abs(pi - 3.1415) > 1e-4)
       stop("OOPS:  fix() is broken ...")
 rm(pi); options(oo)
 ## end of moved from fix.Rd
+}
 
 
 ## format
@@ -971,6 +974,13 @@ try(eigen(m))
 ## segfaults on 1.2.2
 
 
+## PR 979 expand.model.frame() failed for models fitted with a subset
+df <- data.frame(y = 1:10, z = 1:10, m = 1:10)
+fit <- lm(y ~ 1, data = df, subset = m < 8)
+mf <- expand.model.frame(fit, ~ z)  # failed in 1.2.3
+stopifnot(identical(names(mf), c("y", "z")), identical(mf$z, 1:7))
+
+
 ## 1.3.0 had poor compression on gzfile() with lots of small pieces.
 zz <- gzfile("t1.gz", "w")
 write(1:1000, zz)
@@ -1130,8 +1140,12 @@ stopifnot(diff(tmp$mday) == c(0, 1, 0, 0))
 ## Methods, 2nd ed., Wiley, 1999, pp. 180-181).
 x <- c(-0.15, 8.6, 5, 3.71, 4.29, 7.74, 2.48, 3.25, -1.15, 8.38)
 y <- c(2.55, 12.07, 0.46, 0.35, 2.69, -0.94, 1.73, 0.73, -0.35, -0.37)
-stopifnot(round(ks.test(x, y)$p.value, 4) == 0.0524)
-
+KSxy <- ks.test(x, y)
+stopifnot(exprs = {
+    round(KSxy$p.value, 4) == 0.0524
+    all.equal(c(D = 0.6), KSxy$statistic, tol = 1e-15) # see 1.85 e-16
+    all.equal( 15/286,    KSxy$p.value,   tol = 1e-15) #  "  2.646e-16
+})
 
 ## PR 1150.  Wilcoxon rank sum and signed rank tests did not return the
 ## Hodges-Lehmann estimators of the associated confidence interval
@@ -1833,6 +1847,7 @@ stopifnot(length(res) == 1 && res == 1)
 ## gave NULL in 1.6.1
 
 
+if (have_cat) {
 ## Formerly undocumented line limit in system(intern=TRUE)
 ## Naoki Takebayashi <ntakebay@bio.indiana.edu> 2002-12-07
 tmp <- tempfile()
@@ -1841,6 +1856,7 @@ cat(long, "\n", sep="", file=tmp)
 junk <- system(paste("cat", shQuote(tmp)), intern = TRUE)
 stopifnot(length(junk) == 1L, nchar(junk[1]) == 200L)
 ## and split truncated on 1.6.1
+}
 
 
 ## missing group generics for `difftime' (related to PR#2345)

@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997--2021  The R Core Team
+ *  Copyright (C) 1997--2023  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -164,7 +164,7 @@ static void linebreak(Rboolean *lbreak, LocalParseData *);
 static void deparse2(SEXP, SEXP, LocalParseData *);
 
 // .Internal(deparse(expr, width.cutoff, backtick, .deparseOpts(control), nlines))
-SEXP attribute_hidden do_deparse(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_deparse(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);
 
@@ -361,7 +361,7 @@ SEXP deparse1line(SEXP call, Rboolean abbrev)
 
 
 // called only from ./errors.c  for calls in warnings and errors :
-SEXP attribute_hidden deparse1s(SEXP call)
+attribute_hidden SEXP deparse1s(SEXP call)
 {
    Rboolean backtick=TRUE;
    return
@@ -378,7 +378,7 @@ static void con_cleanup(void *data)
 }
 
 // .Internal(dput(x, file, .deparseOpts(control)))
-SEXP attribute_hidden do_dput(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_dput(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);
     SEXP tval = CAR(args);
@@ -432,7 +432,7 @@ SEXP attribute_hidden do_dput(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 // .Internal(dump(list, file, envir, opts, evaluate))
-SEXP attribute_hidden do_dump(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_dump(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);
     SEXP names = CAR(args),
@@ -622,16 +622,14 @@ static Rboolean needsparens(PPinfo mainop, SEXP arg, unsigned int left,
 		case PP_ASSIGN:
 		case PP_ASSIGN2:
 		case PP_DOLLAR:
-		    /* Same as other unary operators above */
-		    if (arginfo.precedence == PREC_NOT && !left)
-			return FALSE;
 		    if (mainop.precedence > arginfo.precedence
 			|| (mainop.precedence == arginfo.precedence && left == mainop.rightassoc)) {
 			return TRUE;
 		    }
 		    break;
 		case PP_UNARY:
-		    return left && mainop.precedence > arginfo.precedence;
+		    return (left && mainop.precedence > arginfo.precedence)
+			|| (deepLeft && deepLeft > arginfo.precedence);
 		case PP_FOR:
 		case PP_IF:
 		case PP_WHILE:
@@ -890,8 +888,7 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 
     if (!d->active) return;
 
-    Rboolean hasS4_t = TYPEOF(s) == S4SXP;
-    if (IS_S4_OBJECT(s) || hasS4_t) {
+    if (IS_S4_OBJECT(s)) {
 	d->isS4 = TRUE;
 	/* const void *vmax = vmaxget(); */
 	SEXP class = getAttrib(s, R_ClassSymbol),
@@ -914,6 +911,7 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 	    UNPROTECT(2); // (e, cl_def)
 	    int n;
 	    Rboolean has_Data = FALSE;// does it have ".Data" slot?
+	    Rboolean hasS4_t = TYPEOF(s) == S4SXP;
 	    if(TYPEOF(slotNms) == STRSXP && (n = LENGTH(slotNms))) {
 		PROTECT(slotNms);
 		SEXP slotlist = PROTECT(allocVector(VECSXP, n));
@@ -1180,7 +1178,7 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 		    deparse2buff(CAR(s), d);
 		    print2buff(") ", d);
 		    if (d->incurly && !d->inlist ) {
-			lookahead = curlyahead(CAR(CDR(s)));
+			lookahead = curlyahead(CADR(s));
 			if (!lookahead) {
 			    writeline(d);
 			    d->indent++;
@@ -1188,7 +1186,7 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 		    }
 		    /* need to find out if there is an else */
 		    if (length(s) > 2) {
-			deparse2buff(CAR(CDR(s)), d);
+			deparse2buff(CADR(s), d);
 			if (d->incurly && !d->inlist) {
 			    writeline(d);
 			    if (!lookahead)
@@ -1197,10 +1195,10 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 			else
 			    print2buff(" ", d);
 			print2buff("else ", d);
-			deparse2buff(CAR(CDDR(s)), d);
+			deparse2buff(CADDR(s), d);
 		    }
 		    else {
-			deparse2buff(CAR(CDR(s)), d);
+			deparse2buff(CADR(s), d);
 			if (d->incurly && !lookahead && !d->inlist )
 			    d->indent--;
 		    }
@@ -1217,7 +1215,7 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 		    print2buff(" in ", d);
 		    deparse2buff(CADR(s), d);
 		    print2buff(") ", d);
-		    deparse2buff(CADR(CDR(s)), d);
+		    deparse2buff(CADDR(s), d);
 		    break;
 		case PP_REPEAT:
 		    print2buff("repeat ", d);
@@ -1303,7 +1301,7 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 		    	print2buff("(", d);
 		    if ((parens = needsparens(fop, CAR(s), 1, prevLeft)))
 			print2buff("(", d);
-		    d->left = !parens;
+		    d->left = parens ? 0 : fop.precedence;
 		    deparse2buff(CAR(s), d);
 		    if (parens)
 			print2buff(")", d);
@@ -1312,7 +1310,7 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 		    print2buff(" ", d);
 		    if ((parens = needsparens(fop, CADR(s), 0, prevLeft)))
 			print2buff("(", d);
-		    d->left = prevLeft && !parens;
+		    d->left = parens ? 0 : prevLeft;
 		    deparse2buff(CADR(s), d);
 		    if (parens)
 			print2buff(")", d);
@@ -1324,7 +1322,7 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 		case PP_DOLLAR:
 		    if ((parens = needsparens(fop, CAR(s), 1, prevLeft)))
 			print2buff("(", d);
-		    d->left = !parens;
+		    d->left = parens ? 0 : fop.precedence;
 		    deparse2buff(CAR(s), d);
 		    if (parens)
 			print2buff(")", d);
@@ -1336,7 +1334,7 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 		    else {
 			if ((parens = needsparens(fop, CADR(s), 0, prevLeft)))
 			    print2buff("(", d);
-			d->left = prevLeft && !parens;
+			d->left = parens ? 0 : prevLeft;
 			deparse2buff(CADR(s), d);
 			if (parens)
 			    print2buff(")", d);
@@ -1346,7 +1344,7 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 		case PP_BINARY:
 		    if ((parens = needsparens(fop, CAR(s), 1, prevLeft)))
 			print2buff("(", d);
-		    d->left = !parens;
+		    d->left = parens ? 0 : fop.precedence;
 		    deparse2buff(CAR(s), d);
 		    if (parens)
 			print2buff(")", d);
@@ -1357,7 +1355,7 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 
 		    if ((parens = needsparens(fop, CADR(s), 0, prevLeft)))
 			print2buff("(", d);
-		    d->left = prevLeft && !parens;
+		    d->left = parens ? 0 : prevLeft;
 		    deparse2buff(CADR(s), d);
 		    if (parens)
 			print2buff(")", d);
@@ -1370,7 +1368,7 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 		case PP_BINARY2:	/* no space between op and args */
 		    if ((parens = needsparens(fop, CAR(s), 1, prevLeft)))
 			print2buff("(", d);
-		    d->left = !parens;
+		    d->left = parens ? 0 : fop.precedence;
 		    deparse2buff(CAR(s), d);
 		    if (parens)
 			print2buff(")", d);
@@ -1378,7 +1376,7 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 		    print2buff(CHAR(PRINTNAME(op)), d); /* ASCII */
 		    if ((parens = needsparens(fop, CADR(s), 0, prevLeft)))
 			print2buff("(", d);
-		    d->left = prevLeft && !parens;
+		    d->left = parens ? 0 : prevLeft;
 		    deparse2buff(CADR(s), d);
 		    if (parens)
 			print2buff(")", d);
@@ -1388,7 +1386,7 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 		    print2buff(CHAR(PRINTNAME(op)), d); /* ASCII */
 		    if ((parens = needsparens(fop, CAR(s), 0, prevLeft)))
 			print2buff("(", d);
-		    d->left = prevLeft;
+		    d->left = parens ? 0 : prevLeft;
 		    deparse2buff(CAR(s), d);
 		    if (parens)
 			print2buff(")", d);

@@ -18,7 +18,7 @@
   following) can only be used \emph{inside} a function which has
   \code{...} among its formal arguments.
 
-  \code{...elt(n)} is a functional way to get \code{..<n>} and
+  \code{...elt(n)} is a functional way to get \code{..\var{n}} and
   basically the same as \code{eval(paste0("..", n))}, just more elegant
   and efficient.
   Note that \code{switch(n, ...)} is very close, differing by returning

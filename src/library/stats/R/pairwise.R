@@ -34,7 +34,7 @@ function(x, g, p.adjust.method = p.adjust.methods, pool.sd = !paired,
         n <- tapply(!is.na(x), g, sum)
         degf <- n - 1
         total.degf <- sum(degf)
-        pooled.sd <- sqrt(sum(s^2 * degf)/total.degf)
+        pooled.sd <- sqrt(sum(ifelse(degf, s^2, 0) * degf)/total.degf)
         compare.levels <- function(i, j) {
             dif <- xbar[i] - xbar[j]
             se.dif <- pooled.sd * sqrt(1/n[i] + 1/n[j])

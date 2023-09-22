@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C)  2001-2021   The R Core Team.
+ *  Copyright (C)  2001-2022   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -82,15 +82,16 @@ static Rboolean sock_open(Rconnection con)
 	    }
 	}
 	free(con->description);
-	con->description = (char *) malloc(strlen(buf) + 10);
-	sprintf(con->description, "<-%s:%d", buf, this->port);
+	size_t sz = strlen(buf) + 10;
+	con->description = (char *) malloc(sz); // FIXME check allocation 
+	snprintf(con->description, sz, "<-%s:%d", buf, this->port);
     } else {
 	sock = R_SockConnect(this->port, con->description, timeout);
 	if(sock < 0) {
 	    warning("%s:%d cannot be opened", con->description, this->port);
 	    return FALSE;
 	}
-	sprintf(buf, "->%s:%d", con->description, this->port);
+	snprintf(buf, 256, "->%s:%d", con->description, this->port);
 	strcpy(con->description, buf);
     }
     this->fd = sock;

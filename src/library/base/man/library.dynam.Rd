@@ -85,7 +85,7 @@ library.dynam.unload(chname, libpath,
   \code{"\link{DLLInfo}"} identifying the DLL successfully unloaded.
 
   \code{.dynLibs} returns an object of class \code{"\link{DLLInfoList}"}
-  corresponding corresponding to its current value.
+  corresponding to its current value.
 }
 \section{Warning}{
   Do not use \code{\link{dyn.unload}} on a DLL loaded by

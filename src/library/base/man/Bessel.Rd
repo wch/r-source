@@ -26,7 +26,7 @@ besselY(x, nu)
 \arguments{
   \item{x}{numeric, \eqn{\ge 0}.}
 
-  \item{nu}{numeric; The \emph{order} (maybe fractional and negative) of
+  \item{nu}{numeric; the \emph{order} (maybe fractional and negative) of
     the corresponding Bessel function.}
 
   \item{expon.scaled}{logical; if \code{TRUE}, the results are
@@ -56,7 +56,7 @@ besselY(x, nu)
 }
 \source{
   The C code is a translation of Fortran routines from
-  \url{https://www.netlib.org/specfun/ribesl}, \samp{../rjbesl}, etc.
+  \url{https://netlib.org/specfun/ribesl}, \samp{../rjbesl}, etc.
   The four source code files for bessel[IJKY] each contain a paragraph
   \dQuote{Acknowledgement} and \dQuote{References}, a short summary of
   which is

@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998-2021   The R Core Team.
+ *  Copyright (C) 1998-2022  The R Core Team.
+ *  Copyright (C) 1995,1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -543,7 +543,9 @@ static void ruleout_types(const char *s, Typecvt_Info *typeInfo, LocalData *data
    the result is a character string if as.is == TRUE
    or a factor if as.is == FALSE. */
 
-
+/* Called from R's  type.convert.default()
+ * as  .External2(C_typeconvert,
+ *                x, na.strings, as.is, dec, match.arg(numerals), tryLogical) */
 SEXP typeconvert(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP cvec, a, dup, levs, dims, names, dec, numerals;
@@ -555,9 +557,9 @@ SEXP typeconvert(SEXP call, SEXP op, SEXP args, SEXP env)
     LocalData data = {NULL, 0, 0, '.', "", NO_COMCHAR, 0, NULL, FALSE,
 		      FALSE, 0, FALSE, FALSE};
     Typecvt_Info typeInfo;      /* keep track of possible types of cvec */
-    typeInfo.islogical = TRUE;  /* we can't rule anything out initially */
+    /* we can't rule anything out initially,  but set 'islogical' below */
     typeInfo.isinteger = TRUE;
-    typeInfo.isreal = TRUE;
+    typeInfo.isreal    = TRUE;
     typeInfo.iscomplex = TRUE;
     data.NAstrings = R_NilValue;
 
@@ -571,7 +573,7 @@ SEXP typeconvert(SEXP call, SEXP op, SEXP args, SEXP env)
 	error(_("invalid '%s' argument"), "na.strings");
 
     asIs = asLogical(CADDR(args));
-    if (asIs == NA_LOGICAL) asIs = 0;
+    if (asIs == NA_LOGICAL) asIs = FALSE;
 
     dec = CADDDR(args);
     if (isString(dec) || isNull(dec)) {
@@ -600,6 +602,10 @@ SEXP typeconvert(SEXP call, SEXP op, SEXP args, SEXP env)
 	i_exact = FALSE;
 	exact = FALSE;
     }
+
+    Rboolean tryLogical = asLogical(CAD5R(args));
+    if (tryLogical == NA_LOGICAL) tryLogical = FALSE;
+    typeInfo.islogical = tryLogical;
 
     cvec = CAR(args);
     len = length(cvec);
@@ -1047,7 +1053,7 @@ static void wt_cleanup(void *data)
 	    else
 	        warning(_("Problem closing connection"));
 	}
-    }	
+    }
     R_FreeStringBuffer(ld->buf);
     R_print.digits = ld->savedigits;
 }
@@ -1111,7 +1117,8 @@ SEXP writetable(SEXP call, SEXP op, SEXP args, SEXP env)
     }
     R_AllocStringBuffer(0, &strBuf);
     PrintDefaults();
-    wi.savedigits = R_print.digits; R_print.digits = DBL_DIG;/* MAX precision */
+    wi.savedigits = R_print.digits;
+    R_print.digits = DBL_DIG; /* MAX precision */
     wi.con = con;
     wi.wasopen = wasopen;
     wi.buf = &strBuf;
@@ -1135,7 +1142,10 @@ SEXP writetable(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
 
 	for(int i = 0; i < nr; i++) {
-	    if(i % 1000 == 999) R_CheckUserInterrupt();
+	    if(i % 1000 == 999) {
+		R_CheckUserInterrupt();
+		R_print.digits = DBL_DIG; /* MAX precision, see PR#18384 */
+	    }
 	    if(!isNull(rnames))
 		Rconn_printf(con, "%s%s",
 			     EncodeElement2(rnames, i, quote_rn, qmethod,
@@ -1179,7 +1189,10 @@ SEXP writetable(SEXP call, SEXP op, SEXP args, SEXP env)
 	    error(_("corrupt matrix -- dims do not match length"));
 
 	for(int i = 0; i < nr; i++) {
-	    if(i % 1000 == 999) R_CheckUserInterrupt();
+	    if(i % 1000 == 999) {
+		R_CheckUserInterrupt();
+		R_print.digits = DBL_DIG; /* MAX precision, see PR#18384 */
+	    }
 	    if(!isNull(rnames))
 		Rconn_printf(con, "%s%s",
 			     EncodeElement2(rnames, i, quote_rn, qmethod,

@@ -1,7 +1,7 @@
 #  File src/library/grDevices/R/prettyDate.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2016 The R Core Team
+#  Copyright (C) 1995-2023 The R Core Team
 #
 # Original code Copyright (C) 2010 Felix Andrews
 # Modifications Copyright (C) 2010 The R Core Team
@@ -38,7 +38,8 @@ prettyDate <- function(x, n = 5, min.n = n %/% 2, sep = " ", ...)
 	structure(if(isDate)
 		      if(round) as.Date(round(at, units = "days")) else at
 		  else as.POSIXct(at),
-		  labels = format(at, s$format))
+		  labels = format(at, s$format),
+          format = s$format)
     }
     if(isDate && D <= n * DAY) { # D <= 'n days' & Date  ==> use days
 	zz <- as.Date(zz)

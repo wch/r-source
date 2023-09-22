@@ -64,7 +64,7 @@
 }
 \note{
   Files for all 182 districts in 1888 and other years have been available at
-  \url{https://opr.princeton.edu/archive/pefp/switz.aspx}.
+  \url{https://oprdata.princeton.edu/archive/pefp/switz.aspx}.
 
   They state that variables \code{Examination} and \code{Education}
   are averages for 1887, 1888 and 1889.

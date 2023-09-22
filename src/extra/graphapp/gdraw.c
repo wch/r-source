@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1998--2004  Guido Masarotto and Brian Ripley
- *  Copyright (C) 2005-8      The R Core Team
+ *  Copyright (C) 2005-22      The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -920,10 +920,11 @@ font gnewfont2(drawing d, const char *face, int style, int size,
     lf.lfEscapement = lf.lfOrientation = (int) 10*rot;
     lf.lfWeight = FW_NORMAL;
     lf.lfItalic = lf.lfUnderline = lf.lfStrikeOut = 0;
-    if ((! strcmp(face, "Symbol")) || (! strcmp(face, "Wingdings")))
+    if ((! strcmp(face, "Symbol")) || (! strcmp(face, "Wingdings"))
+        || (! strcmp(face, "TT Symbol")) || (! strcmp(face, "TT Wingdings")))
 	lf.lfCharSet = SYMBOL_CHARSET;
     else
-	lf.lfCharSet = DEFAULT_CHARSET;
+	lf.lfCharSet = default_font_charset();
     lf.lfClipPrecision = CLIP_DEFAULT_PRECIS;
     lf.lfQuality = quality;
     lf.lfPitchAndFamily = DEFAULT_PITCH | FF_DONTCARE;

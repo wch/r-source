@@ -1,7 +1,7 @@
 #  File src/library/tools/R/sotools.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 2011-2021 The R Core Team
+#  Copyright (C) 2011-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -63,7 +63,7 @@ read_symbols_from_object_file <- function(f)
     if(!nzchar(nm)) {
         ## reasonable to assume nm is on the path
         nm <- Sys.which("nm")
-        if(!nzchar(nm)) nm <- shQuote(nm)
+        if(nzchar(nm)) nm <- shQuote(nm)
     }
     if(!nzchar(nm)) {
         warning("this requires 'nm' to be on the PATH")
@@ -85,33 +85,25 @@ read_symbols_from_object_file <- function(f)
     tab
 }
 
-get_system_ABI <- if(.Platform$OS.type == "windows") {
-    function() c(system = "windows", CC = "gcc", CXX = "g++",
-                 F77 = "gfortran", FC = "gfortran")
+## env variable formerly in etc/Renviron, now in ../Makefile
+system_ABI <- Sys.getenv("R_SYSTEM_ABI")
+if((system_ABI == "") || (substr(system_ABI, 1L, 1L) %in% c("@", "?"))) {
+    system_ABI <- character()
 } else {
-    function()
-    {
-        s <- Sys.getenv("R_SYSTEM_ABI")
-        if((s == "") || (substr(s, 1L, 1L) %in% c("@", "?")))
-            return(character())
-        s <- unlist(strsplit(s, ",", fixed = TRUE))
-        names(s) <- c("system", "CC", "CXX", "F77", "FC")
-        s
-    }
+    system_ABI <- unlist(strsplit(system_ABI, ",", fixed = TRUE))
+    names(system_ABI) <- c("system", "CC", "CXX", "F77", "FC")
 }
-
-system_ABI <- get_system_ABI()
 
 ## entry points for std::terminate are commented out as almost all
 ## come from system headers.
 so_symbol_names_table <-
-    ## 'linux' == glibc, principally
+    ## 'linux' == glibc, principally but checked with Alpine Linux's musl
     c("linux, C, gcc, abort, abort",
       ## https://refspecs.linuxbase.org/LSB_5.0.0/LSB-Core-generic/LSB-Core-generic/baselib---assert-fail-1.html
       "Linux, C, gcc, assert, __assert_fail",
       "linux, C, gcc, assert, __assert_fail_base",
       "linux, C, gcc, exit, exit",
-      "linux, C, gcc, _exit, _exit",
+      "linux, C, gcc, _exit, _exit", ## may not be seen
       "linux, C, gcc, _Exit, _Exit", ## _Exit is C99 and may not be a fn call
       "linux, C, gcc, printf, printf",
       "linux, C, gcc, printf, __printf_chk",
@@ -120,11 +112,13 @@ so_symbol_names_table <-
       "linux, C, gcc, putchar, putchar",
       "linux, C, gcc, stderr, stderr",
       "linux, C, gcc, stdout, stdout",
+      "linux, C, gcc, sprintf, sprintf",
+      "linux, C, gcc, sprintf, __sprintf_chk",
       "linux, C, gcc, vprintf, vprintf",
       "linux, C, gcc, vprintf, __vprintf_chk",
-      "linux, C++, gxx, std::cout, _ZSt4cout",
-      "linux, C++, gxx, std::cerr, _ZSt4cerr",
-      #"linux, C++, gxx, std::terminate, _ZSt9terminatev",
+      "linux, C, gcc, vsprintf, vsprintf",
+#      "linux, C, gcc, vprintf, vfprintf", # but also from REvprintf
+      "linux, C, gcc, vsprintf, __vsprintf_chk",
       "linux, C, gcc, rand, rand",
       "linux, C, gcc, random, random",
       "linux, C, gcc, rand_r, rand_r",
@@ -132,8 +126,11 @@ so_symbol_names_table <-
       "linux, C, gcc, srandom, srandom",
       "linux, C, gcc, srandom_r, srandom_r",
       "linux, C, gcc, srand48, srand48",
+      "linux, C++, gxx, std::cout, _ZSt4cout",
+      "linux, C++, gxx, std::cerr, _ZSt4cerr",
+      #"linux, C++, gxx, std::terminate, _ZSt9terminatev",
       ## libc++ variants
-      "linux, C++, gxx, std::cout, _ZNSt3__14coutE",
+      "linux, C++, gxx, std::cout, _ZNSt3__14coutE", # std::__1::cout
       "linux, C++, gxx, std::cerr, _ZNSt3__14cerrE",
       "linux, Fortran, gfortran, open, _gfortran_st_open",
       "linux, Fortran, gfortran, close, _gfortran_st_close",
@@ -144,53 +141,165 @@ so_symbol_names_table <-
       "linux, Fortran, gfortran, stop, _gfortran_stop_numeric_f08",
       "linux, Fortran, gfortran, stop, _gfortran_stop_string",
       "linux, Fortran, gfortran, rand, _gfortran_rand",
-      "linux, Fortran, flang, open, f90io_open03",
-      "linux, Fortran, flang, open, f90io_open2003",
-      "linux, Fortran, flang, close, f90io_close",
-      "linux, Fortran, flang, rewind, f90io_rewind",
-      "linux, Fortran, flang, write, f90io_print_init",
-      "linux, Fortran, flang, print, f90io_print_init",
-      "linux, Fortran, flang, read, f90io_fmt_read",
-      "linux, Fortran, flang, write, f90io_fmt_write",
-      "linux, Fortran, flang, stop, f90_stop",
-      "linux, Fortran, flang, stop, f90_stop08",
-      "linux, Fortran, flang, rand, rand",
+      "linux, Fortran, gfortran, random_init, _gfortran_random_init",
+      "linux, Fortran, gfortran, random_number, _gfortran_arandom_r4",
+      "linux, Fortran, gfortran, random_number, _gfortran_arandom_r8",
+      "linux, Fortran, gfortran, random_number, _gfortran_arandom_r16",
+      "linux, Fortran, gfortran, random_number, _gfortran_random_r4",
+      "linux, Fortran, gfortran, random_number, _gfortran_random_r8",
+      "linux, Fortran, gfortran, random_number, _gfortran_random_r16",
+      "linux, Fortran, gfortran, random_number, _gfortran_rand",
+      "linux, Fortran, gfortran, random_seed, _gfortran_random_seed_i4",
+      "linux, Fortran, gfortran, random_seed, _gfortran_random_seed_i8",
 
-      ## clang identifies itself as gcc, so configure has used that
-      "macos, C, gcc, abort, _abort",
-      "macos, C, gcc, assert, ___assert_rtn",
+      ## Classic flang from Dec 2017 (and untested since)
+      "linux, Fortran, ClassicFlang, open, f90io_open03",
+      "linux, Fortran, ClassicFlang, open, f90io_open2003",
+      "linux, Fortran, ClassicFlang, close, f90io_close",
+      "linux, Fortran, ClassicFlang, rewind, f90io_rewind",
+      "linux, Fortran, ClassicFlang, write, f90io_print_init",
+      "linux, Fortran, ClassicFlang, print, f90io_print_init",
+      "linux, Fortran, ClassicFlang, read, f90io_fmt_read",
+      "linux, Fortran, ClassicFlang, write, f90io_fmt_write",
+      "linux, Fortran, ClassicFlang, stop, f90_stop",
+      "linux, Fortran, ClassicFlang, stop, f90_stop08",
+      "linux, Fortran, ClassicFlang, rand, rand",
+
+      ## and for for the 'flang' in the LLVM tree, currently
+      ## with executable 'flang-new'.
+      ## This currently has static libs for its runtimes.
+      "linux, Fortran, flang-new, stop, _FortranAStopStatement",
+      "linux, Fortran, flang-new, stop, _FortranAStopStatementText",
+      "linux, Fortran, flang-new, open, _FortranAioBeginOpenUnit",
+      "linux, Fortran, flang-new, close, _FortranAioBeginClose",
+      "linux, Fortran, flang-new, rewind, _FortranAioBeginRewind",
+      "linux, Fortran, flang-new, read, _FortranAioInputAscii",
+      "linux, Fortran, flang-new, read, _FortranAioInputCharacter",
+      "linux, Fortran, flang-new, read, _FortranAioInputComplex32",
+      "linux, Fortran, flang-new, read, _FortranAioInputComplex64",
+      "linux, Fortran, flang-new, read, _FortranAioOutputExternalListInput",
+      "linux, Fortran, flang-new, read, _FortranAioInputInteger",
+      "linux, Fortran, flang-new, read, _FortranAioInputLogical",
+      "linux, Fortran, flang-new, read, _FortranAioInputNamelist",
+      "linux, Fortran, flang-new, read, _FortranAioInputReal32",
+      "linux, Fortran, flang-new, read, _FortranAioInputReal64",
+      "linux, Fortran, flang-new, read, _FortranAioInputUnformattedBlock",
+      "linux, Fortran, flang-new, print, _FortranAioOutputAscii",
+      "linux, Fortran, flang-new, print, _FortranAioOutputCharacter",
+      "linux, Fortran, flang-new, print, _FortranAioOutputComplex32",
+      "linux, Fortran, flang-new, print, _FortranAioOutputComplex64",
+      "linux, Fortran, flang-new, print, _FortranAioOutputExternalListOutput",
+      "linux, Fortran, flang-new, print, _FortranAioOutputInteger128",
+      "linux, Fortran, flang-new, print, _FortranAioOutputInteger16",
+      "linux, Fortran, flang-new, print, _FortranAioOutputInteger32",
+      "linux, Fortran, flang-new, print, _FortranAioOutputInteger64",
+      "linux, Fortran, flang-new, print, _FortranAioOutputInteger8",
+      "linux, Fortran, flang-new, print, _FortranAioOutputLogical",
+      "linux, Fortran, flang-new, print, _FortranAioOutputNamelist",
+      "linux, Fortran, flang-new, print, _FortranAioOutputReal32",
+      "linux, Fortran, flang-new, print, _FortranAioOutputReal64",
+      "linux, Fortran, flang-new, write, _FortranAioOutputAscii",
+      "linux, Fortran, flang-new, write, _FortranAioOutputCharacter",
+      "linux, Fortran, flang-new, write, _FortranAioOutputComplex32",
+      "linux, Fortran, flang-new, write, _FortranAioOutputComplex64",
+      "linux, Fortran, flang-new, write, _FortranAioOutputExternalListOutput",
+      "linux, Fortran, flang-new, write, _FortranAioOutputInteger128",
+      "linux, Fortran, flang-new, write, _FortranAioOutputInteger16",
+      "linux, Fortran, flang-new, write, _FortranAioOutputInteger32",
+      "linux, Fortran, flang-new, write, _FortranAioOutputInteger64",
+      "linux, Fortran, flang-new, write, _FortranAioOutputInteger8",
+      "linux, Fortran, flang-new, write, _FortranAioOutputLogical",
+      "linux, Fortran, flang-new, write, _FortranAioOutputNamelist",
+      "linux, Fortran, flang-new, write, _FortranAioOutputReal32",
+      "linux, Fortran, flang-new, write, _FortranAioOutputReal64",
+      "linux, Fortran, flang-new, write, _FortranAioOutputUnformatedBlock",
+      ## does not support rand()
+      ## https://discourse.llvm.org/t/support-for-gnu-fortran-extensions/69630
+      "linux, Fortran, flang-new, random_init, _FortranARandomInit",
+      "linux, Fortran, flang-new, random_number, _FortranARandomNumber",
+      "linux, Fortran, flang-new, random_seed, _FortranARandomSeed",
+      "linux, Fortran, flang-new, random_seed, _FortranARandomSeedGet",
+      "linux, Fortran, flang-new, random_seed, _FortranARandomSeedSize",
+
+      ## Intel 'Clasic' and 202x
+      "linux, Fortran, intel, stop, for_stop",
+      "linux, Fortran, intel, stop, for_stop_core",
+      "linux, Fortran, intel, stop, for_stop_core8",
+      "linux, Fortran, intel, stop, for_stop_core_impl",
+      "linux, Fortran, intel, stop, for_stop_core_int",
+      "linux, Fortran, intel, stop, for_stop_core_int8",
+      "linux, Fortran, intel, stop, for_stop_core_quiet",
+      "linux, Fortran, intel, stop, for_stop_core_quiet_int8",
+      "linux, Fortran, intel, print, for_write_seq_lis",
+      "linux, Fortran, intel, open, for_open",
+      "linux, Fortran, intel, open, for_open_args",
+      "linux, Fortran, intel, open, for_open_default",
+      "linux, Fortran, intel, open, for_open_key",
+      "linux, Fortran, intel, close, for_close",
+      "linux, Fortran, intel, rewind, for_rewind",
+      "linux, Fortran, intel, read, for_read_seq_lis",
+      "linux, Fortran, intel, read, for_read_seq_fmt",
+      "linux, Fortran, intel, write, for_write_seq_lis",
+      "linux, Fortran, intel, write, for_write_seq_fmt",
+      "linux, Fortran, intel, write, for_write_seq_nml",
+      ## does not support rand() except in module ifport
+      "linux, Fortran, intel, rand, rand_",
+      "linux, Fortran, intel, random_number, for_random_number",
+      "linux, Fortran, intel, random_number, for_random_number_single",
+      "linux, Fortran, intel, random_seed, for_random_seed_bit_size",
+      "linux, Fortran, intel, random_seed, for_random_seed_get",
+
+      ## Apple clang identifies itself as gcc, so configure has used that
+      "macos, C, gcc, abort, _abort", # not currently seen
+      "macos, C, gcc, assert, ___assert_rtn", # not currently seen
       "macos, C, gcc, exit, _exit",
       "macos, C, gcc, _exit, __exit",
       "macos, C, gcc, _Exit, __Exit",
+      "macos, C, gcc, _Exit, __exit",
       "macos, C, gcc, printf, _printf",
       "macos, C, gcc, printf, _puts",
       "macos, C, gcc, puts, _puts",
       "macos, C, gcc, putchar, _putchar",
       "macos, C, gcc, stderr, ___stderrp",
       "macos, C, gcc, stdout, ___stdoutp",
+      "macos, C, gcc, sprintf, _sprintf", # old
+      "macos, C, gcc, sprintf, ___sprintf_chk",
       "macos, C, gcc, vprintf, _vprintf",
-      "macos, C++, gxx, std::cout, __ZSt4cout",
-      "macos, C++, gxx, std::cerr, __ZSt4cerr",
-      #"macos, C++, gxx, std::terminate, __ZSt9terminatev",
+      "macos, C, gcc, vsprintf, _vsprintf", # old
+      "macos, C, gcc, vsprintf, ___vsprintf_chk",
       "macos, C, gcc, rand, _rand",
       "macos, C, gcc, random, _random",
       "macos, C, gcc, rand_r, _rand_r",
       "macos, C, gcc, srand, _srand",
       "macos, C, gcc, srandom, _srandom",
       "macos, C, gcc, srand48, _srand48",
-      ## libc++ variants
-      "macos, C++, gxx, std::cout, __ZNSt3__14coutE",
+      #"macos, C++, gxx, std::cout, __ZSt4cout", # not with clang
+      #"macos, C++, gxx, std::cerr, __ZSt4cerr",
+      "macos, C++, gxx, std::cout, __ZNSt3__14coutE", # std::__1::cout
       "macos, C++, gxx, std::cerr, __ZNSt3__14cerrE",
+      #"macos, C++, gxx, std::terminate, __ZSt9terminatev",
       "macos, Fortran, gfortran, open, __gfortran_st_open",
       "macos, Fortran, gfortran, close, __gfortran_st_close",
-      "macos, Fortran, gfortran, rewind, _gfortran_st_rewind",
+      "macos, Fortran, gfortran, rewind, __gfortran_st_rewind",
       "macos, Fortran, gfortran, read, __gfortran_st_read",
       "macos, Fortran, gfortran, write, __gfortran_st_write",
       "macos, Fortran, gfortran, print, __gfortran_st_write",
       "macos, Fortran, gfortran, stop, __gfortran_stop_numeric",
       "macos, Fortran, gfortran, stop, __gfortran_stop_string",
       "macos, Fortran, gfortran, rand, __gfortran_rand",
+      "macos, Fortran, gfortran, random_init, __gfortran_random_init",
+      "macos, Fortran, gfortran, random_number, __gfortran_arandom_r4",
+      "macos, Fortran, gfortran, random_number, __gfortran_arandom_r8",
+      "macos, Fortran, gfortran, random_number, __gfortran_arandom_r16",
+      "macos, Fortran, gfortran, random_number, __gfortran_random_r4",
+      "macos, Fortran, gfortran, random_number, __gfortran_random_r8",
+      "macos, Fortran, gfortran, random_number, __gfortran_random_r16",
+      "macos, Fortran, gfortran, random_number, __gfortran_rand",
+      "macos, Fortran, gfortran, random_seed, __gfortran_random_seed_i4",
+      "macos, Fortran, gfortran, random_seed, __gfortran_random_seed_i8",
 
+      ## This is old: freebsd defaults to clang these days, and
+      ## gfortran and (classic) flang are available (and 'f18' will be)
       "freebsd, C, gcc, abort, abort",
       "freebsd, C, gcc, assert, __assert",
       "freebsd, C, gcc, exit, exit",
@@ -202,9 +311,14 @@ so_symbol_names_table <-
       "freebsd, C, gcc, putchar, putchar",
       "freebsd, C, gcc, stderr, __stderrp",
       "freebsd, C, gcc, stdout, __stdoutp",
+      "freebsd, C, gcc, sprintf, sprintf",
       "freebsd, C, gcc, vprintf, vprintf",
+      "freebsd, C, gcc, vsprintf, vsprintf",
       "freebsd, C++, gxx, std::cout, _ZSt4cout",
       "freebsd, C++, gxx, std::cerr, _ZSt4cerr",
+      ## libc++ variants
+      "freebsd, C++, gxx, std::cout, _ZNSt3__14coutE",
+      "freebsd, C++, gxx, std::cerr, _ZNSt3__14cerrE",
       "freebsd, C, gcc, rand, rand",
       "freebsd, C, gcc, random, random",
       "freebsd, C, gcc, srand, srand",
@@ -229,7 +343,9 @@ so_symbol_names_table <-
       "solaris, C, solcc, printf, printf",
       "solaris, C, solcc, putchar, putchar",
       "solaris, C, solcc, puts, puts",
+      "solaris, C, solcc, sprintf, sprintf",
       "solaris, C, solcc, vprintf, vprintf",
+      "solaris, C, solcc, vsprintf, vsprintf",
       "solaris, C++, solCC, std::cout, __1cDstdEcout_",
       "solaris, C++, solCC, std::cerr, __1cDstdEcerr_",
       #"solaris, C++, solCC, std::terminate, _ZSt9terminatev",
@@ -264,7 +380,9 @@ so_symbol_names_table <-
       "solaris, C, gcc, printf, puts",
       "solaris, C, gcc, puts, puts",
       "solaris, C, gcc, putchar, putchar",
+      "solaris, C, gcc, sprintf, sprintf",
       "solaris, C, gcc, vprintf, vprintf",
+      "solaris, C, gcc, vsprintf, vsprintf",
       "solaris, C, gcc, rand, rand",
       "solaris, C, gcc, random, random",
       "solaris, C, gcc, rand_r, rand_r",
@@ -307,7 +425,9 @@ so_symbol_names_table <-
       "windows, C, gcc, printf, puts",
       "windows, C, gcc, puts, puts",
       "windows, C, gcc, putchar, putchar",
+      "windows, C, gcc, sprintf, sprintf",
       "windows, C, gcc, vprintf, vprintf",
+      "windows, C, gcc, vsprintf, vsprintf",
       ## Windows does not have (s)random
       "windows, C, gcc, rand, rand",
       "windows, C, gcc, rand_r, rand_r",
@@ -315,7 +435,85 @@ so_symbol_names_table <-
       "windows, C, gcc, srand48, srand48",
       "windows, Fortran, gfortran, stop, exit",
       ## next will not show up with static libgfortran
-      "windows, Fortran, gfortran, rand, _gfortran_rand"
+      "windows, Fortran, gfortran, rand, _gfortran_rand",
+      "windows, Fortran, gfortran, random_init, _gfortran_random_init",
+      "windows, Fortran, gfortran, random_number, _gfortran_arandom_r4",
+      "windows, Fortran, gfortran, random_number, _gfortran_arandom_r8",
+      "windows, Fortran, gfortran, random_number, _gfortran_arandom_r16",
+      "windows, Fortran, gfortran, random_number, _gfortran_random_r4",
+      "windows, Fortran, gfortran, random_number, _gfortran_random_r8",
+      "windows, Fortran, gfortran, random_number, _gfortran_random_r16",
+      "windows, Fortran, gfortran, random_seed, _gfortran_random_seed_i4",
+      "windows, Fortran, gfortran, random_seed, _gfortran_random_seed_i8",
+
+      ## currently copy from Linux
+      ## flang-new but executable already named 'flang'
+      "windows, Fortran, flang, stop, _FortranAStopStatement",
+      "windows, Fortran, flang, stop, _FortranAStopStatementText",
+      "windows, Fortran, flang, open, _FortranAioBeginOpenUnit",
+      "windows, Fortran, flang, close, _FortranAioBeginClose",
+      "windows, Fortran, flang, rewind, _FortranAioBeginRewind",
+      "windows, Fortran, flang, read, _FortranAioInputAscii",
+      "windows, Fortran, flang, read, _FortranAioInputCharacter",
+      "windows, Fortran, flang, read, _FortranAioInputComplex32",
+      "windows, Fortran, flang, read, _FortranAioInputComplex64",
+      "windows, Fortran, flang, read, _FortranAioOutputExternalListInput",
+      "windows, Fortran, flang, read, _FortranAioInputInteger",
+      "windows, Fortran, flang, read, _FortranAioInputLogical",
+      "windows, Fortran, flang, read, _FortranAioInputNamelist",
+      "windows, Fortran, flang, read, _FortranAioInputReal32",
+      "windows, Fortran, flang, read, _FortranAioInputReal64",
+      "windows, Fortran, flang, read, _FortranAioInputUnformattedBlock",
+      "windows, Fortran, flang, print, _FortranAioOutputAscii",
+      "windows, Fortran, flang, print, _FortranAioOutputCharacter",
+      "windows, Fortran, flang, print, _FortranAioOutputComplex32",
+      "windows, Fortran, flang, print, _FortranAioOutputComplex64",
+      "windows, Fortran, flang, print, _FortranAioOutputExternalListOutput",
+      "windows, Fortran, flang, print, _FortranAioOutputInteger128",
+      "windows, Fortran, flang, print, _FortranAioOutputInteger16",
+      "windows, Fortran, flang, print, _FortranAioOutputInteger32",
+      "windows, Fortran, flang, print, _FortranAioOutputInteger64",
+      "windows, Fortran, flang, print, _FortranAioOutputInteger8",
+      "windows, Fortran, flang, print, _FortranAioOutputLogical",
+      "windows, Fortran, flang, print, _FortranAioOutputNamelist",
+      "windows, Fortran, flang, print, _FortranAioOutputReal32",
+      "windows, Fortran, flang, print, _FortranAioOutputReal64",
+      "windows, Fortran, flang, write, _FortranAioOutputAscii",
+      "windows, Fortran, flang, write, _FortranAioOutputCharacter",
+      "windows, Fortran, flang, write, _FortranAioOutputComplex32",
+      "windows, Fortran, flang, write, _FortranAioOutputComplex64",
+      "windows, Fortran, flang, write, _FortranAioOutputExternalListOutput",
+      "windows, Fortran, flang, write, _FortranAioOutputInteger128",
+      "windows, Fortran, flang, write, _FortranAioOutputInteger16",
+      "windows, Fortran, flang, write, _FortranAioOutputInteger32",
+      "windows, Fortran, flang, write, _FortranAioOutputInteger64",
+      "windows, Fortran, flang, write, _FortranAioOutputInteger8",
+      "windows, Fortran, flang, write, _FortranAioOutputLogical",
+      "windows, Fortran, flang, write, _FortranAioOutputNamelist",
+      "windows, Fortran, flang, write, _FortranAioOutputReal32",
+      "windows, Fortran, flang, write, _FortranAioOutputReal64",
+      "windows, Fortran, flang, write, _FortranAioOutputUnformatedBlock",
+      ## Next is a guess.
+      "windows, Fortran, flang, rand, rand_",
+      "windows, Fortran, flang, random_init, _FortranARandomInit",
+      "windows, Fortran, flang, random_number, _FortranARandomNumber",
+      "windows, Fortran, flang, random_seed, _FortranARandomSeed",
+      "windows, Fortran, flang, random_seed, _FortranARandomSeedGet",
+      "windows, Fortran, flang, random_seed, _FortranARandomSeedSize",
+
+      "windows, C++, clang++, std::cout, _ZNSt3__14coutE",
+      "windows, C++, clang++, std::cerr, _ZNSt3__14cerrE",
+      "windows, C++, clang++, std::terminate, _ZSt9terminatev",
+      "windows, C, clang, exit, exit",
+      "windows, C, clang, printf, printf",
+      "windows, C, clang, printf, puts",
+      "windows, C, clang, puts, puts",
+      "windows, C, clang, putchar, putchar",
+      "windows, C, clang, sprintf, sprintf",
+      "windows, C, clang, vprintf, vprintf",
+      "windows, C, clang, vsprintf, vsprintf",
+      "windows, C, clang, rand, rand",
+      "windows, C, clang, srand, srand"
       )
 so_symbol_names_table <-
     do.call(rbind,
@@ -420,12 +618,14 @@ nonAPI <- c("chol_", "chol2inv_", "cg_", "ch_", "rg_",
             "max_contour_segments", "mbcsToUcs2", "memtrace_report",
             "parseError", "pythag_", "rs_", "rwarnc_",
             "tql2_", "tqlrat_", "tred1_", "tred2_", "utf8locale", "yylloc",
+            "R_opendir", "R_readdir", "R_closedir",
             # "signrank_free", "wilcox_free" are API only from 4.2.0
 
 ## Rinterface.h, Rembedded.h, R_ext/{RStartup,eventloop}.h
             "AllDevicesKilled", "R_CStackLimit", "R_CStackStart",
             "R_ClearerrConsole", "R_CleanTempDir", "R_Consolefile",
-            "R_DefParams", "R_DirtyImage", "R_GUIType", "R_GlobalContext",
+            "R_DefCallbacks", "R_DefParams", "R_DefParamsEx",
+            "R_DirtyImage", "R_GUIType", "R_GlobalContext",
             "R_HistoryFile", "R_HistorySize", "R_Home", "R_HomeDir",
             "R_InputHandlers", "R_Interactive", "R_Outputfile",
             "R_PolledEvents", "R_ReplDLLdo1", "R_ReplDLLinit",
@@ -441,6 +641,7 @@ nonAPI <- c("chol_", "chol2inv_", "cg_", "ch_", "rg_",
             "Rf_KillAllDevices", "Rf_endEmbeddedR", "Rf_initEmbeddedR",
             "Rf_initialize_R", "Rf_jump_to_toplevel", "Rf_mainloop",
             "SaveAction", "addInputHandler", "editorcleanall", "fpu_setup",
+            "freeRUser", "free_R_HOME",
             "getDLLVersion", "getInputHandler", "getRUser", "get_R_HOME",
             "getSelectedHandler", "initStdinHandler",
             "process_site_Renviron", "process_system_Renviron",
@@ -478,7 +679,7 @@ nonAPI <- c("chol_", "chol2inv_", "cg_", "ch_", "rg_",
 
 ## tcltk uses R_Consolefile R_GUIType R_InputHandlers R_Outputfile R_PolledEvents R_checkActivity R_runHandlers R_timeout_handler R_timeout_val R_wait_usec ptr_R_ClearerrConsole ptr_R_FlushConsole ptr_R_ReadConsole ptr_R_ResetConsole ptr_R_WriteConsole
 
-## tools uses RC_fopen R_FileExists R_NewHashedEnv R_ParseContext R_ParseContextLast R_ParseContextLine R_ParseError R_ParseErrorMsg R_SrcfileSymbol R_SrcrefSymbol Rconn_fgetc Rf_begincontext Rf_endcontext Rf_envlength Rf_mbrtowc Rf_strchr extR_HTTPDCreate extR_HTTPDStop getConnection parseError
+## tools uses RC_fopen R_FileExists R_NewHashedEnv R_ParseContext R_ParseContextLast R_ParseContextLine R_ParseError R_ParseErrorMsg R_SrcfileSymbol R_SrcrefSymbol Rconn_fgetc Rf_begincontext Rf_endcontext Rf_envlength Rf_mbrtowc Rf_strchr extR_HTTPDCreate extR_HTTPDStop getConnection parseError R_opendir R_readdir R_closedir
 
 ## utils uses R_ClearerrConsole R_FreeStringBuffer R_GUIType R_moduleCdynload R_print R_strtod4 Rconn_fgetc Rconn_printf Rdownload Rf_EncodeElement Rf_PrintDefaults Rf_begincontext Rf_con_pushback Rf_endcontext Rf_envlength Rf_sortVector Rsockclose Rsockconnect Rsocklisten Rsockopen Rsockread Rsockwrite Runzip UNIMPLEMENTED_TYPE csduplicated do_Rprof do_Rprofmem do_edit getConnection known_to_be_latin1 ptr_R_addhistory ptr_R_loadhistory ptr_R_savehistory ptr_do_dataentry ptr_do_dataviewer ptr_do_selectlist
 
@@ -807,7 +1008,10 @@ function(dir)
     ## A few packages such as CDM use base::.Call
     ff_call_names <- c(".C", ".Call", ".Fortran", ".External",
                        "base::.C", "base::.Call",
-                       "base::.Fortran", "base::.External")
+                       "base::.Fortran", "base::.External",
+                       ## internal ones
+                       ".Call.graphics", ".External.graphics",
+                       ".External2")
 
     predicate <- function(e) {
         (length(e) > 1L) &&
@@ -830,7 +1034,9 @@ function(calls, dir = NULL, character_only = TRUE)
 {
     if(!length(calls)) return(NULL)
 
-    ff_call_names <- c(".C", ".Call", ".Fortran", ".External")
+    ff_call_names <-
+        c(".C", ".Call", ".Fortran", ".External",
+          ".Call.graphics", ".External.graphics", ".External2")
     ff_call_args <- lapply(ff_call_names,
                            function(e) args(get(e, baseenv())))
     names(ff_call_args) <- ff_call_names
@@ -843,7 +1049,7 @@ function(calls, dir = NULL, character_only = TRUE)
         dir <- attr(calls, "dir")
 
     package <- # drop name
-        as.vector(.read_description(file.path(dir, "DESCRIPTION"))["Package"])
+        as.vector(.get_package_metadata(dir)["Package"])
 
     symbols <- character()
     nrdb <-
@@ -874,6 +1080,7 @@ function(calls, dir = NULL, character_only = TRUE)
                    ## Only keep ff calls where .NAME is character
                    ## or (optionally) a name.
                    s <- e[[".NAME"]]
+                   t <- typeof(s)
                    if(is.name(s)) {
                        s <- deparse(s)[1L]
                        if(character_only) {
@@ -901,12 +1108,12 @@ function(calls, dir = NULL, character_only = TRUE)
                         }
                    ## Could perhaps also record whether 's' was a symbol
                    ## or a character string ...
-                   cbind(cname, s, n)
+                   cbind(cname, s, n, t)
                })
     nrdb <- do.call(rbind, nrdb)
     nrdb <- as.data.frame(unique(nrdb), stringsAsFactors = FALSE)
 
-    if(NROW(nrdb) == 0L || length(nrdb) != 3L) {
+    if(NROW(nrdb) == 0L || length(nrdb) != 4L) {
         message("no native symbols were extracted")
         return(NULL)
     }
@@ -1007,27 +1214,27 @@ function(nrdb, align = TRUE, include_declarations = FALSE)
         "*/")
 
     if(include_declarations) {
+        prepare <- function(nargs)
+            if(nargs > 0) paste(rep.int("void *", nargs), collapse=", ")
+            else "void"
         decls <- c(
             "/* FIXME: ",
             "   Check these declarations against the C/Fortran source code.",
             "*/",
             if(NROW(y <- nrdb$.C)) {
-                 args <- sapply(y$n, function(n) if(n >= 0)
-                                paste(rep.int("void *", n), collapse=", ")
+                 args <- sapply(y$n, function(n) if(n >= 0) prepare(n)
                                 else "/* FIXME */")
                 c("", "/* .C calls */",
                   paste0("extern void ", y$s, "(", args, ");"))
            },
             if(NROW(y <- nrdb$.Call)) {
-                args <- sapply(y$n, function(n) if(n >= 0)
-                               paste(rep.int("SEXP", n), collapse=", ")
+                args <- sapply(y$n, function(n) if(n >= 0) prepare(n)
                                else "/* FIXME */")
                c("", "/* .Call calls */",
                   paste0("extern SEXP ", y$s, "(", args, ");"))
             },
             if(NROW(y <- nrdb$.Fortran)) {
-                 args <- sapply(y$n, function(n) if(n >= 0)
-                                paste(rep.int("void *", n), collapse=", ")
+                 args <- sapply(y$n, function(n) if(n >= 0) prepare(n)
                                 else "/* FIXME */")
                 c("", "/* .Fortran calls */",
                   paste0("extern void F77_NAME(", y$s, ")(", args, ");"))

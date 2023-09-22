@@ -1998,7 +1998,7 @@ c     initialize  d1mach(2) === DBL_MAX:
 
 c {called only from ehg127}  purpose...?...
       subroutine ehg137(z,leaf,nleaf,d,ncmax,a,xi,lo,hi)
-      integer d,nleaf
+      integer d,nleaf,ncmax
       integer leaf(256),a(ncmax),hi(ncmax),lo(ncmax),pstack(20)
       DOUBLE PRECISION z(d),xi(ncmax)
 

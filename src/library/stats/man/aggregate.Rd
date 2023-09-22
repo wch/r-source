@@ -1,6 +1,6 @@
 % File src/library/stats/man/aggregate.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2022 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{aggregate}
@@ -33,7 +33,7 @@ aggregate(x, \dots)
     \code{y} variables are numeric data to be split into groups according
     to the grouping \code{x} variables (usually factors).}
   \item{by}{a list of grouping elements, each as long as the variables
-    in the data frame \code{x}.  The elements are coerced to factors
+    in the data frame \code{x}, or a formula.  The elements are coerced to factors
     before use.}
   \item{FUN}{a function to compute the summary statistics which can be
     applied to all data subsets.}
@@ -42,13 +42,14 @@ aggregate(x, \dots)
   \item{drop}{a logical indicating whether to drop unused combinations
     of grouping values.  The non-default case \code{drop=FALSE} has been
     amended for \R 3.5.0 to drop unused combinations.}
-  \item{data}{a data frame (or list) from which the variables in formula
+  \item{data}{a data frame (or list) from which the variables in the formula
     should be taken.}
   \item{subset}{an optional vector specifying a subset of observations
     to be used.}
   \item{na.action}{a function which indicates what should happen when
-    the data contain \code{NA} values. The default is to ignore missing
-    values in the given variables.}
+    the data contain \code{NA} values. The default is to only consider
+    \emph{complete cases} % != complete.cases (c2991 in R-0-63-patches)
+    with respect to the given variables.}
   \item{nfrequency}{new number of observations per unit of time; must
     be a divisor of the frequency of \code{x}.}
   \item{ndeltat}{new fraction of the sampling period between
@@ -84,8 +85,11 @@ aggregate(x, \dots)
   the result.  (Note that versions of \R prior to 2.11.0 required
   \code{FUN} to be a scalar function.)
 
-  \code{aggregate.formula} is a standard formula interface to
+  The formula method provides a standard formula interface to
   \code{aggregate.data.frame}.
+  The latter invokes the formula method if \code{by} is a formula,
+  in which case \code{aggregate(x, by, FUN)} is the same as
+  \code{aggregate(by, x, FUN)} for a data frame \code{x}.
 
   \code{aggregate.ts} is the time series method, and requires \code{FUN}
   to be a scalar function.  If \code{x} is not a time series, it is
@@ -113,6 +117,13 @@ aggregate(x, \dots)
   unnamed grouping variables being named \code{Group.\var{i}} for
   \code{by[[\var{i}]]}.
 }
+
+\section{Warning}{
+  The first argument of the \code{"formula"} method was named
+  \code{formula} rather than \code{x} prior to \R 4.2.0.  Portable uses
+  should not name that argument.
+}
+
 \author{
   Kurt Hornik, with contributions by Arni Magnusson.
 }
@@ -158,6 +169,14 @@ aggregate(breaks ~ wool + tension, data = warpbreaks, mean)
 aggregate(cbind(Ozone, Temp) ~ Month, data = airquality, mean)
 aggregate(cbind(ncases, ncontrols) ~ alcgp + tobgp, data = esoph, sum)
 
+## "complete cases" vs. "available cases"
+colSums(is.na(airquality))  # NAs in Ozone but not Temp
+## the default is to summarize *complete cases*:
+aggregate(cbind(Ozone, Temp) ~ Month, data = airquality, FUN = mean)
+## to handle missing values *per variable*:
+aggregate(cbind(Ozone, Temp) ~ Month, data = airquality, FUN = mean,
+          na.action = na.pass, na.rm = TRUE)
+
 ## Dot notation:
 aggregate(. ~ Species, data = iris, mean)
 aggregate(len ~ ., data = ToothGrowth, mean)
@@ -166,6 +185,8 @@ aggregate(len ~ ., data = ToothGrowth, mean)
 ag <- aggregate(len ~ ., data = ToothGrowth, mean)
 xtabs(len ~ ., data = ag)
 
+## Formula interface via 'by' (for pipe operations)
+ToothGrowth |> aggregate(len ~ ., FUN = mean)
 
 ## Compute the average annual approval ratings for American presidents.
 aggregate(presidents, nfrequency = 1, FUN = mean)

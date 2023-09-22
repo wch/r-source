@@ -1078,7 +1078,7 @@ static RotatedTextItem *XRotCreateTextItem(Display *dpy, XFontStruct *font,
 	xinc=1./tan(angle);
     }
 
-    /* loop through all relevent bits in rotated image */
+    /* loop through all relevant bits in rotated image */
     for(j=0; j<item->rows_out; j++) {
 
 	/* no point re-calculating these every pass */
@@ -2301,7 +2301,7 @@ static RotatedTextItem
 	xinc=1./tan(angle);
     }
 
-    /* loop through all relevent bits in rotated image */
+    /* loop through all relevant bits in rotated image */
     for(j=0; j<item->rows_out; j++) {
 
 	/* no point re-calculating these every pass */

@@ -1,14 +1,14 @@
 # R Italian translation
 # Copyright (C) The R Foundation for Statistical Computing
 # This file is distributed under the same license as the R package.
-# Daniele Medri <dmedri@gmail.com>, 2005-2020.
+# Daniele Medri <dmedri@gmail.com>, 2005-2023.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R-grDevices 4.0.0\n"
+"Project-Id-Version: R-4-3-BRANCH\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-11-06 17:17\n"
-"PO-Revision-Date: \n"
+"POT-Creation-Date: 2023-07-31 14:59\n"
+"PO-Revision-Date: 2022-10-14 10:22+0200\n"
 "Last-Translator: Daniele Medri <dmedri@gmail.com>\n"
 "Language-Team: Italian https://github.com/dmedri/R-italian-lang\n"
 "Language: it\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.2.1\n"
+"X-Generator: Poedit 3.1.1\n"
 
 msgid "invalid 'filename'"
 msgstr "'filename' non valido"
@@ -31,7 +31,7 @@ msgid "cairo_ps: Cairo-based devices are not available for this platform"
 msgstr "cairo_ps: i dispositivi basati su Cairo non sono disponibili per questa piattaforma"
 
 msgid "'coef' must not be negative"
-msgstr "'coef' dev'essere non negativo"
+msgstr "'coef' non dev'essere negativo"
 
 msgid "no 'z' matrix specified"
 msgstr "la matrice 'z' non è stata specificata"
@@ -40,7 +40,7 @@ msgid "increasing 'x' and 'y' values expected"
 msgstr "i valori di 'x' e 'y' devono essere crescenti"
 
 msgid "no proper 'z' matrix specified"
-msgstr "nessuna matrice 'z' opportuna specificata"
+msgstr "non è stata specificata alcuna opportuna matrice 'z'"
 
 msgid "dimensions of 'x', 'y' and 'z' do not match"
 msgstr "le dimensioni di 'x', 'y' e 'z' non corrispondono"
@@ -130,7 +130,7 @@ msgid "no device to print from"
 msgstr "nessun dispositivo da cui stampare"
 
 msgid "can only print from a screen device"
-msgstr "può solo stampare da un dispositivo schermo"
+msgstr "può solo stampare da un dispositivo di tipo schermo"
 
 msgid "need to specify one of 'width' and 'height'"
 msgstr "è richiesta la specificazione di 'width' e 'height'"
@@ -162,12 +162,81 @@ msgstr "nessun nome file utilizzabile per postscript()"
 msgid "dev.new(): using postscript(file=\"%s\")"
 msgstr "dev.new(): si utilizza postscript(file=\"%s\")"
 
+msgid "Invalid capabilities - alert the device maintainer"
+msgstr "Capacità non valide - si avvisi il responsabile del dispositivo"
+
+#, fuzzy
+msgid "Invalid span weight"
+msgstr "Tipo di pattern non valido"
+
+msgid "length of arguments must match (and be greater than 0)"
+msgstr ""
+
+msgid "Invalid glyph width(s)"
+msgstr ""
+
+msgid "Invalid glyph width"
+msgstr ""
+
+msgid "Unknown width; using left anchor"
+msgstr ""
+
+msgid "Invalid glyph height(s)"
+msgstr ""
+
+msgid "Invalid glyph height"
+msgstr ""
+
+msgid "Unknown height; using bottom anchor"
+msgstr ""
+
+msgid "Invalid glyph anchor"
+msgstr ""
+
+msgid "Font file longer than 500 will be truncated"
+msgstr ""
+
+msgid "Font family longer than 200 will be truncated"
+msgstr ""
+
+msgid "PostScript font name longer than 200 will be truncated"
+msgstr ""
+
+msgid "Font information is inconsistent"
+msgstr ""
+
+msgid "List must include at least one font"
+msgstr ""
+
+#, fuzzy
+msgid "Invalid glyph font"
+msgstr "Tipo di carattere non valido"
+
+#, fuzzy
+msgid "Invalid font list"
+msgstr "Tipo di carattere non valido"
+
+#, fuzzy
+msgid "Unknown font"
+msgstr "carattere sconosciuto"
+
+msgid "There must be anchors named \"left\" and \"bottom\""
+msgstr ""
+
+msgid "Invalid glyph info"
+msgstr ""
+
+msgid "Invalid compositing operator"
+msgstr "Operatore di composizione non valido"
+
 msgid "wrong 'type'; should never happen, please report!"
 msgstr "'type' errato; non dovrebbe accadere, per piacere riportalo!"
 
-#, fuzzy
+msgid "Invalid mask type"
+msgstr "Tipo maschera non valido"
+
 msgid "Invalid fill rule"
-msgstr "'file' non valido"
+msgstr "Regola di riempimento non valida"
 
 msgid "Invalid pattern type"
 msgstr "Tipo di pattern non valido"
@@ -247,7 +316,8 @@ msgstr "carattere sconosciuto"
 msgid "font encoding mismatch '%s'/'%s'"
 msgstr "codifica dei caratteri non corrispondente '%s'/'%s'"
 
-msgid "'file' must be a non-empty character string"
+#, fuzzy
+msgid "'%s' must be a non-empty character string"
 msgstr "'file' dev'essere una stringa di caratteri non vuota"
 
 msgid "GhostScript was not found"
@@ -258,6 +328,13 @@ msgstr "formato di uscita non valido"
 
 msgid "status %d in running command '%s'"
 msgstr "status %d durante l'esecuzione del comando '%s'"
+
+msgid "'file' must be a non-empty character string"
+msgstr "'file' dev'essere una stringa di caratteri non vuota"
+
+#, fuzzy
+msgid "Invalid 'glyphInfo'"
+msgstr "'file' non valido"
 
 msgid "failed to add more ticks; 'min.n' too large?"
 msgstr "aggiunta di segni fallita; 'min.n' troppo grande?"
@@ -319,6 +396,9 @@ msgstr "Dovresti avere installato il pacchetto \"KernSmooth\" (nei 'Recommended'
 msgid "'r' must be a \"range\", hence of length 2"
 msgstr "'r' dev'essere un \"intervallo\", quindi di lunghezza 2"
 
+msgid "points cut off after point[%d]"
+msgstr ""
+
 msgid "invalid first argument"
 msgstr "primo argomento non valido"
 
@@ -356,8 +436,20 @@ msgstr ""
 "Dispositivi disponibili:\n"
 "%s"
 
+#, fuzzy
+msgid "invalid width"
+msgstr "'title' non valido"
+
+#, fuzzy
+msgid "invalid height"
+msgstr "'title' non valido"
+
 msgid "'res' must be specified unless 'units = \"px\"'"
 msgstr "'res' dev'essere specificato finché 'units = \"px\"'"
+
+#, fuzzy
+msgid "'filename' must be a non-empty character string"
+msgstr "'file' dev'essere una stringa di caratteri non vuota"
 
 msgid "type = \"quartz\" is unavailable. trying \"Xlib\""
 msgstr "type = \"quartz\" non disponibile. Si usa \"Xlib\""
@@ -444,17 +536,23 @@ msgid_plural "differ between new and previous"
 msgstr[0] "differisce tra nuovo e vecchio"
 msgstr[1] "differiscono tra nuovi e vecchi"
 
-msgid "%d x value <= 0 omitted from logarithmic plot"
-msgid_plural "%d x values <= 0 omitted from logarithmic plot"
-msgstr[0] "omesso %d valore di x <= 0 dal grafico su scala logaritmica"
-msgstr[1] "omessi %d valori di x <= 0 dal grafico su scala logaritmica"
+msgid "%d %s value <= 0 omitted from logarithmic plot"
+msgid_plural "%d %s values <= 0 omitted from logarithmic plot"
+msgstr[0] "omesso valore %d %s <= 0 dal grafico su scala logaritmica"
+msgstr[1] "omessi valori %d %s <= 0 dal grafico su scala logaritmica"
 
-msgid "%d y value <= 0 omitted from logarithmic plot"
-msgid_plural "%d y values <= 0 omitted from logarithmic plot"
-msgstr[0] "omesso %d valore di y <= 0 dal grafico su scala logaritmica"
-msgstr[1] "omessi %d valori di y <= 0 dal grafico su scala logaritmica"
+#~ msgid "log_le_0"
+#~ msgstr "log_le_0"
 
-msgid "%d z value <= 0 omitted from logarithmic plot"
-msgid_plural "%d z values <= 0 omitted from logarithmic plot"
-msgstr[0] "omesso %d valore di x <= 0 dal grafico su scala logaritmica"
-msgstr[1] "omessi %d valori di x <= 0 dal grafico su scala logaritmica"
+#~ msgid "plot_coords"
+#~ msgstr "plot_coords"
+
+#~ msgid "%d y value <= 0 omitted from logarithmic plot"
+#~ msgid_plural "%d y values <= 0 omitted from logarithmic plot"
+#~ msgstr[0] "omesso %d valore di y <= 0 dal grafico su scala logaritmica"
+#~ msgstr[1] "omessi %d valori di y <= 0 dal grafico su scala logaritmica"
+
+#~ msgid "%d z value <= 0 omitted from logarithmic plot"
+#~ msgid_plural "%d z values <= 0 omitted from logarithmic plot"
+#~ msgstr[0] "omesso %d valore di x <= 0 dal grafico su scala logaritmica"
+#~ msgstr[1] "omessi %d valori di x <= 0 dal grafico su scala logaritmica"

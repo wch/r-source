@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
+ *  Copyright (C) 1998--2021  R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--2012  R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@
 /* needed for R_GE_lineend/join, R_GE_gcontext */
 
 #define R_GRAPHICS 1
-#include <Rgraphics.h> /* RUnit */
+#include <Rgraphics.h> /* RUnit, G<par> functions */
 
 /* base.c, graphics.c, par.c */
 #define MAX_LAYOUT_ROWS 200
@@ -61,7 +61,7 @@ typedef struct {
 
     /* GRZ-like Graphics Parameters */
     /* ``The horror, the horror ... '' */
-    /* Marlon Brando - Appocalypse Now */
+    /* Marlon Brando - Apocalypse Now */
 
     /* General Parameters -- set and interrogated directly */
 
@@ -76,7 +76,7 @@ typedef struct {
     rcolor col;		/* Plotting Color */
     double crt;		/* Character/string rotation */
     double din[2];	/* device size in inches */
-    int	err;		/* Error repporting level */
+    int	err;		/* Error reporting level */
     rcolor fg;		/* **R ONLY** Foreground Color */
     char family[201];  /* **R ONLY** Font family
 			   Simple name which is mapped by device-specific

@@ -133,8 +133,8 @@ print(xtabs(~ x1 + x2, exclude = 'c', na.action = na.pass))
 ## adapted from adaptsmoFMRI
 if(suppressMessages(require("Matrix"))) {
     x <- matrix(c(1,2,3,4))
-    print(median(x))
-    print(median(as(x, "dgeMatrix")))
+    print(m <- median(x))
+    stopifnot(all.equal(m, median(as(x, "denseMatrix"))))
     detach("package:Matrix")
 }
 
@@ -200,30 +200,20 @@ nchar(x, "w", allowNA = TRUE)
 ## Results differed by platform, but some gave incorrect results on string 10.
 
 
-## str() on large strings (in multibyte locales; changing locale may not work everywhere
-oloc <- Sys.getlocale("LC_CTYPE")
-mbyte.lc <- {
-    if(.Platform$OS.type == "windows") # Windows Latin-9, but why not 1252?
-	"English_United States.28605"
-    else if(l10n_info()[["UTF-8"]])
-	oloc
-    else
-	"en_US.UTF-8"
-}
-identical(Sys.setlocale("LC_CTYPE", mbyte.lc), mbyte.lc) # "ok" if not
-cc <- "J\xf6reskog" # valid in "latin-1"; invalid multibyte string in UTF-8
-.tmp <- capture.output(
-str(cc) # failed in some R-devel versions
-)
-stopifnot(grepl("chr \"J.*reskog\"", .tmp))
+## str() on large strings
+if (l10n_info()$"UTF-8" || l10n_info()$"Latin-1") {
+  cc <- "J\xf6reskog" # valid in "latin-1"; invalid multibyte string in UTF-8
+  .tmp <- capture.output(
+  str(cc) # failed in some R-devel versions
+  )
+  stopifnot(grepl("chr \"J.*reskog\"", .tmp))
 
-nchar(L <- strrep(paste(LETTERS, collapse="."), 100000), type="b") # 5.1 M
-stopifnot(system.time( str(L) )[[1L]] < 0.10) # Sparc Solaris needed 0.052
-if(mbyte.lc != oloc) Sys.setlocale("LC_CTYPE", oloc)
-## needed 1.6 sec in (some) R <= 3.3.0 in a multibyte locale
+  print(nchar(L <- strrep(paste(LETTERS, collapse="."), 100000), type="b")) # 5.1 M
+  print(str(L))
+}
 
 if(require("Matrix", .Library)) {
-    M <- Matrix(diag(1:10), sparse=TRUE) # a "dsCMatrix"
+    M <- Matrix(diag(1:10), sparse=TRUE) # a "ddiMatrix"
     setClass("TestM", slots = c(M='numeric'))
     setMethod("+", c("TestM","TestM"), function(e1,e2) {
         e1@M + e2@M
@@ -231,7 +221,9 @@ if(require("Matrix", .Library)) {
     M+M # works the first time
     M+M # was error   "object '.Generic' not found"
     ##
-    as.Matrix <- function(x) `dimnames<-`(as.matrix(x), list(NULL,NULL))
+    as.Matrix <- if(packageVersion("Matrix", .Library) >= "1.4.2") {
+                     as.matrix
+                 } else function(x) `dimnames<-`(as.matrix(x), list(NULL,NULL))
     stopifnot(exprs = {
         identical(pmin(2,M), pmin(2, as.matrix(M)))
         identical(as.matrix(pmax(M, 7)),
@@ -244,3 +236,45 @@ if(require("Matrix", .Library)) {
 
     detach("package:Matrix", unload=TRUE)
 }##{Matrix}
+
+## citation() / bibentry: year will change but check is sloppy
+options(width=88) # format.bibentry() using strwrap()
+print(c1 <- citation())
+fc1B <- format(c1)
+fc1N <- format(c1, bibtex=FALSE)
+stopifnot(exprs = {
+    identical(fc1B[-2], fc1N[-2])
+    (b2 <- fc1B[2]) != (n2 <- fc1N[2]) # bibtex left away (at end of line 2)
+    startsWith(b2, n2)
+})
+
+pkg <- "nlme"
+(hasME <- requireNamespace(pkg, quietly=TRUE, lib.loc = .Library))
+if(hasME) withAutoprint({
+    c2 <- citation(package=pkg)
+    ## avoid spurious diffs:
+    c2$author[[1]]$given[[1]] <- "J."
+    c2$year[[1]] <- "9999"
+    c2$note[[1]] <- sub("3.1-[0-9]*$", "3.1-999", c2$note[[1]])
+    print(c2)
+    print(c2, bibtex=FALSE) # no final message
+    print(c2, bibtex=TRUE)  # w/ two bibTeX
+    stopifnot(length(c2) >= 2)
+    f2N <- format(c2) # -> format.bibentry(*, style="citation")
+    f2B <- format(c2, bibtex=TRUE)
+    stopifnot(exprs = {
+        print(n <- length(f2N)) == length(f2B)
+        identical(f2N[1], f2B[1])
+        grepl("see these entries in BibTeX",       f2N[n], fixed=TRUE)
+        grepl("'format(<citation>, bibtex=TRUE)'", f2N[n], fixed=TRUE) # "format(..)" was "print(..)"
+        f2B[n] == ""
+        (ie <- -c(1,n)) < 0
+        grepl("A BibTeX entry ", f2B[ie], fixed=TRUE)
+        grepl(" @[A-Z]", f2B[ie]) # @Book etc
+       !grepl(" @[A-Z]", f2N[ie]) # *not* there
+        nchar(f2N[ie]) < nchar(f2B[ie])
+        startsWith(f2B[ie], f2N[ie])
+      })
+})
+
+cat('Time elapsed: ', proc.time(),'\n')

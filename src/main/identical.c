@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001-2021  The R Core Team
+ *  Copyright (C) 2001-2023  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -47,7 +47,7 @@ static R_INLINE int asFlag(SEXP x, const char *name)
 }
 
 /* .Internal(identical(..)) */
-SEXP attribute_hidden do_identical(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_identical(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     int nargs = length(args);
     /* avoid problems with earlier (and future) versions captured in S4
@@ -323,7 +323,7 @@ R_compute_identical(SEXP x, SEXP y, int flags)
 	} else { // !IGNORE_BYTECODE: use byte code for comparison of function bodies :
 	    if(!R_compute_identical(BODY(x), BODY(y), flags)) return FALSE;
 	}
-	// now, formals and body are equal, check the enviroment(.)s:
+	// now, formals and body are equal, check the environment(.)s:
 	return (IGNORE_ENV || CLOENV(x) == CLOENV(y) ? TRUE : FALSE);
     }
     case SPECIALSXP:
@@ -364,7 +364,7 @@ R_compute_identical(SEXP x, SEXP y, int flags)
     default:
 	/* these are all supposed to be types that represent constant
 	   entities, so no further testing required ?? */
-	printf("Unknown Type in identical(): %s (%x)\n", type2char(TYPEOF(x)), TYPEOF(x));
+	printf("Unknown Type in identical(): %s (%x)\n", R_typeToChar(x), TYPEOF(x));
 	return TRUE;
     }
 }

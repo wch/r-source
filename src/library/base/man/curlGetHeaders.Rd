@@ -1,6 +1,6 @@
 % File src/library/base/man/curlGetHeaders.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2015-2021 R Core Team
+% Copyright 2015-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{curlGetHeaders}
@@ -10,8 +10,7 @@
 }
 \description{
   Retrieve the headers for a URL for a supported protocol such as
-  \code{http://}, \code{ftp://}, \code{https://} and \code{ftps://}.
-  Prior to \R 4.2.0, an optional function not supported on all platforms.
+  \samp{http://}, \samp{ftp://}, \samp{https://} and \samp{ftps://}.
 }
 \usage{
 curlGetHeaders(url, redirect = TRUE, verify = TRUE,
@@ -27,7 +26,7 @@ curlGetHeaders(url, redirect = TRUE, verify = TRUE,
     allowed to take.  Non-positive and invalid values are ignored
     (including the default).  (Added in \R 4.1.0.)}
   \item{TLS}{character: the minimum version of the TLS protocol to be used
-    for \code{https://} URLs: the default (\code{""}) is no restriction
+    for \samp{https://} URLs: the default (\code{""}) is no restriction
     beyond that of the underlying \code{libcurl} (usually 1.0).  Other
     valid values are \code{"1.1"}, \code{"1.2"} (both for \code{libcurl}
     7.34.0 and later)  and \code{"1.3"} (7.52.0 and later), if supported
@@ -38,7 +37,7 @@ curlGetHeaders(url, redirect = TRUE, verify = TRUE,
 
 \details{
   This reports what \command{curl -I -L} or \command{curl -I} would
-  report.  For a \code{ftp://} URL the \sQuote{headers} are a record of
+  report.  For a \samp{ftp://} URL the \sQuote{headers} are a record of
   the conversation between client and server before data transfer.
 
   Only 500 header lines will be reported: there is a limit of 20
@@ -84,6 +83,7 @@ curlGetHeaders(url, redirect = TRUE, verify = TRUE,
 
 \examples{\donttest{## needs Internet access, results vary
 curlGetHeaders("http://bugs.r-project.org")   ## this redirects to https://
-curlGetHeaders("https://httpbin.org/status/404")  ## returns status
-curlGetHeaders("ftp://cran.r-project.org")
+## 2023-04: replaces slow and unreliable https://httpbin.org/status/404
+curlGetHeaders("https://developer.R-project.org/inet-tests/not-found")
+## returns status
 }}

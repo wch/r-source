@@ -68,11 +68,11 @@ deparse1(expr, collapse = " ", width.cutoff = 500L, ...)
   intended to be deparsed and \code{.Internal} calls will be shown as
   primitive calls.
 
-  Prior to \R 4.2.0, attributes named \code{dim}, \code{dimnames},
-  \code{levels}, \code{names} and \code{tsp} were deparsed to
-  \code{.Dim}, \code{.Dimnames}, \code{.Label}, \code{.Names} and
-  \code{.Tsp} as part of calls to \code{\link{structure}}, apparently
-  for historical compatibility with S.
+  %% Prior to \R 4.2.0, attributes named \code{dim}, \code{dimnames},
+  %% \code{levels}, \code{names} and \code{tsp} were deparsed to
+  %% \code{.Dim}, \code{.Dimnames}, \code{.Label}, \code{.Names} and
+  %% \code{.Tsp} as part of calls to \code{\link{structure}}, apparently
+  %% for historical compatibility with S.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

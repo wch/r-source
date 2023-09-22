@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.0.4\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-02-01 13:58\n"
+"POT-Creation-Date: 2023-07-31 14:59\n"
 "PO-Revision-Date: 2021-02-10 17:38+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -292,11 +292,12 @@ msgstr "'legend' est de longueur nulle"
 msgid "invalid coordinate lengths"
 msgstr "longueurs de coordonnées incorrectes"
 
-msgid "'text.width' must be numeric, >= 0"
-msgstr "'text.width' doit être numérique et >= 0"
-
 msgid "horizontal specification overrides: Number of columns := %d"
 msgstr "argument horizontal supplanté : nombre de colonnes := %d"
+
+#, fuzzy
+msgid "'text.width' must be numeric, >= 0, or a scalar NA"
+msgstr "'text.width' doit être numérique et >= 0"
 
 msgid "'merge = TRUE' has no effect when no line segments are drawn"
 msgstr "'merge = TRUE' n'a pas d'effet lorsque aucun segment de droite n'est tracé"
@@ -420,6 +421,9 @@ msgstr "'nrpoints' doit être un scalaire numérique >= 0."
 
 msgid "a 2-way table has to be specified"
 msgstr "une table à double entrée doit être spécifiée"
+
+msgid "weights are not supported for 2-way table specification"
+msgstr ""
 
 msgid "x axis is on a cumulative probability scale, 'xlim' must be in [0,1]"
 msgstr "l'axe x a une échelle de probabilités cumulées, 'xlim' doit être dans l'intervalle [0,1]"

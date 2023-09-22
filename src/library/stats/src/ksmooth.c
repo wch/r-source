@@ -64,7 +64,7 @@ static void BDRksmooth(double *x, double *y, R_xlen_t n,
 
 
 // called only from  spline()  in ./ppr.f
-void NORET F77_SUB(bdrsplerr)(void)
+NORET void F77_SUB(bdrsplerr)(void)
 {
     error(_("only 2500 rows are allowed for sm.method=\"spline\""));
 }

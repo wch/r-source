@@ -18,6 +18,15 @@
 
 .geometry <- function(width, height, units, res)
 {
+    width <- as.numeric(width)
+    if (length(width) == 0 || !is.finite(width[1]))
+        stop("invalid width")
+    else width <- width[1]
+    height <- as.numeric(height)
+    if (length(height) == 0 || !is.finite(height[1]))
+        stop("invalid height")
+    else height <- height[1]
+
     units <- match.arg(units, c("in", "px", "cm", "mm"))
     if(units != "px" && is.na(res))
         stop("'res' must be specified unless 'units = \"px\"'")
@@ -39,6 +48,8 @@ png <- function(filename = "Rplot%03d.png",
                 pointsize = 12, bg = "white", res = NA, ...,
                 type = c("cairo", "cairo-png", "Xlib", "quartz"), antialias)
 {
+    if(!is.character(filename) || length(filename) != 1L || !nzchar(filename))
+        stop("'filename' must be a non-empty character string")
     if(!checkIntFormat(filename)) stop("invalid 'filename'")
     g <- .geometry(width, height, units, res)
     new <- list(...)
@@ -83,6 +94,8 @@ jpeg <- function(filename = "Rplot%03d.jpeg",
                  bg = "white", res = NA, ...,
                  type = c("cairo", "Xlib", "quartz"), antialias)
 {
+    if(!is.character(filename) || length(filename) != 1L || !nzchar(filename))
+        stop("'filename' must be a non-empty character string")
     if(!checkIntFormat(filename)) stop("invalid 'filename'")
     g <- .geometry(width, height, units, res)
     new <- list(...)
@@ -121,6 +134,8 @@ tiff <- function(filename = "Rplot%03d.tiff",
                  bg = "white", res = NA, ...,
                  type = c("cairo", "Xlib", "quartz"), antialias)
 {
+    if(!is.character(filename) || length(filename) != 1L || !nzchar(filename))
+        stop("'filename' must be a non-empty character string")
     if(!checkIntFormat(filename)) stop("invalid 'filename'")
     g <- .geometry(width, height, units, res)
     new <- list(...)
@@ -160,6 +175,8 @@ bmp <- function(filename = "Rplot%03d.bmp",
                 bg = "white", res = NA, ...,
                 type = c("cairo", "Xlib", "quartz"), antialias)
 {
+    if(!is.character(filename) || length(filename) != 1L || !nzchar(filename))
+        stop("'filename' must be a non-empty character string")
     if(!checkIntFormat(filename)) stop("invalid 'filename'")
     g <- .geometry(width, height, units, res)
     new <- list(...)

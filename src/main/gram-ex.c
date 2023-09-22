@@ -29,7 +29,7 @@
 #include <config.h>
 #endif
 
-#include "Defn.h"
+#include <Defn.h>
 
 attribute_hidden
 int R_fgetc(FILE *fp)

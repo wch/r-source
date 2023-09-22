@@ -1,6 +1,6 @@
 % File src/library/utils/man/chooseCRANmirror.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2017 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{chooseCRANmirror}
@@ -33,7 +33,7 @@ getCRANmirrors(all = FALSE, local.only = FALSE)
   list of current mirrors is consulted, and the file copy used only if
   the on-line list is inaccessible.
 
-  This function is called by a Windows GUI menu item and by
+  \code{chooseCRANmirror} is called by a Windows GUI menu item and by
   \code{\link{contrib.url}} if it finds the initial dummy value of
   \code{\link{options}("repos")}.
   
@@ -51,7 +51,8 @@ getCRANmirrors(all = FALSE, local.only = FALSE)
   \code{getCRANmirrors()} returns a data frame with mirror information.
 }
 \seealso{
-  \code{\link{setRepositories}}, \code{\link{chooseBioCmirror}},
+  \code{\link{setRepositories}}, \code{\link{findCRANmirror}},
+  \code{\link{chooseBioCmirror}},
   \code{\link{contrib.url}}.
 }
 \keyword{ utilities }

@@ -1,7 +1,7 @@
 #  File src/library/tools/R/Vignettes.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2021 The R Core Team
+#  Copyright (C) 1995-2022 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -439,6 +439,7 @@ function(package, dir, subdirs = NULL, lib.loc = NULL, output = FALSE,
         for (i in seq_along(docs)) {
             file <- docs[i]
             name <- names[i]
+            engine <- vignetteEngine(engines[i])
             outputI <- find_vignette_product(name, by = "weave", dir = docdir, engine = engine)
             outputs[i] <- outputI
         }
@@ -450,6 +451,7 @@ function(package, dir, subdirs = NULL, lib.loc = NULL, output = FALSE,
         for (i in seq_along(docs)) {
             file <- docs[i]
             name <- names[i]
+            engine <- vignetteEngine(engines[i])
             sourcesI <- find_vignette_product(name, by = "tangle", main = FALSE, dir = docdir, engine = engine)
             sources[[file]] <- sourcesI
         }
@@ -485,12 +487,14 @@ function(package, dir, subdirs = NULL, lib.loc = NULL, output = FALSE,
 
 ### * buildVignettes
 ###
-### Run a weave and pdflatex on all vignettes of a package and try to
-### remove all temporary files that were created.
+### Run a weave and pdflatex on all vignettes of a package
+### (except for those named in 'skip', where TRUE means to skip vignettes
+### with unavailable \VignetteDepends, as used by R CMD check)
+### and try to remove all temporary files that were created.
 ### Exported version, used in R CMD build/check
 buildVignettes <-
     function(package, dir, lib.loc = NULL, quiet = TRUE, clean = TRUE,
-             tangle = FALSE, ser_elibs = NULL)
+             tangle = FALSE, skip = NULL, ser_elibs = NULL)
 {
     separate <- !is.null(ser_elibs)
     if (separate) elibs <- readRDS(ser_elibs)
@@ -514,23 +518,11 @@ buildVignettes <-
              domain = NA)
     }
 
-    ## Check for duplicated titles (which look silly on CRAN pages)
-    titles <- character()
-    for (d in vigns$docs) {
-        this <- c(.get_vignette_metadata(readLines(d, warn = FALSE),
-                                         "IndexEntry"), "")[1L]
-        titles <- c(titles, this)
+    if (isTRUE(skip)) { # look for unavailable \VignetteDepends
+        installed <- rownames(utils::installed.packages())
+    } else if (!is.null(skip)) {
+        if (isFALSE(skip)) skip <- NULL else stopifnot(is.character(skip))
     }
-    have_dup_titles <-
-        if (any(dup <- duplicated(titles))) {
-            dups <- unique(titles[dup])
-            message(ngettext(length(dups),
-                             "duplicated vignette title:",
-                             "duplicated vignette titles:"))
-            message(paste(.pretty_format(dups), collapse = "\n"))
-            message()
-            TRUE
-        } else FALSE
 
     ## unset SWEAVE_STYLEPATH_DEFAULT here to avoid problems
     Sys.unsetenv("SWEAVE_STYLEPATH_DEFAULT")
@@ -559,10 +551,27 @@ buildVignettes <-
     outputs <- character()
     sourceList <- list()
     startdir <- getwd()
+    skipped <- character()
     fails <- character()
     for(i in seq_along(vigns$docs)) {
         thisOK <- TRUE
         file <- basename(vigns$docs[i])
+        name <- vigns$names[i]
+        thisSKIP <- if (isTRUE(skip)) {
+                        vinfo <- vignetteInfo(file)
+                        length(missdeps <- vinfo$depends %w/o% installed) > 0
+                    } else name %in% skip
+        if (thisSKIP) {
+            msg <- if (isTRUE(skip)) .pretty_format2(
+                    sprintf("Note: skipping %s due to unavailable dependencies:",
+                            sQuote(file)),  # grepped in check
+                    missdeps)
+                else gettextf("Note: skipping %s", sQuote(file))
+            message(paste0(c(msg, ""), collapse = "\n"),
+                    domain = NA)
+            skipped <- c(skipped, file)
+            next
+        }
         enc <- vigns$encodings[i]
         if (enc == "non-ASCII") {
             message(gettextf("Error: Vignette '%s' is non-ASCII but has no declared encoding",
@@ -570,7 +579,6 @@ buildVignettes <-
             fails <- c(fails, file)
             next
         }
-        name <- vigns$names[i]
         engine <- vignetteEngine(vigns$engines[i])
 
         if (separate) {  # --- run in separate process
@@ -688,21 +696,11 @@ buildVignettes <-
         message()
     }
 
-
-    msg2 <- paste("Duplicate vignette titles.",
-                  "  Ensure that the %\\VignetteIndexEntry lines in the vignette sources",
-                  "  correspond to the vignette titles.",
-                  sep = "\n")
-
     ## Assert
-    if (length(fails) || (length(outputs) != length(vigns$docs))) {
+    if (length(fails) || (length(outputs) != (length(vigns$docs) - length(skipped)))) {
         msg <- "Vignette re-building failed."
-        if (have_dup_titles) msg <- paste0(msg, "\nError: ", msg2)
         stop(msg, domain = NA, call. = FALSE)
     }
-
-    if (have_dup_titles)
-        stop(msg2, domain = NA, call. = FALSE)
 
     vigns$outputs <- outputs
     vigns$sources <- sourceList
@@ -756,11 +754,9 @@ buildVignette <-
     olddir <- setwd(dir)
     if (!is.null(olddir)) on.exit(setwd(olddir))
 
-    ## # Record existing files
-    ## origfiles <- list.files(all.files = TRUE)
-    if (is.na(clean) || clean) {
-	file.create(".build.timestamp")
-    }
+    # Record existing files (not to be cleaned)
+    if (is.na(clean) || clean)
+        origfiles <- list.files(all.files = TRUE)
 
     tdir <- getwd()# if 'dir' was relative, resetting to tdir will work
     output <- NULL
@@ -793,19 +789,10 @@ buildVignette <-
 	clean <- TRUE
     }
     if (clean) {
-	f <- setdiff(list.files(all.files = TRUE, no.. = TRUE), keep)
-	newer <- file_test("-nt", f, ".build.timestamp")
+	f <- setdiff(list.files(all.files = TRUE, no.. = TRUE),
+                     c(keep, origfiles))
 	## some packages create directories
-	unlink(f[newer], recursive = TRUE)
-    }
-    ### huh?  2nd round of cleaning even if  clean is FALSE ??
-    ##     f <- setdiff(list.files(all.files = TRUE, no.. = TRUE), c(keep, origfiles))
-    ##     f <- f[file_test("-f", f)]
-    ##     file.remove(f)
-    ## #}
-
-    if((is.na(clean) || clean) && file.exists(".build.timestamp")) {
-        file.remove(".build.timestamp")
+	unlink(f, recursive = TRUE)
     }
 
     unique(keep)
@@ -886,6 +873,8 @@ getVignetteEncoding <-  function(file, ...)
                 poss <- poss[poss < start[1L]]
             if(length(poss)) {
         	poss <- lines[poss[1L]]
+                poss <- gsub("%.*", "", poss, useBytes = TRUE) # strip off comment which
+                                                               # may be non-ASCII
         	res <- gsub("^[[:space:]]*\\\\usepackage\\[([[:alnum:]]+)\\].*", "\\1",
                             poss)               # This line should be ASCII.
 		## see Rd2latex.R.
@@ -1088,7 +1077,7 @@ function(pkg, con, vignetteIndex = NULL)
 			     otherfiles)
 	urls <- paste0('<a href="', otherfiles, '">', otherfiles, '</a>')
         html <- c(html, '<h2>Other files in the <span class="samp">doc</span> directory</h2>',
-                  '<table width="100%" summary="Other docs">',
+                  '<table style="width: 100%;">',
 		  '<col style="width: 24%;" />',
 		  '<col style="width: 50%;" />',
 		  '<col style="width: 24%;" />',

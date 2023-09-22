@@ -1,6 +1,6 @@
 % File src/library/tools/man/compactPDF.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2011-2014 R Core Team
+% Copyright 2011-2023  R Core Team
 % Distributed under GPL 2 or later
 
 \name{compactPDF}
@@ -18,7 +18,8 @@ compactPDF(paths,
            qpdf = Sys.which(Sys.getenv("R_QPDF", "qpdf")),
            gs_cmd = Sys.getenv("R_GSCMD", ""),
            gs_quality = Sys.getenv("GS_QUALITY", "none"),
-           gs_extras = character())
+           gs_extras = character(),
+           verbose = FALSE)
 
 \method{format}{compactPDF}(x, ratio = 0.9, diff = 1e4, ...)
 }
@@ -39,6 +40,9 @@ compactPDF(paths,
     \code{"screen"} (72dpi).  Can be abbreviated.}
   \item{gs_extras}{An optional character vector of further options to be
     passed to GhostScript.}
+  \item{verbose}{\code{\link{logical}} or non-negative integer indicating if
+    and how much of the compression utilities' output should be shown.}
+  %--> format(*):
   \item{x}{An object of class \code{"compactPDF"}.}
   \item{ratio, diff}{Limits for reporting: files are only reported whose
     sizes are reduced both by a factor of \code{ratio} and by
@@ -47,7 +51,7 @@ compactPDF(paths,
 }
 \details{
   This by default makes use of \command{qpdf}, available from
-  \url{http://qpdf.sourceforge.net/} (including as a Windows binary) and
+  \url{https://qpdf.sourceforge.io/} (including as a Windows binary) and
   included with the CRAN macOS distribution of \R.  If \code{gs_cmd}
   is non-empty and \code{gs_quality != "none"}, GhostScript will used
   first, then \command{qpdf} if it is available.  If
@@ -95,16 +99,15 @@ compactPDF(paths,
 \note{
   The external tools used may change in future releases.
 
-  Versions of GhostScript 9.06 and later give several times better
-  compression than 9.05 on some vignettes in CRAN packages.
+  Frequently, updates to GhostScript have produced better compression (up
+  to several times better), so if possible use the latest version available.
 }
 
 \seealso{
   \code{\link{resaveRdaFiles}}.
 
-  Many other (and sometimes more effective) tools to compact PDF files
-  are available, including Adobe Acrobat (not Reader).
-  See the \sQuote{Writing R Extensions} manual.
+  For other tools to compact PDF files, see the \sQuote{Writing R
+    Extensions} manual.
 }
 
 \keyword{ utilities }

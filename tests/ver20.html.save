@@ -1,15 +1,24 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html><head><title>R: Johnson &amp; Johnson, $ _ ### ^ ~</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<link rel="stylesheet" type="text/css" href="R.css">
-</head><body>
+<!DOCTYPE html><html><head><title>R: Johnson &amp; Johnson, $ _ ### ^ ~</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.css">
+<script type="text/javascript">
+const macros = { "\\R": "\\textsf{R}", "\\code": "\\texttt"};
+function processMathHTML() {
+    var l = document.getElementsByClassName('reqn');
+    for (let e of l) { katex.render(e.textContent, e, { throwOnError: false, macros }); }
+    return;
+}</script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.js"
+    onload="processMathHTML();"></script>
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
 
-<table width="100%" summary="page for ver20"><tr><td>ver20</td><td align="right">R Documentation</td></tr></table>
+<table style="width: 100%;"><tr><td>ver20</td><td style="text-align: right;">R Documentation</td></tr></table>
 
-<h2>Johnson &amp; Johnson,  $ _  ### ^ ~</h2>
+<h2 id='ver20'>Johnson &amp; Johnson,  $ _  ### ^ ~</h2>
 
 <h3>Description</h3>
-
 
 <p>This is the description
 </p>
@@ -17,17 +26,16 @@
 
 <h3>Arguments</h3>
 
-
-<table summary="R argblock">
-<tr valign="top"><td><code>foo</code></td>
+<table>
+<tr><td><code id="ver20_:_foo">foo</code></td>
 <td>
 <p>item 1</p>
 </td></tr>
-<tr valign="top"><td><code>bar</code></td>
+<tr><td><code id="ver20_:_bar">bar</code></td>
 <td>
 <p>space, the item 2</p>
 </td></tr>
-<tr valign="top"><td><code>bah</code></td>
+<tr><td><code id="ver20_:_bah">bah</code></td>
 <td>
 <p>newline, then item 3</p>
 </td></tr>
@@ -36,8 +44,7 @@
 
 <h3>Details</h3>
 
-
-<p><font face="Courier New,Courier" color="#666666"><b>R</b></font> <font face="Courier New,Courier" color="#666666"><b>R</b></font> \R <i>&alpha;&beta;&Gamma;</i>
+<p><span class="rlang"><b>R</b></span> <span class="rlang"><b>R</b></span> \R <code class="reqn">\alpha\beta\Gamma</code>
 </p>
 <p>In code, all that needs to be escaped is percent, backslash and unpaired
 braces: <code>% \ {</code>. Unescaped: <code>$ # _ ^ ~ &lt; &gt; |</code>, and as a
@@ -48,29 +55,30 @@ give one, one, two, two backslashes.
 <p>How about \ (that is backslash space) in text?
 </p>
 <p>Elsewhere, { } % \ need to be escaped, but not $ # _ ^ ~ &lt; &gt; | .
-Let's try that again in <code>\samp</code>: <span class="samp"> { } % \ $ # _ ^ ~ &lt; &gt; |</span>.
+Let's try that again in <code>\samp</code>: &lsquo;<span class="samp">&#8288; { } % \ $ # _ ^ ~ &lt; &gt; |&#8288;</span>&rsquo;.
 And if we do escape: \$ \# \_ , and with three backslashes, \\#.
 </p>
-<p align="center"><i>a &lt; b &gt; c | d, x^y</i></p>
+<p style="text-align: center;"><code class="reqn">a &lt; b &gt; c | d, x^y</code>
+</p>
 
-<p align="center"><i>\$k &gt; \#k, x_y, x\_y</i></p>
+<p style="text-align: center;"><code class="reqn">\$k &gt; \#k, x_y, x\_y</code>
+</p>
 
 
 <p>group-weighting from $[N_iP_i(1-P_i)]$
 </p>
-<PRE>
+<pre>
     % a
     \
     \% c
     {
     \{
-  </PRE>
+  </pre>
 
 
 <h3>URLs and emails</h3>
 
-
-<p>URLs need to be verbatim:  <a href="testit ~^_$#<>|">testit ~^_$#&lt;&gt;|</a>.
+<p>URLs need to be verbatim:  <a href="testit%20~%5E_$#%3C%3E%7C">testit ~^_$#&lt;&gt;|</a>.
 </p>
 <p>Markus Kuhn, &ldquo;ASCII and Unicode quotation marks&rdquo;.
 <a href="http://www.cl.cam.ac.uk/~mgk25/ucs/quotes.html">http://www.cl.cam.ac.uk/~mgk25/ucs/quotes.html</a>
@@ -81,9 +89,9 @@ And if we do escape: \$ \# \_ , and with three backslashes, \\#.
 
 <h3>Examples</h3>
 
-<pre>
-"\\r\\n"
-</pre>
+<pre><code class='language-R'>"\\r\\n"
+</code></pre>
 
 
+</div>
 </body></html>

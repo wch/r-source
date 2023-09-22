@@ -1,7 +1,7 @@
 #  File src/library/utils/R/roman.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2019 The R Core Team
+#  Copyright (C) 1995-2022 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -44,9 +44,10 @@ as.character.roman <- function(x, ...) .numeric2roman(x)
 
 format.roman <- function(x, ...) format(as.character.roman(x), ...)
 
-print.roman <- function(x, ...)
+print.roman <- function(x, quote = FALSE, ...)
 {
-    print(noquote(as.character.roman(x)), ...)
+    if(length(x)) print(as.character.roman(x), quote=quote, ...)
+    else cat("<0-length roman>\n")
     invisible(x)
 }
 

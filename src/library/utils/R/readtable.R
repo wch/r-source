@@ -1,7 +1,7 @@
 #  File src/library/utils/R/readtable.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2020 The R Core Team
+#  Copyright (C) 1995-2022 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -36,7 +36,7 @@ function(x, ...)
 
 type.convert.default <-
 function(x, na.strings = "NA", as.is, dec = ".",
-         numerals = c("allow.loss", "warn.loss", "no.loss"), ...)
+         numerals = c("allow.loss", "warn.loss", "no.loss"), tryLogical = TRUE, ...)
 {
     if(is.array(x))
         storage.mode(x) <- "character"
@@ -48,7 +48,7 @@ function(x, na.strings = "NA", as.is, dec = ".",
         warning("'as.is' should be specified by the caller; using TRUE")
         as.is <- TRUE
     }
-    .External2(C_typeconvert, x, na.strings, as.is, dec, match.arg(numerals))
+    .External2(C_typeconvert, x, na.strings, as.is, dec, match.arg(numerals), tryLogical)
 }
 
 type.convert.list <-
@@ -64,7 +64,7 @@ type.convert.data.frame <- type.convert.list
 read.table <-
 function(file, header = FALSE, sep = "", quote = "\"'", dec = ".",
 	 numerals = c("allow.loss", "warn.loss", "no.loss"),
-         row.names, col.names, as.is = !stringsAsFactors,
+         row.names, col.names, as.is = !stringsAsFactors, tryLogical = TRUE,
          na.strings = "NA", colClasses = NA,
          nrows = -1, skip = 0,
          check.names = TRUE, fill = !blank.lines.skip,
@@ -114,7 +114,7 @@ function(file, header = FALSE, sep = "", quote = "\"'", dec = ".",
                       nlines = 1, quiet = TRUE, skip = 0,
                       strip.white = TRUE,
                       blank.lines.skip = blank.lines.skip,
-                      na.strings=character(0),# NA colname if !check.names 
+                      na.strings=character(0),# NA colname if !check.names
                       comment.char = comment.char, allowEscapes = allowEscapes,
                       encoding = encoding, skipNul = skipNul)
         col1 <- if(missing(col.names)) length(first) else length(col.names)
@@ -235,7 +235,8 @@ function(file, header = FALSE, sep = "", quote = "\"'", dec = ".",
         data[[i]] <-
             if (is.na(colClasses[i]))
                 type.convert(data[[i]], as.is = as.is[i], dec=dec,
-			     numerals=numerals, na.strings = character(0L))
+			     numerals=numerals, na.strings = character(0L),
+                             tryLogical=tryLogical)
         ## as na.strings have already been converted to <NA>
             else if (colClasses[i] == "factor") as.factor(data[[i]])
             else if (colClasses[i] == "Date") as.Date(data[[i]])

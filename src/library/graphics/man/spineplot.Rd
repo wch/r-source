@@ -21,7 +21,7 @@ spineplot(x, \dots)
           ylevels = NULL, col = NULL,
           main = "", xlab = NULL, ylab = NULL,
           xaxlabels = NULL, yaxlabels = NULL,
-          xlim = NULL, ylim = c(0, 1), axes = TRUE, \dots)
+          xlim = NULL, ylim = c(0, 1), axes = TRUE, weights = NULL, \dots)
 
 \method{spineplot}{formula}(formula, data = NULL,
           breaks = NULL, tol.ylab = 0.05, off = NULL,
@@ -29,7 +29,7 @@ spineplot(x, \dots)
           main = "", xlab = NULL, ylab = NULL,
           xaxlabels = NULL, yaxlabels = NULL,
           xlim = NULL, ylim = c(0, 1), axes = TRUE, \dots,
-          subset = NULL, drop.unused.levels = FALSE)
+          subset = NULL, weights = NULL, drop.unused.levels = FALSE)
 }
 \arguments{
   \item{x}{an object, the default method expects either a single variable
@@ -59,6 +59,10 @@ spineplot(x, \dots)
   \item{xlim, ylim}{the range of x and y values with sensible defaults.}
   \item{axes}{logical.  If \code{FALSE} all axes (including those giving
     level names) are suppressed.}
+  \item{weights}{numeric. A vector of frequency weights for each
+    observation in the data. If \code{NULL} all weights are implicitly
+    assumed to be 1. If \code{x} is already a 2-way table, the weights
+    are ignored.}
   \item{\dots}{additional arguments passed to \code{\link{rect}}.}
   \item{subset}{an optional vector specifying a subset of observations
     to be used for plotting.}

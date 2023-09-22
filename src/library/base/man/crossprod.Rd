@@ -14,8 +14,7 @@
   \code{x \%*\% t(y)} (\code{tcrossprod}).
 }
 \usage{
-crossprod(x, y = NULL)
-
+ crossprod(x, y = NULL)
 tcrossprod(x, y = NULL)
 }
 \arguments{

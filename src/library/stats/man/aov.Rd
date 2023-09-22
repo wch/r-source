@@ -1,6 +1,6 @@
 % File src/library/stats/man/aov.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2019 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{aov}
@@ -10,7 +10,8 @@
 \alias{Error}
 \title{Fit an Analysis of Variance Model}
 \description{
-  Fit an analysis of variance model by a call to \code{lm} for each stratum.
+  Fit an analysis of variance model by a call to \code{lm} (for each
+  stratum if an \code{Error(.)} is used).
 }
 \usage{
 aov(formula, data = NULL, projections = FALSE, qr = TRUE,
@@ -31,7 +32,7 @@ aov(formula, data = NULL, projections = FALSE, qr = TRUE,
     or \code{na.action}.  See \sQuote{Details} about \code{weights}.}
 }
 \details{
-  This provides a wrapper to \code{lm} for fitting linear models to
+  This provides a wrapper to \code{\link{lm}} for fitting linear models to
   balanced or unbalanced experimental designs.
 
   The main difference from \code{lm} is in the way \code{print},

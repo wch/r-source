@@ -28,12 +28,9 @@ svd <- function(x, nu = min(n,p), nv = min(n,p), LINPACK = FALSE)
     if(!n || !p) stop("a dimension is zero")
     La.res <- La.svd(x, nu, nv)
     res <- list(d = La.res$d)
-    if (nu) res$u <- La.res$u
-    if (nv) {
-	if (is.complex(x))
-	    res$v <- Conj(t(La.res$vt))
-	else
-	    res$v <- t(La.res$vt)
-    }
+    if (nu)
+        res$u <- La.res$u
+    if (nv)
+        res$v <- if(is.complex(x)) Conj(t(La.res$vt)) else t(La.res$vt)
     res
 }

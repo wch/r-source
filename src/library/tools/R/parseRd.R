@@ -1,7 +1,7 @@
 #  File src/library/tools/R/parseRd.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2021 The R Core Team
+#  Copyright (C) 1995-2022 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -112,9 +112,9 @@ print.Rd <- function(x, deparse = FALSE, ...)
 as.character.Rd <- function(x, deparse = FALSE, ...)
 {
     ZEROARG <- c("\\cr", "\\dots", "\\ldots", "\\R", "\\tab") # Only these cause trouble when {} is added
-    TWOARG <- c("\\section", "\\subsection", "\\item", "\\enc",
-                "\\method", "\\S3method", "\\S4method", "\\tabular",
-                "\\if", "\\href")
+    MULTIARG <- c("\\section", "\\subsection", "\\item", "\\enc",
+                  "\\method", "\\S3method", "\\S4method", "\\tabular",
+                  "\\if", "\\href", "\\ifelse")
     USERMACROS <- c("USERMACRO", "\\newcommand", "\\renewcommand")
     EQN <- c("\\deqn", "\\eqn", "\\figure")
     modes <- c(RLIKE = 1L, LATEXLIKE = 2L, VERBATIM = 3L, INOPTION = 4L, COMMENTMODE = 5L, UNKNOWNMODE = 6L)
@@ -149,7 +149,7 @@ as.character.Rd <- function(x, deparse = FALSE, ...)
     	    } else if (tag %in% ZEROARG) {
     	    	result <- tag
     	    	needBraces <<- TRUE
-    	    } else if (tag %in% TWOARG) {
+    	    } else if (tag %in% MULTIARG) {
     	    	result <- tag
     	    	for (i in seq_along(x))
                     result <- c(result, pr(x[[i]], quoteBraces))

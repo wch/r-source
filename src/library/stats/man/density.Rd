@@ -1,6 +1,6 @@
 % File src/library/stats/man/density.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2021 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{density}
@@ -16,7 +16,10 @@ density(x, \dots)
                    "cosine", "optcosine"),
         weights = NULL, window = kernel, width,
         give.Rkern = FALSE, subdensity = FALSE,
-        n = 512, from, to, cut = 3, na.rm = FALSE, \dots)
+        warnWbw = var(weights) > 0,
+        n = 512, from, to, cut = 3, ext = 4,
+        old.coords = FALSE,
+        na.rm = FALSE, \dots)
 }
 \arguments{
   \item{x}{the data from which the estimate is to be computed.  For the
@@ -59,7 +62,13 @@ density(x, \dots)
     and there are \code{NA}'s in \code{x}, they \emph{and} the
     corresponding weights are removed before computations.  In that case,
     when the original weights have summed to one, they are re-scaled to
-    keep doing so.}
+    keep doing so.
+
+    Note that weights are \emph{not} taken into account for automatic
+    bandwidth rules, i.e., when \code{bw} is a string.  When the weights
+    are proportional to true counts \code{cn}, \code{density(x = rep(x, cn))}
+    may be used instead of \code{weights}.
+  }
 
   \item{width}{this exists for compatibility with S; if given, and
     \code{bw} is not, will set \code{bw} to \code{width} if this is a
@@ -75,6 +84,13 @@ density(x, \dots)
     is desired and no warning should be signalled.  By default, when false,
     a \code{\link{warning}} is signalled when the weights do not sum to one.}
 
+  \item{warnWbw}{\code{\link{logical}}, used only when \code{weights} are specified \emph{and}
+    \code{bw} is \code{character}, i.e., automatic bandwidth selection is
+    chosen (as by default).  When true (as by default), a
+    \code{\link{warning}} is signalled to alert the user that automatic
+    bandwidth selection will not take the weights into account and hence
+    may be suboptimal.}
+
   \item{n}{the number of equally spaced points at which the density is
     to be estimated.  When \code{n > 512}, it is rounded up to a power
     of 2 during the calculations (as \code{\link{fft}} is used) and the
@@ -89,7 +105,14 @@ density(x, \dots)
   \item{cut}{by default, the values of \code{from} and \code{to} are
     \code{cut} bandwidths beyond the extremes of the data.  This allows
     the estimated density to drop to approximately zero at the extremes.}
-
+  \item{ext}{a positive extension factor, \code{4} by default.  The values
+    \code{from} and \code{to} are further extended on both sides to
+    \code{lo <- from - ext * bw} and \code{up <- to + ext * bw} which are
+    then used to build the grid used for the FFT and interpolation, see
+    \code{n} above.
+    Do not change unless you know what you are doing!}
+  \item{old.coords}{\code{\link{logical}} to require pre-R 4.4.0 behaviour
+    which gives too large values by a factor of about \eqn{(1 + 1/(2n-2))}.}
   \item{na.rm}{logical; if \code{TRUE}, missing values are removed
     from \code{x}. If \code{FALSE} any missing values cause an error.}
   \item{\dots}{further arguments for (non-default) methods.}
@@ -150,10 +173,10 @@ density(x, \dots)
   Sheather, S. J. and Jones, M. C. (1991).
   A reliable data-based bandwidth selection method for kernel density
   estimation.
-  \emph{Journal of the Royal Statistical Society series B},
+  \emph{Journal of the Royal Statistical Society Series B},
   \bold{53}, 683--690.
   \doi{10.1111/j.2517-6161.1991.tb01857.x}.
-  \url{https://www.jstor.org/stable/2345597}.
+  %% \url{https://www.jstor.org/stable/2345597}.
 
   Silverman, B. W. (1986).
   \emph{Density Estimation}.
@@ -165,7 +188,9 @@ density(x, \dots)
 }
 \seealso{
   \code{\link{bw.nrd}},
-  \code{\link{plot.density}}, \code{\link{hist}}.
+  \code{\link{plot.density}}, \code{\link{hist}};
+  \code{\link{fft}} and \code{\link{convolve}} for the computational short
+  cut used.
 }
 \examples{
 require(graphics)
@@ -203,6 +228,7 @@ plot(fit)
 lines(density(x.new), col = "blue")
 
 
+## The available kernels:
 (kernels <- eval(formals(density.default)$kernel))
 
 ## show the kernels in the R parametrization
@@ -224,6 +250,21 @@ legend(0.6, 1.0, legend = kernels, col = seq(kernels), lty = 1)
 ##-------- Semi-advanced theoretic from here on -------------
 %% i.e. "secondary example" in a new help system ...
 
+## Explore the old.coords TRUE --> FALSE change:
+set.seed(7); x <- runif(2^12) # N = 4096
+den  <- density(x) # -> grid of n = 512 points
+den0 <- density(x, old.coords = TRUE)
+summary(den0$y / den$y) # 1.001 ... 1.011
+summary(    den0$y / den$y - 1) # ~= 1/(2n-2)
+summary(1/ (den0$y / den$y - 1))# ~=    2n-2 = 1022
+corr0 <- 1 - 1/(2*512-2) # 1 - 1/(2n-2)
+all.equal(den$y, den0$y * corr0)# ~ 0.0001
+plot(den$x, (den0$y - den$y)/den$y, type='o', cex=1/4)
+title("relative error of density(runif(2^12), old.coords=TRUE)")
+abline(h = 1/1022, v = range(x), lty=2); axis(2, at=1/1022, "1/(2n-2)", las=1)
+
+
+## The R[K] for our kernels:
 (RKs <- cbind(sapply(kernels,
                      function(k) density(kernel = k, give.Rkern = TRUE))))
 100*round(RKs["epanechnikov",]/RKs, 4) ## Efficiencies

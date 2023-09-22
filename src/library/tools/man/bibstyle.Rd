@@ -114,8 +114,8 @@ c(bibentry(bibtype = "manual",
     year = 1964,
     title = "An Analysis of Transformations",
     journal = "Journal of the Royal Statistical Society, Series B",
-    volume = 26,
-    pages = "211-252"))
+    volume = 26, number = 2, pages = "211--243",
+    doi = "10.1111/j.2517-6161.1964.tb00553.x"))
 
 bibstyle("unsorted", sortKeys = function(refs) seq_along(refs),
     fmtPrefix = function(paper) paste0("[", paper$.index, "]"),

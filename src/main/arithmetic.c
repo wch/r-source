@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998--2020 The R Core Team.
- *  Copyright (C) 2003--2020 The R Foundation
+ *  Copyright (C) 1998--2023 The R Core Team.
+ *  Copyright (C) 2003--2023 The R Foundation
  *  Copyright (C) 1995--1997 Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -18,6 +18,12 @@
  *  along with this program; if not, a copy is available at
  *  https://www.R-project.org/Licenses/
  */
+
+/* ====
+   NOTE: The [dpq]<foo>() distribution functions in math2, math3, math4 are *NOT* used from R,
+   ====  as [dpqr]<foo>() functions are in stats,
+         and the C code wrappers are all in ../library/stats/src/distn.c  <<< keep in SYNC !!!
+*/
 
 #ifdef HAVE_CONFIG_H
 #include <config.h>
@@ -52,40 +58,9 @@
 
 #include <errno.h>
 
-#ifdef HAVE_MATHERR
-
-/* Override the SVID matherr function:
-   the main difference here is not to print warnings.
-
-   This used to be common but was removed in glibc 2.27 having
-   previously been marked as obsolete.
-
-   macOS had it for x86_64 even in 11.0, but not for arm64.
- */
-#ifndef __cplusplus
-int matherr(struct exception *exc)
-{
-    switch (exc->type) {
-    case DOMAIN:
-    case SING:
-	errno = EDOM;
-	break;
-    case OVERFLOW:
-	errno = ERANGE;
-	break;
-    case UNDERFLOW:
-	exc->retval = 0.0;
-	break;
-	/*
-	   There are cases TLOSS and PLOSS which are ignored here.
-	   According to the Solaris man page, there are for
-	   trigonometric algorithms and not needed for good ones.
-	 */
-    }
-    return 1;
-}
-#endif
-#endif
+/* Override for matherr removed for R 4.4.0 */
+/* Intel compilers for Linux do have matherr, but they do not have the
+   defines in math.h.  So we skip this for Intel */
 
 typedef union
 {
@@ -114,8 +89,8 @@ static CONST int lw = 0;
 
 static double R_ValueOfNA(void)
 {
-    /* The gcc shipping with Fedora 9 gets this wrong without
-     * the volatile declaration. Thanks to Marc Schwartz. */
+    /* The gcc (3.2.1?) shipping with Red Hat Linux 9 gets this wrong
+     * without the volatile declaration. Thanks to Marc Schwartz. */
     volatile ieee_double x;
     x.word[hw] = 0x7ff00000;
     x.word[lw] = 1954;
@@ -123,7 +98,7 @@ static double R_ValueOfNA(void)
 }
 
 /* is a value known to be a NaN also an R NA? */
-int attribute_hidden R_NaN_is_R_NA(double x)
+attribute_hidden int R_NaN_is_R_NA(double x)
 {
     ieee_double y;
     y.value = x;
@@ -163,7 +138,7 @@ int R_finite(double x)
 
 /* Arithmetic Initialization */
 
-void attribute_hidden InitArithmetic()
+attribute_hidden void InitArithmetic(void)
 {
     R_NaInt = INT_MIN;
     R_NaReal = R_ValueOfNA();
@@ -412,11 +387,9 @@ static R_INLINE SEXP ScalarValue2(SEXP x, SEXP y)
 
 /* Unary and Binary Operators */
 
-SEXP attribute_hidden do_arith(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_arith(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP ans, arg1, arg2;
     int argc;
-
     if (args == R_NilValue)
 	argc = 0;
     else if (CDR(args) == R_NilValue)
@@ -425,9 +398,10 @@ SEXP attribute_hidden do_arith(SEXP call, SEXP op, SEXP args, SEXP env)
 	argc = 2;
     else
 	argc = length(args);
-    arg1 = CAR(args);
-    arg2 = CADR(args);
 
+    SEXP ans,
+	arg1 = CAR(args),
+	arg2 = CADR(args);
     if (ATTRIB(arg1) != R_NilValue || ATTRIB(arg2) != R_NilValue) {
 	if (DispatchGroup("Ops", call, op, args, env, &ans))
 	    return ans;
@@ -544,7 +518,7 @@ SEXP attribute_hidden do_arith(SEXP call, SEXP op, SEXP args, SEXP env)
     } \
 } while (0)
 
-SEXP attribute_hidden R_binary(SEXP call, SEXP op, SEXP x, SEXP y)
+attribute_hidden SEXP R_binary(SEXP call, SEXP op, SEXP x, SEXP y)
 {
     Rboolean xattr, yattr, xarray, yarray, xts, yts, xS4, yS4;
     PROTECT_INDEX xpi, ypi;
@@ -596,7 +570,7 @@ SEXP attribute_hidden R_binary(SEXP call, SEXP op, SEXP x, SEXP y)
 	    if(ny != 0)
 		warningcall(call, _(
 	"Recycling array of length 1 in array-vector arithmetic is deprecated.\n\
-  Use c() or as.vector() instead.\n"));
+  Use c() or as.vector() instead."));
     	    REPROTECT(x = duplicate(x), xpi);
     	    setAttrib(x, R_DimSymbol, R_NilValue);
     	}
@@ -604,7 +578,7 @@ SEXP attribute_hidden R_binary(SEXP call, SEXP op, SEXP x, SEXP y)
 	    if(nx != 0)
 		warningcall(call, _(
 	"Recycling array of length 1 in vector-array arithmetic is deprecated.\n\
-  Use c() or as.vector() instead.\n"));
+  Use c() or as.vector() instead."));
     	    REPROTECT(y = duplicate(y), ypi);
     	    setAttrib(y, R_DimSymbol, R_NilValue);
     	}
@@ -730,7 +704,7 @@ SEXP attribute_hidden R_binary(SEXP call, SEXP op, SEXP x, SEXP y)
     return val;
 }
 
-SEXP attribute_hidden R_unary(SEXP call, SEXP op, SEXP s1)
+attribute_hidden SEXP R_unary(SEXP call, SEXP op, SEXP s1)
 {
     ARITHOP_TYPE operation = (ARITHOP_TYPE) PRIMVAL(op);
     switch (TYPEOF(s1)) {
@@ -1260,7 +1234,7 @@ static SEXP math1(SEXP sa, double(*f)(double), SEXP lcall)
 }
 
 
-SEXP attribute_hidden do_math1(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_math1(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP s;
 
@@ -1310,13 +1284,13 @@ SEXP attribute_hidden do_math1(SEXP call, SEXP op, SEXP args, SEXP env)
 
 	   case 46: return MATH1(Rf_gamma_cody); removed in 2.8.0
 	*/
+/* not yet:
+    case 44: return MATH1(factorial);
+*/
+
     case 47: return MATH1(cospi);
     case 48: return MATH1(sinpi);
-#if defined(HAVE_TANPI) || defined(HAVE___TANPI)
-    case 49: return MATH1(Rtanpi);
-#else
-    case 49: return MATH1(tanpi);
-#endif
+    case 49: return MATH1(Rtanpi);// our own in any case
 
     default:
 	errorcall(call, _("unimplemented real function of 1 argument"));
@@ -1325,7 +1299,7 @@ SEXP attribute_hidden do_math1(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 /* methods are allowed to have more than one arg */
-SEXP attribute_hidden do_trunc(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_trunc(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP s;
     if (DispatchGroup("Math", call, op, args, env, &s))
@@ -1342,7 +1316,7 @@ SEXP attribute_hidden do_trunc(SEXP call, SEXP op, SEXP args, SEXP env)
    both for integer/logical inputs and what it dispatches to for complex ones.
 */
 
-SEXP attribute_hidden do_abs(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_abs(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP x, s = R_NilValue /* -Wall */;
 
@@ -1386,7 +1360,7 @@ SEXP attribute_hidden do_abs(SEXP call, SEXP op, SEXP args, SEXP env)
     return s;
 }
 
-/* Mathematical Functions of Two Numeric Arguments (plus 1 int) */
+/* Mathematical Functions of Two Numeric Arguments (plus 1 or 2 int) */
 
 /* math2_1 and math2_2 and related can be removed  once the byte
   compiler knows how to optimize to .External rather than
@@ -1403,14 +1377,13 @@ static SEXP math2(SEXP sa, SEXP sb, double (*f)(double, double),
     R_xlen_t i, ia, ib, n, na, nb;
     double ai, bi, *y;
     const double *a, *b;
-    int naflag;
 
-    if (!isNumeric(sa) || !isNumeric(sb))
-	errorcall(lcall, R_MSG_NONNUM_MATH);
-
-    /* for 0-length a we want the attributes of a, not those of b
+    /* for 0-length a we want the attributes of a,
        as no recycling will occur */
 #define SETUP_Math2					\
+    if (!isNumeric(sa) || !isNumeric(sb))		\
+	errorcall(lcall, R_MSG_NONNUM_MATH);		\
+							\
     na = XLENGTH(sa);					\
     nb = XLENGTH(sb);					\
     if ((na == 0) || (nb == 0))	{			\
@@ -1426,7 +1399,7 @@ static SEXP math2(SEXP sa, SEXP sb, double (*f)(double, double),
     a = REAL_RO(sa);					\
     b = REAL_RO(sb);					\
     y = REAL(sy);					\
-    naflag = 0
+    int naflag = 0
 
     SETUP_Math2;
 
@@ -1443,7 +1416,7 @@ static SEXP math2(SEXP sa, SEXP sb, double (*f)(double, double),
 
 #define FINISH_Math2					\
     if(naflag) warning(R_MSG_NA);			\
-    if (n == na)  SHALLOW_DUPLICATE_ATTRIB(sy, sa);	\
+    if      (n == na) SHALLOW_DUPLICATE_ATTRIB(sy, sa);	\
     else if (n == nb) SHALLOW_DUPLICATE_ATTRIB(sy, sb);	\
     UNPROTECT(3)
 
@@ -1459,14 +1432,9 @@ static SEXP math2_1(SEXP sa, SEXP sb, SEXP sI,
     R_xlen_t i, ia, ib, n, na, nb;
     double ai, bi, *y;
     const double *a, *b;
-    int m_opt;
-    int naflag;
-
-    if (!isNumeric(sa) || !isNumeric(sb))
-	errorcall(lcall, R_MSG_NONNUM_MATH);
 
     SETUP_Math2;
-    m_opt = asInteger(sI);
+    int m_opt = asInteger(sI);
 
     MOD_ITERATE2(n, na, nb, i, ia, ib, {
 //	if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
@@ -1489,14 +1457,10 @@ static SEXP math2_2(SEXP sa, SEXP sb, SEXP sI1, SEXP sI2,
     R_xlen_t i, ia, ib, n, na, nb;
     double ai, bi, *y;
     const double *a, *b;
-    int i_1, i_2;
-    int naflag;
-    if (!isNumeric(sa) || !isNumeric(sb))
-	errorcall(lcall, R_MSG_NONNUM_MATH);
 
     SETUP_Math2;
-    i_1 = asInteger(sI1);
-    i_2 = asInteger(sI2);
+    int i_1 = asInteger(sI1),
+	i_2 = asInteger(sI2);
 
     MOD_ITERATE2(n, na, nb, i, ia, ib, {
 //	if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
@@ -1521,17 +1485,11 @@ static SEXP math2B(SEXP sa, SEXP sb, double (*f)(double, double, double *),
     R_xlen_t i, ia, ib, n, na, nb;
     double ai, bi, *y;
     const double *a, *b;
-    int naflag;
     double amax, *work;
     size_t nw;
 
 #define besselJY_max_nu 1e7
 
-    if (!isNumeric(sa) || !isNumeric(sb))
-	errorcall(lcall, R_MSG_NONNUM_MATH);
-
-    /* for 0-length a we want the attributes of a, not those of b
-       as no recycling will occur */
     SETUP_Math2;
 
     /* allocate work array for BesselJ, BesselY large enough for all
@@ -1568,9 +1526,9 @@ static SEXP math2B(SEXP sa, SEXP sb, double (*f)(double, double, double *),
 #define Math2(A, FUN)	  math2(CAR(A), CADR(A), FUN, call);
 #define Math2_1(A, FUN)	math2_1(CAR(A), CADR(A), CADDR(A), FUN, call);
 #define Math2_2(A, FUN) math2_2(CAR(A), CADR(A), CADDR(A), CADDDR(A), FUN, call)
-#define Math2B(A, FUN)	  math2B(CAR(A), CADR(A), FUN, call);
+#define Math2B(A, FUN)   math2B(CAR(A), CADR(A), FUN, call);
 
-SEXP attribute_hidden do_math2(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_math2(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     /* For .Internals, fix up call so errorcall() behaves like error(). */
     if (TYPEOF(CAR(call)) == SYMSXP && INTERNAL(CAR(call)) == op)
@@ -1629,66 +1587,118 @@ SEXP attribute_hidden do_math2(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 
+// matching of (x, ...) signature.
+// This signature is used for round() to support the POSIXt method.
+// match for 'x' will be in the first result cell (R_MissingArg for no match).
+// Any additional arguments are appended to the cell for the 'x' argument.
+#define OPTIMIZE_MATCH
+static R_INLINE SEXP match_round_gen_args(SEXP args, SEXP call)
+{
+#ifdef OPTIMIZE_MATCH
+    // for now this optimization is worth while to avoid matchArgs
+    // overhead in common cases
+    static SEXP R_x_Symbol = NULL;
+    if (R_x_Symbol == NULL)
+        R_x_Symbol = install("x");
+    if (args != R_NilValue &&           // at least one arg
+        TAG(args) == R_NilValue &&      // first arg is not named
+        TAG(CDR(args)) != R_x_Symbol && // second arg, if any, is not named 'x'
+        CDDR(args) == R_NilValue)       // no mare than two arguments
+        return args;
+#endif
+    static SEXP round_gen_formals = NULL;
+    if (round_gen_formals == NULL)
+        round_gen_formals = allocFormalsList2(install("x"), R_DotsSymbol);
+    args = matchArgs_NR(round_gen_formals, args, call);
+
+    // merge ... result back into args
+    SEXP rest = CADR(args);
+    if (rest == R_MissingArg)
+        rest = R_NilValue;
+    else if (TYPEOF(rest) == DOTSXP)
+        SET_TYPEOF(rest, LISTSXP);
+    else error("matchArg returned something weird");
+    SETCDR(args, rest);
+    return args;
+}
+
+static R_INLINE SEXP match_Math2_dflt_args(SEXP args, SEXP call)
+{
+#ifdef OPTIMIZE_MATCH
+    // for now this optimization is worth while to avoid matchArgs
+    // overhead in common cases
+    if (args == R_NilValue)
+        return list2(R_MissingArg, R_MissingArg);
+    else if (TAG(args) == R_NilValue &&
+             CDR(args) == R_NilValue) {
+        SETCDR(args, CONS_NR(R_MissingArg, R_NilValue));
+        return args;
+    }
+    else if (CDR(args) != R_NilValue &&
+             CDDR(args) == R_NilValue &&
+             TAG(args) == R_NilValue &&
+             TAG(CDR(args)) == R_NilValue)
+        return args;
+#endif
+    static SEXP do_Math2_dflt_formals = NULL;
+    if (do_Math2_dflt_formals == NULL)
+        do_Math2_dflt_formals = allocFormalsList2(install("x"),
+                                                  install("digits"));
+    return matchArgs_NR(do_Math2_dflt_formals, args, call);
+}
+
 /* The S4 Math2 group, round and signif */
 /* This is a primitive SPECIALSXP with internal argument matching */
-SEXP attribute_hidden do_Math2(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_Math2(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP res, call2;
-    int n, nprotect = 2;
-    static SEXP do_Math2_formals = NULL;
+    int is_signif = (PRIMVAL(op) == 10004) ? TRUE : FALSE;
+    double dflt_digits = is_signif ? 6.0 : 0.;
 
-    if (length(args) >= 2 &&
-	isSymbol(CADR(args)) && R_isMissing(CADR(args), env)) {
-	double digits = 0;
-	if(PRIMVAL(op) == 10004) digits = 6.0; // for signif()
-	PROTECT(args = list2(CAR(args), ScalarReal(digits))); nprotect++;
+    PROTECT_INDEX api;
+    PROTECT_WITH_INDEX(args = evalListKeepMissing(args, env), &api);
+
+    if (is_signif) {
+        REPROTECT(args = match_Math2_dflt_args(args, call), api);
+
+        if (CADR(args) == R_MissingArg)
+            SETCADR(args, ScalarReal(dflt_digits));
     }
+    else
+        REPROTECT(args = match_round_gen_args(args, call), api);
 
-    PROTECT(args = evalListKeepMissing(args, env));
     R_args_enable_refcnt(args);
-    PROTECT(call2 = lang2(CAR(call), R_NilValue));
-    SETCDR(call2, args);
+    PROTECT(call2 = LCONS(CAR(call), args));
 
-    n = length(args);
-    if (n != 1 && n != 2)
-	error(ngettext("%d argument passed to '%s' which requires 1 or 2 arguments",
-		       "%d arguments passed to '%s' which requires 1 or 2 arguments", n),
-	      n, PRIMNAME(op));
+    int dispatched = DispatchGroup("Math", call2, op, args, env, &res);
 
-    static SEXP R_x_Symbol = NULL;
-    if (! DispatchGroup("Math", call2, op, args, env, &res)) {
-	if(n == 1) {
-	    if(R_x_Symbol == NULL) R_x_Symbol = install("x");
-	    // Ensure  we do not call it with a mis-named argument:
-	    if(CAR(args) == R_MissingArg ||
-	       (TAG(args) != R_NilValue && TAG(args) != R_x_Symbol))
-		error(_("argument \"%s\" is missing, with no default"), "x");
-	    double digits = 0.0; // round()
-	    if(PRIMVAL(op) == 10004) // signif()
-		digits = 6.0;
-	    SETCDR(args, CONS(ScalarReal(digits), R_NilValue));
-	} else {
-	    /* If named, do argument matching by name */
-	    if (TAG(args) != R_NilValue || TAG(CDR(args)) != R_NilValue) {
-		if (do_Math2_formals == NULL)
-		    do_Math2_formals = allocFormalsList2(install("x"),
-							 install("digits"));
-		PROTECT(args = matchArgs_NR(do_Math2_formals, args, call));
-		nprotect++;
-	    }
-	    if (length(CADR(args)) == 0)
-		errorcall(call, _("invalid second argument of length 0"));
-	}
-	res = do_math2(call, op, args, env);
-    }
-    UNPROTECT(nprotect);
     SETCDR(call2, R_NilValue); /* clear refcnt on args */
     R_try_clear_args_refcnt(args);
+    UNPROTECT(1); /* call2 */
+
+    if (! dispatched) {
+        if (! is_signif) {
+            REPROTECT(args = match_Math2_dflt_args(args, call), api);
+
+            if (CADR(args) == R_MissingArg)
+                SETCADR(args, ScalarReal(dflt_digits));
+        }
+
+        if (CAR(args) == R_MissingArg)
+            error(_("argument \"%s\" is missing, with no default"), "x");
+
+        if (xlength(CADR(args)) == 0)
+            errorcall(call, _("invalid second argument of length 0"));
+
+        res = do_math2(call, op, args, env);
+    }
+
+    UNPROTECT(1); /* args */
     return res;
 }
 
 /* log{2,10}() builtins : */
-SEXP attribute_hidden do_log1arg(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_log1arg(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP res, call2, args2, tmp = R_NilValue /* -Wall */;
 
@@ -1723,13 +1733,13 @@ SEXP attribute_hidden do_log1arg(SEXP call, SEXP op, SEXP args, SEXP env)
    matching. do_log_builtin is the BUILTIN version that expects
    evaluated arguments to be passed as 'args', expect that these may
    contain missing arguments.  */
-SEXP attribute_hidden do_log(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_log(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     args = evalListKeepMissing(args, env);
     return  do_log_builtin(call, op, args, env);
 }
 
-SEXP attribute_hidden do_log_builtin(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_log_builtin(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     PROTECT(args);
     int n = length(args);
@@ -1810,12 +1820,11 @@ SEXP attribute_hidden do_log_builtin(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 
-/* Mathematical Functions of Three (Real) Arguments */
+/* Mathematical Functions of Three (Real) Arguments (plus 1 or 2 int) */
 
 /* math3_1 and math3_2 and related can be removed once the byte
   compiler knows how to optimize to .External rather than
   .Internal */
-
 
 #define if_NA_Math3_set(y,a,b,c)			        \
 	if      (ISNA (a) || ISNA (b)|| ISNA (c)) y = NA_REAL;	\
@@ -1828,8 +1837,13 @@ SEXP attribute_hidden do_log_builtin(SEXP call, SEXP op, SEXP args, SEXP env)
     na = XLENGTH(sa);						\
     nb = XLENGTH(sb);						\
     nc = XLENGTH(sc);						\
-    if ((na == 0) || (nb == 0) || (nc == 0))			\
-	return(allocVector(REALSXP, 0));			\
+    if ((na == 0) || (nb == 0) || (nc == 0)) {			\
+	/* for 0-length a we want the attributes of a: */	\
+	PROTECT(sy = allocVector(REALSXP, 0));			\
+	if (na == 0) SHALLOW_DUPLICATE_ATTRIB(sy, sa);		\
+	UNPROTECT(1);						\
+	return(sy);						\
+    }								\
     n = na;							\
     if (n < nb) n = nb;						\
     if (n < nc) n = nc;						\
@@ -1837,16 +1851,16 @@ SEXP attribute_hidden do_log_builtin(SEXP call, SEXP op, SEXP args, SEXP env)
     PROTECT(sb = coerceVector(sb, REALSXP));			\
     PROTECT(sc = coerceVector(sc, REALSXP));			\
     PROTECT(sy = allocVector(REALSXP, n));			\
-    a = REAL_RO(sa);						\
-    b = REAL_RO(sb);						\
-    c = REAL_RO(sc);						\
+    const double *a = REAL_RO(sa),				\
+	*b = REAL_RO(sb),					\
+	*c = REAL_RO(sc);					\
     y = REAL(sy);						\
-    naflag = 0
+    int naflag = 0
 
 #define FINISH_Math3					\
     if(naflag) warning(R_MSG_NA);			\
 							\
-    if (n == na) SHALLOW_DUPLICATE_ATTRIB(sy, sa);	\
+    if      (n == na) SHALLOW_DUPLICATE_ATTRIB(sy, sa);	\
     else if (n == nb) SHALLOW_DUPLICATE_ATTRIB(sy, sb);	\
     else if (n == nc) SHALLOW_DUPLICATE_ATTRIB(sy, sc);	\
     UNPROTECT(4)
@@ -1857,12 +1871,9 @@ static SEXP math3_1(SEXP sa, SEXP sb, SEXP sc, SEXP sI,
     SEXP sy;
     R_xlen_t i, ia, ib, ic, n, na, nb, nc;
     double ai, bi, ci, *y;
-    const double *a, *b, *c;
-    int i_1;
-    int naflag;
 
     SETUP_Math3;
-    i_1 = asInteger(sI);
+    int i_1 = asInteger(sI);
 
     MOD_ITERATE3(n, na, nb, nc, i, ia, ib, ic, {
 //	if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
@@ -1886,13 +1897,10 @@ static SEXP math3_2(SEXP sa, SEXP sb, SEXP sc, SEXP sI, SEXP sJ,
     SEXP sy;
     R_xlen_t i, ia, ib, ic, n, na, nb, nc;
     double ai, bi, ci, *y;
-    const double *a, *b, *c;
-    int i_1,i_2;
-    int naflag;
 
     SETUP_Math3;
-    i_1 = asInteger(sI);
-    i_2 = asInteger(sJ);
+    int i_1 = asInteger(sI),
+	i_2 = asInteger(sJ);
 
     MOD_ITERATE3 (n, na, nb, nc, i, ia, ib, ic, {
 //	if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
@@ -1918,8 +1926,6 @@ static SEXP math3B(SEXP sa, SEXP sb, SEXP sc,
     SEXP sy;
     R_xlen_t i, ia, ib, ic, n, na, nb, nc;
     double ai, bi, ci, *y;
-    const double *a, *b, *c;
-    int naflag;
     double amax, *work;
     size_t nw;
 
@@ -1958,7 +1964,7 @@ static SEXP math3B(SEXP sa, SEXP sb, SEXP sc,
 #define Math3_2(A, FUN) math3_2(CAR(A), CADR(A), CADDR(A), CADDDR(A), CAD4R(A), FUN, call)
 #define Math3B(A, FUN)  math3B (CAR(A), CADR(A), CADDR(A), FUN, call);
 
-SEXP attribute_hidden do_math3(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_math3(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     checkArity(op, args);
 
@@ -2048,8 +2054,6 @@ static SEXP math4(SEXP sa, SEXP sb, SEXP sc, SEXP sd,
     SEXP sy;
     R_xlen_t i, ia, ib, ic, id, n, na, nb, nc, nd;
     double ai, bi, ci, di, *y;
-    const double *a, *b, *c, *d;
-    int naflag;
 
 #define SETUP_Math4							\
     if(!isNumeric(sa)|| !isNumeric(sb)|| !isNumeric(sc)|| !isNumeric(sd))\
@@ -2059,8 +2063,13 @@ static SEXP math4(SEXP sa, SEXP sb, SEXP sc, SEXP sd,
     nb = XLENGTH(sb);							\
     nc = XLENGTH(sc);							\
     nd = XLENGTH(sd);							\
-    if ((na == 0) || (nb == 0) || (nc == 0) || (nd == 0))		\
-	return(allocVector(REALSXP, 0));				\
+    if ((na == 0) || (nb == 0) || (nc == 0) || (nd == 0)) {		\
+	/* for 0-length a we want the attributes of a: */		\
+	PROTECT(sy = allocVector(REALSXP, 0));				\
+	if (na == 0) SHALLOW_DUPLICATE_ATTRIB(sy, sa);			\
+	UNPROTECT(1);							\
+	return(sy);							\
+    }									\
     n = na;								\
     if (n < nb) n = nb;							\
     if (n < nc) n = nc;							\
@@ -2070,12 +2079,12 @@ static SEXP math4(SEXP sa, SEXP sb, SEXP sc, SEXP sd,
     PROTECT(sc = coerceVector(sc, REALSXP));				\
     PROTECT(sd = coerceVector(sd, REALSXP));				\
     PROTECT(sy = allocVector(REALSXP, n));				\
-    a = REAL_RO(sa);							\
-    b = REAL_RO(sb);							\
-    c = REAL_RO(sc);							\
-    d = REAL_RO(sd);							\
+    const double *a = REAL_RO(sa),					\
+	*b = REAL_RO(sb),						\
+	*c = REAL_RO(sc),						\
+	*d = REAL_RO(sd);						\
     y = REAL(sy);							\
-    naflag = 0
+    int naflag = 0
 
     SETUP_Math4;
 
@@ -2095,7 +2104,7 @@ static SEXP math4(SEXP sa, SEXP sb, SEXP sc, SEXP sd,
 #define FINISH_Math4					\
     if(naflag) warning(R_MSG_NA);			\
 							\
-    if (n == na) SHALLOW_DUPLICATE_ATTRIB(sy, sa);	\
+    if      (n == na) SHALLOW_DUPLICATE_ATTRIB(sy, sa);	\
     else if (n == nb) SHALLOW_DUPLICATE_ATTRIB(sy, sb);	\
     else if (n == nc) SHALLOW_DUPLICATE_ATTRIB(sy, sc);	\
     else if (n == nd) SHALLOW_DUPLICATE_ATTRIB(sy, sd);	\
@@ -2111,12 +2120,9 @@ static SEXP math4_1(SEXP sa, SEXP sb, SEXP sc, SEXP sd, SEXP sI, double (*f)(dou
     SEXP sy;
     R_xlen_t i, ia, ib, ic, id, n, na, nb, nc, nd;
     double ai, bi, ci, di, *y;
-    const double *a, *b, *c, *d;
-    int i_1;
-    int naflag;
 
     SETUP_Math4;
-    i_1 = asInteger(sI);
+    int i_1 = asInteger(sI);
 
     MOD_ITERATE4 (n, na, nb, nc, nd, i, ia, ib, ic, id, {
 //	if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
@@ -2140,13 +2146,10 @@ static SEXP math4_2(SEXP sa, SEXP sb, SEXP sc, SEXP sd, SEXP sI, SEXP sJ,
     SEXP sy;
     R_xlen_t i, ia, ib, ic, id, n, na, nb, nc, nd;
     double ai, bi, ci, di, *y;
-    const double *a, *b, *c, *d;
-    int i_1, i_2;
-    int naflag;
 
     SETUP_Math4;
-    i_1 = asInteger(sI);
-    i_2 = asInteger(sJ);
+    int i_1 = asInteger(sI),
+	i_2 = asInteger(sJ);
 
     MOD_ITERATE4 (n, na, nb, nc, nd, i, ia, ib, ic, id, {
 //	if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
@@ -2176,7 +2179,7 @@ static SEXP math4_2(SEXP sa, SEXP sb, SEXP sc, SEXP sd, SEXP sI, SEXP sJ,
 				CAD5R(A), FUN, call)
 
 
-SEXP attribute_hidden do_math4(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_math4(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     checkArity(op, args);
 
@@ -2223,7 +2226,6 @@ static SEXP math5(SEXP sa, SEXP sb, SEXP sc, SEXP sd, SEXP se, double (*f)())
     SEXP sy;
     R_xlen_t i, ia, ib, ic, id, ie, n, na, nb, nc, nd, ne;
     double ai, bi, ci, di, ei, *y;
-    const double *a, *b, *c, *d, *e;
 
 #define SETUP_Math5							\
     if (!isNumeric(sa) || !isNumeric(sb) || !isNumeric(sc) ||		\
@@ -2235,8 +2237,10 @@ static SEXP math5(SEXP sa, SEXP sb, SEXP sc, SEXP sd, SEXP se, double (*f)())
     nc = XLENGTH(sc);							\
     nd = XLENGTH(sd);							\
     ne = XLENGTH(se);							\
-    if ((na == 0) || (nb == 0) || (nc == 0) || (nd == 0) || (ne == 0))	\
+    if ((na == 0) || (nb == 0) || (nc == 0) || (nd == 0) || (ne == 0)) { \
+	/* ... TODO if(na == 0) do keep attributes of 'a' */		\
 	return(allocVector(REALSXP, 0));				\
+    }									\
     n = na;								\
     if (n < nb) n = nb;							\
     if (n < nc) n = nc;							\
@@ -2248,13 +2252,14 @@ static SEXP math5(SEXP sa, SEXP sb, SEXP sc, SEXP sd, SEXP se, double (*f)())
     PROTECT(sd = coerceVector(sd, REALSXP));				\
     PROTECT(se = coerceVector(se, REALSXP));				\
     PROTECT(sy = allocVector(REALSXP, n));				\
-    a = REAL_RO(sa);							\
-    b = REAL_RO(sb);							\
-    c = REAL_RO(sc);							\
-    d = REAL_RO(sd);							\
-    e = REAL_RO(se);							\
+    const double							\
+	*a = REAL_RO(sa),						\
+	*b = REAL_RO(sb),						\
+	*c = REAL_RO(sc),						\
+	*d = REAL_RO(sd),						\
+	*e = REAL_RO(se);						\
     y = REAL(sy);							\
-    naflag = 0
+    int naflag = 0
 
     SETUP_Math5;
 
@@ -2291,7 +2296,7 @@ static SEXP math5(SEXP sa, SEXP sb, SEXP sc, SEXP sd, SEXP se, double (*f)())
 #define Math5(A, FUN) \
 	math5(CAR(A), CADR(A), CADDR(A), CAD3R(A), CAD4R(A), FUN);
 
-SEXP attribute_hidden do_math5(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_math5(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     checkArity(op, args);
     lcall = call;

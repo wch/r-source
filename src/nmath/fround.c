@@ -32,9 +32,9 @@
 #include "nmath.h"
 
 double fround(double x, double digits) {
-#define MAX_DIGITS (DBL_MAX_10_EXP + DBL_DIG)
-    /* was DBL_MAX_10_EXP (= 308, IEEE) till R 3.6.x; before,
-       was (DBL_DIG - 1)  till R 0.99  */
+#define MAX_DIGITS (DBL_MAX_10_EXP + DBL_DIG) /* typically = 308+15 = 323
+    * was DBL_MAX_10_EXP (= 308, IEEE) till R 3.6.x; before,
+    * was (DBL_DIG - 1)  till R 0.99  */
     const static int max10e = (int) DBL_MAX_10_EXP; // == 308 ("IEEE")
 
     /* Note that large digits make sense for very small numbers */

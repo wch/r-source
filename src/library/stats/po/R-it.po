@@ -1,14 +1,14 @@
 # R Italian translation
 # Copyright (C) The R Foundation
 # This file is distributed under the same license as the R package.
-# Daniele Medri <dmedri@gmail.com>, 2005-2021.
+# Daniele Medri <dmedri@gmail.com>, 2005-2023.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R-stats 4.1.0\n"
+"Project-Id-Version: R-4-3-BRANCH\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-11-06 17:17\n"
-"PO-Revision-Date: \n"
+"POT-Creation-Date: 2023-07-31 14:59\n"
+"PO-Revision-Date: 2023-01-19 18:34+0100\n"
 "Last-Translator: Daniele Medri <dmedri@gmail.com>\n"
 "Language-Team: Italian https://github.com/dmedri/R-italian-lang\n"
 "Language: it\n"
@@ -16,13 +16,13 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.2.1\n"
+"X-Generator: Poedit 3.2.2\n"
 
 msgid "models are not all fitted to the same number of observations"
 msgstr "i modelli non sono stati stimati per il medesimo numero di osservazioni"
 
 msgid "empty model supplied"
-msgstr "passato modello vuoto"
+msgstr "è stato indicato un modello vuoto"
 
 msgid "'acf' must be of length two or more"
 msgstr "'acf' dev'essere di lunghezza due o più"
@@ -160,11 +160,14 @@ msgstr "'by' dev'essere una lista"
 msgid "arguments must have same length"
 msgstr "gli argomenti devono avere la stessa lunghezza"
 
-msgid "'formula' missing or incorrect"
-msgstr "'formula' assente o sbagliata"
+msgid "argument 'x' is  missing -- it has been renamed from 'formula'"
+msgstr "l'argomento 'x' è mancante -- è stato rinominato da 'formula'"
 
-msgid "'formula' must have both left and right hand sides"
-msgstr "'formula' deve avere sia il membro di destra che quello di sinistra"
+msgid "argument 'x' must be a formula"
+msgstr "l'argomento 'x' dev'essere una formula"
+
+msgid "formula 'x' must have both left and right hand sides"
+msgstr "la formula 'x' deve avere sia il membro di destra che quello di sinistra"
 
 msgid "cannot change frequency from %g to %g"
 msgstr "non è possibile cambiare la frequenza fa %g a %g"
@@ -213,6 +216,9 @@ msgstr "non è possibile calcolare p-value esatto in presenza di ties"
 
 msgid "cannot compute exact confidence intervals with ties"
 msgstr "non è possibile calcolare intervalli di confidenza esatti in presenza di ties"
+
+msgid "'formula' missing or incorrect"
+msgstr "'formula' assente o sbagliata"
 
 msgid "grouping factor must have exactly 2 levels"
 msgstr "la variabile di gruppo deve avere esattamente 2 livelli"
@@ -490,8 +496,14 @@ msgstr "'k' dev'essere in {1, 2, ..  n - 1}"
 msgid "only %d of the first %d eigenvalues are > 0"
 msgstr "solo %d dei primi %d eigenvalues (vedi. autovalori) sono > 0"
 
-msgid "package 'MASS' must be installed"
-msgstr "il pacchetto 'MASS' dev'essere installato"
+msgid "Waiting for profiling to be done..."
+msgstr ""
+
+msgid "Reprofiling for"
+msgstr ""
+
+msgid "statistic. Waiting..."
+msgstr ""
 
 msgid "initial value is not in the interior of the feasible region"
 msgstr "il valore iniziale non è interno della regione fattibile (feasible region)"
@@ -703,6 +715,9 @@ msgstr "sum(weights) != 1  -- non otterrà la vera densità"
 msgid "need at least 2 points to select a bandwidth automatically"
 msgstr "necessari almeno 2 punti per selezionare il bandwidth automatico"
 
+msgid "Selecting bandwidth *not* using 'weights'"
+msgstr ""
+
 msgid "unknown bandwidth rule"
 msgstr "regola di bandwidth sconosciuta"
 
@@ -735,6 +750,9 @@ msgstr "dimensioni incorrette per 'xi'"
 
 msgid "'x' is not a vector or matrix"
 msgstr "'x' non è un vettore o una matrice"
+
+msgid "x[1] != r[1]; using x[1] for diagonal"
+msgstr "x[1] != r[1]; utilizzando x[1] per diagonale"
 
 msgid "invalid distance method"
 msgstr "metodo distanza non valido"
@@ -938,6 +956,9 @@ msgstr "specificazione di 'row'vars' non corretta"
 msgid "incorrect specification for 'col.vars'"
 msgstr "specificazione di 'col.vars' non corretta"
 
+msgid "'formula' must have both left and right hand sides"
+msgstr "'formula' deve avere sia il membro di destra che quello di sinistra"
+
 msgid "interactions are not allowed"
 msgstr "le interazioni non sono ammesse"
 
@@ -967,6 +988,19 @@ msgstr "'row.var.names' assente"
 
 msgid "'col.vars' missing or incorrect"
 msgstr "'col.var' assente o non corretto"
+
+#, fuzzy
+msgid "Parameter:"
+msgstr "Parametri"
+
+msgid "down"
+msgstr ""
+
+msgid "up"
+msgstr ""
+
+msgid "profiling has found a better solution, so original fit had not converged"
+msgstr ""
 
 msgid "'family' not recognized"
 msgstr "'family' non riconosciuta"
@@ -1202,6 +1236,12 @@ msgstr "alcuni elementi di 'x' non sono numerici e saranno convertiti in numeric
 msgid "not enough 'x' data"
 msgstr "dati 'x' insufficienti"
 
+msgid "Parameter(s)"
+msgstr "Parametri"
+
+msgid "ignored"
+msgstr "ignorato"
+
 msgid "not enough 'y' data"
 msgstr "dati 'y' insufficienti"
 
@@ -1211,8 +1251,24 @@ msgstr "il p-value sarà approssimativo in presenza di legami"
 msgid "'y' must be numeric or a function or a string naming a valid function"
 msgstr "'y' dev'essere numerico o una funzione o una stringa indicante una funzione valida"
 
-msgid "ties should not be present for the Kolmogorov-Smirnov test"
+#, fuzzy
+msgid "ties should not be present for the one-sample Kolmogorov-Smirnov test"
 msgstr "i legami non dovrebbero essere presenti per il test di Kolmogorov-Smirnov"
+
+msgid "invalid arguments"
+msgstr "argomenti non validi"
+
+msgid "argument 'sizes' must be a vector of length 2"
+msgstr "l'argomento 'sizes' dev'essere un vettore di lunghezza 2"
+
+msgid "argument 'q' must be numeric"
+msgstr "l'argomento 'q' dev'essere numerico"
+
+msgid "computation of exact probability failed, returning Monte Carlo approximation"
+msgstr "il calcolo esatto della probabilità è fallito, si restituisce l'approssimazione di Monte Carlo"
+
+msgid "argument 'p' must be numeric"
+msgstr "l'argomento 'p' dev'essere numerico"
 
 msgid ""
 "numeric y must be supplied.\n"
@@ -1258,8 +1314,8 @@ msgid ""
 "lm object does not have a proper 'qr' component.\n"
 " Rank zero or should not have used lm(.., qr=FALSE)."
 msgstr ""
-"L'oggetto lm non ha un componente 'qr' corretto.\n"
-"  Rango zero o non avrebbe dovuto usare lm (.., qr = FALSE)."
+"L'oggetto lm non ha un componente 'qr' appropriato.\n"
+" Rango zero o non avrebbe dovuto usare lm(.., qr = FALSE)."
 
 msgid "simulate() is not yet implemented for multivariate lm()"
 msgstr "simulate() non è ancora implementato per un lm() multivariato"
@@ -1276,8 +1332,21 @@ msgstr "I test F ANOVA su un adattamento essenzialmente perfetto non sono affida
 msgid "calling predict.lm(<fake-lm-object>) ..."
 msgstr "chiamata predict.lm(<fake-lm-object>) ..."
 
-msgid "prediction from a rank-deficient fit may be misleading"
+#, fuzzy
+msgid "prediction from rank-deficient fit"
 msgstr "previsione da una stima non a rango pieno può essere non corretta"
+
+msgid "%s; consider predict(., rankdeficient=\"NA\")"
+msgstr ""
+
+msgid "lower-rank qr: determining non-estimable cases"
+msgstr "qr di rango inferiore: determinazione di casi non stimabili"
+
+msgid "%s; attr(*, \"non-estim\") has doubtful cases"
+msgstr ""
+
+msgid "%s: NAs produced for non-estimable cases"
+msgstr ""
 
 msgid "predictions on current data refer to _future_ responses"
 msgstr "le previsioni sui dati attuali fanno riferimento a risposte _future_"
@@ -1502,14 +1571,11 @@ msgstr "nessuna componente termini o attributo"
 msgid "'termlabels' must be a character vector of length at least one"
 msgstr "'termlabels' dev'essere un vettore di caratteri almeno di lunghezza 1"
 
+msgid "'%s' must be a character string"
+msgstr "'%s' dev'essere una stringa di caratteri"
+
 msgid "Unparseable 'response' \"%s\"; use is deprecated.  Use as.name(.) or `..`!"
 msgstr "'response' \"%s\" non analizzabile; l'utilizzo è deprecato.  Si utilizzi as.name(.) o `..`!"
-
-msgid "reformulate"
-msgstr "riformulazione"
-
-msgid "deprecatedWarning"
-msgstr "deprecatedWarning"
 
 msgid "'termobj' must be a object of class %s"
 msgstr "'termobj' dev'essere un oggetto di classe %s"
@@ -1528,6 +1594,12 @@ msgstr "'data' dev'essere un data.frame, un ambiente o una lista"
 
 msgid "variable '%s' is not a factor"
 msgstr "la variabile '%s' non è un fattore"
+
+msgid "contrasts dropped from factor %s"
+msgstr "contrasti eliminati dal fattore %s"
+
+msgid "contrasts dropped from factor %s due to missing levels"
+msgstr "contrasti eliminati dal fattore %s a causa di livelli mancanti"
 
 msgid "'offset' must be numeric"
 msgstr "'offset' dev'essere numerico"
@@ -1617,7 +1689,7 @@ msgid "cannot recognize parameter name"
 msgstr "non è possibile riconoscere nome parametro"
 
 msgid "levels truncated to positive values only"
-msgstr "livelli limitati ai solo valori positivi"
+msgstr "livelli troncati solo ai valori positivi"
 
 msgid "invalid  'attr(rhs, \"gradient\")'"
 msgstr "'attr(rhs, \"gradient\")' non valido"
@@ -1726,12 +1798,15 @@ msgstr "'which' dev'essere in 1:6"
 msgid "'id.n' must be in {1,..,%d}"
 msgstr "'id.n' dev'essere in {1,..,%d}"
 
+msgid "y is empty or has only NAs"
+msgstr "y è vuota o contiene sonlo NA"
+
 msgid ""
 "hat values (leverages) are all = %s\n"
 " and there are no factor predictors; no plot no. 5"
 msgstr ""
-"i valori hat (leve) sono tutti =%s\n"
-"  e non ci sono fattori predittivi; nessun plot no. 5"
+"i valori hat (influenza) sono tutti = %s\n"
+" e non ci sono fattori predittivi; nessun grafico n. 5"
 
 msgid "'x' and 'T' have incompatible length"
 msgstr "'x' e 'T' hanno lunghezze incompatibili"
@@ -1847,8 +1922,8 @@ msgstr "'p' deve avere la stessa lunghezza di 'x' e 'n'"
 msgid "elements of 'p' must be in (0,1)"
 msgstr "gli elementi di 'p' devono essere in (0,1)"
 
-msgid "y is empty or has only NAs"
-msgstr "y è vuota o contiene sonlo NA"
+msgid "'conf.level' is not a probability"
+msgstr "'conf.level' non è una probabilità"
 
 msgid "'formula' missing"
 msgstr "'formula' assente"
@@ -1891,9 +1966,6 @@ msgstr "'ref' dev'essere un livello esistente"
 
 msgid "ref = %d must be in 1L:%d"
 msgstr "ref = %d dev'essere in 1L:%d"
-
-msgid "'sep' must be a character string"
-msgstr "'sep' dev'essere una stringa di caratteri"
 
 msgid "failed to guess time-varying variables from their names"
 msgstr "non si è riusciti a indovinare le variabili alterabili nel tempo dai loro nomi"
@@ -1939,6 +2011,10 @@ msgstr "bandwidth 'k' dev'essere >= 1 e dispari!"
 
 msgid "argument 'object' has an impossible length"
 msgstr "argomento 'object' ha una lunghezza impossibile"
+
+#, fuzzy
+msgid "right-hand side of formula is not a call"
+msgstr "formula %s non valida: non è una chiamata"
 
 msgid "no 'getInitial' method found for \"%s\" objects"
 msgstr "non è stato trovato il metodo 'getInitial' per gli oggetti \"%s\""
@@ -2487,3 +2563,21 @@ msgid "'start.innov' is too short: need %d point"
 msgid_plural "'start.innov' is too short: need %d points"
 msgstr[0] "'start.innov' è troppo corto: richiesto %d punto"
 msgstr[1] "'start.innov' è troppo corto: richiesti %d punti"
+
+#~ msgid "package 'MASS' must be installed"
+#~ msgstr "il pacchetto 'MASS' dev'essere installato"
+
+#~ msgid "Possibly rank-deficient fit; the default rankdeficient = \"simple\" may change"
+#~ msgstr "Possibile fit con carenza di rango; il valore predefinito rankdeficient=\"simple\" potrebbe cambiare"
+
+#~ msgid "reformulate"
+#~ msgstr "riformulazione"
+
+#~ msgid "deprecatedWarning"
+#~ msgstr "deprecatedWarning"
+
+#~ msgid "'sep' must be a character string"
+#~ msgstr "'sep' dev'essere una stringa di caratteri"
+
+#~ msgid "formula missing or incorrect"
+#~ msgstr "formula assente o sbagliata"

@@ -3,7 +3,7 @@
 \alias{depth.viewport}
 \alias{depth.path}
 \title{
-  Determine the number of levels in an object.
+  Determine the number of levels in an object
 }
 \description{
   Determine the number of levels in a viewport stack or tree,

@@ -1,7 +1,7 @@
 #  File src/library/stats/R/density.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2021 The R Core Team
+#  Copyright (C) 1995-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -24,7 +24,10 @@ density.default <-
 	     "triangular", "biweight", "cosine", "optcosine"),
 	     weights = NULL, window = kernel, width,
 	     give.Rkern = FALSE, subdensity = FALSE,
-	     n = 512, from, to, cut = 3, na.rm = FALSE, ...)
+             warnWbw = var(weights) > 0,# sd(weights) > mean(weights) "better", but arbitrary
+	     n = 512, from, to, cut = 3, ext = 4,
+             old.coords = FALSE,
+             na.rm = FALSE, ...)
 {
     chkDots(...)
     if(!missing(window) && missing(kernel))
@@ -50,14 +53,12 @@ density.default <-
     if(has.wts <- !is.null(weights)) {
         if(length(weights) != N)
             stop("'x' and 'weights' have unequal length")
-        some.na <- FALSE
     }
     x.na <- is.na(x)
     if (any(x.na)) {
         if (na.rm) {
             N <- length(x <- x[!x.na])
             if(has.wts) {
-                some.na <- TRUE
                 trueD <- isTRUE(all.equal(1, sum(weights)))
                 weights <- weights[!x.na]
                 if(trueD) ## keep weights summing to one
@@ -120,6 +121,9 @@ density.default <-
     if (is.character(bw)) {
         if(nx < 2)
             stop("need at least 2 points to select a bandwidth automatically")
+        ##cat(sprintf("density(): sd(wts)/mean(wts) = %g\n", sd(weights)/mean(weights)))
+        if(has.wts && warnWbw)
+            warning("Selecting bandwidth *not* using 'weights'")
         bw <- switch(tolower(bw),
                      nrd0 = bw.nrd0(x),
                      nrd = bw.nrd(x),
@@ -138,13 +142,13 @@ density.default <-
     if (missing(to))
 	to   <- max(x) + cut * bw
     if (!is.finite(from)) stop("non-finite 'from'")
-    if (!is.finite(to)) stop("non-finite 'to'")
-    lo <- from - 4 * bw
-    up <- to + 4 * bw
+    if (!is.finite(to))   stop("non-finite 'to'")
+    lo <- from - ext * bw
+    up <- to   + ext * bw
     ## This bins weighted distances
     y <- .Call(C_BinDist, x, weights, lo, up, n) * totMass
 
-    kords <- seq.int(0, 2*(up-lo), length.out = 2L * n)
+    kords <- seq.int(0, (if(old.coords) 2 else (2L*n-1)/(n-1)) * (up-lo), length.out = 2L * n)
     kords[(n + 2):(2 * n)] <- -kords[n:2]
     kords <- switch(kernel,
 		    gaussian = dnorm(kords, sd = bw),
@@ -174,6 +178,7 @@ density.default <-
     xords <- seq.int(lo, up, length.out = n)
     x <- seq.int(from, to, length.out = n.user)
     structure(list(x = x, y = approx(xords, kords, x)$y, bw = bw, n = N,
+                   old.coords = old.coords,
 		   call=match.call(), data.name=name, has.na = FALSE),
 	      class="density")
 }
@@ -183,9 +188,9 @@ plot.density <- function(x, main = NULL, xlab = NULL, ylab = "Density",
 {
     if(is.null(xlab))
 	xlab <- paste("N =", x$n, "  Bandwidth =", formatC(x$bw))
-    if(is.null(main)) main <- deparse(x$call)
+    if(is.null(main)) main <- sub("[.]default", "", deparse(x$call))
     plot.default(x, main = main, xlab = xlab, ylab = ylab, type = type, ...)
-    if(zero.line) abline(h = 0, lwd = 0.1, col = "gray")
+    if(zero.line) abline(h = 0, lwd = 0.25, col = "gray")
     invisible(NULL)
 }
 

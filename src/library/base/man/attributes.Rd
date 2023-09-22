@@ -20,7 +20,7 @@ attributes(x) <- value
 mostattributes(x) <- value
 }
 \arguments{
-  \item{x}{any \R object}
+  \item{x}{any \R object.}
   \item{value}{an appropriate named \code{\link{list}} of attributes, or
     \code{NULL}.}
 }
