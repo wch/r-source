@@ -141,7 +141,7 @@ Rd2ex <-
                     encoding <- outputEncoding
                 else
                     outputEncoding <- encoding
-                of0("### Encoding: ", encoding, "\n\n") #
+                of0("### Encoding: ", encoding, "\n") #
             }
         }
         nameblk <- sections == "\\name"
