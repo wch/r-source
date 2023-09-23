@@ -1893,9 +1893,9 @@ Optional Packages:
   --with-PACKAGE[=ARG]    use PACKAGE [ARG=yes]
   --without-PACKAGE       do not use PACKAGE (same as --with-PACKAGE=no)
   --with-blas             use system BLAS library (if available), or specify
-                          it [no]
+                          it [unset]
   --with-lapack           use system LAPACK library (if available), or specify
-                          it [no]
+                          it [unset]
   --with-readline         use readline library [yes]
   --with-pcre2            use PCRE2 library (if available) [yes]
   --with-pcre1            use PCRE1 library (if available and PCRE2 is not)
