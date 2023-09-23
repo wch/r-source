@@ -406,13 +406,13 @@ AM_CONDITIONAL(WANT_JAVA, [test "x${want_java}" = xyes])
 
 ## BLAS.
 AC_ARG_WITH([blas],
-[AS_HELP_STRING([--with-blas],[use system BLAS library (if available), or specify it @<:@no@:>@])],
+[AS_HELP_STRING([--with-blas],[use system BLAS library (if available), or specify it @<:@unset@:>@])],
 [R_ARG_USE(blas)],
 [use_blas=unset])
 
 ## LAPACK.
 AC_ARG_WITH([lapack],
-[AS_HELP_STRING([--with-lapack],[use system LAPACK library (if available), or specify it @<:@no@:>@])],
+[AS_HELP_STRING([--with-lapack],[use system LAPACK library (if available), or specify it @<:@unset@:>@])],
 [R_ARG_USE(lapack)],
 [use_lapack=unset])
 
