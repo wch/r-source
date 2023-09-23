@@ -408,9 +408,9 @@ void GetRNGstate(void)
     SEXP seeds;
 
     seeds = GetSeedsFromVar();
-    if (seeds == R_UnboundValue) {
+    if (seeds == R_UnboundValue)
 	Randomize(RNG_kind);
-    } else {
+    else {
 	/* this might re-set the generator */
 	if(GetRNGkind(seeds)) return;
 	len_seed = RNG_Table[RNG_kind].n_seed;
@@ -430,14 +430,15 @@ void GetRNGstate(void)
 
 void PutRNGstate(void)
 {
-    /* Copy out seeds to  .Random.seed  */
-    int len_seed, j;
-    SEXP seeds;
-
-    if (RNG_kind > LECUYER_CMRG || N01_kind > KINDERMAN_RAMAGE || Sample_kind > REJECTION) {
+    if (RNG_kind > LECUYER_CMRG || N01_kind > KINDERMAN_RAMAGE ||
+	Sample_kind > REJECTION) {
 	warning("Internal .Random.seed is corrupt: not saving");
 	return;
     }
+
+    /* Copy out seeds to  .Random.seed  */
+    int len_seed, j;
+    SEXP seeds;
 
     len_seed = RNG_Table[RNG_kind].n_seed;
 
@@ -449,6 +450,7 @@ void PutRNGstate(void)
 
     /* assign only in the workspace */
     defineVar(R_SeedsSymbol, seeds, R_GlobalEnv);
+    INCREMENT_NAMED(seeds);
     UNPROTECT(1);
 }
 
