@@ -9065,7 +9065,6 @@ Kruskal-Wallis chi-squared = 29.267, df = 4, p-value = 6.901e-06
 > flush(stderr()); flush(stdout())
 > 
 > ### Encoding: UTF-8
-> 
 > ### Name: ks.test
 > ### Title: Kolmogorov-Smirnov Tests
 > ### Aliases: ks.test ks.test.default ks.test.formula
