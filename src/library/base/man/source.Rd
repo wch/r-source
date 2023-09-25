@@ -1,6 +1,6 @@
 % File src/library/base/man/source.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2022 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{source}
@@ -35,6 +35,7 @@ withAutoprint(exprs, evaluated = FALSE, local = parent.frame(),
               print. = TRUE, echo = TRUE, max.deparse.length = Inf,
               width.cutoff = max(20, getOption("width")),
               deparseCtrl = c("keepInteger", "showAttributes", "keepNA"),
+              skip.echo = 0,
               \dots)
 }
 \arguments{
@@ -189,7 +190,7 @@ if(someCond) withAutoprint({
 
 ## If you want to source() a bunch of files, something like
 ## the following may be useful:
- sourceDir <- function(path, trace = TRUE, ...) {
+sourceDir <- function(path, trace = TRUE, ...) {
     op <- options(); on.exit(options(op)) # to reset after each 
     for (nm in list.files(path, pattern = "[.][RrSsQq]$")) {
        if(trace) cat(nm,":")
@@ -197,10 +198,10 @@ if(someCond) withAutoprint({
        if(trace) cat("\n")
        options(op)
     }
- }
+}
 
 suppressWarnings( rm(x,y) ) # remove 'x' or 'y' from global env
-withAutoprint({ x <- 1:2; cat("x=",x,"\n"); y <- x^2 })
+withAutoprint({ x <- 1:2; cat("x=",x, "\n"); y <- x^2 })
 ## x and y now exist:
 stopifnot(identical(x, 1:2), identical(y, x^2))
 

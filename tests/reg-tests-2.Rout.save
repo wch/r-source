@@ -1,4 +1,3 @@
-
 R Under development (unstable) (2023-09-22 r85207) -- "Unsuffered Consequences"
 Copyright (C) 2023 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu
@@ -8322,11 +8321,16 @@ Error in f() : argument is missing, with no default
 + #line 1 "file1.R"
 +     withAutoprint({ show.srcref() })
 + }
-> {
-> #line 1 "file1.R"
 >     withAutoprint({ show.srcref() })
  language show.srcref()
  - attr(*, "srcref")= 'srcref' int [1:8] 1 21 1 33 21 33 3 3
   ..- attr(*, "srcfile")=Classes 'srcfilealias', 'srcfile' <environment: 0x563a4c811e70> 
 > ## no   attr(*, "src..")   in R <= 4.3.1
+> ##
+> withAutoprint({
++     1 + 2
++ })
+>     1 + 2
+[1] 3
+> ## temporarily wrongly showed " withAutoprint({ "
 > 

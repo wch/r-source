@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2023-08-17 r84982) -- "Unsuffered Consequences"
+R Under development (unstable) (2023-09-20 r85183) -- "Unsuffered Consequences"
 Copyright (C) 2023 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu
 
@@ -208,6 +208,7 @@ Levels: a b <NA>
 + )
 > ## partly failed in R 3.4.0 alpha
 > rm(CO) # as its deparse() depends on if utils was installed w/ keep.source.pkgs=TRUE
+> rm(r2)
 > 
 > srcdir <- file.path(Sys.getenv("SRCDIR"), "eval-fns.R")
 > source(if(file.exists(srcdir)) srcdir else "./eval-fns.R", echo = TRUE)
@@ -878,34 +879,24 @@ r1: list(value = quote({
     if (!evaluated) {
         exprs <- substitute(exprs)
         if (is.call(exprs)) {
-            if (exprs[[1]] == quote(`{`)) 
+            if (exprs[[1]] == quote(`{`)) {
                 exprs <- as.list(exprs)[-1]
+                if (missing(skip.echo) && is.list(srcrefs <- attr(exprs, 
+                  "srcref"))) {
+                  skip.echo <- srcrefs[[1L]][7L] - 1L
+                }
+            }
         }
     }
     source(exprs = exprs, local = local, print.eval = print., 
         echo = echo, max.deparse.length = max.deparse.length, 
         width.cutoff = width.cutoff, deparseCtrl = deparseCtrl, 
-        ...)
+        skip.echo = skip.echo, ...)
 }), visible = TRUE)
  --> checking list(*): Ok
 --=--=--=--=--
 r13: structure(c(1, 2, 3), names = c("use.names", "recursive", "one"
 ))
- --> checking list(*): Ok
---=--=--=--=--
-r2: list(value = quote({
-    if (!evaluated) {
-        exprs <- substitute(exprs)
-        if (is.call(exprs)) {
-            if (exprs[[1]] == quote(`{`)) 
-                exprs <- as.list(exprs)[-1]
-        }
-    }
-    source(exprs = exprs, local = local, print.eval = print., 
-        echo = echo, max.deparse.length = max.deparse.length, 
-        width.cutoff = width.cutoff, deparseCtrl = deparseCtrl, 
-        ...)
-}), visible = TRUE)
  --> checking list(*): Ok
 --=--=--=--=--
 runEPD_checks: function (env = .GlobalEnv) 

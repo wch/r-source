@@ -3377,3 +3377,8 @@ show.srcref <- function() str(sys.call())
     withAutoprint({ show.srcref() })
 }
 ## no   attr(*, "src..")   in R <= 4.3.1
+##
+withAutoprint({
+    1 + 2
+})
+## temporarily wrongly showed " withAutoprint({ "
