@@ -880,7 +880,12 @@ install.packages <-
                 pkgs <- update[, 1L]
                 tss <- sub("[.]ts$", "", dir(".", pattern = "[.]ts$"))
                 failed <- pkgs[!pkgs %in% tss]
-		for (pkg in failed) system(paste0("cat ", pkg, ".out"))
+                for (pkg in failed) {
+                    ## targets with failed dependencies are not made (even with -k)
+                    if (file.exists(outfile <- paste0(pkg, ".out")))
+                        system2("cat", outfile)
+                    ##else cat("skipped installing package ", pkg, "\n", sep = "")
+                }
                 n <- length(failed)
                 if (n == 1L)
                     warning(gettextf("installation of package %s failed",
@@ -897,8 +902,11 @@ install.packages <-
                                 domain = NA)
                      }
             }
-            if(keep_outputs)
-                file.copy(paste0(update[, 1L], ".out"), outdir, overwrite = TRUE)
+            if(keep_outputs) {
+                outfiles <- paste0(update[, 1L], ".out") # some could be missing
+                file.copy(outfiles[file.exists(outfiles)],
+                          outdir, overwrite = TRUE)
+            }
             ## Keep binary packages possibly created via --build
             file.copy(Sys.glob(paste0(update[, 1L], "*.zip")), cwd)
             file.copy(Sys.glob(paste0(update[, 1L], "*.tgz")), cwd)
