@@ -226,6 +226,13 @@
       of arguments).
 
       \item \command{R CMD Rdiff} gets option \option{--useEx}.
+
+      \item \command{R CMD check} now warns on non-portable uses of
+      Fortran \code{KIND} such as \code{INTEGER(KIND=4)} and
+      \code{REAL(KIND=8)}.
+
+      To see the failing lines set environment variable
+      \env{_R_CHECK_FORTRAN_KIND_DETAILS_} to a true value.
     }
   }
 

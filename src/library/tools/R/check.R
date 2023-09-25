@@ -623,6 +623,44 @@ add_dummies <- function(dir, Log)
            length(so_symbol_names_table)) # suitable OS
             check_sos()
 
+        if (dir.exists("src") &&
+            length(files <- dir("src", patt = "[.](f|f90|f95)$"))) {
+            checkingLog(Log, "usage of KIND in Fortran files")
+            bad <- character()
+            details <- character()
+
+            for (f in files) {
+                lines <- readLines(file.path("src", f), warn = FALSE)
+                ## skip comment lines
+                lines <- grep("^([cC]| *!)", lines,
+                              value = TRUE, invert = TRUE, useBytes = TRUE)
+                if (any(z<-grepl("[(].*(kind|KIND) *= *[1-9].*[)]", lines,
+                                  useBytes = TRUE))) {
+                    bad <- c(bad, f)
+                    details <- c(details, paste0(f, ":", lines[z]))
+                }
+            }
+            if (!length(bad)) resultLog(Log, "OK")
+            else {
+                warningLog(Log)
+                msg <-
+                    ngettext(length(bad),
+                             "Found the following file with non-portable usage of KIND:\n",
+                             "Found the following files with non-portable file usage of KIND:\n",
+                             domain = NA)
+                wrapLog(msg)
+                verbose <-
+                    config_val_to_logical(Sys.getenv("_R_CHECK_FORTRAN_KIND_DETAILS_", "FALSE"))
+                if(verbose)
+                    printLog0(Log, .format_lines_with_indent(details), "\n")
+                else {
+                    printLog0(Log, .format_lines_with_indent(bad), "\n")
+                    msg <- "For details set environment variable _R_CHECK_FORTRAN_KIND_DETAILS_ to a true value."
+                    wrapLog(msg)
+                }
+            }
+        }
+
         miss <- file.path("inst", "doc", c("Rplots.ps", "Rplots.pdf"))
         if (any(f <- file.exists(miss))) {
             checkingLog(Log, "for left-overs from vignette generation")
