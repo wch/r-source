@@ -646,7 +646,7 @@ add_dummies <- function(dir, Log)
                 msg <-
                     ngettext(length(bad),
                              "Found the following file with non-portable usage of KIND:\n",
-                             "Found the following files with non-portable file usage of KIND:\n",
+                             "Found the following files with non-portable usage of KIND:\n",
                              domain = NA)
                 wrapLog(msg)
                 verbose <-
