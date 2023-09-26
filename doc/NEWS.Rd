@@ -141,8 +141,10 @@
       \code{rsmirnov()} in package \pkg{stats} have argument
       \code{two.sided} changed to \code{alternative}, to take into
       account that the permutation distributions of the one-sided
-      statistics can be different in the case of ties.  Consequence of 
-      \PR{18582}.      
+      statistics can be different in the case of ties.  Consequence of
+      \PR{18582}.
+
+      \item \code{sort()} is now an implicit S4 generic in \pkg{methods}.
     }
   }
 
@@ -254,7 +256,7 @@
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{pairwise.t.test()} misbehaved when subgroups had 0 DF
-      for variance, even with \code{pool.sd=TRUE} \PR{18594} (Jack Berry). 
+      for variance, even with \code{pool.sd=TRUE} \PR{18594} (Jack Berry).
 
       \item Arguments are now properly forwarded to methods on S4 generics
       with \dots{} in the middle of their formal arguments. This was
@@ -414,7 +416,7 @@
       from Fortran.
     }
   }
-  
+
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{substr(x, n, L) <- cc} now works (more) correctly for
