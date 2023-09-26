@@ -400,6 +400,11 @@ invalid:
     return TRUE;
 }
 
+static void copy_seeds_in(Int32 *i_seed, SEXP seeds, int len_seed)
+{
+    int *p = INTEGER(seeds); // will warn if R INTEGER type changes
+    memcpy(i_seed, p + 1, sizeof(Int32) * len_seed);
+}
 
 void GetRNGstate(void)
 {
@@ -420,12 +425,16 @@ void GetRNGstate(void)
 	if(LENGTH(seeds) == 1 && RNG_kind != USER_UNIF)
 	    Randomize(RNG_kind);
 	else {
-	    int j, *is = INTEGER(seeds);
-	    for(j = 1; j <= len_seed; j++)
-		RNG_Table[RNG_kind].i_seed[j - 1] = is[j];
+	    copy_seeds_in(RNG_Table[RNG_kind].i_seed, seeds, len_seed);
 	    FixupSeeds(RNG_kind, 0);
 	}
     }
+}
+
+static R_INLINE void copy_seeds_out(SEXP seeds, Int32 *i_seed, int len_seed)
+{
+    int *p = INTEGER(seeds) + 1; // will warn if R INTEGER type changes
+    memcpy(p, i_seed, sizeof(Int32) * len_seed);
 }
 
 void PutRNGstate(void)
@@ -437,21 +446,27 @@ void PutRNGstate(void)
     }
 
     /* Copy out seeds to  .Random.seed  */
-    int len_seed, j;
-    SEXP seeds;
+    int len_seed = RNG_Table[RNG_kind].n_seed;
+    int kinds = RNG_kind + 100 * N01_kind + 10000 * Sample_kind;
 
-    len_seed = RNG_Table[RNG_kind].n_seed;
+    SEXP seeds = findVarInFrame(R_GlobalEnv, R_SeedsSymbol);
+    if (NOT_SHARED(seeds) && ATTRIB(seeds) == R_NilValue &&
+	TYPEOF(seeds) == INTSXP && XLENGTH(seeds) == len_seed + 1) {
+	/* it is safe to resuse the existing .Random.seed vector */
+	INTEGER(seeds)[0] = kinds;
+	copy_seeds_out(seeds, RNG_Table[RNG_kind].i_seed, len_seed);
+    }
+    else {
+	/* need to allocate a fresh .Random.seed vector */
+	seeds = PROTECT(allocVector(INTSXP, len_seed + 1));
+	INTEGER(seeds)[0] = kinds;
+	copy_seeds_out(seeds, RNG_Table[RNG_kind].i_seed, len_seed);
 
-    PROTECT(seeds = allocVector(INTSXP, len_seed + 1));
-
-    INTEGER(seeds)[0] = RNG_kind + 100 * N01_kind + 10000 * Sample_kind;
-    for(j = 0; j < len_seed; j++)
-	INTEGER(seeds)[j+1] = RNG_Table[RNG_kind].i_seed[j];
-
-    /* assign only in the workspace */
-    defineVar(R_SeedsSymbol, seeds, R_GlobalEnv);
-    INCREMENT_NAMED(seeds);
-    UNPROTECT(1);
+	/* assign only in the workspace */
+	defineVar(R_SeedsSymbol, seeds, R_GlobalEnv);
+	INCREMENT_NAMED(seeds);
+	UNPROTECT(1);
+    }
 }
 
 static void RNGkind(RNGtype newkind)
