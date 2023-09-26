@@ -7361,7 +7361,8 @@ form
 @noindent
 for each component of the list returned.  There may be
 optional text outside the @code{\item} entries
-(see for example the help for @code{rle}).  Note that @code{\value}
+(see for example the joint help for @code{rle} and @code{inverse.rle},
+or the sets of items in @code{l10n_info}).  Note that @code{\value}
 is implicitly a @code{\describe} environment, so that environment should
 not be used for listing components, just individual @code{\item@{@}@{@}}
 entries.@footnote{@code{\describe} can still be used for more general
