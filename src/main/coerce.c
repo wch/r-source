@@ -2064,8 +2064,10 @@ attribute_hidden SEXP do_is(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     case 200:		/* is.atomic */
 	switch(TYPEOF(CAR(args))) {
+#ifdef S_compatible_BUT_UNDESIRABLE
 	case NILSXP:
 	    /* NULL is atomic (S compatibly), but not in isVectorAtomic(.) */
+#endif
 	case CHARSXP:
 	case LGLSXP:
 	case INTSXP:

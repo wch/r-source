@@ -857,7 +857,8 @@ stopifnot(exprs = {
 ## negative integer scalars
 tools::assertWarning(compiler::cmpfun(function(x) sqrt(x))(-1L))
 
-
+## is.atomic(NULL) is no longer true
+if(is.atomic(NULL)) stop("Should no longer happen: 'NULL' is not atomic")
 ## untested previously
 stopifnot(is.null(sort(NULL)), is.null(sort.int(NULL)))
 ## failed in first version of `R-is` branch

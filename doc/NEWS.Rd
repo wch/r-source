@@ -14,6 +14,11 @@
       32-bit platforms will still report \code{(32-bit)}.
 
       On Windows, ditto for window titles.
+
+      \item \code{is.atomic(NULL)} now returns \code{FALSE}, as \code{NULL}
+      is not an atomic vector.  Strict back compatibility would
+      replace \code{is.atomic(foo)} by \code{(is.null(foo) || is.atomic(foo))}
+      but should happen sparingly only.
     }
   }
 
