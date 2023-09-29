@@ -72,9 +72,9 @@
       or \env{LOGNAME}.  This is a (modified) fulfillment of Will Landau's
       suggestion in \PR{17530}.
 
-      \item \pkg{tools}\code{::testInstalledBasic()} gets new optional
+      \item \code{tools::testInstalledBasic()} gets new optional
       arguments \code{outDir} and \code{testSrcdir}, e.g., allowing to use
-      it in a \sQuote{<builddir> != <srcdir>} setup, and in standard
+      it in a \code{\var{builddir} != \var{srcdir}} setup, and in standard
       \dQuote{binary} Windows installation \bold{if} a source \file{tests/}
       folder is present.
 
