@@ -231,11 +231,17 @@ ComplexFromLogical(int x, int *warn)
 {
     Rcomplex z;
     if (x == NA_LOGICAL) {
+#ifdef NA_TO_COMPLEX_NA
 	set_COMPLEX_NA(z);
+#else
+	z.r = NA_REAL;
+#endif
     } else {
 	z.r = x;
-	z.i = 0;
     }
+#ifndef NA_TO_COMPLEX_NA
+    z.i = 0;
+#endif
     return z;
 }
 
@@ -244,12 +250,17 @@ ComplexFromInteger(int x, int *warn)
 {
     Rcomplex z;
     if (x == NA_INTEGER) {
+#ifdef NA_TO_COMPLEX_NA
 	set_COMPLEX_NA(z);
-    }
-    else {
+#else
+	z.r = NA_REAL;
+#endif
+    } else {
 	z.r = x;
-	z.i = 0;
     }
+#ifndef NA_TO_COMPLEX_NA
+    z.i = 0;
+#endif
     return z;
 }
 
@@ -257,10 +268,14 @@ Rcomplex attribute_hidden
 ComplexFromReal(double x, int *warn)
 {
     Rcomplex z;
-    if (ISNA(x)) { // NA, but not NaN, since R >= 4.4.0 ; was ISNAN(x) in R < 3.3.0
+#ifdef NA_TO_COMPLEX_NA
+    if (ISNA(x)) { // NA, but not NaN; was ISNAN(x) in R < 3.3.0
 	set_COMPLEX_NA(z);
     }
     else { // also for non-NA NaN's
+#else
+    {
+#endif
 	z.r = x;
 	z.i = 0;
     }

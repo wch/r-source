@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2023-09-25 r85219) -- "Unsuffered Consequences"
+R Under development (unstable) (2023-09-29 r85231) -- "Unsuffered Consequences"
 Copyright (C) 2023 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu
 
@@ -5716,8 +5716,8 @@ list(a = NA, b = as.integer(NA), c = as.double(NA), d = as.complex(NA),
 > tmp <- tempfile(tmpdir = getwd())
 > dput(x, tmp, control="all")
 > stopifnot(identical(dget(tmp), x))
-> dput(x, tmp, control=c("all", "S_compatible"))
-> stopifnot(identical(dget(tmp), x))
+> dput(x, tmp, control=c("all", "S_compatible"))# -> d => (r = NA, im = 0)
+> stopifnot(identical(dget(tmp), local({ x$d <- as.complex(NA); x })))
 > unlink(tmp)
 > ## changes in 2.5.0
 > 

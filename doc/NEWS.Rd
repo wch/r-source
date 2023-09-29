@@ -281,8 +281,9 @@
       as proposed by Ivan Krylov on the R-devel mailing list.  (This
       also means it is now an error to specify \code{na.rm} more than once.)
 
-      \item \code{as.complex(x)} now returns \code{NA_complex_} also for
-      \code{NA_real_} arguments, as it does for all other \code{NA}s.
+      \item \code{as.complex(x)} now returns \code{complex(real=x,
+      imaginary=0)} for \emph{all} numerical and logical \code{x}, notably
+      also for \code{NA} or \code{NA_integer_}.
 
       \item Directories are now omitted by
       \code{file.copy(,recursive = FALSE)} and in \code{file.append()}

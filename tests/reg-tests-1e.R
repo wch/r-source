@@ -563,9 +563,23 @@ if(englishMsgs)
 ## these gave numeric (or NA) results without any warning in R <= 4.3.0
 
 
-## as.complex(NA_real_) |-> NA_complex_  as for all other NA, NA_*
+## as.complex(NA_real_) |-> ... Im(.) == 0 as for NA (logical) and NA_integer_
+if(FALSE) # in R-devel Apr--Sep 2023 only:
 stopifnot(identical(as.complex(NA_real_), NA_complex_))
-## gave  complex(real = NA, imaginary=0) from R 3.3.0  to 4.3.x
+Cmplx <- function(re = numeric(), im = numeric()) complex(real = re, imaginary = im)
+showC <- function(z) noquote(sprintf("(R = %g, I = %g)", Re(z), Im(z)))
+showC(print(asCnum <- Cmplx(NA_real_, 0)))
+showC(print(NA_rP0i <- NA_real_ + 0i)) # arithmetic here via as.complex(.)
+stopifnot(exprs = {
+    identical(as.complex(NA_real_),    asCnum)
+    identical(as.complex(NA_integer_), asCnum)
+    identical(as.complex(NA),          asCnum)
+    identical(NA_rP0i,                 asCnum)
+    identical(as.complex( NaN), Cmplx(NaN, 0))
+    identical(as.complex( Inf), Cmplx(Inf, 0))
+    identical(as.complex(-Inf),Cmplx(-Inf, 0))
+})
+## as.complex( <real-number-like> ) keeps imaginary part 0 even for NA
 
 
 ## methods() in {base} pkg are visible

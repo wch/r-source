@@ -2043,8 +2043,8 @@ dput(x, control=c("all", "S_compatible"))
 tmp <- tempfile(tmpdir = getwd())
 dput(x, tmp, control="all")
 stopifnot(identical(dget(tmp), x))
-dput(x, tmp, control=c("all", "S_compatible"))
-stopifnot(identical(dget(tmp), x))
+dput(x, tmp, control=c("all", "S_compatible"))# -> d => (r = NA, im = 0)
+stopifnot(identical(dget(tmp), local({ x$d <- as.complex(NA); x })))
 unlink(tmp)
 ## changes in 2.5.0
 
