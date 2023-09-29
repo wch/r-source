@@ -187,8 +187,8 @@
       \item A new \command{configure} option \option{--with-newAccelerate}
       makes use of Apple's \sQuote{new} BLAS / LAPACK interfaces in their
       Accelerate framework.  Those interfaces are only available in macOS
-      13.3 or later, and building requires SDK 14.3 or later (from the
-      Command Line Tools or Xcode).
+      13.3 or later, and building requires SDK 13.3 or later (from the
+      Command Line Tools or Xcode 14.3 or later).
 
       By default the option uses new Accelerate for BLAS calls: to also
       use it for LAPACK use \option{--with-newAccelerate=lapack}.  The

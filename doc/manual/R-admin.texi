@@ -5709,14 +5709,13 @@ can be used @emph{via} the configuration option
 @end example
 
 @noindent
-@c LAPACK in Accelerate was still 3.2.1 in macOS 13.3 / CLT 14.3
+@c LAPACK in Accelerate was still 3.2.1 in macOS 13.6 and 14
 to provide potentially higher-performance versions of the @acronym{BLAS}
 and LAPACK routines.@footnote{It has been reported that for some
 non-Apple toolchains @code{CPPFLAGS} needed to contain
 @code{-D__ACCELERATE__}: not needed for @command{clang} from LLVM.}
 This includes a full LAPACK which can be used @emph{via}
 @option{--with-lapack}: however, the version of LAPACK it contains has
-@c 3.2.1 even in Ventura 13.3.
 often been seriously old (and is not used unless @option{--with-lapack}
 is specified).  Some @acronym{CRAN} builds of @R{} can be
 switched@footnote{@url{https://cran.r-project.org/bin/macosx/RMacOSX-FAQ.html#Which-BLAS-is-used-and-how-can-it-be-changed_003f}}
@@ -5730,10 +5729,10 @@ framework are `now inline with reference version
 naming new entry points and so only accessible @emph{via} their C
 headers.  That version can be used for BLAS calls @emph{via}
 @command{configure} option @option{--with-newAccelerate}: it requires at
-least macOS 13.3 and SDK 14.3.  To use it for both BLAS and LAPACK
-calls, configure with @option{--with-newAccelerate=lapack}.  These
-options cannot be used with others such as @option{--with-blas} and
-@option{--with-lapack}.
+least macOS 13.3 and SDK 13.3 (from Xcode/CLT 14.3).  To use it for both
+BLAS and LAPACK calls, configure with
+@option{--with-newAccelerate=lapack}.  These options cannot be used with
+others such as @option{--with-blas} and @option{--with-lapack}.
 
 @c https://developer.apple.com/documentation/accelerate/veclib
 Threading in Accelerate is controlled by `Grand Central
