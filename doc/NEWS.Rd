@@ -465,6 +465,9 @@
 
       \item \code{postscript()} refused to accept a \code{title} comment
       containing the letter \dQuote{W} (\PR{18599}).
+
+      \item \code{isoreg(c(1,Inf))} signals an error instead of
+      segfaulting, fixing \PR{18603}.
     }
   }
 }

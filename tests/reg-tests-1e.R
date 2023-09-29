@@ -818,14 +818,14 @@ kz2La
 all.equal(0.058131632, (rcTm <- rcond(zm, triangular=TRUE          )), tol=0) # 3.178e-9
 all.equal(0.047891278, (rcTL <- rcond(zm, triangular=TRUE, uplo="L")), tol=0) # 4.191e-9
 ## New: can use norm "M" or "F" for exact=TRUE:
-(kz <- kappa(zm, norm="M", exact = TRUE)) # 2.440468 
-(kF <- kappa(zm, norm="F", exact = TRUE)) # 6.448678 
+(kz <- kappa(zm, norm="M", exact = TRUE)) # 2.440468
+(kF <- kappa(zm, norm="F", exact = TRUE)) # 6.448678
 stopifnot(exprs = {
     all.equal(7.8370264, kz1d) # was wrong {wrongly using .kappa_tri()}
     all.equal(6.6194289, kz1)  # {always ok}
     all.equal(0.058131632, rcTm) #  "
     all.equal(0.047891278, rcTL)
-    all.equal(6.82135883, kzqr2)    
+    all.equal(6.82135883, kzqr2)
     all.equal(2.44046765, kz, tol = 1e-9) # 1.8844e-10
     all.equal(6.44867822, kF, tol = 4e-9) # 4.4193e-10
 })
@@ -853,9 +853,10 @@ stopifnot(exprs = {
 ## in all three cases, "A-1" inadvertently became "A.1" in R < 4.4.0
 
 
-## byte compiled sqrt() was not warling about creating NaNs for
+## byte compiled sqrt() was not warning about creating NaNs for
 ## negative integer scalars
 tools::assertWarning(compiler::cmpfun(function(x) sqrt(x))(-1L))
+
 
 ## is.atomic(NULL) is no longer true
 if(is.atomic(NULL)) stop("Should no longer happen: 'NULL' is not atomic")
@@ -863,6 +864,12 @@ if(is.atomic(NULL)) stop("Should no longer happen: 'NULL' is not atomic")
 stopifnot(is.null(sort(NULL)), is.null(sort.int(NULL)))
 ## failed in first version of `R-is` branch
 
+
+## isoreg() seg.faulted with Inf - PR#18603 - in R <= 4.3.1
+assertErrV(isoreg(Inf))
+assertErrV(isoreg(c(0,Inf)))
+assertErrV(isoreg(rep(1e307, 20))) # no Inf in 'y'
+## ==> Asserted error: non-finite sum(y) == inf is not allowed
 
 
 ## keep at end
