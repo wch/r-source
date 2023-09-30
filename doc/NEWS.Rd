@@ -194,7 +194,7 @@
       use it for LAPACK use \option{--with-newAccelerate=lapack}.  The
       later interfaces provide LAPACK 3.9.1 rather than 3.2.1: 3.9.1 is
       from 2021-04 and does not include the improved algorithms
-      introduced in LAPACK 3.10.0.
+      introduced in LAPACK 3.10.0 (including for BLAS calls).
     }
   }
 
