@@ -78,7 +78,7 @@ iconvlist()
 \section{Implementation Details}{
   There are three main implementations of \code{iconv} in use.  Linux's
   most common C runtime, \samp{glibc}, contains one.  Several platforms
-  supply GNU \samp{libiconv}, including macOS and FreeBSD, in
+  supply versions of GNU \samp{libiconv}, including macOS and FreeBSD, in
   some cases with additional encodings.  On Windows we use a version of
   Yukihiro Nakadaira's \samp{win_iconv}, which is based on Windows'
   codepages.  (We have added many encoding names for compatibility with
@@ -86,6 +86,13 @@ iconvlist()
   encoding names and support \samp{//TRANSLIT} (but with different
   results, and for \samp{win_iconv} currently a \sQuote{best fit}
   strategy is used except for \code{to = "ASCII"}).
+
+  %% https://github.com/apple-oss-distributions/libiconv/blob/libiconv-80.1.1/citrus/iconv.h
+  The macOS implemetation is attribted to the \sQuote{Citrus Project}:
+  the Apple sources declare it as \sQuote{compatible} with GNU \samp{libiconv}
+  1.11 from 2006.  Howver, it is has diverged notably since and in macOS
+  14 uses a \sQuote{best fit} for conversions at least for \code{to =
+  "ASCII"} and \code{to = "latin1"}.
 
   Most commercial Unixes contain an implementation of \code{iconv} but
   none we have encountered have supported the encoding names we need:
@@ -140,7 +147,8 @@ iconvlist()
   If \code{toRaw = FALSE} (the default), the value is a character vector
   of the same length and the same attributes as \code{x} (after
   conversion to a character vector).  If conversion fails for an element
-  that element of the result is set to \code{NA_character_}.
+  that element of the result is set to \code{NA_character_}.  (NB:
+  whether conversion fails is implementation-specific.)
 
   If \code{mark = TRUE} (the default) the elements of the result have a
   declared encoding if \code{to} is \code{"latin1"} or \code{"UTF-8"},

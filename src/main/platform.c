@@ -3628,7 +3628,12 @@ do_eSoftVersion(SEXP call, SEXP op, SEXP args, SEXP rho)
 #ifdef _LIBICONV_VERSION
     {
 	int ver = _libiconv_version;
+#ifdef __APPLE__
+	// Apple patch to Citrix libiconv
+	snprintf(p, 256, "Apple libiconv %d.%d", ver/0x0100, ver%0x0100);
+#else
 	snprintf(p, 256, "GNU libiconv %d.%d", ver/0x0100, ver%0x0100);
+#endif
     }
 #elif defined(_WIN32)
     snprintf(p, 256, "%s", "win_iconv");

@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2023-07-11 r84677) -- "Unsuffered Consequences"
+R Under development (unstable) (2023-09-29 r85235) -- "Unsuffered Consequences"
 Copyright (C) 2023 The R Foundation for Statistical Computing
-Platform: aarch64-apple-darwin22.5.0
+Platform: aarch64-apple-darwin23.0.0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -204,7 +204,7 @@ Error in assertWarning(ff()) :
 > bibstyle("unsorted", sortKeys = function(refs) seq_along(refs),
 +     fmtPrefix = function(paper) paste0("[", paper$.index, "]"),
 +        .init = TRUE)
-<environment: 0x126cbf4f8>
+<environment: 0x119d11bf0>
 > print(refs, .bibstyle = "unsorted")
 [1] R Core Team (2013). _R: A Language and Environment for Statistical
 Computing_. R Foundation for Statistical Computing, Vienna, Austria.
@@ -865,9 +865,11 @@ function (x, ...)
 > f <- tempfile()
 > cat(out, file = f, sep = "\n")
 > 
+> ## IGNORE_RDIFF_BEGIN
 > showNonASCIIfile(f)
-1: fran<e7>ais: test of showNonASCII():
-4:    This has an <fc>mlaut in it.
+1: francais: test of showNonASCII():
+4:    This has an "umlaut in it.
+> ## IGNORE_RDIFF_END
 > unlink(f)
 > 
 > 
@@ -1155,7 +1157,7 @@ needs Deep Thought
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  0.132 0.012 0.145 0 0 
+Time elapsed:  0.163 0.015 0.179 0 0 
 > grDevices::dev.off()
 null device 
           1 
