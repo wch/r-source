@@ -220,9 +220,9 @@ C
 C  Map row I and column J of upper half diagonal symmetric matrix
 C  onto vector.
       INTEGER N,I,J
-C  Use 64-bit integers for temporaries to avoid integer overflow
-C  This could use SELECTED_INT_KIND(R=18), instead
-      INTEGER(KIND=8) N8,I8,J8
+C     Use 64-bit integers for temporaries to avoid integer overflow
+C     2**63 -1 ~ 9e+18
+      INTEGER(KIND=SELECTED_INT_KIND(R=18)) N8,I8,J8
       N8=N
       I8=I
       J8=J
