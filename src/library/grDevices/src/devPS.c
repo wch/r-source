@@ -4378,7 +4378,8 @@ static void mbcsToSbcs(const char *in, char *out, const char *encoding,
     i_buf = (char *) in;
     i_len = strlen(in)+1; /* include terminator */
     o_buf = (char *) out;
-    o_len = i_len; /* must be the same or fewer chars */
+    /* iconv in macOS 14 can expand 1 UTF-8 char to at least 4 (o/oo) */
+    o_len = 2*i_len; /* must be the same or fewer chars */
 next_char:
     status = Riconv(cd, &i_buf, &i_len, &o_buf, &o_len);
     /* libiconv 1.13 gives EINVAL on \xe0 in UTF-8 (as used in fBasics) */

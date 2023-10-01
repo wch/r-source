@@ -397,6 +397,10 @@
       \code{verbose} addressing the problem of possible \dQuote{wrap
 	around} when projecting too long curves, as reported by Achim Zeileis
       in \PR{18537}.
+
+      \item \code{tools::showNonASCII()} has been rewritten to work
+      better on macOS 14 (which has a changed implementation of
+      \code{iconv()}.
     }
   }
 

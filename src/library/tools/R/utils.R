@@ -211,12 +211,15 @@ function(x)
     ## The only one we guarantee to exist is 'latin1'.
     ## The default sub=NA is faster, but on some platforms
     ## some characters used just to lose their accents, so two tests.
-    asc <- iconv(x, "latin1", "ASCII")
-    ind <- is.na(asc) | asc != x
-    if(any(ind))
+    ##    asc <- iconv(x, "latin1", "ASCII")
+    ##    ind <- is.na(asc) | asc != x
+
+    ind <- .Call(C_nonASCII, x)
+    if(any(ind)) {
         message(paste0(which(ind), ": ",
-                       iconv(x[ind], "latin1", "ASCII", sub = "byte"),
+                       iconv(x[ind], "", "ASCII", sub = "byte"),
                        collapse = "\n"), domain = NA)
+    }
     invisible(x[ind])
 }
 

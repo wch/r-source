@@ -303,3 +303,25 @@ SEXP splitString(SEXP string, SEXP delims)
     UNPROTECT(1);
     return ans;
 }
+
+SEXP nonASCII(SEXP text)
+{
+    R_xlen_t len = XLENGTH(text);
+    SEXP ans = allocVector(LGLSXP, len);
+    int *lans = LOGICAL(ans);
+    if(TYPEOF(text) != STRSXP) error("invalid input");
+    for (R_xlen_t i = 0; i < len; i++)
+    {
+	SEXP this = STRING_ELT(text, i);
+	if (this == NA_STRING) {
+	    lans[i] = 0;
+	    continue;
+	} 
+	int notOK = 0;
+	const char *p = CHAR(this);
+	while(*p++)
+	    if((unsigned int)*p > 127) {notOK = 1; break;}
+	lans[i] = notOK;
+    }
+    return ans;
+}
