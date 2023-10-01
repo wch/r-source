@@ -44,6 +44,7 @@ SEXP startHTTPD(SEXP sIP, SEXP sPort);
 SEXP stopHTTPD(void);
 SEXP splitString(SEXP string, SEXP delims);
 SEXP package_dependencies_scan(SEXP x);
+SEXP nonASCII(SEXP x);
 
 SEXP parseLatex(SEXP call, SEXP op, SEXP args, SEXP env);
 SEXP parseRd(SEXP call, SEXP op, SEXP args, SEXP env);

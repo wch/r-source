@@ -53,6 +53,7 @@ static const R_CallMethodDef CallEntries[] = {
     CALLDEF(deparseRd, 2),
     CALLDEF(splitString, 2),
     CALLDEF(package_dependencies_scan, 1),
+    CALLDEF(nonASCII, 1),
 
     {NULL, NULL, 0}
 };

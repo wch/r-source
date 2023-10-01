@@ -28,8 +28,9 @@ showNonASCIIfile(file)
   preceded by the element number and with non-ASCII bytes highlighted
   \emph{via} \code{\link{iconv}(sub = "byte")}.
 
-  However, this depends on \code{\link{iconv}(to = "ASCII")} failing to
-  convert, and macOS 14 no longer does so reliably.
+  However, this rendering depends on \code{\link{iconv}(to = "ASCII")}
+  failing to convert, and macOS 14 no longer does so reliably so for
+  example permille (\samp{\u2030}) is rendered as \code{o/oo}.
 }
 \value{
   The elements of \code{x} containing non-ASCII characters will be returned
