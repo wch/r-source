@@ -19,11 +19,11 @@ iconvlist()
 }
 
 \arguments{
-  \item{x}{A character vector, or an object to be converted to a character
+  \item{x}{a character vector, or an object to be converted to a character
     vector by \code{\link{as.character}}, or a list with \code{NULL} and
     \code{raw} elements as returned by \code{iconv(toRaw = TRUE)}.}
-  \item{from}{A character string describing the current encoding.}
-  \item{to}{A character string describing the target encoding.}
+  \item{from}{a character string describing the current encoding.}
+  \item{to}{a character string describing the target encoding.}
   \item{sub}{character string.  If not \code{NA} it is used to replace
     any non-convertible bytes in the input.  (This would normally be a
     single character, but can be more.)  If \code{"byte"}, the indication is
@@ -88,9 +88,9 @@ iconvlist()
   strategy is used except for \code{to = "ASCII"}).
 
   %% https://github.com/apple-oss-distributions/libiconv/blob/libiconv-80.1.1/citrus/iconv.h
-  The macOS implemetation is attribted to the \sQuote{Citrus Project}:
+  The macOS implementation is attributed to the \sQuote{Citrus Project}:
   the Apple sources declare it as \sQuote{compatible} with GNU \samp{libiconv}
-  1.11 from 2006.  Howver, it is has diverged notably since and in macOS
+  1.11 from 2006.  However, it is has diverged notably since and in macOS
   14 uses a \sQuote{best fit} for conversions at least for \code{to =
   "ASCII"} and \code{to = "latin1"}.
 
@@ -174,7 +174,7 @@ iconvlist()
   the official (and most widely supported) name for \sQuote{Mac Roman}
   (\url{https://en.wikipedia.org/wiki/Mac_OS_Roman}).
 
-  Using \code{sub} substiutes each non-onvertible \emph{byte} in the
+  Using \code{sub} substitutes each non-convertible \emph{byte} in the
   input, so when converting from UTF-8 a non-convertible character may
   be replaced by two or more bytes.  Using \code{sub = "c99"} or
   \code{sub = "Unicode"} will be clearer.
@@ -201,12 +201,13 @@ x
 charToRaw(xx <- iconv(x, "latin1", "UTF-8"))
 xx
 
+## The results in the comments are those from glbc and GNU libiconv
 iconv(x, "latin1", "ASCII")           #   NA
 iconv(x, "latin1", "ASCII", "?")      # "fran?ais"
 iconv(x, "latin1", "ASCII", "")       # "franais"
 iconv(x, "latin1", "ASCII", "byte")   # "fran<e7>ais"
 iconv(xx, "UTF-8", "ASCII", "Unicode")# "fran<U+00E7>ais"
-iconv(xx, "UTF-8", "ASCII", "c99")    # "fran\\u00e7ais"
+iconv(xx, "UTF-8", "ASCII", "c99")    # "fran\\\\u00e7ais"
 
 ## Extracts from old R help files (they are nowadays in UTF-8)
 x <- c("Ekstr\xf8m", "J\xf6reskog", "bi\xdfchen Z\xfcrcher")
