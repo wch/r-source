@@ -201,6 +201,7 @@ x
 charToRaw(xx <- iconv(x, "latin1", "UTF-8"))
 xx
 
+## The results in the comments are those from glbc and GNU libiconv
 iconv(x, "latin1", "ASCII")           #   NA
 iconv(x, "latin1", "ASCII", "?")      # "fran?ais"
 iconv(x, "latin1", "ASCII", "")       # "franais"
