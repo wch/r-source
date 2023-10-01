@@ -88,9 +88,9 @@ iconvlist()
   strategy is used except for \code{to = "ASCII"}).
 
   %% https://github.com/apple-oss-distributions/libiconv/blob/libiconv-80.1.1/citrus/iconv.h
-  The macOS implemetation is attribted to the \sQuote{Citrus Project}:
+  The macOS implementation is attributed to the \sQuote{Citrus Project}:
   the Apple sources declare it as \sQuote{compatible} with GNU \samp{libiconv}
-  1.11 from 2006.  Howver, it is has diverged notably since and in macOS
+  1.11 from 2006.  However, it is has diverged notably since and in macOS
   14 uses a \sQuote{best fit} for conversions at least for \code{to =
   "ASCII"} and \code{to = "latin1"}.
 
