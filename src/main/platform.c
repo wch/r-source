@@ -3629,8 +3629,11 @@ do_eSoftVersion(SEXP call, SEXP op, SEXP args, SEXP rho)
     {
 	int ver = _libiconv_version;
 #ifdef __APPLE__
-	// Apple patch to Citrix libiconv, but might be external libiconv
-	snprintf(p, 256, "Apple or GNU libiconv %d.%d", ver/0x0100, ver%0x0100);
+	// Apple patch to Citrix libiconv reoprts 1.11, but might be external libiconv
+	if (ver == 0x010B)
+	    snprintf(p, 256, "Apple or GNU libiconv %d.%d", ver/0x0100, ver%0x0100);
+	else
+	    snprintf(p, 256, "GNU libiconv %d.%d", ver/0x0100, ver%0x0100);
 #else
 	snprintf(p, 256, "GNU libiconv %d.%d", ver/0x0100, ver%0x0100);
 #endif

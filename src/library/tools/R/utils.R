@@ -177,7 +177,6 @@ function(dir, type, all.files = FALSE, full.names = TRUE,
         }
     }
     ## avoid ranges since they depend on the collation order in the locale.
-    ## in particular, Estonian sorts Z after S.
     if(type %in% c("code", "docs")) { # only certain filenames are valid.
         files <- files[grep("^[ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789]", basename(files))]
     }
@@ -207,16 +206,12 @@ function(x)
 showNonASCII <-
 function(x)
 {
-    ## All that is needed here is an 8-bit encoding that includes ASCII.
-    ## The only one we guarantee to exist is 'latin1'.
-    ## The default sub=NA is faster, but on some platforms
-    ## some characters used just to lose their accents, so two tests.
-    ##    asc <- iconv(x, "latin1", "ASCII")
-    ##    ind <- is.na(asc) | asc != x
-
     ind <- .Call(C_nonASCII, x)
     if(any(ind)) {
         message(paste0(which(ind), ": ",
+                       ## iconv will usually substitute,
+                       ## but inplementations including macOS 14
+                       ## may translate to ASCII.
                        iconv(x[ind], "", "ASCII", sub = "byte"),
                        collapse = "\n"), domain = NA)
     }
