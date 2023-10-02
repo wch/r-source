@@ -4914,15 +4914,12 @@ static SEXP cmp_arith2(SEXP call, int opval, SEXP opsym, SEXP x, SEXP y,
 #define Relop2(opval,opsym) NewBuiltin2(cmp_relop,opval,opsym,rho)
 
 #define R_MSG_NA	_("NaNs produced")
-#define CMP_ISNAN ISNAN
-//On Linux this is quite a bit faster; not on macOS El Capitan:
-//#define CMP_ISNAN(x) ((x) != (x))
 #define FastMath1(fun, sym) do {					\
 	R_bcstack_t vvx;						\
 	R_bcstack_t *vx = bcStackScalar(R_BCNodeStackTop - 1, &vvx);	\
 	if (vx->tag == REALSXP) {					\
 	    double dval = fun(vx->u.dval);				\
-	    if (CMP_ISNAN(dval)) {					\
+	    if (ISNAN(dval)) {						\
 		SEXP call = VECTOR_ELT(constants, GETOP());		\
 		if (ISNAN(vx->u.dval)) dval = vx->u.dval;		\
 		else warningcall(call, R_MSG_NA);			\
@@ -4934,7 +4931,7 @@ static SEXP cmp_arith2(SEXP call, int opval, SEXP opsym, SEXP x, SEXP y,
 	}								\
 	else if (vx->tag == INTSXP && vx->u.ival != NA_INTEGER) {	\
 	    double dval = fun((double) vx->u.ival);			\
-	    if (CMP_ISNAN(dval)) {					\
+	    if (ISNAN(dval)) {						\
 		SEXP call = VECTOR_ELT(constants, GETOP());		\
 		warningcall(call, R_MSG_NA);				\
 	    }								\
@@ -5026,7 +5023,7 @@ static SEXP cmp_arith2(SEXP call, int opval, SEXP opsym, SEXP x, SEXP y,
 	R_bcstack_t *vx = bcStackScalarReal(R_BCNodeStackTop - 1, &vvx); \
 	if (vx->tag == REALSXP) {					\
 	    double dval = R_log(vx->u.dval);				\
-	    if (CMP_ISNAN(dval)) {					\
+	    if (ISNAN(dval)) {						\
 		SEXP call = VECTOR_ELT(constants, GETOP());		\
 		if (ISNAN(vx->u.dval)) dval = vx->u.dval;		\
 		else warningcall(call, R_MSG_NA);			\
