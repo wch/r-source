@@ -110,6 +110,7 @@ except <- c("call", "switch", ".C", ".Fortran", ".Call", ".External",
             ".subset", ".subset2", ".primTrace", ".primUntrace",
             "lazyLoadDBfetch", ".Internal", ".Primitive", "^", "|",
             "::", ":::", "%*%", "rep", "seq.int", "forceAndCall",
+            "Tailcall",
             ## these may not be enabled
             "tracemem", "retracemem", "untracemem")
 

@@ -150,6 +150,9 @@ assign("unCfillPOSIXlt", function(x) NULL, envir = .ArgsEnv)
 assign("unclass", function(x) NULL, envir = .ArgsEnv)
 assign("untracemem", function(x) NULL, envir = .ArgsEnv)
 
+assign("Exec", function(expr, envir) NULL, envir = .ArgsEnv)
+assign("Tailcall", function(FUN, ...) NULL, envir = .ArgsEnv)
+
 
 ## 2) .GenericArgsEnv : The generic .Primitives :
 

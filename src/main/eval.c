@@ -2168,6 +2168,17 @@ attribute_hidden void unpromiseArgs(SEXP pargs)
 attribute_hidden void unpromiseArgs(SEXP pargs) { }
 #endif
 
+#define SUPPORT_TAILCALL
+#ifdef SUPPORT_TAILCALL
+static SEXP R_exec_token = NULL; /* initialized in R_initAssignSymbols below */
+
+static R_INLINE Rboolean is_exec_continuation(SEXP val)
+{
+    return (TYPEOF(val) == VECSXP && XLENGTH(val) == 4 &&
+	    VECTOR_ELT(val, 0) == R_exec_token);
+}
+#endif
+
 /* Note: GCC will not inline execClosure because it calls setjmp */
 static R_INLINE SEXP R_execClosure(SEXP call, SEXP newrho, SEXP sysparent,
                                    SEXP rho, SEXP arglist, SEXP op);
@@ -2175,6 +2186,19 @@ static R_INLINE SEXP R_execClosure(SEXP call, SEXP newrho, SEXP sysparent,
 /* Apply SEXP op of type CLOSXP to actuals */
 SEXP applyClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho, SEXP suppliedvars)
 {
+#ifdef SUPPORT_TAILCALL
+    Rboolean tailcall = FALSE;
+ again:
+    /* applyClosure should be called with arguments protected, so
+       these variables will be protected on the first call but not on
+       tail calls */
+    PROTECT(call);
+    PROTECT(op);
+    PROTECT(arglist);
+    PROTECT(rho);
+    PROTECT(suppliedvars);
+#endif
+
     SEXP formals, actuals, savedrho, newrho;
     SEXP f, a;
 
@@ -2248,12 +2272,65 @@ SEXP applyClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho, SEXP suppliedvars)
 			     R_GlobalContext->sysparent : rho,
 			     rho, arglist, op);
 #ifdef ADJUST_ENVIR_REFCNTS
+# ifdef SUPPORT_TAILCALL
+    if (tailcall)
+	R_CleanupEnvir(rho, val);
+# endif
     R_CleanupEnvir(newrho, val);
     if (is_getter_call && MAYBE_REFERENCED(val))
     	val = shallow_duplicate(val);
 #endif
 
     UNPROTECT(1); /* newrho */
+
+#ifdef SUPPORT_TAILCALL
+    if (is_exec_continuation(val)) {
+	PROTECT(val);
+	call = VECTOR_ELT(val, 1); // replaces the original one
+
+	rho = VECTOR_ELT(val, 2); // replaces the original one
+	SET_VECTOR_ELT(val, 2, R_NilValue); // to drop REFCNT
+
+	op = VECTOR_ELT(val, 3); // replaces the original one
+
+# ifdef ADJUST_ENVIR_REFCNTS
+	unpromiseArgs(arglist);
+# endif
+
+	if (TYPEOF(op) != CLOSXP) {
+	    /* Ideally this should handle BUILTINSXP/SPECIALSXP calls
+	       in the standard way as in eval() or bceval(). For now,
+	       just build a new call and eval. */
+	    SEXP expr = PROTECT(LCONS(op, CDR(call)));
+	    val = eval(expr, rho);
+	    UNPROTECT(2); /* expr, old val */
+	    UNPROTECT(5); /* old call, op, arglist, rho, suppliedvars */
+	    return val;
+	}
+
+	arglist = promiseArgs(CDR(call), rho); // replaces the original one
+
+	suppliedvars = R_NilValue; // replaces the original one
+
+	UNPROTECT(1); /* val */
+	UNPROTECT(5); /* old call, op, arglist, rho, suppliedvars */
+	tailcall = TRUE;
+	goto again;
+	/* if the C compiler does tail-call optimization then we could
+	   replace the label/goto by a tail call:
+
+	   return applyClosure(call, op, arglist, rho, suppliedvars);
+
+	   (would need to pass 'tailcall' argument also)
+	*/
+    }
+
+    UNPROTECT(5); /* call, op, arglist, rho, suppliedvars */
+# ifdef ADJUST_ENVIR_REFCNTS
+    if (tailcall)
+	unpromiseArgs(arglist);
+# endif
+#endif
     return val;
 }
 
@@ -2498,6 +2575,10 @@ SEXP R_execMethod(SEXP op, SEXP rho)
     R_CleanupEnvir(newrho, val);
 #endif
     UNPROTECT(1);
+#ifdef SUPPORT_TAILCALL
+    if (is_exec_continuation(val))
+	error("'Exec' and 'Tailcall' are not supported in methods yet");
+#endif
     return val;
 }
 
@@ -2955,6 +3036,79 @@ attribute_hidden NORET SEXP do_return(SEXP call, SEXP op, SEXP args, SEXP rho)
     findcontext(CTXT_BROWSER | CTXT_FUNCTION, rho, v);
 }
 
+static void MISSING_ARGUMENT_ERROR(SEXP symbol, SEXP rho);
+attribute_hidden SEXP do_tailcall(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+#ifdef SUPPORT_TAILCALL
+    SEXP expr, env;
+
+    if (PRIMVAL(op) == 0) { // exec
+	static SEXP formals = NULL;
+	if (formals == NULL)
+	    formals = allocFormalsList2(install("expr"), install("envir"));
+
+	PROTECT_INDEX api;
+	PROTECT_WITH_INDEX(args = matchArgs_NR(formals, args, call), &api);
+	REPROTECT(args = evalListKeepMissing(args, rho), api);
+	expr = CAR(args);
+        if (expr == R_MissingArg)
+	    MISSING_ARGUMENT_ERROR(install("expr"), rho);
+	if (TYPEOF(expr) == EXPRSXP && XLENGTH(expr) == 1)
+	    expr = VECTOR_ELT(expr, 0);
+	if (TYPEOF(expr) != LANGSXP)
+	    error(_("\"expr\" must be a call expression"));
+	env = CADR(args);
+	if (env == R_MissingArg)
+	    env = rho;
+	UNPROTECT(1); /* args */
+    }
+    else { // tailcall
+	/* could do argument matching here */
+	if (args == R_NilValue)
+	    error(_("'tailcall' requres at least one argument"));
+	expr = LCONS(CAR(args), CDR(args));
+	env = rho;
+    }
+
+    SEXP val;
+    PROTECT(expr);
+    PROTECT(env);
+    SEXP fun = CAR(expr);
+    if (TYPEOF(fun) == STRSXP && XLENGTH(fun) == 1)
+	fun = installTrChar(STRING_ELT(fun, 0));
+    if (TYPEOF(fun) == SYMSXP)
+	/* might need to adjust the call here as in eval() */
+	fun = findFun3(fun, env, call);
+    else
+	fun = eval(fun, env);
+
+    /* allocating a vector result could be avoided by passing expr,
+       env, and fun in some in globals or on the byte code stack */
+    PROTECT(fun);
+    val = allocVector(VECSXP, 4);
+    UNPROTECT(1); /* fun */
+    SET_VECTOR_ELT(val, 0, R_exec_token);
+    SET_VECTOR_ELT(val, 1, expr);
+    SET_VECTOR_ELT(val, 2, env);
+    SET_VECTOR_ELT(val, 3, fun);
+
+    /* This skips over browser frames. If that is not what we want we
+       would probably want to use R_NilValue as the return value for a
+       jump to browser so R_exec_token doesn't escape. */
+    for (RCNTXT *cntxt = R_GlobalContext;
+	 cntxt && cntxt->callflag != CTXT_TOPLEVEL;
+	 cntxt = cntxt->nextcontext) {
+	if (cntxt->callflag & CTXT_FUNCTION && cntxt->cloenv == rho)
+	    R_jumpctxt(cntxt, CTXT_FUNCTION, val);
+    }
+    error(_("'%s' called from outside a closure"),
+	  PRIMVAL(op) == 0 ? "Exec" : "Tailcall");
+#else
+    error("recompile eval.c with -DSUPPORT_TAILCALL "
+	  "to enable Exec and Tailcall");
+#endif
+}
+
 /* Declared with a variable number of args in names.c */
 attribute_hidden SEXP do_function(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
@@ -3072,6 +3226,11 @@ attribute_hidden void R_initAssignSymbols(void)
     R_DollarGetsSymbol = install("$<-");
     R_valueSym = install("value");
     R_AssignSym = install("<-");
+
+#ifdef SUPPORT_TAILCALL
+    R_exec_token = CONS(install(".__EXEC__."), R_NilValue);
+    R_PreserveObject(R_exec_token);
+#endif
 }
 
 static R_INLINE SEXP lookupAssignFcnSymbol(SEXP fun)

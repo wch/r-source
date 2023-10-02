@@ -161,6 +161,9 @@
 
       We have simplified the internal code and now basically format the
       real and imaginary parts independently of each other.
+
+      \item New experimental functions \code{Tailcall} and \code{Exec}
+      to support writing stack-space-effcient recursive functions.
     }
   }
 
