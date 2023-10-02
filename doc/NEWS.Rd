@@ -150,6 +150,17 @@
       \PR{18582}.
 
       \item \code{sort()} is now an implicit S4 generic in \pkg{methods}.
+
+      \item Formatting and printing, \code{format(z), print(z)}, of complex
+      vectors \code{z} no longer zap relatively small real or imaginary
+      parts to zero, fixing \PR{16752}.  This is an API change, as it was
+      documented previously to round real and imaginary parts together on
+      purpose, producing nicer looking output.  As mentioned, e.g. in the
+      PR, this change is compatible to many other \dQuote{\R-like}
+      programming environments.
+
+      We have simplified the internal code and now basically format the
+      real and imaginary parts independently of each other.
     }
   }
 

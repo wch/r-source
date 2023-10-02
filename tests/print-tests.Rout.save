@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2022-03-19 r81942) -- "Unsuffered Consequences"
-Copyright (C) 2022 The R Foundation for Statistical Computing
-Platform: x86_64-pc-linux-gnu (64-bit)
+R Under development (unstable) (2023-08-31 r85038) -- "Unsuffered Consequences"
+Copyright (C) 2023 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -399,9 +399,9 @@ x0 1+1i 1.2+10i
 [2,] 1.2+13.141593i -Inf+     NaNi
 [3,]             NA  NaN+     Infi
 > xx + pi
-            a           b
-x 4.141593+1i 4.34159+10i
-  5.141593+2i 5.54159+20i
+            a            b
+x 4.141593+1i 4.341593+10i
+  5.141593+2i 5.541593+20i
 > t(cbind(xx, xx+ 1i*c(1,pi)))
         x               
 a 1.0+ 1i 2.0+ 2.000000i
@@ -537,8 +537,8 @@ b 1.2+11i 2.4+23.141593i
 [13] "3.141592653590+2.200000000000i"     "3.1415926535898+2.2000000000000i"  
 [15] "3.14159265358979+2.20000000000000i"
 > sf(s + pi*1i)
- [1] "-0.01+3.14i"                         "-0.01+3.14i"                        
- [3] "-0.01+3.14i"                         "-0.012+3.142i"                      
+ [1] "-0.0123+3.14i"                       "-0.0123+3.14i"                      
+ [3] "-0.0123+3.14i"                       "-0.0123+3.142i"                     
  [5] "-0.0123+3.1416i"                     "-0.01234+3.14159i"                  
  [7] "-0.012340+3.141593i"                 "-0.0123400+3.1415927i"              
  [9] "-0.01234000+3.14159265i"             "-0.012340000+3.141592654i"          

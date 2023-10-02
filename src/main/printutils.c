@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1999--2022  The R Core Team
+ *  Copyright (C) 1999--2023  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -69,7 +69,7 @@
 /* At times we want to convert marked UTF-8 strings to wchar_t*. We
  * can use our facilities to do so in a UTF-8 locale or system
  * facilities if the platform tells us that wchar_t is UCS-4 or we
- * know that about the platform. 
+ * know that about the platform.
  * Add __OpenBSD__ and  __NetBSD__ ?
  */
 #if !defined(__STDC_ISO_10646__) && (defined(__APPLE__) || defined(__FreeBSD__) || defined(__sun))
@@ -327,10 +327,6 @@ const char *EncodeReal2(double x, int w, int d, int e)
     return buff;
 }
 
-#ifdef formatComplex_USING_signif
-void z_prec_r(Rcomplex *r, Rcomplex *x, double digits);
-#endif
-
 #define NB3 NB+3
 const char
 *EncodeComplex(Rcomplex x, int wr, int dr, int er, int wi, int di, int ei,
@@ -350,22 +346,13 @@ const char
 	char Re[NB];
 	const char *Im, *tmp;
 	int flagNegIm = 0;
-	Rcomplex y;
-#ifdef formatComplex_USING_signif
-	/* formatComplex rounded, but this does not, and we need to
-	   keep it that way so we don't get strange trailing zeros.
-	   But we do want to avoid printing small exponentials that
-	   are probably garbage.
-	 */
-	z_prec_r(&y, &x, R_print.digits);
-#endif
 	/* EncodeReal has static buffer, so copy */
-	tmp = EncodeReal0(y.r == 0. ? y.r : x.r, wr, dr, er, dec);
+	tmp = EncodeReal0(x.r, wr, dr, er, dec);
 	strcpy(Re, tmp);
 	/* If x.i is very slightly negative, we printed -Oi, and that
 	   will often be platform dependent */
 	if ( (flagNegIm = (x.i < 0)) ) x.i = -x.i;
-	Im = EncodeReal0(y.i == 0. ? y.i : x.i, wi, di, ei, dec);
+	Im = EncodeReal0(x.i, wi, di, ei, dec);
 	if (streql(Im, "0")) flagNegIm = FALSE;
 	snprintf(buff, NB3, "%s%s%si", Re, flagNegIm ? "-" : "+", Im);
     }

@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998-2014    The R Core Team
+ *  Copyright (C) 1998-2023    The R Core Team
  *
  *  This header file is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -30,8 +30,11 @@
 #include <Rinternals.h> // for R_xlen_t
 #include <R_ext/Complex.h>
 
-// for backcompatibility but not to stay (MM) :
-#define formatComplex_USING_signif
+/* no longer in R >= 4.4.0:
+#undef formatComplex_USING_signif
+#undef formatComplex_tricky
+ * for backcompatibility mainly: all complex NA's printed as 'NA' (not showing Re|Im): */
+#define formatComplex_NA_give_NA
 
 #define formatLogical      Rf_formatLogical
 #define formatInteger      Rf_formatInteger

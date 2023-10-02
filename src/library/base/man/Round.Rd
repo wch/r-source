@@ -38,8 +38,6 @@ signif(x, digits = 6)
   \code{signif} rounds the values in its first argument to the specified
   number of \emph{significant} digits.   Hence, for \code{numeric} \code{x},
   \code{signif(x, dig)} is the same as \code{round(x, dig - ceiling(log10(abs(x))))}.
-  For \code{\link{complex}} \code{x}, this is not the case, % currently (?)
-  see the \sQuote{Details}.
 }
 \arguments{
   \item{x}{a numeric vector.  Or, for \code{round} and \code{signif}, a
@@ -71,9 +69,8 @@ signif(x, digits = 6)
 
   For \code{signif} the recognized values of \code{digits} are
   \code{1...22}, and non-missing values are rounded to the nearest
-  integer in that range.  Complex numbers are rounded to retain the
-  specified number of digits in the larger of the components.  Each
-  element of the vector is rounded individually, unlike printing.
+  integer in that range. Each element of the vector is rounded individually, 
+  unlike printing.
 
   These are all primitive functions.
 }

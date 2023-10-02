@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2023-09-29 r85231) -- "Unsuffered Consequences"
+R Under development (unstable) (2023-09-29 r85235) -- "Unsuffered Consequences"
 Copyright (C) 2023 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu
 
@@ -5641,10 +5641,10 @@ Residual standard error: 1.877 on 44 degrees of freedom
 > 
 > ## printing of complex numbers of very different magnitudes
 > 1e100  + 1e44i
-[1] 1e+100+0e+00i
+[1] 1e+100+1e+44i
 > 1e100 + pi*1i*10^(c(-100,0,1,40,100))
-[1] 1e+100+ 0.000000e+00i 1e+100+ 0.000000e+00i 1e+100+ 0.000000e+00i
-[4] 1e+100+ 0.000000e+00i 1e+100+3.141593e+100i
+[1] 1e+100+3.141593e-100i 1e+100+ 3.141593e+00i 1e+100+ 3.141593e+01i
+[4] 1e+100+ 3.141593e+40i 1e+100+3.141593e+100i
 > ## first was silly, second not rounded correctly in 2.2.0 - 2.3.1
 > ## We don't get them lining up, but that is a printf issue
 > ## that only happens for very large complex nos.

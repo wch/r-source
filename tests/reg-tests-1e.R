@@ -886,6 +886,22 @@ assertErrV(isoreg(rep(1e307, 20))) # no Inf in 'y'
 ## ==> Asserted error: non-finite sum(y) == inf is not allowed
 
 
+## format() and print() of complex numbers, PR#16752
+100+ 0:4 + 10000i  # no 'e'
+100+ 0:4 + 100000i # using 'e' as it is shorter
+z <- 100+ 0:4 + 1e9i
+## for a long time printed identical 5 time  0e+00+1e+09i
+(asCz <- as.character(z))
+oZ <- capture.output(z)
+stopifnot(exprs = {
+        substr(asCz, 1,6) == paste0(100+ 0:4, "+1e")
+    as.complex(asCz) == z # has been fulfilled for a long time
+    identical(oZ, paste("[1]", paste(asCz, collapse=" ")))
+})
+## had exponential/scientific format for Re() as well, from R 3.3.0 to R 4.3.z
+
+
+
 ## keep at end
 rbind(last =  proc.time() - .pt,
       total = proc.time())
