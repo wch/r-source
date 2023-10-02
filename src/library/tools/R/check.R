@@ -624,7 +624,7 @@ add_dummies <- function(dir, Log)
             check_sos()
 
         if (dir.exists("src") &&
-            length(files <- dir("src", patt = "[.](f|f90|f95)$"))) {
+            length(files <- dir("src", pattern = "[.](f|f90|f95)$"))) {
             checkingLog(Log, "usage of KIND in Fortran files")
             bad <- character()
             details <- character()
