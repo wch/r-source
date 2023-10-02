@@ -651,9 +651,14 @@ fsub1 <- function(pattern, replacement, x)
 
 
 ## for lists of messages, see ../man/checkRd.Rd
-checkRd <- function(Rd, defines=.Platform$OS.type, stages = "render",
+checkRd <- function(Rd, defines = .Platform$OS.type, stages = "render",
                     unknownOK = TRUE, listOK = TRUE, ..., def_enc = FALSE)
 {
+    allow_empty_item_in_describe <- config_val_to_logical(
+        Sys.getenv("_R_CHECK_RD_ALLOW_EMPTY_ITEM_IN_DESCRIBE_", "FALSE"))
+    note_lost_braces <- config_val_to_logical(
+        Sys.getenv("_R_CHECK_RD_NOTE_LOST_BRACES_", "FALSE"))
+
     warnRd <- function(block, Rdfile, ..., level = 0L)
     {
         msg <- sprintf("checkRd: (%d) %s", level,
@@ -697,7 +702,7 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages = "render",
     }
             
     ## blocktag is unused
-    checkBlock <- function(block, tag, blocktag)
+    checkBlock <- function(block, tag, blocktag, level_braces = -3)
     {
 	switch(tag,
                ## parser already warned here
@@ -748,7 +753,7 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages = "render",
                        deparse <- sQuote(.Rd_deparse(block))
                        if(!listOK)
                            stopRd(block, Rdfile, "Unnecessary braces at ", deparse)
-                       else warnRd(block, Rdfile, level = -3,
+                       else warnRd(block, Rdfile, level = level_braces,
                                    "Unnecessary braces at\n  ",
                                    gsub("\n", "\n  ", deparse, fixed = TRUE))
                    }
@@ -945,7 +950,8 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages = "render",
             "\\cr" = {
             	newrow <- TRUE
             },
-            checkBlock(content[[i]], tags[i], "\\tabular"))
+            checkBlock(content[[i]], tags[i], "\\tabular",
+                       level_braces = if (note_lost_braces) -1 else -3))
         }
     }
 
@@ -960,11 +966,8 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages = "render",
             switch(tag,
             "\\item" = {
     	    	if (!inlist) inlist <- TRUE
-                CHECK_BLOCKS <- 
-                    if (config_val_to_logical(Sys.getenv("_R_CHECK_RD_ALLOW_EMPTY_ITEM_IN_DESCRIBE_", "FALSE")))
-                        c("\\arguments", "\\value")
-                    else
-                        c("\\describe", "\\arguments", "\\value")
+                CHECK_BLOCKS <- c(if (!allow_empty_item_in_describe) "\\describe",
+                                  "\\arguments", "\\value")
                 if((blocktag %in% CHECK_BLOCKS) &&
                     isBlankRd(block[[1L]]))
                     warnRd(block, Rdfile, level = 5,
@@ -988,7 +991,13 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages = "render",
     	    	           && !(tag == "TEXT" && isBlankRd(block))) {
     		    inlist <- FALSE
     		}
-    		checkBlock(block, tag, blocktag)
+                checkBlock(block, tag, blocktag,
+                           ## want to note real issues like "code{.}" or "{1,2}"
+                           ## but ignore bib-type braces and \itemize{\item{}}
+                           level_braces = if (note_lost_braces &&
+                                              blocktag != "\\references" &&
+                                              !identical(tags[i-1L], "\\item"))
+                                              -1 else -3)
     	    })
 	}
     }
