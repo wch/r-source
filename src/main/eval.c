@@ -2155,7 +2155,7 @@ static R_INLINE void R_CleanupEnvir(SEXP rho, SEXP val)
 
 attribute_hidden void unpromiseArgs(SEXP pargs)
 {
-    /* This assumes pargs will no longer be references. We could
+    /* This assumes pargs will no longer be referenced. We could
        double check the refcounts on pargs as a sanity check. */
     for (; pargs != R_NilValue; pargs = CDR(pargs)) {
 	SEXP v = CAR(pargs);
@@ -3042,6 +3042,14 @@ attribute_hidden SEXP do_tailcall(SEXP call, SEXP op, SEXP args, SEXP rho)
 #ifdef SUPPORT_TAILCALL
     SEXP expr, env;
 
+    static Rboolean warned = FALSE;
+    if (! warned) {
+	warningcall_immediate(call,
+			      "'Tailcall' and 'Exec' are experimental and "
+			      "may be changed or removed before release");
+	warned = TRUE;
+    }
+    
     if (PRIMVAL(op) == 0) { // exec
 	static SEXP formals = NULL;
 	if (formals == NULL)
@@ -3065,7 +3073,7 @@ attribute_hidden SEXP do_tailcall(SEXP call, SEXP op, SEXP args, SEXP rho)
     else { // tailcall
 	/* could do argument matching here */
 	if (args == R_NilValue)
-	    error(_("'tailcall' requres at least one argument"));
+	    error(_("'tailcall' requires at least one argument"));
 	expr = LCONS(CAR(args), CDR(args));
 	env = rho;
     }
