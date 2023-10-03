@@ -32,7 +32,7 @@ isGrammarSymbol(symbol)
       The 2nd, 3rd, etc. elements are the 1st, 2nd, etc. arguments
       expressions.  Note that the form of the extracted name is
       different for R and S-Plus.  When the name (the first element) of
-      a call is replaced, the languageEl replacement function coerces a
+      a call is replaced, the \code{languageEl} replacement function coerces a
       character string to the internal form for each system.
 
       The 1st, 2nd, 3rd elements of an \code{if} expression are the

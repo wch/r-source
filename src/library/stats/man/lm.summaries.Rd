@@ -36,7 +36,7 @@
   various useful features of the value returned by \code{lm}.
 
   The working and response residuals are \sQuote{observed - fitted}.  The
-  deviance and pearson residuals are weighted residuals, scaled by the
+  deviance and Pearson residuals are weighted residuals, scaled by the
   square root of the weights used in fitting.  The partial residuals
   are a matrix with each column formed by omitting a term from the
   model.  In all these, zero weight cases are never omitted (as opposed

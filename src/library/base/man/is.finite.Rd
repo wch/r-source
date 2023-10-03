@@ -38,13 +38,13 @@ NaN
 }
 \details{
   \code{is.finite} returns a vector of the same length as \code{x} the
-  jth element of which is \code{TRUE} if \code{x[j]} is finite (i.e., it
+  j-th element of which is \code{TRUE} if \code{x[j]} is finite (i.e., it
   is not one of the values \code{NA}, \code{NaN}, \code{Inf} or
   \code{-Inf}) and \code{FALSE} otherwise.  Complex
   numbers are finite if both the real and imaginary parts are.
 
   \code{is.infinite} returns a vector of the same length as \code{x} the
-  jth element of which is \code{TRUE} if \code{x[j]} is infinite (i.e.,
+  j-th element of which is \code{TRUE} if \code{x[j]} is infinite (i.e.,
   equal to one of \code{Inf} or \code{-Inf}) and \code{FALSE}
   otherwise.  This will be false unless \code{x} is numeric or complex.
   Complex numbers are infinite if either the real or the imaginary part is.

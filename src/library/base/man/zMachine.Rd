@@ -142,7 +142,7 @@
 
   Note that it is legal for a platform to have a \samp{long double} C
   type which is identical to the \samp{double} type --- this happens on
-  ARM cpus.  In that case \code{\link{capabilities}("long.double")} will
+  ARM CPUs.  In that case \code{\link{capabilities}("long.double")} will
   be false but on versions of \R prior to 4.0.4, \code{.Machine} may contain
   \code{"longdouble.\var{kind}"} elements.
 }

@@ -26,7 +26,7 @@ tapply(X, INDEX, FUN = NULL, \dots, default = NA, simplify = TRUE)
   \item{FUN}{a function (or name of a function) to be applied, or \code{NULL}.
     In the case of functions like \code{+}, \code{\%*\%}, etc.,
     the function name must be backquoted or quoted.  If \code{FUN} is
-    \code{NULL}, tapply returns a vector which can be used to subscript
+    \code{NULL}, \code{tapply} returns a vector which can be used to subscript
     the multi-way array \code{tapply} normally produces.}
   \item{\dots}{optional arguments to \code{FUN}: the Note section.}
   \item{default}{(only in the case of simplification to an array) the

@@ -218,7 +218,7 @@ X11.options(\dots, reset = FALSE)
   The font selection is handled by \code{Pango} (usually \emph{via}
   \code{fontconfig}) or \code{fontconfig} (on macOS and perhaps
   elsewhere).  The results depend on the fonts installed on the system
-  running \R -- setting the environmnent variable \env{FC_DEBUG} to 1
+  running \R -- setting the environment variable \env{FC_DEBUG} to 1
   normally allows some tracing of the selection process.
 
   This works best when high-quality scalable fonts are installed,

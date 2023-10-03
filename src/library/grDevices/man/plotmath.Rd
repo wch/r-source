@@ -76,7 +76,7 @@
     \code{x^2}    \tab x superscript 2 \cr
     \code{paste(x, y, z)} \tab juxtapose x, y, and z \cr
     \code{sqrt(x)}   \tab square root of x \cr
-    \code{sqrt(x, y)}   \tab yth root of x \cr
+    \code{sqrt(x, y)}   \tab y-th root of x \cr
     \code{x == y}   \tab x equals y \cr
     \code{x != y}   \tab x is not equal to y \cr
     \code{x < y}   \tab x is less than y \cr

@@ -624,7 +624,7 @@ getOption(x, default = NULL)
 
     \item{\code{citation.bibtex.max}:}{default 1; the maximal number of
       bibentries (\code{\link{bibentry}}) in a \code{\link{citation}} for
-      which the bibtex version is printed in addition to the text one.}
+      which the BibTeX version is printed in addition to the text one.}
 
     \item{\code{de.cellwidth}:}{integer: the cell widths (number of
       characters) to be used in the data editor \code{\link{dataentry}}.
@@ -715,7 +715,7 @@ getOption(x, default = NULL)
       help files in \code{\link{help}}.}
 
     \item{\code{Ncpus}:}{an integer \eqn{n \ge 1}{n >= 1}, used in
-      \code{\link{install.packages}} as default for the number of cpus
+      \code{\link{install.packages}} as default for the number of CPUs
       to use in a potentially parallel installation, as
       \code{Ncpus = getOption("Ncpus", 1L)}, i.e., when unset is
       equivalent to a setting of 1.}

@@ -27,7 +27,7 @@ is found.
 }
 \details{
 If weights are specified then a weighted least squares is performed
-with the weight given to the \emph{j}th case specified by the \emph{j}th
+with the weight given to the \emph{j}-th case specified by the \emph{j}-th
 entry in \code{wt}.
 
 If any observation has a missing value in any field, that observation

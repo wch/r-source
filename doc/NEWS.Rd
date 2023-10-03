@@ -1647,7 +1647,7 @@
       overflow reliably.
 
       \item \code{tar(., files=*)} now produces correctly the warning
-      about invalid uid or gid of files, fixing \PR{18344}, reported by
+      about invalid UID or GID of files, fixing \PR{18344}, reported by
       Martin Morgan.
 
       \item \code{tk_choose.files()} with \code{multi = FALSE}

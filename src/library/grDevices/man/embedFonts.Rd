@@ -24,7 +24,7 @@ embedGlyphs(file, glyphInfo, outfile = file, options = character())
 \arguments{
   \item{file}{a character string giving the name of the original file.}
   \item{format}{the format for the new file (with fonts embedded) given as
-    the name of a ghostscript output device.
+    the name of a Ghostscript output device.
     If not specified, it is guessed from the suffix of \code{file}.}
   \item{outfile}{the name of the new file (with fonts embedded).}
   \item{fontpaths}{a character vector giving directories that

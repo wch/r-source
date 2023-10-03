@@ -17,7 +17,7 @@ rgb2hsv(r, g = NULL, b = NULL, maxColorValue = 255)
 }
 \arguments{
   \item{r}{vector of \sQuote{red} values in \eqn{[0, M]}, (\eqn{M
-      = }\code{maxColorValue}) or 3-row rgb matrix.}
+      = }\code{maxColorValue}) or 3-row RGB matrix.}
   \item{g}{vector of \sQuote{green} values, or \code{\link{NULL}} when
     \code{r} is a matrix.}
   \item{b}{vector of \sQuote{blue} values, or \code{\link{NULL}} when

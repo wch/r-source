@@ -31,8 +31,12 @@
     8.  \tab stratum number \tab 1-63}
 }
 \source{
-  Trichopoulos \emph{et al} (1976)
-  \emph{Br. J. of Obst. and Gynaec.} \bold{83}, 645--650.
+  Trichopoulos, D., Handanos, N., Danezis, J., Kalandidi, A., &
+  Kalapothaki, V. (1976).
+  Induced abortion and secondary infertility.
+  \emph{British Journal of Obstetrics and Gynaecology},
+  \bold{83}, 645--650.  
+  \doi{10.1111/j.1471-0528.1976.tb00904.x}.
 }
 \note{
   One case with two prior spontaneous abortions and two prior induced

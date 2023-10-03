@@ -18,7 +18,7 @@ adjustcolor(col, alpha.f = 1, red.f = 1, green.f = 1, blue.f = 1,
             offset = c(0, 0, 0, 0),
             transform = diag(c(red.f, green.f, blue.f, alpha.f)))}
 \arguments{
-  \item{col}{vector of colors, in any format that col2rgb() accepts}
+  \item{col}{vector of colors, in any format that \code{\link{col2rgb}()} accepts}
   \item{alpha.f}{factor modifying the opacity alpha; typically in [0,1]}
   \item{red.f, green.f, blue.f}{factors modifying the \dQuote{red-},
     \dQuote{green-} or \dQuote{blue-}ness of the colors, respectively.}
