@@ -1290,7 +1290,7 @@ static const unsigned char utf8_table4[] = {
   2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
   3,3,3,3,3,3,3,3,4,4,4,4,5,5,5,5 };
 
-int attribute_hidden utf8clen(char c)
+int utf8clen(char c)
 {
     /* This allows through 8-bit chars 10xxxxxx, which are invalid */
     if ((c & 0xc0) != 0xc0) return 1;
@@ -1319,7 +1319,7 @@ utf8toucs32(wchar_t high, const char *s)
 
 /* These return the result in wchar_t.  If wchar_t is 16 bit (e.g. UTF-16LE on Windows)
    only the high surrogate is returned; call utf8toutf16low next. */
-size_t attribute_hidden
+size_t 
 utf8toucs(wchar_t *wc, const char *s)
 {
     unsigned int byte;
