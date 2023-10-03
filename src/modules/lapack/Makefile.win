@@ -49,7 +49,7 @@ $(MODULE).dll: $(OBJS)
 
 clean:
 	@$(RM) Makedeps *.d *.o $(MODULE).def $(MODULE).dll Rlapack.def \
-	  Rlapack.dll *.a
+	  Rlapack.dll *.a *.mod
 
 
 # Dependencies
