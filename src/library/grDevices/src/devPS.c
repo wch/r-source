@@ -757,8 +757,9 @@ static double
 	    */
 	   (face % 5) != 0) {
 	    R_CheckStack2(strlen((char *)str)+1);
-	    char buff[strlen((char *)str)+1];
-	    /* Output string cannot be longer */
+	    /* Output string cannot be longer
+	       -- but it can be if transliteration is used */
+	    char buff[2*strlen((char *)str)+1];
 	    mbcsToSbcs((char *)str, buff, encoding, enc);
 	    str1 = (unsigned char *)buff;
 	}
@@ -4378,8 +4379,8 @@ static void mbcsToSbcs(const char *in, char *out, const char *encoding,
     i_buf = (char *) in;
     i_len = strlen(in)+1; /* include terminator */
     o_buf = (char *) out;
-    /* iconv in macOS 14 can expand 1 UTF-8 char to at least 4 (o/oo) */
-    o_len = 2*i_len; /* must be the same or fewer chars */
+    /* libiconv in macOS 14 can expand 1 UTF-8 char to at least 4 (o/oo) */
+    o_len = 2*i_len;
 next_char:
     status = Riconv(cd, &i_buf, &i_len, &o_buf, &o_len);
     /* libiconv 1.13 gives EINVAL on \xe0 in UTF-8 (as used in fBasics) */
@@ -4509,7 +4510,10 @@ static void PS_Text0(double x, double y, const char *str, int enc,
     */
     if((enc == CE_UTF8 || mbcslocale) && !strIsASCII(str)) {
 	R_CheckStack2(strlen(str)+1);
-	buff = alloca(strlen(str)+1); /* Output string cannot be longer */
+	/* Output string cannot be longer
+	   -- but it can be if transliteration is used
+	 */
+	buff = alloca(2*strlen(str)+1);
 	mbcsToSbcs(str, buff, convname(gc->fontfamily, pd), enc);
 	str1 = buff;
     }
@@ -10004,7 +10008,10 @@ static void PDF_Text0(double x, double y, const char *str, int enc,
         if((enc == CE_UTF8 || mbcslocale) && !strIsASCII(str) && face < 5) {
             /* face 5 handled above */
             R_CheckStack2(strlen(str)+1);
-            buff = alloca(strlen(str)+1); /* Output string cannot be longer */
+	    /* Output string cannot be longer
+	       -- but it can be if transliteration is used
+	     */
+            buff = alloca(2*strlen(str)+1); 
             mbcsToSbcs(str, buff, PDFconvname(gc->fontfamily, pd), enc);
             str1 = buff;
         } else str1 = str;

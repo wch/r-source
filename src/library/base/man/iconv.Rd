@@ -202,7 +202,7 @@ x
 charToRaw(xx <- iconv(x, "latin1", "UTF-8"))
 xx
 
-## The results in the comments are those from glbc and GNU libiconv
+## The results in the comments are those from glibc and GNU libiconv
 iconv(x, "latin1", "ASCII")           #   NA
 iconv(x, "latin1", "ASCII", "?")      # "fran?ais"
 iconv(x, "latin1", "ASCII", "")       # "franais"
@@ -215,9 +215,10 @@ x <- c("Ekstr\xf8m", "J\xf6reskog", "bi\xdfchen Z\xfcrcher")
 Encoding(x) <- "latin1"
 x
 try(iconv(x, "latin1", "ASCII//TRANSLIT"))  # platform-dependent
-iconv(x, "latin1", "ASCII", sub = "byte")
 ## glibc gives "Ekstroem" "Joreskog" "bisschen Zurcher"
 ## macOS 14 gives "Ekstrom" "J\"oreskog" "bisschen Z\"urcher"
+## musl gives "Ekstr*m" "J*reskog" "bi*chen Z*rcher"
+iconv(x, "latin1", "ASCII", sub = "byte")
 
 ## and for Windows' 'Unicode'
 str(xx <- iconv(x, "latin1", "UTF-16LE", toRaw = TRUE))

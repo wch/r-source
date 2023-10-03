@@ -27,7 +27,7 @@
 
       \item \code{tools::showNonASCII()} has been rewritten to work
       better on macOS 14 (which has a changed implementation of
-      \code{iconv()}.
+      \code{iconv()}).
     }
   }
 
@@ -53,7 +53,7 @@
       from Fortran.
     }
   }
-  
+
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{substr(x, n, L) <- cc} now works (more) correctly for
