@@ -3079,7 +3079,8 @@ add_dummies <- function(dir, Log)
                          "  'qpdf' made some significant size reductions:\n",
                          paste("  ", res, collapse = "\n"),
                          "\n",
-                         "  consider running tools::compactPDF() on these files\n")
+                         "  consider running tools::compactPDF() on these files,\n",
+                         "  or build the source package with --compact-vignettes\n")
             }
             if (R_check_doc_sizes2) {
                 gs_cmd <- find_gs_cmd()
@@ -3093,7 +3094,8 @@ add_dummies <- function(dir, Log)
                                  "  'gs+qpdf' made some significant size reductions:\n",
                                  paste("  ", res, collapse = "\n"),
                                  "\n",
-                                 '  consider running tools::compactPDF(gs_quality = "ebook") on these files\n')
+                                 '  consider running tools::compactPDF(gs_quality = "ebook") on these files,\n',
+                                 '  or build the source package with --compact-vignettes=both\n')
                     }
                 } else {
                     if (!any) noteLog(Log)
