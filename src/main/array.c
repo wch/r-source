@@ -1246,7 +1246,7 @@ attribute_hidden SEXP do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     // .Primitive() ; may have 1 or 2 args, but some methods have more
     Rboolean cross = PRIMVAL(op) != 0;
-    int nargs, min_nargs = cross ? 1 : 2;
+    int nargs = 0 /* -Wall */, min_nargs = cross ? 1 : 2;
     if (args == R_NilValue)
 	nargs = 0;
     else if (CDR(args) == R_NilValue)
