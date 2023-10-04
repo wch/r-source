@@ -1246,12 +1246,12 @@ attribute_hidden SEXP do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     // .Primitive() ; may have 1 or 2 args, but some methods have more
     Rboolean cross = PRIMVAL(op) != 0;
-    int nargs = 0 /* -Wall */, min_nargs = cross ? 1 : 2;
+    int nargs, min_nargs = cross ? 1 : 2;
     if (args == R_NilValue)
 	nargs = 0;
     else if (CDR(args) == R_NilValue)
 	nargs = 1;
-    else if (CDDR(args) == R_NilValue)
+    else // if (CDDR(args) == R_NilValue)
 	nargs = 2;
     /* else   // not relevant
 	nargs = length(args);
@@ -1276,7 +1276,10 @@ attribute_hidden SEXP do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
 	else if (DispatchGroup("matrixOps", call, op, args, rho, &ans))
 	    return ans;
     }
-
+    // the default method:
+    if (CDDR(args) != R_NilValue)
+	warningcall(call, _("more than 2 arguments passed to default method of '%s'"),
+		    PRIMNAME(op));
     Rboolean sym = isNull(y);
     if (sym && (PRIMVAL(op) > 0)) y = x;
     if ( !(isNumeric(x) || isComplex(x)) || !(isNumeric(y) || isComplex(y)) )
