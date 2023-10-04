@@ -23,7 +23,7 @@ checkRd(Rd, defines = .Platform$OS.type, stages = "render",
     \code{FALSE}, otherwise warnings. }
   \item{listOK}{ unnecessary non-empty braces (e.g., around text, not as
     an argument) are treated as errors if \code{FALSE}, otherwise
-    warnings.}
+    warnings (\dQuote{Lost braces}).}
   \item{\dots}{ additional parameters to pass to \code{\link{parse_Rd}} when
     \code{Rd} is a filename.  One that is often useful is \code{encoding}.}
   \item{def_enc}{logical: has the package declared an encoding, so tests
@@ -76,7 +76,7 @@ checkRd(Rd, defines = .Platform$OS.type, stages = "render",
     -1 \tab Non-ASCII contents in second part of \verb{\enc}\cr
     -1 \tab Escaped LaTeX specials: \ldots\cr
     -3 \tab Tag \verb{\ldots} is invalid in a code block\cr
-    -3 \tab Unnecessary braces at \ldots\cr
+    -3 \tab Lost braces\cr
     -5 \tab \verb{\title} should not end in a period\cr
   }
   and variations with \verb{\method} replaced by \verb{\S3method} or

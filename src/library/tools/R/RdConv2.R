@@ -30,7 +30,7 @@ isBlankLineRd <- function(x) {
     length(grep("^[[:blank:]]*\n", x, perl = TRUE)) == length(x)   # newline required
 }
 
-.makeMessageRd <- function(block, Rdfile, ...)
+.makeMessageRd <- function(block, Rdfile, ..., showSource = FALSE)
 {
     srcref <- attr(block, "srcref")
     if (missing(Rdfile) && !is.null(srcref)) {
@@ -46,9 +46,17 @@ isBlankLineRd <- function(x) {
     if (is.null(srcref))
         paste0(Rdfile, " ", ...)
     else {
-    	loc <- paste0(Rdfile, srcref[1L])
-    	if (srcref[1L] != srcref[3L]) loc <- paste0(loc, "-", srcref[3L])
-    	paste0(loc, ": ", ...)
+        from <- srcref[1L]
+        loc <- paste0(Rdfile, from,
+                      if (from != srcref[3L]) paste0("-", srcref[3L]))
+        src <- if (showSource) tryCatch(error = function (e) NULL, {
+            ## show first source line and column marker for the block
+            line <- getSrcLines(attr(srcref, "srcfile"), from, from)
+            sprintf("\n  %3s | %s", c(from, ""),
+                    c(line, paste0(strrep(" ", srcref[5L] - 1L), "^")))
+        })
+        paste0(loc, ": ", ...,
+               paste0(src, collapse = ""))
     }
 }
 
@@ -750,12 +758,12 @@ checkRd <- function(Rd, defines = .Platform$OS.type, stages = "render",
                COMMENT = {},
                LIST = if (length(block)) {
                    if (!inherits(block, "Rd")) { # skip wrapped \Sexpr Rd result
-                       deparse <- sQuote(.Rd_deparse(block))
                        if(!listOK)
-                           stopRd(block, Rdfile, "Unnecessary braces at ", deparse)
-                       else warnRd(block, Rdfile, level = level_braces,
-                                   "Unnecessary braces at\n  ",
-                                   gsub("\n", "\n  ", deparse, fixed = TRUE))
+                           stopRd(block, Rdfile,
+                                  "Lost braces", showSource = TRUE)
+                       else
+                           warnRd(block, Rdfile, level = level_braces,
+                                  "Lost braces", showSource = TRUE)
                    }
                    checkContent(block, tag)
                },
