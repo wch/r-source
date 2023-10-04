@@ -4384,7 +4384,8 @@ next_char:
 	    */
 	    int clen = utf8clen(*i_buf);
 	    wchar_t wc;
-	    int res = utf8toucs(&wc, i_buf); // gives -1 for a conversion error
+	    int res =
+		(int) utf8toucs(&wc, i_buf); // gives -1 for a conversion error
 	    if (res != -1) {
 		warning(_("conversion failure on '%s' in 'mbcsToSbcs': dot substituted for %lc"),
 			in, wc),

@@ -164,6 +164,15 @@
 
       \item New experimental functions \code{Tailcall} and \code{Exec}
       to support writing stack-space-effcient recursive functions.
+
+      \item Where characters are attempted to be plotted by
+      \code{pdf()} and \code{postscript()} which are
+      not in the selected 8-bit character set (most often Latin-1) and
+      the \R session is using a UTF-8 locale, the warning messages will
+      show the UTF-8 character rather than its bytes and one dot will be
+      substituted per character rather than per byte.  (Platforms whose
+      \code{iconv()} does transliteration silently plot the
+      transliteration.)
     }
   }
 
@@ -415,15 +424,6 @@
       \item \code{tools::showNonASCII()} has been rewritten to work
       better on macOS 14 (which has a changed implementation of
       \code{iconv()}).
-
-      \item Where characters are attempted to be plotted by
-      \code{pdf()} and \code{postscript()} which are
-      not in the selected 8-bit character set (most often Latin-1) and
-      the \R session is using a UTF-8 locale, the warning messages will
-      show the UTF-8 character rather than its bytes and one dot will be
-      substituted per character rather than per byte.  (Platforms whose
-      \code{iconv()} does transliteration silently plot the
-      transliteration.)
     }
   }
 
