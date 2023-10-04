@@ -173,6 +173,10 @@
       substituted per character rather than per byte.  (Platforms whose
       \code{iconv()} does transliteration silently plot the
       transliteration.)
+
+      \item The matrix multiplication functions \code{crossprod()} and
+      \code{tcrossprod()} are now also primitive and S3 generic, as
+      \code{\%*\%} had become in \R 4.3.0.
     }
   }
 

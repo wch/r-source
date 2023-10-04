@@ -1,6 +1,6 @@
 % File src/library/base/man/crossprod.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{crossprod}
@@ -9,18 +9,23 @@
 \title{Matrix Crossproduct}
 \description{
   Given matrices \code{x} and \code{y} as arguments, return a matrix
-  cross-product.  This is formally equivalent to (but usually slightly
-  faster than) the call \code{t(x) \%*\% y} (\code{crossprod}) or
+  cross-product.  This is formally equivalent to (but faster than) the call
+  \code{t(x) \%*\% y} (\code{crossprod}) or
   \code{x \%*\% t(y)} (\code{tcrossprod}).
+
+  These are generic functions since \R 4.4.0: methods can be written
+  individually or via the \code{\link[=S3groupGeneric]{matOps}} group
+  generic function; it dispatches to S3 and S4 methods.
 }
 \usage{
- crossprod(x, y = NULL)
-tcrossprod(x, y = NULL)
+ crossprod(x, y = NULL, \dots)
+tcrossprod(x, y = NULL, \dots)
 }
 \arguments{
   \item{x, y}{numeric or complex matrices (or vectors): \code{y = NULL}
     is taken to be the same matrix as \code{x}.  Vectors are promoted to
     single-column or single-row matrices, depending on the context.}
+  \item{\dots}{potential further arguments for methods}.}
 }
 \value{
   A double or complex matrix, with appropriate \code{dimnames} taken
@@ -36,7 +41,7 @@ tcrossprod(x, y = NULL)
   are more flexible in promotion of vectors to row or column matrices, such
   that more cases are allowed, since \R 3.2.0.
 
-  The propagation of NaN/Inf values, precision, and performance of matrix
+  The propagation of \code{NaN}/\code{Inf} values, precision, and performance of matrix
   products can be controlled by \code{\link{options}("matprod")}.
 }
 %% Consider using a new optional argument, say 'make.names = NA'
