@@ -24,6 +24,7 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
 	 max.deparse.length = 150, width.cutoff = 60L,
          deparseCtrl = "showAttributes", ## rather?  c("keepInteger", "showAttributes", "keepNA"),
          chdir = FALSE,
+         catch.aborts = FALSE,
          encoding = getOption("encoding"),
          continue.echo = getOption("continue"),
          skip.echo = 0, keep.source = getOption("keep.source"))
@@ -222,7 +223,11 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
 	    }
 	}
 	if (!tail) {
-	    yy <- withVisible(eval(ei, envir))
+	    yy <- if(catch.aborts)
+		      withRestarts(
+			  withVisible(eval(ei, envir)),
+			  abort = function() list(value = NULL, visible = FALSE))
+		  else withVisible(eval(ei, envir))
 	    i.symbol <- mode(ei[[1L]]) == "name"
 	    if (!i.symbol) {
 		## ei[[1L]] : the function "<-" or other

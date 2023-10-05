@@ -177,6 +177,10 @@
       \item The matrix multiplication functions \code{crossprod()} and
       \code{tcrossprod()} are now also primitive and S3 generic, as
       \code{\%*\%} had become in \R 4.3.0.
+
+      \item \code{source()} and \code{example()} get a new optional argument
+      \code{catch.aborts} which allows continued evaluation of the \R code
+      after an error.
     }
   }
 
