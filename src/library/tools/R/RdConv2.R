@@ -52,6 +52,8 @@ isBlankLineRd <- function(x) {
         src <- if (showSource) tryCatch(error = function (e) NULL, {
             ## show first source line and column marker for the block
             line <- getSrcLines(attr(srcref, "srcfile"), from, from)
+            ## FIXME: marker may be misplaced if line uses tabs, or for
+            ##        expanded USERMACRO (seen srcref[5L] > srcref[6L])
             sprintf("\n  %3s | %s", c(from, ""),
                     c(line, paste0(strrep(" ", srcref[5L] - 1L), "^")))
         })
@@ -708,9 +710,58 @@ checkRd <- function(Rd, defines = .Platform$OS.type, stages = "render",
                        "Invalid URL: ", u)
         }
     }
-            
-    ## blocktag is unused
-    checkBlock <- function(block, tag, blocktag, level_braces = -3)
+
+    checkLIST <- function(block, tag, blocktag, preblocks = NULL)
+    {
+        ## skip empty block or wrapped \Sexpr Rd result
+        if (!length(block) || inherits(block, "Rd"))
+            return()
+        if (!listOK)
+            stopRd(block, Rdfile, "Lost braces", showSource = TRUE)
+        level <- -3
+        msg2 <- NULL
+        showSource <- TRUE
+        if (note_lost_braces) {
+            ## try to raise real issues like "code{.}" or "{1,2}",
+            ## ignoring bib-braces, \tab *{}, \itemize{\item *{}}, {\sspace}
+            npre <- length(preblocks)
+            pretags <- vapply(preblocks, function (block) {
+                tag <- attr(block, "Rd_tag")
+                if (tag == "TEXT" && grepl("^[[:blank:]]*$", block)) "BLANK"
+                else tag
+            }, "")
+            preidx <- npre - (pretags[npre] == "BLANK")
+            pretag <- pretags[preidx] # possibly empty
+            tags <- RdTags(block)
+            inItemize <- blocktag %in% c("\\itemize", "\\enumerate")
+            ignore <- identical(attr(block, "srcref")[2L], 1L) ||
+                (length(tags) == 2L && tags[1L] == "USERMACRO" &&
+                 attr(block[[1L]], "macro") == "\\sspace") ||
+                (inItemize && identical(pretag, "\\item")) ||
+                identical(pretag, "\\tab") ||
+                (blocktag == "\\item" && npre == 0L) || # '\item{arg}{{desc}}'
+                (sectiontag %in% c("\\source", "\\references") &&
+                 all(tags == "TEXT") &&
+                 utils::charClass(block[[1L]], "upper")[1L])
+            if (!ignore) {
+                level <- -1
+                ## extra message for frequent misuse of \item *{label} *{desc}
+                if (inItemize && identical(pretag, "LIST") && preidx > 1L &&
+                    (pretags[preidx - 1L] == "\\item" ||
+                     (pretags[preidx - 1L] == "BLANK" &&
+                      identical(pretags[preidx - 2L], "\\item")))) {
+                    msg2 <- paste0(" in ", blocktag, "; ",
+                                   if (sectiontag == "\\value") "\\value handles \\item{}{} directly"
+                                   else "meant \\describe ?")
+                    showSource <- FALSE # misleading marker, often many \items
+                }
+            }
+        }
+        warnRd(block, Rdfile, level = level,
+               "Lost braces", msg2, showSource = showSource)
+    }
+
+    checkBlock <- function(block, tag, blocktag, preblocks = NULL)
     {
 	switch(tag,
                ## parser already warned here
@@ -756,15 +807,8 @@ checkRd <- function(Rd, defines = .Platform$OS.type, stages = "render",
                "\\newcommand" =,
                "\\renewcommand" =,
                COMMENT = {},
-               LIST = if (length(block)) {
-                   if (!inherits(block, "Rd")) { # skip wrapped \Sexpr Rd result
-                       if(!listOK)
-                           stopRd(block, Rdfile,
-                                  "Lost braces", showSource = TRUE)
-                       else
-                           warnRd(block, Rdfile, level = level_braces,
-                                  "Lost braces", showSource = TRUE)
-                   }
+               LIST = {
+                   checkLIST(block, tag, blocktag, preblocks)
                    checkContent(block, tag)
                },
                "\\describe"=,
@@ -823,8 +867,8 @@ checkRd <- function(Rd, defines = .Platform$OS.type, stages = "render",
                "\\eqn" =,
                "\\deqn" =,
                "\\figure" = {
-                   checkContent(block[[1L]])
-                   if (length(block) > 1L) checkContent(block[[2L]])
+                   checkContent(block[[1L]], tag)
+                   if (length(block) > 1L) checkContent(block[[2L]], tag)
                },
                "\\tabular" = checkTabular(block),
                "\\subsection" = {
@@ -843,9 +887,9 @@ checkRd <- function(Rd, defines = .Platform$OS.type, stages = "render",
                                             "html", "TRUE", "FALSE")
     		   if (length(unknown))
     		       warnRd(block, Rdfile, level = 7, "Unrecognized format: ", unknown)
-                   checkContent(block[[2L]])
+                   checkContent(block[[2L]], tag)
                    if (tag == "\\ifelse")
-                       checkContent(block[[3L]])
+                       checkContent(block[[3L]], tag)
                },
                "\\href" = {
                    if (!identical(RdTags(block[[1L]]), "VERB"))
@@ -959,7 +1003,7 @@ checkRd <- function(Rd, defines = .Platform$OS.type, stages = "render",
             	newrow <- TRUE
             },
             checkBlock(content[[i]], tags[i], "\\tabular",
-                       level_braces = if (note_lost_braces) -1 else -3))
+                       content[seq_len(i-1L)]))
         }
     }
 
@@ -1000,12 +1044,7 @@ checkRd <- function(Rd, defines = .Platform$OS.type, stages = "render",
     		    inlist <- FALSE
     		}
                 checkBlock(block, tag, blocktag,
-                           ## want to note real issues like "code{.}" or "{1,2}"
-                           ## but ignore bib-type braces and \itemize{\item{}}
-                           level_braces = if (note_lost_braces &&
-                                              blocktag != "\\references" &&
-                                              !identical(tags[i-1L], "\\item"))
-                                              -1 else -3)
+                           blocks[seq_len(i-1L)])
     	    })
 	}
     }
@@ -1066,8 +1105,10 @@ checkRd <- function(Rd, defines = .Platform$OS.type, stages = "render",
     sections <- RdTags(Rd)
     if (any(sections == "\\encoding")) def_enc <- TRUE
     inEnc2 <- FALSE
-    for (i in seq_along(sections))
+    for (i in seq_along(sections)) {
+        sectiontag <- sections[i]
         checkSection(Rd[[i]], sections[i])
+    }
 
     structure(.messages, class = "checkRd")
 }
