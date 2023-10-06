@@ -25,18 +25,32 @@ Exec(expr, envir)
   }
 }
 \details{
-  \code{Tailcall} and \code{Exec} can only be used inside an \R function,
-  not at top level. They replace the currently executing call context
-  with a new one for the call to \code{FUN} or the call specified in
-  \code{expr}.
-
-  Using \code{Tailcall} it is possible to define
-  tail-recursive functions that do not grow the evaluation stack.
-  Because of lazy evaluation it may be necessary to \code{force} some
-  arguments to avoid accumulating deferred evaluations.
   
-  \code{Exec} can be used to simplify the call stack for functions that
-  create and then evaluate an expression.
+  \code{Tailcall} evaluates a call to \code{FUN} with arguments \dots in
+  the current environment, and \code{Exec} evaluates the call
+  \code{expr} in environment \code{envir}. If a \code{Tailcall} or
+  \code{Exec} expression appears in tail position in an \R function, and
+  if there are no \code{on.exit} expressions set, then the evaluation
+  context of the new calls replaces the currently executing call context
+  with a new one. If the requirements for context re-use are not met,
+  then evaluation proceeds in the standard way adding another context to
+  the stack.
+
+  Using \code{Tailcall} it is possible to define tail-recursive
+  functions that do not grow the evaluation stack.  \code{Exec} can be
+  used to simplify the call stack for functions that create and then
+  evaluate an expression.
+
+  Because of lazy evaluation of arguments in \R it may be necessary to
+  force evaluation of some arguments to avoid accumulating deferred
+  evaluations.
+
+  This \emph{tail call optimization} has the advantage of not growing
+  the call stack and permitting arbitrarily deep tail recursions. It
+  does also mean that stack traces produced by \code{\link{traceback}}
+  or \code{\link{sys.calls}} will only show the call specified by
+  \code{Tailcall} or \code{Exec}, not the previous call whose stack
+  entry has been replaced.
 }
 \note{\code{Tailcall} and \code{Exec} are experimental and may not be
   included in a released version of \R.
