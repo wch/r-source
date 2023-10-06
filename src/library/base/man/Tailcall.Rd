@@ -57,7 +57,7 @@ lfact <- function(n) {
     }
     lfact_iter(0, n)
 }
-10 ^ lfact(3)
+suppressWarnings(10 ^ lfact(3)) # first Tailcall in a session warns
 lfact(100000)
 
 ## simplified variant of do.call using Exec:

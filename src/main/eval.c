@@ -3010,6 +3010,33 @@ attribute_hidden NORET SEXP do_return(SEXP call, SEXP op, SEXP args, SEXP rho)
     findcontext(CTXT_BROWSER | CTXT_FUNCTION, rho, v);
 }
 
+static Rboolean checkTailPosition(SEXP call, SEXP code, SEXP rho)
+{
+    /* Could allow for switch() as well.
+
+       Ideally this should check that functions are from base;
+       pretty safe bet for '{' and 'if'.
+
+       Constructed code containing the call in multiple places could
+       produce false positives.
+
+       All this would be best done at compile time. */
+    if (call == code)
+	return TRUE;
+    else if (TYPEOF(code) == LANGSXP) {
+	if (CAR(code) == R_BraceSymbol) {
+	    while (CDR(code) != R_NilValue)
+		code = CDR(code);
+	    return checkTailPosition(call, CAR(code), rho);
+	}
+	else if (CAR(code) == R_IfSymbol)
+	    return checkTailPosition(call, CADDR(code), rho) ||
+		checkTailPosition(call, CADDDR(code), rho);
+	else return FALSE;
+    }
+    else return FALSE;
+}
+
 static void MISSING_ARGUMENT_ERROR(SEXP symbol, SEXP rho);
 attribute_hidden SEXP do_tailcall(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
@@ -3054,36 +3081,51 @@ attribute_hidden SEXP do_tailcall(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     PROTECT(expr);
     PROTECT(env);
-    SEXP fun = CAR(expr);
-    if (TYPEOF(fun) == STRSXP && XLENGTH(fun) == 1)
-	fun = installTrChar(STRING_ELT(fun, 0));
-    if (TYPEOF(fun) == SYMSXP)
-	/* might need to adjust the call here as in eval() */
-	fun = findFun3(fun, env, call);
-    else
-	fun = eval(fun, env);
 
-    /* allocating a vector result could be avoided by passing expr,
-       env, and fun in some in globals or on the byte code stack */
-    PROTECT(fun);
-    SEXP val = allocVector(VECSXP, 4);
-    UNPROTECT(1); /* fun */
-    SET_VECTOR_ELT(val, 0, R_exec_token);
-    SET_VECTOR_ELT(val, 1, expr);
-    SET_VECTOR_ELT(val, 2, env);
-    SET_VECTOR_ELT(val, 3, fun);
+    /* A jump should only be used if there are no on.exit expressions
+       and the call is in tail position. Determining tail position
+       accurately in the AST interprester would be expensive, so this
+       is an approximation for now. The compiler could do a better
+       job, and eventually we may want to only jump from a compiled
+       call.  The JIT could be taught to always compile functions
+       containing Tailcall/Exec calls. */
+    Rboolean jump_OK =
+	(R_GlobalContext->conexit == R_NilValue &&
+	 R_GlobalContext->callflag & CTXT_FUNCTION &&
+	 R_GlobalContext->cloenv == rho &&
+	 TYPEOF(R_GlobalContext->callfun) == CLOSXP &&
+	 checkTailPosition(call, BODY_EXPR(R_GlobalContext->callfun), rho));
 
-    /* This skips over browser frames. If that is not what we want we
-       would probably want to use R_NilValue as the return value for a
-       jump to browser so R_exec_token doesn't escape. */
-    for (RCNTXT *cntxt = R_GlobalContext;
-	 cntxt && cntxt->callflag != CTXT_TOPLEVEL;
-	 cntxt = cntxt->nextcontext) {
-	if (cntxt->callflag & CTXT_FUNCTION && cntxt->cloenv == rho)
-	    R_jumpctxt(cntxt, CTXT_FUNCTION, val);
+    if (jump_OK) {
+	/* computing the function before the jump allows the idiom
+	   Tailcall(sys.function(), ...) to be used */
+	SEXP fun = CAR(expr);
+	if (TYPEOF(fun) == STRSXP && XLENGTH(fun) == 1)
+	    fun = installTrChar(STRING_ELT(fun, 0));
+	if (TYPEOF(fun) == SYMSXP)
+	    /* might need to adjust the call here as in eval() */
+	    fun = findFun3(fun, env, call);
+	else
+	    fun = eval(fun, env);
+
+	/* allocating a vector result could be avoided by passing expr,
+	   env, and fun in some in globals or on the byte code stack */
+	PROTECT(fun);
+	SEXP val = allocVector(VECSXP, 4);
+	UNPROTECT(1); /* fun */
+	SET_VECTOR_ELT(val, 0, R_exec_token);
+	SET_VECTOR_ELT(val, 1, expr);
+	SET_VECTOR_ELT(val, 2, env);
+	SET_VECTOR_ELT(val, 3, fun);
+
+	R_jumpctxt(R_GlobalContext, CTXT_FUNCTION, val);
     }
-    error(_("'%s' called from outside a closure"),
-	  PRIMVAL(op) == 0 ? "Exec" : "Tailcall");
+    else {
+	/**** maybe have an optional diagnostic about why no tail call? */
+	SEXP val = eval(expr, rho);
+	UNPROTECT(2); /* expr, rho */
+	return val;
+    }
 #else
     error("recompile eval.c with -DSUPPORT_TAILCALL "
 	  "to enable Exec and Tailcall");
