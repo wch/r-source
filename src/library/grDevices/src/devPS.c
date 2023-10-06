@@ -4378,9 +4378,10 @@ next_char:
     /* libiconv 1.13 gives EINVAL on \xe0 in UTF-8 (as used in fBasics) */
     if(status == (size_t) -1 && (errno == EILSEQ || errno == EINVAL)) {
 	if (utf8locale) {
-	    /* We attempt to do better here in a UTF-8 locale if
-	       the input is valid and give one dot per UTF-8 character. 
-	       However, package PBSmodelling use invalid 8-bit inputs.
+	    /* We attempt to do better here in a UTF-8 locale if the
+	       input is valid and give one dot per UTF-8 character.
+	       However, packages PBSmodelling and fBasics use invalid
+	       8-bit inputs.
 	    */
 	    int clen = utf8clen(*i_buf);
 	    wchar_t wc;
@@ -4404,9 +4405,13 @@ next_char:
     }
 
     Riconv_close(cd);
-    if (status == (size_t)-1)  /* internal error? */
+    if (status == (size_t)-1) {  /* internal error? */
+	// 'in' might not be valid in the session encoding.
+	Rboolean valid = mbcsValid(in);
 	error("conversion failure from %s to %s on '%s' in 'mbcsToSbcs'",
-	      (enc == CE_UTF8) ? "UTF-8" : "native", encoding, in);
+	      (enc == CE_UTF8) ? "UTF-8" : "native", encoding,
+	      valid ? in : "invalid input");
+    }
 }
 
 static void PS_Text0(double x, double y, const char *str, int enc,

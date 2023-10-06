@@ -1618,7 +1618,6 @@ char* mbcsTruncateToValid(char *s)
     return s;
 }
 
-attribute_hidden
 Rboolean mbcsValid(const char *str)
 {
     return  ((int)mbstowcs(NULL, str, 0) >= 0);
