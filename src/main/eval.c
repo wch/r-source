@@ -2184,21 +2184,9 @@ static R_INLINE SEXP R_execClosure(SEXP call, SEXP newrho, SEXP sysparent,
                                    SEXP rho, SEXP arglist, SEXP op);
 
 /* Apply SEXP op of type CLOSXP to actuals */
-SEXP applyClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho, SEXP suppliedvars)
+static SEXP applyClosure_core(SEXP call, SEXP op, SEXP arglist, SEXP rho,
+			      SEXP suppliedvars)
 {
-#ifdef SUPPORT_TAILCALL
-    Rboolean tailcall = FALSE;
- again:
-    /* applyClosure should be called with arguments protected, so
-       these variables will be protected on the first call but not on
-       tail calls */
-    PROTECT(call);
-    PROTECT(op);
-    PROTECT(arglist);
-    PROTECT(rho);
-    PROTECT(suppliedvars);
-#endif
-
     SEXP formals, actuals, savedrho, newrho;
     SEXP f, a;
 
@@ -2272,64 +2260,50 @@ SEXP applyClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho, SEXP suppliedvars)
 			     R_GlobalContext->sysparent : rho,
 			     rho, arglist, op);
 #ifdef ADJUST_ENVIR_REFCNTS
-# ifdef SUPPORT_TAILCALL
-    if (tailcall)
-	R_CleanupEnvir(rho, val);
-# endif
     R_CleanupEnvir(newrho, val);
     if (is_getter_call && MAYBE_REFERENCED(val))
     	val = shallow_duplicate(val);
 #endif
 
     UNPROTECT(1); /* newrho */
+    return val;
+}
 
+SEXP applyClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho, SEXP suppliedvars)
+{
+    SEXP val = applyClosure_core(call, op, arglist, rho, suppliedvars);
 #ifdef SUPPORT_TAILCALL
-    if (is_exec_continuation(val)) {
-	PROTECT(val);
-	call = VECTOR_ELT(val, 1); // replaces the original one
-
-	rho = VECTOR_ELT(val, 2); // replaces the original one
+    while (is_exec_continuation(val)) {
+	call = PROTECT(VECTOR_ELT(val, 1));
+	rho = PROTECT(VECTOR_ELT(val, 2));
 	SET_VECTOR_ELT(val, 2, R_NilValue); // to drop REFCNT
-
-	op = VECTOR_ELT(val, 3); // replaces the original one
+	op = PROTECT(VECTOR_ELT(val, 3));
 
 # ifdef ADJUST_ENVIR_REFCNTS
+	/**** cleaner to put this at end of applyClosure_core */
 	unpromiseArgs(arglist);
 # endif
 
-	if (TYPEOF(op) != CLOSXP) {
+	if (TYPEOF(op) == CLOSXP) {
+	    arglist = PROTECT(promiseArgs(CDR(call), rho));
+	    suppliedvars = R_NilValue;
+	    val = applyClosure_core(call, op, arglist, rho, suppliedvars);
+# ifdef ADJUST_ENVIR_REFCNTS
+	    R_CleanupEnvir(rho, val);
+	    unpromiseArgs(arglist);
+# endif
+	    UNPROTECT(1); /* arglist */
+	}
+	else {
 	    /* Ideally this should handle BUILTINSXP/SPECIALSXP calls
 	       in the standard way as in eval() or bceval(). For now,
 	       just build a new call and eval. */
 	    SEXP expr = PROTECT(LCONS(op, CDR(call)));
 	    val = eval(expr, rho);
-	    UNPROTECT(2); /* expr, old val */
-	    UNPROTECT(5); /* old call, op, arglist, rho, suppliedvars */
-	    return val;
+	    UNPROTECT(1); /* expr */
 	}
-
-	arglist = promiseArgs(CDR(call), rho); // replaces the original one
-
-	suppliedvars = R_NilValue; // replaces the original one
-
-	UNPROTECT(1); /* val */
-	UNPROTECT(5); /* old call, op, arglist, rho, suppliedvars */
-	tailcall = TRUE;
-	goto again;
-	/* if the C compiler does tail-call optimization then we could
-	   replace the label/goto by a tail call:
-
-	   return applyClosure(call, op, arglist, rho, suppliedvars);
-
-	   (would need to pass 'tailcall' argument also)
-	*/
+	UNPROTECT(3); /* call, rho, op */
     }
-
-    UNPROTECT(5); /* call, op, arglist, rho, suppliedvars */
-# ifdef ADJUST_ENVIR_REFCNTS
-    if (tailcall)
-	unpromiseArgs(arglist);
-# endif
 #endif
     return val;
 }
