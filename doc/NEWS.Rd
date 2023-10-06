@@ -163,7 +163,7 @@
       real and imaginary parts independently of each other.
 
       \item New experimental functions \code{Tailcall} and \code{Exec}
-      to support writing stack-space-effcient recursive functions.
+      to support writing stack-space-efficient recursive functions.
 
       \item Where characters are attempted to be plotted by
       \code{pdf()} and \code{postscript()} which are
