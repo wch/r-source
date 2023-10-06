@@ -181,6 +181,9 @@
       \item \code{source()} and \code{example()} get a new optional argument
       \code{catch.aborts} which allows continued evaluation of the \R code
       after an error.
+
+      \item The non-Quartz \code{tiff()} devices allow additional types
+      of compression.
     }
   }
 
@@ -432,6 +435,9 @@
       \item \code{tools::showNonASCII()} has been rewritten to work
       better on macOS 14 (which has a changed implementation of
       \code{iconv()}).
+
+      \item \code{tiff(type = "quartz")} (the default on macOS) now warns
+      if \code{compression} is specified: it continues to be ignored.
     }
   }
 

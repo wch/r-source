@@ -130,7 +130,8 @@ jpeg <- function(filename = "Rplot%03d.jpeg",
 tiff <- function(filename = "Rplot%03d.tiff",
                  width = 480, height = 480, units = "px", pointsize = 12,
                  compression = c("none", "rle", "lzw", "jpeg", "zip",
-                                 "lzw+p", "zip+p"),
+                                 "lzw+p", "zip+p",
+                                 "lerc", "lzma",  "zstd", "webp"),
                  bg = "white", res = NA, ...,
                  type = c("cairo", "Xlib", "quartz"), antialias)
 {
@@ -143,13 +144,19 @@ tiff <- function(filename = "Rplot%03d.tiff",
     if(!missing(antialias)) new$antialias <- match.arg(antialias, aa.cairo)
     d <- check.options(new, name.opt = ".X11.Options", envir = .X11env)
     antialias <- match(d$antialias, aa.cairo)
-    comp <- switch( match.arg(compression),
-                   "none" = 1L, "rle" = 2L, "lzw" = 5L, "jpeg" = 7L, "zip" = 8L,
-                   "lzw+p" = 15L, "zip+p" = 18L)
+    comp <- if(is.numeric(compression)) compression
+            else
+                switch(match.arg(compression),
+                       "none" = 1L, "rle" = 2L, "lzw" = 5L, "jpeg" = 7L,
+                       "zip" = 8L, "lzw+p" = 15L, "zip+p" = 18L,
+                       "lerc" = 34887L, "lzma" = 34925L,
+                       "zstd" = 50000L, "webp" = 50001L)
     if(type == "quartz") {
         if(capabilities("aqua")) {
             width <- g$width/ifelse(is.na(res), 72, res);
             height <- g$height/ifelse(is.na(res), 72, res);
+            if (comp != 1L)
+                warning('compression is not supported for type = "quartz"')
             invisible(.External(C_Quartz, "tiff", path.expand(filename),
                                 width, height, pointsize, d$family,
                                 d$antialias != "none", "", bg,

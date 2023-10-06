@@ -34,7 +34,9 @@ png(filename = "Rplot\%03d.png",
 
 tiff(filename = "Rplot\%03d.tif",
      width = 480, height = 480, units = "px", pointsize = 12,
-     compression = c("none", "rle", "lzw", "jpeg", "zip", "lzw+p", "zip+p"),
+     compression = c("none", "rle", "lzw", "jpeg", "zip",
+                     "lzw+p", "zip+p"
+                     "lerc", "lzma",  "zstd", "webp"),
      bg = "white", res = NA, family = "", restoreConsole = TRUE,
      type = c("windows", "cairo"), antialias,
      symbolfamily="default")
@@ -59,7 +61,9 @@ tiff(filename = "Rplot\%03d.tif",
   \item{quality}{the \sQuote{quality} of the JPEG image, as a
     percentage.  Smaller values will give more compression but also more
     degradation of the image.}
-  \item{compression}{the type of compression to be used.}
+   \item{compression}{the type of compression to be used.  Can also be a
+     numeric value supported by the underlying \code{libtiff} library :
+     see its \file{tiff.h} header file.}
   \item{res}{The nominal resolution in ppi which will be recorded in the
     bitmap file, if a positive integer.  Also used for units other than
     the default.  If not specified, taken as 72 ppi to set the size of
@@ -140,6 +144,9 @@ tiff(filename = "Rplot\%03d.tif",
 
 \value{
   A plot device is opened: nothing is returned to the \R interpreter.
+
+  If somthing goes wrong in writing a TIFF file (for example, an
+  unsupported type of compression), a file is produced, likely invalid.
 }
 
 \section{Warnings}{
@@ -191,6 +198,11 @@ tiff(filename = "Rplot\%03d.tif",
     "cleartype"} if this is not the default on your Windows system.  On
   the other hand, \code{png(antialias = "none")} will give the most
   compact files
+
+  Support for compression types depends on the underlying \samp{libtiff}
+  library: types \code{"lerc"}, \code{"lzma"}, \code{"zstd"} and
+  \code{"webp"} are relatively recent additions and may well not be
+  supported.  They are also liable to be unsupported in TIFF viewers.
 }
 
 \references{

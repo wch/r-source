@@ -482,7 +482,7 @@ int R_SaveAsTIFF(void  *d, int width, int height,
     TIFFSetField(out, TIFFTAG_COMPRESSION, COMPRESSION_NONE);
 #endif
     if(compression > 1) {
-	if (compression > 10) {
+	if (compression == 15 || compression == 18) {
 	    TIFFSetField(out, TIFFTAG_COMPRESSION, compression - 10);
 	    TIFFSetField(out, TIFFTAG_PREDICTOR, 2);
 	} else 
@@ -510,7 +510,8 @@ int R_SaveAsTIFF(void  *d, int width, int height,
 	    *pscanline++ = GETBLUE(col) ;
 	    if(have_alpha) *pscanline++ = GETALPHA(col) ;
 	}
-	TIFFWriteScanline(out, buf, i, 0);
+	int res = TIFFWriteScanline(out, buf, i, 0);
+	if (res == -1) break;
     }
     TIFFClose(out);
     _TIFFfree(buf);
