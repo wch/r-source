@@ -3023,7 +3023,7 @@ attribute_hidden SEXP do_tailcall(SEXP call, SEXP op, SEXP args, SEXP rho)
 			      "may be changed or removed before release");
 	warned = TRUE;
     }
-    
+
     if (PRIMVAL(op) == 0) { // exec
 	static SEXP formals = NULL;
 	if (formals == NULL)
@@ -3046,13 +3046,12 @@ attribute_hidden SEXP do_tailcall(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
     else { // tailcall
 	/* could do argument matching here */
-	if (args == R_NilValue)
-	    error(_("'tailcall' requires at least one argument"));
+	if (args == R_NilValue || CAR(args) == R_MissingArg)
+	    MISSING_ARGUMENT_ERROR(install("FUN"), rho);
 	expr = LCONS(CAR(args), CDR(args));
 	env = rho;
     }
 
-    SEXP val;
     PROTECT(expr);
     PROTECT(env);
     SEXP fun = CAR(expr);
@@ -3067,7 +3066,7 @@ attribute_hidden SEXP do_tailcall(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* allocating a vector result could be avoided by passing expr,
        env, and fun in some in globals or on the byte code stack */
     PROTECT(fun);
-    val = allocVector(VECSXP, 4);
+    SEXP val = allocVector(VECSXP, 4);
     UNPROTECT(1); /* fun */
     SET_VECTOR_ELT(val, 0, R_exec_token);
     SET_VECTOR_ELT(val, 1, expr);
