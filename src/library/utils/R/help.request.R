@@ -36,7 +36,7 @@ help.request <- function (subject = "", address = "r-help@R-project.org",
     {
         cat("Checking if", pkgtxt, "are up-to-date; may take some time...\n")
 
-        stopifnot(sapply(pkgDescs, inherits, what="packageDescription"))
+        stopifnot(vapply(pkgDescs, inherits, NA, what="packageDescription"))
         fields <- .instPkgFields(NULL)
 	n <- length(pkgDescs)
 	iPkgs <- matrix(NA_character_, n, 2L + length(fields),

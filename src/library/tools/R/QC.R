@@ -620,7 +620,7 @@ function(package, dir, lib.loc = NULL,
         ## curiosity.
         ind <- vapply(exprs, is.name, NA, USE.NAMES=FALSE)
         if(any(ind)) {
-            variables <- sapply(exprs[ind], deparse)
+            variables <- vapply(exprs[ind], deparse, "")
             variables_in_usages <- c(variables_in_usages, variables)
             variables <- setdiff(variables, objects_as_in)
             if(length(variables))
@@ -632,8 +632,9 @@ function(package, dir, lib.loc = NULL,
 
         ind <- vapply(exprs, is_data_for_dataset, NA, USE.NAMES=FALSE)
         if(any(ind)) {
-            data_sets <- sapply(exprs[ind],
-                                function(e) as.character(e[[2L]]))
+            data_sets <- vapply(exprs[ind],
+                                function(e) as.character(e[[2L]]),
+                                "")
             data_sets_in_usages <- c(data_sets_in_usages, data_sets)
             data_sets <- setdiff(data_sets, data_sets_in_code)
             if(length(data_sets))
@@ -663,8 +664,9 @@ function(package, dir, lib.loc = NULL,
         ## Replacement functions.
         if(length(replace_exprs)) {
             replace_funs <-
-                paste0(sapply(replace_exprs,
-                             function(e) as.character(e[[2L]][[1L]])),
+                paste0(vapply(replace_exprs,
+                              function(e) as.character(e[[2L]][[1L]]),
+                              ""),
                        "<-")
             replace_funs <- .transform_S3_method_markup(replace_funs)
             functions <- c(functions, replace_funs)
@@ -1450,9 +1452,8 @@ function(package, dir, lib.loc = NULL, chkInternal = NULL)
         replace_exprs <- exprs[ind]
         exprs <- exprs[!ind]
         ## Ordinary functions.
-        functions <- as.character(sapply(exprs,
-                                         function(e)
-                                         as.character(e[[1L]])))
+        functions <-
+            vapply(exprs, function(e) as.character(e[[1L]]), "")
         ## Catch assignments.
         ind <- functions %in% c("<-", "=")
         assignments <- exprs[ind]
@@ -1838,16 +1839,16 @@ function(package, dir, lib.loc = NULL)
         exprs <- exprs[lengths(exprs) > 1L]
         ## Ordinary functions.
         functions <-
-            as.character(sapply(exprs,
-                                function(e) as.character(e[[1L]])))
+            vapply(exprs, function(e) as.character(e[[1L]]), "")
         ## (Note that as.character(sapply(exprs, `[[`, 1L)) does not do
         ## what we want due to backquotifying.)
         ## Replacement functions.
         ind <- vapply(exprs, .is_call_from_replacement_function_usage, NA)
         if(any(ind)) {
             replace_funs <-
-                paste0(sapply(exprs[ind],
-                              function(e) as.character(e[[2L]][[1L]])),
+                paste0(vapply(exprs[ind],
+                              function(e) as.character(e[[2L]][[1L]]),
+                              ""),
                        "<-")
             functions <- c(functions, replace_funs)
         }
@@ -3174,11 +3175,10 @@ function(dir, force_suggests = TRUE, check_incoming = FALSE,
     ## VignetteBuilder packages are needed to ascertain what is a vignette.
     VB <- .get_requires_from_package_db(db, "VignetteBuilder")
 
-    ## FIXME: use vapply to get a character vector.
-    depends <- sapply(ldepends, `[[`, 1L)
-    imports <- sapply(limports, `[[`, 1L)
-    links <- sapply(llinks, `[[`, 1L)
-    suggests <- sapply(lsuggests, `[[`, 1L)
+    depends <- vapply(ldepends, `[[`, "", 1L)
+    imports <- vapply(limports, `[[`, "", 1L)
+    links <- vapply(llinks, `[[`, "", 1L)
+    suggests <- vapply(lsuggests, `[[`, "", 1L)
 
     standard_package_names <- .get_standard_package_names()
 
@@ -5555,7 +5555,7 @@ function(file, encoding = NA)
 
 .call_names <-
 function(x)
-    as.character(sapply(x, function(e) deparse(e[[1L]])))
+    vapply(x, function(e) deparse(e[[1L]]), "")
 
 
 ### * .check_package_code_unload_functions

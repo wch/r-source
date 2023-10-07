@@ -32,10 +32,10 @@ dataentry <- function (data, modes)
 {
     check_screen_device("dataentry()")
 
-    if(!is.list(data) || !length(data) || !all(sapply(data, is.vector)))
+    if(!is.list(data) || !length(data) || !all(vapply(data, is.vector, NA)))
         stop("invalid 'data' argument")
     if(!is.list(modes) ||
-       (length(modes) && !all(sapply(modes, is.character))))
+       (length(modes) && !all(vapply(modes, is.character, NA))))
         stop("invalid 'modes' argument")
     if (grepl("darwin", R.version$os))
         check_for_XQuartz(file.path(R.home("modules"), "R_de.so"))
@@ -52,7 +52,7 @@ View <- function (x, title)
     x <- as.list(format.data.frame(x0))
     rn <- row.names(x0)
     if(any(rn != seq_along(rn))) x <- c(list(row.names = rn), x)
-    if(!is.list(x) || !length(x) || !all(sapply(x, is.atomic)) ||
+    if(!is.list(x) || !length(x) || !all(vapply(x, is.atomic, NA)) ||
        !max(lengths(x)))
         stop("invalid 'x' argument")
     if (grepl("darwin", R.version$os))
@@ -85,8 +85,8 @@ edit.data.frame <-
     check_screen_device("edit()")
 
     is.vector.unclass <- function(x) is.vector(unclass(x))
-    if (length(name) && !all(sapply(name, is.vector.unclass)
-                                 | sapply(name, is.factor)))
+    if (length(name) && !all(vapply(name, is.vector.unclass, NA)
+                                 | vapply(name, is.factor, NA)))
         stop("can only handle vector and factor elements")
 
     if (grepl("darwin", R.version$os))

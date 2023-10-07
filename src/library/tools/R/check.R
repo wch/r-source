@@ -1441,8 +1441,9 @@ add_dummies <- function(dir, Log)
             ## Are these mentioned in DESCRIPTION?
             lic <- desc["License"]
             if(!is.na(lic)) {
-                found <- sapply(topfiles,
-                                function(x) grepl(x, lic, fixed = TRUE))
+                found <- vapply(topfiles,
+                                function(x) grepl(x, lic, fixed = TRUE),
+                                NA)
                 topfiles <- topfiles[!found]
                 if (length(topfiles)) {
                     if(!any) noteLog(Log)
@@ -1466,8 +1467,9 @@ add_dummies <- function(dir, Log)
             ## Are these mentioned in DESCRIPTION?
             lic <- desc["License"]
             if(!is.na(lic)) {
-                found <- sapply(basename(topfiles),
-                                function(x) grepl(x, lic, fixed = TRUE))
+                found <- vapply(basename(topfiles),
+                                function(x) grepl(x, lic, fixed = TRUE),
+                                NA)
                 topfiles <- topfiles[!found]
                 if (length(topfiles)) {
                     if(!any) noteLog(Log)
@@ -2660,7 +2662,9 @@ add_dummies <- function(dir, Log)
             ans <- list_data_in_pkg(dir = pkgdir)
             if (length(ans)) {
                 bad <-
-                    names(ans)[sapply(ans, function(x) ".Random.seed" %in% x)]
+                    names(ans)[vapply(ans,
+                                      function(x) ".Random.seed" %in% x,
+                                      NA)]
                 if (length(bad)) {
                     warn <- TRUE
                     msg <- if (length(bad) > 1L)
@@ -5256,7 +5260,7 @@ add_dummies <- function(dir, Log)
                 z <-  readBin(f, raw(), 2L)
                 identical(z, as.raw(c(3, 122)))
             }
-            allfiles <- allfiles[!sapply(allfiles, pretest)]
+            allfiles <- allfiles[!vapply(allfiles, pretest, NA)]
 
             ## Watch out for spaces in file names here
             ## Do in parallel for speed on Windows, but in batches

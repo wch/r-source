@@ -187,7 +187,7 @@ function(file, header = FALSE, sep = "", quote = "\"'", dec = ".",
                                "character", "raw")
     what[known] <- lapply(colClasses[known], do.call, list(0))
     what[colClasses %in% "NULL"] <- list(NULL)
-    keep <- !sapply(what, is.null)
+    keep <- !vapply(what, is.null, NA)
 
     data <- scan(file = file, what = what, sep = sep, quote = quote,
                  dec = dec, nmax = nrows, skip = 0,
