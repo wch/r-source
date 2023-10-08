@@ -347,6 +347,7 @@
  Rconn_getline
  Rcons_vprintf
  Rconsolesetwidth
+ Rf_applyClosure
  Rf_AdobeSymbol2ucs2
  Rf_BindDomain
  Rf_CheckFormals

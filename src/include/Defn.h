@@ -1641,6 +1641,7 @@ int Rf_asLogical2(SEXP x, int checking, SEXP call);
 typedef enum { iSILENT, iWARN, iERROR } warn_type;
 
 /* Other Internally Used Functions, excluding those which are inline-able*/
+SEXP Rf_applyClosure(SEXP, SEXP, SEXP, SEXP, SEXP);
 void Rf_addMissingVarsToNewEnv(SEXP, SEXP);
 SEXP Rf_allocFormalsList2(SEXP sym1, SEXP sym2);
 SEXP Rf_allocFormalsList3(SEXP sym1, SEXP sym2, SEXP sym3);
