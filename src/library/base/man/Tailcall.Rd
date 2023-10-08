@@ -82,11 +82,11 @@ docall <- function (what, args, quote = FALSE) {
         args <- lapply(args, enquote)
     Exec(as.call(c(list(substitute(what)), args)), parent.frame())
 }
-## the call stack doe not contain the call to docall:
-docall(function(x) sys.calls(), list(1)) |> 
+## the call stack does not contain the call to docall:
+docall(function() sys.calls(), list()) |> 
     Find(function(x) identical(x[[1]], quote(docall)), x = _)
 ## contrast to do.call:
-do.call(function(x) sys.calls(), list(1)) |> 
+do.call(function(x) sys.calls(), list()) |> 
     Find(function(x) identical(x[[1]], quote(do.call)), x = _)
 }
 \keyword{programming}
