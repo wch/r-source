@@ -2184,7 +2184,6 @@ static R_INLINE SEXP R_execClosure(SEXP call, SEXP newrho, SEXP sysparent,
                                    SEXP rho, SEXP arglist, SEXP op);
 
 /* Apply SEXP op of type CLOSXP to actuals */
-attribute_hidden
 static SEXP applyClosure_core(SEXP call, SEXP op, SEXP arglist, SEXP rho,
 			      SEXP suppliedvars)
 {
@@ -2270,6 +2269,7 @@ static SEXP applyClosure_core(SEXP call, SEXP op, SEXP arglist, SEXP rho,
     return val;
 }
 
+attribute_hidden
 SEXP applyClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho, SEXP suppliedvars)
 {
     SEXP val = applyClosure_core(call, op, arglist, rho, suppliedvars);
