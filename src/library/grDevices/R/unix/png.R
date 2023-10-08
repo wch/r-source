@@ -150,6 +150,8 @@ tiff <- function(filename = "Rplot%03d.tiff",
         if(capabilities("aqua")) {
             width <- g$width/ifelse(is.na(res), 72, res);
             height <- g$height/ifelse(is.na(res), 72, res);
+            if (comp != 1L)
+                warning('compression is not supported for type = "quartz"')
             invisible(.External(C_Quartz, "tiff", path.expand(filename),
                                 width, height, pointsize, d$family,
                                 d$antialias != "none", "", bg,

@@ -28,6 +28,9 @@
       \item \code{tools::showNonASCII()} has been rewritten to work
       better on macOS 14 (which has a changed implementation of
       \code{iconv()}).
+
+      \item \code{tiff(type = "quartz")} (the default on macOS) now warns
+      if \code{compression} is specified: it continues to be ignored.
     }
   }
 
@@ -1260,7 +1263,7 @@
       overflow reliably.
 
       \item \code{tar(., files=*)} now produces correctly the warning
-      about invalid uid or gid of files, fixing \PR{18344}, reported by
+      about invalid UID or GID of files, fixing \PR{18344}, reported by
       Martin Morgan.
 
       \item \code{tk_choose.files()} with \code{multi = FALSE}
