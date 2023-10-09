@@ -5555,7 +5555,7 @@ function(file, encoding = NA)
 
 .call_names <-
 function(x)
-    vapply(x, function(e) deparse(e[[1L]]), "")
+    vapply(x, function(e) deparse1(e[[1L]]), "")
 
 
 ### * .check_package_code_unload_functions
