@@ -160,7 +160,7 @@ tiff(filename = "Rplot\%03d.tiff",
 \value{
   A plot device is opened: nothing is returned to the \R interpreter.
 
-  If somthing goes wrong in writing a TIFF file (for example, an
+  If something goes wrong in writing a TIFF file (for example, an
   unsupported type of compression), a file is produced, likely invalid.
 }
 
