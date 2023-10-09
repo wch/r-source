@@ -297,6 +297,7 @@
  R_makeNotSubsettableError
  R_makeOutOfBoundsError
  R_max_num_math_threads
+ R_missing
  R_mkEVPROMISE_NR
  R_mktime
  R_moduleCdynload

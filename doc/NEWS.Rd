@@ -282,6 +282,9 @@
       \item Headers \file{R_ext/Applic.h} and \file{R-ext/Linpack.h}
       used to include \file{R_ext/BLAS.h} although this was undocumented and
       unneeded by their documented entry points.  They no longer do so.
+
+      \item New \code{R_missing()}, factored out from \code{do_missing()},
+      used to fix \PR{18579}.
     }
   }
 

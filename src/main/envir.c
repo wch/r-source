@@ -2282,14 +2282,15 @@ static SEXP findRootPromise(SEXP p) {
     return p;
 }
 
-int attribute_hidden
-R_isMissing(SEXP symbol, SEXP rho)
+// missing() for the case of promise aka *un*evaluated symbol:
+attribute_hidden
+Rboolean R_isMissing(SEXP symbol, SEXP rho)
 {
     int ddv=0;
     SEXP vl, s;
 
     if (symbol == R_MissingArg) /* Yes, this can happen */
-	return 1;
+	return TRUE;
 
     /* check for infinite recursion */
     R_CheckStack();
@@ -2302,24 +2303,24 @@ R_isMissing(SEXP symbol, SEXP rho)
 	s = symbol;
 
     if (rho == R_BaseEnv || rho == R_BaseNamespace)
-	return 0;  /* is this really the right thing to do? LT */
+	return FALSE;  /* is this really the right thing to do? LT */
 
     vl = findVarLocInFrame(rho, s, NULL);
     if (vl != R_NilValue) {
 	if (DDVAL(symbol)) {
 	    if (length(CAR(vl)) < ddv || CAR(vl) == R_MissingArg)
-		return 1;
+		return TRUE;
 	    /* defineVar(symbol, value, R_GlobalEnv); */
 	    else
 		vl = nthcdr(CAR(vl), ddv-1);
 	}
 	if (MISSING(vl) == 1 ||
 	    (BNDCELL_TAG(vl) == 0 && CAR(vl) == R_MissingArg))
-	    return 1;
+	    return TRUE;
 	if (IS_ACTIVE_BINDING(vl))
-	    return 0;
+	    return FALSE;
 	if (BNDCELL_TAG(vl))
-	    return 0;
+	    return FALSE;
 	SETCAR(vl, findRootPromise(CAR(vl)));
 	if (TYPEOF(CAR(vl)) == PROMSXP &&
 	    PRVALUE(CAR(vl)) == R_UnboundValue &&
@@ -2334,13 +2335,12 @@ R_isMissing(SEXP symbol, SEXP rho)
 	       for an active binding a longjmp should only happen if
 	       the stack check fails.  LT */
 	    if (PRSEEN(CAR(vl)) == 1)
-		return 1;
+		return TRUE;
 	    else {
-		int val;
 		int oldseen = PRSEEN(CAR(vl));
 		SET_PRSEEN(CAR(vl), 1);
 		PROTECT(vl);
-		val = R_isMissing(PREXPR(CAR(vl)), PRENV(CAR(vl)));
+		int val = R_isMissing(PREXPR(CAR(vl)), PRENV(CAR(vl)));
 		UNPROTECT(1); /* vl */
 		/* The oldseen value will usually be 0, but might be 2
 		   from an interrupted evaluation. LT */
@@ -2349,68 +2349,66 @@ R_isMissing(SEXP symbol, SEXP rho)
 	    }
 	}
 	else
-	    return 0;
+	    return FALSE;
     }
-    return 0;
+    return FALSE;
+}
+
+// workhorse of do_missing()  == R's missing(); more generally useful -> ./bind.c
+attribute_hidden
+Rboolean R_missing(SEXP var, SEXP rho)
+{
+    int ddv = 0;
+    SEXP s = var;
+    if (DDVAL(var)) {
+	ddv = ddVal(var);
+	var = R_DotsSymbol;
+    }
+
+    SEXP t = findVarLocInFrame(rho, var, NULL);
+    if (t != R_NilValue) {
+	if (DDVAL(s)) {
+	    if (length(CAR(t)) < ddv  || CAR(t) == R_MissingArg) {
+		return TRUE;
+	    }
+	    else
+		t = nthcdr(CAR(t), ddv-1);
+	}
+	if (BNDCELL_TAG(t)) return FALSE;
+	if (MISSING(t) || CAR(t) == R_MissingArg) {
+	    return TRUE;
+	}
+    }
+    else  /* it wasn't an argument to the function */
+	error(_("'missing(%s)' did not find an argument"), CHAR(PRINTNAME(var)));
+
+    t = CAR(t);
+    if (TYPEOF(t) != PROMSXP) {
+	return FALSE;
+    }
+    // deal with promise :
+    t = findRootPromise(t);
+    if (!isSymbol(PREXPR(t)))
+	return FALSE;
+    else {
+	return R_isMissing(PREXPR(t), PRENV(t));
+    }
 }
 
 /* this is primitive and a SPECIALSXP */
 attribute_hidden SEXP do_missing(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    int ddv=0;
-    SEXP rval, t, sym, s;
-
     checkArity(op, args);
     check1arg(args, call, "x");
-    s = sym = CAR(args);
+    SEXP sym = CAR(args);
     if( isString(sym) && length(sym)==1 )
-	s = sym = installTrChar(STRING_ELT(CAR(args), 0));
+	sym = installTrChar(STRING_ELT(CAR(args), 0));
     if (!isSymbol(sym))
 	errorcall(call, _("invalid use of 'missing'"));
 
-    if (DDVAL(sym)) {
-	ddv = ddVal(sym);
-	sym = R_DotsSymbol;
-    }
-
-    PROTECT(t = findVarLocInFrame(rho, sym, NULL));
-    rval = allocVector(LGLSXP,1);
-    LOGICAL(rval)[0] = 0;
+    SEXP rval = PROTECT(allocVector(LGLSXP, 1));
+    LOGICAL(rval)[0] = R_missing(sym, rho);
     UNPROTECT(1);
-    if (t != R_NilValue) {
-	if (DDVAL(s)) {
-	    if (length(CAR(t)) < ddv  || CAR(t) == R_MissingArg) {
-		LOGICAL(rval)[0] = 1;
-		return rval;
-	    }
-	    else
-		t = nthcdr(CAR(t), ddv-1);
-	}
-	if (BNDCELL_TAG(t)) return rval;
-	if (MISSING(t) || CAR(t) == R_MissingArg) {
-	    LOGICAL(rval)[0] = 1;
-	    return rval;
-	}
-	else goto havebinding;
-    }
-    else  /* it wasn't an argument to the function */
-	errorcall(call, _("'missing' can only be used for arguments"));
-
- havebinding:
-
-    t = CAR(t);
-    if (TYPEOF(t) != PROMSXP) {
-	LOGICAL(rval)[0] = 0;
-	return rval;
-    }
-
-    t = findRootPromise(t);
-    if (!isSymbol(PREXPR(t))) LOGICAL(rval)[0] = 0;
-    else {
-	PROTECT(rval);
-	LOGICAL(rval)[0] = R_isMissing(PREXPR(t), PRENV(t));
-	UNPROTECT(1);
-    }
     return rval;
 }
 
