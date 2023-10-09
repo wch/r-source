@@ -2150,7 +2150,7 @@ static R_INLINE void R_CleanupEnvir(SEXP rho, SEXP val)
     }
 }
 
-attribute_hidden void unpromiseArgs(SEXP pargs)
+static void unpromiseArgs(SEXP pargs)
 {
     /* This assumes pargs will no longer be referenced. We could
        double check the refcounts on pargs as a sanity check. */
@@ -2161,8 +2161,8 @@ attribute_hidden void unpromiseArgs(SEXP pargs)
 	SETCAR(pargs, R_NilValue);
     }
 }
-#else
-attribute_hidden void unpromiseArgs(SEXP pargs) { }
+//#else
+//static void unpromiseArgs(SEXP pargs) { }
 #endif
 
 #define SUPPORT_TAILCALL

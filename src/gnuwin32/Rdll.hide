@@ -509,7 +509,6 @@
  Rf_tspgets
  Rf_ucstomb
  Rf_unbindVar
- Rf_unpromiseArgs
  Rf_usemethod
  Rf_utf8toucs32
  Rf_vectorIndex
