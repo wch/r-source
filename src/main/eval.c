@@ -1270,10 +1270,7 @@ SEXP eval(SEXP e, SEXP rho)
 	else if (TYPEOF(op) == CLOSXP) {
 	    SEXP pargs = promiseArgs(CDR(e), rho);
 	    PROTECT(pargs);
-	    tmp = applyClosure(e, op, pargs, rho, R_NilValue);
-#ifdef ADJUST_ENVIR_REFCNTS
-	    unpromiseArgs(pargs);
-#endif
+	    tmp = applyClosure(e, op, pargs, rho, R_NilValue, TRUE);
 	    UNPROTECT(1);
 	}
 	else
@@ -2185,7 +2182,7 @@ static R_INLINE SEXP R_execClosure(SEXP call, SEXP newrho, SEXP sysparent,
 
 /* Apply SEXP op of type CLOSXP to actuals */
 static SEXP applyClosure_core(SEXP call, SEXP op, SEXP arglist, SEXP rho,
-			      SEXP suppliedvars)
+			      SEXP suppliedvars, Rboolean unpromise)
 {
     SEXP formals, actuals, savedrho, newrho;
     SEXP f, a;
@@ -2263,6 +2260,8 @@ static SEXP applyClosure_core(SEXP call, SEXP op, SEXP arglist, SEXP rho,
     R_CleanupEnvir(newrho, val);
     if (is_getter_call && MAYBE_REFERENCED(val))
     	val = shallow_duplicate(val);
+    if (unpromise)
+	unpromiseArgs(arglist);
 #endif
 
     UNPROTECT(1); /* newrho */
@@ -2270,9 +2269,11 @@ static SEXP applyClosure_core(SEXP call, SEXP op, SEXP arglist, SEXP rho,
 }
 
 attribute_hidden
-SEXP applyClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho, SEXP suppliedvars)
+SEXP applyClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho,
+		  SEXP suppliedvars, Rboolean unpromise)
 {
-    SEXP val = applyClosure_core(call, op, arglist, rho, suppliedvars);
+    SEXP val = applyClosure_core(call, op, arglist, rho,
+				 suppliedvars, unpromise);
 #ifdef SUPPORT_TAILCALL
     while (is_exec_continuation(val)) {
 	call = PROTECT(VECTOR_ELT(val, 1));
@@ -2288,10 +2289,9 @@ SEXP applyClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho, SEXP suppliedvars)
 	if (TYPEOF(op) == CLOSXP) {
 	    arglist = PROTECT(promiseArgs(CDR(call), rho));
 	    suppliedvars = R_NilValue;
-	    val = applyClosure_core(call, op, arglist, rho, suppliedvars);
+	    val = applyClosure_core(call, op, arglist, rho, suppliedvars, TRUE);
 # ifdef ADJUST_ENVIR_REFCNTS
 	    R_CleanupEnvir(rho, val);
-	    unpromiseArgs(arglist);
 # endif
 	    UNPROTECT(1); /* arglist */
 	}
@@ -2436,10 +2436,7 @@ SEXP R_forceAndCall(SEXP e, int n, SEXP rho)
 	    else error("something weird happened");
 	}
 	SEXP pargs = tmp;
-	tmp = applyClosure(e, fun, pargs, rho, R_NilValue);
-#ifdef ADJUST_ENVIR_REFCNTS
-	unpromiseArgs(pargs);
-#endif
+	tmp = applyClosure(e, fun, pargs, rho, R_NilValue, TRUE);
 	UNPROTECT(1);
     }
     else {
@@ -4039,7 +4036,7 @@ attribute_hidden SEXP do_recall(SEXP call, SEXP op, SEXP args, SEXP rho)
 	PROTECT(s = eval(CAR(cptr->call), cptr->sysparent));
     if (TYPEOF(s) != CLOSXP)
 	error(_("'Recall' called from outside a closure"));
-    ans = applyClosure(cptr->call, s, args, cptr->sysparent, R_NilValue);
+    ans = applyClosure(cptr->call, s, args, cptr->sysparent, R_NilValue, FALSE);
     UNPROTECT(1);
     return ans;
 }
@@ -4505,10 +4502,7 @@ int DispatchGroup(const char* group, SEXP call, SEXP op, SEXP args, SEXP rho,
 	if(isOps) SET_TAG(m, R_NilValue);
     }
 
-    *ans = applyClosure(t, lsxp, s, rho, newvars);
-#ifdef ADJUST_ENVIR_REFCNTS
-    unpromiseArgs(s);
-#endif
+    *ans = applyClosure(t, lsxp, s, rho, newvars, TRUE);
     UNPROTECT(10);
     return 1;
 }
@@ -7716,10 +7710,7 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	  break;
 	case CLOSXP:
 	  args = CLOSURE_CALL_FRAME_ARGS();
-	  value = applyClosure(call, fun, args, rho, R_NilValue);
-#ifdef ADJUST_ENVIR_REFCNTS
-	  unpromiseArgs(args);
-#endif
+	  value = applyClosure(call, fun, args, rho, R_NilValue, TRUE);
 	  break;
 	default: error(_("bad function"));
 	}
@@ -8141,10 +8132,7 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	  prom = R_mkEVPROMISE(R_TmpvalSymbol, lhs);
 	  SETCAR(args, prom);
 	  /* make the call */
-	  value = applyClosure(call, fun, args, rho, R_NilValue);
-#ifdef ADJUST_ENVIR_REFCNTS
-	  unpromiseArgs(args);
-#endif
+	  value = applyClosure(call, fun, args, rho, R_NilValue, TRUE);
 	  break;
 	default: error(_("bad function"));
 	}
@@ -8185,10 +8173,7 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	  prom = R_mkEVPROMISE(R_TmpvalSymbol, lhs);
 	  SETCAR(args, prom);
 	  /* make the call */
-	  value = applyClosure(call, fun, args, rho, R_NilValue);
-#ifdef ADJUST_ENVIR_REFCNTS
-	  unpromiseArgs(args);
-#endif
+	  value = applyClosure(call, fun, args, rho, R_NilValue, TRUE);
 	  break;
 	default: error(_("bad function"));
 	}

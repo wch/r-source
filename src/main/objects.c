@@ -115,7 +115,7 @@ static SEXP applyMethod(SEXP call, SEXP op, SEXP args, SEXP rho, SEXP newvars)
 	vmaxset(vmax);
     }
     else if (TYPEOF(op) == CLOSXP) {
-	ans = applyClosure(call, op, args, rho, newvars);
+	ans = applyClosure(call, op, args, rho, newvars, FALSE);
     }
     else
 	ans = R_NilValue;  /* for -Wall */
@@ -1573,17 +1573,15 @@ R_possible_dispatch(SEXP call, SEXP op, SEXP args, SEXP rho,
 		if (length(s) != length(args)) error(_("dispatch error"));
 		for (a = args, b = s; a != R_NilValue; a = CDR(a), b = CDR(b))
 		    IF_PROMSXP_SET_PRVALUE(CAR(b), CAR(a));
-		value =  applyClosure(call, value, s, rho, suppliedvars);
-#ifdef ADJUST_ENVIR_REFCNTS
-		unpromiseArgs(s);
-#endif
+		value =  applyClosure(call, value, s, rho, suppliedvars, TRUE);
 		UNPROTECT(2);
 		return value;
 	    } else {
 		/* INC/DEC of REFCNT needed for non-tracking args */
 		for (SEXP a = args; a != R_NilValue; a = CDR(a))
 		    INCREMENT_REFCNT(CAR(a));
-		value = applyClosure(call, value, args, rho, suppliedvars);
+		value = applyClosure(call, value, args, rho,
+				     suppliedvars, FALSE);
 		for (SEXP a = args; a != R_NilValue; a = CDR(a))
 		    DECREMENT_REFCNT(CAR(a));
                 UNPROTECT(1);
@@ -1603,13 +1601,13 @@ R_possible_dispatch(SEXP call, SEXP op, SEXP args, SEXP rho,
 	if (length(s) != length(args)) error(_("dispatch error"));
 	for (a = args, b = s; a != R_NilValue; a = CDR(a), b = CDR(b))
 	    IF_PROMSXP_SET_PRVALUE(CAR(b), CAR(a));
-	value = applyClosure(call, fundef, s, rho, R_NilValue);
+	value = applyClosure(call, fundef, s, rho, R_NilValue, FALSE);
 	UNPROTECT(1);
     } else {
 	/* INC/DEC of REFCNT needed for non-tracking args */
 	for (SEXP a = args; a != R_NilValue; a = CDR(a))
 	    INCREMENT_REFCNT(CAR(a));
-	value = applyClosure(call, fundef, args, rho, R_NilValue);
+	value = applyClosure(call, fundef, args, rho, R_NilValue, FALSE);
 	for (SEXP a = args; a != R_NilValue; a = CDR(a))
 	    DECREMENT_REFCNT(CAR(a));
     }
