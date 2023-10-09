@@ -2161,8 +2161,6 @@ static void unpromiseArgs(SEXP pargs)
 	SETCAR(pargs, R_NilValue);
     }
 }
-//#else
-//static void unpromiseArgs(SEXP pargs) { }
 #endif
 
 #define SUPPORT_TAILCALL
