@@ -4031,7 +4031,7 @@ attribute_hidden SEXP do_recall(SEXP call, SEXP op, SEXP args, SEXP rho)
 	PROTECT(s = eval(CAR(cptr->call), cptr->sysparent));
     if (TYPEOF(s) != CLOSXP)
 	error(_("'Recall' called from outside a closure"));
-    ans = applyClosure(cptr->call, s, args, cptr->sysparent, R_NilValue, FALSE);
+    ans = applyClosure(cptr->call, s, args, cptr->sysparent, R_NilValue, TRUE);
     UNPROTECT(1);
     return ans;
 }

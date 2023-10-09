@@ -1601,7 +1601,7 @@ R_possible_dispatch(SEXP call, SEXP op, SEXP args, SEXP rho,
 	if (length(s) != length(args)) error(_("dispatch error"));
 	for (a = args, b = s; a != R_NilValue; a = CDR(a), b = CDR(b))
 	    IF_PROMSXP_SET_PRVALUE(CAR(b), CAR(a));
-	value = applyClosure(call, fundef, s, rho, R_NilValue, FALSE);
+	value = applyClosure(call, fundef, s, rho, R_NilValue, TRUE);
 	UNPROTECT(1);
     } else {
 	/* INC/DEC of REFCNT needed for non-tracking args */
