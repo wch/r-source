@@ -479,10 +479,12 @@ int R_SaveAsTIFF(void  *d, int width, int height,
     unsigned char *buf = (unsigned char *)_TIFFmalloc(TIFFScanlineSize(out));
     if (!buf) {
 	TIFFClose(out);
+	unlink(outfile);
 	warning("allocation failure in R_SaveAsTIF");
 	return 0;
     }
-    
+
+    int fail = 0;
     for (unsigned int i = 0; i < height; i++) {
 	unsigned char *pscanline = buf;
 	for(unsigned int j = 0; j < width; j++) {
@@ -492,9 +494,14 @@ int R_SaveAsTIFF(void  *d, int width, int height,
 	    *pscanline++ = GETBLUE(col) ;
 	    if(have_alpha) *pscanline++ = GETALPHA(col) ;
 	}
-	if(TIFFWriteScanline(out, buf, i, 0) == -1) break;
+	if(TIFFWriteScanline(out, buf, i, 0) == -1)
+	{
+	    fail = 1;
+	    break;
+	}
     }
     TIFFClose(out);
+    if (fail) unlink(outfile);
     _TIFFfree(buf);
     return 1;
 }
