@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1999       Guido Masarotto
- *  Copyright (C) 1999-2022  The R Core Team
+ *  Copyright (C) 1999-2023  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -437,26 +437,20 @@ int R_SaveAsTIFF(void  *d, int width, int height,
 		unsigned int (*gp)(void *, int, int),
 		int bgr, const char *outfile, int res, int compression)
 {
-    TIFF *out;
-    int sampleperpixel;
-    tsize_t linebytes;
-    unsigned char *buf, *pscanline;
-    unsigned int col, i, j;
-    int have_alpha = 0;
-
     DECLARESHIFTS;
 
-    for (i = 0; i < height; i++)
-	for (j = 0; j < width; j++) {
-	    col = gp(d,i,j);
+    int have_alpha = 0;
+    for (unsigned int i = 0; i < height; i++)
+	for (unsigned int j = 0; j < width; j++) {
+	    unsigned int col = gp(d,i,j);
 	    if (GETALPHA(col) < 255) {
 		have_alpha = 1;
 		break;
 	    }
 	}
-    sampleperpixel = 3 + have_alpha;
+    int sampleperpixel = 3 + have_alpha;
 
-    out = TIFFOpen(outfile, "w");
+    TIFF *out = TIFFOpen(outfile, "w");
     if (!out) {
 	warning("unable to open TIFF file '%s'", outfile);
 	return 0;
@@ -468,19 +462,6 @@ int R_SaveAsTIFF(void  *d, int width, int height,
     TIFFSetField(out, TIFFTAG_ORIENTATION, ORIENTATION_TOPLEFT);
     TIFFSetField(out, TIFFTAG_PLANARCONFIG, PLANARCONFIG_CONTIG);
     TIFFSetField(out, TIFFTAG_PHOTOMETRIC, PHOTOMETRIC_RGB);
-#if 0
-    /* Possible compression values
-       COMPRESSION_NONE = 1;
-       COMPRESSION_CCITTRLE = 2;
-       COMPRESSION_CCITTFAX3 = COMPRESSION_CCITT_T4 = 3;
-       COMPRESSION_CCITTFAX4 = COMPRESSION_CCITT_T6 = 4;
-       COMPRESSION_LZW = 5;
-       COMPRESSION_JPEG = 7;
-       COMPRESSION_DEFLATE = 32946;
-       COMPRESSION_ADOBE_DEFLATE = 8;
-    */
-    TIFFSetField(out, TIFFTAG_COMPRESSION, COMPRESSION_NONE);
-#endif
     if(compression > 1) {
 	if (compression == 15 || compression == 18) {
 	    TIFFSetField(out, TIFFTAG_COMPRESSION, compression - 10);
@@ -495,23 +476,23 @@ int R_SaveAsTIFF(void  *d, int width, int height,
 	TIFFSetField(out, TIFFTAG_YRESOLUTION, (float) res);
     }
 
-    linebytes = sampleperpixel * width;
-    if (TIFFScanlineSize(out))
-	buf =(unsigned char *)_TIFFmalloc(linebytes);
-    else
-	buf = (unsigned char *)_TIFFmalloc(TIFFScanlineSize(out));
-
-    for (i = 0; i < height; i++) {
-	pscanline = buf;
-	for(j = 0; j < width; j++) {
-	    col = gp(d, i, j);
+    unsigned char *buf = (unsigned char *)_TIFFmalloc(TIFFScanlineSize(out));
+    if (!buf) {
+	TIFFClose(out);
+	warning("allocation failure in R_SaveAsTIF");
+	return 0;
+    }
+    
+    for (unsigned int i = 0; i < height; i++) {
+	unsigned char *pscanline = buf;
+	for(unsigned int j = 0; j < width; j++) {
+	    unsigned int col = gp(d, i, j);
 	    *pscanline++ = GETRED(col) ;
 	    *pscanline++ = GETGREEN(col) ;
 	    *pscanline++ = GETBLUE(col) ;
 	    if(have_alpha) *pscanline++ = GETALPHA(col) ;
 	}
-	int res = TIFFWriteScanline(out, buf, i, 0);
-	if (res == -1) break;
+	if(TIFFWriteScanline(out, buf, i, 0) == -1) break;
     }
     TIFFClose(out);
     _TIFFfree(buf);
