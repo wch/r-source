@@ -2281,11 +2281,6 @@ SEXP applyClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho,
 	SET_VECTOR_ELT(val, 2, R_NilValue); // to drop REFCNT
 	op = PROTECT(VECTOR_ELT(val, 3));
 
-# ifdef ADJUST_ENVIR_REFCNTS
-	/**** cleaner to put this at end of applyClosure_core */
-	unpromiseArgs(arglist);
-# endif
-
 	if (TYPEOF(op) == CLOSXP) {
 	    arglist = PROTECT(promiseArgs(CDR(call), rho));
 	    suppliedvars = R_NilValue;
