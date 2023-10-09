@@ -274,7 +274,7 @@
  R_has_methods
  R_in_gc
  R_initAsignSymbols
- R_initAssignSymbols
+ R_initEvalSymbols
  R_init_altrep
  R_init_base
  R_init_jit_enabled

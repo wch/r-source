@@ -2167,7 +2167,7 @@ static void unpromiseArgs(SEXP pargs)
 
 #define SUPPORT_TAILCALL
 #ifdef SUPPORT_TAILCALL
-static SEXP R_exec_token = NULL; /* initialized in R_initAssignSymbols below */
+static SEXP R_exec_token = NULL; /* initialized in R_initEvalSymbols below */
 
 static R_INLINE Rboolean is_exec_continuation(SEXP val)
 {
@@ -2589,7 +2589,7 @@ static SEXP EnsureLocal(SEXP symbol, SEXP rho, R_varloc_t *ploc)
 /* to prevent evaluation.  As an example consider */
 /* e <- quote(f(x=1,y=2); names(e) <- c("","a","b") */
 
-static SEXP R_valueSym = NULL; /* initialized in R_initAssignSymbols below */
+static SEXP R_valueSym = NULL; /* initialized in R_initEvalSymbols below */
 
 static SEXP replaceCall(SEXP fun, SEXP val, SEXP args, SEXP rhs)
 {
@@ -3227,7 +3227,7 @@ static SEXP R_Subassign2Sym = NULL;
 static SEXP R_DollarGetsSymbol = NULL;
 static SEXP R_AssignSym = NULL;
 
-attribute_hidden void R_initAssignSymbols(void)
+attribute_hidden void R_initEvalSymbols(void)
 {
     for (int i = 0; i < NUM_ASYM; i++)
 	asymSymbol[i] = install(asym[i]);
