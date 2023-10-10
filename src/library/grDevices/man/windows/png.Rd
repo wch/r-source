@@ -35,7 +35,7 @@ png(filename = "Rplot\%03d.png",
 tiff(filename = "Rplot\%03d.tif",
      width = 480, height = 480, units = "px", pointsize = 12,
      compression = c("none", "rle", "lzw", "jpeg", "zip",
-                     "lzw+p", "zip+p"
+                     "lzw+p", "zip+p",
                      "lerc", "lzma",  "zstd", "webp"),
      bg = "white", res = NA, family = "", restoreConsole = TRUE,
      type = c("windows", "cairo"), antialias,
@@ -97,9 +97,9 @@ tiff(filename = "Rplot\%03d.tif",
   colour.  The JPEG format is lossy, but may be useful for image plots,
   for example.  The BMP format is standard on Windows, and supported by
   most viewers elsewhere.  TIFF is a meta-format: the default format
-  written by \code{tiff} is lossless and stores RGB values
-  uncompressed---such files are widely accepted, which is their main
-  virtue over PNG.
+  written by \code{tiff} is lossless and stores RGB (and alpha where
+  appropriate) values uncompressed---such files are widely accepted,
+  which is their main virtue over PNG.
 
   Windows GDI imposes limits on the size of bitmaps: these are not
   documented in the SDK and may depend on the version of Windows.
@@ -140,6 +140,8 @@ tiff(filename = "Rplot\%03d.tif",
   horizontal differencing (\sQuote{differencing predictor}, section 14
   of the TIFF specification) in combination with the compression method,
   which is effective for continuous-tone images, especially colour ones.
+  The \code{jpeg} quality when used for \code{tiff} compression is fixed
+  at 75.
   
   Unknown resolutions in BMP files are recorded as 72 ppi.
 }
