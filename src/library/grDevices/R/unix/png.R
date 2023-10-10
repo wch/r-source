@@ -150,8 +150,7 @@ tiff <- function(filename = "Rplot%03d.tiff",
                        "none" = 1L, "rle" = 2L, "lzw" = 5L, "jpeg" = 7L,
                        "zip" = 8L, "lzw+p" = 15L, "zip+p" = 18L,
                        "lerc" = 34887L, "lzma" = 34925L,
-                       "zstd" = 50000L, "webp" = 50001L,
-                       "jpeg" = -7)
+                       "zstd" = 50000L, "webp" = 50001L)
     if(type == "quartz") {
         if(capabilities("aqua")) {
             width <- g$width/ifelse(is.na(res), 72, res);

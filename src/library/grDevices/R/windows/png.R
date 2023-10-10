@@ -162,8 +162,7 @@ tiff <-
                        "none" = 1L, "rle" = 2L, "lzw" = 5L, "jpeg" = 7L,
                        "zip" = 8L, "lzw+p" = 15L, "zip+p" = 18L,
                        "lerc" = 34887L, "lzma" = 34925L,
-                       "zstd" = 50000L, "webp" = 50001L,
-                       "jpeg" = -7)
+                       "zstd" = 50000L, "webp" = 50001L)
    if(match.arg(type) == "cairo") {
         antialias <- match(match.arg(antialias), aa.cairo)
         invisible(.External(C_devCairo, filename, 8L,

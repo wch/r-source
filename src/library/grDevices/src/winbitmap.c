@@ -466,7 +466,7 @@ int R_SaveAsTIFF(void  *d, int width, int height,
     TIFFSetField(out, TIFFTAG_PHOTOMETRIC, PHOTOMETRIC_RGB);
     TIFFSetField(out, TIFFTAG_SOFTWARE, "R " R_MAJOR "." R_MINOR);
 
-    /* JPEG compression does not work a line at a time, so switch to
+    /* JBIG compression does not work a line at a time, so switch to
      * whole image -- we could use strips if necessary */
     int byline = 1, fail = 0;
     if(compression < 0) {
