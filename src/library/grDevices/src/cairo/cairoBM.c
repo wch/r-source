@@ -628,7 +628,7 @@ SEXP in_Cairo(SEXP args)
 	if(quality == NA_INTEGER || quality < 0 || quality > 100)
 	    error(_("invalid '%s' argument"), "quality");
     } else if(type == TIFF) {
-	if(quality == NA_INTEGER || quality < 0)
+	if(quality == NA_INTEGER)
 	    error(_("invalid '%s' argument"), "compression");
     }
     args = CDR(args);
