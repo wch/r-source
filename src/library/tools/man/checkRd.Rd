@@ -75,14 +75,19 @@ checkRd(Rd, defines = .Platform$OS.type, stages = "render",
     -1 \tab Non-ASCII contents without declared encoding\cr
     -1 \tab Non-ASCII contents in second part of \verb{\enc}\cr
     -1 \tab Escaped LaTeX specials: \ldots\cr
+ -1|-3 \tab Lost braces \dots\cr
     -3 \tab Tag \verb{\ldots} is invalid in a code block\cr
-    -3 \tab Lost braces\cr
     -5 \tab \verb{\title} should not end in a period\cr
   }
   and variations with \verb{\method} replaced by \verb{\S3method} or
   \verb{\S4method}, \verb{\dontrun} replaced by \verb{\donttest} or
   \verb{\dontshow}, and \verb{\title} replaced by \verb{\section} or
   \verb{\subsection} name.
+  (Some instances of \dQuote{Lost braces} are uprated to level -1,
+  currently only during \command{R CMD check} with option
+  \option{--as-cran}.)
+  %or if environment variable \env{_R_CHECK_RD_NOTE_LOST_BRACES_}
+  %is set to a true value.
 
   Note that both \code{prepare_Rd} and \code{checkRd} have tests for an
   empty section: that in \code{checkRd} is stricter (essentially that

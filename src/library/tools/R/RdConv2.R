@@ -54,7 +54,7 @@ isBlankLineRd <- function(x) {
             line <- getSrcLines(attr(srcref, "srcfile"), from, from)
             ## FIXME: marker may be misplaced if line uses tabs, or for
             ##        expanded USERMACRO (seen srcref[5L] > srcref[6L])
-            sprintf("\n  %3s | %s", c(from, ""),
+            sprintf("\n  %4s | %s", c(from, ""),
                     c(line, paste0(strrep(" ", srcref[5L] - 1L), "^")))
         })
         paste0(loc, ": ", ...,

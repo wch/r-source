@@ -4026,10 +4026,18 @@ Control whether @code{check_T_and_F()} also looks for ``bad'' (global)
 @samp{T}/@samp{F} uses in examples.
 Off by default because this can result in false positives.
 @item _R_CHECK_RD_CHECKRD_MINLEVEL_
-Controls the minimum level for reporting warnings from @code{checkRd}.
+Controls the minimum level for reporting warnings from @code{checkRd()}.
 Default: -1.
+@item _R_CHECK_RD_NOTE_LOST_BRACES_
+If true, some of the ``lost braces'' that @code{checkRd()} finds in
+@LaTeX{}-like Rd contexts are reported (by raising their warning level
+to -1). This will often detect missing initial backslashes for Rd
+macros, unescaped in-text set braces, and description-like
+@code{\item@{label@}@{desc@}} entries within @code{\itemize}.
+Default: unset (but true for CRAN submission checks), currently;
+may be enabled unconditionally in the future.
 @item _R_CHECK_RD_ALLOW_EMPTY_ITEM_IN_DESCRIBE_
-Control whether empty items inside @code{\\describe} are allowed without
+Control whether empty items inside @code{\describe} are allowed without
 a warning. This is a temporary stop gap measure meant to support legacy
 packages, and is likely to be removed in future versions of R.
 Default: false.
@@ -4698,6 +4706,7 @@ _R_CHECK_BROWSER_NONINTERACTIVE_=true
 _R_CHECK_URLS_SHOW_301_STATUS_=true
 _R_CHECK_UNDOC_USE_ALL_NAMES_=true
 _R_CHECK_S3_METHODS_SHOW_POSSIBLE_ISSUES_=true
+_R_CHECK_RD_NOTE_LOST_BRACES_=true
 @end example
 
 @noindent
