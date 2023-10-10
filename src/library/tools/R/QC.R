@@ -962,7 +962,7 @@ function(x, ...)
     }
 
     for(fname in names(x)) {
-        writeLines(gettextf("Codoc mismatches from Rd file object '%s':",
+        writeLines(gettextf("Codoc mismatches from Rd file '%s':",
                             fname))
         xfname <- x[[fname]]
         for(i in seq_along(xfname)) {
