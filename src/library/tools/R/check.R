@@ -2539,7 +2539,7 @@ add_dummies <- function(dir, Log)
             if (length(out)) {
                 any <- TRUE
                 pos <- which(out ==
-                             "All issues in internal Rd objects checked specially.")
+                             "All issues in internal Rd files checked specially.")
                 if(length(pos)) {
                     noteLog(Log)
                     out <- out[-pos]
