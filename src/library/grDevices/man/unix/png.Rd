@@ -123,6 +123,9 @@ tiff(filename = "Rplot\%03d.tiff",
   the compression method, which is effective for continuous-tone images,
   especially colour ones.
 
+  The \code{jpeg} quality when used for \code{tiff} compression is fixed
+  at 75.
+
   \R can be compiled without support for some or all of the types for
   each of these devices: this will be reported if you attempt to use
   them on a system where they are not supported.  For \code{type =
