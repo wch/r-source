@@ -1,7 +1,7 @@
 #  File src/library/grDevices/R/windows/png.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -162,7 +162,8 @@ tiff <-
                        "none" = 1L, "rle" = 2L, "lzw" = 5L, "jpeg" = 7L,
                        "zip" = 8L, "lzw+p" = 15L, "zip+p" = 18L,
                        "lerc" = 34887L, "lzma" = 34925L,
-                       "zstd" = 50000L, "webp" = 50001L)
+                       "zstd" = 50000L, "webp" = 50001L,
+                       "jpeg" = -7)
    if(match.arg(type) == "cairo") {
         antialias <- match(match.arg(antialias), aa.cairo)
         invisible(.External(C_devCairo, filename, 8L,
