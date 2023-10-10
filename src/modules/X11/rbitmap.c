@@ -366,7 +366,6 @@ int R_SaveAsJpeg(void  *d, int width, int height,
 
     /* Have we enough memory?*/
     if (scanline == NULL) {
-	if (outfile) unlink(outfile);
 	return 0;
     }
 
@@ -391,10 +390,7 @@ int R_SaveAsJpeg(void  *d, int width, int height,
 	 */
 	jpeg_destroy_compress(&cinfo);
 	free(scanline);
-	if (outfile) {
-	    fclose(outfile);
-	    unlink(outfile);
-	}
+	if (outfile) fclose(outfile);
 	return 0;
     }
     /* Now we can initialize the JPEG compression object. */
