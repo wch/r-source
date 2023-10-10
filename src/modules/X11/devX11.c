@@ -1970,7 +1970,11 @@ static void X11_NewPage(const pGEcontext gc, pDevDesc dd)
     if (xd->type > WINDOW) {
 	if (xd->npages++) {
 	    /* try to preserve the page we do have */
-	    if (xd->type != XIMAGE) X11_Close_bitmap(xd);
+	    if (xd->type != XIMAGE) {
+		xd->npages--;
+		X11_Close_bitmap(xd);
+		xd->npages++;
+	    }
 	    if (xd->type != XIMAGE && xd->fp != NULL) fclose(xd->fp);
 	    if (xd->type == PNG || xd->type == JPEG || xd->type == BMP) {
 		char buf[R_PATH_MAX];

@@ -521,6 +521,9 @@
 
       \item \code{isoreg(c(1,Inf))} signals an error instead of
       segfaulting, fixing \PR{18603}.
+
+      \item \code{tiff(type = "Xlib")} was only outputting the last page
+      of multi-page plots.
     }
   }
 }
