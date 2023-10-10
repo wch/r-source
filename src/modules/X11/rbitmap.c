@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1999       Guido Masarotto
- *  Copyright (C) 1999-2022  The R Core Team
+ *  Copyright (C) 1999-2023  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -457,6 +457,7 @@ int R_SaveAsJpeg(void  *d, int width, int height,
 #ifdef HAVE_TIFF
 
 #include <tiffio.h>
+#include <Rversion.h>
 
 int R_SaveAsTIFF(void  *d, int width, int height,
 		unsigned int (*gp)(void *, int, int),
@@ -493,6 +494,7 @@ int R_SaveAsTIFF(void  *d, int width, int height,
     TIFFSetField(out, TIFFTAG_ORIENTATION, ORIENTATION_TOPLEFT);
     TIFFSetField(out, TIFFTAG_PLANARCONFIG, PLANARCONFIG_CONTIG);
     TIFFSetField(out, TIFFTAG_PHOTOMETRIC, PHOTOMETRIC_RGB);
+    TIFFSetField(out, TIFFTAG_SOFTWARE, "R " R_MAJOR "." R_MINOR);
 #if 0
     /* Possible compression values
        COMPRESSION_NONE = 1;
@@ -521,10 +523,12 @@ int R_SaveAsTIFF(void  *d, int width, int height,
     }
 
     linebytes = sampleperpixel * width;
-    if (TIFFScanlineSize(out))
-	buf =(unsigned char *)_TIFFmalloc(linebytes);
-    else
-	buf = (unsigned char *)_TIFFmalloc(TIFFScanlineSize(out));
+    buf = (unsigned char *)_TIFFmalloc(TIFFScanlineSize(out));
+    if (!buf) {
+	TIFFClose(out);
+	warning("allocation failure in R_SaveAsTIF");
+	return 0;
+    }
 
     for (i = 0; i < height; i++) {
 	pscanline = buf;
@@ -535,7 +539,7 @@ int R_SaveAsTIFF(void  *d, int width, int height,
 	    *pscanline++ = GETBLUE(col) ;
 	    if(have_alpha) *pscanline++ = GETALPHA(col) ;
 	}
-	TIFFWriteScanline(out, buf, i, 0);
+	if(TIFFWriteScanline(out, buf, i, 0) == -1) break;
     }
     TIFFClose(out);
     _TIFFfree(buf);
