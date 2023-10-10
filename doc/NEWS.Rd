@@ -178,12 +178,12 @@
       \code{tcrossprod()} are now also primitive and S3 generic, as
       \code{\%*\%} had become in \R 4.3.0.
 
-      \item \code{source()} and \code{example()} get a new optional argument
-      \code{catch.aborts} which allows continued evaluation of the \R code
-      after an error.
+      \item \code{source()} and \code{example()} have a new optional
+      argument \code{catch.aborts} which allows continued evaluation of
+      the \R code after an error.
 
       \item The non-Quartz \code{tiff()} devices allow additional types
-      of compression.
+      of compression if supported by the platform's \samp{libtiff} library.
     }
   }
 
