@@ -465,7 +465,6 @@ int R_SaveAsTIFF(void  *d, int width, int height,
 {
     TIFF *out;
     int sampleperpixel;
-    tsize_t linebytes;
     unsigned char *buf, *pscanline;
     unsigned int col, i, j;
     int have_alpha = 0;
@@ -495,19 +494,6 @@ int R_SaveAsTIFF(void  *d, int width, int height,
     TIFFSetField(out, TIFFTAG_PLANARCONFIG, PLANARCONFIG_CONTIG);
     TIFFSetField(out, TIFFTAG_PHOTOMETRIC, PHOTOMETRIC_RGB);
     TIFFSetField(out, TIFFTAG_SOFTWARE, "R " R_MAJOR "." R_MINOR);
-#if 0
-    /* Possible compression values
-       COMPRESSION_NONE = 1;
-       COMPRESSION_CCITTRLE = 2;
-       COMPRESSION_CCITTFAX3 = COMPRESSION_CCITT_T4 = 3;
-       COMPRESSION_CCITTFAX4 = COMPRESSION_CCITT_T6 = 4;
-       COMPRESSION_LZW = 5;
-       COMPRESSION_JPEG = 7;
-       COMPRESSION_DEFLATE = 32946;
-       COMPRESSION_ADOBE_DEFLATE = 8;
-    */
-    TIFFSetField(out, TIFFTAG_COMPRESSION, COMPRESSION_NONE);
-#endif
     if(compression > 1) {
 	if (compression > 10) {
 	    TIFFSetField(out, TIFFTAG_COMPRESSION, compression - 10);
@@ -522,7 +508,6 @@ int R_SaveAsTIFF(void  *d, int width, int height,
 	TIFFSetField(out, TIFFTAG_YRESOLUTION, (float) res);
     }
 
-    linebytes = sampleperpixel * width;
     buf = (unsigned char *)_TIFFmalloc(TIFFScanlineSize(out));
     if (!buf) {
 	TIFFClose(out);
