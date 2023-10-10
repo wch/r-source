@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1999       Guido Masarotto
- *  Copyright (C) 1999-2022  The R Core Team
+ *  Copyright (C) 1999-2023  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -41,6 +41,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h> // for unlink
 
 /* 8 bits red, green and blue channel */
 #define DECLARESHIFTS int RSHIFT=(bgr)?0:16, GSHIFT=8, BSHIFT=(bgr)?16:0
@@ -101,7 +102,7 @@ int R_SaveAsPng(void  *d, int width, int height,
     volatile DECLARESHIFTS;
 
     /* Have we enough memory?*/
-    if (scanline == NULL)
+    if (scanline == NULL) // we do not know the file name to unlink it
 	return 0;
 
     if (fp == NULL) {
@@ -364,8 +365,10 @@ int R_SaveAsJpeg(void  *d, int width, int height,
     volatile DECLARESHIFTS;
 
     /* Have we enough memory?*/
-    if (scanline == NULL)
+    if (scanline == NULL) {
+	if (outfile) unlink(outfile);
 	return 0;
+    }
 
     if (outfile == NULL) {
 	free(scanline);
@@ -388,7 +391,10 @@ int R_SaveAsJpeg(void  *d, int width, int height,
 	 */
 	jpeg_destroy_compress(&cinfo);
 	free(scanline);
-	if (outfile) fclose(outfile);
+	if (outfile) {
+	    fclose(outfile);
+	    unlink(outfile);
+	}
 	return 0;
     }
     /* Now we can initialize the JPEG compression object. */
@@ -457,7 +463,7 @@ int R_SaveAsJpeg(void  *d, int width, int height,
 #ifdef HAVE_TIFF
 
 #include <tiffio.h>
-#include <unistd.h> // for unlink
+#include <Rversion.h>
 
 int R_SaveAsTIFF(void  *d, int width, int height,
 		unsigned int (*gp)(void *, int, int),
@@ -488,6 +494,15 @@ int R_SaveAsTIFF(void  *d, int width, int height,
     TIFFSetField(out, TIFFTAG_ORIENTATION, ORIENTATION_TOPLEFT);
     TIFFSetField(out, TIFFTAG_PLANARCONFIG, PLANARCONFIG_CONTIG);
     TIFFSetField(out, TIFFTAG_PHOTOMETRIC, PHOTOMETRIC_RGB);
+    TIFFSetField(out, TIFFTAG_SOFTWARE, "R " R_MAJOR "." R_MINOR);
+
+    /* JPEG compression does not work a line at a time, so switch to
+     * whole image -- we could use strips if necessary */
+    int byline = 1, fail = 0;
+    if(compression < 0) {
+	byline = 0;
+	compression = -compression;
+    }
     if(compression > 1) {
 	if (compression == 15 || compression == 18) {
 	    TIFFSetField(out, TIFFTAG_COMPRESSION, compression - 10);
@@ -502,29 +517,54 @@ int R_SaveAsTIFF(void  *d, int width, int height,
 	TIFFSetField(out, TIFFTAG_YRESOLUTION, (float) res);
     }
 
-    unsigned char *buf = (unsigned char *)_TIFFmalloc(TIFFScanlineSize(out));
-    if (!buf) {
-	TIFFClose(out);
-	unlink(outfile);
-	warning("allocation failure in R_SaveAsTIF");
-	return 0;
-    }
+    unsigned char *buf;
+    if(byline) {
+	buf = (unsigned char *)_TIFFmalloc(TIFFScanlineSize(out));
+	if (!buf) {
+	    TIFFClose(out);
+	    unlink(outfile);
+	    warning("allocation failure in R_SaveAsTIF");
+	    return 0;
+	}
 
-    int fail = 0;
-    for (unsigned int i = 0; i < height; i++) {
-	unsigned char *pscanline = buf;
-	for(unsigned int j = 0; j < width; j++) {
-	    unsigned int col = gp(d, i, j);
-	    *pscanline++ = GETRED(col) ;
-	    *pscanline++ = GETGREEN(col) ;
-	    *pscanline++ = GETBLUE(col) ;
-	    if(have_alpha) *pscanline++ = GETALPHA(col) ;
+	for (unsigned int i = 0; i < height; i++) {
+	    unsigned char *pscanline = buf;
+	    for(unsigned int j = 0; j < width; j++) {
+		unsigned int col = gp(d, i, j);
+		*pscanline++ = GETRED(col) ;
+		*pscanline++ = GETGREEN(col) ;
+		*pscanline++ = GETBLUE(col) ;
+		if(have_alpha) *pscanline++ = GETALPHA(col) ;
+	    }
+	    if(TIFFWriteScanline(out, buf, i, 0) == -1)
+	    {
+		fail = 1;
+		break;
+	    }
 	}
-	if(TIFFWriteScanline(out, buf, i, 0) == -1)
-	{
-	    fail = 1;
-	    break;
+    } else {
+	TIFFSetField(out, TIFFTAG_SAMPLESPERPIXEL, sampleperpixel);
+	TIFFSetField(out, TIFFTAG_ROWSPERSTRIP, height);
+	size_t sz = width * height * sampleperpixel;
+	buf = (unsigned char *)_TIFFmalloc(sz);
+	if (!buf) {
+	    TIFFClose(out);
+	    unlink(outfile);
+	    warning("allocation failure in R_SaveAsTIF");
+	    return 0;
 	}
+
+	unsigned char *pbuf = buf;
+	for (unsigned int i = 0; i < height; i++) {
+	    for(unsigned int j = 0; j < width; j++) {
+		unsigned int col = gp(d, i, j);
+		*pbuf++ = GETRED(col) ;
+		*pbuf++ = GETGREEN(col) ;
+		*pbuf++ = GETBLUE(col) ;
+		if(have_alpha) *pbuf++ = GETALPHA(col) ;
+	    }
+	}
+	if(TIFFWriteEncodedStrip(out, 0, buf, sz)  == -1) fail = 1;
     }
     TIFFClose(out);
     if (fail) unlink(outfile);

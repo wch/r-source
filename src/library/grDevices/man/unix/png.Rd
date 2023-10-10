@@ -94,14 +94,13 @@ tiff(filename = "Rplot\%03d.tiff",
 }
 \details{
   Plots in PNG and JPEG format can easily be converted to many other
-  bitmap formats, and both can be displayed in modern web
-  browsers.  The PNG format is lossless and is best for line
-  diagrams and blocks of colour.  The JPEG format is lossy,
-  but may be useful for image plots, for example.  BMP is a standard
-  format on Windows.  TIFF is a meta-format: the default format written
-  by \code{tiff} is lossless and stores RGB (and alpha where
-  appropriate) values uncompressed---such files are widely accepted,
-  which is their main virtue over PNG.
+  bitmap formats, and both can be displayed in modern web browsers.  The
+  PNG format is lossless and is best for line diagrams and blocks of
+  colour.  The JPEG format is lossy, but may be useful for image plots,
+  for example.  BMP is a standard format on Windows.  TIFF is a
+  meta-format: the default format written by \code{tiff} is lossless and
+  stores RGB (and alpha where appropriate) values uncompressed---such
+  files are widely accepted, which is their main virtue over PNG.
 
   The JPEG format only supports opaque backgrounds.
 

@@ -1,7 +1,7 @@
 #  File src/library/grDevices/R/unix/png.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2020 The R Core Team
+#  Copyright (C) 1995-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -150,7 +150,8 @@ tiff <- function(filename = "Rplot%03d.tiff",
                        "none" = 1L, "rle" = 2L, "lzw" = 5L, "jpeg" = 7L,
                        "zip" = 8L, "lzw+p" = 15L, "zip+p" = 18L,
                        "lerc" = 34887L, "lzma" = 34925L,
-                       "zstd" = 50000L, "webp" = 50001L)
+                       "zstd" = 50000L, "webp" = 50001L,
+                       "jpeg" = -7)
     if(type == "quartz") {
         if(capabilities("aqua")) {
             width <- g$width/ifelse(is.na(res), 72, res);
