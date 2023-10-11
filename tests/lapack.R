@@ -172,7 +172,12 @@ solve(a, b)
 solve(a, bb)
 
 A <- a + 0i
-solve(A, b)
+A_b <- solve(A, b) # platform dependent (NA <-> NaN in 2nd column)
+stopifnot(is.na(A_b))
+## IGNORE_RDIFF_BEGIN
+A_b
+rbind(re = Re(A_b[,2]), im = Im(A_b[,2]))
+## IGNORE_RDIFF_END
 
 
 ## PR#18541 by Mikael Jagan -- chol()  error & warning message:

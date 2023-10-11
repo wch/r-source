@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2023-08-31 r85038) -- "Unsuffered Consequences"
+R Under development (unstable) (2023-10-09 r85284) -- "Unsuffered Consequences"
 Copyright (C) 2023 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu
 
@@ -427,11 +427,19 @@ c NaN NA
 NaN NaN NaN 
 > 
 > A <- a + 0i
-> solve(A, b)
+> A_b <- solve(A, b) # platform dependent (NA <-> NaN in 2nd column)
+> stopifnot(is.na(A_b))
+> ## IGNORE_RDIFF_BEGIN
+> A_b
         11 12
 a NaN+NaNi NA
 b NaN+NaNi NA
 c NaN+NaNi NA
+> rbind(re = Re(A_b[,2]), im = Im(A_b[,2]))
+     a   b   c
+re  NA  NA  NA
+im NaN NaN NaN
+> ## IGNORE_RDIFF_END
 > 
 > 
 > ## PR#18541 by Mikael Jagan -- chol()  error & warning message:
