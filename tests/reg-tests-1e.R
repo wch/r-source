@@ -901,6 +901,21 @@ stopifnot(exprs = {
 ## had exponential/scientific format for Re() as well, from R 3.3.0 to R 4.3.z
 
 
+## PR#18579 (thanks to Mikael Jagan) -- cbind/rbind deparse.level for *methods*
+.S3method("cbind", "zzz",
+          function(..., deparse.level = 1)
+              if(!missing(deparse.level)) deparse.level)
+x <- structure(0, class = "zzz")
+stopifnot(exprs = {
+    is.null(cbind(x)) # deparse.level  *missing* {always ok}
+    identical(0,  cbind(x, deparse.level = 0))
+    identical(1,  cbind(x, deparse.level = 1))
+    identical(2,  cbind(x, deparse.level = 2))
+    identical(2L, cbind(x, deparse.level = 2L))
+})
+## passing to S3/S4 method did not work in R <= 4.3.x
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

@@ -419,6 +419,10 @@
 
       \item The level reported in the browser prompt was often too
       large. It now shows the number of browser contexts on the stack.
+
+      \item For \code{cbind()} and \code{rbind()}, the optional
+      \code{deparse.level} argument is now properly passed to methods,
+      thanks to Mikael Jagan's \PR{18579} and comments there.
     }
   }
 }
