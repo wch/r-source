@@ -727,33 +727,38 @@ checkRd <- function(Rd, defines = .Platform$OS.type, stages = "render",
             npre <- length(preblocks)
             pretags <- vapply(preblocks, function (block) {
                 tag <- attr(block, "Rd_tag")
-                if (tag == "TEXT" && grepl("^[[:blank:]]*$", block)) "BLANK"
+                if (tag == "TEXT" && grepl("^[[:space:]]*$", block)) "BLANK"
                 else tag
             }, "")
-            preidx <- npre - (pretags[npre] == "BLANK")
-            pretag <- pretags[preidx] # possibly empty
-            tags <- RdTags(block)
-            inItemize <- blocktag %in% c("\\itemize", "\\enumerate")
-            ignore <- identical(attr(block, "srcref")[2L], 1L) ||
-                (length(tags) == 2L && tags[1L] == "USERMACRO" &&
-                 attr(block[[1L]], "macro") == "\\sspace") ||
-                (inItemize && identical(pretag, "\\item")) ||
-                identical(pretag, "\\tab") ||
-                (blocktag == "\\item" && npre == 0L) || # '\item{arg}{{desc}}'
-                (sectiontag %in% c("\\source", "\\references") &&
-                 all(tags == "TEXT") &&
-                 utils::charClass(block[[1L]], "upper")[1L])
-            if (!ignore) {
-                level <- -1
-                ## extra message for frequent misuse of \item *{label} *{desc}
-                if (inItemize && identical(pretag, "LIST") && preidx > 1L &&
-                    (pretags[preidx - 1L] == "\\item" ||
-                     (pretags[preidx - 1L] == "BLANK" &&
-                      identical(pretags[preidx - 2L], "\\item")))) {
-                    msg2 <- paste0(" in ", blocktag, "; ",
-                                   if (sectiontag == "\\value") "\\value handles \\item{}{} directly"
-                                   else "meant \\describe ?")
-                    showSource <- FALSE # misleading marker, often many \items
+            pretagsNB <- pretags[pretags != "BLANK"]
+            if (npreNB <- length(pretagsNB)) { # skip '{{...}}'
+                pretag <- pretagsNB[npreNB]
+                tags <- RdTags(block)
+                inItemize <- blocktag %in% c("\\itemize", "\\enumerate")
+                separated <- npre == 0L || pretags[npre] == "BLANK" ||
+                    (pretags[npre] == "TEXT" && # catch 'emph{Journal}', '\"{o}',
+                     ## '"[...]{...}', but ignore {P}oisson-{G}amma or ({EM})
+                     !grepl("([[:alnum:]]|\\\\[[:punct:]]|[])])$", preblocks[[npre]]))
+                ignore <-
+                    (length(tags) == 1L && startsWith(tags, "\\") &&
+                     separated) || # ignore ' {\code{...}}' but not ' code{\link{}}'
+                    (length(tags) == 2L && tags[1L] == "USERMACRO") || # '{\sspace}'
+                    (inItemize && pretag == "\\item") || # '\item {}'
+                    pretag == "\\tab" || # '\tab {}'
+                    (sectiontag %in% c("\\source", "\\references") && (
+                        separated || pretag == "\\cr" # '\cr\cr{ref}' relicts
+                    ))
+                if (!ignore) {
+                    level <- -1
+                    ## extra message for frequent misuse of \item *{label} *{desc}
+                    if (inItemize && npreNB > 1L && pretag == "LIST" &&
+                        pretagsNB[npreNB - 1L] == "\\item") {
+                        msg2 <- paste0(" in ", blocktag, "; ",
+                                       if (sectiontag == "\\value")
+                                           "\\value handles \\item{}{} directly"
+                                       else "meant \\describe ?")
+                        showSource <- FALSE # misleading marker, often many \items
+                    }
                 }
             }
         }
