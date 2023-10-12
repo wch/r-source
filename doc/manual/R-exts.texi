@@ -14562,13 +14562,13 @@ was defined prior to the inclusion of the header.
 @example
 @group
 char * CallocCharBuf(size_t @var{n})
-void * Memcpy(@var{p}, @var{q}, @var{n})
-void * Memzero(@var{p}, @var{m})
+void * Memcpy(@var{q}, @var{p}, @var{n})
+void * Memzero(@var{p}, @var{n})
 @end group
 @end example
-@code{CallocCharBuf} is shorthand for @code{R_Calloc(n+1, char)} to allow
+@code{CallocCharBuf(n)} is shorthand for @code{R_Calloc(n+1, char)} to allow
 for the @code{nul} terminator.  @code{Memcpy} and @code{Memzero} take
-@code{n} items from array @code{p} and copy them to array @code{p} or
+@code{n} items from array @code{p} and copy them to array @code{q} or
 zero them respectively.
 
 @node Error signaling, Random numbers, Memory allocation, The R API
