@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2023-10-09 r85284) -- "Unsuffered Consequences"
+R Under development (unstable) (2023-10-11 r85316) -- "Unsuffered Consequences"
 Copyright (C) 2023 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu
 
@@ -417,17 +417,20 @@ attr(,"class")
 > dimnames(b) <- list(One=4:6, Two=11:12)
 > bb <- 1:3; names(bb) <- 11:12
 > ## gave error with LAPACK 3.11.0
-> solve(a, b)
+> ## names(dimnames(.)), ("two", "Two") are lost {FIXME?}:
+> ## IGNORE_RDIFF_BEGIN
+> stopifnot(is.na(print(solve(a, b )))) # is.na(): NA *or* NaN
    11 12
 a NaN NA
 b NaN NA
 c NaN NA
-> solve(a, bb)
+> ## IGNORE_RDIFF_END
+> stopifnot(is.na(print(solve(a, bb)))) # all NaN
   a   b   c 
 NaN NaN NaN 
 > 
 > A <- a + 0i
-> A_b <- solve(A, b) # platform dependent (NA <-> NaN in 2nd column)
+> A_b <- solve(A, b) # platform dependent result (e.g. OPENBLAS ..)
 > stopifnot(is.na(A_b))
 > ## IGNORE_RDIFF_BEGIN
 > A_b
@@ -435,7 +438,7 @@ NaN NaN NaN
 a NaN+NaNi NA
 b NaN+NaNi NA
 c NaN+NaNi NA
-> rbind(re = Re(A_b[,2]), im = Im(A_b[,2]))
+> rbind(re = Re(A_b[,2]), im = Im(A_b[,2])) # often was "all NA", now typically "re=NA, im=NaN"
      a   b   c
 re  NA  NA  NA
 im NaN NaN NaN
