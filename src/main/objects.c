@@ -378,9 +378,66 @@ SEXP dispatchMethod(SEXP op, SEXP sxp, SEXP dotClass, RCNTXT *cptr, SEXP method,
 		    break;
 		}
 	    if (!matched) {
+#ifdef USEMETHOD_FORWARD_LOCALS
 		UNPROTECT(1); /* newvars */
 		newvars = PROTECT(CONS(CAR(s), newvars));
 		SET_TAG(newvars, TAG(s));
+#else
+		static int option = -1;
+		if (option == -1) {
+		    const char *val = getenv("R_USEMETHOD_FORWARD_LOCALS");
+		    if (val == NULL)
+			option = 0;
+		    else {
+			if (strcmp(val, "all") == 0)
+			    option = 0;
+			else if (strcmp(val, "S4") == 0)
+			    option = 1;
+			else if (strcmp(val, "none") == 0)
+			    option = 2;
+			else if (strcmp(val, "error") == 0)
+			    option = 3;
+			else {
+			    warning("bad value for R_USEMETHOD_FORWARD_LOCALS");
+			    option = 0;
+			}
+		    }
+		}
+		SEXP val;
+		char buf[8192];
+		switch(option) {
+		case 0: // forward all, as in the past
+		    UNPROTECT(1); /* newvars */
+		    newvars = PROTECT(CONS(CAR(s), newvars));
+		    SET_TAG(newvars, TAG(s));
+		    break;
+		case 1: // forward only S4 variables
+		    if (TAG(s) == R_dot_defined ||
+			TAG(s) == R_dot_Method ||
+			TAG(s) == R_dot_target ||
+			TAG(s) == R_dot_Generic ||
+			TAG(s) == R_dot_Methods) {
+			UNPROTECT(1); /* newvars */
+			newvars = PROTECT(CONS(CAR(s), newvars));
+			SET_TAG(newvars, TAG(s));
+		    }
+		    break;
+		case 2: // don't forward any variables
+		    break;
+		case 3: // forward all, with an error when used
+		    snprintf(buf, sizeof(buf),
+			     "stop(\"getting UseMethod variable '%s'\")",
+			     CHAR(PRINTNAME(TAG(s))));
+		    val = mkPROMISE(R_ParseString(buf), R_GlobalEnv);
+		    UNPROTECT(1); /* newvars */
+		    newvars = PROTECT(CONS(val, newvars));
+		    SET_TAG(newvars, TAG(s));
+		    break;
+		default:
+		    option = 0;
+		    warning("bad value for R_USEMETHOD_FORWARD_LOCALS");
+		}
+#endif
 	    }
 	}
     }
