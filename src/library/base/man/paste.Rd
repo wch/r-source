@@ -22,10 +22,13 @@ paste0(\dots,            collapse = NULL, recycle0 = FALSE)
   \item{recycle0}{\code{\link{logical}} indicating if zero-length
     character arguments should result in the zero-length
     \code{\link{character}(0)}.  Note that when \code{collapse} is
-    a string, \code{recycle0} has no effect.}
+    a string, \code{recycle0} does \emph{not} recycle to zero-length, but
+    to \code{""}.}% <== basic semantic of {collapse} mentioned above
 }
 \description{
   Concatenate vectors after converting to character.
+  Concatenation happens in two basically different ways, determined by
+  \code{collapse} being a string or not.
 }
 \details{
   \code{paste} converts its arguments (\emph{via}
