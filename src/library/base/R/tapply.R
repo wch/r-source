@@ -1,7 +1,7 @@
 #  File src/library/base/R/tapply.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2017 The R Core Team
+#  Copyright (C) 1995-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -51,7 +51,7 @@ tapply <- function (X, INDEX, FUN = NULL, ..., default = NA, simplify = TRUE)
     ansmat <- array(
 	if (simplify && all(lengths(ans) == 1L)) {
 	    ans <- unlist(ans, recursive = FALSE, use.names = FALSE)
-	    if(!is.null(ans) && is.na(default) && is.atomic(ans))
+	    if(is.na(default) && is.atomic(ans))
 		vector(typeof(ans))
 	    else default
 	} else vector("list", prod(extent)),

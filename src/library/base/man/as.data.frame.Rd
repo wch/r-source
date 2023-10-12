@@ -1,6 +1,6 @@
 % File src/library/base/man/as.data.frame.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2022 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{as.data.frame}
@@ -97,8 +97,7 @@ is.data.frame(x)
   as the method.
 
   Since \R 4.3.0, the \emph{default} method will call
-  \code{as.data.frame.vector} for atomic (as by \code{\link{is.atomic}})
-  non-\code{NULL} \code{x}.
+  \code{as.data.frame.vector} for atomic (as by \code{\link{is.atomic}}) \code{x}.
 
   Direct calls of \code{as.data.frame.\var{class}} are still possible (base package!),
   for 12 atomic base classes, but will be deprecated (already visibly by setting

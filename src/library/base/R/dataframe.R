@@ -182,11 +182,7 @@ as.data.frame <- function(x, row.names = NULL, optional = FALSE, ...)
 }
 
 as.data.frame.default <- function(x, ...) {
-    isVectorLike <- function(x) {
-        (is.atomic(x) && !is.null(x)) ##  # <== should be new  is.atomic(x) (!)
-        ## || (is.vector(x) && !is.object(x))
-    }
-    if(isVectorLike(x))
+    if(is.atomic(x))
         as.data.frame.vector(x, ...)
     else
     stop(gettextf("cannot coerce class %s to a data.frame",
