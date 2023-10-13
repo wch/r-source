@@ -4377,10 +4377,11 @@ next_char:
     status = Riconv(cd, &i_buf, &i_len, &o_buf, &o_len);
     /* libiconv 1.13 gives EINVAL on \xe0 in UTF-8 (as used in fBasics) */
     if(status == (size_t) -1 && (errno == EILSEQ || errno == EINVAL)) {
+	int fail = getenv("_R_CHECK_MBCS_CONVERSION_FAILURE_") != NULL;
 	if (utf8locale) {
 	    /* We attempt to do better here in a UTF-8 locale if the
 	       input is valid and give one dot per UTF-8 character.
-	       However, packages PBSmodelling and fBasics use invalid
+	       However, packages PBSmodelling and fBasics used invalid
 	       8-bit inputs.
 	    */
 	    int clen = utf8clen(*i_buf);
@@ -4388,17 +4389,23 @@ next_char:
 	    int res =
 		(int) utf8toucs(&wc, i_buf); // gives -1 for a conversion error
 	    if (res != -1) {
-		warning(_("conversion failure on '%s' in 'mbcsToSbcs': dot substituted for %lc"),
-			in, wc),
-		    *o_buf++ = '.'; o_len--; i_buf += clen; i_len -= clen;
+		if (fail)
+		    error(_("conversion failure on '%s' in 'mbcsToSbcs': dot substituted for %lc"), in, wc);
+		else
+		    warning(_("conversion failure on '%s' in 'mbcsToSbcs': dot substituted for %lc"), in, wc);
+		*o_buf++ = '.'; o_len--; i_buf += clen; i_len -= clen;
 	    } else {
-		warning(_("conversion failure on '%s' in 'mbcsToSbcs': dot substituted for <%02x>"),
-			in, (unsigned char) *i_buf),
-		    *o_buf++ = '.'; o_len--; i_buf++; i_len--;
+		if (fail)
+		    error(_("conversion failure on '%s' in 'mbcsToSbcs': dot substituted for <%02x>"), in, (unsigned char) *i_buf);
+		else
+		    warning(_("conversion failure on '%s' in 'mbcsToSbcs': dot substituted for <%02x>"), in, (unsigned char) *i_buf);
+		*o_buf++ = '.'; o_len--; i_buf++; i_len--;
 	    }
 	} else {
-	    warning(_("conversion failure on '%s' in 'mbcsToSbcs': dot substituted for <%02x>"),
-		    in, (unsigned char) *i_buf),
+	    if (fail)
+		error(_("conversion failure on '%s' in 'mbcsToSbcs': dot substituted for <%02x>"), in, (unsigned char) *i_buf);
+	    else
+		warning(_("conversion failure on '%s' in 'mbcsToSbcs': dot substituted for <%02x>"), in, (unsigned char) *i_buf);
 		*o_buf++ = '.'; o_len--; i_buf++; i_len--;
 	}
 	if(i_len > 0) goto next_char;
