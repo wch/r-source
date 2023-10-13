@@ -1100,8 +1100,8 @@ suffice.
 @subsection C standards
 
 Compiling @R{} requires C99 or later: C11 and C17 are minor updates, but
-the substantial update planned for `C23' (now expected in 2024) will
-also be supported.
+the substantial update planned for `C23' (now expected @emph{ca} April
+2024) will also be supported.
 
 As from @R{} 4.3.0 there is support for packages to indicate their
 preferred C version.  Macros @code{CC17}, @code{C17FLAGS}, @code{CC23}
