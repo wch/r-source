@@ -16,9 +16,9 @@
       On Windows, ditto for window titles.
 
       \item \code{is.atomic(NULL)} now returns \code{FALSE}, as \code{NULL}
-      is not an atomic vector.  Strict back compatibility would
+      is not an atomic vector.  Strict back-compatibility would
       replace \code{is.atomic(foo)} by \code{(is.null(foo) || is.atomic(foo))}
-      but should happen sparingly only.
+      but should happen only sparingly.
     }
   }
 
@@ -173,6 +173,9 @@
       substituted per character rather than per byte.  (Platforms whose
       \code{iconv()} does transliteration silently plot the
       transliteration.)
+
+      In a UTF-8 locale some transliterations are now done without
+      warning (e.g., dashes and Unicode minus to hyphen).
 
       \item The matrix multiplication functions \code{crossprod()} and
       \code{tcrossprod()} are now also primitive and S3 generic, as

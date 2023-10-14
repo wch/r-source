@@ -4389,24 +4389,53 @@ next_char:
 	    int res =
 		(int) utf8toucs(&wc, i_buf); // gives -1 for a conversion error
 	    if (res != -1) {
-		if (fail)
-		    error(_("conversion failure on '%s' in 'mbcsToSbcs': dot substituted for %lc"), in, wc);
-		else
-		    warning(_("conversion failure on '%s' in 'mbcsToSbcs': dot substituted for %lc"), in, wc);
-		*o_buf++ = '.'; o_len--; i_buf += clen; i_len -= clen;
+		// two-char fixups
+		char *fix2 = NULL;
+		if(wc == 0x2190) fix2 = "<-";
+		else if(wc == 0x2192 || wc == 0x2794 || wc == 0x279C ||
+			wc == 0x279D || wc == 0x279E || wc == 0x279F)
+		    fix2 = "->";
+		// The nwxt two could and probably should be done by plotmath.
+		else if(wc == 0x2264) fix2 = "<=";
+		else if(wc == 0x2265) fix2 = ">=";
+		if(fix2) {
+		    /*
+		    if (fail)
+			error("conversion failure on '%s' in 'mbcsToSbcs': for %lc", in, wc);
+		    else
+			warning("conversion failure on '%s' in 'mbcsToSbcs': %s substituted for %lc", in, fix2, wc);
+		    */
+		    *o_buf++ = fix2[0]; *o_buf++ = fix2[1]; o_len-= 2;
+		    i_buf += clen; i_len -= clen;
+		} else {
+		    // one-char fixups
+		    char fix = '.';
+		    if (wc == 0x2013 || wc == 0x2014 || wc == 0x2212)
+			fix = '-'; // dashes, minus
+		    else if (wc == 0x2018 || wc == 0x2018) fix = '\'';
+		    else if (wc == 0x2022) fix = '.';
+		    else if (wc == 0x2665 || wc == 0x2737) fix = '*';
+		    else {
+			if (fail)
+			    error(_("conversion failure on '%s' in 'mbcsToSbcs': for %lc"), in, wc);
+			else
+			    warning(_("conversion failure on '%s' in 'mbcsToSbcs': %c substituted for %lc"), in, fix, wc);
+		    }
+		    *o_buf++ = fix; o_len--; i_buf += clen; i_len -= clen;
+		}
 	    } else {
 		if (fail)
-		    error(_("conversion failure on '%s' in 'mbcsToSbcs': dot substituted for <%02x>"), in, (unsigned char) *i_buf);
+		    error(_("conversion failure on '%s' in 'mbcsToSbcs': for <%02x>"), in, (unsigned char) *i_buf);
 		else
 		    warning(_("conversion failure on '%s' in 'mbcsToSbcs': dot substituted for <%02x>"), in, (unsigned char) *i_buf);
 		*o_buf++ = '.'; o_len--; i_buf++; i_len--;
 	    }
 	} else {
 	    if (fail)
-		error(_("conversion failure on '%s' in 'mbcsToSbcs': dot substituted for <%02x>"), in, (unsigned char) *i_buf);
+		error(_("conversion failure on '%s' in 'mbcsToSbcs': for <%02x>"), in, (unsigned char) *i_buf);
 	    else
 		warning(_("conversion failure on '%s' in 'mbcsToSbcs': dot substituted for <%02x>"), in, (unsigned char) *i_buf);
-		*o_buf++ = '.'; o_len--; i_buf++; i_len--;
+	    *o_buf++ = '.'; o_len--; i_buf++; i_len--;
 	}
 	if(i_len > 0) goto next_char;
     }
