@@ -54,7 +54,11 @@ deparseLatex <- function(x, dropBraces = FALSE)
     paste(result, collapse="")
 }
 
-print.LaTeX <- function(x, ...) cat(deparseLatex(x), "\n")
+print.LaTeX <- function(x, ...)
+{
+    cat(deparseLatex(x), "\n")
+    invisible(x)
+}
 
 latex_tag <- function(x, tag)
 {
