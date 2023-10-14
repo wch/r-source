@@ -8,3 +8,4 @@ Contact: R-help mailing list <r-help@r-project.org>
 Description: Base R functions.
 License: Part of R @VERSION@
 Suggests: methods
+Enhances: chron, date, round
