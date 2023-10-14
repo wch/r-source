@@ -187,6 +187,9 @@
 
       \item The non-Quartz \code{tiff()} devices allow additional types
       of compression if supported by the platform's \samp{libtiff} library.
+
+      \item The list of base and recommended package names is now provided by
+      \code{tools :: standard_package_names}.
     }
   }
 

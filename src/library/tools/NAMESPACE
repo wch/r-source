@@ -27,6 +27,7 @@ export("Adobe_glyphs", "HTMLheader", "Rcmd", "Rd2HTML", "Rd2ex",
        getDepList, pkgDepends, installFoundDepends,# R/pkgDepends.R man/getDepList.Rd man/installFoundDepends.Rd
        vignetteDepends, # deprecated, too as it calls  getDepList()
 
+       standard_package_names,
        "package_dependencies",
        "package_native_routine_registration_skeleton",
        "parseLatex", "parse_Rd",

@@ -1288,6 +1288,7 @@ function()
 
 ## we cannot assume that file.path(R.home("share"), "make", "vars.mk")
 ## is installed, as it is not on Windows
+standard_package_names <-
 .get_standard_package_names <-
 local({
     lines <- readLines(file.path(R.home("share"), "make", "vars.mk"))
@@ -1297,6 +1298,7 @@ local({
         tolower(sub("^R_PKGS_([[:upper:]]+) *=.*", "\\1", lines))
     eval(substitute(function() {out}, list(out=out)), envir = topenv())
     })
+
 
 ### ** .get_standard_package_dependencies
 

@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2023-09-29 r85235) -- "Unsuffered Consequences"
+R Under development (unstable) (2023-10-13 r85327) -- "Unsuffered Consequences"
 Copyright (C) 2023 The R Foundation for Statistical Computing
-Platform: aarch64-apple-darwin23.0.0
+Platform: x86_64-pc-linux-gnu
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -867,10 +867,60 @@ function (x, ...)
 > 
 > ## IGNORE_RDIFF_BEGIN
 > showNonASCIIfile(f)
-1: francais: test of showNonASCII():
-4:    This has an "umlaut in it.
+1: fran<e7>ais: test of showNonASCII():
+4:    This has an <fc>mlaut in it.
 > ## IGNORE_RDIFF_END
 > unlink(f)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("testInstalledPackage")
+> ### * testInstalledPackage
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: testInstalledPackage
+> ### Title: Test Installed Packages
+> ### Aliases: testInstalledPackage testInstalledPackages testInstalledBasic
+> ###   TEST_MC_CORES standard_package_names
+> ### Keywords: utilities
+> 
+> ### ** Examples
+> 
+> str(stPkgs <- standard_package_names())
+List of 2
+ $ base       : chr [1:14] "base" "tools" "utils" "grDevices" ...
+ $ recommended: chr [1:15] "MASS" "lattice" "Matrix" "nlme" ...
+> (pNms <- unlist(stPkgs, FALSE))
+        base1         base2         base3         base4         base5 
+       "base"       "tools"       "utils"   "grDevices"    "graphics" 
+        base6         base7         base8         base9        base10 
+      "stats"    "datasets"     "methods"        "grid"     "splines" 
+       base11        base12        base13        base14  recommended1 
+     "stats4"       "tcltk"    "compiler"    "parallel"        "MASS" 
+ recommended2  recommended3  recommended4  recommended5  recommended6 
+    "lattice"      "Matrix"        "nlme"    "survival"        "boot" 
+ recommended7  recommended8  recommended9 recommended10 recommended11 
+    "cluster"   "codetools"     "foreign"  "KernSmooth"       "rpart" 
+recommended12 recommended13 recommended14 recommended15 
+      "class"        "nnet"     "spatial"        "mgcv" 
+> (prio <- sapply(as.vector(pNms), packageDescription, fields = "Priority"))
+         base         tools         utils     grDevices      graphics 
+       "base"        "base"        "base"        "base"        "base" 
+        stats      datasets       methods          grid       splines 
+       "base"        "base"        "base"        "base"        "base" 
+       stats4         tcltk      compiler      parallel          MASS 
+       "base"        "base"        "base"        "base" "recommended" 
+      lattice        Matrix          nlme      survival          boot 
+"recommended" "recommended" "recommended" "recommended" "recommended" 
+      cluster     codetools       foreign    KernSmooth         rpart 
+"recommended" "recommended" "recommended" "recommended" "recommended" 
+        class          nnet       spatial          mgcv 
+"recommended" "recommended" "recommended" "recommended" 
+> ## consistency of packageDescription and standard_package_names :
+> stopifnot(identical(unname(prio),
++                     sub("[0-9]+$", '', names(pNms))))
 > 
 > 
 > 
