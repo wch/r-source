@@ -129,7 +129,9 @@ latexToUtf8 <- function(x)
 		    index <- c(index, switch(nexttag1,
 			    MACRO =,
 			    TEXT = nextobj1,
-			    BLOCK = deparseLatex(nextobj1, dropBraces=TRUE)))
+			    BLOCK = if (length(nextobj1))
+					deparseLatex(nextobj1, dropBraces=TRUE)
+				    else " ")) # index for empty arg {}
 		}
 		subst <- latex_tag(latexTable[[index]], "TEXT")
 
@@ -198,7 +200,7 @@ makeLatexTable <- function(utf8table)
     	    	}
     	    } else if (nexttag == "BLOCK") {
     	    	if (!length(nextobj)) {
-    	    	    arg <- ""   # or character()?
+    	    	    arg <- " "  # index for empty arg {}
     	    	    getNext <- TRUE
     	    	} else {
     	    	    arg <- nextobj[[1L]]
@@ -247,8 +249,7 @@ makeLatexTable <- function(utf8table)
     ## Also handle (some) LaTeX specials:
     table[["\\&"]] <- "&"
     latexArgCount[["\\&"]] <<- 0    
-    table[["\\~"]] <- "~"
-    latexArgCount[["\\~"]] <<- 0
+    table[["\\~"]][[" "]] <- "~"
     table[["\\%"]] <- "%"
     latexArgCount[["\\%"]] <<- 0    
     

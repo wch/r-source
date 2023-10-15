@@ -916,6 +916,15 @@ stopifnot(exprs = {
 ## passing to S3/S4 method did not work in R <= 4.3.x
 
 
+## Conversion of LaTeX code \~{n} etc and \~{}
+stopifnot(identical(
+    print(tools::parseLatex("El\\~{}Ni\\~{n}o") |>
+          tools::latexToUtf8() |>
+          tools::deparseLatex(dropBraces = TRUE)),
+    "El~Ni\u00F1o")) # "El~Niño"
+## gave "El~Ni~no" in R 4.3.{0,1} (\~ treated as 0-arg macro)
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

@@ -534,6 +534,9 @@
 
       \item \code{tiff(type = "Xlib")} was only outputting the last page
       of multi-page plots.
+
+      \item \code{tools::latexToUtf8()} again knows about \samp{\\~{n}}
+      and other letters with tilde, fixing a regression in \R 4.3.0.
     }
   }
 }
