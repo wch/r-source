@@ -4412,7 +4412,7 @@ next_char:
 		    char fix = '.';
 		    if (wc == 0x2013 || wc == 0x2014 || wc == 0x2212)
 			fix = '-'; // dashes, minus
-		    else if (wc == 0x2018 || wc == 0x2018) fix = '\'';
+		    else if (wc == 0x2018 || wc == 0x2019) fix = '\'';
 		    else if (wc == 0x2022) fix = '.';
 		    else if (wc == 0x2665 || wc == 0x2737) fix = '*';
 		    else {
