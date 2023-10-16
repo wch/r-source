@@ -11,3 +11,4 @@ Imports: utils, grDevices, graphics
 Suggests: MASS, Matrix, SuppDists, methods, stats4
 NeedsCompilation: yes
 Encoding: UTF-8
+Enhances: Kendall, coin, multcomp, pcaPP, pspearman, robustbase 
