@@ -397,6 +397,7 @@ aspell_control_R_manuals <-
          c("--master=en_US",
            "--add-extra-dicts=en_GB",
            "--mode=texinfo",
+           "--add-texinfo-ignore=abbr",           
            "--add-texinfo-ignore=acronym",
            "--add-texinfo-ignore=deftypefun",
            "--add-texinfo-ignore=deftypefunx",
@@ -409,12 +410,15 @@ aspell_control_R_manuals <-
            "--add-texinfo-ignore=macro",
            "--add-texinfo-ignore=multitable",
            "--add-texinfo-ignore=node",
-           "--add-texinfo-ignore=pkg",
            "--add-texinfo-ignore=printindex",
            "--add-texinfo-ignore=set",
            "--add-texinfo-ignore=vindex",
            "--add-texinfo-ignore-env=menu",
-           "--add-texinfo-ignore=CRANpkg"
+           "--add-texinfo-ignore=CRANpkg",
+           "--add-texinfo-ignore=cputype",
+           "--add-texinfo-ignore=math",           
+           "--add-texinfo-ignore=pkg",
+           character()
            ),
          hunspell =
          c("-d en_US,en_GB"))
