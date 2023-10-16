@@ -4597,7 +4597,7 @@ Default: false (but true for CRAN submission checks).
 
 @item _R_CHECK_MBCS_CONVERSION_FAILURE_
 If set to a non-empty value, makes warnings from @code{pdf()} and
-@code{postscript()} about conversion failures from an MBCS (ususally
+@code{postscript()} about conversion failures from an MBCS (usually
 UTF-8) into errors.
 Default: unset.
 @end vtable
