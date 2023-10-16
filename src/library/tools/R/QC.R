@@ -4102,7 +4102,7 @@ function(dfile, dir)
             }
         }
         patt <- "(^Modified BSD License$|^BSD$|^CC BY.* [23][.]0)"
-        if(any(ind <- grepl(patt, status$component))) {
+        if(any(ind <- grepl(patt, status$components))) {
             status$deprecated <- status$components[ind]
             ok <- FALSE
         }
