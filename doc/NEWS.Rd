@@ -190,6 +190,10 @@
 
       \item The list of base and recommended package names is now provided by
       \code{tools :: standard_package_names}.
+
+      \item \code{cairo_pdf()} and \code{cairo_ps()} default to
+      \code{onefile = TRUE} to closer match \code{pdf()} and
+      \code{postscript()}.
     }
   }
 
@@ -217,8 +221,8 @@
       \emph{pro tem} this can also be selected by setting environment
       variable \env{R_USE_LIBDEFLATE_FOR_LAZYLOAD} to \code{yes}.
 
-      \item \command{configure} \option{--enable-lto=check} has not
-      worked reliably since 2019 and has been removed.
+      \item \command{configure} option \option{--enable-lto=check} has
+      not worked reliably since 2019 and has been removed.
     }
   }
 
