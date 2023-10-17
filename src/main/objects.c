@@ -425,9 +425,21 @@ SEXP dispatchMethod(SEXP op, SEXP sxp, SEXP dotClass, RCNTXT *cptr, SEXP method,
 		case 2: // don't forward any variables
 		    break;
 		case 3: // forward all, with an error when used
+		    if (TAG(s) != R_dot_defined &&
+			TAG(s) != R_dot_Method &&
+			TAG(s) != R_dot_target &&
+			TAG(s) != R_dot_Generic &&
+			TAG(s) != R_dot_Methods)
+			warningcall_immediate(R_NilValue,
+					      "UseMethod forwarding '%s' "
+					      "in generic '%s'",
+				CHAR(PRINTNAME(TAG(s))),
+				generic);
 		    snprintf(buf, sizeof(buf),
-			     "stop(\"getting UseMethod variable '%s'\")",
-			     CHAR(PRINTNAME(TAG(s))));
+			     "stop(\"getting UseMethod variable '%s' "
+			     "from generic '%s'\")",
+			     CHAR(PRINTNAME(TAG(s))),
+			     generic);
 		    val = mkPROMISE(R_ParseString(buf), R_GlobalEnv);
 		    UNPROTECT(1); /* newvars */
 		    newvars = PROTECT(CONS(val, newvars));
