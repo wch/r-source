@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2023-09-10 r85120) -- "Unsuffered Consequences"
+R Under development (unstable) (2023-10-17 r85341) -- "Unsuffered Consequences"
 Copyright (C) 2023 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu
 
@@ -1856,6 +1856,21 @@ Variances:
 > 
 > plot(function(x) dt(x, df = 3, ncp = 2), -3, 11, ylim = c(0, 0.32),
 +      main = "Non-central t - Density", yaxs = "i")
+> 
+> ## Relation between F_t(.) = pt(x, n) and pbeta():
+> ptBet <- function(t, n) {
++     x <- n/(n + t^2)
++     r <- pb <- pbeta(x, n/2, 1/2) / 2
++     pos <- t > 0
++     r[pos] <- 1 - pb[pos]
++     r
++ }
+> x <- seq(-5, 5, by = 1/8)
+> nu <- 3:10
+> pt. <- outer(x, nu, pt)
+> ptB <- outer(x, nu, ptBet)
+> ## matplot(x, pt., type = "l")
+> stopifnot(all.equal(pt., ptB, tolerance = 1e-15))
 > 
 > 
 > 

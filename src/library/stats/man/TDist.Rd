@@ -1,6 +1,6 @@
 % File src/library/stats/man/TDist.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2022 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{TDist}
@@ -94,8 +94,9 @@ rt(n, df, ncp)
 
   The \eqn{t} distribution's cumulative distribution function (cdf),
   \eqn{F_{\nu}}{F_n} fulfills
-  \eqn{F_{\nu}(t) = 1 - I_x(\nu/2, 1/2) = I_{1-x}(1/2, \nu/2),}{%
-       F_{n}(t)   = 1 - I_x(n/2,   1/2) = I_{1-x}(1/2, n/2),}   where
+  \eqn{F_{\nu}(t) =    \frac 1 2 I_x(\frac{\nu}{2}, \frac 1 2),}{F_{n}(t) =     I_x(n/2, 1/2) / 2,}  for \eqn{t \le 0}, and
+  \eqn{F_{\nu}(t) = 1- \frac 1 2 I_x(\frac{\nu}{2}, \frac 1 2),}{F_{n}(t) = 1 - I_x(n/2, 1/2) / 2,}  for \eqn{t \ge 0},
+  where
   \eqn{x := \nu/(\nu + t^2)}{x := n/(n + t^2)}, and \eqn{I_x(a,b)} is the
   incomplete beta function, in \R this is \code{\link{pbeta}(x, a,b)}.
 }
@@ -162,5 +163,20 @@ persp(tt, ncp, ptn, zlim = 0:1, r = 2, phi = 20, theta = 200, main = t.tit,
 
 plot(function(x) dt(x, df = 3, ncp = 2), -3, 11, ylim = c(0, 0.32),
      main = "Non-central t - Density", yaxs = "i")
+
+## Relation between F_t(.) = pt(x, n) and pbeta():
+ptBet <- function(t, n) {
+    x <- n/(n + t^2)
+    r <- pb <- pbeta(x, n/2, 1/2) / 2
+    pos <- t > 0
+    r[pos] <- 1 - pb[pos]
+    r
+}
+x <- seq(-5, 5, by = 1/8)
+nu <- 3:10
+pt. <- outer(x, nu, pt)
+ptB <- outer(x, nu, ptBet)
+## matplot(x, pt., type = "l")
+stopifnot(all.equal(pt., ptB, tolerance = 1e-15))
 }
 \keyword{distribution}
