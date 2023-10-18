@@ -707,6 +707,12 @@ function(package, lib.loc = NULL, quietly = FALSE, warn.conflicts,
     invisible(value)
 }
 
+use <-
+function(package, lib.loc = NULL, include.only)
+    invisible(library(package, lib.loc = lib.loc, character.only = TRUE,
+                      logical.return = TRUE, include.only = include.only,
+                      attach.required = FALSE))
+
 .packages <-
 function(all.available = FALSE, lib.loc = NULL)
 {
@@ -1022,3 +1028,4 @@ function(x)
 
     gsub("%%", "%", x, fixed = TRUE)
 }
+
