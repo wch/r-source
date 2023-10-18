@@ -633,7 +633,7 @@ inRbuildignore <- function(files, pkgdir) {
         }
 
 	needRefman <- manual &&
-            parse_description_field(desc, "BuildManual", TRUE) &&
+            parse_description_field(desc, "BuildManual", FALSE) &&
             any(btinfo[, "later"])
 	if (needRefman) {
 	    messageLog(Log, "building the PDF package manual")
