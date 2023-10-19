@@ -101,10 +101,12 @@ standard_package_names()
 }
 \examples{
 str(stPkgs <- standard_package_names())
+\donttest{%needs recommended packages
+## consistency of packageDescription and standard_package_names :
 (pNms <- unlist(stPkgs, FALSE))
 (prio <- sapply(as.vector(pNms), packageDescription, fields = "Priority"))
-## consistency of packageDescription and standard_package_names :
 stopifnot(identical(unname(prio),
                     sub("[0-9]+$", '', names(pNms))))
+}
 }
 \keyword{utilities}

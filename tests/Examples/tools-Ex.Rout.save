@@ -892,35 +892,6 @@ function (x, ...)
 List of 2
  $ base       : chr [1:14] "base" "tools" "utils" "grDevices" ...
  $ recommended: chr [1:15] "MASS" "lattice" "Matrix" "nlme" ...
-> (pNms <- unlist(stPkgs, FALSE))
-        base1         base2         base3         base4         base5 
-       "base"       "tools"       "utils"   "grDevices"    "graphics" 
-        base6         base7         base8         base9        base10 
-      "stats"    "datasets"     "methods"        "grid"     "splines" 
-       base11        base12        base13        base14  recommended1 
-     "stats4"       "tcltk"    "compiler"    "parallel"        "MASS" 
- recommended2  recommended3  recommended4  recommended5  recommended6 
-    "lattice"      "Matrix"        "nlme"    "survival"        "boot" 
- recommended7  recommended8  recommended9 recommended10 recommended11 
-    "cluster"   "codetools"     "foreign"  "KernSmooth"       "rpart" 
-recommended12 recommended13 recommended14 recommended15 
-      "class"        "nnet"     "spatial"        "mgcv" 
-> (prio <- sapply(as.vector(pNms), packageDescription, fields = "Priority"))
-         base         tools         utils     grDevices      graphics 
-       "base"        "base"        "base"        "base"        "base" 
-        stats      datasets       methods          grid       splines 
-       "base"        "base"        "base"        "base"        "base" 
-       stats4         tcltk      compiler      parallel          MASS 
-       "base"        "base"        "base"        "base" "recommended" 
-      lattice        Matrix          nlme      survival          boot 
-"recommended" "recommended" "recommended" "recommended" "recommended" 
-      cluster     codetools       foreign    KernSmooth         rpart 
-"recommended" "recommended" "recommended" "recommended" "recommended" 
-        class          nnet       spatial          mgcv 
-"recommended" "recommended" "recommended" "recommended" 
-> ## consistency of packageDescription and standard_package_names :
-> stopifnot(identical(unname(prio),
-+                     sub("[0-9]+$", '', names(pNms))))
 > 
 > 
 > 

@@ -544,3 +544,51 @@ inner A B C E
 [33,] . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 1 4 1 .
 [34,] . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 1 4 1
 > 
+> 
+> ## From tools
+> library(tools)
+> example(standard_package_names, run.donttest = TRUE)
+
+stnd__> str(stPkgs <- standard_package_names())
+List of 2
+ $ base       : chr [1:14] "base" "tools" "utils" "grDevices" ...
+ $ recommended: chr [1:15] "MASS" "lattice" "Matrix" "nlme" ...
+
+stnd__> ## No test: 
+stnd__> ## consistency of packageDescription and standard_package_names :
+stnd__> (pNms <- unlist(stPkgs, FALSE))
+        base1         base2         base3         base4         base5 
+       "base"       "tools"       "utils"   "grDevices"    "graphics" 
+        base6         base7         base8         base9        base10 
+      "stats"    "datasets"     "methods"        "grid"     "splines" 
+       base11        base12        base13        base14  recommended1 
+     "stats4"       "tcltk"    "compiler"    "parallel"        "MASS" 
+ recommended2  recommended3  recommended4  recommended5  recommended6 
+    "lattice"      "Matrix"        "nlme"    "survival"        "boot" 
+ recommended7  recommended8  recommended9 recommended10 recommended11 
+    "cluster"   "codetools"     "foreign"  "KernSmooth"       "rpart" 
+recommended12 recommended13 recommended14 recommended15 
+      "class"        "nnet"     "spatial"        "mgcv" 
+
+stnd__> (prio <- sapply(as.vector(pNms), packageDescription, fields = "Priority"))
+         base         tools         utils     grDevices      graphics 
+       "base"        "base"        "base"        "base"        "base" 
+        stats      datasets       methods          grid       splines 
+       "base"        "base"        "base"        "base"        "base" 
+       stats4         tcltk      compiler      parallel          MASS 
+       "base"        "base"        "base"        "base" "recommended" 
+      lattice        Matrix          nlme      survival          boot 
+"recommended" "recommended" "recommended" "recommended" "recommended" 
+      cluster     codetools       foreign    KernSmooth         rpart 
+"recommended" "recommended" "recommended" "recommended" "recommended" 
+        class          nnet       spatial          mgcv 
+"recommended" "recommended" "recommended" "recommended" 
+
+stnd__> stopifnot(identical(unname(prio),
+stnd__+                     sub("[0-9]+$", '', names(pNms))))
+
+stnd__> ## End(No test)
+stnd__> 
+stnd__> 
+stnd__> 
+> 
