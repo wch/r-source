@@ -175,7 +175,9 @@ extern char *tzname[2];
 #include <Defn.h>
 #include <Internal.h>
 
+#ifndef HAVE_WORKING_MKTIME_BEFORE_1902
 static Rboolean warn1902 = FALSE;
+#endif
 
 /* Substitute based on glibc code. */
 #include "Rstrptime.h"
@@ -326,6 +328,14 @@ static double mkdate00 (stm *tm)
 }
 
 
+/* if d is negative and non-integer then t will be off by one second
+   since we really need floor(). But floor() is slow, so we just
+   fix t instead as needed. */
+#define LOCALTIME_MK_(t_)			\
+        time_t t_ = (time_t) d;			\
+	if (d < 0. && d != (double) t_) t_--
+
+
 #ifdef USE_INTERNAL_MKTIME
 /*
    PATH 2), internal tzcode
@@ -353,7 +363,8 @@ static double mktime0 (stm *tm, const int local)
 */
 static stm * localtime0(const double *tp, const int local, stm *ltm)
 {
-    time_t t = (time_t) *tp;
+    double d = *tp;
+    LOCALTIME_MK_(t);
     return local ? R_localtime_r(&t, ltm) : R_gmtime_r(&t, ltm);
 }
 
@@ -588,11 +599,7 @@ static stm * localtime0(const double *tp, const int local, stm *ltm)
 #endif
     }
     if(OK) {
-	time_t t = (time_t) d;
-	/* if d is negative and non-integer then t will be off by one day
-	   since we really need floor(). But floor() is slow, so we just
-	   fix t instead as needed. */
-	if (d < 0.0 && (double) t != d) t--;
+	LOCALTIME_MK_(t);
 #ifndef HAVE_POSIX_LEAPSECONDS
 	for(int y = 0; y < n_leapseconds; y++) if(t > leapseconds[y] + y - 1) t++;
 #endif

@@ -568,6 +568,14 @@ stopifnot(exprs = {
 })
 
 
+## Losing 1 sec in ct -> lt conversion for tzcode=internal (USE_INTERNAL_MKTIME) -- PR#16856
+ct <- .POSIXct(c(-1.25, -1, 0, 1), tz = "UTC")
+(d1 <- (lt <- as.POSIXlt(ct)) - ct)
+(d2 <-        as.POSIXlt(as.POSIXct(lt)) - ct)
+stopifnot(d1 == 0, d2 == 0)
+## where (1 0 0 0) and (2 0 0 0) {w/ "internal" tz src} in R <= 4.3.1
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

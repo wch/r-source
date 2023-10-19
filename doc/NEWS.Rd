@@ -545,6 +545,10 @@
       \item \code{tar(*, tar = "internal")} no longer creates out-of-spec
       tar files in the very rare case of user or group names longer than
       32 bytes, fixing \PR{17871} with thanks to Ivan Krylov.
+
+      \item When using the \dQuote{internal} timezone datetime code, adding
+       a fraction of a second no longer adds one second, fixing \PR{16856}
+       from a patch by Ivan Krylov.
     }
   }
 }
