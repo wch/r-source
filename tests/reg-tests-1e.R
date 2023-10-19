@@ -916,13 +916,19 @@ stopifnot(exprs = {
 ## passing to S3/S4 method did not work in R <= 4.3.x
 
 
-## Conversion of LaTeX code \~{n} etc and \~{}
+## Conversion of LaTeX accents: \~{n} etc vs. \~{}, accented I and i
 stopifnot(identical(
     print(tools::parseLatex("El\\~{}Ni\\~{n}o") |>
           tools::latexToUtf8() |>
           tools::deparseLatex(dropBraces = TRUE)),
     "El~Ni\u00F1o")) # "El~Niño"
 ## gave "El~Ni~no" in R 4.3.{0,1} (\~ treated as 0-arg macro)
+stopifnot(tools:::cleanupLatex(r"(\`{I}\'{I}\^{I}\"{I})")
+          == "\u00cc\u00cd\u00ce\u00cf")
+## was wrongly converted as "ËÌÍÏ" in R <= 4.3.1
+stopifnot(tools:::cleanupLatex(r"(\`{i}\'{i}\^{i}\"{i})")
+          == "\u00ec\u00ed\u00ee\u00ef")
+## codes with i instead of \i were unknown thus not converted in R <= 4.3.1
 
 
 

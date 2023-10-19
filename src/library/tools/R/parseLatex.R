@@ -246,6 +246,13 @@ makeLatexTable <- function(utf8table)
     table[["\\aa"]] <- "\u00e5"
     latexArgCount[["\\aa"]] <<- 0
 
+    ## Variants of accented i: LaTeX no longer needs dotless \i for accents
+    for (accent in c("`", "'", "^", '"')) {
+        table[[c(paste0("\\", accent), "i")]] <- table[[c(paste0("\\", accent), "\\i")]]
+        if (accent %in% c("'", "`"))
+            table[[c("\\a", accent, "i")]] <- table[[c("\\a", accent, "\\i")]]
+    }
+
     ## Also handle (some) LaTeX specials:
     table[["\\&"]] <- "&"
     latexArgCount[["\\&"]] <<- 0    
