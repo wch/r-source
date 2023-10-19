@@ -4414,7 +4414,7 @@ next_char:
 			fix = '-'; // dashes, minus
 		    else if (wc == 0x2018 || wc == 0x2019) fix = '\'';
 		    else if (wc == 0x2022) fix = '.';
-		    else if (wc == 0x2665 || wc == 0x2737) fix = '*';
+		    else if (wc == 0x2605 || wc == 0x2737) fix = '*';
 		    else {
 			if (fail)
 			    error(_("conversion failure on '%s' in 'mbcsToSbcs': for %lc"), in, wc);
