@@ -541,6 +541,10 @@
 
       \item \code{tools::latexToUtf8()} again knows about \samp{\\~{n}}
       and other letters with tilde, fixing a regression in \R 4.3.0.
+
+      \item \code{tar(*, tar = "internal")} no longer creates out-of-spec
+      tar files in the very rare case of user or group names longer than
+      32 bytes, fixing \PR{17871} with thanks to Ivan Krylov.
     }
   }
 }
