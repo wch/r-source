@@ -576,11 +576,11 @@ attr(,"match.length")
 > ##D "\\usepackage{Rd}",
 > ##D "\\begin{document}",
 > ##D "\\HeaderA{test}{}{test}",
-> ##D "\\begin{Details}\relax",
+> ##D "\\begin{Details}\\relax",
 > ##D "\\Tabular{cccccccccccccccc}{")
 > ##D trailer <- c("}", "\\end{Details}", "\\end{document}")
 > ##D writeLines(header, con)
-> ##D writeLines(paste0(xx, "\\"), con)
+> ##D writeLines(paste0(xx, "\\\\"), con)
 > ##D writeLines(trailer, con)
 > ##D close(con)
 > ##D ## and some UTF_8 chars
@@ -595,7 +595,7 @@ attr(,"match.length")
 > ##D xx <- apply(xx, 1, paste, collapse = "&")
 > ##D con <- file("test-utf8.tex", "w")
 > ##D writeLines(header, con)
-> ##D writeLines(paste(xx, "\\", sep = ""), con)
+> ##D writeLines(paste(xx, "\\\\", sep = ""), con)
 > ##D writeLines(trailer, con)
 > ##D close(con)
 > ## End(Not run)
