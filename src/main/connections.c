@@ -4794,11 +4794,13 @@ readFixedString(Rconnection con, int len, int useBytes, Rboolean *warnOnNul)
 		warning(_("truncating string with embedded nuls"));
 	    }
 	}
+	*p = '\0';
     } else {
 	buf = (char *) R_alloc(len+1, sizeof(char));
 	memset(buf, 0, len+1);
 	m = (int) con->read(buf, sizeof(char), len, con);
 	if(len && !m) return R_NilValue;
+	buf[m] = '\0';
 	if (strlen(buf) < m && *warnOnNul) {
 	    *warnOnNul = FALSE;
 	    warning(_("truncating string with embedded nuls"));
