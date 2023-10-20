@@ -19,7 +19,7 @@ object@name <- value
     object with a class for which `@` or `@<-` S3 methods are defined.}
   \item{name}{The name of the slot or property, supplied as a character
     string or unquoted symbol. If \code{object} has an S4 class, then
-    code{name} must be the name of a slot in the definition of the class
+    \code{name} must be the name of a slot in the definition of the class
     of \code{object}.}
   \item{value}{A suitable replacement value for the slot or
     property. For an S4 object this must be from a class compatible
