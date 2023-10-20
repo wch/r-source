@@ -769,6 +769,7 @@
  do_curlGetHeaders
  do_curlVersion
  do_date
+ do_declare
  do_debug
  do_delayed
  do_deparse
@@ -1154,6 +1155,7 @@
  do_sysumask
  do_syswhich
  do_tabulate
+ do_tailcall
  do_tempdir
  do_tempfile
  do_textconnection
