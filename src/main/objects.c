@@ -425,6 +425,7 @@ SEXP dispatchMethod(SEXP op, SEXP sxp, SEXP dotClass, RCNTXT *cptr, SEXP method,
 		case 2: // don't forward any variables
 		    break;
 		case 3: // forward all, with an error when used
+#ifdef WARN_ON_FORWARDING		    
 		    if (TAG(s) != R_dot_defined &&
 			TAG(s) != R_dot_Method &&
 			TAG(s) != R_dot_target &&
@@ -435,6 +436,7 @@ SEXP dispatchMethod(SEXP op, SEXP sxp, SEXP dotClass, RCNTXT *cptr, SEXP method,
 					      "in generic '%s'",
 				CHAR(PRINTNAME(TAG(s))),
 				generic);
+#endif
 		    snprintf(buf, sizeof(buf),
 			     "stop(\"getting UseMethod variable '%s' "
 			     "from generic '%s'\")",
