@@ -5,14 +5,14 @@
 
 \name{use}
 \title{Use Packages}
-\alias{use}
+\alias{.use}
 \description{
   Use packages in R scripts by loading their namespace and attaching a
   package environment including (a subset of) their exports to the
   search path.
 }
 \usage{
-use(package, lib.loc = NULL, include.only)
+.use(package, lib.loc = NULL, include.only)
 }
 \arguments{
   \item{package}{a character string given the name of a package.}
@@ -43,5 +43,8 @@ use(package, lib.loc = NULL, include.only)
 }
 \note{
   This functionality is still experimental: interfaces may change in
-  future versions. 
+  future versions.
+
+  Name temporarily changed from \code{use} to \code{.use} to avoid
+  CRAN breakage.
 }
