@@ -57,7 +57,11 @@ deparseLatex <- function(x, dropBraces = FALSE)
     paste(result, collapse="")
 }
 
-print.LaTeX <- function(x, ...) cat(deparseLatex(x), "\n")
+print.LaTeX <- function(x, ...)
+{
+    cat(deparseLatex(x), "\n")
+    invisible(x)
+}
 
 latex_tag <- function(x, tag)
 {
@@ -128,7 +132,9 @@ latexToUtf8 <- function(x)
 		    index <- c(index, switch(nexttag1,
 			    MACRO =,
 			    TEXT = nextobj1,
-			    BLOCK = deparseLatex(nextobj1, dropBraces=TRUE)))
+			    BLOCK = if (length(nextobj1))
+					deparseLatex(nextobj1, dropBraces=TRUE)
+				    else " ")) # index for empty arg {}
 		}
 		subst <- latex_tag(latexTable[[index]], "TEXT")
 
@@ -197,7 +203,7 @@ makeLatexTable <- function(utf8table)
     	    	}
     	    } else if (nexttag == "BLOCK") {
     	    	if (!length(nextobj)) {
-    	    	    arg <- ""   # or character()?
+    	    	    arg <- " "  # index for empty arg {}
     	    	    getNext <- TRUE
     	    	} else {
     	    	    arg <- nextobj[[1L]]
@@ -243,11 +249,17 @@ makeLatexTable <- function(utf8table)
     table[["\\aa"]] <- "\u00e5"
     latexArgCount[["\\aa"]] <<- 0
 
+    ## Variants of accented i: LaTeX no longer needs dotless \i for accents
+    for (accent in c("`", "'", "^", '"')) {
+        table[[c(paste0("\\", accent), "i")]] <- table[[c(paste0("\\", accent), "\\i")]]
+        if (accent %in% c("'", "`"))
+            table[[c("\\a", accent, "i")]] <- table[[c("\\a", accent, "\\i")]]
+    }
+
     ## Also handle (some) LaTeX specials:
     table[["\\&"]] <- "&"
     latexArgCount[["\\&"]] <<- 0    
-    table[["\\~"]] <- "~"
-    latexArgCount[["\\~"]] <<- 0
+    table[["\\~"]][[" "]] <- "~"
     table[["\\%"]] <- "%"
     latexArgCount[["\\%"]] <<- 0    
     

@@ -106,6 +106,14 @@
 
       \item \code{tiff(type = "Xlib")} was only outputting the last page
       of multi-page plots.
+
+      \item \code{tools::latexToUtf8()} again knows about \samp{\\~{n}}
+      and other letters with tilde, fixing a regression in \R 4.3.0,
+      and about \samp{\\^{i}} as an alternative to \samp{\\^{\\i}}
+      (similarly with other accents).
+      Furthermore, \LaTeX codes for accented I letters are now
+      correctly converted, also fixing related mistakes in
+      \code{tools::encoded_text_to_latex()}.
     }
   }
 }
