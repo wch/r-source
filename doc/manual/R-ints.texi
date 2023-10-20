@@ -4599,7 +4599,7 @@ Default: false (but true for CRAN submission checks).
 If set to a non-empty value, makes warnings from @code{pdf()} and
 @code{postscript()} about conversion failures from an MBCS (usually
 UTF-8) into errors.
-Default: unset.
+Default: unset (but true for CRAN submission checks).
 @end vtable
 
 The following variables control checks for undeclared/unconditional use
