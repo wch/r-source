@@ -5,7 +5,7 @@
 \title{R News}
 \encoding{UTF-8}
 
-\section{\Rlogo CHANGES IN R 4.3.1 patched}{
+\section{\Rlogo CHANGES IN R 4.3.2}{
   \subsection{NEW FEATURES}{
     \itemize{
       \item The default initialization of the \code{"repos"} option
