@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2023-09-29 r85235) -- "Unsuffered Consequences"
+R Under development (unstable) (2023-10-20 r85375) -- "Unsuffered Consequences"
 Copyright (C) 2023 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu
 
@@ -5081,12 +5081,19 @@ browser())(mpg = c(21, 21, 22.8, 21.4, 18.7, 18.1, 14.3, 24.4,
   ...
 Browse[1]> c
 > 
-> op <- c(op, options(error = expression(NULL)))
+> op2 <- c(op, options(catch.script.errors = TRUE))
 > f <- function(...) stop()
 > do.call(f, mtcars)
 Error in (function (...)  : 
 Calls: do.call -> <Anonymous>
-> traceback()
+> traceback() # *no* traceback
+No traceback available 
+> options(catch.script.errors = FALSE) # back to default
+> op <- c(op, options(error = expression(NULL))) # *is* slightly different:
+> do.call(f, mtcars)
+Error in (function (...)  : 
+Calls: do.call -> <Anonymous>
+> traceback() ## does give traceback
 3: stop()
 2: (function (...) 
    stop())(mpg = c(21, 21, 22.8, 21.4, 18.7, 18.1, 14.3, 24.4, 22.8, 

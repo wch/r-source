@@ -3110,7 +3110,7 @@ stopifnot(is.character(mc), inherits(mc, "MethodsFunction"),
 
 
 ## PR#17580 -- using max.lines, "truncated"
-op <- options(error = expression(NULL)) # {careful! : errors do *NOT* stop}
+op <- options(catch.script.errors = TRUE) # {careful! : errors do *NOT* stop}
 is.t.back <- function(x) is.pairlist(x) && all(vapply(x, is.character, NA))
 f <- function(...) stop(deparse(substitute(...)))
 g <- function(...) f(...)
@@ -5601,7 +5601,7 @@ stopifnot(is.list(h1), length(h1) == 1, is.function(h1$message))
 stopifnot(identical(capture.output(message("boom")), "Hey, message : boom"))
 ## Now try to remove all global calling handlers while having active
 ## calling handlers; gives a non-tryCatch()able (!) error, hence:
-op <- options(error = expression(NULL)) # careful!!
+op <- options(catch.script.errors = TRUE) # careful!!
 ## ... "should not be called with handlers on the stack"  [as expected]
 withCallingHandlers(globalCallingHandlers(NULL), foo = identity)
 options(op)# revert to sanity.  Then:

@@ -194,6 +194,9 @@
       \item \code{cairo_pdf()} and \code{cairo_ps()} default to
       \code{onefile = TRUE} to closer match \code{pdf()} and
       \code{postscript()}.
+
+      \item New option \code{catch.script.errors} provides a documented way
+      to catch errors and continue in non-interactive use.
     }
   }
 

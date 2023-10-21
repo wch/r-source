@@ -1763,10 +1763,14 @@ f <- function(...) browser()
 do.call(f, mtcars)
 c
 
-op <- c(op, options(error = expression(NULL)))
+op2 <- c(op, options(catch.script.errors = TRUE))
 f <- function(...) stop()
 do.call(f, mtcars)
-traceback()
+traceback() # *no* traceback
+options(catch.script.errors = FALSE) # back to default
+op <- c(op, options(error = expression(NULL))) # *is* slightly different:
+do.call(f, mtcars)
+traceback() ## does give traceback
 ## unlimited < 2.3.0
 options(op)
 
