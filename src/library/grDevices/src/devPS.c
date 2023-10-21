@@ -4393,7 +4393,8 @@ next_char:
 		char *fix2 = NULL;
 		if(wc == 0x2190) fix2 = "<-";
 		else if(wc == 0x2192 || wc == 0x2794 || wc == 0x279C ||
-			wc == 0x279D || wc == 0x279E || wc == 0x279F)
+			wc == 0x279D || wc == 0x279E || wc == 0x279F ||
+			wc == 0x27a1 || wc == 0x27a2)
 		    fix2 = "->";
 		// The nwxt two could and probably should be done by plotmath.
 		else if(wc == 0x2264) fix2 = "<=";
