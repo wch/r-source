@@ -41,6 +41,10 @@
 #endif
 #include <R_ext/Itermacros.h>
 
+#ifdef Win32
+#include <trioremap.h> /* for %lld */
+#endif
+
 #include "duplicate.h"
 
 #include <complex.h>
@@ -151,15 +155,19 @@ attribute_hidden SEXP do_matrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if (lendat > 1 && (nrc % lendat) != 0) { // ==> nrc > 0
 	    if (((lendat > nr) && (lendat / nr) * nr != lendat) ||
 		((lendat < nr) && (nr / lendat) * lendat != nr))
-		warning(_("data length [%d] is not a sub-multiple or multiple of the number of rows [%d]"), lendat, nr);
+		warning(_("data length [%lld] is not a sub-multiple or multiple of the number of rows [%d]"),
+			(long long)lendat, nr);
 	    else if (((lendat > nc) && (lendat / nc) * nc != lendat) ||
 		     ((lendat < nc) && (nc / lendat) * lendat != nc))
-		warning(_("data length [%d] is not a sub-multiple or multiple of the number of columns [%d]"), lendat, nc);
+		warning(_("data length [%lld] is not a sub-multiple or multiple of the number of columns [%d]"),
+			(long long)lendat, nc);
 	    else if (nrc != lendat) {
 		if(nowarn)
-		    error(_("data length differs from size of matrix: [%d != %d x %d]"), lendat, nr, nc);
+		    error(_("data length differs from size of matrix: [%lld != %d x %d]"),
+			  (long long)lendat, nr, nc);
 		else
-		    warning(_("data length differs from size of matrix: [%d != %d x %d]"), lendat, nr, nc);
+		    warning(_("data length differs from size of matrix: [%lld != %d x %d]"),
+			    (long long)lendat, nr, nc);
 	    }
 	}
 	else if (lendat > 1 && nrc == 0) // for now *not* warning for e.g., matrix(NA, 0, 4)
@@ -1714,23 +1722,21 @@ attribute_hidden SEXP do_transpose(SEXP call, SEXP op, SEXP args, SEXP rho)
 /* aperm (a, perm, resize = TRUE) */
 attribute_hidden SEXP do_aperm(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP a, perm, r, dimsa, dimsr, dna;
-    int i, j, n, itmp;
-
     checkArity(op, args);
 
-    a = CAR(args);
+    SEXP a = CAR(args);
     if (!isArray(a))
 	error(_("invalid first argument, must be %s"), "an array");
 
-    PROTECT(dimsa = getAttrib(a, R_DimSymbol));
-    n = LENGTH(dimsa);
-    int *isa = INTEGER(dimsa);
+    SEXP dimsa = PROTECT(getAttrib(a, R_DimSymbol));
+    int n = LENGTH(dimsa),
+	*isa = INTEGER(dimsa);
 
     /* check the permutation */
 
+    int i, j, itmp;
     int *pp = (int *) R_alloc((size_t) n, sizeof(int));
-    perm = CADR(args);
+    SEXP perm = CADR(args);
     if (length(perm) == 0) {
 	for (i = 0; i < n; i++) pp[i] = n-1-i;
     } else {
@@ -1746,6 +1752,7 @@ attribute_hidden SEXP do_aperm(SEXP call, SEXP op, SEXP args, SEXP rho)
 		error(_("'a' does not have named dimnames"));
 	    for (i = 0; i < n; i++) {
 		const char *this = translateChar(STRING_ELT(perm, i));
+		int j;
 		for (j = 0; j < n; j++)
 		    if (streql(translateChar(STRING_ELT(dnna, j)),
 			       this)) {pp[i] = j; break;}
@@ -1775,20 +1782,20 @@ attribute_hidden SEXP do_aperm(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     /* also need to have the dimensions of r */
 
-    PROTECT(dimsr = allocVector(INTSXP, n));
+    SEXP dimsr = PROTECT(allocVector(INTSXP, n));
     int *isr = INTEGER(dimsr);
     for (i = 0; i < n; i++) isr[i] = isa[pp[i]];
 
     /* and away we go! iip will hold the incrementer */
 
     R_xlen_t len = XLENGTH(a);
-    PROTECT(r = allocVector(TYPEOF(a), len));
+    SEXP r = PROTECT(allocVector(TYPEOF(a), len));
 
     for (i = 0; i < n; iip[i++] = 0);
 
     R_xlen_t li, lj;
     switch (TYPEOF(a)) {
-
+    int itmp;
     case INTSXP:
 	for (lj = 0, li = 0; li < len; li++) {
 	    INTEGER(r)[li] = INTEGER(a)[lj];
@@ -1861,7 +1868,7 @@ attribute_hidden SEXP do_aperm(SEXP call, SEXP op, SEXP args, SEXP rho)
 	}
 	setAttrib(r, R_DimSymbol, dimsr);
 
-	PROTECT(dna = getAttrib(a, R_DimNamesSymbol));
+	SEXP dna = PROTECT(getAttrib(a, R_DimNamesSymbol));
 	if (dna != R_NilValue) {
 	    SEXP dnna, dnr, dnnr;
 

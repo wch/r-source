@@ -26,6 +26,10 @@
 #include <Internal.h>
 #include <Rmath.h>
 
+#ifdef Win32
+#include <trioremap.h> /* for %lld */
+#endif
+
 static SEXP installAttrib(SEXP, SEXP, SEXP);
 static SEXP removeAttrib(SEXP, SEXP);
 
@@ -403,7 +407,8 @@ static void checkNames(SEXP x, SEXP s)
 	    error(_("invalid type (%s) for 'names': must be vector or NULL"),
 		  R_typeToChar(s));
 	if (xlength(x) != xlength(s))
-	    error(_("'names' attribute [%d] must be the same length as the vector [%d]"), length(s), length(x));
+	    error(_("'names' attribute [%lld] must be the same length as the vector [%lld]"),
+		  (long long)xlength(s), (long long)xlength(x));
     }
     else if(IS_S4_OBJECT(x)) {
       /* leave validity checks to S4 code */
@@ -824,7 +829,7 @@ void InitS3DefaultTypes(void)
     }
 }
 
-/* Version for S3-dispatch */
+/* Version for S3- and S4-dispatch -- workhorse for R's  .class2() */
 attribute_hidden SEXP R_data_class2 (SEXP obj)
 {
     SEXP klass = getAttrib(obj, R_ClassSymbol);
@@ -1081,9 +1086,6 @@ static SEXP dimnamesgets1(SEXP val1)
 
 SEXP dimnamesgets(SEXP vec, SEXP val)
 {
-    SEXP dims, top, newval;
-    int i, k;
-
     PROTECT(vec);
     PROTECT(val);
 
@@ -1094,8 +1096,9 @@ SEXP dimnamesgets(SEXP vec, SEXP val)
     /* There are, when this gets used as names<- for 1-d arrays */
     if (!isList(val) && !isNewList(val))
 	error(_("'%s' must be a list"), "dimnames");
-    dims = getAttrib(vec, R_DimSymbol);
-    if ((k = LENGTH(dims)) < length(val))
+    SEXP dims = getAttrib(vec, R_DimSymbol);
+    int k = LENGTH(dims);
+    if (k < length(val))
 	error(_("length of 'dimnames' [%d] must match that of 'dims' [%d]"),
 	      length(val), k);
     if (length(val) == 0) {
@@ -1104,9 +1107,10 @@ SEXP dimnamesgets(SEXP vec, SEXP val)
 	return vec;
     }
     /* Old list to new list */
+    SEXP newval;
     if (isList(val)) {
 	newval = allocVector(VECSXP, k);
-	for (i = 0; i < k; i++) {
+	for (int i = 0; i < k; i++) {
 	    SET_VECTOR_ELT(newval, i, CAR(val));
 	    val = CDR(val);
 	}
@@ -1126,7 +1130,7 @@ SEXP dimnamesgets(SEXP vec, SEXP val)
     if (k != length(val))
 	error(_("length of 'dimnames' [%d] must match that of 'dims' [%d]"),
 	      length(val), k);
-    for (i = 0; i < k; i++) {
+    for (int i = 0; i < k; i++) {
 	SEXP _this = VECTOR_ELT(val, i);
 	if (_this != R_NilValue) {
 	    if (!isVector(_this))
@@ -1140,8 +1144,8 @@ SEXP dimnamesgets(SEXP vec, SEXP val)
     }
     installAttrib(vec, R_DimNamesSymbol, val);
     if (isList(vec) && k == 1) {
-	top = VECTOR_ELT(val, 0);
-	i = 0;
+	SEXP top = VECTOR_ELT(val, 0);
+	int i = 0;
 	for (val = vec; !isNull(val); val = CDR(val))
 	    SET_TAG(val, installTrChar(STRING_ELT(top, i++)));
     }
@@ -1213,10 +1217,9 @@ attribute_hidden SEXP do_dimgets(SEXP call, SEXP op, SEXP args, SEXP env)
     return x;
 }
 
+// called from setAttrib(vec, R_DimSymbol, val) :
 SEXP dimgets(SEXP vec, SEXP val)
 {
-    int i, ndim;
-    R_xlen_t len, total;
     PROTECT(vec);
     PROTECT(val);
     if (!isVector(vec) && !isList(vec))
@@ -1227,12 +1230,11 @@ SEXP dimgets(SEXP vec, SEXP val)
     UNPROTECT(1);
     PROTECT(val);
 
-    len = xlength(vec);
-    ndim = length(val);
+    int ndim = length(val);
     if (ndim == 0)
 	error(_("length-0 dimension vector is invalid"));
-    total = 1;
-    for (i = 0; i < ndim; i++) {
+    R_xlen_t total = 1, len = xlength(vec);
+    for (int i = 0; i < ndim; i++) {
 	/* need this test first as NA_INTEGER is < 0 */
 	if (INTEGER(val)[i] == NA_INTEGER)
 	    error(_("the dims contain missing values"));
@@ -1241,12 +1243,14 @@ SEXP dimgets(SEXP vec, SEXP val)
 	total *= INTEGER(val)[i];
     }
     if (total != len) {
-	if (total > INT_MAX || len > INT_MAX)
-	    error(_("dims do not match the length of object"), total, len);
-	else
-	    error(_("dims [product %d] do not match the length of object [%d]"), total, len);
+	error(_("dims [product %lld] do not match the length of object [%lld]"),
+	      (long long)total, (long long)len);
     }
-    removeAttrib(vec, R_DimNamesSymbol);
+// currently it is documented that `dim<-` removes dimnames() .. but ..
+    SEXP odim = getAttrib0(vec, R_DimSymbol); // keep dimnames(.) if dim() entries are unchanged
+    if((LENGTH(odim) != ndim) || memcmp((void *)INTEGER(odim),
+					(void *)INTEGER(val), ndim * sizeof(int)))
+	removeAttrib(vec, R_DimNamesSymbol);
     installAttrib(vec, R_DimSymbol, val);
 
     /* Mark as immutable so nested complex assignment can't make the
@@ -1348,7 +1352,7 @@ attribute_hidden SEXP do_attributesgets(SEXP call, SEXP op, SEXP args, SEXP env)
     /* Do checks before duplication */
     if (!isNewList(attrs))
 	error(_("attributes must be a list or NULL"));
-    int nattrs = length(attrs), i;
+    int i, nattrs = length(attrs);
     if (nattrs > 0) {
 	names = getAttrib(attrs, R_NamesSymbol);
 	if (names == R_NilValue)

@@ -433,6 +433,11 @@
       \item For \code{cbind()} and \code{rbind()}, the optional
       \code{deparse.level} argument is now properly passed to methods,
       thanks to Mikael Jagan's \PR{18579} and comments there.
+
+      \item Some error and warning messages for large (\sQuote{long
+	vector}) \code{matrix(v, nr, nc)} and \code{dim(m) <- d} are now
+	correct about sizes, using \code{long long} formatting, fixing
+	\PR{18612} (and more) reported by Mikael Jagan.
     }
   }
 }
