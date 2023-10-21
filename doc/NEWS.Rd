@@ -114,6 +114,10 @@
       Furthermore, \LaTeX codes for accented I letters are now
       correctly converted, also fixing related mistakes in
       \code{tools::encoded_text_to_latex()}.
+
+      \item \code{tar(*, tar = "internal")} no longer creates out-of-spec
+      tar files in the very rare case of user or group names longer than
+      32 bytes, fixing \PR{17871} with thanks to Ivan Krylov.
     }
   }
 }
