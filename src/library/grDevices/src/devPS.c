@@ -4396,7 +4396,7 @@ next_char:
 			wc == 0x279D || wc == 0x279E || wc == 0x279F ||
 			wc == 0x27a1 || wc == 0x27a2)
 		    fix2 = "->";
-		// The nwxt two could and probably should be done by plotmath.
+		// The next two could and probably should be done by plotmath.
 		else if(wc == 0x2264) fix2 = "<=";
 		else if(wc == 0x2265) fix2 = ">=";
 		if(fix2) {
