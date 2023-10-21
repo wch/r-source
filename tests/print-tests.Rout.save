@@ -221,7 +221,7 @@ Type 'q()' to quit R.
 > do.p <- FALSE
 > for(di in 1:10) {
 +     options(digits=di)
-+     cat(if(do.p)"\n",formatC(di,w=2),":", format.info(Mm),"\n")
++     cat(if(do.p)"\n",formatC(di, width=2),":", format.info(Mm),"\n")
 +     if(do.p)print(Mm)
 + }
   1 : 6 0 1 

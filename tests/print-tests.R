@@ -102,7 +102,7 @@ do.p <- TRUE
 do.p <- FALSE
 for(di in 1:10) {
     options(digits=di)
-    cat(if(do.p)"\n",formatC(di,w=2),":", format.info(Mm),"\n")
+    cat(if(do.p)"\n", formatC(di, width=2),":", format.info(Mm),"\n")
     if(do.p)print(Mm)
 }
 ##-- R-0.49 (4/1997)	 R-0.50-a1 (7.7.97)
