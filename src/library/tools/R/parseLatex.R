@@ -1,7 +1,7 @@
 #  File src/library/tools/R/parseLatex.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2017 The R Core Team
+#  Copyright (C) 1995-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -59,7 +59,7 @@ deparseLatex <- function(x, dropBraces = FALSE)
 
 print.LaTeX <- function(x, ...)
 {
-    cat(deparseLatex(x), "\n")
+    cat(deparseLatex(x), "\n", sep = "")
     invisible(x)
 }
 
