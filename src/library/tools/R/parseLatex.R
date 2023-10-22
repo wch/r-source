@@ -30,26 +30,42 @@ parseLatex <- function(text, filename = deparse1(substitute(text)),
 # This converts a latex object into a single element character vector
 deparseLatex <- function(x, dropBraces = FALSE)
 {
+    specials <- c("\\", "#", "$", "%", "&", "~", "_", "^", "{", "}")
     result <- character()
     lastTag <- "TEXT"
+    expectArg <- FALSE
     for (i in seq_along(x)) {
         a <- x[[i]]
         tag <- attr(a, "latex_tag")
         if (is.null(tag)) tag <- "NULL"
+        result <- c(result,
         switch(tag,
         VERB = ,
-        TEXT = ,
         MACRO = ,
-        COMMENT = result <- c(result, a),
-        BLOCK = result <- c(result, if (dropBraces && lastTag == "TEXT") deparseLatex(a) else c("{", deparseLatex(a), "}")),
-        ENVIRONMENT = result <- c(result,
+        COMMENT = a,
+        TEXT = c(if (lastTag == "MACRO" && expectArg && grepl("^[[:alpha:]]", a))
+                     ## restore space that the parser has eaten ('\item text')
+                     " ",
+                 a),
+        BLOCK = if (dropBraces && !expectArg)
+                    Recall(a)
+                else
+                    c("{", Recall(a), "}"),
+        ENVIRONMENT = c(
         	"\\begin{", a[[1L]], "}",
-        	deparseLatex(a[[2L]]),
+        	Recall(a[[2L]]),
         	"\\end{", a[[1L]], "}"),
-        MATH = result <- c(result, "$", deparseLatex(a), "$"),
+        MATH = c("$", Recall(a), "$"), # \( and \) parse as MACRO
         NULL = stop("Internal error, no tag", domain = NA)
-        )
+        ))
         lastTag <- tag
+        expectArg <-
+            if (tag == "MACRO")
+                a %notin% paste0("\\", c(specials, "(", ")"))
+            else
+                expectArg &&
+                    tag %in% c("BLOCK", "COMMENT") # \cmd{}{}, \cmd%
+                    ## currently ignoring \cmd  {}, \cmd[]{}, \cmd*{}
     }
     paste(result, collapse="")
 }
@@ -154,10 +170,7 @@ latexToUtf8 <- function(x)
 	            }
 		} else
 		    i <- j
-	    } else if (i < length(x) 
-	                && attr(x[[i+1]], "latex_tag") != "BLOCK" 
-	                && grepl("^[[:alpha:]]", x[[i+1]])) # unrecognized macro followed by letters needs space
-	        x[[i]] <- latex_tag(paste0(x[[i]], " "), "MACRO")
+	    }
 	} else if (tag == "BLOCK")
 	    x[[i]] <- latexToUtf8(a)
     }

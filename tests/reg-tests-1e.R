@@ -931,6 +931,23 @@ stopifnot(tools:::cleanupLatex(r"(\`{i}\'{i}\^{i}\"{i})")
 ## codes with i instead of \i were unknown thus not converted in R <= 4.3.1
 
 
+## tools::deparseLatex() can drop successive LaTeX groups
+bib1 <- bibentry("misc", key = "test", year = "2023",
+                 author = r"(averig{\"u}{\'e})")
+bib2 <- bib1; bib2$author$family <- r"(averig\"{u}\'{e})"
+roundtrip <- function (tex, drop = FALSE)
+    tex == tools::deparseLatex(tools::parseLatex(tex), dropBraces = drop)
+stopifnot(exprs = {
+    citeNatbib("test", bib1) == "(averig\u00fc\u00e9 2023)"
+    citeNatbib("test", bib2) == citeNatbib("test", bib1)
+    roundtrip(r"(\{R\})", TRUE) # escaped braces are not dropped
+    roundtrip(r"(\href{https://bugs.R-project.org/}{Bugs})", TRUE)
+})
+## the first produced "(averigü{é} 2023)" in R < 4.4.0
+stopifnot(roundtrip(r"(\item text)"))
+## space was lost in R < 4.4.0
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
