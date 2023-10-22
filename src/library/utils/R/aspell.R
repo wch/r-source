@@ -371,18 +371,33 @@ function(x)
 }
 
 print.aspell_inspect_context <-
-function(x, ...)
+function(x, ..., byfile = FALSE)
 {
-    s <- split(x, x$File)
-    nms <- names(s)
-    for(i in seq_along(s)) {
-        e <- s[[i]]
-        writeLines(c(sprintf("File '%s':", nms[i]),
-                     sprintf("  Line %s: \"%s\", \"%s\", \"%s\"",
-                             format(e$Line),
-                             gsub("\"", "\\\"", e$Left ), e$Original,
-                             gsub("\"", "\\\"", e$Right)),
-                     ""))
+    if(byfile) {
+        s <- split(x, x$File)
+        nms <- names(s)
+        for(i in seq_along(s)) {
+            e <- s[[i]]
+            writeLines(c(sprintf("File '%s':", nms[i]),
+                         sprintf("  Line %s: \"%s\", \"%s\", \"%s\"",
+                                 format(e$Line),
+                                 gsub("\"", "\\\"", e$Left ), e$Original,
+                                 gsub("\"", "\\\"", e$Right)),
+                         ""))
+        }
+    } else {
+        y <- sprintf("  %s:%s:%s\n  %s%s%s\n  %s%s",
+                     x$File, x$Line, x$Column,
+                     x$Left, x$Original, x$Right,
+                     strrep(" ", as.integer(x$Column) - 1L),
+                     strrep("^", nchar(x$Original)))
+        chunks <- split(y, x$Original)
+        chunks <- Map(function(u, v)
+                          paste(c(paste("Word:", u), v),
+                                collapse = "\n"),
+                      names(chunks),
+                      chunks)
+        writeLines(unlist(chunks))
     }
     invisible(x)
 }
