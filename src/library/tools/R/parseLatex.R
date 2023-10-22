@@ -56,7 +56,7 @@ deparseLatex <- function(x, dropBraces = FALSE)
 
 print.LaTeX <- function(x, ...)
 {
-    cat(deparseLatex(x), "\n")
+    cat(deparseLatex(x), "\n", sep = "")
     invisible(x)
 }
 
