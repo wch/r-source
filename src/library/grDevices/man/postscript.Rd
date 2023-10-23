@@ -43,11 +43,8 @@ postscript(file = if(onefile) "Rplots.ps" else "Rplot\%03d.ps",
     in one file.  If false, generate a file name containing the page
     number for each page and use an EPSF header and no
     \code{DocumentMedia} comment.  Defaults to \code{TRUE}.}
- \item{family}{the initial font family to be used, see
-    \code{\link{pdf}}.  Defaults to \code{"Helvetica"}.}
-  \item{family}{the initial font family to be used, normally as a
-    character string.  See the section \sQuote{Families}.  Defaults to
-    \code{"Helvetica"}.}
+ \item{family}{the initial font family to be used, see the section
+    \sQuote{Families} in \code{\link{pdf}}.  Defaults to \code{"Helvetica"}.}
   \item{title}{title string to embed as the \code{Title} comment in the
     file.  Defaults to \code{"R Graphics Output"}.}
   \item{fonts}{a character vector specifying additional \R graphics font
