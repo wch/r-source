@@ -190,20 +190,17 @@ function(contents, type = NULL)
     idx <- (vapply(keywords,
                    function(x) match("internal", x, 0L),
                    0L) == 0L)
-    index <- contents[idx, c("Name", "Title"), drop = FALSE]
+    topic <- as.character(unlist(Map(.Rd_topic_for_display,
+                                     contents[idx, "Name"],
+                                     contents[idx, "Aliases"])))
+    index <- data.frame(Topic = topic,
+                        Title = contents[idx, "Title"])
     if(nrow(index)) {
-        ## If a \name is not a valid \alias, replace it by the first
-        ## alias.
-        aliases <- contents[idx, "Aliases"]
-        bad <- which(!mapply(`%in%`, index[, 1L], aliases))
-        if(any(bad)) {
-            ## was [[, but that applies to lists not char vectors
-            tmp <- sapply(aliases[bad], `[`, 1L)
-            tmp[is.na(tmp)] <- ""
-            index[bad, 1L] <- tmp
-        }
-        ## and sort it by name
-        index <- index[sort.list(index[, 1L]), ]
+        ## Handle entries with missing topic: should these perhaps be 
+        ## dropped?
+        index$Topic[is.na(index$Topic)] <- ""
+        ## Sort by topic.
+        index <- index[order(index$Topic), ]
     }
     index
 }
@@ -949,6 +946,12 @@ function(x)
     ## Also remove leading and trailing whitespace.
     trimws(x)
 }
+
+### * .Rd_topic_for_display
+
+.Rd_topic_for_display <-
+function(name, aliases)
+    if(name %in% aliases) name else aliases[1L]
 
 ### * fetchRdDB
 
