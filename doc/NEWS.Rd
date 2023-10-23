@@ -122,6 +122,10 @@
       \item When using the \dQuote{internal} timezone datetime code, adding
        a fraction of a second no longer adds one second, fixing \PR{16856}
        from a patch by Ivan Krylov.
+
+      \item \code{tools::checkRd()} no longer produces spurious notes
+      about \dQuote{unnecessary braces} from multi-line Rd results of
+      \verb{\Sexpr} macros.
     }
   }
 }
