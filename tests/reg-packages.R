@@ -434,7 +434,7 @@ if(length(ifoo <- grep("foo.Rd", msg, fixed = TRUE)))
 ## (when _R_CHECK_RD_CHECKRD_MINLEVEL_=-Inf)
 if(length(ibraces <- grep("a\\.Rd.* braces", msg)))
     stop(".check_package_parseRd() found unnecessary braces")
-## in R < 4.4.0, gave,
+## in R <= 4.3.1, gave,
 ##checkRd: (-3) file '..../man/a.Rd': Unnecessary braces at '{a1....
 
 ## but R >= 4.4.0 *does warn* about badly nested Sexpr macros
