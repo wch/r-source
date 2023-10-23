@@ -889,8 +889,8 @@ set.seed(7)
 cf2 <- t(sapply(2:50, function(k) {
     x <- sample.int(k)
     line(x, 1-2*x)$coefficients }))
-stopifnot(all.equal(cfs, matrix(c(2,  1), 49, 2, byrow=TRUE), tol = 1e-14), # typically exact
-          all.equal(cf2, matrix(c(1, -2), 49, 2, byrow=TRUE), tol = 1e-14))
+stopifnot(all.equal(cfs, matrix(c(2,  1), 49, 2, byrow=TRUE), tolerance = 1e-14), # typically exact
+          all.equal(cf2, matrix(c(1, -2), 49, 2, byrow=TRUE), tolerance = 1e-14))
 ## had incorrect medians of the left/right third of the data (x_L, x_R), in R < 3.5.0
 
 ## aggregate.data.frame() producing spurious names  PR#17283
@@ -904,7 +904,7 @@ stopifnot(exprs = {
     identical(unlist(a2$Population), a1$Population)
     all.equal(unlist(a2$Population),
               c(8802.8, 4208.12, 7233.83, 4582.57, 1360.5, 2372.17, 970.167),
-              tol = 1e-6)
+              tolerance = 1e-6)
 })
 ## in R <= 3.4.x, a2$Population had spurious names
 
@@ -1667,7 +1667,7 @@ if(requireNamespace('Matrix', lib.loc=.Library, quietly = TRUE)) {
     stopifnot(exprs = {
 	inherits(SM, "sparseMatrix")
 	all.equal(scale(SM, Matrix::colMeans(SM)),
-		  scale(SM, Matrix::colMeans(SM, sparse=TRUE)),
+		  scale(SM, Matrix::colMeans(SM, sparseResult=TRUE)),
 		  check.attributes=FALSE)
     })
 }
@@ -3110,7 +3110,7 @@ stopifnot(is.character(mc), inherits(mc, "MethodsFunction"),
 
 
 ## PR#17580 -- using max.lines, "truncated"
-op <- options(catch.script.errors = TRUE) # {careful! : errors do *NOT* stop}
+op <- options(catch.script.errors = TRUE, error = expression()) # {careful! : errors do *NOT* stop}
 is.t.back <- function(x) is.pairlist(x) && all(vapply(x, is.character, NA))
 f <- function(...) stop(deparse(substitute(...)))
 g <- function(...) f(...)
