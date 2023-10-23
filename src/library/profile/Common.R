@@ -2,7 +2,7 @@
 ### Additional commands can be placed in site or user Rprofile files
 ### (see ?Rprofile).
 
-### Copyright (C) 1995-2022 The R Core Team
+### Copyright (C) 1995-2023 The R Core Team
 
 ### Notice that it is a bad idea to use this file as a template for
 ### personal startup files, since things will be executed twice and in
@@ -42,6 +42,7 @@ options(add.smooth = TRUE)# currently only used in 'plot.lm'
 
 if(!interactive())
     options(showErrorCalls = TRUE)
+options(catch.script.errors = FALSE)
 
 local({dp <- Sys.getenv("R_DEFAULT_PACKAGES")
        if(identical(dp, "")) ## it fact methods is done first
