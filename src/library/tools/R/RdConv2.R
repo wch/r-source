@@ -758,6 +758,9 @@ checkRd <- function(Rd, defines = .Platform$OS.type, stages = "render",
                                            "\\value handles \\item{}{} directly"
                                        else "meant \\describe ?")
                         showSource <- FALSE # misleading marker, often many \items
+                    } else if (separated && identical(tags, "TEXT")) {
+                        ## simple braced text: 'X_{i-1}' w/o \eqn, '{pkg}'
+                        msg2 <- "; missing escapes or markup?"
                     }
                 }
             }
