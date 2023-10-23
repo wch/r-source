@@ -336,7 +336,7 @@ static void check_session_exit(void)
 	else {
 	    exiting = TRUE;
 	    if (GetOption1(install("error")) != R_NilValue ||
-		GetOption1(install("catch.script.errors"))
+		LOGICAL(GetOption1(install("catch.script.errors")))[0]
 		) {
 		exiting = FALSE;
 		return;
