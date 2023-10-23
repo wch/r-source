@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/xfig.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2019 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{xfig}
@@ -26,7 +26,7 @@ xfig(file = if(onefile) "Rplots.fig" else "Rplot\%03d.fig",
   \item{file}{a character string giving the file path.   For use
     with \code{onefile = FALSE} give a C integer format such as
     \code{"Rplot\%03d.fig"} (the default in that case).
-    (See \code{\link{postscript}} for further details.)
+    (See \code{\link{pdf}} for further details.)
   }
   \item{onefile}{logical: if true allow multiple figures
     in one file. If false, assume only one page per file and generate a

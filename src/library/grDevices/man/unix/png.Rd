@@ -43,7 +43,7 @@ tiff(filename = "Rplot\%03d.tiff",
     the character string, as in the default.  (Depending on the platform,
     the result should be less
     than \code{PATH_MAX} characters long, and may be truncated if not.
-    See \code{\link{postscript}} for further details.)  Tilde expansion
+    See \code{\link{pdf}} for further details.)  Tilde expansion
     is performed where supported by the platform.  An input with
     a marked encoding is converted to the native encoding on an error is
     given.}

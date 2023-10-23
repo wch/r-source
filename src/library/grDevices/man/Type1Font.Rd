@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/Type1Font.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Type1Font}
@@ -12,7 +12,7 @@
 \description{
   These functions are used to define the translation of a \R graphics
   font family name to a Type 1 or CID font descriptions, used by both
-  the \code{\link{postscript}} and \code{\link{pdf}} graphics devices.
+  the \code{\link{pdf}} and \code{\link{postscript}} graphics devices.
 }
 \usage{
 Type1Font(family, metrics, encoding = "default")
@@ -78,8 +78,8 @@ CIDFont(family, cmap, cmapEncoding, pdfresource = "")
   A list of class \code{"Type1Font"} or \code{"CIDFont"}.
 }
 \seealso{
-  \code{\link{postscript}}, \code{\link{pdf}},
-  \code{\link{postscriptFonts}}, and \code{\link{pdfFonts}}.
+  \code{\link{pdf}}, \code{\link{postscript}}, \code{\link{pdfFonts}} and
+  \code{\link{postscriptFonts}}.
 }
 \examples{
 ## This duplicates "ComputerModernItalic".

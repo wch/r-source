@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/pictex.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2019 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{pictex}
@@ -75,7 +75,7 @@ pictex(file = "Rplots.tex", width = 5, height = 4, debug = FALSE,
   }
 }
 \seealso{
-  \code{\link{postscript}}, \code{\link{pdf}}, \code{\link{Devices}}.
+  \code{\link{pdf}}, \code{\link{postscript}}, \code{\link{Devices}}.
 
   The \code{tikzDevice} in the CRAN package of that name for more modern
   TeX-based graphics (\url{https://pgf.sourceforge.net/}, although

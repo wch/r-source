@@ -210,7 +210,7 @@
   examples section of \code{\link{points}} for a function to display
   them.  (\sQuote{In principle} because some of the glyphs are missing
   from some implementations of the symbol font.)  Unfortunately,
-  \code{\link{postscript}} and \code{\link{pdf}} have support for little
+  \code{\link{pdf}} and \code{\link{postscript}} have support for little
   more than European (not Greek) and CJK characters and the Adobe Symbol
   encoding (and in a few fonts, also Cyrillic characters).
 
@@ -223,6 +223,9 @@
   \code{\link{X11}} device using cairo: see its help page for how
   installing additional fonts can help.  This can often be used to
   display Greek \emph{letters} in bold or italic.
+
+  On macOS the \code{\link{quartz}} device and the default system fonts
+  have quite large coverage.
 
   In non-UTF-8 locales there is normally no support for symbols not in
   the languages for which the current encoding was intended.

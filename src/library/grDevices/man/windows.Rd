@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/windows.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2018 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{windows}
@@ -77,7 +77,7 @@ win.print(width = 7, height = 7, pointsize = 12, printer = "",
     Windows metafile, usually given extension \file{.emf} or
     \file{.wmf}.  Up to 511 characters are allowed. The page number is
     substituted if an integer format is included in the character
-    string (see \code{\link{postscript}} for further details) and
+    string (see \code{\link{pdf}} for further details) and
     tilde-expansion (see \code{\link{path.expand}}) is performed. (The
     result must be less than 600 characters long.)  The default,
     \code{""}, means the clipboard.}
@@ -254,7 +254,7 @@ win.print(width = 7, height = 7, pointsize = 12, printer = "",
 \seealso{
   \code{\link{windowsFonts}},
   \code{\link{savePlot}}, \code{\link{bringToTop}},
-  \code{\link{Devices}}, \code{\link{postscript}},
+  \code{\link{Devices}}, \code{\link{pdf}},
   \code{\link{x11}} for Unix-alikes.
 }
 \examples{\dontrun{## A series of plots written to a sequence of metafiles

@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/pdf.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2019 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{pdf}
@@ -26,9 +26,12 @@ pdf(file = if(onefile) "Rplots.pdf" else "Rplot\%03d.pdf",
     then no external file is created (effectively, no drawing occurs),
     but the device may still be queried (e.g., for size of text).
 
-    For use with \code{onefile = FALSE} give a C integer format such
-    as \code{"Rplot\%03d.pdf"} (the default in that case).
-    (See \code{\link{postscript}} for further details.)
+    For use with \code{onefile = FALSE} give a C integer format such as
+    \code{"Rplot\%03d.pdf"} (the default in that case).  The string
+    should not otherwise contain a \code{\%}: if it is really necessary,
+    use \code{\%\%} in the string for \code{\%} in the file name.  A
+    single integer format matching the \link{regular expression}
+    \code{"\%[#0 +=-]*[0-9.]*[diouxX]"} is allowed.
 
     Tilde expansion (see \code{\link{path.expand}}) is done. An input with
     a marked encoding is converted to the native encoding or an error is
@@ -40,8 +43,9 @@ pdf(file = if(onefile) "Rplots.pdf" else "Rplot\%03d.pdf",
     in one file.  If false, generate a file with name containing the page
     number for each page.  Defaults to \code{TRUE}, and forced to true
     if \code{file} is a pipe.}
-  \item{family}{the font family to be used, see
-    \code{\link{postscript}}.  Defaults to \code{"Helvetica"}.}
+  \item{family}{the initial font family to be used, normally as a
+    character string.  See the section \sQuote{Families}.  Defaults to
+    \code{"Helvetica"}.}
   \item{title}{title string to embed as the \samp{/Title} field in the
     file.  Defaults to \code{"R Graphics Output"}.}
   \item{fonts}{a character vector specifying \R graphics font family
@@ -62,8 +66,24 @@ pdf(file = if(onefile) "Rplots.pdf" else "Rplot\%03d.pdf",
     if that is set and as \code{"a4"} if it is unset or empty.
     Defaults to \code{"special"}.
   }
-  \item{encoding}{the name of an encoding file.  See
-    \code{\link{postscript}} for details.  Defaults to \code{"default"}.}
+  \item{encoding}{the name of an encoding file.  Defaults to
+    \code{"default"}.  The latter is interpreted
+    \describe{
+      \item{on Unix-alikes}{
+	as \file{"ISOLatin1.enc"} unless the locale is recognized as
+    corresponding to a language using ISO 8859-\{2,5,7,13,15\} or KOI8-\{R,U\}.
+      }
+      \item{on Windows}{
+    as \file{"CP1250.enc"} (Central European), \code{"CP1251.enc"} (Cyrillic),
+    \code{"CP1253.enc"} (Greek) or \code{"CP1257.enc"} (Baltic) if one
+    of those codepages is in use, otherwise \file{"WinAnsi.enc"}
+    (codepage 1252).
+      }
+    }
+    The file is looked for in the \file{enc} directory of package
+    \pkg{grDevices} if the path does not contain a path separator.  An
+    extension \code{".enc"} can be omitted.
+  }
   \item{bg}{the initial background color to be used.  Defaults to
     \code{"transparent"}.}
   \item{fg}{the initial foreground color to be used.  Defaults to
@@ -128,7 +148,7 @@ pdf(file = if(onefile) "Rplots.pdf" else "Rplot\%03d.pdf",
   software (e.g., Ghostscript) may be required to embed the fonts so
   that the PDF can be included in other documents (e.g., LaTeX): see
   \code{\link{embedFonts}}.  The URW-based families described for
-  \code{\link{postscript}} can be used with viewers, platform dependently:
+  in section \sQuote{Families}.can be used with viewers, platform dependently:
   \describe{
     \item{on Unix-alikes}{viewers set up to use URW fonts, which is
       usual with those based on \code{xpdf} or Ghostscript.}
@@ -136,10 +156,6 @@ pdf(file = if(onefile) "Rplots.pdf" else "Rplot\%03d.pdf",
   }
   Since \code{\link{embedFonts}} makes use of Ghostscript, it should be
   able to embed the URW-based families for use with other viewers.
-
-  See \code{\link{postscript}} for details of encodings, as the internal
-  code is shared between the drivers.  The native PDF encoding is given
-  in file \file{PDFDoc.enc}.
 
   The PDF produced is fairly simple, with each page being represented as
   a single stream (by default compressed and possibly with references to
@@ -176,6 +192,108 @@ pdf(file = if(onefile) "Rplots.pdf" else "Rplot\%03d.pdf",
   PDF viewers will use a white canvas so the visual effect is if the
   background were white.  This will not be the case when printing onto
   coloured paper, though.
+}
+
+\section{Families}{
+  Font families are collections of fonts covering the five font faces,
+  (conventionally plain, bold, italic, bold-italic and symbol) selected
+  by the graphics parameter \code{\link{par}(font = )} or the grid
+  parameter \code{\link{gpar}(fontface = )}.  Font families can be
+  specified either as an initial/default font family for the device
+  via the \code{family} argument or after the device is opened by
+  the graphics parameter \code{\link{par}(family = )} or the grid
+  parameter \code{\link{gpar}(fontfamily = )}.  Families which will be
+  used in addition to the initial family must be specified in the
+  \code{fonts} argument when the device is opened.
+
+  Font families are declared via a call to \code{\link{pdfFonts}}
+  or \code{\link{postscriptFonts}}.
+
+  The argument \code{family} specifies the initial/default font family
+  to be used.  In normal use it is one of \code{"AvantGarde"},
+  \code{"Bookman"}, \code{"Courier"}, \code{"Helvetica"},
+  \code{"Helvetica-Narrow"}, \code{"NewCenturySchoolbook"},
+  \code{"Palatino"} or \code{"Times"}, and refers to the standard Adobe
+  PostScript fonts families of those names which are included (or
+  cloned) in all common PDF/PostScript renderers.
+
+  Many PDF/PostScript renders (including those based on
+  \code{ghostscript}) use the URW equivalents of these fonts, which are
+  \code{"URWGothic"}, \code{"URWBookman"}, \code{"NimbusMon"},
+  \code{"NimbusSan"}, \code{"NimbusSanCond"}, \code{"CenturySch"},
+  \code{"URWPalladio"} and \code{"NimbusRom"} respectively.  If your
+  device is using URW fonts, you will obtain access to more characters
+  and more appropriate metrics by using these names.  To make these
+  easier to remember, \code{"URWHelvetica" == "NimbusSan"} and
+  \code{"URWTimes" == "NimbusRom"} are also supported.
+
+  Another type of family makes use of CID-keyed fonts for East Asian
+  languages -- see \code{\link{pdfFonts}}.
+
+  The \code{family} argument is normally a character string naming a
+  font family, but family objects generated by \code{\link{Type1Font}}
+  and \code{\link{CIDFont}} are also accepted.  For compatibility with
+  earlier versions of \R, the initial family can also be specified as a
+  vector of four or five afm files.
+
+  Note that \R does not embed the font(s) used in the PostScript output:
+  see \code{\link{embedFonts}} for a utility to help do so.
+
+  Viewers and embedding applications frequently substitute fonts for
+  those specified in the family, and the substitute will often have
+  slightly different font metrics. \code{useKerning = TRUE} spaces the
+  letters in the string using kerning corrections for the intended
+  family: this may look uglier than \code{useKerning = FALSE}.
+}
+
+\section{Encodings}{
+  Encodings describe which glyphs are used to display the character codes
+  (in the range 0--255).  Most commonly \R uses ISOLatin1 encoding, and
+  the examples for \code{\link{text}} are in that encoding.  However,
+  the encoding used on machines running \R may well be different, and by
+  using the \code{encoding} argument the glyphs can be matched to
+  encoding in use.  This suffices for European and Cyrillic languages,
+  but not for East Asian languages.  For the latter, composite CID fonts are
+  used.  These fonts are useful for other languages: for example they
+  may contain Greek glyphs. (The rest of this section applies only when CID
+  fonts are not used.)
+
+  None of this will matter if only ASCII characters (codes 32--126) are
+  used as all the encodings (except \code{"TeXtext"}) agree over that
+  range.  Some encodings are supersets of ISOLatin1, too.  However, if
+  accented and special characters do not come out as you expect, you may
+  need to change the encoding.  Some other encodings are supplied with
+  \R: \code{"WinAnsi.enc"} and \code{"MacRoman.enc"} correspond to the
+  encodings normally used on Windows and Classic Mac OS (at least by
+  Adobe), and \code{"PDFDoc.enc"} is the first 256 characters of the
+  Unicode encoding, the standard for PDF.  There are also encodings
+  \code{"ISOLatin2.enc"}, \code{"CP1250.enc"}, \code{"ISOLatin7.enc"}
+  (ISO 8859-13), \code{"CP1257.enc"}, and \code{"ISOLatin9.enc"} (ISO
+  8859-15), \code{"Cyrillic.enc"} (ISO 8859-5), \code{"KOI8-R.enc"},
+  \code{"KOI8-U.enc"}, \code{"CP1251.enc"}, \code{"Greek.enc"} (ISO
+  8859-7) and \code{"CP1253.enc"}.  Note that many glyphs in these
+  encodings are not in the fonts corresponding to the standard families.
+  (The Adobe ones for all but Courier, Helvetica and Times cover little
+  more than Latin-1, whereas the URW ones also cover Latin-2, Latin-7,
+  Latin-9 and Cyrillic but no Greek.  The Adobe exceptions cover the
+  Latin character sets, but not the Euro.)
+
+  If you specify the encoding, it is your responsibility to ensure that
+  the PostScript font contains the glyphs used.  One issue here is the Euro
+  symbol which is in the WinAnsi and MacRoman encodings but may well not
+  be in the PostScript fonts.  (It is in the URW variants; it is not in
+  the supplied Adobe Font Metric files.)
+
+  There is an exception.  Character 45 (\code{"-"}) is always set
+  as minus (its value in Adobe ISOLatin1) even though it is hyphen in
+  the other encodings.  Hyphen is available as character 173 (octal
+  0255) in all the Latin encodings, Cyrillic and Greek.  (This can be
+  entered as \code{"\uad"} in a UTF-8 locale.)  There are some
+  discrepancies in accounts of glyphs 39 and 96: the supplied encodings
+  (except CP1250 and CP1251) treat these as \sQuote{quoteright} and
+  \sQuote{quoteleft} (rather than \sQuote{quotesingle}/\sQuote{acute}
+  and \sQuote{grave} respectively), as they are in the Adobe
+  documentation.
 }
 
 \section{Color models}{

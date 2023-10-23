@@ -46,7 +46,7 @@ tiff(filename = "Rplot\%03d.tif",
     page number is substituted if a C integer format is included in the
     character string, as in the default, and tilde-expansion is
     performed (see \code{\link{path.expand}}).   (The result must be less than
-    600 characters long.  See \code{\link{postscript}} for further
+    600 characters long.  See \code{\link{png}} for further
     details.)
   }
   \item{width}{the width of the device.}

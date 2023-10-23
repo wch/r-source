@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/x11.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2022 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{x11}
@@ -86,7 +86,7 @@ X11.options(\dots, reset = FALSE)
   \item{title}{character string, up to 100 bytes.  With the default,
     \code{""}, a suitable title is created internally.  A C-style format
     for an integer will be substituted by the device number (see the
-    \code{file} argument to \code{\link{postscript}} for further
+    \code{file} argument of \code{\link{df}} for further
     details).  How non-ASCII titles are handled is
     implementation-dependent.}
 

@@ -37,7 +37,7 @@ cairo_ps(filename = if(onefile) "Rplots.ps" else "Rplot\%03d.ps",
     the character string, as in the default.  (Depending on the platform,
     the result must be less
     than \code{PATH_MAX} characters long, and may be truncated if not.
-    See \code{\link{postscript}} for further details.)  Tilde expansion
+    See \code{\link{pdf}} for further details.)  Tilde expansion
     is performed where supported by the platform.}
   \item{width}{the width of the device in inches.}
   \item{height}{the height of the device in inches.}
@@ -69,7 +69,7 @@ cairo_ps(filename = if(onefile) "Rplots.ps" else "Rplot\%03d.ps",
   SVG 1.2.  (Few SVG viewers are capable of displaying multi-page SVG
   files.)
 
-  Note that unlike \code{\link{postscript}} and \code{\link{pdf}},
+  Note that unlike \code{\link{pdf}} and \code{\link{postscript}},
   \code{cairo_pdf} and \code{cairo_ps} sometimes record \emph{bitmaps}
   and not vector graphics.  On the other hand, they can
   (on suitable platforms) include a much wider range of UTF-8 glyphs,
