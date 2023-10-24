@@ -189,6 +189,15 @@ Rboolean isOrdered(SEXP s)
 	    && inherits(s, "ordered"));
 }
 
+Rboolean R_isTRUE(SEXP x)
+{
+    if (TYPEOF(x) == LGLSXP && XLENGTH(x) == 1) {
+	int val = LOGICAL(x)[0];
+	return val != NA_LOGICAL && val;
+    }
+    return FALSE;
+}
+
 
 const static struct {
     const char * const str;

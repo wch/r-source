@@ -988,15 +988,6 @@ INLINE_FUN Rboolean isNumber(SEXP s)
     }
 }
 
-INLINE_FUN Rboolean R_isTRUE(SEXP x)
-{
-    if (TYPEOF(x) == LGLSXP && XLENGTH(x) == 1) {
-	int val = LOGICAL(x)[0];
-	return val != NA_LOGICAL && val;
-    }
-    return FALSE;
-}
-
 
 /* As from R 2.4.0 we check that the value is allowed. */
 INLINE_FUN SEXP ScalarLogical(int x)
