@@ -342,9 +342,14 @@ httpd <- function(path, query, ...)
     }
         
     cssRegexp <- "^/library/([^/]*)/html/R.css$"
-    if (grepl("R\\.css$", path) && !grepl(cssRegexp, path))
-        return(list(file = file.path(R.home("doc"), "html", "R.css"),
-                    "content-type" = "text/css"))
+    if (grepl("R\\.css$", path) && !grepl(cssRegexp, path)) {
+        if (isTRUE(getOption("help.htmltoc")))
+            return(list(file = file.path(R.home("doc"), "html", "R-nav.css"),
+                        "content-type" = "text/css"))
+        else
+            return(list(file = file.path(R.home("doc"), "html", "R.css"),
+                        "content-type" = "text/css"))
+    }
     else if(path == "/favicon.ico")
         return(list(file = file.path(R.home("doc"), "html", "favicon.ico"),
                     "content-type" = "image/x-icon"))

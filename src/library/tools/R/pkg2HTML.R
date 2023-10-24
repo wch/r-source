@@ -108,8 +108,8 @@ pkg2HTML <- function(package, pkgdir = NULL, descfile,
                                       function(h) h$info$name,
                                       ""))]
     rdnames <- vapply(hcontent, function(h) h$info$name, "")
-    ## rdtitles <- vapply(hcontent, function(h) h$info$title[[1L]], "")
-    rdtitles <- vapply(hcontent, function(h) h$info$htmltitle[[1L]], "")
+    rdtitles <- vapply(hcontent, function(h) h$info$title[[1L]], "")
+    ## rdtitles <- vapply(hcontent, function(h) h$info$htmltitle[[1L]], "") # FIXME: has extra <p>
 
     ## toclines <- sprintf("<li><a href='#%s'><em>%s</em></a></li>", rdnames, rdtitles)
 
@@ -131,11 +131,12 @@ pkg2HTML <- function(package, pkgdir = NULL, descfile,
 
     ## cat(hfcomps$header, fill = TRUE) # debug
     writeHTML(hfcomps$header, sep = "", append = FALSE)
-    writeHTML(sprintf("<header class='top'><h1>Package %s</h1><hr></header>",
-                      sQuote(pkgname)))
+    ## writeHTML(sprintf("<header class='top'><h1>Package {%s}</h1><hr></header>",
+    ##                   pkgname))
     writeHTML('<nav aria-label="Topic Navigation">',
               '<div class="dropdown-menu">',
-              '<h1>Topics</h1>',
+              sprintf('<h1>Package {%s}</h1>', pkgname),
+              '<h2>Contents</h2>',
               '<ul class="menu">',
               toclines,
               '</ul>',
@@ -143,9 +144,6 @@ pkg2HTML <- function(package, pkgdir = NULL, descfile,
               '<hr>',
               '</nav>',
               '<main>')
-
-    writeHTML(sprintf("<header class='right'><h1>Package %s</h1><hr></header>",
-                      sQuote(pkgname)))
 
     if (include_description) writeHTML(.DESCRIPTION_to_HTML(descfile))
     lapply(hcontent, function(h) writeHTML("<hr>", h$outlines))
