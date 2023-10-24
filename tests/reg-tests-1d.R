@@ -3110,7 +3110,7 @@ stopifnot(is.character(mc), inherits(mc, "MethodsFunction"),
 
 
 ## PR#17580 -- using max.lines, "truncated"
-op <- options(catch.script.errors = TRUE, error = expression()) # {careful! : errors do *NOT* stop}
+op <- options(catch.script.errors = TRUE) # {careful! : errors do *NOT* stop}
 is.t.back <- function(x) is.pairlist(x) && all(vapply(x, is.character, NA))
 f <- function(...) stop(deparse(substitute(...)))
 g <- function(...) f(...)

@@ -1068,7 +1068,8 @@ static void jump_to_top_ex(Rboolean traceback,
 
     /* only run traceback if we are not going to bail out of a
        non-interactive session */
-    if (R_Interactive || haveHandler) {
+
+    if (R_Interactive || haveHandler || R_isTRUE(GetOption1(install("catch.script.errors")))) {
 	/* write traceback if requested, unless we're already doing it
 	   or there is an inconsistency between inError and oldInError
 	   (which should not happen) */

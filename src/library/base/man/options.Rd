@@ -85,6 +85,14 @@ getOption(x, default = NULL)
     \item{\code{browserNLdisabled}:}{logical: whether newline is
       disabled as a synonym for \code{"n"} in the browser.}
 
+    \item{\code{catch.script.errors}:}{logical, false by default.  If
+      true \emph{and} \code{\link{interactive}()} is false, e.g., when an
+      \R script is run by \code{R CMD \link{BATCH} <script>.R}, then
+      errors do \emph{not} stop execution of the script.  Rather evaluation
+      continues after printing the error (and jumping to top level).
+      Also, \code{\link{traceback}()} would provide info about the error.
+      Do use with care!}
+
     \item{\code{checkPackageLicense}:}{logical, not set by default.  If
       true, \code{\link{loadNamespace}} asks a user to accept any
       non-standard license at first load of the package.
@@ -259,7 +267,7 @@ getOption(x, default = NULL)
       character.  The preferred character to be used as the decimal
       point in output conversions, that is in printing, plotting,
       \code{\link{format}}, \code{\link{formatC}} and
-      \code{\link{as.character}} but not when 
+      \code{\link{as.character}} but not when
       deparsing nor by \code{\link{sprintf}}
       (which is sometimes used prior to printing).
     }

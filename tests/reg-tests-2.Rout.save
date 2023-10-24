@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2023-10-20 r85375) -- "Unsuffered Consequences"
+R Under development (unstable) (2023-10-23 r85401) -- "Unsuffered Consequences"
 Copyright (C) 2023 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu
 
@@ -5087,7 +5087,12 @@ Browse[1]> c
 Error in (function (...)  : 
 Calls: do.call -> <Anonymous>
 > traceback() # *no* traceback
-No traceback available 
+3: stop()
+2: (function (...) 
+   stop())(mpg = c(21, 21, 22.8, 21.4, 18.7, 18.1, 14.3, 24.4, 22.8, 
+   19.2, 17.8, 16.4, 17.3, 15.2, 10.4, 10.4, 14.7, 32.4, 30.4, 33.9, 
+    ...
+1: do.call(f, mtcars)
 > options(catch.script.errors = FALSE) # back to default
 > op <- c(op, options(error = expression(NULL))) # *is* slightly different:
 > do.call(f, mtcars)
