@@ -124,6 +124,9 @@ isFALSE(x)
 
   \code{\link{Syntax}} for operator precedence.
 
+  \code{L \link{\%||\%} R } which takes \code{L} if it is not \code{NULL},
+  and \code{R} otherwise.
+
   \code{\link{bitwAnd}} for bitwise versions for integer vectors.
 }
 \examples{

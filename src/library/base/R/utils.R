@@ -1,7 +1,7 @@
 #  File src/library/base/R/utils.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2021 The R Core Team
+#  Copyright (C) 1995-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -15,6 +15,9 @@
 #
 #  A copy of the GNU General Public License is available at
 #  https://www.R-project.org/Licenses/
+
+## A pearl from Ruby -> ggplot2 et al.
+`%||%` <- function(x, y) if(is.null(x)) y else x
 
 shQuote <- function(string, type = c("sh", "csh", "cmd", "cmd2"))
 {

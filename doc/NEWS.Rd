@@ -197,6 +197,11 @@
 
       \item New option \code{catch.script.errors} provides a documented way
       to catch errors and continue in non-interactive use.
+
+      \item \code{L \%||\% R} newly in base is an expressive idiom for the
+      \code{if(!is.null(L)) L else R} or \code{if(is.null(L)) R else L}
+      phrases.
+
     }
   }
 

@@ -1,7 +1,7 @@
 #  File src/library/utils/R/str.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2021 The R Core Team
+#  Copyright (C) 1995-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -16,9 +16,6 @@
 #  A copy of the GNU General Public License is available at
 #  https://www.R-project.org/Licenses/
 
-## A pearl from ggplot2 et al.  NB: often needs '(.)' :   <lhs> %||% ( <rhs> )
-## *not exported* [should rather be in 'base' than exported here]
-`%||%` <- function(L,R) if(is.null(L)) R else L
 
 ####------ str : show STRucture of an R object
 str <- function(object, ...) UseMethod("str")
