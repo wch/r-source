@@ -3076,7 +3076,8 @@ attribute_hidden SEXP do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 	for(i = 0; i < name_count; i++) {
 	    char *entry = name_table + name_entry_size * i;
 	    PROTECT(thisname = mkChar(entry + 2));
-	    int capture_num = (entry[0]<<8) + entry[1] - 1;
+	    int capture_num = ((unsigned char)entry[0]<<8)
+	                     + (unsigned char)entry[1] - 1;
 	    SET_STRING_ELT(capture_names, capture_num, thisname);
 	    UNPROTECT(1);
 	}
