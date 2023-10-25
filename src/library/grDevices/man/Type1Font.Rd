@@ -11,7 +11,7 @@
 \title{Type 1 and CID Fonts}
 \description{
   These functions are used to define the translation of a \R graphics
-  font family name to a Type 1 or CID font descriptions, used by both
+  font family name to Type 1 or CID font descriptions, used by
   the \code{\link{pdf}} and \code{\link{postscript}} graphics devices.
 }
 \usage{

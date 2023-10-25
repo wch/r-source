@@ -24,9 +24,11 @@ xfig(file = if(onefile) "Rplots.fig" else "Rplot\%03d.fig",
 }
 \arguments{
   \item{file}{a character string giving the file path.   For use
-    with \code{onefile = FALSE} give a C integer format such as
+    with \code{onefile = FALSE}, give a C integer format such as
     \code{"Rplot\%03d.fig"} (the default in that case).
-    (See \code{\link{pdf}} for further details.)
+
+    See section \sQuote{File specifications} in the help
+    for \code{\link{pdf}} for further details.
   }
   \item{onefile}{logical: if true allow multiple figures
     in one file. If false, assume only one page per file and generate a

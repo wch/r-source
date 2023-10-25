@@ -21,21 +21,7 @@ pdf(file = if(onefile) "Rplots.pdf" else "Rplot\%03d.pdf",
 }
 \arguments{
   \item{file}{a character string giving the file path.
-    If it is of the form \code{"|cmd"}, the output is piped to the
-    command given by \command{cmd}.  If it is \code{NULL},
-    then no external file is created (effectively, no drawing occurs),
-    but the device may still be queried (e.g., for size of text).
-
-    For use with \code{onefile = FALSE} give a C integer format such as
-    \code{"Rplot\%03d.pdf"} (the default in that case).  The string
-    should not otherwise contain a \code{\%}: if it is really necessary,
-    use \code{\%\%} in the string for \code{\%} in the file name.  A
-    single integer format matching the \link{regular expression}
-    \code{"\%[#0 +=-]*[0-9.]*[diouxX]"} is allowed.
-
-    Tilde expansion (see \code{\link{path.expand}}) is done. An input with
-    a marked encoding is converted to the native encoding or an error is
-    given.
+    See the section \sQuote{File specifications} for further details.
   }
   \item{width, height}{the width and height of the graphics region in
     inches.  The default values are \code{7}.}
@@ -122,11 +108,6 @@ pdf(file = if(onefile) "Rplots.pdf" else "Rplot\%03d.pdf",
   \code{pdf()} opens the file \code{file} and the PDF commands needed to
   plot any graphics requested are sent to that file.
 
-  The \code{file} argument is interpreted as a C integer format as used
-  by \code{\link{sprintf}}, with integer argument the page number.
-  The default gives files \file{Rplot001.pdf}, \dots, \file{Rplot999.pdf},
-  \file{Rplot1000.pdf}, \dots.
-
   The \code{family} argument can be used to specify a PDF-specific
   font family as the initial/default font for the device.  If additional
   font families are to be used they should be included in the
@@ -192,6 +173,23 @@ pdf(file = if(onefile) "Rplots.pdf" else "Rplot\%03d.pdf",
   PDF viewers will use a white canvas so the visual effect is if the
   background were white.  This will not be the case when printing onto
   coloured paper, though.
+}
+
+\section{File specifications}{
+  Tilde expansion (see \code{\link{path.expand}}) is done on the
+  \code{file} argument.  An input with a marked encoding is converted to
+  the native encoding or an error is given.
+
+  For use with \code{onefile = FALSE}, give a C integer format such as
+  \code{"Rplot\%03d.pdf"} (the default in that case) which is expanded
+  using the page number, so this uses files \file{Rplot001.pdf}, \dots,
+  \file{Rplot999.pdf}, \file{Rplot1000.pdf},
+
+  A single integer format matching the \link{regular expression}
+  \code{"\%[#0 +=-]*[0-9.]*[diouxX]"} is allowed in \code{file}.  The
+  character string should not otherwise contain a \code{\%}: if it is
+  really necessary, use \code{\%\%} in the string for \code{\%} in the
+  file path.
 }
 
 \section{Families}{

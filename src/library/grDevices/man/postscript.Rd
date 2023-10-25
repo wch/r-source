@@ -28,7 +28,7 @@ postscript(file = if(onefile) "Rplots.ps" else "Rplot\%03d.ps",
     If it is of the form \code{"|cmd"}, the output is piped to the
     command given by \command{cmd}.
 
-    For use with \code{onefile = FALSE} give a C integer format such as
+    For use with \code{onefile = FALSE}, give a C integer format such as
     \code{"Rplot\%03d.ps"} (the default in that case).  The string
     should not otherwise contain a \code{\%}: if it is really necessary,
     use \code{\%\%} in the string for \code{\%} in the file name.  A
@@ -38,6 +38,9 @@ postscript(file = if(onefile) "Rplots.ps" else "Rplot\%03d.ps",
     Tilde expansion (see \code{\link{path.expand}}) is done. An input with
     a marked encoding is converted to the native encoding or an error is
     given.
+
+    See also section \sQuote{File specifications} in the help
+    for \code{\link{pdf}} for further details.
   }
   \item{onefile}{logical: if true (the default) allow multiple figures
     in one file.  If false, generate a file name containing the page
