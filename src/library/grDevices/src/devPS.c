@@ -759,7 +759,7 @@ static double
 	    R_CheckStack2(strlen((char *)str)+1);
 	    /* Output string cannot be longer
 	       -- but it can be if transliteration is used */
-	    char buff[2*strlen((char *)str)+1];
+	    char *buff = alloca(2*strlen((char *)str)+1);
 	    mbcsToSbcs((char *)str, buff, encoding, enc);
 	    str1 = (unsigned char *)buff;
 	}
