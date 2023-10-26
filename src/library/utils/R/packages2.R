@@ -1003,11 +1003,8 @@ registerNames <- function(names, package, .listFile, add = TRUE) {
 packageName <- function(env = parent.frame()) {
     if (!is.environment(env)) stop("'env' must be an environment")
     env <- topenv(env)
-    if (!is.null(pn <- get0(".packageName", envir = env, inherits = FALSE)))
-	pn
-    else if (identical(env, .BaseNamespaceEnv))
-	"base"
-    ## else NULL
+    get0(".packageName", envir = env, inherits = FALSE) %||%
+        if(identical(env, .BaseNamespaceEnv)) "base" ## else NULL
 }
 
 ##' R's .libPaths() to be used in 'R CMD ...' or similar,

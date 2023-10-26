@@ -34,8 +34,8 @@ smoothScatter <- function(x, y=NULL, nbin=128, bandwidth,
     xlabel <- if (!missing(x)) deparse1(substitute(x))
     ylabel <- if (!missing(y)) deparse1(substitute(y))
     xy <- xy.coords(x, y, xlabel, ylabel)
-    xlab <- if (is.null(xlab)) xy$xlab else xlab
-    ylab <- if (is.null(ylab)) xy$ylab else ylab
+    if (is.null(xlab)) xlab <- xy$xlab
+    if (is.null(ylab)) ylab <- xy$ylab
 
     ## eliminate non-finite (incl. NA) values
     ## want to keep rownames

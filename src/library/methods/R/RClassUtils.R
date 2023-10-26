@@ -995,11 +995,10 @@ possibleExtends <- function(class1, class2, ClassDef1, ClassDef2)
         return(FALSE)
     ## else
     ext <- ClassDef1@contains
-    if(!is.null(contained <- ext[[class2]]))
-	contained
-    else if (is.null(ClassDef2))
+    ext[[class2]] %||%
+      if (is.null(ClassDef2))
 	FALSE
-    else { ## look for class1 in the known subclasses of class2
+      else { ## look for class1 in the known subclasses of class2
 	subs <- ClassDef2@subclasses
 	## check for a classUnion definition, not a plain "classRepresentation"
 	if(!.identC(class(ClassDef2), "classRepresentation") && isClassUnion(ClassDef2))
@@ -1012,7 +1011,7 @@ possibleExtends <- function(class1, class2, ClassDef1, ClassDef2)
 	    i <- i[!is.na(i)]
 	    if(length(i)) subs[[ i[1L] ]] else FALSE
 	}
-    }
+      }
 }
 
   ## complete the extends information in the class definition, by following

@@ -1,7 +1,7 @@
 #  File src/library/methods/R/is.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2022 The R Core Team
+#  Copyright (C) 1995-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -39,9 +39,7 @@ is <- function(object, class2)
         return(inherits(object, class2))
     if(is.null(class2Def)) {
         class2Def <- getClassDef(class2, .classDefEnv(class1Def),
-                                 if (!is.null(package <- packageSlot(class2)))
-                                     package
-                                 else getPackageName(topenv(parent.frame())))
+                                 packageSlot(class2) %||% getPackageName(topenv(parent.frame())))
     }
     ## S3 inheritance is applied if the object is not S4 and class2 is either
     ## a basic class or an S3 class (registered or not)
@@ -174,12 +172,10 @@ setIs <-
              domain = NA)
     prevIs <- !identical(possibleExtends(class1, class2,classDef, classDef2),
                          FALSE) # used in checking for previous coerce
-    obj <- if(is.null(extensionObject))
+    obj <- extensionObject %||%
                makeExtends(class1, coerce, test, replace, by,
                            classDef1 = classDef, classDef2 = classDef2,
                            package = getPackageName(where))
-           else
-               extensionObject
     ## revise the superclass/subclass info in the stored class definition
     ok <- .validExtends(class1, class2, classDef,  classDef2, obj@simple)
     if(!isTRUE(ok))

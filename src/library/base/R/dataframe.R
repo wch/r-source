@@ -438,7 +438,7 @@ data.frame <-
 		    domain = NA)
 	    }
 	else function(current, new, i) {
-	    if(is.null(current)) {
+	    current %||%
 		if(anyDuplicated(new)) {
 		    warning(gettextf(
                         "some row.names duplicated: %s --> row.names NOT used",
@@ -446,7 +446,6 @@ data.frame <-
                         domain = NA)
 		    current
 		} else new
-	    } else current
 	}
     object <- as.list(substitute(list(...)))[-1L]
     mirn <- missing(row.names) # record before possibly changing
@@ -1472,7 +1471,7 @@ rbind.data.frame <- function(..., deparse.level = 1, make.row.names = TRUE,
 		      stringsAsFactors = stringsAsFactors)
     } else {
 	structure(value, class = cl,
-		  row.names = if(is.null(rlabs)) .set_row_names(nrow) else rlabs)
+		  row.names = rlabs %||% .set_row_names(nrow))
     }
 }
 

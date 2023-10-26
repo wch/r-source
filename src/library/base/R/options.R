@@ -1,7 +1,7 @@
 #  File src/library/base/R/options.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2018 The R Core Team
+#  Copyright (C) 1995-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -23,8 +23,6 @@ options <- function(...)
 getOption <- function(x, default = NULL) {
      if (missing(default))
          .Internal(getOption(x))
-     else {
-         ans <- .Internal(getOption(x))
-         if (is.null(ans)) default else ans
-     }
+     else
+         .Internal(getOption(x)) %||% default
 }

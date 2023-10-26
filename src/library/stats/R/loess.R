@@ -473,10 +473,8 @@ scatter.smooth <-
     xy <- xy.coords(x, y, xlabel, ylabel)
     x <- xy$x
     y <- xy$y
-    xlab <- if (is.null(xlab)) xy$xlab else xlab
-    ylab <- if (is.null(ylab)) xy$ylab else ylab
     pred <- loess.smooth(x, y, span, degree, family, evaluation)
-    plot(x, y, ylim = ylim, xlab = xlab, ylab = ylab, ...)
+    plot(x, y, ylim = ylim, xlab = xlab %||% xy$xlab, ylab = ylab %||% xy$ylab, ...)
     do.call(lines, c(list(pred), lpars))
     invisible()
 }

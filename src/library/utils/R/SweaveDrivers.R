@@ -745,7 +745,7 @@ RtangleRuncode <- function(object, chunk, options)
         if (is.logical(annotate) && annotate) {
             cat("###################################################\n",
                 "### code chunk number ", options$chunknr, ": ",
-                if(!is.null(ol <- options$label)) ol else .RtangleCodeLabel(chunk),
+                options$label %||% .RtangleCodeLabel(chunk),
                 if(!options$eval) " (eval = FALSE)", "\n",
                 "###################################################\n",
                 file = chunkout, sep = "")

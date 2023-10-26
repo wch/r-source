@@ -37,15 +37,15 @@ curve <- function(expr, from = NULL, to = NULL, n = 101, add = FALSE,
     addF <- isFALSE(add)
     if (is.null(ylab)) ylab <- deparse(expr)
     if (is.null(from) || is.null(to)) {
-        xl <- if (!is.null(xlim)) xlim
-        else if (!addF) {
+        xl <- xlim %||%
+          if (!addF) {
             ## determine xlim of current plot.
             pu <- par("usr")[1L:2L]
             if (par("xaxs") == "r") pu <- extendrange(pu, f = -1/27)
             if (par("xlog")) 10^pu else pu
-       } else c(0, 1) # was c(1/27, 26/27) in R < 2.14.0
+          } else c(0, 1) # was c(1/27, 26/27) in R < 2.14.0
         if (is.null(from)) from <- xl[1L]
-        if (is.null(to)) to <- xl[2L]
+        if (is.null(to))     to <- xl[2L]
     }
     lg <- if (length(log)) log else if (!addF && par("xlog")) "x" else ""
     if (length(lg) == 0) lg <- ""

@@ -45,5 +45,5 @@ capture.output <- function(..., file=NULL, append=FALSE,
     on.exit()
     sink(type=type, split=split)
     if(closeit) close(file)
-    if(is.null(rval)) invisible(NULL) else rval
+    rval %||% invisible(NULL)
 }
