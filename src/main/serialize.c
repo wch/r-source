@@ -105,16 +105,7 @@
    The output format for dotted pairs writes the ATTRIB value first
    rather than last.  This allows CDR's to be processed by iterative
    tail calls to avoid recursion stack overflows when processing long
-   lists.  The writing code does take advantage of this, but the
-   reading code does not.  It hasn't been a big issue so far--the only
-   case where it has come up is in saving a large unhashed environment
-   where saving succeeds but loading fails because the PROTECT stack
-   overflows.  With the ability to create hashed environments at the
-   user level this is likely to be even less of an issue now.  But if
-   we do need to deal with it we can do so without a change in the
-   serialization format--just rewrite ReadItem to pass the place to
-   store the CDR it reads. (It's a bit of a pain to do, that is why it
-   is being deferred until it is clearly needed.)
+   lists.
 
    CHARSXPs are now handled in a way that preserves both embedded null
    characters and NA_STRING values.
@@ -1804,17 +1795,88 @@ static SEXP R_FindNamespace1(SEXP info)
     return val;
 }
 
+static SEXP ReadItem_Recursive(int flags, SEXP ref_table, R_inpstream_t stream);
 
-static SEXP ReadItem (SEXP ref_table, R_inpstream_t stream)
+static SEXP ReadItem_Iterative(int flags, SEXP ref_table, R_inpstream_t stream)
+{
+    /* Building dotted pair objects with recursion on the CDR will
+       overflow the PROTECT stack for long lists. Instead we build
+       pairlists in an iterative loop */
+    
+    SEXPTYPE type = DECODE_TYPE(flags);
+    SEXP s, sfirst = NULL, slast = NULL;
+    
+    /* An assertion here guarantees that we go through the loop at
+       least once. This make for cleaner exit code and avoids a
+       potential infinite loop: ReadItem_Recursive <->
+       ReadIterm_iterative */
+    R_assert(type == LISTSXP || type == LANGSXP || type == CLOSXP ||
+	     type == PROMSXP || type == DOTSXP);
+    
+    while (type == LISTSXP || type == LANGSXP || type == CLOSXP ||
+	   type == PROMSXP || type == DOTSXP) {
+	int levs, objf, hasattr, hastag;
+	UnpackFlags(flags, &type, &levs, &objf, &hasattr, &hastag);
+
+	PROTECT(s = allocSExp(type));
+	SETLEVELS(s, levs);
+	SET_OBJECT(s, objf);
+	R_ReadItemDepth++;
+	Rboolean set_lastname = FALSE;
+	SET_ATTRIB(s, hasattr ? ReadItem(ref_table, stream) : R_NilValue);
+	SET_TAG(s, hastag ? ReadItem(ref_table, stream) : R_NilValue);
+	if (hastag && R_ReadItemDepth == R_InitReadItemDepth + 1 &&
+	    isSymbol(TAG(s))) {
+	    snprintf(lastname, 8192, "%s", CHAR(PRINTNAME(TAG(s))));
+	    set_lastname = TRUE;
+	}
+	if (hastag && R_ReadItemDepth <= 0) {
+	    Rprintf("%*s", 2*(R_ReadItemDepth - R_InitReadItemDepth), "");
+	    PrintValue(TAG(s));
+	}
+	SETCAR(s, ReadItem(ref_table, stream));
+	R_ReadItemDepth--;
+	R_CheckStack();
+
+	if (sfirst == NULL) {
+	    sfirst = s; /* First iteration: start list */
+	}
+	else {
+	    SETCDR(slast, s); /* Subsequent iterations: extend list */
+	    UNPROTECT(1); /* s, which is now protected as part of sfirst */
+	}
+	slast = s;
+
+	/* For reading closures and promises stored in earlier
+	   versions, convert NULL env to baseenv() */
+	if (type == CLOSXP && CLOENV(s) == R_NilValue)
+	    SET_CLOENV(s, R_BaseEnv);
+	else if (type == PROMSXP && PRENV(s) == R_NilValue)
+	    SET_PRENV(s, R_BaseEnv);
+	if (set_lastname) strcpy(lastname, "<unknown>");
+
+	flags = InInteger(stream);
+	type = DECODE_TYPE(flags);
+    }
+
+    R_ReadItemDepth++;
+    PROTECT(s = ReadItem_Recursive(flags, ref_table, stream));
+    R_ReadItemDepth--;
+    SETCDR(slast, s);
+    UNPROTECT(2); /* s, sfirst */
+    return sfirst;
+}
+
+
+static SEXP ReadItem_Recursive (int flags, SEXP ref_table, R_inpstream_t stream)
 {
     SEXPTYPE type;
     SEXP s;
     R_xlen_t len, count;
-    int flags, levs, objf, hasattr, hastag, length;
+    int levs, objf, hasattr, hastag, length;
 
     R_assert(TYPEOF(ref_table) == LISTSXP && TYPEOF(CAR(ref_table)) == VECSXP);
 
-    flags = InInteger(stream);
     UnpackFlags(flags, &type, &levs, &objf, &hasattr, &hastag);
 
     switch(type) {
@@ -1898,43 +1960,7 @@ static SEXP ReadItem (SEXP ref_table, R_inpstream_t stream)
     case CLOSXP:
     case PROMSXP:
     case DOTSXP:
-	/* This handling of dotted pair objects still uses recursion
-	   on the CDR and so will overflow the PROTECT stack for long
-	   lists.  The save format does permit using an iterative
-	   approach; it just has to pass around the place to write the
-	   CDR into when it is allocated.  It's more trouble than it
-	   is worth to write the code to handle this now, but if it
-	   becomes necessary we can do it without needing to change
-	   the save format. */
-	PROTECT(s = allocSExp(type));
-	SETLEVELS(s, levs);
-	SET_OBJECT(s, objf);
-	R_ReadItemDepth++;
-	Rboolean set_lastname = FALSE;
-	SET_ATTRIB(s, hasattr ? ReadItem(ref_table, stream) : R_NilValue);
-	SET_TAG(s, hastag ? ReadItem(ref_table, stream) : R_NilValue);
-	if (hastag && R_ReadItemDepth == R_InitReadItemDepth + 1 &&
-	    isSymbol(TAG(s))) {
-	    snprintf(lastname, 8192, "%s", CHAR(PRINTNAME(TAG(s))));
-	    set_lastname = TRUE;
-	}
-	if (hastag && R_ReadItemDepth <= 0) {
-	    Rprintf("%*s", 2*(R_ReadItemDepth - R_InitReadItemDepth), "");
-	    PrintValue(TAG(s));
-	}
-	SETCAR(s, ReadItem(ref_table, stream));
-	R_ReadItemDepth--; /* do this early because of the recursion. */
-	R_CheckStack();
-	SETCDR(s, ReadItem(ref_table, stream));
-	/* For reading closures and promises stored in earlier
-	   versions, convert NULL env to baseenv() */
-	if (type == CLOSXP && CLOENV(s) == R_NilValue)
-	    SET_CLOENV(s, R_BaseEnv);
-	else if (type == PROMSXP && PRENV(s) == R_NilValue)
-	    SET_PRENV(s, R_BaseEnv);
-	if (set_lastname) strcpy(lastname, "<unknown>");
-	UNPROTECT(1); /* s */
-	return s;
+	return ReadItem_Iterative(flags, ref_table, stream);
     default:
 	/* These break out of the switch to have their ATTR,
 	   LEVELS, and OBJECT fields filled in.  Each leaves the
@@ -2080,6 +2106,12 @@ static SEXP ReadItem (SEXP ref_table, R_inpstream_t stream)
 	    return R_BytecodeExpr(s);
 	return s;
     }
+}
+
+static R_INLINE SEXP ReadItem (SEXP ref_table, R_inpstream_t stream)
+{
+    int flags = InInteger(stream);
+    return ReadItem_Recursive(flags, ref_table, stream);
 }
 
 static SEXP ReadBC1(SEXP ref_table, SEXP reps, R_inpstream_t stream);
