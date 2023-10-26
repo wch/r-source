@@ -1707,18 +1707,6 @@ attribute_hidden SEXP do_transpose(SEXP call, SEXP op, SEXP args, SEXP rho)
  M.Maechler : expanded	all ../include/Rdefines.h macros
  */
 
-/* this increments iip and sets j using strides */
-
-#define CLICKJ						\
-    for (itmp = 0; itmp < n; itmp++)			\
-	if (iip[itmp] == isr[itmp]-1) iip[itmp] = 0;	\
-	else {						\
-	    iip[itmp]++;				\
-	    break;					\
-	}						\
-    for (lj = 0, itmp = 0; itmp < n; itmp++)		\
-	lj += iip[itmp] * stride[itmp];
-
 /* aperm (a, perm, resize = TRUE) */
 attribute_hidden SEXP do_aperm(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
@@ -1734,7 +1722,7 @@ attribute_hidden SEXP do_aperm(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     /* check the permutation */
 
-    int i, j, itmp;
+    int i;
     int *pp = (int *) R_alloc((size_t) n, sizeof(int));
     SEXP perm = CADR(args);
     if (length(perm) == 0) {
@@ -1767,7 +1755,7 @@ attribute_hidden SEXP do_aperm(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
 
     R_xlen_t *iip = (R_xlen_t *) R_alloc((size_t) n, sizeof(R_xlen_t));
-    for (i = 0; i < n; iip[i++] = 0);
+    Memzero(iip, n);
     for (i = 0; i < n; i++)
 	if (pp[i] >= 0 && pp[i] < n) iip[pp[i]]++;
 	else error(_("value out of range in 'perm'"));
@@ -1787,15 +1775,26 @@ attribute_hidden SEXP do_aperm(SEXP call, SEXP op, SEXP args, SEXP rho)
     for (i = 0; i < n; i++) isr[i] = isa[pp[i]];
 
     /* and away we go! iip will hold the incrementer */
+    Memzero(iip, n);
 
     R_xlen_t len = XLENGTH(a);
     SEXP r = PROTECT(allocVector(TYPEOF(a), len));
 
-    for (i = 0; i < n; iip[i++] = 0);
-
     R_xlen_t li, lj;
+
+/* this increments iip and sets lj using strides */
+#define CLICKJ						\
+	for (int i_ = 0; i_ < n; i_++)			\
+	    if (iip[i_] == isr[i_]-1) iip[i_] = 0;	\
+	    else {					\
+		iip[i_]++;				\
+		break;					\
+	    }						\
+    lj = 0;						\
+    for (int i_ = 0; i_ < n; i_++)			\
+	    lj += iip[i_] * stride[i_]
+
     switch (TYPEOF(a)) {
-    int itmp;
     case INTSXP:
 	for (lj = 0, li = 0; li < len; li++) {
 	    INTEGER(r)[li] = INTEGER(a)[lj];
