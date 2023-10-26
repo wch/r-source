@@ -78,23 +78,26 @@ iconvlist()
 \section{Implementation Details}{
   There are three main implementations of \code{iconv} in use.  Linux's
   most common C runtime, \samp{glibc}, contains one.  Several platforms
-  supply versions or emulations of GNU \samp{libiconv}, including macOS
-  and FreeBSD, in some cases with additional encodings.  On Windows we
-  use a version of Yukihiro Nakadaira's \samp{win_iconv}, which is based
-  on Windows' codepages.  (We have added many encoding names for
-  compatibility with other systems.)  All three have \code{iconvlist},
-  ignore case in encoding names and support \samp{//TRANSLIT} (but with
-  different results, and for \samp{win_iconv} currently a \sQuote{best
-  fit} strategy is used except for \code{to = "ASCII"}).
+  supply versions or emulations of GNU \samp{libiconv}, including
+  previous versions of macOS and FreeBSD, in some cases with additional
+  encodings.  On Windows we use a version of Yukihiro Nakadaira's
+  \samp{win_iconv}, which is based on Windows' codepages.  (We have
+  added many encoding names for compatibility with other systems.)  All
+  three have \code{iconvlist}, ignore case in encoding names and support
+  \samp{//TRANSLIT} (but with different results, and for
+  \samp{win_iconv} currently a \sQuote{best fit} strategy is used except
+  for \code{to = "ASCII"}).
 
-  %% https://github.com/apple-oss-distributions/libiconv/blob/libiconv-80.1.1/citrus/iconv.h
+%% https://github.com/apple-oss-distributions/libiconv/blob/libiconv-80.1.1/citrus/iconv.h
   The macOS 14 implementation is attributed to the \sQuote{Citrus
   Project}: the Apple headers declare it as \sQuote{compatible} with GNU
-  \samp{libiconv} 1.11 from 2006.  However, it differs in
-  significant ways including using a \sQuote{best fit} for conversions,
-  at least for \code{to = "ASCII"} and \code{to = "latin1"}.  (Earlier
-  versions of macOS used GNU \samp{libiconv} 1.11. It seems this
-  implementation is also used in recent versions of FreeBSD.)
+  \samp{libiconv} 1.11 from 2006.  However, it differs in significant
+  ways including using a \sQuote{best fit} for conversions, at least for
+  \code{to = "ASCII"} and \code{to = "latin1"}.  (Earlier versions of
+  macOS used GNU \samp{libiconv} 1.11. It seems this implementation is
+  also used in recent versions of FreeBSD.)  For a failing conversion
+  macOS 14 generally translated character(s) to \code{?} but 14.1 gives
+  an error (so an \code{NA} result in \R).
 
   Most commercial Unixes contain an implementation of \code{iconv} but
   none we have encountered have supported the encoding names we need:
