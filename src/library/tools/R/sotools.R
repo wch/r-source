@@ -1214,8 +1214,8 @@ function(nrdb, align = TRUE, include_declarations = FALSE)
         "*/")
 
     if(include_declarations) {
-        prepare <- function(nargs)
-            if(nargs > 0) paste(rep.int("void *", nargs), collapse=", ")
+        prepare <- function(nargs, type = "void *")
+            if(nargs > 0) paste(rep.int(type, nargs), collapse=", ")
             else "void"
         decls <- c(
             "/* FIXME: ",
@@ -1228,7 +1228,7 @@ function(nrdb, align = TRUE, include_declarations = FALSE)
                   paste0("extern void ", y$s, "(", args, ");"))
            },
             if(NROW(y <- nrdb$.Call)) {
-                args <- sapply(y$n, function(n) if(n >= 0) prepare(n)
+                args <- sapply(y$n, function(n) if(n >= 0) prepare(n, "SEXP")
                                else "/* FIXME */")
                c("", "/* .Call calls */",
                   paste0("extern SEXP ", y$s, "(", args, ");"))
