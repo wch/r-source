@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998--2018  The R Core Team
+ *  Copyright (C) 1998--2023  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -1564,16 +1564,19 @@ static SEXP contour(SEXP x, int nx, SEXP y, int ny, SEXP z,
 		buffer[0] = ' ';
 		if (!isNull(labels)) {
 		    int numl = length(labels);
-		    strcpy(&buffer[1], CHAR(STRING_ELT(labels, cnum % numl)));
+		    strncpy(&buffer[1], CHAR(STRING_ELT(labels, cnum % numl)),
+		            sizeof(buffer) - 2);
 		    enc = getCharCE(STRING_ELT(labels, cnum % numl));
 		}
 		else {
 		    PROTECT(lab = allocVector(REALSXP, 1));
 		    REAL(lab)[0] = zc;
 		    lab = labelformat(lab);
-		    strcpy(&buffer[1], CHAR(STRING_ELT(lab, 0))); /* ASCII */
+		    strncpy(&buffer[1], CHAR(STRING_ELT(lab, 0)),
+		            sizeof(buffer) - 2); /* ASCII */
 		    UNPROTECT(1); /* lab */
 		}
+		buffer[sizeof(buffer)-2] = '\0';
 		buffer[strlen(buffer)+1] = '\0';
 		buffer[strlen(buffer)] = ' ';
 
