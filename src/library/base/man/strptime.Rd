@@ -164,7 +164,8 @@ strptime(x, format, tz = "")
       If the week (starting on Monday) containing 1 January has four or
       more days in the new year, then it is considered week 1.  Otherwise, it
       is the last week of the previous year, and the next week is week
-      1.  (Accepted but ignored on input.)}
+      1. See \code{\%G} (\code{\%g}) for the year corresponding to the
+      week given by \code{\%V}. (Accepted but ignored on input.)}
     \item{\code{\%w}}{Weekday as decimal number (0--6, Sunday is 0).}
     \item{\code{\%W}}{Week of the year as decimal number (00--53) using
       Monday as the first day of week (and typically with the
