@@ -172,6 +172,7 @@ extern char *tzname[2];
 #endif
 
 #include <stdlib.h> /* for setenv or putenv */
+#define R_USE_SIGNALS 1
 #include <Defn.h>
 #include <Internal.h>
 
@@ -714,19 +715,77 @@ static stm * localtime0(const double *tp, const int local, stm *ltm)
 } /* localtime0() */
 #endif // end of PATH 1) ---------------------------------------------
 
-static Rboolean set_tz(const char *tz, char *oldtz)
-{
-    Rboolean settz = TRUE; // typical result
+/* Some functions below need to set environment variable TZ and then
+   (attempt to) set the time-zone accordingly (via set_tz, tzset).
+   On exit, they attempt to restore the previous TZ and re-set the time-zone
+   (via reset_tz, tzset). Functions set_tz, reset_tz and the internal tzcode
+   tzset() may issue warnings, which may be turned into errors and cause a long
+   jump (PR#17966), before or after setting the time-zone (to the required one,
+   or as a fallback to UTC).
 
-    strcpy(oldtz, "");
+   struct tzset_info ... holds information for resetting the time zone
+                         during local and non-local returns
+
+   prepare_reset_tz() .. initializes tzset_info and sets up context
+   set_tz()           .. local setting of tz
+   reset_tz()         .. local re-setting, also invoked non-locally
+
+   prepare_dummy_reset_tz()
+                      .. initializes tzset_info for local invocation
+                         so that it does nothing (could go away
+                         after some refactoring)
+*/
+
+typedef struct tzset_info {
+    char oldtz[1001];	/* previous value of TZ variable */
+    Rboolean settz;	/* TZ variable was set */
+    RCNTXT cntxt;
+    Rboolean end_context_on_reset;
+			/* should endcontext() be called from reset_tz()? */
+} tzset_info;
+
+static void reset_tz(tzset_info *si);
+
+static void cend_reset_tz(void *data)
+{
+    tzset_info *si = (tzset_info *)data;
+    si->end_context_on_reset = FALSE;
+    reset_tz(si);
+}
+
+static void prepare_reset_tz(tzset_info *si)
+{
+    si->settz = FALSE;
+    si->oldtz[0] = '\0';
+
+    /* set up a context which will reset tz if there is an error */
+    begincontext(&si->cntxt, CTXT_CCODE, R_NilValue, R_BaseEnv, R_BaseEnv,
+                 R_NilValue, R_NilValue);
+    si->cntxt.cend = &cend_reset_tz;
+    si->cntxt.cenddata = si;
+    si->end_context_on_reset = TRUE;
+}
+
+static void prepare_dummy_reset_tz(tzset_info *si)
+{
+    si->settz = FALSE;
+    si->end_context_on_reset = FALSE;
+}
+    
+static Rboolean set_tz(const char *tz, tzset_info *si)
+{
+    si->settz = FALSE;
+    si->oldtz[0] = '\0';
+
     char *p = getenv("TZ");
     if(p) {
 	if (strlen(p) > 1000)
 	    error("time zone specification is too long");
-	strcpy(oldtz, p);
+	strcpy(si->oldtz, p);
     }
 #ifdef HAVE_SETENV
     if(setenv("TZ", tz, 1)) warning(_("problem with setting timezone"));
+    else si->settz = TRUE;
 #elif defined(HAVE_PUTENV)
     {
 	/* This could be dynamic, but setenv is strongly preferred
@@ -738,24 +797,33 @@ static Rboolean set_tz(const char *tz, char *oldtz)
 	    error("time zone specification is too long");
 	strcpy(buff, "TZ="); strcat(buff, tz);
 	if(putenv(buff)) warning(_("problem with setting timezone"));
+	else si->settz = TRUE;
     }
 #else
     warning(_("cannot set timezones on this system"));
-    settz = FALSE;
 #endif
     tzset();
-    return settz;
+    return si->settz;
 }
 
-static void reset_tz(char *tz)
+static void reset_tz(tzset_info *si)
 {
-    if(strlen(tz)) {
+    if (si->end_context_on_reset) {
+	endcontext(&si->cntxt);
+	si->end_context_on_reset = FALSE; /* guard against double reset */
+    }
+    if (!si->settz)
+	return;
+
+    si->settz = FALSE; /* better avoid recursive attempts */
+    if(strlen(si->oldtz)) {
 #ifdef HAVE_SETENV
-	if(setenv("TZ", tz, 1)) warning(_("problem with setting timezone"));
+	if(setenv("TZ", si->oldtz, 1))
+	    warning(_("problem with setting timezone"));
 #elif defined(HAVE_PUTENV)
 	{
 	    static char buff[1010];
-	    strcpy(buff, "TZ="); strcat(buff, tz); // could use strncat
+	    strcpy(buff, "TZ="); strcat(buff, si->oldtz); // could use strncat
 	    if(putenv(buff)) warning(_("problem with setting timezone"));
 	}
 #endif
@@ -852,7 +920,7 @@ makelt(stm *tm, SEXP ans, R_xlen_t i, Rboolean valid, double frac_secs)
     }
 
 // Used in do_asPOSIXlt do_strptime do_D2POSIXlt
-// Uses ans ansnames tzone settz oldtz  from enclosing function
+// Uses ans ansnames tzone tzsi from enclosing function
 #define END_MAKElt					\
     setAttrib(ans, R_NamesSymbol, ansnames);		\
     SEXP klass = PROTECT(allocVector(STRSXP, 2));	\
@@ -860,7 +928,7 @@ makelt(stm *tm, SEXP ans, R_xlen_t i, Rboolean valid, double frac_secs)
     SET_STRING_ELT(klass, 1, mkChar("POSIXt"));		\
     classgets(ans, klass);				\
     if(isString(tzone)) setAttrib(ans, install("tzone"), tzone);	\
-    if(settz) reset_tz(oldtz);				\
+    reset_tz(&tzsi);				\
     SEXP nm = getAttrib(x, R_NamesSymbol);				\
     if(nm != R_NilValue) setAttrib(VECTOR_ELT(ans, 5), R_NamesSymbol, nm); \
     MAYBE_INIT_balanced							\
@@ -988,10 +1056,12 @@ attribute_hidden SEXP do_asPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
        It controls setting TZ, the use of gmtime vs localtime, forcing
        isdst = 0 and how the "tzone" attribute is set.
     */
-    Rboolean isUTC = (strcmp(tz, "GMT") == 0  || strcmp(tz, "UTC") == 0),
-      settz = FALSE;
-    char oldtz[1001] = "";
-    if(!isUTC && strlen(tz) > 0) settz = set_tz(tz, oldtz);
+    Rboolean isUTC = (strcmp(tz, "GMT") == 0  || strcmp(tz, "UTC") == 0);
+
+    tzset_info tzsi;
+    prepare_reset_tz(&tzsi);
+
+    if(!isUTC && strlen(tz) > 0) set_tz(tz, &tzsi);
 #ifdef USE_INTERNAL_MKTIME
     else R_tzsetwall(); // to get the system timezone recorded
 #else
@@ -1048,7 +1118,6 @@ attribute_hidden SEXP do_asPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
     }
     END_MAKElt
-    if(settz) reset_tz(oldtz);
     UNPROTECT(6);
     return ans;
 } // asPOSIXlt
@@ -1085,9 +1154,9 @@ attribute_hidden SEXP do_asPOSIXct(SEXP call, SEXP op, SEXP args, SEXP env)
       if !isUTC we need to set the tz, not set tm_isdst and use mktime
       not timegm (or an emulation).
     */
-    char oldtz[1001] = "";
-    Rboolean settz = FALSE;
-    if(!isUTC && strlen(tz) > 0) settz = set_tz(tz, oldtz);
+    tzset_info tzsi;
+    prepare_reset_tz(&tzsi);
+    if(!isUTC && strlen(tz) > 0) set_tz(tz, &tzsi);
 #ifdef USE_INTERNAL_MKTIME
     else R_tzsetwall(); // to get the system timezone recorded
 #else
@@ -1156,7 +1225,7 @@ attribute_hidden SEXP do_asPOSIXct(SEXP call, SEXP op, SEXP args, SEXP env)
     SET_STRING_ELT(klass, 1, mkChar("POSIXt"));
     classgets(ans, klass);
 
-    if(settz) reset_tz(oldtz);
+    reset_tz(&tzsi);
     UNPROTECT(4);
     return ans;
 } // as.POSIXct()
@@ -1179,8 +1248,8 @@ attribute_hidden SEXP do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
     if(!isNull(tz) && !isString(tz))
 	error(_("invalid '%s'"), "attr(x, \"tzone\")");
 
-    Rboolean settz = FALSE;
-    char oldtz[1001] = "";
+    tzset_info tzsi;
+    prepare_reset_tz(&tzsi);
     const char *tz1;
     if (!isNull(tz) && strlen(tz1 = CHAR(STRING_ELT(tz, 0)))) {
 	/* If the format includes %Z or %z
@@ -1193,7 +1262,7 @@ attribute_hidden SEXP do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 	/* strftime (per POSIX) calls settz(), so we need to set TZ, but
 	   we would not have to call settz() directly (except for the
 	   old OLD_Win32 code) */
-	if(needTZ) settz = set_tz(tz1, oldtz);
+	if(needTZ) set_tz(tz1, &tzsi);
     }
 
     /* workaround for glibc/FreeBSD/macOS strftime: they have
@@ -1367,7 +1436,7 @@ attribute_hidden SEXP do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 	UNPROTECT(1);
     }
 
-    if(settz) reset_tz(oldtz);
+    reset_tz(&tzsi);
     UNPROTECT(3);
     return ans;
 }
@@ -1397,11 +1466,13 @@ attribute_hidden SEXP do_strptime(SEXP call, SEXP op, SEXP args, SEXP env)
     }
     PROTECT(stz); /* it might be new */
 
-    char oldtz[1001] = "";
     // Usage of isUTC here follows do_asPOSIXlt
-    Rboolean isUTC = (strcmp(tz, "GMT") == 0  || strcmp(tz, "UTC") == 0),
-      settz = FALSE;
-   if(!isUTC && strlen(tz) > 0) settz = set_tz(tz, oldtz);
+    Rboolean isUTC = (strcmp(tz, "GMT") == 0  || strcmp(tz, "UTC") == 0);
+
+    tzset_info tzsi;
+    prepare_reset_tz(&tzsi);
+
+    if(!isUTC && strlen(tz) > 0) set_tz(tz, &tzsi);
 #ifdef USE_INTERNAL_MKTIME
     else R_tzsetwall(); // to get the system timezone recorded
 #else
@@ -1512,7 +1583,6 @@ attribute_hidden SEXP do_strptime(SEXP call, SEXP op, SEXP args, SEXP env)
 	    setAttrib(VECTOR_ELT(ans, 5), R_NamesSymbol, nm3);
 	}
     }
-    if(settz) reset_tz(oldtz);
     UNPROTECT(5);
     return ans;
 } // strptime()
@@ -1577,8 +1647,9 @@ attribute_hidden SEXP do_D2POSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
     }
     SEXP tzone = mkString(tz);
     PROTECT(tzone);
-    Rboolean settz = FALSE;
-    char oldtz[1] = ""; // unused
+
+    tzset_info tzsi; /* tz reset not used */
+    prepare_dummy_reset_tz(&tzsi);
     END_MAKElt
 
     UNPROTECT(5);
