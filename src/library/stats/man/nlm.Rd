@@ -72,7 +72,7 @@ nlm(f, p, \dots, hessian = FALSE, typsize = rep(1, length(p)),
   default) with a warning.  The hessian is not even checked unless the
   gradient is present and passes the sanity checks.
 
-  The C code for the \dQuote{perturbed} cholesky, \code{choldc()} has
+  The C code for the \dQuote{perturbed} Cholesky, \code{choldc()} has
   had a bug in all \R versions before 3.4.1.
 
   From the three methods available in the original source, we always use

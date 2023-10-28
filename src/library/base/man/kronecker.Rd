@@ -11,7 +11,7 @@
 \title{Kronecker Products on Arrays}
 
 \description{
-  Computes the generalised kronecker product of two arrays,
+  Computes the generalised Kronecker product of two arrays,
   \code{X} and \code{Y}.
 }
 

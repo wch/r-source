@@ -583,12 +583,13 @@ function(package, dir, lib.loc = NULL,
     else
         Rd_db(dir = dir)
 
-    names(db) <- db_names <- .Rd_get_names_from_Rd_db(db)
-
+    ## <FIXME>
+    ## How exactly do we recognize docs for defunct/deprecated?
+    db_names <- .Rd_get_names_from_Rd_db(db)
     ## pkg-defunct.Rd is not expected to list arguments
     ind <- db_names %in% paste0(package_name, "-defunct")
     db <- db[!ind]
-    db_names <- db_names[!ind]
+    ## </FIXME>
 
     db_usages <- lapply(db, .Rd_get_section, "usage")
     ## FIXME: all db_usages entries are full of "srcref" which are never used
@@ -612,19 +613,19 @@ function(package, dir, lib.loc = NULL,
                            c("NA", "NULL", "Inf", "NaN", "TRUE", "FALSE", ".Autoloaded")
                        )
 
-    for(docObj in db_names) {
-        exprs <- db_usages[[docObj]]
+    for(nm in names(db)) {
+        exprs <- db_usages[[nm]]
         if(!length(exprs)) next
 
         ## Get variable names and data set usages first, mostly for
         ## curiosity.
         ind <- vapply(exprs, is.name, NA, USE.NAMES=FALSE)
         if(any(ind)) {
-            variables <- sapply(exprs[ind], deparse)
+            variables <- vapply(exprs[ind], deparse, "")
             variables_in_usages <- c(variables_in_usages, variables)
             variables <- setdiff(variables, objects_as_in)
             if(length(variables))
-                variables_in_usages_not_in_code[[docObj]] <- variables
+                variables_in_usages_not_in_code[[nm]] <- variables
             exprs <- exprs[!ind]
         }
 
@@ -632,12 +633,13 @@ function(package, dir, lib.loc = NULL,
 
         ind <- vapply(exprs, is_data_for_dataset, NA, USE.NAMES=FALSE)
         if(any(ind)) {
-            data_sets <- sapply(exprs[ind],
-                                function(e) as.character(e[[2L]]))
+            data_sets <- vapply(exprs[ind],
+                                function(e) as.character(e[[2L]]),
+                                "")
             data_sets_in_usages <- c(data_sets_in_usages, data_sets)
             data_sets <- setdiff(data_sets, data_sets_in_code)
             if(length(data_sets))
-                data_sets_in_usages_not_in_code[[docObj]] <- data_sets
+                data_sets_in_usages_not_in_code[[nm]] <- data_sets
             exprs <- exprs[!ind]
         }
         ## Split out replacement function usages.
@@ -663,8 +665,9 @@ function(package, dir, lib.loc = NULL,
         ## Replacement functions.
         if(length(replace_exprs)) {
             replace_funs <-
-                paste0(sapply(replace_exprs,
-                             function(e) as.character(e[[2L]][[1L]])),
+                paste0(vapply(replace_exprs,
+                              function(e) as.character(e[[2L]][[1L]]),
+                              ""),
                        "<-")
             replace_funs <- .transform_S3_method_markup(replace_funs)
             functions <- c(functions, replace_funs)
@@ -685,7 +688,7 @@ function(package, dir, lib.loc = NULL,
 
         bad_functions <- do.call(c, bad_functions)
         if(length(bad_functions))
-            bad_doc_objects[[docObj]] <- bad_functions
+            bad_doc_objects[[nm]] <- bad_functions
 
         ## Determine functions with a \usage entry in the documentation
         ## but 'missing from the code'.  If a package has a namespace, we
@@ -707,7 +710,7 @@ function(package, dir, lib.loc = NULL,
         ## </FIXME>
         bad_functions <- setdiff(functions, objects_as_in)
         if(length(bad_functions))
-            functions_in_usages_not_in_code[[docObj]] <- bad_functions
+            functions_in_usages_not_in_code[[nm]] <- bad_functions
 
         functions_in_usages <- c(functions_in_usages, functions)
     }
@@ -818,7 +821,7 @@ function(x, ...)
         attr(x, "functions_in_usages_not_in_code")
     if(length(functions_in_usages_not_in_code)) {
         for(fname in names(functions_in_usages_not_in_code)) {
-            writeLines(gettextf("Functions or methods with usage in documentation object '%s' but not in code:",
+            writeLines(gettextf("Functions or methods with usage in Rd file '%s' but not in code:",
                                 fname))
             .pretty_print(sQuote(unique(functions_in_usages_not_in_code[[fname]])))
             writeLines("")
@@ -829,7 +832,7 @@ function(x, ...)
         attr(x, "data_sets_in_usages_not_in_code")
     if(length(data_sets_in_usages_not_in_code)) {
         for(fname in names(data_sets_in_usages_not_in_code)) {
-            writeLines(gettextf("Data with usage in documentation object '%s' but not in code:",
+            writeLines(gettextf("Data with usage in Rd file '%s' but not in code:",
                                 fname))
             .pretty_print(sQuote(unique(data_sets_in_usages_not_in_code[[fname]])))
             writeLines("")
@@ -840,7 +843,7 @@ function(x, ...)
         attr(x, "variables_in_usages_not_in_code")
     if(length(variables_in_usages_not_in_code)) {
         for(fname in names(variables_in_usages_not_in_code)) {
-            writeLines(gettextf("Variables with usage in documentation object '%s' but not in code:",
+            writeLines(gettextf("Variables with usage in Rd file '%s' but not in code:",
                                 fname))
             .pretty_print(sQuote(unique(variables_in_usages_not_in_code[[fname]])))
             writeLines("")
@@ -959,7 +962,7 @@ function(x, ...)
     }
 
     for(fname in names(x)) {
-        writeLines(gettextf("Codoc mismatches from documentation object '%s':",
+        writeLines(gettextf("Codoc mismatches from Rd file '%s':",
                             fname))
         xfname <- x[[fname]]
         for(i in seq_along(xfname)) {
@@ -1064,7 +1067,7 @@ function(package, lib.loc = NULL)
     db <- db[idx]; aliases <- aliases[idx]; Rd_slots <- Rd_slots[idx]
     stats["n.final"] <- length(db)
 
-    db_names <- .Rd_get_names_from_Rd_db(db)
+    db_names <- names(db)
 
     .get_slot_names <- function(x) {
         ## Get \describe (inside user-defined section 'Slots'):
@@ -1133,7 +1136,7 @@ function(x, ...)
         }
 
         docObj <- x[[nm]]
-        c(gettextf("S4 class codoc mismatches from documentation object '%s':",
+        c(gettextf("S4 class codoc mismatches from Rd file '%s':",
                    nm),
           gettextf("Slots for class '%s'", docObj[["name"]]),
           wrapPart("code"),
@@ -1203,7 +1206,7 @@ function(package, lib.loc = NULL)
     db <- db[idx]
     aliases <- aliases[idx]
 
-    names(db) <- .Rd_get_names_from_Rd_db(db)
+    names(db) <- names(db)
 
     .get_var_names_from_item_tags <- function(s, nice = TRUE) {
         if(!length(s)) return(character())
@@ -1340,7 +1343,7 @@ function(x, ...)
     .fmt <- function(nm) {
         docObj <- x[[nm]]
         ## FIXME singular or plural?
-        c(gettextf("Data codoc mismatches from documentation object '%s':", nm),
+        c(gettextf("Data codoc mismatches from Rd file '%s':", nm),
           gettextf("Variables in data frame '%s'", docObj[["name"]]),
           strwrap(gettextf("Code: %s", format_args(docObj[["code"]])),
                   indent = 2L, exdent = 8L),
@@ -1390,8 +1393,6 @@ function(package, dir, lib.loc = NULL, chkInternal = NULL)
           else
               Rd_db(dir = dir)
 
-    names(db) <- .Rd_get_names_from_Rd_db(db)
-
     db_aliases  <- lapply(db, .Rd_get_metadata, "alias")
     db_keywords <- lapply(db, .Rd_get_metadata, "keyword")
 
@@ -1415,26 +1416,26 @@ function(package, dir, lib.loc = NULL, chkInternal = NULL)
     bad_doc_objects <- list()
     all_special <- (length(bad_lines) == 0L)
 
-    for(docObj in names(db)) {
+    for(nm in names(db)) {
         ## <FIXME>
         ## There really should be no \arguments or \value without a
         ## \usage, so it should be "safe" to skip checking \arguments in
         ## case of no \usage.
         ## However, currently the above is not ensured.
         ## Ideally, checkRd() should complain ...
-        exprs <- db_usages[[docObj]]
+        exprs <- db_usages[[nm]]
         if(!length(exprs)) next
         ## </FIXME>
 
         ## If !chkInternal, exclude internal Rd objects from further
         ## computations.  Otherwise, maybe treat them specially, and
         ## ignore arguments in \usage but not in \arguments.
-        internal <- "internal" %in% db_keywords[[docObj]]
+        internal <- "internal" %in% db_keywords[[nm]]
         if(internal && !chkInternal) next
         special <- (internal && check_internal_specially)
         
-        aliases <- db_aliases[[docObj]]
-        arg_names_in_arg_list <- db_argument_names[[docObj]]
+        aliases <- db_aliases[[nm]]
+        arg_names_in_arg_list <- db_argument_names[[nm]]
 
         ## Determine function names ('functions') and corresponding
         ## arguments ('arg_names_in_usage') in the \usage.  Note how we
@@ -1450,9 +1451,8 @@ function(package, dir, lib.loc = NULL, chkInternal = NULL)
         replace_exprs <- exprs[ind]
         exprs <- exprs[!ind]
         ## Ordinary functions.
-        functions <- as.character(sapply(exprs,
-                                         function(e)
-                                         as.character(e[[1L]])))
+        functions <-
+            vapply(exprs, function(e) as.character(e[[1L]]), "")
         ## Catch assignments.
         ind <- functions %in% c("<-", "=")
         assignments <- exprs[ind]
@@ -1495,7 +1495,7 @@ function(package, dir, lib.loc = NULL, chkInternal = NULL)
         arg_names_in_arg_list_missing_in_usage <-
             setdiff(arg_names_in_arg_list, arg_names_in_usage)
         if(length(arg_names_in_arg_list_missing_in_usage)) {
-            usage_text <- db_usage_texts[[docObj]]
+            usage_text <- db_usage_texts[[nm]]
             bad_args <- character()
             ## In the case of 'over-documented' arguments, try to be
             ## defensive and reduce to arguments which either are not
@@ -1556,7 +1556,7 @@ function(package, dir, lib.loc = NULL, chkInternal = NULL)
            || (length(arg_names_in_arg_list_missing_in_usage))
            || (length(functions_not_in_aliases))
            || (length(assignments))) {
-            bad_doc_objects[[docObj]] <-
+            bad_doc_objects[[nm]] <-
                 list(missing = arg_names_in_usage_missing_in_arg_list,
                      duplicated =
                      arg_names_in_arg_list[duplicated(arg_names_in_arg_list)],
@@ -1580,31 +1580,31 @@ function(x, ...)
         c(character(),
           if(length(arg_names_in_usage_missing_in_arg_list <-
                     x[[nm]][["missing"]])) {
-              c(gettextf("Undocumented arguments in documentation object '%s'",
+              c(gettextf("Undocumented arguments in Rd file '%s'",
                          nm),
                 .pretty_format(unique(arg_names_in_usage_missing_in_arg_list)))
           },
           if(length(duplicated_args_in_arg_list <-
                     x[[nm]][["duplicated"]])) {
-              c(gettextf("Duplicated \\argument entries in documentation object '%s':",
+              c(gettextf("Duplicated \\argument entries in Rd file '%s':",
                          nm),
                 .pretty_format(duplicated_args_in_arg_list))
           },
           if(length(arg_names_in_arg_list_missing_in_usage <-
                     x[[nm]][["overdoc"]])) {
-              c(gettextf("Documented arguments not in \\usage in documentation object '%s':",
+              c(gettextf("Documented arguments not in \\usage in Rd file '%s':",
                          nm),
                 .pretty_format(unique(arg_names_in_arg_list_missing_in_usage)))
           },
           if(length(functions_not_in_aliases <-
                     x[[nm]][["unaliased"]])) {
-              c(gettextf("Objects in \\usage without \\alias in documentation object '%s':",
+              c(gettextf("Objects in \\usage without \\alias in Rd file '%s':",
                          nm),
                 .pretty_format(unique(functions_not_in_aliases)))
           },
           if(length(assignments <-
                     x[[nm]][["assignments"]])) {
-              c(gettextf("Assignments in \\usage in documentation object '%s':",
+              c(gettextf("Assignments in \\usage in Rd file '%s':",
                          nm),
                 sprintf("  %s", unlist(lapply(assignments, format))))
           },
@@ -1617,7 +1617,7 @@ function(x, ...)
         y <- c(y,
                unlist(lapply(names(bad_lines),
                              function(nm) {
-                                 c(gettextf("Bad \\usage lines found in documentation object '%s':",
+                                 c(gettextf("Bad \\usage lines found in Rd file '%s':",
                                             nm),
                                    paste0("  ", bad_lines[[nm]]))
                              })),
@@ -1632,7 +1632,7 @@ function(x, ...)
        (Sys.getenv("__R_CHECK_DOC_FILES_NOTE_IF_ALL_SPECIAL__",
                    "FALSE") == "TRUE") &&
        isTRUE(attr(x, "all_special")))
-        y <- c(y, "All issues in internal Rd objects checked specially.")
+        y <- c(y, "All issues in internal Rd files checked specially.")
     
     y
 }
@@ -1810,13 +1810,14 @@ function(package, dir, lib.loc = NULL)
     else
         Rd_db(dir = dir)
 
-    names(db) <- db_names <- .Rd_get_names_from_Rd_db(db)
-
     ## Ignore pkg-deprecated.Rd and pkg-defunct.Rd.
+    ## <FIXME>
+    ## How exactly do we recognize docs for defunct/deprecated?
+    db_names <- .Rd_get_names_from_Rd_db(db)
     ind <- db_names %in% paste(package_name, c("deprecated", "defunct"),
                                sep = "-")
     db <- db[!ind]
-    db_names <- db_names[!ind]
+    ## </FIXME>
 
     db_usages <-
         lapply(db,
@@ -1831,23 +1832,23 @@ function(package, dir, lib.loc = NULL)
 
     bad_doc_objects <- list()
 
-    for(docObj in db_names) {
+    for(nm in names(db)) {
 
         ## Determine function names in the \usage.
-        exprs <- db_usages[[docObj]]
+        exprs <- db_usages[[nm]]
         exprs <- exprs[lengths(exprs) > 1L]
         ## Ordinary functions.
         functions <-
-            as.character(sapply(exprs,
-                                function(e) as.character(e[[1L]])))
+            vapply(exprs, function(e) as.character(e[[1L]]), "")
         ## (Note that as.character(sapply(exprs, `[[`, 1L)) does not do
         ## what we want due to backquotifying.)
         ## Replacement functions.
         ind <- vapply(exprs, .is_call_from_replacement_function_usage, NA)
         if(any(ind)) {
             replace_funs <-
-                paste0(sapply(exprs[ind],
-                              function(e) as.character(e[[2L]][[1L]])),
+                paste0(vapply(exprs[ind],
+                              function(e) as.character(e[[2L]][[1L]]),
+                              ""),
                        "<-")
             functions <- c(functions, replace_funs)
         }
@@ -1864,7 +1865,7 @@ function(package, dir, lib.loc = NULL)
 
         if((length(methods_with_generic)) ||
            (length(methods_with_full_name)))
-            bad_doc_objects[[docObj]] <-
+            bad_doc_objects[[nm]] <-
                 list(withGeneric  = methods_with_generic,
                      withFullName = methods_with_full_name)
 
@@ -1892,7 +1893,7 @@ function(x, ...)
         ## </NOTE>
         methods_with_full_name <- x[[nm]][["withFullName"]]
         if(length(methods_with_full_name)) {
-            c(gettextf("S3 methods shown with full name in documentation object '%s':",
+            c(gettextf("S3 methods shown with full name in Rd file '%s':",
                        nm),
               .pretty_format(methods_with_full_name),
               "")
@@ -3174,11 +3175,10 @@ function(dir, force_suggests = TRUE, check_incoming = FALSE,
     ## VignetteBuilder packages are needed to ascertain what is a vignette.
     VB <- .get_requires_from_package_db(db, "VignetteBuilder")
 
-    ## FIXME: use vapply to get a character vector.
-    depends <- sapply(ldepends, `[[`, 1L)
-    imports <- sapply(limports, `[[`, 1L)
-    links <- sapply(llinks, `[[`, 1L)
-    suggests <- sapply(lsuggests, `[[`, 1L)
+    depends <- vapply(ldepends, `[[`, "", 1L)
+    imports <- vapply(limports, `[[`, "", 1L)
+    links <- vapply(llinks, `[[`, "", 1L)
+    suggests <- vapply(lsuggests, `[[`, "", 1L)
 
     standard_package_names <- .get_standard_package_names()
 
@@ -4102,7 +4102,7 @@ function(dfile, dir)
             }
         }
         patt <- "(^Modified BSD License$|^BSD$|^CC BY.* [23][.]0)"
-        if(any(ind <- grepl(patt, status$component))) {
+        if(any(ind <- grepl(patt, status$components))) {
             status$deprecated <- status$components[ind]
             ok <- FALSE
         }
@@ -4794,14 +4794,14 @@ function(x, ...)
     xs <- x$suspect
     if(length(xb) || length(xs)) {
         .fmtb <- function(i) {
-            c(gettextf("Missing link or links in documentation object '%s':",
+            c(gettextf("Missing link or links in Rd file '%s':",
                        names(xb)[i]),
               ## NB, link might be empty, and was in mvbutils
               .pretty_format(unique(xb[[i]])),
               "")
         }
         .fmts <- function(i) {
-            c(gettextf("Non-file package-anchored link(s) in documentation object '%s':",
+            c(gettextf("Non-file package-anchored link(s) in Rd file '%s':",
                        names(xs)[i]),
               .pretty_format(unique(xs[[i]])),
               "")
@@ -5555,7 +5555,7 @@ function(file, encoding = NA)
 
 .call_names <-
 function(x)
-    as.character(sapply(x, function(e) deparse(e[[1L]])))
+    vapply(x, function(e) deparse1(e[[1L]]), "")
 
 
 ### * .check_package_code_unload_functions
@@ -9089,8 +9089,6 @@ function(package, dir, lib.loc = NULL, chkInternal = NULL)
           else
               Rd_db(dir = dir)
 
-    names(db) <- .Rd_get_names_from_Rd_db(db)
-
     for(nm in names(db)) {
         rd <- db[[nm]]
 
@@ -9147,12 +9145,12 @@ function(x, ...)
         c(character(),
           if(length(arguments_with_no_description <-
                     y[["arguments_with_no_description"]])) {
-              c(gettextf("Argument items with no description in Rd object '%s':",
+              c(gettextf("Argument items with no description in Rd file '%s':",
                          nm),
                 .pretty_format(arguments_with_no_description))
           },
           if(length(autocontents <- y[["offending_autogenerated_content"]])) {
-              c(gettextf("Auto-generated content requiring editing in Rd object '%s':",
+              c(gettextf("Auto-generated content requiring editing in Rd file '%s':",
                          nm),
                 sprintf("  %s: %s", autocontents[, 1L],
                         sQuote(mapply(glimpse, autocontents[, 2L],
@@ -9162,7 +9160,7 @@ function(x, ...)
 
     c(character(),
       if (length(res <- which(vapply(x, `[[`, TRUE, "missing_description"))))
-          c(gettext("Rd objects without \\description:"),
+          c(gettext("Rd files without \\description:"),
             .pretty_format(names(res))),
       as.character(unlist(lapply(names(x), .fmt))))
 }

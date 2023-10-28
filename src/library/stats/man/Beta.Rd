@@ -120,11 +120,14 @@ rbeta(n, shape1, shape2, ncp = 0)
   \item The non-central \code{pbeta} uses a C translation of
 
   Lenth, R. V. (1987) Algorithm AS 226: Computing noncentral beta
-  probabilities. \emph{Appl. Statist}, \bold{36}, 241--244,
+  probabilities. \emph{Applied Statistics}, \bold{36}, 241--244,
+  \doi{10.2307/2347558}, 
   incorporating\cr
-  Frick, H. (1990)'s AS R84, \emph{Appl. Statist}, \bold{39}, 311--2,
+  Frick, H. (1990)'s AS R84, \emph{Applied Statistics}, \bold{39},
+  311--2, \doi{10.2307/2347780}
   and\cr
-  Lam, M.L. (1995)'s AS R95, \emph{Appl. Statist}, \bold{44}, 551--2.
+  Lam, M.L. (1995)'s AS R95, \emph{Applied Statistics}, \bold{44},
+  551--2, \doi{10.2307/2986147}.
 
   This computes the lower tail only, so the upper tail suffers from
   cancellation and a warning will be given when this is likely to be
@@ -135,6 +138,7 @@ rbeta(n, shape1, shape2, ncp = 0)
   Cran, G. W., K. J. Martin and G. E. Thomas (1977).
   Remark AS R19 and Algorithm AS 109,
   \emph{Applied Statistics},  \bold{26}, 111--114,
+  \doi{10.2307/2346887},
   and subsequent remarks (AS83 and correction).
 
   Enhancements, notably for starting values and switching to a log-scale

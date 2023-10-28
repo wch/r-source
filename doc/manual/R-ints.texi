@@ -4026,10 +4026,18 @@ Control whether @code{check_T_and_F()} also looks for ``bad'' (global)
 @samp{T}/@samp{F} uses in examples.
 Off by default because this can result in false positives.
 @item _R_CHECK_RD_CHECKRD_MINLEVEL_
-Controls the minimum level for reporting warnings from @code{checkRd}.
+Controls the minimum level for reporting warnings from @code{checkRd()}.
 Default: -1.
+@item _R_CHECK_RD_NOTE_LOST_BRACES_
+If true, some of the ``lost braces'' that @code{checkRd()} finds in
+@LaTeX{}-like Rd contexts are reported (by raising their warning level
+to -1). This will often detect missing initial backslashes for Rd
+macros, unescaped in-text set braces, and description-like
+@code{\item@{label@}@{desc@}} entries within @code{\itemize}.
+Default: unset (but true for CRAN submission checks), currently;
+may be enabled unconditionally in the future.
 @item _R_CHECK_RD_ALLOW_EMPTY_ITEM_IN_DESCRIBE_
-Control whether empty items inside @code{\\describe} are allowed without
+Control whether empty items inside @code{\describe} are allowed without
 a warning. This is a temporary stop gap measure meant to support legacy
 packages, and is likely to be removed in future versions of R.
 Default: false.
@@ -4418,7 +4426,7 @@ the check directory.
 Default: false (but true for CRAN submission checks).
 
 @item _R_CHECK_THINGS_IN_TEMP_DIR_
-Check and report at the end of tthe check run if files would have been
+Check and report at the end of the check run if files would have been
 left in the temporary directory (usually @file{/tmp} on a Unix-alike).
 It does this by setting the environment variable @env{TEMPDIR} to a
 subdirectory of the @R{} session directory for the @code{check} process:
@@ -4587,6 +4595,11 @@ issues'', including issues with apparent methods not registered and
 methods registered for non-generics.
 Default: false (but true for CRAN submission checks).
 
+@item _R_CHECK_MBCS_CONVERSION_FAILURE_
+If set to a non-empty value, makes warnings from @code{pdf()} and
+@code{postscript()} about conversion failures from an MBCS (usually
+UTF-8) into errors.
+Default: unset (but true for CRAN submission checks).
 @end vtable
 
 The following variables control checks for undeclared/unconditional use
@@ -4686,7 +4699,6 @@ _R_CHECK_DATALIST_=true
 _R_CHECK_THINGS_IN_CHECK_DIR_=true
 _R_CHECK_THINGS_IN_TEMP_DIR_=true
 _R_CHECK_BASHISMS_=true
-_R_CLASS_MATRIX_ARRARY_=true
 _R_CHECK_ORPHANED_=true
 _R_CHECK_BOGUS_RETURN_=true
 _R_CHECK_MATRIX_DATA_=TRUE
@@ -4698,6 +4710,7 @@ _R_CHECK_BROWSER_NONINTERACTIVE_=true
 _R_CHECK_URLS_SHOW_301_STATUS_=true
 _R_CHECK_UNDOC_USE_ALL_NAMES_=true
 _R_CHECK_S3_METHODS_SHOW_POSSIBLE_ISSUES_=true
+_R_CHECK_RD_NOTE_LOST_BRACES_=true
 @end example
 
 @noindent

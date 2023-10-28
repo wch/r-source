@@ -18,7 +18,7 @@ setSessionTimeLimit(cpu = Inf, elapsed = Inf)
 }
 \arguments{
   \item{cpu, elapsed}{double (of length one).  Set a limit on
-    the total or elapsed cpu time in seconds, respectively.}
+    the total or elapsed CPU time in seconds, respectively.}
   \item{transient}{logical.  If \code{TRUE}, the limits apply only to
     the rest of the current computation.}
 }
@@ -41,7 +41,7 @@ setSessionTimeLimit(cpu = Inf, elapsed = Inf)
   code author.
 #ifdef unix
 
-  \sQuote{Total cpu time} includes that used by child processes where
+  \sQuote{Total CPU time} includes that used by child processes where
   the latter is reported.
 #endif
 }

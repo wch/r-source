@@ -151,6 +151,7 @@ stopifnot(
 )
 ## partly failed in R 3.4.0 alpha
 rm(CO) # as its deparse() depends on if utils was installed w/ keep.source.pkgs=TRUE
+rm(r2)
 
 srcdir <- file.path(Sys.getenv("SRCDIR"), "eval-fns.R")
 source(if(file.exists(srcdir)) srcdir else "./eval-fns.R", echo = TRUE)

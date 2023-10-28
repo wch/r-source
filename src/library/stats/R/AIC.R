@@ -16,9 +16,6 @@
 #  A copy of the GNU General Public License is available at
 #  https://www.R-project.org/Licenses/
 
-## A pearl from ggplot2 et al.  NB: often needs '(..)' around RHS :   <lhs> %||% ( <rhs> )
-`%||%` <- function(L,R) if(is.null(L)) R else L
-
 
 #### Return the value of Akaike's Information Criterion
 ### originally from package nlne.

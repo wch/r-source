@@ -766,7 +766,7 @@ function(x, ...)
     outConn <- file(outFile, open = "w")
     typeinstruct <-
         c(vignette =
-              paste("Type 'vignette(\"FOO\", package=\"PKG\")' to",
+              paste("Type 'vignette(PKG::FOO)' to",
                     "inspect entries 'PKG::FOO'."),
           help =
               paste("Type '?PKG::FOO' to",
@@ -785,11 +785,16 @@ function(x, ...)
                                        matchtype, "matching:")),
 			 "\n"),
 		       outConn)
+            top <- dbtemp[ , "Topic"]
+            ind <- (top != make.names(top))
+            if(type == "help")
+                ind <- ind & !grepl("-(class|method|package)$", top)
+            top[ind] <- paste0("`", top[ind], "`")
             fields <- fields_for_match_details[[type]]
             chunks <- split.data.frame(dbtemp,
                                        paste0(dbtemp[, "Package"],
                                               "::",
-                                              dbtemp[ , "Topic"]))
+                                              top))
             nms <- names(chunks)
             for(i in seq_along(nms)) {
                 chunk <- chunks[[i]]

@@ -265,8 +265,8 @@ FUNTAB R_FunTab[] =
 {"pmatch",	do_pmatch,	0,	11,	4,	{PP_FUNCALL, PREC_FN,	0}},
 {"charmatch",	do_charmatch,	0,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
 {"match.call",	do_matchcall,	0,	11,	4,	{PP_FUNCALL, PREC_FN,	0}},
-{"crossprod",	do_matprod,	1,	11,	2,	{PP_FUNCALL, PREC_FN,   0}},
-{"tcrossprod",	do_matprod,	2,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
+{"crossprod",	do_matprod,	1,	1,	1,	{PP_FUNCALL, PREC_FN,   0}},
+{"tcrossprod",	do_matprod,	2,	1,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"lengths",	do_lengths,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"sequence",	do_sequence,	0,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
 
@@ -711,6 +711,8 @@ FUNTAB R_FunTab[] =
 {"ls",		do_ls,		1,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
 {"typeof",	do_typeof,	1,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"eval",	do_eval,	0,	211,	3,	{PP_FUNCALL, PREC_FN,	0}},
+{"Exec",	do_tailcall,	0,	200,	-1,	{PP_FUNCALL, PREC_FN,	0}},
+{"Tailcall",	do_tailcall,	1,	200,	-1,	{PP_FUNCALL, PREC_FN,	0}},
 {"returnValue",   do_returnValue,0,     11,     1,      {PP_FUNCALL, PREC_FN,	0}},
 {"sys.parent",	do_sys,		1,	11,	-1,	{PP_FUNCALL, PREC_FN,	0}},
 {"sys.call",	do_sys,		2,	11,	-1,	{PP_FUNCALL, PREC_FN,	0}},
@@ -1239,7 +1241,7 @@ void attribute_hidden InitNames(void)
     for (int i = 0; Spec_name[i]; i++)
 	SET_SPECIAL_SYMBOL(install(Spec_name[i]));
 
-    R_initAssignSymbols();
+    R_initEvalSymbols();
     initializeDDVALSymbols();
     R_initialize_bcode();
     R_init_altrep();

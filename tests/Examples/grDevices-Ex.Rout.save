@@ -459,8 +459,9 @@ NULL
 $out
 [1] 1000
 
+> 
 > ## no outlier treatment:
-> boxplot.stats(x, coef = 0)
+> (b3 <- boxplot.stats(x, coef = 0))
 $stats
 [1]    1   26   51   76 1000
 
@@ -473,20 +474,11 @@ $conf
 $out
 numeric(0)
 
+> stopifnot(b3$stats == fivenum(x))
 > 
-> boxplot.stats(c(x, NA)) # slight change : n is 101
-$stats
-[1]   1  26  51  76 100
-
-$n
-[1] 101
-
-$conf
-[1] 43.13921 58.86079
-
-$out
-[1] 1000
-
+> ## missing values are ignored
+> stopifnot(identical(boxplot.stats(c(x, NA)), b1))
+> ## ... infinite values are not:
 > (r <- boxplot.stats(c(x, -1:1/0)))
 $stats
 [1]   1.0  25.5  51.0  76.5 100.0

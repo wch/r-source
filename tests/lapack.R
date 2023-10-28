@@ -168,11 +168,19 @@ b <- cbind(1:3, NA)
 dimnames(b) <- list(One=4:6, Two=11:12)
 bb <- 1:3; names(bb) <- 11:12
 ## gave error with LAPACK 3.11.0
-solve(a, b)
-solve(a, bb)
+## names(dimnames(.)), ("two", "Two") are lost {FIXME?}:
+## IGNORE_RDIFF_BEGIN
+stopifnot(is.na(print(solve(a, b )))) # is.na(): NA *or* NaN
+## IGNORE_RDIFF_END
+stopifnot(is.na(print(solve(a, bb)))) # all NaN
 
 A <- a + 0i
-solve(A, b)
+A_b <- solve(A, b) # platform dependent result (e.g. OPENBLAS ..)
+stopifnot(is.na(A_b))
+## IGNORE_RDIFF_BEGIN
+A_b
+rbind(re = Re(A_b[,2]), im = Im(A_b[,2])) # often was "all NA", now typically "re=NA, im=NaN"
+## IGNORE_RDIFF_END
 
 
 ## PR#18541 by Mikael Jagan -- chol()  error & warning message:

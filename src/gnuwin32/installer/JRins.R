@@ -52,7 +52,7 @@
                     paste("file", shQuote(file.path(srcdir, "bin", "R.exe"))),
                     intern=TRUE)
         if (grepl("x86-64", fout, fixed = TRUE))
-            cat("ArchitecturesInstallIn64BitMode=x64\n", file = con)
+            cat("ArchitecturesInstallIn64BitMode=x64 arm64\n", file = con)
         else if (grepl("Aarch64", fout, fixed = TRUE)) {
             cat("ArchitecturesInstallIn64BitMode=arm64\n", file = con)
             cat("ArchitecturesAllowed=arm64\n", file = con)

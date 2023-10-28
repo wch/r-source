@@ -1074,7 +1074,7 @@ compareVersion <- function(a, b)
     if(!length(xx)) return(list(character(), character()))
     ## Then check for those we already have installed
     pkgs <- installed[, "Package"]
-    have <- sapply(xx, function(x) {
+    have <- vapply(xx, function(x) {
         if(length(x) == 3L) {
             if (! x[[1L]] %in% pkgs ) return(FALSE)
             if(x[[2L]] != ">=") return(TRUE)
@@ -1085,7 +1085,7 @@ compareVersion <- function(a, b)
             target <- as.package_version(x[[3L]])
             any(do.call(x$op, list(current, target)))
         } else x[[1L]] %in% pkgs
-    })
+    }, NA)
     xx <- xx[!have]
     if(!length(xx)) return(list(character(), character()))
     ## now check if we can satisfy the missing dependencies
@@ -1211,7 +1211,7 @@ compareVersion <- function(a, b)
 }
 
 ## default is included in setRepositories.Rd (via \Sexpr)
-.BioC_version_associated_with_R_version_default <- "3.17"
+.BioC_version_associated_with_R_version_default <- "3.18"
 .BioC_version_associated_with_R_version <- function ()
     numeric_version(Sys.getenv("R_BIOC_VERSION",
                                .BioC_version_associated_with_R_version_default))

@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2023-08-17 r84982) -- "Unsuffered Consequences"
+R Under development (unstable) (2023-10-23 r85401) -- "Unsuffered Consequences"
 Copyright (C) 2023 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu
 
@@ -5081,12 +5081,24 @@ browser())(mpg = c(21, 21, 22.8, 21.4, 18.7, 18.1, 14.3, 24.4,
   ...
 Browse[1]> c
 > 
-> op <- c(op, options(error = expression(NULL)))
+> op2 <- c(op, options(catch.script.errors = TRUE))
 > f <- function(...) stop()
 > do.call(f, mtcars)
 Error in (function (...)  : 
 Calls: do.call -> <Anonymous>
-> traceback()
+> traceback() # *no* traceback
+3: stop()
+2: (function (...) 
+   stop())(mpg = c(21, 21, 22.8, 21.4, 18.7, 18.1, 14.3, 24.4, 22.8, 
+   19.2, 17.8, 16.4, 17.3, 15.2, 10.4, 10.4, 14.7, 32.4, 30.4, 33.9, 
+    ...
+1: do.call(f, mtcars)
+> options(catch.script.errors = FALSE) # back to default
+> op <- c(op, options(error = expression(NULL))) # *is* slightly different:
+> do.call(f, mtcars)
+Error in (function (...)  : 
+Calls: do.call -> <Anonymous>
+> traceback() ## does give traceback
 3: stop()
 2: (function (...) 
    stop())(mpg = c(21, 21, 22.8, 21.4, 18.7, 18.1, 14.3, 24.4, 22.8, 
@@ -5102,7 +5114,7 @@ Calls: do.call -> <Anonymous>
 > g(function(x) x+1)
 debugging in: g(function(x) x + 1)
 debug: fun(1)
-Browse[2]> c
+Browse[1]> c
 exiting from: g(function(x) x + 1)
 [1] 2
 > 
@@ -5641,10 +5653,10 @@ Residual standard error: 1.877 on 44 degrees of freedom
 > 
 > ## printing of complex numbers of very different magnitudes
 > 1e100  + 1e44i
-[1] 1e+100+0e+00i
+[1] 1e+100+1e+44i
 > 1e100 + pi*1i*10^(c(-100,0,1,40,100))
-[1] 1e+100+ 0.000000e+00i 1e+100+ 0.000000e+00i 1e+100+ 0.000000e+00i
-[4] 1e+100+ 0.000000e+00i 1e+100+3.141593e+100i
+[1] 1e+100+3.141593e-100i 1e+100+ 3.141593e+00i 1e+100+ 3.141593e+01i
+[4] 1e+100+ 3.141593e+40i 1e+100+3.141593e+100i
 > ## first was silly, second not rounded correctly in 2.2.0 - 2.3.1
 > ## We don't get them lining up, but that is a printf issue
 > ## that only happens for very large complex nos.
@@ -5716,8 +5728,8 @@ list(a = NA, b = as.integer(NA), c = as.double(NA), d = as.complex(NA),
 > tmp <- tempfile(tmpdir = getwd())
 > dput(x, tmp, control="all")
 > stopifnot(identical(dget(tmp), x))
-> dput(x, tmp, control=c("all", "S_compatible"))
-> stopifnot(identical(dget(tmp), x))
+> dput(x, tmp, control=c("all", "S_compatible"))# -> d => (r = NA, im = 0)
+> stopifnot(identical(dget(tmp), local({ x$d <- as.complex(NA); x })))
 > unlink(tmp)
 > ## changes in 2.5.0
 > 
@@ -6354,7 +6366,7 @@ function(given = NULL) {
     if (is.null(given)) callObj$default <- TRUE
     callObj
 }
-<bytecode: 0x5555f08>
+<bytecode: 0x563a4cd32a90>
 > print(foo, useSource = FALSE)
 function (given = NULL) 
 {
@@ -6365,7 +6377,7 @@ function (given = NULL)
         callObj$default <- TRUE
     callObj
 }
-<bytecode: 0x5555f08>
+<bytecode: 0x563a4cd32a90>
 > attr(foo, "srcref") <- NULL
 > foo
 function (given = NULL) 
@@ -6377,7 +6389,7 @@ function (given = NULL)
         callObj$default <- TRUE
     callObj
 }
-<bytecode: 0x5555f08>
+<bytecode: 0x563a4cd32a90>
 > (f <- structure(function(){}, note = "just a note",
 +                 yada = function() "not the same"))
 function(){}
@@ -8322,11 +8334,16 @@ Error in f() : argument is missing, with no default
 + #line 1 "file1.R"
 +     withAutoprint({ show.srcref() })
 + }
-> {
-> #line 1 "file1.R"
 >     withAutoprint({ show.srcref() })
  language show.srcref()
  - attr(*, "srcref")= 'srcref' int [1:8] 1 21 1 33 21 33 3 3
-  ..- attr(*, "srcfile")=Classes 'srcfilealias', 'srcfile' <environment: 0xfeef070> 
+  ..- attr(*, "srcfile")=Classes 'srcfilealias', 'srcfile' <environment: 0x563a4c811e70> 
 > ## no   attr(*, "src..")   in R <= 4.3.1
+> ##
+> withAutoprint({
++     1 + 2
++ })
+>     1 + 2
+[1] 3
+> ## temporarily wrongly showed " withAutoprint({ "
 > 

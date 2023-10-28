@@ -16,9 +16,6 @@
 #  A copy of the GNU General Public License is available at
 #  https://www.R-project.org/Licenses/
 
-## A pearl from ggplot2 et al.  NB: often needs '(.)' :   <lhs> %||% ( <rhs> )
-## *not exported* [should rather be in 'base' than exported here]
-`%||%` <- function(L,R) if(is.null(L)) R else L
 
 ####------ str : show STRucture of an R object
 str <- function(object, ...) UseMethod("str")

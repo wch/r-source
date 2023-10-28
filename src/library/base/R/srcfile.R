@@ -203,14 +203,16 @@ getSrcLines <- function(srcfile, first, last) {
 }
 
 # a srcref gives start and stop positions of text
-# lloc entries are first_line, first_byte, last_line, last_byte,
-#  first_column, last_column, first_parse, last_parse
+# lloc entries are first_line,   first_byte,  last_line,   last_byte,
+#                       1            2            3            4
+#                  first_column, last_column, first_parse, last_parse
+#                       5            6            7            8
 # all are inclusive
 
 srcref <- function(srcfile, lloc) {
     stopifnot(inherits(srcfile, "srcfile"), length(lloc) %in% c(4L,6L,8L))
-    if (length(lloc) == 4) lloc <- c(lloc, lloc[c(2,4)])
-    if (length(lloc) == 6) lloc <- c(lloc, lloc[c(1,3)])
+    if (length(lloc) == 4L) lloc <- c(lloc, lloc[c(2L,4L)]) # {f,l}_column := {f,l}_byte
+    if (length(lloc) == 6L) lloc <- c(lloc, lloc[c(1L,3L)]) # {f,l}_parse  := {f,l}_line
     structure(as.integer(lloc), srcfile=srcfile, class="srcref")
 }
 

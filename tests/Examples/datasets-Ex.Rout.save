@@ -2975,7 +2975,6 @@ F-statistic:  59.9 on 3 and 17 DF,  p-value: 3.016e-09
 > flush(stderr()); flush(stdout())
 > 
 > ### Encoding: UTF-8
-> 
 > ### Name: state
 > ### Title: US State Facts and Figures
 > ### Aliases: state state.abb state.area state.center state.division

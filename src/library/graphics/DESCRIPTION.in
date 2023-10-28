@@ -9,3 +9,4 @@ Description: R functions for base graphics.
 Imports: grDevices
 License: Part of R @VERSION@
 NeedsCompilation: yes
+Enhances: vcd

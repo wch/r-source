@@ -563,9 +563,23 @@ if(englishMsgs)
 ## these gave numeric (or NA) results without any warning in R <= 4.3.0
 
 
-## as.complex(NA_real_) |-> NA_complex_  as for all other NA, NA_*
+## as.complex(NA_real_) |-> ... Im(.) == 0 as for NA (logical) and NA_integer_
+if(FALSE) # in R-devel Apr--Sep 2023 only:
 stopifnot(identical(as.complex(NA_real_), NA_complex_))
-## gave  complex(real = NA, imaginary=0) from R 3.3.0  to 4.3.x
+Cmplx <- function(re = numeric(), im = numeric()) complex(real = re, imaginary = im)
+showC <- function(z) noquote(sprintf("(R = %g, I = %g)", Re(z), Im(z)))
+showC(print(asCnum <- Cmplx(NA_real_, 0)))
+showC(print(NA_rP0i <- NA_real_ + 0i)) # arithmetic here via as.complex(.)
+stopifnot(exprs = {
+    identical(as.complex(NA_real_),    asCnum)
+    identical(as.complex(NA_integer_), asCnum)
+    identical(as.complex(NA),          asCnum)
+    identical(NA_rP0i,                 asCnum)
+    identical(as.complex( NaN), Cmplx(NaN, 0))
+    identical(as.complex( Inf), Cmplx(Inf, 0))
+    identical(as.complex(-Inf),Cmplx(-Inf, 0))
+})
+## as.complex( <real-number-like> ) keeps imaginary part 0 even for NA
 
 
 ## methods() in {base} pkg are visible
@@ -888,9 +902,86 @@ stopifnot(exprs = {
 ## in all three cases, "A-1" inadvertently became "A.1" in R < 4.4.0
 
 
-## byte compiled sqrt() was not warling about creating NaNs for
+## byte compiled sqrt() was not warning about creating NaNs for
 ## negative integer scalars
 tools::assertWarning(compiler::cmpfun(function(x) sqrt(x))(-1L))
+
+
+## is.atomic(NULL) is no longer true
+if(is.atomic(NULL)) stop("Should no longer happen: 'NULL' is not atomic")
+## untested previously
+stopifnot(is.null(sort(NULL)), is.null(sort.int(NULL)))
+## failed in first version of `R-is` branch
+
+
+## isoreg() seg.faulted with Inf - PR#18603 - in R <= 4.3.1
+assertErrV(isoreg(Inf))
+assertErrV(isoreg(c(0,Inf)))
+assertErrV(isoreg(rep(1e307, 20))) # no Inf in 'y'
+## ==> Asserted error: non-finite sum(y) == inf is not allowed
+
+
+## format() and print() of complex numbers, PR#16752
+100+ 0:4 + 10000i  # no 'e'
+100+ 0:4 + 100000i # using 'e' as it is shorter
+z <- 100+ 0:4 + 1e9i
+## for a long time printed identical 5 time  0e+00+1e+09i
+(asCz <- as.character(z))
+oZ <- capture.output(z)
+stopifnot(exprs = {
+        substr(asCz, 1,6) == paste0(100+ 0:4, "+1e")
+    as.complex(asCz) == z # has been fulfilled for a long time
+    identical(oZ, paste("[1]", paste(asCz, collapse=" ")))
+})
+## had exponential/scientific format for Re() as well, from R 3.3.0 to R 4.3.z
+
+
+## PR#18579 (thanks to Mikael Jagan) -- cbind/rbind deparse.level for *methods*
+.S3method("cbind", "zzz",
+          function(..., deparse.level = 1)
+              if(!missing(deparse.level)) deparse.level)
+x <- structure(0, class = "zzz")
+stopifnot(exprs = {
+    is.null(cbind(x)) # deparse.level  *missing* {always ok}
+    identical(0,  cbind(x, deparse.level = 0))
+    identical(1,  cbind(x, deparse.level = 1))
+    identical(2,  cbind(x, deparse.level = 2))
+    identical(2L, cbind(x, deparse.level = 2L))
+})
+## passing to S3/S4 method did not work in R <= 4.3.x
+
+
+## Conversion of LaTeX accents: \~{n} etc vs. \~{}, accented I and i
+stopifnot(identical(
+    print(tools::parseLatex("El\\~{}Ni\\~{n}o") |>
+          tools::latexToUtf8() |>
+          tools::deparseLatex(dropBraces = TRUE)),
+    "El~Ni\u00F1o")) # "El~Niño"
+## gave "El~Ni~no" in R 4.3.{0,1} (\~ treated as 0-arg macro)
+stopifnot(tools:::cleanupLatex(r"(\`{I}\'{I}\^{I}\"{I})")
+          == "\u00cc\u00cd\u00ce\u00cf")
+## was wrongly converted as "ËÌÍÏ" in R <= 4.3.1
+stopifnot(tools:::cleanupLatex(r"(\`{i}\'{i}\^{i}\"{i})")
+          == "\u00ec\u00ed\u00ee\u00ef")
+## codes with i instead of \i were unknown thus not converted in R <= 4.3.1
+
+
+## tools::deparseLatex() can drop successive LaTeX groups
+bib1 <- bibentry("misc", key = "test", year = "2023",
+                 author = r"(averig{\"u}{\'e})")
+bib2 <- bib1; bib2$author$family <- r"(averig\"{u}\'{e})"
+roundtrip <- function (tex, drop = FALSE)
+    tex == tools::deparseLatex(tools::parseLatex(tex), dropBraces = drop)
+stopifnot(exprs = {
+    citeNatbib("test", bib1) == "(averig\u00fc\u00e9 2023)"
+    citeNatbib("test", bib2) == citeNatbib("test", bib1)
+    roundtrip(r"(\{R\})", TRUE) # escaped braces are not dropped
+    roundtrip(r"(\href{https://bugs.R-project.org/}{Bugs})", TRUE)
+})
+## the first produced "(averigü{é} 2023)" in R < 4.4.0
+stopifnot(roundtrip(r"(\item text)"))
+## space was lost in R < 4.4.0
+
 
 
 ## keep at end

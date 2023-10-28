@@ -14,7 +14,7 @@
     \item{\code{\link{pdf}}:}{Write PDF graphics commands to a file}
     \item{\code{\link{postscript}}:}{Writes PostScript graphics commands to
       a file}
-    \item{\code{\link{xfig}}:}{Device for XFIG graphics file format}
+    \item{\code{\link{xfig}}:}{Device for XFig graphics file format}
     \item{\code{\link{bitmap}}:}{bitmap pseudo-device via
       \code{Ghostscript} (if available).}
     \item{\code{\link{pictex}}:}{Writes TeX/PicTeX graphics commands to a

@@ -377,5 +377,30 @@ stopifnot(exprs = {
     length(LL[cbind( -ca.half, 1)]) == 0
 })
 
+if(availableGB > 10) withAutoprint({ ## PR#18612
+    ##  Summary: integer overflow in matrix(<long vector>, nrow, ncol)
+    ##           due to wrong format specifiers
+    ## Reporter: Mikael Jagan @ McMaster
+    M <- .Machine$integer.max
+    x <- raw(M + 1)
+    y <- raw(2 * M)
+    (m1 <- conditionMessage(tryCatch(matrix(x, M, 1L), warning = identity)))
+    ## was "data length [-2147483648] is not a sub-multiple or multiple ...."
+    (m2 <- conditionMessage(tryCatch(matrix(x, 1L, M), warning = identity)))
+    ## was "data length [-2147483648] is not a sub-multiple or multiple ...."
+    (m3 <- conditionMessage(tryCatch(matrix(y, M, 1L), error = identity)))
+    ## was "data length differs from size of matrix: [-2 != 2147483647 x 1]"
+    (m4 <- conditionMessage(tryCatch(matrix(y, 1L, M), error = identity)))
+    ## "data length differs from size of matrix: [-2 != 1 x 2147483647]"
+    ## triggering those in dimsgets():
+    (m5 <- conditionMessage(tryCatch(dim(y) <- c(1L, M), error = identity)))
+    (m6 <- conditionMessage(tryCatch(dim(x) <- c(M, 1L), error = identity)))
+    stopifnot(exprs = {
+        grepl(paste0("data length [", M+1, "] is not"), c(m1,m2), fixed=TRUE)
+        grepl(paste0("size of matrix: [", 2*M, " != "), c(m3,m4), fixed=TRUE)
+        grepl(paste0("dims [product ", M, "] do not "), c(m5,m6), fixed=TRUE)
+    })
+})
+
 gc() # NB the "max used"
 proc.time() # total  [ ~ 40 minutes in full case, 2019-04-12]

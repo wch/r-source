@@ -68,7 +68,7 @@
   The model fitting function \code{\link{lm}}, \code{\link{anova}}.
 
   \code{\link{drop1}} for
-  so-called \sQuote{type II} anova where each term is dropped one at a
+  so-called \sQuote{type II} ANOVA where each term is dropped one at a
   time respecting their hierarchy.
 }
 \examples{

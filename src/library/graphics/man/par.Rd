@@ -676,9 +676,9 @@ par(\dots, no.readonly = FALSE)
   \code{\link{plot.default}} for some high-level plotting parameters;
   \code{\link{colors}}; \code{\link{clip}};
   \code{\link{options}} for other setup parameters;
-  graphic devices \code{\link{x11}}, \code{\link{postscript}} and
-  setting up device regions by \code{\link{layout}} and
-  \code{\link{split.screen}}.
+  graphic devices \code{\link{x11}}, \code{\link{pdf}},
+  \code{\link{postscript}} and setting up device regions by
+  \code{\link{layout}} and \code{\link{split.screen}}.
 }
 
 \examples{

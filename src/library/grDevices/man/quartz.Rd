@@ -26,7 +26,7 @@ quartz.save(file, type = "png", device = dev.cur(), dpi = 100, ...)
   \item{title}{title for the Quartz window (applies to on-screen output
     only), default \code{"Quartz \%d"}.  A C-style format for an integer
     will be substituted by the device number (see the \code{file}
-    argument to \code{\link{postscript}} for further details).}
+    argument to \code{\link{pdf}} for further details).}
   \item{width}{the width of the plotting area in inches.  Default \code{7}.}
   \item{height}{the height of the plotting area in inches.  Default \code{7}.}
   \item{pointsize}{the default pointsize to be used.  Default \code{12}.}
@@ -74,7 +74,7 @@ quartz.save(file, type = "png", device = dev.cur(), dpi = 100, ...)
   e.g.\sspace{}\code{Rplot\%03d.png}.  (Depending on the platform,
   the result should be less than
   \code{PATH_MAX} characters long, and may be truncated if not. See
-  \code{\link{postscript}} for further details.)  If a \code{file}
+  \code{\link{pdf}} for further details.)  If a \code{file}
   argument is not supplied, the default is \code{Rplots.pdf} or
   \code{Rplot\%03d.\var{type}}.  Tilde expansion
   (see \code{\link{path.expand}}) is done.

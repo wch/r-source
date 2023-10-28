@@ -429,6 +429,7 @@ SEXP do_sysgetpid(SEXP, SEXP, SEXP, SEXP);
 SEXP do_system(SEXP, SEXP, SEXP, SEXP);
 SEXP do_systime(SEXP, SEXP, SEXP, SEXP);
 SEXP do_tabulate(SEXP, SEXP, SEXP, SEXP);
+SEXP do_tailcall(SEXP, SEXP, SEXP, SEXP);
 SEXP do_tempdir(SEXP, SEXP, SEXP, SEXP);
 SEXP do_tempfile(SEXP, SEXP, SEXP, SEXP);
 SEXP do_tilde(SEXP, SEXP, SEXP, SEXP);

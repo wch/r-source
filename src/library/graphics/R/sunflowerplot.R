@@ -37,10 +37,10 @@ sunflowerplot.default <-
             x
         } else xy.coords(x, y, xlabel, ylabel, log)
     if(!add) {
-        xlab <- if (is.null(xlab)) xy$xlab else xlab
-        ylab <- if (is.null(ylab)) xy$ylab else ylab
-        xlim <- if (is.null(xlim)) range(xy$x[is.finite(xy$x)]) else xlim
-        ylim <- if (is.null(ylim)) range(xy$y[is.finite(xy$y)]) else ylim
+        if (is.null(xlab)) xlab <- xy$xlab
+        if (is.null(ylab)) ylab <- xy$ylab
+        if (is.null(xlim)) xlim <- range(xy$x[is.finite(xy$x)])
+        if (is.null(ylim)) ylim <- range(xy$y[is.finite(xy$y)])
     }
     n <- length(xy$x)
     if(missing(number)) {

@@ -1,7 +1,7 @@
 #  File src/library/utils/R/tar.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2022 The R Core Team
+#  Copyright (C) 1995-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -530,22 +530,27 @@ tar <- function(tarfile, files = NULL,
             }
         }
         ## size is 0 for directories and it seems for links.
-        size <- ifelse(info$isdir, 0, info$size)
+        size <- if(info$isdir) 0 else info$size
         if(size >= 8^11) stop("file size is limited to 8GB")
         header[125:135] <- .Call(C_octsize, size)
         ## the next two are what POSIX says, not what GNU tar does.
         header[258:262] <- charToRaw("ustar")
         header[264:265] <- charToRaw("0")
         ## Windows does not have uname, grname
-        s <- info$uname
-        if(!is.null(s) && !is.na(s)) {
-            ns <- nchar(s, "b")
-            header[265L + (1:ns)] <- charToRaw(s)
-        }
-        s <- info$grname
-        if(!is.null(s) && !is.na(s)) {
-            ns <- nchar(s, "b")
-            header[297L + (1:ns)] <- charToRaw(s)
+        ##     too long ( > 32 ) uname, grname are truncated (PR#17871)
+        for (frag in list(list('uname',  265L),
+                          list('grname', 297L))) {
+            s <- info[[frag[[1L]]]]
+            if(!is.null(s) && !is.na(s)) {
+                ns <- nchar(s, "b")
+                if (ns > 32L) {
+                    warn1 <- c(warn1, sprintf("truncating %d character long '%s'",
+                                              ns, frag[[1L]]))
+                    ns <- 32L
+                }
+                i <- seq_len(ns)
+                header[frag[[2L]] + i] <- charToRaw(s)[i]
+            }
         }
         header[149:156] <- charToRaw(" ")
         checksum <- sum(as.integer(header)) %% 2^24 # 6 bytes

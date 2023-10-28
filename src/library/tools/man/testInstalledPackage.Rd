@@ -8,6 +8,7 @@
 \alias{testInstalledPackages}
 \alias{testInstalledBasic}
 \alias{TEST_MC_CORES}
+\alias{standard_package_names}
 
 \title{Test Installed Packages}
 \description{
@@ -27,6 +28,8 @@ testInstalledPackages(outDir = ".", errorsAreFatal = TRUE,
 testInstalledBasic(scope = c("basic", "devel", "both", "internet", "all"),
                    outDir = file.path(R.home(), "tests"),
                    testSrcdir = getTestSrcdir(outDir))
+
+standard_package_names()
 }
 \arguments{
   \item{pkg}{name of an installed package.}
@@ -89,5 +92,21 @@ testInstalledBasic(scope = c("basic", "devel", "both", "internet", "all"),
 }
 \value{
   Invisibly \code{0L} for success, \code{1L} for failure.
+
+  \code{standard_package_names()} returns a \code{\link{list}} with
+  components named
+  \item{base}{a \code{character} vector with the \sQuote{base} package names.}
+  \item{recommended}{a \code{character} vector with the
+    \sQuote{Recommended} package names in historical order.}
+}
+\examples{
+str(stPkgs <- standard_package_names())
+\donttest{%needs recommended packages
+## consistency of packageDescription and standard_package_names :
+(pNms <- unlist(stPkgs, FALSE))
+(prio <- sapply(as.vector(pNms), packageDescription, fields = "Priority"))
+stopifnot(identical(unname(prio),
+                    sub("[0-9]+$", '', names(pNms))))
+}
 }
 \keyword{utilities}

@@ -18,6 +18,7 @@ example(topic, package = NULL, lib.loc = NULL,
         verbose = getOption("verbose"),
         setRNG = FALSE, ask = getOption("example.ask"),
         prompt.prefix = abbreviate(topic, 6),
+        catch.aborts = FALSE,
         run.dontrun = FALSE, run.donttest = interactive())
 }
 \arguments{
@@ -60,6 +61,8 @@ example(topic, package = NULL, lib.loc = NULL,
     device and to any devices opened by the example code.}
   \item{prompt.prefix}{character; prefixes the prompt to be used if
     \code{echo} is true (as it is by default).}
+  \item{catch.aborts}{logical, passed on to \code{\link{source}()},
+    indicating that \dQuote{abort}ing errors should be caught.}
   \item{run.dontrun}{logical indicating that \verb{\dontrun}
     should be ignored.}
   \item{run.donttest}{logical indicating that \verb{\donttest}

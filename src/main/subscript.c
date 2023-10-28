@@ -186,7 +186,7 @@ OneIndex(SEXP x, SEXP s, R_xlen_t nx, int partial, SEXP *newname,
 	    PROTECT(names);
 	    for (i = 0; i < nx; i++)
 		if (streql(translateChar(STRING_ELT(names, i)),
-			   translateChar(PRINTNAME(s)))) {
+			   CHAR(PRINTNAME(s)))) {
 		    indx = i;
 		    break;
 		}

@@ -23,6 +23,7 @@ function(topic, package = NULL, lib.loc = NULL,
 	 type = c("console", "html"), echo = TRUE, verbose = getOption("verbose"),
          setRNG = FALSE, ask = getOption("example.ask"),
 	 prompt.prefix = abbreviate(topic, 6),
+         catch.aborts = FALSE,
 	 run.dontrun = FALSE, run.donttest = interactive())
 {
     type <- match.arg(type)
@@ -128,5 +129,6 @@ function(topic, package = NULL, lib.loc = NULL,
              prompt.echo = paste0(prompt.prefix, getOption("prompt")),
            continue.echo = paste0(prompt.prefix, getOption("continue")),
            verbose = verbose, max.deparse.length = Inf, encoding = "UTF-8",
+           catch.aborts = catch.aborts,
     	   skip.echo = skips, keep.source=TRUE)
 }

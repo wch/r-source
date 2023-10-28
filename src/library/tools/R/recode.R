@@ -1,7 +1,7 @@
 #  File src/library/tools/R/recode.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -73,13 +73,13 @@ latin1table <- c(
      "{\\textdegree}", "{\\textpm}", "{\\mathtwosuperior}", "{\\maththreesuperior}", "{\\a'{}}", "{\\textmu}", "{\\P}", "{\\textperiodcentered}",
      "{\\c\\ }", "{\\mathonesuperior}", "{\\textordmasculine}", "{\\guillemotright}", "{\\textonequarter}", "{\\textonehalf}", "{\\textthreequarters}", "{\\textquestiondown}",
      "{\\a`A}", "{\\a'A}", "{\\^A}", "{\\~A}", '{\\"A}', "{\\r A}", "{\\AE}", "{\\c C}",
-     "{\\a`E}", "{\\a'E}", "{\\^E}", "{\\a`I}", "{\\a'I}", "{\\^I}", "{\\~I}", '{\\"I}',
+     "{\\a`E}", "{\\a'E}", "{\\^E}", '{\\"E}', "{\\a`I}", "{\\a'I}", "{\\^I}", '{\\"I}',
      "{\\DH}", "{\\~N}", "{\\a`O}", "{\\a'O}", "{\\^O}", "{\\~O}", '{\\"O}', "{\\texttimes}",
-     "{\\O}", "{\\a`U}", "{\\a'U}", "{\\^U}", '{\\"U}', "{\\a`Y}", "{\\TH}", "{\\ss}",
+     "{\\O}", "{\\a`U}", "{\\a'U}", "{\\^U}", '{\\"U}', "{\\a'Y}", "{\\TH}", "{\\ss}",
      "{\\a`a}", "{\\a'a}", "{\\^a}", "{\\~a}", '{\\"a}', "{\\r a}", "{\\ae}", "{\\c c}",
      "{\\a`e}", "{\\a'e}", "{\\^e}", '{\\"e}',"{\\a`\\i}", "{\\a'\\i}", "{\\^\\i}", '{\\"\\i}',
      "{\\dh}", "{\\~n}", "{\\a`o}", "{\\a'o}", "{\\^o}", "{\\~o}", '{\\"o}', "{\\textdiv}",
-     "{\\o}", "{\\a`u}", "{\\a'u}", "{\\^u}", '{\\"u}', "{\\a`y}", "{\\th}", '{\\"y}'
+     "{\\o}", "{\\a`u}", "{\\a'u}", "{\\^u}", '{\\"u}', "{\\a'y}", "{\\th}", '{\\"y}'
      )
 
 latin2table <- c(
@@ -96,33 +96,19 @@ latin2table <- c(
      "{\\a'R}", "{\\a'A}", "{\\^A}", "{\\u A}", '{\\"A}', "{\\'L}", "{\\a'C}", "{\\c C}",
      "{\\v C}", "{\\a'E}", "{\\k E}", '{\\"E}', "{\\v E}", "{\\'I}", "{\\^I}", '{\\v D}',
      "{\\DJ}", "{\\a'N}", "{\\v N}", "{\\a'O}", "{\\^O}", "{\\H O}", '{\\"O}', "{\\texttimes}",
-     "{\\v R}", "{\\r U}", "{\\a'U}", "{\\H U}", '{\\"U}', "{\\a`Y}", "{\\c I}", "{\\ss}",
+     "{\\v R}", "{\\r U}", "{\\a'U}", "{\\H U}", '{\\"U}', "{\\a'Y}", "{\\c I}", "{\\ss}",
      "{\\a'r}", "{\\a'a}", "{\\^a}", "{\\u a}", '{\\"a}', "{\\'l}", "{\\a'c}", "{\\c c}",
      "{\\v c}", "{\\a'e}", "{\\k e}", '{\\"e}', "{\\v e}", "{\\'\\i}", "{\\^\\i}", '{\\v d}',
-     "{\\dj}", "{\\a'n}", "{\\c n}", "{\\a'o}", '{\\"a}', "{\\H o}", '{\\"o}', "{\\textdiv}",
-     "{\\v r}", "{\\r u}", "{\\a'u}", "{\\H u}", '{\\"u}', "{\\a`y}", "{\\c t}", '{\\.{}}'
+     "{\\dj}", "{\\a'n}", "{\\v n}", "{\\a'o}", "{\\^o}", "{\\H o}", '{\\"o}', "{\\textdiv}",
+     "{\\v r}", "{\\r u}", "{\\a'u}", "{\\H u}", '{\\"u}', "{\\a'y}", "{\\c t}", '{\\.{}}'
      )
 
-latin9table <- c(
-     rep.int("?}", 31),
-     ## 0x20 to %x7F
-     rawToChar(as.raw(seq.int(32, 126)), multiple=TRUE), "?}",
-     ## 0x80 to 0x9F
-     rep.int("?}", 32),
-     ## 0xA0 = 160 on
-     "{\\nobreakspace}", "{\\textexclamdown}", "{\\textcent}", "{\\textsterling}", "{\\texteuro}", "{\\textyen}", "{\\v S}", "{\\S}",
-     '{\\v s}', "{\\copyright}", "{\\textordfeminine}", "{\\guillemotleft}", "{\\textlnot}", "\\-", "{\\textregistered}", "{\\a={}}",
-     "{\\textdegree}", "{\\textpm}", "{\\mathtwosuperior}", "{\\maththreesuperior}", "{\\v Z}", "{\\textmu}", "{\\P}", "{\\textperiodcentered}",
-     "{\\v z}", "{\\mathonesuperior}", "{\\textordmasculine}", "{\\guillemotright}", "{\\OE}", "{\\oe}", '{\\"Y}', "{\\textquestiondown}",
-     "{\\a`A}", "{\\a'A}", "{\\^A}", "{\\~A}", '{\\"A}', "{\\r A}", "{\\AE}", "{\\c C}",
-     "{\\a`E}", "{\\a'E}", "{\\^E}", "{\\a`I}", "{\\a'I}", "{\\^I}", "{\\~I}", '{\\"I}',
-     "{\\DH}", "{\\~N}", "{\\a`O}", "{\\a'O}", "{\\^O}", "{\\~O}", '{\\"O}', "{\\texttimes}",
-     "{\\O}", "{\\a`u}", "{\\a'U}", "{\\^U}", '\\"U', "{\\a`Y}", "{\\TH}", "{\\ss}",
-     "{\\a`a}", "{\\a'a}", "{\\^a}", "{\\~a}", '{\\"a}', "{\\r a}", "{\\ae}", "{\\c c}",
-     "{\\a`e}", "{\\a'e}", "{\\^e}", '{\\"e}',"{\\a`\\i}", "{\\a'\\i}", "{\\^\\i}", '{\\"\\i}',
-     "{\\dh}", "{\\~n}", "{\\a`o}", "{\\a'o}", "{\\^o}", "{\\~o}", '{\\"o}', "{\\textdiv}",
-     "{\\o}", "{\\a`u}", "{\\a'u}", "{\\^u}", '\\"u', "{\\a`y}", "{\\th}", '{\\"y}'
-     )
+latin9table <- latin1table
+latin9table[c(0xD0, 0xDD, 0xDE,
+              0xF0, 0xFD, 0xFE)] <-
+    c("{\\u G}", "{\\.I}", "{\\c S}",
+      "{\\u g}", "{\\i}",  "{\\c s}")
+
 
 utf8table <- c(latin1table, rep.int("?", 256))
 

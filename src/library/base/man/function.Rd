@@ -20,7 +20,7 @@
 }
 \arguments{
   \item{arglist}{empty or one or more (comma-separated) \samp{name} or
-    \samp{\var{name} = \var{expression}} terms
+    \samp{name = expression} terms
     and/or the special token \code{\link{...}}.}
   \item{expr}{an expression.}
   \item{value}{an expression.}

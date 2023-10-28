@@ -757,8 +757,9 @@ static double
 	    */
 	   (face % 5) != 0) {
 	    R_CheckStack2(strlen((char *)str)+1);
-	    char buff[strlen((char *)str)+1];
-	    /* Output string cannot be longer */
+	    /* Output string cannot be longer
+	       -- but it can be if transliteration is used */
+	    char *buff = alloca(2*strlen((char *)str)+1);
 	    mbcsToSbcs((char *)str, buff, encoding, enc);
 	    str1 = (unsigned char *)buff;
 	}
@@ -4363,14 +4364,6 @@ static void mbcsToSbcs(const char *in, char *out, const char *encoding,
     const char *i_buf; char *o_buf;
     size_t i_len, o_len, status;
 
-#if 0
-    if(enc != CE_UTF8 &&
-       ( !strcmp(encoding, "latin1") || !strcmp(encoding, "ISOLatin1")) ) {
-	mbcsToLatin1(in, out); /* more tolerant */
-	return;
-    }
-#endif
-
     if ((void*)-1 ==
 	(cd = Riconv_open(encoding, (enc == CE_UTF8) ? "UTF-8" : "")))
 	error(_("unknown encoding '%s' in 'mbcsToSbcs'"), encoding);
@@ -4378,21 +4371,84 @@ static void mbcsToSbcs(const char *in, char *out, const char *encoding,
     i_buf = (char *) in;
     i_len = strlen(in)+1; /* include terminator */
     o_buf = (char *) out;
-    o_len = i_len; /* must be the same or fewer chars */
+    /* libiconv in macOS 14 can expand 1 UTF-8 char to at least 4 (o/oo) */
+    o_len = 2*i_len;
 next_char:
     status = Riconv(cd, &i_buf, &i_len, &o_buf, &o_len);
     /* libiconv 1.13 gives EINVAL on \xe0 in UTF-8 (as used in fBasics) */
     if(status == (size_t) -1 && (errno == EILSEQ || errno == EINVAL)) {
-	warning(_("conversion failure on '%s' in 'mbcsToSbcs': dot substituted for <%02x>"),
-		in, (unsigned char) *i_buf),
-	*o_buf++ = '.'; i_buf++; o_len--; i_len--;
+	int fail = getenv("_R_CHECK_MBCS_CONVERSION_FAILURE_") != NULL;
+	if (utf8locale) {
+	    /* We attempt to do better here in a UTF-8 locale if the
+	       input is valid and give one dot per UTF-8 character.
+	       However, packages PBSmodelling and fBasics used invalid
+	       8-bit inputs.
+	    */
+	    int clen = utf8clen(*i_buf);
+	    wchar_t wc;
+	    int res =
+		(int) utf8toucs(&wc, i_buf); // gives -1 for a conversion error
+	    if (res != -1) {
+		// two-char fixups
+		char *fix2 = NULL;
+		if(wc == 0x2190) fix2 = "<-";
+		else if(wc == 0x2192 || wc == 0x2794 || wc == 0x279C ||
+			wc == 0x279D || wc == 0x279E || wc == 0x279F ||
+			wc == 0x27a1 || wc == 0x27a2)
+		    fix2 = "->";
+		// The next two could and probably should be done by plotmath.
+		else if(wc == 0x2264) fix2 = "<=";
+		else if(wc == 0x2265) fix2 = ">=";
+		if(fix2) {
+		    /*
+		    if (fail)
+			error("conversion failure on '%s' in 'mbcsToSbcs': for %lc", in, wc);
+		    else
+			warning("conversion failure on '%s' in 'mbcsToSbcs': %s substituted for %lc", in, fix2, wc);
+		    */
+		    *o_buf++ = fix2[0]; *o_buf++ = fix2[1]; o_len-= 2;
+		    i_buf += clen; i_len -= clen;
+		} else {
+		    // one-char fixups
+		    char fix = '.';
+		    if (wc == 0x2013 || wc == 0x2014 || wc == 0x2212)
+			fix = '-'; // dashes, minus
+		    else if (wc == 0x2018 || wc == 0x2019) fix = '\'';
+		    else if (wc == 0x2022) fix = '.';
+		    else if (wc == 0x2605 || wc == 0x2737) fix = '*';
+		    else {
+			if (fail)
+			    error(_("conversion failure on '%s' in 'mbcsToSbcs': for %lc"), in, wc);
+			else
+			    warning(_("conversion failure on '%s' in 'mbcsToSbcs': %c substituted for %lc"), in, fix, wc);
+		    }
+		    *o_buf++ = fix; o_len--; i_buf += clen; i_len -= clen;
+		}
+	    } else {
+		if (fail)
+		    error(_("conversion failure on '%s' in 'mbcsToSbcs': for <%02x>"), in, (unsigned char) *i_buf);
+		else
+		    warning(_("conversion failure on '%s' in 'mbcsToSbcs': dot substituted for <%02x>"), in, (unsigned char) *i_buf);
+		*o_buf++ = '.'; o_len--; i_buf++; i_len--;
+	    }
+	} else {
+	    if (fail)
+		error(_("conversion failure on '%s' in 'mbcsToSbcs': for <%02x>"), in, (unsigned char) *i_buf);
+	    else
+		warning(_("conversion failure on '%s' in 'mbcsToSbcs': dot substituted for <%02x>"), in, (unsigned char) *i_buf);
+	    *o_buf++ = '.'; o_len--; i_buf++; i_len--;
+	}
 	if(i_len > 0) goto next_char;
     }
 
     Riconv_close(cd);
-    if (status == (size_t)-1)  /* internal error? */
+    if (status == (size_t)-1) {  /* internal error? */
+	// 'in' might not be valid in the session encoding.
+	Rboolean valid = mbcsValid(in);
 	error("conversion failure from %s to %s on '%s' in 'mbcsToSbcs'",
-	      (enc == CE_UTF8) ? "UTF-8" : "native", encoding, in);
+	      (enc == CE_UTF8) ? "UTF-8" : "native", encoding,
+	      valid ? in : "invalid input");
+    }
 }
 
 static void PS_Text0(double x, double y, const char *str, int enc,
@@ -4508,7 +4564,10 @@ static void PS_Text0(double x, double y, const char *str, int enc,
     */
     if((enc == CE_UTF8 || mbcslocale) && !strIsASCII(str)) {
 	R_CheckStack2(strlen(str)+1);
-	buff = alloca(strlen(str)+1); /* Output string cannot be longer */
+	/* Output string cannot be longer
+	   -- but it can be if transliteration is used
+	 */
+	buff = alloca(2*strlen(str)+1);
 	mbcsToSbcs(str, buff, convname(gc->fontfamily, pd), enc);
 	str1 = buff;
     }
@@ -10003,7 +10062,10 @@ static void PDF_Text0(double x, double y, const char *str, int enc,
         if((enc == CE_UTF8 || mbcslocale) && !strIsASCII(str) && face < 5) {
             /* face 5 handled above */
             R_CheckStack2(strlen(str)+1);
-            buff = alloca(strlen(str)+1); /* Output string cannot be longer */
+	    /* Output string cannot be longer
+	       -- but it can be if transliteration is used
+	     */
+            buff = alloca(2*strlen(str)+1); 
             mbcsToSbcs(str, buff, PDFconvname(gc->fontfamily, pd), enc);
             str1 = buff;
         } else str1 = str;

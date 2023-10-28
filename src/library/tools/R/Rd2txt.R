@@ -1023,7 +1023,8 @@ Rd2txt <-
     } else {
 	title <- .Rd_format_title(.Rd_get_title(Rd))
 
-	name <- trim(Rd[[2L]][[1L]])
+	name <- .Rd_topic_for_display(.Rd_get_name(Rd),
+                                      .Rd_get_metadata(Rd, "alias"))
 
 	if(nzchar(package)) {
 	    left <- name

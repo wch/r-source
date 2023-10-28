@@ -1270,10 +1270,7 @@ SEXP eval(SEXP e, SEXP rho)
 	else if (TYPEOF(op) == CLOSXP) {
 	    SEXP pargs = promiseArgs(CDR(e), rho);
 	    PROTECT(pargs);
-	    tmp = applyClosure(e, op, pargs, rho, R_NilValue);
-#ifdef ADJUST_ENVIR_REFCNTS
-	    unpromiseArgs(pargs);
-#endif
+	    tmp = applyClosure(e, op, pargs, rho, R_NilValue, TRUE);
 	    UNPROTECT(1);
 	}
 	else
@@ -2153,9 +2150,9 @@ static R_INLINE void R_CleanupEnvir(SEXP rho, SEXP val)
     }
 }
 
-attribute_hidden void unpromiseArgs(SEXP pargs)
+static void unpromiseArgs(SEXP pargs)
 {
-    /* This assumes pargs will no longer be references. We could
+    /* This assumes pargs will no longer be referenced. We could
        double check the refcounts on pargs as a sanity check. */
     for (; pargs != R_NilValue; pargs = CDR(pargs)) {
 	SEXP v = CAR(pargs);
@@ -2164,8 +2161,17 @@ attribute_hidden void unpromiseArgs(SEXP pargs)
 	SETCAR(pargs, R_NilValue);
     }
 }
-#else
-attribute_hidden void unpromiseArgs(SEXP pargs) { }
+#endif
+
+#define SUPPORT_TAILCALL
+#ifdef SUPPORT_TAILCALL
+static SEXP R_exec_token = NULL; /* initialized in R_initEvalSymbols below */
+
+static R_INLINE Rboolean is_exec_continuation(SEXP val)
+{
+    return (TYPEOF(val) == VECSXP && XLENGTH(val) == 4 &&
+	    VECTOR_ELT(val, 0) == R_exec_token);
+}
 #endif
 
 /* Note: GCC will not inline execClosure because it calls setjmp */
@@ -2173,7 +2179,8 @@ static R_INLINE SEXP R_execClosure(SEXP call, SEXP newrho, SEXP sysparent,
                                    SEXP rho, SEXP arglist, SEXP op);
 
 /* Apply SEXP op of type CLOSXP to actuals */
-SEXP applyClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho, SEXP suppliedvars)
+static SEXP applyClosure_core(SEXP call, SEXP op, SEXP arglist, SEXP rho,
+			      SEXP suppliedvars, Rboolean unpromise)
 {
     SEXP formals, actuals, savedrho, newrho;
     SEXP f, a;
@@ -2251,9 +2258,47 @@ SEXP applyClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho, SEXP suppliedvars)
     R_CleanupEnvir(newrho, val);
     if (is_getter_call && MAYBE_REFERENCED(val))
     	val = shallow_duplicate(val);
+    if (unpromise)
+	unpromiseArgs(arglist);
 #endif
 
     UNPROTECT(1); /* newrho */
+    return val;
+}
+
+attribute_hidden
+SEXP applyClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho,
+		  SEXP suppliedvars, Rboolean unpromise)
+{
+    SEXP val = applyClosure_core(call, op, arglist, rho,
+				 suppliedvars, unpromise);
+#ifdef SUPPORT_TAILCALL
+    while (is_exec_continuation(val)) {
+	call = PROTECT(VECTOR_ELT(val, 1));
+	rho = PROTECT(VECTOR_ELT(val, 2));
+	SET_VECTOR_ELT(val, 2, R_NilValue); // to drop REFCNT
+	op = PROTECT(VECTOR_ELT(val, 3));
+
+	if (TYPEOF(op) == CLOSXP) {
+	    arglist = PROTECT(promiseArgs(CDR(call), rho));
+	    suppliedvars = R_NilValue;
+	    val = applyClosure_core(call, op, arglist, rho, suppliedvars, TRUE);
+# ifdef ADJUST_ENVIR_REFCNTS
+	    R_CleanupEnvir(rho, val);
+# endif
+	    UNPROTECT(1); /* arglist */
+	}
+	else {
+	    /* Ideally this should handle BUILTINSXP/SPECIALSXP calls
+	       in the standard way as in eval() or bceval(). For now,
+	       just build a new call and eval. */
+	    SEXP expr = PROTECT(LCONS(op, CDR(call)));
+	    val = eval(expr, rho);
+	    UNPROTECT(1); /* expr */
+	}
+	UNPROTECT(3); /* call, rho, op */
+    }
+#endif
     return val;
 }
 
@@ -2384,10 +2429,7 @@ SEXP R_forceAndCall(SEXP e, int n, SEXP rho)
 	    else error("something weird happened");
 	}
 	SEXP pargs = tmp;
-	tmp = applyClosure(e, fun, pargs, rho, R_NilValue);
-#ifdef ADJUST_ENVIR_REFCNTS
-	unpromiseArgs(pargs);
-#endif
+	tmp = applyClosure(e, fun, pargs, rho, R_NilValue, TRUE);
 	UNPROTECT(1);
     }
     else {
@@ -2498,6 +2540,10 @@ SEXP R_execMethod(SEXP op, SEXP rho)
     R_CleanupEnvir(newrho, val);
 #endif
     UNPROTECT(1);
+#ifdef SUPPORT_TAILCALL
+    if (is_exec_continuation(val))
+	error("'Exec' and 'Tailcall' are not supported in methods yet");
+#endif
     return val;
 }
 
@@ -2541,7 +2587,7 @@ static SEXP EnsureLocal(SEXP symbol, SEXP rho, R_varloc_t *ploc)
 /* to prevent evaluation.  As an example consider */
 /* e <- quote(f(x=1,y=2); names(e) <- c("","a","b") */
 
-static SEXP R_valueSym = NULL; /* initialized in R_initAssignSymbols below */
+static SEXP R_valueSym = NULL; /* initialized in R_initEvalSymbols below */
 
 static SEXP replaceCall(SEXP fun, SEXP val, SEXP args, SEXP rhs)
 {
@@ -2955,6 +3001,128 @@ attribute_hidden NORET SEXP do_return(SEXP call, SEXP op, SEXP args, SEXP rho)
     findcontext(CTXT_BROWSER | CTXT_FUNCTION, rho, v);
 }
 
+static Rboolean checkTailPosition(SEXP call, SEXP code, SEXP rho)
+{
+    /* Could allow for switch() as well.
+
+       Ideally this should check that functions are from base;
+       pretty safe bet for '{' and 'if'.
+
+       Constructed code containing the call in multiple places could
+       produce false positives.
+
+       All this would be best done at compile time. */
+    if (call == code)
+	return TRUE;
+    else if (TYPEOF(code) == LANGSXP) {
+	if (CAR(code) == R_BraceSymbol) {
+	    while (CDR(code) != R_NilValue)
+		code = CDR(code);
+	    return checkTailPosition(call, CAR(code), rho);
+	}
+	else if (CAR(code) == R_IfSymbol)
+	    return checkTailPosition(call, CADDR(code), rho) ||
+		checkTailPosition(call, CADDDR(code), rho);
+	else return FALSE;
+    }
+    else return FALSE;
+}
+
+static void MISSING_ARGUMENT_ERROR(SEXP symbol, SEXP rho);
+attribute_hidden SEXP do_tailcall(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+#ifdef SUPPORT_TAILCALL
+    SEXP expr, env;
+
+    static Rboolean warned = FALSE;
+    if (! warned) {
+	warningcall_immediate(call,
+			      "'Tailcall' and 'Exec' are experimental and "
+			      "may be changed or removed before release");
+	warned = TRUE;
+    }
+
+    if (PRIMVAL(op) == 0) { // exec
+	static SEXP formals = NULL;
+	if (formals == NULL)
+	    formals = allocFormalsList2(install("expr"), install("envir"));
+
+	PROTECT_INDEX api;
+	PROTECT_WITH_INDEX(args = matchArgs_NR(formals, args, call), &api);
+	REPROTECT(args = evalListKeepMissing(args, rho), api);
+	expr = CAR(args);
+        if (expr == R_MissingArg)
+	    MISSING_ARGUMENT_ERROR(install("expr"), rho);
+	if (TYPEOF(expr) == EXPRSXP && XLENGTH(expr) == 1)
+	    expr = VECTOR_ELT(expr, 0);
+	if (TYPEOF(expr) != LANGSXP)
+	    error(_("\"expr\" must be a call expression"));
+	env = CADR(args);
+	if (env == R_MissingArg)
+	    env = rho;
+	UNPROTECT(1); /* args */
+    }
+    else { // tailcall
+	/* could do argument matching here */
+	if (args == R_NilValue || CAR(args) == R_MissingArg)
+	    MISSING_ARGUMENT_ERROR(install("FUN"), rho);
+	expr = LCONS(CAR(args), CDR(args));
+	env = rho;
+    }
+
+    PROTECT(expr);
+    PROTECT(env);
+
+    /* A jump should only be used if there are no on.exit expressions
+       and the call is in tail position. Determining tail position
+       accurately in the AST interprester would be expensive, so this
+       is an approximation for now. The compiler could do a better
+       job, and eventually we may want to only jump from a compiled
+       call.  The JIT could be taught to always compile functions
+       containing Tailcall/Exec calls. */
+    Rboolean jump_OK =
+	(R_GlobalContext->conexit == R_NilValue &&
+	 R_GlobalContext->callflag & CTXT_FUNCTION &&
+	 R_GlobalContext->cloenv == rho &&
+	 TYPEOF(R_GlobalContext->callfun) == CLOSXP &&
+	 checkTailPosition(call, BODY_EXPR(R_GlobalContext->callfun), rho));
+
+    if (jump_OK) {
+	/* computing the function before the jump allows the idiom
+	   Tailcall(sys.function(), ...) to be used */
+	SEXP fun = CAR(expr);
+	if (TYPEOF(fun) == STRSXP && XLENGTH(fun) == 1)
+	    fun = installTrChar(STRING_ELT(fun, 0));
+	if (TYPEOF(fun) == SYMSXP)
+	    /* might need to adjust the call here as in eval() */
+	    fun = findFun3(fun, env, call);
+	else
+	    fun = eval(fun, env);
+
+	/* allocating a vector result could be avoided by passing expr,
+	   env, and fun in some in globals or on the byte code stack */
+	PROTECT(fun);
+	SEXP val = allocVector(VECSXP, 4);
+	UNPROTECT(1); /* fun */
+	SET_VECTOR_ELT(val, 0, R_exec_token);
+	SET_VECTOR_ELT(val, 1, expr);
+	SET_VECTOR_ELT(val, 2, env);
+	SET_VECTOR_ELT(val, 3, fun);
+
+	R_jumpctxt(R_GlobalContext, CTXT_FUNCTION, val);
+    }
+    else {
+	/**** maybe have an optional diagnostic about why no tail call? */
+	SEXP val = eval(expr, rho);
+	UNPROTECT(2); /* expr, rho */
+	return val;
+    }
+#else
+    error("recompile eval.c with -DSUPPORT_TAILCALL "
+	  "to enable Exec and Tailcall");
+#endif
+}
+
 /* Declared with a variable number of args in names.c */
 attribute_hidden SEXP do_function(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
@@ -3057,7 +3225,7 @@ static SEXP R_Subassign2Sym = NULL;
 static SEXP R_DollarGetsSymbol = NULL;
 static SEXP R_AssignSym = NULL;
 
-attribute_hidden void R_initAssignSymbols(void)
+attribute_hidden void R_initEvalSymbols(void)
 {
     for (int i = 0; i < NUM_ASYM; i++)
 	asymSymbol[i] = install(asym[i]);
@@ -3072,6 +3240,11 @@ attribute_hidden void R_initAssignSymbols(void)
     R_DollarGetsSymbol = install("$<-");
     R_valueSym = install("value");
     R_AssignSym = install("<-");
+
+#ifdef SUPPORT_TAILCALL
+    R_exec_token = CONS(install(".__EXEC__."), R_NilValue);
+    R_PreserveObject(R_exec_token);
+#endif
 }
 
 static R_INLINE SEXP lookupAssignFcnSymbol(SEXP fun)
@@ -3856,7 +4029,7 @@ attribute_hidden SEXP do_recall(SEXP call, SEXP op, SEXP args, SEXP rho)
 	PROTECT(s = eval(CAR(cptr->call), cptr->sysparent));
     if (TYPEOF(s) != CLOSXP)
 	error(_("'Recall' called from outside a closure"));
-    ans = applyClosure(cptr->call, s, args, cptr->sysparent, R_NilValue);
+    ans = applyClosure(cptr->call, s, args, cptr->sysparent, R_NilValue, TRUE);
     UNPROTECT(1);
     return ans;
 }
@@ -4322,10 +4495,7 @@ int DispatchGroup(const char* group, SEXP call, SEXP op, SEXP args, SEXP rho,
 	if(isOps) SET_TAG(m, R_NilValue);
     }
 
-    *ans = applyClosure(t, lsxp, s, rho, newvars);
-#ifdef ADJUST_ENVIR_REFCNTS
-    unpromiseArgs(s);
-#endif
+    *ans = applyClosure(t, lsxp, s, rho, newvars, TRUE);
     UNPROTECT(10);
     return 1;
 }
@@ -4914,15 +5084,12 @@ static SEXP cmp_arith2(SEXP call, int opval, SEXP opsym, SEXP x, SEXP y,
 #define Relop2(opval,opsym) NewBuiltin2(cmp_relop,opval,opsym,rho)
 
 #define R_MSG_NA	_("NaNs produced")
-#define CMP_ISNAN ISNAN
-//On Linux this is quite a bit faster; not on macOS El Capitan:
-//#define CMP_ISNAN(x) ((x) != (x))
 #define FastMath1(fun, sym) do {					\
 	R_bcstack_t vvx;						\
 	R_bcstack_t *vx = bcStackScalar(R_BCNodeStackTop - 1, &vvx);	\
 	if (vx->tag == REALSXP) {					\
 	    double dval = fun(vx->u.dval);				\
-	    if (CMP_ISNAN(dval)) {					\
+	    if (ISNAN(dval)) {						\
 		SEXP call = VECTOR_ELT(constants, GETOP());		\
 		if (ISNAN(vx->u.dval)) dval = vx->u.dval;		\
 		else warningcall(call, R_MSG_NA);			\
@@ -4934,7 +5101,7 @@ static SEXP cmp_arith2(SEXP call, int opval, SEXP opsym, SEXP x, SEXP y,
 	}								\
 	else if (vx->tag == INTSXP && vx->u.ival != NA_INTEGER) {	\
 	    double dval = fun((double) vx->u.ival);			\
-	    if (CMP_ISNAN(dval)) {					\
+	    if (ISNAN(dval)) {						\
 		SEXP call = VECTOR_ELT(constants, GETOP());		\
 		warningcall(call, R_MSG_NA);				\
 	    }								\
@@ -5026,7 +5193,7 @@ static SEXP cmp_arith2(SEXP call, int opval, SEXP opsym, SEXP x, SEXP y,
 	R_bcstack_t *vx = bcStackScalarReal(R_BCNodeStackTop - 1, &vvx); \
 	if (vx->tag == REALSXP) {					\
 	    double dval = R_log(vx->u.dval);				\
-	    if (CMP_ISNAN(dval)) {					\
+	    if (ISNAN(dval)) {						\
 		SEXP call = VECTOR_ELT(constants, GETOP());		\
 		if (ISNAN(vx->u.dval)) dval = vx->u.dval;		\
 		else warningcall(call, R_MSG_NA);			\
@@ -7536,10 +7703,7 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	  break;
 	case CLOSXP:
 	  args = CLOSURE_CALL_FRAME_ARGS();
-	  value = applyClosure(call, fun, args, rho, R_NilValue);
-#ifdef ADJUST_ENVIR_REFCNTS
-	  unpromiseArgs(args);
-#endif
+	  value = applyClosure(call, fun, args, rho, R_NilValue, TRUE);
 	  break;
 	default: error(_("bad function"));
 	}
@@ -7961,10 +8125,7 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	  prom = R_mkEVPROMISE(R_TmpvalSymbol, lhs);
 	  SETCAR(args, prom);
 	  /* make the call */
-	  value = applyClosure(call, fun, args, rho, R_NilValue);
-#ifdef ADJUST_ENVIR_REFCNTS
-	  unpromiseArgs(args);
-#endif
+	  value = applyClosure(call, fun, args, rho, R_NilValue, TRUE);
 	  break;
 	default: error(_("bad function"));
 	}
@@ -8005,10 +8166,7 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	  prom = R_mkEVPROMISE(R_TmpvalSymbol, lhs);
 	  SETCAR(args, prom);
 	  /* make the call */
-	  value = applyClosure(call, fun, args, rho, R_NilValue);
-#ifdef ADJUST_ENVIR_REFCNTS
-	  unpromiseArgs(args);
-#endif
+	  value = applyClosure(call, fun, args, rho, R_NilValue, TRUE);
 	  break;
 	default: error(_("bad function"));
 	}

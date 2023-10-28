@@ -1,8 +1,9 @@
 #### STRICT test suite in the spirit of no-segfaults,
 #### but with explicit statements.
 
-options(error=expression(NULL))
-stop("test of `options(error=expression(NULL))'")
+tools::assertError(options(catch.script.errors = NA)) # TRUE or FALSE
+options(catch.script.errors = TRUE)
+stop("test of 'options(catch.script.errors = TRUE)'")
 
 if(FALSE) {
 ## these ought to work on machines with enough memory

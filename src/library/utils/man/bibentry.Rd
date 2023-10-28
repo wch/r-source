@@ -86,7 +86,7 @@ bibentry(bibtype, textVersion = NULL, header = NULL, footer = NULL,
     additionally; currently applies only to \code{style = "citation"}.
     The default for the \code{print()} method depends on the number of
     (bib) entries and \code{\link{getOption}("citation.bibtex.max")} (which
-    itself is 1 by default).  For example, to see no bibtex at all, you can change the
+    itself is 1 by default).  For example, to see no BibTeX at all, you can change the
     default by \code{\link{options}(citation.bibtex.max = 0)}.}
   \item{citMsg}{\code{\link{logical}} indicating if a \dQuote{message} should be
     added (to the footer) about how to get BibTeX code when \code{bibtex}

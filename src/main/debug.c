@@ -203,7 +203,7 @@ static void memtrace_stack_dump(void)
 	    && TYPEOF(cptr->call) == LANGSXP) {
 	    SEXP fun = CAR(cptr->call);
 	    Rprintf("%s ",
-		    TYPEOF(fun) == SYMSXP ? translateChar(PRINTNAME(fun)) :
+		    TYPEOF(fun) == SYMSXP ? EncodeChar(PRINTNAME(fun)) :
 		    "<Anonymous>");
 	}
     }

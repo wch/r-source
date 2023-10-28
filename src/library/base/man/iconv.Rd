@@ -78,14 +78,26 @@ iconvlist()
 \section{Implementation Details}{
   There are three main implementations of \code{iconv} in use.  Linux's
   most common C runtime, \samp{glibc}, contains one.  Several platforms
-  supply GNU \samp{libiconv}, including macOS and FreeBSD, in
-  some cases with additional encodings.  On Windows we use a version of
-  Yukihiro Nakadaira's \samp{win_iconv}, which is based on Windows'
-  codepages.  (We have added many encoding names for compatibility with
-  other systems.)  All three have \code{iconvlist}, ignore case in
-  encoding names and support \samp{//TRANSLIT} (but with different
-  results, and for \samp{win_iconv} currently a \sQuote{best fit}
-  strategy is used except for \code{to = "ASCII"}).
+  supply versions or emulations of GNU \samp{libiconv}, including
+  previous versions of macOS and FreeBSD, in some cases with additional
+  encodings.  On Windows we use a version of Yukihiro Nakadaira's
+  \samp{win_iconv}, which is based on Windows' codepages.  (We have
+  added many encoding names for compatibility with other systems.)  All
+  three have \code{iconvlist}, ignore case in encoding names and support
+  \samp{//TRANSLIT} (but with different results, and for
+  \samp{win_iconv} currently a \sQuote{best fit} strategy is used except
+  for \code{to = "ASCII"}).
+
+%% https://github.com/apple-oss-distributions/libiconv/blob/libiconv-80.1.1/citrus/iconv.h
+  The macOS 14 implementation is attributed to the \sQuote{Citrus
+  Project}: the Apple headers declare it as \sQuote{compatible} with GNU
+  \samp{libiconv} 1.11 from 2006.  However, it differs in significant
+  ways including using a \sQuote{best fit} for conversions, at least for
+  \code{to = "ASCII"} and \code{to = "latin1"}.  (Earlier versions of
+  macOS used GNU \samp{libiconv} 1.11. It seems this implementation is
+  also used in recent versions of FreeBSD.)  For a failing conversion
+  macOS 14 generally translated character(s) to \code{?} but 14.1 gives
+  an error (so an \code{NA} result in \R).
 
   Most commercial Unixes contain an implementation of \code{iconv} but
   none we have encountered have supported the encoding names we need:
@@ -101,8 +113,7 @@ iconvlist()
 
   There are other implementations, e.g.\sspace{} NetBSD has used one from the
   Citrus project (which does not support \samp{//TRANSLIT}) and there is
-  an older FreeBSD port (\samp{libiconv} is usually used there): it has
-  not been reported whether or not these work with \R.
+  an older FreeBSD port.
 
   Note that you cannot rely on invalid inputs being detected, especially
   for \code{to = "ASCII"} where some implementations allow 8-bit
@@ -110,7 +121,7 @@ iconvlist()
   substitution.
 
   Some of the implementations have interesting extra encodings: for
-  example GNU \samp{libiconv} allows \code{to = "C99"} to use
+  example GNU \samp{libiconv} and macOS 14 allow \code{to = "C99"} to use
   \samp{\\uxxxx} escapes (or if needed \samp{\Uuxxxxxxxx}) for
   non-ASCII characters.
 }
@@ -140,7 +151,8 @@ iconvlist()
   If \code{toRaw = FALSE} (the default), the value is a character vector
   of the same length and the same attributes as \code{x} (after
   conversion to a character vector).  If conversion fails for an element
-  that element of the result is set to \code{NA_character_}.
+  that element of the result is set to \code{NA_character_}.  (NB:
+  whether conversion fails is implementation-specific.)
 
   If \code{mark = TRUE} (the default) the elements of the result have a
   declared encoding if \code{to} is \code{"latin1"} or \code{"UTF-8"},
@@ -193,6 +205,7 @@ x
 charToRaw(xx <- iconv(x, "latin1", "UTF-8"))
 xx
 
+## The results in the comments are those from glibc and GNU libiconv
 iconv(x, "latin1", "ASCII")           #   NA
 iconv(x, "latin1", "ASCII", "?")      # "fran?ais"
 iconv(x, "latin1", "ASCII", "")       # "franais"
@@ -205,7 +218,11 @@ x <- c("Ekstr\xf8m", "J\xf6reskog", "bi\xdfchen Z\xfcrcher")
 Encoding(x) <- "latin1"
 x
 try(iconv(x, "latin1", "ASCII//TRANSLIT"))  # platform-dependent
+## glibc gives "Ekstroem" "Joreskog" "bisschen Zurcher"
+## macOS 14 gives "Ekstrom" "J\"oreskog" "bisschen Z\"urcher"
+## musl gives "Ekstr*m" "J*reskog" "bi*chen Z*rcher"
 iconv(x, "latin1", "ASCII", sub = "byte")
+
 ## and for Windows' 'Unicode'
 str(xx <- iconv(x, "latin1", "UTF-16LE", toRaw = TRUE))
 iconv(xx, "UTF-16LE", "UTF-8")

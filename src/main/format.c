@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997--2021  The R Core Team
+ *  Copyright (C) 1997--2023  The R Core Team
  *  Copyright (C) 2003--2016  The R Foundation
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
@@ -183,7 +183,7 @@ void formatIntegerS(SEXP x, R_xlen_t n, int *fieldwidth)
        true for non-ALTREPs or "exploded" ALTREPs
     */
     sorted = INTEGER_IS_SORTED(x);
-    /* if we're not formatting/printing the whole thing 
+    /* if we're not formatting/printing the whole thing
        ALTINTEGER_MIN/MAX will give us the wrong thing
        anyway */
     if(n == XLENGTH(x) && KNOWN_SORTED(sorted)) {
@@ -528,19 +528,22 @@ void formatRealS(SEXP x, R_xlen_t n, int *w, int *d, int *e, int nsmall)
 		      });
 }
 
+#ifdef formatComplex_tricky
 #ifdef formatComplex_USING_signif
 /*   From complex.c. */
 void z_prec_r(Rcomplex *r, const Rcomplex *x, double digits);
 #endif
+#endif
 
-/* As from 2.2.0 the number of digits applies to real and imaginary parts
-   together, not separately */
+/* From R 2.2.0 to 4.3.z, the number of digits applied to real and imaginary parts
+   together, not separately.  Since R 4.4.0, Re(.) and Im(.) are treated seperately. */
 void formatComplex(const Rcomplex *x, R_xlen_t n,
 		   int *wr, int *dr, int *er, // (w,d,e) for Re(.)
 		   int *wi, int *di, int *ei, // (w,d,e) for Im(.)
 		   int nsmall)
 {
 /* format.info() for  x[1..n] for both Re & Im */
+#ifdef formatComplex_tricky // R 4.3.z and earlier
     Rboolean all_re_zero = TRUE, all_im_zero = TRUE,
 	naflag = FALSE,
 	rnan = FALSE, rposinf = FALSE, rneginf = FALSE,
@@ -558,8 +561,8 @@ void formatComplex(const Rcomplex *x, R_xlen_t n,
 	/* Now round */
 	z_prec_r(&tmp, &(x[i]), R_print.digits);
 #else
-	tmp.r = x[i].r;
-	tmp.i = x[i].i;
+ 	tmp.r = x[i].r;
+ 	tmp.i = x[i].i;
 #endif
 	if(ISNA(tmp.r) || ISNA(tmp.i)) {
 	    naflag = TRUE;
@@ -699,11 +702,42 @@ void formatComplex(const Rcomplex *x, R_xlen_t n,
     if (inan    && *wi < 3) *wi = 3;
     if (iposinf && *wi < 3) *wi = 3;
 
-    /* finally, ensure that there is space for NA */
+#else // R >= 4.4.0 : no longer "tricky"
+    double
+	*Re = (double *) R_alloc(n, sizeof(double)),
+	*Im = (double *) R_alloc(n, sizeof(double));
 
+# ifdef formatComplex_NA_give_NA // as previously in all S and R versions:
+    Rboolean naflag = FALSE;
+    R_xlen_t i1 = 0;
+    for (R_xlen_t i = 0; i < n; i++) {
+	if(ISNA(x[i].r) || ISNA(x[i].i)) {
+	    naflag |= TRUE;
+	} else {
+	    Re[i1] =      x[i].r;
+	    Im[i1] = fabs(x[i].i); // in "Re +/- Im", the '-' does not take more space
+	    i1++;
+	} // 0 <= i1 <= i < n; i1 == length(Re) == length(Im)
+    }
+    formatReal(Re, i1, wr, dr, er, nsmall);
+    formatReal(Im, i1, wi, di, ei, nsmall);
+
+    /* finally, ensure that there is space for NA */
     if (naflag && *wr+*wi+2 < R_print.na_width)
 	*wr += (R_print.na_width -(*wr + *wi + 2));
+
+# else // even simpler: can lead to extra " " e.g. for c(NA, 1+2i)
+    for (R_xlen_t i = 0; i < n; i++) {
+	Re[i] =      x[i].r;
+	Im[i] = fabs(x[i].i); // in "Re +/- Im", the '-' does not take more space
+    }
+    formatReal(Re, n, wr, dr, er, nsmall);
+    formatReal(Im, n, wi, di, ei, nsmall);
+# endif
+#endif
 }
+
+
 
 void formatComplexS(SEXP x, R_xlen_t n, int *wr, int *dr, int *er,
 		   int *wi, int *di, int *ei, int nsmall)

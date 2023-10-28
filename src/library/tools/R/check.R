@@ -623,6 +623,44 @@ add_dummies <- function(dir, Log)
            length(so_symbol_names_table)) # suitable OS
             check_sos()
 
+        if (dir.exists("src") &&
+            length(files <- dir("src", pattern = "[.](f|f90|f95)$"))) {
+            checkingLog(Log, "usage of KIND in Fortran files")
+            bad <- character()
+            details <- character()
+
+            for (f in files) {
+                lines <- readLines(file.path("src", f), warn = FALSE)
+                ## skip comment lines
+                lines <- grep("^([cC]| *!)", lines,
+                              value = TRUE, invert = TRUE, useBytes = TRUE)
+                if (any(z<-grepl("[(].*(kind|KIND) *= *[1-9].*[)]", lines,
+                                  useBytes = TRUE))) {
+                    bad <- c(bad, f)
+                    details <- c(details, paste0(f, ":", lines[z]))
+                }
+            }
+            if (!length(bad)) resultLog(Log, "OK")
+            else {
+                warningLog(Log)
+                msg <-
+                    ngettext(length(bad),
+                             "Found the following file with non-portable usage of KIND:\n",
+                             "Found the following files with non-portable usage of KIND:\n",
+                             domain = NA)
+                wrapLog(msg)
+                verbose <-
+                    config_val_to_logical(Sys.getenv("_R_CHECK_FORTRAN_KIND_DETAILS_", "FALSE"))
+                if(verbose)
+                    printLog0(Log, .format_lines_with_indent(details), "\n")
+                else {
+                    printLog0(Log, .format_lines_with_indent(bad), "\n")
+                    msg <- "For details set environment variable _R_CHECK_FORTRAN_KIND_DETAILS_ to a true value."
+                    wrapLog(msg)
+                }
+            }
+        }
+
         miss <- file.path("inst", "doc", c("Rplots.ps", "Rplots.pdf"))
         if (any(f <- file.exists(miss))) {
             checkingLog(Log, "for left-overs from vignette generation")
@@ -1403,8 +1441,9 @@ add_dummies <- function(dir, Log)
             ## Are these mentioned in DESCRIPTION?
             lic <- desc["License"]
             if(!is.na(lic)) {
-                found <- sapply(topfiles,
-                                function(x) grepl(x, lic, fixed = TRUE))
+                found <- vapply(topfiles,
+                                function(x) grepl(x, lic, fixed = TRUE),
+                                NA)
                 topfiles <- topfiles[!found]
                 if (length(topfiles)) {
                     if(!any) noteLog(Log)
@@ -1428,8 +1467,9 @@ add_dummies <- function(dir, Log)
             ## Are these mentioned in DESCRIPTION?
             lic <- desc["License"]
             if(!is.na(lic)) {
-                found <- sapply(basename(topfiles),
-                                function(x) grepl(x, lic, fixed = TRUE))
+                found <- vapply(basename(topfiles),
+                                function(x) grepl(x, lic, fixed = TRUE),
+                                NA)
                 topfiles <- topfiles[!found]
                 if (length(topfiles)) {
                     if(!any) noteLog(Log)
@@ -2499,7 +2539,7 @@ add_dummies <- function(dir, Log)
             if (length(out)) {
                 any <- TRUE
                 pos <- which(out ==
-                             "All issues in internal Rd objects checked specially.")
+                             "All issues in internal Rd files checked specially.")
                 if(length(pos)) {
                     noteLog(Log)
                     out <- out[-pos]
@@ -2622,7 +2662,9 @@ add_dummies <- function(dir, Log)
             ans <- list_data_in_pkg(dir = pkgdir)
             if (length(ans)) {
                 bad <-
-                    names(ans)[sapply(ans, function(x) ".Random.seed" %in% x)]
+                    names(ans)[vapply(ans,
+                                      function(x) ".Random.seed" %in% x,
+                                      NA)]
                 if (length(bad)) {
                     warn <- TRUE
                     msg <- if (length(bad) > 1L)
@@ -3041,7 +3083,8 @@ add_dummies <- function(dir, Log)
                          "  'qpdf' made some significant size reductions:\n",
                          paste("  ", res, collapse = "\n"),
                          "\n",
-                         "  consider running tools::compactPDF() on these files\n")
+                         "  consider running tools::compactPDF() on these files,\n",
+                         "  or build the source package with --compact-vignettes\n")
             }
             if (R_check_doc_sizes2) {
                 gs_cmd <- find_gs_cmd()
@@ -3055,7 +3098,8 @@ add_dummies <- function(dir, Log)
                                  "  'gs+qpdf' made some significant size reductions:\n",
                                  paste("  ", res, collapse = "\n"),
                                  "\n",
-                                 '  consider running tools::compactPDF(gs_quality = "ebook") on these files\n')
+                                 '  consider running tools::compactPDF(gs_quality = "ebook") on these files,\n',
+                                 '  or build the source package with --compact-vignettes=both\n')
                     }
                 } else {
                     if (!any) noteLog(Log)
@@ -5216,7 +5260,7 @@ add_dummies <- function(dir, Log)
                 z <-  readBin(f, raw(), 2L)
                 identical(z, as.raw(c(3, 122)))
             }
-            allfiles <- allfiles[!sapply(allfiles, pretest)]
+            allfiles <- allfiles[!vapply(allfiles, pretest, NA)]
 
             ## Watch out for spaces in file names here
             ## Do in parallel for speed on Windows, but in batches
@@ -6847,6 +6891,8 @@ add_dummies <- function(dir, Log)
         Sys.setenv("_R_CHECK_NEWS_IN_PLAIN_TEXT_" = "TRUE")
         Sys.setenv("_R_CHECK_BROWSER_NONINTERACTIVE_" = "TRUE")
         Sys.setenv("_R_CHECK_AS_DATA_FRAME_EXPLICIT_METHOD_" = "TRUE")
+        Sys.setenv("_R_CHECK_RD_NOTE_LOST_BRACES_" = "TRUE")
+        Sys.setenv("_R_CHECK_MBCS_CONVERSION_FAILURE_" = "TRUE")
         R_check_vc_dirs <- TRUE
         R_check_executables_exclusions <- FALSE
         R_check_doc_sizes2 <- TRUE

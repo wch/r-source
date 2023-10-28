@@ -35,7 +35,7 @@ cat(".proctime00 <- proc.time()\n",
 
 cat("report <- function(x) {print(x); stopifnot(x)}\n")
 
-cat("options(error = expression(NULL))",
+cat("options(catch.script.errors = TRUE)",
     "# don't stop on error in batch\n##~~~~~~~~~~~~~~\n")
 for(x in ex.list) {
     cat("\n###--------\n x <- ", deparse(x), "\n", sep="")

@@ -22,7 +22,13 @@ vignette <-
     vinfo <- tools::getVignetteInfo(package, lib.loc, all)
 
     if(!missing(topic)) {
-        topic <- topic[1L]               # Just making sure ...
+        stopic <- substitute(topic)
+        if(is.call(stopic) &&
+           (deparse1(stopic[[1L]]) == "::")) {
+            package <- as.character(stopic[[2L]])
+            topic <- as.character(stopic[[3L]])
+        } else
+            topic <- topic[1L] # Just making sure ...
         vinfo <- vinfo[vinfo[, "Topic"] == topic, , drop = FALSE]
         if(length(vinfo)) {
             pos <- which(file_test("-f",

@@ -64,10 +64,10 @@ plot.default <-
     xlabel <- if (!missing(x)) deparse1(substitute(x))
     ylabel <- if (!missing(y)) deparse1(substitute(y))
     xy <- xy.coords(x, y, xlabel, ylabel, log)
-    xlab <- if (is.null(xlab)) xy$xlab else xlab
-    ylab <- if (is.null(ylab)) xy$ylab else ylab
-    xlim <- if (is.null(xlim)) range(xy$x[is.finite(xy$x)]) else xlim
-    ylim <- if (is.null(ylim)) range(xy$y[is.finite(xy$y)]) else ylim
+    if (is.null(xlab)) xlab <- xy$xlab
+    if (is.null(ylab)) ylab <- xy$ylab
+    if (is.null(xlim)) xlim <- range(xy$x[is.finite(xy$x)])
+    if (is.null(ylim)) ylim <- range(xy$y[is.finite(xy$y)])
     dev.hold(); on.exit(dev.flush())
     plot.new()
     localWindow(xlim, ylim, log, asp, ...)
@@ -122,8 +122,7 @@ plot.table <-
     if(rnk == 1L) {
 	dn <- dimnames(x)
 	nx <- dn[[1L]]
-	if(is.null(xlab)) xlab <- names(dn)
-	if(is.null(xlab)) xlab <- ""
+	if(is.null(xlab)) xlab <- names(dn) %||% ""
 	if(is.null(ylab)) ylab <- xnam
         is.num <- suppressWarnings(!any(is.na(xx <- as.numeric(nx))))
 	x0 <- if(is.num) xx else seq_along(x)
@@ -202,7 +201,7 @@ function(formula, data = parent.frame(), ..., subset,
             if( !is.null(xlab <- dots[["xlab"]]) )
                 dots <- dots[-match("xlab", names(dots))]
             for (i in xn) {
-                xl <- if(is.null(xlab)) i else xlab
+                xl <- xlab %||% i
                 yl <- ylab
                 if(horizontal && is.factor(mf[[i]])) {yl <- xl; xl <- ylab}
                 do.call(funname,

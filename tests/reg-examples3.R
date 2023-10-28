@@ -174,3 +174,8 @@ if(require("Matrix")) {
 ## From splines
 library(splines)
 Matrix::drop0(zapsmall(6*splineDesign(knots = 1:40, x = 4:37, sparse = TRUE)))
+
+
+## From tools
+library(tools)
+example(standard_package_names, run.donttest = TRUE)

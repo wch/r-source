@@ -224,7 +224,7 @@ postscript <- function(file = if(onefile) "Rplots.ps" else "Rplot%03d.ps",
     old <- check.options(new, name.opt = ".PostScript.Options", envir = .PSenv)
 
     if(is.null(old$command) || old$command == "default")
-        old$command <- if(!is.null(cmd <- getOption("printcmd"))) cmd else ""
+        old$command <- getOption("printcmd") %||% ""
 
     # need to handle this case before encoding
     if(!missing(family) &&

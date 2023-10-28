@@ -116,12 +116,12 @@ pdfFonts(\dots)
   %% Ken Lunde's CJKV resources are at
   %% \url{ftp://ftp.oreilly.com/pub/examples/nutshell/cjkv/adobe/samples/}.
   These will need to be installed or otherwise made available to the
-  postscript/PDF interpreter such as ghostscript (and not all
+  PostScript/PDF interpreter such as Ghostscript (and not all
   interpreters can handle TrueType fonts).
 
   You may well find that your postscript/PDF interpreters has been set
   up to provide aliases for many of these fonts.  For example,
-  ghostscript on Windows can optionally be installed to map common East
+  Ghostscript on Windows can optionally be installed to map common East
   Asian fonts names to Windows TrueType fonts.  (You may want to add the
   \code{-Acro} versions as well.)
 

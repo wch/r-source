@@ -180,6 +180,9 @@ utils::globalVariables(".addBasicGeneric")
     setGeneric("with", signature = "data", where = where)
     setGenericImplicit("with", where, FALSE)
 
+    setGeneric("sort", signature = "x", where = where)
+    setGenericImplicit("sort", where, FALSE)
+
     ## when setMethod()ing on chol2inv, one should *not* have to deal with
     ## arguments  'size' and 'LINPACK' :
     setGeneric("chol2inv", function(x, ...) standardGeneric("chol2inv"),

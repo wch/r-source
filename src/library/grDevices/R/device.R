@@ -49,8 +49,6 @@ deviceIsInteractive <- local({
 })
 
 
-`%||%` <- function(L,R) if(is.null(L)) R else L
-
 dev.list <- function()
 {
     n <- get0(".Devices") %||% list("null device")

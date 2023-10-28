@@ -219,11 +219,11 @@ topic2url <- function(x)
 }
 topic2filename <- function(x)
     gsub("%", "+", utils::URLencode(x, reserved = TRUE))
-## The next 3 are for generating URL fragment ids
-name2id <- function(x)
+## The next few are for generating URL fragment ids
+string2id <- function(x)
     gsub("%", "+", utils::URLencode(x, reserved = TRUE))
-topic2id <- function(x)
-    sprintf("topic+%s", gsub("%", "+", utils::URLencode(x, reserved = TRUE)))
+name2id <- function(x) string2id(x)
+topic2id <- function(x) sprintf("topic+%s", string2id(x))
 topic2href <- function(x, destpkg = NULL, FUN = NULL)
 {
     if (is.null(destpkg)) sprintf("#%s", topic2id(x))
@@ -233,6 +233,68 @@ topic2href <- function(x, destpkg = NULL, FUN = NULL)
         FUN(topic2id(x), destpkg)
     }
 }
+
+## We want to give an id to each top-level section tags, arguments,
+## and _maybe_ other \item{} objects (eventually). The following
+## function tries to implement a rule to construct such an id given
+## relevant information.
+
+## Ideally, the id-s should be predictable so we could reference them
+## from other help pages using some standard markup, but this may or
+## may not be possible. The standard sections should be unique, so can
+## be standardized, but arbitrary \section{}-s and \item{}-s inside
+## sections other than \argument{}-s are potentially problematic. In
+## addition, the HTML may be used in standalone help pages or in a
+## combined per-package refman; in the second case, id-s must be
+## distinguished for different pages. For this, we will use the
+## \name{} of a page, which must uniquely define every help page
+## within a package.
+
+## The current rule is as follows:
+## - If name != NULL, it will be used as a prefix
+## - Standard sections will get standardized ids
+## - remaining sections will require a string to be supplied
+
+## Note that tagid can be a vector (for comma-separated items)
+
+tag2id <- function(tag, name = NULL, tagid = section2id[tag])
+{
+    section2id <- 
+        c("\\description" = "_sec_description", "\\usage"    = "_sec_usage",
+          "\\arguments"   = "_sec_arguments",   "\\format"   = "_sec_format",
+          "\\details"     = "_sec_details",     "\\note"     = "_sec_note",
+          "\\section"     = "_sec_section",     "\\author"   = "_sec_author",
+          "\\references"  = "_sec_references",  "\\source"   = "_sec_source",
+          "\\seealso"     = "_sec_seealso",     "\\examples" = "_sec_examples",
+          "\\value"       = "_sec_value")
+    if (anyNA(tagid)) return(NULL) # or "" ?
+    id <- if (is.null(name)) tagid
+          else paste(name2id(name), tolower(tagid), sep = "_:_")
+    string2id(gsub("[[:space:]]+", "-", id))
+}
+
+rdfragment2text <- function(rd, html = TRUE)
+{
+    if (html) {
+        ## utils::capture.output(Rd2HTML(rd, fragment = TRUE)) has
+        ## unclosed <p>. Handle this as tools:::.extract_news_from_Rd
+        ## does
+        s <- utils::capture.output(Rd2HTML(rd, fragment = TRUE)) |> trimws()
+        i <- which(startsWith(s, "<p>") & !endsWith(s, "</p>"))
+        if (length(i)) {
+            z <- s[i]
+            j <- which((lengths(gregexpr("</?p>", z)) %% 2L) > 0L)
+            if (length(j)) 
+                s[i[j]] <- paste0(z[j], "</p>")
+        }
+        paste(s, collapse = "\n")
+    }
+    else
+        (utils::capture.output(Rd2txt(rd, fragment = TRUE))
+            |> paste(collapse = "\n")
+            |> trimws())
+}
+
 
 ## Create HTTP redirect files for aliases; called only during package
 ## installation if static help files are enabled. Files are named
@@ -312,11 +374,12 @@ Rd2HTML <-
     function(Rd, out = "", package = "", defines = .Platform$OS.type,
              Links = NULL, Links2 = NULL,
              stages = "render", outputEncoding = "UTF-8",
-             dynamic = FALSE, no_links = FALSE, fragment=FALSE,
+             dynamic = FALSE, no_links = FALSE, fragment = FALSE,
              stylesheet = if (dynamic) "/doc/html/R.css" else "R.css",
              texmath = getOption("help.htmlmath"),
              concordance = FALSE,
              standalone = TRUE,
+             toc = isTRUE(getOption("help.htmltoc")),
              Rhtml = FALSE, # TODO: guess from 'out' if non-missing
              ...)
 {
@@ -372,7 +435,11 @@ Rd2HTML <-
     	conc <- activeConcordance()
     else
     	conc <- NULL
-    
+    if (toc) { # not meaningful unless standalone = TRUE
+        if (!standalone) toc <- FALSE
+        else toc_entries <- list()
+    }
+
     of0 <- function(...)
         of1(paste0(...))
     of1 <- function(text) {
@@ -478,10 +545,19 @@ Rd2HTML <-
 
         s <- trimws(strsplit(paste(s, collapse = ""), ",", fixed = TRUE)[[1]])
         s <- s[nzchar(s)] # unlikely to matter, but just to be safe
-        s <- if (addID) sprintf('<code id="%s">%s</code>',
-                                gsub("[[:space:]]+", "-", paste(name2id(name), s, sep = "_:_")),
-                                vhtmlify(s))
-             else sprintf('<code>%s</code>', vhtmlify(s))
+        item_value <- vhtmlify(s)
+        s <- if (addID) {
+                 item_id <- tag2id(name = if (standalone) NULL else name, tagid = s)
+                 if (toc)
+                     toc_entries <<-
+                         c(toc_entries,
+                           list(argitem =
+                                    list(id = item_id,
+                                         value = sprintf("<code>%s</code>",
+                                                         item_value))))
+                 sprintf('<code id="%s">%s</code>', item_id, item_value)
+             }
+             else sprintf('<code>%s</code>', item_value)
         s <- paste0(s, collapse = ", ")
         of1(s)
     }
@@ -994,7 +1070,27 @@ Rd2HTML <-
         leavePara(NA)
         save <- sectionLevel
         sectionLevel <<- sectionLevel + 1L
-    	of1(paste0("\n\n<h", sectionLevel+2L, ">"))
+
+        ## compute id and toc entries if required
+        if (toc) {
+            if (tag %in% c("\\section", "\\subsection")) {
+                sec_value <- rdfragment2text(section[[1L]])
+                sec_id <-
+                    tag2id(name = if (standalone) NULL else name,
+                           tagid = rdfragment2text(section[[1L]], html = FALSE))
+            }
+            else {
+                sec_value <- paste0("<p>", sectionTitles[tag], "</p>")
+                sec_id <- tag2id(tag = tag, name = if (standalone) NULL else name)
+            }
+            toc_entry <- list(id = trimws(sec_id), value = trimws(sec_value))
+            toc_entries <<-
+                c(toc_entries,
+                  if (tag == "\\subsection") list(subsection = toc_entry)
+                  else list(section = toc_entry))
+            of1(paste0("\n\n<h", sectionLevel+2L, " id='", sec_id, "'>"))
+        }
+        else of1(paste0("\n\n<h", sectionLevel+2L, ">"))
         if (concordance)
             conc$saveSrcref(section)
     	if (tag == "\\section" || tag == "\\subsection") {
@@ -1033,6 +1129,35 @@ Rd2HTML <-
     	sectionLevel <<- save
     }
 
+    ## Write a navigation menu (if toc == TRUE) based on toc_entries
+    writeNav <- function() {
+
+        of0('<nav aria-label="Topic Navigation">\n',
+            '<div class="dropdown-menu">\n',
+            '<h1>Contents</h1>\n',
+            '<ul class="menu">\n')
+
+        currentLevel <- 1L # entry_types = argitem, subsection are level 2
+        ## toc_entries <- list( section|subsection|argitem = list(id, value) )
+        entry_types <- names(toc_entries)
+        for (i in seq_along(toc_entries)) {
+            newLevel <-
+                if (entry_types[[i]] %in% c("argitem", "subsection")) 2L
+                else 1L
+            if (newLevel > currentLevel) of1("  <ul>")
+            else if (newLevel < currentLevel) of1("  </ul>")
+            currentLevel <- newLevel
+            e <- toc_entries[[i]] # id, value can be vectors
+            of0(sprintf("<li><a href='#%s'>%s</a></li>\n", e$id, e$value))
+        }
+
+        of0('</ul>\n',
+            '</div>\n',
+            '</nav>')
+    }
+
+
+    
     ## ----------------------- Continue in main function -----------------------
     info <- list() # attribute to be returned if standalone = FALSE
     create_redirects <- FALSE
@@ -1148,6 +1273,7 @@ Rd2HTML <-
                                doTexMath = doTexMath, texmath = texmath,
                                PRISM_CSS_STATIC = NULL, PRISM_JS_STATIC = NULL)
             of1(paste(hfcomps$header, collapse = "")) # write out header
+            of1('<main>')
             of0('\n\n<table style="width: 100%;">',
                 '<tr><td>',
                 name)
@@ -1162,10 +1288,8 @@ Rd2HTML <-
 	inPara <- NA
 	title <- Rd[[1L]]
         info$name <- name
-        info$title <- trimws(paste(utils::capture.output(Rd2txt(title, fragment = TRUE)),
-                                   collapse = "\n"))
-        info$htmltitle <- trimws(paste(utils::capture.output(Rd2HTML(title, fragment = TRUE)),
-                                       collapse = ""))
+        info$title <- rdfragment2text(title)
+        info$htmltitle <- info$title # Rd2HTML(fragment = TRUE) gives unbalanced <p>
 	if (concordance)
 	    conc$saveSrcref(title)
 	writeContent(title, sections[1])
@@ -1188,6 +1312,8 @@ Rd2HTML <-
                 of0('<hr /><div style="text-align: center;">[', version,
                     if (!no_links) '<a href="00Index.html">Index</a>',
                     ']</div>')
+            of1('</main>')
+            if (toc) writeNav()
             of1(paste(hfcomps$footer, collapse = "")) # write out footer
         }
         else attr(out, "info") <- info

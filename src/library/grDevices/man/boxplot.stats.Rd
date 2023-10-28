@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/boxplot.stats.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2018 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{boxplot.stats}
@@ -28,18 +28,21 @@ boxplot.stats(x, coef = 1.5, do.conf = TRUE, do.out = TRUE)
   but may be invoked separately.
 }
 \value{
-  List with named components as follows:
+  A list with named components as follows:
+
   \item{stats}{a vector of length 5, containing the extreme of the
     lower whisker, the lower \sQuote{hinge}, the median, the upper
-    \sQuote{hinge} and the extreme of the upper whisker.}
+    \sQuote{hinge} and the extreme of the upper whisker.
+    For \code{coef = 0}, this vector is identical to
+    \code{\link{fivenum}(x, na.rm = TRUE)}.}
   \item{n}{the number of non-\code{NA} observations in the sample.}
   \item{conf}{the lower and upper extremes of the \sQuote{notch}
     (\code{if(do.conf)}). See the details.}
   \item{out}{the values of any data points which lie beyond the
     extremes of the whiskers (\code{if(do.out)}).}
 
-  Note that \code{$stats} and \code{$conf} are sorted in \emph{in}creasing
-  order, unlike S, and that \code{$n} and \code{$out} include any
+  Note that \code{stats} and \code{conf} are sorted in \emph{in}creasing
+  order, unlike S, and that \code{n} and \code{out} include any
   \code{+- Inf} values.
 }
 \details{
@@ -96,10 +99,14 @@ x <- c(1:100, 1000)
 (b2 <- boxplot.stats(x, do.conf = FALSE, do.out = FALSE))
 stopifnot(b1 $ stats == b2 $ stats) # do.out = FALSE is still robust
 boxplot.stats(x, coef = 3, do.conf = FALSE)
-## no outlier treatment:
-boxplot.stats(x, coef = 0)
 
-boxplot.stats(c(x, NA)) # slight change : n is 101
+## no outlier treatment:
+(b3 <- boxplot.stats(x, coef = 0))
+stopifnot(b3$stats == fivenum(x))
+
+## missing values are ignored
+stopifnot(identical(boxplot.stats(c(x, NA)), b1))
+## ... infinite values are not:
 (r <- boxplot.stats(c(x, -1:1/0)))
 stopifnot(r$out == c(1000, -Inf, Inf))
 

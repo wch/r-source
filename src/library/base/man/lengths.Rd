@@ -1,6 +1,6 @@
 % File src/library/base/man/lengths.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{lengths}
@@ -16,8 +16,8 @@ lengths(x, use.names = TRUE)
 }
 \arguments{
   \item{x}{a \code{\link{list}}, list-like such as an
-    \code{\link{expression}} or an atomic vector (for which the result
-    is trivial).}
+    \code{\link{expression}}, \code{NULL} or an atomic vector (for which
+    the result is trivial).}
   \item{use.names}{logical indicating if the result should inherit the
     \code{\link{names}} from \code{x}.}
 }

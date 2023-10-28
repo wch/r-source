@@ -1331,10 +1331,12 @@ if(FALSE) {
                         if(one_only && !force_biarch) {
                             if(parse_description_field(desc, "Biarch", FALSE))
                                 force_biarch <- TRUE
-                            else if (has_configure_ucrt)
-                                warning("this package has a non-empty 'configure.ucrt' file,\nso building only the main architecture\n", call. = FALSE, domain = NA)
-                            else
-                                warning("this package has a non-empty 'configure.win' file,\nso building only the main architecture\n", call. = FALSE, domain = NA)
+                            else if (length(archs) > 1L) {
+                                if (has_configure_ucrt)
+                                    warning("this package has a non-empty 'configure.ucrt' file,\nso building only the main architecture\n", call. = FALSE, domain = NA)
+                                else
+                                    warning("this package has a non-empty 'configure.win' file,\nso building only the main architecture\n", call. = FALSE, domain = NA)
+                            }
                         }
                     }
                     if(force_biarch) one_only <- FALSE

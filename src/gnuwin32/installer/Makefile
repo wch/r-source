@@ -40,6 +40,8 @@ SHARE_DIRS = R dictionaries encodings licenses make Rd texmf zoneinfo
 all: $(RPREFIX)-win.exe
 msi: $(RPREFIX)-$(SUFF).msi
 
+RTARGET := $(if $(findstring Aarch64,$(shell file "$(R_HOME)/bin/R.exe")),aarch64,x86_64)
+
 imagedir:
 	$(RM) -R $(RPREFIX)
 	$(MKDIR) $(RPREFIX)
@@ -94,13 +96,15 @@ imagedir:
 # This is odd -- better to clean the copy
 	(cd ..; $(MAKE) --no-print-directory PKGDIR=. pkgclean-windlgs)
 	$(CP) -pR ../windlgs $(RPREFIX)/src/library
-
-# Edit Makeconf
-	$(SED) -i -e 's!# INSTALLER-BUILD:!!' $(RPREFIX)/etc$(R_ARCH)/Makeconf
-# Edit Rcmd_environ
-	$(SED) -i -e 's!# INSTALLER-BUILD:!!' $(RPREFIX)/etc/Rcmd_environ
-# Edit base package profile
-	$(SED) -i -e 's!# INSTALLER-BUILD:!!' $(RPREFIX)/library/base/R/Rprofile
+# Edit Makeconf, Rcmd_environ, base package profile
+	$(foreach F, \
+	  $(RPREFIX)/etc$(R_ARCH)/Makeconf \
+	  $(RPREFIX)/etc/Rcmd_environ \
+	  $(RPREFIX)/library/base/R/Rprofile, \
+	      $(SED) -i -e 's!# INSTALLER-BUILD:!!' \
+	                -e 's!# INSTALLER-BUILD-$(RTARGET):!!' \
+	             $(F); \
+	)
 # test dir
 	mkdir $(RPREFIX)/tests
 	$(MAKE) --no-print-directory -C ../../../tests -f Makefile.win \
@@ -109,7 +113,7 @@ imagedir:
 	$(FIND) $(RPREFIX) -name .svn -prune -exec rm -Rf \{\} \;
 	$(FIND) $(RPREFIX) -name \*~ -delete
 
-md5sums:
+md5sums: imagedir fixups extras
 	@echo "adding MD5 checksums"
 	@(cd $(RPREFIX); echo "tools:::.installMD5sums(\".\")" | \
 	  R_DEFAULT_PACKAGES=NULL LC_COLLATE=C R_OSTYPE=windows \
@@ -117,7 +121,7 @@ md5sums:
 
 PDF_FILES = $(wildcard $(RPREFIX)/library/*/doc/*.pdf)
 
-fixups:
+fixups: extras
 	echo "make.packages.html(.Library,temp=FALSE,verbose=FALSE)" | $(RPREFIX)/$(BINDIR)/Rterm.exe --vanilla --no-echo LC_COLLATE=C
 	$(CP) -pRf $(R_HOME)/Tcl $(RPREFIX)
 	$(RM) $(RPREFIX)/Tcl*/lib/*.lib
@@ -128,7 +132,7 @@ ifneq ($(strip $(QPDF)),)
 	done
 endif
 
-extras:
+extras: imagedir
 	for f in $(DLLs64); do \
 	  cp "$$f" $(RPREFIX)/bin$(R_ARCH); \
 	done

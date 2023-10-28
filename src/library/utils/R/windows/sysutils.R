@@ -1,7 +1,7 @@
 #  File src/library/utils/R/windows/sysutils.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2022 The R Core Team
+#  Copyright (C) 1995-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -94,10 +94,7 @@ arrangeWindows <-
     stopifnot(length(action) == 1 && !is.na(action))
 
     if (missing(windows)) {
-    	args <- if(!is.null(a <- get0(".arrangeWindowsDefaults", globalenv())))
-                    a
-                else
-                    list()
+    	args <- get0(".arrangeWindowsDefaults", globalenv()) %||% list()
         if (action == 5) # restore
             args$minimized <- TRUE
     	windows <- do.call(getWindowsHandles, args)

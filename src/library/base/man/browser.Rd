@@ -1,6 +1,6 @@
 % File src/library/base/man/browser.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2021 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{browser}
@@ -98,9 +98,9 @@ browser(text = "", condition = NULL, expr = TRUE, skipCalls = 0L)
   This is a primitive function but does argument matching in the
   standard way.
 }
-\section{Interaction with condition handling}{
+\section{Interaction with Condition Handling}{
   Because the browser prompt is implemented using the
-  \link[base:conditions]{restart and condition handling mechanism},
+  \link[=conditions]{restart and condition handling mechanism},
   it prevents error handlers set up before the breakpoint from being
   called or invoked. The implementation follows this model:
 
@@ -122,7 +122,7 @@ readEvalPrint <- function(env = parent.frame()) {
 }
 
   The restart invocation interrupts the lookup for condition handlers
-  and transfers control to the next iteration of the debugger REPL.
+  and transfers control to the next iteration of the debugger \acronym{REPL}.
 
   Note that condition handlers for other classes (such as \code{"warning"})
   are still called and may cause a non-local transfer of control out of the

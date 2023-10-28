@@ -162,7 +162,7 @@ print.factor <- function (x, quote = FALSE, max.levels = NULL,
         attributes(xx)[keepAttrs] <- attributes(x)[keepAttrs]
         print(xx, quote = quote, ...)
     }
-    maxl <- if(is.null(max.levels)) TRUE else max.levels
+    maxl <- max.levels %||% TRUE
     if (maxl) {
         n <- length(lev <- encodeString(levels(x), quote=ifelse(quote, '"', '')))
         colsep <- if(ord) " < " else " "

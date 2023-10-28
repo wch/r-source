@@ -124,7 +124,7 @@ text(x, \dots)
   y, "\xA0", font = 5)} may work. People using Western European locales
   on Unix-alikes can probably select ISO-8895-15 (Latin-9) which has the
   Euro as character 165: this can also be used for
-  \code{\link{postscript}} and \code{\link{pdf}}. It is \samp{\u20ac} in
+  \code{\link{pdf}} and \code{\link{postscript}}. It is \samp{\u20ac} in
   Unicode, which can be used in UTF-8 locales.
 #ifdef unix
 

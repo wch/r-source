@@ -75,6 +75,13 @@ stopifnot(inherits(NEWS_Rd, "Rd"),
           length(print(checkRd(NEWS_Rd))) == 0L)
 ## "Must have a \description" in R < 4.4.0, now moved to checkRdContents()
 
+## checkRd() raises some instances of "lost braces"
+Sys.setenv("_R_CHECK_RD_NOTE_LOST_BRACES_" = TRUE)
+bad <- function (Rd) sum(startsWith(checkRd(Rd), "checkRd: (-1) "))
+stopifnot(bad("Rd-braces_ignored.Rd") == 0L,
+          bad("Rd-braces_reported.Rd") == 10L)
+
+
 ## An unmatched un-escaped '{' in a comment in \examples{} ... should *NOT* trip up, but does
 
 txt <- r"(\title{Commented left-brace in Example}

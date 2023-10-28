@@ -182,11 +182,7 @@ as.data.frame <- function(x, row.names = NULL, optional = FALSE, ...)
 }
 
 as.data.frame.default <- function(x, ...) {
-    isVectorLike <- function(x) {
-        (is.atomic(x) && !is.null(x)) ##  # <== should be new  is.atomic(x) (!)
-        ## || (is.vector(x) && !is.object(x))
-    }
-    if(isVectorLike(x))
+    if(is.atomic(x))
         as.data.frame.vector(x, ...)
     else
     stop(gettextf("cannot coerce class %s to a data.frame",
@@ -442,7 +438,7 @@ data.frame <-
 		    domain = NA)
 	    }
 	else function(current, new, i) {
-	    if(is.null(current)) {
+	    current %||%
 		if(anyDuplicated(new)) {
 		    warning(gettextf(
                         "some row.names duplicated: %s --> row.names NOT used",
@@ -450,7 +446,6 @@ data.frame <-
                         domain = NA)
 		    current
 		} else new
-	    } else current
 	}
     object <- as.list(substitute(list(...)))[-1L]
     mirn <- missing(row.names) # record before possibly changing
@@ -1476,7 +1471,7 @@ rbind.data.frame <- function(..., deparse.level = 1, make.row.names = TRUE,
 		      stringsAsFactors = stringsAsFactors)
     } else {
 	structure(value, class = cl,
-		  row.names = if(is.null(rlabs)) .set_row_names(nrow) else rlabs)
+		  row.names = rlabs %||% .set_row_names(nrow))
     }
 }
 

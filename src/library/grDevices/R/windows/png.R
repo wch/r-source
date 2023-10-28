@@ -1,7 +1,7 @@
 #  File src/library/grDevices/R/windows/png.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -147,7 +147,8 @@ tiff <-
     function(filename = "Rplot%03d.tif",
              width = 480, height = 480, units = "px", pointsize = 12,
              compression = c("none", "rle", "lzw", "jpeg", "zip",
-                             "lzw+p", "zip+p"),
+                             "lzw+p", "zip+p",
+                             "lerc", "lzma", "zstd", "webp"),
              bg = "white", res = NA, family = "sans",
              restoreConsole = TRUE, type = c("windows", "cairo"),
              antialias = c("default", "none", "cleartype", "gray", "subpixel"),
@@ -155,10 +156,13 @@ tiff <-
 {
     if(!checkIntFormat(filename)) stop("invalid 'filename'")
     g <- .geometry(width, height, units, res)
-    comp <-
-        switch(match.arg(compression),
-               "none" = 1L, "rle" = 2L, "lzw" = 5L, "jpeg" = 7L, "zip" = 8L,
-               "lzw+p" = 15L, "zip+p" = 18L)
+    comp <- if(is.numeric(compression)) compression
+            else
+                switch(match.arg(compression),
+                       "none" = 1L, "rle" = 2L, "lzw" = 5L, "jpeg" = 7L,
+                       "zip" = 8L, "lzw+p" = 15L, "zip+p" = 18L,
+                       "lerc" = 34887L, "lzma" = 34925L,
+                       "zstd" = 50000L, "webp" = 50001L)
    if(match.arg(type) == "cairo") {
         antialias <- match(match.arg(antialias), aa.cairo)
         invisible(.External(C_devCairo, filename, 8L,

@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/x11.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2022 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{x11}
@@ -86,7 +86,7 @@ X11.options(\dots, reset = FALSE)
   \item{title}{character string, up to 100 bytes.  With the default,
     \code{""}, a suitable title is created internally.  A C-style format
     for an integer will be substituted by the device number (see the
-    \code{file} argument to \code{\link{postscript}} for further
+    \code{file} argument of \code{\link{df}} for further
     details).  How non-ASCII titles are handled is
     implementation-dependent.}
 
@@ -218,7 +218,7 @@ X11.options(\dots, reset = FALSE)
   The font selection is handled by \code{Pango} (usually \emph{via}
   \code{fontconfig}) or \code{fontconfig} (on macOS and perhaps
   elsewhere).  The results depend on the fonts installed on the system
-  running \R -- setting the environmnent variable \env{FC_DEBUG} to 1
+  running \R -- setting the environment variable \env{FC_DEBUG} to 1
   normally allows some tracing of the selection process.
 
   This works best when high-quality scalable fonts are installed,

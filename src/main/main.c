@@ -335,7 +335,9 @@ static void check_session_exit(void)
 	    R_Suicide(_("error during cleanup\n"));
 	else {
 	    exiting = TRUE;
-	    if (GetOption1(install("error")) != R_NilValue) {
+	    if (GetOption1(install("error")) != R_NilValue ||
+		R_isTRUE(GetOption1(install("catch.script.errors")))
+		) {
 		exiting = FALSE;
 		return;
 	    }
@@ -1327,12 +1329,8 @@ static void PrintCall(SEXP call, SEXP rho)
 
 static int countBrowserContexts(void)
 {
-#ifdef USE_BROWSER_HOOK
     /* passing TRUE for the second argument seems to over-count */
     return countContexts(CTXT_BROWSER, FALSE);
-#else
-    return countContexts(CTXT_BROWSER, 1);
-#endif
 }
 
 #ifdef USE_BROWSER_HOOK

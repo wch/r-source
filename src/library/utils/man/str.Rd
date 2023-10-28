@@ -1,7 +1,7 @@
 
 % File src/library/utils/man/str.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2021 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{str}
@@ -148,7 +148,7 @@ op <- options(); str(op)   # save first;
                            # otherwise internal options() is used.
 need.dev <-
   !exists(".Device") || is.null(.Device) || .Device == "null device"
-{ if(need.dev) postscript()
+{ if(need.dev) pdf()
   str(par())
   if(need.dev) graphics.off()
 }

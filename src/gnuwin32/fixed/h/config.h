@@ -1112,10 +1112,14 @@
 #endif
 
 /* Define this to be the name of the CPU of your system. */
-#ifdef _WIN64
-#define R_CPU "x86_64"
+#ifdef __aarch64__
+# define R_CPU "aarch64"
 #else
-#define R_CPU "i386"
+# ifdef _WIN64
+#  define R_CPU "x86_64"
+# else
+#  define R_CPU "i386"
+# endif
 #endif
 
 /* Define as `inline', or `__inline__' or `__inline' if that's what the C

@@ -358,30 +358,46 @@ function(x)
         lines <- readLines(f, warn = FALSE)[x$Line]
         cbind(f,
               x$Line,
+              x$Column,
               substring(lines, 1L, x$Column - 1L),
               x$Original,
               substring(lines, x$Column + nchar(x$Original)))
     },
              names(x), x)
     y <- data.frame(do.call(rbind, y), stringsAsFactors = FALSE)
-    names(y) <- c("File", "Line", "Left", "Original", "Right")
+    names(y) <- c("File", "Line", "Column", "Left", "Original", "Right")
     class(y) <- c("aspell_inspect_context", "data.frame")
     y
 }
 
 print.aspell_inspect_context <-
-function(x, ...)
+function(x, ..., byfile = FALSE)
 {
-    s <- split(x, x$File)
-    nms <- names(s)
-    for(i in seq_along(s)) {
-        e <- s[[i]]
-        writeLines(c(sprintf("File '%s':", nms[i]),
-                     sprintf("  Line %s: \"%s\", \"%s\", \"%s\"",
-                             format(e$Line),
-                             gsub("\"", "\\\"", e$Left ), e$Original,
-                             gsub("\"", "\\\"", e$Right)),
-                     ""))
+    if(byfile) {
+        s <- split(x, x$File)
+        nms <- names(s)
+        for(i in seq_along(s)) {
+            e <- s[[i]]
+            writeLines(c(sprintf("File '%s':", nms[i]),
+                         sprintf("  Line %s: \"%s\", \"%s\", \"%s\"",
+                                 format(e$Line),
+                                 gsub("\"", "\\\"", e$Left ), e$Original,
+                                 gsub("\"", "\\\"", e$Right)),
+                         ""))
+        }
+    } else {
+        y <- sprintf("  %s:%s:%s\n  %s%s%s\n  %s%s",
+                     x$File, x$Line, x$Column,
+                     x$Left, x$Original, x$Right,
+                     strrep(" ", as.integer(x$Column) - 1L),
+                     strrep("^", nchar(x$Original)))
+        chunks <- split(y, x$Original)
+        chunks <- Map(function(u, v)
+                          paste(c(paste("Word:", u), v),
+                                collapse = "\n"),
+                      names(chunks),
+                      chunks)
+        writeLines(unlist(chunks))
     }
     invisible(x)
 }
@@ -397,6 +413,7 @@ aspell_control_R_manuals <-
          c("--master=en_US",
            "--add-extra-dicts=en_GB",
            "--mode=texinfo",
+           "--add-texinfo-ignore=abbr",           
            "--add-texinfo-ignore=acronym",
            "--add-texinfo-ignore=deftypefun",
            "--add-texinfo-ignore=deftypefunx",
@@ -406,15 +423,18 @@ aspell_control_R_manuals <-
            "--add-texinfo-ignore=ifclear",
            "--add-texinfo-ignore=ifset",
            "--add-texinfo-ignore=math",
-           "--add-texinfo-ignore=macro",
            "--add-texinfo-ignore=multitable",
            "--add-texinfo-ignore=node",
-           "--add-texinfo-ignore=pkg",
            "--add-texinfo-ignore=printindex",
            "--add-texinfo-ignore=set",
            "--add-texinfo-ignore=vindex",
+           "--add-texinfo-ignore-env=macro",
            "--add-texinfo-ignore-env=menu",
-           "--add-texinfo-ignore=CRANpkg"
+           "--add-texinfo-ignore=CRANpkg",
+           "--add-texinfo-ignore=cputype",
+           "--add-texinfo-ignore=math",           
+           "--add-texinfo-ignore=pkg",
+           character()
            ),
          hunspell =
          c("-d en_US,en_GB"))

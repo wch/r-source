@@ -78,10 +78,10 @@ dev.control(displaylist = c("inhibit", "enable"))
   \code{Rplot.pdf}, and can be overridden by specifying a \code{file}
   argument.
 
-  Copying to devices such as \code{\link{postscript}} and
-  \code{\link{pdf}} which need font families pre-specified needs extra
-  care -- \R is unaware of which families were used in a plot and so
-  they will need to manually specified by the \code{fonts} argument
+  Copying to devices such as \code{\link{pdf}} and
+  \code{\link{postscript}} which need font families pre-specified needs
+  extra care -- \R is unaware of which families were used in a plot and
+  so they will need to manually specified by the \code{fonts} argument
   passed as part of \code{\dots}.  Similarly, if the device to be copied
   from was opened with a \code{family} argument, a suitable
   \code{family} argument will need to be included in \code{\dots}.

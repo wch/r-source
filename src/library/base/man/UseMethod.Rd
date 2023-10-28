@@ -94,7 +94,8 @@ NextMethod(generic = NULL, object = NULL, \dots)
   (See also the draft \sQuote{R Language Definition}.)
   \code{UseMethod} creates a new function call with
   arguments matched as they came in to the generic.  Any local variables
-  defined before the call to \code{UseMethod} are retained (unlike S).  Any
+  defined before the call to \code{UseMethod} are retained (unlike S);
+  use of this \emph{feature} is discouraged. Any
   statements after the call to \code{UseMethod} will not be evaluated as
   \code{UseMethod} does not return.  \code{UseMethod} can be called with
   more than two arguments: a warning will be given and additional

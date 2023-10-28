@@ -1,6 +1,6 @@
 % File src/library/base/man/stop.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{stop}
@@ -36,7 +36,9 @@ geterrmessage()
   handler is used.  The default behaviour (the \code{NULL}
   error-handler) in interactive use is to return to the top level
   prompt or the top level browser, and in non-interactive use to
-  (effectively) call \code{\link{q}("no", status = 1, runLast = FALSE}).
+  (effectively) call \code{\link{q}("no", status = 1, runLast = FALSE)}
+  unless \code{\link{getOption}("catch.script.errors")} is true.
+
   The default handler stores the error message in a buffer; it can be
   retrieved by \code{geterrmessage()}.  It also stores a trace of
   the call stack that can be retrieved by \code{\link{traceback}()}.

@@ -1,9 +1,10 @@
 % File src/library/base/man/Control.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2022 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Control}
+\title{Control Flow}
 \alias{Control}
 \alias{if}
 \alias{else}
@@ -13,7 +14,7 @@
 \alias{repeat}
 \alias{break}
 \alias{next}
-\title{Control Flow}
+\alias{\%||\%}
 \description{
   These are the basic control-flow constructs of the \R language.  They
   function in much the same way as control statements in any Algol-like
@@ -28,18 +29,20 @@ while(cond) expr
 repeat expr
 break
 next
+
+x \%||\% y
 }
 \arguments{
   \item{cond}{A length-one logical vector that is not \code{NA}.
     Other types are coerced to logical if possible, ignoring any class.
-    (Conditions of length greater than one are an error.) 
+    (Conditions of length greater than one are an error.)
   }
   \item{var}{A syntactical name for a variable.}
   \item{seq}{An expression evaluating to a vector (including a list and
     an \link{expression}) or to a \link{pairlist} or \code{NULL}.  A
     factor value will be coerced to a character vector.  This can be a
     long vector.}
-  \item{expr, cons.expr, alt.expr}{
+  \item{expr, cons.expr, alt.expr, x, y}{
     An \emph{expression} in a formal sense.  This is either a
     simple expression or a so-called \emph{compound expression}, usually
     of the form \code{\{ expr1 ; expr2 \}}.
@@ -68,6 +71,12 @@ next
   but this will not affect the next iteration.  When the loop terminates,
   \code{var} remains as a variable containing its latest value.
 
+  \code{x \%||\% y} is a simple 1-line function, an idiomatic way to call
+  \preformatted{
+    if (is.null(x)) y else x
+                             # or equivalently, of course,
+    if(!is.null(x)) x else y }
+  Inspired by Ruby, it was first proposed by Hadley Wickham.
 }
 \value{
   \code{if} returns the value of the expression evaluated, or
@@ -101,6 +110,13 @@ for(n in c(2,5,10,20,50)) {
 }
 f <- factor(sample(letters[1:5], 10, replace = TRUE))
 for(i in unique(f)) print(i)
+
+res <- {}
+res \%||\% "alternative result"
+x <- head(x) \%||\% stop("parsed, but *not* evaluated..")
+
+res <- if(sum(x) > 7.5) mean(x) # may be NULL
+res \%||\% "sum(x) <= 7.5"
 }
 \keyword{programming}
 \keyword{iteration}

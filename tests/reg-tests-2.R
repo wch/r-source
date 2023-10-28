@@ -1763,10 +1763,14 @@ f <- function(...) browser()
 do.call(f, mtcars)
 c
 
-op <- c(op, options(error = expression(NULL)))
+op2 <- c(op, options(catch.script.errors = TRUE))
 f <- function(...) stop()
 do.call(f, mtcars)
-traceback()
+traceback() # *no* traceback
+options(catch.script.errors = FALSE) # back to default
+op <- c(op, options(error = expression(NULL))) # *is* slightly different:
+do.call(f, mtcars)
+traceback() ## does give traceback
 ## unlimited < 2.3.0
 options(op)
 
@@ -2043,8 +2047,8 @@ dput(x, control=c("all", "S_compatible"))
 tmp <- tempfile(tmpdir = getwd())
 dput(x, tmp, control="all")
 stopifnot(identical(dget(tmp), x))
-dput(x, tmp, control=c("all", "S_compatible"))
-stopifnot(identical(dget(tmp), x))
+dput(x, tmp, control=c("all", "S_compatible"))# -> d => (r = NA, im = 0)
+stopifnot(identical(dget(tmp), local({ x$d <- as.complex(NA); x })))
 unlink(tmp)
 ## changes in 2.5.0
 
@@ -3377,3 +3381,8 @@ show.srcref <- function() str(sys.call())
     withAutoprint({ show.srcref() })
 }
 ## no   attr(*, "src..")   in R <= 4.3.1
+##
+withAutoprint({
+    1 + 2
+})
+## temporarily wrongly showed " withAutoprint({ "

@@ -1,6 +1,6 @@
 % File src/library/stats/vignettes/reshape.Rnw
 % Part of the R package, https://www.R-project.org
-% Copyright 2021 The R Core Team
+% Copyright 2021-2023 The R Core Team
 % Distributed under GPL 2 or later
 
 \documentclass[a4paper]{article}
@@ -286,7 +286,7 @@ reshape(d2, direction = "long",
 @
 
 
-\section{Conversion from wide to long format}
+\section{Conversion from long to wide format}
 
 Conversion from long to wide format is generally simpler. Let us
 simulate long format data from the same hypothetical setup.

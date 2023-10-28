@@ -23,6 +23,7 @@ Rd2HTML(Rd, out = "", package = "", defines = .Platform$OS.type,
         texmath = getOption("help.htmlmath"),
         concordance = FALSE,
         standalone = TRUE,
+        toc = isTRUE(getOption("help.htmltoc")),
         Rhtml = FALSE,
         ...)
 
@@ -73,6 +74,8 @@ Rd2ex(Rd, out = "", defines = .Platform$OS.type,
     standalone HTML file. If \code{FALSE}, the header and footer are
     omitted, so that the output can be combined with other fragments.
   }
+  \item{toc}{logical: whether the HTML output should include a table
+      of contents. Ignored unless \code{standalone = TRUE}. }
   \item{Rhtml}{logical: whether the output is intended to be a Rhtml
       file that can be processed using \CRANpkg{knitr}. If \code{TRUE}, the
       examples section is wrapped inside a \code{rcode} block. }

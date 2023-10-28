@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/windows/png.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2017 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{png}
@@ -34,7 +34,9 @@ png(filename = "Rplot\%03d.png",
 
 tiff(filename = "Rplot\%03d.tif",
      width = 480, height = 480, units = "px", pointsize = 12,
-     compression = c("none", "rle", "lzw", "jpeg", "zip", "lzw+p", "zip+p"),
+     compression = c("none", "rle", "lzw", "jpeg", "zip",
+                     "lzw+p", "zip+p",
+                     "lerc", "lzma",  "zstd", "webp"),
      bg = "white", res = NA, family = "", restoreConsole = TRUE,
      type = c("windows", "cairo"), antialias,
      symbolfamily="default")
@@ -44,7 +46,7 @@ tiff(filename = "Rplot\%03d.tif",
     page number is substituted if a C integer format is included in the
     character string, as in the default, and tilde-expansion is
     performed (see \code{\link{path.expand}}).   (The result must be less than
-    600 characters long.  See \code{\link{postscript}} for further
+    600 characters long.  See \code{\link{png}} for further
     details.)
   }
   \item{width}{the width of the device.}
@@ -59,7 +61,9 @@ tiff(filename = "Rplot\%03d.tif",
   \item{quality}{the \sQuote{quality} of the JPEG image, as a
     percentage.  Smaller values will give more compression but also more
     degradation of the image.}
-  \item{compression}{the type of compression to be used.}
+   \item{compression}{the type of compression to be used.  Can also be a
+     numeric value supported by the underlying \code{libtiff} library :
+     see its \file{tiff.h} header file.}
   \item{res}{The nominal resolution in ppi which will be recorded in the
     bitmap file, if a positive integer.  Also used for units other than
     the default.  If not specified, taken as 72 ppi to set the size of
@@ -93,9 +97,9 @@ tiff(filename = "Rplot\%03d.tif",
   colour.  The JPEG format is lossy, but may be useful for image plots,
   for example.  The BMP format is standard on Windows, and supported by
   most viewers elsewhere.  TIFF is a meta-format: the default format
-  written by \code{tiff} is lossless and stores RGB values
-  uncompressed---such files are widely accepted, which is their main
-  virtue over PNG.
+  written by \code{tiff} is lossless and stores RGB (and alpha where
+  appropriate) values uncompressed---such files are widely accepted,
+  which is their main virtue over PNG.
 
   Windows GDI imposes limits on the size of bitmaps: these are not
   documented in the SDK and may depend on the version of Windows.
@@ -120,6 +124,8 @@ tiff(filename = "Rplot\%03d.tif",
   file---this may work better for specialist uses with semi-transparent
   colours.
 
+  The JPEG format only supports opaque backgrounds.
+
   \code{png(type = "windows")} supports transparent backgrounds on 16-bit
   (\sQuote{High Color}) or better screens: use \code{bg =
     "transparent"}.  There is also support for semi-transparent colours
@@ -134,6 +140,8 @@ tiff(filename = "Rplot\%03d.tif",
   horizontal differencing (\sQuote{differencing predictor}, section 14
   of the TIFF specification) in combination with the compression method,
   which is effective for continuous-tone images, especially colour ones.
+  The \code{jpeg} quality when used for \code{tiff} compression is fixed
+  at 75.
   
   Unknown resolutions in BMP files are recorded as 72 ppi.
 }
@@ -191,19 +199,34 @@ tiff(filename = "Rplot\%03d.tif",
     "cleartype"} if this is not the default on your Windows system.  On
   the other hand, \code{png(antialias = "none")} will give the most
   compact files
+
+  Support for compression types depends on the underlying \samp{libtiff}
+  library: types \code{"lerc"}, \code{"lzma"}, \code{"zstd"} and
+  \code{"webp"} are relatively recent additions and may well not be
+  supported.  They are also liable to be unsupported in TIFF viewers.
 }
 
 \references{
-  The PNG specification, \url{http://www.w3.org/TR/PNG/}.
+  The PNG specification, \url{https://www.w3.org/TR/png/}.
   
-  The TIFF specification, including extensions, at
-  \url{https://partners.adobe.com/public/developer/tiff/}.
+  The TIFF specification,
+  \url{https://www.iso.org/standard/34342.html}.
+  See also \url{https://en.wikipedia.org/wiki/TIFF}.
+  %% no longer works:
+  %% \url{https://partners.adobe.com/public/developer/tiff/}.
 }
 \seealso{
   \code{\link{Devices}}, \code{\link{dev.print}}
 
-  \code{\link{bitmap}} provides an alternative way to generate plots in
-  many bitmap formats if GhostScript is available.
+  \code{\link{capabilities}} to see if these devices are
+  supported by this build of \R, and if \code{type = "cairo"} is supported.
+
+  \code{\link{bitmap}} provides an alternative way to generate plots in many
+  bitmap formats that does not depend on accessing the X11 display but does
+  depend on having GhostScript installed.
+
+  Ways to write raster images to bitmap formats are available in
+  packages \CRANpkg{jpeg}, \CRANpkg{png} and \CRANpkg{tiff}.
 }
 
 \section{Conventions}{

@@ -643,7 +643,7 @@ function(pkgdir, outfile, title, silent = FALSE,
 
     ## Rd2.tex part 2: body
     toc <- if (dir.exists(files_or_dir)) {
-        "\\Rdcontents{\\R{} topics documented:}"
+        "\\Rdcontents{Table of contents:}"
     } else ""
 
     latexEncodings <- if(description) "utf8" else character()

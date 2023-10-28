@@ -1,6 +1,6 @@
 % File src/library/base/man/NULL.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2022 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{NULL}
@@ -52,6 +52,9 @@ is.null(x)
 
   \code{is.null} returns \code{TRUE} if its argument's value
   is \code{NULL} and \code{FALSE} otherwise.
+}
+\seealso{
+  \code{\link{\%||\%}}: \code{L \%||\% R} is equivalent to \code{ if(!is.null(L)) L else R }
 }
 \examples{
 is.null(list())     # FALSE (on purpose!)

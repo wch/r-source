@@ -973,13 +973,13 @@ function(dir, logs = NULL, drop_ok = TRUE, ...)
         if(!length(out))
             return(matrix(character(), ncol = 6L))
         chunks <- lapply(out, `[[`, "Chunks")
-        package <- sapply(out, `[[`, "Package")
+        package <- vapply(out, `[[`, "", "Package")
         lens <- lengths(chunks)
         cbind(rep.int(package, lens),
-              rep.int(sapply(out, `[[`, "Version"), lens),
+              rep.int(vapply(out, `[[`, "", "Version"), lens),
               matrix(as.character(unlist(chunks)), ncol = 3L,
                      byrow = TRUE),
-              rep.int(sapply(out, `[[`, "Flags"),
+              rep.int(vapply(out, `[[`, "", "Flags"),
                       lens))
     }
 

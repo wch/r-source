@@ -1,6 +1,6 @@
 % File src/library/stats/man/isoreg.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2008 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{isoreg}
@@ -18,6 +18,7 @@ isoreg(x, y = NULL)
   \item{x, y}{%in \code{isoreg},
     coordinate vectors of the regression points.  Alternatively a single
     plotting structure can be specified: see \code{\link{xy.coords}}.
+    The y values, and even \code{sum(y)} must be finite, currently.
   }
 }
 \details{

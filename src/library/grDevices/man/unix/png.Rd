@@ -26,12 +26,14 @@ jpeg(filename = "Rplot\%03d.jpeg",
 
 png(filename = "Rplot\%03d.png",
     width = 480, height = 480, units = "px", pointsize = 12,
-     bg = "white",  res = NA, \dots,
+    bg = "white",  res = NA, \dots,
     type = c("cairo", "cairo-png", "Xlib", "quartz"), antialias)
 
 tiff(filename = "Rplot\%03d.tiff",
      width = 480, height = 480, units = "px", pointsize = 12,
-     compression = c("none", "rle", "lzw", "jpeg", "zip", "lzw+p", "zip+p"),
+     compression = c("none", "rle", "lzw", "jpeg", "zip",
+                     "lzw+p", "zip+p",
+                     "lerc", "lzma",  "zstd", "webp"),
      bg = "white", res = NA,  \dots,
      type = c("cairo", "Xlib", "quartz"), antialias)
 }
@@ -41,7 +43,7 @@ tiff(filename = "Rplot\%03d.tiff",
     the character string, as in the default.  (Depending on the platform,
     the result should be less
     than \code{PATH_MAX} characters long, and may be truncated if not.
-    See \code{\link{postscript}} for further details.)  Tilde expansion
+    See \code{\link{pdf}} for further details.)  Tilde expansion
     is performed where supported by the platform.  An input with
     a marked encoding is converted to the native encoding on an error is
     given.}
@@ -57,8 +59,10 @@ tiff(filename = "Rplot\%03d.tiff",
   \item{quality}{the \sQuote{quality} of the JPEG image, as a
     percentage.  Smaller values will give more compression but also more
     degradation of the image.}
-  \item{compression}{the type of compression to be used.  Ignored for
-     \code{type = "quartz"}.}
+  \item{compression}{the type of compression to be used.  Can also be a
+     numeric value supported by the underlying \code{libtiff} library :
+     see its \file{tiff.h} header file.   Ignored with a warning for
+     \code{type = "quartz"}.} 
   \item{res}{The nominal resolution in ppi which will be recorded in the
     bitmap file, if a positive integer.  Also used for \code{units}
     other than the default, and to convert points to pixels.}
@@ -90,14 +94,15 @@ tiff(filename = "Rplot\%03d.tiff",
 }
 \details{
   Plots in PNG and JPEG format can easily be converted to many other
-  bitmap formats, and both can be displayed in modern web
-  browsers.  The PNG format is lossless and is best for line
-  diagrams and blocks of colour.  The JPEG format is lossy,
-  but may be useful for image plots, for example.  BMP is a standard
-  format on Windows.  TIFF is a meta-format: the default format written
-  by \code{tiff} is lossless and stores RGB (and alpha where
-  appropriate) values uncompressed---such files are widely accepted,
-  which is their main virtue over PNG.
+  bitmap formats, and both can be displayed in modern web browsers.  The
+  PNG format is lossless and is best for line diagrams and blocks of
+  colour.  The JPEG format is lossy, but may be useful for image plots,
+  for example.  BMP is a standard format on Windows.  TIFF is a
+  meta-format: the default format written by \code{tiff} is lossless and
+  stores RGB (and alpha where appropriate) values uncompressed---such
+  files are widely accepted, which is their main virtue over PNG.
+
+  The JPEG format only supports opaque backgrounds.
 
   \code{png} supports transparent backgrounds: use \code{bg =
   "transparent"}.  (Not all PNG viewers render files with transparency
@@ -117,6 +122,9 @@ tiff(filename = "Rplot\%03d.tiff",
   predictor}, section 14 of the TIFF specification) in combination with
   the compression method, which is effective for continuous-tone images,
   especially colour ones.
+
+  The \code{jpeg} quality when used for \code{tiff} compression is fixed
+  at 75.
 
   \R can be compiled without support for some or all of the types for
   each of these devices: this will be reported if you attempt to use
@@ -198,6 +206,11 @@ tiff(filename = "Rplot\%03d.tiff",
   device.  The colour model used will be that set up by
   \code{X11.options} at the time the first Xlib-based devices was opened
   (or the first after all such devices have been closed).
+
+  Support for compression types depends on the underlying \samp{libtiff}
+  library: types \code{"lerc"}, \code{"lzma"}, \code{"zstd"} and
+  \code{"webp"} are relatively recent additions and may well not be
+  supported.  They are also liable to be unsupported in TIFF viewers.
 }
 
 \author{Guido Masarotto and Brian Ripley}
@@ -220,6 +233,9 @@ tiff(filename = "Rplot\%03d.tiff",
   \code{\link{bitmap}} provides an alternative way to generate plots in many
   bitmap formats that does not depend on accessing the X11 display but does
   depend on having GhostScript installed.
+
+  Ways to write raster images to bitmap formats are available in
+  packages \CRANpkg{jpeg}, \CRANpkg{png} and \CRANpkg{tiff}.
 }
 
 \section{Conventions}{
