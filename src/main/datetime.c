@@ -176,7 +176,10 @@ extern char *tzname[2];
 #include <Defn.h>
 #include <Internal.h>
 
+#ifndef USE_INTERNAL_MKTIME
+/* PATH 1 */
 static Rboolean warn1902 = FALSE;
+#endif
 
 /* Substitute based on glibc code. */
 #include "Rstrptime.h"
