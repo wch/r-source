@@ -190,6 +190,12 @@ pdf(file = if(onefile) "Rplots.pdf" else "Rplot\%03d.pdf",
   character string should not otherwise contain a \code{\%}: if it is
   really necessary, use \code{\%\%} in the string for \code{\%} in the
   file path.
+
+  For \code{pdf}, \code{file} can be \code{NULL} when no external file
+  is created (effectively, no drawing occurs), but the device may still
+  be queried (e.g., for the size of text by (base
+  graphics)\code{\link{strwidth}} or (\pkg{grid})
+  \code{\link[grid]{stringWidth}}).
 }
 
 \section{Families}{
