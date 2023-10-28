@@ -2952,6 +2952,13 @@ SEXP allocS4Object(void)
    return s;
 }
 
+attribute_hidden SEXP R_allocObject(void)
+{
+   SEXP s;
+   GC_PROT(s = allocSExpNonCons(OBJSXP));
+   return s;
+}
+
 static SEXP allocFormalsList(int nargs, ...)
 {
     SEXP res = R_NilValue;

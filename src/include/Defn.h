@@ -1648,6 +1648,7 @@ SEXP Rf_allocFormalsList3(SEXP sym1, SEXP sym2, SEXP sym3);
 SEXP Rf_allocFormalsList4(SEXP sym1, SEXP sym2, SEXP sym3, SEXP sym4);
 SEXP Rf_allocFormalsList5(SEXP sym1, SEXP sym2, SEXP sym3, SEXP sym4, SEXP sym5);
 SEXP Rf_allocFormalsList6(SEXP sym1, SEXP sym2, SEXP sym3, SEXP sym4, SEXP sym5, SEXP sym6);
+SEXP R_allocObject(void);
 SEXP Rf_arraySubscript(int, SEXP, SEXP, SEXP (*)(SEXP,SEXP),
                        SEXP (*)(SEXP, int), SEXP);
 SEXP Rf_fixSubset3Args(SEXP, SEXP, SEXP, SEXP*);
