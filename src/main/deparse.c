@@ -911,7 +911,7 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 	    UNPROTECT(2); // (e, cl_def)
 	    int n;
 	    Rboolean has_Data = FALSE;// does it have ".Data" slot?
-	    Rboolean hasS4_t = TYPEOF(s) == S4SXP;
+	    Rboolean hasS4_t = TYPEOF(s) == OBJSXP;
 	    if(TYPEOF(slotNms) == STRSXP && (n = LENGTH(slotNms))) {
 		PROTECT(slotNms);
 		SEXP slotlist = PROTECT(allocVector(VECSXP, n));

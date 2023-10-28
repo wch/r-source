@@ -192,7 +192,7 @@ SEXP lazy_duplicate(SEXP s) {
     case CPLXSXP:
     case RAWSXP:
     case STRSXP:
-    case S4SXP:
+    case OBJSXP:
 	ENSURE_NAMEDMAX(s);
 	break;
     default:

@@ -1790,7 +1790,7 @@ do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     /* code to allow classes to extend ENVSXP */
     Rboolean S4 = IS_S4_OBJECT(x);
-    if(S4 && TYPEOF(x) == S4SXP) {
+    if(S4 && TYPEOF(x) == OBJSXP) {
 	xOrig = x; /* will be an S4 object */
 	x = R_getS4DataSlot(x, ANYSXP);
 	if(TYPEOF(x) != ENVSXP)
@@ -2147,7 +2147,7 @@ SEXP R_subassign3_dflt(SEXP call, SEXP x, SEXP nlist, SEXP val)
 	REPROTECT(x = shallow_duplicate(x), pxidx);
 
     /* code to allow classes to extend ENVSXP */
-    if(TYPEOF(x) == S4SXP) {
+    if(TYPEOF(x) == OBJSXP) {
 	xS4 = x;
 	REPROTECT(x = R_getS4DataSlot(x, ANYSXP), pxidx);
 	if(x == R_NilValue)

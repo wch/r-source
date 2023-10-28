@@ -165,7 +165,7 @@ typedef enum {
     EXTPTRSXP	= 22,	/* external pointer */
     WEAKREFSXP	= 23,	/* weak reference */
     RAWSXP	= 24,	/* raw bytes */
-    S4SXP	= 25,	/* S4 non-vector */
+    OBJSXP	= 25,	/* S4 non-vector */
 
     NEWSXP      = 30,   /* fresh node created in new page */
     FREESXP     = 31,   /* node released by GC */

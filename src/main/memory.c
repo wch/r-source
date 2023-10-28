@@ -696,7 +696,7 @@ static R_size_t R_NodesInUse = 0;
   case CPLXSXP: \
   case WEAKREFSXP: \
   case RAWSXP: \
-  case S4SXP: \
+  case OBJSXP: \
     break; \
   case STRSXP: \
     { \
@@ -2947,7 +2947,7 @@ SEXP allocList(int n)
 SEXP allocS4Object(void)
 {
    SEXP s;
-   GC_PROT(s = allocSExpNonCons(S4SXP));
+   GC_PROT(s = allocSExpNonCons(OBJSXP));
    SET_S4_OBJECT(s);
    return s;
 }

@@ -1284,7 +1284,7 @@ attribute_hidden SEXP R_subset3_dflt(SEXP x, SEXP input, SEXP call)
     /* Optimisation to prevent repeated recalculation */
     size_t slen = strlen(translateChar(input));
     /* The mechanism to allow a class extending "environment" */
-    if( IS_S4_OBJECT(x) && TYPEOF(x) == S4SXP ){
+    if( IS_S4_OBJECT(x) && TYPEOF(x) == OBJSXP ){
 	x = R_getS4DataSlot(x, ANYSXP);
 	if(x == R_NilValue)
 	    errorcall(call, "$ operator not defined for this S4 class");
