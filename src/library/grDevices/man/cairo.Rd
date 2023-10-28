@@ -32,7 +32,7 @@ cairo_ps(filename = if(onefile) "Rplots.ps" else "Rplot\%03d.ps",
          fallback_resolution = 300, symbolfamily)
 }
 \arguments{
-  \item{filename}{the name of the output file.
+  \item{filename}{the file path of the output file(s).
     The page number is substituted if a C integer format is included in
     the character string, as in the default.  (Depending on the platform,
     the result must be less
@@ -48,7 +48,7 @@ cairo_ps(filename = if(onefile) "Rplots.ps" else "Rplot\%03d.ps",
     string specify a font family to be searched for in a
     system-dependent way.
 
-    On unix-alikes (incl.\ Mac), see
+    On unix-alikes (incl.\ macOS), see
     the \sQuote{Cairo fonts} section in the help for \code{\link{X11}}.
   }
   \item{bg}{the initial background colour: can be overridden by setting
@@ -56,18 +56,18 @@ cairo_ps(filename = if(onefile) "Rplots.ps" else "Rplot\%03d.ps",
   \item{antialias}{string, the type of anti-aliasing (if any) to be used;
     defaults to \code{"default"}.}
   \item{fallback_resolution}{numeric: the resolution in dpi used when
-    falling back to bitmap output.  Prior to \R 3.3.0 this depended on
-    the cairo implementation but was commonly 300.}
+    falling back to bitmap output.}
   \item{symbolfamily}{
       a length-one character string that specifies the font family to
       be used as the "symbol" font (e.g., for \link{plotmath} output).}
 }
 \details{
   SVG (Scalar Vector Graphics) is a W3C standard for vector graphics.
-  See \url{https://www.w3.org/Graphics/SVG/}.  The output from \code{svg}
-  is SVG version 1.1 for \code{onefile = FALSE} (the default), otherwise
-  SVG 1.2.  (Few SVG viewers are capable of displaying multi-page SVG
-  files.)
+  See \url{https://www.w3.org/Graphics/SVG/}.  The output from
+  \code{svg} is SVG version 1.1 for \code{onefile = FALSE} (the
+  default), otherwise SVG 1.2.  (SVG 1.2 never passed the draft
+  stage. Few SVG viewers are capable of displaying multi-page SVG files,
+  and they have been dropped from SVG 2.0 (still in draft).)
 
   Note that unlike \code{\link{pdf}} and \code{\link{postscript}},
   \code{cairo_pdf} and \code{cairo_ps} sometimes record \emph{bitmaps}
@@ -80,11 +80,11 @@ cairo_ps(filename = if(onefile) "Rplots.ps" else "Rplot\%03d.ps",
 
   \R can be compiled without support for any of these devices: this will
   be reported if you attempt to use them on a system where they are not
-  supported.  They all require cairo version 1.2 or later.
+  supported.
 
   If you plot more than one page on one of these devices and do not
   include something like \code{\%d} for the sequence number in
-  \code{file} (or set \code{onefile = TRUE}) the file will contain the
+  \code{filename} (or set \code{onefile = TRUE}) the file will contain the
   last page plotted.
 
   There is full support of semi-transparency, but using this is one of
@@ -96,7 +96,7 @@ cairo_ps(filename = if(onefile) "Rplots.ps" else "Rplot\%03d.ps",
   In principle these devices are independent of X11 (as is seen by their
   presence on Windows).  But on a Unix-alike the cairo libraries may be
   distributed as part of the X11 system and hence that (for example, on
-  \code{x86_64} macOS, XQuartz) may need to be installed.
+  macOS, XQuartz) may need to be installed.
 }
 
 \value{

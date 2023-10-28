@@ -193,8 +193,8 @@ pdf(file = if(onefile) "Rplots.pdf" else "Rplot\%03d.pdf",
 
   For \code{pdf}, \code{file} can be \code{NULL} when no external file
   is created (effectively, no drawing occurs), but the device may still
-  be queried (e.g., for the size of text by (base
-  graphics)\code{\link{strwidth}} or (\pkg{grid})
+  be queried (e.g., for the size of text by (base graphics)
+  \code{\link{strwidth}} or (\pkg{grid})
   \code{\link[grid]{stringWidth}}).
 }
 
