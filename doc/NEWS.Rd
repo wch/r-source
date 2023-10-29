@@ -440,8 +440,25 @@
 
       \item Some error and warning messages for large (\sQuote{long
 	vector}) \code{matrix(v, nr, nc)} and \code{dim(m) <- d} are now
-	correct about sizes, using \code{long long} formatting, fixing
-	\PR{18612} (and more) reported by Mikael Jagan.
+      correct about sizes, using \code{long long} formatting, fixing
+      \PR{18612} (and more) reported by Mikael Jagan.
+    }
+  }
+}
+\section{\Rlogo CHANGES IN R 4.3.2}{
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item Some invalid \code{file} arguments to \code{postscript()}
+      and \code{xfig()} opened a file called \samp{NA} rather than throw
+	an error.  These included \code{postscript(NULL)} (which some
+	people expected to work like \code{pdf(NULL)}).
+
+      Passing \code{filename = NA} to \code{svg()}, \code{cairo_pdf()},
+      \code{cairo_ps()} or the Cairo-based bitmap devices open a file
+      called \samp{NA}: it now throws an error.
+
+      \code{quartz(file + NA} opened a file called \samp{NA}, including
+      when used as a Quartz-based bitmap device.  It now gives an error.
     }
   }
 }
