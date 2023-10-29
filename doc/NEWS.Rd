@@ -445,7 +445,7 @@
     }
   }
 }
-\section{\Rlogo CHANGES IN R 4.3.2}{
+\section{\Rlogo CHANGES IN R 4.3.2 patched}{
   \subsection{BUG FIXES}{
     \itemize{
       \item Some invalid \code{file} arguments to \code{postscript()}
@@ -457,7 +457,7 @@
       \code{cairo_ps()} or the Cairo-based bitmap devices open a file
       called \samp{NA}: it now throws an error.
 
-      \code{quartz(file + NA} opened a file called \samp{NA}, including
+      \code{quartz(file + NA)} opened a file called \samp{NA}, including
       when used as a Quartz-based bitmap device.  It now gives an error.
     }
   }
