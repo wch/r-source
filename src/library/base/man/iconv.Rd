@@ -51,7 +51,8 @@ iconvlist()
 
   Elements of \code{x} which cannot be converted (perhaps because they
   are invalid or because they cannot be represented in the target
-  encoding) will be returned as \code{NA} unless \code{sub} is specified.
+  encoding) will be returned as \code{NA} (or \code{NULL} for
+  \code{toRaw = TRUE}) unless \code{sub} is specified.
 
   Most versions of \code{iconv} will allow transliteration by appending
   \samp{//TRANSLIT} to the \code{to} encoding: see the examples.
@@ -63,9 +64,10 @@ iconvlist()
   "?"}. (However, musl's version of \code{"ASCII"} substitutes
   \code{*}.)
 
-  With \code{from = ""}, elements of \code{x} with a declared encoding
-  (UTF-8 or latin1, see \code{\link{Encoding}}) are converted from that
-  encoding.
+  Elements of \code{x} with a declared encoding (UTF-8 or latin1, see
+  \code{\link{Encoding}}) are converted from that encoding if \code{from
+  = ""}, otherwise they are taken as being in the encoding specified by
+  \code{from}.
 
   Note that implementations of \code{iconv} typically do not do much
   validity checking and will often mis-convert inputs which are invalid
@@ -88,16 +90,16 @@ iconvlist()
   \samp{win_iconv} currently a \sQuote{best fit} strategy is used except
   for \code{to = "ASCII"}).
 
-%% https://github.com/apple-oss-distributions/libiconv/blob/libiconv-80.1.1/citrus/iconv.h
+%% https://github.com/apple-oss-distributions/libiconv/blob/libiconv-80.1.1/citrus/iconv.h  
   The macOS 14 implementation is attributed to the \sQuote{Citrus
   Project}: the Apple headers declare it as \sQuote{compatible} with GNU
   \samp{libiconv} 1.11 from 2006.  However, it differs in significant
   ways including using a \sQuote{best fit} for conversions, at least for
-  \code{to = "ASCII"} and \code{to = "latin1"}.  (Earlier versions of
-  macOS used GNU \samp{libiconv} 1.11. It seems this implementation is
-  also used in recent versions of FreeBSD.)  For a failing conversion
-  macOS 14 generally translated character(s) to \code{?} but 14.1 gives
-  an error (so an \code{NA} result in \R).
+  \code{to = "ASCII"} and \code{to = "latin1"}.  (It seems this
+  implementation is also used in recent versions of FreeBSD.  Earlier
+  versions of macOS used GNU \samp{libiconv} 1.11.)  For a failing
+  conversion macOS 14 generally translated character(s) to \code{?} but
+  14.1 gives an error (so an \code{NA} result in \R).
 
   Most commercial Unixes contain an implementation of \code{iconv} but
   none we have encountered have supported the encoding names we need:
@@ -153,6 +155,7 @@ iconvlist()
   conversion to a character vector).  If conversion fails for an element
   that element of the result is set to \code{NA_character_}.  (NB:
   whether conversion fails is implementation-specific.)
+  \code{NA_character_} inputs give  \code{NA_character_} outputs.
 
   If \code{mark = TRUE} (the default) the elements of the result have a
   declared encoding if \code{to} is \code{"latin1"} or \code{"UTF-8"},
@@ -161,7 +164,8 @@ iconvlist()
 
   If \code{toRaw = TRUE}, the value is a list of the same length and
   the same attributes as \code{x} whose elements are either \code{NULL}
-  (if conversion fails) or a raw vector.
+  (if conversion fails or the input was \code{NA_character_}) or a raw
+  vector.
 
   For \code{iconvlist()}, a character vector (typically of a few hundred
   elements) of known encoding names.
