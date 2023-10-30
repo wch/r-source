@@ -1284,7 +1284,11 @@ Rd2HTML <-
 
         ## id can identify help page when combined with others, and
         ## also needed to form argument id-s programmatically
-        of0("<h2 id='", name2id(name), "'>")
+        if (!standalone) {
+            of0("<h2 id='", name2id(name), "'>")
+        }
+        else
+            of0("<h2>")
 	inPara <- NA
 	title <- Rd[[1L]]
         info$name <- name
