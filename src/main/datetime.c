@@ -741,7 +741,8 @@ static stm * localtime0(const double *tp, const int local, stm *ltm)
 
 typedef struct tzset_info {
     char oldtz[1001];	/* previous value of TZ variable */
-    Rboolean settz;	/* TZ variable was set */
+    Rboolean hadtz;	/* TZ variable existed previously */
+    Rboolean settz;	/* TZ variable was set by us */
     RCNTXT cntxt;
     Rboolean end_context_on_reset;
 			/* should endcontext() be called from reset_tz()? */
@@ -759,8 +760,6 @@ static void cend_reset_tz(void *data)
 static void prepare_reset_tz(tzset_info *si)
 {
     si->settz = FALSE;
-    si->oldtz[0] = '\0';
-
     /* set up a context which will reset tz if there is an error */
     begincontext(&si->cntxt, CTXT_CCODE, R_NilValue, R_BaseEnv, R_BaseEnv,
                  R_NilValue, R_NilValue);
@@ -778,14 +777,15 @@ static void prepare_dummy_reset_tz(tzset_info *si)
 static Rboolean set_tz(const char *tz, tzset_info *si)
 {
     si->settz = FALSE;
-    si->oldtz[0] = '\0';
 
     char *p = getenv("TZ");
     if(p) {
 	if (strlen(p) > 1000)
 	    error("time zone specification is too long");
 	strcpy(si->oldtz, p);
-    }
+	si->hadtz = TRUE;
+    } else
+	si->hadtz = FALSE;
 #ifdef HAVE_SETENV
     if(setenv("TZ", tz, 1)) warning(_("problem with setting timezone"));
     else si->settz = TRUE;
@@ -819,7 +819,7 @@ static void reset_tz(tzset_info *si)
 	return;
 
     si->settz = FALSE; /* better avoid recursive attempts */
-    if(strlen(si->oldtz)) {
+    if(si->hadtz) {
 #ifdef HAVE_SETENV
 	if(setenv("TZ", si->oldtz, 1))
 	    warning(_("problem with setting timezone"));

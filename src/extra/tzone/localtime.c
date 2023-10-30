@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Modifications copyright (C) 2007-2022  The R Core Team
+ *  Modifications copyright (C) 2007-2023  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -77,6 +77,10 @@ R_tzsetwall
 #include <errno.h>
 #ifndef EOVERFLOW
 # define EOVERFLOW 79
+#endif
+
+#ifdef HAVE_SYS_STAT_H
+# include <sys/stat.h> // for fstat
 #endif
 
 #include <stdlib.h>
@@ -468,7 +472,15 @@ tzload(const char * name, struct state * const sp, const int doextend)
 	    Rf_warning("unknown timezone '%s'", sname);
 	    return -1;
 	}
-		
+#ifdef HAVE_SYS_STAT_H
+	struct stat sb;
+	if (!fstat(fid, &sb) && S_ISDIR(sb.st_mode)) {
+	    close(fid);
+	    Rf_warning("unknown timezone '%s'", sname);
+	    return -1;
+	}
+#endif
+
     }
     nread = read(fid, up->buf, sizeof up->buf);
     if (close(fid) < 0 || nread <= 0)

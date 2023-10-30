@@ -94,7 +94,7 @@
                           fig.width = 9, fig.height = 7,
                           dpi = 96)
     out <- knitr::knit(text = rhtml, quiet = TRUE,
-                       envir = if (is.null(env)) new.env(parent = .GlobalEnv) else env)
+                       envir = env %||% new.env(parent = .GlobalEnv))
     ## the paste() doesn't seem necessary, but just to be safe
     list(payload = paste(out, collapse = "\n"))
 }

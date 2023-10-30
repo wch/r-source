@@ -24,17 +24,14 @@
 ##  2) We use  ':::' instead of '::' inside the code below, for efficiency only
 
 getNamespace <- function(name) {
-    ns <- .Internal(getRegisteredNamespace(name))
-    if (! is.null(ns)) ns
-    else loadNamespace(name)
+    .Internal(getRegisteredNamespace(name)) %||% loadNamespace(name)
 }
 
 .getNamespace <- function(name) .Internal(getRegisteredNamespace(name))
 
 ..getNamespace <- function(name, where) {
-    ns <- .Internal(getRegisteredNamespace(name))
-    if (!is.null(ns)) ns
-    else tryCatch(loadNamespace(name), error = function(e) {
+    .Internal(getRegisteredNamespace(name)) %||%
+	tryCatch(loadNamespace(name), error = function(e) {
              tr <- Sys.getenv("_R_NO_REPORT_MISSING_NAMESPACES_")
              if( tr == "false" || (where != "<unknown>" && !nzchar(tr)) ) {
                  warning(gettextf("namespace %s is not available and has been replaced\nby .GlobalEnv when processing object %s",

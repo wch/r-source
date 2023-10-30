@@ -10629,7 +10629,10 @@ SEXP PostScript(SEXP args)
 
     vmax = vmaxget();
     args = CDR(args); /* skip entry point name */
-    file = translateCharFP(asChar(CAR(args)));  args = CDR(args);
+    SEXP tmp = asChar(CAR(args));
+    if (tmp == NA_STRING)
+	error(_("invalid 'file' parameter in %s"), call);
+    file = translateCharFP(tmp);  args = CDR(args);
     paper = CHAR(asChar(CAR(args))); args = CDR(args);
 
     /* 'family' can be either one string or a 5-vector of afmpaths. */
@@ -10718,7 +10721,10 @@ SEXP XFig(SEXP args)
 
     vmax = vmaxget();
     args = CDR(args); /* skip entry point name */
-    file = translateCharFP(asChar(CAR(args)));  args = CDR(args);
+    SEXP tmp = asChar(CAR(args));
+    if (tmp == NA_STRING)
+	error(_("invalid 'file' parameter in %s"), "xfig");
+    file = translateCharFP(tmp);  args = CDR(args);
     paper = CHAR(asChar(CAR(args))); args = CDR(args);
     family = CHAR(asChar(CAR(args)));  args = CDR(args);
     bg = CHAR(asChar(CAR(args)));    args = CDR(args);

@@ -60,8 +60,7 @@ Vectorize <- function(FUN, vectorize.args = arg.names, SIMPLIFY = TRUE,
     (function() {
     FUNV <- function() { ## will set the formals below
         args <- lapply(as.list(match.call())[-1L], eval, parent.frame())
-        names <- if(is.null(names(args))) character(length(args))
-        else names(args)
+        names <- names(args) %||% character(length(args))
         dovec <- names %in% vectorize.args
         do.call("mapply", c(FUN = FUN,
                             args[dovec],

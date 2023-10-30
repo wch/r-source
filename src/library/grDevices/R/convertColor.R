@@ -111,7 +111,7 @@ chromaticAdaptation <- function(xyz, from, to) {
 
 vectorizeConverter <- function(converter) {
     function(color, white) {
-        nr <- if(is.null(nrow(color))) length(color) else nrow(color)
+        nr <- nrow(color) %||% length(color)
         res <- apply(color, 1L, converter, white)
         if (is.null(nrow(res)))
             matrix(res, nrow=nr)

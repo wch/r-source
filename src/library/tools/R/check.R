@@ -6454,7 +6454,7 @@ add_dummies <- function(dir, Log)
             "      --no-examples     do not run the examples in the Rd files",
             "      --no-install      skip installation and associated tests",
             "      --no-tests        do not run code in 'tests' subdirectory",
-            "      --no-manual       do not produce the PDF manual",
+            "      --no-manual       do not produce the PDF and HTML manuals",
             "      --no-vignettes    do not run R code in vignettes nor build outputs",
             "      --no-build-vignettes    do not build vignette outputs",
             "      --ignore-vignettes    skip all tests on vignettes",

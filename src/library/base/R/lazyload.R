@@ -75,7 +75,7 @@ lazyLoadDBexec <- function(filebase, fun, filter)
             ## parent.env=emptyenv(); and yes an alternative would have been
             ## baseenv(), but that was seldom the intention of folks that
             ## set the environment to NULL.
-            parent.env(e) <- if(!is.null(data$enclos)) data$enclos else emptyenv()
+            parent.env(e) <- data$enclos %||% emptyenv()
             list2env(data$bindings, e)
             if (! is.null(data$attributes))
                 attributes(e) <- data$attributes
