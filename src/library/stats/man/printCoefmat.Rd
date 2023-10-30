@@ -1,6 +1,6 @@
 % File src/library/stats/man/printCoefmat.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2018 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{printCoefmat}
@@ -55,7 +55,7 @@ printCoefmat(x, digits = max(3, getOption("digits") - 2),
   \item{has.Pvalue}{logical; if \code{TRUE}, the last column of \code{x}
     contains P values; in that case, it is printed if and only if
     \code{P.values} (above) is true.}
-  \item{eps.Pvalue}{number, ..}
+  \item{eps.Pvalue}{number, passed to \code{\link{format.Pval}()} as \code{eps}.}
   \item{na.print}{a character string to code \code{\link{NA}} values in
     printed output.}
   \item{quote, right, \dots}{further arguments passed to
