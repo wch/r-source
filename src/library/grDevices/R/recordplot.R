@@ -95,8 +95,7 @@ restoreRecordedPlot <- function(plot, reloadPkgs) {
         symbol <- plot[[c(1L, i, 2L, 1L)]]
         if (inherits(symbol, "NativeSymbolInfo")) {
             # determine the dll that the symbol lives in
-            name <- (if(!is.null(symbol$package))
-                         symbol$package else symbol$dll)[["name"]]
+            name <- (symbol$package %||% symbol$dll)[["name"]]
             pkgDLL <- getLoadedDLLs()[[name]]
             # reconstruct the native symbol and assign it into the plot
             # This will error out if it fails to find the symbol, which

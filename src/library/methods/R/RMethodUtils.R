@@ -1729,8 +1729,7 @@ if(FALSE) {
         names <- names(signature)
         pkgs <- character(length(signature))
         for(i in seq_along(pkgs)) {
-            pkgi <- attr(signature[[i]], "package")
-            pkgs[[i]] <- if(is.null(pkgi)) "" else pkgi
+            pkgs[[i]] <- attr(signature[[i]], "package") %||% ""
         }
     }
     msgs <- character(); level <- integer()

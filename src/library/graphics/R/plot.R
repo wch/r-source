@@ -87,11 +87,10 @@ plot.factor <- function(x, y, legend.text = NULL, ...)
 {
     if (missing(y) || is.factor(y)) {
         dargs <- list(...)
-        axisnames <- if (!is.null(dargs$axes))
-            dargs$axes
-        else if (!is.null(dargs$xaxt))
-            dargs$xaxt != "n"
-        else TRUE
+        axisnames <- dargs$axes %||%
+            if (!is.null(dargs$xaxt))
+                dargs$xaxt != "n"
+            else TRUE
     }
     if (missing(y)) {
         barplot(table(x), axisnames = axisnames, ...)

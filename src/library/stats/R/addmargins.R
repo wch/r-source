@@ -129,7 +129,7 @@ addmargins <-
 	newdim[margin] <- newdim[margin] + n.mar
 	dnA <- dimnames(A) %||% vector("list", n.dim)
 	dnA[[margin]] <-
-	    c(if(is.null(dnA[[margin]])) rep("", d[[margin]]) else dnA[[margin]],
+	    c(dnA[[margin]] %||% rep("", d[[margin]]),
 	      fnames)
 
 	## Number of elements in the expanded array

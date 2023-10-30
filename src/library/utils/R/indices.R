@@ -42,8 +42,7 @@ packageDescription <-
     if(is.null(pkgpath)) pkgpath <- ""
 
     if(pkgpath == "") {
-        libs <- if(is.null(lib.loc)) .libPaths() else lib.loc
-        for(lib in libs)
+        for(lib in lib.loc %||% .libPaths())
             if(file.access(file.path(lib, pkg), 5) == 0L) {
                 pkgpath <- file.path(lib, pkg)
                 break

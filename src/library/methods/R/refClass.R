@@ -1198,11 +1198,7 @@ showRefClassDef <- function(object, title = "Reference Class") {
 .lockedFieldsMetaName <- ".#lockedFields"
 .getLockedFieldNames <- function(def) {
     env <- def@fieldPrototypes
-    value <- env[[.lockedFieldsMetaName]]
-    if(is.null(value))
-        character()
-    else
-        value
+    env[[.lockedFieldsMetaName]] %||% character()
 }
 .setLockedFieldNames <- function(def, value) {
     env <- def@fieldPrototypes

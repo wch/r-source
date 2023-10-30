@@ -856,11 +856,11 @@ getGrobFromGPath.gTree <- function(grob, pathsofar, gPath, strict,
         NULL
       else
         getGTree(grob,
-                 if (is.null(pathsofar)) grob$name else pathsofar,
+                 pathsofar %||% grob$name,
                  gPath, strict, grep, global)
   } else {
     getGTree(grob,
-             if (is.null(pathsofar)) grob$name else pathsofar,
+             pathsofar %||% grob$name,
              gPath, strict, grep, global)
   }
 }
@@ -1001,12 +1001,12 @@ setGrobFromGPath.gTree <- function(grob, pathsofar, gPath, newGrob,
         NULL
       else
         setGTree(grob,
-                 if (is.null(pathsofar)) grob$name else pathsofar,
+                 pathsofar %||% grob$name,
                  gPath, newGrob, strict, grep)
   } else {
     setGTree(grob,
              # Initialise pathsofar if first time through
-             if (is.null(pathsofar)) grob$name else pathsofar,
+             pathsofar %||% grob$name,
              gPath, newGrob, strict, grep)
   }
 }
@@ -1164,11 +1164,11 @@ editGrobFromGPath.gTree <- function(grob, specs,
         NULL
       else
         editGTree(grob, specs,
-                  if (is.null(pathsofar)) grob$name else pathsofar,
+                  pathsofar %||% grob$name,
                   gPath, strict, grep, global)
   } else {
     editGTree(grob, specs,
-              if (is.null(pathsofar)) grob$name else pathsofar,
+              pathsofar %||% grob$name,
               gPath, strict, grep, global)
   }
 }
@@ -1328,11 +1328,11 @@ addGrobFromGPath.gTree <- function(grob, child,
         NULL
       else
         addGTree(grob, child,
-                 if (is.null(pathsofar)) grob$name else pathsofar,
+                 pathsofar %||% grob$name,
                  gPath, strict, grep, global)
   } else {
     addGTree(grob, child,
-             if (is.null(pathsofar)) grob$name else pathsofar,
+             pathsofar %||% grob$name,
              gPath, strict, grep, global)
   }
 }
@@ -1503,11 +1503,11 @@ removeGrobFromGPath.gTree <- function(grob, name,
         NULL
       else
         removeGTree(grob, name,
-                    if (is.null(pathsofar)) grob$name else pathsofar,
+                    pathsofar %||% grob$name,
                     gPath, strict, grep, grepname, global, warn)
   } else {
     removeGTree(grob, name,
-                if (is.null(pathsofar)) grob$name else pathsofar,
+                pathsofar %||% grob$name,
                 gPath, strict, grep, grepname, global, warn)
   }
 }
