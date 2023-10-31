@@ -757,7 +757,11 @@ SEXP PicTeX(SEXP args)
 
     const void *vmax = vmaxget();
     args = CDR(args); /* skip entry point name */
-    file = translateCharFP(asChar(CAR(args))); args = CDR(args);
+
+     SEXP tmp = asChar(CAR(args));
+    if (tmp == NA_STRING)
+	error(_("invalid 'file' parameter in %s"), "pictex");
+    file = translateCharFP(tmp);  args = CDR(args);
     bg = CHAR(asChar(CAR(args)));   args = CDR(args);
     fg = CHAR(asChar(CAR(args)));   args = CDR(args);
     width = asReal(CAR(args));	     args = CDR(args);
