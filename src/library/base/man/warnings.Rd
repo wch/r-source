@@ -70,6 +70,8 @@ warnings(\dots)
 }
 \value{\code{warnings()} returns an object of S3 class \code{"warnings"}, basically a named
   \code{\link{list}}.
+  In \R versions before 4.4.0, it returned \code{\link{NULL}} when there
+  were no warnings, contrary to the above documentation.
 
   \code{summary(<warnings>)} returns a \code{"summary.warnings"}
   object which is basically the \code{\link{list}} of unique warnings

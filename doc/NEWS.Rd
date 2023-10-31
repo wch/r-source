@@ -202,6 +202,9 @@
       \code{if(!is.null(L)) L else R} or \code{if(is.null(L)) R else L}
       phrases.
 
+      \item \code{warnings()} now always inherits from \code{"warnings"} as
+      documented, newly also in the case of no warnings, where it
+      previously returned \code{NULL}.
     }
   }
 
