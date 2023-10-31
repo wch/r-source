@@ -1246,10 +1246,12 @@ SEXP dimgets(SEXP vec, SEXP val)
 	error(_("dims [product %lld] do not match the length of object [%lld]"),
 	      (long long)total, (long long)len);
     }
+#if 0
 // currently it is documented that `dim<-` removes dimnames() .. but ..
     SEXP odim = getAttrib0(vec, R_DimSymbol); // keep dimnames(.) if dim() entries are unchanged
     if((LENGTH(odim) != ndim) || memcmp((void *)INTEGER(odim),
 					(void *)INTEGER(val), ndim * sizeof(int)))
+#endif
 	removeAttrib(vec, R_DimNamesSymbol);
     installAttrib(vec, R_DimSymbol, val);
 
