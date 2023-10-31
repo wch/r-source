@@ -807,7 +807,7 @@ attribute_hidden SEXP do_seq(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     /* This is a primitive and we manage argument matching ourselves.
        We pretend this is
-       seq(from, to, by, length.out, along.with, ...)
+       seq.int(from, to, by, length.out, along.with, ...)
     */
     static SEXP do_seq_formals = NULL;
     if (do_seq_formals == NULL)
@@ -846,12 +846,17 @@ attribute_hidden SEXP do_seq(SEXP call, SEXP op, SEXP args, SEXP rho)
 	}
     } else if(len != R_MissingArg && len != R_NilValue) {
 	double rout = asReal(len);
+	if(!R_FINITE(rout))
+	    errorcall(call, _("'%s' must be a finite number"), "length.out");
 	if(ISNAN(rout) || rout <= -0.5)
 	    errorcall(call, _("'length.out' must be a non-negative number"));
 	if(length(len) != 1)
 	    warningcall(call, _("first element used of '%s' argument"),
 			"length.out");
-	lout = (R_xlen_t) ceil(rout);
+	rout = ceil(rout);
+	if(rout >= R_XLEN_T_MAX)
+	    errorcall(call, _("result would be too long a vector"));
+	lout = (R_xlen_t) rout;
     }
 
     if(lout == NA_INTEGER) {

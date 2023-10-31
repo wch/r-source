@@ -466,6 +466,8 @@
 
       \code{rank(<long vector>)} now works, fixing \PR{18617}, thanks to
       Ilia Kats.
+
+      \code{seq.int()} did not adequately check its \code{length.out} argument.
     }
   }
 }
