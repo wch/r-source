@@ -1578,7 +1578,7 @@ OS X' which takes you to a new page. Two files are offered for download,
 @file{R-@value{VERSIONno}-arm64.pkg} and @file{R-@value{VERSIONno}.pkg}.
 Both are for macOS 11 or later (Big Sur, Monterey, Ventura, @dots{}).
 
-The first runs is for `Apple Silicon' (aka `M1' or `M2') Macs, the
+The first runs is for `Apple Silicon' (aka `M1', `M2' or 'M3') Macs, the
 second for older Macs with an @cputype{x86_64} (Intel) CPU.
 
 Package @file{R-@value{VERSIONno}.pkg} also be installed on `Apple
