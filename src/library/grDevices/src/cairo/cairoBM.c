@@ -595,6 +595,8 @@ SEXP in_Cairo(SEXP args)
     if (!isString(CAR(args)) || LENGTH(CAR(args)) < 1)
 	error(_("invalid '%s' argument"), "filename");
     filename = STRING_ELT(CAR(args), 0);
+    if (filename == NA_STRING)
+	error(_("invalid '%s' argument"), "filename");
     args = CDR(args);
     type = asInteger(CAR(args));
     if(type == NA_INTEGER || type <= 0)

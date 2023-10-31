@@ -3130,7 +3130,10 @@ SEXP Quartz(SEXP args)
     if (isNull(tmps)) 
 	file = NULL;
     else if (isString(tmps) && LENGTH(tmps) >= 1) {
-        const char *tmp = R_ExpandFileName(CHAR(STRING_ELT(tmps, 0)));
+	SEXP tmp1 = STRING_ELT(tmps, 0);
+	if(tmp1 == NA_STRING)
+	    error(_("invalid 'file' argument"));
+        const char *tmp = R_ExpandFileName(CHAR(tmp1));
 	file = R_alloc(strlen(tmp) + 1, sizeof(char));
 	strcpy(file, tmp);
     } else
