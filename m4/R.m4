@@ -3117,6 +3117,10 @@ LIBS="${BLAS_LIBS} ${FLIBS} ${LIBS}"
 
 dnl Check LAPACK_LIBS environment variable
 if test "${acx_lapack_ok}" = no; then
+  if test "x${LAPACK_LIBS}" = "x${BLAS_LIBS}"; then
+    ## make it clear that we are using LAPACK from BLAS libs
+    LAPACK_LIBS=""
+  fi
   if test "x${LAPACK_LIBS}" != x; then
     r_save_LIBS="${LIBS}"; LIBS="${LAPACK_LIBS} ${LIBS}"
     AC_MSG_CHECKING([for ${lapack} in ${LAPACK_LIBS}])

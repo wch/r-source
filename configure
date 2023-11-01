@@ -47740,6 +47740,10 @@ acx_lapack_save_LIBS="${LIBS}"
 LIBS="${BLAS_LIBS} ${FLIBS} ${LIBS}"
 
 if test "${acx_lapack_ok}" = no; then
+  if test "x${LAPACK_LIBS}" = "x${BLAS_LIBS}"; then
+    ## make it clear that we are using LAPACK from BLAS libs
+    LAPACK_LIBS=""
+  fi
   if test "x${LAPACK_LIBS}" != x; then
     r_save_LIBS="${LIBS}"; LIBS="${LAPACK_LIBS} ${LIBS}"
     { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for ${lapack} in ${LAPACK_LIBS}" >&5
