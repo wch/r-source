@@ -47740,16 +47740,6 @@ acx_lapack_save_LIBS="${LIBS}"
 LIBS="${BLAS_LIBS} ${FLIBS} ${LIBS}"
 
 if test "${acx_lapack_ok}" = no; then
-  as_ac_var=`printf "%s\n" "ac_cv_func_${lapack}" | $as_tr_sh`
-ac_fn_c_check_func "$LINENO" "${lapack}" "$as_ac_var"
-if eval test \"x\$"$as_ac_var"\" = x"yes"
-then :
-  acx_lapack_ok=yes
-fi
-
-fi
-
-if test "${acx_lapack_ok}" = no; then
   if test "x${LAPACK_LIBS}" != x; then
     r_save_LIBS="${LIBS}"; LIBS="${LAPACK_LIBS} ${LIBS}"
     { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for ${lapack} in ${LAPACK_LIBS}" >&5
@@ -47790,6 +47780,17 @@ printf "%s\n" "${acx_lapack_ok}" >&6; }
     LIBS="${r_save_LIBS}"
   fi
 fi
+
+if test "${acx_lapack_ok}" = no; then
+  as_ac_var=`printf "%s\n" "ac_cv_func_${lapack}" | $as_tr_sh`
+ac_fn_c_check_func "$LINENO" "${lapack}" "$as_ac_var"
+if eval test \"x\$"$as_ac_var"\" = x"yes"
+then :
+  acx_lapack_ok=yes
+fi
+
+fi
+
 
 
 if test "${acx_lapack_ok}" = no; then
