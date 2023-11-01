@@ -451,7 +451,7 @@
 \section{\Rlogo CHANGES IN R 4.3.2 patched}{
   \subsection{BUG FIXES}{
     \itemize{
-      \item Some invalid \code{file} arguments to \code{pictes()},
+      \item Some invalid \code{file} arguments to \code{pictex()},
       \code{postscript()} and \code{xfig()} opened a file called
       \samp{NA} rather than throw an error.  These included
       \code{postscript(NULL)} (which some people expected to work like
