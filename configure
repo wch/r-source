@@ -47646,6 +47646,8 @@ printf "%s\n" "$ac_res" >&6; }
 if eval test \"x\$"$as_ac_Lib"\" = x"yes"
 then :
   acx_lapack_ok=yes
+else $as_nop
+  acx_lapack_ok=no
 fi
 
 fi

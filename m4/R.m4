@@ -3178,7 +3178,7 @@ fi
 
 if test "${acx_lapack_ok}" = yes; then
 LIBS="-lblas ${FLIBS} ${acx_lapack_save_LIBS}"
-AC_CHECK_LIB(lapack, ${lapack}, [acx_lapack_ok=yes])
+AC_CHECK_LIB(lapack, ${lapack}, [acx_lapack_ok=yes], [acx_lapack_ok=no])
 fi
 
 if test "${acx_lapack_ok}" = yes; then
