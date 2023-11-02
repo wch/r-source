@@ -3156,6 +3156,8 @@ AC_SUBST(LAPACK_LIBS)
 ## Look for system -llapack of version at least 3.10.0.
 ## We have to test with a system BLAS.
 ## We don't want an external lapack which contains a BLAS.
+## We document that at least ATLAS, OpenBLAS and Accelerate lapack
+## is excluded (R-admin).
 AC_DEFUN([R_LAPACK_SYSTEM_LIB],
 [AC_REQUIRE([R_PROG_FC_FLIBS])
 AC_REQUIRE([R_PROG_FC_APPEND_UNDERSCORE])
@@ -3179,6 +3181,49 @@ LIBS="${FLIBS} ${LIBS}"
 AC_CHECK_LIB(lapack, ${dgemm}, [acx_lapack_ok=no])
 if test "${acx_lapack_ok}" = no; then
   AC_MSG_NOTICE([Not using liblapack as it contains BLAS routines])
+fi
+
+if test "${acx_lapack_ok}" = yes; then
+  LIBS="-llapack -lblas ${FLIBS} ${acx_lapack_save_LIBS}"
+  dnl Detect ATLAS liblapack.
+  dnl Note on Debian/Ubuntu, liblapack.so is generic but has a SONAME
+  dnl that may point to an optimized version, e.g. from ATLAS.
+  dnl Hence AC_CHECK_LIB doesn't work, it would never find the
+  dnl symbol.
+
+AC_CACHE_CHECK([for ATLAS routines in liblapack], [r_cv_atlas_liblapack],
+[AC_RUN_IFELSE([AC_LANG_SOURCE([[
+#include <dlfcn.h>
+#include <stdlib.h>
+
+extern void ${ilaver}(int *major, int *minor, int *patch);
+int major, minor, patch;
+volatile int dummy;
+
+int main (void) {
+  ${ilaver}(&major, &minor, &patch); /* force linking LAPACK */
+  dummy = major + minor + patch;
+  
+  /* return 1 when we find an ATLAS optimized LAPACK routine dpotrf
+  
+     see do_eSoftVersion in platform.c for more on PLT and
+     RTLD_DEFAULT, RTLD_NEXT */
+  
+  if (dlsym(RTLD_DEFAULT, "ATL_dpotrf") || dlsym(RTLD_NEXT, "ATL_dpotrf"))
+    exit(1);
+  else
+    exit(0);
+}
+]])],
+[r_cv_atlas_liblapack=no],
+[r_cv_atlas_liblapack=yes],
+[r_cv_atlas_liblapack=no])])
+
+LIBS="${acx_lapack_save_LIBS}"
+
+if test "${r_cv_atlas_liblapack}" = yes; then
+ acx_lapack_ok=no
+fi
 fi
 
 if test "${acx_lapack_ok}" = yes; then

@@ -47597,6 +47597,66 @@ printf "%s\n" "$as_me: Not using liblapack as it contains BLAS routines" >&6;}
 fi
 
 if test "${acx_lapack_ok}" = yes; then
+  LIBS="-llapack -lblas ${FLIBS} ${acx_lapack_save_LIBS}"
+
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for ATLAS routines in liblapack" >&5
+printf %s "checking for ATLAS routines in liblapack... " >&6; }
+if test ${r_cv_atlas_liblapack+y}
+then :
+  printf %s "(cached) " >&6
+else $as_nop
+  if test "$cross_compiling" = yes
+then :
+  r_cv_atlas_liblapack=no
+else $as_nop
+  cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+#include <dlfcn.h>
+#include <stdlib.h>
+
+extern void ${ilaver}(int *major, int *minor, int *patch);
+int major, minor, patch;
+volatile int dummy;
+
+int main (void) {
+  ${ilaver}(&major, &minor, &patch); /* force linking LAPACK */
+  dummy = major + minor + patch;
+
+  /* return 1 when we find an ATLAS optimized LAPACK routine dpotrf
+
+     see do_eSoftVersion in platform.c for more on PLT and
+     RTLD_DEFAULT, RTLD_NEXT */
+
+  if (dlsym(RTLD_DEFAULT, "ATL_dpotrf") || dlsym(RTLD_NEXT, "ATL_dpotrf"))
+    exit(1);
+  else
+    exit(0);
+}
+
+_ACEOF
+if ac_fn_c_try_run "$LINENO"
+then :
+  r_cv_atlas_liblapack=no
+else $as_nop
+  r_cv_atlas_liblapack=yes
+fi
+rm -f core *.core core.conftest.* gmon.out bb.out conftest$ac_exeext \
+  conftest.$ac_objext conftest.beam conftest.$ac_ext
+fi
+
+fi
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $r_cv_atlas_liblapack" >&5
+printf "%s\n" "$r_cv_atlas_liblapack" >&6; }
+
+LIBS="${acx_lapack_save_LIBS}"
+
+if test "${r_cv_atlas_liblapack}" = yes; then
+ acx_lapack_ok=no
+fi
+fi
+
+if test "${acx_lapack_ok}" = yes; then
 LIBS="-lblas ${FLIBS} ${acx_lapack_save_LIBS}"
 as_ac_Lib=`printf "%s\n" "ac_cv_lib_lapack_${lapack}" | $as_tr_sh`
 { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for ${lapack} in -llapack" >&5
