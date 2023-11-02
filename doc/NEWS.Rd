@@ -463,18 +463,22 @@
       \code{postscript(NULL)} (which some people expected to work like
       \code{pdf(NULL)}).
 
-      Passing \code{filename = NA} to \code{svg()}, \code{cairo_pdf()},
+      \item Passing \code{filename = NA} to \code{svg()}, \code{cairo_pdf()},
       \code{cairo_ps()} or the Cairo-based bitmap devices opened a file
       called \samp{NA}: it now throws an error.
 
-      \code{quartz(file = NA)} opened a file called \samp{NA}, including
+      \item \code{quartz(file = NA)} opened a file called \samp{NA}, including
       when used as a Quartz-based bitmap device.  It now gives an error.
 
-      \code{rank(<long vector>)} now works, fixing \PR{18617}, thanks to
+      \item \code{rank(<long vector>)} now works, fixing \PR{18617}, thanks to
       Ilia Kats.
 
       \item \code{seq.int()} did not adequately check its
       \code{length.out} argument.
+
+      \item \code{match(<POSIXct>, .)} is correct again for differing time
+      zones, ditto for \code{"POSIXlt"}, fixing \PR{18618} reported by
+      Bastian Klein.
     }
   }
 }

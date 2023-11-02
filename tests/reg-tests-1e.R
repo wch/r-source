@@ -983,6 +983,38 @@ stopifnot(roundtrip(r"(\item text)"))
 ## space was lost in R < 4.4.0
 
 
+## PR#18618: match()  incorrect  with POSIXct || POSIXlt || fractional sec
+(dCT <- seq(as.POSIXct("2010-10-31", tz = "Europe/Berlin"), by = "hour", length = 5))
+(dd <- diff(dCT))
+chd <- as.character(dCT)
+vdt <- as.vector   (dCT)
+dLT <- as.POSIXlt  (dCT)
+dat <- as.Date     (dCT)
+dL2 <- dLT[c(1:5,5)]; dL2[6]$sec <- 1/4
+dL. <- dL2          ; dL.[6]$sec <- 1e-9
+stopifnot(exprs = {
+    inherits(dCT, "POSIXct")
+    inherits(dLT, "POSIXlt")
+    !duplicated(dCT)
+    dd == 1
+    units(dd) == "hours"
+    diff(as.integer(dCT)) == 3600L # seconds
+    identical(match(chd, chd), c(1:3, 3L, 5L))
+    identical(match(vdt, vdt), seq_along(vdt))
+    identical(match(dat, dat), c(1L,1L, 3L,3L,3L)) # always ok
+    identical(match(dCT, dCT), seq_along(dCT)) # wrong in 4.3.{0,1,2}
+    identical(match(dLT, dLT), seq_along(dLT)) #  "    "   "
+    identical(match(dL2, dL2), seq_along(dL2)) #  "    "   "
+    identical(match(dL., dL.), seq_along(dL.)) #  "    "  now ok, as indeed,
+  ! identical(dL.[5], dL.[6]) # NB: `==`, diff(), ... all lose precision, from as.POSIXct():
+    inherits(dC. <- as.POSIXct(dL.), "POSIXct")
+    identical(match(dC., dC.), c(1:5, 5L))
+    identical(dC.[5], dC.[6])
+    dC.[5] == dC.[6]
+} )
+## failed (partly) in R versions  4.3.0 -- 4.3.2
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
