@@ -47653,6 +47653,84 @@ fi
 fi
 
 if test "${acx_lapack_ok}" = yes; then
+  LIBS="-llapack -lblas ${FLIBS} ${acx_lapack_save_LIBS}"
+  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for liblapack dependency with both BLAS and LAPACK routines" >&5
+printf %s "checking for liblapack dependency with both BLAS and LAPACK routines... " >&6; }
+if test ${r_cv_dep_lapackblas+y}
+then :
+  printf %s "(cached) " >&6
+else $as_nop
+  if test "$cross_compiling" = yes
+then :
+  r_cv_dep_lapackblas=no
+else $as_nop
+  cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+#include <dlfcn.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+void *libforsym(const char *name, int current) {
+  void *addr = dlsym(current ? RTLD_DEFAULT : RTLD_NEXT, name);
+  if (!addr) return NULL;
+
+  Dl_info nfo;
+  if (!dladdr(addr, &nfo)) return NULL;
+  return dlopen(nfo.dli_fname, RTLD_LAZY);
+}
+
+/* does a library having symbol a also have symbol b? */
+int libwithhas(const char *syma, const char *symb, int current) {
+  void *lib = libforsym(syma, current);
+  int ans = lib && dlsym(lib, symb);
+  dlclose(lib);
+  return ans;
+}
+
+extern void ${ilaver}(int *major, int *minor, int *patch);
+int major, minor, patch;
+volatile int dummy;
+
+int main (void) {
+  ${ilaver}(&major, &minor, &patch); /* force linking LAPACK */
+  dummy = major + minor + patch;
+
+  /* return 1 when we know a dependent library which includes BLAS
+     routines also includes LAPACK routines
+
+     see do_eSoftVersion in platform.c for more on PLT and
+     RTLD_DEFAULT, RTLD_NEXT */
+  if (libwithhas("${dgemm}", "${lapack}", 0) ||
+     libwithhas("${dgemm}", "${lapack}", 1)) {
+     exit(1);
+  }
+  exit(0);
+}
+
+_ACEOF
+if ac_fn_c_try_run "$LINENO"
+then :
+  r_cv_dep_lapackblas=no
+else $as_nop
+  r_cv_dep_lapackblas=yes
+fi
+rm -f core *.core core.conftest.* gmon.out bb.out conftest$ac_exeext \
+  conftest.$ac_objext conftest.beam conftest.$ac_ext
+fi
+
+fi
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $r_cv_dep_lapackblas" >&5
+printf "%s\n" "$r_cv_dep_lapackblas" >&6; }
+
+LIBS="${acx_lapack_save_LIBS}"
+
+if test "${r_cv_dep_lapackblas}" = yes; then
+ acx_lapack_ok=no
+fi
+fi
+
+if test "${acx_lapack_ok}" = yes; then
   LIBS="-lblas -llapack ${FLIBS} ${acx_lapack_save_LIBS}"
 
 { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking if LAPACK version >= 3.10.0" >&5

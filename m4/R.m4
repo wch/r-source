@@ -3187,6 +3187,63 @@ AC_CHECK_LIB(lapack, ${lapack}, [acx_lapack_ok=yes], [acx_lapack_ok=no])
 fi
 
 if test "${acx_lapack_ok}" = yes; then
+  LIBS="-llapack -lblas ${FLIBS} ${acx_lapack_save_LIBS}"
+  dnl This heuristic can detect liblapack which is e.g. part of OpenBLAS
+AC_CACHE_CHECK([for liblapack dependency with both BLAS and LAPACK routines], [r_cv_dep_lapackblas],
+[AC_RUN_IFELSE([AC_LANG_SOURCE([[
+#include <dlfcn.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+void *libforsym(const char *name, int current) {
+  void *addr = dlsym(current ? RTLD_DEFAULT : RTLD_NEXT, name);
+  if (!addr) return NULL;
+    
+  Dl_info nfo;
+  if (!dladdr(addr, &nfo)) return NULL;
+  return dlopen(nfo.dli_fname, RTLD_LAZY);
+}
+
+/* does a library having symbol a also have symbol b? */
+int libwithhas(const char *syma, const char *symb, int current) {
+  void *lib = libforsym(syma, current);
+  int ans = lib && dlsym(lib, symb);
+  dlclose(lib);
+  return ans;
+}
+
+extern void ${ilaver}(int *major, int *minor, int *patch);
+int major, minor, patch;
+volatile int dummy;
+
+int main (void) {
+  ${ilaver}(&major, &minor, &patch); /* force linking LAPACK */
+  dummy = major + minor + patch;
+  
+  /* return 1 when we know a dependent library which includes BLAS
+     routines also includes LAPACK routines
+      
+     see do_eSoftVersion in platform.c for more on PLT and
+     RTLD_DEFAULT, RTLD_NEXT */  
+  if (libwithhas("${dgemm}", "${lapack}", 0) ||
+     libwithhas("${dgemm}", "${lapack}", 1)) {
+     exit(1);
+  }
+  exit(0);
+}
+]])],
+[r_cv_dep_lapackblas=no],
+[r_cv_dep_lapackblas=yes],
+[r_cv_dep_lapackblas=no])])
+
+LIBS="${acx_lapack_save_LIBS}"
+
+if test "${r_cv_dep_lapackblas}" = yes; then
+ acx_lapack_ok=no
+fi
+fi
+
+if test "${acx_lapack_ok}" = yes; then
   LIBS="-lblas -llapack ${FLIBS} ${acx_lapack_save_LIBS}"
 
 AC_CACHE_CHECK([if LAPACK version >= 3.10.0], [r_cv_lapack_ver],
