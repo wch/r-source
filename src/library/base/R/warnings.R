@@ -1,7 +1,7 @@
 #  File src/library/base/R/warnings.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2021 The R Core Team
+#  Copyright (C) 1995-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -18,9 +18,8 @@
 
 warnings <- function(...)
 {
-    if(length(last.warning <- baseenv()[["last.warning"]]))
-        structure(last.warning, dots = list(...), class = "warnings")
-    ## else NULL
+    structure(baseenv()[["last.warning"]] %||% list(),
+              dots = list(...), class = "warnings")
 }
 
 `[.warnings` <- function(x, ...)

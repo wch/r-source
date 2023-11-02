@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2023-08-12 r84939) -- "Unsuffered Consequences"
+R Under development (unstable) (2023-10-23 r85391) -- "Unsuffered Consequences"
 Copyright (C) 2023 The R Foundation for Statistical Computing
 Platform: aarch64-apple-darwin22.6.0
 
@@ -575,8 +575,7 @@ z32: new("dgeMatrix", Dim = 3:2, Dimnames = list(NULL, NULL), x = c(0,
 --=--=--=--=--
 > 
 > summary(warnings())
-Length  Class   Mode 
-     0   NULL   NULL 
+No warnings
 > ## at the very end
 > cat('Time elapsed: ', proc.time(), "\n")
 Time elapsed:  0.514 0.03 0.547 0.001 0.002 

@@ -3115,13 +3115,12 @@ fi
 acx_lapack_save_LIBS="${LIBS}"
 LIBS="${BLAS_LIBS} ${FLIBS} ${LIBS}"
 
-dnl LAPACK linked to by default?  (Could be in the BLAS libs.)
+dnl Check LAPACK_LIBS environment variable
 if test "${acx_lapack_ok}" = no; then
-  AC_CHECK_FUNC(${lapack}, [acx_lapack_ok=yes])
-fi
-
-dnl Next, check LAPACK_LIBS environment variable
-if test "${acx_lapack_ok}" = no; then
+  if test "x${LAPACK_LIBS}" = "x${BLAS_LIBS}"; then
+    ## make it clear that we are using LAPACK from BLAS libs
+    LAPACK_LIBS=""
+  fi
   if test "x${LAPACK_LIBS}" != x; then
     r_save_LIBS="${LIBS}"; LIBS="${LAPACK_LIBS} ${LIBS}"
     AC_MSG_CHECKING([for ${lapack} in ${LAPACK_LIBS}])
@@ -3130,6 +3129,12 @@ if test "${acx_lapack_ok}" = no; then
     LIBS="${r_save_LIBS}"
   fi
 fi
+
+dnl LAPACK linked to by default?  (Could be in the BLAS libs.)
+if test "${acx_lapack_ok}" = no; then
+  AC_CHECK_FUNC(${lapack}, [acx_lapack_ok=yes])
+fi
+
 
 dnl LAPACK in Sun Performance library?
 dnl No longer test here as will be picked up by the default test.
@@ -3151,6 +3156,8 @@ AC_SUBST(LAPACK_LIBS)
 ## Look for system -llapack of version at least 3.10.0.
 ## We have to test with a system BLAS.
 ## We don't want an external lapack which contains a BLAS.
+## We document that at least ATLAS, OpenBLAS and Accelerate lapack
+## is excluded (R-admin).
 AC_DEFUN([R_LAPACK_SYSTEM_LIB],
 [AC_REQUIRE([R_PROG_FC_FLIBS])
 AC_REQUIRE([R_PROG_FC_APPEND_UNDERSCORE])
@@ -3177,8 +3184,108 @@ if test "${acx_lapack_ok}" = no; then
 fi
 
 if test "${acx_lapack_ok}" = yes; then
+  LIBS="-llapack -lblas ${FLIBS} ${acx_lapack_save_LIBS}"
+  dnl Detect ATLAS liblapack.
+  dnl Note on Debian/Ubuntu, liblapack.so is generic but has a SONAME
+  dnl that may point to an optimized version, e.g. from ATLAS.
+  dnl Hence AC_CHECK_LIB doesn't work, it would never find the
+  dnl symbol.
+
+AC_CACHE_CHECK([for ATLAS routines in liblapack], [r_cv_atlas_liblapack],
+[AC_RUN_IFELSE([AC_LANG_SOURCE([[
+#include <dlfcn.h>
+#include <stdlib.h>
+
+extern void ${ilaver}(int *major, int *minor, int *patch);
+int major, minor, patch;
+volatile int dummy;
+
+int main (void) {
+  ${ilaver}(&major, &minor, &patch); /* force linking LAPACK */
+  dummy = major + minor + patch;
+  
+  /* return 1 when we find an ATLAS optimized LAPACK routine dpotrf
+  
+     see do_eSoftVersion in platform.c for more on PLT and
+     RTLD_DEFAULT, RTLD_NEXT */
+  
+  if (dlsym(RTLD_DEFAULT, "ATL_dpotrf") || dlsym(RTLD_NEXT, "ATL_dpotrf"))
+    exit(1);
+  else
+    exit(0);
+}
+]])],
+[r_cv_atlas_liblapack=no],
+[r_cv_atlas_liblapack=yes],
+[r_cv_atlas_liblapack=no])])
+
+LIBS="${acx_lapack_save_LIBS}"
+
+if test "${r_cv_atlas_liblapack}" = yes; then
+ acx_lapack_ok=no
+fi
+fi
+
+if test "${acx_lapack_ok}" = yes; then
 LIBS="-lblas ${FLIBS} ${acx_lapack_save_LIBS}"
-AC_CHECK_LIB(lapack, ${lapack}, [acx_lapack_ok=yes])
+AC_CHECK_LIB(lapack, ${lapack}, [acx_lapack_ok=yes], [acx_lapack_ok=no])
+fi
+
+if test "${acx_lapack_ok}" = yes; then
+  LIBS="-llapack -lblas ${FLIBS} ${acx_lapack_save_LIBS}"
+  dnl This heuristic can detect liblapack which is e.g. part of OpenBLAS
+AC_CACHE_CHECK([for liblapack dependency with both BLAS and LAPACK routines], [r_cv_dep_lapackblas],
+[AC_RUN_IFELSE([AC_LANG_SOURCE([[
+#include <dlfcn.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+void *libforsym(const char *name, int current) {
+  void *addr = dlsym(current ? RTLD_DEFAULT : RTLD_NEXT, name);
+  if (!addr) return NULL;
+    
+  Dl_info nfo;
+  if (!dladdr(addr, &nfo)) return NULL;
+  return dlopen(nfo.dli_fname, RTLD_LAZY);
+}
+
+/* does a library having symbol a also have symbol b? */
+int libwithhas(const char *syma, const char *symb, int current) {
+  void *lib = libforsym(syma, current);
+  int ans = lib && dlsym(lib, symb);
+  dlclose(lib);
+  return ans;
+}
+
+extern void ${ilaver}(int *major, int *minor, int *patch);
+int major, minor, patch;
+volatile int dummy;
+
+int main (void) {
+  ${ilaver}(&major, &minor, &patch); /* force linking LAPACK */
+  dummy = major + minor + patch;
+  
+  /* return 1 when we know a dependent library which includes BLAS
+     routines also includes LAPACK routines
+      
+     see do_eSoftVersion in platform.c for more on PLT and
+     RTLD_DEFAULT, RTLD_NEXT */  
+  if (libwithhas("${dgemm}", "${lapack}", 0) ||
+     libwithhas("${dgemm}", "${lapack}", 1)) {
+     exit(1);
+  }
+  exit(0);
+}
+]])],
+[r_cv_dep_lapackblas=no],
+[r_cv_dep_lapackblas=yes],
+[r_cv_dep_lapackblas=no])])
+
+LIBS="${acx_lapack_save_LIBS}"
+
+if test "${r_cv_dep_lapackblas}" = yes; then
+ acx_lapack_ok=no
+fi
 fi
 
 if test "${acx_lapack_ok}" = yes; then
