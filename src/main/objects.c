@@ -1778,7 +1778,7 @@ SEXP R_do_new_object(SEXP class_def)
     PROTECT(value = duplicate(R_do_slot(class_def, s_prototype)));
     Rboolean xDataType = TYPEOF(value) == ENVSXP || TYPEOF(value) == SYMSXP ||
 	TYPEOF(value) == EXTPTRSXP;
-    if((TYPEOF(value) == S4SXP || getAttrib(e, R_PackageSymbol) != R_NilValue) &&
+    if((TYPEOF(value) == OBJSXP || getAttrib(e, R_PackageSymbol) != R_NilValue) &&
        !xDataType)
     {
 	setAttrib(value, R_ClassSymbol, e);

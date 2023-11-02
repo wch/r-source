@@ -178,7 +178,7 @@ gap cannot easily be reused.
 @item @code{22}   @tab @code{EXTPTRSXP}  @tab external pointer
 @item @code{23}   @tab @code{WEAKREFSXP} @tab weak reference
 @item @code{24}   @tab @code{RAWSXP}     @tab raw vector
-@item @code{25}   @tab @code{S4SXP}      @tab S4 classes not of simple type
+@item @code{25}   @tab @code{OBJSXP}     @tab objects not of simple type
 @end multitable
 @end quotation
 
@@ -216,8 +216,8 @@ these are sometimes lumped into a pseudo-type @code{FUNSXP} with code
 have formals, body and environment.
 
 @cindex S4 type
-The @code{SEXPTYPE} @code{S4SXP} is for S4 objects which do not consist
-solely of a simple type such as an atomic vector or function.
+The @code{SEXPTYPE} @code{OBJ} is for S4 and other objects which do not
+consist solely of a simple type such as an atomic vector or function.
 
 
 @node Rest of header, The 'data', SEXPTYPEs, SEXPs
@@ -515,7 +515,7 @@ and the @samp{finalizer} is a function or @code{NULL}.
 @item RAWSXP
 @code{length}, @code{truelength} followed by a block of bytes.
 
-@item S4SXP
+@item OBJSXP
 two unused pointers and a tag.
 @end table
 
@@ -1449,7 +1449,7 @@ has not been set.]
 
 S4 objects can be of any @code{SEXPTYPE}.  They are either an object of
 a simple type (such as an atomic vector or function) with S4 class
-information or of type @code{S4SXP}.  In all cases, the `S4 bit' (bit 4
+information or of type @code{OBJSXP}.  In all cases, the `S4 bit' (bit 4
 of the `general purpose' field) is set, and can be tested by the
 macro/function @code{IS_S4_OBJECT}.
 

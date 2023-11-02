@@ -844,11 +844,11 @@ attribute_hidden void PrintValueRec(SEXP s, R_PrintData *data)
 	havecontext = TRUE;
     }
 #endif
-    if(!isMethodsDispatchOn() && (IS_S4_OBJECT(s) || TYPEOF(s) == S4SXP) ) {
+    if(!isMethodsDispatchOn() && (IS_S4_OBJECT(s) || TYPEOF(s) == OBJSXP) ) {
 	SEXP cl = getAttrib(s, R_ClassSymbol);
 	if(isNull(cl)) {
 	    /* This might be a mistaken S4 bit set */
-	    if(TYPEOF(s) == S4SXP)
+	    if(TYPEOF(s) == OBJSXP)
 		Rprintf("<S4 object without a class>\n");
 	    else
 		Rprintf("<Object of type '%s' with S4 bit but without a class>\n",
@@ -967,11 +967,16 @@ attribute_hidden void PrintValueRec(SEXP s, R_PrintData *data)
     case WEAKREFSXP:
 	Rprintf("<weak reference>\n");
 	break;
-    case S4SXP:
-	/*  we got here because no show method, usually no class.
-	    Print the "slots" as attributes, since we don't know the class.
-	*/
-	Rprintf("<S4 Type Object>\n");
+    case OBJSXP:
+	if(IS_S4_OBJECT(s)) {
+	    /*  we got here because no show method, usually no class.
+		Print the "slots" as attributes, since we don't know the class.
+	    */
+	    Rprintf("<S4 Type Object>\n");
+	} else {
+	    /* OBJSXP type, S4 obj bit not set*/
+	    Rprintf("<object>\n");
+	}
 	break;
     default:
 	UNIMPLEMENTED_TYPE("PrintValueRec", s);

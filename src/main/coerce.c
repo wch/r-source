@@ -1200,7 +1200,7 @@ SEXP coerceVector(SEXP v, SEXPTYPE type)
     }
 
     /* code to allow classes to extend ENVSXP, SYMSXP, etc */
-    if(IS_S4_OBJECT(v) && TYPEOF(v) == S4SXP) {
+    if(IS_S4_OBJECT(v) && TYPEOF(v) == OBJSXP) {
 	SEXP vv = R_getS4DataSlot(v, ANYSXP);
 	if(vv == R_NilValue)
 	  error(_("no method for coercing this S4 class to a vector"));
@@ -1570,7 +1570,7 @@ attribute_hidden SEXP do_asvector(SEXP call, SEXP op, SEXP args, SEXP rho)
 	}
     }
 
-    if(IS_S4_OBJECT(x) && TYPEOF(x) == S4SXP) {
+    if(IS_S4_OBJECT(x) && TYPEOF(x) == OBJSXP) {
 	SEXP v = R_getS4DataSlot(x, ANYSXP);
 	if(v == R_NilValue)
 	    error(_("no method for coercing this S4 class to a vector"));
@@ -1970,7 +1970,10 @@ Rcomplex asComplex(SEXP x)
 attribute_hidden SEXP do_typeof(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);
-    return type2rstr(TYPEOF(CAR(args)));
+    if(TYPEOF(CAR(args)) == OBJSXP && ! IS_S4_OBJECT(CAR(args)))
+	return mkString("object");
+    else
+	return type2rstr(TYPEOF(CAR(args)));
 }
 
 /* Define many of the <primitive> "is.xxx" functions :
@@ -2024,7 +2027,7 @@ attribute_hidden SEXP do_is(SEXP call, SEXP op, SEXP args, SEXP rho)
 	LOGICAL0(ans)[0] = (TYPEOF(CAR(args)) == STRSXP);
 	break;
     case SYMSXP:	/* is.symbol === is.name */
-	if(IS_S4_OBJECT(CAR(args)) && (TYPEOF(CAR(args)) == S4SXP)) {
+	if(IS_S4_OBJECT(CAR(args)) && (TYPEOF(CAR(args)) == OBJSXP)) {
 	    SEXP dot_xData = R_getS4DataSlot(CAR(args), SYMSXP);
 	    LOGICAL0(ans)[0] = (TYPEOF(dot_xData) == SYMSXP);
 	}
@@ -2032,7 +2035,7 @@ attribute_hidden SEXP do_is(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    LOGICAL0(ans)[0] = (TYPEOF(CAR(args)) == SYMSXP);
 	break;
     case ENVSXP:	/* is.environment */
-	if(IS_S4_OBJECT(CAR(args)) && (TYPEOF(CAR(args)) == S4SXP)) {
+	if(IS_S4_OBJECT(CAR(args)) && (TYPEOF(CAR(args)) == OBJSXP)) {
 	    SEXP dot_xData = R_getS4DataSlot(CAR(args), ENVSXP);
 	    LOGICAL0(ans)[0] = (TYPEOF(dot_xData) == ENVSXP);
 	}

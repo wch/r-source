@@ -1,6 +1,6 @@
 % File src/library/base/man/typeof.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2021 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{typeof}
@@ -27,6 +27,7 @@ typeof(x)
   (basic functions and operators), \code{"environment"}, \code{"S4"}
   (some S4 objects) and others that are unlikely to be seen at user
   level (\code{"symbol"}, \code{"pairlist"}, \code{"promise"},
+  \code{"object"},
   \code{"language"}, \code{"char"}, \code{"..."}, \code{"any"},
   \code{"expression"}, \code{"externalptr"}, \code{"bytecode"} and
   \code{"weakref"}).

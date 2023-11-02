@@ -1165,7 +1165,7 @@ attribute_hidden SEXP do_bind(SEXP call, SEXP op, SEXP args, SEXP env)
 	   FIXME?  had  cbind(y ~ x, 1) work using lists, before */
     default:
 	error(_("cannot create a matrix from type '%s'"),
-	      type2char(mode));
+	      type2char(mode)); /* mode can only be EXPRSXP here */
     }
 
     if (PRIMVAL(op) == 1)
@@ -1398,6 +1398,9 @@ static SEXP cbind(SEXP call, SEXP args, SEXPTYPE mode, SEXP rho,
 			});
 		    } else
 			/* not sure this can be reached, but to be safe: */
+                        /* `mode` is created in do_bind(), it can only
+                         be one of: NILSXP, LGLSXP, INTSXP, REALSXP,
+                         CPLXSXP, STRSXP, VECSXP, RAWSXP */
 			error(_("cannot create a matrix of type '%s'"),
 			      type2char(mode));
 		}

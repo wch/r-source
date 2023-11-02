@@ -762,6 +762,41 @@ stopifnot(identical(d, data.frame(lwr = c(NA, NA, NA, 6, 15, 24, 33),
 ## lower and upper confidence bands were nonsensical in R <= 4.3.1
 
 
+## New <object> type {{partly experimental}}
+mkObj <- function(...) {
+    ob <- asS3(getClass("S4")@prototype, complete=FALSE) # "hack"
+    if(...length()) attributes(ob) <- list(...)
+    ob
+}
+(oo <- mkObj())
+str(oo) # the same: '<object>'
+(x4 <- asS4(oo))
+dput(x4) # same as print(.)
+dput(oo) # <object> again {possibly to be changed}
+(o2 <- mkObj(name = "Obi", age = 67))
+str(o2) # good!
+dput(o2) # <object>  .. to be changed -- once something like mkObj() becomes API
+stopifnot(exprs = {
+    identical(x4, getClass("S4")@prototype)
+    identical(oo, get("oo", mode="object"))
+    identical(x4, get("x4", mode="S4"))
+    identical(attr(o2, "name"), "Obi")
+})
+assertErrV(o2[ 1 ])
+assertErrV(o2[[1]])
+
+stopifnot(isFALSE(inherits(oo, "S4")))
+stopifnot(isTRUE(inherits(oo, "object")))
+stopifnot(isTRUE(inherits(x4, "S4")))
+stopifnot(isFALSE(inherits(x4, "object")))
+assertErrV(get("oo", .GlobalEnv, mode = "S4"))
+stopifnot(identical(get("oo", .GlobalEnv, mode = "object"), oo))
+stopifnot(identical(get("x4", .GlobalEnv, mode = "S4"), x4))
+assertErrV(get("x4", .GlobalEnv, mode = "object"))
+assertErrV(get("oo", mode = "integer"))
+assertErrV(get("x4", .GlobalEnv, mode = "integer"))
+
+
 ## kappa(), rcond() [& norm()] -- new features and several bug fixes, PR#18543:
 (m <- rbind(c(2, 8, 1),
             c(6, 4, 3),

@@ -274,11 +274,16 @@ static SEXP EnlargeNames(SEXP names, R_xlen_t len, R_xlen_t newlen)
 
 /* used instead of coerceVector to embed a non-vector in a list for
    purposes of SubassignTypeFix, for cases in which coerceVector should
-   fail; namely, S4SXP */
+   fail; currently used only for OBJSXP = S4SXP */
 static SEXP embedInVector(SEXP v, SEXP call)
 {
     SEXP ans;
-    warningcall(call, "implicit list embedding of S4 objects is deprecated");
+    if(IS_S4_OBJECT(v))
+	warningcall(call,
+		    "implicit list embedding of S4 objects is deprecated");
+    else
+	errorcall(call,
+		  "implicit list embedding of \"object\" is not possible");
     PROTECT(ans = allocVector(VECSXP, 1));
     SET_VECTOR_ELT(ans, 0, v);
     UNPROTECT(1);
@@ -403,7 +408,7 @@ static int SubassignTypeFix(SEXP *x, SEXP *y, R_xlen_t stretch, int level,
 	}
 	break;
 
-    case 1925: /* vector <- S4 */
+    case 1925: /* vector <- S4|OBJ */
 
 	if (level == 1) {
 	    /* Embed the RHS into a list */
@@ -452,7 +457,7 @@ static int SubassignTypeFix(SEXP *x, SEXP *y, R_xlen_t stretch, int level,
 	}
 	break;
 
-    case 2025: /* expression <- S4 */
+    case 2025: /* expression <- S4|OBJ */
 
 	if (level == 1) {
 	    /* Embed the RHS into a list */
@@ -463,12 +468,12 @@ static int SubassignTypeFix(SEXP *x, SEXP *y, R_xlen_t stretch, int level,
 	}
 	break;
 
-    case 1025: /* logical   <- S4 */
-    case 1325: /* integer   <- S4 */
-    case 1425: /* real      <- S4 */
-    case 1525: /* complex   <- S4 */
-    case 1625: /* character <- S4 */
-    case 2425: /* raw       <- S4 */
+    case 1025: /* logical   <- S4|OBJ */
+    case 1325: /* integer   <- S4|OBJ */
+    case 1425: /* real      <- S4|OBJ */
+    case 1525: /* complex   <- S4|OBJ */
+    case 1625: /* character <- S4|OBJ */
+    case 2425: /* raw       <- S4|OBJ */
         if (dispatch_asvector(y, call, rho)) {
             return SubassignTypeFix(x, y, stretch, level, call, rho);
         }
@@ -1618,7 +1623,7 @@ attribute_hidden SEXP do_subassign_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	((! IS_ASSIGNMENT_CALL(call)) && MAYBE_REFERENCED(CAR(args))))
 	x = SETCAR(args, shallow_duplicate(CAR(args)));
 
-    Rboolean S4 = IS_S4_OBJECT(x);
+    Rboolean S4 = IS_S4_OBJECT(x); // {before it is changed}
     oldtype = 0;
     if (TYPEOF(x) == LISTSXP || TYPEOF(x) == LANGSXP) {
 	oldtype = TYPEOF(x);
@@ -1785,7 +1790,7 @@ do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     /* code to allow classes to extend ENVSXP */
     Rboolean S4 = IS_S4_OBJECT(x);
-    if(TYPEOF(x) == S4SXP) {
+    if(S4 && TYPEOF(x) == OBJSXP) {
 	xOrig = x; /* will be an S4 object */
 	x = R_getS4DataSlot(x, ANYSXP);
 	if(TYPEOF(x) != ENVSXP)
@@ -2142,7 +2147,7 @@ SEXP R_subassign3_dflt(SEXP call, SEXP x, SEXP nlist, SEXP val)
 	REPROTECT(x = shallow_duplicate(x), pxidx);
 
     /* code to allow classes to extend ENVSXP */
-    if(TYPEOF(x) == S4SXP) {
+    if(TYPEOF(x) == OBJSXP) {
 	xS4 = x;
 	REPROTECT(x = R_getS4DataSlot(x, ANYSXP), pxidx);
 	if(x == R_NilValue)

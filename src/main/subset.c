@@ -965,11 +965,8 @@ attribute_hidden SEXP do_subset2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* Is partial matching ok?  When the exact arg is NA, a warning is
        issued if partial matching occurs.
      */
-    int exact = ExtractExactArg(args), pok;
-    if (exact == -1)
-	pok = exact;
-    else
-	pok = !exact;
+    int exact = ExtractExactArg(args);
+    int pok = (exact == -1) ? exact : ! exact;
 
     x = CAR(args);
 
@@ -996,10 +993,12 @@ attribute_hidden SEXP do_subset2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	errorcall(call, _("incorrect number of subscripts"));
 
     /* code to allow classes to extend environment */
-    if(TYPEOF(x) == S4SXP) {
+    if(TYPEOF(x) == OBJSXP) {
+	SEXP xs = x;
 	x = R_getS4DataSlot(x, ANYSXP);
 	if(x == R_NilValue)
-	  errorcall(call, _("this S4 class is not subsettable"));
+	    errorcall(call, _("this %s class is not subsettable"),
+		      IS_S4_OBJECT(xs) ? "S4" : "object");
     }
     PROTECT(x);
 
@@ -1285,7 +1284,7 @@ attribute_hidden SEXP R_subset3_dflt(SEXP x, SEXP input, SEXP call)
     /* Optimisation to prevent repeated recalculation */
     size_t slen = strlen(translateChar(input));
     /* The mechanism to allow a class extending "environment" */
-    if( IS_S4_OBJECT(x) && TYPEOF(x) == S4SXP ){
+    if( IS_S4_OBJECT(x) && TYPEOF(x) == OBJSXP ){
 	x = R_getS4DataSlot(x, ANYSXP);
 	if(x == R_NilValue)
 	    errorcall(call, "$ operator not defined for this S4 class");

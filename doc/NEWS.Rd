@@ -314,6 +314,12 @@
 
       \item New \code{R_missing()}, factored out from \code{do_missing()},
       used to fix \PR{18579}.
+
+      \item \code{SEXP} type \code{S4SXP} has been renamed \code{OBJSXP}
+      to support experimenting with alternative object systems.  The
+      \code{S4SXP} value can still be used in \code{C} code but is now
+      deprecated. Based on contriubtions from the R Consortium
+      Object-Oriented Programming Working Group.
     }
   }
 

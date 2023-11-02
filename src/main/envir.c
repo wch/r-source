@@ -1328,8 +1328,8 @@ findVar1(SEXP symbol, SEXP rho, SEXPTYPE mode, int inherits)
  */
 
 static SEXP
-findVar1mode(SEXP symbol, SEXP rho, SEXPTYPE mode, int inherits,
-	     Rboolean doGet)
+findVar1mode(SEXP symbol, SEXP rho, SEXPTYPE mode, Rboolean wants_S4,
+	     int inherits, Rboolean doGet)
 {
     SEXP vl;
     int tl;
@@ -1353,7 +1353,14 @@ findVar1mode(SEXP symbol, SEXP rho, SEXPTYPE mode, int inherits,
 	    if (tl == INTSXP) tl = REALSXP;
 	    if (tl == FUNSXP || tl ==  BUILTINSXP || tl == SPECIALSXP)
 		tl = CLOSXP;
-	    if (tl == mode) return vl;
+	    if (tl == mode) {
+		if (tl == OBJSXP) {
+		    if ((wants_S4 && IS_S4_OBJECT(vl)) ||
+			(! wants_S4 && ! IS_S4_OBJECT(vl)))
+			return vl;
+		}
+		else return vl;
+	    }
 	}
 	if (inherits)
 	    rho = ENCLOS(rho);
@@ -1843,7 +1850,7 @@ void gsetVar(SEXP symbol, SEXP value, SEXP rho)
 }
 
 /* get environment from a subclass if possible; else return NULL */
-#define simple_as_environment(arg) (IS_S4_OBJECT(arg) && (TYPEOF(arg) == S4SXP) ? R_getS4DataSlot(arg, ENVSXP) : R_NilValue)
+#define simple_as_environment(arg) (IS_S4_OBJECT(arg) && (TYPEOF(arg) == OBJSXP) ? R_getS4DataSlot(arg, ENVSXP) : R_NilValue)
 
 
 
@@ -2049,10 +2056,15 @@ void R_removeVarFromFrame(SEXP name, SEXP env)
       get0   (x, envir, mode, inherits, value_if_not_exists)
 */
 
-static SEXPTYPE str2mode(const char *modestr)
+static SEXPTYPE str2mode(const char *modestr, Rboolean *pS4)
 {
     if (!strcmp(modestr, "function"))
 	return FUNSXP;
+    else if (!strcmp(modestr, "S4")) {
+	if (pS4 != NULL)
+	    *pS4 = TRUE;
+	return OBJSXP;
+    }
     else {
 	SEXPTYPE gmode = str2type(modestr);
 	if(gmode == (SEXPTYPE) (-1))
@@ -2104,8 +2116,9 @@ attribute_hidden SEXP do_get(SEXP call, SEXP op, SEXP args, SEXP rho)
     */
 
     SEXPTYPE gmode;
+    Rboolean wants_S4 = FALSE;
     if (isString(CADDR(args)))
-	gmode = str2mode(CHAR(STRING_ELT(CADDR(args), 0)));
+	gmode = str2mode(CHAR(STRING_ELT(CADDR(args), 0)), &wants_S4);
     else {
 	error(_("invalid '%s' argument"), "mode");
 	gmode = FUNSXP;/* -Wall */
@@ -2116,7 +2129,7 @@ attribute_hidden SEXP do_get(SEXP call, SEXP op, SEXP args, SEXP rho)
 	error(_("invalid '%s' argument"), "inherits");
 
     /* Search for the object */
-    rval = findVar1mode(t1, genv, gmode, ginherits, PRIMVAL(op));
+    rval = findVar1mode(t1, genv, gmode, wants_S4, ginherits, PRIMVAL(op));
     if (rval == R_MissingArg)
 	error(_("argument \"%s\" is missing, with no default"),
 	      CHAR(PRINTNAME(t1)));
@@ -2159,7 +2172,8 @@ attribute_hidden SEXP do_get(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 #undef GET_VALUE
 
-static SEXP gfind(const char *name, SEXP env, SEXPTYPE mode,
+static SEXP gfind(const char *name, SEXP env,
+		  SEXPTYPE mode, Rboolean wants_S4,
 		  SEXP ifnotfound, int inherits, SEXP enclos)
 {
     SEXP rval, t1, R_fcall, var;
@@ -2167,7 +2181,7 @@ static SEXP gfind(const char *name, SEXP env, SEXPTYPE mode,
     t1 = install(name);
 
     /* Search for the object - last arg is 1 to 'get' */
-    rval = findVar1mode(t1, env, mode, inherits, 1);
+    rval = findVar1mode(t1, env, mode, wants_S4, inherits, 1);
 
     if (rval == R_UnboundValue) {
 	if( isFunction(ifnotfound) ) {
@@ -2244,11 +2258,12 @@ attribute_hidden SEXP do_mget(SEXP call, SEXP op, SEXP args, SEXP rho)
     PROTECT(ans = allocVector(VECSXP, nvals));
 
     for(int i = 0; i < nvals; i++) {
+	Rboolean wants_S4 = FALSE;
 	const char *modestr = CHAR(STRING_ELT(CADDR(args), i % nmode));
-	SEXPTYPE gmode = str2mode(modestr);
+	SEXPTYPE gmode = str2mode(modestr, &wants_S4);
 	SEXP nf = VECTOR_ELT(ifnotfound, i % nifnfnd);
 	SEXP ans_i = gfind(translateChar(STRING_ELT(x, i % nvals)), env,
-			   gmode, nf, ginherits, rho);
+			   gmode, wants_S4, nf, ginherits, rho);
 	SET_VECTOR_ELT(ans, i, lazy_duplicate(ans_i));
     }
 
@@ -2947,7 +2962,7 @@ attribute_hidden SEXP do_env2list(SEXP call, SEXP op, SEXP args, SEXP rho)
 	error(_("use of NULL environment is defunct"));
     if( !isEnvironment(env) ) {
 	SEXP xdata;
-	if( IS_S4_OBJECT(env) && TYPEOF(env) == S4SXP &&
+	if( IS_S4_OBJECT(env) && TYPEOF(env) == OBJSXP &&
 	    (xdata = R_getS4DataSlot(env, ENVSXP)) != R_NilValue)
 	    env = xdata;
 	else
@@ -3267,7 +3282,7 @@ do_as_environment(SEXP call, SEXP op, SEXP args, SEXP rho)
     case NILSXP:
 	errorcall(call,_("using 'as.environment(NULL)' is defunct"));
 	return R_BaseEnv;	/* -Wall */
-    case S4SXP: {
+    case OBJSXP: {
 	/* dispatch was tried above already */
 	SEXP dot_xData = R_getS4DataSlot(arg, ENVSXP);
 	if(!isEnvironment(dot_xData))
@@ -3293,7 +3308,7 @@ do_as_environment(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 void R_LockEnvironment(SEXP env, Rboolean bindings)
 {
-    if(IS_S4_OBJECT(env) && (TYPEOF(env) == S4SXP))
+    if(IS_S4_OBJECT(env) && (TYPEOF(env) == OBJSXP))
 	env = R_getS4DataSlot(env, ANYSXP); /* better be an ENVSXP */
     if (env == R_BaseEnv || env == R_BaseNamespace) {
 	if (bindings) {
@@ -4574,3 +4589,4 @@ attribute_hidden void findFunctionForBody(SEXP body) {
 	}
     }
 }
+

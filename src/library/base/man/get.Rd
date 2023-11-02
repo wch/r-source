@@ -1,6 +1,6 @@
 % File src/library/base/man/get.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{get}
@@ -67,6 +67,7 @@ dynGet(x, ifnotfound = , minframe = 1L, inherits = FALSE)
   all refer to any numeric type, \code{"symbol"} and \code{"name"} are
   equivalent \emph{but} \code{"language"} must be used (and not
   \code{"call"} or \code{"("}).
+  Currently, \code{mode = "S4"} and \code{mode = "object"} are equivalent.
 
   For \code{mget}, the values of \code{mode} and \code{ifnotfound} can
   be either the same length as \code{x} or of length 1.  The argument
