@@ -4600,6 +4600,14 @@ If set to a non-empty value, makes warnings from @code{pdf()} and
 @code{postscript()} about conversion failures from an MBCS (usually
 UTF-8) into errors.
 Default: unset (but true for CRAN submission checks).
+
+@item _R_CHECK_VALIDATE_UTF8_
+If set to a non-empty value, makes installation warnings about non-UTF-8
+strings in a package's code (@code{R/*R}) and help (@file{man/*.Rd}) files
+into errors.  On most platforms invalid bytes in these files get
+converted to escapes (see @code{iconv(sub = "byte")}), but on others
+these lead to installation failure.
+Default: unset (but true for CRAN submission checks).
 @end vtable
 
 The following variables control checks for undeclared/unconditional use

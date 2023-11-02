@@ -68,6 +68,20 @@ parse_Rd <- function(file, srcfile = NULL, encoding = "unknown",
             stop(file0, ": non-ASCII input and no declared encoding",
                  domain = NA, call. = warningCalls)
     } else {
+        validate <- config_val_to_logical(Sys.getenv("_R_CHECK_VALIDATE_UTF8_",
+                                                     "FALSE"))
+        if (encoding %in% c("unknown", "")  && l10n_info()[["UTF-8"]])
+            encoding <- "UTF-8"
+        if (encoding %in% c("UTF-8", "UTF8")) { ## package qgraph used UTF8
+            valid <- validUTF8(lines)
+            if (any(!valid))
+                if (validate)
+                    stop(sprintf("invalid UTF-8 in file %s", sQuote(file0)),
+                         domain = NA, call. = FALSE)
+                else
+                    warning(sprintf("invalid UTF-8 in file %s", sQuote(file0)),
+                            domain = NA, call. = FALSE)
+        }
 	if (encoding != "UTF-8")
     	    lines <- iconv(lines, encoding, "UTF-8", sub = "byte")
         ## Strip UTF-8 BOM if necessary.

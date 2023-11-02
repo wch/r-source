@@ -318,8 +318,21 @@ function(dir, outDir)
     if(need_enc && (Sys.getlocale("LC_CTYPE") %notin% c("C", "POSIX"))) {
         con <- file(outFile, "a")
         on.exit(close(con))  # Windows does not like files left open
+        badfiles <- c()
         for(f in codeFiles) {
+            ## We needed more care here: iconv() in macOS 14.1 throws
+            ## Aborts on some incorrectly encoded inputs.
             lines <- readLines(f, warn = FALSE)
+            if (enc == "UTF-8") {
+                valid <- validUTF8(lines)
+                if (any(!valid)) {
+                    warning(sprintf("file %s is invalid UTF-8",
+                                    sQuote(basename(f))),
+                            domain = NA, call. = FALSE)
+                    badfiles <- c(badfiles, basename(f))
+                    next
+                }
+            }
             tmp <- iconv(lines, from = enc, to = "")
             bad <- which(is.na(tmp))
             if(length(bad))
@@ -341,6 +354,14 @@ function(dir, outDir)
             testParse(text = c(line1, tmp))
             writeLines(line1, con)
             writeLines(tmp, con)
+        }
+        if(length(badfiles)) {
+            validate <- config_val_to_logical(Sys.getenv("_R_CHECK_VALIDATE_UTF8_",
+                                                         "FALSE"))
+            if (validate)
+                stop("invalidly encoded .R file(s)", domain = NA, call. = FALSE)
+            else warning("invalidly encoded .R file(s)",
+                         domain = NA, call. = FALSE)
         }
 	close(con); on.exit()
     } else {
