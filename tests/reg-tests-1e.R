@@ -1015,6 +1015,14 @@ stopifnot(exprs = {
 ## failed (partly) in R versions  4.3.0 -- 4.3.2
 
 
+## PR#18598: *wrong* error message
+writeLines(eMsg <- tryCmsg(
+    diff(1:6, differences = integer(0L))
+))
+if(englishMsgs) stopifnot(grepl("must be integers >= 1", eMsg))
+## errored with "missing value where TRUE/FALSE needed" in R <= 4.3.2
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
