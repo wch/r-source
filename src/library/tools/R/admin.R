@@ -330,7 +330,6 @@ function(dir, outDir)
                                     sQuote(basename(f))),
                             domain = NA, call. = FALSE)
                     badfiles <- c(badfiles, basename(f))
-                    next
                 }
             }
             tmp <- iconv(lines, from = enc, to = "")
