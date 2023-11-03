@@ -25,8 +25,7 @@ formula.default <- function (x = NULL, env = parent.frame(), ...)
     if (notnull(x$formula)) eval(x$formula)
     else if (notnull(x$terms)) {z <- x$terms; oldClass(z) <- "formula"; z}
     else if (notnull(x$call$formula))	eval(x$call$formula)
-    else if (!is.null(attr(x, "formula"))) attr(x, "formula")
-    else {
+    else attr(x, "formula") %||% {
         form <- switch(mode(x),
                        NULL = structure(list(), class = "formula"),
                        character = eval(str2expression(x)), # ever used?  formula.character!
@@ -496,7 +495,7 @@ model.frame.default <-
 	na.action <-
             if(!is.null(naa <- attr(data, "na.action")) && mode(naa)!="numeric")
                 naa
-            else getOption("na.action") %||% 
+            else getOption("na.action") %||%
                      na.fail # rarely happens (option historically unset in S, see FAQ 3.3.2)
     }
 

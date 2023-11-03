@@ -485,14 +485,13 @@ nls <-
     ## get names of the parameters from the starting values or selfStart model
     pnames <-
 	if (missing(start)) {
-	    if(!is.null(attr(data, "parameters"))) {
-		names(attr(data, "parameters"))
-	    } else if (is.call(cll <- formula[[length(formula)]])) {
+	    attr(data, "parameters") %||%
+	      if (is.call(cll <- formula[[length(formula)]])) {
 		## possibly a selfStart - like object
 		func <- eval(cll[[1L]], environment(formula))
 		if(!is.null(pn <- attr(func, "pnames")))
 		    as.character(as.list(match.call(func, call = cll))[-1L][pn])
-	    }
+	      }
 	} else
 	    names(start)
 

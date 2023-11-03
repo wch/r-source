@@ -70,9 +70,7 @@ getInitial <-
 getInitial.formula <-
     function(object, data, ...)
 {
-    if(!is.null(attr(data, "parameters"))) {
-        return(attr(data, "parameters"))
-    }
+  attr(data, "parameters") %||% {     
     len <- length(object)
     if(len == 1L)
         stop("argument 'object' has an impossible length")
@@ -84,6 +82,7 @@ getInitial.formula <-
     getInitial(func, data,
                mCall = as.list(match.call(func, call = RHS)),
                LHS = LHS, ...)
+  }
 }
 
 getInitial.selfStart <-
