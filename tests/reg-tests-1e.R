@@ -1023,6 +1023,12 @@ if(englishMsgs) stopifnot(grepl("must be integers >= 1", eMsg))
 ## errored with "missing value where TRUE/FALSE needed" in R <= 4.3.2
 
 
+## PR#18563: drop.terms(*, dropx = <0-length vector>)
+tt <- terms(y ~ a+b)
+stopifnot(identical(tt, drop.terms(tt, dropx = 0[0])))
+## errored in R <= 4.3.2
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

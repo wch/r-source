@@ -479,6 +479,9 @@
       \item \code{match(<POSIXct>, .)} is correct again for differing time
       zones, ditto for \code{"POSIXlt"}, fixing \PR{18618} reported by
       Bastian Klein.
+
+      \item \code{drop.terms(*, dropx=<0-length>)} now works, fixing
+      \PR{18563} as proposed by Mikael Jagan.
     }
   }
 }
