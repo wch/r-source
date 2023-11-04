@@ -4375,7 +4375,7 @@ static void mbcsToSbcs(const char *in, char *out, const char *encoding,
     o_len = 2*i_len;
 next_char:
     status = Riconv(cd, &i_buf, &i_len, &o_buf, &o_len);
-    /* libiconv 1.13 gives EINVAL on \xe0 in UTF-8 (as used in fBasics) */
+    /* GNU libiconv 1.13 gave EINVAL on \xe0 in UTF-8 (as used in fBasics) */
     if(status == (size_t) -1 && (errno == EILSEQ || errno == EINVAL)) {
 	int fail = getenv("_R_CHECK_MBCS_CONVERSION_FAILURE_") != NULL;
 	if (utf8locale) {
@@ -4396,6 +4396,12 @@ next_char:
 			wc == 0x279D || wc == 0x279E || wc == 0x279F ||
 			wc == 0x27a1 || wc == 0x27a2)
 		    fix2 = "->";
+		// ligatures (not ffi, ffl), AE and ae are latin1.
+		else if(wc == 0xFB00) fix2 = "ff";
+		else if(wc == 0xFB01) fix2 = "fi";
+		else if(wc == 0xFB02) fix2 = "fl";
+		else if(wc == 0x0152) fix2 = "OE";
+		else if(wc == 0x0153) fix2 = "oe";
 		// The next two could and probably should be done by plotmath.
 		else if(wc == 0x2264) fix2 = "<=";
 		else if(wc == 0x2265) fix2 = ">=";
