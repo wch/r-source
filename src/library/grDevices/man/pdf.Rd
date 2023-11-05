@@ -87,7 +87,7 @@ pdf(file = if(onefile) "Rplots.pdf" else "Rplot\%03d.pdf",
   \item{useDingbats}{logical.  Should small circles be rendered
     \emph{via} the Dingbats font?  Defaults to \code{FALSE}.
     If \code{TRUE}, this can produce smaller and better output, but
-    there can font display problems in broken PDF viewers: although this
+    can cause font display problems in broken PDF viewers: although this
     font is one of the 14 guaranteed to be available in all PDF viewers,
     that guarantee is not always honoured.
 
