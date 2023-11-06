@@ -1406,7 +1406,7 @@ fi
 ## Assume flang is the same as clang (it is a modified front end)
 ## Also flang-new
 case "${FC}" in
-  *flang|*flang-new)
+  *flang|*flang-new|*flang-new-*)
     fpicflags=${cpicflags}
     ;;
 esac

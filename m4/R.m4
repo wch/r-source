@@ -4438,7 +4438,7 @@ if test "${ac_cv_fc_compiler_gnu}" = yes; then
   R_SYSTEM_ABI="${R_SYSTEM_ABI},gfortran,gfortran"
 else
 case "${FC}" in
-  *flang-new)
+  *flang-new|*flang-new-*)
     R_SYSTEM_ABI="${R_SYSTEM_ABI},flang-new,flang-new"
     ;;
   ## This means Classic flang
