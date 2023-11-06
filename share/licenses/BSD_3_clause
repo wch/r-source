@@ -10,7 +10,13 @@ ORGANIZATION:
 
 License: BSD_3_clause + file LICENSE
 
-in file DESCRIPTION.
+in file DESCRIPTION.  
+
+(Use
+
+ORGANIZATION: copyright holder
+
+if there is no appropriate organization.)
 
 ************************************************************************
 
