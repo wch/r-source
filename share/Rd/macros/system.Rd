@@ -14,7 +14,6 @@
 % Individual Rd files may define their own macros.
 
 
-
 % To refer to a package on CRAN
 \newcommand{\CRANpkg}{\href{https://CRAN.R-project.org/package=#1}{\pkg{#1}}}
 
@@ -40,7 +39,6 @@
 \newcommand{\packageDESCRIPTION}{\Sexpr[results=rd,stage=build]{tools:::Rd_package_DESCRIPTION("#1")}}
 
 % To include various indices about an installed package
-
 \newcommand{\packageIndices}{\Sexpr[results=rd,stage=build]{tools:::Rd_package_indices("#1")}}
 
 % To indicate a DOI.
@@ -54,3 +52,6 @@
 %   \ifelse{html}{\out{<span style="font-family: sans-serif;">#1</span>}}
 % but this does not always work correctly with Rd2HTML() as of 2018-05.
 \newcommand{\proglang}{\ifelse{latex}{\out{\textsf{#1}}}{#1}}
+
+% To indicate an abbreviation.
+\newcommand{\abbr}{#1}
