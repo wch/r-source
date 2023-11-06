@@ -620,8 +620,10 @@ update_map(size_t change)
 	outbuf = (char *)&uc;
 	last_inbytesleft = inbytesleft;
 	status = Riconv(gl_nat_to_ucs, &inbuf, &inbytesleft, &outbuf, &outbytesleft);
-	if (status == (size_t)-1 && errno != E2BIG)
+	if (status == (size_t)-1 && errno != E2BIG) {
+	    Riconv(gl_nat_to_ucs, NULL, NULL, NULL, NULL);
 	    gl_error("\n*** Error: getline(): invalid multi-byte character.\n");
+	}
 
 	width = iswprint(uc) ? Ri18n_wcwidth(uc) : 0;
 
@@ -1320,8 +1322,10 @@ gl_w_strlen(const char *s)
 	outbytesleft = 4;
 	outbuf = (char *)&uc;
 	status = Riconv(gl_nat_to_ucs, &s, &inbytesleft, &outbuf, &outbytesleft);
-	if (status == (size_t)-1 && errno != E2BIG)
+	if (status == (size_t)-1 && errno != E2BIG) {
+	    Riconv(gl_nat_to_ucs, NULL, NULL, NULL, NULL);
 	    gl_error("\n*** Error: getline(): invalid multi-byte character.\n");
+	}
 
 	if (iswprint(uc))
 	    width += Ri18n_wcwidth(uc);
@@ -1343,8 +1347,10 @@ gl_e_strlen(const char *s)
 	outbytesleft = 4;
 	outbuf = (char *)&uc;
 	status = Riconv(gl_nat_to_ucs, &s, &inbytesleft, &outbuf, &outbytesleft);
-	if (status == (size_t)-1 && errno != E2BIG)
+	if (status == (size_t)-1 && errno != E2BIG) {
+	    Riconv(gl_nat_to_ucs, NULL, NULL, NULL, NULL);
 	    gl_error("\n*** Error: getline(): invalid multi-byte character.\n");
+	}
 
 	if (iswprint(uc) && Ri18n_wcwidth(uc) > 0)
 	    /* this is an approximation, ideally use complete grapheme here */

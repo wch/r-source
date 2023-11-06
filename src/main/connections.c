@@ -513,9 +513,11 @@ int dummy_vfprintf(Rconnection con, const char *format, va_list ap)
 	    errno = 0;
 	    ires = Riconv(con->outconv, &ib, &inb, &ob, &onb);
 	    again = (ires == (size_t)(-1) && errno == E2BIG);
-	    if(ires == (size_t)(-1) && errno != E2BIG)
+	    if(ires == (size_t)(-1) && errno != E2BIG) {
+		Riconv(con->outconv, NULL, NULL, NULL, NULL);
 		/* is this safe? */
 		warning(_("invalid char string in output conversion"));
+	    }
 	    *ob = '\0';
 	    con->write(outbuf, 1, ob - outbuf, con);
 	} while(again && inb > 0);  /* it seems some iconv signal -1 on
@@ -594,6 +596,7 @@ int dummy_fgetc(Rconnection con)
 		    /* incomplete input char or no space in output buffer */
 		    memmove(con->iconvbuff, ib, inb);
 		} else {/*  EILSEQ invalid input */
+		    Riconv(con->inconv, NULL, NULL, NULL, NULL);
 		    warning(_("invalid input found on input connection '%s'"),
 			    con->description);
 		    con->inavail = 0;

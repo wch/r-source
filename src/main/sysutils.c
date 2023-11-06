@@ -772,6 +772,11 @@ attribute_hidden SEXP do_iconv(SEXP call, SEXP op, SEXP args, SEXP env)
 	    } else if(res == -1 && sub &&
 		      (errno == EILSEQ || errno == EINVAL)) {
 		/* it seems this gets thrown for non-convertible input too */
+		res = Riconv(obj, NULL, NULL, &outbuf, &outb);	
+		if (res == -1 && errno == E2BIG) {
+		    R_AllocStringBuffer(2*cbuff.bufsize, &cbuff);
+		    goto top_of_loop;
+		}	
 		if(fromUTF8 && streql(sub, "Unicode")) {
 		    if(outb < 13) {
 			R_AllocStringBuffer(2*cbuff.bufsize, &cbuff);
@@ -928,6 +933,13 @@ void * Riconv_open (const char* tocode, const char* fromcode)
 # define ICONV_CONST
 #endif
 
+/* Beware of a libiconv in macOS 14.1. When an invalid input byte is
+   encountered while converting e.g. from UTF-8 to UTF-8, one has to re-set
+   the converter state. Otherwise, subsequent valid bytes may be reported
+   as invalid and libiconv may crash due to an assertion failure. It seems
+   this can be worked around by re-setting the conversion state after error.
+   With other iconv implementations, this hasn't been needed (but in principle
+   would be for stateful encodings). */
 size_t Riconv (void *cd, const char **inbuf, size_t *inbytesleft,
 	       char **outbuf, size_t *outbytesleft)
 {
@@ -1033,7 +1045,8 @@ next_char:
 	R_AllocStringBuffer(2*cbuff->bufsize, cbuff);
 	goto top_of_loop;
     } else if(res == -1 && (errno == EILSEQ || errno == EINVAL)) {
-	if(outb < 13) {
+	res = Riconv(obj, NULL, NULL, &outbuf, &outb);
+	if((res == -1 && errno == E2BIG) || outb < 13) {
 	    R_AllocStringBuffer(2*cbuff->bufsize, cbuff);
 	    goto top_of_loop;
 	}
@@ -1241,7 +1254,8 @@ next_char:
 	R_AllocStringBuffer(2*cbuff->bufsize, cbuff);
 	goto top_of_loop;
     } else if(res == -1 && (errno == EILSEQ || errno == EINVAL)) {
-	if(outb < 5) {
+	res = Riconv(obj, NULL, NULL, &outbuf, &outb);
+	if((res == -1 && errno == E2BIG) || outb < 5) {
 	    R_AllocStringBuffer(2*cbuff->bufsize, cbuff);
 	    goto top_of_loop;
 	}
@@ -1433,7 +1447,8 @@ next_char:
 	R_AllocStringBuffer(2*cbuff->bufsize, cbuff);
 	goto top_of_loop;
     } else if(res == -1 && (errno == EILSEQ || errno == EINVAL)) {
-	if(outb < 5 * sizeof(wchar_t)) {
+	res = Riconv(obj, NULL, NULL, &outbuf, &outb);
+	if((res == -1 && errno == E2BIG) || outb < 5 * sizeof(wchar_t)) {
 	    R_AllocStringBuffer(2*cbuff->bufsize, cbuff);
 	    goto top_of_loop;
 	}
@@ -1532,6 +1547,11 @@ next_char:
 	R_AllocStringBuffer(2*cbuff->bufsize, cbuff);
 	goto top_of_loop;
     } else if(res == -1 && (errno == EILSEQ || errno == EINVAL)) {
+	res = Riconv(obj, NULL, NULL, &outbuf, &outb);
+	if(res == -1 && errno == E2BIG) {
+	    R_AllocStringBuffer(2*cbuff->bufsize, cbuff);
+	    goto top_of_loop;
+	}
 	size_t inb_per_char = fromWchar ? sizeof(wchar_t) : 1;
 
 	/* ensure space in cbuff for substitution */	

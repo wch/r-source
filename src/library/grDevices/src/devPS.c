@@ -4377,6 +4377,7 @@ next_char:
     status = Riconv(cd, &i_buf, &i_len, &o_buf, &o_len);
     /* GNU libiconv 1.13 gave EINVAL on \xe0 in UTF-8 (as used in fBasics) */
     if(status == (size_t) -1 && (errno == EILSEQ || errno == EINVAL)) {
+	Riconv(cd, NULL, NULL, &o_buf, &o_len);
 	int fail = getenv("_R_CHECK_MBCS_CONVERSION_FAILURE_") != NULL;
 	if (utf8locale) {
 	    /* We attempt to do better here in a UTF-8 locale if the
