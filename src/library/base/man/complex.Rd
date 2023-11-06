@@ -49,7 +49,12 @@ Conj(z)
 
   \code{as.complex} attempts to coerce its argument to be of complex
   type: like \code{\link{as.vector}} it strips attributes including
-  names.  Up to \R versions 3.2.x, all forms of \code{NA} and \code{NaN}
+  names.
+  Since \R version 4.4.0, \code{as.complex(x)} for \dQuote{number-like}
+  \code{x}, i.e., types \code{"logical"}, \code{"integer"}, and
+  \code{"double"}, will always keep imaginary part zero, now also for
+  \code{NA}'s.
+    Up to \R versions 3.2.x, all forms of \code{NA} and \code{NaN}
   were coerced to a complex \code{NA}, i.e., the \code{\link{NA_complex_}}
   constant, for which both the real and imaginary parts are \code{NA}.
   Since \R 3.3.0, typically only objects which are \code{NA} in parts
@@ -58,6 +63,8 @@ Conj(z)
   \code{NaN}'s (but no \code{NA}'s) are involved typically will
   \emph{not} give complex \code{NA} but complex numbers with real or
   imaginary parts of \code{NaN}.
+  All of these many different complex numbers fulfill \code{is.na(.)} but
+  only one of them is identical to \code{NA_complex_}.
 
   Note that \code{is.complex} and \code{is.numeric} are never both
   \code{TRUE}.
@@ -144,11 +151,11 @@ stopifnot(identical(as.complex(NA_real_), NA_real_ + 0i)) # has always been true
 NAs <- vapply(list(NA, NA_integer_, NA_real_, NA_character_, NA_complex_),
               as.complex, 0+0i)
 stopifnot(is.na(NAs), is.na(Re(NAs))) # has always been true
-## in R-devel from {r84322, 2023-04-25}: stopifnot(identical(NA_complex_, unique(NAs)))
-Im(NAs) # [0 0 0 NA NA]  \\ in R <= 4.3.x was [NA NA 0 NA NA]  
+showC <- function(z) noquote(paste0("(", Re(z), ",", Im(z), ")"))
+showC(NAs)
+Im(NAs) # [0 0 0 NA NA]  \\ in R <= 4.3.x was [NA NA 0 NA NA]
 stopifnot(Im(NAs)[1:3] == 0)
 
-showC <- function(z) noquote(paste0("(", Re(z), ",", Im(z), ")"))
 
 ## The exact result of this *depends* on the platform, compiler, math-library:
 (NpNA <- NaN + NA_complex_) ; str(NpNA) # *behaves* as 'cplx NA' ..
