@@ -4603,7 +4603,7 @@ Default: unset (but true for CRAN submission checks).
 
 @item _R_CHECK_VALIDATE_UTF8_
 If set to a non-empty value, makes installation warnings about non-UTF-8
-strings in a package's code (@code{R/*R}) and help (@file{man/*.Rd}) files
+strings in a package's code (@file{R/.*R}) and help (@file{man/*.Rd}) files
 into errors.  On most platforms invalid bytes in these files get
 converted to escapes (see @code{iconv(sub = "byte")}), but on others
 these lead to installation failure.
