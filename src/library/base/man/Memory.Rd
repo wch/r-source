@@ -1,6 +1,6 @@
 % File src/library/base/man/Memory.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2021 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Memory}
@@ -31,7 +31,8 @@
   when \R is started.  Thereafter \R will grow or shrink the areas
   depending on usage, never decreasing below the initial values.  The
   maximal vector heap size can be set with the environment variable
-  \env{R_MAX_VSIZE}.
+  \env{R_MAX_VSIZE}. An attempt to set a lower maximum than the current
+  usage is ignored. Vector heap limits are given in bytes.
 
   How much time \R spends in the garbage collector will depend on these
   initial settings and on the trade-off the memory manager makes, when
