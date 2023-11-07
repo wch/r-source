@@ -745,6 +745,8 @@ checkRd <- function(Rd, defines = .Platform$OS.type, stages = "render",
                     (length(tags) == 2L && tags[1L] == "USERMACRO") || # '{\sspace}'
                     (inItemize && pretag == "\\item") || # '\item {}'
                     pretag == "\\tab" || # '\tab {}'
+                    (!is.null(srcref <- attr(block, "srcref")) &&
+                     srcref[1L] == srcref[3L] && srcref[5L] > srcref[6L]) || # kludge for Rdpack
                     (sectiontag %in% c("\\source", "\\references") && (
                         separated || pretag == "\\cr" # '\cr\cr{ref}' relicts
                     ))
