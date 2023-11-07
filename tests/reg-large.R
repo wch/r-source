@@ -377,5 +377,10 @@ stopifnot(exprs = {
     length(LL[cbind( -ca.half, 1)]) == 0
 })
 
+x <- -1:2^31 # (immediate: ALTREP)
+system.time( r <- rank(x) ) ## gave Error about invalid length() -- PR#18617
+## seen 260 sec (!)
+
+
 gc() # NB the "max used"
 proc.time() # total  [ ~ 40 minutes in full case, 2019-04-12]

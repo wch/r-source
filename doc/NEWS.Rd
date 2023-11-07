@@ -21,6 +21,9 @@
       \code{quartz(file = NA)} opened a file called \samp{NA}, including
       when used as a Quartz-based bitmap device.  It now gives an error.
 
+      \code{rank(<long vector>)} now works, fixing \PR{18617}, thanks to
+      Ilia Kats.
+
       \item \code{seq.int()} did not adequately check its
       \code{length.out} argument.
     }
