@@ -1940,7 +1940,7 @@ Optional Packages:
   --with-x                use the X Window System
   --with-libdeflate-compression
                           use libdeflate (if available) to (de)compress
-                          lazy-loaded R objects [no]
+                          lazy-loaded R objects [yes]
   --with-gnu-ld           assume the C compiler uses GNU ld [default=no]
   --with-libpth-prefix[=DIR]  search for libpth in DIR/include and DIR/lib
   --without-libpth-prefix     don't search for libpth in includedir and libdir
@@ -51525,18 +51525,9 @@ if test ${with_libdeflate_compression+y}
 then :
   withval=$with_libdeflate_compression; use_libdeflate=${withval}
 else $as_nop
-  use_libdeflate=unset
+  use_libdeflate=yes
 fi
 
-if test "x$use_libdeflate" = xunset; then
-  if test "x$R_USE_LIBDEFLATE_FOR_LAZYLOAD" = xyes; then
-    use_libdeflate=yes
-  elif test "x$R_USE_LIBDEFLATE_FOR_LAZYLOAD" = xno; then
-    use_libdeflate=no
-  else
-    use_libdeflate=no
-  fi
-fi
 if test "x$use_libdeflate" = xyes; then
 
 printf "%s\n" "#define USE_LIBDEFLATE 1" >>confdefs.h

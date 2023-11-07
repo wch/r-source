@@ -2568,18 +2568,9 @@ R_LZMA
 R_LIBDEFLATE
 
 AC_ARG_WITH([libdeflate-compression],
-[AS_HELP_STRING([--with-libdeflate-compression],[use libdeflate (if available) to (de)compress lazy-loaded R objects @<:@no@:>@])],
+[AS_HELP_STRING([--with-libdeflate-compression],[use libdeflate (if available) to (de)compress lazy-loaded R objects @<:@yes@:>@])],
 [use_libdeflate=${withval}],
-[use_libdeflate=unset])
-if test "x$use_libdeflate" = xunset; then
-  if test "x$R_USE_LIBDEFLATE_FOR_LAZYLOAD" = xyes; then
-    use_libdeflate=yes
-  elif test "x$R_USE_LIBDEFLATE_FOR_LAZYLOAD" = xno; then
-    use_libdeflate=no
-  else
-    use_libdeflate=no
-  fi
-fi
+[use_libdeflate=yes])
 if test "x$use_libdeflate" = xyes; then
   AC_DEFINE(USE_LIBDEFLATE, 1, [Define to use libdefault rather than libz for lazy-loaded R objects])
 fi

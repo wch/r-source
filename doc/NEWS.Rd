@@ -175,7 +175,9 @@
       transliteration.)
 
       In a UTF-8 locale some transliterations are now done without
-      warning (e.g., dashes and Unicode minus to hyphen).
+      warning (e.g., dashes and Unicode minus to hyphen, ligatures are
+      expanded and Euro sign replaced by \samp{EUR} except if using
+      \code{encoding + "WinANSI"}, the default on Windows).
 
       \item The matrix multiplication functions \code{crossprod()} and
       \code{tcrossprod()} are now also primitive and S3 generic, as
@@ -221,16 +223,15 @@
       so no longer recorded in \file{etc/Renviron} (it was not on Windows
       and was only ever used when preparing package \pkg{tools}).
 
-      \item There is an experimental \command{configure} option
-      \option{--with-libdeflate-compression} which uses
-      \code{libdeflate} rather than \code{libz} to (de)compress \R
-      objects in lazy-load databases, if the \code{libdeflate} library
-      and headers are available.  Typically tasks spend up to 5\% of
+      \item If the \code{libdeflate} library and headers are available,
+      \code{libdeflate} rather than \code{libz} is used to (de)compress
+      \R objects in lazy-load databases,  Typically tasks spend up to 5\% of
       their time on such operations, although creating lazy-data
       databases is one of the exceptions.
 
-      \emph{pro tem} this can also be selected by setting environment
-      variable \env{R_USE_LIBDEFLATE_FOR_LAZYLOAD} to \code{yes}.
+      This can be suppressed if the library is available by the
+      \command{configure} option
+      \option{--without-libdeflate-compression}.
 
       \item \command{configure} option \option{--enable-lto=check} has
       not worked reliably since 2019 and has been removed.
