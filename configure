@@ -29214,7 +29214,7 @@ if test "${ac_cv_fc_compiler_gnu}" = yes; then
   R_SYSTEM_ABI="${R_SYSTEM_ABI},gfortran,gfortran"
 else
 case "${FC}" in
-  *flang-new)
+  *flang-new|*flang-new-*)
     R_SYSTEM_ABI="${R_SYSTEM_ABI},flang-new,flang-new"
     ;;
   ## This means Classic flang
@@ -29397,7 +29397,7 @@ fi
 ## Assume flang is the same as clang (it is a modified front end)
 ## Also flang-new
 case "${FC}" in
-  *flang|*flang-new)
+  *flang|*flang-new|*flang-new-*)
     fpicflags=${cpicflags}
     ;;
 esac
