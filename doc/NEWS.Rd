@@ -452,6 +452,30 @@
 	vector}) \code{matrix(v, nr, nc)} and \code{dim(m) <- d} are now
       correct about sizes, using \code{long long} formatting, fixing
       \PR{18612} (and more) reported by Mikael Jagan.
+
+      \item \code{list.files()} on Windows now returns also files with names
+      longer that 260 bytes (the Windows limit is 260 characters). 
+      Previously, some file names particularly with \sQuote{East Asian}
+      characters were omitted.
+
+      \item \code{readChar(useBytes=TRUE)} now terminates strings even when
+      the underlying connection uses extra space in the input buffer.  This
+      fixes problems with extra garbage seen with \command{gzip}
+      connections, \PR{18605}.
+
+      \item Named capture in PCRE regular expressions now works also with
+      more than 127 named groups (\PR{18588}).
+
+      \item Datetime functions are now robust against long jumps when
+      dealing with internal time zone changes.  This avoids confusing
+      warnings about an invalid time zone, previously triggered by turning
+      warnings into errors or handling them via \code{tryCatch} (\PR{17966},
+      \PR{17780}).
+
+      \item Datetime functions now restore even an empty \env{TZ}
+      environment variable after internal time zone changes (\PR{17724}). 
+      This makes results of datetime functions with this (typically
+      unintentional) setting more predictable.
     }
   }
 }
