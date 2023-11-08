@@ -1,6 +1,6 @@
 % File src/library/base/man/memlimits.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2018 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{memlimits}
@@ -20,7 +20,7 @@ mem.maxNSize(nsize = 0)
   \item{nsize}{numeric; new maximal node number.}
 }
 \details{
-  New Limits lower than current usage are ignored.
+  New limits lower than current usage are ignored.
   Specifying a size of \code{Inf} sets the limit to the maximal possible
   value for the platform.
 
