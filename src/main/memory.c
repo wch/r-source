@@ -424,7 +424,10 @@ R_size_t attribute_hidden R_GetMaxVSize(void)
 attribute_hidden void R_SetMaxVSize(R_size_t size)
 {
     if (size == R_SIZE_T_MAX) return;
-    if (size / vsfac >= R_VSize) R_MaxVSize = (size + 1) / vsfac;
+    if (vsfac == 1) {
+	if (size >= R_VSize) R_MaxVSize = size;
+    } else 
+	if (size / vsfac >= R_VSize) R_MaxVSize = (size + 1) / vsfac;
 }
 
 R_size_t attribute_hidden R_GetMaxNSize(void)

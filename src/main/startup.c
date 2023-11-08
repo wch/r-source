@@ -309,6 +309,29 @@ static void SetSize(R_size_t vsize, R_size_t nsize)
 	R_NSize = nsize;
 }
 
+static void SetMaxSize(R_size_t vsize, R_size_t nsize)
+{
+    char msg[1024];
+
+    /* vsfac is still 1 */
+    R_SetMaxVSize(vsize);
+    if (R_GetMaxVSize() != vsize) {
+	snprintf(msg, 1024,
+		 "WARNING: too small maximum for v(ector heap)size '%lu' ignored,"
+		 " the current usage %gM is already larger\n",
+		 (unsigned long) vsize, R_VSize / Mega);
+	R_ShowMessage(msg);
+    }
+
+    R_SetMaxNSize(nsize);
+    if (R_GetMaxNSize() != nsize) {
+	snprintf(msg, 1024,
+		 "WARNING: too small maximum for language heap (n)size '%lu' ignored,"
+		 " the current usage '%lu' is already larger\n",
+		 (unsigned long) nsize, R_NSize);
+	R_ShowMessage(msg);
+    }
+}
 
 void R_SetParams(Rstart Rp)
 {
@@ -322,8 +345,7 @@ void R_SetParams(Rstart Rp)
     LoadInitFile = Rp->LoadInitFile;
     DebugInitFile = Rp->DebugInitFile;
     SetSize(Rp->vsize, Rp->nsize);
-    R_SetMaxNSize(Rp->max_nsize);
-    R_SetMaxVSize(Rp->max_vsize);
+    SetMaxSize(Rp->max_vsize, Rp->max_nsize);
     R_SetPPSize(Rp->ppsize);
     R_SetNconn(Rp->nconnections);
 #ifdef Win32
