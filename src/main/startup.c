@@ -313,9 +313,8 @@ static void SetMaxSize(R_size_t vsize, R_size_t nsize)
 {
     char msg[1024];
 
-    /* vsfac is still 1 */
-    R_SetMaxVSize(vsize);
-    if (R_GetMaxVSize() != vsize) {
+    if (!R_SetMaxVSize(vsize)) {
+	/* vsfac is still 1 */
 	snprintf(msg, 1024,
 		 "WARNING: too small maximum for v(ector heap)size '%lu' ignored,"
 		 " the current usage %gM is already larger\n",
@@ -323,8 +322,7 @@ static void SetMaxSize(R_size_t vsize, R_size_t nsize)
 	R_ShowMessage(msg);
     }
 
-    R_SetMaxNSize(nsize);
-    if (R_GetMaxNSize() != nsize) {
+    if (!R_SetMaxNSize(nsize)) {
 	snprintf(msg, 1024,
 		 "WARNING: too small maximum for language heap (n)size '%lu' ignored,"
 		 " the current usage '%lu' is already larger\n",

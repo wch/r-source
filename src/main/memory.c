@@ -421,13 +421,23 @@ R_size_t attribute_hidden R_GetMaxVSize(void)
     return R_MaxVSize * vsfac;
 }
 
-attribute_hidden void R_SetMaxVSize(R_size_t size)
+attribute_hidden Rboolean R_SetMaxVSize(R_size_t size)
 {
-    if (size == R_SIZE_T_MAX) return;
+    if (size == R_SIZE_T_MAX) {
+	R_MaxVSize = R_SIZE_T_MAX;
+	return TRUE;
+    }
     if (vsfac == 1) {
-	if (size >= R_VSize) R_MaxVSize = size;
+	if (size >= R_VSize) {
+	    R_MaxVSize = size;
+	    return TRUE;
+	}
     } else 
-	if (size / vsfac >= R_VSize) R_MaxVSize = (size + 1) / vsfac;
+	if (size / vsfac >= R_VSize) {
+	    R_MaxVSize = (size + 1) / vsfac;
+	    return TRUE;
+	}
+    return FALSE;
 }
 
 R_size_t attribute_hidden R_GetMaxNSize(void)
@@ -435,9 +445,13 @@ R_size_t attribute_hidden R_GetMaxNSize(void)
     return R_MaxNSize;
 }
 
-attribute_hidden void R_SetMaxNSize(R_size_t size)
+attribute_hidden Rboolean R_SetMaxNSize(R_size_t size)
 {
-    if (size >= R_NSize) R_MaxNSize = size;
+    if (size >= R_NSize) {
+	R_MaxNSize = size;
+	return TRUE;
+    }
+    return FALSE;
 }
 
 attribute_hidden void R_SetPPSize(R_size_t size)
@@ -453,8 +467,13 @@ attribute_hidden SEXP do_maxVSize(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (newval > 0) {
 	if (newval == R_PosInf)
 	    R_MaxVSize = R_SIZE_T_MAX;
-	else
-	    R_SetMaxVSize((R_size_t) (newval * MB));
+	else {
+	    double newbytes = newval * MB;
+	    if (newbytes >= (double) R_SIZE_T_MAX)
+		R_MaxVSize = R_SIZE_T_MAX;
+	    else if (!R_SetMaxVSize((R_size_t) newbytes))
+		warning(_("a limit lower than current usage, so ignored"));
+	}
     }
 
     if (R_MaxVSize == R_SIZE_T_MAX)
@@ -470,8 +489,12 @@ attribute_hidden SEXP do_maxNSize(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (newval > 0) {
 	if (newval == R_PosInf)
 	    R_MaxNSize = R_SIZE_T_MAX;
-	else
-	    R_SetMaxNSize((R_size_t) newval);
+	else {
+	    if (newval >= (double) R_SIZE_T_MAX) 
+		R_MaxNSize = R_SIZE_T_MAX;
+	    else if (!R_SetMaxNSize((R_size_t) newval))
+		warning(_("a limit lower than current usage, so ignored"));
+	}
     }
 
     if (R_MaxNSize == R_SIZE_T_MAX)
