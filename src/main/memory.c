@@ -4657,14 +4657,20 @@ static void R_InitMemReporting(SEXP filename, int append,
 SEXP do_Rprofmem(SEXP args)
 {
     SEXP filename;
-    R_size_t threshold;
+    R_size_t threshold = 0;
     int append_mode;
 
     if (!isString(CAR(args)) || (LENGTH(CAR(args))) != 1)
 	error(_("invalid '%s' argument"), "filename");
     append_mode = asLogical(CADR(args));
     filename = STRING_ELT(CAR(args), 0);
-    threshold = (R_size_t) REAL(CADDR(args))[0];
+    double tdbl = REAL(CADDR(args))[0];
+    if (tdbl > 0) {
+	if (tdbl >= (double) R_SIZE_T_MAX)
+	    threshold = R_SIZE_T_MAX;
+	else
+	    threshold = (R_size_t) tdbl;
+    }
     if (strlen(CHAR(filename)))
 	R_InitMemReporting(filename, append_mode, threshold);
     else
