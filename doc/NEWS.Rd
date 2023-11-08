@@ -176,8 +176,7 @@
 
       In a UTF-8 locale some transliterations are now done without
       warning (e.g., dashes and Unicode minus to hyphen, ligatures are
-      expanded and Euro sign replaced by \samp{EUR} except if using
-      \code{encoding + "WinANSI"}, the default on Windows).
+      expanded).
 
       \item The matrix multiplication functions \code{crossprod()} and
       \code{tcrossprod()} are now also primitive and S3 generic, as
