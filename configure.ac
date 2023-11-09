@@ -21,6 +21,7 @@
 ### https://www.r-project.org/Licenses/
 
 AC_PREREQ(2.69)
+AC_CONFIG_MACRO_DIR([m4])
 
 ## We want to get the version number from file 'VERSION' (rather than
 ## specifying the version info in 'configure.ac'.  Hence, we need a bit
