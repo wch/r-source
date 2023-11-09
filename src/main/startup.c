@@ -326,7 +326,7 @@ static void SetMaxSize(R_size_t vsize, R_size_t nsize)
 	snprintf(msg, 1024,
 		 "WARNING: too small maximum for language heap (n)size '%lu' ignored,"
 		 " the current usage '%lu' is already larger\n",
-		 (unsigned long) nsize, R_NSize);
+		 (unsigned long) nsize, (unsigned long) R_NSize);
 	R_ShowMessage(msg);
     }
 }
