@@ -166,7 +166,7 @@
       to support writing stack-space-efficient recursive functions.
 
       \item Where characters are attempted to be plotted by
-      \code{pdf()} and \code{postscript()} which are
+      \code{pdf()}, \code{postscript()} and \code{xfig()} which are
       not in the selected 8-bit character set (most often Latin-1) and
       the \R session is using a UTF-8 locale, the warning messages will
       show the UTF-8 character rather than its bytes and one dot will be
