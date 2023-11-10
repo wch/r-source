@@ -2872,13 +2872,19 @@ static int StringValue(int c, Rboolean forSymbol)
 	    c = '\\';
 	}
 	if (c == '\\') {
-	    c = xxgetc(); CTEXT_PUSH(c);
+	    c = xxgetc();
+	    if (c == R_EOF) break;
+	    CTEXT_PUSH(c);
 	    if ('0' <= c && c <= '7') {
 		int octal = c - '0';
-		if ('0' <= (c = xxgetc()) && c <= '7') {
+		c = xxgetc();
+		if (c == R_EOF) break;
+		if ('0' <= c && c <= '7') {
 		    CTEXT_PUSH(c);
 		    octal = 8 * octal + c - '0';
-		    if ('0' <= (c = xxgetc()) && c <= '7') {
+		    c = xxgetc();
+		    if (c == R_EOF) break;
+		    if ('0' <= c && c <= '7') {
 			CTEXT_PUSH(c);
 			octal = 8 * octal + c - '0';
 		    } else {
@@ -2899,7 +2905,9 @@ static int StringValue(int c, Rboolean forSymbol)
 	    else if(c == 'x') {
 		int val = 0; int i, ext;
 		for(i = 0; i < 2; i++) {
-		    c = xxgetc(); CTEXT_PUSH(c);
+		    c = xxgetc();
+		    if (c == R_EOF) break;
+		    CTEXT_PUSH(c);
 		    if(c >= '0' && c <= '9') ext = c - '0';
 		    else if (c >= 'A' && c <= 'F') ext = c - 'A' + 10;
 		    else if (c >= 'a' && c <= 'f') ext = c - 'a' + 10;
@@ -2915,6 +2923,7 @@ static int StringValue(int c, Rboolean forSymbol)
 		    }
 		    val = 16*val + ext;
 		}
+		if (c == R_EOF) break;
 		if (!val)
 		    raiseLexError("nulNotAllowed", NO_VALUE, NULL,
                         _("nul character not allowed (%s:%d:%d)"));
@@ -2928,12 +2937,16 @@ static int StringValue(int c, Rboolean forSymbol)
 		if(forSymbol) 
 		    raiseLexError("unicodeInBackticks", NO_VALUE, NULL, 
 		        _("\\uxxxx sequences not supported inside backticks (%s:%d:%d)"));
-		if((c = xxgetc()) == '{') {
+		c = xxgetc();
+		if (c == R_EOF) break;
+		if (c == '{') {
 		    delim = TRUE;
 		    CTEXT_PUSH(c);
 		} else xxungetc(c);
 		for(i = 0; i < 4; i++) {
-		    c = xxgetc(); CTEXT_PUSH(c);
+		    c = xxgetc();
+		    if (c == R_EOF) break;
+		    CTEXT_PUSH(c);
 		    if(c >= '0' && c <= '9') ext = c - '0';
 		    else if (c >= 'A' && c <= 'F') ext = c - 'A' + 10;
 		    else if (c >= 'a' && c <= 'f') ext = c - 'a' + 10;
@@ -2949,8 +2962,11 @@ static int StringValue(int c, Rboolean forSymbol)
 		    }
 		    val = 16*val + ext;
 		}
+		if (c == R_EOF) break;
 		if(delim) {
-		    if((c = xxgetc()) != '}')
+		    c = xxgetc();
+		    if (c == R_EOF) break;
+		    if (c != '}')
 			raiseLexError("invalidUnicode", NO_VALUE, NULL, 
 			    _("invalid \\u{xxxx} sequence (line %d)"));
 		    else CTEXT_PUSH(c);
@@ -2968,12 +2984,16 @@ static int StringValue(int c, Rboolean forSymbol)
 		if(forSymbol) 
 		    raiseLexError("unicodeInBackticks", NO_VALUE, NULL, 
 		        _("\\Uxxxxxxxx sequences not supported inside backticks (%s:%d:%d)"));
-		if((c = xxgetc()) == '{') {
+		c = xxgetc();
+		if (c == R_EOF) break;
+ 		if (c == '{') {
 		    delim = TRUE;
 		    CTEXT_PUSH(c);
 		} else xxungetc(c);
 		for(i = 0; i < 8; i++) {
-		    c = xxgetc(); CTEXT_PUSH(c);
+		    c = xxgetc();
+		    if (c == R_EOF) break;
+		    CTEXT_PUSH(c);
 		    if(c >= '0' && c <= '9') ext = c - '0';
 		    else if (c >= 'A' && c <= 'F') ext = c - 'A' + 10;
 		    else if (c >= 'a' && c <= 'f') ext = c - 'a' + 10;
@@ -2989,8 +3009,11 @@ static int StringValue(int c, Rboolean forSymbol)
 		    }
 		    val = 16*val + ext;
 		}
+		if (c == R_EOF) break;
 		if(delim) {
-		    if((c = xxgetc()) != '}')
+		    c = xxgetc();
+		    if (c == R_EOF) break;
+		    if (c != '}')
 			raiseLexError("invalidUnicode", NO_VALUE, NULL,
 			    _("invalid \\U{xxxxxxxx} sequence (%s:%d:%d)"));
 		    else CTEXT_PUSH(c);
@@ -3041,8 +3064,6 @@ static int StringValue(int c, Rboolean forSymbol)
 		    c = '\v';
 		    break;
 		case '\\':
-		    c = '\\';
-		    break;
 		case '"':
 		case '\'':
 		case '`':
