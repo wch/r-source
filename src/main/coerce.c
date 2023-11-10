@@ -285,20 +285,21 @@ ComplexFromReal(double x, int *warn)
 Rcomplex attribute_hidden
 ComplexFromString(SEXP x, int *warn)
 {
-    double xr, xi;
-    Rcomplex z;
     const char *xx = CHAR(x); /* ASCII */
     char *endp;
-
-    z.r = z.i = NA_REAL;
+    Rcomplex z = { .r = NA_REAL, .i = NA_REAL };
     if (x != R_NaString && !isBlankString(xx)) {
-	xr = R_strtod(xx, &endp);
+	double xr = R_strtod(xx, &endp);
 	if (isBlankString(endp)) {
 	    z.r = xr;
 	    z.i = 0.0;
 	}
-	else if (*endp == '+' || *endp == '-') {
-	    xi = R_strtod(endp, &endp);
+	else if (*endp++ == 'i' && isBlankString(endp)) {
+	    z.r = 0.;
+	    z.i = xr;
+	}
+	else if (*--endp == '+' || *endp == '-') {
+	    double xi = R_strtod(endp, &endp);
 	    if (*endp++ == 'i' && isBlankString(endp)) {
 		z.r = xr;
 		z.i = xi;

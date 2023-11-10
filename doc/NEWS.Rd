@@ -206,6 +206,9 @@
       \item \code{warnings()} now always inherits from \code{"warnings"} as
       documented, newly also in the case of no warnings, where it
       previously returned \code{NULL}.
+
+      \item \code{as.complex("1i")} now returns \code{1i} instead of
+      \code{NA} with a warning.
     }
   }
 

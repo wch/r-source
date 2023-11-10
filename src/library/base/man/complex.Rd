@@ -107,6 +107,9 @@ Conj(z)
 
   Operations involving complex \code{NA}, i.e., \code{\link{NA_complex_}}, return
   \code{\link{NA_complex_}}.
+
+  Only since \R version 4.4.0, \code{as.complex("1i")} gives \code{1i},
+  it returned \code{NA_complex_} with a warning, previously.
 }
 \seealso{
   \code{\link{Arithmetic}}; \code{\link{polyroot}} finds all \eqn{n}

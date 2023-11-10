@@ -560,7 +560,7 @@ stopifnot(inherits(mT, "error"),
           inherits(mF, "error"), all.equal(mT, mF))
 if(englishMsgs)
     stopifnot(grepl("formal argument \"na.rm\" matched by multiple", conditionMessage(mT)))
-## these gave numeric (or NA) results without any warning in R <= 4.3.0
+## these gave numeric (or NA) results without any warning in R <= 4.3.z
 
 
 ## as.complex(NA_real_) |-> ... Im(.) == 0 as for NA (logical) and NA_integer_
@@ -676,7 +676,7 @@ stopifnot(!m4["coef.foo", "visible"],
 ## coef.foo  part  always worked
 
 
-## R <= 4.3.1 would split into two invalid characters (PR#18546)
+## R <= 4.3.z would split into two invalid characters (PR#18546)
 splitmbcs <- length(strsplit("\u00e4", "^", perl=TRUE)[[1]])
 stopifnot(identical(splitmbcs, 1L))
 
@@ -691,7 +691,7 @@ foo <- function(x, ..., z = 22) z
 setMethod("foo", "character", function(x, y = -5, z = 22) y)
 stopifnot(identical(foo("a"), -5))
 removeGeneric("foo")
-## foo("a") gave -22 in R <= 4.3.1
+## foo("a") gave 22 in R <= 4.3.z
 
 
 ## `substr<-` overrun in case of UTF-8 --- private bug report by 'Architect 95'
@@ -1027,6 +1027,25 @@ if(englishMsgs) stopifnot(grepl("must be integers >= 1", eMsg))
 tt <- terms(y ~ a+b)
 stopifnot(identical(tt, drop.terms(tt, dropx = 0[0])))
 ## errored in R <= 4.3.2
+
+
+## as.complex("<num>i") -- should work (and fail/warn) as the parser does:
+tools::assertWarning(cc <- as.complex("12iL"), verbose=TRUE)
+tools::assertWarning(cF <- as.complex("12irene"))
+tools::assertWarning(cI <- as.complex("12I"))
+stopifnot(is.na(cc), is.na(cF), is.na(cI),
+          identical(cc, cF), identical(cF, cI), identical(cI, NA_complex_))
+stopifnot(exprs = {
+    identical(1i,        as.complex("1i"))
+    identical(4i,        as.complex("+4.i"))
+    identical(-0.1i,     as.complex("-.1i"))
+    identical(-4.321i,   as.complex("-4.321i"))
+    identical(-4.3e-17i, as.complex("-4.3e-17i"))
+    identical(+.123e6i,  as.complex("+.123e6i"))
+    identical(-4.3e6i,   as.complex("-4.3e6i"))
+    identical( 30000i,   as.complex("+.3e+5i"))
+})
+## returned NA_complex_ *with* a warning, in R <= 4.4.0
 
 
 
