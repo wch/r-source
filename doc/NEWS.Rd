@@ -26,6 +26,10 @@
 
       \item \code{seq.int()} did not adequately check its
       \code{length.out} argument.
+
+      \item \code{match(<POSIXct>, .)} is correct again for differing time
+      zones, ditto for \code{"POSIXlt"}, fixing \PR{18618} reported by
+      Bastian Klein.
     }
   }
 }

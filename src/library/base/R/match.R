@@ -1,7 +1,7 @@
 #  File src/library/base/R/match.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2022 The R Core Team
+#  Copyright (C) 1995-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -85,8 +85,12 @@ char.expand <- function(input, target, nomatch = stop("no match"))
 mtfrm <- function(x)
     UseMethod("mtfrm")
 
+# also for "Date"
 mtfrm.default <- function(x) {
     if(length(y <- as.character(x)) != length(x))
         stop("cannot mtfrm")
     y
 }
+
+mtfrm.POSIXct <-
+mtfrm.POSIXlt <- function(x) as.vector(x, "any")

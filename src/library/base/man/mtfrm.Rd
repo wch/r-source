@@ -1,14 +1,19 @@
 % File src/library/base/man/mtfrm.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2021 R Core Team
+% Copyright 2021-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{mtfrm}
+\title{Auxiliary Function for Matching}
 \alias{mtfrm}
 \alias{mtfrm.default}
-\title{Auxiliary Function for Matching}
+\alias{mtfrm.POSIXct}
+\alias{mtfrm.POSIXlt}
 \description{
-  A generic auxiliary function to transform objects for matching.
+  Transform objects for matching via \code{\link{match}()}, think
+  \dQuote{match form} \code{-> "mtfrm"}.
+  \pkg{base} provides the S3 generic and a \code{default} plus
+  \code{"\link{POSIXct}"} and \code{"POSIXlt"} methods.
 }
 \usage{
 mtfrm(x)
