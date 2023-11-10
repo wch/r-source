@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/Devices.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2018 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Devices}
@@ -11,15 +11,14 @@
   \describe{
     \item{\code{\link{windows}}:}{On Windows only, the graphics device for
       Windows (on screen, to printer and to Windows metafile).}
-    \item{\code{\link{pdf}}:}{Write PDF graphics commands to a file}
+    \item{\code{\link{pdf}}:}{Write PDF graphics commands to a file.}
     \item{\code{\link{postscript}}:}{Writes PostScript graphics commands to
-      a file}
-    \item{\code{\link{xfig}}:}{Device for XFig graphics file format}
+      a file.}
+    \item{\code{\link{xfig}}:}{Device for XFig graphics file format.}
     \item{\code{\link{bitmap}}:}{bitmap pseudo-device via
       \code{Ghostscript} (if available).}
     \item{\code{\link{pictex}}:}{Writes TeX/PicTeX graphics commands to a
-      file (of historical interest only)
-    }
+      file (of historical interest only).}
   }
   The following devices will be functional if \R was compiled to use
   them (they exist but will return with a warning on other systems):
@@ -32,7 +31,7 @@
     \item{\code{\link{bmp}}:}{BMP bitmap device}
     \item{\code{\link{tiff}}:}{TIFF bitmap device}
   }
-  On Unix-alikes (incl. Mac) only:
+  On Unix-alikes (including macOS) only:
   \describe{
     \item{\code{\link{X11}}:}{The graphics device for the X11 windowing system}
     \item{\code{\link{quartz}}:}{The graphics device for the macOS
@@ -52,9 +51,10 @@
   device is known to be available, when \code{pdf()} is used.
 
   It is possible for an \R package (or an \R front-end such as RStudio)
-  to provide further graphics devices
-  and several packages on CRAN do so.  These include other devices outputting
-  SVG and PGF/TiKZ (TeX-based graphics, see \url{https://pgf.sourceforge.net/}).
+  to provide further graphics devices and several packages on CRAN do
+  so.  These include devices outputting SVG (\CRANpkg{svglite} and
+  PGF/TiKZ (\CRANpkg{tikzDevice}, TeX-based graphics, see
+  \url{https://pgf.sourceforge.net/}).
 }
 \seealso{
   The individual help files for further information on any of the
