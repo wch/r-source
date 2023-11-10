@@ -561,6 +561,21 @@ stopifnot(exprs = {
 ## was wrong in R 4.3.0 (and R-devel for a while)
 
 
+## Methods of a non-generic function
+foo <- function(x) { bar(x) }
+(m <- methods(foo))
+stopifnot(inherits(m, "MethodsFunction"), length(m) == 0L)
+## .S3methods() failed in R-devel for a few days after r84400.
+
+
+## getS3method() error
+myFUN <- function(x) UseMethod("myFUN")
+(msg <- tryCmsg(getS3method("myFUN", "numeric")))
+if(englishMsgs)
+    stopifnot(grepl("S3 method 'myFUN.numeric' not found", msg))
+## failed with "wrong" message after r84400
+
+
 ## head(.,n) / tail(.,n) error reporting - PR#18362
 try(head(letters, 1:2)) # had "Error in checkHT(..)"); now ".. in head.default(..)"
 try(tail(letters, NA))
@@ -628,6 +643,140 @@ m4 <- methi(coef)
 stopifnot(!m4["coef.foo", "visible"],
            m4["coef.foo", "from"] == "registered S3method for coef")
 ## coef.foo  part  always worked
+
+
+## contrib.url() should "recycle0"
+stopifnot(identical(contrib.url(character()), character()))
+## R <= 4.3.1 returned "/src/contrib" or similar
+
+
+## `substr<-` overrun in case of UTF-8 --- private bug report by 'Architect 95'
+s0 <- "123456"; nchar(s0) #  6
+substr(s0, 6, 7) <- "cc"
+s0 ; nchar(s0) # {"12345c", 6}: all fine: no overrun, silent truncation
+(s1 <- intToUtf8(c(23383, 97, 97, 97, 97, 97))); nchar(s1)  # "字aaaaa" , 6
+substr(s1, 6, 7) <- "cc"
+# Now s1 should be "字aaaac", but  actually did overrunn nchar(s1);
+s1; nchar(s1) ## was "字aaaacc", nchar  = 7
+(s2 <- intToUtf8(c(23383, 98, 98))); nchar(s2)  # "字bb" 3
+substr(s2, 4, 5) <- "dd" # should silently truncate as with s0:
+## --> s2 should be "字bb", but was "字bbdddd\x97" (4.1.3) or "字bbdd字" (4.3.1)
+s2; nchar(s2) ## was either 6 or  "Error ... : invalid multibyte string, element 1"
+#-------------
+## Example where a partial UTF-8 character is included in the second string
+## 3) all fine
+(s3 <- intToUtf8(c(23383, 97, 97, 97, 97, 97))); nchar(s3)  # "字aaaaa" 6
+substr(s3, 6, 6) <- print(intToUtf8(23383))  # "字"
+s3 ; nchar(s3) # everything as expected:  ("字aaaa字", 6)
+## 4) not good
+(s4 <- intToUtf8(c(23383, 98, 98, 98, 98))); nchar(s4) # "字bbbb" 5
+substr(s4, 5, 7) <- "ddd"
+# Now s4 should be "字bbbd", but was "字bbbddd\x97", (\x97 = last byte of "字" in UTF-8)
+s4; nchar(s4)## gave "字bbbddd\x97" and "Error ...: invalid multibyte string, element 1"
+stopifnot(exprs = {
+    identical(s0, "12345c") # always ok
+    identical(utf8ToInt(s1), c(23383L, rep(97L, 4), 99L))           ; nchar(s1) == 6
+    identical(utf8ToInt(s2), c(23383L, 98L, 98L))                   ; nchar(s2) == 3
+    identical(utf8ToInt(s3), c(23383L, 97L, 97L, 97L, 97L, 23383L)) ; nchar(s3) == 6
+    identical(utf8ToInt(s4), c(23383L, 98L, 98L, 98L, 100L))        ; nchar(s4) == 5
+    Encoding(c(s1,s2,s3,s4)) == rep("UTF-8", 4)
+})
+## did partly overrun to invalid strings, nchar(.) giving error in R <= 4.3.1
+
+
+## PR#18557 readChar() with large 'nchars'
+ch <- "hello\n"; tf <- tempfile(); writeChar(ch, tf)
+tools::assertWarning((c2 <- readChar(tf, 4e8)))
+stopifnot(identical(c2, "hello\n"))
+## had failed w/   cannot allocate memory block of size 16777216 Tb
+
+
+## Deprecation of *direct* calls to as.data.frame.<someVector>
+dpi <- as.data.frame(pi)
+d1 <- data.frame(dtime = as.POSIXlt("2023-07-06 11:11")) # gave F.P. warning
+r <- lapply(list(1L, T=T, pi=pi), as.data.frame)
+stopifnot(is.list(r), is.data.frame(d1), inherits(d1[,1], "POSIXt"), is.data.frame(r$pi), r$pi == pi)
+stopifnot(local({adf <- as.data.frame; identical(adf(1L),(as.data.frame)(1L))}))
+## Gave 1 + 3 + 2  F.P. deprecation warnings in 4.3.0 <= R <= 4.3.1
+str(d2 <- mapply(as.data.frame, x=1:3, row.names=letters[1:3]))
+stopifnot(is.list(d2), identical(unlist(unname(d2)), 1:3))
+## gave Error .. sys.call(-1L)[[1L]] .. comparison (!=) is possible only ..
+
+
+## qqplot(x,y, *) confidence bands for unequal sized x,y, PR#18570:
+x <- (7:1)/8; y <- (1:63)/64
+r <- qqplot(x,y, plot.it=FALSE, conf.level = 0.90)
+r2<- qqplot(y,x, plot.it=FALSE, conf.level = 0.90)
+(d <- 64 * as.data.frame(r)[,3:4])
+stopifnot(identical(d, data.frame(lwr = c(NA, NA, NA, 6, 15, 24, 33),
+                                  upr = c(31, 40, 49, 58, NA, NA, NA))),
+          identical(8 * as.data.frame(r2[3:4]),
+                    data.frame(lwr = c(NA,NA,NA, 1:4 +0), upr = c(4:7 +0, NA,NA,NA))))
+## lower and upper confidence bands were nonsensical in R <= 4.3.1
+
+
+## isoreg() seg.faulted with Inf - PR#18603 - in R <= 4.3.1
+assertErrV(isoreg(Inf))
+assertErrV(isoreg(c(0,Inf)))
+assertErrV(isoreg(rep(1e307, 20))) # no Inf in 'y'
+## ==> Asserted error: non-finite sum(y) == inf is not allowed
+
+
+## Conversion of LaTeX accents: \~{n} etc vs. \~{}, accented I and i
+stopifnot(identical(
+    print(tools::parseLatex("El\\~{}Ni\\~{n}o") |>
+          tools::latexToUtf8() |>
+          tools::deparseLatex(dropBraces = TRUE)),
+    "El~Ni\u00F1o")) # "El~Niño"
+## gave "El~Ni~no" in R 4.3.{0,1} (\~ treated as 0-arg macro)
+stopifnot(tools:::cleanupLatex(r"(\`{I}\'{I}\^{I}\"{I})")
+          == "\u00cc\u00cd\u00ce\u00cf")
+## was wrongly converted as "ËÌÍÏ" in R <= 4.3.1
+stopifnot(tools:::cleanupLatex(r"(\`{i}\'{i}\^{i}\"{i})")
+          == "\u00ec\u00ed\u00ee\u00ef")
+## codes with i instead of \i were unknown thus not converted in R <= 4.3.1
+
+
+## PR#18618: match()  incorrect  with POSIXct || POSIXlt || fractional sec
+(dCT <- seq(as.POSIXct("2010-10-31", tz = "Europe/Berlin"), by = "hour", length = 5))
+(dd <- diff(dCT))
+chd <- as.character(dCT)
+vdt <- as.vector   (dCT)
+dLT <- as.POSIXlt  (dCT)
+dat <- as.Date     (dCT)
+dL2 <- dLT[c(1:5,5)]; dL2[6]$sec <- 1/4
+dL. <- dL2          ; dL.[6]$sec <- 1e-9
+stopifnot(exprs = {
+    inherits(dCT, "POSIXct")
+    inherits(dLT, "POSIXlt")
+    !duplicated(dCT)
+    dd == 1
+    units(dd) == "hours"
+    diff(as.integer(dCT)) == 3600L # seconds
+    identical(match(chd, chd), c(1:3, 3L, 5L))
+    identical(match(vdt, vdt), seq_along(vdt))
+    identical(match(dat, dat), c(1L,1L, 3L,3L,3L)) # always ok
+    identical(match(dCT, dCT), seq_along(dCT)) # wrong in 4.3.{0,1,2}
+    identical(match(dLT, dLT), seq_along(dLT)) #  "    "   "
+    identical(match(dL2, dL2), seq_along(dL2)) #  "    "   "
+    identical(match(dL., dL.), seq_along(dL.)) #  "    "  now ok, as indeed,
+  ! identical(dL.[5], dL.[6]) # NB: `==`, diff(), ... all lose precision, from as.POSIXct():
+    inherits(dC. <- as.POSIXct(dL.), "POSIXct")
+    identical(match(dC., dC.), c(1:5, 5L))
+    identical(dC.[5], dC.[6])
+    dC.[5] == dC.[6]
+} )
+## failed (partly) in R versions  4.3.0 -- 4.3.2
+
+
+## PR#18598: *wrong* error message
+writeLines(eMsg <- tryCmsg(
+    diff(1:6, differences = integer(0L))
+))
+if(englishMsgs) stopifnot(grepl("must be integers >= 1", eMsg))
+## errored with "missing value where TRUE/FALSE needed" in R <= 4.3.2
+
+
 
 
 
