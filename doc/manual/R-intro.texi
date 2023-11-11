@@ -6769,14 +6769,14 @@ disappear.
 @c This is written for the UNIX user.  Those using Windows will
 @c need to adapt the discussion slightly.
 
-@table @code
-@item Start @R{} appropriately for your platform (@pxref{Invoking R}).
+Start @R{} appropriately for your platform (@pxref{Invoking R}).
 
 The @R{} program begins, with a banner.
 
 (Within @R{} code, the prompt on the left hand side will not be shown to
 avoid confusion.)
 
+@table @code
 @item help.start()
 Start the @HTML{} interface to on-line help (using a web browser
 available at your machine).  You should briefly explore the features of

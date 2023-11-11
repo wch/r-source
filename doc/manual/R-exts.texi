@@ -3855,6 +3855,7 @@ and for the macOS platform the default binary package file extension is
 The recommended method of building binary packages is to use
 
 @command{R CMD INSTALL --build pkg}
+
 @noindent
 where @file{pkg} is either the name of a source tarball (in the usual
 @file{.tar.gz} format) or the location of the directory of the package
@@ -15323,7 +15324,9 @@ void rmultinom(int n, double* prob, int K, int* rN)
 @end example
 @noindent
 where @code{K = length(prob)},
-@iftex @tex $\pi :=$ @code{prob[]},
+@iftex 
+@tex
+$\pi :=$ @code{prob[]},
 @end tex
 @end iftex
 @eqn{\sum_{j=1}^K \pi_j = 1, sum(prob[.]) == 1}
