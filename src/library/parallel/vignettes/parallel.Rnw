@@ -26,7 +26,6 @@ pdftitle={Package `parallel'}% Could also have pdfusetitle
 %\VignetteIndexEntry{Package 'parallel'}
 %\VignettePackage{parallel}
 
-
 \title{Package `parallel'}
 \author{R Core Team}
 
@@ -47,10 +46,10 @@ Parallelism can be done in computation at many different levels: this
 package is principally concerned with `coarse-grained
 parallelization'.  At the lowest level, modern CPUs can do several
 basic operations simultaneously (e.g.{} integer and floating-point
-arithmetic), and several implementations of external BLAS libraries
+arithmetic), and several implementations of external \abbr{BLAS} libraries
 use multiple threads to do parts of basic vector/matrix operations in
 parallel.  Several contributed \R{} packages use multiple threads at C
-level \emph{via} OpenMP or pthreads.
+level \emph{via} \abbr{OpenMP} or pthreads.
 
 This package handles running much larger chunks of computations in
 parallel.  A typical example is to evaluate the same \R{} function on
@@ -97,7 +96,7 @@ processes.  They can be created in one of three ways:
   This should be available on all \R{} platforms, although it is
   conceivable that zealous security measures could block the
   inter-process communication \emph{via} sockets.  Users of Windows
-  and macOS may expect pop-up dialog boxes from the firewall asking
+  and \abbr{macOS} may expect pop-up dialog boxes from the firewall asking
   if an \R{} process should accept incoming connections.
 
   Following \CRANpkg{snow}, a pool of worker processes listening
@@ -117,7 +116,7 @@ processes.  They can be created in one of three ways:
 
   Note that as it does share the complete process, it also shares any
   GUI elements, for example an \R{} console and on-screen devices.
-  This can cause havoc.\footnote{Some precautions are taken on macOS:
+  This can cause havoc.\footnote{Some precautions are taken on \abbr{macOS}:
     for example the event loops for \command{R.app} and the
     \code{quartz} device are inhibited in the child.  This information
     is available at C level in the \code{Rboolean} variable
@@ -182,7 +181,7 @@ restricted by system policies on multi-user systems.  Nor does it give
 much idea of a reasonable number of CPUs to use for the current task:
 the user may be running many \R{} processes simultaneously, and those
 processes may themselves be using multiple threads through a
-multi-threaded BLAS, compiled code using OpenMP or other low-level
+multi-threaded \abbr{BLAS}, compiled code using \abbr{OpenMP} or other low-level
 forms of parallelism.  We have even seen instances of
 \CRANpkg{multicore}'s \code{mclapply} being called
 recursively,\footnote{\code{parallel::mclapply} detects this and runs
@@ -387,7 +386,7 @@ seed is advanced by $k$ steps by \R{} call
 
 % use \verb to get consistent quote mapping.
 The \citet{lecuyer.1999} generator is available \emph{via}
-\verb|RNGkind("L'Ecuyer-CMRG")|.  Thus using the ideas of
+\code{RNGkind("L'Ecuyer-CMRG")}.  Thus using the ideas of
 \citet{lecuyer.2002} is as simple as
 <<Ecuyer-ex, eval=FALSE>>=
 RNGkind("L'Ecuyer-CMRG")
@@ -439,7 +438,7 @@ disparate capabilities.  But some \emph{caveats} are in order:
 \end{enumerate}
 
 
-\section{Setting the CPU Affinity with mclapply}
+\section{Setting the CPU Affinity with \code{mclapply}}
 %%\author{Helena Kotthaus, Andreas Lang \\ LS12 Department of Computer Science, TU Dortmund}
 
 The parameter \code{affinity.list} of the \code{mclapply} function

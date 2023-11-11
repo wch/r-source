@@ -8,6 +8,7 @@
 %\VignettePackage{grid}
 \newcommand{\pkg}[1]{{\normalfont\fontseries{b}\selectfont #1}}
 \newcommand{\grid}{\pkg{grid}}
+\let\code=\texttt
 \setlength{\parindent}{0in}
 \setlength{\parskip}{.1in}
 \setlength{\textwidth}{140mm}
@@ -25,8 +26,8 @@ ps.options(pointsize = 12)
 options(width = 60)
 @
 
-It is possible to include non-finite values, \texttt{NA}, \texttt{NaN}, {\tt
-  Inf}, and \texttt{-Inf}, in specifications of locations and sizes in
+It is possible to include non-finite values, \code{NA}, \code{NaN},
+\code{Inf}, and \code{-Inf}, in specifications of locations and sizes in
 \grid{} functions.  This document describes how \grid{} responds to
 non-finite values in different cases.
 

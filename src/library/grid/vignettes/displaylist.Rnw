@@ -130,7 +130,7 @@ device before trying the next example.}.
 This next piece of code is an example where the output becomes
 inconsistent when the device is resized.  We specify a width for
 the rectangle in inches, but convert it (gratuitously) to
-NPC coordinates -- when the device is resized, the NPC coordinates
+\abbr{NPC} coordinates -- when the device is resized, the \abbr{NPC} coordinates
 will no longer correspond to 1''.
 
 <<results=hide>>=
