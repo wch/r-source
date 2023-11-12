@@ -370,21 +370,20 @@ function(x)
     y
 }
 
-print.aspell_inspect_context <-
+format.aspell_inspect_context <-
 function(x, ..., byfile = FALSE)
 {
-    if(byfile) {
-        s <- split(x, x$File)
-        nms <- names(s)
-        for(i in seq_along(s)) {
-            e <- s[[i]]
-            writeLines(c(sprintf("File '%s':", nms[i]),
-                         sprintf("  Line %s: \"%s\", \"%s\", \"%s\"",
-                                 format(e$Line),
-                                 gsub("\"", "\\\"", e$Left ), e$Original,
-                                 gsub("\"", "\\\"", e$Right)),
-                         ""))
-        }
+    chunks <- if(byfile) {
+        chunks <- split(x, x$File)
+        Map(function(u, e)
+                c(sprintf("File '%s':", u),
+                  sprintf("  Line %s: \"%s\", \"%s\", \"%s\"",
+                          format(e$Line),
+                          gsub("\"", "\\\"", e$Left ), e$Original,
+                          gsub("\"", "\\\"", e$Right)),
+                  ""),
+            names(chunks),
+            chunks)
     } else {
         y <- sprintf("  %s:%s:%s\n  %s%s%s\n  %s%s",
                      x$File, x$Line, x$Column,
@@ -392,16 +391,21 @@ function(x, ..., byfile = FALSE)
                      strrep(" ", as.integer(x$Column) - 1L),
                      strrep("^", nchar(x$Original)))
         chunks <- split(y, x$Original)
-        chunks <- Map(function(u, v)
-                          paste(c(paste("Word:", u), v),
-                                collapse = "\n"),
-                      names(chunks),
-                      chunks)
-        writeLines(unlist(chunks))
+        Map(function(u, v)
+                paste(c(paste("Word:", u), v),
+                      collapse = "\n"),
+            names(chunks),
+            chunks)
     }
-    invisible(x)
+    unlist(chunks, use.names = FALSE)
 }
 
+print.aspell_inspect_context <-
+function(x, ..., byfile = FALSE)
+{        
+    writeLines(format(x, ..., byfile = byfile))
+    invisible(x)
+}
 
 ## For spell-checking the R manuals:
 
