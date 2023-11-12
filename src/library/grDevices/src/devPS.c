@@ -758,7 +758,7 @@ static double
 	   (face % 5) != 0) {
 	    R_CheckStack2(strlen((char *)str)+1);
 	    /* Output string cannot be longer
-	       -- but it can be if transliteration is used */
+	       -- but it can be in bytes if transliteration is used */
 	    char *buff = alloca(2*strlen((char *)str)+1);
 	    mbcsToSbcs((char *)str, buff, encoding, enc);
 	    str1 = (unsigned char *)buff;
@@ -778,7 +778,8 @@ static double
 #endif
 	    wx = metrics->CharInfo[*p].WX;
 	if(wx == NA_SHORT)
-	    warning(_("font width unknown for character 0x%x"), *p);
+	    warning(_("font width unknown for character 0x%02x in encoding %s" ),
+		    *p, encoding);
 	else sum += wx;
 
 	if(useKerning) {
@@ -859,7 +860,7 @@ PostScriptMetricInfo(int c, double *ascent, double *descent, double *width,
 	    *ascent = 0;
 	    *descent = 0;
 	    *width = 0;
-	    warning(_("font metrics unknown for Unicode character U+%04x"), c);
+	    warning(_("font metrics unknown for Unicode character U+%04X"), c);
 	    return;
 	} else {
 	    c = out[0] & 0xff;
@@ -870,7 +871,7 @@ PostScriptMetricInfo(int c, double *ascent, double *descent, double *width,
 	*ascent = 0;
 	*descent = 0;
 	*width = 0;
-	warning(_("font metrics unknown for Unicode character U+%04x"), c);
+	warning(_("font metrics unknown for Unicode character U+%04X"), c);
     } else {
 	short wx;
 
@@ -878,7 +879,7 @@ PostScriptMetricInfo(int c, double *ascent, double *descent, double *width,
 	*descent = -0.001 * metrics->CharInfo[c].BBox[1];
 	wx = metrics->CharInfo[c].WX;
 	if(wx == NA_SHORT) {
-	    warning(_("font metrics unknown for character 0x%x"), c);
+	    warning(_("font metrics unknown for character 0x%02x in encoding %s"), c, encoding);
 	    wx = 0;
 	}
 	*width = 0.001 * wx;
@@ -892,7 +893,7 @@ PostScriptCIDMetricInfo(int c, double *ascent, double *descent, double *width)
        cope sensibly. */
     if(!mbcslocale && c > 0) {
 	if (c > 255)
-	    error(_("invalid character (%04x) sent to 'PostScriptCIDMetricInfo' in a single-byte locale"),
+	    error(_("invalid character (%04X) sent to 'PostScriptCIDMetricInfo' in a single-byte locale"),
 		  c);
 	else {
 	    /* convert to UCS-2 to use wcwidth. */
@@ -4398,12 +4399,15 @@ next_char:
 		(int) utf8toucs(&wc, i_buf); // gives -1 for a conversion error
 	    if (res != -1) {
 		char *fix = NULL;
-		// three-char fixes
-		if (wc == 0xFB03) fix = "ffi";
+		// four-char fixups
+		if (wc == 0x2030) fix = "o/oo"; // permille
+
+		// three-char fixups
+		else if (wc == 0xFB03) fix = "ffi";
 		else if (wc == 0xFB04) fix = "ffl";
 		// Possible future re-mapping
 		// else if (wc == 0x20AC) fix = "EUR";
-		
+
 		// two-char fixups
 		else if(wc == 0x2190) fix = "<-";
 		else if(wc == 0x2192 || wc == 0x2794 || wc == 0x279C ||
@@ -4419,7 +4423,7 @@ next_char:
 		// The next two could and probably should be done by plotmath.
 		else if(wc == 0x2264) fix = "<=";
 		else if(wc == 0x2265) fix = ">=";
-		
+
 		// one-char fixups
 		else if (wc == 0x2013 || wc == 0x2014 || wc == 0x2212)
 		    fix = "-"; // dashes, minus
@@ -4579,7 +4583,7 @@ static void PS_Text0(double x, double y, const char *str, int enc,
     if((enc == CE_UTF8 || mbcslocale) && !strIsASCII(str)) {
 	R_CheckStack2(strlen(str)+1);
 	/* Output string cannot be longer
-	   -- but it can be if transliteration is used
+	   -- but it can be in bytes if transliteration is used
 	 */
 	buff = alloca(2*strlen(str)+1);
 	mbcsToSbcs(str, buff, convname(gc->fontfamily, pd), enc);
@@ -10077,7 +10081,7 @@ static void PDF_Text0(double x, double y, const char *str, int enc,
             /* face 5 handled above */
             R_CheckStack2(strlen(str)+1);
 	    /* Output string cannot be longer
-	       -- but it can be if transliteration is used
+	       -- but it can be in bytes if transliteration is used
 	     */
             buff = alloca(2*strlen(str)+1); 
             mbcsToSbcs(str, buff, PDFconvname(gc->fontfamily, pd), enc);
