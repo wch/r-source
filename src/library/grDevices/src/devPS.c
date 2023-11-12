@@ -828,12 +828,19 @@ PostScriptMetricInfo(int c, double *ascent, double *descent, double *width,
 
     if (c < 0) { Unicode = TRUE; c = -c; }
     /* We don't need the restriction to 65536 here any more as we could
-       convert from  UCS4ENC, but there are few language chars above 65536. */
+       convert from  UCS4ENC, but there are few language chars above 65536.
+       Also, the 8-bit encodings used have no chars above 65536. */
     if(Unicode && !isSymbol && c >= 128 && c < 65536) { /* Unicode */
 	void *cd = NULL;
 	const char *i_buf; char *o_buf, out[2];
 	size_t i_len, o_len, status;
 	unsigned short w[2];
+
+	/* FIXME:
+	   Because transliteraton can occur in mbcsToSbcs, 'c' may
+	   not be the actual text plotted (which might be a
+	   string not a sinple character).
+	 */
 
 	if ((void*)-1 == (cd = Riconv_open(encoding, UCS2ENC)))
 	    error(_("unknown encoding '%s' in 'PostScriptMetricInfo'"),
@@ -4390,55 +4397,55 @@ next_char:
 	    int res =
 		(int) utf8toucs(&wc, i_buf); // gives -1 for a conversion error
 	    if (res != -1) {
+		char *fix = NULL;
+		// three-char fixes
+		if (wc == 0xFB03) fix = "ffi";
+		else if (wc == 0xFB04) fix = "ffl";
+		// Possible future re-mapping
+		// else if (wc == 0x20AC) fix = "EUR";
+		
 		// two-char fixups
-		char *fix2 = NULL;
-		if(wc == 0x2190) fix2 = "<-";
+		else if(wc == 0x2190) fix = "<-";
 		else if(wc == 0x2192 || wc == 0x2794 || wc == 0x279C ||
 			wc == 0x279D || wc == 0x279E || wc == 0x279F ||
 			wc == 0x27a1 || wc == 0x27a2)
-		    fix2 = "->";
-		// ligatures (not ffi, ffl), AE and ae are latin1.
-		else if(wc == 0xFB00) fix2 = "ff";
-		else if(wc == 0xFB01) fix2 = "fi";
-		else if(wc == 0xFB02) fix2 = "fl";
-		else if(wc == 0x0152) fix2 = "OE";
-		else if(wc == 0x0153) fix2 = "oe";
+		    fix = "->";
+		// some common ligatures: AE and ae are latin1.
+		else if(wc == 0xFB00) fix = "ff";
+		else if(wc == 0xFB01) fix = "fi";
+		else if(wc == 0xFB02) fix = "fl";
+		else if(wc == 0x0152) fix = "OE";
+		else if(wc == 0x0153) fix = "oe";
 		// The next two could and probably should be done by plotmath.
-		else if(wc == 0x2264) fix2 = "<=";
-		else if(wc == 0x2265) fix2 = ">=";
-		if(fix2) {
-		    /*
+		else if(wc == 0x2264) fix = "<=";
+		else if(wc == 0x2265) fix = ">=";
+		
+		// one-char fixups
+		else if (wc == 0x2013 || wc == 0x2014 || wc == 0x2212)
+		    fix = "-"; // dashes, minus
+		else if (wc == 0x2018 || wc == 0x2019) fix = "'";
+		else if (wc == 0x201C || wc == 0x201D) fix = "\"";
+		else if (wc == 0x2022) fix = ".";
+		else if (wc == 0x2605 || wc == 0x2737) fix = "*";
+		if (!fix) {
 		    if (fail)
-			error("conversion failure on '%s' in 'mbcsToSbcs': for %lc", in, wc);
+			error("conversion failure on '%s' in 'mbcsToSbcs': for %lc (U+%04X)", in, wc, wc);
 		    else
-			warning("conversion failure on '%s' in 'mbcsToSbcs': %s substituted for %lc", in, fix2, wc);
-		    */
-		    *o_buf++ = fix2[0]; *o_buf++ = fix2[1]; o_len-= 2;
-		    i_buf += clen; i_len -= clen;
-		} else {
-		    // one-char fixups
-		    char fix = '.';
-		    if (wc == 0x2013 || wc == 0x2014 || wc == 0x2212)
-			fix = '-'; // dashes, minus
-		    else if (wc == 0x2018 || wc == 0x2019) fix = '\'';
-		    else if (wc == 0x2022) fix = '.';
-		    else if (wc == 0x2605 || wc == 0x2737) fix = '*';
-		    else {
-			if (fail)
-			    error(_("conversion failure on '%s' in 'mbcsToSbcs': for %lc"), in, wc);
-			else
-			    warning(_("conversion failure on '%s' in 'mbcsToSbcs': %c substituted for %lc"), in, fix, wc);
-		    }
-		    *o_buf++ = fix; o_len--; i_buf += clen; i_len -= clen;
-		}
-	    } else {
+			warning("conversion failure on '%s' in 'mbcsToSbcs': for %lc (U+%04X)", in, wc, wc);
+		    fix = ".";  // default fix is one dot per char
+		} else
+		    warning("for '%s' in 'mbcsToSbcs': %s substituted for %lc (U+%04X)", in, fix, wc, wc);
+		size_t nfix = strlen(fix);
+		for (int j = 0; j < nfix; j++) *o_buf++ = *fix++;
+		o_len -= nfix; i_buf += clen; i_len -= clen;
+	    } else { // invalid UTF-8 so one dot per byte
 		if (fail)
 		    error(_("conversion failure on '%s' in 'mbcsToSbcs': for <%02x>"), in, (unsigned char) *i_buf);
 		else
 		    warning(_("conversion failure on '%s' in 'mbcsToSbcs': dot substituted for <%02x>"), in, (unsigned char) *i_buf);
 		*o_buf++ = '.'; o_len--; i_buf++; i_len--;
 	    }
-	} else {
+	} else { // non-UTF-8, one dot per byte
 	    if (fail)
 		error(_("conversion failure on '%s' in 'mbcsToSbcs': for <%02x>"), in, (unsigned char) *i_buf);
 	    else
