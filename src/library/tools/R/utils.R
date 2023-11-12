@@ -784,6 +784,18 @@ function(file1, file2)
     .Call(C_codeFilesAppend, file1, file2)
 }
 
+### ** .file_path_to_LaTeX_graphicspath
+
+.file_path_to_LaTeX_graphicspath <-
+function(x)
+{
+    x <- normalizePath(x, "/")
+    ## Older versions of (PDF)LaTeX need double quotes in case of spaces
+    ## etc.  Newer versions of XeLaTeX and LuaLaTeX cannot handle these.
+    ## Argh ...
+    sprintf("\\IfFormatAtLeastTF{2019/10/01}{\\graphicspath{{%s}}}{\\graphicspath{{\"%s\"}}}", x, x)
+}     
+
 ### ** .file_path_relative_to_dir
 
 .file_path_relative_to_dir <-

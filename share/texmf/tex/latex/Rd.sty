@@ -12,6 +12,8 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{Rd}{}
 
+\providecommand\IfFormatAtLeastTF{\@ifl@t@r\fmtversion}
+
 \RequirePackage{ifthen}
 \newboolean{Rd@use@hyper}
 \setboolean{Rd@use@hyper}{true}
@@ -29,6 +31,16 @@
 \DeclareOption{beramono}{\setboolean{Rd@use@beramono}{true}}
 \DeclareOption{inconsolata}{\setboolean{Rd@use@inconsolata}{true}}
 \ProcessOptions
+
+% The above fonts will not work with modern LaTeX engines.
+\IfFileExists{iftex.sty}{\RequirePackage{iftex}}{}
+\@ifpackageloaded{iftex}{\ifPDFTeX\else%
+  \setboolean{Rd@use@times}{false}%
+  \setboolean{Rd@use@lm}{false}%
+  \setboolean{Rd@use@beramono}{false}%
+  \setboolean{Rd@use@inconsolata}{false}%\
+  \fi}
+
 \RequirePackage{longtable}
 \setcounter{LTchunksize}{250}
 \ifthenelse{\boolean{Rd@use@hyper}}

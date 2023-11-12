@@ -196,13 +196,9 @@
             latexEncodings <- c(latexEncodings,
                                 attr(res,"latexEncoding"))
             if (attr(res, "hasFigures")) {
-                graphicspath <-
-                    paste0("\\graphicspath{{\"",
-                           normalizePath(file.path(dirname(f),
-                                                   "figures"),
-                                         "/"),
-                           "/\"}}")
-            	lines <- c(graphicspath, lines)
+                graphicspath <- file.path(dirname(f), "figures")
+                lines <- c(.file_path_to_LaTeX_graphicspath(graphicspath),
+                           lines)
             	hasFigures <- TRUE
             }
             writeLines(lines, outfile)
@@ -274,13 +270,10 @@
                                     attr(res, "latexEncoding"))
                 if (attr(res, "hasFigures")) {
                     lines <- readLines(outfilename)
-                    graphicspath <-
-                        paste0("\\graphicspath{{\"",
-                               normalizePath(file.path(pkgdir, "help",
-                                                       "figures"),
-                                             "/"),
-                               "/\"}}")
-                    writeLines(c(graphicspath, lines), outfilename)
+                    graphicspath <- file.path(pkgdir, "help", "figures")
+                    writeLines(c(.file_path_to_LaTeX_graphicspath(graphicspath),
+                                 lines),
+                               outfilename)
                     hasFigures <- TRUE
                 }
             }
@@ -357,13 +350,10 @@
                     c(latexEncodings, attr(res, "latexEncoding"))
                 if (attr(res, "hasFigures")) {
                     lines <- readLines(outfilename)
-                    graphicspath <-
-                        paste0("\\graphicspath{{\"",
-                               normalizePath(file.path(dirname(paths[i]),
-                                                       "figures"),
-                                             "/"),
-                               "/\"}}")
-                    writeLines(c(graphicspath, lines), outfilename)
+                    graphicspath <- file.path(dirname(paths[i]), "figures")
+                    writeLines(c(.file_path_to_LaTeX_graphicspath(graphicspath),
+                                 lines),
+                               outfilename)
                     hasFigures <- TRUE
                 }
             }
