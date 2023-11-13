@@ -1,7 +1,7 @@
 #  File src/library/grDevices/R/pictex.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -20,6 +20,9 @@ pictex <-
     function(file = "Rplots.tex", width = 5, height = 4, debug = FALSE,
 	     bg = "white", fg = "black")
 {
+    msg <- gettextf("'%s' is deprecated.\n", "pictex")
+    msg <- paste(msg, "Consider a TiKZ device instead.")
+    .Deprecated(msg = msg)
     .External(C_PicTeX, file, bg, fg, width, height, as.logical(debug))
 
     graphics::par(mar = c(5,4,2,4)+0.1)

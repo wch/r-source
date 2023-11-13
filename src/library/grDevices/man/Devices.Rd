@@ -14,11 +14,12 @@
     \item{\code{\link{pdf}}:}{Write PDF graphics commands to a file.}
     \item{\code{\link{postscript}}:}{Writes PostScript graphics commands to
       a file.}
-    \item{\code{\link{xfig}}:}{Device for XFig graphics file format.}
+    \item{\code{\link{xfig}}:}{Device for XFig graphics file format.  (Of
+      historiical interest only, deprecated in \R 4.4.0.)}
     \item{\code{\link{bitmap}}:}{bitmap pseudo-device via
       \code{Ghostscript} (if available).}
     \item{\code{\link{pictex}}:}{Writes TeX/PicTeX graphics commands to a
-      file (of historical interest only).}
+      file (of historical interest only, deprecated in R 4.4.0).}
   }
   The following devices will be functional if \R was compiled to use
   them (they exist but will return with a warning on other systems):

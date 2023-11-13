@@ -10,6 +10,9 @@
   \code{xfig} starts the graphics device driver for producing XFig
   (version 3.2) graphics.
 
+  It was deprecated in \R 4.4.0: consider using an SVG device for
+  editable graphics.
+
   The auxiliary function \code{ps.options} can be used to set and view
   (if called without arguments) default values for the arguments to
   \code{xfig} and \code{postscript}.
@@ -65,7 +68,7 @@ xfig(file = if(onefile) "Rplots.fig" else "Rplot\%03d.fig",
   \item{defaultfont}{logical: should the device use xfig's default
     font?}
   \item{textspecial}{logical: should the device set the textspecial flag
-  for all text elements. This is useful when generating pstex from xfig
+  for all text elements? This is useful when generating pstex from xfig
   figures.}
 }
 %%>>> REAL DOC in SOURCE:    ../../../main/devices.c  &   ../../../unix/devPS.c
@@ -83,9 +86,11 @@ xfig(file = if(onefile) "Rplots.fig" else "Rplot\%03d.fig",
   5/6*1/72 inch.  Multiples less than 1 are allowed.  \code{pch = "."} with
   \code{cex = 1} corresponds to a square of side 1/72 inch.
 
-  Windows users can make use of WinFIG
-  (\url{http://www.schmidt-web-berlin.de/WinFIG.htm}, shareware), or
-  XFig under Cygwin.
+  %% Did not work when tested.
+  %% Inkscape (\url{https://inkscape.org/}) can imoort and edit XFig files
+  %% and has Windows and macOS binaries.
+  
+  Windows users could make use of WinFIG (\url{http://winfig.com/}, shareware).
 }
 \note{
   Only some line textures (\code{0 <= lty < 4}) are used.  Eventually this

@@ -174,9 +174,12 @@
       \code{iconv()} does transliteration silently plot the
       transliteration.)
 
-      In a UTF-8 locale some transliterations are now done without
+      In a UTF-8 locale some transliterations are now done with a
       warning (e.g., dashes and Unicode minus to hyphen, ligatures are
-      expanded).
+      expanded, permille (\samp{‰}) is replaced by \samp{o/oo}),
+      although the OS may have got there first.  These are warnings as
+      they will continue to be replaced by dots in earlier versions of
+      \R.
 
       \item The matrix multiplication functions \code{crossprod()} and
       \code{tcrossprod()} are now also primitive and S3 generic, as
@@ -330,6 +333,12 @@
     \itemize{
       \item \code{data()} no longer handles zipped data from
       long-defunct (since \R 2.13.0) \option{--use-zip-data} installations.
+
+      \item The legacy graphics devices \code{pictex()} and
+      \code{xfig()} are now deprecated.  They do not support recent
+      graphics enhancements and their font-handling is rudimentary. The
+      intention is to retain them for historical interest as long as
+      they remain somewhat functional.   
     }
   }
 

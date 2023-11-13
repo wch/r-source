@@ -285,6 +285,10 @@ xfig <- function (file = if(onefile) "Rplots.fig" else "Rplot%03d.fig",
                   pagecentre = TRUE,
                   defaultfont = FALSE, textspecial = FALSE)
 {
+    msg <- gettextf("'%s' is deprecated.\n", "xfig")
+    msg <- paste(msg, "Consider an SVG device instead.")
+    .Deprecated(msg = msg)
+
     ## do initialization if needed
     initPSandPDFfonts()
 

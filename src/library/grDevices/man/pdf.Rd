@@ -282,6 +282,10 @@ pdf(file = if(onefile) "Rplots.pdf" else "Rplot\%03d.pdf",
   Latin-9 and Cyrillic but no Greek.  The Adobe exceptions cover the
   Latin character sets, but not the Euro.)
 
+  NB: support for encodings other than \code{"PDFDoc.enc"},
+  \code{"ISOLatin1.enc"} (and the Windows ones on Windows) depends on
+  support by the platform's \code{libiconv}.
+
   If you specify the encoding, it is your responsibility to ensure that
   the PostScript font contains the glyphs used.  One issue here is the Euro
   symbol which is in the WinAnsi and MacRoman encodings but may well not

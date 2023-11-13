@@ -24,7 +24,8 @@ pictex(file = "Rplots.tex", width = 5, height = 4, debug = FALSE,
 \description{
   This function produces simple graphics suitable for inclusion in TeX
   and LaTeX documents.  It dates from the very early days of \R and is
-  for historical interest only.
+  for historical interest only.  It was deprecated in \R 4.4.0.
+  Consider the \CRANpkg{tikzDevice} instead.
 }
 \details{
   This driver is much more basic than the other graphics drivers

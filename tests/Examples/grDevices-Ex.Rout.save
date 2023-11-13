@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2023-08-28 r85029) -- "Unsuffered Consequences"
+R Under development (unstable) (2023-11-12 r85514) -- "Unsuffered Consequences"
 Copyright (C) 2023 The R Foundation for Statistical Computing
-Platform: x86_64-pc-linux-gnu
+Platform: aarch64-apple-darwin23.1.0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -1532,7 +1532,7 @@ List of 150
 > stopifnot(setequal(cNms[isC],
 +      c("white","black","blue","cyan","green","magenta","red","yellow")))
 > ## End(Don't show)
-> table(is.gray <- tc[,1] == tc[,2] & tc[,2] == tc[,3])# (397, 105)
+> table(is.gray <- tc[,1] == tc[,2] & tc[,2] == tc[,3])  # (397, 105)
 
 FALSE  TRUE 
   397   105 
@@ -2940,6 +2940,8 @@ List of 18
 > ## End(Don't show)
 > 
 > pictex()
+Warning: 'pictex' is deprecated.
+ Consider a TiKZ device instead.
 > plot(1:11, (-5:5)^2, type = "b", main = "Simple Example Plot")
 > dev.off()
 pdf 
@@ -3590,15 +3592,15 @@ attr(,"class")
 > ## time-dependent ==> ignore diffs:
 > ## IGNORE_RDIFF_BEGIN
 > pretty(Sys.Date())
-[1] "2023-07-29" "2023-07-30" "2023-07-31" "2023-08-01" "2023-08-02"
-[6] "2023-08-03"
+[1] "2023-11-10" "2023-11-11" "2023-11-12" "2023-11-13" "2023-11-14"
+[6] "2023-11-15"
 > pretty(Sys.time(), n = 10)
- [1] "2023-07-31 10:42:05 CEST" "2023-07-31 10:42:06 CEST"
- [3] "2023-07-31 10:42:07 CEST" "2023-07-31 10:42:08 CEST"
- [5] "2023-07-31 10:42:09 CEST" "2023-07-31 10:42:10 CEST"
- [7] "2023-07-31 10:42:11 CEST" "2023-07-31 10:42:12 CEST"
- [9] "2023-07-31 10:42:13 CEST" "2023-07-31 10:42:14 CEST"
-[11] "2023-07-31 10:42:15 CEST"
+ [1] "2023-11-12 17:41:17 GMT" "2023-11-12 17:41:18 GMT"
+ [3] "2023-11-12 17:41:19 GMT" "2023-11-12 17:41:20 GMT"
+ [5] "2023-11-12 17:41:21 GMT" "2023-11-12 17:41:22 GMT"
+ [7] "2023-11-12 17:41:23 GMT" "2023-11-12 17:41:24 GMT"
+ [9] "2023-11-12 17:41:25 GMT" "2023-11-12 17:41:26 GMT"
+[11] "2023-11-12 17:41:27 GMT"
 > ## IGNORE_RDIFF_END
 > 
 > pretty(as.Date("2000-03-01")) # R 1.0.0 came in a leap year
@@ -4430,7 +4432,7 @@ NULL
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  38.446 0.619 39.236 0 0 
+Time elapsed:  20.965 0.422 21.477 0 0 
 > grDevices::dev.off()
 null device 
           1 
