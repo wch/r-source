@@ -32,7 +32,7 @@
 #include <wchar.h>
 #include <wctype.h>
 static void
-mbcsToSbcs(const char *in, char *out, const char *encoding, int enc);
+mbcsToSbcs(const char *in, char *out, const char *encoding, int enc, int silent);
 
 
 #include <R_ext/Riconv.h>
@@ -760,7 +760,8 @@ static double
 	    /* Output string cannot be longer
 	       -- but it can be in bytes if transliteration is used */
 	    char *buff = alloca(2*strlen((char *)str)+1);
-	    mbcsToSbcs((char *)str, buff, encoding, enc);
+	    // Do not show warnings (but throw errors)
+	    mbcsToSbcs((char *)str, buff, encoding, enc, 1);
 	    str1 = (unsigned char *)buff;
 	}
 
@@ -4366,7 +4367,7 @@ static void drawSimpleText(double x, double y, const char *str,
    currently this is only called in a UTF-8 locale.
  */
 static void mbcsToSbcs(const char *in, char *out, const char *encoding,
-		       int enc)
+		       int enc, int silent)
 {
     void *cd = NULL;
     const char *i_buf; char *o_buf;
@@ -4389,9 +4390,9 @@ next_char:
 	int fail = getenv("_R_CHECK_MBCS_CONVERSION_FAILURE_") != NULL;
 	if (utf8locale) {
 	    /* We attempt to do better here in a UTF-8 locale if the
-	       input is valid and give one dot per UTF-8 character.
-	       However, packages PBSmodelling and fBasics used invalid
-	       8-bit inputs.
+	       input is valid and give transliteration or one dot per
+	       UTF-8 character.  However, packages PBSmodelling and
+	       fBasics used invalid 8-bit inputs.
 	    */
 	    int clen = utf8clen(*i_buf);
 	    wchar_t wc;
@@ -4400,21 +4401,23 @@ next_char:
 	    if (res != -1) {
 		char *fix = NULL;
 		// four-char fixups
-		if (wc == 0x2030) fix = "o/oo"; // permille
+		if (wc == 0x2030) fix = "o/oo"; // permille, done by macOS
 
 		// three-char fixups
-		else if (wc == 0xFB03) fix = "ffi";
-		else if (wc == 0xFB04) fix = "ffl";
+		else if (wc == 0xFB03) fix = "ffi"; // done by macOS
+		else if (wc == 0xFB04) fix = "ffl"; // done by macOS
 		// Possible future re-mapping
 		// else if (wc == 0x20AC) fix = "EUR";
 
 		// two-char fixups
+		// left and right arrows, 0x2190 0x2192 done by macOS
 		else if(wc == 0x2190) fix = "<-";
 		else if(wc == 0x2192 || wc == 0x2794 || wc == 0x279C ||
 			wc == 0x279D || wc == 0x279E || wc == 0x279F ||
 			wc == 0x27a1 || wc == 0x27a2)
 		    fix = "->";
 		// some common ligatures: AE and ae are latin1.
+		// all done by macOS
 		else if(wc == 0xFB00) fix = "ff";
 		else if(wc == 0xFB01) fix = "fi";
 		else if(wc == 0xFB02) fix = "fl";
@@ -4426,18 +4429,18 @@ next_char:
 
 		// one-char fixups
 		else if (wc == 0x2013 || wc == 0x2014 || wc == 0x2212)
-		    fix = "-"; // dashes, minus
-		else if (wc == 0x2018 || wc == 0x2019) fix = "'";
-		else if (wc == 0x201C || wc == 0x201D) fix = "\"";
-		else if (wc == 0x2022) fix = ".";
-		else if (wc == 0x2605 || wc == 0x2737) fix = "*";
+		    fix = "-"; // dashes, minus, done by macOS
+		else if (wc == 0x2018 || wc == 0x2019) fix = "'"; // done by macOS
+		else if (wc == 0x201C || wc == 0x201D) fix = "\""; // done by macOS
+		else if (wc == 0x2022) fix = "."; // changed to "o" by macOS
+		else if (wc == 0x2605 || wc == 0x2737) fix = "*"; // not done by macOS
 		if (!fix) {
 		    if (fail)
 			error("conversion failure on '%s' in 'mbcsToSbcs': for %lc (U+%04X)", in, wc, wc);
-		    else
+		    else if(!silent)
 			warning("conversion failure on '%s' in 'mbcsToSbcs': for %lc (U+%04X)", in, wc, wc);
 		    fix = ".";  // default fix is one dot per char
-		} else
+		} else if(!silent)
 		    warning("for '%s' in 'mbcsToSbcs': %s substituted for %lc (U+%04X)", in, fix, wc, wc);
 		size_t nfix = strlen(fix);
 		for (int j = 0; j < nfix; j++) *o_buf++ = *fix++;
@@ -4445,14 +4448,14 @@ next_char:
 	    } else { // invalid UTF-8 so one dot per byte
 		if (fail)
 		    error(_("conversion failure on '%s' in 'mbcsToSbcs': for <%02x>"), in, (unsigned char) *i_buf);
-		else
+		else if(!silent)
 		    warning(_("conversion failure on '%s' in 'mbcsToSbcs': dot substituted for <%02x>"), in, (unsigned char) *i_buf);
 		*o_buf++ = '.'; o_len--; i_buf++; i_len--;
 	    }
 	} else { // non-UTF-8, one dot per byte
 	    if (fail)
 		error(_("conversion failure on '%s' in 'mbcsToSbcs': for <%02x>"), in, (unsigned char) *i_buf);
-	    else
+	    else if(!silent)
 		warning(_("conversion failure on '%s' in 'mbcsToSbcs': dot substituted for <%02x>"), in, (unsigned char) *i_buf);
 	    *o_buf++ = '.'; o_len--; i_buf++; i_len--;
 	}
@@ -4586,7 +4589,7 @@ static void PS_Text0(double x, double y, const char *str, int enc,
 	   -- but it can be in bytes if transliteration is used
 	 */
 	buff = alloca(2*strlen(str)+1);
-	mbcsToSbcs(str, buff, convname(gc->fontfamily, pd), enc);
+	mbcsToSbcs(str, buff, convname(gc->fontfamily, pd), enc, 0);
 	str1 = buff;
     }
     drawSimpleText(x, y, str1, rot, hadj,
@@ -10083,8 +10086,8 @@ static void PDF_Text0(double x, double y, const char *str, int enc,
 	    /* Output string cannot be longer
 	       -- but it can be in bytes if transliteration is used
 	     */
-            buff = alloca(2*strlen(str)+1); 
-            mbcsToSbcs(str, buff, PDFconvname(gc->fontfamily, pd), enc);
+            buff = alloca(2*strlen(str)+1);
+            mbcsToSbcs(str, buff, PDFconvname(gc->fontfamily, pd), enc, 0);
             str1 = buff;
         } else str1 = str;
 
