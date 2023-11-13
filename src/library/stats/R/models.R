@@ -220,7 +220,7 @@ reformulate <- function (termlabels, response=NULL, intercept = TRUE, env = pare
 
 drop.terms <- function(termobj, dropx = NULL, keep.response = FALSE)
 {
-    if (is.null(dropx))
+    if (!length(dropx))
 	termobj
     else {
         if(!inherits(termobj, "terms"))
