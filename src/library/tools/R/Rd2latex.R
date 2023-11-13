@@ -401,6 +401,7 @@ Rd2latex <- function(Rd, out = "", defines = .Platform$OS.type,
                    inCode <<- FALSE
                },
                ## simple wrappers
+               "\\abbr" =,
                "\\acronym" =,
                "\\bold"=,
                "\\dfn"=,

@@ -473,7 +473,8 @@ Rd2HTML <-
     		     "\\dots"="...",
     		     "\\ldots"="...")
     ## These correspond to idiosyncratic wrappers
-    HTMLLeft <- c("\\acronym"='<abbr><span class="acronym">',
+    HTMLLeft <- c("\\abbr"='<abbr>',
+                  "\\acronym"='<abbr><span class="acronym">',
     		  "\\donttest"="",
     		  "\\env"='<span class="env">',
                   "\\file"='&lsquo;<span class="file">',
@@ -483,7 +484,8 @@ Rd2HTML <-
                   "\\sQuote"="&lsquo;",
                   "\\dQuote"="&ldquo;",
                   "\\verb"='<code style="white-space: pre;">&#8288;')
-    HTMLRight <- c("\\acronym"='</span></abbr>',
+    HTMLRight <- c("\\abbr"="</abbr>",
+                   "\\acronym"='</span></abbr>',
     		   "\\donttest"="",
     		   "\\env"="</span>",
                    "\\file"='</span>&rsquo;',
@@ -792,6 +794,7 @@ Rd2HTML <-
                    enterPara(doParas)
                	   of1(HTMLEscapes[tag])
                },
+               "\\abbr" =,
                "\\acronym" =,
                "\\donttest" =,
                "\\env" =,

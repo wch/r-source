@@ -622,6 +622,7 @@ Rd2txt <-
   			put(" <", utils::URLencode(lines2str(as.character(block[[1L]]))), ">")
                },
                "\\Sexpr"= put(as.character.Rd(block, deparse=TRUE)),
+               "\\abbr" =,
                "\\acronym" =,
                "\\cite"=,
                "\\dfn"= ,

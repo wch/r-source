@@ -54,4 +54,4 @@
 \newcommand{\proglang}{\ifelse{latex}{\out{\textsf{#1}}}{#1}}
 
 % To indicate an abbreviation.
-\newcommand{\abbr}{#1}
+% \newcommand{\abbr}{#1}
