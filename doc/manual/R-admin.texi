@@ -1121,14 +1121,14 @@ later of Apple clang warn by default in all modes if @option{-Wall} or
 @node Link-Time Optimization,  , C standards, Other Options
 @subsection Link-Time Optimization
 
-There is support for using link-time optimization (LTO) if the toolchain
-supports it: configure with flag @option{--enable-lto}.  When LTO is
+There is support for using link-time optimization (@abbr{LTO}) if the toolchain
+supports it: configure with flag @option{--enable-lto}.  When @abbr{LTO} is
 enabled it is used for compiled code in add-on packages unless the flag
 @option{--enable-lto=R} is used@footnote{Then recommended packages
-installed as part of the @R{} installation do use LTO, but not packages
+installed as part of the @R{} installation do use @abbr{LTO}, but not packages
 installed later.}.
 
-The main benefit seen to date from LTO has been detecting long-standing
+The main benefit seen to date from @abbr{LTO} has been detecting long-standing
 bugs in the ways packages pass arguments to compiled code and between
 compilation units.  Benchmarking in 2020 with
 @command{gcc}/@command{gfortran}@tie{}10 showed gains of a few percent
@@ -1138,7 +1138,7 @@ packages@footnote{A complete @acronym{CRAN} installation reduced from 50
 to 35GB.} with debug symbols.  (Performance and size gains are said to be
 most often seen in complex C++ builds.)
 
-Whether toolchains support LTO is often unclear: all of the C compiler,
+Whether toolchains support @abbr{LTO} is often unclear: all of the C compiler,
 the Fortran compiler@footnote{although there is the possibility to
 exclude Fortran but that misses some of the benefits.} and linker have
 to support it, and support it by the same mechanism (so mixing compiler
@@ -1146,17 +1146,17 @@ families may not work and a non-default linker may be needed).  It has
 been supported by the GCC and LLVM projects for some years with
 diverging implementations.
 
-LTO support was added in 2011 for GCC@tie{}4.5 on Linux but was little
+@abbr{LTO} support was added in 2011 for GCC@tie{}4.5 on Linux but was little
 used before 2019: compiler support has steadily improved over those
 years and @option{--enable-lto=R} is nowadays used for some routine
 @acronym{CRAN} checking.
 
 Unfortunately @option{--enable-lto} may be accepted but silently do
-nothing useful if some of the toolchain does not support LTO: this is
+nothing useful if some of the toolchain does not support @abbr{LTO}: this is
 less common than it once was.
 
 Various macros can be set in file @file{config.site} to customize how
-LTO is used.  If the Fortran compiler is not of the same family as the
+@abbr{LTO} is used.  If the Fortran compiler is not of the same family as the
 C/C++ compilers, set macro @samp{LTO_FC} (probably to empty).  Macro
 @samp{LTO_LD} can be used to select an alternative linker should that be
 needed.
@@ -1187,12 +1187,12 @@ RANLIB="ranlib --plugin=/path/to/liblto_plugin.so"
 @end example
 @noindent
 amd @code{NM} may be needed to be set analogously. (If using an
-LTO-enabled build to check packages, set environment variable
+@abbr{LTO}-enabled build to check packages, set environment variable
 @env{UserNM}@footnote{not @env{NM} as we found @command{make}
 overriding that.} to @samp{gcc-nm}.)
 
 @c http://hubicka.blogspot.com/2019/05/gcc-9-link-time-and-inter-procedural.html
-With GCC 5 and later it is possible to parallelize parts of the LTO
+With GCC 5 and later it is possible to parallelize parts of the @abbr{LTO}
 linking process: set the make macro @samp{LTO} to something like
 @samp{LTO=-flto=8} (to use 8 threads), for example in file
 @file{config.site}.
@@ -1220,8 +1220,8 @@ confused compiler messages.
 @node LTO with LLVM, LTO for package checking, LTO with GCC, Link-Time Optimization
 @subsubsection LTO with LLVM
 
-LLVM supports another type of LTO called `Thin LTO' as well as a similar
-implementation to GCC, sometimes called `Full LTO'.  (See
+LLVM supports another type of @abbr{LTO} called `Thin @abbr{LTO}' as well as a similar
+implementation to GCC, sometimes called `Full @abbr{LTO}'.  (See
 @uref{https://clang.llvm.org/docs/ThinLTO.html}.)  Currently the LLVM
 compilers relevant to @R{} are @command{clang} and @command{flang} for
 which this can be selected by setting macro @samp{LTO=-flto=thin}.  LLVM
@@ -1232,7 +1232,7 @@ RANLIB=llvm-ranlib
 @end example
 @noindent
 (but macOS does not, and these are not needed there).  Where the linker
-supports a parallel backend for Thin LTO this can be specified @emph{via}
+supports a parallel backend for Thin @abbr{LTO} this can be specified @emph{via}
 the macro @samp{LTO_LD}: see the URL above for per-linker settings and
 further linking optimizations.)
 
@@ -1242,17 +1242,17 @@ LTO=-flto=thin
 LTO_FC=
 LTO_LD=-Wl,-mllvm,-threads=4
 @end example
-to use Thin LTO with 4 threads for C/C++ code, but skip LTO for Fortran
+to use Thin @abbr{LTO} with 4 threads for C/C++ code, but skip @abbr{LTO} for Fortran
 code compiled with @command{gfortran}.
 
 It is said to be particularly beneficial to use @option{-O3} for
-@command{clang} in conjunction with LTO.
+@command{clang} in conjunction with @abbr{LTO}.
 
-It seems that @command{flang} may support LTO, but with no documentation
+It seems that @command{flang} may support @abbr{LTO}, but with no documentation
 as yet.
 
 The 2020s versions of Intel's C/C++ compilers are based on LLVM and as
-such support LLVM-style LTO, both `full' and `thin'.  This might use
+such support LLVM-style @abbr{LTO}, both `full' and `thin'.  This might use
 something like
 @example
 LTO=-flto=thin -flto-jobs=8
@@ -1262,13 +1262,13 @@ LTO=-flto=thin -flto-jobs=8
 @node LTO for package checking,  , LTO with LLVM, Link-Time Optimization
 @subsubsection LTO for package checking
 
-LTO effectively compiles all the source code in a package as a single
+@abbr{LTO} effectively compiles all the source code in a package as a single
 compilation unit and so allows the compiler (with sufficient diagnostic
 flags such as @option{-Wall}) to check consistency between what are
 normally separate compilation units.
 
 With @command{gcc}/@command{gfortran} 9.x and later@footnote{probably
-also 8.4 and later.} LTO will flag inconsistencies in calls to Fortran
+also 8.4 and later.} @abbr{LTO} will flag inconsistencies in calls to Fortran
 subroutines/functions, both between Fortran source files and between
 Fortran and C/C++.  @command{gfortran} 8.4, 9.2 and later can help
 understanding these by extracting C prototypes from Fortran source files
@@ -1278,7 +1278,7 @@ in C.
 
 @c This worked in 2019 but with Fedora 32 did not export dpotrf from dlapack.o
 @c On some systems it is possible to build the BLAS, LINPACK and LAPACK
-@c support as static libraries containing intermediate-level code that LTO
+@c support as static libraries containing intermediate-level code that @abbr{LTO}
 @c will compile for all objects linked against these libraries, by
 @c configuring @R{} with @option{--enable-lto=check}.  This checks the
 @c consistency of calls to BLAS/LINPACK/LAPACK in any packages installed
@@ -2337,7 +2337,7 @@ consistency one can use
 @c rather the Apple-provided commands, and may not be able to find the
 @c headers and libraries@footnote{From Big Sur those libraries are not
 @c publicly visible: rather the system compilers link to `text-based
-@c definition' (@file{.tbd}) files.} of the SDK.
+@c definition' (@file{.tbd}) files.} of the @abbr{SDK}.
 As from @R{} 4.3.0, @command{R CMD INSTALL} and
 @code{install.packages()} try to invoke @command{configure} with the
 same compilers and flags used to build @R{}.
@@ -3541,11 +3541,11 @@ development files installed.
 The build process looks for Java support on the host system, and if it
 finds it sets some settings which are useful for Java-using packages
 (such as @CRANpkg{rJava} and @CRANpkg{JavaGD}: these require a full
-JDK).  This check can be suppressed by configure option
+@abbr{JDK}).  This check can be suppressed by configure option
 @option{--disable-java}.
 @enindex JAVA_HOME
 Configure variable @env{JAVA_HOME} can be set to point to a specific
-JRE/JDK, on the @command{configure} command line or in the environment.
+@abbr{JRE}/@abbr{JDK}, on the @command{configure} command line or in the environment.
 
 Principal amongst these settings are some paths to the Java
 libraries and JVM, which are stored in environment variable
@@ -3559,7 +3559,7 @@ JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.322.b06-6.fc34.x86_64/jre
 R_JAVA_LD_LIBRARY_PATH=$@{JAVA_HOME@}/lib/amd64/server
 @end example
 
-Unfortunately this depends on the exact version of the JRE/JDK
+Unfortunately this depends on the exact version of the @abbr{JRE}/@abbr{JDK}
 installed, and so may need updating if the Java installation is updated.
 This can be done by running @code{R CMD javareconf} which updates
 settings in both @file{@var{R_HOME}/etc/Makeconf} and
@@ -3592,7 +3592,7 @@ worked (since the `auto' setting of @command{/etc/alternatives} chose
 Java 8 aka 1.8.0).
 
 `Non-server' Oracle distributions of Java as from version 11 are of a
-full JDK.  However, Linux distributions can be confusing: for example
+full @abbr{JDK}.  However, Linux distributions can be confusing: for example
 Fedora 34 had
 @example
 java-1.8.0-openjdk
@@ -3607,7 +3607,7 @@ java-latest-openjdk
 java-latest-openjdk-devel
 @end example
 @noindent
-where the @code{-devel} RPMs are needed to complete the JDK. Debian/Ubuntu use
+where the @code{-devel} RPMs are needed to complete the @abbr{JDK}. Debian/Ubuntu use
 @samp{-jre} and @samp{-jdk}, e.g.
 @example
 sudo apt install default-jdk
@@ -5112,7 +5112,7 @@ undocumented for @command{icx}/@command{icpc}, such as
 @option{-Wno-strict-prototypes} above, However it is unclear for which
 version of @command{clang}: the Intel manual suggests checking
 @command{icx -help}.)  The C/C++ compilers support clang-style
-LTO: it is not clear if the Fortran one does.
+@abbr{LTO}: it is not clear if the Fortran one does.
 
 @c https://community.intel.com/t5/Intel-C-Compiler/Troubles-with-getrusage-when-using-icx/m-p/1509374#M41116
 For some versions, including 2023.2.0, all CPU times in e.g.@:
@@ -5453,8 +5453,8 @@ Updating an @cputype{arm64} build may fail because of the bug described
 at @uref{https://openradar.appspot.com/FB8914243} but @emph{ab initio}
 builds work.  This has been far rarer since macOS 13.
 
-If you are using the macOS 13 SDK@footnote{@command{ls -l `xcrun
--show-sdk-path`} in a terminal will show you which SDK is selected.},
+If you are using the macOS 13 @abbr{SDK}@footnote{@command{ls -l `xcrun
+-show-sdk-path`} in a terminal will show you which @abbr{SDK} is selected.},
 you may need to add something like @code{-mmacos-version-min=12.0} to
 @samp{CFLAGS}.
 
@@ -5504,10 +5504,10 @@ There is `universal' (Intel and @code{arm64}) build of
 This installs into @file{/opt/gfortran}.
 
 The @file{/opt/gfortran/SDK} symlink should point to the desired path to
-the SDK (defaults to the command line tools SDK). This can be updated by
+the @abbr{SDK} (defaults to the command line tools @abbr{SDK}). This can be updated by
 running @file{/opt/gfortran/bin/gfortran-update-sdk} or manually. If the
 symlink is broken, the driver will issue a warning and use @code{xcrun
--show-sdk-path} to try to find an SDK and use its path.  (The SDK path
+-show-sdk-path} to try to find an @abbr{SDK} and use its path.  (The @abbr{SDK} path
 is used when using @command{gfortran} to link, so not when building @R{}
 but when installing a few packages.)
 
@@ -5601,7 +5601,7 @@ LDFLAGS="-L$LOCAL/llvm/lib -L$LOCAL/lib"
 R_LD_LIBRARY_PATH=$LOCAL/llvm/lib:$LOCAL/lib
 @end example
 @noindent
-Should the location of the SDK change (or where Xcode provides the SDK
+Should the location of the @abbr{SDK} change (or where Xcode provides the @abbr{SDK}
 rather than the Command Line Tools), it can be found by running
 @command{xcrun -show-sdk-path}.
 
@@ -5727,7 +5727,7 @@ framework are `now inline with reference version
 naming new entry points and so only accessible @emph{via} their C
 headers.  That version can be used for BLAS calls @emph{via}
 @command{configure} option @option{--with-newAccelerate}: it requires at
-least macOS 13.3 and SDK 13.3 (from Xcode/CLT 14.3).  To use it for both
+least macOS 13.3 and @abbr{SDK} 13.3 (from Xcode/CLT 14.3).  To use it for both
 BLAS and LAPACK calls, configure with
 @option{--with-newAccelerate=lapack}.  These options cannot be used with
 others such as @option{--with-blas} and @option{--with-lapack}.
@@ -5811,9 +5811,9 @@ includes @code{Tktable} and the @acronym{CRAN} package
 @c details see @uref{https://www.macstrategy.com/article.php?3}.} and
 @c distribution of Java for all platforms changed in 2018.
 
-macOS does not comes with an installed Java runtime (JRE) and a macOS
+macOS does not comes with an installed Java runtime (@abbr{JRE}) and a macOS
 upgrade may remove one if already installed: it is intended to be
-installed at first use.  Check if a JRE is installed by running
+installed at first use.  Check if a @abbr{JRE} is installed by running
 @command{java -version} in a @command{Terminal} window: if Java is not
 installed@footnote{In the unlikely event that the version reported does
 not start with @code{1.8.0}, @code{11} or higher you need to update your
@@ -5842,12 +5842,12 @@ If needed, set the environment variable @env{JAVA_HOME} to choose
 between these, both when @R{} is built from the sources and when
 @command{R CMD javareconf} is run.
 
-Configuring and building @R{} both looks for a JRE and for support for
+Configuring and building @R{} both looks for a @abbr{JRE} and for support for
 compiling JNI programs (used to install packages @CRANpkg{rJava} and
-@CRANpkg{JavaGD}); the latter requires a JDK (Java SDK).  Most
-distributions of Java 9 or later are of a full JDK.
+@CRANpkg{JavaGD}); the latter requires a @abbr{JDK} (Java @abbr{SDK}).  Most
+distributions of Java 9 or later are of a full @abbr{JDK}.
 
-The build process tries to fathom out what JRE/JDK to use, but it may
+The build process tries to fathom out what @abbr{JRE}/@abbr{JDK} to use, but it may
 need some help, e.g.@: by setting environment variable @env{JAVA_HOME}.
 To select a build from @uref{https://adoptium.net, Adoptium}
 set e.g.@:
@@ -5873,7 +5873,7 @@ runtime.
 
 To use Java (specifically, binary package @CRANpkg{rJava}) with a
 @acronym{CRAN} (@cputype{x86_64}) binary distribution of @R{} on
-@cputype{arm64} macOS, install an Intel build of a Java JRE from one of
+@cputype{arm64} macOS, install an Intel build of a Java @abbr{JRE} from one of
 the sites linked above, then run @command{sudo R CMD javareconf}.
 
 @c jdk.java.net no longer has Java 11 nor 17 LTS builds.

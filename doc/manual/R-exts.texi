@@ -577,7 +577,7 @@ compiled with Link-Time Optimization (@pxref{Using Link-time
 Optimization}) if @R{} was installed with @option{--enable-lto} (default
 true) or @option{--enable-lto=R} (default false) (or on Windows if
 @code{LTO_OPT} is set in @file{MkRules}). This can be overridden by the
-flags @option{--use-LTO} and @option{--no-use-LTO}.  LTO is said to give
+flags @option{--use-LTO} and @option{--no-use-LTO}.  @abbr{LTO} is said to give
 most size and performance improvements for large and complex (heavily
 templated) C++ projects.
 
@@ -1235,7 +1235,7 @@ There are default @command{make} variables and rules for this
 C++, fixed- or free-form Fortran, Objective C and Objective
 C++@footnote{either or both of which may not be supported on particular
 platforms.  Their main use is on macOS, but unfortunately recent
-versions of the macOS SDK have removed much of the support for Objective
+versions of the macOS @abbr{SDK} have removed much of the support for Objective
 C v1.0 and Objective C++.} with associated extensions @file{.c},
 @file{.cc} or @file{.cpp}, @file{.f}, @file{.f90} or
 @file{.f95},@footnote{This is not accepted by the Intel Fortran compiler.}
@@ -5468,7 +5468,7 @@ jar xvf some.jar
 javap -verbose path/to/some.class | grep major
 @end example
 
-Some packages have stated a requirement on a particular JDK, but a
+Some packages have stated a requirement on a particular @abbr{JDK}, but a
 package should only be requiring a JRE unless providing its own Java
 interface.
 
@@ -6328,7 +6328,7 @@ not be accepted in C23.
 Several C entry points are warned against in their @command{man} pages
 on most systems, often in very strong terms such as '@strong{Do not use
 these functions}'.  macOS has started to warn@footnote{when using the
-macOS 13 SDK with a deployment target of macOS 13.} if these are used
+macOS 13 @abbr{SDK} with a deployment target of macOS 13.} if these are used
 for @code{sprintf}, @code{vsprintf}, @code{gets}, @code{mktemp},
 @code{tempmam} and @code{tmpnam}.  It is highly recommended that you use
 safer alternatives (on any platform) but the warning can be avoided by
@@ -6359,7 +6359,7 @@ warning: argument 1 value '18446744073709551615' exceeds maximum object
   size 9223372036854775807  [-Walloc-size-larger-than=]
 @end example
 @noindent
-(especially if LTO is used).  So don't do that!
+(especially if @abbr{LTO} is used).  So don't do that!
 
 @end itemize
 
@@ -8945,7 +8945,7 @@ debugging symbols.
 @subsubsection @command{perf}
 
 This seems the most widely distributed tool.
-Here is an example on @code{x86_64} Linux using @R{} 4.3.1 built with LTO.
+Here is an example on @code{x86_64} Linux using @R{} 4.3.1 built with @abbr{LTO}.
 
 At its simplest
 @example
@@ -10492,8 +10492,8 @@ R-admin, R Installation and Administration}.
 section `Link-Time Optimization' in the `R Installation and
 Administration' manual.
 @end ifclear
-On Linux using GCC without building @R{} with LTO support,
-@c This will not set LTO for linking, but GCC does not seem to need that.
+On Linux using GCC without building @R{} with @abbr{LTO} support,
+@c This will not set @abbr{LTO} for linking, but GCC does not seem to need that.
 it should suffice to set
 @example
 LTO_OPT = -flto
@@ -10561,7 +10561,7 @@ comparison would have been with the definition in @R{}.)
 
 For Fortran files all in the package, most inconsistencies can be
 detected by concatenating the Fortran files and compiling the result,
-sometimes with clearer diagnostics than provided by LTO.  For our last
+sometimes with clearer diagnostics than provided by @abbr{LTO}.  For our last
 two examples this gives
 
 @example
@@ -10581,7 +10581,7 @@ all.f:1663:72:
 Warning: Type mismatch in argument 'jpvt' at (1); passed REAL(8) to INTEGER(4)
 @end example
 
-On a Unix-alike for a package with a @file{src/Makefile} file, LTO can
+On a Unix-alike for a package with a @file{src/Makefile} file, @abbr{LTO} can
 be enabled by including suitable flags in that file, for example
 @example
 LTO = $(LTO_OPT)
@@ -10599,7 +10599,7 @@ On Windows for a package with a @file{src/Makefile.ucrt} or
 LTO = $(LTO_OPT)
 @end example
 @noindent
-or to always use LTO however @R{} was built,
+or to always use @abbr{LTO} however @R{} was built,
 @example
 LTO = -flto
 @end example
@@ -15087,7 +15087,7 @@ void cmsg(const char *msg)
 
 @noindent
 If you use @code{bind} to a C function as here, the only way to check
-that the bound definition is correct is to compile the package with LTO
+that the bound definition is correct is to compile the package with @abbr{LTO}
 (which requires compatible C and Fortran compilers, usually
 @command{gcc} and @command{gfortran}).
 
