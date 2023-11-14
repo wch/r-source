@@ -478,7 +478,8 @@ aspell_control_R_Rd_files <-
          c("-d en_US,en_GB"))
 
 aspell_R_Rd_files <-
-function(which = NULL, dir = NULL, drop = "\\references",
+function(which = NULL, dir = NULL, 
+         drop = c("\\acronym", "\\abbr", "\\references"),
          program = NULL, dictionaries = aspell_dictionaries_R)
 {
     files <- character()
@@ -513,7 +514,7 @@ function(which = NULL, dir = NULL, drop = "\\references",
 ## For spell-checking Rd files in a package:
 
 aspell_package_Rd_files <-
-function(dir, drop = c("\\author", "\\references"),
+function(dir, drop = c("\\acronym", "\\abbr", "\\references"),
          control = list(), program = NULL, dictionaries = character())
 {
     dir <- normalizePath(dir, "/")
