@@ -3724,6 +3724,7 @@ static keywords[] = {
     
     /* These macros take one LaTeX-like argument. */
     
+    { "\\abbr",    LATEXMACRO },
     { "\\acronym", LATEXMACRO },
     { "\\bold",    LATEXMACRO },
     { "\\cite",    LATEXMACRO },
