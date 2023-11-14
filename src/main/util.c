@@ -854,9 +854,7 @@ attribute_hidden SEXP do_setwd(SEXP call, SEXP op, SEXP args, SEXP rho)
 attribute_hidden SEXP do_basename(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans, s = R_NilValue;	/* -Wall */
-    char *sp;
-    wchar_t  *buf, *p;
-    const wchar_t *pp;
+    const char *pp;
     int i, n;
 
     checkArity(op, args);
@@ -867,22 +865,14 @@ attribute_hidden SEXP do_basename(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if (STRING_ELT(s, i) == NA_STRING)
 	    SET_STRING_ELT(ans, i, NA_STRING);
 	else {
-	    pp = filenameToWchar(STRING_ELT(s, i), TRUE);
-	    buf = (wchar_t *)R_alloc(wcslen(pp) + 1, sizeof(wchar_t));
-	    wcscpy(buf, pp);
-	    R_wfixslash(buf);
-	    /* remove trailing file separator(s) */
-	    if (*buf) {
-		p = buf + wcslen(buf) - 1;
-		/* turns D:/ to D: */
-		/* FIXME: basename of D:/ is D:, is that a good behavior? */
-		while (p >= buf && *p == L'/') *(p--) = L'\0';
-	    }
-	    if ((p = wcsrchr(buf, L'/'))) p++; else p = buf;
-	    size_t needed = wcstoutf8(NULL, p, (size_t)INT_MAX + 2);
-	    sp = R_alloc(needed + 1, 1);
-	    wcstoutf8(sp, p, needed + 1);
-	    SET_STRING_ELT(ans, i, mkCharCE(sp, CE_UTF8));
+	    pp = R_ExpandFileNameUTF8(trCharUTF8(STRING_ELT(s, i)));
+            size_t ll = strlen(pp);
+            /* remove trailing file separator(s) */
+            while(ll && (pp[ll-1] == '\\' || pp[ll-1] == '/')) ll--;
+            size_t ff = ll;
+            /* find start of file part */
+            while(ff && (pp[ff-1] != '\\' && pp[ff-1] != '/')) ff--;
+            SET_STRING_ELT(ans, i, mkCharLenCE(pp+ff, ll-ff, CE_UTF8));
 	}
     }
     UNPROTECT(1);
@@ -892,7 +882,7 @@ attribute_hidden SEXP do_basename(SEXP call, SEXP op, SEXP args, SEXP rho)
 attribute_hidden SEXP do_basename(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans, s = R_NilValue;	/* -Wall */
-    char  buf[R_PATH_MAX], *p, fsp = FILESEP[0];
+    const char fsp = FILESEP[0];
     const char *pp;
     int i, n;
 
@@ -905,18 +895,15 @@ attribute_hidden SEXP do_basename(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    SET_STRING_ELT(ans, i, NA_STRING);
 	else {
 	    pp = R_ExpandFileName(translateCharFP(STRING_ELT(s, i)));
-	    if (strlen(pp) > R_PATH_MAX - 1)
+	    size_t ll = strlen(pp);
+	    if (ll > R_PATH_MAX - 1)
 		error(_("path too long"));
-	    strcpy (buf, pp);
-	    if (*buf) {
-		p = buf + strlen(buf) - 1;
-		while (p >= buf && *p == fsp) *(p--) = '\0';
-	    }
-	    if ((p = Rf_strrchr(buf, fsp)))
-		p++;
-	    else
-		p = buf;
-	    SET_STRING_ELT(ans, i, mkChar(p));
+	    /* remove trailing file separator(s) */
+	    while(ll && pp[ll-1] == fsp) ll--;
+	    size_t ff = ll;
+	    /* find start of file part */
+	    while(ff && pp[ff-1] != fsp) ff--;
+	    SET_STRING_ELT(ans, i, mkCharLenCE(pp+ff, ll-ff, CE_NATIVE));
 	}
     }
     UNPROTECT(1);
@@ -929,12 +916,21 @@ attribute_hidden SEXP do_basename(SEXP call, SEXP op, SEXP args, SEXP rho)
    */
 
 #ifdef Win32
+static SEXP root_dir_on_drive(char d)
+{
+    char buf[3];
+
+    buf[0] = d;
+    buf[1] = ':';
+    buf[2] = '/';
+    return mkCharLenCE(buf, 3, CE_UTF8); 
+}
+
 attribute_hidden SEXP do_dirname(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans, s = R_NilValue;	/* -Wall */
-    wchar_t *buf, *p;
-    const wchar_t *pp;
-    char *sp;
+    char *buf;
+    const char *pp;
     int i, n;
 
     checkArity(op, args);
@@ -945,30 +941,46 @@ attribute_hidden SEXP do_dirname(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if (STRING_ELT(s, i) == NA_STRING)
 	    SET_STRING_ELT(ans, i, NA_STRING);
 	else {
-	    sp = "";
-	    pp = filenameToWchar(STRING_ELT(s, i), TRUE);
-	    if (wcslen(pp)) {
-		buf = (wchar_t*)R_alloc(wcslen(pp) + 1, sizeof(wchar_t));
-		wcscpy (buf, pp);
-		R_wfixslash(buf);
-		/* remove trailing file separator(s), preserve D:/, / */
-		p = buf + wcslen(buf) - 1;
-		while (p > buf && *p == L'/'
-		       && (p > buf+2 || *(p-1) != L':')) *p-- = L'\0';
-		p = wcsrchr(buf, L'/');
-		/* FIXME: dirname of D: is ., is this a good behavior? */
-		if(p == NULL) wcscpy(buf, L".");
-		else {
-		    while(p > buf && *p == L'/'
-			  /* this covers both drives and network shares */
-			  && (p > buf+2 || *(p-1) != L':')) --p;
-		    p[1] = L'\0';
+	    pp = R_ExpandFileNameUTF8(trCharUTF8(STRING_ELT(s, i)));
+	    size_t ll = strlen(pp);
+	    if (ll) {
+		buf = (char *)R_alloc(ll + 1, sizeof(char));
+		memcpy(buf, pp, ll + 1);
+		R_UTF8fixslash(buf);
+		/* remove trailing file separator(s) */
+		while (ll && buf[ll-1] == '/') ll--;
+		if (ll == 2 && buf[1] == ':' && buf[2]) { 
+		    SET_STRING_ELT(ans, i, root_dir_on_drive(buf[0]));
+		    continue;
 		}
-		size_t needed = wcstoutf8(NULL, buf, (size_t)INT_MAX + 2);
-		sp = R_alloc(needed + 1, 1);
-		wcstoutf8(sp, buf, needed + 1);
-	    }
-	    SET_STRING_ELT(ans, i, mkCharCE(sp, CE_UTF8));
+		if (!ll) { /* only separators, not share */
+		    SET_STRING_ELT(ans, i, mkCharLenCE("/", 1, CE_UTF8));
+		    continue;
+		}
+		/* remove file part */
+		while(ll && buf[ll-1] != '\\' && buf[ll-1] != '/') ll--;
+		if (!ll) { /* only file part, not share */
+		    /* FIXME: dirname of D: is ., is this good behavior? */
+		    SET_STRING_ELT(ans, i, mkChar("."));
+		    continue;
+		}
+		/* remove separator(s) after directory part */
+		while(ll && buf[ll-1] == '/') ll--;
+		if (ll == 2 && buf[1] == ':' && buf[2]) {
+		    SET_STRING_ELT(ans, i, root_dir_on_drive(buf[0]));
+		    continue;
+		}
+		if (!ll) /* only single part, not share */
+		    SET_STRING_ELT(ans, i, mkCharLenCE("/", 1, CE_UTF8));
+		else if (ll == 2 && buf[0] == '\\' && buf[1] == '\\'
+		                 && buf[2] == '/') {
+		    /* network share with extra slashes */
+		    SET_STRING_ELT(ans, i, mkCharLenCE("/", 1, CE_UTF8));
+		} else
+		    SET_STRING_ELT(ans, i, mkCharLenCE(buf, ll, CE_UTF8));
+	    } else
+		/* empty pathname is invalid, but returned */
+		SET_STRING_ELT(ans, i, mkChar(""));
 	}
     }
     UNPROTECT(1);
@@ -978,7 +990,7 @@ attribute_hidden SEXP do_dirname(SEXP call, SEXP op, SEXP args, SEXP rho)
 attribute_hidden SEXP do_dirname(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans, s = R_NilValue;	/* -Wall */
-    char buf[R_PATH_MAX], *p, fsp = FILESEP[0];
+    const char fsp = FILESEP[0];
     const char *pp;
     int i, n;
 
@@ -991,22 +1003,32 @@ attribute_hidden SEXP do_dirname(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    SET_STRING_ELT(ans, i, NA_STRING);
 	else {
 	    pp = R_ExpandFileName(translateCharFP(STRING_ELT(s, i)));
-	    if (strlen(pp) > R_PATH_MAX - 1)
-		error(_("path too long"));
 	    size_t ll = strlen(pp);
+	    if (ll > R_PATH_MAX - 1)
+		error(_("path too long"));
 	    if (ll) { // svMisc calls this with ""
-		strcpy (buf, pp);
 		/* remove trailing file separator(s) */
-		while ( *(p = buf + ll - 1) == fsp  && p > buf) *p = '\0';
-		p = Rf_strrchr(buf, fsp);
-		if(p == NULL)
-		    strcpy(buf, ".");
-		else {
-		    while(p > buf && *p == fsp) --p;
-		    p[1] = '\0';
+		while(ll && pp[ll-1] == fsp) ll--;
+		if (!ll) { /* only separators */
+		    SET_STRING_ELT(ans, i, mkCharLenCE(&fsp, 1, CE_NATIVE));
+		    continue;
 		}
-	    } else buf[0] = '\0';
-	    SET_STRING_ELT(ans, i, mkChar(buf));
+		/* remove file part */
+		while(ll && pp[ll-1] != fsp) ll--;
+		if (!ll) { /* only file part */
+		    SET_STRING_ELT(ans, i, mkChar("."));
+		    continue;
+		}
+		/* remove separator(s) after directory part */
+		while(ll && pp[ll-1] == fsp) ll--;
+		if (!ll) { /* only single part */
+		    SET_STRING_ELT(ans, i, mkCharLenCE(&fsp, 1, CE_NATIVE));
+		    continue;
+		}
+		SET_STRING_ELT(ans, i, mkCharLenCE(pp, ll, CE_NATIVE));
+	    } else
+		/* empty pathname is invalid, but returned */
+		SET_STRING_ELT(ans, i, mkChar(""));
 	}
     }
     UNPROTECT(1);
