@@ -417,7 +417,11 @@ ComplexAnswer(SEXP x, struct BindData *data, SEXP call)
 	    xi = LOGICAL(x)[i];
 	    if (xi == NA_LOGICAL) {
 		COMPLEX(data->ans_ptr)[data->ans_length].r = NA_REAL;
+#ifdef NA_TO_COMPLEX_NA
 		COMPLEX(data->ans_ptr)[data->ans_length].i = NA_REAL;
+#else
+		COMPLEX(data->ans_ptr)[data->ans_length].i = 0.0;
+#endif
 	    }
 	    else {
 		COMPLEX(data->ans_ptr)[data->ans_length].r = xi;
@@ -431,7 +435,11 @@ ComplexAnswer(SEXP x, struct BindData *data, SEXP call)
 	    xi = INTEGER(x)[i];
 	    if (xi == NA_INTEGER) {
 		COMPLEX(data->ans_ptr)[data->ans_length].r = NA_REAL;
+#ifdef NA_TO_COMPLEX_NA
 		COMPLEX(data->ans_ptr)[data->ans_length].i = NA_REAL;
+#else
+		COMPLEX(data->ans_ptr)[data->ans_length].i = 0.0;
+#endif
 	    }
 	    else {
 		COMPLEX(data->ans_ptr)[data->ans_length].r = xi;

@@ -1,6 +1,6 @@
 % File src/library/base/man/cumsum.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2009 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{cumsum}
@@ -35,6 +35,9 @@ cummin(x)
   An \code{NA} value in \code{x} causes the corresponding and following
   elements of the return value to be \code{NA}, as does integer overflow
   in \code{cumsum} (with a warning).
+  In the complex case with \code{\link{NA}}s, these \code{NA} elements may
+  have finite real or imaginary parts, notably for \code{cumsum()},
+  fulfulling the identity \code{Im(cumsum(x))} \eqn{\equiv}{=id=} \code{cumsum(Im(x))}.
 }
 \section{S4 methods}{
   \code{cumsum} and \code{cumprod} are S4 generic functions:

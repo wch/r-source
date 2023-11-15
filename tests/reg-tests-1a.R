@@ -3066,10 +3066,24 @@ stopifnot(identical(cumprod(x), r))
 stopifnot(identical(cummin(x), r))
 stopifnot(identical(cummax(x), r))
 # complex
-x <- c(1+1i, NA, 3)
-r <- c(1+1i, NA, NA)
-stopifnot(identical(cumsum(x), r))
-stopifnot(identical(cumprod(x), r))
+cx <- function(r,i) complex(real=r, imaginary=i)
+NA.1 <- cx(NA, 1)
+NA.2 <- cx(NA, 2)
+NA_C <- NA_complex_ # = complex(r=NA, i=NA)
+y <- x <- c(1+1i, NA, 3)
+stopifnot(identical(x[2], cx(NA,0))) # newly true
+y[2] <- NA.1
+stopifnot(exprs = {
+    identical(Im(cumsum(x)), cumsum(Im(x)))
+    identical(Re(cumsum(x)), cumsum(Re(x)))
+    identical(Im(cumsum(y)), cumsum(Im(y)))
+    identical(Re(cumsum(y)), cumsum(Re(y)))
+    identical( sum(x), tail( cumsum(x), 1L))
+    identical(prod(x), tail(cumprod(x), 1L))
+    identical(cumsum (x), c(1+1i, NA.1, NA.1)) # new
+    identical(cumsum (y), c(1+1i, NA.2, NA.2)) #  "
+    identical(cumprod(x), c(1+1i, NA_C, NA_C))
+})
 # integer
 x <- c(1L, NA, 3L)
 r <- c(1L, NA, NA)

@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
+ *  Copyright (C) 1997--2023  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2022  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -73,22 +73,23 @@ static SEXP icumsum(SEXP x, SEXP s)
     return s;
 }
 
-static SEXP chandleNaN(SEXP x, SEXP s)
+/* For complex result: recompute once we know one of the result's {re, im} fulfills  ISNAN(.),
+   (speed optimized for the case of *no* NA|NaN) : */
+static SEXP chandleNaN(SEXP x, SEXP s, Rboolean r_isN, Rboolean i_isN)
 {
     Rboolean hasNA = FALSE;
     Rboolean hasNaN = FALSE;
 
     for (R_xlen_t i = 0 ; i < XLENGTH(x) ; i++) {
 	hasNaN = hasNaN || ISNAN(COMPLEX(x)[i].r) || ISNAN(COMPLEX(x)[i].i);
-	hasNA = hasNA || (hasNaN && (R_IsNA(COMPLEX(x)[i].r)
-	                             || R_IsNA(COMPLEX(x)[i].i)));
-
+	hasNA = hasNA || (hasNaN && (R_IsNA(COMPLEX(x)[i].r) ||
+				     R_IsNA(COMPLEX(x)[i].i)));
 	if (hasNA) {
-	    COMPLEX(s)[i].r = NA_REAL;
-	    COMPLEX(s)[i].i = NA_REAL;
+	    if(r_isN) COMPLEX(s)[i].r = NA_REAL;
+	    if(i_isN) COMPLEX(s)[i].i = NA_REAL;
 	} else if (hasNaN) {
-	    COMPLEX(s)[i].r = R_NaN;
-	    COMPLEX(s)[i].i = R_NaN;
+	    if(r_isN) COMPLEX(s)[i].r = R_NaN;
+	    if(i_isN) COMPLEX(s)[i].i = R_NaN;
 	}
     }
     return s;
@@ -105,7 +106,7 @@ static SEXP ccumsum(SEXP x, SEXP s)
 	COMPLEX(s)[i].r = sum.r;
 	COMPLEX(s)[i].i = sum.i;
     }
-    return (ISNAN(sum.r) || ISNAN(sum.i)) ? chandleNaN(x, s) : s;
+    return (ISNAN(sum.r) || ISNAN(sum.i)) ? chandleNaN(x, s, ISNAN(sum.r), ISNAN(sum.i)) : s;
 }
 
 static SEXP cumprod(SEXP x, SEXP s)
@@ -133,7 +134,7 @@ static SEXP ccumprod(SEXP x, SEXP s)
 	COMPLEX(s)[i].r = prod.r;
 	COMPLEX(s)[i].i = prod.i;
     }
-    return (ISNAN(prod.r) || ISNAN(prod.i)) ? chandleNaN(x, s) : s;
+    return (ISNAN(prod.r) || ISNAN(prod.i)) ? chandleNaN(x, s, ISNAN(prod.r), ISNAN(prod.i)) : s;
 }
 
 static SEXP cummax(SEXP x, SEXP s)

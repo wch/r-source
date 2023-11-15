@@ -1048,6 +1048,25 @@ stopifnot(exprs = {
 ## returned NA_complex_ *with* a warning, in R <= 4.4.0
 
 
+## c(NA, <cplx>); cumsum(<cplx_w_NA>) -- related to as.complex(NA_real_); R-devel ML
+cx <- function(r,i) complex(real=r, imaginary=i)
+pz <- function(z) noquote(paste0("(", Re(z), ",", Im(z), ")"))
+pz(z <- c(1i, NA))
+NA.1 <- cx(NA, 1)
+stopifnot(exprs = {
+    Im(z) == 1:0 # was  (TRUE  NA)
+    identical(z, cx(c(0,NA), c(1,0))) # new
+    identical(sum(z), NA.1)           #  "
+    ## these were all TRUE already :
+    identical(prod(z), NA_complex_)
+    identical(Im(cumsum(z)), cumsum(Im(z)))
+    identical(Re(cumsum(z)), cumsum(Re(z)))
+    identical( sum(z), tail( cumsum(z), 1L))
+    identical(prod(z), tail(cumprod(z), 1L))
+})
+##
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

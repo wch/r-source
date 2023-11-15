@@ -212,6 +212,11 @@
 
       \item \code{as.complex("1i")} now returns \code{1i} instead of
       \code{NA} with a warning.
+
+      \item \code{z <- c(NA, 1i)} now keeps the imaginary part
+      \code{Im(z[1]) == 0}, no longer coercing to \code{NA_complex_}.
+      Simlarly, \code{cumsum(z)} correctly sums real and imaginary parts
+      separately, i.e., without \dQuote{crosstalk} in case of \code{NA}s.
     }
   }
 
@@ -338,7 +343,7 @@
       \code{xfig()} are now deprecated.  They do not support recent
       graphics enhancements and their font-handling is rudimentary. The
       intention is to retain them for historical interest as long as
-      they remain somewhat functional.   
+      they remain somewhat functional.
     }
   }
 
@@ -465,7 +470,7 @@
       \PR{18612} (and more) reported by Mikael Jagan.
 
       \item \code{list.files()} on Windows now returns also files with names
-      longer that 260 bytes (the Windows limit is 260 characters). 
+      longer that 260 bytes (the Windows limit is 260 characters).
       Previously, some file names particularly with \sQuote{East Asian}
       characters were omitted.
 
@@ -484,12 +489,13 @@
       \PR{17780}).
 
       \item Datetime functions now restore even an empty \env{TZ}
-      environment variable after internal time zone changes (\PR{17724}). 
+      environment variable after internal time zone changes (\PR{17724}).
       This makes results of datetime functions with this (typically
       unintentional) setting more predictable.
     }
   }
 }
+
 \section{\Rlogo CHANGES IN R 4.3.2 patched}{
   \subsection{BUG FIXES}{
     \itemize{
