@@ -9,7 +9,7 @@ if (!l10n_info()[["UTF-8"]]) {
 }
 musl <- grepl("musl", R.version$os)
 
-Sys.unset("_R_CHECK_MBCS_CONVERSION_FAILURE_")
+Sys.unsetenv("_R_CHECK_MBCS_CONVERSION_FAILURE_")
 
 
 ## characters remapped in mbcsToSbcs
