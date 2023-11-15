@@ -279,9 +279,13 @@ getS3method <- function(f, class, optional = FALSE, envir = parent.frame())
         }
     }
     method <- paste(f, class, sep=".")
-    if(!is.null(m <- get0(method, envir = envir, mode = "function")))
-	## FIXME(?): consider  tools::nonS3methods(<pkg>)  same as isS3method()
-        return(m)
+    if(!is.null(m <- get0(method, envir = envir, mode = "function"))) {
+	## know: f is a knownS3generic, and method m is a visible function
+	pkg <- if(isNamespace(em <- environment(m))) environmentName(em)
+	       else if(is.primitive(m)) "base" ## else NULL
+	if(is.na(match(method, tools::nonS3methods(pkg))))
+	    return(m)
+    }
     ## also look for registered method in namespaces
     defenv <-
 	if(!is.na(w <- .knownS3Generics[f]))

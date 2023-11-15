@@ -524,6 +524,9 @@
 
       \item \code{drop.terms(*, dropx=<0-length>)} now works, fixing
       \PR{18563} as proposed by Mikael Jagan.
+
+      \item \code{getS3method("t", "test")} no longer finds the
+      \code{t.test()} function, fixing \PR{18627}.
     }
   }
 }

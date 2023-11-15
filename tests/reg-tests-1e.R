@@ -1064,7 +1064,17 @@ stopifnot(exprs = {
     identical( sum(z), tail( cumsum(z), 1L))
     identical(prod(z), tail(cumprod(z), 1L))
 })
-##
+## gave NA_complex_ in more cases in R <= 4.4.0
+
+
+## PR#18627 - getS3method() should match method dispatch {and isS3method()}
+stopifnot(exprs = {
+            ! isS3method("t", "test")
+    is.null( getS3method("t", "test", optional=TRUE) )
+    identical(dim(t(structure(matrix(, 3, 2), class = "test"))), # t.test() is *not* called:
+              2:3)
+})
+## getS3method(..) did return the t.test function, in R <= 4.3.2
 
 
 
