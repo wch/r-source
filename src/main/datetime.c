@@ -1547,10 +1547,23 @@ attribute_hidden SEXP do_strptime(SEXP call, SEXP op, SEXP args, SEXP env)
 		/* we do want to set wday, yday, isdst, but not to
 		   adjust structure at DST boundaries */
 		memcpy(&tm2, &tm, sizeof(stm));
-		mktime0(&tm2, !isUTC); /* set wday, yday, isdst */
-		tm.tm_wday = tm2.tm_wday;
-		tm.tm_yday = tm2.tm_yday;
-		tm.tm_isdst = isUTC ? 0: tm2.tm_isdst;
+		if (isUTC) tm.tm_isdst = 0;
+		/* mktime _may_ result in error e.g. during the spring-forward gap */
+		if (mktime0(&tm2, !isUTC) != -1) {
+		    /* set wday, yday, isdst */
+		    tm.tm_wday = tm2.tm_wday;
+		    tm.tm_yday = tm2.tm_yday;
+		    if (!isUTC && tm.tm_hour == tm2.tm_hour
+		               && tm.tm_min == tm2.tm_min) {
+			/* do not adjust tm_isdst when the hours/minutes have
+			   been adjusted; some mktime implementations adjust
+			   the (non-existent) time in the spring-forward gap to
+			   the time after the gap and they adjust the tm_isdst
+			   value accordingly; taking just one of the two of
+			   these adjustments would be incorrect (PR#18581). */
+			tm.tm_isdst = tm2.tm_isdst;
+		    }
+		}
 	    }
 	    invalid = validate_tm(&tm) != 0;
 	}
