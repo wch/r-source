@@ -15,7 +15,7 @@
     \item{\code{\link{postscript}}:}{Writes PostScript graphics commands to
       a file.}
     \item{\code{\link{xfig}}:}{Device for XFig graphics file format.  (Of
-      historiical interest only, deprecated in \R 4.4.0.)}
+      historical interest only, deprecated in \R 4.4.0.)}
     \item{\code{\link{bitmap}}:}{bitmap pseudo-device via
       \code{Ghostscript} (if available).}
     \item{\code{\link{pictex}}:}{Writes TeX/PicTeX graphics commands to a
