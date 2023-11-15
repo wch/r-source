@@ -379,8 +379,10 @@ static int mbcs_get_next(int c, wchar_t *wc)
 	clen = utf8clen((char) c);
 	for(i = 1; i < clen; i++) {
 	    c = xxgetc();
-	    if(c == R_EOF) raiseLexError("unexpectedEOF", NO_VALUE, NULL,
-                                         _("EOF whilst reading MBCS char (%s:%d:%d)"));
+	    if(c == R_EOF) { /* EOF whilst reading MBCS char */
+		for(i--; i > 0; i--) xxungetc(s[i]);
+		return -1;
+	    }
 	    s[i] = (char) c;
 	}
 	s[clen] ='\0'; /* x86 Solaris requires this */
@@ -399,8 +401,10 @@ static int mbcs_get_next(int c, wchar_t *wc)
                     _("invalid multibyte character in parser (%s:%d:%d)"));
 	    /* so res == -2 */
 	    c = xxgetc();
-	    if(c == R_EOF) raiseLexError("unexpectedEOF", NO_VALUE, NULL,
-                               _("EOF whilst reading MBCS char (%s:%d:%d)"));
+	    if(c == R_EOF) { /* EOF whilst reading MBCS char */
+		for(i = clen - 1; i > 0; i--) xxungetc(s[i]);
+		return -1;
+	    }
 	    s[clen++] = (char) c;
 	} /* we've tried enough, so must be complete or invalid by now */
     }
@@ -926,16 +930,16 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,   440,   440,   441,   442,   443,   444,   447,   448,   449,
-     452,   453,   456,   457,   458,   459,   460,   462,   463,   465,
-     466,   467,   468,   469,   471,   472,   473,   474,   475,   476,
-     477,   478,   479,   480,   481,   482,   483,   484,   485,   486,
-     487,   488,   489,   490,   491,   492,   493,   495,   496,   497,
-     498,   499,   500,   501,   502,   503,   504,   505,   506,   507,
-     508,   509,   510,   511,   512,   513,   514,   515,   516,   517,
-     521,   524,   527,   531,   532,   533,   534,   535,   536,   539,
-     540,   543,   544,   545,   546,   547,   548,   549,   550,   553,
-     554,   555,   556,   557,   561
+       0,   444,   444,   445,   446,   447,   448,   451,   452,   453,
+     456,   457,   460,   461,   462,   463,   464,   466,   467,   469,
+     470,   471,   472,   473,   475,   476,   477,   478,   479,   480,
+     481,   482,   483,   484,   485,   486,   487,   488,   489,   490,
+     491,   492,   493,   494,   495,   496,   497,   499,   500,   501,
+     502,   503,   504,   505,   506,   507,   508,   509,   510,   511,
+     512,   513,   514,   515,   516,   517,   518,   519,   520,   521,
+     525,   528,   531,   535,   536,   537,   538,   539,   540,   543,
+     544,   547,   548,   549,   550,   551,   552,   553,   554,   557,
+     558,   559,   560,   561,   565
 };
 #endif
 
@@ -4695,6 +4699,11 @@ static int SkipSpace(void)
 	    if (c == '\n' || c == R_EOF) break;
 	    if ((unsigned int) c < 0x80) break;
 	    clen = mbcs_get_next(c, &wc);  /* always 2 */
+	    if (clen == -1) { /* EOF whilst reading MBCS char */
+		xxungetc(c);
+		c = R_EOF;
+		break;
+	    }
 	    if(! Ri18n_iswctype(wc, blankwct) ) break;
 	    for(i = 1; i < clen; i++) c = xxgetc();
 	}
@@ -4711,6 +4720,11 @@ static int SkipSpace(void)
 	    if (c == '\n' || c == R_EOF) break;
 	    if ((unsigned int) c < 0x80) break;
 	    clen = mbcs_get_next(c, &wc);
+	    if (clen == -1) { /* EOF whilst reading MBCS char */
+		xxungetc(c);
+		c = R_EOF;
+		break;
+	    }
 #if defined(USE_RI18N_FNS)
 	    if(! Ri18n_iswctype(wc, blankwct) ) break;
 #else
@@ -4972,8 +4986,10 @@ static int mbcs_get_next2(int c, ucs_t *wc)
 	clen = utf8clen(c);
 	for(i = 1; i < clen; i++) {
 	    c = xxgetc();
-	    if(c == R_EOF) raiseLexError("EOFinMBCS", NO_VALUE, NULL,
-	                               _("EOF whilst reading MBCS char (%s:%d:%d"));
+	    if(c == R_EOF) { /* EOF whilst reading MBCS char */
+		for(i--; i > 0; i--) xxungetc(s[i]);
+		return -1;
+	    }
 	    s[i] = (char) c;
 	}
 	s[clen] ='\0'; /* x86 Solaris requires this */
@@ -4991,8 +5007,10 @@ static int mbcs_get_next2(int c, ucs_t *wc)
 		    _("invalid multibyte character (%s:%d:%d)"));
 	    /* so res == -2 */
 	    c = xxgetc();
-	    if(c == R_EOF) raiseLexError("EOFinMultibyte", NO_VALUE, NULL,
-	        _("EOF whilst reading MBCS char (%s:%d:%d)"));
+	    if(c == R_EOF) {/* EOF whilst reading MBCS char */
+		for(i = clen - 1; i > 0; i--) xxungetc(s[i]);
+		return -1;
+	    }
 	    s[clen++] = c;
 	} /* we've tried enough, so must be complete or invalid by now */
     }
@@ -5313,6 +5331,11 @@ static int StringValue(int c, Rboolean forSymbol)
 	} else if(mbcslocale) {
 	    ucs_t wc;
 	    int clen = mbcs_get_next2(c, &wc);
+	    if (clen == -1) { /* EOF whilst reading MBCS char */
+		xxungetc(c);
+		c = R_EOF;
+		break;
+	    }
 	    BIDI_CHECK(wc);
 	    WTEXT_PUSH(wc);
 	    ParseState.xxbyteno += clen-1;
@@ -5456,6 +5479,11 @@ static int RawStringValue(int c0, int c)
 	    int i, clen;
 	    ucs_t wc;
 	    clen = mbcs_get_next2(c, &wc);
+	    if (clen == -1) { /* EOF whilst reading MBCS char */
+		xxungetc(c);
+		c = R_EOF;
+		break;
+	    }
 	    BIDI_CHECK(wc);
 	    WTEXT_PUSH(wc);
 	    ParseState.xxbyteno += clen-1;
@@ -5601,7 +5629,7 @@ static int SymbolValue(int c)
 	// FIXME potentially need R_wchar_t with UTF-8 Windows.
 	wchar_t wc; int i, clen;
 	clen = mbcs_get_next(c, &wc);
-	while(1) {
+	while(clen != -1) {
 	    /* at this point we have seen one char, so push its bytes
 	       and get one more */
 	    for(i = 0; i < clen; i++) {
@@ -5614,6 +5642,7 @@ static int SymbolValue(int c)
 		continue;
 	    }
 	    clen = mbcs_get_next(c, &wc);
+	    if (clen == -1) break; /* EOF whilst reading MBCS char */
 	    if(!iswalnum(wc)) break;
 	}
     } else
@@ -5771,7 +5800,8 @@ static int token(void)
     if (c == '_') return Placeholder(c);
     if(mbcslocale) {
 	// FIXME potentially need R_wchar_t with UTF-8 Windows.
-	mbcs_get_next(c, &wc);
+	if (mbcs_get_next(c, &wc) == -1)
+	    return END_OF_INPUT; /* EOF whilst reading MBCS char */
 	if (iswalpha(wc)) return SymbolValue(c);
     } else
 	if (isalpha(c)) return SymbolValue(c);
