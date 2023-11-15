@@ -8,9 +8,9 @@
 \alias{jpeg}
 \alias{tiff}
 \alias{bmp}
-\title{BMP, JPEG, PNG and TIFF graphics devices}
+\title{\abbr{BMP}, \abbr{JPEG}, \abbr{PNG} and \abbr{TIFF} graphics devices}
 \description{
-  Graphics devices for BMP, JPEG, PNG and TIFF format bitmap files.
+  Graphics devices for \abbr{BMP}, \abbr{JPEG}, \abbr{PNG} and \abbr{TIFF} format bitmap files.
 }
 \usage{
 bmp(filename = "Rplot\%03d.bmp",
@@ -56,7 +56,7 @@ tiff(filename = "Rplot\%03d.tiff",
     big points (1/72 inch) at \code{res} ppi.}
   \item{bg}{the initial background colour: can be overridden by setting
     par("bg").}
-  \item{quality}{the \sQuote{quality} of the JPEG image, as a
+  \item{quality}{the \sQuote{quality} of the \abbr{JPEG} image, as a
     percentage.  Smaller values will give more compression but also more
     degradation of the image.}
   \item{compression}{the type of compression to be used.  Can also be a
@@ -93,19 +93,19 @@ tiff(filename = "Rplot\%03d.tiff",
     antialiasing is used unless \code{antialias = "none"}.}
 }
 \details{
-  Plots in PNG and JPEG format can easily be converted to many other
+  Plots in \abbr{PNG} and \abbr{JPEG} format can easily be converted to many other
   bitmap formats, and both can be displayed in modern web browsers.  The
-  PNG format is lossless and is best for line diagrams and blocks of
-  colour.  The JPEG format is lossy, but may be useful for image plots,
-  for example.  BMP is a standard format on Windows.  TIFF is a
+  \abbr{PNG} format is lossless and is best for line diagrams and blocks of
+  colour.  The \abbr{JPEG} format is lossy, but may be useful for image plots,
+  for example.  \abbr{BMP} is a standard format on Windows.  \abbr{TIFF} is a
   meta-format: the default format written by \code{tiff} is lossless and
   stores RGB (and alpha where appropriate) values uncompressed---such
-  files are widely accepted, which is their main virtue over PNG.
+  files are widely accepted, which is their main virtue over \abbr{PNG}.
 
-  The JPEG format only supports opaque backgrounds.
+  The \abbr{JPEG} format only supports opaque backgrounds.
 
   \code{png} supports transparent backgrounds: use \code{bg =
-  "transparent"}.  (Not all PNG viewers render files with transparency
+  "transparent"}.  (Not all \abbr{PNG} viewers render files with transparency
   correctly.)  When transparency is in use in the \code{type = "Xlib"}
   variant a very light grey is used as the background and so appears as
   transparent if used in the plot. This allows opaque white to be used,
@@ -119,7 +119,7 @@ tiff(filename = "Rplot\%03d.tiff",
   semi-transparent background.  Compression type \code{"zip"} is
   \sQuote{deflate (Adobe-style)}.  Compression types \code{"lzw+p"} and
   \code{"zip+p"} use horizontal differencing (\sQuote{differencing
-  predictor}, section 14 of the TIFF specification) in combination with
+  predictor}, section 14 of the \abbr{TIFF} specification) in combination with
   the compression method, which is effective for continuous-tone images,
   especially colour ones.
 
@@ -135,9 +135,9 @@ tiff(filename = "Rplot\%03d.tiff",
   and so is only available where that is (on some macOS builds: see
   \code{\link{capabilities}("aqua")}).
 
-  By default no resolution is recorded in the file, except for BMP.
+  By default no resolution is recorded in the file, except for \abbr{BMP}.
   Viewers will often assume a nominal resolution of 72 ppi when none is
-  recorded.  As resolutions in PNG files are recorded in pixels/metre,
+  recorded.  As resolutions in \abbr{PNG} files are recorded in pixels/metre,
   the reported ppi value will be changed slightly.
 
   For graphics parameters that make use of dimensions in inches
@@ -147,16 +147,16 @@ tiff(filename = "Rplot\%03d.tiff",
   \code{png} will normally use a palette if there are less than 256
   colours on the page, and record a 24-bit RGB file otherwise (or a
   32-bit ARGB file if \code{type = "cairo"} and non-opaque colours are
-  used).  However, \code{type = "cairo-png"} uses cairographics' PNG
+  used).  However, \code{type = "cairo-png"} uses cairographics' \abbr{PNG}
   backend which will never use a palette and normally creates a larger
   32-bit ARGB file---this may work better for specialist uses with
   semi-transparent colours.
 
-  Quartz-produced PNG and TIFF plots with a transparent background are
+  Quartz-produced \abbr{PNG} and \abbr{TIFF} plots with a transparent background are
   recorded with a dark grey matte which will show up in some viewers,
   including \command{Preview} on macOS.
   
-  Unknown resolutions in BMP files are recorded as 72 ppi.
+  Unknown resolutions in \abbr{BMP} files are recorded as 72 ppi.
 }
 
 \value{
@@ -210,15 +210,15 @@ tiff(filename = "Rplot\%03d.tiff",
   Support for compression types depends on the underlying \samp{libtiff}
   library: types \code{"lerc"}, \code{"lzma"}, \code{"zstd"} and
   \code{"webp"} are relatively recent additions and may well not be
-  supported.  They are also liable to be unsupported in TIFF viewers.
+  supported.  They are also liable to be unsupported in \abbr{TIFF} viewers.
 }
 
 \author{Guido Masarotto and Brian Ripley}
 
 \references{
-  The PNG specification, \url{https://www.w3.org/TR/png/}.
+  The \abbr{PNG} specification, \url{https://www.w3.org/TR/png/}.
   
-  The TIFF specification,
+  The \abbr{TIFF} specification,
   \url{https://www.iso.org/standard/34342.html}.
   See also \url{https://en.wikipedia.org/wiki/TIFF}.
   %% no longer works:

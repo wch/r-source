@@ -80,7 +80,7 @@ package_native_routine_registration_skeleton(dir, con = stdout(),
   have a variable number of arguments, which should be declared as
   \code{-1}.
 
-  A surprising number of \acronym{CRAN} packages had calls in \R code to
+  A surprising number of \abbr{CRAN} packages had calls in \R code to
   native routines not included in the package, which will lead to a
   \sQuote{loading failed} error during package installation when the
   registration C code is added.

@@ -75,7 +75,7 @@ agrepl(pattern, x, max.distance = 0.1, costs = NULL,
   another.
 
   This uses the \code{tre} code by Ville Laurikari
-  (\url{https://github.com/laurikari/tre}), which supports MBCS
+  (\url{https://github.com/laurikari/tre}), which supports \abbr{MBCS}
   character matching.
 
   The main effect of \code{useBytes = TRUE} is to avoid errors/warnings

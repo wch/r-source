@@ -51,7 +51,7 @@ capabilities(what = NULL,
     contacted unless a \code{X11} device has already been used.}
 
   \item{aqua}{is the \code{\link{quartz}} function operational?
-    Only on some macOS builds, including \acronym{CRAN} binary
+    Only on some macOS builds, including \abbr{CRAN} binary
     distributions of \R.
 
     Note that this is distinct from \code{.Platform$GUI == "AQUA"},

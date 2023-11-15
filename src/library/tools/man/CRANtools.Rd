@@ -15,7 +15,7 @@
 \alias{R_CRAN_SRC}
 \description{
   Tools for obtaining information about current packages in the
-  \acronym{CRAN} package repository, and their check status.
+  \abbr{CRAN} package repository, and their check status.
 }
 \usage{
 CRAN_package_db()
@@ -30,7 +30,7 @@ summarize_CRAN_check_status(packages,
 }
 \arguments{
   \item{packages}{a character vector of package names.}
-  \item{flavors}{a character vector of \acronym{CRAN} check flavor names, or
+  \item{flavors}{a character vector of \abbr{CRAN} check flavor names, or
     \code{NULL} (default), corresponding to all available flavors.}
   \item{results}{the return value of \code{CRAN_check_results()}
     (default), or a subset of this.}
@@ -47,7 +47,7 @@ summarize_CRAN_check_status(packages,
   \code{utils::\link{available.packages}()}.
 
   \code{CRAN_check_results()} returns a data frame with the basic
-  \acronym{CRAN} package check results including timings, with columns
+  \abbr{CRAN} package check results including timings, with columns
   \code{Package}, \code{Flavor} and \code{Status} giving the package
   name, check flavor, and overall check status, respectively.
 
@@ -69,12 +69,12 @@ summarize_CRAN_check_status(packages,
 
 \value{
   See \sQuote{Details}.  Note that the results are collated on
-  \acronym{CRAN}: currently this is done in a locale which sorts
+  \abbr{CRAN}: currently this is done in a locale which sorts
   \code{aAbB} \dots.
 }
 
 \section{Which CRAN?}{
-  The main functions access a \acronym{CRAN} mirror specified by the
+  The main functions access a \abbr{CRAN} mirror specified by the
   environment variable \env{R_CRAN_WEB}, defaulting to one specified in
   the \code{"repos"} option.  Otherwise the entry in the
   \file{repositories} file (see \code{\link{setRepositories}}) is used:
@@ -84,7 +84,7 @@ summarize_CRAN_check_status(packages,
   The mirror to be used is reported by
   \code{utils::\link{findCRANmirror}("web")}.
   
-  Note that these functions access parts of \acronym{CRAN} under
+  Note that these functions access parts of \abbr{CRAN} under
   \file{web/contrib} and \file{web/packages} so if you have specified a
   mirror of just \file{src/contrib} for installing packages you will
   need to set \env{R_CRAN_WEB} to point to a full mirror.

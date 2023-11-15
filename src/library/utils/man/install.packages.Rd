@@ -323,9 +323,9 @@ install.packages(pkgs, lib, repos = getOption("repos"),
   \code{install.packages} needs to be able to compute all the
   dependencies of \code{pkgs} from \code{available}, including if one
   element of \code{pkgs} depends indirectly on another.  This means that
-  if for example you are installing \acronym{CRAN} packages which depend
-  on Bioconductor packages which in turn depend on \acronym{CRAN}
-  packages, \code{available} needs to cover both \acronym{CRAN} and
+  if for example you are installing \abbr{CRAN} packages which depend
+  on Bioconductor packages which in turn depend on \abbr{CRAN}
+  packages, \code{available} needs to cover both \abbr{CRAN} and
   Bioconductor packages.
 }
 
@@ -359,7 +359,7 @@ install.packages(pkgs, lib, repos = getOption("repos"),
 }
   One possibility is that the package is not available in any of the
   selected repositories; another is that is available but only for
-  current or recent versions of \R{}.  For \acronym{CRAN} packages take
+  current or recent versions of \R{}.  For \abbr{CRAN} packages take
   a look at the package's CRAN page (e.g.,
   \url{https://cran.r-project.org/package=RODBC}). If that indicates in
   the \samp{Depends} field a dependence on a later version of \R you

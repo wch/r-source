@@ -54,7 +54,7 @@ CIDFont(family, cmap, cmapEncoding, pdfresource = "")
   compressed files with this extension.
 
   Glyphs in CID-keyed fonts are accessed by ID (number) and not by name.
-  The CMap file maps encoded strings (usually in a MBCS) to IDs, so
+  The CMap file maps encoded strings (usually in a \abbr{MBCS}) to IDs, so
   \code{cmap} and \code{cmapEncoding} specifications must match.  There
   are no real bold or italic versions of CID fonts (bold/italic were
   very rarely used in traditional East Asian topography), and for the

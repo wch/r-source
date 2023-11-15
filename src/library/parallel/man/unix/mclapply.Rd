@@ -171,7 +171,7 @@ mcMap(f, ...)
   Simon Urbanek and R Core.
   The \code{affinity.list} feature by Helena Kotthaus and Andreas Lang,
   TU Dortmund.
-  Derived from the \pkg{multicore} package formerly on \acronym{CRAN}.
+  Derived from the \pkg{multicore} package formerly on \abbr{CRAN}.
 }
 \seealso{
   \code{\link{mcparallel}}, \code{\link{pvec}},

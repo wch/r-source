@@ -827,7 +827,7 @@
 
       It now checks for duplicated vignette titles (also known as
       \sQuote{index entries}): they are used as hyperlinks on
-      \acronym{CRAN} package pages and so do need to be unique.
+      \abbr{CRAN} package pages and so do need to be unique.
 
       \item \command{R CMD check} has more comprehensive checks on the
       \file{data} directory and the functioning of \code{data()} in a
@@ -2200,7 +2200,7 @@
 
       \item The default for \code{tools::write_PACKAGES(rds_compress=)}
       has been changed to \code{"xz"} to match the compression used by
-      \acronym{CRAN}.
+      \abbr{CRAN}.
 
       \item \code{c()} and \code{unlist()} are now more efficient in
       constructing the \code{names(.)} of their return value, thanks to
@@ -2685,7 +2685,7 @@
 
       \item Package \pkg{tools} now exports function
       \code{CRAN_package_db()} for obtaining information about current
-      packages in the \acronym{CRAN} package repository, and several
+      packages in the \abbr{CRAN} package repository, and several
       functions for obtaining the check status of these packages.
 
       \item The (default) Stangle driver \code{Rtangle} allows
@@ -2735,7 +2735,7 @@
       is unset.
 
       NB: This can break reproducibility of output, and did for a
-      \acronym{CRAN} package.
+      \abbr{CRAN} package.
 
       \item Methods \code{"wget"} and \code{"curl"} for
       \code{download.file()} now give an \R error rather than a non-zero
@@ -2872,7 +2872,7 @@
       adding native-symbol registration to a package.  See its help and
       §5.4.1 of \sQuote{Writing R Extensions} for how to use it.  (At
       the time it was added it successfully automated adding
-      registration to over 90\% of \acronym{CRAN} packages which lacked
+      registration to over 90\% of \abbr{CRAN} packages which lacked
       it.  Many of the failures were newly-detected bugs in the
       packages, e.g.\sspace50 packages called entry points with varying
       numbers of arguments and 65 packages called entry points not in
@@ -3353,7 +3353,7 @@
 
       \item \code{findMethod()} failed if the active signature had
       expanded beyond what a particular package used. (Example with
-      packages \CRANpkg{XR} and \CRANpkg{XRJulia} on \acronym{CRAN}.)
+      packages \CRANpkg{XR} and \CRANpkg{XRJulia} on \abbr{CRAN}.)
 
       \item \code{qbeta()} underflowed too early in some very asymmetric
       cases.  (\PR{17178})
@@ -5317,12 +5317,12 @@
 
       \item A new \command{make} target \code{rsync-extsoft} has been
       added to obtain copies of the external libraries from
-      \acronym{CRAN}.
+      \abbr{CRAN}.
 
       \item Building the manuals now requires \command{texi2any} from
-      \pkg{texinfo} 5.1 or later.  \acronym{CRAN} binary builds include
+      \pkg{texinfo} 5.1 or later.  \abbr{CRAN} binary builds include
       the manuals, but by default builds from source will not, and they
-      will be accessed from \acronym{CRAN}.  See the comments in
+      will be accessed from \abbr{CRAN}.  See the comments in
       \file{src/gnuwin32/MkRules.dist} for how to specify the location
       of \command{texi2any}.
 
@@ -8071,7 +8071,7 @@
       \item \code{untar()} has a new argument \code{restore_times} which
       if false (not the default) discards the times in the tarball.
       This is useful if they are incorrect (some tarballs submitted to
-      \acronym{CRAN} have times in a local time zone or many years in the
+      \abbr{CRAN} have times in a local time zone or many years in the
       past even though the standard required them to be in UTC).
 
       \item \code{replayplot()} cannot (and will not attempt to) replay
@@ -8313,7 +8313,7 @@
       \samp{universal} or \samp{leopard}): it looks in
       \file{bin/macosx/contrib/3.0} rather than
       \file{bin/macosx/leopard/contrib/2.15}).  This is the type used
-      for the \acronym{CRAN} binary distribution for OS X as from \R
+      for the \abbr{CRAN} binary distribution for OS X as from \R
       3.0.0.
 
       \item File \file{etc/Makeconf} makes more use of the macros

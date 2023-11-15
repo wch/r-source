@@ -361,7 +361,7 @@ strptime(x, format, tz = "")
 
   On some platforms (including Windows and by default on macOS) the
   system's \code{strftime} is replaced (along with most of the rest of
-  the C-level datetime code) by code modified from IANA's \samp{tzcode}
+  the C-level datetime code) by code modified from \abbr{IANA}'s \samp{tzcode}
   distribution (\url{https://www.iana.org/time-zones}).
 
   Note that as \code{strftime} is used for output (and not

@@ -7,7 +7,7 @@
 \alias{available.packages}
 \alias{R_AVAILABLE_PACKAGES_CACHE_CONTROL_MAX_AGE}
 
-\title{List Available Packages at CRAN-like Repositories}
+\title{List Available Packages at \abbr{CRAN}-like Repositories}
 \description{
   \code{available.packages} returns a matrix of details corresponding to
   packages currently available at one or more repositories. The
@@ -64,7 +64,7 @@ available.packages(contriburl = contrib.url(repos, type), method,
 }
 \details{
   The list of packages is either copied from a local mirror (specified by a
-  \samp{file://} URI) or downloaded.  If downloaded and
+  \samp{file://} \abbr{URI}) or downloaded.  If downloaded and
   \code{ignore_repo_cache} is false (the default), the list is cached
   for the \R session in a per-repository file in \code{\link{tempdir}()}
   with a name like
@@ -104,10 +104,10 @@ available.packages(contriburl = contrib.url(repos, type), method,
       is in more than one repository.}
     \item{\code{"license/FOSS"}}{Include only packages for which
       installation can proceed solely based on packages which can be
-      verified as Free or Open Source Software (FOSS, e.g.,
+      verified as Free or Open Source Software (\abbr{FOSS}, e.g.,
       \url{https://en.wikipedia.org/wiki/FOSS}) employing the available
       license specifications.  Thus both the package and any packages
-      that it depends on to load need to be \emph{known to be} FOSS.
+      that it depends on to load need to be \emph{known to be} \abbr{FOSS}.
 
       Note that this does depend on the repository supplying license
       information.
@@ -116,7 +116,7 @@ available.packages(contriburl = contrib.url(repos, type), method,
       which installation can proceed solely based on packages which are
       known not to restrict use.
     }
-    \item{\code{"CRAN"}}{Use CRAN versions in preference to versions
+    \item{\code{"CRAN"}}{Use \abbr{CRAN} versions in preference to versions
       from other repositories (even if these have a higher version
       number).  This needs to be applied \emph{before} the default
       \code{"duplicates"} filter, so cannot be used with

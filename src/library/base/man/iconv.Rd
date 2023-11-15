@@ -129,22 +129,22 @@ iconvlist()
 }
 
 \section{Byte Order Marks}{
-  most commonly known as \sQuote{BOMs}.
+  most commonly known as \sQuote{\abbr{BOM}s}.
 
   Encodings using character units which are more than one byte in size
   can be written on a file in either big-endian or little-endian order:
   this applies most commonly to UCS-2, UTF-16 and UTF-32/UCS-4
   encodings.  Some systems will write the Unicode character
   \code{U+FEFF} at the beginning of a file in these encodings and
-  perhaps also in UTF-8.  In that usage the character is known as a BOM,
+  perhaps also in UTF-8.  In that usage the character is known as a \abbr{BOM},
   and should be handled during input (see the \sQuote{Encodings} section
   under \code{\link{connection}}: re-encoded connections have some
-  special handling of BOMs).  The rest of this section applies when this
-  has not been done so \code{x} starts with a BOM.
+  special handling of \abbr{BOM}s).  The rest of this section applies when this
+  has not been done so \code{x} starts with a \abbr{BOM}.
 
-  Implementations will generally interpret a BOM for \code{from} given
+  Implementations will generally interpret a \abbr{BOM} for \code{from} given
   as one of \code{"UCS-2"}, \code{"UTF-16"} and
-  \code{"UTF-32"}.  Implementations differ in how they treat BOMs in
+  \code{"UTF-32"}.  Implementations differ in how they treat \abbr{BOM}s in
   \code{x} in other \code{from} encodings: they may be discarded,
   returned as character \code{U+FEFF} or regarded as invalid.
 }

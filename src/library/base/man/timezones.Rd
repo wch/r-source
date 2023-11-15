@@ -123,7 +123,7 @@ OlsonNames(tzdir = NULL)
   user-friendly ways to specify time zones.
 
   Almost all \R platforms make use of a time-zone database originally
-  compiled by Arthur David Olson and now managed by IANA, in which the
+  compiled by Arthur David Olson and now managed by \abbr{IANA}, in which the
   preferred way to refer to a time zone is by a location (typically of a
   city), e.g., \code{Europe/London}, \code{America/Los_Angeles},
   \code{Pacific/Easter} within a \sQuote{time zone region}.  Some
@@ -154,7 +154,7 @@ OlsonNames(tzdir = NULL)
   format for \code{\link{strftime}}.)
 
   The function \code{OlsonNames} returns the time-zone names known to
-  the currently selected Olson/IANA database.  The system-specific
+  the currently selected Olson/\abbr{IANA} database.  The system-specific
   location in the file system varies,
   e.g.\sspace{}\file{/usr/share/zoneinfo} (Linux, macOS, FreeBSD),
   \file{/usr/share/lib/zoneinfo} (Solaris, AIX), \ldots.  It is likely
@@ -323,7 +323,7 @@ OlsonNames(tzdir = NULL)
   for extensive sets of links.
 
   \url{https://data.iana.org/time-zones/theory.html} for the
-  \sQuote{rules} of the Olson/IANA database.
+  \sQuote{rules} of the Olson/\abbr{IANA} database.
 }
 
 \examples{

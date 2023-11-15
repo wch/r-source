@@ -49,7 +49,7 @@ str2expression(text)
     \code{\link{options}(encoding=)}: see the example under
     \code{\link{file}}. Arguments \code{encoding = "latin1"} and 
     \code{encoding = "UTF-8"} are ignored with a warning when running
-    in a MBCS locale.}
+    in a \abbr{MBCS} locale.}
   \item{s}{a \code{\link{character}} vector of length \code{1}, i.e., a
     \dQuote{string}.}
 }

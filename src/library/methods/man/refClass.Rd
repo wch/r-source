@@ -4,7 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{ReferenceClasses}
-\title{Objects With Fields Treated by Reference (OOP-style)}
+\title{Objects With Fields Treated by Reference (\abbr{OOP}-style)}
 \alias{ReferenceClasses}
 \alias{setRefClass}
 \alias{getRefClass}
@@ -29,9 +29,9 @@
 \alias{externalRefMethod-class}
 \description{
 The software described here allows packages to define \emph{reference
-  classes} that behave in the style of \dQuote{OOP} languages such as Java and
+  classes} that behave in the style of \dQuote{\abbr{OOP}} languages such as Java and
 C++.
-This model for OOP differs from the functional model implemented by S4
+This model for \abbr{OOP} differs from the functional model implemented by S4
 (and S3) classes and methods, in which methods are defined for generic
 functions.
 Methods for reference classes are \dQuote{encapsulated} in the class definition.
@@ -209,7 +209,7 @@ function in a package.  See the section on \dQuote{External Methods}
 
 The goal of the software described here is to provide a uniform
 programming style in \R for software dealing with reference classes, whether
-implemented directly in \R or through an interface to one of the OOP
+implemented directly in \R or through an interface to one of the \abbr{OOP}
 languages.
 }
 
@@ -703,7 +703,7 @@ class for which this object is the generator.
 
 \item{\code{$accessors(...)}}{ %$}{
 A number of
-systems using the OOP programming paradigm recommend or enforce
+systems using the \abbr{OOP} programming paradigm recommend or enforce
 \emph{getter and setter methods}
 corresponding to each field, rather than direct access by name.
 If you like this style and want to  extract a field named \code{abc}

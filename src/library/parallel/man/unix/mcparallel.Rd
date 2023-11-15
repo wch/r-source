@@ -147,7 +147,7 @@ mccollect(jobs, wait = TRUE, timeout = 0, intermediate = FALSE)
   Simon Urbanek and R Core.
 
   Derived from the \pkg{multicore} package formerly on
-  \acronym{CRAN}. (but with different handling of the RNG stream).
+  \abbr{CRAN}. (but with different handling of the RNG stream).
 }
 \seealso{
   \code{\link{pvec}}, \code{\link{mclapply}}

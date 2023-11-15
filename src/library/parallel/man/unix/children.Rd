@@ -105,7 +105,7 @@ mckill(process, signal = 2L)
 \author{
   Simon Urbanek and R Core.
 
-  Derived from the \pkg{multicore} package formerly on \acronym{CRAN}.
+  Derived from the \pkg{multicore} package formerly on \abbr{CRAN}.
 }
 \section{Warning}{
   This is a very low-level interface for expert use only: it not

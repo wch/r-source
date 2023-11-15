@@ -155,13 +155,13 @@ conflictRules(pkg, mask.ok = NULL, exclude = NULL)
   Some packages have restrictive licenses, and there is a mechanism to
   allow users to be aware of such licenses.  If
   \code{\link{getOption}("checkPackageLicense") == TRUE}, then at first
-  use of a namespace of a package with a not-known-to-be-FOSS (see
+  use of a namespace of a package with a not-known-to-be-\abbr{FOSS} (see
   below) license the user is asked to view and accept the license: a
   list of accepted licenses is stored in file \file{~/.R/licensed}.  In
   a non-interactive session it is an error to use such a package whose
   license has not already been recorded as accepted.
 
-  Free or Open Source Software (FOSS,
+  Free or Open Source Software (\abbr{FOSS},
   e.g.\sspace{}\url{https://en.wikipedia.org/wiki/FOSS}) packages are
   determined by the same filters used by
   \code{\link{available.packages}} but applied to just the current

@@ -8,9 +8,9 @@
 \alias{jpeg}
 \alias{tiff}
 \alias{bmp}
-\title{BMP, JPEG, PNG and TIFF graphics devices}
+\title{\abbr{BMP}, \abbr{JPEG}, \abbr{PNG} and \abbr{TIFF} graphics devices}
 \description{
-  Graphics devices for BMP, JPEG, PNG and TIFF format bitmap files.
+  Graphics devices for \abbr{BMP}, \abbr{JPEG}, \abbr{PNG} and \abbr{TIFF} format bitmap files.
 }
 \usage{
 bmp(filename = "Rplot\%03d.bmp",
@@ -58,7 +58,7 @@ tiff(filename = "Rplot\%03d.tif",
     big points (1/72 inch) at \code{res} ppi.}
   \item{bg}{the initial background colour: can be overridden by setting
     par("bg").}
-  \item{quality}{the \sQuote{quality} of the JPEG image, as a
+  \item{quality}{the \sQuote{quality} of the \abbr{JPEG} image, as a
     percentage.  Smaller values will give more compression but also more
     degradation of the image.}
    \item{compression}{the type of compression to be used.  Can also be a
@@ -91,15 +91,15 @@ tiff(filename = "Rplot\%03d.tif",
       a default "symbol" font based on the graphics device capabilities.}
 }
 \details{
-  Plots in PNG and JPEG format can easily be converted to many other
+  Plots in \abbr{PNG} and \abbr{JPEG} format can easily be converted to many other
   bitmap formats, and both can be displayed in modern web browsers.  The
-  PNG format is lossless and is best for line diagrams and blocks of
-  colour.  The JPEG format is lossy, but may be useful for image plots,
-  for example.  The BMP format is standard on Windows, and supported by
-  most viewers elsewhere.  TIFF is a meta-format: the default format
+  \abbr{PNG} format is lossless and is best for line diagrams and blocks of
+  colour.  The \abbr{JPEG} format is lossy, but may be useful for image plots,
+  for example.  The \abbr{BMP} format is standard on Windows, and supported by
+  most viewers elsewhere.  \abbr{TIFF} is a meta-format: the default format
   written by \code{tiff} is lossless and stores RGB (and alpha where
   appropriate) values uncompressed---such files are widely accepted,
-  which is their main virtue over PNG.
+  which is their main virtue over \abbr{PNG}.
 
   Windows GDI imposes limits on the size of bitmaps: these are not
   documented in the SDK and may depend on the version of Windows.
@@ -107,9 +107,9 @@ tiff(filename = "Rplot\%03d.tif",
   \eqn{2^{15}-1}{2^15-1}.  In addition, there are limits on the total
   number of pixels which depend on the graphics hardware.
 
-  By default no resolution is recorded in the file (except for BMP).
+  By default no resolution is recorded in the file (except for \abbr{BMP}).
   Viewers will often assume a nominal resolution of 72 ppi when none is
-  recorded.  As resolutions in PNG files are recorded in pixels/metre,
+  recorded.  As resolutions in \abbr{PNG} files are recorded in pixels/metre,
   the reported ppi value will be changed slightly.
 
   For graphics parameters that make use of dimensions in inches,
@@ -117,14 +117,14 @@ tiff(filename = "Rplot\%03d.tif",
 
   Both \code{bmp} and \code{png} will use a palette if there are fewer
   than 256 colours on the page, and record a 24-bit RGB file otherwise.
-  For the \code{png} device, \code{type = "cairo"} does the PNG output in
+  For the \code{png} device, \code{type = "cairo"} does the \abbr{PNG} output in
   the driver and so is compatible with the \code{"windows"} type.
-  \code{type = "cairo-png"} uses cairographics' PNG backend which will
+  \code{type = "cairo-png"} uses cairographics' \abbr{PNG} backend which will
   never use a palette and normally creates a larger 32-bit ARGB
   file---this may work better for specialist uses with semi-transparent
   colours.
 
-  The JPEG format only supports opaque backgrounds.
+  The \abbr{JPEG} format only supports opaque backgrounds.
 
   \code{png(type = "windows")} supports transparent backgrounds on 16-bit
   (\sQuote{High Color}) or better screens: use \code{bg =
@@ -134,16 +134,16 @@ tiff(filename = "Rplot\%03d.tif",
   transparent background semi-transparent colours are painted onto a
   slightly off-white background and hence the pixels are opaque.
 
-  Not all PNG viewers render files with transparency correctly.
+  Not all \abbr{PNG} viewers render files with transparency correctly.
 
   \code{tiff} compression types \code{"lzw+p"} and \code{"zip+p"} use
   horizontal differencing (\sQuote{differencing predictor}, section 14
-  of the TIFF specification) in combination with the compression method,
+  of the \abbr{TIFF} specification) in combination with the compression method,
   which is effective for continuous-tone images, especially colour ones.
   The \code{jpeg} quality when used for \code{tiff} compression is fixed
   at 75.
   
-  Unknown resolutions in BMP files are recorded as 72 ppi.
+  Unknown resolutions in \abbr{BMP} files are recorded as 72 ppi.
 }
 
 \value{
@@ -203,13 +203,13 @@ tiff(filename = "Rplot\%03d.tif",
   Support for compression types depends on the underlying \samp{libtiff}
   library: types \code{"lerc"}, \code{"lzma"}, \code{"zstd"} and
   \code{"webp"} are relatively recent additions and may well not be
-  supported.  They are also liable to be unsupported in TIFF viewers.
+  supported.  They are also liable to be unsupported in \abbr{TIFF} viewers.
 }
 
 \references{
-  The PNG specification, \url{https://www.w3.org/TR/png/}.
+  The \abbr{PNG} specification, \url{https://www.w3.org/TR/png/}.
   
-  The TIFF specification,
+  The \abbr{TIFF} specification,
   \url{https://www.iso.org/standard/34342.html}.
   See also \url{https://en.wikipedia.org/wiki/TIFF}.
   %% no longer works:
