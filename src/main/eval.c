@@ -1632,7 +1632,7 @@ static R_INLINE Rboolean R_CheckJIT(SEXP fun)
 
 #ifdef DEBUG_JIT
 # define PRINT_JIT_INFO							\
-    REprintf("JIT cache hits: %ld; env: %ld; body %ld\n",		\
+    REprintf("JIT cache hits: %lu; env: %lu; body %lu\n",		\
 	     jit_info.count, jit_info.envcount, jit_info.bdcount)
 #else
 # define PRINT_JIT_INFO	do { } while(0)

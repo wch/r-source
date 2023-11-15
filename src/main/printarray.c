@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996	Robert Gentleman and Ross Ihaka
- *  Copyright (C) 2000--2020	The R Core Team
+ *  Copyright (C) 2000--2023	The R Core Team
  *  Copyright (C) 2001--2012	The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -63,7 +63,7 @@ static void MatrixColumnLabel(SEXP cl, int j, int w)
 		EncodeString(tmp, l, 0, Rprt_adj_left));
     }
     else {
-	Rprintf("%*s[,%ld]", w-IndexWidth(j+1)-3, "", j+1);
+	Rprintf("%*s[,%ld]", w-IndexWidth(j+1)-3, "", (long)j+1);
     }
 }
 
@@ -79,7 +79,7 @@ static void RightMatrixColumnLabel(SEXP cl, int j, int w)
 		EncodeString(tmp, l, 0, Rprt_adj_right));
     }
     else {
-	Rprintf("%*s[,%ld]%*s", R_print.gap, "", j+1, w-IndexWidth(j+1)-3, "");
+	Rprintf("%*s[,%ld]%*s", R_print.gap, "", (long)j+1, w-IndexWidth(j+1)-3, "");
     }
 }
 
@@ -92,7 +92,7 @@ static void LeftMatrixColumnLabel(SEXP cl, int j, int w)
 		EncodeString(tmp, l, 0, Rprt_adj_left), w-l, "");
     }
     else {
-	Rprintf("%*s[,%ld]%*s", R_print.gap, "", j+1, w-IndexWidth(j+1)-3, "");
+	Rprintf("%*s[,%ld]%*s", R_print.gap, "", (long)j+1, w-IndexWidth(j+1)-3, "");
     }
 }
 
@@ -106,7 +106,7 @@ static void MatrixRowLabel(SEXP rl, int i, int rlabw, int lbloff)
 		rlabw-l-lbloff, "");
     }
     else {
-	Rprintf("\n%*s[%ld,]", rlabw-3-IndexWidth(i + 1), "", i+1);
+	Rprintf("\n%*s[%ld,]", rlabw-3-IndexWidth(i + 1), "", (long)i+1);
     }
 }
 

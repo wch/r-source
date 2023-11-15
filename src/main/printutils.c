@@ -95,7 +95,7 @@ R_size_t R_Decode2Long(char *p, int *ierr)
     if(p[0] == '\0') return v;
     /* else look for letter-code ending : */
     if(R_Verbose)
-	REprintf("R_Decode2Long(): v=%ld\n", v);
+	REprintf("R_Decode2Long(): v=%ld\n", (long)v);
     // NOTE: currently, positive *ierr are not differentiated in the callers:
     if(p[0] == 'G') {
 	if((Giga * (double)v) > (double) R_SIZE_T_MAX) { *ierr = 4; return(v); }
@@ -1054,5 +1054,5 @@ int attribute_hidden IndexWidth(R_xlen_t n)
 attribute_hidden void VectorIndex(R_xlen_t i, int w)
 {
 /* print index label "[`i']" , using total width `w' (left filling blanks) */
-    Rprintf("%*s[%ld]", w-IndexWidth(i)-2, "", i);
+    Rprintf("%*s[%ld]", w-IndexWidth(i)-2, "", (long)i);
 }
