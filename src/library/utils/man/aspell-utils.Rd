@@ -15,7 +15,9 @@
   Utilities for spell checking packages via Aspell, Hunspell or Ispell.
 }
 \usage{
-aspell_package_Rd_files(dir, drop = c("\\\\author", "\\\\references"),
+aspell_package_Rd_files(dir,
+                        drop = c("\\\\abbr", "\\\\acronym",
+                                 "\\\\author", "\\\\references"),
                         control = list(), program = NULL,
                         dictionaries = character())
 aspell_package_vignettes(dir,
