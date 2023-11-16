@@ -469,6 +469,10 @@ static void seticonvName(const char *encpath, char *convname)
 	strcpy(convname, "latin-9");
     else if (pathcmp(encpath, "WinAnsi")==0)
 	strcpy(convname, "CP1252");
+    else if(pathcmp(encpath, "Greek") == 0)
+	strcpy(convname, "iso-8859-7");
+    else if(pathcmp(encpath, "Cyrillic") == 0)
+	strcpy(convname, "iso-8859-5");
     else {
 	/*
 	 * Last resort = trim .enc off encpath to produce convname
