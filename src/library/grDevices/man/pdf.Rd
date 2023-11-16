@@ -264,33 +264,37 @@ pdf(file = if(onefile) "Rplots.pdf" else "Rplot\%03d.pdf",
 
   None of this will matter if only ASCII characters (codes 32--126) are
   used as all the encodings (except \code{"TeXtext"}) agree over that
-  range.  Some encodings are supersets of ISOLatin1, too.  However, if
+  range.  Some encodings are supersets of ISOLatin1.  However, if
   accented and special characters do not come out as you expect, you may
   need to change the encoding.  Some other encodings are supplied with
-  \R: \code{"WinAnsi.enc"} and \code{"MacRoman.enc"} correspond to the
-  encodings normally used on Windows and Classic Mac OS (at least by
-  Adobe), and \code{"PDFDoc.enc"} is the first 256 characters of the
-  Unicode encoding, the standard for PDF.  There are also encodings
-  \code{"ISOLatin2.enc"}, \code{"CP1250.enc"}, \code{"ISOLatin7.enc"}
-  (ISO 8859-13), \code{"CP1257.enc"}, and \code{"ISOLatin9.enc"} (ISO
-  8859-15), \code{"Cyrillic.enc"} (ISO 8859-5), \code{"KOI8-R.enc"},
-  \code{"KOI8-U.enc"}, \code{"CP1251.enc"}, \code{"Greek.enc"} (ISO
-  8859-7) and \code{"CP1253.enc"}.  Note that many glyphs in these
-  encodings are not in the fonts corresponding to the standard families.
-  (The Adobe ones for all but Courier, Helvetica and Times cover little
-  more than Latin-1, whereas the URW ones also cover Latin-2, Latin-7,
-  Latin-9 and Cyrillic but no Greek.  The Adobe exceptions cover the
-  Latin character sets, but not the Euro.)
+  \R: \code{"ISOLatin2.enc"} (Central/Eastern Europe),
+  \code{"ISOLatin7.enc"} (ISO 8859-13, \sQuote{Baltic Rim}),
+  \code{"ISOLatin9.enc"} (ISO 8859-15, including Euro),
+  \code{"Cyrillic.enc"} (ISO 8859-5), \code{"KOI8-R.enc"},
+  \code{"KOI8-U.enc"}, and the Windows encodings \code{"WinAnsi.enc"}
+  (also knwon as \code{"CP1252.enc"}, \code{"CP1250.enc"}
+  (Central/Eastern Europe), \code{"CP1251.enc"} (Cyrillic),
+  \code{"Greek.enc"} (ISO 8859-7), \code{"CP1253.enc"} (modern Greek)
+  and \code{"CP1257.enc"} (\sQuote{Baltic Rim}).  Note that many glyphs
+  in these encodings are not in the fonts corresponding to the standard
+  families.  (The Adobe ones for all but Courier, Helvetica and Times
+  cover little more than Latin-1, whereas the URW ones also cover
+  Latin-2, Latin-7, Latin-9 and Cyrillic but no Greek.  The Adobe
+  exceptions cover the Latin character sets, but not the Euro.)
 
-  NB: support for encodings other than \code{"PDFDoc.enc"},
-  \code{"ISOLatin1.enc"} (and the Windows ones on Windows) depends on
-  support by the platform's \code{libiconv}.
+  If using an 8-bit locale (rare nowadays), \R tries to choose a
+  matching Adobe encoding.
+
+  NB: support for encodings other than \code{"ISOLatin1.enc"} (and the
+  Windows ones on Windows) depends on support by the platform's
+  \code{libiconv} in a UTF-8 locale.
 
   If you specify the encoding, it is your responsibility to ensure that
-  the PostScript font contains the glyphs used.  One issue here is the Euro
-  symbol which is in the WinAnsi and MacRoman encodings but may well not
-  be in the PostScript fonts.  (It is in the URW variants; it is not in
-  the supplied Adobe Font Metric files.)
+  the PostScript font contains the glyphs used.  One issue here is the
+  Euro symbol which is in several encodings (including WinAnsi and
+  ISOLatin9 encodings but may well not be in the PostScript fonts.  (It
+  is in the URW variants; it is not in the supplied Adobe Font Metric
+  files so will not be centred correctly.)
 
   There is an exception.  Character 45 (\code{"-"}) is always set
   as minus (its value in Adobe ISOLatin1) even though it is hyphen in
