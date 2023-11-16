@@ -502,6 +502,7 @@ static void seticonvName(const char *encpath, char *convname)
 	else {
 	    /*
 	     * Last resort = trim .enc off encpath to produce convname
+	     * Used for CPxxxx and MacRoman
 	     */
 	    strcpy(convname, encpath);
 	    p = strrchr(convname, '.');

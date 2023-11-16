@@ -4,7 +4,7 @@ options(warn = 1L)
 
 ### only do this in a UTF-8 locale
 if (!l10n_info()[["UTF-8"]]) {
-    warning("pdf-encoding.R requires a UTF-8 locale")
+    warning("encodings.R requires a UTF-8 locale")
     q("no")
 }
 musl <- grepl("musl", R.version$os)
