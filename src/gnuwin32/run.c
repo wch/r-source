@@ -43,9 +43,21 @@
 
 static char RunError[501] = "";
 
+static Rboolean hasspace(const char *s)
+{
+    if (!s)
+	return FALSE;
+    for(;*s;s++)
+	if (isspace(*s)) return TRUE;
+    return FALSE;
+} 
+
 /* This might be given a command line (whole = 0) or just the
    executable (whole = 1).  In the later case the path may or may not
-   be quoted. */
+   be quoted. 
+
+   When whole = 0, the command will be quoted in the result if it contains
+   space. */
 static char *expandcmd(const char *cmd, int whole)
 {
     char c = '\0';
@@ -142,7 +154,8 @@ static char *expandcmd(const char *cmd, int whole)
     if (res > 0) {
 	/* perform the translation again with sufficient buffer size */
 	// This is the return value.
-	if (!(s = (char *) malloc(res + len))) { /* over-estimate */
+	if (!(s = (char *) malloc(res + len + 2))) {
+	    /* the size over-estimate, +2 in case quotes will be needed */
 	    if (fn) free(fn);
 	    strcpy(RunError, "Insufficient memory (expandcmd)");
 	    return NULL;
@@ -154,15 +167,25 @@ static char *expandcmd(const char *cmd, int whole)
 	   permissions for some component of the path. */
 	if (s) free(s);
 	// This is the return value.
-	if (!(s = (char *) malloc(d + len))) { /* over-estimate */
+	if (!(s = (char *) malloc(d + len + 2))) { /* over-estimate */
 	    if (fn) free(fn);
 	    strcpy(RunError, "Insufficient memory (expandcmd)");
 	    return NULL;
 	}
-        strncpy(s, fn, d + 1);
+	if (!whole && hasspace(fn)) 
+	    snprintf(s, d + 3, "\"%s\"", fn);
+	else
+	    strncpy(s, fn, d + 1);
+    } else if (!whole && hasspace(s)) {
+	/* GetShortPathName succeeded but it may still have returned the
+	   long path (so with spaces) */
+
+	memmove(s + 1, s, res + 1); 
+	s[0] = '"';
+	s[1 + res] = '"';
+	s[1 + res + 1] = '\0';
     }
 
-    /* FIXME: warn if the path contains space? */
     if (!whole) {
 	*q = c;         /* restore character after command */
 	strcat(s, q);   /* add the rest of input (usually arguments) */
