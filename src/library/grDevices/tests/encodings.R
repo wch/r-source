@@ -138,3 +138,6 @@ res8 <- try(text(1.5, 9, eight, adj = c(0,0)))
 if(!inherits(res8, "try-error")) message("error check failed on 'eight'")
 dev.off()
 unlink(tf)
+
+proc.time()
+
