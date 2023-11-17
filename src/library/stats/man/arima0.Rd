@@ -7,7 +7,7 @@
 \alias{arima0}
 \alias{print.arima0}
 \alias{predict.arima0}
-\concept{ARNA}
+\concept{ARMA}
 \title{ARIMA Modelling of Time Series -- Preliminary Version}
 \description{
   Fit an ARIMA model to a univariate time series, and forecast from
