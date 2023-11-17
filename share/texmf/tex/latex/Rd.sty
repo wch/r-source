@@ -12,8 +12,6 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{Rd}{}
 
-\providecommand\IfFormatAtLeastTF{\@ifl@t@r\fmtversion}
-
 \RequirePackage{ifthen}
 \newboolean{Rd@use@hyper}
 \setboolean{Rd@use@hyper}{true}
@@ -40,6 +38,11 @@
   \setboolean{Rd@use@beramono}{false}%
   \setboolean{Rd@use@inconsolata}{false}%\
   \fi}
+
+\newboolean{Rd@graphicspath@needs@quotes}
+\@ifl@t@r\fmtversion{2019/10/01}%
+  {\setboolean{Rd@graphicspath@needs@quotes}{false}}%
+  {\setboolean{Rd@graphicspath@needs@quotes}{true}}
 
 \RequirePackage{longtable}
 \setcounter{LTchunksize}{250}

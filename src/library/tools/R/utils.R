@@ -793,7 +793,14 @@ function(x)
     ## Older versions of (PDF)LaTeX need double quotes in case of spaces
     ## etc.  Newer versions of XeLaTeX and LuaLaTeX cannot handle these.
     ## Argh ...
-    sprintf("\\IfFormatAtLeastTF{2019/10/01}{\\graphicspath{{%s/}}}{\\graphicspath{{\"%s/\"}}}", x, x)
+    sprintf(paste(c("\\makeatletter",
+                    "\\ifthenelse",
+                    "{\\boolean{Rd@graphicspath@needs@quotes}}",
+                    "{\\graphicspath{{\"%s/\"}}}",
+                    "{\\graphicspath{{%s/}}}",
+                    "\\makeatother"),
+                  collapse = ""),
+            x, x)
 }     
 
 ### ** .file_path_relative_to_dir
