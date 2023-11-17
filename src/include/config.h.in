@@ -1034,6 +1034,9 @@
 /* Define if using NeXT/Apple-style Objective C runtime. */
 #undef OBJC_NEXT_RUNTIME
 
+/* Define if running on Linux-musl */
+#undef OS_MUSL
+
 /* Name of package */
 #undef PACKAGE
 
