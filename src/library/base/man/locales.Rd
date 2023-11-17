@@ -104,7 +104,7 @@ Sys.setlocale (category = "LC_ALL", locale = "")
   list the \sQuote{available public} locales.  What that means is
   platform-dependent.  On recent Linuxen this may mean \sQuote{available
   to be installed} as on some RPM-based systems the locale data is in
-  separate RPMs.  On Debian/Ubuntu the set of available locales is
+  separate \abbr{RPM}s.  On Debian/Ubuntu the set of available locales is
   managed by OS-specific facilities such as \command{locale-gen} and
   \command{locale -a} lists those currently enabled.
 

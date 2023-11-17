@@ -237,19 +237,19 @@ gregexec(pattern, text, ignore.case = FALSE, perl = FALSE,
 
   PCRE-based matching by default used to put additional effort into
   \sQuote{studying} the compiled pattern when \code{x}/\code{text} has
-  length 10 or more.  That study may use the PCRE JIT compiler on
+  length 10 or more.  That study may use the PCRE \abbr{JIT} compiler on
   platforms where it is available (see \code{\link{pcre_config}}). As
   from PCRE2 (PCRE version >= 10.00 as reported by
   \code{\link{extSoftVersion}}), there is no study phase, but the
-  patterns are optimized automatically when possible, and PCRE JIT is
+  patterns are optimized automatically when possible, and PCRE \abbr{JIT} is
   used when enabled.  The details are controlled by
   \code{\link{options}} \code{PCRE_study} and \code{PCRE_use_JIT}.
   (Some timing comparisons can be seen by running file
   \file{tests/PCRE.R} in the \R sources (and perhaps installed).)
   People working with PCRE and very long strings can adjust the maximum
-  size of the JIT stack by setting environment variable
-  \env{R_PCRE_JIT_STACK_MAXSIZE} before JIT is used to a value between
-  \code{1} and \code{1000} in MB: the default is \code{64}. When JIT is
+  size of the \abbr{JIT} stack by setting environment variable
+  \env{R_PCRE_JIT_STACK_MAXSIZE} before \abbr{JIT} is used to a value between
+  \code{1} and \code{1000} in MB: the default is \code{64}. When \abbr{JIT} is
   not used with PCRE version < 10.30 (that is with PCRE1 and old
   versions of PCRE2), it might also be wise to set the option
   \code{PCRE_limit_recursion}.

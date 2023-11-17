@@ -44,7 +44,7 @@ postscript(file = if(onefile) "Rplots.ps" else "Rplot\%03d.ps",
   }
   \item{onefile}{logical: if true (the default) allow multiple figures
     in one file.  If false, generate a file name containing the page
-    number for each page and use an EPSF header and no
+    number for each page and use an \abbr{EPSF} header and no
     \code{DocumentMedia} comment.  Defaults to \code{TRUE}.}
  \item{family}{the initial font family to be used, see the section
     \sQuote{Families} in \code{\link{pdf}}.  Defaults to \code{"Helvetica"}.}
@@ -180,9 +180,9 @@ postscript(file = if(onefile) "Rplots.ps" else "Rplot\%03d.ps",
 }
 
 \section{Color models}{
-  The default color model (\code{"srgb"}) is sRGB.
+  The default color model (\code{"srgb"}) is \abbr{sRGB}.
 
-  The alternative \code{"srgb+gray"} uses sRGB for colors, but with pure
+  The alternative \code{"srgb+gray"} uses \abbr{sRGB} for colors, but with pure
   gray colors (including black and white) expressed as greyscales (which
   results in smaller files and can be advantageous with some printer
   drivers).  Conversely, its files can be rendered much slower on some
@@ -191,7 +191,7 @@ postscript(file = if(onefile) "Rplots.ps" else "Rplot\%03d.ps",
 
   Other possibilities are \code{"gray"} (or \code{"grey"}) which used
   only greyscales (and converts other colours to a luminance), and
-  \code{"cmyk"}.  The simplest possible conversion from sRGB to CMYK is
+  \code{"cmyk"}.  The simplest possible conversion from \abbr{sRGB} to CMYK is
   used
   (\url{https://en.wikipedia.org/wiki/CMYK_color_model#Mapping_RGB_to_CMYK}),
   and raster images are output in RGB.
@@ -237,7 +237,7 @@ postscript(file = if(onefile) "Rplots.ps" else "Rplot\%03d.ps",
     \item Line widths are as a multiple of 1/96 inch, with a minimum
     of 0.01 enforced.
     \item Circle of any radius are allowed.
-    \item Colours are by default specified as sRGB.
+    \item Colours are by default specified as \abbr{sRGB}.
   }
 
   At very small line widths, the line type may be forced to solid.

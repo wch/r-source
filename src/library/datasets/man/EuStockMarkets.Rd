@@ -11,8 +11,9 @@
 }
 \description{
   Contains the daily closing prices of major European stock indices:
-  Germany DAX (Ibis), Switzerland SMI, France CAC, and UK FTSE.  The
-  data are sampled in business time, i.e., weekends and holidays are
+  Germany \abbr{DAX} (Ibis), Switzerland \abbr{SMI}, France \abbr{CAC},
+  and UK \abbr{FTSE}.
+  The data are sampled in business time, i.e., weekends and holidays are
   omitted.
 }
 \usage{

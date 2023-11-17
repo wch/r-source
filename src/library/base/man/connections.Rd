@@ -275,7 +275,7 @@ socketTimeout(socket, timeout = -1)
   No attempt is made to decode a percent-encoded \samp{file:} URL: call
   \code{\link{URLdecode}} if necessary.
 
-  All the methods attempt to follow redirected HTTP and HTTPS URLs.
+  All the methods attempt to follow redirected HTTP and \abbr{HTTPS} URLs.
 
   Server-side cached data is always accepted.
 
@@ -505,7 +505,7 @@ socketTimeout(socket, timeout = -1)
   Even when a connection is in blocking mode, attempts are made to
   ensure that it does not block the event loop and hence the operation
   of GUI parts of \R.  These do not always succeed, and the whole \R
-  process will be blocked during a DNS lookup on Unix, for example.
+  process will be blocked during a \abbr{DNS} lookup on Unix, for example.
 
   Most blocking operations on HTTP/FTP URLs and on sockets are subject to the
   timeout set by \code{options("timeout")}.  Note that this is a timeout

@@ -56,7 +56,7 @@ cm.colors(n, alpha, rev = FALSE)
 All of these functions (except the helper function \code{hcl.pals}) create a
 vector of \code{n} contiguous colors, either based on the HSV color space
 (rainbow, heat, terrain, topography, and cyan-magenta colors) or the
-perceptually-based HCL color space.
+perceptually-based \abbr{HCL} color space.
 
 HSV (hue-saturation-value) is a simple transformation of the RGB
 (red-green-blue) space which was therefore a convenient choice for color
@@ -66,9 +66,9 @@ and lightness/brightness/luminance/value only poorly and consequently
 the corresponding palettes are typically not a good choice for statistical
 graphics and data visualization.
 
-In contrast, HCL (hue-chroma-luminance) colors are much more suitable for
+In contrast, \abbr{HCL} (hue-chroma-luminance) colors are much more suitable for
 capturing human color perception (see also \code{\link{hcl}}) and better color
-palettes can be derived based on HCL coordinates.
+palettes can be derived based on \abbr{HCL} coordinates.
 Conceptually, three types of palettes are often distinguished:
 \itemize{
   \item Qualitative: For coding categorical information, i.e., where no
@@ -88,16 +88,16 @@ restrictions. The latter group also includes the cividis palette as it is based
 on two different hues (blue and yellow) but it is actually a sequential palette
 (going from dark to light).
 
-The names of all available HCL palettes can be queried with the \code{hcl.pals}
+The names of all available \abbr{HCL} palettes can be queried with the \code{hcl.pals}
 function and they are also visualized by color swatches in the examples. Many of
 the palettes closely approximate palettes of the same name from various other
 packages (including \pkg{RColorBrewer}, \pkg{rcartocolor}, \pkg{viridis},
 \pkg{scico}, among others). 
 
-The default HCL palette is the widely used viridis palette which is a sequential
+The default \abbr{HCL} palette is the widely used viridis palette which is a sequential
 palette with relatively high chroma throughout so that it also works reasonably
 well as a qualitative palette. However, while viridis is a rather robust default
-palette, more suitable HCL palettes are available for most visualizations.
+palette, more suitable \abbr{HCL} palettes are available for most visualizations.
 
 For example, \code{"Dark 3"} works well for shading points or lines in
 up to five groups, \code{"YlGnBu"} is a sequential palette similar to
@@ -135,7 +135,7 @@ suitable palette from \code{hcl.colors} instead of
 }
 \references{
   Wikipedia (2019).
-  HCL color space -- Wikipedia, The Free Encyclopedia.
+  \abbr{HCL} color space -- Wikipedia, The Free Encyclopedia.
   \url{https://en.wikipedia.org/w/index.php?title=HCL_color_space&oldid=883465135}.
   Accessed March 26, 2019.
 

@@ -40,7 +40,7 @@ colorConverter(toXYZ, fromXYZ, name, white = NULL, vectorized = FALSE)
   "D50", "D55", "D60", "E" (usually "D65").
 
   The display gamma is most commonly 2.2, though 1.8 is used for Apple RGB.
-  The sRGB standard specifies a more complicated function that is close
+  The \abbr{sRGB} standard specifies a more complicated function that is close
   to a gamma of 2.2; \code{gamma = "sRGB"} uses this function.
 
   Colour spaces other than RGB can be specified directly by giving

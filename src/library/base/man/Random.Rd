@@ -13,7 +13,7 @@
 \title{Random Number Generation}
 \description{
   \code{.Random.seed} is an integer vector, containing the random number
-  generator (RNG) \bold{state} for random number generation in \R.  It
+  generator (\abbr{RNG}) \bold{state} for random number generation in \R.  It
   can be saved and restored, but should not be altered by the user.
 
   \code{RNGkind} is a more friendly interface to query or set the kind
@@ -221,7 +221,7 @@ set.seed(seed, kind = NULL, normal.kind = NULL, sample.kind = NULL)
   The object \code{.Random.seed} is only looked for in the user's
   workspace.
 
-  Do not rely on randomness of low-order bits from RNGs.  Most of the
+  Do not rely on randomness of low-order bits from \abbr{RNG}s.  Most of the
   supplied uniform generators return 32-bit integer values that are
   converted to doubles, so they take at most \eqn{2^{32}}{2^32} distinct
   values and long runs will return duplicated values (Wichmann-Hill is
@@ -231,7 +231,7 @@ set.seed(seed, kind = NULL, normal.kind = NULL, sample.kind = NULL)
   \code{.Random.seed} is an \code{\link{integer}} vector whose first
   element \emph{codes} the kind of RNG and normal generator. The lowest
   two decimal digits are in \code{0:(k-1)}
-  where \code{k} is the number of available RNGs.  The hundreds
+  where \code{k} is the number of available \abbr{RNG}s.  The hundreds
   represent the type of normal generator (starting at \code{0}), and
   the ten thousands represent the type of discrete uniform sampler.
 

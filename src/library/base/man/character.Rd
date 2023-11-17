@@ -35,7 +35,7 @@ is.character(x)
 
   \code{as.character} represents real and complex numbers to 15 significant
   digits (technically the compiler's setting of the ISO C constant
-  \code{DBL_DIG}, which will be 15 on machines supporting IEC60559
+  \code{DBL_DIG}, which will be 15 on machines supporting \abbr{IEC} 60559
   arithmetic according to the C99 standard).  This ensures that all the
   digits in the result will be reliable (and not the result of
   representation error), but does mean that conversion to character and

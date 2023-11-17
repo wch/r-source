@@ -34,7 +34,7 @@ gzcon(con, level = 6, allowNonCompressed = TRUE, text = FALSE)
   header is equivalent to reading from the original connection if
   \code{allowNonCompressed} is true, otherwise an error.
 
-  Compressed output will contain embedded NUL bytes, and so \code{con}
+  Compressed output will contain embedded \abbr{NUL} bytes, and so \code{con}
   is not permitted to be a \code{\link{textConnection}} opened with
   \code{open = "w"}.  Use a writable \code{\link{rawConnection}} to
   compress data into a variable.

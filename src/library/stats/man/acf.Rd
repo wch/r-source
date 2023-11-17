@@ -83,7 +83,7 @@ ccf(x, y, lag.max = NULL, type = c("correlation", "covariance"),
   covariances are computed from the complete cases.  This means that the
   estimate computed may well not be a valid autocorrelation sequence,
   and may contain missing values.  Missing values are not allowed when
-  computing the PACF of a multivariate time series.
+  computing the \abbr{PACF} of a multivariate time series.
 
   The partial correlation coefficient is estimated by fitting
   autoregressive models of successively higher orders up to

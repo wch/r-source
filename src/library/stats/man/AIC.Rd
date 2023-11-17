@@ -16,7 +16,7 @@
   where \eqn{n_{par}}{npar} represents the number of parameters in the
   fitted model, and \eqn{k = 2} for the usual AIC, or
   \eqn{k = \log(n)}{k = log(n)}
-  (\eqn{n} being the number of observations) for the so-called BIC or SBC
+  (\eqn{n} being the number of observations) for the so-called BIC or \abbr{SBC}
   (Schwarz's Bayesian criterion).
 }
 \usage{

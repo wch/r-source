@@ -32,7 +32,7 @@ rgb2hsv(r, g = NULL, b = NULL, maxColorValue = 255)
   Saturation is the amount of Hue mixed into the color.
 
   An HSV colorspace is relative to an RGB colorspace, which in \R
-  is sRGB, which has an implicit gamma correction.
+  is \abbr{sRGB}, which has an implicit gamma correction.
 }
 \value{
   A matrix with a column for each color.  The three rows of the matrix

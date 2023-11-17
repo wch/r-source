@@ -165,7 +165,7 @@ as.person(x)
 
   The \code{comment} field can be used for \dQuote{arbitrary} additional
   information about persons.  Elements named \code{"ORCID"} will be
-  taken to give ORCID identifiers (see \url{https://orcid.org/} for more
+  taken to give \abbr{ORCID} identifiers (see \url{https://orcid.org/} for more
   information), and be displayed as the corresponding \abbr{URI}s by the
   \code{print()} and \code{format()} methods (see \bold{Examples}
   below).

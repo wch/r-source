@@ -200,7 +200,7 @@ bibentry(bibtype, textVersion = NULL, header = NULL, footer = NULL,
     \item{booktitle:}{Title of a book, part of which is being cited.}
     \item{chapter:}{A chapter (or section or whatever) number.}
 
-    \item{doi:}{The DOI
+    \item{doi:}{The \abbr{DOI}
       (\url{https://en.wikipedia.org/wiki/Digital_Object_Identifier})
       for the reference.}
 
@@ -227,8 +227,8 @@ bibentry(bibtype, textVersion = NULL, header = NULL, footer = NULL,
     \item{title:}{The work's title.}
 
     \item{url:}{A URL for the reference.
-      (If the URL is an expanded DOI, we recommend to use the \samp{doi}
-      field with the unexpanded DOI instead.)}
+      (If the URL is an expanded \abbr{DOI}, we recommend to use the
+      \samp{doi} field with the unexpanded \abbr{DOI} instead.)}
 
     \item{volume:}{The volume of a journal or multi-volume book.}
 

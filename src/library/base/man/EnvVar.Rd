@@ -115,7 +115,7 @@
       \code{\link{options}("papersize")}, e.g.\sspace{}used by
       \code{\link{pdf}} and \code{\link{postscript}}.}
     \item{\env{R_PCRE_JIT_STACK_MAXSIZE}:}{Optional.  Consulted when
-      PCRE's JIT pattern compiler is first used.  See \code{\link{grep}}.}
+      PCRE's \abbr{JIT} pattern compiler is first used.  See \code{\link{grep}}.}
     \item{\env{R_PDFVIEWER}:}{The path to the default PDF viewer.  Used
       by \command{R CMD Rd2pdf}.}
     \item{\env{R_PLATFORM}:}{The platform -- a string of the form

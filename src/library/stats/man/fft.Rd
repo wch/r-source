@@ -8,7 +8,7 @@
 \alias{mvfft}
 \title{Fast Discrete Fourier Transform (FFT)}
 \description{
-  Computes the Discrete Fourier Transform (DFT) of an array with a fast
+  Computes the Discrete Fourier Transform (\abbr{DFT}) of an array with a fast
   algorithm, the \dQuote{Fast Fourier Transform} (FFT).
 }
 \usage{

@@ -37,7 +37,7 @@ getCRANmirrors(all = FALSE, local.only = FALSE)
   \code{\link{contrib.url}} if it finds the initial dummy value of
   \code{\link{options}("repos")}.
   
-  HTTPS mirrors with mirroring over \command{ssh} will be offered in
+  \abbr{HTTPS} mirrors with mirroring over \command{ssh} will be offered in
   preference to other mirrors (which are listed in a sub-menu).
 
   \code{ind} chooses a row in the list of current mirrors, by number. It

@@ -125,7 +125,7 @@ quartz.save(file, type = "png", device = dev.cur(), dpi = 100, ...)
     \item The default font family is Arial.
     \item Line widths are a multiple of 1/96 inch with no minimum set by \R.
     \item Circle radii are real-valued with no minimum set by \R.
-    \item Colours are specified as sRGB.
+    \item Colours are specified as \abbr{sRGB}.
   }
 }
 

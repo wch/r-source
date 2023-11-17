@@ -58,7 +58,7 @@ step(object, scope, scale = 0,
   \item{k}{
     the multiple of the number of degrees of freedom used for the penalty.
     Only \code{k = 2} gives the genuine AIC: \code{k = log(n)} is sometimes
-    referred to as BIC or SBC.
+    referred to as BIC or \abbr{SBC}.
   }
   \item{\dots}{
     any additional arguments to \code{\link{extractAIC}}.

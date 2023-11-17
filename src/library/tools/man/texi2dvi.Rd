@@ -9,7 +9,7 @@
 \title{Compile LaTeX Files}
 \description{
   Run \code{latex}/\code{pdflatex}, \code{makeindex} and \code{bibtex}
-  until all cross-references are resolved to create a DVI or a PDF file.
+  until all cross-references are resolved to create a \abbr{DVI} or a PDF file.
 }
 \usage{
 texi2dvi(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
@@ -23,12 +23,12 @@ texi2pdf(file, clean = FALSE, quiet = TRUE,
 \arguments{
   \item{file}{character string.  Name of the LaTeX source file.}
   \item{pdf}{logical.  If \code{TRUE}, a PDF file is produced instead of
-    the default DVI file (\code{texi2dvi} command line option \option{--pdf}).}
+    the default \abbr{DVI} file (\code{texi2dvi} command line option \option{--pdf}).}
   \item{clean}{logical.  If \code{TRUE}, all auxiliary files created
     during the conversion are removed.}
   \item{quiet}{logical.  No output unless an error occurs.}
   \item{texi2dvi}{character string (or \code{NULL}).  Script or program
-    used to compile a TeX file to DVI or PDF. The default (selected
+    used to compile a TeX file to \abbr{DVI} or PDF. The default (selected
     by \code{""} or \code{"texi2dvi"} or \code{NULL}) is to look
     for a program or script named \command{texi2dvi} on the path and
     otherwise emulate the script with \code{system2} calls (which
@@ -118,7 +118,7 @@ texi2pdf(file, clean = FALSE, quiet = TRUE,
   full paths to the corresponding commands.
 }
 \value{
-  Invisible \code{NULL}.  Used for the side effect of creating a DVI or
+  Invisible \code{NULL}.  Used for the side effect of creating a \abbr{DVI} or
   PDF file in the current working directory (and maybe other files,
   especially if \code{clean = FALSE}).
 }

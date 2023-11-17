@@ -415,7 +415,7 @@
 
       \item A non-blocking connection with non-default encoding such as a
       socket, now correctly returns from \code{readLines()} after new data
-      has arrived also when its EOF had been reached previously.  Thanks to
+      has arrived also when its \abbr{EOF} had been reached previously.  Thanks to
       Peter Meilstrup's report on R-devel and Ivan Krylov's report and
       patch proposal in \PR{18555}.
 
@@ -582,7 +582,7 @@
       number generator \code{RANDOM_NUMBER()} and the subroutines to
       initialize it.
 
-      \sQuote{Writing R Extensions} has example code to use \R{}'s RNGs
+      \sQuote{Writing R Extensions} has example code to use \R{}'s \abbr{RNG}s
       from Fortran.
     }
   }
@@ -1113,7 +1113,7 @@
 
       \item \code{libcurl} 8.x is now accepted by \command{configure}:
       despite a change in major version number it changes neither API
-      nor ABI.
+      nor \abbr{ABI}.
     }
   }
 
@@ -1650,7 +1650,7 @@
 
       \item On Windows, environment variable
       \env{R_LIBCURL_SSL_REVOKE_BEST_EFFORT} can be used to switch to
-      only \sQuote{best-effort} SSL certificate revocation checks with
+      only \sQuote{best-effort} \abbr{SSL} certificate revocation checks with
       the default \code{"libcurl"} download method.  This reduces
       security, but may be needed for downloads to work with MITM
       proxies (\PR{18379}).
@@ -1816,7 +1816,7 @@
       overflow reliably.
 
       \item \code{tar(., files=*)} now produces correctly the warning
-      about invalid UID or GID of files, fixing \PR{18344}, reported by
+      about invalid \abbr{UID} or \abbr{GID} of files, fixing \PR{18344}, reported by
       Martin Morgan.
 
       \item \code{tk_choose.files()} with \code{multi = FALSE}
@@ -2648,7 +2648,7 @@
     \itemize{
       \item \command{R CMD check --as-cran} has a workaround for a bug
       in versions of \command{file} up to at least 5.41 which
-      mis-identify DBF files last changed in 2022 as executables.
+      mis-identify \abbr{DBF} files last changed in 2022 as executables.
     }
   }
 
@@ -3036,9 +3036,9 @@
       \item \code{curlGetHeaders()} has two new arguments,
       \code{timeout} to specify the timeout for that call (overriding
       \code{getOption("timeout")}) and \code{TLS} to specify the minimum
-      TLS protocol version to be used for \code{https://} \abbr{URI}s
+      \abbr{TLS} protocol version to be used for \code{https://} \abbr{URI}s
       (\emph{inter alia} providing a means to check for sites using
-      deprecated TLS versions 1.0 and 1.1).
+      deprecated \abbr{TLS} versions 1.0 and 1.1).
 
       \item For \code{nls()}, an optional constant \code{scaleOffset}
       may be added to the denominator of the relative offset convergence
@@ -3772,7 +3772,7 @@
   \subsection{BUG FIXES}{
     \itemize{
       \item The code mitigating stack overflow with PCRE regexps on very
-      long strings is enabled for PCRE2 < 10.30 also when JIT is enabled,
+      long strings is enabled for PCRE2 < 10.30 also when \abbr{JIT} is enabled,
       since stack overflows have been seen in that case.
       %% Ubuntu 16.04LTS has PCRE2 10.21
 
@@ -4093,7 +4093,7 @@
 
       \item The backquote function \code{bquote()} has a new argument
       \code{splice} to enable splicing a computed list of values into an
-      expression, like \code{,@} in LISP's backquote.
+      expression, like \code{,@} in \abbr{LISP}'s backquote.
 
       \item The formula interface to \code{t.test()} and
       \code{wilcox.test()} has been extended to handle one-sample and

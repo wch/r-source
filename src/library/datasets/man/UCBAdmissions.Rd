@@ -6,7 +6,7 @@
 \name{UCBAdmissions}
 \docType{data}
 \alias{UCBAdmissions}
-\title{Student Admissions at UC Berkeley}
+\title{Student Admissions at \abbr{UC} Berkeley}
 \description{
   Aggregate data on applicants to graduate school at Berkeley for the
   six largest departments in 1973 classified by admission and sex.

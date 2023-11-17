@@ -308,10 +308,10 @@ pdf(file = if(onefile) "Rplots.pdf" else "Rplot\%03d.pdf",
 }
 
 \section{Color models}{
-  The default color model (\code{"srgb"}) is sRGB.  Model \code{"gray"}
-  (or \code{"grey"}) maps sRGB colors to greyscale using perceived
+  The default color model (\code{"srgb"}) is \abbr{sRGB}.  Model \code{"gray"}
+  (or \code{"grey"}) maps \abbr{sRGB} colors to greyscale using perceived
   luminosity (biased towards green).  \code{"cmyk"} outputs in CMYK
-  colorspace.  The simplest possible conversion from sRGB to CMYK is
+  colorspace.  The simplest possible conversion from \abbr{sRGB} to CMYK is
   used
   (\url{https://en.wikipedia.org/wiki/CMYK_color_model#Mapping_RGB_to_CMYK}),
   and raster images are output in RGB.
@@ -319,7 +319,7 @@ pdf(file = if(onefile) "Rplots.pdf" else "Rplot\%03d.pdf",
   Also available for backwards compatibility is model \code{"rgb"} which
   uses uncalibrated RGB and corresponds to the model used with that name
   in \R prior to 2.13.0.  Some viewers may render some plots in that
-  colorspace faster than in sRGB, and the plot files will be smaller.
+  colorspace faster than in \abbr{sRGB}, and the plot files will be smaller.
 }
 
 \section{Conventions}{
@@ -337,7 +337,7 @@ pdf(file = if(onefile) "Rplots.pdf" else "Rplot\%03d.pdf",
     rendered using char 108 in the Dingbats font: all semi-transparent
     and larger circles using a \enc{Bézier}{Bezier} curve for each
     quadrant.
-    \item Colours are by default specified as sRGB.
+    \item Colours are by default specified as \abbr{sRGB}.
   }
 
   At very small line widths, the line type may be forced to solid.

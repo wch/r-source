@@ -54,7 +54,7 @@ signif(x, digits = 6)
   individually or via the \code{\link[=S3groupGeneric]{Math}} group
   generic.
 
-  Note that for rounding off a 5, the IEC 60559 standard (see also
+  Note that for rounding off a 5, the \abbr{IEC} 60559 standard (see also
   \sQuote{IEEE 754}) is expected to be used, \sQuote{\emph{go to the even digit}}.
   Therefore \code{round(0.5)} is \code{0} and \code{round(-1.5)} is
   \code{-2}.  However, this is dependent on OS services and on
@@ -103,7 +103,7 @@ signif(x, digits = 6)
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.  Wadsworth & Brooks/Cole.
 
-  The ISO/IEC/IEEE 60559:2011 standard is available for money from
+  The ISO/\abbr{IEC}/IEEE 60559:2011 standard is available for money from
   \url{https://www.iso.org}.
 
   The IEEE 754:2008 standard is more openly documented, e.g, at

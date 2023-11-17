@@ -18,11 +18,11 @@ libcurlVersion()
   A character string, with value the \code{libcurl} version in use or
   \code{""} if none is.  If \code{libcurl} is available, has attributes
 
-  \item{ssl_version}{A character string naming the SSL/TLS implementation
+  \item{ssl_version}{A character string naming the \abbr{SSL}/\abbr{TLS} implementation
     and version, possibly \code{"none"}.  It is intended for the version
     of OpenSSL used, but not all implementations of \code{libcurl} use
     OpenSSL --- for example macOS reports \code{"SecureTranspart"}, its
-    wrapper for SSL/TLS.}
+    wrapper for \abbr{SSL}/\abbr{TLS}.}
 
   \item{libssh_version}{A character string naming the \code{libssh} version,
     which may or may not be available (it is used for
@@ -48,7 +48,7 @@ libcurlVersion()
 
   \url{https://curl.se/docs/sslcerts.html} and
   \url{https://curl.se/docs/ssl-compared.html} for more details on
-  SSL versions (the current standard being known as TLS).  Normally
+  \abbr{SSL} versions (the current standard being known as \abbr{TLS}).  Normally
   \code{libcurl} used with \R uses SecureTransport on macOS, OpenSSL on
   Windows and GnuTLS, NSS or OpenSSL on Unix-alikes.  (At the time of
   writing Debian-based Linuxen use GnuTLS and RedHat-based ones use

@@ -20,10 +20,12 @@ euro.cross
 \details{
   The data set \code{euro} contains the value of 1 Euro in all
   currencies participating in the European monetary union (Austrian
-  Schilling ATS, Belgian Franc BEF, German Mark DEM, Spanish Peseta ESP,
-  Finnish Markka FIM, French Franc FRF, Irish Punt IEP, Italian Lira
-  ITL, Luxembourg Franc LUF, Dutch Guilder NLG and Portuguese Escudo
-  PTE).  These conversion rates were fixed by the European Union on
+  Schilling \abbr{ATS}, Belgian Franc \abbr{BEF}, German Mark
+  \abbr{DEM}, Spanish Peseta \abbr{ESP}, Finnish Markka \abbr{FIM},
+  French Franc \abbr{FRF}, Irish Punt \abbr{IEP}, Italian Lira
+  \abbr{ITL}, Luxembourg Franc \abbr{LUF}, Dutch Guilder \abbr{NLG} and
+  Portuguese Escudo \abbr{PTE}).
+  These conversion rates were fixed by the European Union on
   December 31, 1998.  To convert old prices to Euro prices, divide by
   the respective rate and round to 2 digits.
 

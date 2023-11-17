@@ -53,8 +53,8 @@ X11.options(\dots, reset = FALSE)
   \item{pointsize}{the default pointsize to be used.  Defaults to \code{12}.}
 
   \item{gamma}{gamma correction fudge factor.
-    Colours in R are sRGB;  if your monitor does not conform to
-    sRGB, you might be able to improve things by tweaking this
+    Colours in R are \abbr{sRGB};  if your monitor does not conform to
+    \abbr{sRGB}, you might be able to improve things by tweaking this
     parameter to apply additional gamma correction to the RGB channels.
     By default 1 (no additional gamma correction).}
 
@@ -354,7 +354,7 @@ If that shows \code{symbol.ttf} that may be the Wine symbol font -- use
     \item For \code{type = "Xlib"} circle radii are in pixels with
     minimum one.
     \item Colours are interpreted by the X11 server, which is
-    \emph{assumed} to conform to sRGB.
+    \emph{assumed} to conform to \abbr{sRGB}.
   }
 }
 

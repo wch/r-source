@@ -20,7 +20,7 @@ R_user_dir(package, which = c("data", "config", "cache"))
 }
 \details{
   For desktop environments using X Windows, the freedesktop.org project
-  (formerly X Desktop Group, XDG) developed the XDG Base Directory
+  (formerly X Desktop Group, \abbr{XDG}) developed the \abbr{XDG} Base Directory
   Specification
   (\url{https://specifications.freedesktop.org/basedir-spec}) for
   standardizing the location where certain files should be placed.  CRAN
@@ -39,7 +39,7 @@ R_user_dir(package, which = c("data", "config", "cache"))
   \env{R_USER_DATA_DIR},
   \env{R_USER_CONFIG_DIR} and
   \env{R_USER_CACHE_DIR}.
-  If these are not set, the general XDG-style environment variables
+  If these are not set, the general \abbr{XDG}-style environment variables
   \env{XDG_DATA_HOME},
   \env{XDG_CONFIG_HOME} and
   \env{XDG_CACHE_HOME}

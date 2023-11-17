@@ -33,7 +33,7 @@
 
   The \code{infile} can have end of line marked by LF or CRLF (but not
   just CR), and files with an incomplete last line (missing end of line
-  (EOL) mark) are processed correctly.
+  (\abbr{EOL}) mark) are processed correctly.
 
   A final expression \samp{proc.time()} will be executed after the input
   script unless the latter calls \code{\link{q}(runLast = FALSE)} or is aborted.

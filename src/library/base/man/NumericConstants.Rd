@@ -65,7 +65,7 @@
 
   \R's own C code is used to convert constants to binary numbers, so the
   effect can be expected to be the same on all platforms implementing
-  full IEC 600559 arithmetic (the most likely area of difference being
+  full \abbr{IEC} 60559 arithmetic (the most likely area of difference being
   the handling of numbers less than \code{\link{.Machine}$double.xmin}).
   The same code is used by \code{\link{scan}}.
 }

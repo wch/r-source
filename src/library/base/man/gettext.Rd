@@ -12,7 +12,7 @@
 \description{
   Translation of text messages typically from calls to
   \code{\link{stop}()}, \code{\link{warning}()}, or \code{\link{message}()}
-  happens when Native Language Support (NLS) was enabled in this build of
+  happens when Native Language Support (\abbr{NLS}) was enabled in this build of
   \R as it is almost always, see also the \code{bindtextdomain()} example.
 
   The functions documented here are the low level building blocks used

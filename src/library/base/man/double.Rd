@@ -70,7 +70,7 @@ as.single(x, \dots)
 }
 \section{Double-precision values}{
   All \R platforms are required to work with values conforming to the
-  IEC 60559 (also known as IEEE 754) standard.  This basically works
+  \abbr{IEC} 60559 (also known as IEEE 754) standard.  This basically works
   with a precision of 53 bits, and represents to that precision a range
   of absolute values from about \eqn{2 \times 10^{-308}}{2e-308} to
   \eqn{2 \times 10^{308}}{2e+308}.  It also has special values
@@ -81,9 +81,9 @@ as.single(x, \dots)
 
   See \code{\link{.Machine}} for precise information on these limits.
   Note that ultimately how double precision numbers are handled is down
-  to the CPU/FPU and compiler.
+  to the CPU/\abbr{FPU} and compiler.
 
-  In IEEE 754-2008/IEC60559:2011 this is called \sQuote{binary64} format.
+  In IEEE 754-2008/\abbr{IEC}60559:2011 this is called \sQuote{binary64} format.
 }
 %% keep next the same in double.Rd & numeric.Rd
 \section{Note on names}{

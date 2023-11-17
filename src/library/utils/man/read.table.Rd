@@ -51,7 +51,7 @@ read.delim2(file, header = TRUE, sep = "\t", quote = "\"",
     necessary, and if so \code{\link{close}}d (and hence destroyed) at
     the end of the function call).  (If \code{\link{stdin}()} is used,
     the prompts for lines may be somewhat confusing.  Terminate input
-    with a blank line or an EOF signal, \code{Ctrl-D} on Unix and
+    with a blank line or an \abbr{EOF} signal, \code{Ctrl-D} on Unix and
     \code{Ctrl-Z} on Windows.  Any pushback on \code{stdin()} will be
     cleared before return.)
 

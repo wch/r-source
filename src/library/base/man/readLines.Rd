@@ -20,7 +20,7 @@ readLines(con = stdin(), n = -1L, ok = TRUE, warn = TRUE,
     input on the connection.}
   \item{ok}{logical.  Is it OK to reach the end of the connection before
     \code{n > 0} lines are read?  If not, an error will be generated.}
-  \item{warn}{logical.  Warn if a text file is missing a final EOL or if
+  \item{warn}{logical.  Warn if a text file is missing a final \abbr{EOL} or if
     there are embedded nuls in the file.}
   \item{encoding}{encoding to be assumed for input strings.  It is
     used to mark character strings as known to be in
@@ -43,14 +43,14 @@ readLines(con = stdin(), n = -1L, ok = TRUE, warn = TRUE,
   the call and then closed (but not destroyed; one must call
   \code{\link{close}} to do that).
 
-  If the final line is incomplete (no final EOL marker) the behaviour
+  If the final line is incomplete (no final \abbr{EOL} marker) the behaviour
   depends on whether the connection is blocking or not.  For a
   non-blocking text-mode connection the incomplete line is pushed back,
   silently.  For all other connections the line will be accepted, with a
   warning.
 
   Whatever mode the connection is opened in, any of LF, CRLF or CR will
-  be accepted as the EOL marker for a line.
+  be accepted as the \abbr{EOL} marker for a line.
 
   Embedded nuls in the input stream will terminate the line currently
   being read, with a warning (unless \code{skipNul = TRUE} or \code{warn

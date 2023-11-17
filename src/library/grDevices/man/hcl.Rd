@@ -6,7 +6,7 @@
 \name{hcl}
 \alias{hcl}
 \encoding{UTF-8}
-\title{HCL Color Specification}
+\title{\abbr{HCL} Color Specification}
 \description{
   Create a vector of colors from vectors specifying hue,
   chroma and luminance.
@@ -30,7 +30,7 @@ hcl(h = 0, c = 35, l = 85, alpha, fixup = TRUE)
     range [0,1] will result in an \code{NA} value.}
 }
 \details{
-This function corresponds to polar coordinates in the CIE-LUV
+This function corresponds to polar coordinates in the \abbr{CIE}-\abbr{LUV}
 color space. Steps of equal size in this space correspond to
 approximately equal perceptual changes in color.  Thus, \code{hcl}
 can be thought of as a perceptually based version of \code{\link{hsv}}.
@@ -47,7 +47,7 @@ The default values of chroma and luminance make it possible
 to generate a full range of hues and have a relatively pleasant
 pastel appearance.
 
-The RGB values produced by this function correspond to the sRGB
+The RGB values produced by this function correspond to the \abbr{sRGB}
 color space used on most PC computer displays.  There are other
 packages which provide more general color space facilities.
 
@@ -72,8 +72,8 @@ Workshop on Distributed Statistical Computing (DSC 2003), March 20-22,
 \author{Ross Ihaka}
 \note{
   At present there is no guarantee that the colours rendered by R
-  graphics devices will correspond to their sRGB description.
-  It is planned to adopt sRGB as the standard R color description
+  graphics devices will correspond to their \abbr{sRGB} description.
+  It is planned to adopt \abbr{sRGB} as the standard R color description
   in future.
 }
 \seealso{

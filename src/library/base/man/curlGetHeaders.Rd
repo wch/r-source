@@ -25,12 +25,12 @@ curlGetHeaders(url, redirect = TRUE, verify = TRUE,
   \item{timeout}{integer: the maximum time in seconds the request is
     allowed to take.  Non-positive and invalid values are ignored
     (including the default).  (Added in \R 4.1.0.)}
-  \item{TLS}{character: the minimum version of the TLS protocol to be used
+  \item{TLS}{character: the minimum version of the \abbr{TLS} protocol to be used
     for \samp{https://} URLs: the default (\code{""}) is no restriction
     beyond that of the underlying \code{libcurl} (usually 1.0).  Other
     valid values are \code{"1.1"}, \code{"1.2"} (both for \code{libcurl}
     7.34.0 and later)  and \code{"1.3"} (7.52.0 and later), if supported
-    by the underlying version of \code{libcurl} and the SSL library it uses.}
+    by the underlying version of \code{libcurl} and the \abbr{SSL} library it uses.}
   %% 1.0 and 1.1 were deprecated in 2020.
   %% e.g. libcurl in macOS 10.15 supported 1.3 but its LibreSSL does not.
 }

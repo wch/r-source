@@ -43,7 +43,7 @@ convertColor(color, from, to, from.ref.white, to.ref.white,
   \code{"Apple RGB"} is used by Apple monitors. \code{"Lab"} and
   \code{"Luv"} are approximately perceptually uniform
   spaces standardized by the Commission Internationale
-  d'Eclairage. \code{XYZ} is a 1931 CIE standard capable of representing
+  d'Eclairage. \code{XYZ} is a 1931 \abbr{CIE} standard capable of representing
   all visible colors (and then some), but not in a perceptually uniform
   way.
 
@@ -52,7 +52,7 @@ convertColor(color, from, to, from.ref.white, to.ref.white,
   color.  Illuminant \code{D65} is a standard indirect daylight,
   Illuminant \code{D50} is close to direct sunlight, and Illuminant
   \code{A} is the light from a standard incandescent bulb. Other
-  standard CIE illuminants supported are \code{B}, \code{C}, \code{E} and
+  standard \abbr{CIE} illuminants supported are \code{B}, \code{C}, \code{E} and
   \code{D55}.  RGB colour spaces are defined relative to a particular
   reference white, and can be only approximately translated to other
   reference whites.  The von Kries chromatic adaptation algorithm is used

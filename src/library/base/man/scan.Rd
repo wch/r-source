@@ -23,7 +23,7 @@ scan(file = "", what = double(), nmax = -1, n = -1, sep = "",
     specified file is \code{""}, then input is taken from the keyboard
     (or whatever \code{\link{stdin}()} reads if input is redirected or
     \R is embedded).
-    (In this case input can be terminated by a blank line or an EOF
+    (In this case input can be terminated by a blank line or an \abbr{EOF}
     signal, \samp{Ctrl-D} on Unix and \samp{Ctrl-Z} on Windows.)
 
     Otherwise, the file name is interpreted \emph{relative} to the
@@ -38,7 +38,7 @@ scan(file = "", what = double(), nmax = -1, n = -1, sep = "",
     Alternatively, \code{file} can be a \code{\link{connection}},
     which will be opened if necessary, and if so closed at the end of
     the function call.  Whatever mode the connection is opened in,
-    any of LF, CRLF or CR will be accepted as the EOL marker for a line
+    any of LF, CRLF or CR will be accepted as the \abbr{EOL} marker for a line
     and so will match \code{sep = "\n"}.
 
     \code{file} can also be a complete URL.  (For the supported URL

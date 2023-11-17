@@ -46,7 +46,7 @@ dev.control(displaylist = c("inhibit", "enable"))
   \code{device} and then shuts the new device.
 
   \code{dev.copy2eps} is similar to \code{dev.print} but produces an
-  EPSF output file in portrait orientation (\code{horizontal = FALSE}).
+  \abbr{EPSF} output file in portrait orientation (\code{horizontal = FALSE}).
   \code{dev.copy2pdf} is the analogue for PDF output.
 
   \code{dev.control} allows the user to control the recording of
