@@ -452,8 +452,6 @@ static int pathcmp(const char *encpath, const char *comparison) {
     return strcmp(p1, comparison);
 }
 
-#define IS_MUSL R_OS =="linux-musl"
-
 static void seticonvName(const char *encpath, char *convname)
 {
     /*
@@ -461,53 +459,41 @@ static void seticonvName(const char *encpath, char *convname)
      */
     char *p;
     strcpy(convname, "latin1");
-    if(streql(R_OS, "linux-musl")) {
-	if(pathcmp(encpath, "ISOLatin1") == 0)
-	    strcpy(convname, "latin1");
-	else if(pathcmp(encpath, "ISOLatin2") == 0)
-	    strcpy(convname, "iso88592");
-	else if(pathcmp(encpath, "ISOLatin7") == 0)
-	    strcpy(convname, "iso885913");
-	else if(pathcmp(encpath, "ISOLatin9") == 0)
-	    strcpy(convname, "iso885915");
-	else if (pathcmp(encpath, "WinAnsi") == 0)
-	    strcpy(convname, "cp1252");
-	else if(pathcmp(encpath, "Greek") == 0)
-	    strcpy(convname, "iso88597");
-	else if(pathcmp(encpath, "Cyrillic") == 0)
-	    strcpy(convname, "iso88595");
-	else {
-	    /*
-	     * Last resort = trim .enc off encpath to produce convname
-	     */
-	    strcpy(convname, encpath);
-	    p = strrchr(convname, '.');
-	    if(p) *p = '\0';
-	}
-    } else {
-	if(pathcmp(encpath, "ISOLatin1") == 0)
-	    strcpy(convname, "latin1");
-	else if(pathcmp(encpath, "ISOLatin2") == 0)
-	    strcpy(convname, "latin2");
-	else if(pathcmp(encpath, "ISOLatin7") == 0)
-	    strcpy(convname, "latin7");
-	else if(pathcmp(encpath, "ISOLatin9") == 0)
-	    strcpy(convname, "latin-9");
-	else if (pathcmp(encpath, "WinAnsi") == 0)
-	    strcpy(convname, "CP1252");
-	else if(pathcmp(encpath, "Greek") == 0)
-	    strcpy(convname, "iso-8859-7");
-	else if(pathcmp(encpath, "Cyrillic") == 0)
-	    strcpy(convname, "iso-8859-5");
-	else {
-	    /*
-	     * Last resort = trim .enc off encpath to produce convname
-	     * Used for CPxxxx and MacRoman
-	     */
-	    strcpy(convname, encpath);
-	    p = strrchr(convname, '.');
-	    if(p) *p = '\0';
-	}
+    if(pathcmp(encpath, "ISOLatin1") == 0)
+	strcpy(convname, "latin1");
+    else if (pathcmp(encpath, "WinAnsi") == 0)
+	strcpy(convname, "cp1252");
+#ifdef OS_MUSL
+    else if(pathcmp(encpath, "ISOLatin2") == 0)
+	strcpy(convname, "iso88592");
+    else if(pathcmp(encpath, "ISOLatin7") == 0)
+	strcpy(convname, "iso885913");
+    else if(pathcmp(encpath, "ISOLatin9") == 0)
+	strcpy(convname, "iso885915");
+    else if(pathcmp(encpath, "Greek") == 0)
+	strcpy(convname, "iso88597");
+    else if(pathcmp(encpath, "Cyrillic") == 0)
+	strcpy(convname, "iso88595");
+#else
+    else if(pathcmp(encpath, "ISOLatin2") == 0)
+	strcpy(convname, "latin2");
+    else if(pathcmp(encpath, "ISOLatin7") == 0)
+	strcpy(convname, "latin7");
+    else if(pathcmp(encpath, "ISOLatin9") == 0)
+	strcpy(convname, "latin-9");
+    else if(pathcmp(encpath, "Greek") == 0)
+	strcpy(convname, "iso-8859-7");
+    else if(pathcmp(encpath, "Cyrillic") == 0)
+	strcpy(convname, "iso-8859-5");
+#endif
+    else {
+	/*
+	 * Last resort = trim .enc off encpath to produce convname
+	 * Used for CPxxxx and MacRoman
+	 */
+	strcpy(convname, encpath);
+	p = strrchr(convname, '.');
+	if(p) *p = '\0';
     }
     //fprintf(stderr, "mapping %s to %s\n", encpath, convname);
 }
