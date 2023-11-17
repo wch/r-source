@@ -42,6 +42,7 @@ bitwise
 Bivariate
 bivariate
 biweight
+BLAS
 boolean
 boxplot
 boxplots
@@ -157,6 +158,8 @@ gif
 GIS
 GLM
 GLMs
+glyph
+glyphs
 Google
 GPD
 GPL
@@ -223,6 +226,7 @@ lognormal
 lookup
 lowess
 LRT
+macOS
 Mahalanobis
 manhattan
 MANOVA
@@ -260,6 +264,7 @@ multinomial
 multinomially
 namespace
 namespaces
+NaN
 NAs
 NCBI
 nonlinearity
