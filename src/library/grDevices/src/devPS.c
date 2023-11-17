@@ -485,11 +485,13 @@ static void seticonvName(const char *encpath, char *convname)
 	strcpy(convname, "iso-8859-7");
     else if(pathcmp(encpath, "Cyrillic") == 0)
 	strcpy(convname, "iso-8859-5");
+    else if(pathcmp(encpath, "MacRoman") == 0)
+	strcpy(convname, "macintosh");
 #endif
     else {
 	/*
 	 * Last resort = trim .enc off encpath to produce convname
-	 * Used for CPxxxx and MacRoman
+	 * Used for CPxxxx
 	 */
 	strcpy(convname, encpath);
 	p = strrchr(convname, '.');
