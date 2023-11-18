@@ -29391,6 +29391,8 @@ if test "${GCC}" = yes; then
   esac
   shlib_ldflags="-shared"
 fi
+## autconf checks for gfortran by compiling a program with
+
 if test "${ac_cv_fc_compiler_gnu}" = yes; then
   case "${host_cpu}" in
     aarch64*|alpha*|sparc*|ppc64*|powerpc64*|s390*)
@@ -29401,13 +29403,26 @@ if test "${ac_cv_fc_compiler_gnu}" = yes; then
       ;;
   esac
 fi
-## Assume flang is the same as clang (it is a modified front end)
-## Also flang-new
-case "${FC}" in
-  *flang|*flang-new|*flang-new-*)
-    fpicflags=${cpicflags}
-    ;;
-esac
+
+## Idenitfy flang-{new}
+## Assume flang(-new) is the same as clang (including classic flang)
+cat > conftestf.F <<EOF
+      program main
+#ifndef __flang__
+       choke me
+#endif
+      end
+EOF
+${FC} ${FFLAGS} -c conftestf.F 1>&5 2>&5
+if test ${?} = 0; then
+   fc_is_clang=yes
+   fpicflags=${cpicflags}
+else
+   fc_is_clang=no
+fi
+rm -Rf conftestf.* core
+## echo "is this flang? ${fc_is_clang}"
+
 if test "${GXX}" = yes; then
   case "${host_cpu}" in
     aarch64*|alpha*|sparc*|ppc64*|powerpc64*|s390*)
