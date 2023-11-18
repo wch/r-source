@@ -707,7 +707,7 @@ function(package, lib.loc = NULL, quietly = FALSE, warn.conflicts,
     invisible(value)
 }
 
-.use <-
+use <-
 function(package, lib.loc = NULL, include.only)
     invisible(library(package, lib.loc = lib.loc, character.only = TRUE,
                       logical.return = TRUE, include.only = include.only,
