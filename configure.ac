@@ -1403,6 +1403,7 @@ dnl #ifndef __GNUC__
 dnl       choke me
 dnl #endif
 
+## Use same flang for gfortran as for gcc.
 if test "${ac_cv_fc_compiler_gnu}" = yes; then
   case "${host_cpu}" in
     aarch64*|alpha*|sparc*|ppc64*|powerpc64*|s390*)
@@ -1412,10 +1413,10 @@ if test "${ac_cv_fc_compiler_gnu}" = yes; then
       fpicflags="-fpic"
       ;;
   esac
-fi
-
-## Idenitfy flang-{new}
-## Assume flang(-new) is the same as clang (including classic flang)
+else
+## Otherwise check for flang (including classic flang)
+## and treat as for clang (you cannot really use flang without clang).
+## Set fc_is_clang in case needed elsewhere.
 cat > conftestf.F <<EOF
       program main
 #ifndef __flang__
@@ -1432,6 +1433,7 @@ else
 fi
 rm -Rf conftestf.* core
 ## echo "is this flang? ${fc_is_clang}"
+fi
 
 if test "${GXX}" = yes; then
   case "${host_cpu}" in
