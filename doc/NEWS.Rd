@@ -531,6 +531,12 @@
       \item \code{pdf()} and \code{postscript()} support for the documented
       Adobe encodings \code{"Greek"} and \code{"Cyrilllic"} was missing
       (although the corresponding Windows' codepages could be used).
+
+      \item Computations of glyph metric informaation for \code{pdf()}
+      and \code{postscript()} did not take into account that
+      transliteration could replace one character by two or more (only
+      seen on macOS 14) and typically warned that the information was
+      not known.
     }
   }
 }
