@@ -63,6 +63,18 @@ text(0.5+seq_along(five), 6, five, adj = c(0,0))
 text(1.5, 7, six, adj = c(0,0))
 text(1.5, 8, seven, adj = c(0,0))
 text(1.5, 9, eight, adj = c(0,0))
+
+## Now try centring
+plot(1:10, 1:10, type = "n")
+text(0.5+seq_along(one), 1, one)
+text(0.5+seq_along(two_1), 3, two_1)
+text(0.5+seq_along(two_2), 2, two_2)
+text(0.5+seq_along(three), 4, three)
+text(0.5+seq_along(four), 5, four)
+text(0.5+seq_along(five), 6, five)
+text(1.5, 7, six)
+text(5, 8, seven)
+text(5, 9, eight)
 dev.off()
 
 pdf("PDF-cyrillic.pdf", width = 5, height = 5,
@@ -71,14 +83,14 @@ plot(1:10, 1:10, type = "n")
 text(1.5, 8, seven, adj = c(0,0))
 dev.off()
 
-if(!musl) { ## musl's iconv does not supprt "latin2", only "iso88592"
+##if(!musl) { ## musl's iconv does not support "latin2", only "iso88592"
     ## works in default Helvetica but not in NimbusSan
     pdf("PDF-latin2.pdf", width = 5, height = 5,
         encoding = "ISOLatin2", compress = FALSE)
     plot(1:10, 1:10, type = "n")
     text(1.5, 9, eight, adj = c(0,0))
     dev.off()
-}
+##}
 
 
 ## Also try postscript
@@ -101,12 +113,12 @@ plot(1:10, 1:10, type = "n")
 text(1.5, 7, seven, adj = c(0,0))
 dev.off()
 
-if(!musl) {
+##if(!musl) {
     postscript("PS-latin2.ps", width = 5, height = 5, encoding = "ISOLatin2")
     plot(1:10, 1:10, type = "n")
     text(1.5, 9, eight, adj = c(0,0))
     dev.off()
-}
+#}
 
 ## Now with --as-cran settings in recent R, only.
 if (getRversion() < "4.4.0") q("no")
