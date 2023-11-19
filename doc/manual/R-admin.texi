@@ -5198,16 +5198,16 @@ hardware tested).  It may also be possible to use a compiler option like
 @option{-qmkl=sequential}.
 
 One quirk is that the Intel Fortran compilers do not accept @file{.f95}
-files, only @file{.f90} for free-format Fortran.  @command{configure}
+files, only @file{.f90}, for free-format Fortran.  @command{configure}
 adds @option{-Tf} which tells the compiler this is indeed a Fortran file
 (and needs to immediately precede the file name), but @option{-free} is
 needed to say it is free-format.  Hence setting the @code{FCFLAGS}
 macro.
 @c https://www.intel.com/content/www/us/en/docs/fortran-compiler/developer-guide-reference/2023-2/file-extensions.html
 
-The compilers have many options, some of which are still under
-development. As the C/C++ and Fortran compilers have different origins
-for their front-ends, there is little consistency in their options.
+The compilers have many options: as the C/C++ and Fortran compilers have
+different origins for their front-ends, there is little consistency in
+their options.
 @c https://www.intel.com/content/www/us/en/docs/dpcpp-cpp-compiler/developer-guide-reference/2023-2/compiler-options.html
 @c https://www.intel.com/content/www/us/en/docs/fortran-compiler/developer-guide-reference/2023-2/compiler-options-001.html
 (The C/C++ compilers support `all' @command{clang} options even if
@@ -5249,7 +5249,7 @@ The classic compilers were @command{icc}, @command{icpc} and
 @command{ifort}.  They are identified by the C/C++ macro
 @code{__INTEL_COMPILER}.
 
-The classic compilers remained available until the second half of 2023.
+The classic compilers remained available until October 2023.
 Version 2021.10.0 (shipped as part of oneAPI 2023.2.0) was tested in
 July 2023 using
 
