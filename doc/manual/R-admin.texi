@@ -5040,16 +5040,12 @@ tested with @R{}.
 @node Intel compilers,  , flang, Linux
 @subsection Intel compilers
 
-@menu
-* `Classic compilers'::
-@end menu
-
 In late 2020 Intel revamped their C/C++ compilers (and later their
 Fortran compiler) to use an LLVM back-end (and for the C/C++ compilers,
 a modified version of @command{clang} as the front-end).  Those
-compilers are only for @cputype{x86_64}: the earlier compilers (now
-branded `Classic') also supported @cputype{ix86} and 32-bit builds on
-@cputype{x86_64}.
+compilers are only for @cputype{x86_64}: the earlier (now called
+`Classic') compilers were discontinued in late 2023 (and are covered in
+the version of this manual for @R{} 4.3.x).
 
 The compilers are now all under Intel's `oneAPI' brand. The revamped
 ones are @command{icx}, @command{icpx} and @command{ifx}; they are
@@ -5064,8 +5060,8 @@ Standalone installers (which are free-of-charge) are available from
 @uref{https://www.intel.com/content/www/us/en/developer/articles/tool/oneapi-standalone-components.html}:
 they are also part of the oneAPI Base and HPC (for Fortran) ToolKits.
 
-We tried the LLVM-based compilers in oneAPI 2024.0.0 using (the paths do
-differ by compiler version)
+We tried the compilers in oneAPI 2024.0.0 and 2023.x.y using (the paths
+do differ by compiler version)
 @example
 IP=/path/to/compilers/bin/
 CC=$IP/icx
@@ -5096,16 +5092,16 @@ hardware tested).  It may also be possible to use a compiler option like
 @option{-qmkl=sequential}.
 
 One quirk is that the Intel Fortran compilers do not accept @file{.f95}
-files, only @file{.f90} for free-format Fortran.  @command{configure}
+files, only @file{.f90}, for free-format Fortran.  @command{configure}
 adds @option{-Tf} which tells the compiler this is indeed a Fortran file
 (and needs to immediately precede the file name), but @option{-free} is
 needed to say it is free-format.  Hence setting the @code{FCFLAGS}
 macro.
 @c https://www.intel.com/content/www/us/en/docs/fortran-compiler/developer-guide-reference/2023-2/file-extensions.html
 
-The compilers have many options, some of which are still under
-development. As the C/C++ and Fortran compilers have different origins
-for their front-ends, there is little consistency in their options.
+The compilers have many option: as the C/C++ and Fortran compilers have
+different origins for their front-ends, there is little consistency in
+their options.
 @c https://www.intel.com/content/www/us/en/docs/dpcpp-cpp-compiler/developer-guide-reference/2023-2/compiler-options.html
 @c https://www.intel.com/content/www/us/en/docs/fortran-compiler/developer-guide-reference/2023-2/compiler-options-001.html
 (The C/C++ compilers support `all' @command{clang} options even if
@@ -5127,9 +5123,9 @@ The preferred Fortran standard for @command{ifx} can be set by one of
 affect warnings on non-standard features: the default is no such
 warnings.
 
-Warning to package maintainers: the Intel Fortran compilers interpret
-comments intended for Visual Fortran@footnote{as the compiler has been
-known on Windows.} like
+Warning to package maintainers: the Intel Fortran compiler interprets
+comments intended for Visual Fortran@footnote{as the `Classic' compiler
+has been known on Windows.} like
 @c from package tseriesentropy 0.6-0
 @example
 !DEC$ ATTRIBUTES DLLEXPORT,C,REFERENCE,ALIAS:'kdenestmlcvb' :: kdenestmlcvb
@@ -5140,93 +5136,6 @@ generates incorrectly named entry points.  Such comment lines need to be
 removed from code for use with @R{} (even if using Intel Fortran on
 Windows).
 
-@node `Classic compilers',  , Intel compilers, Intel compilers
-@subsubsection `Classic' Intel compilers
-
-The classic compilers were @command{icc}, @command{icpc} and
-@command{ifort}.  They are identified by the C/C++ macro
-@code{__INTEL_COMPILER}.
-
-The classic compilers remained available until the second half of 2023.
-Version 2021.10.0 (shipped as part of oneAPI 2023.2.0) was tested in
-July 2023 using
-
-@example
-IP=/path/to/compilers/bin/intel64
-CC=$IP/icc 
-CXX=$IP/icpc
-FC=$IP/ifort
-CFLAGS="-O3 -ip -fp-model precise"
-FFLAGS="-O3 -fp-model precise"
-FCFLAGS="-free -O3 -fp-model precise"
-CXXFLAGS="-O3  -fp-model precise"
-LDFLAGS="-L/path/to/compilers/compiler/lib/intel64_lin -L/usr/local/lib64"
-@end example
-@noindent
-but also segfaulted in the checks unless MKL was used.  (CPU timings
-work with this compiler.)
-
-To suppress endless warnings about deprecation, use
-
-@example
-CC="$IP/icc -diag-disable=10441"
-@end example
-
-@command{icpc} does not support C++23.
-
-@c https://stat.ethz.ch/pipermail/r-devel/2023-June/082679.html
-There has been only one other recent report on the use of these
-compilers: the rest of this section is left in case it provides helpful
-hints for people using them while they are still available.
-
-Brian Ripley used version 9.0 of the compilers for @cputype{x86_64} on
-Fedora Core 5 with
-
-@example
-CC=icc
-CFLAGS="-g -O3 -wd188 -ip -mp"
-FC=ifort
-FLAGS="-g -O3 -mp"
-CXX=icpc
-CXXFLAGS="-g -O3 -mp"
-ICC_LIBS=/opt/compilers/intel/cce/9.1.039/lib
-IFC_LIBS=/opt/compilers/intel/fce/9.1.033/lib
-LDFLAGS="-L$ICC_LIBS -L$IFC_LIBS -L/usr/local/lib64"
-SHLIB_CXXLD=icpc
-@end example
-
-@noindent
-It may be necessary to use @code{CC="icc -std=c99"} or @code{CC="icc
--c99"} for C99-compliance.  The flag @option{-wd188} suppresses a large
-number of warnings about the enumeration type @samp{Rboolean}.  Because
-the Intel C compiler sets @samp{__GNUC__} without complete emulation of
-@command{gcc}, we suggest adding @code{CPPFLAGS=-no-gcc}.
-
-To maintain correct @acronym{IEC}@tie{}60559 arithmetic you most likely
-need add flags to @code{CFLAGS}, @code{FFLAGS} and
-@code{CXXFLAGS} such as @option{-mp} (shown above) or @option{-fp-model
-precise -fp-model source}, depending on the compiler version.
-
-Others have reported success with versions 10.x and 11.x.  
-@c https://stat.ethz.ch/pipermail/r-devel/2015-September/071717.html
-Bjørn-Helge Mevik reported success with version 2015.3 of the compilers,
-using (for a SandyBridge CPU on Centos 6.x)
-
-@example
-fast="-fp-model precise -ip -O3 -opt-mem-layout-trans=3 -xHost -mavx"
-CC=icc
-CFLAGS="$fast -wd188"
-FC=ifort
-FFLAGS="$fast"
-CXX=icpc
-CXXFLAGS="$fast"
-@end example
-
-It is possible that 32-builds need to force the use of SSE2 instructions
-in @code{SAFE_FFLAGS}, e.g.@: by
-@example
-SAFE_FFLAGS=-axsse2
-@end example
 
 @c What this architecture is known as varies. The kernel is called
 @c 'Darwin' and so autoconf uses 'apple-darwin<kernel version>' with
