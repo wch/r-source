@@ -5099,7 +5099,7 @@ needed to say it is free-format.  Hence setting the @code{FCFLAGS}
 macro.
 @c https://www.intel.com/content/www/us/en/docs/fortran-compiler/developer-guide-reference/2023-2/file-extensions.html
 
-The compilers have many option: as the C/C++ and Fortran compilers have
+The compilers have many options: as the C/C++ and Fortran compilers have
 different origins for their front-ends, there is little consistency in
 their options.
 @c https://www.intel.com/content/www/us/en/docs/dpcpp-cpp-compiler/developer-guide-reference/2023-2/compiler-options.html
