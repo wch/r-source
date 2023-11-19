@@ -473,6 +473,8 @@ static void seticonvName(const char *encpath, char *convname)
 	strcpy(convname, "iso-8859-7");
     else if(pathcmp(encpath, "Cyrillic") == 0)
 	strcpy(convname, "iso-8859-5");
+    else if(pathcmp(encpath, "MacRoman") == 0)
+	strcpy(convname, "macintosh"); // most portable form
     else {
 	/*
 	 * Last resort = trim .enc off encpath to produce convname
@@ -743,7 +745,7 @@ static double
 #else
 		    wx = (short)(500 * wcwidth(ucs2s[i]));
 #endif
-		    /* printf("width for U+%04x is %d\n", ucs2s[i], wx); */
+		    /* printf("width for U+%04X is %d\n", ucs2s[i], wx); */
 		    sum += wx;
 		}
 	    else
@@ -831,11 +833,17 @@ PostScriptMetricInfo(int c, double *ascent, double *descent, double *width,
     }
 
     if (c < 0) { Unicode = TRUE; c = -c; }
-    /* We don't need the restriction to 65536 here any more as we could
-       convert from  UCS4ENC, but there are few language chars above 65536. */
-    if(Unicode && !isSymbol && c >= 128 && c < 65536) { /* Unicode */
+    if(Unicode && !isSymbol && c >= 128) {
+	if (c >= 65536) {
+	    // No afm nor enc has entries for chars beyond the basic plane */
+	    *ascent = 0;
+	    *descent = 0;
+	    *width = 0;
+	    warning(_("font metrics unknown for Unicode character U+%04X"), c);
+	    return;
+	}
 	void *cd = NULL;
-	const char *i_buf; char *o_buf, out[2];
+	const char *i_buf; char *o_buf, out[10];
 	size_t i_len, o_len, status;
 	unsigned short w[2];
 
@@ -844,11 +852,12 @@ PostScriptMetricInfo(int c, double *ascent, double *descent, double *width,
 		  encoding);
 
 	/* Here we use terminated strings, but could use one char */
+	memset(out, 0, 10);
 	w[0] = (unsigned short) c; w[1] = 0;
 	i_buf = (char *)w;
 	i_len = 4;
 	o_buf = out;
-	o_len = 2;
+	o_len = 10;
 	status = Riconv(cd, &i_buf, (size_t *)&i_len,
 			(char **)&o_buf, (size_t *)&o_len);
 	Riconv_close(cd);
@@ -856,10 +865,25 @@ PostScriptMetricInfo(int c, double *ascent, double *descent, double *width,
 	    *ascent = 0;
 	    *descent = 0;
 	    *width = 0;
-	    warning(_("font metrics unknown for Unicode character U+%04x"), c);
+	    warning(_("font metrics unknown for Unicode character U+%04X"), c);
 	    return;
 	} else {
-	    c = out[0] & 0xff;
+	    size_t l = strlen(out);
+	    if (l > 1) {
+		short wx = 0;
+		double a = 0.0, b = 0.0;
+		for (unsigned int j = 0; j < l; j++) {
+		    int c = out[j];
+		    wx += metrics->CharInfo[c].WX;
+		    a = max(a, metrics->CharInfo[c].BBox[3]);
+		    b = max(b, metrics->CharInfo[c].BBox[1]);
+		}
+		*width = 0.001 * wx;
+		*ascent =  0.001 * a;
+		*descent = -0.001 * b;
+		return;
+	    } else
+		c = out[0] & 0xff;
 	}
     }
 
@@ -889,7 +913,7 @@ PostScriptCIDMetricInfo(int c, double *ascent, double *descent, double *width)
        cope sensibly. */
     if(!mbcslocale && c > 0) {
 	if (c > 255)
-	    error(_("invalid character (%04x) sent to 'PostScriptCIDMetricInfo' in a single-byte locale"),
+	    error(_("invalid character (%04X) sent to 'PostScriptCIDMetricInfo' in a single-byte locale"),
 		  c);
 	else {
 	    /* convert to UCS-2 to use wcwidth. */
