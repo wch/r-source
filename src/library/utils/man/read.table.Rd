@@ -1,6 +1,6 @@
 % File src/library/utils/man/read.table.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2022 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{read.table}
@@ -187,7 +187,8 @@ read.delim2(file, header = TRUE, sep = "\t", quote = "\"",
     \code{colClasses}, both of which allow finer control.}
 
   \item{fileEncoding}{character string: if non-empty declares the
-    encoding used on a file (not a connection) so the character data can
+    encoding used on a file when given as a character string (not on an
+    existing connection) so the character data can
     be re-encoded.  See the \sQuote{Encoding} section of the help for
     \code{\link{file}}, the \sQuote{R Data Import/Export} manual and
     \sQuote{Note}.
