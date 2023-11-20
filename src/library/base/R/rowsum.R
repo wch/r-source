@@ -1,7 +1,7 @@
 #  File src/library/base/R/rowsum.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -21,7 +21,8 @@ rowsum <- function(x, group, reorder = TRUE, ...) UseMethod("rowsum")
 rowsum.default <- function(x, group, reorder = TRUE, na.rm = FALSE, ...)
 {
     if (!is.numeric(x)) stop("'x' must be numeric")
-    if (length(group) != NROW(x)) stop("incorrect length for 'group'")
+    nr <- if (length(d <- dim(x)) == 2L) d[1L] else length(x)
+    if (length(group) != nr) stop("incorrect length for 'group'")
     if (anyNA(group)) warning("missing values for 'group'")
     ugroup <- unique(group)
     if (reorder) ugroup <- sort(ugroup, na.last = TRUE, method = "quick")
