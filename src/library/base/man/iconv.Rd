@@ -30,7 +30,8 @@ iconvlist()
     \code{"<xx>"} with the hex code of the byte.  If \code{"Unicode"}
     and converting from UTF-8, the Unicode point in the form
     \code{"<U+xxxx>"}, or if \code{c99}, a C99-style escape
-    \code{"\\uxxxx"}.}
+    \code{"\\uxxxx"}. (For points in a \sQuote{supplementary plane},
+    \code{U+xxxxxx} or \code{\Uxxxxxxx} is uzed.)}
   \item{mark}{logical, for expert use.  Should encodings be marked?}
   \item{toRaw}{logical.  Should a list of raw vectors be returned rather
     than a character vector?}
