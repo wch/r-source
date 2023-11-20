@@ -620,6 +620,7 @@ hence not available automatically along with it).  Many packages using
 suggests and so the user package needs to do so too and include this in
 @samp{VignetteBuilder}.
 
+@c This included latin2 but we now know musl does not support it. 
 @c DESCRIPTION field Encoding
 If the @file{DESCRIPTION} file is not entirely in @acronym{ASCII} it
 should contain an @samp{Encoding} field specifying an encoding.  This is
@@ -627,7 +628,7 @@ used as the encoding of the @file{DESCRIPTION} file itself and of the
 @file{R} and @file{NAMESPACE} files, and as the default encoding of
 @file{.Rd} files.  The examples are assumed to be in this encoding when
 running @command{R CMD check}, and it is used for the encoding of the
-@code{CITATION} file.  Only encoding names @code{latin1}, @code{latin2}
+@code{CITATION} file.  Only encoding names @code{latin1} and
 and @code{UTF-8} are known to be portable.  (Do not specify an encoding
 unless one is actually needed: doing so makes the package @emph{less}
 portable.  If a package has a specified encoding, you should run
