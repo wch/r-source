@@ -841,6 +841,7 @@ PostScriptMetricInfo(int c, double *ascent, double *descent, double *width,
 		     const char *encoding)
 {
     Rboolean Unicode = mbcslocale;
+    int c0 = c;
 
     if (c == 0) {
 	*ascent = 0.001 * metrics->FontBBox[3];
@@ -849,13 +850,15 @@ PostScriptMetricInfo(int c, double *ascent, double *descent, double *width,
 	return;
     }
 
-    if (c < 0) { Unicode = TRUE; c = -c; }
+    if (c < 0) { Unicode = TRUE; c = -c; c0 = c;}
     if(Unicode && !isSymbol && c >= 128) {
 	if (c >= 65536) {
 	    // No afm nor enc has entries for chars beyond the basic plane */
 	    *ascent = 0;
 	    *descent = 0;
 	    *width = 0;
+	    // We cannot assume such chars can be printed, and not by %lc
+	    // as wchar_t mught be 16-bit.
 	    warning(_("font metrics unknown for Unicode character U+%04X"), c);
 	    return;
 	}
@@ -888,7 +891,8 @@ PostScriptMetricInfo(int c, double *ascent, double *descent, double *width,
 	    *ascent = 0;
 	    *descent = 0;
 	    *width = 0;
-	    warning(_("font metrics unknown for Unicode character U+%04X"), c);
+	    warning(_("Unicode character %lc (U+%04X) cannot be converted to encoding %s"),
+		    c, c, encoding);
 	    return;
 	} else {
 	    size_t l = strlen(out);
@@ -910,7 +914,7 @@ PostScriptMetricInfo(int c, double *ascent, double *descent, double *width,
 	}
     }
 
-    if (c > 255) { /* Unicode */
+    if (c > 255) { /* Unicode  spec*/
 	*ascent = 0;
 	*descent = 0;
 	*width = 0;
@@ -922,7 +926,10 @@ PostScriptMetricInfo(int c, double *ascent, double *descent, double *width,
 	*descent = -0.001 * metrics->CharInfo[c].BBox[1];
 	wx = metrics->CharInfo[c].WX;
 	if(wx == NA_SHORT) {
-	    warning(_("font metrics unknown for character 0x%02x in encoding %s"), c, encoding);
+	    if(Unicode && !isSymbol)
+		warning(_("font metrics unknown for %lc (U+0x%04X) in encoding %s"), c0, c0, encoding);
+	    else
+		warning(_("font metrics unknown for character 0x%02x in encoding %s"), c, encoding);
 	    wx = 0;
 	}
 	*width = 0.001 * wx;
