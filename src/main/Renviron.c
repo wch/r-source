@@ -85,7 +85,7 @@ static void Renviron_error(const char *msg)
 static void Renviron_warning(const char *msg)
 {
     if (R_Is_Running > 1)
-	warningcall(R_NilValue, msg);
+	warningcall(R_NilValue, "%s", msg);
     else
 	R_ShowMessage(msg);
 }
@@ -93,7 +93,7 @@ static void Renviron_warning(const char *msg)
 static void Renviron_error(const char *msg)
 {
     if (R_Is_Running > 1)
-	errorcall(R_NilValue, msg);
+	errorcall(R_NilValue, "%s", msg);
     else
 	R_Suicide(msg);
 }

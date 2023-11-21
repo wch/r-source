@@ -533,7 +533,7 @@ static SEXP check_retval(SEXP call, SEXP val)
 
     if (check) {
 	if (val < (SEXP) 16)
-	    errorcall(call, "WEIRD RETURN VALUE: %p", val);
+	    errorcall(call, "WEIRD RETURN VALUE: %p", (void *)val);
     }
     else if (val == NULL) {
 	warningcall(call, "converting NULL pointer to R NULL");

@@ -1328,8 +1328,8 @@ attribute_hidden SEXP do_levelsgets(SEXP call, SEXP op, SEXP args, SEXP env)
 	return(ans);
     PROTECT(ans);
     if(!isNull(CADR(args)) && any_duplicated(CADR(args), FALSE))
-	errorcall(call, _("factor level [%d] is duplicated"),
-		  any_duplicated(CADR(args), FALSE));
+	errorcall(call, _("factor level [%lld] is duplicated"),
+		  (long long)any_duplicated(CADR(args), FALSE));
     args = ans;
     if (MAYBE_SHARED(CAR(args)) ||
 	((! IS_ASSIGNMENT_CALL(call)) && MAYBE_REFERENCED(CAR(args))))

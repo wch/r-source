@@ -1367,7 +1367,7 @@ attribute_hidden NORET SEXP do_stop(SEXP call, SEXP op, SEXP args, SEXP rho)
       errorcall(c_call, "%s", translateChar(STRING_ELT(CAR(args), 0)));
     }
     else
-      errorcall(c_call, "");
+      errorcall(c_call, "%s", "");
     /* never called: */
 }
 
@@ -1400,7 +1400,7 @@ attribute_hidden SEXP do_warning(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    warningcall(c_call, "%s", translateChar(STRING_ELT(CAR(args), 0)));
     }
     else
-	warningcall(c_call, "");
+	warningcall(c_call, "%s", "");
     immediateWarning = 0; /* reset to internal calls */
     noBreakWarning = 0;
 
