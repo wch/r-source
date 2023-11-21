@@ -220,7 +220,7 @@ reformulate <- function (termlabels, response=NULL, intercept = TRUE, env = pare
 drop.terms <- function(termobj, dropx = NULL, keep.response = FALSE)
 {
     if (!length(dropx))
-	termobj
+	if(keep.response) termobj else delete.response(termobj)
     else {
         if(!inherits(termobj, "terms"))
             stop(gettextf("'termobj' must be a object of class %s",

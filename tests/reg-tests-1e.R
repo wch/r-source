@@ -1025,7 +1025,7 @@ if(englishMsgs) stopifnot(grepl("must be integers >= 1", eMsg))
 
 ## PR#18563: drop.terms(*, dropx = <0-length vector>)
 tt <- terms(y ~ a+b)
-stopifnot(identical(tt, drop.terms(tt, dropx = 0[0])))
+stopifnot(identical(tt, drop.terms(tt, dropx = 0[0], keep.response=TRUE)))
 ## errored in R <= 4.3.2
 
 
@@ -1075,6 +1075,13 @@ stopifnot(exprs = {
               2:3)
 })
 ## getS3method(..) did return the t.test function, in R <= 4.3.2
+
+
+## PR#18564:  drop.terms(*)
+tt <- terms(y ~ a+b)
+stopifnot(formula(drop.terms(tt))                     == {   ~ a+b }) # was  y ~ a + b
+stopifnot(formula(drop.terms(tt, keep.response=TRUE)) == { y ~ a+b }) # (unchanged)
+## did not drop y (with default keep.response=FALSE) in R <= 4.3.2
 
 
 

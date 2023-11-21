@@ -497,6 +497,9 @@
       environment variable after internal time zone changes (\PR{17724}).
       This makes results of datetime functions with this (typically
       unintentional) setting more predictable.
+
+      \item \code{drop.terms(*)} now drops response as by default,
+      \code{keep.response = FALSE}, fixing \PR{18564} thanks to Mikael Jagan.
     }
   }
 }
