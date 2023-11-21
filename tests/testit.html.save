@@ -12,11 +12,11 @@ function processMathHTML() {
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.js"
     onload="processMathHTML();"></script>
 <link rel="stylesheet" type="text/css" href="R.css" />
-</head><body><div class="container">
+</head><body><div class="container"><main>
 
 <table style="width: 100%;"><tr><td>testit</td><td style="text-align: right;">R Documentation</td></tr></table>
 
-<h2 id='testit'>An Rd Regression Test</h2>
+<h2>An Rd Regression Test</h2>
 
 <h3>Usage</h3>
 
@@ -29,7 +29,7 @@ foo(<var>x</var>, <var>y</var>, ...)
 <h3>Arguments</h3>
 
 <table>
-<tr><td><code id="testit_:_x">x</code>, <code id="testit_:_y">y</code></td>
+<tr><td><code id="x">x</code>, <code id="y">y</code></td>
 <td>
 
 <p>combined arguments, in multiple Rd lines
@@ -37,7 +37,7 @@ foo(<var>x</var>, <var>y</var>, ...)
 <p>paragraph
 </p>
 </td></tr>
-<tr><td><code id="testit_:_...">...</code></td>
+<tr><td><code id="...">...</code></td>
 <td>
 <p>description of ...: ...</p>
 </td></tr>
@@ -160,6 +160,6 @@ and is thus output as-is in R <code class="reqn">\ge</code> 4.4.0:
 foo(<var>x</var>, <var>y</var>)
 </code></pre>
 
-
+</main>
 </div>
 </body></html>
