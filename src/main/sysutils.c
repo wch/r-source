@@ -579,6 +579,14 @@ write_one (unsigned int namescount, const char * const *names, void *data)
 }
 #endif
 
+// Copied from platform.c (only used condiitonally there)
+// case-insensitive string comparison
+int static R_strieql(const char *a, const char *b)
+{
+    while (*a && *b && toupper(*a) == toupper(*b)) { a++; b++; }
+    return (*a == 0 && *b == 0);
+}
+
 #include "RBufferUtils.h"
 
 /* iconv(x, from, to, sub, mark) */
@@ -632,12 +640,12 @@ attribute_hidden SEXP do_iconv(SEXP call, SEXP op, SEXP args, SEXP env)
 	toRaw = asLogical(CAR(args));
 	if(toRaw == NA_LOGICAL)
 	    error(_("invalid '%s' argument"), "toRaw");
-	/* some iconv's allow "UTF8", but libiconv does not */
-	if(streql(from, "UTF8") || streql(from, "utf8") ) from = "UTF-8";
-	if(streql(to, "UTF8") || streql(to, "utf8") ) to = "UTF-8";
+	/* some iconv's allow "UTF8", but GNU libiconv does not */
+	if(R_strieql(from, "UTF8")) from = "UTF-8";
+	if(R_strieql(to, "UTF8")) to = "UTF-8";
 	if(streql(to, "UTF-8")) isUTF8 = TRUE;
-	if(streql(to, "latin1") || streql(to, "ISO_8859-1")
-	    || streql(to, "CP1252")) isLatin1 = TRUE;
+	if(R_strieql(to, "latin1") || R_strieql(to, "ISO_8859-1")
+	    || R_strieql(to, "CP1252")) isLatin1 = TRUE;
 	if(streql(to, "") && known_to_be_latin1) isLatin1 = TRUE;
 	if(streql(to, "") && known_to_be_utf8) isUTF8 = TRUE;
 	isRawlist = (TYPEOF(x) == VECSXP);
@@ -786,7 +794,7 @@ attribute_hidden SEXP do_iconv(SEXP call, SEXP op, SEXP args, SEXP env)
 			    ucs = (R_wchar_t) wc;
 			inbuf += clen; inb -= clen;
 			if(ucs < 65536) {
-			    // gcc 7 objects to this with unsigned int
+			    // gcc 7 objected to this with unsigned int
 			    snprintf(outbuf, 9, "<U+%04X>", (unsigned short) ucs);
 			    outbuf += 8; outb -= 8;
 			} else {
@@ -814,7 +822,7 @@ attribute_hidden SEXP do_iconv(SEXP call, SEXP op, SEXP args, SEXP env)
 			    ucs = (R_wchar_t) wc;
 			inbuf += clen; inb -= clen;
 			if(ucs < 65536) {
-			    // gcc 7 objects to this with unsigned int
+			    // gcc 7 objected to this with unsigned int
 			    snprintf(outbuf, 7, "\\u%04x", (unsigned short) ucs);
 			    outbuf += 6; outb -= 6;
 			} else {

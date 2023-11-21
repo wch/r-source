@@ -6,6 +6,14 @@
 \encoding{UTF-8}
 
 \section{\Rlogo CHANGES IN R 4.3.2 patched}{
+
+  \subsection{NEW FEATURES}{
+    \itemize{
+      \item \code{iconv()} now fixes up variant encoding names such as
+      \code{"utf8"} case-insensitively.
+    }
+  }
+
   \subsection{BUG FIXES}{
     \itemize{
       \item Some invalid \code{file} arguments to \code{pictex()},
