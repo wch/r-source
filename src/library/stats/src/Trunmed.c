@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012-2019  The R Core Team
+ * Copyright (C) 2012-2023  The R Core Team
  * Copyright (C) 2003 ff.   The R Foundation
  * Copyright (C) 2000-2 Martin Maechler <maechler@stat.math.ethz.ch>
  * Copyright (C) 1995   Berwin A. Turlach <berwin@alphasun.anu.edu.au>
@@ -375,8 +375,8 @@ runmedint(R_xlen_t n, int k, int k2, const double *data, double *median,
 	median[i] = window[k];
 	outnext	  = (outnext+1) % k;
 	if(print_level >= 2) {
-	    Rprintf("i=%2d (out=%2d, *virt=%2d): med[i] := window[k]=%11g, outnext=%3d\n",
-		    i, out, outvirt, median[i], outnext);
+	    Rprintf("i=%2lld (out=%2d, *virt=%2d): med[i] := window[k]=%11g, outnext=%3d\n",
+		    (long long)i, out, outvirt, median[i], outnext);
 	    if(print_level >= 3 || (i % every_i) == 0) {
 		R_PRINT_4vec();
 	    }

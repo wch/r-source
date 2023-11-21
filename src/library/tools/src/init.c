@@ -25,7 +25,7 @@
 /* a test for re-encoding */
 void Renctest(char **x)
 {
-    Rprintf("'%s', nbytes = %d\n", x[0], strlen(x[0]));
+    Rprintf("'%s', nbytes = %lld\n", x[0], (long long)strlen(x[0]));
 }
 
 static const R_CMethodDef CEntries[]  = {

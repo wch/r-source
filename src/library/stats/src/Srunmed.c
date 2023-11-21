@@ -225,7 +225,7 @@ SEXP runmed(SEXP sx, SEXP stype, SEXP sk, SEXP end, SEXP naAct, SEXP printLev)
 	firstNA = R_firstNA_dbl(x, n),
 	nn = n;
     if(print_level)
-	Rprintf("firstNA = %d%s.\n", firstNA,
+	Rprintf("firstNA = %lld%s.\n", (long long)firstNA,
 		(firstNA == 0) ? " <=> *no* NA/NaN" : "");
     if(firstNA) { // anyNA(x)
 	Rboolean NA_pos = TRUE;
@@ -291,11 +291,11 @@ SEXP runmed(SEXP sx, SEXP stype, SEXP sk, SEXP end, SEXP naAct, SEXP printLev)
 	case NA_OMIT: { /* fill the shortened median[] series into the result,
 			   putting x[i] into places i where  ISNAN(x[i]) */
 	    if(print_level) {
-		Rprintf("na.omit: reduced n = nn = %d.\n", nn);
+		Rprintf("na.omit: reduced n = nn = %lld.\n", (long long)nn);
 		if(print_level >= 2) {
 		    Rprintf("median[] = ");
 		    for(R_xlen_t i=0; i < nn; i++) {
-			if(i % 20 == 0) Rprintf("\n[%d] ", i);
+			if(i % 20 == 0) Rprintf("\n[%lld] ", (long long)i);
 			Rprintf("%5g", median[i]);
 		    }
 		    Rprintf("\n");
