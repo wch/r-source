@@ -533,13 +533,17 @@
       \item \code{drop.terms(*, dropx=<0-length>)} now works, fixing
       \PR{18563} as proposed by Mikael Jagan.
 
+      \item \code{drop.terms(*)} keeps \code{ + offset(.)} terms when it should,
+      \PR{18565}, and \code{drop.terms()} no longer makes up a response,
+      \PR{18566}, fixing both bugs thanks to Mikael Jagan.
+
       \item \code{getS3method("t", "test")} no longer finds the
       \code{t.test()} function, fixing \PR{18627}.
 
       \item \code{pdf()} and \code{postscript()} support for the documented
       Adobe encodings \code{"Greek"} and \code{"Cyrilllic"} was missing
       (although the corresponding Windows' codepages could be used).
-      (And also for the legacy \code{"MacRoman"} encoding.) 
+      (And also for the legacy \code{"MacRoman"} encoding.)
 
       \item Computations of glyph metric informaation for \code{pdf()}
       and \code{postscript()} did not take into account that

@@ -1077,11 +1077,31 @@ stopifnot(exprs = {
 ## getS3method(..) did return the t.test function, in R <= 4.3.2
 
 
-## PR#18564:  drop.terms(*)
+## PR#18564,5,6:  drop.terms(*)
 tt <- terms(y ~ a+b)
 stopifnot(formula(drop.terms(tt))                     == {   ~ a+b }) # was  y ~ a + b
 stopifnot(formula(drop.terms(tt, keep.response=TRUE)) == { y ~ a+b }) # (unchanged)
 ## did not drop y (with default keep.response=FALSE) in R <= 4.3.2
+##
+## PR#18565: offset() in formula
+tto <- terms(y ~ a + b + offset(h))
+(ttF <- drop.terms(tto, 1L, keep.response = FALSE))
+(ttT <- drop.terms(tto, 1L, keep.response = TRUE ))
+(tt.2 <- tto[2L])
+stopifnot(exprs = {
+    formula(ttF) ==     ~ b + offset(h)
+    formula(ttT) == { y ~ b + offset(h) }
+    formula(tt.2)== { y ~ b + offset(h) }
+    identical(attr(ttF, "offset"), 2L)
+    identical(attr(ttT, "offset"), 3L)
+    identical(attr(tt.2,"offset"), 3L)
+}) ## all dropped 'offset' in R <= 4.3.2
+##
+## PR#18566:
+t2 <- terms(~ a + b)
+str(dt2 <- drop.terms(t2, 1, keep.response = TRUE))
+stopifnot( drop.terms(t2, 1) == dt2, dt2 == ~ b)
+## gave a+b ~ b in R <= 4.3.2
 
 
 

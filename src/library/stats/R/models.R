@@ -226,16 +226,19 @@ drop.terms <- function(termobj, dropx = NULL, keep.response = FALSE)
             stop(gettextf("'termobj' must be a object of class %s",
                           dQuote("terms")),
                  domain = NA)
+	response <- attr(termobj, "response")
+	newformula <- attr(termobj, "term.labels")[-dropx]
+	if (!is.null(off <- attr(termobj, "offset")))
+	    newformula <- c(newformula,
+			    as.character(attr(termobj, "variables")[off + 1L]))
 	newformula <-
-	    reformulate(attr(termobj, "term.labels")[-dropx],
-			response = if(keep.response) termobj[[2L]],
+	    reformulate(newformula,
+			response = if(response && keep.response) termobj[[2L]],
 			intercept = attr(termobj, "intercept"),
 			env = environment(termobj))
 	result <- terms(newformula, specials=names(attr(termobj, "specials")))
 
 	# Edit the optional attributes
-
-	response <- attr(termobj, "response")
 	dropOpt <- if(response && !keep.response) # we have a response in termobj, but not in the result
 		       c(response, dropx + length(response))
 		   else
@@ -261,6 +264,9 @@ drop.terms <- function(termobj, dropx = NULL, keep.response = FALSE)
 {
     resp <- if (attr(termobj, "response")) termobj[[2L]]
     newformula <- attr(termobj, "term.labels")[i]
+    if (!is.null(off <- attr(termobj, "offset")))
+	newformula <- c(newformula,
+			as.character(attr(termobj, "variables")[off + 1L]))
     if (length(newformula) == 0L) newformula <- "1"
     newformula <- reformulate(newformula, resp, attr(termobj, "intercept"), environment(termobj))
     result <- terms(newformula, specials = names(attr(termobj, "specials")))
