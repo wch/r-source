@@ -95,17 +95,18 @@ iconvlist()
   The macOS 14 implementation is attributed to the \sQuote{Citrus
   Project}: the Apple headers declare it as \sQuote{compatible} with GNU
   \samp{libiconv} 1.11 from 2006.  However, it differs in significant
-  ways including using a \sQuote{best fit} for conversions, at least for
-  \code{to = "ASCII"} and \code{to = "latin1"}.  (It seems this
+  ways including using transliteration for conversions which cannot be
+  represeted exactly in the target encoding.  (It seems this
   implementation is also used in recent versions of FreeBSD.  Earlier
-  versions of macOS used GNU \samp{libiconv} 1.11.)  For a failing
+  versions of macOS used GNU \samp{libiconv} 1.11 and some
+  \acronym{CRAN} builds still do.)  For a failing
   conversion macOS 14 generally translated character(s) to \code{?} but
   14.1 gives an error (so an \code{NA} result in \R).
 
   Most commercial Unixes contain an implementation of \code{iconv} but
   none we have encountered have supported the encoding names we need:
-  the \sQuote{R Installation and Administration} manual recommends
-  installing GNU \samp{libiconv} on Solaris and AIX, for example.
+  the \sQuote{R Installation and Administration} manual recommended
+  installing GNU \samp{libiconv} on Solaris and AIX.
 
   %% https://wiki.musl-libc.org/functional-differences-from-glibc.html
   %% https://wiki.musl-libc.org/projects-using-musl.html
@@ -114,7 +115,7 @@ iconvlist()
   \samp{//TRANSLIT} but does inexact conversions (currently using
   \samp{*}).
 
-  There are other implementations, e.g.\sspace{} NetBSD has used one from the
+  There are other implementations, e.g.\sspace{}NetBSD has used one from the
   Citrus project (which does not support \samp{//TRANSLIT}) and there is
   an older FreeBSD port.
 
@@ -172,9 +173,11 @@ iconvlist()
   elements) of known encoding names.
 }
 \note{
-  The only reasonably portable name for the ISO 8859-15 encoding,
-  commonly known as \sQuote{Latin 9}, is \code{"latin-9"}: some
-  platforms support \code{"latin9"} but GNU \samp{libiconv} does not.
+  The most portable name for the ISO 8859-15 encoding, commonly known as
+  \sQuote{Latin 9}, is \code{"iso885915"}: most platforms support both
+  \code{"latin-9"} and\code{"latin9"} but GNU \samp{libiconv} does not
+  support the latter. \samp{musl} (as used by Alpine Linux) supports
+  neither, but \R remaps there to \code{"iso885915"}.
 
   Encoding names \code{"utf8"}, \code{"mac"} and \code{"macroman"} are
   not portable.  \code{"utf8"} is converted to \code{"UTF-8"} for
