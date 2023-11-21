@@ -264,8 +264,8 @@
                 res <- Rd2latex(Rd[[f]],
 				  outfilename,
 				  outputEncoding = outputEncoding,
-				  defines = NULL,
-				  writeEncoding = !asChapter)
+				  defines = NULL, # already processed
+				  writeEncoding = FALSE)
                 latexEncodings <- c(latexEncodings,
                                     attr(res, "latexEncoding"))
                 if (attr(res, "hasFigures")) {
@@ -345,6 +345,7 @@
                                 stages = c("build", "install", "render"),
                                 encoding = encoding,
                                 outputEncoding = outputEncoding,
+                                writeEncoding = FALSE,
                                 macros = macros)
                 latexEncodings <-
                     c(latexEncodings, attr(res, "latexEncoding"))
@@ -632,10 +633,6 @@ function(pkgdir, outfile, title, silent = FALSE,
     }
 
     ## Rd2.tex part 2: body
-    toc <- if (dir.exists(files_or_dir)) {
-        "\\Rdcontents{Table of contents:}"
-    } else ""
-
     latexEncodings <- if(description) "utf8" else character()
     hasFigures <- FALSE
     ## if this looks like a package with no man pages, skip body
@@ -644,7 +641,11 @@ function(pkgdir, outfile, title, silent = FALSE,
           dir.exists(file.path(pkgdir, "help")) ||
           dir.exists(file.path(pkgdir, "latex")))) only_meta <- TRUE
     if (!only_meta) {
-        if (nzchar(toc)) writeLines(toc, out)
+        if (dir.exists(files_or_dir))
+            writeLines(c(
+                "\\Rdcontents{Table of contents:}",
+                paste0("\\inputencoding{", latex_outputEncoding, "}")
+            ), out)
         res <- .Rdfiles2tex(files_or_dir, out, encoding = enc,
                             outputEncoding = outputEncoding,
                             append = TRUE, extraDirs = OSdir, 
