@@ -217,6 +217,11 @@
       \code{Im(z[1]) == 0}, no longer coercing to \code{NA_complex_}.
       Simlarly, \code{cumsum(z)} correctly sums real and imaginary parts
       separately, i.e., without \dQuote{crosstalk} in case of \code{NA}s.
+
+      \item \code{iconv()} now fixes up variant encoding names such as
+      \code{"utf8"} case-insensitively, and on Alpine Linux maps
+      \code{"latin2"}, \code{"latin-2"}, \code{"latin9"} and
+      \code{"latin-9"} to names the OS knows about (case-insensitively).
     }
   }
 
