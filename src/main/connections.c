@@ -5961,7 +5961,7 @@ static size_t gzcon_read(void *ptr, size_t size, size_t nitems,
 	    }
 	    if (crc != priv->crc) {
 		priv->z_err = Z_DATA_ERROR;
-		REprintf(_("crc error %x %x\n"), crc, priv->crc);
+		REprintf(_("crc error %lx %lx\n"), crc, priv->crc);
 	    }
 	    /* finally, get (and ignore) length */
 	    for (n = 0; n < 4; n++) gzcon_byte(priv);

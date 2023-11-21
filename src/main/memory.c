@@ -110,7 +110,7 @@ static void gc_error(const char *msg)
     if (gc_fail_on_error)
 	R_Suicide(msg);
     else if (R_in_gc)
-	REprintf(msg);
+	REprintf("%s", msg);
     else
 	error(msg);
 }

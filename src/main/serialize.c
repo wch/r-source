@@ -2041,7 +2041,8 @@ static SEXP ReadItem_Recursive (int flags, SEXP ref_table, R_inpstream_t stream)
 	    R_ReadItemDepth++;
 	    for (count = 0; count < len; ++count) {
 		if (R_ReadItemDepth <= 0)
-		    Rprintf("%*s[%d]\n", 2*(R_ReadItemDepth - R_InitReadItemDepth), "", count+1);
+		    Rprintf("%*s[%lld]\n", 2*(R_ReadItemDepth - R_InitReadItemDepth),
+		            "", (long long)count+1);
 		SET_VECTOR_ELT(s, count, ReadItem(ref_table, stream));
 	    }
 	    R_ReadItemDepth--;

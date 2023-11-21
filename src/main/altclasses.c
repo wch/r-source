@@ -389,7 +389,7 @@ Rboolean compact_realseq_Inspect(SEXP x, int pre, int deep, int pvec,
     R_xlen_t n = XLENGTH(x);
     R_xlen_t n1 = (R_xlen_t) REAL_ELT(x, 0);
     R_xlen_t n2 = inc == 1 ? n1 + n - 1 : n1 - n + 1;
-    Rprintf(" %lld : %lld (%s)", n1, n2,
+    Rprintf(" %lld : %lld (%s)", (long long)n1, (long long)n2,
 	    COMPACT_SEQ_EXPANDED(x) == R_NilValue ? "compact" : "expanded");
     Rprintf("\n");
     return TRUE;
