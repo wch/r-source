@@ -4451,20 +4451,33 @@ next_char:
 		char *fix = NULL;
 		// four-char fixups
 		if (wc == 0x2030) fix = "o/oo"; // permille, done by macOS
-
-		// three-char fixups
-		else if (wc == 0xFB03) fix = "ffi"; // done by macOS
-		else if (wc == 0xFB04) fix = "ffl"; // done by macOS
+		else if (wc == 0x33C2) fix = "a.m.";
+		else if (wc == 0x33D8) fix = "p.m.";
+		
+		// three-char fixups, done by macOS
+		else if (wc == 0xFB03) fix = "ffi";
+		else if (wc == 0xFB04) fix = "ffl";
+		else if (wc == 0x2194) fix = "<->";
+		else if (wc == 0x21D4) fix = "<-=";
+		else if (wc == 0x22D8) fix = "<<<";
+		else if (wc == 0x22D9) fix = ">>>";
+		else if (wc == 0x2026 || wc == 0x22EF) fix = "...";
 		// Possible future re-mapping
 		// else if (wc == 0x20AC) fix = "EUR";
 
 		// two-char fixups
-		// left and right arrows, 0x2190 0x2192 done by macOS
-		else if(wc == 0x2190) fix = "<-";
+		// left and right arrows, 0x2190 0x2192 0xFFE9 0xFFEB done by macOS
+		else if(wc == 0x2190 || wc == 0xFFE9) fix = "<-";
 		else if(wc == 0x2192 || wc == 0x2794 || wc == 0x279C ||
 			wc == 0x279D || wc == 0x279E || wc == 0x279F ||
-			wc == 0x27a1 || wc == 0x27a2)
+			wc == 0x27a1 || wc == 0x27a2 || wc == 0xFFEB)
 		    fix = "->";
+		// more done by macOS
+		else if(wc == 0x2260) fix = "/=";
+		else if(wc == 0x226A) fix = "<<";
+		else if(wc == 0x226B) fix = ">>";
+		else if(wc == 0x2025) fix = "..";
+		else if(wc == 0x203C) fix = "!!";
 		// some common ligatures: AE and ae are latin1.
 		// all done by macOS
 		else if(wc == 0xFB00) fix = "ff";
@@ -4472,6 +4485,7 @@ next_char:
 		else if(wc == 0xFB02) fix = "fl";
 		else if(wc == 0x0152) fix = "OE";
 		else if(wc == 0x0153) fix = "oe";
+		else if(wc == 0x2122) fix = "TM";
 		// The next two could and probably should be done by plotmath.
 		else if(wc == 0x2264) fix = "<=";
 		else if(wc == 0x2265) fix = ">=";
