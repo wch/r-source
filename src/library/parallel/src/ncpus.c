@@ -162,7 +162,6 @@ SEXP ncpus(SEXP virtual)
     PSYSTEM_LOGICAL_PROCESSOR_INFORMATION ptr = NULL;
     DWORD returnLength = 0;
     DWORD logicalProcessorCount = 0;
-    DWORD numaNodeCount = 0;
     DWORD processorCoreCount = 0;
     DWORD byteOffset = 0;
     /* Reports only processors within the group in which R is running */
@@ -188,7 +187,6 @@ SEXP ncpus(SEXP virtual)
         switch (ptr->Relationship) {
         case RelationNumaNode:
             // Non-NUMA systems report a single record of this type.
-            numaNodeCount++;
             break;
 
         case RelationProcessorCore:
