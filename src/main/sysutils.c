@@ -820,8 +820,9 @@ attribute_hidden SEXP do_iconv(SEXP call, SEXP op, SEXP args, SEXP env)
 			       In any case Unicode points <= 0x10FFFF
 			       so one could argue against zero-padding here.
 			    */
-			    snprintf(outbuf, 13, "<U+%08X>", (unsigned int) ucs);
-			    outbuf += 12; outb -= 12;
+			    snprintf(outbuf, 13, "<U+%04X>", (unsigned int) ucs);
+			    size_t l = strlen(outbuf);
+			    outbuf += l; outb -= l;
 			}
 		    }
 		    goto next_char;
