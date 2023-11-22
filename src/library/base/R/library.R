@@ -708,8 +708,8 @@ function(package, lib.loc = NULL, quietly = FALSE, warn.conflicts,
 }
 
 use <-
-function(package, lib.loc = NULL, include.only)
-    invisible(library(package, lib.loc = lib.loc, character.only = TRUE,
+function(package, include.only)
+    invisible(library(package, lib.loc = NULL, character.only = TRUE,
                       logical.return = TRUE, include.only = include.only,
                       attach.required = FALSE))
 
