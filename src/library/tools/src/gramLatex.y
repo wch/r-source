@@ -698,15 +698,16 @@ static void yyerror(const char *s)
 		ParseErrorFilename, yylloc.first_line, ParseErrorMsg);
 }
 
-#define TEXT_PUSH(c) do {                  \
-	size_t nc = bp - stext;       \
+#define TEXT_PUSH(c) do {		    \
+	size_t nc = bp - stext;		    \
 	if (nc >= nstext - 1) {             \
 	    char *old = stext;              \
-            nstext *= 2;                    \
-	    stext = malloc(nstext);         \
+	    nstext *= 2;		    \
+	    stext = malloc(nstext);	    \
 	    if(!stext) error(_("unable to allocate buffer for long string at line %d"), parseState.xxlineno);\
 	    memmove(stext, old, nc);        \
-	    if(old != st0) free(old);	    \
+	    if(st1) free(st1);		    \
+	    st1 = stext;		    \
 	    bp = stext+nc; }		    \
 	*bp++ = ((char)c);		    \
 } while(0)
@@ -768,6 +769,7 @@ static int token(void)
 static int mkText(int c)
 {
     char st0[INITBUFSIZE];
+    char *st1 = NULL;
     unsigned int nstext = INITBUFSIZE;
     char *stext = st0, *bp = st0;
     
@@ -787,13 +789,14 @@ static int mkText(int c)
 stop:
     xxungetc(c);
     PRESERVE_SV(yylval = mkString2(stext,  bp - stext));
-    if(stext != st0) free(stext);
+    if(st1) free(st1);
     return TEXT;
 }
 
 static int mkComment(int c)
 {
     char st0[INITBUFSIZE];
+    char *st1 = NULL;
     unsigned int nstext = INITBUFSIZE;
     char *stext = st0, *bp = st0;
     
@@ -804,13 +807,14 @@ static int mkComment(int c)
     else TEXT_PUSH(c);
     
     PRESERVE_SV(yylval = mkString2(stext,  bp - stext));
-    if(stext != st0) free(stext);    
+    if(st1) free(st1);    
     return COMMENT;
 }
 
 static int mkMarkup(int c)
 {
     char st0[INITBUFSIZE];
+    char *st1 = NULL;
     unsigned int nstext = INITBUFSIZE;
     char *stext = st0, *bp = st0;
     int retval = 0;
@@ -833,13 +837,14 @@ static int mkMarkup(int c)
     }
     if (retval != VERB)
 	PRESERVE_SV(yylval = mkString(stext));
-    if(stext != st0) free(stext);
+    if(st1) free(st1);
     return retval;
 }
 
 static int mkVerb(int c)
 {
     char st0[INITBUFSIZE];
+    char *st1 = NULL;
     unsigned int nstext = INITBUFSIZE;
     char *stext = st0, *bp = st0;
     int delim = c;   
@@ -850,13 +855,14 @@ static int mkVerb(int c)
     if (c != R_EOF) TEXT_PUSH(c);
     
     PRESERVE_SV(yylval = mkString2(stext, bp - stext));
-    if(stext != st0) free(stext);
+    if(st1) free(st1);
     return VERB;  
 }
 
 static int mkVerbEnv(void)
 {
     char st0[INITBUFSIZE];
+    char *st1 = NULL;
     unsigned int nstext = INITBUFSIZE;
     char *stext = st0, *bp = st0;
     int matched = 0, i;
@@ -877,7 +883,7 @@ static int mkVerbEnv(void)
     }
     	    
     PRESERVE_SV(yylval = mkString2(stext, bp - stext));
-    if (stext != st0) free(stext);
+    if (st1) free(st1);
     return VERB;
 }
 
