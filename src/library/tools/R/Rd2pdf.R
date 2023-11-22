@@ -190,6 +190,7 @@
             con <- textConnection("lines", "w", local = TRUE)
             res <- Rd2latex(rd, con,
                             outputEncoding = outputEncoding,
+                            writeEncoding = FALSE,
                             stages = c("build", "install", "render"))
             close(con) # ensure final line is output
             if (attr(res, "hasFigures")) {
@@ -571,10 +572,15 @@ function(pkgdir, outfile, title, silent = FALSE,
     latex_outputEncoding <- latex_canonical_encoding(outputEncoding)
     asUTF8 <- latex_outputEncoding == "utf8"
     setEncoding <-
+        if (asUTF8 && inputenc == "inputenc") {
+            paste0("\\makeatletter\\@ifl@t@r\\fmtversion{2018/04/01}{}{",
+                   "\\usepackage[utf8]{inputenc}}",
+                   "\\makeatother")
+        } else
         paste0("\\usepackage[",
                if (asUTF8) "utf8"
-               else paste0(c(if (description) "utf8", latex_outputEncoding), collapse=","), "]{",
-               inputenc, "} % @SET ENCODING@")
+               else paste0(c(if (description) "utf8", latex_outputEncoding), collapse=","),
+               "]{", inputenc, "} % @SET ENCODING@")
     useGraphicx <- "% \\usepackage{graphicx} % @USE GRAPHICX@"
     writeLines(c(
         setEncoding,
@@ -874,6 +880,7 @@ function(pkgdir, outfile, title, silent = FALSE,
             dir <- if(dir.exists(d <- file.path(files[1L], "man"))) d else files[1L]
         }
     } else {
+        description <- FALSE
         if(length(files) == 1L && !nzchar(output))
             output <- paste(sub("[.][Rr]d$", "", basename(files)), out_ext, sep = ".")
     }
