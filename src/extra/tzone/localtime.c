@@ -1303,10 +1303,15 @@ tzset(void)
 	lclptr->leapcnt = 0;		/* so, we're off a little */
 	lclptr->timecnt = 0;
 	lclptr->typecnt = 0;
+	sp->charcnt = 0;
+	sp->goback = sp->goahead = FALSE;
 	lclptr->ttis[0].tt_isdst = 0;
 	lclptr->ttis[0].tt_gmtoff = 0;
 	lclptr->ttis[0].tt_abbrind = 0;
+	lclptr->ttis[0].tt_ttisstd = FALSE;
+	lclptr->ttis[0].tt_ttisgmt = FALSE;
 	(void) strcpy(lclptr->chars, gmt);
+	sp->defaulttype = 0;
     } else if (tzload(name, lclptr, TRUE) != 0)
 	if (name[0] == ':' || tzparse(name, lclptr, FALSE) != 0)
 	    (void) gmtload(lclptr);
