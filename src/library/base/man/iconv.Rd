@@ -96,7 +96,7 @@ iconvlist()
   Project}: the Apple headers declare it as \sQuote{compatible} with GNU
   \samp{libiconv} 1.11 from 2006.  However, it differs in significant
   ways including using transliteration for conversions which cannot be
-  represeted exactly in the target encoding.  (It seems this
+  represented exactly in the target encoding.  (It seems this
   implementation is also used in recent versions of FreeBSD.  Earlier
   versions of macOS used GNU \samp{libiconv} 1.11 and some
   \acronym{CRAN} builds still do.)  For a failing
