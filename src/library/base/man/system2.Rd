@@ -18,7 +18,11 @@ system2(command, args = character(),
 }
 \arguments{
   \item{command}{the system command to be invoked, as a character string.}
-  \item{args}{a character vector of arguments to \command{command}.}
+  \item{args}{a character vector of arguments to \command{command}.
+    The arguments have to be quoted e.g. by \code{\link{shQuote}}
+    in case they contain space or other special characters
+    (a double quote or backslash on Windows, shell-specific special
+    characters on Unix).}
   \item{stdout, stderr}{where output to \file{stdout} or
     \file{stderr} should be sent.  Possible values are \code{""}, to the \R
     console (the default), \code{NULL} or \code{FALSE} (discard output),
