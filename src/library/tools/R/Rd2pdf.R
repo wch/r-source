@@ -381,7 +381,7 @@
         }
         this <- sub("\\\\HeaderA\\{\\s*([^}]*)\\}.*", "\\1", hd[1L], perl = TRUE)
         if (!internals &&
-           any(grepl("\\\\keyword\\{\\s*internal\\s*\\}", lines, perl = TRUE)))
+           any(startsWith(lines, "\\keyword{internal}")))
             next
         topics[f] <- this
     }
