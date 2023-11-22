@@ -72,13 +72,13 @@ Rd2latex <- function(Rd, out = "", defines = .Platform$OS.type,
                 writeLines(x, con, useBytes = TRUE, ...)
         } else {
             function(x, con, outputEncoding, ...) {
-                x <- iconv(x, "UTF-8", outputEncoding,  mark = FALSE)
-                if (anyNA(x)) {
-                    x <- iconv(x, "UTF-8", outputEncoding,
+                y <- iconv(x, "UTF-8", outputEncoding,  mark = FALSE)
+                if (anyNA(y)) {
+                    y <- iconv(x, "UTF-8", outputEncoding,
                                sub = "byte", mark = FALSE)
                     encode_warn <<- TRUE
                 }
-                writeLines(x, con, useBytes = TRUE, ...)
+                writeLines(y, con, useBytes = TRUE, ...)
             }
     }
 
