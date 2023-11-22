@@ -4121,6 +4121,42 @@ function(dfile, dir)
             status$miss_extension <- status$components[ind]
             ok <- FALSE
         }
+        ## License stubs invalid or incomplete.
+        if(length(extensions <- status$extensions)) {
+            components <- extensions$components
+            nms <- if(any(grepl("^BSD[ _]3", components)))
+                       c("YEAR", "COPYRIGHT HOLDER", "ORGANIZATION")
+                   else if(any(grepl("^(MIT|BSD[ _]2)", components)))
+                       c("YEAR", "COPYRIGHT HOLDER")
+                   else
+                       NULL
+            if(!is.null(nms)
+               && length(pointers <- status$pointers)
+               && file_test("-f", file.path(dir, pointers[1L]))) {
+                val <- tryCatch(read.dcf(file.path(dir, pointers[1L]),
+                                         fields = nms),
+                                error = identity)
+                if(inherits(val, "error")) {
+                    status$license_stub_is_bad_DCF <- TRUE
+                    ok <- FALSE
+                } else {
+                    ind <- is.na(val) | !nzchar(val)
+                    pos <- which(rowSums(ind) > 0)
+                    if(length(pos)) {
+                        status$license_stub_fields_not_complete <-
+                            gettextf("Record: %d Field(s): %s",
+                                     pos,
+                                     vapply(pos,
+                                            function(p)
+                                                paste(nms[ind[p, ]],
+                                                      collapse = ", "),
+                                            ""))
+                        ok <- FALSE
+                    }
+                }
+            }
+        }
+        
         if(any(ind <- status$components %in% "ACM") &&
            !(db["Package"] %in% c("akima", "tripack"))) {
             status$ACM <- status$components[ind]
@@ -4146,7 +4182,9 @@ function(x, ...)
     check <- if(check %in% c("maybe", ""))
         (!(x$is_standardizable)
          || length(x$bad_pointers)
-         || length(x$bad_extensions))
+         || length(x$bad_extensions)
+         || length(x$license_stub_is_bad_DCF)
+         || length(x$license_stub_fields_not_complete))
     else
         isTRUE(as.logical(check))
     if(!check)
@@ -4177,6 +4215,12 @@ function(x, ...)
       if(length(y <- x$miss_extension)) {
           c(gettext("License components which are templates and need '+ file LICENSE':"),
             paste0("  ", y))
+      },
+      if(length(y <- x$license_stub_is_bad_DCF))
+          gettext("License stub is invalid DCF."),
+      if(length(y <- x$license_stub_fields_not_complete)) {
+          c(gettext("License stub records with missing/empty fields:",
+                    paste0("  ", y)))
       },
       if(length(y <- x$ACM)) {
           gettext("Uses ACM license: only appropriate for pre-2013 ACM TOMS code")
