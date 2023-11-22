@@ -40,7 +40,7 @@ cat(four, sep ="  "); cat("\n")
 
 ## compress = FALSE makes this humna-readable and diff-able.
 pdf("PDF-encoding.pdf", width = 5, height = 5, compress = FALSE)
-plot(1:11, 1:10, type = "n")
+plot(1:11, 0:10, type = "n")
 text(0.5+seq_along(one), 1, one, adj = c(0,0))
 text(0.5+seq_along(two_1), 3, two_1, adj = c(0,0))
 text(0.5+seq_along(two_2), 2, two_2, adj = c(0,0))
@@ -65,7 +65,7 @@ text(1.5, 8, seven, adj = c(0,0))
 text(1.5, 9, eight, adj = c(0,0))
 
 ## Now try centring
-plot(1:11, 1:10, type = "n")
+plot(1:11, 0:10, type = "n")
 text(0.5+seq_along(one), 1, one)
 text(0.5+seq_along(two_1), 3, two_1)
 text(0.5+seq_along(two_2), 2, two_2)
@@ -95,7 +95,7 @@ dev.off()
 
 ## Also try postscript
 postscript("PS-encoding.ps", width = 5, height = 5)
-plot(1:11, 1:10, type = "n")
+plot(1:11, 0:10, type = "n")
 text(0.5+seq_along(one), 1, one, adj = c(0,0))
 text(0.5+seq_along(two_1), 3, two_1, adj = c(0,0))
 text(0.5+seq_along(two_2), 2, two_2, adj = c(0,0))
@@ -129,7 +129,7 @@ if(musl) q("no")
 
 tf <- tempfile(fileext = ".pdf")
 pdf(tf, width = 5, height = 5)
-plot(1:11, 1:10, type = "n")
+plot(1:11, 0:10, type = "n")
 ## tranliterations done in mbcsToSbcs (when they will warn) if not
 ## done by the OS (which will be silent).
 text(0.5+seq_along(one), 1, one, adj = c(0,0))
