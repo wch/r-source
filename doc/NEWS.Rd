@@ -215,7 +215,7 @@
 
       \item \code{z <- c(NA, 1i)} now keeps the imaginary part
       \code{Im(z[1]) == 0}, no longer coercing to \code{NA_complex_}.
-      Simlarly, \code{cumsum(z)} correctly sums real and imaginary parts
+      Similarly, \code{cumsum(z)} correctly sums real and imaginary parts
       separately, i.e., without \dQuote{crosstalk} in case of \code{NA}s.
 
       \item \code{iconv()} now fixes up variant encoding names such as
@@ -545,7 +545,7 @@
       (although the corresponding Windows' codepages could be used).
       (And also for the legacy \code{"MacRoman"} encoding.)
 
-      \item Computations of glyph metric informaation for \code{pdf()}
+      \item Computations of glyph metric information for \code{pdf()}
       and \code{postscript()} did not take into account that
       transliteration could replace one character by two or more (only
       seen on macOS 14) and typically warned that the information was

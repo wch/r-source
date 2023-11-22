@@ -272,7 +272,7 @@ pdf(file = if(onefile) "Rplots.pdf" else "Rplot\%03d.pdf",
   \code{"ISOLatin9.enc"} (ISO 8859-15, including Euro),
   \code{"Cyrillic.enc"} (ISO 8859-5), \code{"KOI8-R.enc"},
   \code{"KOI8-U.enc"}, and the Windows encodings \code{"WinAnsi.enc"}
-  (also knwon as \code{"CP1252.enc"}, \code{"CP1250.enc"}
+  (also known as \code{"CP1252.enc"}, \code{"CP1250.enc"}
   (Central/Eastern Europe), \code{"CP1251.enc"} (Cyrillic),
   \code{"Greek.enc"} (ISO 8859-7), \code{"CP1253.enc"} (modern Greek)
   and \code{"CP1257.enc"} (\sQuote{Baltic Rim}).  There is also
