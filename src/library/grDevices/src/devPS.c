@@ -899,7 +899,7 @@ PostScriptMetricInfo(int c, double *ascent, double *descent, double *width,
 	char out[10]; // one Unicode point in an sbcs, with possible transliteration.
 	// Do not show warnings (but throw errors)
 	mbcsToSbcs(str, out, encoding, CE_UTF8, 1);
-	double a, d;
+	double a = 0, d = 0;
 	short wx = 0;
 	for (unsigned int j = 0; j < strlen(out); j++) {
 	    unsigned char c = out[j];
