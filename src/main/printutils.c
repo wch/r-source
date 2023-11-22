@@ -671,7 +671,7 @@ const char *EncodeString(SEXP s, int w, int quote, Rprt_adj justify)
 	    /* res = 0 is a terminator
 	     * some mbrtowc implementations return wc past end of UCS */
 	    if(res >= 0 &&
-	       ((0 <= wc && wc <= 0x10FFFF) || !wchar_is_ucs_or_utf16)) {
+	       ((0 <= wc && (unsigned long)wc <= 0x10FFFF) || !wchar_is_ucs_or_utf16)) {
 		unsigned int k; /* not wint_t as it might be signed */
 		if (useUTF8 && IS_HIGH_SURROGATE(wc))
 		    k = utf8toucs32(wc, p);
