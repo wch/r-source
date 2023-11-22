@@ -4497,10 +4497,11 @@ next_char:
 		// one-char fixups
 		else if (wc == 0x2013 || wc == 0x2014 || wc == 0x2212)
 		    fix = "-"; // dashes, minus, done by macOS
-		else if (wc == 0x2018 || wc == 0x2019) fix = "'"; // done by macOS
+		// done by macOS, latter to acute accent U+00B4 in Latin-1 (but not Latin-7)
+		else if (wc == 0x2018 || wc == 0x2019) fix = "'";
 		else if (wc == 0x201C || wc == 0x201D) fix = "\""; // done by macOS
-		else if (wc == 0x2022) fix = "."; // changed to "o" by macOS
-		else if (wc == 0x2605 || wc == 0x2737) fix = "*"; // not done by macOS
+		else if (wc == 0x2022) fix = "."; // 'bullet', changed to "o" by macOS
+		else if (wc == 0x2605 || wc == 0x2737) fix = "*";
 		if (!fix) {
 		    if (fail)
 			error("conversion failure on '%s' in 'mbcsToSbcs': for %lc (U+%04X)", in, wc, wc);
