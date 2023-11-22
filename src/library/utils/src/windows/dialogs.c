@@ -3,7 +3,7 @@
  *  file dialogs.c
  *  Copyright (C) 1998--2003  Guido Masarotto and Brian Ripley
  *  Copyright (C) 2004	      The R Foundation
- *  Copyright (C) 2005--2020  The R Core Team
+ *  Copyright (C) 2005--2023  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -245,7 +245,7 @@ SEXP winMenuItems(SEXP call, SEXP op, SEXP args, SEXP env)
 	snprintf(msgbuf, 256, _("unable to retrieve items for %s (%s)"),
 		 translateChar(STRING_ELT(mname,0)), errmsg);
 	freemenuitems(items);
-	errorcall(call, msgbuf);
+	errorcall(call, "%s", msgbuf);
     }
 
     PROTECT(ans = allocVector(STRSXP, items->numItems));
@@ -281,7 +281,7 @@ SEXP winMenuAdd(SEXP call, SEXP op, SEXP args, SEXP env)
 	res = winaddmenu (translateChar(STRING_ELT(smenu, 0)), errmsg);
 	if (res > 0) {
 	    snprintf(msgbuf, 256, _("unable to add menu (%s)"), errmsg);
-	    errorcall(call, msgbuf);
+	    errorcall(call, "%s", msgbuf);
 	}
 
     } else { /* add an item */
@@ -293,7 +293,7 @@ SEXP winMenuAdd(SEXP call, SEXP op, SEXP args, SEXP env)
 			      errmsg);
 	if (res > 0) {
 	    snprintf(msgbuf, 256, _("unable to add menu item (%s)"), errmsg);
-	    errorcall(call, msgbuf);
+	    errorcall(call, "%s", msgbuf);
 	}
     }
     return (R_NilValue);
@@ -323,7 +323,7 @@ SEXP winMenuDel(SEXP call, SEXP op, SEXP args, SEXP env)
 			      translateChar(STRING_ELT(smenu, 0)), errmsg);
 	if (res > 0) {
 	    snprintf(msgbuf, 256, _("unable to delete menu item (%s)"), errmsg);
-	    errorcall(call, msgbuf);
+	    errorcall(call, "%s", msgbuf);
 	}
     }
     return (R_NilValue);
