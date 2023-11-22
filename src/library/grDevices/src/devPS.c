@@ -4456,10 +4456,16 @@ next_char:
 		else if (wc == 0xFB03) fix = "ffi";
 		else if (wc == 0xFB04) fix = "ffl";
 		else if (wc == 0x2194) fix = "<->";
-		else if (wc == 0x21D4) fix = "<-=";
+		else if (wc == 0x21D4) fix = "<=>";
 		else if (wc == 0x22D8) fix = "<<<";
 		else if (wc == 0x22D9) fix = ">>>";
-		else if (wc == 0x2026 || wc == 0x22EF) fix = "...";
+		else if (wc == 0x2026) fix = "...";
+		else if (wc == 0x22EF) fix = "...";
+		/* In most 8-bit encodings B7 is the 'middle dot',
+		   U+00D7,, but not all, e.g. macroman, KOI8-R.  So we
+		   decided not to figure out if it would be
+		   appreopriate. */
+//		else if (wc == 0x22EF) fix = "\267\267\267";
 		// Possible future re-mapping
 		// else if (wc == 0x20AC) fix = "EUR";
 
