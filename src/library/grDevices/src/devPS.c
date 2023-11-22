@@ -777,11 +777,11 @@ static double
 	    * see postscriptFonts()
 	    */
 	   (face % 5) != 0) {
-	    R_CheckStack2(strlen((char *)str)+1);
+	    R_CheckStack2(2*strlen((char *)str)+1);
 	    /* Output string cannot be longer
 	       -- but it can be in bytes if transliteration is used */
 	    char *buff = alloca(2*strlen((char *)str)+1);
-	    // Do not show warnings (but throw errors)
+	    // Do not show warnings (but throw any errors)
 	    mbcsToSbcs((char *)str, buff, encoding, enc, 1);
 	    str1 = (unsigned char *)buff;
 	}
@@ -827,6 +827,8 @@ static double
    When called in an MBCS locale and font != 5, chars < 128 are sent
    as is (we assume that is ASCII) and others are re-encoded to
    Unicode in GEText (and interpreted as Unicode in GESymbol).
+
+   FIXME: this assumes the mbcs is UTF-8.
 */
 # ifdef WORDS_BIGENDIAN
 static const char UCS2ENC[] = "UCS-2BE";
@@ -841,7 +843,6 @@ PostScriptMetricInfo(int c, double *ascent, double *descent, double *width,
 		     const char *encoding)
 {
     Rboolean Unicode = mbcslocale;
-    int c0 = c;
 
     if (c == 0) {
 	*ascent = 0.001 * metrics->FontBBox[3];
@@ -850,89 +851,86 @@ PostScriptMetricInfo(int c, double *ascent, double *descent, double *width,
 	return;
     }
 
-    if (c < 0) { Unicode = TRUE; c = -c; c0 = c;}
-    if(Unicode && !isSymbol && c >= 128) {
+    if (c < 0) { Unicode = TRUE; c = -c;}
+    *ascent = 0.001 * metrics->CharInfo[c].BBox[3];
+    *descent = -0.001 * metrics->CharInfo[c].BBox[1];
+    *width = 0.001 * metrics->CharInfo[c].WX;
+    
+    if(Unicode && !isSymbol && c >= 128) { // don't really need to except ASCII
 	if (c >= 65536) {
 	    // No afm nor enc has entries for chars beyond the basic plane */
 	    *ascent = 0;
 	    *descent = 0;
 	    *width = 0;
-	    // We cannot assume such chars can be printed, and not by %lc
-	    // as wchar_t mught be 16-bit.
+	    // wchar_t might be 16-bit so do not attempt to print
 	    warning(_("font metrics unknown for Unicode character U+%04X"), c);
 	    return;
 	}
-	void *cd = NULL;
-	const char *i_buf; char *o_buf, out[10];
-	size_t i_len, o_len, status;
-	unsigned short w[2];
-
-	/* FIXME:
-	   Because transliteraton can occur in mbcsToSbcs, 'c' may
-	   not be the actual text plotted (which might be a
-	   string not a sinple character).
-	 */
-
-	if ((void*)-1 == (cd = Riconv_open(encoding, UCS2ENC)))
-	    error(_("unknown encoding '%s' in 'PostScriptMetricInfo'"),
-		  encoding);
-
-	/* Here we use terminated strings, but could use one char */
-	memset(out, 0, 10);
-	w[0] = (unsigned short) c; w[1] = 0;
-	i_buf = (char *)w;
-	i_len = 4;
-	o_buf = out;
-	o_len = 10;
-	status = Riconv(cd, &i_buf, (size_t *)&i_len,
-			(char **)&o_buf, (size_t *)&o_len);
-	Riconv_close(cd);
-	if (status == (size_t)-1) {
-	    *ascent = 0;
-	    *descent = 0;
-	    *width = 0;
-	    warning(_("Unicode character %lc (U+%04X) cannot be converted to encoding %s"),
-		    c, c, encoding);
-	    return;
-	} else {
-	    size_t l = strlen(out);
-	    if (l > 1) {
-		short wx = 0;
-		double a = 0.0, b = 0.0;
-		for (unsigned int j = 0; j < l; j++) {
-		    int c = out[j];
-		    wx += metrics->CharInfo[c].WX;
-		    a = max(a, metrics->CharInfo[c].BBox[3]);
-		    b = max(b, metrics->CharInfo[c].BBox[1]);
-		}
-		*width = 0.001 * wx;
-		*ascent =  0.001 * a;
-		*descent = -0.001 * b;
+        char str[10]; // one Unicode point in an mbcs, almost always UTF-8.
+	{
+	    void *cd = NULL;
+	    const char *i_buf; char *o_buf;
+	    size_t i_len, o_len, status;
+	    unsigned short w[2];
+	    // need to convert Unicode point c (in BMP) to the mbcs.
+	    if ((void*)-1 == (cd = Riconv_open("UTF-8", UCS2ENC)))
+		error(_("unknown encoding '%s' in 'PostScriptMetricInfo'"),
+		      encoding);
+	    /* Here we use terminated strings, but could use one char */
+	    memset(str, 0, 10);
+	    w[0] = (unsigned short) c; w[1] = 0;
+	    //printf("converting %lc\n", w[0]);
+	    i_buf = (char *)w;
+	    i_len = 4;
+	    o_buf = str;
+	    o_len = 10;
+	    status = Riconv(cd, &i_buf, (size_t *)&i_len,
+			    (char **)&o_buf, (size_t *)&o_len);
+	    Riconv_close(cd);
+	    if (status == (size_t)-1) {
+		*ascent = 0;
+		*descent = 0;
+		*width = 0;
+		warning(_("Unicode character %lc (U+%04X) cannot be converted"),
+			c, c, encoding);
 		return;
-	    } else
-		c = out[0] & 0xff;
+	    }
 	}
-    }
-
-    if (c > 255) { /* Unicode  spec*/
-	*ascent = 0;
-	*descent = 0;
-	*width = 0;
-	warning(_("font metrics unknown for Unicode character U+%04X"), c);
+	char out[10]; // one Unicode point in an sbcs, with possible transliteration.
+	// Do not show warnings (but throw errors)
+	mbcsToSbcs(str, out, encoding, CE_UTF8, 1);
+	double a, d;
+	short wx = 0;
+	for (unsigned int j = 0; j < strlen(out); j++) {
+	    unsigned char c = out[j];
+	    short w = metrics->CharInfo[c].WX;
+	    if(w == NA_SHORT)
+		warning(_("font metrics unknown for character 0x%02x in encoding %s"), c, encoding);
+	    else wx += w;
+	    double a0 = metrics->CharInfo[c].BBox[3],
+		d0 = metrics->CharInfo[c].BBox[1];
+	    if (j == 0) {
+		a = a0; d = d0;
+	    } else {
+		a = max(a, a0);
+		d = max(d, d0);
+	    }
+	}
+	*width = 0.001 * wx;
+	*ascent =  0.001 * a;
+	*descent = 0.001 * -d;
+	return;
     } else {
-	short wx;
-
+	// 8-bit case
 	*ascent = 0.001 * metrics->CharInfo[c].BBox[3];
 	*descent = -0.001 * metrics->CharInfo[c].BBox[1];
-	wx = metrics->CharInfo[c].WX;
+	short wx = metrics->CharInfo[c].WX;
 	if(wx == NA_SHORT) {
-	    if(Unicode && !isSymbol)
-		warning(_("font metrics unknown for %lc (U+0x%04X) in encoding %s"), c0, c0, encoding);
-	    else
-		warning(_("font metrics unknown for character 0x%02x in encoding %s"), c, encoding);
+	    warning(_("font metrics unknown for character 0x%02x in encoding %s"), c, encoding);
 	    wx = 0;
 	}
 	*width = 0.001 * wx;
+	return;
     }
 }
 
