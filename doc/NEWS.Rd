@@ -218,10 +218,9 @@
       Similarly, \code{cumsum(z)} correctly sums real and imaginary parts
       separately, i.e., without \dQuote{crosstalk} in case of \code{NA}s.
 
-      \item \code{iconv()} now fixes up variant encoding names such as
-      \code{"utf8"} case-insensitively, and on Alpine Linux maps
-      \code{"latin2"}, \code{"latin-2"}, \code{"latin9"} and
-      \code{"latin-9"} to names the OS knows about (case-insensitively).
+      \item On Alpine Linux \code{iconv()} now maps \code{"latin2"},
+      \code{"latin-2"}, \code{"latin9"} and \code{"latin-9"} to names
+      the OS knows about (case-insensitively).
     }
   }
 
@@ -505,6 +504,14 @@
 }
 
 \section{\Rlogo CHANGES IN R 4.3.2 patched}{
+  
+  \subsection{NEW FEATURES}{
+    \itemize{
+      \item \code{iconv()} now fixes up variant encoding names such as
+      \code{"utf8"} case-insensitively.
+    }
+  }
+
   \subsection{BUG FIXES}{
     \itemize{
       \item Some invalid \code{file} arguments to \code{pictex()},
