@@ -42,6 +42,9 @@
       \item \code{drop.terms(*, dropx=<0-length>)} now works, fixing
       \PR{18563} as proposed by Mikael Jagan.
 
+      \item \code{getS3method("t", "test")} no longer finds the
+      \code{t.test()} function, fixing \PR{18627}.
+
       \item \code{pdf()} and \code{postscript()} support for the documented
       Adobe encodings \code{"Greek"} and \code{"Cyrilllic"} was missing
       (although the corresponding Windows' codepages could be used).

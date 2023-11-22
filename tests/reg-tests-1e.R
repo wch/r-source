@@ -783,6 +783,16 @@ stopifnot(identical(tt, drop.terms(tt, dropx = 0[0])))
 ## errored in R <= 4.3.2
 
 
+## PR#18627 - getS3method() should match method dispatch {and isS3method()}
+stopifnot(exprs = {
+            ! isS3method("t", "test")
+    is.null( getS3method("t", "test", optional=TRUE) )
+    identical(dim(t(structure(matrix(, 3, 2), class = "test"))), # t.test() is *not* called:
+              2:3)
+})
+## getS3method(..) did return the t.test function, in R <= 4.3.2
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
