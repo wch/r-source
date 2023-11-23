@@ -25,6 +25,7 @@ cat(two, sep ="  "); cat("\n")
 three <- c(0x2194, 0x21D4, 0x22D8, 0x22D9, 0x2026, 0x22EF)
 three <- intToUtf8(three, TRUE)
 cat(three, sep ="  "); cat("\n")
+## 0x22EF is transliterated to 3x 'middle dot' in a suitable encoding
 
 ## Four-char fixups
 four <- c(0x33C2, 0x33D8)

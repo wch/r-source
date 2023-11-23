@@ -18,7 +18,8 @@ Sys.unsetenv("_R_CHECK_MBCS_CONVERSION_FAILURE_")
 ## One-char fixups
 one <- c(0x2013, 0x2014, 0x2212, 0x2018, 0x2019, 0x201C, 0x201D,
          0x2022, 0x2605, 0x2737)
-one <- intToUtf8(one, TRUE) # macOS transliterates the first 8, 8th to "o"
+one <- intToUtf8(one, TRUE)
+## macOS transliterates the first 8, 8th to "o", quotes to grave/acute accent.
 cat(one, sep ="  "); cat("\n")
 
 ## Two-ckar fixups
@@ -56,6 +57,7 @@ cat(six, sep ="  "); cat("\n")
 seven <- "\u0423\u043b\u0430\u0430\u043d\u0431\u0430\u0430\u0442\u0430\u0440"
 cat(seven, sep ="  "); cat("\n")
 ## Latin-2 example from package 'ggenealogy'
+## Transliterations of \u010d (c caron) differ
 eight <- "Lubom\u00edr  Kub\u00e1\u010dek"
 cat(eight, sep ="  "); cat("\n")
 
