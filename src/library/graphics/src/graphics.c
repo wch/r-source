@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997--2021  The R Core Team
+ *  Copyright (C) 1997--2023  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *  Copyright (C) 2002--2011  The R Foundation
  *
@@ -1770,7 +1770,7 @@ NORET static void invalidError(const char *message, pGEDevDesc dd)
     if (dpptr(dd)->currentFigure < 1)
 	dpptr(dd)->currentFigure = dpptr(dd)->lastFigure;
     gpptr(dd)->currentFigure = dpptr(dd)->currentFigure;
-    error(message);
+    error("%s", message);
 }
 
 Rboolean GRecording(SEXP call, pGEDevDesc dd)

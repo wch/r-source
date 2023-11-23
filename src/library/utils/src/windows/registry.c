@@ -145,7 +145,7 @@ static SEXP readRegistryKey1(HKEY hkey, const wchar_t *name)
 	ans = mkString("<REG_RESOURCE_LIST>");
 	break;
     default:
-	warning("unhandled key type %d\n", type);
+	warning("unhandled key type %lu\n", (unsigned long)type);
     }
     return ans;
 }

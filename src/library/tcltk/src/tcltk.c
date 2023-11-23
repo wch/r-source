@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000--2022  The R Core Team
+ *  Copyright (C) 2000--2023  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -188,7 +188,7 @@ static Tcl_Obj * tk_eval(const char *cmd)
 	    snprintf(p, sizeof(p), "[tcl] %s.\n", res);
 	    Tcl_DStringFree(&res_ds);
 	}
-	error(p);
+	error("%s", p);
     }
     Tcl_DStringFree(&cmd_utf8_ds);
     return Tcl_GetObjResult(RTcl_interp);
@@ -265,7 +265,7 @@ SEXP dotTclObjv(SEXP args)
 	    snprintf(p, sizeof(p), "[tcl] %s.\n", res);
 	    Tcl_DStringFree(&res_ds);
 	}
-	error(p);
+	error("%s", p);
     }
 
     SEXP res = makeRTclObject(Tcl_GetObjResult(RTcl_interp));
@@ -703,7 +703,7 @@ void tcltk_init(int *TkUp)
 
     RTcl_interp = Tcl_CreateInterp();
     code = Tcl_Init(RTcl_interp);
-    if (code != TCL_OK) error(Tcl_GetStringResult(RTcl_interp));
+    if (code != TCL_OK) error("%s", Tcl_GetStringResult(RTcl_interp));
 
 /* HAVE_AQUA is not really right here.
    On macOS we might be using Aqua Tcl/Tk or X11 Tcl/Tk, and that
@@ -717,12 +717,12 @@ void tcltk_init(int *TkUp)
 	{
 	    code = Tk_Init(RTcl_interp);  /* Load Tk into interpreter */
 	    if (code != TCL_OK) {
-		warning(Tcl_GetStringResult(RTcl_interp));
+		warning("%s", Tcl_GetStringResult(RTcl_interp));
 	    } else {
 		Tcl_StaticPackage(RTcl_interp, "Tk", Tk_Init, Tk_SafeInit);
 		
 		code = Tcl_Eval(RTcl_interp, "wm withdraw .");  /* Hide window */
-		if (code != TCL_OK) error(Tcl_GetStringResult(RTcl_interp));
+		if (code != TCL_OK) error("%s", Tcl_GetStringResult(RTcl_interp));
 		*TkUp = 1;
 	    }
 	}

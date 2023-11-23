@@ -678,7 +678,7 @@ int R_ShowFiles(int nfile, const char **file, const char **headers,
 			snprintf(buf, 1024,
 				 _("cannot open file '%s': %s"),
 				 file[i], strerror(errno));
-			warning(buf);
+			warning("%s", buf);
 		    }
 		} else {
 		    /* Quote path if not quoted */
@@ -687,13 +687,13 @@ int R_ShowFiles(int nfile, const char **file, const char **headers,
 		    else
 			snprintf(buf, 1024, "%s \"%s\"", pager, file[i]);
 		    ll = runcmd(buf, CE_NATIVE, 0, 1, NULL, NULL, NULL);
-		    if (ll == NOLAUNCH) warning(runerror());
+		    if (ll == NOLAUNCH) warning("%s", runerror());
 		}
 	    } else {
 		snprintf(buf, 1024,
 			 _("file.show(): file '%s' does not exist\n"),
 			 file[i]);
-		warning(buf);
+		warning("%s", buf);
 	    }
 	}
 	return 0;
@@ -734,7 +734,7 @@ int R_EditFiles(int nfile, const char **file, const char **title,
 		else
 		    snprintf(buf, 1024, "%s \"%s\"", editor, file[i]);
 		ll = runcmd(buf, CE_UTF8, 0, 1, NULL, NULL, NULL);
-		if (ll == NOLAUNCH) warning(runerror());
+		if (ll == NOLAUNCH) warning("%s", runerror());
 	    }
 
 	}

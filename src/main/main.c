@@ -1171,7 +1171,7 @@ void setup_Rmainloop(void)
     {
 	int i;
 	for(i = 0 ; i < ndeferred_warnings; i++)
-	    warning(deferred_warnings[i]);
+	    warning("%s", deferred_warnings[i]);
     }
     if (R_CollectWarnings) {
 	REprintf(_("During startup - "));

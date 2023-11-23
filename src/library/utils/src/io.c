@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998-2022  The R Core Team.
+ *  Copyright (C) 1998-2023  The R Core Team.
  *  Copyright (C) 1995,1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -1168,7 +1168,7 @@ SEXP writetable(SEXP call, SEXP op, SEXP args, SEXP env)
 						 quote_col[j], qmethod,
 						 &strBuf, sdec);
 			else
-			    error(_("column %s claims to be a factor but does not have numeric codes"),
+			    error(_("column %d claims to be a factor but does not have numeric codes"),
 				  j+1);
 		    } else {
 			tmp = EncodeElement2(xj, i, quote_col[j], qmethod,

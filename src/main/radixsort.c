@@ -70,7 +70,7 @@ static void savetl_init(void)
 {
     if (nsaved || nalloc || saveds || savedtl)
 	error("Internal error: savetl_init checks failed (%d %d %p %p).",
-	      nsaved, nalloc, saveds, savedtl);
+	      nsaved, nalloc, (void *)saveds, (void *)savedtl);
     nsaved = 0;
     nalloc = 100;
     saveds = (SEXP *) malloc(nalloc * sizeof(SEXP));
@@ -406,7 +406,7 @@ static void alloc_otmp(int n)
     otmp = (int *) realloc(otmp, n * sizeof(int));
     if (otmp == NULL)
 	Error("Failed to allocate working memory for otmp. Requested %d * %d bytes",
-	      n, sizeof(int));
+	      n, (int)sizeof(int));
     otmp_alloc = n;
 }
 
@@ -422,7 +422,7 @@ static void alloc_xtmp(int n)
     xtmp = (double *) realloc(xtmp, n * sizeof(double));
     if (xtmp == NULL)
 	Error("Failed to allocate working memory for xtmp. Requested %d * %d bytes",
-	      n, sizeof(double));
+	      n, (int)sizeof(double));
     xtmp_alloc = n;
 }
 
@@ -1089,7 +1089,7 @@ static void cgroup(SEXP * x, int *o, int n)
 	    ustr = realloc(ustr, ustr_alloc * sizeof(SEXP));
 	    if (ustr == NULL)
 		Error("Unable to realloc %d * %d bytes in cgroup", ustr_alloc,
-		      sizeof(SEXP));
+		      (int)sizeof(SEXP));
 	}
 	SET_TRLEN(s, -1);
 	ustr[ustr_n++] = s;
@@ -1126,7 +1126,7 @@ static void alloc_csort_otmp(int n)
     if (csort_otmp == NULL)
 	Error
 	    ("Failed to allocate working memory for csort_otmp. Requested %d * %d bytes",
-	     n, sizeof(int));
+	     n, (int)sizeof(int));
     csort_otmp_alloc = n;
 }
 
@@ -1217,7 +1217,7 @@ static void csort_pre(SEXP * x, int n)
 	    ustr = realloc(ustr, ustr_alloc * sizeof(SEXP));
 	    if (ustr == NULL)
 		Error("Failed to realloc ustr. Requested %d * %d bytes",
-		      ustr_alloc, sizeof(SEXP));
+		      ustr_alloc, (int)sizeof(SEXP));
 	}
 	SET_TRLEN(s, -1);  // this -1 will become its ordering later below
 	ustr[ustr_n++] = s;
@@ -1706,12 +1706,12 @@ attribute_hidden SEXP do_radixsort(SEXP call, SEXP op, SEXP args, SEXP rho)
         xsub = (void *) malloc(maxgrpn * sizeof(double));
         if (xsub == NULL)
             Error("Couldn't allocate xsub in do_radixsort, requested %d * %d bytes.",
-                  maxgrpn, sizeof(double));
+                  maxgrpn, (int)sizeof(double));
         // global variable, used by isort, dsort, sort and cgroup
         newo = (int *) malloc(maxgrpn * sizeof(int));
         if (newo == NULL)
             Error("Couldn't allocate newo in do_radixsort, requested %d * %d bytes.",
-                  maxgrpn, sizeof(int));
+                  maxgrpn, (int)sizeof(int));
     }
 
     for (int col = 2; col <= narg; col++) {

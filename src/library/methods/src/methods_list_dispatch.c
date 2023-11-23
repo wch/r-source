@@ -1088,7 +1088,7 @@ SEXP R_dispatchGeneric(SEXP fname, SEXP ev, SEXP fdef)
     PROTECT(siglength = findVarInFrame(f_env, R_siglength)); nprotect++;
     if(sigargs == R_UnboundValue || siglength == R_UnboundValue ||
        mtable == R_UnboundValue)
-	error("generic \"%s\" seems not to have been initialized for table dispatch---need to have '.SigArgs' and '.AllMtable' assigned in its environment");
+	error("generic seems not to have been initialized for table dispatch---need to have '.SigArgs' and '.AllMtable' assigned in its environment");
     nargs = asInteger(siglength);
     PROTECT(classes = allocVector(VECSXP, nargs)); nprotect++;
     if (nargs > LENGTH(sigargs))
