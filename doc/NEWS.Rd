@@ -557,6 +557,10 @@
       transliteration could replace one character by two or more (only
       seen on macOS 14) and typically warned that the information was
       not known.
+
+      \item \code{rank(x)} no longer overflows during integer addition, when
+      computing rank average for largish but not-yet long vector \code{x},
+      fixing \PR{18630}, thanks to Ilia Kats.
     }
   }
 }

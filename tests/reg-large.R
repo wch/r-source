@@ -360,6 +360,7 @@ L
 Ln # gave  Error: long vectors not supported yet: ...
 LL # gave  Error: long vect...
 options(op)
+rm(Ln, L)
 
 ## PR#17977 --- x[<fractional>] behavior should fulfill x[i] === x[as.integer(i)]
 ## large (no overflow in index computations!) -- needs 2 GB
@@ -400,11 +401,23 @@ if(availableGB > 10) withAutoprint({ ## PR#18612
         grepl(paste0("size of matrix: [", 2*M, " != "), c(m3,m4), fixed=TRUE)
         grepl(paste0("dims [product ", M, "] do not "), c(m5,m6), fixed=TRUE)
     })
+    rm(y)
 })
 
 x <- -1:2^31 # (immediate: ALTREP)
-system.time( r <- rank(x) ) ## gave Error about invalid length() -- PR#18617
+system.time( r <- rank(x) )# Error about invalid length() -- PR#18617, in R <= 4.3.2
 ## seen 260 sec (!)
+head(r)
+stopifnot(r[1:6] == 1:6)
+rm(r,x)
+
+## rank(<largish) -- PR#18630
+vals <- 1:1475000000 # (immedate, thanks to ALTREP)
+system.time( ranks <- rank(vals) ) # takes too long for regular regr.tests
+head(ranks, 11)
+stopifnot(ranks[1:11] == 1:11, min(ranks) == 1)
+## min(ranks) was -1073741824, in R <= 4.3.2
+
 
 
 gc() # NB the "max used"

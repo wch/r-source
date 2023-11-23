@@ -1570,7 +1570,7 @@ attribute_hidden SEXP do_rank(SEXP call, SEXP op, SEXP args, SEXP rho)
 		switch(ties_kind) {
 		case AVERAGE:
 		    for (k = i; k <= j; k++)
-			rk[in[k]] = (i + j + 2) / 2.;
+			rk[in[k]] = ((double)i + j + 2) / 2.;
 		    break;
 		case MAX:
 		    for (k = i; k <= j; k++) ik[in[k]] = j+1;
