@@ -4460,12 +4460,26 @@ next_char:
 		else if (wc == 0x22D8) fix = "<<<";
 		else if (wc == 0x22D9) fix = ">>>";
 		else if (wc == 0x2026) fix = "...";
-		else if (wc == 0x22EF) fix = "...";
-		/* In most 8-bit encodings B7 is the 'middle dot',
-		   U+00D7,, but not all, e.g. macroman, KOI8-R.  So we
-		   decided not to figure out if it would be
-		   appreopriate. */
-//		else if (wc == 0x22EF) fix = "\267\267\267";
+		else if (wc == 0x22EF) { // done by macOS in latin1
+		    /* In most 8-bit encodings B7 is the 'middle dot',
+		       U+00D7,, but not all, e.g. macroman, KOI8-R.
+		       Very rare, so don't worry about speed.
+		    */
+		    if (streql(encoding, "latin1") ||
+			streql(encoding, "latin2") ||
+			streql(encoding, "latin7") ||
+			streql(encoding, "latin-9") ||
+			streql(encoding, "iso-8859-7") ||
+			streql(encoding, "cp1252") ||
+			streql(encoding, "cp1253") ||
+			streql(encoding, "cp1257") ||
+			streql(encoding, "iso88592") ||
+			streql(encoding, "iso88597") ||
+			streql(encoding, "iso885913") ||
+			streql(encoding, "iso885915"))
+			fix = "\267\267\267";
+		    else fix = "...";
+		}
 		// Possible future re-mapping
 		// else if (wc == 0x20AC) fix = "EUR";
 
@@ -4652,7 +4666,7 @@ static void PS_Text0(double x, double y, const char *str, int enc,
        CJK MBCS.
     */
     if((enc == CE_UTF8 || mbcslocale) && !strIsASCII(str)) {
-	R_CheckStack2(strlen(str)+1);
+	R_CheckStack2(2*strlen(str)+1);
 	/* Output string cannot be longer
 	   -- but it can be in bytes if transliteration is used
 	 */
@@ -10150,7 +10164,7 @@ static void PDF_Text0(double x, double y, const char *str, int enc,
                 a, b, bm, a, x, y);
         if((enc == CE_UTF8 || mbcslocale) && !strIsASCII(str) && face < 5) {
             /* face 5 handled above */
-            R_CheckStack2(strlen(str)+1);
+            R_CheckStack2(2*strlen(str)+1);
 	    /* Output string cannot be longer
 	       -- but it can be in bytes if transliteration is used
 	     */
