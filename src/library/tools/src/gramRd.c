@@ -3987,15 +3987,16 @@ static void yyerror(const char *s)
     }
 }
 
-#define TEXT_PUSH(c) do {                  \
-	size_t nc = bp - stext;       \
+#define TEXT_PUSH(c) do {		    \
+	size_t nc = bp - stext;		    \
 	if (nc >= nstext - 1) {             \
 	    char *old = stext;              \
-            nstext *= 2;                    \
+	    nstext *= 2;		    \
 	    stext = malloc(nstext);         \
 	    if(!stext) error(_("unable to allocate buffer for long string at line %d"), parseState.xxlineno);\
 	    memmove(stext, old, nc);        \
-	    if(old != st0) free(old);	    \
+	    if(st1) free(st1);		    \
+	    st1 = stext;		    \
 	    bp = stext+nc; }		    \
 	*bp++ = ((char) c);		    \
 } while(0)
@@ -4093,6 +4094,7 @@ static int token(void)
 static int mkText(int c)
 {
     char st0[INITBUFSIZE];
+    char *st1 = NULL;
     unsigned int nstext = INITBUFSIZE;
     char *stext = st0, *bp = st0, lookahead;
     
@@ -4123,13 +4125,14 @@ static int mkText(int c)
 stop:
     if (c != '\n') xxungetc(c); /* newline causes a break, but we keep it */
     PRESERVE_SV(yylval = mkString2(stext, bp - stext));
-    if(stext != st0) free(stext);
+    if(st1) free(st1);
     return TEXT;
 }
 
 static int mkComment(int c)
 {
     char st0[INITBUFSIZE];
+    char *st1 = NULL;
     unsigned int nstext = INITBUFSIZE;
     char *stext = st0, *bp = st0;
     
@@ -4139,7 +4142,7 @@ static int mkComment(int c)
     xxungetc(c);
     
     PRESERVE_SV(yylval = mkString2(stext, bp - stext));
-    if(stext != st0) free(stext);    
+    if(st1) free(st1);
     return COMMENT;
 }
 
@@ -4171,6 +4174,7 @@ static int closingRawStringDelim(int c)
 static int mkCode(int c)
 {
     char st0[INITBUFSIZE];
+    char *st1 = NULL;
     unsigned int nstext = INITBUFSIZE;
     char *stext = st0, *bp = st0;
     
@@ -4297,13 +4301,14 @@ static int mkCode(int c)
     }
     if (c != '\n') xxungetc(c);
     PRESERVE_SV(yylval = mkString2(stext, bp - stext));
-    if(stext != st0) free(stext);
+    if(st1) free(st1);
     return RCODE; 
 }
 
 static int mkMarkup(int c)
 {
     char st0[INITBUFSIZE];
+    char *st1 = NULL;
     unsigned int nstext = INITBUFSIZE;
     char *stext = st0, *bp = st0;
     int retval = 0, attempt = 0;
@@ -4336,7 +4341,7 @@ static int mkMarkup(int c)
         }
     }
     PRESERVE_SV(yylval = mkString2(stext, bp - stext - 1));
-    if(stext != st0) free(stext);
+    if(st1) free(st1);
     xxungetc(c);
     return retval;
 }
@@ -4344,6 +4349,7 @@ static int mkMarkup(int c)
 static int mkIfdef(int c)
 {
     char st0[INITBUFSIZE];
+    char *st1 = NULL;
     unsigned int nstext = INITBUFSIZE;
     char *stext = st0, *bp = st0;
     int retval;
@@ -4380,13 +4386,14 @@ static int mkIfdef(int c)
 	}
 	break;
     }
-    if(stext != st0) free(stext);
+    if(st1) free(st1);
     return retval;
 }
 
 static int mkVerb(int c)
 {
     char st0[INITBUFSIZE];
+    char *st1 = NULL;
     unsigned int nstext = INITBUFSIZE;
     char *stext = st0, *bp = st0;
     
@@ -4419,7 +4426,7 @@ static int mkVerb(int c)
     };
     if (c != '\n') xxungetc(c);
     PRESERVE_SV(yylval = mkString2(stext, bp - stext));
-    if(stext != st0) free(stext);
+    if(st1) free(st1);
     return VERB;  
 }
 
