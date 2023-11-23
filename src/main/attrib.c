@@ -609,7 +609,7 @@ attribute_hidden SEXP do_class(SEXP call, SEXP op, SEXP args, SEXP env)
 
 /* character elements corresponding to the syntactic types in the
    grammar */
-static SEXP lang2str(SEXP obj, SEXPTYPE t)
+static SEXP lang2str(SEXP obj)
 {
   SEXP symb = CAR(obj);
   static SEXP if_sym = 0, while_sym, for_sym, eq_sym, gets_sym,
@@ -634,8 +634,7 @@ static SEXP lang2str(SEXP obj, SEXPTYPE t)
   return PRINTNAME(call_sym);
 }
 
-/* the S4-style class: for dispatch required to be a single string;
-   for the new class() function;
+/* R's class(), for S4 dispatch required to be a single string;
    if(!singleString) , keeps S3-style multiple classes.
    Called from the methods package, so exposed.
  */
@@ -676,7 +675,7 @@ SEXP R_data_class(SEXP obj, Rboolean singleString)
 	    klass = mkChar("name");
 	    break;
 	  case LANGSXP:
-	    klass = lang2str(obj, t);
+	    klass = lang2str(obj);
 	    break;
 	  case OBJSXP:
 	    klass = mkChar(IS_S4_OBJECT(obj) ? "S4" : "object");
@@ -863,7 +862,7 @@ attribute_hidden SEXP R_data_class2 (SEXP obj)
 	if (t != LANGSXP)
 	    error("type must be LANGSXP at this point");
 	if (n == 0) {
-	    return ScalarString(lang2str(obj, t));
+	    return ScalarString(lang2str(obj));
 	}
 	/* Where on earth is this ever needed ??
 	 * __FIXME / TODO__ ??
@@ -878,7 +877,7 @@ attribute_hidden SEXP R_data_class2 (SEXP obj)
 	    part2 = PROTECT(mkChar("matrix")); nprot++;
 	    SET_STRING_ELT(defaultClass, 1, part2);
 	}
-	SET_STRING_ELT(defaultClass, 1+I_mat, lang2str(obj, t));
+	SET_STRING_ELT(defaultClass, 1+I_mat, lang2str(obj));
 	UNPROTECT(nprot);
 	return defaultClass;
     }
@@ -986,8 +985,7 @@ SEXP namesgets(SEXP vec, SEXP val)
     PROTECT(val);
 
     /* Check that the lengths and types are compatible */
-
-    if (xlength(val) < xlength(vec)) {
+    if (xlength(val) < xlength(vec)) { // recycle
 	val = xlengthgets(val, xlength(vec));
 	UNPROTECT(1);
 	PROTECT(val);
@@ -1065,10 +1063,9 @@ attribute_hidden SEXP do_dimnamesgets(SEXP call, SEXP op, SEXP args, SEXP env)
     return CAR(args);
 }
 
-static SEXP dimnamesgets1(SEXP val1)
+// simplistic version of as.character.default()
+static SEXP as_char_simpl(SEXP val1)
 {
-    SEXP this2;
-
     if (LENGTH(val1) == 0) return R_NilValue;
     /* if (isObject(val1)) dispatch on as.character.foo, but we don't
        have the context at this point to do so */
@@ -1077,7 +1074,7 @@ static SEXP dimnamesgets1(SEXP val1)
 	return asCharacterFactor(val1);
 
     if (!isString(val1)) { /* mimic as.character.default */
-	PROTECT(this2 = coerceVector(val1, STRSXP));
+	SEXP this2 = PROTECT(coerceVector(val1, STRSXP));
 	SET_ATTRIB(this2, R_NilValue);
 	SET_OBJECT(this2, 0);
 	UNPROTECT(1);
@@ -1142,7 +1139,7 @@ SEXP dimnamesgets(SEXP vec, SEXP val)
 	    if (INTEGER(dims)[i] != LENGTH(_this) && LENGTH(_this) != 0)
 		error(_("length of 'dimnames' [%d] not equal to array extent"),
 		      i+1);
-	    SET_VECTOR_ELT(val, i, dimnamesgets1(_this));
+	    SET_VECTOR_ELT(val, i, as_char_simpl(_this));
 	}
     }
     installAttrib(vec, R_DimNamesSymbol, val);
@@ -1500,7 +1497,7 @@ attribute_hidden SEXP do_attr(SEXP call, SEXP op, SEXP args, SEXP env)
 		match = FULL;
 		break;
 	    }
-    else if (match == PARTIAL || match == PARTIAL2) {
+	    else if (match == PARTIAL || match == PARTIAL2) {
 		/* this match is partial and we already have a partial match,
 		   so the query is ambiguous and we will return R_NilValue
 		   unless a full match comes up.
