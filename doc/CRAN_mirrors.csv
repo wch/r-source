@@ -100,3 +100,4 @@ Thailand,Thailand,Hatyai,http://mirrors.psu.ac.th/pub/cran/,"Prince of Songkla U
 "USA (TN) [https]",USA,"Oak Ridge",https://mirrors.nics.utk.edu/cran/,"National Institute for Computational Sciences, Oak Ridge, TN","help # nics.utk.edu",1,us,"secure_mirror_from_master"
 "United Arab Emirates [https]","United Arab Emirates","Abu Dhabi",https://cran.nyuad.nyu.edu/,"New York University in Abu Dhabi","nyuad.cran # nyu.edu",1,ae,"secure_mirror_from_master"
 "Uruguay [https]",Uruguay,Montevideo,https://espejito.fder.edu.uy/cran/,"Facultad de Derecho, Universidad de la República","root # fder.edu.uy",1,uy,"secure_mirror_from_master"
+"Worldwide 2 [https]",Worldwide,Worldwide,https://mirrors.cicku.me/cran/,"CICKU","i # cicku.me",1,us
