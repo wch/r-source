@@ -637,7 +637,8 @@ const char *EncodeString(SEXP s, int w, int quote, Rprt_adj justify)
        +2 allows for quotes, +6 for UTF_8 escapes.
      */
     if(5.*cnt + 8 > (double) SIZE_MAX)
-	error(_("too large string (nchar=%d) => 5*nchar + 8 > SIZE_MAX"));
+	error(_("too large string (nchar=%d) => 5*nchar + 8 > SIZE_MAX"),
+	      cnt);
     size_t q_len = 5*(size_t)cnt + 8;
     if(q_len < w) q_len = (size_t) w;
     q = R_AllocStringBuffer(q_len, buffer);

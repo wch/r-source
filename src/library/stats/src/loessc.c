@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 1998--2020  The R Core Team
+ * Copyright (C) 1998--2023  The R Core Team
  *
  * The authors of this software are Cleveland, Grosse, and Shyu.
  * Copyright (c) 1989, 1992 by AT&T.
@@ -404,7 +404,7 @@ switch(*i){
      msg = msg2;
  }
 }
-warning(msg);
+warning("%s", msg);
 }
 #undef MSG
 
@@ -423,7 +423,7 @@ void F77_SUB(ehg183a)(char *s, int *nc,int *i,int *n,int *inc)
 	strcat(mess, num);
     }
     strcat(mess,"\n");
-    warning(mess);
+    warning("%s", mess);
 }
 
 #ifdef FC_LEN_T
@@ -441,5 +441,5 @@ void F77_SUB(ehg184a)(char *s, int *nc, double *x, int *n, int *inc)
 	strcat(mess, num);
     }
     strcat(mess,"\n");
-    warning(mess);
+    warning("%s", mess);
 }

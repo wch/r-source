@@ -892,7 +892,7 @@ PostScriptMetricInfo(int c, double *ascent, double *descent, double *width,
 		*descent = 0;
 		*width = 0;
 		warning(_("Unicode character %lc (U+%04X) cannot be converted"),
-			c, c, encoding);
+			(wint_t)c, c);
 		return;
 	    }
 	}
