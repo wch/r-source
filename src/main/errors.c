@@ -1105,6 +1105,7 @@ NORET void jump_to_toplevel(void)
 # define GETT_PRINT(...) do {} while(0)
 #endif
 
+#ifdef ENABLE_NLS
 /* Called from do_gettext() and do_ngettext() */
 static const char * determine_domain_gettext(SEXP domain_, Rboolean up)
 {
@@ -1182,6 +1183,7 @@ static const char * determine_domain_gettext(SEXP domain_, Rboolean up)
 	return NULL;
     else error(_("invalid '%s' value"), "domain");
 }
+#endif
 
 
 /* gettext(domain, string, trim) */
