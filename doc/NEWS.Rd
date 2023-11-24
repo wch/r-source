@@ -472,12 +472,6 @@
 	vector}) \code{matrix(v, nr, nc)} and \code{dim(m) <- d} are now
       correct about sizes, using \code{long long} formatting, fixing
       \PR{18612} (and more) reported by Mikael Jagan.
-
-      \item \code{list.files()} on Windows now returns also files with names
-      longer that 260 bytes (the Windows limit is 260 characters).
-      Previously, some file names particularly with \sQuote{East Asian}
-      characters were omitted.
-
       \item \code{readChar(useBytes=TRUE)} now terminates strings even when
       the underlying connection uses extra space in the input buffer.  This
       fixes problems with extra garbage seen with \command{gzip}
@@ -561,6 +555,11 @@
       \item \code{rank(x)} no longer overflows during integer addition, when
       computing rank average for largish but not-yet long vector \code{x},
       fixing \PR{18630}, thanks to Ilia Kats.
+
+      \item \code{list.files()} on Windows now returns also files with names
+      longer that 260 bytes (the Windows limit is 260 characters).
+      Previously, some file names particularly with \sQuote{East Asian}
+      characters were omitted.
     }
   }
 }
