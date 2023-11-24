@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998-2019    The R Core Team
+ *  Copyright (C) 1998-2023    The R Core Team
  *
  *  This header file is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -42,11 +42,32 @@ extern "C" {
 # define R_VA_LIST va_list
 #endif
 
-void Rprintf(const char *, ...);
-void REprintf(const char *, ...);
+void Rprintf(const char *, ...)
+#ifdef __GNUC__
+__attribute__ ((format (printf, 1, 2)))
+#endif
+;
+
+void REprintf(const char *, ...)
+#ifdef __GNUC__
+__attribute__ ((format (printf, 1, 2)))
+#endif
+;
+
 #if !defined(__cplusplus) || defined R_USE_C99_IN_CXX
-void Rvprintf(const char *, R_VA_LIST);
-void REvprintf(const char *, R_VA_LIST);
+
+void Rvprintf(const char *, R_VA_LIST)
+#ifdef __GNUC__
+__attribute__ ((format (printf, 1, 0)))
+#endif
+;
+
+void REvprintf(const char *, R_VA_LIST)
+#ifdef __GNUC__
+__attribute__ ((format (printf, 1, 0)))
+#endif
+;
+
 #endif
 
 #ifdef  __cplusplus

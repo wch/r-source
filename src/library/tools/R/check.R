@@ -5730,6 +5730,14 @@ add_dummies <- function(dir, Log)
                 ex_re <- "(RcppEigen/include/Eigen)/.*\\[-Wtautological-compare\\]"
                 lines <- filtergrep(ex_re, lines, useBytes = TRUE)
 
+                ## 2023-11: filter out format warnings (to be fixed upstream)
+                ex_re <- "(Rcpp/include/Rcpp)/.*\\[-Wformat"
+                lines <- filtergrep(ex_re, lines, useBytes = TRUE)
+
+                ## 2023-11: filter out format warnings (to be fixed upstream)
+                ex_re <- "(rstan/io)/.*\\[-Wformat"
+                lines <- filtergrep(ex_re, lines, useBytes = TRUE)
+
                 ## Filter out StanHeader warnings
                 ex_re <- "StanHeaders/.*\\[-Wunneeded-internal-declaration\\]"
                 lines <- filtergrep(ex_re, lines, useBytes = TRUE)

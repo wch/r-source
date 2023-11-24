@@ -48,11 +48,21 @@ extern "C" {
 # define NORET
 #endif
 
-NORET void Rf_error(const char *, ...);
+NORET void Rf_error(const char *, ...)
+#ifdef __GNUC__
+__attribute__ ((format (printf, 1, 2)))
+#endif
+;
+
 NORET void UNIMPLEMENTED(const char *);
 NORET void WrongArgCount(const char *);
 
-void	Rf_warning(const char *, ...);
+void	Rf_warning(const char *, ...)
+#ifdef __GNUC__
+__attribute__ ((format (printf, 1, 2)))
+#endif
+;
+
 void 	R_ShowMessage(const char *s);
     
 

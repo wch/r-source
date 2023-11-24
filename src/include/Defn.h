@@ -2129,7 +2129,12 @@ NORET void R_jumpctxt(RCNTXT *, int, SEXP);
 SEXP ItemName(SEXP, R_xlen_t);
 
 /* ../main/errors.c : */
-NORET void errorcall_cpy(SEXP, const char *, ...);
+NORET void errorcall_cpy(SEXP, const char *, ...)
+#ifdef __GNUC__
+__attribute__ ((format (printf, 2, 3)))
+#endif
+;
+
 NORET void ErrorMessage(SEXP, int, ...);
 void WarningMessage(SEXP, R_WARNING, ...);
 SEXP R_GetTraceback(int);    // including deparse()ing
@@ -2138,10 +2143,20 @@ NORET void R_signalErrorCondition(SEXP cond, SEXP call);
 NORET void R_signalErrorConditionEx(SEXP cond, SEXP call, int exitOnly);
 SEXP R_vmakeErrorCondition(SEXP call,
 			   const char *classname, const char *subclassname,
-			   int nextra, const char *format, va_list ap);
+			   int nextra, const char *format, va_list ap)
+#ifdef __GNUC__
+__attribute__ ((format (printf, 5, 0)))
+#endif
+;
+
 SEXP R_makeErrorCondition(SEXP call,
 			  const char *classname, const char *subclassname,
-			  int nextra, const char *format, ...);
+			  int nextra, const char *format, ...)
+#ifdef __GNUC__
+__attribute__ ((format (printf, 5, 6)))
+#endif
+;
+
 void R_setConditionField(SEXP cond, R_xlen_t idx, const char *name, SEXP val);
 SEXP R_makeNotSubsettableError(SEXP x, SEXP call);
 SEXP R_makeMissingSubscriptError(SEXP x, SEXP call);
@@ -2236,9 +2251,23 @@ char *mbcsTruncateToValid(char *s);
 Rboolean utf8Valid(const char *str);
 char *Rf_strchr(const char *s, int c);
 char *Rf_strrchr(const char *s, int c);
-int Rvsnprintf_mbcs(char *buf, size_t size, const char *format, va_list ap);
-int Rsnprintf_mbcs(char *str, size_t size, const char *format, ...);
-int Rasprintf_malloc(char **str, const char *fmt, ...);
+int Rvsnprintf_mbcs(char *buf, size_t size, const char *format, va_list ap)
+#ifdef __GNUC__
+__attribute__ ((format (printf, 3, 0)))
+#endif
+;
+
+int Rsnprintf_mbcs(char *str, size_t size, const char *format, ...)
+#ifdef __GNUC__
+__attribute__ ((format (printf, 3, 4)))
+#endif
+;
+
+int Rasprintf_malloc(char **str, const char *fmt, ...)
+#ifdef __GNUC__
+__attribute__ ((format (printf, 2, 3)))
+#endif
+;
 
 SEXP fixup_NaRm(SEXP args); /* summary.c */
 void invalidate_cached_recodings(void);  /* from sysutils.c */
@@ -2297,7 +2326,7 @@ extern const char *locale2charset(const char *);
 #  endif
 #  define gettext_noop(String) String
 #  define N_(String) gettext_noop (String)
-#  else /* not NLS */
+# else /* not NLS */
 #  define _(String) (String)
 #  define N_(String) String
 #  define ngettext(String, StringP, N) (N > 1 ? StringP: String)
