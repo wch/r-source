@@ -55,6 +55,11 @@
       transliteration could replace one character by two or more (only
       seen on macOS 14) and typically warned that the information was
       not known.
+
+      \item \code{list.files()} on Windows now returns also files with names
+      longer that 260 bytes (the Windows limit is 260 characters).
+      Previously, some file names particularly with \sQuote{East Asian}
+      characters were omitted.
     }
   }
 }
