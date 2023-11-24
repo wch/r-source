@@ -1,6 +1,6 @@
 % File src/library/base/man/scan.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2022 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{scan}
@@ -98,13 +98,13 @@ scan(file = "", what = double(), nmax = -1, n = -1, sep = "",
     interpreted as missing (\code{\link{NA}}) values.  Blank fields are
     also considered to be missing values in logical, integer, numeric
     and complex fields.  Note that the test happens \emph{after} 
-    white space is stripped from the input, so \code{na.strings} values 
+    white space is stripped from the input (if enabled), so \code{na.strings} values
     may need their own white space stripped in advance.}
 
   \item{flush}{logical: if \code{TRUE}, \code{scan} will flush to the
     end of the line after reading the last of the fields requested.
     This allows putting comments after the last field, but precludes
-    putting more that one record on a line.}
+    putting more than one record on a line.}
 
   \item{fill}{logical: if \code{TRUE}, \code{scan} will implicitly add
     empty fields to any lines with fewer fields than implied by
@@ -113,7 +113,7 @@ scan(file = "", what = double(), nmax = -1, n = -1, sep = "",
   \item{strip.white}{vector of logical value(s) corresponding to items
     in the \code{what} argument.  It is used only when \code{sep} has
     been specified, and allows the stripping of leading and trailing
-    \sQuote{white space} from \code{character} fields (\code{numeric} fields
+    \sQuote{white space} from \code{character} fields (other fields
     are always stripped).  Note: white space inside quoted strings is
     not stripped.
 
@@ -195,7 +195,7 @@ scan(file = "", what = double(), nmax = -1, n = -1, sep = "",
   \code{na.strings} contains \code{""} when they are regarded as missing
   values.
 
-  The allowed input for a numeric field is optional whitespace followed
+  The allowed input for a numeric field is optional whitespace, followed by
   either \code{NA} or an optional sign followed by a decimal or
   hexadecimal constant (see \link{NumericConstants}), or \code{NaN},
   \code{Inf} or \code{infinity} (ignoring case).  Out-of-range values

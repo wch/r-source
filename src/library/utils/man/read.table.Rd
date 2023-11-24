@@ -125,7 +125,7 @@ read.delim2(file, header = TRUE, sep = "\t", quote = "\"",
     interpreted as \code{\link{NA}} values.  Blank fields are also
     considered to be missing values in logical, integer, numeric and
     complex fields.  Note that the test happens \emph{after}
-    white space is stripped from the input, so \code{na.strings}
+    white space is stripped from the input (if enabled), so \code{na.strings}
     values may need their own white space stripped in advance.}
 
   \item{colClasses}{character.  A vector of classes to be assumed for
