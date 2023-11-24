@@ -136,13 +136,15 @@
 \newlength{\ldescriptionwidth}
 \newcommand{\ldescriptionlabel}[1]{%
   \settowidth{\ldescriptionwidth}{{#1}}%
-  \ifdim\ldescriptionwidth>\labelwidth
-    % FIXME: labels can become very long for combined arguments
-    % (e.g., in format.Rd) and need line wrapping
-    {\parbox[b]{\labelwidth}%
-      {\makebox[0pt][l]{#1}\\[1pt]\makebox{}}}%
+  \ifdim\ldescriptionwidth>0.8\textwidth
+    \makebox[\labelwidth][l]{\parbox[b]{0.8\textwidth}{#1\\[1pt]\makebox{}}}%
   \else
-    \makebox[\labelwidth][l]{{#1}}%
+    \ifdim\ldescriptionwidth>\labelwidth
+      {\parbox[b]{\labelwidth}%
+        {\makebox[0pt][l]{#1}\\[1pt]\makebox{}}}%
+    \else
+      \makebox[\labelwidth][l]{{#1}}%
+    \fi
   \fi
   \hfil\relax}
 \newenvironment{ldescription}[1][1in]%
