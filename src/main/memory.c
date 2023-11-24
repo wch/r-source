@@ -112,7 +112,7 @@ static void gc_error(const char *msg)
     else if (R_in_gc)
 	REprintf("%s", msg);
     else
-	error(msg);
+	error("%s", msg);
 }
 
 /* These are used in profiling to separate out time in GC */
@@ -2737,7 +2737,8 @@ SEXP allocVector3(SEXPTYPE type, R_xlen_t length, R_allocator_t *allocator)
 	    size = 0;
 	else {
 	    if (length > R_SIZE_T_MAX / sizeof(int))
-		error(_("cannot allocate vector of length %d"), length);
+		error(_("cannot allocate vector of length %lld"),
+		      (long long)length);
 	    size = INT2VEC(length);
 #if VALGRIND_LEVEL > 0
 	    actual_size = length*sizeof(int);
@@ -2749,7 +2750,8 @@ SEXP allocVector3(SEXPTYPE type, R_xlen_t length, R_allocator_t *allocator)
 	    size = 0;
 	else {
 	    if (length > R_SIZE_T_MAX / sizeof(double))
-		error(_("cannot allocate vector of length %d"), length);
+		error(_("cannot allocate vector of length %lld"),
+		      (long long)length);
 	    size = FLOAT2VEC(length);
 #if VALGRIND_LEVEL > 0
 	    actual_size = length * sizeof(double);
@@ -2761,7 +2763,8 @@ SEXP allocVector3(SEXPTYPE type, R_xlen_t length, R_allocator_t *allocator)
 	    size = 0;
 	else {
 	    if (length > R_SIZE_T_MAX / sizeof(Rcomplex))
-		error(_("cannot allocate vector of length %d"), length);
+		error(_("cannot allocate vector of length %lld"),
+		      (long long)length);
 	    size = COMPLEX2VEC(length);
 #if VALGRIND_LEVEL > 0
 	    actual_size = length * sizeof(Rcomplex);
@@ -2775,7 +2778,8 @@ SEXP allocVector3(SEXPTYPE type, R_xlen_t length, R_allocator_t *allocator)
 	    size = 0;
 	else {
 	    if (length > R_SIZE_T_MAX / sizeof(SEXP))
-		error(_("cannot allocate vector of length %d"), length);
+		error(_("cannot allocate vector of length %lld"),
+		      (long long)length);
 	    size = PTR2VEC(length);
 #if VALGRIND_LEVEL > 0
 	    actual_size = length * sizeof(SEXP);
@@ -2796,8 +2800,8 @@ SEXP allocVector3(SEXPTYPE type, R_xlen_t length, R_allocator_t *allocator)
 #endif
 	return allocList((int) length);
     default:
-	error(_("invalid type/length (%s/%d) in vector allocation"),
-	      type2char(type), length);
+	error(_("invalid type/length (%s/%lld) in vector allocation"),
+	      type2char(type), (long long)length);
     }
 
     if (allocator) {
@@ -3500,9 +3504,9 @@ void *R_chk_calloc(size_t nelem, size_t elsize)
 	return(NULL);
 #endif
     p = calloc(nelem, elsize);
-    if(!p) /* problem here is that we don't have a format for size_t. */
-	error(_("'R_Calloc' could not allocate memory (%.0f of %u bytes)"),
-	      (double) nelem, elsize);
+    if(!p)
+	error(_("'R_Calloc' could not allocate memory (%llu of %llu bytes)"),
+	      (unsigned long long)nelem, (unsigned long long)elsize);
     return(p);
 }
 
@@ -3512,8 +3516,8 @@ void *R_chk_realloc(void *ptr, size_t size)
     /* Protect against broken realloc */
     if(ptr) p = realloc(ptr, size); else p = malloc(size);
     if(!p)
-	error(_("'R_Realloc' could not re-allocate memory (%.0f bytes)"),
-	      (double) size);
+	error(_("'R_Realloc' could not re-allocate memory (%llu bytes)"),
+	      (unsigned long long)size);
     return(p);
 }
 
@@ -4648,7 +4652,8 @@ static void R_InitMemReporting(SEXP filename, int append,
     if(R_MemReportingOutfile != NULL) R_EndMemReporting();
     R_MemReportingOutfile = RC_fopen(filename, append ? "a" : "w", TRUE);
     if (R_MemReportingOutfile == NULL)
-	error(_("Rprofmem: cannot open output file '%s'"), filename);
+	error(_("Rprofmem: cannot open output file '%s'"),
+	      translateChar(filename));
     R_MemReportingThreshold = threshold;
     R_IsMemReporting = 1;
     return;

@@ -796,7 +796,7 @@ attribute_hidden SEXP do_psort(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    if (!R_FINITE(rl[i])) error(_("NA or infinite index"));
 	    l[i] = (R_xlen_t) rl[i];
 	    if (l[i] < 1 || l[i] > n)
-		error(_("index %ld outside bounds"), l[i]);
+		error(_("index %lld outside bounds"), (long long)l[i]);
 	}
     } else {
 	int *il = INTEGER(p);

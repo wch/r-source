@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997--2022  The R Core Team
+ *  Copyright (C) 1997--2023  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -444,7 +444,7 @@ static void MKsetup(R_xlen_t n, HashData *d, R_xlen_t nmax)
 #ifdef LONG_VECTOR_SUPPORT
     /* M = 2^32 is safe, hence n <= 2^31 -1 */
     if(n < 0) /* protect against overflow to -ve */
-	error(_("length %d is too large for hashing"), n);
+	error(_("length %lld is too large for hashing"), (long long)n);
 #else
     if(n < 0 || n >= 1073741824) /* protect against overflow to -ve */
 	error(_("length %d is too large for hashing"), n);

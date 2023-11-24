@@ -503,7 +503,8 @@ char *R_ExpandFileName_readline(const char *s, char *buff)
     strncpy(buff, s2, R_PATH_MAX);
     if(len >= R_PATH_MAX) {
 	buff[R_PATH_MAX-1] = '\0';
-	warning(_("expanded path length %d would be too long for\n%s\n"), len, s);
+	warning(_("expanded path length %lld would be too long for\n%s\n"),
+	        (long long)len, s);
     }
     free(s2);
     return buff;

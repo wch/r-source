@@ -214,7 +214,7 @@ static int curlMultiCheckerrs(CURLM *mhnd)
 		    strerr = ftp_errstr(status);
 		    type = "FTP";
 		}
-		warning(_("cannot open URL '%s': %s status was '%d %s'"),
+		warning(_("cannot open URL '%s': %s status was '%ld %s'"),
 			url, type, status, strerr);
 	    } else {
 		strerr = curl_easy_strerror(msg->data.result);
@@ -723,7 +723,8 @@ in_do_curlDownload(SEXP call, SEXP op, SEXP args, SEXP rho)
 	curl_easy_getinfo(hnd[0], CURLINFO_CONTENT_LENGTH_DOWNLOAD, &cl);
 #endif
 	if (cl >= 0 && dl != cl)
-	    warning(_("downloaded length %0.f != reported length %0.f"), dl, cl);
+	    warning(_("downloaded length %0.f != reported length %0.f"),
+	            (double) dl, (double) cl);
     }
 
     n_err += curlMultiCheckerrs(mhnd);
@@ -900,7 +901,7 @@ static size_t Curl_read(void *ptr, size_t size, size_t nitems,
     }
     if (n_err != 0) {
 	Curl_close(con);
-	error(_("cannot read from connection"), n_err);
+	error(_("cannot read from connection"));
     }
     return total/size;
 }

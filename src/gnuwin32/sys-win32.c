@@ -113,8 +113,8 @@ const char *R_ExpandFileName(const char *s)
 	    strcat(newFileName, s+1);
 	    return newFileName;
 	} else {
-	    warning(_("expanded path length %d would be too long for\n%s\n"),
-		    len, s);
+	    warning(_("expanded path length %llu would be too long for\n%s\n"),
+		    (unsigned long long)len, s);
 	    return s;
 	}
     } else return s;
@@ -135,8 +135,8 @@ const char *R_ExpandFileNameUTF8(const char *s)
 	size_t len = strlen(native_home) * 4;
     	char *utf8_home = (char *)malloc(len);
 	if (!utf8_home) {
-	    warning(_("expanded path length %d would be too long for\n%s\n"),
-	            len, s);
+	    warning(_("expanded path length %llu would be too long for\n%s\n"),
+	            (unsigned long long)len, s);
 	    return s;
 	}
     	reEnc2(native_home, utf8_home, len, CE_NATIVE, CE_UTF8, 3);
@@ -146,8 +146,8 @@ const char *R_ExpandFileNameUTF8(const char *s)
     	    strcat(newFileName, s+1);
     	    return newFileName;
     	} else {
-	    warning(_("expanded path length %d would be too long for\n%s\n"),
-	            len, s);
+	    warning(_("expanded path length %llu would be too long for\n%s\n"),
+	            (unsigned long long)len, s);
 	    return s;
 	}
     }
@@ -310,7 +310,7 @@ SEXP do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
 		    getCharCE(STRING_ELT(cmd, 0)),
 		    flag, vis, CHAR(STRING_ELT(fin, 0)), fout, ferr,
 		    timeout, &timedout, consignals);
-	if (ll == NOLAUNCH) warning(runerror());
+	if (ll == NOLAUNCH) warning("%s", runerror());
     } else {
 	/* read stdout +/- stderr from pipe */
 	int m = -1;
@@ -330,7 +330,7 @@ SEXP do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
 		       vis, CHAR(STRING_ELT(fin, 0)), m, fout, ferr, timeout, 0);
 	if (!fp) {
 	    /* If intern = TRUE generate an error */
-	    if (flag == 3) error(runerror());
+	    if (flag == 3) error("%s", runerror());
 	    ll = NOLAUNCH;
 	} else {
 	    if (flag == 3) { /* intern */

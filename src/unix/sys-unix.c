@@ -159,8 +159,8 @@ static const char *R_ExpandFileName_unix(const char *s, char *buff)
 	// buff is passed from R_ExpandFileName, uses static array of
 	// size R_PATH_MAX.
 	if (len >= R_PATH_MAX) {
-	    warning(_("expanded path length %d would be too long for\n%s\n"),
-		       len, s);
+	    warning(_("expanded path length %lld would be too long for\n%s\n"),
+		       (long long)len, s);
 	    return s;
 	}
 	(void)snprintf(buff, len + 1,  "%s/%s", home, s2);

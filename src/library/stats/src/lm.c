@@ -1,6 +1,6 @@
 /*  R : A Computer Language for Statistical Data Analysis
  *
- *  Copyright (C) 2012-2013  The R Core Team
+ *  Copyright (C) 2012-2023  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -59,8 +59,8 @@ SEXP Cdqrls(SEXP x, SEXP y, SEXP tol, SEXP chk)
     n = dims[0]; p = dims[1];
     if(n) ny = (int)(XLENGTH(y)/n); /* y :  n x ny, or an n - vector */
     if(check && n * ny != XLENGTH(y))
-	error(_("dimensions of 'x' (%d,%d) and 'y' (%d) do not match"),
-	      n,p, XLENGTH(y));
+	error(_("dimensions of 'x' (%d,%d) and 'y' (%lld) do not match"),
+	      n,p, (long long)XLENGTH(y));
 
     /* These lose attributes, so do after we have extracted dims */
     if (TYPEOF(x) != REALSXP) {

@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2002--2022  The R Core Team
+ *  Copyright (C) 2002--2023  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Pulic License as published by
@@ -237,7 +237,8 @@ attribute_hidden SEXP do_agrep(SEXP call, SEXP op, SEXP args, SEXP env)
 	} else {
 	    const char *s = translateChar(STRING_ELT(vec, i));
 	    if(mbcslocale && !mbcsValid(s))
-		error(_("input string %d is invalid in this locale"), i+1);
+		error(_("input string %lld is invalid in this locale"),
+		      (long long)i+1);
 	    rc = tre_regaexec(&reg, s, &match, params, 0);
 	    vmaxset(vmax);
 	}
@@ -873,8 +874,8 @@ attribute_hidden SEXP do_aregexec(SEXP call, SEXP op, SEXP args, SEXP env)
 	    else {
 		t = translateChar(STRING_ELT(vec, i));
 		if(mbcslocale && !mbcsValid(t))
-		    error(_("input string %d is invalid in this locale"),
-			  i + 1);
+		    error(_("input string %lld is invalid in this locale"),
+			  (long long)i + 1);
 		rc = tre_regaexec(&reg, t,
 				  &match, params, 0);
 		vmaxset(vmax);

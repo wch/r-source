@@ -174,8 +174,8 @@ attribute_hidden SEXP do_vapply(SEXP call, SEXP op, SEXP args, SEXP rho)
 		val = lazy_duplicate(val); // Need to duplicate? Copying again anyway
 	    PROTECT_WITH_INDEX(val, &indx);
 	    if (length(val) != commonLen)
-		error(_("values must be length %d,\n but FUN(X[[%d]]) result is length %d"),
-		       commonLen, i+1, length(val));
+		error(_("values must be length %d,\n but FUN(X[[%lld]]) result is length %d"),
+		       commonLen, (long long)i+1, length(val));
 	    valType = TYPEOF(val);
 	    if (valType != commonType) {
 		Rboolean okay = FALSE;
@@ -186,8 +186,8 @@ attribute_hidden SEXP do_vapply(SEXP call, SEXP op, SEXP args, SEXP rho)
 		case INTSXP:  okay = (valType == LGLSXP); break;
 		}
 		if (!okay)
-		    error(_("values must be type '%s',\n but FUN(X[[%d]]) result is type '%s'"),
-			  R_typeToChar(value), i+1, R_typeToChar(val));
+		    error(_("values must be type '%s',\n but FUN(X[[%lld]]) result is type '%s'"),
+			  R_typeToChar(value), (long long)i+1, R_typeToChar(val));
 		REPROTECT(val = coerceVector(val, commonType), indx);
 	    }
 	    /* Take row names from the first result only */

@@ -245,7 +245,7 @@ static void conFinalizer(SEXP ptr)
     R_ClearExternalPtr(ptr); /* not really needed */
 
     if (warn)
-	warning(buf); /* may be turned into error */
+	warning("%s", buf); /* may be turned into error */
 }
 
 
@@ -267,7 +267,7 @@ NORET static void set_iconv_error(Rconnection con, char* from, char* to)
     char buf[100];
     snprintf(buf, 100, _("unsupported conversion from '%s' to '%s'"), from, to);
     con_destroy(ConnIndex(con));
-    error(buf);
+    error("%s", buf);
 }
 
 /* ------------------- buffering --------------------- */
@@ -4087,7 +4087,8 @@ attribute_hidden SEXP do_readLines(SEXP call, SEXP op, SEXP args, SEXP env)
 	    !memcmp(buf, "\xef\xbb\xbf", 3)) qbuf = buf + 3;
 	SET_STRING_ELT(ans, nread, mkCharCE(qbuf, oenc));
 	if (warn && strlen(buf) < nbuf)
-	    warning(_("line %d appears to contain an embedded nul"), nread + 1);
+	    warning(_("line %lld appears to contain an embedded nul"),
+	            (long long)nread + 1);
 	if(c == R_EOF) goto no_more_lines;
     }
     if(!wasopen) {endcontext(&cntxt); con->close(con);}
@@ -6298,7 +6299,7 @@ SEXP R_decompress2(SEXP in, Rboolean *err)
 	res = uncompress((unsigned char *) buf, &outl,
 			 (Bytef *)(p + 5), inlen - 5);
 	if(res != Z_OK) {
-	    warning("internal error %d in R_decompress1");
+	    warning("internal error %d in R_decompress1", res);
 	    *err = TRUE;
 	    return R_NilValue;
 	}
@@ -6501,7 +6502,7 @@ SEXP R_decompress3(SEXP in, Rboolean *err)
 	init_filters();
 	ret = lzma_raw_decoder(&strm, filters);
 	if (ret != LZMA_OK) {
-	    warning("internal error %d in R_decompress3", ret);
+	    warning("internal error %d in R_decompress3", (int)ret);
 	    *err = TRUE;
 	    return R_NilValue;
 	}
@@ -6511,8 +6512,8 @@ SEXP R_decompress3(SEXP in, Rboolean *err)
 	strm.avail_out = outlen;
 	ret = lzma_code(&strm, LZMA_RUN);
 	if (ret != LZMA_OK && (strm.avail_in > 0)) {
-	    warning("internal error %d in R_decompress3 %d",
-		    ret, strm.avail_in);
+	    warning("internal error %d in R_decompress3 %llu",
+		    (int)ret, (unsigned long long)strm.avail_in);
 	    *err = TRUE;
 	    return R_NilValue;
 	}
@@ -6530,7 +6531,7 @@ SEXP R_decompress3(SEXP in, Rboolean *err)
 	uLong outl; int res;
 	res = uncompress(buf, &outl, (Bytef *)(p + 5), inlen - 5);
 	if(res != Z_OK) {
-	    warning("internal error %d in R_decompress1");
+	    warning("internal error %d in R_decompress1", res);
 	    *err = TRUE;
 	    return R_NilValue;
 	}
@@ -6839,8 +6840,9 @@ do_memDecompress(SEXP call, SEXP op, SEXP args, SEXP env)
 		    outlen *= 2;
 		    continue;
 		} else {
-		    error("internal error %d in memDecompress(%s) at %d",
-			  ret, "type = \"xz\"", strm.avail_in);
+		    error("internal error %d in memDecompress(%s) at %llu",
+			  (int)ret, "type = \"xz\"",
+		          (unsigned long long)strm.avail_in);
 		}
 	    } else {
 		break;

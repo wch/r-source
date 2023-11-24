@@ -144,8 +144,8 @@ static SEXP EnlargeVector(SEXP x, R_xlen_t newlen)
     /* Enlarge the vector itself. */
     len = xlength(x);
     if (LOGICAL(GetOption1(R_CheckBoundsSymbol))[0])
-	warning(_("assignment outside vector/list limits (extending from %d to %d)"),
-		len, newlen);
+	warning(_("assignment outside vector/list limits (extending from %lld to %lld)"),
+		(long long)len, (long long)newlen);
 
     /* if the vector is not shared, is growable. and has room, then
        increase its length */

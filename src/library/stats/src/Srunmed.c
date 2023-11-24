@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2012-2019  The R Core Team
+ *  Copyright (C) 2012-2023  The R Core Team
  *  Copyright (C) 2003       The R Foundation
  *  Copyright (C) 1995-2002  Martin Maechler <maechler@stat.math.ethz.ch>
  *
@@ -259,8 +259,8 @@ SEXP runmed(SEXP sx, SEXP stype, SEXP sk, SEXP end, SEXP naAct, SEXP printLev)
 	    break;
 	}
 	case NA_FAIL:
-	    error(_("runmed(x, .., na.action=\"na.fail\"): have NAs starting at x[%ld]"),
-		  firstNA);
+	    error(_("runmed(x, .., na.action=\"na.fail\"): have NAs starting at x[%lld]"),
+		  (long long)firstNA);
 	default:
 	    error(_("runmed(): invalid 'na.action'"));
 	}

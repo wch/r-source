@@ -596,8 +596,8 @@ static void *in_R_HTTPOpen2(const char *url, const char *agent, const char *head
 	InternetCloseHandle(wictxt->session);
 	InternetCloseHandle(wictxt->hand);
 	free(wictxt);
-	warning(_("cannot open URL '%s': %s status was '%d %s'"),
-		url, "HTTP", status, buf);
+	warning(_("cannot open URL '%s': %s status was '%lu %s'"),
+		url, "HTTP", (unsigned long)status, buf);
 	return NULL;
     }
 

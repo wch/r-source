@@ -1033,7 +1033,7 @@ attribute_hidden SEXP do_makenames(SEXP call, SEXP op, SEXP args, SEXP env)
 		}
 		wcstombs(tmp, wstr, strlen(tmp)+1);
 		R_Free(wstr);
-	    } else error(_("invalid multibyte string %d"), i+1);
+	    } else error(_("invalid multibyte string %lld"), (long long)i+1);
 	} else {
 	    for (p = tmp; *p; p++) {
 		if (*p == '.' || (allow_ && *p == '_')) /* leave alone */;
@@ -1162,7 +1162,7 @@ attribute_hidden SEXP do_tolower(SEXP call, SEXP op, SEXP args, SEXP env)
 		    }
 		    R_Free(cbuf);
 		} else {
-		    error(_("invalid multibyte string %d"), i+1);
+		    error(_("invalid multibyte string %lld"), (long long)i+1);
 		}
 	    }
 	    vmaxset(vmax);
@@ -1591,7 +1591,8 @@ attribute_hidden SEXP do_chartr(SEXP call, SEXP op, SEXP args, SEXP env)
 		    ienc = CE_NATIVE;
 		}
 		if (nc < 0)
-		    error(_("invalid input multibyte string %d"), i+1);
+		    error(_("invalid input multibyte string %lld"),
+		          (long long)i+1);
 		wc = (wchar_t *) R_AllocStringBuffer((nc+1)*sizeof(wchar_t),
 						     &cbuff);
 		if (ienc == CE_UTF8) utf8towcs(wc, xi, nc + 1);

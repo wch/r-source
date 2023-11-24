@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998--2020  The R Core Team
+ *  Copyright (C) 1998--2023  The R Core Team
  *  Copyright (C) 1995--1997  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -230,8 +230,8 @@ static uint64_t nextn0_64(uint64_t n, const int f[], int nf)
     while(!ok_n_64(n, f, nf) && n < UINT64_MAX)
 	n++;
     if(n >= UINT64_MAX) { // or give an error?  previously was much more problematic
-	warning(_("nextn<64>() found no solution < %ld = UINT64_MAX (the maximal integer)"),
-		UINT64_MAX);
+	warning(_("nextn<64>() found no solution < %llu = UINT64_MAX (the maximal integer)"),
+		(unsigned long long)UINT64_MAX);
 	return 0; // no NA for this type
     } else  // FIXME: R has no 64 int --> The caller may *not* be able to coerce to REALSXP
 	return n;
