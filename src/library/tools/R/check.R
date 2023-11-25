@@ -5746,6 +5746,19 @@ add_dummies <- function(dir, Log)
                 ex_re <- "StanHeaders/.*\\[-Wunneeded-internal-declaration\\]"
                 lines <- filtergrep(ex_re, lines, useBytes = TRUE)
 
+                ## Filter out TMB warnings
+                ex_re <- "TMB/include/(Rstream|TMB|tmb_core|dynamic_data).hpp:.*\\[-Wformat"
+                lines <- filtergrep(ex_re, lines, useBytes = TRUE)
+
+                ## Filter out testthat warnings
+                ex_re <- "testthat/include/testthat/testthat.h:.*\\[-Wformat"
+                lines <- filtergrep(ex_re, lines, useBytes = TRUE)
+
+                ## Filter out RNifti warnings
+                RNifti/include/RNifti/NiftiImage_impl.h
+                ex_re <- "RNifti/include/RNifti/NiftiImage_impl.h:.*\\[-Wformat"
+                lines <- filtergrep(ex_re, lines, useBytes = TRUE)
+
                 ## and GNU extensions in system headers
                 ex_re <- "^ *(/usr/|/opt/).*GNU extension"
                 lines <- filtergrep(ex_re, lines, useBytes = TRUE)
