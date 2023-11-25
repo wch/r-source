@@ -5731,15 +5731,15 @@ add_dummies <- function(dir, Log)
                 lines <- filtergrep(ex_re, lines, useBytes = TRUE)
 
                 ## 2023-11: filter out format warnings (to be fixed upstream)
-                ex_re <- "(Rcpp/include/Rcpp)/.*\\[-Wformat"
+                ex_re <- "Rcpp/include/Rcpp/.*\\[-Wformat"
                 lines <- filtergrep(ex_re, lines, useBytes = TRUE)
 
                 ## 2023-11: filter out format warnings (to be fixed upstream)
-                ex_re <- "(rstan/include/rstan/io)/.*\\[-Wformat"
+                ex_re <- "rstan/include/rstan/io/.*\\[-Wformat"
                 lines <- filtergrep(ex_re, lines, useBytes = TRUE)
 
                 ## 2023-11: filter out format warnings (to be fixed upstream)
-                ex_re <- "(cpp11/include/cpp11)/.*\\[-Wformat"
+                ex_re <- "cpp11/include/cpp11/.*\\[-Wformat"
                 lines <- filtergrep(ex_re, lines, useBytes = TRUE)
 
                 ## Filter out StanHeader warnings
