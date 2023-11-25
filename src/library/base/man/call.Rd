@@ -1,6 +1,6 @@
 % File src/library/base/man/call.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2019 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{call}
@@ -36,13 +36,18 @@ as.call(x)
       partially match \code{name}.
     }
     \item{\code{is.call} }{is used to determine whether \code{x} is a call (i.e.,
-      of mode \code{"call"} or \code{"("}).  Note that
+      of \code{\link{mode}} \code{"call"} or \code{"("}).  Note that
       \itemize{
 	\item \code{is.call(x)} is strictly equivalent to
 	  \code{typeof(x) == "language"}.
 	\item \code{\link{is.language}()} is also true for calls (but also
 	  for \code{\link{symbol}}s and \code{\link{expression}}s where
 	  \code{is.call()} is false).
+	\item When \code{is.call(cl)} is true, \code{\link{class}(cl)}
+	typically returns \code{"call"}, except when \code{cl} is one of
+	\code{if}, \code{for}, \code{while}, \code{(}, \code{\{},  \code{<-}, \code{=},
+	which each has its own \code{class(cl)} (equal to the
+	\dQuote{function} name), see the \sQuote{Special calls} example.
       }
     }
     \item{\code{as.call(x)}: }{Objects of mode \code{"list"} can be coerced to mode \code{"call"}.
@@ -114,6 +119,16 @@ g <- list(f, quote(A))
 mode(g) <- "call"
 g
 eval(g)
+
+## Special calls (and some regular ones):
+L <- as.list(E <- setNames( , c("if", "for", "while", "repeat", "function",
+                                  "(", "{", "[",  "<-", "<<-", "->", "=")))
+for(i in seq_along(L)) L[[i]] <- call(E[[i]]) # instead of lapply(E, call) ..
+list_ <- function (...) `names<-`(list(...), vapply(sys.call()[-1L], as.character, ""))
+(Tab <- noquote(sapply(list_(is.call, typeof, class, mode), \(F) sapply(L, F))))
+## The 7 exceptions:
+Tab[ Tab[,"class"] != "call" , c(3:4, 1:2)]
+
 ## see also the examples in the help for do.call
 }
 \keyword{programming}

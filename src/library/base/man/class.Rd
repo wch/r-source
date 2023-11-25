@@ -59,8 +59,7 @@ oldClass(x) <- value
   but for type \code{"language"} and \code{\link{mode}} \code{"call"},
   where the following extra classes exist for the corresponding function
   \code{\link{call}}s:
-  \code{if}, \code{while}, \code{for}, \code{=}, \code{<-}, \code{(},
-  \code{\{}, \code{call}.
+  \code{if}, \code{for}, \code{while}, \code{(}, \code{\{}, \code{<-}, \code{=}.
 
   Note that for objects \code{x} of an implicit (or an S4) class, when a
   (S3) generic function \code{foo(x)} is called, method dispatch may use
