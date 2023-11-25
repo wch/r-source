@@ -639,7 +639,7 @@ function(pkgdir, outfile, title, silent = FALSE,
     if (!only_meta) {
         if (dir.exists(files_or_dir))
             writeLines(c(
-                "\\Rdcontents{Table of contents:}",
+                "\\Rdcontents{Contents}",
                 if (!asUTF8) paste0("\\inputencoding{", latex_outputEncoding, "}")
             ), out)
         res <- .Rdfiles2tex(files_or_dir, out, encoding = enc,
