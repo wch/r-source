@@ -65,7 +65,7 @@ function(ifile, encoding = "unknown", keepSpacing = TRUE,
     	if (i < length(tags)
             && tags[i+1L] == "TEXT"
             && length(x[[i]]) == 1L
-            && tags[i] %in% c("\\bold", "\\emph", "\\strong", "\\link")
+            && tags[i] %in% c("\\bold", "\\emph", "\\strong")
             && (tags[i] %notin% drop)
             && RdTags(x[[i]]) == "TEXT") {
     	    text1 <- x[[i]][[1L]]
