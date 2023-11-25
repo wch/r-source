@@ -82,6 +82,7 @@ for(i in seq_along(pdfenc)) {
     }
 }
 
+if(!capabilities("cairo")) q("no")
 ## Now test cairo_pdf(): do not expect any messages
 cairo_pdf("cairo_pdf-encodings.pdf", width = 9, height = 9, onefile = TRUE)
 for (e in enc) {
@@ -89,5 +90,3 @@ for (e in enc) {
     do_one(e, e, TRUE)
 }
 dev.off()
-
-proc.time()

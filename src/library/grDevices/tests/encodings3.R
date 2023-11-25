@@ -45,6 +45,7 @@ text(0.5+seq_along(three), 3, three)
 text(0.5+seq_along(four), 4, four)
 dev.off()
 
+if(!capabilities("cairo")) q("no")
 cairo_pdf("cairo_pdf-encodings3.pdf", width = 7, height = 7, onefile = TRUE)
 plot(1:10, 1:10, type = "n")
 text(0.5+seq_along(two), 2, two, adj = c(0,0))
@@ -56,4 +57,3 @@ text(0.5+seq_along(three), 3, three)
 text(0.5+seq_along(four), 4, four)
 dev.off()
 
-proc.time()

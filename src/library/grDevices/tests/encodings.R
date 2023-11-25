@@ -153,5 +153,3 @@ if(!inherits(res8, "try-error")) message("error check failed on 'eight'")
 dev.off()
 unlink(tf)
 
-proc.time()
-
