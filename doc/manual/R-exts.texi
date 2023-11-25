@@ -7851,7 +7851,10 @@ Indicate a reference without a direct cross-reference @emph{via} @code{\link}
 @item \acronym@{@var{acronym}@}
 @findex \acronym
 Indicate an acronym (an abbreviation written in all capital letters),
-such as @acronym{GNU}. @LaTeX{}-like.
+such as @acronym{GNU}.  @LaTeX{}-like.
+@item \abbr@{@var{abbr}@}
+@findex \abbr
+Indicates an abbreviation.  @LaTeX{}-like.
 @end table
 
 
