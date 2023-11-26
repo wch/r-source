@@ -80,7 +80,7 @@ text(5, 9, eight)
 dev.off()
 
 pdf("PDF-cyrillic.pdf", width = 5, height = 5,
-    encoding = "KOI8-R", family = "NimbusSan", compress = FALSE)
+    encoding = "KOI8-R", compress = FALSE)
 plot(1:10, 1:10, type = "n")
 text(1.5, 8, seven, adj = c(0,0))
 dev.off()
@@ -109,8 +109,8 @@ text(1.5, 8, seven, adj = c(0,0))
 text(1.5, 9, eight, adj = c(0,0)) ## macOS does transliteration here, badly
 dev.off()
 
-postscript("PS-cyrillic.ps", width = 5, height = 5,
-           encoding = "KOI8-R", family = "NimbusSan") ## gs uses URW fonts
+## avoid clashes with encodings tests in encodings2.R
+postscript("PS-cyr.ps", width = 5, height = 5, encoding = "KOI8-R")
 plot(1:10, 1:10, type = "n")
 text(1.5, 7, seven, adj = c(0,0))
 dev.off()
