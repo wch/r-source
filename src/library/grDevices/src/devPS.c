@@ -56,6 +56,9 @@ extern int errno;
 #ifndef max
 #define max(a,b) ((a > b) ? a : b)
 #endif
+#ifndef min
+#define min(a,b) ((a > b) ? b : a)
+#endif
 
 /* from connections.o */
 extern gzFile R_gzopen (const char *path, const char *mode);
@@ -116,6 +119,9 @@ static const char *CIDBoldFontStr2 =
 /* Part 1.  AFM File Parsing.  */
 
 /* These are the basic entities in the AFM file */
+
+// The structure is defined in
+// https://adobe-type-tools.github.io/font-tech-notes/pdfs/5004.AFM_Spec.pdf
 
 #define BUFSIZE 512
 #define NA_SHORT -30000
@@ -287,6 +293,8 @@ typedef struct {
 
 
 /* If reencode > 0, remap to new encoding */
+// File format in
+// https://adobe-type-tools.github.io/font-tech-notes/pdfs/5004.AFM_Spec.pdf
 static int GetCharInfo(char *buf, FontMetricInfo *metrics,
 		       CNAME *charnames, CNAME *encnames,
 		       int reencode)
@@ -329,6 +337,7 @@ static int GetCharInfo(char *buf, FontMetricInfo *metrics,
 
     if (!MatchKey(p, "B ")) return 0;
     p = SkipToNextItem(p);
+    // Bounding box is llx lly urx ury, y measured from baseline.
     sscanf(p, "%hd %hd %hd %hd",
 	   &(metrics->CharInfo[nchar].BBox[0]),
 	   &(metrics->CharInfo[nchar].BBox[1]),
@@ -899,29 +908,49 @@ PostScriptMetricInfo(int c, double *ascent, double *descent, double *width,
 	char out[10]; // one Unicode point in an sbcs, with possible transliteration.
 	// Do not show warnings (but throw errors)
 	mbcsToSbcs(str, out, encoding, CE_UTF8, 1);
-	double a = 0, d = 0;
+
+	/* FIXME: should this have useKerning support? -- drawing text
+	   and PostScriptStringWidth do and it is used for "p.m." */
+	int a = -9999, d = 9999;
 	short wx = 0;
-	for (unsigned int j = 0; j < strlen(out); j++) {
-	    unsigned char c = out[j];
+	for (char *p = out; *p; p++) {
+	    unsigned char c = *p;
+	    // How about USE_HYPHEN?
 	    short w = metrics->CharInfo[c].WX;
+	    // WX = NA_SHORT means that all the metrics are missing:
 	    if(w == NA_SHORT)
 		warning(_("font metrics unknown for character 0x%02x in encoding %s"), c, encoding);
-	    else wx += w;
-	    double a0 = metrics->CharInfo[c].BBox[3],
-		d0 = metrics->CharInfo[c].BBox[1];
-	    if (j == 0) {
-		a = a0; d = d0;
-	    } else {
-		a = max(a, a0);
-		d = max(d, d0);
+	    /* FIXME;  The AFM spec says
+	       B llx lly urx ury
+	       (Optional.) Character bounding box where llx, lly, urx, and ury
+	       are all numbers. If a character makes no marks on the page
+	       (for example, the space character), this field reads B 0 0 0 0,
+	       and these values are not considered when computing the FontBBox.
+	       Also NBSP and Euro in some fonts.  Should that be skipped?
+	    else if
+	       (metrics->CharInfo[c].BBox[0] == 0 &&
+		metrics->CharInfo[c].BBox[1] == 0 &&
+		metrics->CharInfo[c].BBox[2] == 0 &&
+		metrics->CharInfo[c].BBox[3] == 0) {
+		warning(_("character 0x%02x in encoding %s makes no mark"), c, encoding);
+	    */
+	    else {
+		wx += w;
+		a = max(a, metrics->CharInfo[c].BBox[3]);
+		d = min(d, metrics->CharInfo[c].BBox[1]);
 	    }
 	}
+	// printf("MetricInfo for %s: %d %d %d\n", out, wx, a, d);
 	*width = 0.001 * wx;
+	// the original 8-bit version treated missing as 0.
+	if (a == -9999) a = 0;
+	if (d == 9999) d = 0;
 	*ascent =  0.001 * a;
 	*descent = 0.001 * -d;
 	return;
     } else {
 	// 8-bit case
+	// How about USE_HYPHEN?
 	*ascent = 0.001 * metrics->CharInfo[c].BBox[3];
 	*descent = -0.001 * metrics->CharInfo[c].BBox[1];
 	short wx = metrics->CharInfo[c].WX;
