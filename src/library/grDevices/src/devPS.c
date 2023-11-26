@@ -4463,7 +4463,9 @@ next_char:
     /* GNU libiconv 1.13 gave EINVAL on \xe0 in UTF-8 (as used in fBasics) */
     if(status == (size_t) -1 && (errno == EILSEQ || errno == EINVAL)) {
 	Riconv(cd, NULL, NULL, &o_buf, &o_len);
-	int fail = getenv("_R_CHECK_MBCS_CONVERSION_FAILURE_") != NULL;
+	const char *m = getenv("_R_CHECK_MBCS_CONVERSION_FAILURE_");
+	int fail = (m != NULL);
+	if (m && streql(m, "silent")) silent = 0;
 	if (utf8locale) {
 	    /* We attempt to do better here in a UTF-8 locale if the
 	       input is valid and give transliteration or one dot per
