@@ -5081,18 +5081,6 @@ later standards.  (Although @R{} only requires Fortran 90,
 consider @option{-std=f2008} as some recent compilers have Fortran 2008
 or even 2018 as the minimum supported standard.
 
-Not all common @R{} platforms conform to the expected standards, e.g.@:
-C99 for C code.  One common area of problems is the @code{*printf}
-functions where Windows did not support @code{%lld}, @code{%Lf} and
-similar formats (and has its own formats such as @code{%I64d} for 64-bit
-integers).  It is very rare to need to output such types, and 64-bit
-integers can usually be converted to doubles for output.  However, the
-C11 standard (section 7.8.1) includes @code{PRIxNN}
-macros@footnote{These are optional because the corresponding types are,
-but must be provided if the types are.} in C header @file{inttypes.h}
-(for example @code{PRId64}) so the portable approach is to test for
-these and if not available provide emulations in the package.
-
 As from macOS 11 (late 2020), its C compiler sets the flag
 @option{-Werror=implicit-function-declaration} by default which forces
 stricter conformance to C99.  This can be used on other platforms with
