@@ -5730,6 +5730,13 @@ add_dummies <- function(dir, Log)
                 ex_re <- "(RcppEigen/include/Eigen)/.*\\[-Wtautological-compare\\]"
                 lines <- filtergrep(ex_re, lines, useBytes = TRUE)
 
+                ## <FIXME>
+                ## Remove enventually ...
+                check_src_flag <-
+                    Sys.getenv("_R_CHECK_SRC_MINUS_W_FORMAT_EXCEPTIONS_",
+                               "TRUE")
+                if(config_val_to_logical(check_src_flag)) {
+                
                 ## 2023-11: filter out format warnings (to be fixed upstream)
                 ex_re <- "Rcpp/include/Rcpp/.*\\[-Wformat"
                 lines <- filtergrep(ex_re, lines, useBytes = TRUE)
@@ -5756,6 +5763,9 @@ add_dummies <- function(dir, Log)
                 ex_re <- "progress/include/RProgress.h:.*\\[-Wformat"
                 lines <- filtergrep(ex_re, lines, useBytes = TRUE)
 
+                }
+                ## </FIXME>
+                
                 ## and GNU extensions in system headers
                 ex_re <- "^ *(/usr/|/opt/).*GNU extension"
                 lines <- filtergrep(ex_re, lines, useBytes = TRUE)
