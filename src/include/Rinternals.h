@@ -72,9 +72,11 @@ typedef int R_len_t;
     typedef ptrdiff_t R_xlen_t;
 # define R_XLEN_T_MAX 4503599627370496
 # define R_SHORT_LEN_MAX 2147483647
+# define R_PRIdXLEN_T "td"
 #else
     typedef int R_xlen_t;
 # define R_XLEN_T_MAX R_LEN_T_MAX
+# define R_PRIdXLEN_T "d"
 #endif
 
 #ifndef TESTING_WRITE_BARRIER
