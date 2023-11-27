@@ -42,31 +42,32 @@ extern "C" {
 # define R_VA_LIST va_list
 #endif
 
-void Rprintf(const char *, ...)
 #ifdef __GNUC__
-__attribute__ ((format (printf, 1, 2)))
+# ifdef _WIN32
+#  if defined(_UCRT) || ((__MSVCRT_VERSION__ >= 0x1400) || \
+                        (__MSVCRT_VERSION__ >= 0xE00 && __MSVCRT_VERSION__ < 0x1000))
+#   if defined(__clang__)
+#    define R_PRINTF_FORMAT(M,N) __attribute__ ((format (printf, M, N)))    
+#   else
+#    define R_PRINTF_FORMAT(M,N) __attribute__ ((format (gnu_printf, M, N)))    
+#   endif
+#  else
+#   define R_PRINTF_FORMAT(M,N)
+#  endif
+# else
+#  define R_PRINTF_FORMAT(M,N) __attribute__ ((format (printf, M, N)))
+# endif
+#else
+# define R_PRINTF_FORMAT(M,N)
 #endif
-;
 
-void REprintf(const char *, ...)
-#ifdef __GNUC__
-__attribute__ ((format (printf, 1, 2)))
-#endif
-;
+void Rprintf(const char *, ...) R_PRINTF_FORMAT(1, 2);
+void REprintf(const char *, ...) R_PRINTF_FORMAT(1, 2);
 
 #if !defined(__cplusplus) || defined R_USE_C99_IN_CXX
 
-void Rvprintf(const char *, R_VA_LIST)
-#ifdef __GNUC__
-__attribute__ ((format (printf, 1, 0)))
-#endif
-;
-
-void REvprintf(const char *, R_VA_LIST)
-#ifdef __GNUC__
-__attribute__ ((format (printf, 1, 0)))
-#endif
-;
+void Rvprintf(const char *, R_VA_LIST) R_PRINTF_FORMAT(1, 0);
+void REvprintf(const char *, R_VA_LIST) R_PRINTF_FORMAT(1, 0);
 
 #endif
 

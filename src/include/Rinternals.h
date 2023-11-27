@@ -683,23 +683,9 @@ Rboolean R_HasFancyBindings(SEXP rho);
 
 /* ../main/errors.c : */
 /* needed for R_load/savehistory handling in front ends */
-NORET void Rf_errorcall(SEXP, const char *, ...)
-#ifdef __GNUC__
-__attribute__ ((format (printf, 2, 3)))
-#endif
-;
-
-void Rf_warningcall(SEXP, const char *, ...)
-#ifdef __GNUC__
-__attribute__ ((format (printf, 2, 3)))
-#endif
-;
-
-void Rf_warningcall_immediate(SEXP, const char *, ...)
-#ifdef __GNUC__
-__attribute__ ((format (printf, 2, 3)))
-#endif
-;
+NORET void Rf_errorcall(SEXP, const char *, ...) R_PRINTF_FORMAT(2, 3);
+void Rf_warningcall(SEXP, const char *, ...) R_PRINTF_FORMAT(2, 3);
+void Rf_warningcall_immediate(SEXP, const char *, ...) R_PRINTF_FORMAT(2, 3);
 
 /* Save/Load Interface */
 #define R_XDR_DOUBLE_SIZE 8

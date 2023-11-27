@@ -71,6 +71,8 @@
 			   and occasionally as a limit. */
 
 #include <R_ext/Complex.h>
+#include <R_ext/Print.h>
+
 void Rf_CoercionWarning(int);/* warning code */
 int Rf_LogicalFromInteger(int, int*);
 int Rf_LogicalFromReal(double, int*);
@@ -2129,12 +2131,7 @@ NORET void R_jumpctxt(RCNTXT *, int, SEXP);
 SEXP ItemName(SEXP, R_xlen_t);
 
 /* ../main/errors.c : */
-NORET void errorcall_cpy(SEXP, const char *, ...)
-#ifdef __GNUC__
-__attribute__ ((format (printf, 2, 3)))
-#endif
-;
-
+NORET void errorcall_cpy(SEXP, const char *, ...) R_PRINTF_FORMAT(2,3);
 NORET void ErrorMessage(SEXP, int, ...);
 void WarningMessage(SEXP, R_WARNING, ...);
 SEXP R_GetTraceback(int);    // including deparse()ing
@@ -2144,18 +2141,12 @@ NORET void R_signalErrorConditionEx(SEXP cond, SEXP call, int exitOnly);
 SEXP R_vmakeErrorCondition(SEXP call,
 			   const char *classname, const char *subclassname,
 			   int nextra, const char *format, va_list ap)
-#ifdef __GNUC__
-__attribute__ ((format (printf, 5, 0)))
-#endif
-;
+     R_PRINTF_FORMAT(5,0);
 
 SEXP R_makeErrorCondition(SEXP call,
 			  const char *classname, const char *subclassname,
 			  int nextra, const char *format, ...)
-#ifdef __GNUC__
-__attribute__ ((format (printf, 5, 6)))
-#endif
-;
+     R_PRINTF_FORMAT(5,0);
 
 void R_setConditionField(SEXP cond, R_xlen_t idx, const char *name, SEXP val);
 SEXP R_makeNotSubsettableError(SEXP x, SEXP call);
@@ -2252,22 +2243,13 @@ Rboolean utf8Valid(const char *str);
 char *Rf_strchr(const char *s, int c);
 char *Rf_strrchr(const char *s, int c);
 int Rvsnprintf_mbcs(char *buf, size_t size, const char *format, va_list ap)
-#ifdef __GNUC__
-__attribute__ ((format (printf, 3, 0)))
-#endif
-;
+    R_PRINTF_FORMAT(3,0);
 
 int Rsnprintf_mbcs(char *str, size_t size, const char *format, ...)
-#ifdef __GNUC__
-__attribute__ ((format (printf, 3, 4)))
-#endif
-;
+    R_PRINTF_FORMAT(3,4);
 
 int Rasprintf_malloc(char **str, const char *fmt, ...)
-#ifdef __GNUC__
-__attribute__ ((format (printf, 2, 3)))
-#endif
-;
+    R_PRINTF_FORMAT(2,3);
 
 SEXP fixup_NaRm(SEXP args); /* summary.c */
 void invalidate_cached_recodings(void);  /* from sysutils.c */

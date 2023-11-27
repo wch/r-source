@@ -24,6 +24,7 @@
 
 /* the visible part of the connections */
 #include <R_ext/Connections.h>
+#include <R_ext/Print.h>
 
 /* NB: this is a private header, and not installed.  The internals of
        connections are private and subject to change without notice.
@@ -72,11 +73,7 @@ typedef struct clpconn {
 int Rconn_fgetc(Rconnection con);
 int Rconn_ungetc(int c, Rconnection con);
 size_t Rconn_getline(Rconnection con, char *buf, size_t bufsize);
-int Rconn_printf(Rconnection con, const char *format, ...)
-#ifdef __GNUC__
-__attribute__ ((format (printf, 2, 3)))
-#endif
-;
+int Rconn_printf(Rconnection con, const char *format, ...) R_PRINTF_FORMAT(2, 3);
 Rconnection getConnection(int n);
 Rconnection getConnection_no_err(int n);
 Rboolean switch_stdout(int icon, int closeOnExit);
