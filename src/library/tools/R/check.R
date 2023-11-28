@@ -5646,6 +5646,7 @@ add_dummies <- function(dir, Log)
                              ": warning: .* \\[-Wdeprecated-declarations\\]",
                              ": warning: .* \\[-Wformat-extra-args\\]", # also gcc
                              ": warning: .* \\[-Wformat-security\\]",
+                             ": warning: .* \\[-Wformat-insufficient-args\\]",
                              ": warning: .* \\[-Wheader-guard\\]",
                              ": warning: .* \\[-Wpointer-arith\\]",
                              ": warning: .* \\[-Wunsequenced\\]",
@@ -5736,7 +5737,7 @@ add_dummies <- function(dir, Log)
                     Sys.getenv("_R_CHECK_SRC_MINUS_W_FORMAT_EXCEPTIONS_",
                                "TRUE")
                 if(config_val_to_logical(check_src_flag)) {
-                
+
                 ## 2023-11: filter out format warnings (to be fixed upstream)
                 ex_re <- "Rcpp/include/Rcpp/.*\\[-Wformat"
                 lines <- filtergrep(ex_re, lines, useBytes = TRUE)
@@ -5765,7 +5766,7 @@ add_dummies <- function(dir, Log)
 
                 }
                 ## </FIXME>
-                
+
                 ## and GNU extensions in system headers
                 ex_re <- "^ *(/usr/|/opt/).*GNU extension"
                 lines <- filtergrep(ex_re, lines, useBytes = TRUE)
