@@ -5750,22 +5750,18 @@ add_dummies <- function(dir, Log)
                 ex_re <- "cpp11/include/cpp11/.*\\[-Wformat"
                 lines <- filtergrep(ex_re, lines, useBytes = TRUE)
 
-                ## Filter out StanHeader warnings
-                ex_re <- "StanHeaders/.*\\[-Wunneeded-internal-declaration\\]"
-                lines <- filtergrep(ex_re, lines, useBytes = TRUE)
-
                 ## Filter out format warnings
-                ex_re <- "TMB/include/(Rstream|TMB|tmb_core|dynamic_data).hpp:.*\\[-Wformat"
-                lines <- filtergrep(ex_re, lines, useBytes = TRUE)
                 ex_re <- "testthat/include/testthat/testthat.h:.*\\[-Wformat"
                 lines <- filtergrep(ex_re, lines, useBytes = TRUE)
                 ex_re <- "RNifti/include/RNifti/NiftiImage_impl.h:.*\\[-Wformat"
                 lines <- filtergrep(ex_re, lines, useBytes = TRUE)
-                ex_re <- "progress/include/RProgress.h:.*\\[-Wformat"
-                lines <- filtergrep(ex_re, lines, useBytes = TRUE)
 
                 }
                 ## </FIXME>
+
+                ## Filter out StanHeader warnings
+                ex_re <- "StanHeaders/.*\\[-Wunneeded-internal-declaration\\]"
+                lines <- filtergrep(ex_re, lines, useBytes = TRUE)
 
                 ## and GNU extensions in system headers
                 ex_re <- "^ *(/usr/|/opt/).*GNU extension"
