@@ -5753,8 +5753,6 @@ add_dummies <- function(dir, Log)
                 ## Filter out format warnings
                 ex_re <- "testthat/include/testthat/testthat.h:.*\\[-Wformat"
                 lines <- filtergrep(ex_re, lines, useBytes = TRUE)
-                ex_re <- "RNifti/include/RNifti/NiftiImage_impl.h:.*\\[-Wformat"
-                lines <- filtergrep(ex_re, lines, useBytes = TRUE)
 
                 }
                 ## </FIXME>
