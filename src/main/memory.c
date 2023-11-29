@@ -2158,21 +2158,40 @@ attribute_hidden SEXP do_gc(SEXP call, SEXP op, SEXP args, SEXP rho)
     return value;
 }
 
-
 NORET static void mem_err_heap(R_size_t size)
 {
-    errorcall(R_NilValue, _("vector memory exhausted (limit reached?)"));
-}
+    if (R_MaxVSize == R_SIZE_T_MAX)
+	errorcall(R_NilValue, _("vector memory exhausted"));
+    else {
+	double l = R_GetMaxVSize() / 1024.0;
+	const char *unit = "Kb";
 
+	if (l > 1024.0*1024.0) {
+	    l /= 1024.0*1024.0;
+	    unit = "Gb";
+	} else if (l > 1024.0) {
+	    l /= 1024.0;
+	    unit = "Mb";
+	}
+	errorcall(R_NilValue,
+	          _("vector memory limit of %0.1f %s reached, see mem.maxVSize()"),
+	          l, unit);
+    }
+}
 
 NORET static void mem_err_cons(void)
 {
-    errorcall(R_NilValue, _("cons memory exhausted (limit reached?)"));
+    if (R_MaxNSize == R_SIZE_T_MAX)
+        errorcall(R_NilValue, _("cons memory exhausted"));
+    else
+        errorcall(R_NilValue,
+	          _("cons memory limit of %llu nodes reached, see mem.maxNSize()"),
+	          (unsigned long long)R_MaxNSize);
 }
 
 NORET static void mem_err_malloc(R_size_t size)
 {
-    errorcall(R_NilValue, _("memory exhausted (limit reached?)"));
+    errorcall(R_NilValue, _("memory exhausted"));
 }
 
 /* InitMemory : Initialise the memory to be used in R. */
