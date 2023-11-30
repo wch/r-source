@@ -16,6 +16,12 @@
 
   \subsection{BUG FIXES}{
     \itemize{
+      \item Arguments are now properly forwarded to methods on S4 generics
+      with \dots{} in the middle of their formal arguments. This was
+      broken for the case when a method introduced an argument but did
+      not include \dots{} in its own formals. Thanks to Hervé Pagès for
+      the report \PR{18538}.
+      
       \item Some invalid \code{file} arguments to \code{pictex()},
       \code{postscript()} and \code{xfig()} opened a file called
       \samp{NA} rather than throw an error.  These included
