@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-08-03 18:20\n"
+"POT-Creation-Date: 2023-11-30 14:39\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -732,10 +732,22 @@ msgstr ""
 msgid "No factors specified"
 msgstr ""
 
-msgid "norm '%s' currently always uses exact = FALSE"
+msgid "invalid '%s': type \"%s\""
+msgstr ""
+
+msgid "'uplo' must be \"U\" or \"L\""
+msgstr ""
+
+msgid "invalid nrow(z)"
 msgstr ""
 
 msgid "triangular matrix should be square"
+msgstr ""
+
+msgid "using 1-norm approximation for approximate 2-norm"
+msgstr ""
+
+msgid "norm=\"%s\" not available here; using norm=\"1\""
 msgstr ""
 
 msgid "unknown conflict policy: %s"
@@ -1300,6 +1312,9 @@ msgid "invalid 'rle' structure"
 msgstr ""
 
 msgid "... must contain names or character strings"
+msgstr ""
+
+msgid "invalid 'x'"
 msgstr ""
 
 msgid "incorrect length for 'group'"

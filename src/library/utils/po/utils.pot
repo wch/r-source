@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-07-31 15:00+0200\n"
+"POT-Creation-Date: 2023-11-30 14:40+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -104,7 +104,7 @@ msgstr ""
 
 #: io.c:1171
 #, c-format
-msgid "column %s claims to be a factor but does not have numeric codes"
+msgid "column %d claims to be a factor but does not have numeric codes"
 msgstr ""
 
 #: io.c:1189

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-07-31 14:59\n"
+"POT-Creation-Date: 2023-11-30 14:39\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -234,6 +234,9 @@ msgstr ""
 msgid "Invalid 'extend' value"
 msgstr ""
 
+msgid "'%s' is deprecated."
+msgstr ""
+
 msgid "invalid arguments in '%s' (need named args)"
 msgstr ""
 
@@ -439,6 +442,9 @@ msgid "type = \"cairo\" is unavailable. trying \"Xlib\""
 msgstr ""
 
 msgid "type = \"cairo-png\" is unavailable. trying \"Xlib\""
+msgstr ""
+
+msgid "compression is not supported for type = \"quartz\""
 msgstr ""
 
 msgid "invalid 'title'"
