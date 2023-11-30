@@ -292,8 +292,9 @@ GuiReadConsole(const char *prompt, unsigned char *buf, int len,
                int addtohistory)
 {
     int res;
+    const void *vmax = vmaxget();
     const char *NormalPrompt =
-	CHAR(STRING_ELT(GetOption1(install("prompt")), 0));
+	translateChar(STRING_ELT(GetOption1(install("prompt")), 0));
 
     if(!R_is_running) {
 	R_is_running = 1;
@@ -302,6 +303,8 @@ GuiReadConsole(const char *prompt, unsigned char *buf, int len,
     ConsoleAcceptCmd = !strcmp(prompt, NormalPrompt);
     res = consolereads(RConsole, prompt, (char *)buf, len, addtohistory);
     ConsoleAcceptCmd = 0;
+    vmaxset(vmax);
+
     return !res;
 }
 

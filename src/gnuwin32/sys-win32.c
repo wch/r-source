@@ -255,6 +255,7 @@ SEXP do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXP  cmd, fin, Stdout, Stderr, tlist = R_NilValue, tchar, rval;
     PROTECT_INDEX ti;
     int timeout = 0, timedout = 0, consignals = 0;
+    const void *vmax = vmaxget();
 
     checkArity(op, args);
     cmd = CAR(args);
@@ -294,21 +295,27 @@ SEXP do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
 	SetStdHandle(STD_INPUT_HANDLE, INVALID_HANDLE_VALUE);
 	SetStdHandle(STD_OUTPUT_HANDLE, INVALID_HANDLE_VALUE);
 	SetStdHandle(STD_ERROR_HANDLE, INVALID_HANDLE_VALUE);
-	if (TYPEOF(Stdout) == STRSXP) fout = CHAR(STRING_ELT(Stdout, 0));
-	if (TYPEOF(Stderr) == STRSXP) ferr = CHAR(STRING_ELT(Stderr, 0));
+	if (TYPEOF(Stdout) == STRSXP)
+	    fout = translateCharFP(STRING_ELT(Stdout, 0));
+	if (TYPEOF(Stderr) == STRSXP)
+	    ferr = translateCharFP(STRING_ELT(Stderr, 0));
     } else {
 	if (flag == 2) flag = 1; /* ignore std.output.on.console */
-	if (TYPEOF(Stdout) == STRSXP) fout = CHAR(STRING_ELT(Stdout, 0));
-	else if (asLogical(Stdout) == 0) fout = NULL;
-	if (TYPEOF(Stderr) == STRSXP) ferr = CHAR(STRING_ELT(Stderr, 0));
-	else if (asLogical(Stderr) == 0) ferr = NULL;
+	if (TYPEOF(Stdout) == STRSXP)
+	    fout = translateCharFP(STRING_ELT(Stdout, 0));
+	else if (asLogical(Stdout) == 0)
+	    fout = NULL;
+	if (TYPEOF(Stderr) == STRSXP)
+	    ferr = translateCharFP(STRING_ELT(Stderr, 0));
+	else if (asLogical(Stderr) == 0)
+	    ferr = NULL;
     }
 
     if (flag < 2) { /* Neither intern = TRUE nor
 		       show.output.on.console for Rgui */
-	ll = runcmd_timeout(CHAR(STRING_ELT(cmd, 0)),
-		    getCharCE(STRING_ELT(cmd, 0)),
-		    flag, vis, CHAR(STRING_ELT(fin, 0)), fout, ferr,
+	ll = runcmd_timeout(translateCharFP(STRING_ELT(cmd, 0)),
+		    CE_NATIVE,
+		    flag, vis, translateCharFP(STRING_ELT(fin, 0)), fout, ferr,
 		    timeout, &timedout, consignals);
 	if (ll == NOLAUNCH) warning("%s", runerror());
     } else {
@@ -326,8 +333,9 @@ SEXP do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    /* does not happen with system()/system2() */
 	    error(_("invalid %s argument"), "flag");
 
-	fp = rpipeOpen(CHAR(STRING_ELT(cmd, 0)), getCharCE(STRING_ELT(cmd, 0)),
-		       vis, CHAR(STRING_ELT(fin, 0)), m, fout, ferr, timeout, 0);
+	fp = rpipeOpen(translateCharFP(STRING_ELT(cmd, 0)), CE_NATIVE,
+		       vis, translateCharFP(STRING_ELT(fin, 0)), m, fout, ferr,
+	               timeout, 0);
 	if (!fp) {
 	    /* If intern = TRUE generate an error */
 	    if (flag == 3) error("%s", runerror());
@@ -351,10 +359,10 @@ SEXP do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (timedout) {
 	ll = 124;
 	warning(_("command '%s' timed out after %ds"),
-	        CHAR(STRING_ELT(cmd, 0)), timeout);
+	        translateChar(STRING_ELT(cmd, 0)), timeout);
     } else if (flag == 3 && ll) {
 	warning(_("running command '%s' had status %d"), 
-	        CHAR(STRING_ELT(cmd, 0)), ll);
+	        translateChar(STRING_ELT(cmd, 0)), ll);
     }
     if (flag == 3) { /* intern = TRUE: convert pairlist to list */
 	PROTECT(rval = allocVector(STRSXP, i));
@@ -366,9 +374,11 @@ SEXP do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    SEXP lsym = install("status");
 	    setAttrib(rval, lsym, ScalarInteger(ll));
 	}
+	vmaxset(vmax);
 	UNPROTECT(2); /* tlist, rval */
 	return rval;
     } else {
+	vmaxset(vmax);
 	rval = ScalarInteger(ll);
 	R_Visible = 0;
 	return rval;

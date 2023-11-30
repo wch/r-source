@@ -672,6 +672,7 @@ SEXP do_normalizepath(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXP ans, paths = CAR(args), el, slash;
     int i, n = LENGTH(paths);
     int mustWork, fslash = 0;
+    const void *vmax = vmaxget();
 
     checkArity(op, args);
     if(!isString(paths))
@@ -680,7 +681,7 @@ SEXP do_normalizepath(SEXP call, SEXP op, SEXP args, SEXP rho)
     slash = CADR(args);
     if(!isString(slash) || LENGTH(slash) != 1)
 	errorcall(call, "'winslash' must be a character string");
-    const char *sl = CHAR(STRING_ELT(slash, 0));
+    const char *sl = translateCharFP(STRING_ELT(slash, 0));
     if (strcmp(sl, "/") && strcmp(sl, "\\"))
 	errorcall(call, "'winslash' must be '/' or '\\\\'");
     if (strcmp(sl, "/") == 0) fslash = 1;
@@ -779,6 +780,7 @@ SEXP do_normalizepath(SEXP call, SEXP op, SEXP args, SEXP rho)
 	}
 	SET_STRING_ELT(ans, i, result);
     }
+    vmaxset(vmax);
     UNPROTECT(1);
     return ans;
 }

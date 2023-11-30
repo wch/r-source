@@ -206,6 +206,7 @@ static char *expandcmd(const char *cmd, int whole)
 
 extern size_t Rf_utf8towcs(wchar_t *wc, const char *s, size_t n);
 
+/* NOTE: this doesn't work for CE_UTF8 due to expandcmd() */
 static void pcreate(const char* cmd, cetype_t enc,
 		      int newconsole, int visible,
 		      HANDLE hIN, HANDLE hOUT, HANDLE hERR,
@@ -228,7 +229,9 @@ static void pcreate(const char* cmd, cetype_t enc,
     sa.lpSecurityDescriptor = NULL;
     sa.bInheritHandle = TRUE;
 
-    /* FIXME: this might need to be done in wchar_t */
+    /* FIXME: this would have to be done in wchar_t/UTF-16LE to support
+       CE_UTF8; the enc==CE_UTF8 branch could be phased out once UTF-8 as
+       native encoding can be assumed on all Windows systems  */
     if (!(ecmd = expandcmd(cmd, 0))) return; /* error message already set */
 
     inpipe = (hIN != INVALID_HANDLE_VALUE)
