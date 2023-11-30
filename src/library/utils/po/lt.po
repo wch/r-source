@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: utils 4.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-07-31 15:00+0200\n"
+"POT-Creation-Date: 2023-11-30 14:40+0100\n"
 "PO-Revision-Date: 2020-12-08 12:22+0200\n"
 "Last-Translator: r.zakauskas@gmail.com;gabriele.dauksaite@gmail.com\n"
 "Language-Team: Lithuanian\n"
@@ -104,9 +104,9 @@ msgid "corrupt data frame -- length of column %d does not match nrows"
 msgstr "sugadinta duomenų sistema – stulpelio %d ilgis neatitinka nrows"
 
 #: io.c:1171
-#, c-format
-msgid "column %s claims to be a factor but does not have numeric codes"
-msgstr "stulpelis %s gali būti faktorius, bet neturi skaitinių kodų"
+#, fuzzy, c-format
+msgid "column %d claims to be a factor but does not have numeric codes"
+msgstr "stulpelis %d gali būti faktorius, bet neturi skaitinių kodų"
 
 #: io.c:1189
 msgid "corrupt matrix -- dims do not match length"

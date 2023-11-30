@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-07-31 14:59\n"
+"POT-Creation-Date: 2023-11-30 14:39\n"
 "PO-Revision-Date: 2015-03-27 14:17+0900 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -245,6 +245,9 @@ msgstr " 不正なフォント型です "
 msgid "Invalid 'extend' value"
 msgstr " 不正な 'filename' 引数です "
 
+msgid "'%s' is deprecated."
+msgstr ""
+
 msgid "invalid arguments in '%s' (need named args)"
 msgstr " '%s' 中に不正な引数があります (名前付き引数が必要です) "
 
@@ -461,6 +464,9 @@ msgid "type = \"cairo\" is unavailable. trying \"Xlib\""
 msgstr ""
 
 msgid "type = \"cairo-png\" is unavailable. trying \"Xlib\""
+msgstr ""
+
+msgid "compression is not supported for type = \"quartz\""
 msgstr ""
 
 msgid "invalid 'title'"

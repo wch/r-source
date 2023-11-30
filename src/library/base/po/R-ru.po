@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-08-03 18:20\n"
+"POT-Creation-Date: 2023-11-30 14:39\n"
 "PO-Revision-Date: 2020-08-19 21:47+0900\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -766,11 +766,26 @@ msgstr "нужны замены для соответствий"
 msgid "No factors specified"
 msgstr "Не определены факторы"
 
-msgid "norm '%s' currently always uses exact = FALSE"
-msgstr "norm '%s' сейчас всегда использует exact = FALSE"
+#, fuzzy
+msgid "invalid '%s': type \"%s\""
+msgstr "неправильное значение 'n'"
+
+#, fuzzy
+msgid "'uplo' must be \"U\" or \"L\""
+msgstr "'wait' должен быть TRUE или FALSE"
+
+#, fuzzy
+msgid "invalid nrow(z)"
+msgstr "неправильное nrow(x)"
 
 msgid "triangular matrix should be square"
 msgstr "треугольная матрица должна быть квадратной"
+
+msgid "using 1-norm approximation for approximate 2-norm"
+msgstr ""
+
+msgid "norm=\"%s\" not available here; using norm=\"1\""
+msgstr ""
 
 msgid "unknown conflict policy: %s"
 msgstr "неизвестная политика котфликтов: %s"
@@ -1362,6 +1377,10 @@ msgstr "неправильная структура 'rle'"
 
 msgid "... must contain names or character strings"
 msgstr "... должен содержать имена или текстовые строки"
+
+#, fuzzy
+msgid "invalid 'x'"
+msgstr "неправильные 'dims'"
 
 msgid "incorrect length for 'group'"
 msgstr "неправильная длина 'group'"
@@ -1966,6 +1985,9 @@ msgstr[2] ""
 "В %s :\n"
 " дополнительные аргументы %s не будут учтены"
 
+#~ msgid "norm '%s' currently always uses exact = FALSE"
+#~ msgstr "norm '%s' сейчас всегда использует exact = FALSE"
+
 #~ msgid "defunctError"
 #~ msgstr "defunctError"
 
@@ -2235,9 +2257,6 @@ msgstr[2] ""
 
 #~ msgid "do not know how to convert '%s' to class \"POSIXct\""
 #~ msgstr "не знаю как конвертировать '%s' в класс \"POSIXct\""
-
-#~ msgid "invalid 'n' value"
-#~ msgstr "неправильное значение 'n'"
 
 #~ msgid "'shrink.sml' must be numeric > 0"
 #~ msgstr "'shrink.sml' должен быть числом > 0"

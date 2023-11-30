@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-07-31 15:00+0200\n"
+"POT-Creation-Date: 2023-11-30 16:47+0100\n"
 "PO-Revision-Date: 2011-01-28 10:51+0100\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <i18n-nn@lister.ping.uio.no>\n"
@@ -317,7 +317,7 @@ msgid "Print"
 msgstr "Skriv ut"
 
 #: src/gnuwin32/editor.c:800 src/gnuwin32/pager.c:477 src/gnuwin32/rui.c:1210
-#: src/library/utils/src/windows/dataentry.c:1793
+#: src/library/utils/src/windows/dataentry.c:1835
 #: src/library/grDevices/src/devWindows.c:1639
 msgid "File"
 msgstr "Fil"
@@ -349,7 +349,7 @@ msgid "Close script"
 msgstr "Lukk skript"
 
 #: src/gnuwin32/editor.c:815 src/gnuwin32/pager.c:487 src/gnuwin32/rui.c:1231
-#: src/library/utils/src/windows/dataentry.c:1799
+#: src/library/utils/src/windows/dataentry.c:1841
 msgid "Edit"
 msgstr "Rediger"
 
@@ -374,8 +374,8 @@ msgid "GUI preferences..."
 msgstr "GUI-innstillingar …"
 
 #: src/gnuwin32/editor.c:851 src/gnuwin32/rui.c:1274
-#: src/library/utils/src/windows/dataentry.c:1700
-#: src/library/utils/src/windows/dataentry.c:1810
+#: src/library/utils/src/windows/dataentry.c:1742
+#: src/library/utils/src/windows/dataentry.c:1852
 msgid "Help"
 msgstr "Hjelp"
 
@@ -395,7 +395,7 @@ msgstr "Klarte ikkje laga nytt skrivevindauge"
 msgid "Untitled"
 msgstr "Namnlaus"
 
-#: src/gnuwin32/extra.c:1050
+#: src/gnuwin32/extra.c:1052
 msgid "Select file"
 msgstr "Vel fil"
 
@@ -421,14 +421,14 @@ msgid "Paste commands to console"
 msgstr "Lim inn kommandoar i konsollen"
 
 #: src/gnuwin32/pager.c:320 src/gnuwin32/rui.c:946
-#: src/library/utils/src/windows/dataentry.c:1706
+#: src/library/utils/src/windows/dataentry.c:1748
 #: src/library/grDevices/src/devWindows.c:1699
 msgid "Stay on top"
 msgstr "Hald øvst"
 
 #: src/gnuwin32/pager.c:322 src/gnuwin32/pager.c:485
-#: src/library/utils/src/windows/dataentry.c:1708
-#: src/library/utils/src/windows/dataentry.c:1795
+#: src/library/utils/src/windows/dataentry.c:1750
+#: src/library/utils/src/windows/dataentry.c:1837
 msgid "Close"
 msgstr "Lukk"
 
@@ -809,7 +809,7 @@ msgstr "fann ikkje menyen"
 msgid "menu or item does not exist"
 msgstr "menyen eller elementet finst ikkje"
 
-#: src/gnuwin32/system.c:558
+#: src/gnuwin32/system.c:565
 msgid "Save workspace image?"
 msgstr "Vil du lagra arbeidsområdet?"
 
@@ -890,72 +890,73 @@ msgstr "Ikkje nok minne til å visa fila i intern filvisar"
 msgid "Unable to start the print job"
 msgstr "Klarte ikkje laga nytt lesevindauge"
 
-#: src/library/utils/src/windows/dataentry.c:225
-#: src/library/utils/src/windows/dataentry.c:1853
-#: src/library/utils/src/windows/dataentry.c:1856
-#: src/library/utils/src/windows/dataentry.c:1887
+#: src/library/utils/src/windows/dataentry.c:251
+#: src/library/utils/src/windows/dataentry.c:1896
+#: src/library/utils/src/windows/dataentry.c:1899
+#: src/library/utils/src/windows/dataentry.c:1930
 msgid "invalid argument"
 msgstr "ugyldig argument"
 
-#: src/library/utils/src/windows/dataentry.c:272
+#: src/library/utils/src/windows/dataentry.c:298
 msgid "invalid type for value"
 msgstr "ugyldige type for verdien"
 
-#: src/library/utils/src/windows/dataentry.c:283
+#: src/library/utils/src/windows/dataentry.c:309
 msgid "Data Editor"
 msgstr "Dataredigering"
 
-#: src/library/utils/src/windows/dataentry.c:333
+#: src/library/utils/src/windows/dataentry.c:359
+#: src/library/utils/src/windows/dataentry.c:1889
 msgid "dataentry: internal memory problem"
 msgstr "inndata: internt minneproblem"
 
-#: src/library/utils/src/windows/dataentry.c:636
-#: src/library/utils/src/windows/dataentry.c:1224
+#: src/library/utils/src/windows/dataentry.c:662
+#: src/library/utils/src/windows/dataentry.c:1263
 msgid "dataentry: internal memory error"
 msgstr "inndata: intern minnefeil"
 
-#: src/library/utils/src/windows/dataentry.c:759
-#: src/library/utils/src/windows/dataentry.c:772
+#: src/library/utils/src/windows/dataentry.c:785
+#: src/library/utils/src/windows/dataentry.c:798
 msgid "internal type error in dataentry"
 msgstr "intern typefeil i inndata"
 
-#: src/library/utils/src/windows/dataentry.c:855
+#: src/library/utils/src/windows/dataentry.c:893
 msgid "dataentry: parse error on string"
 msgstr "inndata: klarte ikkje tolka tekststrengen"
 
-#: src/library/utils/src/windows/dataentry.c:998
+#: src/library/utils/src/windows/dataentry.c:1037
 msgid "dataentry: expression too long"
 msgstr "inndata: uttrykket er for langt"
 
-#: src/library/utils/src/windows/dataentry.c:1475
+#: src/library/utils/src/windows/dataentry.c:1516
 msgid "column names cannot be blank"
 msgstr "kolonnenamna kan ikkje vera tomme"
 
-#: src/library/utils/src/windows/dataentry.c:1521
+#: src/library/utils/src/windows/dataentry.c:1562
 msgid "Variable editor"
 msgstr "Variabelredigering"
 
-#: src/library/utils/src/windows/dataentry.c:1526
+#: src/library/utils/src/windows/dataentry.c:1567
 msgid "variable name"
 msgstr "variabelnamn"
 
-#: src/library/utils/src/windows/dataentry.c:1528
+#: src/library/utils/src/windows/dataentry.c:1569
 msgid "type"
 msgstr "type"
 
-#: src/library/utils/src/windows/dataentry.c:1642
+#: src/library/utils/src/windows/dataentry.c:1684
 msgid "Cell width(s)"
 msgstr "Cellebreidd(er)"
 
-#: src/library/utils/src/windows/dataentry.c:1648
+#: src/library/utils/src/windows/dataentry.c:1690
 msgid "Cell width"
 msgstr "Cellebreidd"
 
-#: src/library/utils/src/windows/dataentry.c:1651
+#: src/library/utils/src/windows/dataentry.c:1693
 msgid "variable"
 msgstr "variabel"
 
-#: src/library/utils/src/windows/dataentry.c:1694
+#: src/library/utils/src/windows/dataentry.c:1736
 msgid ""
 "Navigation.\n"
 "  Keyboard: cursor keys move selection\n"
@@ -997,35 +998,35 @@ msgstr ""
 "  Høgreklikk for å få ein meny for kopiering, innliming og kolonnebreidd\n"
 "\n"
 
-#: src/library/utils/src/windows/dataentry.c:1702
+#: src/library/utils/src/windows/dataentry.c:1744
 msgid "Copy selected cell"
 msgstr "Kopier merkt celle"
 
-#: src/library/utils/src/windows/dataentry.c:1703
+#: src/library/utils/src/windows/dataentry.c:1745
 msgid "Paste to selected cell"
 msgstr "Lim inn i den valde cella"
 
-#: src/library/utils/src/windows/dataentry.c:1704
+#: src/library/utils/src/windows/dataentry.c:1746
 msgid "Autosize column"
 msgstr "Automatisk kolonnebreidd"
 
-#: src/library/utils/src/windows/dataentry.c:1800
+#: src/library/utils/src/windows/dataentry.c:1842
 msgid "Copy  \tCTRL+C"
 msgstr "Kopier  \tCTRL+C"
 
-#: src/library/utils/src/windows/dataentry.c:1802
+#: src/library/utils/src/windows/dataentry.c:1844
 msgid "Paste \tCTRL+V"
 msgstr "Lim inn \tCTRL+V"
 
-#: src/library/utils/src/windows/dataentry.c:1804
+#: src/library/utils/src/windows/dataentry.c:1846
 msgid "Delete\tDEL"
 msgstr "Søett\tDEL"
 
-#: src/library/utils/src/windows/dataentry.c:1807
+#: src/library/utils/src/windows/dataentry.c:1849
 msgid "Cell widths ..."
 msgstr "Cellebreidder …"
 
-#: src/library/utils/src/windows/dataentry.c:1811
+#: src/library/utils/src/windows/dataentry.c:1853
 msgid "Data editor"
 msgstr "Dataredigering"
 

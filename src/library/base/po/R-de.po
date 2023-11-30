@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-08-03 18:20\n"
+"POT-Creation-Date: 2023-11-30 14:39\n"
 "PO-Revision-Date: 2023-05-12 14:41+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <r-core@r-project.org>\n"
@@ -766,11 +766,26 @@ msgstr "benötige Ersetzungswerte für Treffer"
 msgid "No factors specified"
 msgstr "Keine Faktoren angegeben"
 
-msgid "norm '%s' currently always uses exact = FALSE"
-msgstr "Norm '%s' nutzt aktuell immer exact = FALSE"
+#, fuzzy
+msgid "invalid '%s': type \"%s\""
+msgstr "ungültiger Wert für 'n'"
+
+#, fuzzy
+msgid "'uplo' must be \"U\" or \"L\""
+msgstr "'wait' muss TRUE oder FALSE sein"
+
+#, fuzzy
+msgid "invalid nrow(z)"
+msgstr "ungültige nrow(x)"
 
 msgid "triangular matrix should be square"
 msgstr "Dreiecks-Matrix sollte quadratisch sein"
+
+msgid "using 1-norm approximation for approximate 2-norm"
+msgstr ""
+
+msgid "norm=\"%s\" not available here; using norm=\"1\""
+msgstr ""
 
 msgid "unknown conflict policy: %s"
 msgstr "unbekannte Konfliktpolicy: %s"
@@ -1365,6 +1380,10 @@ msgstr "ungültige 'rle' Struktur"
 msgid "... must contain names or character strings"
 msgstr "... muss Namen oder Zeichenketten enthalten"
 
+#, fuzzy
+msgid "invalid 'x'"
+msgstr "ungültige 'dims'"
+
 msgid "incorrect length for 'group'"
 msgstr "falsche Länge für 'group'"
 
@@ -1940,6 +1959,9 @@ msgstr[1] ""
 "In %s :\n"
 "zusätzliche Argumente %s werden verworfen"
 
+#~ msgid "norm '%s' currently always uses exact = FALSE"
+#~ msgstr "Norm '%s' nutzt aktuell immer exact = FALSE"
+
 #~ msgid "defunctError"
 #~ msgstr "defunctError"
 
@@ -2206,9 +2228,6 @@ msgstr[1] ""
 
 #~ msgid "do not know how to convert '%s' to class \"POSIXct\""
 #~ msgstr "weiss nicht, wie '%s' in Klasse \"POSIXct\" umgewandelt wird"
-
-#~ msgid "invalid 'n' value"
-#~ msgstr "ungültiger Wert für 'n'"
 
 #~ msgid "'shrink.sml' must be numeric > 0"
 #~ msgstr "'shrink.sml' muss numerisch und > 0 sein"

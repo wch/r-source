@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-08-03 18:20\n"
+"POT-Creation-Date: 2023-11-30 14:39\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -778,11 +778,25 @@ msgstr "wymagane są zamiany dla dopasowań"
 msgid "No factors specified"
 msgstr "Nie określono czynników"
 
-msgid "norm '%s' currently always uses exact = FALSE"
-msgstr "norma '%s' aktualnie zawsze używa dokładnej wartości = FALSE"
+msgid "invalid '%s': type \"%s\""
+msgstr ""
+
+#, fuzzy
+msgid "'uplo' must be \"U\" or \"L\""
+msgstr "argument 'wait' musi mieć wartość TRUE lub FALSE"
+
+#, fuzzy
+msgid "invalid nrow(z)"
+msgstr "niepoprawna wartość 'nrow(x)'"
 
 msgid "triangular matrix should be square"
 msgstr "macierz trójkątna powinna mieć równą liczbę wierszy i kolumn"
+
+msgid "using 1-norm approximation for approximate 2-norm"
+msgstr ""
+
+msgid "norm=\"%s\" not available here; using norm=\"1\""
+msgstr ""
 
 msgid "unknown conflict policy: %s"
 msgstr ""
@@ -1375,6 +1389,10 @@ msgstr "niepoprawna struktura 'rle'"
 
 msgid "... must contain names or character strings"
 msgstr "'...' musi zawierać nazwy lub łańcuchy tekstowe"
+
+#, fuzzy
+msgid "invalid 'x'"
+msgstr "niepoprawny argument 'dims'"
 
 msgid "incorrect length for 'group'"
 msgstr "niepoprawna długość argumentu 'group'"
@@ -1982,6 +2000,9 @@ msgstr[1] ""
 msgstr[2] ""
 "W poleceniu '%s':\n"
 " dodatkowe argumenty %s zostaną odrzucone"
+
+#~ msgid "norm '%s' currently always uses exact = FALSE"
+#~ msgstr "norma '%s' aktualnie zawsze używa dokładnej wartości = FALSE"
 
 #~ msgid "options(\"stringsAsFactors\") not set to TRUE or FALSE"
 #~ msgstr "'options(\"stringsAsFactors\")' nie zostało ustawione na 'TRUE' lub 'FALSE'"

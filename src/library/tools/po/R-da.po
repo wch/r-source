@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-07-31 14:59\n"
+"POT-Creation-Date: 2023-11-30 14:40\n"
 "PO-Revision-Date: 2012-01-07 22:11+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -56,15 +56,15 @@ msgid "directory '%s' does not contain Rd objects"
 msgstr "mappe »%s« indeholder ikke Rd-objekter"
 
 #, fuzzy
-msgid "Functions or methods with usage in documentation object '%s' but not in code:"
+msgid "Functions or methods with usage in Rd file '%s' but not in code:"
 msgstr "Funktioner/metoder med brug i dokumentationsobjekt »%s« men ikke i kode:"
 
 #, fuzzy
-msgid "Data with usage in documentation object '%s' but not in code:"
+msgid "Data with usage in Rd file '%s' but not in code:"
 msgstr "Datasæts med brug i dokumentationsobjekt »%s« men ikke i kode:"
 
 #, fuzzy
-msgid "Variables with usage in documentation object '%s' but not in code:"
+msgid "Variables with usage in Rd file '%s' but not in code:"
 msgstr "Datasæts med brug i dokumentationsobjekt »%s« men ikke i kode:"
 
 msgid "Argument names in code not in docs:"
@@ -85,7 +85,8 @@ msgstr "Forskellige standardnavne for argumenter (første 3):"
 msgid "Mismatches in argument default values:"
 msgstr "Forskellige standardnavne for argumenter:"
 
-msgid "Codoc mismatches from documentation object '%s':"
+#, fuzzy
+msgid "Codoc mismatches from Rd file '%s':"
 msgstr "Forskellige codoc fra dokumentationsobjekt »%s«:"
 
 msgid "Code: %s"
@@ -94,37 +95,46 @@ msgstr "Kode: %s"
 msgid "Docs: %s"
 msgstr "Dokumenter: %s"
 
-msgid "S4 class codoc mismatches from documentation object '%s':"
+#, fuzzy
+msgid "S4 class codoc mismatches from Rd file '%s':"
 msgstr "Forskellige S4-klassecodoc fra dokumentationsobjekt »%s«:"
 
 msgid "Slots for class '%s'"
 msgstr "Pladser for klasse »%s«"
 
-msgid "Data codoc mismatches from documentation object '%s':"
+#, fuzzy
+msgid "Data codoc mismatches from Rd file '%s':"
 msgstr "Forskellige datacodoc fra dokumentationsobjekt »%s«:"
 
 msgid "Variables in data frame '%s'"
 msgstr "Variabler i dataramme »%s«"
 
-msgid "Undocumented arguments in documentation object '%s'"
+#, fuzzy
+msgid "Undocumented arguments in Rd file '%s'"
 msgstr "Ikke dokumenterede argumenter i dokumentationsobjekt »%s«"
 
-msgid "Duplicated \\argument entries in documentation object '%s':"
+#, fuzzy
+msgid "Duplicated \\argument entries in Rd file '%s':"
 msgstr "Duplikerede \\argument-punkter i dokumentationsobjekt »%s«:"
 
-msgid "Documented arguments not in \\usage in documentation object '%s':"
+#, fuzzy
+msgid "Documented arguments not in \\usage in Rd file '%s':"
 msgstr "Dokumenterede argumenter ikke i \\usage i dokumentationsobjekt »%s«:"
 
-msgid "Objects in \\usage without \\alias in documentation object '%s':"
+#, fuzzy
+msgid "Objects in \\usage without \\alias in Rd file '%s':"
 msgstr "Objekter i \\usage uden \\alias i dokumentationsobjekt »%s«:"
 
-msgid "Assignments in \\usage in documentation object '%s':"
+#, fuzzy
+msgid "Assignments in \\usage in Rd file '%s':"
 msgstr "Tildelinger i \\usage i dokumentationsobjekt »%s«:"
 
-msgid "Bad \\usage lines found in documentation object '%s':"
+#, fuzzy
+msgid "Bad \\usage lines found in Rd file '%s':"
 msgstr "Ugyldige \\usage-linjer fundet i dokumentationsobjekt »%s«:"
 
-msgid "S3 methods shown with full name in documentation object '%s':"
+#, fuzzy
+msgid "S3 methods shown with full name in Rd file '%s':"
 msgstr "S4-metoder vist med fulde navne i dokumentationsobjekt »%s«:"
 
 msgid "you must specify 'package', 'dir' or 'file'"
@@ -143,10 +153,10 @@ msgstr ""
 msgid "cannot check R code installed as image"
 msgstr "kan ikke kontrollere R-kode installeret som aftryk"
 
-msgid "parse error in file '%s':"
-msgstr "fortolkningsfejl i fil »%s«:"
-
-msgid "parse error in examples from file '%s':"
+#, fuzzy
+msgid ""
+"parse error in examples from file '%s':\n"
+"%s"
 msgstr "fortolkningsfejl i eksempler fra fil »%s«:"
 
 msgid "File '%s':"
@@ -268,6 +278,9 @@ msgstr ""
 msgid "Unknown encoding with non-ASCII data"
 msgstr ""
 
+msgid "Record: %d Field(s): %s"
+msgstr ""
+
 msgid "Non-standard license specification:"
 msgstr ""
 
@@ -289,6 +302,12 @@ msgstr ""
 msgid "License components which are templates and need '+ file LICENSE':"
 msgstr ""
 
+msgid "License stub is invalid DCF."
+msgstr ""
+
+msgid "License stub records with missing/empty fields:"
+msgstr ""
+
 msgid "Uses ACM license: only appropriate for pre-2013 ACM TOMS code"
 msgstr ""
 
@@ -306,11 +325,11 @@ msgid "invalid 'OS.type' \"%s\".  Should not happen"
 msgstr ""
 
 #, fuzzy
-msgid "Missing link or links in documentation object '%s':"
+msgid "Missing link or links in Rd file '%s':"
 msgstr "Tildelinger i \\usage i dokumentationsobjekt »%s«:"
 
 #, fuzzy
-msgid "Non-file package-anchored link(s) in documentation object '%s':"
+msgid "Non-file package-anchored link(s) in Rd file '%s':"
 msgstr "Tildelinger i \\usage i dokumentationsobjekt »%s«:"
 
 msgid "See section 'Cross-references' in the 'Writing R Extensions' manual."
@@ -465,13 +484,13 @@ msgstr ""
 msgid "Invalid package aliases in Rd file '%s':"
 msgstr "fortolkningsfejl i fil »%s«:"
 
-msgid "Argument items with no description in Rd object '%s':"
+msgid "Argument items with no description in Rd file '%s':"
 msgstr ""
 
-msgid "Auto-generated content requiring editing in Rd object '%s':"
+msgid "Auto-generated content requiring editing in Rd file '%s':"
 msgstr ""
 
-msgid "Rd objects without \\description:"
+msgid "Rd files without \\description:"
 msgstr ""
 
 msgid "no Rd sections specified"
@@ -1148,6 +1167,16 @@ msgid ""
 "  %s"
 msgstr ""
 
+#, fuzzy
+msgid "unable to create temporary directory %s"
+msgstr "kan ikke oprette"
+
+msgid "expected one package directory, found %d."
+msgstr ""
+
+msgid "one of 'package' and 'dir' must be specified."
+msgstr ""
+
 msgid "argument '%s' must be a character string or connection"
 msgstr ""
 
@@ -1507,6 +1536,9 @@ msgid "Corresponding BibTeX entry:"
 msgid_plural "Corresponding BibTeX entries:"
 msgstr[0] ""
 msgstr[1] ""
+
+#~ msgid "parse error in file '%s':"
+#~ msgstr "fortolkningsfejl i fil »%s«:"
 
 #~ msgid "declared S3 method '%s' not found"
 #~ msgstr "erklæret S3-metode »%s« blev ikke fundet"

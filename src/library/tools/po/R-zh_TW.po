@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-07-31 14:59\n"
+"POT-Creation-Date: 2023-11-30 14:40\n"
 "PO-Revision-Date: 2021-11-06 22:40+0100\n"
 "Last-Translator: Wei-Lun Chao <bluebat@member.fsf.org>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -60,14 +60,16 @@ msgstr "檔案目錄 '%s' 不含 R 編碼"
 msgid "directory '%s' does not contain Rd objects"
 msgstr "目錄 '%s' 沒有 Rd 物件"
 
-msgid "Functions or methods with usage in documentation object '%s' but not in code:"
+#, fuzzy
+msgid "Functions or methods with usage in Rd file '%s' but not in code:"
 msgstr "函式或檔案的使用方法在使用手冊物件 '%s' 裡有記錄但不在編碼裡："
 
-msgid "Data with usage in documentation object '%s' but not in code:"
+#, fuzzy
+msgid "Data with usage in Rd file '%s' but not in code:"
 msgstr "資料的使用方法在使用手冊物件 '%s' 裡有記錄但不在編碼裡："
 
 #, fuzzy
-msgid "Variables with usage in documentation object '%s' but not in code:"
+msgid "Variables with usage in Rd file '%s' but not in code:"
 msgstr "資料的使用方法在使用手冊物件 '%s' 裡有記錄但不在編碼裡："
 
 msgid "Argument names in code not in docs:"
@@ -88,7 +90,8 @@ msgstr "引數預設值配合錯誤(開頭三個)："
 msgid "Mismatches in argument default values:"
 msgstr "引數預設配合錯誤："
 
-msgid "Codoc mismatches from documentation object '%s':"
+#, fuzzy
+msgid "Codoc mismatches from Rd file '%s':"
 msgstr "使用手冊物件 '%s' 裡的 Codoc 配合錯誤："
 
 msgid "Code: %s"
@@ -97,37 +100,46 @@ msgstr "編碼: %s"
 msgid "Docs: %s"
 msgstr "檔案: %s"
 
-msgid "S4 class codoc mismatches from documentation object '%s':"
+#, fuzzy
+msgid "S4 class codoc mismatches from Rd file '%s':"
 msgstr "使用手冊物件 '%s' 裡的 S4 類別 codoc 配合有錯誤："
 
 msgid "Slots for class '%s'"
 msgstr "'%s' 類別的槽"
 
-msgid "Data codoc mismatches from documentation object '%s':"
+#, fuzzy
+msgid "Data codoc mismatches from Rd file '%s':"
 msgstr "使用手冊物件 '%s' 裡的資料 codoc 配合錯誤："
 
 msgid "Variables in data frame '%s'"
 msgstr "資料框 '%s' 裡的變數"
 
-msgid "Undocumented arguments in documentation object '%s'"
+#, fuzzy
+msgid "Undocumented arguments in Rd file '%s'"
 msgstr "使用手冊物件 '%s' 有未公開的引數"
 
-msgid "Duplicated \\argument entries in documentation object '%s':"
+#, fuzzy
+msgid "Duplicated \\argument entries in Rd file '%s':"
 msgstr "使用手冊物件 '%s' 裡有重複的\\argument 條目："
 
-msgid "Documented arguments not in \\usage in documentation object '%s':"
+#, fuzzy
+msgid "Documented arguments not in \\usage in Rd file '%s':"
 msgstr "使用手冊物件 '%s' 裡入檔的檔案引數沒有在\\usage 裡提到："
 
-msgid "Objects in \\usage without \\alias in documentation object '%s':"
+#, fuzzy
+msgid "Objects in \\usage without \\alias in Rd file '%s':"
 msgstr "使用手冊物件 '%s' 裡的\\usage 物件沒有\\alias 這條目："
 
-msgid "Assignments in \\usage in documentation object '%s':"
+#, fuzzy
+msgid "Assignments in \\usage in Rd file '%s':"
 msgstr "使用手冊物件 '%s' 裡\\usage 指派："
 
-msgid "Bad \\usage lines found in documentation object '%s':"
+#, fuzzy
+msgid "Bad \\usage lines found in Rd file '%s':"
 msgstr "使用手冊物件 '%s' 有些\\usage 不對："
 
-msgid "S3 methods shown with full name in documentation object '%s':"
+#, fuzzy
+msgid "S3 methods shown with full name in Rd file '%s':"
 msgstr "使用手冊物件 '%s' 裡 S3 方法用全名稱顯示出來："
 
 msgid "you must specify 'package', 'dir' or 'file'"
@@ -146,10 +158,10 @@ msgstr ""
 msgid "cannot check R code installed as image"
 msgstr "因為影像安裝無法檢查 R 編碼"
 
-msgid "parse error in file '%s':"
-msgstr "檔案 '%s' 裡句法分析不正確："
-
-msgid "parse error in examples from file '%s':"
+#, fuzzy
+msgid ""
+"parse error in examples from file '%s':\n"
+"%s"
 msgstr "檔案 '%s' 中的例子在進行句法分析時發生錯誤："
 
 msgid "File '%s':"
@@ -270,6 +282,9 @@ msgstr "編碼 '%s' 不可攜"
 msgid "Unknown encoding with non-ASCII data"
 msgstr "不明的編碼，帶非 ASCII 資料："
 
+msgid "Record: %d Field(s): %s"
+msgstr ""
+
 msgid "Non-standard license specification:"
 msgstr "非標準執照規格"
 
@@ -291,6 +306,13 @@ msgstr "不允許有限制的使用授權元件："
 msgid "License components which are templates and need '+ file LICENSE':"
 msgstr "是範本且需要 '+ file LICENSE' 的使用授權元件："
 
+msgid "License stub is invalid DCF."
+msgstr ""
+
+#, fuzzy
+msgid "License stub records with missing/empty fields:"
+msgstr "無法使用缺少或有空白名稱的 Rd 物件"
+
 msgid "Uses ACM license: only appropriate for pre-2013 ACM TOMS code"
 msgstr ""
 
@@ -307,11 +329,12 @@ msgstr "變數覆寫使用者/場所設定："
 msgid "invalid 'OS.type' \"%s\".  Should not happen"
 msgstr ""
 
-msgid "Missing link or links in documentation object '%s':"
+#, fuzzy
+msgid "Missing link or links in Rd file '%s':"
 msgstr "使用手冊物件 '%s' 缺少聯結："
 
 #, fuzzy
-msgid "Non-file package-anchored link(s) in documentation object '%s':"
+msgid "Non-file package-anchored link(s) in Rd file '%s':"
 msgstr "使用手冊物件 '%s' 缺少聯結："
 
 msgid "See section 'Cross-references' in the 'Writing R Extensions' manual."
@@ -466,14 +489,17 @@ msgstr "Rd 檔案不能有重複的別名 '%s'："
 msgid "Invalid package aliases in Rd file '%s':"
 msgstr "變數 '%s' 裡有不可攜的標記："
 
-msgid "Argument items with no description in Rd object '%s':"
+#, fuzzy
+msgid "Argument items with no description in Rd file '%s':"
 msgstr "Rd 物件 '%s' 裡存在沒有描述的引數："
 
-msgid "Auto-generated content requiring editing in Rd object '%s':"
+#, fuzzy
+msgid "Auto-generated content requiring editing in Rd file '%s':"
 msgstr "在 Rd 物件 '%s' 裡自動產生的內容需要修改："
 
-msgid "Rd objects without \\description:"
-msgstr ""
+#, fuzzy
+msgid "Rd files without \\description:"
+msgstr "Rd 檔案不能有重複的別名 '%s'："
 
 msgid "no Rd sections specified"
 msgstr "沒有指定 Rd 區段"
@@ -1194,6 +1220,17 @@ msgstr ""
 "讀取 DESCRIPTION 用於套件 %s 失敗，訊息為:\n"
 "  %s"
 
+#, fuzzy
+msgid "unable to create temporary directory %s"
+msgstr "無法建立臨時目錄 %s"
+
+msgid "expected one package directory, found %d."
+msgstr ""
+
+#, fuzzy
+msgid "one of 'package' and 'dir' must be specified."
+msgstr "只能設定一個 Rd 檔案"
+
 msgid "argument '%s' must be a character string or connection"
 msgstr "引數 '%s' 必須是字串或聯結"
 
@@ -1526,6 +1563,9 @@ msgstr[0] "%d 項套件測試失敗"
 msgid "Corresponding BibTeX entry:"
 msgid_plural "Corresponding BibTeX entries:"
 msgstr[0] "相關的 BibTeX 條目："
+
+#~ msgid "parse error in file '%s':"
+#~ msgstr "檔案 '%s' 裡句法分析不正確："
 
 #~ msgid "declared S3 method '%s' not found"
 #~ msgstr "找不到公布的 S3 方法 '%s'"

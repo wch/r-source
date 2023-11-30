@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-4-3-BRANCH\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-07-31 15:00+0200\n"
+"POT-Creation-Date: 2023-11-30 14:40+0100\n"
 "PO-Revision-Date: 2023-01-19 18:36+0100\n"
 "Last-Translator: Daniele Medri <dmedri@gmail.com>\n"
 "Language-Team: Italian https://github.com/dmedri/R-italian-lang\n"
@@ -104,9 +104,9 @@ msgid "corrupt data frame -- length of column %d does not match nrows"
 msgstr "data frame corrotto -- la lunghezza della colonna %d non corrisponde con nrows"
 
 #: io.c:1171
-#, c-format
-msgid "column %s claims to be a factor but does not have numeric codes"
-msgstr "la colonna %s si presenta come un factor ma non ha codici numerici"
+#, fuzzy, c-format
+msgid "column %d claims to be a factor but does not have numeric codes"
+msgstr "la colonna %d si presenta come un factor ma non ha codici numerici"
 
 #: io.c:1189
 msgid "corrupt matrix -- dims do not match length"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.0.4\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-07-31 14:59\n"
+"POT-Creation-Date: 2023-11-30 14:40\n"
 "PO-Revision-Date: 2021-02-10 17:55+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -60,13 +60,16 @@ msgstr "le répertoire '%s' ne contient pas de code R"
 msgid "directory '%s' does not contain Rd objects"
 msgstr "le répertoire '%s' ne contient aucun objet Rd"
 
-msgid "Functions or methods with usage in documentation object '%s' but not in code:"
+#, fuzzy
+msgid "Functions or methods with usage in Rd file '%s' but not in code:"
 msgstr "Fonctions ou méthodes avec 'usage' dans la documentation de l'objet '%s', mais pas dans le code :"
 
-msgid "Data with usage in documentation object '%s' but not in code:"
+#, fuzzy
+msgid "Data with usage in Rd file '%s' but not in code:"
 msgstr "Jeux de données avec 'usage' dans la documentation de l'objet '%s', mais pas dans le code :"
 
-msgid "Variables with usage in documentation object '%s' but not in code:"
+#, fuzzy
+msgid "Variables with usage in Rd file '%s' but not in code:"
 msgstr "Variables avec 'usage' dans la documentation de l'objet '%s', mais pas dans le code :"
 
 msgid "Argument names in code not in docs:"
@@ -87,7 +90,8 @@ msgstr "Incohérence dans les valeurs par défaut des arguments (les 3 premiers)
 msgid "Mismatches in argument default values:"
 msgstr "Incohérence dans les valeurs par défaut des arguments :"
 
-msgid "Codoc mismatches from documentation object '%s':"
+#, fuzzy
+msgid "Codoc mismatches from Rd file '%s':"
 msgstr "Erreurs 'codoc' pour la documentation de l'objet '%s' :"
 
 msgid "Code: %s"
@@ -96,37 +100,46 @@ msgstr "Code : %s"
 msgid "Docs: %s"
 msgstr "Docs : %s"
 
-msgid "S4 class codoc mismatches from documentation object '%s':"
+#, fuzzy
+msgid "S4 class codoc mismatches from Rd file '%s':"
 msgstr "Erreurs 'codoc' de class S4 pour la documentation de l'objet '%s' :"
 
 msgid "Slots for class '%s'"
 msgstr "Slots de la classe '%s'"
 
-msgid "Data codoc mismatches from documentation object '%s':"
+#, fuzzy
+msgid "Data codoc mismatches from Rd file '%s':"
 msgstr "Erreurs 'codoc' de jeux de données dans la documentation de l'objet '%s' :"
 
 msgid "Variables in data frame '%s'"
 msgstr "Variables dans le tableau de données '%s'"
 
-msgid "Undocumented arguments in documentation object '%s'"
+#, fuzzy
+msgid "Undocumented arguments in Rd file '%s'"
 msgstr "Arguments non documentés dans la documentation de l'objet '%s'"
 
-msgid "Duplicated \\argument entries in documentation object '%s':"
+#, fuzzy
+msgid "Duplicated \\argument entries in Rd file '%s':"
 msgstr "Entrées \\argument dupliquées dans la documentation de l'objet '%s' :"
 
-msgid "Documented arguments not in \\usage in documentation object '%s':"
+#, fuzzy
+msgid "Documented arguments not in \\usage in Rd file '%s':"
 msgstr "Arguments documentés non repris dans \\usage pour la documentation de l'objet '%s' :"
 
-msgid "Objects in \\usage without \\alias in documentation object '%s':"
+#, fuzzy
+msgid "Objects in \\usage without \\alias in Rd file '%s':"
 msgstr "Objets dans \\usage sans \\alias dans la documentation de l'objet '%s' :"
 
-msgid "Assignments in \\usage in documentation object '%s':"
+#, fuzzy
+msgid "Assignments in \\usage in Rd file '%s':"
 msgstr "Affectations dans \\usage pour la documentation de l'objet '%s' :"
 
-msgid "Bad \\usage lines found in documentation object '%s':"
+#, fuzzy
+msgid "Bad \\usage lines found in Rd file '%s':"
 msgstr "Mauvaises lignes \\usage trouvées dans la documentation de l'objet '%s' :"
 
-msgid "S3 methods shown with full name in documentation object '%s':"
+#, fuzzy
+msgid "S3 methods shown with full name in Rd file '%s':"
 msgstr "Methodes S3 indiquées avec le nom complet dans la documentation de l'objet '%s' :"
 
 msgid "you must specify 'package', 'dir' or 'file'"
@@ -145,10 +158,10 @@ msgstr ""
 msgid "cannot check R code installed as image"
 msgstr "impossible de vérifier du code R installé comme une image"
 
-msgid "parse error in file '%s':"
-msgstr "erreur d'analyse de code dans le fichier '%s' :"
-
-msgid "parse error in examples from file '%s':"
+#, fuzzy
+msgid ""
+"parse error in examples from file '%s':\n"
+"%s"
 msgstr "erreur d'analyse de code dans les exemples pour le fichier '%s' :"
 
 msgid "File '%s':"
@@ -268,6 +281,9 @@ msgstr "L’encodage '%s' n'est pas portable"
 msgid "Unknown encoding with non-ASCII data"
 msgstr "Encodage inconnu avec des données non-ASCII"
 
+msgid "Record: %d Field(s): %s"
+msgstr ""
+
 msgid "Non-standard license specification:"
 msgstr "Spécification de licence non standard :"
 
@@ -289,6 +305,13 @@ msgstr "Les composants avec restrictions de licence ne sont pas autorisés :"
 msgid "License components which are templates and need '+ file LICENSE':"
 msgstr "Les composants avec restrictions de licence qui sont des modèles et qui nécessitent '+ file LICENSE' :"
 
+msgid "License stub is invalid DCF."
+msgstr ""
+
+#, fuzzy
+msgid "License stub records with missing/empty fields:"
+msgstr "impossible de travailler avec des objets Rd dont les noms sont manquants ou vides"
+
 msgid "Uses ACM license: only appropriate for pre-2013 ACM TOMS code"
 msgstr ""
 
@@ -304,10 +327,12 @@ msgstr "Des variables remplacent les valeurs utilisateur/site :"
 msgid "invalid 'OS.type' \"%s\".  Should not happen"
 msgstr "un 'OS.type' incorrect \"%s\" est trouvé. Cela ne devrait pas se produire"
 
-msgid "Missing link or links in documentation object '%s':"
+#, fuzzy
+msgid "Missing link or links in Rd file '%s':"
 msgstr "Lien(s) manquant(s) dans la documentation de l'objet '%s' :"
 
-msgid "Non-file package-anchored link(s) in documentation object '%s':"
+#, fuzzy
+msgid "Non-file package-anchored link(s) in Rd file '%s':"
 msgstr "Lien(s) non liés à un ou des fichiers dans la documentation de l'objet '%s' :"
 
 msgid "See section 'Cross-references' in the 'Writing R Extensions' manual."
@@ -462,14 +487,17 @@ msgstr "Fichiers Rd avec alias '%s' dupliqué :"
 msgid "Invalid package aliases in Rd file '%s':"
 msgstr "Indicateur non portable dans le fichier '%s' :"
 
-msgid "Argument items with no description in Rd object '%s':"
+#, fuzzy
+msgid "Argument items with no description in Rd file '%s':"
 msgstr "Arguments sans description dans l'objet Rd '%s' :"
 
-msgid "Auto-generated content requiring editing in Rd object '%s':"
+#, fuzzy
+msgid "Auto-generated content requiring editing in Rd file '%s':"
 msgstr "Contenu automatique de l'objet Rd '%s' à éditer :"
 
-msgid "Rd objects without \\description:"
-msgstr ""
+#, fuzzy
+msgid "Rd files without \\description:"
+msgstr "Fichiers Rd avec alias '%s' dupliqué :"
 
 msgid "no Rd sections specified"
 msgstr "aucune section Rd n'est spécifiée"
@@ -1183,6 +1211,17 @@ msgstr ""
 "la lecture de DESCRIPTION pour le package %s a échoué avec le message :\n"
 "  %s"
 
+#, fuzzy
+msgid "unable to create temporary directory %s"
+msgstr "impossible de créer le répertoire temporaire %s"
+
+msgid "expected one package directory, found %d."
+msgstr ""
+
+#, fuzzy
+msgid "one of 'package' and 'dir' must be specified."
+msgstr "un seul fichier Rd doit être spécifié"
+
 msgid "argument '%s' must be a character string or connection"
 msgstr "l'argument '%s' doit être une chaîne de caractères ou une connexion"
 
@@ -1545,6 +1584,9 @@ msgid "Corresponding BibTeX entry:"
 msgid_plural "Corresponding BibTeX entries:"
 msgstr[0] "Entrée BibTeX correspondante :"
 msgstr[1] "Entrées BibTeX correspondantes :"
+
+#~ msgid "parse error in file '%s':"
+#~ msgstr "erreur d'analyse de code dans le fichier '%s' :"
 
 #~ msgid "declared S3 method '%s' not found"
 #~ msgstr "methode S3 '%s' déclarée mais introuvable"

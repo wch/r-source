@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-07-31 14:59+0200\n"
+"POT-Creation-Date: 2023-11-30 14:40+0100\n"
 "PO-Revision-Date: 2022-04-13 14:54+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <r-core@r-project.org>\n"
@@ -21,9 +21,9 @@ msgid "bandwidth/span of running medians is larger than n"
 msgstr "Bandbreite/Spannweite der gleitenden Mediane größer als n"
 
 #: Srunmed.c:262
-#, c-format
-msgid "runmed(x, .., na.action=\"na.fail\"): have NAs starting at x[%ld]"
-msgstr "runmed(x, .., na.action=\"na.fail\"): es gibt NAs beginnend bei x[%ld]"
+#, fuzzy, c-format
+msgid "runmed(x, .., na.action=\"na.fail\"): have NAs starting at x[%lld]"
+msgstr "runmed(x, .., na.action=\"na.fail\"): es gibt NAs beginnend bei x[%lld]"
 
 #: Srunmed.c:265
 msgid "runmed(): invalid 'na.action'"
@@ -270,9 +270,9 @@ msgid "nextn() found no solution < %d = INT_MAX (the maximal integer); pass '0+ 
 msgstr "nextn() fand keine Lösung < %d = INT_MAX (größte ganze Zahl); übergebe '0+ n' statt 'n'"
 
 #: fourier.c:233
-#, c-format
-msgid "nextn<64>() found no solution < %ld = UINT64_MAX (the maximal integer)"
-msgstr "nextn<64>() fand keine Lösung < %ld = UINT64_MAX (größte ganze Zahl)"
+#, fuzzy, c-format
+msgid "nextn<64>() found no solution < %llu = UINT64_MAX (the maximal integer)"
+msgstr "nextn<64>() fand keine Lösung < %llu = UINT64_MAX (größte ganze Zahl)"
 
 #: fourier.c:249
 msgid "no factors"
@@ -300,6 +300,11 @@ msgstr "nextn() = %<PRIu64> > 2^53 ist eventuell in R nicht exakt darstellbar (a
 msgid "'%s' must be of length one"
 msgstr "'%s' muss Länge 1 haben"
 
+#: isoreg.c:53
+#, c-format
+msgid "non-finite sum(y) == %g is not allowed"
+msgstr ""
+
 #: ksmooth.c:69
 msgid "only 2500 rows are allowed for sm.method=\"spline\""
 msgstr "nur 2500 Zeilen erlaubt für sm.method=\\\"spline\\\""
@@ -309,9 +314,9 @@ msgid "'x' is not a matrix"
 msgstr "'x' ist keine Matrix"
 
 #: lm.c:62
-#, c-format
-msgid "dimensions of 'x' (%d,%d) and 'y' (%d) do not match"
-msgstr "Dimensionen von 'x' (%d,%d) und 'y' (%d) passen nicht zueinander"
+#, fuzzy, c-format
+msgid "dimensions of 'x' (%d,%d) and 'y' (%lld) do not match"
+msgstr "Dimensionen von 'x' (%d,%d) und 'y' (%lld) passen nicht zueinander"
 
 #: lm.c:77 lm.c:81
 #, c-format

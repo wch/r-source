@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-07-31 14:59+0200\n"
+"POT-Creation-Date: 2023-11-30 14:40+0100\n"
 "PO-Revision-Date: 2018-04-09 12:10-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team: \n"
@@ -24,7 +24,7 @@ msgstr "연속적인 중앙값들의 브로드밴드/범위가 n보다 큽니다
 
 #: Srunmed.c:262
 #, c-format
-msgid "runmed(x, .., na.action=\"na.fail\"): have NAs starting at x[%ld]"
+msgid "runmed(x, .., na.action=\"na.fail\"): have NAs starting at x[%lld]"
 msgstr ""
 
 #: Srunmed.c:265
@@ -259,7 +259,7 @@ msgstr ""
 
 #: fourier.c:233
 #, c-format
-msgid "nextn<64>() found no solution < %ld = UINT64_MAX (the maximal integer)"
+msgid "nextn<64>() found no solution < %llu = UINT64_MAX (the maximal integer)"
 msgstr ""
 
 #: fourier.c:249
@@ -289,6 +289,11 @@ msgstr ""
 msgid "'%s' must be of length one"
 msgstr "'%s'의 길이는 반드시 1이어야 합니다."
 
+#: isoreg.c:53
+#, c-format
+msgid "non-finite sum(y) == %g is not allowed"
+msgstr ""
+
 #: ksmooth.c:69
 msgid "only 2500 rows are allowed for sm.method=\"spline\""
 msgstr "sm.method에 \"spline\"이 주어졌을 때에는 최대로 사용할 수 있는 행의 개수는 2500개입니다"
@@ -298,9 +303,9 @@ msgid "'x' is not a matrix"
 msgstr "'x'는 행렬이 아닙니다"
 
 #: lm.c:62
-#, c-format
-msgid "dimensions of 'x' (%d,%d) and 'y' (%d) do not match"
-msgstr "'x' (%d,%d)와 'y' (%d)의 차원들이 일치하지 않습니다"
+#, fuzzy, c-format
+msgid "dimensions of 'x' (%d,%d) and 'y' (%lld) do not match"
+msgstr "'x' (%d,%d)와 'y' (%lld)의 차원들이 일치하지 않습니다"
 
 #: lm.c:77 lm.c:81
 #, c-format

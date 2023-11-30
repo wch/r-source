@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-07-31 14:59+0200\n"
+"POT-Creation-Date: 2023-11-30 14:40+0100\n"
 "PO-Revision-Date: 2023-01-30 10:05+0000\n"
 "Last-Translator: Shun Wang <shuonwang@gmail.com>\n"
 "Language-Team: Chinese\n"
@@ -28,7 +28,7 @@ msgstr "无法分叉，可能的原因是：%s"
 msgid "unable to terminate child: %s"
 msgstr "无法建立管道"
 
-#: fork.c:329 fork.c:620 ncpus.c:87 ncpus.c:123 ncpus.c:179
+#: fork.c:329 fork.c:620 ncpus.c:87 ncpus.c:123 ncpus.c:178
 msgid "memory allocation error"
 msgstr "内存分配错误"
 

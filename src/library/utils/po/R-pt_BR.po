@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-07-31 15:00\n"
+"POT-Creation-Date: 2023-11-30 14:40\n"
 "PO-Revision-Date: 2023-04-22 22:18+0200\n"
 "Last-Translator: Beatriz Milz <milz.bea@gmail.com>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -226,9 +226,6 @@ msgstr "'package' deve ser uma string de caracteres ou NULL"
 
 msgid "data index for package %s is invalid and will be ignored"
 msgstr "índice de dados para o pacote %s é inválido e será ignorado"
-
-msgid "file 'filelist' is missing for directory %s"
-msgstr "arquivo 'filelist' está ausente para o diretório %s"
 
 msgid "data set %s not found"
 msgstr "conjunto de dados %s não encontrado"
@@ -1024,7 +1021,8 @@ msgstr "O número de tokens != 'length(proto)'"
 msgid "The number of tokens is not consistent across 'x'"
 msgstr "O número de tokens não é consistente ao longo de 'x'"
 
-msgid "cannot coerce %s to logical"
+#, fuzzy
+msgid "cannot coerce %s to TRUE or FALSE"
 msgstr "não é possível fazer a coerção de %s para lógico"
 
 msgid "no lines found in %s"
@@ -1426,6 +1424,9 @@ msgid "invalid roman numeral: %s"
 msgid_plural "invalid roman numerals: %s"
 msgstr[0] ""
 msgstr[1] ""
+
+#~ msgid "file 'filelist' is missing for directory %s"
+#~ msgstr "arquivo 'filelist' está ausente para o diretório %s"
 
 #~ msgid "'browser' must be a non-empty character string"
 #~ msgstr "'browser' deve ser uma string de caracteres não vazia"

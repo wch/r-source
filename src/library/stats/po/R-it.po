@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-4-3-BRANCH\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-07-31 14:59\n"
+"POT-Creation-Date: 2023-11-30 14:40\n"
 "PO-Revision-Date: 2023-01-19 18:34+0100\n"
 "Last-Translator: Daniele Medri <dmedri@gmail.com>\n"
 "Language-Team: Italian https://github.com/dmedri/R-italian-lang\n"
@@ -2034,9 +2034,6 @@ msgstr "tentativo di allisciare valori NA"
 msgid "invalid 'endrule' argument"
 msgstr "argomento 'endrule' non valido"
 
-msgid ".nknots.smspl() is now exported; use it instead of n.knots()"
-msgstr ".nknots.smspl() è ora esportato; utilizzalo al posto di n.knots()"
-
 msgid "invalid 'control.spar'"
 msgstr "'control.spar' non valido"
 
@@ -2228,6 +2225,10 @@ msgstr "'y' assente nel test per dati appaiati"
 
 msgid "data are essentially constant"
 msgstr "i dati sono praticamente costanti"
+
+#, fuzzy
+msgid "cannot use 'paired' in formula method"
+msgstr "non di può usare il punto '.' nella formula per i dati specificati"
 
 msgid "'main' must be TRUE, FALSE, NULL or character (vector)."
 msgstr "'main' dev'essere TRUE, FALSE, NULL o un (vettore) character."
@@ -2563,6 +2564,9 @@ msgid "'start.innov' is too short: need %d point"
 msgid_plural "'start.innov' is too short: need %d points"
 msgstr[0] "'start.innov' è troppo corto: richiesto %d punto"
 msgstr[1] "'start.innov' è troppo corto: richiesti %d punti"
+
+#~ msgid ".nknots.smspl() is now exported; use it instead of n.knots()"
+#~ msgstr ".nknots.smspl() è ora esportato; utilizzalo al posto di n.knots()"
 
 #~ msgid "package 'MASS' must be installed"
 #~ msgstr "il pacchetto 'MASS' dev'essere installato"

@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-07-31 14:59\n"
+"POT-Creation-Date: 2023-11-30 14:40\n"
 "PO-Revision-Date: 2020-08-28 15:57+0900\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -2047,9 +2047,6 @@ msgstr "попытка сгладить пропущенные значения"
 msgid "invalid 'endrule' argument"
 msgstr "недопустимый аргумент 'endrule'"
 
-msgid ".nknots.smspl() is now exported; use it instead of n.knots()"
-msgstr ".nknots.smspl() не экспортирован; вместо этого пользуйтесь n.knots()"
-
 msgid "invalid 'control.spar'"
 msgstr "неправильный 'control.spar'"
 
@@ -2241,6 +2238,10 @@ msgstr "'y' пропущено для парного теста"
 
 msgid "data are essentially constant"
 msgstr "данные абсолютно константны"
+
+#, fuzzy
+msgid "cannot use 'paired' in formula method"
+msgstr "не могу использовать точки в формуле с заданной таблицей данных"
 
 msgid "'main' must be TRUE, FALSE, NULL or character (vector)."
 msgstr "'main' должен быть TRUE, FALSE, NULL или текст (вектор)."
@@ -2604,6 +2605,9 @@ msgid_plural "'start.innov' is too short: need %d points"
 msgstr[0] "'start.innov' слишком короткий: нужно %d точку"
 msgstr[1] "'start.innov' слишком короткий: нужно %d точки"
 msgstr[2] "'start.innov' слишком короткий: нужно %d точек"
+
+#~ msgid ".nknots.smspl() is now exported; use it instead of n.knots()"
+#~ msgstr ".nknots.smspl() не экспортирован; вместо этого пользуйтесь n.knots()"
 
 #~ msgid "package 'MASS' must be installed"
 #~ msgstr "нужно установить пакет 'MASS'"

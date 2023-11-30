@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: stats 4.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-07-31 14:59\n"
+"POT-Creation-Date: 2023-11-30 14:40\n"
 "PO-Revision-Date: 2021-10-15 18:44+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -2040,9 +2040,6 @@ msgstr "bandymas glodinti NA reikšmes"
 msgid "invalid 'endrule' argument"
 msgstr "neteisingas 'endrule' argumentas"
 
-msgid ".nknots.smspl() is now exported; use it instead of n.knots()"
-msgstr ".nknots.smspl() dabar eksportuojamas; naudoti vietoj n.knots()"
-
 msgid "invalid 'control.spar'"
 msgstr "neteisingas 'control.spar'"
 
@@ -2234,6 +2231,10 @@ msgstr "trūksta 'y' atliekant suporuotą testą"
 
 msgid "data are essentially constant"
 msgstr "duomenys yra pastovūs"
+
+#, fuzzy
+msgid "cannot use 'paired' in formula method"
+msgstr "formulėje su duotais duomenimis negalima naudoti taškų"
 
 msgid "'main' must be TRUE, FALSE, NULL or character (vector)."
 msgstr "main' turi būti TRUE, FALSE, NULL arba simbolis (vektorius)."
@@ -2597,6 +2598,9 @@ msgid_plural "'start.innov' is too short: need %d points"
 msgstr[0] "'start.innov' per trumpas: reikia %d taško"
 msgstr[1] "'start.innov' per trumpas: reikia %d taškus"
 msgstr[2] "'start.innov' per trumpas: reikia %d taškų"
+
+#~ msgid ".nknots.smspl() is now exported; use it instead of n.knots()"
+#~ msgstr ".nknots.smspl() dabar eksportuojamas; naudoti vietoj n.knots()"
 
 #~ msgid "package 'MASS' must be installed"
 #~ msgstr "paketas 'MASS' turi būti įdiegtas"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-07-31 14:59\n"
+"POT-Creation-Date: 2023-11-30 14:40\n"
 "PO-Revision-Date: 2018-04-09 12:11-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team: \n"
@@ -60,14 +60,16 @@ msgstr "디렉토리 '%s'는 R 코드를 포함하지 않습니다"
 msgid "directory '%s' does not contain Rd objects"
 msgstr "디렉퇴 '%s'는 Rd 객체들을 포함하지 않습니다"
 
-msgid "Functions or methods with usage in documentation object '%s' but not in code:"
+#, fuzzy
+msgid "Functions or methods with usage in Rd file '%s' but not in code:"
 msgstr "객체 '%s'에 대한 함수 또는 메소드의 사용법을 문서로부터 찾을 수 있으나, 코드에는 없습니다:"
 
-msgid "Data with usage in documentation object '%s' but not in code:"
+#, fuzzy
+msgid "Data with usage in Rd file '%s' but not in code:"
 msgstr "객체 '%s'에 대한 데이터셋의 사용법은 문서로부터 찾을 수 있으나, 코드에는 없습니다:"
 
 #, fuzzy
-msgid "Variables with usage in documentation object '%s' but not in code:"
+msgid "Variables with usage in Rd file '%s' but not in code:"
 msgstr "객체 '%s'에 대한 데이터셋의 사용법은 문서로부터 찾을 수 있으나, 코드에는 없습니다:"
 
 msgid "Argument names in code not in docs:"
@@ -88,7 +90,8 @@ msgstr "인자들의 기본값이 일치하지 않습니다 (처음 세개):"
 msgid "Mismatches in argument default values:"
 msgstr "인자들의 기본값이 일치하지 않습니다:"
 
-msgid "Codoc mismatches from documentation object '%s':"
+#, fuzzy
+msgid "Codoc mismatches from Rd file '%s':"
 msgstr "문서 객체 '%s'로부터 다음과 같은 코드와 문서가 일치하지 않는 부분을 찾았습니다:"
 
 msgid "Code: %s"
@@ -97,37 +100,46 @@ msgstr "코드: %s"
 msgid "Docs: %s"
 msgstr "문서: %s"
 
-msgid "S4 class codoc mismatches from documentation object '%s':"
+#, fuzzy
+msgid "S4 class codoc mismatches from Rd file '%s':"
 msgstr "문서 객체 '%s'로부터 S4 클래스 코드와 문서가 일치하지 않는 부분을 찾았습니다:"
 
 msgid "Slots for class '%s'"
 msgstr "클래스 '%s'에 대한 슬롯들"
 
-msgid "Data codoc mismatches from documentation object '%s':"
+#, fuzzy
+msgid "Data codoc mismatches from Rd file '%s':"
 msgstr "문서 객체 '%s'로부터 데이터 코드와 문서가 일치하지 않는 부분을 찾았습니다:"
 
 msgid "Variables in data frame '%s'"
 msgstr "데이터 프레임 '%s'내의 변수들"
 
-msgid "Undocumented arguments in documentation object '%s'"
+#, fuzzy
+msgid "Undocumented arguments in Rd file '%s'"
 msgstr "다큐멘테이션 객체 '%s'에 기록되지 않은 인자들입니다"
 
-msgid "Duplicated \\argument entries in documentation object '%s':"
+#, fuzzy
+msgid "Duplicated \\argument entries in Rd file '%s':"
 msgstr "다큐멘테이션 객체 '%s'에 중복된 \\argument 항목들입니다:"
 
-msgid "Documented arguments not in \\usage in documentation object '%s':"
+#, fuzzy
+msgid "Documented arguments not in \\usage in Rd file '%s':"
 msgstr "다큐멘테이션 객체 '%s' 내에 \\usage 부분에 기록되지 않은 인자들입니다 :"
 
-msgid "Objects in \\usage without \\alias in documentation object '%s':"
+#, fuzzy
+msgid "Objects in \\usage without \\alias in Rd file '%s':"
 msgstr "다큐멘테이션 객체 '%s'내에 \\usage 부분에는 있고 \\alias 부분에는 없는 객체들입니다:"
 
-msgid "Assignments in \\usage in documentation object '%s':"
-msgstr ""
+#, fuzzy
+msgid "Assignments in \\usage in Rd file '%s':"
+msgstr "파일 '%s'에서 파싱에러가 발생했습니다:"
 
-msgid "Bad \\usage lines found in documentation object '%s':"
+#, fuzzy
+msgid "Bad \\usage lines found in Rd file '%s':"
 msgstr "문서 객체 '%s'내에서 올바르지 않은 \\usage 라인들을 찾았습니다:"
 
-msgid "S3 methods shown with full name in documentation object '%s':"
+#, fuzzy
+msgid "S3 methods shown with full name in Rd file '%s':"
 msgstr "다큐멘테이션 객체 '%s' 내에 전체이름과 함께 보여지는 S3 메소드들입니다:"
 
 msgid "you must specify 'package', 'dir' or 'file'"
@@ -146,10 +158,10 @@ msgstr ""
 msgid "cannot check R code installed as image"
 msgstr "이미지로서 설치된 R 코드는 확인할 수 없습니다"
 
-msgid "parse error in file '%s':"
-msgstr "파일 '%s'에서 파싱에러가 발생했습니다:"
-
-msgid "parse error in examples from file '%s':"
+#, fuzzy
+msgid ""
+"parse error in examples from file '%s':\n"
+"%s"
 msgstr "파일 '%s'에 포함된 예제부분에서  파싱에러가 발생했습니다:"
 
 msgid "File '%s':"
@@ -270,6 +282,9 @@ msgstr "인코딩 '%s'은 포터블(portable)하지 않습니다."
 msgid "Unknown encoding with non-ASCII data"
 msgstr "ASCII가 아닌 데이터에 이용된 인코딩을 알 수 없습니다"
 
+msgid "Record: %d Field(s): %s"
+msgstr ""
+
 msgid "Non-standard license specification:"
 msgstr "비표준 라이센스 지정(non-standard license specification)입니다:"
 
@@ -291,6 +306,13 @@ msgstr "다음은 허용되지 않는 제한을 가지고 있는 라이센스 �
 msgid "License components which are templates and need '+ file LICENSE':"
 msgstr ""
 
+msgid "License stub is invalid DCF."
+msgstr ""
+
+#, fuzzy
+msgid "License stub records with missing/empty fields:"
+msgstr "이름이 없는 Rd 객체들은 다루어질 수 없습니다"
+
 msgid "Uses ACM license: only appropriate for pre-2013 ACM TOMS code"
 msgstr ""
 
@@ -307,11 +329,12 @@ msgstr ""
 msgid "invalid 'OS.type' \"%s\".  Should not happen"
 msgstr ""
 
-msgid "Missing link or links in documentation object '%s':"
+#, fuzzy
+msgid "Missing link or links in Rd file '%s':"
 msgstr "다큐멘테이션 객체 '%s'내에서 빠져있는 링크(들)은 다음과 같습니다:"
 
 #, fuzzy
-msgid "Non-file package-anchored link(s) in documentation object '%s':"
+msgid "Non-file package-anchored link(s) in Rd file '%s':"
 msgstr "다큐멘테이션 객체 '%s'내에서 빠져있는 링크(들)은 다음과 같습니다:"
 
 msgid "See section 'Cross-references' in the 'Writing R Extensions' manual."
@@ -466,14 +489,17 @@ msgstr "다음은 중복된 에일리어스 '%s'를 가진 Rd 파일들입니다
 msgid "Invalid package aliases in Rd file '%s':"
 msgstr "파일 '%s'에서 파싱에러가 발생했습니다:"
 
-msgid "Argument items with no description in Rd object '%s':"
+#, fuzzy
+msgid "Argument items with no description in Rd file '%s':"
 msgstr "다음은 Rd 객체 '%s'에 아무런 설명이 없는 인자항목들입니다:"
 
-msgid "Auto-generated content requiring editing in Rd object '%s':"
+#, fuzzy
+msgid "Auto-generated content requiring editing in Rd file '%s':"
 msgstr "다음은 Rd 객체 '%s'를 편집하는데 필요한 자동으로 생성된 컨텐츠입니다:"
 
-msgid "Rd objects without \\description:"
-msgstr ""
+#, fuzzy
+msgid "Rd files without \\description:"
+msgstr "다음은 중복된 에일리어스 '%s'를 가진 Rd 파일들입니다:"
 
 msgid "no Rd sections specified"
 msgstr "Rd 섹션들이 지정되지 않았습니다"
@@ -1167,6 +1193,17 @@ msgid ""
 "  %s"
 msgstr ""
 
+#, fuzzy
+msgid "unable to create temporary directory %s"
+msgstr "임시디렉토리 %s를 생성하지 못했습니다"
+
+msgid "expected one package directory, found %d."
+msgstr ""
+
+#, fuzzy
+msgid "one of 'package' and 'dir' must be specified."
+msgstr "반드시 한개의 Rd 파일은 지정되어야 합니다"
+
 msgid "argument '%s' must be a character string or connection"
 msgstr "인자 '%s'는 반드시 문자열 또는 연결이어야 합니다"
 
@@ -1495,6 +1532,9 @@ msgstr[0] ""
 msgid "Corresponding BibTeX entry:"
 msgid_plural "Corresponding BibTeX entries:"
 msgstr[0] ""
+
+#~ msgid "parse error in file '%s':"
+#~ msgstr "파일 '%s'에서 파싱에러가 발생했습니다:"
 
 #~ msgid "declared S3 method '%s' not found"
 #~ msgstr "선언된 S3 메소드 '%s'를 찾을 수 없습니다"

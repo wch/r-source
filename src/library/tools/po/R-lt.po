@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tools 4.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-07-31 14:59\n"
+"POT-Creation-Date: 2023-11-30 14:40\n"
 "PO-Revision-Date: 2021-11-08 10:33+0100\n"
 "Last-Translator: r.zakauskas@gmail.com;gabriele.dauksaite@gmail.com\n"
 "Language-Team: Lithuanian\n"
@@ -55,13 +55,16 @@ msgstr "kataloge '%s' nėra R kodo"
 msgid "directory '%s' does not contain Rd objects"
 msgstr "kataloge '%s' nėra Rd objektų"
 
-msgid "Functions or methods with usage in documentation object '%s' but not in code:"
+#, fuzzy
+msgid "Functions or methods with usage in Rd file '%s' but not in code:"
 msgstr "Funkcijos arba metodai su naudojimu dokumentacijos objekte '%s', bet ne kode:"
 
-msgid "Data with usage in documentation object '%s' but not in code:"
+#, fuzzy
+msgid "Data with usage in Rd file '%s' but not in code:"
 msgstr "Duomenys, kurie naudojami dokumentacijos objekte '%s', bet ne kode:"
 
-msgid "Variables with usage in documentation object '%s' but not in code:"
+#, fuzzy
+msgid "Variables with usage in Rd file '%s' but not in code:"
 msgstr "Kintamieji, kurie naudojami dokumentacijos objekte '%s', bet ne kode:"
 
 msgid "Argument names in code not in docs:"
@@ -82,7 +85,8 @@ msgstr "Nesutapimas argumento numatytose reikšmėse (pirmos 3):"
 msgid "Mismatches in argument default values:"
 msgstr "Nesutapimas argumento numatytose reikšmėse:"
 
-msgid "Codoc mismatches from documentation object '%s':"
+#, fuzzy
+msgid "Codoc mismatches from Rd file '%s':"
 msgstr "Codoc neatitikimas iš dokumento objekto '%s':"
 
 msgid "Code: %s"
@@ -91,37 +95,46 @@ msgstr "Kodas: %s"
 msgid "Docs: %s"
 msgstr "Dokumentai: %s"
 
-msgid "S4 class codoc mismatches from documentation object '%s':"
+#, fuzzy
+msgid "S4 class codoc mismatches from Rd file '%s':"
 msgstr "S4 klasės neatitikimai dokumentacijos objektui '%s':"
 
 msgid "Slots for class '%s'"
 msgstr "Laukai klasei '%s'"
 
-msgid "Data codoc mismatches from documentation object '%s':"
+#, fuzzy
+msgid "Data codoc mismatches from Rd file '%s':"
 msgstr "Duomenys codoc skiriasi nuo dokumentacijos objekto '%s':"
 
 msgid "Variables in data frame '%s'"
 msgstr "Kintamieji duomenų sistemoje '%s'"
 
-msgid "Undocumented arguments in documentation object '%s'"
+#, fuzzy
+msgid "Undocumented arguments in Rd file '%s'"
 msgstr "Dokumentacijos objekte '%s' nedokumentuoti argumentai"
 
-msgid "Duplicated \\argument entries in documentation object '%s':"
+#, fuzzy
+msgid "Duplicated \\argument entries in Rd file '%s':"
 msgstr "Pasikartoja \\argument įrašai dokumentacijos objekte '%s':"
 
-msgid "Documented arguments not in \\usage in documentation object '%s':"
+#, fuzzy
+msgid "Documented arguments not in \\usage in Rd file '%s':"
 msgstr "Dokumentuoti argumentai nėra \\usage, esančiame dokumentacijos objekte '%s':"
 
-msgid "Objects in \\usage without \\alias in documentation object '%s':"
+#, fuzzy
+msgid "Objects in \\usage without \\alias in Rd file '%s':"
 msgstr "Objektai, esantys \\usage be \\alias, esančio dokumentacijos objekte '%s':"
 
-msgid "Assignments in \\usage in documentation object '%s':"
+#, fuzzy
+msgid "Assignments in \\usage in Rd file '%s':"
 msgstr "Priskyrimai esantys \\usage dokumentacijos objekte '%s':"
 
-msgid "Bad \\usage lines found in documentation object '%s':"
+#, fuzzy
+msgid "Bad \\usage lines found in Rd file '%s':"
 msgstr "Netinkamo naudojimo eilutės, rastos dokumentacijos objekte '%s':"
 
-msgid "S3 methods shown with full name in documentation object '%s':"
+#, fuzzy
+msgid "S3 methods shown with full name in Rd file '%s':"
 msgstr "S3 metodai rodomi su pilnu pavadinimu dokumentacijos objekte '%s':"
 
 msgid "you must specify 'package', 'dir' or 'file'"
@@ -140,10 +153,10 @@ msgstr ""
 msgid "cannot check R code installed as image"
 msgstr "negalima patikrinti R kodo, įdiegto kaip paveikslėlis"
 
-msgid "parse error in file '%s':"
-msgstr "analizavimo klaida faile '%s':"
-
-msgid "parse error in examples from file '%s':"
+#, fuzzy
+msgid ""
+"parse error in examples from file '%s':\n"
+"%s"
 msgstr "analizavimo klaida pavyzdžiuose iš failo '%s':"
 
 msgid "File '%s':"
@@ -263,6 +276,9 @@ msgstr "Kodavimas '%s' yra ne perkeliamas"
 msgid "Unknown encoding with non-ASCII data"
 msgstr "Nežinomas kodavimas su ne ASCII duomenimis"
 
+msgid "Record: %d Field(s): %s"
+msgstr ""
+
 msgid "Non-standard license specification:"
 msgstr "Nestandartinė licencijos specifikacija:"
 
@@ -284,6 +300,13 @@ msgstr "Licencijos komponentai su apribojimais neleidžiami:"
 msgid "License components which are templates and need '+ file LICENSE':"
 msgstr "Licencijos komponentai, kurie yra šablonai ir reikia '+ file LICENSE':"
 
+msgid "License stub is invalid DCF."
+msgstr ""
+
+#, fuzzy
+msgid "License stub records with missing/empty fields:"
+msgstr "negali susidoroti su Rd objektais trūkstamais/tuščiais pavadinimais"
+
 msgid "Uses ACM license: only appropriate for pre-2013 ACM TOMS code"
 msgstr ""
 
@@ -299,10 +322,12 @@ msgstr "Kintamieji viršijantys vartotojo/svetainės parametrus:"
 msgid "invalid 'OS.type' \"%s\".  Should not happen"
 msgstr "netinkamas OS.type' \"%s\".  Neturėtų atsitikti"
 
-msgid "Missing link or links in documentation object '%s':"
+#, fuzzy
+msgid "Missing link or links in Rd file '%s':"
 msgstr "Trūkstama nuoroda arba nuorodos, esančios dokumentacijos objekte '%s':"
 
-msgid "Non-file package-anchored link(s) in documentation object '%s':"
+#, fuzzy
+msgid "Non-file package-anchored link(s) in Rd file '%s':"
 msgstr "Ne failo pakete įtvirtinta nuoroda(-os) dokumentacijos objekte '%s':"
 
 msgid "See section 'Cross-references' in the 'Writing R Extensions' manual."
@@ -457,14 +482,17 @@ msgstr "Rd failas su dubliuotais pseudonimais '%s':"
 msgid "Invalid package aliases in Rd file '%s':"
 msgstr "Neperkeliamos žymos kintamajame '%s':"
 
-msgid "Argument items with no description in Rd object '%s':"
+#, fuzzy
+msgid "Argument items with no description in Rd file '%s':"
 msgstr "Argumento elementai be aprašo Rd objekte '%s':"
 
-msgid "Auto-generated content requiring editing in Rd object '%s':"
+#, fuzzy
+msgid "Auto-generated content requiring editing in Rd file '%s':"
 msgstr "Automatiškai sugeneruotas turinys, kurį reikia redaguoti Rd objekte '%s':"
 
-msgid "Rd objects without \\description:"
-msgstr ""
+#, fuzzy
+msgid "Rd files without \\description:"
+msgstr "Rd failas su dubliuotais pseudonimais '%s':"
 
 msgid "no Rd sections specified"
 msgstr "nėra nurodytų Rd sekcijų"
@@ -1176,6 +1204,17 @@ msgstr ""
 "skaitymas DESCRIPTION paketui %s nepavyko su pranešimu:\n"
 "  %s"
 
+#, fuzzy
+msgid "unable to create temporary directory %s"
+msgstr "nepavyko sukurti temp katalogo %s"
+
+msgid "expected one package directory, found %d."
+msgstr ""
+
+#, fuzzy
+msgid "one of 'package' and 'dir' must be specified."
+msgstr "tiksliai vienas Rd failas turi būti nurodytas"
+
 msgid "argument '%s' must be a character string or connection"
 msgstr "argumentas '%s' turi būti simbolių eilutė arba ryšys"
 
@@ -1570,6 +1609,9 @@ msgid_plural "Corresponding BibTeX entries:"
 msgstr[0] "Atitinkamas BibTeX įrašas:"
 msgstr[1] "Atitinkami BibTeX įrašai:"
 msgstr[2] "Atitinkamų BibTeX įrašų:"
+
+#~ msgid "parse error in file '%s':"
+#~ msgstr "analizavimo klaida faile '%s':"
 
 #~ msgid "declared S3 method '%s' not found"
 #~ msgstr "deklaruotas S3 metodas '%s' nerastas"

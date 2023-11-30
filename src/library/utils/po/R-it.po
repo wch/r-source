@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-4-3-BRANCH\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-07-31 15:00\n"
+"POT-Creation-Date: 2023-11-30 14:40\n"
 "PO-Revision-Date: 2023-01-19 18:35+0100\n"
 "Last-Translator: Daniele Medri <dmedri@gmail.com>\n"
 "Language-Team: Italian https://github.com/dmedri/R-italian-lang\n"
@@ -230,9 +230,6 @@ msgstr "'package' dev'essere un vettore di caratteri o NULL"
 
 msgid "data index for package %s is invalid and will be ignored"
 msgstr "l'indice dati per il pacchetto %s non è valido e sarà ignorato"
-
-msgid "file 'filelist' is missing for directory %s"
-msgstr "il file 'filelist' non è presente nella directory %s"
 
 msgid "data set %s not found"
 msgstr "il dataset %s non è stato trovato"
@@ -1019,7 +1016,8 @@ msgstr "Il numero di token != 'length(proto)'"
 msgid "The number of tokens is not consistent across 'x'"
 msgstr "Il numero di token non è consistente attraverso 'x'"
 
-msgid "cannot coerce %s to logical"
+#, fuzzy
+msgid "cannot coerce %s to TRUE or FALSE"
 msgstr "non è possibile la coercizione di %s in logica"
 
 msgid "no lines found in %s"
@@ -1432,6 +1430,9 @@ msgid "invalid roman numeral: %s"
 msgid_plural "invalid roman numerals: %s"
 msgstr[0] "numero romano non valido: %s"
 msgstr[1] "numeri romani non validi: %s"
+
+#~ msgid "file 'filelist' is missing for directory %s"
+#~ msgstr "il file 'filelist' non è presente nella directory %s"
 
 #~ msgid "Argument '%s' is deprecated; rather set '%s' instead."
 #~ msgstr "L'argomento '%s' è deprecato; come alternativa si utilizzi '%s'."

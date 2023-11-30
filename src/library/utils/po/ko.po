@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-07-31 15:00+0200\n"
+"POT-Creation-Date: 2023-11-30 14:40+0100\n"
 "PO-Revision-Date: 2018-04-09 12:11-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team: \n"
@@ -105,7 +105,7 @@ msgstr "데이터 프레임이 손상되었습니다 -- 열의 길이 %d가 행�
 
 #: io.c:1171
 #, c-format
-msgid "column %s claims to be a factor but does not have numeric codes"
+msgid "column %d claims to be a factor but does not have numeric codes"
 msgstr ""
 
 #: io.c:1189

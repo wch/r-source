@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.0.4\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-07-31 14:59+0200\n"
+"POT-Creation-Date: 2023-11-30 14:40+0100\n"
 "PO-Revision-Date: 2021-02-10 18:07+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -23,9 +23,9 @@ msgid "bandwidth/span of running medians is larger than n"
 msgstr "largeur de fenêtre de médiane mobile supérieure à n"
 
 #: Srunmed.c:262
-#, c-format
-msgid "runmed(x, .., na.action=\"na.fail\"): have NAs starting at x[%ld]"
-msgstr "runmed(x, .., na.action=\"na.fail\"): des valeurs manquantes se trouvent à x[%ld]"
+#, fuzzy, c-format
+msgid "runmed(x, .., na.action=\"na.fail\"): have NAs starting at x[%lld]"
+msgstr "runmed(x, .., na.action=\"na.fail\"): des valeurs manquantes se trouvent à x[%lld]"
 
 #: Srunmed.c:265
 msgid "runmed(): invalid 'na.action'"
@@ -272,9 +272,9 @@ msgid "nextn() found no solution < %d = INT_MAX (the maximal integer); pass '0+ 
 msgstr "nextn() n’a pas trouvé de solution < %d = INT_MAX (le plus grand entier) ; passer '0 + n' à la place de 'n'"
 
 #: fourier.c:233
-#, c-format
-msgid "nextn<64>() found no solution < %ld = UINT64_MAX (the maximal integer)"
-msgstr "nextn<64>() n’a pas trouvé de solution < %ld = UINT64_MAX (le plus grand entier)"
+#, fuzzy, c-format
+msgid "nextn<64>() found no solution < %llu = UINT64_MAX (the maximal integer)"
+msgstr "nextn<64>() n’a pas trouvé de solution < %llu = UINT64_MAX (le plus grand entier)"
 
 #: fourier.c:249
 msgid "no factors"
@@ -302,6 +302,11 @@ msgstr "nextn() = %<PRIu64> > 2^53 peut ne pas être représentable exactement e
 msgid "'%s' must be of length one"
 msgstr "'%s' doit être de longueur unitaire"
 
+#: isoreg.c:53
+#, c-format
+msgid "non-finite sum(y) == %g is not allowed"
+msgstr ""
+
 #: ksmooth.c:69
 msgid "only 2500 rows are allowed for sm.method=\"spline\""
 msgstr "seulement 2500 lignes autorisées pour sm.method=\"spline\""
@@ -311,9 +316,9 @@ msgid "'x' is not a matrix"
 msgstr "'x' n'est pas une matrice"
 
 #: lm.c:62
-#, c-format
-msgid "dimensions of 'x' (%d,%d) and 'y' (%d) do not match"
-msgstr "les dimensions de 'x' (%d,%d) et de 'y' (%d) ne correspondent pas"
+#, fuzzy, c-format
+msgid "dimensions of 'x' (%d,%d) and 'y' (%lld) do not match"
+msgstr "les dimensions de 'x' (%d,%d) et de 'y' (%lld) ne correspondent pas"
 
 #: lm.c:77 lm.c:81
 #, c-format

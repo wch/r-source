@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.0.4\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-07-31 14:59+0200\n"
+"POT-Creation-Date: 2023-11-30 14:39+0100\n"
 "PO-Revision-Date: 2022-08-31 15:04+0000\n"
 "Last-Translator: Marcel Ramos <marcel.ramos@sph.cuny.edu>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -197,7 +197,7 @@ msgstr "choix de fonte incorrect"
 
 #: plot.c:276 plot.c:290 plot.c:474 plot.c:479 plot.c:2195 plot.c:2202
 #: plot.c:3225 plot.c:3227 plot.c:3229 plot.c:3388 plot3d.c:1163 plot3d.c:1167
-#: plot3d.c:1169 plot3d.c:1903
+#: plot3d.c:1169 plot3d.c:1906
 #, c-format
 msgid "invalid '%s' value"
 msgstr "valeur '%s' incorrecte"
@@ -255,7 +255,7 @@ msgstr "type incorrect pour les étiquettes des axes"
 
 #: plot.c:779 plot.c:1390 plot.c:1704 plot.c:1769 plot.c:1844 plot.c:1910
 #: plot.c:1984 plot.c:2079 plot.c:2155 plot.c:2433 plot.c:2607 plot.c:2823
-#: plot.c:3370 plot.c:3505 plot.c:3581 plot.c:3747 plot.c:4027 plot3d.c:1872
+#: plot.c:3370 plot.c:3505 plot.c:3581 plot.c:3747 plot.c:4027 plot3d.c:1875
 msgid "too few arguments"
 msgstr "trop peu d'arguments"
 
@@ -475,11 +475,11 @@ msgstr "type de symbole incorrect"
 msgid "incorrect length for '%s' argument"
 msgstr "mauvaise longueur pour l'argument '%s'"
 
-#: plot3d.c:181 plot3d.c:1929
+#: plot3d.c:181 plot3d.c:1932
 msgid "insufficient 'x' or 'y' values"
 msgstr "valeurs 'x' ou 'y' insuffisantes"
 
-#: plot3d.c:185 plot3d.c:1932
+#: plot3d.c:185 plot3d.c:1935
 msgid "dimension mismatch"
 msgstr "dimensions en désaccord"
 
@@ -541,36 +541,36 @@ msgstr "spécification de '%s' incorrecte"
 msgid "contour(): circular/long seglist -- set %s > %d?"
 msgstr "contour() : seglist longue / circulaire -- est-ce que %s > %d ?"
 
-#: plot3d.c:1935
+#: plot3d.c:1938
 msgid "no 'levels'"
 msgstr "Pas de ‘levels'"
 
-#: plot3d.c:1939
+#: plot3d.c:1942
 msgid "missing 'x' values"
 msgstr "valeurs 'x' manquantes"
 
-#: plot3d.c:1941
+#: plot3d.c:1944
 msgid "increasing 'x' values expected"
 msgstr "des valeurs croissantes sont attendues pour 'x'"
 
-#: plot3d.c:1946
+#: plot3d.c:1949
 msgid "missing 'y' values"
 msgstr "valeurs 'y' manquantes"
 
-#: plot3d.c:1948
+#: plot3d.c:1951
 msgid "increasing 'y' values expected"
 msgstr "des valeurs croissantes sont attendues pour 'y'"
 
-#: plot3d.c:1953
+#: plot3d.c:1956
 #, c-format
 msgid "non-finite level values: levels[%d] = %g"
 msgstr "Valeurs de niveaux non finis : levels[%d] = %g"
 
-#: plot3d.c:1966
+#: plot3d.c:1969
 msgid "all z values are equal"
 msgstr "toutes les valeurs en z sont égales"
 
-#: plot3d.c:1968
+#: plot3d.c:1971
 msgid "all z values are NA"
 msgstr "toutes les valeurs z sont NA"
 

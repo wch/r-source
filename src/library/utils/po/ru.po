@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-07-31 15:00+0200\n"
+"POT-Creation-Date: 2023-11-30 14:40+0100\n"
 "PO-Revision-Date: 2020-08-28 17:09+0900\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -106,8 +106,8 @@ msgid "corrupt data frame -- length of column %d does not match nrows"
 msgstr "поврежденная таблица данных -- длина колонки %d не соответствует строкам"
 
 #: io.c:1171
-#, c-format
-msgid "column %s claims to be a factor but does not have numeric codes"
+#, fuzzy, c-format
+msgid "column %d claims to be a factor but does not have numeric codes"
 msgstr "колонка %s считает себя фактором, но у нее нет числовых кодов"
 
 #: io.c:1189

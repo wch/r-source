@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-07-31 14:59\n"
+"POT-Creation-Date: 2023-11-30 14:40\n"
 "PO-Revision-Date: 2015-03-27 14:18+0900 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -2065,9 +2065,6 @@ msgstr " NA 値を平滑化しようとしました "
 msgid "invalid 'endrule' argument"
 msgstr " 無効な引数 'endrule' です "
 
-msgid ".nknots.smspl() is now exported; use it instead of n.knots()"
-msgstr " .nknots.smspl() がエクスポートされるようになりましたから，n.knots() の代わりにこちらを用いてください "
-
 msgid "invalid 'control.spar'"
 msgstr " 無効な 'control.spar' です "
 
@@ -2263,6 +2260,10 @@ msgstr " 対検定で 'y' が欠損しています "
 
 msgid "data are essentially constant"
 msgstr " データは本質的に定数です "
+
+#, fuzzy
+msgid "cannot use 'paired' in formula method"
+msgstr " 与えられたデータではモデル式中にドット記法を使うことはできません "
 
 msgid "'main' must be TRUE, FALSE, NULL or character (vector)."
 msgstr " 'main' は TRUE, FALSE, NULL または文字 (ベクトル) でなければなりません "
@@ -2575,6 +2576,9 @@ msgstr[0] " NA, NaN および Inf を含む %d 個のの観測値は削除され
 msgid "'start.innov' is too short: need %d point"
 msgid_plural "'start.innov' is too short: need %d points"
 msgstr[0] " 'start.innov' が短すぎます: %d 個の点が必要です "
+
+#~ msgid ".nknots.smspl() is now exported; use it instead of n.knots()"
+#~ msgstr " .nknots.smspl() がエクスポートされるようになりましたから，n.knots() の代わりにこちらを用いてください "
 
 #~ msgid "link \"%s\" not available for quasipoisson family; available links are %s"
 #~ msgstr " リンク \"%s\" は quasiPoisson ファミリには利用できません。利用できるリンクは %s です "

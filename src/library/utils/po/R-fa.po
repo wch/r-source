@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-07-31 15:00\n"
+"POT-Creation-Date: 2023-11-30 14:40\n"
 "PO-Revision-Date: 2012-12-30 23:32+0330\n"
 "Last-Translator: Seyed Mahmood Taghavi Shahri <taghavi_m@razi.tums.ac.ir>\n"
 "Language-Team: Persian\n"
@@ -216,9 +216,6 @@ msgid "'package' must be a character vector or NULL"
 msgstr ""
 
 msgid "data index for package %s is invalid and will be ignored"
-msgstr ""
-
-msgid "file 'filelist' is missing for directory %s"
 msgstr ""
 
 msgid "data set %s not found"
@@ -984,7 +981,7 @@ msgstr ""
 msgid "The number of tokens is not consistent across 'x'"
 msgstr ""
 
-msgid "cannot coerce %s to logical"
+msgid "cannot coerce %s to TRUE or FALSE"
 msgstr ""
 
 msgid "no lines found in %s"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.5.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-07-31 14:59\n"
+"POT-Creation-Date: 2023-11-30 14:40\n"
 "PO-Revision-Date: 2018-09-16 23:38+0800\n"
 "Last-Translator: Wei-Lun Chao <bluebat@member.fsf.org>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -2060,9 +2060,6 @@ msgstr "不能平滑 NA 值"
 msgid "invalid 'endrule' argument"
 msgstr "'endrule' 引數無效"
 
-msgid ".nknots.smspl() is now exported; use it instead of n.knots()"
-msgstr ".nknots.smspl() 目前已匯出；用它來替代 n.knots()"
-
 msgid "invalid 'control.spar'"
 msgstr "'control.spar' 無效"
 
@@ -2254,6 +2251,10 @@ msgstr "配對檢驗時沒有設定 'y'"
 
 msgid "data are essentially constant"
 msgstr "資料是恆量"
+
+#, fuzzy
+msgid "cannot use 'paired' in formula method"
+msgstr "按照所提供的資料無法在公式裡用點符號"
 
 msgid "'main' must be TRUE, FALSE, NULL or character (vector)."
 msgstr "'main' 必須是 TRUE，FALSE，NULL 或字元(向量) 。"
@@ -2565,6 +2566,9 @@ msgstr[0] "刪除了含 NA，NaN 或 Inf 的 %d 個觀察量"
 msgid "'start.innov' is too short: need %d point"
 msgid_plural "'start.innov' is too short: need %d points"
 msgstr[0] "'start.innov' 太短了，需要 %d 個點"
+
+#~ msgid ".nknots.smspl() is now exported; use it instead of n.knots()"
+#~ msgstr ".nknots.smspl() 目前已匯出；用它來替代 n.knots()"
 
 #~ msgid "package 'MASS' must be installed"
 #~ msgstr "套件 'MASS' 必須已安裝"

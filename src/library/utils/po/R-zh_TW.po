@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.5.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-07-31 15:00\n"
+"POT-Creation-Date: 2023-11-30 14:40\n"
 "PO-Revision-Date: 2018-09-16 23:38+0800\n"
 "Last-Translator: Wei-Lun Chao <bluebat@member.fsf.org>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -229,9 +229,6 @@ msgstr "'package' 的值必須是字串或 NULL"
 
 msgid "data index for package %s is invalid and will be ignored"
 msgstr "程式套件 %s 的資料索引不對，忽略不用"
-
-msgid "file 'filelist' is missing for directory %s"
-msgstr "目錄 %s 裡沒有 'filelist' 此一檔案"
 
 msgid "data set %s not found"
 msgstr "沒有 %s 這個資料集"
@@ -1025,7 +1022,7 @@ msgid "The number of tokens is not consistent across 'x'"
 msgstr ""
 
 #, fuzzy
-msgid "cannot coerce %s to logical"
+msgid "cannot coerce %s to TRUE or FALSE"
 msgstr "無法將 'x' 轉變成羅馬數"
 
 msgid "no lines found in %s"
@@ -1416,6 +1413,9 @@ msgstr[0] "最後一個記錄不完全，%d 列忽略不用"
 msgid "invalid roman numeral: %s"
 msgid_plural "invalid roman numerals: %s"
 msgstr[0] "羅馬數字不對：%s"
+
+#~ msgid "file 'filelist' is missing for directory %s"
+#~ msgstr "目錄 %s 裡沒有 'filelist' 此一檔案"
 
 #~ msgid "Argument '%s' is deprecated; rather set '%s' instead."
 #~ msgstr "引數 '%s' 已經不再用了；請設定 '%s' 做為替代。"

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-07-31 14:59\n"
+"POT-Creation-Date: 2023-11-30 14:39\n"
 "PO-Revision-Date: 2020-08-27 18:56+0900\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -248,6 +248,9 @@ msgstr "Неправильный тип паттерна"
 msgid "Invalid 'extend' value"
 msgstr "Неправильное значение 'extend'"
 
+msgid "'%s' is deprecated."
+msgstr ""
+
 msgid "invalid arguments in '%s' (need named args)"
 msgstr "неправильные аргументы в '%s' (нужны именованные аргументы)"
 
@@ -462,6 +465,9 @@ msgid "type = \"cairo\" is unavailable. trying \"Xlib\""
 msgstr ""
 
 msgid "type = \"cairo-png\" is unavailable. trying \"Xlib\""
+msgstr ""
+
+msgid "compression is not supported for type = \"quartz\""
 msgstr ""
 
 msgid "invalid 'title'"

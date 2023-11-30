@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-07-31 14:59+0200\n"
+"POT-Creation-Date: 2023-11-30 14:40+0100\n"
 "PO-Revision-Date: 2022-10-02 02:04+0000\n"
 "Last-Translator: Kwangchun Lee <kwangchun.lee.7@gmail.com>\n"
 "Language-Team: \n"
@@ -19,7 +19,7 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Weblate 4.13.1\n"
 
-#: gpar.c:621
+#: gpar.c:632
 msgid "updateGContext must only be called after initGContext"
 msgstr "updateGContext는 initGContext 를 호출한 다음에만 호출해야 합니다"
 
@@ -39,61 +39,66 @@ msgstr ""
 msgid "Masks within a (clipping) path are not honoured"
 msgstr ""
 
-#: grid.c:917 grid.c:922 grid.c:1043 grid.c:1048
+#: grid.c:699 grid.c:877
+#, c-format
+msgid "Viewport '%s' was not found"
+msgstr ""
+
+#: grid.c:909 grid.c:914 grid.c:1035 grid.c:1040
 msgid "cannot pop the top-level viewport ('grid' and 'graphics' output mixed?)"
 msgstr "최상단 뷰포트를 띄울 수 없습니다 ('grid'와 'graphics' 출력을 혼용하고 있나요?)"
 
-#: grid.c:1249
+#: grid.c:1241
 msgid "attempt to plot on null device"
 msgstr "null 장치위에 플랏을 시도합니다"
 
-#: grid.c:1719
+#: grid.c:1711
 msgid "there is no layout defined"
 msgstr "정의된 레이아웃이 없습니다"
 
-#: grid.c:1941
+#: grid.c:1933
 msgid "polygon edge not found (zero-width or zero-height?)"
 msgstr "다각형의 끝점을 찾을 수 없습니다 (혹시 너비 또는 높이가 0인가요?)"
 
-#: grid.c:1950
+#: grid.c:1942
 msgid "polygon edge not found"
 msgstr "다각형의 끝점을 찾을 수 없습니다"
 
-#: grid.c:2104
+#: grid.c:2096
 msgid "require at least two points to draw arrow"
 msgstr "화살표를 그리기 위해서는 최소한 두개의 점이 필요합니다"
 
-#: grid.c:2475
+#: grid.c:2467
 msgid "non-finite control point in Xspline"
 msgstr "Xspline에서 유한하지 않은 컨트롤 포인트입니다"
 
-#: grid.c:3444
+#: grid.c:3436
 msgid "non-finite x or y in graphics path"
 msgstr "그래픽 패스에 유한하지 않은 x 또는 y가 있습니다"
 
-#: grid.c:3495
+#: grid.c:3487
 msgid "Empty raster"
 msgstr "비어있는 래스터입니다"
 
-#: grid.c:4046 grid.c:4102
+#: grid.c:4038 grid.c:4094
 msgid "Coordinates for text pch not yet supported"
 msgstr ""
 
-#: grid.c:4107
+#: grid.c:4099
 #, c-format
 msgid "pch value '%d' is invalid in this locale"
 msgstr ""
 
-#: grid.c:4928
+#: grid.c:4920
 #, c-format
 msgid "unimplemented pch value '%d'"
 msgstr ""
 
-#: grid.c:5087
+#: grid.c:5079
 msgid "invalid plotting symbol"
 msgstr "유효하지 않은 플랏팅 기호입니다"
 
-#: grid.c:5205
+#: grid.c:5197
 msgid "unable to clip to rotated rectangle"
 msgstr "회전된 사각형을 고정할 수 없습니다"
 

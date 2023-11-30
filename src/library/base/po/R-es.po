@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-08-03 18:20\n"
+"POT-Creation-Date: 2023-11-30 14:39\n"
 "PO-Revision-Date: 2023-02-27 14:05+0000\n"
 "Last-Translator: Richard Detomasi <richard.detomasi@gmail.com>\n"
 "Language-Team: none\n"
@@ -751,10 +751,23 @@ msgstr ""
 msgid "No factors specified"
 msgstr ""
 
-msgid "norm '%s' currently always uses exact = FALSE"
+msgid "invalid '%s': type \"%s\""
+msgstr ""
+
+#, fuzzy
+msgid "'uplo' must be \"U\" or \"L\""
+msgstr "'from' debe ser de tipo raw o character"
+
+msgid "invalid nrow(z)"
 msgstr ""
 
 msgid "triangular matrix should be square"
+msgstr ""
+
+msgid "using 1-norm approximation for approximate 2-norm"
+msgstr ""
+
+msgid "norm=\"%s\" not available here; using norm=\"1\""
 msgstr ""
 
 msgid "unknown conflict policy: %s"
@@ -1334,6 +1347,10 @@ msgstr ""
 
 msgid "... must contain names or character strings"
 msgstr ""
+
+#, fuzzy
+msgid "invalid 'x'"
+msgstr "'dims' no válidas"
 
 msgid "incorrect length for 'group'"
 msgstr ""

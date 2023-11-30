@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-4-3-BRANCH\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-08-03 18:20\n"
+"POT-Creation-Date: 2023-11-30 14:39\n"
 "PO-Revision-Date: 2023-01-19 12:03+0100\n"
 "Last-Translator: Daniele Medri <dmedri@gmail.com>\n"
 "Language-Team: Italian https://github.com/dmedri/R-italian-lang\n"
@@ -760,11 +760,25 @@ msgstr "deve avere sostituzioni per le corrispondenze"
 msgid "No factors specified"
 msgstr "Nessun factor specificato"
 
-msgid "norm '%s' currently always uses exact = FALSE"
-msgstr "norm '%s' attualmente utilizza sempre exact = FALSE"
+msgid "invalid '%s': type \"%s\""
+msgstr ""
+
+#, fuzzy
+msgid "'uplo' must be \"U\" or \"L\""
+msgstr "'wait' dev'essere TRUE o FALSE"
+
+#, fuzzy
+msgid "invalid nrow(z)"
+msgstr "nrow(x) non valido"
 
 msgid "triangular matrix should be square"
 msgstr "la matrice triangolare dev'essere quadrata"
+
+msgid "using 1-norm approximation for approximate 2-norm"
+msgstr ""
+
+msgid "norm=\"%s\" not available here; using norm=\"1\""
+msgstr ""
 
 msgid "unknown conflict policy: %s"
 msgstr "policy di conflitto sconosciuta: %s"
@@ -1357,6 +1371,10 @@ msgstr "struttura 'rle' non valida"
 msgid "... must contain names or character strings"
 msgstr "... deve contenere nomi o stringhe di caratteri"
 
+#, fuzzy
+msgid "invalid 'x'"
+msgstr "'dims' non valido"
+
 msgid "incorrect length for 'group'"
 msgstr "lunghezza per 'group' non corretta"
 
@@ -1926,6 +1944,9 @@ msgstr[0] ""
 msgstr[1] ""
 "In %s :\n"
 " gli argomenti extra %s saranno ignorati"
+
+#~ msgid "norm '%s' currently always uses exact = FALSE"
+#~ msgstr "norm '%s' attualmente utilizza sempre exact = FALSE"
 
 #~ msgid "defunctError"
 #~ msgstr "defunctError"

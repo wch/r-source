@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-07-31 14:59+0200\n"
+"POT-Creation-Date: 2023-11-30 14:40+0100\n"
 "PO-Revision-Date: 2011-12-01 20:24+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -23,7 +23,7 @@ msgstr "båndbredde/spænd for kørende medianer er større end n"
 
 #: Srunmed.c:262
 #, c-format
-msgid "runmed(x, .., na.action=\"na.fail\"): have NAs starting at x[%ld]"
+msgid "runmed(x, .., na.action=\"na.fail\"): have NAs starting at x[%lld]"
 msgstr ""
 
 #: Srunmed.c:265
@@ -259,7 +259,7 @@ msgstr ""
 
 #: fourier.c:233
 #, c-format
-msgid "nextn<64>() found no solution < %ld = UINT64_MAX (the maximal integer)"
+msgid "nextn<64>() found no solution < %llu = UINT64_MAX (the maximal integer)"
 msgstr ""
 
 #: fourier.c:249
@@ -289,6 +289,11 @@ msgstr ""
 msgid "'%s' must be of length one"
 msgstr "'m' skal være en liste"
 
+#: isoreg.c:53
+#, c-format
+msgid "non-finite sum(y) == %g is not allowed"
+msgstr ""
+
 #: ksmooth.c:69
 msgid "only 2500 rows are allowed for sm.method=\"spline\""
 msgstr "kun 2.500 rækker er tilladt for sm.method=\"spline\""
@@ -299,7 +304,7 @@ msgstr ""
 
 #: lm.c:62
 #, c-format
-msgid "dimensions of 'x' (%d,%d) and 'y' (%d) do not match"
+msgid "dimensions of 'x' (%d,%d) and 'y' (%lld) do not match"
 msgstr ""
 
 #: lm.c:77 lm.c:81

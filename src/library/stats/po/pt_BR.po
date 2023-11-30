@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-07-31 14:59+0200\n"
+"POT-Creation-Date: 2023-11-30 14:40+0100\n"
 "PO-Revision-Date: 2023-01-20 19:04+0000\n"
 "Last-Translator: Caio Lente <lente@ime.usp.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -26,7 +26,7 @@ msgstr "largura de banda/vão das medianas móveis é maior que n"
 
 #: Srunmed.c:262
 #, c-format
-msgid "runmed(x, .., na.action=\"na.fail\"): have NAs starting at x[%ld]"
+msgid "runmed(x, .., na.action=\"na.fail\"): have NAs starting at x[%lld]"
 msgstr ""
 
 #: Srunmed.c:265
@@ -261,7 +261,7 @@ msgstr ""
 
 #: fourier.c:233
 #, c-format
-msgid "nextn<64>() found no solution < %ld = UINT64_MAX (the maximal integer)"
+msgid "nextn<64>() found no solution < %llu = UINT64_MAX (the maximal integer)"
 msgstr ""
 
 #: fourier.c:249
@@ -291,6 +291,11 @@ msgstr ""
 msgid "'%s' must be of length one"
 msgstr "'m' deve ser uma lista"
 
+#: isoreg.c:53
+#, c-format
+msgid "non-finite sum(y) == %g is not allowed"
+msgstr ""
+
 #: ksmooth.c:69
 msgid "only 2500 rows are allowed for sm.method=\"spline\""
 msgstr "são permitidas apenas 2500 linhas para sm.method=\"spline\""
@@ -302,7 +307,7 @@ msgstr "'tmax' não é um inteiro"
 
 #: lm.c:62
 #, c-format
-msgid "dimensions of 'x' (%d,%d) and 'y' (%d) do not match"
+msgid "dimensions of 'x' (%d,%d) and 'y' (%lld) do not match"
 msgstr ""
 
 #: lm.c:77 lm.c:81

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-08-03 18:20\n"
+"POT-Creation-Date: 2023-11-30 14:39\n"
 "PO-Revision-Date: 2021-01-27 10:37+0100\n"
 "Last-Translator: <r.zakauskas@gmail.com;gabriele.dauksaite@gmail.com>\n"
 "Language-Team: Lithuanian\n"
@@ -769,11 +769,25 @@ msgstr "privalo turėti pakeitimus suderinimui"
 msgid "No factors specified"
 msgstr "Nėra nurodytų faktorių"
 
-msgid "norm '%s' currently always uses exact = FALSE"
-msgstr "norma '%s' šiuo metu visada naudoja exact = FALSE"
+msgid "invalid '%s': type \"%s\""
+msgstr ""
+
+#, fuzzy
+msgid "'uplo' must be \"U\" or \"L\""
+msgstr "'wait' turi būti TRUE arba FALSE"
+
+#, fuzzy
+msgid "invalid nrow(z)"
+msgstr "neteisingas nrow(x)"
 
 msgid "triangular matrix should be square"
 msgstr "trikampė matrica turi būti kvadratinė"
+
+msgid "using 1-norm approximation for approximate 2-norm"
+msgstr ""
+
+msgid "norm=\"%s\" not available here; using norm=\"1\""
+msgstr ""
 
 msgid "unknown conflict policy: %s"
 msgstr "nežinoma konfliktų politika: %s"
@@ -1367,6 +1381,10 @@ msgstr "netaisyklingas 'rle' struktūra"
 
 msgid "... must contain names or character strings"
 msgstr "... turi būti vardai arba simbolių eilutė"
+
+#, fuzzy
+msgid "invalid 'x'"
+msgstr "netaisyklinga 'dims'"
 
 msgid "incorrect length for 'group'"
 msgstr "neteisingas 'group' ilgis"
@@ -1970,6 +1988,9 @@ msgstr[1] ""
 msgstr[2] ""
 "%s :\n"
 "%s papildomų argumentų bus ignoruojama"
+
+#~ msgid "norm '%s' currently always uses exact = FALSE"
+#~ msgstr "norma '%s' šiuo metu visada naudoja exact = FALSE"
 
 #~ msgid "defunctError"
 #~ msgstr "defunctError"

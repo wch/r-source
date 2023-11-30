@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.0.4\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-07-31 15:00\n"
+"POT-Creation-Date: 2023-11-30 14:40\n"
 "PO-Revision-Date: 2022-08-31 15:04+0000\n"
 "Last-Translator: Marcel Ramos <marcel.ramos@sph.cuny.edu>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -231,9 +231,6 @@ msgstr "'package' doit être une chaîne de caratcères ou NULL"
 
 msgid "data index for package %s is invalid and will be ignored"
 msgstr "l'index de données pour le package %s est incorrect et sera ignoré"
-
-msgid "file 'filelist' is missing for directory %s"
-msgstr "fichier 'filelist' introuvable pour le répertoire %s"
 
 msgid "data set %s not found"
 msgstr "jeu de données %s introuvable"
@@ -1028,7 +1025,8 @@ msgstr "Le nombre de tokens != 'length(proto)'"
 msgid "The number of tokens is not consistent across 'x'"
 msgstr "Le nombre de tokens est incohérent avec 'x’"
 
-msgid "cannot coerce %s to logical"
+#, fuzzy
+msgid "cannot coerce %s to TRUE or FALSE"
 msgstr "impossible de convertir %s en booléen"
 
 msgid "no lines found in %s"
@@ -1446,6 +1444,9 @@ msgid "invalid roman numeral: %s"
 msgid_plural "invalid roman numerals: %s"
 msgstr[0] "nombre roman incorrect : %s"
 msgstr[1] "nombres romans incorrects : %s"
+
+#~ msgid "file 'filelist' is missing for directory %s"
+#~ msgstr "fichier 'filelist' introuvable pour le répertoire %s"
 
 #~ msgid "Argument '%s' is deprecated; rather set '%s' instead."
 #~ msgstr "L'argument '%s' est obsolète; utilisez '%s' plutôt."

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-07-31 14:59\n"
+"POT-Creation-Date: 2023-11-30 14:39\n"
 "PO-Revision-Date: 2011-03-26 08:56-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -252,6 +252,9 @@ msgstr "Tipo de fonte inválido"
 msgid "Invalid 'extend' value"
 msgstr "'filename' inválido"
 
+msgid "'%s' is deprecated."
+msgstr ""
+
 msgid "invalid arguments in '%s' (need named args)"
 msgstr "argumentos inválidos em '%s' (precisa-se de argumentos nomeados)"
 
@@ -478,6 +481,9 @@ msgid "type = \"cairo\" is unavailable. trying \"Xlib\""
 msgstr ""
 
 msgid "type = \"cairo-png\" is unavailable. trying \"Xlib\""
+msgstr ""
+
+msgid "compression is not supported for type = \"quartz\""
 msgstr ""
 
 msgid "invalid 'title'"

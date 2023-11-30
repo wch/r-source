@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-08-03 18:20\n"
+"POT-Creation-Date: 2023-11-30 14:39\n"
 "PO-Revision-Date: 2015-03-27 14:42+0900 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -785,11 +785,26 @@ msgstr " マッチに対する置換が必要です "
 msgid "No factors specified"
 msgstr " 因子が指定されていません "
 
-msgid "norm '%s' currently always uses exact = FALSE"
-msgstr " norm '%s' は現在は常に exact = FALSE を使用します "
+#, fuzzy
+msgid "invalid '%s': type \"%s\""
+msgstr " 無効な 'n' 値です "
+
+#, fuzzy
+msgid "'uplo' must be \"U\" or \"L\""
+msgstr " 'wait' は TRUE か FALSE でなければなりません "
+
+#, fuzzy
+msgid "invalid nrow(z)"
+msgstr " nrow(x) が不正です "
 
 msgid "triangular matrix should be square"
 msgstr " 三角行列は正方行列であるべきです "
+
+msgid "using 1-norm approximation for approximate 2-norm"
+msgstr ""
+
+msgid "norm=\"%s\" not available here; using norm=\"1\""
+msgstr ""
 
 msgid "unknown conflict policy: %s"
 msgstr ""
@@ -1386,6 +1401,10 @@ msgstr " 無効な 'rle' 構造です "
 msgid "... must contain names or character strings"
 msgstr " ... は名前あるいは文字列を含んでいなくてはなりません "
 
+#, fuzzy
+msgid "invalid 'x'"
+msgstr " 無効な 'dims' です "
+
 msgid "incorrect length for 'group'"
 msgstr " 'group' に対する不正な長さです "
 
@@ -1936,6 +1955,9 @@ msgid_plural ""
 " extra arguments %s will be disregarded"
 msgstr[0] " 余分な引数 %s は無視されます "
 
+#~ msgid "norm '%s' currently always uses exact = FALSE"
+#~ msgstr " norm '%s' は現在は常に exact = FALSE を使用します "
+
 #~ msgid "options(\"stringsAsFactors\") not set to TRUE or FALSE"
 #~ msgstr " options(\"stringsAsFactors\") が TRUE にも FALSE にも設定されていません "
 
@@ -2188,9 +2210,6 @@ msgstr[0] " 余分な引数 %s は無視されます "
 
 #~ msgid "do not know how to convert '%s' to class \"POSIXct\""
 #~ msgstr " '%s' をクラス \"POSIXct\" へ変換する方法が分かりません "
-
-#~ msgid "invalid 'n' value"
-#~ msgstr " 無効な 'n' 値です "
 
 #~ msgid "'shrink.sml' must be numeric > 0"
 #~ msgstr " 'shrink.sml' は正の数値でなければなりません "

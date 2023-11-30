@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.0.4\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-08-03 18:20\n"
+"POT-Creation-Date: 2023-11-30 14:39\n"
 "PO-Revision-Date: 2022-08-31 15:04+0000\n"
 "Last-Translator: Marcel Ramos <marcel.ramos@sph.cuny.edu>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -765,11 +765,26 @@ msgstr "des remplacements doivent être fournis pour les correspondances"
 msgid "No factors specified"
 msgstr "Aucunes variables 'factor's spécifiées"
 
-msgid "norm '%s' currently always uses exact = FALSE"
-msgstr "norm '%s' utilise systématiquement 'exact = FALSE' pour l'instant"
+#, fuzzy
+msgid "invalid '%s': type \"%s\""
+msgstr "valeur 'n' incorrecte"
+
+#, fuzzy
+msgid "'uplo' must be \"U\" or \"L\""
+msgstr "'wait' doit être TRUE ou FALSE"
+
+#, fuzzy
+msgid "invalid nrow(z)"
+msgstr "nrow(x) incorrect"
 
 msgid "triangular matrix should be square"
 msgstr "la matrice triangulaire doit être carrée"
+
+msgid "using 1-norm approximation for approximate 2-norm"
+msgstr ""
+
+msgid "norm=\"%s\" not available here; using norm=\"1\""
+msgstr ""
 
 msgid "unknown conflict policy: %s"
 msgstr "règle de gestion de conflit inconnue : %s"
@@ -1364,6 +1379,10 @@ msgstr "structure 'rle' incorrecte"
 msgid "... must contain names or character strings"
 msgstr "... doit contenir des noms ou des chaînes de caractères"
 
+#, fuzzy
+msgid "invalid 'x'"
+msgstr "'dims' incorrect"
+
 msgid "incorrect length for 'group'"
 msgstr "longueur de 'group' incorrecte"
 
@@ -1935,6 +1954,9 @@ msgstr[1] ""
 "Dans %s :\n"
 "les arguments supplémentaires %s seront ignorés"
 
+#~ msgid "norm '%s' currently always uses exact = FALSE"
+#~ msgstr "norm '%s' utilise systématiquement 'exact = FALSE' pour l'instant"
+
 #~ msgid "defunctError"
 #~ msgstr "defunctError"
 
@@ -2201,9 +2223,6 @@ msgstr[1] ""
 
 #~ msgid "do not know how to convert '%s' to class \"POSIXct\""
 #~ msgstr "incapable de convertir automatiquement '%s' dans la classe \"POSIXct\""
-
-#~ msgid "invalid 'n' value"
-#~ msgstr "valeur 'n' incorrecte"
 
 #~ msgid "'shrink.sml' must be numeric > 0"
 #~ msgstr "'shrink.sml' doit être un nombre > 0"

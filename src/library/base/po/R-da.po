@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-08-03 18:20\n"
+"POT-Creation-Date: 2023-11-30 14:39\n"
 "PO-Revision-Date: 2015-03-25 14:20+0200\n"
 "Last-Translator: Joe Hansen <joedalton2@yahoo.dk>\n"
 "Language-Team: Danish <debian-l10n-danish@lists.debian.org>\n"
@@ -796,11 +796,25 @@ msgstr "skal have erstatninger for matchninger"
 msgid "No factors specified"
 msgstr "Ingen faktorer angivet"
 
-msgid "norm '%s' currently always uses exact = FALSE"
-msgstr "norm '%s' bruger i øjeblikket altid præcis = FALSE"
+msgid "invalid '%s': type \"%s\""
+msgstr ""
+
+#, fuzzy
+msgid "'uplo' must be \"U\" or \"L\""
+msgstr "'wait' skal være TRUE eller FALSE"
+
+#, fuzzy
+msgid "invalid nrow(z)"
+msgstr "ugyldig nrow(x)"
 
 msgid "triangular matrix should be square"
 msgstr "triangulær matrix skal være kvadratisk"
+
+msgid "using 1-norm approximation for approximate 2-norm"
+msgstr ""
+
+msgid "norm=\"%s\" not available here; using norm=\"1\""
+msgstr ""
 
 msgid "unknown conflict policy: %s"
 msgstr ""
@@ -1401,6 +1415,10 @@ msgstr "ugyldig 'rle'-struktur"
 msgid "... must contain names or character strings"
 msgstr "... skal indeholde navne eller tegnstrenge"
 
+#, fuzzy
+msgid "invalid 'x'"
+msgstr "ugyldig 'dims'"
+
 msgid "incorrect length for 'group'"
 msgstr "ej korrekt længde for 'group'"
 
@@ -1980,6 +1998,9 @@ msgid_plural ""
 " extra arguments %s will be disregarded"
 msgstr[0] "ekstra argument %s vil blive ignoreret"
 msgstr[1] "ekstra argumentet %s vil blive ignoreret"
+
+#~ msgid "norm '%s' currently always uses exact = FALSE"
+#~ msgstr "norm '%s' bruger i øjeblikket altid præcis = FALSE"
 
 #~ msgid "options(\"stringsAsFactors\") not set to TRUE or FALSE"
 #~ msgstr "options(\"stringsAsFactors\") ikke angivet til TRUE eller FALSE"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-07-31 14:59+0200\n"
+"POT-Creation-Date: 2023-11-30 14:40+0100\n"
 "PO-Revision-Date: 2018-04-09 12:09-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team: \n"
@@ -28,7 +28,7 @@ msgstr "자식 프로세스를 종료할 수 없습니다: %s"
 msgid "unable to terminate child: %s"
 msgstr ""
 
-#: fork.c:329 fork.c:620 ncpus.c:87 ncpus.c:123 ncpus.c:179
+#: fork.c:329 fork.c:620 ncpus.c:87 ncpus.c:123 ncpus.c:178
 msgid "memory allocation error"
 msgstr "메모리 할당 에러입니다"
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.0.4\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-07-31 14:59+0200\n"
+"POT-Creation-Date: 2023-11-30 14:40+0100\n"
 "PO-Revision-Date: 2022-08-31 15:04+0000\n"
 "Last-Translator: Marcel Ramos <marcel.ramos@sph.cuny.edu>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
 "X-Generator: Weblate 4.13.1\n"
 
-#: gpar.c:621
+#: gpar.c:632
 msgid "updateGContext must only be called after initGContext"
 msgstr "updateGContext doit être appelé après initGContext"
 
@@ -38,61 +38,66 @@ msgstr "Les chemins de détourage dans un chemin (de détourage) ne sont pas res
 msgid "Masks within a (clipping) path are not honoured"
 msgstr "Les masques dans un chemin (de détourage) ne sont pas respectés"
 
-#: grid.c:917 grid.c:922 grid.c:1043 grid.c:1048
+#: grid.c:699 grid.c:877
+#, c-format
+msgid "Viewport '%s' was not found"
+msgstr ""
+
+#: grid.c:909 grid.c:914 grid.c:1035 grid.c:1040
 msgid "cannot pop the top-level viewport ('grid' and 'graphics' output mixed?)"
 msgstr "impossible de rendre la vue de plus haut niveau active (sorties 'grid' et 'graphics' mixées ?)"
 
-#: grid.c:1249
+#: grid.c:1241
 msgid "attempt to plot on null device"
 msgstr "tentative de dessin dans un périphérique 'null'"
 
-#: grid.c:1719
+#: grid.c:1711
 msgid "there is no layout defined"
 msgstr "aucune mise en page définie"
 
-#: grid.c:1941
+#: grid.c:1933
 msgid "polygon edge not found (zero-width or zero-height?)"
 msgstr "extrémité de polygone non trouvé (longueur ou largeur nulle?)"
 
-#: grid.c:1950
+#: grid.c:1942
 msgid "polygon edge not found"
 msgstr "extrémités de polygone non trouvés"
 
-#: grid.c:2104
+#: grid.c:2096
 msgid "require at least two points to draw arrow"
 msgstr "il faut au moins deux points pour tracer une flèche"
 
-#: grid.c:2475
+#: grid.c:2467
 msgid "non-finite control point in Xspline"
 msgstr "point de contrôle non fini dans Xspline"
 
-#: grid.c:3444
+#: grid.c:3436
 msgid "non-finite x or y in graphics path"
 msgstr "x ou y infinis dans le chemin graphique"
 
-#: grid.c:3495
+#: grid.c:3487
 msgid "Empty raster"
 msgstr "Graphique raster vide"
 
-#: grid.c:4046 grid.c:4102
+#: grid.c:4038 grid.c:4094
 msgid "Coordinates for text pch not yet supported"
 msgstr ""
 
-#: grid.c:4107
+#: grid.c:4099
 #, c-format
 msgid "pch value '%d' is invalid in this locale"
 msgstr ""
 
-#: grid.c:4928
+#: grid.c:4920
 #, c-format
 msgid "unimplemented pch value '%d'"
 msgstr ""
 
-#: grid.c:5087
+#: grid.c:5079
 msgid "invalid plotting symbol"
 msgstr "symboles graphiques incorrects"
 
-#: grid.c:5205
+#: grid.c:5197
 msgid "unable to clip to rotated rectangle"
 msgstr "impossible de couper au rectangle pivoté"
 

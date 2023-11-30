@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-08-03 18:20\n"
+"POT-Creation-Date: 2023-11-30 14:39\n"
 "PO-Revision-Date: 2018-04-09 12:05-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team: \n"
@@ -772,11 +772,25 @@ msgstr "일치하는 항목들에 대하여 대체할 값들이 필요합니다.
 msgid "No factors specified"
 msgstr "지정된 요인들이 없습니다"
 
-msgid "norm '%s' currently always uses exact = FALSE"
-msgstr "'%s'는 현재로서는 항상 exact = FALSE를 사용합니다."
+msgid "invalid '%s': type \"%s\""
+msgstr ""
+
+#, fuzzy
+msgid "'uplo' must be \"U\" or \"L\""
+msgstr "'wait'은 반드시 TRUE 또는 FALSE이어야 합니다"
+
+#, fuzzy
+msgid "invalid nrow(z)"
+msgstr "유효하지 않은 nrow(x)입니다"
 
 msgid "triangular matrix should be square"
 msgstr "triangular matrix는 반드시 정방이어야 합니다"
+
+msgid "using 1-norm approximation for approximate 2-norm"
+msgstr ""
+
+msgid "norm=\"%s\" not available here; using norm=\"1\""
+msgstr ""
 
 msgid "unknown conflict policy: %s"
 msgstr ""
@@ -1367,6 +1381,10 @@ msgstr "유효하지 않은 'rle' 구조입니다"
 msgid "... must contain names or character strings"
 msgstr "...는 반드시 이름 또는 문자열을 포함하고 있어야 합니다"
 
+#, fuzzy
+msgid "invalid 'x'"
+msgstr "유효하지 않은 'dims'가 아닙니다"
+
 msgid "incorrect length for 'group'"
 msgstr "'group'의 길이가 잘못되었습니다"
 
@@ -1900,6 +1918,9 @@ msgid_plural ""
 "In %s :\n"
 " extra arguments %s will be disregarded"
 msgstr[0] ""
+
+#~ msgid "norm '%s' currently always uses exact = FALSE"
+#~ msgstr "'%s'는 현재로서는 항상 exact = FALSE를 사용합니다."
 
 #~ msgid "options(\"stringsAsFactors\") not set to TRUE or FALSE"
 #~ msgstr "options(\"stringsAsFactors\")의 값이 TRUE 또는 FALSE로 지정되어 있지 않습니다"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: utils 4.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-07-31 15:00\n"
+"POT-Creation-Date: 2023-11-30 14:40\n"
 "PO-Revision-Date: 2020-11-29 17:00+0200\n"
 "Last-Translator: <r.zakauskas@gmail.com;gabriele.dauksaite@gmail.com>\n"
 "Language-Team: Lithuanian\n"
@@ -225,9 +225,6 @@ msgstr "'package' turi būti simbolių eilutė arba NULL"
 
 msgid "data index for package %s is invalid and will be ignored"
 msgstr "paketo %s duomenų indeksas neleistinas ir bus ignoruojamas"
-
-msgid "file 'filelist' is missing for directory %s"
-msgstr "trūksta katalogo %s failo 'filelist'"
 
 msgid "data set %s not found"
 msgstr "duomenų rinkinys %s nerastas"
@@ -1022,7 +1019,8 @@ msgstr "Ženklų skaičius != 'length(proto)'"
 msgid "The number of tokens is not consistent across 'x'"
 msgstr "Ženklų skaičius 'x' nėra vienodas"
 
-msgid "cannot coerce %s to logical"
+#, fuzzy
+msgid "cannot coerce %s to TRUE or FALSE"
 msgstr "negalima %s pakeisti į loginį"
 
 msgid "no lines found in %s"
@@ -1469,6 +1467,9 @@ msgid_plural "invalid roman numerals: %s"
 msgstr[0] "neteisingas romėniškas skaitmuo: %s"
 msgstr[1] "neteisingi romėniški skaitmenys: %s"
 msgstr[2] "neteisingų romėniškų skaitmenų: %s"
+
+#~ msgid "file 'filelist' is missing for directory %s"
+#~ msgstr "trūksta katalogo %s failo 'filelist'"
 
 #~ msgid "Argument '%s' is deprecated; rather set '%s' instead."
 #~ msgstr "Argumentas '%s' nebenaudojamas; vietoj to nustatyti '%s'."

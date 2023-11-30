@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-07-31 14:59\n"
+"POT-Creation-Date: 2023-11-30 14:40\n"
 "PO-Revision-Date: 2022-12-15 08:04+0000\n"
 "Last-Translator: Shun Wang <shuonwang@gmail.com>\n"
 "Language-Team: Chinese\n"
@@ -2078,9 +2078,6 @@ msgstr "不能平滑NA值"
 msgid "invalid 'endrule' argument"
 msgstr "'endrule'参数无效"
 
-msgid ".nknots.smspl() is now exported; use it instead of n.knots()"
-msgstr ""
-
 msgid "invalid 'control.spar'"
 msgstr "'control.spar'无效"
 
@@ -2277,6 +2274,10 @@ msgstr "配对检验时缺失设定'y'"
 
 msgid "data are essentially constant"
 msgstr "数据是恆量"
+
+#, fuzzy
+msgid "cannot use 'paired' in formula method"
+msgstr "按照所提供的数据无法在公式里用点符号"
 
 msgid "'main' must be TRUE, FALSE, NULL or character (vector)."
 msgstr "'main'必需是TRUE, FALSE, NULL或字符(向量) 。"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-08-03 18:20\n"
+"POT-Creation-Date: 2023-11-30 14:39\n"
 "PO-Revision-Date: 2022-10-23 00:04+0000\n"
 "Last-Translator: Beatriz Milz <milz.bea@gmail.com>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -766,11 +766,26 @@ msgstr "devem haver substitutos para as correspondências"
 msgid "No factors specified"
 msgstr "Nenhum fator especificado"
 
-msgid "norm '%s' currently always uses exact = FALSE"
-msgstr "norma '%s' atualmente sempre usa exact = FALSE"
+#, fuzzy
+msgid "invalid '%s': type \"%s\""
+msgstr "valor de 'n' inválido"
+
+#, fuzzy
+msgid "'uplo' must be \"U\" or \"L\""
+msgstr "'wait' deve ser TRUE ou FALSE"
+
+#, fuzzy
+msgid "invalid nrow(z)"
+msgstr "nrow(x) inválido"
 
 msgid "triangular matrix should be square"
 msgstr "matriz triangular deve ser quadrada"
+
+msgid "using 1-norm approximation for approximate 2-norm"
+msgstr ""
+
+msgid "norm=\"%s\" not available here; using norm=\"1\""
+msgstr ""
 
 msgid "unknown conflict policy: %s"
 msgstr "política de conflito desconhecida: %s"
@@ -1363,6 +1378,10 @@ msgstr "estrutura 'rle' inválida"
 msgid "... must contain names or character strings"
 msgstr "... deve conter nomes ou cadeia de caracteres"
 
+#, fuzzy
+msgid "invalid 'x'"
+msgstr "'dims' inválido"
+
 msgid "incorrect length for 'group'"
 msgstr "comprimento incorreto para 'group'"
 
@@ -1937,6 +1956,9 @@ msgstr[1] ""
 "Em %s :\n"
 " argumentos extras %s serão ignorados"
 
+#~ msgid "norm '%s' currently always uses exact = FALSE"
+#~ msgstr "norma '%s' atualmente sempre usa exact = FALSE"
+
 #~ msgid "defunctError"
 #~ msgstr "defunctError"
 
@@ -2179,9 +2201,6 @@ msgstr[1] ""
 
 #~ msgid "do not know how to convert '%s' to class \"POSIXct\""
 #~ msgstr "não sei como converter '%s' para classe \"POSIXct\""
-
-#~ msgid "invalid 'n' value"
-#~ msgstr "valor de 'n' inválido"
 
 #~ msgid "'shrink.sml' must be numeric > 0"
 #~ msgstr "'shrink.sml' deve ser numérico > 0"

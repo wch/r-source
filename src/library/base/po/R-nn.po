@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-08-03 18:20\n"
+"POT-Creation-Date: 2023-11-30 14:39\n"
 "PO-Revision-Date: 2012-09-28 22:18+0200\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <i18n-nn@lister.ping.uio.no>\n"
@@ -823,11 +823,26 @@ msgstr "må har erstattingsverdiar for treff"
 msgid "No factors specified"
 msgstr "ingen DLL definert"
 
-msgid "norm '%s' currently always uses exact = FALSE"
-msgstr "norma «%s» brukar alltid «exact = FALSE»"
+#, fuzzy
+msgid "invalid '%s': type \"%s\""
+msgstr "ugyldig n-verdi"
+
+#, fuzzy
+msgid "'uplo' must be \"U\" or \"L\""
+msgstr "«wait» må vera TRUE eller FALSE"
+
+#, fuzzy
+msgid "invalid nrow(z)"
+msgstr "ugyldig nrow(x)"
 
 msgid "triangular matrix should be square"
 msgstr "trekantmatrise må vera kvadratisk"
+
+msgid "using 1-norm approximation for approximate 2-norm"
+msgstr ""
+
+msgid "norm=\"%s\" not available here; using norm=\"1\""
+msgstr ""
 
 msgid "unknown conflict policy: %s"
 msgstr ""
@@ -1453,6 +1468,10 @@ msgstr "ugyldig «rle»-struktur"
 msgid "... must contain names or character strings"
 msgstr "… må innehalda namn eller teiknstrengar"
 
+#, fuzzy
+msgid "invalid 'x'"
+msgstr "ugyldige «dims»-verdiar"
+
 msgid "incorrect length for 'group'"
 msgstr "ugyldig lengd på «group»"
 
@@ -2056,6 +2075,9 @@ msgid_plural ""
 msgstr[0] "ekstraargument(a) «%s» vert ikkje brukt(e)"
 msgstr[1] "ekstraargument(a) «%s» vert ikkje brukt(e)"
 
+#~ msgid "norm '%s' currently always uses exact = FALSE"
+#~ msgstr "norma «%s» brukar alltid «exact = FALSE»"
+
 #~ msgid "options(\"stringsAsFactors\") not set to TRUE or FALSE"
 #~ msgstr "options(\"stringsAsFactors\") ikkje sett til TRUE eller FALSE"
 
@@ -2303,9 +2325,6 @@ msgstr[1] "ekstraargument(a) «%s» vert ikkje brukt(e)"
 
 #~ msgid "not found"
 #~ msgstr "fann ikkje"
-
-#~ msgid "invalid 'n' value"
-#~ msgstr "ugyldig n-verdi"
 
 #~ msgid "'shrink.sml' must be numeric > 0"
 #~ msgstr "«shrink.sml» må vera numerisk og positiv"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-07-31 15:00\n"
+"POT-Creation-Date: 2023-11-30 14:40\n"
 "PO-Revision-Date: 2018-04-09 12:11-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team: \n"
@@ -231,9 +231,6 @@ msgstr "'package'는 반드시 문자열 또는 NULL이어야 합니다"
 
 msgid "data index for package %s is invalid and will be ignored"
 msgstr "패키지 %s에 있는 데이터 인덱스가 잘못되었기 때문에 무시될 것입니다"
-
-msgid "file 'filelist' is missing for directory %s"
-msgstr "파일 'filelist'이 디렉토리 %s에 빠져있습니다"
 
 msgid "data set %s not found"
 msgstr "데이터셋 %s을 찾을 수 없습니다"
@@ -1023,7 +1020,7 @@ msgid "The number of tokens is not consistent across 'x'"
 msgstr ""
 
 #, fuzzy
-msgid "cannot coerce %s to logical"
+msgid "cannot coerce %s to TRUE or FALSE"
 msgstr "'x'를 roman으로 강제변환을 할 수 없습니다"
 
 msgid "no lines found in %s"
@@ -1412,6 +1409,9 @@ msgstr[0] "마지막 레코드가 완성되지 않아 %d 번째 라인은 삭제
 msgid "invalid roman numeral: %s"
 msgid_plural "invalid roman numerals: %s"
 msgstr[0] ""
+
+#~ msgid "file 'filelist' is missing for directory %s"
+#~ msgstr "파일 'filelist'이 디렉토리 %s에 빠져있습니다"
 
 #~ msgid "no date field in DESCRIPTION file of package %s"
 #~ msgstr "패키지 %s에 있는 DESCRIPTION 파일에 날짜 항목이 없습니다"

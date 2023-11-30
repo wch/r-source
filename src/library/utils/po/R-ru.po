@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-07-31 15:00\n"
+"POT-Creation-Date: 2023-11-30 14:40\n"
 "PO-Revision-Date: 2020-08-28 17:07+0900\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -234,9 +234,6 @@ msgstr "'package' должен быть текстовой строкой или NULL"
 
 msgid "data index for package %s is invalid and will be ignored"
 msgstr "индекс данных пакета %s неправильный и будет пропущен"
-
-msgid "file 'filelist' is missing for directory %s"
-msgstr "файл 'filelist' в папке %s не найден"
 
 msgid "data set %s not found"
 msgstr "данные %s не найдены"
@@ -1031,7 +1028,8 @@ msgstr "Количество токенов в 'pattern' != 'length(proto)'"
 msgid "The number of tokens is not consistent across 'x'"
 msgstr "Количество токенов в пределах 'x' не согласовано"
 
-msgid "cannot coerce %s to logical"
+#, fuzzy
+msgid "cannot coerce %s to TRUE or FALSE"
 msgstr "не могу перевести %s в логическую"
 
 msgid "no lines found in %s"
@@ -1474,6 +1472,9 @@ msgid_plural "invalid roman numerals: %s"
 msgstr[0] "Неправильные римский номер: %s"
 msgstr[1] "Неправильные римские номера: %s"
 msgstr[2] "Неправильные римские номера: %s"
+
+#~ msgid "file 'filelist' is missing for directory %s"
+#~ msgstr "файл 'filelist' в папке %s не найден"
 
 #~ msgid "Argument '%s' is deprecated; rather set '%s' instead."
 #~ msgstr "аргумент '%s' устарел; вместо него используйте %s."

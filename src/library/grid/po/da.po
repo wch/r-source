@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-07-31 14:59+0200\n"
+"POT-Creation-Date: 2023-11-30 14:40+0100\n"
 "PO-Revision-Date: 2011-11-28 23:18+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Pootle 2.1.6\n"
 
-#: gpar.c:621
+#: gpar.c:632
 msgid "updateGContext must only be called after initGContext"
 msgstr ""
 
@@ -38,67 +38,72 @@ msgstr ""
 msgid "Masks within a (clipping) path are not honoured"
 msgstr ""
 
-#: grid.c:917 grid.c:922 grid.c:1043 grid.c:1048
+#: grid.c:699 grid.c:877
+#, c-format
+msgid "Viewport '%s' was not found"
+msgstr ""
+
+#: grid.c:909 grid.c:914 grid.c:1035 grid.c:1040
 #, fuzzy
 msgid "cannot pop the top-level viewport ('grid' and 'graphics' output mixed?)"
 msgstr "Kan ikke pop topniveau-viewporten (gitter og grafiks uddata blandet?)"
 
-#: grid.c:1249
+#: grid.c:1241
 msgid "attempt to plot on null device"
 msgstr "forsøg på at plotte på null-enhed"
 
-#: grid.c:1719
+#: grid.c:1711
 #, fuzzy
 msgid "there is no layout defined"
 msgstr "Der er ingen layout defineret"
 
-#: grid.c:1941
+#: grid.c:1933
 #, fuzzy
 msgid "polygon edge not found (zero-width or zero-height?)"
 msgstr "Polygonkant ikke fundet (nulbredde eller nulhøjde?)"
 
-#: grid.c:1950
+#: grid.c:1942
 #, fuzzy
 msgid "polygon edge not found"
 msgstr "Polygonkant ikke fundet"
 
-#: grid.c:2104
+#: grid.c:2096
 #, fuzzy
 msgid "require at least two points to draw arrow"
 msgstr "Kræver mindst to punkter at tegne pil"
 
-#: grid.c:2475
+#: grid.c:2467
 #, fuzzy
 msgid "non-finite control point in Xspline"
 msgstr "Ikkebegrænsende kontrolpunkter i Xspline"
 
-#: grid.c:3444
+#: grid.c:3436
 msgid "non-finite x or y in graphics path"
 msgstr "ikkebegrænsende x eller y i grafiksti"
 
-#: grid.c:3495
+#: grid.c:3487
 msgid "Empty raster"
 msgstr ""
 
-#: grid.c:4046 grid.c:4102
+#: grid.c:4038 grid.c:4094
 msgid "Coordinates for text pch not yet supported"
 msgstr ""
 
-#: grid.c:4107
+#: grid.c:4099
 #, c-format
 msgid "pch value '%d' is invalid in this locale"
 msgstr ""
 
-#: grid.c:4928
+#: grid.c:4920
 #, c-format
 msgid "unimplemented pch value '%d'"
 msgstr ""
 
-#: grid.c:5087
+#: grid.c:5079
 msgid "invalid plotting symbol"
 msgstr "ugyldigt plotsymbol"
 
-#: grid.c:5205
+#: grid.c:5197
 #, fuzzy
 msgid "unable to clip to rotated rectangle"
 msgstr "Kan ikke klippe til roteret rektangel"

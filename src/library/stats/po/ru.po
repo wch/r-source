@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.9.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-07-31 14:59+0200\n"
+"POT-Creation-Date: 2023-11-30 14:40+0100\n"
 "PO-Revision-Date: 2020-08-28 16:07+0900\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -26,8 +26,8 @@ msgid "bandwidth/span of running medians is larger than n"
 msgstr "диапазон/пересечение скользящих медиан больше чем n"
 
 #: Srunmed.c:262
-#, c-format
-msgid "runmed(x, .., na.action=\"na.fail\"): have NAs starting at x[%ld]"
+#, fuzzy, c-format
+msgid "runmed(x, .., na.action=\"na.fail\"): have NAs starting at x[%lld]"
 msgstr "runmed(x, .., na.action=\"na.fail\"): есть NAs начиная с x[%ld]"
 
 #: Srunmed.c:265
@@ -275,8 +275,8 @@ msgid "nextn() found no solution < %d = INT_MAX (the maximal integer); pass '0+ 
 msgstr "nextn() не нашла решения < %d = INT_MAX (максимальное целое число); дайте ей '0+ n' вместо 'n'"
 
 #: fourier.c:233
-#, c-format
-msgid "nextn<64>() found no solution < %ld = UINT64_MAX (the maximal integer)"
+#, fuzzy, c-format
+msgid "nextn<64>() found no solution < %llu = UINT64_MAX (the maximal integer)"
 msgstr "nextn<64>() не нашла решения < %ld = UINT64_MAX (максимальное целое число)"
 
 #: fourier.c:249
@@ -305,6 +305,11 @@ msgstr "nextn() = %<PRIu64> > 2^53 возможно, не удастся отобразать в R (как \"do
 msgid "'%s' must be of length one"
 msgstr "'%s' должен быть единичной длины"
 
+#: isoreg.c:53
+#, c-format
+msgid "non-finite sum(y) == %g is not allowed"
+msgstr ""
+
 #: ksmooth.c:69
 msgid "only 2500 rows are allowed for sm.method=\"spline\""
 msgstr "только 2500 строк разрешается для sm.method=\"spline\""
@@ -314,8 +319,8 @@ msgid "'x' is not a matrix"
 msgstr "'x' -- не матрица"
 
 #: lm.c:62
-#, c-format
-msgid "dimensions of 'x' (%d,%d) and 'y' (%d) do not match"
+#, fuzzy, c-format
+msgid "dimensions of 'x' (%d,%d) and 'y' (%lld) do not match"
 msgstr "измерения 'x' (%d,%d) и 'y' (%d) не соответствуют друг другу"
 
 #: lm.c:77 lm.c:81

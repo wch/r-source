@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-07-31 14:59\n"
+"POT-Creation-Date: 2023-11-30 14:39\n"
 "PO-Revision-Date: 2022-04-13 13:19+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-Core <R-core@r-project.org>\n"
@@ -244,6 +244,9 @@ msgstr "ungültiger Patterntyp"
 msgid "Invalid 'extend' value"
 msgstr "unzulässiger 'extend' Wert"
 
+msgid "'%s' is deprecated."
+msgstr ""
+
 msgid "invalid arguments in '%s' (need named args)"
 msgstr "unzulässige Argumente in '%s' (benannte Argumente benötigt)"
 
@@ -459,6 +462,9 @@ msgstr "type = \"cairo\" nicht verfügbar. Probiere \"Xlib\""
 
 msgid "type = \"cairo-png\" is unavailable. trying \"Xlib\""
 msgstr "type = \"cairo-png\" nicht verfügbar. Probiere \"Xlib\""
+
+msgid "compression is not supported for type = \"quartz\""
+msgstr ""
 
 msgid "invalid 'title'"
 msgstr "unzulässiger 'title'"
