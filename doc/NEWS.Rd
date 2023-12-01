@@ -698,7 +698,7 @@
       diagnosed by Stephen Wade.
 
       \item The C prototypes for LAPACK calls \code{dspgv} and \code{dtptrs}
-      in \file{R_exts/Lapack.h} had one too many and one too few
+      in \file{R_ext/Lapack.h} had one too many and one too few
       character length arguments --- but this has not caused any known
       issues. To get the corrected prototypes, include
       \preformatted{
@@ -706,7 +706,7 @@
 	#ifdef PR18534fixed
 	# define usePR18534fix 1
         #endif
-	#include <R_exts/Lapack.h>
+	#include <R_ext/Lapack.h>
       }
       in your C/C++ code (\PR{18534}).
     }
@@ -2424,7 +2424,7 @@
       \item The deprecated legacy S-compatibility macros \code{PROBLEM},
       \code{MESSAGE}, \code{ERROR}, \code{WARN}, \code{WARNING},
       \code{RECOVER}, \dots{} are no longer defined in
-      \file{R_exts/RS.h} (included by \file{R.h}).  Replace these by
+      \file{R_ext/RS.h} (included by \file{R.h}).  Replace these by
       calls to \code{Rf_error} and \code{Rf_warning} (defined in header
       \file{R_ext/Error.h} included by \file{R.h}).
 

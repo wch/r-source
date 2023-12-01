@@ -43,7 +43,7 @@ extern "C" {
 # include <stdio.h>
 #endif
 
-// See R_exts/Error.h
+// See R_ext/Error.h
 #if defined NORET
 #elif (defined(__STDC_VERSION__) && __STDC_VERSION__ >= 202301L)
 # define NORET [[noreturn]]

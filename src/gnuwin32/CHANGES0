@@ -175,7 +175,7 @@ PACKAGE INSTALLATION
 
     o	Since iconv.dll has been renamed, packages wanting to link
 	against it need to use -lRiconv (or, hetter, use the entry
-	points in R_exts/Riconv.h).
+	points in R_ext/Riconv.h).
 
 
 CUSTOMIZATION

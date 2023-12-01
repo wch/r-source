@@ -8540,8 +8540,8 @@
     \itemize{
       \item There has been some minor re-organization of the non-API
       header files.  In particular, \file{Rinternals.h} no longer
-      includes the non-API header \file{R_exts/PrtUtil.h}, and that no
-      longer includes \file{R_exts/Print.h}.
+      includes the non-API header \file{R_ext/PrtUtil.h}, and that no
+      longer includes \file{R_ext/Print.h}.
 
       \item Passing \code{NULL} to \code{.C()} is now an error.
 

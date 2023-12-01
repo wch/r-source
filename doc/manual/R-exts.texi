@@ -14413,7 +14413,7 @@ There are two types of memory allocation available to the C programmer,
 one in which @R{} manages the clean-up and the other in which user
 has full control (and responsibility).
 
-These functions are declared in header @file{R_exts/RS.h} which is
+These functions are declared in header @file{R_ext/RS.h} which is
 included by @file{R.h}.
 
 @node Transient storage allocation, User-controlled memory, Memory allocation, Memory allocation
