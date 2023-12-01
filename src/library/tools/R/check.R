@@ -5799,6 +5799,16 @@ add_dummies <- function(dir, Log)
                 ex_re <- "(include/Eigen|include/boost|boost/smart_ptr).* warning: .* \\[-Wdeprecated-declarations\\]"
                 lines <- filtergrep(ex_re, lines, useBytes = TRUE)
 
+                ## and -Wstrict-prototypes in what should be thought of as
+                ## system headers.
+                ex_re <- "/usr/lib/mxe/usr/x86_64-w64-mingw32.static.posix/include.*\\[-Wstrict-prototypes\\]"
+                lines <- filtergrep(ex_re, lines, useBytes = TRUE)
+
+                ## and -Wpedantic in what should be thought of as system
+                ## headers.
+                ex_re <- "/usr/lib/mxe/usr/x86_64-w64-mingw32.static.posix/include.*\\[-Wpedantic\\]"
+                lines <- filtergrep(ex_re, lines, useBytes = TRUE)
+
                 ## Ignore install-time readLines() warnings about
                 ## files with incomplete final lines.  Most of these
                 ## come from .install_package_indices(), and should be
