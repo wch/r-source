@@ -41,8 +41,8 @@
 ## these cases is less likely but needs to be tested (below) and a suitable
 ## replace function inserted.
 .simpleExtReplace <- function(from, to, value){
-    for(what in .InhSlotNames(to))
-        slot(from, what) <- slot(value, what)
+    for(what in methods:::.InhSlotNames(to))
+        methods::slot(from, what) <- methods::slot(value, what)
     from
 }
 ## slot names for inheritance (to be used in replace methods).  Extends slots to implicit
@@ -61,7 +61,7 @@
 },
 
 f2 = function(from, to, value){
-    from@.Data <- as(value, THISCLASS, strict = FALSE)
+    from@.Data <- methods::as(value, THISCLASS, strict = FALSE)
     from
 },
 
@@ -135,12 +135,12 @@ S3Part <- function(object, strictS3 = FALSE, S3Class) {
 .S3replace <-
     list(e1 =
          quote( {
-             S3Part(from, needClass = NEED) <- value
+             methods::S3Part(from, needClass = NEED) <- value
              from
          }),
          e2 = quote( {
-             if(is(value, CLASS)) {
-                 S3Part(from,  needClass = NEED) <- value
+             if(methods::is(value, CLASS)) {
+                 methods::S3Part(from,  needClass = NEED) <- value
                  from
              }
              else
@@ -152,7 +152,7 @@ S3Part <- function(object, strictS3 = FALSE, S3Class) {
          )
 
 .S3coerce <- function(from, to) {
-    S3Part(from)
+    methods::S3Part(from)
 }
 
 .ErrorReplace <- function(from, to, value)
@@ -207,7 +207,7 @@ makeExtends <- function(Class,
 ##            allNames <- names(slots)
             body(coerce, envir = packageEnv) <-
                 substitute({
-                    if(strict) S3Part(from, S3Class = S3CLASS)
+                    if(strict) methods::S3Part(from, S3Class = S3CLASS)
                     else from
                 }, list(S3CLASS =  to))
         }
@@ -262,7 +262,7 @@ makeExtends <- function(Class,
                   S3Class <- to
                 body(replace, envir = packageEnv) <-
                   quote({
-                      S3Part(from) <- value
+                      methods::S3Part(from) <- value
                       from
                   })
             }

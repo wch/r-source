@@ -869,7 +869,7 @@ stopifnot(identical(alsofirstclass, class.list[[1]]))
 setClass("A", slots = c(foo = "numeric"))
 setClass("Ap", contains = "A", slots = c(p = "character"))
 cd <- getClassDef("Ap")
-body(cd@contains[["A"]]@coerce)[[2]] ## >>   value <- new("A")
+body(cd@contains[["A"]]@coerce)[[2]] ## >>   value <- methods::new("A")
 ## was ... <-  new(structure("A", package = ".GlobalEnv"))
 ## for a few days in R-devel (Nov.2017)
 

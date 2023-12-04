@@ -353,6 +353,9 @@
 
   \subsection{BUG FIXES}{
     \itemize{
+      \item The methods package is more robust to not being attached to
+      the search path. More work needs to be done.
+      
       \item \code{pairwise.t.test()} misbehaved when subgroups had 0 DF
       for variance, even with \code{pool.sd=TRUE} \PR{18594} (Jack Berry).
 

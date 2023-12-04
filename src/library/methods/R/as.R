@@ -320,11 +320,11 @@ setAs <-
 	     }, list(AS = as.name(paste0("as.", what)))),
 	     ##
 	     ts = body(method, envir = environment(method)) <- quote({
-		 value <- as.ts(from)
+		 value <- stats::as.ts(from)
 		 if(strict) {
 		     attributes(value) <- NULL
 		     class(value) <- class(new("ts"))
-		     tsp(value) <- tsp(from)
+		     stats::tsp(value) <- stats::tsp(from)
 		 }
 		 value
 	     }),

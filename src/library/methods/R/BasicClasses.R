@@ -196,7 +196,7 @@
     ## not defined at the time these are done).
     setMethod("coerce", c("ANY", "ts"), function (from, to, strict = TRUE)
               {
-                  value <- as.ts(from)
+                  value <- stats::as.ts(from)
                   if(strict) {
                       attrs <- attributes(value)
                       if(length(attrs) > 2)

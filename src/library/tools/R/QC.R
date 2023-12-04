@@ -6221,7 +6221,8 @@ function(package, dir, lib.loc = NULL)
                        (imp3f %notin% c(".class1",
                                         ".missingMethod",
                                         ".selectDotsMethod",
-                                        ".setDummyField"))]
+                                        ".setDummyField",
+                                        ".InhSlotNames"))]
         imp3 <- names(imp3f)
     }
     imp3 <- unique(imp3)

@@ -22,6 +22,9 @@
   function(libname, pkgname)
 {
     where <- environment(sys.function())  # the namespace
+    coerceVars <- c("as", "as<-", "is", "new", "S3Part", "S3Part<-", "slot",
+                    "slot<-")
+    namespaceExport(where, coerceVars)
     initMethodDispatch(where)
     ## temporary empty reference to the package's own namespace
     assign(".methodsNamespace", new.env(), envir = where)
@@ -84,6 +87,7 @@
        .InitS3Classes, .InitSpecialTypesAndClasses, .InitTraceFunctions,
        .InitRefClasses, .initImplicitGenerics,
        envir = where)
+    rm(list = coerceVars, envir = .getNamespaceInfo(where, "exports"))
     ## unlock some bindings that must be modifiable
     unlockBinding(".BasicFunsList", where)
     assign(".saveImage", TRUE, envir = where)
