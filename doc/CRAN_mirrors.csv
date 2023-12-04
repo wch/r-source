@@ -65,7 +65,7 @@ Name,Country,City,URL,Host,Maintainer,OK,CountryCode,Comment
 "Mexico (Mexico City) [https]",Mexico,"Mexico City",https://cran.itam.mx/,"Instituto Tecnologico Autonomo de Mexico","Ernesto Barrios <ebarrios # Itam.mx>",1,mx,"secure_mirror_from_master"
 "Mexico (Texcoco) [https]",Mexico,Texcoco,https://www.est.colpos.mx/,"Colegio de Postgraduados, Texcoco","perpdgo # gmail.com",1,mx,"secure_mirror_from_master"
 "Morocco [https]",Morocco,Rabat,https://mirror.marwan.ma/cran/,"MARWAN","noc # marwan.ma",1,ma,"secure_mirror_from_master"
-"Netherlands (Amsterdam) [https]","Netherlands",Amsterdam,https://mirrors.evoluso.com/CRAN/,"Evoluso.com","mirrors # evoluso.com",1,nl,
+"Netherlands (Amsterdam) [https]","Netherlands",Amsterdam,https://mirrors.evoluso.com/CRAN/,"Evoluso.com","mirrors # evoluso.com",0,nl,
 "Netherlands (Dronten) [https]","Netherlands",Dronten,https://mirror.lyrahosting.com/CRAN/,"Lyra Hosting","admin # lyrahosting.com",1,nl,"secure_mirror_from_master"
 "New Zealand [https]","New Zealand",Auckland,https://cran.stat.auckland.ac.nz/,"University of Auckland","s.urbanek # auckland.ac.nz",1,nz,"secure_mirror_from_master"
 "Norway [https]",Norway,Bergen,https://cran.uib.no/,"University of Bergen","sundrift # It.uib.no",1,no,"secure_mirror_from_master"
@@ -76,7 +76,6 @@ Name,Country,City,URL,Host,Maintainer,OK,CountryCode,Comment
 "South Africa (Johannesburg) [https]","South Africa",Johannesburg,https://cran.mirror.ac.za/,"TENET, Johannesburg","mirroradmin # tenet.ac.za",1,za,"secure_mirror_from_master"
 "Spain (A Coruña) [https]","Spain","A Coruña",https://ftp.cixug.es/CRAN/,"Oficina de software libre (CIXUG)","<osl # cixug.es>",1,es,"secure_mirror_from_master"
 "Spain (Madrid) [https]",Spain,Madrid,https://cran.rediris.es/,"Spanish National Research Network, Madrid","Jose Manuel Macias <jmanuel.macias # rediris.es>",1,es,"secure_mirror_from_master"
-"Sweden (Borås) [https]",Sweden,Borås,https://ftpmirror1.infania.net/mirror/CRAN/,"Infania Networks","Mattias Björlin <mirror # infania.net>",0,se,"secure_mirror_from_master"
 "Sweden (Umeå) [https]",Sweden,Umeå,https://ftp.acc.umu.se/mirror/CRAN/,"Academic Computer Club, Umeå University","<ftp-adm # acc.umu.se>",1,se,"secure_mirror_from_master"
 "Switzerland (Zurich 1) [https]",Switzerland,Zürich,https://stat.ethz.ch/CRAN/,"ETH Zürich","Martin.Maechler # R-project.org",1,ch,"secure_mirror_from_master"
 "Switzerland (Zurich 2) [https]",Switzerland,Zürich,https://mirror.metanet.ch/cran/," METNET AG","mirror # metanet.ch",0,ch
