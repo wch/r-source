@@ -50,7 +50,7 @@ For all of these primitives, non-finite values for locations or
 sizes result in the corresponding primitive not being drawn.
 The following image provides a simple demonstration.  Each primitive
 is drawn at seven x-locations, with the fourth location made non-finite
- (as indicated by a grey \texttt{"NA"}).
+ (as indicated by a grey \code{"NA"}).
 
 <<prim1, echo=FALSE, fig=TRUE, results=hide, width=4, height=2, include=FALSE>>=
 pushViewport(viewport(layout = grid.layout(1, 2,
@@ -85,8 +85,8 @@ new location are both not non-finite.
 \textbf{polygon} {~} \\
 A non-finite value breaks the polygon into two separate polygons.
 NOTE that this break happens within the current polygon as specified
-by the \texttt{id} argument.  All polygons with the same \texttt{id}
-receive the same \texttt{gp} settings.
+by the \code{id} argument.  All polygons with the same \code{id}
+receive the same \code{gp} settings.
 
 \textbf{arrows} {~} \\
 An arrow head is only drawn if the first or last line segment is

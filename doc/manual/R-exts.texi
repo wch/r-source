@@ -1178,7 +1178,7 @@ allowed in the @file{R} directory to allow a @file{configure} script to
 generate suitable files.
 
 Only @acronym{ASCII} characters (and the control characters tab,
-formfeed, LF and CR) should be used in code files.  Other characters are
+formfeed, @abbr{LF} and @abbr{CR}) should be used in code files.  Other characters are
 accepted in comments@footnote{but they should be in the encoding
 declared in the @file{DESCRIPTION} file.}, but then the comments may not
 be readable in e.g.@: a UTF-8 locale.  Non-@acronym{ASCII} characters in
@@ -3511,7 +3511,7 @@ and for the use of reasonable levels of compression.
 @item
 C, C++ and Fortran source and header files@footnote{An exception is made
 for subdirectories with names starting @samp{win} or @samp{Win}.} are
-tested for portable (LF-only) line endings.  If there is a
+tested for portable (@abbr{LF}-only) line endings.  If there is a
 @file{Makefile} or @file{Makefile.in} or @file{Makevars} or
 @file{Makevars.in} file under the @file{src} directory, it is checked
 for portable line endings and the correct use of @samp{$(BLAS_LIBS)} and
@@ -3731,7 +3731,7 @@ Prior to actually building the package in the standard gzipped tar file
 format, a few diagnostic checks and cleanups are performed.  In
 particular, it is tested whether object indices exist and can be assumed
 to be up-to-date, and C, C++ and Fortran source files and relevant
-makefiles in a @file{src} directory are tested and converted to LF
+makefiles in a @file{src} directory are tested and converted to @abbr{LF}
 line-endings if necessary.
 
 Run-time checks whether the package works correctly should be performed
@@ -4000,7 +4000,7 @@ Finally, if there is a @file{Makefile} and it has a @samp{clean:}
 target, @command{make clean} is run.
 
 All the usual @emph{caveats} about including a @file{Makefile} apply.
-It must be portable (no @acronym{GNU} extensions), use LF line endings
+It must be portable (no @acronym{GNU} extensions), use @abbr{LF} line endings
 and must work correctly with a parallel @command{make}: too many authors
 have written things like
 
@@ -4886,8 +4886,8 @@ empty @file{configure.win} file if no actions are needed).
 @item
 If your package has a @file{Makevars} or @file{Makefile} file, make sure
 that you use only portable make features.  Such files should be
-LF-terminated@footnote{Solaris @command{make} did not accept
-CRLF-terminated Makefiles; Solaris warned about and some other
+@abbr{LF}-terminated@footnote{Solaris @command{make} did not accept
+@abbr{CRLF}-terminated Makefiles; Solaris warned about and some other
 @command{make}s ignore incomplete final lines.} (including the final
 line of the file) and not make use of GNU extensions.  (The POSIX
 specification is available at
@@ -9637,7 +9637,7 @@ will be some small memory leaks from @code{readline} and @R{} itself ---
 these are memory areas that are in use right up to the end of the @R{}
 session.  Expect this to run around 20x slower than without
 @code{valgrind}, and in some cases much slower than that.  Several
-versions of @code{valgrind} were not happy with some optimized BLASes
+versions of @code{valgrind} were not happy with some optimized BLAS libraries
 that use @acronym{CPU}-specific instructions so you may need to build a
 version of @R{} specifically to use with @code{valgrind}.
 
@@ -11948,7 +11948,7 @@ system and so the two interworked successfully.  This was true of
 @command{gcc} 4 and later.  In particular, any package that makes use of
 Fortran I/O will when compiled on Windows interfere with C I/O: when the
 Fortran I/O support code is initialized (typically when the package is
-loaded) the C @code{stdout} and @code{stderr} are switched to LF line
+loaded) the C @code{stdout} and @code{stderr} are switched to @abbr{LF} line
 endings.  (Function @code{init} in file
 @file{src/modules/lapack/init_win.c} shows how to mitigate this.  In a
 package this would look something like

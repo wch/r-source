@@ -426,6 +426,7 @@ aspell_control_R_manuals <-
            "--add-texinfo-ignore=include",
            "--add-texinfo-ignore=ifclear",
            "--add-texinfo-ignore=ifset",
+           "--add-texinfo-ignore=key",
            "--add-texinfo-ignore=math",
            "--add-texinfo-ignore=multitable",
            "--add-texinfo-ignore=node",

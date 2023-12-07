@@ -1148,7 +1148,7 @@ their earlier `internal' dot-name versions) and
 serialize to (a file, a connection, a raw vector) and whether they are
 intended to serialize a single object or a collection of objects
 (typically the workspace).  @code{save} writes a header at the beginning
-of the file (a single LF-terminated line) which the lower-level versions
+of the file (a single @abbr{LF}-terminated line) which the lower-level versions
 do not.
 
 @code{save} and @code{saveRDS} allow various forms of compression, and

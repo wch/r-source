@@ -845,7 +845,7 @@ or their use suppressed by @code{options(useFancyQuotes=FALSE)}.
 @section There is no tilde on my keyboard!
 
 Where tilde does not appear on the main keyboard, it can normally be
-accessed by pressing AltGr (the right Alt key) plus some other key.
+accessed by pressing @key{AltGr} (the right @key{Alt} key) plus some other key.
 This is @code{]} in Canadian (multilingual), German and Scandinavian
 layouts, @code{1} in Eastern Europe, @code{[} in Portuguese, @code{4} or
 @code{5} in Spanish, @code{/} in Francophone Belgian, and so on.  You
