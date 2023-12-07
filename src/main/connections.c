@@ -578,7 +578,6 @@ int dummy_fgetc(Rconnection con)
 		con->inavail -= (short) 2;
 		memmove(con->iconvbuff, con->iconvbuff+2, con->inavail);
 	    }
-	    if(inew == 0) return R_EOF;
 	    if(checkBOM8 && con->inavail >= 3 &&
 	       !memcmp(con->iconvbuff, "\xef\xbb\xbf", 3)) {
 		con->inavail -= (short) 3;
