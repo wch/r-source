@@ -926,13 +926,17 @@ PostScriptMetricInfo(int c, double *ascent, double *descent, double *width,
 	       are all numbers. If a character makes no marks on the page
 	       (for example, the space character), this field reads B 0 0 0 0,
 	       and these values are not considered when computing the FontBBox.
-	       Also NBSP and Euro in some fonts.  Should that be skipped?
+
+ 	       Also NBSP and Euro in some fonts.  Should that be
+ 	       skipped for acent and descent?
 	    else if
 	       (metrics->CharInfo[c].BBox[0] == 0 &&
 		metrics->CharInfo[c].BBox[1] == 0 &&
 		metrics->CharInfo[c].BBox[2] == 0 &&
 		metrics->CharInfo[c].BBox[3] == 0) {
 		warning(_("character 0x%02x in encoding %s makes no mark"), c, encoding);
+                wx += w;
+            }
 	    */
 	    else {
 		wx += w;
