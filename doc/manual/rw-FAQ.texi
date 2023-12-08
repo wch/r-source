@@ -634,8 +634,8 @@ Unfortunately, because DLLs may themselves load other DLLs it is not
 possible for R to track which DLL caused the problem.
 
 This is less of a problem with 64-bit builds of R, which use SSE
-instructions for computations instead of the FPU. We may be able to remove
-this handling of the FPU control word in future versions of R.
+instructions for computations instead of the @abbr{FPU}. We may be able to remove
+this handling of the @abbr{FPU} control word in future versions of R.
 
 See also @code{?dyn.load}.
 

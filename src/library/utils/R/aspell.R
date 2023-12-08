@@ -419,6 +419,7 @@ aspell_control_R_manuals <-
            "--mode=texinfo",
            "--add-texinfo-ignore=abbr",           
            "--add-texinfo-ignore=acronym",
+           "--add-texinfo-ignore=anchor",           
            "--add-texinfo-ignore=deftypefun",
            "--add-texinfo-ignore=deftypefunx",
            "--add-texinfo-ignore=findex",

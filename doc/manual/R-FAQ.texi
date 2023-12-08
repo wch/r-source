@@ -496,26 +496,26 @@ instructions.
 
 R binaries for Fedora, maintained by Tom ``Spot'' Callaway, are provided
 as part of the Fedora distribution and can be accessed through
-@command{yum}, the RPM installer/updater.  Note that the ``Software''
+@command{yum}, the @abbr{RPM} installer/updater.  Note that the ``Software''
 application (gnome-software), which is the default @acronym{GUI} for
 software installation in Fedora 20, cannot be used to install R.  It is
 therefore recommended to use the yum command line tool.
-The Fedora R RPM is a ``meta-package'' which installs all the user and
+The Fedora R @abbr{RPM} is a ``meta-package'' which installs all the user and
 developer components of R (available separately as @code{R-core} and
 @code{R-devel}), as well as @code{R-java}, which ensures that R is
-configured for use with Java.  The R RPM also installs the standalone R
+configured for use with Java.  The R @abbr{RPM} also installs the standalone R
 math library (@code{libRmath} and @code{libRmath-devel}), although this
 is not necessary to use R.  When a new version of R is released, there
-may be a delay of up to 2 weeks until the Fedora RPM becomes publicly
+may be a delay of up to 2 weeks until the Fedora @abbr{RPM} becomes publicly
 available, as it must pass through the Fedora review process.
-RPMs for a selection of R packages are also provided by Fedora.  The
-Extra Packages for Enterprise Linux (EPEL) project
+@abbr{RPM}s for a selection of R packages are also provided by Fedora.  The
+Extra Packages for Enterprise Linux (@abbr{EPEL}) project
 (@url{https://docs.fedoraproject.org/en-US/epel/}) provides ports of the Fedora
-RPMs for RedHat Enterprise Linux and compatible distributions (e.g.,
+@abbr{RPM}s for RedHat Enterprise Linux and compatible distributions (e.g.,
 Centos, Scientific Linux, Oracle Linux).
 
 See @url{https://CRAN.R-project.org/bin/linux/suse/README.html} for
-information about RPMs for openSUSE.
+information about @abbr{RPM}s for openSUSE.
 
 No other binary distributions are currently publicly available via
 @CRAN{}.
@@ -1036,9 +1036,9 @@ R> cube(2)
 As a more ``interesting'' real-world problem, suppose you want to write
 a function which returns the density function of the @math{r}-th order
 statistic from a sample of size @math{n} from a (continuous)
-distribution.  For simplicity, we shall use both the cdf and pdf of the
-distribution as explicit arguments.  (Example compiled from various
-postings by Luke Tierney.)
+distribution.  For simplicity, we shall use both the distribution and
+density functions distribution as explicit arguments.  (Example compiled
+from various postings by Luke Tierney.)
 
 The @SPLUS{} documentation for @code{call()} basically suggests the
 following:
@@ -1531,7 +1531,7 @@ Angelo Mineo and Alfredo Pontillo (2006),
 
 The R distribution comes with the following packages:
 
-@table @strong
+@table @pkg
 @c <FIXME>
 @c 3.0.0
 @item base
@@ -1584,7 +1584,7 @@ to be included in all binary distributions of R.
 
 @c <FIXME>
 @c 3.0.0
-@table @strong
+@table @pkg
 @item KernSmooth
 Functions for kernel smoothing (and density estimation) corresponding to
 the book ``Kernel Smoothing'' by M. P. Wand and M. C. Jones, 1995.
@@ -1600,7 +1600,7 @@ Functions and datasets for bootstrapping from the book ``Bootstrap
 Methods and Their Applications'' by A. C. Davison and D. V. Hinkley,
 1997, Cambridge University Press.
 @item class
-Functions for classification (@math{k}-nearest neighbor and LVQ).
+Functions for classification (@math{k}-nearest neighbor and @abbr{LVQ}).
 @c (Contained in the @file{VR} bundle for R versions prior to 2.10.0.)
 @item cluster
 Functions for cluster analysis.
@@ -1950,7 +1950,7 @@ within Emacs by typing @kbd{M-x ess-submit-bug-report} or using the
 @section Should I run R from within Emacs?
 
 Yes, instead of just running it in a console, @emph{definitely}.  As an
-alternative to other IDE's such as Rstudio, @emph{possibly}, notably if you
+alternative to other @abbr{IDE}s such as Rstudio, @emph{possibly}, notably if you
 are interested to use Emacs for other computer interaction.
 You'd be using @acronym{ESS}, Emacs Speaks Statistics, see previous FAQ.
 
@@ -3313,7 +3313,7 @@ Suppose you have C code file for dynloading into R, but you want to use
 @code{R CMD SHLIB} with compilation flags other than the default ones
 (which were determined when R was built).
 
-Starting with R 2.1.0, users can provide personal Makevars configuration
+Starting with R 2.1.0, users can provide personal @file{Makevars} configuration
 files in @file{$@env{HOME}/.R} to override the default flags.
 @ifclear UseExternalXrefs
 See section ``Add-on packages'' in @cite{R Installation and

@@ -1290,7 +1290,7 @@ lacking a powerful enough @code{iconv}), it is likely that they work in
 Latin-1, the old @R{} assumption. Then the parser can return a
 UTF-8-encoded string if it encounters a @samp{\uxxxx} escape for a
 Unicode point that cannot be represented in the current charset.  (This
-needs MBCS support, and in the past was only enabled@footnote{See define
+needs @abbr{MBCS} support, and in the past was only enabled@footnote{See define
 @code{USE_UTF8_IF_POSSIBLE} in old versions of file @file{src/main/gram.c}.} on
 Windows.)  Now this is enabled for all platforms, and a @samp{\uxxxx} or
 @samp{\Uxxxxxxxx} escape ensures that the parsed string will be marked
@@ -1352,12 +1352,12 @@ Windows since Windows 10 (version 1903), Windows Server 2022 (LTSC), and
 Windows Server 1903 (semi-annual channel) allow setting the active code page
 to UTF-8 in the application manifest.  This changes the active code page
 only for the given application and does so together with changing also the
-UCRT C locale to UTF-8. R 4.2 for Windows uses this feature to get UTF-8 as
+@abbr{UCRT} C locale to UTF-8. R 4.2 for Windows uses this feature to get UTF-8 as
 the native encoding on Windows. To make that possible, R had to switch to
-UCRT, which in turn required creation of Rtools42.
+@abbr{UCRT}, which in turn required creation of Rtools42.
 
 Older versions of Windows still rely on the previous encoding support where
-the native encoding cannot be UTF-8. R 4.2 requires UCRT to work, but UCRT
+the native encoding cannot be UTF-8. R 4.2 requires @abbr{UCRT} to work, but @abbr{UCRT}
 can be installed on Windows since Vista SP2 and Windows Server 2008 SP2. It
 is shipped with Windows since Windows 10 and Windows Server 2016.
 
@@ -4138,7 +4138,7 @@ running/re-building vignettes as part of the check log.  The format is
 @samp{[as/bs]} for the total CPU time (including child processes)
 @samp{a} and elapsed time @samp{b}, except on Windows, when it is
 @samp{[bs]}.  In most cases timings are only given for @samp{OK} checks.
-Times with an elapsed component over 10 mins are reported in minutes
+Times with an elapsed component over 10 @abbr{min}s are reported in minutes
 (with abbreviation @samp{m}).  The value is the smallest numerical value
 in elapsed seconds that should be reported: non-numerical values
 indicate that no report is required, a value of @samp{0} that a report
@@ -4446,7 +4446,7 @@ Check and report at the end of the check run if new files or directories
 are created in a selected set of directories during the check run.
 (This is confined to files owned by the user running the check process.)
 Currently the directories monitored are the home directory, @file{/tmp}
-(excluding @file{RtmpXXXXXX} dirs), @file{/dav/shm}, @file{~/.cache}
+(excluding @file{RtmpXXXXXX} directories), @file{/dav/shm}, @file{~/.cache}
 (recursively) and @file{~/.local/share} (recursively) or their
 equivalents on Windows and macOS (the directories in which the default
 settings for @code{tools::R_user_dir()} use a @file{R} subdirectory).
@@ -4564,7 +4564,7 @@ Default: false (but true for CRAN submission checks).
 Check whether arguments passed to the Windows C runtime are valid. When
 enabled and a C runtime function is called with an invalid parameter, R
 prints diagnostic information and unconditionally terminates. By default,
-R for Windows following MinGW-W64 default causes UCRT to ignore invalid
+R for Windows following MinGW-W64 default causes @abbr{UCRT} to ignore invalid
 parameters, but they may cause R to abort e.g. when R is embedded into
 applications built with a different compiler toolchain. One may set the
 value to @code{"watson"} for interactive debugging on Windows via
@@ -4597,7 +4597,7 @@ Default: false (but true for CRAN submission checks).
 
 @item _R_CHECK_MBCS_CONVERSION_FAILURE_
 If set to a non-empty value, makes warnings from @code{pdf()} and
-@code{postscript()} about conversion failures from an MBCS (usually
+@code{postscript()} about conversion failures from an @abbr{MBCS} (usually
 UTF-8) into errors. Unless the value is @samp{silent}, when the warnings
 are suppressed.
 Default: unset (but true for CRAN submission checks).

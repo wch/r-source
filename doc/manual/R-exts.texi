@@ -284,7 +284,7 @@ shell scripts which are, respectively, executed before and (if option
 @file{configure.win} and @file{cleanup.win}. Since @R{} 4.2.0 on Windows,
 @file{configure.ucrt} and @file{cleanup.ucrt} are supported and take
 precedence over @file{configure.win} and @file{cleanup.win}. They can
-hence be used to provide content specific to UCRT or Rtools42 and newer, if needed,
+hence be used to provide content specific to @abbr{UCRT} or Rtools42 and newer, if needed,
 but the support for @file{.ucrt} files may be removed in future when
 building packages from source on the older versions of R will no longer
 be needed, and hence the files may be renamed back to @file{.win}.
@@ -676,7 +676,7 @@ H.2.8, I.5.1}.
 @c DESCRIPTION field Language
 A @samp{Language} field can be used to indicate if the package
 documentation is not in English: this should be a comma-separated list
-of standard (not private use or grandfathered) IETF language tags as
+of standard (not private use or grandfathered) @abbr{IETF} language tags as
 currently defined by RFC 5646
 (@uref{https://www.rfc-editor.org/rfc/rfc5646}, see also
 @uref{https://en.wikipedia.org/wiki/IETF_language_tag}), i.e., use
@@ -1279,7 +1279,7 @@ There are platform-specific file names on Windows:
 @file{src/Makevars.win} and @file{src/Makefile.ucrt} takes precedence
 over @file{src/Makefile.win}. @file{src/Makevars.ucrt} and
 @file{src/Makefile.ucrt} will be ignored by earlier versions of @R{}, and
-hence can be used to provide content specific to UCRT or Rtools42 and newer,
+hence can be used to provide content specific to @abbr{UCRT} or Rtools42 and newer,
 but the support for @file{.ucrt} files may be removed in the future when
 building packages from source on the older versions of R will no longer
 be needed, and hence the files may be renamed back to @file{.win}.
@@ -2559,7 +2559,7 @@ The performance of OpenMP varies substantially between platforms.  The
 Windows implementation has substantial overheads, so is only beneficial
 if quite substantial tasks are run in parallel.  Also, on Windows new
 threads are started with the default@footnote{Windows default, not
-MinGW-w64 default.} FPU control word, so computations done on OpenMP
+MinGW-w64 default.} @abbr{FPU} control word, so computations done on OpenMP
 threads will not make use of extended-precision arithmetic which is the
 default for the main process.
 @c mingw64-public, 2015-02-02.
@@ -2717,7 +2717,7 @@ Note the quotes: the macros can contain spaces, e.g.@: @code{CC = "gcc
 -m64 -std=gnu99"}.  Several authors have forgotten about parallel makes:
 the static library in the subdirectory must be made before the shared
 object (@code{$(SHLIB)}) and so the latter must depend on the former.
-Others forget the need@footnote{A few OSes (AIX, Windows) do not
+Others forget the need@footnote{A few OSes (@abbr{AIX}, Windows) do not
 need special flags for such code, but most do---although compilers will
 often generate PIC code when not asked to do so.} for
 position-independent code.
@@ -5363,7 +5363,7 @@ on Solaris it did something completely different and took an argument.
 Some people have a need to set a locale.  Locale names are not portable,
 and e.g.@: @samp{fr_FR.utf8} is commonly used on Linux but not accepted
 on macOS.  @samp{fr_FR.UTF-8} is more portable, being accepted on recent
-Linux, AIX, FreeBSD, macOS and Solaris (at least).  However, some Linux
+Linux, @abbr{AIX}, FreeBSD, macOS and Solaris (at least).  However, some Linux
 distributions micro-package, so locales defined by @pkg{glibc}
 (including these examples) may not be installed.
 
@@ -5598,7 +5598,7 @@ other platforms.  @R{} is configured by default to make use of long
 doubles where available, but they may not be available or be too slow
 for routine use.  Most @R{} platforms use @cputype{ix86} or
 @cputype{x86_64} CPUs: these may use extended precision registers on
-some but not all of their FPU instructions.  Thus the achieved precision
+some but not all of their @abbr{FPU} instructions.  Thus the achieved precision
 can depend on the compiler version and optimization flags---our
 experience is that 32-bit builds tend to be less precise than 64-bit
 ones.  But not all platforms use those CPUs, and not all@footnote{Not
@@ -5669,7 +5669,7 @@ at @uref{https://svn.r-project.org/R/trunk/doc/manual/refman.top}.
 
 Other tools can reduce the size of PDFs containing bitmap images at
 excessively high resolution.  These are often best re-generated (for
-example @code{Sweave} defaults to 300 ppi, and 100--150 is more
+example @code{Sweave} defaults to 300@tie{}@abbr{ppi}, and 100--150 is more
 appropriate for a package manual).  These tools include Adobe Acrobat
 (not Reader), Apple's Preview@footnote{Select `Save as', and select
 `Reduce file size' from the `Quartz filter' menu': this can be accessed
@@ -6027,7 +6027,7 @@ Similarly for constants: for example @code{SIZE_MAX} is defined in
 @item
 Some headers are not portable: we have just mentioned @file{malloc.h}
 and often @acronym{CRAN} submissions attempt to use @file{endian.h}.
-The latter is a @code{glibc} extension: some OSs have
+The latter is a @code{glibc} extension: some OSes have
 @file{machine/endian.h} or @file{sys/endian.h} but some have neither.
 @c macOS has machine/endian.h.  Solaris had none.
 
@@ -6393,7 +6393,7 @@ depend on the OS, but has been checked on Linux and macOS.} by using
 compiler flag @option{-fno-common} as part of @samp{CFLAGS} in earlier
 versions of @command{gcc} and @command{clang}.
 
-@option{-fno-common} is said to be particularly beneficial for ARM cpus.
+@option{-fno-common} is said to be particularly beneficial for ARM CPUs.
 
 This is not pertinent to C++ which does not permit tentative definitions.
 
@@ -6716,7 +6716,7 @@ in another language one might need to say
 @section Internationalization
 
 There are mechanisms to translate the @R{}- and C-level error and warning
-messages.  There are only available if @R{} is compiled with NLS support
+messages.  There are only available if @R{} is compiled with @abbr{NLS} support
 (which is requested by @command{configure} option @option{--enable-nls},
 the default).
 
@@ -7362,7 +7362,7 @@ lists, including when @code{\item} labels need special markup such as
 @item \references@{@dots{}@}
 @findex \references
 A section with references to the literature.  Use @code{\url@{@}} or
-@code{\href@{@}@{@}} for web pointers, and @code{\doi@{@}} for DOIs
+@code{\href@{@}@{@}} for web pointers, and @code{\doi@{@}} for @abbr{DOI}s
 (this needs @R{} >= 3.3, see @ref{User-defined macros} for more info).
 
 @item \note@{...@}
@@ -8029,7 +8029,7 @@ backslash, @code{\dots} and @code{\ldots} will be rendered as ellipses
 and @code{\sqrt}, @code{\ge} and @code{\le} as mathematical symbols.
 
 Note that only basic @LaTeX{} can be used, there being no provision to
-specify @LaTeX{} style files, but AMS extensions are supported
+specify @LaTeX{} style files, but @abbr{AMS} extensions are supported
 as from @R{} 4.2.2.
 
 @node Figures, Insertions, Mathematics, Writing R documentation files
@@ -8393,7 +8393,7 @@ A package on CRAN
 A single space (used after a period that does not end a sentence).
 
 @item \doi@{@var{numbers}@}
-A digital object identifier (DOI).
+A digital object identifier (@abbr{DOI}).
 @end ftable
 See the @file{system.Rd} file in @file{share/Rd/macros} for more details
 and macro definitions, including macros @code{\packageTitle},
@@ -8646,7 +8646,7 @@ page can be consulted for full details.  Profiling works by recording at
 fixed intervals@footnote{For Unix-alikes by default these are intervals
 of CPU time, and for Windows of elapsed (`wall-clock') time.  As from
 @R{} 4.4.0, elapsed time is optional on Unix-alikes} (by default every
-20 msecs) which line in which @R{} function is being used, and recording
+20 @abbr{msec}s) which line in which @R{} function is being used, and recording
 the results in a file (default @file{Rprof.out} in the working
 directory).  Then the function @code{summaryRprof} or the command-line
 utility @code{R CMD Rprof @var{Rprof.out}} can be used to summarize the
@@ -9097,7 +9097,7 @@ command-line version prior to macOS 12.
 problems with accessing the debug information, but the best results which
 included function names were obtained by attaching the profiler to an
 existing @command{Rterm} process, either via GUI or using @option{/a:}
-(pid obtained via @command{Sys.getpid()}).
+(@abbr{PID} obtained via @command{Sys.getpid()}).
 
 @node Debugging, System and foreign language interfaces, Tidying and profiling R code, Top
 @chapter Debugging
@@ -9774,7 +9774,7 @@ uninitialized memory.
 
 Recent versions return symbolic addresses for the location of the error
 provided @command{llvm-symbolizer}@footnote{part of the LLVM project and
-distributed in @code{llvm} RPMs and @code{.deb}s on Linux.  It is not
+distributed in @code{llvm} @acronym{RPM}s and @file{.deb}s on Linux.  It is not
 currently shipped by Apple.} is on the path: if it is available but not
 on the path or has been renamed@footnote{as Ubuntu has been said to
 do.}, one can use an environment variable, e.g.@:
@@ -10455,7 +10455,7 @@ a command that is to be debugged, at a terminal
 
 @example
 ps -ef | grep exec/R
-# identify the pid @var{pid} for the next command: it is the second item
+# identify the PID @var{pid} for the next command: it is the second item
 lldb -p @var{pid}
 (lldb) continue
 @end example
@@ -11909,7 +11909,7 @@ A small number of external libraries used in @R{} packages have a C++
 interface to a library of compiled code, e.g.@: packages @CRANpkg{sf}
 and @CRANpkg{rjags}.  This raises many more problems!  The C++ interface
 uses name-mangling and the
-ABI@footnote{@uref{https://en.wikipedia.org/wiki/Application_binary_interface}.}
+@abbr{ABI}@footnote{@uref{https://en.wikipedia.org/wiki/Application_binary_interface}.}
 may depend on the compiler, version and even C++ defines@footnote{For
 example, @samp{_GLIBCXX_USE_CXX11_ABI} in @command{g++} 5.1 and later:
 @uref{https://gcc.gnu.org/onlinedocs/libstdc++/manual/using_dual_abi.html}.},
@@ -13417,7 +13417,7 @@ is true) is to check for missing (@code{NA}) and @acronym{IEEE} special
 values (@code{Inf}, @code{-Inf} and @code{NaN}) and give an error if any
 are found.  With the @code{.Call} interface these will be passed to our
 code.  In this example the special values are no problem, as
-@acronym{IEC60559} arithmetic will handle them correctly.  In the current
+@acronym{IEC}@tie{}60559 arithmetic will handle them correctly.  In the current
 implementation this is also true of @code{NA} as it is a type of
 @code{NaN}, but it is unwise to rely on such details.  Thus we will
 re-write the code to handle @code{NA}s using macros defined in
@@ -15950,7 +15950,7 @@ For historical reasons there are Fortran interfaces to functions
 @code{D1MACH} and @code{I1MACH}.  These can be called from C code as
 e.g.@: @code{F77_CALL(d1mach)(4)}.  Note that these are emulations of
 the original functions by Fox, Hall and Schryer on NetLib at
-@uref{https://netlib.org/slatec/src/} for IEC 60559 arithmetic
+@uref{https://netlib.org/slatec/src/} for @acronym{IEC}@tie{}60559 arithmetic
 (required by @R{}).
 
 @node Re-encoding, Condition handling and cleanup code, Utility functions, The R API
@@ -16200,7 +16200,7 @@ is configured and recorded in header @file{Rconfig.h} (included by
 @file{R_ext/Visibility.h}).  It is often defined on modern Unix-alikes
 with a recent compiler@footnote{It is defined by the Intel compilers,
 but also hides unsatisfied references and so cannot be used with @R{}.
-It was not supported by the AIX nor Solaris compilers.}, but not
+It was not supported by the @abbr{AIX} nor Solaris compilers.}, but not
 supported on macOS nor Windows.  Minimizing the visibility of symbols in
 a shared library will both speed up its loading (unlikely to be
 significant) and reduce the possibility of linking to other entry points
@@ -16575,7 +16575,7 @@ example the package @CRANpkg{Rserve} (from @acronym{CRAN}, see also
 @uref{https://www.rforge.net/Rserve/}) and connections to Java in
 @samp{JRI} (part of the @CRANpkg{rJava} package on @acronym{CRAN}).
 
-Note that the APIs described in this chapter are only intended to be
+Note that the @abbr{API}s described in this chapter are only intended to be
 used in an alternative front-end: they are not part of the API made
 available for @R{} packages and can be dangerous to use in a
 conventional package (although packages may contain alternative
@@ -16717,7 +16717,7 @@ after setting up various parts of @R{} to talk to our GUI, and arranging
 for our GUI callbacks to be called during the @R{} mainloop.
 
 One issue to watch is that on some platforms @code{Rf_initEmbeddedR} and
-@code{Rf_endEmbeddedR} change the settings of the FPU (e.g.@: to allow
+@code{Rf_endEmbeddedR} change the settings of the @abbr{FPU} (e.g.@: to allow
 errors to be trapped and to make use of extended precision registers).
 
 The standard code sets up a session temporary directory in the usual
@@ -17453,7 +17453,7 @@ executables default to 2Mb, and Visual C++ ones to 1Mb.  The latter
 stack sizes are too small for a number of @R{} applications, so
 general-purpose front-ends should use a larger stack size.
 
-Applications embedding @R{} 4.2.0 and newer should use UCRT as the C runtime
+Applications embedding @R{} 4.2.0 and newer should use @abbr{UCRT} as the C runtime
 and opt in for UTF-8 as the active code page in their manifest, as all
 frontends shipped with @R{} do.  This will allow the embedded @R{} to use
 UTF-8 as its native encoding on recent Windows systems.

@@ -184,7 +184,7 @@ the four-week period prior to the release.
 
 Note that @samp{https:} is required@footnote{for some Subversion clients
 @samp{http:} may appear to work, but requires continual redirection.},
-and that the SSL certificate for the Subversion server of the @R{}
+and that the @abbr{SSL} certificate for the Subversion server of the @R{}
 project should be recognized as from a trusted source.
 
 Note that retrieving the sources by e.g.@: @command{wget -r} or
@@ -902,7 +902,7 @@ and recommended packages are not byte-compiled.  (Alternatively the
 non-empty value for the duration of the build.)
 
 Option @option{--with-internal-tzcode} makes use of @R{}'s own code and
-copy of the IANA database for managing timezones.  This will be
+copy of the @abbr{IANA} database for managing timezones.  This will be
 preferred where there are issues with the system implementation, usually
 involving times after 2037 or before 1916.  An alternative time-zone
 directory@footnote{How to prepare such a directory is described in file
@@ -919,7 +919,7 @@ system wide-character classification (such as @code{iswprint}),
 case-changing (@code{wctrans}) and width (@code{wcwidth} and
 @code{wcswidth}) functions by ones contained in the @R{} sources.
 Replacement of the classification functions has been done for many years
-on macOS and AIX (and Windows): option @option{--with-internal-iswxxxxx}
+on macOS and @abbr{AIX} (and Windows): option @option{--with-internal-iswxxxxx}
 allows this to be suppressed on those platforms or used on others.
 Replacing the case-changing functions was new in @R{} 4.1.0 and the
 default on macOS (and on Windows since @R{} 4.2.0).  Replacement of the
@@ -1387,7 +1387,7 @@ from @acronym{CRAN} to run on 64-bit Windows.
 R is best tested on current versions of Windows 10 and Windows Server 2022
 with UTF-8 as the charset encoding.  It works also on Windows 11.  It runs
 on older versions of Windows, but normally with other charset encoding and
-may require manual installation of the Universal C Runtime (UCRT).
+may require manual installation of the Universal C Runtime (@abbr{UCRT}).
 
 Your file system must allow long file names (as is likely except
 perhaps for some network-mounted systems).  If it does not also support
@@ -1415,7 +1415,7 @@ information on use on older Windows systems.
 @node Building from source, Checking the build, Installing R under Windows, Installing R under Windows
 @section Building from source
 
-It is possible to use other 64-bit toolchains (including `MSYS2') with UCRT
+It is possible to use other 64-bit toolchains (including `MSYS2') with @abbr{UCRT}
 support to build @R{}, but this manual only documents that used for binary
 distributions of @R{} 4.2.x and later.  When using other toolchains, makefiles of @R{}
 and packages may need to be adapted.
@@ -2778,7 +2778,7 @@ some OSes offer only one charset per language.
 @node Locales under Unix-alikes, Locales under Windows, Locales, Locales
 @subsection Locales under Unix-alikes
 
-Modern Linux uses the XPG@footnote{`X/Open Portability Guide', which has
+Modern Linux uses the @abbr{XPG}@footnote{`X/Open Portability Guide', which has
 had several versions.} locale specifications which have the form
 @samp{en_GB}, @samp{en_GB.UTF-8}, @samp{aa_ER.UTF-8@@saaho},
 @samp{de_AT.iso885915@@euro}, the components being in the order listed
@@ -2839,7 +2839,7 @@ by the environment variables @env{LC_ALL}, @env{LC_MESSAGES} and
 should not be needed, but the first is only used to select the language
 for messages.)  The code tries hard to map locales to languages, but on
 some systems (notably Windows) the locale names needed for the
-environment variable @env{LC_ALL} do not all correspond to XPG language
+environment variable @env{LC_ALL} do not all correspond to @abbr{XPG} language
 names and so @env{LANGUAGE} may need to be set.  (One example is
 @samp{LC_ALL=es} on Windows which sets the locale to Estonian and the
 language to Spanish.)
@@ -3143,7 +3143,7 @@ This appendix gives details of programs you will need to build @R{} on
 Unix-like platforms, or which will be used by @R{} if found by
 @command{configure}.
 
-Remember that some package management systems (such as @acronym{RPM} and
+Remember that some package management systems (such as @abbr{RPM} and
 Debian/Ubuntu's) make a distinction between the user version of a
 package and the development version.  The latter usually has the same
 name but with the extension @samp{-devel} or @samp{-dev}: you need both
@@ -3177,7 +3177,7 @@ architecture, should be specified as part of @code{CC} rather than in
 
 Unless you do not want to view graphs on-screen (or use macOS) you need
 @samp{X11} installed, including its headers and client libraries. For
-recent Fedora/RedHat distributions it means (at least) RPMs
+recent Fedora/RedHat distributions it means (at least) @abbr{RPM}s
 @samp{libX11}, @samp{libX11-devel}, @samp{libXt} and @samp{libXt-devel}.
 On Debian/Ubuntu we recommend the meta-package @samp{xorg-dev}.  If you
 really do not want these you will need to explicitly configure @R{}
@@ -3391,7 +3391,7 @@ unlikely event that is installed but not linked to
 statically unless @command{configure} option
 @option{--with-static-cairo} is used.  Most systems with @code{Gtk+} 2.8
 or later installed will have suitable libraries: for Fedora users the
-@code{pango-devel} RPM and its dependencies suffice.
+@code{pango-devel} @abbr{RPM} and its dependencies suffice.
 @c arm64 Homebrew did in early 2021.
 It is possible (but very unusual on a platform with X11) to build Cairo
 without its @code{cairo-xlib} module in which case @code{X11(type =
@@ -3465,7 +3465,7 @@ Use of the X11 clipboard selection requires the @code{Xmu} headers and
 libraries.  These are normally part of an X11 installation (e.g.@: the
 Debian meta-package @samp{xorg-dev}), but some distributions have split
 this into smaller parts, so for example recent versions of Fedora
-require the @samp{libXmu} and @samp{libXmu-devel} RPMs.
+require the @samp{libXmu} and @samp{libXmu-devel} @abbr{RPM}s.
 
 Some systems (notably macOS and at least some FreeBSD systems) have
 inadequate support for collation in multibyte locales.  It is possible
@@ -3473,7 +3473,7 @@ to replace the OS's collation support by that from ICU (International
 Components for Unicode, @uref{https://icu.unicode.org/}), and this
 provides much more precise control over collation on all systems.  ICU
 is available as sources and as binary distributions for (at least) most
-Linux distributions, FreeBSD, macOS and AIX, usually as @code{libicu} or
+Linux distributions, FreeBSD, macOS and @abbr{AIX}, usually as @code{libicu} or
 @code{icu4c}.  It will be used by default where available: should a very
 old or broken version of ICU be found this can be suppressed by
 @option{--without-ICU}.
@@ -3607,7 +3607,7 @@ java-latest-openjdk
 java-latest-openjdk-devel
 @end example
 @noindent
-where the @code{-devel} RPMs are needed to complete the @abbr{JDK}. Debian/Ubuntu use
+where the @code{-devel} @abbr{RPM}s are needed to complete the @abbr{JDK}. Debian/Ubuntu use
 @samp{-jre} and @samp{-jdk}, e.g.
 @example
 sudo apt install default-jdk
@@ -3662,7 +3662,7 @@ using an external BLAS library may necessitate using the version of
 LAPACK it contains.
 
 Note that the alternative implementations will not give identical
-numeric results.  Some differences may be benign (such the signs of SVDs
+numeric results.  Some differences may be benign (such the signs of @abbr{SVD}s
 and eigenvectors), but the optimized routines can be less accurate and
 (particularly for LAPACK) can be from older versions with fewer
 corrections.  However, @R{} relies on
@@ -3743,7 +3743,7 @@ platforms.
 
 Note that under Unix (but not under Windows) if @R{} is compiled against
 a non-default @acronym{BLAS} and @option{--enable-BLAS-shlib} is
-@strong{not} used (it is the default on all platforms except AIX), then
+@strong{not} used (it is the default on all platforms except @abbr{AIX}), then
 all @acronym{BLAS}-using packages must also be.  So if @R{} is re-built
 to use an enhanced @acronym{BLAS} then packages such as
 @CRANpkg{quantreg} will need to be re-installed.
@@ -3805,8 +3805,8 @@ or, as on @cputype{x86_64} Fedora where a path needs to be specified,
 Distributed ATLAS libraries cannot be tuned to your machine and so are a
 compromise: for example Fedora tunes@footnote{The only way to see
 exactly which CPUs the distributed libraries have been tuned for is to
-read the @file{atlas.spec} file.} @cputype{x86_64} RPMs for CPUs with
-SSE3 extensions, and separate RPMs may be available for specific CPU
+read the @file{atlas.spec} file.} @cputype{x86_64} @abbr{RPM}s for CPUs with
+SSE3 extensions, and separate @abbr{RPM}s may be available for specific CPU
 families.
 
 Note that building @R{} on Linux against distributed shared libraries
@@ -3853,7 +3853,7 @@ See @pxref{Shared BLAS} for an alternative (and in many ways preferable)
 way to use them.
 
 Some platforms provide multiple builds of OpenBLAS: for example Fedora
-has RPMs@footnote{(and more, e.g.@: for 64-bit ints and static versions).}
+has @abbr{RPM}s@footnote{(and more, e.g.@: for 64-bit ints and static versions).}
 @example
 openblas
 openblas-threads
@@ -4009,7 +4009,7 @@ package.
 library @code{libRblas} stored in @file{@var{R_HOME}/lib} and linking
 both @R{} itself and all the add-on packages against that library.
 
-This is the default on all platforms except AIX unless an external
+This is the default on all platforms except @abbr{AIX} unless an external
 @acronym{BLAS} is specified and found: for the latter it can be used by
 specifying the option @option{--enable-BLAS-shlib}, and it can always be
 disabled via @option{--disable-BLAS-shlib}.
@@ -4063,7 +4063,7 @@ ln -s /usr/lib64/atlas/libtatlas.so.3 @var{R_HOME}/lib/libRblas.so
 
 @noindent
 can be used with its distributed ATLAS libraries.  (If you have the
-@samp{-devel} RPMS installed you can omit the @code{.0}/@code{.3}.)
+@samp{-devel} @abbr{RPM}s installed you can omit the @code{.0}/@code{.3}.)
 
 Note that rebuilding or symlinking @file{libRblas.so} may not suffice
 if the intention is to use a modified LAPACK contained in an external
@@ -4233,7 +4233,7 @@ attempt to compile support for @code{Rprofmem()} and @code{tracemem()} [no]
 @item --enable-R-shlib
 build @R{} as a shared/dynamic library [no]
 @item --enable-BLAS-shlib
-build the @acronym{BLAS} as a shared/dynamic library [yes, except on AIX]
+build the @acronym{BLAS} as a shared/dynamic library [yes, except on @abbr{AIX}]
 @end table
 
 @noindent
@@ -4636,8 +4636,8 @@ of support software; your results may differ if you have other versions
 of compilers and support libraries.
 
 Older versions of this manual contain notes on platforms such as HP-UX,
-IRIX, Alpha/OSF1 (for @R{} < 2.10.0, and support has since been removed
-for all of these) and AIX (for @R{} < = 3.5.x) for which we have had no
+@abbr{IRIX}, Alpha/OSF1 (for @R{} < 2.10.0, and support has since been removed
+for all of these) and @abbr{AIX} (for @R{} < = 3.5.x) for which we have had no
 recent reports.
 
 C macros to select particular platforms can be tricky to track down
@@ -4962,7 +4962,7 @@ which is needed for some versions of @command{gfortran}.
 
 The current out-of-the-box default for @command{clang++} is to use the
 C++ runtime from the installed @command{g++}.  Using the runtime from
-the @url{https://libcxx.llvm.org/, @code{libc++}} project (Fedora RPM
+the @url{https://libcxx.llvm.org/, @code{libc++}} project (Fedora @acronym{RPM}
 @code{libcxx-devel}) @emph{via} @option{-stdlib=libc++} has also been
 tested.
 

@@ -167,7 +167,7 @@ another system do the work!  (For example Therneau & Grambsch (2000)
 commented that they preferred to do data manipulation in SAS and then
 use package @CRANpkg{survival} in @Sl{} for the analysis.)  Database
 manipulation systems are often very suitable for manipulating and
-extracting data: several packages to interact with DBMSs are discussed
+extracting data: several packages to interact with @abbr{DBMS}s are discussed
 here.
 
 There are packages to allow functionality developed in languages such as
@@ -232,8 +232,8 @@ represented in memory, possibly preceded by a header.  Such data formats
 are discussed in @ref{Binary files} and @ref{Binary connections}.
 
 For much larger databases it is common to handle the data using a
-database management system (DBMS).  There is once again the option of
-using the DBMS to extract a plain file, but for many such DBMSs the
+database management system (@abbr{DBMS}).  There is once again the option of
+using the @abbr{DBMS} to extract a plain file, but for many such @abbr{DBMS}s the
 extraction operation can be done directly from an @R{} package:
 @xref{Relational databases}.  Importing data via network connections is
 discussed in @ref{Network interfaces}.
@@ -275,13 +275,13 @@ guesses may be possible and @command{file} may guess as it did in the
 example above), so you may simply have to ask the originator for some
 clues (e.g.@: `Russian on Windows').
 
-`BOMs' (Byte Order Marks,
+`@abbr{BOM}s' (Byte Order Marks,
 @uref{https://en.wikipedia.org/wiki/Byte_order_mark}) cause problems for
-Unicode files.  In the Unix world BOMs are rarely used, whereas in the
+Unicode files.  In the Unix world @abbr{BOM}s are rarely used, whereas in the
 Windows world they almost always are for UCS-2/UTF-16 files, and often
 are for UTF-8 files.  The @command{file} utility will not even recognize
-UCS-2 files without a BOM, but many other utilities will refuse to read
-files with a BOM and the @acronym{IANA} standards for @code{UTF-16LE}
+UCS-2 files without a @abbr{BOM}, but many other utilities will refuse to read
+files with a @abbr{BOM} and the @abbr{IANA} standards for @code{UTF-16LE}
 and @code{UTF-16BE} prohibit it.  We have too often been reduced to
 looking at the file with the command-line utility @command{od} or a hex
 editor to work out its encoding.
@@ -360,7 +360,7 @@ function @code{write.csv} provides appropriate defaults.  In some
 locales the comma is used as the decimal point (set this in
 @code{write.table} by @code{dec = ","}) and there CSV files use the
 semicolon as the field separator: use @code{write.csv2} for appropriate
-defaults.  There is an IETF standard for CSV files (which mandates
+defaults.  There is an @abbr{IETF} standard for CSV files (which mandates
 commas and CRLF line endings, for which use @code{eol = "\r\n"}), RFC4180
 (see @uref{https://www.rfc-editor.org/rfc/rfc4180}), but what is more
 important in practice is that the file is readable by the application it
@@ -684,8 +684,8 @@ fileEncoding = "UTF-8"
 
 @noindent
 If you know (correctly) the file's encoding this will almost always
-work.  However, we know of one exception, UTF-8 files with a BOM.  Some
-people claim that UTF-8 files should never have a BOM, but some software
+work.  However, we know of one exception, UTF-8 files with a @abbr{BOM}.  Some
+people claim that UTF-8 files should never have a @abbr{BOM}, but some software
 (apparently including Excel:mac) uses them, and many Unix-alike OSes do
 not accept them.  So faced with a file which @command{file} reports as
 
@@ -787,7 +787,7 @@ using Fortran-style column specifications.
 @section Data Interchange Format (DIF)
 @cindex Data Interchange Format (DIF)
 
-An old format sometimes used for spreadsheet-like data is DIF, or Data Interchange 
+An old format sometimes used for spreadsheet-like data is @abbr{DIF}, or Data Interchange 
 format.  
 
 @findex read.DIF
@@ -1176,8 +1176,8 @@ object or an entire worksheet from one session and restore it at the
 subsequent session, but the format of the stored data is specific to
 @R{} and not easily manipulated by other systems.
 
-Database management systems (DBMSs) and, in particular, relational
-DBMSs (RDBMSs) @emph{are} designed to do all of these things well.
+Database management systems (@abbr{DBMS}s) and, in particular, relational
+@abbr{DBMS}s (@abbr{RDBMS}s) @emph{are} designed to do all of these things well.
 Their strengths are
 
 @enumerate
@@ -1199,12 +1199,12 @@ enforcing security constraints on access to the data.
 Ability to act as a server to a wide range of clients.
 @end enumerate
 
-The sort of statistical applications for which DBMS might be used are to
+The sort of statistical applications for which @abbr{DBMS} might be used are to
 extract a 10% sample of the data, to cross-tabulate data to produce a
 multi-dimensional contingency table, and to extract data group by group
 from a database for separate analysis.
 
-Increasingly OSes are themselves making use of DBMSs for these reasons,
+Increasingly OSes are themselves making use of @abbr{DBMS}s for these reasons,
 so it is nowadays likely that one will be already installed on your
 (non-Windows) OS.  @uref{https://en.wikipedia.org/wiki/Akonadi, Akonadi}
 is used by KDE4 to store personal information.  Several macOS
@@ -1214,7 +1214,7 @@ applications, including Mail and Address Book, use SQLite.
 @node Overview of RDBMSs, R interface packages, Why use a database?, Relational databases
 @section Overview of RDBMSs
 
-Traditionally there had been large (and expensive) commercial RDBMSs
+Traditionally there had been large (and expensive) commercial @abbr{RDBMS}s
 (@uref{https://www.ibm.com/products/informix, Informix};
 @uref{https://www.oracle.com, Oracle}; 
 Sybase;
@@ -1225,7 +1225,7 @@ MySQL@footnote{and forks, notably MariaDB.}, PostgreSQL, Microsoft
 Access, @dots{}), the former marked out by much greater emphasis on data
 security features.  The line is blurring, with MySQL and PostgreSQL
 having more and more high-end features, and free `express' versions
-being made available for the commercial DBMSs.
+being made available for the commercial @abbr{DBMS}s.
 
 @cindex ODBC
 @cindex Open Database Connectivity
@@ -1239,11 +1239,11 @@ but is also implemented on Linux/Unix/macOS.
 All of the packages described later in this chapter provide clients to
 client/server databases.  The database can reside on the same machine or
 (more often) remotely.  There is an @acronym{ISO} standard (in fact
-several: @acronym{SQL}92 is @acronym{ISO}/IEC 9075, also known as
+several: @acronym{SQL}92 is @acronym{ISO}/@acronym{IEC}@tie{}9075, also known as
 @acronym{ANSI} X3.135-1992, and @acronym{SQL}99 is coming into use) for
 an interface language called @acronym{SQL} (Structured Query Language,
 sometimes pronounced `sequel': see Bowman @emph{et al.@:} 1996 and Kline
-and Kline 2001) which these DBMSs support to varying degrees.
+and Kline 2001) which these @abbr{DBMS}s support to varying degrees.
 
 
 @menu
@@ -1261,7 +1261,7 @@ for complex operations in all.  Conventionally @acronym{SQL} is written
 in upper case, but many users will find it more convenient to use lower
 case in the @R{} interface functions.
 
-A relational DBMS stores data as a database of @emph{tables} (or
+A relational @abbr{DBMS} stores data as a database of @emph{tables} (or
 @emph{relations}) which are rather similar to @R{} data frames, in that
 they are made up of @emph{columns} or @emph{fields} of one type
 (numeric, character, date, currency, @dots{}) and @emph{rows} or
@@ -1293,7 +1293,7 @@ applied to a single column.)
 
 SELECT queries use FROM to select the table, WHERE to specify a
 condition for inclusion (or more than one condition separated by AND or
-OR), and ORDER BY to sort the result.  Unlike data frames, rows in RDBMS
+OR), and ORDER BY to sort the result.  Unlike data frames, rows in @abbr{RDBMS}
 tables are best thought of as unordered, and without an ORDER BY
 statement the ordering is indeterminate.  You can sort (in
 lexicographical order) on more than one column by separating them by
@@ -1326,7 +1326,7 @@ in Microsoft SQL Server 2000, Oracle, MySQL and PostgreSQL.
 @subsection Data types
 
 Data can be stored in a database in various data types.  The range of
-data types is DBMS-specific, but the @acronym{SQL} standard defines many
+data types is @abbr{DBMS}-specific, but the @acronym{SQL} standard defines many
 types, including the following that are widely implemented (often not by
 the @acronym{SQL} name).
 
@@ -1365,20 +1365,20 @@ conversion issues from the user.
 @section R interface packages
 
 There are several packages available on @acronym{CRAN} to help @R{}
-communicate with DBMSs.  They provide different levels of abstraction.
+communicate with @abbr{DBMS}s.  They provide different levels of abstraction.
 Some provide means to copy whole data frames to and from databases.  All
 have functions to select data within the database via @acronym{SQL}
 queries, and to retrieve the result as a whole as a
 data frame or in pieces (usually as groups of rows).  
 
-All except @CRANpkg{RODBC} are tied to one DBMS, but there has been a
+All except @CRANpkg{RODBC} are tied to one @abbr{DBMS}, but there has been a
 proposal for a unified `front-end' package @CRANpkg{DBI}
 (@uref{https://developer.r-project.org/db/}) in conjunction with a
 `back-end', the most developed of which is @CRANpkg{RMySQL}.  Also on
 @acronym{CRAN} are the back-ends @CRANpkg{ROracle},
 @CRANpkg{RPostgreSQL} and @CRANpkg{RSQLite} (which works with the
-bundled DBMS @code{SQLite}, @uref{https://www.sqlite.org/index.html}) and
-@CRANpkg{RJDBC} (which uses Java and can connect to any DBMS that has a
+bundled @abbr{DBMS} @code{SQLite}, @uref{https://www.sqlite.org/index.html}) and
+@CRANpkg{RJDBC} (which uses Java and can connect to any @abbr{DBMS} that has a
 JDBC driver).
 
 @c The BioConductor project has updated @pkg{RdbiPgSQL} (formerly on
@@ -1426,7 +1426,7 @@ object, and then a call to @code{dbConnect} opens a database connection
 which can subsequently be closed by a call to the generic function
 @code{dbDisconnect}.  Use @code{dbDriver("Oracle")},
 @code{dbDriver("PostgreSQL")} or @code{dbDriver("SQLite")} with those
-DBMSs and packages @CRANpkg{ROracle}, @CRANpkg{RPostgreSQL} or @CRANpkg{RSQLite}
+@abbr{DBMSs} and packages @CRANpkg{ROracle}, @CRANpkg{RPostgreSQL} or @CRANpkg{RSQLite}
 respectively.
 
 @findex dbSendQuery
@@ -1504,7 +1504,7 @@ have tested Microsoft SQL Server, Access, MySQL, PostgreSQL, Oracle and
 IBM DB2 on Windows and MySQL, MariaDB, Oracle, PostgreSQL and SQLite on
 Linux.
 
-ODBC is a client-server system, and we have happily connected to a DBMS
+ODBC is a client-server system, and we have happily connected to a @abbr{DBMS}
 running on a Unix server from a Windows client, and @emph{vice versa}.
 
 On Windows ODBC support is part of the OS.  On Unix/Linux you will need
@@ -1516,7 +1516,7 @@ database system.
 @cindex Excel
 @cindex Dbase
 @findex .dbf
-Windows provides drivers not just for DBMSs but also for Excel
+Windows provides drivers not just for @abbr{DBMS}s but also for Excel
 (@file{.xls}) spreadsheets, DBase (@file{.dbf}) files and even text
 files.  (The named applications do @emph{not} need to be
 installed. Which file formats are supported depends on the versions of
@@ -1575,7 +1575,7 @@ number of rows at a time, as can function @code{sqlFetchMore}.
 @cindex PostgreSQL database system
 Here is an example using PostgreSQL, for which the @acronym{ODBC} driver
 maps column and data frame names to lower case.  We use a database
-@code{testdb} we created earlier, and had the DSN (data source name) set
+@code{testdb} we created earlier, and had the @abbr{DSN} (data source name) set
 up in @file{~/.odbc.ini} under @code{unixODBC}.  Exactly the same code
 worked using MyODBC to access a MySQL database under Linux or Windows
 (where MySQL also maps names to lowercase).  Under Windows,
@@ -1831,9 +1831,9 @@ and
 @findex read.dbf
 @findex write.dbf
 Functions @code{read.dbf} and @code{write.dbf} provide ways to read and
-write basic DBF files on all @R{} platforms.  For Windows users
+write basic @abbr{DBF} files on all @R{} platforms.  For Windows users
 @code{odbcConnectDbase} in package @CRANpkg{RODBC} provides more
-comprehensive facilities to read DBF files @emph{via} Microsoft's dBase
+comprehensive facilities to read @abbr{DBF} files @emph{via} Microsoft's dBase
 ODBC driver (and the Visual FoxPro driver can also be used via
 @code{odbcDriverConnect}).
 @findex odbcConnectDbase
@@ -2234,11 +2234,12 @@ constants @code{NA_REAL}, @code{R_PosInf} and @code{R_NegInf}, and
 include the header @file{Rmath.h} which defines the macros @code{ISNAN}
 and @code{R_FINITE}.
 
-If that is not possible, on all current platforms IEC 60559 (aka IEEE
-754) arithmetic is used, so standard C facilities can be used to test
-for or set @code{Inf}, @code{-Inf} and @code{NaN} values.  On such
-platforms @code{NA} is represented by the @code{NaN} value with low-word
-@code{0x7a2} (1954 in decimal).
+If that is not possible, on all current platforms
+@acronym{IEC}@tie{}60559 (aka IEEE@tie{}754) arithmetic is used, so
+standard C facilities can be used to test for or set @code{Inf},
+@code{-Inf} and @code{NaN} values.  On such platforms @code{NA} is
+represented by the @code{NaN} value with low-word @code{0x7a2} (1954 in
+decimal).
 
 Character missing values are written as @code{NA}, and there are no
 provision to recognize character values as missing (as this can be done
@@ -2308,7 +2309,7 @@ access to Excel, export the data you want from Excel in tab-delimited or
 comma-separated form, and use @code{read.delim} or @code{read.csv} to
 import it into R.  (You may need to use @code{read.delim2} or
 @code{read.csv2} in a locale that uses comma as the decimal point.)
-Exporting a DIF file and reading it using @code{read.DIF} is another
+Exporting a @abbr{DIF} file and reading it using @code{read.DIF} is another
 possibility.
 
 If you do not have Excel, many other programs are able to read such

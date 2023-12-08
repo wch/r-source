@@ -91,7 +91,7 @@ Its principal designer, John M. Chambers, was awarded the 1998 ACM
 Software Systems Award for @Sl{}.
 
 The language syntax has a superficial similarity with C, but the
-semantics are of the FPL (functional programming language) variety with
+semantics are of the @abbr{FPL} (functional programming language) variety with
 stronger affinities with Lisp and @acronym{APL}.  In particular, it
 allows ``computing on the language'', which in turn makes it possible to
 write functions that take expressions as input, something that is often
@@ -3085,15 +3085,19 @@ The following table lists the functions for the different Groups.
 
 @table @samp
 @item Math
-abs, acos, acosh, asin, asinh, atan, atanh, ceiling, cos, cosh, cospi, cumsum,
-exp, floor, gamma, lgamma, log, log10, round, signif, sin, sinh, sinpi, 
-tan, tanh, tanpi, trunc
+@code{abs}, @code{acos}, @code{acosh}, @code{asin}, @code{asinh},
+@code{atan}, @code{atanh}, @code{ceiling}, @code{cos}, @code{cosh},
+@code{cospi}, @code{cumsum}, @code{exp}, @code{floor}, @code{gamma},
+@code{lgamma}, @code{log}, @code{log10}, @code{round}, @code{signif},
+@code{sin}, @code{sinh}, @code{sinpi}, @code{tan}, @code{tanh},
+@code{tanpi}, @code{trunc}
 
 @item Summary
-all, any, max, min, prod, range, sum
+@code{all}, @code{any}, @code{max}, @code{min}, @code{prod},
+@code{range}, @code{sum}
 
 @item Ops
-@code{+}, @code{-}, @code{*}, @code{/}, @code{^}, @code{<} , @code{>},
+@code{+}, @code{-}, @code{*}, @code{/}, @code{^}, @code{<}, @code{>},
 @code{<=}, @code{>=}, @code{!=}, @code{==}, @code{%%}, @code{%/%},
 @code{&}, @code{|}, @code{!}
 @end table
