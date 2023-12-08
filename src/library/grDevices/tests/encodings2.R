@@ -38,18 +38,15 @@ do_one <-function(name, encoding, all = FALSE)
 
 pdfenc <- c("ISOLatin1", "ISOLatin2", "ISOLatin7", "ISOLatin9",
            "Greek", "Cyrillic", "KOI8-R", "KOI8-U",
-           "WinAnsi", "CP1250", "CP1251", "CP1253", "CP1257",
-           "MacRoman")
+           "WinAnsi", "CP1250", "CP1251", "CP1253", "CP1257")
 if(musl) {
     enc <- c("latin1", "iso88592", "iso885913", "iso885915",
              "iso88597", "iso88595", "KOI8-R", "KOI8-U",
-             "CP1252", "CP1250", "CP1251", "CP1253", "CP1257",
-             "macintosh") # seems macroman is not supported
+             "CP1252", "CP1250", "CP1251", "CP1253", "CP1257")
 } else {
     enc <- c("latin1", "latin2", "iso-8859-13", "latin-9",
              "iso-8859-7", "iso-8859-5", "KOI8-R", "KOI8-U",
-             "CP1252", "CP1250", "CP1251", "CP1253", "CP1257",
-             "macintosh")
+             "CP1252", "CP1250", "CP1251", "CP1253", "CP1257")
 }
 
 ## Expect centring to fail for Euro and most chars in
