@@ -58,7 +58,7 @@ documents the code to reproduce the analysis in the same file that
 contains the report. The \R{} code of the complete analysis is embedded
 into a \LaTeX{} document\footnote{\url{https://www.ctan.org}} using the
 \code{noweb} syntax \citep{flm:Ramsey:1998} which is usually used
-for literate programming \cite{fla:Knuth:1984}.  Hence, the full power
+for literate programming \citep{fla:Knuth:1984}.  Hence, the full power
 of \LaTeX{} (for high-quality typesetting) and \R{} (for data analysis)
 can be used simultaneously. See \cite{e1071-papers:Leisch:2002} and
 references therein for more general thoughts on dynamic report
