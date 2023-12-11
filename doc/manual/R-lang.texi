@@ -2993,7 +2993,7 @@ is in contrast to @code{NextMethod} where the arguments in the call to
 the next method can be altered.
 
 @node NextMethod, Group methods, UseMethod, Object-oriented programming
-@section NextMethod
+@section @code{NextMethod}
 @findex NextMethod
 
 @code{NextMethod} is used to provide a simple inheritance mechanism.
@@ -3005,7 +3005,7 @@ call to the current method.  This means that they are the same as for
 the call to the generic.  However, the expressions for the arguments are
 the names of the corresponding formal arguments of the current method.
 Thus the arguments will have values that correspond to their value at
-the time NextMethod was invoked.
+the time @code{NextMethod} was invoked.
 
 Unevaluated arguments remain unevaluated.  Missing arguments remain
 missing.
@@ -3043,19 +3043,19 @@ An issue for discussion is the behaviour of the @code{...} argument to
 
 What I would like to do is:
 
--first do the argument matching for NextMethod;
+-first do the argument matching for @code{NextMethod};
   -if the object or generic are changed fine
   -first if a named list element matches an argument (named or not) the
   list value replaces the argument value.
   - the first unnamed list element
 
 Values for lookup:
- Class: comes first from .Class, second from the first argument to the
- method and last from the object specified in the call to NextMethod
+ Class: comes first from @code{.Class}, second from the first argument to the
+ method and last from the object specified in the call to @code{NextMethod}
 
- Generic: comes first from .Generic, if nothing then from the first
+ Generic: comes first from @code{.Generic}, if nothing then from the first
  argument to the method and if it's still missing from the call to
- NextMethod
+ @code{NextMethod}
 
  Method: this should just be the current function name.
 
