@@ -43,7 +43,7 @@ SUBDIRS_WITH_NO_BUILD = Pkgs
 ## GNU gettext disables LANGUAGE if LC_ALL=C, but other systems might not.
 R  = R_LIBS_USER=$(top_builddir)/library LANGUAGE=en LC_ALL=C SRCDIR=$(srcdir) R_DEFAULT_PACKAGES= $(top_builddir)/bin/R --vanilla
 R2 = R_LIBS_USER=$(top_builddir)/library R_DEFAULT_PACKAGES= $(top_builddir)/bin/R --vanilla
-RCHK = R_LIBS_USER=$(top_builddir)/library $(top_builddir)/bin/R CMD check
+RCHK = R_LIBS_USER=$${R_LIBS_USER_IN_R_TESTS:-NULL} $(top_builddir)/bin/R CMD check
 RDIFF = $(top_builddir)/bin/R CMD Rdiff
 RDCONV = LC_CTYPE=C $(top_builddir)/bin/R CMD Rdconv
 RD2PDF = $(top_builddir)/bin/R CMD Rd2pdf --quiet --no-preview --force
