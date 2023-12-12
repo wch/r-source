@@ -501,7 +501,7 @@ test-Packages1-Recommended:
 	    (cd RecPackages && $(TAR) -x -f -) ; \
 	  $(ECHO) "checking package '$${p}'"; \
 	  R_LIBS="$(top_builddir)/library:$${R_LIBS}" \
-	    _R_CHECK_FORCE_SUGGESTS_=FALSE $(R3) --install=skip \
+	    _R_CHECK_FORCE_SUGGESTS_=FALSE $(RCHK) --install=skip \
 	    --library="$(top_builddir)/library" RecPackages/$${p} || $(ECHO); \
 	done
 
@@ -523,7 +523,7 @@ stamp-Packages2: $(PKG_ROBJECTS)
 	    (cd RecPackages && $(TAR) -x -f -) ; \
 	  $(ECHO) "begin checking package '$${p}'"; \
 	  R_LIBS="$(top_builddir)/library:$${R_LIBS}" \
-	 _R_CHECK_FORCE_SUGGESTS_=FALSE $(R3) --install=skip \
+	 _R_CHECK_FORCE_SUGGESTS_=FALSE $(RCHK) --install=skip \
 	    --library="$(top_builddir)/library" RecPackages/$${p}  > $@ 2>&1
 	@cat $@
 
