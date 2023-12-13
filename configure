@@ -45342,77 +45342,6 @@ then :
 
 fi
 
-## -lnsl is needed on Solaris
-## 2018: Sun RPC is being unbundled from glibc, at least in Fedora 28
-## (https://fedoraproject.org/wiki/Changes/SunRPCRemoval)
-## Use libtirpc instead, which has been a possible source since ca 2007
-{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for library containing xdr_string" >&5
-printf %s "checking for library containing xdr_string... " >&6; }
-if test ${ac_cv_search_xdr_string+y}
-then :
-  printf %s "(cached) " >&6
-else $as_nop
-  ac_func_search_save_LIBS=$LIBS
-cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
-
-/* Override any GCC internal prototype to avoid an error.
-   Use char because int might match the return type of a GCC
-   builtin and then its argument prototype would still apply.  */
-char xdr_string ();
-#ifdef FC_DUMMY_MAIN
-#ifndef FC_DUMMY_MAIN_EQ_F77
-#  ifdef __cplusplus
-     extern "C"
-#  endif
-   int FC_DUMMY_MAIN() { return 1; }
-#endif
-#endif
-int
-main (void)
-{
-return xdr_string ();
-  ;
-  return 0;
-}
-_ACEOF
-for ac_lib in '' nsl tirpc
-do
-  if test -z "$ac_lib"; then
-    ac_res="none required"
-  else
-    ac_res=-l$ac_lib
-    LIBS="-l$ac_lib  $ac_func_search_save_LIBS"
-  fi
-  if ac_fn_c_try_link "$LINENO"
-then :
-  ac_cv_search_xdr_string=$ac_res
-fi
-rm -f core conftest.err conftest.$ac_objext conftest.beam \
-    conftest$ac_exeext
-  if test ${ac_cv_search_xdr_string+y}
-then :
-  break
-fi
-done
-if test ${ac_cv_search_xdr_string+y}
-then :
-
-else $as_nop
-  ac_cv_search_xdr_string=no
-fi
-rm conftest.$ac_ext
-LIBS=$ac_func_search_save_LIBS
-fi
-{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $ac_cv_search_xdr_string" >&5
-printf "%s\n" "$ac_cv_search_xdr_string" >&6; }
-ac_res=$ac_cv_search_xdr_string
-if test "$ac_res" != no
-then :
-  test "$ac_res" = "none required" || LIBS="$ac_res $LIBS"
-
-fi
-
 { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for working calloc" >&5
 printf %s "checking for working calloc... " >&6; }
 if test ${r_cv_func_calloc_works+y}
@@ -51031,8 +50960,7 @@ fi
 
 fi
 if test "${ac_cv_header_rpc_types_h}" = yes && \
-   test "${ac_cv_header_rpc_xdr_h}" = yes && \
-   test "${ac_cv_search_xdr_string}" != no ; then
+   test "${ac_cv_header_rpc_xdr_h}" = yes ; then
   r_xdr=yes
 else
   r_xdr=no
@@ -51065,6 +50993,93 @@ fi
     r_xdr=yes
   fi
   CPPFLAGS="${save_CPPFLAGS}"
+fi
+if test "${r_xdr}" = yes ; then
+  ## -lnsl is needed on Solaris
+  ## 2018: Sun RPC is being unbundled from glibc, at least in Fedora 28
+  ## (https://fedoraproject.org/wiki/Changes/SunRPCRemoval)
+  ## Use libtirpc instead, which has been a possible source since ca 2007
+  r_save_CPPFLAGS="${CPPFLAGS}"
+  CPPFLAGS="${CPPFLAGS} ${TIRPC_CPPFLAGS}"
+  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for XDR library" >&5
+printf %s "checking for XDR library... " >&6; }
+if test ${r_cv_search_xdr+y}
+then :
+  printf %s "(cached) " >&6
+else $as_nop
+  r_func_search_save_LIBS=$LIBS
+cat > conftest.c <<EOF
+#include <rpc/xdr.h>
+#include <stdlib.h>
+#include "confdefs.h"
+
+int main(void) {
+  XDR xdrs;
+  int srci = 1234;
+  int dsti = 0;
+  char buf[4];
+
+  xdrmem_create(&xdrs, buf, sizeof(buf), XDR_ENCODE);
+  xdr_int(&xdrs, &srci);
+  xdr_destroy(&xdrs);
+
+  xdrmem_create(&xdrs, buf, sizeof(buf), XDR_DECODE);
+  xdr_int(&xdrs, &dsti);
+  xdr_destroy(&xdrs);
+
+  if (srci == dsti) exit(0); /* SUCCESS, real XDR found */
+  exit(1);
+}
+EOF
+for r_lib in '' nsl tirpc
+do
+  if test -z "$r_lib"; then
+    r_res="none required"
+  else
+    r_res=-l$r_lib
+    LIBS="-l$r_lib  $r_func_search_save_LIBS"
+  fi
+  if test "$cross_compiling" = yes
+then :
+  { { printf "%s\n" "$as_me:${as_lineno-$LINENO}: error: in \`$ac_pwd':" >&5
+printf "%s\n" "$as_me: error: in \`$ac_pwd':" >&2;}
+as_fn_error $? "cannot run test program while cross compiling
+See \`config.log' for more details" "$LINENO" 5; }
+else $as_nop
+  if ac_fn_c_try_run "$LINENO"
+then :
+  r_cv_search_xdr=$r_res
+fi
+rm -f core *.core core.conftest.* gmon.out bb.out conftest$ac_exeext \
+  conftest.$ac_objext conftest.beam
+fi
+
+  if test ${r_cv_search_xdr+y}
+then :
+  break
+fi
+done
+if test ${r_cv_search_xdr+y}
+then :
+
+else $as_nop
+  r_cv_search_xdr=no
+fi
+rm conftest.$ac_ext
+LIBS=$r_func_search_save_LIBS
+fi
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $r_cv_search_xdr" >&5
+printf "%s\n" "$r_cv_search_xdr" >&6; }
+r_res=$r_cv_search_xdr
+if test "$r_res" != no
+then :
+  test "$r_res" = "none required" || LIBS="$r_res $LIBS"
+
+else $as_nop
+  r_xdr=no
+fi
+
+  CPPFLAGS="${r_save_CPPFLAGS}"
 fi
 { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for XDR support" >&5
 printf %s "checking for XDR support... " >&6; }

@@ -3323,6 +3323,68 @@ fi
 AC_SUBST(LAPACK_LIBS)
 ])# R_LAPACK_SYSTEM_LIB
 
+## R_SEARCH_XDR_LIBS
+## -----------------
+## Linking a test program is not enough with address sanitizer, which on
+## Linux implements wrappers for XDR and other functions as weak symbols. 
+## So, linking succeeds even if the real functions are not available.  A
+## runtime test reveals this, calling the real function segfaults.
+##
+## This macro is a modified version of AC_SEARCH_LIBS, which runs a test
+## program using XDR instead of a link test.
+##
+## R_SEARCH_XDR_LIBS(SEARCH-LIBS,
+##                [ACTION-IF-FOUND], [ACTION-IF-NOT-FOUND],
+##                [OTHER-LIBRARIES])
+## --------------------------------------------------------
+AC_DEFUN([R_SEARCH_XDR_LIBS],
+[AS_VAR_PUSHDEF([r_Search], [r_cv_search_xdr])dnl
+AC_CACHE_CHECK([for XDR library], [r_Search],
+[r_func_search_save_LIBS=$LIBS
+cat > conftest.c <<EOF
+#include <rpc/xdr.h>
+#include <stdlib.h>
+#include "confdefs.h"
+
+int main(void) {
+  XDR xdrs;
+  int srci = 1234;
+  int dsti = 0;
+  char buf[[4]];
+
+  xdrmem_create(&xdrs, buf, sizeof(buf), XDR_ENCODE);
+  xdr_int(&xdrs, &srci);
+  xdr_destroy(&xdrs);
+
+  xdrmem_create(&xdrs, buf, sizeof(buf), XDR_DECODE);
+  xdr_int(&xdrs, &dsti);
+  xdr_destroy(&xdrs);
+
+  if (srci == dsti) exit(0); /* SUCCESS, real XDR found */
+  exit(1);
+}
+EOF
+for r_lib in '' $1
+do
+  if test -z "$r_lib"; then
+    r_res="none required"
+  else
+    r_res=-l$r_lib
+    LIBS="-l$r_lib $4 $r_func_search_save_LIBS"
+  fi
+  AC_RUN_IFELSE([], [AS_VAR_SET([r_Search], [$r_res])])
+  AS_VAR_SET_IF([r_Search], [break])
+done
+AS_VAR_SET_IF([r_Search], , [AS_VAR_SET([r_Search], [no])])
+rm conftest.$ac_ext
+LIBS=$r_func_search_save_LIBS])
+AS_VAR_COPY([r_res], [r_Search])
+AS_IF([test "$r_res" != no],
+  [test "$r_res" = "none required" || LIBS="$r_res $LIBS"
+  $2],
+      [$3])
+AS_VAR_POPDEF([r_Search])dnl
+])
 
 ## R_XDR
 ## -----
@@ -3334,8 +3396,7 @@ if test "${ac_cv_header_rpc_types_h}" = yes ; then
   AC_CHECK_HEADER(rpc/xdr.h, , , [#include <rpc/types.h>])
 fi
 if test "${ac_cv_header_rpc_types_h}" = yes && \
-   test "${ac_cv_header_rpc_xdr_h}" = yes && \
-   test "${ac_cv_search_xdr_string}" != no ; then
+   test "${ac_cv_header_rpc_xdr_h}" = yes ; then
   r_xdr=yes
 else
   r_xdr=no
@@ -3357,6 +3418,16 @@ if test "${r_xdr}" = no ; then
     r_xdr=yes
   fi
   CPPFLAGS="${save_CPPFLAGS}"
+fi
+if test "${r_xdr}" = yes ; then
+  ## -lnsl is needed on Solaris
+  ## 2018: Sun RPC is being unbundled from glibc, at least in Fedora 28
+  ## (https://fedoraproject.org/wiki/Changes/SunRPCRemoval)
+  ## Use libtirpc instead, which has been a possible source since ca 2007
+  r_save_CPPFLAGS="${CPPFLAGS}"
+  CPPFLAGS="${CPPFLAGS} ${TIRPC_CPPFLAGS}"
+  R_SEARCH_XDR_LIBS([nsl tirpc],[],[r_xdr=no])
+  CPPFLAGS="${r_save_CPPFLAGS}"
 fi
 AC_MSG_CHECKING([for XDR support])
 AC_MSG_RESULT([${r_xdr}])

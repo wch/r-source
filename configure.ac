@@ -2243,11 +2243,6 @@ AC_CHECK_DECLS([mkdtemp, strdup, strncasecmp])
 AC_SEARCH_LIBS(connect, [socket])
 # gethostbyname was removed in POSIX 2008 (in favour of getaddrinfo, POSIX 2001)
 AC_SEARCH_LIBS(gethostbyname, [nsl socket])
-## -lnsl is needed on Solaris
-## 2018: Sun RPC is being unbundled from glibc, at least in Fedora 28
-## (https://fedoraproject.org/wiki/Changes/SunRPCRemoval)
-## Use libtirpc instead, which has been a possible source since ca 2007
-AC_SEARCH_LIBS(xdr_string, [nsl tirpc])
 R_FUNC_CALLOC
 if test "${ac_cv_have_decl_isfinite}" = "yes"; then
 R_FUNC_ISFINITE
