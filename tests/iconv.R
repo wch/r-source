@@ -25,7 +25,7 @@ chkEQpr(charToRaw(xx), as.raw(c(0x61, 0xc3, 0xa7, 0xc3, 0xba, 0x63, 0x61, 0x72))
 iconv(c(x, xx), to = "ASCII", sub = NA) # default
 ## often both NA, but could still use substitution ("a**car" with musl's iconv)
 stopifnot(length(tools::showNonASCII(c(x, xx))) == 2L) # robust via string comparison
-## output for most iconvs (at least GNU libiconv, glibc, win_iconv):
+## output for most iconvs (at least GNU libiconv, glibc, win_iconv, macOS >= 14):
 ## 1: a<e7><fa>car
 ## 2: a<c3><a7><c3><ba>car
 ## musl:
@@ -51,7 +51,7 @@ if (known_iconv) withAutoprint({
     chkEQpr(iconv(z, "UTF-8", "ASCII", "c99"    ), "\\U0001f600")
 })
 
-## write out to compare with GNU libiconv's iconv on e.g. macOS
+## write out to compare with GNU libiconv's iconv on e.g. macOS < 14
 ## The reading can only work in a UTF-8 locale
 if(startsWith(iconv_version, 'GNU libiconv') &&
    l10n_info()[["UTF-8"]]) {
