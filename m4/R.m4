@@ -5125,9 +5125,15 @@ AC_CACHE_VAL([r_cv_cstack_direction],
 
 #define attribute_no_sanitizer_instrumentation
 #ifdef __has_attribute
-# undef attribute_no_sanitizer_instrumentation
-# define attribute_no_sanitizer_instrumentation \
-    __attribute__((disable_sanitizer_instrumentation))
+# if __has_attribute(disable_sanitizer_instrumentation)
+#  undef attribute_no_sanitizer_instrumentation
+#  define attribute_no_sanitizer_instrumentation \
+     __attribute__((disable_sanitizer_instrumentation))
+# elif __has_attribute(no_sanitize)
+#  undef attribute_no_sanitizer_instrumentation
+#  define attribute_no_sanitizer_instrumentation \
+     __attribute__ ((no_sanitize ("address", "thread", "leak", "undefined")))
+# endif
 #endif
 
 int attribute_no_sanitizer_instrumentation

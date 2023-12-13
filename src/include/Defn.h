@@ -63,7 +63,11 @@
 # if __has_attribute(disable_sanitizer_instrumentation)
 #  undef attribute_no_sanitizer_instrumentation
 #  define attribute_no_sanitizer_instrumentation \
-          __attribute__((disable_sanitizer_instrumentation))
+     __attribute__((disable_sanitizer_instrumentation))
+# elif __has_attribute(no_sanitize)
+#  undef attribute_no_sanitizer_instrumentation
+#  define attribute_no_sanitizer_instrumentation \
+     __attribute__ ((no_sanitize ("address", "thread", "leak", "undefined")))
 # endif
 #endif
 
@@ -775,6 +779,12 @@ void SET_SCALAR_BVAL(SEXP x, Rbyte v);
 
 #ifdef __has_feature
 # if __has_feature(address_sanitizer)
+#  undef R_CheckStack
+# endif
+#endif
+
+#ifdef R_CheckStack
+# if defined(__SANITIZE_ADDRESS__) || defined(__SANITIZE_THREAD__)
 #  undef R_CheckStack
 # endif
 #endif

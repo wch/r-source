@@ -26390,9 +26390,15 @@ else $as_nop
 
 #define attribute_no_sanitizer_instrumentation
 #ifdef __has_attribute
-# undef attribute_no_sanitizer_instrumentation
-# define attribute_no_sanitizer_instrumentation \
-    __attribute__((disable_sanitizer_instrumentation))
+# if __has_attribute(disable_sanitizer_instrumentation)
+#  undef attribute_no_sanitizer_instrumentation
+#  define attribute_no_sanitizer_instrumentation \
+     __attribute__((disable_sanitizer_instrumentation))
+# elif __has_attribute(no_sanitize)
+#  undef attribute_no_sanitizer_instrumentation
+#  define attribute_no_sanitizer_instrumentation \
+     __attribute__ ((no_sanitize ("address", "thread", "leak", "undefined")))
+# endif
 #endif
 
 int attribute_no_sanitizer_instrumentation
@@ -27115,7 +27121,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_verb"
-(eval echo $as_me:27120: \"$ac_link\") >&5
+(eval echo $as_me:27126: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -27191,7 +27197,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_cv_prog_c_v"
-(eval echo $as_me:27196: \"$ac_link\") >&5
+(eval echo $as_me:27202: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
