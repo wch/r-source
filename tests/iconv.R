@@ -47,7 +47,7 @@ z <- "\U1f600"
 chkEQpr(charToRaw(z), as.raw(c(0xf0, 0x9f, 0x98, 0x80)))
 if (known_iconv) withAutoprint({
     chkEQpr(iconv(z, "UTF-8", "ASCII", "byte"), "<f0><9f><98><80>")
-    chkEQpr(iconv(z, "UTF-8", "ASCII", "Unicode"), "<U+0001F600>")
+    chkEQpr(iconv(z, "UTF-8", "ASCII", "Unicode"), "<U+1F600>")
     chkEQpr(iconv(z, "UTF-8", "ASCII", "c99"    ), "\\U0001f600")
 })
 
