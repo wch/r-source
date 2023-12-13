@@ -221,6 +221,12 @@
       \item On Alpine Linux \code{iconv()} now maps \code{"latin2"},
       \code{"latin-2"}, \code{"latin9"} and \code{"latin-9"} to names
       the OS knows about (case-insensitively).
+
+      \item \code{iconv(sub = "Unicode")} now zero-pads to four (hex)
+      digits, rather than to 4 or 8.  (This seems to have become the
+      convention once Unicode restricted the number of Unicode points
+      to \eqn{2{^31} - 1}{2^31 - 1} and so will never need more than 6
+      digits.)
     }
   }
 
