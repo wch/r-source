@@ -383,8 +383,8 @@ static void substr(const char *str, int len, int ienc, int sa, int so,
 
     if (ienc == CE_UTF8) {
 	if (!assumevalid && !utf8Valid(str)) {
-	    char msg[30];
-	    snprintf(msg, 30, "element %ld", (long)idx+1);
+	    char msg[40];
+	    snprintf(msg, 40, "element %ld", (long)idx+1);
 	    error(_("invalid multibyte string, %s"), msg);
 	}
 	for (i = 0; i < sa - 1 && str < end; i++)
@@ -588,13 +588,13 @@ substrset(char *buf, const char *const str, cetype_t ienc, int sa, int so,
 
     if (ienc == CE_UTF8) {
 	if (!utf8Valid(buf)) {
-	    char msg[30];
-	    snprintf(msg, 30, "element %ld", (long)xidx+1);
+	    char msg[40];
+	    snprintf(msg, 40, "element %ld", (long)xidx+1);
 	    error(_("invalid multibyte string, %s"), msg);
 	}
 	if (!utf8Valid(str)) {
-	    char msg[30];
-	    snprintf(msg, 30, "value element %ld", (long)vidx+1);
+	    char msg[40];
+	    snprintf(msg, 40, "value element %ld", (long)vidx+1);
 	    error(_("invalid multibyte string, %s"), msg);
 	}
 	for (i = 1; i < sa; i++) buf += utf8clen(*buf);
