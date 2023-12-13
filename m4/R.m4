@@ -486,8 +486,8 @@ AC_CACHE_CHECK([for inline], r_cv_c_inline,
 for ac_kw in inline __inline__ __inline; do
   AC_COMPILE_IFELSE([AC_LANG_SOURCE(
 [#ifndef __cplusplus
-static $ac_kw int static_foo () {return 0; }
-$ac_kw int foo () {return 0; }
+static $ac_kw int static_foo (void) {return 0; }
+$ac_kw int foo (void) {return 0; }
 #endif
 ])],
                     [r_cv_c_inline=$ac_kw; break])
@@ -854,7 +854,7 @@ dnl Yes we need to double quote this ...
 #else
 # define F77_SYMBOL(x)   x
 #endif
-int main () {
+int main (void) {
   exit(0);
 }
 EOF]
@@ -927,7 +927,7 @@ dnl Yes we need to double quote this ...
 
 extern void F77_SYMBOL(cftest)(int *a, int *b, double *x, double *y);
 
-int main () {
+int main (void) {
   int a[3] = {17, 237, 2000000000}, b[2], res = 0;
   double x[3] = {3.14159265, 123.456789, 2.3e34}, z[3];
   double eps = 1e-6;
@@ -1022,7 +1022,7 @@ typedef union {
 
 extern void F77_SYMBOL(cftest)(Rcomplex *x);
 
-int main () {
+int main (void) {
     Rcomplex z[3];
 
     z[0].r = 3.14159265;
@@ -1372,7 +1372,7 @@ cat << \EOF > conftest.mm
 @end
 
 int
-main ()
+main (void)
 {
   std::cout << "Hello from C++\n";
   Greeter *obj = @<:@Greeter new@:>@;
@@ -1435,7 +1435,7 @@ AC_DEFUN([R_FUNC_CALLOC],
 [AC_CACHE_CHECK([for working calloc], [r_cv_func_calloc_works],
 [AC_RUN_IFELSE([AC_LANG_SOURCE([[
 #include <stdlib.h>
-int main () {
+int main (void) {
   int *p = calloc(0, sizeof(int));
   exit(p == 0);
 }
@@ -1458,7 +1458,7 @@ AC_DEFUN([R_FUNC_ISFINITE],
 #include <math.h>
 #include <stdlib.h>
 #include "confdefs.h"
-int main () {
+int main (void) {
 #ifdef HAVE_DECL_ISFINITE
   exit(isfinite(1./0.) | isfinite(0./0.) | isfinite(-1./0.));
 #else
@@ -1487,7 +1487,7 @@ AC_DEFUN([R_FUNC_LOG1P],
 #include <math.h>
 #include <stdlib.h>
 #include "confdefs.h"
-int main () {
+int main (void) {
 #ifdef HAVE_LOG1P
   int k;
   double d;
@@ -2803,7 +2803,7 @@ dnl Yes we need to double quote this ...
 #endif
 extern void F77_SYMBOL(test1)(int *iflag);
 
-int main () {
+int main (void) {
   int iflag;
   F77_SYMBOL(test1)(&iflag);
   exit(iflag);
@@ -3021,7 +3021,7 @@ void blas_set () {
   F77_SYMBOL(ztrsv)();
 #endif
 }
-int main ()
+int main (void)
 {
   exit(0);
 }
@@ -3742,7 +3742,7 @@ AC_DEFUN([R_SYS_POSIX_LEAPSECONDS],
 #include <stdio.h>
 #include "confdefs.h"
 
-int main () {
+int main (void) {
   struct tm *tm;
   time_t ct = 0; /* required on 64bit AIX */
 
@@ -3871,7 +3871,7 @@ if test "$ac_cv_func_iconv" != no; then
 #include <iconv.h>
 #endif
 
-int main () {
+int main (void) {
   iconv_t cd;
   cd = iconv_open("latin1","UTF-8");
   if(cd == (iconv_t)(-1)) exit(1);
@@ -3942,7 +3942,7 @@ int main () {
 #include <iconv.h>
 #endif
 
-int main () {
+int main (void) {
   iconv_t cd;
   cd = iconv_open("CP1252","UTF-8");
   if(cd == (iconv_t)(-1)) exit(1);
@@ -4228,7 +4228,7 @@ AC_DEFUN([R_KERN_USRSTACK],
 #include <sys/types.h>
 #include <sys/sysctl.h>
 
-int main () {
+int main (void) {
   int nm[2] = {CTL_KERN, KERN_USRSTACK};
   void * base;
   size_t len = sizeof(void *);
@@ -4320,7 +4320,7 @@ AC_DEFUN([R_FUNC_SIGACTION],
 #include "confdefs.h"
 #include <stdlib.h>
 #include <signal.h>
-int main ()
+int main (void)
 {
     struct sigaction sa;
     siginfo_t si, *ip;
@@ -4420,7 +4420,7 @@ AC_RUN_IFELSE([AC_LANG_SOURCE([[
 
 #include <stdlib.h>
 
-int main () {
+int main (void) {
     UErrorCode  status = U_ZERO_ERROR;
     UCollator *collator;
     UCharIterator aIter;
@@ -5014,7 +5014,7 @@ AC_DEFUN([R_FUNC_CTANH],
 #include <complex.h>
 #include <stdlib.h>
 #include "confdefs.h"
-int main () {
+int main (void) {
 #ifdef HAVE_CTANH
   volatile double complex z1 = 0;
   volatile double complex z2 = 365;
