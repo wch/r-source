@@ -297,7 +297,10 @@ socketTimeout(socket, timeout = -1)
   is available only for some types of connections (e.g., pipes, files and
   fifos): typically zero values indicate success.  Negative values will
   result in a warning; if writing, these may indicate write failures and should
-  not be ignored.
+  not be ignored. Connections should be closed explicitly when finished
+  with to avoid wasting resources and to reduce the risk that some buffered
+  data in output connections would be lost (see \link{\code{on.exit()}} for
+  how to run code also in case of error).
 
   \code{isOpen} returns a logical value, whether the connection is
   currently open.
