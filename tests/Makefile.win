@@ -19,9 +19,9 @@ R_HOME = ..
 test-src-sloppy-b = eval-etc-2.R
 include Makefile.common
 
-R    = $(R_HOME)/$(BINDIR)/Rterm --vanilla LC_ALL=C SRCDIR=. R_DEFAULT_PACKAGES=
-R2   = $(R_HOME)/$(BINDIR)/Rterm --vanilla SRCDIR=. R_DEFAULT_PACKAGES=
-RCHK = $(R_HOME)/$(BINDIR)/Rcmd check
+R    = $(R_HOME)/$(BINDIR)/Rterm --vanilla R_LIBS_USER="$(or $(R_LIBS_USER_IN_R_TESTS), NULL)" LC_ALL=C SRCDIR=. R_DEFAULT_PACKAGES=
+R2   = $(R_HOME)/$(BINDIR)/Rterm --vanilla R_LIBS_USER="$(or $(R_LIBS_USER_IN_R_TESTS), NULL)" SRCDIR=. R_DEFAULT_PACKAGES=
+RCHK = R_LIBS_USER="$(or $(R_LIBS_USER_IN_R_TESTS), NULL)" $(R_HOME)/$(BINDIR)/Rcmd check 
 RDIFF = $(R_HOME)/$(BINDIR)/R CMD Rdiff
 RVAL_IF_DIFF=0
 ## suppress fancy quotes for diff-ing
