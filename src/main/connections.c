@@ -75,9 +75,10 @@
   which have a quite low default limit (256 on macOS, 1024 on Linux),
   and are needed for other uses including loading DLLs.  (Parallel
   clusters use a file connection per cluster member.)  Windows is said
-  to have a default limit of 512 file handlws per process.
+  to have a default limit of 512 simultaneously open files at stream
+  I/O level.
 
-  As from R 4.4.0 the defailt limit remains 128. but can be overriden
+  As from R 4.4.0 the default limit remains 128, but can be overriden
   by the startup option --max-connections.  This does not allow it to
   be set below 128 but has a limit of 4096 (see CommandLineArgs.c).
   The upper limit is conservative, but as creating a new connection
