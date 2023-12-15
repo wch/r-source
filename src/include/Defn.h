@@ -643,6 +643,7 @@ void SET_PRENV(SEXP x, SEXP v);
 void SET_PRVALUE(SEXP x, SEXP v);
 void SET_PRCODE(SEXP x, SEXP v);
 void IF_PROMSXP_SET_PRVALUE(SEXP x, SEXP v);
+int  (PROMISE_IS_EVALUATED)(SEXP x);
 
 /* Hashing Functions */
 int  (HASHASH)(SEXP x);
@@ -1154,6 +1155,7 @@ typedef struct {
 #define PRVALUE(x)	((x)->u.promsxp.value)
 #define PRSEEN(x)	((x)->sxpinfo.gp)
 #define SET_PRSEEN(x,v)	(((x)->sxpinfo.gp)=(v))
+#define PROMISE_IS_EVALUATED(x) (PRVALUE(x) != R_UnboundValue)
 
 /* Hashing Macros */
 #define HASHASH(x)      ((x)->sxpinfo.gp & HASHASH_MASK)

@@ -4486,6 +4486,12 @@ SEXP (PRCODE)(SEXP x) { return CHK(PRCODE(CHK(x))); }
 SEXP (PRENV)(SEXP x) { return CHK(PRENV(CHK(x))); }
 SEXP (PRVALUE)(SEXP x) { return CHK(PRVALUE(CHK(x))); }
 int (PRSEEN)(SEXP x) { return PRSEEN(CHK(x)); }
+attribute_hidden
+int (PROMISE_IS_EVALUATED)(SEXP x)
+{
+    x = CHK(x);
+    return PROMISE_IS_EVALUATED(x);
+}
 
 void (SET_PRENV)(SEXP x, SEXP v){ FIX_REFCNT(x, PRENV(x), v); CHECK_OLD_TO_NEW(x, v); PRENV(x) = v; }
 void (SET_PRCODE)(SEXP x, SEXP v) { FIX_REFCNT(x, PRCODE(x), v); CHECK_OLD_TO_NEW(x, v); PRCODE(x) = v; }

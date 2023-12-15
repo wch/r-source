@@ -935,7 +935,7 @@ attribute_hidden void check_stack_balance(SEXP op, int save)
 
 static SEXP forcePromise(SEXP e)
 {
-    if (PRVALUE(e) == R_UnboundValue) {
+    if (! PROMISE_IS_EVALUATED(e)) {
 	RPRSTACK prstack;
 	SEXP val;
 	if(PRSEEN(e)) {
@@ -1166,7 +1166,7 @@ SEXP eval(SEXP e, SEXP rho)
 			   _("argument is missing, with no default"));
 	}
 	else if (TYPEOF(tmp) == PROMSXP) {
-	    if (PRVALUE(tmp) == R_UnboundValue) {
+	    if (! PROMISE_IS_EVALUATED(tmp)) {
 		/* not sure the PROTECT is needed here but keep it to
 		   be on the safe side. */
 		PROTECT(tmp);
@@ -1179,7 +1179,7 @@ SEXP eval(SEXP e, SEXP rho)
 	else ENSURE_NAMED(tmp); /* needed for .Last.value - LT */
 	break;
     case PROMSXP:
-	if (PRVALUE(e) == R_UnboundValue)
+	if (! PROMISE_IS_EVALUATED(e))
 	    /* We could just unconditionally use the return value from
 	       forcePromise; the test avoids the function call if the
 	       promise is already evaluated. */
@@ -5752,7 +5752,7 @@ NORET static void UNBOUND_VARIABLE_ERROR(SEXP symbol, SEXP rho)
 static R_INLINE SEXP FORCE_PROMISE(SEXP value, SEXP symbol, SEXP rho,
 				   Rboolean keepmiss)
 {
-    if (PRVALUE(value) == R_UnboundValue) {
+    if (! PROMISE_IS_EVALUATED(value)) {
 	/**** R_isMissing is inefficient */
 	if (keepmiss && R_isMissing(symbol, rho))
 	    value = R_MissingArg;
@@ -5833,9 +5833,8 @@ static R_INLINE SEXP getvar(SEXP symbol, SEXP rho,
 	int type = TYPEOF(value);					\
 	/* extract value of forced promises */				\
 	if (type == PROMSXP) {						\
-	    SEXP pv = PRVALUE(value);					\
-	    if (pv != R_UnboundValue) {					\
-		value = pv;						\
+	    if (PROMISE_IS_EVALUATED(value)) {				\
+		value = PRVALUE(value);					\
 		type = TYPEOF(value);					\
 	    }								\
 	}								\
@@ -6815,8 +6814,9 @@ static R_INLINE SEXP SymbolValue(SEXP sym)
     else {
 	SEXP value = SYMVALUE(sym);
 	if (TYPEOF(value) == PROMSXP) {
-	    value = PRVALUE(value);
-	    if (value == R_UnboundValue)
+	    if (PROMISE_IS_EVALUATED(value))
+		value = PRVALUE(value);
+	    else
 		value = eval(sym, R_BaseEnv);
 	}
 	return value;

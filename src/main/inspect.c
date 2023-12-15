@@ -117,7 +117,7 @@ static void inspect_tree(int pre, SEXP v, int deep, int pvec) {
 	if (IS_GLOBAL_FRAME(v)) { if (a) Rprintf(","); Rprintf("GL"); a = 1; }
     }
     if (TYPEOF(v) == PROMSXP) {
-	if (PRVALUE(v) != R_UnboundValue) { if (a) Rprintf(","); Rprintf("VAL"); a = 1; }
+	if (PROMISE_IS_EVALUATED(v)) { if (a) Rprintf(","); Rprintf("VAL"); a = 1; }
     }
     if (LEVELS(v)) { if (a) Rprintf(","); Rprintf("gp=0x%x", LEVELS(v)); a = 1; }
     if (ATTRIB(v) && ATTRIB(v) != R_NilValue) { if (a) Rprintf(","); Rprintf("ATT"); a = 1; }

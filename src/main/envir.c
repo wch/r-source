@@ -1570,9 +1570,8 @@ SEXP findFun3(SEXP symbol, SEXP rho, SEXP call)
 #endif
 	if (vl != R_UnboundValue) {
 	    if (TYPEOF(vl) == PROMSXP) {
-		SEXP pv = PRVALUE(vl);
-		if (pv != R_UnboundValue)
-		    vl = pv;
+		if (PROMISE_IS_EVALUATED(vl))
+		    vl = PRVALUE(vl);
 		else {
 		    PROTECT(vl);
 		    vl = eval(vl, rho);
@@ -2338,7 +2337,7 @@ Rboolean R_isMissing(SEXP symbol, SEXP rho)
 	    return FALSE;
 	SETCAR(vl, findRootPromise(CAR(vl)));
 	if (TYPEOF(CAR(vl)) == PROMSXP &&
-	    PRVALUE(CAR(vl)) == R_UnboundValue &&
+	    ! PROMISE_IS_EVALUATED(CAR(vl)) &&
 	    TYPEOF(PREXPR(CAR(vl))) == SYMSXP) {
 	    /* This code uses the PRSEEN value to detect cycles.  If a
 	       cycle occurs then a missing argument was encountered,

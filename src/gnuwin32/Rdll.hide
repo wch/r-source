@@ -82,6 +82,7 @@
  NO_SPECIAL_SYMBOLS
  PrintUsage
  ProfileEvent
+ PROMISE_IS_EVALUATED
  RExitContext
  R_BCIntActive
  R_BCNodeStackBase

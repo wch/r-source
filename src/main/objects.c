@@ -80,7 +80,7 @@ static SEXP GetObject(RCNTXT *cptr)
 	s = CAR(cptr->promargs);
 
     if (TYPEOF(s) == PROMSXP) {
-	if (PRVALUE(s) == R_UnboundValue)
+	if (! PROMISE_IS_EVALUATED(s))
 	    s = eval(s, R_BaseEnv);
 	else
 	    s = PRVALUE(s);
