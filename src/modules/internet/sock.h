@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
 
- *  Copyright (C) 1998-2020   The R Core Team
+ *  Copyright (C) 1998-2023   The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -42,6 +42,7 @@ ssize_t Sock_write(int fd, const void *buf, size_t nbytes, Sock_error_t perr);
 #ifndef Win32
 # define SOCKET int
 #else
+  /* keep FD_SETSIZE in step with connections.c, but this is the default */
 # define FD_SETSIZE 1024
 # include<winsock2.h>
 #endif

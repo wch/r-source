@@ -87,6 +87,18 @@
 
   Using a dynamic upper limit would not be hard, but not very useful
   because of the non-dynamic fd limit.
+
+  The current implementation of socket connections uses select(). On
+  POSIX systems, only FD_SETSIZE descriptors are supported and they 
+  must have numbers between 0 and FD_SETSIZE-1, inclusive. On Linux and macOS,
+  FD_SETSIZE is normally 1024. On macOS, the limit could be overcome via
+  _DARWIN_UNLIMITED_SELECT (not used by R), but a POSIX solution would
+  be to use poll() instead of select(). On Windows, by default 1024 different
+  descriptors are supported in a single select() call, but these include
+  valid socket file descriptors of arbitrary numbers, much larger
+  than FD_SETSIZE.  On Windows, the limit can be set in the program
+  by setting FD_SETSIZE before including WinSock headers, R sets it to
+  1024 (in sock.h and here in connections.c).
 */
 
 #ifdef HAVE_CONFIG_H
@@ -6323,6 +6335,13 @@ attribute_hidden SEXP do_sockselect(SEXP call, SEXP op, SEXP args, SEXP rho)
     int nsock, i;
     SEXP insock, write, val, insockfd;
     double timeout;
+    int fdlim;
+
+#ifdef Win32
+    fdlim = 1024; /* keep in step with sock.h */
+#else
+    fdlim = FD_SETSIZE;
+#endif
 
     checkArity(op, args);
 
@@ -6358,8 +6377,16 @@ attribute_hidden SEXP do_sockselect(SEXP call, SEXP op, SEXP args, SEXP rho)
 		warning(_("a server socket connection cannot be writeable"));
 	} else
 	    error(_("not a socket connection"));
+#ifdef Unix
+	if (INTEGER(insockfd)[i] >= fdlim && !immediate)
+	    error(_("file descriptor is too large for select()"));
+#endif
     }
 
+#ifdef Win32
+    if (nsock > fdlim && !immediate)
+	error(_("too many file descriptors for select()"));
+#endif
     if (! immediate)
 	Rsockselect(nsock, INTEGER(insockfd), LOGICAL(val), LOGICAL(write),
 		    timeout);
