@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  (C) Copyright 2008-2011 Simon Urbanek
- *      Copyright 2011-2022 R Core Team.
+ *      Copyright 2011-2023 R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -816,6 +816,8 @@ SEXP mc_send_child_stdin(SEXP sPid, SEXP what)
 void fdcopy(fd_set *dst, fd_set *src, int nfds)
 {
     FD_ZERO(dst);
+    if (nfds > FD_SETSIZE)
+	error("file descriptor is too large for select()");
     for(int i = 0; i < nfds; i++)
 	if (FD_ISSET(i, src)) FD_SET(i, dst);
 }
@@ -847,7 +849,7 @@ SEXP mc_select_children(SEXP sTimeout, SEXP sWhich)
 		unsigned int k = 0;
 		while (k < wlen) {
 		    if (which[k++] == ci->pid) {
-			if (ci->pfd > FD_SETSIZE)
+			if (ci->pfd >= FD_SETSIZE)
 			    error("file descriptor is too large for select()");
 			FD_SET(ci->pfd, &fs);
 			if (ci->pfd > maxfd) maxfd = ci->pfd;
@@ -860,7 +862,7 @@ SEXP mc_select_children(SEXP sTimeout, SEXP sWhich)
 		}
 	    } else {
 		/* not sure if this should be allowed */
-		if (ci->pfd > FD_SETSIZE)
+		if (ci->pfd >= FD_SETSIZE)
 		    error("file descriptor is too large for select()");
 		FD_SET(ci->pfd, &fs);
 		if (ci->pfd > maxfd) maxfd = ci->pfd;
@@ -1061,7 +1063,11 @@ SEXP mc_read_children(SEXP sTimeout)
     while (ci) {
 	if (!ci->detached && ci->ppid == ppid) {
 	    if (ci->pfd > maxfd) maxfd = ci->pfd;
-	    if (ci->pfd >= 0) FD_SET(ci->pfd, &fs);
+	    if (ci->pfd >= 0) {
+		if (ci->pfd >= FD_SETSIZE)
+		    error("file descriptor is too large for select()");
+		FD_SET(ci->pfd, &fs);
+	    }
 	}
 	ci = ci -> next;
     }

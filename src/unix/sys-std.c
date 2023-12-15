@@ -120,7 +120,7 @@ int R_SelectEx(int  n,  fd_set  *readfds,  fd_set  *writefds,
        platforms. If this still turns out to be limiting we will
        probably need to rewrite internals to use poll() instead of
        select().  LT */
-    if (n > FD_SETSIZE)
+    if (n >= FD_SETSIZE)
 	error("file descriptor is too large for select()");
 
     if (timeout != NULL && timeout->tv_sec == 0 && timeout->tv_usec == 0)
@@ -229,6 +229,8 @@ addInputHandler(InputHandler *handlers, int fd, InputHandlerProc handler,
     input = R_Calloc(1, InputHandler);
 
     input->activity = activity;
+    if (fd >= FD_SETSIZE)
+	error("file descriptor is too large for select()");
     input->fileDescriptor = fd;
     input->handler = handler;
 
@@ -382,8 +384,11 @@ setSelectMask(InputHandler *handlers, fd_set *readMask)
     FD_ZERO(readMask);
 
     /* If we are dealing with BasicInputHandler always put stdin */
-    if(handlers == &BasicInputHandler)
+    if(handlers == &BasicInputHandler) {
 	handlers->fileDescriptor = fileno(stdin);
+	if (handlers->fileDescriptor >= FD_SETSIZE)
+	    error("file descriptor is too large for select()");
+    }
 
     while(tmp) {
 	FD_SET(tmp->fileDescriptor, readMask);
