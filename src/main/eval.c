@@ -932,10 +932,16 @@ attribute_hidden void check_stack_balance(SEXP op, int save)
 	     PRIMNAME(op), save, R_PPStackTop);
 }
 
+#define ENSURE_PROMISE_IS_EVALUATED(x) do {	\
+	SEXP __x__ = (x);			\
+	if (! PROMISE_IS_EVALUATED(__x__))	\
+	    forcePromise(__x__);		\
+    } while (0)
 
-static SEXP forcePromise(SEXP e)
+static void forcePromise(SEXP e)
 {
     if (! PROMISE_IS_EVALUATED(e)) {
+	PROTECT(e);
 	RPRSTACK prstack;
 	SEXP val;
 	if(PRSEEN(e)) {
@@ -968,8 +974,8 @@ static SEXP forcePromise(SEXP e)
 	SET_PRVALUE(e, val);
 	ENSURE_NAMEDMAX(val);
 	SET_PRENV(e, R_NilValue);
+	UNPROTECT(1); /* e */
     }
-    return PRVALUE(e);
 }
 
 
@@ -1166,24 +1172,13 @@ SEXP eval(SEXP e, SEXP rho)
 			   _("argument is missing, with no default"));
 	}
 	else if (TYPEOF(tmp) == PROMSXP) {
-	    if (! PROMISE_IS_EVALUATED(tmp)) {
-		/* not sure the PROTECT is needed here but keep it to
-		   be on the safe side. */
-		PROTECT(tmp);
-		tmp = forcePromise(tmp);
-		UNPROTECT(1);
-	    }
-	    else tmp = PRVALUE(tmp);
-	    ENSURE_NAMEDMAX(tmp);
+	    ENSURE_PROMISE_IS_EVALUATED(tmp);
+	    tmp = PRVALUE(tmp);
 	}
 	else ENSURE_NAMED(tmp); /* needed for .Last.value - LT */
 	break;
     case PROMSXP:
-	if (! PROMISE_IS_EVALUATED(e))
-	    /* We could just unconditionally use the return value from
-	       forcePromise; the test avoids the function call if the
-	       promise is already evaluated. */
-	    forcePromise(e);
+	ENSURE_PROMISE_IS_EVALUATED(e);
 	tmp = PRVALUE(e);
 	/* This does _not_ change the value of NAMED on the value tmp,
 	   in contrast to the handling of promises bound to symbols in
@@ -3129,8 +3124,8 @@ attribute_hidden SEXP do_function(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXP rval, srcref;
 
     if (TYPEOF(op) == PROMSXP) {
-	op = forcePromise(op);
-	ENSURE_NAMEDMAX(op);
+	ENSURE_PROMISE_IS_EVALUATED(op);
+	op = PRVALUE(op);
     }
     if (length(args) < 2) WrongArgCount("function");
     CheckFormals(CAR(args));
@@ -4972,8 +4967,8 @@ static R_INLINE SEXP getPrimitive(SEXP symbol, SEXPTYPE type)
 {
     SEXP value = SYMVALUE(symbol);
     if (TYPEOF(value) == PROMSXP) {
-	value = forcePromise(value);
-	ENSURE_NAMEDMAX(value);
+	ENSURE_PROMISE_IS_EVALUATED(value);
+	value = PRVALUE(value);
     }
     if (TYPEOF(value) != type) {
 	/* probably means a package redefined the base function so
@@ -5749,20 +5744,6 @@ NORET static void UNBOUND_VARIABLE_ERROR(SEXP symbol, SEXP rho)
 		  EncodeChar(PRINTNAME(symbol)));
 }
 
-static R_INLINE SEXP FORCE_PROMISE(SEXP value, SEXP symbol, SEXP rho,
-				   Rboolean keepmiss)
-{
-    if (! PROMISE_IS_EVALUATED(value)) {
-	/**** R_isMissing is inefficient */
-	if (keepmiss && R_isMissing(symbol, rho))
-	    value = R_MissingArg;
-	else value = forcePromise(value);
-    }
-    else value = PRVALUE(value);
-    ENSURE_NAMEDMAX(value);
-    return value;
-}
-
 static R_INLINE SEXP FIND_VAR_NO_CACHE(SEXP symbol, SEXP rho, SEXP cell)
 {
     R_varloc_t loc =  R_findVarLoc(symbol, rho);
@@ -5791,21 +5772,27 @@ static R_INLINE SEXP getvar(SEXP symbol, SEXP rho,
 
     if (value == R_UnboundValue)
 	UNBOUND_VARIABLE_ERROR(symbol, rho);
-    else if (value == R_MissingArg)
+    else if (value == R_MissingArg) {
 	MAYBE_MISSING_ARGUMENT_ERROR(symbol, keepmiss, rho);
+	return R_MissingArg;
+    }
     else if (TYPEOF(value) == PROMSXP) {
-	SEXP pv = PRVALUE(value);
-	if (pv == R_UnboundValue) {
-	    PROTECT(value);
-	    value = FORCE_PROMISE(value, symbol, rho, keepmiss);
-	    UNPROTECT(1);
-	}
+	if (PROMISE_IS_EVALUATED(value))
+	    return PRVALUE(value);
 	else {
-	        ENSURE_NAMEDMAX(pv);
-		value = pv;
+	    /**** R_isMissing is inefficient */
+	    if (keepmiss && R_isMissing(symbol, rho))
+		return R_MissingArg;
+	    else {
+		forcePromise(value);
+		return PRVALUE(value);
+	    }
 	}
-    } else ENSURE_NAMED(value); /* needed for .Last.value - LT */
-    return value;
+    }
+    else {
+	ENSURE_NAMED(value); /* needed for .Last.value - LT */
+	return value;
+    }
 }
 
 #define INLINE_GETVAR
@@ -7028,8 +7015,8 @@ attribute_hidden SEXP R_getBCInterpreterExpression(void)
 {
     SEXP exp = R_findBCInterpreterExpression();
     if (TYPEOF(exp) == PROMSXP) {
-	exp = forcePromise(exp);
-	ENSURE_NAMEDMAX(exp);
+	ENSURE_PROMISE_IS_EVALUATED(exp);
+	exp = PRVALUE(exp);
     }
 
     /* This tries to mimick the behavior of the AST interpreter to a
@@ -7556,8 +7543,8 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	SEXP symbol = VECTOR_ELT(constants, GETOP());
 	SEXP value = SYMVALUE(symbol);
 	if (TYPEOF(value) == PROMSXP) {
-	    value = forcePromise(value);
-	    ENSURE_NAMEDMAX(value);
+	    ENSURE_PROMISE_IS_EVALUATED(value);
+	    value = PRVALUE(value);
 	}
 	if(RTRACE(value)) {
 	  Rprintf("trace: ");
