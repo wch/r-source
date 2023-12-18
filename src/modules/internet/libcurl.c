@@ -89,6 +89,7 @@ R_curl_multi_wait(CURLM *multi_handle,
 	*ret = 0;
 	Rsleep(0.1);
     } else
+	/* file descriptors checked against FD_SETSIZE by caller */
 	*ret = select(maxfd+1, &fdread, &fdwrite, &fdexcep, &timeout);
 
     return mc;
@@ -530,6 +531,10 @@ in_do_curlDownload(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (!isString(scmd) || length(scmd) < 1)
 	error(_("invalid '%s' argument"), "url");
     int nurls = length(scmd);
+#ifdef Win32
+    if (nurls > FD_SETSIZE)
+	error(_("too many file descriptors for select()"));
+#endif
     sfile = CAR(args); args = CDR(args);
     if (!isString(sfile) || length(sfile) < 1)
 	error(_("invalid '%s' argument"), "destfile");
@@ -603,12 +608,20 @@ in_do_curlDownload(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    n_err += 1;
 	    warning(_("URL %s: cannot open destfile '%s', reason '%s'"),
 		    url, file, strerror(errno));
-	    if (nurls == 1) break; else continue;
-	} else {
-	    // This uses the internal CURLOPT_WRITEFUNCTION
-	    curl_easy_setopt(hnd[i], CURLOPT_WRITEDATA, out[i]);
-	    curl_multi_add_handle(mhnd, hnd[i]);
+	    continue;
 	}
+#ifdef Unix
+	if (fileno(out[i]) >= FD_SETSIZE) {
+	    n_err += 1;
+	    fclose(out[i]);
+	    out[i] = NULL;
+	    warning(_("file descriptor is too large for select()"));
+	    continue;
+	}
+#endif
+	// This uses the internal CURLOPT_WRITEFUNCTION
+	curl_easy_setopt(hnd[i], CURLOPT_WRITEDATA, out[i]);
+	curl_multi_add_handle(mhnd, hnd[i]);
 
 	total = 0.;
 	if (!quiet && nurls <= 1) {
