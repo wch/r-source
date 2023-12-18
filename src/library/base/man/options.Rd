@@ -448,7 +448,9 @@ getOption(x, default = NULL)
       created and can be printed through the function
       \code{\link{warnings}}.  If \code{warn} is one, warnings are
       printed as they occur.  If \code{warn} is two (or larger, coercible
-      to integer), all warnings are turned into errors.}
+      to integer), all warnings are turned into errors. While sometimes
+      useful for debugging, turning warnings into errors may trigger
+      bugs and resource leaks that would not have been triggered otherwise.}
 
     \item{\code{warnPartialMatchArgs}:}{logical.  If true, warns if
       partial matching is used in argument matching.}
