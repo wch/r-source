@@ -55,7 +55,7 @@ extern void Rsleep(double timeint);
 
 static int current_timeout = 0;
 
-# if (LIBCURL_VERSION_MAJOR == 7 && LIBCURL_VERSION_MINOR < 28)
+# if LIBCURL_VERSION_MAJOR < 7 || (LIBCURL_VERSION_MAJOR == 7 && LIBCURL_VERSION_MINOR < 28)
 
 // curl/curl.h includes <sys/select.h> and headers it requires.
 
@@ -87,7 +87,7 @@ R_curl_multi_wait(CURLM *multi_handle,
 	*ret = 0;
 	Rsleep(0.1);
     } else
-	/* file descriptors checked against FD_SETSIZE by caller */
+	/* file descriptors should be checked against FD_SETSIZE by caller */
 	*ret = select(maxfd+1, &fdread, &fdwrite, &fdexcep, &timeout);
 
     return mc;
@@ -549,10 +549,15 @@ in_do_curlDownload(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (!isString(scmd) || length(scmd) < 1)
 	error(_("invalid '%s' argument"), "url");
     int nurls = length(scmd);
+
 #ifdef Win32
+    /* not used as 7.28 is required */
+# if LIBCURL_VERSION_MAJOR < 7 || (LIBCURL_VERSION_MAJOR == 7 && LIBCURL_VERSION_MINOR < 28)
     if (nurls > FD_SETSIZE)
 	error(_("too many file descriptors for select()"));
+# endif
 #endif
+
     sfile = CAR(args); args = CDR(args);
     if (!isString(sfile) || length(sfile) < 1)
 	error(_("invalid '%s' argument"), "destfile");
@@ -644,6 +649,7 @@ in_do_curlDownload(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    continue;
 	}
 #ifdef Unix
+# if LIBCURL_VERSION_MAJOR < 7 || (LIBCURL_VERSION_MAJOR == 7 && LIBCURL_VERSION_MINOR < 28)
 	if (fileno(out[i]) >= FD_SETSIZE) {
 	    n_err += 1;
 	    fclose(out[i]);
@@ -651,6 +657,7 @@ in_do_curlDownload(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    warning(_("file descriptor is too large for select()"));
 	    continue;
 	}
+# endif
 #endif
 	// This uses the internal CURLOPT_WRITEFUNCTION
 	curl_easy_setopt(hnd[i], CURLOPT_WRITEDATA, out[i]);
@@ -995,6 +1002,8 @@ static Rboolean Curl_open(Rconnection con)
     ctxt->mh = curl_multi_init();
     if (!ctxt->mh) 
 	error(_("could not create curl handle"));
+    /* FIXME: suitability of file handle for select should be checked with
+              libcurl older than 7.28 */
     curl_multi_add_handle(ctxt->mh, ctxt->hnd);
 
     ctxt->current = ctxt->buf; ctxt->filled = 0; ctxt->available = FALSE;
