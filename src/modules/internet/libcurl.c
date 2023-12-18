@@ -228,6 +228,7 @@ static int curlMultiCheckerrs(CURLM *mhnd)
     }
     return retval;
 }
+
 static void curlCommon(CURL *hnd, int redirect, int verify)
 {
     const char *capath = getenv("CURL_CA_BUNDLE");
@@ -453,12 +454,6 @@ typedef struct {
 } winprogressbar;
 
 static winprogressbar pbar = {NULL, NULL, NULL};
-
-static void doneprogressbar(void *data)
-{
-    winprogressbar *pbar = data;
-    hide(pbar->wprog);
-}
 # endif // Win32
 
 #if LIBCURL_VERSION_NUM >= 0x072000
@@ -529,6 +524,58 @@ int progress(void *clientp, CURL_LEN dltotal, CURL_LEN dlnow,
 }
 #endif // HAVE_LIBCURL
 
+typedef struct {
+    struct curl_slist *headers;
+    CURLM *mhnd;
+    int nurls;
+    CURL ***hnd;
+    FILE **out;
+    SEXP sfile;
+#ifdef Win32
+    winprogressbar *pbar;
+#endif
+} download_cleanup_info;
+
+static void download_cleanup(void *data)
+{
+    download_cleanup_info *c = data;
+
+    for (int i = 0; i < c->nurls; i++) {
+	if (c->out && c->out[i]) {
+	    fclose(c->out[i]);
+#if LIBCURL_VERSION_NUM >= 0x073700
+	    curl_off_t dl;
+	    curl_easy_getinfo(c->hnd[i], CURLINFO_SIZE_DOWNLOAD_T, &dl);
+#else
+	    double dl;
+	    curl_easy_getinfo(c->hnd[i], CURLINFO_SIZE_DOWNLOAD, &dl);
+#endif
+	    if (c->sfile) {
+		long status = 0L;
+		curl_easy_getinfo(c->hnd[i], CURLINFO_RESPONSE_CODE, &status);
+		// should we do something about incomplete transfers?
+		if (status != 200 && dl == 0.) {
+		    const void *vmax = vmaxget();
+		    unlink(R_ExpandFileName(translateChar(STRING_ELT(c->sfile, i))));
+		    vmaxset(vmax);
+		}
+	    }
+	    curl_multi_remove_handle(c->mhnd, c->hnd[i]);
+	}
+	if (c->hnd && c->hnd[i])
+	    curl_easy_cleanup(c->hnd[i]);
+    }
+    if (c->mhnd)
+	curl_multi_cleanup(c->mhnd);
+    if (c->headers)
+	curl_slist_free_all(c->headers);
+
+#ifdef Win32
+    if (c->pbar)
+	hide(c->pbar->wprog);
+#endif
+}
+
 /* download(url, destfile, quiet, mode, headers, cacheOK) */
 
 SEXP attribute_hidden
@@ -544,6 +591,8 @@ in_do_curlDownload(SEXP call, SEXP op, SEXP args, SEXP rho)
     int quiet, cacheOK;
     struct curl_slist *headers = NULL;
     const void *vmax = vmaxget();
+    RCNTXT cntxt;
+    download_cleanup_info c;
 
     scmd = CAR(args); args = CDR(args);
     if (!isString(scmd) || length(scmd) < 1)
@@ -576,16 +625,31 @@ in_do_curlDownload(SEXP call, SEXP op, SEXP args, SEXP rho)
     sheaders = CAR(args);
     if(TYPEOF(sheaders) != NILSXP && !isString(sheaders))
 	error(_("invalid '%s' argument"), "headers");
+
+    c.mhnd = NULL;
+    c.nurls = nurls;
+    c.hnd = NULL;
+    c.out = NULL;
+    if (strchr(mode, 'w'))
+	c.sfile = sfile;
+    else
+	c.sfile = NULL;
+#ifdef Win32
+    c.pbar = NULL;
+#endif
+    c.headers = NULL;
+    begincontext(&cntxt, CTXT_CCODE, R_NilValue, R_BaseEnv, R_BaseEnv,
+                 R_NilValue, R_NilValue);
+    cntxt.cend = &download_cleanup;
+    cntxt.cenddata = &c;
     if(TYPEOF(sheaders) != NILSXP) {
 	for (int i = 0; i < LENGTH(sheaders); i++) {
 	    struct curl_slist *tmp =
 		curl_slist_append(headers,
 		                  translateChar(STRING_ELT(sheaders, i)));
-	    if (!tmp) {
-		if (headers) curl_slist_free_all(headers);
+	    if (!tmp)
 		error(_("out of memory"));
-	    }
-	    headers = tmp;
+	    c.headers = headers = tmp;
 	}
     }
 
@@ -599,18 +663,16 @@ in_do_curlDownload(SEXP call, SEXP op, SEXP args, SEXP rho)
 	   http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html */
 	struct curl_slist *tmp =
 	    curl_slist_append(headers, "Pragma: no-cache");
-	if(!tmp) {
-	    if (headers) curl_slist_free_all(headers);
+	if(!tmp)
 	    error(_("out of memory"));
-	}
-	headers = tmp;
+	c.headers = headers = tmp;
     }
 
     CURLM *mhnd = curl_multi_init();
-    if (!mhnd) {
-	if (headers) curl_slist_free_all(headers);
+    if (!mhnd)
 	error(_("could not create curl handle"));
-    }
+    c.mhnd = mhnd;
+
     int still_running, repeats = 0, n_err = 0;
     CURL **hnd[nurls];
     FILE *out[nurls];
@@ -619,6 +681,8 @@ in_do_curlDownload(SEXP call, SEXP op, SEXP args, SEXP rho)
 	hnd[i] = NULL;
 	out[i] = NULL;
     }
+    c.hnd = hnd;
+    c.out = out;
 
     for(int i = 0; i < nurls; i++) {
 	url = translateChar(STRING_ELT(scmd, i));
@@ -687,10 +751,7 @@ in_do_curlDownload(SEXP call, SEXP op, SEXP args, SEXP rho)
 		setprogressbar(pbar.pb, 0);
 		settext(pbar.wprog, "Download progress");
 		show(pbar.wprog);
-		begincontext(&(pbar.cntxt), CTXT_CCODE, R_NilValue, R_NilValue,
-			     R_NilValue, R_NilValue, R_NilValue);
-		pbar.cntxt.cend = &doneprogressbar;
-		pbar.cntxt.cenddata = &pbar;
+		c.pbar = &pbar;
 	    }
 #endif
 	    // For libcurl >= 7.32.0 use CURLOPT_XFERINFOFUNCTION
@@ -713,7 +774,8 @@ in_do_curlDownload(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     if (n_err == nurls) {
 	// no dest files could be opened, so bail out
-	curl_multi_cleanup(mhnd);
+	endcontext(&cntxt);
+	download_cleanup(&c);
 	vmaxset(vmax);
 	return ScalarInteger(1);
     }
@@ -742,8 +804,8 @@ in_do_curlDownload(SEXP call, SEXP op, SEXP args, SEXP rho)
     R_Busy(0);
 #ifdef Win32
     if (R_Interactive && !quiet && nurls<=1) {
-	endcontext(&(pbar.cntxt));
-	doneprogressbar(&pbar);
+	c.pbar = NULL;
+	hide(pbar.wprog);
     } else if (total > 0.) {
 	REprintf("\n");
 	R_FlushConsole();
@@ -783,33 +845,12 @@ in_do_curlDownload(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     n_err += curlMultiCheckerrs(mhnd);
 
-    long status = 0L;
-    for (int i = 0; i < nurls; i++) {
-	if (out[i]) {
-	    fclose(out[i]);
-#if LIBCURL_VERSION_NUM >= 0x073700
-	    curl_off_t dl;
-	    curl_easy_getinfo(hnd[i], CURLINFO_SIZE_DOWNLOAD_T, &dl);
-#else
-	    double dl;
-	    curl_easy_getinfo(hnd[i], CURLINFO_SIZE_DOWNLOAD, &dl);
-#endif
-	    curl_easy_getinfo(hnd[i], CURLINFO_RESPONSE_CODE, &status);
-	    // should we do something about incomplete transfers?
-	    if (status != 200 && dl == 0. && strchr(mode, 'w'))
-		unlink(R_ExpandFileName(translateChar(STRING_ELT(sfile, i))));
-	    curl_multi_remove_handle(mhnd, hnd[i]);
-	}
-	if (hnd[i])
-	    curl_easy_cleanup(hnd[i]);
-    }
-    curl_multi_cleanup(mhnd);
-    curl_slist_free_all(headers);
-
     if(nurls > 1) {
 	if (n_err == nurls) error(_("cannot download any files"));
 	else if (n_err) warning(_("some files were not downloaded"));
     } else if(n_err) {
+	long status = 0L;
+	curl_easy_getinfo(hnd[0], CURLINFO_RESPONSE_CODE, &status);	
 	if (status != 200)
 	    error(_("cannot open URL '%s'"),
 	          translateChar(STRING_ELT(scmd, 0)));
@@ -817,6 +858,8 @@ in_do_curlDownload(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    error(_("download from '%s' failed"),
 	          translateChar(STRING_ELT(scmd, 0)));
     }
+    endcontext(&cntxt);
+    download_cleanup(&c);
     vmaxset(vmax);
     return ScalarInteger(0);
 #endif
