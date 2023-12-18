@@ -1,7 +1,7 @@
 #  File src/library/stats/R/models.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2022 The R Core Team
+#  Copyright (C) 1995-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -221,22 +221,25 @@ reformulate <- function (termlabels, response=NULL, intercept = TRUE, env = pare
 drop.terms <- function(termobj, dropx = NULL, keep.response = FALSE)
 {
     if (!length(dropx))
-	termobj
+	if(keep.response) termobj else delete.response(termobj)
     else {
         if(!inherits(termobj, "terms"))
             stop(gettextf("'termobj' must be a object of class %s",
                           dQuote("terms")),
                  domain = NA)
+	response <- attr(termobj, "response")
+	newformula <- attr(termobj, "term.labels")[-dropx]
+	if (!is.null(off <- attr(termobj, "offset")))
+	    newformula <- c(newformula,
+			    as.character(attr(termobj, "variables")[off + 1L]))
 	newformula <-
-	    reformulate(attr(termobj, "term.labels")[-dropx],
-			response = if(keep.response) termobj[[2L]],
+	    reformulate(newformula,
+			response = if(response && keep.response) termobj[[2L]],
 			intercept = attr(termobj, "intercept"),
 			env = environment(termobj))
 	result <- terms(newformula, specials=names(attr(termobj, "specials")))
 
 	# Edit the optional attributes
-
-	response <- attr(termobj, "response")
 	dropOpt <- if(response && !keep.response) # we have a response in termobj, but not in the result
 		       c(response, dropx + length(response))
 		   else
@@ -262,6 +265,9 @@ drop.terms <- function(termobj, dropx = NULL, keep.response = FALSE)
 {
     resp <- if (attr(termobj, "response")) termobj[[2L]]
     newformula <- attr(termobj, "term.labels")[i]
+    if (!is.null(off <- attr(termobj, "offset")))
+	newformula <- c(newformula,
+			as.character(attr(termobj, "variables")[off + 1L]))
     if (length(newformula) == 0L) newformula <- "1"
     newformula <- reformulate(newformula, resp, attr(termobj, "intercept"), environment(termobj))
     result <- terms(newformula, specials = names(attr(termobj, "specials")))
