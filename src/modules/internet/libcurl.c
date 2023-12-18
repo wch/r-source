@@ -21,9 +21,7 @@
 # include <config.h>
 #endif
 
-#ifdef Win32
-# define R_USE_SIGNALS 1
-#endif
+#define R_USE_SIGNALS 1
 #include <Defn.h>
 #include <Internal.h>
 #include <Fileio.h>
@@ -325,6 +323,12 @@ rcvBody(void *buffer, size_t size, size_t nmemb, void *userp)
 }
 #endif
 
+static void handle_cleanup(void *data)
+{
+    CURL *hnd = data;
+    if (hnd)
+	curl_easy_cleanup(hnd);
+}
 
 SEXP attribute_hidden
 in_do_curlGetHeaders(SEXP call, SEXP op, SEXP args, SEXP rho)
@@ -356,6 +360,13 @@ in_do_curlGetHeaders(SEXP call, SEXP op, SEXP args, SEXP rho)
     CURL *hnd = curl_easy_init();
     if (!hnd)
 	error(_("could not create curl handle"));
+    /* Set up a context which will free the handle on error (also from
+       curlCommon) */
+    RCNTXT cntxt;
+    begincontext(&cntxt, CTXT_CCODE, R_NilValue, R_BaseEnv, R_BaseEnv,
+                 R_NilValue, R_NilValue);
+    cntxt.cend = &handle_cleanup;
+    cntxt.cenddata = hnd;
     curl_easy_setopt(hnd, CURLOPT_URL, url);
     curl_easy_setopt(hnd, CURLOPT_NOPROGRESS, 1L);
     curl_easy_setopt(hnd, CURLOPT_NOBODY, 1L);
@@ -379,13 +390,10 @@ in_do_curlGetHeaders(SEXP call, SEXP op, SEXP args, SEXP rho)
 # if LIBCURL_VERSION_MAJOR > 7 ||  (LIBCURL_VERSION_MAJOR == 7 && LIBCURL_VERSION_MINOR >= 52)
 	else if (streql(TLS, "1.3")) TLS_ver = CURL_SSLVERSION_TLSv1_3;
 # endif
-	else {
-	    curl_easy_cleanup(hnd);
+	else
 	    error(_("invalid %s argument"), "TLS");
-	}
 	curl_easy_setopt(hnd, CURLOPT_SSLVERSION, TLS_ver);
 # else
-	curl_easy_cleanup(hnd);
 	error("TLS argument is unsupported in this libcurl version %d.%d",
 	      LIBCURL_VERSION_MAJOR, LIBCURL_VERSION_MINOR);
 #endif
@@ -397,7 +405,6 @@ in_do_curlGetHeaders(SEXP call, SEXP op, SEXP args, SEXP rho)
     errbuf[0] = '\0';
     CURLcode ret = curl_easy_perform(hnd);
     if (ret != CURLE_OK) {
-	curl_easy_cleanup(hnd);
 	if (errbuf[0])
 	    error(_("libcurl error code %d:\n\t%s\n"), ret, errbuf);
 	else if(ret == 77)
@@ -408,6 +415,7 @@ in_do_curlGetHeaders(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
     long http_code = 0;
     curl_easy_getinfo (hnd, CURLINFO_RESPONSE_CODE, &http_code);
+    endcontext(&cntxt);
     curl_easy_cleanup(hnd);
 
     SEXP ans = PROTECT(allocVector(STRSXP, used));
@@ -938,6 +946,9 @@ static size_t Curl_read(void *ptr, size_t size, size_t nitems,
     size_t total = consumeData(ptr, nbytes, ctxt);
     int n_err = 0;
     while((total < nbytes) && ctxt->sr) {
+	/* FIXME: A an error from fetchData() or a warning turned into error
+	          would not close the connection. But the GC would do it later.
+	*/
 	n_err += fetchData(ctxt);
 	total += consumeData(p + total, (nbytes - total), ctxt);
     }
@@ -962,6 +973,13 @@ static Rboolean Curl_open(Rconnection con)
     ctxt->hnd = curl_easy_init();
     if (!ctxt->hnd)
 	error(_("could not create curl handle"));
+    /* Set up a context which will free the handle on error (also from
+       curlCommon) */
+    RCNTXT cntxt;
+    begincontext(&cntxt, CTXT_CCODE, R_NilValue, R_BaseEnv, R_BaseEnv,
+                 R_NilValue, R_NilValue);
+    cntxt.cend = &handle_cleanup;
+    cntxt.cenddata = ctxt->hnd;
     curl_easy_setopt(ctxt->hnd, CURLOPT_URL, url);
     curl_easy_setopt(ctxt->hnd, CURLOPT_FAILONERROR, 1L);
     curlCommon(ctxt->hnd, 1, 1);
@@ -970,16 +988,13 @@ static Rboolean Curl_open(Rconnection con)
     curl_easy_setopt(ctxt->hnd, CURLOPT_TCP_KEEPALIVE, 1L);
 #endif
 
-    if (ctxt->headers) {
+    if (ctxt->headers)
 	curl_easy_setopt(ctxt->hnd, CURLOPT_HTTPHEADER, ctxt->headers);
-    }
     curl_easy_setopt(ctxt->hnd, CURLOPT_WRITEFUNCTION, rcvData);
     curl_easy_setopt(ctxt->hnd, CURLOPT_WRITEDATA, ctxt);
     ctxt->mh = curl_multi_init();
-    if (!ctxt->mh) {
-	curl_easy_cleanup(ctxt->hnd);
+    if (!ctxt->mh) 
 	error(_("could not create curl handle"));
-    }
     curl_multi_add_handle(ctxt->mh, ctxt->hnd);
 
     ctxt->current = ctxt->buf; ctxt->filled = 0; ctxt->available = FALSE;
@@ -987,14 +1002,18 @@ static Rboolean Curl_open(Rconnection con)
     // Establish the connection: not clear if we should do this now.
     ctxt->sr = 1;
     int n_err = 0;
+    endcontext(&cntxt); /* from now leave ctxt->hnd cleanup to GC */
+    con->isopen = TRUE; /* enable GC cleanup of opened connections */
     while(ctxt->sr && !ctxt->available)
+	/* FIXME: A an error from fetchData() or a warning turned into error
+	          would not close the connection. But the GC would do it later.
+	*/
 	n_err += fetchData(ctxt);
     if (n_err != 0) {
 	Curl_close(con);
 	error(_("cannot open the connection to '%s'"), url);
     }
 
-    con->isopen = TRUE;
     con->canwrite = (con->mode[0] == 'w' || con->mode[0] == 'a');
     con->canread = !con->canwrite;
     mlen = (int) strlen(con->mode);
