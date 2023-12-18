@@ -1,6 +1,6 @@
 #### lm, glm, aov, etc --- typically *strict* tests (no *.Rout.save)
 
-options(warn = 2) # all warnings must be asserted below
+options(warn = 2, width = 101) # all warnings must be asserted below
 
 data(mtcars)
 mtcar2 <- within(mtcars, {
@@ -162,3 +162,129 @@ stopifnot(exprs = {
 
 ## __FIXME__
 ## predict(*, ... type="terms" .. ) does *not* obey   rankdeficient=".."
+
+
+##-------- dummy.coef() -- with "character"-factor ---------------------------------------
+## [Bug 18635] New: dummy.coef could not deal with character variable  // 9 Dec 2023
+##  ---------  https://bugs.r-project.org/show_bug.cgi?id=18635
+
+## for data generating model
+ch2num <- function(ch) vapply(ch, function(.) as.integer(charToRaw(.)),
+                              1L, USE.NAMES=FALSE)
+## test:
+str(print(ch2num(LETTERS)) - ch2num(letters))
+
+set.seed(7)
+mydatC <- data.frame(x = sort(rnorm(49)), ch = c(LETTERS[1:3], letters[1:4]))
+mydatC$y <- with(mydatC, 20*x + 10 - (ch2num(ch) - 68) + rnorm(x))
+str(mydatC)
+if(dev.interactive()) ## visualize:
+    plot(y ~ x, data=mydatC, col = factor(ch))
+
+Sys.setlocale("LC_COLLATE", "C")
+mydatF <- mydatC; mydatF$ch <- factor(mydatC$ch)
+str(mydatF)
+## $ ch: Factor w/ 7 levels "A","B","C","a",..: 1 2 3 4 5 6 7 1 2 3 ...
+
+(sfmCc <- summary(fmCc <- lm(y ~ ., data=mydatC)))
+ sfmCf <- summary(fmCf <- lm(y ~ ., data=mydatF))
+(ae.cf <- all.equal(sfmCc, sfmCf)) # only the call differs:
+## [1] "Component “call”: target, current do not match when deparsed"
+stopifnot(length(ae.cf) == 1L, grepl("^Component .call.:", ae.cf))
+
+Sys.setlocale("LC_COLLATE", "de_CH.UTF-8")
+## but still,  summary.lm(fmC) does *not* depend on the locale:
+stopifnot(identical(summary(fmCc), sfmCc))
+
+## data version with de_CH locale --> different level order
+mydatF8 <- mydatC; mydatF8$ch <- factor(mydatC$ch)
+str(mydatF8)
+## $ ch: Factor w/ 7 levels "a","A","b","B",..: 2 4 6 1 3 5 7 2 4 6 ...
+
+## "charactor not factor" data -- now different lm() coeff:
+(sfmCH8c <- summary(fmCH8c <- lm(y ~ ., data=mydatC)))
+## lm() with *factor* data is the "same"
+sfmCH8f <- summary(fmCH8f <- lm(y ~ ., data=mydatF))
+## ... very similar to the fmCc and fmCf  summaries:
+stopifnot(all.equal(sfmCH8f, sfmCf))
+(ae8f <-  all.equal(sfmCH8f, sfmCc)) # only "call" differs
+stopifnot(length(ae8f) == 1L, grepl("^Component .call.:", ae8f))
+
+sfmCH8f8 <- summary(fmCH8f8 <- lm(y ~ ., data=mydatF8))
+## as the fmCH8c above :
+(aeC8 <- all.equal(sfmCH8f8, sfmCH8c)) # only "call" ..
+stopifnot(length(aeC8) == 1L, grepl("^Component .call.:", aeC8))
+
+coef(fmCc)
+## (Intercept)           x         chB         chC         cha         chb         chc         chd
+##  12.7781626  19.8494272  -0.8240301  -1.3309157 -31.7032317 -32.8819084 -33.3519985 -34.6249161
+(coef(fmCf) -> cf.f) # the same
+coef(fmCH8f) -> cf.8 # same again : factor() was called during "C" locale!
+stopifnot(exprs = {
+    identical(coef(fmCc), cf.f)
+    identical(cf.f,       cf.8)
+})
+
+coef(fmCH8c) ## different, indeed
+## (Intercept)           x         chA         chb         chB         chc         chC         chd
+##  -18.925069   19.849427   31.703232   -1.178677   30.879202   -1.648767   30.372316   -2.921684
+
+(dummy.coef(fmCc) -> df.Cc)
+## (Intercept):       12.77816
+## x:                 19.84943
+## ch:                       A           B           C           a           b           c           d
+##                   0.0000000  -0.8240301  -1.3309157 -31.7032317 -32.8819084 -33.3519985 -34.6249161
+dummy.coef(fmCf)   -> dc.Cf # the same
+dummy.coef(fmCH8f) -> dc.8f # also the same, indeed, typically even identical (not testing):
+identical(dc.Cf, dc.8f) # TRUE
+all.equal15 <- function(x,y, ...) all.equal(x,y, tolerance = 1e-15, ...)
+stopifnot(exprs = {
+    all.equal15(dc.Cf, dc.Cf)
+    all.equal15(dc.Cf, dc.8f)
+    ## coef() <--> dummy.coef() :
+    length(dcCf <- unlist(dc.Cf)) == 1 + length(cf.f)
+    is.character(names(dcCf) <- sub("[.]", "", names(dcCf)))
+    all.equal15(dcCf[i2 <- 1:2], cf.f[i2], check.attributes = FALSE)
+    all.equal15(dcCf[-i2], c(chA = 0, cf.f[-i2]))
+})
+
+dummy.coef(fmCH8c) #		*is* different
+## (Intercept):    -18.92507
+## x:               19.84943
+## ch:                     a         A         b         B         c         C         d
+##                  0.000000 31.703232 -1.178677 30.879202 -1.648767 30.372316 -2.921684
+
+##============= + 2 way interactions ============================================
+(sfm2c  <- summary(fm2c <- lm(y ~ .^2, data=mydatC)))
+ sfm2f8 <- summary(fm2f8<- lm(y ~ .^2, data=mydatF8))
+(dc2c <- dummy.coef(fm2c))
+iC <- match("call", names(sfm2c))
+all.equal(sfm2c, sfm2f8)
+stopifnot(exprs = {
+    all.equal15(sfm2c [-iC],
+                sfm2f8[-iC])
+    all.equal15(cf2c <- coef(fm2c),
+                        coef(fm2f8))
+    all.equal15(dc2c, dummy.coef(fm2f8))
+    length(dc2c <- unlist(dc2c)) == 2 + length(cf2c)
+
+    all.equal15(dc2c[1:2], cf2c[1:2], check.attributes = FALSE)
+    is.character(names(dc2c) <- sub("[.]", "", names(dc2c)))
+    all.equal15(dc2c[-(1:2)][1:7],
+                c(cha = 0, cf2c[-(1:2)][1:6]))
+    all.equal15(tail(dc2c, 7),
+                c(`x:cha` = 0, tail(cf2c, 6)))
+})
+
+(sfm2f  <- summary(fm2f <- lm(y ~ .^2, data=mydatF))) # different
+(dc2f <- dummy.coef(fm2f))
+cf2f <-       coef(fm2f)
+stopifnot(exprs = {
+    length(dc2f <- unlist(dc2f)) == 2 + length(cf2f)
+    all.equal(dc2f[1:2], cf2f[1:2], check.attributes = FALSE)
+    is.character(names(dc2f) <- sub("[.]", "", names(dc2f)))
+    all.equal15(dc2f[-(1:2)][1:7],
+                c(chA = 0, cf2f[-(1:2)][1:6]))
+    all.equal15(tail(dc2f, 7),
+                c(`x:chA` = 0, tail(cf2f, 6)))
+})

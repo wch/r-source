@@ -501,6 +501,10 @@
 
       \item \code{drop.terms(*)} now drops response as by default,
       \code{keep.response = FALSE}, fixing \PR{18564} thanks to Mikael Jagan.
+
+      \item \code{dummy.coef(.)} now also works for \code{lm()}-models with
+      \code{character} categorical predictor variables rather than
+      \code{factor} ones, fixing \PR{18635} reported by Jinsong Zhao.
     }
   }
 }

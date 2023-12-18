@@ -1,7 +1,7 @@
 #  File src/library/stats/R/dummy.coef.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1998-2020 The R Core Team
+#  Copyright (C) 1998-2023 The R Core Team
 #  Copyright (C) 1998 B. D. Ripley
 #
 #  This program is free software; you can redistribute it and/or modify
@@ -19,27 +19,31 @@
 
 dummy.coef <- function(object, ...) UseMethod("dummy.coef")
 
+## NB: This is very similar to dummy.coef.aovlist()  -- keep in sync !
 dummy.coef.lm <- function(object, use.na=FALSE, ...)
 {
     xl <- object$xlevels
-    if(!length(xl)) # no factors in model
+    if(!length(xl)) # no factor-alikes in model
 	return(as.list(coef(object)))
+    ## have  "factor-alike" ~= {factor, character}
     Terms <- terms(object)
     tl <- attr(Terms, "term.labels")
     int <- attr(Terms, "intercept")
     facs <- attr(Terms, "factors")[-1, , drop=FALSE]
     Terms <- delete.response(Terms)
     mf <- object$model %||% model.frame(object)
-    vars <- dimnames(facs)[[1]] # names
-    xtlv <- lapply(mf[,vars, drop=FALSE], levels) ## levels
+    nvars <- setNames(, vars <- dimnames(facs)[[1]]) # names
+    xtlv <- lapply(nvars, function(i) {
+        x <- mf[, i, drop=TRUE] # levels() also for character:
+        levels(x) %||% if(is.character(x)) xl[[i]] # NULL e.g. for numeric
+    })
     nxl <- pmax(lengths(xtlv), 1L)  ## (named) number of levels
     lterms <- apply(facs, 2L, function(x) prod(nxl[x > 0]))
     nl <- sum(lterms)
-    ## dummy: data frame of vars
-    args <- sapply(vars, function(i)
+    ## dummy := data frame of vars
+    args <- lapply(nvars, function(i)
 	if (nxl[i] == 1) rep.int(1, nl)
-	else factor(rep.int(xtlv[[i]][1L], nl), levels = xtlv[[i]]),
-	simplify=FALSE)
+	else factor(rep.int(xtlv[[i]][1L], nl), levels = xtlv[[i]]))
     ## dummy <- as.data.frame(args) # slightly more efficiently:
     dummy <- do.call(data.frame, args); names(dummy) <- vars
     pos <- 0L
@@ -119,7 +123,7 @@ dummy.coef.lm <- function(object, use.na=FALSE, ...)
 dummy.coef.aovlist <- function(object, use.na = FALSE, ...)
 {
     xl <- attr(object, "xlevels")
-    if(!length(xl)) # no factors in model
+    if(!length(xl)) # no factor-alikes in model
 	return(as.list(coef(object)))
     Terms <- terms(object, specials="Error")
     err <- attr(Terms,"specials")$Error - 1
@@ -128,15 +132,19 @@ dummy.coef.aovlist <- function(object, use.na = FALSE, ...)
     facs <- attr(Terms, "factors")[-c(1,1+err), -err, drop=FALSE]
     stopifnot(length(names(object)) == (N <- length(object)))
     mf <- object$model %||% model.frame(object)
-    vars <- dimnames(facs)[[1]] # names
-    xtlv <- lapply(mf[,vars, drop=FALSE], levels) ## levels
+    nvars <- setNames(, vars <- dimnames(facs)[[1]]) # names
+    xtlv <- lapply(nvars, function(i) {
+        x <- mf[, i, drop=TRUE] # levels() also for character:
+        levels(x) %||% if(is.character(x)) xl[[i]] # NULL e.g. for numeric
+    })
     nxl <- pmax(lengths(xtlv), 1L)  ## (named) number of levels
     lterms <- apply(facs, 2L, function(x) prod(nxl[x > 0]))
     nl <- sum(lterms)
+    ## dummy := data frame of vars
     args <- setNames(vector("list", length(vars)), vars)
-    for(i in vars)
-	args[[i]] <- if(nxl[[i]] == 1) rep.int(1, nl)
-                     else factor(rep.int(xl[[i]][1L], nl), levels = xl[[i]])
+    args <- lapply(nvars, function(i)
+	if(nxl[[i]] == 1) rep.int(1, nl)
+        else factor(rep.int(xl[[i]][1L], nl), levels = xl[[i]]))
     ## dummy <- as.data.frame(args) # slightly more efficiently:
     dummy <- do.call(data.frame, args); names(dummy) <- vars
     pos <- 0L
