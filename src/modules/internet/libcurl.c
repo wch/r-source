@@ -352,6 +352,8 @@ in_do_curlGetHeaders(SEXP call, SEXP op, SEXP args, SEXP rho)
     else error(_("invalid %s argument"), "TLS");
 
     CURL *hnd = curl_easy_init();
+    if (!hnd)
+	error(_("could not create curl handle"));
     curl_easy_setopt(hnd, CURLOPT_URL, url);
     curl_easy_setopt(hnd, CURLOPT_NOPROGRESS, 1L);
     curl_easy_setopt(hnd, CURLOPT_NOBODY, 1L);
@@ -375,9 +377,13 @@ in_do_curlGetHeaders(SEXP call, SEXP op, SEXP args, SEXP rho)
 # if LIBCURL_VERSION_MAJOR > 7 ||  (LIBCURL_VERSION_MAJOR == 7 && LIBCURL_VERSION_MINOR >= 52)
 	else if (streql(TLS, "1.3")) TLS_ver = CURL_SSLVERSION_TLSv1_3;
 # endif
-	else error(_("invalid %s argument"), "TLS");
+	else {
+	    curl_easy_cleanup(hnd);
+	    error(_("invalid %s argument"), "TLS");
+	}
 	curl_easy_setopt(hnd, CURLOPT_SSLVERSION, TLS_ver);
 # else
+	curl_easy_cleanup(hnd);
 	error("TLS argument is unsupported in this libcurl version %d.%d",
 	      LIBCURL_VERSION_MAJOR, LIBCURL_VERSION_MINOR);
 #endif
@@ -389,6 +395,7 @@ in_do_curlGetHeaders(SEXP call, SEXP op, SEXP args, SEXP rho)
     errbuf[0] = '\0';
     CURLcode ret = curl_easy_perform(hnd);
     if (ret != CURLE_OK) {
+	curl_easy_cleanup(hnd);
 	if (errbuf[0])
 	    error(_("libcurl error code %d:\n\t%s\n"), ret, errbuf);
 	else if(ret == 77)
@@ -558,7 +565,7 @@ in_do_curlDownload(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    struct curl_slist *tmp =
 		curl_slist_append(headers, CHAR(STRING_ELT(sheaders, i)));
 	    if (!tmp) {
-		curl_slist_free_all(headers);
+		if (headers) curl_slist_free_all(headers);
 		error(_("out of memory"));
 	    }
 	    headers = tmp;
@@ -576,20 +583,34 @@ in_do_curlDownload(SEXP call, SEXP op, SEXP args, SEXP rho)
 	struct curl_slist *tmp =
 	    curl_slist_append(headers, "Pragma: no-cache");
 	if(!tmp) {
-	    curl_slist_free_all(headers);
+	    if (headers) curl_slist_free_all(headers);
 	    error(_("out of memory"));
 	}
 	headers = tmp;
     }
 
     CURLM *mhnd = curl_multi_init();
+    if (!mhnd) {
+	if (headers) curl_slist_free_all(headers);
+	error(_("could not create curl handle"));
+    }
     int still_running, repeats = 0, n_err = 0;
     CURL **hnd[nurls];
     FILE *out[nurls];
 
     for(int i = 0; i < nurls; i++) {
+	hnd[i] = NULL;
+	out[i] = NULL;
+    }
+
+    for(int i = 0; i < nurls; i++) {
 	url = CHAR(STRING_ELT(scmd, i));
 	hnd[i] = curl_easy_init();
+	if (!hnd[i]) {
+	    n_err += 1;
+	    warning(_("could not create curl handle"));
+	    continue;
+	}
 	curl_easy_setopt(hnd[i], CURLOPT_URL, url);
 	curl_easy_setopt(hnd[i], CURLOPT_FAILONERROR, 1L);
 	/* Users will normally expect to follow redirections, although
@@ -757,9 +778,10 @@ in_do_curlDownload(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    // should we do something about incomplete transfers?
 	    if (status != 200 && dl == 0. && strchr(mode, 'w'))
 		unlink(R_ExpandFileName(translateChar(STRING_ELT(sfile, i))));
+	    curl_multi_remove_handle(mhnd, hnd[i]);
 	}
-	curl_multi_remove_handle(mhnd, hnd[i]);
-	curl_easy_cleanup(hnd[i]);
+	if (hnd[i])
+	    curl_easy_cleanup(hnd[i]);
     }
     curl_multi_cleanup(mhnd);
     curl_slist_free_all(headers);
@@ -931,6 +953,8 @@ static Rboolean Curl_open(Rconnection con)
     }
 
     ctxt->hnd = curl_easy_init();
+    if (!ctxt->hnd)
+	error(_("could not create curl handle"));
     curl_easy_setopt(ctxt->hnd, CURLOPT_URL, url);
     curl_easy_setopt(ctxt->hnd, CURLOPT_FAILONERROR, 1L);
     curlCommon(ctxt->hnd, 1, 1);
@@ -945,6 +969,10 @@ static Rboolean Curl_open(Rconnection con)
     curl_easy_setopt(ctxt->hnd, CURLOPT_WRITEFUNCTION, rcvData);
     curl_easy_setopt(ctxt->hnd, CURLOPT_WRITEDATA, ctxt);
     ctxt->mh = curl_multi_init();
+    if (!ctxt->mh) {
+	curl_easy_cleanup(ctxt->hnd);
+	error(_("could not create curl handle"));
+    }
     curl_multi_add_handle(ctxt->mh, ctxt->hnd);
 
     ctxt->current = ctxt->buf; ctxt->filled = 0; ctxt->available = FALSE;
