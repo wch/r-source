@@ -269,12 +269,14 @@ static void curlCommon(CURL *hnd, int redirect, int verify)
     int Default = 1;
     SEXP sua = GetOption1(install("HTTPUserAgent")); // set in utils startup
     if (TYPEOF(sua) == STRSXP && LENGTH(sua) == 1 ) {
-	const char *p = CHAR(STRING_ELT(sua, 0));
+	const void *vmax = vmaxget();
+	const char *p = translateChar(STRING_ELT(sua, 0));
 	if (p[0] && p[1] && p[2] && p[0] == 'R' && p[1] == ' ' && p[2] == '(') {
 	} else {
 	    Default = 0;
 	    curl_easy_setopt(hnd, CURLOPT_USERAGENT, p);
 	}
+	vmaxset(vmax);
     }
     if (Default) {
 	char buf[20];
@@ -533,6 +535,7 @@ in_do_curlDownload(SEXP call, SEXP op, SEXP args, SEXP rho)
     const char *url, *file, *mode;
     int quiet, cacheOK;
     struct curl_slist *headers = NULL;
+    const void *vmax = vmaxget();
 
     scmd = CAR(args); args = CDR(args);
     if (!isString(scmd) || length(scmd) < 1)
@@ -553,7 +556,7 @@ in_do_curlDownload(SEXP call, SEXP op, SEXP args, SEXP rho)
     smode =  CAR(args); args = CDR(args);
     if (!isString(smode) || length(smode) != 1)
 	error(_("invalid '%s' argument"), "mode");
-    mode = CHAR(STRING_ELT(smode, 0));
+    mode = translateChar(STRING_ELT(smode, 0));
     cacheOK = asLogical(CAR(args)); args = CDR(args);
     if (cacheOK == NA_LOGICAL)
 	error(_("invalid '%s' argument"), "cacheOK");
@@ -563,7 +566,8 @@ in_do_curlDownload(SEXP call, SEXP op, SEXP args, SEXP rho)
     if(TYPEOF(sheaders) != NILSXP) {
 	for (int i = 0; i < LENGTH(sheaders); i++) {
 	    struct curl_slist *tmp =
-		curl_slist_append(headers, CHAR(STRING_ELT(sheaders, i)));
+		curl_slist_append(headers,
+		                  translateChar(STRING_ELT(sheaders, i)));
 	    if (!tmp) {
 		if (headers) curl_slist_free_all(headers);
 		error(_("out of memory"));
@@ -604,7 +608,7 @@ in_do_curlDownload(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
 
     for(int i = 0; i < nurls; i++) {
-	url = CHAR(STRING_ELT(scmd, i));
+	url = translateChar(STRING_ELT(scmd, i));
 	hnd[i] = curl_easy_init();
 	if (!hnd[i]) {
 	    n_err += 1;
@@ -695,6 +699,7 @@ in_do_curlDownload(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (n_err == nurls) {
 	// no dest files could be opened, so bail out
 	curl_multi_cleanup(mhnd);
+	vmaxset(vmax);
 	return ScalarInteger(1);
     }
 
@@ -791,11 +796,13 @@ in_do_curlDownload(SEXP call, SEXP op, SEXP args, SEXP rho)
 	else if (n_err) warning(_("some files were not downloaded"));
     } else if(n_err) {
 	if (status != 200)
-	    error(_("cannot open URL '%s'"), CHAR(STRING_ELT(scmd, 0)));
+	    error(_("cannot open URL '%s'"),
+	          translateChar(STRING_ELT(scmd, 0)));
 	else
-	    error(_("download from '%s' failed"), CHAR(STRING_ELT(scmd, 0)));
+	    error(_("download from '%s' failed"),
+	          translateChar(STRING_ELT(scmd, 0)));
     }
-
+    vmaxset(vmax);
     return ScalarInteger(0);
 #endif
 }
@@ -1052,9 +1059,11 @@ in_newCurlUrl(const char *description, const char * const mode,
 	/* for Solaris 12.5 */ new = NULL;
     }
     ctxt->headers = NULL;
+    const void *vmax = vmaxget();
     for (int i = 0; i < LENGTH(headers); i++) {
 	struct curl_slist *tmp =
-	    curl_slist_append(ctxt->headers, CHAR(STRING_ELT(headers, i)));
+	    curl_slist_append(ctxt->headers,
+	                      translateChar(STRING_ELT(headers, i)));
 	if (!tmp) {
 	    free(new->description); free(new->class); free(new->private);
 	    free(new); curl_slist_free_all(ctxt->headers);
@@ -1063,6 +1072,7 @@ in_newCurlUrl(const char *description, const char * const mode,
 	}
 	ctxt->headers = tmp;
     }
+    vmaxset(vmax);
     return new;
 #else
     error(_("url(method = \"libcurl\") is not supported on this platform"));
