@@ -1104,6 +1104,12 @@ stopifnot( drop.terms(t2, 1) == dt2, dt2 == ~ b)
 ## gave a+b ~ b in R <= 4.3.2
 
 
+## cov2cor(<0x0>) PR#18423
+m00 <- matrix(0,0,0)
+stopifnot(identical(cov2cor(m00), m00))
+## gave error in R <= 4.3.2
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

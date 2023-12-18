@@ -360,15 +360,9 @@
     \itemize{
       \item The methods package is more robust to not being attached to
       the search path. More work needs to be done.
-      
+
       \item \code{pairwise.t.test()} misbehaved when subgroups had 0 DF
       for variance, even with \code{pool.sd=TRUE} \PR{18594} (Jack Berry).
-
-      \item Arguments are now properly forwarded to methods on S4 generics
-      with \dots{} in the middle of their formal arguments. This was
-      broken for the case when a method introduced an argument but did
-      not include \dots{} in its own formals. Thanks to Hervé Pagès for
-      the report \PR{18538}.
 
       \item Probability distribution functions \code{[dpq]<distrib>(x, *)},
       but also \code{bessel[IKJY](x, .)} are now consistently preserving
@@ -510,7 +504,7 @@
 }
 
 \section{\Rlogo CHANGES IN R 4.3.2 patched}{
-  
+
   \subsection{NEW FEATURES}{
     \itemize{
       \item \code{iconv()} now fixes up variant encoding names such as
@@ -520,6 +514,12 @@
 
   \subsection{BUG FIXES}{
     \itemize{
+      \item Arguments are now properly forwarded to methods on S4 generics
+      with \dots{} in the middle of their formal arguments. This was
+      broken for the case when a method introduced an argument but did
+      not include \dots{} in its own formals. Thanks to Hervé Pagès for
+      the report \PR{18538}.
+
       \item Some invalid \code{file} arguments to \code{pictex()},
       \code{postscript()} and \code{xfig()} opened a file called
       \samp{NA} rather than throw an error.  These included
@@ -572,6 +572,9 @@
       longer that 260 bytes (the Windows limit is 260 characters).
       Previously, some file names particularly with \sQuote{East Asian}
       characters were omitted.
+
+      \item \code{cov2cor(<0x0>)} now works, fixing \PR{18423} thanks to
+      Mikael Jagan and Elin Warning.
     }
   }
 }
