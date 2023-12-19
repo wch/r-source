@@ -546,13 +546,7 @@ int dummy_fgetc(Rconnection con)
 {
     if(con->inconv) {
 	Rboolean checkBOM = FALSE, checkBOM8 = FALSE;
-	con->EOF_signalled = FALSE; /* e.g. for a non-blocking connection; PR#18555 */
 	while(con->navail <= 0) {
-	    /* Probably in all cases there will be at most one iteration
-	       of the loop. It could iterate multiple times only if the input
-	       encoding could have \r or \n as a part of a multi-byte coded
-	       character.
-	    */
 	    unsigned int i, inew = 0;
 	    char *p, *ob;
 	    const char *ib;
@@ -572,7 +566,10 @@ int dummy_fgetc(Rconnection con)
 		int c = (con->buff)
 		    ? buff_fgetc(con)
 		    : con->fgetc_internal(con);
-		if(c == R_EOF){ con->EOF_signalled = TRUE; break; }
+		if(c == R_EOF)
+		    /* Do not set EOF_signalled, because subsequent reads from
+		       a non-blocking connections may succeed (PR18555). */
+		    break;
 		*p++ = (char) c;
 		con->inavail++;
 		inew++;
@@ -612,7 +609,9 @@ int dummy_fgetc(Rconnection con)
 		    warning(_("invalid input found on input connection '%s'"),
 			    con->description);
 		    con->inavail = 0;
-		    if (con->navail == 0) return R_EOF;
+		    /* Set to prevent reading any more bytes from input,
+		       possibly those following the invalid bytes currently
+		       encountered. */
 		    con->EOF_signalled = TRUE;
 		}
 	    }
