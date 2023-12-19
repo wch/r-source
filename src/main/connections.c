@@ -545,21 +545,37 @@ int dummy_vfprintf(Rconnection con, const char *format, va_list ap)
 int dummy_fgetc(Rconnection con)
 {
     if(con->inconv) {
-	Rboolean checkBOM = FALSE, checkBOM8 = FALSE;
 	while(con->navail <= 0) {
 	    unsigned int i, inew = 0;
 	    char *p, *ob;
 	    const char *ib;
 	    size_t inb, onb, res;
+	    Rboolean checkBOM = FALSE, checkBOM8 = FALSE;
 
 	    if(con->EOF_signalled) return R_EOF;
-	    if(con->inavail == -2) {
-		con->inavail = 0;
-		checkBOM = TRUE;
-	    }
-	    if(con->inavail == -3) {
-		con->inavail = 0;
-		checkBOM8 = TRUE;
+	    if (con->inavail < 0) {
+		switch(con->inavail) {
+		case -2:
+		    con->inavail = 0;
+		    checkBOM = TRUE;
+		    break;
+		case -3:
+		    con->inavail = 0;
+		    checkBOM8 = TRUE;
+		    break;
+		case -21:
+		    con->inavail = 1;
+		    checkBOM = TRUE;
+		    break;
+		case -31:
+		    con->inavail = 1;
+		    checkBOM8 = TRUE;
+		    break;
+		case -32:
+		    con->inavail = 2;
+		    checkBOM8 = TRUE;
+		    break;
+		}
 	    }
 	    p = con->iconvbuff + con->inavail;
 	    for(i = con->inavail; i < 25; i++) {
@@ -580,6 +596,36 @@ int dummy_fgetc(Rconnection con)
 		       (PR17634).
 		    */
 		    break;
+	    }
+	    if (checkBOM || checkBOM8) {
+		/* Handle the case of partial BOMs, e.g. in non-blocking
+		   connections, when we do not have enough data to tell
+		   whether there is a BOM or not.  Indicate by negative
+		   con->inavail which BOM still needs to be checked and
+		   how many bytes were already checked. */
+		if(con->inavail == 0) {
+		    if (checkBOM)
+			con->inavail = -2;
+		    else if (checkBOM8)
+			con->inavail = -3;
+		    return R_EOF;
+		}
+		if (con->inavail == 1) {
+		    if (checkBOM && (((int)con->iconvbuff[0] & 0xff) == 255)) {
+			con->inavail = -21;
+			return R_EOF;
+		    }
+		    if (checkBOM8 && con->iconvbuff[0] == '\xef') {
+			con->inavail = -31;
+			return R_EOF;
+		    }
+		}
+		if (con->inavail == 2 && checkBOM8 &&
+		    con->iconvbuff[1] == '\xbb') {
+
+		    con->inavail = -32;
+		    return R_EOF;
+		}
 	    }
 	    if(inew == 0) return R_EOF;
 	    if(checkBOM && con->inavail >= 2 &&
