@@ -30,7 +30,8 @@ nrow <- function(x) dim(x)[1L]
 ncol <- function(x) dim(x)[2L]
 
 NROW <- function(x) if(length(d <- dim(x)))      d[1L] else length(x)
-NCOL <- function(x) if(length(d <- dim(x)) > 1L) d[2L] else 1L
+NCOL <- function(x)
+    if(is.null(x)) 0L else if(length(d <- dim(x)) > 1L) d[2L] else 1L
 
 rownames <- function(x, do.NULL = TRUE, prefix = "row")
 {

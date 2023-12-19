@@ -226,6 +226,9 @@
       convention once Unicode restricted the number of Unicode points
       to \eqn{2{^31} - 1}{2^31 - 1} and so will never need more than 6
       digits.)
+
+      \item \code{NCOL(NULL)} now returns 0 instead of 1, for
+      consistency with \code{cbind()}.
     }
   }
 

@@ -128,11 +128,3 @@ local({
 
     makeActiveBinding(".Library.site", slfun, globalenv())
 })
-
-if(isTRUE(as.logical(Sys.getenv("_R_NCOL_NULL_IS_ZERO_",
-                                "FALSE")))) {
-    NCOL <- function(x)
-        if(is.null(x)) 0L
-        else if(length(d <- dim(x)) > 1L) d[2L]
-        else 1L
-}

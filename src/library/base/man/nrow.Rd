@@ -52,8 +52,10 @@ NROW(1:12) # 12, the length() of the vector
 ## and so does cbind() :
 dim(as.matrix(numeric())) # 0 1
 dim(    cbind(numeric())) # ditto
-## consequently, NCOL(.) gives 1, too :
-NCOL(numeric()) # 1 and hence
-NCOL(NULL)      # 1
+NCOL(numeric()) # 1
+## However, as.matrix(NULL) fails and cbind(NULL) gives NULL, hence for
+## consistency: 
+NCOL(NULL)      # 0
+## (This gave 1 in R < 4.4.0.)
 }
 \keyword{array}
