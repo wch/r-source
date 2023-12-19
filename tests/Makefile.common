@@ -228,7 +228,7 @@ test-Packages1:
 	  $(ECHO) "checking package '$${p}'"; \
 	  _R_CHECK_FF_CALLS_=registration \
 	  _R_CHECK_CODE_USAGE_WITH_ONLY_BASE_ATTACHED_=true \
-	  $(top_builddir)/bin/R CMD check --install=skip --no-build-vignettes \
+	  $(R3) --install=skip --no-build-vignettes \
 	    $(top_srcdir)/src/library/$${p} || $(ECHO); \
 	done
 
@@ -247,7 +247,7 @@ stamp-Packages: $(PKG_OBJECTS)
 	@rm -f $@
 	@_R_CHECK_FF_CALLS_=registration \
 	  _R_CHECK_CODE_USAGE_WITH_ONLY_BASE_ATTACHED_=true \
-	  $(top_builddir)/bin/R CMD check --install=skip --no-build-vignettes \
+	  $(R3) --install=skip --no-build-vignettes \
 	  $(top_srcdir)/src/library/`basename $@ .log` > $@ 2>&1
 	@cat $@
 
