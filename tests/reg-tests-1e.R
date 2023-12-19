@@ -1110,6 +1110,17 @@ stopifnot(identical(cov2cor(m00), m00))
 ## gave error in R <= 4.3.2
 
 
+## cov2cor(.) warning(s) with negative/NA diag(.) - PR#18424
+(D_1 <- diag(-1, 3L))
+op <- options(warn=1)
+m <- capture.output(r <- cov2cor(D_1), type = "message")
+matrix(rep_len(c(1, rep(NaN,3)),3*3), 3) -> r0
+stopifnot(all.equal(r, r0, tol = 0, check.attributes = FALSE),# always ok
+          length(m) == 2, grepl("^ *diag.V. ", m[2]))
+options(op) # revert
+## cov2cor() gave 2 warnings on 3 lines, the 2nd one inaccurate in R <= 4.3.2
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

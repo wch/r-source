@@ -578,6 +578,10 @@
 
       \item \code{cov2cor(<0x0>)} now works, fixing \PR{18423} thanks to
       Mikael Jagan and Elin Warning.
+
+      \item \code{cov2cor(<negative diagonal>)} and similar now give one
+      warning instead of two, with better wording, fixing \PR{18424} thanks
+      to Mikael Jagan.
     }
   }
 }

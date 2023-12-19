@@ -194,9 +194,12 @@ cov2cor <- function(V)
     p <- (d <- dim(V))[1L]
     if(!is.numeric(V) || length(d) != 2L || p != d[2L])
 	stop("'V' is not a square numeric matrix")
-    Is <- sqrt(1/diag(V)) # diag( 1/sigma_i )
-    if(any(!is.finite(Is)))
-	warning("diag(.) had 0 or NA entries; non-finite result is doubtful")
+    ## Is := diag( 1/sigma_i )
+    pos <- !is.na(Is <- D <- diag(V, names=FALSE)) & D > 0
+    Is[ pos] <- sqrt(1/D[pos])
+    Is[!pos] <- NaN
+    if(any(!pos) || any(!is.finite(Is)))
+	warning("diag(V) had non-positive or NA entries; the non-finite result may be dubious")
     r <- V # keep dimnames
     r[] <- Is * V * rep(Is, each = p)
     ##	== D %*% V %*% D  where D = diag(Is)
