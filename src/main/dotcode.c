@@ -582,6 +582,7 @@ attribute_hidden SEXP do_External(SEXP call, SEXP op, SEXP args, SEXP env)
     return check_retval(call, retval);
 }
 
+typedef SEXP (*FUNS0)(void);
 typedef SEXP (*FUNS1)(SEXP);
 typedef SEXP (*FUNS2)(SEXP, SEXP);
 typedef SEXP (*FUNS3)(SEXP, SEXP, SEXP);
@@ -862,7 +863,7 @@ attribute_hidden SEXP R_doDotCall(DL_FUNC fun, int nargs, SEXP *cargs,
     SEXP retval = R_NilValue;	/* -Wall */
     switch (nargs) {
     case 0:
-	retval = (SEXP)fun();
+	retval = (SEXP)((FUNS0)fun)();
 	break;
     case 1:
 	retval = (SEXP)((FUNS1)fun)(cargs[0]);
@@ -2069,7 +2070,7 @@ attribute_hidden SEXP do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 
     switch (nargs) {
     case 0:
-	fun();
+	((FUNS0)fun)();
 	break;
     case 1:
 	((FUNS1)fun)(cargs[0]);
