@@ -868,56 +868,62 @@ R_xlen_t sorted_any_duplicated(SEXP x, Rboolean from_last) {
     Rboolean seen_na = FALSE, seen_nan = FALSE, na1st = FALSE;
     
 #define SORTED_ANYDUP_NONNANS_FROM_LAST(start, count, tmpvar, eetype, vvtype) do { \
-	tmpvar = vvtype##_ELT(x, start + count - 1);			\
-	ITERATE_BY_REGION_PARTIAL_REV(x, xptr, idx, nb, eetype, vvtype, \
-				      start, count - 1, {		\
-					  if(xptr[nb - 1] == tmpvar) {	\
-					      return idx + nb;		\
-					  }				\
-					  for(R_xlen_t k = nb - 2; k >= 0; k--) { \
-					      if(xptr[k + 1] == xptr[k]) { \
-						  return idx + k + 1;	\
-					      }				\
-					  }				\
-					  tmpvar = xptr[0];		\
-				      });				\
+	if (count > 1) {							\
+	    tmpvar = vvtype##_ELT(x, start + count - 1);			\
+	    ITERATE_BY_REGION_PARTIAL_REV(x, xptr, idx, nb, eetype, vvtype,	\
+					  start, count - 1, {			\
+					      if(xptr[nb - 1] == tmpvar) {	\
+						  return idx + nb;		\
+					      }					\
+					      for(R_xlen_t k = nb - 2; k >= 0; k--) { \
+						  if(xptr[k + 1] == xptr[k]) {	\
+						      return idx + k + 1;	\
+						  }				\
+					      }					\
+					      tmpvar = xptr[0];			\
+					  });					\
+	}									\
     } while(0)
 
 #define SORTED_ANYDUP_NONNANS_FROM_FIRST(start, count, tmpvar, eetype, vvtype) do { \
-	tmpvar = vvtype##_ELT(x, start);				\
-	ITERATE_BY_REGION_PARTIAL(x, xptr, idx, nb, eetype,		\
-				  vvtype, start + 1, count - 1, {	\
-				      if(xptr[0] == tmpvar) {		\
-					  return idx + 1;		\
-				      }					\
-				      for(R_xlen_t k = 1; k < nb; k++) { \
-					  if(xptr[k] == xptr[k - 1]) {	\
-					      return idx + k + 1;	\
-					  }				\
-				      }					\
-				      tmpvar = xptr[nb - 1];		\
-				  });					\
+	if (count > 1) {							\
+	    tmpvar = vvtype##_ELT(x, start);					\
+	    ITERATE_BY_REGION_PARTIAL(x, xptr, idx, nb, eetype,			\
+				      vvtype, start + 1, count - 1, {		\
+					  if(xptr[0] == tmpvar) {		\
+					      return idx + 1;			\
+					  }					\
+					  for(R_xlen_t k = 1; k < nb; k++) {	\
+					      if(xptr[k] == xptr[k - 1]) {	\
+						  return idx + k + 1;		\
+					      }					\
+					  }					\
+					  tmpvar = xptr[nb - 1];		\
+				      });					\
+	}									\
     } while(0)
 
 #define SORTED_ANYDUP_NANS(start, count, itype, istart, icond, iter) do { \
-	ITERATE_BY_REGION_##itype(x, xptr, idx, nb, double, REAL,	\
-				  start, count, {			\
-				      for(R_xlen_t i = istart; icond; iter) { \
-					  if(R_NaN_is_R_NA(xptr[i])) {	\
-					      if(seen_na) {		\
-						  return idx + i + 1;	\
-					      } else {			\
-						  seen_na = TRUE;	\
-					      }				\
-					  } else {			\
-					      if(seen_nan) {		\
-						  return idx + i + 1;	\
-					      } else {			\
-						  seen_nan = TRUE;	\
-					      }				\
-					  }				\
-				      }					\
-				  });					\
+	if (count > 1) {							\
+	    ITERATE_BY_REGION_##itype(x, xptr, idx, nb, double, REAL,		\
+				      start, count, {				\
+					  for(R_xlen_t i = istart; icond; iter) { \
+					      if(R_NaN_is_R_NA(xptr[i])) {	\
+						  if(seen_na) {			\
+						      return idx + i + 1;	\
+						  } else {			\
+						      seen_na = TRUE;		\
+						  }				\
+					      } else {				\
+						  if(seen_nan) {		\
+						      return idx + i + 1;	\
+						  } else {			\
+						      seen_nan = TRUE;		\
+						  }				\
+					      }					\
+					  }					\
+				      });					\
+	}									\
     } while(0)
 
     switch(TYPEOF(x)) {
