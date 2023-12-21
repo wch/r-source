@@ -861,9 +861,6 @@ PostScriptMetricInfo(int c, double *ascent, double *descent, double *width,
     }
 
     if (c < 0) { Unicode = TRUE; c = -c;}
-    *ascent = 0.001 * metrics->CharInfo[c].BBox[3];
-    *descent = -0.001 * metrics->CharInfo[c].BBox[1];
-    *width = 0.001 * metrics->CharInfo[c].WX;
     
     if(Unicode && !isSymbol && c >= 128) { // don't really need to except ASCII
 	if (c >= 65536) {
