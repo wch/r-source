@@ -1299,7 +1299,10 @@ attribute_hidden SEXP do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 	// This codes assumes a fixed order of components.
 	double secs = REAL(VECTOR_ELT(x, 0))[i%nlen[0]], fsecs = floor(secs);
 	// avoid (int) NAN
-	tm.tm_sec   = R_FINITE(secs) ? (int) fsecs: NA_INTEGER;
+	if (R_FINITE(secs) && fsecs >= INT_MIN && fsecs <= INT_MAX)
+	    tm.tm_sec = (int) fsecs;
+	else
+	    tm.tm_sec = NA_INTEGER;
 	tm.tm_min   = INTEGER(VECTOR_ELT(x, 1))[i%nlen[1]];
 	tm.tm_hour  = INTEGER(VECTOR_ELT(x, 2))[i%nlen[2]];
 	tm.tm_mday  = INTEGER(VECTOR_ELT(x, 3))[i%nlen[3]];
@@ -1646,16 +1649,19 @@ attribute_hidden SEXP do_D2POSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 		for ( ; day < 0; --y, day += days_in_year(y) );
 	    // Avoid overflows
 	    double year0 =  y - 1900 + rounds * 400;
-	    if (year0 > INT_MAX || year0 < INT_MIN) valid = FALSE;
-	    y = tm.tm_year = (int)year0;
-	    tm.tm_yday = day;
-	    /* month within year */
-	    for (mon = 0;
-		 day >= (tmp = days_in_month(mon, y));
-		 day -= tmp, mon++);
-	    tm.tm_mon = mon;
-	    tm.tm_mday = day + 1;
-	    tm.tm_isdst = 0; /* no dst in GMT */
+	    if (year0 > INT_MAX || year0 < INT_MIN)
+		valid = FALSE;
+	    else {
+		y = tm.tm_year = (int)year0;
+		tm.tm_yday = day;
+		/* month within year */
+		for (mon = 0;
+		     day >= (tmp = days_in_month(mon, y));
+		     day -= tmp, mon++);
+		tm.tm_mon = mon;
+		tm.tm_mday = day + 1;
+		tm.tm_isdst = 0; /* no dst in GMT */
+	    }
 	}
 	makelt(&tm, ans, i, valid, valid ? 0.0 : x_i);
 	SET_STRING_ELT(VECTOR_ELT(ans, 9), i, mkChar(tz));

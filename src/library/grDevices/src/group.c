@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997-2014  The R Core Team
+ *  Copyright (C) 1997-2023  The R Core Team
  *  Copyright (C) 2003	     The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -65,7 +65,7 @@ SEXP useGroup(SEXP args)
     return R_NilValue;
 }
 
-SEXP devUp(void) {
+SEXP devUp(SEXP args) {
     pDevDesc dd = GEcurrentDevice()->dev;
     double left, right, bottom, top;
     SEXP ans;

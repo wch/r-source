@@ -2068,6 +2068,8 @@ attribute_hidden SEXP do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 	if (nprotect) UNPROTECT(nprotect);
     }
 
+    /* FIXME: Calling a function via an incompatible function pointer is
+       undefined behavior. */ 
     switch (nargs) {
     case 0:
 	((FUNS0)fun)();

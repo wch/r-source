@@ -2,7 +2,7 @@
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *  Copyright (C) 2003-2004  The R Foundation
- *  Copyright (C) 1998--2014  The R Core Team
+ *  Copyright (C) 1998--2023  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -206,8 +206,9 @@ struct callinfo {
 /*static SEXP R_fcall1;
   static SEXP R_env1; */
 
-static double fcn1(double x, struct callinfo *info)
+static double fcn1(double x, void *arg_info)
 {
+    struct callinfo *info = arg_info;
     SEXP s, sx;
     PROTECT(sx = ScalarReal(x));
     SETCADR(info->R_fcall, sx);
@@ -280,8 +281,7 @@ SEXP do_fmin(SEXP call, SEXP op, SEXP args, SEXP rho)
     info.R_env = rho;
     PROTECT(info.R_fcall = lang2(v, R_NilValue));
     PROTECT(res = allocVector(REALSXP, 1));
-    REAL(res)[0] = Brent_fmin(xmin, xmax,
-			      (double (*)(double, void*)) fcn1, &info, tol);
+    REAL(res)[0] = Brent_fmin(xmin, xmax, fcn1, &info, tol);
     UNPROTECT(2);
     return res;
 }
@@ -292,8 +292,9 @@ SEXP do_fmin(SEXP call, SEXP op, SEXP args, SEXP rho)
 // Brent's "zeroin"
 // ---------------
 
-static double fcn2(double x, struct callinfo *info)
+static double fcn2(double x, void *arg_info)
 {
+    struct callinfo *info = arg_info;
     SEXP s, sx;
     PROTECT(sx = ScalarReal(x));
     SETCADR(info->R_fcall, sx);
@@ -381,7 +382,7 @@ SEXP zeroin2(SEXP call, SEXP op, SEXP args, SEXP rho)
     PROTECT(info.R_fcall = lang2(v, R_NilValue)); /* the info used in fcn2() */
     PROTECT(res = allocVector(REALSXP, 3));
     REAL(res)[0] =
-	R_zeroin2(xmin, xmax, f_ax, f_bx, (double (*)(double, void*)) fcn2,
+	R_zeroin2(xmin, xmax, f_ax, f_bx, fcn2,
 		 (void *) &info, &tol, &iter);
     REAL(res)[1] = (double)iter;
     REAL(res)[2] = tol;
@@ -499,9 +500,9 @@ static int FT_lookup(int n, const double *x, function_info *state)
 
 /* This how the optimizer sees them */
 
-static void fcn(int n, const double x[], double *f, function_info
-		*state)
+static void fcn(int n, double *x, double *f, void *arg_state)
 {
+    function_info *state = arg_state;
     SEXP s, R_fcall;
     ftable *Ftable;
     double *g = (double *) 0, *h = (double *) 0;
@@ -556,8 +557,9 @@ static void fcn(int n, const double x[], double *f, function_info
 }
 
 
-static void Cd1fcn(int n, const double x[], double *g, function_info *state)
+static void Cd1fcn(int n, double *x, double *g, void *arg_state)
 {
+    function_info *state = arg_state;
     int ind;
 
     if ((ind = FT_lookup(n, x, state)) < 0) {	/* shouldn't happen */
@@ -570,9 +572,9 @@ static void Cd1fcn(int n, const double x[], double *g, function_info *state)
 }
 
 
-static void Cd2fcn(int nr, int n, const double x[], double *h,
-		   function_info *state)
+static void Cd2fcn(int nr, int n, double *x, double *h, void *arg_state)
 {
+    function_info *state = arg_state;
     int j, ind;
 
     if ((ind = FT_lookup(n, x, state)) < 0) {	/* shouldn't happen */

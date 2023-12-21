@@ -459,13 +459,13 @@ extern void signrank_free(void);
 extern void wilcox_free(void);
 */
 
-SEXP stats_signrank_free(void)
+SEXP stats_signrank_free(SEXP args)
 {
     signrank_free();
     return R_NilValue;
 }
 
-SEXP stats_wilcox_free(void)
+SEXP stats_wilcox_free(SEXP args)
 {
     wilcox_free();
     return R_NilValue;
