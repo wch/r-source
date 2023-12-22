@@ -71,7 +71,7 @@ extern int R_gzclose (gzFile file);
 #undef USE_HYPHEN
 /* In ISOLatin1, minus is 45 and hyphen is 173 */
 #ifdef USE_HYPHEN
-static char PS_hyphen = 173;
+static unsigned char PS_hyphen = 173;
 #endif
 
 #define USERAFM 999
@@ -912,7 +912,9 @@ PostScriptMetricInfo(int c, double *ascent, double *descent, double *width,
 	short wx = 0;
 	for (char *p = out; *p; p++) {
 	    unsigned char c = *p;
-	    // How about USE_HYPHEN?
+#ifdef USE_HYPHEN
+	    if (c == '-') c = PS_hyphen;
+#endif
 	    short w = metrics->CharInfo[c].WX;
 	    // WX = NA_SHORT means that all the metrics are missing:
 	    if(w == NA_SHORT)
@@ -951,7 +953,9 @@ PostScriptMetricInfo(int c, double *ascent, double *descent, double *width,
 	return;
     } else {
 	// 8-bit case
-	// How about USE_HYPHEN?
+#ifdef USE_HYPHEN
+	    if (c == '-') c = PS_hyphen;
+#endif
 	*ascent = 0.001 * metrics->CharInfo[c].BBox[3];
 	*descent = -0.001 * metrics->CharInfo[c].BBox[1];
 	short wx = metrics->CharInfo[c].WX;
@@ -9837,7 +9841,7 @@ static void PDFWriteString(const char *str, size_t nb, PDFDesc *pd)
 	case '-':
 #ifdef USE_HYPHEN
 	    if (!isdigit((int)str[1]))
-                PDFwrite(buf, 2, PS_hyphen, pd);
+                PDFwrite(buf, 2, "%c", pd, PS_hyphen);
 	    else
 #endif
                 PDFwrite(buf, 2, "%c", pd, *str);
@@ -9877,7 +9881,7 @@ static void PDFWriteT1KerningString(const char *str,
 	p2 = str[i+1];
 #ifdef USE_HYPHEN
 	if (p1 == '-' && !isdigit((int)p2))
-	    p1 = (unsigned char)PS_hyphen;
+	    p1 = PS_hyphen;
 #endif
 	for (j = metrics->KPstart[p1]; j < metrics->KPend[p1]; j++)
 	    if(metrics->KernPairs[j].c2 == p2 &&
@@ -9902,7 +9906,7 @@ static void PDFWriteT1KerningString(const char *str,
 	    case '-':
 #ifdef USE_HYPHEN
 		if (!isdigit((int)str[i+1]))
-                    PDFwrite(buf, 10, PS_hyphen, pd);
+		    PDFwrite(buf, 2, "%c", pd, PS_hyphen);
 		else
 #endif
                 PDFwrite(buf, 2, "%c", pd, str[i]);
