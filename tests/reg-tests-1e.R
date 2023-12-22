@@ -1121,6 +1121,17 @@ options(op) # revert
 ## cov2cor() gave 2 warnings on 3 lines, the 2nd one inaccurate in R <= 4.3.2
 
 
+## `formals<-` failing for _explicit_ constant body
+g <- f <- function() "foo"; formals(f) <- formals(f); stopifnot(identical(f, g))
+g <- f <- function()r"(')"; formals(f) <- formals(f); stopifnot(identical(f, g))
+g <- f <- function()   1L;  formals(f) <- formals(f); stopifnot(identical(f, g))
+g <- f <- function() TRUE;  formals(f) <- formals(f); stopifnot(identical(f, g))
+g <- f <- function()   1i;  formals(f) <- formals(f); stopifnot(identical(f, g))
+g <- f <- function() 3.14;  formals(f) <- formals(f); stopifnot(identical(f, g))
+g <- f <- function()  Inf;  formals(f) <- formals(f); stopifnot(identical(f, g))
+## all failed in R <= 4.3.2 w/ Error in as.function.default(....): list argument expected
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

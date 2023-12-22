@@ -502,6 +502,9 @@
       \item \code{dummy.coef(.)} now also works for \code{lm()}-models with
       \code{character} categorical predictor variables rather than
       \code{factor} ones, fixing \PR{18635} reported by Jinsong Zhao.
+
+      \item \code{formals(f) <- formals(f)} now also works for a function
+      w/o arguments and atomic \emph{constant} \code{body(f)}.
     }
   }
 }
