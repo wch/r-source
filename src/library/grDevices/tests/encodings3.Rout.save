@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2023-12-21 r85716) -- "Unsuffered Consequences"
+R Under development (unstable) (2023-12-22 r85720) -- "Unsuffered Consequences"
 Copyright (C) 2023 The R Foundation for Statistical Computing
-Platform: aarch64-apple-darwin23.2.0
+Platform: x86_64-pc-linux-gnu
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -55,14 +55,69 @@ Type 'q()' to quit R.
 > pdf("Encoding3.pdf", width = 7, height = 7, compress = FALSE)
 > plot(1:10, 1:10, type = "n")
 > text(0.5+seq_along(two), 2, two, adj = c(0,0))
+Warning in text.default(0.5 + seq_along(two), 2, two, adj = c(0, 0)) :
+  for '≠' in 'mbcsToSbcs': /= substituted for ≠ (U+2260)
+Warning in text.default(0.5 + seq_along(two), 2, two, adj = c(0, 0)) :
+  for '≪' in 'mbcsToSbcs': << substituted for ≪ (U+226A)
+Warning in text.default(0.5 + seq_along(two), 2, two, adj = c(0, 0)) :
+  for '≫' in 'mbcsToSbcs': >> substituted for ≫ (U+226B)
+Warning in text.default(0.5 + seq_along(two), 2, two, adj = c(0, 0)) :
+  for '‥' in 'mbcsToSbcs': .. substituted for ‥ (U+2025)
+Warning in text.default(0.5 + seq_along(two), 2, two, adj = c(0, 0)) :
+  for '‼' in 'mbcsToSbcs': !! substituted for ‼ (U+203C)
+Warning in text.default(0.5 + seq_along(two), 2, two, adj = c(0, 0)) :
+  for '™' in 'mbcsToSbcs': TM substituted for ™ (U+2122)
 > text(0.5+seq_along(three), 3, three, adj = c(0,0))
+Warning in text.default(0.5 + seq_along(three), 3, three, adj = c(0, 0)) :
+  for '↔' in 'mbcsToSbcs': <-> substituted for ↔ (U+2194)
+Warning in text.default(0.5 + seq_along(three), 3, three, adj = c(0, 0)) :
+  for '⇔' in 'mbcsToSbcs': <=> substituted for ⇔ (U+21D4)
+Warning in text.default(0.5 + seq_along(three), 3, three, adj = c(0, 0)) :
+  for '⋘' in 'mbcsToSbcs': <<< substituted for ⋘ (U+22D8)
+Warning in text.default(0.5 + seq_along(three), 3, three, adj = c(0, 0)) :
+  for '⋙' in 'mbcsToSbcs': >>> substituted for ⋙ (U+22D9)
+Warning in text.default(0.5 + seq_along(three), 3, three, adj = c(0, 0)) :
+  for '…' in 'mbcsToSbcs': ... substituted for … (U+2026)
+Warning in text.default(0.5 + seq_along(three), 3, three, adj = c(0, 0)) :
+  for '⋯' in 'mbcsToSbcs': ��� substituted for ⋯ (U+22EF)
 > text(0.5+seq_along(four), 4, four, adj = c(0,0))
+Warning in text.default(0.5 + seq_along(four), 4, four, adj = c(0, 0)) :
+  for '㏂' in 'mbcsToSbcs': a.m. substituted for ㏂ (U+33C2)
+Warning in text.default(0.5 + seq_along(four), 4, four, adj = c(0, 0)) :
+  for '㏘' in 'mbcsToSbcs': p.m. substituted for ㏘ (U+33D8)
 > 
 > ## Now try centring
 > plot(1:10, 1:10, type = "n")
 > text(0.5+seq_along(two), 2, two)
+Warning in text.default(0.5 + seq_along(two), 2, two) :
+  for '≠' in 'mbcsToSbcs': /= substituted for ≠ (U+2260)
+Warning in text.default(0.5 + seq_along(two), 2, two) :
+  for '≪' in 'mbcsToSbcs': << substituted for ≪ (U+226A)
+Warning in text.default(0.5 + seq_along(two), 2, two) :
+  for '≫' in 'mbcsToSbcs': >> substituted for ≫ (U+226B)
+Warning in text.default(0.5 + seq_along(two), 2, two) :
+  for '‥' in 'mbcsToSbcs': .. substituted for ‥ (U+2025)
+Warning in text.default(0.5 + seq_along(two), 2, two) :
+  for '‼' in 'mbcsToSbcs': !! substituted for ‼ (U+203C)
+Warning in text.default(0.5 + seq_along(two), 2, two) :
+  for '™' in 'mbcsToSbcs': TM substituted for ™ (U+2122)
 > text(0.5+seq_along(three), 3, three)
+Warning in text.default(0.5 + seq_along(three), 3, three) :
+  for '↔' in 'mbcsToSbcs': <-> substituted for ↔ (U+2194)
+Warning in text.default(0.5 + seq_along(three), 3, three) :
+  for '⇔' in 'mbcsToSbcs': <=> substituted for ⇔ (U+21D4)
+Warning in text.default(0.5 + seq_along(three), 3, three) :
+  for '⋘' in 'mbcsToSbcs': <<< substituted for ⋘ (U+22D8)
+Warning in text.default(0.5 + seq_along(three), 3, three) :
+  for '⋙' in 'mbcsToSbcs': >>> substituted for ⋙ (U+22D9)
+Warning in text.default(0.5 + seq_along(three), 3, three) :
+  for '…' in 'mbcsToSbcs': ... substituted for … (U+2026)
+Warning in text.default(0.5 + seq_along(three), 3, three) : for '⋯' in 'mbcsToSbcs': ��� substituted for ⋯ (U+22EF)
 > text(0.5+seq_along(four), 4, four)
+Warning in text.default(0.5 + seq_along(four), 4, four) :
+  for '㏂' in 'mbcsToSbcs': a.m. substituted for ㏂ (U+33C2)
+Warning in text.default(0.5 + seq_along(four), 4, four) :
+  for '㏘' in 'mbcsToSbcs': p.m. substituted for ㏘ (U+33D8)
 > dev.off()
 null device 
           1 
@@ -84,4 +139,4 @@ null device
 > 
 > proc.time()
    user  system elapsed 
-  0.109   0.020   0.117 
+  0.480   0.120   0.572 
