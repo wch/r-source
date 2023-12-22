@@ -4459,9 +4459,9 @@ add_dummies <- function(dir, Log)
                 lines <- NULL
                 if (Log$con > 0L && file.exists(logf)) {
                     ## write results only to 00check.log
-                    lines <- readLines(logf, warn = FALSE)
-                    if(any(grepl("Running R code.*times elapsed time",
-                                 lines)))
+                    ## check o/p might be in a different encoding.
+                    lines <- readLines(logf, warn = FALSE, encoding = "bytes")
+                    if(any(grepl("Running R code.*times elapsed time", lines)))
                         any <- TRUE
                 }
                 if(any) noteLog(Log) else resultLog(Log, "OK")
