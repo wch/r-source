@@ -526,6 +526,13 @@
     }
   }
 
+  \subsection{DEPRECATED AND DEFUNCT}{
+    \itemize{
+      \item The legacy \code{encoding = "MacRoman"} is deprecated in
+      \code{pdf()}, \code{postscript()}.
+    }
+  }
+
   \subsection{BUG FIXES}{
     \itemize{
       \item Arguments are now properly forwarded to methods on S4 generics
