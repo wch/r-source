@@ -267,6 +267,8 @@ postscript <- function(file = if(onefile) "Rplots.ps" else "Rplot%03d.ps",
     onefile <- old$onefile # for 'file'
     if(!checkIntFormat(file))
         stop(gettextf("invalid 'file' argument '%s'", file), domain = NA)
+    if (!is.na(pmatch("MacRoman", old$encoding)))
+        warning("encoding MacRoman is deprecated")
     .External(C_PostScript,
               file, old$paper, old$family, old$encoding, old$bg, old$fg,
               old$width, old$height, old$horizontal, old$pointsize,
@@ -369,6 +371,8 @@ pdf <- function(file = if(onefile) "Rplots.pdf" else "Rplot%03d.pdf",
     onefile <- old$onefile # needed to set 'file'
     if(!checkIntFormat(file))
         stop(gettextf("invalid 'file' argument '%s'", file), domain = NA)
+    if (!is.na(pmatch("MacRoman", old$encoding)))
+        warning("encoding MacRoman is deprecated")
     .External(C_PDF,
               file, old$paper, old$family, old$encoding, old$bg, old$fg,
               old$width, old$height, old$pointsize, onefile, old$pagecentre,
@@ -991,7 +995,7 @@ embedFonts <- function(file, # The ps or pdf file to convert
 }
 
 ## 'file' is the pdf file to convert
-## 'glyphInfo' is RGlyphInfo 
+## 'glyphInfo' is RGlyphInfo
 ## 'outfile' is the new pdf file
 ## 'options' are additional options to ghostscript
 embedGlyphs <- function(file, glyphInfo, outfile = file,

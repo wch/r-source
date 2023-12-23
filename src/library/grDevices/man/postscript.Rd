@@ -251,6 +251,9 @@ postscript(file = if(onefile) "Rplots.ps" else "Rplot\%03d.ps",
   Latin-9 and Cyrillic but no Greek.  The Adobe exceptions cover the
   Latin character sets, but not the Euro.)
 
+  Support for the legacy \code{"MacRoman.enc"} encoding is deprecated
+  and will be removed in \R 4.4.0.
+
   If you specify the encoding, it is your responsibility to ensure that
   the PostScript font contains the glyphs used.  One issue here is the Euro
   symbol which is in the WinAnsi and MacRoman encodings but may well not

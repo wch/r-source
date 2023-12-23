@@ -14,6 +14,13 @@
     }
   }
 
+  \subsection{DEPRECATED AND DEFUNCT}{
+    \itemize{
+      \item The legacy \code{encoding = "MacRoman"} is deprecated in
+      \code{pdf()}, \code{postscript()}.
+    }
+  }
+
   \subsection{BUG FIXES}{
     \itemize{
       \item Arguments are now properly forwarded to methods on S4 generics
@@ -21,7 +28,7 @@
       broken for the case when a method introduced an argument but did
       not include \dots{} in its own formals. Thanks to Hervé Pagès for
       the report \PR{18538}.
-      
+
       \item Some invalid \code{file} arguments to \code{pictex()},
       \code{postscript()} and \code{xfig()} opened a file called
       \samp{NA} rather than throw an error.  These included
@@ -58,7 +65,7 @@
       \item \code{pdf()} and \code{postscript()} support for the documented
       Adobe encodings \code{"Greek"} and \code{"Cyrilllic"} was missing
       (although the corresponding Windows' codepages could be used).
-      (And also for the legacy \code{"MacRoman"} encoding.) 
+      (And also for the legacy \code{"MacRoman"} encoding.)
 
       \item Computations of glyph metric information for \code{pdf()}
       and \code{postscript()} did not take into account that
