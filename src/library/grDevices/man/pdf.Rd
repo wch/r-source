@@ -275,14 +275,12 @@ pdf(file = if(onefile) "Rplots.pdf" else "Rplot\%03d.pdf",
   (also known as \code{"CP1252.enc"}, \code{"CP1250.enc"}
   (Central/Eastern Europe), \code{"CP1251.enc"} (Cyrillic),
   \code{"Greek.enc"} (ISO 8859-7), \code{"CP1253.enc"} (modern Greek)
-  and \code{"CP1257.enc"} (\sQuote{Baltic Rim}).  There is also
-  \code{"MacRoman.enc"} (of historical interest only as was used on
-  Classic MacOS), Note that many glyphs in these encodings are not in
-  the fonts corresponding to the standard families.  (The Adobe ones for
-  all but Courier, Helvetica and Times cover little more than Latin-1,
-  whereas the URW ones also cover Latin-2, Latin-7, Latin-9 and Cyrillic
-  but no Greek.  The Adobe exceptions cover the Latin character sets,
-  but not the Euro.)
+  and \code{"CP1257.enc"} (\sQuote{Baltic Rim}).  Note that many glyphs
+  in these encodings are not in the fonts corresponding to the standard
+  families.  (The Adobe ones for all but Courier, Helvetica and Times
+  cover little more than Latin-1, whereas the URW ones also cover
+  Latin-2, Latin-7, Latin-9 and Cyrillic but no Greek.  The Adobe
+  exceptions cover the Latin character sets, but not the Euro.)
 
   NB: support for encodings other than \code{"ISOLatin1.enc"} (and the
   Windows ones on Windows) depends on support by the platform's

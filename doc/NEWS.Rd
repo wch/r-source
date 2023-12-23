@@ -229,6 +229,12 @@
 
       \item \code{NCOL(NULL)} now returns 0 instead of 1, for
       consistency with \code{cbind()}.
+
+      \item Support for \code{encoding = "MacRoman"} has been removed
+      from the \code{pdf()} and \code{postscript()} devices -- this was
+      a legacy encoding supporting classic macOS up to 2001 (with
+      various revisions), and no longer has universal \code{libiconv}
+      support.%% e.g. not in musl
     }
   }
 

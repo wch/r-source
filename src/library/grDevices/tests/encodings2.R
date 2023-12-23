@@ -5,7 +5,7 @@
 ## Cyrillic Greek
 ## KOI8-R KOI8-U
 ## WinAnsi aka CP1252 CP1250 CP1251 CP1253 CP1257
-## and a few more (PDFDdoc, MacRoman), designed for 8-but locales.
+## and a few more (PDFDdoc, AdobeStd, AdobeSym).
 
 options(warn = 1L)
 

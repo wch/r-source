@@ -494,8 +494,6 @@ static void seticonvName(const char *encpath, char *convname)
 	strcpy(convname, "iso-8859-7");
     else if(pathcmp(encpath, "Cyrillic") == 0)
 	strcpy(convname, "iso-8859-5");
-    else if(pathcmp(encpath, "MacRoman") == 0)
-	strcpy(convname, "macintosh");
 #endif
     else {
 	/*
@@ -4510,7 +4508,7 @@ next_char:
 		else if (wc == 0x2026) fix = "...";
 		else if (wc == 0x22EF) { // done by macOS in latin1
 		    /* In most 8-bit encodings B7 is the 'middle dot',
-		       U+00D7,, but not all, e.g. macroman, KOI8-R.
+		       U+00D7,, but not all, e.g. KOI8-?.
 		       Very rare, so don't worry about speed.
 		    */
 		    if (streql(encoding, "latin1") ||
@@ -8426,7 +8424,6 @@ static void PDF_Encodings(PDFDesc *pd)
 
 	fprintf(pd->pdffp, "%d 0 obj\n<<\n/Type /Encoding ", pd->nobjs);
 	if (strcmp(encoding->name, "WinAnsiEncoding") == 0 ||
-	    strcmp(encoding->name, "MacRomanEncoding") == 0 ||
 	    strcmp(encoding->name, "PDFDocEncoding") == 0) {
 	    fprintf(pd->pdffp, "/BaseEncoding /%s\n", encoding->name);
 	    fprintf(pd->pdffp, "/Differences [ 45/minus ]\n");
