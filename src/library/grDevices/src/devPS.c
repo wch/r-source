@@ -745,10 +745,8 @@ static double
 			  Rboolean useKerning,
 			  int face, const char *encoding)
 {
-    int sum = 0, i;
-    short wx;
+    int sum = 0;
     const unsigned char *p = NULL, *str1 = str;
-    unsigned char p1, p2;
 
     int status;
     if(!metrics && (face % 5) != 0) {
@@ -763,7 +761,8 @@ static double
 	    R_ucs2_t ucs2s[ucslen];
 	    status = (int) mbcsToUcs2((char *)str, ucs2s, (int) ucslen, enc);
 	    if (status >= 0)
-		for(i = 0 ; i < ucslen ; i++) {
+		for(int i = 0 ; i < ucslen ; i++) {
+		    short wx;
 #ifdef USE_RI18N_WIDTH
 		    wx = (short)(500 * Ri18n_wcwidth(ucs2s[i]));
 #else
@@ -802,6 +801,7 @@ static double
     /* Now we know we have an 8-bit encoded string in the encoding to
        be used for output. */
     for (p = str1; *p; p++) {
+	short wx;
 #ifdef USE_HYPHEN
 	if (*p == '-' && !isdigit(p[1]))
 	    wx = metrics->CharInfo[(int)PS_hyphen].WX;
@@ -815,8 +815,8 @@ static double
 
 	if(useKerning) {
 	    /* check for kerning adjustment */
-	    p1 = p[0]; p2 = p[1];
-	    for (i =  metrics->KPstart[p1]; i < metrics->KPend[p1]; i++)
+	    unsigned char p1 = p[0], p2 = p[1];
+	    for (int i =  metrics->KPstart[p1]; i < metrics->KPend[p1]; i++)
 		/* second test is a safety check: should all start with p1 */
 		if(metrics->KernPairs[i].c2 == p2 &&
 		   metrics->KernPairs[i].c1 == p1) {
@@ -848,6 +848,7 @@ static const char UCS2ENC[] = "UCS-2LE";
 static void
 PostScriptMetricInfo(int c, double *ascent, double *descent, double *width,
 		     FontMetricInfo *metrics,
+		     Rboolean useKerning,
 		     Rboolean isSymbol,
 		     const char *encoding)
 {
@@ -903,11 +904,9 @@ PostScriptMetricInfo(int c, double *ascent, double *descent, double *width,
 	    }
 	}
 	char out[10]; // one Unicode point in an sbcs, with possible transliteration.
-	// Do not show warnings (but throw errors)
+	// Do not show warnings (but do throw errors)
 	mbcsToSbcs(str, out, encoding, CE_UTF8, 1);
 
-	/* FIXME: should this have useKerning support? -- drawing text
-	   and PostScriptStringWidth do and it is used for "p.m." */
 	int a = -9999, d = 9999;
 	short wx = 0;
 	for (char *p = out; *p; p++) {
@@ -927,7 +926,10 @@ PostScriptMetricInfo(int c, double *ascent, double *descent, double *width,
 	       and these values are not considered when computing the FontBBox.
 
  	       Also NBSP and Euro in some fonts.  Should that be
- 	       skipped for acent and descent?
+ 	       skipped for acent and descent?  However:
+	       1) There are currently no transliterations including 
+	       space/NBSP (although macOS did at one point).
+	       2) The graphivs engine does not do this.
 	    else if
 	       (metrics->CharInfo[c].BBox[0] == 0 &&
 		metrics->CharInfo[c].BBox[1] == 0 &&
@@ -941,6 +943,15 @@ PostScriptMetricInfo(int c, double *ascent, double *descent, double *width,
 		wx += w;
 		a = max(a, metrics->CharInfo[c].BBox[3]);
 		d = min(d, metrics->CharInfo[c].BBox[1]);
+		if (useKerning) {
+		    unsigned char p1 = p[0], p2 = p[1];
+		    for (int i =  metrics->KPstart[p1]; i < metrics->KPend[p1]; i++)
+			if(metrics->KernPairs[i].c2 == p2 &&
+			   metrics->KernPairs[i].c1 == p1) {
+			    wx += metrics->KernPairs[i].kern;
+			    break;
+			}
+		}
 	    }
 	}
 	// printf("MetricInfo for %s: %d %d %d\n", out, wx, a, d);
@@ -4026,6 +4037,7 @@ static void PS_MetricInfo(int c,
     if (isType1Font(gc->fontfamily, PostScriptFonts, pd->defaultFont)) {
 	PostScriptMetricInfo(c, ascent, descent, width,
 			     metricInfo(gc->fontfamily, face, pd),
+			     TRUE,
 			     face == 5, convname(gc->fontfamily, pd));
     } else { /* cidfont(gc->fontfamily, PostScriptFonts) */
 	if (face < 5) {
@@ -4033,7 +4045,7 @@ static void PS_MetricInfo(int c,
 	} else {
 	    PostScriptMetricInfo(c, ascent, descent, width,
 				 CIDsymbolmetricInfo(gc->fontfamily, pd),
-				 TRUE, "");
+				 FALSE, TRUE, "");
 	}
     }
     *ascent = floor(gc->cex * gc->ps + 0.5) * *ascent;
@@ -5660,7 +5672,7 @@ static void XFig_MetricInfo(int c,
 
     PostScriptMetricInfo(c, ascent, descent, width,
 			 &(pd->fonts->family->fonts[face-1]->metrics),
-			 face == 5, "");
+			 FALSE, face == 5, "");
     *ascent = floor(gc->cex * gc->ps + 0.5) * *ascent;
     *descent = floor(gc->cex * gc->ps + 0.5) * *descent;
     *width = floor(gc->cex * gc->ps + 0.5) * *width;
@@ -10441,14 +10453,14 @@ void PDF_MetricInfo(int c,
 	PostScriptMetricInfo(c, ascent, descent, width,
 			     PDFmetricInfo(gc->fontfamily,
 					   gc->fontface, pd),
-			     face == 5, PDFconvname(gc->fontfamily, pd));
+			     TRUE, face == 5, PDFconvname(gc->fontfamily, pd));
     } else { /* cidfont(gc->fontfamily) */
 	if (face < 5) {
 	    PostScriptCIDMetricInfo(c, ascent, descent, width);
 	} else {
 	    PostScriptMetricInfo(c, ascent, descent, width,
 				 PDFCIDsymbolmetricInfo(gc->fontfamily, pd),
-				 TRUE, "");
+				 FALSE, TRUE, "");
 	}
     }
     *ascent = floor(gc->cex * gc->ps + 0.5) * *ascent;
