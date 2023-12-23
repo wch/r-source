@@ -981,11 +981,11 @@ extern int putenv(char *string);
    bytes of an entire path name that may exist.  In current POSIX, when
    defined, it is the maximum number of bytes that will be stored to a
    user-supplied buffer by file-system operations which do not allow the
-   caller to provide actual size of the buffer (and such calls are rare). 
+   caller to provide actual size of the buffer (and such calls are rare).
    If the system limited path names to a certain value, it shall not be less
    than this value, if defined.
 
-   POSIX has required this to be at least 255/256, and X/Open at least 1024. 
+   POSIX has required this to be at least 255/256, and X/Open at least 1024.
    Solaris, macOS, *BSD have 1024, Linux glibc has 4192 (but glibc does not
    enforce the limit).  File names are limited to FILENAME_MAX bytes
    (usually the same as PATH_MAX) or NAME_MAX (often 255/256).
@@ -1012,7 +1012,7 @@ extern int putenv(char *string);
 
    But longer paths can and do exist, they can be created using some API,
    usually UCS-2, sometimes using the extended syntax
-   (\\?\D:\very_long_path) but sometimes using the common syntax. 
+   (\\?\D:\very_long_path) but sometimes using the common syntax.
    Applications that haven't opted for "long paths" (and those also have to
    be enabled system-wide) are shielded from seeing the long paths in some
    API calls to prevent buffer-overflow and other errors in user code that
@@ -1972,7 +1972,7 @@ R_xlen_t asVecSize(SEXP x);
 R_xlen_t asXLength(SEXP x);
 void check1arg(SEXP, SEXP, const char *);
 void Rf_checkArityCall(SEXP, SEXP, SEXP);
-void CheckFormals(SEXP);
+void CheckFormals(SEXP, const char*);
 void R_check_locale(void);
 void check_stack_balance(SEXP op, int save);
 void CleanEd(void);

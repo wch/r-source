@@ -1613,31 +1613,28 @@ attribute_hidden SEXP do_asvector(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 attribute_hidden SEXP do_asfunction(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP arglist, envir, names, pargs, body;
-    int i, n;
-
     checkArity(op, args);
 
     /* Check the arguments; we need a list and environment. */
 
-    arglist = CAR(args);
+    SEXP arglist = CAR(args);
     if (!isNewList(arglist))
 	error(_("list argument expected"));
 
-    envir = CADR(args);
+    SEXP envir = CADR(args);
     if (isNull(envir)) {
 	error(_("use of NULL environment is defunct"));
 	envir = R_BaseEnv;
-    } else
-    if (!isEnvironment(envir))
+    } else if (!isEnvironment(envir))
 	error(_("invalid environment"));
 
-    n = length(arglist);
+    int n = length(arglist);
     if (n < 1)
 	error(_("argument must have length at least 1"));
-    PROTECT(names = getAttrib(arglist, R_NamesSymbol));
-    PROTECT(pargs = args = allocList(n - 1));
-    for (i = 0; i < n - 1; i++) {
+    SEXP
+	names = PROTECT(getAttrib(arglist, R_NamesSymbol)),
+	pargs = PROTECT(args = allocList(n - 1));
+    for (int i = 0; i < n - 1; i++) {
 	SETCAR(pargs, VECTOR_ELT(arglist, i));
 	if (names != R_NilValue && *CHAR(STRING_ELT(names, i)) != '\0') /* ASCII */
 	    SET_TAG(pargs, installTrChar(STRING_ELT(names, i)));
@@ -1645,8 +1642,8 @@ attribute_hidden SEXP do_asfunction(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    SET_TAG(pargs, R_NilValue);
 	pargs = CDR(pargs);
     }
-    CheckFormals(args);
-    PROTECT(body = VECTOR_ELT(arglist, n-1));
+    CheckFormals(args, "as.function");
+    SEXP body = PROTECT(VECTOR_ELT(arglist, n-1));
     /* the main (only?) thing to rule out is body being
        a function already. If we test here then
        mkCLOSXP can continue to overreact when its

@@ -1132,6 +1132,13 @@ g <- f <- function()  Inf;  formals(f) <- formals(f); stopifnot(identical(f, g))
 ## all failed in R <= 4.3.2 w/ Error in as.function.default(....): list argument expected
 
 
+## fix error message of as.function(..1, *)
+(msg <- tryCmsg(as.function(list({}, 1), .GlobalEnv)))
+stopifnot(!englishMsgs || grepl("invalid formal argument list", msg),
+          grepl('"as.function"', msg, fixed=TRUE))
+## had "function" wrongly in R <= 4.3.x
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

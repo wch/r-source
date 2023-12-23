@@ -505,6 +505,8 @@
 
       \item \code{formals(f) <- formals(f)} now also works for a function
       w/o arguments and atomic \emph{constant} \code{body(f)}.
+
+      \item Correct \code{as.function(<invalid list>, .)}'s error message.
     }
   }
 }

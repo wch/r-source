@@ -3128,7 +3128,7 @@ attribute_hidden SEXP do_function(SEXP call, SEXP op, SEXP args, SEXP rho)
 	op = PRVALUE(op);
     }
     if (length(args) < 2) WrongArgCount("function");
-    CheckFormals(CAR(args));
+    CheckFormals(CAR(args), "function");
     rval = mkCLOSXP(CAR(args), CADR(args), rho);
     srcref = CADDR(args);
     if (!isNull(srcref)) setAttrib(rval, R_SrcrefSymbol, srcref);
@@ -3630,7 +3630,7 @@ attribute_hidden SEXP evalList(SEXP el, SEXP rho, SEXP call, int n)
 	       which may have been called on part of the args. */
 	    errorcall(call, _("argument %d is empty"), n);
 #ifdef CHECK_IS_MISSING_IN_evalList
-	    /* Radford Newl drops this R_isMissing check in pqR in
+	    /* Radford Neal drops this R_isMissing check in pqR in
 	       03-zap-isMissing (but it seems to creep in again later
 	       with helper thread stuff?)  as it takes quite a bit of
 	       time (essentially the equivalent of evaluating the
@@ -3808,7 +3808,7 @@ attribute_hidden SEXP promiseArgs(SEXP el, SEXP rho)
 /* Check that each formal is a symbol */
 
 /* used in coerce.c */
-attribute_hidden void CheckFormals(SEXP ls)
+attribute_hidden void CheckFormals(SEXP ls, const char *name)
 {
     if (isList(ls)) {
 	for (; ls != R_NilValue; ls = CDR(ls))
@@ -3817,7 +3817,7 @@ attribute_hidden void CheckFormals(SEXP ls)
 	return;
     }
  err:
-    error(_("invalid formal argument list for \"function\""));
+    error(_("invalid formal argument list for \"%s\""), name);
 }
 
 
@@ -8647,7 +8647,7 @@ attribute_hidden SEXP do_bcclose(SEXP call, SEXP op, SEXP args, SEXP rho)
     body = CADR(args);
     env = CADDR(args);
 
-    CheckFormals(forms);
+    CheckFormals(forms, "bcClose");
 
     if (! isByteCode(body))
 	error(_("invalid body"));
