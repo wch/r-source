@@ -500,7 +500,7 @@ static void seticonvName(const char *encpath, char *convname)
     else {
 	/*
 	 * Last resort = trim .enc off encpath to produce convname
-	 * Used for CPxxxx
+	 * Used for CP12xx, KOI8-?
 	 */
 	strcpy(convname, encpath);
 	p = strrchr(convname, '.');
