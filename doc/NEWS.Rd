@@ -428,11 +428,11 @@
       \item Rd \verb{\Sexpr} macros with nested \verb{#ifdef}
       conditionals were not processed.
 
-      \item A non-blocking connection with non-default encoding such as a
-      socket, now correctly returns from \code{readLines()} after new data
-      has arrived also when its \abbr{EOF} had been reached previously.  Thanks to
-      Peter Meilstrup's report on R-devel and Ivan Krylov's report and
-      patch proposal in \PR{18555}.
+      \item A non-blocking connection with non-default encoding such as
+      a socket, now correctly returns from \code{readLines()} after new
+      data has arrived also when its \code{EOF} had been reached
+      previously.  Thanks to Peter Meilstrup's report on R-devel and
+      Ivan Krylov's report and patch proposal in \PR{18555}.
 
       \item \code{tools::checkRdContents()} failed to detect empty
       argument descriptions when they spanned multiple lines,
