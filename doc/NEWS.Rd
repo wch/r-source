@@ -483,8 +483,8 @@
 	vector}) \code{matrix(v, nr, nc)} and \code{dim(m) <- d} are now
       correct about sizes, using \code{long long} formatting, fixing
       \PR{18612} (and more) reported by Mikael Jagan.
-      \item \code{readChar(useBytes=TRUE)} now terminates strings even when
-      the underlying connection uses extra space in the input buffer.  This
+      \item \code{readChar(useBytes = TRUE)} now terminates strings even when
+      the underlying connection uses extra spacea in the input buffer.  This
       fixes problems with extra garbage seen with \command{gzip}
       connections, \PR{18605}.
 
@@ -529,7 +529,8 @@
   \subsection{DEPRECATED AND DEFUNCT}{
     \itemize{
       \item The legacy \code{encoding = "MacRoman"} is deprecated in
-      \code{pdf()}, \code{postscript()}.
+      \code{pdf()} and \code{postscript()}: support was incomplete in
+      earlier versions of \R.
     }
   }
 
@@ -564,7 +565,7 @@
       zones, ditto for \code{"POSIXlt"}, fixing \PR{18618} reported by
       Bastian Klein.
 
-      \item \code{drop.terms(*, dropx=<0-length>)} now works, fixing
+      \item \code{drop.terms(*, dropx = <0-length>)} now works, fixing
       \PR{18563} as proposed by Mikael Jagan.
 
       \item \code{drop.terms(*)} keeps \code{ + offset(.)} terms when it should,
@@ -577,7 +578,6 @@
       \item \code{pdf()} and \code{postscript()} support for the documented
       Adobe encodings \code{"Greek"} and \code{"Cyrilllic"} was missing
       (although the corresponding Windows' codepages could be used).
-      (And also for the legacy \code{"MacRoman"} encoding.)
 
       \item Computations of glyph metric information for \code{pdf()}
       and \code{postscript()} did not take into account that
