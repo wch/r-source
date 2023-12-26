@@ -5166,7 +5166,7 @@ Standalone installers (which are free-of-charge) are available from
 @uref{https://www.intel.com/content/www/us/en/developer/articles/tool/oneapi-standalone-components.html}:
 they are also part of the oneAPI Base and HPC (for Fortran) ToolKits.
 
-We tried the LLVM-based compilers in oneAPI 2024.0.0 using (the paths do
+We tried the LLVM-based compilers in oneAPI 2024.0.2 using (the paths do
 differ by compiler version)
 @example
 IP=/path/to/compilers/bin/
@@ -5249,7 +5249,7 @@ The classic compilers were @command{icc}, @command{icpc} and
 @command{ifort}.  They are identified by the C/C++ macro
 @code{__INTEL_COMPILER}.
 
-The classic compilers remained available until October 2023.
+The classic C/C++ compilers remained available until October 2023.
 Version 2021.10.0 (shipped as part of oneAPI 2023.2.0) was tested in
 July 2023 using
 
