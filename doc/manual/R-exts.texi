@@ -5332,8 +5332,8 @@ The @command{ar} utility is often used in makefiles to make static
 libraries.  Its modifier @code{u} is defined by POSIX but is disabled in
 GNU @command{ar} on some Linux distributions which use
 `deterministic mode'.  The safest way to make a static library is to first
-remove any existing file of that name then use @command{ar -cr} and then
-@command{ranlib} if needed (which is system-dependent: on most
+remove any existing file of that name then use @command{$(AR) -cr} and then
+@command{$(RANLIB)} if needed (which is system-dependent: on most
 systems@footnote{some versions of macOS did not.} @command{ar} always
 maintains a symbol table).  The POSIX standard says options should be
 preceded by a hyphen (as in @option{-cr}), although most OSes accept
@@ -5345,6 +5345,10 @@ specified.
 The @code{s} modifier (to replace a separate call to @command{ranlib})
 is required by X/OPEN but not POSIX, so @command{ar -crs} is not
 portable.
+
+For portability the @code{AR} and @code{RANLIB} macros should always be
+used -- some builds require wrappers such as @command{gcc-ar} or extra
+arguments to specify plugins.
 
 @item
 The @command{strip} utility is platform-specific (and @acronym{CRAN}
