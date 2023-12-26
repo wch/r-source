@@ -5044,8 +5044,9 @@ In late 2020 Intel revamped their C/C++ compilers (and later their
 Fortran compiler) to use an LLVM back-end (and for the C/C++ compilers,
 a modified version of @command{clang} as the front-end).  Those
 compilers are only for @cputype{x86_64}: the earlier (now called
-`Classic') compilers were discontinued in late 2023 (and are covered in
-the version of this manual for @R{} 4.3.x).
+`Classic') C/C++ compilers were discontinued in late 2023 (and are covered in
+the version of this manual for @R{} 4.3.x: the Fortran compiler
+@command{ifort} remains part of the Fortran distribution)..
 
 The compilers are now all under Intel's `oneAPI' brand. The revamped
 ones are @command{icx}, @command{icpx} and @command{ifx}; they are
