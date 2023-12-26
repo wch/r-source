@@ -1,7 +1,7 @@
 #  File src/library/utils/R/sourceutils.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2018 The R Core Team
+#  Copyright (C) 1995-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -21,9 +21,17 @@ removeSource <- function(fn) {
 
     recurse <- function(part) {
         if (is.name(part)) return(part)  # handles missing arg, PR#15957
+        if (inherits(part, "srcref")) return(NULL)
         attr(part, "srcref") <- NULL
         attr(part, "wholeSrcref") <- NULL
         attr(part, "srcfile") <- NULL
+
+        if (is.pairlist(part)) { # source references from formal arguments of sub-functions
+            ## PR#18638, Andrew Simmons
+            for (i in seq_along(part))
+                part[i] <- list(recurse(part[[i]]))
+            return(as.pairlist(part))
+        }
 	if (is.language(part) && is.recursive(part)) {
 	    for (i in seq_along(part))
 		part[i] <- list(recurse(part[[i]])) # recurse(*) may be NULL
@@ -36,6 +44,7 @@ removeSource <- function(fn) {
             attr(fn, "srcref") <- NULL
             ## `body<-`(f, *) drops all attributes of f
             at <- attributes(fn)
+            formals(fn) <- recurse(formals(fn))
             attr(body(fn), "wholeSrcref") <- NULL
             attr(body(fn), "srcfile") <- NULL
             body(fn) <- recurse(body(fn))
@@ -49,6 +58,7 @@ removeSource <- function(fn) {
     else
 	stop("argument is not a function or language object:", typeof(fn))
 }
+
 
 getSrcFilename <- function(x, full.names=FALSE, unique=TRUE) {
     srcref <- getSrcref(x)
@@ -138,9 +148,8 @@ getParseData <- function(x, includeText = NA) {
     srcfile <- if(inherits(x, "srcfile")) x else getSrcfile(x)
     if (is.null(srcfile))
     	return(NULL)
-    else
-    	data <- srcfile$parseData
-    
+
+    data <- srcfile$parseData
     if (is.null(data) && !is.null(srcfile$original))
         data <- srcfile$original$parseData
         

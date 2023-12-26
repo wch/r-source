@@ -513,6 +513,10 @@
       w/o arguments and atomic \emph{constant} \code{body(f)}.
 
       \item Correct \code{as.function(<invalid list>, .)}'s error message.
+
+      \item \code{removeSource()} is yet more thorough in finding and
+      removing \code{"srcref"} and the other source references from parsed
+      \R language chunks, fixing \PR{18638} thanks to Andrew Simmons.
     }
   }
 }

@@ -1139,6 +1139,37 @@ stopifnot(!englishMsgs || grepl("invalid formal argument list", msg),
 ## had "function" wrongly in R <= 4.3.x
 
 
+## removeSource() checking *formals* incl in sub-functions -- PR#18638
+f <- function(x = {}) {
+    function(y = {}) { NULL }
+}
+str(lapply(formals(f), attributes)) # list(x = list(srcref = .., srcfile = .. wholeSrcref = ..))
+f0 <- removeSource(f) # was unchanged in R <= 4.3.2
+## in sub function {not atttrib}:
+(toplev <- !sys.nframe())
+op <- options(keep.source = TRUE)
+qf <- quote(function() NULL)
+str(qf4 <- qf[[4]]) # srcref, now removed:
+qf0 <- removeSource(qf)
+stopifnot(exprs = {
+    ## no "srcref" anymore for the formals of f0 or its result:
+    identical(lapply(formals(f0),   attributes), list(x = NULL))
+    identical(lapply(formals(f0()), attributes), list(y = NULL))
+    ##
+    length(qf) == 4L
+    length(qf0)== 4L
+    is.integer(qf4)
+    length(qf4) >= 8
+    if(toplev) # e.g., when source()d
+        qf4 == c(1L, 13L, 1L, 27L, 13L, 27L, 1L, 1L) # in qf[] but not in qf0[]
+    else
+        qf4 >= 1L
+    is.null(qf0[[4L]])
+})
+options(op)
+## f0 and qf0 were unchanged, keeping srcref in R <= 4.3.*
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
