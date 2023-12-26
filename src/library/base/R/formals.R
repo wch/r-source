@@ -37,7 +37,9 @@ alist <- function (...) as.list(sys.call())[-1L]
             warning("using the first element of 'value' of type \"expression\"")
         value <- value[[1L]]
     }
-    as.function(c(as.list(formals(fun)), list(value)), envir)
+    as.function(c(formals(fun), 
+                  if(is.null(value) || is.atomic(value) || is.list(value)) list(value) else value),
+                envir)
 }
 
 `formals<-` <- function (fun, envir = environment(fun), value)

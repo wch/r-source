@@ -1121,15 +1121,26 @@ options(op) # revert
 ## cov2cor() gave 2 warnings on 3 lines, the 2nd one inaccurate in R <= 4.3.2
 
 
-## `formals<-` failing for _explicit_ constant body
-g <- f <- function() "foo"; formals(f) <- formals(f); stopifnot(identical(f, g))
-g <- f <- function()r"(')"; formals(f) <- formals(f); stopifnot(identical(f, g))
-g <- f <- function()   1L;  formals(f) <- formals(f); stopifnot(identical(f, g))
-g <- f <- function() TRUE;  formals(f) <- formals(f); stopifnot(identical(f, g))
-g <- f <- function()   1i;  formals(f) <- formals(f); stopifnot(identical(f, g))
-g <- f <- function() 3.14;  formals(f) <- formals(f); stopifnot(identical(f, g))
-g <- f <- function()  Inf;  formals(f) <- formals(f); stopifnot(identical(f, g))
-## all failed in R <= 4.3.2 w/ Error in as.function.default(....): list argument expected
+## `formals<-` failing for _explicit_ constant body and empty formals
+fbList <- c(Sys.info, body, lm
+            ## constant body:
+            , function() "foo"
+            , function()r"(')"
+            , function()   1L
+            , function() TRUE
+            , function()   1i
+            , function() 3.14
+            , function()  Inf
+            )
+for(f in fbList) {
+    g <- f ; formals(g) <- formals(g)
+    h <- f ;    body(h) <- body(h)
+    stopifnot(identical(g, f),
+              identical(h, f))
+}
+## those w/ constant body failed in `formals<-`  in R <= 4.3.x
+## with Error in as.function.default(....): list argument expected
+
 
 
 ## fix error message of as.function(..1, *)
