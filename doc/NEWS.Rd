@@ -484,7 +484,7 @@
       correct about sizes, using \code{long long} formatting, fixing
       \PR{18612} (and more) reported by Mikael Jagan.
       \item \code{readChar(useBytes = TRUE)} now terminates strings even when
-      the underlying connection uses extra spacea in the input buffer.  This
+      the underlying connection uses extra spaces in the input buffer.  This
       fixes problems with extra garbage seen with \command{gzip}
       connections, \PR{18605}.
 
