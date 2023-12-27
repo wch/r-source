@@ -6467,11 +6467,11 @@ Another build for Windows which may be sufficiently compatible with
 @node Portable Fortran code, Binary distribution, Portable C and C++ code, Writing portable packages
 @subsection Portable Fortran code
 
-Until recently almost all known @R{} platforms used @command{gfortran}
+For many years almost all known @R{} platforms used @command{gfortran}
 as their Fortran compiler, but now there are LLVM and `classic'
 @command{flang} and the Intel compilers
-@command{ifort}@footnote{announced to be discontinued in 2023.} and
-@command{ifx} are free-of-change.
+@command{ifort}@footnote{discontinued in 2023.} and @command{ifx} are now
+free-of-change.
 
 There is still a lot of Fortran code in @acronym{CRAN} packages which
 predates Fortran 77.  Modern Fortran compilers are being written to
@@ -6504,8 +6504,8 @@ such as dimensions.
 @noindent
 Unfortunately this flags extensions such as @code{DOUBLE COMPLEX} and
 @code{COMPLEX*16}.  @R{} has tested that @code{DOUBLE COMPLEX} works and
-so is preferred to -@code{COMPLEX*16}.  (One can also use something like
--@code{COMPLEX(KIND=KIND(0.0D0))}.)
+so is preferred to @code{COMPLEX*16}.  (One can also use something like
+@code{COMPLEX(KIND=KIND(0.0D0))}.)
 
 GNU Fortran 10 and later give a compilation error for the previously
 widespread practice of passing a Fortran array element where an array is
@@ -6551,6 +6551,12 @@ works around this for packages without a @file{src/Makefile}.
 Use of extensions @file{.F} and @code{.F90} to indicate source code to
 be preprocessed: the preprocessor used is compiler-specific and may or
 may not be @command{cpp}.
+
+@item
+Fixed form Fortran (with extension @file{.f}) should only use 72
+columns, and free-form at most 132 columns.  This includes trailing
+comments.  Over-long lines may be silently truncated or give a warning.
+%% The Intel compilers warn.
 
 @end itemize
 
