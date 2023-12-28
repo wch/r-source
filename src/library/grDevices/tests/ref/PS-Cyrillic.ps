@@ -1,0 +1,538 @@
+%!PS-Adobe-3.0
+%%DocumentNeededResources: font Helvetica
+%%+ font Helvetica-Bold
+%%+ font Helvetica-Oblique
+%%+ font Helvetica-BoldOblique
+%%+ font Symbol
+%%DocumentMedia: a4 595 841 0 () ()
+%%Title: R Graphics Output
+%%Creator: R Software
+%%Pages: (atend)
+%%Orientation: Landscape
+%%BoundingBox: 18 97 577 745
+%%EndComments
+%%BeginProlog
+/bp  { gs sRGB 595.00 0 translate 90 rotate gs } def
+% begin .ps.prolog
+/gs  { gsave } bind def
+/gr  { grestore } bind def
+/ep  { showpage gr gr } bind def
+/m   { moveto } bind def
+/l  { rlineto } bind def
+/np  { newpath } bind def
+/cp  { closepath } bind def
+/f   { fill } bind def
+/o   { stroke } bind def
+/c   { newpath 0 360 arc } bind def
+/r   { 4 2 roll moveto 1 copy 3 -1 roll exch 0 exch rlineto 0 rlineto -1 mul 0 exch rlineto closepath } bind def
+/p1  { stroke } bind def
+/p2  { gsave bg fill grestore newpath } bind def
+/p3  { gsave bg fill grestore stroke } bind def
+/p6  { gsave bg eofill grestore newpath } bind def
+/p7  { gsave bg eofill grestore stroke } bind def
+/t   { 5 -2 roll moveto gsave rotate
+       1 index stringwidth pop
+       mul neg 0 rmoveto show grestore } bind def
+/ta  { 4 -2 roll moveto gsave rotate show } bind def
+/tb  { 2 -1 roll 0 rmoveto show } bind def
+/cl  { grestore gsave newpath 3 index 3 index moveto 1 index
+       4 -1 roll lineto  exch 1 index lineto lineto
+       closepath clip newpath } bind def
+/rgb { setrgbcolor } bind def
+/s   { scalefont setfont } bind def
+% end   .ps.prolog
+/sRGB { [ /CIEBasedABC
+          << /DecodeLMN
+               [ { dup 0.03928 le
+                        {12.92321 div}
+                        {0.055 add 1.055 div 2.4 exp }
+                     ifelse
+                 } bind dup dup
+               ]
+             /MatrixLMN [0.412457 0.212673 0.019334
+                         0.357576 0.715152 0.119192
+                         0.180437 0.072175 0.950301]
+             /WhitePoint [0.9505 1.0 1.0890]
+           >>
+         ] setcolorspace } bind def
+/srgb { setcolor } bind def
+% begin encoding
+/ISOLatin5Encoding [
+ /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+ /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+ /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+ /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+ /space /exclam /quotedbl /numbersign /dollar /percent /ampersand /quoteright
+ /parenleft /parenright /asterisk /plus /comma /minus /period /slash
+ /zero /one /two /three /four /five /six /seven
+ /eight /nine /colon /semicolon /less /equal /greater /question
+ /at /A /B /C /D /E /F /G
+ /H /I /J /K /L /M /N /O
+ /P /Q /R /S /T /U /V /W
+ /X /Y /Z /bracketleft /backslash /bracketright /asciicircum /underscore
+ /quoteleft /a /b /c /d /e /f /g
+ /h /i /j /k /l /m /n /o
+ /p /q /r /s /t /u /v /w
+ /x /y /z /braceleft /bar /braceright /asciitilde /.notdef
+ /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+ /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+ /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+ /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+ /space /afii10023 /afii10051 /afii10052 /afii10053 /afii10054 /afii10055 /afii10056
+ /afii10057 /afii10058 /afii10059 /afii10060 /afii10061 /hyphen /afii10062 /afii10145
+ /afii10017 /afii10018 /afii10019 /afii10020 /afii10021 /afii10022 /afii10024 /afii10025
+ /afii10026 /afii10027 /afii10028 /afii10029 /afii10030 /afii10031 /afii10032 /afii10033
+ /afii10034 /afii10035 /afii10036 /afii10037 /afii10038 /afii10039 /afii10040 /afii10041
+ /afii10042 /afii10043 /afii10044 /afii10045 /afii10046 /afii10047 /afii10048 /afii10049
+ /afii10065 /afii10066 /afii10067 /afii10068 /afii10069 /afii10070 /afii10072 /afii10073
+ /afii10074 /afii10075 /afii10076 /afii10077 /afii10078 /afii10079 /afii10080 /afii10081
+ /afii10082 /afii10083 /afii10084 /afii10085 /afii10086 /afii10087 /afii10088 /afii10089
+ /afii10090 /afii10091 /afii10092 /afii10093 /afii10094 /afii10095 /afii10096 /afii10097
+ /afii61352 /afii10071 /afii10099 /afii10100 /afii10101 /afii10102 /afii10103 /afii10104
+ /afii10105 /afii10106 /afii10107 /afii10108 /afii10109 /section /afii10110 /afii10193
+]
+ def
+% end encoding
+%%IncludeResource: font Helvetica
+/Helvetica findfont
+dup length dict begin
+  {1 index /FID ne {def} {pop pop} ifelse} forall
+  /Encoding ISOLatin5Encoding def
+  currentdict
+  end
+/Font1 exch definefont pop
+%%IncludeResource: font Helvetica-Bold
+/Helvetica-Bold findfont
+dup length dict begin
+  {1 index /FID ne {def} {pop pop} ifelse} forall
+  /Encoding ISOLatin5Encoding def
+  currentdict
+  end
+/Font2 exch definefont pop
+%%IncludeResource: font Helvetica-Oblique
+/Helvetica-Oblique findfont
+dup length dict begin
+  {1 index /FID ne {def} {pop pop} ifelse} forall
+  /Encoding ISOLatin5Encoding def
+  currentdict
+  end
+/Font3 exch definefont pop
+%%IncludeResource: font Helvetica-BoldOblique
+/Helvetica-BoldOblique findfont
+dup length dict begin
+  {1 index /FID ne {def} {pop pop} ifelse} forall
+  /Encoding ISOLatin5Encoding def
+  currentdict
+  end
+/Font4 exch definefont pop
+%%IncludeResource: font Symbol
+/Symbol findfont
+dup length dict begin
+  {1 index /FID ne {def} {pop pop} ifelse} forall
+  currentdict
+  end
+/Font5 exch definefont pop
+%%EndProlog
+%%Page: 1 1
+bp
+96.94 18.00 744.94 577.28 cl
+0 0 0 srgb
+0.75 setlinewidth
+[] 0 setdash
+1 setlinecap
+1 setlinejoin
+10.00 setmiterlimit
+np
+247.05 91.44 m
+376.59 0 l
+o
+np
+247.05 91.44 m
+0 -7.20 l
+o
+np
+372.58 91.44 m
+0 -7.20 l
+o
+np
+498.11 91.44 m
+0 -7.20 l
+o
+np
+623.64 91.44 m
+0 -7.20 l
+o
+/Font1 findfont 12 s
+247.05 65.52 (0) .5 0 t
+372.58 65.52 (5) .5 0 t
+498.11 65.52 (10) .5 0 t
+623.64 65.52 (15) .5 0 t
+np
+221.95 116.55 m
+0 376.58 l
+o
+np
+221.95 116.55 m
+-7.20 0 l
+o
+np
+221.95 242.07 m
+-7.20 0 l
+o
+np
+221.95 367.60 m
+-7.20 0 l
+o
+np
+221.95 493.13 m
+-7.20 0 l
+o
+204.67 116.55 (0) .5 90 t
+204.67 242.07 (5) .5 90 t
+204.67 367.60 (10) .5 90 t
+204.67 493.13 (15) .5 90 t
+np
+ 221.95 91.44 m
+426.79 0 l
+0 426.80 l
+-426.79 0 l
+cp p1
+96.94 18.00 744.94 577.28 cl
+/Font2 findfont 14 s
+0 0 0 srgb
+354.82 542.73 (Centred c) 0 ta
+-0.140 (har) tb
+-0.210 (s in Cyrillic) tb gr
+221.95 91.44 648.74 518.24 cl
+0.8275 0.8275 0.8275 srgb
+0.75 setlinewidth
+[] 0 setdash
+1 setlinecap
+1 setlinejoin
+10.00 setmiterlimit
+np
+221.95 116.55 m
+426.79 0 l
+o
+np
+221.95 141.65 m
+426.79 0 l
+o
+np
+221.95 166.76 m
+426.79 0 l
+o
+np
+221.95 191.86 m
+426.79 0 l
+o
+np
+221.95 216.97 m
+426.79 0 l
+o
+np
+221.95 242.07 m
+426.79 0 l
+o
+np
+221.95 267.18 m
+426.79 0 l
+o
+np
+221.95 292.28 m
+426.79 0 l
+o
+np
+221.95 317.39 m
+426.79 0 l
+o
+np
+221.95 342.50 m
+426.79 0 l
+o
+np
+221.95 367.60 m
+426.79 0 l
+o
+np
+221.95 392.71 m
+426.79 0 l
+o
+np
+221.95 417.81 m
+426.79 0 l
+o
+np
+221.95 442.92 m
+426.79 0 l
+o
+np
+221.95 468.02 m
+426.79 0 l
+o
+np
+221.95 493.13 m
+426.79 0 l
+o
+np
+247.05 91.44 m
+0 426.80 l
+o
+np
+272.16 91.44 m
+0 426.80 l
+o
+np
+297.26 91.44 m
+0 426.80 l
+o
+np
+322.37 91.44 m
+0 426.80 l
+o
+np
+347.48 91.44 m
+0 426.80 l
+o
+np
+372.58 91.44 m
+0 426.80 l
+o
+np
+397.69 91.44 m
+0 426.80 l
+o
+np
+422.79 91.44 m
+0 426.80 l
+o
+np
+447.90 91.44 m
+0 426.80 l
+o
+np
+473.00 91.44 m
+0 426.80 l
+o
+np
+498.11 91.44 m
+0 426.80 l
+o
+np
+523.21 91.44 m
+0 426.80 l
+o
+np
+548.32 91.44 m
+0 426.80 l
+o
+np
+573.43 91.44 m
+0 426.80 l
+o
+np
+598.53 91.44 m
+0 426.80 l
+o
+np
+623.64 91.44 m
+0 426.80 l
+o
+/Font1 findfont 12 s
+0 0 0 srgb
+247.05 166.76 ( ) .5 0 t
+272.16 162.45 (!) .5 0 t
+297.26 159.67 (") .5 0 t
+322.37 162.63 (#) .5 0 t
+347.48 162.80 ($) .5 0 t
+372.58 162.65 (%) .5 0 t
+397.69 162.54 (&) .5 0 t
+422.79 159.67 (') .5 0 t
+447.90 163.60 (\() .5 0 t
+473.00 163.60 (\)) .5 0 t
+498.11 159.86 (*) .5 0 t
+523.21 163.73 (+) .5 0 t
+548.32 167.00 (,) .5 0 t
+573.43 163.73 (-) .5 0 t
+/bg { 0 0 0 srgb } def
+598.03 166.26 1.00 1.00 r p2
+623.64 162.45 (/) .5 0 t
+247.05 187.76 (0) .5 0 t
+272.16 187.64 (1) .5 0 t
+297.26 187.64 (2) .5 0 t
+322.37 187.76 (3) .5 0 t
+347.48 187.64 (4) .5 0 t
+372.58 187.85 (5) .5 0 t
+397.69 187.76 (6) .5 0 t
+422.79 187.73 (7) .5 0 t
+447.90 187.76 (8) .5 0 t
+473.00 187.76 (9) .5 0 t
+498.11 188.77 (:) .5 0 t
+523.21 189.65 (;) .5 0 t
+548.32 188.83 (<) .5 0 t
+573.43 188.83 (=) .5 0 t
+598.53 188.83 (>) .5 0 t
+623.64 187.50 (?) .5 0 t
+247.05 212.66 (@) .5 0 t
+272.16 212.66 (A) .5 0 t
+297.26 212.66 (B) .5 0 t
+322.37 212.66 (C) .5 0 t
+347.48 212.66 (D) .5 0 t
+372.58 212.66 (E) .5 0 t
+397.69 212.66 (F) .5 0 t
+422.79 212.66 (G) .5 0 t
+447.90 212.66 (H) .5 0 t
+473.00 212.66 (I) .5 0 t
+498.11 212.77 (J) .5 0 t
+523.21 212.66 (K) .5 0 t
+548.32 212.66 (L) .5 0 t
+573.43 212.66 (M) .5 0 t
+598.53 212.66 (N) .5 0 t
+623.64 212.66 (O) .5 0 t
+247.05 237.77 (P) .5 0 t
+272.16 237.99 (Q) .5 0 t
+297.26 237.77 (R) .5 0 t
+322.37 237.77 (S) .5 0 t
+347.48 237.77 (T) .5 0 t
+372.58 237.88 (U) .5 0 t
+397.69 237.77 (V) .5 0 t
+422.79 237.77 (W) .5 0 t
+447.90 237.77 (X) .5 0 t
+473.00 237.77 (Y) .5 0 t
+498.11 237.77 (Z) .5 0 t
+523.21 238.92 ([) .5 0 t
+548.32 237.77 (\\) .5 0 t
+573.43 238.92 (]) .5 0 t
+598.53 236.36 (^) .5 0 t
+623.64 243.27 (_) .5 0 t
+247.05 260.01 (`) .5 0 t
+272.16 264.04 (a) .5 0 t
+297.26 262.96 (b) .5 0 t
+322.37 264.04 (c) .5 0 t
+347.48 262.96 (d) .5 0 t
+372.58 264.04 (e) .5 0 t
+397.69 262.81 (f) .5 0 t
+422.79 265.27 (g) .5 0 t
+447.90 262.87 (h) .5 0 t
+473.00 262.87 (i) .5 0 t
+498.11 264.13 (j) .5 0 t
+523.21 262.87 (k) .5 0 t
+548.32 262.87 (l) .5 0 t
+573.43 263.95 (m) .5 0 t
+598.53 263.95 (n) .5 0 t
+623.64 264.04 (o) .5 0 t
+247.05 290.30 (p) .5 0 t
+272.16 290.30 (q) .5 0 t
+297.26 289.06 (r) .5 0 t
+322.37 289.15 (s) .5 0 t
+347.48 288.31 (t) .5 0 t
+372.58 289.24 (u) .5 0 t
+397.69 289.15 (v) .5 0 t
+422.79 289.15 (w) .5 0 t
+447.90 289.15 (x) .5 0 t
+473.00 290.43 (y) .5 0 t
+498.11 289.15 (z) .5 0 t
+523.21 289.13 ({) .5 0 t
+548.32 288.98 (|) .5 0 t
+573.43 289.13 (}) .5 0 t
+598.53 289.25 (~) .5 0 t
+247.05 367.60 ( ) .5 0 t
+272.16 367.60 (¡) .5 0 t
+297.26 367.60 (¢) .5 0 t
+322.37 367.60 (£) .5 0 t
+347.48 367.60 (¤) .5 0 t
+372.58 367.60 (¥) .5 0 t
+397.69 367.60 (¦) .5 0 t
+422.79 367.60 (§) .5 0 t
+447.90 367.60 (¨) .5 0 t
+473.00 367.60 (©) .5 0 t
+498.11 367.60 (ª) .5 0 t
+523.21 367.60 («) .5 0 t
+548.32 367.60 (¬) .5 0 t
+573.43 364.28 (­) .5 0 t
+598.53 367.60 (®) .5 0 t
+623.64 367.60 (¯) .5 0 t
+247.05 392.71 (°) .5 0 t
+272.16 392.71 (±) .5 0 t
+297.26 392.71 (²) .5 0 t
+322.37 392.71 (³) .5 0 t
+347.48 392.71 (´) .5 0 t
+372.58 392.71 (µ) .5 0 t
+397.69 392.71 (¶) .5 0 t
+422.79 392.71 (·) .5 0 t
+447.90 392.71 (¸) .5 0 t
+473.00 392.71 (¹) .5 0 t
+498.11 392.71 (º) .5 0 t
+523.21 392.71 (») .5 0 t
+548.32 392.71 (¼) .5 0 t
+573.43 392.71 (½) .5 0 t
+598.53 392.71 (¾) .5 0 t
+623.64 392.71 (¿) .5 0 t
+247.05 417.81 (À) .5 0 t
+272.16 417.81 (Á) .5 0 t
+297.26 417.81 (Â) .5 0 t
+322.37 417.81 (Ã) .5 0 t
+347.48 417.81 (Ä) .5 0 t
+372.58 417.81 (Å) .5 0 t
+397.69 417.81 (Æ) .5 0 t
+422.79 417.81 (Ç) .5 0 t
+447.90 417.81 (È) .5 0 t
+473.00 417.81 (É) .5 0 t
+498.11 417.81 (Ê) .5 0 t
+523.21 417.81 (Ë) .5 0 t
+548.32 417.81 (Ì) .5 0 t
+573.43 417.81 (Í) .5 0 t
+598.53 417.81 (Î) .5 0 t
+623.64 417.81 (Ï) .5 0 t
+247.05 442.92 (Ð) .5 0 t
+272.16 442.92 (Ñ) .5 0 t
+297.26 442.92 (Ò) .5 0 t
+322.37 442.92 (Ó) .5 0 t
+347.48 442.92 (Ô) .5 0 t
+372.58 442.92 (Õ) .5 0 t
+397.69 442.92 (Ö) .5 0 t
+422.79 442.92 (×) .5 0 t
+447.90 442.92 (Ø) .5 0 t
+473.00 442.92 (Ù) .5 0 t
+498.11 442.92 (Ú) .5 0 t
+523.21 442.92 (Û) .5 0 t
+548.32 442.92 (Ü) .5 0 t
+573.43 442.92 (Ý) .5 0 t
+598.53 442.92 (Þ) .5 0 t
+623.64 442.92 (ß) .5 0 t
+247.05 468.02 (à) .5 0 t
+272.16 468.02 (á) .5 0 t
+297.26 468.02 (â) .5 0 t
+322.37 468.02 (ã) .5 0 t
+347.48 468.02 (ä) .5 0 t
+372.58 468.02 (å) .5 0 t
+397.69 468.02 (æ) .5 0 t
+422.79 468.02 (ç) .5 0 t
+447.90 468.02 (è) .5 0 t
+473.00 468.02 (é) .5 0 t
+498.11 468.02 (ê) .5 0 t
+523.21 468.02 (ë) .5 0 t
+548.32 468.02 (ì) .5 0 t
+573.43 468.02 (í) .5 0 t
+598.53 468.02 (î) .5 0 t
+623.64 468.02 (ï) .5 0 t
+247.05 493.13 (ð) .5 0 t
+272.16 493.13 (ñ) .5 0 t
+297.26 493.13 (ò) .5 0 t
+322.37 493.13 (ó) .5 0 t
+347.48 493.13 (ô) .5 0 t
+372.58 493.13 (õ) .5 0 t
+397.69 493.13 (ö) .5 0 t
+422.79 493.13 (÷) .5 0 t
+447.90 493.13 (ø) .5 0 t
+473.00 493.13 (ù) .5 0 t
+498.11 493.13 (ú) .5 0 t
+523.21 493.13 (û) .5 0 t
+548.32 493.13 (ü) .5 0 t
+573.43 489.85 (ý) .5 0 t
+598.53 493.13 (þ) .5 0 t
+623.64 493.13 (ÿ) .5 0 t
+ep
+%%Trailer
+%%Pages: 1
+%%EOF

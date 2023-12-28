@@ -1,0 +1,222 @@
+%!PS-Adobe-3.0
+%%DocumentNeededResources: font Helvetica
+%%+ font Helvetica-Bold
+%%+ font Helvetica-Oblique
+%%+ font Helvetica-BoldOblique
+%%+ font Symbol
+%%DocumentMedia: a4 595 841 0 () ()
+%%Title: R Graphics Output
+%%Creator: R Software
+%%Pages: (atend)
+%%Orientation: Landscape
+%%BoundingBox: 118 241 478 601
+%%EndComments
+%%BeginProlog
+/bp  { gs sRGB 595.00 0 translate 90 rotate gs } def
+% begin .ps.prolog
+/gs  { gsave } bind def
+/gr  { grestore } bind def
+/ep  { showpage gr gr } bind def
+/m   { moveto } bind def
+/l  { rlineto } bind def
+/np  { newpath } bind def
+/cp  { closepath } bind def
+/f   { fill } bind def
+/o   { stroke } bind def
+/c   { newpath 0 360 arc } bind def
+/r   { 4 2 roll moveto 1 copy 3 -1 roll exch 0 exch rlineto 0 rlineto -1 mul 0 exch rlineto closepath } bind def
+/p1  { stroke } bind def
+/p2  { gsave bg fill grestore newpath } bind def
+/p3  { gsave bg fill grestore stroke } bind def
+/p6  { gsave bg eofill grestore newpath } bind def
+/p7  { gsave bg eofill grestore stroke } bind def
+/t   { 5 -2 roll moveto gsave rotate
+       1 index stringwidth pop
+       mul neg 0 rmoveto show grestore } bind def
+/ta  { 4 -2 roll moveto gsave rotate show } bind def
+/tb  { 2 -1 roll 0 rmoveto show } bind def
+/cl  { grestore gsave newpath 3 index 3 index moveto 1 index
+       4 -1 roll lineto  exch 1 index lineto lineto
+       closepath clip newpath } bind def
+/rgb { setrgbcolor } bind def
+/s   { scalefont setfont } bind def
+% end   .ps.prolog
+/sRGB { [ /CIEBasedABC
+          << /DecodeLMN
+               [ { dup 0.03928 le
+                        {12.92321 div}
+                        {0.055 add 1.055 div 2.4 exp }
+                     ifelse
+                 } bind dup dup
+               ]
+             /MatrixLMN [0.412457 0.212673 0.019334
+                         0.357576 0.715152 0.119192
+                         0.180437 0.072175 0.950301]
+             /WhitePoint [0.9505 1.0 1.0890]
+           >>
+         ] setcolorspace } bind def
+/srgb { setcolor } bind def
+% begin encoding
+/KOI8REncoding [
+ /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /dagger /ddagger
+ /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+ /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+ /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+ /space /exclam /quotedbl /numbersign /dollar /percent /ampersand /quoteright
+ /parenleft /parenright /asterisk /plus /comma /minus /period /slash
+ /zero /one /two /three /four /five /six /seven
+ /eight /nine /colon /semicolon /less /equal /greater /question
+ /at /A /B /C /D /E /F /G
+ /H /I /J /K /L /M /N /O
+ /P /Q /R /S /T /U /V /W
+ /X /Y /Z /bracketleft /backslash /bracketright /asciicircum /underscore
+ /quoteleft /a /b /c /d /e /f /g
+ /h /i /j /k /l /m /n /o
+ /p /q /r /s /t /u /v /w
+ /x /y /z /braceleft /bar /braceright /asciitilde /.notdef
+ /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+ /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+ /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+ /.notdef /.notdef /space /.notdef /degree /twosuperior /periodcentered /divide
+ /.notdef /.notdef /.notdef /afii10071 /.notdef /.notdef /.notdef /.notdef
+ /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+ /.notdef /.notdef /.notdef /afii10023 /.notdef /.notdef /.notdef /.notdef
+ /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /copyright
+ /afii10096 /afii10065 /afii10066 /afii10088 /afii10069 /afii10070 /afii10086 /afii10068
+ /afii10087 /afii10074 /afii10075 /afii10076 /afii10077 /afii10078 /afii10079 /afii10080
+ /afii10081 /afii10097 /afii10082 /afii10083 /afii10084 /afii10085 /afii10072 /afii10067
+ /afii10094 /afii10093 /afii10073 /afii10090 /afii10095 /afii10091 /afii10089 /afii10092
+ /afii10048 /afii10017 /afii10018 /afii10040 /afii10021 /afii10022 /afii10038 /afii10020
+ /afii10039 /afii10026 /afii10027 /afii10028 /afii10029 /afii10030 /afii10031 /afii10032
+ /afii10033 /afii10049 /afii10034 /afii10035 /afii10036 /afii10037 /afii10024 /afii10019
+ /afii10046 /afii10045 /afii10025 /afii10042 /afii10047 /afii10043 /afii10041 /afii10044
+]
+ def
+% end encoding
+%%IncludeResource: font Helvetica
+/Helvetica findfont
+dup length dict begin
+  {1 index /FID ne {def} {pop pop} ifelse} forall
+  /Encoding KOI8REncoding def
+  currentdict
+  end
+/Font1 exch definefont pop
+%%IncludeResource: font Helvetica-Bold
+/Helvetica-Bold findfont
+dup length dict begin
+  {1 index /FID ne {def} {pop pop} ifelse} forall
+  /Encoding KOI8REncoding def
+  currentdict
+  end
+/Font2 exch definefont pop
+%%IncludeResource: font Helvetica-Oblique
+/Helvetica-Oblique findfont
+dup length dict begin
+  {1 index /FID ne {def} {pop pop} ifelse} forall
+  /Encoding KOI8REncoding def
+  currentdict
+  end
+/Font3 exch definefont pop
+%%IncludeResource: font Helvetica-BoldOblique
+/Helvetica-BoldOblique findfont
+dup length dict begin
+  {1 index /FID ne {def} {pop pop} ifelse} forall
+  /Encoding KOI8REncoding def
+  currentdict
+  end
+/Font4 exch definefont pop
+%%IncludeResource: font Symbol
+/Symbol findfont
+dup length dict begin
+  {1 index /FID ne {def} {pop pop} ifelse} forall
+  currentdict
+  end
+/Font5 exch definefont pop
+%%EndProlog
+%%Page: 1 1
+bp
+240.94 117.64 600.94 477.64 cl
+0 0 0 srgb
+0.75 setlinewidth
+[] 0 setdash
+1 setlinecap
+1 setlinejoin
+10.00 setmiterlimit
+np
+337.86 191.08 m
+222.82 0 l
+o
+np
+337.86 191.08 m
+0 -7.20 l
+o
+np
+393.57 191.08 m
+0 -7.20 l
+o
+np
+449.27 191.08 m
+0 -7.20 l
+o
+np
+504.97 191.08 m
+0 -7.20 l
+o
+np
+560.68 191.08 m
+0 -7.20 l
+o
+/Font1 findfont 12 s
+337.86 165.16 (2) .5 0 t
+393.57 165.16 (4) .5 0 t
+449.27 165.16 (6) .5 0 t
+504.97 165.16 (8) .5 0 t
+560.68 165.16 (10) .5 0 t
+np
+299.98 222.91 m
+0 187.26 l
+o
+np
+299.98 222.91 m
+-7.20 0 l
+o
+np
+299.98 269.73 m
+-7.20 0 l
+o
+np
+299.98 316.54 m
+-7.20 0 l
+o
+np
+299.98 363.36 m
+-7.20 0 l
+o
+np
+299.98 410.17 m
+-7.20 0 l
+o
+282.70 222.91 (2) .5 90 t
+282.70 269.73 (4) .5 90 t
+282.70 316.54 (6) .5 90 t
+282.70 363.36 (8) .5 90 t
+282.70 410.17 (10) .5 90 t
+np
+ 299.98 191.08 m
+270.72 0 l
+0 227.52 l
+-270.72 0 l
+cp p1
+240.94 117.64 600.94 477.64 cl
+/Font1 findfont 12 s
+0 0 0 srgb
+435.34 136.36 (1:10) .5 0 t
+253.90 304.84 (1:10) .5 90 t
+299.98 191.08 570.70 418.60 cl
+/Font1 findfont 12 s
+0 0 0 srgb
+323.94 339.95 (ıÃ¡¡Œ¬¡¡‘¡“) 0 0 t
+ep
+%%Trailer
+%%Pages: 1
+%%EOF
