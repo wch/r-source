@@ -49,7 +49,7 @@ if(musl) {
              "CP1252", "CP1250", "CP1251", "CP1253", "CP1257")
 }
 
-## Expect centring to fail for Euro and most chars in
+## Expect centring to fail for most chars in
 ## CP1253 KOI8-* Cyrillic CP1251 Greek CP1253
 ## as those chars are not in the Adobe afms.
 for(i in seq_along(pdfenc)) {
