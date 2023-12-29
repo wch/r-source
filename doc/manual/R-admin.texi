@@ -341,6 +341,12 @@ you have a local CRAN mirror, these checks can be speeded up by either
 setting environment variable @env{R_CRAN_WEB} to its URL, or having a
 file @file{.R/repositories} specifying it (see @code{?setRepositories}).
 
+@command{make check-devel} checks the included packages' @file{tests}
+directories. For @pkg{grDevices} more complete checks will be run if
+the environment variable @env{R_GRDEVICES_COMPARE_PS_PDF} is set: those
+checks are skipped on plaforms using @code{musl} such as Alpine Linux, and
+it knows about differences from tranliterations in macOS 14 and later.
+
 Parallel make is supported for building @R{} but not for the
 @samp{check} targets (as the output is likely to be unreadably
 interleaved, although where supported@footnote{not by the version
