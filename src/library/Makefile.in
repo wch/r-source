@@ -144,9 +144,7 @@ install-tests:
 	@for pkg in $(R_PKGS_BASE); do \
 	  if test -d "$(srcdir)/$${pkg}/tests"; then \
 	    $(MKINSTALLDIRS) "$(DESTDIR)$(rhome)/library/$${pkg}/tests" ; \
-	    for f in $(srcdir)/$${pkg}/tests/*; do \
-	      $(INSTALL_DATA) $${f} "$(DESTDIR)$(rhome)/library/$${pkg}/tests"; \
-	    done; \
+	    cp -R  $(srcdir)/$${pkg}/tests/* "$(DESTDIR)$(rhome)/library/$${pkg}/tests"; \
 	  fi; \
 	done
 @USE_RECOMMENDED_PACKAGES_TRUE@	@(cd Recommended && $(MAKE) $@)

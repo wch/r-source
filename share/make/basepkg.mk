@@ -163,7 +163,7 @@ mkfigs:
 install-tests:
 	@if test -d tests; then \
 	  mkdir -p $(top_builddir)/library/$(pkg)/tests; \
-	  cp tests/* $(top_builddir)/library/$(pkg)/tests; \
+	  cp -R tests/* $(top_builddir)/library/$(pkg)/tests; \
 	fi
 
 
