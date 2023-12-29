@@ -19,6 +19,8 @@ include Makefile.common
 
 ## GNU gettext disables LANGUAGE if LC_ALL=C, but other systems might not.
 R = LANGUAGE=en LC_ALL=C SRCDIR=$(srcdir) R_DEFAULT_PACKAGES= $(top_builddir)/bin/R --vanilla
+## grDevices should be run in an UTF-8 locale
+R0 = LANGUAGE=en SRCDIR=$(srcdir) R_DEFAULT_PACKAGES= $(top_builddir)/bin/R --vanilla
 R2 = R_DEFAULT_PACKAGES= $(top_builddir)/bin/R --vanilla
 RCHK  = $(top_builddir)/bin/R CMD check
 RDIFF = $(top_builddir)/bin/R CMD Rdiff
@@ -46,11 +48,11 @@ test-Internet:
 
 test-BasePackages:
 	@$(MKINSTALLDIRS) Packages
-	@$(ECHO) "tools::testInstalledPackages(outDir='Packages', scope='base')" | $(R) --no-echo
+	@$(ECHO) "tools::testInstalledPackages(outDir='Packages', scope='base')" | $(R0) --no-echo
 
 test-Recommended:
 	@$(MKINSTALLDIRS) Packages
-	@$(ECHO) "tools::testInstalledPackages(outDir='Packages', scope='recommended')" | $(R) --no-echo
+	@$(ECHO) "tools::testInstalledPackages(outDir='Packages', scope='recommended')" | $(R0) --no-echo
 
 
 mostlyclean: clean
