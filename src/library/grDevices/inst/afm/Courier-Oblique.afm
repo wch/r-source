@@ -337,6 +337,6 @@ C -1 ; WX 600 ; N zcaron ; B 99 0 624 669 ;
 C -1 ; WX 600 ; N ncommaaccent ; B 26 -250 585 441 ;
 C -1 ; WX 600 ; N onesuperior ; B 231 249 491 622 ;
 C -1 ; WX 600 ; N imacron ; B 95 0 543 565 ;
-C -1 ; WX 600 ; N Euro ; B 0 0 0 0 ;
+C -1 ; WX 600 ; N Euro ; B 60 -16 634 576 ;
 EndCharMetrics
 EndFontMetrics

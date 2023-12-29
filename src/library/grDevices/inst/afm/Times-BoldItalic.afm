@@ -337,7 +337,7 @@ C -1 ; WX 389 ; N zcaron ; B -43 -78 424 690 ;
 C -1 ; WX 556 ; N ncommaaccent ; B -6 -218 493 462 ;
 C -1 ; WX 300 ; N onesuperior ; B 30 274 301 683 ;
 C -1 ; WX 278 ; N imacron ; B 2 -9 294 623 ;
-C -1 ; WX 500 ; N Euro ; B 0 0 0 0 ;
+C -1 ; WX 500 ; N Euro ; B 53 -5 666 689 ;
 EndCharMetrics
 StartKernData
 StartKernPairs 2038

@@ -337,7 +337,7 @@ C -1 ; WX 500 ; N zcaron ; B 31 0 571 734 ;
 C -1 ; WX 556 ; N ncommaaccent ; B 65 -225 573 538 ;
 C -1 ; WX 333 ; N onesuperior ; B 166 281 371 703 ;
 C -1 ; WX 278 ; N imacron ; B 95 0 417 684 ;
-C -1 ; WX 556 ; N Euro ; B 0 0 0 0 ;
+C -1 ; WX 556 ; N Euro ; B 12 -22 636 709 ;
 EndCharMetrics
 StartKernData
 StartKernPairs 2705
