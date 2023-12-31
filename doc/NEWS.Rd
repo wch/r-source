@@ -84,7 +84,7 @@
       by Davis Vaughan on R-devel.  Other \code{range()}-methods can make
       use of new \code{.rangeNum()}.
 
-      \item New \code{.internalGenerics} complementing
+      \item New \code{.internalGenerics} object complementing
       \code{.S3PrimitiveGenerics}, for documentation and low-level book
       keeping.
 
@@ -150,13 +150,14 @@
 
       \item \code{sort()} is now an implicit S4 generic in \pkg{methods}.
 
-      \item Formatting and printing, \code{format(z), print(z)}, of complex
-      vectors \code{z} no longer zap relatively small real or imaginary
-      parts to zero, fixing \PR{16752}.  This is an API change, as it was
-      documented previously to round real and imaginary parts together on
-      purpose, producing nicer looking output.  As mentioned, e.g. in the
-      PR, this change is compatible to many other \dQuote{\R-like}
-      programming environments.
+      \item Formatting and printing, \code{format(z), print(z)}, of
+      complex vectors \code{z} no longer zap relatively small real or
+      imaginary parts to zero, fixing \PR{16752}.  This is an API
+      change, as it was documented previously to round real and
+      imaginary parts together on purpose, producing nicer looking
+      output.  As mentioned, e.g.\sspace{}in the PR, this change is
+      compatible with many other \dQuote{\R-like} programming
+      environments.
 
       We have simplified the internal code and now basically format the
       real and imaginary parts independently of each other.
@@ -230,15 +231,9 @@
       \item \code{NCOL(NULL)} now returns 0 instead of 1, for
       consistency with \code{cbind()}.
 
-      \item Support for \code{encoding = "MacRoman"} has been removed
-      from the \code{pdf()} and \code{postscript()} devices -- this was
-      a legacy encoding supporting classic macOS up to 2001 (with
-      various revisions), and no longer has universal \code{libiconv}
-      support.%% e.g. not in musl
-
       \item The information for the Euro glyph missing from the Adobe
       \file{.afm} files for the Courier, Helvetica and Times families
-      has been copied from their URW equivalents -- this will much
+      has been copied from their URW equivalents -- this will
       improve vertical centring in the \code{pdf()} and
       \code{postscript()} devices.
     }
@@ -347,8 +342,8 @@
       used to include \file{R_ext/BLAS.h} although this was undocumented and
       unneeded by their documented entry points.  They no longer do so.
 
-      \item New \code{R_missing()}, factored out from \code{do_missing()},
-      used to fix \PR{18579}.
+      \item New function \code{R_missing()}, factored out from
+      \code{do_missing()}, used to fix \PR{18579}.
 
       \item \code{SEXP} type \code{S4SXP} has been renamed \code{OBJSXP}
       to support experimenting with alternative object systems.  The
@@ -361,13 +356,20 @@
   \subsection{DEPRECATED AND DEFUNCT}{
     \itemize{
       \item \code{data()} no longer handles zipped data from
-      long-defunct (since \R 2.13.0) \option{--use-zip-data} installations.
+      long-defunct (since \R\sspace{}2.13.0) \option{--use-zip-data}
+      installations.
 
       \item The legacy graphics devices \code{pictex()} and
       \code{xfig()} are now deprecated.  They do not support recent
       graphics enhancements and their font-handling is rudimentary. The
       intention is to retain them for historical interest as long as
       they remain somewhat functional.
+
+      \item Support for \code{encoding = "MacRoman"} has been removed
+      from the \code{pdf()} and \code{postscript()} devices -- this was
+      a legacy encoding supporting classic macOS up to 2001 (with
+      various revisions), and no longer has universal \code{libiconv}
+      support.%% e.g. not in musl
     }
   }
 
@@ -377,7 +379,8 @@
       the search path. More work needs to be done.
 
       \item \code{pairwise.t.test()} misbehaved when subgroups had 0 DF
-      for variance, even with \code{pool.sd=TRUE} \PR{18594} (Jack Berry).
+      for variance, even with \code{pool.sd = TRUE}.  (\PR{18594} by
+      Jack Berry).
 
       \item Probability distribution functions \code{[dpq]<distrib>(x, *)},
       but also \code{bessel[IKJY](x, .)} are now consistently preserving
@@ -391,9 +394,9 @@
       as proposed by Ivan Krylov on the R-devel mailing list.  (This
       also means it is now an error to specify \code{na.rm} more than once.)
 
-      \item \code{as.complex(x)} now returns \code{complex(real=x,
-      imaginary=0)} for \emph{all} numerical and logical \code{x}, notably
-      also for \code{NA} or \code{NA_integer_}.
+      \item \code{as.complex(x)} now returns \code{complex(real = x,
+      imaginary = 0)} for \emph{all} numerical and logical \code{x},
+      notably also for \code{NA} or \code{NA_integer_}.
 
       \item Directories are now omitted by
       \code{file.copy(,recursive = FALSE)} and in \code{file.append()}
@@ -434,11 +437,11 @@
       \item Rd \verb{\Sexpr} macros with nested \verb{#ifdef}
       conditionals were not processed.
 
-      \item A non-blocking connection with non-default encoding such as a
-      socket, now correctly returns from \code{readLines()} after new data
-      has arrived also when its \abbr{EOF} had been reached previously.  Thanks to
-      Peter Meilstrup's report on R-devel and Ivan Krylov's report and
-      patch proposal in \PR{18555}.
+      \item A non-blocking connection with non-default encoding (such as
+      a socket) now correctly returns from \code{readLines()} after new
+      data has arrived also when its \abbr{EOF} had been reached
+      previously.  Thanks to Peter Meilstrup's report on R-devel and
+      Ivan Krylov's report and patch proposal in \PR{18555}.
 
       \item \code{tools::checkRdContents()} failed to detect empty
       argument descriptions when they spanned multiple lines,
@@ -461,7 +464,7 @@
 
       \item When S4 method dispatch fails because no method was found, the
       error message now includes the signature argument names; thanks to
-      Michael Chirico's proposal on R-devel.
+      Michael Chirico's proposal on the R-devel list.
 
       \item \code{withAutoprint({ .. })} now preserves \code{srcref}s
       previously lost, thanks to Andrew Simmons' report plus fix in
@@ -604,7 +607,7 @@
       Previously, some file names particularly with \sQuote{East Asian}
       characters were omitted.
 
-      \item \code{cov2cor(<0x0>)} now works, fixing \PR{18423} thanks to
+      \item \code{cov2cor(<0 x 0>)} now works, fixing \PR{18423} thanks to
       Mikael Jagan and Elin Warning.
 
       \item \code{cov2cor(<negative diagonal>)} and similar now give one
