@@ -4501,8 +4501,21 @@ add_dummies <- function(dir, Log)
         .libPaths(c(libdir, libpaths))
         vigns <- pkgVignettes(dir = pkgdir)
         .libPaths(libpaths)
-        if (is.null(vigns) || !length(vigns$docs)) return()
+        if(is.null(vigns)) return()
 
+        ## Packages with a 'vignette' subdir not providing vignettes.
+        if(!length(vigns$docs)) {
+            if(config_val_to_logical(Sys.getenv("_R_CHECK_VIGNETTES_MISSING_SOURCES_",
+                                                "FALSE"))) {
+                checkingLog(Log, "package vignettes")                
+                noteLog(Log)
+                msg <- c("Package has 'vignettes' subdirectory but apparently no vignettes.",
+                         "Perhaps the 'VignetteBuilder' information is missing from the DESCRIPTION file?")
+                wrapLog(msg)
+            }
+            return()
+        }
+                
         if(do_install && !spec_install && !is_base_pkg && !extra_arch) {
             ## fake installs don't install inst/doc
             checkingLog(Log, "for unstated dependencies in vignettes")
@@ -4643,6 +4656,26 @@ add_dummies <- function(dir, Log)
             }
         }
 
+        ## Packages not specifying a package for their vignette engine.
+        ## tools::pkgVignettes() actually uses tools:::engineMatches()
+        ## trickery to work around these cases, other code does not.
+        bad_vignettes <-
+            vigns$docs[!grepl("::",
+                              vapply(vigns$docs, getVignetteEngine, ""),
+                              fixed = TRUE)]
+        if(nb <- length(bad_vignettes)) {
+            if(!any) noteLog(Log)
+            any <- TRUE
+            msg <- ngettext(nb,
+                            "Package vignette with \\VignetteEngine{} not specifying an engine package:",
+                            "Package vignettes with \\VignetteEngine{} not specifying an engine package:",
+                            domain = NA)
+                printLog0(Log, msg, "\n",
+                          .format_lines_with_indent(sQuote(basename(bad_vignettes))),
+                          "\n")
+            wrapLog("Engines should be specified as \\VignetteEngine{PKG::ENG}.")
+        }
+
         if(R_check_vignette_titles) {
             titles <- vapply(vigns$docs, function(v) vignetteInfo(v)$title, "",
                              USE.NAMES = TRUE)
@@ -4674,6 +4707,80 @@ add_dummies <- function(dir, Log)
                           .format_lines_with_indent(sQuote(dups)), "\n")
                 wrapLog("Ensure that the %\\VignetteIndexEntry lines in the",
                         "vignette sources correspond to the vignette titles.")
+            }
+        }
+
+        ## Check for missing tangle outputs.
+        ## Note that R CMD build drops outputs with no R code, via
+        ##   bfr <- readLines(file, warn = FALSE)
+        ##   if(all(grepl("(^###|^[[:space:]]*$)", bfr, useBytes = TRUE))) {
+        ## so we do the same here.
+        if(!is_base_pkg &&
+           dir.exists(dir <- file.path(pkgdir, "inst", "doc")) &&
+           config_val_to_logical(Sys.getenv("_R_CHECK_VIGNETTES_MISSING_TANGLE_OUTPUTS_",
+                                            "FALSE"))) {
+            ## This is similar to the weave output check above, but we
+            ## cannot simply use find_vignette_product(by = "tangle") as
+            ## we need to ignore outputs with no R code, see above.
+            ## <FIXME>
+            ## Unfortunately, knitr::vtangle() still creates empty
+            ## outputs when xfun::is_R_CMD_check() which gives true when
+            ##   !is.na(Sys.getenv("_R_CHECK_PACKAGE_NAME_", NA))
+            ## or when
+            ##   tolower(Sys.getenv("_R_CHECK_LICENSE_")) == "true"
+            ## so we have to reset these env vars.
+            rcp <- Sys.getenv("_R_CHECK_PACKAGE_NAME_", NA_character_)
+            rcl <- Sys.getenv("_R_CHECK_LICENSE_")
+            if(!is.na(rcp))
+                Sys.unsetenv("_R_CHECK_PACKAGE_NAME_")
+            if(tolower(rcl) == "true")
+                Sys.setenv("_R_CHECK_LICENSE_" = "false")
+            saveRDS(list(Sys.getenv("_R_CHECK_LICENSE_"),
+                         xfun::is_R_CMD_check()),
+                    file = "~/tmp/zzz.rds")
+            bad_vignettes <- character()
+            for (i in seq_along(vigns$docs)) {
+                tdir <- tempfile()
+                file <- vigns$docs[i]
+                engine <- vignetteEngine(vigns$engines[i])
+                encoding <- vigns$encodings[i]
+                dir.create(tdir)
+                products <-
+                    tryCatch(buildVignette(file, dir = tdir,
+                                           weave = FALSE,
+                                           quiet = TRUE,
+                                           engine = engine,
+                                           encoding = encoding),
+                             error = identity)
+                if(!inherits(products, "error") && length(products)) {
+                    ## Hmm ... there should really only be one tangle
+                    ## product. 
+                    lines <- readLines(file.path(tdir, products[1L]),
+                                       warn = FALSE)
+                    if(!all(grepl("(^###|^[[:space:]]*$)", lines,
+                                  useBytes = TRUE)) &&
+                       !file.exists(file.path(dir, basename(products[1L])))
+                       )
+                        bad_vignettes <- c(bad_vignettes, file)
+                }
+                unlink(tdir, recursive = TRUE)
+            }
+            if(tolower(rcl) == "true")
+                Sys.setenv("_R_CHECK_LICENSE_" = rcl)
+            if(!is.na(rcp))
+                Sys.setenv("_R_CHECK_PACKAGE_NAME_" = rcp)
+            ## Hopefully knitr::vtangle() will be fixed eventually ...
+            ## </FIXME>        
+            if(nb <- length(bad_vignettes)) {
+                if(!any) noteLog(Log)
+                any <- TRUE
+                msg <- ngettext(nb,
+                            "Package vignette without corresponding tangle output:",
+                            "Package vignettes without corresponding tangle output:",
+                            domain = NA)
+                printLog0(Log, msg, "\n",
+                          .format_lines_with_indent(sQuote(basename(bad_vignettes))),
+                          "\n")
             }
         }
 
