@@ -40,7 +40,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup double_blas_level1
+*> \ingroup abs1
 *
 *  =====================================================================
       DOUBLE PRECISION FUNCTION DCABS1(Z)
@@ -121,7 +121,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup double_blas_level1
+*> \ingroup asum
 *
 *> \par Further Details:
 *  =====================
@@ -238,7 +238,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup aux_blas
+*> \ingroup iamax
 *
 *> \par Further Details:
 *  =====================
@@ -383,7 +383,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16_blas_level1
+*> \ingroup axpy
 *
 *> \par Further Details:
 *  =====================
@@ -515,7 +515,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16_blas_level1
+*> \ingroup copy
 *
 *> \par Further Details:
 *  =====================
@@ -642,7 +642,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16_blas_level1
+*> \ingroup dot
 *
 *> \par Further Details:
 *  =====================
@@ -776,7 +776,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16_blas_level1
+*> \ingroup dot
 *
 *> \par Further Details:
 *  =====================
@@ -931,7 +931,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16_blas_level1
+*> \ingroup rot
 *
 *  =====================================================================
       SUBROUTINE ZDROT( N, ZX, INCX, ZY, INCY, C, S )
@@ -1054,7 +1054,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16_blas_level1
+*> \ingroup scal
 *
 *> \par Further Details:
 *  =====================
@@ -1085,11 +1085,14 @@
 *
 *     .. Local Scalars ..
       INTEGER I,NINCX
+*     .. Parameters ..
+      DOUBLE PRECISION ONE
+      PARAMETER (ONE=1.0D+0)
 *     ..
 *     .. Intrinsic Functions ..
       INTRINSIC DBLE, DCMPLX, DIMAG
 *     ..
-      IF (N.LE.0 .OR. INCX.LE.0) RETURN
+      IF (N.LE.0 .OR. INCX.LE.0 .OR. DA.EQ.ONE) RETURN
       IF (INCX.EQ.1) THEN
 *
 *        code for increment equal to 1
@@ -1261,6 +1264,8 @@
 *>           ( 1 + ( n - 1 )*abs( INCY ) ) otherwise.
 *>           Before entry, the incremented array Y must contain the
 *>           vector y. On exit, Y is overwritten by the updated vector y.
+*>           If either m or n is zero, then Y not referenced and the function
+*>           performs a quick return.
 *> \endverbatim
 *>
 *> \param[in] INCY
@@ -1278,7 +1283,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16_blas_level2
+*> \ingroup gbmv
 *
 *> \par Further Details:
 *  =====================
@@ -1296,7 +1301,8 @@
 *> \endverbatim
 *>
 *  =====================================================================
-      SUBROUTINE ZGBMV(TRANS,M,N,KL,KU,ALPHA,A,LDA,X,INCX,BETA,Y,INCY)
+      SUBROUTINE ZGBMV(TRANS,M,N,KL,KU,ALPHA,A,LDA,X,INCX,
+     +         BETA,Y,INCY)
 *
 *  -- Reference BLAS level2 routine --
 *  -- Reference BLAS is a software package provided by Univ. of Tennessee,    --
@@ -1666,7 +1672,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16_blas_level3
+*> \ingroup gemm
 *
 *> \par Further Details:
 *  =====================
@@ -1683,7 +1689,8 @@
 *> \endverbatim
 *>
 *  =====================================================================
-      SUBROUTINE ZGEMM(TRANSA,TRANSB,M,N,K,ALPHA,A,LDA,B,LDB,BETA,C,LDC)
+      SUBROUTINE ZGEMM(TRANSA,TRANSB,M,N,K,ALPHA,A,LDA,B,LDB,
+     +         BETA,C,LDC)
 *
 *  -- Reference BLAS level3 routine --
 *  -- Reference BLAS is a software package provided by Univ. of Tennessee,    --
@@ -2096,6 +2103,8 @@
 *>           Before entry with BETA non-zero, the incremented array Y
 *>           must contain the vector y. On exit, Y is overwritten by the
 *>           updated vector y.
+*>           If either m or n is zero, then Y not referenced and the function
+*>           performs a quick return.
 *> \endverbatim
 *>
 *> \param[in] INCY
@@ -2113,7 +2122,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16_blas_level2
+*> \ingroup gemv
 *
 *> \par Further Details:
 *  =====================
@@ -2433,7 +2442,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16_blas_level2
+*> \ingroup ger
 *
 *> \par Further Details:
 *  =====================
@@ -2657,7 +2666,7 @@ c              END IF
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16_blas_level2
+*> \ingroup ger
 *
 *> \par Further Details:
 *  =====================
@@ -2937,7 +2946,7 @@ c              END IF
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16_blas_level2
+*> \ingroup hbmv
 *
 *> \par Further Details:
 *  =====================
@@ -3319,7 +3328,7 @@ c              END IF
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16_blas_level3
+*> \ingroup hemm
 *
 *> \par Further Details:
 *  =====================
@@ -3387,9 +3396,11 @@ c              END IF
 *     Test the input parameters.
 *
       INFO = 0
-      IF ((.NOT.LSAME(SIDE,'L')) .AND. (.NOT.LSAME(SIDE,'R'))) THEN
+      IF ((.NOT.LSAME(SIDE,'L')) .AND.
+     +    (.NOT.LSAME(SIDE,'R'))) THEN
           INFO = 1
-      ELSE IF ((.NOT.UPPER) .AND. (.NOT.LSAME(UPLO,'L'))) THEN
+      ELSE IF ((.NOT.UPPER) .AND.
+     +         (.NOT.LSAME(UPLO,'L'))) THEN
           INFO = 2
       ELSE IF (M.LT.0) THEN
           INFO = 3
@@ -3649,7 +3660,7 @@ c              END IF
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16_blas_level2
+*> \ingroup hemv
 *
 *> \par Further Details:
 *  =====================
@@ -3980,7 +3991,7 @@ c              END IF
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16_blas_level2
+*> \ingroup her2
 *
 *> \par Further Details:
 *  =====================
@@ -4339,7 +4350,7 @@ c                  END IF
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16_blas_level3
+*> \ingroup her2k
 *
 *> \par Further Details:
 *  =====================
@@ -4719,7 +4730,7 @@ c                      END IF
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16_blas_level2
+*> \ingroup her
 *
 *> \par Further Details:
 *  =====================
@@ -5029,7 +5040,7 @@ c                  END IF
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16_blas_level3
+*> \ingroup herk
 *
 *> \par Further Details:
 *  =====================
@@ -5400,7 +5411,7 @@ c                  END IF
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16_blas_level2
+*> \ingroup hpmv
 *
 *> \par Further Details:
 *  =====================
@@ -5732,7 +5743,7 @@ c                  END IF
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16_blas_level2
+*> \ingroup hpr2
 *
 *> \par Further Details:
 *  =====================
@@ -6032,7 +6043,7 @@ c                  END IF
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16_blas_level2
+*> \ingroup hpr
 *
 *> \par Further Details:
 *  =====================
@@ -6260,7 +6271,7 @@ c                  END IF
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16_blas_level1
+*> \ingroup scal
 *
 *> \par Further Details:
 *  =====================
@@ -6292,7 +6303,11 @@ c                  END IF
 *     .. Local Scalars ..
       INTEGER I,NINCX
 *     ..
-      IF (N.LE.0 .OR. INCX.LE.0) RETURN
+*     .. Parameters ..
+      DOUBLE COMPLEX ONE
+      PARAMETER (ONE= (1.0D+0,0.0D+0))
+*     ..
+      IF (N.LE.0 .OR. INCX.LE.0 .OR. ZA.EQ.ONE) RETURN
       IF (INCX.EQ.1) THEN
 *
 *        code for increment equal to 1
@@ -6381,7 +6396,7 @@ c                  END IF
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16_blas_level1
+*> \ingroup swap
 *
 *> \par Further Details:
 *  =====================
@@ -6613,7 +6628,7 @@ c                  END IF
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16_blas_level3
+*> \ingroup hemm
 *
 *> \par Further Details:
 *  =====================
@@ -6681,9 +6696,11 @@ c                  END IF
 *     Test the input parameters.
 *
       INFO = 0
-      IF ((.NOT.LSAME(SIDE,'L')) .AND. (.NOT.LSAME(SIDE,'R'))) THEN
+      IF ((.NOT.LSAME(SIDE,'L')) .AND.
+     +    (.NOT.LSAME(SIDE,'R'))) THEN
           INFO = 1
-      ELSE IF ((.NOT.UPPER) .AND. (.NOT.LSAME(UPLO,'L'))) THEN
+      ELSE IF ((.NOT.UPPER) .AND.
+     +         (.NOT.LSAME(UPLO,'L'))) THEN
           INFO = 2
       ELSE IF (M.LT.0) THEN
           INFO = 3
@@ -6978,7 +6995,7 @@ c                  END IF
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16_blas_level3
+*> \ingroup her2k
 *
 *> \par Further Details:
 *  =====================
@@ -7350,7 +7367,7 @@ c                      END IF
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16_blas_level3
+*> \ingroup herk
 *
 *> \par Further Details:
 *  =====================
@@ -7728,7 +7745,7 @@ c                      END IF
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16_blas_level2
+*> \ingroup tbmv
 *
 *> \par Further Details:
 *  =====================
@@ -7787,10 +7804,12 @@ c                      END IF
       INFO = 0
       IF (.NOT.LSAME(UPLO,'U') .AND. .NOT.LSAME(UPLO,'L')) THEN
           INFO = 1
-      ELSE IF (.NOT.LSAME(TRANS,'N') .AND. .NOT.LSAME(TRANS,'T') .AND.
+      ELSE IF (.NOT.LSAME(TRANS,'N') .AND.
+     +         .NOT.LSAME(TRANS,'T') .AND.
      +         .NOT.LSAME(TRANS,'C')) THEN
           INFO = 2
-      ELSE IF (.NOT.LSAME(DIAG,'U') .AND. .NOT.LSAME(DIAG,'N')) THEN
+      ELSE IF (.NOT.LSAME(DIAG,'U') .AND.
+     +         .NOT.LSAME(DIAG,'N')) THEN
           INFO = 3
       ELSE IF (N.LT.0) THEN
           INFO = 4
@@ -8158,7 +8177,7 @@ c                      END IF
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16_blas_level2
+*> \ingroup tbsv
 *
 *> \par Further Details:
 *  =====================
@@ -8216,10 +8235,12 @@ c                      END IF
       INFO = 0
       IF (.NOT.LSAME(UPLO,'U') .AND. .NOT.LSAME(UPLO,'L')) THEN
           INFO = 1
-      ELSE IF (.NOT.LSAME(TRANS,'N') .AND. .NOT.LSAME(TRANS,'T') .AND.
+      ELSE IF (.NOT.LSAME(TRANS,'N') .AND.
+     +         .NOT.LSAME(TRANS,'T') .AND.
      +         .NOT.LSAME(TRANS,'C')) THEN
           INFO = 2
-      ELSE IF (.NOT.LSAME(DIAG,'U') .AND. .NOT.LSAME(DIAG,'N')) THEN
+      ELSE IF (.NOT.LSAME(DIAG,'U') .AND.
+     +         .NOT.LSAME(DIAG,'N')) THEN
           INFO = 3
       ELSE IF (N.LT.0) THEN
           INFO = 4
@@ -8539,7 +8560,7 @@ c                      END IF
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16_blas_level2
+*> \ingroup tpmv
 *
 *> \par Further Details:
 *  =====================
@@ -8598,10 +8619,12 @@ c                      END IF
       INFO = 0
       IF (.NOT.LSAME(UPLO,'U') .AND. .NOT.LSAME(UPLO,'L')) THEN
           INFO = 1
-      ELSE IF (.NOT.LSAME(TRANS,'N') .AND. .NOT.LSAME(TRANS,'T') .AND.
+      ELSE IF (.NOT.LSAME(TRANS,'N') .AND.
+     +         .NOT.LSAME(TRANS,'T') .AND.
      +         .NOT.LSAME(TRANS,'C')) THEN
           INFO = 2
-      ELSE IF (.NOT.LSAME(DIAG,'U') .AND. .NOT.LSAME(DIAG,'N')) THEN
+      ELSE IF (.NOT.LSAME(DIAG,'U') .AND.
+     +         .NOT.LSAME(DIAG,'N')) THEN
           INFO = 3
       ELSE IF (N.LT.0) THEN
           INFO = 4
@@ -8927,7 +8950,7 @@ c                      END IF
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16_blas_level2
+*> \ingroup tpsv
 *
 *> \par Further Details:
 *  =====================
@@ -8985,10 +9008,12 @@ c                      END IF
       INFO = 0
       IF (.NOT.LSAME(UPLO,'U') .AND. .NOT.LSAME(UPLO,'L')) THEN
           INFO = 1
-      ELSE IF (.NOT.LSAME(TRANS,'N') .AND. .NOT.LSAME(TRANS,'T') .AND.
+      ELSE IF (.NOT.LSAME(TRANS,'N') .AND.
+     +         .NOT.LSAME(TRANS,'T') .AND.
      +         .NOT.LSAME(TRANS,'C')) THEN
           INFO = 2
-      ELSE IF (.NOT.LSAME(DIAG,'U') .AND. .NOT.LSAME(DIAG,'N')) THEN
+      ELSE IF (.NOT.LSAME(DIAG,'U') .AND.
+     +         .NOT.LSAME(DIAG,'N')) THEN
           INFO = 3
       ELSE IF (N.LT.0) THEN
           INFO = 4
@@ -9347,7 +9372,7 @@ c                      END IF
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16_blas_level3
+*> \ingroup trmm
 *
 *> \par Further Details:
 *  =====================
@@ -9424,7 +9449,8 @@ c                      END IF
      +         (.NOT.LSAME(TRANSA,'T')) .AND.
      +         (.NOT.LSAME(TRANSA,'C'))) THEN
           INFO = 3
-      ELSE IF ((.NOT.LSAME(DIAG,'U')) .AND. (.NOT.LSAME(DIAG,'N'))) THEN
+      ELSE IF ((.NOT.LSAME(DIAG,'U')) .AND.
+     +         (.NOT.LSAME(DIAG,'N'))) THEN
           INFO = 4
       ELSE IF (M.LT.0) THEN
           INFO = 5
@@ -9765,7 +9791,7 @@ c                          END IF
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16_blas_level2
+*> \ingroup trmv
 *
 *> \par Further Details:
 *  =====================
@@ -9824,10 +9850,12 @@ c                          END IF
       INFO = 0
       IF (.NOT.LSAME(UPLO,'U') .AND. .NOT.LSAME(UPLO,'L')) THEN
           INFO = 1
-      ELSE IF (.NOT.LSAME(TRANS,'N') .AND. .NOT.LSAME(TRANS,'T') .AND.
+      ELSE IF (.NOT.LSAME(TRANS,'N') .AND.
+     +         .NOT.LSAME(TRANS,'T') .AND.
      +         .NOT.LSAME(TRANS,'C')) THEN
           INFO = 2
-      ELSE IF (.NOT.LSAME(DIAG,'U') .AND. .NOT.LSAME(DIAG,'N')) THEN
+      ELSE IF (.NOT.LSAME(DIAG,'U') .AND.
+     +         .NOT.LSAME(DIAG,'N')) THEN
           INFO = 3
       ELSE IF (N.LT.0) THEN
           INFO = 4
@@ -10169,7 +10197,7 @@ c                      END IF
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16_blas_level3
+*> \ingroup trsm
 *
 *> \par Further Details:
 *  =====================
@@ -10246,7 +10274,8 @@ c                      END IF
      +         (.NOT.LSAME(TRANSA,'T')) .AND.
      +         (.NOT.LSAME(TRANSA,'C'))) THEN
           INFO = 3
-      ELSE IF ((.NOT.LSAME(DIAG,'U')) .AND. (.NOT.LSAME(DIAG,'N'))) THEN
+      ELSE IF ((.NOT.LSAME(DIAG,'U')) .AND.
+     +         (.NOT.LSAME(DIAG,'N'))) THEN
           INFO = 4
       ELSE IF (M.LT.0) THEN
           INFO = 5
@@ -10612,7 +10641,7 @@ c                          END IF
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16_blas_level2
+*> \ingroup trsv
 *
 *> \par Further Details:
 *  =====================
@@ -10670,10 +10699,12 @@ c                          END IF
       INFO = 0
       IF (.NOT.LSAME(UPLO,'U') .AND. .NOT.LSAME(UPLO,'L')) THEN
           INFO = 1
-      ELSE IF (.NOT.LSAME(TRANS,'N') .AND. .NOT.LSAME(TRANS,'T') .AND.
+      ELSE IF (.NOT.LSAME(TRANS,'N') .AND.
+     +         .NOT.LSAME(TRANS,'T') .AND.
      +         .NOT.LSAME(TRANS,'C')) THEN
           INFO = 2
-      ELSE IF (.NOT.LSAME(DIAG,'U') .AND. .NOT.LSAME(DIAG,'N')) THEN
+      ELSE IF (.NOT.LSAME(DIAG,'U') .AND.
+     +         .NOT.LSAME(DIAG,'N')) THEN
           INFO = 3
       ELSE IF (N.LT.0) THEN
           INFO = 4

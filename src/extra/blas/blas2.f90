@@ -60,7 +60,7 @@
 !
 !> \date August 2016
 !
-!> \ingroup single_blas_level1
+!> \ingroup nrm2
 !
 !> \par Contributors:
 !  ==================
@@ -204,18 +204,15 @@ end function
 ! Online html documentation available at
 !            http://www.netlib.org/lapack/explore-html/
 !
-!  Definition:
-!  ===========
-!
-!  DROTG constructs a plane rotation
-!     [  c  s ] [ a ] = [ r ]
-!     [ -s  c ] [ b ]   [ 0 ]
-!  satisfying c**2 + s**2 = 1.
-!
 !> \par Purpose:
 !  =============
 !>
 !> \verbatim
+!>
+!> DROTG constructs a plane rotation
+!>    [  c  s ] [ a ] = [ r ]
+!>    [ -s  c ] [ b ]   [ 0 ]
+!> satisfying c**2 + s**2 = 1.
 !>
 !> The computation uses the formulas
 !>    sigma = sgn(a)    if |a| >  |b|
@@ -233,6 +230,8 @@ end function
 !>    If |z| > 1, set c = 1/z and s = sqrt( 1 - c**2).
 !>
 !> \endverbatim
+!>
+!> @see lartg, @see lartgp
 !
 !  Arguments:
 !  ==========
@@ -273,7 +272,7 @@ end function
 !>
 !> Weslley Pereira, University of Colorado Denver, USA
 !
-!> \ingroup single_blas_level1
+!> \ingroup rotg
 !
 !> \par Further Details:
 !  =====================

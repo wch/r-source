@@ -236,6 +236,9 @@
       has been copied from their URW equivalents -- this will
       improve vertical centring in the \code{pdf()} and
       \code{postscript()} devices.
+
+      \item The included BLAS sources have been updated to those shipped
+      with LAPACK version 3.12. The changes are almost entirely cosmetic.
     }
   }
 
