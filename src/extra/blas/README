@@ -27,7 +27,7 @@ cmplxblas2.f90 contains dznrm2 and zrotg
 
 
 ----------------------------------------
-cd lapack-3.12/BLAS/SRC
+cd lapack-3.12.0/BLAS/SRC
 
 cat dasum.f daxpy.f dcopy.f ddot.f dgbmv.f dgemm.f dgemv.f dger.f drot.f drotm.f drotmg.f dsbmv.f dscal.f dsdot.f dspmv.f dspr2.f dspr.f dswap.f dsymm.f dsymv.f dsyr2.f dsyr2k.f dsyr.f dsyrk.f dtbmv.f dtbsv.f dtpmv.f dtpsv.f dtrmm.f dtrmv.f dtrsm.f dtrsv.f idamax.f lsame.f > ../../blas.f
 

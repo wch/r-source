@@ -238,7 +238,7 @@
       \code{postscript()} devices.
 
       \item The included BLAS sources have been updated to those shipped
-      with LAPACK version 3.12. The changes are almost entirely cosmetic.
+      with LAPACK version 3.12.0 The changes are almost entirely cosmetic.
     }
   }
 
