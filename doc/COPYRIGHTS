@@ -105,7 +105,7 @@ src/library/grDevices/inst/afm/CM_*.afm
 src/library/grDevices/inst/afm/cm*.afm
 
 	are derived from afms which are copyright by the American
-	Mathematical Society, but 'the AMS does require which the
+	Mathematical Society, but 'the AMS does require that the
 	AMS copyright notice be removed from any derivative versions
 	of the fonts which have been altered in any way'.
 
