@@ -4,7 +4,7 @@
 ### Test original URW fonts.
 
 ## These have good coverage except KOI8-[RU] (0x80 to 0xLBF are missing)
-## but no metric info, not even widths for Greek glyphs.
+## but no metric info, not even widths for most Greek glyphs.
 
 options(warn = 1L)
 
@@ -66,12 +66,10 @@ for(i in seq_along(pdfenc)) {
 
 ## and repeat for URW 2.0 fonts
 
-## These have metrix info for Greak glyphs, but a few widths missing
-## for CP1253 and a few Greek glyphs (Omega, mu, sigma1) are not
-## renedered and Delta, Omega and mu are missing metric info.  In part
-## this is because the encodings use names /Deltagreek, /Omegagreek
-## and /mugreek and the afms are missing Omega, mu and (unsuprisingly,
-## sigma1).
+## These have metrix info for Greek glyphs, but a few widths missing
+## and a few Greek glyphs (drachma, Omega, mu, sigma1) are not
+## renedered or not centered.  In part this is because the afms do not
+## contain data for these.
 
 ## follow embedFonts
 if (!nzchar(tools::find_gs_cmd()))

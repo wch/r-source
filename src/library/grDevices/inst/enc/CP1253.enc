@@ -26,12 +26,12 @@
 /dieresis /copyright /.notdef /guillemotleft /logicalnot /hyphen /registered /afii00208
 /degree /plusminus /twosuperior /threesuperior /tonos /mu /paragraph /periodcentered
 /Epsilontonos /Etatonos /Iotatonos /guillemotright /Omicrontonos /onehalf /Upsilontonos /Omegatonos
-/iotadieresistonos /Alpha /Beta /Gamma /Deltagreek /Epsilon /Zeta /Eta
+/iotadieresistonos /Alpha /Beta /Gamma /Delta /Epsilon /Zeta /Eta
 /Theta /Iota /Kappa /Lambda /Mu /Nu /Xi /Omicron
 /Pi /Rho /.notdef /Sigma /Tau /Upsilon /Phi /Chi
-/Psi /Omegagreek /Iotadieresis /Upsilondieresis /alphatonos /epsilontonos /etatonos /iotatonos
+/Psi /Omega /Iotadieresis /Upsilondieresis /alphatonos /epsilontonos /etatonos /iotatonos
 /upsilondieresistonos /alpha /beta /gamma /delta /epsilon /zeta /eta
-/theta /iota /kappa /lambda /mugreek /nu /xi /omicron
+/theta /iota /kappa /lambda /mu /nu /xi /omicron
 /pi /rho /sigma1 /sigma /tau /upsilon /phi /chi
 /psi /omega /iotadieresis /upsilondieresis /omicrontonos /upsilontonos /omegatonos /.notdef
 ]

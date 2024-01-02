@@ -2,8 +2,8 @@
 %âãÏÓ\r
 1 0 obj
 <<
-/CreationDate (D:20231228140609)
-/ModDate (D:20231228140609)
+/CreationDate (D:20240102150728)
+/ModDate (D:20240102150728)
 /Title (R Graphics Output)
 /Producer (R 4.4.0)
 /Creator (R)
@@ -562,7 +562,7 @@ BT
 /F2 1 Tf 12.00 0.00 0.00 12.00 201.94 467.66 Tm (Ã) Tj
 ET
 BT
-/F2 1 Tf 12.00 0.00 0.00 12.00 232.26 467.66 Tm (Ä) Tj
+/F2 1 Tf 12.00 0.00 0.00 12.00 228.59 463.53 Tm (Ä) Tj
 ET
 BT
 /F2 1 Tf 12.00 0.00 0.00 12.00 262.59 467.66 Tm (Å) Tj
@@ -679,7 +679,7 @@ BT
 /F2 1 Tf 12.00 0.00 0.00 12.00 444.54 528.31 Tm (ë) Tj
 ET
 BT
-/F2 1 Tf 12.00 0.00 0.00 12.00 474.86 528.31 Tm (ì) Tj
+/F2 1 Tf 12.00 0.00 0.00 12.00 471.53 526.41 Tm (ì) Tj
 ET
 BT
 /F2 1 Tf 12.00 0.00 0.00 12.00 505.19 528.31 Tm (í) Tj
@@ -985,12 +985,12 @@ endobj
  168/dieresis 169/copyright 170/.notdef 171/guillemotleft 172/logicalnot 173/hyphen 174/registered 175/afii00208
  176/degree 177/plusminus 178/twosuperior 179/threesuperior 180/tonos 181/mu 182/paragraph 183/periodcentered
  184/Epsilontonos 185/Etatonos 186/Iotatonos 187/guillemotright 188/Omicrontonos 189/onehalf 190/Upsilontonos 191/Omegatonos
- 192/iotadieresistonos 193/Alpha 194/Beta 195/Gamma 196/Deltagreek 197/Epsilon 198/Zeta 199/Eta
+ 192/iotadieresistonos 193/Alpha 194/Beta 195/Gamma 196/Delta 197/Epsilon 198/Zeta 199/Eta
  200/Theta 201/Iota 202/Kappa 203/Lambda 204/Mu 205/Nu 206/Xi 207/Omicron
  208/Pi 209/Rho 210/.notdef 211/Sigma 212/Tau 213/Upsilon 214/Phi 215/Chi
- 216/Psi 217/Omegagreek 218/Iotadieresis 219/Upsilondieresis 220/alphatonos 221/epsilontonos 222/etatonos 223/iotatonos
+ 216/Psi 217/Omega 218/Iotadieresis 219/Upsilondieresis 220/alphatonos 221/epsilontonos 222/etatonos 223/iotatonos
  224/upsilondieresistonos 225/alpha 226/beta 227/gamma 228/delta 229/epsilon 230/zeta 231/eta
- 232/theta 233/iota 234/kappa 235/lambda 236/mugreek 237/nu 238/xi 239/omicron
+ 232/theta 233/iota 234/kappa 235/lambda 236/mu 237/nu 238/xi 239/omicron
  240/pi 241/rho 242/sigma1 243/sigma 244/tau 245/upsilon 246/phi 247/chi
  248/psi 249/omega 250/iotadieresis 251/upsilondieresis 252/omicrontonos 253/upsilontonos 254/omegatonos 255/.notdef
 
@@ -1018,10 +1018,10 @@ xref
 0000000292 00000 n 
 0000015221 00000 n 
 0000025017 00000 n 
-0000027826 00000 n 
-0000027924 00000 n 
+0000027811 00000 n 
+0000027909 00000 n 
 trailer
 << /Size 13 /Info 1 0 R /Root 2 0 R >>
 startxref
-28027
+28012
 %%EOF
