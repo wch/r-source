@@ -239,6 +239,12 @@
 
       \item The included BLAS sources have been updated to those shipped
       with LAPACK version 3.12.0.  The changes are almost entirely cosmetic.
+
+      \item There are new font families for the 2014--5 URW 2.0 fonts --
+      see \code{?pdf} -- which are included in recent versions of
+      \command{ghostscript}.  These have font widths for Greek glyphs
+      and a few others which were missing from the original versions
+      (whose font families remain available for reproducibility).
     }
   }
 

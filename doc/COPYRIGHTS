@@ -93,11 +93,19 @@ src/library/grDevices/inst/afm/*l.afm
 
 	Copyright 1999 by (URW)++ Design & Development
 
+src/library/grDevices/inst/afm{Nimbus*.afm
+
+	Copyright (URW)++,Copyright 2014 by (URW)++ Design & Development
+
+src/library/grDevices/inst/afm//StandardSymbolsPS.afm
+
+	Copyright URW Software, Copyright 2015 by URW
+
 src/library/grDevices/inst/afm/CM_*.afm
 src/library/grDevices/inst/afm/cm*.afm
 
 	are derived from afms which are copyright by the American
-	Mathematical Society, but 'the AMS does require that the
+	Mathematical Society, but 'the AMS does require which the
 	AMS copyright notice be removed from any derivative versions
 	of the fonts which have been altered in any way'.
 

@@ -17,5 +17,11 @@ by the American Mathematical Society, but `the AMS does require that
 the AMS copyright notice be removed from any derivative versions of
 the fonts which have been altered in any way'.
 
-
 BDR 2001-01-13, 2001-11-28
+
+
+The URW 2.0 afms were added on 2004-01-02 from
+https://github.com/twardoch/urw-core35-fonts/tree/master#readme
+
+They  are licensed under 3 licenses, and used here under
+'The LaTeX Project Public License', file LICENSE.LPPL.

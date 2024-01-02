@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/pdf.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2023 R Core Team
+% Copyright 1995-2024 R Core Team
 % Distributed under GPL 2 or later
 
 \name{pdf}
@@ -226,10 +226,19 @@ pdf(file = if(onefile) "Rplots.pdf" else "Rplot\%03d.pdf",
   \code{"URWGothic"}, \code{"URWBookman"}, \code{"NimbusMon"},
   \code{"NimbusSan"}, \code{"NimbusSanCond"}, \code{"CenturySch"},
   \code{"URWPalladio"} and \code{"NimbusRom"} respectively.  If your
-  device is using URW fonts, you will obtain access to more characters
+  viewer is using URW fonts, you will obtain access to more characters
   and more appropriate metrics by using these names.  To make these
   easier to remember, \code{"URWHelvetica" == "NimbusSan"} and
-  \code{"URWTimes" == "NimbusRom"} are also supported.
+  \code{"URWTimes" == "NimbusRom"} are also supported.  However, if the
+  viewer is not using URW fonts (for example Adobe Acrobat Reader) it
+  may substitute inappropriately or not render at all. (Consider using
+  \code{\link{embedFonts}}.)
+
+  As from \R{}\sspace{}4.4.0 there is support for URW 2.0 fonts in
+  families \code{"URW2Helvetica"} (with \samp{Oblique} fonts),
+  \code{"URW2HelveticaItalic"} (with \samp{Italic} fonts),
+  \code{"URW2Times"} and \code{"NimbusMonoPS"}.
+  
 
   Another type of family makes use of CID-keyed fonts for East Asian
   languages -- see \code{\link{pdfFonts}}.
