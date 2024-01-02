@@ -20,7 +20,7 @@
 ### along with R; if not, a copy is available at
 ### https://www.r-project.org/Licenses/
 
-AC_PREREQ(2.69)
+AC_PREREQ([2.69])
 
 ## We want to get the version number from file 'VERSION' (rather than
 ## specifying the version info in 'configure.ac'.  Hence, we need a bit
@@ -743,8 +743,7 @@ AC_ARG_VAR([PKG_CONFIG_PATH], [directories to add to pkg-config's search path])
 AC_ARG_VAR([PKG_CONFIG_LIBDIR], [path overriding pkg-config's default search path])
 
 AC_PROG_CC
-AC_PROG_GCC_TRADITIONAL
-dnl AC_GNU_SOURCE ## see note above
+dnl AC_PROG_GCC_TRADITIONAL
 AC_USE_SYSTEM_EXTENSIONS ## see note above
 
 AC_PROG_CPP
