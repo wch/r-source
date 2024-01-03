@@ -179,6 +179,10 @@
 ## shared objects containing object files from a C or Fortran
 ## compiler only.  This is usually automatically detected by configure,
 ## and anything set here will be in addition unless SHLIB_LD is given.
+## On platforms using the GNU lnker, -shared.
+## On macOS, the default is
+## -dynamiclib -Wl,-headerpad_max_install_names -undefined dynamic_lookup
+## For other platforms, see configure.ac
 ## SHLIB_LDFLAGS=
 
 ## ditto for a dynamic library: DYLIB_LDFLAGS defaults to SHLIB_LDFLAGS

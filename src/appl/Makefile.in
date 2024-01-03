@@ -33,6 +33,7 @@ DISTFILES = \
 @WANT_R_SHLIB_FALSE@ALL_FFLAGS = $(ALL_FFLAGS_PIE)
 
 Rblas_la = libRblas$(R_DYLIB_EXT)
+## This should neally be Darwin-only.
 Rblas_la_LIBADD = @DYLIB_UNDEFINED_ALLOWED_FALSE@ -flat_namespace -undefined suppress
 
 all: R
