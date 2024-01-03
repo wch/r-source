@@ -273,6 +273,12 @@
 
       \item \command{configure} option \option{--enable-lto=check} has
       not worked reliably since 2019 and has been removed.
+
+      \item The minimum requirement for a maintainer build has been
+      increased to \command{autoconf}\sspace{}2.71, and it is intended to
+      increase to 2.72 before release. (The issue is better support for
+      \sQuote{C23}: \command{autoconf}\sspace{}2.72 requires a C version
+      of C90 or later, but \R has long required C99 or later.)
     }
   }
 
@@ -1273,7 +1279,7 @@
 	  they are not implemented.}
 	\item{USE_C23}{Use C23 (or in future, later).  Compiler/library
 	  support for C23 is still being implemented, but LLVM clang
-	  from 15.0.0 and the upcoming GCC 13 have quite extensive support.
+	  from 15.0.0 and GCC from 13 have quite extensive support.
 	}
       }
       These can be specified as part of the \samp{SystemRequirements}

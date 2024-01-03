@@ -2,7 +2,7 @@
 ###
 ### Process this file with autoconf to produce a configure script.
 ###
-### Copyright (C) 1998-2023 R Core Team
+### Copyright (C) 1998-2024 R Core Team
 ###
 ### This file is part of R.
 ###
@@ -20,7 +20,7 @@
 ### along with R; if not, a copy is available at
 ### https://www.r-project.org/Licenses/
 
-AC_PREREQ([2.69])
+AC_PREREQ([2.71])
 
 ## We want to get the version number from file 'VERSION' (rather than
 ## specifying the version info in 'configure.ac'.  Hence, we need a bit
@@ -1867,6 +1867,8 @@ fi
 : ${INTERNET_LIBS="${internet_libs}"}
 AC_SUBST(INTERNET_LIBS)
 
+dnl Used in appl/Makefile.in; Darwin-specific setting there.
+dnl Also used for support for Apple Accelerate.
 AM_CONDITIONAL(DYLIB_UNDEFINED_ALLOWED, [test "x${dylib_undefined_allowed}" = xyes])
 
 AC_SUBST(MAIN_LD)

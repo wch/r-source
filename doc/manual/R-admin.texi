@@ -4597,9 +4597,10 @@ in the rest of this section.
 File @file{configure} is created from @file{configure.ac} and the files
 under @file{m4} by @command{autoconf} and @command{aclocal} (part of the
 @pkg{automake} package).  There is a formal version requirement on
-@command{autoconf} of 2.69 or later, but it is unlikely that anything
+@command{autoconf} of 2.71 or later, but it is unlikely that anything
 other than the most recent versions@footnote{at the time of revision of
-this para in late 2021, @pkg{autoconf-2.71} and @pkg{automake-1.16.5}.}
+this para in late 2021, @pkg{autoconf-2.71} and
+@pkg{automake-1.16.5}. Subsequently @pkg{autoconf-2.72} has been tested.}
 have been thoroughly tested.
 
 File @file{src/include/config.h} is created by @command{autoheader}
@@ -5067,7 +5068,7 @@ Standalone installers (which are free-of-charge) are available from
 @uref{https://www.intel.com/content/www/us/en/developer/articles/tool/oneapi-standalone-components.html}:
 they are also part of the oneAPI Base and HPC (for Fortran) ToolKits.
 
-We tried the compilers in oneAPI 2024.0.0 and 2023.x.y using (the paths
+We tried the compilers in oneAPI 2024.0.2 and 2023.x.y using (the paths
 do differ by compiler version)
 @example
 IP=/path/to/compilers/bin/
