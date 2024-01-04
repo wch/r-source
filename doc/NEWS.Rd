@@ -207,10 +207,10 @@
       phrases.
 
       \item \code{warnings()} now always inherits from \code{"warnings"} as
-      documented, newly also in the case of no warnings, where it
+      documented, now also in the case of no warnings where it
       previously returned \code{NULL}.
 
-      \item \code{as.complex("1i")} now returns \code{1i} instead of
+      \item \code{as.complex("1i")} now returns \code{0 + 1i} instead of
       \code{NA} with a warning.
 
       \item \code{z <- c(NA, 1i)} now keeps the imaginary part
@@ -240,11 +240,12 @@
       \item The included BLAS sources have been updated to those shipped
       with LAPACK version 3.12.0.  The changes are almost entirely cosmetic.
 
-      \item There are new font families for the 2014--5 URW 2.0 fonts --
-      see \code{?pdf} -- which are included in recent versions of
-      \command{ghostscript}.  These have font widths for Greek glyphs
-      and a few others which were missing from the original versions
-      (whose font families remain available for reproducibility).
+      \item There are new font families for the 2014-5 URW 2.0 fonts
+      (see \code{?pdf}) which are included in recent versions of
+      Ghostscript.  These have font widths for most Greek glyphs and a
+      few others which were missing from the original versions (whose
+      font families remain available for reproducibility, although
+      Ghostscript-based viewers will render using the 2.0 versions).
     }
   }
 

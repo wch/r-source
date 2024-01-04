@@ -222,7 +222,7 @@ pdf(file = if(onefile) "Rplots.pdf" else "Rplot\%03d.pdf",
   cloned) in all common PDF/PostScript renderers.
 
   Many PDF/PostScript renders (including those based on
-  \code{ghostscript}) use the URW equivalents of these fonts, which are
+  Ghostscript) use the URW equivalents of these fonts, which are
   \code{"URWGothic"}, \code{"URWBookman"}, \code{"NimbusMon"},
   \code{"NimbusSan"}, \code{"NimbusSanCond"}, \code{"CenturySch"},
   \code{"URWPalladio"} and \code{"NimbusRom"} respectively.  If your
@@ -237,7 +237,10 @@ pdf(file = if(onefile) "Rplots.pdf" else "Rplot\%03d.pdf",
   As from \R{}\sspace{}4.4.0 there is support for URW 2.0 fonts in
   families \code{"URW2Helvetica"} (with \samp{Oblique} fonts),
   \code{"URW2HelveticaItalic"} (with \samp{Italic} fonts),
-  \code{"URW2Times"} and \code{"NimbusMonoPS"}.
+  \code{"URW2Times"} and \code{"NimbusMonoPS"}.  As recent versions of
+  Ghostscript will render with (and embed) these fonts. these families
+  should be used instead of \code{"URWHelvetica"}, \code{"URWTimes"},
+  \code{"NimbusSan"}, \code{"NimbusRom"}, and \code{"NimbusMon"}
   
 
   Another type of family makes use of CID-keyed fonts for East Asian
