@@ -3766,8 +3766,9 @@ the BLAS in use
 rather than overriding @code{libblas}, this requires configuring @R{}
 with option @option{--with-blas=flexiblas}.  `Backend' wrappers are
 available for the reference BLAS, ATLAS and serial, threaded and OpenMP
-builds of OpenBLAS and BLIS.  This can be controlled from a running @R{}
-session by package @CRANpkg{flexiblas}.
+builds of OpenBLAS and BLIS, and perhaps others@footnote{for example,
+Intel MKL not packaged by Fedora.}.  This can be controlled from a
+running @R{} session by package @CRANpkg{flexiblas}.
 
 BLAS implementations which use parallel computations can be
 non-deterministic: this is known for ATLAS.
