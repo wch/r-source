@@ -1,6 +1,6 @@
 
-R Under development (unstable) (2023-12-22 r85720) -- "Unsuffered Consequences"
-Copyright (C) 2023 The R Foundation for Statistical Computing
+R Under development (unstable) (2024-01-04 r85772) -- "Unsuffered Consequences"
+Copyright (C) 2024 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -153,10 +153,6 @@ Warning in plot.xy(xy.coords(x, y), type = type, ...) :
 Warning in plot.xy(xy.coords(x, y), type = type, ...) :
   font metrics unknown for character 0xc3 in encoding iso-8859-7
 Warning in plot.xy(xy.coords(x, y), type = type, ...) :
-  font width unknown for character 0xc4 in encoding iso-8859-7
-Warning in plot.xy(xy.coords(x, y), type = type, ...) :
-  font metrics unknown for character 0xc4 in encoding iso-8859-7
-Warning in plot.xy(xy.coords(x, y), type = type, ...) :
   font width unknown for character 0xc5 in encoding iso-8859-7
 Warning in plot.xy(xy.coords(x, y), type = type, ...) :
   font metrics unknown for character 0xc5 in encoding iso-8859-7
@@ -308,10 +304,6 @@ Warning in plot.xy(xy.coords(x, y), type = type, ...) :
   font width unknown for character 0xeb in encoding iso-8859-7
 Warning in plot.xy(xy.coords(x, y), type = type, ...) :
   font metrics unknown for character 0xeb in encoding iso-8859-7
-Warning in plot.xy(xy.coords(x, y), type = type, ...) :
-  font width unknown for character 0xec in encoding iso-8859-7
-Warning in plot.xy(xy.coords(x, y), type = type, ...) :
-  font metrics unknown for character 0xec in encoding iso-8859-7
 Warning in plot.xy(xy.coords(x, y), type = type, ...) :
   font width unknown for character 0xed in encoding iso-8859-7
 Warning in plot.xy(xy.coords(x, y), type = type, ...) :
@@ -2183,10 +2175,6 @@ Warning in plot.xy(xy.coords(x, y), type = type, ...) :
 Warning in plot.xy(xy.coords(x, y), type = type, ...) :
   font metrics unknown for character 0xc3 in encoding CP1253
 Warning in plot.xy(xy.coords(x, y), type = type, ...) :
-  font width unknown for character 0xc4 in encoding CP1253
-Warning in plot.xy(xy.coords(x, y), type = type, ...) :
-  font metrics unknown for character 0xc4 in encoding CP1253
-Warning in plot.xy(xy.coords(x, y), type = type, ...) :
   font width unknown for character 0xc5 in encoding CP1253
 Warning in plot.xy(xy.coords(x, y), type = type, ...) :
   font metrics unknown for character 0xc5 in encoding CP1253
@@ -2338,10 +2326,6 @@ Warning in plot.xy(xy.coords(x, y), type = type, ...) :
   font width unknown for character 0xeb in encoding CP1253
 Warning in plot.xy(xy.coords(x, y), type = type, ...) :
   font metrics unknown for character 0xeb in encoding CP1253
-Warning in plot.xy(xy.coords(x, y), type = type, ...) :
-  font width unknown for character 0xec in encoding CP1253
-Warning in plot.xy(xy.coords(x, y), type = type, ...) :
-  font metrics unknown for character 0xec in encoding CP1253
 Warning in plot.xy(xy.coords(x, y), type = type, ...) :
   font width unknown for character 0xed in encoding CP1253
 Warning in plot.xy(xy.coords(x, y), type = type, ...) :
@@ -2500,10 +2484,6 @@ Warning in plot.xy(xy.coords(x, y), type = type, ...) :
 Warning in plot.xy(xy.coords(x, y), type = type, ...) :
   font metrics unknown for character 0xc3 in encoding iso-8859-7
 Warning in plot.xy(xy.coords(x, y), type = type, ...) :
-  font width unknown for character 0xc4 in encoding iso-8859-7
-Warning in plot.xy(xy.coords(x, y), type = type, ...) :
-  font metrics unknown for character 0xc4 in encoding iso-8859-7
-Warning in plot.xy(xy.coords(x, y), type = type, ...) :
   font width unknown for character 0xc5 in encoding iso-8859-7
 Warning in plot.xy(xy.coords(x, y), type = type, ...) :
   font metrics unknown for character 0xc5 in encoding iso-8859-7
@@ -2655,10 +2635,6 @@ Warning in plot.xy(xy.coords(x, y), type = type, ...) :
   font width unknown for character 0xeb in encoding iso-8859-7
 Warning in plot.xy(xy.coords(x, y), type = type, ...) :
   font metrics unknown for character 0xeb in encoding iso-8859-7
-Warning in plot.xy(xy.coords(x, y), type = type, ...) :
-  font width unknown for character 0xec in encoding iso-8859-7
-Warning in plot.xy(xy.coords(x, y), type = type, ...) :
-  font metrics unknown for character 0xec in encoding iso-8859-7
 Warning in plot.xy(xy.coords(x, y), type = type, ...) :
   font width unknown for character 0xed in encoding iso-8859-7
 Warning in plot.xy(xy.coords(x, y), type = type, ...) :
@@ -4530,10 +4506,6 @@ Warning in plot.xy(xy.coords(x, y), type = type, ...) :
 Warning in plot.xy(xy.coords(x, y), type = type, ...) :
   font metrics unknown for character 0xc3 in encoding CP1253
 Warning in plot.xy(xy.coords(x, y), type = type, ...) :
-  font width unknown for character 0xc4 in encoding CP1253
-Warning in plot.xy(xy.coords(x, y), type = type, ...) :
-  font metrics unknown for character 0xc4 in encoding CP1253
-Warning in plot.xy(xy.coords(x, y), type = type, ...) :
   font width unknown for character 0xc5 in encoding CP1253
 Warning in plot.xy(xy.coords(x, y), type = type, ...) :
   font metrics unknown for character 0xc5 in encoding CP1253
@@ -4686,10 +4658,6 @@ Warning in plot.xy(xy.coords(x, y), type = type, ...) :
 Warning in plot.xy(xy.coords(x, y), type = type, ...) :
   font metrics unknown for character 0xeb in encoding CP1253
 Warning in plot.xy(xy.coords(x, y), type = type, ...) :
-  font width unknown for character 0xec in encoding CP1253
-Warning in plot.xy(xy.coords(x, y), type = type, ...) :
-  font metrics unknown for character 0xec in encoding CP1253
-Warning in plot.xy(xy.coords(x, y), type = type, ...) :
   font width unknown for character 0xed in encoding CP1253
 Warning in plot.xy(xy.coords(x, y), type = type, ...) :
   font metrics unknown for character 0xed in encoding CP1253
@@ -4790,4 +4758,4 @@ null device
 > 
 > proc.time()
    user  system elapsed 
-  5.390   0.193   5.574 
+  2.961   0.124   3.056 
