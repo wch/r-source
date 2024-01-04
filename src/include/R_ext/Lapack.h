@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2003-2023 The R Core Team.
+ *  Copyright (C) 2003-2024 The R Core Team.
  *  Copyright (C) 2008-2019 The R Foundation
  *
  *  This header file is free software; you can redistribute it and/or modify
@@ -2366,6 +2366,18 @@ La_extern void
 F77_NAME(zlacn2)(const La_INT *n, La_complex *v, La_complex *x,
                  double *est, La_INT *kase, La_INT *isave);
 
+/*  ZLANSP estimates the 1-norm of a square, complex matrix A.
+ *  Reverse communication is used for evaluating matrix-vector products.
+ * Added in R 4.4.0
+*/
+La_extern double
+F77_NAME(zlansp)(const char* norm, const char* uplo, const char* diag,
+		 const La_INT *m, const La_INT *n, La_complex *a,
+		 const La_INT *lda, double *work FCLEN FCLEN FCLEN);
+La_extern double
+F77_NAME(zlansy)(const char* norm, const char* uplo, La_INT *n, La_complex *a,
+		 double *work FCLEN FCLEN);
+
 /* ZLANTR  -  return the value of the one norm, or the Frobenius norm,
  * or the infinity norm, or the element of largest absolute value of
  * a trapezoidal or triangular matrix A.
@@ -2383,17 +2395,47 @@ F77_NAME(zlantr)(const char* norm, const char* uplo, const char* diag,
 La_extern double
 F77_NAME(dzsum1)(const La_INT *n, La_complex *CX, const La_INT *incx);
 
-/* Added in R 3.6.2 */
+/* Added in R 3.6.2, 4.4.0 -- now alphabetically */
 La_extern void
 F77_NAME(zpotrf)(const char* uplo, const La_INT* n,
 		 La_complex* a, const La_INT* lda, La_INT* info FCLEN);
 La_extern void
+F77_NAME(zpotrf2)(const char* uplo, const La_INT* n,
+		 La_complex* a, const La_INT* lda, La_INT* info FCLEN);
+
+La_extern void
 F77_NAME(zpotri)(const char* uplo, const La_INT* n,
 		 La_complex* a, const La_INT* lda, La_INT* info FCLEN);
+
 La_extern void
 F77_NAME(zpotrs)(const char* uplo, const La_INT* n,
 		 const La_INT* nrhs, const La_complex* a, const La_INT* lda,
 		 La_complex* b, const La_INT* ldb, La_INT* info FCLEN);
+
+La_extern void
+F77_NAME(zppcon)(const char* uplo, const La_INT* n,
+		 const La_complex* ap,
+		 const double* anorm, double* rcond,
+		 La_complex* work, double* rwork, La_INT* info FCLEN);
+
+La_extern void
+F77_NAME(zpptrf)(const char* uplo, const La_INT* n,
+		 La_complex* a, const La_INT* lda, La_INT* info FCLEN);
+
+La_extern void
+F77_NAME(zpptri)(const char* uplo, const La_INT* n,
+		 La_complex* a, const La_INT* lda, La_INT* info FCLEN);
+
+La_extern void
+F77_NAME(zpptrs)(const char* uplo, const La_INT* n,
+		 const La_INT* nrhs, const La_complex* a, const La_INT* lda,
+		 La_complex* b, const La_INT* ldb, La_INT* info FCLEN);
+
+La_extern void
+F77_NAME(zpstrf)(const char* uplo, const La_INT* n, La_complex* a, const La_INT* lda,
+		 La_INT* ipiv, La_INT *rank, const double* tol, double* work,
+		 La_INT* info FCLEN);
+
 
 /* ======================================================================== */
 
@@ -2410,8 +2452,8 @@ F77_NAME(dbdsdc)(const char* uplo, const char* compq, La_INT *n,
 
 La_extern void
 F77_NAME(dgelsd)(La_INT *m, La_INT *n, La_INT *nrhs,
-	double *a, La_INT *lda, double *b, La_INT *ldb, double *
-	s, double *rcond, La_INT *rank, double *work, La_INT *lwork,
+	double *a, La_INT *lda, double *b, La_INT *ldb, double *s,
+	double *rcond, La_INT *rank, double *work, La_INT *lwork,
 	 La_INT *iwork, La_INT *info);
 
 La_extern void
@@ -2876,6 +2918,17 @@ F77_NAME(zgetf2)(La_INT *m, La_INT *n, La_complex *a,
 La_extern void
 F77_NAME(zgetrf)(La_INT *m, La_INT *n, La_complex *a,
 	La_INT *lda, La_INT *ipiv, La_INT *info);
+La_extern void
+F77_NAME(zgetrf2)(La_INT *m, La_INT *n, La_complex *a,
+	La_INT *lda, La_INT *ipiv, La_INT *info);
+
+/* ZGETRI computes the inverse of a matrix using the LU factorization
+ * computed by ZGETRF.
+ * Added in R 3.3.0
+ */
+La_extern void
+F77_NAME(zgetri)(La_INT *n, La_complex *a, La_INT *lda,
+		 La_INT *ipiv, La_complex *work, La_INT *lwork, La_INT *info);
 
 La_extern void
 F77_NAME(zgetrs)(const char* trans, La_INT *n, La_INT *nrhs,
@@ -2928,6 +2981,10 @@ F77_NAME(zlanhe)(const char* norm,  const char* uplo, La_INT *n, La_complex *a,
 La_extern double
 F77_NAME(zlanhs)(const char* norm, La_INT *n, La_complex *a, La_INT *lda, 
 		 double *work FCLEN);
+
+La_extern double
+F77_NAME(zlantp)(const char* norm, const char* uplo, const char* diag,
+		 La_INT *n, La_complex *ap, double *work FCLEN FCLEN FCLEN);
 
 
 La_extern void
@@ -3007,6 +3064,93 @@ La_extern void
 F77_NAME(zsteqr)(const char* compz, La_INT *n, double *d,
 	double *e, La_complex *z, La_INT *ldz, double *work,
 		 La_INT *info FCLEN);
+
+La_extern void
+F77_NAME(zpocon)(const char* uplo, const La_INT *n, const La_complex *a, const La_INT *lda,
+		 const double *anorm, double *rcond,
+		 La_complex *work, double *rwork, La_INT *info FCLEN);
+
+La_extern void
+F77_NAME(zspcon)(const char* uplo, const La_INT *n, const La_complex *ap,
+		 const La_INT *ipiv, const double *anorm,
+		 double *rcond,
+		 La_complex *work, La_INT *info FCLEN);
+
+/* ZSPMV  performs the matrix-vector operation
+ *
+ *    y := alpha*A*x + beta*y,
+ *
+ * where alpha and beta are scalars, x and y are n element vectors and
+ * A is an n by n symmetric matrix, supplied in packed form.
+ * Added in R 4.4.0
+*/
+La_extern void
+F77_NAME(zspmv)(const char* uplo, const La_INT *n, const La_complex* alpha,
+		const La_complex *ap,
+		const La_complex* x, const La_INT* incx,
+		const La_complex* beta,
+		La_complex* y, const La_INT* incy FCLEN);
+
+La_extern void
+F77_NAME(zsptrf)(const char* uplo, const La_INT *n, La_complex *ap,
+		 La_INT *ipiv, La_INT *info FCLEN);
+
+La_extern void
+F77_NAME(zsptri)(const char* uplo, const La_INT* n, La_complex* ap,
+		 La_INT *ipiv, La_complex* work, La_INT *info FCLEN);
+
+La_extern void
+F77_NAME(zsptrs)(const char* uplo, const La_INT* n, const La_INT* nrhs,
+		 const La_complex* ap, const La_INT* ipiv,
+		 La_complex* b, const La_INT* ldb, La_INT* info FCLEN);
+
+La_extern void
+F77_NAME(zsycon)(const char* uplo, const La_INT *n, const La_complex *a, const La_INT *lda,
+		 La_INT *ipiv, const double *anorm,
+		 double *rcond,
+		 La_complex *work, La_INT *info FCLEN);
+
+/* ZSYMV  performs the matrix-vector  operation   y := alpha*A*x + beta*y  */
+La_extern void
+F77_NAME(zsymv)(const char* uplo, const La_INT* n, const La_complex* alpha,
+		const La_complex* a, const La_INT* lda,
+		const La_complex* x, const La_INT* incx,
+		const La_complex* beta,
+		La_complex* y, const La_INT* incy FCLEN);
+
+La_extern void
+F77_NAME(zsytrf)(const char* uplo, const La_INT *n, La_complex *a, const La_INT* lda,
+		 La_INT *ipiv, La_complex *work, const La_INT *lwork, La_INT *info FCLEN);
+
+La_extern void
+F77_NAME(zsytri)(const char* uplo, const La_INT *n, La_complex *a, const La_INT* lda,
+		 const La_INT *ipiv, La_complex *work, La_INT *info FCLEN);
+
+La_extern void
+F77_NAME(zsytrs)(const char* uplo, const La_INT* n, const La_INT* nrhs,
+	const La_complex* a, const La_INT* lda, const La_INT* ipiv,
+	      La_complex* b, const La_INT* ldb, La_INT* info FCLEN);
+
+
+La_extern void
+F77_NAME(ztpcon)(const char* norm, const char* uplo, const char* diag,
+                 const La_INT *n, const La_complex *ap,
+		 double *rcond, La_complex *work, double *rwork, La_INT *info
+		 FCLEN FCLEN FCLEN);
+
+La_extern void
+F77_NAME(ztptri)(const char* uplo, const char* diag, const La_INT* n, La_complex* ap,
+		 La_INT *info FCLEN FCLEN);
+
+La_extern void
+F77_NAME(ztptrs)(const char* uplo, const char* trans, const char* diag, 
+		 const La_INT* n, const La_INT* nrhs, const La_complex* ap,
+		 La_complex* b, const La_INT* ldb, La_INT* info FCLEN FCLEN FCLEN);
+
+La_extern void
+F77_NAME(ztrtri)(const char* uplo, const char* diag,
+		 const La_INT* n, La_complex* a, const La_INT* lda,
+		 La_INT *info FCLEN FCLEN);
 
 /* ZTRCON estimates the reciprocal of the condition number of a
  * triangular matrix A, in either the 1-norm or the infinity-norm.
