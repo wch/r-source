@@ -69,7 +69,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16OTHERauxiliary
+*> \ingroup sum1
 *
 *> \par Contributors:
 *  ==================
@@ -208,7 +208,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16OTHERauxiliary
+*> \ingroup ilalc
 *
 *  =====================================================================
       INTEGER FUNCTION ILAZLC( M, N, A, LDA )
@@ -323,7 +323,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16OTHERauxiliary
+*> \ingroup ilalr
 *
 *  =====================================================================
       INTEGER FUNCTION ILAZLR( M, N, A, LDA )
@@ -439,7 +439,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complexOTHERauxiliary
+*> \ingroup imax1
 *
 *> \par Contributors:
 *  ==================
@@ -712,6 +712,17 @@
 *>          algorithm through its inner loop. The algorithms stops
 *>          (and so fails to converge) if the number of passes
 *>          through the inner loop exceeds MAXITR*N**2.
+*>
+*> \endverbatim
+*
+*> \par Note:
+*  ===========
+*>
+*> \verbatim
+*>  Bug report from Cezary Dendek.
+*>  On November 3rd 2023, the INTEGER variable MAXIT = MAXITR*N**2 is
+*>  removed since it can overflow pretty easily (for N larger or equal
+*>  than 18,919). We instead use MAXITDIVN = MAXITR*N.
 *> \endverbatim
 *
 *  Authors:
@@ -722,7 +733,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16OTHERcomputational
+*> \ingroup bdsqr
 *
 *  =====================================================================
       SUBROUTINE ZBDSQR( UPLO, N, NCVT, NRU, NCC, D, E, VT, LDVT, U,
@@ -763,11 +774,11 @@
 *     ..
 *     .. Local Scalars ..
       LOGICAL            LOWER, ROTATE
-      INTEGER            I, IDIR, ISUB, ITER, J, LL, LLL, M, MAXIT, NM1,
-     $                   NM12, NM13, OLDLL, OLDM
+      INTEGER            I, IDIR, ISUB, ITER, ITERDIVN, J, LL, LLL, M,
+     $                   MAXITDIVN, NM1, NM12, NM13, OLDLL, OLDM
       DOUBLE PRECISION   ABSE, ABSS, COSL, COSR, CS, EPS, F, G, H, MU,
      $                   OLDCS, OLDSN, R, SHIFT, SIGMN, SIGMX, SINL,
-     $                   SINR, SLL, SMAX, SMIN, SMINL, SMINOA,
+     $                   SINR, SLL, SMAX, SMIN, SMINOA,
      $                   SN, THRESH, TOL, TOLMUL, UNFL
 *     ..
 *     .. External Functions ..
@@ -880,7 +891,7 @@
       DO 30 I = 1, N - 1
          SMAX = MAX( SMAX, ABS( E( I ) ) )
    30 CONTINUE
-      SMINL = ZERO
+      SMIN = ZERO
       IF( TOL.GE.ZERO ) THEN
 *
 *        Relative accuracy desired
@@ -897,20 +908,21 @@
    40    CONTINUE
    50    CONTINUE
          SMINOA = SMINOA / SQRT( DBLE( N ) )
-         THRESH = MAX( TOL*SMINOA, MAXITR*N*N*UNFL )
+         THRESH = MAX( TOL*SMINOA, MAXITR*(N*(N*UNFL)) )
       ELSE
 *
 *        Absolute accuracy desired
 *
-         THRESH = MAX( ABS( TOL )*SMAX, MAXITR*N*N*UNFL )
+         THRESH = MAX( ABS( TOL )*SMAX, MAXITR*(N*(N*UNFL)) )
       END IF
 *
 *     Prepare for main iteration loop for the singular values
 *     (MAXIT is the maximum number of passes through the inner
 *     loop permitted before nonconvergence signalled.)
 *
-      MAXIT = MAXITR*N*N
-      ITER = 0
+      MAXITDIVN = MAXITR*N
+      ITERDIVN = 0
+      ITER = -1
       OLDLL = -1
       OLDM = -1
 *
@@ -926,15 +938,18 @@
 *
       IF( M.LE.1 )
      $   GO TO 160
-      IF( ITER.GT.MAXIT )
-     $   GO TO 200
+      IF( ITER.GE.N ) THEN
+         ITER = ITER - N
+         ITERDIVN = ITERDIVN + 1
+         IF( ITERDIVN.GE.MAXITDIVN )
+     $      GO TO 200
+      END IF
 *
 *     Find diagonal block of matrix to work on
 *
       IF( TOL.LT.ZERO .AND. ABS( D( M ) ).LE.THRESH )
      $   D( M ) = ZERO
       SMAX = ABS( D( M ) )
-      SMIN = SMAX
       DO 70 LLL = 1, M - 1
          LL = M - LLL
          ABSS = ABS( D( LL ) )
@@ -943,7 +958,6 @@
      $      D( LL ) = ZERO
          IF( ABSE.LE.THRESH )
      $      GO TO 80
-         SMIN = MIN( SMIN, ABSS )
          SMAX = MAX( SMAX, ABSS, ABSE )
    70 CONTINUE
       LL = 0
@@ -1025,14 +1039,14 @@
 *           apply convergence criterion forward
 *
             MU = ABS( D( LL ) )
-            SMINL = MU
+            SMIN = MU
             DO 100 LLL = LL, M - 1
                IF( ABS( E( LLL ) ).LE.TOL*MU ) THEN
                   E( LLL ) = ZERO
                   GO TO 60
                END IF
                MU = ABS( D( LLL+1 ) )*( MU / ( MU+ABS( E( LLL ) ) ) )
-               SMINL = MIN( SMINL, MU )
+               SMIN = MIN( SMIN, MU )
   100       CONTINUE
          END IF
 *
@@ -1053,14 +1067,14 @@
 *           apply convergence criterion backward
 *
             MU = ABS( D( M ) )
-            SMINL = MU
+            SMIN = MU
             DO 110 LLL = M - 1, LL, -1
                IF( ABS( E( LLL ) ).LE.TOL*MU ) THEN
                   E( LLL ) = ZERO
                   GO TO 60
                END IF
                MU = ABS( D( LLL ) )*( MU / ( MU+ABS( E( LLL ) ) ) )
-               SMINL = MIN( SMINL, MU )
+               SMIN = MIN( SMIN, MU )
   110       CONTINUE
          END IF
       END IF
@@ -1070,7 +1084,7 @@
 *     Compute shift.  First, test if shifting would ruin relative
 *     accuracy, and if so set the shift to zero.
 *
-      IF( TOL.GE.ZERO .AND. N*TOL*( SMINL / SMAX ).LE.
+      IF( TOL.GE.ZERO .AND. N*TOL*( SMIN / SMAX ).LE.
      $    MAX( EPS, HNDRTH*TOL ) ) THEN
 *
 *        Use a zero shift to avoid loss of relative accuracy
@@ -1424,7 +1438,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16OTHERauxiliary
+*> \ingroup rscl
 *
 *  =====================================================================
       SUBROUTINE ZDRSCL( N, SA, SX, INCX )
@@ -1456,7 +1470,7 @@
       EXTERNAL           DLAMCH
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           DLABAD, ZDSCAL
+      EXTERNAL           ZDSCAL
 *     ..
 *     .. Intrinsic Functions ..
       INTRINSIC          ABS
@@ -1472,7 +1486,6 @@
 *
       SMLNUM = DLAMCH( 'S' )
       BIGNUM = ONE / SMLNUM
-      CALL DLABAD( SMLNUM, BIGNUM )
 *
 *     Initialize the denominator to SA and the numerator to 1.
 *
@@ -1657,7 +1670,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16GBcomputational
+*> \ingroup gbcon
 *
 *  =====================================================================
       SUBROUTINE ZGBCON( NORM, N, KL, KU, AB, LDAB, IPIV, ANORM, RCOND,
@@ -1981,7 +1994,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16GBcomputational
+*> \ingroup gbequ
 *
 *  =====================================================================
       SUBROUTINE ZGBEQU( M, N, KL, KU, AB, LDAB, R, C, ROWCND, COLCND,
@@ -2362,7 +2375,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16GBcomputational
+*> \ingroup gbrfs
 *
 *  =====================================================================
       SUBROUTINE ZGBRFS( TRANS, N, KL, KU, NRHS, AB, LDAB, AFB, LDAFB,
@@ -2770,7 +2783,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16GBsolve
+*> \ingroup gbsv
 *
 *> \par Further Details:
 *  =====================
@@ -3179,7 +3192,7 @@
 *>
 *> \param[out] RWORK
 *> \verbatim
-*>          RWORK is DOUBLE PRECISION array, dimension (N)
+*>          RWORK is DOUBLE PRECISION array, dimension (MAX(1,N))
 *>          On exit, RWORK(1) contains the reciprocal pivot growth
 *>          factor norm(A)/norm(U). The "max absolute element" norm is
 *>          used. If RWORK(1) is much less than 1, then the stability
@@ -3218,7 +3231,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16GBsolve
+*> \ingroup gbsvx
 *
 *  =====================================================================
       SUBROUTINE ZGBSVX( FACT, TRANS, N, KL, KU, NRHS, AB, LDAB, AFB,
@@ -3616,7 +3629,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16GBcomputational
+*> \ingroup gbtf2
 *
 *> \par Further Details:
 *  =====================
@@ -3890,7 +3903,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16GBcomputational
+*> \ingroup gbtrf
 *
 *> \par Further Details:
 *  =====================
@@ -4419,7 +4432,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16GBcomputational
+*> \ingroup gbtrs
 *
 *  =====================================================================
       SUBROUTINE ZGBTRS( TRANS, N, KL, KU, NRHS, AB, LDAB, IPIV, B, LDB,
@@ -4706,7 +4719,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16GEcomputational
+*> \ingroup gebak
 *
 *  =====================================================================
       SUBROUTINE ZGEBAK( JOB, SIDE, N, ILO, IHI, SCALE, M, V, LDV,
@@ -4939,7 +4952,7 @@
 *> \param[out] IHI
 *> \verbatim
 *>          IHI is INTEGER
-*>          ILO and IHI are set to INTEGER such that on exit
+*>          ILO and IHI are set to integers such that on exit
 *>          A(i,j) = 0 if i > j and j = 1,...,ILO-1 or I = IHI+1,...,N.
 *>          If JOB = 'N' or 'S', ILO = 1 and IHI = N.
 *> \endverbatim
@@ -4973,7 +4986,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16GEcomputational
+*> \ingroup gebal
 *
 *> \par Further Details:
 *  =====================
@@ -5005,6 +5018,9 @@
 *>
 *>  Modified by Tzu-Yi Chen, Computer Science Division, University of
 *>    California at Berkeley, USA
+*>
+*>  Refactored by Evert Provoost, Department of Computer Science,
+*>    KU Leuven, Belgium
 *> \endverbatim
 *>
 *  =====================================================================
@@ -5034,8 +5050,8 @@
       PARAMETER          ( FACTOR = 0.95D+0 )
 *     ..
 *     .. Local Scalars ..
-      LOGICAL            NOCONV
-      INTEGER            I, ICA, IEXC, IRA, J, K, L, M
+      LOGICAL            NOCONV, CANSWAP
+      INTEGER            I, ICA, IRA, J, K, L
       DOUBLE PRECISION   C, CA, F, G, R, RA, S, SFMAX1, SFMAX2, SFMIN1,
      $                   SFMIN2
 *     ..
@@ -5067,176 +5083,194 @@
          RETURN
       END IF
 *
+*     Quick returns.
+*
+      IF( N.EQ.0 ) THEN
+         ILO = 1
+         IHI = 0
+         RETURN
+      END IF
+*
+      IF( LSAME( JOB, 'N' ) ) THEN
+         DO I = 1, N
+            SCALE( I ) = ONE
+         END DO
+         ILO = 1
+         IHI = N
+         RETURN
+      END IF
+*
+*     Permutation to isolate eigenvalues if possible.
+*
       K = 1
       L = N
 *
-      IF( N.EQ.0 )
-     $   GO TO 210
+      IF( .NOT.LSAME( JOB, 'S' ) ) THEN
 *
-      IF( LSAME( JOB, 'N' ) ) THEN
-         DO 10 I = 1, N
-            SCALE( I ) = ONE
-   10    CONTINUE
-         GO TO 210
+*        Row and column exchange.
+*
+         NOCONV = .TRUE.
+         DO WHILE( NOCONV )
+*
+*           Search for rows isolating an eigenvalue and push them down.
+*
+            NOCONV = .FALSE.
+            DO I = L, 1, -1
+               CANSWAP = .TRUE.
+               DO J = 1, L
+                  IF( I.NE.J .AND. ( DBLE( A( I, J ) ).NE.ZERO .OR.
+     $                DIMAG( A( I, J ) ).NE.ZERO ) ) THEN
+                     CANSWAP = .FALSE.
+                     EXIT
+                  END IF
+               END DO
+*
+               IF( CANSWAP ) THEN
+                  SCALE( L ) = I
+                  IF( I.NE.L ) THEN
+                     CALL ZSWAP( L, A( 1, I ), 1, A( 1, L ), 1 )
+                     CALL ZSWAP( N-K+1, A( I, K ), LDA, A( L, K ), LDA )
+                  END IF
+                  NOCONV = .TRUE.
+*
+                  IF( L.EQ.1 ) THEN
+                     ILO = 1
+                     IHI = 1
+                     RETURN
+                  END IF
+*
+                  L = L - 1
+               END IF
+            END DO
+*
+         END DO
+
+         NOCONV = .TRUE.
+         DO WHILE( NOCONV )
+*
+*           Search for columns isolating an eigenvalue and push them left.
+*
+            NOCONV = .FALSE.
+            DO J = K, L
+               CANSWAP = .TRUE.
+               DO I = K, L
+                  IF( I.NE.J .AND. ( DBLE( A( I, J ) ).NE.ZERO .OR.
+     $                DIMAG( A( I, J ) ).NE.ZERO ) ) THEN
+                     CANSWAP = .FALSE.
+                     EXIT
+                  END IF
+               END DO
+*
+               IF( CANSWAP ) THEN
+                  SCALE( K ) = J
+                  IF( J.NE.K ) THEN
+                     CALL ZSWAP( L, A( 1, J ), 1, A( 1, K ), 1 )
+                     CALL ZSWAP( N-K+1, A( J, K ), LDA, A( K, K ), LDA )
+                  END IF
+                  NOCONV = .TRUE.
+*
+                  K = K + 1
+               END IF
+            END DO
+*
+         END DO
+*
       END IF
 *
-      IF( LSAME( JOB, 'S' ) )
-     $   GO TO 120
+*     Initialize SCALE for non-permuted submatrix.
 *
-*     Permutation to isolate eigenvalues if possible
-*
-      GO TO 50
-*
-*     Row and column exchange.
-*
-   20 CONTINUE
-      SCALE( M ) = J
-      IF( J.EQ.M )
-     $   GO TO 30
-*
-      CALL ZSWAP( L, A( 1, J ), 1, A( 1, M ), 1 )
-      CALL ZSWAP( N-K+1, A( J, K ), LDA, A( M, K ), LDA )
-*
-   30 CONTINUE
-      GO TO ( 40, 80 )IEXC
-*
-*     Search for rows isolating an eigenvalue and push them down.
-*
-   40 CONTINUE
-      IF( L.EQ.1 )
-     $   GO TO 210
-      L = L - 1
-*
-   50 CONTINUE
-      DO 70 J = L, 1, -1
-*
-         DO 60 I = 1, L
-            IF( I.EQ.J )
-     $         GO TO 60
-            IF( DBLE( A( J, I ) ).NE.ZERO .OR. DIMAG( A( J, I ) ).NE.
-     $          ZERO )GO TO 70
-   60    CONTINUE
-*
-         M = L
-         IEXC = 1
-         GO TO 20
-   70 CONTINUE
-*
-      GO TO 90
-*
-*     Search for columns isolating an eigenvalue and push them left.
-*
-   80 CONTINUE
-      K = K + 1
-*
-   90 CONTINUE
-      DO 110 J = K, L
-*
-         DO 100 I = K, L
-            IF( I.EQ.J )
-     $         GO TO 100
-            IF( DBLE( A( I, J ) ).NE.ZERO .OR. DIMAG( A( I, J ) ).NE.
-     $          ZERO )GO TO 110
-  100    CONTINUE
-*
-         M = K
-         IEXC = 2
-         GO TO 20
-  110 CONTINUE
-*
-  120 CONTINUE
-      DO 130 I = K, L
+      DO I = K, L
          SCALE( I ) = ONE
-  130 CONTINUE
+      END DO
 *
-      IF( LSAME( JOB, 'P' ) )
-     $   GO TO 210
+*     If we only had to permute, we are done.
+*
+      IF( LSAME( JOB, 'P' ) ) THEN
+         ILO = K
+         IHI = L
+         RETURN
+      END IF
 *
 *     Balance the submatrix in rows K to L.
 *
-*     Iterative loop for norm reduction
+*     Iterative loop for norm reduction.
 *
       SFMIN1 = DLAMCH( 'S' ) / DLAMCH( 'P' )
       SFMAX1 = ONE / SFMIN1
       SFMIN2 = SFMIN1*SCLFAC
       SFMAX2 = ONE / SFMIN2
-  140 CONTINUE
-      NOCONV = .FALSE.
 *
-      DO 200 I = K, L
+      NOCONV = .TRUE.
+      DO WHILE( NOCONV )
+         NOCONV = .FALSE.
 *
-         C = DZNRM2( L-K+1, A( K, I ), 1 )
-         R = DZNRM2( L-K+1, A( I, K ), LDA )
-         ICA = IZAMAX( L, A( 1, I ), 1 )
-         CA = ABS( A( ICA, I ) )
-         IRA = IZAMAX( N-K+1, A( I, K ), LDA )
-         RA = ABS( A( I, IRA+K-1 ) )
+         DO I = K, L
 *
-*        Guard against zero C or R due to underflow.
+            C = DZNRM2( L-K+1, A( K, I ), 1 )
+            R = DZNRM2( L-K+1, A( I, K ), LDA )
+            ICA = IZAMAX( L, A( 1, I ), 1 )
+            CA = ABS( A( ICA, I ) )
+            IRA = IZAMAX( N-K+1, A( I, K ), LDA )
+            RA = ABS( A( I, IRA+K-1 ) )
 *
-         IF( C.EQ.ZERO .OR. R.EQ.ZERO )
-     $      GO TO 200
-         G = R / SCLFAC
-         F = ONE
-         S = C + R
-  160    CONTINUE
-         IF( C.GE.G .OR. MAX( F, C, CA ).GE.SFMAX2 .OR.
-     $       MIN( R, G, RA ).LE.SFMIN2 )GO TO 170
-            IF( DISNAN( C+F+CA+R+G+RA ) ) THEN
+*           Guard against zero C or R due to underflow.
+*
+            IF( C.EQ.ZERO .OR. R.EQ.ZERO ) CYCLE
 *
 *           Exit if NaN to avoid infinite loop
 *
-            INFO = -3
-            CALL XERBLA( 'ZGEBAL', -INFO )
-            RETURN
-         END IF
-         F = F*SCLFAC
-         C = C*SCLFAC
-         CA = CA*SCLFAC
-         R = R / SCLFAC
-         G = G / SCLFAC
-         RA = RA / SCLFAC
-         GO TO 160
+            IF( DISNAN( C+CA+R+RA ) ) THEN
+               INFO = -3
+               CALL XERBLA( 'ZGEBAL', -INFO )
+               RETURN
+            END IF
 *
-  170    CONTINUE
-         G = C / SCLFAC
-  180    CONTINUE
-         IF( G.LT.R .OR. MAX( R, RA ).GE.SFMAX2 .OR.
-     $       MIN( F, C, G, CA ).LE.SFMIN2 )GO TO 190
-         F = F / SCLFAC
-         C = C / SCLFAC
-         G = G / SCLFAC
-         CA = CA / SCLFAC
-         R = R*SCLFAC
-         RA = RA*SCLFAC
-         GO TO 180
+            G = R / SCLFAC
+            F = ONE
+            S = C + R
 *
-*        Now balance.
+            DO WHILE( C.LT.G .AND. MAX( F, C, CA ).LT.SFMAX2 .AND.
+     $                MIN( R, G, RA ).GT.SFMIN2 )
+               F = F*SCLFAC
+               C = C*SCLFAC
+               CA = CA*SCLFAC
+               R = R / SCLFAC
+               G = G / SCLFAC
+               RA = RA / SCLFAC
+            END DO
 *
-  190    CONTINUE
-         IF( ( C+R ).GE.FACTOR*S )
-     $      GO TO 200
-         IF( F.LT.ONE .AND. SCALE( I ).LT.ONE ) THEN
-            IF( F*SCALE( I ).LE.SFMIN1 )
-     $         GO TO 200
-         END IF
-         IF( F.GT.ONE .AND. SCALE( I ).GT.ONE ) THEN
-            IF( SCALE( I ).GE.SFMAX1 / F )
-     $         GO TO 200
-         END IF
-         G = ONE / F
-         SCALE( I ) = SCALE( I )*F
-         NOCONV = .TRUE.
+            G = C / SCLFAC
 *
-         CALL ZDSCAL( N-K+1, G, A( I, K ), LDA )
-         CALL ZDSCAL( L, F, A( 1, I ), 1 )
+            DO WHILE( G.GE.R .AND. MAX( R, RA ).LT.SFMAX2 .AND.
+     $                MIN( F, C, G, CA ).GT.SFMIN2 )
+               F = F / SCLFAC
+               C = C / SCLFAC
+               G = G / SCLFAC
+               CA = CA / SCLFAC
+               R = R*SCLFAC
+               RA = RA*SCLFAC
+            END DO
 *
-  200 CONTINUE
+*           Now balance.
 *
-      IF( NOCONV )
-     $   GO TO 140
+            IF( ( C+R ).GE.FACTOR*S ) CYCLE
+            IF( F.LT.ONE .AND. SCALE( I ).LT.ONE ) THEN
+               IF( F*SCALE( I ).LE.SFMIN1 ) CYCLE
+            END IF
+            IF( F.GT.ONE .AND. SCALE( I ).GT.ONE ) THEN
+               IF( SCALE( I ).GE.SFMAX1 / F ) CYCLE
+            END IF
+            G = ONE / F
+            SCALE( I ) = SCALE( I )*F
+            NOCONV = .TRUE.
 *
-  210 CONTINUE
+            CALL ZDSCAL( N-K+1, G, A( I, K ), LDA )
+            CALL ZDSCAL( L, F, A( 1, I ), 1 )
+*
+         END DO
+*
+      END DO
+*
       ILO = K
       IHI = L
 *
@@ -5379,7 +5413,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16GEcomputational
+*> \ingroup gebd2
 *
 *> \par Further Details:
 *  =====================
@@ -5722,7 +5756,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16GEcomputational
+*> \ingroup gebrd
 *
 *> \par Further Details:
 *  =====================
@@ -6029,7 +6063,15 @@
 *> \verbatim
 *>          INFO is INTEGER
 *>          = 0:  successful exit
-*>          < 0:  if INFO = -i, the i-th argument had an illegal value
+*>          < 0:  if INFO = -i, the i-th argument had an illegal value.
+*>                NaNs are illegal values for ANORM, and they propagate to
+*>                the output parameter RCOND.
+*>                Infinity is illegal for ANORM, and it propagates to the output
+*>                parameter RCOND as 0.
+*>          = 1:  if RCOND = NaN, or
+*>                   RCOND = Inf, or
+*>                   the computed norm of the inverse of A is 0.
+*>                In the latter, RCOND = 0 is returned.
 *> \endverbatim
 *
 *  Authors:
@@ -6040,7 +6082,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16GEcomputational
+*> \ingroup gecon
 *
 *  =====================================================================
       SUBROUTINE ZGECON( NORM, N, A, LDA, ANORM, RCOND, WORK, RWORK,
@@ -6070,17 +6112,17 @@
       LOGICAL            ONENRM
       CHARACTER          NORMIN
       INTEGER            IX, KASE, KASE1
-      DOUBLE PRECISION   AINVNM, SCALE, SL, SMLNUM, SU
+      DOUBLE PRECISION   AINVNM, SCALE, SL, SMLNUM, SU, HUGEVAL
       COMPLEX*16         ZDUM
 *     ..
 *     .. Local Arrays ..
       INTEGER            ISAVE( 3 )
 *     ..
 *     .. External Functions ..
-      LOGICAL            LSAME
+      LOGICAL            LSAME, DISNAN
       INTEGER            IZAMAX
       DOUBLE PRECISION   DLAMCH
-      EXTERNAL           LSAME, IZAMAX, DLAMCH
+      EXTERNAL           LSAME, IZAMAX, DLAMCH, DISNAN
 *     ..
 *     .. External Subroutines ..
       EXTERNAL           XERBLA, ZDRSCL, ZLACN2, ZLATRS
@@ -6095,6 +6137,8 @@
       CABS1( ZDUM ) = ABS( DBLE( ZDUM ) ) + ABS( DIMAG( ZDUM ) )
 *     ..
 *     .. Executable Statements ..
+*
+      HUGEVAL = DLAMCH( 'Overflow' )
 *
 *     Test the input parameters.
 *
@@ -6121,6 +6165,13 @@
          RCOND = ONE
          RETURN
       ELSE IF( ANORM.EQ.ZERO ) THEN
+         RETURN
+      ELSE IF( DISNAN( ANORM ) ) THEN
+         RCOND = ANORM
+         INFO = -5
+         RETURN
+      ELSE IF( ANORM.GT.HUGEVAL ) THEN
+         INFO = -5
          RETURN
       END IF
 *
@@ -6179,8 +6230,17 @@
 *
 *     Compute the estimate of the reciprocal condition number.
 *
-      IF( AINVNM.NE.ZERO )
-     $   RCOND = ( ONE / AINVNM ) / ANORM
+      IF( AINVNM.NE.ZERO ) THEN
+         RCOND = ( ONE / AINVNM ) / ANORM
+      ELSE
+         INFO = 1
+         RETURN
+      END IF
+*
+*     Check for NaNs and Infs
+*
+      IF( DISNAN( RCOND ) .OR. RCOND.GT.HUGEVAL )
+     $   INFO = 1
 *
    20 CONTINUE
       RETURN
@@ -6322,7 +6382,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16GEcomputational
+*> \ingroup geequ
 *
 *  =====================================================================
       SUBROUTINE ZGEEQU( M, N, A, LDA, R, C, ROWCND, COLCND, AMAX,
@@ -6689,7 +6749,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16GEeigen
+*> \ingroup gees
 *
 *  =====================================================================
       SUBROUTINE ZGEES( JOBVS, SORT, SELECT, N, A, LDA, SDIM, W, VS,
@@ -6729,7 +6789,7 @@
       DOUBLE PRECISION   DUM( 1 )
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           DLABAD, XERBLA, ZCOPY, ZGEBAK, ZGEBAL, ZGEHRD,
+      EXTERNAL           XERBLA, ZCOPY, ZGEBAK, ZGEBAL, ZGEHRD,
      $                   ZHSEQR, ZLACPY, ZLASCL, ZTRSEN, ZUNGHR
 *     ..
 *     .. External Functions ..
@@ -6818,7 +6878,6 @@
       EPS = DLAMCH( 'P' )
       SMLNUM = DLAMCH( 'S' )
       BIGNUM = ONE / SMLNUM
-      CALL DLABAD( SMLNUM, BIGNUM )
       SMLNUM = SQRT( SMLNUM ) / EPS
       BIGNUM = ONE / SMLNUM
 *
@@ -7093,7 +7152,7 @@
 *
 *  @precisions fortran z -> c
 *
-*> \ingroup complex16GEeigen
+*> \ingroup geev
 *
 *  =====================================================================
       SUBROUTINE ZGEEV( JOBVL, JOBVR, N, A, LDA, W, VL, LDVL, VR, LDVR,
@@ -7133,8 +7192,8 @@
       DOUBLE PRECISION   DUM( 1 )
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           DLABAD, XERBLA, ZDSCAL, ZGEBAK, ZGEBAL, ZGEHRD,
-     $                   ZHSEQR, ZLACPY, ZLASCL, ZSCAL, ZTREVC3, ZUNGHR
+      EXTERNAL           XERBLA, ZDSCAL, ZGEBAK, ZGEBAL, ZGEHRD, ZHSEQR,
+     $                   ZLACPY, ZLASCL, ZSCAL, ZTREVC3, ZUNGHR
 *     ..
 *     .. External Functions ..
       LOGICAL            LSAME
@@ -7236,7 +7295,6 @@
       EPS = DLAMCH( 'P' )
       SMLNUM = DLAMCH( 'S' )
       BIGNUM = ONE / SMLNUM
-      CALL DLABAD( SMLNUM, BIGNUM )
       SMLNUM = SQRT( SMLNUM ) / EPS
       BIGNUM = ONE / SMLNUM
 *
@@ -7701,7 +7759,7 @@
 *
 *  @precisions fortran z -> c
 *
-*> \ingroup complex16GEeigen
+*> \ingroup geevx
 *
 *  =====================================================================
       SUBROUTINE ZGEEVX( BALANC, JOBVL, JOBVR, SENSE, N, A, LDA, W, VL,
@@ -7745,9 +7803,9 @@
       DOUBLE PRECISION   DUM( 1 )
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           DLABAD, DLASCL, XERBLA, ZDSCAL, ZGEBAK, ZGEBAL,
-     $                   ZGEHRD, ZHSEQR, ZLACPY, ZLASCL, ZSCAL, ZTREVC3,
-     $                   ZTRSNA, ZUNGHR
+      EXTERNAL           DLASCL, XERBLA, ZDSCAL, ZGEBAK, ZGEBAL, ZGEHRD,
+     $                   ZHSEQR, ZLACPY, ZLASCL, ZSCAL, ZTREVC3, ZTRSNA,
+     $                   ZUNGHR
 *     ..
 *     .. External Functions ..
       LOGICAL            LSAME
@@ -7880,7 +7938,6 @@
       EPS = DLAMCH( 'P' )
       SMLNUM = DLAMCH( 'S' )
       BIGNUM = ONE / SMLNUM
-      CALL DLABAD( SMLNUM, BIGNUM )
       SMLNUM = SQRT( SMLNUM ) / EPS
       BIGNUM = ONE / SMLNUM
 *
@@ -8193,7 +8250,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16GEcomputational
+*> \ingroup gehd2
 *
 *> \par Further Details:
 *  =====================
@@ -8428,7 +8485,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16GEcomputational
+*> \ingroup gehrd
 *
 *> \par Further Details:
 *  =====================
@@ -8765,7 +8822,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16GEcomputational
+*> \ingroup gelq2
 *
 *> \par Further Details:
 *  =====================
@@ -8978,7 +9035,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16GEcomputational
+*> \ingroup gelqf
 *
 *> \par Further Details:
 *  =====================
@@ -9308,7 +9365,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16GEsolve
+*> \ingroup gels
 *
 *  =====================================================================
       SUBROUTINE ZGELS( TRANS, M, N, NRHS, A, LDA, B, LDB, WORK, LWORK,
@@ -9349,7 +9406,7 @@
       EXTERNAL           LSAME, ILAENV, DLAMCH, ZLANGE
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           DLABAD, XERBLA, ZGELQF, ZGEQRF, ZLASCL, ZLASET,
+      EXTERNAL           XERBLA, ZGELQF, ZGEQRF, ZLASCL, ZLASET,
      $                   ZTRTRS, ZUNMLQ, ZUNMQR
 *     ..
 *     .. Intrinsic Functions ..
@@ -9430,7 +9487,6 @@
 *
       SMLNUM = DLAMCH( 'S' ) / DLAMCH( 'P' )
       BIGNUM = ONE / SMLNUM
-      CALL DLABAD( SMLNUM, BIGNUM )
 *
 *     Scale A, B if max element outside range [SMLNUM,BIGNUM]
 *
@@ -9696,12 +9752,6 @@
 *> singular values which are less than RCOND times the largest singular
 *> value.
 *>
-*> The divide and conquer algorithm makes very mild assumptions about
-*> floating point arithmetic. It will work on machines with a guard
-*> digit in add/subtract, or on those binary machines without guard
-*> digits which subtract like the Cray X-MP, Cray Y-MP, Cray C-90, or
-*> Cray-2. It could conceivably fail on hexadecimal or decimal machines
-*> without guard digits, but we know of none.
 *> \endverbatim
 *
 *  Arguments:
@@ -9846,7 +9896,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16GEsolve
+*> \ingroup gelsd
 *
 *> \par Contributors:
 *  ==================
@@ -9889,9 +9939,9 @@
       DOUBLE PRECISION   ANRM, BIGNUM, BNRM, EPS, SFMIN, SMLNUM
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           DLABAD, DLASCL, DLASET, XERBLA, ZGEBRD, ZGELQF,
-     $                   ZGEQRF, ZLACPY, ZLALSD, ZLASCL, ZLASET, ZUNMBR,
-     $                   ZUNMLQ, ZUNMQR
+      EXTERNAL           DLASCL, DLASET, XERBLA, ZGEBRD, ZGELQF, ZGEQRF,
+     $                   ZLACPY, ZLALSD, ZLASCL, ZLASET, ZUNMBR, ZUNMLQ,
+     $                   ZUNMQR
 *     ..
 *     .. External Functions ..
       INTEGER            ILAENV
@@ -10037,7 +10087,6 @@
       SFMIN = DLAMCH( 'S' )
       SMLNUM = SFMIN / EPS
       BIGNUM = ONE / SMLNUM
-      CALL DLABAD( SMLNUM, BIGNUM )
 *
 *     Scale A if max entry outside range [SMLNUM,BIGNUM].
 *
@@ -10425,7 +10474,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16GEcomputational
+*> \ingroup geqp3
 *
 *> \par Further Details:
 *  =====================
@@ -10772,7 +10821,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16GEcomputational
+*> \ingroup geqr2
 *
 *> \par Further Details:
 *  =====================
@@ -10986,7 +11035,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16GEcomputational
+*> \ingroup geqrf
 *
 *> \par Further Details:
 *  =====================
@@ -11325,7 +11374,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16GEcomputational
+*> \ingroup gerfs
 *
 *  =====================================================================
       SUBROUTINE ZGERFS( TRANS, N, NRHS, A, LDA, AF, LDAF, IPIV, B, LDB,
@@ -11694,7 +11743,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16GEauxiliary
+*> \ingroup gesc2
 *
 *> \par Contributors:
 *  ==================
@@ -11730,7 +11779,7 @@
       COMPLEX*16         TEMP
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           ZLASWP, ZSCAL, DLABAD
+      EXTERNAL           ZLASWP, ZSCAL
 *     ..
 *     .. External Functions ..
       INTEGER            IZAMAX
@@ -11747,7 +11796,6 @@
       EPS = DLAMCH( 'P' )
       SMLNUM = DLAMCH( 'S' ) / EPS
       BIGNUM = ONE / SMLNUM
-      CALL DLABAD( SMLNUM, BIGNUM )
 *
 *     Apply permutations IPIV to RHS
 *
@@ -11844,12 +11892,6 @@
 *>
 *> Note that the routine returns VT = V**H, not V.
 *>
-*> The divide and conquer algorithm makes very mild assumptions about
-*> floating point arithmetic. It will work on machines with a guard
-*> digit in add/subtract, or on those binary machines without guard
-*> digits which subtract like the Cray X-MP, Cray Y-MP, Cray C-90, or
-*> Cray-2. It could conceivably fail on hexadecimal or decimal machines
-*> without guard digits, but we know of none.
 *> \endverbatim
 *
 *  Arguments:
@@ -12004,7 +12046,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16GEsing
+*> \ingroup gesdd
 *
 *> \par Contributors:
 *  ==================
@@ -14012,6 +14054,8 @@
 *     End of ZGESDD
 *
       END
+*> \addtogroup gesv
+*>
 *> \brief <b> ZGESV computes the solution to system of linear equations A * X = B for GE matrices (simple driver) </b>
 *
 *  =========== DOCUMENTATION ===========
@@ -14129,7 +14173,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16GEsolve
+*> \ingroup gesv
 *
 *  =====================================================================
       SUBROUTINE ZGESV( N, NRHS, A, LDA, IPIV, B, LDB, INFO )
@@ -14396,7 +14440,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16GEsing
+*> \ingroup gesvd
 *
 *  =====================================================================
       SUBROUTINE ZGESVD( JOBU, JOBVT, M, N, A, LDA, S, U, LDU,
@@ -18194,7 +18238,7 @@
 *>
 *> \param[out] RWORK
 *> \verbatim
-*>          RWORK is DOUBLE PRECISION array, dimension (2*N)
+*>          RWORK is DOUBLE PRECISION array, dimension (MAX(1,2*N))
 *>          On exit, RWORK(1) contains the reciprocal pivot growth
 *>          factor norm(A)/norm(U). The "max absolute element" norm is
 *>          used. If RWORK(1) is much less than 1, then the stability
@@ -18233,7 +18277,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16GEsolve
+*> \ingroup gesvx
 *
 *  =====================================================================
       SUBROUTINE ZGESVX( FACT, TRANS, N, NRHS, A, LDA, AF, LDAF, IPIV,
@@ -18592,7 +18636,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16GEauxiliary
+*> \ingroup getc2
 *
 *> \par Contributors:
 *  ==================
@@ -18626,7 +18670,7 @@
       DOUBLE PRECISION   BIGNUM, EPS, SMIN, SMLNUM, XMAX
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           ZGERU, ZSWAP, DLABAD
+      EXTERNAL           ZGERU, ZSWAP
 *     ..
 *     .. External Functions ..
       DOUBLE PRECISION   DLAMCH
@@ -18649,7 +18693,6 @@
       EPS = DLAMCH( 'P' )
       SMLNUM = DLAMCH( 'S' ) / EPS
       BIGNUM = ONE / SMLNUM
-      CALL DLABAD( SMLNUM, BIGNUM )
 *
 *     Handle the case N=1 by itself
 *
@@ -18826,7 +18869,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16GEcomputational
+*> \ingroup getf2
 *
 *  =====================================================================
       SUBROUTINE ZGETF2( M, N, A, LDA, IPIV, INFO )
@@ -18852,7 +18895,7 @@
 *     ..
 *     .. Local Scalars ..
       DOUBLE PRECISION   SFMIN
-      INTEGER            I, J, JP
+      INTEGER            J, JP
 *     ..
 *     .. External Functions ..
       DOUBLE PRECISION   DLAMCH
@@ -18860,7 +18903,7 @@
       EXTERNAL           DLAMCH, IZAMAX
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           XERBLA, ZGERU, ZSCAL, ZSWAP
+      EXTERNAL           XERBLA, ZGERU, ZRSCL, ZSWAP
 *     ..
 *     .. Intrinsic Functions ..
       INTRINSIC          MAX, MIN
@@ -18906,15 +18949,8 @@
 *
 *           Compute elements J+1:M of J-th column.
 *
-            IF( J.LT.M ) THEN
-               IF( ABS(A( J, J )) .GE. SFMIN ) THEN
-                  CALL ZSCAL( M-J, ONE / A( J, J ), A( J+1, J ), 1 )
-               ELSE
-                  DO 20 I = 1, M-J
-                     A( J+I, J ) = A( J+I, J ) / A( J, J )
-   20             CONTINUE
-               END IF
-            END IF
+            IF( J.LT.M )
+     $         CALL ZRSCL( M-J, A( J, J ), A( J+1, J ), 1 )
 *
          ELSE IF( INFO.EQ.0 ) THEN
 *
@@ -19037,7 +19073,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16GEcomputational
+*> \ingroup getrf
 *
 *  =====================================================================
       SUBROUTINE ZGETRF( M, N, A, LDA, IPIV, INFO )
@@ -19264,7 +19300,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16GEcomputational
+*> \ingroup getrf2
 *
 *  =====================================================================
       RECURSIVE SUBROUTINE ZGETRF2( M, N, A, LDA, IPIV, INFO )
@@ -19536,7 +19572,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16GEcomputational
+*> \ingroup getri
 *
 *  =====================================================================
       SUBROUTINE ZGETRI( N, A, LDA, IPIV, WORK, LWORK, INFO )
@@ -19802,7 +19838,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16GEcomputational
+*> \ingroup getrs
 *
 *  =====================================================================
       SUBROUTINE ZGETRS( TRANS, N, NRHS, A, LDA, IPIV, B, LDB, INFO )
@@ -20041,7 +20077,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16GBcomputational
+*> \ingroup ggbak
 *
 *> \par Further Details:
 *  =====================
@@ -20374,7 +20410,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16GBcomputational
+*> \ingroup ggbal
 *
 *> \par Further Details:
 *  =====================
@@ -21044,7 +21080,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16GEeigen
+*> \ingroup gges
 *
 *  =====================================================================
       SUBROUTINE ZGGES( JOBVSL, JOBVSR, SORT, SELCTG, N, A, LDA, B, LDB,
@@ -21094,9 +21130,8 @@
       DOUBLE PRECISION   DIF( 2 )
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           DLABAD, XERBLA, ZGEQRF, ZGGBAK, ZGGBAL, ZGGHRD,
-     $                   ZHGEQZ, ZLACPY, ZLASCL, ZLASET, ZTGSEN, ZUNGQR,
-     $                   ZUNMQR
+      EXTERNAL           XERBLA, ZGEQRF, ZGGBAK, ZGGBAL, ZGGHRD, ZHGEQZ,
+     $                   ZLACPY, ZLASCL, ZLASET, ZTGSEN, ZUNGQR, ZUNMQR
 *     ..
 *     .. External Functions ..
       LOGICAL            LSAME
@@ -21198,7 +21233,6 @@
       EPS = DLAMCH( 'P' )
       SMLNUM = DLAMCH( 'S' )
       BIGNUM = ONE / SMLNUM
-      CALL DLABAD( SMLNUM, BIGNUM )
       SMLNUM = SQRT( SMLNUM ) / EPS
       BIGNUM = ONE / SMLNUM
 *
@@ -21588,7 +21622,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16GEeigen
+*> \ingroup ggev
 *
 *  =====================================================================
       SUBROUTINE ZGGEV( JOBVL, JOBVR, N, A, LDA, B, LDB, ALPHA, BETA,
@@ -21632,9 +21666,8 @@
       LOGICAL            LDUMMA( 1 )
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           DLABAD, XERBLA, ZGEQRF, ZGGBAK, ZGGBAL, ZGGHRD,
-     $                   ZHGEQZ, ZLACPY, ZLASCL, ZLASET, ZTGEVC, ZUNGQR,
-     $                   ZUNMQR
+      EXTERNAL           XERBLA, ZGEQRF, ZGGBAK, ZGGBAL, ZGGHRD, ZHGEQZ,
+     $                   ZLACPY, ZLASCL, ZLASET, ZTGEVC, ZUNGQR, ZUNMQR
 *     ..
 *     .. External Functions ..
       LOGICAL            LSAME
@@ -21738,7 +21771,6 @@
       EPS = DLAMCH( 'E' )*DLAMCH( 'B' )
       SMLNUM = DLAMCH( 'S' )
       BIGNUM = ONE / SMLNUM
-      CALL DLABAD( SMLNUM, BIGNUM )
       SMLNUM = SQRT( SMLNUM ) / EPS
       BIGNUM = ONE / SMLNUM
 *
@@ -22120,7 +22152,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16OTHERcomputational
+*> \ingroup gghrd
 *
 *> \par Further Details:
 *  =====================
@@ -22425,7 +22457,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16GTcomputational
+*> \ingroup gtcon
 *
 *  =====================================================================
       SUBROUTINE ZGTCON( NORM, N, DL, D, DU, DU2, IPIV, ANORM, RCOND,
@@ -22743,7 +22775,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16GTcomputational
+*> \ingroup gtrfs
 *
 *  =====================================================================
       SUBROUTINE ZGTRFS( TRANS, N, NRHS, DL, D, DU, DLF, DF, DUF, DU2,
@@ -23143,7 +23175,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16GTsolve
+*> \ingroup gtsv
 *
 *  =====================================================================
       SUBROUTINE ZGTSV( N, NRHS, DL, D, DU, B, LDB, INFO )
@@ -23552,7 +23584,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16GTsolve
+*> \ingroup gtsvx
 *
 *  =====================================================================
       SUBROUTINE ZGTSVX( FACT, TRANS, N, NRHS, DL, D, DU, DLF, DF, DUF,
@@ -23797,7 +23829,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16GTcomputational
+*> \ingroup gttrf
 *
 *  =====================================================================
       SUBROUTINE ZGTTRF( N, DL, D, DU, DU2, IPIV, INFO )
@@ -24050,7 +24082,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16GTcomputational
+*> \ingroup gttrs
 *
 *  =====================================================================
       SUBROUTINE ZGTTRS( TRANS, N, NRHS, DL, D, DU, DU2, IPIV, B, LDB,
@@ -24263,7 +24295,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16GTcomputational
+*> \ingroup gtts2
 *
 *  =====================================================================
       SUBROUTINE ZGTTS2( ITRANS, N, NRHS, DL, D, DU, DU2, IPIV, B, LDB )
@@ -24620,7 +24652,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16HEeigen
+*> \ingroup heev
 *
 *  =====================================================================
       SUBROUTINE ZHEEV( JOBZ, UPLO, N, A, LDA, W, WORK, LWORK, RWORK,
@@ -24824,12 +24856,6 @@
 *> complex Hermitian matrix A.  If eigenvectors are desired, it uses a
 *> divide and conquer algorithm.
 *>
-*> The divide and conquer algorithm makes very mild assumptions about
-*> floating point arithmetic. It will work on machines with a guard
-*> digit in add/subtract, or on those binary machines without guard
-*> digits which subtract like the Cray X-MP, Cray Y-MP, Cray C-90, or
-*> Cray-2. It could conceivably fail on hexadecimal or decimal machines
-*> without guard digits, but we know of none.
 *> \endverbatim
 *
 *  Arguments:
@@ -24969,7 +24995,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16HEeigen
+*> \ingroup heevd
 *
 *> \par Further Details:
 *  =====================
@@ -25300,7 +25326,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16HEcomputational
+*> \ingroup hetd2
 *
 *> \par Further Details:
 *  =====================
@@ -25648,7 +25674,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16HEcomputational
+*> \ingroup hetrd
 *
 *> \par Further Details:
 *  =====================
@@ -26150,7 +26176,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16GEcomputational
+*> \ingroup hgeqz
 *
 *> \par Further Details:
 *  =====================
@@ -26993,7 +27019,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16OTHERcomputational
+*> \ingroup hseqr
 *
 *> \par Contributors:
 *  ==================
@@ -27429,7 +27455,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16OTHERauxiliary
+*> \ingroup labrd
 *
 *> \par Further Details:
 *  =====================
@@ -27756,7 +27782,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16OTHERauxiliary
+*> \ingroup lacgv
 *
 *  =====================================================================
       SUBROUTINE ZLACGV( N, X, INCX )
@@ -27898,7 +27924,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16OTHERauxiliary
+*> \ingroup lacn2
 *
 *> \par Further Details:
 *  =====================
@@ -28194,7 +28220,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16OTHERauxiliary
+*> \ingroup lacp2
 *
 *  =====================================================================
       SUBROUTINE ZLACP2( UPLO, M, N, A, LDA, B, LDB )
@@ -28351,7 +28377,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16OTHERauxiliary
+*> \ingroup lacpy
 *
 *  =====================================================================
       SUBROUTINE ZLACPY( UPLO, M, N, A, LDA, B, LDB )
@@ -28518,7 +28544,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16OTHERauxiliary
+*> \ingroup lacrm
 *
 *  =====================================================================
       SUBROUTINE ZLACRM( M, N, A, LDA, B, LDB, C, LDC, RWORK )
@@ -28650,7 +28676,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16OTHERauxiliary
+*> \ingroup ladiv
 *
 *  =====================================================================
       COMPLEX*16     FUNCTION ZLADIV( X, Y )
@@ -28824,7 +28850,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16OTHERcomputational
+*> \ingroup laed0
 *
 *  =====================================================================
       SUBROUTINE ZLAED0( QSIZ, N, D, E, Q, LDQ, QSTORE, LDQS, RWORK,
@@ -29294,7 +29320,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16OTHERcomputational
+*> \ingroup laed7
 *
 *  =====================================================================
       SUBROUTINE ZLAED7( N, CUTPNT, QSIZ, TLVLS, CURLVL, CURPBM, D, Q,
@@ -29418,7 +29444,7 @@
             RETURN
          END IF
 *
-*     Prepare the INDXQ sorting premutation.
+*     Prepare the INDXQ sorting permutation.
 *
          N1 = K
          N2 = N - K
@@ -29455,7 +29481,7 @@
 *  Definition:
 *  ===========
 *
-*       SUBROUTINE ZLAED8( K, N, QSIZ, Q, LDQ, D, RHO, CUTPNT, Z, DLAMDA,
+*       SUBROUTINE ZLAED8( K, N, QSIZ, Q, LDQ, D, RHO, CUTPNT, Z, DLAMBDA,
 *                          Q2, LDQ2, W, INDXP, INDX, INDXQ, PERM, GIVPTR,
 *                          GIVCOL, GIVNUM, INFO )
 *
@@ -29466,7 +29492,7 @@
 *       .. Array Arguments ..
 *       INTEGER            GIVCOL( 2, * ), INDX( * ), INDXP( * ),
 *      $                   INDXQ( * ), PERM( * )
-*       DOUBLE PRECISION   D( * ), DLAMDA( * ), GIVNUM( 2, * ), W( * ),
+*       DOUBLE PRECISION   D( * ), DLAMBDA( * ), GIVNUM( 2, * ), W( * ),
 *      $                   Z( * )
 *       COMPLEX*16         Q( LDQ, * ), Q2( LDQ2, * )
 *       ..
@@ -29559,9 +29585,9 @@
 *>         destroyed during the updating process.
 *> \endverbatim
 *>
-*> \param[out] DLAMDA
+*> \param[out] DLAMBDA
 *> \verbatim
-*>          DLAMDA is DOUBLE PRECISION array, dimension (N)
+*>          DLAMBDA is DOUBLE PRECISION array, dimension (N)
 *>         Contains a copy of the first K eigenvalues which will be used
 *>         by DLAED3 to form the secular equation.
 *> \endverbatim
@@ -29656,10 +29682,10 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16OTHERcomputational
+*> \ingroup laed8
 *
 *  =====================================================================
-      SUBROUTINE ZLAED8( K, N, QSIZ, Q, LDQ, D, RHO, CUTPNT, Z, DLAMDA,
+      SUBROUTINE ZLAED8( K, N, QSIZ, Q, LDQ, D, RHO, CUTPNT, Z, DLAMBDA,
      $                   Q2, LDQ2, W, INDXP, INDX, INDXQ, PERM, GIVPTR,
      $                   GIVCOL, GIVNUM, INFO )
 *
@@ -29674,7 +29700,7 @@
 *     .. Array Arguments ..
       INTEGER            GIVCOL( 2, * ), INDX( * ), INDXP( * ),
      $                   INDXQ( * ), PERM( * )
-      DOUBLE PRECISION   D( * ), DLAMDA( * ), GIVNUM( 2, * ), W( * ),
+      DOUBLE PRECISION   D( * ), DLAMBDA( * ), GIVNUM( 2, * ), W( * ),
      $                   Z( * )
       COMPLEX*16         Q( LDQ, * ), Q2( LDQ2, * )
 *     ..
@@ -29759,14 +29785,14 @@
          INDXQ( I ) = INDXQ( I ) + CUTPNT
    20 CONTINUE
       DO 30 I = 1, N
-         DLAMDA( I ) = D( INDXQ( I ) )
+         DLAMBDA( I ) = D( INDXQ( I ) )
          W( I ) = Z( INDXQ( I ) )
    30 CONTINUE
       I = 1
       J = CUTPNT + 1
-      CALL DLAMRG( N1, N2, DLAMDA, 1, 1, INDX )
+      CALL DLAMRG( N1, N2, DLAMBDA, 1, 1, INDX )
       DO 40 I = 1, N
-         D( I ) = DLAMDA( INDX( I ) )
+         D( I ) = DLAMBDA( INDX( I ) )
          Z( I ) = W( INDX( I ) )
    40 CONTINUE
 *
@@ -29875,7 +29901,7 @@
          ELSE
             K = K + 1
             W( K ) = Z( JLAM )
-            DLAMDA( K ) = D( JLAM )
+            DLAMBDA( K ) = D( JLAM )
             INDXP( K ) = JLAM
             JLAM = J
          END IF
@@ -29887,19 +29913,19 @@
 *
       K = K + 1
       W( K ) = Z( JLAM )
-      DLAMDA( K ) = D( JLAM )
+      DLAMBDA( K ) = D( JLAM )
       INDXP( K ) = JLAM
 *
   100 CONTINUE
 *
-*     Sort the eigenvalues and corresponding eigenvectors into DLAMDA
+*     Sort the eigenvalues and corresponding eigenvectors into DLAMBDA
 *     and Q2 respectively.  The eigenvalues/vectors which were not
-*     deflated go into the first K slots of DLAMDA and Q2 respectively,
+*     deflated go into the first K slots of DLAMBDA and Q2 respectively,
 *     while those which were deflated go into the last N - K slots.
 *
       DO 110 J = 1, N
          JP = INDXP( J )
-         DLAMDA( J ) = D( JP )
+         DLAMBDA( J ) = D( JP )
          PERM( J ) = INDXQ( INDX( JP ) )
          CALL ZCOPY( QSIZ, Q( 1, PERM( J ) ), 1, Q2( 1, J ), 1 )
   110 CONTINUE
@@ -29908,7 +29934,7 @@
 *     into the last N - K slots of D and Q respectively.
 *
       IF( K.LT.N ) THEN
-         CALL DCOPY( N-K, DLAMDA( K+1 ), 1, D( K+1 ), 1 )
+         CALL DCOPY( N-K, DLAMBDA( K+1 ), 1, D( K+1 ), 1 )
          CALL ZLACPY( 'A', QSIZ, N-K, Q2( 1, K+1 ), LDQ2, Q( 1, K+1 ),
      $                LDQ )
       END IF
@@ -29957,7 +29983,7 @@
 *>
 *> \verbatim
 *>
-*> ZLAGTM performs a matrix-vector product of the form
+*> ZLAGTM performs a matrix-matrix product of the form
 *>
 *>    B := alpha * A * X + beta * B
 *>
@@ -30057,7 +30083,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16OTHERauxiliary
+*> \ingroup lagtm
 *
 *  =====================================================================
       SUBROUTINE ZLAGTM( TRANS, N, NRHS, ALPHA, DL, D, DU, X, LDX, BETA,
@@ -30409,7 +30435,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16OTHERauxiliary
+*> \ingroup lahqr
 *
 *> \par Contributors:
 *  ==================
@@ -30474,7 +30500,7 @@
       EXTERNAL           ZLADIV, DLAMCH
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           DLABAD, ZCOPY, ZLARFG, ZSCAL
+      EXTERNAL           ZCOPY, ZLARFG, ZSCAL
 *     ..
 *     .. Statement Functions ..
       DOUBLE PRECISION   CABS1
@@ -30536,7 +30562,6 @@
 *
       SAFMIN = DLAMCH( 'SAFE MINIMUM' )
       SAFMAX = RONE / SAFMIN
-      CALL DLABAD( SAFMIN, SAFMAX )
       ULP = DLAMCH( 'PRECISION' )
       SMLNUM = SAFMIN*( DBLE( NH ) / ULP )
 *
@@ -30939,7 +30964,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16OTHERauxiliary
+*> \ingroup lahr2
 *
 *> \par Further Details:
 *  =====================
@@ -31263,7 +31288,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16OTHERauxiliary
+*> \ingroup lahrd
 *
 *> \par Further Details:
 *  =====================
@@ -31684,7 +31709,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16OTHERcomputational
+*> \ingroup lals0
 *
 *> \par Contributors:
 *  ==================
@@ -31822,6 +31847,11 @@
      $                ( POLES( I, 2 ).EQ.ZERO ) ) THEN
                      RWORK( I ) = ZERO
                   ELSE
+*
+*                    Use calls to the subroutine DLAMC3 to enforce the
+*                    parentheses (x+y)+z. The goal is to prevent
+*                    optimizing compilers from doing x+(y+z).
+*
                      RWORK( I ) = POLES( I, 2 )*Z( I ) /
      $                            ( DLAMC3( POLES( I, 2 ), DSIGJ )-
      $                            DIFLJ ) / ( POLES( I, 2 )+DJ )
@@ -31900,6 +31930,11 @@
                   IF( Z( J ).EQ.ZERO ) THEN
                      RWORK( I ) = ZERO
                   ELSE
+*
+*                    Use calls to the subroutine DLAMC3 to enforce the
+*                    parentheses (x+y)+z. The goal is to prevent
+*                    optimizing compilers from doing x+(y+z).
+*
                      RWORK( I ) = Z( J ) / ( DLAMC3( DSIGJ, -POLES( I+1,
      $                            2 ) )-DIFR( I, 1 ) ) /
      $                            ( DSIGJ+POLES( I, 1 ) ) / DIFR( I, 2 )
@@ -32025,9 +32060,9 @@
 *>
 *> \verbatim
 *>
-*> ZLALSA is an itermediate step in solving the least squares problem
+*> ZLALSA is an intermediate step in solving the least squares problem
 *> by computing the SVD of the coefficient matrix in compact form (The
-*> singular vectors are computed as products of simple orthorgonal
+*> singular vectors are computed as products of simple orthogonal
 *> matrices.).
 *>
 *> If ICOMPQ = 0, ZLALSA applies the inverse of the left singular vector
@@ -32233,7 +32268,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16OTHERcomputational
+*> \ingroup lalsa
 *
 *> \par Contributors:
 *  ==================
@@ -32663,12 +32698,6 @@
 *> problem; in this case a minimum norm solution is returned.
 *> The actual singular values are returned in D in ascending order.
 *>
-*> This code makes very mild assumptions about floating point
-*> arithmetic. It will work on machines with a guard digit in
-*> add/subtract, or on those binary machines without guard digits
-*> which subtract like the Cray XMP, Cray YMP, Cray C 90, or Cray 2.
-*> It could conceivably fail on hexadecimal or decimal machines
-*> without guard digits, but we know of none.
 *> \endverbatim
 *
 *  Arguments:
@@ -32787,7 +32816,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16OTHERcomputational
+*> \ingroup lalsd
 *
 *> \par Contributors:
 *  ==================
@@ -33422,7 +33451,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16GBauxiliary
+*> \ingroup langb
 *
 *  =====================================================================
       DOUBLE PRECISION FUNCTION ZLANGB( NORM, N, KL, KU, AB, LDAB,
@@ -33636,7 +33665,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16GEauxiliary
+*> \ingroup lange
 *
 *  =====================================================================
       DOUBLE PRECISION FUNCTION ZLANGE( NORM, M, N, A, LDA, WORK )
@@ -33837,7 +33866,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16OTHERauxiliary
+*> \ingroup langt
 *
 *  =====================================================================
       DOUBLE PRECISION FUNCTION ZLANGT( NORM, N, DL, D, DU )
@@ -34060,7 +34089,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16HEauxiliary
+*> \ingroup lanhe
 *
 *  =====================================================================
       DOUBLE PRECISION FUNCTION ZLANHE( NORM, UPLO, N, A, LDA, WORK )
@@ -34300,7 +34329,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16OTHERauxiliary
+*> \ingroup lanhs
 *
 *  =====================================================================
       DOUBLE PRECISION FUNCTION ZLANHS( NORM, N, A, LDA, WORK )
@@ -34398,6 +34427,275 @@
       RETURN
 *
 *     End of ZLANHS
+*
+      END
+*> \brief \b ZLANSP returns the value of the 1-norm, or the Frobenius norm, or the infinity norm, or the element of largest absolute value of a symmetric matrix supplied in packed form.
+*
+*  =========== DOCUMENTATION ===========
+*
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
+*
+*> \htmlonly
+*> Download ZLANSP + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zlansp.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zlansp.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zlansp.f">
+*> [TXT]</a>
+*> \endhtmlonly
+*
+*  Definition:
+*  ===========
+*
+*       DOUBLE PRECISION FUNCTION ZLANSP( NORM, UPLO, N, AP, WORK )
+*
+*       .. Scalar Arguments ..
+*       CHARACTER          NORM, UPLO
+*       INTEGER            N
+*       ..
+*       .. Array Arguments ..
+*       DOUBLE PRECISION   WORK( * )
+*       COMPLEX*16         AP( * )
+*       ..
+*
+*
+*> \par Purpose:
+*  =============
+*>
+*> \verbatim
+*>
+*> ZLANSP  returns the value of the one norm,  or the Frobenius norm, or
+*> the  infinity norm,  or the  element of  largest absolute value  of a
+*> complex symmetric matrix A,  supplied in packed form.
+*> \endverbatim
+*>
+*> \return ZLANSP
+*> \verbatim
+*>
+*>    ZLANSP = ( max(abs(A(i,j))), NORM = 'M' or 'm'
+*>             (
+*>             ( norm1(A),         NORM = '1', 'O' or 'o'
+*>             (
+*>             ( normI(A),         NORM = 'I' or 'i'
+*>             (
+*>             ( normF(A),         NORM = 'F', 'f', 'E' or 'e'
+*>
+*> where  norm1  denotes the  one norm of a matrix (maximum column sum),
+*> normI  denotes the  infinity norm  of a matrix  (maximum row sum) and
+*> normF  denotes the  Frobenius norm of a matrix (square root of sum of
+*> squares).  Note that  max(abs(A(i,j)))  is not a consistent matrix norm.
+*> \endverbatim
+*
+*  Arguments:
+*  ==========
+*
+*> \param[in] NORM
+*> \verbatim
+*>          NORM is CHARACTER*1
+*>          Specifies the value to be returned in ZLANSP as described
+*>          above.
+*> \endverbatim
+*>
+*> \param[in] UPLO
+*> \verbatim
+*>          UPLO is CHARACTER*1
+*>          Specifies whether the upper or lower triangular part of the
+*>          symmetric matrix A is supplied.
+*>          = 'U':  Upper triangular part of A is supplied
+*>          = 'L':  Lower triangular part of A is supplied
+*> \endverbatim
+*>
+*> \param[in] N
+*> \verbatim
+*>          N is INTEGER
+*>          The order of the matrix A.  N >= 0.  When N = 0, ZLANSP is
+*>          set to zero.
+*> \endverbatim
+*>
+*> \param[in] AP
+*> \verbatim
+*>          AP is COMPLEX*16 array, dimension (N*(N+1)/2)
+*>          The upper or lower triangle of the symmetric matrix A, packed
+*>          columnwise in a linear array.  The j-th column of A is stored
+*>          in the array AP as follows:
+*>          if UPLO = 'U', AP(i + (j-1)*j/2) = A(i,j) for 1<=i<=j;
+*>          if UPLO = 'L', AP(i + (j-1)*(2n-j)/2) = A(i,j) for j<=i<=n.
+*> \endverbatim
+*>
+*> \param[out] WORK
+*> \verbatim
+*>          WORK is DOUBLE PRECISION array, dimension (MAX(1,LWORK)),
+*>          where LWORK >= N when NORM = 'I' or '1' or 'O'; otherwise,
+*>          WORK is not referenced.
+*> \endverbatim
+*
+*  Authors:
+*  ========
+*
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
+*
+*> \ingroup lanhp
+*
+*  =====================================================================
+      DOUBLE PRECISION FUNCTION ZLANSP( NORM, UPLO, N, AP, WORK )
+*
+*  -- LAPACK auxiliary routine --
+*  -- LAPACK is a software package provided by Univ. of Tennessee,    --
+*  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
+*
+*     .. Scalar Arguments ..
+      CHARACTER          NORM, UPLO
+      INTEGER            N
+*     ..
+*     .. Array Arguments ..
+      DOUBLE PRECISION   WORK( * )
+      COMPLEX*16         AP( * )
+*     ..
+*
+* =====================================================================
+*
+*     .. Parameters ..
+      DOUBLE PRECISION   ONE, ZERO
+      PARAMETER          ( ONE = 1.0D+0, ZERO = 0.0D+0 )
+*     ..
+*     .. Local Scalars ..
+      INTEGER            I, J, K
+      DOUBLE PRECISION   ABSA, SCALE, SUM, VALUE
+*     ..
+*     .. External Functions ..
+      LOGICAL            LSAME, DISNAN
+      EXTERNAL           LSAME, DISNAN
+*     ..
+*     .. External Subroutines ..
+      EXTERNAL           ZLASSQ
+*     ..
+*     .. Intrinsic Functions ..
+      INTRINSIC          ABS, DBLE, DIMAG, SQRT
+*     ..
+*     .. Executable Statements ..
+*
+      IF( N.EQ.0 ) THEN
+         VALUE = ZERO
+      ELSE IF( LSAME( NORM, 'M' ) ) THEN
+*
+*        Find max(abs(A(i,j))).
+*
+         VALUE = ZERO
+         IF( LSAME( UPLO, 'U' ) ) THEN
+            K = 1
+            DO 20 J = 1, N
+               DO 10 I = K, K + J - 1
+                  SUM = ABS( AP( I ) )
+                  IF( VALUE .LT. SUM .OR. DISNAN( SUM ) ) VALUE = SUM
+   10          CONTINUE
+               K = K + J
+   20       CONTINUE
+         ELSE
+            K = 1
+            DO 40 J = 1, N
+               DO 30 I = K, K + N - J
+                  SUM = ABS( AP( I ) )
+                  IF( VALUE .LT. SUM .OR. DISNAN( SUM ) ) VALUE = SUM
+   30          CONTINUE
+               K = K + N - J + 1
+   40       CONTINUE
+         END IF
+      ELSE IF( ( LSAME( NORM, 'I' ) ) .OR. ( LSAME( NORM, 'O' ) ) .OR.
+     $         ( NORM.EQ.'1' ) ) THEN
+*
+*        Find normI(A) ( = norm1(A), since A is symmetric).
+*
+         VALUE = ZERO
+         K = 1
+         IF( LSAME( UPLO, 'U' ) ) THEN
+            DO 60 J = 1, N
+               SUM = ZERO
+               DO 50 I = 1, J - 1
+                  ABSA = ABS( AP( K ) )
+                  SUM = SUM + ABSA
+                  WORK( I ) = WORK( I ) + ABSA
+                  K = K + 1
+   50          CONTINUE
+               WORK( J ) = SUM + ABS( AP( K ) )
+               K = K + 1
+   60       CONTINUE
+            DO 70 I = 1, N
+               SUM = WORK( I )
+               IF( VALUE .LT. SUM .OR. DISNAN( SUM ) ) VALUE = SUM
+   70       CONTINUE
+         ELSE
+            DO 80 I = 1, N
+               WORK( I ) = ZERO
+   80       CONTINUE
+            DO 100 J = 1, N
+               SUM = WORK( J ) + ABS( AP( K ) )
+               K = K + 1
+               DO 90 I = J + 1, N
+                  ABSA = ABS( AP( K ) )
+                  SUM = SUM + ABSA
+                  WORK( I ) = WORK( I ) + ABSA
+                  K = K + 1
+   90          CONTINUE
+               IF( VALUE .LT. SUM .OR. DISNAN( SUM ) ) VALUE = SUM
+  100       CONTINUE
+         END IF
+      ELSE IF( ( LSAME( NORM, 'F' ) ) .OR. ( LSAME( NORM, 'E' ) ) ) THEN
+*
+*        Find normF(A).
+*
+         SCALE = ZERO
+         SUM = ONE
+         K = 2
+         IF( LSAME( UPLO, 'U' ) ) THEN
+            DO 110 J = 2, N
+               CALL ZLASSQ( J-1, AP( K ), 1, SCALE, SUM )
+               K = K + J
+  110       CONTINUE
+         ELSE
+            DO 120 J = 1, N - 1
+               CALL ZLASSQ( N-J, AP( K ), 1, SCALE, SUM )
+               K = K + N - J + 1
+  120       CONTINUE
+         END IF
+         SUM = 2*SUM
+         K = 1
+         DO 130 I = 1, N
+            IF( DBLE( AP( K ) ).NE.ZERO ) THEN
+               ABSA = ABS( DBLE( AP( K ) ) )
+               IF( SCALE.LT.ABSA ) THEN
+                  SUM = ONE + SUM*( SCALE / ABSA )**2
+                  SCALE = ABSA
+               ELSE
+                  SUM = SUM + ( ABSA / SCALE )**2
+               END IF
+            END IF
+            IF( DIMAG( AP( K ) ).NE.ZERO ) THEN
+               ABSA = ABS( DIMAG( AP( K ) ) )
+               IF( SCALE.LT.ABSA ) THEN
+                  SUM = ONE + SUM*( SCALE / ABSA )**2
+                  SCALE = ABSA
+               ELSE
+                  SUM = SUM + ( ABSA / SCALE )**2
+               END IF
+            END IF
+            IF( LSAME( UPLO, 'U' ) ) THEN
+               K = K + I + 1
+            ELSE
+               K = K + N - I + 1
+            END IF
+  130    CONTINUE
+         VALUE = SCALE*SQRT( SUM )
+      END IF
+*
+      ZLANSP = VALUE
+      RETURN
+*
+*     End of ZLANSP
 *
       END
 *> \brief \b ZLANSY returns the value of the 1-norm, or the Frobenius norm, or the infinity norm, or the element of largest absolute value of a complex symmetric matrix.
@@ -34518,7 +34816,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16SYauxiliary
+*> \ingroup lanhe
 *
 *  =====================================================================
       DOUBLE PRECISION FUNCTION ZLANSY( NORM, UPLO, N, A, LDA, WORK )
@@ -34775,7 +35073,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16OTHERauxiliary
+*> \ingroup lantb
 *
 *  =====================================================================
       DOUBLE PRECISION FUNCTION ZLANTB( NORM, UPLO, DIAG, N, K, AB,
@@ -35000,6 +35298,360 @@
 *     End of ZLANTB
 *
       END
+*> \brief \b ZLANTP returns the value of the 1-norm, or the Frobenius norm, or the infinity norm, or the element of largest absolute value of a triangular matrix supplied in packed form.
+*
+*  =========== DOCUMENTATION ===========
+*
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
+*
+*> \htmlonly
+*> Download ZLANTP + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zlantp.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zlantp.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zlantp.f">
+*> [TXT]</a>
+*> \endhtmlonly
+*
+*  Definition:
+*  ===========
+*
+*       DOUBLE PRECISION FUNCTION ZLANTP( NORM, UPLO, DIAG, N, AP, WORK )
+*
+*       .. Scalar Arguments ..
+*       CHARACTER          DIAG, NORM, UPLO
+*       INTEGER            N
+*       ..
+*       .. Array Arguments ..
+*       DOUBLE PRECISION   WORK( * )
+*       COMPLEX*16         AP( * )
+*       ..
+*
+*
+*> \par Purpose:
+*  =============
+*>
+*> \verbatim
+*>
+*> ZLANTP  returns the value of the one norm,  or the Frobenius norm, or
+*> the  infinity norm,  or the  element of  largest absolute value  of a
+*> triangular matrix A, supplied in packed form.
+*> \endverbatim
+*>
+*> \return ZLANTP
+*> \verbatim
+*>
+*>    ZLANTP = ( max(abs(A(i,j))), NORM = 'M' or 'm'
+*>             (
+*>             ( norm1(A),         NORM = '1', 'O' or 'o'
+*>             (
+*>             ( normI(A),         NORM = 'I' or 'i'
+*>             (
+*>             ( normF(A),         NORM = 'F', 'f', 'E' or 'e'
+*>
+*> where  norm1  denotes the  one norm of a matrix (maximum column sum),
+*> normI  denotes the  infinity norm  of a matrix  (maximum row sum) and
+*> normF  denotes the  Frobenius norm of a matrix (square root of sum of
+*> squares).  Note that  max(abs(A(i,j)))  is not a consistent matrix norm.
+*> \endverbatim
+*
+*  Arguments:
+*  ==========
+*
+*> \param[in] NORM
+*> \verbatim
+*>          NORM is CHARACTER*1
+*>          Specifies the value to be returned in ZLANTP as described
+*>          above.
+*> \endverbatim
+*>
+*> \param[in] UPLO
+*> \verbatim
+*>          UPLO is CHARACTER*1
+*>          Specifies whether the matrix A is upper or lower triangular.
+*>          = 'U':  Upper triangular
+*>          = 'L':  Lower triangular
+*> \endverbatim
+*>
+*> \param[in] DIAG
+*> \verbatim
+*>          DIAG is CHARACTER*1
+*>          Specifies whether or not the matrix A is unit triangular.
+*>          = 'N':  Non-unit triangular
+*>          = 'U':  Unit triangular
+*> \endverbatim
+*>
+*> \param[in] N
+*> \verbatim
+*>          N is INTEGER
+*>          The order of the matrix A.  N >= 0.  When N = 0, ZLANTP is
+*>          set to zero.
+*> \endverbatim
+*>
+*> \param[in] AP
+*> \verbatim
+*>          AP is COMPLEX*16 array, dimension (N*(N+1)/2)
+*>          The upper or lower triangular matrix A, packed columnwise in
+*>          a linear array.  The j-th column of A is stored in the array
+*>          AP as follows:
+*>          if UPLO = 'U', AP(i + (j-1)*j/2) = A(i,j) for 1<=i<=j;
+*>          if UPLO = 'L', AP(i + (j-1)*(2n-j)/2) = A(i,j) for j<=i<=n.
+*>          Note that when DIAG = 'U', the elements of the array AP
+*>          corresponding to the diagonal elements of the matrix A are
+*>          not referenced, but are assumed to be one.
+*> \endverbatim
+*>
+*> \param[out] WORK
+*> \verbatim
+*>          WORK is DOUBLE PRECISION array, dimension (MAX(1,LWORK)),
+*>          where LWORK >= N when NORM = 'I'; otherwise, WORK is not
+*>          referenced.
+*> \endverbatim
+*
+*  Authors:
+*  ========
+*
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
+*
+*> \ingroup lantp
+*
+*  =====================================================================
+      DOUBLE PRECISION FUNCTION ZLANTP( NORM, UPLO, DIAG, N, AP, WORK )
+*
+*  -- LAPACK auxiliary routine --
+*  -- LAPACK is a software package provided by Univ. of Tennessee,    --
+*  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
+*
+*     .. Scalar Arguments ..
+      CHARACTER          DIAG, NORM, UPLO
+      INTEGER            N
+*     ..
+*     .. Array Arguments ..
+      DOUBLE PRECISION   WORK( * )
+      COMPLEX*16         AP( * )
+*     ..
+*
+* =====================================================================
+*
+*     .. Parameters ..
+      DOUBLE PRECISION   ONE, ZERO
+      PARAMETER          ( ONE = 1.0D+0, ZERO = 0.0D+0 )
+*     ..
+*     .. Local Scalars ..
+      LOGICAL            UDIAG
+      INTEGER            I, J, K
+      DOUBLE PRECISION   SCALE, SUM, VALUE
+*     ..
+*     .. External Functions ..
+      LOGICAL            LSAME, DISNAN
+      EXTERNAL           LSAME, DISNAN
+*     ..
+*     .. External Subroutines ..
+      EXTERNAL           ZLASSQ
+*     ..
+*     .. Intrinsic Functions ..
+      INTRINSIC          ABS, SQRT
+*     ..
+*     .. Executable Statements ..
+*
+      IF( N.EQ.0 ) THEN
+         VALUE = ZERO
+      ELSE IF( LSAME( NORM, 'M' ) ) THEN
+*
+*        Find max(abs(A(i,j))).
+*
+         K = 1
+         IF( LSAME( DIAG, 'U' ) ) THEN
+            VALUE = ONE
+            IF( LSAME( UPLO, 'U' ) ) THEN
+               DO 20 J = 1, N
+                  DO 10 I = K, K + J - 2
+                     SUM = ABS( AP( I ) )
+                     IF( VALUE .LT. SUM .OR. DISNAN( SUM ) ) VALUE = SUM
+   10             CONTINUE
+                  K = K + J
+   20          CONTINUE
+            ELSE
+               DO 40 J = 1, N
+                  DO 30 I = K + 1, K + N - J
+                     SUM = ABS( AP( I ) )
+                     IF( VALUE .LT. SUM .OR. DISNAN( SUM ) ) VALUE = SUM
+   30             CONTINUE
+                  K = K + N - J + 1
+   40          CONTINUE
+            END IF
+         ELSE
+            VALUE = ZERO
+            IF( LSAME( UPLO, 'U' ) ) THEN
+               DO 60 J = 1, N
+                  DO 50 I = K, K + J - 1
+                     SUM = ABS( AP( I ) )
+                     IF( VALUE .LT. SUM .OR. DISNAN( SUM ) ) VALUE = SUM
+   50             CONTINUE
+                  K = K + J
+   60          CONTINUE
+            ELSE
+               DO 80 J = 1, N
+                  DO 70 I = K, K + N - J
+                     SUM = ABS( AP( I ) )
+                     IF( VALUE .LT. SUM .OR. DISNAN( SUM ) ) VALUE = SUM
+   70             CONTINUE
+                  K = K + N - J + 1
+   80          CONTINUE
+            END IF
+         END IF
+      ELSE IF( ( LSAME( NORM, 'O' ) ) .OR. ( NORM.EQ.'1' ) ) THEN
+*
+*        Find norm1(A).
+*
+         VALUE = ZERO
+         K = 1
+         UDIAG = LSAME( DIAG, 'U' )
+         IF( LSAME( UPLO, 'U' ) ) THEN
+            DO 110 J = 1, N
+               IF( UDIAG ) THEN
+                  SUM = ONE
+                  DO 90 I = K, K + J - 2
+                     SUM = SUM + ABS( AP( I ) )
+   90             CONTINUE
+               ELSE
+                  SUM = ZERO
+                  DO 100 I = K, K + J - 1
+                     SUM = SUM + ABS( AP( I ) )
+  100             CONTINUE
+               END IF
+               K = K + J
+               IF( VALUE .LT. SUM .OR. DISNAN( SUM ) ) VALUE = SUM
+  110       CONTINUE
+         ELSE
+            DO 140 J = 1, N
+               IF( UDIAG ) THEN
+                  SUM = ONE
+                  DO 120 I = K + 1, K + N - J
+                     SUM = SUM + ABS( AP( I ) )
+  120             CONTINUE
+               ELSE
+                  SUM = ZERO
+                  DO 130 I = K, K + N - J
+                     SUM = SUM + ABS( AP( I ) )
+  130             CONTINUE
+               END IF
+               K = K + N - J + 1
+               IF( VALUE .LT. SUM .OR. DISNAN( SUM ) ) VALUE = SUM
+  140       CONTINUE
+         END IF
+      ELSE IF( LSAME( NORM, 'I' ) ) THEN
+*
+*        Find normI(A).
+*
+         K = 1
+         IF( LSAME( UPLO, 'U' ) ) THEN
+            IF( LSAME( DIAG, 'U' ) ) THEN
+               DO 150 I = 1, N
+                  WORK( I ) = ONE
+  150          CONTINUE
+               DO 170 J = 1, N
+                  DO 160 I = 1, J - 1
+                     WORK( I ) = WORK( I ) + ABS( AP( K ) )
+                     K = K + 1
+  160             CONTINUE
+                  K = K + 1
+  170          CONTINUE
+            ELSE
+               DO 180 I = 1, N
+                  WORK( I ) = ZERO
+  180          CONTINUE
+               DO 200 J = 1, N
+                  DO 190 I = 1, J
+                     WORK( I ) = WORK( I ) + ABS( AP( K ) )
+                     K = K + 1
+  190             CONTINUE
+  200          CONTINUE
+            END IF
+         ELSE
+            IF( LSAME( DIAG, 'U' ) ) THEN
+               DO 210 I = 1, N
+                  WORK( I ) = ONE
+  210          CONTINUE
+               DO 230 J = 1, N
+                  K = K + 1
+                  DO 220 I = J + 1, N
+                     WORK( I ) = WORK( I ) + ABS( AP( K ) )
+                     K = K + 1
+  220             CONTINUE
+  230          CONTINUE
+            ELSE
+               DO 240 I = 1, N
+                  WORK( I ) = ZERO
+  240          CONTINUE
+               DO 260 J = 1, N
+                  DO 250 I = J, N
+                     WORK( I ) = WORK( I ) + ABS( AP( K ) )
+                     K = K + 1
+  250             CONTINUE
+  260          CONTINUE
+            END IF
+         END IF
+         VALUE = ZERO
+         DO 270 I = 1, N
+            SUM = WORK( I )
+            IF( VALUE .LT. SUM .OR. DISNAN( SUM ) ) VALUE = SUM
+  270    CONTINUE
+      ELSE IF( ( LSAME( NORM, 'F' ) ) .OR. ( LSAME( NORM, 'E' ) ) ) THEN
+*
+*        Find normF(A).
+*
+         IF( LSAME( UPLO, 'U' ) ) THEN
+            IF( LSAME( DIAG, 'U' ) ) THEN
+               SCALE = ONE
+               SUM = N
+               K = 2
+               DO 280 J = 2, N
+                  CALL ZLASSQ( J-1, AP( K ), 1, SCALE, SUM )
+                  K = K + J
+  280          CONTINUE
+            ELSE
+               SCALE = ZERO
+               SUM = ONE
+               K = 1
+               DO 290 J = 1, N
+                  CALL ZLASSQ( J, AP( K ), 1, SCALE, SUM )
+                  K = K + J
+  290          CONTINUE
+            END IF
+         ELSE
+            IF( LSAME( DIAG, 'U' ) ) THEN
+               SCALE = ONE
+               SUM = N
+               K = 2
+               DO 300 J = 1, N - 1
+                  CALL ZLASSQ( N-J, AP( K ), 1, SCALE, SUM )
+                  K = K + N - J + 1
+  300          CONTINUE
+            ELSE
+               SCALE = ZERO
+               SUM = ONE
+               K = 1
+               DO 310 J = 1, N
+                  CALL ZLASSQ( N-J+1, AP( K ), 1, SCALE, SUM )
+                  K = K + N - J + 1
+  310          CONTINUE
+            END IF
+         END IF
+         VALUE = SCALE*SQRT( SUM )
+      END IF
+*
+      ZLANTP = VALUE
+      RETURN
+*
+*     End of ZLANTP
+*
+      END
 *> \brief \b ZLANTR returns the value of the 1-norm, or the Frobenius norm, or the infinity norm, or the element of largest absolute value of a trapezoidal or triangular matrix.
 *
 *  =========== DOCUMENTATION ===========
@@ -35136,7 +35788,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16OTHERauxiliary
+*> \ingroup lantr
 *
 *  =====================================================================
       DOUBLE PRECISION FUNCTION ZLANTR( NORM, UPLO, DIAG, M, N, A, LDA,
@@ -35506,7 +36158,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16GBauxiliary
+*> \ingroup laqgb
 *
 *  =====================================================================
       SUBROUTINE ZLAQGB( M, N, KL, KU, AB, LDAB, R, C, ROWCND, COLCND,
@@ -35744,7 +36396,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16GEauxiliary
+*> \ingroup laqge
 *
 *  =====================================================================
       SUBROUTINE ZLAQGE( M, N, A, LDA, R, C, ROWCND, COLCND, AMAX,
@@ -35971,7 +36623,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16HEauxiliary
+*> \ingroup laqhe
 *
 *  =====================================================================
       SUBROUTINE ZLAQHE( UPLO, N, A, LDA, S, SCOND, AMAX, EQUED )
@@ -36186,7 +36838,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16OTHERauxiliary
+*> \ingroup laqp2
 *
 *> \par Contributors:
 *  ==================
@@ -36477,7 +37129,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16OTHERauxiliary
+*> \ingroup laqps
 *
 *> \par Contributors:
 *  ==================
@@ -36909,7 +37561,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16OTHERauxiliary
+*> \ingroup laqr0
 *
 *> \par Contributors:
 *  ==================
@@ -37488,7 +38140,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16OTHERauxiliary
+*> \ingroup laqr1
 *
 *> \par Contributors:
 *  ==================
@@ -37825,7 +38477,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16OTHERauxiliary
+*> \ingroup laqr2
 *
 *> \par Contributors:
 *  ==================
@@ -37872,7 +38524,7 @@
       EXTERNAL           DLAMCH
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           DLABAD, ZCOPY, ZGEHRD, ZGEMM, ZLACPY, ZLAHQR,
+      EXTERNAL           ZCOPY, ZGEHRD, ZGEMM, ZLACPY, ZLAHQR,
      $                   ZLARF, ZLARFG, ZLASET, ZTREXC, ZUNMHR
 *     ..
 *     .. Intrinsic Functions ..
@@ -37931,7 +38583,6 @@
 *
       SAFMIN = DLAMCH( 'SAFE MINIMUM' )
       SAFMAX = RONE / SAFMIN
-      CALL DLABAD( SAFMIN, SAFMAX )
       ULP = DLAMCH( 'PRECISION' )
       SMLNUM = SAFMIN*( DBLE( N ) / ULP )
 *
@@ -38386,7 +39037,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16OTHERauxiliary
+*> \ingroup laqr3
 *
 *> \par Contributors:
 *  ==================
@@ -38435,8 +39086,8 @@
       EXTERNAL           DLAMCH, ILAENV
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           DLABAD, ZCOPY, ZGEHRD, ZGEMM, ZLACPY, ZLAHQR,
-     $                   ZLAQR4, ZLARF, ZLARFG, ZLASET, ZTREXC, ZUNMHR
+      EXTERNAL           ZCOPY, ZGEHRD, ZGEMM, ZLACPY, ZLAHQR, ZLAQR4,
+     $                   ZLARF, ZLARFG, ZLASET, ZTREXC, ZUNMHR
 *     ..
 *     .. Intrinsic Functions ..
       INTRINSIC          ABS, DBLE, DCMPLX, DCONJG, DIMAG, INT, MAX, MIN
@@ -38500,7 +39151,6 @@
 *
       SAFMIN = DLAMCH( 'SAFE MINIMUM' )
       SAFMAX = RONE / SAFMIN
-      CALL DLABAD( SAFMIN, SAFMAX )
       ULP = DLAMCH( 'PRECISION' )
       SMLNUM = SAFMIN*( DBLE( N ) / ULP )
 *
@@ -38930,7 +39580,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16OTHERauxiliary
+*> \ingroup laqr4
 *
 *> \par Contributors:
 *  ==================
@@ -39634,7 +40284,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16OTHERauxiliary
+*> \ingroup laqr5
 *
 *> \par Contributors:
 *  ==================
@@ -39709,8 +40359,7 @@
       COMPLEX*16         VT( 3 )
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           DLABAD, ZGEMM, ZLACPY, ZLAQR1, ZLARFG, ZLASET,
-     $                   ZTRMM
+      EXTERNAL           ZGEMM, ZLACPY, ZLAQR1, ZLARFG, ZLASET, ZTRMM
 *     ..
 *     .. Statement Functions ..
       DOUBLE PRECISION   CABS1
@@ -39740,7 +40389,6 @@
 *
       SAFMIN = DLAMCH( 'SAFE MINIMUM' )
       SAFMAX = RONE / SAFMIN
-      CALL DLABAD( SAFMIN, SAFMAX )
       ULP = DLAMCH( 'PRECISION' )
       SMLNUM = SAFMIN*( DBLE( N ) / ULP )
 *
@@ -39942,11 +40590,13 @@
 *                 .    Mth bulge. Exploit fact that first two elements
 *                 .    of row are actually zero. ====
 *
-                  REFSUM = V( 1, M )*V( 3, M )*H( K+3, K+2 )
-                  H( K+3, K   ) = -REFSUM
-                  H( K+3, K+1 ) = -REFSUM*DCONJG( V( 2, M ) )
-                  H( K+3, K+2 ) = H( K+3, K+2 ) -
-     $                            REFSUM*DCONJG( V( 3, M ) )
+                  T1 = V( 1, M )
+                  T2 = T1*DCONJG( V( 2, M ) )
+                  T3 = T1*DCONJG( V( 3, M ) )
+                  REFSUM = V( 3, M )*H( K+3, K+2 )
+                  H( K+3, K   ) = -REFSUM*T1
+                  H( K+3, K+1 ) = -REFSUM*T2
+                  H( K+3, K+2 ) = H( K+3, K+2 ) - REFSUM*T3
 *
 *                 ==== Calculate reflection to move
 *                 .    Mth bulge one step. ====
@@ -39981,12 +40631,13 @@
      $                            S( 2*M ), VT )
                      ALPHA = VT( 1 )
                      CALL ZLARFG( 3, ALPHA, VT( 2 ), 1, VT( 1 ) )
-                     REFSUM = DCONJG( VT( 1 ) )*
-     $                        ( H( K+1, K )+DCONJG( VT( 2 ) )*
-     $                        H( K+2, K ) )
+                     T1 = DCONJG( VT( 1 ) )
+                     T2 = T1*VT( 2 )
+                     T3 = T1*VT( 3 )
+                     REFSUM = H( K+1, K )+DCONJG( VT( 2 ) )*H( K+2, K )
 *
-                     IF( CABS1( H( K+2, K )-REFSUM*VT( 2 ) )+
-     $                   CABS1( REFSUM*VT( 3 ) ).GT.ULP*
+                     IF( CABS1( H( K+2, K )-REFSUM*T2 )+
+     $                   CABS1( REFSUM*T3 ).GT.ULP*
      $                   ( CABS1( H( K, K ) )+CABS1( H( K+1,
      $                   K+1 ) )+CABS1( H( K+2, K+2 ) ) ) ) THEN
 *
@@ -40004,7 +40655,7 @@
 *                       .    Replace the old reflector with
 *                       .    the new one. ====
 *
-                        H( K+1, K ) = H( K+1, K ) - REFSUM
+                        H( K+1, K ) = H( K+1, K ) - REFSUM*T1
                         H( K+2, K ) = ZERO
                         H( K+3, K ) = ZERO
                         V( 1, M ) = VT( 1 )
@@ -40328,7 +40979,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16OTHERauxiliary
+*> \ingroup larcm
 *
 *  =====================================================================
       SUBROUTINE ZLARCM( M, N, A, LDA, B, LDB, C, LDC, RWORK )
@@ -40524,7 +41175,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16OTHERauxiliary
+*> \ingroup larf
 *
 *  =====================================================================
       SUBROUTINE ZLARF( SIDE, M, N, V, INCV, TAU, C, LDC, WORK )
@@ -40793,7 +41444,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16OTHERauxiliary
+*> \ingroup larfb
 *
 *> \par Further Details:
 *  =====================
@@ -41461,7 +42112,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16OTHERauxiliary
+*> \ingroup larfg
 *
 *  =====================================================================
       SUBROUTINE ZLARFG( N, ALPHA, X, INCX, TAU )
@@ -41692,7 +42343,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16OTHERauxiliary
+*> \ingroup larft
 *
 *> \par Further Details:
 *  =====================
@@ -41998,7 +42649,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16OTHERauxiliary
+*> \ingroup larfx
 *
 *  =====================================================================
       SUBROUTINE ZLARFX( SIDE, M, N, V, TAU, C, LDC, WORK )
@@ -42719,7 +43370,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16OTHERauxiliary
+*> \ingroup lascl
 *
 *  =====================================================================
       SUBROUTINE ZLASCL( TYPE, KL, KU, CFROM, CTO, M, N, A, LDA, INFO )
@@ -43049,7 +43700,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16OTHERauxiliary
+*> \ingroup laset
 *
 *  =====================================================================
       SUBROUTINE ZLASET( UPLO, M, N, ALPHA, BETA, A, LDA )
@@ -43324,7 +43975,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16OTHERauxiliary
+*> \ingroup lasr
 *
 *  =====================================================================
       SUBROUTINE ZLASR( SIDE, PIVOT, DIRECT, M, N, C, S, A, LDA )
@@ -43666,7 +44317,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16OTHERauxiliary
+*> \ingroup laswp
 *
 *> \par Further Details:
 *  =====================
@@ -43917,7 +44568,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16SYcomputational
+*> \ingroup lahef
 *
 *> \par Contributors:
 *  ==================
@@ -44747,7 +45398,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16OTHERauxiliary
+*> \ingroup latbs
 *
 *> \par Further Details:
 *  =====================
@@ -45710,7 +46361,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16OTHERauxiliary
+*> \ingroup latdf
 *
 *> \par Further Details:
 *  =====================
@@ -45803,7 +46454,7 @@
             BM = RHS( J ) - CONE
             SPLUS = ONE
 *
-*           Lockahead for L- part RHS(1:N-1) = +-1
+*           Look-ahead for L- part RHS(1:N-1) = +-1
 *           SPLUS and SMIN computed more efficiently than in BSOLVE[1].
 *
             SPLUS = SPLUS + DBLE( ZDOTC( N-J, Z( J+1, J ), 1, Z( J+1,
@@ -45892,6 +46543,980 @@
       RETURN
 *
 *     End of ZLATDF
+*
+      END
+*> \brief \b ZLATPS solves a triangular system of equations with the matrix held in packed storage.
+*
+*  =========== DOCUMENTATION ===========
+*
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
+*
+*> \htmlonly
+*> Download ZLATPS + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zlatps.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zlatps.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zlatps.f">
+*> [TXT]</a>
+*> \endhtmlonly
+*
+*  Definition:
+*  ===========
+*
+*       SUBROUTINE ZLATPS( UPLO, TRANS, DIAG, NORMIN, N, AP, X, SCALE,
+*                          CNORM, INFO )
+*
+*       .. Scalar Arguments ..
+*       CHARACTER          DIAG, NORMIN, TRANS, UPLO
+*       INTEGER            INFO, N
+*       DOUBLE PRECISION   SCALE
+*       ..
+*       .. Array Arguments ..
+*       DOUBLE PRECISION   CNORM( * )
+*       COMPLEX*16         AP( * ), X( * )
+*       ..
+*
+*
+*> \par Purpose:
+*  =============
+*>
+*> \verbatim
+*>
+*> ZLATPS solves one of the triangular systems
+*>
+*>    A * x = s*b,  A**T * x = s*b,  or  A**H * x = s*b,
+*>
+*> with scaling to prevent overflow, where A is an upper or lower
+*> triangular matrix stored in packed form.  Here A**T denotes the
+*> transpose of A, A**H denotes the conjugate transpose of A, x and b
+*> are n-element vectors, and s is a scaling factor, usually less than
+*> or equal to 1, chosen so that the components of x will be less than
+*> the overflow threshold.  If the unscaled problem will not cause
+*> overflow, the Level 2 BLAS routine ZTPSV is called. If the matrix A
+*> is singular (A(j,j) = 0 for some j), then s is set to 0 and a
+*> non-trivial solution to A*x = 0 is returned.
+*> \endverbatim
+*
+*  Arguments:
+*  ==========
+*
+*> \param[in] UPLO
+*> \verbatim
+*>          UPLO is CHARACTER*1
+*>          Specifies whether the matrix A is upper or lower triangular.
+*>          = 'U':  Upper triangular
+*>          = 'L':  Lower triangular
+*> \endverbatim
+*>
+*> \param[in] TRANS
+*> \verbatim
+*>          TRANS is CHARACTER*1
+*>          Specifies the operation applied to A.
+*>          = 'N':  Solve A * x = s*b     (No transpose)
+*>          = 'T':  Solve A**T * x = s*b  (Transpose)
+*>          = 'C':  Solve A**H * x = s*b  (Conjugate transpose)
+*> \endverbatim
+*>
+*> \param[in] DIAG
+*> \verbatim
+*>          DIAG is CHARACTER*1
+*>          Specifies whether or not the matrix A is unit triangular.
+*>          = 'N':  Non-unit triangular
+*>          = 'U':  Unit triangular
+*> \endverbatim
+*>
+*> \param[in] NORMIN
+*> \verbatim
+*>          NORMIN is CHARACTER*1
+*>          Specifies whether CNORM has been set or not.
+*>          = 'Y':  CNORM contains the column norms on entry
+*>          = 'N':  CNORM is not set on entry.  On exit, the norms will
+*>                  be computed and stored in CNORM.
+*> \endverbatim
+*>
+*> \param[in] N
+*> \verbatim
+*>          N is INTEGER
+*>          The order of the matrix A.  N >= 0.
+*> \endverbatim
+*>
+*> \param[in] AP
+*> \verbatim
+*>          AP is COMPLEX*16 array, dimension (N*(N+1)/2)
+*>          The upper or lower triangular matrix A, packed columnwise in
+*>          a linear array.  The j-th column of A is stored in the array
+*>          AP as follows:
+*>          if UPLO = 'U', AP(i + (j-1)*j/2) = A(i,j) for 1<=i<=j;
+*>          if UPLO = 'L', AP(i + (j-1)*(2n-j)/2) = A(i,j) for j<=i<=n.
+*> \endverbatim
+*>
+*> \param[in,out] X
+*> \verbatim
+*>          X is COMPLEX*16 array, dimension (N)
+*>          On entry, the right hand side b of the triangular system.
+*>          On exit, X is overwritten by the solution vector x.
+*> \endverbatim
+*>
+*> \param[out] SCALE
+*> \verbatim
+*>          SCALE is DOUBLE PRECISION
+*>          The scaling factor s for the triangular system
+*>             A * x = s*b,  A**T * x = s*b,  or  A**H * x = s*b.
+*>          If SCALE = 0, the matrix A is singular or badly scaled, and
+*>          the vector x is an exact or approximate solution to A*x = 0.
+*> \endverbatim
+*>
+*> \param[in,out] CNORM
+*> \verbatim
+*>          CNORM is DOUBLE PRECISION array, dimension (N)
+*>
+*>          If NORMIN = 'Y', CNORM is an input argument and CNORM(j)
+*>          contains the norm of the off-diagonal part of the j-th column
+*>          of A.  If TRANS = 'N', CNORM(j) must be greater than or equal
+*>          to the infinity-norm, and if TRANS = 'T' or 'C', CNORM(j)
+*>          must be greater than or equal to the 1-norm.
+*>
+*>          If NORMIN = 'N', CNORM is an output argument and CNORM(j)
+*>          returns the 1-norm of the offdiagonal part of the j-th column
+*>          of A.
+*> \endverbatim
+*>
+*> \param[out] INFO
+*> \verbatim
+*>          INFO is INTEGER
+*>          = 0:  successful exit
+*>          < 0:  if INFO = -k, the k-th argument had an illegal value
+*> \endverbatim
+*
+*  Authors:
+*  ========
+*
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
+*
+*> \ingroup latps
+*
+*> \par Further Details:
+*  =====================
+*>
+*> \verbatim
+*>
+*>  A rough bound on x is computed; if that is less than overflow, ZTPSV
+*>  is called, otherwise, specific code is used which checks for possible
+*>  overflow or divide-by-zero at every operation.
+*>
+*>  A columnwise scheme is used for solving A*x = b.  The basic algorithm
+*>  if A is lower triangular is
+*>
+*>       x[1:n] := b[1:n]
+*>       for j = 1, ..., n
+*>            x(j) := x(j) / A(j,j)
+*>            x[j+1:n] := x[j+1:n] - x(j) * A[j+1:n,j]
+*>       end
+*>
+*>  Define bounds on the components of x after j iterations of the loop:
+*>     M(j) = bound on x[1:j]
+*>     G(j) = bound on x[j+1:n]
+*>  Initially, let M(0) = 0 and G(0) = max{x(i), i=1,...,n}.
+*>
+*>  Then for iteration j+1 we have
+*>     M(j+1) <= G(j) / | A(j+1,j+1) |
+*>     G(j+1) <= G(j) + M(j+1) * | A[j+2:n,j+1] |
+*>            <= G(j) ( 1 + CNORM(j+1) / | A(j+1,j+1) | )
+*>
+*>  where CNORM(j+1) is greater than or equal to the infinity-norm of
+*>  column j+1 of A, not counting the diagonal.  Hence
+*>
+*>     G(j) <= G(0) product ( 1 + CNORM(i) / | A(i,i) | )
+*>                  1<=i<=j
+*>  and
+*>
+*>     |x(j)| <= ( G(0) / |A(j,j)| ) product ( 1 + CNORM(i) / |A(i,i)| )
+*>                                   1<=i< j
+*>
+*>  Since |x(j)| <= M(j), we use the Level 2 BLAS routine ZTPSV if the
+*>  reciprocal of the largest M(j), j=1,..,n, is larger than
+*>  max(underflow, 1/overflow).
+*>
+*>  The bound on x(j) is also used to determine when a step in the
+*>  columnwise method can be performed without fear of overflow.  If
+*>  the computed bound is greater than a large constant, x is scaled to
+*>  prevent overflow, but if the bound overflows, x is set to 0, x(j) to
+*>  1, and scale to 0, and a non-trivial solution to A*x = 0 is found.
+*>
+*>  Similarly, a row-wise scheme is used to solve A**T *x = b  or
+*>  A**H *x = b.  The basic algorithm for A upper triangular is
+*>
+*>       for j = 1, ..., n
+*>            x(j) := ( b(j) - A[1:j-1,j]' * x[1:j-1] ) / A(j,j)
+*>       end
+*>
+*>  We simultaneously compute two bounds
+*>       G(j) = bound on ( b(i) - A[1:i-1,i]' * x[1:i-1] ), 1<=i<=j
+*>       M(j) = bound on x(i), 1<=i<=j
+*>
+*>  The initial values are G(0) = 0, M(0) = max{b(i), i=1,..,n}, and we
+*>  add the constraint G(j) >= G(j-1) and M(j) >= M(j-1) for j >= 1.
+*>  Then the bound on x(j) is
+*>
+*>       M(j) <= M(j-1) * ( 1 + CNORM(j) ) / | A(j,j) |
+*>
+*>            <= M(0) * product ( ( 1 + CNORM(i) ) / |A(i,i)| )
+*>                      1<=i<=j
+*>
+*>  and we can safely call ZTPSV if 1/M(n) and 1/G(n) are both greater
+*>  than max(underflow, 1/overflow).
+*> \endverbatim
+*>
+*  =====================================================================
+      SUBROUTINE ZLATPS( UPLO, TRANS, DIAG, NORMIN, N, AP, X, SCALE,
+     $                   CNORM, INFO )
+*
+*  -- LAPACK auxiliary routine --
+*  -- LAPACK is a software package provided by Univ. of Tennessee,    --
+*  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
+*
+*     .. Scalar Arguments ..
+      CHARACTER          DIAG, NORMIN, TRANS, UPLO
+      INTEGER            INFO, N
+      DOUBLE PRECISION   SCALE
+*     ..
+*     .. Array Arguments ..
+      DOUBLE PRECISION   CNORM( * )
+      COMPLEX*16         AP( * ), X( * )
+*     ..
+*
+*  =====================================================================
+*
+*     .. Parameters ..
+      DOUBLE PRECISION   ZERO, HALF, ONE, TWO
+      PARAMETER          ( ZERO = 0.0D+0, HALF = 0.5D+0, ONE = 1.0D+0,
+     $                   TWO = 2.0D+0 )
+*     ..
+*     .. Local Scalars ..
+      LOGICAL            NOTRAN, NOUNIT, UPPER
+      INTEGER            I, IMAX, IP, J, JFIRST, JINC, JLAST, JLEN
+      DOUBLE PRECISION   BIGNUM, GROW, REC, SMLNUM, TJJ, TMAX, TSCAL,
+     $                   XBND, XJ, XMAX
+      COMPLEX*16         CSUMJ, TJJS, USCAL, ZDUM
+*     ..
+*     .. External Functions ..
+      LOGICAL            LSAME
+      INTEGER            IDAMAX, IZAMAX
+      DOUBLE PRECISION   DLAMCH, DZASUM
+      COMPLEX*16         ZDOTC, ZDOTU, ZLADIV
+      EXTERNAL           LSAME, IDAMAX, IZAMAX, DLAMCH, DZASUM, ZDOTC,
+     $                   ZDOTU, ZLADIV
+*     ..
+*     .. External Subroutines ..
+      EXTERNAL           DSCAL, XERBLA, ZAXPY, ZDSCAL, ZTPSV
+*     ..
+*     .. Intrinsic Functions ..
+      INTRINSIC          ABS, DBLE, DCMPLX, DCONJG, DIMAG, MAX, MIN
+*     ..
+*     .. Statement Functions ..
+      DOUBLE PRECISION   CABS1, CABS2
+*     ..
+*     .. Statement Function definitions ..
+      CABS1( ZDUM ) = ABS( DBLE( ZDUM ) ) + ABS( DIMAG( ZDUM ) )
+      CABS2( ZDUM ) = ABS( DBLE( ZDUM ) / 2.D0 ) +
+     $                ABS( DIMAG( ZDUM ) / 2.D0 )
+*     ..
+*     .. Executable Statements ..
+*
+      INFO = 0
+      UPPER = LSAME( UPLO, 'U' )
+      NOTRAN = LSAME( TRANS, 'N' )
+      NOUNIT = LSAME( DIAG, 'N' )
+*
+*     Test the input parameters.
+*
+      IF( .NOT.UPPER .AND. .NOT.LSAME( UPLO, 'L' ) ) THEN
+         INFO = -1
+      ELSE IF( .NOT.NOTRAN .AND. .NOT.LSAME( TRANS, 'T' ) .AND. .NOT.
+     $         LSAME( TRANS, 'C' ) ) THEN
+         INFO = -2
+      ELSE IF( .NOT.NOUNIT .AND. .NOT.LSAME( DIAG, 'U' ) ) THEN
+         INFO = -3
+      ELSE IF( .NOT.LSAME( NORMIN, 'Y' ) .AND. .NOT.
+     $         LSAME( NORMIN, 'N' ) ) THEN
+         INFO = -4
+      ELSE IF( N.LT.0 ) THEN
+         INFO = -5
+      END IF
+      IF( INFO.NE.0 ) THEN
+         CALL XERBLA( 'ZLATPS', -INFO )
+         RETURN
+      END IF
+*
+*     Quick return if possible
+*
+      IF( N.EQ.0 )
+     $   RETURN
+*
+*     Determine machine dependent parameters to control overflow.
+*
+      SMLNUM = DLAMCH( 'Safe minimum' )
+      BIGNUM = ONE / SMLNUM
+      SMLNUM = SMLNUM / DLAMCH( 'Precision' )
+      BIGNUM = ONE / SMLNUM
+      SCALE = ONE
+*
+      IF( LSAME( NORMIN, 'N' ) ) THEN
+*
+*        Compute the 1-norm of each column, not including the diagonal.
+*
+         IF( UPPER ) THEN
+*
+*           A is upper triangular.
+*
+            IP = 1
+            DO 10 J = 1, N
+               CNORM( J ) = DZASUM( J-1, AP( IP ), 1 )
+               IP = IP + J
+   10       CONTINUE
+         ELSE
+*
+*           A is lower triangular.
+*
+            IP = 1
+            DO 20 J = 1, N - 1
+               CNORM( J ) = DZASUM( N-J, AP( IP+1 ), 1 )
+               IP = IP + N - J + 1
+   20       CONTINUE
+            CNORM( N ) = ZERO
+         END IF
+      END IF
+*
+*     Scale the column norms by TSCAL if the maximum element in CNORM is
+*     greater than BIGNUM/2.
+*
+      IMAX = IDAMAX( N, CNORM, 1 )
+      TMAX = CNORM( IMAX )
+      IF( TMAX.LE.BIGNUM*HALF ) THEN
+         TSCAL = ONE
+      ELSE
+         TSCAL = HALF / ( SMLNUM*TMAX )
+         CALL DSCAL( N, TSCAL, CNORM, 1 )
+      END IF
+*
+*     Compute a bound on the computed solution vector to see if the
+*     Level 2 BLAS routine ZTPSV can be used.
+*
+      XMAX = ZERO
+      DO 30 J = 1, N
+         XMAX = MAX( XMAX, CABS2( X( J ) ) )
+   30 CONTINUE
+      XBND = XMAX
+      IF( NOTRAN ) THEN
+*
+*        Compute the growth in A * x = b.
+*
+         IF( UPPER ) THEN
+            JFIRST = N
+            JLAST = 1
+            JINC = -1
+         ELSE
+            JFIRST = 1
+            JLAST = N
+            JINC = 1
+         END IF
+*
+         IF( TSCAL.NE.ONE ) THEN
+            GROW = ZERO
+            GO TO 60
+         END IF
+*
+         IF( NOUNIT ) THEN
+*
+*           A is non-unit triangular.
+*
+*           Compute GROW = 1/G(j) and XBND = 1/M(j).
+*           Initially, G(0) = max{x(i), i=1,...,n}.
+*
+            GROW = HALF / MAX( XBND, SMLNUM )
+            XBND = GROW
+            IP = JFIRST*( JFIRST+1 ) / 2
+            JLEN = N
+            DO 40 J = JFIRST, JLAST, JINC
+*
+*              Exit the loop if the growth factor is too small.
+*
+               IF( GROW.LE.SMLNUM )
+     $            GO TO 60
+*
+               TJJS = AP( IP )
+               TJJ = CABS1( TJJS )
+*
+               IF( TJJ.GE.SMLNUM ) THEN
+*
+*                 M(j) = G(j-1) / abs(A(j,j))
+*
+                  XBND = MIN( XBND, MIN( ONE, TJJ )*GROW )
+               ELSE
+*
+*                 M(j) could overflow, set XBND to 0.
+*
+                  XBND = ZERO
+               END IF
+*
+               IF( TJJ+CNORM( J ).GE.SMLNUM ) THEN
+*
+*                 G(j) = G(j-1)*( 1 + CNORM(j) / abs(A(j,j)) )
+*
+                  GROW = GROW*( TJJ / ( TJJ+CNORM( J ) ) )
+               ELSE
+*
+*                 G(j) could overflow, set GROW to 0.
+*
+                  GROW = ZERO
+               END IF
+               IP = IP + JINC*JLEN
+               JLEN = JLEN - 1
+   40       CONTINUE
+            GROW = XBND
+         ELSE
+*
+*           A is unit triangular.
+*
+*           Compute GROW = 1/G(j), where G(0) = max{x(i), i=1,...,n}.
+*
+            GROW = MIN( ONE, HALF / MAX( XBND, SMLNUM ) )
+            DO 50 J = JFIRST, JLAST, JINC
+*
+*              Exit the loop if the growth factor is too small.
+*
+               IF( GROW.LE.SMLNUM )
+     $            GO TO 60
+*
+*              G(j) = G(j-1)*( 1 + CNORM(j) )
+*
+               GROW = GROW*( ONE / ( ONE+CNORM( J ) ) )
+   50       CONTINUE
+         END IF
+   60    CONTINUE
+*
+      ELSE
+*
+*        Compute the growth in A**T * x = b  or  A**H * x = b.
+*
+         IF( UPPER ) THEN
+            JFIRST = 1
+            JLAST = N
+            JINC = 1
+         ELSE
+            JFIRST = N
+            JLAST = 1
+            JINC = -1
+         END IF
+*
+         IF( TSCAL.NE.ONE ) THEN
+            GROW = ZERO
+            GO TO 90
+         END IF
+*
+         IF( NOUNIT ) THEN
+*
+*           A is non-unit triangular.
+*
+*           Compute GROW = 1/G(j) and XBND = 1/M(j).
+*           Initially, M(0) = max{x(i), i=1,...,n}.
+*
+            GROW = HALF / MAX( XBND, SMLNUM )
+            XBND = GROW
+            IP = JFIRST*( JFIRST+1 ) / 2
+            JLEN = 1
+            DO 70 J = JFIRST, JLAST, JINC
+*
+*              Exit the loop if the growth factor is too small.
+*
+               IF( GROW.LE.SMLNUM )
+     $            GO TO 90
+*
+*              G(j) = max( G(j-1), M(j-1)*( 1 + CNORM(j) ) )
+*
+               XJ = ONE + CNORM( J )
+               GROW = MIN( GROW, XBND / XJ )
+*
+               TJJS = AP( IP )
+               TJJ = CABS1( TJJS )
+*
+               IF( TJJ.GE.SMLNUM ) THEN
+*
+*                 M(j) = M(j-1)*( 1 + CNORM(j) ) / abs(A(j,j))
+*
+                  IF( XJ.GT.TJJ )
+     $               XBND = XBND*( TJJ / XJ )
+               ELSE
+*
+*                 M(j) could overflow, set XBND to 0.
+*
+                  XBND = ZERO
+               END IF
+               JLEN = JLEN + 1
+               IP = IP + JINC*JLEN
+   70       CONTINUE
+            GROW = MIN( GROW, XBND )
+         ELSE
+*
+*           A is unit triangular.
+*
+*           Compute GROW = 1/G(j), where G(0) = max{x(i), i=1,...,n}.
+*
+            GROW = MIN( ONE, HALF / MAX( XBND, SMLNUM ) )
+            DO 80 J = JFIRST, JLAST, JINC
+*
+*              Exit the loop if the growth factor is too small.
+*
+               IF( GROW.LE.SMLNUM )
+     $            GO TO 90
+*
+*              G(j) = ( 1 + CNORM(j) )*G(j-1)
+*
+               XJ = ONE + CNORM( J )
+               GROW = GROW / XJ
+   80       CONTINUE
+         END IF
+   90    CONTINUE
+      END IF
+*
+      IF( ( GROW*TSCAL ).GT.SMLNUM ) THEN
+*
+*        Use the Level 2 BLAS solve if the reciprocal of the bound on
+*        elements of X is not too small.
+*
+         CALL ZTPSV( UPLO, TRANS, DIAG, N, AP, X, 1 )
+      ELSE
+*
+*        Use a Level 1 BLAS solve, scaling intermediate results.
+*
+         IF( XMAX.GT.BIGNUM*HALF ) THEN
+*
+*           Scale X so that its components are less than or equal to
+*           BIGNUM in absolute value.
+*
+            SCALE = ( BIGNUM*HALF ) / XMAX
+            CALL ZDSCAL( N, SCALE, X, 1 )
+            XMAX = BIGNUM
+         ELSE
+            XMAX = XMAX*TWO
+         END IF
+*
+         IF( NOTRAN ) THEN
+*
+*           Solve A * x = b
+*
+            IP = JFIRST*( JFIRST+1 ) / 2
+            DO 120 J = JFIRST, JLAST, JINC
+*
+*              Compute x(j) = b(j) / A(j,j), scaling x if necessary.
+*
+               XJ = CABS1( X( J ) )
+               IF( NOUNIT ) THEN
+                  TJJS = AP( IP )*TSCAL
+               ELSE
+                  TJJS = TSCAL
+                  IF( TSCAL.EQ.ONE )
+     $               GO TO 110
+               END IF
+               TJJ = CABS1( TJJS )
+               IF( TJJ.GT.SMLNUM ) THEN
+*
+*                    abs(A(j,j)) > SMLNUM:
+*
+                  IF( TJJ.LT.ONE ) THEN
+                     IF( XJ.GT.TJJ*BIGNUM ) THEN
+*
+*                          Scale x by 1/b(j).
+*
+                        REC = ONE / XJ
+                        CALL ZDSCAL( N, REC, X, 1 )
+                        SCALE = SCALE*REC
+                        XMAX = XMAX*REC
+                     END IF
+                  END IF
+                  X( J ) = ZLADIV( X( J ), TJJS )
+                  XJ = CABS1( X( J ) )
+               ELSE IF( TJJ.GT.ZERO ) THEN
+*
+*                    0 < abs(A(j,j)) <= SMLNUM:
+*
+                  IF( XJ.GT.TJJ*BIGNUM ) THEN
+*
+*                       Scale x by (1/abs(x(j)))*abs(A(j,j))*BIGNUM
+*                       to avoid overflow when dividing by A(j,j).
+*
+                     REC = ( TJJ*BIGNUM ) / XJ
+                     IF( CNORM( J ).GT.ONE ) THEN
+*
+*                          Scale by 1/CNORM(j) to avoid overflow when
+*                          multiplying x(j) times column j.
+*
+                        REC = REC / CNORM( J )
+                     END IF
+                     CALL ZDSCAL( N, REC, X, 1 )
+                     SCALE = SCALE*REC
+                     XMAX = XMAX*REC
+                  END IF
+                  X( J ) = ZLADIV( X( J ), TJJS )
+                  XJ = CABS1( X( J ) )
+               ELSE
+*
+*                    A(j,j) = 0:  Set x(1:n) = 0, x(j) = 1, and
+*                    scale = 0, and compute a solution to A*x = 0.
+*
+                  DO 100 I = 1, N
+                     X( I ) = ZERO
+  100             CONTINUE
+                  X( J ) = ONE
+                  XJ = ONE
+                  SCALE = ZERO
+                  XMAX = ZERO
+               END IF
+  110          CONTINUE
+*
+*              Scale x if necessary to avoid overflow when adding a
+*              multiple of column j of A.
+*
+               IF( XJ.GT.ONE ) THEN
+                  REC = ONE / XJ
+                  IF( CNORM( J ).GT.( BIGNUM-XMAX )*REC ) THEN
+*
+*                    Scale x by 1/(2*abs(x(j))).
+*
+                     REC = REC*HALF
+                     CALL ZDSCAL( N, REC, X, 1 )
+                     SCALE = SCALE*REC
+                  END IF
+               ELSE IF( XJ*CNORM( J ).GT.( BIGNUM-XMAX ) ) THEN
+*
+*                 Scale x by 1/2.
+*
+                  CALL ZDSCAL( N, HALF, X, 1 )
+                  SCALE = SCALE*HALF
+               END IF
+*
+               IF( UPPER ) THEN
+                  IF( J.GT.1 ) THEN
+*
+*                    Compute the update
+*                       x(1:j-1) := x(1:j-1) - x(j) * A(1:j-1,j)
+*
+                     CALL ZAXPY( J-1, -X( J )*TSCAL, AP( IP-J+1 ), 1, X,
+     $                           1 )
+                     I = IZAMAX( J-1, X, 1 )
+                     XMAX = CABS1( X( I ) )
+                  END IF
+                  IP = IP - J
+               ELSE
+                  IF( J.LT.N ) THEN
+*
+*                    Compute the update
+*                       x(j+1:n) := x(j+1:n) - x(j) * A(j+1:n,j)
+*
+                     CALL ZAXPY( N-J, -X( J )*TSCAL, AP( IP+1 ), 1,
+     $                           X( J+1 ), 1 )
+                     I = J + IZAMAX( N-J, X( J+1 ), 1 )
+                     XMAX = CABS1( X( I ) )
+                  END IF
+                  IP = IP + N - J + 1
+               END IF
+  120       CONTINUE
+*
+         ELSE IF( LSAME( TRANS, 'T' ) ) THEN
+*
+*           Solve A**T * x = b
+*
+            IP = JFIRST*( JFIRST+1 ) / 2
+            JLEN = 1
+            DO 170 J = JFIRST, JLAST, JINC
+*
+*              Compute x(j) = b(j) - sum A(k,j)*x(k).
+*                                    k<>j
+*
+               XJ = CABS1( X( J ) )
+               USCAL = TSCAL
+               REC = ONE / MAX( XMAX, ONE )
+               IF( CNORM( J ).GT.( BIGNUM-XJ )*REC ) THEN
+*
+*                 If x(j) could overflow, scale x by 1/(2*XMAX).
+*
+                  REC = REC*HALF
+                  IF( NOUNIT ) THEN
+                     TJJS = AP( IP )*TSCAL
+                  ELSE
+                     TJJS = TSCAL
+                  END IF
+                  TJJ = CABS1( TJJS )
+                  IF( TJJ.GT.ONE ) THEN
+*
+*                       Divide by A(j,j) when scaling x if A(j,j) > 1.
+*
+                     REC = MIN( ONE, REC*TJJ )
+                     USCAL = ZLADIV( USCAL, TJJS )
+                  END IF
+                  IF( REC.LT.ONE ) THEN
+                     CALL ZDSCAL( N, REC, X, 1 )
+                     SCALE = SCALE*REC
+                     XMAX = XMAX*REC
+                  END IF
+               END IF
+*
+               CSUMJ = ZERO
+               IF( USCAL.EQ.DCMPLX( ONE ) ) THEN
+*
+*                 If the scaling needed for A in the dot product is 1,
+*                 call ZDOTU to perform the dot product.
+*
+                  IF( UPPER ) THEN
+                     CSUMJ = ZDOTU( J-1, AP( IP-J+1 ), 1, X, 1 )
+                  ELSE IF( J.LT.N ) THEN
+                     CSUMJ = ZDOTU( N-J, AP( IP+1 ), 1, X( J+1 ), 1 )
+                  END IF
+               ELSE
+*
+*                 Otherwise, use in-line code for the dot product.
+*
+                  IF( UPPER ) THEN
+                     DO 130 I = 1, J - 1
+                        CSUMJ = CSUMJ + ( AP( IP-J+I )*USCAL )*X( I )
+  130                CONTINUE
+                  ELSE IF( J.LT.N ) THEN
+                     DO 140 I = 1, N - J
+                        CSUMJ = CSUMJ + ( AP( IP+I )*USCAL )*X( J+I )
+  140                CONTINUE
+                  END IF
+               END IF
+*
+               IF( USCAL.EQ.DCMPLX( TSCAL ) ) THEN
+*
+*                 Compute x(j) := ( x(j) - CSUMJ ) / A(j,j) if 1/A(j,j)
+*                 was not used to scale the dotproduct.
+*
+                  X( J ) = X( J ) - CSUMJ
+                  XJ = CABS1( X( J ) )
+                  IF( NOUNIT ) THEN
+*
+*                    Compute x(j) = x(j) / A(j,j), scaling if necessary.
+*
+                     TJJS = AP( IP )*TSCAL
+                  ELSE
+                     TJJS = TSCAL
+                     IF( TSCAL.EQ.ONE )
+     $                  GO TO 160
+                  END IF
+                  TJJ = CABS1( TJJS )
+                  IF( TJJ.GT.SMLNUM ) THEN
+*
+*                       abs(A(j,j)) > SMLNUM:
+*
+                     IF( TJJ.LT.ONE ) THEN
+                        IF( XJ.GT.TJJ*BIGNUM ) THEN
+*
+*                             Scale X by 1/abs(x(j)).
+*
+                           REC = ONE / XJ
+                           CALL ZDSCAL( N, REC, X, 1 )
+                           SCALE = SCALE*REC
+                           XMAX = XMAX*REC
+                        END IF
+                     END IF
+                     X( J ) = ZLADIV( X( J ), TJJS )
+                  ELSE IF( TJJ.GT.ZERO ) THEN
+*
+*                       0 < abs(A(j,j)) <= SMLNUM:
+*
+                     IF( XJ.GT.TJJ*BIGNUM ) THEN
+*
+*                          Scale x by (1/abs(x(j)))*abs(A(j,j))*BIGNUM.
+*
+                        REC = ( TJJ*BIGNUM ) / XJ
+                        CALL ZDSCAL( N, REC, X, 1 )
+                        SCALE = SCALE*REC
+                        XMAX = XMAX*REC
+                     END IF
+                     X( J ) = ZLADIV( X( J ), TJJS )
+                  ELSE
+*
+*                       A(j,j) = 0:  Set x(1:n) = 0, x(j) = 1, and
+*                       scale = 0 and compute a solution to A**T *x = 0.
+*
+                     DO 150 I = 1, N
+                        X( I ) = ZERO
+  150                CONTINUE
+                     X( J ) = ONE
+                     SCALE = ZERO
+                     XMAX = ZERO
+                  END IF
+  160             CONTINUE
+               ELSE
+*
+*                 Compute x(j) := x(j) / A(j,j) - CSUMJ if the dot
+*                 product has already been divided by 1/A(j,j).
+*
+                  X( J ) = ZLADIV( X( J ), TJJS ) - CSUMJ
+               END IF
+               XMAX = MAX( XMAX, CABS1( X( J ) ) )
+               JLEN = JLEN + 1
+               IP = IP + JINC*JLEN
+  170       CONTINUE
+*
+         ELSE
+*
+*           Solve A**H * x = b
+*
+            IP = JFIRST*( JFIRST+1 ) / 2
+            JLEN = 1
+            DO 220 J = JFIRST, JLAST, JINC
+*
+*              Compute x(j) = b(j) - sum A(k,j)*x(k).
+*                                    k<>j
+*
+               XJ = CABS1( X( J ) )
+               USCAL = TSCAL
+               REC = ONE / MAX( XMAX, ONE )
+               IF( CNORM( J ).GT.( BIGNUM-XJ )*REC ) THEN
+*
+*                 If x(j) could overflow, scale x by 1/(2*XMAX).
+*
+                  REC = REC*HALF
+                  IF( NOUNIT ) THEN
+                     TJJS = DCONJG( AP( IP ) )*TSCAL
+                  ELSE
+                     TJJS = TSCAL
+                  END IF
+                  TJJ = CABS1( TJJS )
+                  IF( TJJ.GT.ONE ) THEN
+*
+*                       Divide by A(j,j) when scaling x if A(j,j) > 1.
+*
+                     REC = MIN( ONE, REC*TJJ )
+                     USCAL = ZLADIV( USCAL, TJJS )
+                  END IF
+                  IF( REC.LT.ONE ) THEN
+                     CALL ZDSCAL( N, REC, X, 1 )
+                     SCALE = SCALE*REC
+                     XMAX = XMAX*REC
+                  END IF
+               END IF
+*
+               CSUMJ = ZERO
+               IF( USCAL.EQ.DCMPLX( ONE ) ) THEN
+*
+*                 If the scaling needed for A in the dot product is 1,
+*                 call ZDOTC to perform the dot product.
+*
+                  IF( UPPER ) THEN
+                     CSUMJ = ZDOTC( J-1, AP( IP-J+1 ), 1, X, 1 )
+                  ELSE IF( J.LT.N ) THEN
+                     CSUMJ = ZDOTC( N-J, AP( IP+1 ), 1, X( J+1 ), 1 )
+                  END IF
+               ELSE
+*
+*                 Otherwise, use in-line code for the dot product.
+*
+                  IF( UPPER ) THEN
+                     DO 180 I = 1, J - 1
+                        CSUMJ = CSUMJ + ( DCONJG( AP( IP-J+I ) )*USCAL )
+     $                          *X( I )
+  180                CONTINUE
+                  ELSE IF( J.LT.N ) THEN
+                     DO 190 I = 1, N - J
+                        CSUMJ = CSUMJ + ( DCONJG( AP( IP+I ) )*USCAL )*
+     $                          X( J+I )
+  190                CONTINUE
+                  END IF
+               END IF
+*
+               IF( USCAL.EQ.DCMPLX( TSCAL ) ) THEN
+*
+*                 Compute x(j) := ( x(j) - CSUMJ ) / A(j,j) if 1/A(j,j)
+*                 was not used to scale the dotproduct.
+*
+                  X( J ) = X( J ) - CSUMJ
+                  XJ = CABS1( X( J ) )
+                  IF( NOUNIT ) THEN
+*
+*                    Compute x(j) = x(j) / A(j,j), scaling if necessary.
+*
+                     TJJS = DCONJG( AP( IP ) )*TSCAL
+                  ELSE
+                     TJJS = TSCAL
+                     IF( TSCAL.EQ.ONE )
+     $                  GO TO 210
+                  END IF
+                  TJJ = CABS1( TJJS )
+                  IF( TJJ.GT.SMLNUM ) THEN
+*
+*                       abs(A(j,j)) > SMLNUM:
+*
+                     IF( TJJ.LT.ONE ) THEN
+                        IF( XJ.GT.TJJ*BIGNUM ) THEN
+*
+*                             Scale X by 1/abs(x(j)).
+*
+                           REC = ONE / XJ
+                           CALL ZDSCAL( N, REC, X, 1 )
+                           SCALE = SCALE*REC
+                           XMAX = XMAX*REC
+                        END IF
+                     END IF
+                     X( J ) = ZLADIV( X( J ), TJJS )
+                  ELSE IF( TJJ.GT.ZERO ) THEN
+*
+*                       0 < abs(A(j,j)) <= SMLNUM:
+*
+                     IF( XJ.GT.TJJ*BIGNUM ) THEN
+*
+*                          Scale x by (1/abs(x(j)))*abs(A(j,j))*BIGNUM.
+*
+                        REC = ( TJJ*BIGNUM ) / XJ
+                        CALL ZDSCAL( N, REC, X, 1 )
+                        SCALE = SCALE*REC
+                        XMAX = XMAX*REC
+                     END IF
+                     X( J ) = ZLADIV( X( J ), TJJS )
+                  ELSE
+*
+*                       A(j,j) = 0:  Set x(1:n) = 0, x(j) = 1, and
+*                       scale = 0 and compute a solution to A**H *x = 0.
+*
+                     DO 200 I = 1, N
+                        X( I ) = ZERO
+  200                CONTINUE
+                     X( J ) = ONE
+                     SCALE = ZERO
+                     XMAX = ZERO
+                  END IF
+  210             CONTINUE
+               ELSE
+*
+*                 Compute x(j) := x(j) / A(j,j) - CSUMJ if the dot
+*                 product has already been divided by 1/A(j,j).
+*
+                  X( J ) = ZLADIV( X( J ), TJJS ) - CSUMJ
+               END IF
+               XMAX = MAX( XMAX, CABS1( X( J ) ) )
+               JLEN = JLEN + 1
+               IP = IP + JINC*JLEN
+  220       CONTINUE
+         END IF
+         SCALE = SCALE / TSCAL
+      END IF
+*
+*     Scale the column norms by 1/TSCAL for return.
+*
+      IF( TSCAL.NE.ONE ) THEN
+         CALL DSCAL( N, ONE / TSCAL, CNORM, 1 )
+      END IF
+*
+      RETURN
+*
+*     End of ZLATPS
 *
       END
 *> \brief \b ZLATRD reduces the first nb rows and columns of a symmetric/Hermitian matrix A to real tridiagonal form by an unitary similarity transformation.
@@ -46036,7 +47661,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16OTHERauxiliary
+*> \ingroup latrd
 *
 *> \par Further Details:
 *  =====================
@@ -46410,7 +48035,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16OTHERauxiliary
+*> \ingroup latrs
 *
 *> \par Further Details:
 *  =====================
@@ -47372,7 +48997,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16OTHERauxiliary
+*> \ingroup lauu2
 *
 *  =====================================================================
       SUBROUTINE ZLAUU2( UPLO, N, A, LDA, INFO )
@@ -47575,7 +49200,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16OTHERauxiliary
+*> \ingroup lauum
 *
 *  =====================================================================
       SUBROUTINE ZLAUUM( UPLO, N, A, LDA, INFO )
@@ -47797,8 +49422,8 @@
 *>          INFO is INTEGER
 *>          = 0: successful exit
 *>          < 0: if INFO = -k, the k-th argument had an illegal value
-*>          > 0: if INFO = k, the leading minor of order k is not
-*>               positive definite, and the factorization could not be
+*>          > 0: if INFO = k, the leading principal minor of order k
+*>               is not positive, and the factorization could not be
 *>               completed.
 *> \endverbatim
 *
@@ -47810,7 +49435,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16OTHERcomputational
+*> \ingroup pbtf2
 *
 *> \par Further Details:
 *  =====================
@@ -48058,8 +49683,8 @@
 *>          INFO is INTEGER
 *>          = 0:  successful exit
 *>          < 0:  if INFO = -i, the i-th argument had an illegal value
-*>          > 0:  if INFO = i, the leading minor of order i is not
-*>                positive definite, and the factorization could not be
+*>          > 0:  if INFO = i, the leading principal minor of order i
+*>                is not positive, and the factorization could not be
 *>                completed.
 *> \endverbatim
 *
@@ -48071,7 +49696,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16OTHERcomputational
+*> \ingroup pbtrf
 *
 *> \par Further Details:
 *  =====================
@@ -48518,7 +50143,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16POcomputational
+*> \ingroup pocon
 *
 *  =====================================================================
       SUBROUTINE ZPOCON( UPLO, N, A, LDA, ANORM, RCOND, WORK, RWORK,
@@ -48768,7 +50393,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16POcomputational
+*> \ingroup poequ
 *
 *  =====================================================================
       SUBROUTINE ZPOEQU( N, A, LDA, S, SCOND, AMAX, INFO )
@@ -49041,7 +50666,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16POcomputational
+*> \ingroup porfs
 *
 *  =====================================================================
       SUBROUTINE ZPORFS( UPLO, N, NRHS, A, LDA, AF, LDAF, B, LDB, X,
@@ -49409,9 +51034,9 @@
 *>          INFO is INTEGER
 *>          = 0:  successful exit
 *>          < 0:  if INFO = -i, the i-th argument had an illegal value
-*>          > 0:  if INFO = i, the leading minor of order i of A is not
-*>                positive definite, so the factorization could not be
-*>                completed, and the solution has not been computed.
+*>          > 0:  if INFO = i, the leading principal minor of order i
+*>                of A is not positive, so the factorization could not
+*>                be completed, and the solution has not been computed.
 *> \endverbatim
 *
 *  Authors:
@@ -49422,7 +51047,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16POsolve
+*> \ingroup posv
 *
 *  =====================================================================
       SUBROUTINE ZPOSV( UPLO, N, NRHS, A, LDA, B, LDB, INFO )
@@ -49559,7 +51184,7 @@
 *>    where U is an upper triangular matrix and L is a lower triangular
 *>    matrix.
 *>
-*> 3. If the leading i-by-i principal minor is not positive definite,
+*> 3. If the leading principal minor of order i is not positive,
 *>    then the routine returns with INFO = i. Otherwise, the factored
 *>    form of A is used to estimate the condition number of the matrix
 *>    A.  If the reciprocal of the condition number is less than machine
@@ -49765,10 +51390,10 @@
 *>          = 0: successful exit
 *>          < 0: if INFO = -i, the i-th argument had an illegal value
 *>          > 0: if INFO = i, and i is
-*>                <= N:  the leading minor of order i of A is
-*>                       not positive definite, so the factorization
-*>                       could not be completed, and the solution has not
-*>                       been computed. RCOND = 0 is returned.
+*>                <= N:  the leading principal minor of order i of A
+*>                       is not positive, so the factorization could not
+*>                       be completed, and the solution has not been
+*>                       computed. RCOND = 0 is returned.
 *>                = N+1: U is nonsingular, but RCOND is less than machine
 *>                       precision, meaning that the matrix is singular
 *>                       to working precision.  Nevertheless, the
@@ -49786,7 +51411,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16POsolve
+*> \ingroup posvx
 *
 *  =====================================================================
       SUBROUTINE ZPOSVX( FACT, UPLO, N, NRHS, A, LDA, AF, LDAF, EQUED,
@@ -50067,8 +51692,8 @@
 *>          INFO is INTEGER
 *>          = 0: successful exit
 *>          < 0: if INFO = -k, the k-th argument had an illegal value
-*>          > 0: if INFO = k, the leading minor of order k is not
-*>               positive definite, and the factorization could not be
+*>          > 0: if INFO = k, the leading principal minor of order k
+*>               is not positive, and the factorization could not be
 *>               completed.
 *> \endverbatim
 *
@@ -50080,7 +51705,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16POcomputational
+*> \ingroup potf2
 *
 *  =====================================================================
       SUBROUTINE ZPOTF2( UPLO, N, A, LDA, INFO )
@@ -50299,8 +51924,8 @@
 *>          INFO is INTEGER
 *>          = 0:  successful exit
 *>          < 0:  if INFO = -i, the i-th argument had an illegal value
-*>          > 0:  if INFO = i, the leading minor of order i is not
-*>                positive definite, and the factorization could not be
+*>          > 0:  if INFO = i, the leading principal minor of order i
+*>                is not positive, and the factorization could not be
 *>                completed.
 *> \endverbatim
 *
@@ -50312,7 +51937,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16POcomputational
+*> \ingroup potrf
 *
 *  =====================================================================
       SUBROUTINE ZPOTRF( UPLO, N, A, LDA, INFO )
@@ -50544,8 +52169,8 @@
 *>          INFO is INTEGER
 *>          = 0:  successful exit
 *>          < 0:  if INFO = -i, the i-th argument had an illegal value
-*>          > 0:  if INFO = i, the leading minor of order i is not
-*>                positive definite, and the factorization could not be
+*>          > 0:  if INFO = i, the leading principal minor of order i
+*>                is not positive, and the factorization could not be
 *>                completed.
 *> \endverbatim
 *
@@ -50557,7 +52182,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16POcomputational
+*> \ingroup potrf2
 *
 *  =====================================================================
       RECURSIVE SUBROUTINE ZPOTRF2( UPLO, N, A, LDA, INFO )
@@ -50784,7 +52409,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16POcomputational
+*> \ingroup potri
 *
 *  =====================================================================
       SUBROUTINE ZPOTRI( UPLO, N, A, LDA, INFO )
@@ -50955,7 +52580,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16POcomputational
+*> \ingroup potrs
 *
 *  =====================================================================
       SUBROUTINE ZPOTRS( UPLO, N, NRHS, A, LDA, B, LDB, INFO )
@@ -51049,6 +52674,883 @@
       RETURN
 *
 *     End of ZPOTRS
+*
+      END
+*> \brief \b ZPPCON
+*
+*  =========== DOCUMENTATION ===========
+*
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
+*
+*> \htmlonly
+*> Download ZPPCON + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zppcon.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zppcon.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zppcon.f">
+*> [TXT]</a>
+*> \endhtmlonly
+*
+*  Definition:
+*  ===========
+*
+*       SUBROUTINE ZPPCON( UPLO, N, AP, ANORM, RCOND, WORK, RWORK, INFO )
+*
+*       .. Scalar Arguments ..
+*       CHARACTER          UPLO
+*       INTEGER            INFO, N
+*       DOUBLE PRECISION   ANORM, RCOND
+*       ..
+*       .. Array Arguments ..
+*       DOUBLE PRECISION   RWORK( * )
+*       COMPLEX*16         AP( * ), WORK( * )
+*       ..
+*
+*
+*> \par Purpose:
+*  =============
+*>
+*> \verbatim
+*>
+*> ZPPCON estimates the reciprocal of the condition number (in the
+*> 1-norm) of a complex Hermitian positive definite packed matrix using
+*> the Cholesky factorization A = U**H*U or A = L*L**H computed by
+*> ZPPTRF.
+*>
+*> An estimate is obtained for norm(inv(A)), and the reciprocal of the
+*> condition number is computed as RCOND = 1 / (ANORM * norm(inv(A))).
+*> \endverbatim
+*
+*  Arguments:
+*  ==========
+*
+*> \param[in] UPLO
+*> \verbatim
+*>          UPLO is CHARACTER*1
+*>          = 'U':  Upper triangle of A is stored;
+*>          = 'L':  Lower triangle of A is stored.
+*> \endverbatim
+*>
+*> \param[in] N
+*> \verbatim
+*>          N is INTEGER
+*>          The order of the matrix A.  N >= 0.
+*> \endverbatim
+*>
+*> \param[in] AP
+*> \verbatim
+*>          AP is COMPLEX*16 array, dimension (N*(N+1)/2)
+*>          The triangular factor U or L from the Cholesky factorization
+*>          A = U**H*U or A = L*L**H, packed columnwise in a linear
+*>          array.  The j-th column of U or L is stored in the array AP
+*>          as follows:
+*>          if UPLO = 'U', AP(i + (j-1)*j/2) = U(i,j) for 1<=i<=j;
+*>          if UPLO = 'L', AP(i + (j-1)*(2n-j)/2) = L(i,j) for j<=i<=n.
+*> \endverbatim
+*>
+*> \param[in] ANORM
+*> \verbatim
+*>          ANORM is DOUBLE PRECISION
+*>          The 1-norm (or infinity-norm) of the Hermitian matrix A.
+*> \endverbatim
+*>
+*> \param[out] RCOND
+*> \verbatim
+*>          RCOND is DOUBLE PRECISION
+*>          The reciprocal of the condition number of the matrix A,
+*>          computed as RCOND = 1/(ANORM * AINVNM), where AINVNM is an
+*>          estimate of the 1-norm of inv(A) computed in this routine.
+*> \endverbatim
+*>
+*> \param[out] WORK
+*> \verbatim
+*>          WORK is COMPLEX*16 array, dimension (2*N)
+*> \endverbatim
+*>
+*> \param[out] RWORK
+*> \verbatim
+*>          RWORK is DOUBLE PRECISION array, dimension (N)
+*> \endverbatim
+*>
+*> \param[out] INFO
+*> \verbatim
+*>          INFO is INTEGER
+*>          = 0:  successful exit
+*>          < 0:  if INFO = -i, the i-th argument had an illegal value
+*> \endverbatim
+*
+*  Authors:
+*  ========
+*
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
+*
+*> \ingroup ppcon
+*
+*  =====================================================================
+      SUBROUTINE ZPPCON( UPLO, N, AP, ANORM, RCOND, WORK, RWORK, INFO )
+*
+*  -- LAPACK computational routine --
+*  -- LAPACK is a software package provided by Univ. of Tennessee,    --
+*  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
+*
+*     .. Scalar Arguments ..
+      CHARACTER          UPLO
+      INTEGER            INFO, N
+      DOUBLE PRECISION   ANORM, RCOND
+*     ..
+*     .. Array Arguments ..
+      DOUBLE PRECISION   RWORK( * )
+      COMPLEX*16         AP( * ), WORK( * )
+*     ..
+*
+*  =====================================================================
+*
+*     .. Parameters ..
+      DOUBLE PRECISION   ONE, ZERO
+      PARAMETER          ( ONE = 1.0D+0, ZERO = 0.0D+0 )
+*     ..
+*     .. Local Scalars ..
+      LOGICAL            UPPER
+      CHARACTER          NORMIN
+      INTEGER            IX, KASE
+      DOUBLE PRECISION   AINVNM, SCALE, SCALEL, SCALEU, SMLNUM
+      COMPLEX*16         ZDUM
+*     ..
+*     .. Local Arrays ..
+      INTEGER            ISAVE( 3 )
+*     ..
+*     .. External Functions ..
+      LOGICAL            LSAME
+      INTEGER            IZAMAX
+      DOUBLE PRECISION   DLAMCH
+      EXTERNAL           LSAME, IZAMAX, DLAMCH
+*     ..
+*     .. External Subroutines ..
+      EXTERNAL           XERBLA, ZDRSCL, ZLACN2, ZLATPS
+*     ..
+*     .. Intrinsic Functions ..
+      INTRINSIC          ABS, DBLE, DIMAG
+*     ..
+*     .. Statement Functions ..
+      DOUBLE PRECISION   CABS1
+*     ..
+*     .. Statement Function definitions ..
+      CABS1( ZDUM ) = ABS( DBLE( ZDUM ) ) + ABS( DIMAG( ZDUM ) )
+*     ..
+*     .. Executable Statements ..
+*
+*     Test the input parameters.
+*
+      INFO = 0
+      UPPER = LSAME( UPLO, 'U' )
+      IF( .NOT.UPPER .AND. .NOT.LSAME( UPLO, 'L' ) ) THEN
+         INFO = -1
+      ELSE IF( N.LT.0 ) THEN
+         INFO = -2
+      ELSE IF( ANORM.LT.ZERO ) THEN
+         INFO = -4
+      END IF
+      IF( INFO.NE.0 ) THEN
+         CALL XERBLA( 'ZPPCON', -INFO )
+         RETURN
+      END IF
+*
+*     Quick return if possible
+*
+      RCOND = ZERO
+      IF( N.EQ.0 ) THEN
+         RCOND = ONE
+         RETURN
+      ELSE IF( ANORM.EQ.ZERO ) THEN
+         RETURN
+      END IF
+*
+      SMLNUM = DLAMCH( 'Safe minimum' )
+*
+*     Estimate the 1-norm of the inverse.
+*
+      KASE = 0
+      NORMIN = 'N'
+   10 CONTINUE
+      CALL ZLACN2( N, WORK( N+1 ), WORK, AINVNM, KASE, ISAVE )
+      IF( KASE.NE.0 ) THEN
+         IF( UPPER ) THEN
+*
+*           Multiply by inv(U**H).
+*
+            CALL ZLATPS( 'Upper', 'Conjugate transpose', 'Non-unit',
+     $                   NORMIN, N, AP, WORK, SCALEL, RWORK, INFO )
+            NORMIN = 'Y'
+*
+*           Multiply by inv(U).
+*
+            CALL ZLATPS( 'Upper', 'No transpose', 'Non-unit', NORMIN, N,
+     $                   AP, WORK, SCALEU, RWORK, INFO )
+         ELSE
+*
+*           Multiply by inv(L).
+*
+            CALL ZLATPS( 'Lower', 'No transpose', 'Non-unit', NORMIN, N,
+     $                   AP, WORK, SCALEL, RWORK, INFO )
+            NORMIN = 'Y'
+*
+*           Multiply by inv(L**H).
+*
+            CALL ZLATPS( 'Lower', 'Conjugate transpose', 'Non-unit',
+     $                   NORMIN, N, AP, WORK, SCALEU, RWORK, INFO )
+         END IF
+*
+*        Multiply by 1/SCALE if doing so will not cause overflow.
+*
+         SCALE = SCALEL*SCALEU
+         IF( SCALE.NE.ONE ) THEN
+            IX = IZAMAX( N, WORK, 1 )
+            IF( SCALE.LT.CABS1( WORK( IX ) )*SMLNUM .OR. SCALE.EQ.ZERO )
+     $         GO TO 20
+            CALL ZDRSCL( N, SCALE, WORK, 1 )
+         END IF
+         GO TO 10
+      END IF
+*
+*     Compute the estimate of the reciprocal condition number.
+*
+      IF( AINVNM.NE.ZERO )
+     $   RCOND = ( ONE / AINVNM ) / ANORM
+*
+   20 CONTINUE
+      RETURN
+*
+*     End of ZPPCON
+*
+      END
+*> \brief \b ZPPTRF
+*
+*  =========== DOCUMENTATION ===========
+*
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
+*
+*> \htmlonly
+*> Download ZPPTRF + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zpptrf.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zpptrf.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zpptrf.f">
+*> [TXT]</a>
+*> \endhtmlonly
+*
+*  Definition:
+*  ===========
+*
+*       SUBROUTINE ZPPTRF( UPLO, N, AP, INFO )
+*
+*       .. Scalar Arguments ..
+*       CHARACTER          UPLO
+*       INTEGER            INFO, N
+*       ..
+*       .. Array Arguments ..
+*       COMPLEX*16         AP( * )
+*       ..
+*
+*
+*> \par Purpose:
+*  =============
+*>
+*> \verbatim
+*>
+*> ZPPTRF computes the Cholesky factorization of a complex Hermitian
+*> positive definite matrix A stored in packed format.
+*>
+*> The factorization has the form
+*>    A = U**H * U,  if UPLO = 'U', or
+*>    A = L  * L**H,  if UPLO = 'L',
+*> where U is an upper triangular matrix and L is lower triangular.
+*> \endverbatim
+*
+*  Arguments:
+*  ==========
+*
+*> \param[in] UPLO
+*> \verbatim
+*>          UPLO is CHARACTER*1
+*>          = 'U':  Upper triangle of A is stored;
+*>          = 'L':  Lower triangle of A is stored.
+*> \endverbatim
+*>
+*> \param[in] N
+*> \verbatim
+*>          N is INTEGER
+*>          The order of the matrix A.  N >= 0.
+*> \endverbatim
+*>
+*> \param[in,out] AP
+*> \verbatim
+*>          AP is COMPLEX*16 array, dimension (N*(N+1)/2)
+*>          On entry, the upper or lower triangle of the Hermitian matrix
+*>          A, packed columnwise in a linear array.  The j-th column of A
+*>          is stored in the array AP as follows:
+*>          if UPLO = 'U', AP(i + (j-1)*j/2) = A(i,j) for 1<=i<=j;
+*>          if UPLO = 'L', AP(i + (j-1)*(2n-j)/2) = A(i,j) for j<=i<=n.
+*>          See below for further details.
+*>
+*>          On exit, if INFO = 0, the triangular factor U or L from the
+*>          Cholesky factorization A = U**H*U or A = L*L**H, in the same
+*>          storage format as A.
+*> \endverbatim
+*>
+*> \param[out] INFO
+*> \verbatim
+*>          INFO is INTEGER
+*>          = 0:  successful exit
+*>          < 0:  if INFO = -i, the i-th argument had an illegal value
+*>          > 0:  if INFO = i, the leading principal minor of order i
+*>                is not positive, and the factorization could not be
+*>                completed.
+*> \endverbatim
+*
+*  Authors:
+*  ========
+*
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
+*
+*> \ingroup pptrf
+*
+*> \par Further Details:
+*  =====================
+*>
+*> \verbatim
+*>
+*>  The packed storage scheme is illustrated by the following example
+*>  when N = 4, UPLO = 'U':
+*>
+*>  Two-dimensional storage of the Hermitian matrix A:
+*>
+*>     a11 a12 a13 a14
+*>         a22 a23 a24
+*>             a33 a34     (aij = conjg(aji))
+*>                 a44
+*>
+*>  Packed storage of the upper triangle of A:
+*>
+*>  AP = [ a11, a12, a22, a13, a23, a33, a14, a24, a34, a44 ]
+*> \endverbatim
+*>
+*  =====================================================================
+      SUBROUTINE ZPPTRF( UPLO, N, AP, INFO )
+*
+*  -- LAPACK computational routine --
+*  -- LAPACK is a software package provided by Univ. of Tennessee,    --
+*  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
+*
+*     .. Scalar Arguments ..
+      CHARACTER          UPLO
+      INTEGER            INFO, N
+*     ..
+*     .. Array Arguments ..
+      COMPLEX*16         AP( * )
+*     ..
+*
+*  =====================================================================
+*
+*     .. Parameters ..
+      DOUBLE PRECISION   ZERO, ONE
+      PARAMETER          ( ZERO = 0.0D+0, ONE = 1.0D+0 )
+*     ..
+*     .. Local Scalars ..
+      LOGICAL            UPPER
+      INTEGER            J, JC, JJ
+      DOUBLE PRECISION   AJJ
+*     ..
+*     .. External Functions ..
+      LOGICAL            LSAME
+      COMPLEX*16         ZDOTC
+      EXTERNAL           LSAME, ZDOTC
+*     ..
+*     .. External Subroutines ..
+      EXTERNAL           XERBLA, ZDSCAL, ZHPR, ZTPSV
+*     ..
+*     .. Intrinsic Functions ..
+      INTRINSIC          DBLE, SQRT
+*     ..
+*     .. Executable Statements ..
+*
+*     Test the input parameters.
+*
+      INFO = 0
+      UPPER = LSAME( UPLO, 'U' )
+      IF( .NOT.UPPER .AND. .NOT.LSAME( UPLO, 'L' ) ) THEN
+         INFO = -1
+      ELSE IF( N.LT.0 ) THEN
+         INFO = -2
+      END IF
+      IF( INFO.NE.0 ) THEN
+         CALL XERBLA( 'ZPPTRF', -INFO )
+         RETURN
+      END IF
+*
+*     Quick return if possible
+*
+      IF( N.EQ.0 )
+     $   RETURN
+*
+      IF( UPPER ) THEN
+*
+*        Compute the Cholesky factorization A = U**H * U.
+*
+         JJ = 0
+         DO 10 J = 1, N
+            JC = JJ + 1
+            JJ = JJ + J
+*
+*           Compute elements 1:J-1 of column J.
+*
+            IF( J.GT.1 )
+     $         CALL ZTPSV( 'Upper', 'Conjugate transpose', 'Non-unit',
+     $                     J-1, AP, AP( JC ), 1 )
+*
+*           Compute U(J,J) and test for non-positive-definiteness.
+*
+            AJJ = DBLE( AP( JJ ) ) - DBLE( ZDOTC( J-1,
+     $            AP( JC ), 1, AP( JC ), 1 ) )
+            IF( AJJ.LE.ZERO ) THEN
+               AP( JJ ) = AJJ
+               GO TO 30
+            END IF
+            AP( JJ ) = SQRT( AJJ )
+   10    CONTINUE
+      ELSE
+*
+*        Compute the Cholesky factorization A = L * L**H.
+*
+         JJ = 1
+         DO 20 J = 1, N
+*
+*           Compute L(J,J) and test for non-positive-definiteness.
+*
+            AJJ = DBLE( AP( JJ ) )
+            IF( AJJ.LE.ZERO ) THEN
+               AP( JJ ) = AJJ
+               GO TO 30
+            END IF
+            AJJ = SQRT( AJJ )
+            AP( JJ ) = AJJ
+*
+*           Compute elements J+1:N of column J and update the trailing
+*           submatrix.
+*
+            IF( J.LT.N ) THEN
+               CALL ZDSCAL( N-J, ONE / AJJ, AP( JJ+1 ), 1 )
+               CALL ZHPR( 'Lower', N-J, -ONE, AP( JJ+1 ), 1,
+     $                    AP( JJ+N-J+1 ) )
+               JJ = JJ + N - J + 1
+            END IF
+   20    CONTINUE
+      END IF
+      GO TO 40
+*
+   30 CONTINUE
+      INFO = J
+*
+   40 CONTINUE
+      RETURN
+*
+*     End of ZPPTRF
+*
+      END
+*> \brief \b ZPPTRI
+*
+*  =========== DOCUMENTATION ===========
+*
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
+*
+*> \htmlonly
+*> Download ZPPTRI + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zpptri.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zpptri.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zpptri.f">
+*> [TXT]</a>
+*> \endhtmlonly
+*
+*  Definition:
+*  ===========
+*
+*       SUBROUTINE ZPPTRI( UPLO, N, AP, INFO )
+*
+*       .. Scalar Arguments ..
+*       CHARACTER          UPLO
+*       INTEGER            INFO, N
+*       ..
+*       .. Array Arguments ..
+*       COMPLEX*16         AP( * )
+*       ..
+*
+*
+*> \par Purpose:
+*  =============
+*>
+*> \verbatim
+*>
+*> ZPPTRI computes the inverse of a complex Hermitian positive definite
+*> matrix A using the Cholesky factorization A = U**H*U or A = L*L**H
+*> computed by ZPPTRF.
+*> \endverbatim
+*
+*  Arguments:
+*  ==========
+*
+*> \param[in] UPLO
+*> \verbatim
+*>          UPLO is CHARACTER*1
+*>          = 'U':  Upper triangular factor is stored in AP;
+*>          = 'L':  Lower triangular factor is stored in AP.
+*> \endverbatim
+*>
+*> \param[in] N
+*> \verbatim
+*>          N is INTEGER
+*>          The order of the matrix A.  N >= 0.
+*> \endverbatim
+*>
+*> \param[in,out] AP
+*> \verbatim
+*>          AP is COMPLEX*16 array, dimension (N*(N+1)/2)
+*>          On entry, the triangular factor U or L from the Cholesky
+*>          factorization A = U**H*U or A = L*L**H, packed columnwise as
+*>          a linear array.  The j-th column of U or L is stored in the
+*>          array AP as follows:
+*>          if UPLO = 'U', AP(i + (j-1)*j/2) = U(i,j) for 1<=i<=j;
+*>          if UPLO = 'L', AP(i + (j-1)*(2n-j)/2) = L(i,j) for j<=i<=n.
+*>
+*>          On exit, the upper or lower triangle of the (Hermitian)
+*>          inverse of A, overwriting the input factor U or L.
+*> \endverbatim
+*>
+*> \param[out] INFO
+*> \verbatim
+*>          INFO is INTEGER
+*>          = 0:  successful exit
+*>          < 0:  if INFO = -i, the i-th argument had an illegal value
+*>          > 0:  if INFO = i, the (i,i) element of the factor U or L is
+*>                zero, and the inverse could not be computed.
+*> \endverbatim
+*
+*  Authors:
+*  ========
+*
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
+*
+*> \ingroup pptri
+*
+*  =====================================================================
+      SUBROUTINE ZPPTRI( UPLO, N, AP, INFO )
+*
+*  -- LAPACK computational routine --
+*  -- LAPACK is a software package provided by Univ. of Tennessee,    --
+*  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
+*
+*     .. Scalar Arguments ..
+      CHARACTER          UPLO
+      INTEGER            INFO, N
+*     ..
+*     .. Array Arguments ..
+      COMPLEX*16         AP( * )
+*     ..
+*
+*  =====================================================================
+*
+*     .. Parameters ..
+      DOUBLE PRECISION   ONE
+      PARAMETER          ( ONE = 1.0D+0 )
+*     ..
+*     .. Local Scalars ..
+      LOGICAL            UPPER
+      INTEGER            J, JC, JJ, JJN
+      DOUBLE PRECISION   AJJ
+*     ..
+*     .. External Functions ..
+      LOGICAL            LSAME
+      COMPLEX*16         ZDOTC
+      EXTERNAL           LSAME, ZDOTC
+*     ..
+*     .. External Subroutines ..
+      EXTERNAL           XERBLA, ZDSCAL, ZHPR, ZTPMV, ZTPTRI
+*     ..
+*     .. Intrinsic Functions ..
+      INTRINSIC          DBLE
+*     ..
+*     .. Executable Statements ..
+*
+*     Test the input parameters.
+*
+      INFO = 0
+      UPPER = LSAME( UPLO, 'U' )
+      IF( .NOT.UPPER .AND. .NOT.LSAME( UPLO, 'L' ) ) THEN
+         INFO = -1
+      ELSE IF( N.LT.0 ) THEN
+         INFO = -2
+      END IF
+      IF( INFO.NE.0 ) THEN
+         CALL XERBLA( 'ZPPTRI', -INFO )
+         RETURN
+      END IF
+*
+*     Quick return if possible
+*
+      IF( N.EQ.0 )
+     $   RETURN
+*
+*     Invert the triangular Cholesky factor U or L.
+*
+      CALL ZTPTRI( UPLO, 'Non-unit', N, AP, INFO )
+      IF( INFO.GT.0 )
+     $   RETURN
+      IF( UPPER ) THEN
+*
+*        Compute the product inv(U) * inv(U)**H.
+*
+         JJ = 0
+         DO 10 J = 1, N
+            JC = JJ + 1
+            JJ = JJ + J
+            IF( J.GT.1 )
+     $         CALL ZHPR( 'Upper', J-1, ONE, AP( JC ), 1, AP )
+            AJJ = DBLE( AP( JJ ) )
+            CALL ZDSCAL( J, AJJ, AP( JC ), 1 )
+   10    CONTINUE
+*
+      ELSE
+*
+*        Compute the product inv(L)**H * inv(L).
+*
+         JJ = 1
+         DO 20 J = 1, N
+            JJN = JJ + N - J + 1
+            AP( JJ ) = DBLE( ZDOTC( N-J+1, AP( JJ ), 1, AP( JJ ), 1 ) )
+            IF( J.LT.N )
+     $         CALL ZTPMV( 'Lower', 'Conjugate transpose', 'Non-unit',
+     $                     N-J, AP( JJN ), AP( JJ+1 ), 1 )
+            JJ = JJN
+   20    CONTINUE
+      END IF
+*
+      RETURN
+*
+*     End of ZPPTRI
+*
+      END
+*> \brief \b ZPPTRS
+*
+*  =========== DOCUMENTATION ===========
+*
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
+*
+*> \htmlonly
+*> Download ZPPTRS + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zpptrs.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zpptrs.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zpptrs.f">
+*> [TXT]</a>
+*> \endhtmlonly
+*
+*  Definition:
+*  ===========
+*
+*       SUBROUTINE ZPPTRS( UPLO, N, NRHS, AP, B, LDB, INFO )
+*
+*       .. Scalar Arguments ..
+*       CHARACTER          UPLO
+*       INTEGER            INFO, LDB, N, NRHS
+*       ..
+*       .. Array Arguments ..
+*       COMPLEX*16         AP( * ), B( LDB, * )
+*       ..
+*
+*
+*> \par Purpose:
+*  =============
+*>
+*> \verbatim
+*>
+*> ZPPTRS solves a system of linear equations A*X = B with a Hermitian
+*> positive definite matrix A in packed storage using the Cholesky
+*> factorization A = U**H * U or A = L * L**H computed by ZPPTRF.
+*> \endverbatim
+*
+*  Arguments:
+*  ==========
+*
+*> \param[in] UPLO
+*> \verbatim
+*>          UPLO is CHARACTER*1
+*>          = 'U':  Upper triangle of A is stored;
+*>          = 'L':  Lower triangle of A is stored.
+*> \endverbatim
+*>
+*> \param[in] N
+*> \verbatim
+*>          N is INTEGER
+*>          The order of the matrix A.  N >= 0.
+*> \endverbatim
+*>
+*> \param[in] NRHS
+*> \verbatim
+*>          NRHS is INTEGER
+*>          The number of right hand sides, i.e., the number of columns
+*>          of the matrix B.  NRHS >= 0.
+*> \endverbatim
+*>
+*> \param[in] AP
+*> \verbatim
+*>          AP is COMPLEX*16 array, dimension (N*(N+1)/2)
+*>          The triangular factor U or L from the Cholesky factorization
+*>          A = U**H * U or A = L * L**H, packed columnwise in a linear
+*>          array.  The j-th column of U or L is stored in the array AP
+*>          as follows:
+*>          if UPLO = 'U', AP(i + (j-1)*j/2) = U(i,j) for 1<=i<=j;
+*>          if UPLO = 'L', AP(i + (j-1)*(2n-j)/2) = L(i,j) for j<=i<=n.
+*> \endverbatim
+*>
+*> \param[in,out] B
+*> \verbatim
+*>          B is COMPLEX*16 array, dimension (LDB,NRHS)
+*>          On entry, the right hand side matrix B.
+*>          On exit, the solution matrix X.
+*> \endverbatim
+*>
+*> \param[in] LDB
+*> \verbatim
+*>          LDB is INTEGER
+*>          The leading dimension of the array B.  LDB >= max(1,N).
+*> \endverbatim
+*>
+*> \param[out] INFO
+*> \verbatim
+*>          INFO is INTEGER
+*>          = 0:  successful exit
+*>          < 0:  if INFO = -i, the i-th argument had an illegal value
+*> \endverbatim
+*
+*  Authors:
+*  ========
+*
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
+*
+*> \ingroup pptrs
+*
+*  =====================================================================
+      SUBROUTINE ZPPTRS( UPLO, N, NRHS, AP, B, LDB, INFO )
+*
+*  -- LAPACK computational routine --
+*  -- LAPACK is a software package provided by Univ. of Tennessee,    --
+*  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
+*
+*     .. Scalar Arguments ..
+      CHARACTER          UPLO
+      INTEGER            INFO, LDB, N, NRHS
+*     ..
+*     .. Array Arguments ..
+      COMPLEX*16         AP( * ), B( LDB, * )
+*     ..
+*
+*  =====================================================================
+*
+*     .. Local Scalars ..
+      LOGICAL            UPPER
+      INTEGER            I
+*     ..
+*     .. External Functions ..
+      LOGICAL            LSAME
+      EXTERNAL           LSAME
+*     ..
+*     .. External Subroutines ..
+      EXTERNAL           XERBLA, ZTPSV
+*     ..
+*     .. Intrinsic Functions ..
+      INTRINSIC          MAX
+*     ..
+*     .. Executable Statements ..
+*
+*     Test the input parameters.
+*
+      INFO = 0
+      UPPER = LSAME( UPLO, 'U' )
+      IF( .NOT.UPPER .AND. .NOT.LSAME( UPLO, 'L' ) ) THEN
+         INFO = -1
+      ELSE IF( N.LT.0 ) THEN
+         INFO = -2
+      ELSE IF( NRHS.LT.0 ) THEN
+         INFO = -3
+      ELSE IF( LDB.LT.MAX( 1, N ) ) THEN
+         INFO = -6
+      END IF
+      IF( INFO.NE.0 ) THEN
+         CALL XERBLA( 'ZPPTRS', -INFO )
+         RETURN
+      END IF
+*
+*     Quick return if possible
+*
+      IF( N.EQ.0 .OR. NRHS.EQ.0 )
+     $   RETURN
+*
+      IF( UPPER ) THEN
+*
+*        Solve A*X = B where A = U**H * U.
+*
+         DO 10 I = 1, NRHS
+*
+*           Solve U**H *X = B, overwriting B with X.
+*
+            CALL ZTPSV( 'Upper', 'Conjugate transpose', 'Non-unit', N,
+     $                  AP, B( 1, I ), 1 )
+*
+*           Solve U*X = B, overwriting B with X.
+*
+            CALL ZTPSV( 'Upper', 'No transpose', 'Non-unit', N, AP,
+     $                  B( 1, I ), 1 )
+   10    CONTINUE
+      ELSE
+*
+*        Solve A*X = B where A = L * L**H.
+*
+         DO 20 I = 1, NRHS
+*
+*           Solve L*Y = B, overwriting B with X.
+*
+            CALL ZTPSV( 'Lower', 'No transpose', 'Non-unit', N, AP,
+     $                  B( 1, I ), 1 )
+*
+*           Solve L**H *X = Y, overwriting B with X.
+*
+            CALL ZTPSV( 'Lower', 'Conjugate transpose', 'Non-unit', N,
+     $                  AP, B( 1, I ), 1 )
+   20    CONTINUE
+      END IF
+*
+      RETURN
+*
+*     End of ZPPTRS
 *
       END
 *> \brief \b ZPSTF2 computes the Cholesky factorization with complete pivoting of a complex Hermitian positive semidefinite matrix.
@@ -51188,7 +53690,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16OTHERcomputational
+*> \ingroup pstf2
 *
 *  =====================================================================
       SUBROUTINE ZPSTF2( UPLO, N, A, LDA, PIV, RANK, TOL, WORK, INFO )
@@ -51591,7 +54093,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16OTHERcomputational
+*> \ingroup pstrf
 *
 *  =====================================================================
       SUBROUTINE ZPSTRF( UPLO, N, A, LDA, PIV, RANK, TOL, WORK, INFO )
@@ -51952,7 +54454,7 @@
 *>
 *> \verbatim
 *>
-*> ZROT   applies a plane rotation, where the cos (C) is real and the
+*> ZROT applies a plane rotation, where the cos (C) is real and the
 *> sin (S) is complex, and the vectors CX and CY are complex.
 *> \endverbatim
 *
@@ -52013,7 +54515,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16OTHERauxiliary
+*> \ingroup rot
 *
 *  =====================================================================
       SUBROUTINE ZROT( N, CX, INCX, CY, INCY, C, S )
@@ -52074,6 +54576,2515 @@
    30 CONTINUE
       RETURN
       END
+*> \brief \b ZDRSCL multiplies a vector by the reciprocal of a real scalar.
+*
+*  =========== DOCUMENTATION ===========
+*
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
+*
+*> \htmlonly
+*> Download ZDRSCL + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zdrscl.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zdrscl.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zdrscl.f">
+*> [TXT]</a>
+*> \endhtmlonly
+*
+*  Definition:
+*  ===========
+*
+*       SUBROUTINE ZRSCL( N, A, X, INCX )
+*
+*       .. Scalar Arguments ..
+*       INTEGER            INCX, N
+*       COMPLEX*16         A
+*       ..
+*       .. Array Arguments ..
+*       COMPLEX*16         X( * )
+*       ..
+*
+*
+*> \par Purpose:
+*  =============
+*>
+*> \verbatim
+*>
+*> ZRSCL multiplies an n-element complex vector x by the complex scalar
+*> 1/a.  This is done without overflow or underflow as long as
+*> the final result x/a does not overflow or underflow.
+*> \endverbatim
+*
+*  Arguments:
+*  ==========
+*
+*> \param[in] N
+*> \verbatim
+*>          N is INTEGER
+*>          The number of components of the vector x.
+*> \endverbatim
+*>
+*> \param[in] A
+*> \verbatim
+*>          A is COMPLEX*16
+*>          The scalar a which is used to divide each component of x.
+*>          A must not be 0, or the subroutine will divide by zero.
+*> \endverbatim
+*>
+*> \param[in,out] X
+*> \verbatim
+*>          X is COMPLEX*16 array, dimension
+*>                         (1+(N-1)*abs(INCX))
+*>          The n-element vector x.
+*> \endverbatim
+*>
+*> \param[in] INCX
+*> \verbatim
+*>          INCX is INTEGER
+*>          The increment between successive values of the vector SX.
+*>          > 0:  SX(1) = X(1) and SX(1+(i-1)*INCX) = x(i),     1< i<= n
+*> \endverbatim
+*
+*  Authors:
+*  ========
+*
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
+*
+*> \ingroup complex16OTHERauxiliary
+*
+*  =====================================================================
+      SUBROUTINE ZRSCL( N, A, X, INCX )
+*
+*  -- LAPACK auxiliary routine --
+*  -- LAPACK is a software package provided by Univ. of Tennessee,    --
+*  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
+*
+*     .. Scalar Arguments ..
+      INTEGER            INCX, N
+      COMPLEX*16         A
+*     ..
+*     .. Array Arguments ..
+      COMPLEX*16         X( * )
+*     ..
+*
+* =====================================================================
+*
+*     .. Parameters ..
+      DOUBLE PRECISION   ZERO, ONE
+      PARAMETER          ( ZERO = 0.0D+0, ONE = 1.0D+0 )
+*     ..
+*     .. Local Scalars ..
+      DOUBLE PRECISION   SAFMAX, SAFMIN, OV, AR, AI, ABSR, ABSI, UR, UI
+*     ..
+*     .. External Functions ..
+      DOUBLE PRECISION   DLAMCH
+      COMPLEX*16         ZLADIV
+      EXTERNAL           DLAMCH, ZLADIV
+*     ..
+*     .. External Subroutines ..
+      EXTERNAL           DSCAL, ZDSCAL, ZDRSCL
+*     ..
+*     .. Intrinsic Functions ..
+      INTRINSIC          ABS
+*     ..
+*     .. Executable Statements ..
+*
+*     Quick return if possible
+*
+      IF( N.LE.0 )
+     $   RETURN
+*
+*     Get machine parameters
+*
+      SAFMIN = DLAMCH( 'S' )
+      SAFMAX = ONE / SAFMIN
+      OV   = DLAMCH( 'O' )
+*
+*     Initialize constants related to A.
+*
+      AR = DBLE( A )
+      AI = DIMAG( A )
+      ABSR = ABS( AR )
+      ABSI = ABS( AI )
+*
+      IF( AI.EQ.ZERO ) THEN
+*        If alpha is real, then we can use csrscl
+         CALL ZDRSCL( N, AR, X, INCX )
+*
+      ELSE IF( AR.EQ.ZERO ) THEN
+*        If alpha has a zero real part, then we follow the same rules as if
+*        alpha were real.
+         IF( ABSI.GT.SAFMAX ) THEN
+            CALL ZDSCAL( N, SAFMIN, X, INCX )
+            CALL ZSCAL( N, DCMPLX( ZERO, -SAFMAX / AI ), X, INCX )
+         ELSE IF( ABSI.LT.SAFMIN ) THEN
+            CALL ZSCAL( N, DCMPLX( ZERO, -SAFMIN / AI ), X, INCX )
+            CALL ZDSCAL( N, SAFMAX, X, INCX )
+         ELSE
+            CALL ZSCAL( N, DCMPLX( ZERO, -ONE / AI ), X, INCX )
+         END IF
+*
+      ELSE
+*        The following numbers can be computed.
+*        They are the inverse of the real and imaginary parts of 1/alpha.
+*        Note that a and b are always different from zero.
+*        NaNs are only possible if either:
+*        1. alphaR or alphaI is NaN.
+*        2. alphaR and alphaI are both infinite, in which case it makes sense
+*        to propagate a NaN.
+         UR = AR + AI * ( AI / AR )
+         UI = AI + AR * ( AR / AI )
+*
+         IF( (ABS( UR ).LT.SAFMIN).OR.(ABS( UI ).LT.SAFMIN) ) THEN
+*           This means that both alphaR and alphaI are very small.
+            CALL ZSCAL( N, DCMPLX( SAFMIN / UR, -SAFMIN / UI ), X,
+     $                  INCX )
+            CALL ZDSCAL( N, SAFMAX, X, INCX )
+         ELSE IF( (ABS( UR ).GT.SAFMAX).OR.(ABS( UI ).GT.SAFMAX) ) THEN
+            IF( (ABSR.GT.OV).OR.(ABSI.GT.OV) ) THEN
+*              This means that a and b are both Inf. No need for scaling.
+               CALL ZSCAL( N, DCMPLX( ONE / UR, -ONE / UI ), X, INCX )
+            ELSE
+               CALL ZDSCAL( N, SAFMIN, X, INCX )
+               IF( (ABS( UR ).GT.OV).OR.(ABS( UI ).GT.OV) ) THEN
+*                 Infs were generated. We do proper scaling to avoid them.
+                  IF( ABSR.GE.ABSI ) THEN
+*                    ABS( UR ) <= ABS( UI )
+                     UR = (SAFMIN * AR) + SAFMIN * (AI * ( AI / AR ))
+                     UI = (SAFMIN * AI) + AR * ( (SAFMIN * AR) / AI )
+                  ELSE
+*                    ABS( UR ) > ABS( UI )
+                     UR = (SAFMIN * AR) + AI * ( (SAFMIN * AI) / AR )
+                     UI = (SAFMIN * AI) + SAFMIN * (AR * ( AR / AI ))
+                  END IF
+                  CALL ZSCAL( N, DCMPLX( ONE / UR, -ONE / UI ), X,
+     $                        INCX )
+               ELSE
+                  CALL ZSCAL( N, DCMPLX( SAFMAX / UR, -SAFMAX / UI ),
+     $                        X, INCX )
+               END IF
+            END IF
+         ELSE
+            CALL ZSCAL( N, DCMPLX( ONE / UR, -ONE / UI ), X, INCX )
+         END IF
+      END IF
+*
+      RETURN
+*
+*     End of ZRSCL
+*
+      END
+*> \brief \b ZSPCON
+*
+*  =========== DOCUMENTATION ===========
+*
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
+*
+*> \htmlonly
+*> Download ZSPCON + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zspcon.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zspcon.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zspcon.f">
+*> [TXT]</a>
+*> \endhtmlonly
+*
+*  Definition:
+*  ===========
+*
+*       SUBROUTINE ZSPCON( UPLO, N, AP, IPIV, ANORM, RCOND, WORK, INFO )
+*
+*       .. Scalar Arguments ..
+*       CHARACTER          UPLO
+*       INTEGER            INFO, N
+*       DOUBLE PRECISION   ANORM, RCOND
+*       ..
+*       .. Array Arguments ..
+*       INTEGER            IPIV( * )
+*       COMPLEX*16         AP( * ), WORK( * )
+*       ..
+*
+*
+*> \par Purpose:
+*  =============
+*>
+*> \verbatim
+*>
+*> ZSPCON estimates the reciprocal of the condition number (in the
+*> 1-norm) of a complex symmetric packed matrix A using the
+*> factorization A = U*D*U**T or A = L*D*L**T computed by ZSPTRF.
+*>
+*> An estimate is obtained for norm(inv(A)), and the reciprocal of the
+*> condition number is computed as RCOND = 1 / (ANORM * norm(inv(A))).
+*> \endverbatim
+*
+*  Arguments:
+*  ==========
+*
+*> \param[in] UPLO
+*> \verbatim
+*>          UPLO is CHARACTER*1
+*>          Specifies whether the details of the factorization are stored
+*>          as an upper or lower triangular matrix.
+*>          = 'U':  Upper triangular, form is A = U*D*U**T;
+*>          = 'L':  Lower triangular, form is A = L*D*L**T.
+*> \endverbatim
+*>
+*> \param[in] N
+*> \verbatim
+*>          N is INTEGER
+*>          The order of the matrix A.  N >= 0.
+*> \endverbatim
+*>
+*> \param[in] AP
+*> \verbatim
+*>          AP is COMPLEX*16 array, dimension (N*(N+1)/2)
+*>          The block diagonal matrix D and the multipliers used to
+*>          obtain the factor U or L as computed by ZSPTRF, stored as a
+*>          packed triangular matrix.
+*> \endverbatim
+*>
+*> \param[in] IPIV
+*> \verbatim
+*>          IPIV is INTEGER array, dimension (N)
+*>          Details of the interchanges and the block structure of D
+*>          as determined by ZSPTRF.
+*> \endverbatim
+*>
+*> \param[in] ANORM
+*> \verbatim
+*>          ANORM is DOUBLE PRECISION
+*>          The 1-norm of the original matrix A.
+*> \endverbatim
+*>
+*> \param[out] RCOND
+*> \verbatim
+*>          RCOND is DOUBLE PRECISION
+*>          The reciprocal of the condition number of the matrix A,
+*>          computed as RCOND = 1/(ANORM * AINVNM), where AINVNM is an
+*>          estimate of the 1-norm of inv(A) computed in this routine.
+*> \endverbatim
+*>
+*> \param[out] WORK
+*> \verbatim
+*>          WORK is COMPLEX*16 array, dimension (2*N)
+*> \endverbatim
+*>
+*> \param[out] INFO
+*> \verbatim
+*>          INFO is INTEGER
+*>          = 0:  successful exit
+*>          < 0:  if INFO = -i, the i-th argument had an illegal value
+*> \endverbatim
+*
+*  Authors:
+*  ========
+*
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
+*
+*> \ingroup hpcon
+*
+*  =====================================================================
+      SUBROUTINE ZSPCON( UPLO, N, AP, IPIV, ANORM, RCOND, WORK, INFO )
+*
+*  -- LAPACK computational routine --
+*  -- LAPACK is a software package provided by Univ. of Tennessee,    --
+*  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
+*
+*     .. Scalar Arguments ..
+      CHARACTER          UPLO
+      INTEGER            INFO, N
+      DOUBLE PRECISION   ANORM, RCOND
+*     ..
+*     .. Array Arguments ..
+      INTEGER            IPIV( * )
+      COMPLEX*16         AP( * ), WORK( * )
+*     ..
+*
+*  =====================================================================
+*
+*     .. Parameters ..
+      DOUBLE PRECISION   ONE, ZERO
+      PARAMETER          ( ONE = 1.0D+0, ZERO = 0.0D+0 )
+*     ..
+*     .. Local Scalars ..
+      LOGICAL            UPPER
+      INTEGER            I, IP, KASE
+      DOUBLE PRECISION   AINVNM
+*     ..
+*     .. Local Arrays ..
+      INTEGER            ISAVE( 3 )
+*     ..
+*     .. External Functions ..
+      LOGICAL            LSAME
+      EXTERNAL           LSAME
+*     ..
+*     .. External Subroutines ..
+      EXTERNAL           XERBLA, ZLACN2, ZSPTRS
+*     ..
+*     .. Executable Statements ..
+*
+*     Test the input parameters.
+*
+      INFO = 0
+      UPPER = LSAME( UPLO, 'U' )
+      IF( .NOT.UPPER .AND. .NOT.LSAME( UPLO, 'L' ) ) THEN
+         INFO = -1
+      ELSE IF( N.LT.0 ) THEN
+         INFO = -2
+      ELSE IF( ANORM.LT.ZERO ) THEN
+         INFO = -5
+      END IF
+      IF( INFO.NE.0 ) THEN
+         CALL XERBLA( 'ZSPCON', -INFO )
+         RETURN
+      END IF
+*
+*     Quick return if possible
+*
+      RCOND = ZERO
+      IF( N.EQ.0 ) THEN
+         RCOND = ONE
+         RETURN
+      ELSE IF( ANORM.LE.ZERO ) THEN
+         RETURN
+      END IF
+*
+*     Check that the diagonal matrix D is nonsingular.
+*
+      IF( UPPER ) THEN
+*
+*        Upper triangular storage: examine D from bottom to top
+*
+         IP = N*( N+1 ) / 2
+         DO 10 I = N, 1, -1
+            IF( IPIV( I ).GT.0 .AND. AP( IP ).EQ.ZERO )
+     $         RETURN
+            IP = IP - I
+   10    CONTINUE
+      ELSE
+*
+*        Lower triangular storage: examine D from top to bottom.
+*
+         IP = 1
+         DO 20 I = 1, N
+            IF( IPIV( I ).GT.0 .AND. AP( IP ).EQ.ZERO )
+     $         RETURN
+            IP = IP + N - I + 1
+   20    CONTINUE
+      END IF
+*
+*     Estimate the 1-norm of the inverse.
+*
+      KASE = 0
+   30 CONTINUE
+      CALL ZLACN2( N, WORK( N+1 ), WORK, AINVNM, KASE, ISAVE )
+      IF( KASE.NE.0 ) THEN
+*
+*        Multiply by inv(L*D*L**T) or inv(U*D*U**T).
+*
+         CALL ZSPTRS( UPLO, N, 1, AP, IPIV, WORK, N, INFO )
+         GO TO 30
+      END IF
+*
+*     Compute the estimate of the reciprocal condition number.
+*
+      IF( AINVNM.NE.ZERO )
+     $   RCOND = ( ONE / AINVNM ) / ANORM
+*
+      RETURN
+*
+*     End of ZSPCON
+*
+      END
+*> \brief \b ZSPMV computes a matrix-vector product for complex vectors using a complex symmetric packed matrix
+*
+*  =========== DOCUMENTATION ===========
+*
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
+*
+*> \htmlonly
+*> Download ZSPMV + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zspmv.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zspmv.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zspmv.f">
+*> [TXT]</a>
+*> \endhtmlonly
+*
+*  Definition:
+*  ===========
+*
+*       SUBROUTINE ZSPMV( UPLO, N, ALPHA, AP, X, INCX, BETA, Y, INCY )
+*
+*       .. Scalar Arguments ..
+*       CHARACTER          UPLO
+*       INTEGER            INCX, INCY, N
+*       COMPLEX*16         ALPHA, BETA
+*       ..
+*       .. Array Arguments ..
+*       COMPLEX*16         AP( * ), X( * ), Y( * )
+*       ..
+*
+*
+*> \par Purpose:
+*  =============
+*>
+*> \verbatim
+*>
+*> ZSPMV  performs the matrix-vector operation
+*>
+*>    y := alpha*A*x + beta*y,
+*>
+*> where alpha and beta are scalars, x and y are n element vectors and
+*> A is an n by n symmetric matrix, supplied in packed form.
+*> \endverbatim
+*
+*  Arguments:
+*  ==========
+*
+*> \param[in] UPLO
+*> \verbatim
+*>          UPLO is CHARACTER*1
+*>           On entry, UPLO specifies whether the upper or lower
+*>           triangular part of the matrix A is supplied in the packed
+*>           array AP as follows:
+*>
+*>              UPLO = 'U' or 'u'   The upper triangular part of A is
+*>                                  supplied in AP.
+*>
+*>              UPLO = 'L' or 'l'   The lower triangular part of A is
+*>                                  supplied in AP.
+*>
+*>           Unchanged on exit.
+*> \endverbatim
+*>
+*> \param[in] N
+*> \verbatim
+*>          N is INTEGER
+*>           On entry, N specifies the order of the matrix A.
+*>           N must be at least zero.
+*>           Unchanged on exit.
+*> \endverbatim
+*>
+*> \param[in] ALPHA
+*> \verbatim
+*>          ALPHA is COMPLEX*16
+*>           On entry, ALPHA specifies the scalar alpha.
+*>           Unchanged on exit.
+*> \endverbatim
+*>
+*> \param[in] AP
+*> \verbatim
+*>          AP is COMPLEX*16 array, dimension at least
+*>           ( ( N*( N + 1 ) )/2 ).
+*>           Before entry, with UPLO = 'U' or 'u', the array AP must
+*>           contain the upper triangular part of the symmetric matrix
+*>           packed sequentially, column by column, so that AP( 1 )
+*>           contains a( 1, 1 ), AP( 2 ) and AP( 3 ) contain a( 1, 2 )
+*>           and a( 2, 2 ) respectively, and so on.
+*>           Before entry, with UPLO = 'L' or 'l', the array AP must
+*>           contain the lower triangular part of the symmetric matrix
+*>           packed sequentially, column by column, so that AP( 1 )
+*>           contains a( 1, 1 ), AP( 2 ) and AP( 3 ) contain a( 2, 1 )
+*>           and a( 3, 1 ) respectively, and so on.
+*>           Unchanged on exit.
+*> \endverbatim
+*>
+*> \param[in] X
+*> \verbatim
+*>          X is COMPLEX*16 array, dimension at least
+*>           ( 1 + ( N - 1 )*abs( INCX ) ).
+*>           Before entry, the incremented array X must contain the N-
+*>           element vector x.
+*>           Unchanged on exit.
+*> \endverbatim
+*>
+*> \param[in] INCX
+*> \verbatim
+*>          INCX is INTEGER
+*>           On entry, INCX specifies the increment for the elements of
+*>           X. INCX must not be zero.
+*>           Unchanged on exit.
+*> \endverbatim
+*>
+*> \param[in] BETA
+*> \verbatim
+*>          BETA is COMPLEX*16
+*>           On entry, BETA specifies the scalar beta. When BETA is
+*>           supplied as zero then Y need not be set on input.
+*>           Unchanged on exit.
+*> \endverbatim
+*>
+*> \param[in,out] Y
+*> \verbatim
+*>          Y is COMPLEX*16 array, dimension at least
+*>           ( 1 + ( N - 1 )*abs( INCY ) ).
+*>           Before entry, the incremented array Y must contain the n
+*>           element vector y. On exit, Y is overwritten by the updated
+*>           vector y.
+*> \endverbatim
+*>
+*> \param[in] INCY
+*> \verbatim
+*>          INCY is INTEGER
+*>           On entry, INCY specifies the increment for the elements of
+*>           Y. INCY must not be zero.
+*>           Unchanged on exit.
+*> \endverbatim
+*
+*  Authors:
+*  ========
+*
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
+*
+*> \ingroup hpmv
+*
+*  =====================================================================
+      SUBROUTINE ZSPMV( UPLO, N, ALPHA, AP, X, INCX, BETA, Y, INCY )
+*
+*  -- LAPACK auxiliary routine --
+*  -- LAPACK is a software package provided by Univ. of Tennessee,    --
+*  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
+*
+*     .. Scalar Arguments ..
+      CHARACTER          UPLO
+      INTEGER            INCX, INCY, N
+      COMPLEX*16         ALPHA, BETA
+*     ..
+*     .. Array Arguments ..
+      COMPLEX*16         AP( * ), X( * ), Y( * )
+*     ..
+*
+* =====================================================================
+*
+*     .. Parameters ..
+      COMPLEX*16         ONE
+      PARAMETER          ( ONE = ( 1.0D+0, 0.0D+0 ) )
+      COMPLEX*16         ZERO
+      PARAMETER          ( ZERO = ( 0.0D+0, 0.0D+0 ) )
+*     ..
+*     .. Local Scalars ..
+      INTEGER            I, INFO, IX, IY, J, JX, JY, K, KK, KX, KY
+      COMPLEX*16         TEMP1, TEMP2
+*     ..
+*     .. External Functions ..
+      LOGICAL            LSAME
+      EXTERNAL           LSAME
+*     ..
+*     .. External Subroutines ..
+      EXTERNAL           XERBLA
+*     ..
+*     .. Executable Statements ..
+*
+*     Test the input parameters.
+*
+      INFO = 0
+      IF( .NOT.LSAME( UPLO, 'U' ) .AND. .NOT.LSAME( UPLO, 'L' ) ) THEN
+         INFO = 1
+      ELSE IF( N.LT.0 ) THEN
+         INFO = 2
+      ELSE IF( INCX.EQ.0 ) THEN
+         INFO = 6
+      ELSE IF( INCY.EQ.0 ) THEN
+         INFO = 9
+      END IF
+      IF( INFO.NE.0 ) THEN
+         CALL XERBLA( 'ZSPMV ', INFO )
+         RETURN
+      END IF
+*
+*     Quick return if possible.
+*
+      IF( ( N.EQ.0 ) .OR. ( ( ALPHA.EQ.ZERO ) .AND. ( BETA.EQ.ONE ) ) )
+     $   RETURN
+*
+*     Set up the start points in  X  and  Y.
+*
+      IF( INCX.GT.0 ) THEN
+         KX = 1
+      ELSE
+         KX = 1 - ( N-1 )*INCX
+      END IF
+      IF( INCY.GT.0 ) THEN
+         KY = 1
+      ELSE
+         KY = 1 - ( N-1 )*INCY
+      END IF
+*
+*     Start the operations. In this version the elements of the array AP
+*     are accessed sequentially with one pass through AP.
+*
+*     First form  y := beta*y.
+*
+      IF( BETA.NE.ONE ) THEN
+         IF( INCY.EQ.1 ) THEN
+            IF( BETA.EQ.ZERO ) THEN
+               DO 10 I = 1, N
+                  Y( I ) = ZERO
+   10          CONTINUE
+            ELSE
+               DO 20 I = 1, N
+                  Y( I ) = BETA*Y( I )
+   20          CONTINUE
+            END IF
+         ELSE
+            IY = KY
+            IF( BETA.EQ.ZERO ) THEN
+               DO 30 I = 1, N
+                  Y( IY ) = ZERO
+                  IY = IY + INCY
+   30          CONTINUE
+            ELSE
+               DO 40 I = 1, N
+                  Y( IY ) = BETA*Y( IY )
+                  IY = IY + INCY
+   40          CONTINUE
+            END IF
+         END IF
+      END IF
+      IF( ALPHA.EQ.ZERO )
+     $   RETURN
+      KK = 1
+      IF( LSAME( UPLO, 'U' ) ) THEN
+*
+*        Form  y  when AP contains the upper triangle.
+*
+         IF( ( INCX.EQ.1 ) .AND. ( INCY.EQ.1 ) ) THEN
+            DO 60 J = 1, N
+               TEMP1 = ALPHA*X( J )
+               TEMP2 = ZERO
+               K = KK
+               DO 50 I = 1, J - 1
+                  Y( I ) = Y( I ) + TEMP1*AP( K )
+                  TEMP2 = TEMP2 + AP( K )*X( I )
+                  K = K + 1
+   50          CONTINUE
+               Y( J ) = Y( J ) + TEMP1*AP( KK+J-1 ) + ALPHA*TEMP2
+               KK = KK + J
+   60       CONTINUE
+         ELSE
+            JX = KX
+            JY = KY
+            DO 80 J = 1, N
+               TEMP1 = ALPHA*X( JX )
+               TEMP2 = ZERO
+               IX = KX
+               IY = KY
+               DO 70 K = KK, KK + J - 2
+                  Y( IY ) = Y( IY ) + TEMP1*AP( K )
+                  TEMP2 = TEMP2 + AP( K )*X( IX )
+                  IX = IX + INCX
+                  IY = IY + INCY
+   70          CONTINUE
+               Y( JY ) = Y( JY ) + TEMP1*AP( KK+J-1 ) + ALPHA*TEMP2
+               JX = JX + INCX
+               JY = JY + INCY
+               KK = KK + J
+   80       CONTINUE
+         END IF
+      ELSE
+*
+*        Form  y  when AP contains the lower triangle.
+*
+         IF( ( INCX.EQ.1 ) .AND. ( INCY.EQ.1 ) ) THEN
+            DO 100 J = 1, N
+               TEMP1 = ALPHA*X( J )
+               TEMP2 = ZERO
+               Y( J ) = Y( J ) + TEMP1*AP( KK )
+               K = KK + 1
+               DO 90 I = J + 1, N
+                  Y( I ) = Y( I ) + TEMP1*AP( K )
+                  TEMP2 = TEMP2 + AP( K )*X( I )
+                  K = K + 1
+   90          CONTINUE
+               Y( J ) = Y( J ) + ALPHA*TEMP2
+               KK = KK + ( N-J+1 )
+  100       CONTINUE
+         ELSE
+            JX = KX
+            JY = KY
+            DO 120 J = 1, N
+               TEMP1 = ALPHA*X( JX )
+               TEMP2 = ZERO
+               Y( JY ) = Y( JY ) + TEMP1*AP( KK )
+               IX = JX
+               IY = JY
+               DO 110 K = KK + 1, KK + N - J
+                  IX = IX + INCX
+                  IY = IY + INCY
+                  Y( IY ) = Y( IY ) + TEMP1*AP( K )
+                  TEMP2 = TEMP2 + AP( K )*X( IX )
+  110          CONTINUE
+               Y( JY ) = Y( JY ) + ALPHA*TEMP2
+               JX = JX + INCX
+               JY = JY + INCY
+               KK = KK + ( N-J+1 )
+  120       CONTINUE
+         END IF
+      END IF
+*
+      RETURN
+*
+*     End of ZSPMV
+*
+      END
+*> \brief \b ZSPR performs the symmetrical rank-1 update of a complex symmetric packed matrix.
+*
+*  =========== DOCUMENTATION ===========
+*
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
+*
+*> \htmlonly
+*> Download ZSPR + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zspr.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zspr.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zspr.f">
+*> [TXT]</a>
+*> \endhtmlonly
+*
+*  Definition:
+*  ===========
+*
+*       SUBROUTINE ZSPR( UPLO, N, ALPHA, X, INCX, AP )
+*
+*       .. Scalar Arguments ..
+*       CHARACTER          UPLO
+*       INTEGER            INCX, N
+*       COMPLEX*16         ALPHA
+*       ..
+*       .. Array Arguments ..
+*       COMPLEX*16         AP( * ), X( * )
+*       ..
+*
+*
+*> \par Purpose:
+*  =============
+*>
+*> \verbatim
+*>
+*> ZSPR    performs the symmetric rank 1 operation
+*>
+*>    A := alpha*x*x**H + A,
+*>
+*> where alpha is a complex scalar, x is an n element vector and A is an
+*> n by n symmetric matrix, supplied in packed form.
+*> \endverbatim
+*
+*  Arguments:
+*  ==========
+*
+*> \param[in] UPLO
+*> \verbatim
+*>          UPLO is CHARACTER*1
+*>           On entry, UPLO specifies whether the upper or lower
+*>           triangular part of the matrix A is supplied in the packed
+*>           array AP as follows:
+*>
+*>              UPLO = 'U' or 'u'   The upper triangular part of A is
+*>                                  supplied in AP.
+*>
+*>              UPLO = 'L' or 'l'   The lower triangular part of A is
+*>                                  supplied in AP.
+*>
+*>           Unchanged on exit.
+*> \endverbatim
+*>
+*> \param[in] N
+*> \verbatim
+*>          N is INTEGER
+*>           On entry, N specifies the order of the matrix A.
+*>           N must be at least zero.
+*>           Unchanged on exit.
+*> \endverbatim
+*>
+*> \param[in] ALPHA
+*> \verbatim
+*>          ALPHA is COMPLEX*16
+*>           On entry, ALPHA specifies the scalar alpha.
+*>           Unchanged on exit.
+*> \endverbatim
+*>
+*> \param[in] X
+*> \verbatim
+*>          X is COMPLEX*16 array, dimension at least
+*>           ( 1 + ( N - 1 )*abs( INCX ) ).
+*>           Before entry, the incremented array X must contain the N-
+*>           element vector x.
+*>           Unchanged on exit.
+*> \endverbatim
+*>
+*> \param[in] INCX
+*> \verbatim
+*>          INCX is INTEGER
+*>           On entry, INCX specifies the increment for the elements of
+*>           X. INCX must not be zero.
+*>           Unchanged on exit.
+*> \endverbatim
+*>
+*> \param[in,out] AP
+*> \verbatim
+*>          AP is COMPLEX*16 array, dimension at least
+*>           ( ( N*( N + 1 ) )/2 ).
+*>           Before entry, with  UPLO = 'U' or 'u', the array AP must
+*>           contain the upper triangular part of the symmetric matrix
+*>           packed sequentially, column by column, so that AP( 1 )
+*>           contains a( 1, 1 ), AP( 2 ) and AP( 3 ) contain a( 1, 2 )
+*>           and a( 2, 2 ) respectively, and so on. On exit, the array
+*>           AP is overwritten by the upper triangular part of the
+*>           updated matrix.
+*>           Before entry, with UPLO = 'L' or 'l', the array AP must
+*>           contain the lower triangular part of the symmetric matrix
+*>           packed sequentially, column by column, so that AP( 1 )
+*>           contains a( 1, 1 ), AP( 2 ) and AP( 3 ) contain a( 2, 1 )
+*>           and a( 3, 1 ) respectively, and so on. On exit, the array
+*>           AP is overwritten by the lower triangular part of the
+*>           updated matrix.
+*>           Note that the imaginary parts of the diagonal elements need
+*>           not be set, they are assumed to be zero, and on exit they
+*>           are set to zero.
+*> \endverbatim
+*
+*  Authors:
+*  ========
+*
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
+*
+*> \ingroup hpr
+*
+*  =====================================================================
+      SUBROUTINE ZSPR( UPLO, N, ALPHA, X, INCX, AP )
+*
+*  -- LAPACK auxiliary routine --
+*  -- LAPACK is a software package provided by Univ. of Tennessee,    --
+*  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
+*
+*     .. Scalar Arguments ..
+      CHARACTER          UPLO
+      INTEGER            INCX, N
+      COMPLEX*16         ALPHA
+*     ..
+*     .. Array Arguments ..
+      COMPLEX*16         AP( * ), X( * )
+*     ..
+*
+* =====================================================================
+*
+*     .. Parameters ..
+      COMPLEX*16         ZERO
+      PARAMETER          ( ZERO = ( 0.0D+0, 0.0D+0 ) )
+*     ..
+*     .. Local Scalars ..
+      INTEGER            I, INFO, IX, J, JX, K, KK, KX
+      COMPLEX*16         TEMP
+*     ..
+*     .. External Functions ..
+      LOGICAL            LSAME
+      EXTERNAL           LSAME
+*     ..
+*     .. External Subroutines ..
+      EXTERNAL           XERBLA
+*     ..
+*     .. Executable Statements ..
+*
+*     Test the input parameters.
+*
+      INFO = 0
+      IF( .NOT.LSAME( UPLO, 'U' ) .AND. .NOT.LSAME( UPLO, 'L' ) ) THEN
+         INFO = 1
+      ELSE IF( N.LT.0 ) THEN
+         INFO = 2
+      ELSE IF( INCX.EQ.0 ) THEN
+         INFO = 5
+      END IF
+      IF( INFO.NE.0 ) THEN
+         CALL XERBLA( 'ZSPR  ', INFO )
+         RETURN
+      END IF
+*
+*     Quick return if possible.
+*
+      IF( ( N.EQ.0 ) .OR. ( ALPHA.EQ.ZERO ) )
+     $   RETURN
+*
+*     Set the start point in X if the increment is not unity.
+*
+      IF( INCX.LE.0 ) THEN
+         KX = 1 - ( N-1 )*INCX
+      ELSE IF( INCX.NE.1 ) THEN
+         KX = 1
+      END IF
+*
+*     Start the operations. In this version the elements of the array AP
+*     are accessed sequentially with one pass through AP.
+*
+      KK = 1
+      IF( LSAME( UPLO, 'U' ) ) THEN
+*
+*        Form  A  when upper triangle is stored in AP.
+*
+         IF( INCX.EQ.1 ) THEN
+            DO 20 J = 1, N
+               IF( X( J ).NE.ZERO ) THEN
+                  TEMP = ALPHA*X( J )
+                  K = KK
+                  DO 10 I = 1, J - 1
+                     AP( K ) = AP( K ) + X( I )*TEMP
+                     K = K + 1
+   10             CONTINUE
+                  AP( KK+J-1 ) = AP( KK+J-1 ) + X( J )*TEMP
+               ELSE
+                  AP( KK+J-1 ) = AP( KK+J-1 )
+               END IF
+               KK = KK + J
+   20       CONTINUE
+         ELSE
+            JX = KX
+            DO 40 J = 1, N
+               IF( X( JX ).NE.ZERO ) THEN
+                  TEMP = ALPHA*X( JX )
+                  IX = KX
+                  DO 30 K = KK, KK + J - 2
+                     AP( K ) = AP( K ) + X( IX )*TEMP
+                     IX = IX + INCX
+   30             CONTINUE
+                  AP( KK+J-1 ) = AP( KK+J-1 ) + X( JX )*TEMP
+               ELSE
+                  AP( KK+J-1 ) = AP( KK+J-1 )
+               END IF
+               JX = JX + INCX
+               KK = KK + J
+   40       CONTINUE
+         END IF
+      ELSE
+*
+*        Form  A  when lower triangle is stored in AP.
+*
+         IF( INCX.EQ.1 ) THEN
+            DO 60 J = 1, N
+               IF( X( J ).NE.ZERO ) THEN
+                  TEMP = ALPHA*X( J )
+                  AP( KK ) = AP( KK ) + TEMP*X( J )
+                  K = KK + 1
+                  DO 50 I = J + 1, N
+                     AP( K ) = AP( K ) + X( I )*TEMP
+                     K = K + 1
+   50             CONTINUE
+               ELSE
+                  AP( KK ) = AP( KK )
+               END IF
+               KK = KK + N - J + 1
+   60       CONTINUE
+         ELSE
+            JX = KX
+            DO 80 J = 1, N
+               IF( X( JX ).NE.ZERO ) THEN
+                  TEMP = ALPHA*X( JX )
+                  AP( KK ) = AP( KK ) + TEMP*X( JX )
+                  IX = JX
+                  DO 70 K = KK + 1, KK + N - J
+                     IX = IX + INCX
+                     AP( K ) = AP( K ) + X( IX )*TEMP
+   70             CONTINUE
+               ELSE
+                  AP( KK ) = AP( KK )
+               END IF
+               JX = JX + INCX
+               KK = KK + N - J + 1
+   80       CONTINUE
+         END IF
+      END IF
+*
+      RETURN
+*
+*     End of ZSPR
+*
+      END
+*> \brief \b ZSPTRF
+*
+*  =========== DOCUMENTATION ===========
+*
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
+*
+*> \htmlonly
+*> Download ZSPTRF + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zsptrf.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zsptrf.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zsptrf.f">
+*> [TXT]</a>
+*> \endhtmlonly
+*
+*  Definition:
+*  ===========
+*
+*       SUBROUTINE ZSPTRF( UPLO, N, AP, IPIV, INFO )
+*
+*       .. Scalar Arguments ..
+*       CHARACTER          UPLO
+*       INTEGER            INFO, N
+*       ..
+*       .. Array Arguments ..
+*       INTEGER            IPIV( * )
+*       COMPLEX*16         AP( * )
+*       ..
+*
+*
+*> \par Purpose:
+*  =============
+*>
+*> \verbatim
+*>
+*> ZSPTRF computes the factorization of a complex symmetric matrix A
+*> stored in packed format using the Bunch-Kaufman diagonal pivoting
+*> method:
+*>
+*>    A = U*D*U**T  or  A = L*D*L**T
+*>
+*> where U (or L) is a product of permutation and unit upper (lower)
+*> triangular matrices, and D is symmetric and block diagonal with
+*> 1-by-1 and 2-by-2 diagonal blocks.
+*> \endverbatim
+*
+*  Arguments:
+*  ==========
+*
+*> \param[in] UPLO
+*> \verbatim
+*>          UPLO is CHARACTER*1
+*>          = 'U':  Upper triangle of A is stored;
+*>          = 'L':  Lower triangle of A is stored.
+*> \endverbatim
+*>
+*> \param[in] N
+*> \verbatim
+*>          N is INTEGER
+*>          The order of the matrix A.  N >= 0.
+*> \endverbatim
+*>
+*> \param[in,out] AP
+*> \verbatim
+*>          AP is COMPLEX*16 array, dimension (N*(N+1)/2)
+*>          On entry, the upper or lower triangle of the symmetric matrix
+*>          A, packed columnwise in a linear array.  The j-th column of A
+*>          is stored in the array AP as follows:
+*>          if UPLO = 'U', AP(i + (j-1)*j/2) = A(i,j) for 1<=i<=j;
+*>          if UPLO = 'L', AP(i + (j-1)*(2n-j)/2) = A(i,j) for j<=i<=n.
+*>
+*>          On exit, the block diagonal matrix D and the multipliers used
+*>          to obtain the factor U or L, stored as a packed triangular
+*>          matrix overwriting A (see below for further details).
+*> \endverbatim
+*>
+*> \param[out] IPIV
+*> \verbatim
+*>          IPIV is INTEGER array, dimension (N)
+*>          Details of the interchanges and the block structure of D.
+*>          If IPIV(k) > 0, then rows and columns k and IPIV(k) were
+*>          interchanged and D(k,k) is a 1-by-1 diagonal block.
+*>          If UPLO = 'U' and IPIV(k) = IPIV(k-1) < 0, then rows and
+*>          columns k-1 and -IPIV(k) were interchanged and D(k-1:k,k-1:k)
+*>          is a 2-by-2 diagonal block.  If UPLO = 'L' and IPIV(k) =
+*>          IPIV(k+1) < 0, then rows and columns k+1 and -IPIV(k) were
+*>          interchanged and D(k:k+1,k:k+1) is a 2-by-2 diagonal block.
+*> \endverbatim
+*>
+*> \param[out] INFO
+*> \verbatim
+*>          INFO is INTEGER
+*>          = 0: successful exit
+*>          < 0: if INFO = -i, the i-th argument had an illegal value
+*>          > 0: if INFO = i, D(i,i) is exactly zero.  The factorization
+*>               has been completed, but the block diagonal matrix D is
+*>               exactly singular, and division by zero will occur if it
+*>               is used to solve a system of equations.
+*> \endverbatim
+*
+*  Authors:
+*  ========
+*
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
+*
+*> \ingroup hptrf
+*
+*> \par Further Details:
+*  =====================
+*>
+*> \verbatim
+*>
+*>  5-96 - Based on modifications by J. Lewis, Boeing Computer Services
+*>         Company
+*>
+*>  If UPLO = 'U', then A = U*D*U**T, where
+*>     U = P(n)*U(n)* ... *P(k)U(k)* ...,
+*>  i.e., U is a product of terms P(k)*U(k), where k decreases from n to
+*>  1 in steps of 1 or 2, and D is a block diagonal matrix with 1-by-1
+*>  and 2-by-2 diagonal blocks D(k).  P(k) is a permutation matrix as
+*>  defined by IPIV(k), and U(k) is a unit upper triangular matrix, such
+*>  that if the diagonal block D(k) is of order s (s = 1 or 2), then
+*>
+*>             (   I    v    0   )   k-s
+*>     U(k) =  (   0    I    0   )   s
+*>             (   0    0    I   )   n-k
+*>                k-s   s   n-k
+*>
+*>  If s = 1, D(k) overwrites A(k,k), and v overwrites A(1:k-1,k).
+*>  If s = 2, the upper triangle of D(k) overwrites A(k-1,k-1), A(k-1,k),
+*>  and A(k,k), and v overwrites A(1:k-2,k-1:k).
+*>
+*>  If UPLO = 'L', then A = L*D*L**T, where
+*>     L = P(1)*L(1)* ... *P(k)*L(k)* ...,
+*>  i.e., L is a product of terms P(k)*L(k), where k increases from 1 to
+*>  n in steps of 1 or 2, and D is a block diagonal matrix with 1-by-1
+*>  and 2-by-2 diagonal blocks D(k).  P(k) is a permutation matrix as
+*>  defined by IPIV(k), and L(k) is a unit lower triangular matrix, such
+*>  that if the diagonal block D(k) is of order s (s = 1 or 2), then
+*>
+*>             (   I    0     0   )  k-1
+*>     L(k) =  (   0    I     0   )  s
+*>             (   0    v     I   )  n-k-s+1
+*>                k-1   s  n-k-s+1
+*>
+*>  If s = 1, D(k) overwrites A(k,k), and v overwrites A(k+1:n,k).
+*>  If s = 2, the lower triangle of D(k) overwrites A(k,k), A(k+1,k),
+*>  and A(k+1,k+1), and v overwrites A(k+2:n,k:k+1).
+*> \endverbatim
+*>
+*  =====================================================================
+      SUBROUTINE ZSPTRF( UPLO, N, AP, IPIV, INFO )
+*
+*  -- LAPACK computational routine --
+*  -- LAPACK is a software package provided by Univ. of Tennessee,    --
+*  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
+*
+*     .. Scalar Arguments ..
+      CHARACTER          UPLO
+      INTEGER            INFO, N
+*     ..
+*     .. Array Arguments ..
+      INTEGER            IPIV( * )
+      COMPLEX*16         AP( * )
+*     ..
+*
+*  =====================================================================
+*
+*     .. Parameters ..
+      DOUBLE PRECISION   ZERO, ONE
+      PARAMETER          ( ZERO = 0.0D+0, ONE = 1.0D+0 )
+      DOUBLE PRECISION   EIGHT, SEVTEN
+      PARAMETER          ( EIGHT = 8.0D+0, SEVTEN = 17.0D+0 )
+      COMPLEX*16         CONE
+      PARAMETER          ( CONE = ( 1.0D+0, 0.0D+0 ) )
+*     ..
+*     .. Local Scalars ..
+      LOGICAL            UPPER
+      INTEGER            I, IMAX, J, JMAX, K, KC, KK, KNC, KP, KPC,
+     $                   KSTEP, KX, NPP
+      DOUBLE PRECISION   ABSAKK, ALPHA, COLMAX, ROWMAX
+      COMPLEX*16         D11, D12, D21, D22, R1, T, WK, WKM1, WKP1, ZDUM
+*     ..
+*     .. External Functions ..
+      LOGICAL            LSAME
+      INTEGER            IZAMAX
+      EXTERNAL           LSAME, IZAMAX
+*     ..
+*     .. External Subroutines ..
+      EXTERNAL           XERBLA, ZSCAL, ZSPR, ZSWAP
+*     ..
+*     .. Intrinsic Functions ..
+      INTRINSIC          ABS, DBLE, DIMAG, MAX, SQRT
+*     ..
+*     .. Statement Functions ..
+      DOUBLE PRECISION   CABS1
+*     ..
+*     .. Statement Function definitions ..
+      CABS1( ZDUM ) = ABS( DBLE( ZDUM ) ) + ABS( DIMAG( ZDUM ) )
+*     ..
+*     .. Executable Statements ..
+*
+*     Test the input parameters.
+*
+      INFO = 0
+      UPPER = LSAME( UPLO, 'U' )
+      IF( .NOT.UPPER .AND. .NOT.LSAME( UPLO, 'L' ) ) THEN
+         INFO = -1
+      ELSE IF( N.LT.0 ) THEN
+         INFO = -2
+      END IF
+      IF( INFO.NE.0 ) THEN
+         CALL XERBLA( 'ZSPTRF', -INFO )
+         RETURN
+      END IF
+*
+*     Initialize ALPHA for use in choosing pivot block size.
+*
+      ALPHA = ( ONE+SQRT( SEVTEN ) ) / EIGHT
+*
+      IF( UPPER ) THEN
+*
+*        Factorize A as U*D*U**T using the upper triangle of A
+*
+*        K is the main loop index, decreasing from N to 1 in steps of
+*        1 or 2
+*
+         K = N
+         KC = ( N-1 )*N / 2 + 1
+   10    CONTINUE
+         KNC = KC
+*
+*        If K < 1, exit from loop
+*
+         IF( K.LT.1 )
+     $      GO TO 110
+         KSTEP = 1
+*
+*        Determine rows and columns to be interchanged and whether
+*        a 1-by-1 or 2-by-2 pivot block will be used
+*
+         ABSAKK = CABS1( AP( KC+K-1 ) )
+*
+*        IMAX is the row-index of the largest off-diagonal element in
+*        column K, and COLMAX is its absolute value
+*
+         IF( K.GT.1 ) THEN
+            IMAX = IZAMAX( K-1, AP( KC ), 1 )
+            COLMAX = CABS1( AP( KC+IMAX-1 ) )
+         ELSE
+            COLMAX = ZERO
+         END IF
+*
+         IF( MAX( ABSAKK, COLMAX ).EQ.ZERO ) THEN
+*
+*           Column K is zero: set INFO and continue
+*
+            IF( INFO.EQ.0 )
+     $         INFO = K
+            KP = K
+         ELSE
+            IF( ABSAKK.GE.ALPHA*COLMAX ) THEN
+*
+*              no interchange, use 1-by-1 pivot block
+*
+               KP = K
+            ELSE
+*
+               ROWMAX = ZERO
+               JMAX = IMAX
+               KX = IMAX*( IMAX+1 ) / 2 + IMAX
+               DO 20 J = IMAX + 1, K
+                  IF( CABS1( AP( KX ) ).GT.ROWMAX ) THEN
+                     ROWMAX = CABS1( AP( KX ) )
+                     JMAX = J
+                  END IF
+                  KX = KX + J
+   20          CONTINUE
+               KPC = ( IMAX-1 )*IMAX / 2 + 1
+               IF( IMAX.GT.1 ) THEN
+                  JMAX = IZAMAX( IMAX-1, AP( KPC ), 1 )
+                  ROWMAX = MAX( ROWMAX, CABS1( AP( KPC+JMAX-1 ) ) )
+               END IF
+*
+               IF( ABSAKK.GE.ALPHA*COLMAX*( COLMAX / ROWMAX ) ) THEN
+*
+*                 no interchange, use 1-by-1 pivot block
+*
+                  KP = K
+               ELSE IF( CABS1( AP( KPC+IMAX-1 ) ).GE.ALPHA*ROWMAX ) THEN
+*
+*                 interchange rows and columns K and IMAX, use 1-by-1
+*                 pivot block
+*
+                  KP = IMAX
+               ELSE
+*
+*                 interchange rows and columns K-1 and IMAX, use 2-by-2
+*                 pivot block
+*
+                  KP = IMAX
+                  KSTEP = 2
+               END IF
+            END IF
+*
+            KK = K - KSTEP + 1
+            IF( KSTEP.EQ.2 )
+     $         KNC = KNC - K + 1
+            IF( KP.NE.KK ) THEN
+*
+*              Interchange rows and columns KK and KP in the leading
+*              submatrix A(1:k,1:k)
+*
+               CALL ZSWAP( KP-1, AP( KNC ), 1, AP( KPC ), 1 )
+               KX = KPC + KP - 1
+               DO 30 J = KP + 1, KK - 1
+                  KX = KX + J - 1
+                  T = AP( KNC+J-1 )
+                  AP( KNC+J-1 ) = AP( KX )
+                  AP( KX ) = T
+   30          CONTINUE
+               T = AP( KNC+KK-1 )
+               AP( KNC+KK-1 ) = AP( KPC+KP-1 )
+               AP( KPC+KP-1 ) = T
+               IF( KSTEP.EQ.2 ) THEN
+                  T = AP( KC+K-2 )
+                  AP( KC+K-2 ) = AP( KC+KP-1 )
+                  AP( KC+KP-1 ) = T
+               END IF
+            END IF
+*
+*           Update the leading submatrix
+*
+            IF( KSTEP.EQ.1 ) THEN
+*
+*              1-by-1 pivot block D(k): column k now holds
+*
+*              W(k) = U(k)*D(k)
+*
+*              where U(k) is the k-th column of U
+*
+*              Perform a rank-1 update of A(1:k-1,1:k-1) as
+*
+*              A := A - U(k)*D(k)*U(k)**T = A - W(k)*1/D(k)*W(k)**T
+*
+               R1 = CONE / AP( KC+K-1 )
+               CALL ZSPR( UPLO, K-1, -R1, AP( KC ), 1, AP )
+*
+*              Store U(k) in column k
+*
+               CALL ZSCAL( K-1, R1, AP( KC ), 1 )
+            ELSE
+*
+*              2-by-2 pivot block D(k): columns k and k-1 now hold
+*
+*              ( W(k-1) W(k) ) = ( U(k-1) U(k) )*D(k)
+*
+*              where U(k) and U(k-1) are the k-th and (k-1)-th columns
+*              of U
+*
+*              Perform a rank-2 update of A(1:k-2,1:k-2) as
+*
+*              A := A - ( U(k-1) U(k) )*D(k)*( U(k-1) U(k) )**T
+*                 = A - ( W(k-1) W(k) )*inv(D(k))*( W(k-1) W(k) )**T
+*
+               IF( K.GT.2 ) THEN
+*
+                  D12 = AP( K-1+( K-1 )*K / 2 )
+                  D22 = AP( K-1+( K-2 )*( K-1 ) / 2 ) / D12
+                  D11 = AP( K+( K-1 )*K / 2 ) / D12
+                  T = CONE / ( D11*D22-CONE )
+                  D12 = T / D12
+*
+                  DO 50 J = K - 2, 1, -1
+                     WKM1 = D12*( D11*AP( J+( K-2 )*( K-1 ) / 2 )-
+     $                      AP( J+( K-1 )*K / 2 ) )
+                     WK = D12*( D22*AP( J+( K-1 )*K / 2 )-
+     $                    AP( J+( K-2 )*( K-1 ) / 2 ) )
+                     DO 40 I = J, 1, -1
+                        AP( I+( J-1 )*J / 2 ) = AP( I+( J-1 )*J / 2 ) -
+     $                     AP( I+( K-1 )*K / 2 )*WK -
+     $                     AP( I+( K-2 )*( K-1 ) / 2 )*WKM1
+   40                CONTINUE
+                     AP( J+( K-1 )*K / 2 ) = WK
+                     AP( J+( K-2 )*( K-1 ) / 2 ) = WKM1
+   50             CONTINUE
+*
+               END IF
+            END IF
+         END IF
+*
+*        Store details of the interchanges in IPIV
+*
+         IF( KSTEP.EQ.1 ) THEN
+            IPIV( K ) = KP
+         ELSE
+            IPIV( K ) = -KP
+            IPIV( K-1 ) = -KP
+         END IF
+*
+*        Decrease K and return to the start of the main loop
+*
+         K = K - KSTEP
+         KC = KNC - K
+         GO TO 10
+*
+      ELSE
+*
+*        Factorize A as L*D*L**T using the lower triangle of A
+*
+*        K is the main loop index, increasing from 1 to N in steps of
+*        1 or 2
+*
+         K = 1
+         KC = 1
+         NPP = N*( N+1 ) / 2
+   60    CONTINUE
+         KNC = KC
+*
+*        If K > N, exit from loop
+*
+         IF( K.GT.N )
+     $      GO TO 110
+         KSTEP = 1
+*
+*        Determine rows and columns to be interchanged and whether
+*        a 1-by-1 or 2-by-2 pivot block will be used
+*
+         ABSAKK = CABS1( AP( KC ) )
+*
+*        IMAX is the row-index of the largest off-diagonal element in
+*        column K, and COLMAX is its absolute value
+*
+         IF( K.LT.N ) THEN
+            IMAX = K + IZAMAX( N-K, AP( KC+1 ), 1 )
+            COLMAX = CABS1( AP( KC+IMAX-K ) )
+         ELSE
+            COLMAX = ZERO
+         END IF
+*
+         IF( MAX( ABSAKK, COLMAX ).EQ.ZERO ) THEN
+*
+*           Column K is zero: set INFO and continue
+*
+            IF( INFO.EQ.0 )
+     $         INFO = K
+            KP = K
+         ELSE
+            IF( ABSAKK.GE.ALPHA*COLMAX ) THEN
+*
+*              no interchange, use 1-by-1 pivot block
+*
+               KP = K
+            ELSE
+*
+*              JMAX is the column-index of the largest off-diagonal
+*              element in row IMAX, and ROWMAX is its absolute value
+*
+               ROWMAX = ZERO
+               KX = KC + IMAX - K
+               DO 70 J = K, IMAX - 1
+                  IF( CABS1( AP( KX ) ).GT.ROWMAX ) THEN
+                     ROWMAX = CABS1( AP( KX ) )
+                     JMAX = J
+                  END IF
+                  KX = KX + N - J
+   70          CONTINUE
+               KPC = NPP - ( N-IMAX+1 )*( N-IMAX+2 ) / 2 + 1
+               IF( IMAX.LT.N ) THEN
+                  JMAX = IMAX + IZAMAX( N-IMAX, AP( KPC+1 ), 1 )
+                  ROWMAX = MAX( ROWMAX, CABS1( AP( KPC+JMAX-IMAX ) ) )
+               END IF
+*
+               IF( ABSAKK.GE.ALPHA*COLMAX*( COLMAX / ROWMAX ) ) THEN
+*
+*                 no interchange, use 1-by-1 pivot block
+*
+                  KP = K
+               ELSE IF( CABS1( AP( KPC ) ).GE.ALPHA*ROWMAX ) THEN
+*
+*                 interchange rows and columns K and IMAX, use 1-by-1
+*                 pivot block
+*
+                  KP = IMAX
+               ELSE
+*
+*                 interchange rows and columns K+1 and IMAX, use 2-by-2
+*                 pivot block
+*
+                  KP = IMAX
+                  KSTEP = 2
+               END IF
+            END IF
+*
+            KK = K + KSTEP - 1
+            IF( KSTEP.EQ.2 )
+     $         KNC = KNC + N - K + 1
+            IF( KP.NE.KK ) THEN
+*
+*              Interchange rows and columns KK and KP in the trailing
+*              submatrix A(k:n,k:n)
+*
+               IF( KP.LT.N )
+     $            CALL ZSWAP( N-KP, AP( KNC+KP-KK+1 ), 1, AP( KPC+1 ),
+     $                        1 )
+               KX = KNC + KP - KK
+               DO 80 J = KK + 1, KP - 1
+                  KX = KX + N - J + 1
+                  T = AP( KNC+J-KK )
+                  AP( KNC+J-KK ) = AP( KX )
+                  AP( KX ) = T
+   80          CONTINUE
+               T = AP( KNC )
+               AP( KNC ) = AP( KPC )
+               AP( KPC ) = T
+               IF( KSTEP.EQ.2 ) THEN
+                  T = AP( KC+1 )
+                  AP( KC+1 ) = AP( KC+KP-K )
+                  AP( KC+KP-K ) = T
+               END IF
+            END IF
+*
+*           Update the trailing submatrix
+*
+            IF( KSTEP.EQ.1 ) THEN
+*
+*              1-by-1 pivot block D(k): column k now holds
+*
+*              W(k) = L(k)*D(k)
+*
+*              where L(k) is the k-th column of L
+*
+               IF( K.LT.N ) THEN
+*
+*                 Perform a rank-1 update of A(k+1:n,k+1:n) as
+*
+*                 A := A - L(k)*D(k)*L(k)**T = A - W(k)*(1/D(k))*W(k)**T
+*
+                  R1 = CONE / AP( KC )
+                  CALL ZSPR( UPLO, N-K, -R1, AP( KC+1 ), 1,
+     $                       AP( KC+N-K+1 ) )
+*
+*                 Store L(k) in column K
+*
+                  CALL ZSCAL( N-K, R1, AP( KC+1 ), 1 )
+               END IF
+            ELSE
+*
+*              2-by-2 pivot block D(k): columns K and K+1 now hold
+*
+*              ( W(k) W(k+1) ) = ( L(k) L(k+1) )*D(k)
+*
+*              where L(k) and L(k+1) are the k-th and (k+1)-th columns
+*              of L
+*
+               IF( K.LT.N-1 ) THEN
+*
+*                 Perform a rank-2 update of A(k+2:n,k+2:n) as
+*
+*                 A := A - ( L(k) L(k+1) )*D(k)*( L(k) L(k+1) )**T
+*                    = A - ( W(k) W(k+1) )*inv(D(k))*( W(k) W(k+1) )**T
+*
+*                 where L(k) and L(k+1) are the k-th and (k+1)-th
+*                 columns of L
+*
+                  D21 = AP( K+1+( K-1 )*( 2*N-K ) / 2 )
+                  D11 = AP( K+1+K*( 2*N-K-1 ) / 2 ) / D21
+                  D22 = AP( K+( K-1 )*( 2*N-K ) / 2 ) / D21
+                  T = CONE / ( D11*D22-CONE )
+                  D21 = T / D21
+*
+                  DO 100 J = K + 2, N
+                     WK = D21*( D11*AP( J+( K-1 )*( 2*N-K ) / 2 )-
+     $                    AP( J+K*( 2*N-K-1 ) / 2 ) )
+                     WKP1 = D21*( D22*AP( J+K*( 2*N-K-1 ) / 2 )-
+     $                      AP( J+( K-1 )*( 2*N-K ) / 2 ) )
+                     DO 90 I = J, N
+                        AP( I+( J-1 )*( 2*N-J ) / 2 ) = AP( I+( J-1 )*
+     $                     ( 2*N-J ) / 2 ) - AP( I+( K-1 )*( 2*N-K ) /
+     $                     2 )*WK - AP( I+K*( 2*N-K-1 ) / 2 )*WKP1
+   90                CONTINUE
+                     AP( J+( K-1 )*( 2*N-K ) / 2 ) = WK
+                     AP( J+K*( 2*N-K-1 ) / 2 ) = WKP1
+  100             CONTINUE
+               END IF
+            END IF
+         END IF
+*
+*        Store details of the interchanges in IPIV
+*
+         IF( KSTEP.EQ.1 ) THEN
+            IPIV( K ) = KP
+         ELSE
+            IPIV( K ) = -KP
+            IPIV( K+1 ) = -KP
+         END IF
+*
+*        Increase K and return to the start of the main loop
+*
+         K = K + KSTEP
+         KC = KNC + N - K + 2
+         GO TO 60
+*
+      END IF
+*
+  110 CONTINUE
+      RETURN
+*
+*     End of ZSPTRF
+*
+      END
+*> \brief \b ZSPTRI
+*
+*  =========== DOCUMENTATION ===========
+*
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
+*
+*> \htmlonly
+*> Download ZSPTRI + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zsptri.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zsptri.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zsptri.f">
+*> [TXT]</a>
+*> \endhtmlonly
+*
+*  Definition:
+*  ===========
+*
+*       SUBROUTINE ZSPTRI( UPLO, N, AP, IPIV, WORK, INFO )
+*
+*       .. Scalar Arguments ..
+*       CHARACTER          UPLO
+*       INTEGER            INFO, N
+*       ..
+*       .. Array Arguments ..
+*       INTEGER            IPIV( * )
+*       COMPLEX*16         AP( * ), WORK( * )
+*       ..
+*
+*
+*> \par Purpose:
+*  =============
+*>
+*> \verbatim
+*>
+*> ZSPTRI computes the inverse of a complex symmetric indefinite matrix
+*> A in packed storage using the factorization A = U*D*U**T or
+*> A = L*D*L**T computed by ZSPTRF.
+*> \endverbatim
+*
+*  Arguments:
+*  ==========
+*
+*> \param[in] UPLO
+*> \verbatim
+*>          UPLO is CHARACTER*1
+*>          Specifies whether the details of the factorization are stored
+*>          as an upper or lower triangular matrix.
+*>          = 'U':  Upper triangular, form is A = U*D*U**T;
+*>          = 'L':  Lower triangular, form is A = L*D*L**T.
+*> \endverbatim
+*>
+*> \param[in] N
+*> \verbatim
+*>          N is INTEGER
+*>          The order of the matrix A.  N >= 0.
+*> \endverbatim
+*>
+*> \param[in,out] AP
+*> \verbatim
+*>          AP is COMPLEX*16 array, dimension (N*(N+1)/2)
+*>          On entry, the block diagonal matrix D and the multipliers
+*>          used to obtain the factor U or L as computed by ZSPTRF,
+*>          stored as a packed triangular matrix.
+*>
+*>          On exit, if INFO = 0, the (symmetric) inverse of the original
+*>          matrix, stored as a packed triangular matrix. The j-th column
+*>          of inv(A) is stored in the array AP as follows:
+*>          if UPLO = 'U', AP(i + (j-1)*j/2) = inv(A)(i,j) for 1<=i<=j;
+*>          if UPLO = 'L',
+*>             AP(i + (j-1)*(2n-j)/2) = inv(A)(i,j) for j<=i<=n.
+*> \endverbatim
+*>
+*> \param[in] IPIV
+*> \verbatim
+*>          IPIV is INTEGER array, dimension (N)
+*>          Details of the interchanges and the block structure of D
+*>          as determined by ZSPTRF.
+*> \endverbatim
+*>
+*> \param[out] WORK
+*> \verbatim
+*>          WORK is COMPLEX*16 array, dimension (N)
+*> \endverbatim
+*>
+*> \param[out] INFO
+*> \verbatim
+*>          INFO is INTEGER
+*>          = 0: successful exit
+*>          < 0: if INFO = -i, the i-th argument had an illegal value
+*>          > 0: if INFO = i, D(i,i) = 0; the matrix is singular and its
+*>               inverse could not be computed.
+*> \endverbatim
+*
+*  Authors:
+*  ========
+*
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
+*
+*> \ingroup hptri
+*
+*  =====================================================================
+      SUBROUTINE ZSPTRI( UPLO, N, AP, IPIV, WORK, INFO )
+*
+*  -- LAPACK computational routine --
+*  -- LAPACK is a software package provided by Univ. of Tennessee,    --
+*  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
+*
+*     .. Scalar Arguments ..
+      CHARACTER          UPLO
+      INTEGER            INFO, N
+*     ..
+*     .. Array Arguments ..
+      INTEGER            IPIV( * )
+      COMPLEX*16         AP( * ), WORK( * )
+*     ..
+*
+*  =====================================================================
+*
+*     .. Parameters ..
+      COMPLEX*16         ONE, ZERO
+      PARAMETER          ( ONE = ( 1.0D+0, 0.0D+0 ),
+     $                   ZERO = ( 0.0D+0, 0.0D+0 ) )
+*     ..
+*     .. Local Scalars ..
+      LOGICAL            UPPER
+      INTEGER            J, K, KC, KCNEXT, KP, KPC, KSTEP, KX, NPP
+      COMPLEX*16         AK, AKKP1, AKP1, D, T, TEMP
+*     ..
+*     .. External Functions ..
+      LOGICAL            LSAME
+      COMPLEX*16         ZDOTU
+      EXTERNAL           LSAME, ZDOTU
+*     ..
+*     .. External Subroutines ..
+      EXTERNAL           XERBLA, ZCOPY, ZSPMV, ZSWAP
+*     ..
+*     .. Intrinsic Functions ..
+      INTRINSIC          ABS
+*     ..
+*     .. Executable Statements ..
+*
+*     Test the input parameters.
+*
+      INFO = 0
+      UPPER = LSAME( UPLO, 'U' )
+      IF( .NOT.UPPER .AND. .NOT.LSAME( UPLO, 'L' ) ) THEN
+         INFO = -1
+      ELSE IF( N.LT.0 ) THEN
+         INFO = -2
+      END IF
+      IF( INFO.NE.0 ) THEN
+         CALL XERBLA( 'ZSPTRI', -INFO )
+         RETURN
+      END IF
+*
+*     Quick return if possible
+*
+      IF( N.EQ.0 )
+     $   RETURN
+*
+*     Check that the diagonal matrix D is nonsingular.
+*
+      IF( UPPER ) THEN
+*
+*        Upper triangular storage: examine D from bottom to top
+*
+         KP = N*( N+1 ) / 2
+         DO 10 INFO = N, 1, -1
+            IF( IPIV( INFO ).GT.0 .AND. AP( KP ).EQ.ZERO )
+     $         RETURN
+            KP = KP - INFO
+   10    CONTINUE
+      ELSE
+*
+*        Lower triangular storage: examine D from top to bottom.
+*
+         KP = 1
+         DO 20 INFO = 1, N
+            IF( IPIV( INFO ).GT.0 .AND. AP( KP ).EQ.ZERO )
+     $         RETURN
+            KP = KP + N - INFO + 1
+   20    CONTINUE
+      END IF
+      INFO = 0
+*
+      IF( UPPER ) THEN
+*
+*        Compute inv(A) from the factorization A = U*D*U**T.
+*
+*        K is the main loop index, increasing from 1 to N in steps of
+*        1 or 2, depending on the size of the diagonal blocks.
+*
+         K = 1
+         KC = 1
+   30    CONTINUE
+*
+*        If K > N, exit from loop.
+*
+         IF( K.GT.N )
+     $      GO TO 50
+*
+         KCNEXT = KC + K
+         IF( IPIV( K ).GT.0 ) THEN
+*
+*           1 x 1 diagonal block
+*
+*           Invert the diagonal block.
+*
+            AP( KC+K-1 ) = ONE / AP( KC+K-1 )
+*
+*           Compute column K of the inverse.
+*
+            IF( K.GT.1 ) THEN
+               CALL ZCOPY( K-1, AP( KC ), 1, WORK, 1 )
+               CALL ZSPMV( UPLO, K-1, -ONE, AP, WORK, 1, ZERO, AP( KC ),
+     $                     1 )
+               AP( KC+K-1 ) = AP( KC+K-1 ) -
+     $                        ZDOTU( K-1, WORK, 1, AP( KC ), 1 )
+            END IF
+            KSTEP = 1
+         ELSE
+*
+*           2 x 2 diagonal block
+*
+*           Invert the diagonal block.
+*
+            T = AP( KCNEXT+K-1 )
+            AK = AP( KC+K-1 ) / T
+            AKP1 = AP( KCNEXT+K ) / T
+            AKKP1 = AP( KCNEXT+K-1 ) / T
+            D = T*( AK*AKP1-ONE )
+            AP( KC+K-1 ) = AKP1 / D
+            AP( KCNEXT+K ) = AK / D
+            AP( KCNEXT+K-1 ) = -AKKP1 / D
+*
+*           Compute columns K and K+1 of the inverse.
+*
+            IF( K.GT.1 ) THEN
+               CALL ZCOPY( K-1, AP( KC ), 1, WORK, 1 )
+               CALL ZSPMV( UPLO, K-1, -ONE, AP, WORK, 1, ZERO, AP( KC ),
+     $                     1 )
+               AP( KC+K-1 ) = AP( KC+K-1 ) -
+     $                        ZDOTU( K-1, WORK, 1, AP( KC ), 1 )
+               AP( KCNEXT+K-1 ) = AP( KCNEXT+K-1 ) -
+     $                            ZDOTU( K-1, AP( KC ), 1, AP( KCNEXT ),
+     $                            1 )
+               CALL ZCOPY( K-1, AP( KCNEXT ), 1, WORK, 1 )
+               CALL ZSPMV( UPLO, K-1, -ONE, AP, WORK, 1, ZERO,
+     $                     AP( KCNEXT ), 1 )
+               AP( KCNEXT+K ) = AP( KCNEXT+K ) -
+     $                          ZDOTU( K-1, WORK, 1, AP( KCNEXT ), 1 )
+            END IF
+            KSTEP = 2
+            KCNEXT = KCNEXT + K + 1
+         END IF
+*
+         KP = ABS( IPIV( K ) )
+         IF( KP.NE.K ) THEN
+*
+*           Interchange rows and columns K and KP in the leading
+*           submatrix A(1:k+1,1:k+1)
+*
+            KPC = ( KP-1 )*KP / 2 + 1
+            CALL ZSWAP( KP-1, AP( KC ), 1, AP( KPC ), 1 )
+            KX = KPC + KP - 1
+            DO 40 J = KP + 1, K - 1
+               KX = KX + J - 1
+               TEMP = AP( KC+J-1 )
+               AP( KC+J-1 ) = AP( KX )
+               AP( KX ) = TEMP
+   40       CONTINUE
+            TEMP = AP( KC+K-1 )
+            AP( KC+K-1 ) = AP( KPC+KP-1 )
+            AP( KPC+KP-1 ) = TEMP
+            IF( KSTEP.EQ.2 ) THEN
+               TEMP = AP( KC+K+K-1 )
+               AP( KC+K+K-1 ) = AP( KC+K+KP-1 )
+               AP( KC+K+KP-1 ) = TEMP
+            END IF
+         END IF
+*
+         K = K + KSTEP
+         KC = KCNEXT
+         GO TO 30
+   50    CONTINUE
+*
+      ELSE
+*
+*        Compute inv(A) from the factorization A = L*D*L**T.
+*
+*        K is the main loop index, increasing from 1 to N in steps of
+*        1 or 2, depending on the size of the diagonal blocks.
+*
+         NPP = N*( N+1 ) / 2
+         K = N
+         KC = NPP
+   60    CONTINUE
+*
+*        If K < 1, exit from loop.
+*
+         IF( K.LT.1 )
+     $      GO TO 80
+*
+         KCNEXT = KC - ( N-K+2 )
+         IF( IPIV( K ).GT.0 ) THEN
+*
+*           1 x 1 diagonal block
+*
+*           Invert the diagonal block.
+*
+            AP( KC ) = ONE / AP( KC )
+*
+*           Compute column K of the inverse.
+*
+            IF( K.LT.N ) THEN
+               CALL ZCOPY( N-K, AP( KC+1 ), 1, WORK, 1 )
+               CALL ZSPMV( UPLO, N-K, -ONE, AP( KC+N-K+1 ), WORK, 1,
+     $                     ZERO, AP( KC+1 ), 1 )
+               AP( KC ) = AP( KC ) - ZDOTU( N-K, WORK, 1, AP( KC+1 ),
+     $                    1 )
+            END IF
+            KSTEP = 1
+         ELSE
+*
+*           2 x 2 diagonal block
+*
+*           Invert the diagonal block.
+*
+            T = AP( KCNEXT+1 )
+            AK = AP( KCNEXT ) / T
+            AKP1 = AP( KC ) / T
+            AKKP1 = AP( KCNEXT+1 ) / T
+            D = T*( AK*AKP1-ONE )
+            AP( KCNEXT ) = AKP1 / D
+            AP( KC ) = AK / D
+            AP( KCNEXT+1 ) = -AKKP1 / D
+*
+*           Compute columns K-1 and K of the inverse.
+*
+            IF( K.LT.N ) THEN
+               CALL ZCOPY( N-K, AP( KC+1 ), 1, WORK, 1 )
+               CALL ZSPMV( UPLO, N-K, -ONE, AP( KC+( N-K+1 ) ), WORK, 1,
+     $                     ZERO, AP( KC+1 ), 1 )
+               AP( KC ) = AP( KC ) - ZDOTU( N-K, WORK, 1, AP( KC+1 ),
+     $                    1 )
+               AP( KCNEXT+1 ) = AP( KCNEXT+1 ) -
+     $                          ZDOTU( N-K, AP( KC+1 ), 1,
+     $                          AP( KCNEXT+2 ), 1 )
+               CALL ZCOPY( N-K, AP( KCNEXT+2 ), 1, WORK, 1 )
+               CALL ZSPMV( UPLO, N-K, -ONE, AP( KC+( N-K+1 ) ), WORK, 1,
+     $                     ZERO, AP( KCNEXT+2 ), 1 )
+               AP( KCNEXT ) = AP( KCNEXT ) -
+     $                        ZDOTU( N-K, WORK, 1, AP( KCNEXT+2 ), 1 )
+            END IF
+            KSTEP = 2
+            KCNEXT = KCNEXT - ( N-K+3 )
+         END IF
+*
+         KP = ABS( IPIV( K ) )
+         IF( KP.NE.K ) THEN
+*
+*           Interchange rows and columns K and KP in the trailing
+*           submatrix A(k-1:n,k-1:n)
+*
+            KPC = NPP - ( N-KP+1 )*( N-KP+2 ) / 2 + 1
+            IF( KP.LT.N )
+     $         CALL ZSWAP( N-KP, AP( KC+KP-K+1 ), 1, AP( KPC+1 ), 1 )
+            KX = KC + KP - K
+            DO 70 J = K + 1, KP - 1
+               KX = KX + N - J + 1
+               TEMP = AP( KC+J-K )
+               AP( KC+J-K ) = AP( KX )
+               AP( KX ) = TEMP
+   70       CONTINUE
+            TEMP = AP( KC )
+            AP( KC ) = AP( KPC )
+            AP( KPC ) = TEMP
+            IF( KSTEP.EQ.2 ) THEN
+               TEMP = AP( KC-N+K-1 )
+               AP( KC-N+K-1 ) = AP( KC-N+KP-1 )
+               AP( KC-N+KP-1 ) = TEMP
+            END IF
+         END IF
+*
+         K = K - KSTEP
+         KC = KCNEXT
+         GO TO 60
+   80    CONTINUE
+      END IF
+*
+      RETURN
+*
+*     End of ZSPTRI
+*
+      END
+*> \brief \b ZSPTRS
+*
+*  =========== DOCUMENTATION ===========
+*
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
+*
+*> \htmlonly
+*> Download ZSPTRS + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zsptrs.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zsptrs.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zsptrs.f">
+*> [TXT]</a>
+*> \endhtmlonly
+*
+*  Definition:
+*  ===========
+*
+*       SUBROUTINE ZSPTRS( UPLO, N, NRHS, AP, IPIV, B, LDB, INFO )
+*
+*       .. Scalar Arguments ..
+*       CHARACTER          UPLO
+*       INTEGER            INFO, LDB, N, NRHS
+*       ..
+*       .. Array Arguments ..
+*       INTEGER            IPIV( * )
+*       COMPLEX*16         AP( * ), B( LDB, * )
+*       ..
+*
+*
+*> \par Purpose:
+*  =============
+*>
+*> \verbatim
+*>
+*> ZSPTRS solves a system of linear equations A*X = B with a complex
+*> symmetric matrix A stored in packed format using the factorization
+*> A = U*D*U**T or A = L*D*L**T computed by ZSPTRF.
+*> \endverbatim
+*
+*  Arguments:
+*  ==========
+*
+*> \param[in] UPLO
+*> \verbatim
+*>          UPLO is CHARACTER*1
+*>          Specifies whether the details of the factorization are stored
+*>          as an upper or lower triangular matrix.
+*>          = 'U':  Upper triangular, form is A = U*D*U**T;
+*>          = 'L':  Lower triangular, form is A = L*D*L**T.
+*> \endverbatim
+*>
+*> \param[in] N
+*> \verbatim
+*>          N is INTEGER
+*>          The order of the matrix A.  N >= 0.
+*> \endverbatim
+*>
+*> \param[in] NRHS
+*> \verbatim
+*>          NRHS is INTEGER
+*>          The number of right hand sides, i.e., the number of columns
+*>          of the matrix B.  NRHS >= 0.
+*> \endverbatim
+*>
+*> \param[in] AP
+*> \verbatim
+*>          AP is COMPLEX*16 array, dimension (N*(N+1)/2)
+*>          The block diagonal matrix D and the multipliers used to
+*>          obtain the factor U or L as computed by ZSPTRF, stored as a
+*>          packed triangular matrix.
+*> \endverbatim
+*>
+*> \param[in] IPIV
+*> \verbatim
+*>          IPIV is INTEGER array, dimension (N)
+*>          Details of the interchanges and the block structure of D
+*>          as determined by ZSPTRF.
+*> \endverbatim
+*>
+*> \param[in,out] B
+*> \verbatim
+*>          B is COMPLEX*16 array, dimension (LDB,NRHS)
+*>          On entry, the right hand side matrix B.
+*>          On exit, the solution matrix X.
+*> \endverbatim
+*>
+*> \param[in] LDB
+*> \verbatim
+*>          LDB is INTEGER
+*>          The leading dimension of the array B.  LDB >= max(1,N).
+*> \endverbatim
+*>
+*> \param[out] INFO
+*> \verbatim
+*>          INFO is INTEGER
+*>          = 0:  successful exit
+*>          < 0: if INFO = -i, the i-th argument had an illegal value
+*> \endverbatim
+*
+*  Authors:
+*  ========
+*
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
+*
+*> \ingroup hptrs
+*
+*  =====================================================================
+      SUBROUTINE ZSPTRS( UPLO, N, NRHS, AP, IPIV, B, LDB, INFO )
+*
+*  -- LAPACK computational routine --
+*  -- LAPACK is a software package provided by Univ. of Tennessee,    --
+*  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
+*
+*     .. Scalar Arguments ..
+      CHARACTER          UPLO
+      INTEGER            INFO, LDB, N, NRHS
+*     ..
+*     .. Array Arguments ..
+      INTEGER            IPIV( * )
+      COMPLEX*16         AP( * ), B( LDB, * )
+*     ..
+*
+*  =====================================================================
+*
+*     .. Parameters ..
+      COMPLEX*16         ONE
+      PARAMETER          ( ONE = ( 1.0D+0, 0.0D+0 ) )
+*     ..
+*     .. Local Scalars ..
+      LOGICAL            UPPER
+      INTEGER            J, K, KC, KP
+      COMPLEX*16         AK, AKM1, AKM1K, BK, BKM1, DENOM
+*     ..
+*     .. External Functions ..
+      LOGICAL            LSAME
+      EXTERNAL           LSAME
+*     ..
+*     .. External Subroutines ..
+      EXTERNAL           XERBLA, ZGEMV, ZGERU, ZSCAL, ZSWAP
+*     ..
+*     .. Intrinsic Functions ..
+      INTRINSIC          MAX
+*     ..
+*     .. Executable Statements ..
+*
+      INFO = 0
+      UPPER = LSAME( UPLO, 'U' )
+      IF( .NOT.UPPER .AND. .NOT.LSAME( UPLO, 'L' ) ) THEN
+         INFO = -1
+      ELSE IF( N.LT.0 ) THEN
+         INFO = -2
+      ELSE IF( NRHS.LT.0 ) THEN
+         INFO = -3
+      ELSE IF( LDB.LT.MAX( 1, N ) ) THEN
+         INFO = -7
+      END IF
+      IF( INFO.NE.0 ) THEN
+         CALL XERBLA( 'ZSPTRS', -INFO )
+         RETURN
+      END IF
+*
+*     Quick return if possible
+*
+      IF( N.EQ.0 .OR. NRHS.EQ.0 )
+     $   RETURN
+*
+      IF( UPPER ) THEN
+*
+*        Solve A*X = B, where A = U*D*U**T.
+*
+*        First solve U*D*X = B, overwriting B with X.
+*
+*        K is the main loop index, decreasing from N to 1 in steps of
+*        1 or 2, depending on the size of the diagonal blocks.
+*
+         K = N
+         KC = N*( N+1 ) / 2 + 1
+   10    CONTINUE
+*
+*        If K < 1, exit from loop.
+*
+         IF( K.LT.1 )
+     $      GO TO 30
+*
+         KC = KC - K
+         IF( IPIV( K ).GT.0 ) THEN
+*
+*           1 x 1 diagonal block
+*
+*           Interchange rows K and IPIV(K).
+*
+            KP = IPIV( K )
+            IF( KP.NE.K )
+     $         CALL ZSWAP( NRHS, B( K, 1 ), LDB, B( KP, 1 ), LDB )
+*
+*           Multiply by inv(U(K)), where U(K) is the transformation
+*           stored in column K of A.
+*
+            CALL ZGERU( K-1, NRHS, -ONE, AP( KC ), 1, B( K, 1 ), LDB,
+     $                  B( 1, 1 ), LDB )
+*
+*           Multiply by the inverse of the diagonal block.
+*
+            CALL ZSCAL( NRHS, ONE / AP( KC+K-1 ), B( K, 1 ), LDB )
+            K = K - 1
+         ELSE
+*
+*           2 x 2 diagonal block
+*
+*           Interchange rows K-1 and -IPIV(K).
+*
+            KP = -IPIV( K )
+            IF( KP.NE.K-1 )
+     $         CALL ZSWAP( NRHS, B( K-1, 1 ), LDB, B( KP, 1 ), LDB )
+*
+*           Multiply by inv(U(K)), where U(K) is the transformation
+*           stored in columns K-1 and K of A.
+*
+            CALL ZGERU( K-2, NRHS, -ONE, AP( KC ), 1, B( K, 1 ), LDB,
+     $                  B( 1, 1 ), LDB )
+            CALL ZGERU( K-2, NRHS, -ONE, AP( KC-( K-1 ) ), 1,
+     $                  B( K-1, 1 ), LDB, B( 1, 1 ), LDB )
+*
+*           Multiply by the inverse of the diagonal block.
+*
+            AKM1K = AP( KC+K-2 )
+            AKM1 = AP( KC-1 ) / AKM1K
+            AK = AP( KC+K-1 ) / AKM1K
+            DENOM = AKM1*AK - ONE
+            DO 20 J = 1, NRHS
+               BKM1 = B( K-1, J ) / AKM1K
+               BK = B( K, J ) / AKM1K
+               B( K-1, J ) = ( AK*BKM1-BK ) / DENOM
+               B( K, J ) = ( AKM1*BK-BKM1 ) / DENOM
+   20       CONTINUE
+            KC = KC - K + 1
+            K = K - 2
+         END IF
+*
+         GO TO 10
+   30    CONTINUE
+*
+*        Next solve U**T*X = B, overwriting B with X.
+*
+*        K is the main loop index, increasing from 1 to N in steps of
+*        1 or 2, depending on the size of the diagonal blocks.
+*
+         K = 1
+         KC = 1
+   40    CONTINUE
+*
+*        If K > N, exit from loop.
+*
+         IF( K.GT.N )
+     $      GO TO 50
+*
+         IF( IPIV( K ).GT.0 ) THEN
+*
+*           1 x 1 diagonal block
+*
+*           Multiply by inv(U**T(K)), where U(K) is the transformation
+*           stored in column K of A.
+*
+            CALL ZGEMV( 'Transpose', K-1, NRHS, -ONE, B, LDB, AP( KC ),
+     $                  1, ONE, B( K, 1 ), LDB )
+*
+*           Interchange rows K and IPIV(K).
+*
+            KP = IPIV( K )
+            IF( KP.NE.K )
+     $         CALL ZSWAP( NRHS, B( K, 1 ), LDB, B( KP, 1 ), LDB )
+            KC = KC + K
+            K = K + 1
+         ELSE
+*
+*           2 x 2 diagonal block
+*
+*           Multiply by inv(U**T(K+1)), where U(K+1) is the transformation
+*           stored in columns K and K+1 of A.
+*
+            CALL ZGEMV( 'Transpose', K-1, NRHS, -ONE, B, LDB, AP( KC ),
+     $                  1, ONE, B( K, 1 ), LDB )
+            CALL ZGEMV( 'Transpose', K-1, NRHS, -ONE, B, LDB,
+     $                  AP( KC+K ), 1, ONE, B( K+1, 1 ), LDB )
+*
+*           Interchange rows K and -IPIV(K).
+*
+            KP = -IPIV( K )
+            IF( KP.NE.K )
+     $         CALL ZSWAP( NRHS, B( K, 1 ), LDB, B( KP, 1 ), LDB )
+            KC = KC + 2*K + 1
+            K = K + 2
+         END IF
+*
+         GO TO 40
+   50    CONTINUE
+*
+      ELSE
+*
+*        Solve A*X = B, where A = L*D*L**T.
+*
+*        First solve L*D*X = B, overwriting B with X.
+*
+*        K is the main loop index, increasing from 1 to N in steps of
+*        1 or 2, depending on the size of the diagonal blocks.
+*
+         K = 1
+         KC = 1
+   60    CONTINUE
+*
+*        If K > N, exit from loop.
+*
+         IF( K.GT.N )
+     $      GO TO 80
+*
+         IF( IPIV( K ).GT.0 ) THEN
+*
+*           1 x 1 diagonal block
+*
+*           Interchange rows K and IPIV(K).
+*
+            KP = IPIV( K )
+            IF( KP.NE.K )
+     $         CALL ZSWAP( NRHS, B( K, 1 ), LDB, B( KP, 1 ), LDB )
+*
+*           Multiply by inv(L(K)), where L(K) is the transformation
+*           stored in column K of A.
+*
+            IF( K.LT.N )
+     $         CALL ZGERU( N-K, NRHS, -ONE, AP( KC+1 ), 1, B( K, 1 ),
+     $                     LDB, B( K+1, 1 ), LDB )
+*
+*           Multiply by the inverse of the diagonal block.
+*
+            CALL ZSCAL( NRHS, ONE / AP( KC ), B( K, 1 ), LDB )
+            KC = KC + N - K + 1
+            K = K + 1
+         ELSE
+*
+*           2 x 2 diagonal block
+*
+*           Interchange rows K+1 and -IPIV(K).
+*
+            KP = -IPIV( K )
+            IF( KP.NE.K+1 )
+     $         CALL ZSWAP( NRHS, B( K+1, 1 ), LDB, B( KP, 1 ), LDB )
+*
+*           Multiply by inv(L(K)), where L(K) is the transformation
+*           stored in columns K and K+1 of A.
+*
+            IF( K.LT.N-1 ) THEN
+               CALL ZGERU( N-K-1, NRHS, -ONE, AP( KC+2 ), 1, B( K, 1 ),
+     $                     LDB, B( K+2, 1 ), LDB )
+               CALL ZGERU( N-K-1, NRHS, -ONE, AP( KC+N-K+2 ), 1,
+     $                     B( K+1, 1 ), LDB, B( K+2, 1 ), LDB )
+            END IF
+*
+*           Multiply by the inverse of the diagonal block.
+*
+            AKM1K = AP( KC+1 )
+            AKM1 = AP( KC ) / AKM1K
+            AK = AP( KC+N-K+1 ) / AKM1K
+            DENOM = AKM1*AK - ONE
+            DO 70 J = 1, NRHS
+               BKM1 = B( K, J ) / AKM1K
+               BK = B( K+1, J ) / AKM1K
+               B( K, J ) = ( AK*BKM1-BK ) / DENOM
+               B( K+1, J ) = ( AKM1*BK-BKM1 ) / DENOM
+   70       CONTINUE
+            KC = KC + 2*( N-K ) + 1
+            K = K + 2
+         END IF
+*
+         GO TO 60
+   80    CONTINUE
+*
+*        Next solve L**T*X = B, overwriting B with X.
+*
+*        K is the main loop index, decreasing from N to 1 in steps of
+*        1 or 2, depending on the size of the diagonal blocks.
+*
+         K = N
+         KC = N*( N+1 ) / 2 + 1
+   90    CONTINUE
+*
+*        If K < 1, exit from loop.
+*
+         IF( K.LT.1 )
+     $      GO TO 100
+*
+         KC = KC - ( N-K+1 )
+         IF( IPIV( K ).GT.0 ) THEN
+*
+*           1 x 1 diagonal block
+*
+*           Multiply by inv(L**T(K)), where L(K) is the transformation
+*           stored in column K of A.
+*
+            IF( K.LT.N )
+     $         CALL ZGEMV( 'Transpose', N-K, NRHS, -ONE, B( K+1, 1 ),
+     $                     LDB, AP( KC+1 ), 1, ONE, B( K, 1 ), LDB )
+*
+*           Interchange rows K and IPIV(K).
+*
+            KP = IPIV( K )
+            IF( KP.NE.K )
+     $         CALL ZSWAP( NRHS, B( K, 1 ), LDB, B( KP, 1 ), LDB )
+            K = K - 1
+         ELSE
+*
+*           2 x 2 diagonal block
+*
+*           Multiply by inv(L**T(K-1)), where L(K-1) is the transformation
+*           stored in columns K-1 and K of A.
+*
+            IF( K.LT.N ) THEN
+               CALL ZGEMV( 'Transpose', N-K, NRHS, -ONE, B( K+1, 1 ),
+     $                     LDB, AP( KC+1 ), 1, ONE, B( K, 1 ), LDB )
+               CALL ZGEMV( 'Transpose', N-K, NRHS, -ONE, B( K+1, 1 ),
+     $                     LDB, AP( KC-( N-K ) ), 1, ONE, B( K-1, 1 ),
+     $                     LDB )
+            END IF
+*
+*           Interchange rows K and -IPIV(K).
+*
+            KP = -IPIV( K )
+            IF( KP.NE.K )
+     $         CALL ZSWAP( NRHS, B( K, 1 ), LDB, B( KP, 1 ), LDB )
+            KC = KC - ( N-K+2 )
+            K = K - 2
+         END IF
+*
+         GO TO 90
+  100    CONTINUE
+      END IF
+*
+      RETURN
+*
+*     End of ZSPTRS
+*
+      END
 *> \brief \b ZSTEDC
 *
 *  =========== DOCUMENTATION ===========
@@ -52119,12 +57130,6 @@
 *> be found if ZHETRD or ZHPTRD or ZHBTRD has been used to reduce this
 *> matrix to tridiagonal form.
 *>
-*> This code makes very mild assumptions about floating point
-*> arithmetic. It will work on machines with a guard digit in
-*> add/subtract, or on those binary machines without guard digits
-*> which subtract like the Cray X-MP, Cray Y-MP, Cray C-90, or Cray-2.
-*> It could conceivably fail on hexadecimal or decimal machines
-*> without guard digits, but we know of none.  See DLAED3 for details.
 *> \endverbatim
 *
 *  Arguments:
@@ -52274,7 +57279,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16OTHERcomputational
+*> \ingroup stedc
 *
 *> \par Contributors:
 *  ==================
@@ -52684,7 +57689,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16OTHERcomputational
+*> \ingroup steqr
 *
 *  =====================================================================
       SUBROUTINE ZSTEQR( COMPZ, N, D, E, Z, LDZ, WORK, INFO )
@@ -53130,6 +58135,242 @@
 *     End of ZSTEQR
 *
       END
+*> \brief \b ZSYCON
+*
+*  =========== DOCUMENTATION ===========
+*
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
+*
+*> \htmlonly
+*> Download ZSYCON + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zsycon.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zsycon.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zsycon.f">
+*> [TXT]</a>
+*> \endhtmlonly
+*
+*  Definition:
+*  ===========
+*
+*       SUBROUTINE ZSYCON( UPLO, N, A, LDA, IPIV, ANORM, RCOND, WORK,
+*                          INFO )
+*
+*       .. Scalar Arguments ..
+*       CHARACTER          UPLO
+*       INTEGER            INFO, LDA, N
+*       DOUBLE PRECISION   ANORM, RCOND
+*       ..
+*       .. Array Arguments ..
+*       INTEGER            IPIV( * )
+*       COMPLEX*16         A( LDA, * ), WORK( * )
+*       ..
+*
+*
+*> \par Purpose:
+*  =============
+*>
+*> \verbatim
+*>
+*> ZSYCON estimates the reciprocal of the condition number (in the
+*> 1-norm) of a complex symmetric matrix A using the factorization
+*> A = U*D*U**T or A = L*D*L**T computed by ZSYTRF.
+*>
+*> An estimate is obtained for norm(inv(A)), and the reciprocal of the
+*> condition number is computed as RCOND = 1 / (ANORM * norm(inv(A))).
+*> \endverbatim
+*
+*  Arguments:
+*  ==========
+*
+*> \param[in] UPLO
+*> \verbatim
+*>          UPLO is CHARACTER*1
+*>          Specifies whether the details of the factorization are stored
+*>          as an upper or lower triangular matrix.
+*>          = 'U':  Upper triangular, form is A = U*D*U**T;
+*>          = 'L':  Lower triangular, form is A = L*D*L**T.
+*> \endverbatim
+*>
+*> \param[in] N
+*> \verbatim
+*>          N is INTEGER
+*>          The order of the matrix A.  N >= 0.
+*> \endverbatim
+*>
+*> \param[in] A
+*> \verbatim
+*>          A is COMPLEX*16 array, dimension (LDA,N)
+*>          The block diagonal matrix D and the multipliers used to
+*>          obtain the factor U or L as computed by ZSYTRF.
+*> \endverbatim
+*>
+*> \param[in] LDA
+*> \verbatim
+*>          LDA is INTEGER
+*>          The leading dimension of the array A.  LDA >= max(1,N).
+*> \endverbatim
+*>
+*> \param[in] IPIV
+*> \verbatim
+*>          IPIV is INTEGER array, dimension (N)
+*>          Details of the interchanges and the block structure of D
+*>          as determined by ZSYTRF.
+*> \endverbatim
+*>
+*> \param[in] ANORM
+*> \verbatim
+*>          ANORM is DOUBLE PRECISION
+*>          The 1-norm of the original matrix A.
+*> \endverbatim
+*>
+*> \param[out] RCOND
+*> \verbatim
+*>          RCOND is DOUBLE PRECISION
+*>          The reciprocal of the condition number of the matrix A,
+*>          computed as RCOND = 1/(ANORM * AINVNM), where AINVNM is an
+*>          estimate of the 1-norm of inv(A) computed in this routine.
+*> \endverbatim
+*>
+*> \param[out] WORK
+*> \verbatim
+*>          WORK is COMPLEX*16 array, dimension (2*N)
+*> \endverbatim
+*>
+*> \param[out] INFO
+*> \verbatim
+*>          INFO is INTEGER
+*>          = 0:  successful exit
+*>          < 0:  if INFO = -i, the i-th argument had an illegal value
+*> \endverbatim
+*
+*  Authors:
+*  ========
+*
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
+*
+*> \ingroup hecon
+*
+*  =====================================================================
+      SUBROUTINE ZSYCON( UPLO, N, A, LDA, IPIV, ANORM, RCOND, WORK,
+     $                   INFO )
+*
+*  -- LAPACK computational routine --
+*  -- LAPACK is a software package provided by Univ. of Tennessee,    --
+*  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
+*
+*     .. Scalar Arguments ..
+      CHARACTER          UPLO
+      INTEGER            INFO, LDA, N
+      DOUBLE PRECISION   ANORM, RCOND
+*     ..
+*     .. Array Arguments ..
+      INTEGER            IPIV( * )
+      COMPLEX*16         A( LDA, * ), WORK( * )
+*     ..
+*
+*  =====================================================================
+*
+*     .. Parameters ..
+      DOUBLE PRECISION   ONE, ZERO
+      PARAMETER          ( ONE = 1.0D+0, ZERO = 0.0D+0 )
+*     ..
+*     .. Local Scalars ..
+      LOGICAL            UPPER
+      INTEGER            I, KASE
+      DOUBLE PRECISION   AINVNM
+*     ..
+*     .. Local Arrays ..
+      INTEGER            ISAVE( 3 )
+*     ..
+*     .. External Functions ..
+      LOGICAL            LSAME
+      EXTERNAL           LSAME
+*     ..
+*     .. External Subroutines ..
+      EXTERNAL           XERBLA, ZLACN2, ZSYTRS
+*     ..
+*     .. Intrinsic Functions ..
+      INTRINSIC          MAX
+*     ..
+*     .. Executable Statements ..
+*
+*     Test the input parameters.
+*
+      INFO = 0
+      UPPER = LSAME( UPLO, 'U' )
+      IF( .NOT.UPPER .AND. .NOT.LSAME( UPLO, 'L' ) ) THEN
+         INFO = -1
+      ELSE IF( N.LT.0 ) THEN
+         INFO = -2
+      ELSE IF( LDA.LT.MAX( 1, N ) ) THEN
+         INFO = -4
+      ELSE IF( ANORM.LT.ZERO ) THEN
+         INFO = -6
+      END IF
+      IF( INFO.NE.0 ) THEN
+         CALL XERBLA( 'ZSYCON', -INFO )
+         RETURN
+      END IF
+*
+*     Quick return if possible
+*
+      RCOND = ZERO
+      IF( N.EQ.0 ) THEN
+         RCOND = ONE
+         RETURN
+      ELSE IF( ANORM.LE.ZERO ) THEN
+         RETURN
+      END IF
+*
+*     Check that the diagonal matrix D is nonsingular.
+*
+      IF( UPPER ) THEN
+*
+*        Upper triangular storage: examine D from bottom to top
+*
+         DO 10 I = N, 1, -1
+            IF( IPIV( I ).GT.0 .AND. A( I, I ).EQ.ZERO )
+     $         RETURN
+   10    CONTINUE
+      ELSE
+*
+*        Lower triangular storage: examine D from top to bottom.
+*
+         DO 20 I = 1, N
+            IF( IPIV( I ).GT.0 .AND. A( I, I ).EQ.ZERO )
+     $         RETURN
+   20    CONTINUE
+      END IF
+*
+*     Estimate the 1-norm of the inverse.
+*
+      KASE = 0
+   30 CONTINUE
+      CALL ZLACN2( N, WORK( N+1 ), WORK, AINVNM, KASE, ISAVE )
+      IF( KASE.NE.0 ) THEN
+*
+*        Multiply by inv(L*D*L**T) or inv(U*D*U**T).
+*
+         CALL ZSYTRS( UPLO, N, 1, A, LDA, IPIV, WORK, N, INFO )
+         GO TO 30
+      END IF
+*
+*     Compute the estimate of the reciprocal condition number.
+*
+      IF( AINVNM.NE.ZERO )
+     $   RCOND = ( ONE / AINVNM ) / ANORM
+*
+      RETURN
+*
+*     End of ZSYCON
+*
+      END
 *> \brief \b ZSYMV computes a matrix-vector product for a complex symmetric matrix.
 *
 *  =========== DOCUMENTATION ===========
@@ -53282,7 +58523,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16SYauxiliary
+*> \ingroup hemv
 *
 *  =====================================================================
       SUBROUTINE ZSYMV( UPLO, N, ALPHA, A, LDA, X, INCX, BETA, Y, INCY )
@@ -53600,7 +58841,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16SYauxiliary
+*> \ingroup her
 *
 *  =====================================================================
       SUBROUTINE ZSYR( UPLO, N, ALPHA, X, INCX, A, LDA )
@@ -53864,7 +59105,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16SYcomputational
+*> \ingroup hetf2
 *
 *> \par Further Details:
 *  =====================
@@ -54480,7 +59721,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16SYcomputational
+*> \ingroup hetrf
 *
 *> \par Further Details:
 *  =====================
@@ -54577,7 +59818,7 @@
 *        Determine the block size
 *
          NB = ILAENV( 1, 'ZSYTRF', UPLO, N, -1, -1, -1 )
-         LWKOPT = N*NB
+         LWKOPT = MAX( 1, N*NB )
          WORK( 1 ) = LWKOPT
       END IF
 *
@@ -54811,7 +60052,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16SYcomputational
+*> \ingroup hetri
 *
 *  =====================================================================
       SUBROUTINE ZSYTRI( UPLO, N, A, LDA, IPIV, WORK, INFO )
@@ -55082,6 +60323,448 @@
 *     End of ZSYTRI
 *
       END
+*> \brief \b ZSYTRS
+*
+*  =========== DOCUMENTATION ===========
+*
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
+*
+*> \htmlonly
+*> Download ZSYTRS + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zsytrs.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zsytrs.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zsytrs.f">
+*> [TXT]</a>
+*> \endhtmlonly
+*
+*  Definition:
+*  ===========
+*
+*       SUBROUTINE ZSYTRS( UPLO, N, NRHS, A, LDA, IPIV, B, LDB, INFO )
+*
+*       .. Scalar Arguments ..
+*       CHARACTER          UPLO
+*       INTEGER            INFO, LDA, LDB, N, NRHS
+*       ..
+*       .. Array Arguments ..
+*       INTEGER            IPIV( * )
+*       COMPLEX*16         A( LDA, * ), B( LDB, * )
+*       ..
+*
+*
+*> \par Purpose:
+*  =============
+*>
+*> \verbatim
+*>
+*> ZSYTRS solves a system of linear equations A*X = B with a complex
+*> symmetric matrix A using the factorization A = U*D*U**T or
+*> A = L*D*L**T computed by ZSYTRF.
+*> \endverbatim
+*
+*  Arguments:
+*  ==========
+*
+*> \param[in] UPLO
+*> \verbatim
+*>          UPLO is CHARACTER*1
+*>          Specifies whether the details of the factorization are stored
+*>          as an upper or lower triangular matrix.
+*>          = 'U':  Upper triangular, form is A = U*D*U**T;
+*>          = 'L':  Lower triangular, form is A = L*D*L**T.
+*> \endverbatim
+*>
+*> \param[in] N
+*> \verbatim
+*>          N is INTEGER
+*>          The order of the matrix A.  N >= 0.
+*> \endverbatim
+*>
+*> \param[in] NRHS
+*> \verbatim
+*>          NRHS is INTEGER
+*>          The number of right hand sides, i.e., the number of columns
+*>          of the matrix B.  NRHS >= 0.
+*> \endverbatim
+*>
+*> \param[in] A
+*> \verbatim
+*>          A is COMPLEX*16 array, dimension (LDA,N)
+*>          The block diagonal matrix D and the multipliers used to
+*>          obtain the factor U or L as computed by ZSYTRF.
+*> \endverbatim
+*>
+*> \param[in] LDA
+*> \verbatim
+*>          LDA is INTEGER
+*>          The leading dimension of the array A.  LDA >= max(1,N).
+*> \endverbatim
+*>
+*> \param[in] IPIV
+*> \verbatim
+*>          IPIV is INTEGER array, dimension (N)
+*>          Details of the interchanges and the block structure of D
+*>          as determined by ZSYTRF.
+*> \endverbatim
+*>
+*> \param[in,out] B
+*> \verbatim
+*>          B is COMPLEX*16 array, dimension (LDB,NRHS)
+*>          On entry, the right hand side matrix B.
+*>          On exit, the solution matrix X.
+*> \endverbatim
+*>
+*> \param[in] LDB
+*> \verbatim
+*>          LDB is INTEGER
+*>          The leading dimension of the array B.  LDB >= max(1,N).
+*> \endverbatim
+*>
+*> \param[out] INFO
+*> \verbatim
+*>          INFO is INTEGER
+*>          = 0:  successful exit
+*>          < 0:  if INFO = -i, the i-th argument had an illegal value
+*> \endverbatim
+*
+*  Authors:
+*  ========
+*
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
+*
+*> \ingroup hetrs
+*
+*  =====================================================================
+      SUBROUTINE ZSYTRS( UPLO, N, NRHS, A, LDA, IPIV, B, LDB, INFO )
+*
+*  -- LAPACK computational routine --
+*  -- LAPACK is a software package provided by Univ. of Tennessee,    --
+*  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
+*
+*     .. Scalar Arguments ..
+      CHARACTER          UPLO
+      INTEGER            INFO, LDA, LDB, N, NRHS
+*     ..
+*     .. Array Arguments ..
+      INTEGER            IPIV( * )
+      COMPLEX*16         A( LDA, * ), B( LDB, * )
+*     ..
+*
+*  =====================================================================
+*
+*     .. Parameters ..
+      COMPLEX*16         ONE
+      PARAMETER          ( ONE = ( 1.0D+0, 0.0D+0 ) )
+*     ..
+*     .. Local Scalars ..
+      LOGICAL            UPPER
+      INTEGER            J, K, KP
+      COMPLEX*16         AK, AKM1, AKM1K, BK, BKM1, DENOM
+*     ..
+*     .. External Functions ..
+      LOGICAL            LSAME
+      EXTERNAL           LSAME
+*     ..
+*     .. External Subroutines ..
+      EXTERNAL           XERBLA, ZGEMV, ZGERU, ZSCAL, ZSWAP
+*     ..
+*     .. Intrinsic Functions ..
+      INTRINSIC          MAX
+*     ..
+*     .. Executable Statements ..
+*
+      INFO = 0
+      UPPER = LSAME( UPLO, 'U' )
+      IF( .NOT.UPPER .AND. .NOT.LSAME( UPLO, 'L' ) ) THEN
+         INFO = -1
+      ELSE IF( N.LT.0 ) THEN
+         INFO = -2
+      ELSE IF( NRHS.LT.0 ) THEN
+         INFO = -3
+      ELSE IF( LDA.LT.MAX( 1, N ) ) THEN
+         INFO = -5
+      ELSE IF( LDB.LT.MAX( 1, N ) ) THEN
+         INFO = -8
+      END IF
+      IF( INFO.NE.0 ) THEN
+         CALL XERBLA( 'ZSYTRS', -INFO )
+         RETURN
+      END IF
+*
+*     Quick return if possible
+*
+      IF( N.EQ.0 .OR. NRHS.EQ.0 )
+     $   RETURN
+*
+      IF( UPPER ) THEN
+*
+*        Solve A*X = B, where A = U*D*U**T.
+*
+*        First solve U*D*X = B, overwriting B with X.
+*
+*        K is the main loop index, decreasing from N to 1 in steps of
+*        1 or 2, depending on the size of the diagonal blocks.
+*
+         K = N
+   10    CONTINUE
+*
+*        If K < 1, exit from loop.
+*
+         IF( K.LT.1 )
+     $      GO TO 30
+*
+         IF( IPIV( K ).GT.0 ) THEN
+*
+*           1 x 1 diagonal block
+*
+*           Interchange rows K and IPIV(K).
+*
+            KP = IPIV( K )
+            IF( KP.NE.K )
+     $         CALL ZSWAP( NRHS, B( K, 1 ), LDB, B( KP, 1 ), LDB )
+*
+*           Multiply by inv(U(K)), where U(K) is the transformation
+*           stored in column K of A.
+*
+            CALL ZGERU( K-1, NRHS, -ONE, A( 1, K ), 1, B( K, 1 ), LDB,
+     $                  B( 1, 1 ), LDB )
+*
+*           Multiply by the inverse of the diagonal block.
+*
+            CALL ZSCAL( NRHS, ONE / A( K, K ), B( K, 1 ), LDB )
+            K = K - 1
+         ELSE
+*
+*           2 x 2 diagonal block
+*
+*           Interchange rows K-1 and -IPIV(K).
+*
+            KP = -IPIV( K )
+            IF( KP.NE.K-1 )
+     $         CALL ZSWAP( NRHS, B( K-1, 1 ), LDB, B( KP, 1 ), LDB )
+*
+*           Multiply by inv(U(K)), where U(K) is the transformation
+*           stored in columns K-1 and K of A.
+*
+            CALL ZGERU( K-2, NRHS, -ONE, A( 1, K ), 1, B( K, 1 ), LDB,
+     $                  B( 1, 1 ), LDB )
+            CALL ZGERU( K-2, NRHS, -ONE, A( 1, K-1 ), 1, B( K-1, 1 ),
+     $                  LDB, B( 1, 1 ), LDB )
+*
+*           Multiply by the inverse of the diagonal block.
+*
+            AKM1K = A( K-1, K )
+            AKM1 = A( K-1, K-1 ) / AKM1K
+            AK = A( K, K ) / AKM1K
+            DENOM = AKM1*AK - ONE
+            DO 20 J = 1, NRHS
+               BKM1 = B( K-1, J ) / AKM1K
+               BK = B( K, J ) / AKM1K
+               B( K-1, J ) = ( AK*BKM1-BK ) / DENOM
+               B( K, J ) = ( AKM1*BK-BKM1 ) / DENOM
+   20       CONTINUE
+            K = K - 2
+         END IF
+*
+         GO TO 10
+   30    CONTINUE
+*
+*        Next solve U**T *X = B, overwriting B with X.
+*
+*        K is the main loop index, increasing from 1 to N in steps of
+*        1 or 2, depending on the size of the diagonal blocks.
+*
+         K = 1
+   40    CONTINUE
+*
+*        If K > N, exit from loop.
+*
+         IF( K.GT.N )
+     $      GO TO 50
+*
+         IF( IPIV( K ).GT.0 ) THEN
+*
+*           1 x 1 diagonal block
+*
+*           Multiply by inv(U**T(K)), where U(K) is the transformation
+*           stored in column K of A.
+*
+            CALL ZGEMV( 'Transpose', K-1, NRHS, -ONE, B, LDB, A( 1, K ),
+     $                  1, ONE, B( K, 1 ), LDB )
+*
+*           Interchange rows K and IPIV(K).
+*
+            KP = IPIV( K )
+            IF( KP.NE.K )
+     $         CALL ZSWAP( NRHS, B( K, 1 ), LDB, B( KP, 1 ), LDB )
+            K = K + 1
+         ELSE
+*
+*           2 x 2 diagonal block
+*
+*           Multiply by inv(U**T(K+1)), where U(K+1) is the transformation
+*           stored in columns K and K+1 of A.
+*
+            CALL ZGEMV( 'Transpose', K-1, NRHS, -ONE, B, LDB, A( 1, K ),
+     $                  1, ONE, B( K, 1 ), LDB )
+            CALL ZGEMV( 'Transpose', K-1, NRHS, -ONE, B, LDB,
+     $                  A( 1, K+1 ), 1, ONE, B( K+1, 1 ), LDB )
+*
+*           Interchange rows K and -IPIV(K).
+*
+            KP = -IPIV( K )
+            IF( KP.NE.K )
+     $         CALL ZSWAP( NRHS, B( K, 1 ), LDB, B( KP, 1 ), LDB )
+            K = K + 2
+         END IF
+*
+         GO TO 40
+   50    CONTINUE
+*
+      ELSE
+*
+*        Solve A*X = B, where A = L*D*L**T.
+*
+*        First solve L*D*X = B, overwriting B with X.
+*
+*        K is the main loop index, increasing from 1 to N in steps of
+*        1 or 2, depending on the size of the diagonal blocks.
+*
+         K = 1
+   60    CONTINUE
+*
+*        If K > N, exit from loop.
+*
+         IF( K.GT.N )
+     $      GO TO 80
+*
+         IF( IPIV( K ).GT.0 ) THEN
+*
+*           1 x 1 diagonal block
+*
+*           Interchange rows K and IPIV(K).
+*
+            KP = IPIV( K )
+            IF( KP.NE.K )
+     $         CALL ZSWAP( NRHS, B( K, 1 ), LDB, B( KP, 1 ), LDB )
+*
+*           Multiply by inv(L(K)), where L(K) is the transformation
+*           stored in column K of A.
+*
+            IF( K.LT.N )
+     $         CALL ZGERU( N-K, NRHS, -ONE, A( K+1, K ), 1, B( K, 1 ),
+     $                     LDB, B( K+1, 1 ), LDB )
+*
+*           Multiply by the inverse of the diagonal block.
+*
+            CALL ZSCAL( NRHS, ONE / A( K, K ), B( K, 1 ), LDB )
+            K = K + 1
+         ELSE
+*
+*           2 x 2 diagonal block
+*
+*           Interchange rows K+1 and -IPIV(K).
+*
+            KP = -IPIV( K )
+            IF( KP.NE.K+1 )
+     $         CALL ZSWAP( NRHS, B( K+1, 1 ), LDB, B( KP, 1 ), LDB )
+*
+*           Multiply by inv(L(K)), where L(K) is the transformation
+*           stored in columns K and K+1 of A.
+*
+            IF( K.LT.N-1 ) THEN
+               CALL ZGERU( N-K-1, NRHS, -ONE, A( K+2, K ), 1, B( K, 1 ),
+     $                     LDB, B( K+2, 1 ), LDB )
+               CALL ZGERU( N-K-1, NRHS, -ONE, A( K+2, K+1 ), 1,
+     $                     B( K+1, 1 ), LDB, B( K+2, 1 ), LDB )
+            END IF
+*
+*           Multiply by the inverse of the diagonal block.
+*
+            AKM1K = A( K+1, K )
+            AKM1 = A( K, K ) / AKM1K
+            AK = A( K+1, K+1 ) / AKM1K
+            DENOM = AKM1*AK - ONE
+            DO 70 J = 1, NRHS
+               BKM1 = B( K, J ) / AKM1K
+               BK = B( K+1, J ) / AKM1K
+               B( K, J ) = ( AK*BKM1-BK ) / DENOM
+               B( K+1, J ) = ( AKM1*BK-BKM1 ) / DENOM
+   70       CONTINUE
+            K = K + 2
+         END IF
+*
+         GO TO 60
+   80    CONTINUE
+*
+*        Next solve L**T *X = B, overwriting B with X.
+*
+*        K is the main loop index, decreasing from N to 1 in steps of
+*        1 or 2, depending on the size of the diagonal blocks.
+*
+         K = N
+   90    CONTINUE
+*
+*        If K < 1, exit from loop.
+*
+         IF( K.LT.1 )
+     $      GO TO 100
+*
+         IF( IPIV( K ).GT.0 ) THEN
+*
+*           1 x 1 diagonal block
+*
+*           Multiply by inv(L**T(K)), where L(K) is the transformation
+*           stored in column K of A.
+*
+            IF( K.LT.N )
+     $         CALL ZGEMV( 'Transpose', N-K, NRHS, -ONE, B( K+1, 1 ),
+     $                     LDB, A( K+1, K ), 1, ONE, B( K, 1 ), LDB )
+*
+*           Interchange rows K and IPIV(K).
+*
+            KP = IPIV( K )
+            IF( KP.NE.K )
+     $         CALL ZSWAP( NRHS, B( K, 1 ), LDB, B( KP, 1 ), LDB )
+            K = K - 1
+         ELSE
+*
+*           2 x 2 diagonal block
+*
+*           Multiply by inv(L**T(K-1)), where L(K-1) is the transformation
+*           stored in columns K-1 and K of A.
+*
+            IF( K.LT.N ) THEN
+               CALL ZGEMV( 'Transpose', N-K, NRHS, -ONE, B( K+1, 1 ),
+     $                     LDB, A( K+1, K ), 1, ONE, B( K, 1 ), LDB )
+               CALL ZGEMV( 'Transpose', N-K, NRHS, -ONE, B( K+1, 1 ),
+     $                     LDB, A( K+1, K-1 ), 1, ONE, B( K-1, 1 ),
+     $                     LDB )
+            END IF
+*
+*           Interchange rows K and -IPIV(K).
+*
+            KP = -IPIV( K )
+            IF( KP.NE.K )
+     $         CALL ZSWAP( NRHS, B( K, 1 ), LDB, B( KP, 1 ), LDB )
+            K = K - 2
+         END IF
+*
+         GO TO 90
+  100    CONTINUE
+      END IF
+*
+      RETURN
+*
+*     End of ZSYTRS
+*
+      END
 *> \brief \b ZTGEVC
 *
 *  =========== DOCUMENTATION ===========
@@ -55137,7 +60820,7 @@
 *>
 *>    S*x = w*P*x,  (y**H)*S = w*(y**H)*P,
 *>
-*> where y**H denotes the conjugate tranpose of y.
+*> where y**H denotes the conjugate transpose of y.
 *> The eigenvalues are not input to this routine, but are computed
 *> directly from the diagonal elements of S and P.
 *>
@@ -55238,7 +60921,7 @@
 *> \verbatim
 *>          VR is COMPLEX*16 array, dimension (LDVR,MM)
 *>          On entry, if SIDE = 'R' or 'B' and HOWMNY = 'B', VR must
-*>          contain an N-by-N matrix Q (usually the unitary matrix Z
+*>          contain an N-by-N matrix Z (usually the unitary matrix Z
 *>          of right Schur vectors returned by ZHGEQZ).
 *>          On exit, if SIDE = 'R' or 'B', VR contains:
 *>          if HOWMNY = 'A', the matrix X of right eigenvectors of (S,P);
@@ -55295,7 +60978,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16GEcomputational
+*> \ingroup tgevc
 *
 *  =====================================================================
       SUBROUTINE ZTGEVC( SIDE, HOWMNY, SELECT, N, S, LDS, P, LDP, VL,
@@ -55343,7 +61026,7 @@
       EXTERNAL           LSAME, DLAMCH, ZLADIV
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           DLABAD, XERBLA, ZGEMV
+      EXTERNAL           XERBLA, ZGEMV
 *     ..
 *     .. Intrinsic Functions ..
       INTRINSIC          ABS, DBLE, DCMPLX, DCONJG, DIMAG, MAX, MIN
@@ -55451,7 +61134,6 @@
 *
       SAFMIN = DLAMCH( 'Safe minimum' )
       BIG = ONE / SAFMIN
-      CALL DLABAD( SAFMIN, BIG )
       ULP = DLAMCH( 'Epsilon' )*DLAMCH( 'Base' )
       SMALL = SAFMIN*N / ULP
       BIG = ONE / SMALL
@@ -55971,7 +61653,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16GEauxiliary
+*> \ingroup tgex2
 *
 *> \par Further Details:
 *  =====================
@@ -56357,7 +62039,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16GEcomputational
+*> \ingroup tgexc
 *
 *> \par Contributors:
 *  ==================
@@ -56781,7 +62463,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16OTHERcomputational
+*> \ingroup tgsen
 *
 *> \par Further Details:
 *  =====================
@@ -57332,7 +63014,7 @@
 *>        Z = [ kron(In, A)  -kron(B**H, Im) ]             (2)
 *>            [ kron(In, D)  -kron(E**H, Im) ],
 *>
-*> Ik is the identity matrix of size k and X**H is the conjuguate transpose of X.
+*> Ik is the identity matrix of size k and X**H is the conjugate transpose of X.
 *> kron(X, Y) is the Kronecker product between the matrices X and Y.
 *>
 *> If TRANS = 'C', y in the conjugate transposed system Z**H*y = scale*b
@@ -57519,7 +63201,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16SYauxiliary
+*> \ingroup tgsy2
 *
 *> \par Contributors:
 *  ==================
@@ -58004,7 +63686,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16SYcomputational
+*> \ingroup tgsyl
 *
 *> \par Contributors:
 *  ==================
@@ -58436,6 +64118,741 @@
 *     End of ZTGSYL
 *
       END
+*> \brief \b ZTPCON
+*
+*  =========== DOCUMENTATION ===========
+*
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
+*
+*> \htmlonly
+*> Download ZTPCON + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/ztpcon.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/ztpcon.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/ztpcon.f">
+*> [TXT]</a>
+*> \endhtmlonly
+*
+*  Definition:
+*  ===========
+*
+*       SUBROUTINE ZTPCON( NORM, UPLO, DIAG, N, AP, RCOND, WORK, RWORK,
+*                          INFO )
+*
+*       .. Scalar Arguments ..
+*       CHARACTER          DIAG, NORM, UPLO
+*       INTEGER            INFO, N
+*       DOUBLE PRECISION   RCOND
+*       ..
+*       .. Array Arguments ..
+*       DOUBLE PRECISION   RWORK( * )
+*       COMPLEX*16         AP( * ), WORK( * )
+*       ..
+*
+*
+*> \par Purpose:
+*  =============
+*>
+*> \verbatim
+*>
+*> ZTPCON estimates the reciprocal of the condition number of a packed
+*> triangular matrix A, in either the 1-norm or the infinity-norm.
+*>
+*> The norm of A is computed and an estimate is obtained for
+*> norm(inv(A)), then the reciprocal of the condition number is
+*> computed as
+*>    RCOND = 1 / ( norm(A) * norm(inv(A)) ).
+*> \endverbatim
+*
+*  Arguments:
+*  ==========
+*
+*> \param[in] NORM
+*> \verbatim
+*>          NORM is CHARACTER*1
+*>          Specifies whether the 1-norm condition number or the
+*>          infinity-norm condition number is required:
+*>          = '1' or 'O':  1-norm;
+*>          = 'I':         Infinity-norm.
+*> \endverbatim
+*>
+*> \param[in] UPLO
+*> \verbatim
+*>          UPLO is CHARACTER*1
+*>          = 'U':  A is upper triangular;
+*>          = 'L':  A is lower triangular.
+*> \endverbatim
+*>
+*> \param[in] DIAG
+*> \verbatim
+*>          DIAG is CHARACTER*1
+*>          = 'N':  A is non-unit triangular;
+*>          = 'U':  A is unit triangular.
+*> \endverbatim
+*>
+*> \param[in] N
+*> \verbatim
+*>          N is INTEGER
+*>          The order of the matrix A.  N >= 0.
+*> \endverbatim
+*>
+*> \param[in] AP
+*> \verbatim
+*>          AP is COMPLEX*16 array, dimension (N*(N+1)/2)
+*>          The upper or lower triangular matrix A, packed columnwise in
+*>          a linear array.  The j-th column of A is stored in the array
+*>          AP as follows:
+*>          if UPLO = 'U', AP(i + (j-1)*j/2) = A(i,j) for 1<=i<=j;
+*>          if UPLO = 'L', AP(i + (j-1)*(2n-j)/2) = A(i,j) for j<=i<=n.
+*>          If DIAG = 'U', the diagonal elements of A are not referenced
+*>          and are assumed to be 1.
+*> \endverbatim
+*>
+*> \param[out] RCOND
+*> \verbatim
+*>          RCOND is DOUBLE PRECISION
+*>          The reciprocal of the condition number of the matrix A,
+*>          computed as RCOND = 1/(norm(A) * norm(inv(A))).
+*> \endverbatim
+*>
+*> \param[out] WORK
+*> \verbatim
+*>          WORK is COMPLEX*16 array, dimension (2*N)
+*> \endverbatim
+*>
+*> \param[out] RWORK
+*> \verbatim
+*>          RWORK is DOUBLE PRECISION array, dimension (N)
+*> \endverbatim
+*>
+*> \param[out] INFO
+*> \verbatim
+*>          INFO is INTEGER
+*>          = 0:  successful exit
+*>          < 0:  if INFO = -i, the i-th argument had an illegal value
+*> \endverbatim
+*
+*  Authors:
+*  ========
+*
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
+*
+*> \ingroup tpcon
+*
+*  =====================================================================
+      SUBROUTINE ZTPCON( NORM, UPLO, DIAG, N, AP, RCOND, WORK, RWORK,
+     $                   INFO )
+*
+*  -- LAPACK computational routine --
+*  -- LAPACK is a software package provided by Univ. of Tennessee,    --
+*  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
+*
+*     .. Scalar Arguments ..
+      CHARACTER          DIAG, NORM, UPLO
+      INTEGER            INFO, N
+      DOUBLE PRECISION   RCOND
+*     ..
+*     .. Array Arguments ..
+      DOUBLE PRECISION   RWORK( * )
+      COMPLEX*16         AP( * ), WORK( * )
+*     ..
+*
+*  =====================================================================
+*
+*     .. Parameters ..
+      DOUBLE PRECISION   ONE, ZERO
+      PARAMETER          ( ONE = 1.0D+0, ZERO = 0.0D+0 )
+*     ..
+*     .. Local Scalars ..
+      LOGICAL            NOUNIT, ONENRM, UPPER
+      CHARACTER          NORMIN
+      INTEGER            IX, KASE, KASE1
+      DOUBLE PRECISION   AINVNM, ANORM, SCALE, SMLNUM, XNORM
+      COMPLEX*16         ZDUM
+*     ..
+*     .. Local Arrays ..
+      INTEGER            ISAVE( 3 )
+*     ..
+*     .. External Functions ..
+      LOGICAL            LSAME
+      INTEGER            IZAMAX
+      DOUBLE PRECISION   DLAMCH, ZLANTP
+      EXTERNAL           LSAME, IZAMAX, DLAMCH, ZLANTP
+*     ..
+*     .. External Subroutines ..
+      EXTERNAL           XERBLA, ZDRSCL, ZLACN2, ZLATPS
+*     ..
+*     .. Intrinsic Functions ..
+      INTRINSIC          ABS, DBLE, DIMAG, MAX
+*     ..
+*     .. Statement Functions ..
+      DOUBLE PRECISION   CABS1
+*     ..
+*     .. Statement Function definitions ..
+      CABS1( ZDUM ) = ABS( DBLE( ZDUM ) ) + ABS( DIMAG( ZDUM ) )
+*     ..
+*     .. Executable Statements ..
+*
+*     Test the input parameters.
+*
+      INFO = 0
+      UPPER = LSAME( UPLO, 'U' )
+      ONENRM = NORM.EQ.'1' .OR. LSAME( NORM, 'O' )
+      NOUNIT = LSAME( DIAG, 'N' )
+*
+      IF( .NOT.ONENRM .AND. .NOT.LSAME( NORM, 'I' ) ) THEN
+         INFO = -1
+      ELSE IF( .NOT.UPPER .AND. .NOT.LSAME( UPLO, 'L' ) ) THEN
+         INFO = -2
+      ELSE IF( .NOT.NOUNIT .AND. .NOT.LSAME( DIAG, 'U' ) ) THEN
+         INFO = -3
+      ELSE IF( N.LT.0 ) THEN
+         INFO = -4
+      END IF
+      IF( INFO.NE.0 ) THEN
+         CALL XERBLA( 'ZTPCON', -INFO )
+         RETURN
+      END IF
+*
+*     Quick return if possible
+*
+      IF( N.EQ.0 ) THEN
+         RCOND = ONE
+         RETURN
+      END IF
+*
+      RCOND = ZERO
+      SMLNUM = DLAMCH( 'Safe minimum' )*DBLE( MAX( 1, N ) )
+*
+*     Compute the norm of the triangular matrix A.
+*
+      ANORM = ZLANTP( NORM, UPLO, DIAG, N, AP, RWORK )
+*
+*     Continue only if ANORM > 0.
+*
+      IF( ANORM.GT.ZERO ) THEN
+*
+*        Estimate the norm of the inverse of A.
+*
+         AINVNM = ZERO
+         NORMIN = 'N'
+         IF( ONENRM ) THEN
+            KASE1 = 1
+         ELSE
+            KASE1 = 2
+         END IF
+         KASE = 0
+   10    CONTINUE
+         CALL ZLACN2( N, WORK( N+1 ), WORK, AINVNM, KASE, ISAVE )
+         IF( KASE.NE.0 ) THEN
+            IF( KASE.EQ.KASE1 ) THEN
+*
+*              Multiply by inv(A).
+*
+               CALL ZLATPS( UPLO, 'No transpose', DIAG, NORMIN, N, AP,
+     $                      WORK, SCALE, RWORK, INFO )
+            ELSE
+*
+*              Multiply by inv(A**H).
+*
+               CALL ZLATPS( UPLO, 'Conjugate transpose', DIAG, NORMIN,
+     $                      N, AP, WORK, SCALE, RWORK, INFO )
+            END IF
+            NORMIN = 'Y'
+*
+*           Multiply by 1/SCALE if doing so will not cause overflow.
+*
+            IF( SCALE.NE.ONE ) THEN
+               IX = IZAMAX( N, WORK, 1 )
+               XNORM = CABS1( WORK( IX ) )
+               IF( SCALE.LT.XNORM*SMLNUM .OR. SCALE.EQ.ZERO )
+     $            GO TO 20
+               CALL ZDRSCL( N, SCALE, WORK, 1 )
+            END IF
+            GO TO 10
+         END IF
+*
+*        Compute the estimate of the reciprocal condition number.
+*
+         IF( AINVNM.NE.ZERO )
+     $      RCOND = ( ONE / ANORM ) / AINVNM
+      END IF
+*
+   20 CONTINUE
+      RETURN
+*
+*     End of ZTPCON
+*
+      END
+*> \brief \b ZTPTRI
+*
+*  =========== DOCUMENTATION ===========
+*
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
+*
+*> \htmlonly
+*> Download ZTPTRI + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/ztptri.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/ztptri.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/ztptri.f">
+*> [TXT]</a>
+*> \endhtmlonly
+*
+*  Definition:
+*  ===========
+*
+*       SUBROUTINE ZTPTRI( UPLO, DIAG, N, AP, INFO )
+*
+*       .. Scalar Arguments ..
+*       CHARACTER          DIAG, UPLO
+*       INTEGER            INFO, N
+*       ..
+*       .. Array Arguments ..
+*       COMPLEX*16         AP( * )
+*       ..
+*
+*
+*> \par Purpose:
+*  =============
+*>
+*> \verbatim
+*>
+*> ZTPTRI computes the inverse of a complex upper or lower triangular
+*> matrix A stored in packed format.
+*> \endverbatim
+*
+*  Arguments:
+*  ==========
+*
+*> \param[in] UPLO
+*> \verbatim
+*>          UPLO is CHARACTER*1
+*>          = 'U':  A is upper triangular;
+*>          = 'L':  A is lower triangular.
+*> \endverbatim
+*>
+*> \param[in] DIAG
+*> \verbatim
+*>          DIAG is CHARACTER*1
+*>          = 'N':  A is non-unit triangular;
+*>          = 'U':  A is unit triangular.
+*> \endverbatim
+*>
+*> \param[in] N
+*> \verbatim
+*>          N is INTEGER
+*>          The order of the matrix A.  N >= 0.
+*> \endverbatim
+*>
+*> \param[in,out] AP
+*> \verbatim
+*>          AP is COMPLEX*16 array, dimension (N*(N+1)/2)
+*>          On entry, the upper or lower triangular matrix A, stored
+*>          columnwise in a linear array.  The j-th column of A is stored
+*>          in the array AP as follows:
+*>          if UPLO = 'U', AP(i + (j-1)*j/2) = A(i,j) for 1<=i<=j;
+*>          if UPLO = 'L', AP(i + (j-1)*((2*n-j)/2) = A(i,j) for j<=i<=n.
+*>          See below for further details.
+*>          On exit, the (triangular) inverse of the original matrix, in
+*>          the same packed storage format.
+*> \endverbatim
+*>
+*> \param[out] INFO
+*> \verbatim
+*>          INFO is INTEGER
+*>          = 0:  successful exit
+*>          < 0:  if INFO = -i, the i-th argument had an illegal value
+*>          > 0:  if INFO = i, A(i,i) is exactly zero.  The triangular
+*>                matrix is singular and its inverse can not be computed.
+*> \endverbatim
+*
+*  Authors:
+*  ========
+*
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
+*
+*> \ingroup tptri
+*
+*> \par Further Details:
+*  =====================
+*>
+*> \verbatim
+*>
+*>  A triangular matrix A can be transferred to packed storage using one
+*>  of the following program segments:
+*>
+*>  UPLO = 'U':                      UPLO = 'L':
+*>
+*>        JC = 1                           JC = 1
+*>        DO 2 J = 1, N                    DO 2 J = 1, N
+*>           DO 1 I = 1, J                    DO 1 I = J, N
+*>              AP(JC+I-1) = A(I,J)              AP(JC+I-J) = A(I,J)
+*>      1    CONTINUE                    1    CONTINUE
+*>           JC = JC + J                      JC = JC + N - J + 1
+*>      2 CONTINUE                       2 CONTINUE
+*> \endverbatim
+*>
+*  =====================================================================
+      SUBROUTINE ZTPTRI( UPLO, DIAG, N, AP, INFO )
+*
+*  -- LAPACK computational routine --
+*  -- LAPACK is a software package provided by Univ. of Tennessee,    --
+*  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
+*
+*     .. Scalar Arguments ..
+      CHARACTER          DIAG, UPLO
+      INTEGER            INFO, N
+*     ..
+*     .. Array Arguments ..
+      COMPLEX*16         AP( * )
+*     ..
+*
+*  =====================================================================
+*
+*     .. Parameters ..
+      COMPLEX*16         ONE, ZERO
+      PARAMETER          ( ONE = ( 1.0D+0, 0.0D+0 ),
+     $                   ZERO = ( 0.0D+0, 0.0D+0 ) )
+*     ..
+*     .. Local Scalars ..
+      LOGICAL            NOUNIT, UPPER
+      INTEGER            J, JC, JCLAST, JJ
+      COMPLEX*16         AJJ
+*     ..
+*     .. External Functions ..
+      LOGICAL            LSAME
+      EXTERNAL           LSAME
+*     ..
+*     .. External Subroutines ..
+      EXTERNAL           XERBLA, ZSCAL, ZTPMV
+*     ..
+*     .. Executable Statements ..
+*
+*     Test the input parameters.
+*
+      INFO = 0
+      UPPER = LSAME( UPLO, 'U' )
+      NOUNIT = LSAME( DIAG, 'N' )
+      IF( .NOT.UPPER .AND. .NOT.LSAME( UPLO, 'L' ) ) THEN
+         INFO = -1
+      ELSE IF( .NOT.NOUNIT .AND. .NOT.LSAME( DIAG, 'U' ) ) THEN
+         INFO = -2
+      ELSE IF( N.LT.0 ) THEN
+         INFO = -3
+      END IF
+      IF( INFO.NE.0 ) THEN
+         CALL XERBLA( 'ZTPTRI', -INFO )
+         RETURN
+      END IF
+*
+*     Check for singularity if non-unit.
+*
+      IF( NOUNIT ) THEN
+         IF( UPPER ) THEN
+            JJ = 0
+            DO 10 INFO = 1, N
+               JJ = JJ + INFO
+               IF( AP( JJ ).EQ.ZERO )
+     $            RETURN
+   10       CONTINUE
+         ELSE
+            JJ = 1
+            DO 20 INFO = 1, N
+               IF( AP( JJ ).EQ.ZERO )
+     $            RETURN
+               JJ = JJ + N - INFO + 1
+   20       CONTINUE
+         END IF
+         INFO = 0
+      END IF
+*
+      IF( UPPER ) THEN
+*
+*        Compute inverse of upper triangular matrix.
+*
+         JC = 1
+         DO 30 J = 1, N
+            IF( NOUNIT ) THEN
+               AP( JC+J-1 ) = ONE / AP( JC+J-1 )
+               AJJ = -AP( JC+J-1 )
+            ELSE
+               AJJ = -ONE
+            END IF
+*
+*           Compute elements 1:j-1 of j-th column.
+*
+            CALL ZTPMV( 'Upper', 'No transpose', DIAG, J-1, AP,
+     $                  AP( JC ), 1 )
+            CALL ZSCAL( J-1, AJJ, AP( JC ), 1 )
+            JC = JC + J
+   30    CONTINUE
+*
+      ELSE
+*
+*        Compute inverse of lower triangular matrix.
+*
+         JC = N*( N+1 ) / 2
+         DO 40 J = N, 1, -1
+            IF( NOUNIT ) THEN
+               AP( JC ) = ONE / AP( JC )
+               AJJ = -AP( JC )
+            ELSE
+               AJJ = -ONE
+            END IF
+            IF( J.LT.N ) THEN
+*
+*              Compute elements j+1:n of j-th column.
+*
+               CALL ZTPMV( 'Lower', 'No transpose', DIAG, N-J,
+     $                     AP( JCLAST ), AP( JC+1 ), 1 )
+               CALL ZSCAL( N-J, AJJ, AP( JC+1 ), 1 )
+            END IF
+            JCLAST = JC
+            JC = JC - N + J - 2
+   40    CONTINUE
+      END IF
+*
+      RETURN
+*
+*     End of ZTPTRI
+*
+      END
+*> \brief \b ZTPTRS
+*
+*  =========== DOCUMENTATION ===========
+*
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
+*
+*> \htmlonly
+*> Download ZTPTRS + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/ztptrs.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/ztptrs.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/ztptrs.f">
+*> [TXT]</a>
+*> \endhtmlonly
+*
+*  Definition:
+*  ===========
+*
+*       SUBROUTINE ZTPTRS( UPLO, TRANS, DIAG, N, NRHS, AP, B, LDB, INFO )
+*
+*       .. Scalar Arguments ..
+*       CHARACTER          DIAG, TRANS, UPLO
+*       INTEGER            INFO, LDB, N, NRHS
+*       ..
+*       .. Array Arguments ..
+*       COMPLEX*16         AP( * ), B( LDB, * )
+*       ..
+*
+*
+*> \par Purpose:
+*  =============
+*>
+*> \verbatim
+*>
+*> ZTPTRS solves a triangular system of the form
+*>
+*>    A * X = B,  A**T * X = B,  or  A**H * X = B,
+*>
+*> where A is a triangular matrix of order N stored in packed format,
+*> and B is an N-by-NRHS matrix.  A check is made to verify that A is
+*> nonsingular.
+*> \endverbatim
+*
+*  Arguments:
+*  ==========
+*
+*> \param[in] UPLO
+*> \verbatim
+*>          UPLO is CHARACTER*1
+*>          = 'U':  A is upper triangular;
+*>          = 'L':  A is lower triangular.
+*> \endverbatim
+*>
+*> \param[in] TRANS
+*> \verbatim
+*>          TRANS is CHARACTER*1
+*>          Specifies the form of the system of equations:
+*>          = 'N':  A * X = B     (No transpose)
+*>          = 'T':  A**T * X = B  (Transpose)
+*>          = 'C':  A**H * X = B  (Conjugate transpose)
+*> \endverbatim
+*>
+*> \param[in] DIAG
+*> \verbatim
+*>          DIAG is CHARACTER*1
+*>          = 'N':  A is non-unit triangular;
+*>          = 'U':  A is unit triangular.
+*> \endverbatim
+*>
+*> \param[in] N
+*> \verbatim
+*>          N is INTEGER
+*>          The order of the matrix A.  N >= 0.
+*> \endverbatim
+*>
+*> \param[in] NRHS
+*> \verbatim
+*>          NRHS is INTEGER
+*>          The number of right hand sides, i.e., the number of columns
+*>          of the matrix B.  NRHS >= 0.
+*> \endverbatim
+*>
+*> \param[in] AP
+*> \verbatim
+*>          AP is COMPLEX*16 array, dimension (N*(N+1)/2)
+*>          The upper or lower triangular matrix A, packed columnwise in
+*>          a linear array.  The j-th column of A is stored in the array
+*>          AP as follows:
+*>          if UPLO = 'U', AP(i + (j-1)*j/2) = A(i,j) for 1<=i<=j;
+*>          if UPLO = 'L', AP(i + (j-1)*(2*n-j)/2) = A(i,j) for j<=i<=n.
+*> \endverbatim
+*>
+*> \param[in,out] B
+*> \verbatim
+*>          B is COMPLEX*16 array, dimension (LDB,NRHS)
+*>          On entry, the right hand side matrix B.
+*>          On exit, if INFO = 0, the solution matrix X.
+*> \endverbatim
+*>
+*> \param[in] LDB
+*> \verbatim
+*>          LDB is INTEGER
+*>          The leading dimension of the array B.  LDB >= max(1,N).
+*> \endverbatim
+*>
+*> \param[out] INFO
+*> \verbatim
+*>          INFO is INTEGER
+*>          = 0:  successful exit
+*>          < 0:  if INFO = -i, the i-th argument had an illegal value
+*>          > 0:  if INFO = i, the i-th diagonal element of A is zero,
+*>                indicating that the matrix is singular and the
+*>                solutions X have not been computed.
+*> \endverbatim
+*
+*  Authors:
+*  ========
+*
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
+*
+*> \ingroup tptrs
+*
+*  =====================================================================
+      SUBROUTINE ZTPTRS( UPLO, TRANS, DIAG, N, NRHS, AP, B, LDB, INFO )
+*
+*  -- LAPACK computational routine --
+*  -- LAPACK is a software package provided by Univ. of Tennessee,    --
+*  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
+*
+*     .. Scalar Arguments ..
+      CHARACTER          DIAG, TRANS, UPLO
+      INTEGER            INFO, LDB, N, NRHS
+*     ..
+*     .. Array Arguments ..
+      COMPLEX*16         AP( * ), B( LDB, * )
+*     ..
+*
+*  =====================================================================
+*
+*     .. Parameters ..
+      COMPLEX*16         ZERO
+      PARAMETER          ( ZERO = ( 0.0D+0, 0.0D+0 ) )
+*     ..
+*     .. Local Scalars ..
+      LOGICAL            NOUNIT, UPPER
+      INTEGER            J, JC
+*     ..
+*     .. External Functions ..
+      LOGICAL            LSAME
+      EXTERNAL           LSAME
+*     ..
+*     .. External Subroutines ..
+      EXTERNAL           XERBLA, ZTPSV
+*     ..
+*     .. Intrinsic Functions ..
+      INTRINSIC          MAX
+*     ..
+*     .. Executable Statements ..
+*
+*     Test the input parameters.
+*
+      INFO = 0
+      UPPER = LSAME( UPLO, 'U' )
+      NOUNIT = LSAME( DIAG, 'N' )
+      IF( .NOT.UPPER .AND. .NOT.LSAME( UPLO, 'L' ) ) THEN
+         INFO = -1
+      ELSE IF( .NOT.LSAME( TRANS, 'N' ) .AND. .NOT.
+     $         LSAME( TRANS, 'T' ) .AND. .NOT.LSAME( TRANS, 'C' ) ) THEN
+         INFO = -2
+      ELSE IF( .NOT.NOUNIT .AND. .NOT.LSAME( DIAG, 'U' ) ) THEN
+         INFO = -3
+      ELSE IF( N.LT.0 ) THEN
+         INFO = -4
+      ELSE IF( NRHS.LT.0 ) THEN
+         INFO = -5
+      ELSE IF( LDB.LT.MAX( 1, N ) ) THEN
+         INFO = -8
+      END IF
+      IF( INFO.NE.0 ) THEN
+         CALL XERBLA( 'ZTPTRS', -INFO )
+         RETURN
+      END IF
+*
+*     Quick return if possible
+*
+      IF( N.EQ.0 )
+     $   RETURN
+*
+*     Check for singularity.
+*
+      IF( NOUNIT ) THEN
+         IF( UPPER ) THEN
+            JC = 1
+            DO 10 INFO = 1, N
+               IF( AP( JC+INFO-1 ).EQ.ZERO )
+     $            RETURN
+               JC = JC + INFO
+   10       CONTINUE
+         ELSE
+            JC = 1
+            DO 20 INFO = 1, N
+               IF( AP( JC ).EQ.ZERO )
+     $            RETURN
+               JC = JC + N - INFO + 1
+   20       CONTINUE
+         END IF
+      END IF
+      INFO = 0
+*
+*     Solve  A * x = b,  A**T * x = b,  or  A**H * x = b.
+*
+      DO 30 J = 1, NRHS
+         CALL ZTPSV( UPLO, TRANS, DIAG, N, AP, B( 1, J ), 1 )
+   30 CONTINUE
+*
+      RETURN
+*
+*     End of ZTPTRS
+*
+      END
 *> \brief \b ZTRCON
 *
 *  =========== DOCUMENTATION ===========
@@ -58567,7 +64984,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16OTHERcomputational
+*> \ingroup trcon
 *
 *  =====================================================================
       SUBROUTINE ZTRCON( NORM, UPLO, DIAG, N, A, LDA, RCOND, WORK,
@@ -58914,7 +65331,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16OTHERcomputational
+*> \ingroup trevc
 *
 *> \par Further Details:
 *  =====================
@@ -58971,7 +65388,7 @@
       EXTERNAL           LSAME, IZAMAX, DLAMCH, DZASUM
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           XERBLA, ZCOPY, ZDSCAL, ZGEMV, ZLATRS, DLABAD
+      EXTERNAL           XERBLA, ZCOPY, ZDSCAL, ZGEMV, ZLATRS
 *     ..
 *     .. Intrinsic Functions ..
       INTRINSIC          ABS, DBLE, DCMPLX, DCONJG, DIMAG, MAX
@@ -59037,7 +65454,6 @@
 *
       UNFL = DLAMCH( 'Safe minimum' )
       OVFL = ONE / UNFL
-      CALL DLABAD( UNFL, OVFL )
       ULP = DLAMCH( 'Precision' )
       SMLNUM = UNFL*( N / ULP )
 *
@@ -59423,7 +65839,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16OTHERcomputational
+*> \ingroup trevc3
 *
 *> \par Further Details:
 *  =====================
@@ -59484,7 +65900,7 @@
 *     ..
 *     .. External Subroutines ..
       EXTERNAL           XERBLA, ZCOPY, ZDSCAL, ZGEMV, ZLATRS,
-     $                   ZGEMM, DLABAD, ZLASET, ZLACPY
+     $                   ZGEMM, ZLASET, ZLACPY
 *     ..
 *     .. Intrinsic Functions ..
       INTRINSIC          ABS, DBLE, DCMPLX, CONJG, DIMAG, MAX
@@ -59522,9 +65938,9 @@
 *
       INFO = 0
       NB = ILAENV( 1, 'ZTREVC', SIDE // HOWMNY, N, -1, -1, -1 )
-      MAXWRK = N + 2*N*NB
+      MAXWRK = MAX( 1, N + 2*N*NB )
       WORK(1) = MAXWRK
-      RWORK(1) = N
+      RWORK(1) = MAX( 1, N )
       LQUERY = ( LWORK.EQ.-1 .OR. LRWORK.EQ.-1 )
       IF( .NOT.RIGHTV .AND. .NOT.LEFTV ) THEN
          INFO = -1
@@ -59572,7 +65988,6 @@
 *
       UNFL = DLAMCH( 'Safe minimum' )
       OVFL = ONE / UNFL
-      CALL DLABAD( UNFL, OVFL )
       ULP = DLAMCH( 'Precision' )
       SMLNUM = UNFL*( N / ULP )
 *
@@ -59867,7 +66282,7 @@
 *>
 *> The Schur form T is reordered by a unitary similarity transformation
 *> Z**H*T*Z, and optionally the matrix Q of Schur vectors is updated by
-*> postmultplying it with Z.
+*> postmultiplying it with Z.
 *> \endverbatim
 *
 *  Arguments:
@@ -59946,7 +66361,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16OTHERcomputational
+*> \ingroup trexc
 *
 *  =====================================================================
       SUBROUTINE ZTREXC( COMPQ, N, T, LDT, Q, LDQ, IFST, ILST, INFO )
@@ -60247,7 +66662,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16OTHERcomputational
+*> \ingroup trsen
 *
 *> \par Further Details:
 *  =====================
@@ -60715,7 +67130,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16OTHERcomputational
+*> \ingroup trsna
 *
 *> \par Further Details:
 *  =====================
@@ -60806,8 +67221,7 @@
       EXTERNAL           LSAME, IZAMAX, DLAMCH, DZNRM2, ZDOTC
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           XERBLA, ZDRSCL, ZLACN2, ZLACPY, ZLATRS, ZTREXC,
-     $                   DLABAD
+      EXTERNAL           XERBLA, ZDRSCL, ZLACN2, ZLACPY, ZLATRS, ZTREXC
 *     ..
 *     .. Intrinsic Functions ..
       INTRINSIC          ABS, DBLE, DIMAG, MAX
@@ -60886,7 +67300,6 @@
       EPS = DLAMCH( 'P' )
       SMLNUM = DLAMCH( 'S' ) / EPS
       BIGNUM = ONE / SMLNUM
-      CALL DLABAD( SMLNUM, BIGNUM )
 *
       KS = 1
       DO 50 K = 1, N
@@ -61128,7 +67541,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16SYcomputational
+*> \ingroup trsyl
 *
 *  =====================================================================
       SUBROUTINE ZTRSYL( TRANA, TRANB, ISGN, M, N, A, LDA, B, LDB, C,
@@ -61170,7 +67583,7 @@
       EXTERNAL           LSAME, DLAMCH, ZLANGE, ZDOTC, ZDOTU, ZLADIV
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           DLABAD, XERBLA, ZDSCAL
+      EXTERNAL           XERBLA, ZDSCAL
 *     ..
 *     .. Intrinsic Functions ..
       INTRINSIC          ABS, DBLE, DCMPLX, DCONJG, DIMAG, MAX, MIN
@@ -61216,7 +67629,6 @@
       EPS = DLAMCH( 'P' )
       SMLNUM = DLAMCH( 'S' )
       BIGNUM = ONE / SMLNUM
-      CALL DLABAD( SMLNUM, BIGNUM )
       SMLNUM = SMLNUM*DBLE( M*N ) / EPS
       BIGNUM = ONE / SMLNUM
       SMIN = MAX( SMLNUM, EPS*ZLANGE( 'M', M, M, A, LDA, DUM ),
@@ -61533,7 +67945,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16OTHERcomputational
+*> \ingroup trti2
 *
 *  =====================================================================
       SUBROUTINE ZTRTI2( UPLO, DIAG, N, A, LDA, INFO )
@@ -61741,7 +68153,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16OTHERcomputational
+*> \ingroup trtri
 *
 *  =====================================================================
       SUBROUTINE ZTRTRI( UPLO, DIAG, N, A, LDA, INFO )
@@ -62011,7 +68423,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16OTHERcomputational
+*> \ingroup trtrs
 *
 *  =====================================================================
       SUBROUTINE ZTRTRS( UPLO, TRANS, DIAG, N, NRHS, A, LDA, B, LDB,
@@ -62210,7 +68622,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16OTHERcomputational
+*> \ingroup ung2l
 *
 *  =====================================================================
       SUBROUTINE ZUNG2L( M, N, K, A, LDA, TAU, WORK, INFO )
@@ -62406,7 +68818,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16OTHERcomputational
+*> \ingroup ung2r
 *
 *  =====================================================================
       SUBROUTINE ZUNG2R( M, N, K, A, LDA, TAU, WORK, INFO )
@@ -62647,7 +69059,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16GBcomputational
+*> \ingroup ungbr
 *
 *  =====================================================================
       SUBROUTINE ZUNGBR( VECT, M, N, K, A, LDA, TAU, WORK, LWORK, INFO )
@@ -62951,7 +69363,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16OTHERcomputational
+*> \ingroup unghr
 *
 *  =====================================================================
       SUBROUTINE ZUNGHR( N, ILO, IHI, A, LDA, TAU, WORK, LWORK, INFO )
@@ -63176,7 +69588,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16OTHERcomputational
+*> \ingroup ungl2
 *
 *  =====================================================================
       SUBROUTINE ZUNGL2( M, N, K, A, LDA, TAU, WORK, INFO )
@@ -63394,7 +69806,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16OTHERcomputational
+*> \ingroup unglq
 *
 *  =====================================================================
       SUBROUTINE ZUNGLQ( M, N, K, A, LDA, TAU, WORK, LWORK, INFO )
@@ -63681,7 +70093,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16OTHERcomputational
+*> \ingroup ungql
 *
 *  =====================================================================
       SUBROUTINE ZUNGQL( M, N, K, A, LDA, TAU, WORK, LWORK, INFO )
@@ -63974,7 +70386,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16OTHERcomputational
+*> \ingroup ungqr
 *
 *  =====================================================================
       SUBROUTINE ZUNGQR( M, N, K, A, LDA, TAU, WORK, LWORK, INFO )
@@ -64247,7 +70659,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16OTHERcomputational
+*> \ingroup ungr2
 *
 *  =====================================================================
       SUBROUTINE ZUNGR2( M, N, K, A, LDA, TAU, WORK, INFO )
@@ -64463,7 +70875,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16OTHERcomputational
+*> \ingroup ungrq
 *
 *  =====================================================================
       SUBROUTINE ZUNGRQ( M, N, K, A, LDA, TAU, WORK, LWORK, INFO )
@@ -64752,7 +71164,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16OTHERcomputational
+*> \ingroup ungtr
 *
 *  =====================================================================
       SUBROUTINE ZUNGTR( UPLO, N, A, LDA, TAU, WORK, LWORK, INFO )
@@ -65040,7 +71452,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16OTHERcomputational
+*> \ingroup unm2l
 *
 *  =====================================================================
       SUBROUTINE ZUNM2L( SIDE, TRANS, M, N, K, A, LDA, TAU, C, LDC,
@@ -65318,7 +71730,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16OTHERcomputational
+*> \ingroup unm2r
 *
 *  =====================================================================
       SUBROUTINE ZUNM2R( SIDE, TRANS, M, N, K, A, LDA, TAU, C, LDC,
@@ -65638,7 +72050,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16OTHERcomputational
+*> \ingroup unmbr
 *
 *  =====================================================================
       SUBROUTINE ZUNMBR( VECT, SIDE, TRANS, M, N, K, A, LDA, TAU, C,
@@ -65993,7 +72405,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16OTHERcomputational
+*> \ingroup unmhr
 *
 *  =====================================================================
       SUBROUTINE ZUNMHR( SIDE, TRANS, M, N, ILO, IHI, A, LDA, TAU, C,
@@ -66265,7 +72677,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16OTHERcomputational
+*> \ingroup unml2
 *
 *  =====================================================================
       SUBROUTINE ZUNML2( SIDE, TRANS, M, N, K, A, LDA, TAU, C, LDC,
@@ -66560,7 +72972,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16OTHERcomputational
+*> \ingroup unmlq
 *
 *  =====================================================================
       SUBROUTINE ZUNMLQ( SIDE, TRANS, M, N, K, A, LDA, TAU, C, LDC,
@@ -66904,7 +73316,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16OTHERcomputational
+*> \ingroup unmql
 *
 *  =====================================================================
       SUBROUTINE ZUNMQL( SIDE, TRANS, M, N, K, A, LDA, TAU, C, LDC,
@@ -67240,7 +73652,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16OTHERcomputational
+*> \ingroup unmqr
 *
 *  =====================================================================
       SUBROUTINE ZUNMQR( SIDE, TRANS, M, N, K, A, LDA, TAU, C, LDC,
@@ -67581,7 +73993,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \ingroup complex16OTHERcomputational
+*> \ingroup unmtr
 *
 *  =====================================================================
       SUBROUTINE ZUNMTR( SIDE, UPLO, TRANS, M, N, A, LDA, TAU, C, LDC,
