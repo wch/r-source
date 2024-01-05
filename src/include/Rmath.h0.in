@@ -1,6 +1,6 @@
 /* -*- C -*-
  *  Mathlib : A C Library of Special Functions
- *  Copyright (C) 1998-2022  The R Core Team
+ *  Copyright (C) 1998-2024  The R Core Team
  *  Copyright (C) 2004       The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -252,6 +252,7 @@ double  Rlog1p(double);
 #define lgammafn	Rf_lgammafn
 #define lgammafn_sign	Rf_lgammafn_sign
 #define lgamma1p	Rf_lgamma1p
+#define pow1p		Rf_pow1p
 #define log1mexp       	Rf_log1mexp
 #define log1pexp       	Rf_log1pexp
 #define log1pmx		Rf_log1pmx
@@ -394,8 +395,17 @@ double  log1pexp(double); // <-- ../nmath/plogis.c
 double  log1mexp(double);
 double  lgamma1p(double);/* accurate log(gamma(x+1)), small x (0 < x < 0.5) */
 
-double  logspace_add(double, double);
-double  logspace_sub(double, double);
+double  pow1p(double, double); /* pow1p(x, y) := (1+x)^y  accurately also for |x| << 1 */
+
+/* Compute the log of a sum or difference from logs of terms, i.e.,
+ *
+ *     log (exp (logx) + exp (logy))
+ * or  log (exp (logx) - exp (logy))
+ *
+ * without causing overflows or throwing away too much accuracy:
+ */
+double  logspace_add(double logx, double logy);
+double  logspace_sub(double logx, double logy);
 double  logspace_sum(const double *, int);
 
 	/* Beta Distribution */
@@ -607,17 +617,6 @@ double sinpi(double);
 double tanpi(double);
 #endif
 double Rtanpi(double); /* our own in any case */
-
-/* Compute the log of a sum or difference from logs of terms, i.e.,
- *
- *     log (exp (logx) + exp (logy))
- * or  log (exp (logx) - exp (logy))
- *
- * without causing overflows or throwing away too much accuracy:
- */
-double  logspace_add(double logx, double logy);
-double  logspace_sub(double logx, double logy);
-
 
 /* ----------------- Private part of the header file ------------------- */
 

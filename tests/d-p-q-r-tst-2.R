@@ -828,5 +828,18 @@ stopifnot(exprs = {
 ## dpois(x,x) underflowed to zero in R <= 4.1.1 for such large x.
 
 
+## PR#18642 -- dgeom() accuracy --> improved via  dbinom_raw(x, n, prob) for x=0 and x=n
+x <- c(159, 171, 183, 201)
+tru1 <- c(4.64906012307645596e-240, 4.03241686836417614e-258,
+         3.4975641032381073e-276,  2.82530978257810403e-303)
+(xs <- 44400 + sort(c(outer(c(10,26), 29*(0:2), `+`))))
+tru2 <- c(2.850864888117265e-306, 2.2158779845990397e-306, 1.8056489670203573e-306,
+          1.4034680530148749e-306, 1.1436417789181365e-306, 8.8891292278883415e-307)
+stopifnot(exprs = {
+    print(abs(1 - dgeom(x, 31/32) / tru1) * 2^52) <= 4 # see 0 0 0 0     (Linux F 38, gcc)
+    print(abs(1 - dgeom(xs, 1/64) / tru2) * 2^52) <= 4 # see 0 0 0 0 0 0 (  "		)
+}) # in R <= 4.3.z, relErr * 2^52  were (238 246 254 10) and (252 242.5 252 242 252 242)
+
+
 
 cat("Time elapsed: ", proc.time() - .ptime,"\n")

@@ -15437,11 +15437,15 @@ There are a few other numerical utility functions available as entry points.
 
 @deftypefun double R_pow (double @var{x}, double @var{y})
 @deftypefunx double R_pow_di (double @var{x}, int @var{i})
+@deftypefunx double pow1p (double @var{x}, double @var{y})
 @code{R_pow(@var{x}, @var{y})} and @code{R_pow_di(@var{x}, @var{i})}
 compute @code{@var{x}^@var{y}} and @code{@var{x}^@var{i}}, respectively
 using @code{R_FINITE} checks and returning the proper result (the same
 as @R{}) for the cases where @var{x}, @var{y} or @var{i} are 0 or
 missing or infinite or @code{NaN}.
+
+@code{pow1p(@var{x}, @var{y})} computes @code{(1 + @var{x})^@var{y}}, accurately
+even for small @var{x}, i.e., @eqn{|x| \ll 1, |x| << 1}. 
 @end deftypefun
 
 @deftypefun double log1p (double @var{x})

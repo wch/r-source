@@ -369,6 +369,8 @@
       \code{S4SXP} value can still be used in \code{C} code but is now
       deprecated. Based on contributions from the R Consortium
       Object-Oriented Programming Working Group.
+
+      \item New function \code{pow1p(x,y)} for accurate \code{(1+x)^y}.
     }
   }
 
@@ -545,6 +547,11 @@
       \item \code{removeSource()} is yet more thorough in finding and
       removing \code{"srcref"} and the other source references from parsed
       \R language chunks, fixing \PR{18638} thanks to Andrew Simmons.
+
+      \item \code{dgeom()} is more accurate now, notably when its result is
+      very small, fixing \PR{18642} thanks to the proposal of Morten Welinder,
+      also improving other instances where C level \code{binom_raw(x, n, ..)}
+      has \code{x == 0} or \code{x== n}.
     }
   }
 }
