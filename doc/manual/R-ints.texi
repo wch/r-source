@@ -414,7 +414,7 @@ created by slightly over-committing when enlarging a vector during
 subassignment, so that some number of the following enlargements during
 subassignment can be performed in place), where @code{truelength} is the
 number of slots in use.  } of the vector, and then followed by the data
-(aligned as required: on most 32-bit systems with a 24-byte
+(aligned as required: on most 32-bit systems with a 28-byte
 @code{VECTOR_SEXPREC} node the data can follow immediately after the node). 
 The data are a block of memory of the appropriate length to store `true
 length' elements (rounded up to a multiple of 8 bytes, with the 8-byte
