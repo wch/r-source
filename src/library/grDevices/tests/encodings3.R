@@ -1,8 +1,11 @@
 ### Tests of transliteration in PDF
 
-## macOS >= 14 transliterates many chars, ans R 4.4.0 some many of
+## macOS >= 14 transliterates many chars, and R 4.4.0 does many of
 ## these for other platforms.  Some were tested in encodings.R, the
 ## rest here.
+
+## Silence substitution warnings to make this more diff-able.
+Sys.setenv("_R_SILENT_PDF_SUBSTITUTION_" = "true")
 
 options(warn = 1L)
 

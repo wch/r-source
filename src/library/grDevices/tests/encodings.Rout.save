@@ -1,6 +1,6 @@
 
-R Under development (unstable) (2023-12-22 r85720) -- "Unsuffered Consequences"
-Copyright (C) 2023 The R Foundation for Statistical Computing
+R Under development (unstable) (2024-01-05 r85780) -- "Unsuffered Consequences"
+Copyright (C) 2024 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -16,6 +16,10 @@ Type 'demo()' for some demos, 'help()' for on-line help, or
 Type 'q()' to quit R.
 
 > ### Tests of non-ASCII plotting in PDF and PS
+> 
+> 
+> ## Silence substitution warnings to make this more diff-able.
+> Sys.setenv("_R_SILENT_PDF_SUBSTITUTION_" =  "true")
 > 
 > options(warn = 1L)
 > 
@@ -64,68 +68,10 @@ Type 'q()' to quit R.
 > pdf("PDF-encoding.pdf", width = 5, height = 5, compress = FALSE)
 > plot(1:11, 0:10, type = "n")
 > text(0.5+seq_along(one), 1, one, adj = c(0,0))
-Warning in text.default(0.5 + seq_along(one), 1, one, adj = c(0, 0)) :
-  for '–' in 'mbcsToSbcs': - substituted for – (U+2013)
-Warning in text.default(0.5 + seq_along(one), 1, one, adj = c(0, 0)) :
-  for '—' in 'mbcsToSbcs': - substituted for — (U+2014)
-Warning in text.default(0.5 + seq_along(one), 1, one, adj = c(0, 0)) :
-  for '−' in 'mbcsToSbcs': - substituted for − (U+2212)
-Warning in text.default(0.5 + seq_along(one), 1, one, adj = c(0, 0)) :
-  for '‘' in 'mbcsToSbcs': ' substituted for ‘ (U+2018)
-Warning in text.default(0.5 + seq_along(one), 1, one, adj = c(0, 0)) :
-  for '’' in 'mbcsToSbcs': ' substituted for ’ (U+2019)
-Warning in text.default(0.5 + seq_along(one), 1, one, adj = c(0, 0)) :
-  for '“' in 'mbcsToSbcs': " substituted for “ (U+201C)
-Warning in text.default(0.5 + seq_along(one), 1, one, adj = c(0, 0)) :
-  for '”' in 'mbcsToSbcs': " substituted for ” (U+201D)
-Warning in text.default(0.5 + seq_along(one), 1, one, adj = c(0, 0)) :
-  for '•' in 'mbcsToSbcs': . substituted for • (U+2022)
-Warning in text.default(0.5 + seq_along(one), 1, one, adj = c(0, 0)) :
-  for '★' in 'mbcsToSbcs': * substituted for ★ (U+2605)
-Warning in text.default(0.5 + seq_along(one), 1, one, adj = c(0, 0)) :
-  for '✷' in 'mbcsToSbcs': * substituted for ✷ (U+2737)
 > text(0.5+seq_along(two_1), 3, two_1, adj = c(0,0))
-Warning in text.default(0.5 + seq_along(two_1), 3, two_1, adj = c(0, 0)) :
-  for '←' in 'mbcsToSbcs': <- substituted for ← (U+2190)
-Warning in text.default(0.5 + seq_along(two_1), 3, two_1, adj = c(0, 0)) :
-  for '→' in 'mbcsToSbcs': -> substituted for → (U+2192)
-Warning in text.default(0.5 + seq_along(two_1), 3, two_1, adj = c(0, 0)) :
-  for '➔' in 'mbcsToSbcs': -> substituted for ➔ (U+2794)
-Warning in text.default(0.5 + seq_along(two_1), 3, two_1, adj = c(0, 0)) :
-  for '➜' in 'mbcsToSbcs': -> substituted for ➜ (U+279C)
-Warning in text.default(0.5 + seq_along(two_1), 3, two_1, adj = c(0, 0)) :
-  for '➝' in 'mbcsToSbcs': -> substituted for ➝ (U+279D)
-Warning in text.default(0.5 + seq_along(two_1), 3, two_1, adj = c(0, 0)) :
-  for '➞' in 'mbcsToSbcs': -> substituted for ➞ (U+279E)
-Warning in text.default(0.5 + seq_along(two_1), 3, two_1, adj = c(0, 0)) :
-  for '➟' in 'mbcsToSbcs': -> substituted for ➟ (U+279F)
-Warning in text.default(0.5 + seq_along(two_1), 3, two_1, adj = c(0, 0)) :
-  for '➡' in 'mbcsToSbcs': -> substituted for ➡ (U+27A1)
-Warning in text.default(0.5 + seq_along(two_1), 3, two_1, adj = c(0, 0)) :
-  for '➢' in 'mbcsToSbcs': -> substituted for ➢ (U+27A2)
 > text(0.5+seq_along(two_2), 2, two_2, adj = c(0,0))
-Warning in text.default(0.5 + seq_along(two_2), 2, two_2, adj = c(0, 0)) :
-  for 'ﬀ' in 'mbcsToSbcs': ff substituted for ﬀ (U+FB00)
-Warning in text.default(0.5 + seq_along(two_2), 2, two_2, adj = c(0, 0)) :
-  for 'ﬁ' in 'mbcsToSbcs': fi substituted for ﬁ (U+FB01)
-Warning in text.default(0.5 + seq_along(two_2), 2, two_2, adj = c(0, 0)) :
-  for 'ﬂ' in 'mbcsToSbcs': fl substituted for ﬂ (U+FB02)
-Warning in text.default(0.5 + seq_along(two_2), 2, two_2, adj = c(0, 0)) :
-  for 'Œ' in 'mbcsToSbcs': OE substituted for Œ (U+0152)
-Warning in text.default(0.5 + seq_along(two_2), 2, two_2, adj = c(0, 0)) :
-  for 'œ' in 'mbcsToSbcs': oe substituted for œ (U+0153)
-Warning in text.default(0.5 + seq_along(two_2), 2, two_2, adj = c(0, 0)) :
-  for '≤' in 'mbcsToSbcs': <= substituted for ≤ (U+2264)
-Warning in text.default(0.5 + seq_along(two_2), 2, two_2, adj = c(0, 0)) :
-  for '≥' in 'mbcsToSbcs': >= substituted for ≥ (U+2265)
 > text(0.5+seq_along(three), 4, three, adj = c(0,0))
-Warning in text.default(0.5 + seq_along(three), 4, three, adj = c(0, 0)) :
-  for 'ﬃ' in 'mbcsToSbcs': ffi substituted for ﬃ (U+FB03)
-Warning in text.default(0.5 + seq_along(three), 4, three, adj = c(0, 0)) :
-  for 'ﬄ' in 'mbcsToSbcs': ffl substituted for ﬄ (U+FB04)
 > text(0.5+seq_along(four), 5, four, adj = c(0,0))
-Warning in text.default(0.5 + seq_along(four), 5, four, adj = c(0, 0)) :
-  for '‰' in 'mbcsToSbcs': o/oo substituted for ‰ (U+2030)
 > 
 > ## Things in packages which cannot be plotted on pdf(encoding = "latin1")
 > five <- c("\u03b1", "\u03bc", "\u2211", "\u25cf", "\u25b2", "\u221e", "\uB3C4")
@@ -145,161 +91,23 @@ Warning in text.default(0.5 + seq_along(four), 5, four, adj = c(0, 0)) :
 Lubomír  Kubáček
 > 
 > text(0.5+seq_along(five), 6, five, adj = c(0,0))
-Warning in text.default(0.5 + seq_along(five), 6, five, adj = c(0, 0)) :
-  conversion failure on 'α' in 'mbcsToSbcs': for α (U+03B1)
-Warning in text.default(0.5 + seq_along(five), 6, five, adj = c(0, 0)) :
-  conversion failure on 'μ' in 'mbcsToSbcs': for μ (U+03BC)
-Warning in text.default(0.5 + seq_along(five), 6, five, adj = c(0, 0)) :
-  conversion failure on '∑' in 'mbcsToSbcs': for ∑ (U+2211)
-Warning in text.default(0.5 + seq_along(five), 6, five, adj = c(0, 0)) :
-  conversion failure on '●' in 'mbcsToSbcs': for ● (U+25CF)
-Warning in text.default(0.5 + seq_along(five), 6, five, adj = c(0, 0)) :
-  conversion failure on '▲' in 'mbcsToSbcs': for ▲ (U+25B2)
-Warning in text.default(0.5 + seq_along(five), 6, five, adj = c(0, 0)) :
-  conversion failure on '∞' in 'mbcsToSbcs': for ∞ (U+221E)
-Warning in text.default(0.5 + seq_along(five), 6, five, adj = c(0, 0)) :
-  conversion failure on '도' in 'mbcsToSbcs': for 도 (U+B3C4)
 > text(1.5, 7, six, adj = c(0,0))
-Warning in text.default(1.5, 7, six, adj = c(0, 0)) :
-  conversion failure on '😄' in 'mbcsToSbcs': for 😄 (U+1F604)
 > text(1.5, 8, seven, adj = c(0,0))
-Warning in text.default(1.5, 8, seven, adj = c(0, 0)) :
-  conversion failure on 'Улаанбаатар' in 'mbcsToSbcs': for У (U+0423)
-Warning in text.default(1.5, 8, seven, adj = c(0, 0)) :
-  conversion failure on 'Улаанбаатар' in 'mbcsToSbcs': for л (U+043B)
-Warning in text.default(1.5, 8, seven, adj = c(0, 0)) :
-  conversion failure on 'Улаанбаатар' in 'mbcsToSbcs': for а (U+0430)
-Warning in text.default(1.5, 8, seven, adj = c(0, 0)) :
-  conversion failure on 'Улаанбаатар' in 'mbcsToSbcs': for а (U+0430)
-Warning in text.default(1.5, 8, seven, adj = c(0, 0)) :
-  conversion failure on 'Улаанбаатар' in 'mbcsToSbcs': for н (U+043D)
-Warning in text.default(1.5, 8, seven, adj = c(0, 0)) :
-  conversion failure on 'Улаанбаатар' in 'mbcsToSbcs': for б (U+0431)
-Warning in text.default(1.5, 8, seven, adj = c(0, 0)) :
-  conversion failure on 'Улаанбаатар' in 'mbcsToSbcs': for а (U+0430)
-Warning in text.default(1.5, 8, seven, adj = c(0, 0)) :
-  conversion failure on 'Улаанбаатар' in 'mbcsToSbcs': for а (U+0430)
-Warning in text.default(1.5, 8, seven, adj = c(0, 0)) :
-  conversion failure on 'Улаанбаатар' in 'mbcsToSbcs': for т (U+0442)
-Warning in text.default(1.5, 8, seven, adj = c(0, 0)) :
-  conversion failure on 'Улаанбаатар' in 'mbcsToSbcs': for а (U+0430)
-Warning in text.default(1.5, 8, seven, adj = c(0, 0)) :
-  conversion failure on 'Улаанбаатар' in 'mbcsToSbcs': for р (U+0440)
 > text(1.5, 9, eight, adj = c(0,0))
-Warning in text.default(1.5, 9, eight, adj = c(0, 0)) :
-  conversion failure on 'Lubomír  Kubáček' in 'mbcsToSbcs': for č (U+010D)
 > 
 > ## Now try centring
 > plot(1:11, 0:10, type = "n")
 > text(0.5+seq_along(one), 1, one)
-Warning in text.default(0.5 + seq_along(one), 1, one) :
-  for '–' in 'mbcsToSbcs': - substituted for – (U+2013)
-Warning in text.default(0.5 + seq_along(one), 1, one) :
-  for '—' in 'mbcsToSbcs': - substituted for — (U+2014)
-Warning in text.default(0.5 + seq_along(one), 1, one) :
-  for '−' in 'mbcsToSbcs': - substituted for − (U+2212)
-Warning in text.default(0.5 + seq_along(one), 1, one) :
-  for '‘' in 'mbcsToSbcs': ' substituted for ‘ (U+2018)
-Warning in text.default(0.5 + seq_along(one), 1, one) :
-  for '’' in 'mbcsToSbcs': ' substituted for ’ (U+2019)
-Warning in text.default(0.5 + seq_along(one), 1, one) :
-  for '“' in 'mbcsToSbcs': " substituted for “ (U+201C)
-Warning in text.default(0.5 + seq_along(one), 1, one) :
-  for '”' in 'mbcsToSbcs': " substituted for ” (U+201D)
-Warning in text.default(0.5 + seq_along(one), 1, one) :
-  for '•' in 'mbcsToSbcs': . substituted for • (U+2022)
-Warning in text.default(0.5 + seq_along(one), 1, one) :
-  for '★' in 'mbcsToSbcs': * substituted for ★ (U+2605)
-Warning in text.default(0.5 + seq_along(one), 1, one) :
-  for '✷' in 'mbcsToSbcs': * substituted for ✷ (U+2737)
 > text(0.5+seq_along(two_1), 3, two_1)
-Warning in text.default(0.5 + seq_along(two_1), 3, two_1) :
-  for '←' in 'mbcsToSbcs': <- substituted for ← (U+2190)
-Warning in text.default(0.5 + seq_along(two_1), 3, two_1) :
-  for '→' in 'mbcsToSbcs': -> substituted for → (U+2192)
-Warning in text.default(0.5 + seq_along(two_1), 3, two_1) :
-  for '➔' in 'mbcsToSbcs': -> substituted for ➔ (U+2794)
-Warning in text.default(0.5 + seq_along(two_1), 3, two_1) :
-  for '➜' in 'mbcsToSbcs': -> substituted for ➜ (U+279C)
-Warning in text.default(0.5 + seq_along(two_1), 3, two_1) :
-  for '➝' in 'mbcsToSbcs': -> substituted for ➝ (U+279D)
-Warning in text.default(0.5 + seq_along(two_1), 3, two_1) :
-  for '➞' in 'mbcsToSbcs': -> substituted for ➞ (U+279E)
-Warning in text.default(0.5 + seq_along(two_1), 3, two_1) :
-  for '➟' in 'mbcsToSbcs': -> substituted for ➟ (U+279F)
-Warning in text.default(0.5 + seq_along(two_1), 3, two_1) :
-  for '➡' in 'mbcsToSbcs': -> substituted for ➡ (U+27A1)
-Warning in text.default(0.5 + seq_along(two_1), 3, two_1) :
-  for '➢' in 'mbcsToSbcs': -> substituted for ➢ (U+27A2)
 > text(0.5+seq_along(two_2), 2, two_2)
-Warning in text.default(0.5 + seq_along(two_2), 2, two_2) :
-  for 'ﬀ' in 'mbcsToSbcs': ff substituted for ﬀ (U+FB00)
-Warning in text.default(0.5 + seq_along(two_2), 2, two_2) :
-  for 'ﬁ' in 'mbcsToSbcs': fi substituted for ﬁ (U+FB01)
-Warning in text.default(0.5 + seq_along(two_2), 2, two_2) :
-  for 'ﬂ' in 'mbcsToSbcs': fl substituted for ﬂ (U+FB02)
-Warning in text.default(0.5 + seq_along(two_2), 2, two_2) :
-  for 'Œ' in 'mbcsToSbcs': OE substituted for Œ (U+0152)
-Warning in text.default(0.5 + seq_along(two_2), 2, two_2) :
-  for 'œ' in 'mbcsToSbcs': oe substituted for œ (U+0153)
-Warning in text.default(0.5 + seq_along(two_2), 2, two_2) :
-  for '≤' in 'mbcsToSbcs': <= substituted for ≤ (U+2264)
-Warning in text.default(0.5 + seq_along(two_2), 2, two_2) :
-  for '≥' in 'mbcsToSbcs': >= substituted for ≥ (U+2265)
 > text(0.5+seq_along(three), 4, three)
-Warning in text.default(0.5 + seq_along(three), 4, three) :
-  for 'ﬃ' in 'mbcsToSbcs': ffi substituted for ﬃ (U+FB03)
-Warning in text.default(0.5 + seq_along(three), 4, three) :
-  for 'ﬄ' in 'mbcsToSbcs': ffl substituted for ﬄ (U+FB04)
 > text(0.5+seq_along(four), 5, four)
-Warning in text.default(0.5 + seq_along(four), 5, four) :
-  for '‰' in 'mbcsToSbcs': o/oo substituted for ‰ (U+2030)
 > text(0.5+seq_along(five), 6, five)
-Warning in text.default(0.5 + seq_along(five), 6, five) :
-  conversion failure on 'α' in 'mbcsToSbcs': for α (U+03B1)
-Warning in text.default(0.5 + seq_along(five), 6, five) :
-  conversion failure on 'μ' in 'mbcsToSbcs': for μ (U+03BC)
-Warning in text.default(0.5 + seq_along(five), 6, five) :
-  conversion failure on '∑' in 'mbcsToSbcs': for ∑ (U+2211)
-Warning in text.default(0.5 + seq_along(five), 6, five) :
-  conversion failure on '●' in 'mbcsToSbcs': for ● (U+25CF)
-Warning in text.default(0.5 + seq_along(five), 6, five) :
-  conversion failure on '▲' in 'mbcsToSbcs': for ▲ (U+25B2)
-Warning in text.default(0.5 + seq_along(five), 6, five) :
-  conversion failure on '∞' in 'mbcsToSbcs': for ∞ (U+221E)
-Warning in text.default(0.5 + seq_along(five), 6, five) :
-  conversion failure on '도' in 'mbcsToSbcs': for 도 (U+B3C4)
 > text(1.5, 7, six)
 Warning in text.default(1.5, 7, six) :
   font metrics unknown for Unicode character U+1F604
-Warning in text.default(1.5, 7, six) :
-  conversion failure on '😄' in 'mbcsToSbcs': for 😄 (U+1F604)
 > text(5, 8, seven)
-Warning in text.default(5, 8, seven) :
-  conversion failure on 'Улаанбаатар' in 'mbcsToSbcs': for У (U+0423)
-Warning in text.default(5, 8, seven) :
-  conversion failure on 'Улаанбаатар' in 'mbcsToSbcs': for л (U+043B)
-Warning in text.default(5, 8, seven) :
-  conversion failure on 'Улаанбаатар' in 'mbcsToSbcs': for а (U+0430)
-Warning in text.default(5, 8, seven) :
-  conversion failure on 'Улаанбаатар' in 'mbcsToSbcs': for а (U+0430)
-Warning in text.default(5, 8, seven) :
-  conversion failure on 'Улаанбаатар' in 'mbcsToSbcs': for н (U+043D)
-Warning in text.default(5, 8, seven) :
-  conversion failure on 'Улаанбаатар' in 'mbcsToSbcs': for б (U+0431)
-Warning in text.default(5, 8, seven) :
-  conversion failure on 'Улаанбаатар' in 'mbcsToSbcs': for а (U+0430)
-Warning in text.default(5, 8, seven) :
-  conversion failure on 'Улаанбаатар' in 'mbcsToSbcs': for а (U+0430)
-Warning in text.default(5, 8, seven) :
-  conversion failure on 'Улаанбаатар' in 'mbcsToSbcs': for т (U+0442)
-Warning in text.default(5, 8, seven) :
-  conversion failure on 'Улаанбаатар' in 'mbcsToSbcs': for а (U+0430)
-Warning in text.default(5, 8, seven) :
-  conversion failure on 'Улаанбаатар' in 'mbcsToSbcs': for р (U+0440)
 > text(5, 9, eight)
-Warning in text.default(5, 9, eight) :
-  conversion failure on 'Lubomír  Kubáček' in 'mbcsToSbcs': for č (U+010D)
 > dev.off()
 null device 
           1 
@@ -351,112 +159,14 @@ null device
 > postscript("PS-encoding.ps", width = 5, height = 5)
 > plot(1:11, 0:10, type = "n")
 > text(0.5+seq_along(one), 1, one, adj = c(0,0))
-Warning in text.default(0.5 + seq_along(one), 1, one, adj = c(0, 0)) :
-  for '–' in 'mbcsToSbcs': - substituted for – (U+2013)
-Warning in text.default(0.5 + seq_along(one), 1, one, adj = c(0, 0)) :
-  for '—' in 'mbcsToSbcs': - substituted for — (U+2014)
-Warning in text.default(0.5 + seq_along(one), 1, one, adj = c(0, 0)) :
-  for '−' in 'mbcsToSbcs': - substituted for − (U+2212)
-Warning in text.default(0.5 + seq_along(one), 1, one, adj = c(0, 0)) :
-  for '‘' in 'mbcsToSbcs': ' substituted for ‘ (U+2018)
-Warning in text.default(0.5 + seq_along(one), 1, one, adj = c(0, 0)) :
-  for '’' in 'mbcsToSbcs': ' substituted for ’ (U+2019)
-Warning in text.default(0.5 + seq_along(one), 1, one, adj = c(0, 0)) :
-  for '“' in 'mbcsToSbcs': " substituted for “ (U+201C)
-Warning in text.default(0.5 + seq_along(one), 1, one, adj = c(0, 0)) :
-  for '”' in 'mbcsToSbcs': " substituted for ” (U+201D)
-Warning in text.default(0.5 + seq_along(one), 1, one, adj = c(0, 0)) :
-  for '•' in 'mbcsToSbcs': . substituted for • (U+2022)
-Warning in text.default(0.5 + seq_along(one), 1, one, adj = c(0, 0)) :
-  for '★' in 'mbcsToSbcs': * substituted for ★ (U+2605)
-Warning in text.default(0.5 + seq_along(one), 1, one, adj = c(0, 0)) :
-  for '✷' in 'mbcsToSbcs': * substituted for ✷ (U+2737)
 > text(0.5+seq_along(two_1), 3, two_1, adj = c(0,0))
-Warning in text.default(0.5 + seq_along(two_1), 3, two_1, adj = c(0, 0)) :
-  for '←' in 'mbcsToSbcs': <- substituted for ← (U+2190)
-Warning in text.default(0.5 + seq_along(two_1), 3, two_1, adj = c(0, 0)) :
-  for '→' in 'mbcsToSbcs': -> substituted for → (U+2192)
-Warning in text.default(0.5 + seq_along(two_1), 3, two_1, adj = c(0, 0)) :
-  for '➔' in 'mbcsToSbcs': -> substituted for ➔ (U+2794)
-Warning in text.default(0.5 + seq_along(two_1), 3, two_1, adj = c(0, 0)) :
-  for '➜' in 'mbcsToSbcs': -> substituted for ➜ (U+279C)
-Warning in text.default(0.5 + seq_along(two_1), 3, two_1, adj = c(0, 0)) :
-  for '➝' in 'mbcsToSbcs': -> substituted for ➝ (U+279D)
-Warning in text.default(0.5 + seq_along(two_1), 3, two_1, adj = c(0, 0)) :
-  for '➞' in 'mbcsToSbcs': -> substituted for ➞ (U+279E)
-Warning in text.default(0.5 + seq_along(two_1), 3, two_1, adj = c(0, 0)) :
-  for '➟' in 'mbcsToSbcs': -> substituted for ➟ (U+279F)
-Warning in text.default(0.5 + seq_along(two_1), 3, two_1, adj = c(0, 0)) :
-  for '➡' in 'mbcsToSbcs': -> substituted for ➡ (U+27A1)
-Warning in text.default(0.5 + seq_along(two_1), 3, two_1, adj = c(0, 0)) :
-  for '➢' in 'mbcsToSbcs': -> substituted for ➢ (U+27A2)
 > text(0.5+seq_along(two_2), 2, two_2, adj = c(0,0))
-Warning in text.default(0.5 + seq_along(two_2), 2, two_2, adj = c(0, 0)) :
-  for 'ﬀ' in 'mbcsToSbcs': ff substituted for ﬀ (U+FB00)
-Warning in text.default(0.5 + seq_along(two_2), 2, two_2, adj = c(0, 0)) :
-  for 'ﬁ' in 'mbcsToSbcs': fi substituted for ﬁ (U+FB01)
-Warning in text.default(0.5 + seq_along(two_2), 2, two_2, adj = c(0, 0)) :
-  for 'ﬂ' in 'mbcsToSbcs': fl substituted for ﬂ (U+FB02)
-Warning in text.default(0.5 + seq_along(two_2), 2, two_2, adj = c(0, 0)) :
-  for 'Œ' in 'mbcsToSbcs': OE substituted for Œ (U+0152)
-Warning in text.default(0.5 + seq_along(two_2), 2, two_2, adj = c(0, 0)) :
-  for 'œ' in 'mbcsToSbcs': oe substituted for œ (U+0153)
-Warning in text.default(0.5 + seq_along(two_2), 2, two_2, adj = c(0, 0)) :
-  for '≤' in 'mbcsToSbcs': <= substituted for ≤ (U+2264)
-Warning in text.default(0.5 + seq_along(two_2), 2, two_2, adj = c(0, 0)) :
-  for '≥' in 'mbcsToSbcs': >= substituted for ≥ (U+2265)
 > text(0.5+seq_along(three), 4, three, adj = c(0,0))
-Warning in text.default(0.5 + seq_along(three), 4, three, adj = c(0, 0)) :
-  for 'ﬃ' in 'mbcsToSbcs': ffi substituted for ﬃ (U+FB03)
-Warning in text.default(0.5 + seq_along(three), 4, three, adj = c(0, 0)) :
-  for 'ﬄ' in 'mbcsToSbcs': ffl substituted for ﬄ (U+FB04)
 > text(0.5+seq_along(four), 5, four, adj = c(0,0))
-Warning in text.default(0.5 + seq_along(four), 5, four, adj = c(0, 0)) :
-  for '‰' in 'mbcsToSbcs': o/oo substituted for ‰ (U+2030)
 > text(0.5+seq_along(five), 6, five, adj = c(0,0))
-Warning in text.default(0.5 + seq_along(five), 6, five, adj = c(0, 0)) :
-  conversion failure on 'α' in 'mbcsToSbcs': for α (U+03B1)
-Warning in text.default(0.5 + seq_along(five), 6, five, adj = c(0, 0)) :
-  conversion failure on 'μ' in 'mbcsToSbcs': for μ (U+03BC)
-Warning in text.default(0.5 + seq_along(five), 6, five, adj = c(0, 0)) :
-  conversion failure on '∑' in 'mbcsToSbcs': for ∑ (U+2211)
-Warning in text.default(0.5 + seq_along(five), 6, five, adj = c(0, 0)) :
-  conversion failure on '●' in 'mbcsToSbcs': for ● (U+25CF)
-Warning in text.default(0.5 + seq_along(five), 6, five, adj = c(0, 0)) :
-  conversion failure on '▲' in 'mbcsToSbcs': for ▲ (U+25B2)
-Warning in text.default(0.5 + seq_along(five), 6, five, adj = c(0, 0)) :
-  conversion failure on '∞' in 'mbcsToSbcs': for ∞ (U+221E)
-Warning in text.default(0.5 + seq_along(five), 6, five, adj = c(0, 0)) :
-  conversion failure on '도' in 'mbcsToSbcs': for 도 (U+B3C4)
 > text(1.5, 7, six, adj = c(0,0))
-Warning in text.default(1.5, 7, six, adj = c(0, 0)) :
-  conversion failure on '😄' in 'mbcsToSbcs': for 😄 (U+1F604)
 > text(1.5, 8, seven, adj = c(0,0))
-Warning in text.default(1.5, 8, seven, adj = c(0, 0)) :
-  conversion failure on 'Улаанбаатар' in 'mbcsToSbcs': for У (U+0423)
-Warning in text.default(1.5, 8, seven, adj = c(0, 0)) :
-  conversion failure on 'Улаанбаатар' in 'mbcsToSbcs': for л (U+043B)
-Warning in text.default(1.5, 8, seven, adj = c(0, 0)) :
-  conversion failure on 'Улаанбаатар' in 'mbcsToSbcs': for а (U+0430)
-Warning in text.default(1.5, 8, seven, adj = c(0, 0)) :
-  conversion failure on 'Улаанбаатар' in 'mbcsToSbcs': for а (U+0430)
-Warning in text.default(1.5, 8, seven, adj = c(0, 0)) :
-  conversion failure on 'Улаанбаатар' in 'mbcsToSbcs': for н (U+043D)
-Warning in text.default(1.5, 8, seven, adj = c(0, 0)) :
-  conversion failure on 'Улаанбаатар' in 'mbcsToSbcs': for б (U+0431)
-Warning in text.default(1.5, 8, seven, adj = c(0, 0)) :
-  conversion failure on 'Улаанбаатар' in 'mbcsToSbcs': for а (U+0430)
-Warning in text.default(1.5, 8, seven, adj = c(0, 0)) :
-  conversion failure on 'Улаанбаатар' in 'mbcsToSbcs': for а (U+0430)
-Warning in text.default(1.5, 8, seven, adj = c(0, 0)) :
-  conversion failure on 'Улаанбаатар' in 'mbcsToSbcs': for т (U+0442)
-Warning in text.default(1.5, 8, seven, adj = c(0, 0)) :
-  conversion failure on 'Улаанбаатар' in 'mbcsToSbcs': for а (U+0430)
-Warning in text.default(1.5, 8, seven, adj = c(0, 0)) :
-  conversion failure on 'Улаанбаатар' in 'mbcsToSbcs': for р (U+0440)
 > text(1.5, 9, eight, adj = c(0,0)) ## macOS does transliteration here, badly
-Warning in text.default(1.5, 9, eight, adj = c(0, 0)) :
-  conversion failure on 'Lubomír  Kubáček' in 'mbcsToSbcs': for č (U+010D)
 > dev.off()
 null device 
           1 
@@ -513,68 +223,10 @@ null device
 > ## tranliterations done in mbcsToSbcs (when they will warn) if not
 > ## done by the OS (which will be silent).
 > text(0.5+seq_along(one), 1, one, adj = c(0,0))
-Warning in text.default(0.5 + seq_along(one), 1, one, adj = c(0, 0)) :
-  for '–' in 'mbcsToSbcs': - substituted for – (U+2013)
-Warning in text.default(0.5 + seq_along(one), 1, one, adj = c(0, 0)) :
-  for '—' in 'mbcsToSbcs': - substituted for — (U+2014)
-Warning in text.default(0.5 + seq_along(one), 1, one, adj = c(0, 0)) :
-  for '−' in 'mbcsToSbcs': - substituted for − (U+2212)
-Warning in text.default(0.5 + seq_along(one), 1, one, adj = c(0, 0)) :
-  for '‘' in 'mbcsToSbcs': ' substituted for ‘ (U+2018)
-Warning in text.default(0.5 + seq_along(one), 1, one, adj = c(0, 0)) :
-  for '’' in 'mbcsToSbcs': ' substituted for ’ (U+2019)
-Warning in text.default(0.5 + seq_along(one), 1, one, adj = c(0, 0)) :
-  for '“' in 'mbcsToSbcs': " substituted for “ (U+201C)
-Warning in text.default(0.5 + seq_along(one), 1, one, adj = c(0, 0)) :
-  for '”' in 'mbcsToSbcs': " substituted for ” (U+201D)
-Warning in text.default(0.5 + seq_along(one), 1, one, adj = c(0, 0)) :
-  for '•' in 'mbcsToSbcs': . substituted for • (U+2022)
-Warning in text.default(0.5 + seq_along(one), 1, one, adj = c(0, 0)) :
-  for '★' in 'mbcsToSbcs': * substituted for ★ (U+2605)
-Warning in text.default(0.5 + seq_along(one), 1, one, adj = c(0, 0)) :
-  for '✷' in 'mbcsToSbcs': * substituted for ✷ (U+2737)
 > text(0.5+seq_along(two_1), 3, two_1, adj = c(0,0))
-Warning in text.default(0.5 + seq_along(two_1), 3, two_1, adj = c(0, 0)) :
-  for '←' in 'mbcsToSbcs': <- substituted for ← (U+2190)
-Warning in text.default(0.5 + seq_along(two_1), 3, two_1, adj = c(0, 0)) :
-  for '→' in 'mbcsToSbcs': -> substituted for → (U+2192)
-Warning in text.default(0.5 + seq_along(two_1), 3, two_1, adj = c(0, 0)) :
-  for '➔' in 'mbcsToSbcs': -> substituted for ➔ (U+2794)
-Warning in text.default(0.5 + seq_along(two_1), 3, two_1, adj = c(0, 0)) :
-  for '➜' in 'mbcsToSbcs': -> substituted for ➜ (U+279C)
-Warning in text.default(0.5 + seq_along(two_1), 3, two_1, adj = c(0, 0)) :
-  for '➝' in 'mbcsToSbcs': -> substituted for ➝ (U+279D)
-Warning in text.default(0.5 + seq_along(two_1), 3, two_1, adj = c(0, 0)) :
-  for '➞' in 'mbcsToSbcs': -> substituted for ➞ (U+279E)
-Warning in text.default(0.5 + seq_along(two_1), 3, two_1, adj = c(0, 0)) :
-  for '➟' in 'mbcsToSbcs': -> substituted for ➟ (U+279F)
-Warning in text.default(0.5 + seq_along(two_1), 3, two_1, adj = c(0, 0)) :
-  for '➡' in 'mbcsToSbcs': -> substituted for ➡ (U+27A1)
-Warning in text.default(0.5 + seq_along(two_1), 3, two_1, adj = c(0, 0)) :
-  for '➢' in 'mbcsToSbcs': -> substituted for ➢ (U+27A2)
 > text(0.5+seq_along(two_2), 2, two_2, adj = c(0,0))
-Warning in text.default(0.5 + seq_along(two_2), 2, two_2, adj = c(0, 0)) :
-  for 'ﬀ' in 'mbcsToSbcs': ff substituted for ﬀ (U+FB00)
-Warning in text.default(0.5 + seq_along(two_2), 2, two_2, adj = c(0, 0)) :
-  for 'ﬁ' in 'mbcsToSbcs': fi substituted for ﬁ (U+FB01)
-Warning in text.default(0.5 + seq_along(two_2), 2, two_2, adj = c(0, 0)) :
-  for 'ﬂ' in 'mbcsToSbcs': fl substituted for ﬂ (U+FB02)
-Warning in text.default(0.5 + seq_along(two_2), 2, two_2, adj = c(0, 0)) :
-  for 'Œ' in 'mbcsToSbcs': OE substituted for Œ (U+0152)
-Warning in text.default(0.5 + seq_along(two_2), 2, two_2, adj = c(0, 0)) :
-  for 'œ' in 'mbcsToSbcs': oe substituted for œ (U+0153)
-Warning in text.default(0.5 + seq_along(two_2), 2, two_2, adj = c(0, 0)) :
-  for '≤' in 'mbcsToSbcs': <= substituted for ≤ (U+2264)
-Warning in text.default(0.5 + seq_along(two_2), 2, two_2, adj = c(0, 0)) :
-  for '≥' in 'mbcsToSbcs': >= substituted for ≥ (U+2265)
 > text(0.5+seq_along(three), 4, three, adj = c(0,0))
-Warning in text.default(0.5 + seq_along(three), 4, three, adj = c(0, 0)) :
-  for 'ﬃ' in 'mbcsToSbcs': ffi substituted for ﬃ (U+FB03)
-Warning in text.default(0.5 + seq_along(three), 4, three, adj = c(0, 0)) :
-  for 'ﬄ' in 'mbcsToSbcs': ffl substituted for ﬄ (U+FB04)
 > text(0.5+seq_along(four), 5, four, adj = c(0,0))
-Warning in text.default(0.5 + seq_along(four), 5, four, adj = c(0, 0)) :
-  for '‰' in 'mbcsToSbcs': o/oo substituted for ‰ (U+2030)
 > 
 > ## conversions not done in mbcsToSbcs
 > res5 <- try(text(0.5+seq_along(five), 6, five, adj = c(0,0)))
@@ -602,4 +254,4 @@ null device
 > 
 > proc.time()
    user  system elapsed 
-  0.897   0.085   0.963 
+  0.848   0.085   1.150 

@@ -4468,6 +4468,10 @@ static void mbcsToSbcs(const char *in, char *out, const char *encoding,
 	(cd = Riconv_open(encoding, (enc == CE_UTF8) ? "UTF-8" : "")))
 	error(_("unknown encoding '%s' in 'mbcsToSbcs'"), encoding);
 
+    if (!silent) {
+	const char *p = getenv("_R_SILENT_PDF_SUBSTITUTION_");
+	if(p) silent = 1;
+    }
     i_buf = (char *) in;
     i_len = strlen(in)+1; /* include terminator */
     o_buf = (char *) out;

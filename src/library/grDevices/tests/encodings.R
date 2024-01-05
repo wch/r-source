@@ -1,5 +1,9 @@
 ### Tests of non-ASCII plotting in PDF and PS
 
+
+## Silence substitution warnings to make this more diff-able.
+Sys.setenv("_R_SILENT_PDF_SUBSTITUTION_" =  "true")
+
 options(warn = 1L)
 
 ### only do this in a UTF-8 locale
