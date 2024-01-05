@@ -4139,6 +4139,37 @@ on Debian/Ubuntu systems to select the system @code{liblapack} which can
 be switched by the `alternatives' mechanism.
 @end itemize
 
+If building LAPACK from its Netlib sources, be aware that @command{make}
+with its supplied @file{Makefile} will make a @emph{staiic} library and
+@R{} requires a shared/dynamic one.  To get one, use @command{cmake} as
+doxumented briefly in @file{README.md}.  Something like (to build only
+the double and double complex subroutines with 32-bit array indices),
+
+@example
+mkdir build
+cd build
+cmake \
+-DCMAKE_INSTALL_PREFIX=/where/you/want/to/install \
+-DCMAKE_BUILD_TYPE:STRING=Release \
+-DBUILD_DEPRECATED=ON -DBUILD_SHARED_LIBS=ON \
+-DBUILD_INDEX64_EXT_API:BOOL=OFF \
+-DBUILD_SINGLE:BOOL=OFF -DBUILD_COMPLEX:BOOL=OFF \
+-DLAPACKE=OFF -DCBLAS=OFF \
+-S ..
+make -j10
+@end example
+@noindent
+This builds the reference BLAS and the reference LAPACK linked to it.
+
+Note that @command{cmake} files do not provide an @code{uninstall}
+target, but @file{build/install_manifest.txt} is a list of the files
+installed, so you can remove them @emph{via} shell commands or from
+@R{}.
+
+If using @option{--with-lapack} to get a generic LAPACK (or allowing the
+default to select one), consider also using @option{--with-blas} (with a
+path if an enhanced BLAS is installed).
+
 
 @node Caveats,  , LAPACK, Linear algebra
 @subsection Caveats
