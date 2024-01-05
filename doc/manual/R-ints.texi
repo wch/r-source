@@ -109,7 +109,7 @@ comments about when features were introduced: this version is for the
 @section SEXPs
 
 @cindex SEXP
-@cindex SEXPRREC
+@cindex SEXPREC
 What @R{} users think of as @emph{variables} or @emph{objects} are
 symbols which are bound to a value.  The value can be thought of as
 either a @code{SEXP} (a pointer), or the structure it points to, a
