@@ -84,7 +84,8 @@ were new in LAPACK 3.6.0 and added in R 3.3.0.
 
 dtrevc3 and ztrevc3 were new in LAPACK 3.6.1 and added in R 3.4.0.
 
-dcombssq.f was patched in R 3.6.3 (see the R-admin manual).
+dcombssq.f was patched in R 3.6.3 (see the R-admin manual): that patch
+is now in the main distribution.
 
 Patches from LAPACK 3.9.0 to 3.10.0 were applied for R 4.2.0 but not
 the new .f90 files replacing dlartg.f dlassq.f zlartg.f zlassq.f
@@ -114,8 +115,8 @@ DEPRECATED/dgegv.f DEPRECATED/dgeqpf.fDEPRECATED/dggsvd.f DEPRECATED/dggsvp.f
 DEPRECATED/dgegs.f DEPRECATED/dgelsx.f DEPRECATED/dlahrd.f DEPRECATED/dlatzm.f
 DEPRECATED/dtzrqf.f
 
-If you change this, alter R_ext/Lapack.h accordingly: it docuemnts the
-first line.
+If you change this, alter R_ext/Lapack.h accordingly: it docuemnts
+those in the first line.
 
 -------------------------------------------------
 
