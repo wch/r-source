@@ -109,6 +109,14 @@ zspr zsptrf zsptri zsptrs zsycon zsytrs ztpcon ztptri ztptrs
 
 at the request of the Matrix maintainers.
 
+We still include the deprecated (in LAPACK 3.6.0) subroutines in files
+DEPRECATED/dgegv.f DEPRECATED/dgeqpf.fDEPRECATED/dggsvd.f DEPRECATED/dggsvp.f
+DEPRECATED/dgegs.f DEPRECATED/dgelsx.f DEPRECATED/dlahrd.f DEPRECATED/dlatzm.f
+DEPRECATED/dtzrqf.f
+
+If you change this, alter R_ext/Lapack.h accordingly: it docuemnts the
+first line.
+
 -------------------------------------------------
 
 For 'base' R addition of a new .Call()able Lapack routine,
