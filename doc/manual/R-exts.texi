@@ -1233,7 +1233,7 @@ C v1.0 and Objective C++.} with associated extensions @file{.c},
 @file{.f95},@footnote{This is not accepted by the Intel Fortran compiler.}
 @file{.m}, and @file{.mm}, respectively.  We recommend using @file{.h}
 for headers, also for C++@footnote{Using @file{.hpp} is not guaranteed
-to be portable.} or Fortran 9x include files.  (Use of extension
+to be portable.} or Fortran include files.  (Use of extension
 @file{.C} for C++ is no longer supported.)  Files in the @file{src}
 directory should not be hidden (start with a dot), and hidden files will
 under some versions of @R{} be ignored.
@@ -2868,8 +2868,8 @@ support Fortran 90.  However, Fortran 95 is supported on all known
 platforms.
 
 Most compilers specified by @samp{FC} will accept Fortran 2003, 2008 or
-2018 code: such code should still use file extension @file{.f90}..  Most
-current platforms use @command{gfortran} where you may need to include
+2018 code: such code should still use file extension @file{.f90}.  Most
+current platforms use @command{gfortran} where you might need to include
 @option{-std=f2003}, @option{-std=f2008} or (from version 8)
 @option{-std=f2018} in @code{PKG_FFLAGS} or @code{PKG_FCFLAGS}: the
 default is `GNU Fortran', currently Fortran 2018 (but Fortran 95 prior
@@ -2883,8 +2883,8 @@ It is good practice to describe a Fortran version requirement in
 @c The Oracle @command{f95} compiler `accepts some Fortran 2003/8 features'
 @c (search for `Oracle Developer Studio 12.6: Fortran User's Guide' and
 @c look for §4.6).
-Intel Fortran had full Fortran 2008 support from version 17.0, and some
-2018 support in version 16.0 and more in version 19.0.  
+@c Intel Fortran had full Fortran 2008 support from version 17.0, and some
+@c 2018 support in version 16.0 and more in version 19.0.  
 
 Modern versions of Fortran support modules, whereby compiling one source
 file creates a module file which is then included in others.  (Module
@@ -2921,7 +2921,7 @@ there were also additional deprecations.} (`C++14') was published in
 December 2014 and was used by default as from @R{} 4.1.0 if
 supported.  Further revisions `C++17' (in December 2017) and `C++20'
 (with many new features in December 2020) have been published since.
-The next revision, `C++23', is expected in 2023 and several compilers
+The next revision, `C++23', is expected in 2023/4 and several compilers
 already have extensive partial support for the current drafts.
 
 The default standard for compiling @R{} packages was changed to C++17 in
@@ -3134,8 +3134,7 @@ static linking (as used for external libraries on Windows and macOS)
 will not.  @command{R CMD INSTALL} will link with the C++ compiler if
 there are any top-level C++ files in @file{src}, but not if these are
 all in subdirectories.  The simplest way to force linking by the C++
-compiler is to include an empty C++ file in @file{src}, as used by
-package @pkg{rgeos}.
+compiler is to include an empty C++ file in @file{src}..
 
 @node C standards, Using @command{cmake}, Using C++ code, Configure and cleanup
 @subsection C standards
@@ -6024,7 +6023,7 @@ Similarly for constants: for example @code{SIZE_MAX} is defined in
 @item
 Some headers are not portable: we have just mentioned @file{malloc.h}
 and often @acronym{CRAN} submissions attempt to use @file{endian.h}.
-The latter is a @code{glibc} extension: some OSs have
+The latter is a @code{glibc} extension: some OSes have
 @file{machine/endian.h} or @file{sys/endian.h} but some have neither.
 @c macOS has machine/endian.h.  Solaris had none.
 
@@ -9627,7 +9626,7 @@ will be some small memory leaks from @code{readline} and @R{} itself ---
 these are memory areas that are in use right up to the end of the @R{}
 session.  Expect this to run around 20x slower than without
 @code{valgrind}, and in some cases much slower than that.  Several
-versions of @code{valgrind} were not happy with some optimized BLASes
+versions of @code{valgrind} were not happy with some optimized BLAS libraries
 that use @acronym{CPU}-specific instructions so you may need to build a
 version of @R{} specifically to use with @code{valgrind}.
 
@@ -10805,10 +10804,10 @@ C/C++ code that includes @file{Rinternals.h} should be called @emph{via}
 @code{.Call} or @code{.External}.
 
 @code{.Fortran} is primarily intended for Fortran 77 code, and long
-precedes any support for Fortran 9x.  Now current implementations of
-Fortran 9x support the Fortran 2003 module @code{iso_c_binding}, a
-better way to interface modern Fortran code to @R{} is to use @code{.C}
-and write a C interface using @code{use iso_c_binding}.
+precedes any support for `modern' Fortran.  Nowadays implementations of
+Fortran support the Fortran 2003 module @code{iso_c_binding}, a better
+way to interface modern Fortran code to @R{} is to use @code{.C} and
+write a C interface using @code{use iso_c_binding}.
 
 @node dyn.load and dyn.unload, Registering native routines, Interface functions .C and .Fortran, System and foreign language interfaces
 @section @code{dyn.load} and @code{dyn.unload}
@@ -14385,7 +14384,7 @@ There are two types of memory allocation available to the C programmer,
 one in which @R{} manages the clean-up and the other in which user
 has full control (and responsibility).
 
-These functions are declared in header @file{R_exts/RS.h} which is
+These functions are declared in header @file{R_ext/RS.h} which is
 included by @file{R.h}.
 
 @node Transient storage allocation, User-controlled memory, Memory allocation, Memory allocation
