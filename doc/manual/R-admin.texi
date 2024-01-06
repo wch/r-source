@@ -1080,7 +1080,9 @@ Intel:   c++11  gnu+11 c++14 gnu++14 c++17 gnu++17
 (Those for LLVM @command{clang++} are documented at
 @uref{https://clang.llvm.org/cxx_status.html}, and follow @code{g++}:
 @code{-std=c++20} is supported from Clang 10, @code{-std=c++2b} from
-Clang 13.  Apple Clang supports @code{-std=c++2b} from 13.1.6.)
+Clang 13 and @code{-std=c++23} from Clang 17.  Apple Clang supports
+@code{-std=c++2b} from 13.1.6: version 15.0.0 does not support
+@code{-std=c++23}.)
 
 @c c++1y does not pass the configure test in gcc 4.9.3
 @c , with @option{-std=c++1y} (introduced@footnote{See
