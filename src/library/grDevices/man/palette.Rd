@@ -120,19 +120,21 @@ palette("default")
 palette.pals()
 
 ## Demonstrate the colors 1:8 in different palettes using a custom matplot()
-sinplot <- function(main=NULL) {
+sinplot <- function(main=NULL, n = 8) {
     x <- outer(
 	seq(-pi, pi, length.out = 50),
-	seq(0, pi, length.out = 8),
+	seq(  0, pi, length.out = n),
 	function(x, y) sin(x - y)
     )
-    matplot(x, type = "l", lwd = 4, lty = 1, col = 1:8, ylab = "", main=main)
+    matplot(x, type = "l", lwd = 4, lty = 1, col = 1:n, ylab = "", main=main)
 }
 sinplot("default palette")
 
 palette("R3");        sinplot("R3")
 palette("Okabe-Ito"); sinplot("Okabe-Ito")
-palette("Tableau")  ; sinplot("Tableau")
+palette("Tableau")  ; sinplot("Tableau", n = 10)
+palROB <- colorRampPalette(c("red", "darkorange2", "blue"), space = "Lab")
+palette(palROB(16)); sinplot("palROB(16)", n = 16)
 palette("default") # reset
 
 ## color swatches for palette.colors()

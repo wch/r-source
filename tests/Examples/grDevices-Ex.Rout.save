@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2024-01-01 r85757) -- "Unsuffered Consequences"
+R Under development (unstable) (2024-01-06 r85786) -- "Unsuffered Consequences"
 Copyright (C) 2024 The R Foundation for Statistical Computing
 Platform: aarch64-apple-darwin23.2.0
 
@@ -2704,19 +2704,20 @@ Sturges   Scott      FD
 [13] "Tableau 10"      "Classic Tableau" "Polychrome 36"   "Alphabet"       
 > 
 > ## Demonstrate the colors 1:8 in different palettes using a custom matplot()
-> sinplot <- function(main=NULL) {
+> sinplot <- function(main=NULL, n = 8) {
 +     x <- outer(
 + 	seq(-pi, pi, length.out = 50),
-+ 	seq(0, pi, length.out = 8),
++ 	seq(0, pi, length.out = n),
 + 	function(x, y) sin(x - y)
 +     )
-+     matplot(x, type = "l", lwd = 4, lty = 1, col = 1:8, ylab = "", main=main)
++     matplot(x, type = "l", lwd = 4, lty = 1, col = 1:n, ylab = "", main=main)
 + }
 > sinplot("default palette")
 > 
 > palette("R3");        sinplot("R3")
 > palette("Okabe-Ito"); sinplot("Okabe-Ito")
-> palette("Tableau")  ; sinplot("Tableau")
+> palette("Tableau")  ; sinplot("Tableau", n = 10)
+> palette(rainbow(13, end=0.85)); sinplot("rainbow(13, end = 0.85)", n = 13)
 > palette("default") # reset
 > 
 > ## color swatches for palette.colors()
