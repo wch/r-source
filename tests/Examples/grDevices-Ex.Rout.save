@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2024-01-06 r85786) -- "Unsuffered Consequences"
+R Under development (unstable) (2024-01-08 r85788) -- "Unsuffered Consequences"
 Copyright (C) 2024 The R Foundation for Statistical Computing
 Platform: aarch64-apple-darwin23.2.0
 
@@ -2707,7 +2707,7 @@ Sturges   Scott      FD
 > sinplot <- function(main=NULL, n = 8) {
 +     x <- outer(
 + 	seq(-pi, pi, length.out = 50),
-+ 	seq(0, pi, length.out = n),
++ 	seq(  0, pi, length.out = n),
 + 	function(x, y) sin(x - y)
 +     )
 +     matplot(x, type = "l", lwd = 4, lty = 1, col = 1:n, ylab = "", main=main)
@@ -2717,7 +2717,8 @@ Sturges   Scott      FD
 > palette("R3");        sinplot("R3")
 > palette("Okabe-Ito"); sinplot("Okabe-Ito")
 > palette("Tableau")  ; sinplot("Tableau", n = 10)
-> palette(rainbow(13, end=0.85)); sinplot("rainbow(13, end = 0.85)", n = 13)
+> palROB <- colorRampPalette(c("red", "darkorange2", "blue"), space = "Lab")
+> palette(palROB(16)); sinplot("palROB(16)", n = 16)
 > palette("default") # reset
 > 
 > ## color swatches for palette.colors()
@@ -3654,15 +3655,15 @@ attr(,"class")
 > ## time-dependent ==> ignore diffs:
 > ## IGNORE_RDIFF_BEGIN
 > pretty(Sys.Date())
-[1] "2023-12-31" "2024-01-01" "2024-01-02" "2024-01-03" "2024-01-04"
-[6] "2024-01-05"
+[1] "2024-01-06" "2024-01-07" "2024-01-08" "2024-01-09" "2024-01-10"
+[6] "2024-01-11"
 > pretty(Sys.time(), n = 10)
- [1] "2024-01-02 08:18:31 GMT" "2024-01-02 08:18:32 GMT"
- [3] "2024-01-02 08:18:33 GMT" "2024-01-02 08:18:34 GMT"
- [5] "2024-01-02 08:18:35 GMT" "2024-01-02 08:18:36 GMT"
- [7] "2024-01-02 08:18:37 GMT" "2024-01-02 08:18:38 GMT"
- [9] "2024-01-02 08:18:39 GMT" "2024-01-02 08:18:40 GMT"
-[11] "2024-01-02 08:18:41 GMT"
+ [1] "2024-01-08 10:32:54 GMT" "2024-01-08 10:32:55 GMT"
+ [3] "2024-01-08 10:32:56 GMT" "2024-01-08 10:32:57 GMT"
+ [5] "2024-01-08 10:32:58 GMT" "2024-01-08 10:32:59 GMT"
+ [7] "2024-01-08 10:33:00 GMT" "2024-01-08 10:33:01 GMT"
+ [9] "2024-01-08 10:33:02 GMT" "2024-01-08 10:33:03 GMT"
+[11] "2024-01-08 10:33:04 GMT"
 > ## IGNORE_RDIFF_END
 > 
 > pretty(as.Date("2000-03-01")) # R 1.0.0 came in a leap year
@@ -4494,7 +4495,7 @@ NULL
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  21.457 0.442 22.058 0 0 
+Time elapsed:  20.809 0.427 21.363 0 0 
 > grDevices::dev.off()
 null device 
           1 
