@@ -1181,6 +1181,14 @@ options(op)
 ## f0 and qf0 were unchanged, keeping srcref in R <= 4.3.*
 
 
+## startDynamicHelp(): port out of range, PR#18645
+op <- options(help.ports = 123456L)
+assertErrV(tools::startDynamicHelp())
+assertErrV(help.start(browser = identity))
+options(op)
+## silently failed much later in R <= 4.3.2.
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

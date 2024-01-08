@@ -552,6 +552,9 @@
       very small, fixing \PR{18642} thanks to the proposal of Morten Welinder,
       also improving other instances where C level \code{binom_raw(x, n, ..)}
       has \code{x == 0} or \code{x== n}.
+
+      \item \pkg{tools}\code{:: startDynamicHelp()} now ensures \code{port}
+      is in proper range, fixing \PR{18645}.
     }
   }
 }
