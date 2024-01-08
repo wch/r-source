@@ -4735,9 +4735,6 @@ add_dummies <- function(dir, Log)
                 Sys.unsetenv("_R_CHECK_PACKAGE_NAME_")
             if(tolower(rcl) == "true")
                 Sys.setenv("_R_CHECK_LICENSE_" = "false")
-            saveRDS(list(Sys.getenv("_R_CHECK_LICENSE_"),
-                         xfun::is_R_CMD_check()),
-                    file = "~/tmp/zzz.rds")
             bad_vignettes <- character()
             for (i in seq_along(vigns$docs)) {
                 tdir <- tempfile()
