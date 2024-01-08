@@ -4505,14 +4505,11 @@ add_dummies <- function(dir, Log)
 
         ## Packages with a 'vignette' subdir not providing vignettes.
         if(!length(vigns$docs)) {
-            if(config_val_to_logical(Sys.getenv("_R_CHECK_VIGNETTES_MISSING_SOURCES_",
-                                                "FALSE"))) {
-                checkingLog(Log, "package vignettes")                
-                noteLog(Log)
-                msg <- c("Package has 'vignettes' subdirectory but apparently no vignettes.",
-                         "Perhaps the 'VignetteBuilder' information is missing from the DESCRIPTION file?")
-                wrapLog(msg)
-            }
+            checkingLog(Log, "package vignettes")                
+            noteLog(Log)
+            msg <- c("Package has 'vignettes' subdirectory but apparently no vignettes.",
+                     "Perhaps the 'VignetteBuilder' information is missing from the DESCRIPTION file?")
+            wrapLog(msg)
             return()
         }
                 
@@ -4716,9 +4713,7 @@ add_dummies <- function(dir, Log)
         ##   if(all(grepl("(^###|^[[:space:]]*$)", bfr, useBytes = TRUE))) {
         ## so we do the same here.
         if(!is_base_pkg &&
-           dir.exists(dir <- file.path(pkgdir, "inst", "doc")) &&
-           config_val_to_logical(Sys.getenv("_R_CHECK_VIGNETTES_MISSING_TANGLE_OUTPUTS_",
-                                            "FALSE"))) {
+           dir.exists(dir <- file.path(pkgdir, "inst", "doc"))) {
             ## This is similar to the weave output check above, but we
             ## cannot simply use find_vignette_product(by = "tangle") as
             ## we need to ignore outputs with no R code, see above.
