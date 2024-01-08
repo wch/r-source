@@ -344,8 +344,8 @@ file @file{.R/repositories} specifying it (see @code{?setRepositories}).
 @command{make check-devel} checks the included packages' @file{tests}
 directories. For @pkg{grDevices} more complete checks will be run if
 the environment variable @env{R_GRDEVICES_COMPARE_PS_PDF} is set: those
-checks are skipped on plaforms using @code{musl} such as Alpine Linux, and
-it knows about differences from tranliterations in macOS 14 and later.
+checks are skipped on platforms using @code{musl} such as Alpine Linux, and
+it knows about differences from transliterations in macOS 14 and later.
 
 Parallel make is supported for building @R{} but not for the
 @samp{check} targets (as the output is likely to be unreadably
@@ -4142,9 +4142,9 @@ be switched by the `alternatives' mechanism.
 @end itemize
 
 If building LAPACK from its Netlib sources, be aware that @command{make}
-with its supplied @file{Makefile} will make a @emph{staiic} library and
+with its supplied @file{Makefile} will make a @emph{static} library and
 @R{} requires a shared/dynamic one.  To get one, use @command{cmake} as
-doxumented briefly in @file{README.md}.  Something like (to build only
+documented briefly in @file{README.md}.  Something like (to build only
 the double and double complex subroutines with 32-bit array indices),
 
 @example
