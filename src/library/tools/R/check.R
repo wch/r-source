@@ -4526,7 +4526,7 @@ add_dummies <- function(dir, Log)
             } else resultLog(Log, "OK")
         }
 
-        checkingLog(Log, "package vignettes in ", sQuote("inst/doc"))
+        checkingLog(Log, "package vignettes")
         any <- FALSE
         ## Do PDFs or HTML files exist for all package vignettes?
         ## A base source package need not have PDFs to avoid
