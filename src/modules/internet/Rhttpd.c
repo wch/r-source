@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2009-2022 The R Core Team.
+ *  Copyright (C) 2009-2024 The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -78,8 +78,8 @@
 # define donesocks()
 #else
 /* --- Windows-only --- */
+# include <winsock2.h>
 # include <windows.h>
-# include <winsock.h>
 # include <string.h>
 
 # define sockerrno WSAGetLastError()
@@ -88,8 +88,9 @@
 static int initsocks(void)
 {
     WSADATA dt;
-    /* initialize WinSock 1.1 */
-    return (WSAStartup(0x0101, &dt)) ? -1 : 0;
+    /* initialize WinSock 2.2 */
+    WORD wVers = MAKEWORD(2, 2);
+    return (WSAStartup(wVers, &dt)) ? -1 : 0;
 }
 
 # define donesocks() WSACleanup()
@@ -1201,6 +1202,7 @@ static void worker_input_handler(void *data) {
 static void srv_input_handler(void *data);
 
 static SOCKET srv_sock = INVALID_SOCKET;
+static WSAEVENT server_thread_should_stop = NULL;
 
 #ifdef _WIN32
 /* Windows implementation uses threads to accept and serve
@@ -1222,9 +1224,29 @@ static LRESULT CALLBACK RhttpdWindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LP
    creates worker threads
  */
 static DWORD WINAPI ServerThreadProc(LPVOID lpParameter) {
-    while (srv_sock != INVALID_SOCKET) {
-	srv_input_handler(lpParameter);
+
+    WSAEVENT srv_sock_ready = WSACreateEvent();
+    if (!srv_sock_ready ||
+	WSAEventSelect(srv_sock, srv_sock_ready, FD_ACCEPT)) {
+
+	return 1;
     }
+
+    WSAEVENT events[] = { srv_sock_ready, server_thread_should_stop };
+    for(;;) {
+	DWORD ret = WSAWaitForMultipleEvents(2, events, FALSE, WSA_INFINITE,
+	                                     FALSE);
+	if (ret == WSA_WAIT_EVENT_0) {
+	    WSANETWORKEVENTS events;
+	    /* only re-set, we know the event is FD_ACCEPT */
+	    WSAEnumNetworkEvents(srv_sock, srv_sock_ready, &events);
+	    srv_input_handler(lpParameter);
+	    continue;
+	}
+	/* exit the thread when signalled to do so or on error */
+	break;
+    }
+
     return 0;
 }
 
@@ -1243,7 +1265,7 @@ static DWORD WINAPI WorkerThreadProc(LPVOID lpParameter) {
 }
 
 /* global server thread - currently we support only one server at a time */
-HANDLE server_thread;
+static HANDLE server_thread = NULL;
 #else
 /* on unix we register all used sockets (server and workers) as input
  * handlers such that we can avoid polling */
@@ -1279,6 +1301,20 @@ static void srv_input_handler(void *data)
 #endif
 }
 
+#ifdef _WIN32
+void stop_server_thread(void)
+{
+    if (!server_thread || !server_thread_should_stop)
+	return;
+    WSASetEvent(server_thread_should_stop);
+    WaitForSingleObject(server_thread, INFINITE);
+    WSACloseEvent(server_thread_should_stop);
+    CloseHandle(server_thread);
+    server_thread = NULL;
+    server_thread_should_stop = NULL;
+}
+#endif
+
 int in_R_HTTPDCreate(const char *ip, int port) 
 {
 #ifndef _WIN32
@@ -1289,19 +1325,14 @@ int in_R_HTTPDCreate(const char *ip, int port)
     if (needs_init) /* initialization may need to be performed on first use */
 	first_init();
 
+#ifdef _WIN32
+    /* on Windows stop the server thread if it exists */
+    stop_server_thread();
+#endif
+
     /* is already in use, close the current socket */
     if (srv_sock != INVALID_SOCKET)
 	closesocket(srv_sock);
-
-#ifdef _WIN32
-    /* on Windows stop the server thread if it exists */
-    if (server_thread) {
-	DWORD ts = 0;
-	if (GetExitCodeThread(server_thread, &ts) && ts == STILL_ACTIVE)
-	    TerminateThread(server_thread, 0);
-	server_thread = 0;
-    }
-#endif
 
     /* create a new socket */
     srv_sock = socket(AF_INET, SOCK_STREAM, 0);
@@ -1333,8 +1364,11 @@ int in_R_HTTPDCreate(const char *ip, int port)
     }
 
     /* setup listen */
-    if (listen(srv_sock, 8))
+    if (listen(srv_sock, 8)) {
+	closesocket(srv_sock);
+	srv_sock = INVALID_SOCKET;
 	Rf_error("cannot listen to TCP port %d", port);
+    }
 
 #ifndef _WIN32
     /* all went well, register the socket as a handler */
@@ -1343,25 +1377,38 @@ int in_R_HTTPDCreate(const char *ip, int port)
 				  &srv_input_handler, HttpdServerActivity);
 #else
     /* do the desired Windows synchronization */
+    server_thread_should_stop = WSACreateEvent();
+    if (!server_thread_should_stop) {
+	closesocket(srv_sock);
+	srv_sock = INVALID_SOCKET;
+	Rf_error("cannot create synchronization event");
+    }
+    
     server_thread = CreateThread(NULL, 0, ServerThreadProc, 0, 0, 0);
+    if (!server_thread) {
+	closesocket(srv_sock);
+	srv_sock = INVALID_SOCKET;
+	WSACloseEvent(server_thread_should_stop);
+	server_thread_should_stop = NULL;
+	Rf_error("cannot create server thread");
+    }
 #endif
     return 0;
 }
 
 void in_R_HTTPDStop(void)
 {
-    if (srv_sock != INVALID_SOCKET) closesocket(srv_sock);
-    srv_sock = INVALID_SOCKET;
-
 #ifdef _WIN32
     /* on Windows stop the server thread if it exists */
-    if (server_thread) {
-	DWORD ts = 0;
-	if (GetExitCodeThread(server_thread, &ts) && ts == STILL_ACTIVE)
-	    TerminateThread(server_thread, 0);
-	server_thread = 0;
+    stop_server_thread();
+#endif
+
+    if (srv_sock != INVALID_SOCKET) {
+	closesocket(srv_sock);
+	srv_sock = INVALID_SOCKET;
     }
-#else
+
+#ifndef _WIN32
     if (srv_handler) removeInputHandler(&R_InputHandlers, srv_handler);
 #endif
 }
