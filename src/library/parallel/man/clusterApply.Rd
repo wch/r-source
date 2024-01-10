@@ -54,7 +54,7 @@ parSapplyLB(cl = NULL, X, FUN, ..., simplify = TRUE,
   \item{expr}{expression to evaluate.}
   \item{seq}{vector to split.}
   \item{varlist}{character vector of names of objects to export.}
-  \item{envir}{environment from which t export variables}
+  \item{envir}{environment from which to export variables}
   \item{x}{a vector for \code{clusterApply} and \code{clusterApplyLB}, a
     matrix for \code{parRapply} and \code{parCapply}.}
   \item{...}{additional arguments to pass to \code{fun} or \code{FUN}:
