@@ -4737,13 +4737,19 @@ add_dummies <- function(dir, Log)
                 engine <- vignetteEngine(vigns$engines[i])
                 encoding <- vigns$encodings[i]
                 dir.create(tdir)
-                products <-
-                    tryCatch(buildVignette(file, dir = tdir,
-                                           weave = FALSE,
-                                           quiet = TRUE,
-                                           engine = engine,
-                                           encoding = encoding),
-                             error = identity)
+                ## Argh.
+                ## At least knitr::markdown() gives error msgs when
+                ## tangling with quiet = TRUE, so we need to capture
+                ## these.
+                .eval_with_capture({
+                    products <-
+                        tryCatch(buildVignette(file, dir = tdir,
+                                               weave = FALSE,
+                                               quiet = TRUE,
+                                               engine = engine,
+                                               encoding = encoding),
+                                 error = identity)
+                })
                 if(!inherits(products, "error") && length(products)) {
                     ## Hmm ... there should really only be one tangle
                     ## product. 
