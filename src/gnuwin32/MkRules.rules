@@ -31,7 +31,7 @@ CAIRO_LIBS ?= "-lcairo -lfontconfig -lfreetype -lpng -lpixman-1 -lexpat -lharfbu
               $(LIBBROTLI)"
 CURL_CA_BUNDLE ?=
 USE_LIBCURL = yes
-CURL_LIBS ?= -lcurl -lbcrypt -lzstd -lrtmp -lssl -lssh2 -lgcrypt -lcrypto -lgdi32 -lz \
+CURL_LIBS ?= -lcurl -lbcrypt -lzstd -lrtmp -lssl -lssh2 -lbcrypt -lgcrypt -lcrypto -lgdi32 -lz \
              -lws2_32 -lgdi32 -lcrypt32 -lidn2 -lunistring -liconv -lgpg-error -lwldap32 \
              -lwinmm $(LIBBROTLI)
 
