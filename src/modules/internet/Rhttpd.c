@@ -1199,12 +1199,12 @@ static void worker_input_handler(void *data) {
     }
 }
 
-static void srv_input_handler(void *data);
-
 static SOCKET srv_sock = INVALID_SOCKET;
-static WSAEVENT server_thread_should_stop = NULL;
 
 #ifdef _WIN32
+static void srv_input_handler(void *data);
+static WSAEVENT server_thread_should_stop = NULL;
+
 /* Windows implementation uses threads to accept and serve
    connections, using the main event loop to synchronize with R
    through a message-only window which is created on the R thread
