@@ -5837,20 +5837,6 @@ add_dummies <- function(dir, Log)
                 ex_re <- "(RcppEigen/include/Eigen)/.*\\[-Wtautological-compare\\]"
                 lines <- filtergrep(ex_re, lines, useBytes = TRUE)
 
-                ## <FIXME>
-                ## Remove enventually ...
-                check_src_flag <-
-                    Sys.getenv("_R_CHECK_SRC_MINUS_W_FORMAT_EXCEPTIONS_",
-                               "TRUE")
-                if(config_val_to_logical(check_src_flag)) {
-
-                ## 2023-11: filter out format warnings (to be fixed upstream)
-                ex_re <- "rstan/include/rstan/io/.*\\[-Wformat"
-                lines <- filtergrep(ex_re, lines, useBytes = TRUE)
-
-                }
-                ## </FIXME>
-
                 ## Filter out StanHeader warnings
                 ex_re <- "StanHeaders/.*\\[-Wunneeded-internal-declaration\\]"
                 lines <- filtergrep(ex_re, lines, useBytes = TRUE)
