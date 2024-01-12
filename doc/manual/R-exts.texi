@@ -5053,6 +5053,21 @@ for accounts ported from Mojave or earlier it is usually
 @command{bash}).
 
 @item
+@R{} is not built by default as a shared library on non-Windows
+platforms (although it commonly is on macOS to support the GUI), so
+there need be not a file @file{libR.so} nor @file{libR.dylib}.  Users of
+@command{cmake} or @command{rust} have all too frequently assumed
+otherwise, so do ensure your package is checked under a vanilla @R{} build.
+@ifset UseExternalXrefs
+@xref{Configuration options, , Configuration options,
+R-admin, R Installation and Administration}.
+@end ifset
+@ifclear UseExternalXrefs
+See the section `Configuration options' in the `R Installation and
+Administration' manual for more information.
+@end ifclear
+
+@item
 Make use of the abilities of your compilers to check the
 standards-conformance of your code.  For example, @command{gcc},
 @command{clang} and
