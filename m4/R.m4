@@ -1,6 +1,6 @@
 ### R.m4 -- extra macros for configuring R		-*- Autoconf -*-
 ###
-### Copyright (C) 1998-2023 R Core Team
+### Copyright (C) 1998-2024 R Core Team
 ###
 ### This file is part of R.
 ###
@@ -3152,8 +3152,8 @@ AC_SUBST(LAPACK_LIBS)
 
 ## R_LAPACK_SYSTEM_LIB
 ## -------------------
-## New for R 4.2.0
-## Look for system -llapack of version at least 3.10.0.
+## New for R 4.2.0: reduced to >=3.9.0 for 4.4.0.
+## Look for system -llapack of version at least 3.9.0.
 ## We have to test with a system BLAS.
 ## We don't want an external lapack which contains a BLAS.
 ## We document that at least ATLAS, OpenBLAS and Accelerate lapack
@@ -3291,7 +3291,7 @@ fi
 if test "${acx_lapack_ok}" = yes; then
   LIBS="-lblas -llapack ${FLIBS} ${acx_lapack_save_LIBS}"
 
-AC_CACHE_CHECK([if LAPACK version >= 3.10.0], [r_cv_lapack_ver],
+AC_CACHE_CHECK([if LAPACK version >= 3.9.0], [r_cv_lapack_ver],
 [AC_RUN_IFELSE([AC_LANG_SOURCE([[
 extern void ${ilaver}(int *major, int *minor, int *patch);
 
@@ -3301,7 +3301,7 @@ int main(void) {
   int major, minor, patch;
   ${ilaver}(&major, &minor, &patch);
   printf("%d.%d.%d, so ", major, minor, patch);
-  if (major < 3 || (major == 3 && minor < 10)) exit(1);
+  if (major < 3 || (major == 3 && minor < 9)) exit(1);
   exit(0);
 }
 ]])],

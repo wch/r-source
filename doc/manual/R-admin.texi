@@ -4087,7 +4087,7 @@ which is used.
 @cindex LAPACK library
 
 If when configuring @R{} a system LAPACK library is found of version
-3.10.0 or later (and does not contain BLAS routines) it will be used
+3.9.0 or later (and does not contain BLAS routines) it will be used
 instead of compiling the LAPACK code in the package sources.  This can
 be prevented by configuring @R{} with @option{--without-lapack}.
 Using a static @file{liblapack.a} is not supported.

@@ -278,11 +278,15 @@
       \item \command{configure} option \option{--enable-lto=check} has
       not worked reliably since 2019 and has been removed.
 
-      \item The minimum requirement for a maintainer build has been
-      increased to \command{autoconf}\sspace{}2.71, and it is intended to
-      increase to 2.72 before release. (The issue is better support for
-      \sQuote{C23}: \command{autoconf}\sspace{}2.72 requires a C version
-      of C90 or later, but \R has long required C99 or later.)
+      \item The minimum requirement \command{autoconf} for a maintainer
+      build has been increased to \command{autoconf}\sspace{}2.71, and
+      it is intended to increase to 2.72 before release. (The issue is
+      better support for \sQuote{C23}: \command{autoconf}\sspace{}2.72
+      requires a C version of C90 or later, but \R has long required C99
+      or later.)
+
+      \item The minimum version requirement for an external LAPACK has
+      been reduced to 3.9.0.
     }
   }
 
