@@ -278,7 +278,7 @@
       \item \command{configure} option \option{--enable-lto=check} has
       not worked reliably since 2019 and has been removed.
 
-      \item The minimum requirement \command{autoconf} for a maintainer
+      \item The minimum \command{autoconf} requirement for a maintainer
       build has been increased to \command{autoconf}\sspace{}2.71, and
       it is intended to increase to 2.72 before release. (The issue is
       better support for \sQuote{C23}: \command{autoconf}\sspace{}2.72
