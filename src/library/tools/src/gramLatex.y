@@ -876,6 +876,7 @@ static int mkVerbEnv(void)
     	    matched = 0;
     }
     if ( !CHAR(STRING_ELT(parseState.xxInVerbEnv, 0))[matched] ) {
+        xxungetc(c);
     	for (i = matched-1; i >= 0; i--) 
     	    xxungetc(*(--bp));    	    
 	RELEASE_SV(parseState.xxInVerbEnv);
