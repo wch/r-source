@@ -74,8 +74,8 @@ This is a guide to importing and exporting data to and from R.
 @unnumbered Acknowledgements
 
 The relational databases part of this manual is based in part on an
-earlier manual by Douglas Bates and Saikat DebRoy.  The principal author
-of this manual was Brian Ripley.
+earlier manual by @I{Douglas Bates} and @I{Saikat DebRoy}.  The
+principal author of this manual was @I{Brian Ripley}.
 
 Many volunteers have contributed to the packages used here.  The
 principal authors of the packages mentioned are
@@ -83,65 +83,73 @@ principal authors of the packages mentioned are
 @quotation
 @table @asis
 @item @CRANpkg{DBI}:
-David A. James
+@I{David A. James}
 
 @item @CRANpkg{dataframes2xls}:
-Guido van Steen
+@I{Guido van Steen}
 
 @item @CRANpkg{foreign}:
-Thomas Lumley, Saikat DebRoy, Douglas Bates, Duncan Murdoch and Roger Bivand
+@I{Thomas Lumley},
+@I{Saikat DebRoy},
+@I{Douglas Bates},
+@I{Duncan Murdoch} and 
+@I{Roger Bivand}
 
 @item @CRANpkg{gdata}:
-Gregory R. Warnes
+@I{Gregory R. Warnes}
 
 @item @CRANpkg{ncdf4}:
-David Pierce
+@I{David Pierce}
 
 @item @CRANpkg{rJava}:
-Simon Urbanek
+@I{Simon Urbanek}
 
 @item @CRANpkg{RJDBC}:
-Simon Urbanek
+@I{Simon Urbanek}
 
 @item @CRANpkg{RMySQL}:
-David James and Saikat DebRoy
+@I{David James} and
+@I{Saikat DebRoy}
 
 @item @CRANpkg{RNetCDF}:
-Pavel Michna
+@I{Pavel Michna}
 
 @item @CRANpkg{RODBC}:
-Michael Lapsley and Brian Ripley
+@I{Michael Lapsley} and
+@I{Brian Ripley}
 
 @item @CRANpkg{ROracle}:
-David A. James
+@I{David A. James}
 
 @item @CRANpkg{RPostgreSQL}:
-Sameer Kumar Prayaga and Tomoaki Nishiyama
+@I{Sameer Kumar Prayaga} and
+@I{Tomoaki Nishiyama}
 
 @item @pkg{RSPerl}:
-Duncan Temple Lang
+@I{Duncan Temple Lang}
 
 @item @pkg{RSPython}:
-Duncan Temple Lang
+@I{Duncan Temple Lang}
 
 @item @CRANpkg{RSQLite}:
-David A. James
+@I{David A. James}
 
 @item @pkg{SJava}:
-John Chambers and Duncan Temple Lang
+@I{John Chambers} and
+@I{Duncan Temple Lang}
 
 @item @CRANpkg{WriteXLS}:
-Marc Schwartz
+@I{Marc Schwartz}
 
 @item @CRANpkg{XLConnect}:
-Mirai Solutions GmbH
+@I{Mirai Solutions GmbH}
 
 @item @CRANpkg{XML}:
-Duncan Temple Lang
+@I{Duncan Temple Lang}
 @end table
 @end quotation
 
-Brian Ripley is the author of the support for connections.
+@I{Brian Ripley} is the author of the support for connections.
 
 
 @node Introduction, Spreadsheet-like data, Acknowledgements, Top
@@ -163,7 +171,7 @@ In general, statistical systems like @R{} are not particularly well
 suited to manipulations of large-scale data.  Some other systems are
 better than @R{} at this, and part of the thrust of this manual is to
 suggest that rather than duplicating functionality in @R{} we can make
-another system do the work!  (For example Therneau & Grambsch (2000)
+another system do the work!  (For example @I{Therneau} & @I{Grambsch} (2000)
 commented that they preferred to do data manipulation in SAS and then
 use package @CRANpkg{survival} in @Sl{} for the analysis.)  Database
 manipulation systems are often very suitable for manipulating and
@@ -1042,10 +1050,10 @@ other system.
 @end menu
 
 @node EpiInfo Minitab SAS S-PLUS SPSS Stata Systat, Octave, Importing from other statistical systems, Importing from other statistical systems
-@section EpiInfo, Minitab, S-PLUS, SAS, SPSS, Stata, Systat
+@section EpiInfo, Minitab, S-PLUS, SAS, SPSS, @I{Stata}, Systat
 
 The recommended package @CRANpkg{foreign} provides import facilities for
-files produced by these statistical systems, and for export to Stata. In
+files produced by these statistical systems, and for export to @I{Stata}. In
 some cases these functions may require substantially less memory than
 @code{read.table} would. @code{write.foreign} (See @ref{Export to text
 files}) provides an export mechanism with support currently for
@@ -1116,10 +1124,10 @@ to handle these.
 @cindex Stata
 @findex read.dta
 @findex write.dta
-Stata @file{.dta} files are a binary file format. Files from versions 5
-up to 12 of Stata can be read and written by functions @code{read.dta}
-and @code{write.dta}.  Stata variables with value labels are optionally
-converted to (and from) @R{} factors. For  Stata versions 13 and later
+@I{Stata} @file{.dta} files are a binary file format. Files from versions 5
+up to 12 of @I{Stata} can be read and written by functions @code{read.dta}
+and @code{write.dta}.  @I{Stata} variables with value labels are optionally
+converted to (and from) @R{} factors. For  @I{Stata} versions 13 and later
 see @acronym{CRAN} packages @CRANpkg{readstata13} and @CRANpkg{haven}.
 
 
@@ -1231,7 +1239,7 @@ being made available for the commercial @abbr{DBMS}s.
 @cindex Open Database Connectivity
 There are other commonly used data sources, including spreadsheets,
 non-relational databases and even text files (possibly compressed).
-Open Database Connectivity (@acronym{ODBC}) is a standard to use all of
+Open Database Connectivity (@abbr{ODBC}) is a standard to use all of
 these data sources.  It originated on Windows (see
 @uref{https://docs.microsoft.com/en-us/sql/odbc/microsoft-open-database-connectivity-odbc})
 but is also implemented on Linux/Unix/macOS.
@@ -1379,7 +1387,7 @@ proposal for a unified `front-end' package @CRANpkg{DBI}
 @CRANpkg{RPostgreSQL} and @CRANpkg{RSQLite} (which works with the
 bundled @abbr{DBMS} @code{SQLite}, @uref{https://www.sqlite.org/index.html}) and
 @CRANpkg{RJDBC} (which uses Java and can connect to any @abbr{DBMS} that has a
-JDBC driver).
+@abbr{JDBC} driver).
 
 @c The BioConductor project has updated @pkg{RdbiPgSQL} (formerly on
 @c @acronym{CRAN} ca 2000), a first-generation interface to PostgreSQL.
@@ -1404,8 +1412,8 @@ which are queried using JavaScript rather than SQL.  Package
 @cindex MySQL database system
 
 Package @CRANpkg{RMySQL} on @acronym{CRAN} provides an interface to the
-MySQL database system (see @uref{https://www.mysql.com} and Dubois,
-2000) or its fork MariaDB (see @uref{https://mariadb.org/}).  The
+MySQL database system (see @uref{https://www.mysql.com} and @I{Dubois},
+2000) or its fork @I{MariaDB} (see @uref{https://mariadb.org/}).  The
 description here applies to versions @code{0.5-0} and later: earlier
 versions had a substantially different interface.  The current version
 requires the @CRANpkg{DBI} package, and this description will apply with
@@ -1496,20 +1504,20 @@ Arkansas          8.8     190       50 19.5
 @cindex Open Database Connectivity
 
 Package @CRANpkg{RODBC} on @acronym{CRAN} provides an interface to
-database sources supporting an @acronym{ODBC} interface.  This is very
+database sources supporting an @abbr{ODBC} interface.  This is very
 widely available, and allows the same @R{} code to access different
 database systems.  @CRANpkg{RODBC} runs on Unix/Linux, Windows and macOS,
-and almost all database systems provide support for @acronym{ODBC}.  We
+and almost all database systems provide support for @abbr{ODBC}.  We
 have tested Microsoft SQL Server, Access, MySQL, PostgreSQL, Oracle and
 IBM DB2 on Windows and MySQL, MariaDB, Oracle, PostgreSQL and SQLite on
 Linux.
 
-ODBC is a client-server system, and we have happily connected to a @abbr{DBMS}
+@abbr{ODBC} is a client-server system, and we have happily connected to a @abbr{DBMS}
 running on a Unix server from a Windows client, and @emph{vice versa}.
 
-On Windows ODBC support is part of the OS.  On Unix/Linux you will need
-an @acronym{ODBC} Driver Manager such as unixODBC
-(@uref{https://www.unixodbc.org/}) or iOBDC (@uref{https://www.iodbc.org/}:
+On Windows @abbr{ODBC} support is part of the OS.  On Unix/Linux you will need
+an @abbr{ODBC} Driver Manager such as @I{unixODBC}
+(@uref{https://www.unixodbc.org/}) or @abbr{iODBC} (@uref{https://www.iodbc.org/}:
 this is pre-installed in macOS) and an installed driver for your
 database system.
 
@@ -1522,14 +1530,14 @@ files.  (The named applications do @emph{not} need to be
 installed. Which file formats are supported depends on the versions of
 the drivers.)  There are versions for Excel and Access 2007/2010 (go to
 @uref{https://www.microsoft.com/en-us/download}, and
-search for `Office ODBC', which will lead to
+search for `Office @abbr{ODBC}', which will lead to
 @file{AccessDatabaseEngine.exe}), the `2007 Office System Driver' (the
 latter has a version for 64-bit Windows, and that will also read earlier
 versions).
 
 On macOS the Actual Technologies
 (@url{https://www.actualtech.com/product_access.php}) drivers provide
-ODBC interfaces to Access databases and to Excel spreadsheets (not
+@abbr{ODBC} interfaces to Access databases and to Excel spreadsheets (not
 including Excel 2007/2010).
 
 @findex odbcConnect
@@ -1539,7 +1547,7 @@ Many simultaneous connections are possible.  A connection is opened by a
 call to @code{odbcConnect} or @code{odbcDriverConnect} (which on the
 Windows GUI allows a database to be selected via dialog boxes) which
 returns a handle used for subsequent access to the database.  Printing a
-connection will provide some details of the ODBC connection, and calling
+connection will provide some details of the @abbr{ODBC} connection, and calling
 @code{odbcGetInfo} will give details on the client and server.
 
  
@@ -1573,14 +1581,14 @@ results.  The latter can be used within a loop to retrieve a limited
 number of rows at a time, as can function @code{sqlFetchMore}.
 
 @cindex PostgreSQL database system
-Here is an example using PostgreSQL, for which the @acronym{ODBC} driver
+Here is an example using PostgreSQL, for which the @abbr{ODBC} driver
 maps column and data frame names to lower case.  We use a database
 @code{testdb} we created earlier, and had the @abbr{DSN} (data source name) set
 up in @file{~/.odbc.ini} under @code{unixODBC}.  Exactly the same code
-worked using MyODBC to access a MySQL database under Linux or Windows
+worked using @I{MyODBC} to access a MySQL database under Linux or Windows
 (where MySQL also maps names to lowercase).  Under Windows,
-@acronym{DSN}s are set up in the @acronym{ODBC} applet in the Control
-Panel (`Data Sources (ODBC)' in the `Administrative Tools' section).
+@acronym{DSN}s are set up in the @abbr{ODBC} applet in the Control
+Panel (`@I{Data Sources (ODBC)}' in the `Administrative Tools' section).
 @cindex MySQL database system
 
 @smallexample
@@ -1622,7 +1630,7 @@ Alaska           10.0     263       48 44.5
 @cindex Excel
 @findex .xls
 @findex odbcConnectExcel
-As a simple example of using @acronym{ODBC} under Windows with a Excel
+As a simple example of using @abbr{ODBC} under Windows with a Excel
 spreadsheet, we can read from a spreadsheet by
 
 @smallexample
@@ -1787,7 +1795,7 @@ handle binary files.
 @findex netCDF
 @cindex network Common Data Form
 
-Packages @CRANpkg{h5}, Bioconductor's @pkg{rhdf5}, @CRANpkg{RNetCDF} and
+Packages @CRANpkg{h5}, @I{Bioconductor}'s @pkg{rhdf5}, @CRANpkg{RNetCDF} and
 @CRANpkg{ncdf4} on @acronym{CRAN} provide interfaces to @acronym{NASA}'s
 HDF5 (Hierarchical Data Format, see
 @uref{https://www.hdfgroup.org/HDF5/}) and to UCAR's netCDF data files
@@ -1813,11 +1821,11 @@ limited by platform, especially on Windows.
 
 @cindex dBase
 @cindex DBF files
-@code{dBase} was a DOS program written by Ashton-Tate and later owned by
-Borland which has a binary flat-file format that became popular, with
+@code{dBase} was a DOS program written by @I{Ashton-Tate} and later owned by
+@I{Borland} which has a binary flat-file format that became popular, with
 file extension @file{.dbf}.  It has been adopted for the 'Xbase' family
-of databases, covering dBase, Clipper, FoxPro and their Windows
-equivalents Visual dBase, Visual Objects and Visual FoxPro (see
+of databases, covering dBase, Clipper, @I{FoxPro} and their Windows
+equivalents Visual dBase, Visual Objects and @I{Visual FoxPro} (see
 @uref{https://www.clicketyclick.dk/databases/xbase/format/}).
 A dBase file contains
 a header and then a series of fields and so is most similar to an @R{}
@@ -1834,7 +1842,7 @@ Functions @code{read.dbf} and @code{write.dbf} provide ways to read and
 write basic @abbr{DBF} files on all @R{} platforms.  For Windows users
 @code{odbcConnectDbase} in package @CRANpkg{RODBC} provides more
 comprehensive facilities to read @abbr{DBF} files @emph{via} Microsoft's dBase
-ODBC driver (and the Visual FoxPro driver can also be used via
+@abbr{ODBC} driver (and the @I{Visual FoxPro} driver can also be used via
 @code{odbcDriverConnect}).
 @findex odbcConnectDbase
 
@@ -1870,9 +1878,9 @@ There some facilities for specialized sub-formats, for example in
 Bioconductor package @pkg{beadarray}.
 
 Raster files are common in the geographical sciences, and package
-@CRANpkg{rgdal} provides an interface to GDAL which provides some
+@CRANpkg{rgdal} provides an interface to @I{GDAL} which provides some
 facilities of its own to read raster files and links to many others.
-Which formats it supports is determined when GDAL is compiled: use
+Which formats it supports is determined when @I{GDAL} is compiled: use
 @code{gdalDrivers()} to see what these are for the build you are using.
 It can be useful for uncommon formats such as JPEG 2000 (which is a
 different format from JPEG, and not currently supported in the macOS
@@ -2078,7 +2086,7 @@ scan(pipe("sed -e s/,$// data"), sep=",")
 
 @cindex URL connections
 For convenience, if the @code{file} argument specifies a FTP, HTTP or
-HTTPS @acronym{URL}, the @acronym{URL} is opened for reading via
+@abbr{HTTPS} @acronym{URL}, the @acronym{URL} is opened for reading via
 @code{url}.  Specifying files via @samp{file://foo.bar} is also allowed.
 
 @menu
@@ -2194,7 +2202,7 @@ platforms the only change needed is that of byte-order.  Common PCs
 (@cputype{ix86}-based and @cputype{x86_64}-based machines), Compaq Alpha
 and Vaxen are @emph{little-endian}, whereas Sun Sparc, mc680x0 series,
 IBM R6000, SGI and most others are @emph{big-endian}.  (Network
-byte-order (as used by XDR, eXternal Data Representation) is
+byte-order (as used by @abbr{XDR}, eXternal Data Representation) is
 big-endian.)  To transfer to or from other programs we may need to do
 more, for example to read 16-bit integers or write single-precision real
 numbers.  This can be done using the @code{size} argument, which
@@ -2281,7 +2289,7 @@ The earlier low-level interface is given by functions @code{make.socket},
 @section Using @code{download.file}
 
 Function @code{download.file} is provided to read a file from a Web
-resource via FTP or HTTP (including HTTPS) and write it to a file.
+resource via FTP or HTTP (including @abbr{HTTPS}) and write it to a file.
 Often this can be avoided, as functions such as @code{read.table} and
 @code{scan} can read directly from a URL, either by explicitly using
 @code{url} to open a connection, or implicitly using it by giving a URL
@@ -2314,7 +2322,7 @@ possibility.
 
 If you do not have Excel, many other programs are able to read such
 spreadsheets and export in a text format on both Windows and Unix, for
-example Gnumeric (@uref{http://www.gnumeric.org}) and
+example @I{Gnumeric} (@uref{http://www.gnumeric.org}) and
 OpenOffice (@uref{https://www.openoffice.org}).  You can also
 cut-and-paste between the display of a spreadsheet in such a program and
 R: @code{read.table} will read from the R console or, under Windows,
@@ -2332,7 +2340,7 @@ and may be confused by other contents of the file.
 Windows users (of 32-bit @R{}) can use @code{odbcConnectExcel} in
 package @CRANpkg{RODBC}.  This can select rows and columns from any of the
 sheets in an Excel spreadsheet file (at least from Excel 97--2003,
-depending on your ODBC drivers: by calling @code{odbcConnect} directly
+depending on your @abbr{ODBC} drivers: by calling @code{odbcConnect} directly
 versions back to Excel 3.0 can be read).  The version
 @code{odbcConnectExcel2007} will read the Excel 2007 formats as well as
 earlier ones (provided the drivers are installed, including with 64-bit
@@ -2369,46 +2377,57 @@ spreadsheets, using an included C library.
 @appendix References
 
 @noindent
-R.@: A.@: Becker, J.@: M.@: Chambers and A.@: R.@: Wilks (1988)
+@I{R.@: A.@: Becker}, @I{J.@: M.@: Chambers} and @I{A.@: R.@: Wilks} (1988),
 @emph{The New S Language.  A Programming Environment for Data Analysis
-and Graphics.}  Wadsworth & Brooks/Cole.
+and Graphics.}  
+@I{Wadsworth & Brooks/Cole}.
 
 @noindent
-J.@: Bowman, S.@: Emberson and M.@: Darnovsky (1996) @emph{The
-Practical @acronym{SQL} Handbook.  Using Structured Query Language.}
+@I{J.@: Bowman}, @I{S.@: Emberson} and @I{M.@: Darnovsky} (1996),
+@emph{The Practical @acronym{SQL} Handbook.  Using Structured Query Language.}
 Addison-Wesley.
 
 @noindent
-J.@: M.@: Chambers (1998) @emph{Programming with Data.  A Guide to the S
-Language.} Springer-Verlag.
+@I{J.@: M.@: Chambers} (1998),
+@emph{Programming with Data.  A Guide to the S Language.}
+@I{Springer-Verlag}.
 
 @noindent
-P.@: Dubois (2000) @emph{MySQL.} New Riders.
+@I{P.@: Dubois} (2000),
+@emph{MySQL.}
+New Riders.
 
 @noindent
-M.@: Henning and S.@: Vinoski (1999) @emph{Advanced CORBA Programming
-with C++.} Addison-Wesley.
+@I{M.@: Henning} and @I{S.@: Vinoski} (1999),
+@emph{Advanced CORBA Programming with C++.}
+Addison-Wesley.
 
 @noindent
-K.@: Kline and D.@: Kline (2001) @emph{SQL in a Nutshell.} O'Reilly.
+@I{K.@: Kline} and @I{D.@: Kline} (2001),
+@emph{SQL in a Nutshell.} 
+@I{O'Reilly}.
 
 @noindent
-B.@: Momjian (2000) @emph{PostgreSQL: Introduction and Concepts.}
+@I{B.@: Momjian} (2000),
+@emph{PostgreSQL: Introduction and Concepts.}
 Addison-Wesley.
 Also available at @uref{https://momjian.us/main/writings/pgsql/aw_pgsql_book/}.
 
 @noindent
-B.@: D.@: Ripley (2001) Connections. @emph{R News}, @strong{1/1}, 16--7.
-  @uref{https://www.r-project.org/doc/Rnews/Rnews_2001-1.pdf}
-
-
-@noindent
-T.@: M.@: Therneau and P.@: M.@: Grambsch (2000) @emph{Modeling Survival
-Data.  Extending the Cox Model.} Springer-Verlag.
+@I{B.@: D.@: Ripley} (2001),
+Connections.
+@emph{R News}, @strong{1/1}, 16--7.
+@uref{https://www.r-project.org/doc/Rnews/Rnews_2001-1.pdf}
 
 @noindent
-E.@: J.@: Yarger, G.@: Reese and T.@ King (1999) @emph{MySQL & mSQL}.
-O'Reilly.
+@I{T.@: M.@: Therneau} and @I{P.@: M.@: Grambsch} (2000),
+@emph{Modeling Survival Data.  Extending the Cox Model.}
+@I{Springer-Verlag}.
+
+@noindent
+@I{E.@: J.@: Yarger}, @I{G.@: Reese} and @I{T.@ King} (1999),
+@emph{MySQL & mSQL}.
+@I{O'Reilly}.
 
 @node Function and variable index, Concept index, References, Top
 @unnumbered Function and variable index

@@ -87,7 +87,7 @@ manual details and defines the @R{} language.
 
 The @R{} language is a dialect of @Sl{} which was designed in the 1980s
 and has been in widespread use in the statistical community since.
-Its principal designer, John M. Chambers, was awarded the 1998 ACM
+Its principal designer, John M. Chambers, was awarded the 1998 @abbr{ACM}
 Software Systems Award for @Sl{}.
 
 The language syntax has a superficial similarity with C, but the
@@ -216,8 +216,8 @@ Users cannot easily get hold of objects of types marked with a `***'.
 @findex mode
 @cindex mode
 Function @code{mode} gives information about the @dfn{mode} of an object
-in the sense of Becker, Chambers & Wilks (1988), and is more compatible
-with other implementations of the @Sl{} language.
+in the sense of @I{Becker}, @I{Chambers} & @I{Wilks} (1988), and is more
+compatible with other implementations of the @Sl{} language.
 @c FIXME:
 @c Should say that many R functions, such as vector(), actually have an
 @c argument `mode' rather than `type'.  E.g., vector(mode = "double")
@@ -790,8 +790,8 @@ series with periodic substructure such as monthly or quarterly data.
 @subsection Copying of attributes
 
 Whether attributes should be copied when an object is altered is a
-complex area, but there are some general rules (Becker, Chambers &
-Wilks, 1988, pp. 144--6).
+complex area, but there are some general rules (@I{Becker}, @I{Chambers}
+& @I{Wilks}, 1988, pp. 144--6).
 
 Scalar functions (those which operate element-by-element on a vector and
 whose output is similar to the input) should preserve attributes (except
@@ -4524,7 +4524,7 @@ Note that the following operators are predefined
 @subsection Separators
 
 Although not strictly tokens, stretches of whitespace characters
-(spaces, tabs and formfeeds, on Windows and UTF-8 locales other Unicode
+(spaces, tabs and form feeds, on Windows and UTF-8 locales other Unicode
 whitespace characters@footnote{such as @code{U+A0}, non-breaking space,
 and @code{U+3000}, ideographic space.}) serve to delimit tokens in case of
 ambiguity, (compare @code{x<-5} and @code{x < -5}).
@@ -4868,8 +4868,9 @@ diagnostic messages refer to the original file.
 @node References,  , Concept Index, Top
 @appendix References
 
-Richard A.@: Becker, John M.@: Chambers and Allan R.@: Wilks (1988),
-@emph{The New S Language.} Chapman & Hall, New York.
+@I{Richard A.@: Becker}, @I{John M.@: Chambers} and @I{Allan R.@: Wilks} (1988),
+@emph{The New S Language.}
+Chapman & Hall, New York.
 This book is often called the ``@emph{Blue Book}''.
 
 @bye

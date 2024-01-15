@@ -35,6 +35,8 @@ pdftitle={Sweave User Manual},%
 pdfsubject={R vignette documentation system}%
 }
 
+\def\I#1{#1}
+
 \sloppy
 
 \begin{document}
@@ -716,7 +718,7 @@ R CMD Sweave file.Rnw
    lattice is being used with Sweave?  I would prefer a global option that
    stays in effect for multiple plots.
 
-   Answer by Deepayan Sarkar: I'd do something like this as part of
+   Answer by \I{Deepayan Sarkar}: I'd do something like this as part of
    the initialization:
 \begin{verbatim}
  <<...>>=

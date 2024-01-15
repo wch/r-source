@@ -450,11 +450,12 @@ all of these fail, the current working directory is used.
 You can find the home directory from R code by @code{Sys.getenv("R_USER")}
 or @code{normalizePath("~")}, @samp{~} being Unix notation for the home
 directory. Note that some distributions of Unix utilities for Windows, such
-as Msys2 (and hence Rtools) or cygwin set the environment variable
+as Msys2 (and hence @I{Rtools}) or cygwin set the environment variable
 @env{HOME} to a user directory of their choice. When R is invoked from a
 shell of such an distribution, the home directory in R would hence
-typically not be the Windows "personal" directory. With Rtools40,
-Rtools42 and Rtools43, it is the user profile (e.g. @file{C:\Users\username}).
+typically not be the Windows "personal" directory. With @I{Rtools40},
+@I{Rtools42} and @I{Rtools43}, it is the user profile (e.g.,
+@file{C:\Users\username}). 
 
 The R home directory is the directory where R was installed. You can find
 this from R code by @code{R.home()} or @code{Sys.getenv("R_HOME")}. From
@@ -864,7 +865,7 @@ Yes, and this is the primarily used and the only tested option now.  Since R
 
 The 32-bit build of R for Windows (R 4.1 and earlier) will run on both 32-bit and
 64-bit@footnote{what Windows calls x64 for x86-64 CPUs, not the very
-rare ia64 Windows for Itanium CPUs.} versions of Windows.  64-bit
+rare @I{ia64} Windows for @I{Itanium} CPUs.} versions of Windows.  64-bit
 versions of Windows run 32-bit executables under the WOW (Windows on
 Windows) subsystem: they run in almost exactly the same way as on a
 32-bit version of Windows, except that the address limit for the R
@@ -902,9 +903,9 @@ equivalent).
 For advanced users the choice may be dictated by whether the contributed
 packages needed are available in 64-bit builds (although CRAN only
 offers 32/64-bit builds).  The considerations can be more complex: for
-example 32/64-bit @code{RODBC} need 32/64-bit ODBC drivers respectively,
+example 32/64-bit @code{RODBC} need 32/64-bit @abbr{ODBC} drivers respectively,
 and where both exist they may not be able to be installed together.  An
-extreme example is the Microsoft Access/Excel ODBC drivers: if you have
+extreme example is the Microsoft Access/Excel @abbr{ODBC} drivers: if you have
 installed 64-bit Microsoft Office you can only install the 64-bit
 drivers and so need to use 64-bit @code{RODBC} and hence R.  (And
 similarly for 32-bit Microsoft Office.)
@@ -1074,7 +1075,7 @@ GB2312).
 
 When using @command{Rterm} the window in which it is run has to be set
 up to use a suitable font (e.g. @code{Lucida Console} or
-@code{Consolas}, not the OEM raster fonts) and a suitable codepage
+@code{Consolas}, not the @abbr{OEM} raster fonts) and a suitable codepage
 (which for the Windows Cmd shell can be done using @command{chcp}). In R 4.2
 and later on recent versions of Windows where UTF-8 is the native encoding,
 @command{Rterm} will automatically switch the console codepage to UTF-8.
@@ -1310,7 +1311,7 @@ value of @env{MY_TCLTK}, and that this is set up correctly (with
 no guarantee that a 64-bit build will work: it depends on the layout it
 uses and R 4.2 and later use a different layout from previous versions.)
 
-In the past several package authors have suggested using ActiveTcl
+In the past several package authors have suggested using @I{ActiveTcl}
 (@uref{https://www.activestate.com/@/Products/@/activetcl/}) as a way to
 get Tcl/Tk extensions (but the support files do contain the most
 commonly used @code{TkTable} and @code{BWidget} extensions).  This could
@@ -1406,7 +1407,7 @@ installed with static HTML pages.
 @node How can I get a binary version of a package?, Package xxx is out of date for Windows, How do I get static HTML pages?, Packages
 @section How can I get a binary version of a package?
 
-Presumably one not available on CRAN, BioC or a similar repository.
+Presumably one not available on CRAN, @abbr{BioC} or a similar repository.
 
 If you have a source package that is known to work on a Unix-alike
 system, you can try the automated Windows binary package builder
@@ -1815,7 +1816,7 @@ further options, or see @code{?SHLIB}.
 
 
 @node How do I debug code that I have compiled and dyn.load-ed?, How do I include C++ code?, How do I include compiled C code?, Building from Source
-@section How do I debug code that I have compiled and dyn.load-ed?
+@section How do I debug code that I have compiled and @code{dyn.load}-ed?
 
 @c Debugging under Windows is often a fraught process, and sometimes does
 @c not work at all.  If all you need is a @emph{just-in-time} debugger to
@@ -1842,7 +1843,7 @@ Rcmd INSTALL --debug mypkg
 See the `R Installation and Administration' manual (for the version of R you
 want to install) and @uref{https://CRAN.R-project.org/bin/windows/Rtools/}
 for links to detailed information on how to build R and R packages from
-source using corresponding versions of Rtools and for additional hints for
+source using corresponding versions of @I{Rtools} and for additional hints for
 debugging on Windows.
 
 You will need a suitable version of @command{gdb} which matches your

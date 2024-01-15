@@ -76,9 +76,9 @@ foreign language interfaces, and the @R{} @acronym{API}.
 @unnumbered Acknowledgements
 
 
-The contributions to early versions of this manual by Saikat DebRoy
+The contributions to early versions of this manual by @I{Saikat DebRoy}
 (who wrote the first draft of a guide to using @code{.Call} and
-@code{.External}) and Adrian Trapletti (who provided information on the
+@code{.External}) and @I{Adrian Trapletti} (who provided information on the
 C++ interface) are gratefully acknowledged.
 
 @node Creating R packages, Writing R documentation files, Acknowledgements, Top
@@ -277,14 +277,14 @@ section on @ref{Package namespaces}.
 @cindex configure file
 @cindex cleanup file
 
-The optional files @file{configure} and @file{cleanup} are (Bourne)
+The optional files @file{configure} and @file{cleanup} are (@I{Bourne})
 shell scripts which are, respectively, executed before and (if option
 @option{--clean} was given) after installation on Unix-alikes, see
 @ref{Configure and cleanup}.  The analogues on Windows are
 @file{configure.win} and @file{cleanup.win}. Since @R{} 4.2.0 on Windows,
 @file{configure.ucrt} and @file{cleanup.ucrt} are supported and take
 precedence over @file{configure.win} and @file{cleanup.win}. They can
-hence be used to provide content specific to @abbr{UCRT} or Rtools42 and newer, if needed,
+hence be used to provide content specific to @abbr{UCRT} or @I{Rtools42} and newer, if needed,
 but the support for @file{.ucrt} files may be removed in future when
 building packages from source on the older versions of R will no longer
 be needed, and hence the files may be renamed back to @file{.win}.
@@ -736,11 +736,11 @@ the package, let alone use it.
 
 The package management tools use the concept of
 `free or open source software'
-(FOSS, e.g., @uref{https://en.wikipedia.org/wiki/FOSS})
+(@abbr{FOSS}, e.g., @uref{https://en.wikipedia.org/wiki/FOSS})
 licenses: the idea being that some users of @R{} and its packages want
 to restrict themselves to such software.  Others need to ensure that
 there are no restrictions stopping them using a package, e.g.@:
-forbidding commercial or military use.  It is a central tenet of FOSS
+forbidding commercial or military use.  It is a central tenet of @abbr{FOSS}
 software that there are no restrictions on users nor usage.
 
 Do not use the @samp{License} field for information on copyright
@@ -795,7 +795,7 @@ Multiple licences can be specified separated by @samp{|} (surrounded by
 spaces) in which case the user can choose any of the alternatives.
 
 If a package license @emph{restricts} a base license (where permitted,
-e.g., using GPL-3 or AGPL-3 with an attribution clause), the additional
+e.g., using GPL-3 or @I{AGPL-3} with an attribution clause), the additional
 terms should be placed in file @file{LICENSE} (or @file{LICENCE}), and
 the string @samp{+ file LICENSE} (or @samp{+ file LICENCE},
 respectively) should be appended to the corresponding individual license
@@ -823,7 +823,7 @@ evident to people reading your @file{DESCRIPTION} file.
 Fields @samp{License_is_FOSS} and @samp{License_restricts_use} may be
 added by repositories where information cannot be computed from the name
 of the license.  @samp{License_is_FOSS: yes} is used for licenses which
-are known to be FOSS, and @samp{License_restricts_use} can have values
+are known to be @abbr{FOSS}, and @samp{License_restricts_use} can have values
 @samp{yes} or @samp{no} if the @file{LICENSE} file is known to restrict
 users or usage, or known not to.  These are used by, e.g.@:, the
 @code{available.packages} filters.
@@ -1178,7 +1178,7 @@ allowed in the @file{R} directory to allow a @file{configure} script to
 generate suitable files.
 
 Only @acronym{ASCII} characters (and the control characters tab,
-formfeed, @abbr{LF} and @abbr{CR}) should be used in code files.  Other characters are
+form feed, @abbr{LF} and @abbr{CR}) should be used in code files.  Other characters are
 accepted in comments@footnote{but they should be in the encoding
 declared in the @file{DESCRIPTION} file.}, but then the comments may not
 be readable in e.g.@: a UTF-8 locale.  Non-@acronym{ASCII} characters in
@@ -1258,7 +1258,7 @@ which can used in C or C++.  On all Windows builds (even 64-bit ones)
 @samp{_WIN64}.  On macOS @samp{__APPLE__} is defined@footnote{There is
 also @samp{__APPLE_CC__}, but that indicates a compiler with
 Apple-specific features not the OS, although for historical reasons is
-is defined by LLVM @command{clang}.  It is used in
+is defined by @I{LLVM} @command{clang}.  It is used in
 @file{Rinlinedfuns.h}.}; for an `Apple Silicon' platform, test for both
 @samp{__APPLE__} and @samp{__arm64__}.
 
@@ -1279,7 +1279,7 @@ There are platform-specific file names on Windows:
 @file{src/Makevars.win} and @file{src/Makefile.ucrt} takes precedence
 over @file{src/Makefile.win}. @file{src/Makevars.ucrt} and
 @file{src/Makefile.ucrt} will be ignored by earlier versions of @R{}, and
-hence can be used to provide content specific to @abbr{UCRT} or Rtools42 and newer,
+hence can be used to provide content specific to @abbr{UCRT} or @I{Rtools42} and newer,
 but the support for @file{.ucrt} files may be removed in the future when
 building packages from source on the older versions of R will no longer
 be needed, and hence the files may be renamed back to @file{.win}.
@@ -1736,7 +1736,7 @@ Note that most of this section is specific to Unix-alikes: see the
 comments later on about the Windows port of @R{}.
 
 If your package needs some system-dependent configuration before
-installation you can include an executable (Bourne@footnote{The script
+installation you can include an executable (@I{Bourne}@footnote{The script
 should only assume a POSIX-compliant @command{/bin/sh} -- see
 @uref{https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html}.
 In particular @command{bash} extensions must not be used, and not all
@@ -1744,7 +1744,7 @@ In particular @command{bash} extensions must not be used, and not all
 @file{/bin/bash}.  All known shells used with @R{} support the use of
 backticks, but not all support @samp{$(@var{cmd})}.  However, real-world
 shells are not fully POSIX-compliant and omissions and idiosyncrasies
-need to be worked around---which Autoconf will do for you.  Arithmetic
+need to be worked around---which @I{Autoconf} will do for you.  Arithmetic
 expansion is a known issue: see
 @uref{https://www.gnu.org/software/autoconf/manual/autoconf.html#Portable-Shell}
 for this and others.  Some checks can be done by the
@@ -1759,13 +1759,13 @@ can be extracted from Debian sources such as the most recent
 been needed for recent versions of Perl.}  shell script @file{configure}
 in your package which (if present) is executed by @code{R CMD INSTALL}
 before any other action is performed.  This can be a script created by
-the Autoconf mechanism, but may also be a script written by yourself.
+the @I{Autoconf} mechanism, but may also be a script written by yourself.
 Use this to detect if any nonstandard libraries are present such that
 corresponding code in the package can be disabled at install time rather
 than giving error messages when the package is compiled or used.  To
-summarize, the full power of Autoconf is available for your extension
+summarize, the full power of @I{Autoconf} is available for your extension
 package (including variable substitution, searching for libraries,
-etc.).  Background and useful tips on Autoconf and related tools
+etc.).  Background and useful tips on @I{Autoconf} and related tools
 (including @command{pkg-config} described below) can be found at
 @uref{https://autotools.info/}.
 
@@ -1778,13 +1778,13 @@ the package), @code{R_PACKAGE_DIR} (the path of the target installation
 directory of the package, a temporary location for staged installs) and
 @code{R_ARCH} (the arch-dependent part of the path, often empty).
 
-Under a Unix-alike only, an executable (Bourne shell) script
+Under a Unix-alike only, an executable (@I{Bourne} shell) script
 @command{cleanup} is executed as the last thing by @code{R CMD INSTALL} if
 option @option{--clean} was given, and by @code{R CMD build} when
 preparing the package for building from its source.
 
 As an example consider we want to use functionality provided by a (C or
-Fortran) library @code{foo}.  Using Autoconf, we can create a configure
+Fortran) library @code{foo}.  Using @I{Autoconf}, we can create a configure
 script which checks for the library, sets variable @code{HAVE_FOO} to
 @code{TRUE} if it was found and to @code{FALSE} otherwise, and then
 substitutes this value into output files (by replacing instances of
@@ -1804,7 +1804,7 @@ AC_OUTPUT
 @end example
 
 @noindent
-in @file{configure.ac} (assuming Autoconf 2.50 or later).
+in @file{configure.ac} (assuming @I{Autoconf} 2.50 or later).
 
 The definition of the respective @R{} function in @file{foo.R.in} could be
 
@@ -1912,7 +1912,7 @@ standard (but not the C++ standard as that is selected at a later stage
 by  @command{R CMD SHLIB}).
 
 To check for an external BLAS library using the @code{AX_BLAS} macro
-from the official Autoconf Macro
+from the official @I{Autoconf} Macro
 Archive@footnote{@uref{https://www.gnu.org/software/autoconf-archive/ax_blas.html}. If
 you include macros from that archive you need to arrange for them to be
 included in the package sources for use by @command{autoreconf}.}, one
@@ -1959,7 +1959,7 @@ to configure it manually, or provide a @file{configure.win} script (or
 @file{configure.ucrt}) to be used on that platform.  (Optionally, there
 can be a @file{cleanup.win} script (or @file{cleanup.ucrt}).  Both
 should be shell scripts to be executed by @command{ash}, which is a
-minimal version of Bourne-style @command{sh}. As from @R{} 4.2.0,
+minimal version of @I{Bourne}-style @command{sh}. As from @R{} 4.2.0,
 @command{bash} is used.  When @file{configure.win} (or
 @file{configure.ucrt}) is run the environment variables @env{R_HOME}
 (which uses @samp{/} as the file separator), @env{R_ARCH} and
@@ -2092,10 +2092,10 @@ libraries are needed, but they do not obviate the need to check that the
 recipes they give actually work.  (This is especially necessary for
 platforms which use static linking.)
 
-If using Autoconf it is good practice to include all the Autoconf
+If using @I{Autoconf} it is good practice to include all the @I{Autoconf}
 sources in the package (and required for an Open Source package and
 tested by @command{R CMD check --as-cran}).  This will include the file
-@file{configure.ac}@footnote{a decade ago Autoconf used
+@file{configure.ac}@footnote{a decade ago @I{Autoconf} used
 @file{configure.in}: this is still accepted but should be renamed and
 @command{autoreconf} as used by @command{R CMD check --as-cran} will
 report as such.} in the top-level directory of the package.  If
@@ -2106,7 +2106,7 @@ under the directory @file{tools} and included from @file{configure.ac}
 m4_include([tools/ax_pthread.m4])
 @end example
 @noindent
-Alternatively, Autoconf can be asked to search all @file{.m4} files in a
+Alternatively, @I{Autoconf} can be asked to search all @file{.m4} files in a
 directory by including something like@footnote{For those using
 @command{autoconf} 2.70 or later there is also
 @code{AC_CONFIG_MACRO_DIRS} which allows multiple directories to be
@@ -2115,7 +2115,7 @@ specified.}
 AC_CONFIG_MACRO_DIR([tools/m4])
 @end example
 @noindent
-One source of such extensions is the `Autoconf Archive'
+One source of such extensions is the `@I{Autoconf} Archive'
 (@uref{https://www.gnu.org/software/autoconf-archive/}.  It is not
 safe to assume this is installed on users' machines, so the extension
 should be shipped with the package (taking care to comply with its
@@ -2439,12 +2439,12 @@ using DLLs is unavoidable we normally arrange (@emph{via}
 DLL.
 
 @node OpenMP support, Using pthreads, Using Makevars, Using Makevars
-@subsubsection OpenMP support
+@subsubsection @abbr{OpenMP} support
 
 @cindex OpenMP
 
 There is some support for packages which wish to use
-OpenMP@footnote{@uref{https://www.openmp.org/},
+@abbr{OpenMP}@footnote{@uref{https://www.openmp.org/},
 @uref{https://en.wikipedia.org/wiki/OpenMP},
 @uref{https://hpc-tutorials.llnl.gov/openmp/}}.  The
 @command{make} macros
@@ -2460,16 +2460,16 @@ are available for use in @file{src/Makevars}, @file{src/Makevars.win} or
 @file{Makevars.ucrt}.  Include the appropriate macro in
 @code{PKG_CFLAGS}, @code{PKG_CXXFLAGS} and so on, and also in
 @code{PKG_LIBS} (but see below for Fortran).  C/C++ code that needs to
-be conditioned on the use of OpenMP can be used inside @code{#ifdef
+be conditioned on the use of @abbr{OpenMP} can be used inside @code{#ifdef
 _OPENMP}: note that some toolchains used for @R{} (including Apple's for
 macOS@footnote{There are somewhat fragile workarounds: see
 @uref{https://mac.r-project.org/openmp/}.} and some others using
-@command{clang}@footnote{Default builds of LLVM @command{clang} 3.8.0
-and later have support for OpenMP, but the @code{libomp} run-time
-library may not be installed.}) have no OpenMP support at all, not even
+@command{clang}@footnote{Default builds of @I{LLVM} @command{clang} 3.8.0
+and later have support for @abbr{OpenMP}, but the @code{libomp} run-time
+library may not be installed.}) have no @abbr{OpenMP} support at all, not even
 @file{omp.h}.
 
-For example, a package with C code written for OpenMP should have in
+For example, a package with C code written for @abbr{OpenMP} should have in
 @file{src/Makevars} the lines
 
 @example
@@ -2480,18 +2480,18 @@ PKG_LIBS = $(SHLIB_OPENMP_CFLAGS)
 Note that the macro @code{SHLIB_OPENMP_CXXFLAGS} applies to the default
 C++ compiler and not necessarily to the C++17/20/23 compiler: users of the
 latter should do their own @command{configure} checks.  If you do use
-your own checks, make sure that OpenMP support is complete by compiling
-and linking an OpenMP-using program: on some platforms the runtime
+your own checks, make sure that @abbr{OpenMP} support is complete by compiling
+and linking an @abbr{OpenMP}-using program: on some platforms the runtime
 library is optional and on others that library depends on other optional
 libraries.
 @c For clang pre-7, libomp.so depended on libatomic.
 
 Some care is needed when compilers are from different families which may
-use different OpenMP runtimes (e.g.@: @command{clang} @emph{vs} GCC
+use different @abbr{OpenMP} runtimes (e.g.@: @command{clang} @emph{vs} GCC
 including @command{gfortran}, although it is often possible to use the
 @command{clang} runtime with GCC but not @emph{vice versa}: however
 @command{gfortran} >= 9 may generate calls not in the @command{clang}
-runtime).  For a package with Fortran code using OpenMP the appropriate
+runtime).  For a package with Fortran code using @abbr{OpenMP} the appropriate
 lines are
 
 @example
@@ -2501,9 +2501,9 @@ PKG_LIBS = $(SHLIB_OPENMP_CFLAGS)
 
 @noindent
 as the C compiler will be used to link the package code. There are
-platforms on which this does not work @emph{for some OpenMP-using code}
+platforms on which this does not work @emph{for some @abbr{OpenMP}-using code}
 and installation will fail.  Since @R{} >= 3.6.2 the best alternative
-for a package with only Fortran sources using OpenMP is to use
+for a package with only Fortran sources using @abbr{OpenMP} is to use
 @example
 USE_FC_TO_LINK =
 PKG_FFLAGS = $(SHLIB_OPENMP_FFLAGS)
@@ -2516,37 +2516,37 @@ when this is used @code{$(FLIBS)} should not be included in
 compiler.
 
 @c Most often seen with clang and sanitizer flags.
-Common platforms may inline all OpenMP calls and so tolerate the
-omission of the OpenMP flag from @code{PKG_LIBS}, but this usually
+Common platforms may inline all @abbr{OpenMP} calls and so tolerate the
+omission of the @abbr{OpenMP} flag from @code{PKG_LIBS}, but this usually
 results in an installation failure with a different compiler or
 compilation flags.  So cross-check that e.g.@: @code{-fopenmp} appears
 in the linking line in the installation logs.
 
-It is not portable to use OpenMP with more than one of C, C++ and
+It is not portable to use @abbr{OpenMP} with more than one of C, C++ and
 Fortran in a single package since it is not uncommon that the compilers
 are of different families.
 
 For portability, any C/C++ code using the @code{omp_*} functions should
 include the @file{omp.h} header: some compilers (but not all) include it
-when OpenMP mode is switched on (e.g.@: @emph{via} flag
+when @abbr{OpenMP} mode is switched on (e.g.@: @emph{via} flag
 @option{-fopenmp}).
 
 @c http://openmp.org/wp/openmp-compilers-tools/
-@c LLVM clang 3.8.x reports 201307 but has full support only for 3.1 (201111)
-@c LLVM clang 3.9.x reports 201111 but has all but offloading support of 4.0.
+@c @I{LLVM} clang 3.8.x reports 201307 but has full support only for 3.1 (201111)
+@c @I{LLVM} clang 3.9.x reports 201111 but has all but offloading support of 4.0.
 There is nothing@footnote{In most implementations the @code{_OPENMP}
-macro has value a date which can be mapped to an OpenMP version: for
+macro has value a date which can be mapped to an @abbr{OpenMP} version: for
 example, value @code{201307} is the date of version 4.0 (July
 2013). However this may be used to denote the latest version which is
 partially supported, not that which is fully implemented.} to say what
-version of OpenMP is supported: version 4.0 (and much of 4.5 or 5.0) is
+version of @abbr{OpenMP} is supported: version 4.0 (and much of 4.5 or 5.0) is
 supported by recent versions of the Linux and Windows platforms, but
 portable packages cannot assume that end users have recent versions.
-Apple @command{clang} on macOS has no OpenMP support.
+Apple @command{clang} on macOS has no @abbr{OpenMP} support.
 @uref{https://www.openmp.org/resources/openmp-compilers-tools/} gives
 some idea of what compilers support what versions.
 
-Rarely, using OpenMP with @command{clang} on Linux generates calls in
+Rarely, using @abbr{OpenMP} with @command{clang} on Linux generates calls in
 @code{libatomic}, resulting in loading messages like
 @example
   undefined symbol: __atomic_compare_exchange
@@ -2555,19 +2555,19 @@ Rarely, using OpenMP with @command{clang} on Linux generates calls in
 @noindent
 The workaround is to link with @code{-latomic} (having checked it exists).
 
-The performance of OpenMP varies substantially between platforms.  The
+The performance of @abbr{OpenMP} varies substantially between platforms.  The
 Windows implementation has substantial overheads, so is only beneficial
 if quite substantial tasks are run in parallel.  Also, on Windows new
 threads are started with the default@footnote{Windows default, not
-MinGW-w64 default.} @abbr{FPU} control word, so computations done on OpenMP
+@I{MinGW-w64} default.} @abbr{FPU} control word, so computations done on @abbr{OpenMP}
 threads will not make use of extended-precision arithmetic which is the
 default for the main process.
 @c mingw64-public, 2015-02-02.
 @c https://stackoverflow.com/questions/2553725/is-the-fpu-control-word-setting-per-thread-or-per-process
 
-Do not include these macros unless your code does make use of OpenMP
+Do not include these macros unless your code does make use of @abbr{OpenMP}
 (possibly for C++ via included external headers): this can result in the
-OpenMP runtime being linked in, threads being started, @dots{}.
+@abbr{OpenMP} runtime being linked in, threads being started, @dots{}.
 
 Calling any of the @R{} API from threaded code is `for experts only' and
 strongly discouraged.  Many functions in the @R{} API modify internal
@@ -2577,16 +2577,16 @@ signal errors, which must only happen on the @R{} main thread.  Also,
 external libraries (e.g.@: LAPACK) may not be thread-safe.
 
 Packages are not standard-alone programs, and an @R{} process could
-contain more than one OpenMP-enabled package as well as other components
-(for example, an optimized BLAS) making use of OpenMP.  So careful
-consideration needs to be given to resource usage.  OpenMP works with
+contain more than one @abbr{OpenMP}-enabled package as well as other components
+(for example, an optimized BLAS) making use of @abbr{OpenMP}.  So careful
+consideration needs to be given to resource usage.  @abbr{OpenMP} works with
 parallel regions, and for most implementations the default is to use as
 many threads as `CPUs' for such regions.  Parallel regions can be
 nested, although it is common to use only a single thread below the
 first level.  The correctness of the detected number of `CPUs' and the
 assumption that the @R{} process is entitled to use them all are both
 dubious assumptions.  One way to limit resources is to limit the overall
-number of threads available to OpenMP in the @R{} process: this can be
+number of threads available to @abbr{OpenMP} in the @R{} process: this can be
 done @emph{via} environment variable @env{OMP_THREAD_LIMIT}, where
 implemented.@footnote{Which it was at the time of writing with GCC,
 Intel and Clang compilers.  The count may include the thread
@@ -2600,11 +2600,11 @@ compiler required it to be `an lvalue'.}
 #pragma omp parallel for num_threads(nthreads) @dots{}
 @end example
 @noindent
-That way you only control your own code and not that of other OpenMP users.
+That way you only control your own code and not that of other @abbr{OpenMP} users.
 
-Note that setting environment variables to control OpenMP is
+Note that setting environment variables to control @abbr{OpenMP} is
 implementation-dependent and may need to be done outside the @R{}
-process or before any use of OpenMP (which might be by another process
+process or before any use of @abbr{OpenMP} (which might be by another process
 or @R{} itself).   Also, implementation-specific variables such as
 @env{KMP_THREAD_LIMIT} might take precedence.
 
@@ -2643,7 +2643,7 @@ For a tutorial see
 POSIX threads are not normally used on Windows, which has its own native
 concepts of threads.  However, there are two projects implementing
 @code{pthreads} on top of Windows, @code{pthreads-w32} and
-@code{winpthreads} (part of the MinGW-w64 project).
+@code{winpthreads} (part of the @I{MinGW-w64} project).
 
 Whether Windows toolchains implement @code{pthreads} is up to the
 toolchain provider.  A @command{make} variable
@@ -2661,8 +2661,8 @@ are optional (see
 @uref{https://pubs.opengroup.org/onlinepubs/009695399/basedefs/pthread.h.html}):
 for example, macOS lacks the `Barriers' option.
 
-See also the comments on thread-safety and performance under OpenMP: on
-all known @R{} platforms OpenMP is implemented @emph{via}
+See also the comments on thread-safety and performance under @abbr{OpenMP}: on
+all known @R{} platforms @abbr{OpenMP} is implemented @emph{via}
 @code{pthreads} and the known performance issues are in the latter.
 
 @node Compiling in sub-directories,  , Using pthreads, Using Makevars
@@ -2843,8 +2843,8 @@ PKG_LIBS = @@LIBS@@
 @end example
 @end quotation
 
-A user can then be advised to specify the location of the ODBC driver
-manager files by options like (lines broken for easier reading)
+A user can then be advised to specify the location of the @abbr{ODBC}
+driver manager files by options like (lines broken for easier reading)
 
 @example
 R CMD INSTALL \
@@ -2887,7 +2887,7 @@ current platforms use @command{gfortran} where you might need to include
 @option{-std=f2018} in @code{PKG_FFLAGS} or @code{PKG_FCFLAGS}: the
 default is `GNU Fortran', currently Fortran 2018 (but Fortran 95 prior
 to @command{gfortran}@tie{}8) with non-standard extensions.  The other
-compilers in current use (LLVM's @command{flang-new} and Intel's
+compilers in current use (@I{LLVM}'s @command{flang-new} and Intel's
 @command{ifx}) default to Fortran 2018.
 
 It is good practice to describe a Fortran version requirement in
@@ -2946,7 +2946,7 @@ the value@footnote{Values @code{201103L}, @code{201402L}, @code{201703L}
 and @code{202002L} are most commonly used for C++11, C++14, C++17 and
 C++20 respectively, but some compilers set @code{1L}. For C++23 all that
 can currently be assumed is a value greater than that for C++20: for
-example @command{g++} 12 uses @code{202100L} and @command{clang++} (LLVM
+example @command{g++} 12 uses @code{202100L} and @command{clang++} (@I{LLVM}
 15, Apple 14) uses @code{202101L}.}  of @code{__cplusplus} may help but
 some compilers use it to denote a standard which is partially supported
 and some the latest standard which is (almost) fully supported.  On a
@@ -2955,7 +2955,7 @@ for each of the standards: this relies heavily on the reported values of
 @code{__cplusplus}.
 
 @c Apple clang 14 defaults to C++98 (even 14.0.3)
-@c LLVM clang 14, 15 default to C++14, 16 to C++17
+@c @I{LLVM} clang 14, 15 default to C++14, 16 to C++17
 @c g++ 11, 12, 13 default to C++17
 
 The webpage
@@ -3004,7 +3004,7 @@ of C++14.  Note that support of C++14 or C++17 is only available from
 @R{} 3.4.0, so if the package has an @R{} version requirement it needs to
 take that into account.
 
-Essentially complete C++14 support is available from GCC 5, LLVM
+Essentially complete C++14 support is available from GCC 5, @I{LLVM}
 @command{clang} 3.4 and currently-used versions of Apple
 @command{clang}.
 
@@ -3037,7 +3037,7 @@ is platform-dependent.  Some C++17 and C++20 support is available with
 the default builds of @R{} on macOS and Windows as from @R{} 4.0.0.
 Much of @command{g++}'s support for C++17 needs version 7 or later: that
 is more recent than some still-current Linux distributions but often
-packages for later compilers are available: for RHEL/Centos 7 look for
+packages for later compilers are available: for @I{RHEL}/@I{Centos} 7 look for
 `devtoolset'.
 
 Note that C++17 or later `support' does not mean complete support: use
@@ -3091,8 +3091,8 @@ The discussion above is about the standard @R{} ways of compiling C++:
 it will not apply to packages using @file{src/Makefile} or building in a
 subdirectory that do not set the C++ standard.  And compilers' default
 C++ standards varies widely and gets changed frequently by vendors --
-for example Apple clang 14 defaults to C++98, LLVM clang 14--15 to C++14,
-LLVM clang 16 to C++17 and @command{g++} 11--13 to C++17.
+for example Apple clang 14 defaults to C++98, @I{LLVM} clang 14--15 to C++14,
+@I{LLVM} clang 16 to C++17 and @command{g++} 11--13 to C++17.
 
 For a package with a @file{src/Makefile} (or a Windows analogue),
 a non-default C++ compiler can be selected by including something like
@@ -3165,7 +3165,7 @@ parameters. (There are many other additions: see for example
 
 The @command{configure} script in recent versions of @R{} aims to choose
 a C compiler which supports C11: as the default in recent versions of
-@command{gcc}, LLVM @command{clang} and Apple @command{clang} is C17,
+@command{gcc}, @I{LLVM} @command{clang} and Apple @command{clang} is C17,
 that is what is likely to be chosen.  On the other hand, until @R{} 4.3.0
 the makefiles for the Windows build specified C99.  They now use the
 compiler default which for the recommended compiler is C17.
@@ -3907,7 +3907,7 @@ discussed in the platform-specific FAQs.
 
 
 Finally, at least one web-based service is available for building binary
-packages from (checked) source code: WinBuilder (see
+packages from (checked) source code: @I{WinBuilder} (see
 @uref{https://win-builder.R-project.org/}) is able to build Windows
 binaries. Note that this is intended for developers on other platforms
 who do not have access to Windows but wish to provide binaries for the
@@ -4464,7 +4464,7 @@ should use @code{packageStartupMessage} so users (include check scripts)
 can suppress them if desired.
 
 @node useDynLib, An example, Load hooks, Package namespaces
-@subsection useDynLib
+@subsection @code{useDynLib}
 
 A @file{NAMESPACE} file can contain one or more @code{useDynLib}
 directives which allows shared objects that need to be
@@ -5002,9 +5002,9 @@ Bash extensions also need to be avoided in shell scripts, including
 expressions in Makefiles (which are passed to the shell for processing).
 Some @R{} platforms use strict@footnote{For example, @command{test}
 options @option{-a} and @option{-e} are not portable, and not supported
-in the AT&T Bourne shell used on Solaris 10/11, even though they are in
+in the AT&T @I{Bourne} shell used on Solaris 10/11, even though they are in
 the POSIX standard.  Nor did Solaris support @samp{$(@var{cmd})}.}
-Bourne shells: an earlier @R{} toolset on Windows@footnote{as from
+@I{Bourne} shells: an earlier @R{} toolset on Windows@footnote{as from
 @R{} 4.0.0 the default is @command{bash}.} and some Unix-alike OSes use
 @command{ash} (@uref{https://en.wikipedia.org/wiki/Almquist_shell},
 a `lightweight shell with few builtins) or derivatives such as @command{dash}.
@@ -5026,7 +5026,7 @@ which is @command{bash}-specific (first set the variable then export it
 by name).
 
 Using @code{test -e} (or @code{[ -e ]}) in shell scripts is not fully
-portable@footnote{it was not in the Bourne shell, and was not supported
+portable@footnote{it was not in the @I{Bourne} shell, and was not supported
 by Solaris 10.}: @code{-f} is normally what is intended.  Flags
 @option{-a} and @option{-o} are nowadays declared obsolescent by POSIX
 and should not be used.
@@ -5217,7 +5217,7 @@ Fortran's @code{rand}, @code{irand} and @code{srand}.  Except for
 implementation-dependent.
 
 Nor should the C++11 random number library be used nor any other
-third-party random number generators such as those in GSL.
+third-party random number generators such as those in @I{GSL}.
 
 @item
 Use of @code{sprintf} and @code{vsprintf} is regarded as a potential
@@ -5302,7 +5302,7 @@ Where possible @command{R CMD build} will replace them by copies.
 
 @item
 If you do not yourself have a Windows system, consider submitting your
-source package to WinBuilder (@uref{https://win-builder.r-project.org/})
+source package to @I{WinBuilder} (@uref{https://win-builder.r-project.org/})
 before distribution.  If you need to check on an M1 Mac, there is a
 check service at
 @uref{https://mac.r-project.org/macbuilder/submit.html}.
@@ -5424,7 +5424,7 @@ be for binary packages).
 @c @cputype{x86_64} Linux, macOS, 64-bit Windows and 64-bit Solaris 11 from
 @c Oracle; Linux on several 64-bit CPUs, Intel and ARM macOS, 32- and
 @c 64-bit Windows and AIX from @uref{https://adoptium.net/} -- several
-@c OSes provide builds of OpenJDK including FreeBSD and most Linux
+@c OSes provide builds of @I{OpenJDK} including FreeBSD and most Linux
 @c distributions).
 
 When specifying a minimum Java version please use the official version
@@ -5481,12 +5481,12 @@ javap -verbose path/to/some.class | grep major
 @end example
 
 Some packages have stated a requirement on a particular @abbr{JDK}, but a
-package should only be requiring a JRE unless providing its own Java
+package should only be requiring a @abbr{JRE} unless providing its own Java
 interface.
 
 @c https://endoflife.date/java
 Java 8 is still in widespread use (and may remain so because of licence
-changes and support on older OSes: OpenJDK has security support until
+changes and support on older OSes: @I{OpenJDK} has security support until
 March 2026).  On the other hand, newer platforms may only have support
 for recent versions of Java: for @cputype{arm64} macOS the first
 officially supported version was 17.
@@ -5661,7 +5661,7 @@ If your package uses dates/times, ensure that it works in all timezones,
 especially those near boundaries (problems have most often be seen in
 @samp{Europe/London} (zero offset in Winter) and
 @samp{Pacific/Auckland}, near enough the International Date line) and
-with offsets not in whole hours (Adelaide, Chatham Islands, @dots{}).
+with offsets not in whole hours (Adelaide, @I{Chatham Islands}, @dots{}).
 More extreme examples are @samp{Africa/Conakry} (permanent UTC),
 @samp{Asia/Calcutta} (no DST, permanent half-hour offset)
 and @samp{Pacific/Kiritimati}(no DST, more than 12 hours ahead of UTC).
@@ -5887,10 +5887,10 @@ versions instead.)
 A common error is to assume recent versions of compilers or OSes.  In
 production environments `long term support' versions of OSes may be in
 use for many years,@footnote{Ubuntu provides 5 years of support (but
-people were running 14.04 after 7 years) and RHEL provides 10 years full
+people were running 14.04 after 7 years) and @I{RHEL} provides 10 years full
 support and up to 14 with extended support.} and their compilers may not
 be updated during that time.  For example, GCC 4.8 was still in use in
-2022 and could be (in RHEL 7) until 2028: that supports neither C++14
+2022 and could be (in @I{RHEL} 7) until 2028: that supports neither C++14
 nor C++17.
 
 The POSIX standards only require recently-defined functions to be
@@ -5935,9 +5935,9 @@ functionality.
 
 Both the compiler and OS (@emph{via} system header files, which may
 differ by architecture even for nominally the same OS) affect the
-compilability of C/C++ code.  Compilers from the GCC, LLVM
+compilability of C/C++ code.  Compilers from the GCC, @I{LLVM}
 (@command{clang} and @command{flang}) Intel and Oracle Developer Studio
-suites have been used with @R{}, and both LLVM @command{clang} and
+suites have been used with @R{}, and both @I{LLVM} @command{clang} and
 Oracle have more than one implementation of C++ headers and library.
 The range of possibilities makes comprehensive empirical checking
 impossible, and regrettably compilers are patchy at best on warning
@@ -6081,7 +6081,7 @@ strerror strlen strncmp strtol tan trunc
 @end example
 @noindent
 This problem is less common than it used to be, but in 2019
-LLVM @command{clang} did not have @code{bind} in the main namespace.  Also
+@I{LLVM} @command{clang} did not have @code{bind} in the main namespace.  Also
 seen has been type @code{size_t} defined only in the @code{std} namespace.
 @c with g++ on Solaris 10.
 
@@ -6108,7 +6108,7 @@ included by other headers). The best practice is to use explicit
 be in that namespace.
 
 @item
-@c including LLVM clang as from 4.0.0
+@c including @I{LLVM} clang as from 4.0.0
 Some C++ compilers refuse to compile constructs such as
 @example
       if(ptr > 0) @{ ....@}
@@ -6156,16 +6156,16 @@ Some compilers do not allow a space between @code{-D} and the macro to
 be defined.  Similarly for @code{-U}.
 
 @item
-If you use OpenMP, check carefully that you have followed the advice in
+If you use @abbr{OpenMP}, check carefully that you have followed the advice in
 the subsection on @ref{OpenMP support}.  In particular, any use of
-OpenMP in C/C++ code will need to use
+@abbr{OpenMP} in C/C++ code will need to use
 @example
 #ifdef _OPENMP
 # include <omp.h>
 #endif
 @end example
 @noindent
-Any use of OpenMP functions, e.g.@: @code{omp_set_num_threads}, also
+Any use of @abbr{OpenMP} functions, e.g.@: @code{omp_set_num_threads}, also
 needs to be conditioned.  To avoid incessant warnings such as
 @example
 warning: ignoring #pragma omp parallel [-Wunknown-pragmas]
@@ -6173,7 +6173,7 @@ warning: ignoring #pragma omp parallel [-Wunknown-pragmas]
 
 @noindent
 uses of such pragmas should also be conditioned (or commented out if
-they are used in code in a package not enabling OpenMP on any platform).
+they are used in code in a package not enabling @abbr{OpenMP} on any platform).
 
 Do not hardcode @option{-lgomp}: not only is that specific to the
 GCC family of compilers, using the correct linker flag often sets up the
@@ -6238,7 +6238,7 @@ ISO C++11 does not allow conversion from string literal to 'char *'
 removed in C++17.
 
 There are quite a lot of other C++98 features deprecated in C++11 and
-removed in C++17, and LLVM @command{clang} 9 and later warn about them
+removed in C++17, and @I{LLVM} @command{clang} 9 and later warn about them
 (and as from version 16 they have been removed). Examples include
 @code{bind1st}/@code{bind2nd} (use @code{std::bind} or
 lambdas@footnote{@uref{https://stackoverflow.com/questions/32739018/a-replacement-for-stdbind2nd}})
@@ -6321,17 +6321,17 @@ ridiculously large values).
 
 @item
 For C code, consider using the flag @option{-Wstrict-prototypes} which
-is supported by @command{gcc} and LLVM and Apple @command{clang}.  This
+is supported by @command{gcc} and @I{LLVM} and Apple @command{clang}.  This
 has found quite a number of errors where functions have been declared
 without arguments and is likely to become the default in future
-compilers.  (It already is for LLVM @command{clang} in C23 mode.)  Note
+compilers.  (It already is for @I{LLVM} @command{clang} in C23 mode.)  Note
 that using @code{f()} for a function without any parameters was
 deprecated in C99 and C11, but it expected to be non-deprecated in C23.
 However, @code{f(void)} is supported by all standards and avoids any
 uncertainty.
 @c draft n3054 §6.7.6.3 point 13 and footnote.
 
-LLVM @command{clang} has a separate warning
+@I{LLVM} @command{clang} has a separate warning
 @option{-Wdeprecated-non-prototype} which is enabled by
 @option{-Wstrict-prototypes}.  This warns on K&R-style usage, which will
 not be accepted in C23.
@@ -6377,7 +6377,7 @@ warning: argument 1 value '18446744073709551615' exceeds maximum object
 
 Some additional information for C++ is available at
 @uref{https://journal.r-project.org/archive/2011-2/RJournal_2011-2_Plummer.pdf}
-by Martyn Plummer.
+by @I{Martyn Plummer}.
 
 @node Common symbols, C++17 issues, Portable C and C++ code, Portable C and C++ code
 @subsubsection Common symbols
@@ -6389,7 +6389,7 @@ definitions of the same variable in different object files to the same
 object, or to a non-tentative definition.  However,
 @command{gcc}@tie{}10@footnote{see
 @uref{https://gcc.gnu.org/gcc-10/porting_to.html}.} and
-LLVM @command{clang}@tie{}11@footnote{See
+@I{LLVM} @command{clang}@tie{}11@footnote{See
 @uref{https://prereleases.llvm.org/11.0.0/rc2/tools/clang/docs/ReleaseNotes.html#modified-compiler-flags}.}
 changed their default so that tentative definitions cannot be
 merged and the linker will give an error if the same variable is defined
@@ -6426,7 +6426,7 @@ This is not pertinent to C++ which does not permit tentative definitions.
 @R{} 4.3.0 and later default to C++17 when compiling C++, and that
 finally removed many C++98 features which were deprecated as long ago as
 C++11.  Compiler/runtime authors have been slow to remove these, but
-LLVM @command{clang} with its @code{libc++} runtime library finally
+@I{LLVM} @command{clang} with its @code{libc++} runtime library finally
 started to do so in 2023 -- some others warn but some do not.
 
 The principal offender is the `Boost' collection of C++ headers and
@@ -6463,7 +6463,7 @@ in @file{boost/mpl/aux_/integral_wrapper.hpp}.  Adding
 @end example
 @noindent
 to @code{PKG_CXXFLAGS} will allow this, but that flag is only accepted
-by recent versions of LLVM @command{clang} (and will not be in future)
+by recent versions of @I{LLVM} @command{clang} (and will not be in future)
 so needs a @command{configure} test.
 
 Pre=built versions of current @command{clang}/@code{libc++} are
@@ -6487,7 +6487,7 @@ Another build for Windows which may be sufficiently compatible with
 @subsection Portable Fortran code
 
 For many years almost all known @R{} platforms used @command{gfortran}
-as their Fortran compiler, but now there are LLVM and `classic'
+as their Fortran compiler, but now there are @I{LLVM} and `classic'
 @command{flang} and the Intel compilers
 @command{ifort}@footnote{discontinued in 2023.} and @command{ifx} are now
 free-of-change.
@@ -6625,14 +6625,14 @@ To arrange for installation of the package to download the additional
 software from a URL, as e.g.@: package @CRANpkg{Cairo} used to.
 
 @item
-To negotiate with Tomas Kalibera to include Windows software in
-@code{Rtools} or with Simon Urbanek to include macOS software in his
+To negotiate with @I{Tomas Kalibera} to include Windows software in
+@code{Rtools} or with @I{Simon Urbanek} to include macOS software in his
 `recipes' system.
 
 @item
 (For @acronym{CRAN}.)
-To negotiate with Uwe Ligges to host the additional components on
-WinBuilder, and write a @file{configure.win} file to install them.
+To negotiate with @I{Uwe Ligges} to host the additional components on
+@I{WinBuilder}, and write a @file{configure.win} file to install them.
 
 @end itemize
 
@@ -7006,7 +7006,7 @@ offers the automated preparation of (64-bit) Windows binaries from
 well-tested source packages.
 
 R-Forge (@uref{https://R-Forge.r-project.org, R-Forge.r-project.org}) and
-RForge (@uref{https://www.rforge.net, www.rforge.net}) are similar
+@I{RForge} (@uref{https://www.rforge.net, www.rforge.net}) are similar
 services with similar names.  Both provide source-code management
 through SVN, daily building and checking, mailing lists and a repository
 that can be accessed @emph{via} @code{install.packages} (they can be
@@ -7819,7 +7819,7 @@ a hyperlink in @HTML{} and PDF conversion.  Displayed using
 Indicate a uniform resource locator (@acronym{URL}) for the World Wide
 Web.  The argument is handled as `verbatim' text (with percent and
 braces escaped by backslash), and rendered as a hyperlink in @HTML{} and
-PDF conversion.  Linefeeds are removed, and leading and trailing
+PDF conversion.  Line feeds are removed, and leading and trailing
 whitespace@footnote{as defined by the @R{} function @code{trimws}.} is
 removed. @xref{Specifying URLs}.
 
@@ -7830,7 +7830,7 @@ Displayed using @code{typewriter} font where possible.
 Indicate a hyperlink to the World Wide Web. The first argument is
 handled as `verbatim' text (with percent and braces escaped by
 backslash) and is used as the @acronym{URL} in the hyperlink, with the
-second argument of @LaTeX{}-like text displayed to the user.  Linefeeds
+second argument of @LaTeX{}-like text displayed to the user.  Line feeds
 are removed from the first argument, and leading and trailing whitespace
 is removed.
 
@@ -8003,7 +8003,7 @@ Packages referred to by these `other forms' should be declared in the
 @findex \deqn
 
 Mathematical formulae should be set beautifully for printed
-documentation and in KaTeX/MathJax-enhanced @HTML{} help (as from
+documentation and in KaTeX/@I{MathJax}-enhanced @HTML{} help (as from
 @R{} 4.2.0) yet we still want something useful for plain-text (and
 legacy @HTML{}) help.  To this end, the two commands
 @code{\eqn@{@var{latex}@}@{@var{ascii}@}} and
@@ -8451,7 +8451,7 @@ file.
 
 Rd files are text files and so it is impossible to deduce the encoding
 they are written in unless @acronym{ASCII}: files with 8-bit characters
-could be UTF-8, Latin-1, Latin-9, KOI8-R, EUC-JP, @emph{etc}.  So an
+could be UTF-8, Latin-1, Latin-9, @I{KOI8-R}, @I{EUC-JP}, @emph{etc}.  So an
 @code{\encoding@{@}} section must be used to specify the encoding if it
 is not @acronym{ASCII}.  (The @code{\encoding@{@}} section must be on a
 line by itself, and in particular one containing no non-@acronym{ASCII}
@@ -8571,7 +8571,7 @@ People have also used @LaTeX{} mode in a editor, as @file{.Rd} files are
 rather similar to @LaTeX{} files.
 
 Some @R{} front-ends provide editing support for  @file{.Rd} files, for
-example RStudio (@uref{https://posit.co/}).
+example @I{RStudio} (@uref{https://posit.co/}).
 
 @node Tidying and profiling R code, Debugging, Writing R documentation files, Top
 @chapter Tidying and profiling R code
@@ -8647,7 +8647,7 @@ The standard format provides a good starting point for further tidying.
 Although the deparsing cannot do so, we recommend the consistent use of
 the preferred assignment operator @samp{<-} (rather than @samp{=}) for
 assignment.  Many package authors use a version of Emacs (on a
-Unix-alike or Windows) to edit @R{} code, using the ESS[S] mode of the
+Unix-alike or Windows) to edit @R{} code, using the @I{ESS[S]} mode of the
 @acronym{ESS} Emacs package.  See 
 @ifset UseExternalXrefs
 @ref{R coding standards, , R coding standards, R-ints, R Internals}
@@ -8655,7 +8655,7 @@ Unix-alike or Windows) to edit @R{} code, using the ESS[S] mode of the
 @ifclear UseExternalXrefs
 section `R coding standards' in the `R Internals' manual
 @end ifclear
-for style options within the ESS[S] mode recommended for the source code
+for style options within the @I{ESS[S]} mode recommended for the source code
 of @R{} itself.
 
 
@@ -8681,7 +8681,7 @@ directory).  Then the function @code{summaryRprof} or the command-line
 utility @code{R CMD Rprof @var{Rprof.out}} can be used to summarize the
 activity.
 
-As an example, consider the following code (from Venables & Ripley,
+As an example, consider the following code (from @I{Venables} & @I{Ripley},
 2002, pp. 225--6).
 
 @smallexample
@@ -9550,7 +9550,7 @@ damage to the structures which @R{} itself has allocated may only become
 apparent at the next garbage collection (or even at later garbage
 collections after objects have been deleted).
 
-Note that memory access errors may be seen with LAPACK, BLAS, OpenMP and
+Note that memory access errors may be seen with LAPACK, BLAS, @abbr{OpenMP} and
 Java-using packages: some at least of these seem to be intentional, and
 some are related to passing characters to Fortran.
 
@@ -9768,7 +9768,7 @@ threaded programs.
 @subsection Using the Address Sanitizer
 
 @c https://github.com/google/sanitizers/wiki/AddressSanitizer
-@command{AddressSanitizer} (`ASan') is a tool with similar aims to the
+@command{AddressSanitizer} (`@abbr{ASan}') is a tool with similar aims to the
 memory checker in @command{valgrind}.  It is available with suitable
 builds@footnote{currently on @cputype{x86_64}/@cputype{ix86} Linux and
 FreeBSD, with some support for Intel macOS but not
@@ -9797,12 +9797,12 @@ allocate) 16--20TB of virtual memory: restrictive shell settings can
 cause problems.  It can be helpful to increase the stack size, for
 example to 40MB.
 
-By comparison with @command{valgrind}, ASan can
+By comparison with @command{valgrind}, @abbr{ASan} can
 detect misuse of stack and global variables but not the use of
 uninitialized memory.
 
 Recent versions return symbolic addresses for the location of the error
-provided @command{llvm-symbolizer}@footnote{part of the LLVM project and
+provided @command{llvm-symbolizer}@footnote{part of the @I{LLVM} project and
 distributed in @code{llvm} @acronym{RPM}s and @file{.deb}s on Linux.  It is not
 currently shipped by Apple.} is on the path: if it is available but not
 on the path or has been renamed@footnote{as Ubuntu has been said to
@@ -9851,7 +9851,7 @@ MAIN_LDFLAGS = -fsanitize=address
 @noindent
 to link the runtime libraries into the @R{} executable if it was not
 specified as part of @samp{CC} when @R{} was built.  (For some builds
-without OpenMP, @option{-pthread} is also required.)
+without @abbr{OpenMP}, @option{-pthread} is also required.)
 
 For options available @emph{via} the environment variable
 @env{ASAN_OPTIONS} see
@@ -9875,7 +9875,7 @@ More recent versions@footnote{including @command{gcc} 7.1 and
 @option{-fsanitize-address-use-after-scope}: see
 @uref{https://github.com/google/sanitizers/wiki/AddressSanitizerUseAfterScope}.
 
-One of the checks done by ASan is that @code{malloc/free} and in C++
+One of the checks done by @abbr{ASan} is that @code{malloc/free} and in C++
 @code{new/delete} and @code{new[]/delete[]} are used consistently
 (rather than say @code{free} being used to dealloc memory allocated by
 @code{new[]}).  This matters on some systems but not all: unfortunately
@@ -9886,7 +9886,7 @@ environment variable @env{RGL_USE_NULL=true}.} are not consistent.  The
 check can be suppressed by including @samp{alloc_dealloc_mismatch=0} in
 @env{ASAN_OPTIONS}.
 
-ASan also checks system calls and sometimes reports can refer to
+@abbr{ASan} also checks system calls and sometimes reports can refer to
 problems in the system software and not the package nor @R{}.  A couple
 of reports have been of `heap-use-after-free' errors in the X11
 libraries called from Tcl/Tk.
@@ -9898,12 +9898,12 @@ libraries called from Tcl/Tk.
 @node Using Leak Sanitizer,  , Using Address Sanitizer, Using Address Sanitizer
 @subsubsection Using the Leak Sanitizer
 
-For @code{x86_64} Linux there is a leak sanitizer, `LSan': see
+For @code{x86_64} Linux there is a leak sanitizer, `@abbr{LSan}': see
 @uref{https://github.com/google/sanitizers/wiki/AddressSanitizerLeakSanitizer}.
 This is available on recent versions of @code{gcc} and @code{clang}, and
-where available is compiled in as part of ASan.
+where available is compiled in as part of @abbr{ASan}.
 
-One way to invoke this from an ASan-enabled build is by the environment
+One way to invoke this from an @abbr{ASan}-enabled build is by the environment
 variable
 
 @example
@@ -9913,10 +9913,10 @@ ASAN_OPTIONS='detect_leaks=1'
 However, this was made the default as from @command{clang} 3.5 and
 @command{gcc} 5.1.0.
 
-When LSan is enabled, leaks give the process a failure error status (by
+When @abbr{LSan} is enabled, leaks give the process a failure error status (by
 default @code{23}).  For an @R{} package this means the @R{} process,
 and as the parser retains some memory to the end of the process, if @R{}
-itself was built against ASan all runs will have a failure error status
+itself was built against @abbr{ASan} all runs will have a failure error status
 (which may include running @R{} as part of building @R{} itself).
 
 To disable this, allocation-mismatch checking and some strict C++
@@ -9926,8 +9926,8 @@ checking use
 setenv ASAN_OPTIONS 'alloc_dealloc_mismatch=0:detect_leaks=0:detect_odr_violation=0'
 @end example
 
-LSan also has a `stand-alone' mode where it is compiled in using
-@option{-fsanitize=leak} and avoids the run-time overhead of ASan.
+@abbr{LSan} also has a `stand-alone' mode where it is compiled in using
+@option{-fsanitize=leak} and avoids the run-time overhead of @abbr{ASan}.
 
 @node Using Undefined Behaviour Sanitizer, Other analyses with `clang', Using Address Sanitizer, Checking memory access
 @subsection Using the Undefined Behaviour Sanitizer
@@ -10050,7 +10050,7 @@ For more details on the topic see
 (which has 3 parts).
 
 It may or may not be possible to build @R{} itself with
-@option{-fsanitize=undefined}: problems have been seen with OpenMP-using
+@option{-fsanitize=undefined}: problems have been seen with @abbr{OpenMP}-using
 code with @command{gcc} but there has been success with @command{clang}.
 
 
@@ -10449,7 +10449,7 @@ debugger
 (@uref{https://cran.r-project.org/bin/macosx/RMacOSX-FAQ.html#I-cannot-attach-debugger-to-R}),
 although both were possible on High Sierra and are again from @R{}
 4.2.0.  This can also affect locally compiled builds, where attaching to
-an interactive @R{} session under Big Sur or Monterey worked in 2022
+an interactive @R{} session under @I{Big Sur} or Monterey worked in 2022
 after giving administrator permission @emph{via} a popup-up.  (To debug
 in what Apple deems a non-interactive session, e.g. logged in remotely,
 see @command{man DevToolsSecurity}.)
@@ -11724,7 +11724,7 @@ with suitable rules to make the objects.
 Flags that are already set (for example in file
 @file{etc@var{R_ARCH}/Makeconf}) can be overridden by the environment
 variable @env{MAKEFLAGS} (at least for systems using a POSIX-compliant
-@code{make}), as in (Bourne shell syntax)
+@code{make}), as in (@I{Bourne} shell syntax)
 
 @example
 MAKEFLAGS="CFLAGS=-O3" R CMD SHLIB *.c
@@ -13627,9 +13627,9 @@ which can be done via @code{R_GetCurrentEnv()} function.
 @subsection Zero-finding
 @cindex Zero-finding
 
-In this section we re-work the example of Becker, Chambers & Wilks (1988,
-pp.~205--10) on finding a zero of a univariate function.  The @R{} code
-and an example are
+In this section we re-work the example of @I{Becker}, @I{Chambers} &
+@I{Wilks} (1988, pp.~205--10) on finding a zero of a univariate
+function.  The @R{} code and an example are
 
 @example
 zero <- function(f, guesses, tol = 1e-7) @{
@@ -13710,7 +13710,7 @@ SEXP zero(SEXP f, SEXP guesses, SEXP stol, SEXP rho)
 @subsection Calculating numerical derivatives
 @cindex Numerical derivatives
 
-We will use a longer example (by Saikat DebRoy) to illustrate the use of
+We will use a longer example (by @I{Saikat DebRoy}) to illustrate the use of
 evaluation and @code{.External}.  This calculates numerical derivatives,
 something that could be done as effectively in interpreted @R{} code but
 may be needed as part of a larger C calculation.
@@ -14394,7 +14394,7 @@ header files when using these entry points.
 This remapping can cause problems@footnote{Known problems have been
 defining @code{LENGTH}, @code{error}, @code{length}, @code{vector} and
 @code{warning}: whether these matter depends on the OS and toolchain,
-with many problem reports involving @command{clang++}.  As from LLVM
+with many problem reports involving @command{clang++}.  As from @I{LLVM}
 @command{clang} 13.0.0, the remapping of @code{match} breaks the
 subsequent inclusion of @file{omp.h}.}, and can be eliminated by
 defining @code{R_NO_REMAP} (before including any @R{} headers) and
@@ -15982,7 +15982,7 @@ this is defined.
 For historical reasons there are Fortran interfaces to functions
 @code{D1MACH} and @code{I1MACH}.  These can be called from C code as
 e.g.@: @code{F77_CALL(d1mach)(4)}.  Note that these are emulations of
-the original functions by Fox, Hall and Schryer on NetLib at
+the original functions by Fox, Hall and @I{Schryer} on @I{Netlib} at
 @uref{https://netlib.org/slatec/src/} for @acronym{IEC}@tie{}60559 arithmetic
 (required by @R{}).
 
@@ -16332,7 +16332,7 @@ double unif_rand(void)
 
 @noindent
 or use the one supplied (and with a dynamic library or DLL you will have
-to use the one supplied, which is the Marsaglia-multicarry with an entry
+to use the one supplied, which is the @I{Marsaglia}-multicarry with an entry
 points
 
 @example
@@ -16481,8 +16481,8 @@ an argument @code{dispersion} to handle over-dispersion.  As
 @code{predict.lm} had neither a @code{dispersion} nor a @code{@dots{}}
 argument, @code{NextMethod} could no longer be used.  (The legacy, two
 direct calls to @code{predict.lm}, lives on in @code{predict.glm} in
-@R{}, which is based on the workaround for S3 written by Venables &
-Ripley.)
+@R{}, which is based on the workaround for S3 written by @I{Venables} &
+@I{Ripley}.)
 
 Further, the user is entitled to use positional matching when calling
 the generic, and the arguments to a method called by @code{UseMethod}
@@ -16853,7 +16853,7 @@ all:
 @end example
   
 Additional flags which @code{$(MAIN_LINK)} includes are, amongst others,
-those to select OpenMP and @option{--export-dynamic} for the GNU linker
+those to select @abbr{OpenMP} and @option{--export-dynamic} for the GNU linker
 on some platforms.  In principle @code{$(LIBS)} is not needed
 when using a shared @R{} library as @file{libR} is linked against
 those libraries, but some platforms need the executable also linked
@@ -17253,8 +17253,8 @@ currently available that interface directly with @R{} and provide a
 (D)COM server:
 @itemize
 @item
-There is a (D)COM server called @code{StatConnector} written by Thomas
-Baier available @emph{via} @uref{https://www.autstat.com/},
+There is a (D)COM server called @code{StatConnector} written by
+@I{Thomas Baier} available @emph{via} @uref{https://www.autstat.com/},
 which works with @R{} packages to support transfer of data to and from
 @R{} and remote execution of @R{} commands, as well as embedding of an
 @R{} graphics window.
@@ -17268,7 +17268,7 @@ Recent versions have usage restrictions.
 @c very different from the purpose of this section.
 @end itemize
 @node Calling R.dll directly, Finding R_HOME, Using (D)COM, Embedding R under Windows
-@subsection Calling R.dll directly
+@subsection Calling @file{R.dll} directly
 
 The @code{R} DLL is mainly written in C and has @code{_cdecl} entry
 points.  Calling it directly will be tricky except from C code (or C++
@@ -17481,7 +17481,7 @@ attempt to use only threads in the late 1990s failed to work correctly
 under Windows 95, the predominant version of Windows at that time.} to
 use multiple threads.
 
-Note that @R{}'s own front ends use a stack size of 10Mb, whereas MinGW
+Note that @R{}'s own front ends use a stack size of 10Mb, whereas @I{MinGW}
 executables default to 2Mb, and Visual C++ ones to 1Mb.  The latter
 stack sizes are too small for a number of @R{} applications, so
 general-purpose front-ends should use a larger stack size.

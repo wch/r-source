@@ -148,7 +148,7 @@ From there, you can obtain versions converted to
 @node Citing this document, Notation, Obtaining this document, Introduction
 @section Citing this document
 
-In publications, please refer to this @acronym{FAQ} as Hornik and R Core Team
+In publications, please refer to this @acronym{FAQ} as @I{Hornik} and R Core Team
 (@value{FAQ_YEAR}), ``The R @acronym{FAQ}'', and give the above,
 @emph{official} @acronym{URL}:
 
@@ -237,19 +237,34 @@ flexible graphical environment for creating various kinds of data
 presentations.  Additional modules (``add-on packages'') are available
 for a variety of specific purposes (@pxref{R Add-On Packages}).
 
-R was initially written by @email{Ross.Ihaka@@R-project.org, Ross Ihaka}
-and @email{Robert.Gentleman@@R-project.org, Robert Gentleman} at the
+R was initially written by @email{Ross.Ihaka@@R-project.org, @I{Ross Ihaka}}
+and @email{Robert.Gentleman@@R-project.org, @I{Robert Gentleman}} at the
 Department of Statistics of the University of Auckland in Auckland, New
 Zealand.  In addition, a large group of individuals has contributed to R
 by sending code and bug reports.
 
 Since mid-1997 there has been a core group (the ``R Core Team'') who can
-modify the R source code archive.  The group currently consists of Doug
-Bates, John Chambers, Peter Dalgaard, Robert Gentleman,
-Kurt Hornik, Ross Ihaka, Tomas Kalibera, Michael Lawrence, Friedrich Leisch, Uwe Ligges,
-Thomas Lumley, Martin Maechler, Sebastian Meyer, Paul Murrell, Martyn
-Plummer, Brian Ripley, Deepayan Sarkar, Duncan Temple Lang, Luke
-Tierney, and Simon Urbanek.
+modify the R source code archive.  The group currently consists of 
+@I{Doug Bates},
+@I{John Chambers},
+@I{Peter Dalgaard},
+@I{Robert Gentleman},
+@I{Kurt Hornik},
+@I{Ross Ihaka},
+@I{Tomas Kalibera},
+@I{Michael Lawrence},
+@I{Friedrich Leisch},
+@I{Uwe Ligges},
+@I{Thomas Lumley},
+@I{Martin Maechler},
+@I{Sebastian Meyer},
+@I{Paul Murrell},
+@I{Martyn Plummer},
+@I{Brian Ripley},
+@I{Deepayan Sarkar},
+@I{Duncan Temple Lang},
+@I{Luke Tierney}, and 
+@I{Simon Urbanek}.
 
 R has a home page at @url{https://www.R-project.org/}.  It is
 @url{https://www.gnu.org/philosophy/free-sw.html, free software}
@@ -266,11 +281,13 @@ operating systems.  Support for Mac OS Classic ended with R 1.7.1.
 
 The current version of R will configure and build under a number of
 common Unix-like (e.g., @uref{https://en.wikipedia.org/wiki/Unix-like})
-platforms including @var{cpu}-linux-gnu for the i386, amd64/x86_64,
-alpha, arm, arm64, hppa, mips/mipsel, powerpc, s390x and sparc
+platforms including @var{cpu}-linux-gnu for the @I{i386},
+@I{amd64}/@I{x86_64}, @I{alpha}, @I{arm}, @I{arm64}, @I{hppa},
+@I{mips}/@I{mipsel}, @I{powerpc}, @I{s390x} and @I{sparc}
 @acronym{CPU}s (e.g.,
-@url{https://buildd.debian.org/build.php?&pkg=r-base}), i386-hurd-gnu,
-@var{cpu}-kfreebsd-gnu for i386 and amd64,
+@url{https://buildd.debian.org/build.php?&pkg=r-base}), 
+@I{386-hurd-gnu},
+@var{cpu}-kfreebsd-gnu for @I{i386} and @I{amd64},
 @c <FIXME>
 @c Not sure anymore ...
 @c alpha-dec-osf4,
@@ -284,8 +301,13 @@ alpha, arm, arm64, hppa, mips/mipsel, powerpc, s390x and sparc
 @c hppa-hp-hpux, 
 @c mips-sgi-irix,
 @c </FIXME>
-i386-pc-solaris, rs6000-ibm-aix, sparc-sun-solaris, x86_64-apple-darwin,
-aarch64-apple-darwin, x86_64-unknown-freebsd and x86_64-unknown-openbsd.
+@I{i386-pc-solaris},
+@I{rs6000-ibm-aix},
+@I{sparc-sun-solaris}, 
+@I{x86_64-apple-darwin},
+@I{aarch64-apple-darwin}, 
+@I{x86_64-unknown-freebsd} and 
+@I{x86_64-unknown-openbsd}.
 
 @c and according to @email{jlindsey@@luc.ac.be, Jim Lindsey} also on
 @c Mac, Amiga and Atari under m68k-linux.
@@ -399,7 +421,7 @@ versions of the R manuals, including
 @acronym{GNU} Texinfo system can also be converted to info files
 suitable for reading online with Emacs or stand-alone @acronym{GNU}
 Info; use @kbd{make info} to create these versions (note that this
-requires Makeinfo version 4.5).
+requires @I{Makeinfo} version 4.5).
 
 Finally, use @kbd{make check} to find out whether your R system works
 correctly.
@@ -441,9 +463,9 @@ The @file{bin/windows} directory of a @CRAN{} site contains binaries for
 a base distribution and add-on packages from @CRAN{} to run on 64-bit
 versions of Windows 7 and later on x86_64 chips (R 4.1.3 was the last
 version of R to support 32-bit Windows).  The Windows version of R was
-created by Robert Gentleman and Guido Masarotto; Brian Ripley and Duncan
-Murdoch made substantial contributions and it is now being maintained by
-other members of the R Core team.
+created by @I{Robert Gentleman} and @I{Guido Masarotto}; @I{Brian
+Ripley} and @I{Duncan Murdoch} made substantial contributions and it is
+now being maintained by other members of the R Core team.
 
 The same directory has links to snapshots of the r-patched and r-devel
 versions of R.
@@ -456,12 +478,12 @@ See the @url{https://CRAN.R-project.org/bin/windows/base/rw-FAQ.html,
 
 The @file{bin/macosx} directory of a @CRAN{} site contains a standard
 Apple installer package to run on macOS 10.13 (`High Sierra') or later,
-and another which runs only on `Apple Silicon' Macs under macOS 11 (`Big
-Sur') or later.  Once downloaded and executed, the installer will
+and another which runs only on `Apple Silicon' Macs under macOS 11
+(`@I{Big Sur}') or later.  Once downloaded and executed, the installer will
 install the current release of R and R.app, the macOS @acronym{GUI}.
 This port of R for macOS is maintained by
-@email{Simon.Urbanek@@R-project.org, Simon Urbanek} (and previously by
-Stefano Iacus).  The
+@email{Simon.Urbanek@@R-project.org, @I{Simon Urbanek}} (and previously by
+@I{Stefano Iacus}).  The
 @url{https://CRAN.R-project.org/bin/macosx/RMacOSX-FAQ.html, ``R for
 macOS @acronym{FAQ}''} has more details.
 
@@ -478,23 +500,23 @@ if one is available for yours.
 The @file{bin/linux} directory of a @CRAN{} site contains R packages for
 Debian and Ubuntu.
 
-Debian packages, maintained by Dirk Eddelbuettel, have long been part of
+Debian packages, maintained by @I{Dirk Eddelbuettel}, have long been part of
 the Debian distribution, and can be accessed through APT, the Debian
 package maintenance tool.  Use e.g.@: @code{apt-get install r-base
 r-recommended} to install the R environment and recommended packages.
 If you also want to build R packages from source, also run @code{apt-get
 install r-base-dev} to obtain the additional tools required for this.
 So-called ``backports'' of the current R packages for at least the
-@dfn{stable} distribution of Debian are provided by Johannes Ranke, and
+@dfn{stable} distribution of Debian are provided by @I{Johannes Ranke}, and
 available from @CRAN{}.  See
 @url{https://CRAN.R-project.org/bin/linux/debian/index.html} for details on R
 Debian packages and installing the backports, which should also be
 suitable for other Debian derivatives.  Native backports for Ubuntu are
-provided by Michael Rutter, see
+provided by @I{Michael Rutter}, see
 @url{https://CRAN.R-project.org/bin/linux/ubuntu/index.html} for
 instructions.
 
-R binaries for Fedora, maintained by Tom ``Spot'' Callaway, are provided
+R binaries for Fedora, maintained by @I{Tom ``Spot'' Callaway}, are provided
 as part of the Fedora distribution and can be accessed through
 @command{yum}, the @abbr{RPM} installer/updater.  Note that the ``Software''
 application (gnome-software), which is the default @acronym{GUI} for
@@ -511,8 +533,8 @@ available, as it must pass through the Fedora review process.
 @abbr{RPM}s for a selection of R packages are also provided by Fedora.  The
 Extra Packages for Enterprise Linux (@abbr{EPEL}) project
 (@url{https://docs.fedoraproject.org/en-US/epel/}) provides ports of the Fedora
-@abbr{RPM}s for RedHat Enterprise Linux and compatible distributions (e.g.,
-Centos, Scientific Linux, Oracle Linux).
+@abbr{RPM}s for @I{RedHat Enterprise Linux} and compatible distributions (e.g.,
+@I{Centos}, Scientific Linux, Oracle Linux).
 
 See @url{https://CRAN.R-project.org/bin/linux/suse/README.html} for
 information about @abbr{RPM}s for openSUSE.
@@ -549,7 +571,7 @@ The R distribution also comes with the following manuals.
 @item ``An Introduction to R'' (@file{R-intro})
 includes information on data types, programming elements, statistical
 modeling and graphics.  This document is based on the ``Notes on
-@SPLUS{}'' by Bill Venables and David Smith.
+@SPLUS{}'' by @I{Bill Venables} and @I{David Smith}.
 @item ``Writing R Extensions'' (@file{R-exts})
 currently describes the process of creating R add-on packages, writing R
 documentation, R's system and foreign language interfaces, and the R
@@ -557,7 +579,7 @@ documentation, R's system and foreign language interfaces, and the R
 @item ``R Data Import/Export'' (@file{R-data})
 is a guide to importing and exporting data to and from R.
 @item ``The R Language Definition'' (@file{R-lang}),
-a first version of the ``Kernighan & Ritchie of R'', explains
+a first version of the ``@I{Kernighan} & @I{Ritchie} of R'', explains
 evaluation, parsing, object oriented programming, computing on the
 language, and so forth.
 @item ``R Installation and Administration'' (@file{R-admin}).
@@ -576,45 +598,53 @@ can be found at
 Books on R by R Core Team members include
 
 @quotation
-John M. Chambers (2008), ``Software for Data Analysis: Programming with
-R''.  Springer, New York, ISBN 978-0-387-75935-7,
+@I{John M. Chambers} (2008),
+``Software for Data Analysis: Programming with R''.  
+@I{Springer}, New York, ISBN 978-0-387-75935-7,
 @url{https://statweb.stanford.edu/~jmc4/Rbook/}.
 
-Peter Dalgaard (2008), ``Introductory Statistics with R'', 2nd edition.
-Springer, ISBN 978-0-387-79053-4,
+@I{Peter Dalgaard} (2008),
+``Introductory Statistics with R'',
+2nd edition.
+@I{Springer}, ISBN 978-0-387-79053-4,
 @url{http://publicifsv.sund.ku.dk/~pd/ISwR.html}.
 
-Robert Gentleman (2008), ``R Programming for Bioinformatics''.  Chapman
-& Hall/CRC, Boca Raton, FL, ISBN 978-1-420-06367-7,
+@I{Robert Gentleman} (2008),
+``R Programming for Bioinformatics''.
+@I{Chapman & Hall/CRC}, @I{Boca Raton}, FL, ISBN 978-1-420-06367-7,
 @url{https://master.bioconductor.org/help/publications/books/r-programming-for-bioinformatics/}.
 
-Stefano M. Iacus (2008), ``Simulation and Inference for Stochastic
-Differential Equations: With R Examples''. Springer, New York, ISBN
-978-0-387-75838-1.
+@I{Stefano M. Iacus} (2008),
+``Simulation and Inference for Stochastic Differential Equations: With R
+Examples''.
+@I{Springer}, New York, ISBN 978-0-387-75838-1.
 
-Deepayan Sarkar (2007), ``Lattice: Multivariate Data Visualization with
-R''. Springer, New York, ISBN 978-0-387-75968-5.
+@I{Deepayan Sarkar} (2007),
+``Lattice: Multivariate Data Visualization with R''.
+@I{Springer}, New York, ISBN 978-0-387-75968-5.
 
-W. John Braun and Duncan J. Murdoch (2007), ``A First Course in
-Statistical Programming with R''.  Cambridge University Press,
-Cambridge, ISBN 978-0521872652.
+@I{W. John Braun} and @I{Duncan J. Murdoch} (2007),
+``A First Course in Statistical Programming with R''.
+ Cambridge University Press, Cambridge, ISBN 978-0521872652.
 
-P. Murrell (2005), ``R Graphics'', Chapman & Hall/CRC, ISBN:
-1-584-88486-X,
+@I{P. Murrell} (2005), ``R Graphics'',
+@I{Chapman & Hall/CRC}, ISBN 1-584-88486-X,
 @url{https://www.stat.auckland.ac.nz/~paul/RGraphics/rgraphics.html}.
 
-William N. Venables and Brian D. Ripley (2002), ``Modern Applied
-Statistics with S'' (4th edition).  Springer, ISBN 0-387-95457-0,
+@I{William N. Venables} and @I{Brian D. Ripley} (2002),
+``Modern Applied Statistics with S'' (4th edition).
+@I{Springer}, ISBN 0-387-95457-0,
 @url{https://www.stats.ox.ac.uk/pub/MASS4/}.
 
-Jose C. Pinheiro and Douglas M. Bates (2000), ``Mixed-Effects Models in
-S and S-Plus''. Springer, ISBN 0-387-98957-0.
+@I{Jose C. Pinheiro} and @I{Douglas M. Bates} (2000),
+``Mixed-Effects Models in S and S-Plus''.
+@I{Springer}, ISBN 0-387-98957-0.
 @end quotation
 
 Last, but not least, Ross' and Robert's experience in designing and
-implementing R is described in Ihaka & Gentleman (1996), ``R: A Language
-for Data Analysis and Graphics'', @emph{Journal of Computational and
-Graphical Statistics}, @strong{5}, 299--314
+implementing R is described in @I{Ihaka} & @I{Gentleman} (1996), 
+``R: A Language for Data Analysis and Graphics'', 
+@emph{Journal of Computational and Graphical Statistics}, @strong{5}, 299--314
 (@doi{10.1080/10618600.1996.10474713}).
 
 @node Citing R, What mailing lists exist for R?, What documentation exists for R?, R Basics
@@ -736,7 +766,7 @@ sites which carry identical material, consisting of the R
 distribution(s), the contributed extensions, documentation for R, and
 binaries.
 
-The @CRAN{} main site at WU (Wirtschaftsuniversit@"at Wien) in Austria
+The @CRAN{} main site at WU (@I{Wirtschaftsuniversit@"at Wien}) in Austria
 can be found at the @acronym{URL}
 
 @quotation
@@ -842,7 +872,7 @@ easy access to the best in SVN, daily built and checked packages,
 mailing lists, bug tracking, message boards/forums, site hosting,
 permanent file archival, full backups, and total web-based
 administration.  For more information, see the R-Forge web page and
-Stefan Theu@ss{}l and Achim Zeileis (2009), ``Collaborative software
+@I{Stefan Theu@ss{}l} and @I{Achim Zeileis} (2009), ``Collaborative software
 development using R-Forge'', @url{https://journal.R-project.org/, ,
 @emph{The R Journal}}, @strong{1}(1):9--14.
 
@@ -863,7 +893,7 @@ development using R-Forge'', @url{https://journal.R-project.org/, ,
 
 S is a very high level language and an environment for data analysis and
 graphics.  In 1998, the Association for Computing Machinery
-(@acronym{ACM}) presented its Software System Award to John M. Chambers,
+(@abbr{ACM}) presented its Software System Award to John M. Chambers,
 the principal designer of S, for
 
 @quotation
@@ -880,35 +910,39 @@ Chambers and coauthors, which are also the primary references for S.
 
 @itemize @bullet
 @item
-Richard A. Becker and John M. Chambers (1984), ``S.  An Interactive
-Environment for Data Analysis and Graphics,'' Monterey: Wadsworth and
-Brooks/Cole.
+@I{Richard A. Becker} and @I{John M. Chambers} (1984),
+``S.  An Interactive Environment for Data Analysis and Graphics,''
+Monterey: @I{Wadsworth and Brooks/Cole}.
 
 This is also referred to as the ``@emph{Brown Book}'', and of historical
 interest only.
 
 @item
-Richard A. Becker, John M. Chambers and Allan R. Wilks (1988), ``The New
-S Language,'' London: Chapman & Hall.
+@I{Richard A. Becker}, @I{John M. Chambers} and @I{Allan R. Wilks} (1988),
+``The New S Language,''
+London: Chapman & Hall.
 
 This book is often called the ``@emph{Blue Book}'', and introduced what
 is now known as S version 2.
 
 @item
-John M. Chambers and Trevor J. Hastie (1992), ``Statistical Models in
-S,''  London: Chapman & Hall.
+@I{John M. Chambers} and @I{Trevor J. Hastie} (1992),
+``Statistical Models in S,''
+ London: Chapman & Hall.
 
 This is also called the ``@emph{White Book}'', and introduced S version
 3, which added structures to facilitate statistical modeling in S.
 
 @item
-John M. Chambers (1998), ``Programming with Data,'' New York: Springer,
+@I{John M. Chambers} (1998), 
+``Programming with Data,''
+New York: @I{Springer},
 ISBN 0-387-98503-4
 (@url{https://statweb.stanford.edu/~jmc4/Sbook/}).
 
 This ``@emph{Green Book}'' describes version 4 of S, a major revision of
-S designed by John Chambers to improve its usefulness at every stage of
-the programming process.
+S designed by @I{John Chambers} to improve its usefulness at every stage
+of the programming process.
 @end itemize
 
 See @url{https://statweb.stanford.edu/~jmc4/papers/96.7.ps}
@@ -1038,7 +1072,7 @@ a function which returns the density function of the @math{r}-th order
 statistic from a sample of size @math{n} from a (continuous)
 distribution.  For simplicity, we shall use both the distribution and
 density functions distribution as explicit arguments.  (Example compiled
-from various postings by Luke Tierney.)
+from various postings by @I{Luke Tierney}.)
 
 The @SPLUS{} documentation for @code{call()} basically suggests the
 following:
@@ -1452,10 +1486,10 @@ handling of line types, more convenient color handling (via palettes),
 gamma correction for color, and, most importantly, mathematical
 annotation in plot texts, via input expressions reminiscent of @TeX{}
 constructs.  See the help page for @code{plotmath}, which features an
-impressive on-line example.  More details can be found in Paul Murrell
-and Ross Ihaka (2000), ``An Approach to Providing Mathematical
-Annotation in Plots'', @emph{Journal of Computational and Graphical
-Statistics}, @strong{9}, 582--599
+impressive on-line example.  More details can be found in 
+@I{Paul Murrell} and @I{Ross Ihaka} (2000),
+``An Approach to Providing Mathematical Annotation in Plots'', 
+@emph{Journal of Computational and Graphical Statistics}, @strong{9}, 582--599
 (@doi{10.1080/10618600.2000.10474900}).
 
 @node What is R-plus?,  , Is there anything R can do that S-PLUS cannot?, R and S
@@ -1468,7 +1502,7 @@ For a very long time, there was no such thing.
 @c currently beta testing a commercially supported version of R named R+
 @c (read R plus).
 
-Revolution Analytics has released REvolution R, now available as
+Revolution Analytics has released @I{REvolution R}, now available as
 Microsoft R (see
 @url{https://blog.revolutionanalytics.com/2016/01/microsoft-r-open.html}
 for more information).
@@ -1493,15 +1527,15 @@ specifically section ``Web and Server Frameworks'', for up-to-date
 information on R web interface packages.
 
 Early references on R web interfaces include
-Jeff Banfield (1999),
-``Rweb: Web-based Statistical Analysis''
+@I{Jeff Banfield} (1999),
+``@I{Rweb}: Web-based Statistical Analysis''
 (@doi{10.18637/jss.v004.i01}),
-David Firth (2003),
-``CGIwithR: Facilities for processing web forms using R''
+@I{David Firth} (2003),
+``@I{CGIwithR}: Facilities for processing web forms using R''
 (@doi{10.18637/jss.v008.i10}),
 and
-Angelo Mineo and Alfredo Pontillo (2006),
-``Using R via PHP for Teaching Purposes: R-php''
+@I{Angelo Mineo} and @I{Alfredo Pontillo} (2006),
+``Using R via PHP for Teaching Purposes: @I{R-php}''
 (@doi{10.18637/jss.v017.i04}).
 
 @node R Add-On Packages, R and Emacs, R Web Interfaces, Top
@@ -1587,9 +1621,9 @@ to be included in all binary distributions of R.
 @table @pkg
 @item KernSmooth
 Functions for kernel smoothing (and density estimation) corresponding to
-the book ``Kernel Smoothing'' by M. P. Wand and M. C. Jones, 1995.
+the book ``Kernel Smoothing'' by @I{M. P. Wand} and @I{M. C. Jones}, 1995.
 @item MASS
-Functions and datasets from the main package of Venables and Ripley,
+Functions and datasets from the main package of @I{Venables} and @I{Ripley},
 ``Modern Applied Statistics with S''.
 @c (Contained in the @file{VR} bundle for R versions prior to 2.10.0.)
 @item Matrix
@@ -1597,7 +1631,7 @@ Support for spares and dense matrices
 @c (Recommended for R 2.9.0 or later.)
 @item boot
 Functions and datasets for bootstrapping from the book ``Bootstrap
-Methods and Their Applications'' by A. C. Davison and D. V. Hinkley,
+Methods and Their Applications'' by @I{A. C. Davison} and @I{D. V. Hinkley},
 1997, Cambridge University Press.
 @item class
 Functions for classification (@math{k}-nearest neighbor and @abbr{LVQ}).
@@ -1609,12 +1643,12 @@ Code analysis tools.
 @c (Recommended for R 2.5.0 or later.)
 @item foreign
 Functions for reading and writing data stored by statistical software
-like Minitab, S, SAS, SPSS, Stata, Systat, etc.
+like @I{Minitab}, S, SAS, SPSS, @I{Stata}, @I{Systat}, etc.
 @item lattice
 Lattice graphics, an implementation of Trellis Graphics functions.
 @item mgcv
 Routines for GAMs and other generalized ridge regression problems with
-multiple smoothing parameter selection by GCV or UBRE.
+multiple smoothing parameter selection by GCV or @abbr{UBRE}.
 @item nlme
 Fit and compare Gaussian linear and nonlinear mixed-effects models.
 @item nnet
@@ -1625,7 +1659,7 @@ networks''), and for multinomial log-linear models.
 Recursive PARTitioning and regression trees.
 @item spatial
 Functions for kriging and point pattern analysis from ``Modern Applied
-Statistics with S'' by W. Venables and B. Ripley.
+Statistics with S'' by @I{W. Venables} and @I{B. Ripley}.
 @c (Contained in the @file{VR} bundle for R versions prior to 2.10.0.)
 @item survival
 Functions for survival analysis, including penalized likelihood.
@@ -1674,7 +1708,7 @@ broadened to include the analysis of all types of genomic data, such as
 SAGE, sequence, or SNP data.  In addition, there are metadata
 (annotation, CDF and probe) and experiment data packages.  See
 @url{https://master.bioconductor.org/install/} for available packages and a
-complete taxonomy via BioC Views.
+complete taxonomy via @I{BioC Views}.
 
 @node Other add-on packages,  , Add-on packages from Bioconductor, Which add-on packages exist for R?
 @subsection Other add-on packages
@@ -1907,14 +1941,14 @@ Statistics'') which provides a standard interface between statistical
 programs and statistical processes.  It is intended to provide
 assistance for interactive statistical programming and data analysis.
 Languages supported include: S dialects (R, S 3/4, and @SPLUS{}
-3.x/4.x/5.x/6.x/7.x), LispStat dialects (XLispStat, ViSta), SAS, Stata,
-and BUGS.
+3.x/4.x/5.x/6.x/7.x), @I{LispStat} dialects (@I{XLispStat}, @I{ViSta}),
+SAS, @I{Stata}, and @I{BUGS}.
 
 @acronym{ESS} grew out of the need for bug fixes and extensions to
 S-mode 4.8 (which was a @acronym{GNU} Emacs interface to S/@SPLUS{}
 version 3 only).  The current set of developers desired support for
 XEmacs, R, S4, and MS Windows.  In addition, with new modes being
-developed for R, Stata, and SAS, it was felt that a unifying interface
+developed for R, @I{Stata}, and SAS, it was felt that a unifying interface
 and framework for the user interface would benefit both the user and the
 developer, by helping both groups conform to standard Emacs usage.  The
 end result is an increase in efficiency for statistical programming and
@@ -1944,13 +1978,13 @@ For help with @acronym{ESS}, send email to
 Please send bug reports and suggestions on @acronym{ESS} to
 @email{ESS-bugs@@r-project.org}.  The easiest way to do this from is
 within Emacs by typing @kbd{M-x ess-submit-bug-report} or using the
-[ESS] or [iESS] pulldown menus.
+@I{[ESS]} or @I{[iESS]} pulldown menus.
 
 @node Should I run R from within Emacs?, Debugging R from within Emacs, Is there Emacs support for R?, R and Emacs
 @section Should I run R from within Emacs?
 
 Yes, instead of just running it in a console, @emph{definitely}.  As an
-alternative to other @abbr{IDE}s such as Rstudio, @emph{possibly}, notably if you
+alternative to other @abbr{IDE}s such as @I{RStudio}, @emph{possibly}, notably if you
 are interested to use Emacs for other computer interaction.
 You'd be using @acronym{ESS}, Emacs Speaks Statistics, see previous FAQ.
 
@@ -1980,8 +2014,8 @@ To specify command line arguments for the inferior R process, use
 @section Debugging R from within Emacs
 
 To debug R ``from within Emacs'', there are several possibilities.  To
-use the Emacs GUD (Grand Unified Debugger) library with the recommended
-debugger GDB, type @kbd{M-x gdb} and give the path to the R
+use the Emacs @abbr{GUD} (Grand Unified Debugger) library with the recommended
+debugger @I{GDB}, type @kbd{M-x gdb} and give the path to the R
 @emph{binary} as argument.  At the @command{gdb} prompt, set
 @env{R_HOME} and other environment variables as needed (using e.g.@:
 @kbd{set env R_HOME /path/to/R/}, but see also below), and start the
@@ -1992,7 +2026,7 @@ If you have @acronym{ESS}, you can do @kbd{C-u M-x R @key{RET} - d
 @option{-d gdb}.
 
 A third option is to start an inferior R process via @acronym{ESS}
-(@kbd{M-x R}) and then start GUD (@kbd{M-x gdb}) giving the R binary
+(@kbd{M-x R}) and then start @abbr{GUD} (@kbd{M-x gdb}) giving the R binary
 (using its full path name) as the program to debug.  Use the program
 @command{ps} to find the process number of the currently running R
 process then use the @code{attach} command in gdb to attach it to that
@@ -2001,7 +2035,7 @@ process.  One advantage of this method is that you have separate
 you have all the @acronym{ESS} facilities, such as object-name
 completion, that we know and love.
 
-When using GUD mode for debugging from within Emacs, you may find it
+When using @abbr{GUD} mode for debugging from within Emacs, you may find it
 most convenient to use the directory with your code in it as the current
 working directory and then make a symbolic link from that directory to
 the R binary.  That way @file{.gdbinit} can stay in the directory with
@@ -2138,7 +2172,7 @@ rm(list = ls(all.names = TRUE))
 with a @samp{.} are removed.)
 
 @node How can I get eval() and D() to work?, Why do my matrices lose dimensions?, How can I clean up my workspace?, R Miscellanea
-@section How can I get eval() and D() to work?
+@section How can I get @code{eval()} and @code{D()} to work?
 
 Strange things will happen if you use @code{eval(print(x), envir = e)}
 or @code{D(x^2, "x")}.  The first one will either tell you that
@@ -2577,7 +2611,7 @@ outer(1:4, 1:2, FUN = wrapper, my.fun = foo, happy = 10)
 Scalar functions can also be vectorized using @code{Vectorize()}.
 
 @node Why does the output from anova() depend on the order of factors in the model?, How do I produce PNG graphics in batch mode?, Why does outer() behave strangely with my function?, R Miscellanea
-@section Why does the output from anova() depend on the order of factors in the model?
+@section Why does the output from @code{anova()} depend on the order of factors in the model?
 
 In a model such as @code{~A+B+A:B}, R will report the difference in sums
 of squares between the models @code{~1}, @code{~A}, @code{~A+B} and
@@ -2615,9 +2649,9 @@ on macOS, and that too works in batch mode.
 Earlier versions of the @code{png()} device used the X11 driver, which
 is a problem in batch mode or for remote operation.  If you have
 Ghostscript you can use @code{bitmap()}, which produces a PostScript or
-PDF file then converts it to any bitmap format supported by Ghostscript.
+PDF file then converts it to any bitmap format supported by @I{Ghostscript}.
 On some installations this produces ugly output, on others it is
-perfectly satisfactory.  Many systems now come with Xvfb from
+perfectly satisfactory.  Many systems now come with @I{Xvfb} from
 @url{https://www.x.org/, X.Org} (possibly as an optional
 install), which is an X11 server that does not require a screen.
 
@@ -2805,7 +2839,8 @@ region.  You can adjust the value of the @code{0.25} offset as required
 to move the axis labels up or down relative to the x axis.  See
 @code{?par} for more information.
 
-Also see Figure 1 and associated code in Paul Murrell (2003),
+Also see Figure 1 and associated code in 
+@I{Paul Murrell} (2003),
 ``Integrating grid Graphics Output with Base Graphics Output'',
 @emph{R News}, @strong{3/2}, 7--12.
 
@@ -2830,7 +2865,7 @@ add it to the search path) via calls to the function @code{library}.
 I.e., @code{library()} is employed to load a package from libraries
 containing packages.
 
-@xref{R Add-On Packages}, for more details.  See also Uwe Ligges (2003),
+@xref{R Add-On Packages}, for more details.  See also @I{Uwe Ligges} (2003),
 ``R Help Desk: Package Management'', @emph{R News}, @strong{3/3},
 37--39.
 
@@ -2871,13 +2906,16 @@ carefully.
 A discussion with many easily followed examples is in Appendix G
 ``Computational Precision and Floating Point Arithmetic'', pages
 753--771 of @emph{Statistical Analysis and Data Display: An Intermediate
-Course with Examples in R}, Richard M. Heiberger and Burt Holland
-(Springer 2015, second edition).  This appendix is a free download from
+Course with Examples in R}, @I{Richard M. Heiberger} and @I{Burt Holland}
+(@I{Springer} 2015, second edition).
+This appendix is a free download from
 @url{https://link.springer.com/content/pdf/bbm:978-1-4939-2122-5/1.pdf}.
 
-For more information, see e.g.@: David Goldberg (1991), ``What Every
-Computer Scientist Should Know About Floating-Point Arithmetic'',
-@emph{ACM Computing Surveys}, @strong{23/1}, 5--48, also available via
+For more information, see e.g.@: 
+@I{David Goldberg} (1991), 
+``What Every Computer Scientist Should Know About Floating-Point Arithmetic'',
+@I{@emph{ACM Computing Surveys}}, @strong{23/1}, 5--48, 
+also available via
 @c As of 2020-09-25, redirects to https without valid certificate ...
 @c @url{http://www.validlab.com/goldberg/paper.pdf}.
 @c See <https://en.wikipedia.org/wiki/IEEE_754>:
@@ -3124,7 +3162,7 @@ package) automate the process somewhat.
 
 In most cases, typing the name of the function will print its source 
 code. However, code is sometimes hidden in a namespace, or compiled.  For 
-a complete overview on how to access source code, see Uwe Ligges (2006),
+a complete overview on how to access source code, see @I{Uwe Ligges} (2006),
 ``Help Desk: Accessing the sources'', @emph{R News}, @strong{6/4},
 43--45 (@url{https://CRAN.R-project.org/doc/Rnews/Rnews_2006-4.pdf}).
 
@@ -3227,9 +3265,9 @@ actually used memory as well as unused memory that cannot be released.
 @section How can I enable secure https downloads in R?
 
 From R 4.2.0, @code{"libcurl"} download method is always available and
-used for @acronym{HTTPS} by default on all platforms.  It has been used
+used for @abbr{HTTPS} by default on all platforms.  It has been used
 since R 3.3.0 everywhere but Windows where the default method
-@code{"wininet"} also supported @acronym{HTTPS}.
+@code{"wininet"} also supported @abbr{HTTPS}.
 
 So nothing needs to be done to access @samp{https://} websites in recent
 versions of R.
@@ -3502,10 +3540,19 @@ or to the translation team as listed at
 Of course, many many thanks to Robert and Ross for the R system, and to
 the package writers and porters for adding to it.
 
-Special thanks go to Doug Bates, Peter Dalgaard, Paul Gilbert, Stefano
-Iacus, Fritz Leisch, Jim Lindsey, Thomas Lumley, Martin Maechler, Brian
-D. Ripley, Anthony Rossini, and Andreas Weingessel for their comments
-which helped me improve this @acronym{FAQ}.
+Special thanks go to 
+@I{Doug Bates}, 
+@I{Peter Dalgaard}, 
+@I{Paul Gilbert},
+@I{Stefano Iacus},
+@I{Fritz Leisch},
+@I{Jim Lindsey},
+@I{Thomas Lumley},
+@I{Martin Maechler},
+@I{Brian D. Ripley},
+@I{Anthony Rossini}, and 
+@I{Andreas Weingessel}
+for their comments which helped me improve this @acronym{FAQ}.
 
 More to come soon @dots{}
 

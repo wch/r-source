@@ -1194,7 +1194,7 @@ references after the first are written out as a reference marker indexed
 by the table entry.
 
 Version-2 serialization first writes a header indicating the format
-(normally @samp{X\n} for an XDR format binary save, but @samp{A\n},
+(normally @samp{X\n} for an @abbr{XDR} format binary save, but @samp{A\n},
 ASCII, and @samp{B\n}, native word-order binary, can also occur) and
 then three integers giving the version of the format and two @R{}
 versions (packed by the @code{R_Version} macro from @file{Rversion.h}).
@@ -1234,8 +1234,8 @@ name.  `Normal' environments are written out as @code{ENVSXP}s with an
 integer indicating if the environment is locked followed by the
 enclosure, frame, `tag' (the hash table) and attributes.
 
-In the `XDR' format integers and doubles are written in bigendian order:
-however the format is not fully XDR (as defined in RFC 1832) as byte
+In the `@abbr{XDR}' format integers and doubles are written in bigendian order:
+however the format is not fully @abbr{XDR} (as defined in RFC 1832) as byte
 quantities (such as the contents of @code{CHARSXP} and @code{RAWSXP}
 types) are written as-is and not padded to a multiple of four bytes.
 
@@ -1332,7 +1332,7 @@ Windows have multiple notions of the current locale encoding, one is in the
 C runtime (C library) and another is the active code page (system locale). 
 The active code page is used when calling non-UTF-16 variants of Windows API
 functions (earlier referred to as ANSI calls), either directly or indirectly
-via POSIX wrappers inside MinGW-w64, from R, R packages and libraries they
+via POSIX wrappers inside @I{MinGW-w64}, from R, R packages and libraries they
 link to.  While R has handled many cases by calling directly the UTF-16
 variants of the Windows API, it still may sometimes use the non-UTF-16 ones,
 and external libraries also primarily developed for POSIX systems typically
@@ -1354,7 +1354,7 @@ to UTF-8 in the application manifest.  This changes the active code page
 only for the given application and does so together with changing also the
 @abbr{UCRT} C locale to UTF-8. R 4.2 for Windows uses this feature to get UTF-8 as
 the native encoding on Windows. To make that possible, R had to switch to
-@abbr{UCRT}, which in turn required creation of Rtools42.
+@abbr{UCRT}, which in turn required creation of @I{Rtools42}.
 
 Older versions of Windows still rely on the previous encoding support where
 the native encoding cannot be UTF-8. R 4.2 requires @abbr{UCRT} to work, but @abbr{UCRT}
@@ -1895,7 +1895,7 @@ Windows is unique in that it conventionally treats importing variables
 differently from functions: variables that are imported from a DLL need
 to be specified  by a prefix (often @samp{_imp_}) when being linked to
 (`imported') but not when being linked from (`exported').  The details
-depend on the compiler system, and have changed for MinGW during the
+depend on the compiler system, and have changed for @I{MinGW} during the
 lifetime of that port.  They are in the main hidden behind some macros
 defined in header file @file{R_ext/libextern.h}.
 
@@ -1906,9 +1906,9 @@ such as @file{Rgraphapp.dll}) should be declared with prefix
 to be considered for any public header and also @file{Defn.h}.
 
 It would nowadays be possible to make use of the `auto-import' feature
-of the MinGW port of @command{ld} to fix up imports from DLLs (and if
+of the @I{MinGW} port of @command{ld} to fix up imports from DLLs (and if
 @R{} is built for the Cygwin platform this is what happens).  However,
-this was not possible when the MinGW build of @R{} was first constructed
+this was not possible when the @I{MinGW} build of @R{} was first constructed
 in ca 1998, allows less control of visibility and would not work for
 other Windows compiler suites.
 
@@ -1930,7 +1930,7 @@ and @file{data} subdirectories.  The database consists of two files,
 is a concatenation of serialized objects, and the @file{.rdx} file
 contains an index.  The objects are stored in (usually) a
 @command{gzip}-compressed format with a 4-byte header giving the
-uncompressed serialized length (in XDR, that is big-endian, byte order)
+uncompressed serialized length (in @abbr{XDR}, that is big-endian, byte order)
 and read by a call to the primitive @code{lazyLoadDBfetch}.  (Note that
 this makes lazy-loading unsuitable for really large objects: the
 unserialized length of an @R{} object can exceed 4GB.)
@@ -3345,7 +3345,7 @@ apart (that is with 2pt leading).
 
 @item
 The default font family should be a sans serif font, e.g Helvetica or
-similar (e.g.@: Arial on Windows).
+similar (e.g.@: @I{Arial} on Windows).
 
 @item
 @code{lwd = 1} should correspond to a line width of 1/96 inch.  This
@@ -3503,8 +3503,8 @@ bitmap which is copied to the file in the appropriate format).
 
 The device units are pixels (logical ones on a metafile device).
 
-The code was originally written by Guido Masarotto with extensive use of
-macros, which can make it hard to disentangle.
+The code was originally written by @I{Guido Masarotto} with extensive
+use of macros, which can make it hard to disentangle.
 
 For a screen device, @code{xd->gawin} is the canvas of the screen, and
 @code{xd->bm} is the off-screen bitmap.  So macro @code{DRAW} arranges
@@ -3580,7 +3580,7 @@ macros are defined in @file{R_ext/GraphicsDevice.h} to extract the
 various components.
 
 Colours in the base graphics system were originally adopted from S (and
-before that the GRZ library from Bell Labs), with the concept of a
+before that the @I{GRZ} library from Bell Labs), with the concept of a
 (variable-sized) palette of colours referenced by numbers
 @samp{1...@var{N}} plus @samp{0} (the background colour of the current
 device).  @R{} introduced the idea of referring to colours by character
@@ -3613,7 +3613,7 @@ resized or @code{dev.copy} is used.  The palette should be thought of as
 per-session: it is stored in package @pkg{grDevices}.
 
 The convention is that devices use the colorspace `sRGB'. This is an
-industry standard: it is used by Web browsers and JPEGs from all but
+industry standard: it is used by Web browsers and @abbr{JPEG}s from all but
 high-end digital cameras.  The interpretation is a matter for graphics
 devices and for code that manipulates colours, but not for the graphics
 engine or subsystems.
@@ -4434,7 +4434,7 @@ if any files or directories are left there they are removed.  Since some
 of these might be out of the user's control, environment variable
 @env{_R_CHECK_THINGS_IN_TEMP_DIR_EXCLUDE_} can specify an (extended
 regex) pattern of file paths not to be reported -- CRAN uses
-@samp{^ompi.} for directories left behind by OpenMPI.  There are rare
+@samp{^ompi.} for directories left behind by @I{OpenMPI}.  There are rare
 instances where @env{TEMPDIR} is not respected and so files are left in
 @file{/tmp} (and not reported, but see the next item): one example is
 @file{/tmp/boost_interprocess} on some OSes.
@@ -4476,7 +4476,7 @@ Default: false
 
 @item _R_CHECK_BASHISMS_
 Check the top-level scripts @file{configure} (unless generated by
-@file{autoconf}) and @file{cleanup} for non-Bourne-shell code, using the
+@file{autoconf}) and @file{cleanup} for non-@I{Bourne}-shell code, using the
 Perl script @command{checkbashisms} if available.  This includes
 reporting scripts using the non-portable @code{#! /bin/bash}.
 (Script @command{checkbashisms} is available in most Linux distributions
@@ -4564,7 +4564,7 @@ Default: false (but true for CRAN submission checks).
 Check whether arguments passed to the Windows C runtime are valid. When
 enabled and a C runtime function is called with an invalid parameter, R
 prints diagnostic information and unconditionally terminates. By default,
-R for Windows following MinGW-W64 default causes @abbr{UCRT} to ignore invalid
+R for Windows following @I{MinGW-W64} default causes @abbr{UCRT} to ignore invalid
 parameters, but they may cause R to abort e.g. when R is embedded into
 applications built with a different compiler toolchain. One may set the
 value to @code{"watson"} for interactive debugging on Windows via
@@ -4624,7 +4624,7 @@ non-empty value.} to installed packages not also in @code{.Library}.
 @item _R_CHECK_INSTALL_DEPENDS_
 If set to a true value and a test installation is to be done, this is
 done with a temporary library populated by all the
-Depends/Imports/LinkingTo packages.
+@I{Depends}/@I{Imports}/@I{LinkingTo} packages.
 Default: false (but true for CRAN submission checks).
 
 Note that this is actually implemented in @command{R CMD INSTALL}, so it
@@ -4672,7 +4672,7 @@ This may give false positives on code which uses
 various contrasts functions if @code{sparse = TRUE} is used.)
 @end vtable
 
-CRAN's submission checks use something like
+The CRAN submission checks use something like
 
 @example
 _R_CHECK_CRAN_INCOMING_=TRUE
@@ -4817,7 +4817,7 @@ The following tools can ``safely be assumed'' for @R{} extensions.
 @itemize @bullet
 @item
 An ISO C99 C compiler.  Note that extensions such as @acronym{POSIX}
-1003.1 must be tested for, typically using Autoconf unless you are sure
+1003.1 must be tested for, typically using @I{Autoconf} unless you are sure
 they are supported on all mainstream @R{} platforms (including Windows
 and macOS).
 
@@ -4842,13 +4842,13 @@ Windows-specific makefiles can assume @acronym{GNU} @command{make} 3.79
 or later, as no other @command{make} is viable on that platform.
 
 @item
-A Bourne shell and the ``traditional'' Unix programming tools, including
+A @I{Bourne} shell and the ``traditional'' Unix programming tools, including
 @command{grep}, @command{sed}, and @command{awk}.
 
 There are @acronym{POSIX} standards for these tools, but these may not
 be fully supported.  Baseline features could be determined from a book
-such as @cite{The UNIX Programming Environment} by Brian W. Kernighan &
-Rob Pike.  Note in particular that @samp{|} in a regexp is an extended
+such as @cite{The UNIX Programming Environment} by @I{Brian W. Kernighan} &
+@I{Rob Pike}.  Note in particular that @samp{|} in a regexp is an extended
 regexp, and is not supported by all versions of @command{grep} or
 @command{sed}.  The Open Group Base Specifications, Issue 7, which are
 technically identical to  IEEE Std 1003.1 (POSIX), 2008,
@@ -4863,7 +4863,7 @@ they can be assumed to have followed the instructions in ``the Windows
 toolset'' appendix of the ``R Installation and Administration'' manual
 to obtain them.  Redirection cannot be assumed to be available via
 @command{system} as this does not use a standard shell (let alone a
-Bourne shell).
+@I{Bourne} shell).
 
 @noindent
 In addition, the following tools are needed for certain tasks.

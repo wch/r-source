@@ -114,13 +114,13 @@ statistical modelling and graphics.
 
 This introduction to @R{} is derived from an original set of notes
 describing the @Sl{} and @SPLUS{} environments written in 1990--2 by
-Bill Venables and David M. Smith when at the University of Adelaide.  We
-have made a number of small changes to reflect differences between the
-@R{} and @Sl{} programs, and expanded some of the material.
+@I{Bill Venables} and @I{David M. Smith} when at the University of
+Adelaide.  We have made a number of small changes to reflect differences
+between the @R{} and @Sl{} programs, and expanded some of the material.
 
-We would like to extend warm thanks to Bill Venables (and David Smith)
-for granting permission to distribute this modified version of the notes
-in this way, and for being a supporter of @R{} from way back.
+We would like to extend warm thanks to @I{Bill Venables} (and @I{David
+Smith}) for granting permission to distribute this modified version of
+the notes in this way, and for being a supporter of @R{} from way back.
 
 Comments and corrections are always welcome.  Please address email
 correspondence to @email{R-help@@R-project.org}.
@@ -195,19 +195,19 @@ analysis.
 @section Related software and documentation
 
 @R{} can be regarded as an implementation of the @Sl{} language which
-was developed at Bell Laboratories by Rick Becker, John Chambers and
-Allan Wilks, and also forms the basis of the @SPLUS{} systems.
+was developed at Bell Laboratories by @I{Rick Becker}, @I{John Chambers}
+and @I{Allan Wilks}, and also forms the basis of the @SPLUS{} systems.
 
 The evolution of the @Sl{} language is characterized by four books by
 John Chambers and coauthors.  For @R{}, the basic reference is @emph{The
 New @Sl{} Language: A Programming Environment for Data Analysis and
-Graphics} by Richard A.@: Becker, John M.@: Chambers and Allan R.@:
-Wilks.  The new features of the 1991 release of @Sl{}
+Graphics} by @I{Richard A.@: Becker}, @I{John M.@: Chambers} and
+@I{Allan R.@: Wilks}.  The new features of the 1991 release of @Sl{}
 @c (@Sl{} version 3) JMC says the 1988 version is S3.
-are covered in @emph{Statistical Models in @Sl{}} edited by John M.@:
-Chambers and Trevor J.@: Hastie.  The formal methods and classes of the
+are covered in @emph{Statistical Models in @Sl{}} edited by @I{John M.@:
+Chambers} and @I{Trevor J.@: Hastie}.  The formal methods and classes of the 
 @pkg{methods} package are based on those described in @emph{Programming
-with Data} by John M.@: Chambers.  @xref{References}, for precise
+with Data} by @I{John M.@: Chambers}.  @xref{References}, for precise
 references.
 
 There are now a number of books which describe how to use @R{} for data
@@ -456,7 +456,7 @@ newline.  Elementary commands can be grouped together into one compound
 expression by braces (@samp{@code{@{}} and @samp{@code{@}}}).
 @emph{Comments} can be put almost@footnote{@strong{not} inside strings,
 nor within the argument list of a function definition} anywhere,
-starting with a hashmark (@samp{@code{#}}), everything to the end of the
+starting with a hash mark (@samp{@code{#}}), everything to the end of the
 line is a comment.
 
 If a command is not complete at the end of a line, @R{} will
@@ -3170,7 +3170,7 @@ qqline(x)
 @end example
 
 Finally, we might want a more formal test of agreement with normality
-(or not).  @R{} provides the Shapiro-Wilk test
+(or not).  @R{} provides the Shapiro-@I{Wilk} test
 @cindex Shapiro-Wilk test
 @findex shapiro.test
 
@@ -4389,7 +4389,7 @@ explicitly removed.
 @end table
 
 The @emph{formula operators} are similar in effect to the Wilkinson and
-Rogers notation used by such programs as Glim and Genstat.  One
+Rogers notation used by such programs as @I{Glim} and Genstat.  One
 inevitable change is that the operator @samp{@code{.}} becomes
 @samp{@code{:}} since the period is a valid name character in @R{}.
 
@@ -4825,8 +4825,8 @@ These assumptions are loose enough to encompass a wide class of models
 useful in statistical practice, but tight enough to allow the
 development of a unified methodology of estimation and inference, at
 least approximately.  The reader is referred to any of the current
-reference works on the subject for full details, such as McCullagh &
-Nelder (1989) or Dobson (1990).
+reference works on the subject for full details, such as @I{McCullagh &
+Nelder} (1989) or @I{Dobson} (1990). 
 
 @menu
 * Families::                    
@@ -4921,7 +4921,7 @@ we shall see later.
 
 @subsubheading The @code{binomial} family
 
-Consider a small, artificial example, from Silvey (1970).
+Consider a small, artificial example, from @I{Silvey} (1970).
 
 On the Aegean island of Kalythos the male inhabitants suffer from a
 congenital eye disease, the effects of which become more marked with
@@ -5190,7 +5190,7 @@ fit on a new plot:
 
 The standard package @pkg{stats} provides much more extensive facilities
 for fitting non-linear models by least squares.  The model we have just
-fitted is the Michaelis-Menten model, so we can use
+fitted is the @I{Michaelis}-@I{Menten} model, so we can use
 
 @example
 > df <- data.frame(x=x, y=y)
@@ -5225,7 +5225,7 @@ K 0.7651
 Maximum likelihood is a method of nonlinear model fitting that applies
 even if the errors are not normal.  The method finds the parameter values
 which maximize the log likelihood, or equivalently which minimize the
-negative log-likelihood.  Here is an example from Dobson (1990), pp.@:
+negative log-likelihood.  Here is an example from @I{Dobson} (1990), pp.@:
 108--111.  This example fits a logistic model to dose-response data,
 which clearly could also be fit by @code{glm()}.  The data are:
 
@@ -6416,8 +6416,8 @@ Terminate all graphics devices on the list, except the null device.
 @R{} does not have builtin capabilities for dynamic or
 interactive graphics, e.g.@: rotating point clouds or to ``brushing''
 (interactively highlighting) points. However, extensive dynamic graphics
-facilities are available in the system GGobi by Swayne, Cook and Buja
-available from
+facilities are available in the system @I{GGobi} by @I{Swayne}, @I{Cook}
+and @I{Buja} available from
 
 @quotation
 @uref{http://ggobi.org/}
@@ -6456,7 +6456,7 @@ To see which packages are installed at your site, issue the command
 
 @noindent
 with no arguments.  To load a particular package (e.g., the @CRANpkg{boot}
-package containing functions from Davison & Hinkley (1997)), use a
+package containing functions from @I{Davison} & @I{Hinkley} (1997)), use a
 command like
 
 @example
@@ -7490,7 +7490,7 @@ to their path), use
 @end example
 
 @noindent
-At least in Bourne and bash shells, the @code{#!} mechanism does
+At least in @I{Bourne} and bash shells, the @code{#!} mechanism does
 @strong{not} allow extra arguments like 
 @code{#! /usr/bin/env Rscript --vanilla}.
 
@@ -7508,8 +7508,8 @@ and @code{stdin()} refers to the script file to allow such traditional
 usage.  If you want to refer to the process's @file{stdin}, use
 @code{"stdin"} as a @code{file} connection, e.g.@: @code{scan("stdin", ...)}.
 
-Another way to write executable script files (suggested by Fran@,{c}ois
-Pinard) is to use a @emph{here document} like
+Another way to write executable script files (suggested by
+@I{Fran@,{c}ois Pinard}) is to use a @emph{here document} like
 
 @example
 #!/bin/sh
@@ -7689,41 +7689,51 @@ $endif
 @node References,  , Concept index, Top
 @appendix References
 
-D.@: M.@: Bates and  D.@: G.@: Watts (1988), @emph{Nonlinear Regression
-Analysis and Its Applications.} John Wiley & Sons, New York.
+@I{D.@: M.@: Bates} and @I{D.@: G.@: Watts} (1988),
+@emph{Nonlinear Regression Analysis and Its Applications.}
+John Wiley & Sons, New York.
 
 @noindent
-Richard A.@: Becker, John M.@: Chambers and Allan R.@: Wilks (1988),
-@emph{The New S Language.} Chapman & Hall, New York.
+@I{Richard A.@: Becker}, @I{John M.@: Chambers} and @I{Allan R.@: Wilks} (1988),
+@emph{The New S Language.}
+Chapman & Hall, New York.
 This book is often called the ``@emph{Blue Book}''.
 
 @noindent
-John M.@: Chambers and Trevor J.@: Hastie eds. (1992),
-@emph{Statistical Models in S.} Chapman & Hall, New York.
+@I{John M.@: Chambers} and @I{Trevor J.@: Hastie} eds. (1992),
+@emph{Statistical Models in S.}
+Chapman & Hall, New York.
 This is also called the ``@emph{White Book}''.
 
 @noindent
-John M.@: Chambers (1998)
-@emph{Programming with Data}. Springer, New York.
+@I{John M.@: Chambers} (1998)
+@emph{Programming with Data}.
+@I{Springer}, New York.
 This is also called the ``@emph{Green Book}''.
 
 @noindent
-A.@: C.@: Davison and D.@: V.@: Hinkley (1997), @emph{Bootstrap Methods
-and Their Applications}, Cambridge University Press.
+@I{A.@: C.@: Davison} and @I{D.@: V.@: Hinkley} (1997),
+@emph{Bootstrap Methods and Their Applications},
+Cambridge University Press.
 
 @noindent
-Annette J.@: Dobson (1990), @emph{An Introduction to Generalized Linear
-Models}, Chapman and Hall, London.
+@I{Annette J.@: Dobson} (1990),
+@emph{An Introduction to Generalized Linear Models},
+Chapman and Hall, London.
 
 @noindent
-Peter McCullagh and John A.@: Nelder (1989), @emph{Generalized Linear
-Models.} Second edition, Chapman and Hall, London.
+@I{Peter McCullagh} and @I{John A.@: Nelder} (1989), 
+@emph{Generalized Linear Models.} 
+Second edition, Chapman and Hall, London.
 
 @noindent
-John A.@ Rice (1995), @emph{Mathematical Statistics and Data Analysis.}
-Second edition.  Duxbury Press, Belmont, CA.
+@I{John A.@ Rice} (1995),
+@emph{Mathematical Statistics and Data Analysis.}
+Second edition.  @I{Duxbury Press}, Belmont, CA.
 
 @noindent
-S.@: D.@: Silvey (1970), @emph{Statistical Inference.} Penguin, London.
+@I{S.@: D.@: Silvey} (1970),
+@emph{Statistical Inference.} 
+Penguin, London.
 
 @bye
