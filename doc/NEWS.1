@@ -7973,9 +7973,6 @@ BUG FIXES
 	multiple matches are found on lib.loc.
 
     o	round(2.345e-99, 100) now works (not giving 0).
-	C functions fprec() and fround() [= R's signif() and round()],
-	now use R_pow_di(10.0, n) which is clean and more efficient.
-	This changes some results in the least significant bits.
 
     o	rpois sometimes had problems with mu=0, now special-cased
 
