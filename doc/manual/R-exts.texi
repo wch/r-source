@@ -5088,10 +5088,10 @@ See section `Customizing package compilation' in the `R Installation and
 Administration' manual for more information.
 @end ifclear
 
-Portable C++ code needs to follow both the 2011, 2014 and 2017 standards
-or to specify C+11/14/17/20 where available (which is not the case on
-all @R{} platforms).  Currently C++20 support is patchy across @R{}
-platforms.
+Portable C++ code needs to follow all of the 2011, 2014 and 2017
+standards or to specify C+11/14/17/20/23 where available (which is not the
+case on all @R{} platforms).  Currently C++20 support is patchy across
+@R{} platforms.
 
 If using Fortran with the GNU compiler, use the flags @option{-std=f95
 -Wall -pedantic} which reject most GNU extensions and features from
@@ -5128,6 +5128,11 @@ although @option{-pthread} is pretty close to portable.  (Option
 @option{-U} is portable but little use on the command line as it will
 only cancel built-in defines (not portable) and those defined earlier on
 the command line (@R{} does not use any).)
+
+Thw GBU option @option{-pipe} used to be widely accepted by
+C/C++/Fortran compilers, but has been removed in
+@w{@command{flang-new} 18}.  In any case, it should not be used in
+distributed code as it may lead to excessive memory use.
 
 People have used @command{configure} to customize @file{src/Makevars},
 including for specific compilers.  This is unsafe for several reasons.
@@ -5174,7 +5179,9 @@ and @code{<cstdint>}: they are not required to be implemented by the
 standards but are used in C code by @R{} itself).
 
 Note that @code{integer} in Fortran corresponds to @code{int} in C on
-all @R{} platforms.
+all @R{} platforms.  There is no such guarantee for Fortran
+@code{logical}, and recent @command{gfortran} maps it to
+@code{int_least32_t} on most platforms.
 
 @item
 Under no circumstances should your compiled code ever call @code{abort}
