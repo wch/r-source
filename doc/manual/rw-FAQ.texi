@@ -11,6 +11,8 @@
 
 @finalout
 
+@include R-defs.texi
+
 @macro newchap{}
 @ifinfo
 @sp 1
