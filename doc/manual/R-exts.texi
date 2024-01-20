@@ -3028,8 +3028,14 @@ using std::make_unique;
 
 @c Ubuntu 16.04LTS (5.4, ESM support until 2024-04)
 @c Ubuntu 14.04LTS (4.8, ESM support until 2022-04)
+@c Ubuntu LTS releases now have 10 years of support.
+@c Ubuntu 20.04LTS (4.9.3, 10.5 available)
+@c Ubuntu 22.04LTS (4.11.x, 10.5 available)
 @c Centos 7 (4.8.5, ESM support until 2024-06)
-@c RHEL 7 (4.8, end of all support in 2028)
+@c https://access.redhat.com/solutions/19458
+@c RHEL 7 (4.8, goes to 'extended life cycle 2024-07 to 2028-06-30)
+€c RHEL 8 (8.x, 9.x available. full support 2024-05 + 8 more years)
+€c RHEL 9 (11.x available, full support 2027-05 + 8 more years)
 C++17 (as from @R{} 3.4.0), C++20 (as from @R{} 4.0.0) and C++23 (as
 from @R{} 4.3.0) can be specified in an analogous way (replacing
 @code{14} by @code{17}, @code{20} or @code{23}) but compiler/OS support
