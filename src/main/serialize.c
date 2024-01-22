@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1995--2023  The R Core Team
+ *  Copyright (C) 1995--2024  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -1985,6 +1985,7 @@ static SEXP ReadItem_Recursive (int flags, SEXP ref_table, R_inpstream_t stream)
 	    {
 		/* These are all short strings */
 		length = InInteger(stream);
+		R_CheckStack2(length+1);
 		char cbuf[length+1];
 		InString(stream, cbuf, length);
 		cbuf[length] = '\0';
