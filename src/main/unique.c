@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997--2023  The R Core Team
+ *  Copyright (C) 1997--2024  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -323,16 +323,14 @@ static hlen vhash(SEXP x, R_xlen_t indx, HashData *d)
 
 static hlen vhash_one(SEXP _this, HashData *d)
 {
-    int i;
-    unsigned int key;
-
     /* Handle environments by pointer hashing. Previously,
        environments were hashed based only on length, which is not
        very effective and could be expensive to compute. */
     if (TYPEOF(_this) == ENVSXP)
 	return scatter(PTRHASH(_this), d);
 
-    key = OBJECT(_this) + 2*TYPEOF(_this) + 100U*(unsigned int) length(_this);
+    int i;
+    unsigned int key = OBJECT(_this) + 2*TYPEOF(_this) + 100U*(unsigned int) length(_this);
     /* maybe we should also look at attributes, but that slows us down */
     switch (TYPEOF(_this)) {
     case LGLSXP:
@@ -1497,8 +1495,8 @@ attribute_hidden SEXP do_match(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     checkArity(op, args);
 
-    if ((!isVector(CAR(args)) && !isNull(CAR(args)))
-	|| (!isVector(CADR(args)) && !isNull(CADR(args))))
+    if ((!isVector(CAR (args)) && !isNull(CAR (args))) ||
+	(!isVector(CADR(args)) && !isNull(CADR(args))))
 	error(_("'match' requires vector arguments"));
 
     int nomatch = asInteger(CADDR(args));
@@ -1526,35 +1524,32 @@ attribute_hidden SEXP do_match(SEXP call, SEXP op, SEXP args, SEXP env)
  * Empty strings are unmatched			      BDR 2000/2/16
  */
 
+// .Internal(pmatch(x, table, nomatch, duplicates.ok))
 attribute_hidden SEXP do_pmatch(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP ans, input, target;
-    int mtch, n_target, mtch_count, dups_ok, no_match;
-    size_t temp;
-    int *used = NULL, *ians;
-    const char **in, **tar;
-    Rboolean no_dups;
-    Rboolean useBytes = FALSE, useUTF8 = FALSE;
-
     checkArity(op, args);
-    input = CAR(args);
+    SEXP input  = CAR(args), // = x     in R
+	target = CADR(args), // = table  "
+	ans;
     R_xlen_t n_input = XLENGTH(input);
-    target = CADR(args);
-    n_target = LENGTH(target); // not allowed to be long
-    no_match = asInteger(CADDR(args));
-    dups_ok = asLogical(CADDDR(args));
+
+    int n_target = LENGTH(target), // not allowed to be long
+	no_match = asInteger(CADDR(args)),
+	dups_ok  = asLogical(CADDDR(args));
     if (dups_ok == NA_LOGICAL)
 	error(_("invalid '%s' argument"), "duplicates.ok");
-    no_dups = !dups_ok;
+    Rboolean no_dups = !dups_ok;
 
     if (!isString(input) || !isString(target))
 	error(_("argument is not of mode character"));
 
+    int *used = NULL;
     if(no_dups) {
 	used = (int *) R_alloc((size_t) n_target, sizeof(int));
 	for (int j = 0; j < n_target; j++) used[j] = 0;
     }
 
+    Rboolean useBytes = FALSE, useUTF8 = FALSE;
     for(R_xlen_t i = 0; i < n_input; i++) {
 	if(IS_BYTES(STRING_ELT(input, i))) {
 	    useBytes = TRUE;
@@ -1576,10 +1571,11 @@ attribute_hidden SEXP do_pmatch(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
     }
 
-    in = (const char **) R_alloc((size_t) n_input, sizeof(char *));
+    const char **in, **tar;
+    in  = (const char **) R_alloc((size_t) n_input,  sizeof(char *));
     tar = (const char **) R_alloc((size_t) n_target, sizeof(char *));
     PROTECT(ans = allocVector(INTSXP, n_input));
-    ians = INTEGER0(ans);
+    int *ians = INTEGER0(ans);
     if(useBytes) {
 	for(R_xlen_t i = 0; i < n_input; i++) {
 	    in[i] = CHAR(STRING_ELT(input, i));
@@ -1643,11 +1639,13 @@ attribute_hidden SEXP do_pmatch(SEXP call, SEXP op, SEXP args, SEXP env)
 	    const char *ss;
 	    if (ians[i]) continue;
 	    ss = in[i];
-	    temp = strlen(ss);
+	    size_t temp = strlen(ss);
 	    if (temp == 0) continue;
-	    mtch = 0;
-	    mtch_count = 0;
+	    int mtch = 0,
+		mtch_count = 0;
 	    for (int j = 0; j < n_target; j++) {
+		if (!(((size_t)i * n_target + j) & 0x1fff))
+		    R_CheckUserInterrupt();
 		if (no_dups && used[j]) continue;
 		if (strncmp(ss, tar[j], temp) == 0) {
 		    mtch = j + 1;

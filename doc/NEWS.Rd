@@ -559,6 +559,10 @@
 
       \item \pkg{tools}\code{:: startDynamicHelp()} now ensures \code{port}
       is in proper range, fixing \PR{18645}.
+
+      \item \code{pmatch(x, table)} for large \code{table}, also called for
+      data frame row selection, \code{dfrm[nm, ]}, is now interruptable,
+      fixing \PR{18656}.
     }
   }
 }
