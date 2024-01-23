@@ -1,7 +1,7 @@
 #  File src/library/stats/R/cor.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -190,16 +190,19 @@ cov2cor <- function(V)
     ## ----------------------------------------------------------------------
     ## Arguments: V: a covariance matrix (i.e. symmetric and positive definite)
     ## ----------------------------------------------------------------------
-    ## Author: Martin Maechler, Date: 12 Jun 2003, 11L:50
+    ## Author: Martin Maechler, Date: 12 Jun 2003
     p <- (d <- dim(V))[1L]
     if(!is.numeric(V) || length(d) != 2L || p != d[2L])
 	stop("'V' is not a square numeric matrix")
-    Is <- sqrt(1/diag(V)) # diag( 1/sigma_i )
-    if(any(!is.finite(Is)))
-	warning("diag(.) had 0 or NA entries; non-finite result is doubtful")
+    ## Is := diag( 1/sigma_i )
+    pos <- !is.na(Is <- D <- diag(V, names=FALSE)) & D > 0
+    Is[ pos] <- sqrt(1/D[pos])
+    Is[!pos] <- NaN
+    if(any(!pos) || any(!is.finite(Is)))
+	warning("diag(V) had non-positive or NA entries; the non-finite result may be dubious")
     r <- V # keep dimnames
     r[] <- Is * V * rep(Is, each = p)
     ##	== D %*% V %*% D  where D = diag(Is)
-    r[cbind(1L:p,1L:p)] <- 1 # exact in diagonal
+    if(p) r[seq.int(from = 1L, by = p + 1L, length.out = p)] <- 1 # exact in diagonal
     r
 }

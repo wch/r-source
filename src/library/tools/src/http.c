@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2092--2012     The R Core Team
+ *  Copyright (C) 2092--2024     The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -31,7 +31,12 @@ SEXP startHTTPD(SEXP sIP, SEXP sPort)
     if (sIP != R_NilValue && (TYPEOF(sIP) != STRSXP || LENGTH(sIP) != 1))
 	error(_("invalid bind address specification"));
     if (sIP != R_NilValue) ip = CHAR(STRING_ELT(sIP, 0));
-    return ScalarInteger(extR_HTTPDCreate(ip, asInteger(sPort)));
+    int port = asInteger(sPort);
+    if (port < 0 || port > 65535)
+	error(
+	    _("Invalid port number %d: should be in 0:65535, typically above 1024"),
+	    port);
+    return ScalarInteger(extR_HTTPDCreate(ip, port));
 }
 
 SEXP stopHTTPD(void)

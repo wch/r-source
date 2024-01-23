@@ -382,7 +382,9 @@ cls <- c("raw", "logical", "integer", "numeric", "complex",
 names(cls) <- cls
 be <- baseenv()
 asF  <- lapply(cls, \(cl) be[[paste0("as.",cl)]] %||% be[[cl]])
-obs  <- lapply(cls, \(cl) asF[[cl]](switch(cl, "difftime" = "2:1:0", "noquote" = letters, 1:2)))
+## objects of the respective class:
+obs  <- lapply(cls, \(cl) asF[[cl]](switch(cl, "difftime" = "2:1:0", "noquote" = letters,
+                                           "numeric_version" = as.character(1:2), 1:2)))
 asDF <- lapply(cls, \(cl) getVaW(be[[paste0("as.data.frame.", cl)]](obs[[cl]])))
 r <- local({ g <- as.data.frame.logical; f <- function(L=TRUE) g(L)
     getVaW(f()) })
@@ -818,6 +820,33 @@ t2 <- terms(~ a + b)
 str(dt2 <- drop.terms(t2, 1, keep.response = TRUE))
 stopifnot( drop.terms(t2, 1) == dt2, dt2 == ~ b)
 ## gave a+b ~ b in R <= 4.3.2
+
+
+## cov2cor(<0x0>) PR#18423
+m00 <- matrix(0,0,0)
+stopifnot(identical(cov2cor(m00), m00))
+## gave error in R <= 4.3.2
+
+
+## cov2cor(.) warning(s) with negative/NA diag(.) - PR#18424
+(D_1 <- diag(-1, 3L))
+op <- options(warn=1)
+m <- capture.output(r <- cov2cor(D_1), type = "message")
+matrix(rep_len(c(1, rep(NaN,3)),3*3), 3) -> r0
+stopifnot(all.equal(r, r0, tol = 0, check.attributes = FALSE),# always ok
+          length(m) == 2, grepl("^ *diag.V. ", m[2]))
+options(op) # revert
+## cov2cor() gave 2 warnings on 3 lines, the 2nd one inaccurate in R <= 4.3.2
+
+
+## startDynamicHelp(): port out of range, PR#18645
+op <- options(help.ports = 123456L)
+assertErrV(tools::startDynamicHelp())
+assertErrV(help.start(browser = identity))
+options(op)
+## silently failed much later in R <= 4.3.2.
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

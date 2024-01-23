@@ -73,10 +73,24 @@
       seen on macOS 14) and typically warned that the information was
       not known.
 
+      \item \code{rank(x)} no longer overflows during integer addition, when
+      computing rank average for largish but not-yet long vector \code{x},
+      fixing \PR{18630}, thanks to Ilia Kats.
+
       \item \code{list.files()} on Windows now returns also files with names
       longer that 260 bytes (the Windows limit is 260 characters).
       Previously, some file names particularly with \sQuote{East Asian}
       characters were omitted.
+
+      \item \code{cov2cor(<0 x 0>)} now works, fixing \PR{18423} thanks to
+      Mikael Jagan and Elin Warning.
+
+      \item \code{cov2cor(<negative diagonal>)} and similar now give one
+      warning instead of two, with better wording, fixing \PR{18424} thanks
+      to Mikael Jagan.
+
+      \item \pkg{tools}\code{:: startDynamicHelp()} now ensures \code{port}
+      is in proper range, fixing \PR{18645}.
     }
   }
 }
