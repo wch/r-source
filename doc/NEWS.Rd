@@ -517,6 +517,7 @@
 	vector}) \code{matrix(v, nr, nc)} and \code{dim(m) <- d} are now
       correct about sizes, using \code{long long} formatting, fixing
       \PR{18612} (and more) reported by Mikael Jagan.
+      
       \item \code{readChar(useBytes = TRUE)} now terminates strings even when
       the underlying connection uses extra spaces in the input buffer.  This
       fixes problems with extra garbage seen with \command{gzip}
@@ -556,9 +557,6 @@
       very small, fixing \PR{18642} thanks to the proposal of Morten Welinder,
       also improving other instances where C level \code{binom_raw(x, n, ..)}
       has \code{x == 0} or \code{x== n}.
-
-      \item \pkg{tools}\code{:: startDynamicHelp()} now ensures \code{port}
-      is in proper range, fixing \PR{18645}.
 
       \item \code{pmatch(x, table)} for large \code{table}, also called for
       data frame row selection, \code{dfrm[nm, ]}, is now interruptable,
@@ -650,6 +648,9 @@
       \item \code{cov2cor(<negative diagonal>)} and similar now give one
       warning instead of two, with better wording, fixing \PR{18424} thanks
       to Mikael Jagan.
+
+      \item \pkg{tools}\code{:: startDynamicHelp()} now ensures \code{port}
+      is in proper range, fixing \PR{18645}.
     }
   }
 }
