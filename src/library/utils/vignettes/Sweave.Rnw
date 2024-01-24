@@ -35,7 +35,7 @@ pdftitle={Sweave User Manual},%
 pdfsubject={R vignette documentation system}%
 }
 
-\def\I#1{#1}
+\newcommand{\I}[1]{#1}
 
 \sloppy
 
@@ -73,7 +73,7 @@ CRAN provide support for other word processing systems (see
 Appendix~\ref{sec:faq}).
 
 
-\section{Noweb files}
+\section{\I{Noweb} files}
 \label{sec:noweb}
 
 \code{noweb} \citep{flm:Ramsey:1998} is a simple
@@ -91,7 +91,7 @@ of code and documentation segments, called \emph{chunks}:
   the contents of documentation chunks, and so will identify chunk
   indicators even inside \LaTeX{} verbatim environments.
 
-\item[Code chunks] start with \verb|<<|\texttt{\textsl{options}}\verb|>>=| at the beginning of
+\item[Code chunks] start with \verb|<<|\code{\textsl{options}}\verb|>>=| at the beginning of
   a line; again the rest of the line is a comment and ignored.
 \end{description}
 The default for the first chunk is documentation.
@@ -213,7 +213,7 @@ In the \file{.Rnw} file options can be specified either
   modifying the behaviour \emph{only for this chunk}, or
  \item anywhere in a documentation chunk using the command %
   \begin{quote}
-    \verb|\SweaveOpts{|\texttt{\textsl{opt1}=\textsl{value1}, \textsl{opt2}=\textsl{value2}, ..., \textsl{optN}=\textsl{valueN}}\verb|}|
+    \verb|\SweaveOpts{|\code{\textsl{opt1}=\textsl{value1}, \textsl{opt2}=\textsl{value2}, ..., \textsl{optN}=\textsl{valueN}}\verb|}|
   \end{quote}
   which modifies the defaults for the rest of the document, i.e.,
   \emph{all code chunks after the statement}. Hence, an
@@ -303,7 +303,7 @@ encoding as the main file.
 \subsection{Using scalars in text}
 
 There is limited support for using the values of \R{} objects in text
-chunks. Any occurrence of \verb|\Sexpr|\verb|{|\texttt{\textit{expr}}\verb|}|
+chunks. Any occurrence of \verb|\Sexpr|\verb|{|\code{\textsl{expr}}\verb|}|
 is replaced by the string resulting from coercing the value of the
 expression \code{expr} to a character vector; only the first element
 of this vector is used. E.g., \verb|\Sexpr{sqrt(9)}| will be replaced
@@ -381,7 +381,7 @@ SweaveSyntConv(rnwfile, SweaveSyntaxLatex)
 
 Code chunks are now enclosed in \code{Scode}
 environments, code chunk reuse is performed using
-\verb|\Scoderef{|\texttt{\textsl{chunkname}}\verb|}|. All other operators are the same as in
+\verb|\Scoderef{|\code{\textsl{chunkname}}\verb|}|. All other operators are the same as in
 the \code{noweb}-style syntax.
 
 Which syntax is used for a document is determined by the extension of
@@ -446,7 +446,7 @@ figures. It is the user's responsibility that the text inclusions are
 covered by the declared input encoding.  \LaTeX{} allows the input
 encoding to be changed by
 \begin{quote}
-  \verb|\inputencoding{|\texttt{\textsl{something}}\verb|}|
+  \verb|\inputencoding{|\code{\textsl{something}}\verb|}|
 \end{quote}
 statements: these may not work well in Sweave processing.  Since
 \verb|\usepackage[latin1]{inputenc}| is typically not legal \LaTeX{} code
@@ -798,7 +798,7 @@ R CMD Sweave file.Rnw
    Not directly, but package~\CRANpkg{officer} provides
    functionality to manipulate Microsoft Word documents from R.
 
-   \subsection{Can I use Sweave for OpenDocument files?}
+   \subsection{Can I use Sweave for \I{OpenDocument} files?}
 
    Not directly. Package \CRANpkg{odfWeave} (archived in 2018) provided functions for using Sweave in
    combination with OpenOffice Writer rather than \LaTeX.
