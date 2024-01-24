@@ -593,7 +593,6 @@ aspell_control_R_vignettes <-
            "--add-tex-command='command p'",
            "--add-tex-command='definecolor ppp'",
            "--add-tex-command='file p'",
-           "--add-tex-command='hypersetup p'",
            "--add-tex-command='lstset p'",
            "--add-tex-command='lstinputlisting p'",
            "--add-tex-command='pkg p'",
@@ -612,7 +611,11 @@ function(program = NULL, dictionaries = aspell_dictionaries_R)
     program <- aspell_find_program(program)
 
     aspell(files,
-           filter = "Sweave",
+           filter = list("Sweave+LaTeX",
+                         cmds = c("Sexpr p",
+                                  "SweaveOpts p",
+                                  "code p",
+                                  "hypersetup p")),
            control = aspell_control_R_vignettes[[names(program)]],
            program = program,
            dictionaries = dictionaries)
@@ -1181,6 +1184,85 @@ function(ifile, encoding = "UTF-8")
     y
 }
 
+## Spell-checking LaTeX files.
+
+## Aspell provides customizable filtering of command arguments, but has
+## problems when arguments contain braces, and does not allow filtering
+## verbatims or environments.
+
+aspell_filter_db$LaTeX <-
+function(ifile, encoding = "unknown", ...)
+    aspell_filter_LaTeX_worker(readLines(ifile, encoding = encoding),
+                               ...)
+aspell_filter_LaTeX_worker <-
+function(x, vrbs = c("verbatim", "verbatim*", "Sinput", "Soutput"),
+         cmds = NULL, envs = NULL)
+{
+    ranges <- list()
+    chrran <- function(e) getSrcref(e)[c(1L, 5L, 3L, 6L)]
+    ltxtag <- function(e) {
+        tag <- attr(e, "latex_tag")
+        if(is.null(tag)) "NULL" else tag
+    }
+
+    if(length(cmds)) {
+        cmds <- c(cmds, "newcommand pp")
+        cmds <- strsplit(trimws(cmds), " +")
+        ones <- vapply(cmds, `[[`, "", 1L)
+        ## For now always ignore optional arguments.
+        twos <- vapply(cmds, `[[`, "", 2L)
+        cmds <- lapply(strsplit(gsub("[^pP]", "", twos), ""),
+                       function(e) which(e == "p"))
+        names(cmds) <- paste0("\\", ones)
+    }
+                       
+    recurse <- function(e) {
+        tag <- ltxtag(e)
+        if((tag == "VERB") ||
+           ((tag == "ENVIRONMENT") && e[[1L]] %in% envs))
+            ranges <<- c(ranges, list(chrran(e)))
+        else if(is.list(e)) {
+            if(length(cmds)) {
+                skip <- integer()
+                tags <- vapply(e, ltxtag, "")
+                ## Are there any macros listed in cmds?
+                mpos <- which(tags == "MACRO")
+                mpos <- mpos[vapply(e[mpos], `[[`, "", 1L) %in%
+                             names(cmds)]
+                if(length(mpos)) {
+                    bpos <- which(tags == "BLOCK")
+                    for(m in mpos) {
+                        skip <- c(skip,
+                                  bpos[bpos > m][cmds[[e[[m]][[1L]]]]])
+                    }
+                    for(s in skip) {
+                        ran <- chrran(e[[s]])
+                        ## Keep the braces.
+                        ran[2L] <- ran[2L] + 1L
+                        ran[4L] <- ran[4L] - 1L
+                        ranges <<- c(ranges, list(ran))
+                    }
+                    e <- e[-skip]
+                }
+            }
+            lapply(e, recurse)
+        }
+    }
+
+    recurse(tools::parseLatex(x, verbatim = vrbs))
+    blank_out_character_ranges(x, ranges)
+}
+
+## <FIXME>
+## Try to merge into the Sweave filter.
+## Note that currently we cannot pass filter args when using
+## aspell_package_vignettes().
+aspell_filter_db$`Sweave+LaTeX` <-
+function(ifile, encoding = "unknown", ...)
+    aspell_filter_LaTeX_worker(tools::SweaveTeXFilter(ifile, encoding),
+                               ...)
+## </FIXME>
+
 ## For spell checking packages.
 
 aspell_package <-
@@ -1284,6 +1366,26 @@ function(lines, ignore)
                          c(list(lines, re), args))
     lines
 }
+
+## <FIXME>
+## Should this also be used in the md filter?
+blank_out_character_ranges <- function(s, ranges) {
+    for(r in ranges) {
+        ## Legibility ...
+        l1 <- r[1L]; c1 <- r[2L]
+        l2 <- r[3L]; c2 <- r[4L]
+        if(l1 == l2) {
+            substring(s[l1], c1, c2) <- strrep(" ", c2 - c1 + 1L)
+        } else {
+            substring(s[l1], c1, nchar(s[l1])) <- ""
+            for(i in seq(l1 + 1L, length.out = l2 - l1 - 1L))
+                s[i] <- ""
+            substring(s[l2], 1L, c2) <- strrep(" ", c2)
+        }
+    }
+    s
+}
+## </FIXME>
 
 find_files_in_directories <-
 function(basenames, dirnames)
