@@ -1378,7 +1378,7 @@ function(package, dir, lib.loc = NULL, chkInternal = NULL)
             dir <- file_path_as_absolute(dir)
     }
 
-    check_internal_specially <- FALSE    
+    check_internal_specially <- FALSE
     ## Do
     ##   if(!isTRUE(chkInternal) && !isFALSE(chkInternal))
     ## more efficiently.
@@ -1387,7 +1387,7 @@ function(package, dir, lib.loc = NULL, chkInternal = NULL)
        (length(chkInternal) != 1L) ||
        is.na(chkInternal))
         chkInternal <- check_internal_specially <- TRUE
-    
+
     db <- if(!missing(package))
               Rd_db(package, lib.loc = dirname(dir))
           else
@@ -1433,7 +1433,7 @@ function(package, dir, lib.loc = NULL, chkInternal = NULL)
         internal <- "internal" %in% db_keywords[[nm]]
         if(internal && !chkInternal) next
         special <- (internal && check_internal_specially)
-        
+
         aliases <- db_aliases[[nm]]
         arg_names_in_arg_list <- db_argument_names[[nm]]
 
@@ -1633,7 +1633,7 @@ function(x, ...)
                    "FALSE") == "TRUE") &&
        isTRUE(attr(x, "all_special")))
         y <- c(y, "All issues in internal Rd files checked specially.")
-    
+
     y
 }
 
@@ -4156,7 +4156,7 @@ function(dfile, dir)
                 }
             }
         }
-        
+
         if(any(ind <- status$components %in% "ACM") &&
            !(db["Package"] %in% c("akima", "tripack"))) {
             status$ACM <- status$components[ind]
@@ -4283,6 +4283,7 @@ function(dir, makevars = c("Makevars.in", "Makevars"))
     ##   -Wall -pedantic -ansi -traditional -std* -f* -m* [GCC]
     ##   -x [Solaris]
     ##   -q [AIX]
+    ##   -pipe (GNU compilers, not accepted by flang-new)
     ## It is hard to think of anything apart from -I* and -D* that is
     ## safe for general use ...
     bad_flags_regexp <-
@@ -4295,6 +4296,7 @@ function(dir, makevars = c("Makevars.in", "Makevars"))
                         "f.*", "m.*", "std.*", # includes -fopenmp
                         "isystem", # gcc and clones
                         "x",
+                        "pipe",
                         "cpp", # gfortran
                         "g",  # not portable, waste of space
                         "q"),
@@ -7876,7 +7878,7 @@ function(dir, localOnly = FALSE, pkgSize = NA)
         out$descr_bad_DOIs <- descr[ind]
     else if(any(ind <- grepl(
            # almost all others are publisher URLs that should be replaced by DOI markup
-           "<https?:.*/10\\.\\d{4,}/.*?>", 
+           "<https?:.*/10\\.\\d{4,}/.*?>",
            descr, ignore.case = TRUE)))
        out$descr_replace_by_DOI <- descr[ind]
     if(any(ind <- grepl(paste(c("https?://arxiv.org",
@@ -8820,11 +8822,11 @@ function(x, ...)
                         }),
                       collapse = "\n")
             },
-            if(length(y) && any(nzchar(y$New)) && 
+            if(length(y) && any(nzchar(y$New)) &&
                config_val_to_logical(Sys.getenv("_R_CHECK_URLS_SHOW_301_STATUS_", "FALSE"))) {
                 paste(strwrap("For content that is 'Moved Permanently', please change http to https, add trailing slashes, or replace the old by the new URL.",
                                 indent = 2L, exdent = 2L), collapse = "\n")
-            },            
+            },
             if(length(y) && any(nzchar(y$Spaces))) {
                 "  Spaces in an http[s] URL should probably be replaced by %20"
             },
@@ -8932,11 +8934,11 @@ function(x, ...)
                       collapse = "\n")
             },
            if(length(y <- x$descr_replace_by_DOI)) {
-               paste(c("The Description field contains", 
-                       paste0("  ", y), 
-                       "Please use permanent DOI markup for linking to publications as in <doi:prefix/suffix>."), 
+               paste(c("The Description field contains",
+                       paste0("  ", y),
+                       "Please use permanent DOI markup for linking to publications as in <doi:prefix/suffix>."),
                        collapse = "\n")
-            }       
+            }
             )),
       fmt(c(if(length(x$GNUmake)) {
                 "GNU make is a SystemRequirements."
@@ -9053,7 +9055,7 @@ function(package, dir, lib.loc = NULL)
     if(length(all_package_aliases))
         out$files_with_bad_package_aliases <-
             split(all_package_aliases, names(all_package_aliases))
-                                
+
     out
 }
 
