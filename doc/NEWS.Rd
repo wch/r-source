@@ -225,7 +225,7 @@
       \item \code{iconv(sub = "Unicode")} now zero-pads to four (hex)
       digits, rather than to 4 or 8.  (This seems to have become the
       convention once Unicode restricted the number of Unicode points
-      to \eqn{2^{31} - 1}{2^31 - 1} and so will never need more than 6
+      to \eqn{2^{21} - 1}{2^21 - 1} and so will never need more than 6
       digits.)
 
       \item \code{NCOL(NULL)} now returns 0 instead of 1, for
