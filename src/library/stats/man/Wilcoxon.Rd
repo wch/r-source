@@ -1,6 +1,6 @@
 % File src/library/stats/man/Wilcoxon.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2019 R Core Team
+% Copyright 1995-2024 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Wilcoxon}
@@ -60,7 +60,7 @@ rwilcox(nn, m, n)
   the length of the longest vector.
 }
 \note{
-  S-PLUS uses a different (but equivalent) definition of the Wilcoxon
+  S-PLUS used a different (but equivalent) definition of the Wilcoxon
   statistic: see \code{\link{wilcox.test}} for details.
 }
 \section{Warning}{

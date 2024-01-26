@@ -1,6 +1,6 @@
 % File src/library/stats/man/cov.wt.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2024 R Core Team
 % Distributed under GPL 2 or later
 
 \name{cov.wt}
@@ -45,7 +45,7 @@ cov.wt(x, wt = rep(1/nrow(x), nrow(x)), cor = FALSE, center = TRUE,
   the weights, so if the weights are the default (\eqn{1/n}) the conventional
   unbiased estimate of the covariance matrix with divisor \eqn{(n - 1)}
   is obtained.  This differs from the behaviour in S-PLUS which
-  corresponds to \code{method = "ML"} and does not divide.
+  corresponded to \code{method = "ML"} and does not divide.
 }
 \seealso{\code{\link{cov}} and \code{\link{var}}.
 }

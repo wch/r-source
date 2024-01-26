@@ -1,6 +1,6 @@
 % File src/library/stats/man/wilcox.test.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2023 R Core Team
+% Copyright 1995-2024 R Core Team
 % Distributed under GPL 2 or later
 
 \name{wilcox.test}
@@ -144,7 +144,7 @@ wilcox.test(x, \dots)
   The literature is not unanimous about the definitions of the Wilcoxon
   rank sum and Mann-Whitney tests.  The two most common definitions
   correspond to the sum of the ranks of the first sample with the
-  minimum value subtracted or not: \R subtracts and S-PLUS does not,
+  minimum value subtracted or not: \R subtracts but S-PLUS did not,
   giving a value which is larger by \eqn{m(m+1)/2} for a first sample
   of size \eqn{m}.  (It seems Wilcoxon's original paper used the
   unadjusted sum of the ranks but subsequent tables subtracted the

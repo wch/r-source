@@ -48,7 +48,7 @@ smooth(x, kind = c("3RS3R", "3RSS", "3RSR", "3R", "3", "S"),
   smoothed values with additional attributes.
 }
 \note{
-  S and S-PLUS use a different (somewhat better) Tukey smoother in
+  S and S-PLUS used a different (somewhat better) Tukey smoother in
   \code{smooth(*)}.
   Note that there are other smoothing methods which provide
   rather better results.  These were designed for hand calculations
@@ -57,7 +57,7 @@ smooth(x, kind = c("3RS3R", "3RSS", "3RSR", "3R", "3", "S"),
   Since \R version 1.2, \code{smooth} \emph{does} really implement
   Tukey's end-point rule correctly (see argument \code{endrule}).
 
-  \code{kind = "3RSR"} has been the default till \R-1.1,
+  \code{kind = "3RSR"} had been the default till \R-1.1,
   but it can have very bad properties, see the examples.
 
   Note that repeated application of \code{smooth(*)} \emph{does}

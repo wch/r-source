@@ -1,6 +1,6 @@
 % File src/library/stats/man/arima.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2021 R Core Team
+% Copyright 1995-2024 R Core Team
 % Distributed under GPL 2 or later
 
 \name{arima}
@@ -108,7 +108,7 @@ arima(x, order = c(0L, 0L, 0L),
   \deqn{X_t= a_1 X_{t-1}+\cdots+ a_p X_{t-p} + e_t + b_1 e_{t-1}+\cdots+b_q e_{t-q}
   }{X[t] = a[1]X[t-1] + \dots + a[p]X[t-p] + e[t] + b[1]e[t-1] + \dots + b[q]e[t-q]}
 
-  and so the MA coefficients differ in sign from those of S-PLUS.
+  and so the MA coefficients differ in sign from those used by S-PLUS.
   Further, if \code{include.mean} is true (the default for an ARMA
   model), this formula applies to \eqn{X - m} rather than \eqn{X}.  For
   ARIMA models with differencing, the differenced series follows a

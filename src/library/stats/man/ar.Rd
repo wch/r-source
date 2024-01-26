@@ -1,6 +1,6 @@
 % File src/library/stats/man/ar.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2019 R Core Team
+% Copyright 1995-2024 R Core Team
 % Distributed under GPL 2 or later
 
 \name{ar}
@@ -108,7 +108,7 @@ ar.mle(x, aic = TRUE, order.max = NULL, na.action = na.fail,
   \code{ar.burg} allows two methods to estimate the innovations
   variance and hence AIC. Method 1 is to use the update given by
   the Levinson-Durbin recursion (Brockwell and Davis, 1991, (8.2.6)
-  on page 242), and follows S-PLUS. Method 2 is the mean of the sum
+  on page 242), and folloeds S-PLUS. Method 2 is the mean of the sum
   of squares of the forward and backward prediction errors
   (as in Brockwell and Davis, 1996, page 145). Percival and Walden
   (1998) discuss both. In the multivariate case the estimated

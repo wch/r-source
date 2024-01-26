@@ -1,6 +1,6 @@
 % File src/library/stats/man/stl.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2024 R Core Team
 % Distributed under GPL 2 or later
 
 \name{stl}
@@ -94,7 +94,7 @@ stl(x, s.window, s.degree = 0,
   \file{netlib}.}
 
 \note{This is similar to but not identical to the \code{stl} function in
-  S-PLUS. The \code{remainder} component given by S-PLUS is the sum of
+  S-PLUS. The \code{remainder} component given by S-PLUS was the sum of
   the \code{trend} and \code{remainder} series from this function.}
 
 \seealso{
