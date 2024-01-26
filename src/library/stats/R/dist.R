@@ -1,7 +1,7 @@
 #  File src/library/stats/R/dist.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2022 The R Core Team
+#  Copyright (C) 1995-2024 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -49,13 +49,16 @@ as.matrix.dist <- function(x, ...)
 {
     size <- attr(x, "Size")
     df <- matrix(0, size, size)
-    lower <- row(df) > col(df)
-    df[lower] <- x ## preserving NAs in x
-    df <- t(df)
-    df[lower] <- x
-    labels <- attr(x, "Labels")
-    dimnames(df) <-
-	if(is.null(labels)) list(seq_len(size), seq_len(size)) else list(labels,labels)
+    ## instead of  lower <- (row(df) > col(df)) and  t(.), create {lo, up} directly:
+    if (size > 1L) {
+        n..1 <- (size - 1L):1L # n:1
+        s.1 <- size + 1L
+        up <- sequence.default(n..1, from = seq.int(s.1, length(df),      s.1), by = size)
+        lo <- sequence.default(n..1, from = seq.int(2L , length(df) + 1L, s.1))
+        df[up] <- df[lo] <- x ## preserving NAs in x
+    }
+    labels <- attr(x, "Labels") %||% seq_len(size)
+    dimnames(df) <- list(labels,labels)
     df
 }
 

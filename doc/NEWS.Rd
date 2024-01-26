@@ -249,6 +249,10 @@
       few others which were missing from the original versions (whose
       font families remain available for reproducibility, although
       Ghostscript-based viewers will render using the 2.0 versions).
+
+      \item Improve the large-n efficiency of \code{as.matrix(<dist>)},
+      thanks an R contributors effort, notably by Tim Taylor and
+      Heather Turner, see \PR{18660}.
     }
   }
 
@@ -517,7 +521,7 @@
 	vector}) \code{matrix(v, nr, nc)} and \code{dim(m) <- d} are now
       correct about sizes, using \code{long long} formatting, fixing
       \PR{18612} (and more) reported by Mikael Jagan.
-      
+
       \item \code{readChar(useBytes = TRUE)} now terminates strings even when
       the underlying connection uses extra spaces in the input buffer.  This
       fixes problems with extra garbage seen with \command{gzip}
