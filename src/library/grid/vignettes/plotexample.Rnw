@@ -12,6 +12,7 @@
 \newcommand{\grob}{\code{grob}}
 \newcommand{\gTree}{\code{gTree}}
 \newcommand{\R}{{\sffamily R}}
+\newcommand{\I}[1]{#1}
 \setlength{\parindent}{0in}
 \setlength{\parskip}{.1in}
 \setlength{\textwidth}{140mm}
@@ -582,6 +583,6 @@ grid.draw(date)
 
 All of this may seem a bit irrelevant to interactive use, but it does
 provide a basis for creating an editable plot interface as used in
-M.~Kondrin's \pkg{Rgrace} package (available on CRAN 2005--7).
+\I{M.~Kondrin}'s \pkg{Rgrace} package (available on CRAN 2005--7).
 
 \end{document}

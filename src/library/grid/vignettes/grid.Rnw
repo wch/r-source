@@ -16,6 +16,8 @@
 \newcommand{\grid}{\pkg{grid}}
 \newcommand{\lattice}{\CRANpkg{lattice}}
 
+\newcommand{\I}[1]{#1}
+
 \setlength{\parindent}{0in}
 \setlength{\parskip}{.1in}
 \setlength{\textwidth}{140mm}
@@ -227,9 +229,9 @@ centimetres.} \\
 \code{"mm"} & \parbox[t]{3in}{Millimetres.} \\
 \code{"points"} & \parbox[t]{3in}{Points.  There are 72.27 points per inch.} \\
 \code{"bigpts"} & \parbox[t]{3in}{Big points. There are 72 big points per inch.} \\
-\code{"picas"} & \parbox[t]{3in}{Picas.  There are 12 points per pica.} \\
-\code{"dida"} & \parbox[t]{3in}{Dida.  1157 dida equals 1238 points. } \\
-\code{"cicero"} & \parbox[t]{3in}{Cicero.  There are 12 dida per cicero. } \\
+\code{"picas"} & \parbox[t]{3in}{\I{Picas}.  There are 12 points per pica.} \\
+\code{"dida"} & \parbox[t]{3in}{\I{Dida}.  1157 \I{dida} equals 1238 points. } \\
+\code{"cicero"} & \parbox[t]{3in}{Cicero.  There are 12 \I{dida} per \I{cicero}. } \\
 \code{"scaledpts"} & \parbox[t]{3in}{Scaled points. There are 65536 scaled
 points per point. } \\
 \code{"char"} & \parbox[t]{3in}{Locations and sizes are specified in

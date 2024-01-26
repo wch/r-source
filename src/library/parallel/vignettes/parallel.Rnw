@@ -26,6 +26,8 @@ pdftitle={Package `parallel'}% Could also have pdfusetitle
 %\VignetteIndexEntry{Package 'parallel'}
 %\VignettePackage{parallel}
 
+\newcommand{\I}[1]{#1}
+
 \title{Package `parallel'}
 \author{R Core Team}
 
@@ -49,7 +51,7 @@ basic operations simultaneously (e.g.{} integer and floating-point
 arithmetic), and several implementations of external \abbr{BLAS} libraries
 use multiple threads to do parts of basic vector/matrix operations in
 parallel.  Several contributed \R{} packages use multiple threads at C
-level \emph{via} \abbr{OpenMP} or pthreads.
+level \emph{via} \abbr{OpenMP} or \I{pthreads}.
 
 This package handles running much larger chunks of computations in
 parallel.  A typical example is to evaluate the same \R{} function on
@@ -139,8 +141,8 @@ processes.  They can be created in one of three ways:
   computers with high-speed interconnects.
 
   CRAN packages following this approach include \CRANpkg{GridR} (using
-  Condor or Globus) and \CRANpkg{Rsge} (using SGE, currently called
-  `Oracle Grid Engine').
+  \I{Condor} or \I{Globus}) and \CRANpkg{Rsge} (using \I{SGE}, currently
+  called `Oracle Grid Engine').
 
   It will not be considered further in this vignette, but those parts
   of \pkg{parallel} which provide \CRANpkg{snow}-like functions will
@@ -219,7 +221,7 @@ arguments discussed on its help page.  They differ slightly in
 philosophy: \code{mclapply} sets up a pool of \code{mc.cores} workers
 just for this computation, whereas \code{parLapply} uses a less
 ephemeral pool specified by the object \code{cl} created by a call to
-\code{makeCluster} (which \emph{inter alia} specifies the size of the
+\code{makeCluster} (which \emph{\I{inter alia}} specifies the size of the
 pool).  So the workflow is
 \begin{verbatim}
 cl <- makeCluster(<size of pool>)

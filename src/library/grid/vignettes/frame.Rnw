@@ -10,6 +10,7 @@
 \newcommand{\pkg}[1]{{\normalfont\fontseries{b}\selectfont #1}}
 \newcommand{\grid}{\pkg{grid}}
 \newcommand{\R}{{\sffamily R}}
+\newcommand{\I}[1]{#1}
 \setlength{\parindent}{0in}
 \setlength{\parskip}{.1in}
 \setlength{\textwidth}{140mm}
@@ -207,10 +208,10 @@ the parent automatically leaves enough room for the child.
 Another useful pair of examples are those for \code{"rect"} grobs.
 These methods make use of the \code{absolute.size} function.
 When a grob is asked to specify its size, it makes sense to respond
-with the grob's width and height if the grob has an ``absolute'' size
+with the \I{grob}'s width and height if the grob has an ``absolute'' size
 (e.g., \code{"inches"}, \code{"cm"}, \code{"lines"}, etc;
  i.e., the grob knows exactly how big itself is).
-On the other hand, it does not make sense to respond with the grob's
+On the other hand, it does not make sense to respond with the \I{grob}'s
 width and height if the grob has a ``relative'' size (e.g., \code{"npc"} or
 \code{"native"};  i.e.,
 the grob needs to know about it's parent's size before it can figure
