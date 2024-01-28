@@ -1,6 +1,6 @@
 % File src/library/stats/man/plot.spec.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2024 R Core Team
 % Distributed under GPL 2 or later
 
 \name{plot.spec}
@@ -40,7 +40,7 @@ plot.spec.coherency(x, ci = 0.95,
   \item{ci}{coverage probability for confidence interval.  Plotting of
     the confidence bar/limits is omitted unless \code{ci} is strictly
     positive.}
-  \item{log}{If \code{"dB"}, plot on log10 (decibel) scale (as S-PLUS),
+  \item{log}{If \code{"dB"}, plot on log10 (decibel) scale,
     otherwise use conventional log scale or linear scale.  Logical
     values are also accepted.  The default is \code{"yes"} unless
     \code{options(ts.S.compat = TRUE)} has been set, when it is

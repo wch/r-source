@@ -93,10 +93,6 @@ stl(x, s.window, s.degree = 0,
 \author{B.D. Ripley; Fortran code by Cleveland \emph{et al} (1990) from
   \file{netlib}.}
 
-\note{This is similar to but not identical to the \code{stl} function in
-  S-PLUS. The \code{remainder} component given by S-PLUS was the sum of
-  the \code{trend} and \code{remainder} series from this function.}
-
 \seealso{
   \code{\link{plot.stl}} for \code{stl} methods;
   \code{\link{loess}} in package \pkg{stats} (which is not actually

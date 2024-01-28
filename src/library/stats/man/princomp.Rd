@@ -1,6 +1,6 @@
 % File src/library/stats/man/princomp.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2018 R Core Team
+% Copyright 1995-2024 R Core Team
 % Distributed under GPL 2 or later
 
 \name{princomp}
@@ -90,9 +90,9 @@ princomp(x, \dots)
   \code{princomp} is a generic function with \code{"formula"} and
   \code{"default"} methods.
 
-  The calculation is done using \code{\link{eigen}} on the correlation or
-  covariance matrix, as determined by \code{\link{cor}}.  This is done for
-  compatibility with the S-PLUS result.  A preferred method of
+  The calculation is done using \code{\link{eigen}} on the correlation
+  or covariance matrix, as determined by \code{\link{cor}}.  (This was
+  done for compatibility with the S-PLUS result.)  A preferred method of
   calculation is to use \code{\link{svd}} on \code{x}, as is done in
   \code{prcomp}.
 

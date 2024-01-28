@@ -1,6 +1,6 @@
 % File src/library/stats/man/smooth.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2016 R Core Team
+% Copyright 1995-2024 R Core Team
 % Distributed under GPL 2 or later
 
 \name{smooth}
@@ -48,8 +48,6 @@ smooth(x, kind = c("3RS3R", "3RSS", "3RSR", "3R", "3", "S"),
   smoothed values with additional attributes.
 }
 \note{
-  S and S-PLUS used a different (somewhat better) Tukey smoother in
-  \code{smooth(*)}.
   Note that there are other smoothing methods which provide
   rather better results.  These were designed for hand calculations
   and may be used mainly for didactical purposes.

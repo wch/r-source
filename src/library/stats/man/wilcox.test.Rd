@@ -144,11 +144,10 @@ wilcox.test(x, \dots)
   The literature is not unanimous about the definitions of the Wilcoxon
   rank sum and Mann-Whitney tests.  The two most common definitions
   correspond to the sum of the ranks of the first sample with the
-  minimum value subtracted or not: \R subtracts but S-PLUS did not,
-  giving a value which is larger by \eqn{m(m+1)/2} for a first sample
-  of size \eqn{m}.  (It seems Wilcoxon's original paper used the
-  unadjusted sum of the ranks but subsequent tables subtracted the
-  minimum.)
+  minimum value (\eqn{m(m+1)/2} for a first sample of size \eqn{m})
+  subtracted or not: \R subtracts.  It seems Wilcoxon's original paper
+  used the unadjusted sum of the ranks but subsequent tables subtracted
+  the minimum.
 
   \R's value can also be computed as the number of all pairs
   \code{(x[i], y[j])} for which \code{y[j]} is not greater than

@@ -108,14 +108,14 @@ arima(x, order = c(0L, 0L, 0L),
   \deqn{X_t= a_1 X_{t-1}+\cdots+ a_p X_{t-p} + e_t + b_1 e_{t-1}+\cdots+b_q e_{t-q}
   }{X[t] = a[1]X[t-1] + \dots + a[p]X[t-p] + e[t] + b[1]e[t-1] + \dots + b[q]e[t-q]}
 
-  and so the MA coefficients differ in sign from those used by S-PLUS.
-  Further, if \code{include.mean} is true (the default for an ARMA
-  model), this formula applies to \eqn{X - m} rather than \eqn{X}.  For
-  ARIMA models with differencing, the differenced series follows a
-  zero-mean ARMA model. If an \code{xreg} term is included, a linear
-  regression (with a constant term if \code{include.mean} is true and
-  there is no differencing) is fitted with an ARMA model for the error
-  term.
+  and so the MA coefficients differ in sign from those used in
+  documentation written for S-PLUS.  Further, if \code{include.mean} is
+  true (the default for an ARMA model), this formula applies to \eqn{X -
+  m} rather than \eqn{X}.  For ARIMA models with differencing, the
+  differenced series follows a zero-mean ARMA model. If an \code{xreg}
+  term is included, a linear regression (with a constant term if
+  \code{include.mean} is true and there is no differencing) is fitted
+  with an ARMA model for the error term.
 
   The variance matrix of the estimates is found from the Hessian of
   the log-likelihood, and so may only be a rough guide.
@@ -234,11 +234,6 @@ arima(x, order = c(0L, 0L, 0L),
 }
 
 \note{
-  The results are likely to be different from S-PLUS's
-  \code{arima.mle}, which computes a conditional likelihood and does
-  not include a mean in the model.  Further, the convention used by
-  \code{arima.mle} reverses the signs of the MA coefficients.
-
   \code{arima} is very similar to \code{\link{arima0}} for
   ARMA models or for differenced models without missing values,
   but handles differenced models with missing values exactly.

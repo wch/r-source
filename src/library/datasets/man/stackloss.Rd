@@ -1,6 +1,6 @@
 % File src/library/datasets/man/stackloss.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2024 R Core Team
 % Distributed under GPL 2 or later
 
 \name{stackloss}
@@ -31,10 +31,10 @@ stack.loss
     [,4] \tab  \code{stack.loss} \tab Stack loss\cr
   }
 
-  For compatibility with S-PLUS, the data sets \code{stack.x}, a matrix
-  with the first three (independent) variables of the data frame, and
-  \code{stack.loss}, the numeric vector giving the fourth (dependent)
-  variable, are provided as well.
+  For historical compatibility with S-PLUS, the data sets
+  \code{stack.x}, a matrix with the first three (independent) variables
+  of the data frame, and \code{stack.loss}, the numeric vector giving
+  the fourth (dependent) variable, are also provided.
 }
 \source{
   Brownlee, K. A. (1960, 2nd ed.\sspace{}1965)

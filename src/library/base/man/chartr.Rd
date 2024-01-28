@@ -1,6 +1,6 @@
 % File src/library/base/man/chartr.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2020 R Core Team
+% Copyright 1995-2024 R Core Team
 % Distributed under GPL 2 or later
 
 \name{chartr}
@@ -44,7 +44,7 @@ casefold(x, upper = FALSE)
   to a single upper-case character.
 
   \code{casefold} is a wrapper for \code{tolower} and \code{toupper}
-  provided for compatibility with S-PLUS.
+  originally written for compatibility with S-PLUS.
 }
 \value{
   A character vector of the same length and with the same attributes as

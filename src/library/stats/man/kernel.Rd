@@ -1,6 +1,6 @@
 % File src/library/stats/man/kernel.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2024 R Core Team
 % Distributed under GPL 2 or later
 
 \name{kernel}
@@ -45,8 +45,7 @@ is.tskernel(k)
 }
 \details{
   \code{kernel} is used to construct a general kernel or named specific
-  kernels.  The modified Daniell kernel halves the end coefficients (as
-  used by S-PLUS).
+  kernels.  The modified Daniell kernel halves the end coefficients.
 
   The \code{\link{[}} method allows natural indexing of kernel objects
   with indices in \code{(-m) : m}.  The normalization is such that for

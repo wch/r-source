@@ -1,6 +1,6 @@
 % File src/library/base/man/Random.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2021 R Core Team
+% Copyright 1995-2024 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Random}
@@ -92,9 +92,7 @@ set.seed(seed, kind = NULL, normal.kind = NULL, sample.kind = NULL)
     We use the implementation by Reeds \emph{et al} (1982--84).
 
     The two seeds are the Tausworthe and congruence long integers,
-    respectively.  A one-to-one mapping to S's \code{.Random.seed[1:12]}
-    is possible but we will not publish one, not least as this generator
-    is \bold{not} exactly the same as that in recent versions of S-PLUS.
+    respectively.
 
     It exhibits 25 clear failures in the TestU01 Crush suite (\emph{L'Ecuyer}, 2007).
     }

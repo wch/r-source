@@ -1,6 +1,6 @@
 % File src/library/stats/man/density.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2023 R Core Team
+% Copyright 1995-2024 R Core Team
 % Distributed under GPL 2 or later
 
 \name{density}
@@ -27,7 +27,7 @@ density(x, \dots)
 
   \item{bw}{the smoothing bandwidth to be used.  The kernels are scaled
     such that this is the standard deviation of the smoothing kernel.
-    (Note this differs from the reference books cited below, and from S-PLUS.)
+    (Note this differs from the reference books cited below.)
 
     \code{bw} can also be a character string giving a rule to choose the
     bandwidth.  See \code{\link{bw.nrd}}. \cr The default,

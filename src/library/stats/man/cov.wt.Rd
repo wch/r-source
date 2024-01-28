@@ -44,8 +44,7 @@ cov.wt(x, wt = rep(1/nrow(x), nrow(x)), cor = FALSE, center = TRUE,
   The covariance matrix is divided by one minus the sum of squares of
   the weights, so if the weights are the default (\eqn{1/n}) the conventional
   unbiased estimate of the covariance matrix with divisor \eqn{(n - 1)}
-  is obtained.  This differs from the behaviour in S-PLUS which
-  corresponded to \code{method = "ML"} and does not divide.
+  is obtained.
 }
 \seealso{\code{\link{cov}} and \code{\link{var}}.
 }

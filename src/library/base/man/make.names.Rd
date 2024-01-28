@@ -1,6 +1,6 @@
 % File src/library/base/man/make.names.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2024 R Core Team
 % Distributed under GPL 2 or later
 
 \name{make.names}
@@ -51,8 +51,7 @@ make.names(names, unique = FALSE, allow_ = TRUE)
   work. Use \code{allow_ = FALSE} for back-compatibility.
 
   \code{allow_ = FALSE} is also useful when creating names for export to
-  applications which do not allow underline in names (for example,
-  S-PLUS and some DBMSes).
+  applications which do not allow underline in names (such as some DBMSes).
 }
 \seealso{
   \code{\link{make.unique}},

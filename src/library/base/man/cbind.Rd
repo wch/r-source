@@ -1,6 +1,6 @@
 % File src/library/base/man/cbind.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2023 R Core Team
+% Copyright 1995-2024 R Core Team
 % Distributed under GPL 2 or later
 
 \name{cbind}
@@ -100,13 +100,13 @@ rbind(\dots, deparse.level = 1)
   The \code{rbind} data frame method first drops all zero-column and
   zero-row arguments.  (If that leaves none, it returns the first
   argument with columns otherwise a zero-column zero-row data frame.)
-  It then takes the classes of the columns from the
-  first data frame, and matches columns by name (rather than by
-  position).  Factors have their levels expanded as necessary (in the
-  order of the levels of the level sets of the factors encountered) and
-  the result is an ordered factor if and only if all the components were
-  ordered factors.  (The last point differs from S-PLUS.)  Old-style
-  categories (integer vectors with levels) are promoted to factors.
+  It then takes the classes of the columns from the first data frame,
+  and matches columns by name (rather than by position).  Factors have
+  their levels expanded as necessary (in the order of the levels of the
+  level sets of the factors encountered) and the result is an ordered
+  factor if and only if all the components were ordered factors.
+  Old-style categories (integer vectors with levels) are promoted to
+  factors.
 
   Note that for result column \code{j}, \code{\link{factor}(., exclude = X(j))}
   is applied, where \preformatted{  X(j) := if(isTRUE(factor.exclude)) {
