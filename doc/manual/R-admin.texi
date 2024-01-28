@@ -1093,15 +1093,13 @@ Clang 13 and @code{-std=c++23} from Clang 17.  Apple Clang supports
 `Standards' for @command{g++} starting with @samp{gnu} enable `GNU
 extensions': what those are is hard to track down.
 
-For the use of C++11 and later in @R{} packages see the `Writing R
+For the use of C++ in @R{} packages see the `Writing R
 Extensions' manual.  Prior to @R{} 3.6.0 the default C++ standard was
-that of the compiler used: currently it is C++17 (if available): this
-can be overridden by setting @samp{CXXSTD} when @R{} is configured.
+that of the compiler used: currently it is C++17 (if available).
 
 @uref{https://en.cppreference.com/w/cpp/compiler_support} indicates
 which versions of common compilers support (parts of) which C++
-standards.  GCC 5 was the minimum version with sufficient C++14
-support. GCC introduced C++17 support gradually, but version 7 should
+standards.  GCC introduced C++17 support gradually, but version 7 should
 suffice.
 
 @node C standards, Link-Time Optimization, C++ Support, Other Options

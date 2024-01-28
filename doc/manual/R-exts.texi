@@ -4917,7 +4917,13 @@ platforms but do not have the intended results.
 
 Note that the @option{-C} flag for @command{make} is not included in the
 POSIX specification and is not implemented by some of the
-@command{make}s which have been used with @R{}.
+@command{make}s which have been used with @R{}.  However, it is more
+commonly implemented (e.g.@: by FreeBSD @command{make}) than the GNU-specific
+@option{--directory=}.
+
+You should not rely on built-in/default @command{make} rules, even when
+specified by POSIX, as some @command{make}s do not have the POSIX ones
+and others have altered them.
 
 The use of @code{$@{shell ...@}} can be avoided by using backticks, e.g.@:
 
