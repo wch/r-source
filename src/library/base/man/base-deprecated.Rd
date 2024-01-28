@@ -1,10 +1,11 @@
 % File src/library/base/man/base-deprecated.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2022 R Core Team
+% Copyright 1995-2024 R Core Team
 % Distributed under GPL 2 or later
 
 \name{base-deprecated}
 \alias{base-deprecated}
+\alias{is.R}
 %------ Eventually move entries to ---->> ./base-defunct.Rd
 %%\alias{default.stringsAsFactors}% here for R 4.2.0
 %------ NOTE:  ../R/Deprecated.R   must be synchronized with this!
@@ -14,7 +15,12 @@
   These functions are provided for compatibility with older versions of
   \R only, and may be defunct as soon as the next release.
 
-  (currently none)
+ \code{is.R} tests if running under \R, but no other S dialect
+ is known to be in use, and this could only identify historical dialects, not
+ future ones.
+}
+\usage{
+is.R()
 }
 %% \usage{
 %% default.stringsAsFactors()

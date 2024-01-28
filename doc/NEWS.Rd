@@ -399,6 +399,10 @@
       a legacy encoding supporting classic macOS up to 2001 (with
       various revisions), and no longer has universal \code{libiconv}
       support.%% e.g. not in musl
+
+      \item \code{is.R()} is dperecated as no other S dialect is known
+      to be in use (and this could only identify historical dialects,
+      not future ones).
     }
   }
 

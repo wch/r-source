@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2023-03-28 r84086) -- "Unsuffered Consequences"
-Copyright (C) 2023 The R Foundation for Statistical Computing
-Platform: x86_64-pc-linux-gnu (64-bit)
+R Under development (unstable) (2024-01-26 r85832) -- "Unsuffered Consequences"
+Copyright (C) 2024 The R Foundation for Statistical Computing
+Platform: aarch64-apple-darwin23.3.0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -2537,7 +2537,7 @@ Number of Fisher Scoring iterations: 4
 > ### ** Examples
 > 
 > require(stats); require(graphics)
-> ## give the data set in the form it is used in S-PLUS:
+> ## give the data set in the form it was used in S-PLUS:
 > longley.x <- data.matrix(longley[, 1:6])
 > longley.y <- longley[, "Employed"]
 > pairs(longley, main = "longley data")
@@ -3613,7 +3613,7 @@ c0   -5.14
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  1.134 0.029 1.167 0 0 
+Time elapsed:  0.915 0.059 0.983 0 0 
 > grDevices::dev.off()
 null device 
           1 

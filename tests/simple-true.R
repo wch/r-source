@@ -73,10 +73,8 @@ all(l1 == as.logical(as.data.frame(l1)[,1]))
 
 ## empty data.frames :
 x <- data.frame(a=1:3)
-x30 <- {
-    if(is.R()) x[, -1]# not even possible in S+
-    else structure(list(), row.names = paste(1:3), class = "data.frame")
-}
+x30 <- x[, -1] # was not even possible in S-PLUS
+
 all(dim(x30) == c(3,0))
 x01 <- x[-(1:3), , drop = FALSE]
 x00 <- x01[,-1]

@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2022-03-19 r81942) -- "Unsuffered Consequences"
-Copyright (C) 2022 The R Foundation for Statistical Computing
-Platform: x86_64-pc-linux-gnu (64-bit)
+R Under development (unstable) (2024-01-26 r85832) -- "Unsuffered Consequences"
+Copyright (C) 2024 The R Foundation for Statistical Computing
+Platform: aarch64-apple-darwin23.3.0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -125,10 +125,8 @@ integer literal 1.L contains unnecessary decimal point
 > 
 > ## empty data.frames :
 > x <- data.frame(a=1:3)
-> x30 <- {
-+     if(is.R()) x[, -1]# not even possible in S+
-+     else structure(list(), row.names = paste(1:3), class = "data.frame")
-+ }
+> x30 <- x[, -1] # was not even possible in S-PLUS
+> 
 > all(dim(x30) == c(3,0))
 [1] TRUE
 > x01 <- x[-(1:3), , drop = FALSE]

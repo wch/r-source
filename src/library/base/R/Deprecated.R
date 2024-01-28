@@ -1,7 +1,7 @@
 #  File src/library/base/R/Deprecated.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2022 The R Core Team
+#  Copyright (C) 1995-2024 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -54,4 +54,12 @@
 ##     val
 ## }
 ## </entry>
+
+## Deprecated in 4.4.0
+## Use  'version' since that exists in all S dialects :
+is.R <-
+    function() {
+        .Deprecated("is.R()")
+        exists("version") && !is.null(vl <- version$language) && vl == "R"
+    }
 
