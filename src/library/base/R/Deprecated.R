@@ -59,7 +59,7 @@
 ## Use  'version' since that exists in all S dialects :
 is.R <-
     function() {
-        .Deprecated("is.R()")
+        .Deprecated()
         exists("version") && !is.null(vl <- version$language) && vl == "R"
     }
 
