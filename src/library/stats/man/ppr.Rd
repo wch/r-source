@@ -139,7 +139,7 @@ method functions.
 \details{
   The basic method is given by Friedman (1984) and based on his
   code. This code has been shown to be extremely sensitive to the
-  Fortrancompiler used.
+  Fortran compiler used.
 
   The algorithm first adds up to \code{max.terms} ridge terms one at a
   time; it will use less if it is unable to find a term to add that makes
