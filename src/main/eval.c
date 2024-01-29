@@ -1162,8 +1162,10 @@ SEXP eval(SEXP e, SEXP rho)
 	    errorcall_cpy(getLexicalCall(rho),
 			  _("object '%s' not found"),
 			  EncodeChar(PRINTNAME(e)));
-	/* if ..d is missing then ddfindVar will signal */
-	else if (tmp == R_MissingArg && !DDVAL(e) ) {
+	else if (tmp == R_MissingArg) {
+	    /* the error signaled here for a missing ..d matches the one
+	       signaled in getvar() for byte compiled code, but ...elt()
+	       signals a slightly different error (see PR18661) */
 	    const char *n = CHAR(PRINTNAME(e));
 	    if(*n) errorcall(getLexicalCall(rho),
 			     _("argument \"%s\" is missing, with no default"),
