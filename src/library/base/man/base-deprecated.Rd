@@ -15,9 +15,9 @@
   These functions are provided for compatibility with older versions of
   \R only, and may be defunct as soon as the next release.
 
- \code{is.R} tests if running under \R, but no other S dialect
- is known to be in use, and this could only identify historical dialects, not
- future ones.
+  \code{is.R} tests if not running under historical dialects of S
+  (including S-PLUS), but cannot exclude future programs claiming
+  compatibility with \R.
 }
 \usage{
 is.R()
