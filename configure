@@ -42545,16 +42545,33 @@ fi
 
 
 
-## Set default C++ compiler to C++17 if available, otherwise unset
+## Set default C++ compiler to C++17 if available, otherwise C++14 or C++11
+## Do not set if none is available.
 if test -n "${CXX}" && test -z "${CXXSTD}"; then
   if test -n "${CXX17}"; then
     CXX=${CXX17}
     CXXSTD=${CXX17STD}
     CXXFLAGS=${CXX17FLAGS}
     CXXPICFLAGS=${CXX17PICFLAGS}
+  elif test -n "${CXX11}"; then
+    if test -n "${CXX14}"; then
+      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: C++17 is not available so the default C++ standard is C++14" >&5
+printf "%s\n" "$as_me: WARNING: C++17 is not available so the default C++ standard is C++14" >&2;}
+      CXX=${CXX14}
+      CXXSTD=${CXX14STD}
+      CXXFLAGS=${CXX14FLAGS}
+      CXXPICFLAGS=${CXX14PICFLAGS}
+    else
+      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: C++17 is not available so the default C++ standard is C++11" >&5
+printf "%s\n" "$as_me: WARNING: C++17 is not available so the default C++ standard is C++11" >&2;}
+      CXX=${CXX11}
+      CXXSTD=${CXX11STD}
+      CXXFLAGS=${CXX11FLAGS}
+      CXXPICFLAGS=${CXX11PICFLAGS}
+    fi
   else
-    { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: No C++17 compiler is available so no default C++ compiler is set" >&5
-printf "%s\n" "$as_me: WARNING: No C++17 compiler is available so no default C++ compiler is set" >&2;}
+    { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: None of C++17, C++14 nor C++11 is available so no default C++ compiler is set" >&5
+printf "%s\n" "$as_me: WARNING: None of C++17, C++14 nor C++11 is available so no default C++ compiler is set" >&2;}
   fi
 fi
 

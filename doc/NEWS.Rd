@@ -291,11 +291,6 @@
 
       \item The minimum version requirement for an external LAPACK has
       been reduced to 3.9.0.
-
-      \item A default C++ compiler is no longer set if no C++17 compiler
-      is detected: there is no longer an automatic fallback to C++14 or
-      C++11.  (Compilers from the last five years should have sufficient
-      support.)
     }
   }
 
