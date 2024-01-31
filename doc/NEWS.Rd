@@ -291,6 +291,12 @@
 
       \item The minimum version requirement for an external LAPACK has
       been reduced to 3.9.0.
+
+      \item No default C++ compiler is set if no C++17 compiler is
+      detected: there is no longer an automatic fallback to C++14 or
+      C++11.  (Compilers from the last five years should have sufficient
+      support: for others macros \code{CXX} and \code{CXXSTD} can be set
+      in file \file{config.site} to provide a fallback if needed.)
     }
   }
 

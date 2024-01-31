@@ -1057,8 +1057,8 @@ CXX23PICFLAGS
 The macros @code{CXX} etc are those used by default for C++ code.
 @command{configure} will attempt to set the rest suitably, choosing for
 @code{CXXSTD} and @code{CXX11STD} a suitable flag such as
-@option{-std=c++11} for C++11 support (which is required if C++ is to be
-supported at all).  inferred values can be overridden in file
+@option{-std=c++17} for C++17 support (which is required if C++ is to be
+supported by default).  inferred values can be overridden in file
 @file{config.site} or on the @command{configure} command line:
 user-supplied values will be tested by compiling some C++11/14/17/20/23
 code.
@@ -1067,6 +1067,11 @@ It may be that there is no suitable flag for C++14/17/20/23 support with
 the default compiler, in which case a different compiler could be
 selected for @code{CXX14}/@code{CXX17}/@code{CXX20}/@code{CXX23} with its
 corresponding flags.
+
+If no suitable compiler/flag is found for the default C++ compiler, one
+can be set in file @file{config.site} @emph{via} macros @code{CXX}
+and @code{CXXSTD}.  A user-specified compiler does not need to pass the
+C++17 tests, so do this at your own risk as some packages may not compile.
 
 The @option{-std} flag is supported by the GCC, @command{clang++} and
 Intel compilers.  Currently accepted values are (plus some synonyms)
