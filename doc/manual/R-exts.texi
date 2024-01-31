@@ -2938,8 +2938,8 @@ The next revision, `C++23', is expected in 2023/4 and several compilers
 already have extensive partial support for the current drafts.
 
 The default standard for compiling @R{} packages was changed to C++17 in
-@R{} 4.3.0 if supported (and for rather old compilers, C++14 or even
-C++11 would be used as the default).
+@R{} 4.3.0 if supported, and from @R{} 4.4.0 only a C++17 compiler will
+be selected as the default C++ compiler.
 
 What standard a C++ compiler aims to support can be hard to determine:
 the value@footnote{Values @code{201103L}, @code{201402L}, @code{201703L}
@@ -3026,14 +3026,15 @@ using std::make_unique;
 #endif
 @end example
 
-@c Ubuntu 16.04LTS (5.4, ESM support until 2024-04)
-@c Ubuntu 14.04LTS (4.8, ESM support until 2022-04)
-@c Ubuntu LTS releases now have 10 years of support.
+@c Ubuntu LTS releases now have 10 years of support even if announced
+@c with 8 years.
+@c Ubuntu 16.04LTS (5.4, ESM support extended until 2026-04)
+@c Ubuntu 14.04LTS (4.8, ESM support extended until 2024-04)
 @c Ubuntu 20.04LTS (4.9.3, 10.5 available)
 @c Ubuntu 22.04LTS (4.11.x, 10.5 available)
 @c Centos 7 (4.8.5, ESM support until 2024-06)
 @c https://access.redhat.com/solutions/19458
-@c RHEL 7 (4.8, goes to 'extended life cycle 2024-07 to 2028-06-30)
+@c RHEL 7 (4.8, goes to 'extended life cycle' 2024-07 to 2028-06-30)
 €c RHEL 8 (8.x, 9.x available. full support 2024-05 + 8 more years)
 €c RHEL 9 (11.x available, full support 2027-05 + 8 more years)
 C++17 (as from @R{} 3.4.0), C++20 (as from @R{} 4.0.0) and C++23 (as
@@ -3097,8 +3098,9 @@ The discussion above is about the standard @R{} ways of compiling C++:
 it will not apply to packages using @file{src/Makefile} or building in a
 subdirectory that do not set the C++ standard.  And compilers' default
 C++ standards varies widely and gets changed frequently by vendors --
-for example Apple clang 14 defaults to C++98, @I{LLVM} clang 14--15 to C++14,
-@I{LLVM} clang 16 to C++17 and @command{g++} 11--13 to C++17.
+for example Apple clang up to at least 15 defaults to C++98, @I{LLVM}
+clang 14--15 to C++14, @I{LLVM} clang 16--18 to C++17 and @command{g++}
+11--13 to C++17.
 
 For a package with a @file{src/Makefile} (or a Windows analogue),
 a non-default C++ compiler can be selected by including something like
@@ -3143,7 +3145,8 @@ C++14 in @R{} 4.2.3 and to C++17 in @R{} 4.3.0.
 The C++11 standard could be specified as from @R{} 3.1.0 and C++14 or
 C++17 as from @R{} 3.4.0, for C++20 from @R{} 4.0.0 and for C++23 from
 @R{} 4.3.0 (although they may not be supported by the compilers
-in use).  C++11 support became mandatory in @R{} 4.0.0.
+in use).  C++11 support became mandatory in @R{} 4.0.0 and C++17 support
+in @R{} 4.4.0.
 
 The @file{.so}/@file{.dll} in a package may need to be linked by the
 C++ compiler if it or any library it links to contains compiled C++
@@ -5616,6 +5619,13 @@ Packages have even tested the exact format of system error messages,
 which are platform-dependent and perhaps locale-dependent.  For example,
 in late 2021 @code{libcurl} changed its warning/error messages,
 including when URLs are not found.
+
+@item
+Do not test for the absence of warnings (something users of
+@CRANpkg{testthat} are fond off).  Future changes in either @R{} or
+packages you make use of can create new warnings, and your tests should
+not make these into errors.  (Some, like deprecation notices, may be
+intended to remain as warnings for a long time.)
 
 @item
 If you use functions such as @code{View}, remember that in testing there

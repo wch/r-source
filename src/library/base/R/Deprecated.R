@@ -56,10 +56,8 @@
 ## </entry>
 
 ## Deprecated in 4.4.0
-## Use  'version' since that exists in all S dialects :
-is.R <-
-    function() {
-        .Deprecated()
-        exists("version") && !is.null(vl <- version$language) && vl == "R"
-    }
+is.R <- function() {
+    .Deprecated(package = "base")
+    TRUE
+}
 
