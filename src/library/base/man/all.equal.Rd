@@ -1,6 +1,6 @@
 % File src/library/base/man/all.equal.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2022 R Core Team
+% Copyright 1995-2024 R Core Team
 % Distributed under GPL 2 or later
 
 \name{all.equal}
@@ -25,11 +25,13 @@
 \usage{
 all.equal(target, current, \dots)
 
+\method{all.equal}{default}(target, current, \dots, check.class = TRUE)
+
 \method{all.equal}{numeric}(target, current,
           tolerance = sqrt(.Machine$double.eps), scale = NULL,
           countEQ = FALSE,
           formatFUN = function(err, what) format(err),
-          \dots, check.attributes = TRUE, giveErr = FALSE)
+          \dots, check.attributes = TRUE, check.class = TRUE, giveErr = FALSE)
 
 \method{all.equal}{list}(target, current, \dots,
           check.attributes = TRUE, use.names = TRUE)
@@ -68,6 +70,8 @@ attr.all.equal(target, current, \dots,
   \item{check.attributes}{logical indicating if the
     \code{\link{attributes}} of \code{target} and \code{current}
     (other than the names) should be compared.}
+  \item{check.class}{logical indicating if the \code{\link{data.class}()}
+    of \code{target} and \code{current} should be compared.}
   \item{giveErr}{\code{\link{logical}} indicating if the result should
     contain the numerical error as an \code{"err"} attribute.}
   \item{use.names}{logical indicating if \code{\link{list}} comparison
@@ -220,6 +224,11 @@ tryCatch(error=identity, stopifnot(all.equalShow(x1, 2*x1))) -> eAe
 cat(eaMsg <- conditionMessage(eAe), "\n")
 stopifnot(inherits(eAe, "error"), # stopifnot() giving smart msg:
           grepl("are not equal", eaMsg, fixed=TRUE))
+
+two <- structure(2, foo = 1, class = "bar")
+all.equal(two^20, 2^20) # lots of diff
+all.equal(two^20, 2^20, check.attributes = FALSE)# "target is bar, current is numeric"
+all.equal(two^20, 2^20, check.attributes = FALSE, check.class = FALSE) # TRUE
 
 ## comparison of date-time objects
 now <- Sys.time()

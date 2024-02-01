@@ -1,7 +1,7 @@
 #  File src/library/base/R/all.equal.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2022 The R Core Team
+#  Copyright (C) 1995-2024 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@ all.equal <- function(target, current, ...) UseMethod("all.equal")
 ## not really: do this inside all.equal.default() :
 ## all.equal.... <- function(target, current, ...) . . . .
 
-all.equal.default <- function(target, current, ...)
+all.equal.default <- function(target, current, ..., check.class = TRUE)
 {
     ## Really a dispatcher given mode() of args :
     ## use data.class as unlike class it does not give "integer"
@@ -70,7 +70,7 @@ all.equal.default <- function(target, current, ...)
                    raw       = all.equal.raw      (target, current, ...),
 		   ## assumes that slots are implemented as attributes :
 		   S4        = attr.all.equal(target, current, ...),
-                   if(data.class(target) != data.class(current)) {
+                   if(check.class && data.class(target) != data.class(current)) {
                        gettextf("target is %s, current is %s",
                                 data.class(target), data.class(current))
                    } else NULL)
@@ -100,7 +100,7 @@ all.equal.numeric <-
     function(target, current, tolerance = sqrt(.Machine$double.eps),
              scale = NULL, countEQ = FALSE,
              formatFUN = function(err, what) format(err),
-             ..., check.attributes = TRUE, giveErr = FALSE)
+             ..., check.attributes = TRUE, check.class = TRUE, giveErr = FALSE)
 {
     if (!is.numeric(tolerance))
         stop("'tolerance' should be numeric")
@@ -112,7 +112,7 @@ all.equal.numeric <-
     msg <- if(check.attributes)
 	attr.all.equal(target, current, tolerance = tolerance, scale = scale,
                        ...)
-    if(data.class(target) != data.class(current)) {
+    if(check.class && data.class(target) != data.class(current)) {
 	msg <- c(msg, paste0("target is ", data.class(target), ", current is ",
                              data.class(current)))
 	return(msg)

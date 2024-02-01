@@ -253,6 +253,9 @@
       \item Improve the large-n efficiency of \code{as.matrix(<dist>)},
       thanks an R contributors effort, notably by Tim Taylor and
       Heather Turner, see \PR{18660}.
+
+      \item The default and \code{numeric} methods of \code{all.equal()}
+      get a \code{check.class} option.
     }
   }
 
