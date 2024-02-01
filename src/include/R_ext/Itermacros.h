@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001--2019  The R Core Team.
+ *  Copyright (C) 2001--2024  The R Core Team.
  *
  *  This header file is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -219,7 +219,9 @@
 	    (void) idx; /* variable may be unused in expr */		\
 	    R_xlen_t nb = nfull;					\
 	    px += strt;							\
-	    expr							\
+	    if (nb > 0) {                                               \
+	        expr							\
+	    }                                                           \
 	}								\
 	else ITERATE_BY_REGION_PARTIAL0(sx, px, idx, nb, etype, vtype,	\
 					strt, nfull, expr);		\
@@ -233,7 +235,9 @@
 	    (void) idx; /* variable may be unused in expr */		\
 	    R_xlen_t nb = nfull;					\
 	    px += strt;							\
-	    expr							\
+	    if (nb > 0) {                                               \
+	        expr							\
+	    }                                                           \
 	}								\
 	else ITERATE_BY_REGION_PARTIAL_REV0(sx, px, idx, nb, etype,	\
 					    vtype, strt, nfull, expr);	\
