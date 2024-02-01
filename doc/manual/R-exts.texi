@@ -2531,7 +2531,13 @@ supported by recent versions of the Linux and Windows platforms, but
 portable packages cannot assume that end users have recent versions.
 Apple @command{clang} on macOS has no OpenMP support.
 @uref{https://www.openmp.org/resources/openmp-compilers-tools/} gives
-some idea of what compilers support what versions.
+some idea of what compilers support what versions.  Note that support
+for Fortran compilers is often less up-to-date and that page suggests it
+is unwise to rely on a version later than 3.1.  Which introduced a
+Fortran OpenMP module, so Fortran users of OpemMP should include
+@example
+use omp_lib
+@end example
 
 Rarely, using OpenMP with @command{clang} on Linux generates calls in
 @code{libatomic}, resulting in loading messages like
@@ -5584,6 +5590,13 @@ Packages have even tested the exact format of system error messages,
 which are platform-dependent and perhaps locale-dependent.  For example,
 in late 2021 @code{libcurl} changed its warning/error messages,
 including when URLs are not found.
+
+@item
+Do not test for the absence of warnings (something users of
+@CRANpkg{testthat} are fond of).  Future changes in either @R{} or
+packages you make use of can create new warnings, and your tests should
+not make these into errors.  (Some deprecation notices may be intended
+to remain as warnings for a long time.)
 
 @item
 If you use functions such as @code{View}, remember that in testing there
