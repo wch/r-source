@@ -154,18 +154,23 @@ pairs.profile <-
     ## Another plot method for profile objects showing pairwise traces.
     ## Recommended only for diagnostic purposes.
 
-    ## FIXME (pd): Could work better if profiling a subset of parameters
-    ## via profile(...which=...).
+    ## pd: support added for plotting a subset of parameter traces, 
+    ## defaulting to those from the which= argument in profile()
 
     ## FIXME (pd): Could have markings according to approx. 2D
     ## conf. regions supplementing/replacing the equidistant steps
     
-function(x, colours = 2:3, ...)
+function(x, colours = 2:3, which=names(x), ...)
 {
     parvals <- lapply(x, "[[", "par.vals")
     rng <- apply(do.call("rbind", parvals), 2L, range, na.rm = TRUE)
     Pnames <- colnames(rng)
     npar <- length(Pnames)
+    force(which)
+    if (is.character(which)) which <- match(which, Pnames)
+    stopifnot(all(!is.na(which)))
+    stopifnot(all(which %in% 1:npar))
+    stopifnot((nw <- length(which)) >= 2)
     coefs <- coef(attr(x, "original.fit"))
     form <- paste(as.character(formula(attr(x, "original.fit")))[c(2, 1, 3)],
                   collapse = "")
@@ -182,16 +187,16 @@ function(x, colours = 2:3, ...)
     par(omi = par("omi") + adj)
     ##
     ##
-    cex <- 1 + 1/npar
+    cex <- 1 + 1/nw
     frame()
     mtext(form, side = 3, line = 3, cex = 1.5, outer = TRUE)
-    del <- 1/npar
-    for(i in 1L:npar) {
-        ci <- npar - i
-        pi <- Pnames[i]
-        for(j in 1L:npar) {
+    del <- 1/nw
+    for(i in 1L:nw) {
+        ci <- nw - i
+        pi <- Pnames[which[i]]
+        for(j in 1L:nw) {
             dev.hold()
-            pj <- Pnames[j]
+            pj <- Pnames[which[j]]
             par(fig = del * c(j - 1, j, ci, ci + 1))
             if(i == j) {
                 par(new=TRUE)
@@ -226,7 +231,7 @@ function(x, colours = 2:3, ...)
                 }
                 points(coefs[pj], coefs[pi], pch = 3, cex = 3)
             }
-            if(i == npar) axis(1)
+            if(i == nw) axis(1)
             if(j == 1) axis(2)
             if(i == 1) axis(3)
             if(j == npar) axis(4)

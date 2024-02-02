@@ -40,6 +40,10 @@
       Likelihood Ratio. This is controlled by a new \code{test =}
       argument.
 
+      \item The \code{pairs()} method for \code{"profile"} objects has
+      been extended with a \code{which =} argument to allow plotting only
+      a subset of the parameters.
+
       \item The \code{"glm"} method for \code{anova()} computes test
       statistics and p-values by default, using a chi-squared test or
       an F test depending on whether the dispersion is fixed or
