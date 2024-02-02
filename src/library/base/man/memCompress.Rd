@@ -95,7 +95,7 @@ memDecompress(from,
   \url{https://en.wikipedia.org/wiki/Data_compression} for background on
   data compression, \url{https://zlib.net/},
   \url{https://en.wikipedia.org/wiki/Gzip}, \url{http://www.bzip.org/},
-  \url{https://en.wikipedia.org/wiki/Bzip2}, \url{https://tukaani.org/xz/}
+  \url{https://en.wikipedia.org/wiki/Bzip2}, \url{https://xz.tukaani.org/xz-utils/}
   and \url{https://en.wikipedia.org/wiki/XZ_Utils} for references about the
   particular schemes used.
 }
