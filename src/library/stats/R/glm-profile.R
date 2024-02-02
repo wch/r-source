@@ -154,8 +154,8 @@ pairs.profile <-
     ## Another plot method for profile objects showing pairwise traces.
     ## Recommended only for diagnostic purposes.
 
-    ## FIXME (pd): Should work better if profiling a subset of parameters
-    ## via profile(...which=...). Currently, you get a rather odd plot.
+    ## FIXME (pd): Could work better if profiling a subset of parameters
+    ## via profile(...which=...).
 
     ## FIXME (pd): Could have markings according to approx. 2D
     ## conf. regions supplementing/replacing the equidistant steps
@@ -203,8 +203,8 @@ function(x, colours = 2:3, ...)
             } else {
                 col <- colours
                 if(i < j) col <- col[2:1]
+		par(new=TRUE)
                 if(!is.null(parvals[[pj]])) {
-                    par(new=TRUE)
                     plot(spline(x <- parvals[[pj]][, pj],
                                 y <- parvals[[pj]][, pi]),
                          type = "l", xlim = rng[, pj],
