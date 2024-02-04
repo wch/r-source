@@ -2351,6 +2351,12 @@ It would also be possible to add tasks to the target @samp{shlib-clean}
 which is run by @command{R CMD INSTALL} and @command{R CMD SHLIB} with
 options @option{--clean} and @option{--preclean}.
 
+Avoid the use of default (also known as `implicit' rules) in makefiles,
+as these are @command{make}-specific.  Even when mandated by POSIX --
+GNU @command{make} does not comply and this has broken package
+installation.
+@c Assumptions about .f: rules in package x12binary
+
 An unfortunately common error is to have
 
 @example
@@ -4983,9 +4989,10 @@ Anticipate a parallel @command{make}.  @xref{Using Makevars}.
 @item
 Pass macros down to the makefile in the subdirectory, including
 @strong{all} the needed compiler flags (including PIC and visibility
-flags).  If they are used in the subdirectory's Makefile, this includes
-macros @samp{AR} and @samp{RANLIB}.  @xref{Compiling in
-sub-directories}, which has a C example.  A C++ example:
+flags).  If they are used (even by a default rule) in the subdirectory's
+Makefile, this includes macros @samp{AR} and @samp{RANLIB}.
+@xref{Compiling in sub-directories}, which has a C example.  A C++
+example:
 
 @example
 pkg/libpkg.a:
@@ -5110,9 +5117,10 @@ Administration' manual for more information.
 @end ifclear
 
 Portable C++ code needs to follow all of the 2011, 2014 and 2017
-standards or to specify C+11/14/17/20/23 where available (which is not the
-case on all @R{} platforms).  Currently C++20 support is patchy across
-@R{} platforms.
+standards (including not using deprecated/removed features) or to
+specify C+11/14/17/20/23 where available (which is not the case on all
+@R{} platforms).  Currently C++20 support is patchy across @R{}
+platforms.
 
 If using Fortran with the GNU compiler, use the flags @option{-std=f95
 -Wall -pedantic} which reject most GNU extensions and features from
