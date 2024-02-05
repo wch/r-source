@@ -416,6 +416,15 @@
       \item \code{is.R()} is deprecated as no other S dialect is known
       to be in use (and this could only identify historical dialects,
       not future ones).
+
+      For now, further information on calls can be obtained by setting
+      environment variable \env{_R_DEPRECATED_IS_R_}.  Value \samp{warn}
+      gives a warning as per the default except immediately, value
+      \samp{error} turns this warning into an error (so by default gives
+      a traceback), value \samp{traceback} gives a tracebeck in a
+      message (not a warning, as that may truncate) and value
+      \code{"where"} gives the call to the function (if any) calling
+      \code{is.R} and which namespace it is from.
     }
   }
 
