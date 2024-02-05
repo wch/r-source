@@ -849,7 +849,7 @@ like @file{LICENSE.note}.
 
 A few ``standard'' licenses are rather license templates which need
 additional information to be completed @emph{via} @samp{+ file LICENSE}
-(with the @samp{+} surrounded by spaces).  Where the addiitonal
+(with the @samp{+} surrounded by spaces).  Where the additional
 information is @samp{COPYRIGHT HOLDER}, this must give the actual legal
 entities (not something vague like `Name-of-package authors'): if more
 than one they should be listed in decreasing order of contribution.

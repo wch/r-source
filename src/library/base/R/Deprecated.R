@@ -57,7 +57,65 @@
 
 ## Deprecated in 4.4.0
 is.R <- function() {
-    .Deprecated(package = "base")
+    ## eventually use a custon message
+    p <- Sys.getenv("_R_DEPRECATED_IS_R_")
+    if(nzchar(p)) {
+        msg <- paste0(sQuote("is.R"), " is deprecated.\n",
+                          'See help("Deprecated") and help("base-deprecated")')
+        if (p == "warn") {
+            warning(warningCondition(msg, class = "deprecatedWarning"))
+        }
+        else if (p == "error") {
+            .Deprecated(package = "base")
+            ## temporary, so do not translate
+            stop('deprecation turned into an error', domain = NA)
+        }
+        else if (p == "traceback") {
+            calls <- rev(sys.calls())
+            msg <- paste0(msg, "\nCalls:\n",
+                          paste0(sprintf("%2i: ", seq_along(calls)),
+                                 vapply(calls, deparse1, "",
+                                        collapse = "\n    "),
+                                 collapse = "\n"))
+            message(msg, domain = NA)
+        }
+        else if (p == "where") {
+            call <- sys.call(-1)
+            if(!is.null(call)) {
+                msg <- paste0(msg,"\nCall: ", deparse1(call))
+                env <- environment(sys.function(-1))
+                if (isNamespace(env)) {
+                    env <- getNamespaceName(env)
+                    msg <- paste0(msg, "\n",
+                                  sprintf("From namespace %s", sQuote(env)))
+                }
+            }
+            warning(warningCondition(msg, class = "deprecatedWarning"))
+        }
+        else if (p == "self") {
+            call <- sys.call(-1)
+            done <- FALSE
+            if(!is.null(call)) {
+                msg <- paste0(msg,"\nCall: ", deparse1(call))
+                env <- environment(sys.function(-1))
+                if (isNamespace(env)) {
+                    env <- getNamespaceName(env)
+                    this <- Sys.getenv("_R_CHECK_PACKAGE_NAME_", "unknown")
+                    done <- TRUE
+                    if (this != env) {
+                        msg <- paste0(msg, "\n",
+                                      sprintf("From namespace %s", sQuote(env)))
+                        message(msg, domain = NA)
+                    } else
+                         warning(warningCondition(msg, class = "deprecatedWarning"))
+                }
+            }
+            if(!done)
+                warning(warningCondition(msg, class = "deprecatedWarning"))
+        }
+    } else
+        .Deprecated(package = "base")
+
     TRUE
 }
 
