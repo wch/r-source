@@ -36,7 +36,8 @@
 
     if (missing(new)) new <- NULL
     warning(warningCondition(msg, old = old, new = new, package = package,
-                             class = "deprecatedWarning"))
+                             class = "deprecatedWarning",
+                             call = sys.call(sys.parent())))
 }
 
 ## consider keeping one (commented) entry here, for easier additions

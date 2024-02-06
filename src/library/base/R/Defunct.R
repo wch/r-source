@@ -1,7 +1,7 @@
 #  File src/library/base/R/Defunct.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2023 The R Core Team
+#  Copyright (C) 1995-2024 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -33,7 +33,8 @@
 
     if (missing(new)) new <- NULL
     stop(errorCondition(msg, old = fname, new = new, package = package,
-                        class = "defunctError"))
+                        class = "defunctError",
+                        call = sys.call(sys.parent())))
 }
 
 ## Version <- function() .Defunct("R.Version")
