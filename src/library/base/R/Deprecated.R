@@ -57,21 +57,31 @@
 
 ## Deprecated in 4.4.0
 is.R <- function() {
-    ## eventually use a custon message
     p <- Sys.getenv("_R_DEPRECATED_IS_R_")
     if(nzchar(p)) {
-        msg <- paste0(gettextf("'%s' is deprecated.\n", "is.R"),
-                      'See help("Deprecated") and help("base-deprecated")')
-        if (p == "warn") {
-            ## disallow deferred warnings:
+        choices <-c("warn", "error", "traceback", "where", "self")
+        if (!is.na(i<- pmatch(p, choices)))
+            p <- choices[i]
+        else
+            message("unknown value of _R_DEPRECATED_IS_R_ ", sQuote(p),
+                    " will be ignored")
+        warn_now <- function(msg) {
+            ## Avoid deferred warnings:
             ## warning(<condition>) does not support immediate. = TRUE
             op <- getOption("warn")
             if(op == 0L) options(warn = 1L)
             warning(warningCondition(msg, class = "deprecatedWarning"))
             if(op == 0L) options(warn = op)
         }
+        msg <- paste0(gettextf("'%s' is deprecated.\n", "is.R"),
+                      'See help("Deprecated") and help("base-deprecated")')
+        if (p == "warn") {
+            ## As default, buy immediately.
+            warn_now(msg)
+        }
         else if (p == "error") {
             .Deprecated(package = "base")
+            ## stop will flush out deferred warnings
             ## temporary, so do not translate
             stop('deprecation turned into an error', domain = NA)
         }
@@ -95,35 +105,23 @@ is.R <- function() {
                                   sprintf("from namespace %s", sQuote(env)))
                 }
             }
-            op <- getOption("warn")
-            if(op == 0L) options(warn = 1L)
-            warning(warningCondition(msg, class = "deprecatedWarning"))
-            if(op == 0L) options(warn = op)
+            warn_now(msg)
         }
-        else if (FALSE && p == "self") {
+        else if (p == "self") {
+            ## Do not warn if called from a namespace other than that under test
             call <- sys.call(-1)
-            done <- FALSE
             if(!is.null(call)) {
                 msg <- paste0(msg,"\nCall: ", deparse1(call))
                 env <- environment(sys.function(-1))
                 if (isNamespace(env)) {
                     env <- getNamespaceName(env)
                     this <- Sys.getenv("_R_CHECK_PACKAGE_NAME_", "unknown")
-                    done <- TRUE
-                    if (this != env) {
-                        msg <- paste0(msg, "\n",
-                                      sprintf("from namespace %s", sQuote(env)))
-                        message(msg, domain = NA)
-                    } else
-                         warning(warningCondition(msg, class = "deprecatedWarning"))
+                    ## fails if this is uncommented.
+##                    if (this != env) return(TRUE)
                 }
             }
-            if(!done)
-                warning(warningCondition(msg, class = "deprecatedWarning"))
+            warn_now(msg)
         }
-        else
-            message("unknown value of _R_DEPRECATED_IS_R_ ", sQuote(p),
-                    " was ignored")
     } else
         .Deprecated(package = "base")
 
