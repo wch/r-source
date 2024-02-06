@@ -372,10 +372,13 @@ getOption(x, default = NULL)
       the \code{width} option when the terminal is resized.}
 
     \item{\code{showWarnCalls}, \code{showErrorCalls}:}{a logical.
-      Should warning and error messages show a summary of the call
-      stack?  By default error calls are shown in non-interactive
-      sessions. \code{showWarnCalls} is not used when
-      \code{\link{warning}} is called on a condition object. }
+      Should warning and error messages produced by the default handlers
+      show a summary of the call stack?  By default error call stacks
+      are shown in non-interactive sessions. When \code{\link{warning}}
+      or \code{\link{stop}} are called on a condition object the call
+      stacks are only shown if the value returned by
+      \code{\link{conditionCall}} for the condition object is not
+      \code{NULL}.}
 
     \item{\code{showNCalls}:}{integer.  Controls how long the sequence
       of calls must be (in bytes) before ellipses are used.  Defaults to
@@ -440,7 +443,8 @@ getOption(x, default = NULL)
       on progress?  Set to \code{TRUE} by the command-line option
       \option{--verbose}.}
 
-    \item{\code{warn}:}{integer value to set the handling of warning messages.  If
+    \item{\code{warn}:}{integer value to set the handling of warning
+      messages by the default warning handler.  If
       \code{warn} is negative all warnings are ignored.  If \code{warn}
       is zero (the default) warnings are stored until the top--level
       function returns.  If 10 or fewer warnings were signalled they
