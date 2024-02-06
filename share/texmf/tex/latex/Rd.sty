@@ -287,7 +287,10 @@
 % Rd2latex() should never let \Sexpr through to here.
 \newcommand\Sexpr[2][]{{\normalfont\texttt{\bsl Sexpr[#1]\{#2\}}}}
 
-\newcommand{\var}[1]{{\textsl{#1}}}
+% Texinfo 7.1 says that it is planned to change @var "in the next
+% release to use a variable-width, slanted roman font in all contexts"
+% as we apparently have done forever.
+\newcommand{\var}[1]{{\normalfont\textsl{#1}}}
 
 \newcommand{\dfn}[1]{\textsl{#1}}
 \let\Cite=\dfn
