@@ -1,6 +1,6 @@
 % File src/library/base/man/warning.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2024 R Core Team
 % Distributed under GPL 2 or later
 
 \name{warning}
@@ -17,15 +17,16 @@ warning(\dots, call. = TRUE, immediate. = FALSE, noBreaks. = FALSE,
 suppressWarnings(expr, classes = "warning")
 }
 \arguments{
-  \item{\dots}{zero or more objects which can be coerced to character
-    (and which are pasted together with no separator) or a single
-    condition object.}
+  \item{\dots}{\emph{either} zero or more objects which can be coerced
+    to character (and which are pasted together with no separator)
+    \emph{or} a single \link{condition} object.}
   \item{call.}{logical, indicating if the call should become part of the
     warning message.}
-  \item{immediate.}{logical, indicating if the call should be output
-    immediately, even if \code{\link{getOption}("warn") <= 0}.}
+  \item{immediate.}{logical, indicating if the warning should be output
+    immediately, even if \code{\link{getOption}("warn") <=
+      0}. \strong{NB:} this is not respected for condition objects.}
   \item{noBreaks.}{logical, indicating as far as possible the message should
-    be output as a single line when \code{options(warn = 1)}.}
+    be output as a single line when \code{\link{options}(warn = 1)}.}
   \item{expr}{expression to evaluate.}
   \item{domain}{see \code{\link{gettext}}.  If \code{NA}, messages will
     not be translated, see also the note in \code{\link{stop}}.}
@@ -37,8 +38,10 @@ suppressWarnings(expr, classes = "warning")
   \code{\link{options}("warn")} and on handlers established in the
   executing code.
 
-  If a condition object is supplied it should be the only argument, and
-  further arguments will be ignored, with a message.
+  If a \link{condition} object is supplied it should be the only
+  argument, and further arguments will be ignored, with a message.
+  \code{\link{options}(warn = 1)} can be used to request an immediate
+  report.
 
   \code{warning} signals a warning condition by (effectively) calling
   \code{signalCondition}.  If there are no handlers or if all handlers

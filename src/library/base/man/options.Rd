@@ -1,6 +1,6 @@
 % File src/library/base/man/options.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2023 R Core Team
+% Copyright 1995-2024 R Core Team
 % Distributed under GPL 2 or later
 
 \name{options}
@@ -374,7 +374,8 @@ getOption(x, default = NULL)
     \item{\code{showWarnCalls}, \code{showErrorCalls}:}{a logical.
       Should warning and error messages show a summary of the call
       stack?  By default error calls are shown in non-interactive
-      sessions.}
+      sessions. \code{showWarnCalls} is not used when
+      \code{\link{warning}} is called on a condition object. }
 
     \item{\code{showNCalls}:}{integer.  Controls how long the sequence
       of calls must be (in bytes) before ellipses are used.  Defaults to
