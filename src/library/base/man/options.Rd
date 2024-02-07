@@ -258,9 +258,10 @@ getOption(x, default = NULL)
     \item{\code{OutDec}:}{character string containing a single
       character.  The preferred character to be used as the decimal
       point in output conversions, that is in printing, plotting,
-      \code{\link{format}} and \code{\link{as.character}} but not when
-      deparsing nor by \code{\link{sprintf}} nor \code{\link{formatC}}
-      (which are sometimes used prior to printing.)
+      \code{\link{format}}, \code{\link{formatC}} and
+      \code{\link{as.character}} but not when
+      deparsing nor by \code{\link{sprintf}}
+      (which is sometimes used prior to printing).
     }
 
     \item{\code{pager}:}{the command used for displaying text files by
@@ -363,10 +364,13 @@ getOption(x, default = NULL)
       the \code{width} option when the terminal is resized.}
 
     \item{\code{showWarnCalls}, \code{showErrorCalls}:}{a logical.
-      Should warning and error messages show a summary of the call
-      stack?  By default error calls are shown in non-interactive
-      sessions. \code{showWarnCalls} is not used when
-      \code{\link{warning}} is called on a condition object. }
+      Should warning and error messages produced by the default handlers
+      show a summary of the call stack?  By default error call stacks
+      are shown in non-interactive sessions. When \code{\link{warning}}
+      or \code{\link{stop}} are called on a condition object the call
+      stacks are only shown if the value returned by
+      \code{\link{conditionCall}} for the condition object is not
+      \code{NULL}.}
 
     \item{\code{showNCalls}:}{integer.  Controls how long the sequence
       of calls must be (in bytes) before ellipses are used.  Defaults to
@@ -431,7 +435,8 @@ getOption(x, default = NULL)
       on progress?  Set to \code{TRUE} by the command-line option
       \option{--verbose}.}
 
-    \item{\code{warn}:}{integer value to set the handling of warning messages.  If
+    \item{\code{warn}:}{integer value to set the handling of warning
+      messages by the default warning handler.  If
       \code{warn} is negative all warnings are ignored.  If \code{warn}
       is zero (the default) warnings are stored until the top--level
       function returns.  If 10 or fewer warnings were signalled they
@@ -440,7 +445,9 @@ getOption(x, default = NULL)
       created and can be printed through the function
       \code{\link{warnings}}.  If \code{warn} is one, warnings are
       printed as they occur.  If \code{warn} is two (or larger, coercible
-      to integer), all warnings are turned into errors.}
+      to integer), all warnings are turned into errors. While sometimes
+      useful for debugging, turning warnings into errors may trigger
+      bugs and resource leaks that would not have been triggered otherwise.}
 
     \item{\code{warnPartialMatchArgs}:}{logical.  If true, warns if
       partial matching is used in argument matching.}
@@ -624,7 +631,7 @@ getOption(x, default = NULL)
 
     \item{\code{citation.bibtex.max}:}{default 1; the maximal number of
       bibentries (\code{\link{bibentry}}) in a \code{\link{citation}} for
-      which the bibtex version is printed in addition to the text one.}
+      which the BibTeX version is printed in addition to the text one.}
 
     \item{\code{de.cellwidth}:}{integer: the cell widths (number of
       characters) to be used in the data editor \code{\link{dataentry}}.
@@ -667,9 +674,9 @@ getOption(x, default = NULL)
       HTTP(S) requests by \code{\link{download.file}}, \code{\link{url}}
       and \code{\link{curlGetHeaders}}, or \code{NULL} when requests will
       be made without a user agent header.  The default is
-      \code{R (<version> <platform> <arch> <os>)}
+      \code{"R (\var{version} \var{platform} \var{arch} \var{os})"}
       except when \samp{libcurl} is used when it is
-      \code{libcurl/7.<xx>.<y>} for the \samp{libcurl} version in use.}
+      \code{"libcurl/\var{version}"} for the \samp{libcurl} version in use.}
 
     \item{\code{install.lock}:}{logical: should per-directory package
       locking be used by \code{\link{install.packages}}?  Most useful
@@ -715,7 +722,7 @@ getOption(x, default = NULL)
       help files in \code{\link{help}}.}
 
     \item{\code{Ncpus}:}{an integer \eqn{n \ge 1}{n >= 1}, used in
-      \code{\link{install.packages}} as default for the number of cpus
+      \code{\link{install.packages}} as default for the number of CPUs
       to use in a potentially parallel installation, as
       \code{Ncpus = getOption("Ncpus", 1L)}, i.e., when unset is
       equivalent to a setting of 1.}
@@ -742,7 +749,8 @@ getOption(x, default = NULL)
 
     \item{\code{repos}:}{character vector of repository URLs for use by
       \code{\link{available.packages}} and related functions.  Initially
-      set from entries marked as default in the \file{repositories} file,
+      set from entries marked as default in the
+      \file{\link[=R_REPOSITORIES]{repositories}} file,
       whose path is configurable via environment variable \env{R_REPOSITORIES}
       (set this to \code{NULL} to skip initialization at startup).
       The \sQuote{factory-fresh} setting from the file in \code{R.home("etc")} is
