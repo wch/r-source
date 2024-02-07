@@ -3,6 +3,8 @@
 % Copyright 2008-2014 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{find_gs_cmd}
 \alias{find_gs_cmd}
 
@@ -10,21 +12,21 @@
 \alias{GSC}
 
 \title{
-  Find a GhostScript Executable
+  Find a \I{GhostScript} Executable
 }
 \description{
-  Find a GhostScript executable in a cross-platform way.
+  Find a \I{GhostScript} executable in a cross-platform way.
 }
 \usage{
 find_gs_cmd(gs_cmd = "")
 }
 \arguments{
-  \item{gs_cmd}{The name, full or partial path of a GhostScript executable.}
+  \item{gs_cmd}{The name, full or partial path of a \I{GhostScript} executable.}
 }
 \details{
   The details differ by platform.
 
-  On a Unix-alike, the GhostScript executable is usually called
+  On a Unix-alike, the \I{GhostScript} executable is usually called
   \command{gs}.  The name (and possibly path) of the command is taken
   first from argument \code{gs_cmd} then from the environment variable
   \env{R_GSCMD} and default \code{gs}.  This is then looked for on the
@@ -37,11 +39,11 @@ find_gs_cmd(gs_cmd = "")
   cases the command is looked for on the system \env{PATH}.
 
   Note that on Windows (and some other OSes) there are separate
-  GhostScript executables to display Postscript/PDF files and to
+  \I{GhostScript} executables to display Postscript/PDF files and to
   manipulate them: this function looks for the latter.  
 }
 \value{
-  A character string giving the full path to a GhostScript executable if
+  A character string giving the full path to a \I{GhostScript} executable if
   one was found, otherwise an empty string.
 }
 \examples{\dontrun{

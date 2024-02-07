@@ -3,6 +3,8 @@
 % Copyright 2011-2023  R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{compactPDF}
 \alias{compactPDF}
 \alias{format.compactPDF}
@@ -29,17 +31,17 @@ compactPDF(paths,
     that directory will be used.}
   \item{qpdf}{Character string giving the path to the \command{qpdf}
     command.  If empty, \command{qpdf} will not be used.}
-  \item{gs_cmd}{Character string giving the path to the GhostScript
+  \item{gs_cmd}{Character string giving the path to the \I{GhostScript}
     executable, if that is to be used.  On Windows this is the path to
     \file{gswin32c.exe} or \file{gswin64c.exe}.  If \code{""} (the
     default), the function will try to find a platform-specific path to
-    GhostScript where required.}
+    \I{GhostScript} where required.}
   \item{gs_quality}{A character string indicating the quality required:
-    the options are \code{"none"} (so GhostScript is not used),
+    the options are \code{"none"} (so \I{GhostScript} is not used),
     \code{"printer"} (300dpi), \code{"ebook"} (150dpi) and
     \code{"screen"} (72dpi).  Can be abbreviated.}
   \item{gs_extras}{An optional character vector of further options to be
-    passed to GhostScript.}
+    passed to \I{GhostScript}.}
   \item{verbose}{\code{\link{logical}} or non-negative integer indicating if
     and how much of the compression utilities' output should be shown.}
   %--> format(*):
@@ -53,17 +55,17 @@ compactPDF(paths,
   This by default makes use of \command{qpdf}, available from
   \url{https://qpdf.sourceforge.io/} (including as a Windows binary) and
   included with the CRAN macOS distribution of \R.  If \code{gs_cmd}
-  is non-empty and \code{gs_quality != "none"}, GhostScript will used
+  is non-empty and \code{gs_quality != "none"}, \I{GhostScript} will used
   first, then \command{qpdf} if it is available.  If
   \code{gs_quality != "none"} and \code{gs_cmd} is \code{""}, an attempt
-  will be made to find a GhostScript executable.
+  will be made to find a \I{GhostScript} executable.
 
   \command{qpdf} and/or \command{gs_cmd} are run on all PDF files found,
   and those which are reduced in size by at least 10\% and 10Kb are
   replaced.
 
   The strategy of our use of \command{qpdf} is to (losslessly) compress
-  both PDF streams and objects.  GhostScript compresses streams and more
+  both PDF streams and objects.  \I{GhostScript} compresses streams and more
   (including downsampling and compressing embedded images) and
   consequently is much slower and may lose quality (but can also produce
   much smaller PDF files).  However, quality \code{"ebook"} is perfectly
@@ -76,11 +78,11 @@ compactPDF(paths,
   Stream compression is what most often has large gains.  Most PDF
   documents are generated with object compression, but this does not
   seem to be the default for MiKTeX's \command{pdflatex}.  For some PDF
-  files (and especially package vignettes), using GhostScript can
+  files (and especially package vignettes), using \I{GhostScript} can
   dramatically reduce the space taken by embedded images (often
   screenshots).
 
-  Where both GhostScript and \command{qpdf} are selected (when
+  Where both \I{GhostScript} and \command{qpdf} are selected (when
   \code{gs_quality != "none"} and both executables are found), they are
   run in that order and the size reductions apply to the total
   compression achieved.
@@ -99,7 +101,7 @@ compactPDF(paths,
 \note{
   The external tools used may change in future releases.
 
-  Frequently, updates to GhostScript have produced better compression (up
+  Frequently, updates to \I{GhostScript} have produced better compression (up
   to several times better), so if possible use the latest version available.
 }
 

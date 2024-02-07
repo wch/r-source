@@ -3,6 +3,8 @@
 % Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{texi2dvi}
 \alias{texi2dvi}
 \alias{texi2pdf}
@@ -123,6 +125,6 @@ texi2pdf(file, clean = FALSE, quiet = TRUE,
   especially if \code{clean = FALSE}).
 }
 \author{
-  Originally Achim Zeileis but largely rewritten by R-core.
+  Originally \I{Achim Zeileis} but largely rewritten by R-core.
 }
 \keyword{utilities}

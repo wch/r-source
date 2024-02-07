@@ -3,6 +3,8 @@
 % Copyright 1995-2019 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{buildVignette}
 \alias{buildVignette}
 \title{Build One Vignette}
@@ -65,7 +67,7 @@ buildVignette(file, dir = ".", weave = TRUE, latex = TRUE, tangle = TRUE,
   A character vector naming the files that have been produced.
 }
 \author{
-  Henrik Bengtsson and Duncan Murdoch
+  \I{Henrik Bengtsson} and Duncan Murdoch
 }
 \seealso{
   \code{\link{buildVignettes}} for building all vignettes in a package.

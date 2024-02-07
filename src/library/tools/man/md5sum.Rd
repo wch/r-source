@@ -3,6 +3,8 @@
 % Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{md5sum}
 \alias{md5sum}
 \title{Compute MD5 Checksums}
@@ -36,7 +38,7 @@ md5sum(files)
   32-character string of hexadecimal digits.
 }
 \source{
-  The underlying C code was written by Ulrich Drepper and extracted from
+  The underlying C code was written by \I{Ulrich Drepper} and extracted from
   a 2001 release of \code{glibc}.
 }
 \seealso{

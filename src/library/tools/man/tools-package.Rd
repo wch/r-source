@@ -3,6 +3,8 @@
 % Copyright 1995-2007 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{tools-package}
 \alias{tools-package}
 \alias{tools}
@@ -19,7 +21,7 @@
 
 }
 \author{
-  Kurt Hornik and Friedrich Leisch
+  \I{Kurt Hornik} and \I{Friedrich Leisch}
 
   Maintainer: R Core Team \email{R-core@r-project.org}
 }

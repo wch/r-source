@@ -3,6 +3,8 @@
 % Copyright 2013-2019 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{vignetteEngine}
 \alias{vignetteEngine}
 \title{Set or Get a Vignette Processing Engine}
@@ -72,7 +74,7 @@ is used.
   \item{tangle}{The tangle function}
 }
 \author{
-Duncan Murdoch and Henrik Bengtsson.
+Duncan Murdoch and \I{Henrik Bengtsson}.
 }
 \seealso{
 \code{\link{Sweave}} and the \sQuote{Writing R Extensions} manual.
