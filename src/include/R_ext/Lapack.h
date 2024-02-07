@@ -3265,6 +3265,59 @@ F77_NAME(zgelsd)(La_INT *m, La_INT *n, La_INT *nrhs,
         double *rcond, La_INT *rank, 
         La_complex *work, La_INT *lwork, double *rwork, La_INT *iwork, La_INT *info);
 
+/* More Complex for R 4.4.0  --- Complex Hermitian (incl "crossprod") */
+
+La_extern void
+F77_NAME(zlanhp)(const char* norm, const char* uplo,
+		 La_INT const* n,
+		 La_complex const* AP,
+		 double* work FCLEN FCLEN);
+
+La_extern void
+F77_NAME(zhpcon)(const char* uplo, La_INT const* n, La_complex const* AP,
+		 La_INT const* ipiv, double const* anorm,
+		 double* rcond,
+		 La_complex* work, La_INT* info FCLEN);
+
+La_extern void
+F77_NAME(zhptrf)(const char* uplo, La_INT const* n, La_complex* AP, La_INT* ipiv,
+		 La_INT* info FCLEN);
+    
+La_extern void
+F77_NAME(zhptri)(const char* uplo, La_INT const* n, La_complex* AP, La_INT const* ipiv,
+		 La_complex* work, La_INT* info FCLEN);
+
+La_extern void
+F77_NAME(zhptrs)(const char* uplo, La_INT const* n, La_INT const* nrhs,
+		 La_complex const* AP, La_INT const* ipiv,
+		 La_complex* B, La_INT const* ldb,
+		 La_INT* info FCLEN);
+
+La_extern void
+F77_NAME(zhecon)(const char* uplo, La_INT const* n,
+		 La_complex const* A, La_INT const* lda,
+		 La_INT const* ipiv, double const* anorm,
+		 double* rcond,
+		 La_complex* work, La_INT* info FCLEN);
+
+La_extern void
+F77_NAME(zhetrf)(const char* uplo, La_INT const* n,
+		 La_complex* A, La_INT const* lda, La_INT* ipiv,
+		 La_complex* work, La_INT const* lwork, La_INT* info FCLEN);
+
+La_extern void
+F77_NAME(zhetri)(const char* uplo, La_INT const* n,
+		 La_complex* A, La_INT const* lda, La_INT const* ipiv,
+		 La_complex* work, La_INT* info FCLEN);
+
+La_extern void
+F77_NAME(zhetrs)(const char* uplo, La_INT const* n, La_INT const* nrhs,
+		 La_complex const* A, La_INT const* lda, La_INT const* ipiv,
+		 La_complex* B, La_INT const* ldb,
+		 La_INT* info FCLEN);
+
+
+
 /* =========================== DEPRECATED ==============================
 
    Routines below were deprecated in LAPACK 3.6.0, and are not

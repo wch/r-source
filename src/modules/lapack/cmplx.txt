@@ -55,11 +55,20 @@ zgtsvx.f
 zgttrf.f
 zgttrs.f
 zgtts2.f
+zhecon.f
 zheev.f
 zheevd.f
 zhetd2.f
+zhetf2.f
 zhetrd.f
+zhetrf.f
+zhetri.f
+zhetrs.f
 zhgeqz.f
+zhpcon.f
+zhptrf.f
+zhptri.f
+zhptrs.f
 zhseqr.f
 zlabrd.f
 zlacgv.f
@@ -72,6 +81,7 @@ zlaed0.f
 zlaed7.f
 zlaed8.f
 zlagtm.f
+zlahef.f
 zlahqr.f
 zlahr2.f
 zlals0.f
@@ -81,6 +91,7 @@ zlangb.f
 zlange.f
 zlangt.f
 zlanhe.f
+zlanhp.f
 zlanhs.f
 zlansp.f
 zlansy.f

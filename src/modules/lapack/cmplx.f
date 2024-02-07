@@ -24518,6 +24518,242 @@
 *     End of ZGTTS2
 *
       END
+*> \brief \b ZHECON
+*
+*  =========== DOCUMENTATION ===========
+*
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
+*
+*> \htmlonly
+*> Download ZHECON + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zhecon.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zhecon.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zhecon.f">
+*> [TXT]</a>
+*> \endhtmlonly
+*
+*  Definition:
+*  ===========
+*
+*       SUBROUTINE ZHECON( UPLO, N, A, LDA, IPIV, ANORM, RCOND, WORK,
+*                          INFO )
+*
+*       .. Scalar Arguments ..
+*       CHARACTER          UPLO
+*       INTEGER            INFO, LDA, N
+*       DOUBLE PRECISION   ANORM, RCOND
+*       ..
+*       .. Array Arguments ..
+*       INTEGER            IPIV( * )
+*       COMPLEX*16         A( LDA, * ), WORK( * )
+*       ..
+*
+*
+*> \par Purpose:
+*  =============
+*>
+*> \verbatim
+*>
+*> ZHECON estimates the reciprocal of the condition number of a complex
+*> Hermitian matrix A using the factorization A = U*D*U**H or
+*> A = L*D*L**H computed by ZHETRF.
+*>
+*> An estimate is obtained for norm(inv(A)), and the reciprocal of the
+*> condition number is computed as RCOND = 1 / (ANORM * norm(inv(A))).
+*> \endverbatim
+*
+*  Arguments:
+*  ==========
+*
+*> \param[in] UPLO
+*> \verbatim
+*>          UPLO is CHARACTER*1
+*>          Specifies whether the details of the factorization are stored
+*>          as an upper or lower triangular matrix.
+*>          = 'U':  Upper triangular, form is A = U*D*U**H;
+*>          = 'L':  Lower triangular, form is A = L*D*L**H.
+*> \endverbatim
+*>
+*> \param[in] N
+*> \verbatim
+*>          N is INTEGER
+*>          The order of the matrix A.  N >= 0.
+*> \endverbatim
+*>
+*> \param[in] A
+*> \verbatim
+*>          A is COMPLEX*16 array, dimension (LDA,N)
+*>          The block diagonal matrix D and the multipliers used to
+*>          obtain the factor U or L as computed by ZHETRF.
+*> \endverbatim
+*>
+*> \param[in] LDA
+*> \verbatim
+*>          LDA is INTEGER
+*>          The leading dimension of the array A.  LDA >= max(1,N).
+*> \endverbatim
+*>
+*> \param[in] IPIV
+*> \verbatim
+*>          IPIV is INTEGER array, dimension (N)
+*>          Details of the interchanges and the block structure of D
+*>          as determined by ZHETRF.
+*> \endverbatim
+*>
+*> \param[in] ANORM
+*> \verbatim
+*>          ANORM is DOUBLE PRECISION
+*>          The 1-norm of the original matrix A.
+*> \endverbatim
+*>
+*> \param[out] RCOND
+*> \verbatim
+*>          RCOND is DOUBLE PRECISION
+*>          The reciprocal of the condition number of the matrix A,
+*>          computed as RCOND = 1/(ANORM * AINVNM), where AINVNM is an
+*>          estimate of the 1-norm of inv(A) computed in this routine.
+*> \endverbatim
+*>
+*> \param[out] WORK
+*> \verbatim
+*>          WORK is COMPLEX*16 array, dimension (2*N)
+*> \endverbatim
+*>
+*> \param[out] INFO
+*> \verbatim
+*>          INFO is INTEGER
+*>          = 0:  successful exit
+*>          < 0:  if INFO = -i, the i-th argument had an illegal value
+*> \endverbatim
+*
+*  Authors:
+*  ========
+*
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
+*
+*> \ingroup hecon
+*
+*  =====================================================================
+      SUBROUTINE ZHECON( UPLO, N, A, LDA, IPIV, ANORM, RCOND, WORK,
+     $                   INFO )
+*
+*  -- LAPACK computational routine --
+*  -- LAPACK is a software package provided by Univ. of Tennessee,    --
+*  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
+*
+*     .. Scalar Arguments ..
+      CHARACTER          UPLO
+      INTEGER            INFO, LDA, N
+      DOUBLE PRECISION   ANORM, RCOND
+*     ..
+*     .. Array Arguments ..
+      INTEGER            IPIV( * )
+      COMPLEX*16         A( LDA, * ), WORK( * )
+*     ..
+*
+*  =====================================================================
+*
+*     .. Parameters ..
+      DOUBLE PRECISION   ONE, ZERO
+      PARAMETER          ( ONE = 1.0D+0, ZERO = 0.0D+0 )
+*     ..
+*     .. Local Scalars ..
+      LOGICAL            UPPER
+      INTEGER            I, KASE
+      DOUBLE PRECISION   AINVNM
+*     ..
+*     .. Local Arrays ..
+      INTEGER            ISAVE( 3 )
+*     ..
+*     .. External Functions ..
+      LOGICAL            LSAME
+      EXTERNAL           LSAME
+*     ..
+*     .. External Subroutines ..
+      EXTERNAL           XERBLA, ZHETRS, ZLACN2
+*     ..
+*     .. Intrinsic Functions ..
+      INTRINSIC          MAX
+*     ..
+*     .. Executable Statements ..
+*
+*     Test the input parameters.
+*
+      INFO = 0
+      UPPER = LSAME( UPLO, 'U' )
+      IF( .NOT.UPPER .AND. .NOT.LSAME( UPLO, 'L' ) ) THEN
+         INFO = -1
+      ELSE IF( N.LT.0 ) THEN
+         INFO = -2
+      ELSE IF( LDA.LT.MAX( 1, N ) ) THEN
+         INFO = -4
+      ELSE IF( ANORM.LT.ZERO ) THEN
+         INFO = -6
+      END IF
+      IF( INFO.NE.0 ) THEN
+         CALL XERBLA( 'ZHECON', -INFO )
+         RETURN
+      END IF
+*
+*     Quick return if possible
+*
+      RCOND = ZERO
+      IF( N.EQ.0 ) THEN
+         RCOND = ONE
+         RETURN
+      ELSE IF( ANORM.LE.ZERO ) THEN
+         RETURN
+      END IF
+*
+*     Check that the diagonal matrix D is nonsingular.
+*
+      IF( UPPER ) THEN
+*
+*        Upper triangular storage: examine D from bottom to top
+*
+         DO 10 I = N, 1, -1
+            IF( IPIV( I ).GT.0 .AND. A( I, I ).EQ.ZERO )
+     $         RETURN
+   10    CONTINUE
+      ELSE
+*
+*        Lower triangular storage: examine D from top to bottom.
+*
+         DO 20 I = 1, N
+            IF( IPIV( I ).GT.0 .AND. A( I, I ).EQ.ZERO )
+     $         RETURN
+   20    CONTINUE
+      END IF
+*
+*     Estimate the 1-norm of the inverse.
+*
+      KASE = 0
+   30 CONTINUE
+      CALL ZLACN2( N, WORK( N+1 ), WORK, AINVNM, KASE, ISAVE )
+      IF( KASE.NE.0 ) THEN
+*
+*        Multiply by inv(L*D*L**H) or inv(U*D*U**H).
+*
+         CALL ZHETRS( UPLO, N, 1, A, LDA, IPIV, WORK, N, INFO )
+         GO TO 30
+      END IF
+*
+*     Compute the estimate of the reciprocal condition number.
+*
+      IF( AINVNM.NE.ZERO )
+     $   RCOND = ( ONE / AINVNM ) / ANORM
+*
+      RETURN
+*
+*     End of ZHECON
+*
+      END
 *> \brief <b> ZHEEV computes the eigenvalues and, optionally, the left and/or right eigenvectors for HE matrices</b>
 *
 *  =========== DOCUMENTATION ===========
@@ -25533,6 +25769,664 @@
 *     End of ZHETD2
 *
       END
+*> \brief \b ZHETF2 computes the factorization of a complex Hermitian matrix, using the diagonal pivoting method (unblocked algorithm, calling Level 2 BLAS).
+*
+*  =========== DOCUMENTATION ===========
+*
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
+*
+*> \htmlonly
+*> Download ZHETF2 + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zhetf2.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zhetf2.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zhetf2.f">
+*> [TXT]</a>
+*> \endhtmlonly
+*
+*  Definition:
+*  ===========
+*
+*       SUBROUTINE ZHETF2( UPLO, N, A, LDA, IPIV, INFO )
+*
+*       .. Scalar Arguments ..
+*       CHARACTER          UPLO
+*       INTEGER            INFO, LDA, N
+*       ..
+*       .. Array Arguments ..
+*       INTEGER            IPIV( * )
+*       COMPLEX*16         A( LDA, * )
+*       ..
+*
+*
+*> \par Purpose:
+*  =============
+*>
+*> \verbatim
+*>
+*> ZHETF2 computes the factorization of a complex Hermitian matrix A
+*> using the Bunch-Kaufman diagonal pivoting method:
+*>
+*>    A = U*D*U**H  or  A = L*D*L**H
+*>
+*> where U (or L) is a product of permutation and unit upper (lower)
+*> triangular matrices, U**H is the conjugate transpose of U, and D is
+*> Hermitian and block diagonal with 1-by-1 and 2-by-2 diagonal blocks.
+*>
+*> This is the unblocked version of the algorithm, calling Level 2 BLAS.
+*> \endverbatim
+*
+*  Arguments:
+*  ==========
+*
+*> \param[in] UPLO
+*> \verbatim
+*>          UPLO is CHARACTER*1
+*>          Specifies whether the upper or lower triangular part of the
+*>          Hermitian matrix A is stored:
+*>          = 'U':  Upper triangular
+*>          = 'L':  Lower triangular
+*> \endverbatim
+*>
+*> \param[in] N
+*> \verbatim
+*>          N is INTEGER
+*>          The order of the matrix A.  N >= 0.
+*> \endverbatim
+*>
+*> \param[in,out] A
+*> \verbatim
+*>          A is COMPLEX*16 array, dimension (LDA,N)
+*>          On entry, the Hermitian matrix A.  If UPLO = 'U', the leading
+*>          n-by-n upper triangular part of A contains the upper
+*>          triangular part of the matrix A, and the strictly lower
+*>          triangular part of A is not referenced.  If UPLO = 'L', the
+*>          leading n-by-n lower triangular part of A contains the lower
+*>          triangular part of the matrix A, and the strictly upper
+*>          triangular part of A is not referenced.
+*>
+*>          On exit, the block diagonal matrix D and the multipliers used
+*>          to obtain the factor U or L (see below for further details).
+*> \endverbatim
+*>
+*> \param[in] LDA
+*> \verbatim
+*>          LDA is INTEGER
+*>          The leading dimension of the array A.  LDA >= max(1,N).
+*> \endverbatim
+*>
+*> \param[out] IPIV
+*> \verbatim
+*>          IPIV is INTEGER array, dimension (N)
+*>          Details of the interchanges and the block structure of D.
+*>
+*>          If UPLO = 'U':
+*>             If IPIV(k) > 0, then rows and columns k and IPIV(k) were
+*>             interchanged and D(k,k) is a 1-by-1 diagonal block.
+*>
+*>             If IPIV(k) = IPIV(k-1) < 0, then rows and columns
+*>             k-1 and -IPIV(k) were interchanged and D(k-1:k,k-1:k)
+*>             is a 2-by-2 diagonal block.
+*>
+*>          If UPLO = 'L':
+*>             If IPIV(k) > 0, then rows and columns k and IPIV(k) were
+*>             interchanged and D(k,k) is a 1-by-1 diagonal block.
+*>
+*>             If IPIV(k) = IPIV(k+1) < 0, then rows and columns
+*>             k+1 and -IPIV(k) were interchanged and D(k:k+1,k:k+1)
+*>             is a 2-by-2 diagonal block.
+*> \endverbatim
+*>
+*> \param[out] INFO
+*> \verbatim
+*>          INFO is INTEGER
+*>          = 0: successful exit
+*>          < 0: if INFO = -k, the k-th argument had an illegal value
+*>          > 0: if INFO = k, D(k,k) is exactly zero.  The factorization
+*>               has been completed, but the block diagonal matrix D is
+*>               exactly singular, and division by zero will occur if it
+*>               is used to solve a system of equations.
+*> \endverbatim
+*
+*  Authors:
+*  ========
+*
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
+*
+*> \ingroup hetf2
+*
+*> \par Further Details:
+*  =====================
+*>
+*> \verbatim
+*>
+*>  If UPLO = 'U', then A = U*D*U**H, where
+*>     U = P(n)*U(n)* ... *P(k)U(k)* ...,
+*>  i.e., U is a product of terms P(k)*U(k), where k decreases from n to
+*>  1 in steps of 1 or 2, and D is a block diagonal matrix with 1-by-1
+*>  and 2-by-2 diagonal blocks D(k).  P(k) is a permutation matrix as
+*>  defined by IPIV(k), and U(k) is a unit upper triangular matrix, such
+*>  that if the diagonal block D(k) is of order s (s = 1 or 2), then
+*>
+*>             (   I    v    0   )   k-s
+*>     U(k) =  (   0    I    0   )   s
+*>             (   0    0    I   )   n-k
+*>                k-s   s   n-k
+*>
+*>  If s = 1, D(k) overwrites A(k,k), and v overwrites A(1:k-1,k).
+*>  If s = 2, the upper triangle of D(k) overwrites A(k-1,k-1), A(k-1,k),
+*>  and A(k,k), and v overwrites A(1:k-2,k-1:k).
+*>
+*>  If UPLO = 'L', then A = L*D*L**H, where
+*>     L = P(1)*L(1)* ... *P(k)*L(k)* ...,
+*>  i.e., L is a product of terms P(k)*L(k), where k increases from 1 to
+*>  n in steps of 1 or 2, and D is a block diagonal matrix with 1-by-1
+*>  and 2-by-2 diagonal blocks D(k).  P(k) is a permutation matrix as
+*>  defined by IPIV(k), and L(k) is a unit lower triangular matrix, such
+*>  that if the diagonal block D(k) is of order s (s = 1 or 2), then
+*>
+*>             (   I    0     0   )  k-1
+*>     L(k) =  (   0    I     0   )  s
+*>             (   0    v     I   )  n-k-s+1
+*>                k-1   s  n-k-s+1
+*>
+*>  If s = 1, D(k) overwrites A(k,k), and v overwrites A(k+1:n,k).
+*>  If s = 2, the lower triangle of D(k) overwrites A(k,k), A(k+1,k),
+*>  and A(k+1,k+1), and v overwrites A(k+2:n,k:k+1).
+*> \endverbatim
+*
+*> \par Contributors:
+*  ==================
+*>
+*> \verbatim
+*>  09-29-06 - patch from
+*>    Bobby Cheng, MathWorks
+*>
+*>    Replace l.210 and l.393
+*>         IF( MAX( ABSAKK, COLMAX ).EQ.ZERO ) THEN
+*>    by
+*>         IF( (MAX( ABSAKK, COLMAX ).EQ.ZERO) .OR. DISNAN(ABSAKK) ) THEN
+*>
+*>  01-01-96 - Based on modifications by
+*>    J. Lewis, Boeing Computer Services Company
+*>    A. Petitet, Computer Science Dept., Univ. of Tenn., Knoxville, USA
+*> \endverbatim
+*
+*  =====================================================================
+      SUBROUTINE ZHETF2( UPLO, N, A, LDA, IPIV, INFO )
+*
+*  -- LAPACK computational routine --
+*  -- LAPACK is a software package provided by Univ. of Tennessee,    --
+*  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
+*
+*     .. Scalar Arguments ..
+      CHARACTER          UPLO
+      INTEGER            INFO, LDA, N
+*     ..
+*     .. Array Arguments ..
+      INTEGER            IPIV( * )
+      COMPLEX*16         A( LDA, * )
+*     ..
+*
+*  =====================================================================
+*
+*     .. Parameters ..
+      DOUBLE PRECISION   ZERO, ONE
+      PARAMETER          ( ZERO = 0.0D+0, ONE = 1.0D+0 )
+      DOUBLE PRECISION   EIGHT, SEVTEN
+      PARAMETER          ( EIGHT = 8.0D+0, SEVTEN = 17.0D+0 )
+*     ..
+*     .. Local Scalars ..
+      LOGICAL            UPPER
+      INTEGER            I, IMAX, J, JMAX, K, KK, KP, KSTEP
+      DOUBLE PRECISION   ABSAKK, ALPHA, COLMAX, D, D11, D22, R1, ROWMAX,
+     $                   TT
+      COMPLEX*16         D12, D21, T, WK, WKM1, WKP1, ZDUM
+*     ..
+*     .. External Functions ..
+      LOGICAL            LSAME, DISNAN
+      INTEGER            IZAMAX
+      DOUBLE PRECISION   DLAPY2
+      EXTERNAL           LSAME, IZAMAX, DLAPY2, DISNAN
+*     ..
+*     .. External Subroutines ..
+      EXTERNAL           XERBLA, ZDSCAL, ZHER, ZSWAP
+*     ..
+*     .. Intrinsic Functions ..
+      INTRINSIC          ABS, DBLE, DCMPLX, DCONJG, DIMAG, MAX, SQRT
+*     ..
+*     .. Statement Functions ..
+      DOUBLE PRECISION   CABS1
+*     ..
+*     .. Statement Function definitions ..
+      CABS1( ZDUM ) = ABS( DBLE( ZDUM ) ) + ABS( DIMAG( ZDUM ) )
+*     ..
+*     .. Executable Statements ..
+*
+*     Test the input parameters.
+*
+      INFO = 0
+      UPPER = LSAME( UPLO, 'U' )
+      IF( .NOT.UPPER .AND. .NOT.LSAME( UPLO, 'L' ) ) THEN
+         INFO = -1
+      ELSE IF( N.LT.0 ) THEN
+         INFO = -2
+      ELSE IF( LDA.LT.MAX( 1, N ) ) THEN
+         INFO = -4
+      END IF
+      IF( INFO.NE.0 ) THEN
+         CALL XERBLA( 'ZHETF2', -INFO )
+         RETURN
+      END IF
+*
+*     Initialize ALPHA for use in choosing pivot block size.
+*
+      ALPHA = ( ONE+SQRT( SEVTEN ) ) / EIGHT
+*
+      IF( UPPER ) THEN
+*
+*        Factorize A as U*D*U**H using the upper triangle of A
+*
+*        K is the main loop index, decreasing from N to 1 in steps of
+*        1 or 2
+*
+         K = N
+   10    CONTINUE
+*
+*        If K < 1, exit from loop
+*
+         IF( K.LT.1 )
+     $      GO TO 90
+         KSTEP = 1
+*
+*        Determine rows and columns to be interchanged and whether
+*        a 1-by-1 or 2-by-2 pivot block will be used
+*
+         ABSAKK = ABS( DBLE( A( K, K ) ) )
+*
+*        IMAX is the row-index of the largest off-diagonal element in
+*        column K, and COLMAX is its absolute value.
+*        Determine both COLMAX and IMAX.
+*
+         IF( K.GT.1 ) THEN
+            IMAX = IZAMAX( K-1, A( 1, K ), 1 )
+            COLMAX = CABS1( A( IMAX, K ) )
+         ELSE
+            COLMAX = ZERO
+         END IF
+*
+         IF( (MAX( ABSAKK, COLMAX ).EQ.ZERO) .OR. DISNAN(ABSAKK) ) THEN
+*
+*           Column K is zero or underflow, or contains a NaN:
+*           set INFO and continue
+*
+            IF( INFO.EQ.0 )
+     $         INFO = K
+            KP = K
+            A( K, K ) = DBLE( A( K, K ) )
+         ELSE
+*
+*           ============================================================
+*
+*           Test for interchange
+*
+            IF( ABSAKK.GE.ALPHA*COLMAX ) THEN
+*
+*              no interchange, use 1-by-1 pivot block
+*
+               KP = K
+            ELSE
+*
+*              JMAX is the column-index of the largest off-diagonal
+*              element in row IMAX, and ROWMAX is its absolute value.
+*              Determine only ROWMAX.
+*
+               JMAX = IMAX + IZAMAX( K-IMAX, A( IMAX, IMAX+1 ), LDA )
+               ROWMAX = CABS1( A( IMAX, JMAX ) )
+               IF( IMAX.GT.1 ) THEN
+                  JMAX = IZAMAX( IMAX-1, A( 1, IMAX ), 1 )
+                  ROWMAX = MAX( ROWMAX, CABS1( A( JMAX, IMAX ) ) )
+               END IF
+*
+               IF( ABSAKK.GE.ALPHA*COLMAX*( COLMAX / ROWMAX ) ) THEN
+*
+*                 no interchange, use 1-by-1 pivot block
+*
+                  KP = K
+*
+               ELSE IF( ABS( DBLE( A( IMAX, IMAX ) ) ).GE.ALPHA*ROWMAX )
+     $                   THEN
+*
+*                 interchange rows and columns K and IMAX, use 1-by-1
+*                 pivot block
+*
+                  KP = IMAX
+               ELSE
+*
+*                 interchange rows and columns K-1 and IMAX, use 2-by-2
+*                 pivot block
+*
+                  KP = IMAX
+                  KSTEP = 2
+               END IF
+*
+            END IF
+*
+*           ============================================================
+*
+            KK = K - KSTEP + 1
+            IF( KP.NE.KK ) THEN
+*
+*              Interchange rows and columns KK and KP in the leading
+*              submatrix A(1:k,1:k)
+*
+               CALL ZSWAP( KP-1, A( 1, KK ), 1, A( 1, KP ), 1 )
+               DO 20 J = KP + 1, KK - 1
+                  T = DCONJG( A( J, KK ) )
+                  A( J, KK ) = DCONJG( A( KP, J ) )
+                  A( KP, J ) = T
+   20          CONTINUE
+               A( KP, KK ) = DCONJG( A( KP, KK ) )
+               R1 = DBLE( A( KK, KK ) )
+               A( KK, KK ) = DBLE( A( KP, KP ) )
+               A( KP, KP ) = R1
+               IF( KSTEP.EQ.2 ) THEN
+                  A( K, K ) = DBLE( A( K, K ) )
+                  T = A( K-1, K )
+                  A( K-1, K ) = A( KP, K )
+                  A( KP, K ) = T
+               END IF
+            ELSE
+               A( K, K ) = DBLE( A( K, K ) )
+               IF( KSTEP.EQ.2 )
+     $            A( K-1, K-1 ) = DBLE( A( K-1, K-1 ) )
+            END IF
+*
+*           Update the leading submatrix
+*
+            IF( KSTEP.EQ.1 ) THEN
+*
+*              1-by-1 pivot block D(k): column k now holds
+*
+*              W(k) = U(k)*D(k)
+*
+*              where U(k) is the k-th column of U
+*
+*              Perform a rank-1 update of A(1:k-1,1:k-1) as
+*
+*              A := A - U(k)*D(k)*U(k)**H = A - W(k)*1/D(k)*W(k)**H
+*
+               R1 = ONE / DBLE( A( K, K ) )
+               CALL ZHER( UPLO, K-1, -R1, A( 1, K ), 1, A, LDA )
+*
+*              Store U(k) in column k
+*
+               CALL ZDSCAL( K-1, R1, A( 1, K ), 1 )
+            ELSE
+*
+*              2-by-2 pivot block D(k): columns k and k-1 now hold
+*
+*              ( W(k-1) W(k) ) = ( U(k-1) U(k) )*D(k)
+*
+*              where U(k) and U(k-1) are the k-th and (k-1)-th columns
+*              of U
+*
+*              Perform a rank-2 update of A(1:k-2,1:k-2) as
+*
+*              A := A - ( U(k-1) U(k) )*D(k)*( U(k-1) U(k) )**H
+*                 = A - ( W(k-1) W(k) )*inv(D(k))*( W(k-1) W(k) )**H
+*
+               IF( K.GT.2 ) THEN
+*
+                  D = DLAPY2( DBLE( A( K-1, K ) ),
+     $                DIMAG( A( K-1, K ) ) )
+                  D22 = DBLE( A( K-1, K-1 ) ) / D
+                  D11 = DBLE( A( K, K ) ) / D
+                  TT = ONE / ( D11*D22-ONE )
+                  D12 = A( K-1, K ) / D
+                  D = TT / D
+*
+                  DO 40 J = K - 2, 1, -1
+                     WKM1 = D*( D11*A( J, K-1 )-DCONJG( D12 )*
+     $                      A( J, K ) )
+                     WK = D*( D22*A( J, K )-D12*A( J, K-1 ) )
+                     DO 30 I = J, 1, -1
+                        A( I, J ) = A( I, J ) - A( I, K )*DCONJG( WK ) -
+     $                              A( I, K-1 )*DCONJG( WKM1 )
+   30                CONTINUE
+                     A( J, K ) = WK
+                     A( J, K-1 ) = WKM1
+                     A( J, J ) = DCMPLX( DBLE( A( J, J ) ), 0.0D+0 )
+   40             CONTINUE
+*
+               END IF
+*
+            END IF
+         END IF
+*
+*        Store details of the interchanges in IPIV
+*
+         IF( KSTEP.EQ.1 ) THEN
+            IPIV( K ) = KP
+         ELSE
+            IPIV( K ) = -KP
+            IPIV( K-1 ) = -KP
+         END IF
+*
+*        Decrease K and return to the start of the main loop
+*
+         K = K - KSTEP
+         GO TO 10
+*
+      ELSE
+*
+*        Factorize A as L*D*L**H using the lower triangle of A
+*
+*        K is the main loop index, increasing from 1 to N in steps of
+*        1 or 2
+*
+         K = 1
+   50    CONTINUE
+*
+*        If K > N, exit from loop
+*
+         IF( K.GT.N )
+     $      GO TO 90
+         KSTEP = 1
+*
+*        Determine rows and columns to be interchanged and whether
+*        a 1-by-1 or 2-by-2 pivot block will be used
+*
+         ABSAKK = ABS( DBLE( A( K, K ) ) )
+*
+*        IMAX is the row-index of the largest off-diagonal element in
+*        column K, and COLMAX is its absolute value.
+*        Determine both COLMAX and IMAX.
+*
+         IF( K.LT.N ) THEN
+            IMAX = K + IZAMAX( N-K, A( K+1, K ), 1 )
+            COLMAX = CABS1( A( IMAX, K ) )
+         ELSE
+            COLMAX = ZERO
+         END IF
+*
+         IF( (MAX( ABSAKK, COLMAX ).EQ.ZERO) .OR. DISNAN(ABSAKK) ) THEN
+*
+*           Column K is zero or underflow, or contains a NaN:
+*           set INFO and continue
+*
+            IF( INFO.EQ.0 )
+     $         INFO = K
+            KP = K
+            A( K, K ) = DBLE( A( K, K ) )
+         ELSE
+*
+*           ============================================================
+*
+*           Test for interchange
+*
+            IF( ABSAKK.GE.ALPHA*COLMAX ) THEN
+*
+*              no interchange, use 1-by-1 pivot block
+*
+               KP = K
+            ELSE
+*
+*              JMAX is the column-index of the largest off-diagonal
+*              element in row IMAX, and ROWMAX is its absolute value.
+*              Determine only ROWMAX.
+*
+               JMAX = K - 1 + IZAMAX( IMAX-K, A( IMAX, K ), LDA )
+               ROWMAX = CABS1( A( IMAX, JMAX ) )
+               IF( IMAX.LT.N ) THEN
+                  JMAX = IMAX + IZAMAX( N-IMAX, A( IMAX+1, IMAX ), 1 )
+                  ROWMAX = MAX( ROWMAX, CABS1( A( JMAX, IMAX ) ) )
+               END IF
+*
+               IF( ABSAKK.GE.ALPHA*COLMAX*( COLMAX / ROWMAX ) ) THEN
+*
+*                 no interchange, use 1-by-1 pivot block
+*
+                  KP = K
+*
+               ELSE IF( ABS( DBLE( A( IMAX, IMAX ) ) ).GE.ALPHA*ROWMAX )
+     $                   THEN
+*
+*                 interchange rows and columns K and IMAX, use 1-by-1
+*                 pivot block
+*
+                  KP = IMAX
+               ELSE
+*
+*                 interchange rows and columns K+1 and IMAX, use 2-by-2
+*                 pivot block
+*
+                  KP = IMAX
+                  KSTEP = 2
+               END IF
+*
+            END IF
+*
+*           ============================================================
+*
+            KK = K + KSTEP - 1
+            IF( KP.NE.KK ) THEN
+*
+*              Interchange rows and columns KK and KP in the trailing
+*              submatrix A(k:n,k:n)
+*
+               IF( KP.LT.N )
+     $            CALL ZSWAP( N-KP, A( KP+1, KK ), 1, A( KP+1, KP ), 1 )
+               DO 60 J = KK + 1, KP - 1
+                  T = DCONJG( A( J, KK ) )
+                  A( J, KK ) = DCONJG( A( KP, J ) )
+                  A( KP, J ) = T
+   60          CONTINUE
+               A( KP, KK ) = DCONJG( A( KP, KK ) )
+               R1 = DBLE( A( KK, KK ) )
+               A( KK, KK ) = DBLE( A( KP, KP ) )
+               A( KP, KP ) = R1
+               IF( KSTEP.EQ.2 ) THEN
+                  A( K, K ) = DBLE( A( K, K ) )
+                  T = A( K+1, K )
+                  A( K+1, K ) = A( KP, K )
+                  A( KP, K ) = T
+               END IF
+            ELSE
+               A( K, K ) = DBLE( A( K, K ) )
+               IF( KSTEP.EQ.2 )
+     $            A( K+1, K+1 ) = DBLE( A( K+1, K+1 ) )
+            END IF
+*
+*           Update the trailing submatrix
+*
+            IF( KSTEP.EQ.1 ) THEN
+*
+*              1-by-1 pivot block D(k): column k now holds
+*
+*              W(k) = L(k)*D(k)
+*
+*              where L(k) is the k-th column of L
+*
+               IF( K.LT.N ) THEN
+*
+*                 Perform a rank-1 update of A(k+1:n,k+1:n) as
+*
+*                 A := A - L(k)*D(k)*L(k)**H = A - W(k)*(1/D(k))*W(k)**H
+*
+                  R1 = ONE / DBLE( A( K, K ) )
+                  CALL ZHER( UPLO, N-K, -R1, A( K+1, K ), 1,
+     $                       A( K+1, K+1 ), LDA )
+*
+*                 Store L(k) in column K
+*
+                  CALL ZDSCAL( N-K, R1, A( K+1, K ), 1 )
+               END IF
+            ELSE
+*
+*              2-by-2 pivot block D(k)
+*
+               IF( K.LT.N-1 ) THEN
+*
+*                 Perform a rank-2 update of A(k+2:n,k+2:n) as
+*
+*                 A := A - ( L(k) L(k+1) )*D(k)*( L(k) L(k+1) )**H
+*                    = A - ( W(k) W(k+1) )*inv(D(k))*( W(k) W(k+1) )**H
+*
+*                 where L(k) and L(k+1) are the k-th and (k+1)-th
+*                 columns of L
+*
+                  D = DLAPY2( DBLE( A( K+1, K ) ),
+     $                DIMAG( A( K+1, K ) ) )
+                  D11 = DBLE( A( K+1, K+1 ) ) / D
+                  D22 = DBLE( A( K, K ) ) / D
+                  TT = ONE / ( D11*D22-ONE )
+                  D21 = A( K+1, K ) / D
+                  D = TT / D
+*
+                  DO 80 J = K + 2, N
+                     WK = D*( D11*A( J, K )-D21*A( J, K+1 ) )
+                     WKP1 = D*( D22*A( J, K+1 )-DCONJG( D21 )*
+     $                      A( J, K ) )
+                     DO 70 I = J, N
+                        A( I, J ) = A( I, J ) - A( I, K )*DCONJG( WK ) -
+     $                              A( I, K+1 )*DCONJG( WKP1 )
+   70                CONTINUE
+                     A( J, K ) = WK
+                     A( J, K+1 ) = WKP1
+                     A( J, J ) = DCMPLX( DBLE( A( J, J ) ), 0.0D+0 )
+   80             CONTINUE
+               END IF
+            END IF
+         END IF
+*
+*        Store details of the interchanges in IPIV
+*
+         IF( KSTEP.EQ.1 ) THEN
+            IPIV( K ) = KP
+         ELSE
+            IPIV( K ) = -KP
+            IPIV( K+1 ) = -KP
+         END IF
+*
+*        Increase K and return to the start of the main loop
+*
+         K = K + KSTEP
+         GO TO 50
+*
+      END IF
+*
+   90 CONTINUE
+      RETURN
+*
+*     End of ZHETF2
+*
+      END
 *> \brief \b ZHETRD
 *
 *  =========== DOCUMENTATION ===========
@@ -25906,6 +26800,1220 @@
       RETURN
 *
 *     End of ZHETRD
+*
+      END
+*> \brief \b ZHETRF
+*
+*  =========== DOCUMENTATION ===========
+*
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
+*
+*> \htmlonly
+*> Download ZHETRF + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zhetrf.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zhetrf.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zhetrf.f">
+*> [TXT]</a>
+*> \endhtmlonly
+*
+*  Definition:
+*  ===========
+*
+*       SUBROUTINE ZHETRF( UPLO, N, A, LDA, IPIV, WORK, LWORK, INFO )
+*
+*       .. Scalar Arguments ..
+*       CHARACTER          UPLO
+*       INTEGER            INFO, LDA, LWORK, N
+*       ..
+*       .. Array Arguments ..
+*       INTEGER            IPIV( * )
+*       COMPLEX*16         A( LDA, * ), WORK( * )
+*       ..
+*
+*
+*> \par Purpose:
+*  =============
+*>
+*> \verbatim
+*>
+*> ZHETRF computes the factorization of a complex Hermitian matrix A
+*> using the Bunch-Kaufman diagonal pivoting method.  The form of the
+*> factorization is
+*>
+*>    A = U*D*U**H  or  A = L*D*L**H
+*>
+*> where U (or L) is a product of permutation and unit upper (lower)
+*> triangular matrices, and D is Hermitian and block diagonal with
+*> 1-by-1 and 2-by-2 diagonal blocks.
+*>
+*> This is the blocked version of the algorithm, calling Level 3 BLAS.
+*> \endverbatim
+*
+*  Arguments:
+*  ==========
+*
+*> \param[in] UPLO
+*> \verbatim
+*>          UPLO is CHARACTER*1
+*>          = 'U':  Upper triangle of A is stored;
+*>          = 'L':  Lower triangle of A is stored.
+*> \endverbatim
+*>
+*> \param[in] N
+*> \verbatim
+*>          N is INTEGER
+*>          The order of the matrix A.  N >= 0.
+*> \endverbatim
+*>
+*> \param[in,out] A
+*> \verbatim
+*>          A is COMPLEX*16 array, dimension (LDA,N)
+*>          On entry, the Hermitian matrix A.  If UPLO = 'U', the leading
+*>          N-by-N upper triangular part of A contains the upper
+*>          triangular part of the matrix A, and the strictly lower
+*>          triangular part of A is not referenced.  If UPLO = 'L', the
+*>          leading N-by-N lower triangular part of A contains the lower
+*>          triangular part of the matrix A, and the strictly upper
+*>          triangular part of A is not referenced.
+*>
+*>          On exit, the block diagonal matrix D and the multipliers used
+*>          to obtain the factor U or L (see below for further details).
+*> \endverbatim
+*>
+*> \param[in] LDA
+*> \verbatim
+*>          LDA is INTEGER
+*>          The leading dimension of the array A.  LDA >= max(1,N).
+*> \endverbatim
+*>
+*> \param[out] IPIV
+*> \verbatim
+*>          IPIV is INTEGER array, dimension (N)
+*>          Details of the interchanges and the block structure of D.
+*>          If IPIV(k) > 0, then rows and columns k and IPIV(k) were
+*>          interchanged and D(k,k) is a 1-by-1 diagonal block.
+*>          If UPLO = 'U' and IPIV(k) = IPIV(k-1) < 0, then rows and
+*>          columns k-1 and -IPIV(k) were interchanged and D(k-1:k,k-1:k)
+*>          is a 2-by-2 diagonal block.  If UPLO = 'L' and IPIV(k) =
+*>          IPIV(k+1) < 0, then rows and columns k+1 and -IPIV(k) were
+*>          interchanged and D(k:k+1,k:k+1) is a 2-by-2 diagonal block.
+*> \endverbatim
+*>
+*> \param[out] WORK
+*> \verbatim
+*>          WORK is COMPLEX*16 array, dimension (MAX(1,LWORK))
+*>          On exit, if INFO = 0, WORK(1) returns the optimal LWORK.
+*> \endverbatim
+*>
+*> \param[in] LWORK
+*> \verbatim
+*>          LWORK is INTEGER
+*>          The length of WORK.  LWORK >=1.  For best performance
+*>          LWORK >= N*NB, where NB is the block size returned by ILAENV.
+*> \endverbatim
+*>
+*> \param[out] INFO
+*> \verbatim
+*>          INFO is INTEGER
+*>          = 0:  successful exit
+*>          < 0:  if INFO = -i, the i-th argument had an illegal value
+*>          > 0:  if INFO = i, D(i,i) is exactly zero.  The factorization
+*>                has been completed, but the block diagonal matrix D is
+*>                exactly singular, and division by zero will occur if it
+*>                is used to solve a system of equations.
+*> \endverbatim
+*
+*  Authors:
+*  ========
+*
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
+*
+*> \ingroup hetrf
+*
+*> \par Further Details:
+*  =====================
+*>
+*> \verbatim
+*>
+*>  If UPLO = 'U', then A = U*D*U**H, where
+*>     U = P(n)*U(n)* ... *P(k)U(k)* ...,
+*>  i.e., U is a product of terms P(k)*U(k), where k decreases from n to
+*>  1 in steps of 1 or 2, and D is a block diagonal matrix with 1-by-1
+*>  and 2-by-2 diagonal blocks D(k).  P(k) is a permutation matrix as
+*>  defined by IPIV(k), and U(k) is a unit upper triangular matrix, such
+*>  that if the diagonal block D(k) is of order s (s = 1 or 2), then
+*>
+*>             (   I    v    0   )   k-s
+*>     U(k) =  (   0    I    0   )   s
+*>             (   0    0    I   )   n-k
+*>                k-s   s   n-k
+*>
+*>  If s = 1, D(k) overwrites A(k,k), and v overwrites A(1:k-1,k).
+*>  If s = 2, the upper triangle of D(k) overwrites A(k-1,k-1), A(k-1,k),
+*>  and A(k,k), and v overwrites A(1:k-2,k-1:k).
+*>
+*>  If UPLO = 'L', then A = L*D*L**H, where
+*>     L = P(1)*L(1)* ... *P(k)*L(k)* ...,
+*>  i.e., L is a product of terms P(k)*L(k), where k increases from 1 to
+*>  n in steps of 1 or 2, and D is a block diagonal matrix with 1-by-1
+*>  and 2-by-2 diagonal blocks D(k).  P(k) is a permutation matrix as
+*>  defined by IPIV(k), and L(k) is a unit lower triangular matrix, such
+*>  that if the diagonal block D(k) is of order s (s = 1 or 2), then
+*>
+*>             (   I    0     0   )  k-1
+*>     L(k) =  (   0    I     0   )  s
+*>             (   0    v     I   )  n-k-s+1
+*>                k-1   s  n-k-s+1
+*>
+*>  If s = 1, D(k) overwrites A(k,k), and v overwrites A(k+1:n,k).
+*>  If s = 2, the lower triangle of D(k) overwrites A(k,k), A(k+1,k),
+*>  and A(k+1,k+1), and v overwrites A(k+2:n,k:k+1).
+*> \endverbatim
+*>
+*  =====================================================================
+      SUBROUTINE ZHETRF( UPLO, N, A, LDA, IPIV, WORK, LWORK, INFO )
+*
+*  -- LAPACK computational routine --
+*  -- LAPACK is a software package provided by Univ. of Tennessee,    --
+*  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
+*
+*     .. Scalar Arguments ..
+      CHARACTER          UPLO
+      INTEGER            INFO, LDA, LWORK, N
+*     ..
+*     .. Array Arguments ..
+      INTEGER            IPIV( * )
+      COMPLEX*16         A( LDA, * ), WORK( * )
+*     ..
+*
+*  =====================================================================
+*
+*     .. Local Scalars ..
+      LOGICAL            LQUERY, UPPER
+      INTEGER            IINFO, IWS, J, K, KB, LDWORK, LWKOPT, NB, NBMIN
+*     ..
+*     .. External Functions ..
+      LOGICAL            LSAME
+      INTEGER            ILAENV
+      EXTERNAL           LSAME, ILAENV
+*     ..
+*     .. External Subroutines ..
+      EXTERNAL           XERBLA, ZHETF2, ZLAHEF
+*     ..
+*     .. Intrinsic Functions ..
+      INTRINSIC          MAX
+*     ..
+*     .. Executable Statements ..
+*
+*     Test the input parameters.
+*
+      INFO = 0
+      UPPER = LSAME( UPLO, 'U' )
+      LQUERY = ( LWORK.EQ.-1 )
+      IF( .NOT.UPPER .AND. .NOT.LSAME( UPLO, 'L' ) ) THEN
+         INFO = -1
+      ELSE IF( N.LT.0 ) THEN
+         INFO = -2
+      ELSE IF( LDA.LT.MAX( 1, N ) ) THEN
+         INFO = -4
+      ELSE IF( LWORK.LT.1 .AND. .NOT.LQUERY ) THEN
+         INFO = -7
+      END IF
+*
+      IF( INFO.EQ.0 ) THEN
+*
+*        Determine the block size
+*
+         NB = ILAENV( 1, 'ZHETRF', UPLO, N, -1, -1, -1 )
+         LWKOPT = N*NB
+         WORK( 1 ) = LWKOPT
+      END IF
+*
+      IF( INFO.NE.0 ) THEN
+         CALL XERBLA( 'ZHETRF', -INFO )
+         RETURN
+      ELSE IF( LQUERY ) THEN
+         RETURN
+      END IF
+*
+      NBMIN = 2
+      LDWORK = N
+      IF( NB.GT.1 .AND. NB.LT.N ) THEN
+         IWS = LDWORK*NB
+         IF( LWORK.LT.IWS ) THEN
+            NB = MAX( LWORK / LDWORK, 1 )
+            NBMIN = MAX( 2, ILAENV( 2, 'ZHETRF', UPLO, N, -1, -1, -1 ) )
+         END IF
+      ELSE
+         IWS = 1
+      END IF
+      IF( NB.LT.NBMIN )
+     $   NB = N
+*
+      IF( UPPER ) THEN
+*
+*        Factorize A as U*D*U**H using the upper triangle of A
+*
+*        K is the main loop index, decreasing from N to 1 in steps of
+*        KB, where KB is the number of columns factorized by ZLAHEF;
+*        KB is either NB or NB-1, or K for the last block
+*
+         K = N
+   10    CONTINUE
+*
+*        If K < 1, exit from loop
+*
+         IF( K.LT.1 )
+     $      GO TO 40
+*
+         IF( K.GT.NB ) THEN
+*
+*           Factorize columns k-kb+1:k of A and use blocked code to
+*           update columns 1:k-kb
+*
+            CALL ZLAHEF( UPLO, K, NB, KB, A, LDA, IPIV, WORK, N, IINFO )
+         ELSE
+*
+*           Use unblocked code to factorize columns 1:k of A
+*
+            CALL ZHETF2( UPLO, K, A, LDA, IPIV, IINFO )
+            KB = K
+         END IF
+*
+*        Set INFO on the first occurrence of a zero pivot
+*
+         IF( INFO.EQ.0 .AND. IINFO.GT.0 )
+     $      INFO = IINFO
+*
+*        Decrease K and return to the start of the main loop
+*
+         K = K - KB
+         GO TO 10
+*
+      ELSE
+*
+*        Factorize A as L*D*L**H using the lower triangle of A
+*
+*        K is the main loop index, increasing from 1 to N in steps of
+*        KB, where KB is the number of columns factorized by ZLAHEF;
+*        KB is either NB or NB-1, or N-K+1 for the last block
+*
+         K = 1
+   20    CONTINUE
+*
+*        If K > N, exit from loop
+*
+         IF( K.GT.N )
+     $      GO TO 40
+*
+         IF( K.LE.N-NB ) THEN
+*
+*           Factorize columns k:k+kb-1 of A and use blocked code to
+*           update columns k+kb:n
+*
+            CALL ZLAHEF( UPLO, N-K+1, NB, KB, A( K, K ), LDA, IPIV( K ),
+     $                   WORK, N, IINFO )
+         ELSE
+*
+*           Use unblocked code to factorize columns k:n of A
+*
+            CALL ZHETF2( UPLO, N-K+1, A( K, K ), LDA, IPIV( K ), IINFO )
+            KB = N - K + 1
+         END IF
+*
+*        Set INFO on the first occurrence of a zero pivot
+*
+         IF( INFO.EQ.0 .AND. IINFO.GT.0 )
+     $      INFO = IINFO + K - 1
+*
+*        Adjust IPIV
+*
+         DO 30 J = K, K + KB - 1
+            IF( IPIV( J ).GT.0 ) THEN
+               IPIV( J ) = IPIV( J ) + K - 1
+            ELSE
+               IPIV( J ) = IPIV( J ) - K + 1
+            END IF
+   30    CONTINUE
+*
+*        Increase K and return to the start of the main loop
+*
+         K = K + KB
+         GO TO 20
+*
+      END IF
+*
+   40 CONTINUE
+      WORK( 1 ) = LWKOPT
+      RETURN
+*
+*     End of ZHETRF
+*
+      END
+*> \brief \b ZHETRI
+*
+*  =========== DOCUMENTATION ===========
+*
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
+*
+*> \htmlonly
+*> Download ZHETRI + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zhetri.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zhetri.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zhetri.f">
+*> [TXT]</a>
+*> \endhtmlonly
+*
+*  Definition:
+*  ===========
+*
+*       SUBROUTINE ZHETRI( UPLO, N, A, LDA, IPIV, WORK, INFO )
+*
+*       .. Scalar Arguments ..
+*       CHARACTER          UPLO
+*       INTEGER            INFO, LDA, N
+*       ..
+*       .. Array Arguments ..
+*       INTEGER            IPIV( * )
+*       COMPLEX*16         A( LDA, * ), WORK( * )
+*       ..
+*
+*
+*> \par Purpose:
+*  =============
+*>
+*> \verbatim
+*>
+*> ZHETRI computes the inverse of a complex Hermitian indefinite matrix
+*> A using the factorization A = U*D*U**H or A = L*D*L**H computed by
+*> ZHETRF.
+*> \endverbatim
+*
+*  Arguments:
+*  ==========
+*
+*> \param[in] UPLO
+*> \verbatim
+*>          UPLO is CHARACTER*1
+*>          Specifies whether the details of the factorization are stored
+*>          as an upper or lower triangular matrix.
+*>          = 'U':  Upper triangular, form is A = U*D*U**H;
+*>          = 'L':  Lower triangular, form is A = L*D*L**H.
+*> \endverbatim
+*>
+*> \param[in] N
+*> \verbatim
+*>          N is INTEGER
+*>          The order of the matrix A.  N >= 0.
+*> \endverbatim
+*>
+*> \param[in,out] A
+*> \verbatim
+*>          A is COMPLEX*16 array, dimension (LDA,N)
+*>          On entry, the block diagonal matrix D and the multipliers
+*>          used to obtain the factor U or L as computed by ZHETRF.
+*>
+*>          On exit, if INFO = 0, the (Hermitian) inverse of the original
+*>          matrix.  If UPLO = 'U', the upper triangular part of the
+*>          inverse is formed and the part of A below the diagonal is not
+*>          referenced; if UPLO = 'L' the lower triangular part of the
+*>          inverse is formed and the part of A above the diagonal is
+*>          not referenced.
+*> \endverbatim
+*>
+*> \param[in] LDA
+*> \verbatim
+*>          LDA is INTEGER
+*>          The leading dimension of the array A.  LDA >= max(1,N).
+*> \endverbatim
+*>
+*> \param[in] IPIV
+*> \verbatim
+*>          IPIV is INTEGER array, dimension (N)
+*>          Details of the interchanges and the block structure of D
+*>          as determined by ZHETRF.
+*> \endverbatim
+*>
+*> \param[out] WORK
+*> \verbatim
+*>          WORK is COMPLEX*16 array, dimension (N)
+*> \endverbatim
+*>
+*> \param[out] INFO
+*> \verbatim
+*>          INFO is INTEGER
+*>          = 0: successful exit
+*>          < 0: if INFO = -i, the i-th argument had an illegal value
+*>          > 0: if INFO = i, D(i,i) = 0; the matrix is singular and its
+*>               inverse could not be computed.
+*> \endverbatim
+*
+*  Authors:
+*  ========
+*
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
+*
+*> \ingroup hetri
+*
+*  =====================================================================
+      SUBROUTINE ZHETRI( UPLO, N, A, LDA, IPIV, WORK, INFO )
+*
+*  -- LAPACK computational routine --
+*  -- LAPACK is a software package provided by Univ. of Tennessee,    --
+*  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
+*
+*     .. Scalar Arguments ..
+      CHARACTER          UPLO
+      INTEGER            INFO, LDA, N
+*     ..
+*     .. Array Arguments ..
+      INTEGER            IPIV( * )
+      COMPLEX*16         A( LDA, * ), WORK( * )
+*     ..
+*
+*  =====================================================================
+*
+*     .. Parameters ..
+      DOUBLE PRECISION   ONE
+      COMPLEX*16         CONE, ZERO
+      PARAMETER          ( ONE = 1.0D+0, CONE = ( 1.0D+0, 0.0D+0 ),
+     $                   ZERO = ( 0.0D+0, 0.0D+0 ) )
+*     ..
+*     .. Local Scalars ..
+      LOGICAL            UPPER
+      INTEGER            J, K, KP, KSTEP
+      DOUBLE PRECISION   AK, AKP1, D, T
+      COMPLEX*16         AKKP1, TEMP
+*     ..
+*     .. External Functions ..
+      LOGICAL            LSAME
+      COMPLEX*16         ZDOTC
+      EXTERNAL           LSAME, ZDOTC
+*     ..
+*     .. External Subroutines ..
+      EXTERNAL           XERBLA, ZCOPY, ZHEMV, ZSWAP
+*     ..
+*     .. Intrinsic Functions ..
+      INTRINSIC          ABS, DBLE, DCONJG, MAX
+*     ..
+*     .. Executable Statements ..
+*
+*     Test the input parameters.
+*
+      INFO = 0
+      UPPER = LSAME( UPLO, 'U' )
+      IF( .NOT.UPPER .AND. .NOT.LSAME( UPLO, 'L' ) ) THEN
+         INFO = -1
+      ELSE IF( N.LT.0 ) THEN
+         INFO = -2
+      ELSE IF( LDA.LT.MAX( 1, N ) ) THEN
+         INFO = -4
+      END IF
+      IF( INFO.NE.0 ) THEN
+         CALL XERBLA( 'ZHETRI', -INFO )
+         RETURN
+      END IF
+*
+*     Quick return if possible
+*
+      IF( N.EQ.0 )
+     $   RETURN
+*
+*     Check that the diagonal matrix D is nonsingular.
+*
+      IF( UPPER ) THEN
+*
+*        Upper triangular storage: examine D from bottom to top
+*
+         DO 10 INFO = N, 1, -1
+            IF( IPIV( INFO ).GT.0 .AND. A( INFO, INFO ).EQ.ZERO )
+     $         RETURN
+   10    CONTINUE
+      ELSE
+*
+*        Lower triangular storage: examine D from top to bottom.
+*
+         DO 20 INFO = 1, N
+            IF( IPIV( INFO ).GT.0 .AND. A( INFO, INFO ).EQ.ZERO )
+     $         RETURN
+   20    CONTINUE
+      END IF
+      INFO = 0
+*
+      IF( UPPER ) THEN
+*
+*        Compute inv(A) from the factorization A = U*D*U**H.
+*
+*        K is the main loop index, increasing from 1 to N in steps of
+*        1 or 2, depending on the size of the diagonal blocks.
+*
+         K = 1
+   30    CONTINUE
+*
+*        If K > N, exit from loop.
+*
+         IF( K.GT.N )
+     $      GO TO 50
+*
+         IF( IPIV( K ).GT.0 ) THEN
+*
+*           1 x 1 diagonal block
+*
+*           Invert the diagonal block.
+*
+            A( K, K ) = ONE / DBLE( A( K, K ) )
+*
+*           Compute column K of the inverse.
+*
+            IF( K.GT.1 ) THEN
+               CALL ZCOPY( K-1, A( 1, K ), 1, WORK, 1 )
+               CALL ZHEMV( UPLO, K-1, -CONE, A, LDA, WORK, 1, ZERO,
+     $                     A( 1, K ), 1 )
+               A( K, K ) = A( K, K ) - DBLE( ZDOTC( K-1, WORK, 1, A( 1,
+     $                     K ), 1 ) )
+            END IF
+            KSTEP = 1
+         ELSE
+*
+*           2 x 2 diagonal block
+*
+*           Invert the diagonal block.
+*
+            T = ABS( A( K, K+1 ) )
+            AK = DBLE( A( K, K ) ) / T
+            AKP1 = DBLE( A( K+1, K+1 ) ) / T
+            AKKP1 = A( K, K+1 ) / T
+            D = T*( AK*AKP1-ONE )
+            A( K, K ) = AKP1 / D
+            A( K+1, K+1 ) = AK / D
+            A( K, K+1 ) = -AKKP1 / D
+*
+*           Compute columns K and K+1 of the inverse.
+*
+            IF( K.GT.1 ) THEN
+               CALL ZCOPY( K-1, A( 1, K ), 1, WORK, 1 )
+               CALL ZHEMV( UPLO, K-1, -CONE, A, LDA, WORK, 1, ZERO,
+     $                     A( 1, K ), 1 )
+               A( K, K ) = A( K, K ) - DBLE( ZDOTC( K-1, WORK, 1, A( 1,
+     $                     K ), 1 ) )
+               A( K, K+1 ) = A( K, K+1 ) -
+     $                       ZDOTC( K-1, A( 1, K ), 1, A( 1, K+1 ), 1 )
+               CALL ZCOPY( K-1, A( 1, K+1 ), 1, WORK, 1 )
+               CALL ZHEMV( UPLO, K-1, -CONE, A, LDA, WORK, 1, ZERO,
+     $                     A( 1, K+1 ), 1 )
+               A( K+1, K+1 ) = A( K+1, K+1 ) -
+     $                         DBLE( ZDOTC( K-1, WORK, 1, A( 1, K+1 ),
+     $                         1 ) )
+            END IF
+            KSTEP = 2
+         END IF
+*
+         KP = ABS( IPIV( K ) )
+         IF( KP.NE.K ) THEN
+*
+*           Interchange rows and columns K and KP in the leading
+*           submatrix A(1:k+1,1:k+1)
+*
+            CALL ZSWAP( KP-1, A( 1, K ), 1, A( 1, KP ), 1 )
+            DO 40 J = KP + 1, K - 1
+               TEMP = DCONJG( A( J, K ) )
+               A( J, K ) = DCONJG( A( KP, J ) )
+               A( KP, J ) = TEMP
+   40       CONTINUE
+            A( KP, K ) = DCONJG( A( KP, K ) )
+            TEMP = A( K, K )
+            A( K, K ) = A( KP, KP )
+            A( KP, KP ) = TEMP
+            IF( KSTEP.EQ.2 ) THEN
+               TEMP = A( K, K+1 )
+               A( K, K+1 ) = A( KP, K+1 )
+               A( KP, K+1 ) = TEMP
+            END IF
+         END IF
+*
+         K = K + KSTEP
+         GO TO 30
+   50    CONTINUE
+*
+      ELSE
+*
+*        Compute inv(A) from the factorization A = L*D*L**H.
+*
+*        K is the main loop index, increasing from 1 to N in steps of
+*        1 or 2, depending on the size of the diagonal blocks.
+*
+         K = N
+   60    CONTINUE
+*
+*        If K < 1, exit from loop.
+*
+         IF( K.LT.1 )
+     $      GO TO 80
+*
+         IF( IPIV( K ).GT.0 ) THEN
+*
+*           1 x 1 diagonal block
+*
+*           Invert the diagonal block.
+*
+            A( K, K ) = ONE / DBLE( A( K, K ) )
+*
+*           Compute column K of the inverse.
+*
+            IF( K.LT.N ) THEN
+               CALL ZCOPY( N-K, A( K+1, K ), 1, WORK, 1 )
+               CALL ZHEMV( UPLO, N-K, -CONE, A( K+1, K+1 ), LDA, WORK,
+     $                     1, ZERO, A( K+1, K ), 1 )
+               A( K, K ) = A( K, K ) - DBLE( ZDOTC( N-K, WORK, 1,
+     $                     A( K+1, K ), 1 ) )
+            END IF
+            KSTEP = 1
+         ELSE
+*
+*           2 x 2 diagonal block
+*
+*           Invert the diagonal block.
+*
+            T = ABS( A( K, K-1 ) )
+            AK = DBLE( A( K-1, K-1 ) ) / T
+            AKP1 = DBLE( A( K, K ) ) / T
+            AKKP1 = A( K, K-1 ) / T
+            D = T*( AK*AKP1-ONE )
+            A( K-1, K-1 ) = AKP1 / D
+            A( K, K ) = AK / D
+            A( K, K-1 ) = -AKKP1 / D
+*
+*           Compute columns K-1 and K of the inverse.
+*
+            IF( K.LT.N ) THEN
+               CALL ZCOPY( N-K, A( K+1, K ), 1, WORK, 1 )
+               CALL ZHEMV( UPLO, N-K, -CONE, A( K+1, K+1 ), LDA, WORK,
+     $                     1, ZERO, A( K+1, K ), 1 )
+               A( K, K ) = A( K, K ) - DBLE( ZDOTC( N-K, WORK, 1,
+     $                     A( K+1, K ), 1 ) )
+               A( K, K-1 ) = A( K, K-1 ) -
+     $                       ZDOTC( N-K, A( K+1, K ), 1, A( K+1, K-1 ),
+     $                       1 )
+               CALL ZCOPY( N-K, A( K+1, K-1 ), 1, WORK, 1 )
+               CALL ZHEMV( UPLO, N-K, -CONE, A( K+1, K+1 ), LDA, WORK,
+     $                     1, ZERO, A( K+1, K-1 ), 1 )
+               A( K-1, K-1 ) = A( K-1, K-1 ) -
+     $                         DBLE( ZDOTC( N-K, WORK, 1, A( K+1, K-1 ),
+     $                         1 ) )
+            END IF
+            KSTEP = 2
+         END IF
+*
+         KP = ABS( IPIV( K ) )
+         IF( KP.NE.K ) THEN
+*
+*           Interchange rows and columns K and KP in the trailing
+*           submatrix A(k-1:n,k-1:n)
+*
+            IF( KP.LT.N )
+     $         CALL ZSWAP( N-KP, A( KP+1, K ), 1, A( KP+1, KP ), 1 )
+            DO 70 J = K + 1, KP - 1
+               TEMP = DCONJG( A( J, K ) )
+               A( J, K ) = DCONJG( A( KP, J ) )
+               A( KP, J ) = TEMP
+   70       CONTINUE
+            A( KP, K ) = DCONJG( A( KP, K ) )
+            TEMP = A( K, K )
+            A( K, K ) = A( KP, KP )
+            A( KP, KP ) = TEMP
+            IF( KSTEP.EQ.2 ) THEN
+               TEMP = A( K, K-1 )
+               A( K, K-1 ) = A( KP, K-1 )
+               A( KP, K-1 ) = TEMP
+            END IF
+         END IF
+*
+         K = K - KSTEP
+         GO TO 60
+   80    CONTINUE
+      END IF
+*
+      RETURN
+*
+*     End of ZHETRI
+*
+      END
+*> \brief \b ZHETRS
+*
+*  =========== DOCUMENTATION ===========
+*
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
+*
+*> \htmlonly
+*> Download ZHETRS + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zhetrs.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zhetrs.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zhetrs.f">
+*> [TXT]</a>
+*> \endhtmlonly
+*
+*  Definition:
+*  ===========
+*
+*       SUBROUTINE ZHETRS( UPLO, N, NRHS, A, LDA, IPIV, B, LDB, INFO )
+*
+*       .. Scalar Arguments ..
+*       CHARACTER          UPLO
+*       INTEGER            INFO, LDA, LDB, N, NRHS
+*       ..
+*       .. Array Arguments ..
+*       INTEGER            IPIV( * )
+*       COMPLEX*16         A( LDA, * ), B( LDB, * )
+*       ..
+*
+*
+*> \par Purpose:
+*  =============
+*>
+*> \verbatim
+*>
+*> ZHETRS solves a system of linear equations A*X = B with a complex
+*> Hermitian matrix A using the factorization A = U*D*U**H or
+*> A = L*D*L**H computed by ZHETRF.
+*> \endverbatim
+*
+*  Arguments:
+*  ==========
+*
+*> \param[in] UPLO
+*> \verbatim
+*>          UPLO is CHARACTER*1
+*>          Specifies whether the details of the factorization are stored
+*>          as an upper or lower triangular matrix.
+*>          = 'U':  Upper triangular, form is A = U*D*U**H;
+*>          = 'L':  Lower triangular, form is A = L*D*L**H.
+*> \endverbatim
+*>
+*> \param[in] N
+*> \verbatim
+*>          N is INTEGER
+*>          The order of the matrix A.  N >= 0.
+*> \endverbatim
+*>
+*> \param[in] NRHS
+*> \verbatim
+*>          NRHS is INTEGER
+*>          The number of right hand sides, i.e., the number of columns
+*>          of the matrix B.  NRHS >= 0.
+*> \endverbatim
+*>
+*> \param[in] A
+*> \verbatim
+*>          A is COMPLEX*16 array, dimension (LDA,N)
+*>          The block diagonal matrix D and the multipliers used to
+*>          obtain the factor U or L as computed by ZHETRF.
+*> \endverbatim
+*>
+*> \param[in] LDA
+*> \verbatim
+*>          LDA is INTEGER
+*>          The leading dimension of the array A.  LDA >= max(1,N).
+*> \endverbatim
+*>
+*> \param[in] IPIV
+*> \verbatim
+*>          IPIV is INTEGER array, dimension (N)
+*>          Details of the interchanges and the block structure of D
+*>          as determined by ZHETRF.
+*> \endverbatim
+*>
+*> \param[in,out] B
+*> \verbatim
+*>          B is COMPLEX*16 array, dimension (LDB,NRHS)
+*>          On entry, the right hand side matrix B.
+*>          On exit, the solution matrix X.
+*> \endverbatim
+*>
+*> \param[in] LDB
+*> \verbatim
+*>          LDB is INTEGER
+*>          The leading dimension of the array B.  LDB >= max(1,N).
+*> \endverbatim
+*>
+*> \param[out] INFO
+*> \verbatim
+*>          INFO is INTEGER
+*>          = 0:  successful exit
+*>          < 0:  if INFO = -i, the i-th argument had an illegal value
+*> \endverbatim
+*
+*  Authors:
+*  ========
+*
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
+*
+*> \ingroup hetrs
+*
+*  =====================================================================
+      SUBROUTINE ZHETRS( UPLO, N, NRHS, A, LDA, IPIV, B, LDB, INFO )
+*
+*  -- LAPACK computational routine --
+*  -- LAPACK is a software package provided by Univ. of Tennessee,    --
+*  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
+*
+*     .. Scalar Arguments ..
+      CHARACTER          UPLO
+      INTEGER            INFO, LDA, LDB, N, NRHS
+*     ..
+*     .. Array Arguments ..
+      INTEGER            IPIV( * )
+      COMPLEX*16         A( LDA, * ), B( LDB, * )
+*     ..
+*
+*  =====================================================================
+*
+*     .. Parameters ..
+      COMPLEX*16         ONE
+      PARAMETER          ( ONE = ( 1.0D+0, 0.0D+0 ) )
+*     ..
+*     .. Local Scalars ..
+      LOGICAL            UPPER
+      INTEGER            J, K, KP
+      DOUBLE PRECISION   S
+      COMPLEX*16         AK, AKM1, AKM1K, BK, BKM1, DENOM
+*     ..
+*     .. External Functions ..
+      LOGICAL            LSAME
+      EXTERNAL           LSAME
+*     ..
+*     .. External Subroutines ..
+      EXTERNAL           XERBLA, ZDSCAL, ZGEMV, ZGERU, ZLACGV, ZSWAP
+*     ..
+*     .. Intrinsic Functions ..
+      INTRINSIC          DBLE, DCONJG, MAX
+*     ..
+*     .. Executable Statements ..
+*
+      INFO = 0
+      UPPER = LSAME( UPLO, 'U' )
+      IF( .NOT.UPPER .AND. .NOT.LSAME( UPLO, 'L' ) ) THEN
+         INFO = -1
+      ELSE IF( N.LT.0 ) THEN
+         INFO = -2
+      ELSE IF( NRHS.LT.0 ) THEN
+         INFO = -3
+      ELSE IF( LDA.LT.MAX( 1, N ) ) THEN
+         INFO = -5
+      ELSE IF( LDB.LT.MAX( 1, N ) ) THEN
+         INFO = -8
+      END IF
+      IF( INFO.NE.0 ) THEN
+         CALL XERBLA( 'ZHETRS', -INFO )
+         RETURN
+      END IF
+*
+*     Quick return if possible
+*
+      IF( N.EQ.0 .OR. NRHS.EQ.0 )
+     $   RETURN
+*
+      IF( UPPER ) THEN
+*
+*        Solve A*X = B, where A = U*D*U**H.
+*
+*        First solve U*D*X = B, overwriting B with X.
+*
+*        K is the main loop index, decreasing from N to 1 in steps of
+*        1 or 2, depending on the size of the diagonal blocks.
+*
+         K = N
+   10    CONTINUE
+*
+*        If K < 1, exit from loop.
+*
+         IF( K.LT.1 )
+     $      GO TO 30
+*
+         IF( IPIV( K ).GT.0 ) THEN
+*
+*           1 x 1 diagonal block
+*
+*           Interchange rows K and IPIV(K).
+*
+            KP = IPIV( K )
+            IF( KP.NE.K )
+     $         CALL ZSWAP( NRHS, B( K, 1 ), LDB, B( KP, 1 ), LDB )
+*
+*           Multiply by inv(U(K)), where U(K) is the transformation
+*           stored in column K of A.
+*
+            CALL ZGERU( K-1, NRHS, -ONE, A( 1, K ), 1, B( K, 1 ), LDB,
+     $                  B( 1, 1 ), LDB )
+*
+*           Multiply by the inverse of the diagonal block.
+*
+            S = DBLE( ONE ) / DBLE( A( K, K ) )
+            CALL ZDSCAL( NRHS, S, B( K, 1 ), LDB )
+            K = K - 1
+         ELSE
+*
+*           2 x 2 diagonal block
+*
+*           Interchange rows K-1 and -IPIV(K).
+*
+            KP = -IPIV( K )
+            IF( KP.NE.K-1 )
+     $         CALL ZSWAP( NRHS, B( K-1, 1 ), LDB, B( KP, 1 ), LDB )
+*
+*           Multiply by inv(U(K)), where U(K) is the transformation
+*           stored in columns K-1 and K of A.
+*
+            CALL ZGERU( K-2, NRHS, -ONE, A( 1, K ), 1, B( K, 1 ), LDB,
+     $                  B( 1, 1 ), LDB )
+            CALL ZGERU( K-2, NRHS, -ONE, A( 1, K-1 ), 1, B( K-1, 1 ),
+     $                  LDB, B( 1, 1 ), LDB )
+*
+*           Multiply by the inverse of the diagonal block.
+*
+            AKM1K = A( K-1, K )
+            AKM1 = A( K-1, K-1 ) / AKM1K
+            AK = A( K, K ) / DCONJG( AKM1K )
+            DENOM = AKM1*AK - ONE
+            DO 20 J = 1, NRHS
+               BKM1 = B( K-1, J ) / AKM1K
+               BK = B( K, J ) / DCONJG( AKM1K )
+               B( K-1, J ) = ( AK*BKM1-BK ) / DENOM
+               B( K, J ) = ( AKM1*BK-BKM1 ) / DENOM
+   20       CONTINUE
+            K = K - 2
+         END IF
+*
+         GO TO 10
+   30    CONTINUE
+*
+*        Next solve U**H *X = B, overwriting B with X.
+*
+*        K is the main loop index, increasing from 1 to N in steps of
+*        1 or 2, depending on the size of the diagonal blocks.
+*
+         K = 1
+   40    CONTINUE
+*
+*        If K > N, exit from loop.
+*
+         IF( K.GT.N )
+     $      GO TO 50
+*
+         IF( IPIV( K ).GT.0 ) THEN
+*
+*           1 x 1 diagonal block
+*
+*           Multiply by inv(U**H(K)), where U(K) is the transformation
+*           stored in column K of A.
+*
+            IF( K.GT.1 ) THEN
+               CALL ZLACGV( NRHS, B( K, 1 ), LDB )
+               CALL ZGEMV( 'Conjugate transpose', K-1, NRHS, -ONE, B,
+     $                     LDB, A( 1, K ), 1, ONE, B( K, 1 ), LDB )
+               CALL ZLACGV( NRHS, B( K, 1 ), LDB )
+            END IF
+*
+*           Interchange rows K and IPIV(K).
+*
+            KP = IPIV( K )
+            IF( KP.NE.K )
+     $         CALL ZSWAP( NRHS, B( K, 1 ), LDB, B( KP, 1 ), LDB )
+            K = K + 1
+         ELSE
+*
+*           2 x 2 diagonal block
+*
+*           Multiply by inv(U**H(K+1)), where U(K+1) is the transformation
+*           stored in columns K and K+1 of A.
+*
+            IF( K.GT.1 ) THEN
+               CALL ZLACGV( NRHS, B( K, 1 ), LDB )
+               CALL ZGEMV( 'Conjugate transpose', K-1, NRHS, -ONE, B,
+     $                     LDB, A( 1, K ), 1, ONE, B( K, 1 ), LDB )
+               CALL ZLACGV( NRHS, B( K, 1 ), LDB )
+*
+               CALL ZLACGV( NRHS, B( K+1, 1 ), LDB )
+               CALL ZGEMV( 'Conjugate transpose', K-1, NRHS, -ONE, B,
+     $                     LDB, A( 1, K+1 ), 1, ONE, B( K+1, 1 ), LDB )
+               CALL ZLACGV( NRHS, B( K+1, 1 ), LDB )
+            END IF
+*
+*           Interchange rows K and -IPIV(K).
+*
+            KP = -IPIV( K )
+            IF( KP.NE.K )
+     $         CALL ZSWAP( NRHS, B( K, 1 ), LDB, B( KP, 1 ), LDB )
+            K = K + 2
+         END IF
+*
+         GO TO 40
+   50    CONTINUE
+*
+      ELSE
+*
+*        Solve A*X = B, where A = L*D*L**H.
+*
+*        First solve L*D*X = B, overwriting B with X.
+*
+*        K is the main loop index, increasing from 1 to N in steps of
+*        1 or 2, depending on the size of the diagonal blocks.
+*
+         K = 1
+   60    CONTINUE
+*
+*        If K > N, exit from loop.
+*
+         IF( K.GT.N )
+     $      GO TO 80
+*
+         IF( IPIV( K ).GT.0 ) THEN
+*
+*           1 x 1 diagonal block
+*
+*           Interchange rows K and IPIV(K).
+*
+            KP = IPIV( K )
+            IF( KP.NE.K )
+     $         CALL ZSWAP( NRHS, B( K, 1 ), LDB, B( KP, 1 ), LDB )
+*
+*           Multiply by inv(L(K)), where L(K) is the transformation
+*           stored in column K of A.
+*
+            IF( K.LT.N )
+     $         CALL ZGERU( N-K, NRHS, -ONE, A( K+1, K ), 1, B( K, 1 ),
+     $                     LDB, B( K+1, 1 ), LDB )
+*
+*           Multiply by the inverse of the diagonal block.
+*
+            S = DBLE( ONE ) / DBLE( A( K, K ) )
+            CALL ZDSCAL( NRHS, S, B( K, 1 ), LDB )
+            K = K + 1
+         ELSE
+*
+*           2 x 2 diagonal block
+*
+*           Interchange rows K+1 and -IPIV(K).
+*
+            KP = -IPIV( K )
+            IF( KP.NE.K+1 )
+     $         CALL ZSWAP( NRHS, B( K+1, 1 ), LDB, B( KP, 1 ), LDB )
+*
+*           Multiply by inv(L(K)), where L(K) is the transformation
+*           stored in columns K and K+1 of A.
+*
+            IF( K.LT.N-1 ) THEN
+               CALL ZGERU( N-K-1, NRHS, -ONE, A( K+2, K ), 1, B( K, 1 ),
+     $                     LDB, B( K+2, 1 ), LDB )
+               CALL ZGERU( N-K-1, NRHS, -ONE, A( K+2, K+1 ), 1,
+     $                     B( K+1, 1 ), LDB, B( K+2, 1 ), LDB )
+            END IF
+*
+*           Multiply by the inverse of the diagonal block.
+*
+            AKM1K = A( K+1, K )
+            AKM1 = A( K, K ) / DCONJG( AKM1K )
+            AK = A( K+1, K+1 ) / AKM1K
+            DENOM = AKM1*AK - ONE
+            DO 70 J = 1, NRHS
+               BKM1 = B( K, J ) / DCONJG( AKM1K )
+               BK = B( K+1, J ) / AKM1K
+               B( K, J ) = ( AK*BKM1-BK ) / DENOM
+               B( K+1, J ) = ( AKM1*BK-BKM1 ) / DENOM
+   70       CONTINUE
+            K = K + 2
+         END IF
+*
+         GO TO 60
+   80    CONTINUE
+*
+*        Next solve L**H *X = B, overwriting B with X.
+*
+*        K is the main loop index, decreasing from N to 1 in steps of
+*        1 or 2, depending on the size of the diagonal blocks.
+*
+         K = N
+   90    CONTINUE
+*
+*        If K < 1, exit from loop.
+*
+         IF( K.LT.1 )
+     $      GO TO 100
+*
+         IF( IPIV( K ).GT.0 ) THEN
+*
+*           1 x 1 diagonal block
+*
+*           Multiply by inv(L**H(K)), where L(K) is the transformation
+*           stored in column K of A.
+*
+            IF( K.LT.N ) THEN
+               CALL ZLACGV( NRHS, B( K, 1 ), LDB )
+               CALL ZGEMV( 'Conjugate transpose', N-K, NRHS, -ONE,
+     $                     B( K+1, 1 ), LDB, A( K+1, K ), 1, ONE,
+     $                     B( K, 1 ), LDB )
+               CALL ZLACGV( NRHS, B( K, 1 ), LDB )
+            END IF
+*
+*           Interchange rows K and IPIV(K).
+*
+            KP = IPIV( K )
+            IF( KP.NE.K )
+     $         CALL ZSWAP( NRHS, B( K, 1 ), LDB, B( KP, 1 ), LDB )
+            K = K - 1
+         ELSE
+*
+*           2 x 2 diagonal block
+*
+*           Multiply by inv(L**H(K-1)), where L(K-1) is the transformation
+*           stored in columns K-1 and K of A.
+*
+            IF( K.LT.N ) THEN
+               CALL ZLACGV( NRHS, B( K, 1 ), LDB )
+               CALL ZGEMV( 'Conjugate transpose', N-K, NRHS, -ONE,
+     $                     B( K+1, 1 ), LDB, A( K+1, K ), 1, ONE,
+     $                     B( K, 1 ), LDB )
+               CALL ZLACGV( NRHS, B( K, 1 ), LDB )
+*
+               CALL ZLACGV( NRHS, B( K-1, 1 ), LDB )
+               CALL ZGEMV( 'Conjugate transpose', N-K, NRHS, -ONE,
+     $                     B( K+1, 1 ), LDB, A( K+1, K-1 ), 1, ONE,
+     $                     B( K-1, 1 ), LDB )
+               CALL ZLACGV( NRHS, B( K-1, 1 ), LDB )
+            END IF
+*
+*           Interchange rows K and -IPIV(K).
+*
+            KP = -IPIV( K )
+            IF( KP.NE.K )
+     $         CALL ZSWAP( NRHS, B( K, 1 ), LDB, B( KP, 1 ), LDB )
+            K = K - 2
+         END IF
+*
+         GO TO 90
+  100    CONTINUE
+      END IF
+*
+      RETURN
+*
+*     End of ZHETRS
 *
       END
 *> \brief \b ZHGEQZ
@@ -26799,6 +28907,1759 @@
       RETURN
 *
 *     End of ZHGEQZ
+*
+      END
+*> \brief \b ZHPCON
+*
+*  =========== DOCUMENTATION ===========
+*
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
+*
+*> \htmlonly
+*> Download ZHPCON + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zhpcon.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zhpcon.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zhpcon.f">
+*> [TXT]</a>
+*> \endhtmlonly
+*
+*  Definition:
+*  ===========
+*
+*       SUBROUTINE ZHPCON( UPLO, N, AP, IPIV, ANORM, RCOND, WORK, INFO )
+*
+*       .. Scalar Arguments ..
+*       CHARACTER          UPLO
+*       INTEGER            INFO, N
+*       DOUBLE PRECISION   ANORM, RCOND
+*       ..
+*       .. Array Arguments ..
+*       INTEGER            IPIV( * )
+*       COMPLEX*16         AP( * ), WORK( * )
+*       ..
+*
+*
+*> \par Purpose:
+*  =============
+*>
+*> \verbatim
+*>
+*> ZHPCON estimates the reciprocal of the condition number of a complex
+*> Hermitian packed matrix A using the factorization A = U*D*U**H or
+*> A = L*D*L**H computed by ZHPTRF.
+*>
+*> An estimate is obtained for norm(inv(A)), and the reciprocal of the
+*> condition number is computed as RCOND = 1 / (ANORM * norm(inv(A))).
+*> \endverbatim
+*
+*  Arguments:
+*  ==========
+*
+*> \param[in] UPLO
+*> \verbatim
+*>          UPLO is CHARACTER*1
+*>          Specifies whether the details of the factorization are stored
+*>          as an upper or lower triangular matrix.
+*>          = 'U':  Upper triangular, form is A = U*D*U**H;
+*>          = 'L':  Lower triangular, form is A = L*D*L**H.
+*> \endverbatim
+*>
+*> \param[in] N
+*> \verbatim
+*>          N is INTEGER
+*>          The order of the matrix A.  N >= 0.
+*> \endverbatim
+*>
+*> \param[in] AP
+*> \verbatim
+*>          AP is COMPLEX*16 array, dimension (N*(N+1)/2)
+*>          The block diagonal matrix D and the multipliers used to
+*>          obtain the factor U or L as computed by ZHPTRF, stored as a
+*>          packed triangular matrix.
+*> \endverbatim
+*>
+*> \param[in] IPIV
+*> \verbatim
+*>          IPIV is INTEGER array, dimension (N)
+*>          Details of the interchanges and the block structure of D
+*>          as determined by ZHPTRF.
+*> \endverbatim
+*>
+*> \param[in] ANORM
+*> \verbatim
+*>          ANORM is DOUBLE PRECISION
+*>          The 1-norm of the original matrix A.
+*> \endverbatim
+*>
+*> \param[out] RCOND
+*> \verbatim
+*>          RCOND is DOUBLE PRECISION
+*>          The reciprocal of the condition number of the matrix A,
+*>          computed as RCOND = 1/(ANORM * AINVNM), where AINVNM is an
+*>          estimate of the 1-norm of inv(A) computed in this routine.
+*> \endverbatim
+*>
+*> \param[out] WORK
+*> \verbatim
+*>          WORK is COMPLEX*16 array, dimension (2*N)
+*> \endverbatim
+*>
+*> \param[out] INFO
+*> \verbatim
+*>          INFO is INTEGER
+*>          = 0:  successful exit
+*>          < 0:  if INFO = -i, the i-th argument had an illegal value
+*> \endverbatim
+*
+*  Authors:
+*  ========
+*
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
+*
+*> \ingroup hpcon
+*
+*  =====================================================================
+      SUBROUTINE ZHPCON( UPLO, N, AP, IPIV, ANORM, RCOND, WORK, INFO )
+*
+*  -- LAPACK computational routine --
+*  -- LAPACK is a software package provided by Univ. of Tennessee,    --
+*  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
+*
+*     .. Scalar Arguments ..
+      CHARACTER          UPLO
+      INTEGER            INFO, N
+      DOUBLE PRECISION   ANORM, RCOND
+*     ..
+*     .. Array Arguments ..
+      INTEGER            IPIV( * )
+      COMPLEX*16         AP( * ), WORK( * )
+*     ..
+*
+*  =====================================================================
+*
+*     .. Parameters ..
+      DOUBLE PRECISION   ONE, ZERO
+      PARAMETER          ( ONE = 1.0D+0, ZERO = 0.0D+0 )
+*     ..
+*     .. Local Scalars ..
+      LOGICAL            UPPER
+      INTEGER            I, IP, KASE
+      DOUBLE PRECISION   AINVNM
+*     ..
+*     .. Local Arrays ..
+      INTEGER            ISAVE( 3 )
+*     ..
+*     .. External Functions ..
+      LOGICAL            LSAME
+      EXTERNAL           LSAME
+*     ..
+*     .. External Subroutines ..
+      EXTERNAL           XERBLA, ZHPTRS, ZLACN2
+*     ..
+*     .. Executable Statements ..
+*
+*     Test the input parameters.
+*
+      INFO = 0
+      UPPER = LSAME( UPLO, 'U' )
+      IF( .NOT.UPPER .AND. .NOT.LSAME( UPLO, 'L' ) ) THEN
+         INFO = -1
+      ELSE IF( N.LT.0 ) THEN
+         INFO = -2
+      ELSE IF( ANORM.LT.ZERO ) THEN
+         INFO = -5
+      END IF
+      IF( INFO.NE.0 ) THEN
+         CALL XERBLA( 'ZHPCON', -INFO )
+         RETURN
+      END IF
+*
+*     Quick return if possible
+*
+      RCOND = ZERO
+      IF( N.EQ.0 ) THEN
+         RCOND = ONE
+         RETURN
+      ELSE IF( ANORM.LE.ZERO ) THEN
+         RETURN
+      END IF
+*
+*     Check that the diagonal matrix D is nonsingular.
+*
+      IF( UPPER ) THEN
+*
+*        Upper triangular storage: examine D from bottom to top
+*
+         IP = N*( N+1 ) / 2
+         DO 10 I = N, 1, -1
+            IF( IPIV( I ).GT.0 .AND. AP( IP ).EQ.ZERO )
+     $         RETURN
+            IP = IP - I
+   10    CONTINUE
+      ELSE
+*
+*        Lower triangular storage: examine D from top to bottom.
+*
+         IP = 1
+         DO 20 I = 1, N
+            IF( IPIV( I ).GT.0 .AND. AP( IP ).EQ.ZERO )
+     $         RETURN
+            IP = IP + N - I + 1
+   20    CONTINUE
+      END IF
+*
+*     Estimate the 1-norm of the inverse.
+*
+      KASE = 0
+   30 CONTINUE
+      CALL ZLACN2( N, WORK( N+1 ), WORK, AINVNM, KASE, ISAVE )
+      IF( KASE.NE.0 ) THEN
+*
+*        Multiply by inv(L*D*L**H) or inv(U*D*U**H).
+*
+         CALL ZHPTRS( UPLO, N, 1, AP, IPIV, WORK, N, INFO )
+         GO TO 30
+      END IF
+*
+*     Compute the estimate of the reciprocal condition number.
+*
+      IF( AINVNM.NE.ZERO )
+     $   RCOND = ( ONE / AINVNM ) / ANORM
+*
+      RETURN
+*
+*     End of ZHPCON
+*
+      END
+*> \brief \b ZHPTRF
+*
+*  =========== DOCUMENTATION ===========
+*
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
+*
+*> \htmlonly
+*> Download ZHPTRF + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zhptrf.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zhptrf.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zhptrf.f">
+*> [TXT]</a>
+*> \endhtmlonly
+*
+*  Definition:
+*  ===========
+*
+*       SUBROUTINE ZHPTRF( UPLO, N, AP, IPIV, INFO )
+*
+*       .. Scalar Arguments ..
+*       CHARACTER          UPLO
+*       INTEGER            INFO, N
+*       ..
+*       .. Array Arguments ..
+*       INTEGER            IPIV( * )
+*       COMPLEX*16         AP( * )
+*       ..
+*
+*
+*> \par Purpose:
+*  =============
+*>
+*> \verbatim
+*>
+*> ZHPTRF computes the factorization of a complex Hermitian packed
+*> matrix A using the Bunch-Kaufman diagonal pivoting method:
+*>
+*>    A = U*D*U**H  or  A = L*D*L**H
+*>
+*> where U (or L) is a product of permutation and unit upper (lower)
+*> triangular matrices, and D is Hermitian and block diagonal with
+*> 1-by-1 and 2-by-2 diagonal blocks.
+*> \endverbatim
+*
+*  Arguments:
+*  ==========
+*
+*> \param[in] UPLO
+*> \verbatim
+*>          UPLO is CHARACTER*1
+*>          = 'U':  Upper triangle of A is stored;
+*>          = 'L':  Lower triangle of A is stored.
+*> \endverbatim
+*>
+*> \param[in] N
+*> \verbatim
+*>          N is INTEGER
+*>          The order of the matrix A.  N >= 0.
+*> \endverbatim
+*>
+*> \param[in,out] AP
+*> \verbatim
+*>          AP is COMPLEX*16 array, dimension (N*(N+1)/2)
+*>          On entry, the upper or lower triangle of the Hermitian matrix
+*>          A, packed columnwise in a linear array.  The j-th column of A
+*>          is stored in the array AP as follows:
+*>          if UPLO = 'U', AP(i + (j-1)*j/2) = A(i,j) for 1<=i<=j;
+*>          if UPLO = 'L', AP(i + (j-1)*(2n-j)/2) = A(i,j) for j<=i<=n.
+*>
+*>          On exit, the block diagonal matrix D and the multipliers used
+*>          to obtain the factor U or L, stored as a packed triangular
+*>          matrix overwriting A (see below for further details).
+*> \endverbatim
+*>
+*> \param[out] IPIV
+*> \verbatim
+*>          IPIV is INTEGER array, dimension (N)
+*>          Details of the interchanges and the block structure of D.
+*>          If IPIV(k) > 0, then rows and columns k and IPIV(k) were
+*>          interchanged and D(k,k) is a 1-by-1 diagonal block.
+*>          If UPLO = 'U' and IPIV(k) = IPIV(k-1) < 0, then rows and
+*>          columns k-1 and -IPIV(k) were interchanged and D(k-1:k,k-1:k)
+*>          is a 2-by-2 diagonal block.  If UPLO = 'L' and IPIV(k) =
+*>          IPIV(k+1) < 0, then rows and columns k+1 and -IPIV(k) were
+*>          interchanged and D(k:k+1,k:k+1) is a 2-by-2 diagonal block.
+*> \endverbatim
+*>
+*> \param[out] INFO
+*> \verbatim
+*>          INFO is INTEGER
+*>          = 0: successful exit
+*>          < 0: if INFO = -i, the i-th argument had an illegal value
+*>          > 0: if INFO = i, D(i,i) is exactly zero.  The factorization
+*>               has been completed, but the block diagonal matrix D is
+*>               exactly singular, and division by zero will occur if it
+*>               is used to solve a system of equations.
+*> \endverbatim
+*
+*  Authors:
+*  ========
+*
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
+*
+*> \ingroup hptrf
+*
+*> \par Further Details:
+*  =====================
+*>
+*> \verbatim
+*>
+*>  If UPLO = 'U', then A = U*D*U**H, where
+*>     U = P(n)*U(n)* ... *P(k)U(k)* ...,
+*>  i.e., U is a product of terms P(k)*U(k), where k decreases from n to
+*>  1 in steps of 1 or 2, and D is a block diagonal matrix with 1-by-1
+*>  and 2-by-2 diagonal blocks D(k).  P(k) is a permutation matrix as
+*>  defined by IPIV(k), and U(k) is a unit upper triangular matrix, such
+*>  that if the diagonal block D(k) is of order s (s = 1 or 2), then
+*>
+*>             (   I    v    0   )   k-s
+*>     U(k) =  (   0    I    0   )   s
+*>             (   0    0    I   )   n-k
+*>                k-s   s   n-k
+*>
+*>  If s = 1, D(k) overwrites A(k,k), and v overwrites A(1:k-1,k).
+*>  If s = 2, the upper triangle of D(k) overwrites A(k-1,k-1), A(k-1,k),
+*>  and A(k,k), and v overwrites A(1:k-2,k-1:k).
+*>
+*>  If UPLO = 'L', then A = L*D*L**H, where
+*>     L = P(1)*L(1)* ... *P(k)*L(k)* ...,
+*>  i.e., L is a product of terms P(k)*L(k), where k increases from 1 to
+*>  n in steps of 1 or 2, and D is a block diagonal matrix with 1-by-1
+*>  and 2-by-2 diagonal blocks D(k).  P(k) is a permutation matrix as
+*>  defined by IPIV(k), and L(k) is a unit lower triangular matrix, such
+*>  that if the diagonal block D(k) is of order s (s = 1 or 2), then
+*>
+*>             (   I    0     0   )  k-1
+*>     L(k) =  (   0    I     0   )  s
+*>             (   0    v     I   )  n-k-s+1
+*>                k-1   s  n-k-s+1
+*>
+*>  If s = 1, D(k) overwrites A(k,k), and v overwrites A(k+1:n,k).
+*>  If s = 2, the lower triangle of D(k) overwrites A(k,k), A(k+1,k),
+*>  and A(k+1,k+1), and v overwrites A(k+2:n,k:k+1).
+*> \endverbatim
+*
+*> \par Contributors:
+*  ==================
+*>
+*>  J. Lewis, Boeing Computer Services Company
+*
+*  =====================================================================
+      SUBROUTINE ZHPTRF( UPLO, N, AP, IPIV, INFO )
+*
+*  -- LAPACK computational routine --
+*  -- LAPACK is a software package provided by Univ. of Tennessee,    --
+*  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
+*
+*     .. Scalar Arguments ..
+      CHARACTER          UPLO
+      INTEGER            INFO, N
+*     ..
+*     .. Array Arguments ..
+      INTEGER            IPIV( * )
+      COMPLEX*16         AP( * )
+*     ..
+*
+*  =====================================================================
+*
+*     .. Parameters ..
+      DOUBLE PRECISION   ZERO, ONE
+      PARAMETER          ( ZERO = 0.0D+0, ONE = 1.0D+0 )
+      DOUBLE PRECISION   EIGHT, SEVTEN
+      PARAMETER          ( EIGHT = 8.0D+0, SEVTEN = 17.0D+0 )
+*     ..
+*     .. Local Scalars ..
+      LOGICAL            UPPER
+      INTEGER            I, IMAX, J, JMAX, K, KC, KK, KNC, KP, KPC,
+     $                   KSTEP, KX, NPP
+      DOUBLE PRECISION   ABSAKK, ALPHA, COLMAX, D, D11, D22, R1, ROWMAX,
+     $                   TT
+      COMPLEX*16         D12, D21, T, WK, WKM1, WKP1, ZDUM
+*     ..
+*     .. External Functions ..
+      LOGICAL            LSAME
+      INTEGER            IZAMAX
+      DOUBLE PRECISION   DLAPY2
+      EXTERNAL           LSAME, IZAMAX, DLAPY2
+*     ..
+*     .. External Subroutines ..
+      EXTERNAL           XERBLA, ZDSCAL, ZHPR, ZSWAP
+*     ..
+*     .. Intrinsic Functions ..
+      INTRINSIC          ABS, DBLE, DCMPLX, DCONJG, DIMAG, MAX, SQRT
+*     ..
+*     .. Statement Functions ..
+      DOUBLE PRECISION   CABS1
+*     ..
+*     .. Statement Function definitions ..
+      CABS1( ZDUM ) = ABS( DBLE( ZDUM ) ) + ABS( DIMAG( ZDUM ) )
+*     ..
+*     .. Executable Statements ..
+*
+*     Test the input parameters.
+*
+      INFO = 0
+      UPPER = LSAME( UPLO, 'U' )
+      IF( .NOT.UPPER .AND. .NOT.LSAME( UPLO, 'L' ) ) THEN
+         INFO = -1
+      ELSE IF( N.LT.0 ) THEN
+         INFO = -2
+      END IF
+      IF( INFO.NE.0 ) THEN
+         CALL XERBLA( 'ZHPTRF', -INFO )
+         RETURN
+      END IF
+*
+*     Initialize ALPHA for use in choosing pivot block size.
+*
+      ALPHA = ( ONE+SQRT( SEVTEN ) ) / EIGHT
+*
+      IF( UPPER ) THEN
+*
+*        Factorize A as U*D*U**H using the upper triangle of A
+*
+*        K is the main loop index, decreasing from N to 1 in steps of
+*        1 or 2
+*
+         K = N
+         KC = ( N-1 )*N / 2 + 1
+   10    CONTINUE
+         KNC = KC
+*
+*        If K < 1, exit from loop
+*
+         IF( K.LT.1 )
+     $      GO TO 110
+         KSTEP = 1
+*
+*        Determine rows and columns to be interchanged and whether
+*        a 1-by-1 or 2-by-2 pivot block will be used
+*
+         ABSAKK = ABS( DBLE( AP( KC+K-1 ) ) )
+*
+*        IMAX is the row-index of the largest off-diagonal element in
+*        column K, and COLMAX is its absolute value
+*
+         IF( K.GT.1 ) THEN
+            IMAX = IZAMAX( K-1, AP( KC ), 1 )
+            COLMAX = CABS1( AP( KC+IMAX-1 ) )
+         ELSE
+            COLMAX = ZERO
+         END IF
+*
+         IF( MAX( ABSAKK, COLMAX ).EQ.ZERO ) THEN
+*
+*           Column K is zero: set INFO and continue
+*
+            IF( INFO.EQ.0 )
+     $         INFO = K
+            KP = K
+            AP( KC+K-1 ) = DBLE( AP( KC+K-1 ) )
+         ELSE
+            IF( ABSAKK.GE.ALPHA*COLMAX ) THEN
+*
+*              no interchange, use 1-by-1 pivot block
+*
+               KP = K
+            ELSE
+*
+*              JMAX is the column-index of the largest off-diagonal
+*              element in row IMAX, and ROWMAX is its absolute value
+*
+               ROWMAX = ZERO
+               JMAX = IMAX
+               KX = IMAX*( IMAX+1 ) / 2 + IMAX
+               DO 20 J = IMAX + 1, K
+                  IF( CABS1( AP( KX ) ).GT.ROWMAX ) THEN
+                     ROWMAX = CABS1( AP( KX ) )
+                     JMAX = J
+                  END IF
+                  KX = KX + J
+   20          CONTINUE
+               KPC = ( IMAX-1 )*IMAX / 2 + 1
+               IF( IMAX.GT.1 ) THEN
+                  JMAX = IZAMAX( IMAX-1, AP( KPC ), 1 )
+                  ROWMAX = MAX( ROWMAX, CABS1( AP( KPC+JMAX-1 ) ) )
+               END IF
+*
+               IF( ABSAKK.GE.ALPHA*COLMAX*( COLMAX / ROWMAX ) ) THEN
+*
+*                 no interchange, use 1-by-1 pivot block
+*
+                  KP = K
+               ELSE IF( ABS( DBLE( AP( KPC+IMAX-1 ) ) ).GE.ALPHA*
+     $                  ROWMAX ) THEN
+*
+*                 interchange rows and columns K and IMAX, use 1-by-1
+*                 pivot block
+*
+                  KP = IMAX
+               ELSE
+*
+*                 interchange rows and columns K-1 and IMAX, use 2-by-2
+*                 pivot block
+*
+                  KP = IMAX
+                  KSTEP = 2
+               END IF
+            END IF
+*
+            KK = K - KSTEP + 1
+            IF( KSTEP.EQ.2 )
+     $         KNC = KNC - K + 1
+            IF( KP.NE.KK ) THEN
+*
+*              Interchange rows and columns KK and KP in the leading
+*              submatrix A(1:k,1:k)
+*
+               CALL ZSWAP( KP-1, AP( KNC ), 1, AP( KPC ), 1 )
+               KX = KPC + KP - 1
+               DO 30 J = KP + 1, KK - 1
+                  KX = KX + J - 1
+                  T = DCONJG( AP( KNC+J-1 ) )
+                  AP( KNC+J-1 ) = DCONJG( AP( KX ) )
+                  AP( KX ) = T
+   30          CONTINUE
+               AP( KX+KK-1 ) = DCONJG( AP( KX+KK-1 ) )
+               R1 = DBLE( AP( KNC+KK-1 ) )
+               AP( KNC+KK-1 ) = DBLE( AP( KPC+KP-1 ) )
+               AP( KPC+KP-1 ) = R1
+               IF( KSTEP.EQ.2 ) THEN
+                  AP( KC+K-1 ) = DBLE( AP( KC+K-1 ) )
+                  T = AP( KC+K-2 )
+                  AP( KC+K-2 ) = AP( KC+KP-1 )
+                  AP( KC+KP-1 ) = T
+               END IF
+            ELSE
+               AP( KC+K-1 ) = DBLE( AP( KC+K-1 ) )
+               IF( KSTEP.EQ.2 )
+     $            AP( KC-1 ) = DBLE( AP( KC-1 ) )
+            END IF
+*
+*           Update the leading submatrix
+*
+            IF( KSTEP.EQ.1 ) THEN
+*
+*              1-by-1 pivot block D(k): column k now holds
+*
+*              W(k) = U(k)*D(k)
+*
+*              where U(k) is the k-th column of U
+*
+*              Perform a rank-1 update of A(1:k-1,1:k-1) as
+*
+*              A := A - U(k)*D(k)*U(k)**H = A - W(k)*1/D(k)*W(k)**H
+*
+               R1 = ONE / DBLE( AP( KC+K-1 ) )
+               CALL ZHPR( UPLO, K-1, -R1, AP( KC ), 1, AP )
+*
+*              Store U(k) in column k
+*
+               CALL ZDSCAL( K-1, R1, AP( KC ), 1 )
+            ELSE
+*
+*              2-by-2 pivot block D(k): columns k and k-1 now hold
+*
+*              ( W(k-1) W(k) ) = ( U(k-1) U(k) )*D(k)
+*
+*              where U(k) and U(k-1) are the k-th and (k-1)-th columns
+*              of U
+*
+*              Perform a rank-2 update of A(1:k-2,1:k-2) as
+*
+*              A := A - ( U(k-1) U(k) )*D(k)*( U(k-1) U(k) )**H
+*                 = A - ( W(k-1) W(k) )*inv(D(k))*( W(k-1) W(k) )**H
+*
+               IF( K.GT.2 ) THEN
+*
+                  D = DLAPY2( DBLE( AP( K-1+( K-1 )*K / 2 ) ),
+     $                DIMAG( AP( K-1+( K-1 )*K / 2 ) ) )
+                  D22 = DBLE( AP( K-1+( K-2 )*( K-1 ) / 2 ) ) / D
+                  D11 = DBLE( AP( K+( K-1 )*K / 2 ) ) / D
+                  TT = ONE / ( D11*D22-ONE )
+                  D12 = AP( K-1+( K-1 )*K / 2 ) / D
+                  D = TT / D
+*
+                  DO 50 J = K - 2, 1, -1
+                     WKM1 = D*( D11*AP( J+( K-2 )*( K-1 ) / 2 )-
+     $                      DCONJG( D12 )*AP( J+( K-1 )*K / 2 ) )
+                     WK = D*( D22*AP( J+( K-1 )*K / 2 )-D12*
+     $                    AP( J+( K-2 )*( K-1 ) / 2 ) )
+                     DO 40 I = J, 1, -1
+                        AP( I+( J-1 )*J / 2 ) = AP( I+( J-1 )*J / 2 ) -
+     $                     AP( I+( K-1 )*K / 2 )*DCONJG( WK ) -
+     $                     AP( I+( K-2 )*( K-1 ) / 2 )*DCONJG( WKM1 )
+   40                CONTINUE
+                     AP( J+( K-1 )*K / 2 ) = WK
+                     AP( J+( K-2 )*( K-1 ) / 2 ) = WKM1
+                     AP( J+( J-1 )*J / 2 ) = DCMPLX( DBLE( AP( J+( J-
+     $                                       1 )*J / 2 ) ), 0.0D+0 )
+   50             CONTINUE
+*
+               END IF
+*
+            END IF
+         END IF
+*
+*        Store details of the interchanges in IPIV
+*
+         IF( KSTEP.EQ.1 ) THEN
+            IPIV( K ) = KP
+         ELSE
+            IPIV( K ) = -KP
+            IPIV( K-1 ) = -KP
+         END IF
+*
+*        Decrease K and return to the start of the main loop
+*
+         K = K - KSTEP
+         KC = KNC - K
+         GO TO 10
+*
+      ELSE
+*
+*        Factorize A as L*D*L**H using the lower triangle of A
+*
+*        K is the main loop index, increasing from 1 to N in steps of
+*        1 or 2
+*
+         K = 1
+         KC = 1
+         NPP = N*( N+1 ) / 2
+   60    CONTINUE
+         KNC = KC
+*
+*        If K > N, exit from loop
+*
+         IF( K.GT.N )
+     $      GO TO 110
+         KSTEP = 1
+*
+*        Determine rows and columns to be interchanged and whether
+*        a 1-by-1 or 2-by-2 pivot block will be used
+*
+         ABSAKK = ABS( DBLE( AP( KC ) ) )
+*
+*        IMAX is the row-index of the largest off-diagonal element in
+*        column K, and COLMAX is its absolute value
+*
+         IF( K.LT.N ) THEN
+            IMAX = K + IZAMAX( N-K, AP( KC+1 ), 1 )
+            COLMAX = CABS1( AP( KC+IMAX-K ) )
+         ELSE
+            COLMAX = ZERO
+         END IF
+*
+         IF( MAX( ABSAKK, COLMAX ).EQ.ZERO ) THEN
+*
+*           Column K is zero: set INFO and continue
+*
+            IF( INFO.EQ.0 )
+     $         INFO = K
+            KP = K
+            AP( KC ) = DBLE( AP( KC ) )
+         ELSE
+            IF( ABSAKK.GE.ALPHA*COLMAX ) THEN
+*
+*              no interchange, use 1-by-1 pivot block
+*
+               KP = K
+            ELSE
+*
+*              JMAX is the column-index of the largest off-diagonal
+*              element in row IMAX, and ROWMAX is its absolute value
+*
+               ROWMAX = ZERO
+               KX = KC + IMAX - K
+               DO 70 J = K, IMAX - 1
+                  IF( CABS1( AP( KX ) ).GT.ROWMAX ) THEN
+                     ROWMAX = CABS1( AP( KX ) )
+                     JMAX = J
+                  END IF
+                  KX = KX + N - J
+   70          CONTINUE
+               KPC = NPP - ( N-IMAX+1 )*( N-IMAX+2 ) / 2 + 1
+               IF( IMAX.LT.N ) THEN
+                  JMAX = IMAX + IZAMAX( N-IMAX, AP( KPC+1 ), 1 )
+                  ROWMAX = MAX( ROWMAX, CABS1( AP( KPC+JMAX-IMAX ) ) )
+               END IF
+*
+               IF( ABSAKK.GE.ALPHA*COLMAX*( COLMAX / ROWMAX ) ) THEN
+*
+*                 no interchange, use 1-by-1 pivot block
+*
+                  KP = K
+               ELSE IF( ABS( DBLE( AP( KPC ) ) ).GE.ALPHA*ROWMAX ) THEN
+*
+*                 interchange rows and columns K and IMAX, use 1-by-1
+*                 pivot block
+*
+                  KP = IMAX
+               ELSE
+*
+*                 interchange rows and columns K+1 and IMAX, use 2-by-2
+*                 pivot block
+*
+                  KP = IMAX
+                  KSTEP = 2
+               END IF
+            END IF
+*
+            KK = K + KSTEP - 1
+            IF( KSTEP.EQ.2 )
+     $         KNC = KNC + N - K + 1
+            IF( KP.NE.KK ) THEN
+*
+*              Interchange rows and columns KK and KP in the trailing
+*              submatrix A(k:n,k:n)
+*
+               IF( KP.LT.N )
+     $            CALL ZSWAP( N-KP, AP( KNC+KP-KK+1 ), 1, AP( KPC+1 ),
+     $                        1 )
+               KX = KNC + KP - KK
+               DO 80 J = KK + 1, KP - 1
+                  KX = KX + N - J + 1
+                  T = DCONJG( AP( KNC+J-KK ) )
+                  AP( KNC+J-KK ) = DCONJG( AP( KX ) )
+                  AP( KX ) = T
+   80          CONTINUE
+               AP( KNC+KP-KK ) = DCONJG( AP( KNC+KP-KK ) )
+               R1 = DBLE( AP( KNC ) )
+               AP( KNC ) = DBLE( AP( KPC ) )
+               AP( KPC ) = R1
+               IF( KSTEP.EQ.2 ) THEN
+                  AP( KC ) = DBLE( AP( KC ) )
+                  T = AP( KC+1 )
+                  AP( KC+1 ) = AP( KC+KP-K )
+                  AP( KC+KP-K ) = T
+               END IF
+            ELSE
+               AP( KC ) = DBLE( AP( KC ) )
+               IF( KSTEP.EQ.2 )
+     $            AP( KNC ) = DBLE( AP( KNC ) )
+            END IF
+*
+*           Update the trailing submatrix
+*
+            IF( KSTEP.EQ.1 ) THEN
+*
+*              1-by-1 pivot block D(k): column k now holds
+*
+*              W(k) = L(k)*D(k)
+*
+*              where L(k) is the k-th column of L
+*
+               IF( K.LT.N ) THEN
+*
+*                 Perform a rank-1 update of A(k+1:n,k+1:n) as
+*
+*                 A := A - L(k)*D(k)*L(k)**H = A - W(k)*(1/D(k))*W(k)**H
+*
+                  R1 = ONE / DBLE( AP( KC ) )
+                  CALL ZHPR( UPLO, N-K, -R1, AP( KC+1 ), 1,
+     $                       AP( KC+N-K+1 ) )
+*
+*                 Store L(k) in column K
+*
+                  CALL ZDSCAL( N-K, R1, AP( KC+1 ), 1 )
+               END IF
+            ELSE
+*
+*              2-by-2 pivot block D(k): columns K and K+1 now hold
+*
+*              ( W(k) W(k+1) ) = ( L(k) L(k+1) )*D(k)
+*
+*              where L(k) and L(k+1) are the k-th and (k+1)-th columns
+*              of L
+*
+               IF( K.LT.N-1 ) THEN
+*
+*                 Perform a rank-2 update of A(k+2:n,k+2:n) as
+*
+*                 A := A - ( L(k) L(k+1) )*D(k)*( L(k) L(k+1) )**H
+*                    = A - ( W(k) W(k+1) )*inv(D(k))*( W(k) W(k+1) )**H
+*
+*                 where L(k) and L(k+1) are the k-th and (k+1)-th
+*                 columns of L
+*
+                  D = DLAPY2( DBLE( AP( K+1+( K-1 )*( 2*N-K ) / 2 ) ),
+     $                DIMAG( AP( K+1+( K-1 )*( 2*N-K ) / 2 ) ) )
+                  D11 = DBLE( AP( K+1+K*( 2*N-K-1 ) / 2 ) ) / D
+                  D22 = DBLE( AP( K+( K-1 )*( 2*N-K ) / 2 ) ) / D
+                  TT = ONE / ( D11*D22-ONE )
+                  D21 = AP( K+1+( K-1 )*( 2*N-K ) / 2 ) / D
+                  D = TT / D
+*
+                  DO 100 J = K + 2, N
+                     WK = D*( D11*AP( J+( K-1 )*( 2*N-K ) / 2 )-D21*
+     $                    AP( J+K*( 2*N-K-1 ) / 2 ) )
+                     WKP1 = D*( D22*AP( J+K*( 2*N-K-1 ) / 2 )-
+     $                      DCONJG( D21 )*AP( J+( K-1 )*( 2*N-K ) /
+     $                      2 ) )
+                     DO 90 I = J, N
+                        AP( I+( J-1 )*( 2*N-J ) / 2 ) = AP( I+( J-1 )*
+     $                     ( 2*N-J ) / 2 ) - AP( I+( K-1 )*( 2*N-K ) /
+     $                     2 )*DCONJG( WK ) - AP( I+K*( 2*N-K-1 ) / 2 )*
+     $                     DCONJG( WKP1 )
+   90                CONTINUE
+                     AP( J+( K-1 )*( 2*N-K ) / 2 ) = WK
+                     AP( J+K*( 2*N-K-1 ) / 2 ) = WKP1
+                     AP( J+( J-1 )*( 2*N-J ) / 2 )
+     $                  = DCMPLX( DBLE( AP( J+( J-1 )*( 2*N-J ) / 2 ) ),
+     $                  0.0D+0 )
+  100             CONTINUE
+               END IF
+            END IF
+         END IF
+*
+*        Store details of the interchanges in IPIV
+*
+         IF( KSTEP.EQ.1 ) THEN
+            IPIV( K ) = KP
+         ELSE
+            IPIV( K ) = -KP
+            IPIV( K+1 ) = -KP
+         END IF
+*
+*        Increase K and return to the start of the main loop
+*
+         K = K + KSTEP
+         KC = KNC + N - K + 2
+         GO TO 60
+*
+      END IF
+*
+  110 CONTINUE
+      RETURN
+*
+*     End of ZHPTRF
+*
+      END
+*> \brief \b ZHPTRI
+*
+*  =========== DOCUMENTATION ===========
+*
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
+*
+*> \htmlonly
+*> Download ZHPTRI + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zhptri.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zhptri.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zhptri.f">
+*> [TXT]</a>
+*> \endhtmlonly
+*
+*  Definition:
+*  ===========
+*
+*       SUBROUTINE ZHPTRI( UPLO, N, AP, IPIV, WORK, INFO )
+*
+*       .. Scalar Arguments ..
+*       CHARACTER          UPLO
+*       INTEGER            INFO, N
+*       ..
+*       .. Array Arguments ..
+*       INTEGER            IPIV( * )
+*       COMPLEX*16         AP( * ), WORK( * )
+*       ..
+*
+*
+*> \par Purpose:
+*  =============
+*>
+*> \verbatim
+*>
+*> ZHPTRI computes the inverse of a complex Hermitian indefinite matrix
+*> A in packed storage using the factorization A = U*D*U**H or
+*> A = L*D*L**H computed by ZHPTRF.
+*> \endverbatim
+*
+*  Arguments:
+*  ==========
+*
+*> \param[in] UPLO
+*> \verbatim
+*>          UPLO is CHARACTER*1
+*>          Specifies whether the details of the factorization are stored
+*>          as an upper or lower triangular matrix.
+*>          = 'U':  Upper triangular, form is A = U*D*U**H;
+*>          = 'L':  Lower triangular, form is A = L*D*L**H.
+*> \endverbatim
+*>
+*> \param[in] N
+*> \verbatim
+*>          N is INTEGER
+*>          The order of the matrix A.  N >= 0.
+*> \endverbatim
+*>
+*> \param[in,out] AP
+*> \verbatim
+*>          AP is COMPLEX*16 array, dimension (N*(N+1)/2)
+*>          On entry, the block diagonal matrix D and the multipliers
+*>          used to obtain the factor U or L as computed by ZHPTRF,
+*>          stored as a packed triangular matrix.
+*>
+*>          On exit, if INFO = 0, the (Hermitian) inverse of the original
+*>          matrix, stored as a packed triangular matrix. The j-th column
+*>          of inv(A) is stored in the array AP as follows:
+*>          if UPLO = 'U', AP(i + (j-1)*j/2) = inv(A)(i,j) for 1<=i<=j;
+*>          if UPLO = 'L',
+*>             AP(i + (j-1)*(2n-j)/2) = inv(A)(i,j) for j<=i<=n.
+*> \endverbatim
+*>
+*> \param[in] IPIV
+*> \verbatim
+*>          IPIV is INTEGER array, dimension (N)
+*>          Details of the interchanges and the block structure of D
+*>          as determined by ZHPTRF.
+*> \endverbatim
+*>
+*> \param[out] WORK
+*> \verbatim
+*>          WORK is COMPLEX*16 array, dimension (N)
+*> \endverbatim
+*>
+*> \param[out] INFO
+*> \verbatim
+*>          INFO is INTEGER
+*>          = 0: successful exit
+*>          < 0: if INFO = -i, the i-th argument had an illegal value
+*>          > 0: if INFO = i, D(i,i) = 0; the matrix is singular and its
+*>               inverse could not be computed.
+*> \endverbatim
+*
+*  Authors:
+*  ========
+*
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
+*
+*> \ingroup hptri
+*
+*  =====================================================================
+      SUBROUTINE ZHPTRI( UPLO, N, AP, IPIV, WORK, INFO )
+*
+*  -- LAPACK computational routine --
+*  -- LAPACK is a software package provided by Univ. of Tennessee,    --
+*  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
+*
+*     .. Scalar Arguments ..
+      CHARACTER          UPLO
+      INTEGER            INFO, N
+*     ..
+*     .. Array Arguments ..
+      INTEGER            IPIV( * )
+      COMPLEX*16         AP( * ), WORK( * )
+*     ..
+*
+*  =====================================================================
+*
+*     .. Parameters ..
+      DOUBLE PRECISION   ONE
+      COMPLEX*16         CONE, ZERO
+      PARAMETER          ( ONE = 1.0D+0, CONE = ( 1.0D+0, 0.0D+0 ),
+     $                   ZERO = ( 0.0D+0, 0.0D+0 ) )
+*     ..
+*     .. Local Scalars ..
+      LOGICAL            UPPER
+      INTEGER            J, K, KC, KCNEXT, KP, KPC, KSTEP, KX, NPP
+      DOUBLE PRECISION   AK, AKP1, D, T
+      COMPLEX*16         AKKP1, TEMP
+*     ..
+*     .. External Functions ..
+      LOGICAL            LSAME
+      COMPLEX*16         ZDOTC
+      EXTERNAL           LSAME, ZDOTC
+*     ..
+*     .. External Subroutines ..
+      EXTERNAL           XERBLA, ZCOPY, ZHPMV, ZSWAP
+*     ..
+*     .. Intrinsic Functions ..
+      INTRINSIC          ABS, DBLE, DCONJG
+*     ..
+*     .. Executable Statements ..
+*
+*     Test the input parameters.
+*
+      INFO = 0
+      UPPER = LSAME( UPLO, 'U' )
+      IF( .NOT.UPPER .AND. .NOT.LSAME( UPLO, 'L' ) ) THEN
+         INFO = -1
+      ELSE IF( N.LT.0 ) THEN
+         INFO = -2
+      END IF
+      IF( INFO.NE.0 ) THEN
+         CALL XERBLA( 'ZHPTRI', -INFO )
+         RETURN
+      END IF
+*
+*     Quick return if possible
+*
+      IF( N.EQ.0 )
+     $   RETURN
+*
+*     Check that the diagonal matrix D is nonsingular.
+*
+      IF( UPPER ) THEN
+*
+*        Upper triangular storage: examine D from bottom to top
+*
+         KP = N*( N+1 ) / 2
+         DO 10 INFO = N, 1, -1
+            IF( IPIV( INFO ).GT.0 .AND. AP( KP ).EQ.ZERO )
+     $         RETURN
+            KP = KP - INFO
+   10    CONTINUE
+      ELSE
+*
+*        Lower triangular storage: examine D from top to bottom.
+*
+         KP = 1
+         DO 20 INFO = 1, N
+            IF( IPIV( INFO ).GT.0 .AND. AP( KP ).EQ.ZERO )
+     $         RETURN
+            KP = KP + N - INFO + 1
+   20    CONTINUE
+      END IF
+      INFO = 0
+*
+      IF( UPPER ) THEN
+*
+*        Compute inv(A) from the factorization A = U*D*U**H.
+*
+*        K is the main loop index, increasing from 1 to N in steps of
+*        1 or 2, depending on the size of the diagonal blocks.
+*
+         K = 1
+         KC = 1
+   30    CONTINUE
+*
+*        If K > N, exit from loop.
+*
+         IF( K.GT.N )
+     $      GO TO 50
+*
+         KCNEXT = KC + K
+         IF( IPIV( K ).GT.0 ) THEN
+*
+*           1 x 1 diagonal block
+*
+*           Invert the diagonal block.
+*
+            AP( KC+K-1 ) = ONE / DBLE( AP( KC+K-1 ) )
+*
+*           Compute column K of the inverse.
+*
+            IF( K.GT.1 ) THEN
+               CALL ZCOPY( K-1, AP( KC ), 1, WORK, 1 )
+               CALL ZHPMV( UPLO, K-1, -CONE, AP, WORK, 1, ZERO,
+     $                     AP( KC ), 1 )
+               AP( KC+K-1 ) = AP( KC+K-1 ) -
+     $                        DBLE( ZDOTC( K-1, WORK, 1, AP( KC ), 1 ) )
+            END IF
+            KSTEP = 1
+         ELSE
+*
+*           2 x 2 diagonal block
+*
+*           Invert the diagonal block.
+*
+            T = ABS( AP( KCNEXT+K-1 ) )
+            AK = DBLE( AP( KC+K-1 ) ) / T
+            AKP1 = DBLE( AP( KCNEXT+K ) ) / T
+            AKKP1 = AP( KCNEXT+K-1 ) / T
+            D = T*( AK*AKP1-ONE )
+            AP( KC+K-1 ) = AKP1 / D
+            AP( KCNEXT+K ) = AK / D
+            AP( KCNEXT+K-1 ) = -AKKP1 / D
+*
+*           Compute columns K and K+1 of the inverse.
+*
+            IF( K.GT.1 ) THEN
+               CALL ZCOPY( K-1, AP( KC ), 1, WORK, 1 )
+               CALL ZHPMV( UPLO, K-1, -CONE, AP, WORK, 1, ZERO,
+     $                     AP( KC ), 1 )
+               AP( KC+K-1 ) = AP( KC+K-1 ) -
+     $                        DBLE( ZDOTC( K-1, WORK, 1, AP( KC ), 1 ) )
+               AP( KCNEXT+K-1 ) = AP( KCNEXT+K-1 ) -
+     $                            ZDOTC( K-1, AP( KC ), 1, AP( KCNEXT ),
+     $                            1 )
+               CALL ZCOPY( K-1, AP( KCNEXT ), 1, WORK, 1 )
+               CALL ZHPMV( UPLO, K-1, -CONE, AP, WORK, 1, ZERO,
+     $                     AP( KCNEXT ), 1 )
+               AP( KCNEXT+K ) = AP( KCNEXT+K ) -
+     $                          DBLE( ZDOTC( K-1, WORK, 1, AP( KCNEXT ),
+     $                          1 ) )
+            END IF
+            KSTEP = 2
+            KCNEXT = KCNEXT + K + 1
+         END IF
+*
+         KP = ABS( IPIV( K ) )
+         IF( KP.NE.K ) THEN
+*
+*           Interchange rows and columns K and KP in the leading
+*           submatrix A(1:k+1,1:k+1)
+*
+            KPC = ( KP-1 )*KP / 2 + 1
+            CALL ZSWAP( KP-1, AP( KC ), 1, AP( KPC ), 1 )
+            KX = KPC + KP - 1
+            DO 40 J = KP + 1, K - 1
+               KX = KX + J - 1
+               TEMP = DCONJG( AP( KC+J-1 ) )
+               AP( KC+J-1 ) = DCONJG( AP( KX ) )
+               AP( KX ) = TEMP
+   40       CONTINUE
+            AP( KC+KP-1 ) = DCONJG( AP( KC+KP-1 ) )
+            TEMP = AP( KC+K-1 )
+            AP( KC+K-1 ) = AP( KPC+KP-1 )
+            AP( KPC+KP-1 ) = TEMP
+            IF( KSTEP.EQ.2 ) THEN
+               TEMP = AP( KC+K+K-1 )
+               AP( KC+K+K-1 ) = AP( KC+K+KP-1 )
+               AP( KC+K+KP-1 ) = TEMP
+            END IF
+         END IF
+*
+         K = K + KSTEP
+         KC = KCNEXT
+         GO TO 30
+   50    CONTINUE
+*
+      ELSE
+*
+*        Compute inv(A) from the factorization A = L*D*L**H.
+*
+*        K is the main loop index, increasing from 1 to N in steps of
+*        1 or 2, depending on the size of the diagonal blocks.
+*
+         NPP = N*( N+1 ) / 2
+         K = N
+         KC = NPP
+   60    CONTINUE
+*
+*        If K < 1, exit from loop.
+*
+         IF( K.LT.1 )
+     $      GO TO 80
+*
+         KCNEXT = KC - ( N-K+2 )
+         IF( IPIV( K ).GT.0 ) THEN
+*
+*           1 x 1 diagonal block
+*
+*           Invert the diagonal block.
+*
+            AP( KC ) = ONE / DBLE( AP( KC ) )
+*
+*           Compute column K of the inverse.
+*
+            IF( K.LT.N ) THEN
+               CALL ZCOPY( N-K, AP( KC+1 ), 1, WORK, 1 )
+               CALL ZHPMV( UPLO, N-K, -CONE, AP( KC+N-K+1 ), WORK, 1,
+     $                     ZERO, AP( KC+1 ), 1 )
+               AP( KC ) = AP( KC ) - DBLE( ZDOTC( N-K, WORK, 1,
+     $                    AP( KC+1 ), 1 ) )
+            END IF
+            KSTEP = 1
+         ELSE
+*
+*           2 x 2 diagonal block
+*
+*           Invert the diagonal block.
+*
+            T = ABS( AP( KCNEXT+1 ) )
+            AK = DBLE( AP( KCNEXT ) ) / T
+            AKP1 = DBLE( AP( KC ) ) / T
+            AKKP1 = AP( KCNEXT+1 ) / T
+            D = T*( AK*AKP1-ONE )
+            AP( KCNEXT ) = AKP1 / D
+            AP( KC ) = AK / D
+            AP( KCNEXT+1 ) = -AKKP1 / D
+*
+*           Compute columns K-1 and K of the inverse.
+*
+            IF( K.LT.N ) THEN
+               CALL ZCOPY( N-K, AP( KC+1 ), 1, WORK, 1 )
+               CALL ZHPMV( UPLO, N-K, -CONE, AP( KC+( N-K+1 ) ), WORK,
+     $                     1, ZERO, AP( KC+1 ), 1 )
+               AP( KC ) = AP( KC ) - DBLE( ZDOTC( N-K, WORK, 1,
+     $                    AP( KC+1 ), 1 ) )
+               AP( KCNEXT+1 ) = AP( KCNEXT+1 ) -
+     $                          ZDOTC( N-K, AP( KC+1 ), 1,
+     $                          AP( KCNEXT+2 ), 1 )
+               CALL ZCOPY( N-K, AP( KCNEXT+2 ), 1, WORK, 1 )
+               CALL ZHPMV( UPLO, N-K, -CONE, AP( KC+( N-K+1 ) ), WORK,
+     $                     1, ZERO, AP( KCNEXT+2 ), 1 )
+               AP( KCNEXT ) = AP( KCNEXT ) -
+     $                        DBLE( ZDOTC( N-K, WORK, 1, AP( KCNEXT+2 ),
+     $                        1 ) )
+            END IF
+            KSTEP = 2
+            KCNEXT = KCNEXT - ( N-K+3 )
+         END IF
+*
+         KP = ABS( IPIV( K ) )
+         IF( KP.NE.K ) THEN
+*
+*           Interchange rows and columns K and KP in the trailing
+*           submatrix A(k-1:n,k-1:n)
+*
+            KPC = NPP - ( N-KP+1 )*( N-KP+2 ) / 2 + 1
+            IF( KP.LT.N )
+     $         CALL ZSWAP( N-KP, AP( KC+KP-K+1 ), 1, AP( KPC+1 ), 1 )
+            KX = KC + KP - K
+            DO 70 J = K + 1, KP - 1
+               KX = KX + N - J + 1
+               TEMP = DCONJG( AP( KC+J-K ) )
+               AP( KC+J-K ) = DCONJG( AP( KX ) )
+               AP( KX ) = TEMP
+   70       CONTINUE
+            AP( KC+KP-K ) = DCONJG( AP( KC+KP-K ) )
+            TEMP = AP( KC )
+            AP( KC ) = AP( KPC )
+            AP( KPC ) = TEMP
+            IF( KSTEP.EQ.2 ) THEN
+               TEMP = AP( KC-N+K-1 )
+               AP( KC-N+K-1 ) = AP( KC-N+KP-1 )
+               AP( KC-N+KP-1 ) = TEMP
+            END IF
+         END IF
+*
+         K = K - KSTEP
+         KC = KCNEXT
+         GO TO 60
+   80    CONTINUE
+      END IF
+*
+      RETURN
+*
+*     End of ZHPTRI
+*
+      END
+*> \brief \b ZHPTRS
+*
+*  =========== DOCUMENTATION ===========
+*
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
+*
+*> \htmlonly
+*> Download ZHPTRS + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zhptrs.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zhptrs.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zhptrs.f">
+*> [TXT]</a>
+*> \endhtmlonly
+*
+*  Definition:
+*  ===========
+*
+*       SUBROUTINE ZHPTRS( UPLO, N, NRHS, AP, IPIV, B, LDB, INFO )
+*
+*       .. Scalar Arguments ..
+*       CHARACTER          UPLO
+*       INTEGER            INFO, LDB, N, NRHS
+*       ..
+*       .. Array Arguments ..
+*       INTEGER            IPIV( * )
+*       COMPLEX*16         AP( * ), B( LDB, * )
+*       ..
+*
+*
+*> \par Purpose:
+*  =============
+*>
+*> \verbatim
+*>
+*> ZHPTRS solves a system of linear equations A*X = B with a complex
+*> Hermitian matrix A stored in packed format using the factorization
+*> A = U*D*U**H or A = L*D*L**H computed by ZHPTRF.
+*> \endverbatim
+*
+*  Arguments:
+*  ==========
+*
+*> \param[in] UPLO
+*> \verbatim
+*>          UPLO is CHARACTER*1
+*>          Specifies whether the details of the factorization are stored
+*>          as an upper or lower triangular matrix.
+*>          = 'U':  Upper triangular, form is A = U*D*U**H;
+*>          = 'L':  Lower triangular, form is A = L*D*L**H.
+*> \endverbatim
+*>
+*> \param[in] N
+*> \verbatim
+*>          N is INTEGER
+*>          The order of the matrix A.  N >= 0.
+*> \endverbatim
+*>
+*> \param[in] NRHS
+*> \verbatim
+*>          NRHS is INTEGER
+*>          The number of right hand sides, i.e., the number of columns
+*>          of the matrix B.  NRHS >= 0.
+*> \endverbatim
+*>
+*> \param[in] AP
+*> \verbatim
+*>          AP is COMPLEX*16 array, dimension (N*(N+1)/2)
+*>          The block diagonal matrix D and the multipliers used to
+*>          obtain the factor U or L as computed by ZHPTRF, stored as a
+*>          packed triangular matrix.
+*> \endverbatim
+*>
+*> \param[in] IPIV
+*> \verbatim
+*>          IPIV is INTEGER array, dimension (N)
+*>          Details of the interchanges and the block structure of D
+*>          as determined by ZHPTRF.
+*> \endverbatim
+*>
+*> \param[in,out] B
+*> \verbatim
+*>          B is COMPLEX*16 array, dimension (LDB,NRHS)
+*>          On entry, the right hand side matrix B.
+*>          On exit, the solution matrix X.
+*> \endverbatim
+*>
+*> \param[in] LDB
+*> \verbatim
+*>          LDB is INTEGER
+*>          The leading dimension of the array B.  LDB >= max(1,N).
+*> \endverbatim
+*>
+*> \param[out] INFO
+*> \verbatim
+*>          INFO is INTEGER
+*>          = 0:  successful exit
+*>          < 0: if INFO = -i, the i-th argument had an illegal value
+*> \endverbatim
+*
+*  Authors:
+*  ========
+*
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
+*
+*> \ingroup hptrs
+*
+*  =====================================================================
+      SUBROUTINE ZHPTRS( UPLO, N, NRHS, AP, IPIV, B, LDB, INFO )
+*
+*  -- LAPACK computational routine --
+*  -- LAPACK is a software package provided by Univ. of Tennessee,    --
+*  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
+*
+*     .. Scalar Arguments ..
+      CHARACTER          UPLO
+      INTEGER            INFO, LDB, N, NRHS
+*     ..
+*     .. Array Arguments ..
+      INTEGER            IPIV( * )
+      COMPLEX*16         AP( * ), B( LDB, * )
+*     ..
+*
+*  =====================================================================
+*
+*     .. Parameters ..
+      COMPLEX*16         ONE
+      PARAMETER          ( ONE = ( 1.0D+0, 0.0D+0 ) )
+*     ..
+*     .. Local Scalars ..
+      LOGICAL            UPPER
+      INTEGER            J, K, KC, KP
+      DOUBLE PRECISION   S
+      COMPLEX*16         AK, AKM1, AKM1K, BK, BKM1, DENOM
+*     ..
+*     .. External Functions ..
+      LOGICAL            LSAME
+      EXTERNAL           LSAME
+*     ..
+*     .. External Subroutines ..
+      EXTERNAL           XERBLA, ZDSCAL, ZGEMV, ZGERU, ZLACGV, ZSWAP
+*     ..
+*     .. Intrinsic Functions ..
+      INTRINSIC          DBLE, DCONJG, MAX
+*     ..
+*     .. Executable Statements ..
+*
+      INFO = 0
+      UPPER = LSAME( UPLO, 'U' )
+      IF( .NOT.UPPER .AND. .NOT.LSAME( UPLO, 'L' ) ) THEN
+         INFO = -1
+      ELSE IF( N.LT.0 ) THEN
+         INFO = -2
+      ELSE IF( NRHS.LT.0 ) THEN
+         INFO = -3
+      ELSE IF( LDB.LT.MAX( 1, N ) ) THEN
+         INFO = -7
+      END IF
+      IF( INFO.NE.0 ) THEN
+         CALL XERBLA( 'ZHPTRS', -INFO )
+         RETURN
+      END IF
+*
+*     Quick return if possible
+*
+      IF( N.EQ.0 .OR. NRHS.EQ.0 )
+     $   RETURN
+*
+      IF( UPPER ) THEN
+*
+*        Solve A*X = B, where A = U*D*U**H.
+*
+*        First solve U*D*X = B, overwriting B with X.
+*
+*        K is the main loop index, decreasing from N to 1 in steps of
+*        1 or 2, depending on the size of the diagonal blocks.
+*
+         K = N
+         KC = N*( N+1 ) / 2 + 1
+   10    CONTINUE
+*
+*        If K < 1, exit from loop.
+*
+         IF( K.LT.1 )
+     $      GO TO 30
+*
+         KC = KC - K
+         IF( IPIV( K ).GT.0 ) THEN
+*
+*           1 x 1 diagonal block
+*
+*           Interchange rows K and IPIV(K).
+*
+            KP = IPIV( K )
+            IF( KP.NE.K )
+     $         CALL ZSWAP( NRHS, B( K, 1 ), LDB, B( KP, 1 ), LDB )
+*
+*           Multiply by inv(U(K)), where U(K) is the transformation
+*           stored in column K of A.
+*
+            CALL ZGERU( K-1, NRHS, -ONE, AP( KC ), 1, B( K, 1 ), LDB,
+     $                  B( 1, 1 ), LDB )
+*
+*           Multiply by the inverse of the diagonal block.
+*
+            S = DBLE( ONE ) / DBLE( AP( KC+K-1 ) )
+            CALL ZDSCAL( NRHS, S, B( K, 1 ), LDB )
+            K = K - 1
+         ELSE
+*
+*           2 x 2 diagonal block
+*
+*           Interchange rows K-1 and -IPIV(K).
+*
+            KP = -IPIV( K )
+            IF( KP.NE.K-1 )
+     $         CALL ZSWAP( NRHS, B( K-1, 1 ), LDB, B( KP, 1 ), LDB )
+*
+*           Multiply by inv(U(K)), where U(K) is the transformation
+*           stored in columns K-1 and K of A.
+*
+            CALL ZGERU( K-2, NRHS, -ONE, AP( KC ), 1, B( K, 1 ), LDB,
+     $                  B( 1, 1 ), LDB )
+            CALL ZGERU( K-2, NRHS, -ONE, AP( KC-( K-1 ) ), 1,
+     $                  B( K-1, 1 ), LDB, B( 1, 1 ), LDB )
+*
+*           Multiply by the inverse of the diagonal block.
+*
+            AKM1K = AP( KC+K-2 )
+            AKM1 = AP( KC-1 ) / AKM1K
+            AK = AP( KC+K-1 ) / DCONJG( AKM1K )
+            DENOM = AKM1*AK - ONE
+            DO 20 J = 1, NRHS
+               BKM1 = B( K-1, J ) / AKM1K
+               BK = B( K, J ) / DCONJG( AKM1K )
+               B( K-1, J ) = ( AK*BKM1-BK ) / DENOM
+               B( K, J ) = ( AKM1*BK-BKM1 ) / DENOM
+   20       CONTINUE
+            KC = KC - K + 1
+            K = K - 2
+         END IF
+*
+         GO TO 10
+   30    CONTINUE
+*
+*        Next solve U**H *X = B, overwriting B with X.
+*
+*        K is the main loop index, increasing from 1 to N in steps of
+*        1 or 2, depending on the size of the diagonal blocks.
+*
+         K = 1
+         KC = 1
+   40    CONTINUE
+*
+*        If K > N, exit from loop.
+*
+         IF( K.GT.N )
+     $      GO TO 50
+*
+         IF( IPIV( K ).GT.0 ) THEN
+*
+*           1 x 1 diagonal block
+*
+*           Multiply by inv(U**H(K)), where U(K) is the transformation
+*           stored in column K of A.
+*
+            IF( K.GT.1 ) THEN
+               CALL ZLACGV( NRHS, B( K, 1 ), LDB )
+               CALL ZGEMV( 'Conjugate transpose', K-1, NRHS, -ONE, B,
+     $                     LDB, AP( KC ), 1, ONE, B( K, 1 ), LDB )
+               CALL ZLACGV( NRHS, B( K, 1 ), LDB )
+            END IF
+*
+*           Interchange rows K and IPIV(K).
+*
+            KP = IPIV( K )
+            IF( KP.NE.K )
+     $         CALL ZSWAP( NRHS, B( K, 1 ), LDB, B( KP, 1 ), LDB )
+            KC = KC + K
+            K = K + 1
+         ELSE
+*
+*           2 x 2 diagonal block
+*
+*           Multiply by inv(U**H(K+1)), where U(K+1) is the transformation
+*           stored in columns K and K+1 of A.
+*
+            IF( K.GT.1 ) THEN
+               CALL ZLACGV( NRHS, B( K, 1 ), LDB )
+               CALL ZGEMV( 'Conjugate transpose', K-1, NRHS, -ONE, B,
+     $                     LDB, AP( KC ), 1, ONE, B( K, 1 ), LDB )
+               CALL ZLACGV( NRHS, B( K, 1 ), LDB )
+*
+               CALL ZLACGV( NRHS, B( K+1, 1 ), LDB )
+               CALL ZGEMV( 'Conjugate transpose', K-1, NRHS, -ONE, B,
+     $                     LDB, AP( KC+K ), 1, ONE, B( K+1, 1 ), LDB )
+               CALL ZLACGV( NRHS, B( K+1, 1 ), LDB )
+            END IF
+*
+*           Interchange rows K and -IPIV(K).
+*
+            KP = -IPIV( K )
+            IF( KP.NE.K )
+     $         CALL ZSWAP( NRHS, B( K, 1 ), LDB, B( KP, 1 ), LDB )
+            KC = KC + 2*K + 1
+            K = K + 2
+         END IF
+*
+         GO TO 40
+   50    CONTINUE
+*
+      ELSE
+*
+*        Solve A*X = B, where A = L*D*L**H.
+*
+*        First solve L*D*X = B, overwriting B with X.
+*
+*        K is the main loop index, increasing from 1 to N in steps of
+*        1 or 2, depending on the size of the diagonal blocks.
+*
+         K = 1
+         KC = 1
+   60    CONTINUE
+*
+*        If K > N, exit from loop.
+*
+         IF( K.GT.N )
+     $      GO TO 80
+*
+         IF( IPIV( K ).GT.0 ) THEN
+*
+*           1 x 1 diagonal block
+*
+*           Interchange rows K and IPIV(K).
+*
+            KP = IPIV( K )
+            IF( KP.NE.K )
+     $         CALL ZSWAP( NRHS, B( K, 1 ), LDB, B( KP, 1 ), LDB )
+*
+*           Multiply by inv(L(K)), where L(K) is the transformation
+*           stored in column K of A.
+*
+            IF( K.LT.N )
+     $         CALL ZGERU( N-K, NRHS, -ONE, AP( KC+1 ), 1, B( K, 1 ),
+     $                     LDB, B( K+1, 1 ), LDB )
+*
+*           Multiply by the inverse of the diagonal block.
+*
+            S = DBLE( ONE ) / DBLE( AP( KC ) )
+            CALL ZDSCAL( NRHS, S, B( K, 1 ), LDB )
+            KC = KC + N - K + 1
+            K = K + 1
+         ELSE
+*
+*           2 x 2 diagonal block
+*
+*           Interchange rows K+1 and -IPIV(K).
+*
+            KP = -IPIV( K )
+            IF( KP.NE.K+1 )
+     $         CALL ZSWAP( NRHS, B( K+1, 1 ), LDB, B( KP, 1 ), LDB )
+*
+*           Multiply by inv(L(K)), where L(K) is the transformation
+*           stored in columns K and K+1 of A.
+*
+            IF( K.LT.N-1 ) THEN
+               CALL ZGERU( N-K-1, NRHS, -ONE, AP( KC+2 ), 1, B( K, 1 ),
+     $                     LDB, B( K+2, 1 ), LDB )
+               CALL ZGERU( N-K-1, NRHS, -ONE, AP( KC+N-K+2 ), 1,
+     $                     B( K+1, 1 ), LDB, B( K+2, 1 ), LDB )
+            END IF
+*
+*           Multiply by the inverse of the diagonal block.
+*
+            AKM1K = AP( KC+1 )
+            AKM1 = AP( KC ) / DCONJG( AKM1K )
+            AK = AP( KC+N-K+1 ) / AKM1K
+            DENOM = AKM1*AK - ONE
+            DO 70 J = 1, NRHS
+               BKM1 = B( K, J ) / DCONJG( AKM1K )
+               BK = B( K+1, J ) / AKM1K
+               B( K, J ) = ( AK*BKM1-BK ) / DENOM
+               B( K+1, J ) = ( AKM1*BK-BKM1 ) / DENOM
+   70       CONTINUE
+            KC = KC + 2*( N-K ) + 1
+            K = K + 2
+         END IF
+*
+         GO TO 60
+   80    CONTINUE
+*
+*        Next solve L**H *X = B, overwriting B with X.
+*
+*        K is the main loop index, decreasing from N to 1 in steps of
+*        1 or 2, depending on the size of the diagonal blocks.
+*
+         K = N
+         KC = N*( N+1 ) / 2 + 1
+   90    CONTINUE
+*
+*        If K < 1, exit from loop.
+*
+         IF( K.LT.1 )
+     $      GO TO 100
+*
+         KC = KC - ( N-K+1 )
+         IF( IPIV( K ).GT.0 ) THEN
+*
+*           1 x 1 diagonal block
+*
+*           Multiply by inv(L**H(K)), where L(K) is the transformation
+*           stored in column K of A.
+*
+            IF( K.LT.N ) THEN
+               CALL ZLACGV( NRHS, B( K, 1 ), LDB )
+               CALL ZGEMV( 'Conjugate transpose', N-K, NRHS, -ONE,
+     $                     B( K+1, 1 ), LDB, AP( KC+1 ), 1, ONE,
+     $                     B( K, 1 ), LDB )
+               CALL ZLACGV( NRHS, B( K, 1 ), LDB )
+            END IF
+*
+*           Interchange rows K and IPIV(K).
+*
+            KP = IPIV( K )
+            IF( KP.NE.K )
+     $         CALL ZSWAP( NRHS, B( K, 1 ), LDB, B( KP, 1 ), LDB )
+            K = K - 1
+         ELSE
+*
+*           2 x 2 diagonal block
+*
+*           Multiply by inv(L**H(K-1)), where L(K-1) is the transformation
+*           stored in columns K-1 and K of A.
+*
+            IF( K.LT.N ) THEN
+               CALL ZLACGV( NRHS, B( K, 1 ), LDB )
+               CALL ZGEMV( 'Conjugate transpose', N-K, NRHS, -ONE,
+     $                     B( K+1, 1 ), LDB, AP( KC+1 ), 1, ONE,
+     $                     B( K, 1 ), LDB )
+               CALL ZLACGV( NRHS, B( K, 1 ), LDB )
+*
+               CALL ZLACGV( NRHS, B( K-1, 1 ), LDB )
+               CALL ZGEMV( 'Conjugate transpose', N-K, NRHS, -ONE,
+     $                     B( K+1, 1 ), LDB, AP( KC-( N-K ) ), 1, ONE,
+     $                     B( K-1, 1 ), LDB )
+               CALL ZLACGV( NRHS, B( K-1, 1 ), LDB )
+            END IF
+*
+*           Interchange rows K and -IPIV(K).
+*
+            KP = -IPIV( K )
+            IF( KP.NE.K )
+     $         CALL ZSWAP( NRHS, B( K, 1 ), LDB, B( KP, 1 ), LDB )
+            KC = KC - ( N-K+2 )
+            K = K - 2
+         END IF
+*
+         GO TO 90
+  100    CONTINUE
+      END IF
+*
+      RETURN
+*
+*     End of ZHPTRS
 *
       END
 *> \brief \b ZHSEQR
@@ -30260,6 +34121,975 @@
       RETURN
 *
 *     End of ZLAGTM
+*
+      END
+*> \brief \b ZLAHEF computes a partial factorization of a complex Hermitian indefinite matrix using the Bunch-Kaufman diagonal pivoting method (blocked algorithm, calling Level 3 BLAS).
+*
+*  =========== DOCUMENTATION ===========
+*
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
+*
+*> \htmlonly
+*> Download ZLAHEF + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zlahef.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zlahef.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zlahef.f">
+*> [TXT]</a>
+*> \endhtmlonly
+*
+*  Definition:
+*  ===========
+*
+*       SUBROUTINE ZLAHEF( UPLO, N, NB, KB, A, LDA, IPIV, W, LDW, INFO )
+*
+*       .. Scalar Arguments ..
+*       CHARACTER          UPLO
+*       INTEGER            INFO, KB, LDA, LDW, N, NB
+*       ..
+*       .. Array Arguments ..
+*       INTEGER            IPIV( * )
+*       COMPLEX*16         A( LDA, * ), W( LDW, * )
+*       ..
+*
+*
+*> \par Purpose:
+*  =============
+*>
+*> \verbatim
+*>
+*> ZLAHEF computes a partial factorization of a complex Hermitian
+*> matrix A using the Bunch-Kaufman diagonal pivoting method. The
+*> partial factorization has the form:
+*>
+*> A  =  ( I  U12 ) ( A11  0  ) (  I      0     )  if UPLO = 'U', or:
+*>       ( 0  U22 ) (  0   D  ) ( U12**H U22**H )
+*>
+*> A  =  ( L11  0 ) (  D   0  ) ( L11**H L21**H )  if UPLO = 'L'
+*>       ( L21  I ) (  0  A22 ) (  0      I     )
+*>
+*> where the order of D is at most NB. The actual order is returned in
+*> the argument KB, and is either NB or NB-1, or N if N <= NB.
+*> Note that U**H denotes the conjugate transpose of U.
+*>
+*> ZLAHEF is an auxiliary routine called by ZHETRF. It uses blocked code
+*> (calling Level 3 BLAS) to update the submatrix A11 (if UPLO = 'U') or
+*> A22 (if UPLO = 'L').
+*> \endverbatim
+*
+*  Arguments:
+*  ==========
+*
+*> \param[in] UPLO
+*> \verbatim
+*>          UPLO is CHARACTER*1
+*>          Specifies whether the upper or lower triangular part of the
+*>          Hermitian matrix A is stored:
+*>          = 'U':  Upper triangular
+*>          = 'L':  Lower triangular
+*> \endverbatim
+*>
+*> \param[in] N
+*> \verbatim
+*>          N is INTEGER
+*>          The order of the matrix A.  N >= 0.
+*> \endverbatim
+*>
+*> \param[in] NB
+*> \verbatim
+*>          NB is INTEGER
+*>          The maximum number of columns of the matrix A that should be
+*>          factored.  NB should be at least 2 to allow for 2-by-2 pivot
+*>          blocks.
+*> \endverbatim
+*>
+*> \param[out] KB
+*> \verbatim
+*>          KB is INTEGER
+*>          The number of columns of A that were actually factored.
+*>          KB is either NB-1 or NB, or N if N <= NB.
+*> \endverbatim
+*>
+*> \param[in,out] A
+*> \verbatim
+*>          A is COMPLEX*16 array, dimension (LDA,N)
+*>          On entry, the Hermitian matrix A.  If UPLO = 'U', the leading
+*>          n-by-n upper triangular part of A contains the upper
+*>          triangular part of the matrix A, and the strictly lower
+*>          triangular part of A is not referenced.  If UPLO = 'L', the
+*>          leading n-by-n lower triangular part of A contains the lower
+*>          triangular part of the matrix A, and the strictly upper
+*>          triangular part of A is not referenced.
+*>          On exit, A contains details of the partial factorization.
+*> \endverbatim
+*>
+*> \param[in] LDA
+*> \verbatim
+*>          LDA is INTEGER
+*>          The leading dimension of the array A.  LDA >= max(1,N).
+*> \endverbatim
+*>
+*> \param[out] IPIV
+*> \verbatim
+*>          IPIV is INTEGER array, dimension (N)
+*>          Details of the interchanges and the block structure of D.
+*>
+*>          If UPLO = 'U':
+*>             Only the last KB elements of IPIV are set.
+*>
+*>             If IPIV(k) > 0, then rows and columns k and IPIV(k) were
+*>             interchanged and D(k,k) is a 1-by-1 diagonal block.
+*>
+*>             If IPIV(k) = IPIV(k-1) < 0, then rows and columns
+*>             k-1 and -IPIV(k) were interchanged and D(k-1:k,k-1:k)
+*>             is a 2-by-2 diagonal block.
+*>
+*>          If UPLO = 'L':
+*>             Only the first KB elements of IPIV are set.
+*>
+*>             If IPIV(k) > 0, then rows and columns k and IPIV(k) were
+*>             interchanged and D(k,k) is a 1-by-1 diagonal block.
+*>
+*>             If IPIV(k) = IPIV(k+1) < 0, then rows and columns
+*>             k+1 and -IPIV(k) were interchanged and D(k:k+1,k:k+1)
+*>             is a 2-by-2 diagonal block.
+*> \endverbatim
+*>
+*> \param[out] W
+*> \verbatim
+*>          W is COMPLEX*16 array, dimension (LDW,NB)
+*> \endverbatim
+*>
+*> \param[in] LDW
+*> \verbatim
+*>          LDW is INTEGER
+*>          The leading dimension of the array W.  LDW >= max(1,N).
+*> \endverbatim
+*>
+*> \param[out] INFO
+*> \verbatim
+*>          INFO is INTEGER
+*>          = 0: successful exit
+*>          > 0: if INFO = k, D(k,k) is exactly zero.  The factorization
+*>               has been completed, but the block diagonal matrix D is
+*>               exactly singular.
+*> \endverbatim
+*
+*  Authors:
+*  ========
+*
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
+*
+*> \ingroup lahef
+*
+*> \par Contributors:
+*  ==================
+*>
+*> \verbatim
+*>
+*>  December 2016,  Igor Kozachenko,
+*>                  Computer Science Division,
+*>                  University of California, Berkeley
+*> \endverbatim
+*
+*  =====================================================================
+      SUBROUTINE ZLAHEF( UPLO, N, NB, KB, A, LDA, IPIV, W, LDW, INFO )
+*
+*  -- LAPACK computational routine --
+*  -- LAPACK is a software package provided by Univ. of Tennessee,    --
+*  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
+*
+*     .. Scalar Arguments ..
+      CHARACTER          UPLO
+      INTEGER            INFO, KB, LDA, LDW, N, NB
+*     ..
+*     .. Array Arguments ..
+      INTEGER            IPIV( * )
+      COMPLEX*16         A( LDA, * ), W( LDW, * )
+*     ..
+*
+*  =====================================================================
+*
+*     .. Parameters ..
+      DOUBLE PRECISION   ZERO, ONE
+      PARAMETER          ( ZERO = 0.0D+0, ONE = 1.0D+0 )
+      COMPLEX*16         CONE
+      PARAMETER          ( CONE = ( 1.0D+0, 0.0D+0 ) )
+      DOUBLE PRECISION   EIGHT, SEVTEN
+      PARAMETER          ( EIGHT = 8.0D+0, SEVTEN = 17.0D+0 )
+*     ..
+*     .. Local Scalars ..
+      INTEGER            IMAX, J, JB, JJ, JMAX, JP, K, KK, KKW, KP,
+     $                   KSTEP, KW
+      DOUBLE PRECISION   ABSAKK, ALPHA, COLMAX, R1, ROWMAX, T
+      COMPLEX*16         D11, D21, D22, Z
+*     ..
+*     .. External Functions ..
+      LOGICAL            LSAME
+      INTEGER            IZAMAX
+      EXTERNAL           LSAME, IZAMAX
+*     ..
+*     .. External Subroutines ..
+      EXTERNAL           ZCOPY, ZDSCAL, ZGEMM, ZGEMV, ZLACGV, ZSWAP
+*     ..
+*     .. Intrinsic Functions ..
+      INTRINSIC          ABS, DBLE, DCONJG, DIMAG, MAX, MIN, SQRT
+*     ..
+*     .. Statement Functions ..
+      DOUBLE PRECISION   CABS1
+*     ..
+*     .. Statement Function definitions ..
+      CABS1( Z ) = ABS( DBLE( Z ) ) + ABS( DIMAG( Z ) )
+*     ..
+*     .. Executable Statements ..
+*
+      INFO = 0
+*
+*     Initialize ALPHA for use in choosing pivot block size.
+*
+      ALPHA = ( ONE+SQRT( SEVTEN ) ) / EIGHT
+*
+      IF( LSAME( UPLO, 'U' ) ) THEN
+*
+*        Factorize the trailing columns of A using the upper triangle
+*        of A and working backwards, and compute the matrix W = U12*D
+*        for use in updating A11 (note that conjg(W) is actually stored)
+*
+*        K is the main loop index, decreasing from N in steps of 1 or 2
+*
+*        KW is the column of W which corresponds to column K of A
+*
+         K = N
+   10    CONTINUE
+         KW = NB + K - N
+*
+*        Exit from loop
+*
+         IF( ( K.LE.N-NB+1 .AND. NB.LT.N ) .OR. K.LT.1 )
+     $      GO TO 30
+*
+         KSTEP = 1
+*
+*        Copy column K of A to column KW of W and update it
+*
+         CALL ZCOPY( K-1, A( 1, K ), 1, W( 1, KW ), 1 )
+         W( K, KW ) = DBLE( A( K, K ) )
+         IF( K.LT.N ) THEN
+            CALL ZGEMV( 'No transpose', K, N-K, -CONE, A( 1, K+1 ), LDA,
+     $                  W( K, KW+1 ), LDW, CONE, W( 1, KW ), 1 )
+            W( K, KW ) = DBLE( W( K, KW ) )
+         END IF
+*
+*        Determine rows and columns to be interchanged and whether
+*        a 1-by-1 or 2-by-2 pivot block will be used
+*
+         ABSAKK = ABS( DBLE( W( K, KW ) ) )
+*
+*        IMAX is the row-index of the largest off-diagonal element in
+*        column K, and COLMAX is its absolute value.
+*        Determine both COLMAX and IMAX.
+*
+         IF( K.GT.1 ) THEN
+            IMAX = IZAMAX( K-1, W( 1, KW ), 1 )
+            COLMAX = CABS1( W( IMAX, KW ) )
+         ELSE
+            COLMAX = ZERO
+         END IF
+*
+         IF( MAX( ABSAKK, COLMAX ).EQ.ZERO ) THEN
+*
+*           Column K is zero or underflow: set INFO and continue
+*
+            IF( INFO.EQ.0 )
+     $         INFO = K
+            KP = K
+            A( K, K ) = DBLE( A( K, K ) )
+         ELSE
+*
+*           ============================================================
+*
+*           BEGIN pivot search
+*
+*           Case(1)
+            IF( ABSAKK.GE.ALPHA*COLMAX ) THEN
+*
+*              no interchange, use 1-by-1 pivot block
+*
+               KP = K
+            ELSE
+*
+*              BEGIN pivot search along IMAX row
+*
+*
+*              Copy column IMAX to column KW-1 of W and update it
+*
+               CALL ZCOPY( IMAX-1, A( 1, IMAX ), 1, W( 1, KW-1 ), 1 )
+               W( IMAX, KW-1 ) = DBLE( A( IMAX, IMAX ) )
+               CALL ZCOPY( K-IMAX, A( IMAX, IMAX+1 ), LDA,
+     $                     W( IMAX+1, KW-1 ), 1 )
+               CALL ZLACGV( K-IMAX, W( IMAX+1, KW-1 ), 1 )
+               IF( K.LT.N ) THEN
+                  CALL ZGEMV( 'No transpose', K, N-K, -CONE,
+     $                        A( 1, K+1 ), LDA, W( IMAX, KW+1 ), LDW,
+     $                        CONE, W( 1, KW-1 ), 1 )
+                  W( IMAX, KW-1 ) = DBLE( W( IMAX, KW-1 ) )
+               END IF
+*
+*              JMAX is the column-index of the largest off-diagonal
+*              element in row IMAX, and ROWMAX is its absolute value.
+*              Determine only ROWMAX.
+*
+               JMAX = IMAX + IZAMAX( K-IMAX, W( IMAX+1, KW-1 ), 1 )
+               ROWMAX = CABS1( W( JMAX, KW-1 ) )
+               IF( IMAX.GT.1 ) THEN
+                  JMAX = IZAMAX( IMAX-1, W( 1, KW-1 ), 1 )
+                  ROWMAX = MAX( ROWMAX, CABS1( W( JMAX, KW-1 ) ) )
+               END IF
+*
+*              Case(2)
+               IF( ABSAKK.GE.ALPHA*COLMAX*( COLMAX / ROWMAX ) ) THEN
+*
+*                 no interchange, use 1-by-1 pivot block
+*
+                  KP = K
+*
+*              Case(3)
+               ELSE IF( ABS( DBLE( W( IMAX, KW-1 ) ) ).GE.ALPHA*ROWMAX )
+     $                   THEN
+*
+*                 interchange rows and columns K and IMAX, use 1-by-1
+*                 pivot block
+*
+                  KP = IMAX
+*
+*                 copy column KW-1 of W to column KW of W
+*
+                  CALL ZCOPY( K, W( 1, KW-1 ), 1, W( 1, KW ), 1 )
+*
+*              Case(4)
+               ELSE
+*
+*                 interchange rows and columns K-1 and IMAX, use 2-by-2
+*                 pivot block
+*
+                  KP = IMAX
+                  KSTEP = 2
+               END IF
+*
+*
+*              END pivot search along IMAX row
+*
+            END IF
+*
+*           END pivot search
+*
+*           ============================================================
+*
+*           KK is the column of A where pivoting step stopped
+*
+            KK = K - KSTEP + 1
+*
+*           KKW is the column of W which corresponds to column KK of A
+*
+            KKW = NB + KK - N
+*
+*           Interchange rows and columns KP and KK.
+*           Updated column KP is already stored in column KKW of W.
+*
+            IF( KP.NE.KK ) THEN
+*
+*              Copy non-updated column KK to column KP of submatrix A
+*              at step K. No need to copy element into column K
+*              (or K and K-1 for 2-by-2 pivot) of A, since these columns
+*              will be later overwritten.
+*
+               A( KP, KP ) = DBLE( A( KK, KK ) )
+               CALL ZCOPY( KK-1-KP, A( KP+1, KK ), 1, A( KP, KP+1 ),
+     $                     LDA )
+               CALL ZLACGV( KK-1-KP, A( KP, KP+1 ), LDA )
+               IF( KP.GT.1 )
+     $            CALL ZCOPY( KP-1, A( 1, KK ), 1, A( 1, KP ), 1 )
+*
+*              Interchange rows KK and KP in last K+1 to N columns of A
+*              (columns K (or K and K-1 for 2-by-2 pivot) of A will be
+*              later overwritten). Interchange rows KK and KP
+*              in last KKW to NB columns of W.
+*
+               IF( K.LT.N )
+     $            CALL ZSWAP( N-K, A( KK, K+1 ), LDA, A( KP, K+1 ),
+     $                        LDA )
+               CALL ZSWAP( N-KK+1, W( KK, KKW ), LDW, W( KP, KKW ),
+     $                     LDW )
+            END IF
+*
+            IF( KSTEP.EQ.1 ) THEN
+*
+*              1-by-1 pivot block D(k): column kw of W now holds
+*
+*              W(kw) = U(k)*D(k),
+*
+*              where U(k) is the k-th column of U
+*
+*              (1) Store subdiag. elements of column U(k)
+*              and 1-by-1 block D(k) in column k of A.
+*              (NOTE: Diagonal element U(k,k) is a UNIT element
+*              and not stored)
+*                 A(k,k) := D(k,k) = W(k,kw)
+*                 A(1:k-1,k) := U(1:k-1,k) = W(1:k-1,kw)/D(k,k)
+*
+*              (NOTE: No need to use for Hermitian matrix
+*              A( K, K ) = DBLE( W( K, K) ) to separately copy diagonal
+*              element D(k,k) from W (potentially saves only one load))
+               CALL ZCOPY( K, W( 1, KW ), 1, A( 1, K ), 1 )
+               IF( K.GT.1 ) THEN
+*
+*                 (NOTE: No need to check if A(k,k) is NOT ZERO,
+*                  since that was ensured earlier in pivot search:
+*                  case A(k,k) = 0 falls into 2x2 pivot case(4))
+*
+                  R1 = ONE / DBLE( A( K, K ) )
+                  CALL ZDSCAL( K-1, R1, A( 1, K ), 1 )
+*
+*                 (2) Conjugate column W(kw)
+*
+                  CALL ZLACGV( K-1, W( 1, KW ), 1 )
+               END IF
+*
+            ELSE
+*
+*              2-by-2 pivot block D(k): columns kw and kw-1 of W now hold
+*
+*              ( W(kw-1) W(kw) ) = ( U(k-1) U(k) )*D(k)
+*
+*              where U(k) and U(k-1) are the k-th and (k-1)-th columns
+*              of U
+*
+*              (1) Store U(1:k-2,k-1) and U(1:k-2,k) and 2-by-2
+*              block D(k-1:k,k-1:k) in columns k-1 and k of A.
+*              (NOTE: 2-by-2 diagonal block U(k-1:k,k-1:k) is a UNIT
+*              block and not stored)
+*                 A(k-1:k,k-1:k) := D(k-1:k,k-1:k) = W(k-1:k,kw-1:kw)
+*                 A(1:k-2,k-1:k) := U(1:k-2,k:k-1:k) =
+*                 = W(1:k-2,kw-1:kw) * ( D(k-1:k,k-1:k)**(-1) )
+*
+               IF( K.GT.2 ) THEN
+*
+*                 Factor out the columns of the inverse of 2-by-2 pivot
+*                 block D, so that each column contains 1, to reduce the
+*                 number of FLOPS when we multiply panel
+*                 ( W(kw-1) W(kw) ) by this inverse, i.e. by D**(-1).
+*
+*                 D**(-1) = ( d11 cj(d21) )**(-1) =
+*                           ( d21    d22 )
+*
+*                 = 1/(d11*d22-|d21|**2) * ( ( d22) (-cj(d21) ) ) =
+*                                          ( (-d21) (     d11 ) )
+*
+*                 = 1/(|d21|**2) * 1/((d11/cj(d21))*(d22/d21)-1) *
+*
+*                   * ( d21*( d22/d21 ) conj(d21)*(           - 1 ) ) =
+*                     (     (      -1 )           ( d11/conj(d21) ) )
+*
+*                 = 1/(|d21|**2) * 1/(D22*D11-1) *
+*
+*                   * ( d21*( D11 ) conj(d21)*(  -1 ) ) =
+*                     (     (  -1 )           ( D22 ) )
+*
+*                 = (1/|d21|**2) * T * ( d21*( D11 ) conj(d21)*(  -1 ) ) =
+*                                      (     (  -1 )           ( D22 ) )
+*
+*                 = ( (T/conj(d21))*( D11 ) (T/d21)*(  -1 ) ) =
+*                   (               (  -1 )         ( D22 ) )
+*
+*                 = ( conj(D21)*( D11 ) D21*(  -1 ) )
+*                   (           (  -1 )     ( D22 ) ),
+*
+*                 where D11 = d22/d21,
+*                       D22 = d11/conj(d21),
+*                       D21 = T/d21,
+*                       T = 1/(D22*D11-1).
+*
+*                 (NOTE: No need to check for division by ZERO,
+*                  since that was ensured earlier in pivot search:
+*                  (a) d21 != 0, since in 2x2 pivot case(4)
+*                      |d21| should be larger than |d11| and |d22|;
+*                  (b) (D22*D11 - 1) != 0, since from (a),
+*                      both |D11| < 1, |D22| < 1, hence |D22*D11| << 1.)
+*
+                  D21 = W( K-1, KW )
+                  D11 = W( K, KW ) / DCONJG( D21 )
+                  D22 = W( K-1, KW-1 ) / D21
+                  T = ONE / ( DBLE( D11*D22 )-ONE )
+                  D21 = T / D21
+*
+*                 Update elements in columns A(k-1) and A(k) as
+*                 dot products of rows of ( W(kw-1) W(kw) ) and columns
+*                 of D**(-1)
+*
+                  DO 20 J = 1, K - 2
+                     A( J, K-1 ) = D21*( D11*W( J, KW-1 )-W( J, KW ) )
+                     A( J, K ) = DCONJG( D21 )*
+     $                           ( D22*W( J, KW )-W( J, KW-1 ) )
+   20             CONTINUE
+               END IF
+*
+*              Copy D(k) to A
+*
+               A( K-1, K-1 ) = W( K-1, KW-1 )
+               A( K-1, K ) = W( K-1, KW )
+               A( K, K ) = W( K, KW )
+*
+*              (2) Conjugate columns W(kw) and W(kw-1)
+*
+               CALL ZLACGV( K-1, W( 1, KW ), 1 )
+               CALL ZLACGV( K-2, W( 1, KW-1 ), 1 )
+*
+            END IF
+*
+         END IF
+*
+*        Store details of the interchanges in IPIV
+*
+         IF( KSTEP.EQ.1 ) THEN
+            IPIV( K ) = KP
+         ELSE
+            IPIV( K ) = -KP
+            IPIV( K-1 ) = -KP
+         END IF
+*
+*        Decrease K and return to the start of the main loop
+*
+         K = K - KSTEP
+         GO TO 10
+*
+   30    CONTINUE
+*
+*        Update the upper triangle of A11 (= A(1:k,1:k)) as
+*
+*        A11 := A11 - U12*D*U12**H = A11 - U12*W**H
+*
+*        computing blocks of NB columns at a time (note that conjg(W) is
+*        actually stored)
+*
+         DO 50 J = ( ( K-1 ) / NB )*NB + 1, 1, -NB
+            JB = MIN( NB, K-J+1 )
+*
+*           Update the upper triangle of the diagonal block
+*
+            DO 40 JJ = J, J + JB - 1
+               A( JJ, JJ ) = DBLE( A( JJ, JJ ) )
+               CALL ZGEMV( 'No transpose', JJ-J+1, N-K, -CONE,
+     $                     A( J, K+1 ), LDA, W( JJ, KW+1 ), LDW, CONE,
+     $                     A( J, JJ ), 1 )
+               A( JJ, JJ ) = DBLE( A( JJ, JJ ) )
+   40       CONTINUE
+*
+*           Update the rectangular superdiagonal block
+*
+            CALL ZGEMM( 'No transpose', 'Transpose', J-1, JB, N-K,
+     $                  -CONE, A( 1, K+1 ), LDA, W( J, KW+1 ), LDW,
+     $                  CONE, A( 1, J ), LDA )
+   50    CONTINUE
+*
+*        Put U12 in standard form by partially undoing the interchanges
+*        in columns k+1:n looping backwards from k+1 to n
+*
+         J = K + 1
+   60    CONTINUE
+*
+*           Undo the interchanges (if any) of rows JJ and JP at each
+*           step J
+*
+*           (Here, J is a diagonal index)
+            JJ = J
+            JP = IPIV( J )
+            IF( JP.LT.0 ) THEN
+               JP = -JP
+*              (Here, J is a diagonal index)
+               J = J + 1
+            END IF
+*           (NOTE: Here, J is used to determine row length. Length N-J+1
+*           of the rows to swap back doesn't include diagonal element)
+            J = J + 1
+            IF( JP.NE.JJ .AND. J.LE.N )
+     $         CALL ZSWAP( N-J+1, A( JP, J ), LDA, A( JJ, J ), LDA )
+         IF( J.LT.N )
+     $      GO TO 60
+*
+*        Set KB to the number of columns factorized
+*
+         KB = N - K
+*
+      ELSE
+*
+*        Factorize the leading columns of A using the lower triangle
+*        of A and working forwards, and compute the matrix W = L21*D
+*        for use in updating A22 (note that conjg(W) is actually stored)
+*
+*        K is the main loop index, increasing from 1 in steps of 1 or 2
+*
+         K = 1
+   70    CONTINUE
+*
+*        Exit from loop
+*
+         IF( ( K.GE.NB .AND. NB.LT.N ) .OR. K.GT.N )
+     $      GO TO 90
+*
+         KSTEP = 1
+*
+*        Copy column K of A to column K of W and update it
+*
+         W( K, K ) = DBLE( A( K, K ) )
+         IF( K.LT.N )
+     $      CALL ZCOPY( N-K, A( K+1, K ), 1, W( K+1, K ), 1 )
+         CALL ZGEMV( 'No transpose', N-K+1, K-1, -CONE, A( K, 1 ), LDA,
+     $               W( K, 1 ), LDW, CONE, W( K, K ), 1 )
+         W( K, K ) = DBLE( W( K, K ) )
+*
+*        Determine rows and columns to be interchanged and whether
+*        a 1-by-1 or 2-by-2 pivot block will be used
+*
+         ABSAKK = ABS( DBLE( W( K, K ) ) )
+*
+*        IMAX is the row-index of the largest off-diagonal element in
+*        column K, and COLMAX is its absolute value.
+*        Determine both COLMAX and IMAX.
+*
+         IF( K.LT.N ) THEN
+            IMAX = K + IZAMAX( N-K, W( K+1, K ), 1 )
+            COLMAX = CABS1( W( IMAX, K ) )
+         ELSE
+            COLMAX = ZERO
+         END IF
+*
+         IF( MAX( ABSAKK, COLMAX ).EQ.ZERO ) THEN
+*
+*           Column K is zero or underflow: set INFO and continue
+*
+            IF( INFO.EQ.0 )
+     $         INFO = K
+            KP = K
+            A( K, K ) = DBLE( A( K, K ) )
+         ELSE
+*
+*           ============================================================
+*
+*           BEGIN pivot search
+*
+*           Case(1)
+            IF( ABSAKK.GE.ALPHA*COLMAX ) THEN
+*
+*              no interchange, use 1-by-1 pivot block
+*
+               KP = K
+            ELSE
+*
+*              BEGIN pivot search along IMAX row
+*
+*
+*              Copy column IMAX to column K+1 of W and update it
+*
+               CALL ZCOPY( IMAX-K, A( IMAX, K ), LDA, W( K, K+1 ), 1 )
+               CALL ZLACGV( IMAX-K, W( K, K+1 ), 1 )
+               W( IMAX, K+1 ) = DBLE( A( IMAX, IMAX ) )
+               IF( IMAX.LT.N )
+     $            CALL ZCOPY( N-IMAX, A( IMAX+1, IMAX ), 1,
+     $                        W( IMAX+1, K+1 ), 1 )
+               CALL ZGEMV( 'No transpose', N-K+1, K-1, -CONE, A( K, 1 ),
+     $                     LDA, W( IMAX, 1 ), LDW, CONE, W( K, K+1 ),
+     $                     1 )
+               W( IMAX, K+1 ) = DBLE( W( IMAX, K+1 ) )
+*
+*              JMAX is the column-index of the largest off-diagonal
+*              element in row IMAX, and ROWMAX is its absolute value.
+*              Determine only ROWMAX.
+*
+               JMAX = K - 1 + IZAMAX( IMAX-K, W( K, K+1 ), 1 )
+               ROWMAX = CABS1( W( JMAX, K+1 ) )
+               IF( IMAX.LT.N ) THEN
+                  JMAX = IMAX + IZAMAX( N-IMAX, W( IMAX+1, K+1 ), 1 )
+                  ROWMAX = MAX( ROWMAX, CABS1( W( JMAX, K+1 ) ) )
+               END IF
+*
+*              Case(2)
+               IF( ABSAKK.GE.ALPHA*COLMAX*( COLMAX / ROWMAX ) ) THEN
+*
+*                 no interchange, use 1-by-1 pivot block
+*
+                  KP = K
+*
+*              Case(3)
+               ELSE IF( ABS( DBLE( W( IMAX, K+1 ) ) ).GE.ALPHA*ROWMAX )
+     $                   THEN
+*
+*                 interchange rows and columns K and IMAX, use 1-by-1
+*                 pivot block
+*
+                  KP = IMAX
+*
+*                 copy column K+1 of W to column K of W
+*
+                  CALL ZCOPY( N-K+1, W( K, K+1 ), 1, W( K, K ), 1 )
+*
+*              Case(4)
+               ELSE
+*
+*                 interchange rows and columns K+1 and IMAX, use 2-by-2
+*                 pivot block
+*
+                  KP = IMAX
+                  KSTEP = 2
+               END IF
+*
+*
+*              END pivot search along IMAX row
+*
+            END IF
+*
+*           END pivot search
+*
+*           ============================================================
+*
+*           KK is the column of A where pivoting step stopped
+*
+            KK = K + KSTEP - 1
+*
+*           Interchange rows and columns KP and KK.
+*           Updated column KP is already stored in column KK of W.
+*
+            IF( KP.NE.KK ) THEN
+*
+*              Copy non-updated column KK to column KP of submatrix A
+*              at step K. No need to copy element into column K
+*              (or K and K+1 for 2-by-2 pivot) of A, since these columns
+*              will be later overwritten.
+*
+               A( KP, KP ) = DBLE( A( KK, KK ) )
+               CALL ZCOPY( KP-KK-1, A( KK+1, KK ), 1, A( KP, KK+1 ),
+     $                     LDA )
+               CALL ZLACGV( KP-KK-1, A( KP, KK+1 ), LDA )
+               IF( KP.LT.N )
+     $            CALL ZCOPY( N-KP, A( KP+1, KK ), 1, A( KP+1, KP ), 1 )
+*
+*              Interchange rows KK and KP in first K-1 columns of A
+*              (columns K (or K and K+1 for 2-by-2 pivot) of A will be
+*              later overwritten). Interchange rows KK and KP
+*              in first KK columns of W.
+*
+               IF( K.GT.1 )
+     $            CALL ZSWAP( K-1, A( KK, 1 ), LDA, A( KP, 1 ), LDA )
+               CALL ZSWAP( KK, W( KK, 1 ), LDW, W( KP, 1 ), LDW )
+            END IF
+*
+            IF( KSTEP.EQ.1 ) THEN
+*
+*              1-by-1 pivot block D(k): column k of W now holds
+*
+*              W(k) = L(k)*D(k),
+*
+*              where L(k) is the k-th column of L
+*
+*              (1) Store subdiag. elements of column L(k)
+*              and 1-by-1 block D(k) in column k of A.
+*              (NOTE: Diagonal element L(k,k) is a UNIT element
+*              and not stored)
+*                 A(k,k) := D(k,k) = W(k,k)
+*                 A(k+1:N,k) := L(k+1:N,k) = W(k+1:N,k)/D(k,k)
+*
+*              (NOTE: No need to use for Hermitian matrix
+*              A( K, K ) = DBLE( W( K, K) ) to separately copy diagonal
+*              element D(k,k) from W (potentially saves only one load))
+               CALL ZCOPY( N-K+1, W( K, K ), 1, A( K, K ), 1 )
+               IF( K.LT.N ) THEN
+*
+*                 (NOTE: No need to check if A(k,k) is NOT ZERO,
+*                  since that was ensured earlier in pivot search:
+*                  case A(k,k) = 0 falls into 2x2 pivot case(4))
+*
+                  R1 = ONE / DBLE( A( K, K ) )
+                  CALL ZDSCAL( N-K, R1, A( K+1, K ), 1 )
+*
+*                 (2) Conjugate column W(k)
+*
+                  CALL ZLACGV( N-K, W( K+1, K ), 1 )
+               END IF
+*
+            ELSE
+*
+*              2-by-2 pivot block D(k): columns k and k+1 of W now hold
+*
+*              ( W(k) W(k+1) ) = ( L(k) L(k+1) )*D(k)
+*
+*              where L(k) and L(k+1) are the k-th and (k+1)-th columns
+*              of L
+*
+*              (1) Store L(k+2:N,k) and L(k+2:N,k+1) and 2-by-2
+*              block D(k:k+1,k:k+1) in columns k and k+1 of A.
+*              (NOTE: 2-by-2 diagonal block L(k:k+1,k:k+1) is a UNIT
+*              block and not stored)
+*                 A(k:k+1,k:k+1) := D(k:k+1,k:k+1) = W(k:k+1,k:k+1)
+*                 A(k+2:N,k:k+1) := L(k+2:N,k:k+1) =
+*                 = W(k+2:N,k:k+1) * ( D(k:k+1,k:k+1)**(-1) )
+*
+               IF( K.LT.N-1 ) THEN
+*
+*                 Factor out the columns of the inverse of 2-by-2 pivot
+*                 block D, so that each column contains 1, to reduce the
+*                 number of FLOPS when we multiply panel
+*                 ( W(kw-1) W(kw) ) by this inverse, i.e. by D**(-1).
+*
+*                 D**(-1) = ( d11 cj(d21) )**(-1) =
+*                           ( d21    d22 )
+*
+*                 = 1/(d11*d22-|d21|**2) * ( ( d22) (-cj(d21) ) ) =
+*                                          ( (-d21) (     d11 ) )
+*
+*                 = 1/(|d21|**2) * 1/((d11/cj(d21))*(d22/d21)-1) *
+*
+*                   * ( d21*( d22/d21 ) conj(d21)*(           - 1 ) ) =
+*                     (     (      -1 )           ( d11/conj(d21) ) )
+*
+*                 = 1/(|d21|**2) * 1/(D22*D11-1) *
+*
+*                   * ( d21*( D11 ) conj(d21)*(  -1 ) ) =
+*                     (     (  -1 )           ( D22 ) )
+*
+*                 = (1/|d21|**2) * T * ( d21*( D11 ) conj(d21)*(  -1 ) ) =
+*                                      (     (  -1 )           ( D22 ) )
+*
+*                 = ( (T/conj(d21))*( D11 ) (T/d21)*(  -1 ) ) =
+*                   (               (  -1 )         ( D22 ) )
+*
+*                 = ( conj(D21)*( D11 ) D21*(  -1 ) )
+*                   (           (  -1 )     ( D22 ) ),
+*
+*                 where D11 = d22/d21,
+*                       D22 = d11/conj(d21),
+*                       D21 = T/d21,
+*                       T = 1/(D22*D11-1).
+*
+*                 (NOTE: No need to check for division by ZERO,
+*                  since that was ensured earlier in pivot search:
+*                  (a) d21 != 0, since in 2x2 pivot case(4)
+*                      |d21| should be larger than |d11| and |d22|;
+*                  (b) (D22*D11 - 1) != 0, since from (a),
+*                      both |D11| < 1, |D22| < 1, hence |D22*D11| << 1.)
+*
+                  D21 = W( K+1, K )
+                  D11 = W( K+1, K+1 ) / D21
+                  D22 = W( K, K ) / DCONJG( D21 )
+                  T = ONE / ( DBLE( D11*D22 )-ONE )
+                  D21 = T / D21
+*
+*                 Update elements in columns A(k) and A(k+1) as
+*                 dot products of rows of ( W(k) W(k+1) ) and columns
+*                 of D**(-1)
+*
+                  DO 80 J = K + 2, N
+                     A( J, K ) = DCONJG( D21 )*
+     $                           ( D11*W( J, K )-W( J, K+1 ) )
+                     A( J, K+1 ) = D21*( D22*W( J, K+1 )-W( J, K ) )
+   80             CONTINUE
+               END IF
+*
+*              Copy D(k) to A
+*
+               A( K, K ) = W( K, K )
+               A( K+1, K ) = W( K+1, K )
+               A( K+1, K+1 ) = W( K+1, K+1 )
+*
+*              (2) Conjugate columns W(k) and W(k+1)
+*
+               CALL ZLACGV( N-K, W( K+1, K ), 1 )
+               CALL ZLACGV( N-K-1, W( K+2, K+1 ), 1 )
+*
+            END IF
+*
+         END IF
+*
+*        Store details of the interchanges in IPIV
+*
+         IF( KSTEP.EQ.1 ) THEN
+            IPIV( K ) = KP
+         ELSE
+            IPIV( K ) = -KP
+            IPIV( K+1 ) = -KP
+         END IF
+*
+*        Increase K and return to the start of the main loop
+*
+         K = K + KSTEP
+         GO TO 70
+*
+   90    CONTINUE
+*
+*        Update the lower triangle of A22 (= A(k:n,k:n)) as
+*
+*        A22 := A22 - L21*D*L21**H = A22 - L21*W**H
+*
+*        computing blocks of NB columns at a time (note that conjg(W) is
+*        actually stored)
+*
+         DO 110 J = K, N, NB
+            JB = MIN( NB, N-J+1 )
+*
+*           Update the lower triangle of the diagonal block
+*
+            DO 100 JJ = J, J + JB - 1
+               A( JJ, JJ ) = DBLE( A( JJ, JJ ) )
+               CALL ZGEMV( 'No transpose', J+JB-JJ, K-1, -CONE,
+     $                     A( JJ, 1 ), LDA, W( JJ, 1 ), LDW, CONE,
+     $                     A( JJ, JJ ), 1 )
+               A( JJ, JJ ) = DBLE( A( JJ, JJ ) )
+  100       CONTINUE
+*
+*           Update the rectangular subdiagonal block
+*
+            IF( J+JB.LE.N )
+     $         CALL ZGEMM( 'No transpose', 'Transpose', N-J-JB+1, JB,
+     $                     K-1, -CONE, A( J+JB, 1 ), LDA, W( J, 1 ),
+     $                     LDW, CONE, A( J+JB, J ), LDA )
+  110    CONTINUE
+*
+*        Put L21 in standard form by partially undoing the interchanges
+*        of rows in columns 1:k-1 looping backwards from k-1 to 1
+*
+         J = K - 1
+  120    CONTINUE
+*
+*           Undo the interchanges (if any) of rows JJ and JP at each
+*           step J
+*
+*           (Here, J is a diagonal index)
+            JJ = J
+            JP = IPIV( J )
+            IF( JP.LT.0 ) THEN
+               JP = -JP
+*              (Here, J is a diagonal index)
+               J = J - 1
+            END IF
+*           (NOTE: Here, J is used to determine row length. Length J
+*           of the rows to swap back doesn't include diagonal element)
+            J = J - 1
+            IF( JP.NE.JJ .AND. J.GE.1 )
+     $         CALL ZSWAP( J, A( JP, 1 ), LDA, A( JJ, 1 ), LDA )
+         IF( J.GT.1 )
+     $      GO TO 120
+*
+*        Set KB to the number of columns factorized
+*
+         KB = K - 1
+*
+      END IF
+      RETURN
+*
+*     End of ZLAHEF
 *
       END
 *> \brief \b ZLAHQR computes the eigenvalues and Schur factorization of an upper Hessenberg matrix, using the double-shift/single-shift QR algorithm.
@@ -34223,6 +39053,272 @@
       RETURN
 *
 *     End of ZLANHE
+*
+      END
+*> \brief \b ZLANHP returns the value of the 1-norm, or the Frobenius norm, or the infinity norm, or the element of largest absolute value of a complex Hermitian matrix supplied in packed form.
+*
+*  =========== DOCUMENTATION ===========
+*
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
+*
+*> \htmlonly
+*> Download ZLANHP + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zlanhp.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zlanhp.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zlanhp.f">
+*> [TXT]</a>
+*> \endhtmlonly
+*
+*  Definition:
+*  ===========
+*
+*       DOUBLE PRECISION FUNCTION ZLANHP( NORM, UPLO, N, AP, WORK )
+*
+*       .. Scalar Arguments ..
+*       CHARACTER          NORM, UPLO
+*       INTEGER            N
+*       ..
+*       .. Array Arguments ..
+*       DOUBLE PRECISION   WORK( * )
+*       COMPLEX*16         AP( * )
+*       ..
+*
+*
+*> \par Purpose:
+*  =============
+*>
+*> \verbatim
+*>
+*> ZLANHP  returns the value of the one norm,  or the Frobenius norm, or
+*> the  infinity norm,  or the  element of  largest absolute value  of a
+*> complex hermitian matrix A,  supplied in packed form.
+*> \endverbatim
+*>
+*> \return ZLANHP
+*> \verbatim
+*>
+*>    ZLANHP = ( max(abs(A(i,j))), NORM = 'M' or 'm'
+*>             (
+*>             ( norm1(A),         NORM = '1', 'O' or 'o'
+*>             (
+*>             ( normI(A),         NORM = 'I' or 'i'
+*>             (
+*>             ( normF(A),         NORM = 'F', 'f', 'E' or 'e'
+*>
+*> where  norm1  denotes the  one norm of a matrix (maximum column sum),
+*> normI  denotes the  infinity norm  of a matrix  (maximum row sum) and
+*> normF  denotes the  Frobenius norm of a matrix (square root of sum of
+*> squares).  Note that  max(abs(A(i,j)))  is not a consistent matrix norm.
+*> \endverbatim
+*
+*  Arguments:
+*  ==========
+*
+*> \param[in] NORM
+*> \verbatim
+*>          NORM is CHARACTER*1
+*>          Specifies the value to be returned in ZLANHP as described
+*>          above.
+*> \endverbatim
+*>
+*> \param[in] UPLO
+*> \verbatim
+*>          UPLO is CHARACTER*1
+*>          Specifies whether the upper or lower triangular part of the
+*>          hermitian matrix A is supplied.
+*>          = 'U':  Upper triangular part of A is supplied
+*>          = 'L':  Lower triangular part of A is supplied
+*> \endverbatim
+*>
+*> \param[in] N
+*> \verbatim
+*>          N is INTEGER
+*>          The order of the matrix A.  N >= 0.  When N = 0, ZLANHP is
+*>          set to zero.
+*> \endverbatim
+*>
+*> \param[in] AP
+*> \verbatim
+*>          AP is COMPLEX*16 array, dimension (N*(N+1)/2)
+*>          The upper or lower triangle of the hermitian matrix A, packed
+*>          columnwise in a linear array.  The j-th column of A is stored
+*>          in the array AP as follows:
+*>          if UPLO = 'U', AP(i + (j-1)*j/2) = A(i,j) for 1<=i<=j;
+*>          if UPLO = 'L', AP(i + (j-1)*(2n-j)/2) = A(i,j) for j<=i<=n.
+*>          Note that the  imaginary parts of the diagonal elements need
+*>          not be set and are assumed to be zero.
+*> \endverbatim
+*>
+*> \param[out] WORK
+*> \verbatim
+*>          WORK is DOUBLE PRECISION array, dimension (MAX(1,LWORK)),
+*>          where LWORK >= N when NORM = 'I' or '1' or 'O'; otherwise,
+*>          WORK is not referenced.
+*> \endverbatim
+*
+*  Authors:
+*  ========
+*
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
+*
+*> \ingroup lanhp
+*
+*  =====================================================================
+      DOUBLE PRECISION FUNCTION ZLANHP( NORM, UPLO, N, AP, WORK )
+*
+*  -- LAPACK auxiliary routine --
+*  -- LAPACK is a software package provided by Univ. of Tennessee,    --
+*  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
+*
+*     .. Scalar Arguments ..
+      CHARACTER          NORM, UPLO
+      INTEGER            N
+*     ..
+*     .. Array Arguments ..
+      DOUBLE PRECISION   WORK( * )
+      COMPLEX*16         AP( * )
+*     ..
+*
+* =====================================================================
+*
+*     .. Parameters ..
+      DOUBLE PRECISION   ONE, ZERO
+      PARAMETER          ( ONE = 1.0D+0, ZERO = 0.0D+0 )
+*     ..
+*     .. Local Scalars ..
+      INTEGER            I, J, K
+      DOUBLE PRECISION   ABSA, SCALE, SUM, VALUE
+*     ..
+*     .. External Functions ..
+      LOGICAL            LSAME, DISNAN
+      EXTERNAL           LSAME, DISNAN
+*     ..
+*     .. External Subroutines ..
+      EXTERNAL           ZLASSQ
+*     ..
+*     .. Intrinsic Functions ..
+      INTRINSIC          ABS, DBLE, SQRT
+*     ..
+*     .. Executable Statements ..
+*
+      IF( N.EQ.0 ) THEN
+         VALUE = ZERO
+      ELSE IF( LSAME( NORM, 'M' ) ) THEN
+*
+*        Find max(abs(A(i,j))).
+*
+         VALUE = ZERO
+         IF( LSAME( UPLO, 'U' ) ) THEN
+            K = 0
+            DO 20 J = 1, N
+               DO 10 I = K + 1, K + J - 1
+                  SUM = ABS( AP( I ) )
+                  IF( VALUE .LT. SUM .OR. DISNAN( SUM ) ) VALUE = SUM
+   10          CONTINUE
+               K = K + J
+               SUM = ABS( DBLE( AP( K ) ) )
+               IF( VALUE .LT. SUM .OR. DISNAN( SUM ) ) VALUE = SUM
+   20       CONTINUE
+         ELSE
+            K = 1
+            DO 40 J = 1, N
+               SUM = ABS( DBLE( AP( K ) ) )
+               IF( VALUE .LT. SUM .OR. DISNAN( SUM ) ) VALUE = SUM
+               DO 30 I = K + 1, K + N - J
+                  SUM = ABS( AP( I ) )
+                  IF( VALUE .LT. SUM .OR. DISNAN( SUM ) ) VALUE = SUM
+   30          CONTINUE
+               K = K + N - J + 1
+   40       CONTINUE
+         END IF
+      ELSE IF( ( LSAME( NORM, 'I' ) ) .OR. ( LSAME( NORM, 'O' ) ) .OR.
+     $         ( NORM.EQ.'1' ) ) THEN
+*
+*        Find normI(A) ( = norm1(A), since A is hermitian).
+*
+         VALUE = ZERO
+         K = 1
+         IF( LSAME( UPLO, 'U' ) ) THEN
+            DO 60 J = 1, N
+               SUM = ZERO
+               DO 50 I = 1, J - 1
+                  ABSA = ABS( AP( K ) )
+                  SUM = SUM + ABSA
+                  WORK( I ) = WORK( I ) + ABSA
+                  K = K + 1
+   50          CONTINUE
+               WORK( J ) = SUM + ABS( DBLE( AP( K ) ) )
+               K = K + 1
+   60       CONTINUE
+            DO 70 I = 1, N
+               SUM = WORK( I )
+               IF( VALUE .LT. SUM .OR. DISNAN( SUM ) ) VALUE = SUM
+   70       CONTINUE
+         ELSE
+            DO 80 I = 1, N
+               WORK( I ) = ZERO
+   80       CONTINUE
+            DO 100 J = 1, N
+               SUM = WORK( J ) + ABS( DBLE( AP( K ) ) )
+               K = K + 1
+               DO 90 I = J + 1, N
+                  ABSA = ABS( AP( K ) )
+                  SUM = SUM + ABSA
+                  WORK( I ) = WORK( I ) + ABSA
+                  K = K + 1
+   90          CONTINUE
+               IF( VALUE .LT. SUM .OR. DISNAN( SUM ) ) VALUE = SUM
+  100       CONTINUE
+         END IF
+      ELSE IF( ( LSAME( NORM, 'F' ) ) .OR. ( LSAME( NORM, 'E' ) ) ) THEN
+*
+*        Find normF(A).
+*
+         SCALE = ZERO
+         SUM = ONE
+         K = 2
+         IF( LSAME( UPLO, 'U' ) ) THEN
+            DO 110 J = 2, N
+               CALL ZLASSQ( J-1, AP( K ), 1, SCALE, SUM )
+               K = K + J
+  110       CONTINUE
+         ELSE
+            DO 120 J = 1, N - 1
+               CALL ZLASSQ( N-J, AP( K ), 1, SCALE, SUM )
+               K = K + N - J + 1
+  120       CONTINUE
+         END IF
+         SUM = 2*SUM
+         K = 1
+         DO 130 I = 1, N
+            IF( DBLE( AP( K ) ).NE.ZERO ) THEN
+               ABSA = ABS( DBLE( AP( K ) ) )
+               IF( SCALE.LT.ABSA ) THEN
+                  SUM = ONE + SUM*( SCALE / ABSA )**2
+                  SCALE = ABSA
+               ELSE
+                  SUM = SUM + ( ABSA / SCALE )**2
+               END IF
+            END IF
+            IF( LSAME( UPLO, 'U' ) ) THEN
+               K = K + I + 1
+            ELSE
+               K = K + N - I + 1
+            END IF
+  130    CONTINUE
+         VALUE = SCALE*SQRT( SUM )
+      END IF
+*
+      ZLANHP = VALUE
+      RETURN
+*
+*     End of ZLANHP
 *
       END
 *> \brief \b ZLANHS returns the value of the 1-norm, Frobenius norm, infinity-norm, or the largest absolute value of any element of an upper Hessenberg matrix.
