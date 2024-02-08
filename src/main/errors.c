@@ -499,8 +499,8 @@ static void vwarningcall_dflt(SEXP call, const char *format, va_list ap)
 	else {
 	    REprintf(_("Warning in %s :"), dcall);
 	    if(!(noBreakWarning ||
-		 ( mbcslocale && 18 + wd(dcall) + wd(buf) <= LONGWARN) ||
-		 (!mbcslocale && 18 + strlen(dcall) + strlen(buf) <= LONGWARN)))
+		 ( mbcslocale && 18 + wd(dcall) + wd(buf) >= LONGWARN) ||
+		 (!mbcslocale && 18 + strlen(dcall) + strlen(buf) >= LONGWARN)))
 		REprintf("\n ");
 	}
 	REprintf(" %s\n", buf);

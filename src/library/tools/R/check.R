@@ -4099,7 +4099,8 @@ add_dummies <- function(dir, Log)
             ## particularly parallel cluster on Windows, hence a hack to retry after 2 sec:
             lines <- tryCatch(suppressWarnings(readLines(exout, warn = FALSE)),
                               error = function(e){Sys.sleep(2); readLines(exout, warn = FALSE)})
-            bad_lines <- grep("^Warning: .*is deprecated.$",
+            ## r85870 changed .Deprecated to report the call, hence changed msg
+            bad_lines <- grep("^Warning.*: .*is deprecated[.]$",
                               lines, useBytes = TRUE, value = TRUE)
             if(length(bad_lines)) {
                 bad <- TRUE
@@ -4505,14 +4506,14 @@ add_dummies <- function(dir, Log)
 
         ## Packages with a 'vignette' subdir not providing vignettes.
         if(!length(vigns$docs)) {
-            checkingLog(Log, "package vignettes")                
+            checkingLog(Log, "package vignettes")
             noteLog(Log)
             msg <- c("Package has 'vignettes' subdirectory but apparently no vignettes.",
                      "Perhaps the 'VignetteBuilder' information is missing from the DESCRIPTION file?")
             wrapLog(msg)
             return()
         }
-                
+
         if(do_install && !spec_install && !is_base_pkg && !extra_arch) {
             ## fake installs don't install inst/doc
             checkingLog(Log, "for unstated dependencies in vignettes")
@@ -4752,7 +4753,7 @@ add_dummies <- function(dir, Log)
                 })
                 if(!inherits(products, "error") && length(products)) {
                     ## Hmm ... there should really only be one tangle
-                    ## product. 
+                    ## product.
                     lines <- readLines(file.path(tdir, products[1L]),
                                        warn = FALSE)
                     if(!all(grepl("(^###|^[[:space:]]*$)", lines,
@@ -4768,7 +4769,7 @@ add_dummies <- function(dir, Log)
             if(!is.na(rcp))
                 Sys.setenv("_R_CHECK_PACKAGE_NAME_" = rcp)
             ## Hopefully knitr::vtangle() will be fixed eventually ...
-            ## </FIXME>        
+            ## </FIXME>
             if(nb <- length(bad_vignettes)) {
                 if(!any) noteLog(Log)
                 any <- TRUE
@@ -5598,6 +5599,8 @@ add_dummies <- function(dir, Log)
                              ## so filter out later.
                              "^Warning:",
                              ## <FIXME>
+                             ## New form of warning in 4.4.0
+                             "^Warning.*: .*is deprecated[.]$",
                              ## New style Rd conversion
                              ## which may even show errors:
                              "^Rd (warning|error): ",
