@@ -1,7 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
- *  Copyright (C) 2000-2018 The R Core Team
- *  Copyright (C) 2002-2018 The R Foundation
+ *  Copyright (C) 2000-2024 The R Core Team
+ *  Copyright (C) 2002-2024 The R Foundation
  *  Copyright (C) 1998 Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -89,10 +89,6 @@ double gammafn(double x)
 	-.5793070335782135784625493333333e-31
     };
 
-    int i, n;
-    double y;
-    double sinpiy, value;
-
 #ifdef NOMORE_FOR_THREADS
     static int ngam = 0;
     static double xmin = 0, xmax = 0., xsml = 0., dxrel = 0.;
@@ -128,7 +124,8 @@ double gammafn(double x)
 	return ML_NAN;
     }
 
-    y = fabs(x);
+    int i;
+    double y = fabs(x), value;
 
     if (y <= 10) {
 
@@ -136,7 +133,7 @@ double gammafn(double x)
 	 * Reduce the interval and find gamma(1 + y) for 0 <= y < 1
 	 * first of all. */
 
-	n = (int) x;
+	int n = (int) x;
 	if(x < 0) --n;
 	y = x - n;/* n = floor(x)  ==>	y in [ 0, 1 ) */
 	--n;
@@ -197,20 +194,21 @@ double gammafn(double x)
 	}
 	else { /* normal case */
 	    value = exp((y - 0.5) * log(y) - y + M_LN_SQRT_2PI +
-			((2*y == (int)2*y)? stirlerr(y) : lgammacor(y)));
+			((2*y == (int)2*y) ? stirlerr(y) : lgammacor(y)));
 	}
+
 	if (x > 0)
 	    return value;
+	// else:  x < 0, not an integer :
 
-	if (fabs((x - (int)(x - 0.5))/x) < dxrel){
-
+	if (fabs((x - (int)(x - 0.5))/x) < dxrel) {
 	    /* The answer is less than half precision because */
 	    /* the argument is too near a negative integer. */
 
 	    ML_WARNING(ME_PRECISION, "gammafn");
 	}
 
-	sinpiy = sinpi(y);
+	double sinpiy = sinpi(y);
 	if (sinpiy == 0) {		/* Negative integer arg - overflow */
 	    ML_WARNING(ME_RANGE, "gammafn");
 	    return ML_POSINF;

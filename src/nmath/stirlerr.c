@@ -4,7 +4,7 @@
  *    October 23, 2000.
  *
  *  Merge in to R:
- *	Copyright (C) 2000-2021, The R Core Team
+ *	Copyright (C) 2000-2024, The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -42,8 +42,12 @@
  *
  * see also lgammacor() in ./lgammacor.c  which computes almost the same!
  *
- * NB: stirlerr(n/2) is called from dt() *and* gamma(n/2) when n is integer and n/2 <= 50
+ * NB: stirlerr(n/2) & stirlerr((n+1)/2) are called from dt(x,n) for all real n > 0 ;
+ *     stirlerr(x) from gammafn(x) when |x| > 10,  2|x| is integer, but |x| is *not* in {11:50}
+ *     stirlerr(x) from dpois_raw(x, lam) for any x > 0  which itself is called by many!
+ *     stirlerr(n), stirlerr(x), stirlerr(n-x) from binom_raw(x, n, ..) for all possible 0 < x < n
  */
+
 double attribute_hidden stirlerr(double n)
 {
 

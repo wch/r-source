@@ -63,8 +63,6 @@ double attribute_hidden lgammacor(double x)
 	+.1276642195630062933333333333333e-30
     };
 
-    double tmp;
-
 /* For IEEE double precision DBL_EPSILON = 2^-52 = 2.220446049250313e-16 :
  *   xbig = 2 ^ 26.5
  *   xmax = DBL_MAX / 48 =  2^1020 / 3 */
@@ -72,15 +70,16 @@ double attribute_hidden lgammacor(double x)
 #define xbig  94906265.62425156
 #define xmax  3.745194030963158e306
 
-    if (x < 10)
+    if (x < 10) // possibly consider stirlerr()
 	ML_WARN_return_NAN
     else if (x >= xmax) {
 	ML_WARNING(ME_UNDERFLOW, "lgammacor");
 	/* allow to underflow below */
     }
     else if (x < xbig) {
-	tmp = 10 / x;
+	double tmp = 10 / x;
 	return chebyshev_eval(tmp * tmp * 2 - 1, algmcs, nalgm) / x;
     }
+    // else, xbig <= x < xmax :
     return 1 / (x * 12);
 }
