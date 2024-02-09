@@ -498,9 +498,16 @@ static void vwarningcall_dflt(SEXP call, const char *format, va_list ap)
 	if(dcall[0] == '\0') REprintf(_("Warning:"));
 	else {
 	    REprintf(_("Warning in %s :"), dcall);
+	    // This did not allow for buf containing line breaks
+	    // We can put the first line on the same line as the warning
+	    // if it fits within LONGWARN.
+	    char buf1[BUFSIZE];
+	    strncpy(buf1, buf, BUFSIZE);
+	    char *p = strstr(buf1, "\n");
+	    if(p) *p = '\0';
 	    if(!(noBreakWarning ||
-		 ( mbcslocale && 18 + wd(dcall) + wd(buf) >= LONGWARN) ||
-		 (!mbcslocale && 18 + strlen(dcall) + strlen(buf) >= LONGWARN)))
+		 ( mbcslocale && (18 + wd(dcall) + wd(buf1) <= LONGWARN)) ||
+		 (!mbcslocale && (18 + strlen(dcall) + strlen(buf1) <= LONGWARN)))) 
 		REprintf("\n ");
 	}
 	REprintf(" %s\n", buf);
