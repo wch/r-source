@@ -595,6 +595,9 @@
       \item \code{pmatch(x, table)} for large \code{table}, also called for
       data frame row selection, \code{dfrm[nm, ]}, is now interruptable,
       fixing \PR{18656}.
+
+      \item \code{warning()} with \code{options(warn = 1)} has improved
+      output for multi-line messages.
     }
   }
 }
