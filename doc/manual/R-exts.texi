@@ -1151,7 +1151,7 @@ files to be installed must start with an @acronym{ASCII} (lower or upper
 case) letter or digit and have one of the extensions@footnote{Extensions
 @file{.S} and @file{.s} arise from code originally written for S(-PLUS),
 but are commonly used for assembler code.  Extension @file{.q} was used
-for S, which at one time was tentatively called QPE.} @file{.R},
+for S, which at one time was tentatively called @I{QPE}.} @file{.R},
 @file{.S}, @file{.q}, @file{.r}, or @file{.s}.  We recommend using
 @file{.R}, as this extension seems to be not used by any other software.
 It should be possible to read in the files using @code{source()}, so
@@ -1685,7 +1685,7 @@ sudo mv bwidget-1.9.14 /usr/local/lib
 @noindent
 substituting a location on the Tcl search path for @file{/usr/local/lib} if
 needed.  (If no location on that search path is writeable, you will need
-to add one each time BWidget is to be used with @code{tcltk::addTclPath()}.)
+to add one each time @samp{BWidget} is to be used with @code{tcltk::addTclPath()}.)
 
 To (silently) test for the presence of @samp{Tktable} one can use
 
@@ -2450,7 +2450,7 @@ DLL.
 @node OpenMP support, Using pthreads, Using Makevars, Using Makevars
 @subsubsection @abbr{OpenMP} support
 
-@cindex OpenMP
+@cindex @I{OpenMP}
 
 There is some support for packages which wish to use
 @abbr{OpenMP}@footnote{@uref{https://www.openmp.org/},
@@ -2556,7 +2556,7 @@ Apple @command{clang} on macOS has no @abbr{OpenMP} support.
 some idea of what compilers support what versions.  Note that support
 for Fortran compilers is often less up-to-date and that page suggests it
 is unwise to rely on a version later than 3.1.  Which introduced a
-Fortran OpenMP module, so Fortran users of OpemMP should include
+Fortran @abbr{OpenMP} module, so Fortran users of @abbr{OpenMP} should include
 @example
 use omp_lib
 @end example
@@ -3854,7 +3854,7 @@ built tarball as a final check on the contents.
 
 Where a non-POSIX file system is in use which does not utilize execute
 permissions, some care is needed with permissions.  This applies on
-Windows and to e.g.@: FAT-formatted drives and SMB-mounted file systems
+Windows and to e.g.@: FAT-formatted drives and @I{SMB}-mounted file systems
 on other OSes.  The `mode' of the file recorded in the tarball will be
 whatever @code{file.info()} returns.  On Windows this will record only
 directories as having execute permission and on other OSes it is likely
@@ -4951,7 +4951,7 @@ PKG_CPPFLAGS = `gsl-config --cflags`
 
 @noindent
 which works in all versions of @command{make} known@footnote{GNU make,
-BSD make and other variants of @command{pmake} in FreeBSD, NetBSD and
+BSD make and other variants of @command{pmake} in FreeBSD, @I{NetBSD} and
 formerly in macOS, and formerly AT&T make as implemented on Solaris and
 `Distributed Make' (@code{dmake}), part of Oracle Developer Studio and
 available in other versions including from Apache OpenOffice.} to be
@@ -5251,7 +5251,7 @@ particular, if more than one package initializes a system RNG (e.g.@:
 @emph{via} @code{srand}), they will interfere with each other.  This
 applies also to Fortran 90's @code{random_number} and
 @code{random_seed}, and Fortran 2018's @code{random_init}.  And to GNU
-Fortran's @code{rand}, @code{irand} and @code{srand}.  Except for
+Fortran@w{'s} @code{rand}, @code{irand} and @code{srand}.  Except for
 @code{drand48}, what PRNG these functions use is
 implementation-dependent.
 
@@ -5742,7 +5742,7 @@ example @code{Sweave} defaults to 300@tie{}@abbr{ppi}, and 100--150 is more
 appropriate for a package manual).  These tools include Adobe Acrobat
 (not Reader), Apple's Preview@footnote{Select `Save as', and select
 `Reduce file size' from the `Quartz filter' menu': this can be accessed
-in other ways, for example by Automator.}  and Ghostscript (which
+in other ways, for example by @I{Automator}.}  and Ghostscript (which
 converts PDF to PDF by
 
 @example
@@ -8049,7 +8049,7 @@ Packages referred to by these `other forms' should be declared in the
 @findex \deqn
 
 Mathematical formulae should be set beautifully for printed
-documentation and in KaTeX/@I{MathJax}-enhanced @HTML{} help (as from
+documentation and in @I{KaTeX}/@I{MathJax}-enhanced @HTML{} help (as from
 @R{} 4.2.0) yet we still want something useful for plain-text (and
 legacy @HTML{}) help.  To this end, the two commands
 @code{\eqn@{@var{latex}@}@{@var{ascii}@}} and
@@ -9990,7 +9990,7 @@ packages are attempts to coerce a @code{NaN} or infinity to type
 @code{size_t}.  Also common is @code{y[x - 1]} forgetting that @code{x}
 might be @code{NA_INTEGER}.
 
-`UBSanitizer' is a tool for C/C++ source code selected by
+`@I{UBSanitizer}' is a tool for C/C++ source code selected by
 @option{-fsanitize=undefined} in suitable builds@footnote{On some
 platforms the runtime library, @pkg{libubsan}, needs to be installed
 separately.} of @command{clang} and GCC.  Its (main) runtime library is
@@ -10104,7 +10104,7 @@ code with @command{gcc} but there has been success with @command{clang}.
 @subsection Other analyses with `clang'
 
 Recent versions of @command{clang} on @cputype{x86_64} Linux have
-`ThreadSanitizer' (@uref{https://github.com/google/sanitizers/wiki#threadsanitizer}),
+`@I{ThreadSanitizer}' (@uref{https://github.com/google/sanitizers/wiki#threadsanitizer}),
 a `data race detector for C/C++ programs', and `MemorySanitizer'
 (@uref{https://clang.llvm.org/docs/MemorySanitizer.html},
 @uref{https://github.com/google/sanitizers})
@@ -15701,7 +15701,7 @@ Further, the included header @file{R_ext/Boolean.h} has enumeration
 constants @code{TRUE} and @code{FALSE} of type @code{Rboolean} in
 order to provide a way of using ``logical'' variables in C consistently.
 This can conflict with other software: for example it conflicts with the
-headers in IJG's @code{jpeg-9} (but not earlier versions).
+headers in @I{IJG}'s @code{jpeg-9} (but not earlier versions).
 
 @node Optimization, Integration, Numerical analysis subroutines, The R API
 @section Optimization
@@ -15736,7 +15736,7 @@ at the result.
 The interfaces (defined in header @file{R_ext/Applic.h}) are
 
 @itemize @bullet
-@item Nelder Mead:
+@item @I{Nelder Mead}:
 @findex nmmin
 @example
 void nmmin(int n, double *xin, double *x, double *Fmin, optimfn fn,
@@ -16182,7 +16182,7 @@ or generate an error and so not return to your code.
 @node Platform and version information, Inlining C functions, Allowing interrupts, The R API
 @section Platform and version information
 @cindex Version information from C
-@cindex OpenMP
+@cindex @I{OpenMP}
 @findex R_Version
 
 The header files define @code{USING_R}, which can be used to test if
@@ -17515,11 +17515,11 @@ some action after each line of input has been dealt with: see the
 alternative code below @code{#ifdef SIMPLE_CASE}.
 @end itemize
 
-It may be that no @R{} GraphApp windows need to be considered, although
+It may be that no @R{} @I{GraphApp} windows need to be considered, although
 these include pagers, the @code{windows()} graphics device, the @R{}
 data and script editors and various popups such as @code{choose.file()}
 and @code{select.list()}.  It would be possible to replace all of these,
-but it seems easier to allow GraphApp to handle most of them.
+but it seems easier to allow @I{GraphApp} to handle most of them.
 
 It is possible to run @R{} in a GUI in a single thread (as
 @file{RGui.exe} shows) but it will normally be easier@footnote{An

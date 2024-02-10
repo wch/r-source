@@ -101,7 +101,7 @@ tar -xf R-@var{x}.@var{y}.@var{z}.tar.gz
 @noindent
 on systems that have a suitable@footnote{e.g.@: @acronym{GNU}
 @command{tar} version 1.15 or later, or that from the @samp{libarchive}
-(as used on macOS) or `Heirloom Toolchest' distributions.}
+(as used on macOS) or `@I{Heirloom Toolchest}' distributions.}
 @command{tar} installed.  On other systems you need to have the
 @command{gzip} program installed, when you can use
 
@@ -523,8 +523,8 @@ on how to install the latest version are at
 @pkg{bera} installed.)
 
 Note that in most @LaTeX{} installations this will not actually use the
-standard fonts for PDF, but rather embed the URW clones NimbusRom,
-NimbusSans and (for Courier, if used) NimbusMon.
+standard fonts for PDF, but rather embed the URW clones @I{NimbusRom},
+@I{NimbusSans} and (for Courier, if used) @I{NimbusMon}.
 
 This needs @LaTeX{} packages @pkg{times}, @pkg{helvetic} and (if used)
 @pkg{courier} installed.
@@ -955,7 +955,7 @@ dependence on the @R{} version.)
 @subsection Debugging Symbols
 
 By default, @command{configure} adds a flag (usually @option{-g}) to the
-compilation flags for C, Fortran and CXX sources.  This will slow down
+compilation flags for C, Fortran and C++ sources.  This will slow down
 compilation and increase object sizes of both @R{} and packages, so it
 may be a good idea to change those flags (set @samp{CFLAGS} etc in
 @file{config.site} before configuring, or edit files @file{Makeconf}
@@ -1332,7 +1332,7 @@ packages (if installed) respectively.
 
 This re-runs all the tests relevant to the installed @R{} (including for
 example the code in the package vignettes), but not for example the ones
-checking the example code in the manuals nor making the standalone Rmath
+checking the example code in the manuals nor making the standalone @I{Rmath}
 library.  This can occasionally be useful when the operating environment
 has been changed, for example by OS updates or by substituting the
 @acronym{BLAS} (@pxref{Shared BLAS}).
@@ -1612,7 +1612,7 @@ To install, just double-click on the icon of the file you downloaded.
 At the `Installation Type' stage, note the option to `Customize'.  This
 currently shows four components: everyone will need the `R Framework'
 component: the remaining components are optional. (The `Tcl/Tk'
-component is needed to use package @pkg{tcltk}. The `Texinfo' component
+component is needed to use package @pkg{tcltk}. The `@I{Texinfo}' component
 is only needed by those installing source packages or @R{} from its
 sources.)
 
@@ -1628,18 +1628,18 @@ installer is clever enough to try to upgrade the last-installed version
 of the application where you installed it (which may not be where you
 want this time @dots{}).
 
-Various parts of the build require XQuartz to be installed: see
+Various parts of the build require @I{XQuartz} to be installed: see
 @uref{https://www.xquartz.org/releases/}.@footnote{At the time of
 writing, version 2.8.5 or later.}  These include the @pkg{tcltk} package
 and the @code{X11} graphics device: attempting to use these without
-XQuartz will remind you.  This is also needed for some
+@I{XQuartz} will remind you.  This is also needed for some
 @cindex Cairo
 builds of the cairographics-based devices (which are not often used on
 macOS) such as @code{png(type = "cairo")} and @code{svg()} and some
 third-party packages (e.g.@: @CRANpkg{rgl}).
 
 If you update your macOS version, you should re-install @R{} (and
-perhaps XQuartz): the installer may tailor the installation to the
+perhaps @I{XQuartz}): the installer may tailor the installation to the
 current version of the OS.
 
 Installers for R-patched and R-devel are usually available from
@@ -1729,7 +1729,7 @@ default for command-line @R{} but not @Rapp{}) requires
 Under some rather nebulous circumstances messages have been seen from
 @code{fontconfig} about missing/unreadable configuration files when
 using cairo-based devices, especially @code{X11(type = "cairo")}.  With
-XQuartz installed there are two @code{fontconfig} areas from different
+@I{XQuartz} installed there are two @code{fontconfig} areas from different
 versions and it can help to set
 @example
 setenv FONTCONFIG_PATH /opt/X11/lib/X11/fontconfig
@@ -1768,7 +1768,7 @@ installing multiple @R{} versions in parallel), or after you have
 deleted the files. @strong{NB:} the package names are case-sensitive and
 the @R{} domain is named inconsistently.
 
-Uninstalling the Tcl/Tk and Texinfo components (which are installed under
+Uninstalling the Tcl/Tk and @I{Texinfo} components (which are installed under
 @file{/opt/R/x86_64} on a @cputype{x86_64} build and @file{/opt/R/arm64}
 for an @cputype{arm64} one) is not as simple.  You can list the files
 they installed in a Terminal by e.g.@:
@@ -1829,7 +1829,7 @@ section `Invoking R' in the `An Introduction to R' manual.
 You should ensure that the shell has set adequate resource limits: @R{}
 expects a stack size of at least 8MB and to be able to open at least 256
 file descriptors.  (Any modern OS should have default limits at least as
-large as these, but apparently NetBSD may not.  Use the shell command
+large as these, but apparently @I{NetBSD} may not.  Use the shell command
 @command{ulimit} (@command{sh}/@command{bash}) or @command{limit}
 (@command{csh}/@command{tcsh}) to check.)  For some
 compilers@footnote{Including GCC 9 on Linux.} and packages a larger
@@ -2302,7 +2302,7 @@ as @file{/usr/local/lib}.
 @c (Using @code{-arch x86_64} also works.)
 
 Apple includes many Open Source libraries in macOS but increasingly
-without the corresponding headers (not even in Xcode nor the Command
+without the corresponding headers (not even in @I{Xcode} nor the Command
 Line Tools): they are often rather old versions.  If installing packages
 from source using them it is usually easiest to install a
 statically-linked up-to-date copy of the Open Source package from its
@@ -2937,7 +2937,7 @@ prepare and install translation catalogues.
 As from @R{} 4.4.0 32-bit builds are unsupported.
 
 @node The standalone Rmath library, Essential and useful other programs under a Unix-alike, Choosing between 32- and 64-bit builds, Top
-@chapter The standalone Rmath library
+@chapter The standalone @I{Rmath} library
 
 The routines supporting the distribution and
 special@footnote{e.g.@: Bessel, beta and gamma functions} functions in @R{}
@@ -3145,7 +3145,7 @@ If you make use of dynamic linking you should use
 @noindent
 to ensure that the constants like @code{NA_REAL} are linked correctly.
 (Auto-import will probably work with @I{MinGW-w64}, but it is better to be
-sure. This is likely to also work with VC++, @I{Borland} and similar
+sure. This is likely to also work with @I{VC++}, @I{Borland} and similar
 compilers.)
 
 
@@ -3286,7 +3286,7 @@ A @command{tar} program is needed to unpack the sources and packages
 @acronym{GNU} @command{tar} 1.15 or later, @command{bsdtar} (from
 @uref{https://github.com/libarchive/libarchive/}, used as
 @command{tar} by FreeBSD and macOS 10.6 and later) or @command{tar} from
-the Heirloom Toolchest
+the @I{Heirloom Toolchest}
 (@uref{https://heirloom.sourceforge.net/tools.html}), although the
 latter does not support @command{xz} compression.} that can
 automagically detect compressed archives is preferred for use with
@@ -3294,7 +3294,7 @@ automagically detect compressed archives is preferred for use with
 @command{gnutar} before
 @enindex TAR
 @command{tar} -- use environment variable @env{TAR} to override this.
-(On NetBSD/OpenBSD systems set this to @command{bsdtar} if that is
+(On @I{NetBSD}/@I{OpenBSD} systems set this to @command{bsdtar} if that is
 installed.)
 
 There need to be suitable versions of the tools @command{grep} and
@@ -3386,10 +3386,10 @@ runtime contained in the R sources will be used if no suitable external
 @code{gettext} is found.
 
 @cindex Cairo
-@cindex Pango
+@cindex @I{Pango}
 The `modern' version of the @code{X11()}, @code{jpeg()}, @code{png()}
-and @code{tiff()} graphics devices uses the Cairo and Pango libraries.
-Cairo version 1.2.0 or later and Pango version 1.10 or later are
+and @code{tiff()} graphics devices uses the Cairo and @I{Pango} libraries.
+Cairo version 1.2.0 or later and @I{Pango} version 1.10 or later are
 required (but much later versions are current).  @R{} checks for
 @command{pkg-config}, and uses that to check first that the
 @samp{pangocairo} package is installed (and if not, @samp{cairo}) then
@@ -3408,7 +3408,7 @@ or later installed will have suitable libraries: for Fedora users the
 @c arm64 Homebrew did in early 2021.
 It is possible (but very unusual on a platform with X11) to build Cairo
 without its @code{cairo-xlib} module in which case @code{X11(type =
-"cairo")} will not be available.  Pango is optional but highly desirable
+"cairo")} will not be available.  @I{Pango} is optional but highly desirable
 as it is likely to give much better text rendering, including kerning.
 
 For the best font experience with these devices you need suitable fonts
@@ -3417,7 +3417,7 @@ platforms which have it available, the @code{msttcorefonts}
 package@footnote{also known as @code{ttf-mscorefonts-installer} in the
 Debian/Ubuntu world: see also
 @uref{https://en.wikipedia.org/wiki/Core_fonts_for_the_Web}.} provides
-TrueType versions of Monotype fonts such as @I{Arial} and Times New Roman.
+TrueType versions of @I{Monotype} fonts such as @I{Arial} and Times New Roman.
 Another useful set of fonts is the `liberation' TrueType fonts available
 at
 @uref{https://pagure.io/liberation-fonts},@footnote{@code{ttf-liberation}
@@ -3427,7 +3427,7 @@ Roman and Courier New, and contain fonts rather similar to the first two
 (@uref{https://en.wikipedia.org/wiki/Liberation_fonts}).  Then there
 is the `Free UCS Outline Fonts' project
 (@uref{https://www.gnu.org/software/freefont/}) which are
-OpenType/TrueType fonts based on the URW fonts but with extended Unicode
+@I{OpenType}/@I{TrueType} fonts based on the URW fonts but with extended Unicode
 coverage.  See the @R{} help on @code{X11} on selecting such fonts.
 
 The bitmapped graphics devices @code{jpeg()}, @code{png()} and
@@ -3452,7 +3452,7 @@ tell you what other libraries are required for linking, for example by
 @c --print-requires and --print-requires-private are not recursive.
 
 Option @option{--with-system-tre} is also available: it needs a recent
-version of TRE. (The latest sources are in the @command{git} repository
+version of @I{TRE}. (The latest sources are in the @command{git} repository
 at @url{https://github.com/laurikari/tre/}, but at the time of writing
 the resulting build did not complete its checks, nor did @R{} built
 against the version supplied by Fedora.)
@@ -3699,7 +3699,7 @@ more elapsed time (occasionally dramatically so) than using a similar
 single-threaded @acronym{BLAS}.  On a machine running other tasks, there
 can be contention for CPU caches that reduces the effectiveness of the
 optimization of cache use by a @acronym{BLAS} implementation: some
-people warn that this is especially problematic for hyperthreaded CPUs.
+people warn that this is especially problematic for hyper-threaded CPUs.
 
 BLAS and LAPACK routines may be used inside threaded code, for example
 in @abbr{OpenMP} sections in packages such as @CRANpkg{mgcv}.  The reference
@@ -3843,7 +3843,7 @@ According to the ATLAS
 FAQ@footnote{@uref{https://math-atlas.sourceforge.net/faq.html#tnum}} the
 maximum number of threads used by multi-threaded ATLAS is set at compile
 time.  Also, the author advises against using multi-threaded ATLAS on
-hyperthreaded CPUs without restricting affinities at compile-time to one
+hyper-threaded CPUs without restricting affinities at compile-time to one
 virtual core per physical CPU.  (For the Fedora libraries the
 compile-time flag specifies 4 threads.)
 @c https://math-atlas.sourceforge.net/atlas_install/node21.html
@@ -4101,7 +4101,7 @@ It is assumed that @code{-llapack} is the reference LAPACK library but
 on Debian/Ubuntu it can be switched, including after @R{} is installed.
 On such a platform it is better to use @option{--without-lapack} or
 @option{--with-blas --with-lapack} (see below) explicitly.  The known
-examples@footnote{ATLAS, @I{OpenBLAS} and Accelerate.} of a
+examples@footnote{ATLAS, @I{OpenBLAS} and @I{Accelerate}.} of a
 non-reference LAPACK library found at installation all contain BLAS
 routines so are not used by a default @command{configure} run.
 
@@ -4199,7 +4199,7 @@ flag @option{-fno-optimize-sibling-calls} (formerly set by
 however use of the @R{} headers which include those character-length
 arguments is no longer optional in packages.
 
-LAPACK 3.9.0 (and probably earlier) had a bug in which the DCOMBSSQ
+LAPACK 3.9.0 (and probably earlier) had a bug in which the @code{DCOMBSSQ}
 subroutine may cause NA to be interpreted as zero. This is fixed in the
 @R{} 3.6.3 and later sources, but if you use an external LAPACK, you may
 need to fix it there. (The bug was corrected in 3.9.1 and the routine
@@ -4681,7 +4681,7 @@ Success in building @R{} depends on the proper installation and functioning
 of support software; your results may differ if you have other versions
 of compilers and support libraries.
 
-Older versions of this manual contain notes on platforms such as HP-UX,
+Older versions of this manual contain notes on platforms such as @I{HP-UX},
 @abbr{IRIX}, Alpha/@I{OSF1} (for @R{} < 2.10.0, and support has since been removed
 for all of these) and @abbr{AIX} (for @R{} < = 3.5.x) for which we have had no
 recent reports.
@@ -4805,7 +4805,7 @@ character sets, e.g.@: ISO 8859-1 (Western European), @I{JISX0208} (Kanji),
 @I{KSC5601} (Korean), @I{GB2312} (Chinese Han) and @I{JISX0201} (Kana)).
 
 On some systems scalable fonts are available covering a wide range of
-glyphs.  One source is TrueType/OpenType fonts, and these can provide
+glyphs.  One source is @I{TrueType}/@I{OpenType} fonts, and these can provide
 high coverage.  Another is Type 1 fonts: the URW set of Type 1 fonts
 provides standard typefaces such as Helvetica with a larger coverage of
 Unicode glyphs than the standard X11 bitmaps, including Cyrillic.  These
@@ -5249,7 +5249,7 @@ Apple's `Command Line Tools': these can be (re-)installed by running
 
 If you have a fresh OS installation, running e.g.@: @command{make} in a
 terminal will offer the installation of the command-line tools.  If you
-have installed Xcode, this provides the command-line tools.  The tools
+have installed @I{Xcode}, this provides the command-line tools.  The tools
 may need to be reinstalled when macOS is upgraded, as upgrading may
 partially or completely remove them.
 
@@ -5269,7 +5269,7 @@ if that is enabled, so do run @code{make check} on your build.} and
 @uref{https://mac.r-project.org/bin/}.  There is an @R{} script there to
 help with installing all the needed components.  (At the time of writing
 @code{install.libs("r-base-dev")} installed neither @code{readline5} nor
-those needed to support Pango.)
+those needed to support @I{Pango}.)
 
 Intel users want the @code{darwin20} components: the @code{darwin17}
 ones are for macOS 10.13--10.15.
@@ -5307,13 +5307,13 @@ the full range of bitmapped graphics devices.  (Some builds of
 @item
 An X sub-system unless configuring using @option{--without-x}: see
 @uref{https://www.xquartz.org/}. @R{}'s @command{configure}
-script can be told to look for @code{X11} in XQuartz's main
+script can be told to look for @code{X11} in @I{XQuartz}'s main
 location of @file{/opt/X11}, e.g.@: by
 @example
 --x-includes=/opt/X11/include --x-libraries=/opt/X11/lib
 @end example
 
-Be wary of pre-release versions of XQuartz, which may be offered as an
+Be wary of pre-release versions of @I{XQuartz}, which may be offered as an
 update.
 
 @item
@@ -5345,7 +5345,7 @@ distribution of @R{} and there is a @code{texinfo} component at
 @end itemize
 
 To build @R{} itself from the sources with the C/C++ compilers in the
-Command Line Tools (or Xcode) and @command{gfortran} from the installer
+Command Line Tools (or @I{Xcode}) and @command{gfortran} from the installer
 mentioned below, use a file @file{config.site} containing
 @example
 CC=clang
@@ -5379,7 +5379,7 @@ of @command{gfortran} have targetted the current version of macOS (unlike
 @command{clang}, causing linker warnings).
 
 To install packages using compiled code one needs the Command Line Tools
-(or Xcode) and appropriate compilers, e.g.@: the C/C++ compilers from
+(or @I{Xcode}) and appropriate compilers, e.g.@: the C/C++ compilers from
 those tools and/or @command{gfortran}. Some packages have further
 requirements such as component @command{pkgconfig} (and to set
 @env{PKG_CONFIG_PATH=} as above).
@@ -5524,11 +5524,11 @@ any others are required.
 @c @c Another issue seen in XQuartz 2.8.0 is that pkg-config requires
 @c @c the private dependencies of cairo of which xproto is not included.
 
-@cindex Pango
+@cindex @I{Pango}
 The best font experience of Cairo graphics will be to use it in
-combination with Pango which will match that supported on most other
+combination with @I{Pango} which will match that supported on most other
 Unix-alikes.  @command{configure} uses @command{pkg-config} to determine
-if all the external software required by both Pango and Cairo is
+if all the external software required by both @I{Pango} and Cairo is
 available: running @command{pkg-config pangocairo --exists
 --print-errors} should show if the installation suffices and if not,
 what is missing.  At the time of writing using pre-built components
@@ -5558,7 +5558,7 @@ LDFLAGS="-L$LOCAL/llvm/lib -L$LOCAL/lib"
 R_LD_LIBRARY_PATH=$LOCAL/llvm/lib:$LOCAL/lib
 @end example
 @noindent
-Should the location of the @abbr{SDK} change (or where Xcode provides the @abbr{SDK}
+Should the location of the @abbr{SDK} change (or where @I{Xcode} provides the @abbr{SDK}
 rather than the Command Line Tools), it can be found by running
 @command{xcrun -show-sdk-path}.
 
@@ -5574,7 +5574,7 @@ to be set to find the latest version of the C++ run-time libraries
 rather than the system ones.
 
 It is usually possible to build @R{} with GCC (built from the sources,
-from a @command{gfortran} distribution, from Homebrew, @dots{}).  When
+from a @command{gfortran} distribution, from @I{Homebrew}, @dots{}).  When
 last tested@footnote{with @command{gcc} 10.2.} it was not possible to
 use @command{gcc} to build the @code{quartz()} device, so
 @command{configure --without-aqua} may be required.
@@ -5584,13 +5584,13 @@ It is usually possible to add some @abbr{OpenMP} support to the Apple
 Note that that approach is somewhat fragile as it needs a
 @file{libomp.dylib} library matching the version of the compiler
 used---and for example at the time of writing none was offered for the
-current compilers in Xcode/CLT 14.3 nor 15.
+current compilers in @I{Xcode CLT} 14.3 nor 15.
 
 @node Other libraries, Tcl/Tk headers and libraries, Other C/C++ compilers, macOS
 @subsection Other libraries
 
 @menu
-* Accelereate::
+* Accelerate::
 * OpenBLAS (macOS)::
 @end menu
 
@@ -5650,8 +5650,8 @@ downloaded from @uref{https://www.stats.ox.ac.uk/pub/bdr/timeout}: make
 it executable (@code{chmod 755 timeout}) and put it somewhere on your
 path.
 
-@node Accelereate, OpenBLAS (macOS), Other libraries, Other libraries
-@subsubsection Accelerate
+@node Accelerate, OpenBLAS (macOS), Other libraries, Other libraries
+@subsubsection @I{Accelerate}
 
 @cindex BLAS library
 @cindex LAPACK library
@@ -5674,32 +5674,32 @@ This includes a full LAPACK which can be used @emph{via}
 often been seriously old (and is not used unless @option{--with-lapack}
 is specified).  Some @acronym{CRAN} builds of @R{} can be
 switched@footnote{@url{https://cran.r-project.org/bin/macosx/RMacOSX-FAQ.html#Which-BLAS-is-used-and-how-can-it-be-changed_003f}}
-to use Accelerate's BLAS.
+to use @I{Accelerate}'s BLAS.
 
 @c https://developer.apple.com/documentation/macos-release-notes/macos-13_3-release-notes
 @c https://developer.apple.com/documentation/xcode-release-notes/xcode-14_3-release-notes
-As from macOS 13.3, the BLAS and LAPACK libraries under the Accelerate
+As from macOS 13.3, the BLAS and LAPACK libraries under the @I{Accelerate}
 framework are `now inline with reference version
 3.9.1'.@footnote{Released 2021-04-01.} However, this has been done by
 naming new entry points and so only accessible @emph{via} their C
 headers.  That version can be used for BLAS calls @emph{via}
 @command{configure} option @option{--with-newAccelerate}: it requires at
-least macOS 13.3 and @abbr{SDK} 13.3 (from Xcode/CLT 14.3).  To use it for both
+least macOS 13.3 and @abbr{SDK} 13.3 (from @I{Xcode CLT} 14.3).  To use it for both
 BLAS and LAPACK calls, configure with
 @option{--with-newAccelerate=lapack}.  These options cannot be used with
 others such as @option{--with-blas} and @option{--with-lapack}.
 
 @c https://developer.apple.com/documentation/accelerate/veclib
-Threading in Accelerate is controlled by `Grand Central
+Threading in @I{Accelerate} is controlled by `Grand Central
 Dispatch'@footnote{E.g.,
 @url{https://en.wikipedia.org/wiki/Grand_Central_Dispatch} .} and is
 said not to need user control.  Test @file{nls.R} in package @pkg{stats}
-has often failed with the Accelerate BLAS on Intel macOS.  All versions
-of Accelerate show differences from the reference BLAS (and most others)
+has often failed with the @I{Accelerate} BLAS on Intel macOS.  All versions
+of @I{Accelerate} show differences from the reference BLAS (and most others)
 in the use of @code{NA} @emph{vs} @code{NaN} and a substantial number of
 @R{} packages fail their checks.
 
-@node OpenBLAS (macOS),  , Accelereate, Other libraries
+@node OpenBLAS (macOS),  , Accelerate, Other libraries
 @subsubsection @I{OpenBLAS}
 
 @R{} has been built on @cputype{arm64} using @I{OpenBLAS} 0.3.24 (sources
@@ -5712,7 +5712,7 @@ does not have @abbr{OpenMP}) with the number of threads controlled by
 environment variable @env{OPENBLAS_NUM_THREADS}.  On an M1 Pro this
 defaulted to 10 threads (there are 8 `performance' cores and 2
 `efficiency cores`) and we saw a 9x speedup over the reference BLAS on a
-large SVD (which was slightly faster than Accelerate).
+large SVD (which was slightly faster than @I{Accelerate}).
 
 @node Tcl/Tk headers and libraries, Java (macOS), Other libraries, macOS
 @subsection Tcl/Tk headers and libraries
@@ -5733,7 +5733,7 @@ or
 --with-tcl-config=$LOCAL/lib/tclConfig.sh
 --with-tk-config=$LOCAL/lib/tkConfig.sh
 @end example
-Note that this requires a matching XQuartz installation.
+Note that this requires a matching @I{XQuartz} installation.
 
 There is also a native (`Aqua') version of Tcl/Tk which produces widgets
 in the native macOS style: this will not work with @Rapp{} because of
@@ -5873,7 +5873,7 @@ to @command{pkg-config}).
 @node Building R.app, Building binary packages, Frameworks, macOS
 @subsection Building R.app
 
-Building the @Rapp{} GUI console is a separate project, using Xcode.
+Building the @Rapp{} GUI console is a separate project, using @I{Xcode}.
 Before compiling @Rapp{} make sure the current version of @R{} is
 installed in @file{/Library/Frameworks/R.framework} and is working at the
 command-line (this can be a binary install).
@@ -6284,8 +6284,8 @@ Use of ICU for collation and the @command{configure} option
 @option{--with-internal-tzcode} are desirable workarounds.
 
 @node OpenBSD, Cygwin, FreeBSD, Platform notes
-@section OpenBSD
-@cindex OpenBSD
+@section @I{OpenBSD}
+@cindex @I{OpenBSD}
 
 @I{Ingo Feinerer} installed @R{} version 3.2.2 on OpenBSD 5.8 arch
 @cputype{amd64} (their name for @cputype{x86_64}).  Details of the build
@@ -6294,7 +6294,7 @@ Use of ICU for collation and the @command{configure} option
 currently updated for @R{} 4.2.1.
 
 @node Cygwin, New platforms, OpenBSD, Platform notes
-@section Cygwin
+@section @I{Cygwin}
 
 The 32-bit version never worked well enough to pass @R{}'s @command{make
 check}, and residual support from earlier experiments was removed in
@@ -6314,7 +6314,7 @@ This mandates the use of plus and minus infinity and @code{NaN} (not a
 number) as well as specific details of rounding.  Although almost all
 current @abbr{FPU}s can support this, selecting such support can be a pain.
 The problem is that there is no agreement on how to set the signalling
-behaviour; Sun/Sparc, SGI/IRIX and @cputype{ix86} Linux require no
+behaviour; @I{Sun/Sparc}, @I{SGI/IRIX} and @cputype{ix86} Linux require no
 special action, FreeBSD requires a call to (the macro)
 @code{fpsetmask(0)} and @I{OSF1} required that computation be done with a
 @option{-ieee_with_inexact} flag etc. With Intel compilers on 32-bit and

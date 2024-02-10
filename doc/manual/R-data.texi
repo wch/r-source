@@ -192,7 +192,7 @@ more appropriate.  (See the @CRANpkg{rJava} package from @acronym{CRAN}.)
 It is also worth remembering that @R{} like @Sl{} comes from the Unix
 tradition of small re-usable tools, and it can be rewarding to use tools
 such as @code{awk} and @code{perl} to manipulate data before import or
-after export.  The case study in Becker, Chambers & Wilks (1988, Chapter
+after export.  The case study in @I{Becker, Chambers & Wilks} (1988, Chapter
 9) is an example of this, where Unix tools were used to check and
 manipulate the data before input to @Sl{}. The traditional Unix tools
 are now much more widely available, including for Windows.
@@ -997,7 +997,7 @@ method.
 
 As a simple example, consider the @R{} standard data set
 @code{UCBAdmissions} which is a 3-dimensional contingency table
-resulting from classifying applicants to graduate school at UC Berkeley
+resulting from classifying applicants to graduate school at @I{UC Berkeley}
 for the six largest departments in 1973 classified by admission and sex.
 
 @example
@@ -1050,7 +1050,7 @@ other system.
 @end menu
 
 @node EpiInfo Minitab SAS S-PLUS SPSS Stata Systat, Octave, Importing from other statistical systems, Importing from other statistical systems
-@section EpiInfo, Minitab, S-PLUS, SAS, SPSS, @I{Stata}, Systat
+@section @I{EpiInfo}, @I{Minitab}, S-PLUS, SAS, SPSS, @I{Stata}, Systat
 
 The recommended package @CRANpkg{foreign} provides import facilities for
 files produced by these statistical systems, and for export to @I{Stata}. In
@@ -1059,21 +1059,21 @@ some cases these functions may require substantially less memory than
 files}) provides an export mechanism with support currently for
 @code{SAS}, @code{SPSS} and @code{Stata}.
 
-@cindex EpiInfo
-@cindex EpiData
+@cindex @I{EpiInfo}
+@cindex @I{EpiData}
 @findex read.epiinfo
 EpiInfo versions 5 and 6 stored data in a  self-describing fixed-width
 text format. @code{read.epiinfo} will read these @file{.REC} files into
-an @R{} data frame. EpiData also produces data in this format.
+an @R{} data frame. @I{EpiData} also produces data in this format.
 
-@cindex Minitab
+@cindex @I{Minitab}
 @findex read.mtp
-Function @code{read.mtp} imports a `Minitab Portable Worksheet'.  This
+Function @code{read.mtp} imports a `@I{Minitab} Portable Worksheet'.  This
 returns the components of the worksheet as an @R{} list.
 
 @cindex SAS
 @findex read.xport
-Function @code{read.xport} reads a file in SAS Transport (XPORT) format
+Function @code{read.xport} reads a file in SAS Transport (@I{XPORT}) format
 and return a list of data frames.  If SAS is available on your system,
 function @code{read.ssd} can be used to create and run a SAS script that
 saves a SAS permanent dataset (@file{.ssd} or @file{.sas7bdat}) in
@@ -1305,7 +1305,7 @@ OR), and ORDER BY to sort the result.  Unlike data frames, rows in @abbr{RDBMS}
 tables are best thought of as unordered, and without an ORDER BY
 statement the ordering is indeterminate.  You can sort (in
 lexicographical order) on more than one column by separating them by
-commas.  Placing DESC after an ORDER BY puts the sort in descending
+commas.  Placing @I{DESC} after an ORDER BY puts the sort in descending
 order.
 
 SELECT DISTINCT queries will only return one copy of each distinct row
@@ -1525,7 +1525,7 @@ database system.
 @cindex Dbase
 @findex .dbf
 Windows provides drivers not just for @abbr{DBMS}s but also for Excel
-(@file{.xls}) spreadsheets, DBase (@file{.dbf}) files and even text
+(@file{.xls}) spreadsheets, @I{DBase} (@file{.dbf}) files and even text
 files.  (The named applications do @emph{not} need to be
 installed. Which file formats are supported depends on the versions of
 the drivers.)  There are versions for Excel and Access 2007/2010 (go to
@@ -1797,19 +1797,19 @@ handle binary files.
 
 Packages @CRANpkg{h5}, @I{Bioconductor}'s @pkg{rhdf5}, @CRANpkg{RNetCDF} and
 @CRANpkg{ncdf4} on @acronym{CRAN} provide interfaces to @acronym{NASA}'s
-HDF5 (Hierarchical Data Format, see
-@uref{https://www.hdfgroup.org/HDF5/}) and to UCAR's netCDF data files
+@abbr{HDF5} (Hierarchical Data Format, see
+@uref{https://www.hdfgroup.org/HDF5/}) and to @I{UCAR}'s netCDF data files
 (network Common Data Form, see
 @uref{https://www.unidata.ucar.edu/software/netcdf/}).
 
 Both of these are systems to store scientific data in array-oriented
-ways, including descriptions, labels, formats, units, @dots{}.  HDF5 also
+ways, including descriptions, labels, formats, units, @dots{}.  @abbr{HDF5} also
 allows @emph{groups} of arrays, and the @R{} interface maps lists
-to HDF5 groups, and can write numeric and character vectors and
+to @abbr{HDF5} groups, and can write numeric and character vectors and
 matrices.
 
 NetCDF's version 4 format (confusingly, implemented in netCDF 4.1.1 and
-later, but not in 4.0.1) includes the use of various HDF5 formats.  This
+later, but not in 4.0.1) includes the use of various @abbr{HDF5} formats.  This
 is handled by package @CRANpkg{ncdf4} whereas @CRANpkg{RNetCDF} handles
 version 3 files.
 
@@ -1817,10 +1817,10 @@ The availability of software to support these formats is somewhat
 limited by platform, especially on Windows.
 
 @node dBase files (DBF),  , Binary data formats, Binary files
-@section dBase files (DBF)
+@section dBase files (@I{DBF})
 
 @cindex dBase
-@cindex DBF files
+@cindex @I{DBF} files
 @code{dBase} was a DOS program written by @I{Ashton-Tate} and later owned by
 @I{Borland} which has a binary flat-file format that became popular, with
 file extension @file{.dbf}.  It has been adopted for the 'Xbase' family
@@ -1855,8 +1855,8 @@ not uncommon request is to read such a file into @R{} as a matrix.
 There are many formats for image files (most with lots of variants), and
 it may be necessary to use external conversion software to first convert
 the image into one of the formats for which a package currently provides
-an @R{} reader.  A versatile example of such software is ImageMagick and
-its fork GraphicsMagick.  These provide command-line programs
+an @R{} reader.  A versatile example of such software is @I{ImageMagick} and
+its fork @I{GraphicsMagick}.  These provide command-line programs
 @command{convert} and @command{gm convert} to convert images from one
 format to another: what formats they can input is determined when they
 are compiled, and the supported formats can be listed by e.g.@:
@@ -2399,7 +2399,7 @@ New Riders.
 
 @noindent
 @I{M.@: Henning} and @I{S.@: Vinoski} (1999),
-@emph{Advanced CORBA Programming with C++.}
+@emph{Advanced @I{CORBA} Programming with C++.}
 Addison-Wesley.
 
 @noindent

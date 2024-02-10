@@ -204,7 +204,7 @@ drawDetails.pieplot <- function(x, recording) {
     popViewport(3, recording = FALSE)
 }
 @
-The ``pieplot'' is created by assembling the component grobs
+The ``pie plot'' is created by assembling the component grobs
 into a collective grob of the appropriate class; the \code{drawDetails}
 method takes care of actually producing the output.
 

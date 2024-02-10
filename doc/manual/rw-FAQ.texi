@@ -28,14 +28,14 @@
 @title R for Windows FAQ
 @subtitle Frequently Asked Questions on R for Windows
 @subtitle Version @value{VERSION}
-@author B. D. Ripley and D. J. Murdoch, updates by T. Kalibera
+@author B. D. Ripley and D. J. Murdoch, updates by @I{T. Kalibera}
 @end titlepage
 
 @ifinfo
 R for Windows FAQ                                       @*
 Frequently Asked Questions on R for Windows             @*
 Version for @value{VERSION}                             @*
-B. D. Ripley and D. J. Murdoch, updates by T. Kalibera  @*
+B. D. Ripley and D. J. Murdoch, updates by @I{T. Kalibera}  @*
 
 @sp 2
 @end ifinfo
@@ -43,7 +43,7 @@ B. D. Ripley and D. J. Murdoch, updates by T. Kalibera  @*
 @ifhtml
 @html
 <h2>Version for <tt>@value{VERSION}</tt></h2>
-<address>B. D. Ripley and D. J. Murdoch, updates by T. Kalibera</address>
+<address>B. D. Ripley and D. J. Murdoch, updates by @I{T. Kalibera}</address>
 <hr>
 @end html
 @end ifhtml
@@ -148,9 +148,9 @@ Current binary versions of R are known to run on Windows 7 or later. R 4.1
 is the last version that supported 32-bit versions: @xref{Can I use R on 64-bit Windows?}.
 Windows Vista is no longer supported.
 
-R 4.2.0 and later require the Universal C Runtime (UCRT), which is included in
+R 4.2.0 and later require the Universal C Runtime (@abbr{UCRT}), which is included in
 Windows 10 and Windows Server 2016 or newer. On earlier versions of Windows,
-UCRT has to be installed before installing R. UCRT is available for Windows since
+@abbr{UCRT} has to be installed before installing R.  @abbr{UCRT} is available for Windows since
 Windows Vista SP2 and Windows Server 2008 SP2. 
 
 @c 2000 went end-of-life 2010-07-13
@@ -417,12 +417,12 @@ same file as normal output.
 
 
 @node Can I use @RWVER@ with ESS and Emacs?, What are HOME and working directories?, Can I use R CMD BATCH?, Installation and Usage
-@section Can I use @RWVER@ with ESS and Emacs?
+@section Can I use @RWVER@ with @I{ESS} and Emacs?
 
-Yes.  ESS has for a long time supported R under Windows: it does so by
+Yes.  @I{ESS} has for a long time supported R under Windows: it does so by
 running @code{Rterm.exe} without a visible console.
 
-For help with ESS, please send email to @email{ESS-help@@stat.ethz.ch},
+For help with @I{ESS}, please send email to @email{ESS-help@@stat.ethz.ch},
 not the R mailing lists.
 
 
@@ -624,7 +624,7 @@ R 4.2 and later use UCRT as the C runtime instead of MSVCRT. No such problems ha
 been reported so far.
 
 @node What does 'DLL attempted to change FPU control word' mean?, Other strange crashes., Entering certain characters crashes Rgui., Installation and Usage
-@section What does 'DLL attempted to change FPU control word' mean?
+@section What does '@I{DLL attempted to change FPU control word}' mean?
 
 This is a @emph{warning} which indicates that R has taken action to
 correct the action of some (non-R) DLL which has just been loaded and
@@ -827,8 +827,8 @@ The font used can affect whether quotes are rendered correctly.  The
 default font in the @code{Rgui} console and internal pager is
 @code{Courier New}, which has directional quotes on all the systems we
 tried.  @code{Lucida Console} which has elegant glyphs for directional
-quotes (but seems rather light unless ClearType is in use):
-@code{Consolas} is another font which we often select when ClearType is
+quotes (but seems rather light unless @I{ClearType} is in use):
+@code{Consolas} is another font which we often select when @I{ClearType} is
 in use.  Non-TrueType fonts such as @code{Courier} and @code{FixedSys}
 lack directional double quotes on the systems we tried.
 
@@ -1016,7 +1016,7 @@ Portuguese (Portugal),
 Russian,
 Slovenian,
 Spanish (Spain)
-and Ukranian.
+and Ukrainian.
 
 @node I want R in English!, I want to run R in Chinese/Japanese/Korean, The installer does not offer my language, Languages and Internationalization
 @section I want R in English (and not in French/Chinese/...)!
@@ -1078,7 +1078,7 @@ GB2312).
 When using @command{Rterm} the window in which it is run has to be set
 up to use a suitable font (e.g. @code{Lucida Console} or
 @code{Consolas}, not the @abbr{OEM} raster fonts) and a suitable codepage
-(which for the Windows Cmd shell can be done using @command{chcp}). In R 4.2
+(which for the Windows command shell can be done using @command{chcp}). In R 4.2
 and later on recent versions of Windows where UTF-8 is the native encoding,
 @command{Rterm} will automatically switch the console codepage to UTF-8.
 
@@ -1519,7 +1519,7 @@ and @key{Ctrl-break} or @key{Ctrl-C} in @command{Rterm.exe}:
 
 @item 
 Command-line editing is always available, but is somewhat simpler than the
-readline-based editing on Unix.  For @command{Rgui.exe}, the menu item
+@I{readline}-based editing on Unix.  For @command{Rgui.exe}, the menu item
 `Help | Console' will give details.  For @command{Rterm.exe} see file
 @file{README.rterm}.
 
@@ -1925,7 +1925,7 @@ as in the example in @emph{`Writing R Extensions'}.  Then build the DLL by
 @end example
 
 @noindent
-or (VC++, which requires extension @code{.cpp})
+or (@I{VC++}, which requires extension @code{.cpp})
 
 @example
 cl /MT /c X.cpp X_main.cpp

@@ -737,7 +737,7 @@ environments populated from @R{} code in a package.
 @cindex attributes, preserving
 @cindex preserving attributes
 When should attributes be preserved under operations on an object?
-Becker, Chambers & Wilks (1988, pp. 144--6) give some guidance.  Scalar
+@I{Becker, Chambers & Wilks} (1988, pp. 144--6) give some guidance.  Scalar
 functions (those which operate element-by-element on a vector and whose
 output is similar to the input) should preserve attributes (except
 perhaps class, and if they do preserve class they need to preserve the
@@ -1313,17 +1313,17 @@ were encoded in Latin-1 rather than Adobe Symbol: this is selected by
 @code{wantSymbolUTF8 = NA_LOGICAL}.
 
 Windows with MSVCRT as the C runtime has no UTF-8 locales, but rather expects to work with
-UCS-2@footnote{or UTF-16 if support for surrogates is enabled in the OS,
+@I{UCS-2}@footnote{or UTF-16 if support for surrogates is enabled in the OS,
 which it used not to be when encoding support was added to @R{}.}
 strings.  @R{} (being written in standard C) would not work internally
-with UCS-2 without extensive changes.  The @file{Rgui}
-console@footnote{but not the GraphApp toolkit.} uses UCS-2 internally,
+with @I{UCS-2} without extensive changes.  The @file{Rgui}
+console@footnote{but not the @I{GraphApp} toolkit.} uses @I{UCS-2} internally,
 but communicates with the @R{} engine in the native encoding.  To allow
 UTF-8 strings to be printed in UTF-8 in @file{Rgui.exe}, an escape
 convention is used (see header file @file{rgui_UTF8.h}) by
 @code{cat}, @code{print} and autoprinting.
 
-`Unicode' (UCS-2LE) files are common in the Windows world, and
+`Unicode' (@I{UCS-2LE}) files are common in the Windows world, and
 @code{readLines} and @code{scan} will read them into UTF-8 strings on
 Windows if the encoding is declared explicitly on an unopened
 connection passed to those functions.
@@ -1340,7 +1340,7 @@ do that.  Therefore, for R to reliably work with (non-ASCII) strings on
 Windows, both the C locale encoding and the active code page on Windows must
 be the same, and by default they are.
 
-The Windows UCRT C runtime supports UTF-8 locales.  Historically, the active
+The Windows @abbr{UCRT} C runtime supports UTF-8 locales.  Historically, the active
 code page was a system-wide setting, changing which required a reboot, and
 UTF-8 was not supported.  Later a "BETA: Use Unicode UTF-8 for worldwide
 language support" feature has been added to set the active code page to
@@ -1907,7 +1907,7 @@ to be considered for any public header and also @file{Defn.h}.
 
 It would nowadays be possible to make use of the `auto-import' feature
 of the @I{MinGW} port of @command{ld} to fix up imports from DLLs (and if
-@R{} is built for the Cygwin platform this is what happens).  However,
+@R{} is built for the @I{Cygwin} platform this is what happens).  However,
 this was not possible when the @I{MinGW} build of @R{} was first constructed
 in ca 1998, allows less control of visibility and would not work for
 other Windows compiler suites.
@@ -3493,12 +3493,12 @@ fonts on the machine running @R{} and send grayscale bitmaps to cairo.
 @subsubsection windows()
 
 The @code{windows()} device is a family of devices: it supports plotting
-to Windows (enhanced) metafiles, @code{BMP}, @code{JPEG}, @code{PNG} and
-@code{TIFF} files as well as to Windows printers.
+to Windows (enhanced) metafiles, @I{BMP}, @I{JPEG}, @I{PNG} and
+@I{TIFF} files as well as to Windows printers.
 
 In most of these cases the primary plotting is to a bitmap: this is used
 for the (default) buffering of the screen device, which also enables the
-current plot to be saved to BMP, JPEG, PNG or TIFF (it is the internal
+current plot to be saved to @I{BMP}, @I{JPEG}, @I{PNG} or @I{TIFF} (it is the internal
 bitmap which is copied to the file in the appropriate format).
 
 The device units are pixels (logical ones on a metafile device).
@@ -3512,8 +3512,8 @@ to plot to @code{xd->bm}, and if buffering is off, also to
 @code{xd->gawin}.  For all other device, @code{xd->gawin} is the canvas,
 a bitmap for the @code{jpeg()} and @code{png()} device, and an internal
 representation of a Windows metafile for the @code{win.metafile()} and
-@code{win.print} device.  Since `plotting' is done by Windows GDI calls
-to the appropriate canvas, its precise nature is hidden by the GDI
+@code{win.print} device.  Since `plotting' is done by Windows @abbr{GDI} calls
+to the appropriate canvas, its precise nature is hidden by the @abbr{GDI}
 system.
 
 Buffering on the screen device is achieved by running a timer, which
@@ -3527,10 +3527,10 @@ Resizes are handled by replaying the display list: this might not be
 necessary if a fixed canvas with scrollbars is being used, but that is
 the least popular of the three forms of resizing.
 
-Text on the device has moved to `Unicode' (UCS-2) in recent years.
+Text on the device has moved to `Unicode' (@I{UCS-2}) in recent years.
 UTF-8 is requested (@code{hasTextUTF8 = TRUE}) for standard text, and
-converted to UCS-2 in the plotting functions in file
-@file{src/extra/graphapp/gdraw.c}.  However, GDI has no support for
+converted to @I{UCS-2} in the plotting functions in file
+@file{src/extra/graphapp/gdraw.c}.  However, @abbr{GDI} has no support for
 Unicode symbol fonts, and symbols are handled in Adobe Symbol encoding.
 
 There is support for translucent colours (with alpha channel between 0
@@ -3561,7 +3561,7 @@ near-white canvas.  Where a palette is used in the PNG file (if less
 than 256 colours were used) then this colour is recorded with full
 transparency and the remaining colours as opaque.  If 32-bit colour were
 available then we could add a full alpha channel, but this is dependent
-on the graphics hardware and undocumented properties of GDI.
+on the graphics hardware and undocumented properties of @abbr{GDI}.
 
 
 @node Colours, Base graphics, Graphics devices, Graphics Devices
@@ -3761,7 +3761,7 @@ and launches a console as part of its startup code or by the user
 running a specific function: package @CRANpkg{Rcmdr} is a well-known
 example with a Tk-based GUI.
 
-There used to be a Gtk-based console invoked by @command{R --gui=GNOME}:
+There used to be a GTK-based console invoked by @command{R --gui=GNOME}:
 this relied on special-casing in the front-end shell script to launch a
 different executable.  There still is @command{R --gui=Tk}, which starts
 terminal-based @R{} and runs @code{tcltk::tkStartGui()} as part of the
@@ -4549,7 +4549,7 @@ Default: false (but true for CRAN submission checks). @option{--as-cran}
 can be overridden by setting this variable to a false value.
 
 @item _R_CHECK_RD_MATH_RENDERING_
-Check whether HTML math rendering via KaTeX works (if package
+Check whether HTML math rendering via @I{KaTeX} works (if package
 @CRANpkg{V8} is available).
 See 
 @uref{https://blog.r-project.org/2022/04/08/enhancements-to-html-documentation/}.
@@ -4876,7 +4876,7 @@ Perl version 5 is needed for the maintainer-only script
 
 @item
 @command{texinfo} version 5.1 or later is needed to build the HTML, PDF
-and Info files for the @R{} manuals written in the @acronym{GNU} Texinfo
+and Info files for the @R{} manuals written in the @acronym{GNU} @I{Texinfo}
 system.  And that requires Perl.
 @findex makeinfo
 @end itemize

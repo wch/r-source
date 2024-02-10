@@ -21,6 +21,8 @@
 \setlength{\textwidth}{140mm}
 \setlength{\oddsidemargin}{10mm}
 
+\newcommand{\I}[1]{#1}
+
 \title{Modifying \grid{} \code{grob}s}
 \author{Paul Murrell}
 
@@ -76,8 +78,8 @@ for the tick-marks and a text \grob{} for the tick-mark labels.  The
 function \code{childNames()} can be used to list the names of the
 children of a \gTree{}.  When dealing with these hierarchical objects,
 more complex \gPath{}s can be used to access children of a \gTree{}.
-In the following example, an x-axis is drawn, then the xaxis itself is
-edited to modify the locations of the tick-marks, then the xaxis's
+In the following example, an x-axis is drawn, then the \I{xaxis} itself is
+edited to modify the locations of the tick-marks, then the \I{xaxis}'s
 text child is edited to modify the location of the labels on the
 tick-marks.
 

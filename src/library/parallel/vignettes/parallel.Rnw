@@ -448,7 +448,7 @@ can be used to run elements of the input vector \code{X} of \code{mclapply} on
 specific CPUs.
 \code{affinity.list} is a vector (atomic or list) containing the CPU
 affinity mask for each element of \code{X}, it describes on which CPU
-(core or hyperthread unit) a given item is allowed to run, see
+(core or hyper-thread unit) a given item is allowed to run, see
 \code{? mcaffinity}.
 This can be helpful, if the elements of \code{X} (parallel jobs) have a
 high variance of completion time or if the hardware architecture

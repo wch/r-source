@@ -52,7 +52,7 @@ doi:@tie{}@url{https://doi.org/\d\, \d\}
 @titlepage
 @title R @acronym{FAQ}
 @subtitle Frequently Asked Questions on R
-@author Kurt Hornik
+@author @I{Kurt Hornik}
 @author and the R Core Team
 @end titlepage
 
@@ -60,7 +60,7 @@ doi:@tie{}@url{https://doi.org/\d\, \d\}
 @c We do not really see this in info, but in plain text output.
 R FAQ                            @*
 Frequently Asked Questions on R  @*
-Kurt Hornik and the R Core Team  @*
+@I{Kurt Hornik} and the R Core Team  @*
 
 @sp 2
 @end ifinfo
@@ -111,7 +111,7 @@ questions about R.
 @node Legalese, Obtaining this document, Introduction, Introduction
 @section Legalese
 
-Copyright @copyright{} 1998--2020 Kurt Hornik @*
+Copyright @copyright{} 1998--2020 @I{Kurt Hornik} @*
 @Rcopyright{2021}
 
 This document is free software; you can redistribute it and/or modify it
@@ -218,7 +218,7 @@ to certain system functions, and the ability to run programs stored in
 script files.
 
 The design of R has been heavily influenced by two existing languages:
-Becker, Chambers & Wilks' S (@pxref{What is S?}) and Sussman's
+Becker, Chambers & @I{Wilks}' S (@pxref{What is S?}) and Sussman's
 @url{http://community.schemewiki.org/?scheme-faq, Scheme}.
 Whereas the resulting language is very similar in appearance to S, the
 underlying implementation and semantics are derived from Scheme.
@@ -418,7 +418,7 @@ subdirectory.
 Use @kbd{make pdf} to build PDF (Portable Document Format)
 versions of the R manuals, including
 @file{fullrefman.pdf} (an R object reference index).  Manuals written in the
-@acronym{GNU} Texinfo system can also be converted to info files
+@acronym{GNU} @I{Texinfo} system can also be converted to info files
 suitable for reading online with Emacs or stand-alone @acronym{GNU}
 Info; use @kbd{make info} to create these versions (note that this
 requires @I{Makeinfo} version 4.5).
@@ -601,7 +601,7 @@ Books on R by R Core Team members include
 @I{John M. Chambers} (2008),
 ``Software for Data Analysis: Programming with R''.  
 @I{Springer}, New York, ISBN 978-0-387-75935-7,
-@url{https://statweb.stanford.edu/~jmc4/Rbook/}.
+@url{https://johnmchambers.su.domains/Rbook/}.
 
 @I{Peter Dalgaard} (2008),
 ``Introductory Statistics with R'',
@@ -844,7 +844,7 @@ Core Team does not provide legal advice under any circumstances.
 @section Why is R named R?
 
 The name is partly based on the (first) names of the first two R authors
-(Robert Gentleman and Ross Ihaka), and partly a play on the name of the
+(@I{Robert Gentleman} and @I{Ross Ihaka}), and partly a play on the name of the
 Bell Labs language `S' (@pxref{What is S?}).
 
 @c At the time the name was coined no one expected that the software would
@@ -938,14 +938,14 @@ This is also called the ``@emph{White Book}'', and introduced S version
 ``Programming with Data,''
 New York: @I{Springer},
 ISBN 0-387-98503-4
-(@url{https://statweb.stanford.edu/~jmc4/Sbook/}).
+(@url{https://johnmchambers.su.domains/Sbook/}).
 
 This ``@emph{Green Book}'' describes version 4 of S, a major revision of
 S designed by @I{John Chambers} to improve its usefulness at every stage
 of the programming process.
 @end itemize
 
-See @url{https://statweb.stanford.edu/~jmc4/papers/96.7.ps}
+See @url{https://johnmchambers.su.domains/papers/96.7.ps}
 for further information on the ``Evolution of the S Language''.
 
 @c There is a huge amount of user-contributed code for S, available at the
@@ -959,7 +959,7 @@ for further information on the ``Evolution of the S Language''.
 @section What is @sc{S-Plus}?
 
 @SPLUS{} is a value-added version of S sold by
-@url{https://www.tibco.com/, TIBCO Software Inc} as `TIBCO Spotfire S+'.
+@url{https://www.tibco.com/, TIBCO Software Inc} as `@I{TIBCO Spotfire S+}'.
 See @url{https://en.wikipedia.org/wiki/S-PLUS} for more information.
 
 @node What are the differences between R and S?, Is there anything R can do that S-PLUS cannot?, What is S-PLUS?, R and S
@@ -1200,7 +1200,7 @@ maintaining local state.  A simple example (taken from Abelson and
 Sussman) is obtained by typing @kbd{demo("scoping")} at the R prompt.
 Further information is provided in the standard R reference ``R: A
 Language for Data Analysis and Graphics'' (@pxref{What documentation
-exists for R?}) and in Robert Gentleman and Ross Ihaka (2000), ``Lexical
+exists for R?}) and in @I{Robert Gentleman} and @I{Ross Ihaka} (2000), ``Lexical
 Scope and Statistical Computing'',
 @emph{Journal of
 Computational and Graphical Statistics}, @strong{9}, 491--508
@@ -1385,7 +1385,7 @@ data frame, then @code{is.matrix(DF)} returns @code{FALSE} in R and
 
 @item
 R by default uses treatment contrasts in the unordered case, whereas S
-uses the Helmert ones.  This is a deliberate difference reflecting the
+uses the @I{Helmert} ones.  This is a deliberate difference reflecting the
 opinion that treatment contrasts are more natural.
 
 @item
@@ -1647,7 +1647,7 @@ like @I{Minitab}, S, SAS, SPSS, @I{Stata}, @I{Systat}, etc.
 @item lattice
 Lattice graphics, an implementation of Trellis Graphics functions.
 @item mgcv
-Routines for GAMs and other generalized ridge regression problems with
+Routines for GAM@w{s} and other generalized ridge regression problems with
 multiple smoothing parameter selection by GCV or @abbr{UBRE}.
 @item nlme
 Fit and compare Gaussian linear and nonlinear mixed-effects models.
@@ -1988,7 +1988,7 @@ alternative to other @abbr{IDE}s such as @I{RStudio}, @emph{possibly}, notably i
 are interested to use Emacs for other computer interaction.
 You'd be using @acronym{ESS}, Emacs Speaks Statistics, see previous FAQ.
 
-Inferior R mode provides a readline/history
+Inferior R mode provides a @I{readline}/history
 mechanism, object name completion, and syntax-based highlighting of the
 interaction buffer using Font Lock mode, as well as a very convenient
 interface to the R help system.
@@ -2514,17 +2514,17 @@ strings file ``names''.
 @end enumerate
 
 @node Are GAMs implemented in R?, Why is the output not printed when I source() a file?, What are valid names?, R Miscellanea
-@section Are GAMs implemented in R?
+@section Are GAM@w{s} implemented in R?
 
 Package @CRANpkg{gam} from @CRAN{} implements all the Generalized
 Additive Models (GAM) functionality as described in the GAM chapter of
 the White Book.  In particular, it implements backfitting with both
 local regression and smoothing splines, and is extendable.  There is a
-@code{gam()} function for GAMs in package @CRANpkg{mgcv}, but it is not
+@code{gam()} function for GAM@w{s} in package @CRANpkg{mgcv}, but it is not
 an exact clone of what is described in the White Book (no @code{lo()}
-for example).  Package @CRANpkg{gss} can fit spline-based GAMs too.  And
+for example).  Package @CRANpkg{gss} can fit spline-based GAM@w{s} too.  And
 if you can accept regression splines you can use @code{glm()}.  For
-Gaussian GAMs you can use @code{bruto()} from package @CRANpkg{mda}.
+Gaussian GAM@w{s} you can use @code{bruto()} from package @CRANpkg{mda}.
 
 @node Why is the output not printed when I source() a file?, Why does outer() behave strangely with my function?, Are GAMs implemented in R?, R Miscellanea
 @section Why is the output not printed when I source() a file?
@@ -2663,9 +2663,9 @@ install), which is an X11 server that does not require a screen.
 
 The Unix-like command-line interface to R can only provide the inbuilt
 command line editor which allows recall, editing and re-submission of
-prior commands provided that the @acronym{GNU} readline library is
+prior commands provided that the @acronym{GNU} @I{readline} library is
 available at the time R is configured for compilation.  Note that the
-`development' version of readline including the appropriate headers is
+`development' version of @I{readline} including the appropriate headers is
 needed: users of Linux binary distributions will need to install
 packages such as @code{libreadline-dev} (Debian) or
 @code{readline-devel} (Red Hat).
@@ -3035,23 +3035,23 @@ Disable line art smoothing.
 There is an option in Preferences to enable/disable anti-aliasing of
 text and line art.
 Disable this option. 
-@item GSview (cross platform)
+@item @I{GSview} (cross platform)
 There are settings for Text Alpha and Graphics Alpha.
 Change Graphics Alpha from 4 bits to 1 bit to disable graphic
 anti-aliasing.
-@item gv (Unix-like X)
+@item @I{gv} (Unix-like X)
 There is an option to enable/disable anti-aliasing.
 Disable this option.
 @item Evince (Linux/GNOME)
 There is not an option to disable anti-aliasing in this viewer.
-@item Okular (Linux/KDE)
+@item @I{Okular} (Linux/KDE)
 There is not an option in the GUI to enable/disable anti-aliasing.
 From a console command line, use:
 @smallexample
 $ kwriteconfig --file okularpartrc --group 'Dlg Performance' \
                --key GraphicsAntialias Disabled
 @end smallexample
-Then restart Okular.  Change the final word to @samp{Enabled} to restore
+Then restart @I{Okular}.  Change the final word to @samp{Enabled} to restore
 the original setting.
 @end ftable
 
@@ -3199,11 +3199,11 @@ The model with constant, non-zero mean is not nested in the model
 with a line through the origin.
 @end itemize
 
-All these come down to saying that if you know @emph{a priori} that
+All these come down to saying that if you know @emph{@I{a priori}} that
 @math{E[Y]=0} when @math{x=0} then the `null' model that you should
 compare to the fitted line, the model where @math{x} doesn't explain any
 of the variance, is the model where @math{E[Y]=0} everywhere.  (If you
-don't know a priori that @math{E[Y]=0} when @math{x=0}, then you
+don't know @I{a priori} that @math{E[Y]=0} when @math{x=0}, then you
 probably shouldn't be fitting a line through the origin.)
 
 @node Why is R apparently not releasing memory?, How can I enable secure https downloads in R?, Why does summary() report strange results for the R^2 estimate when I fit a linear model with no intercept?, R Miscellanea
@@ -3262,7 +3262,7 @@ query the allocator about the layout of the allocations, including the
 actually used memory as well as unused memory that cannot be released.
 
 @node How can I enable secure https downloads in R?, How can I get CRAN package binaries for outdated versions of R?, Why is R apparently not releasing memory?, R Miscellanea
-@section How can I enable secure https downloads in R?
+@section How can I enable secure @I{https} downloads in R?
 
 From R 4.2.0, @code{"libcurl"} download method is always available and
 used for @abbr{HTTPS} by default on all platforms.  It has been used

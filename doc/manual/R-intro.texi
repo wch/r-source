@@ -438,7 +438,7 @@ variables.  The set of symbols which can be used in @R{} names depends
 on the operating system and country within which @R{} is being run
 (technically on the @emph{locale} in use).  Normally all alphanumeric
 symbols are allowed@footnote{For portable @R{} code (including that to
-be used in @R{} packages) only A--Za--z0--9 should be used.} (and in
+be used in @R{} packages) only A--Z, a--z, and 0--9 should be used.} (and in
 some countries this includes accented letters) plus @samp{@code{.}} and
 @samp{@code{_}}, with the restriction that a name must start with
 @samp{@code{.}} or a letter, and if it starts with @samp{@code{.}} the
@@ -491,7 +491,7 @@ editor}.
 
 The recall and editing capabilities under UNIX are highly customizable.
 You can find out how to do this by reading the manual entry for the
-@strong{readline} library.
+@strong{@I{readline}} library.
 
 Alternatively, the Emacs text editor provides more general support
 mechanisms (via @acronym{ESS}, @emph{Emacs Speaks Statistics}) for
@@ -3170,8 +3170,8 @@ qqline(x)
 @end example
 
 Finally, we might want a more formal test of agreement with normality
-(or not).  @R{} provides the Shapiro-@I{Wilk} test
-@cindex Shapiro-Wilk test
+(or not).  @R{} provides the @I{Shapiro-Wilk} test
+@cindex @I{Shapiro-Wilk} test
 @findex shapiro.test
 
 @example
@@ -4389,11 +4389,11 @@ explicitly removed.
 @end table
 
 The @emph{formula operators} are similar in effect to the Wilkinson and
-Rogers notation used by such programs as @I{Glim} and Genstat.  One
+Rogers notation used by such programs as @I{Glim} and @I{Genstat}.  One
 inevitable change is that the operator @samp{@code{.}} becomes
 @samp{@code{:}} since the period is a valid name character in @R{}.
 
-The notation is summarized below (based on Chambers & Hastie, 1992,
+The notation is summarized below (based on @I{Chambers & Hastie}, 1992,
 p.29):
 
 @table @code
@@ -4473,7 +4473,7 @@ options(contrasts = c("contr.treatment", "contr.poly"))
 
 @noindent
 The main reason for mentioning this is that @R{} and @Sl{} have
-different defaults for unordered factors, @Sl{} using Helmert
+different defaults for unordered factors, @Sl{} using @I{Helmert}
 contrasts.  So if you need to compare your results to those of a textbook
 or paper which used @SPLUS{}, you will need to set
 
@@ -4670,7 +4670,7 @@ inconsequential.
 
 For multistratum experiments the procedure is first to project the
 response onto the error strata, again in sequence, and to fit the mean
-model to each projection.  For further details, see Chambers & Hastie
+model to each projection.  For further details, see @I{Chambers & Hastie}
 (1992).
 
 A more flexible alternative to the default full ANOVA table is to
@@ -6331,7 +6331,7 @@ another document.  This works best when @emph{encapsulated} PostScript
 is produced: @R{} always produces conformant output, but only marks the
 output as such when the @code{onefile=FALSE} argument is supplied.  This
 unusual notation stems from @Sl{}-compatibility: it really means that
-the output will be a single page (which is part of the EPSF
+the output will be a single page (which is part of the @I{EPSF}
 specification).  Thus to produce a plot for inclusion use something like
 
 @example
@@ -6672,7 +6672,7 @@ POSIX filesystems and treated as if there was only one slash.  They are
 double slashes may have a different meaning.
 
 @item
-Windows' UNC filepaths (such as @file{\\server\dir1\dir2\file} and
+Windows' @I{UNC} filepaths (such as @file{\\server\dir1\dir2\file} and
 @file{\\?\UNC\server\dir1\dir2\file}) are not supported, but they may
 work in some @R{} functions.  POSIX filesystems are allowed to treat a
 leading double slash specially.
@@ -7159,7 +7159,7 @@ expressions used in this way.  Expressions containing spaces or shell
 metacharacters will need to be quoted.)
 
 @item --no-readline
-(UNIX only) Turn off command-line editing via @strong{readline}.  This
+(UNIX only) Turn off command-line editing via @strong{@I{readline}}.  This
 is useful when running @R{} from within Emacs using the @acronym{ESS}
 (``Emacs Speaks Statistics'') package.  @xref{The command-line editor},
 for more information.  Command-line editing is enabled for default
@@ -7537,10 +7537,10 @@ should not contain spaces nor shell metacharacters.
 
 @appendixsection Preliminaries
 
-When the @acronym{GNU} @strong{readline} library is available at the
+When the @acronym{GNU} @strong{@I{readline}} library is available at the
 time @R{} is configured for compilation under UNIX, an inbuilt command
 line editor allowing recall, editing and re-submission of prior commands
-is used.  Note that other versions of @strong{readline} exist and may be
+is used.  Note that other versions of @strong{@I{readline}} exist and may be
 used by the inbuilt command line editor: this is most common on macOS.
 You can find out which version (if any) is available by running
 @code{extSoftVersion()} in an @R{} session.
@@ -7556,9 +7556,9 @@ file @file{README.Rterm} for command-line editing under
 @code{Rterm.exe}.
 
 When using @R{} with GNU@footnote{It is possible to build @R{} using an
-emulation of GNU @strong{readline}, such as one based on NetBSD's
+emulation of GNU @strong{@I{readline}}, such as one based on NetBSD's
 @strong{editline} (also known as @strong{libedit}), in which case only a
-subset of the capabilities may be provided.} @strong{readline}
+subset of the capabilities may be provided.} @strong{@I{readline}}
 capabilities, the functions described below are available, as well as
 others (probably) documented in @command{man readline} or @command{info
 readline} on your system.
@@ -7578,7 +7578,7 @@ allowed on terminals with real Meta keys.  Note that case is significant
 for Meta characters.
 
 Some but not all versions@footnote{In particular, not versions 6.3 or
-later: this is worked around as from @R{} 3.4.0.} of @strong{readline}
+later: this is worked around as from @R{} 3.4.0.} of @strong{@I{readline}}
 will recognize resizing of the terminal window so this is best avoided.
 
 @appendixsection Editing actions
@@ -7592,7 +7592,7 @@ you are editing, displacing any characters to the right of the cursor.
 In @emph{vi} mode character insertion mode is started by @kbd{M-i} or
 @kbd{M-a}, characters are typed and insertion mode is finished by typing
 a further @key{ESC}.  (The default is Emacs-style, and only that is
-described here: for @emph{vi} mode see the @strong{readline}
+described here: for @emph{vi} mode see the @strong{@I{readline}}
 documentation.)
 
 Pressing the @key{RET} command at any time causes the command to be
@@ -7666,7 +7666,7 @@ Re-submit the command to @R{}.
 
 The final @key{RET} terminates the command line editing sequence.
 
-The @strong{readline} key bindings can be customized in the usual way
+The @strong{@I{readline}} key bindings can be customized in the usual way
 @emph{via} a @file{~/.inputrc} file.  These customizations can be
 conditioned on application @code{R}, that is by including a section like
 

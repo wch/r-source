@@ -13,6 +13,9 @@
 \setlength{\parskip}{.1in}
 \setlength{\textwidth}{140mm}
 \setlength{\oddsidemargin}{10mm}
+
+\newcommand{\I}[1]{#1}
+
 \title{How \grid{} Responds to Non-Finite Values}
 \author{Paul Murrell}
 
@@ -78,7 +81,7 @@ popViewport(2)
 
 \newpage
 
-\textbf{lineTo} {~} \\
+\textbf{\I{lineTo}} {~} \\
 A line segment is only drawn if the previous location and the
 new location are both not non-finite.
 
