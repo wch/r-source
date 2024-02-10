@@ -602,7 +602,8 @@ aspell_control_R_vignettes <-
          c("-t", "-d en_US,en_GB"))
 
 aspell_R_vignettes <-
-function(program = NULL, dictionaries = aspell_dictionaries_R)
+function(program = NULL,
+         dictionaries = c(aspell_dictionaries_R, "R_vignettes"))
 {
     files <- Sys.glob(file.path(tools:::.R_top_srcdir_from_Rd(),
                                 "src", "library", "*", "vignettes",
@@ -1405,4 +1406,63 @@ function(basenames, dirnames)
     }
 
     out
+}
+
+aspell_query_wiktionary_categories <-
+function(x)
+{
+    if(inherits(x, "aspell")) {
+        x <- unique(x$Original)
+    }
+
+    verbose <- getOption("verbose")
+
+    ## Need to split into chunks of size 50 if necessary:
+    n <- length(x)
+    k <- n %/% 50L
+    ind <- c(rep.int(seq_len(k), rep.int(50L, k)),
+             rep.int(k + 1L, n %% 50L))
+    y <- lapply(split(x, ind),
+                function(s) {
+                    q <- URLencode(sprintf("https://en.wiktionary.org/w/api.php?action=query&prop=categories&format=json&cllimit=20&titles=%s",
+                        paste(s, collapse = "|")))                    
+                    if(verbose)
+                        message(sprintf("Performing query %s", q))
+                    u <- ""
+                    v <- list()
+                    repeat {
+                        w <- jsonlite::fromJSON(paste0(q, u))
+                        v <- c(v, w$query$pages)
+                        if(is.null(u <- w$continue$clcontinue))
+                            break
+                        u <- paste0("&clcontinue=", URLencode(u))
+                    }
+                    ## Gather results.
+                    v <- do.call(rbind,
+                                 lapply(v,
+                                        function(e)
+                                            list(e$title,
+                                                 e$categories$title)))
+                    lapply(split(v[, 2L],
+                                 unlist(v[, 1L], use.names = FALSE)),
+                           unlist, use.names = FALSE)
+                                        
+                })
+    Reduce(c, y)[x]
+}
+
+aspell_update_R_dictionary <-
+function(which, new = character())
+{
+    which <- which[1L]
+    dir <- file.path(tools:::.R_top_srcdir_from_Rd(),
+                     "share", "dictionaries")
+    txt <- file.path(dir, paste0(which, ".txt"))
+    rds <- file.path(dir, paste0(which, ".rds"))    
+    new <- unique(c(if(file.exists(txt))
+                        readLines(txt, encoding = "UTF-8"),
+                    enc2utf8(new)))
+    new <- new[order(tolower(new), new)]
+    writeLines(new, txt, useBytes = TRUE)
+    saveRDS(new, rds)
 }
