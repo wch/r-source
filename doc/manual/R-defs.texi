@@ -30,6 +30,21 @@ $\t\$%
 @end macro
 @end ifnottex
 
+@iftex
+@macro deqn {t, a}
+@tex
+$$\t\$$%
+@end tex
+@end macro
+@end iftex
+@ifnottex
+@macro deqn {t, a}
+@display
+\a\
+@end display
+@end macro
+@end ifnottex
+
 @macro pkg {p}
 @strong{\p\}
 @end macro

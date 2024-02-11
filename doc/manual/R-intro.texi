@@ -3597,12 +3597,9 @@ Thus given a @math{n} by @math{1} vector @math{y} and an @math{n} by
 @math{X \\ y}
 @end tex
 is defined as
-@ifnottex
-(X'X)^@{-@}X'y, where (X'X)^@{-@}
-@end ifnottex
-@tex
-$(X^T X)^{-}X^T y$, where $(X^T X)^{-}$
-@end tex
+@eqn{(X^T X)^{-}X^T y, (X'X)^@{-@}X'y},
+where
+@eqn{(X^T X)^{-}, (X'X)^@{-@}}
 is a generalized inverse of @math{X'X}.
 
 @example
@@ -3792,14 +3789,13 @@ levels) and @code{varieties} (@code{v} levels).  If @math{R} and
 @emph{replications} and @emph{block size} matrices, respectively, and
 @math{N} is the @math{b} by @math{v} incidence matrix, then the
 efficiency factors are defined as the eigenvalues of the matrix
-@ifnottex
-E = I_v - R^@{-1/2@}N'K^@{-1@}NR^@{-1/2@} = I_v - A'A, where
-A = K^@{-1/2@}NR^@{-1/2@}.
-@end ifnottex
 @tex
 $$E = I_v - R^{-1/2}N^T K^{-1}NR^{-1/2} = I_v - A^T A,$$
-where $A = K^{-1/2}NR^{-1/2}$.
 @end tex
+@ifnottex
+E = I_v - R^@{-1/2@}N'K^@{-1@}NR^@{-1/2@} = I_v - A'A,
+@end ifnottex
+where @eqn{A = K^{-1/2}NR^{-1/2}, A = K^@{-1/2@}NR^@{-1/2@}}.
 One way to write the function is given below.
 
 @example
@@ -4256,14 +4252,7 @@ $$
 @end tex
 In matrix terms this would be written
 
-@ifnottex
-@display
-y = X @ beta + e
-@end display
-@end ifnottex
-@tex
-$$ y = X \beta + e $$
-@end tex
+@deqn{y = X \beta + e, y = X @ beta + e}
 
 @noindent
 where the @math{y} is the response vector, @math{X} is the @emph{model
@@ -4296,13 +4285,7 @@ Simple linear regression of @math{y} on @math{x} through the origin
 (that is, without an intercept term).
 
 @item log(y) ~ x1 + x2
-Multiple regression of the transformed variable,
-@ifnottex
-log(y),
-@end ifnottex
-@tex
-$\log(y)$,
-@end tex
+Multiple regression of the transformed variable,@eqn{\log(y), log(y)},
 on @math{x1} and @math{x2} (with an implicit intercept term).
 
 @item y ~ poly(x,2)
@@ -4770,14 +4753,12 @@ the @emph{linear predictor}, and is usually written
 @display
 eta = beta_1 x_1 + beta_2 x_2 + @dots{} + beta_p x_p,
 @end display
-hence x_i has no influence on the distribution of @math{y} if and only if
-beta_i is zero.
 @end ifnottex
 @tex
 $$ \eta = \beta_1 x_1 + \beta_2 x_2 + \cdots + \beta_p x_p, $$
-hence $x_i$ has no influence on the distribution of @math{y} if and only
-if $\beta_i=0$.
 @end tex
+hence @math{x_i} has no influence on the distribution of @math{y} if and
+only if @eqn{\beta_i=0, beta_i is zero}.
 
 @item
 The distribution of @math{y} is of the form
@@ -4786,10 +4767,6 @@ The distribution of @math{y} is of the form
 f_Y(y; mu, phi)
   = exp((A/phi) * (y lambda(mu) - gamma(lambda(mu))) + tau(y, phi))
 @end display
-where phi is a @emph{scale parameter} (possibly known), and is constant
-for all observations, @math{A} represents a prior weight, assumed known
-but possibly varying with the observations, and $\mu$ is the mean of
-@math{y}.
 @end ifnottex
 @tex
 $$
@@ -4797,28 +4774,28 @@ f_Y(y;\mu,\varphi)
 = \exp\left[{A \over \varphi}\left\{y\lambda(\mu) -
 \gamma\left(\lambda(\mu)\right)\right\} + \tau(y,\varphi)\right]
 $$
-where $\varphi$ is a @emph{scale parameter} (possibly known), and is
-constant for all observations, $A$ represents a prior weight, assumed
-known but possibly varying with the observations, and $\mu$ is the mean
-of $y$.
 @end tex
+where @eqn{\varphi, phi} is a @emph{scale parameter} (possibly known),
+and is constant for all observations, @math{A} represents a prior
+weight, assumed known but possibly varying with the observations, and
+@eqn{\mu, mu} is the mean of @math{y}.
+
 So it is assumed that the distribution of @math{y} is determined by its
 mean and possibly a scale parameter as well.
 
 @item
+The mean, @eqn{\mu, mu}, is a smooth invertible function of the linear
+predictor:
 @ifnottex
-The mean, mu, is a smooth invertible function of the linear predictor:
 @display
 mu = m(eta),    eta = m^@{-1@}(mu) = ell(mu)
 @end display
-and this inverse function, ell(), is called the @emph{link function}.
 @end ifnottex
 @tex
-The mean, $\mu$, is a smooth invertible function of the linear predictor:
 $$ \mu = m(\eta),\qquad \eta = m^{-1}(\mu) = \ell(\mu) $$
-and this inverse function, $\ell()$, is called the @emph{link function}.
 @end tex
-
+and this inverse function, @eqn{\ell(), ell()}, is called the @emph{link
+function}. 
 @end itemize
 
 These assumptions are loose enough to encompass a wide class of models
@@ -4962,7 +4939,7 @@ where for the probit case,
 is the standard normal distribution function, and in the logit case
 (the default),
 @eqn{F(z) = e^z/(1+e^z),F(z) = e^z/(1+e^z)}.
-In both cases the LD50 is
+In both cases the @I{LD50} is
 @ifnottex
 LD50 = - beta_0/beta_1
 @end ifnottex

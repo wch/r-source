@@ -3172,19 +3172,11 @@ a complete overview on how to access source code, see @I{Uwe Ligges} (2006),
 As described in @code{?summary.lm}, when the intercept is zero (e.g.,
 from @code{y ~ x - 1} or @code{y ~ x + 0}), @code{summary.lm()} uses the
 formula
-@ifnottex
-  R^2 = 1 - Sum(R[i]^2) / Sum((y[i])^2)
-@end ifnottex
-@tex
-$ R^2 = 1 - \sum_i R_i^2 / \sum_i y_i^2 $
-@end tex
+@eqn{R^2 = 1 - \sum_i R_i^2 / \sum_i y_i^2,
+     R^2 = 1 - Sum(R[i]^2) / Sum((y[i])^2)},
 which is different from the usual
-@ifnottex
-  R^2 = 1 - Sum(R[i]^2) / Sum((y[i] - mean(y))^2).
-@end ifnottex
-@tex
-$ R^2 = 1 - \sum R_i^2 / \sum_i (y_i - \hbox{mean}(y))^2. $ 
-@end tex
+@eqn{R^2 = 1 - \sum R_i^2 / \sum_i (y_i - \hbox{mean}(y))^2,
+     R^2 = 1 - Sum(R[i]^2) / Sum((y[i] - mean(y))^2)}.
 There are several reasons for this:
 @itemize
 @item
