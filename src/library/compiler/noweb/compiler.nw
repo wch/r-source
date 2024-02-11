@@ -2580,9 +2580,10 @@ if (length(e) == 4) {
 else have.else.expr <- FALSE
 @ %def
 
-To deal with use of [[if (FALSE) ...]] for commenting out code and of
+To deal with use of [[if (FALSE) ...]] for commenting out code and formerly of
 [[if (is.R()) ... else ...]] for handling both R and Splus code it is
-useful to attempt to constant-fold the test.  If this succeeds and
+useful to attempt to constant-fold the test (however, in R 4.4, is.R()
+became more complicated so that this was no longer possible). If this succeeds and
 produces either [[TRUE]] or [[FALSE]] then only the appropriate branch
 is compiled and the handler returns [[TRUE]].
 <<[[if]] inline handler body>>=
@@ -4987,8 +4988,7 @@ foldFuns <- c("+", "-", "*", "/", "^", "(",
               "seq_along", "seq.int", "seq_len", "sign", "signif",
               "sin", "sinh", "sqrt", "sum", "tan", "tanh", "trunc",
               "baseenv", "emptyenv", "globalenv",
-              "Arg", "Conj", "Im", "Mod", "Re",
-              "is.R")
+              "Arg", "Conj", "Im", "Mod", "Re")
 @ %def foldFuns
 [[getFoldFun]] checks the called function against this list and
 whether the binding for the variable can be assumed to be from the

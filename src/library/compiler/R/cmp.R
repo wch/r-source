@@ -510,8 +510,7 @@ foldFuns <- c("+", "-", "*", "/", "^", "(",
               "seq_along", "seq.int", "seq_len", "sign", "signif",
               "sin", "sinh", "sqrt", "sum", "tan", "tanh", "trunc",
               "baseenv", "emptyenv", "globalenv",
-              "Arg", "Conj", "Im", "Mod", "Re",
-              "is.R")
+              "Arg", "Conj", "Im", "Mod", "Re")
 
 languageFuns <- c("^", "~", "<", "<<-", "<=", "<-", "=", "==", ">", ">=",
                   "|", "||", "-", ":", "!", "!=", "/", "(", "[", "[<-", "[[",
