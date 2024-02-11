@@ -135,7 +135,7 @@ installed package which can be unpacked rather than installing from
 sources.
 
 A package is @strong{not}@footnote{although this is a persistent
-mis-usage.  It seems to stem from S, whose analogues of @R{}'s packages
+@I{mis-usage}.  It seems to stem from S, whose analogues of @R{}'s packages
 were officially known as @emph{library sections} and later as
 @emph{chapters}, but almost always referred to as @emph{libraries}.} a
 @emph{library}.  The latter is used in two senses in @R{} documentation.
@@ -2886,7 +2886,7 @@ around when using packages without a @file{src/Makefile}.})  @file{.f95}.
 The same compiler is used for both fixed-form and free-form Fortran code
 (with different file extensions and possibly different flags).  Macro
 @code{PKG_FFLAGS} can be used for package-specific flags: for the
-un-encountered case that both are included in a single package and that
+@I{un-encountered} case that both are included in a single package and that
 different flags are needed for the two forms, macro @code{PKG_FCFLAGS}
 is also available for free-form Fortran.
 
@@ -3362,7 +3362,7 @@ and for the second approach to substitute @env{CMAKE} into
 @section Checking and building packages
 
 Before using these tools, please check that your package can be
-installed.  @code{R CMD check} will @emph{inter alia} do this, but you
+installed.  @code{R CMD check} will @emph{@I{inter alia}} do this, but you
 may get more detailed error messages doing the install directly.
 
 @menu
@@ -4926,7 +4926,7 @@ avoided.  Further advice can be found at
 Commonly misused GNU extensions are conditional inclusions (@code{ifeq}
 and the like), @code{$@{shell ...@}}, @code{$@{wildcard ...@}} and
 similar, and the use of @code{+=}@footnote{This was apparently
-introduced in SunOS 4, and is available elsewhere @emph{provided} it is
+introduced in @I{SunOS} 4, and is available elsewhere @emph{provided} it is
 surrounded by spaces.} and @code{:=}.  Also, the use of @code{$<} other
 than in implicit rules is a GNU extension, as is the @code{$^} macro.
 As is the use of  @code{.PHONY} (some other makes ignore it).
@@ -5677,7 +5677,7 @@ precision.  In particular, current ARM CPUs do not have extended
 precision nor long doubles, and @command{clang} currently has long
 double the same as double on all ARM CPUs.  On the other hand some CPUs
 have higher-precision modes which may be used for @code{long double},
-notably 64-bit PowerPC and Sparc.
+notably 64-bit PowerPC and @I{Sparc}.
 
 If you must try to establish a tolerance empirically, configure and
 build @R{} with @option{--disable-long-double} and use appropriate
@@ -6009,7 +6009,7 @@ may have an `overloading ambiguity'.
 A surprising common misuse is things like @code{pow(10, -3)}: this
 should be the constant @code{1e-3}.  Note that there are constants such
 as @code{M_SQRT2} defined @emph{via} @file{Rmath.h}@footnote{often taken from
-the toolchain's headers.} for @code{sqrt(2.0)}, frequently mis-coded as
+the toolchain's headers.} for @code{sqrt(2.0)}, frequently @I{mis-coded} as
 @code{sqrt(2)}.
 
 @item
@@ -6988,7 +6988,7 @@ returned by default if no @file{CITATION} file is present.
 
 See @code{?bibentry} for further details of the
 information which can be provided.
-In case a bibentry contains @LaTeX{} markup (e.g., for accented
+In case a @I{bibentry} contains @LaTeX{} markup (e.g., for accented
 characters or mathematical symbols), it may be necessary to provide a
 text representation to be used for printing @emph{via} the
 @code{textVersion} argument to @code{bibentry}.  E.g., earlier versions
@@ -7024,7 +7024,7 @@ used also to be a @samp{Translation} type.
 @end menu
 
 @node Frontend,  , Package types, Package types
-@subsection Frontend
+@subsection @I{Frontend}
 
 This is a rather general mechanism, designed for adding new front-ends
 such as the former @pkg{gnomeGUI} package (see the @file{Archive} area on
@@ -7059,8 +7059,8 @@ that can be accessed @emph{via} @code{install.packages} (they can be
 selected by @code{setRepositories} and the GUI menus that use it).
 Package developers have the opportunity to present their work on the
 basis of project websites or news announcements.  Mailing lists, forums
-or wikis provide useRs with convenient instruments for discussions and
-for exchanging information between developers and/or interested useRs.
+or wikis provide @I{useRs} with convenient instruments for discussions and
+for exchanging information between developers and/or interested @I{useRs}.
 
 
 @node Writing R documentation files, Tidying and profiling R code, Creating R packages, Top
@@ -8005,7 +8005,7 @@ Note that whereas leading and trailing spaces are stripped when
 extracting a topic from a @code{\alias}, they are not stripped when
 looking up the topic of a @code{\link}.
 
-@cindex \linkS4class
+@findex \linkS4class
 You can specify a link to a different topic than its name by
 @code{\link[=@var{dest}]@{@var{name}@}} which links to topic @var{dest}
 with name @var{name}.  This can be used to refer to the documentation
@@ -8600,7 +8600,7 @@ needed is a @LaTeX{} installation.
 
 It can be very helpful to prepare @file{.Rd} files using a editor which
 knows about their syntax and will highlight commands, indent to show the
-structure and detect mis-matched braces, and so on.
+structure and detect @I{mis-matched} braces, and so on.
 
 The system most commonly used for this is some version of
 @command{Emacs} (including @command{XEmacs}) with the @acronym{ESS}
@@ -8610,7 +8610,7 @@ separately).
 
 Another is the Eclipse IDE with the Stat-ET plugin
 (@uref{https://projects.eclipse.org/projects/science.statet}), and (on
-Windows only) Tinn-R
+Windows only) @I{Tinn-R}
 (@uref{https://sourceforge.net/projects/tinn-r/}).
 
 People have also used @LaTeX{} mode in a editor, as @file{.Rd} files are
@@ -9390,7 +9390,7 @@ error, but it is not obvious where it is coming from.  Setting
 
 Once we have located the error, we have some choices.  One way to proceed
 is to find out more about what was happening at the time of the crash by
-looking a @emph{post-mortem} dump.  To do so, set
+looking a @emph{@I{post-mortem}} dump.  To do so, set
 @findex dump.frames
 @command{options(error=dump.frames)} and run the code again.  Then invoke
 @command{debugger()} and explore the dump.  Continuing our example:
@@ -9466,7 +9466,7 @@ Enter an environment number, or 0 to exit  Selection: 0
 @end smallexample
 
 Because @code{last.dump} can be looked at later or even in another @R{}
-session, post-mortem debugging is possible even for batch usage of @R{}.
+session, @I{post-mortem} debugging is possible even for batch usage of @R{}.
 We do need to arrange for the dump to be saved: this can be done either
 using the command-line flag @option{--save} to save the workspace at the
 end of the run, or @emph{via} a setting such as
@@ -9504,7 +9504,7 @@ since it behaves like @code{dump.frames} in non-interactive use.
 
 
 @findex debug
-Post-mortem debugging is good for finding out exactly what went wrong,
+@I{Post-mortem} debugging is good for finding out exactly what went wrong,
 but not necessarily why.  An alternative approach is to take a closer
 look at what was happening just before the error, and a good way to do
 that is to use @command{debug}.  This inserts a call to the browser
@@ -9646,11 +9646,11 @@ It is possible to run all the examples, tests and vignettes covered by
 @code{R CMD check} under @code{gctorture(TRUE)} by using the option
 @option{--use-gct}.
 
-The function @code{gctorture2} provides more refined control over the GC
+The function @code{gctorture2} provides more refined control over the @abbr{GC}
 torture process.  Its arguments @code{step}, @code{wait} and
 @code{inhibit_release} are documented on its help page.  Environment
 variables can also be used at the start of the @R{} session to turn on
-GC torture: @env{R_GCTORTURE} corresponds to the @code{step} argument to
+@abbr{GC} torture: @env{R_GCTORTURE} corresponds to the @code{step} argument to
 @code{gctorture2}, @env{R_GCTORTURE_WAIT} to @code{wait}, and
 @env{R_GCTORTURE_INHIBIT_RELEASE} to @code{inhibit_release}.
 
@@ -9661,13 +9661,13 @@ addition tests to help detect protect issues are enabled:
 @itemize @bullet
 
 @item
-All GCs are full GCs.
+All @abbr{GC}s are full @abbr{GC}s.
 
 @item
 New nodes in small node pages are marked as @code{NEWSXP} on creation.
 
 @item
-After a GC all free nodes that are not of type @code{NEWSXP} are marked
+After a @abbr{GC} all free nodes that are not of type @code{NEWSXP} are marked
 as type @code{FREESXP} and their previous type is recorded.
 
 @item
@@ -9926,7 +9926,7 @@ One of the checks done by @abbr{ASan} is that @code{malloc/free} and in C++
 (rather than say @code{free} being used to dealloc memory allocated by
 @code{new[]}).  This matters on some systems but not all: unfortunately
 on some of those where it does not matter, system libraries@footnote{for
-example, X11/GL libraries on Linux, seen when checking package
+example, X11/@I{GL} libraries on Linux, seen when checking package
 @CRANpkg{rgl} and some others using it---a workaround is to set
 environment variable @env{RGL_USE_NULL=true}.} are not consistent.  The
 check can be suppressed by including @samp{alloc_dealloc_mismatch=0} in
@@ -9984,7 +9984,7 @@ zero (where for doubles @R{} requires the
 @acronym{ISO}/@acronym{IEC}@tie{}60559 behaviour but C/C++ do not), use
 of zero-length arrays, shifts too far for signed types (e.g.@: @code{int
 x, y; y = x << 31;}), out-of-range coercion, invalid C++ casts and
-mis-alignment.  Not uncommon examples of out-of-range coercion in @R{}
+@I{mis-alignment}.  Not uncommon examples of out-of-range coercion in @R{}
 packages are attempts to coerce a @code{NaN} or infinity to type
 @code{int} or @code{NA_INTEGER} to an unsigned type such as
 @code{size_t}.  Also common is @code{y[x - 1]} forgetting that @code{x}
@@ -10330,7 +10330,7 @@ Continue execution of @R{} by typing @kbd{signal 0@key{RET}}.
 @end itemize
 
 Under Windows signals may not be able to be used, and if so the procedure is
-more complicated.  See the rw-FAQ.
+more complicated.  See the @I{rw-FAQ}.
 
 
 @node Inspecting R objects, Debugging on macOS, Finding entry points, Debugging compiled code
@@ -10401,7 +10401,7 @@ $2 = @{
 (Debugger output reformatted for better legibility).
 
 Using @code{R_PV()} one can ``inspect'' the values of the various
-elements of the SEXP, for example,
+elements of the @code{SEXP}, for example,
 
 @example
 @group
@@ -12317,7 +12317,7 @@ make use of the source code for inspirational examples.
 
 It is necessary to know something about how @R{} objects are handled in
 C code.  All the @R{} objects you will deal with will be handled with
-the type @dfn{SEXP}@footnote{SEXP is an acronym for @emph{S}imple
+the type @dfn{SEXP}@footnote{@I{SEXP} is an acronym for @I{@emph{S}imple}
 @emph{EXP}ression, common in LISP-like language syntaxes.}, which is a
 pointer to a structure with typedef @code{SEXPREC}.  Think of this
 structure as a @emph{variant type} that can handle all the usual types
@@ -12904,7 +12904,7 @@ is only ever one @code{CHARSXP} representing a given string in memory.
 @findex mkChar
 @findex mkCharLen
 You can obtain a @code{CHARSXP} by calling @code{mkChar} and providing a
-nul-terminated C-style string.  This function will return a pre-existing
+@abbr{NUL}-terminated C-style string.  This function will return a pre-existing
 @code{CHARSXP} if one with a matching string already exists, otherwise
 it will create a new one and add it to the cache before returning it to
 you.   The variant @code{mkCharLen} can be used to create a
@@ -13119,10 +13119,10 @@ function to call plus zero to five arguments).
 @findex lang4
 @findex lang5
 @findex lang6
-Functions @code{elt} and @code{lastElt} find the @var{i}th element and
+Functions @code{elt} and @code{lastElt} find the @I{@var{i}-th} element and
 the last element of a pairlist, and @code{nthcdr} returns a pointer to
-the @var{n}th position in the pairlist (whose @code{CAR} is the
-@var{n}th item).
+the @I{@var{n}-th} position in the pairlist (whose @code{CAR} is the
+@I{@var{n}-th} item).
 @findex elt
 @findex lastElt
 @findex nthcdr
@@ -13915,9 +13915,9 @@ applicable.)
 @noindent
 Here, we are entering a for loop.  We loop through each of the
 variables.  In the @code{for} loop, we first create a symbol
-corresponding to the @code{i}'th element of the @code{STRSXP}
+corresponding to the @I{@code{i}-th} element of the @code{STRSXP}
 @code{theta}.  Here, @code{STRING_ELT(theta, i)} accesses the
-@code{i}'th element of the @code{STRSXP} @code{theta}.  Macro
+@I{@code{i}-th} element of the @code{STRSXP} @code{theta}.  Macro
 @code{CHAR()} extracts the actual character
 representation@footnote{@pxref{Character encoding issues} for why this
 might not be what is required.} of it: it returns a pointer.  We then
@@ -13953,7 +13953,7 @@ changed parameter value.
 @end example
 
 @noindent
-Now, we compute the @code{i}'th column of the gradient matrix.  Note how
+Now, we compute the @I{@code{i}-th} column of the gradient matrix.  Note how
 it is accessed: @R{} stores matrices by column (like Fortran).
 
 @example
@@ -15041,7 +15041,7 @@ what the @code{.Fortran} call used) but only has 8.
 
 Passing character strings from C to Fortran or @emph{vice versa} is
 not portable, but can be done with care.  The internal representations
-are different: a character array in C (or C++) is nul-terminated so its
+are different: a character array in C (or C++) is @abbr{NUL}-terminated so its
 length can be computed by @code{strlen}.  Fortran character arrays are
 typically stored as an array of bytes and a length.  This matters when
 passing strings from C to Fortran or @emph{vice versa}: in many cases
@@ -15095,7 +15095,7 @@ void F77_NAME(rmsg)(char *msg, FC_LEN_T msg_len)
 @end example
 @noindent
 in code depending on @code{R(>= 3.6.2)}.  For earlier versions of @R{} we
-could just assume that @code{msg} is nul-terminated (not guaranteed, but
+could just assume that @code{msg} is @abbr{NUL}-terminated (not guaranteed, but
 people have been getting away with it for many years), so the complete C
 side might be
 @example
@@ -15444,7 +15444,7 @@ q = 1-p} which may be advantageous when one of them is close to @eqn{1,
 @subsection Mathematical functions
 
 @cindex Gamma function
-@cindex Polygamma functions
+@cindex @I{Polygamma} functions
 @deftypefun double gammafn (double @var{x})
 @deftypefunx double lgammafn (double @var{x})
 @deftypefunx double digamma (double @var{x})
@@ -15454,7 +15454,7 @@ q = 1-p} which may be advantageous when one of them is close to @eqn{1,
 @deftypefunx double psigamma (double @var{x}, double @var{deriv})
 @deftypefunx void dpsifn (double @var{x}, int @var{n}, int @var{kode}, int @var{m}, double* @var{ans}, int* @var{nz}, int* @var{ierr})
 The Gamma function, the natural logarithm of its absolute value and
-first four derivatives and the n-th derivative of Psi, the digamma
+first four derivatives and the @I{n-th} derivative of Psi, the @I{digamma}
 function, which is the derivative of @code{lgammafn}. In other words,
 @code{digamma(x)} is the same as @code{psigamma(x,0)},
 @code{trigamma(x) == psigamma(x,1)}, etc.
@@ -15463,7 +15463,7 @@ The underlying workhorse, @code{dpsifn()}, is useful, e.g., when several derivat
 returns in @code{ans[]} the length-@var{m} sequence 
 @eqn{(-1)^{k+1} / \Gamma(k+1) * \psi^{(k)}(x), (-1)^(k+1) / gamma(k+1) * psi(k;x)} for
 @eqn{k = n \ldots n+m-1, k = n ... n+m-1}, where @eqn{\psi^{(k)}(x), psi(k;x)}
-is the k-th derivative of @eqn{\psi(x), Psi(x)}, i.e.,
+is the @I{k-th} derivative of @eqn{\psi(x), Psi(x)}, i.e.,
 @code{psigamma(x,k)}.  For more details, see the comments in
 @file{src/nmath/polygamma.c}.
 @end deftypefun
@@ -15514,7 +15514,7 @@ even for small @var{x}, i.e., @eqn{|x| \ll 1, |x| << 1}.
 @end deftypefun
 
 @deftypefun double log1p (double @var{x})
-Computes @code{log(1 + @var{x})} (@emph{log 1 @b{p}lus x}), accurately
+Computes @code{log(1 + @var{x})} (@emph{log 1 @I{@b{p}lus} x}), accurately
 even for small @var{x}, i.e., @eqn{|x| \ll 1, |x| << 1}.
 
 This should be provided by your platform, in which case it is not
@@ -15524,17 +15524,17 @@ C++98).
 @end deftypefun
 
 @deftypefun double log1pmx (double @var{x})
-Computes @code{log(1 + @var{x}) - @var{x}} (@emph{log 1 @b{p}lus x @b{m}inus @b{x}}),
+Computes @code{log(1 + @var{x}) - @var{x}} (@emph{log 1 @I{@b{p}lus} x @I{@b{m}inus} @b{x}}),
 accurately even for small @var{x}, i.e., @eqn{|x| \ll 1, |x| << 1}.
 @end deftypefun
 
 @deftypefun double log1pexp (double @var{x})
-Computes @code{log(1 + exp(@var{x}))} (@emph{log 1 @b{p}lus @b{exp}}),
+Computes @code{log(1 + exp(@var{x}))} (@emph{log 1 @I{@b{p}lus} @b{exp}}),
 accurately, notably for large @var{x}, e.g., @eqn{x > 720, x > 720}.
 @end deftypefun
 
 @deftypefun double log1mexp (double @var{x})
-Computes @code{log(1 - exp(@var{-x}))} (@emph{log 1 @b{m}inus @b{exp}}),
+Computes @code{log(1 - exp(@var{-x}))} (@emph{log 1 @I{@b{m}inus} @b{exp}}),
 accurately, carefully for two regions of @var{x}, optimally cutting
 off at @eqn{\log 2, log 2} (= 0.693147..), using
 @code{((-x) > -M_LN2 ? log(-expm1(-x)) : log1p(-exp(-x)))}.
@@ -15542,7 +15542,7 @@ off at @eqn{\log 2, log 2} (= 0.693147..), using
 
 
 @deftypefun double expm1 (double @var{x})
-Computes @code{exp(@var{x}) - 1} (@emph{exp x @b{m}inus 1}), accurately
+Computes @code{exp(@var{x}) - 1} (@emph{exp x @I{@b{m}inus} 1}), accurately
 even for small @var{x}, i.e., @eqn{|x| \ll 1, |x| << 1}.
 
 This should be provided by your platform, in which case it is not
@@ -15552,7 +15552,7 @@ C++98).
 @end deftypefun
 
 @deftypefun double lgamma1p (double @var{x})
-Computes @code{log(gamma(@var{x} + 1))} (@emph{log(gamma(1 @b{p}lus x))}),
+Computes @code{log(gamma(@var{x} + 1))} (@emph{log(gamma(1 @I{@b{p}lus} x))}),
 accurately even for small @var{x}, i.e., @eqn{0 < x < 0.5, 0 < x < 0.5}.
 @end deftypefun
 
@@ -15665,8 +15665,8 @@ natural logarithm (@code{log(x)} in @R{}).
 @item @code{M_E} @tab @math{e} @tab 2.7182818
 @item @code{M_LOG2E} @tab log2(@math{e}) @tab 1.4426950
 @item @code{M_LOG10E} @tab log10(@math{e}) @tab 0.4342945
-@item @code{M_LN2} @tab ln(2) @tab 0.6931472
-@item @code{M_LN10} @tab ln(10) @tab 2.3025851
+@item @code{M_LN2} @tab @I{ln}(2) @tab 0.6931472
+@item @code{M_LN10} @tab @I{ln}(10) @tab 2.3025851
 @item @code{M_PI} @tab @eqn{\pi, pi}   @tab 3.1415927
 @item @code{M_PI_2} @tab @eqn{\pi/2, pi/2} @tab 1.5707963
 @item @code{M_PI_4} @tab @eqn{\pi/4, pi/4} @tab 0.7853982
@@ -15683,9 +15683,9 @@ natural logarithm (@code{log(x)} in @R{}).
 @item @code{M_SQRT_PI} @tab sqrt(@eqn{\pi, pi}) @tab 1.7724539
 @item @code{M_1_SQRT_2PI} @tab 1/sqrt(@eqn{2\pi, 2*pi}) @tab 0.3989423
 @item @code{M_SQRT_2dPI} @tab sqrt(2/@eqn{\pi, pi}) @tab 0.7978846
-@item @code{M_LN_SQRT_PI} @tab ln(sqrt(@eqn{\pi, pi})) @tab 0.5723649
-@item @code{M_LN_SQRT_2PI} @tab ln(sqrt(@eqn{2\pi, 2*pi})) @tab 0.9189385
-@item @code{M_LN_SQRT_PId2} @tab ln(sqrt(@eqn{\pi, pi}/2)) @tab 0.2257914
+@item @code{M_LN_SQRT_PI} @tab @I{ln}(sqrt(@eqn{\pi, pi})) @tab 0.5723649
+@item @code{M_LN_SQRT_2PI} @tab @I{ln}(sqrt(@eqn{2\pi, 2*pi})) @tab 0.9189385
+@item @code{M_LN_SQRT_PId2} @tab @I{ln}(sqrt(@eqn{\pi, pi}/2)) @tab 0.2257914
 @end multitable
 @end quotation
 
@@ -15843,7 +15843,7 @@ void Rdqagi(integr_fn f, void *ex, double *bound, int *inf,
 @end itemize
 
 @noindent
-Only the 3rd and 4th argument differ for the two integrators; for the
+Only the 3rd and @I{4th} argument differ for the two integrators; for the
 finite range integral using @code{Rdqags}, @code{a} and @code{b} are the
 integration interval bounds, whereas for an infinite range integral using
 @code{Rdqagi}, @code{bound} is the finite bound of the integration (if
@@ -15964,7 +15964,7 @@ The Fortran interface routines for sorting double precision vectors are
 Given the @var{nr} by @var{nc} matrix @code{matrix} in column-major
 (``Fortran'')
 order, @code{R_max_col()} returns in @code{@var{maxes}[@var{i}-1]} the
-column number of the maximal element in the @var{i}-th row (the same as
+column number of the maximal element in the @I{@var{i}-th} row (the same as
 @R{}'s @code{max.col()} function).  In the case of ties (multiple maxima),
 @code{*ties_meth} is an integer code in @code{1:3} determining the method:
 1 = ``random'', 2 = ``first'' and 3 = ``last''.

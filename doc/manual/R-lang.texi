@@ -104,7 +104,7 @@ go beyond that level, others will want to write their own functions
 either in an ad hoc fashion to systematize repetitive work or with the
 perspective of writing add-on packages for new functionality.
 
-The purpose of this manual is to document the language @emph{per se}.
+The purpose of this manual is to document the language @emph{@I{per se}}.
 That is, the objects that it works on, and the details of the expression
 evaluation process, which are useful to know when programming @R{}
 functions.  Major subsystems for specific tasks, such as graphics, are
@@ -225,7 +225,7 @@ compatible with other implementations of the @Sl{} language.
 @c </FIXME>
 @findex storage.mode
 Finally, the function @code{storage.mode} returns the @dfn{storage mode}
-of its argument in the sense of Becker et al.@: (1988).  It is generally
+of its argument in the sense of Becker @I{et al.}@: (1988).  It is generally
 used when calling functions written in another language, such as C or
 FORTRAN, to ensure that @R{} objects have the data type expected by the
 routine being called.  (In the @Sl{} language, vectors with integer or
@@ -638,10 +638,10 @@ be created by (e.g.) the @code{pairlist} function. A zero-length
 pairlist is @code{NULL}, as would be expected in Lisp but in contrast to
 a zero-length list.
 @findex pairlist
-Each such object has three slots, a CAR value, a CDR value and a TAG
-value.  The TAG value is a text string and CAR and CDR usually
+Each such object has three slots, a @I{CAR} value, a @I{CDR} value and a TAG
+value.  The TAG value is a text string and @I{CAR} and @I{CDR} usually
 represent, respectively, a list item (head) and the remainder (tail) of
-the list with a NULL object as terminator (the CAR/CDR terminology is
+the list with a NULL object as terminator (the @I{CAR}/@I{CDR} terminology is
 traditional Lisp and originally referred to the address and decrement
 registers on an early 60's IBM computer).
 @c FIXME: Check: Is it *required* that TAG is a STRSXP and CDR is a
@@ -1638,7 +1638,7 @@ There is no @code{NA} value for raw vectors.
 
 @R{} contains several constructs which allow access to individual
 elements or subsets through indexing operations.  In the case of the
-basic vector types one can access the i-th element using @code{x[i]},
+basic vector types one can access the @I{i-th} element using @code{x[i]},
 but there is also indexing of lists, matrices, and multi-dimensional
 arrays.  There are several forms of indexing in addition to indexing
 with a single integer.  Indexing can be used both to extract part of an
@@ -1665,7 +1665,7 @@ they have some slight semantic differences from the @code{[} form (e.g.
 it drops any @code{names} or @code{dimnames} attribute, and that partial
 matching is used for character indices).  When indexing
 multi-dimensional structures with a single index, @code{x[[i]]} or
-@code{x[i]} will return the @code{i}th sequential element of @code{x}.
+@code{x[i]} will return the @I{@code{i}-th} sequential element of @code{x}.
 
 For lists, one generally uses @code{[[} to select any single element,
 whereas @code{[} returns a list of the selected elements.
@@ -2392,7 +2392,7 @@ matches exactly with the first part of a formal argument then the two
 arguments are considered to be matched.  It is an error to have multiple
 partial matches.  Notice that if @code{f <- function(fumble,
 fooey) fbody}, then @code{f(f = 1, fo = 2)} is illegal, even though the
-2nd actual argument only matches @code{fooey}.  @code{f(f = 1, fooey =
+@I{2nd} actual argument only matches @code{fooey}.  @code{f(f = 1, fooey =
 2)} @emph{is} legal though since the second argument matches exactly and
 is removed from consideration for partial matching.  If the formal
 arguments contain @code{...} then partial matching is only applied to
@@ -2867,7 +2867,7 @@ The class attribute of an object can have several elements.  When a
 @cindex function, generic
 generic function is called the first inheritance is mainly handled
 through @code{NextMethod}.  @code{NextMethod} determines the method
-currently being evaluated, finds the next class from th
+currently being evaluated, finds the next class from the
 
 FIXME: something is missing here
 
@@ -3603,7 +3603,7 @@ f(y = 1, 2, z = 3, 4)
 
 However, this is not really useful except for debugging because it
 requires the function to keep track of argument matching in order to
-interpret the call.  For instance, it must be able to see that the 2nd
+interpret the call.  For instance, it must be able to see that the @I{2nd}
 actual argument gets matched to the first formal one (@code{x} in the
 above example).
 
@@ -4445,7 +4445,7 @@ eight hex digits.
 A single quote may also be embedded directly in a double-quote delimited
 string and vice versa.
 
-A `nul' (@code{\0}) is not allowed in a character string, so using
+A @abbr{NUL} (@code{\0}) is not allowed in a character string, so using
 @code{\0} in a string constant terminates the constant (usually with a
 warning): further characters up to the closing quote are scanned but
 ignored.

@@ -218,7 +218,7 @@ to certain system functions, and the ability to run programs stored in
 script files.
 
 The design of R has been heavily influenced by two existing languages:
-Becker, Chambers & @I{Wilks}' S (@pxref{What is S?}) and Sussman's
+Becker, Chambers & @I{Wilks}' S (@pxref{What is S?}) and @I{Sussman}'s
 @url{http://community.schemewiki.org/?scheme-faq, Scheme}.
 Whereas the resulting language is very similar in appearance to S, the
 underlying implementation and semantics are derived from Scheme.
@@ -287,7 +287,7 @@ platforms including @var{cpu}-linux-gnu for the @I{i386},
 @acronym{CPU}s (e.g.,
 @url{https://buildd.debian.org/build.php?&pkg=r-base}), 
 @I{386-hurd-gnu},
-@var{cpu}-kfreebsd-gnu for @I{i386} and @I{amd64},
+@var{cpu}-@I{kfreebsd}-gnu for @I{i386} and @I{amd64},
 @c <FIXME>
 @c Not sure anymore ...
 @c alpha-dec-osf4,
@@ -605,7 +605,7 @@ Books on R by R Core Team members include
 
 @I{Peter Dalgaard} (2008),
 ``Introductory Statistics with R'',
-2nd edition.
+@I{2nd} edition.
 @I{Springer}, ISBN 978-0-387-79053-4,
 @url{http://publicifsv.sund.ku.dk/~pd/ISwR.html}.
 
@@ -632,7 +632,7 @@ Examples''.
 @url{https://www.stat.auckland.ac.nz/~paul/RGraphics/rgraphics.html}.
 
 @I{William N. Venables} and @I{Brian D. Ripley} (2002),
-``Modern Applied Statistics with S'' (4th edition).
+``Modern Applied Statistics with S'' (@I{4th} edition).
 @I{Springer}, ISBN 0-387-95457-0,
 @url{https://www.stats.ox.ac.uk/pub/MASS4/}.
 
@@ -1068,7 +1068,7 @@ R> cube(2)
 @c hours of confusion on each occasion.)
 
 As a more ``interesting'' real-world problem, suppose you want to write
-a function which returns the density function of the @math{r}-th order
+a function which returns the density function of the @I{@math{r}-th} order
 statistic from a sample of size @math{n} from a (continuous)
 distribution.  For simplicity, we shall use both the distribution and
 density functions distribution as explicit arguments.  (Example compiled
@@ -1197,7 +1197,7 @@ work if the optimizer supports this.
 
 Nested lexically scoped functions allow using function closures and
 maintaining local state.  A simple example (taken from Abelson and
-Sussman) is obtained by typing @kbd{demo("scoping")} at the R prompt.
+@I{Sussman}) is obtained by typing @kbd{demo("scoping")} at the R prompt.
 Further information is provided in the standard R reference ``R: A
 Language for Data Analysis and Graphics'' (@pxref{What documentation
 exists for R?}) and in @I{Robert Gentleman} and @I{Ross Ihaka} (2000), ``Lexical
@@ -2029,7 +2029,7 @@ A third option is to start an inferior R process via @acronym{ESS}
 (@kbd{M-x R}) and then start @abbr{GUD} (@kbd{M-x gdb}) giving the R binary
 (using its full path name) as the program to debug.  Use the program
 @command{ps} to find the process number of the currently running R
-process then use the @code{attach} command in gdb to attach it to that
+process then use the @code{attach} command in @I{GDB} to attach it to that
 process.  One advantage of this method is that you have separate
 @code{*R*} and @code{*gud-gdb*} windows.  Within the @code{*R*} window
 you have all the @acronym{ESS} facilities, such as object-name
@@ -2643,7 +2643,7 @@ Under a Unix-like, if your installation supports the
 @code{type="cairo"} option to the @code{png()} device there should be no
 problems, and the default settings should just work.  This option is not
 available for versions of R prior to 2.7.0, or without support for
-cairo.  From R 2.7.0 @code{png()} by default uses the Quartz device
+@I{cairo}.  From R 2.7.0 @code{png()} by default uses the Quartz device
 on macOS, and that too works in batch mode.
 
 Earlier versions of the @code{png()} device used the X11 driver, which

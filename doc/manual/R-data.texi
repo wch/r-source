@@ -187,8 +187,8 @@ more appropriate.  (See the @CRANpkg{rJava} package from @acronym{CRAN}.)
 
 
 @cindex Unix tools
-@cindex awk
-@cindex perl
+@cindex @I{awk}
+@cindex @I{perl}
 It is also worth remembering that @R{} like @Sl{} comes from the Unix
 tradition of small re-usable tools, and it can be rewarding to use tools
 such as @code{awk} and @code{perl} to manipulate data before import or
@@ -286,9 +286,9 @@ clues (e.g.@: `Russian on Windows').
 `@abbr{BOM}s' (Byte Order Marks,
 @uref{https://en.wikipedia.org/wiki/Byte_order_mark}) cause problems for
 Unicode files.  In the Unix world @abbr{BOM}s are rarely used, whereas in the
-Windows world they almost always are for UCS-2/UTF-16 files, and often
+Windows world they almost always are for @I{UCS-2}/UTF-16 files, and often
 are for UTF-8 files.  The @command{file} utility will not even recognize
-UCS-2 files without a @abbr{BOM}, but many other utilities will refuse to read
+@I{UCS-2} files without a @abbr{BOM}, but many other utilities will refuse to read
 files with a @abbr{BOM} and the @abbr{IANA} standards for @code{UTF-16LE}
 and @code{UTF-16BE} prohibit it.  We have too often been reduced to
 looking at the file with the command-line utility @command{od} or a hex
@@ -784,7 +784,7 @@ out a temporary tab-separated file and then calls @code{read.table}.
 This is adequate for small files, but for anything more complicated we
 recommend using the facilities of a language like @code{perl} to
 pre-process the file.
-@cindex perl
+@cindex @I{perl}
 
 
 @findex read.fortran
@@ -1250,7 +1250,7 @@ client/server databases.  The database can reside on the same machine or
 several: @acronym{SQL}92 is @acronym{ISO}/@acronym{IEC}@tie{}9075, also known as
 @acronym{ANSI} X3.135-1992, and @acronym{SQL}99 is coming into use) for
 an interface language called @acronym{SQL} (Structured Query Language,
-sometimes pronounced `sequel': see Bowman @emph{et al.@:} 1996 and Kline
+sometimes pronounced `sequel': see Bowman @emph{@I{et al.}@:} 1996 and Kline
 and Kline 2001) which these @abbr{DBMS}s support to varying degrees.
 
 
@@ -1863,7 +1863,7 @@ are compiled, and the supported formats can be listed by e.g.@:
 @command{convert -list format}.
 
 Package @CRANpkg{pixmap} has a function @code{read.pnm} to read `portable
-anymap' images in PBM (black/white), PGM (grey) and PPM (RGB colour)
+anymap' images in PBM (black/white), @abbr{PGM} (grey) and PPM (RGB colour)
 formats.  These are also known as `netpbm' formats.
 
 Packages @CRANpkg{bmp}, @CRANpkg{jpeg} and @CRANpkg{png} read the
@@ -2094,10 +2094,10 @@ For convenience, if the @code{file} argument specifies a FTP, HTTP or
 @end menu
 
 @node Pushback,  , Input from connections, Input from connections
-@subsection Pushback
+@subsection @I{Pushback}
 
 @findex pushBack.
-@cindex Pushback on a connection
+@cindex @I{Pushback} on a connection
 C programmers may be familiar with the @code{ungetc} function to push
 back a character onto a text input stream.  @R{} connections have the
 same idea in a more powerful way, in that an (essentially) arbitrary
@@ -2128,7 +2128,7 @@ Read 4 items
 > close(zz)
 @end example
 
-Pushback is only available for connections opened for input in text mode.
+@I{Pushback} is only available for connections opened for input in text mode.
 
 @node Listing and manipulating connections, Binary connections, Input from connections, Connections
 @section Listing and manipulating connections
@@ -2200,7 +2200,7 @@ versa}.  This will not suffice if the data are to be transferred to a
 machine with a different architecture, but between almost all @R{}
 platforms the only change needed is that of byte-order.  Common PCs
 (@cputype{ix86}-based and @cputype{x86_64}-based machines), Compaq Alpha
-and Vaxen are @emph{little-endian}, whereas Sun Sparc, mc680x0 series,
+and Vaxen are @emph{little-endian}, whereas Sun @I{Sparc}, @I{mc680x0} series,
 IBM R6000, SGI and most others are @emph{big-endian}.  (Network
 byte-order (as used by @abbr{XDR}, eXternal Data Representation) is
 big-endian.)  To transfer to or from other programs we may need to do

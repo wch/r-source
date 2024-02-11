@@ -825,7 +825,7 @@ adding @samp{r_arch=@var{name}} to the @command{configure} line.  Here
 @var{name} can be anything non-empty, and is used to name subdirectories
 of @file{lib}, @file{etc}, @file{include} and the package @file{libs}
 subdirectories.  Example names from other software are the use of
-@file{sparcv9} on Sparc Solaris and @file{32} by @command{gcc} on
+@file{sparcv9} on @I{Sparc} Solaris and @file{32} by @command{gcc} on
 @cputype{x86_64} Linux.
 
 If you have two or more such builds you can install them over each other
@@ -1410,7 +1410,7 @@ Installation is @emph{via} the installer
 follow the instructions. You can uninstall @R{} from the Control Panel.
 
 You will be asked to choose a language for installation: that choice
-applies to both installation and un-installation but not to running @R{}
+applies to both installation and @I{un-installation} but not to running @R{}
 itself.
 
 See the @uref{https://CRAN.R-project.org/bin/windows/base/rw-FAQ.html, R
@@ -1728,7 +1728,7 @@ default for command-line @R{} but not @Rapp{}) requires
 
 Under some rather nebulous circumstances messages have been seen from
 @code{fontconfig} about missing/unreadable configuration files when
-using cairo-based devices, especially @code{X11(type = "cairo")}.  With
+using @I{cairo}-based devices, especially @code{X11(type = "cairo")}.  With
 @I{XQuartz} installed there are two @code{fontconfig} areas from different
 versions and it can help to set
 @example
@@ -1742,7 +1742,7 @@ upright ones.
 @section Uninstalling under macOS
 
 @R{} for macOS consists of two parts: the GUI (@Rapp{}) and the R
-framework. Un-installation is as simple as removing those folders
+framework. @I{Un-installation} is as simple as removing those folders
 (e.g.@: by dragging them onto the Bin aka Trash). The typical installation will
 install the GUI into the @file{/Applications/R.app} folder and the R
 framework into the @file{/Library/Frameworks/R.framework} folder.  The
@@ -2104,7 +2104,7 @@ have to use @code{library} to make its functionality available.
 What @code{install.packages} does by default is different on Unix-alikes
 (except macOS) and Windows.  On Unix-alikes it consults the list of
 available @emph{source} packages on @acronym{CRAN} (or other
-repository/ies), downloads the latest version of the package sources,
+repositories), downloads the latest version of the package sources,
 and installs them (via @code{R CMD INSTALL}).  On Windows it looks (by
 default) first at the list of @emph{binary} versions of packages
 available for your version of @R{} and downloads the latest versions (if
@@ -2650,7 +2650,7 @@ simplest way to set up such a file is to use function
 @code{write_PACKAGES} in the @pkg{tools} package, and its help explains
 which fields are needed.  Optionally there can also be
 @file{PACKAGES.rds} and @file{PACKAGES.gz} files, downloaded in
-preference to @file{PACKAGES}.  (If you have a mis-configured server
+preference to @file{PACKAGES}.  (If you have a @I{mis-configured} server
 that does not report correctly non-existent files you may need these
 files.)
 
@@ -3053,7 +3053,7 @@ make uninstall
 @end example
 
 @noindent
-will (un)install the header @file{Rmath.h} and shared and static
+will @I{(un)instal}l the header @file{Rmath.h} and shared and static
 @enindex DESTDIR
 libraries (if built).  Both @code{prefix=} and @env{DESTDIR} are
 supported, together with more precise control as described for the main
@@ -3425,7 +3425,7 @@ in Debian/Ubuntu.} which cover the Latin, Greek and Cyrillic alphabets
 plus a fair range of signs.  These share metrics with @I{Arial}, Times New
 Roman and Courier New, and contain fonts rather similar to the first two
 (@uref{https://en.wikipedia.org/wiki/Liberation_fonts}).  Then there
-is the `Free UCS Outline Fonts' project
+is the `Free @I{UCS} Outline Fonts' project
 (@uref{https://www.gnu.org/software/freefont/}) which are
 @I{OpenType}/@I{TrueType} fonts based on the URW fonts but with extended Unicode
 coverage.  See the @R{} help on @code{X11} on selecting such fonts.
@@ -4183,7 +4183,7 @@ path if an enhanced BLAS is installed).
 
 As with all libraries, you need to ensure that they and @R{} were
 compiled with compatible compilers and flags.  For example, this has
-meant that on Sun Sparc using the Oracle compilers the flag
+meant that on Sun @I{Sparc} using the Oracle compilers the flag
 @option{-dalign} is needed if @code{sunperf} is to be used.
 
 On some systems it has been necessary that an external
@@ -4873,7 +4873,7 @@ increase the optimization levels to @option{-O3}: however for many
 versions of the compilers this has caused problems in at least one
 @acronym{CRAN} package.
 
-Do not use @option{-O3} with @command{gcc} 11.0 or 11.1: it mis-compiles
+Do not use @option{-O3} with @command{gcc} 11.0 or 11.1: it @I{mis-compiles}
 code resulting in plausible but
 incorrect results.  (This was seen in package @CRANpkg{MASS} but has
 been worked around there as from version 3.1-57.)
@@ -5028,7 +5028,7 @@ in @file{config.site}. (As from @R{} 4.2.2 @command{configure} tries
 that value if it is unset.)
 
 @node flang, Intel compilers, Clang, Linux
-@subsection flang
+@subsection @I{flang}
 
 The name @command{flang} has been used for two projects: this is about
 the sub-project of @I{LLVM} which builds a Fortran compiler and runtime
@@ -6321,8 +6321,8 @@ special action, FreeBSD requires a call to (the macro)
 64-bit Intel machines, one has to explicitly disable flush-to-zero and
 denormals-are-zero modes.  Some ARM processors including A12Z and M1
 (Apple Silicon) by default use runfast mode, which includes
-flush-to-zero and default-nan and hence has to be disabled.  With
-default-nan mode, the NaN payload used for representation of numeric NA
+flush-to-zero and @I{default-nan} and hence has to be disabled.  With
+@I{default-nan} mode, the NaN payload used for representation of numeric NA
 values is lost even on simple operations with finite values. On a new
 platform you must find out the magic recipe and add some code to make it
 work.  This can often be done via the file @file{config.site} which

@@ -106,10 +106,10 @@ comments about when features were introduced: this version is for the
 @end menu
 
 @node SEXPs, Environments and variable lookup, R Internal Structures, R Internal Structures
-@section SEXPs
+@section @I{SEXPs}
 
-@cindex SEXP
-@cindex SEXPREC
+@cindex @I{SEXP}
+@cindex @I{SEXPREC}
 What @R{} users think of as @emph{variables} or @emph{objects} are
 symbols which are bound to a value.  The value can be thought of as
 either a @code{SEXP} (a pointer), or the structure it points to, a
@@ -142,16 +142,16 @@ The first five bits of the @code{sxpinfo} header specify one of up to 32
 @end menu
 
 @node SEXPTYPEs, Rest of header, SEXPs, SEXPs
-@subsection SEXPTYPEs
+@subsection @I{SEXPTYPE}s
 
-@cindex SEXPTYPE
+@cindex @I{SEXPTYPE}
 Currently @code{SEXPTYPE}s 0:10 and 13:25 are in use.  Values 11 and 12
 were used for internal factors and ordered factors and have since been
 withdrawn.  Note that the @code{SEXPTYPE} numbers are stored in
 @code{save}d objects and that the ordering of the types is used, so the
 gap cannot easily be reused.
 
-@cindex SEXPTYPE table
+@cindex @I{SEXPTYPE} table
 @quotation
 @multitable {no} {SPECIALSXPXXX} {S4 classes not of simple type}
 @headitem no @tab  SEXPTYPE@tab  Description
@@ -171,7 +171,7 @@ gap cannot easily be reused.
 @item @code{15}   @tab @code{CPLXSXP}    @tab complex vectors
 @item @code{16}   @tab @code{STRSXP}     @tab character vectors
 @item @code{17}   @tab @code{DOTSXP}     @tab dot-dot-dot object
-@item @code{18}   @tab @code{ANYSXP}     @tab make ``any'' args work
+@item @code{18}   @tab @code{ANYSXP}     @tab make ``any'' @I{args} work
 @item @code{19}   @tab @code{VECSXP}     @tab list (generic vector)
 @item @code{20}   @tab @code{EXPRSXP}    @tab expression vector
 @item @code{21}   @tab @code{BCODESXP}   @tab byte code
@@ -436,7 +436,7 @@ the last is a pointer to the appropriate @code{SEXPREC}.)  Many symbols
 have @code{SYMVALUE} @code{R_UnboundValue}.
 
 @item LISTSXP
-Pointers to the CAR, CDR (usually a @code{LISTSXP} or @code{NULL}) and
+Pointers to the @I{CAR}, @I{CDR} (usually a @code{LISTSXP} or @code{NULL}) and
 TAG (a @code{SYMSXP} or @code{NULL}).
 
 @item CLOSXP
@@ -445,7 +445,7 @@ Pointers to the formals (a pairlist), the body and the environment.
 @item ENVSXP
 Pointers to the frame, enclosing environment and hash table (@code{NULL} or a
 @code{VECSXP}).  A frame is a tagged pairlist with tag the symbol and
-CAR the bound value.
+@I{CAR} the bound value.
 
 @item PROMSXP
 Pointers to the value, expression and environment (in which to evaluate
@@ -453,9 +453,9 @@ the expression).  Once an promise has been evaluated, the environment is
 set to @code{NULL}.
 
 @item LANGSXP
-A special type of @code{LISTSXP} used for function calls.  (The CAR
+A special type of @code{LISTSXP} used for function calls.  (The @I{CAR}
 references the function (perhaps via a symbol or language object), and
-the CDR the argument list with tags for named arguments.)  @R{}-level
+the @I{CDR} the argument list with tags for named arguments.)  @R{}-level
 documentation references to `expressions' / `language objects' are
 mainly @code{LANGSXP}s, but can be symbols (@code{SYMSXP}s) or
 expression vectors (@code{EXPRSXP}s).
@@ -531,7 +531,7 @@ allocator vector nodes 6 and `large' vector nodes being of class 7.  The
 64 and 128 bytes: larger vectors are @code{malloc}-ed individually
 whereas the `small' nodes are allocated from pages of about 2000
 bytes. Vector nodes allocated using custom allocators (via
-@code{allocVector3}) are not counted in the gc memory usage statistics
+@code{allocVector3}) are not counted in the @abbr{GC} memory usage statistics
 since their memory semantics is not under R's control and may be
 non-standard (e.g., memory could be partially shared across nodes).
 
@@ -689,7 +689,7 @@ accessed/set by the macros/functions @code{ATTRIB} and
 if the attributes are @code{NULL} or to reset them.  Otherwise access
 goes through the functions @code{getAttrib} and @code{setAttrib} which
 impose restrictions on the attributes.  One thing to watch is that if
-you copy attributes from one object to another you may (un)set the
+you copy attributes from one object to another you may @I{(un)set} the
 @code{"class"} attribute and so need to copy the object and S4 bits as
 well.  There is a macro/function @code{DUPLICATE_ATTRIB} to automate
 this.
@@ -1217,7 +1217,7 @@ indicating if there are any attributes and if there is a tag (for the
 pairlist types), an unused bit and then the @code{gp}
 field@footnote{Currently the only relevant bits are 0:1, 4, 14:15.} in
 bits 12:27.  Pairlist-like objects write their attributes (if any), tag
-(if any), CAR and then CDR (using tail recursion): other objects write
+(if any), @I{CAR} and then @I{CDR} (using tail recursion): other objects write
 their attributes after themselves.  Atomic vector objects write their
 length followed by the data: generic vector-list objects write their
 length followed by a call to @code{WriteItem} for each element.  The
@@ -1654,7 +1654,7 @@ that
 @noindent
 is called immediately after the allocation (as @R{}'s stack checking
 mechanism will warn far enough from the stack limit to allow for modest
-use of alloca).  (@code{do_makeunique} in file @file{src/main/unique.c}
+use of @code{alloca}).  (@code{do_makeunique} in file @file{src/main/unique.c}
 provides an example of both points.)
 
 There is an alternative check,
@@ -1720,7 +1720,7 @@ static R_StringBuffer ex_buff = @{NULL, 0, MAXELTSIZE@};
 @end menu
 
 @node Internals of R_alloc,  , Memory allocators, Memory allocators
-@subsection Internals of R_alloc
+@subsection Internals of @code{R_alloc}
 
 The memory used by @code{R_alloc} is allocated as @R{} vectors, of type
 @code{RAWSXP}.  Thus the allocation is in units of 8 bytes, and is
@@ -1731,7 +1731,7 @@ cases 1 byte is added before rounding up so the allocation is always
 
 The vectors allocated are protected via the setting of @code{R_VStack},
 as the garbage collector marks everything that can be reached from that
-location.  When a vector is @code{R_alloc}ated, its @code{ATTRIB}
+location.  When a vector is @I{@code{R_alloc}ated}, its @code{ATTRIB}
 pointer is set to the current @code{R_VStack}, and @code{R_VStack} is
 set to the latest allocation.  Thus @code{R_VStack} is a single-linked
 chain of the vectors currently allocated via @code{R_alloc}.  Function
@@ -2812,7 +2812,7 @@ error or by the user).
 The device also sets a number of variables, mainly Boolean flags
 indicating its capabilities.  Devices work entirely in `device units'
 which are up to its developer: they can be in pixels, big points (1/72
-inch), twips, @dots{}, and can differ@footnote{although that needs to be
+inch), @I{twip}s, @dots{}, and can differ@footnote{although that needs to be
 handled carefully, as for example the @code{circle} callback is given a
 radius (and that should be interpreted as in the x units).} in the
 @samp{x} and @samp{y} directions.
@@ -3361,7 +3361,7 @@ pixel.
 
 @item
 How RGB colour values will be interpreted should be documented, and
-preferably be sRGB.
+preferably be @abbr{sRGB}.
 
 @item
 The help page should describe its policy on these conventions.
@@ -3484,9 +3484,9 @@ The current approach is to make use of more modern toolkits, namely
 management---because these are associated with @code{Gtk+2} they are
 widely available.  Cairo supports translucent colours and alpha-blending
 (@emph{via} @code{Xrender}), and anti-aliasing for the display of lines
-and text.  Pango's font management is based on @code{fontconfig} and
+and text.  @I{Pango}'s font management is based on @code{fontconfig} and
 somewhat mysterious, but it seems mainly to use Type 1 and TrueType
-fonts on the machine running @R{} and send grayscale bitmaps to cairo.
+fonts on the machine running @R{} and send grayscale bitmaps to @I{cairo}.
 
 
 @node windows(),  , X11(), Specific devices
@@ -3612,7 +3612,7 @@ matters when re-playing the display list, e.g.@: when a device is
 resized or @code{dev.copy} is used.  The palette should be thought of as
 per-session: it is stored in package @pkg{grDevices}.
 
-The convention is that devices use the colorspace `sRGB'. This is an
+The convention is that devices use the colorspace `@abbr{sRGB}'. This is an
 industry standard: it is used by Web browsers and @abbr{JPEG}s from all but
 high-end digital cameras.  The interpretation is a matter for graphics
 devices and for code that manipulates colours, but not for the graphics
@@ -3740,7 +3740,7 @@ The handling of missing values differs in the two classes of uses.
 Generally these are errors when used in @code{par} but cause the
 corresponding element of the plot to be omitted when used as an element
 of a vector argument.  Originally the interpretation of arguments was
-mainly left to the device, but nowadays some of this is pre-empted in
+mainly left to the device, but nowadays some of this is @I{pre-empted} in
 the graphics engine (but for example the handling of @code{lwd = 0}
 remains device-specific, with some interpreting it as a `thinnest
 possible' line).

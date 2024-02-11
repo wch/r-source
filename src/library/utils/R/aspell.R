@@ -423,7 +423,6 @@ aspell_control_R_manuals <-
            "--add-texinfo-ignore=anchor",           
            "--add-texinfo-ignore=deftypefun",
            "--add-texinfo-ignore=deftypefunx", 
-           "--add-texinfo-ignore=direntry",
            "--add-texinfo-ignore=findex",
            "--add-texinfo-ignore=enindex",
            "--add-texinfo-ignore=include",
@@ -438,6 +437,7 @@ aspell_control_R_manuals <-
            "--add-texinfo-ignore=set",
            "--add-texinfo-ignore=value",
            "--add-texinfo-ignore=vindex",
+           "--add-texinfo-ignore-env=direntry",
            "--add-texinfo-ignore-env=html",
            "--add-texinfo-ignore-env=macro",
            "--add-texinfo-ignore-env=menu",
@@ -454,7 +454,7 @@ aspell_control_R_manuals <-
 
 aspell_R_manuals <-
 function(which = NULL, dir = NULL, program = NULL,
-         dictionaries = aspell_dictionaries_R)
+         dictionaries = c(aspell_dictionaries_R, "R_manuals"))
 {
     if(is.null(dir)) dir <- tools:::.R_top_srcdir_from_Rd()
     ## Allow specifying 'R-exts' and alikes, or full paths.

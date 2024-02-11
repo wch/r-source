@@ -1957,7 +1957,7 @@ may be used to permute an array, @code{a}.  The argument @code{perm}
 must be a permutation of the integers @math{@{1, @dots{}, k@}}, where
 @math{k} is the number of subscripts in @code{a}.  The result of the
 function is an array of the same size as @code{a} but with old dimension
-given by @code{perm[j]} becoming the new @code{j}-th dimension.  The
+given by @code{perm[j]} becoming the new @I{@code{j}-th} dimension.  The
 easiest way to think of this operation is as a generalization of
 transposition for matrices.  Indeed if @code{A} is a matrix, (that is, a
 doubly subscripted array) then @code{B} given by
@@ -2059,7 +2059,7 @@ result.  The matrix @xxT{} may be calculated either by @code{cbind(x)
 @xTx{} or @xxT{} is @code{crossprod(x)} or @code{x %o% x} respectively.}
 
 @findex crossprod
-The function @code{crossprod()} forms ``crossproducts'', meaning that
+The function @code{crossprod()} forms ``cross products'', meaning that
 @code{crossprod(X, y)} is the same as @code{t(X) %*% y} but the
 operation is more efficient.  If the second argument to
 @code{crossprod()} is omitted it is taken to be the same as the first.
@@ -2116,7 +2116,7 @@ x} @ } which is used in multivariate computations, should be computed by
 something like@footnote{Even better would be to form a matrix square
 root @eqn{B, B} with @eqn{A = BB^T, A = BB'} and find the squared length
 of the solution of @eqn{By = x, By = x} , perhaps using the Cholesky or
-eigen decomposition of @eqn{A, A}.  } @code{x %*% solve(A,x)}, rather
+eigendecomposition of @eqn{A, A}.  } @code{x %*% solve(A,x)}, rather
 than computing the inverse of @code{A}.
 
 @node Eigenvalues and eigenvectors, Singular value decomposition and determinants, Linear equations and inversion, Matrix facilities
@@ -4438,7 +4438,7 @@ a column of ones if included in the model).
 What about a @math{k}-level factor @code{A}?  The answer differs for
 unordered and ordered factors.  For @emph{unordered} factors @math{k -
 1} columns are generated for the indicators of the second, @dots{},
-@math{k}th levels of the factor. (Thus the implicit parameterization is
+@I{@math{k}-th} levels of the factor. (Thus the implicit parameterization is
 to contrast the response at each level with that at the first.)  For
 @emph{ordered} factors the @math{k - 1} columns are the orthogonal
 polynomials on @math{1, @dots{}, k}, omitting the constant term.
@@ -4815,7 +4815,7 @@ Nelder} (1989) or @I{Dobson} (1990).
 @cindex Families
 
 The class of generalized linear models handled by facilities supplied in
-@R{} includes @emph{gaussian}, @emph{binomial}, @emph{poisson},
+@R{} includes @emph{gaussian}, @emph{binomial}, @emph{@I{poisson}},
 @emph{inverse gaussian} and @emph{gamma} response distributions and also
 @emph{quasi-likelihood} models where the response distribution is not
 explicitly specified.  In the latter case the @emph{variance function}
@@ -4923,7 +4923,7 @@ for blindness and the results recorded.  The data is shown below:
 @end ifnottex
 
 The problem we consider is to fit both logistic and probit models to
-this data, and to estimate for each model the LD50, that is the age at
+this data, and to estimate for each model the @I{LD50}, that is the age at
 which the chance of blindness for a male inhabitant is 50%.
 
 If @math{y} is the number of blind at age @math{x} and @math{n} the
@@ -4941,7 +4941,7 @@ is the standard normal distribution function, and in the logit case
 @eqn{F(z) = e^z/(1+e^z),F(z) = e^z/(1+e^z)}.
 In both cases the @I{LD50} is
 @ifnottex
-LD50 = - beta_0/beta_1
+@I{LD50} = - beta_0/beta_1
 @end ifnottex
 @tex
 $$ \hbox{LD50} = -\beta_0/\beta_1 $$
@@ -4996,7 +4996,7 @@ second call.  To see the results of each fit we could use
 > summary(fml)
 @end example
 
-Both models fit (all too) well.  To find the LD50 estimate we can use a
+Both models fit (all too) well.  To find the @I{LD50} estimate we can use a
 simple function:
 
 @example
@@ -5032,7 +5032,7 @@ example:
 For all families the variance of the response will depend on the mean
 and will have the scale parameter as a multiplier.  The form of
 dependence of the variance on the mean is a characteristic of the
-response distribution; for example for the poisson distribution
+response distribution; for example for the Poisson distribution
 @eqn{\hbox{Var}[y] = \mu,Var(y) = mu}.
 
 For quasi-likelihood estimation and inference the precise response
@@ -5232,7 +5232,7 @@ We pick sensible starting values and do the fit:
 @noindent
 After the fitting, @code{out$minimum} is the negative log-likelihood,
 and @code{out$estimate} are the maximum likelihood estimates of the
-parameters.  To obtain the approximate SEs of the estimates we do:
+parameters.  To obtain the approximate @abbr{SE}s of the estimates we do:
 
 @example
 > sqrt(diag(solve(out$hessian)))
@@ -5455,7 +5455,7 @@ against every other column of @code{X} and the resulting @math{n(n-1)}
 plots are arranged in a matrix with plot scales constant over the rows
 and columns of the matrix.
 
-When three or four variables are involved a @emph{coplot} may be more
+When three or four variables are involved a @emph{@I{coplot}} may be more
 enlightening.  If @code{a} and @code{b} are numeric vectors and @code{c}
 is a numeric vector or factor object (all of the same length), then
 the command
@@ -5491,7 +5491,7 @@ appears in each panel.  The default is @code{points()} to produce a
 scatterplot but by supplying some other low-level graphics function of
 two vectors @code{x} and @code{y} as the value of @code{panel=} you can
 produce any type of plot you wish.  An example panel function useful for
-coplots is @code{panel.smooth()}.
+@I{coplots} is @code{panel.smooth()}.
 
 @node Display graphics, Arguments to high-level plotting functions, Displaying multivariate data, High-level plotting commands
 @subsection Display graphics

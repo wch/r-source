@@ -618,7 +618,7 @@ regularly.  All the occurrences we have solved have been traced to
 faulty versions of @samp{msvcrt.dll}: we have installed a workaround
 that seems to avoid this.  A few other people have discovered this was
 caused by desktop switcher and keyboard macro programs, for example
-`Macro Magic' and `JS Pager'.
+`Macro Magic' and `@I{JS Pager}'.
 
 R 4.2 and later use UCRT as the C runtime instead of MSVCRT. No such problems have
 been reported so far.
@@ -654,7 +654,7 @@ system in question: it makes changes to the floating point control word
 which are incompatible with R.  (Good practice would restore the control
 word to the state it was in when the driver code was called, and R
 tries hard to correct this before running its own code.)  For example,
-one user reported that the virtual screen manager JSP2 caused this
+one user reported that the virtual screen manager @I{JSP2} caused this
 crash. These errors are essentially impossible for us to fix or work around
 beyond the measures already taken.  The only solution we know of is for
 the user to replace the buggy system component that is causing the
@@ -704,7 +704,7 @@ Vista and later normally disable the Administrator account and expect
 software installation to be done by an account which is in the local
 Administrator group with `admin approval mode' turned on.  (The
 Administrator account by default has it turned off.)  Unlike (say)
-Windows XP, such accounts do not run programs with full administrator
+@I{Windows XP}, such accounts do not run programs with full administrator
 privileges, and this is where the issues arise.  These OSes have the
 concept of `over-the-shoulder' credentials: if you are running without
 full administrator privileges and do something which needs them you may
@@ -938,7 +938,7 @@ This has often been reported after an upgrade.
 The R installer does not put @command{Rcmd.exe} (nor any other R
 executable) on your @env{PATH}.  What seems to have happened is that
 people did this for themselves in the past, upgraded R (which by default
-will install to a different location) and un-installed the old version
+will install to a different location) and @I{un-installed} the old version
 of R.  If you do that (or install R for the first time), you need to
 edit the @env{PATH}.
 
@@ -1137,8 +1137,8 @@ to altered (see Q3.3).
 
 In most cases they actually are, but by Windows.  Setting the locale or
 the @code{LANGUAGE} environment variable does not change the Windows
-setting of its `UI language'.  Vista and later talk about the 'UI
-language' and the 'system locale' for setting the language used for
+setting of its `@I{UI language}'.  Vista and later talk about the '@I{UI
+language}' and the 'system locale' for setting the language used for
 `non-Unicode' programs (on the 'Administrative' tab in Windows 7).
 
 If you have Windows running completely in say French or Chinese these
