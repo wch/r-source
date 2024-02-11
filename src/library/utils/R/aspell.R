@@ -429,6 +429,7 @@ aspell_control_R_manuals <-
            "--add-texinfo-ignore=include",
            "--add-texinfo-ignore=ifclear",
            "--add-texinfo-ignore=ifset",
+           "--add-texinfo-ignore=image",
            "--add-texinfo-ignore=key",
            "--add-texinfo-ignore=math",
            "--add-texinfo-ignore=multitable",
@@ -437,10 +438,13 @@ aspell_control_R_manuals <-
            "--add-texinfo-ignore=set",
            "--add-texinfo-ignore=value",
            "--add-texinfo-ignore=vindex",
+           "--add-texinfo-ignore-env=html",
            "--add-texinfo-ignore-env=macro",
            "--add-texinfo-ignore-env=menu",
+           "--add-texinfo-ignore-env=tex",
            "--add-texinfo-ignore=CRANpkg",
            "--add-texinfo-ignore=cputype",
+           "--add-texinfo-ignore=deqn",
            "--add-texinfo-ignore=eqn",
            "--add-texinfo-ignore=pkg",
            character()
@@ -1207,7 +1211,7 @@ function(x, vrbs = c("verbatim", "verbatim*", "Sinput", "Soutput"),
     }
 
     if(length(cmds)) {
-        cmds <- c(cmds, "newcommand pp")
+        cmds <- c(cmds, aspell_filter_LaTeX_commands)
         cmds <- strsplit(trimws(cmds), " +")
         ones <- vapply(cmds, `[[`, "", 1L)
         ## For now always ignore optional arguments.
@@ -1253,6 +1257,37 @@ function(x, vrbs = c("verbatim", "verbatim*", "Sinput", "Soutput"),
     recurse(tools::parseLatex(x, verbatim = vrbs))
     blank_out_character_ranges(x, ranges)
 }
+
+aspell_filter_LaTeX_commands_from_Aspell_tex_filter_info <-
+function(dir) {
+    x <- readLines(file.path(dir, "modules/filter/tex-filter.info"),
+                   encoding = "UTF-8")
+    ## Extract 'OPTION command' block.
+    x <- x[seq.int(which(x == "OPTION command"), length(x))]
+    x <- x[seq.int(1L, which(x == "ENDOPTION")[1L])]
+    ## Extract command defaults.
+    substring(x[startsWith(x, "DEFAULT")], 9L)
+}
+
+aspell_filter_LaTeX_commands <-
+    c("addtocounter pp", "addtolength pp", "alpha p", "arabic p",
+      "fnsymbol p", "roman p", "stepcounter p", "setcounter pp",
+      "usecounter p", "value p", "newcounter po", "refstepcounter p",
+      "label p", "pageref p", "ref p", "newcommand poOP",
+      "renewcommand poOP", "newenvironment poOPP",
+      "renewenvironment poOPP", "newtheorem poPo", "newfont pp",
+      "documentclass op", "usepackage op", "begin po", "end p",
+      "setlength pp", "addtolength pp", "settowidth pp",
+      "settodepth pp", "settoheight pp", "enlargethispage p",
+      "hyphenation p", "pagenumbering p", "pagestyle p", "addvspace p",
+      "framebox ooP", "hspace p", "vspace p", "makebox ooP",
+      "parbox ooopP", "raisebox pooP", "rule opp", "sbox pO",
+      "savebox pooP", "usebox p", "include p", "includeonly p",
+      "input p", "addcontentsline ppP", "addtocontents pP",
+      "fontencoding p", "fontfamily p", "fontseries p", "fontshape p",
+      "fontsize pp", "usefont pppp", "documentstyle op", "cite p",
+      "nocite p", "psfig p", "selectlanguage p", "includegraphics op",
+      "bibitem op", "geometry p")
 
 ## <FIXME>
 ## Try to merge into the Sweave filter.
