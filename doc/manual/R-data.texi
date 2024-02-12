@@ -89,7 +89,7 @@ principal authors of the packages mentioned are
 @I{Guido van Steen}
 
 @item @CRANpkg{foreign}:
-@I{Thomas Lumley},
+@I{Thomas Lumley },
 @I{Saikat DebRoy},
 @I{Douglas Bates},
 @I{Duncan Murdoch} and 
