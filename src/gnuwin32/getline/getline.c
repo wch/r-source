@@ -17,7 +17,7 @@
  *   Edin Hodzic, Eric J Bivona, Kai Uwe Rommel, Danny Quah, Ulrich Betzler
  */
 
- /* Copyright (C) 2018-2023 The R Core Team */
+ /* Copyright (C) 2018-2024 The R Core Team */
 
 #include       "getline.h"
 
@@ -182,6 +182,12 @@ gl_getc(void)
 
     /* Initial version by Guido Masarotto (3/12/98):
          "get Ansi char code from a Win32 console" */
+
+    /* A pending sequence of characters to return, e.g. ANSI, stored
+       in reverse order. Used to emit an ANSI escape sequence. */ 
+    static int seq_buf[128];
+    static int seq_len = 0;
+
     DWORD a;
     INPUT_RECORD r;
     DWORD st;
@@ -190,6 +196,9 @@ gl_getc(void)
     wchar_t high = 0;
     int bbb = 0, nAlt=0, n, hex = 0;
     static int debug_codes = 0;
+
+    if (seq_len > 0)
+	return seq_buf[--seq_len];
 
     c = 0; 
     while (!c) {
@@ -289,9 +298,15 @@ gl_getc(void)
 	    c = '\020';
 	else if (vk == VK_DOWN)
 	    c = '\016';
-	else if (vk == VK_DELETE)
-	    c = '\004';
-	else 
+	else if (vk == VK_DELETE) {
+	    /* Previously mapped to ^D (c = '\004'), but that closes the session
+	       when the input line is empty. */
+	    seq_buf[0] = '~';
+	    seq_buf[1] = '3';
+	    seq_buf[2] = '['; /* CSI */
+	    seq_len = 3;
+	    c = '\033'; /* ESC */
+	} else 
             /* Only characters from BMP obtained this way. */
             c = r.Event.KeyEvent.uChar.UnicodeChar;
       }
@@ -717,7 +732,7 @@ getline(const char *prompt, char *buf, int buflen)
 		  gl_kill(0);
 		  gl_fixup(gl_prompt, -2, BUF_SIZE);
 		break;
-	      case '\004':					/* ^D, VK_DELETE */
+	      case '\004':					/* ^D */
 		if (gl_cnt == 0) {
 		    gl_buf[0] = 0;
 		    gl_cleanup();
@@ -801,6 +816,13 @@ getline(const char *prompt, char *buf, int buflen)
 		        break;
 		    case 'D':                                  /* left */
 			gl_fixup(gl_prompt, -1, gl_pos - gl_edit_unit_size_left());
+			break;
+		    case '3':
+			c = gl_getc();
+			if (c == '~')
+			    gl_del(0);                         /* VK_DELETE */
+			else
+			    gl_putc('\007');
 			break;
 		    default: gl_putc('\007');                  /* who knows */
 		        break;
