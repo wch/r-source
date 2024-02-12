@@ -427,15 +427,16 @@
       \samp{error} turns this warning into an error (so by default gives
       a traceback), value \samp{traceback} gives a tracebeck in a
       message (not a warning, as that may truncate) and value
-      \code{"where"} gives the call to the function (if any) calling
-      \code{is.R} and which namespace it is from.
+      \samp{where} gives the call to the function (if any) calling
+      \code{is.R} and which namespace it is from.  Value \samp{self} is
+      a variant of \samp{where} for use by \command{R CMD check --as-cran}.
     }
   }
 
   \subsection{BUG FIXES}{
     \itemize{
-      \item The methods package is more robust to not being attached to
-      the search path. More work needs to be done.
+      \item The \pkg{methods} package is more robust to not being attached to
+      the search path.  More work needs to be done.
 
       \item \code{pairwise.t.test()} misbehaved when subgroups had 0 DF
       for variance, even with \code{pool.sd = TRUE}.  (\PR{18594} by

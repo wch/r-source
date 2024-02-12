@@ -71,7 +71,8 @@ is.R <- function() {
             ## warning(<condition>) does not support immediate. = TRUE
             op <- getOption("warn")
             if(op == 0L) options(warn = 1L)
-            warning(warningCondition(msg, class = "deprecatedWarning"))
+            warning(warningCondition(msg, class = "deprecatedWarning",
+                                     call = sys.call(sys.parent())))
             if(op == 0L) options(warn = op)
         }
         msg <- paste0(gettextf("'%s' is deprecated.\n", "is.R"),
@@ -117,8 +118,7 @@ is.R <- function() {
                 if (isNamespace(env)) {
                     env <- getNamespaceName(env)
                     this <- Sys.getenv("_R_CHECK_PACKAGE_NAME_", "unknown")
-                    ## fails if this is uncommented.
-##                    if (this != env) return(TRUE)
+                    if (this != env) return(TRUE)
                 }
             }
             warn_now(msg)
