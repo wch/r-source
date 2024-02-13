@@ -1,6 +1,6 @@
 % File src/library/base/man/Arithmetic.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2022 R Core Team
+% Copyright 1995-2024 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Arithmetic}
@@ -115,10 +115,10 @@ x \%/\% y
 
   \code{\%\%} and \code{x \%/\% y} can be used for non-integer \code{y},
   e.g.\sspace{}\code{1 \%/\% 0.2}, but the results are subject to representation
-  error and so may be platform-dependent.  Because the \abbr{IEC} 60559
+  error and so may be platform-dependent.  Mathematically, the answer to
+  \code{1 \%/\% 0.2} should be \code{5}, but because the \abbr{IEC} 60559
   representation of \code{0.2} is a binary fraction slightly larger than
-  \code{0.2}, the answer to \code{1 \%/\% 0.2} should be \code{4} but
-  most platforms give \code{5}.
+  \code{0.2} most platforms give \code{4}.
 
   Users are sometimes surprised by the value returned, for example why
   \code{(-8)^(1/3)} is \code{NaN}.  For \link{double} inputs, \R makes
@@ -218,5 +218,9 @@ x \%\%  3 # is periodic  2 0  1  2 0  1 ...
 x \%\% -3 #  (ditto)    -1 0 -2 -1 0 -2 ...
 x \%/\% 5
 x \%\% Inf # now is defined by limit (gave NaN in earlier versions of R)
+\dontshow{## IGNORE_RDIFF_BEGIN}
+## Illustrating PR#18677, see above
+1 \%/\% print(0.2, digits=19)
+\dontshow{## IGNORE_RDIFF_END}
 }
 \keyword{arith}
