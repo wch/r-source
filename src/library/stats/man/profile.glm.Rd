@@ -40,7 +40,7 @@
   element for each parameter being profiled.  The elements are
   data-frames with two variables
   \item{par.vals}{a matrix of parameter values for each fitted model.}
-  \item{tau}{the profile z-statistics.}
+  \item{tau or z}{the profile t or z-statistics (the name depends on whether  there is an estimated dispersion parameter.)}
 }
 \details{
   The profile z-statistic is defined either as (case \code{test = "LRT"}) the square root of change in
