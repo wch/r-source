@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997--2023  The R Core Team
+ *  Copyright (C) 1997--2024  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -769,7 +769,7 @@ attribute_hidden SEXP do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 			    (slen > 1 && strncmp(bufp, split, slen))) continue;
 			if (slen) {
 			    if (bufp > laststart)
-				strncpy(pt, laststart, bufp - laststart);
+				memcpy(pt, laststart, bufp - laststart);
 			    pt[bufp - laststart] = '\0';
 			} else {
 			    pt[0] = *bufp; pt[1] ='\0';
