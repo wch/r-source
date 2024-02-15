@@ -348,7 +348,7 @@ processRdChunk <- function(code, stage, options, env, macros)
 	                           stage2 = FALSE, stage3 = FALSE)
 	    }
 	} else if (options$results == "text")
-	    res <- tagged(err, "TEXT")
+	    res <- tagged(enc2utf8(as.character(err)), "TEXT")
 	else if (options$results == "hide" || !length(res))
 	    res <- tagged("", "COMMENT")
 	else { ## if (length(res)) 
