@@ -1,6 +1,6 @@
 % File src/library/base/man/Control.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2023 R Core Team
+% Copyright 1995-2024 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Control}
@@ -71,7 +71,8 @@ x \%||\% y
   but this will not affect the next iteration.  When the loop terminates,
   \code{var} remains as a variable containing its latest value.
 
-  \code{x \%||\% y} is a simple 1-line function, an idiomatic way to call
+  The null coalescing operator \code{\%||\%} is a simple 1-line function:
+  \code{x \%||\% y} is an idiomatic way to call
   \preformatted{
     if (is.null(x)) y else x
                              # or equivalently, of course,

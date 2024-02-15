@@ -1182,6 +1182,8 @@ below.
 @tab Kronecker product, binary
 @item @code{%in%}
 @tab Matching operator, binary (in model formulae: nesting)
+@item @code{%||%}
+@tab Null coalescing operator, binary
 @item @code{<}
 @tab Less than, binary
 @item @code{>}
@@ -4506,10 +4508,10 @@ string of characters delimited by the @samp{%} character.  The string
 can contain any printable character except @samp{%}.  The escape sequences
 for strings do not apply here.
 
-Note that the following operators are predefined
+Note that the following operators are predefined:
 
 @example
-%% %*% %/% %in% %o% %x%
+%% %*% %/% %in% %o% %x% %||%
 @end example
 
 @c  @node Special symbols, Separators, Special operators, Tokens
