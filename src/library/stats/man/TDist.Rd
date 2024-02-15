@@ -92,7 +92,7 @@ rt(n, df, ncp)
   degrees of freedom and \bold{n}on-\bold{c}entrality \bold{p}arameter
   \code{ncp}\eqn{{} = (\mu - \mu_0) \sqrt{n}/\sigma}{ = (\mu - m0) * sqrt(n)/\sigma}.
 
-  The \eqn{t} distribution's cumulative distribution function (cdf),
+  The \eqn{t} distribution's cumulative distribution function (\abbr{cdf}),
   \eqn{F_{\nu}}{F_n} fulfills
   \eqn{F_{\nu}(t) =    \frac 1 2 I_x(\frac{\nu}{2}, \frac 1 2),}{F_{n}(t) =     I_x(n/2, 1/2) / 2,}  for \eqn{t \le 0}, and
   \eqn{F_{\nu}(t) = 1- \frac 1 2 I_x(\frac{\nu}{2}, \frac 1 2),}{F_{n}(t) = 1 - I_x(n/2, 1/2) / 2,}  for \eqn{t \ge 0},

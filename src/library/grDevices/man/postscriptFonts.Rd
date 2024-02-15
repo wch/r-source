@@ -3,6 +3,8 @@
 % Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{postscriptFonts}
 \alias{postscriptFonts}
 \alias{pdfFonts}
@@ -60,7 +62,7 @@ pdfFonts(\dots)
   \code{"NimbusRom"} (synonym \code{"URWTimes"}).
 
   There are also mappings for \code{"ComputerModern"},
-  \code{"ComputerModernItalic"} and \code{"ArialMT"} (Monotype Arial).
+  \code{"ComputerModernItalic"} and \code{"ArialMT"} (\I{Monotype} Arial).
 
   Finally, there are some default mappings for East Asian locales
   described in a separate section.
@@ -99,15 +101,15 @@ pdfFonts(\dots)
     Japan1 (PDF) \tab \code{KozMinPro-Regular-Acro}\cr \tab from Adobe Reader 7.0 Japanese Font Pack\cr
     Japan1HeiMin (PS) \tab \code{HeiseiMin-W3}\cr \tab Linotype Japanese printer font\cr
     Japan1HeiMin (PDF) \tab \code{HeiseiMin-W3-Acro}\cr \tab from Adobe Reader 7.0 Japanese Font Pack\cr
-    Japan1GothicBBB \tab \code{GothicBBB-Medium}\cr \tab Japanese-market PostScript printer font\cr
-    Japan1Ryumin \tab \code{Ryumin-Light}\cr \tab Japanese-market PostScript printer font\cr
-    Korea1 (PS) \tab \code{Baekmuk-Batang}\cr  \tab TrueType font found on some Linux systems\cr
+    \I{Japan1GothicBBB} \tab \code{GothicBBB-Medium}\cr \tab Japanese-market PostScript printer font\cr
+    \I{Japan1Ryumin} \tab \code{Ryumin-Light}\cr \tab Japanese-market PostScript printer font\cr
+    Korea1 (PS) \tab \code{Baekmuk-Batang}\cr  \tab \I{TrueType} font found on some Linux systems\cr
     Korea1 (PDF) \tab \code{HYSMyeongJoStd-Medium-Acro}\cr  \tab from Adobe Reader 7.0 Korean Font Pack\cr
-    Korea1deb (PS) \tab \code{Batang-Regular}\cr  \tab another name for Baekmuk-Batang\cr
+    Korea1deb (PS) \tab \code{Batang-Regular}\cr  \tab another name for \I{Baekmuk-Batang}\cr
     Korea1deb (PDF) \tab \code{HYGothic-Medium-Acro}\cr  \tab from Adobe Reader 4.0 Korean Font Pack\cr
-    GB1 (PS) \tab \code{BousungEG-Light-GB}\cr  \tab TrueType font found on some Linux systems\cr
+    GB1 (PS) \tab \code{BousungEG-Light-GB}\cr  \tab \I{TrueType} font found on some Linux systems\cr
     GB1 (PDF) \tab \code{STSong-Light-Acro}\cr  \tab from Adobe Reader 7.0 Simplified Chinese Font Pack\cr
-    CNS1 (PS) \tab \code{MOESung-Regular}\cr \tab Ken Lunde's \abbr{CJKV} resources\cr
+    CNS1 (PS) \tab \code{MOESung-Regular}\cr \tab \I{Ken Lunde}'s \abbr{CJKV} resources\cr
     CNS1 (PDF) \tab \code{MSungStd-Light-Acro}\cr  \tab from Adobe Reader 7.0 Traditional Chinese Font Pack\cr
   }
 %  \code{Baekmuk-Batang} was found at \url{ftp://ftp.mizi.com/pub/baekmuk/}.
@@ -117,12 +119,12 @@ pdfFonts(\dots)
   %% \url{ftp://ftp.oreilly.com/pub/examples/nutshell/cjkv/adobe/samples/}.
   These will need to be installed or otherwise made available to the
   PostScript/PDF interpreter such as Ghostscript (and not all
-  interpreters can handle TrueType fonts).
+  interpreters can handle \I{TrueType} fonts).
 
   You may well find that your postscript/PDF interpreters has been set
   up to provide aliases for many of these fonts.  For example,
   Ghostscript on Windows can optionally be installed to map common East
-  Asian fonts names to Windows TrueType fonts.  (You may want to add the
+  Asian fonts names to Windows \I{TrueType} fonts.  (You may want to add the
   \code{-Acro} versions as well.)
 
   Adding a mapping for a CID-keyed font is for gurus only.

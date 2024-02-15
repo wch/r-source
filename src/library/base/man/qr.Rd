@@ -3,6 +3,8 @@
 % Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{qr}
 \alias{qr}
 \alias{qr.default}
@@ -99,12 +101,12 @@ as.qr(x)
 \value{
   The QR decomposition of the matrix as computed by LINPACK(*) or LAPACK.
   The components in the returned value correspond directly
-  to the values returned by DQRDC(2)/DGEQP3/ZGEQP3.
+  to the values returned by \I{DQRDC}(2)/\I{DGEQP3}/\I{ZGEQP3}.
   \item{qr}{a matrix with the same dimensions as \code{x}.
     The upper triangle contains the \eqn{\bold{R}} of the decomposition
     and the lower triangle contains information on the \eqn{\bold{Q}} of
     the decomposition (stored in compact form).  Note that the storage
-    used by DQRDC and DGEQP3 differs.}
+    used by \I{DQRDC} and \I{DGEQP3} differs.}
   \item{qraux}{a vector of length \code{ncol(x)} which contains
     additional information on \eqn{\bold{Q}}.}
   \item{rank}{the rank of \code{x} as computed by the decomposition(*):
@@ -117,7 +119,7 @@ as.qr(x)
 }
 \note{
   To compute the determinant of a matrix (do you \emph{really} need it?),
-  the QR decomposition is much more efficient than using Eigen values
+  the QR decomposition is much more efficient than using eigenvalues
   (\code{\link{eigen}}).  See \code{\link{det}}.
 
   Using LAPACK (including in the complex case) uses column pivoting and

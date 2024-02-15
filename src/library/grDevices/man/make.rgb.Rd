@@ -38,7 +38,7 @@ colorConverter(toXYZ, fromXYZ, name, white = NULL, vectorized = FALSE)
   blue primaries.  These are given as vectors of length 2 or 3 in xyY
   coordinates (the Y component is not used and may be omitted).
   The chromaticities are defined relative to a reference white, which
-  must be one of the CIE standard illuminants: "A", "B", "C",
+  must be one of the \I{CIE} standard illuminants: "A", "B", "C",
   "D50", "D55", "D60", "E" (usually "D65").
 
   The display gamma is most commonly 2.2, though 1.8 is used for Apple RGB.

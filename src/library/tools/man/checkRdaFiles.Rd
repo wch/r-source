@@ -61,7 +61,7 @@ resaveRdaFiles(paths, compress = c("auto", "gzip", "bzip2", "xz"),
     \R).}
   \item{version}{integer: positive with the version(s) of the
     \code{\link{save}()}, see there on which versions have been default in
-    which versions of \R, and \code{NA} for non-Rda files.}
+    which versions of \R, and \code{NA} for non-\abbr{Rda} files.}
 }
 \examples{\dontrun{
 ## from a package top-level source directory

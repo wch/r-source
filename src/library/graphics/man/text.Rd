@@ -3,6 +3,8 @@
 % Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{text}
 \title{Add Text to a Plot}
 \encoding{UTF-8}
@@ -63,7 +65,7 @@ text(x, \dots)
   \code{\link{expression}} (or be coercible to such a type).
   In the latter case, quite a bit of
   mathematical notation is available such as sub- and superscripts,
-  greek letters, fractions, etc.
+  Greek letters, fractions, etc.
 
   \code{adj} allows \emph{adj}ustment of the text position with respect to
   \code{(x, y)}.
@@ -116,7 +118,7 @@ text(x, \dots)
   What happens when \code{font = 5} (the symbol font) is selected can be
   both device- and locale-dependent.  Most often \code{labels} will be
   interpreted in the Adobe symbol encoding, so e.g.\sspace{}\code{"d"}
-  is delta, and \code{"\300"} is aleph.
+  is delta, and \code{"\300"} is \I{aleph}.
 }
 \section{Euro symbol}{
   The Euro symbol may not be available in older fonts.  In current

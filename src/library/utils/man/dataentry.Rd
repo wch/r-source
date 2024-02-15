@@ -68,7 +68,7 @@ de(\dots, Modes = list(), Names = NULL)
   the X11-based implementation under Unix.
 #endif
 #ifdef windows
-  the GraphApp-based implementation under Windows.
+  the \I{GraphApp}-based implementation under Windows.
 #endif
 
   You can navigate around the grid using the cursor keys or by clicking
@@ -78,10 +78,10 @@ de(\dots, Modes = list(), Names = NULL)
   to the rows or columns currently in use.
 
   There are alternative ways to navigate using the keys.  Return and
-  (keypad) Enter and LineFeed all move down. Tab moves right and
+  (keypad) Enter and \I{LineFeed} all move down. Tab moves right and
   Shift-Tab move left.  Home moves to the top left.
 
-  PageDown or Control-F moves down a page, and PageUp or
+  \I{PageDown} or Control-F moves down a page, and PageUp or
   Control-B up by a page.  End will show the last used column and the
   last few rows used (in any column).
 
@@ -96,7 +96,7 @@ de(\dots, Modes = list(), Names = NULL)
   (the default) only letters making up a valid number (including
   \code{-.eE}) are accepted, and entering an invalid edited value (such
   as blank) enters \code{NA} in that cell.  The last entered value can
-  be deleted using the  BackSpace or Del(ete) key.  Only a limited
+  be deleted using the \I{BackSpace} or \I{Del(ete)} key.  Only a limited
   number of characters (currently 29) can be entered in a cell, and if
   necessary only the start or end of the string will be displayed, with the
   omissions indicated by \code{>} or \code{<}.  (The start is shown

@@ -208,7 +208,7 @@ read.delim2(file, header = TRUE, sep = "\t", quote = "\"",
     within R code.
   }
 
-  \item{skipNul}{logical: should nuls be skipped?}
+  \item{skipNul}{logical: should \abbr{NUL}s be skipped?}
 
   \item{\dots}{Further arguments to be passed to \code{read.table}.}
 }
@@ -257,7 +257,7 @@ read.delim2(file, header = TRUE, sep = "\t", quote = "\"",
   column.
 
   Quoted fields with embedded newlines are supported except after a
-  comment character.  Embedded nuls are unsupported: skipping them (with
+  comment character.  Embedded \abbr{NUL}s are unsupported: skipping them (with
   \code{skipNul = TRUE}) may work.
 }
 

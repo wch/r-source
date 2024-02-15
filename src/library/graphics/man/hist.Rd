@@ -96,13 +96,13 @@ hist(x, \dots)
 }
 \details{
   The definition of \emph{histogram} differs by source (with
-  country-specific biases).  \R's default with equi-spaced breaks (also
+  country-specific biases).  \R's default with equispaced breaks (also
   the default) is to plot the counts in the cells defined by
   \code{breaks}.  Thus the height of a rectangle is proportional to
   the number of points falling into the cell, as is the area
   \emph{provided} the breaks are equally-spaced.
 
-  The default with non-equi-spaced breaks is to give
+  The default with non-equispaced breaks is to give
   a plot of area one, in which the \emph{area} of the rectangles is the
   fraction of the data points falling in the cells.
 

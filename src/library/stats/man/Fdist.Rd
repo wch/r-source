@@ -60,7 +60,7 @@ rf(n, df1, df2, ncp)
     (1 + (n1/n2) x)^-(n1 + n2)/2}
   for \eqn{x > 0}.
 
-  The F distribution's cumulative distribution function (cdf),
+  The F distribution's cumulative distribution function (\abbr{cdf}),
   \eqn{F_{\nu_1,\nu_2}}{F_{n1,n2}} fulfills (Abramowitz & Stegun 26.6.2, p.946)
   \eqn{F_{\nu_1,\nu_2}(qF) = 1 - I_x(\nu_2/2, \nu_1/2) = I_{1-x}(\nu_1/2, \nu_2/2),}{%
        F_{n1,n2}(qF)   = 1 - I_x(n2/2, n1/2)   = I_{1-x}(n1/2, n2/2),}  where

@@ -3,6 +3,8 @@
 % Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{png}
 \alias{png}
 \alias{jpeg}
@@ -55,7 +57,7 @@ tiff(filename = "Rplot\%03d.tiff",
   \item{pointsize}{the default pointsize of plotted text, interpreted as
     big points (1/72 inch) at \code{res} \abbr{ppi}.}
   \item{bg}{the initial background colour: can be overridden by setting
-    par("bg").}
+    \code{par("bg")}.}
   \item{quality}{the \sQuote{quality} of the \abbr{JPEG} image, as a
     percentage.  Smaller values will give more compression but also more
     degradation of the image.}
@@ -147,7 +149,7 @@ tiff(filename = "Rplot\%03d.tiff",
   \code{png} will normally use a palette if there are less than 256
   colours on the page, and record a 24-bit RGB file otherwise (or a
   32-bit ARGB file if \code{type = "cairo"} and non-opaque colours are
-  used).  However, \code{type = "cairo-png"} uses cairographics' \abbr{PNG}
+  used).  However, \code{type = "cairo-png"} uses \I{cairographics}' \abbr{PNG}
   backend which will never use a palette and normally creates a larger
   32-bit ARGB file---this may work better for specialist uses with
   semi-transparent colours.
@@ -186,7 +188,7 @@ tiff(filename = "Rplot\%03d.tiff",
     compiled with suitable support, using Apple's Quartz plotting
     system.
 
-    \item Where support has been compiled in for cairographics, plotting
+    \item Where support has been compiled in for \I{cairographics}, plotting
     on cairo surfaces.  This may use the native platform support for
     fonts, or it may use \code{fontconfig} to support a wide range of
     font formats.
@@ -232,7 +234,7 @@ tiff(filename = "Rplot\%03d.tiff",
 
   \code{\link{bitmap}} provides an alternative way to generate plots in many
   bitmap formats that does not depend on accessing the X11 display but does
-  depend on having GhostScript installed.
+  depend on having \I{GhostScript} installed.
 
   Ways to write raster images to bitmap formats are available in
   packages \CRANpkg{jpeg}, \CRANpkg{png} and \CRANpkg{tiff}.

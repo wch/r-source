@@ -95,7 +95,7 @@ merge(x, y, \dots)
   gives a \emph{natural join}, a special case of an \emph{inner
   join}. Specifying \code{all.x = TRUE} gives a \emph{left (outer)
   join}, \code{all.y = TRUE} a \emph{right (outer) join}, and both
-  (\code{all = TRUE}) a \emph{(full) outer join}.  DBMSes do not match
+  (\code{all = TRUE}) a \emph{(full) outer join}.  \abbr{DBMS}es do not match
   \code{NULL} records, equivalent to \code{incomparables = NA} in \R.
 }
 

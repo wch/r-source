@@ -38,7 +38,7 @@ ecdf(x)
 \description{
   Compute an empirical cumulative distribution function, with several
   methods for plotting, printing and computing with such an
-  \dQuote{ecdf} object.
+  \dQuote{\abbr{ecdf}} object.
 }
 \details{
   The e.c.d.f. (empirical cumulative distribution function)

@@ -3,6 +3,8 @@
 % Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{gettext}
 \title{Translate Text Messages}
 \alias{gettext}
@@ -82,7 +84,7 @@ Sys.setLanguage(lang, unset = "en")
 
   \code{ngettext} is used where the message needs to vary by a single
   integer.  Translating such messages is subject to very specific rules
-  for different languages: see the GNU Gettext Manual.  The string
+  for different languages: see the GNU \I{Gettext} Manual.  The string
   will often contain a single instance of \code{\%d} to be used in
   \code{\link{sprintf}}.  If English is used, \code{msg1} is returned if
   \code{n == 1} and \code{msg2} in all other cases.

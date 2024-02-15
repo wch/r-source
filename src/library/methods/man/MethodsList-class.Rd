@@ -7,7 +7,7 @@
 \alias{MethodsList-class}
 \alias{body<-,MethodDefinition-method}
 \docType{class}
-\title{Class MethodsList, Defunct Representation of Methods }
+\title{Class \code{"MethodsList"}, Defunct Representation of Methods }
 \description{ This class of objects was used in the original
   implementation of the package to control method dispatch.  Its use
   is now defunct, but object appear as the default method slot in

@@ -3,6 +3,8 @@
 % Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{grid.bezier}
 \alias{grid.bezier}
 \alias{bezierGrob}
@@ -45,7 +47,7 @@ bezierGrob(x = c(0, 0.5, 1, 0.5), y = c(0.5, 1, 0.5, 0),
   A grob object.
 }
 \details{
-  Both functions create a beziergrob (a graphical object describing a
+  Both functions create a \I{beziergrob} (a graphical object describing a
   Bezier curve), but only \code{grid.bezier}
   draws the Bezier curve.
 

@@ -20,7 +20,7 @@ lag.plot(x, lags = 1, layout = NULL, set.lags = 1:lags,
 }
 \arguments{
   \item{x}{time-series (univariate or multivariate)}
-  \item{lags}{number of lag plots desired, see arg \code{set.lags}.}
+  \item{lags}{number of lag plots desired, see argument \code{set.lags}.}
   \item{layout}{the layout of multiple plots, basically the \code{mfrow}
     \code{\link{par}()} argument.  The default uses about a square
     layout (see \code{\link{n2mfrow}}) such that all plots are on one page.}

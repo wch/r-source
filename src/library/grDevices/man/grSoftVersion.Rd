@@ -18,9 +18,9 @@ grSoftVersion()
 \value{
   A named character vector containing at least the elements
 
-  \item{cairo}{the version of cairographics in use, or \code{""} if
-    cairographics is not available.}
-  \item{cairoFT}{the FreeType/FontConfig versions if cairographics is
+  \item{cairo}{the version of \I{cairographics} in use, or \code{""} if
+    \I{cairographics} is not available.}
+  \item{cairoFT}{the \I{FreeType}/\I{FontConfig} versions if \I{cairographics} is
     using those libraries directly (not \emph{via} \I{pango}); otherwise,
     \code{""}.  Earlier versions of \R returned \code{"yes"} rather than
     the versions.  The FontConfig version is determined when \R is built.}
@@ -38,7 +38,7 @@ grSoftVersion()
     not available.}
 
   It is conceivable but unlikely that the cairo-based bitmap devices
-  will use different versions linked \emph{via} cairographics,
+  will use different versions linked \emph{via} \I{cairographics},
   especially \code{png(type = "cairo-png")}.
 
   On macOS, if available, the Quartz-based devices will use the system

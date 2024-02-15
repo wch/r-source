@@ -31,7 +31,8 @@ writeLines(text, con = stdout(), sep = "\n", useBytes = FALSE)
 
   Normally \code{writeLines} is used with a text-mode  connection, and the
   default separator is converted to the normal separator for that
-  platform (LF on Unix/Linux, CRLF on Windows).  For more control, open
+  platform (\abbr{LF} on Unix/Linux, \abbr{CRLF} on Windows).  For more
+  control, open 
   a binary connection and specify the precise value you want written to
   the file in \code{sep}.  For even more control, use
   \code{\link{writeChar}} on a binary connection.

@@ -3,6 +3,8 @@
 % Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{dev2bitmap}
 \alias{dev2bitmap}
 \alias{bitmap}
@@ -48,7 +50,7 @@ dev2bitmap(file, type = "png16m", height = 7, width = 7, res = 72,
 
   You will need \code{ghostscript}: the full path to the executable can
   be set by the environment variable \env{R_GSCMD}. If this is unset, a
-  GhostScript executable will be looked for by name on your path: on a
+  \I{GhostScript} executable will be looked for by name on your path: on a
   Unix alike \code{"gs"} is used, and on Windows the setting of the
   environment variable \env{GSC} is used, otherwise commands
   \code{"gswi64c.exe"} then \code{"gswin32c.exe"} are tried.

@@ -73,7 +73,7 @@
     \code{x \%+-\% y}   \tab x plus or minus y \cr
     \code{x \%/\% y}   \tab x divided by y \cr
     \code{x \%*\% y}   \tab x times y \cr
-    \code{x \%.\% y}   \tab x cdot y \cr
+    \code{x \%.\% y}   \tab x \I{cdot} y \cr
     \code{x[i]}   \tab x subscript i \cr
     \code{x^2}    \tab x superscript 2 \cr
     \code{paste(x, y, z)} \tab juxtapose x, y, and z \cr
@@ -94,7 +94,7 @@
     \code{plain(x)}   \tab draw x in normal font \cr
     \code{bold(x)}   \tab draw x in bold font \cr
     \code{italic(x)}   \tab draw x in italic font \cr
-    \code{bolditalic(x)} \tab draw x in bolditalic font \cr
+    \code{bolditalic(x)} \tab draw x in bold italic font \cr
     \code{symbol(x)} \tab draw x in symbol font \cr
     \code{list(x, y, z)} \tab comma-separated list \cr
     \code{...}    \tab ellipsis (height varies) \cr
@@ -179,7 +179,7 @@
   The symbol font uses Adobe Symbol encoding so, for example, a lower
   case mu can be obtained either by the special symbol \code{mu} or by
   \code{symbol("m")}.  This provides access to symbols that have no
-  special symbol name, for example, the universal, or forall, symbol is
+  special symbol name, for example, the universal, or \I{forall}, symbol is
   \code{symbol("\\042")}.  To see what symbols are available in this way
   use \code{TestChars(font=5)} as given in the examples for
   \code{\link{points}}: some are only available on some devices.

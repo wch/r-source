@@ -3,6 +3,8 @@
 % Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{x11}
 \title{X Window System Graphics (X11)}
 \alias{x11}
@@ -29,7 +31,7 @@
       \code{x11} is recognized as a synonym for \code{X11}.
 
       The \R function is a wrapper for two devices, one based on Xlib
-      (\url{https://en.wikipedia.org/wiki/Xlib}) and one using cairographics
+      (\url{https://en.wikipedia.org/wiki/Xlib}) and one using \I{cairographics}
       (\url{https://www.cairographics.org}).}
   }
 }
@@ -93,7 +95,7 @@ X11.options(\dots, reset = FALSE)
   \item{type}{character string, one of \code{"Xlib"}, \code{"cairo"},
     \code{"nbcairo"} or \code{"dbcairo"}.  Only the first will be
     available if the system was compiled without support for
-    cairographics.  The default is \code{"cairo"} where \R was built
+    \I{cairographics}.  The default is \code{"cairo"} where \R was built
     using \code{pangocairo} (often not the case on macOS), otherwise
     \code{"Xlib"}.}
 
@@ -151,7 +153,7 @@ X11.options(\dots, reset = FALSE)
   Which version will be fastest depends on the X11 connection and the
   type of plotting.  You will probably want to use a buffered type
   unless backing store is in use on the X server (which for example it
-  always is on the \code{x86_64} macOS XQuartz server), as otherwise
+  always is on the \code{x86_64} macOS \I{XQuartz} server), as otherwise
   repainting when the window is exposed will be slow.  On slow
   connections \code{type = "dbcairo"} will probably give the best
   performance.
@@ -206,7 +208,7 @@ X11.options(\dots, reset = FALSE)
 }
 
 \section{Cairo Fonts}{
-  The cairographics-based devices work directly with font family names
+  The \I{cairographics}-based devices work directly with font family names
   such as \code{"Helvetica"} which can be selected initially by the
   \code{family} argument and subsequently by \code{\link{par}} or
   \code{\link{gpar}}.  There are mappings for the three
@@ -222,11 +224,11 @@ X11.options(\dots, reset = FALSE)
   normally allows some tracing of the selection process.
 
   This works best when high-quality scalable fonts are installed,
-  usually in Type 1 or TrueType formats: see the
+  usually in Type 1 or \I{TrueType} formats: see the
   \sQuote{R Installation and Administration} manual for advice on how to
   obtain and install such fonts.
   At present the best rendering (including using kerning)
-  will be achieved with TrueType fonts: see
+  will be achieved with \I{TrueType} fonts: see
   \url{https://www.freedesktop.org/software/fontconfig/fontconfig-user.html}
   for ways to set up your system to prefer them.  The default family
   (\code{"Helvetica"}) is likely not to use kerning: alternatives which
@@ -320,19 +322,19 @@ If that shows \code{symbol.ttf} that may be the Wine symbol font -- use
 
   % A test in 2011 showed that cairo >= 1.6 works on 8-bit visuals,
   % but does not interpret colours correctly.  Done via VNC.
-  The cairographics-based devices most likely only work (or work
-  correctly) with \sQuote{TrueColor} visuals, although in principle this
+  The \I{cairographics}-based devices most likely only work (or work
+  correctly) with \sQuote{\I{TrueColor}} visuals, although in principle this
   depends on the cairo installation: a warning is given if any other
   visual is encountered.
 
-  \code{type = "Xlib"} supports \sQuote{TrueColor},
-  \sQuote{PseudoColor}, \sQuote{GrayScale}, \code{StaticGray} and
-  \code{MonoChrome} visuals: \sQuote{StaticColor} and
-  \sQuote{DirectColor} visuals are handled only in black/white.
+  \code{type = "Xlib"} supports \sQuote{\I{TrueColor}},
+  \sQuote{\I{PseudoColor}}, \sQuote{\I{GrayScale}}, \code{\I{StaticGray}} and
+  \code{MonoChrome} visuals: \sQuote{\I{StaticColor}} and
+  \sQuote{\I{DirectColor}} visuals are handled only in black/white.
 }
 
 \section{Anti-aliasing}{
-  Anti-aliasing is only supported for cairographics-based devices, and
+  Anti-aliasing is only supported for \I{cairographics}-based devices, and
   applies to both graphics and fonts.  It is generally preferable for
   lines and text, but can lead to undesirable effects for fills,
   e.g.\sspace{}for \code{\link{image}} plots, and so is never used for fills.

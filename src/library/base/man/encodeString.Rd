@@ -32,7 +32,7 @@ encodeString(x, width = 0, quote = "", na.encode = TRUE,
 }
 \details{
   This escapes backslash and the control characters \samp{\\a} (bell),
-  \samp{\\b} (backspace), \samp{\\f} (formfeed),
+  \samp{\\b} (backspace), \samp{\\f} (form feed),
   \samp{\\n} (line feed, aka \dQuote{newline}),
   \samp{\\r} (carriage return), \samp{\\t} (tab) and \samp{\\v}
   (vertical tab) as well as any non-printable characters in a

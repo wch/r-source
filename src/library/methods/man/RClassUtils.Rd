@@ -244,7 +244,7 @@ newClassRepresentation(\dots)
     }
 
     \item{\code{makeExtends}:}{
-      Construct an SClassExtension object representing the relationship
+      Construct an \code{"SClassExtension"} object representing the relationship
       from \code{Class} to the class defined by \code{classDef2}. 
     }
 

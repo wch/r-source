@@ -6,7 +6,7 @@
 \name{Rtangle}
 \alias{Rtangle}
 \alias{RtangleSetup}
-\title{R Driver for Stangle}
+\title{R Driver for \code{Stangle}}
 \description{
   A driver for \code{\link{Stangle}} that extracts \R code chunks.
   Notably all \code{RtangleSetup()} arguments may be used as arguments

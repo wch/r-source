@@ -21,7 +21,7 @@ readLines(con = stdin(), n = -1L, ok = TRUE, warn = TRUE,
   \item{ok}{logical.  Is it OK to reach the end of the connection before
     \code{n > 0} lines are read?  If not, an error will be generated.}
   \item{warn}{logical.  Warn if a text file is missing a final \abbr{EOL} or if
-    there are embedded nuls in the file.}
+    there are embedded \abbr{NUL}s in the file.}
   \item{encoding}{encoding to be assumed for input strings.  It is
     used to mark character strings as known to be in
     Latin-1, UTF-8 or to be bytes: it is not used to re-encode the input.
@@ -30,7 +30,7 @@ readLines(con = stdin(), n = -1L, ok = TRUE, warn = TRUE,
     via \code{\link{options}(encoding=)}: see the examples
     and \sQuote{Details}.
   }
-  \item{skipNul}{logical: should nuls be skipped?}
+  \item{skipNul}{logical: should \abbr{NUL}s be skipped?}
 }
 \details{
   If the \code{con} is a character string, the function calls
@@ -49,10 +49,11 @@ readLines(con = stdin(), n = -1L, ok = TRUE, warn = TRUE,
   silently.  For all other connections the line will be accepted, with a
   warning.
 
-  Whatever mode the connection is opened in, any of LF, CRLF or CR will
-  be accepted as the \abbr{EOL} marker for a line.
+  Whatever mode the connection is opened in, any of \abbr{LF},
+  \abbr{CRLF} or \abbr{CR} will be accepted as the \abbr{EOL} marker for
+  a line. 
 
-  Embedded nuls in the input stream will terminate the line currently
+  Embedded \abbr{NUL}s in the input stream will terminate the line currently
   being read, with a warning (unless \code{skipNul = TRUE} or \code{warn
     = FALSE}).
 

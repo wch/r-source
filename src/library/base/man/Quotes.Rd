@@ -72,8 +72,8 @@
   These forms will also be used by \code{\link{print.default}}
   when outputting non-printable characters (including backslash).
 
-  Embedded nuls are not allowed in character strings, so using escapes
-  (such as \samp{\\0}) for a nul will result in the string being
+  Embedded \abbr{NUL}s are not allowed in character strings, so using escapes
+  (such as \samp{\\0}) for a \abbr{NUL} will result in the string being
   truncated at that point (usually with a warning).
 
   Raw character constants are also available using a syntax similar to

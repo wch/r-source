@@ -35,16 +35,16 @@ ccf(x, y, lag.max = NULL, type = c("correlation", "covariance"),
 \arguments{
   \item{x, y}{a univariate or multivariate (not \code{ccf}) numeric time
     series object or a numeric vector or matrix, or an \code{"acf"} object.}
-  \item{lag.max}{maximum lag at which to calculate the acf.
+  \item{lag.max}{maximum lag at which to calculate the \abbr{acf}.
     Default is \eqn{10\log_{10}(N/m)}{10*log10(N/m)} where \eqn{N} is the
     number of observations and \eqn{m} the number of series.  Will
     be automatically limited to one less than the number of observations
     in the series.}
-  \item{type}{character string giving the type of acf to be computed.
+  \item{type}{character string giving the type of \abbr{acf} to be computed.
     Allowed values are
     \code{"correlation"} (the default), \code{"covariance"} or
     \code{"partial"}.  Will be partially matched.}
-  \item{plot}{logical. If \code{TRUE} (the default) the acf is plotted.}
+  \item{plot}{logical. If \code{TRUE} (the default) the \abbr{acf} is plotted.}
   \item{na.action}{function to be called to handle missing
     values. \code{na.pass} can be used.}
   \item{demean}{logical.  Should the covariances be about the sample
@@ -59,9 +59,9 @@ ccf(x, y, lag.max = NULL, type = c("correlation", "covariance"),
   elements:
 
   \item{lag}{A three dimensional array containing the lags at which
-    the acf is estimated.}
+    the \abbr{acf} is estimated.}
   \item{acf}{An array with the same dimensions as \code{lag} containing
-    the estimated acf.}
+    the estimated \abbr{acf}.}
   \item{type}{The type of correlation (same as the \code{type}
     argument).}
   \item{n.used}{The number of observations in the time series.}

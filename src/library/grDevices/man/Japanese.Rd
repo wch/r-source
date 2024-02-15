@@ -3,6 +3,8 @@
 % Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{Japanese}
 \alias{Japanese}
 \title{Japanese characters in R}
@@ -15,7 +17,7 @@
   to produce these characters is to use special escape sequences: see
   \code{\link{Hershey}}.
 
-  For example, the Hiragana character for the sound "ka" is produced
+  For example, the Hiragana character for the sound \sQuote{\I{ka}} is produced
   by \samp{\\\\#J242b} and the Katakana character for this sound is
   produced by \samp{\\\\#J252b}.  The Kanji ideograph for "one" is
   produced by \samp{\\\\#J306c} or \samp{\\\\#N0001}.

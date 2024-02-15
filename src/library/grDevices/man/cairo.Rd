@@ -52,7 +52,7 @@ cairo_ps(filename = if(onefile) "Rplots.ps" else "Rplot\%03d.ps",
     the \sQuote{Cairo fonts} section in the help for \code{\link{X11}}.
   }
   \item{bg}{the initial background colour: can be overridden by setting
-    par("bg").}
+    \code{par("bg")}.}
   \item{antialias}{string, the type of anti-aliasing (if any) to be used;
     defaults to \code{"default"}.}
   \item{fallback_resolution}{numeric: the resolution in dpi used when

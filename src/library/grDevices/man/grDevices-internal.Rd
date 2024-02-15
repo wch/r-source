@@ -17,9 +17,9 @@
 \alias{.setPattern}
 \alias{.tilingPattern}
 \alias{.useGroup}
-\title{Internal grDevices Functions}
+\title{Internal \pkg{grDevices} Functions}
 \description{
-  Internal grDevices functions
+  Internal \pkg{grDevices} functions
 }
 \usage{
 .clipPath(fun, rule) 

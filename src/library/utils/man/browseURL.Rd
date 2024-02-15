@@ -53,7 +53,7 @@ browseURL(url, browser = getOption("browser"),
   it, the URL is opened in any already-running browser or a new one if
   necessary.  This mechanism currently is available for browsers which
   support the \code{"-remote openURL(...)"} interface (which includes
-  Mozilla and Opera), Galeon, \I{KDE} konqueror (\emph{via} kfmclient) and
+  Mozilla and Opera), \I{Galeon}, \I{KDE} \I{konqueror} (\emph{via} kfmclient) and
   the GNOME interface to Mozilla. (Firefox has dropped support, but
   defaults to using an already-running browser.)  Note that the type of
   browser is determined from its name, so this mechanism will only be

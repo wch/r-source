@@ -38,8 +38,8 @@ scan(file = "", what = double(), nmax = -1, n = -1, sep = "",
     Alternatively, \code{file} can be a \code{\link{connection}},
     which will be opened if necessary, and if so closed at the end of
     the function call.  Whatever mode the connection is opened in,
-    any of LF, CRLF or CR will be accepted as the \abbr{EOL} marker for a line
-    and so will match \code{sep = "\n"}.
+    any of \abbr{LF}, \abbr{CRLF} or \abbr{CR} will be accepted as the
+    \abbr{EOL} marker for a line and so will match \code{sep = "\n"}.
 
     \code{file} can also be a complete URL.  (For the supported URL
     schemes, see the \sQuote{URLs} section of the help for
@@ -170,7 +170,7 @@ scan(file = "", what = double(), nmax = -1, n = -1, sep = "",
     then data are read from the value of \code{text} via a text connection.
   }
 
-  \item{skipNul}{logical: should nuls be skipped when reading character
+  \item{skipNul}{logical: should \abbr{NUL}s be skipped when reading character
     fields?}
 }
 \details{
@@ -244,7 +244,7 @@ scan(file = "", what = double(), nmax = -1, n = -1, sep = "",
   and declared as such (and the \code{encoding} argument to \code{scan}
   is ignored).  See the examples of \code{\link{readLines}}.
 
-  Embedded nuls in the input stream will terminate the field currently
+  Embedded \abbr{NUL}s in the input stream will terminate the field currently
   being read, with a warning once per call to \code{scan}.  Setting
   \code{skipNul = TRUE} causes them to be ignored.
 }

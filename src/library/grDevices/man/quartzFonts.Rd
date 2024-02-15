@@ -23,7 +23,7 @@ quartzFonts(...)
 }
 \arguments{
   \item{family}{a character vector containing the four PostScript font
-    names for plain, bold, italic, and bolditalic versions of
+    names for plain, bold, italic, and bold italic versions of
     a font family.}
   \item{\dots}{either character strings naming mappings to display,
     or new (named) mappings to define.}

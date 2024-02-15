@@ -3,6 +3,8 @@
 % Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{xgettext}
 \title{Extract Translatable Messages from R Files in a Package}
 \alias{xgettext}
@@ -63,7 +65,7 @@ xgettext2pot(dir, potFile, name = "R", version, bugs)
   and writes a PO template file (to \code{potFile}) for use with the \pkg{GNU Gettext}
   tools.  This ensures that the strings for simple translation are
   unique in the file (as \pkg{GNU Gettext} requires), but does not do so
-  for \code{ngettext} calls (and the rules are not stated in the Gettext
+  for \code{ngettext} calls (and the rules are not stated in the \I{Gettext}
   manual, but \command{msgfmt} complains if there is duplication between
   the sets.).
 

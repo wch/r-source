@@ -128,8 +128,8 @@ nzchar(x, keepNA = FALSE)
   the locale, being one except in some East Asian locales on some OSes
   (notably Windows).
 
-  Control characters are usually given width zero: this includes CR and
-  LF.  Computing the width of a string containing control characters
+  Control characters are usually given width zero: this includes \abbr{CR} and
+  \abbr{LF}.  Computing the width of a string containing control characters
   should be avoided (and may depend on the OS and \R version).
 }
 \references{

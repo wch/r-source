@@ -31,7 +31,7 @@ Hershey
     the outline of each character means that \R can arbitrarily transform
     the characters, which can mean that the vector fonts look better
     for rotated text.
-    \item this implementation was adapted from the GNU libplot library
+    \item this implementation was adapted from the GNU \I{libplot} library
     which provides support for non-ASCII and non-English fonts.  This means
     that it is possible, for example, to produce weird plotting symbols and
     Japanese characters.
@@ -59,17 +59,17 @@ You cannot use mathematical expressions (\code{\link{plotmath}}) with
   }
 
   In the \code{vfont} specification for the \code{text} and
-  \code{contour} functions, the Hershey font is specified by a typeface
-  (e.g., \code{serif} or \code{sans serif}) and a fontindex or
+  \code{contour} functions, the Hershey font is specified by a typefoace
+  (e.g., \code{serif} or \code{sans serif}) and a \I{fontindex} or
   \sQuote{style} (e.g., \code{plain} or \code{italic}). The first
   element of \code{vfont} specifies the typeface and the second element
-  specifies the fontindex.  The first table produced by
+  specifies the \I{fontindex}.  The first table produced by
   \code{demo(Hershey)} shows the character \code{a} produced by each of
   the different fonts.
 
   The available \code{typeface} and \code{fontindex} values are
   available as list components of the variable \code{Hershey}.
-  The allowed pairs for \code{(typeface, fontindex)} are:
+  The allowed pairs for \code{(typeface, \I{fontindex})} are:
 %% This is checked (via max{#}) in FixupVFont() ../../../main/plot.c
 %% The basic "table" really is in  ../../../modules/vfonts/g_fontdb.c
 
@@ -78,9 +78,9 @@ You cannot use mathematical expressions (\code{\link{plotmath}}) with
     serif \tab italic \cr
     serif \tab bold \cr
     serif \tab bold italic \cr
-    serif \tab cyrillic \cr
-    serif \tab oblique cyrillic \cr
-    serif \tab EUC \cr
+    serif \tab \I{cyrillic} \cr
+    serif \tab oblique \I{cyrillic} \cr
+    serif \tab \I{EUC} \cr
     sans serif \tab plain \cr
     sans serif \tab italic \cr
     sans serif \tab bold \cr
@@ -88,9 +88,9 @@ You cannot use mathematical expressions (\code{\link{plotmath}}) with
     script \tab plain \cr
     script \tab italic \cr
     script \tab bold \cr
-    gothic english \tab plain \cr
-    gothic german \tab plain \cr
-    gothic italian \tab plain \cr
+    \I{gothic english}o \tab plain \cr
+    \I{gothic german} \tab plain \cr
+    \I{gothic italian} \tab plain \cr
     serif symbol \tab plain \cr
     serif symbol \tab italic \cr
     serif symbol \tab bold \cr
@@ -120,7 +120,7 @@ You cannot use mathematical expressions (\code{\link{plotmath}}) with
     }
 
     \item{Symbols:}{an entire string of Greek symbols can be produced by
-      selecting the HersheySymbol or HersheySansSymbol family or the
+      selecting the \I{HersheySymbol} or \I{HersheySansSymbol} family or the
       Serif Symbol or Sans Serif Symbol typeface.  To allow Greek
       symbols to be embedded in a string which uses a non-symbol
       typeface, there are a set of symbol escape sequences of the form
@@ -142,7 +142,7 @@ You cannot use mathematical expressions (\code{\link{plotmath}}) with
       are replaced by a dot.)
 
       Several characters are missing, c-cedilla has no cedilla and
-      \sQuote{sharp s} (\samp{U+00DF}, also known as \sQuote{esszett})
+      \sQuote{sharp s} (\samp{U+00DF}, also known as \sQuote{\I{esszett}})
       is rendered as \code{ss}.
     }
 
@@ -154,10 +154,10 @@ You cannot use mathematical expressions (\code{\link{plotmath}}) with
       special character escape sequences.
     }
 
-    \item{Cyrillic Characters:}{cyrillic characters are implemented
+    \item{Cyrillic Characters:}{\I{cyrillic} characters are implemented
       according to the K018-R encoding, and can be used directly in such
       a locale using the Serif typeface and Cyrillic (or Oblique Cyrillic)
-      fontindex.  Alternatively they can be specified via an octal code
+      \I{fontindex}.  Alternatively they can be specified via an octal code
       in the range 300 to 337 for lower case characters or 340 to 377 for
       upper case characters.  The fifth table in \code{demo(Hershey)} shows the
       octal codes for the available Cyrillic characters.
@@ -167,14 +167,14 @@ You cannot use mathematical expressions (\code{\link{plotmath}}) with
     }
 
     \item{Japanese Characters:}{83 Hiragana, 86 Katakana, and 603 Kanji
-      characters are implemented according to the EUC-JP (Extended Unix Code)
+      characters are implemented according to the \I{EUC-JP} (Extended Unix Code)
       encoding. Each character is identified by a unique hexadecimal code.
       The Hiragana characters
       are in the range 0x2421 to 0x2473, Katakana are in the range 0x2521 to
       0x2576, and Kanji are (scattered about) in the range 0x3021 to 0x6d55.
 
-      When using the Serif typeface and EUC
-      fontindex, these characters can be produced by a \emph{pair} of octal
+      When using the Serif typeface and \I{EUC}
+      \I{fontindex}, these characters can be produced by a \emph{pair} of octal
       codes.  Given the hexadecimal code (e.g., 0x2421), take the first two
       digits and add 0x80 and do the same to the second two digits (e.g.,
       0x21 and 0x24 become \I{0xa4} and \I{0xa1}), then convert both to octal (e.g.,
@@ -182,7 +182,7 @@ You cannot use mathematical expressions (\code{\link{plotmath}}) with
       character is produced by \samp{\\244\\241}.
 
       It is also possible to use the hexadecimal code directly.  This works
-      for all non-EUC fonts by specifying an escape sequence of the form
+      for all non-\I{EUC} fonts by specifying an escape sequence of the form
       \samp{\\\\#J1234}.  For example, the first Hiragana character is produced
       by \samp{\\\\#J2421}.
 

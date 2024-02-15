@@ -46,7 +46,7 @@ x \%*\% y
   Wadsworth & Brooks/Cole.
 }
 \seealso{
-  For matrix \emph{cross}products, \code{\link{crossprod}()} and
+  For matrix \emph{cross} products, \code{\link{crossprod}()} and
   \code{tcrossprod()} are typically preferable.
   \code{\link{matrix}}, \code{\link{Arithmetic}}, \code{\link{diag}}.
 }

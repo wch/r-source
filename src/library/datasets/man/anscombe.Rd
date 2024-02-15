@@ -18,7 +18,8 @@
   \tabular{rl}{
     \code{x1} == \code{x2} == \code{x3} \tab the integers 4:14, specially arranged \cr
     \code{x4}             \tab values 8 and 19 \cr
-    \code{y1}, \code{y2}, \code{y3}, \code{y4} \tab numbers in (3, 12.5) with mean 7.5 and sdev 2.03}
+    \code{y1}, \code{y2}, \code{y3}, \code{y4} \tab numbers in (3, 12.5)
+    with mean 7.5 and standard deviation 2.03}
 }
 \source{
   Tufte, Edward R. (1989).

@@ -30,7 +30,7 @@ sigma(object, ...)
 }
 \details{
  The \pkg{stats} package provides the S3 generic, a default method,
- and a method for objects of class "glm".  
+ and a method for objects of class \code{"glm"}. 
  The default method is correct typically for (asymptotically / approximately)
  generalized gaussian (\dQuote{least squares}) problems, since it is
  defined as

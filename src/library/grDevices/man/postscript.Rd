@@ -3,6 +3,8 @@
 % Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{postscript}
 \alias{postscript}
 \alias{.ps.prolog}
@@ -222,7 +224,7 @@ postscript(file = if(onefile) "Rplots.ps" else "Rplot\%03d.ps",
   \code{print.it = TRUE} is used.  Suitable commands to spool a PostScript
   file to a printer can be found in \file{RedMon} suite available from
   \url{http://pages.cs.wisc.edu/~ghost/index.html}.  The command will be
-  run in a minimized window.   GSView 4.x provides \file{gsprint.exe}
+  run in a minimized window.  \I{GSView} 4.x provides \file{gsprint.exe}
   which may be more convenient (it requires Ghostscript version 6.50
   or later).
 }

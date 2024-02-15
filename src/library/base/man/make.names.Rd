@@ -51,7 +51,7 @@ make.names(names, unique = FALSE, allow_ = TRUE)
   work. Use \code{allow_ = FALSE} for back-compatibility.
 
   \code{allow_ = FALSE} is also useful when creating names for export to
-  applications which do not allow underline in names (such as some DBMSes).
+  applications which do not allow underline in names (such as some \abbr{DBMS}es).
 }
 \seealso{
   \code{\link{make.unique}},

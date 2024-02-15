@@ -70,12 +70,12 @@ texi2pdf(file, clean = FALSE, quiet = TRUE,
 #endif
 
 #ifdef windows
-  On Windows the option \code{"texi2dvi"} is normally unset.  The MiKTeX
+  On Windows the option \code{"texi2dvi"} is normally unset.  The \I{MiKTeX}
   command \command{texify.exe} is a suitable choice for \code{texi2dvi},
   and is tried as from \R 3.2.3 if the argument is blank or \code{NULL}
   and a program or script \code{texi2dvi} is not found.
 
-  MiKTeX had a \code{texi2dvi} executable until Sept 2015, but no other
+  \I{MiKTeX} had a \code{texi2dvi} executable until Sept 2015, but no other
   Windows TeX installation that we know of does, so emulation is used on
   e.g.\sspace{}TeXLive installations on Windows.
 #endif
@@ -107,7 +107,7 @@ texi2pdf(file, clean = FALSE, quiet = TRUE,
   such files).
   
   Where supported (\command{texi2dvi} 5.0 and later;
-  \command{texify.exe} from MiKTeX), option \option{--max-iterations=20}
+  \command{texify.exe} from \I{MiKTeX}), option \option{--max-iterations=20}
   is used to avoid infinite retries.
   
   The emulation mode supports \code{quiet = TRUE} from \R 3.2.3 only.

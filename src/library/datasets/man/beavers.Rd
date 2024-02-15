@@ -3,6 +3,8 @@
 % Copyright 1994-9 W. N. Venables and B. D. Ripley
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{beavers}
 \docType{data}
 \alias{beavers}
@@ -15,7 +17,7 @@ beaver2
 }
 \description{
   Reynolds (1994) describes a small part of a study of the long-term
-  temperature dynamics of beaver \emph{Castor canadensis} in
+  temperature dynamics of beaver \emph{\I{Castor canadensis}} in
   north-central Wisconsin.  Body temperature was measured by telemetry
   every 10 minutes for four females, but data from a one period of
   less than a day for each of two animals is used there.

@@ -3,6 +3,8 @@
 % Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{png}
 \alias{png}
 \alias{jpeg}
@@ -55,26 +57,26 @@ tiff(filename = "Rplot\%03d.tif",
     given.  Can be \code{px} (pixels, the default), \code{in} (inches),
     \code{cm} or \code{mm}.}
   \item{pointsize}{the default pointsize of plotted text, interpreted as
-    big points (1/72 inch) at \code{res} ppi.}
+    big points (1/72 inch) at \code{res} \abbr{ppi}.}
   \item{bg}{the initial background colour: can be overridden by setting
-    par("bg").}
+    \code{par("bg")}.}
   \item{quality}{the \sQuote{quality} of the \abbr{JPEG} image, as a
     percentage.  Smaller values will give more compression but also more
     degradation of the image.}
    \item{compression}{the type of compression to be used.  Can also be a
      numeric value supported by the underlying \code{libtiff} library :
      see its \file{tiff.h} header file.}
-  \item{res}{The nominal resolution in ppi which will be recorded in the
+  \item{res}{The nominal resolution in \abbr{ppi} which will be recorded in the
     bitmap file, if a positive integer.  Also used for units other than
-    the default.  If not specified, taken as 72 ppi to set the size of
+    the default.  If not specified, taken as 72 \abbr{ppi} to set the size of
     text and line widths.}
   \item{family}{A length-one character vector specifying the default
     font family.  The default means to use the font numbers on the
-    Windows \abbr{GDI} versions and \code{"sans"} on the cairographics
+    Windows \abbr{GDI} versions and \code{"sans"} on the \I{cairographics}
     versions.}
   \item{restoreConsole}{See the \sQuote{Details} section of
     \code{\link{windows}}.  For \code{type == "windows"} only.}
-  \item{type}{Should be plotting be done using Windows \abbr{GDI} or cairographics?}
+  \item{type}{Should be plotting be done using Windows \abbr{GDI} or \I{cairographics}?}
   \item{antialias}{Length-one character vector.
 
     For allowed values and their effect on fonts with \code{type =
@@ -84,7 +86,7 @@ tiff(filename = "Rplot\%03d.tif",
 
     For allowed values and their effect (on fonts and lines, but not
     fills) with \code{type = "cairo"} see \code{\link{svg}}.}
-  \item{symbolfamily}{  For cairographics only:
+  \item{symbolfamily}{  For \I{cairographics} only:
       a length-one character string that specifies the font family to
       be used as the "symbol" font (e.g., for \link{plotmath} output).
       The default value is "default", which means that R will choose
@@ -108,18 +110,18 @@ tiff(filename = "Rplot\%03d.tif",
   number of pixels which depend on the graphics hardware.
 
   By default no resolution is recorded in the file (except for \abbr{BMP}).
-  Viewers will often assume a nominal resolution of 72 ppi when none is
+  Viewers will often assume a nominal resolution of 72 \abbr{ppi} when none is
   recorded.  As resolutions in \abbr{PNG} files are recorded in pixels/metre,
-  the reported ppi value will be changed slightly.
+  the reported \abbr{ppi} value will be changed slightly.
 
   For graphics parameters that make use of dimensions in inches,
-  \code{res} ppi (default 72) is assumed.
+  \code{res} \abbr{ppi} (default 72) is assumed.
 
   Both \code{bmp} and \code{png} will use a palette if there are fewer
   than 256 colours on the page, and record a 24-bit RGB file otherwise.
   For the \code{png} device, \code{type = "cairo"} does the \abbr{PNG} output in
   the driver and so is compatible with the \code{"windows"} type.
-  \code{type = "cairo-png"} uses cairographics' \abbr{PNG} backend which will
+  \code{type = "cairo-png"} uses \I{cairographics}' \abbr{PNG} backend which will
   never use a palette and normally creates a larger 32-bit ARGB
   file---this may work better for specialist uses with semi-transparent
   colours.
@@ -143,7 +145,7 @@ tiff(filename = "Rplot\%03d.tif",
   The \code{jpeg} quality when used for \code{tiff} compression is fixed
   at 75.
   
-  Unknown resolutions in \abbr{BMP} files are recorded as 72 ppi.
+  Unknown resolutions in \abbr{BMP} files are recorded as 72 \abbr{ppi}.
 }
 
 \value{
@@ -173,7 +175,7 @@ tiff(filename = "Rplot\%03d.tif",
     compiled with suitable support, using Apple's Quartz plotting
     system.
 
-    \item Where support has been compiled in for cairographics, plotting
+    \item Where support has been compiled in for \I{cairographics}, plotting
     on cairo surfaces.  This may use the native platform support for
     fonts, or it may use \code{fontconfig} to support a wide range of
     font formats.
@@ -223,7 +225,7 @@ tiff(filename = "Rplot\%03d.tif",
 
   \code{\link{bitmap}} provides an alternative way to generate plots in many
   bitmap formats that does not depend on accessing the X11 display but does
-  depend on having GhostScript installed.
+  depend on having \I{GhostScript} installed.
 
   Ways to write raster images to bitmap formats are available in
   packages \CRANpkg{jpeg}, \CRANpkg{png} and \CRANpkg{tiff}.
@@ -235,10 +237,10 @@ tiff(filename = "Rplot\%03d.tif",
 
   \itemize{
     \item The default device size is in pixels.
-    \item Font sizes are in big points interpreted at \code{res} ppi.
+    \item Font sizes are in big points interpreted at \code{res} \abbr{ppi}.
     \item The default font family is Arial.
     \item Line widths are a multiple of 1/96 inch (interpreted at
-    \code{res} ppi), with a minimum of one pixel (\code{type =
+    \code{res} \abbr{ppi}), with a minimum of one pixel (\code{type =
       "windows"}) or 0.01 (\code{type = "cairo"}).
     \item The minimum radius of a circle is 1 pixel for \code{type =
       "windows"}.

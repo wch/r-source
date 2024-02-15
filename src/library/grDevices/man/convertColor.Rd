@@ -44,8 +44,8 @@ convertColor(color, from, to, from.ref.white, to.ref.white,
   The \code{"sRGB"} color space is that used by standard PC monitors.
   \code{"Apple RGB"} is used by Apple monitors. \code{"Lab"} and
   \code{"Luv"} are approximately perceptually uniform
-  spaces standardized by the Commission Internationale
-  d'Eclairage. \code{XYZ} is a 1931 \abbr{CIE} standard capable of representing
+  spaces standardized by the \I{Commission Internationale d'Eclairage}.
+  \code{XYZ} is a 1931 \abbr{CIE} standard capable of representing
   all visible colors (and then some), but not in a perceptually uniform
   way.
 

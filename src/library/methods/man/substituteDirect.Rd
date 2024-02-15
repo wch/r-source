@@ -5,7 +5,7 @@
 
 \name{substituteDirect}
 \alias{substituteDirect}
-\title{SubstituteDirect}
+\title{\code{SubstituteDirect}}
 \description{
   Substitute for the variables named in the second argument the
   corresponding objects, substituting into \code{object}.  The argument

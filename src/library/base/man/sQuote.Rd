@@ -3,6 +3,8 @@
 % Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{sQuote}
 \alias{sQuote}
 \alias{dQuote}
@@ -57,7 +59,7 @@ dQuote(x, q = getOption("useFancyQuotes"))
   length four, the first two entries are used for beginning and ending
   single quotes and the second two for beginning and ending double
   quotes: this can be used to implement non-English quoting conventions
-  such as the use of guillemets.
+  such as the use of \I{guillemet}s.
 
   Where fancy quotes are used, you should be aware that they may not be
   rendered correctly as not all fonts include the requisite glyphs: for

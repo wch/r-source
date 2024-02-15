@@ -16,22 +16,22 @@
   A data frame with records for 88 age/alcohol/tobacco combinations.
 
   \tabular{rlll}{
-    [,1] \tab "agegp" \tab Age group \tab 1  25--34 years\cr
+    [,1] \tab \code{agegp} \tab Age group \tab 1  25--34 years\cr
     \tab \tab \tab 2  35--44\cr
     \tab \tab \tab 3  45--54\cr
     \tab \tab \tab 4  55--64\cr
     \tab \tab \tab 5  65--74\cr
     \tab \tab \tab 6  75+\cr
-    [,2] \tab "alcgp" \tab Alcohol consumption \tab 1   0--39 gm/day\cr
+    [,2] \tab \code{alcgp} \tab Alcohol consumption \tab 1   0--39 gm/day\cr
     \tab \tab \tab 2  40--79\cr
     \tab \tab \tab 3  80--119\cr
     \tab \tab \tab 4  120+\cr
-    [,3] \tab "tobgp" \tab Tobacco consumption \tab 1   0-- 9 gm/day\cr
+    [,3] \tab \code{tobgp} \tab Tobacco consumption \tab 1   0-- 9 gm/day\cr
     \tab \tab \tab 2  10--19\cr
     \tab \tab \tab 3  20--29\cr
     \tab \tab \tab 4  30+\cr
-    [,4] \tab "ncases" \tab Number of cases \tab \cr
-    [,5] \tab "ncontrols" \tab Number of controls \tab
+    [,4] \tab \code{ncases} \tab Number of cases \tab \cr
+    [,5] \tab \code{ncontrols} \tab Number of controls \tab
   }
 }
 \source{

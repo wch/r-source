@@ -32,7 +32,7 @@ plot.design(x, y = NULL, fun = mean, data = NULL, \dots,
   \item{ylab}{y axis label with a \sQuote{smart} default.}
   \item{main}{main title, see \code{\link{title}}.}
   \item{ask}{logical indicating if the user should be asked before a new
-    page is started -- in the case of multiple y's.}
+    page is started -- in the case of multiple y values.}
   \item{xaxt}{character giving the type of x axis.}
   \item{axes}{logical indicating if axes should be drawn.}
   \item{xtick}{logical indicating if ticks (one per factor) should

@@ -135,7 +135,7 @@ pdf(file = if(onefile) "Rplots.pdf" else "Rplot\%03d.pdf",
   \describe{
     \item{on Unix-alikes}{viewers set up to use URW fonts, which is
       usual with those based on \code{xpdf} or Ghostscript.}
-    \item{on Windows}{viewers such as GSView which utilise URW fonts.}
+    \item{on Windows}{viewers such as \I{GSView} which utilise URW fonts.}
   }
   Since \code{\link{embedFonts}} makes use of Ghostscript, it should be
   able to embed the URW-based families for use with other viewers.
@@ -266,7 +266,7 @@ pdf(file = if(onefile) "Rplots.pdf" else "Rplot\%03d.pdf",
 
 \section{Encodings}{
   Encodings describe which glyphs are used to display the character codes
-  (in the range 0--255).  Most commonly \R uses ISOLatin1 encoding, and
+  (in the range 0--255).  Most commonly \R uses \I{ISOLatin1} encoding, and
   the examples for \code{\link{text}} are in that encoding.  However,
   the encoding used on machines running \R may well be different, and by
   using the \code{encoding} argument the glyphs can be matched to
@@ -278,7 +278,7 @@ pdf(file = if(onefile) "Rplots.pdf" else "Rplot\%03d.pdf",
 
   None of this will matter if only ASCII characters (codes 32--126) are
   used as all the encodings (except \code{"TeXtext"}) agree over that
-  range.  Some encodings are supersets of ISOLatin1.  However, if
+  range.  Some encodings are supersets of \I{ISOLatin1}.  However, if
   accented and special characters do not come out as you expect, you may
   need to change the encoding.  Some other encodings are supplied with
   \R: \code{"ISOLatin2.enc"} (Central/Eastern Europe),
@@ -303,18 +303,18 @@ pdf(file = if(onefile) "Rplots.pdf" else "Rplot\%03d.pdf",
   If you specify the encoding, it is your responsibility to ensure that
   the PostScript font contains the glyphs used.  One issue here is the
   Euro symbol which is in several encodings (including WinAnsi and
-  ISOLatin9 encodings) but may well not be in the PostScript fonts.  (It
+  \I{ISOLatin9} encodings) but may well not be in the PostScript fonts.  (It
   is in the URW variants; it is not in the supplied Adobe Font Metric
   files so will not be centred correctly.)
 
   There is an exception.  Character 45 (\code{"-"}) is always set
-  as minus (its value in Adobe ISOLatin1) even though it is hyphen in
+  as minus (its value in Adobe \I{ISOLatin1}) even though it is hyphen in
   the other encodings.  Hyphen is available as character 173 (octal
   0255) in all the Latin encodings, Cyrillic and Greek.  (This can be
   entered as \code{"\u00ad"} in a UTF-8 locale.)  There are some
   discrepancies in accounts of glyphs 39 and 96: the supplied encodings
-  (except CP1250 and CP1251) treat these as \sQuote{quoteright} and
-  \sQuote{quoteleft} (rather than \sQuote{quotesingle}/\sQuote{acute}
+  (except CP1250 and CP1251) treat these as \sQuote{\I{quoteright}} and
+  \sQuote{\I{quoteleft}} (rather than \sQuote{\I{quotesingle}}/\sQuote{acute}
   and \sQuote{grave} respectively), as they are in the Adobe
   documentation.
 }
@@ -412,7 +412,7 @@ pdf(file = if(onefile) "Rplots.pdf" else "Rplot\%03d.pdf",
   section of the help for \code{\link{X11}}.
  }
  \item{On Windows:}{
-  The TeXworks PDF viewer was one of those which has been seen to fail to
+  The \I{TeXworks} PDF viewer was one of those which has been seen to fail to
   display Dingbats (used by e.g.\sspace{}\code{pch = 1}) correctly.
   Whereas on other platforms the problems seen were incorrect output, on
   Windows points were silently omitted: however recent versions seem to

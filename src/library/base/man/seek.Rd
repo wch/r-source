@@ -37,7 +37,7 @@ truncate(con, \dots)
   argument the connection is re-positioned (if possible) to the
   specified position.  \code{isSeekable} returns whether the connection
   in principle supports \code{seek}: currently only (possibly
-  gz-compressed) file connections do.
+  \abbr{gz}-compressed) file connections do.
 
   \code{where} is stored as a real but should represent an integer:
   non-integer values are likely to be truncated.  Note that the possible

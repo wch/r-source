@@ -45,7 +45,7 @@ windowsFonts(...)
   font and \code{"mono"} for a monospaced font.
 
   These mappings will only be used if the current font face is
-  1 (plain), 2 (bold), 3 (italic), or 4 (bolditalic).
+  1 (plain), 2 (bold), 3 (italic), or 4 (bold italic).
 }
 \seealso{
   \code{\link{windows}}

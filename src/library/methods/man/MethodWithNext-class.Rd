@@ -6,8 +6,8 @@
 \name{MethodWithNext-class}
 \docType{class}
 \alias{MethodWithNext-class}
-\title{Class MethodWithNext }
-\description{ Class of method definitions set up for callNextMethod }
+\title{Class \code{"MethodWithNext"} }
+\description{ Class of method definitions set up for \code{callNextMethod} }
 \section{Objects from the Class}{
   Objects from this class are generated as a side-effect of calls to
   \code{\link{callNextMethod}}.

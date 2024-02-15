@@ -89,7 +89,7 @@ keys will have been processed, so \code{shift-a} will be passed as
 The idle event handler \code{onIdle} should be a function with no
 arguments. If the function is undefined or \code{NULL}, then R will
 typically call a system function which (efficiently) waits for the next
-event to appear on a filehandle. Otherwise, the idle event handler will
+event to appear on a file handle. Otherwise, the idle event handler will
 be called whenever the event queue of the graphics device was found to
 be empty, i.e. in an infinite loop. This feature is intended to allow
 animations to respond to user input, and could be CPU-intensive.

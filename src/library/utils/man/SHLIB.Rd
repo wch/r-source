@@ -46,7 +46,7 @@
 
   Items in \code{files} with extensions \file{.c}, \file{.cpp},
   \file{.cc}, \file{.C}, \file{.f}, \file{.f90}, \file{.f95}, \file{.m}
-  (ObjC), \file{.M} and \file{.mm} (ObjC++) are regarded as source
+  (Objective-C), \file{.M} and \file{.mm} (Objective-C++) are regarded as source
   files, and those with extension \file{.o} as object files.  All other
   items are passed to the linker.
 

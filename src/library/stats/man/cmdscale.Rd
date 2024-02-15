@@ -13,7 +13,7 @@ cmdscale(d, k = 2, eig = FALSE, add = FALSE, x.ret = FALSE,
          list. = eig || add || x.ret)
 }
 \description{
-  Classical multidimensional scaling (MDS) of a data matrix.
+  Classical multidimensional scaling (\abbr{MDS}) of a data matrix.
   Also known as \emph{principal coordinates analysis} (Gower, 1966).
 }
 \arguments{

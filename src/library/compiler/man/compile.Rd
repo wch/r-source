@@ -31,8 +31,9 @@ setCompilerOptions(...)
   \item{options}{list of named compiler options: see \sQuote{Details}.}
   \item{env}{the top level environment for the compiling.}
   \item{srcref}{initial source reference for the expression.}
-  \item{file,infile,outfile}{pathnames; outfile defaults to infile with
-    a \file{.Rc} extension in place of any existing extension.}
+  \item{file,infile,outfile}{pathnames; \code{outfile} defaults to
+    \code{infile} with a \file{.Rc} extension in place of any existing
+    extension.} 
   \item{ascii}{logical; should the compiled file be saved in ascii format?}
   \item{verbose}{logical; should the compiler show what is being compiled?}
   \item{version}{the workspace format version to use.  \code{NULL}

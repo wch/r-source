@@ -68,7 +68,8 @@ rgeom(n, prob)
 
   \code{pgeom} and \code{qgeom} are based on the closed-form formulae.
 
-  \code{rgeom} uses the derivation as an exponential mixture of Poissons, see
+  \code{rgeom} uses the derivation as an exponential mixture of Poisson
+  distributions, see 
 
   Devroye, L. (1986) \emph{Non-Uniform Random Variate Generation.}
   Springer-Verlag, New York. Page 480.

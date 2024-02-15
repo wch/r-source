@@ -104,13 +104,13 @@ quantile(x, \dots)
 
   \describe{
     \item{Type 4}{\eqn{m = 0}. \eqn{p_k = \frac{k}{n}}{p[k] = k / n}.
-      That is, linear interpolation of the empirical cdf.
+      That is, linear interpolation of the empirical \abbr{cdf}.
     }
 
     \item{Type 5}{\eqn{m = 1/2}.
       \eqn{p_k = \frac{k - 0.5}{n}}{p[k] = (k - 0.5) / n}.
       That is a piecewise linear function where the knots are the values
-      midway through the steps of the empirical cdf.  This is popular
+      midway through the steps of the empirical \abbr{cdf}.  This is popular
       amongst hydrologists.
     }
 

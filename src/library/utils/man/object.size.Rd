@@ -103,16 +103,16 @@ object.size(x)
   \tabular{ll}{
    \bold{object size} \tab \bold{SI} \cr
      1       \tab  1 B   \cr
-     1000    \tab  1 kB  \cr
-     1000^2  \tab  1 MB  \cr
-     1000^3  \tab  1 GB  \cr
-     1000^4  \tab  1 TB  \cr
-     1000^5  \tab  1 PB  \cr
+     1000    \tab  1 \abbr{kB}  \cr
+     1000^2  \tab  1 \abbr{MB}  \cr
+     1000^3  \tab  1 \abbr{GB}  \cr
+     1000^4  \tab  1 \abbr{TB}  \cr
+     1000^5  \tab  1 \abbr{PB}  \cr
      1000^6  \tab  1 \abbr{EB}  \cr
-     1000^7  \tab  1 ZB  \cr
-     1000^8  \tab  1 YB  \cr
-     1000^9  \tab  1 RB  \cr
-     1000^10 \tab  1 QB  \cr
+     1000^7  \tab  1 \abbr{ZB}  \cr
+     1000^8  \tab  1 \abbr{YB}  \cr
+     1000^9  \tab  1 \abbr{RB}  \cr
+     1000^10 \tab  1 \abbr{QB}  \cr
   }
 }
 \value{

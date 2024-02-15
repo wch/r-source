@@ -6,8 +6,8 @@
 \name{eigen}
 \alias{eigen}
 \alias{print.eigen}
-\concept{eigen vector}
-\concept{eigen value}
+\concept{eigenvector}
+\concept{eigenvalue}
 \title{Spectral Decomposition of a Matrix}
 \description{
   Computes eigenvalues and eigenvectors of numeric (double, integer,

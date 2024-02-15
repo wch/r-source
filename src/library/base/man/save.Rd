@@ -172,7 +172,7 @@ save.image(file = ".RData", version = NULL, ascii = FALSE,
   Saved \R objects are binary files, even those saved with
   \code{ascii = TRUE}, so ensure that they are transferred without
   conversion of end-of-line markers and of 8-bit characters.  The lines
-  are delimited by LF on all platforms.
+  are delimited by \abbr{LF} on all platforms.
 
   Although the default version was not changed between \R 1.4.0 and \R
   3.4.4 nor since \R 3.5.0, this does not mean that saved files are

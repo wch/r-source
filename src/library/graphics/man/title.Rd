@@ -38,7 +38,7 @@ title(main = NULL, sub = NULL, xlab = NULL, ylab = NULL,
   plotting functions.  They must be of type \code{\link{character}} or
   \code{\link{expression}}. In the latter case, quite a bit of
   mathematical notation is available such as sub- and superscripts,
-  greek letters, fractions, etc: see \link{plotmath}
+  Greek letters, fractions, etc: see \link{plotmath}
 }
 \details{
   The labels passed to \code{title} can be character strings or

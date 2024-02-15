@@ -303,7 +303,7 @@ OlsonNames(tzdir = NULL)
     \item \sQuote{Modern} Linux systems use \code{systemd} which
     provides mechanisms to set and retrieve the time zone (amongst other
     things).  There is a command \command{timedatectl} to give details.
-    (Unfortunately \I{RHEL}/Centos 6.x were not \sQuote{modern}.)
+    (Unfortunately \I{RHEL}/\I{Centos} 6.x were not \sQuote{modern}.)
 
     \item Debian-derived systems since \emph{ca} 2007 have supplied a
     file \file{/etc/timezone}.  Its format is undocumented but

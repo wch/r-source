@@ -3,6 +3,8 @@
 % Copyright 2009 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{xsplinePoints}
 \alias{xsplinePoints}
 \alias{bezierPoints}
@@ -23,7 +25,7 @@ bezierPoints(x)
 \arguments{
   \item{x}{
     An Xspline grob, as produced by the \code{xsplineGrob()} function
-    (or a beziergrob, as produced by the \code{bezierGrob()} function).
+    (or a \I{beziergrob}, as produced by the \code{bezierGrob()} function).
   }
 }
 \details{

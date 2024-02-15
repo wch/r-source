@@ -79,7 +79,7 @@
   \subsection{NEW FEATURES}{
     \itemize{
       \item \code{bitmap()} and \code{dev2bitmap()} look for
-      \command{gswin64c.exe} (as used by 64-bit GhostScript), in
+      \command{gswin64c.exe} (as used by 64-bit \I{GhostScript}), in
       preference to \command{gswin32c.exe}.
     }
   }
@@ -87,7 +87,7 @@
   \subsection{INSTALLATION}{
     \itemize{
       \item The sources (and packages) can now be compiled using the
-      multilib toolchain developed for \R 2.15.x: see the
+      \I{multilib} toolchain developed for \R 2.15.x: see the
       \samp{MULTI} macro in \file{MkRules.dist}.  This toolchain is used
       for the CRAN binary distribution.
     }
@@ -119,7 +119,7 @@
       (Reported by \I{Henrik Bengtsson}.)
 
       \item Some of the custom messages in the installer were corrupted:
-      add a \abbr{BOM} mark to the file as now required by Unicode Inno Setup.
+      add a \abbr{BOM} mark to the file as now required by Unicode \I{Inno Setup}.
       (\PR{14816})
     }
   }
@@ -170,7 +170,7 @@
       \item \command{R CMD build} once again attempts to preserve file
       permissions on Windows.
 
-      \item There is support for cairographics-based devices using the
+      \item There is support for \I{cairographics}-based devices using the
       same code as on Unix-alikes.  This can be selected by the new
       \code{type} argument of the bitmap devices \code{bmp()},
       \code{jpeg()}, \code{png()} and \code{tiff()}, and devices
@@ -185,7 +185,7 @@
       \code{family} argument.  If non-empty this specifies an initial
       family to be used for fonts 1--4.  If empty the fonts specified in
       the \file{Rdevga} configuration file are used for the Windows \abbr{GDI}
-      devices and \code{"sans"} for cairographics-based devices.
+      devices and \code{"sans"} for \I{cairographics}-based devices.
 
       This will generally be a Windows font name such as
       \code{"Lucida Bright"} or one of the device-independent names
@@ -204,12 +204,12 @@
       settings: this argument should at least be able to turn it
       off.  The default behaviour (unchanged from before) is that Windows
       will use anti-aliasing for screen devices (and bitmap devices, as
-      they plot on a hidden screen) if ClearType has been enabled.  For
-      those not using ClearType, \code{windows.options(antialias =
+      they plot on a hidden screen) if \I{ClearType} has been enabled.  For
+      those not using \I{ClearType}, \code{windows.options(antialias =
 	"cleartype")} will make this the default, and it will probably
       give more legible plots. 
 
-      The argument can also be used for the cairographics-based versions
+      The argument can also be used for the \I{cairographics}-based versions
       of the bitmap devices.
 
       \item The \sQuote{Update packages ...} menu item now runs
@@ -244,7 +244,7 @@
       file association for \file{.RData} files defaults to 64-bit R (it
       defaulted to 32-bit in R 2.12.x and 2.13.x).
 
-      \item There is preliminary support for \sQuote{multilib}
+      \item There is preliminary support for \sQuote{\I{multilib}}
       toolchains which use options \option{--m32} or \option{--m64} to
       select the architecture; set the appropriate macros in
       \file{MkRules.local}.
@@ -257,8 +257,8 @@
   \subsection{PACKAGE INSTALLATION}{
     \itemize{
       \item \file{Rzlib.dll} (sometimes used in packages \emph{via}
-      \samp{$(ZLIB_LIBS)}) does not include the buggy gzio   % for balance: $
-      interface from zlib 1.2.5.
+      \samp{$(ZLIB_LIBS)}) does not include the buggy \I{gzio}   % for balance: $
+      interface from \I{zlib} 1.2.5.
     }
   }
 
@@ -273,7 +273,7 @@
     \itemize{
       \item Raster drawing on \code{win.metafile()} (or copying a plot
       that includes a raster image from another device to a Metafile)
-      now does not crash.  (Reported by Stefan Gelissen.)
+      now does not crash.  (Reported by \I{Stefan Gelissen}.)
     }
   }
 }
@@ -313,7 +313,7 @@
   
   \subsection{BUG FIXES}{
     \itemize{
-      \item Launching the PDF manuals from the Rgui menus did not work
+      \item Launching the PDF manuals from the \I{Rgui} menus did not work
       on some versions of Windows.
       
       \item The windows() screen device would sometimes fail to plot
@@ -480,7 +480,7 @@
   \subsection{INSTALLATION}{
     \itemize{
       \item The \abbr{MSI} installer is now made by an \R script, and there is
-      now support for 64-bit builds.  (Unlike the Inno Setup installer,
+      now support for 64-bit builds.  (Unlike the \I{Inno Setup} installer,
       there are separate \abbr{MSI} installers for 32- and 64-bit Windows.)
 
       It is now built using \command{WiX 3.x} rather than \command{WiX
@@ -545,7 +545,7 @@
        \code{Sd2d} are now handled internally rather by shell scripts.
       
       \item \command{Rcmd} has a new sub-command \command{texify} to run
-       MiKTeX's \file{texify.exe} with arguments to find files such as
+       \I{MiKTeX}'s \file{texify.exe} with arguments to find files such as
        \file{Sweave.sty}.  See the examples in \code{?Sweave}.
 
        \item \code{system(intern = FALSE)} now returns \code{127} (the
@@ -580,7 +580,7 @@
         The default package type is \code{"win.binary"} on both 32- and
         64-bit builds: a single repository contains binary packages for
         both architectures.  This is in place for CRAN, CRAN extras and
-        BioC: \code{type = "win64.binary"} can still be used for any
+        \I{BioC}: \code{type = "win64.binary"} can still be used for any
         repositories which follow the \R 2.11.x convention.  With the
         default filters (see \code{?available.packages}) packages will
         only be offered if they are available for the current
@@ -835,7 +835,7 @@
        Binary packages are installed without CHM help if they contain
        it (as those intended for 2.9.x may).
       
-      \item It is possible to install source packages without Rtools
+      \item It is possible to install source packages without \I{Rtools}
        provided they have no compiled code and no \file{configure.win} or
        \file{cleanup.win} script.
     }
@@ -853,7 +853,7 @@
       \item The categories in the installers have been simplified.  Now the
        files to support installation of source packages are always
        installed (they are now only 0.7Mb), and there are no longer
-       categories 'chtml', 'html/help', 'latex' and 'Rd'.
+       categories '\I{chtml}', 'html/help', 'latex' and 'Rd'.
       
       
     }

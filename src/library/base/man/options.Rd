@@ -252,7 +252,7 @@ getOption(x, default = NULL)
 	\item{\code{"default.simd"}}{is experimental and will likely be
 	  removed in future versions of \R.  It provides the same behavior
 	  as \code{"default"}, but the check whether the input contains
-	  \code{NaN}/\code{Inf} values is faster on some SIMD hardware.
+	  \code{NaN}/\code{Inf} values is faster on some \abbr{SIMD} hardware.
           On older systems it will run correctly, but may be much slower than
 	  \code{"default"}.}
       }
@@ -527,7 +527,7 @@ getOption(x, default = NULL)
   }
   Others are set from environment variables or are platform-dependent.
 }
-\section{Options set in package grDevices}{
+\section{Options set in package \pkg{grDevices}}{
   These will be set when package \pkg{grDevices} (or its namespace)
   is loaded if not already set.
   \describe{

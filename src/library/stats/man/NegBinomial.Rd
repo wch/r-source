@@ -101,7 +101,8 @@ rnbinom(n, size, prob, mu)
   \code{qnbinom} uses the Cornish--Fisher Expansion to include a skewness
   correction to a normal approximation, followed by a search.
 
-  \code{rnbinom} uses the derivation as a gamma mixture of Poissons, see
+  \code{rnbinom} uses the derivation as a gamma mixture of Poisson
+  distributions, see
 
   Devroye, L. (1986) \emph{Non-Uniform Random Variate Generation.}
   Springer-Verlag, New York. Page 480.

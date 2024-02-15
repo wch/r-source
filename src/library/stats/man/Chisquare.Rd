@@ -75,7 +75,7 @@ rchisq(n, df, ncp = 0)
   non-integer, and also \eqn{n = 0} which is relevant for
   non-centrality \eqn{\lambda > 0},
   see Johnson \emph{et al} (1995, chapter 29).
-  In that (noncentral, zero df) case, the distribution is a mixture of a
+  In that (noncentral, zero \abbr{df}) case, the distribution is a mixture of a
   point mass at \eqn{x = 0} (of size \code{pchisq(0, df=0, ncp=ncp)}) and
   a continuous part, and \code{dchisq()} is \emph{not} a density with
   respect to that mixture measure but rather the limit of the density

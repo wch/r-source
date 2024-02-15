@@ -79,11 +79,11 @@ writeChar(object, con, nchars = nchar(object, type = "chars"),
 }
 
 \note{
-  Earlier versions of \R allowed embedded nul bytes within character
+  Earlier versions of \R allowed embedded \abbr{NUL} bytes within character
   strings, but not \R >= 2.8.0.  \code{readChar} was commonly used to
   read fixed-size zero-padded byte fields for which \code{readBin} was
   unsuitable.  \code{readChar} can still be used for such fields if
-  there are no embedded nuls: otherwise \code{readBin(what = "raw")}
+  there are no embedded \abbr{NUL}s: otherwise \code{readBin(what = "raw")}
   provides an alternative.
 
   \code{nchars} will be interpreted in bytes not characters in a
