@@ -1,7 +1,7 @@
 #  File src/library/tools/R/RdConv2.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2023 The R Core Team
+#  Copyright (C) 1995-2024 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -41,8 +41,11 @@ isBlankLineRd <- function(x) {
     Rdfile <-
         if(missing(Rdfile) || is.null(Rdfile))
             ""
-        else # Rdfile could be an absolute path (Rbuild tempdir)
-            paste0(basename(Rdfile), ":")  # or use stripPathTo(Rdfile, "man")
+        else { # Rdfile could be an absolute path (Rbuild tempdir)
+            OS_subdir <- intersect(basename(dirname(Rdfile)), c("unix", "windows"))
+            paste0(paste0(OS_subdir, "/", recycle0 = TRUE),
+                   basename(Rdfile), ":", recycle0 = FALSE)
+        }
     if (is.null(srcref))
         paste0(Rdfile, " ", ...)
     else {

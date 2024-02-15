@@ -355,7 +355,7 @@
       \code{tools::checkRd()} to \code{tools::checkRdContents()}.
 
       \item \command{R CMD check} now visits \file{inst/NEWS.Rd}
-      when checking Rd files.
+      and OS-specific \file{man} subdirectories when checking Rd files.
 
       \item \code{tools::checkDocFiles()} and
       \code{tools::checkRdContents()} now also check internal Rd files

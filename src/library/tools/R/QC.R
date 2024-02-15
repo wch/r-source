@@ -1,7 +1,7 @@
 #  File src/library/tools/R/QC.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2023 The R Core Team
+#  Copyright (C) 1995-2024 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -7141,7 +7141,8 @@ function(dir, silent = FALSE, def_enc = FALSE, minlevel = -1)
             else Sys.unsetenv("_R_RD_MACROS_PACKAGE_DIR_"))
     Sys.setenv("_R_RD_MACROS_PACKAGE_DIR_" = normalizePath(dir))
 
-    pg <- dir(file.path(dir, "man"), pattern = "[.][Rr]d$", full.names = TRUE)
+    pg <- list_files_with_type(file.path(dir, "man"), "docs", full.names = TRUE,
+                               OS_subdirs = c("unix", "windows"))
     if(file.exists(nfile <- file.path(dir, "inst", "NEWS.Rd")))
         pg <- c(nfile, pg)
     bad <- character()
