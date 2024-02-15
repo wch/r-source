@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2023  The R Core Team
+ *  Copyright (C) 1997--2024  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -614,7 +614,8 @@ int R_pclose_timeout(FILE *fp)
 	error("Invalid file pointer in pclose");
 
     int saveerrno = errno;
-    if (!fclose(fp))
+    int res_fclose = fclose(fp);
+    if (!res_fclose)
 	/* On Solaris, fclose sets errno to "Invalid seek" when the pipe is
 	   already closed (e.g.  because of timeout).  fclose would not
 	   return an error, but it would set errno and the non-zero errno
@@ -624,11 +625,17 @@ int R_pclose_timeout(FILE *fp)
     pid_t wres;
     int wstatus;
 
+    saveerrno = errno;
     wres = timeout_wait(&wstatus);
     endcontext(&tost.cntxt);
 
     if (wres < 0)
 	return -1;
+    if (res_fclose) {
+	/* wait succeeded but fclose failed */
+	errno = saveerrno;
+	return -1;
+    } 
     return wstatus;
 }
 
@@ -825,13 +832,16 @@ int R_pclose_pg(FILE *fp)
 		pid_t res_waitpid = waitpid(p->pid, &wstatus, 0);
 		if (res_waitpid != -1 || errno != EINTR) {
 		    free(p);
-		    if (res_waitpid != -1 && res_fclose) {
+		    if (res_waitpid == -1)
+			return -1;
+		    if (res_fclose) {
 			/* waitpid() succeeded but fclose failed */
 			errno = saveerrno;
 			return -1;
 		    }
 		    if (errno == EINTR)
-			/* protect against incorrect error checking */
+			/* protect against incorrect error checking, hide
+			   EINTR from any previous calls to waitpid() */
 			errno = saveerrno;
 		    return wstatus;
 		}
