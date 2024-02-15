@@ -3,6 +3,8 @@
 % Copyright 1995-2024 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{pdf}
 \alias{pdf}
 \encoding{UTF-8}
@@ -57,7 +59,7 @@ pdf(file = if(onefile) "Rplots.pdf" else "Rplot\%03d.pdf",
     \describe{
       \item{on Unix-alikes}{
 	as \file{"ISOLatin1.enc"} unless the locale is recognized as
-    corresponding to a language using ISO 8859-\{2,5,7,13,15\} or KOI8-\{R,U\}.
+    corresponding to a language using ISO 8859-\{2,5,7,13,15\} or \I{KOI8}-\{R,U\}.
       }
       \item{on Windows}{
     as \file{"CP1250.enc"} (Central European), \code{"CP1251.enc"} (Cyrillic),
@@ -75,7 +77,7 @@ pdf(file = if(onefile) "Rplots.pdf" else "Rplot\%03d.pdf",
   \item{fg}{the initial foreground color to be used.  Defaults to
    \code{"black"}.}
   \item{pointsize}{the default point size to be used.  Strictly
-    speaking, in bp, that is 1/72 of an inch, but approximately in
+    speaking, in \abbr{bp}, that is 1/72 of an inch, but approximately in
     points.  Defaults to \code{12}.}
   \item{pagecentre}{logical: should the device region be centred on the
     page? -- is only relevant for \code{paper != "special"}.

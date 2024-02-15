@@ -3,6 +3,8 @@
 % Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{timezones}
 \alias{Sys.timezone}
 \alias{OlsonNames}
@@ -205,7 +207,7 @@ OlsonNames(tzdir = NULL)
   as \sQuote{Local Mean Time} and abbreviated as \samp{LMT} in the
   databases: in many countries that was codified with a specific name
   before the switch to a standard time.  For example, Paris codified its
-  LMT as \sQuote{Paris Mean Time} in 1891 (to be used throughout
+  \abbr{LMT} as \sQuote{Paris Mean Time} in 1891 (to be used throughout
   mainland France) and switched to \samp{GMT+0} in 1911.
 
   %% it is a ksh script so could well pop up elsewhere.
@@ -301,7 +303,7 @@ OlsonNames(tzdir = NULL)
     \item \sQuote{Modern} Linux systems use \code{systemd} which
     provides mechanisms to set and retrieve the time zone (amongst other
     things).  There is a command \command{timedatectl} to give details.
-    (Unfortunately RHEL/Centos 6.x were not \sQuote{modern}.)
+    (Unfortunately \I{RHEL}/Centos 6.x were not \sQuote{modern}.)
 
     \item Debian-derived systems since \emph{ca} 2007 have supplied a
     file \file{/etc/timezone}.  Its format is undocumented but

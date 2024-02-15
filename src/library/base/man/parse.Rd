@@ -88,7 +88,7 @@ str2expression(text)
 
   When input is taken from the console, \code{n = NULL} is equivalent to
   \code{n = 1}, and \code{n < 0} will read until an \abbr{EOF} character is
-  read.  (The \abbr{EOF} character is Ctrl-Z for the Windows front-ends.)  The
+  read.  (The \abbr{EOF} character is \abbr{Ctrl}-Z for the Windows front-ends.)  The
   line-length limit is 4095 bytes when reading from the console (which
   may impose a lower limit: see \sQuote{An Introduction to R}).
 

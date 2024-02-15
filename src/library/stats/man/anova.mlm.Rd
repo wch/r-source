@@ -61,7 +61,7 @@
   model formulas with respect to \code{idata} (the tests will be
   invariant to parametrization of the quotient space \code{M/X}).
 
-  As with \code{anova.lm}, all test statistics use the SSD matrix from
+  As with \code{anova.lm}, all test statistics use the \abbr{SSD} matrix from
   the largest model considered as the (generalized) denominator.
 
   Contrary to other \code{anova} methods, the intercept is not excluded
@@ -74,7 +74,7 @@
 }
 \note{
   The Huynh--Feldt epsilon differs from that calculated by SAS (as of
-  v.\sspace{}8.2) except when the DF is equal to the number of observations
+  v.\sspace{}8.2) except when the \abbr{DF} is equal to the number of observations
   minus one.  This is believed to be a bug in SAS, not in \R.
 }
 

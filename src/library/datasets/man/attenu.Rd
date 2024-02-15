@@ -26,7 +26,7 @@
 \source{
   Joyner, W.B., D.M. Boore and R.D. Porcella (1981).  Peak horizontal
   acceleration and velocity from strong-motion records including
-  records from the 1979 Imperial Valley, California earthquake.  USGS
+  records from the 1979 Imperial Valley, California earthquake.  \abbr{USGS}
   Open File report 81-365. Menlo Park, Ca.
 }
 \references{

@@ -212,7 +212,7 @@ win.print(width = 7, height = 7, pointsize = 12, printer = "",
 
   How the fonts look depends on the antialiasing settings, both through
   the \code{antialias} argument and the machine settings.  These are
-  hints to Windows GDI that may not be able to be followed, but
+  hints to Windows \abbr{GDI} that may not be able to be followed, but
   \code{antialias = "none"} should ensure that no antialiasing is used.
   For a screen device the default depends on the machine settings: it
   will be \code{"cleartype"} if that has been enabled.  Note that the

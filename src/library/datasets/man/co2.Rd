@@ -9,7 +9,7 @@
 \title{Mauna Loa Atmospheric CO2 Concentration}
 \description{
   Atmospheric concentrations of CO\eqn{_2}{2} are expressed in parts per
-  million (ppm) and reported in the preliminary 1997 SIO manometric mole
+  million (ppm) and reported in the preliminary 1997 \abbr{SIO} manometric mole
   fraction scale.
 }
 \usage{co2}
@@ -23,7 +23,7 @@
 }
 \source{
   Keeling, C. D. and  Whorf, T. P.,
-  Scripps Institution of Oceanography (SIO),
+  Scripps Institution of Oceanography (\abbr{SIO}),
   University of California,
   La Jolla, California USA 92093-0220.
 

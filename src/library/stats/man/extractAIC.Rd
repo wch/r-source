@@ -60,7 +60,7 @@ extractAIC(fit, scale, k = 2, \dots)
   assumptions this makes.
 
   \code{k = 2} corresponds to the traditional AIC, using \code{k =
-    log(n)} provides the BIC (Bayesian IC) instead.
+    log(n)} provides the BIC (Bayesian \abbr{IC}) instead.
 
   Note that the methods for this function may differ in their
   assumptions from those of methods for \code{\link{AIC}} (usually

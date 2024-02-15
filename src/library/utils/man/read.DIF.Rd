@@ -7,8 +7,9 @@
 \alias{read.DIF}
 \title{Data Input from Spreadsheet}
 \description{
-  Reads a file in Data Interchange Format (DIF) and creates a data frame
-  from it.  DIF is a format for data matrices such as single spreadsheets.
+  Reads a file in Data Interchange Format (\abbr{DIF}) and creates a
+  data frame from it.  \abbr{DIF} is a format for data matrices such as
+  single spreadsheets. 
 }
 \usage{
 read.DIF(file, header = FALSE,
@@ -24,7 +25,7 @@ read.DIF(file, header = FALSE,
     or a \link{connection}, or a complete URL.
 
     The name \code{"clipboard"} may also be used on Windows, in which
-    case \code{read.DIF("clipboard")} will look for a DIF format entry
+    case \code{read.DIF("clipboard")} will look for a \abbr{DIF} format entry
     in the Windows clipboard.
   }
 
@@ -115,7 +116,7 @@ read.DIF(file, header = FALSE,
 
   \item{transpose}{logical, indicating if the row and column
     interpretation should be transposed.  Microsoft's Excel has been
-    known to produce (non-standard conforming) DIF files which would
+    known to produce (non-standard conforming) \abbr{DIF} files which would
     need \code{transpose = TRUE} to be read correctly.}
   
   \item{fileEncoding}{character string: if non-empty declares the

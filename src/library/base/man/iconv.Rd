@@ -3,6 +3,8 @@
 % Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{iconv}
 \alias{iconv}
 \alias{iconvlist}
@@ -135,7 +137,7 @@ iconvlist()
 
   Encodings using character units which are more than one byte in size
   can be written on a file in either big-endian or little-endian order:
-  this applies most commonly to UCS-2, UTF-16 and UTF-32/UCS-4
+  this applies most commonly to \I{UCS-2}, UTF-16 and UTF-32/\I{UCS-4}
   encodings.  Some systems will write the Unicode character
   \code{U+FEFF} at the beginning of a file in these encodings and
   perhaps also in UTF-8.  In that usage the character is known as a \abbr{BOM},

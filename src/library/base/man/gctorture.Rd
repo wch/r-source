@@ -16,10 +16,10 @@ gctorture2(step, wait = step, inhibit_release = FALSE)
 }
 \arguments{
   \item{on}{logical; turning it on/off.}
-  \item{step}{integer; run GC every \code{step} allocations; \code{step
-      = 0} turns the GC torture off.}
+  \item{step}{integer; run \abbr{GC} every \code{step} allocations; \code{step
+      = 0} turns the \abbr{GC} torture off.}
   \item{wait}{integer; number of allocations to wait before starting
-    GC torture.}
+    \abbr{GC} torture.}
   \item{inhibit_release}{logical; do not release free objects for
     re-use: use with caution.}
 }
@@ -30,9 +30,9 @@ gctorture2(step, wait = step, inhibit_release = FALSE)
 }
 \details{
   Calling \code{gctorture(TRUE)} instructs the memory manager to force a
-  full GC on every allocation. \code{gctorture2} provides a more refined
-  interface that allows the start of the GC torture to be deferred and
-  also gives the option of running a GC only every \code{step}
+  full \abbr{GC} on every allocation. \code{gctorture2} provides a more refined
+  interface that allows the start of the \abbr{GC} torture to be deferred and
+  also gives the option of running a \abbr{GC} only every \code{step}
   allocations.
 
   The third argument to \code{gctorture2} is only used if R has been

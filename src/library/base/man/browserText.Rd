@@ -3,6 +3,8 @@
 % Copyright 1995-2011 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{browserText}
 \alias{browserText}
 \alias{browserCondition}
@@ -39,7 +41,7 @@ stack and call \code{browserSetDebug} with \code{n} set to that value.
 Then, by typing \code{c} at the browser prompt you will cause evaluation
 to continue, and provided there are no intervening calls to browser or
 other interrupts, control will halt again once evaluation has returned to
-the closure specified.  This is similar to the up functionality in gdb
+the closure specified.  This is similar to the up functionality in \I{GDB}
 or the "step out" functionality in other debuggers.
 }
 \value{

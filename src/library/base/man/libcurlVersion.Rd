@@ -3,6 +3,8 @@
 % Copyright 2015-2021 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{libcurlVersion}
 \alias{libcurlVersion}
 \title{
@@ -50,9 +52,9 @@ libcurlVersion()
   \url{https://curl.se/docs/ssl-compared.html} for more details on
   \abbr{SSL} versions (the current standard being known as \abbr{TLS}).  Normally
   \code{libcurl} used with \R uses SecureTransport on macOS, OpenSSL on
-  Windows and GnuTLS, NSS or OpenSSL on Unix-alikes.  (At the time of
+  Windows and GnuTLS, \I{NSS} or OpenSSL on Unix-alikes.  (At the time of
   writing Debian-based Linuxen use GnuTLS and RedHat-based ones use
-  OpenSSL, having previously used NSS.)
+  OpenSSL, having previously used \I{NSS}.)
 }
 \examples{
 libcurlVersion()

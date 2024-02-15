@@ -3,6 +3,8 @@
 % Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{make.rgb}
 \alias{make.rgb}
 \alias{colorConverter}
@@ -18,15 +20,15 @@ make.rgb(red, green, blue, name = NULL, white = "D65",
 colorConverter(toXYZ, fromXYZ, name, white = NULL, vectorized = FALSE)
 }
 \arguments{
-  \item{red,green,blue}{Chromaticity (xy or xyY) of RGB primaries}
+  \item{red,green,blue}{Chromaticity (\I{xy} or \I{xyY}) of RGB primaries}
   \item{name}{Name for the colour space}
   \item{white}{Character string specifying the reference white (see
     \sQuote{Details}.)}
   \item{gamma}{Display gamma (nonlinearity). A positive number or the
     string \code{"sRGB"} }
-  \item{fromXYZ}{Function to convert from XYZ tristimulus coordinates
+  \item{fromXYZ}{Function to convert from \abbr{XYZ} tristimulus coordinates
     to this space}
-  \item{toXYZ}{Function to convert from this space to XYZ tristimulus
+  \item{toXYZ}{Function to convert from this space to \abbr{XYZ} tristimulus
     coordinates.}
   \item{vectorized}{Whether \code{fromXYZ} and \code{toXYZ} are
     vectorized internally to handle input color matrices.}
@@ -44,7 +46,7 @@ colorConverter(toXYZ, fromXYZ, name, white = NULL, vectorized = FALSE)
   to a gamma of 2.2; \code{gamma = "sRGB"} uses this function.
 
   Colour spaces other than RGB can be specified directly by giving
-  conversions to and from XYZ tristimulus coordinates.
+  conversions to and from \abbr{XYZ} tristimulus coordinates.
   The functions  should take two arguments. The first is a vector giving the
   coordinates for one colour. The second argument is the reference
   white. If a specific reference white is included in the definition of

@@ -3,6 +3,8 @@
 % Copyright 1995-2007 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{grid.grab}
 \alias{grid.grab}
 \alias{grid.grabExpr}
@@ -58,7 +60,7 @@ grid.grabExpr(expr, warn = 2, wrap = wrap.grobs, wrap.grobs = FALSE,
   the display list (including those
   that are popped) and every
   grob on the display list as a child of the new
-  gTree;  each child has a vpPath in the vp slot so that it is
+  gTree;  each child has a vpPath in the \I{vp} slot so that it is
   drawn in the appropriate viewport.
   In other words, the gTree contains all elements on the display
   list, but in a slightly altered form.

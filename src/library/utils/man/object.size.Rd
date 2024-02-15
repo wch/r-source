@@ -87,16 +87,16 @@ object.size(x)
 
   Summary of \R's legacy and \acronym{IEC} units:
   \tabular{lll}{
-   \bold{object size} \tab\bold{legacy} \tab\bold{IEC}\cr
+   \bold{object size} \tab\bold{legacy} \tab\bold{\acronym{IEC}}\cr
      1                \tab  1 bytes     \tab  1 B    \cr
-     1024             \tab  1 Kb        \tab  1 KiB  \cr
-     1024^2           \tab  1 Mb        \tab  1 MiB  \cr
-     1024^3           \tab  1 Gb        \tab  1 GiB  \cr
-     1024^4           \tab  1 Tb        \tab  1 TiB  \cr
-     1024^5           \tab  1 Pb        \tab  1 PiB  \cr
+     1024             \tab  1 \abbr{Kb} \tab  1 \abbr{KiB}  \cr
+     1024^2           \tab  1 \abbr{Mb} \tab  1 \abbr{MiB}  \cr
+     1024^3           \tab  1 \abbr{Gb} \tab  1 \abbr{GiB}  \cr
+     1024^4           \tab  1 \abbr{Tb} \tab  1 \abbr{TiB}  \cr
+     1024^5           \tab  1 \abbr{Pb} \tab  1 \abbr{PiB}  \cr
      1024^6           \tab              \tab  1 \abbr{EiB}  \cr
-     1024^7           \tab              \tab  1 ZiB  \cr
-     1024^8           \tab              \tab  1 YiB  \cr
+     1024^7           \tab              \tab  1 \abbr{ZiB}  \cr
+     1024^8           \tab              \tab  1 \abbr{YiB}  \cr
   }
 
   Summary of \acronym{SI} units:
@@ -108,7 +108,7 @@ object.size(x)
      1000^3  \tab  1 GB  \cr
      1000^4  \tab  1 TB  \cr
      1000^5  \tab  1 PB  \cr
-     1000^6  \tab  1 EB  \cr
+     1000^6  \tab  1 \abbr{EB}  \cr
      1000^7  \tab  1 ZB  \cr
      1000^8  \tab  1 YB  \cr
      1000^9  \tab  1 RB  \cr

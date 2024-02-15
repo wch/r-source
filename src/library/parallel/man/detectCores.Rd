@@ -47,7 +47,7 @@ detectCores(all.tests = FALSE, logical = TRUE)
 
   Where virtual machines are in use, one would hope that the result
   for \code{logical = TRUE} represents the number of CPUs available (or
-  potentially available) to that particular VM.
+  potentially available) to that particular \abbr{VM}.
 }
 \author{
   Simon Urbanek and Brian Ripley

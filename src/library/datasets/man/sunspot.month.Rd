@@ -3,6 +3,8 @@
 % Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{sunspot.month}
 \docType{data}
 \alias{sunspot.month}
@@ -26,7 +28,7 @@ sunspot.month
   dataset).
 }
 \source{
-  WDC-SILSO, Solar Influences Data Analysis Center (SIDC),
+  \I{WDC-SILSO}, Solar Influences Data Analysis Center (SIDC),
   Royal Observatory of Belgium, Av. Circulaire, 3, B-1180 BRUSSELS
   Currently at \url{http://www.sidc.be/silso/datafiles}% was http://sidc.oma.be/sunspot-data/
 }

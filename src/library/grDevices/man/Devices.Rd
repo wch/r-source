@@ -54,7 +54,7 @@
   It is possible for an \R package (or an \R front-end such as RStudio)
   to provide further graphics devices and several packages on CRAN do
   so.  These include devices outputting SVG (\CRANpkg{svglite} and
-  PGF/TiKZ (\CRANpkg{tikzDevice}, TeX-based graphics, see
+  \abbr{PGF}/TiKZ (\CRANpkg{tikzDevice}, TeX-based graphics, see
   \url{https://pgf.sourceforge.net/}).
 }
 \seealso{

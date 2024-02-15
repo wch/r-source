@@ -5,7 +5,7 @@
 
 \name{stlmethods}
 \alias{plot.stl}
-\title{Methods for STL Objects}
+\title{Methods for \abbr{STL} Objects}
 \description{
   Methods for objects of class \code{stl}, typically the result of
   \code{\link{stl}}.  The \code{plot} method does a multiple figure plot

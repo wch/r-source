@@ -3,6 +3,8 @@
 % Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{ToothGrowth}
 \docType{data}
 \alias{ToothGrowth}
@@ -19,7 +21,7 @@
   A data frame with 60 observations on 3 variables.
   \tabular{rlll}{
     [,1]  \tab \code{len}   \tab numeric  \tab Tooth length\cr
-    [,2]  \tab \code{supp}  \tab factor   \tab Supplement type (VC or OJ).\cr
+    [,2]  \tab \code{supp}  \tab factor   \tab Supplement type (\I{VC} or \I{OJ}).\cr
     [,3]  \tab \code{dose}  \tab numeric  \tab Dose in milligrams/day
   }
 }

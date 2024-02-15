@@ -3,6 +3,8 @@
 % Copyright 1995-2009 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{dataentry}
 \title{Spreadsheet Interface for Entering Data}
 \usage{
@@ -85,7 +87,7 @@ de(\dots, Modes = list(), Names = NULL)
 
   Using any other key starts an editing process on the currently
   selected cell: moving away from that cell enters the edited value
-  whereas Esc cancels the edit and restores the previous value.  When
+  whereas \I{Esc} cancels the edit and restores the previous value.  When
   the editing process starts the cell is cleared.
 #ifdef windows
   The cursor changes to an I-beam to indicate that the cell is in enter mode.

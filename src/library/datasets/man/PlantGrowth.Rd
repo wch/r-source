@@ -3,6 +3,8 @@
 % Copyright 1995-2007 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{PlantGrowth}
 \docType{data}
 \alias{PlantGrowth}
@@ -21,7 +23,8 @@
     [, 2] \tab \code{group}  \tab factor
   }
 
-  The levels of \code{group} are \sQuote{ctrl}, \sQuote{trt1}, and \sQuote{trt2}.
+  The levels of \code{group} are \sQuote{\I{ctrl}}, \sQuote{\I{trt1}},
+  and \sQuote{\I{trt2}}.
 }
 \examples{
 ## One factor ANOVA example from Dobson's book, cf. Table 7.4:

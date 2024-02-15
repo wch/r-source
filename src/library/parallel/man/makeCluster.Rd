@@ -3,6 +3,8 @@
 % Copyright 2003-2023 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{makeCluster}
 \alias{makeCluster}
 \alias{makePSOCKcluster}
@@ -105,7 +107,7 @@ getDefaultCluster()
       load the \pkg{methods} package: not loading it saves ca 30\% of the
       startup CPU time of the cluster.}
     \item{\code{useXDR}}{Logical. If true (default) serialization will
-      use XDR: where large amounts of data are to be transferred and
+      use \I{XDR}: where large amounts of data are to be transferred and
       all the nodes are little-endian, communication may be
       substantially faster if this is set to false.}
     \item{\code{setup_strategy}}{Character.  If \code{"parallel"} (default)

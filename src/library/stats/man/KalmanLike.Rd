@@ -3,6 +3,8 @@
 % Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{KalmanLike}
 \alias{KalmanLike}%-> ../R/Kalman.R
 \alias{KalmanRun}
@@ -73,7 +75,7 @@ makeARIMA(phi, theta, Delta, kappa = 1e6,
   \code{makeARIMA} constructs the state-space model for an ARIMA model,
   see also \code{\link{arima}}.
 
-  The state-space initialization has used Gardner \emph{et al}'s method
+  The state-space initialization has used Gardner \emph{\I{et al}}'s method
   (\code{SSinit = "Gardner1980"}), as only method for years.  However,
   that suffers sometimes from deficiencies when close to non-stationarity.
   For this reason, it may be replaced as default in the future and only
@@ -86,7 +88,7 @@ makeARIMA(phi, theta, Delta, kappa = 1e6,
   It computes the covariance matrix of
   \eqn{(X_{t-1},...,X_{t-p},Z_t,...,Z_{t-q})}
   by the method of difference equations (page 93 of Brockwell and Davis),
-  apparently suggested by a referee of  Gardner \emph{et al} (see p.314 of
+  apparently suggested by a referee of  Gardner \emph{\I{et al}} (see p.314 of
   their paper).
 }
 

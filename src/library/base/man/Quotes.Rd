@@ -59,7 +59,7 @@
   also supported when reading character strings by \code{\link{scan}}
   and \code{\link{read.table}} if \code{allowEscapes = TRUE}.  Unicode
   escapes can be used to enter Unicode characters not in the current
-  locale's charset (when the string will be stored internally in UTF-8).
+  locale's \abbr{charset} (when the string will be stored internally in UTF-8).
   The maximum allowed value for \samp{\\nnn} is \samp{\\377} (the same
   character as \samp{\\xff}).
 

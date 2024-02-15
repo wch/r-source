@@ -3,6 +3,8 @@
 % Copyright 1995-2007 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{pressure}
 \docType{data}
 \alias{pressure}
@@ -22,7 +24,7 @@
 \source{
   Weast, R. C., ed. (1973)
   \emph{Handbook of Chemistry and Physics}.
-  CRC Press.
+  \I{CRC Press}.
 }
 \references{
   McNeil, D. R. (1977)

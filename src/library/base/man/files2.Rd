@@ -83,7 +83,7 @@ Sys.umask(mode = NA)
   file.  So \R interprets \code{mode} to mean set read-only if and only
   if \code{(mode & 0200) == 0} (interpreted in octal).  Windows has a much
   more extensive system of file permissions on some file systems
-  (e.g., versions of NTFS) which are unrelated to this system call.
+  (e.g., versions of \abbr{NTFS}) which are unrelated to this system call.
 #endif
 
   \code{Sys.umask} sets the \code{umask} and returns the previous value:

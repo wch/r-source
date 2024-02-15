@@ -11,7 +11,7 @@
 \description{
   A classical N, P, K (nitrogen, phosphate, potassium) factorial
   experiment on the growth of peas conducted on 6 blocks. Each half of a
-  fractional factorial design confounding the NPK interaction was used
+  fractional factorial design confounding the \abbr{NPK} interaction was used
   on 3 of the plots.
 }
 \usage{

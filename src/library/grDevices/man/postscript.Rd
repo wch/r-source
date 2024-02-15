@@ -72,7 +72,7 @@ postscript(file = if(onefile) "Rplots.ps" else "Rplot\%03d.ps",
     Defaults to true, that is landscape orientation on paper sizes
     with width less than height.}
   \item{pointsize}{the default point size to be used.  Strictly
-    speaking, in bp, that is 1/72 of an inch, but approximately in
+    speaking, in \abbr{bp}, that is 1/72 of an inch, but approximately in
     points.  Defaults to \code{12}.}
   \item{paper}{the size of paper in the printer.  The choices are
     \code{"a4"}, \code{"letter"} (or \code{"us"}), \code{"legal"} and

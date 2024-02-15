@@ -53,7 +53,7 @@ tiff(filename = "Rplot\%03d.tiff",
     given.  Can be \code{px} (pixels, the default), \code{in} (inches),
     \code{cm} or \code{mm}.}
   \item{pointsize}{the default pointsize of plotted text, interpreted as
-    big points (1/72 inch) at \code{res} ppi.}
+    big points (1/72 inch) at \code{res} \abbr{ppi}.}
   \item{bg}{the initial background colour: can be overridden by setting
     par("bg").}
   \item{quality}{the \sQuote{quality} of the \abbr{JPEG} image, as a
@@ -63,7 +63,7 @@ tiff(filename = "Rplot\%03d.tiff",
      numeric value supported by the underlying \code{libtiff} library :
      see its \file{tiff.h} header file.   Ignored with a warning for
      \code{type = "quartz"}.} 
-  \item{res}{The nominal resolution in ppi which will be recorded in the
+  \item{res}{The nominal resolution in \abbr{ppi} which will be recorded in the
     bitmap file, if a positive integer.  Also used for \code{units}
     other than the default, and to convert points to pixels.}
   \item{\dots}{for \code{type = "Xlib"} only, additional arguments to
@@ -136,13 +136,13 @@ tiff(filename = "Rplot\%03d.tiff",
   \code{\link{capabilities}("aqua")}).
 
   By default no resolution is recorded in the file, except for \abbr{BMP}.
-  Viewers will often assume a nominal resolution of 72 ppi when none is
+  Viewers will often assume a nominal resolution of 72 \abbr{ppi} when none is
   recorded.  As resolutions in \abbr{PNG} files are recorded in pixels/metre,
-  the reported ppi value will be changed slightly.
+  the reported \abbr{ppi} value will be changed slightly.
 
   For graphics parameters that make use of dimensions in inches
   (including font sizes in points) the resolution used is \code{res} (or
-  72 ppi if unset).
+  72 \abbr{ppi} if unset).
 
   \code{png} will normally use a palette if there are less than 256
   colours on the page, and record a 24-bit RGB file otherwise (or a
@@ -156,7 +156,7 @@ tiff(filename = "Rplot\%03d.tiff",
   recorded with a dark grey matte which will show up in some viewers,
   including \command{Preview} on macOS.
   
-  Unknown resolutions in \abbr{BMP} files are recorded as 72 ppi.
+  Unknown resolutions in \abbr{BMP} files are recorded as 72 \abbr{ppi}.
 }
 
 \value{
@@ -177,7 +177,7 @@ tiff(filename = "Rplot\%03d.tiff",
   devices.
   \itemize{
     \item On Windows, devices based on plotting to a hidden screen using
-    Windows' GDI calls.
+    Windows' \abbr{GDI} calls.
 
     \item On platforms with support for X11, plotting to a hidden X11
     display.
@@ -244,9 +244,9 @@ tiff(filename = "Rplot\%03d.tiff",
 
   \itemize{
     \item The default device size is in pixels.
-    \item Font sizes are in big points interpreted at \code{res} ppi.
+    \item Font sizes are in big points interpreted at \code{res} \abbr{ppi}.
     \item The default font family is Helvetica.
-    \item Line widths in 1/96 inch (interpreted at \code{res} ppi),
+    \item Line widths in 1/96 inch (interpreted at \code{res} \abbr{ppi}),
     minimum one pixel for \code{type = "Xlib"}, 0.01 for \code{type =
       "cairo"}.
     \item For \code{type = "Xlib"} circle radii are in pixels with

@@ -71,7 +71,7 @@ pdfFonts(\dots)
   The fonts are not embedded in the resulting PostScript or PDF file, so
   software including the PostScript or PDF plot file should either embed
   the font outlines (usually from \file{.pfb} or \file{.pfa} files) or
-  use DSC comments to instruct the print spooler or including
+  use \abbr{DSC} comments to instruct the print spooler or including
   application to do so (see also \code{\link{embedFonts}}).
 
   A font family has both an \R-level name, the argument name used when
@@ -107,7 +107,7 @@ pdfFonts(\dots)
     Korea1deb (PDF) \tab \code{HYGothic-Medium-Acro}\cr  \tab from Adobe Reader 4.0 Korean Font Pack\cr
     GB1 (PS) \tab \code{BousungEG-Light-GB}\cr  \tab TrueType font found on some Linux systems\cr
     GB1 (PDF) \tab \code{STSong-Light-Acro}\cr  \tab from Adobe Reader 7.0 Simplified Chinese Font Pack\cr
-    CNS1 (PS) \tab \code{MOESung-Regular}\cr \tab Ken Lunde's CJKV resources\cr
+    CNS1 (PS) \tab \code{MOESung-Regular}\cr \tab Ken Lunde's \abbr{CJKV} resources\cr
     CNS1 (PDF) \tab \code{MSungStd-Light-Acro}\cr  \tab from Adobe Reader 7.0 Traditional Chinese Font Pack\cr
   }
 %  \code{Baekmuk-Batang} was found at \url{ftp://ftp.mizi.com/pub/baekmuk/}.

@@ -48,7 +48,7 @@
 }
 \section{Unix}{
   The address-space limit is system-specific: 32-bit OSes
-  imposes a limit of no more than 4Gb: it is often 3Gb.  Running
+  imposes a limit of no more than 4\abbr{Gb}: it is often 3\abbr{Gb}.  Running
   32-bit executables on a 64-bit OS will have similar limits: 64-bit
   executables will have an essentially infinite system-specific limit
   (e.g., 128Tb for Linux on x86_64 CPUs).
@@ -62,21 +62,21 @@
 \preformatted{limit cputime 10m
 limit vmemoryuse 4096m
 }
-  to limit a process to 10 minutes of CPU time and (around) 4Gb of
+  to limit a process to 10 minutes of CPU time and (around) 4\abbr{Gb} of
   virtual memory.  (There are other options to set the RAM in use, but they
   are not generally honoured.)
 }
 \section{Windows}{
-  The address-space limit is 2Gb under 32-bit Windows unless the OS's
-  default has been changed to allow more (up to 3Gb).  See
+  The address-space limit is 2\abbr{Gb} under 32-bit Windows unless the OS's
+  default has been changed to allow more (up to 3\abbr{Gb}).  See
   \url{https://docs.microsoft.com/en-gb/windows/desktop/Memory/physical-address-extension}
   and
   \url{https://docs.microsoft.com/en-gb/windows/desktop/Memory/4-gigabyte-tuning}.
   Under most 64-bit versions of Windows the limit for a 32-bit build
-  of \R is 4Gb: for the oldest ones it is 2Gb.  The limit for a 64-bit
+  of \R is 4\abbr{Gb}: for the oldest ones it is 2\abbr{Gb}.  The limit for a 64-bit
   build of \R (imposed by the OS) is 8Tb.
 
-  It is not normally possible to allocate as much as 2Gb to a single
+  It is not normally possible to allocate as much as 2\abbr{Gb} to a single
   vector in a 32-bit build of \R even on 64-bit Windows because of
   preallocations by Windows in the middle of the address space.
 }

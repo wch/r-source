@@ -179,7 +179,7 @@ untar(tarfile, files = NULL, list = FALSE, exdir = ".",
   handles it, and look carefully at the resulting files.  There may also
   be the warning \preformatted{    using pax extended headers}
   This indicates that additional information may have been discarded,
-  such as ACLs, encodings \dots.
+  such as \abbr{ACL}s, encodings \dots.
 
   The former standards only supported ASCII filenames (indeed, only
   alphanumeric plus period, underscore and hyphen).  \code{untar} makes

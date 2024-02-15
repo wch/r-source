@@ -3,6 +3,8 @@
 % Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{clipboard}
 \Rdversion{1.1}
 \alias{getClipboardFormats}
@@ -33,23 +35,23 @@ writeClipboard(str, format = 13)
 
   The standard formats include
   \tabular{lrl}{
-  CF_TEXT        \tab   1  \tab Text in the machine's locale\cr
-  CF_BITMAP      \tab   2  \tab \cr
-  CF_METAFILEPICT \tab  3  \tab Metafile picture\cr
-  CF_SYLK        \tab   4  \tab Symbolic link\cr
-  CF_DIF         \tab   5  \tab Data Interchange Format\cr
-  CF_TIFF        \tab   6  \tab Tagged-Image File Format\cr
-  CF_OEMTEXT     \tab   7  \tab Text in the OEM codepage\cr
-  CF_DIB         \tab   8  \tab Device-Independent Bitmap\cr
-  CF_PALETTE     \tab   9  \tab \cr
-  CF_PENDATA     \tab   10 \tab \cr
-  CF_RIFF        \tab   11 \tab Audio data\cr
-  CF_WAVE        \tab   12 \tab Audio data\cr
-  CF_UNICODETEXT \tab   13 \tab Text in Unicode (UCS-2)\cr
-  CF_ENHMETAFILE \tab   14 \tab Enhanced metafile\cr
-  CF_HDROP       \tab   15 \tab Drag-and-drop data\cr
-  CF_LOCALE      \tab   16 \tab Locale for the text on the clipboard\cr
-  CF_MAX         \tab   17 \tab Shell-oriented formats\cr
+  \I{CF_TEXT}         \tab   1  \tab Text in the machine's locale\cr
+  \I{CF_BITMAP}       \tab   2  \tab \cr
+  \I{CF_METAFILEPICT} \tab  3  \tab Metafile picture\cr
+  \I{CF_SYLK}         \tab   4  \tab Symbolic link\cr
+  \I{CF_DIF}          \tab   5  \tab Data Interchange Format\cr
+  \I{CF_TIFF}         \tab   6  \tab Tagged-Image File Format\cr
+  \I{CF_OEMTEXT}      \tab   7  \tab Text in the \abbr{OEM} codepage\cr
+  \I{CF_DIB}          \tab   8  \tab Device-Independent Bitmap\cr
+  \I{CF_PALETTE}      \tab   9  \tab \cr
+  \I{CF_PENDATA}      \tab   10 \tab \cr
+  \I{CF_RIFF}         \tab   11 \tab Audio data\cr
+  \I{CF_WAVE}         \tab   12 \tab Audio data\cr
+  \I{CF_UNICODETEXT}  \tab   13 \tab Text in Unicode (\I{UCS-2})\cr
+  \I{CF_ENHMETAFILE}  \tab   14 \tab Enhanced metafile\cr
+  \I{CF_HDROP}        \tab   15 \tab Drag-and-drop data\cr
+  \I{CF_LOCALE}       \tab   16 \tab Locale for the text on the clipboard\cr
+  \I{CF_MAX}          \tab   17 \tab Shell-oriented formats\cr
   }
   Applications normally make data available in one or more of these and
   possibly additional private formats.  Use \code{raw = TRUE} to read binary
@@ -61,7 +63,7 @@ writeClipboard(str, format = 13)
   based on \code{CF_LOCALE}, if available.) 
 
   The \code{writeClipboard} function will write a character vector as
-  text or Unicode text with standard CR-LF line terminators.  It will
+  text or Unicode text with standard \abbr{CRLF} line terminators.  It will
   copy a raw vector directly to the clipboard without any changes. It is
   recommended to use Unicode text (the default) instead of text to avoid interoperability
   problems. (Note that \R 4.2 and newer on recent systems uses UTF-8 as the

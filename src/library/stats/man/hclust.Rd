@@ -26,8 +26,8 @@ hclust(d, method = "complete", members = NULL)
   \item{method}{the agglomeration method to be used.  This should
     be (an unambiguous abbreviation of) one of
     \code{"ward.D"}, \code{"ward.D2"}, \code{"single"}, \code{"complete"},
-    \code{"average"} (= UPGMA), \code{"mcquitty"} (= WPGMA),
-    \code{"median"} (= WPGMC) or \code{"centroid"} (= UPGMC).}
+    \code{"average"} (= \abbr{UPGMA}), \code{"mcquitty"} (= \abbr{WPGMA}),
+    \code{"median"} (= \abbr{WPGMC}) or \code{"centroid"} (= \abbr{UPGMC}).}
 
   \item{members}{\code{NULL} or a vector with length size of
     \code{d}. See the \sQuote{Details} section.}

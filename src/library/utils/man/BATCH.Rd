@@ -31,8 +31,8 @@
   suppress this behavior, add \code{options(echo = FALSE)} at the
   beginning of \code{infile}, or use option \option{--no-echo}.
 
-  The \code{infile} can have end of line marked by LF or CRLF (but not
-  just CR), and files with an incomplete last line (missing end of line
+  The \code{infile} can have end of line marked by \abbr{LF} or \abbr{CRLF} (but not
+  just \abbr{CR}), and files with an incomplete last line (missing end of line
   (\abbr{EOL}) mark) are processed correctly.
 
   A final expression \samp{proc.time()} will be executed after the input

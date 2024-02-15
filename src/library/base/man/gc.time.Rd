@@ -8,19 +8,19 @@
 \title{Report Time Spent in Garbage Collection}
 \description{
   This function reports the time spent in garbage collection so far in
-  the \R session while GC timing was enabled.
+  the \R session while \abbr{GC} timing was enabled.
 }
 \usage{
 gc.time(on = TRUE)
 }
 \arguments{
-  \item{on}{logical; if \code{TRUE}, GC timing is enabled.}
+  \item{on}{logical; if \code{TRUE}, \abbr{GC} timing is enabled.}
 }
 \value{
   A numerical vector of length 5 giving the user CPU time, the system
   CPU time, the elapsed time and children's user and system CPU times
   (normally both zero), of time spent doing garbage collection whilst
-  GC timing was enabled.
+  \abbr{GC} timing was enabled.
 
   Times of child processes are not available on Windows and will always
   be given as \code{NA}.

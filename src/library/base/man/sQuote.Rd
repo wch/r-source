@@ -65,7 +65,7 @@ dQuote(x, q = getOption("useFancyQuotes"))
   quotes.
 #ifdef windows
   This is particularly troublesome in Windows \sQuote{Command Prompt}
-  windows, which by default are set up to run in the so-called OEM
+  windows, which by default are set up to run in the so-called \abbr{OEM}
   codepage, which in most locales uses a different encoding from
   Windows.  Further, if the codepage is changed (with \code{chcp.exe},
   e.g.\sspace{}to 1252 in a Western European language), the default raster fonts

@@ -91,12 +91,12 @@ Sys.setLanguage(lang, unset = "en")
   name: your system may have a \command{man} page for it.  With a
   non-\code{NULL} \code{dirname} it specifies where to look for message
   catalogues: with \code{dirname = NULL} it returns the current location.
-  If NLS is not enabled, \code{bindtextdomain(*,*)} returns \code{NULL}.
+  If \abbr{NLS} is not enabled, \code{bindtextdomain(*,*)} returns \code{NULL}.
   %%
   The special case \code{bindtextdomain(NULL)} calls C level
   \code{textdomain(textdomain(NULL))} for the purpose of flushing (i.e.,
   emptying) the cache of already translated strings; it returns \code{TRUE}
-  when NLS is enabled.
+  when \abbr{NLS} is enabled.
 
   The utility \code{Sys.setlanguage(lang)} combines setting the
   \env{LANGUAGE} environment variable with flushing the translation cache

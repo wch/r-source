@@ -28,7 +28,7 @@ Rprof(filename = "Rprof.out", append = FALSE, interval = 0.02,
     real: distance (time interval) between samples in seconds.
   }
   \item{memory.profiling}{logical: write memory use information to the file?}
-  \item{gc.profiling}{logical:  record whether GC is running?}
+  \item{gc.profiling}{logical:  record whether \abbr{GC} is running?}
   \item{line.profiling}{logical:  write line locations to the file?}
   \item{filter.callframes}{logical: filter out intervening call frames
     of the call tree. See the filtering out call frames section.}

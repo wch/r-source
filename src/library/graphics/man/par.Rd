@@ -310,7 +310,7 @@ par(\dots, no.readonly = FALSE)
         Specification}.  A few devices have an argument to set the
       initial value, which is otherwise \code{"black"}.}
     \item{\code{fig}}{A numerical vector of the form \code{c(x1, x2, y1,
-        y2)} which gives the (NDC) coordinates of the figure region in
+        y2)} which gives the (\abbr{NDC}) coordinates of the figure region in
       the display region of the device. If you set this, unlike S, you
       start a new plot, so to add to an existing plot use
       \code{new = TRUE} as well.}
@@ -465,7 +465,7 @@ par(\dots, no.readonly = FALSE)
       \if{latex}{\figure{oma.pdf}{options: width=6cm}}
     }
     \item{\code{omd}}{A vector of the form \code{c(x1, x2, y1, y2)}
-      giving the region \emph{inside} outer margins in NDC (=
+      giving the region \emph{inside} outer margins in \abbr{NDC} (=
       normalized device coordinates), i.e., as a fraction (in \eqn{[0, 1]})
       of the device region.}
     \item{\code{omi}}{A vector of the form \code{c(bottom, left, top,
@@ -494,7 +494,7 @@ par(\dots, no.readonly = FALSE)
       and \code{omi}).
 
       What is meant by \sQuote{point size} is device-specific, but most
-      devices mean a multiple of 1bp, that is 1/72 of an inch.
+      devices mean a multiple of 1\abbr{bp}, that is 1/72 of an inch.
     }
     \item{\code{pty}}{A character specifying the type of plot region to
       be used; \code{"s"} generates a square plotting region and

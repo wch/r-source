@@ -6,7 +6,7 @@
 \name{SSD}
 \alias{SSD}
 \alias{estVar}
-\title{SSD Matrix and Estimated Variance Matrix in Multivariate Models}
+\title{\abbr{SSD} Matrix and Estimated Variance Matrix in Multivariate Models}
 \description{
   Functions to compute matrix of residual sums of squares and products,
   or the estimated variance matrix for multivariate linear models.

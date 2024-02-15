@@ -3,6 +3,8 @@
 % Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{save}
 \alias{save}
 \alias{save.image}
@@ -76,7 +78,7 @@ save.image(file = ".RData", version = NULL, ascii = FALSE,
   promises are saved (together with their evaluation environments).
   (Promises embedded in objects are always saved unevaluated.)
 
-  All \R platforms use the XDR (bigendian) representation of C ints and
+  All \R platforms use the \I{XDR} (bigendian) representation of C ints and
   doubles in binary save-d files, and these are portable across all \R
   platforms.
 

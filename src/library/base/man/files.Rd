@@ -115,7 +115,7 @@ Sys.junction(from, to)
   \code{to} argument can specify a single existing directory.  If
   \code{copy.mode = TRUE} file read/write/execute permissions are copied
   where possible, restricted by \sQuote{\link{umask}}.  (On Windows this
-  applies only to files.)  Other security attributes such as ACLs are not
+  applies only to files.)  Other security attributes such as \abbr{ACL}s are not
   copied.  On a POSIX filesystem the targets of symbolic links will be
   copied rather than the links themselves, and hard links are copied
   separately.  Using \code{copy.date = TRUE} may or may not copy the
@@ -126,9 +126,9 @@ Sys.junction(from, to)
   on those file systems which support them.  For \code{file.symlink} the
   \code{to} argument can specify a single existing directory.  (Unix and
   macOS native filesystems support both.  Windows has hard links to
-  files on NTFS file systems and concepts related to symbolic links on
+  files on \abbr{NTFS} file systems and concepts related to symbolic links on
   recent versions: see the section below on the Windows version of this
-  help page.  What happens on a FAT or SMB-mounted file system is OS-specific.)
+  help page.  What happens on a FAT or \abbr{SMB}-mounted file system is OS-specific.)
   
   File arguments with a marked encoding (see \code{\link{Encoding}} are
   if possible translated to the native encoding, except on Windows where
@@ -171,7 +171,7 @@ Sys.junction(from, to)
 }
 
 \section{Symbolic links on Windows}{ Symbolic links in the sense of
-  POSIX file systems do not exist on Windows: however, NTFS file systems
+  POSIX file systems do not exist on Windows: however, \abbr{NTFS} file systems
   support two similar concepts.
 
   There are \sQuote{junctions} (or \sQuote{junction points}),

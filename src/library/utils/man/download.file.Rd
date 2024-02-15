@@ -181,7 +181,7 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
 
   \command{wget} (\url{https://www.gnu.org/software/wget/}) is commonly
   installed on Unix-alikes (but not macOS).  Windows binaries are
-  available from MSYS2 and elsewhere.
+  available from \abbr{MSYS2} and elsewhere.
 
   \command{curl} (\url{https://curl.se/}) is installed on macOS and
   increasingly commonly on Unix-alikes.  Windows binaries are available
@@ -226,7 +226,7 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   On Windows with \code{method = "libcurl"}, when \R was linked with
   \code{libcurl} with \code{Schannel} enabled, the connection fails if it
   cannot be established that the certificate has not been revoked.  Some
-  MITM proxies present particularly in corporate environments do not work
+  \abbr{MITM} proxies present particularly in corporate environments do not work
   with this behavior. It can be changed by setting environment variable
   \env{R_LIBCURL_SSL_REVOKE_BEST_EFFORT} to \code{TRUE}, with the
   consequence of reducing security.

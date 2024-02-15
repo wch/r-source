@@ -574,7 +574,7 @@ socketTimeout(socket, timeout = -1)
   \code{description} which is marked as being in UTF-8 is passed to
   Windows as a \sQuote{wide} character string.  This allows files with
   names not in the native encoding to be opened on file systems which
-  use Unicode file names (such as NTFS but not FAT32).
+  use Unicode file names (such as \abbr{NTFS} but not FAT32).
 }
 
 \section{\samp{ftp://} URLs}{
@@ -606,7 +606,7 @@ socketTimeout(socket, timeout = -1)
   on macOS (and Solaris) but 1024 on Linux.  The limit can be raised in the
   shell used to launch \R, for example by \command{ulimit -n}.)  File
   descriptors are used for many other purposes including dynamically
-  loading DSO/DLLs (see \code{\link{dyn.load}}) which may use up to 60\%
+  loading \abbr{DSO}/DLLs (see \code{\link{dyn.load}}) which may use up to 60\%
   of the limit.
 
   Windows has a default limit of 512 open C file streams: these are used

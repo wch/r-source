@@ -6,11 +6,11 @@
 \name{DNase}
 \docType{data}
 \alias{DNase}
-\title{Elisa assay of DNase}
+\title{Elisa assay of \abbr{DNase}}
 \description{
   The \code{DNase} data frame has 176 rows and 3 columns of data
   obtained during development of an ELISA assay for the recombinant
-  protein DNase in rat serum.
+  protein \abbr{DNase} in rat serum.
 }
 \usage{DNase}
 \format{

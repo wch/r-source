@@ -19,7 +19,7 @@ close.screen(n, all.screens = FALSE)
   \item{figs}{a two-element vector describing the number of rows and the
     number of columns in a screen matrix \emph{or} a matrix with 4 columns.
     If a matrix, then each row describes a screen with values for the left,
-    right, bottom, and top of the screen (in that order) in NDC units,
+    right, bottom, and top of the screen (in that order) in \abbr{NDC} units,
     that is 0 at the lower left corner of the device surface, and 1 at
     the upper right corner.}
   \item{screen}{a number giving the screen to be split.  It defaults to

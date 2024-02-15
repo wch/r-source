@@ -371,7 +371,7 @@ function(x)
 }
 
 format.aspell_inspect_context <-
-function(x, ..., byfile = FALSE)
+function(x, ..., byfile = FALSE, indent = 2L)
 {
     chunks <- if(byfile) {
         chunks <- split(x, x$File)
@@ -385,9 +385,13 @@ function(x, ..., byfile = FALSE)
             names(chunks),
             chunks)
     } else {
-        y <- sprintf("  %s:%s:%s\n  %s%s%s\n  %s%s",
+        p <- strrep(" ", indent)
+        y <- sprintf("%s%s:%s:%s\n%s%s%s%s\n%s%s%s",
+                     p,
                      x$File, x$Line, x$Column,
+                     p,
                      x$Left, x$Original, x$Right,
+                     p,
                      strrep(" ", as.integer(x$Column) - 1L),
                      strrep("^", nchar(x$Original)))
         chunks <- split(y, x$Original)
@@ -1499,6 +1503,7 @@ function(which, new = character())
                         readLines(txt, encoding = "UTF-8"),
                     enc2utf8(new)))
     new <- new[order(tolower(new), new)]
+    new <- new[nzchar(new)]
     writeLines(new, txt, useBytes = TRUE)
     saveRDS(new, rds)
 }

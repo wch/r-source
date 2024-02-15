@@ -3,6 +3,8 @@
 % Copyright 1995-2019 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{swiss}
 \docType{data}
 \alias{swiss}
@@ -55,7 +57,7 @@
   indicating their source as
   \dQuote{Data used by permission of Franice van de Walle. Office of
   Population Research, Princeton University, 1976.  Unpublished data
-  assembled under NICHD contract number No 1-HD-O-2077.}
+  assembled under NICHD contract number No \I{1-HD-O-2077}.}
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

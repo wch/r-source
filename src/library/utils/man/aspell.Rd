@@ -45,7 +45,7 @@ aspell(files, filter, control = list(), encoding = "unknown",
   obtaining the Aspell, Hunspell and (International) Ispell programs and
   dictionaries.
 
-  On Windows, Aspell is available via MSYS2.  One should use a non-Cygwin
+  On Windows, Aspell is available via \abbr{MSYS2}.  One should use a non-Cygwin
   version, e.g.  package \code{mingw-w64-x86_64-aspell}.  The version built
   against the Cygwin runtime (package \code{aspell}) requires Unix line
   endings in files and Unix-style paths, which is incompatible with

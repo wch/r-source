@@ -3,6 +3,8 @@
 % Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{plotmath}
 \alias{plotmath}
 \alias{symbol}% also for R symbols aka names in ../../base/man/name.Rd
@@ -109,9 +111,9 @@
     \code{tilde(x)}   \tab x with a tilde \cr
     \code{dot(x)} \tab x with a dot \cr
     \code{ring(x)}   \tab x with a ring \cr
-    \code{bar(xy)}   \tab xy with bar \cr
-    \code{widehat(xy)}   \tab xy with a wide circumflex \cr
-    \code{widetilde(xy)} \tab xy with a wide tilde \cr
+    \code{bar(xy)}   \tab \I{xy} with bar \cr
+    \code{widehat(xy)}   \tab \I{xy} with a wide circumflex \cr
+    \code{widetilde(xy)} \tab \I{xy} with a wide tilde \cr
     \code{x \%<->\% y}   \tab x double-arrow y \cr
     \code{x \%->\% y}   \tab x right-arrow y \cr
     \code{x \%<-\% y}   \tab x left-arrow y \cr

@@ -72,7 +72,7 @@ truncate(con, \dots)
   \code{truncate} truncates a file opened for writing at its current
   position.  It works only for \code{file} connections, and is not
   implemented on all platforms: on others (including Windows) it will
-  not work for large (> 2Gb) files.
+  not work for large (> 2\abbr{Gb}) files.
 
   None of these should be expected to work on text-mode connections with
   re-encoding selected.

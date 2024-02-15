@@ -70,11 +70,11 @@ tiff(filename = "Rplot\%03d.tif",
     text and line widths.}
   \item{family}{A length-one character vector specifying the default
     font family.  The default means to use the font numbers on the
-    Windows GDI versions and \code{"sans"} on the cairographics
+    Windows \abbr{GDI} versions and \code{"sans"} on the cairographics
     versions.}
   \item{restoreConsole}{See the \sQuote{Details} section of
     \code{\link{windows}}.  For \code{type == "windows"} only.}
-  \item{type}{Should be plotting be done using Windows GDI or cairographics?}
+  \item{type}{Should be plotting be done using Windows \abbr{GDI} or cairographics?}
   \item{antialias}{Length-one character vector.
 
     For allowed values and their effect on fonts with \code{type =
@@ -101,8 +101,8 @@ tiff(filename = "Rplot\%03d.tif",
   appropriate) values uncompressed---such files are widely accepted,
   which is their main virtue over \abbr{PNG}.
 
-  Windows GDI imposes limits on the size of bitmaps: these are not
-  documented in the SDK and may depend on the version of Windows.
+  Windows \abbr{GDI} imposes limits on the size of bitmaps: these are not
+  documented in the \abbr{SDK} and may depend on the version of Windows.
   It seems that \code{width} and \code{height} are each limited to
   \eqn{2^{15}-1}{2^15-1}.  In addition, there are limits on the total
   number of pixels which depend on the graphics hardware.
@@ -164,7 +164,7 @@ tiff(filename = "Rplot\%03d.tif",
   devices.
   \itemize{
     \item On Windows, devices based on plotting to a hidden screen using
-    Windows' GDI calls.
+    Windows' \abbr{GDI} calls.
 
     \item On platforms with support for X11, plotting to a hidden X11
     display.

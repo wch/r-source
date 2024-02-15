@@ -18,7 +18,7 @@ StructTS(x, type = c("level", "trend", "BSM"), init = NULL,
 \arguments{
   \item{x}{a univariate numeric time series. Missing values are allowed.}
 
-  \item{type}{the class of structural model.  If omitted, a BSM is used
+  \item{type}{the class of structural model.  If omitted, a \abbr{BSM} is used
     for a time series with \code{frequency(x) > 1}, and a local trend
     model otherwise.  Can be abbreviated.}
 
@@ -73,7 +73,7 @@ StructTS(x, type = c("level", "trend", "BSM"), init = NULL,
  }{s[t+1] = -s[t] - \dots - s[t - s + 2] + w[t],  w[t] ~ N(0, \sigma^2_w)}
  The boundary case \eqn{\sigma^2_\omega = 0}{\sigma^2_w = 0} corresponds
  to a deterministic (but arbitrary) seasonal pattern.  (This is
- sometimes known as the \sQuote{dummy variable} version of the BSM.)
+ sometimes known as the \sQuote{dummy variable} version of the \abbr{BSM}.)
 }
 \value{
   A list of class \code{"StructTS"} with components:

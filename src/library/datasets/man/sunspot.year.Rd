@@ -3,6 +3,8 @@
 % Copyright 1995-2007 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{sunspot.year}
 \docType{data}
 \alias{sunspot.year}
@@ -29,7 +31,7 @@ sunspot.year
   and \code{\link{sunspots}}.
   
   Regularly updated yearly sunspot numbers are available from
-  WDC-SILSO, Royal Observatory of Belgium, at
+  \I{WDC-SILSO}, Royal Observatory of Belgium, at
   \url{http://www.sidc.be/silso/datafiles}
 }
 \examples{

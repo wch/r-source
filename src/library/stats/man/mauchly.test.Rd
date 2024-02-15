@@ -35,7 +35,7 @@ mauchly.test(object, ...)
 
   The basic method is for objects of
   class \code{SSD} the method for \code{mlm} objects just extracts the
-  SSD matrix and invokes the corresponding method with the same options
+  \abbr{SSD} matrix and invokes the corresponding method with the same options
   and arguments.
 
   The \code{T} argument is used to transform the observations prior to
@@ -53,7 +53,7 @@ mauchly.test(object, ...)
   compound symmetry in the untransformed covariance matrix.
 
   Notice that the defaults involve \code{p}, which is calculated
-  internally as the dimension of the SSD matrix, and a couple of hidden
+  internally as the dimension of the \abbr{SSD} matrix, and a couple of hidden
   functions in the \pkg{stats} namespace, namely \code{proj} which
   calculates projection matrices from design matrices or model formulas
   and \code{Thin.row} which removes linearly dependent rows from a

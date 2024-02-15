@@ -48,7 +48,7 @@ timestamp(stamp = date(),
     \item{Windows:}{
   The functions described here work in \command{Rgui} and interactive
   \command{Rterm} but not in batch use of \command{Rterm} nor in
-  embedded/DCOM versions.
+  embedded/\abbr{DCOM} versions.
     }
     \item{Unix-alikes:}{
   The functions described here work under the

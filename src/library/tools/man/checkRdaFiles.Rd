@@ -3,6 +3,8 @@
 % Copyright 2009-2021 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{checkRdaFiles}
 \alias{checkRdaFiles}
 \alias{resaveRdaFiles}
@@ -11,7 +13,7 @@
 }
 \description{
   This reports for each of the files produced by \code{save} the size,
-  if it was saved in ASCII or XDR binary format, and if it was
+  if it was saved in ASCII or \I{XDR} binary format, and if it was
   compressed (and if so in what format).
 
   Usually such files have extension \file{.rda} or \file{.RData}, hence
