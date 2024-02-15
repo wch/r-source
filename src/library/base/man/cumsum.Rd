@@ -37,7 +37,7 @@ cummin(x)
   in \code{cumsum} (with a warning).
   In the complex case with \code{\link{NA}}s, these \code{NA} elements may
   have finite real or imaginary parts, notably for \code{cumsum()},
-  fulfulling the identity \code{Im(cumsum(x))} \eqn{\equiv}{=id=} \code{cumsum(Im(x))}.
+  fulfilling the identity \code{Im(cumsum(x))} \eqn{\equiv}{=id=} \code{cumsum(Im(x))}.
 }
 \section{S4 methods}{
   \code{cumsum} and \code{cumprod} are S4 generic functions:

@@ -198,7 +198,7 @@
       of compression if supported by the platform's \samp{libtiff} library.
 
       \item The list of base and recommended package names is now provided by
-      \code{tools :: standard_package_names}.
+      \code{tools::standard_package_names()}.
 
       \item \code{cairo_pdf()} and \code{cairo_ps()} default to
       \code{onefile = TRUE} to closer match \code{pdf()} and
@@ -207,7 +207,7 @@
       \item New option \code{catch.script.errors} provides a documented way
       to catch errors and continue in non-interactive use.
 
-      \item \code{L \%||\% R} newly in base is an expressive idiom for the
+      \item \code{L \%||\% R} newly in \pkg{base} is an expressive idiom for the
       \code{if(!is.null(L)) L else R} or \code{if(is.null(L)) R else L}
       phrases.
 
@@ -426,7 +426,7 @@
       environment variable \env{_R_DEPRECATED_IS_R_}.  Value \samp{warn}
       gives a warning as per the default except immediately, value
       \samp{error} turns this warning into an error (so by default gives
-      a traceback), value \samp{traceback} gives a tracebeck in a
+      a traceback), value \samp{traceback} gives a traceback in a
       message (not a warning, as that may truncate) and value
       \samp{where} gives the call to the function (if any) calling
       \code{is.R} and which namespace it is from.  Value \samp{self} is
@@ -542,7 +542,7 @@
       \code{wilcox.test()} now catch when \code{paired} is passed,
       addressing \PR{14359}; use \code{Pair(x1, x2) ~ 1} for a paired test.
 
-      \item The level reported in the browser prompt was often too
+      \item The level reported in the \code{browser} prompt was often too
       large. It now shows the number of browser contexts on the stack.
 
       \item For \code{cbind()} and \code{rbind()}, the optional
@@ -595,7 +595,7 @@
       has \code{x == 0} or \code{x== n}.
 
       \item \code{pmatch(x, table)} for large \code{table}, also called for
-      data frame row selection, \code{dfrm[nm, ]}, is now interruptable,
+      data frame row selection, \code{dfrm[nm, ]}, is now interruptible,
       fixing \PR{18656}.
 
       \item \code{warning()} with \code{options(warn = 1)} has improved
