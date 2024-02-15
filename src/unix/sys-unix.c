@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2023  The R Core Team
+ *  Copyright (C) 1997--2024  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -579,13 +579,13 @@ int R_pclose_timeout(FILE *fp)
 	/* should not happen */
 	error("Invalid file pointer in pclose");
 
-    /* Do not use fclose, because on Solaris it sets errno to "Invalid seek"
-       when the pipe is already closed (e.g. because of timeout). fclose would
-       not return an error, but it would set errno and the non-zero errno would
-       then be reported by R's "system" function. */
-    int fd = fileno(fp);
-    if (fd >= 0)
-	close(fd);
+    int saveerrno = errno;
+    if (!fclose(fp))
+	/* On Solaris, fclose sets errno to "Invalid seek" when the pipe is
+           already closed (e.g.  because of timeout).  fclose would not
+           return an error, but it would set errno and the non-zero errno
+           would then be reported by R's "system" function.  */
+	errno = saveerrno;
 
     pid_t wres;
     int wstatus;
@@ -673,7 +673,7 @@ static void warn_status(const char *cmd, int res)
 	   an error here (CERT ERR30-C).*/
 	/* on Solaris, if the command ends with non-zero status and timeout
 	   is 0, "Illegal seek" error is reported; the timeout version
-	   works this around by using close(fileno) */
+	   works this around by restoring errno on success */
 	warning(_("running command '%s' had status %d and error message '%s'"),
 		cmd, res, strerror(errno));
     else
