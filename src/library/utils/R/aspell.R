@@ -488,8 +488,9 @@ aspell_control_R_Rd_files <-
 
 aspell_R_Rd_files <-
 function(which = NULL, dir = NULL, 
-         drop = c("\\abbr", "\\acronym", "\\references"),
-         program = NULL, dictionaries = aspell_dictionaries_R)
+         drop = c("\\abbr", "\\acronym", "\\author", "\\references"),
+         program = NULL,
+         dictionaries = c(aspell_dictionaries_R, "R_Rd_files"))
 {
     files <- character()
 

@@ -3,6 +3,8 @@
 % Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{Palettes}
 \alias{rainbow}
 \alias{heat.colors}
@@ -94,9 +96,9 @@ the palettes closely approximate palettes of the same name from various other
 packages (including \pkg{RColorBrewer}, \pkg{rcartocolor}, \pkg{viridis},
 \pkg{scico}, among others). 
 
-The default \abbr{HCL} palette is the widely used viridis palette which is a sequential
+The default \abbr{HCL} palette is the widely used \I{viridis} palette which is a sequential
 palette with relatively high chroma throughout so that it also works reasonably
-well as a qualitative palette. However, while viridis is a rather robust default
+well as a qualitative palette. However, while \I{viridis} is a rather robust default
 palette, more suitable \abbr{HCL} palettes are available for most visualizations.
 
 For example, \code{"Dark 3"} works well for shading points or lines in

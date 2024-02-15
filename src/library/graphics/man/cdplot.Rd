@@ -3,6 +3,8 @@
 % Copyright 1995-2007 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{cdplot}
 \alias{cdplot}
 \alias{cdplot.default}
@@ -82,7 +84,7 @@ cdplot(x, \dots)
   conditional distributions}, Unpublished Manuscript.
 }
 \author{
-  Achim Zeileis \email{Achim.Zeileis@R-project.org}
+  \I{Achim Zeileis} \email{Achim.Zeileis@R-project.org}
 }
 \examples{
 ## NASA space shuttle o-ring failures

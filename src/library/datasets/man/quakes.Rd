@@ -15,11 +15,11 @@
 \format{
   A data frame with 1000 observations on 5 variables.
   \tabular{rlll}{
-    [,1] \tab lat      \tab numeric \tab Latitude of event\cr
-    [,2] \tab long     \tab numeric \tab Longitude\cr
-    [,3] \tab depth    \tab numeric \tab Depth (km)\cr
-    [,4] \tab mag      \tab numeric \tab Richter Magnitude\cr
-    [,5] \tab stations \tab numeric \tab Number of stations reporting
+    [,1] \tab \code{lat}      \tab numeric \tab Latitude of event\cr
+    [,2] \tab \code{long}     \tab numeric \tab Longitude\cr
+    [,3] \tab \code{depth}    \tab numeric \tab Depth (km)\cr
+    [,4] \tab \code{mag}      \tab numeric \tab Richter Magnitude\cr
+    [,5] \tab \code{stations} \tab numeric \tab Number of stations reporting
   }
 }
 \source{

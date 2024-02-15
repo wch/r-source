@@ -32,7 +32,7 @@ mckill(process, signal = 2L)
     \code{select} should be a list of processes and only those from the
     list that are active will be returned.}
   \item{child}{child process (object of the class \code{"childProcess"}) or a
-    process ID (pid).  See also \sQuote{Details}.}
+    process ID (\abbr{pid}).  See also \sQuote{Details}.}
   \item{timeout}{timeout (in seconds, fractions supported) to wait
     for a response before giving up.}
   \item{children}{list of child processes or a single child process
@@ -53,7 +53,7 @@ mckill(process, signal = 2L)
     are serialized before sending just as any other objects
     (suitable for passing evaluation results).}
   \item{process}{process (object of the class \code{process}) or a
-    process ID (pid)}
+    process ID (\abbr{pid})}
   \item{signal}{integer: signal to send.  Values of 2 (SIGINT), 9
     (SIGKILL) and 15 (SIGTERM) are pretty much portable, but for maximal
     portability use \code{tools::\link{SIGTERM}} and so on.}

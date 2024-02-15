@@ -20,10 +20,10 @@
 
   \tabular{rll}{
     No \tab Name \tab Levels\cr
-    1 \tab Class \tab 1st, 2nd, 3rd, Crew\cr
-    2 \tab Sex \tab Male, Female\cr
-    3 \tab Age \tab Child, Adult\cr
-    4 \tab Survived \tab No, Yes
+    1 \tab \code{Class} \tab 1st, 2nd, 3rd, Crew\cr
+    2 \tab \code{Sex} \tab Male, Female\cr
+    3 \tab \code{Age} \tab Child, Adult\cr
+    4 \tab \code{Survived} \tab No, Yes
   }
 }
 \details{

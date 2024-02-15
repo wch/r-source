@@ -48,7 +48,8 @@ SIGUSR2
   should define all of those listed here), which also support a
   \code{kill} system call to send a signal to a process, most often to
   terminate it.  Function \code{pskill} provides a wrapper: it silently
-  ignores invalid values of its arguments, including zero or negative pids.
+  ignores invalid values of its arguments, including zero or negative
+  \abbr{pid}s.
 
   In normal use on a Unix-alike, \kbd{Ctrl-C} sends \code{SIGINT},
   \kbd{Ctrl-\\} sends \code{SIGQUIT} and \kbd{Ctrl-Z} sends

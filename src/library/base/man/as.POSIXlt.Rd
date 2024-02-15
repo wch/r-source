@@ -108,9 +108,9 @@ as.POSIXlt(x, tz = "", \dots)
 as.POSIXct(strptime("2010-10-31 01:30:00", "\%Y-\%m-\%d \%H:\%M:\%S"))
 }
   are respectively invalid (the clocks went forward at 1:00 GMT to 2:00
-  BST) and ambiguous (the clocks went back at 2:00 BST to 1:00 GMT).  What
+  \abbr{BST}) and ambiguous (the clocks went back at 2:00 \abbr{BST} to 1:00 GMT).  What
   happens in such cases is OS-specific: one should expect the first to
-  be \code{NA}, but the second could be interpreted as either BST or
+  be \code{NA}, but the second could be interpreted as either \abbr{BST} or
   GMT (and common OSes give both possible values).  Note too (see
   \code{\link{strftime}}) that OS facilities may not format invalid
   times correctly.

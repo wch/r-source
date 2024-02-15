@@ -40,21 +40,21 @@ get.gpar(names = NULL)
 
   Valid parameter names are:
   \tabular{ll}{
-    col \tab Colour for lines and borders. \cr
-    fill \tab Colour for filling rectangles, polygons, ... \cr
-    alpha \tab Alpha channel for transparency \cr
-    lty \tab Line type \cr
-    lwd \tab Line width \cr
-    lex \tab Multiplier applied to line width \cr
-    lineend \tab Line end style (round, butt, square) \cr
-    linejoin \tab Line join style (round, mitre, bevel) \cr
-    linemitre \tab Line mitre limit (number greater than 1) \cr
-    fontsize \tab The size of text (in points) \cr
-    cex \tab Multiplier applied to fontsize \cr
-    fontfamily \tab The font family \cr
-    fontface \tab The font face (bold, italic, ...) \cr
-    lineheight \tab The height of a line as a multiple of the size of text \cr
-    font \tab Font face (alias for fontface; for backward compatibility) \cr
+    \code{col} \tab Colour for lines and borders. \cr
+    \code{fill} \tab Colour for filling rectangles, polygons, ... \cr
+    \code{alpha} \tab Alpha channel for transparency \cr
+    \code{lty} \tab Line type \cr
+    \code{lwd} \tab Line width \cr
+    \code{lex} \tab Multiplier applied to line width \cr
+    \code{lineend} \tab Line end style (round, butt, square) \cr
+    \code{linejoin} \tab Line join style (round, mitre, bevel) \cr
+    \code{linemitre} \tab Line mitre limit (number greater than 1) \cr
+    \code{fontsize} \tab The size of text (in points) \cr
+    \code{cex} \tab Multiplier applied to fontsize \cr
+    \code{fontfamily} \tab The font family \cr
+    \code{fontface} \tab The font face (bold, italic, ...) \cr
+    \code{lineheight} \tab The height of a line as a multiple of the size of text \cr
+    \code{font} \tab Font face (alias for fontface; for backward compatibility) \cr
   }
   For more details of many of these, see the help for the corresponding
   graphical parameter \code{\link{par}} in base graphics.  (This may

@@ -94,7 +94,7 @@ smooth.spline(x, y = NULL, w = NULL, df, spar = NULL, lambda = NULL, cv = FALSE,
    \eqn{[low, high]}.
  }
 
- \item{tol}{a tolerance for same-ness or uniqueness of the \code{x}
+ \item{tol}{a tolerance for sameness or uniqueness of the \code{x}
    values.  The values are binned into bins of size \code{tol} and
    values which fall into the same bin are regarded as the same.  Must
    be strictly positive (and finite).}

@@ -18,9 +18,9 @@
 \format{
   A data frame with 60 observations on 3 variables.
   \tabular{rlll}{
-    [,1]  \tab len   \tab numeric  \tab Tooth length\cr
-    [,2]  \tab supp  \tab factor   \tab Supplement type (VC or OJ).\cr
-    [,3]  \tab dose  \tab numeric  \tab Dose in milligrams/day
+    [,1]  \tab \code{len}   \tab numeric  \tab Tooth length\cr
+    [,2]  \tab \code{supp}  \tab factor   \tab Supplement type (VC or OJ).\cr
+    [,3]  \tab \code{dose}  \tab numeric  \tab Dose in milligrams/day
   }
 }
 \source{

@@ -167,7 +167,7 @@ win.print(width = 7, height = 7, pointsize = 12, printer = "",
 
   There is support for semi-transparent colours of lines, fills and text
   on the screen devices.  These work for saving (from the \sQuote{File}
-  menu) to PDF, PNG, BMP, JPEG and TIFF, but will be ignored if saving
+  menu) to PDF, PNG, \abbr{BMP}, JPEG and TIFF, but will be ignored if saving
   to Metafile and PostScript.  Limitations in the underlying Windows API
   mean that a semi-transparent object must be contained strictly within
   the device region (allowing for line widths and joins).

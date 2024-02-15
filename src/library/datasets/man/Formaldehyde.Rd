@@ -17,8 +17,8 @@
 \format{
   A data frame with 6 observations on 2 variables.
   \tabular{rlll}{
-    [,1] \tab carb\tab numeric \tab Carbohydrate (ml) \cr
-    [,2] \tab optden \tab numeric \tab Optical Density
+    [,1] \tab \code{carb}   \tab numeric \tab Carbohydrate (ml) \cr
+    [,2] \tab \code{optden} \tab numeric \tab Optical Density
   }
 }
 \source{

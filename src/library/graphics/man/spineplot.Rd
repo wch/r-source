@@ -3,6 +3,8 @@
 % Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{spineplot}
 \alias{spineplot}
 \alias{spineplot.default}
@@ -122,7 +124,7 @@ spineplot(x, \dots)
   \emph{Computational Statistics}, \bold{11}, 23--33.
 }
 \author{
-  Achim Zeileis \email{Achim.Zeileis@R-project.org}
+  \I{Achim Zeileis} \email{Achim.Zeileis@R-project.org}
 }
 \examples{
 ## treatment and improvement of patients with rheumatoid arthritis

@@ -1,3 +1,4 @@
+
 Accessor
 accessor
 accessors
@@ -52,6 +53,8 @@ cartesian
 CCA
 CDF
 CDFs
+centroid
+changepoint
 checkbox
 Cholesky
 CIs
@@ -329,6 +332,8 @@ Quantile
 quantile
 Quantiles
 quantiles
+quartile
+quartiles
 randomizations
 rbind
 reals

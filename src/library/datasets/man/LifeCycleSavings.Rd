@@ -14,12 +14,12 @@
 \format{
   A data frame with 50 observations on 5 variables.
   \tabular{rlll}{
-    [,1]  \tab sr    \tab numeric  \tab aggregate personal savings \cr
-    [,2]  \tab pop15 \tab numeric  \tab \% of population under 15 \cr
-    [,3]  \tab pop75 \tab numeric  \tab \% of population over 75 \cr
-    [,4]  \tab dpi   \tab numeric  \tab real per-capita disposable
+    [,1]  \tab \code{sr}    \tab numeric  \tab aggregate personal savings \cr
+    [,2]  \tab \code{pop15} \tab numeric  \tab \% of population under 15 \cr
+    [,3]  \tab \code{pop75} \tab numeric  \tab \% of population over 75 \cr
+    [,4]  \tab \code{dpi}   \tab numeric  \tab real per-capita disposable
     income \cr
-    [,5]  \tab ddpi  \tab numeric  \tab \% growth rate of dpi
+    [,5]  \tab \code{ddpi}  \tab numeric  \tab \% growth rate of dpi
   }
 }
 \source{

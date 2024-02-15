@@ -19,9 +19,9 @@
 
   \tabular{rll}{
     No \tab Name \tab Levels\cr
-    1 \tab Admit \tab Admitted, Rejected\cr
-    2 \tab Gender \tab Male, Female\cr
-    3 \tab Dept \tab A, B, C, D, E, F
+    1 \tab \code{Admit} \tab Admitted, Rejected\cr
+    2 \tab \code{Gender} \tab Male, Female\cr
+    3 \tab \code{Dept} \tab A, B, C, D, E, F
   }
 }
 \details{

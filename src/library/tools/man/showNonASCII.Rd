@@ -3,6 +3,8 @@
 % Copyright 2008-2023 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{showNonASCII}
 \alias{showNonASCII}
 \alias{showNonASCIIfile}
@@ -30,7 +32,7 @@ showNonASCIIfile(file)
 
   However, this rendering depends on \code{\link{iconv}(to = "ASCII")}
   failing to convert, and macOS 14 no longer does so reliably so for
-  example permille (\samp{\u2030}) is rendered as \code{o/oo}.
+  example \I{permille} (\samp{\u2030}) is rendered as \code{o/oo}.
 }
 \value{
   The elements of \code{x} containing non-ASCII characters will be returned

@@ -63,7 +63,7 @@ gettextf(fmt, \dots, domain = NULL, trim = TRUE)
       \code{0}, \code{1} or \code{NA}.
     }
     \item{\code{f}}{Double precision value, in \dQuote{\bold{f}ixed
-        point} decimal notation of the form "[-]mmm.ddd".  The number of
+        point} decimal notation of the form \samp{"[-]mmm.ddd"}.  The number of
       decimal places ("d") is specified by the precision: the default is 6;
       a precision of 0 suppresses the decimal point.  Non-finite values
       are converted to \code{NA}, \code{NaN} or (perhaps a sign followed

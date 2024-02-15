@@ -3,6 +3,8 @@
 % Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{Hershey}
 \alias{Hershey}
 \title{Hershey Vector Fonts in R}
@@ -175,8 +177,8 @@ You cannot use mathematical expressions (\code{\link{plotmath}}) with
       fontindex, these characters can be produced by a \emph{pair} of octal
       codes.  Given the hexadecimal code (e.g., 0x2421), take the first two
       digits and add 0x80 and do the same to the second two digits (e.g.,
-      0x21 and 0x24 become 0xa4 and 0xa1), then convert both to octal (e.g.,
-      0xa4 and 0xa1 become 244 and 241).  For example, the first Hiragana
+      0x21 and 0x24 become \I{0xa4} and \I{0xa1}), then convert both to octal (e.g.,
+      \I{0xa4} and \I{0xa1} become 244 and 241).  For example, the first Hiragana
       character is produced by \samp{\\244\\241}.
 
       It is also possible to use the hexadecimal code directly.  This works
@@ -196,7 +198,7 @@ You cannot use mathematical expressions (\code{\link{plotmath}}) with
       fonts are stored in a large array.  Some characters are not
       accessible in any of the Hershey fonts.  These characters can only
       be accessed via an escape sequence of the form \samp{\\\\#H1234}.
-      For example, the fleur-de-lys is produced by \samp{\\\\#H0746}.
+      For example, the \I{fleur-de-lys} is produced by \samp{\\\\#H0746}.
       The sixth and seventh tables of \code{demo(Hershey)} shows all of
       the available raw glyphs.
     }

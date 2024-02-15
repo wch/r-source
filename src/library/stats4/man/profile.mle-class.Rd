@@ -12,7 +12,7 @@
 \description{Likelihood profiles along each parameter of likelihood function}
 \section{Objects from the Class}{
 Objects can be created by calls of the form \code{new("profile.mle",
-  ...)}, but most often by invoking \code{profile} on an "mle" object.
+  ...)}, but most often by invoking \code{profile} on an \code{"mle"} object.
 }
 \section{Slots}{
   \describe{

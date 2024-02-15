@@ -18,7 +18,7 @@ simulate(object, nsim = 1, seed = NULL, \dots)
   \item{nsim}{number of response vectors to simulate.  Defaults to \code{1}.}
   \item{seed}{an object specifying if and how the random number
     generator should be initialized (\sQuote{seeded}).\cr
-    For the "lm" method, either \code{NULL} or an integer that will be
+    For the \code{"lm"} method, either \code{NULL} or an integer that will be
     used in a call to \code{set.seed} before simulating the response
     vectors.  If set, the value is saved as the \code{"seed"} attribute
     of the returned value.  The default, \code{NULL} will not change the

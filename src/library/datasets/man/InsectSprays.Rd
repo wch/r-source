@@ -15,8 +15,8 @@
 \format{
   A data frame with 72 observations on 2 variables.
   \tabular{rlll}{
-    [,1]  \tab count  \tab numeric  \tab Insect count\cr
-    [,2]  \tab spray  \tab factor   \tab The type of spray
+    [,1]  \tab \code{count}  \tab numeric  \tab Insect count\cr
+    [,2]  \tab \code{spray}  \tab factor   \tab The type of spray
   }
 }
 \source{

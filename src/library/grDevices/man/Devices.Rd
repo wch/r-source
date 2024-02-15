@@ -29,7 +29,7 @@
     \item{\code{\link{svg}}:}{SVG device based on cairo graphics}
     \item{\code{\link{png}}:}{PNG bitmap device}
     \item{\code{\link{jpeg}}:}{JPEG bitmap device}
-    \item{\code{\link{bmp}}:}{BMP bitmap device}
+    \item{\code{\link{bmp}}:}{\abbr{BMP} bitmap device}
     \item{\code{\link{tiff}}:}{TIFF bitmap device}
   }
   On Unix-alikes (including macOS) only:

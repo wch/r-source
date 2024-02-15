@@ -8,7 +8,7 @@
 \alias{isoreg}
 \concept{monotonic regression}
 \description{
-  Compute the isotonic (monotonely increasing nonparametric) least
+  Compute the isotonic (monotonically increasing nonparametric) least
   squares regression which is piecewise constant.
 }
 \usage{

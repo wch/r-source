@@ -35,7 +35,7 @@
       \code{chilled}
     }
     \item{conc}{
-      a numeric vector of ambient carbon dioxide concentrations (mL/L).
+      a numeric vector of ambient carbon dioxide concentrations (\abbr{mL}/L).
     }
     \item{uptake}{
       a numeric vector of carbon dioxide uptake rates

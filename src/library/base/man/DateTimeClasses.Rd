@@ -3,6 +3,8 @@
 % Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{DateTimeClasses}
 % implementation mostly in ../R/datetime.R
 \alias{DateTimeClasses}
@@ -103,8 +105,8 @@
   see the section \sQuote{Details on POSIXlt} below for more details.
 
   The classes correspond to the POSIX/C99 constructs of \sQuote{calendar
-    time} (the \code{time_t} data type, \dQuote{ct}), and \sQuote{local time}
-  (or broken-down time, the \samp{struct tm} data type, \dQuote{lt}),
+    time} (the \code{time_t} data type, \dQuote{\I{ct}}), and \sQuote{local time}
+  (or broken-down time, the \samp{struct tm} data type, \dQuote{\I{lt}}),
   from which they also inherit their names.
 
   \code{"POSIXct"} is more convenient for including in data frames, and

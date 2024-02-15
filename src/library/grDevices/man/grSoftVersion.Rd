@@ -3,6 +3,8 @@
 % Copyright 2014-2021 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{grSoftVersion}
 \alias{grSoftVersion}
 \title{Report Versions of Graphics Software}
@@ -19,11 +21,11 @@ grSoftVersion()
   \item{cairo}{the version of cairographics in use, or \code{""} if
     cairographics is not available.}
   \item{cairoFT}{the FreeType/FontConfig versions if cairographics is
-    using those libraries directly (not \emph{via} pango); otherwise,
+    using those libraries directly (not \emph{via} \I{pango}); otherwise,
     \code{""}.  Earlier versions of \R returned \code{"yes"} rather than
     the versions.  The FontConfig version is determined when \R is built.}
-  \item{pango}{the version of pango in use, or \code{""} if
-    pango is not available.}
+  \item{pango}{the version of \I{pango} in use, or \code{""} if
+    \I{pango} is not available.}
 
   It may also contain the versions of third-party software used by the
   standard (on Windows), or X11-based (on Unix-alikes)

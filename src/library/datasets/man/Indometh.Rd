@@ -26,7 +26,7 @@
       a numeric vector of times at which blood samples were drawn (hr).
     }
     \item{conc}{
-      a numeric vector of plasma concentrations of indometacin (mcg/ml).
+      a numeric vector of plasma concentrations of indometacin (\abbr{mcg}/ml).
     }
   }
 }

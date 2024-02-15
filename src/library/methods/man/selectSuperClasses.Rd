@@ -3,6 +3,8 @@
 % Copyright 2009-2016 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{selectSuperClasses}
 \alias{selectSuperClasses}
 \alias{.selectSuperClasses}
@@ -40,7 +42,7 @@ selectSuperClasses(Class, dropVirtual = FALSE, namesOnly = TRUE,
 }
 \note{The typical user level function is \code{selectSuperClasses()}
   which calls \code{.selectSuperClasses()}; i.e., the latter should only
-  be used for efficiency reasons by experienced useRs.
+  be used for efficiency reasons by experienced \I{useR}s.
 }
 \value{
   a \code{\link{character}} vector (if \code{namesOnly} is true, as per

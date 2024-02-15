@@ -3,6 +3,8 @@
 % Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{convertColor}
 \alias{convertColor}
 \alias{colorspaces}
@@ -55,7 +57,7 @@ convertColor(color, from, to, from.ref.white, to.ref.white,
   standard \abbr{CIE} illuminants supported are \code{B}, \code{C}, \code{E} and
   \code{D55}.  RGB colour spaces are defined relative to a particular
   reference white, and can be only approximately translated to other
-  reference whites.  The von Kries chromatic adaptation algorithm is used
+  reference whites.  The \I{von Kries} chromatic adaptation algorithm is used
   for this.  Prior to \R 3.6, color conversions involving color spaces
   created with \code{\link{make.rgb}} were carried out assuming a \code{D65}
   illuminant, irrespective of the actual illuminant used in the creation of the

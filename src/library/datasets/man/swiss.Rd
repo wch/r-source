@@ -8,7 +8,7 @@
 \alias{swiss}
 \title{Swiss Fertility and Socioeconomic Indicators (1888) Data}
 \description{
-  Standardized fertility measure and socio-economic indicators for each
+  Standardized fertility measure and socioeconomic indicators for each
   of 47 French-speaking provinces of Switzerland at about 1888.
 }
 \usage{swiss}
@@ -17,19 +17,19 @@
   is in percent, i.e., in \eqn{[0, 100]}.
 
   \tabular{rll}{
-    [,1] \tab Fertility \tab \eqn{I_g}{Ig},
+    [,1] \tab \code{Fertility} \tab \eqn{I_g}{Ig},
     \sQuote{common standardized fertility measure}\cr
-    [,2] \tab Agriculture\tab \% of males involved in agriculture
+    [,2] \tab \code{Agriculture} \tab \% of males involved in agriculture
     as occupation\cr
-    [,3] \tab Examination\tab \% draftees receiving highest mark
+    [,3] \tab \code{Examination} \tab \% draftees receiving highest mark
     on army examination\cr
-    [,4] \tab Education \tab \% education beyond primary school for draftees.\cr
-    [,5] \tab Catholic \tab \% \sQuote{catholic} (as opposed to \sQuote{protestant}).\cr
-    [,6] \tab Infant.Mortality\tab live births who live less than 1
+    [,4] \tab \code{Education} \tab \% education beyond primary school for draftees.\cr
+    [,5] \tab \code{Catholic} \tab \% \sQuote{catholic} (as opposed to \sQuote{protestant}).\cr
+    [,6] \tab \code{Infant.Mortality} \tab live births who live less than 1
     year.
   }
 
-  All variables but \sQuote{Fertility} give proportions of the
+  All variables but \code{Fertility} give proportions of the
   population.
 }
 \details{
@@ -43,7 +43,7 @@
   about 1888.
 
   Here, all variables are scaled to \eqn{[0, 100]}, where in the
-  original, all but \code{"Catholic"} were scaled to \eqn{[0, 1]}.
+  original, all but \code{Catholic} were scaled to \eqn{[0, 1]}.
 }
 \source{
   Project \dQuote{16P5}, pages 549--551 in

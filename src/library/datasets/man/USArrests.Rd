@@ -17,10 +17,10 @@
   A data frame with 50 observations on 4 variables.
 
   \tabular{rlll}{
-    [,1]  \tab Murder    \tab numeric \tab Murder arrests (per 100,000)\cr
-    [,2]  \tab Assault   \tab numeric \tab Assault arrests (per 100,000)\cr
-    [,3]  \tab UrbanPop  \tab numeric \tab Percent urban population\cr
-    [,4]  \tab Rape      \tab numeric \tab Rape arrests (per 100,000)
+    [,1]  \tab \code{Murder}    \tab numeric \tab Murder arrests (per 100,000)\cr
+    [,2]  \tab \code{Assault}   \tab numeric \tab Assault arrests (per 100,000)\cr
+    [,3]  \tab \code{UrbanPop}  \tab numeric \tab Percent urban population\cr
+    [,4]  \tab \code{Rape}      \tab numeric \tab Rape arrests (per 100,000)
   }
 }
 \source{

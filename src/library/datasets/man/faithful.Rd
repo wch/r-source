@@ -15,9 +15,9 @@
 \usage{faithful}
 \format{A data frame with 272 observations on 2 variables.
   \tabular{rlll}{
-    [,1]  \tab eruptions  \tab numeric  \tab Eruption time in mins \cr
-    [,2]  \tab waiting    \tab numeric  \tab Waiting time to next
-    eruption (in mins)\cr
+    [,1]  \tab \code{eruptions}  \tab numeric  \tab Eruption time in \abbr{min}s \cr
+    [,2]  \tab \code{waiting}    \tab numeric  \tab Waiting time to next
+    eruption (in \abbr{min}s)\cr
   }
 }
 \source{W. Härdle.}

@@ -94,7 +94,7 @@ object.size(x)
      1024^3           \tab  1 Gb        \tab  1 GiB  \cr
      1024^4           \tab  1 Tb        \tab  1 TiB  \cr
      1024^5           \tab  1 Pb        \tab  1 PiB  \cr
-     1024^6           \tab              \tab  1 EiB  \cr
+     1024^6           \tab              \tab  1 \abbr{EiB}  \cr
      1024^7           \tab              \tab  1 ZiB  \cr
      1024^8           \tab              \tab  1 YiB  \cr
   }

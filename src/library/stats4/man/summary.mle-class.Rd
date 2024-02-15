@@ -7,16 +7,16 @@
 \docType{class}
 \alias{summary.mle-class}
 \title{Class \code{"summary.mle"}, Summary of \code{"mle"} Objects}
-\description{Extract of "mle" object}
+\description{Extract of \code{"mle"} object}
 \section{Objects from the Class}{
 Objects can be created by calls of the form \code{new("summary.mle",
-  ...)}, but most often by invoking \code{summary} on an "mle" object.
+  ...)}, but most often by invoking \code{summary} on an \code{"mle"} object.
 They contain values meant for printing by \code{show}.
 }
 \section{Slots}{
   \describe{
     \item{\code{call}:}{Object of class \code{"language"} The call that
-      generated the "mle" object.}
+      generated the \code{"mle"} object.}
     \item{\code{coef}:}{Object of class \code{"matrix"}. Estimated
       coefficients and standard errors }
     \item{\code{m2logL}:}{Object of class \code{"numeric"}. Minus twice

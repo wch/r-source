@@ -16,7 +16,7 @@
 
   \tabular{rlll}{
     \code{[,1]} \tab \code{Ozone}   \tab numeric \tab Ozone (ppb)\cr
-    \code{[,2]} \tab \code{Solar.R} \tab numeric \tab Solar R (lang)\cr
+    \code{[,2]} \tab \code{Solar.R} \tab numeric \tab Solar R (\abbr{lang})\cr
     \code{[,3]} \tab \code{Wind}    \tab numeric \tab Wind (mph)\cr
     \code{[,4]} \tab \code{Temp}    \tab numeric \tab Temperature (degrees F)\cr
     \code{[,5]} \tab \code{Month}   \tab numeric \tab Month (1--12)\cr

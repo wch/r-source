@@ -34,9 +34,9 @@ writeBin(object, con, size = NA_integer_,
   \item{signed}{logical.  Only used for integers of sizes 1 and 2,
     when it determines if the quantity on file
     should be regarded as a signed or unsigned integer.}
-  \item{endian}{The endian-ness (\code{"big"} or \code{"little"}) of the
+  \item{endian}{The endianness (\code{"big"} or \code{"little"}) of the
     target system for the file.  Using \code{"swap"} will force swapping
-    endian-ness.}
+    endianness.}
   \item{object}{An \R object to be written to the connection.}
   \item{useBytes}{See \code{\link{writeLines}}.}
 }

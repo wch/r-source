@@ -1,5 +1,6 @@
 % -*- coding: utf-8 -*-
 \newcommand{\Rlogo}{\if{html}{\figure{../../html/Rlogo.svg}{options: class="toplogo" alt="[R logo]"}}\if{latex}{\figure{Rlogo.pdf}{options: width=0.5in}}}
+\newcommand{\I}{#1}
 
 \name{NEWS}
 \title{R News}
@@ -136,7 +137,7 @@
       equivalent to \code{"#112233"}.
 
       Thanks to MikeFC for the original idea and Ella Kaye, Malcolm
-      Barrett, George Stagg, and Hanne Oberman for the patch.
+      Barrett, George Stagg, and \I{Hanne Oberman} for the patch.
 
       \item Plain-text help shows \verb{\var} markup with angle brackets.
 
@@ -180,7 +181,7 @@
 
       In a UTF-8 locale some transliterations are now done with a
       warning (e.g., dashes and Unicode minus to hyphen, ligatures are
-      expanded, permille (\samp{‰}) is replaced by \samp{o/oo}),
+      expanded, \I{permille} (\samp{‰}) is replaced by \samp{o/oo}),
       although the OS may have got there first.  These are warnings as
       they will continue to be replaced by dots in earlier versions of
       \R.
@@ -649,7 +650,7 @@
 
       \item \code{match(<POSIXct>, .)} is correct again for differing time
       zones, ditto for \code{"POSIXlt"}, fixing \PR{18618} reported by
-      Bastian Klein.
+      \I{Bastian Klein}.
 
       \item \code{drop.terms(*, dropx = <0-length>)} now works, fixing
       \PR{18563} as proposed by Mikael Jagan.
@@ -714,8 +715,8 @@
 
       \item \code{trans3d()} gains options \code{continuous} and
       \code{verbose} addressing the problem of possible \dQuote{wrap
-	around} when projecting too long curves, as reported by Achim Zeileis
-      in \PR{18537}.
+	around} when projecting too long curves, as reported by \I{Achim
+      Zeileis} in \PR{18537}.
 
       \item \code{tools::showNonASCII()} has been rewritten to work
       better on macOS 14 (which has a changed implementation of
@@ -869,7 +870,7 @@
       strings, fixing installation tests on Windows without Rtools
       installed (\PR{18530}).
 
-      \item Fix (new) bug in \code{hcl.colors(2, *)}, by Achim Zeileis (\PR{18523}).
+      \item Fix (new) bug in \code{hcl.colors(2, *)}, by \I{Achim Zeileis} (\PR{18523}).
 
       \item \code{head(., <illegal>)} and \code{tail(..)} now produce
       more useful \code{"Error in ...."} error messages, fixing \PR{18362}.
@@ -988,7 +989,7 @@
 
       \item Added new unit prefixes \code{"R"} and \code{"Q"} for
       abbreviating (unrealistically large) sizes beyond \eqn{10^{27}} in
-      \code{standard = "SI"}, thanks to Henrik Bengtsson's \PR{18435}.
+      \code{standard = "SI"}, thanks to \I{Henrik Bengtsson}'s \PR{18435}.
 
       \item \code{as.data.frame()}'s default method now also works fine
       with atomic objects inheriting from classes such as \code{"roman"},
@@ -1096,12 +1097,12 @@
       \item Calling \code{a:b} when numeric \code{a} or \code{b} is longer
       than one may now be made into an error by setting environment variable
       \env{_R_CHECK_LENGTH_COLON_} to a true value, along the proposal in
-      \PR{18419} by Henrik Bengtsson.
+      \PR{18419} by \I{Henrik Bengtsson}.
 
       \item \code{density(x, weights = *)} now warns if automatic bandwidth
       selection happens without using \code{weights}; new optional
-      \code{warnWbw} may suppress the warning.  Prompted by Christoph
-      Dalitz' \PR{18490} and its discussants.
+      \code{warnWbw} may suppress the warning.  Prompted by \I{Christoph
+      Dalitz}' \PR{18490} and its discussants.
 
       \item \code{rm(list = *)} is faster and more readable thanks to Kevin
       Ushey's \PR{18492}.
@@ -1433,7 +1434,7 @@
       \abbr{URI}s and noting empty \samp{\item} labels in description lists.
 
       \item \command{R CMD check} now also reports problems when reading
-      package news in md (file \file{NEWS.md}) and (optionally) plain
+      package news in \abbr{md} (file \file{NEWS.md}) and (optionally) plain
       text (file \file{NEWS}) formats.
 
       \item \env{_R_CHECK_TIMINGS_} defaults to a value from the
@@ -1512,7 +1513,7 @@
 
       \item \code{as.character(<Rd>, deparse = TRUE)} failed to
       re-escape curly braces in LaTeX-like text.
-      (Reported by Hadley Wickham in \PR{18324}.)
+      (Reported by \I{Hadley Wickham} in \PR{18324}.)
 
       \item \code{library()} now passes its \code{lib.loc} argument when
       requiring \code{Depends} packages; reported (with fix) in \PR{18331}
@@ -1545,7 +1546,7 @@
 
       \item \code{ordered(levels = *)} (missing \code{x}) now works
       analogously to \code{factor(, ordered=TRUE)}; reported (with fix)
-      by Achim Zeileis in \PR{18389}.
+      by \I{Achim Zeileis} in \PR{18389}.
 
       \item User-defined Rd macro definitions can now span multiple lines,
       thanks to a patch from Duncan Murdoch. Previously, the Rd parser
@@ -1648,7 +1649,7 @@
       files now, fixing another inadvertent bug.
 
       \item \code{predict.lm(<model with offset>)} now finds the offset in
-      the correct environment, thanks to André Gillibert's report and patch
+      the correct environment, thanks to \I{André Gillibert}'s report and patch
       in \PR{18456}.
 
       \item \code{getInitial(<formula>)} now finds the \code{selfStart}
@@ -1680,7 +1681,7 @@
 
       \item Vectorized alpha handling in palette functions such as in
       \code{gray()}, \code{rainbow()}, or \code{hcl.colors()} works
-      correctly now, thanks to Achim Zeileis' report and patch in
+      correctly now, thanks to \I{Achim Zeileis}' report and patch in
       \PR{18476}.
 
       \item Formatting and \code{print()}ing of \code{bibentry} objects has
@@ -1744,7 +1745,7 @@
       is the length of the longest component.
 
       \item \code{as.POSIXlt.Date()} could underflow for dates in the
-      far past (more than half a million years BCE).
+      far past (more than half a million years \abbr{BCE}).
 
       \item \code{as.Date.POSIXlt(x)} would return \code{"1970-01-01"}
       instead of \code{NA} in R 4.2.2, e.g., for \preformatted{
@@ -1853,7 +1854,7 @@
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{Rscript -e} would fail if \file{stdin} were closed
-      (Reported by Henrik Bengtsson.)
+      (Reported by \I{Henrik Bengtsson}.)
 
       \item \code{qt(*, log.p=TRUE)} in outer tails no longer produces
       \code{NaN} in its final steps, thus fixing \PR{18360}.
@@ -1885,7 +1886,7 @@
       too late to have the intended effect.
 
       \item \code{as.POSIXlt(x)} now also works with very large dates
-      \code{x}, fixing \PR{18401} reported by Hannes Mühleisen.
+      \code{x}, fixing \PR{18401} reported by \I{Hannes Mühleisen}.
 
       \item Files can now be extracted even from very large zip archives
       (\PR{18390}, thanks to Martin Jakt).
@@ -1942,7 +1943,7 @@
   \subsection{INSTALLATION on a UNIX-ALIKE}{
     \itemize{
       \item The libraries searched for by \option{--with-blas} (without
-      a value) now include BLIS (after OpenBLAS but before ATLAS).  And
+      a value) now include \I{BLIS} (after OpenBLAS but before ATLAS).  And
       on macOS, the Accelerate framework (after ATLAS).  (This is
       patterned after the \code{AX_BLAS} macro from the Autoconf Archive.)
 
@@ -2177,7 +2178,7 @@
 
       \item \code{substr(ch, start,end) <- new} now e.g., preserves
       \code{names(ch)}; ditto for \code{substring()}, thanks to a patch
-      from Brodie Gaslam.
+      from \I{Brodie Gaslam}.
 
       \item \code{plot(<lm>)} gains a \code{extend.ylim.f} argument, in
       partial response to \PR{15285}; further \PR{17784} is fixed thanks to
@@ -2835,7 +2836,7 @@
 
       \item \code{substr(., start, stop) <- v} now treats \emph{negative}
       \code{stop} values correctly.  Reported with a patch in \PR{18228} by
-      Brodie Gaslam.
+      \I{Brodie Gaslam}.
 
       \item Subscripting an array \code{x} without dimnames by a
       \code{length(dim(x))}-column character matrix gave "random"
@@ -2860,7 +2861,7 @@
 
       \item Modifying \code{globalCallingHandlers} inside
       \code{withCallingHandlers()} now works or fails correctly, thanks to
-      Henrik Bengtsson's \PR{18257}.
+      \I{Henrik Bengtsson}'s \PR{18257}.
 
       \item \code{hist(<Date>, breaks = "days")} and
       \code{hist(<POSIXt>, breaks = "secs")}
@@ -2939,7 +2940,7 @@
 
       \item Setting the RNG to \code{"Marsaglia-Multicarry"} e.g., by
       \code{RNGkind()}, now warns in more places, thanks to
-      André Gillibert's report and patch in \PR{18168}.
+      \I{André Gillibert}'s report and patch in \PR{18168}.
 
       \item \code{gray(numeric(), alpha=1/2)} no longer segfaults, fixing
       \PR{18183}, reported by Till Krenz.
@@ -3070,7 +3071,7 @@
 
       \item \code{dnbinom(20, <large>, 1)} now correctly gives 0, and
       similar cases are more accurate with underflow precaution.
-      (Reported by Francisco Vera Alcivar in \PR{18072}.)
+      (Reported by \I{Francisco Vera Alcivar} in \PR{18072}.)
     }
   }
 }
@@ -3279,7 +3280,7 @@
       \item New function \code{gregexec()} which generalizes \code{regexec()}
       to find \emph{all} disjoint matches and all substrings
       corresponding to parenthesized subexpressions of the given regular
-      expression.  (Contributed by Brodie Gaslam.)
+      expression.  (Contributed by \I{Brodie Gaslam}.)
 
       \item New function \code{charClass()} in package \pkg{utils} to
       query the wide-character classification functions in use (such as
@@ -3307,7 +3308,7 @@
       \code{hcl.colors()} (approximating palettes of the same name
       from the \pkg{viridisLite} package).
 
-      Contributed by Achim Zeileis.
+      Contributed by \I{Achim Zeileis}.
 
       \item The base environment and its namespace are now locked (so
       one can no longer add bindings to these or remove from these).
@@ -3741,7 +3742,7 @@
 
       \item \code{cut.Date()} and \code{cut.POSIXt()} could produce an
       empty last interval for \code{breaks = "months"} or \code{breaks =
-      "years"}.  (Reported as \PR{18053} by Christopher Carbone.)
+      "years"}.  (Reported as \PR{18053} by \I{Christopher Carbone}.)
 
       \item Detection of the encoding of \sQuote{regular} macOS locales
       such as \samp{en_US} (which is UTF-8) had been broken by a macOS
@@ -3802,7 +3803,7 @@
 
       \item Unicode character width tables (as used by
       \code{nchar(, type = "w")}) have been updated to Unicode 12.1
-      by Brodie Gaslam (\PR{17781}), including many emoji.
+      by \I{Brodie Gaslam} (\PR{17781}), including many emoji.
 
       \item The internal table for \code{iswprint} (used on Windows,
       macOS and AIX) has been updated to include many recent Unicode
@@ -3827,13 +3828,13 @@
       \PR{17897}.
 
       \item \code{(~ NULL)[1]} and similar formula subsetting now works,
-      thanks to a report and patch by Henrik Bengtsson in \PR{17935}.
+      thanks to a report and patch by \I{Henrik Bengtsson} in \PR{17935}.
       Additionally, subsetting leaving an empty formula now works too,
       thanks to suggestions by Suharto Anggono.
 
       \item \code{.traceback(n)} keeps source references again, as before
       \R 4.0.0, fixing a regression; introduced by the \PR{17580}, reported
-      including two patch proposals by Brodie Gaslam.
+      including two patch proposals by \I{Brodie Gaslam}.
 
       \item \code{unlist(plst, recursive=FALSE)} no longer drops content
       for pairlists with list components, thanks to the report and patch
@@ -3958,7 +3959,7 @@
       \item Low-level socket read/write operations have been fixed to
       correctly signal communication errors. Previously, such errors could
       lead to a segfault due to invalid memory access. Reported
-      and debugged by Dmitriy Selivanov in \PR{17850}.
+      and debugged by \I{Dmitriy Selivanov} in \PR{17850}.
 
       \item \code{quantile(x, pr)} works more consistently for \code{pr}
       values slightly outside [0,1], thanks to Suharto Anggono's \PR{17891}.
@@ -3993,7 +3994,7 @@
       encodings inside a single vector \PR{17809}.
 
       \item \code{phyper(11, 15, 0, 12, log.p=TRUE)} no longer gives
-      \code{NaN}; reported as \PR{17271} by Alexey Stukalov.
+      \code{NaN}; reported as \PR{17271} by \I{Alexey Stukalov}.
 
       \item Fix incorrect calculation in \code{logLik.nls()} \PR{16100}, patch
       from Sebastian Meyer.
@@ -4032,7 +4033,7 @@
       empty lines; reported by Bill Dunlap in \PR{17769}.
 
       \item \code{on.exit()} now correctly matches named arguments, thanks
-      to \PR{17815} (including patch) by Brodie Gaslam.
+      to \PR{17815} (including patch) by \I{Brodie Gaslam}.
 
       \item \code{regexpr(*, perl=TRUE)} no longer returns incorrect
       positions into text containing characters outside of the Unicode
@@ -4208,7 +4209,7 @@
       rather than the \emph{\code{deparse()}d} calls, deferring the
       deparsing to the user-level functions \code{.traceback()} and
       \code{traceback()}.  This fulfils the wish of \PR{17580}, reported
-      including two patch proposals by Brodie Gaslam.
+      including two patch proposals by \I{Brodie Gaslam}.
 
       \item \code{data.matrix()} now converts character columns to
       factors and from this to integers.
@@ -4310,7 +4311,7 @@
       \item \code{readBin()} and \code{writeBin()} now report an error
       for an invalid \code{endian} value.  The affected code needs to be
       fixed with care as the old undocumented behavior was to swap
-      endian-ness in such cases.
+      endianness in such cases.
 
       \item \code{sequence()} is now an S3 generic with an internally
       implemented default method, and gains arguments to generate more
@@ -4598,7 +4599,7 @@
 
       \item \command{R CMD check} now optionally checks
       \command{configure} and \command{cleanup} scripts for
-      non-Bourne-shell code (\sQuote{bashisms}).
+      non-\I{Bourne}-shell code (\sQuote{bashisms}).
 
       \item \command{R CMD check --as-cran} now runs \code{\\donttest}
       examples (which are run by \code{example()}) instead of
@@ -4644,7 +4645,7 @@
       to work more consistently, thanks to suggestions by Suharto Anggono.
 
       \item \code{conformMethod()} now works correctly in cases containing
-      a \dQuote{\code{&&} logic} bug, reported by Henrik Bengtsson.  It now
+      a \dQuote{\code{&&} logic} bug, reported by \I{Henrik Bengtsson}.  It now
       creates methods with \code{"missing"} entries in the signature.
       Consequently, \code{rematchDefinition()} is amended to use
       appropriate \code{.local()} calls with named arguments where needed.
@@ -4767,7 +4768,7 @@
 
       \item \code{dotchart()} now places the y-axis label (\code{ylab})
       much better, not overplotting labels, thanks to a report and
-      suggestion by Alexey Shipunov.
+      suggestion by \I{Alexey Shipunov}.
 
       %% detected by clang-ASAN in examples/tests of adehabitatHR.
       \item A rare C-level array overflow in \code{chull()} has been
@@ -4793,8 +4794,8 @@
       of a socket connection, allowing non-blocking read operations.
 
       \item \code{anova.glm()} and \code{anova.glmlist()} computed
-      incorrect score (Rao) tests in no-intercept cases. (André
-      Gillibert, \PR{17735})
+      incorrect score (Rao) tests in no-intercept cases. (\I{André
+      Gillibert}, \PR{17735})
 
       \item \code{summaryRprof()} now should work correctly for the
       \code{Rprof(*, memory.profiling=TRUE)} case with small chunk size (and
@@ -4803,7 +4804,7 @@
 
       \item \code{xgettext()} ignores strings passed to
       \code{ngettext()}, since the latter is handled by
-      \code{xngettext()}. Thanks to Daniele Medri for the report and all
+      \code{xngettext()}. Thanks to \I{Daniele Medri} for the report and all
       the recent work he has done on the Italian translations.
 
       \item \code{data(package = "P")} for \code{P} in \pkg{base} and
