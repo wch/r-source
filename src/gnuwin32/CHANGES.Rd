@@ -117,7 +117,7 @@
       (Reported by Henrik Bengtsson.)
 
       \item Some of the custom messages in the installer were corrupted:
-      add a BOM mark to the file as now required by Unicode Inno Setup.
+      add a \abbr{BOM} mark to the file as now required by Unicode Inno Setup.
       (\PR{14816})
     }
   }
@@ -345,8 +345,8 @@
   \subsection{NEW FEATURES}{
     \itemize{
       \item \code{win_iconv} has been updated: this version has a change
-      in the behaviour with BOMs on UTF-16 and UTF-32 files -- it
-      removes BOMs when reading and adds them when writing.  (This is
+      in the behaviour with \abbr{BOM}s on UTF-16 and UTF-32 files -- it
+      removes \abbr{BOM}s when reading and adds them when writing.  (This is
       consistent with Microsoft applications, but Unix versions of
       \code{iconv} usually ignore them.)
 
