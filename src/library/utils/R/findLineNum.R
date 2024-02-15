@@ -101,7 +101,7 @@ findLineNum <- function(srcfile, line, nameonly=TRUE, envir=parent.frame(), last
     envirs <- list()
     e <- envir
     repeat {
-    	fns <- c(fns, lsf.str(envir=e, all=TRUE))
+    	fns <- c(fns, lsf.str(envir=e, all.names=TRUE))
     	oldlen <- length(envirs)
     	length(envirs) <- length(fns)
     	if (length(envirs) > oldlen)
