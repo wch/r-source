@@ -237,9 +237,11 @@ if(require("Matrix", .Library)) {
     detach("package:Matrix", unload=TRUE)
 }##{Matrix}
 
-## citation() / bibentry: year will change but check is sloppy
+## citation() / bibentry
 options(width=88) # format.bibentry() using strwrap()
-print(c1 <- citation())
+c1 <- citation()
+c1$year <- "9999" # avoid tedious updates of reference output
+print(c1)
 fc1B <- format(c1)
 fc1N <- format(c1, bibtex=FALSE)
 stopifnot(exprs = {
