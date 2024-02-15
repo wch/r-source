@@ -613,13 +613,13 @@ int R_pclose_timeout(FILE *fp)
 	/* should not happen */
 	error("Invalid file pointer in pclose");
 
-    /* Do not use fclose, because on Solaris it sets errno to "Invalid seek"
-       when the pipe is already closed (e.g. because of timeout). fclose would
-       not return an error, but it would set errno and the non-zero errno would
-       then be reported by R's "system" function. */
-    int fd = fileno(fp);
-    if (fd >= 0)
-	close(fd);
+    int saveerrno = errno;
+    if (!fclose(fp))
+	/* On Solaris, fclose sets errno to "Invalid seek" when the pipe is
+	   already closed (e.g.  because of timeout).  fclose would not
+	   return an error, but it would set errno and the non-zero errno
+	   would then be reported by R's "system" function.  */
+	errno = saveerrno;
 
     pid_t wres;
     int wstatus;
@@ -761,6 +761,8 @@ FILE *R_popen_pg(const char *cmd, const char *type)
 	for(ppg_t *p = ppg; p != NULL; p = p->next) {
 	    int fd = fileno(p->fp);
 	    if (fd >= 0)
+		/* do not use fclose to prevent sending FILE buffer content
+		   multiple times */
 		close(fd);
 	}
 	dup2(child_end, doread ? 1 : 0);
@@ -806,23 +808,31 @@ int R_pclose_pg(FILE *fp)
 		ppg = p->next;
 	    else
 		prev->next = p->next;
-	    int fd = fileno(fp);
-	    if (fd >= 0)
-		close(fd); /* see timeout_wait for why not to use fclose */
 
+	    int saveerrno = errno;
+	    int res_fclose = fclose(fp);
+	    if (!res_fclose)
+		/* see R_pclose_timeout for why restoring errno on success */
+		errno = saveerrno;
+    
 	    /* This may not reliably retrieve the status of the child process
 	       in case SIGCHLD was set to SIG_IGN or SA_NOCLDWAIT was set for
 	       SIGCHLD. In that case, we may get a status for another process
 	       or more likely ECHILD. */
-	    int saveerrno = errno;
+	    saveerrno = errno;
 	    for(;;) {
 		int wstatus = 0;
-		pid_t res = waitpid(p->pid, &wstatus, 0);
-		if (res != -1 || errno != EINTR) {
+		pid_t res_waitpid = waitpid(p->pid, &wstatus, 0);
+		if (res_waitpid != -1 || errno != EINTR) {
+		    free(p);
+		    if (res_waitpid != -1 && res_fclose) {
+			/* waitpid() succeeded but fclose failed */
+			errno = saveerrno;
+			return -1;
+		    }
 		    if (errno == EINTR)
 			/* protect against incorrect error checking */
 			errno = saveerrno;
-		    free(p);
 		    return wstatus;
 		}
 	    }
@@ -845,7 +855,7 @@ static void warn_status(const char *cmd, int res)
 	   an error here (CERT ERR30-C).*/
 	/* on Solaris, if the command ends with non-zero status and timeout
 	   is 0, "Illegal seek" error is reported; the timeout version
-	   works this around by using close(fileno) */
+	   works this around by restoring errno on success */
 	warning(_("running command '%s' had status %d and error message '%s'"),
 		cmd, res, strerror(errno));
     else
