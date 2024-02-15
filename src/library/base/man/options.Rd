@@ -123,9 +123,10 @@ getOption(x, default = NULL)
       environment variable \env{R_DEFAULT_PACKAGES}, or if that is unset
       to \code{c("datasets", "utils", "grDevices", "graphics", "stats",
         "methods")}.  (Set \env{R_DEFAULT_PACKAGES} to \code{NULL} or
-      a comma-separated list of package names.)  It will not work to set
-      this in a \file{.Rprofile} file, as its value is consulted before
-      that file is read.}
+      a comma-separated list of package names.)
+      This option can be changed in a \file{.Rprofile} file, but it will
+      not work to exclude the \pkg{methods} package at this stage, as
+      the value is screened for \pkg{methods} before that file is read.}
 
     \item{\code{deparse.cutoff}:}{integer value controlling the
       printing of language constructs which are \code{\link{deparse}}d.
