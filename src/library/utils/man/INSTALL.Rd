@@ -195,7 +195,7 @@
   \code{\link{update.packages}} for automatic update of packages using
   the Internet or a local repository.
 
-  The section on \sQuote{Add-on packages} in
+  The chapter on \sQuote{Add-on packages} in
   \sQuote{R Installation and Administration}
   and the chapter on \sQuote{Creating R packages} in
   \sQuote{Writing R Extensions}

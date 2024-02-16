@@ -50,7 +50,8 @@ Rprofmem(filename = "Rprofmem.out", append = FALSE, threshold = 0)
 
   \code{\link{tracemem}} traces duplications of specific objects.
 
-  The "Writing R Extensions" manual section on "Tidying and profiling R code"
+  The chapter on \sQuote{Tidying and profiling R code}
+  in the \sQuote{Writing R Extensions} manual.
 }
 \examples{\dontrun{
 ## not supported unless R is compiled to support it.

@@ -69,9 +69,7 @@
 }
 \seealso{
   The sections on \sQuote{Checking and building packages} and
-  \sQuote{Processing Rd format} in \sQuote{Writing R Extensions}
-  (see on Unix-alikes the \file{doc/manual} subdirectory of the \R
-  source tree, on Windows, see the Manuals sub-menu of the Help menu on
-  the console).
+  \sQuote{Processing documentation files} in \sQuote{Writing R Extensions}:
+  \code{\link{RShowDoc}("R-exts")}.
 }
 \keyword{utilities}

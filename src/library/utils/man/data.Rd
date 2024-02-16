@@ -175,7 +175,7 @@ data(\dots, list = character(), package = NULL, lib.loc = NULL,
   \code{\link{save}} for \emph{creating} the second (\file{.rda}) kind
   of data, typically the most efficient one.
 
-  The \sQuote{Writing R Extensions} for considerations in preparing the
+  The \sQuote{Writing R Extensions} manual for considerations in preparing the
   \file{data} directory of a package.
 }
 \examples{

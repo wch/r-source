@@ -80,7 +80,7 @@
 
   The \sQuote{R Installation and Administration} and
   \sQuote{Writing R Extensions} manuals, including the section on
-  \sQuote{Customizing compilation} in the former.
+  \sQuote{Customizing package compilation} in the former.
 }
 #ifdef unix
 \examples{\dontrun{
