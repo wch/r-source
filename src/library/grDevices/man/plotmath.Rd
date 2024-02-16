@@ -69,7 +69,7 @@
     \code{x + y}   \tab x plus y   \cr
     \code{x - y}   \tab x minus y \cr
     \code{x*y}    \tab juxtapose x and y \cr
-    \code{x/y}    \tab x forwardslash y \cr
+    \code{x/y}    \tab x \I{forwardslash} y \cr
     \code{x \%+-\% y}   \tab x plus or minus y \cr
     \code{x \%/\% y}   \tab x divided by y \cr
     \code{x \%*\% y}   \tab x times y \cr
@@ -193,7 +193,7 @@
   \code{sigma1} is also known as \code{stigma}, its Unicode name.
 
   Control characters (e.g., \samp{\\n}) are not interpreted in character
-  strings in plotmath, unlike normal plotting.
+  strings in \I{plotmath}, unlike normal plotting.
 
   The fonts used are taken from the current font family, and so can be
   set by \code{\link{par}(family=)} in base graphics, and
@@ -208,7 +208,7 @@
   On many OSes and some graphics devices many other symbols are
   available as part of the standard text font, and all of the symbols in
   the Adobe Symbol encoding are in principle available \emph{via}
-  changing the font face or (see \sQuote{Details}) plotmath: see the
+  changing the font face or (see \sQuote{Details}) \I{plotmath}: see the
   examples section of \code{\link{points}} for a function to display
   them.  (\sQuote{In principle} because some of the glyphs are missing
   from some implementations of the symbol font.)  Unfortunately,

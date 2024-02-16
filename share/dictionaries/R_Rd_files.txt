@@ -1,5 +1,6 @@
 ACM
 additively
+addons
 algorithmically
 allocator
 allocators
@@ -49,6 +50,7 @@ collinear
 colorspace
 colortype
 combinatorial
+compressions
 computable
 conformant
 contrib
@@ -73,6 +75,7 @@ denormal
 denormalized
 descenders
 diagnostical
+didactical
 differencing
 dimensioned
 dispatchable
@@ -98,6 +101,7 @@ factorizations
 filepath
 filespace
 filesystem
+filesystems
 finalizer
 finalizers
 framebuffer
@@ -126,6 +130,7 @@ integrable
 integrand
 interpretable
 interpretably
+interruptible
 interspacing
 ints
 invertible
@@ -286,6 +291,8 @@ trichotomies
 tricubic
 tristimulus
 twiced
+typedef
+typedefs
 ultrametric
 unabbreviated
 unabsorbed

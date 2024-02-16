@@ -81,7 +81,7 @@ de(\dots, Modes = list(), Names = NULL)
   (keypad) Enter and \I{LineFeed} all move down. Tab moves right and
   Shift-Tab move left.  Home moves to the top left.
 
-  \I{PageDown} or Control-F moves down a page, and PageUp or
+  \I{PageDown} or Control-F moves down a page, and \I{PageUp} or
   Control-B up by a page.  End will show the last used column and the
   last few rows used (in any column).
 
@@ -148,7 +148,7 @@ de(\dots, Modes = list(), Names = NULL)
 
   Columns can be resized by selecting and dragging a line (the cursor
   will change) within limits: columns must be between 4 and 50 chars wide.
-  The Autosize item on the popup menu will resize the currently selected
+  The \I{Autosize} item on the popup menu will resize the currently selected
   column.
 #endif
 #ifdef unix

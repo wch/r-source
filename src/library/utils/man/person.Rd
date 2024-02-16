@@ -3,6 +3,8 @@
 % Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{person}
 \title{Persons}
 \alias{person}
@@ -124,7 +126,7 @@ as.person(x)
   name, e.g., \code{person("R Core Team", role = "aut")}.
 
   The new scheme also adds the possibility of specifying \emph{roles}
-  based on a subset of the MARC Code List for Relators 
+  based on a subset of the MARC \I{Code List for Relators} 
   (\url{https://www.loc.gov/marc/relators/relaterm.html}).
   When giving the roles of persons in the context of authoring \R
   packages, the following usage is suggested.
@@ -147,7 +149,7 @@ as.person(x)
       intellectual property.}
     \item{\code{"dtc"}}{(Data contributor) Use for persons who
       contributed data sets for the package.}
-    \item{\code{"fnd"}}{(Funder) Use for persons or organizations that
+    \item{\code{"fnd"}}{(\I{Funder}) Use for persons or organizations that
       furnished financial support for the development of the package.}
     \item{\code{"rev"}}{(Reviewer) Use for persons or organizations
       responsible for reviewing (parts of) the package.}

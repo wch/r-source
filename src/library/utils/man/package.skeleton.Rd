@@ -34,7 +34,7 @@ package.skeleton(name = "anRpackage", list,
     encoding for an optional \samp{Encoding:} line in
     \file{DESCRIPTION} when non-ASCII characters will be used; typically
     one of \code{"latin1"}, \code{"latin2"}, or \code{"UTF-8"}; see the
-    WRE manual.}
+    \abbr{WRE} manual.}
 }
 \value{
   Used for its side-effects.

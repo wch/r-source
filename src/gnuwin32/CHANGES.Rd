@@ -115,7 +115,7 @@
   \subsection{BUG FIXES}{
     \itemize{
       \item Using a prompt of more than 80 characters in
-      \code{readline()} could cause a buffer overflow in Rterm.
+      \code{readline()} could cause a buffer overflow in \I{Rterm}.
       (Reported by \I{Henrik Bengtsson}.)
 
       \item Some of the custom messages in the installer were corrupted:
@@ -226,7 +226,7 @@
       small delay after removing a directory to counteract some
       interference from anti-virus software.
 
-      \item There is a Danish translation of the RGui menus.
+      \item There is a Danish translation of the \I{RGui} menus.
     }
   }
 
@@ -452,7 +452,7 @@
       limitations).
       
       \item The graphical dialog version of \code{select.list()} could
-      cause later dialogs to fail if Windows events were not processed
+      cause later \I{dialogs} to fail if Windows events were not processed
       between the calls.
     }
   }

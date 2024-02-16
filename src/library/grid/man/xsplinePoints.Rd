@@ -33,9 +33,9 @@ bezierPoints(x)
   for the drawing context in force when this function was called.
 }
 \value{
-  Depends on how many Xsplines would be drawn.  If only one, then
+  Depends on how many \I{xspline}s would be drawn.  If only one, then
   a list with two components, named x and y, both of which are
-  unit objects (in inches).  If several Xsplines would be drawn
+  unit objects (in inches).  If several \I{xspline}s would be drawn
   then the result of this function is a list of lists.
 }
 \author{

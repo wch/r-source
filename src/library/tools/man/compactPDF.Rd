@@ -77,7 +77,7 @@ compactPDF(paths,
 
   Stream compression is what most often has large gains.  Most PDF
   documents are generated with object compression, but this does not
-  seem to be the default for MiKTeX's \command{pdflatex}.  For some PDF
+  seem to be the default for \I{MiKTeX}'s \command{pdflatex}.  For some PDF
   files (and especially package vignettes), using \I{GhostScript} can
   dramatically reduce the space taken by embedded images (often
   screenshots).

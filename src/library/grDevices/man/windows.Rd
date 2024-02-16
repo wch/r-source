@@ -3,6 +3,8 @@
 % Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{windows}
 \alias{windows}
 \alias{win.graph}
@@ -223,7 +225,7 @@ win.print(width = 7, height = 7, pointsize = 12, printer = "",
   Desktop settings \emph{and} the user's local account settings are
   relevant to whether antialiasing is used.
 
-  Some fonts are intended only to be used with ClearType antialiasing,
+  Some fonts are intended only to be used with \I{ClearType} antialiasing,
   for example the \code{Meiryo} Japanese font.
 }
 % http://blogs.msdn.com/b/rds/archive/2006/09/08/747023.aspx

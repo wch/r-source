@@ -87,7 +87,7 @@ quantile(x, \dots)
       \eqn{\gamma = 0} if \eqn{g = 0}, and 1 otherwise.}
     \item{Type 2}{Similar to type 1 but with averaging at discontinuities.
       \eqn{\gamma = 0.5} if \eqn{g = 0}, and 1 otherwise (SAS default, see
-      Wicklin(2017)).}
+      Wicklin (2017)).}
     \item{Type 3}{Nearest even order statistic (SAS default till ca. 2010).
       \eqn{\gamma = 0} if \eqn{g = 0} and \eqn{j} is even,
       and 1 otherwise.}

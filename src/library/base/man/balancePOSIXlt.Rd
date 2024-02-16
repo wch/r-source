@@ -2,6 +2,9 @@
 % Part of the R package, https://www.R-project.org
 % Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
+
+\newcommand{\I}{#1}
+
 \name{balancePOSIXlt}
 \title{Balancing \dQuote{Ragged} and Out-of-range POSIXlt Date-Times}
 \alias{balancePOSIXlt}
@@ -38,9 +41,9 @@ unCfillPOSIXlt(x)
   recycling them to full length.  Prior to \R 4.3.0, this has worked in
   printing, formatting, and conversion to \code{"POSIXct"}, but often
   not for \code{length()}, conversion to \code{"Date"} or indexing,
-  i.e., subsetting, \code{\link{[}}, or subassigning, \code{\link{[<-}}.
+  i.e., subsetting, \code{\link{[}}, or \I{subassigning}, \code{\link{[<-}}.
 
-  Relatedly, components \code{sec}, \code{min}, \code{hour}, \code{mday}
+  \I{Relatedly}, components \code{sec}, \code{min}, \code{hour}, \code{mday}
   and \code{mon} could have been out of their designated range (say, 0--23
   for hours) and still work correctly, e.g. in conversions and printing.
   This is supported as well, since \R 4.3.0, at least when the values are

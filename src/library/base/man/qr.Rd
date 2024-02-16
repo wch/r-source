@@ -89,9 +89,9 @@ as.qr(x)
   error giving a positive error code: these can only be interpreted by
   detailed study of the FORTRAN code.
 }
-\section{\code{*)}\sspace{} \code{dqrdc2} instead of LINPACK's DQRDC}{
+\section{\code{*)}\sspace{} \code{dqrdc2} instead of \I{LINPACK}'s \I{DQRDC}}{
   In the (default) LINPACK case (\code{LAPACK = FALSE}), \code{qr()}
-  uses a \emph{modified} version of LINPACK's DQRDC, called
+  uses a \emph{modified} version of \I{LINPACK}'s \I{DQRDC}, called
   \sQuote{\code{dqrdc2}}.  It differs by using the tolerance \code{tol}
   for a pivoting strategy which moves columns with near-zero 2-norm to
   the right-hand edge of the x matrix.  This strategy means that

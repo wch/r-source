@@ -3,10 +3,12 @@
 % Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{cmdscale}
 \alias{cmdscale}
 \concept{ordination}
-\concept{MDS}
+\concept{\I{MDS}}
 \title{Classical (Metric) Multidimensional Scaling}
 \usage{
 cmdscale(d, k = 2, eig = FALSE, add = FALSE, x.ret = FALSE,

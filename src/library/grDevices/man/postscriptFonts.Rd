@@ -99,8 +99,8 @@ pdfFonts(\dots)
   \tabular{ll}{
     Japan1 (PS) \tab \code{HeiseiKakuGo-W5}\cr \tab Linotype Japanese printer font\cr
     Japan1 (PDF) \tab \code{KozMinPro-Regular-Acro}\cr \tab from Adobe Reader 7.0 Japanese Font Pack\cr
-    Japan1HeiMin (PS) \tab \code{HeiseiMin-W3}\cr \tab Linotype Japanese printer font\cr
-    Japan1HeiMin (PDF) \tab \code{HeiseiMin-W3-Acro}\cr \tab from Adobe Reader 7.0 Japanese Font Pack\cr
+    \I{Japan1HeiMin} (PS) \tab \code{HeiseiMin-W3}\cr \tab Linotype Japanese printer font\cr
+    \I{Japan1HeiMin} (PDF) \tab \code{HeiseiMin-W3-Acro}\cr \tab from Adobe Reader 7.0 Japanese Font Pack\cr
     \I{Japan1GothicBBB} \tab \code{GothicBBB-Medium}\cr \tab Japanese-market PostScript printer font\cr
     \I{Japan1Ryumin} \tab \code{Ryumin-Light}\cr \tab Japanese-market PostScript printer font\cr
     Korea1 (PS) \tab \code{Baekmuk-Batang}\cr  \tab \I{TrueType} font found on some Linux systems\cr

@@ -21,7 +21,7 @@ makeClassRepresentation(name, slots=list(), superClasses=character(),
   \item{name}{character string name for the class}
   \item{slots}{named list of slot classes as would be supplied to
     \code{setClass}, but \emph{without} the unnamed arguments for
-    superClasses if any.}
+    \code{superClasses} if any.}
   \item{superClasses}{what classes does this class extend}
   \item{prototype}{an object providing the default data for the class,
     e.g., the result of a call to \code{\link{prototype}}.}

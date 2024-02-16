@@ -19,7 +19,7 @@
   \item{loadings}{logical. Should loadings be included?}
   \item{cutoff}{numeric. Loadings below this cutoff in absolute value
     are shown as blank in the output.}
-  \item{x}{an object of class "summary.princomp".}
+  \item{x}{an object of class \code{"summary.princomp"}.}
   \item{digits}{the number of significant digits to be used in listing
     loadings.}
   \item{\dots}{arguments to be passed to or from other methods.}

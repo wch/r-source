@@ -62,7 +62,7 @@ Rprof(filename = "Rprof.out", append = FALSE, interval = 0.02,
   so for example excludes time when \R is waiting for input or for processes
   run by \code{\link{system}} to return.  It may go slower than
   \code{"elapsed"} when the process is often waiting for I/O to finish, but it
-  may go faster with actively computing concurrent threads (say via OpenMP)
+  may go faster with actively computing concurrent threads (say via \abbr{OpenMP})
   on a multi-core system.
 
   Note that the (timing) interval cannot be too small.  With \code{"cpu"},

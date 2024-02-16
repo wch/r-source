@@ -31,7 +31,7 @@ savePlot(filename = "Rplot",
   This is equivalent to selecting the \sQuote{Save as} menu item on the
   \sQuote{File} menu of a \code{\link{windows}} device.
 
-  If \code{filename} does not include a dot (\sQuote{.}), savePlot
+  If \code{filename} does not include a dot (\sQuote{.}), \code{savePlot}
   will add the file type as an extension; that is, the filename will
   be set to \code{paste(filename, type, sep = ".")}. If a dot is present in
   \code{filename}, the filename is assumed to include an extension and

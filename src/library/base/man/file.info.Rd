@@ -103,7 +103,7 @@ file.size(\dots)
 
   The resolution of the file times depends on both the OS and the type
   of the file system.  Modern file systems typically record times to an
-  accuracy of a microsecond or better: notable exceptions are HFS+ on
+  accuracy of a microsecond or better: notable exceptions are \abbr{HFS+} on
   macOS (recorded in seconds) and modification time on older FAT systems
   (recorded in increments of 2 seconds).  Note that \code{"POSIXct"}
   times are by default printed in whole seconds: to change that see

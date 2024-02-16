@@ -37,7 +37,7 @@
 
       \item The \code{confint()} and \code{profile} methods for
       \code{"glm"} objects have gained a possibility to do profiling
-      based on the Rao Score statistic in addition to the default
+      based on the \I{Rao} Score statistic in addition to the default
       Likelihood Ratio. This is controlled by a new \code{test =}
       argument.
 
@@ -471,7 +471,7 @@
       \item Top-level handlers are now more robust to attempts to remove a
       handler whilst handlers are running (\PR{18508}).
 
-      \item The handling of \code{Alt+F4} in dialogs created on Windows using
+      \item The handling of \code{Alt+F4} in \I{dialogs} created on Windows using
       \I{GraphApp} has been fixed (\PR{13870}).
 
       \item \code{density()} more consistently computes grid values for the
@@ -1054,7 +1054,7 @@
       does not contain a space.)
 
       \item \code{all.equal.numeric()} gets a new optional switch
-      \code{giveErr} to return the numeric error as attribute.  Relatedly,
+      \code{giveErr} to return the numeric error as attribute.  \I{Relatedly},
       \code{stopifnot(all.equal<some>(a, b, ..))} is as \dQuote{smart} now,
       as \code{stopifnot(all.equal(....))} has been already, thus allowing
       customized \code{all.equal<Some>()} wrappers.
@@ -1192,7 +1192,7 @@
 
       \item Experimental \code{balancePOSIXlt()} utility allows using
       \dQuote{ragged} and or out-of-range \code{"POSIXlt"} objects more
-      correctly, e.g., in subsetting and subassignments.  Such objects
+      correctly, e.g., in subsetting and \I{subassignment}s.  Such objects
       are now documented.
 
       More experimentally, a \code{"POSIXlt"} object may have an attribute
@@ -1604,7 +1604,7 @@
       \code{"factor"}, \code{"roman"}, \code{"hexmode"},
       \code{"octmode"}, \code{"person"}, \code{"bibentry"}, or
       \code{"citation"} now prints something better, one
-      of which fixes \PR{18422}, reported by Benjamin Feakins.
+      of which fixes \PR{18422}, reported by \I{Benjamin Feakins}.
 
       \item \code{Sys.timezone()} queries \command{timedatectl} only if
       \command{systemd} is loaded; addressing a report by \I{Jan Gorecki} in
@@ -1642,7 +1642,7 @@
 
       \item Package installation, \command{R CMD INSTALL} or \code{install.packages(*)},
       now parses each of the \file{<pkg>/R/*.R} files individually instead
-      of first concatenating and then \code{parse()}ing the large resulting
+      of first concatenating and then \I{\code{parse()}ing} the large resulting
       file.  This allows parser or syntax errors to be diagnosed with
       correct file names and line numbers, thanks to \I{Simon Dedman}'s report
       and Bill Dunlap's patch in \PR{17859}.
@@ -1686,7 +1686,7 @@
       correctly now, thanks to \I{Achim Zeileis}' report and patch in
       \PR{18476}.
 
-      \item Formatting and \code{print()}ing of \code{bibentry} objects has
+      \item Formatting and \I{\code{print()}ing} of \code{bibentry} objects has
       dropped the deprecated \code{citation.bibtex.max} argument, such that
       the \code{bibtex} argument's default for \code{print.bibentry()}
       depends directly on the \code{citation.bibtex.max} option, whereas in
@@ -2189,9 +2189,9 @@
       \code{cook.lty} with a different default color and their legend is
       nicer by default and customizable via \code{cook.legendChanges}.
 
-      \item Attempting to subset an object that is not subsettable now
+      \item Attempting to subset an object that is not \I{subsettable} now
       signals an error of class \code{notSubsettableError}. The
-      non-subsettable object is contained in the \code{object} field of
+      non-\I{subsettable} object is contained in the \code{object} field of
       the error condition.
 
       \item Subscript-out-of-bounds errors are now signaled as errors of
@@ -2305,7 +2305,7 @@
 
       \item The HTML help system has several new features: LaTeX-like
       math can be typeset using either \href{https://katex.org/}{\I{KaTeX}}
-      or \href{https://www.mathjax.org/}{MathJax}, usage and example
+      or \href{https://www.mathjax.org/}{\I{MathJax}}, usage and example
       code is highlighted using \href{https://prismjs.com}{Prism}, and
       for dynamic help the output of examples and demos can be shown
       within the browser if the \CRANpkg{knitr} package is
@@ -2781,8 +2781,8 @@
       \item \code{interaction.plot(..., xtick = TRUE)} misplaced the
       x-axis line (\PR{18305}).
 
-      \item Not strictly fixing a bug, \code{format()}ing and
-      \code{print()}ing of non-finite \code{Date} and \code{POSIXt}
+      \item Not strictly fixing a bug, \I{\code{format()}ing} and
+      \I{\code{print()}ing} of non-finite \code{Date} and \code{POSIXt}
       values \code{NaN} and \eqn{\pm}{+/-}\code{Inf} no longer show as
       \code{NA} but the respective string, e.g., \code{Inf}, for
       consistency with numeric vector's behaviour, fulfilling the wish
@@ -3862,7 +3862,7 @@
       \item \code{identical(x,y)} no longer prints "Unknown Type .." for
       \code{typeof(x) == "..."} objects.
 
-      \item Fix (auto-)\code{print()}ing of named complex vectors, see
+      \item Fix \I{(auto-)\code{print()}ing} of named complex vectors, see
       \PR{17868} and \PR{18019}.
 
       \item \code{all.equal(<language>, <...>)} now works, fixing \PR{18029}.
@@ -3878,7 +3878,7 @@
       \item macOS: Quartz device live drawing could fail (no plot is shown)
       if the system changes the drawing context after view update (often
       the case since macOS \I{Big Sur}). System log may show
-      "CGContextDelegateCreateForContext: invalid context" error.
+      \I{"CGContextDelegateCreateForContext: invalid context"} error.
     }
   }
 }
@@ -4798,7 +4798,7 @@
       of a socket connection, allowing non-blocking read operations.
 
       \item \code{anova.glm()} and \code{anova.glmlist()} computed
-      incorrect score (Rao) tests in no-intercept cases. (\I{André
+      incorrect score (\I{Rao}) tests in no-intercept cases. (\I{André
       Gillibert}, \PR{17735})
 
       \item \code{summaryRprof()} now should work correctly for the

@@ -3,6 +3,8 @@
 % Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{grid.yaxis}
 \alias{grid.yaxis}
 \alias{yaxisGrob}
@@ -42,17 +44,17 @@ yaxisGrob(at = NULL, label = TRUE, main = TRUE,
   \item{vp}{A Grid viewport object (or \code{NULL}).}
 }
 \details{
-  Both functions create a yaxis grob (a graphical object describing a
-  yaxis), but only \code{grid.yaxis}
-  draws the yaxis (and then only if \code{draw} is \code{TRUE}).
+  Both functions create a \I{yaxis} grob (a graphical object describing a
+  \I{yaxis}), but only \code{grid.yaxis}
+  draws the \I{yaxis} (and then only if \code{draw} is \code{TRUE}).
 
 }
 \value{
-  A yaxis grob.  \code{grid.yaxis} returns the value invisibly.
+  A \I{yaxis} grob.  \code{grid.yaxis} returns the value invisibly.
 }
 \section{Children}{
-  If the \code{at} slot of an xaxis grob is not \code{NULL} then
-  the xaxis will have the following children:
+  If the \code{at} slot of an \I{xaxis} grob is not \code{NULL} then
+  the \I{xaxis} will have the following children:
   \describe{
     \item{major}{ representing the line at the base of the
     tick marks.}

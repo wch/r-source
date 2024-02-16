@@ -92,11 +92,11 @@ data(\dots, list = character(), package = NULL, lib.loc = NULL,
 
   If \code{lib.loc = NULL} but \code{package} is specified as a
   character vector, the specified package(s) are searched for first
-  amongst loaded packages and then in the default library/ies
+  amongst loaded packages and then in the default libraries
   (see \code{\link{.libPaths}}).
 
   If \code{lib.loc} \emph{is} specified (and not \code{NULL}), packages
-  are searched for in the specified library/ies, even if they are
+  are searched for in the specified libraries, even if they are
   already loaded from another library.
 
   To just look in the \file{data} directory of the current working

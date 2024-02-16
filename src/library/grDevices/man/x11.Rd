@@ -158,7 +158,7 @@ X11.options(\dots, reset = FALSE)
   connections \code{type = "dbcairo"} will probably give the best
   performance.
 
-  Because of known problems with font selection on macOS without Pango
+  Because of known problems with font selection on macOS without \I{Pango}
   (for example, most CRAN distributions), \code{type = "cairo"} is not
   the default there.  These problems have included mixing up bold and
   italic (since worked around), selecting incorrect glyphs and ugly or
@@ -283,7 +283,7 @@ If that shows \code{symbol.ttf} that may be the Wine symbol font -- use
 
 \section{Colour Rendering}{
   X11 supports several \sQuote{visual} types, and nowadays almost all
-  systems support \sQuote{truecolor} which \code{X11} will use by
+  systems support \sQuote{\I{truecolor}} which \code{X11} will use by
   default.  This uses a direct specification of any RGB colour up to the
   depth supported (usually 8 bits per colour).  Other visuals make use
   of a palette to support fewer colours, only grays or even only

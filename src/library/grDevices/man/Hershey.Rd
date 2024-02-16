@@ -59,7 +59,7 @@ You cannot use mathematical expressions (\code{\link{plotmath}}) with
   }
 
   In the \code{vfont} specification for the \code{text} and
-  \code{contour} functions, the Hershey font is specified by a typefoace
+  \code{contour} functions, the Hershey font is specified by a typeface
   (e.g., \code{serif} or \code{sans serif}) and a \I{fontindex} or
   \sQuote{style} (e.g., \code{plain} or \code{italic}). The first
   element of \code{vfont} specifies the typeface and the second element

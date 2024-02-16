@@ -3,6 +3,8 @@
 % Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{quartz}
 \title{macOS Quartz Device}
 \alias{quartz}
@@ -64,7 +66,7 @@ quartz.save(file, type = "png", device = dev.cur(), dpi = 100, ...)
   output.  The following bitmap formats may be supported (depending on
   the OS version): \code{"png"}, \code{"jpeg"}, \code{"jpg"},
   \code{"jpeg2000"}, \code{"tif"}, \code{"tiff"}, \code{"gif"},
-  \code{"psd"} (Adobe Photoshop), \code{"bmp"} (Windows bitmap),
+  \code{"psd"} (Adobe \I{Photoshop}), \code{"bmp"} (Windows bitmap),
   \code{"sgi"} and \code{"pict"}.
 
   The \code{file} argument is used for off-screen drawing.  The actual
@@ -83,7 +85,7 @@ quartz.save(file, type = "png", device = dev.cur(), dpi = 100, ...)
   via \code{par(family =)} in the graphics package), the Quartz device
   makes use of the Quartz font database (see \code{quartzFonts}) to
   convert the R graphics font family to a Quartz-specific font family
-  description.  The default conversions are (MonoType TrueType versions
+  description.  The default conversions are (\I{MonoType} \I{TrueType} versions
   of) \code{Helvetica} for \code{sans}, \code{Times-Roman} for
   \code{serif} and \code{Courier} for \code{mono}.
 

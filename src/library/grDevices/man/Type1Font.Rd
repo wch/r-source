@@ -25,7 +25,7 @@ CIDFont(family, cmap, cmapEncoding, pdfresource = "")
     identify each family, so if you modify a family which is in use
     (see \code{\link{postscriptFonts}}) you need to change the family name.}
   \item{metrics}{a character vector of four or five strings giving paths
-    to the afm (Adobe Font Metric) files for the font.}
+    to the \abbr{afm} (Adobe Font Metric) files for the font.}
   \item{cmap}{the name of a \abbr{CMap} file for a CID-keyed font.}
   \item{encoding}{for \code{Type1Font}, the name of an encoding file.
     Defaults to \code{"default"}, which maps on Unix-alikes to

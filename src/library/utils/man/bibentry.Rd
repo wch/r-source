@@ -149,7 +149,7 @@ bibentry(bibtype, textVersion = NULL, header = NULL, footer = NULL,
   a choice between giving a character vector with one \code{bibentry()}
   call for each \I{bibentry} (as commonly used in \file{CITATION} files), or
   a character string with one collapsed call, obtained by combining the
-  individual calls with \code{c()} if there is more than one bibentry.
+  individual calls with \code{c()} if there is more than one \I{bibentry}.
   This can be controlled by passing the argument \code{collapse=FALSE}
   (default) or \code{TRUE}, respectively, to the \code{format()} method.
   (\emph{Printing} in R style always collapses to a single call.)

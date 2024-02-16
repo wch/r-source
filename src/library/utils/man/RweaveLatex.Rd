@@ -3,6 +3,8 @@
 % Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{RweaveLatex}
 \alias{RweaveLatex}
 \alias{RweaveLatexSetup}
@@ -55,7 +57,7 @@ RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
   The simplest way for frequent Sweave users to ensure that
   \file{Sweave.sty} is in the TeX input path is to add
   \file{\var{R_HOME}/share/texmf} as a \sQuote{texmf tree} (\sQuote{root
-  directory} in the parlance of the \sQuote{MiKTeX settings} utility).
+  directory} in the parlance of the \sQuote{\I{MiKTeX settings}} utility).
 
   By default, \file{Sweave.sty} loads the \samp{graphicx} \LaTeX package
   and sets the width of all included graphics to:\cr

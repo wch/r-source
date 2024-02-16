@@ -3,6 +3,8 @@
 % Copyright 2008-2022 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{Rd2HTML}
 \alias{Rd2txt}
 \alias{Rd2HTML}
@@ -62,8 +64,8 @@ Rd2ex(Rd, out = "", defines = .Platform$OS.type,
   \item{texmath}{character: controls how mathematics in \verb{\eqn} and
       \verb{\deqn} commands are typeset in HTML output. Useful values
       are \code{"katex"} (default) and \code{"mathjax"} to use
-      \href{https://katex.org/}{KaTeX} or
-      \href{https://www.mathjax.org/}{MathJax} respectively, otherwise
+      \href{https://katex.org/}{\I{KaTeX}} or
+      \href{https://www.mathjax.org/}{\I{MathJax}} respectively, otherwise
       basic substitutions are used. May be ignored under certain
       circumstances, e.g., if the help page already uses macros from the
       \code{\link[mathjaxr]{mathjaxr}} package.

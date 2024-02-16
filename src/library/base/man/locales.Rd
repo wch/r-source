@@ -109,7 +109,7 @@ Sys.setlocale (category = "LC_ALL", locale = "")
   \command{locale -a} lists those currently enabled.
 
   For Windows, Microsoft moves its documentation frequently so a Web
-  search is the best way to find current information.  From \R 4.2, UCRT
+  search is the best way to find current information.  From \R 4.2, \abbr{UCRT}
   locale names should be used.  The character set should match the
   system/ANSI codepage (\code{l10n_info()$codepage} be the same as
   \code{l10n_info()$system.codepage}).  Setting it to any other value

@@ -3,6 +3,8 @@
 % Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{cairoSymbolFont}
 \alias{cairoSymbolFont}
 \title{Specify a Symbol Font}
@@ -27,7 +29,7 @@ cairoSymbolFont(family, usePUA = TRUE)
   Adobe Symbol Encoding characters are converted to UTF-8 code points.
   This conversion can use Private Use Area code points or not.
   It is useful to be able to specify this option because some fonts
-  (e.g., the OpenSymbol font that is included in LibreOffice)
+  (e.g., the \I{OpenSymbol} font that is included in LibreOffice)
   have glyphs mapped to the Private Use Area and some fonts 
   (e.g., Nimbus Sans L, the URW Fonts equivalent of Helvetica) do not.
 }

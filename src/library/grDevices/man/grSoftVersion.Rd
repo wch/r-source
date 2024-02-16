@@ -23,7 +23,7 @@ grSoftVersion()
   \item{cairoFT}{the \I{FreeType}/\I{FontConfig} versions if \I{cairographics} is
     using those libraries directly (not \emph{via} \I{pango}); otherwise,
     \code{""}.  Earlier versions of \R returned \code{"yes"} rather than
-    the versions.  The FontConfig version is determined when \R is built.}
+    the versions.  The \I{FontConfig} version is determined when \R is built.}
   \item{pango}{the version of \I{pango} in use, or \code{""} if
     \I{pango} is not available.}
 
@@ -48,7 +48,7 @@ grSoftVersion()
   dynamically-linked) library in use at runtime.
 
   Note that \code{libjpeg-turbo} as used on some Linux distributions
-  reports its version as \code{"6.2"}, the IJG version from which it forked.
+  reports its version as \code{"6.2"}, the \I{IJG} version from which it forked.
 }
 
 \seealso{

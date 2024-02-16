@@ -3,12 +3,14 @@
 % Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{grid.xspline}
 \alias{grid.xspline}
 \alias{xsplineGrob}
-\title{ Draw an Xspline }
+\title{ Draw an \I{Xspline} }
 \description{
-  These functions create and draw an xspline, a curve drawn
+  These functions create and draw an \I{xspline}, a curve drawn
   relative to control points.
 }
 \usage{
@@ -25,11 +27,11 @@ xsplineGrob(x = c(0, 0.5, 1, 0.5), y = c(0.5, 1, 0.5, 0),
   \item{y}{A numeric vector or unit object specifying y-locations of
     spline control points.}
   \item{id}{A numeric vector used to separate locations in \code{x} and
-    \code{y} into multiple xsplines.  All locations with the same
-    \code{id} belong to the same xspline.}
+    \code{y} into multiple \I{xspline}s.  All locations with the same
+    \code{id} belong to the same \I{xspline}.}
   \item{id.lengths}{A numeric vector used to separate locations in \code{x} and
-    \code{y} into multiple xspline.  Specifies consecutive blocks of
-    locations which make up separate xsplines.}
+    \code{y} into multiple \I{xspline}s.  Specifies consecutive blocks of
+    locations which make up separate \I{xspline}s.}
   \item{default.units}{A string indicating the default units to use
     if \code{x} or \code{y}
     are only given as numeric vectors.}
@@ -38,7 +40,7 @@ xsplineGrob(x = c(0, 0.5, 1, 0.5), y = c(0.5, 1, 0.5, 0),
   \item{open}{A logical value indicating whether the spline is
     a line or a closed shape.}
   \item{arrow}{A list describing arrow heads to place at either end
-    of the xspline, as produced by the \code{arrow} function.}
+    of the \I{xspline}, as produced by the \code{arrow} function.}
   \item{repEnds}{A logical value indicating whether the first and
     last control points should be replicated for drawing the curve
     (see Details below).}
@@ -53,11 +55,11 @@ xsplineGrob(x = c(0, 0.5, 1, 0.5), y = c(0.5, 1, 0.5, 0),
   A grob object.
 }
 \details{
-  Both functions create an xspline grob (a graphical object describing an
-  xspline), but only \code{grid.xspline}
-  draws the xspline.
+  Both functions create an \I{xspline} grob (a graphical object describing an
+  \I{xspline}), but only \code{grid.xspline}
+  draws the \I{xspline}.
 
-  An xspline is a line drawn relative to control points.  For each
+  An \I{xspline} is a line drawn relative to control points.  For each
   control point, the line
   may pass through (interpolate) the control point or it
   may only approach (approximate) the control
@@ -72,10 +74,10 @@ xsplineGrob(x = c(0, 0.5, 1, 0.5), y = c(0.5, 1, 0.5, 0),
   the shape is -1).  If the shape parameter is 0, the spline forms a
   sharp corner at that control point.
 
-  For open xsplines, the start and end control points must have a shape
+  For open \I{xspline}s, the start and end control points must have a shape
   of 0 (and non-zero values are silently converted to zero without warning).
 
-  For open xsplines, by default the start and end control points are
+  For open \I{xspline}s, by default the start and end control points are
   actually replicated before the curve is drawn.  A curve is drawn
   between (interpolating or approximating)
   the second and third of each set of four control points, so
@@ -88,12 +90,12 @@ xsplineGrob(x = c(0, 0.5, 1, 0.5), y = c(0.5, 1, 0.5, 0),
   the second control point and ends (approximately) at the first and
   second-to-last control point.
 
-  The \code{repEnds} argument is ignored for closed xsplines.
+  The \code{repEnds} argument is ignored for closed \I{xspline}s.
 
   Missing values are not allowed for \code{x} and \code{y}
   (i.e., it is not valid for a control point to be missing).
 
-  For closed xsplines, a curve is automatically drawn
+  For closed \I{xspline}s, a curve is automatically drawn
   between the final control point and the initial control point.
 }
 \references{

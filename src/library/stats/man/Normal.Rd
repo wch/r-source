@@ -3,6 +3,8 @@
 % Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{Normal}
 \alias{Normal}
 \alias{dnorm}
@@ -11,10 +13,10 @@
 \alias{rnorm}
 % These concepts are for the last example
 \concept{error function}
-\concept{erf}
-\concept{erfc}
-\concept{erfinv}
-\concept{erfcinv}
+\concept{\I{erf}}
+\concept{\I{erfc}}
+\concept{\I{erfinv}}
+\concept{\I{erfcinv}}
 \title{The Normal Distribution}
 \description{
   Density, distribution function, quantile function and random

@@ -35,7 +35,7 @@ colorConverter(toXYZ, fromXYZ, name, white = NULL, vectorized = FALSE)
 }
 \details{
   An RGB colour space is defined by the chromaticities of the  red, green and
-  blue primaries.  These are given as vectors of length 2 or 3 in xyY
+  blue primaries.  These are given as vectors of length 2 or 3 in \I{xyY}
   coordinates (the Y component is not used and may be omitted).
   The chromaticities are defined relative to a reference white, which
   must be one of the \I{CIE} standard illuminants: "A", "B", "C",

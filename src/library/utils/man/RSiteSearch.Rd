@@ -35,7 +35,7 @@ RSiteSearch(string,
     \code{news} for package NEWS,
     \code{Rfunctions} for help pages of R base packages,
     \code{Rmanuals} for R manuals,
-    \code{READMEs} for README files of CRAN packages,
+    \code{READMEs} for \file{README} files of CRAN packages,
     \code{views} for task views,
     \code{vignettes} for package vignettes.}
   \item{format}{deprecated.}
