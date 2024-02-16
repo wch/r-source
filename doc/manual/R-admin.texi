@@ -158,7 +158,7 @@ built in exactly the same way as distributions of @R{} releases.
 @end menu
 
 @node Using Subversion and rsync,  , Getting patched and development versions, Getting patched and development versions
-@subsection Using Subversion and rsync
+@subsection Using Subversion and @I{rsync}
 @cindex Subversion
 
 Sources are also available via @uref{https://svn.R-project.org/R/}, the
@@ -583,7 +583,7 @@ make compact-pdf
 provided @command{qpdf} and @command{gs} are available (see
 @code{?tools::compactPDF} for how to specify them if not on the path).
 
-Ebook versions of most of the manuals in one or both of @file{.epub} and
+E-book versions of most of the manuals in one or both of @file{.epub} and
 @file{.mobi} formats can be made by running in @file{doc/manual} one of
 @example
 make ebooks
@@ -782,7 +782,7 @@ which populates a @file{tests} directory in the installation.
 
 
 @node Uninstallation, Sub-architectures, Installation, Installing R under Unix-alikes
-@section Uninstallation
+@section @I{Uninstallation}
 
 You can uninstall @R{} by
 
@@ -1141,7 +1141,7 @@ installed later.}.
 
 The main benefit seen to date from @abbr{LTO} has been detecting long-standing
 bugs in the ways packages pass arguments to compiled code and between
-compilation units.  Benchmarking in 2020 with
+compilation units.  @I{Benchmarking} in 2020 with
 @command{gcc}/@command{gfortran}@tie{}10 showed gains of a few percent
 in increased performance and reduction in installed size for builds
 without debug symbols, but large size reductions for some
@@ -1634,7 +1634,7 @@ writing, version 2.8.5 or later.}  These include the @pkg{tcltk} package
 and the @code{X11} graphics device: attempting to use these without
 @I{XQuartz} will remind you.  This is also needed for some
 @cindex Cairo
-builds of the cairographics-based devices (which are not often used on
+builds of the @I{cairographics}-based devices (which are not often used on
 macOS) such as @code{png(type = "cairo")} and @code{svg()} and some
 third-party packages (e.g.@: @CRANpkg{rgl}).
 
@@ -2055,7 +2055,7 @@ name given is a single @file{.tar.gz} file.
 
 @code{install.packages} can look in several repositories, specified as a
 character vector by the argument @code{repos}: these can include a
-@acronym{CRAN} mirror, Bioconductor, R-forge, rforge.net,
+@acronym{CRAN} mirror, Bioconductor, R-forge, @I{rforge.net},
 local archives, local files, @dots{}).  Function
 @code{setRepositories()} can select amongst those repositories that the
 @R{} installation is aware of.
@@ -2163,7 +2163,7 @@ with a non-empty @file{configure.win} script or which make use of
 @file{src/Makefile.win}.  If @file{configure.win} does something
 appropriate to both architectures use@footnote{for a small number of
 @acronym{CRAN} packages where this is known to be safe and is needed by
-the autobuilder this is the default.  Look at the source of
+the @I{autobuilder} this is the default.  Look at the source of
 @file{tools:::.install_packages} for the list.  It can also be specified
 in the package's @file{DESCRIPTION} file.} option
 @option{--force-biarch}: otherwise @command{R CMD INSTALL
@@ -2977,7 +2977,7 @@ need to supply the uniform random number generator
 
 @noindent
 or use the one supplied (and with a shared library or DLL you may
-have to use the one supplied, which is the @I{Marsaglia}-multicarry with
+have to use the one supplied, which is the @I{Marsaglia}-@I{multicarry} with
 an entry point
 
 @example
@@ -3417,8 +3417,8 @@ platforms which have it available, the @code{msttcorefonts}
 package@footnote{also known as @code{ttf-mscorefonts-installer} in the
 Debian/Ubuntu world: see also
 @uref{https://en.wikipedia.org/wiki/Core_fonts_for_the_Web}.} provides
-TrueType versions of @I{Monotype} fonts such as @I{Arial} and Times New Roman.
-Another useful set of fonts is the `liberation' TrueType fonts available
+@I{TrueType} versions of @I{Monotype} fonts such as @I{Arial} and Times New Roman.
+Another useful set of fonts is the `liberation' @I{TrueType} fonts available
 at
 @uref{https://pagure.io/liberation-fonts},@footnote{@code{ttf-liberation}
 in Debian/Ubuntu.} which cover the Latin, Greek and Cyrillic alphabets
@@ -3914,7 +3914,7 @@ in the @I{BLIS} libraries.
 @subsubsection Intel @I{MKL}
 For Intel processors (and perhaps others) and some distributions of
 Linux, there is Intel's Math Kernel Library@footnote{Nowadays known as
-`Intel oneAPI Math Kernel Library' or even `oneMKL'.}.  You are
+`@I{Intel oneAPI Math Kernel Library}' or even `@I{oneMKL}'.}.  You are
 encouraged to read the documentation which is installed with the library
 before attempting to link to @I{MKL}.  This includes a `link line advisor'
 which will suggest appropriate incantations: its use is recommended.  Or
@@ -4270,7 +4270,7 @@ X include files are in @var{DIR}
 @item --x-libraries=@var{DIR}
 X library files are in @var{DIR}
 @item --with-readline
-use readline library (if available) [yes]
+use @I{readline} library (if available) [yes]
 @item --enable-R-profiling
 attempt to compile support for @code{Rprof()} [yes]
 @item --enable-memory-profiling
@@ -4307,7 +4307,7 @@ OSes also linked against the dynamic libraries @R{} itself is linked
 against, and this can lead to symbol conflicts.
 
 For maximally effective use of @command{valgrind}, @R{} should be
-compiled with valgrind instrumentation. The @command{configure} option
+compiled with @I{Valgrind} instrumentation. The @command{configure} option
 is @option{--with-valgrind-instrumentation=@var{level}}, where
 @var{level} is 0, 1 or 2.  (Level 0 is the default and does not add
 anything.)  The system headers for @command{valgrind} are required: on
@@ -4423,7 +4423,7 @@ Its counterpart for PDF files is  @env{R_PDFVIEWER}.
 @subsection Compilation flags
 
 If you have libraries and header files, e.g., for @acronym{GNU}
-readline, in non-system directories, use the variables @code{LDFLAGS}
+@I{readline}, in non-system directories, use the variables @code{LDFLAGS}
 (for libraries, using @samp{-L} flags to be passed to the linker) and
 @code{CPPFLAGS} (for header files, using @samp{-I} flags to be passed to
 the C/C++ preprocessors), respectively, to specify these locations.
@@ -4774,7 +4774,7 @@ the @code{C} locale.  The likely issues are a failure to find any fonts
 or glyphs being rendered incorrectly (often as a pair of @acronym{ASCII}
 characters).  X11 works by being asked for a font specification and
 coming up with its idea of a close match.  For text (as distinct from
-the symbols used by plotmath), the specification is the first element of
+the symbols used by @I{plotmath}), the specification is the first element of
 the option @code{"X11fonts"} which defaults to
 
 @example
@@ -4791,7 +4791,7 @@ further font packages, such as @samp{xorg-x11-fonts-ISO8859-2-75dpi} and
 Multi-byte encodings (most commonly UTF-8) are even more complicated.
 There are few fonts in @samp{iso10646-1}, the Unicode encoding, and they
 only contain a subset of the available glyphs (and are often fixed-width
-designed for use in terminals).  In such locales @emph{fontsets} are
+designed for use in terminals).  In such locales @emph{@I{fontset}s} are
 used, made up of fonts encoded in other encodings.  If the locale you
 are using has an entry in the @samp{XLC_LOCALE} directory (typically
 @file{/usr/share/X11/locale}), it is likely that all you need to do is to
@@ -5094,7 +5094,7 @@ compilers are only for @cputype{x86_64}: the earlier (now called
 the version of this manual for @R{} 4.3.x: the Fortran compiler
 @command{ifort} remains part of the Fortran distribution)..
 
-The compilers are now all under Intel's `oneAPI' brand. The revamped
+The compilers are now all under Intel's `@I{oneAPI}' brand. The revamped
 ones are @command{icx}, @command{icpx} and @command{ifx}; they are
 identified by the C/C++ macro @code{__INTEL_LLVM_COMPILER} (and do not
 define @code{__INTEL_COMPILER}: they also define @code{__clang__} and
@@ -5105,9 +5105,9 @@ library rather than @I{LLVM}'s @code{libc++}.
 
 Standalone installers (which are free-of-charge) are available from
 @uref{https://www.intel.com/content/www/us/en/developer/articles/tool/oneapi-standalone-components.html}:
-they are also part of the oneAPI Base and HPC (for Fortran) ToolKits.
+they are also part of the @I{oneAPI} Base and HPC (for Fortran) toolkits.
 
-We tried the compilers in oneAPI 2024.0.2 and 2023.x.y using (the paths
+We tried the compilers in @I{oneAPI} 2024.0.2 and 2023.x.y using (the paths
 do differ by compiler version)
 @example
 IP=/path/to/compilers/bin/
@@ -5432,7 +5432,7 @@ The default security settings can make it difficult to install Apple
 packages which have not been `notarized'@footnote{See
 @uref{https://developer.apple.com/documentation/xcode/notarizing_macos_software_before_distribution}.}
 by Apple.  And not just packages, as this has been seen for executables
-contained in tarballs/zipfiles (for example, for @command{pandoc}).
+contained in tarballs/@I{zipfiles} (for example, for @command{pandoc}).
 Usually one can use @samp{Open With} (Control/right/two-finger-click in
 Finder), then select @samp{Installer} and @samp{Open} if you get a
 further warning message.
@@ -6227,7 +6227,7 @@ with the @file{README} file in that directory.
 @c header files in way incompatible@footnote{In particular, header
 @c @file{cmath} in C++11 mode includes @file{math.h} and
 @c @file{iso/math_c99.h} and @command{gcc} had `fixed' an earlier version
-@c of the latter.} with the modified versions included with OpenCSW's
+@c of the latter.} with the modified versions included with @I{OpenCSW}'s
 @c binary distribution.
 
 @c The notes here are for @command{gcc} set up to use the Solaris linker:
@@ -6319,8 +6319,8 @@ special action, FreeBSD requires a call to (the macro)
 @code{fpsetmask(0)} and @I{OSF1} required that computation be done with a
 @option{-ieee_with_inexact} flag etc. With Intel compilers on 32-bit and
 64-bit Intel machines, one has to explicitly disable flush-to-zero and
-denormals-are-zero modes.  Some ARM processors including A12Z and M1
-(Apple Silicon) by default use runfast mode, which includes
+@I{denormals-are-zero} modes.  Some ARM processors including A12Z and M1
+(Apple Silicon) by default use @I{runfast} mode, which includes
 flush-to-zero and @I{default-nan} and hence has to be disabled.  With
 @I{default-nan} mode, the NaN payload used for representation of numeric NA
 values is lost even on simple operations with finite values. On a new
@@ -6338,7 +6338,7 @@ compilers has caused @R{}'s @code{NaN} to be set incorrectly, and
 @strong{Shared Objects}: There seems to be very little agreement
 across platforms on what needs to be done to build shared objects.
 there are many different combinations of flags for the compilers and
-loaders.  @acronym{GNU} libtool cannot be used (yet), as it currently
+loaders.  @acronym{GNU} @I{libtool} cannot be used (yet), as it currently
 does not fully support Fortran: one would need a shell wrapper for
 this).  The technique we use is to first interrogate the X window system
 about what it does (using @command{xmkmf}), and then override this in

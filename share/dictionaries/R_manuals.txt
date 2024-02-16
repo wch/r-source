@@ -27,6 +27,7 @@ counterintuitive
 customizable
 customizations
 datetime
+deallocate
 deallocation
 deprecations
 DIF
@@ -35,6 +36,7 @@ downsampling
 DSOs
 duplications
 dylibs
+eigendecomposition
 eval
 extern
 fallbacks
@@ -200,3 +202,4 @@ wishlist
 workspaces
 writeable
 writeups
+YAML

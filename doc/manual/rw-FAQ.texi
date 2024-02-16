@@ -285,7 +285,7 @@ after having checked the command line.
 @end table
 
 A successful installation has exit code 0: unsuccessful ones may give 1,
-2, 3, 4 or 5.  See the help for Inno Setup
+2, 3, 4 or 5.  See the help for @I{Inno Setup}
 (@uref{https://jrsoftware.org/}) for details.
 
 @c We have some facilities for building a customized installer, in
@@ -324,7 +324,7 @@ without creating a shortcut starting in a writable folder.
 
 
 @node How do I UNinstall R?, What's the best way to upgrade?, Can I run R from a CD or USB drive?, Installation and Usage
-@section How do I UNinstall R?
+@section How do I @I{UNinstall} R?
 
 Normally you can do this from the @samp{Programs and Features} group in
 the Control Panel.  If it does not appear there, run @file{unins000.exe}
@@ -452,7 +452,7 @@ all of these fail, the current working directory is used.
 You can find the home directory from R code by @code{Sys.getenv("R_USER")}
 or @code{normalizePath("~")}, @samp{~} being Unix notation for the home
 directory. Note that some distributions of Unix utilities for Windows, such
-as Msys2 (and hence @I{Rtools}) or cygwin set the environment variable
+as @I{Msys2} (and hence @I{Rtools}) or @I{Cygwin} set the environment variable
 @env{HOME} to a user directory of their choice. When R is invoked from a
 shell of such an distribution, the home directory in R would hence
 typically not be the Windows "personal" directory. With @I{Rtools40},
@@ -611,7 +611,7 @@ best effort revocation checks via an environment variable: see
 
 
 @node Entering certain characters crashes Rgui., What does 'DLL attempted to change FPU control word' mean?, The Internet download functions fail., Installation and Usage
-@section Entering certain characters crashes Rgui.
+@section Entering certain characters crashes @I{RGui}.
 
 This has not been reported for many years, but used to happen
 regularly.  All the occurrences we have solved have been traced to
@@ -620,7 +620,7 @@ that seems to avoid this.  A few other people have discovered this was
 caused by desktop switcher and keyboard macro programs, for example
 `Macro Magic' and `@I{JS Pager}'.
 
-R 4.2 and later use UCRT as the C runtime instead of MSVCRT. No such problems have
+R 4.2 and later use @abbr{UCRT} as the C runtime instead of @abbr{MSVCRT}. No such problems have
 been reported so far.
 
 @node What does 'DLL attempted to change FPU control word' mean?, Other strange crashes., Entering certain characters crashes Rgui., Installation and Usage
@@ -685,7 +685,7 @@ use multiple CPUs or multiple threads.
 R 4.3 code base still conservatively uses features of Windows 7 and
 later only when available, and otherwise falls back to older features, so it
 might still run on 7, but this is minimally tested (see Q2.2), and the code
-is tuned for newer systems.  Some performance work-arounds for old Windows
+is tuned for newer systems.  Some performance @I{work-arounds} for old Windows
 systems past their end of support may be removed, such as a custom memory
 allocator removed in R 4.2.
 
@@ -829,7 +829,7 @@ default font in the @code{Rgui} console and internal pager is
 tried.  @code{Lucida Console} which has elegant glyphs for directional
 quotes (but seems rather light unless @I{ClearType} is in use):
 @code{Consolas} is another font which we often select when @I{ClearType} is
-in use.  Non-TrueType fonts such as @code{Courier} and @code{FixedSys}
+in use.  Non-@I{TrueType} fonts such as @code{Courier} and @code{FixedSys}
 lack directional double quotes on the systems we tried.
 
 There is a related problem with using @code{Sweave} output in
@@ -931,7 +931,7 @@ and replace @samp{x64} by @samp{i386} or @emph{vice versa}.
 
 
 @node Rcmd is not found in my PATH!,  , Can both 32- and 64-bit R be installed on the same machine?, Installation and Usage
-@section Rcmd is not found in my PATH!
+@section @I{Rcmd} is not found in my PATH!
 
 This has often been reported after an upgrade.
 
@@ -1102,8 +1102,8 @@ start R, or setting it in the @file{Rconsole} file.
 for example, in the console and to annotate graphs.  Similar comments
 apply to any non-Western-European language.
 
-With suitable fonts, this should just work.  You will need to set MS
-Mincho or MS Gothic as the console font to ensure that single- and
+With suitable fonts, this should just work.  You will need to set @I{MS
+Mincho} or MS Gothic as the console font to ensure that single- and
 double-width characters are handled correctly.  The default graphics
 fonts for the @code{windows()} graphics device can handle most common
 Japanese characters, but more specialized fonts may need to be set.
@@ -1297,7 +1297,7 @@ listing of some of these packages (notably @code{RGtk2}, @code{cairoDevice},
 
 
 @node Package TclTk does not work., Hyperlinks in HTML do not work., Loading a package fails., Packages
-@section Package TclTk does not work.
+@section Package @I{TclTk} does not work.
 
 For package @code{tcltk} to work (try @code{demo(tkdensity)} or
 @code{demo(tkttest)} after @code{library(tcltk)}) you need to have Tcl/Tk
@@ -1718,7 +1718,7 @@ and so these problems should disappear.
 
 
 @node The output to the console seems to be delayed, Long lines seem to be truncated., The R Console, The R Console
-@section When using Rgui the output to the console seems to be delayed.
+@section When using @I{RGui} the output to the console seems to be delayed.
 
 This is deliberate: the console output is buffered and re-written in
 chunks to be faster and less distracting.  You can turn buffering off or

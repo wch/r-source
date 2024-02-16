@@ -466,7 +466,7 @@ describe not only content but also the structure of the content can
 make a file self-describing, so that one need not provide these details
 to the software reading the data.
 
-The eXtensible Markup Language -- more commonly known simply as
+The @I{eXtensible Markup Language} -- more commonly known simply as
 @acronym{XML} -- can be used to provide such structure, not only for
 standard datasets but also more complex data structures.
 @acronym{XML} is becoming extremely popular and is emerging as a
@@ -492,8 +492,8 @@ Package @CRANpkg{StatDataML} on @acronym{CRAN} is one example building
 on @CRANpkg{XML}.  Another interface to the @pkg{libxml2} C library is
 provided by package @CRANpkg{xml2}.
 
-@cindex yaml
-@acronym{yaml} is another system for structuring text data, with
+@cindex YAML
+@acronym{YAML} is another system for structuring text data, with
 emphasis on human-readability: it is supported by package
 @CRANpkg{yaml}.
 
@@ -1050,7 +1050,7 @@ other system.
 @end menu
 
 @node EpiInfo Minitab SAS S-PLUS SPSS Stata Systat, Octave, Importing from other statistical systems, Importing from other statistical systems
-@section @I{EpiInfo}, @I{Minitab}, S-PLUS, SAS, SPSS, @I{Stata}, Systat
+@section @I{EpiInfo}, @I{Minitab}, S-PLUS, SAS, SPSS, @I{Stata}, @I{Systat}
 
 The recommended package @CRANpkg{foreign} provides import facilities for
 files produced by these statistical systems, and for export to @I{Stata}. In
@@ -1062,7 +1062,7 @@ files}) provides an export mechanism with support currently for
 @cindex @I{EpiInfo}
 @cindex @I{EpiData}
 @findex read.epiinfo
-EpiInfo versions 5 and 6 stored data in a  self-describing fixed-width
+@I{EpiInfo} versions 5 and 6 stored data in a  self-describing fixed-width
 text format. @code{read.epiinfo} will read these @file{.REC} files into
 an @R{} data frame. @I{EpiData} also produces data in this format.
 
@@ -1121,7 +1121,7 @@ Some third-party applications claim to produce data `in SPSS format' but
 with differences in the formats: @code{read.spss} may or may not be able
 to handle these.
 
-@cindex Stata
+@cindex @I{Stata}
 @findex read.dta
 @findex write.dta
 @I{Stata} @file{.dta} files are a binary file format. Files from versions 5
@@ -1131,9 +1131,9 @@ converted to (and from) @R{} factors. For  @I{Stata} versions 13 and later
 see @acronym{CRAN} packages @CRANpkg{readstata13} and @CRANpkg{haven}.
 
 
-@cindex Systat
+@cindex @I{Systat}
 @findex read.systat
-@code{read.systat} reads those Systat @code{SAVE} files that are
+@code{read.systat} reads those @I{Systat} @code{SAVE} files that are
 rectangular data files (@code{mtype = 1}) written on little-endian
 machines (such as from Windows).  These have extension @file{.sys}
 or (more recently) @file{.syd}.
@@ -1225,7 +1225,7 @@ applications, including Mail and Address Book, use SQLite.
 Traditionally there had been large (and expensive) commercial @abbr{RDBMS}s
 (@uref{https://www.ibm.com/products/informix, Informix};
 @uref{https://www.oracle.com, Oracle}; 
-Sybase;
+@I{Sybase};
 @uref{https://www.ibm.com/products/db2, IBM's DB2};
 @uref{https://www.microsoft.com/sql-server/, Microsoft @acronym{SQL}
 Server} on Windows) and academic and small-system databases (such as
@@ -1499,7 +1499,7 @@ Arkansas          8.8     190       50 19.5
 @end smallexample
 
 @node RODBC,  , DBI, R interface packages
-@subsection Package RODBC
+@subsection Package @pkg{RODBC}
 @cindex ODBC
 @cindex Open Database Connectivity
 
@@ -1522,10 +1522,10 @@ this is pre-installed in macOS) and an installed driver for your
 database system.
 
 @cindex Excel
-@cindex Dbase
+@cindex @I{dBase}
 @findex .dbf
 Windows provides drivers not just for @abbr{DBMS}s but also for Excel
-(@file{.xls}) spreadsheets, @I{DBase} (@file{.dbf}) files and even text
+(@file{.xls}) spreadsheets, @I{dBase} (@file{.dbf}) files and even text
 files.  (The named applications do @emph{not} need to be
 installed. Which file formats are supported depends on the versions of
 the drivers.)  There are versions for Excel and Access 2007/2010 (go to
@@ -1798,7 +1798,7 @@ handle binary files.
 Packages @CRANpkg{h5}, @I{Bioconductor}'s @pkg{rhdf5}, @CRANpkg{RNetCDF} and
 @CRANpkg{ncdf4} on @acronym{CRAN} provide interfaces to @acronym{NASA}'s
 @abbr{HDF5} (Hierarchical Data Format, see
-@uref{https://www.hdfgroup.org/HDF5/}) and to @I{UCAR}'s netCDF data files
+@uref{https://www.hdfgroup.org/HDF5/}) and to @I{UCAR}'s @I{netCDF} data files
 (network Common Data Form, see
 @uref{https://www.unidata.ucar.edu/software/netcdf/}).
 
@@ -1808,7 +1808,7 @@ allows @emph{groups} of arrays, and the @R{} interface maps lists
 to @abbr{HDF5} groups, and can write numeric and character vectors and
 matrices.
 
-NetCDF's version 4 format (confusingly, implemented in netCDF 4.1.1 and
+@I{NetCDF}'s version 4 format (confusingly, implemented in @I{netCDF} 4.1.1 and
 later, but not in 4.0.1) includes the use of various @abbr{HDF5} formats.  This
 is handled by package @CRANpkg{ncdf4} whereas @CRANpkg{RNetCDF} handles
 version 3 files.
@@ -1817,17 +1817,17 @@ The availability of software to support these formats is somewhat
 limited by platform, especially on Windows.
 
 @node dBase files (DBF),  , Binary data formats, Binary files
-@section dBase files (@I{DBF})
+@section @I{dBase} files (@I{DBF})
 
-@cindex dBase
+@cindex @I{dBase}
 @cindex @I{DBF} files
 @code{dBase} was a DOS program written by @I{Ashton-Tate} and later owned by
 @I{Borland} which has a binary flat-file format that became popular, with
-file extension @file{.dbf}.  It has been adopted for the 'Xbase' family
-of databases, covering dBase, Clipper, @I{FoxPro} and their Windows
-equivalents Visual dBase, Visual Objects and @I{Visual FoxPro} (see
+file extension @file{.dbf}.  It has been adopted for the '@I{Xbase}' family
+of databases, covering @I{dBase}, Clipper, @I{FoxPro} and their Windows
+equivalents @I{Visual dBase}, @I{Visual Objects} and @I{Visual FoxPro} (see
 @uref{https://www.clicketyclick.dk/databases/xbase/format/}).
-A dBase file contains
+A @I{dBase} file contains
 a header and then a series of fields and so is most similar to an @R{}
 data frame.  The data itself is stored in text format, and can include
 character, logical and numeric fields, and other types in later versions
@@ -1841,7 +1841,7 @@ and
 Functions @code{read.dbf} and @code{write.dbf} provide ways to read and
 write basic @abbr{DBF} files on all @R{} platforms.  For Windows users
 @code{odbcConnectDbase} in package @CRANpkg{RODBC} provides more
-comprehensive facilities to read @abbr{DBF} files @emph{via} Microsoft's dBase
+comprehensive facilities to read @abbr{DBF} files @emph{via} Microsoft's @I{dBase}
 @abbr{ODBC} driver (and the @I{Visual FoxPro} driver can also be used via
 @code{odbcDriverConnect}).
 @findex odbcConnectDbase
@@ -1863,8 +1863,8 @@ are compiled, and the supported formats can be listed by e.g.@:
 @command{convert -list format}.
 
 Package @CRANpkg{pixmap} has a function @code{read.pnm} to read `portable
-anymap' images in PBM (black/white), @abbr{PGM} (grey) and PPM (RGB colour)
-formats.  These are also known as `netpbm' formats.
+@I{anymap}' images in PBM (black/white), @abbr{PGM} (grey) and PPM (RGB colour)
+formats.  These are also known as `@I{netpbm}' formats.
 
 Packages @CRANpkg{bmp}, @CRANpkg{jpeg} and @CRANpkg{png} read the
 formats after which they are named.  See also packages @CRANpkg{biOps}
@@ -2105,9 +2105,9 @@ number of lines of text can be pushed back onto a connection via a call
 to @code{pushBack}.
 
 Pushbacks operate as a stack, so a read request first uses each line
-from the most recently pushbacked text, then those from earlier
+from the most recently @I{pushbacked} text, then those from earlier
 pushbacks and finally reads from the connection itself.  Once a
-pushbacked line is read completely, it is cleared.  The number of
+@I{pushbacked} line is read completely, it is cleared.  The number of
 pending lines pushed back can be found via a call to
 @code{pushBackLength}.
 @findex pushBackLength
@@ -2200,9 +2200,9 @@ versa}.  This will not suffice if the data are to be transferred to a
 machine with a different architecture, but between almost all @R{}
 platforms the only change needed is that of byte-order.  Common PCs
 (@cputype{ix86}-based and @cputype{x86_64}-based machines), Compaq Alpha
-and Vaxen are @emph{little-endian}, whereas Sun @I{Sparc}, @I{mc680x0} series,
-IBM R6000, SGI and most others are @emph{big-endian}.  (Network
-byte-order (as used by @abbr{XDR}, eXternal Data Representation) is
+and @I{Vaxen} are @emph{little-endian}, whereas Sun @I{Sparc}, @I{mc680x0} series,
+IBM R6000, @I{SGI} and most others are @emph{big-endian}.  (Network
+byte-order (as used by @abbr{XDR}, @I{eXternal Data Representation}) is
 big-endian.)  To transfer to or from other programs we may need to do
 more, for example to read 16-bit integers or write single-precision real
 numbers.  This can be done using the @code{size} argument, which
@@ -2426,7 +2426,7 @@ Connections.
 
 @noindent
 @I{E.@: J.@: Yarger}, @I{G.@: Reese} and @I{T.@ King} (1999),
-@emph{MySQL & mSQL}.
+@emph{@I{MySQL & mSQL}}.
 @I{O'Reilly}.
 
 @node Function and variable index, Concept index, References, Top

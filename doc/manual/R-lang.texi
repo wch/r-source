@@ -301,7 +301,7 @@ the different vector types are listed in the following table.
 
 @quotation
 @multitable {@code{character}} {@code{character}} {@code{character}}
-@headitem typeof       @tab mode             @tab storage.mode
+@headitem @I{typeof}       @tab mode             @tab storage.mode
 @item @code{logical}   @tab @code{logical}   @tab @code{logical}
 @item @code{integer}   @tab @code{numeric}   @tab @code{integer}
 @item @code{double}    @tab @code{numeric}   @tab @code{double}
@@ -805,7 +805,7 @@ operator.
 
 Subsetting (other than by an empty index) generally drops all attributes
 except @code{names}, @code{dim} and @code{dimnames} which are reset as
-appropriate.  On the other hand, subassignment generally preserves
+appropriate.  On the other hand, @I{subassignment} generally preserves
 attributes even if the length is changed.  Coercion drops all
 attributes.
 
@@ -1966,13 +1966,13 @@ local(@{
 @})
 @end example
 uses the local value of @code{i} on both the LHS and RHS, and the local
-value of @code{e} on the RHS of the superassignment statement.  It sets
+value of @code{e} on the RHS of the @I{superassignment} statement.  It sets
 @code{e} in the outer environment to
 @example
  a  b 
  1 12
 @end example
-That is, the superassignment is equivalent to the four lines
+That is, the @I{superassignment} is equivalent to the four lines
 @example
 `*tmp*` <- get(e, envir=parent.env(), inherits=TRUE)
 `*tmp*`[i] <- e[i]+1
@@ -2001,7 +2001,7 @@ rm(`*tmp*`)
 These two candidate interpretations differ only if there is also a
 local variable @code{x}.  It is a good idea to avoid having a local
 variable with the same name as the target variable of a
-superassignment.  As this case was handled incorrectly in versions
+@I{superassignment}.  As this case was handled incorrectly in versions
 1.9.1 and earlier there must not be a serious need for such code.
 
 
@@ -2825,8 +2825,8 @@ Consider the following simple example.  A point in two-dimensional
 Euclidean space can be specified by its Cartesian (x-y) or polar
 (r-theta) coordinates.  Hence, to store information about the location
 of the point, we could define two classes, @code{"xypoint"} and
-@code{"rthetapoint"}.  All the `xypoint' data structures are lists with
-an x-component and a y-component.  All `rthetapoint' objects are lists
+@code{"rthetapoint"}.  All the `@I{xypoint}' data structures are lists with
+an x-component and a y-component.  All `@I{rthetapoint}' objects are lists
 with an r-component and a theta-component.
 
 Now, suppose we want to get the x-position from either type of object.
@@ -2908,7 +2908,7 @@ When a generic function is invoked the class of its first argument is
 examined.
 
 @node UseMethod, NextMethod, Method dispatching, Object-oriented programming
-@section UseMethod
+@section @code{UseMethod}
 @findex UseMethod
 
 @code{UseMethod} is a special function and it behaves differently from
@@ -3293,13 +3293,13 @@ argument.
 
 This is a bit unfortunate, but it is not easy to write a
 @cindex parsing
-parser/deparser
+parser/@I{deparser}
 combination that both preserves user input, stores it in minimal form
 and ensures that parsing a deparsed expression gives the same expression
 back.
 
 As it happens, @R{}'s parser is not perfectly invertible, nor is its
-deparser, as the following examples show
+@I{deparser}, as the following examples show
 
 @example
 > str(quote(c(1,2)))
@@ -3552,7 +3552,7 @@ behaves almost identically to the compound language object
 Call objects are indistinguishable from subexpressions in a parse tree.
 This means that they are automatically evaluated in the same way a
 subexpression would be.  Expression objects can be recognized during
-evaluation and in a sense retain their quotedness.  The evaluator will
+evaluation and in a sense retain their @I{quotedness}.  The evaluator will
 not evaluate an expression object recursively, only when it is passed
 directly to @code{eval} function as above.  The difference can be seen
 like this:
@@ -3564,7 +3564,7 @@ like this:
 [1] "expression"
 @end example
 
-The deparser represents an expression object by the call
+The @I{deparser} represents an expression object by the call
 that creates it.  This is similar to the way it handles numerical
 vectors and several other objects that do not have a specific external
 representation.  However, it does lead to the following bit of
@@ -4120,7 +4120,7 @@ Browse[1]>
 @end example
 
 @node debug/undebug, trace/untrace, browser, Debugging
-@section debug/undebug
+@section @code{debug}/@code{undebug}
 @findex debug
 @findex undebug
 
@@ -4728,7 +4728,7 @@ similar although with somewhat different semantics:
 @findex [[
 
 The @var{object} can formally be any valid expression, but it is
-understood to denote or evaluate to a subsettable object.  The arguments
+understood to denote or evaluate to a @I{subsettable} object.  The arguments
 generally evaluate to numerical or character indices, but other kinds of
 arguments are possible (notably @code{drop = FALSE}).
 

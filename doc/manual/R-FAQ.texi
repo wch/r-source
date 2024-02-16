@@ -121,7 +121,7 @@ any later version.
 
 This document is distributed in the hope that it will be useful, but
 WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+@I{MERCHANTABILITY} or FITNESS FOR A PARTICULAR PURPOSE.  See the
 @acronym{GNU} General Public License for more details.
 
 Copies of the @acronym{GNU} General Public License versions are
@@ -334,7 +334,7 @@ Sources, binaries and documentation for R can be obtained via @CRAN{},
 the ``Comprehensive R Archive Network'' (see @ref{What is CRAN?}).
 
 Sources are also available via @url{https://svn.R-project.org/R/}, the
-R Subversion repository, but currently not via anonymous rsync (nor
+R Subversion repository, but currently not via anonymous @I{rsync} (nor
 CVS).
 
 Tarballs with daily snapshots of the r-devel and r-patched development
@@ -610,7 +610,7 @@ Books on R by R Core Team members include
 @url{http://publicifsv.sund.ku.dk/~pd/ISwR.html}.
 
 @I{Robert Gentleman} (2008),
-``R Programming for Bioinformatics''.
+``R Programming for @I{Bioinformatics}''.
 @I{Chapman & Hall/CRC}, @I{Boca Raton}, FL, ISBN 978-1-420-06367-7,
 @url{https://master.bioconductor.org/help/publications/books/r-programming-for-bioinformatics/}.
 
@@ -785,7 +785,7 @@ load.
 
 From @CRAN{}, you can obtain the latest official release of R, daily
 snapshots of R (copies of the current source trees), as gzipped and
-bzipped tar files, a wealth of additional contributed code, as well as
+@I{bzipped} tar files, a wealth of additional contributed code, as well as
 prebuilt binaries for various operating systems (Linux, Mac OS Classic,
 macOS, and MS Windows).  @CRAN{} also provides access to
 documentation on R, existing mailing lists and the R Bug Tracking
@@ -1249,7 +1249,7 @@ Whereas in S, you would use @code{lm(y ~ x^3)} to regress @code{y} on
 @code{x^3}, in R, you have to insulate powers of numeric vectors (using
 @code{I()}), i.e., you have to use @code{lm(y ~ I(x^3))}.
 @item
-The glm family objects are implemented differently in R and S.  The same
+The @abbr{GLM} family objects are implemented differently in R and S.  The same
 functionality is available but the components have different names.
 @item
 Option @code{na.action} is set to @code{"na.omit"} by default in R,
@@ -1656,7 +1656,7 @@ Software for single hidden layer perceptrons (``feed-forward neural
 networks''), and for multinomial log-linear models.
 @c (Contained in the @file{VR} bundle for R versions prior to 2.10.0.)
 @item rpart
-Recursive PARTitioning and regression trees.
+Recursive @I{PARTitioning} and regression trees.
 @item spatial
 Functions for kriging and point pattern analysis from ``Modern Applied
 Statistics with S'' by @I{W. Venables} and @I{B. Ripley}.
@@ -2764,7 +2764,7 @@ the system and linked to the browser, and both Java @emph{and}
 JavaScript enabled in the browser.
 
 @node Why did my .Rprofile stop working when I updated R?, Where have all the methods gone?, Why does the help.start() search engine not work?, R Miscellanea
-@section Why did my .Rprofile stop working when I updated R?
+@section Why did my @I{.Rprofile} stop working when I updated R?
 
 Did you read the @file{NEWS} file?  For functions that are not in the
 @pkg{base} package you need to specify the correct package namespace,
@@ -3006,7 +3006,7 @@ for(i in 1:100) @{
 @end example
 
 @node Why are p-values not displayed when using lmer()?, Why are there unwanted borders, How can I save the result of each iteration in a loop into a separate file?, R Miscellanea
-@section Why are @math{p}-values not displayed when using lmer()?
+@section Why are @math{p}-values not displayed when using @code{lmer()}?
 
 Doug Bates has kindly provided an extensive response in a post to the 
 r-help list, which can be reviewed at
@@ -3339,7 +3339,7 @@ R-exts, Writing R Extensions}.
 @node How can I change compilation flags?, How can I debug S4 methods?, How can I inspect R objects when debugging?, R Programming
 @section How can I change compilation flags?
 
-Suppose you have C code file for dynloading into R, but you want to use
+Suppose you have C code file for @I{dynloading} into R, but you want to use
 @code{R CMD SHLIB} with compilation flags other than the default ones
 (which were determined when R was built).
 

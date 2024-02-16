@@ -3004,7 +3004,7 @@ and to simulate from the distribution.
 @noindent
 Prefix the name given here by @samp{d} for the density, @samp{p} for the
 CDF, @samp{q} for the quantile function and @samp{r} for simulation
-(@emph{r}andom deviates).  The first argument is @code{x} for
+(@I{@emph{r}andom} deviates).  The first argument is @code{x} for
 @code{d@var{xxx}}, @code{q} for @code{p@var{xxx}}, @code{p} for
 @code{q@var{xxx}} and @code{n} for @code{r@var{xxx}} (except for
 @code{rhyper}, @code{rsignrank} and @code{rwilcox}, for which it is
@@ -3345,7 +3345,7 @@ already seen a pair of boxplots.  The following
 @noindent
 will show the two empirical CDFs, and @code{qqplot} will perform a Q-Q
 plot of the two samples.  The Kolmogorov-Smirnov test is of the maximal
-vertical distance between the two ecdf's, assuming a common continuous
+vertical distance between the two @abbr{ecdf}s, assuming a common continuous
 distribution:
 
 @example
@@ -3745,7 +3745,7 @@ Less frequently, a function will need to refer to components of
 @samp{@dots{}}.  The expression @code{list(...)} evaluates all such
 arguments and returns them in a named list, while @code{..1},
 @code{..2}, etc. evaluate them one at a time, with @samp{..n}
-returning the n'th unmatched argument.
+returning the @I{n-th} unmatched argument.
 
 @node Assignment within functions, More advanced examples, The three dots argument, Writing your own functions
 @section Assignments within functions
@@ -3761,7 +3761,7 @@ the reader needs to be familiar with the notion of an evaluation
 topic and is not covered further here.
 
 If global and permanent assignments are intended within a function, then
-either the ``superassignment'' operator, @code{<<-} or the function
+either the `@I{superassignment}' operator, @code{<<-} or the function
 @code{assign()} can be used.  See the @code{help} document for details.
 @c @SPLUS{} users should be aware that @code{<<-} has different semantics
 @c in @R{}.  These are discussed further in @ref{Scope}.
@@ -3793,7 +3793,7 @@ efficiency factors are defined as the eigenvalues of the matrix
 $$E = I_v - R^{-1/2}N^T K^{-1}NR^{-1/2} = I_v - A^T A,$$
 @end tex
 @ifnottex
-E = I_v - R^@{-1/2@}N'K^@{-1@}NR^@{-1/2@} = I_v - A'A,
+@I{E = I_v - R^@{-1/2@}N'K^@{-1@}NR^@{-1/2@} = I_v - A'A,}
 @end ifnottex
 where @eqn{A = K^{-1/2}NR^{-1/2}, A = K^@{-1/2@}NR^@{-1/2@}}.
 One way to write the function is given below.
@@ -4239,10 +4239,10 @@ independent, homoscedastic errors
 
 @ifnottex
 @display
-y_i = sum_@{j=0@}^p beta_j x_@{ij@} + e_i, @ @ @ @ i = 1, @dots{}, n,
+@I{y_i = sum_@{j=0@}^p beta_j x_@{ij@} + e_i, @ @ @ @ i = 1, @dots{}, n,}
 @end display
 @noindent
-where the e_i are NID(0, sigma^2).
+where the e_i are @I{NID}(0, sigma^2).
 @end ifnottex
 @tex
 $$ y_i = \sum_{j=0}^p \beta_j x_{ij} + e_i,
@@ -4651,7 +4651,7 @@ in the residual sums of squares resulting from an inclusion of
 Hence only for orthogonal experiments will the order of inclusion be
 inconsequential.
 
-For multistratum experiments the procedure is first to project the
+For @I{multistratum} experiments the procedure is first to project the
 response onto the error strata, again in sequence, and to fit the mean
 model to each projection.  For further details, see @I{Chambers & Hastie}
 (1992).
@@ -4900,7 +4900,7 @@ we shall see later.
 
 Consider a small, artificial example, from @I{Silvey} (1970).
 
-On the Aegean island of Kalythos the male inhabitants suffer from a
+On the Aegean island of @I{Kalythos} the male inhabitants suffer from a
 congenital eye disease, the effects of which become more marked with
 increasing age.  Samples of islander males of various ages were tested
 for blindness and the results recorded.  The data is shown below:
@@ -5533,7 +5533,7 @@ frequencies divided by bin width instead of counts.
 
 @item dotchart(x, @dots{})
 @findex dotchart
-Constructs a dotchart of the data in @code{x}.  In a dotchart the
+Constructs a dot chart of the data in @code{x}.  In a dot chart the
 @math{y}-axis gives a labelling of the data in @code{x} and the
 @math{x}-axis gives its value.  For example it allows easy visual
 selection of all data entries with values lying in specified ranges.
@@ -6604,7 +6604,7 @@ package: @code{tk_choose.files} and @code{tk_choose.dir}.
 
 Functions @code{file.show} and @code{file.edit} will display and edit
 one or more files in a way appropriate to the @R{} port, using the
-facilities of a console (such as RGui on Windows or R.app on macOS) if
+facilities of a console (such as @I{RGui} on Windows or R.app on macOS) if
 one is in use.
 
 There is some support for @emph{links} in the filesystem: see functions
@@ -6759,7 +6759,7 @@ Start the @HTML{} interface to on-line help (using a web browser
 available at your machine).  You should briefly explore the features of
 this facility with the mouse.
 
-Iconify the help window and move on to the next part.
+@I{Iconify} the help window and move on to the next part.
 
 @item x <- rnorm(50)
 @itemx y <- rnorm(x)
@@ -7380,7 +7380,7 @@ R CMD latex.exe mydoc
 @noindent
 will run @LaTeX{} on @file{mydoc.tex}, with the path to @R{}'s
 @file{share/texmf} macros appended to @env{TEXINPUTS}.  (Unfortunately,
-this does not help with the MiKTeX build of @LaTeX{}, but
+this does not help with the @I{MiKTeX} build of @LaTeX{}, but
 @command{R CMD texify mydoc} will work in that case.)
 
 @node Invoking R under macOS, Scripting with R, Invoking R under Windows, Invoking R
@@ -7533,8 +7533,8 @@ file @file{README.Rterm} for command-line editing under
 @code{Rterm.exe}.
 
 When using @R{} with GNU@footnote{It is possible to build @R{} using an
-emulation of GNU @strong{@I{readline}}, such as one based on NetBSD's
-@strong{editline} (also known as @strong{libedit}), in which case only a
+emulation of GNU @strong{@I{readline}}, such as one based on @I{NetBSD}'s
+@I{editline} (also known as @I{libedit}), in which case only a
 subset of the capabilities may be provided.} @strong{@I{readline}}
 capabilities, the functions described below are available, as well as
 others (probably) documented in @command{man readline} or @command{info

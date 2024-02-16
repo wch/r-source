@@ -883,7 +883,7 @@ A package or @samp{R} can appear more than once in the @samp{Depends}
 field, for example to give upper and lower bounds on acceptable
 versions.
 
-It is inadvisable to use a dependence on @R{} with patchlevel (the third
+It is inadvisable to use a dependence on @R{} with patch level (the third
 digit) other than zero.  Doing so with packages which others depend on
 will cause the other packages to become unusable under earlier versions
 in the series, and e.g.@: versions 4.x.1 are widely used throughout the
@@ -1187,7 +1187,7 @@ declared in the @file{DESCRIPTION} file.}, but then the comments may not
 be readable in e.g.@: a UTF-8 locale.  Non-@acronym{ASCII} characters in
 object names will normally@footnote{This is true for OSes which
 implement the @samp{C} locale: Windows' idea of the @samp{C} locale uses
-the WinAnsi charset.} fail when the package is installed.  Any byte will
+the @I{WinAnsi} charset.} fail when the package is installed.  Any byte will
 be allowed in a quoted character string but @samp{\uxxxx} escapes should
 be used for non-@acronym{ASCII} characters.  However,
 non-@acronym{ASCII} character strings may not be usable in some locales
@@ -1398,7 +1398,7 @@ so should be an @acronym{ASCII} file (@pxref{Encoding issues}). Function
 @code{demo()} will use the package encoding if there is one, but this is
 mainly useful for non-@acronym{ASCII} comments.
 
-@cindex .Rinstignore file
+@cindex @I{.Rinstignore} file
 The contents of the @file{inst} subdirectory will be copied recursively
 to the installation directory.  Subdirectories of @file{inst} should not
 interfere with those used by @R{} (currently, @file{R}, @file{data},
@@ -1628,7 +1628,7 @@ is included in the @file{src} subdirectory and discussed elsewhere in
 this document.
 
 Subdirectory @file{exec} could be used for scripts for interpreters such
-as the shell, BUGS, JavaScript, Matlab, Perl, php (@CRANpkg{amap}),
+as the shell, BUGS, JavaScript, Matlab, Perl, @I{PHP} (@CRANpkg{amap}),
 Python or Tcl (@CRANpkg{Simile}), or even @R{}.  However, it seems more
 common to use the @file{inst} directory, for example
 @file{WriteXLS/inst/Perl}, @file{NMF/inst/m-files},
@@ -1701,7 +1701,7 @@ sources (from 2008) were available from
 @uref{https://sourceforge.net/projects/tktable/files/tktable/2.10/Tktable2.10.tar.gz/download},
 but needed patching for current Tk (8.6.11, but not 8.6.10) -- a patch
 can be found at @uref{https://www.stats.ox.ac.uk/pub/bdr/Tktable/}. For
-a system installation of Tk you may need to install Tktable as
+a system installation of Tk you may need to install @samp{Tktable} as
 @samp{root} as on e.g.@: Fedora all the locations on @code{auto_path}
 are owned by @samp{root}.
 
@@ -2067,7 +2067,7 @@ would be needed to use @code{-ljbig} sometimes included in
 Another issue is that @command{pkg-config --exists} may not be reliable.
 It checks not only that the `module' is available but @emph{all} of the
 dependencies, including those in principle needed for static linking.
-(XQuartz 2.8.x only distributed dynamic libraries and not some of the
+(@I{XQuartz} 2.8.x only distributed dynamic libraries and not some of the
 @file{.pc} files needed for @code{--exists}.)
 
 Sometimes the name by which the software is known to
@@ -2624,7 +2624,7 @@ or @R{} itself).   Also, implementation-specific variables such as
 @env{KMP_THREAD_LIMIT} might take precedence.
 
 @node Using pthreads, Compiling in sub-directories, OpenMP support, Using Makevars
-@subsubsection Using pthreads
+@subsubsection Using @I{pthreads}
 
 There is no direct support for the POSIX threads (more commonly known as
 @code{pthreads}): by the time we considered adding it several packages
@@ -3060,7 +3060,7 @@ the default builds of @R{} on macOS and Windows as from @R{} 4.0.0.
 Much of @command{g++}'s support for C++17 needs version 7 or later: that
 is more recent than some still-current Linux distributions but often
 packages for later compilers are available: for @I{RHEL}/@I{Centos} 7 look for
-`devtoolset'.
+`@I{devtoolset}'.
 
 Note that C++17 or later `support' does not mean complete support: use
 feature tests as well as resources such as
@@ -3439,7 +3439,7 @@ The files and directories are checked for sufficient permissions
 The files are checked for binary executables, using a suitable version
 of @command{file} if available@footnote{A suitable @command{file.exe} is
 part of the Windows toolset: it checks for @command{gfile} if a suitable
-@command{file} is not found: the latter is available in the OpenCSW
+@command{file} is not found: the latter is available in the @I{OpenCSW}
 collection for Solaris at @uref{https://www.opencsw.org/}.  The source
 repository is @uref{http://ftp.astron.com/pub/file/}.}.  (There may be
 rare false positives.)
@@ -3765,7 +3765,7 @@ line-endings if necessary.
 Run-time checks whether the package works correctly should be performed
 using @command{R CMD check} prior to invoking the final build procedure.
 
-@cindex .Rbuildignore file
+@cindex @I{.Rbuildignore} file
 To exclude files from being put into the package, one can specify a list
 of exclude patterns in file @file{.Rbuildignore} in the top-level source
 directory.  These patterns should be Perl-like regular expressions (see
@@ -4077,7 +4077,7 @@ files or to the @file{DESCRIPTION} file, and be valid @HTML{} as
 confirmed @emph{via} the @uref{https://validator.w3.org, W3C Markup
 Validation Service} or @uref{https://validator.nu/, Validator.nu}.
 
-Sweave/Stangle allows the document to specify the @code{split=TRUE}
+Sweave/@I{Stangle} allows the document to specify the @code{split=TRUE}
 option to create a single @R{} file for each code chunk: this will not
 work for vignettes where it is assumed that each vignette source
 generates a single file with the vignette extension replaced by
@@ -4992,7 +4992,7 @@ Anticipate a parallel @command{make}.  @xref{Using Makevars}.
 @item
 Pass macros down to the makefile in the subdirectory, including
 @strong{all} the needed compiler flags (including PIC and visibility
-flags).  If they are used (even by a default rule) in the subdirectory's
+flags).  If they are used (even by a default rule) in the @I{subdirectory}'s
 Makefile, this includes macros @samp{AR} and @samp{RANLIB}.
 @xref{Compiling in sub-directories}, which has a C example.  A C++
 example:
@@ -5730,9 +5730,9 @@ build} has an option to run @command{qpdf} over PDF files under
 @file{inst/doc} and replace them if at least 10Kb and 10% is saved.  The
 full path to the @command{qpdf} command can be supplied as environment
 variable @env{R_QPDF} (and is on the @acronym{CRAN} binary of @R{} for
-macOS).  It seems MiKTeX does not use PDF object compression and so
+macOS).  It seems @I{MiKTeX} does not use PDF object compression and so
 @command{qpdf} can reduce considerably the sizes of files it outputs:
-MiKTeX's defaults can be overridden by code in the preamble of an Sweave
+@I{MiKTeX}'s defaults can be overridden by code in the preamble of an Sweave
 or @LaTeX{} file --- see how this is done for the @R{} reference manual
 at @uref{https://svn.r-project.org/R/trunk/doc/manual/refman.top}.
 
@@ -6009,7 +6009,7 @@ may have an `overloading ambiguity'.
 A surprising common misuse is things like @code{pow(10, -3)}: this
 should be the constant @code{1e-3}.  Note that there are constants such
 as @code{M_SQRT2} defined @emph{via} @file{Rmath.h}@footnote{often taken from
-the toolchain's headers.} for @code{sqrt(2.0)}, frequently @I{mis-coded} as
+the @I{toolchain}'s headers.} for @code{sqrt(2.0)}, frequently @I{mis-coded} as
 @code{sqrt(2)}.
 
 @item
@@ -6643,7 +6643,7 @@ such as @file{R.dll} and @file{Rblas.dll}.  The command-line tool
 @command{objdump} in the appropriate toolchain will also reveal what
 DLLs are imported from.  If you use a toolchain other than one provided
 by the @R{} developers or use your own makefiles, watch out in
-particular for dependencies on the toolchain's runtime DLLs such as
+particular for dependencies on the @I{toolchain}'s runtime DLLs such as
 @file{libgfortran}, @file{libstdc++} and @file{libgcc_s}.
 
 For macOS, using @code{R CMD otool -L} on the package's shared object(s)
@@ -6735,7 +6735,7 @@ translation) use directional quotations where available.  The range of
 quotation styles is immense: unfortunately we cannot reproduce them in a
 portable @code{texinfo} document.  But as a taster, some languages use
 `up' and `down' (comma) quotes rather than left or right quotes, and
-some use guillemets (and some use what Adobe calls `guillemotleft' to
+some use guillemets (and some use what Adobe calls `@I{guillemotleft}' to
 start and others use it to end).
 
 In @R{} messages it is also possible to use @code{sQuote} or @code{dQuote} as in
@@ -9619,7 +9619,7 @@ memory leaks) but others will segfault.
 @end menu
 
 @node Using gctorture, Using valgrind, Checking memory access, Checking memory access
-@subsection Using gctorture
+@subsection Using @code{gctorture}
 
 @findex gctorture
 We can help to detect memory problems in @R{} objects earlier by running
@@ -9688,7 +9688,7 @@ mechanism can be helpful in isolating memory protect problems.
 
 
 @node Using valgrind, Using Address Sanitizer, Using gctorture, Checking memory access
-@subsection Using valgrind
+@subsection Using @I{Valgrind}
 
 If you have access to Linux on a common CPU type or supported versions
 of FreeBSD or Solaris@footnote{The macOS support is for long-obsolete
@@ -9819,7 +9819,7 @@ memory checker in @command{valgrind}.  It is available with suitable
 builds@footnote{currently on @cputype{x86_64}/@cputype{ix86} Linux and
 FreeBSD, with some support for Intel macOS but not
 with the toolchain normally used with @R{}. (There is a faster variant,
-HWASAN, for @cputype{aarch64} only.)  On some platforms the runtime
+@I{HWASAN}, for @cputype{aarch64} only.)  On some platforms the runtime
 library, @pkg{libasan}, needs to be installed separately, and for
 checking C++ you may also need @pkg{libubsan}.} of @command{gcc} and
 @command{clang} on common Linux and macOS platforms.  See
@@ -9923,7 +9923,7 @@ More recent versions@footnote{including @command{gcc} 7.1 and
 
 One of the checks done by @abbr{ASan} is that @code{malloc/free} and in C++
 @code{new/delete} and @code{new[]/delete[]} are used consistently
-(rather than say @code{free} being used to dealloc memory allocated by
+(rather than say @code{free} being used to deallocate memory allocated by
 @code{new[]}).  This matters on some systems but not all: unfortunately
 on some of those where it does not matter, system libraries@footnote{for
 example, X11/@I{GL} libraries on Linux, seen when checking package
@@ -10105,7 +10105,7 @@ code with @command{gcc} but there has been success with @command{clang}.
 
 Recent versions of @command{clang} on @cputype{x86_64} Linux have
 `@I{ThreadSanitizer}' (@uref{https://github.com/google/sanitizers/wiki#threadsanitizer}),
-a `data race detector for C/C++ programs', and `MemorySanitizer'
+a `data race detector for C/C++ programs', and `@I{MemorySanitizer}'
 (@uref{https://clang.llvm.org/docs/MemorySanitizer.html},
 @uref{https://github.com/google/sanitizers})
 for the detection of uninitialized memory.  Both are based on and
@@ -10115,7 +10115,7 @@ provide similar functionality to tools in @command{valgrind}.
 files during compilation: see @uref{https://clang-analyzer.llvm.org/}.
 
 @node Other analyses with `gcc', Using `Dr. Memory', Other analyses with `clang', Checking memory access
-@subsection Other analyses with `gcc'
+@subsection Other analyses with `@I{gcc}'
 
 GCC 10 introduced a new flag @option{-fanalyzer} which does static
 analysis during compilation, currently for C code.  It is regarded as
@@ -11959,7 +11959,7 @@ destructor Y
 The @R{} for Windows @acronym{FAQ} (@file{rw-FAQ}) contains details of how
 to compile this example under Windows.
 
-Earlier versions of this example used C++ iostreams: this is best
+Earlier versions of this example used C++ @I{iostreams}: this is best
 avoided.  There is no guarantee that the output will appear in the @R{}
 console, and indeed it will not on the @R{} for Windows console.  Use
 @R{} code or the C entry points (@pxref{Printing}) for all I/O if at all
@@ -12012,7 +12012,7 @@ sources are less likely to already have them installed.
 @node Fortran I/O, Linking to other packages, Interfacing C++ code, System and foreign language interfaces
 @section Fortran I/O
 
-We have already warned against the use of C++ iostreams not least
+We have already warned against the use of C++ @I{iostreams} not least
 because output is not guaranteed to appear on the @R{} console, and this
 warning applies equally to Fortran output to units @code{*}
 and @code{6}. @xref{Printing from Fortran}, which describes workarounds.
@@ -12318,7 +12318,7 @@ make use of the source code for inspirational examples.
 It is necessary to know something about how @R{} objects are handled in
 C code.  All the @R{} objects you will deal with will be handled with
 the type @dfn{SEXP}@footnote{@I{SEXP} is an acronym for @I{@emph{S}imple}
-@emph{EXP}ression, common in LISP-like language syntaxes.}, which is a
+@I{@emph{EXP}ression}, common in LISP-like language syntaxes.}, which is a
 pointer to a structure with typedef @code{SEXPREC}.  Think of this
 structure as a @emph{variant type} that can handle all the usual types
 of @R{} objects, that is vectors of various modes, functions,
@@ -12558,7 +12558,7 @@ given in the table.
 
 @quotation
 @multitable {SEXPTYPE} {numeric with storage mode integer integer}
-@headitem SEXPTYPE @tab @R{} equivalent
+@headitem @I{SEXPTYPE} @tab @R{} equivalent
 @item @code{REALSXP}  @tab numeric with storage mode @code{double}
 @item @code{INTSXP}   @tab integer
 @item @code{CPLXSXP}  @tab complex
@@ -13331,7 +13331,7 @@ conv <- function(a, b) .External("convolveE", a, b)
 
 @noindent
 but the main change is how the arguments are passed to the C code, this
-time as a single SEXP.  The only change to the C code is how we handle
+time as a single @I{SEXP}.  The only change to the C code is how we handle
 the arguments.
 
 @example
@@ -14238,7 +14238,8 @@ Package @CRANpkg{RODBC} uses external pointers to maintain its
 @emph{channels}, connections to databases.  There can be several
 connections open at once, and the status information for each is stored
 in a C structure (pointed to by @code{thisHandle} in the code extract
-below) that is returned @emph{via} an external pointer as part of the RODBC
+below) that is returned @emph{via} an external pointer as part of the
+@pkg{RODBC} 
 `channel' (as the @code{"handle_ptr"} attribute).  The external pointer
 is created by
 
@@ -15810,7 +15811,7 @@ where @code{x[]} is both input and output and has length @code{n}, i.e.,
 a C function, say @code{fn}, of type @code{integr_fn} must basically do
 @code{for(i in 1:n) x[i] := f(x[i], ex)}.  The vectorization requirement
 can be used to speed up the integrand instead of calling it @code{n}
-times.  Note that in the current implementation built on QUADPACK,
+times.  Note that in the current implementation built on @I{QUADPACK},
 @code{n} will be either 15 or 21.  The @code{ex} argument is a pointer
 passed down from the calling routine, normally used to carry auxiliary
 information.
@@ -16192,7 +16193,7 @@ Header file @file{Rconfig.h} (included by @file{R.h}) is used to define
 platform-specific macros that are mainly for use in other header files.
 The macro @code{WORDS_BIGENDIAN} is defined on
 big-endian@footnote{@uref{https://en.wikipedia.org/wiki/Endianness}.}
-systems (e.g.@: most OSes on Sparc and PowerPC hardware) and not on
+systems (e.g.@: most OSes on @I{Sparc} and PowerPC hardware) and not on
 little-endian systems (nowadays all the commoner @R{} platforms).  It
 can be useful when manipulating binary files.  NB: these macros apply
 only to the C compiler used to build @R{}, not necessarily to another C
@@ -16216,7 +16217,7 @@ of @R{} which did not have this macro, use a construction such as
 More detailed information is available in the macros @code{R_MAJOR},
 @code{R_MINOR}, @code{R_YEAR}, @code{R_MONTH} and @code{R_DAY}: see the
 header file @file{Rversion.h} for their format.  Note that the minor
-version includes the patchlevel (as in @samp{2.2}).
+version includes the patch level (as in @samp{2.2}).
 
 Packages which use @code{alloca} need to ensure it is defined: as it is
 part of neither C nor POSIX there is no standard way to do so.  One can
@@ -16378,7 +16379,7 @@ double unif_rand(void)
 
 @noindent
 or use the one supplied (and with a dynamic library or DLL you will have
-to use the one supplied, which is the @I{Marsaglia}-multicarry with an entry
+to use the one supplied, which is the @I{Marsaglia}-@I{multicarry} with an entry
 points
 
 @example
@@ -16793,7 +16794,7 @@ array, for example by
 
 However, to make a GUI we usually do want to run @code{run_Rmainloop}
 after setting up various parts of @R{} to talk to our GUI, and arranging
-for our GUI callbacks to be called during the @R{} mainloop.
+for our GUI callbacks to be called during the @R{} @I{mainloop}.
 
 One issue to watch is that on some platforms @code{Rf_initEmbeddedR} and
 @code{Rf_endEmbeddedR} change the settings of the @abbr{FPU} (e.g.@: to allow
@@ -17190,7 +17191,7 @@ direct socket access in file
 and for the interface to @code{libcurl}.
 
 @item
-Mouse and window events when displaying the X11-based dataentry window,
+Mouse and window events when displaying the X11-based @I{dataentry} window,
 in file @file{src/modules/X11/dataentry.c}.  This is regarded as
 @emph{modal}, and no other events are serviced whilst it is active.
 @end itemize
@@ -17510,7 +17511,7 @@ void R_ProcessEvents(void)
 @end example
 
 @item
-The mainloop can be split up to allow the calling application to take
+The @I{mainloop} can be split up to allow the calling application to take
 some action after each line of input has been dealt with: see the
 alternative code below @code{#ifdef SIMPLE_CASE}.
 @end itemize

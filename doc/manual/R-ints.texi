@@ -154,7 +154,7 @@ gap cannot easily be reused.
 @cindex @I{SEXPTYPE} table
 @quotation
 @multitable {no} {SPECIALSXPXXX} {S4 classes not of simple type}
-@headitem no @tab  SEXPTYPE@tab  Description
+@headitem no @tab  @I{SEXPTYPE} @tab  Description
 @item @code{0}   @tab @code{NILSXP}      @tab @code{NULL}
 @item @code{1}   @tab @code{SYMSXP}      @tab symbols
 @item @code{2}   @tab @code{LISTSXP}     @tab pairlists
@@ -411,14 +411,14 @@ and @code{truelength} is the number of primary slots in use, for the
 reference hash tables in serialization (@code{VECSXP}s), and for `growable'
 vectors (atomic vectors, @code{VECSXP}s and @code{EXPRSXP}s) which are
 created by slightly over-committing when enlarging a vector during
-subassignment, so that some number of the following enlargements during
-subassignment can be performed in place), where @code{truelength} is the
+@I{subassignment}, so that some number of the following enlargements during
+@I{subassignment} can be performed in place), where @code{truelength} is the
 number of slots in use.  } of the vector, and then followed by the data
 (aligned as required: on most 32-bit systems with a 28-byte
 @code{VECTOR_SEXPREC} node the data can follow immediately after the node). 
 The data are a block of memory of the appropriate length to store `true
 length' elements (rounded up to a multiple of 8 bytes, with the 8-byte
-blocks being the `Vcells' referred in the documentation for @code{gc()}).
+blocks being the `@I{Vcells}' referred in the documentation for @code{gc()}).
 
 The `data' for the various types are given in the table below.  A lot of
 this is interpretation, i.e.@: the types are not checked.
@@ -751,7 +751,7 @@ for the operator.
 
 Subsetting (other than by an empty index) generally drops all attributes
 except @code{names}, @code{dim} and @code{dimnames} which are reset as
-appropriate.  On the other hand, subassignment generally preserves such
+appropriate.  On the other hand, @I{subassignment} generally preserves such
 attributes even if the length is changed.  Coercion drops all
 attributes. For example:
 
@@ -1038,9 +1038,9 @@ example the internal code of @code{switch} in file
 @file{src/main/builtin.c}.
 
 @node Autoprinting, The write barrier, Argument evaluation, R Internal Structures
-@section Autoprinting
+@section @I{Autoprinting}
 
-@cindex autoprinting
+@cindex @I{autoprinting}
 @findex R_Visible
 
 Whether the returned value of a top-level @R{} expression is printed is
@@ -1083,7 +1083,7 @@ Internal and primitive functions force the documented setting of
 @code{R_Visible} on return, unless the C code is allowed to change it
 (the exceptions above are indicated by @code{PRIMPRINT} having value 2).
 
-The actual autoprinting is done by @code{PrintValueEnv} in file
+The actual @I{autoprinting} is done by @code{PrintValueEnv} in file
 @file{print.c}.  If the object to be printed has the S4 bit set and S4
 methods dispatch is on, @code{show} is called to print the object.
 Otherwise, if the object bit is set (so the object has a
@@ -1234,7 +1234,7 @@ name.  `Normal' environments are written out as @code{ENVSXP}s with an
 integer indicating if the environment is locked followed by the
 enclosure, frame, `tag' (the hash table) and attributes.
 
-In the `@abbr{XDR}' format integers and doubles are written in bigendian order:
+In the `@abbr{XDR}' format integers and doubles are written in big-endian order:
 however the format is not fully @abbr{XDR} (as defined in RFC 1832) as byte
 quantities (such as the contents of @code{CHARSXP} and @code{RAWSXP}
 types) are written as-is and not padded to a multiple of four bytes.
@@ -1252,9 +1252,9 @@ current native encoding at serialization time, so that unflagged strings can
 be converted if unserialized in R running under different native encoding.
 
 @node Encodings for CHARSXPs, The CHARSXP cache, Serialization Formats, R Internal Structures
-@section Encodings for CHARSXPs
+@section Encodings for @code{CHARSXP}s
 
-Character data in @R{} are stored in the sexptype @code{CHARSXP}.
+Character data in @R{} are stored in the @code{SEXPTYPE} @code{CHARSXP}.
 
 There is support for encodings other than that of the current locale, in
 particular UTF-8 and the multi-byte encodings used on Windows for CJK
@@ -1307,12 +1307,12 @@ strings without re-encoding to the native character set, by setting
 @code{textUTF8} and @code{strWidthUTF8} that expect UTF-8-encoded
 inputs.  Normally the symbol font is encoded in Adobe Symbol encoding,
 but that can be re-encoded to UTF-8 by setting @code{wantSymbolUTF8} to
-@samp{TRUE}.  The Windows' port of cairographics has a rather peculiar
+@samp{TRUE}.  The Windows' port of @I{cairographics} has a rather peculiar
 assumption: it wants the symbol font to be encoded in UTF-8 as if it
 were encoded in Latin-1 rather than Adobe Symbol: this is selected by
 @code{wantSymbolUTF8 = NA_LOGICAL}.
 
-Windows with MSVCRT as the C runtime has no UTF-8 locales, but rather expects to work with
+Windows with @abbr{MSVCRT} as the C runtime has no UTF-8 locales, but rather expects to work with
 @I{UCS-2}@footnote{or UTF-16 if support for surrogates is enabled in the OS,
 which it used not to be when encoding support was added to @R{}.}
 strings.  @R{} (being written in standard C) would not work internally
@@ -1321,7 +1321,7 @@ console@footnote{but not the @I{GraphApp} toolkit.} uses @I{UCS-2} internally,
 but communicates with the @R{} engine in the native encoding.  To allow
 UTF-8 strings to be printed in UTF-8 in @file{Rgui.exe}, an escape
 convention is used (see header file @file{rgui_UTF8.h}) by
-@code{cat}, @code{print} and autoprinting.
+@code{cat}, @code{print} and @I{autoprinting}.
 
 `Unicode' (@I{UCS-2LE}) files are common in the Windows world, and
 @code{readLines} and @code{scan} will read them into UTF-8 strings on
@@ -1348,7 +1348,7 @@ UTF-8, but this still required a reboot and impacted all applications, many
 of which would not work correctly with that unexpected setting, so it could
 not be used in practice.
 
-Windows since Windows 10 (version 1903), Windows Server 2022 (LTSC), and
+Windows since Windows 10 (version 1903), Windows Server 2022 (@I{LTSC}), and
 Windows Server 1903 (semi-annual channel) allow setting the active code page
 to UTF-8 in the application manifest.  This changes the active code page
 only for the given application and does so together with changing also the
@@ -1362,7 +1362,7 @@ can be installed on Windows since Vista SP2 and Windows Server 2008 SP2. It
 is shipped with Windows since Windows 10 and Windows Server 2016.
 
 @node The CHARSXP cache, Warnings and errors, Encodings for CHARSXPs, R Internal Structures
-@section The CHARSXP cache
+@section The @code{CHARSXP} cache
 
 @findex mkChar
 There is a global cache for @code{CHARSXP}s created by @code{mkChar} ---
@@ -1479,7 +1479,7 @@ Since these are just objects, they are subject to the normal scoping
 rules and can be imported and exported from namespaces like other
 objects.  The directives @code{importClassesFrom} and
 @code{exportClasses} are merely convenient ways to refer to class
-objects without needing to know their internal `metaname' (although
+objects without needing to know their internal `@I{metaname}' (although
 @code{exportClasses} does a little sanity checking via @code{isClass}).
 
 @node S4 methods, Mechanics of S4 dispatch, S4 classes, S4 objects
@@ -1591,14 +1591,14 @@ refers to generics by name and partly by function, and maps
 the name used by packages exporting methods for it).
 
 Some elements of the language are implemented as primitives, for example
-@code{@}}.  This includes the subset and subassignment `functions' and
+@code{@}}.  This includes the subset and @I{subassignment} `functions' and
 they are S4 generic, again piggybacking on S3 dispatch.
 
 @code{.BasicFunsList} is generated when @pkg{methods} is installed, by
 computing all primitives, initially disallowing methods on all and then
 setting generics for members of @code{.GenericArgsEnv}, the S4 group
 generics and a short exceptions list in file @file{BasicFunsList.R}: this
-currently contains the subsetting and subassignment operators and an
+currently contains the subsetting and @I{subassignment} operators and an
 override for @code{c}.
 
 @node Memory allocators, Internal use of global and base environments, S4 objects, R Internal Structures
@@ -2267,7 +2267,7 @@ arguments conditional on which are non-missing.
 @code{log}, @code{round} and @code{signif} are special to allow default
 values to be given to missing arguments.
 
-The subsetting, subassignment and @code{@@} operators are all special.
+The subsetting, @I{subassignment} and @code{@@} operators are all special.
 (For both extraction and replacement forms, @code{$} and @code{@@}
 take a symbol argument, and @code{[} and @code{[[} allow missing
 arguments.)
@@ -2801,7 +2801,7 @@ device).
 @item when drawing starts or finishes (e.g.@: used to flush graphics to
 the screen when drawing stops).
 @item wait for an event, for example a mouse click or keypress.
-@item an `onexit' action, to clean up if plotting is interrupted (by an
+@item an `@I{onexit}' action, to clean up if plotting is interrupted (by an
 error or by the user).
 @item capture the current contents of the device as a raster image.
 @item close the device.
@@ -2823,7 +2823,7 @@ the device (although the graphics subsystems do talk directly to
 devices).  This is responsible for clipping lines, rectangles and
 polygons, converting the @code{pch} values @code{0...26} to sets of
 lines/circles, centring (and otherwise adjusting) text, rendering
-mathematical expressions (`plotmath') and mapping colour descriptions
+mathematical expressions (`@I{plotmath}') and mapping colour descriptions
 such as names to the internal representation.
 
 @c graphics.c looks at device dimensions, locator, metricinfo
@@ -3174,7 +3174,7 @@ void metricInfo(int c, pGEcontext gc,
 
 @noindent
 The @samp{gc} parameter provides the graphics context, most importantly
-the current font and fontsize, and @samp{dd} is a pointer to the active
+the current font and font size, and @samp{dd} is a pointer to the active
 device's structure.
 
 The @code{text} callback should plot @samp{str} at @samp{(x,
@@ -3197,14 +3197,14 @@ the character is placed.  For @code{ascent} and @code{descent} this is
 intended to be the bounding box of the `ink' put down by the glyph and
 not the box which might be used when assembling a line of conventional
 text (it needs to be for e.g.@: @code{hat(beta)} to work correctly).
-However, the @code{width} is used in plotmath to advance to the next
+However, the @code{width} is used in @I{plotmath} to advance to the next
 character, and so needs to include left and right bearings.
 
 The @emph{interpretation} of @samp{c} depends on the locale.  In a
 single-byte locale values @code{32...255} indicate the corresponding
 character in the locale (if present).  For the symbol font (as used by
 @samp{graphics::par(font=5)}, @samp{grid::gpar(fontface=5}) and by
-`plotmath'), values @code{32...126, 161...239, 241...254} indicate
+`@I{plotmath}'), values @code{32...126, 161...239, 241...254} indicate
 glyphs in the Adobe Symbol encoding.  In a multibyte locale, @code{c}
 represents a Unicode point (except in the symbol font).  So the function
 needs to include code like
@@ -3473,7 +3473,7 @@ screen, but some users do try to use smaller sizes and even 6 and 8
 point bitmapped fonts do not look good.
 
 Introduction of UTF-8 locales has caused another wave of difficulties.
-X11 has very few genuine UTF-8 fonts, and produces composite fontsets
+X11 has very few genuine UTF-8 fonts, and produces composite @I{fontset}s
 for the @code{iso10646-1} encoding.  Unfortunately these seem to have
 low coverage apart from a few monospaced fonts in a few sizes (which are
 not suitable for graph annotation), and where glyphs are missing what is
@@ -3485,7 +3485,7 @@ management---because these are associated with @code{Gtk+2} they are
 widely available.  Cairo supports translucent colours and alpha-blending
 (@emph{via} @code{Xrender}), and anti-aliasing for the display of lines
 and text.  @I{Pango}'s font management is based on @code{fontconfig} and
-somewhat mysterious, but it seems mainly to use Type 1 and TrueType
+somewhat mysterious, but it seems mainly to use Type 1 and @I{TrueType}
 fonts on the machine running @R{} and send grayscale bitmaps to @I{cairo}.
 
 
@@ -3780,7 +3780,7 @@ of @R{} and the code for the console is currently in @file{R.dll}.
 @section R.app
 
 @command{R.app} is a macOS application which provides a console.  Its
-sources are a separate project@footnote{an Xcode project, in SVN at
+sources are a separate project@footnote{an @I{Xcode} project, in SVN at
 @uref{https://svn.r-project.org/R-packages/trunk/Mac-GUI/}.}, and its binaries
 link to an @R{} installation which it runs as a dynamic library
 @file{libR.dylib}.  The standard @acronym{CRAN} distribution of @R{} for
@@ -4058,7 +4058,7 @@ about unused code constituents (as spotted by GCC with command line
 option @option{-Wunused}, which is implied by @option{-Wall}).
 Default: true.
 @item _R_CHECK_WALL_FORTRAN_
-Control whether gfortran 4.0 or later @option{-Wall} warnings are used in
+Control whether @I{GFortran} 4.0 or later @option{-Wall} warnings are used in
 the analysis of installation output.
 Default: false, even though the warnings are justifiable.
 @item _R_CHECK_ASCII_CODE_
@@ -4964,7 +4964,7 @@ directory @file{doc/manual}.
 @code{tools::texi2dvi} makes use of a system command @command{texi2dvi}
 where available.  On a Unix-alike this is usually part of
 @samp{texinfo}, whereas on Windows if it exists at all it would be an
-executable, part of MiKTeX.  If none is available, the @R{} code runs
+executable, part of @I{MiKTeX}.  If none is available, the @R{} code runs
 a sequence of @command{(pdf)latex}, @command{bibtex} and
 @command{makeindex} commands.
 
