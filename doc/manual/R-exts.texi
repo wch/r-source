@@ -6420,6 +6420,32 @@ warning: argument 1 value '18446744073709551615' exceeds maximum object
 @noindent
 (especially if @abbr{LTO} is used).  So don't do that!
 
+@item
+Some authors feel the need to print (using @code{Rprintf} or
+similar) vector lengths or indices which are of type @code{R_xlen_t}.
+That may be a 32-bit or (most commonly) 64-bit type but which integer
+type it is mapped to is platform-specific.  The safest way is to cast
+the length to double and use a double format.  So one could use
+something like
+@example
+    SEXP Robj; R_xlen_t nelem;
+    error("Actual: %0.f; Expected %0.f\n", (double) XLENGTH(Robj), (double) nelem);
+@end example
+@noindent
+@c x86_64 as a 52-bit design limit.
+@c Linux and Windows are said to have 48-bit virtual address limits.
+(This could print to full precision, lengths well beyond the address space
+limits of current OSes, let alone practical limits.)
+
+@c 'int' on 32-but platforms, 'long' on known 64-bit platforms except Windows
+If you do want to use an integer format, be aware that @code{R_xlen_t}
+is implemented by the @code{int}, @code{long} or @code{long long} type
+on current platforms and even on 64-bit ones need not be the same type
+as @code{int64_t}.
+@c macOS maps int64_t to 'long long'
+So the values will need to be cast to the type assumed by the format
+(and @code{%lld} was not supported on Windows until @R{}@tie{}4.2.0).
+
 @end itemize
 
 Some additional information for C++ is available at
