@@ -49,7 +49,8 @@ function(x, strict = TRUE, regexp, classes = NULL)
         if(!is.character(x)) {
             msg <- gettextf("invalid non-character version specification 'x' (type: %s)",
                             typeof(x))
-            if(nzchar(Sys.getenv("_R_CHECK_STOP_ON_INVALID_NUMERIC_VERSION_INPUTS_")))
+            if(tolower(Sys.getenv("_R_CHECK_STOP_ON_INVALID_NUMERIC_VERSION_INPUTS_")
+                       != "false"))
                 stop(msg, domain = NA)
             else
                 warning(msg, domain = NA, immediate. = TRUE)        
