@@ -292,6 +292,22 @@ aspell_filter_db <- new.env(hash = FALSE) # small
 aspell_filter_db$Rd <- tools::RdTextFilter
 aspell_filter_db$Sweave <- tools::SweaveTeXFilter
 
+## <FIXME>
+## HACK to add 'ignore' argument for the Rd aspell filter.
+## Perhaps merge this to tools?
+aspell_filter_db$`Rd+ignore` <-
+function(ifile, encoding = "unknown",
+         drop = character(), keep = character(),
+         macros = file.path(R.home("share"), "Rd", "macros", "system.Rd"),
+         ignore = character())
+{
+     lines <- tools::RdTextFilter(ifile, encoding,
+                                  drop = drop, keep = keep,
+				  macros = macros)
+     blank_out_ignores_in_lines(lines, ignore)
+}
+## </FIXME>
+
 aspell_find_program <-
 function(program = NULL)
 {
@@ -517,10 +533,22 @@ function(which = NULL, dir = NULL,
                         "docs", OS_subdirs = c("unix", "windows")),
                  use.names = FALSE))
 
+    ignore <-
+        c(sprintf("\\b(%s)\\b",
+                  paste(c("a priori", "et al", "et seq",
+                          "post-mortem", "Inter alia", "inter alia",
+                          "2nd", "20th", "100th",
+                          "equi-", "intra-", "mis-", "pre-", "un-",
+                          "-ary", "-ness", "-th"),
+                        collapse = "|")),
+          sprintf("(%s)\\b",
+                  paste(c("\\(de\\)", "\\(un\\)"),
+                        collapse = "|")))
+
     program <- aspell_find_program(program)
 
     aspell(files,
-           filter = list("Rd", drop = drop),
+           filter = list("Rd+ignore", drop = drop, ignore = ignore),
            control = aspell_control_R_Rd_files[[names(program)]],
            program = program,
            dictionaries = dictionaries)
