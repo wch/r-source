@@ -182,7 +182,7 @@ tar(tarfile, files = NULL,
   NetBSD prior to 8.0 used flag \option{--xz} rather than \option{-J},
   so this should be used \emph{via} \code{extra_flags = "--xz"} rather
   than \code{compression = "xz"}.  The commands from OpenBSD and the
-  Heirloom Toolchest are not documented to support \command{xz}.
+  \I{Heirloom Toolchest} are not documented to support \command{xz}.
 
   The \command{tar} programs in commercial Unixen such as AIX and
   Solaris do not support compression.

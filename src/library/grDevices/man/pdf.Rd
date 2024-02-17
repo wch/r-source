@@ -50,7 +50,7 @@ pdf(file = if(onefile) "Rplots.pdf" else "Rplot\%03d.pdf",
     The default is \code{"special"}, which means that the \code{width}
     and \code{height} specify the paper size.  A further choice is
     \code{"default"}; if this is selected, the
-    papersize is taken from the option \code{"papersize"}
+    paper size is taken from the option \code{"papersize"}
     if that is set and as \code{"a4"} if it is unset or empty.
     Defaults to \code{"special"}.
   }

@@ -77,7 +77,7 @@ convertUnit(x, unitTo,
   become invalid.  For example, suppose that I create a unit
   object as follows: \code{oneinch <- convertUnit(unit(1, "inches"),
     "native")}.  Now if I resize the device, the unit object in
-  oneinch no longer corresponds to a physical length of 1 inch.
+  \code{oneinch} no longer corresponds to a physical length of 1 inch.
   }
 \seealso{ \code{\link{unit}} }
 \examples{

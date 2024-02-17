@@ -260,7 +260,7 @@ system is active; if \code{FALSE}, only the Tcl interpreter is available.
   issued).  To see the current search path as an \R character vector, use
 \preformatted{strsplit(tclvalue('auto_path'), " ")[[1]]}.
 
-  The Tcl version (including patchlevel) is returned as a character
+  The Tcl version (including patch level) is returned as a character
   string (such as \code{"8.6.3"}).
 }
 \note{

@@ -91,14 +91,14 @@ RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
 
   \file{Sweave.sty} also supports the \samp{[nofontenc]} option, which
   skips the default inclusion of \samp{\\usepackage[T1]{fontenc}}
-  for pdfTeX processing.
+  for \I{pdfTeX} processing.
 
   It also supports the \samp{[inconsolata]} option, to render monospaced
   text in \code{inconsolata}, the font used by default for \R help
   pages.
 
   The use of fancy quotes (see \code{\link{sQuote}}) can cause problems
-  when setting \R output in non-UTF-8 locales (note that pdfTeX assumes
+  when setting \R output in non-UTF-8 locales (note that \I{pdfTeX} assumes
   UTF-8 by default since 2018).  Either set
   \code{\link{options}(useFancyQuotes = FALSE)} or arrange that \LaTeX
   is aware of the encoding used and ensure that typewriter fonts

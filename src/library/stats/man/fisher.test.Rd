@@ -86,7 +86,7 @@ fisher.test(x, y = NULL, workspace = 200000, hybrid = FALSE,
   For \eqn{2 \times 2}{2 by 2} cases, p-values are obtained directly
   using the (central or non-central) hypergeometric
   distribution. Otherwise, computations are based on a C version of the
-  FORTRAN subroutine FEXACT which implements the network developed by
+  FORTRAN subroutine \code{FEXACT} which implements the network developed by
   Mehta and Patel (1983, 1986) and improved by Clarkson, Fan and Joe (1993).
   The FORTRAN code can be obtained from
   \url{https://netlib.org/toms/643}.  Note this fails (with an error

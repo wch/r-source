@@ -69,7 +69,7 @@ points(x, \dots)
   Points whose \code{x}, \code{y}, \code{pch}, \code{col} or \code{cex}
   value is \code{NA} are omitted from the plot.
 }
-\section{'pch' values}{
+\section{\code{pch} values}{
   Values of \code{pch} are stored internally as integers.  The
   interpretation is
   \itemize{

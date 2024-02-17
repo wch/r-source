@@ -67,7 +67,7 @@ is.package_version(x)
   character strings with the elements of the sequence concatenated and
   separated by single \samp{.} or \samp{-} characters.  \R package
   versions consist of at least two such integers, an \R system version
-  of exactly three (major, minor and patchlevel).
+  of exactly three (major, minor and patch level).
 
   Functions \code{numeric_version}, \code{package_version} and
   \code{R_system_version} create a representation from such strings (if

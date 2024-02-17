@@ -3,6 +3,8 @@
 % Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{Special}
 \title{Special Functions of Mathematics}
 \alias{Special}
@@ -17,9 +19,9 @@
 \alias{lchoose}
 \alias{factorial}
 \alias{lfactorial}
-\concept{tetragamma}% existed till 1.9.0
-\concept{pentagamma}
-\concept{polygamma}
+\concept{\I{tetragamma}} % existed till 1.9.0
+\concept{\I{pentagamma}}
+\concept{\I{polygamma}}
 \concept{binomial coefficient}
 \concept{psi function}
 \description{
@@ -77,10 +79,10 @@ lfactorial(x)
   \deqn{\code{digamma(x)} = \psi(x) = \frac{d}{dx}\ln\Gamma(x) =
     \frac{\Gamma'(x)}{\Gamma(x)}}{digamma(x) = \psi(x) = d/dx{ln \Gamma(x)} = \Gamma'(x) / \Gamma(x)}
   \eqn{\psi} and its derivatives, the \code{psigamma()} functions, are
-  often called the \sQuote{polygamma} functions, e.g.\sspace{}in
+  often called the \sQuote{\I{polygamma}} functions, e.g.\sspace{}in
   Abramowitz and Stegun (section 6.4.1, page 260); and higher
   derivatives (\code{deriv = 2:4}) have occasionally been called
-  \sQuote{tetragamma}, \sQuote{pentagamma}, and \sQuote{hexagamma}.
+  \sQuote{\I{tetragamma}}, \sQuote{\I{pentagamma}}, and \sQuote{\I{hexagamma}}.
 
   The functions \code{choose} and \code{lchoose} return binomial
   coefficients and the logarithms of their absolute values.  Note that
@@ -102,7 +104,7 @@ lfactorial(x)
 \source{
   \code{gamma}, \code{lgamma}, \code{beta} and \code{lbeta} are based on
   C translations of Fortran subroutines by W. Fullerton of Los Alamos
-  Scientific Laboratory (now available as part of SLATEC).
+  Scientific Laboratory (now available as part of \I{SLATEC}).
 
   \code{digamma}, \code{trigamma} and \code{psigamma} for \code{x >= 0} are based on
 

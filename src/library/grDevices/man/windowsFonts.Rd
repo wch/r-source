@@ -3,6 +3,8 @@
 % Copyright 1995-2007, 2018 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{windowsFonts}
 \alias{windowsFont}
 \alias{windowsFonts}
@@ -20,7 +22,7 @@ windowsFonts(...)
 }
 \arguments{
   \item{family}{a character vector containing the font family name
-    (\code{"TT"} as the first two characters indicates a TrueType font).
+    (\code{"TT"} as the first two characters indicates a \I{TrueType} font).
   }
   \item{\dots}{either character strings naming mappings to display,
     or new (named) mappings to define.}

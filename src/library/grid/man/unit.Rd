@@ -58,7 +58,7 @@ is.unit(x)
     \item{\code{"snpc"}}{Square Normalised Parent Coordinates.
       Same as Normalised Parent Coordinates, except gives the same answer for
       horizontal and vertical locations/dimensions.  It uses the
-      \emph{lesser} of npc-width and npc-height.  This is useful for making
+      \emph{lesser} of \abbr{npc}-width and \abbr{npc}-height.  This is useful for making
       things which are a proportion of the viewport, but have to be square
       (or have a fixed aspect ratio).}
     \item{\code{"strwidth"}}{Multiples of the width of the string

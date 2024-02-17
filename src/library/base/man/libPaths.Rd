@@ -85,9 +85,9 @@
   to obtain \samp{\%}), with currently available conversion
   specifications as follows:
   \describe{
-    \item{\samp{\%V}}{\R version number including the patchlevel (e.g.,
+    \item{\samp{\%V}}{\R version number including the patch level (e.g.,
       \samp{2.5.0}).}
-    \item{\samp{\%v}}{\R version number excluding the patchlevel (e.g.,
+    \item{\samp{\%v}}{\R version number excluding the patch level (e.g.,
       \samp{2.5}).}
     \item{\samp{\%p}}{the platform for which \R was built, the value of
       \code{\link{R.version}$platform}.}

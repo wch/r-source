@@ -9,14 +9,14 @@
 \alias{xsplinePoints}
 \alias{bezierPoints}
 \title{
-  Return the points that would be used to draw an Xspline
+  Return the points that would be used to draw an \I{xspline}
   (or a Bezier curve)
 }
 \description{
-  Rather than drawing an Xspline (or Bezier curve), this function returns
+  Rather than drawing an \I{xspline} (or Bezier curve), this function returns
   the points that would be used to draw the series of line
-  segments for the Xspline.  This may be useful to post-process
-  the Xspline curve, for example, to clip the curve.
+  segments for the \I{xspline}.  This may be useful to post-process
+  the \I{xspline} curve, for example, to clip the curve.
 }
 \usage{
 xsplinePoints(x)
@@ -24,7 +24,7 @@ bezierPoints(x)
 }
 \arguments{
   \item{x}{
-    An Xspline grob, as produced by the \code{xsplineGrob()} function
+    An \I{xspline} grob, as produced by the \code{xsplineGrob()} function
     (or a \I{beziergrob}, as produced by the \code{bezierGrob()} function).
   }
 }

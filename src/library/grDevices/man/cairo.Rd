@@ -3,6 +3,8 @@
 % Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{cairo}
 \alias{svg}
 \alias{cairo_pdf}
@@ -96,7 +98,7 @@ cairo_ps(filename = if(onefile) "Rplots.ps" else "Rplot\%03d.ps",
   In principle these devices are independent of X11 (as is seen by their
   presence on Windows).  But on a Unix-alike the cairo libraries may be
   distributed as part of the X11 system and hence that (for example, on
-  macOS, XQuartz) may need to be installed.
+  macOS, \I{XQuartz}) may need to be installed.
 }
 
 \value{

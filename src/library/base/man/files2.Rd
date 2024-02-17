@@ -3,13 +3,15 @@
 % Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{files2}
 \alias{dir.create}
 \alias{dir.exists}
 \alias{Sys.chmod}
 \alias{Sys.umask}
 \concept{directory}
-\concept{mkdir}
+\concept{\I{mkdir}}
 \alias{umask} % for links
 \title{Manipulation of Directories and File Permissions}
 \description{

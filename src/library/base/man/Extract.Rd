@@ -278,8 +278,9 @@ x$name <- value
 \section{Character indices}{
   Character indices can in some circumstances be partially matched (see
   \code{\link{pmatch}}) to the names or dimnames of the object being
-  subsetted (but never for subassignment).  Unlike S (Becker \emph{et
-  al} p.\sspace{}358), \R never uses partial matching when extracting by
+  subsetted (but never for subassignment).
+  Unlike S (Becker \emph{et al} p.\sspace{}358), \R never uses partial
+  matching when extracting by 
   \code{[}, and partial matching is not by default used by \code{[[}
   (see argument \code{exact}).
 

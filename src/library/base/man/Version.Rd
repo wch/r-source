@@ -37,7 +37,7 @@ R_compiled_by()
   \item{system}{CPU and OS, separated by a comma.}
   \item{status}{the status of the version (e.g., \code{"alpha"}).}
   \item{major}{the major version number.}
-  \item{minor}{the minor version number, including the patchlevel.}
+  \item{minor}{the minor version number, including the patch level.}
   \item{year}{the year the version was released.}
   \item{month}{the month the version was released.}
   \item{day}{the day the version was released.}

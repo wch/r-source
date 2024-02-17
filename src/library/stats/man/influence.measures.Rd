@@ -3,6 +3,8 @@
 % Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{influence.measures}
 \title{Regression Deletion Diagnostics}
 
@@ -10,9 +12,9 @@
 \concept{standardized residuals}
 \concept{Cook's distances}
 \concept{Covariance ratios}
-\concept{DFBETAs}
-\concept{DFFITs}
-\concept{PRESS}
+\concept{\I{DFBETAs}}
+\concept{\I{DFFITs}}
+\concept{\I{PRESS}}
 
 \alias{influence.measures}
 %\alias{print.infl}
@@ -104,8 +106,8 @@ hat(x, intercept = TRUE)
 }
 \details{
   The primary high-level function is \code{influence.measures} which produces a
-  class \code{"infl"} object tabular display showing the DFBETAS for
-  each model variable, DFFITS, covariance ratios, Cook's distances and
+  class \code{"infl"} object tabular display showing the \I{DFBETA}s for
+  each model variable, \I{DFFIT}s, covariance ratios, Cook's distances and
   the diagonal elements of the hat matrix.  Cases which are influential
   with respect to any of these measures are marked with an asterisk.
 

@@ -58,7 +58,7 @@ new.packages(lib.loc = NULL, repos = getOption("repos"),
   \item{ask}{logical indicating whether to ask the user to select
     packages before they are downloaded and installed, or the character
     string \code{"graphics"}, which brings up a widget to allow the user
-    to (de-)select from the list of packages which could be updated.
+    to (de)select from the list of packages which could be updated.
     The latter value only works on systems with a GUI version of
     \code{\link{select.list}}, and is otherwise equivalent to
     \code{ask = TRUE}. \code{ask} does not control questions asked before

@@ -71,7 +71,7 @@ check_packages_in_dir_details(dir, logs = NULL, drop_ok = TRUE, ...)
     dependencies, respectively.}
   \item{xvfb}{a logical indicating whether to perform checking inside a
     virtual framebuffer X server (Unix only), or a character vector of
-    Xvfb options for doing so.}
+    \command{Xvfb} options for doing so.}
   \item{Ncpus}{the number of parallel processes to use for parallel
     installation and checking.}
   \item{clean}{a logical indicating whether to remove the downloaded

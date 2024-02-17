@@ -45,7 +45,7 @@ xfig(file = if(onefile) "Rplots.fig" else "Rplot\%03d.fig",
   \item{paper}{the size of paper region.  The choices
     are \code{"A4"}, \code{"Letter"} and \code{"Legal"} (and these
     can be lowercase).  A further choice is \code{"default"}, which
-    is the default.  If this is selected, the papersize is taken
+    is the default.  If this is selected, the paper size is taken
     from the option \code{"papersize"} if that is set to a non-empty
     value, otherwise \code{"A4"}.}
   \item{horizontal}{the orientation of the printed image, a

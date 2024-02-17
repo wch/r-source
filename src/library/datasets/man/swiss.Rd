@@ -55,7 +55,7 @@
   Addison-Wesley, Reading Mass.
 
   indicating their source as
-  \dQuote{Data used by permission of Franice van de Walle. Office of
+  \dQuote{Data used by permission of \I{Franice van de Walle}. Office of
   Population Research, Princeton University, 1976.  Unpublished data
   assembled under NICHD contract number No \I{1-HD-O-2077}.}
 }

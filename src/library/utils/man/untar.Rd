@@ -3,6 +3,8 @@
 % Copyright 2009-2019 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{untar}
 \alias{untar}
 \title{
@@ -167,7 +169,7 @@ untar(tarfile, files = NULL, list = FALSE, exdir = ".",
   compression.  It does not guard against restoring absolute file paths,
   as some \command{tar} implementations do.  It will create the parent
   directories for directories or files in the archive if necessary.  It
-  handles the USTAR/POSIX, GNU and \command{pax} ways of handling file
+  handles the \I{USTAR}/POSIX, GNU and \command{pax} ways of handling file
   paths of more than 100 bytes, and the GNU way of handling link targets
   of more than 100 bytes.
 

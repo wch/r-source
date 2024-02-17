@@ -3,6 +3,8 @@
 % Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{Sweave}
 \alias{Sweave}
 \alias{Stangle}
@@ -69,7 +71,7 @@ Stangle(file, driver = Rtangle(),
   (where \samp{foo} is typically \samp{latin1}, \samp{latin2}, \samp{utf8} or
   \samp{cp1252} or \samp{cp1250}) or a comment line
   \preformatted{  \%\SweaveUTF8}
-  to declare UTF-8 input (the default encoding assumed by pdfTeX since 2018),
+  to declare UTF-8 input (the default encoding assumed by \I{pdfTeX} since 2018),
   or they will give an error.
   Re-encoding can be turned off completely with argument
   \code{encoding = "bytes"}.
@@ -77,7 +79,7 @@ Stangle(file, driver = Rtangle(),
 
 \section{Syntax Definition}{
   Sweave allows a flexible syntax framework for marking
-  documentation and text chunks. The default is a noweb-style syntax, as
+  documentation and text chunks. The default is a \I{noweb}-style syntax, as
   alternative a \LaTeX-style syntax can be used.  (See the user manual for
   further details.)
 

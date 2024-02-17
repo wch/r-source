@@ -3,11 +3,13 @@
 % Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{download.file}
 \alias{download.file}
 \concept{proxy}
-\concept{ftp}
-\concept{http}
+\concept{\I{ftp}}
+\concept{\I{http}}
 \title{Download File from the Internet}
 \description{
   This function can be used to download a file from the Internet.

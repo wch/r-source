@@ -8,9 +8,9 @@
 \name{memCompress}
 \alias{memCompress}
 \alias{memDecompress}
-\concept{gzip}
-\concept{bzip2}
-\concept{lzma}
+\concept{\I{gzip}}
+\concept{\I{bzip2}}
+\concept{\I{lzma}}
 \title{In-memory Compression and Decompression}
 \description{
   In-memory compression or decompression for raw vectors.
@@ -50,7 +50,7 @@ memDecompress(from,
   level of the underlying library (usually \code{6}). This supports the
   RFC 1950 format, sometimes known as \sQuote{\I{zlib}} format, for
   compression and decompression and for decompression only RFC 1952, the
-  \sQuote{gzip} format (which wraps the \sQuote{\I{zlib}} format with a
+  \sQuote{\I{gzip}} format (which wraps the \sQuote{\I{zlib}} format with a
   header and footer).
 
   \command{bzip2} compression always adds a header (\code{"BZh"}).  The

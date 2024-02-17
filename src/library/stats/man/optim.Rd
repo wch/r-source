@@ -68,7 +68,7 @@ optimHess(par, fn, gr = NULL, \dots, control = list())
   be more fragile than the BFGS method, but as they do not store a
   matrix they may be successful in much larger optimization problems.
 
-  Method \code{"L-BFGS-B"} is that of Byrd \emph{et. al.} (1995) which
+  Method \code{"L-BFGS-B"} is that of Byrd \emph{et al.} (1995) which
   allows \emph{box constraints}, that is each variable can be given a lower
   and/or upper bound. The initial value must satisfy the constraints.
   This uses a limited-memory modification of the BFGS quasi-Newton

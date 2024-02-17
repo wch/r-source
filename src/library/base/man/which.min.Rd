@@ -3,12 +3,14 @@
 % Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{which.min}
 \alias{which.min}
 \alias{which.max}
 \title{Where is the Min() or Max() or first TRUE or FALSE ?}
-\concept{argmin}
-\concept{argmax}
+\concept{\I{argmin}}
+\concept{\I{argmax}}
 \concept{index of minimum}
 \concept{index of maximum}
 \concept{index of first TRUE}

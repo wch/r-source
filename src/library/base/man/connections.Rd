@@ -35,10 +35,10 @@
 \concept{encoding}
 \concept{compression}
 \concept{decompression}
-\concept{zip}
-\concept{gzip}
-\concept{bzip2}
-\concept{lzma}
+\concept{\I{zip}}
+\concept{\I{gzip}}
+\concept{\I{bzip2}}
+\concept{\I{lzma}}
 \description{
   Functions to create, open and close connections, i.e.,
   \dQuote{generalized files}, such as possibly compressed files, URLs,
@@ -161,7 +161,7 @@ socketTimeout(socket, timeout = -1)
   (such as \samp{http://}, \samp{https://}, \samp{ftp://} or
   \samp{file://}).  Method \code{"internal"} is that available since
   connections were introduced but now mainly defunct.  Method
-  \code{"wininet"} is only available on Windows (it uses the WinINet
+  \code{"wininet"} is only available on Windows (it uses the \I{WinINet}
   functions of that OS) and method \code{"libcurl"} (using the library
   of that name: \url{https://curl.se/libcurl/}) is nowadays required but
   was optional on Windows before \R 4.2.0.  Method \code{"default"}

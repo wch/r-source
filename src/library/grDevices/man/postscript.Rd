@@ -81,7 +81,7 @@ postscript(file = if(onefile) "Rplots.ps" else "Rplot\%03d.ps",
     \code{"executive"} (and these can be capitalized).
     Also, \code{"special"} can be used, when arguments \code{width}
     and \code{height} specify the paper size.  A further choice is
-    \code{"default"} (the default): If this is selected, the papersize
+    \code{"default"} (the default): If this is selected, the paper size
     is taken from the option \code{"papersize"} if that is set and to
     \code{"a4"} if it is unset or empty.}
   \item{pagecentre}{logical: should the device region be centred on the

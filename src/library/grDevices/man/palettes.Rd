@@ -85,8 +85,8 @@ The \code{hcl.colors} function provides a basic and lean implementation of
 the pre-specified palettes in the \pkg{colorspace} package. In addition to the
 types above, the functions distinguish \dQuote{diverging} palettes where the two
 arms are restricted to be rather balanced as opposed to flexible
-\dQuote{divergingx} palettes that combine two sequential palettes without any
-restrictions. The latter group also includes the cividis palette as it is based
+\dQuote{\I{divergingx}} palettes that combine two sequential palettes without any
+restrictions. The latter group also includes the \I{cividis} palette as it is based
 on two different hues (blue and yellow) but it is actually a sequential palette
 (going from dark to light).
 
