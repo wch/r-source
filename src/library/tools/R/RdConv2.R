@@ -54,11 +54,11 @@ isBlankLineRd <- function(x) {
                       if (from != srcref[3L]) paste0("-", srcref[3L]))
         src <- if (showSource) tryCatch(error = function (e) NULL, {
             ## show first source line and column marker for the block
-            line <- getSrcLines(attr(srcref, "srcfile"), from, from)
-            ## FIXME: marker may be misplaced if line uses tabs, or for
+            line <- getSrcLines(attr(srcref, "srcfile"), from, from) # Enc=UTF-8
+            ## FIXME: marker may be misplaced for
             ##        expanded USERMACRO (seen srcref[5L] > srcref[6L])
             sprintf("\n  %4s | %s", c(from, ""),
-                    c(line, paste0(strrep(" ", srcref[5L] - 1L), "^")))
+                    c(tabExpand(line), paste0(strrep(" ", srcref[5L] - 1L), "^")))
         })
         paste0(loc, ": ", ...,
                paste0(src, collapse = ""))
