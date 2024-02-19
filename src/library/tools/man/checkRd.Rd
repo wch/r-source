@@ -1,6 +1,6 @@
 % File src/library/tools/man/checkRd.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2008-2023 R Core Team
+% Copyright 2008-2024 R Core Team
 % Distributed under GPL 2 or later
 
 \name{checkRd}
@@ -83,11 +83,9 @@ checkRd(Rd, defines = .Platform$OS.type, stages = "render",
   \verb{\S4method}, \verb{\dontrun} replaced by \verb{\donttest} or
   \verb{\dontshow}, and \verb{\title} replaced by \verb{\section} or
   \verb{\subsection} name.
-  (Some instances of \dQuote{Lost braces} are uprated to level -1,
-  currently only during \command{R CMD check} with option
-  \option{--as-cran}.)
-  %or if environment variable \env{_R_CHECK_RD_NOTE_LOST_BRACES_}
-  %is set to a true value.
+  \dQuote{Lost braces} are uprated to warning level -1 when they match
+  common markup mistakes, e.g., \samp{code{text}} rendered as
+  \samp{codetext} due to the missing backslash escape for the macro name.
 
   Note that both \code{prepare_Rd} and \code{checkRd} have tests for an
   empty section: that in \code{checkRd} is stricter (essentially that

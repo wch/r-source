@@ -670,7 +670,7 @@ checkRd <- function(Rd, defines = .Platform$OS.type, stages = "render",
     allow_empty_item_in_describe <- config_val_to_logical(
         Sys.getenv("_R_CHECK_RD_ALLOW_EMPTY_ITEM_IN_DESCRIBE_", "FALSE"))
     note_lost_braces <- config_val_to_logical(
-        Sys.getenv("_R_CHECK_RD_NOTE_LOST_BRACES_", "FALSE"))
+        Sys.getenv("_R_CHECK_RD_NOTE_LOST_BRACES_", "TRUE"))
 
     warnRd <- function(block, Rdfile, ..., level = 0L)
     {

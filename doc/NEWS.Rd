@@ -372,12 +372,12 @@
       To see the failing lines set environment variable
       \env{_R_CHECK_FORTRAN_KIND_DETAILS_} to a true value.
 
-      \item When checking Rd files, \command{R CMD check --as-cran} now
+      \item When checking Rd files, \command{R CMD check} now
       notes some of the \dQuote{lost braces} that
       \code{tools::checkRd()} finds.  Typical problems are Rd macros
       missing the initial backslash (e.g., \samp{code{...}}), in-text
       set notation (e.g., \samp{{1, 2}}, where the braces need
-      escaping), and \verb{\itemize} lists with \emph{description}-like
+      escaping), and \verb{\itemize} lists with \verb{\describe}-style
       entries of the form \verb{\item{label}{description}}.
     }
   }
