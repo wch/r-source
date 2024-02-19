@@ -601,6 +601,9 @@
 
       \item \code{warning()} with \code{options(warn = 1)} has improved
       output for multi-line messages.
+
+      \item \code{axis.Date()} and \code{axis.POSIXct()} now respect the
+      \code{par("lab")} setting for the number of \code{pretty()} intervals.
     }
   }
 }
@@ -1201,7 +1204,7 @@
 
       \item Functions \code{axis.Date()} and \code{axis.POSIXct()} are
       rewritten to gain better default tick locations and better default
-      formats by using \code{prettyDate()}.
+      formats via the corresponding \code{pretty()} methods.
       Thanks to \I{Swetlana Herbrandt}.
 
       \item The mapping of Windows' names for time zones to \abbr{IANA}'s
