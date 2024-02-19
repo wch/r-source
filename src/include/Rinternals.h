@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1999--2024  The R Core Team.
+ *  Copyright (C) 1999--2023  The R Core Team.
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This header file is free software; you can redistribute it and/or modify
@@ -972,9 +972,7 @@ void R_orderVector1(int *indx, int n, SEXP x,       Rboolean nalast, Rboolean de
 #define lastElt			Rf_lastElt
 #define lazy_duplicate		Rf_lazy_duplicate
 #define lcons			Rf_lcons
-# if !(defined(_cplusplus) && defined(R_NO_REMAP_CXX))
 #define length(x)		Rf_length(x)
-#endif
 #define lengthgets		Rf_lengthgets
 #define list1			Rf_list1
 #define list2			Rf_list2
