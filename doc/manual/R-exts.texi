@@ -6429,7 +6429,7 @@ the length to double and use a double format.  So one could use
 something like
 @example
     SEXP Robj; R_xlen_t nelem;
-    error("Actual: %0.f; Expected %0.f\n", (double) XLENGTH(Robj), (double) nelem);
+    error("Actual: %0.f; Expected %0.f\n", (double)XLENGTH(Robj), (double)nelem);
 @end example
 @noindent
 @c x86_64 as a 52-bit design limit.

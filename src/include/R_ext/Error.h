@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998-2023   The R Core Team
+ *  Copyright (C) 1998-2024   The R Core Team
  *
  *  This header file is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -65,7 +65,9 @@ void 	R_ShowMessage(const char *s);
 #endif
 
 #ifndef R_NO_REMAP
-#define error Rf_error
+# if !(defined(_cplusplus) && defined(R_NO_REMAP_CXX))
+# define error Rf_error
+# endif
 #define warning Rf_warning
 #endif
 

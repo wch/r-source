@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2024-01-08 r85788) -- "Unsuffered Consequences"
+R Under development (unstable) (2024-02-19 r85944) -- "Unsuffered Consequences"
 Copyright (C) 2024 The R Foundation for Statistical Computing
-Platform: aarch64-apple-darwin23.2.0
+Platform: aarch64-apple-darwin23.3.0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -2942,7 +2942,7 @@ List of 18
 > ## End(Don't show)
 > 
 > pictex()
-Warning: 'pictex' is deprecated.
+Warning in pictex() : 'pictex' is deprecated.
  Consider a TiKZ device instead.
 > plot(1:11, (-5:5)^2, type = "b", main = "Simple Example Plot")
 > dev.off()
@@ -3655,15 +3655,15 @@ attr(,"class")
 > ## time-dependent ==> ignore diffs:
 > ## IGNORE_RDIFF_BEGIN
 > pretty(Sys.Date())
-[1] "2024-01-06" "2024-01-07" "2024-01-08" "2024-01-09" "2024-01-10"
-[6] "2024-01-11"
+[1] "2024-02-17" "2024-02-18" "2024-02-19" "2024-02-20" "2024-02-21"
+[6] "2024-02-22"
 > pretty(Sys.time(), n = 10)
- [1] "2024-01-08 10:32:54 GMT" "2024-01-08 10:32:55 GMT"
- [3] "2024-01-08 10:32:56 GMT" "2024-01-08 10:32:57 GMT"
- [5] "2024-01-08 10:32:58 GMT" "2024-01-08 10:32:59 GMT"
- [7] "2024-01-08 10:33:00 GMT" "2024-01-08 10:33:01 GMT"
- [9] "2024-01-08 10:33:02 GMT" "2024-01-08 10:33:03 GMT"
-[11] "2024-01-08 10:33:04 GMT"
+ [1] "2024-02-19 19:19:07 GMT" "2024-02-19 19:19:08 GMT"
+ [3] "2024-02-19 19:19:09 GMT" "2024-02-19 19:19:10 GMT"
+ [5] "2024-02-19 19:19:11 GMT" "2024-02-19 19:19:12 GMT"
+ [7] "2024-02-19 19:19:13 GMT" "2024-02-19 19:19:14 GMT"
+ [9] "2024-02-19 19:19:15 GMT" "2024-02-19 19:19:16 GMT"
+[11] "2024-02-19 19:19:17 GMT"
 > ## IGNORE_RDIFF_END
 > 
 > pretty(as.Date("2000-03-01")) # R 1.0.0 came in a leap year
@@ -4495,7 +4495,7 @@ NULL
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  20.809 0.427 21.363 0 0 
+Time elapsed:  20.844 0.447 21.37 0 0 
 > grDevices::dev.off()
 null device 
           1 

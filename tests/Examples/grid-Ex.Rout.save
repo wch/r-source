@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2023-02-17 r83864) -- "Unsuffered Consequences"
-Copyright (C) 2023 The R Foundation for Statistical Computing
-Platform: x86_64-pc-linux-gnu (64-bit)
+R Under development (unstable) (2024-02-19 r85944) -- "Unsuffered Consequences"
+Copyright (C) 2024 The R Foundation for Statistical Computing
+Platform: aarch64-apple-darwin23.3.0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -2407,7 +2407,7 @@ vp1::vp2
 > flush(stderr()); flush(stdout())
 > 
 > ### Name: xsplinePoints
-> ### Title: Return the points that would be used to draw an Xspline (or a
+> ### Title: Return the points that would be used to draw an xspline (or a
 > ###   Bezier curve)
 > ### Aliases: xsplinePoints bezierPoints
 > ### Keywords: dplot
@@ -2446,7 +2446,7 @@ vp1::vp2
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  4.911 0.016 4.927 0 0 
+Time elapsed:  0.464 0.026 0.493 0 0 
 > grDevices::dev.off()
 null device 
           1 
