@@ -6,7 +6,6 @@
 \encoding{UTF-8}
 
 \section{\Rlogo CHANGES IN R 4.3.3}{
-
   \subsection{NEW FEATURES}{
     \itemize{
       \item \code{iconv()} now fixes up variant encoding names such as
@@ -91,6 +90,10 @@
 
       \item \pkg{tools}\code{:: startDynamicHelp()} now ensures \code{port}
       is in proper range, fixing \PR{18645}.
+
+      \item \code{pmatch(x, table)} for large \code{table}, also called for
+      data frame row selection, \code{dfrm[nm, ]}, is now interruptible,
+      fixing \PR{18656}.
     }
   }
 }
