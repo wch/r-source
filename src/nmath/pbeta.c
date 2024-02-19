@@ -1,6 +1,6 @@
 /*
  *  Mathlib : A C Library of Special Functions
- *  Copyright (C) 2022 The R Core Team
+ *  Copyright (C) 2024 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -40,22 +40,24 @@
 attribute_hidden
 double pbeta_raw(double x, double a, double b, int lower_tail, int log_p)
 {
+    if (x >= 1) // may happen when called from qbeta()
+	return R_DT_1;
     // treat limit cases correctly here:
     if(a == 0 || b == 0 || !R_FINITE(a) || !R_FINITE(b)) {
-	// NB:  0 < x < 1 :
+	// NB:  0 <= x < 1 :
 	if(a == 0 && b == 0) // point mass 1/2 at each of {0,1} :
 	    return (log_p ? -M_LN2 : 0.5);
-	if (a == 0 || a/b == 0) // point mass 1 at 0 ==> P(X <= x) = 1, all x > 0
+	if (a == 0 || a/b == 0) // point mass 1 at 0 ==> P(X <= x) = 1, all x >= 0
 	    return R_DT_1;
 	if (b == 0 || b/a == 0) // point mass 1 at 1 ==> P(X <= x) = 0, all x < 1
 	    return R_DT_0;
 	// else, remaining case:  a = b = Inf : point mass 1 at 1/2
 	if (x < 0.5) return R_DT_0; else return R_DT_1;
     }
-    if (x >= 1) // may happen when called from qbeta()
-	return R_DT_1;
+    if (x <= 0)
+	return R_DT_0;
 
-    // Now:  0 < a < Inf;  0 < b < Inf
+    // Now:  0 < a < Inf;  0 < b < Inf  and  0 < x < 1
 
     double x1 = 0.5 - x + 0.5, w, wc;
     int ierr;
@@ -77,9 +79,6 @@ double pbeta(double x, double a, double b, int lower_tail, int log_p)
 
     if (a < 0 || b < 0) ML_WARN_return_NAN;
     // allowing a==0 and b==0  <==> treat as one- or two-point mass
-
-    if (x <= 0)
-	return R_DT_0;
 
     return pbeta_raw(x, a, b, lower_tail, log_p);
 }

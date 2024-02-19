@@ -91,6 +91,10 @@
       \item \pkg{tools}\code{:: startDynamicHelp()} now ensures \code{port}
       is in proper range, fixing \PR{18645}.
 
+      \item \code{pbeta(x, a,b)} is correct now for \code{x}=0 or 1 in the
+      boundary cases where \code{a} or \code{b} or both are 0, fixing
+      \PR{18672} thanks to Michael Fay.
+
       \item \code{pmatch(x, table)} for large \code{table}, also called for
       data frame row selection, \code{dfrm[nm, ]}, is now interruptible,
       fixing \PR{18656}.

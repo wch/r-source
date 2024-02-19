@@ -12,11 +12,15 @@ assertWarning <- tools::assertWarning
 as.nan <- function(x) { x[is.na(x) & !is.nan(x)] <- NaN ; x }
 ###-- these are identical in ./arith-true.R ["fixme": use source(..)]
 ## opt.conformance <- 0
+(sysinf <- Sys.info())
+Lnx   <- sysinf[["sysname"]] == "Linux"
+isMac <- sysinf[["sysname"]] == "Darwin"
+arch  <- sysinf[["machine"]]
 onWindows <- .Platform$OS.type == "windows"
 b64 <- .Machine$sizeof.pointer >= 8 # 64 (or more) bits
 str(.Machine[grep("^sizeof", names(.Machine))]) ## also differentiate long-double..
 (usingMKL <- grepl("/(lib)?mkl", La_library(), ignore.case=TRUE))
-(Lnx <- Sys.info()[["sysname"]] == "Linux")
+x86 <- arch == "x86_64"
 options(rErr.eps = 1e-30)
 rErr <- function(approx, true, eps = getOption("rErr.eps", 1e-30))
 {
@@ -683,7 +687,6 @@ p201 <- proportions( rep( c(1, epsilon), c(201, 999-201)))
 x <- sample(length(p201), 100000, prob = p201, replace = TRUE)
 stopifnot(sum(x <= 201) == 100000)
 
-arch <- Sys.info()[["machine"]]
 ## had if(!(onWindows && arch == "x86"))
 ## PR#17577 - dgamma(x, shape)  for shape < 1 (=> +Inf at x=0) and very small x
 stopifnot(exprs = {
@@ -826,6 +829,19 @@ stopifnot(exprs = {
     all.equal(ldpxx, log(dpxx), tol = 1e-15)
 })
 ## dpois(x,x) underflowed to zero in R <= 4.1.1 for such large x.
+
+
+
+
+
+## PR#18672 -- x = 0|1 when one or both shape = 0
+stopifnot(exprs = {
+    pbeta(0,  0, 3) == 1 # gave 0
+    pbeta(1, .1, 0) == 1 # gave 0
+    pbeta(1.1, 3,0) == 1 # gave 0
+    pbeta(0,  0, 0) == 0.5 # gave 0, should give 0.5
+    pbeta(1,  0, 0) == 1   # gave 0.5
+})
 
 
 
