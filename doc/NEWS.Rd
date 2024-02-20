@@ -379,6 +379,12 @@
       set notation (e.g., \samp{{1, 2}}, where the braces need
       escaping), and \verb{\itemize} lists with \verb{\describe}-style
       entries of the form \verb{\item{label}{description}}.
+
+      \item \command{R CMD INSTALL} (and hence \command{check}) will
+      compile C++ code with \code{-DR_NO_REMAP} if environment variable
+      \env{_R_CXX_USE_NO_REMAP_} is set to a true value.  It is planned
+      that this will in future become the default for compiling C++.
+      %% E.g. become part of \code{check --no-cran} for R 4.5.0.
     }
   }
 
