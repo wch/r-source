@@ -45,6 +45,7 @@ characterwise
 checksums
 chroma
 chromaticities
+Chromaticity
 codepages
 coercible
 coercions
@@ -118,6 +119,8 @@ greyscales
 halfwidth
 hardcoded
 hardlink
+Hessians
+Hostname
 hyoscines
 hyperthreaded
 hypocenter
