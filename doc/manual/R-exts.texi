@@ -10123,9 +10123,11 @@ For more details on the topic see
 (which has 3 parts).
 
 It may or may not be possible to build @R{} itself with
-@option{-fsanitize=undefined}: problems have been seen with @abbr{OpenMP}-using
-code with @command{gcc} but there has been success with @command{clang}.
-
+@option{-fsanitize=undefined}: problems have in the past been seen with
+@abbr{OpenMP}-using code with @command{gcc} but there has been success
+with @command{clang} up to version 16..  However, problems have been
+seen with @command{clang} 17 and later, including missing entry points
+and @R{} builds hanging.
 
 @node Other analyses with `clang', Other analyses with `gcc', Using Undefined Behaviour Sanitizer, Checking memory access
 @subsection Other analyses with `clang'
