@@ -2763,7 +2763,7 @@ if(FALSE) {
                         paste0("LTO_FC=", shQuote("$(LTO_FC_OPT)")))
                   else if(isFALSE(use_lto)) c("LTO=", "LTO_FC=")
                   )
-    if(config_val_to_logical(Sys.getenv("_R_USE_NO_REMAP_", "FALSE")))
+    if(config_val_to_logical(Sys.getenv("_R_CXX_USE_NO_REMAP_", "FALSE")))
          makeargs <- c(makeargs, "CXX_DEFS=-DR_NO_REMAP")
 
     cmd <- paste(MAKE, p1(paste("-f", shQuote(makefiles))), p1(makeargs),

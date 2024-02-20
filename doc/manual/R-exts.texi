@@ -16497,7 +16497,7 @@ Let us re-iterate the advice to include in C++ code system headers
 before the @R{} header files, especially @file{Rinternals.h} (included
 by @file{Rdefines.h}) and @file{Rmath.h}, which redefine names which may
 be used in system headers, or (preferably) to define @code{R_NO_REMAP}.
-Setting the environment variable @env{_R_USE_NO_REMAP_} to a true value
+Setting the environment variable @env{_R_CXX_USE_NO_REMAP_} to a true value
 allows the need for this to be tested, as it causes @command{R CMD
 INSTALL} to compile C++ code defining @code{R_NO_REMAP}.
 
