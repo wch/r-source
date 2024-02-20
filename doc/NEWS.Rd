@@ -100,7 +100,7 @@
       fixing \PR{18656}.
 
       \item \code{predict(<rank-deficient lm>, newdata=*)} fix computing of
-      \code{nbasis}, see \I{Russ Lenth}'s comment 29 in \PR{16158}.
+      \code{nbasis}, see Russ Lenth's comment 29 in \PR{16158}.
     }
   }
 }
