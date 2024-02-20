@@ -1,7 +1,7 @@
 #  File src/library/stats/R/lm.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2023 The R Core Team
+#  Copyright (C) 1995-2024 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -730,7 +730,7 @@ predict.lm <-
         ## Pad diagonal with ones
         d <- c(pp,pp) ; tR[.row(d) > p  &  .row(d) == .col(d)] <- 1
         ## Null basis is last pp-p cols of Q in QR decomposition of tR
-        nbasis <- qr.Q(qr.default(tR, LAPACK=TRUE))[, (p+1L):pp, drop = FALSE]
+        nbasis <- qr.Q(qr.default(tR))[, (p+1L):pp, drop = FALSE]
         ## Determine estimability; nbasis is orthonormal :
         ## *remember* rows are in qrX$pivot order; we use ALL columns of X, not just p of them
         Xb <- X[, qrX$pivot] %*% nbasis

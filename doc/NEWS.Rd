@@ -98,6 +98,9 @@
       \item \code{pmatch(x, table)} for large \code{table}, also called for
       data frame row selection, \code{dfrm[nm, ]}, is now interruptible,
       fixing \PR{18656}.
+
+      \item \code{predict(<rank-deficient lm>, newdata=*)} fix computing of
+      \code{nbasis}, see \I{Russ Lenth}'s comment 29 in \PR{16158}.
     }
   }
 }
