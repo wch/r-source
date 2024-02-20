@@ -3,6 +3,9 @@
 % Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+\newcommand{\bibcite}{#1}
+
 \name{sort}
 \alias{sort}
 \alias{sort.default}
@@ -78,24 +81,24 @@ sort.int(x, partial = NULL, na.last = NA, decreasing = FALSE,
   are more than 10.)  Names are discarded for partial sorting.
 
   Method \code{"shell"} uses Shellsort (an \eqn{O(n^{4/3})} variant from
-  Sedgewick (1986)).  If \code{x} has names a stable modification is
+  \bibcite{Sedgewick (1986)}).  If \code{x} has names a stable modification is
   used, so ties are not reordered.  (This only matters if names are
   present.)
 
   Method \code{"quick"} uses Singleton (1969)'s implementation of
-  Hoare's Quicksort method and is only available when \code{x} is
+  \I{Hoare}'s Quicksort method and is only available when \code{x} is
   numeric (double or integer) and \code{partial} is \code{NULL}.  (For
   other types of \code{x} Shellsort is used, silently.)  It is normally
   somewhat faster than Shellsort (perhaps 50\% faster on vectors of
   length a million and twice as fast at a billion) but has poor
-  performance in the rare worst case.  (Peto's modification using a
+  performance in the rare worst case.  (\I{Peto}'s modification using a
   pseudo-random midpoint is used to make the worst case rarer.)  This is
   not a stable sort, and ties may be reordered.
   
   Method \code{"radix"} relies on simple hashing to scale time linearly
   with the input size, i.e., its asymptotic time complexity is O(n). The
   specific variant and its implementation originated from the data.table
-  package and are due to Matt Dowle and Arun Srinivasan.  For small
+  package and are due to \I{Matt Dowle} and \I{Arun Srinivasan}.  For small
   inputs (< 200), the implementation uses an insertion sort (O(n^2))
   that operates in-place to avoid the allocation overhead of the radix
   sort. For integer vectors of range less than 100,000, it switches to a

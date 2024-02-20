@@ -3,6 +3,8 @@
 % Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{agrep}
 \alias{agrep}
 \alias{agrepl}
@@ -11,7 +13,7 @@
 \description{
   Searches for approximate matches to \code{pattern} (the first argument)
   within each element of the string \code{x} (the second argument) using
-  the generalized Levenshtein edit distance (the minimal possibly
+  the generalized \I{Levenshtein} edit distance (the minimal possibly
   weighted number of insertions, deletions and substitutions needed to
   transform one string into another).
 }
@@ -38,7 +40,7 @@ agrepl(pattern, x, max.distance = 0.1, costs = NULL,
     list with possible components
     \describe{
       \item{\code{cost}:}{maximum number/fraction of match cost
-	(generalized Levenshtein distance)}
+	(generalized \I{Levenshtein} distance)}
       \item{\code{all}:}{maximal number/fraction of \emph{all}
 	transformations (insertions, deletions and substitutions)}
       \item{\code{insertions}:}{maximum number/fraction of insertions}
@@ -52,7 +54,7 @@ agrepl(pattern, x, max.distance = 0.1, costs = NULL,
   }
   \item{costs}{a numeric vector or list with names partially matching
     \samp{insertions}, \samp{deletions} and \samp{substitutions} giving
-    the respective costs for computing the generalized Levenshtein
+    the respective costs for computing the generalized \I{Levenshtein}
     distance, or \code{NULL} (default) indicating using unit cost for
     all three possible transformations.
     Coerced to integer via \code{\link{as.integer}} if possible.}
@@ -69,12 +71,12 @@ agrepl(pattern, x, max.distance = 0.1, costs = NULL,
     \sQuote{Details}.}
 }
 \details{
-  The Levenshtein edit distance is used as measure of approximateness:
+  The \I{Levenshtein} edit distance is used as measure of approximateness:
   it is the (possibly cost-weighted) total number of insertions,
   deletions and substitutions required to transform one string into
   another.
 
-  This uses the \code{tre} code by Ville Laurikari
+  This uses the \code{tre} code by \I{Ville Laurikari}
   (\url{https://github.com/laurikari/tre}), which supports \abbr{MBCS}
   character matching.
 

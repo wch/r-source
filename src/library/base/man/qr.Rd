@@ -55,7 +55,7 @@ as.qr(x)
   statistical techniques.  In particular it can be used to solve the
   equation \eqn{\bold{Ax} = \bold{b}} for given matrix \eqn{\bold{A}},
   and vector \eqn{\bold{b}}.  It is useful for computing regression
-  coefficients and in applying the Newton-Raphson algorithm.
+  coefficients and in applying the \I{Newton}-\I{Raphson} algorithm.
 
   The functions \code{qr.coef}, \code{qr.resid}, and \code{qr.fitted}
   return the coefficients, residuals and fitted values obtained when

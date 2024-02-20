@@ -3,13 +3,15 @@
 % Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{quade.test}
 \alias{quade.test}
 \alias{quade.test.default}
 \alias{quade.test.formula}
-\title{Quade Test}
+\title{\I{Quade} Test}
 \description{
-  Performs a Quade test with unreplicated blocked data.
+  Performs a \I{Quade} test with unreplicated blocked data.
 }
 \usage{
 quade.test(y, \dots)
@@ -57,7 +59,7 @@ quade.test(y, \dots)
 }
 \value{
   A list with class \code{"htest"} containing the following components:
-  \item{statistic}{the value of Quade's F statistic.}
+  \item{statistic}{the value of \I{Quade}'s F statistic.}
   \item{parameter}{a vector with the numerator and denominator degrees
     of freedom of the approximate F distribution of the test statistic.}
   \item{p.value}{the p-value of the test.}

@@ -3,6 +3,8 @@
 % Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\bibcite}{#1}
+
 \name{mosaicplot}
 \alias{mosaicplot}
 \alias{mosaicplot.default}
@@ -119,7 +121,7 @@ mosaicplot(x, \dots)
   A more flexible and extensible implementation of mosaic plots written
   in the grid graphics system is provided in the function
   \code{\link[vcd]{mosaic}} in the contributed package \CRANpkg{vcd}
-  (Meyer, Zeileis and Hornik, 2006).
+  (\bibcite{Meyer, Zeileis and Hornik, 2006}).
 }
 \author{
   S-PLUS original by John Emerson \email{john.emerson@yale.edu}.

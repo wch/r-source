@@ -4,6 +4,8 @@
 % Copyright 2003-2016 The R Foundation
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{format}
 \alias{format}
 \alias{format.AsIs}
@@ -143,7 +145,7 @@ format(x, \dots)
 
   If \code{x} is a list, the result is a character vector obtained by
   applying \code{format.default(x, \dots)} to each element of the list
-  (after \code{\link{unlist}}ing elements which are themselves lists),
+  (after \I{\code{\link{unlist}}ing} elements which are themselves lists),
   and then collapsing the result for each element with
   \code{paste(collapse = ", ")}.  The defaults in this case are
   \code{trim = TRUE, justify = "none"} since one does not usually want

@@ -3,6 +3,9 @@
 % Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+\newcommand{\bibcite}{#1}
+
 \name{kmeans}
 \alias{kmeans}
 \alias{print.kmeans}
@@ -48,14 +51,15 @@ kmeans(x, centers, iter.max = 10, nstart = 1,
   The data given by \code{x} are clustered by the \eqn{k}-means method,
   which aims to partition the points into \eqn{k} groups such that the
   sum of squares from points to the assigned cluster centres is minimized.
-  At the minimum, all cluster centres are at the mean of their Voronoi
+  At the minimum, all cluster centres are at the mean of their \I{Voronoi}
   sets (the set of data points which are nearest to the cluster centre).
 
-  The algorithm of Hartigan and Wong (1979) is used by default.  Note
-  that some authors use \eqn{k}-means to refer to a specific algorithm
-  rather than the general method: most commonly the algorithm given by
-  MacQueen (1967) but sometimes that given by Lloyd (1957) and Forgy
-  (1965).  The Hartigan--Wong algorithm generally does a better job than
+  The algorithm of \bibcite{Hartigan and Wong (1979)} is used by
+  default.  Note that some authors use \eqn{k}-means to refer to a
+  specific algorithm rather than the general method: most commonly the
+  algorithm given by \bibcite{MacQueen (1967)} but sometimes that given
+  by \bibcite{Lloyd (1957)} and \bibcite{Forgy (1965)}.
+  The \I{Hartigan}--\I{Wong} algorithm generally does a better job than
   either of those, but trying several random starts (\code{nstart}\eqn{>
   1}) is often recommended.  In rare cases, when some of the points
   (rows of \code{x}) are extremely close, the algorithm may not converge
@@ -66,11 +70,11 @@ kmeans(x, centers, iter.max = 10, nstart = 1,
   For ease of programmatic exploration, \eqn{k = 1} is allowed, notably
   returning the center and \code{withinss}.
 
-  Except for the Lloyd--Forgy method, \eqn{k} clusters will always be
+  Except for the \I{Lloyd}--\I{Forgy} method, \eqn{k} clusters will always be
   returned if a number is specified.
   If an initial matrix of centres is supplied, it is possible that
   no point will be closest to one or more centres, which is currently
-  an error for the Hartigan--Wong method.
+  an error for the \I{Hartigan}--\I{Wong} method.
 }
 \note{
   The clusters are numbered in the returned object, but they are a

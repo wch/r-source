@@ -3,6 +3,8 @@
 % Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{getWindowsHandle}
 \alias{getWindowsHandle}
 \title{Get a Windows Handle}
@@ -29,7 +31,7 @@ getWindowsHandle(which = "Console")
   developers making addons to \R{}.
 
   \code{NULL} is returned for the Frame handle if not running in MDI mode,
-  for the Console handle when running Rterm, for any unrecognized
+  for the Console handle when running \I{Rterm}, for any unrecognized
   string for \code{which}, or for a graphics device with no
   corresponding window.
 

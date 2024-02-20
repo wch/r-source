@@ -102,7 +102,7 @@
   and sometimes (both \emph{optional})
   \code{zone}, a string for the time zone, and
   \code{gmtoff}, offset in seconds from GMT,
-  see the section \sQuote{Details on POSIXlt} below for more details.
+  see the section \sQuote{Details on \I{POSIXlt}} below for more details.
 
   The classes correspond to the POSIX/C99 constructs of \sQuote{calendar
     time} (the \code{time_t} data type, \dQuote{\I{ct}}), and \sQuote{local time}
@@ -178,7 +178,7 @@
   attribute. % No longer true: (e.g., by \code{c(x)}).
 }
 
-\section{Details on POSIXlt}{
+\section{Details on \I{POSIXlt}}{
   Class \code{"POSIXlt"} is internally a named \code{\link{list}} of
   vectors representing date-times, with the following list components
   \describe{
@@ -228,7 +228,7 @@
   end of DST: typically 1am to 2am occurs twice, first in DST and then
   in standard time.  At all other times \code{isdst} can be deduced from
   the first six values, but the behaviour if it is set incorrectly is
-  platform-dependent.  For example Linux/glibc when checked fixed up
+  platform-dependent.  For example Linux/\I{glibc} when checked fixed up
   incorrect values in time zones which support DST but gave an error on
   value \code{1} in those without DST.
   % POSIX says used 'initially', so it should probably be ignored.
@@ -309,7 +309,7 @@
   \code{\link{difftime}} for time intervals.
 
   \code{\link{balancePOSIXlt}()} for balancing or filling \dQuote{ragged}
-  POSIXlt objects.
+  \I{POSIXlt} objects.
 
   \code{\link{cut.POSIXt}}, \code{\link{seq.POSIXt}},
   \code{\link{round.POSIXt}} and \code{\link{trunc.POSIXt}} for methods

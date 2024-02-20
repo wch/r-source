@@ -5,7 +5,7 @@
 
 \name{n2mfrow}
 \alias{n2mfrow}
-\title{Compute Default 'mfrow' From Number of Plots}
+\title{Compute Default \code{mfrow} From Number of Plots}
 \description{
   Easy setup for plotting multiple figures (in a rectangular layout) on
   one page.  This computes a sensible default for

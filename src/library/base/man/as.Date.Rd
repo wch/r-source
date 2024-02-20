@@ -103,7 +103,7 @@ as.Date(x, \dots)
     \item Is the origin day 0 or day 1?  As the \sQuote{Examples} show,
     Excel manages to use both choices for its two date systems.
     \item If the origin is far enough back, the designers may show their
-    ignorance of calendar systems.  For example, Excel's designer
+    ignorance of calendar systems.  For example, Excel{}'s designer
     thought 1900 was a leap year (claiming to copy the error from
     earlier DOS spreadsheets), and Matlab's designer chose the
     non-existent date of \sQuote{January 0, 0000} (there is no such day),

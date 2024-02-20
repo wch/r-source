@@ -3,6 +3,8 @@
 % Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{gpar}
 \alias{gpar}
 \alias{get.gpar}
@@ -97,7 +99,7 @@ get.gpar(names = NULL)
   If a string, then valid values are: \code{"plain"},
   \code{"bold"}, \code{"italic"}, \code{"oblique"}, and
   \code{"bold.italic"}.
-  For the special case of the HersheySerif font family,
+  For the special case of the \I{HersheySerif} font family,
   \code{"cyrillic"}, \code{"cyrillic.oblique"}, and \code{"EUC"}
   are also available.
 

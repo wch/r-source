@@ -30,7 +30,7 @@
 
       \code{x11} is recognized as a synonym for \code{X11}.
 
-      The \R function is a wrapper for two devices, one based on Xlib
+      The \R function is a wrapper for two devices, one based on \I{Xlib}
       (\url{https://en.wikipedia.org/wiki/Xlib}) and one using \I{cairographics}
       (\url{https://www.cairographics.org}).}
   }
@@ -73,7 +73,7 @@ X11.options(\dots, reset = FALSE)
     and the second for font 5, the symbol font.  See section \sQuote{Fonts}.}
 
   \item{family}{The default family: a length-one character string.  This
-    is primarily intended for cairo-based devices, but for \code{type =
+    is primarily intended for \I{cairo}-based devices, but for \code{type =
     "Xlib"}, the \code{\link{X11Fonts}()} database is used to map family
     names to \code{fonts} (and this argument takes precedence over that
     one).}
@@ -99,10 +99,10 @@ X11.options(\dots, reset = FALSE)
     using \code{pangocairo} (often not the case on macOS), otherwise
     \code{"Xlib"}.}
 
-  \item{antialias}{for cairo types, the type of anti-aliasing (if any)
+  \item{antialias}{for \I{cairo} types, the type of anti-aliasing (if any)
     to be used.  One of \code{c("default", "none", "gray", "subpixel")}.}
 
-  \item{symbolfamily}{for cairo-based devices only:
+  \item{symbolfamily}{for \I{cairo}-based devices only:
       a length-one character string that specifies the font family to
       be used as the "symbol" font (e.g., for \link{plotmath} output).
       The default value is "default", which means that R will choose
@@ -140,7 +140,7 @@ X11.options(\dots, reset = FALSE)
     in non-UTF-8 locales).  The output should be locale-independent.
   }
 
-  There are three variants of the cairo-based device.  \code{type =
+  There are three variants of the \I{cairo}-based device.  \code{type =
   "nbcairo"} has no buffering.  \code{type = "cairo"} has some
   buffering, and supports \code{\link{dev.hold}} and \code{dev.flush}.
   \code{type = "dbcairo"} buffers output and updates the screen about
@@ -207,7 +207,7 @@ X11.options(\dots, reset = FALSE)
   locale (e.g., Fedora Core 3 lacked one for \code{ru_RU.utf8}).
 }
 
-\section{Cairo Fonts}{
+\section{\I{Cairo} Fonts}{
   The \I{cairographics}-based devices work directly with font family names
   such as \code{"Helvetica"} which can be selected initially by the
   \code{family} argument and subsequently by \code{\link{par}} or
@@ -292,7 +292,7 @@ If that shows \code{symbol.ttf} that may be the Wine symbol font -- use
 
   The default for \code{type = "Xlib"} is to use the best possible colour
   model for the visual of the X11 server: these days this will almost
-  always be \sQuote{truecolor}.  This can be overridden by the
+  always be \sQuote{\I{truecolor}}.  This can be overridden by the
   \code{colortype} argument of \code{X11.options}.  \bold{Note:} All
   \code{X11} and \code{type = "Xlib"} \code{\link{bmp}}, \code{jpeg},
   \code{png} and \code{tiff} devices share a \code{colortype} which is
@@ -320,11 +320,11 @@ If that shows \code{symbol.ttf} that may be the Wine symbol font -- use
   256.  With that setting the largest cube tried is 4 levels each for
   RGB, using 64 colours in the palette.
 
-  % A test in 2011 showed that cairo >= 1.6 works on 8-bit visuals,
+  % A test in 2011 showed that \I{cairo} >= 1.6 works on 8-bit visuals,
   % but does not interpret colours correctly.  Done via VNC.
   The \I{cairographics}-based devices most likely only work (or work
   correctly) with \sQuote{\I{TrueColor}} visuals, although in principle this
-  depends on the cairo installation: a warning is given if any other
+  depends on the \I{cairo} installation: a warning is given if any other
   visual is encountered.
 
   \code{type = "Xlib"} supports \sQuote{\I{TrueColor}},

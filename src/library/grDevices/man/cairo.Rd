@@ -9,10 +9,10 @@
 \alias{svg}
 \alias{cairo_pdf}
 \alias{cairo_ps}
-\title{Cairographics-based SVG, PDF and PostScript Graphics Devices}
+\title{\I{Cairographics}-based SVG, PDF and PostScript Graphics Devices}
 \description{
   Graphics devices for SVG, PDF and PostScript graphics files using
-  the cairo graphics API.
+  the \I{cairo} graphics API.
 }
 \usage{
 svg(filename = if(onefile) "Rplots.svg" else "Rplot\%03d.svg",
@@ -51,7 +51,7 @@ cairo_ps(filename = if(onefile) "Rplots.ps" else "Rplot\%03d.ps",
     system-dependent way.
 
     On unix-alikes (incl.\ macOS), see
-    the \sQuote{Cairo fonts} section in the help for \code{\link{X11}}.
+    the \sQuote{\I{Cairo} fonts} section in the help for \code{\link{X11}}.
   }
   \item{bg}{the initial background colour: can be overridden by setting
     \code{par("bg")}.}
@@ -78,7 +78,7 @@ cairo_ps(filename = if(onefile) "Rplots.ps" else "Rplot\%03d.ps",
   and embed the fonts used.
 
   The output produced by \code{cairo_ps(onefile = FALSE)} will be
-  encapsulated postscript on a platform with cairo >= 1.6.
+  encapsulated postscript on a platform with \I{cairo} >= 1.6.
 
   \R can be compiled without support for any of these devices: this will
   be reported if you attempt to use them on a system where they are not
@@ -96,7 +96,7 @@ cairo_ps(filename = if(onefile) "Rplots.ps" else "Rplot\%03d.ps",
 
 \note{
   In principle these devices are independent of X11 (as is seen by their
-  presence on Windows).  But on a Unix-alike the cairo libraries may be
+  presence on Windows).  But on a Unix-alike the \I{cairo} libraries may be
   distributed as part of the X11 system and hence that (for example, on
   macOS, \I{XQuartz}) may need to be installed.
 }
@@ -138,7 +138,7 @@ cairo_ps(filename = if(onefile) "Rplots.ps" else "Rplot\%03d.ps",
   \code{\link{Devices}}, \code{\link{dev.print}}, \code{\link{pdf}},
   \code{\link{postscript}}
 
-  \code{\link{capabilities}} to see if cairo is supported.
+  \code{\link{capabilities}} to see if \I{cairo} is supported.
 }
 
 \keyword{device}

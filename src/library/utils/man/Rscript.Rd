@@ -3,6 +3,8 @@
 % Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{Rscript}
 \alias{Rscript}
 \title{Scripting Front-End for R}
@@ -36,7 +38,7 @@
   directly on the \samp{#!} line, because spaces and tabs are interpreted as
   delimiters and there is no way to protect them from this interpretation on
   the \samp{#!} line. (The standard Windows command line has no concept
-  of \samp{#!} scripts, but Cygwin shells do.)
+  of \samp{#!} scripts, but \I{Cygwin} shells do.)
 
   \emph{Either} one or more \option{-e} options or \code{file} should
   be supplied.  When using \option{-e} options be aware of the quoting

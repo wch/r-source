@@ -3,6 +3,8 @@
 % Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\bibcite}{#1}
+
 \name{HairEyeColor}
 \docType{data}
 \alias{HairEyeColor}
@@ -24,7 +26,7 @@
 }
 \details{
   The Hair \eqn{\times}{x} Eye table comes from a survey of students at
-  the University of Delaware reported by Snee (1974).  The split by
+  the University of Delaware reported by \bibcite{Snee (1974)}.  The split by
   \code{Sex} was added by Friendly (1992a) for didactic purposes.
 
   This data set is useful for illustrating various techniques for the

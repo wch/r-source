@@ -226,7 +226,7 @@ system is active; if \code{FALSE}, only the Tcl interpreter is available.
   meaningfully be set so assignment forms exist only to print an error
   message.
 
-  It is possible to access Tcl's \sQuote{dual-ported} objects directly,
+  It is possible to access Tcl{}'s \sQuote{dual-ported} objects directly,
   thus avoiding parsing and deparsing of their string representation.
   This works by using objects of class \code{tclObj}.  The string
   representation of such objects can be extracted (but not set) using

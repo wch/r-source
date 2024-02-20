@@ -12,7 +12,7 @@
 \usage{date()}
 \value{
   The string has the form \code{"Fri Aug 20 11:11:00 1999"}, i.e.,
-  length 24, since it relies on POSIX's \code{ctime} ensuring the above
+  length 24, since it relies on POSIX{}'s \code{ctime} ensuring the above
   fixed format.  Timezone and Daylight Saving Time are taken account of,
   but \emph{not} indicated in the result.
 

@@ -3,12 +3,14 @@
 % Copyright 2011-2015 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{adist}
 \alias{adist}
 \title{Approximate String Distances}
 \description{
   Compute the approximate string distance between character vectors.
-  The distance is a generalized Levenshtein (edit) distance, giving the
+  The distance is a generalized \I{Levenshtein} (edit) distance, giving the
   minimal possibly weighted number of insertions, deletions and
   substitutions needed to transform one string into another.
 }
@@ -22,7 +24,7 @@ adist(x, y = NULL, costs = NULL, counts = FALSE, fixed = TRUE,
     taking \code{x} as \code{y}.}
   \item{costs}{a numeric vector or list with names partially matching
     \samp{insertions}, \samp{deletions} and \samp{substitutions} giving
-    the respective costs for computing the Levenshtein distance, or
+    the respective costs for computing the \I{Levenshtein} distance, or
     \code{NULL} (default) indicating using unit cost for all three
     possible transformations.}
   \item{counts}{a logical indicating whether to optionally return the
@@ -63,7 +65,7 @@ adist(x, y = NULL, costs = NULL, counts = FALSE, fixed = TRUE,
   \eqn{-1} in case of no match).
 }
 \details{
-  The (generalized) Levenshtein (or edit) distance between two strings
+  The (generalized) \I{Levenshtein} (or edit) distance between two strings
   \var{s} and \var{t} is the minimal possibly weighted number of
   insertions, deletions and substitutions needed to transform \var{s}
   into \var{t} (so that the transformation exactly matches \var{t}).
@@ -74,14 +76,14 @@ adist(x, y = NULL, costs = NULL, counts = FALSE, fixed = TRUE,
   lengths of \var{s} and \var{t}, respectively.  Additionally computing
   the transformation sequence and counts is \eqn{O(\max(m, n))}.
 
-  The generalized Levenshtein distance can also be used for approximate
+  The generalized \I{Levenshtein} distance can also be used for approximate
   (fuzzy) string matching, in which case one finds the substring of
   \var{t} with minimal distance to the pattern \var{s} (which could be
   taken as a regular expression, in which case the principle of using
   the leftmost and longest match applies), see, e.g.,
   \url{https://en.wikipedia.org/wiki/Approximate_string_matching}.  This
   distance is computed for \code{partial = TRUE} using \samp{tre} by
-  Ville Laurikari (\url{https://github.com/laurikari/tre}) and
+  \I{Ville Laurikari} (\url{https://github.com/laurikari/tre}) and
   corresponds to the distance used by \code{\link{agrep}}.  In this
   case, the given cost values are coerced to integer.
 
@@ -91,7 +93,7 @@ adist(x, y = NULL, costs = NULL, counts = FALSE, fixed = TRUE,
 }
 \seealso{
   \code{\link{agrep}} for approximate string matching (fuzzy matching)
-  using the generalized Levenshtein distance.
+  using the generalized \I{Levenshtein} distance.
 }
 \examples{
 ## Cf. https://en.wikipedia.org/wiki/Levenshtein_distance

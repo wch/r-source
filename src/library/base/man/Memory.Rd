@@ -3,6 +3,8 @@
 % Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{Memory}
 \alias{Memory}
 \title{Memory Available for Data Storage}
@@ -18,7 +20,7 @@
   first of these is allocated as an array of \emph{cons cells} (Lisp
   programmers will know what they are, others may think of them as the
   building blocks of the language itself, parse trees, etc.), and the
-  second are thrown on a \emph{heap} of \sQuote{Vcells} of 8 bytes each.
+  second are thrown on a \emph{heap} of \sQuote{\I{Vcell}s} of 8 bytes each.
   Each cons cell occupies 28 bytes on a 32-bit build of \R, (usually) 56
   bytes on a 64-bit build.
 

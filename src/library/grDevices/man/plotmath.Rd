@@ -222,7 +222,7 @@
   \samp{\\uxxxx} or \samp{\\Uxxxxxxxx} escape sequence, but the issue is
   whether the graphics device is able to display the character.  The
   widest range of characters is likely to be available in the
-  \code{\link{X11}} device using cairo: see its help page for how
+  \code{\link{X11}} device using \I{cairo}: see its help page for how
   installing additional fonts can help.  This can often be used to
   display Greek \emph{letters} in bold or italic.
 

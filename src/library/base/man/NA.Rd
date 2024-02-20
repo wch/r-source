@@ -3,6 +3,8 @@
 % Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{NA}
 \alias{NA}
 \alias{NA_integer_}
@@ -68,7 +70,7 @@ is.na(x) <- value
   involved, in which case either might result (which may depend on
   the \R platform).  However, this is not guaranteed and future CPUs
   and/or compilers may behave differently. Dynamic binary translation may
-  also impact this behavior (with valgrind, computations using \code{NA}
+  also impact this behavior (with \I{valgrind}, computations using \code{NA}
   may result in \code{NaN} even when no \code{NaN} is involved).
 
   Logical computations treat \code{NA} as a missing \code{TRUE/FALSE}

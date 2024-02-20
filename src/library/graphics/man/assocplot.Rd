@@ -3,6 +3,8 @@
 % Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\bibcite}{#1}
+
 \name{assocplot}
 \alias{assocplot}
 \encoding{UTF-8}
@@ -49,7 +51,7 @@ assocplot(x, col = c("black", "red"), space = 0.3,
   A more flexible and extensible implementation of association plots
   written in the grid graphics system is provided in the function
   \code{\link[vcd]{assoc}} in the contributed package \CRANpkg{vcd}
-  (Meyer, Zeileis and Hornik, 2006).
+  (\bibcite{Meyer, Zeileis and Hornik, 2006}).
 }
 \seealso{
   \code{\link{mosaicplot}}, \code{\link{chisq.test}}.

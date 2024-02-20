@@ -46,7 +46,7 @@ de(\dots, Modes = list(), Names = NULL)
   The primitive function is \code{dataentry}. It takes a list of
   vectors of possibly different lengths and modes (the second argument)
   and opens a spreadsheet with these variables being the columns.
-  The columns of the dataentry window are returned as vectors in a
+  The columns of the data entry window are returned as vectors in a
   list when the spreadsheet is closed.
 
   \code{de.ncols} counts the number of columns which are supplied as arguments

@@ -3,6 +3,8 @@
 % Copyright 1995-2024 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{arima}
 \alias{arima}
 \concept{ARMA}
@@ -127,11 +129,11 @@ arima(x, order = c(0L, 0L, 0L),
 \section{Fitting methods}{
   The exact likelihood is computed via a state-space representation of
   the ARIMA process, and the innovations and their variance found by a
-  Kalman filter.  The initialization of the differenced ARMA process uses
+  \I{Kalman} filter.  The initialization of the differenced ARMA process uses
   stationarity and is based on Gardner \emph{et al} (1980).  For a
   differenced process the non-stationary components are given a diffuse
   prior (controlled by \code{kappa}).  Observations which are still
-  controlled by the diffuse prior (determined by having a Kalman gain of
+  controlled by the diffuse prior (determined by having a \I{Kalman} gain of
   at least \code{1e4}) are excluded from the likelihood calculations.
   (This gives comparable results to \code{\link{arima0}} in the absence
   of missing values, when the observations excluded are precisely those
@@ -197,7 +199,7 @@ arima(x, order = c(0L, 0L, 0L),
     can also be extracted via \code{\link{nobs}()} and is used by
     \code{\link{BIC}}.}
 
-  \item{model}{A list representing the Kalman Filter used in the
+  \item{model}{A list representing the \I{Kalman} filter used in the
     fitting.  See \code{\link{KalmanLike}}.}
 }
 \references{

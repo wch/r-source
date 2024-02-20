@@ -3,6 +3,9 @@
 % Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+\newcommand{\bibcite}{#1}
+
 \name{quantile}
 \title{Sample Quantiles}
 \alias{quantile}
@@ -62,7 +65,7 @@ quantile(x, \dots)
   \code{quantile} returns estimates of underlying distribution quantiles
   based on one or two order statistics from the supplied elements in
   \code{x} at probabilities in \code{probs}.  One of the nine quantile
-  algorithms discussed in Hyndman and Fan (1996), selected by
+  algorithms discussed in \bibcite{Hyndman and Fan (1996)}, selected by
   \code{type}, is employed.
 
   All sample quantiles are defined as weighted averages of
@@ -87,7 +90,7 @@ quantile(x, \dots)
       \eqn{\gamma = 0} if \eqn{g = 0}, and 1 otherwise.}
     \item{Type 2}{Similar to type 1 but with averaging at discontinuities.
       \eqn{\gamma = 0.5} if \eqn{g = 0}, and 1 otherwise (SAS default, see
-      Wicklin (2017)).}
+      \bibcite{Wicklin (2017)}).}
     \item{Type 3}{Nearest even order statistic (SAS default till ca. 2010).
       \eqn{\gamma = 0} if \eqn{g = 0} and \eqn{j} is even,
       and 1 otherwise.}
@@ -116,7 +119,7 @@ quantile(x, \dots)
 
     \item{Type 6}{\eqn{m = p}. \eqn{p_k = \frac{k}{n + 1}}{p[k] = k / (n + 1)}.
       Thus \eqn{p_k = \mbox{E}[F(x_{k})]}{p[k] = E[F(x[k])]}.
-      This is used by Minitab and by SPSS.
+      This is used by \I{Minitab} and by SPSS.
     }
 
     \item{Type 7}{\eqn{m = 1-p}.
@@ -138,9 +141,10 @@ quantile(x, \dots)
       the expected order statistics if \code{x} is normally distributed.
     }
   }
-  Further details are provided in Hyndman and Fan (1996) who recommended type 8.
+  Further details are provided in \bibcite{Hyndman and Fan (1996)} who
+  recommended type 8. 
   The default method is type 7, as used by S and by \R < 2.0.0.
-  Makkonen argues for type 6, also as already proposed by Weibull in 1939.
+  \I{Makkonen} argues for type 6, also as already proposed by Weibull in 1939.
   The Wikipedia page contains further information about availability of
   these 9 types in software.
 }

@@ -3,6 +3,8 @@
 % Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{example}
 \alias{example}
 \title{Run an Examples Section from the Online Help}
@@ -62,7 +64,7 @@ example(topic, package = NULL, lib.loc = NULL,
   \item{prompt.prefix}{character; prefixes the prompt to be used if
     \code{echo} is true (as it is by default).}
   \item{catch.aborts}{logical, passed on to \code{\link{source}()},
-    indicating that \dQuote{abort}ing errors should be caught.}
+    indicating that \I{\dQuote{abort}ing} errors should be caught.}
   \item{run.dontrun}{logical indicating that \verb{\dontrun}
     should be ignored.}
   \item{run.donttest}{logical indicating that \verb{\donttest}

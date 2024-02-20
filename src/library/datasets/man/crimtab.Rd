@@ -3,6 +3,9 @@
 % Copyright 1995-2019 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+\newcommand{\bibcite}{#1}
+
 \name{crimtab}
 \alias{crimtab}
 \docType{data}
@@ -25,15 +28,16 @@
   of 3000 criminals, see also below.
 }
 \details{
-  Student is the pseudonym of William Sealy Gosset.
+  Student is the pseudonym of \I{William Sealy Gosset}.
   In his 1908 paper he wrote (on page 13) at the beginning of section VI
   entitled \emph{Practical Test of the forgoing Equations}:
 
   \dQuote{Before I had succeeded in solving my problem analytically,
     I had endeavoured to do so empirically.  The material used was a
     correlation table containing the height and left middle finger
-    measurements of 3000 criminals, from a paper by W. R. MacDonell
-    (\emph{Biometrika}, Vol.\sspace{}I., p.\sspace{}219).  The
+    measurements of 3000 criminals, from a paper by
+    \bibcite{W. R. MacDonell (1902, p.\sspace{}219)}.
+    The
     measurements were written 
     out on 3000 pieces of cardboard, which were then very thoroughly
     shuffled and drawn at random.  As each card was drawn its numbers
@@ -45,14 +49,15 @@
     population was then divided by the standard deviation of the sample,
     giving us the \emph{z} of Section III.}
 
-  The table is in fact page 216 and not page 219 in MacDonell(1902).
-  In the MacDonell table, the middle finger lengths were given in mm
+  The table is in fact page 216 and not page 219 in
+  \bibcite{MacDonell (1902)}.
+  In the \I{MacDonell} table, the middle finger lengths were given in mm
   and the heights in feet/inches intervals, they are both converted into
-  cm here.  The midpoints of intervals were used, e.g., where MacDonell
+  cm here.  The midpoints of intervals were used, e.g., where \I{MacDonell}
   has \eqn{4' 7''9/16 -- 8''9/16}, we have 142.24 which is 2.54*56 =
   2.54*(\eqn{4' 8''}).
 
-  MacDonell credited the source of data (page 178) as follows:
+  \I{MacDonell} credited the source of data (page 178) as follows:
   \emph{The data on which the memoir is based were obtained, through the
     kindness of Dr Garson, from the Central Metric Office, New Scotland Yard...}
   He pointed out on page 179 that : \emph{The forms were drawn at random

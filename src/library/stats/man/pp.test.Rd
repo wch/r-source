@@ -3,9 +3,12 @@
 % Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+\newcommand{\bibcite}{#1}
+
 \name{PP.test}
 \alias{PP.test}
-\title{Phillips-Perron Test for Unit Roots}
+\title{\I{Phillips}-\I{Perron} Test for Unit Roots}
 \usage{
 PP.test(x, lshort = TRUE)
 }
@@ -15,19 +18,19 @@ PP.test(x, lshort = TRUE)
     of the truncation lag parameter is used.}
 }
 \description{
-  Computes the Phillips-Perron test for the null hypothesis that
+  Computes the \I{Phillips}-\I{Perron} test for the null hypothesis that
   \code{x} has a unit root against a stationary alternative.
 }
 \details{
   The general regression equation which incorporates a constant and a
   linear trend is used and the corrected t-statistic for a first order
   autoregressive coefficient equals one is computed.  To estimate
-  \code{sigma^2} the Newey-West estimator is used.  If \code{lshort}
+  \code{sigma^2} the \I{Newey}-\I{West} estimator is used.  If \code{lshort}
   is \code{TRUE}, then the truncation lag parameter is set to
   \code{trunc(4*(n/100)^0.25)}, otherwise
   \code{trunc(12*(n/100)^0.25)} is used.  The p-values are
-  interpolated from Table 4.2, page 103 of Banerjee \emph{et al}
-  (1993).
+  interpolated from Table 4.2, page 103 of
+  \bibcite{Banerjee \emph{et al} (1993)}.
 
   Missing values are not handled.
 }

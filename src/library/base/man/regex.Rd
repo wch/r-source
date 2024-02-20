@@ -3,6 +3,8 @@
 % Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{regex}
 \alias{regex}
 \alias{regexp}
@@ -180,7 +182,7 @@
   By default repetition is greedy, so the maximal possible number of
   repeats is used.  This can be changed to \sQuote{minimal} by appending
   \code{?} to the quantifier.  (There are further quantifiers that allow
-  approximate matching: see the TRE documentation.)
+  approximate matching: see the \I{TRE} documentation.)
 
   Regular expressions may be concatenated; the resulting regular
   expression matches any string formed by concatenating the substrings
@@ -356,7 +358,7 @@
   \code{\link{glob2rx}}, \code{\link{help.search}}, \code{\link{list.files}},
   \code{\link{ls}}, \code{\link{strsplit}} and \code{\link{agrep}}.
 
-  The \href{https://htmlpreview.github.io/?https://raw.githubusercontent.com/laurikari/tre/master/doc/tre-syntax.html}{TRE regexp syntax}.
+  The \href{https://htmlpreview.github.io/?https://raw.githubusercontent.com/laurikari/tre/master/doc/tre-syntax.html}{\I{TRE} regexp syntax}.
 
   The POSIX 1003.2 standard at
   \url{https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap09.html}.

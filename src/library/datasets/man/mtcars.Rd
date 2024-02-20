@@ -3,6 +3,8 @@
 % Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\bibcite}{#1}
+
 \name{mtcars}
 \docType{data}
 \alias{mtcars}
@@ -36,7 +38,7 @@
   \emph{Biometrics}, \bold{37}, 391--411.
 }
 \note{
-  Henderson and Velleman (1981) comment in a footnote to Table 1:
+  \bibcite{Henderson and Velleman (1981)} comment in a footnote to Table 1:
   \sQuote{Hocking [original transcriber]'s noncrucial coding of the
     Mazda's rotary engine as a straight six-cylinder engine and the
     Porsche's flat engine as a V engine, as well as the inclusion of the

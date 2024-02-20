@@ -17,7 +17,7 @@ encoded_text_to_latex(x,
 \arguments{
   \item{x}{a character vector.}
   \item{encoding}{the encoding to be assumed.  \code{"latin9"} is
-    officially ISO-8859-15 or Latin-9, but known as latin9 to LaTeX's
+    officially ISO-8859-15 or Latin-9, but known as latin9 to LaTeX{}'s
     \code{inputenc} package.}
 }
 \details{

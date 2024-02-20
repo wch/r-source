@@ -64,7 +64,7 @@ iconvlist()
   and \code{"POSIX"} are synonyms for ASCII.  Where
   \code{"ASCII/TRANSLIT"} is unsupported by the OS, \code{"ASCII"} is
   used with \code{sub = "c99"} if from UTF-8, else \code{sub =
-  "?"}. (However, musl's version of \code{"ASCII"} substitutes
+  "?"}. (However, \I{musl}'s version of \code{"ASCII"} substitutes
   \code{*}.)
 
   Elements of \code{x} with a declared encoding (UTF-8 or latin1, see
@@ -85,7 +85,7 @@ iconvlist()
   most common C runtime, \samp{glibc}, contains one.  Several platforms
   supply versions or emulations of GNU \samp{libiconv}, including
   previous versions of macOS and FreeBSD, in some cases with additional
-  encodings.  On Windows we use a version of Yukihiro Nakadaira's
+  encodings.  On Windows we use a version of \I{Yukihiro Nakadaira}'s
   \samp{win_iconv}, which is based on Windows' codepages.  (We have
   added many encoding names for compatibility with other systems.)  All
   three have \code{iconvlist}, ignore case in encoding names and support
@@ -108,7 +108,7 @@ iconvlist()
   Most commercial Unixes contain an implementation of \code{iconv} but
   none we have encountered have supported the encoding names we need:
   the \sQuote{R Installation and Administration} manual recommended
-  installing GNU \samp{libiconv} on Solaris and AIX.
+  installing GNU \samp{libiconv} on Solaris and \I{AIX}.
 
   %% https://wiki.musl-libc.org/functional-differences-from-glibc.html
   %% https://wiki.musl-libc.org/projects-using-musl.html
@@ -117,7 +117,7 @@ iconvlist()
   \samp{//TRANSLIT} but does inexact conversions (currently using
   \samp{*}).
 
-  There are other implementations, e.g.\sspace{}NetBSD has used one from the
+  There are other implementations, e.g.\sspace{}\I{NetBSD} has used one from the
   Citrus project (which does not support \samp{//TRANSLIT}) and there is
   an older FreeBSD port.
 

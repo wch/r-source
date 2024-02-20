@@ -3,6 +3,8 @@
 % Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\bibcite}{#1}
+
 \name{loglin}
 \alias{loglin}
 \title{Fitting Log-Linear Models}
@@ -64,7 +66,7 @@ loglin(table, margin, start = rep(1, length(table)), fit = FALSE,
 }
 \details{
   The Iterative Proportional Fitting algorithm as presented in
-  Haberman (1972) is used for fitting the model.  At most \code{iter}
+  \bibcite{Haberman (1972)} is used for fitting the model.  At most \code{iter}
   iterations are performed, convergence is taken to occur when the
   maximum deviation between observed and fitted margins is less than
   \code{eps}.  All internal computations are done in double precision;

@@ -3,6 +3,8 @@
 % Copyright 2008-2024 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{checkRd}
 \alias{checkRd}
 \title{ Check an Rd Object }
@@ -51,8 +53,8 @@ checkRd(Rd, defines = .Platform$OS.type, stages = "render",
     Unprocessed \sQuote{\var{stage}} macro from \var{stage}-stage \verb{\Sexpr}\cr
     All text must be in a section\cr
     Only one \var{tag name} section is allowed: the first will be used\cr
-    docType \var{type} is unrecognized\cr
-    Section \var{name} is unrecognized and will be dropped\cr
+    \I{docType \var{type} is unrecognized}\cr
+    \I{Section \var{name} is unrecognized and will be dropped}\cr
     Dropping empty section \var{name}\cr
   }
   \code{checkRd} itself can show

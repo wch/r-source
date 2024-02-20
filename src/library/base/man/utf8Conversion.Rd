@@ -3,6 +3,8 @@
 % Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{utf8Conversion}
 \alias{utf8ToInt}
 \alias{intToUtf8}
@@ -55,7 +57,7 @@ intToUtf8(x, multiple = FALSE, allow_surrogate_pairs = FALSE)
   by \code{utf8ToInt} and by default by \code{intToUtf8}.
 
   The position of \sQuote{noncharacters} (notably \code{0xFFFE} and
-  \code{0xFFFF}) was clarified by \sQuote{Corrigendum 9} in 2013.  These
+  \code{0xFFFF}) was clarified by \sQuote{\I{Corrigendum 9}} in 2013.  These
   are valid but will never be given an official interpretation.  (In some
   earlier versions of \R \code{utf8ToInt} treated them as invalid.)
   %% https://www.unicode.org/versions/corrigendum9.html

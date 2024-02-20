@@ -3,6 +3,8 @@
 % Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{dump}
 \title{Text Representations of R Objects}
 \usage{
@@ -38,7 +40,7 @@ dump(list, file = "dumpdata.R", append = FALSE,
   omitted, with a warning.  If \code{file} is a file and no objects
   exist then no file is created.
 
-  \code{\link{source}}ing may not produce an identical copy of
+  \I{\code{\link{source}}ing} may not produce an identical copy of
   \code{dump}ed objects.  A warning is issued if it is likely that
   problems will arise, for example when dumping exotic or complex
   objects (see the Note).

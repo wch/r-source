@@ -3,6 +3,8 @@
 % Copyright 1995-2024 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{Control}
 \title{Control Flow}
 \alias{Control}
@@ -77,7 +79,7 @@ x \%||\% y
     if (is.null(x)) y else x
                              # or equivalently, of course,
     if(!is.null(x)) x else y }
-  Inspired by Ruby, it was first proposed by Hadley Wickham.
+  Inspired by Ruby, it was first proposed by \I{Hadley Wickham}.
 }
 \value{
   \code{if} returns the value of the expression evaluated, or

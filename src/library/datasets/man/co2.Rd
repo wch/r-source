@@ -3,10 +3,12 @@
 % Copyright 1995-2007 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{co2}
 \docType{data}
 \alias{co2}
-\title{Mauna Loa Atmospheric CO2 Concentration}
+\title{\I{Mauna Loa} Atmospheric CO2 Concentration}
 \description{
   Atmospheric concentrations of CO\eqn{_2}{2} are expressed in parts per
   million (ppm) and reported in the preliminary 1997 \abbr{SIO} manometric mole

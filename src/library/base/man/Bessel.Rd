@@ -3,6 +3,8 @@
 % Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\bibcite}{#1}
+
 \name{Bessel}
 \title{Bessel Functions}
 \alias{bessel}
@@ -45,8 +47,9 @@ besselY(x, nu)
   If \code{expon.scaled = TRUE}, \eqn{e^{-x} I_{\nu}(x)}{exp(-x) I(x;nu)},
   or \eqn{e^{x} K_{\nu}(x)}{exp(x) K(x;nu)} are returned.
 
-  For \eqn{\nu < 0}{nu < 0}, formulae 9.1.2 and 9.6.2 from Abramowitz &
-  Stegun  are applied (which is probably suboptimal), except for
+  For \eqn{\nu < 0}{nu < 0}, formulae 9.1.2 and 9.6.2 from
+  \bibcite{Abramowitz & Stegun}
+  are applied (which is probably suboptimal), except for
   \code{besselK} which is symmetric in \code{nu}.
 
   The current algorithms will give warnings about accuracy loss for

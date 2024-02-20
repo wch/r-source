@@ -3,6 +3,8 @@
 % Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\bibcite}{#1}
+
 \name{binom.test}
 \alias{binom.test}
 \title{Exact Binomial Test}
@@ -28,7 +30,8 @@ binom.test(x, n, p = 0.5,
 }
 \details{
   Confidence intervals are obtained by a procedure first given in
-  Clopper and Pearson (1934).  This guarantees that the confidence level
+  \bibcite{Clopper and Pearson (1934)}.
+  This guarantees that the confidence level
   is at least \code{conf.level}, but in general does not give the
   shortest-length confidence intervals.
 }

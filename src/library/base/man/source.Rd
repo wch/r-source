@@ -3,6 +3,8 @@
 % Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{source}
 \title{Read R Code from a File, a Connection or Expressions}
 \alias{source}
@@ -85,7 +87,7 @@ withAutoprint(exprs, evaluated = FALSE, local = parent.frame(),
   \item{chdir}{logical; if \code{TRUE} and \code{file} is a pathname,
     the \R working directory is temporarily changed to the directory
     containing \code{file} for evaluating.}
-  \item{catch.aborts}{logical indicating that \dQuote{abort}ing errors
+  \item{catch.aborts}{logical indicating that \I{\dQuote{abort}ing} errors
     should be caught.}
   \item{encoding}{character vector.  The encoding(s) to be assumed when
     \code{file} is a character string: see \code{\link{file}}.  A

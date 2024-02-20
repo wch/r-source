@@ -100,7 +100,7 @@ quartz.save(file, type = "png", device = dev.cur(), dpi = 100, ...)
   which will show up in some viewers, including \command{Preview}.
 
   \code{title} can be used for on-screen output.  It must be a single
-  character string with an optional integer printf-style format that
+  character string with an optional integer \I{printf}-style format that
   will be substituted by the device number.  It is also optionally used
   (without a format) to give a title to a PDF file.
 

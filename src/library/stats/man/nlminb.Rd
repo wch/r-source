@@ -82,7 +82,7 @@ nlminb(start, objective, gradient = NULL, hessian = NULL, \dots,
     \item{\code{iter.max}}{Maximum number of iterations allowed.
       Defaults to 150.}% MXITER
     \item{\code{trace}}{The value of the objective function and the parameters
-      is printed every trace'th iteration.  Defaults to 0 which
+      is printed every trace{}'th iteration.  Defaults to 0 which
       indicates no trace information is to be printed.}
     \item{\code{abs.tol}}{Absolute tolerance.  Defaults
       to 0 so the absolute convergence test is not used.  If the objective

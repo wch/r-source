@@ -23,7 +23,7 @@ gPath(...)
   share the same parent in a gTree.
 
   This function can be used to generate a specification for
-  a grob that includes the grob's parent's name
+  a grob that includes the grob{}'s parent's name
   (and the name of its parent and so on).
 
   For interactive use, it is possible to directly specify

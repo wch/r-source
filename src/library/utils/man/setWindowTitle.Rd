@@ -3,12 +3,14 @@
 % Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{setWindowTitle}
 \alias{setWindowTitle}
 \alias{getWindowTitle}
 \alias{getIdentification}
 \alias{setStatusBar}
-\title{Set the Window Title or the Statusbar of the RGui in Windows}
+\title{Set the Window Title or the Statusbar of the \I{RGui} in Windows}
 \description{
   Set or get the title of the \R (i.e. \command{RGui}) window  which
   will appear in the task bar, or set the statusbar (if in use).

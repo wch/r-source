@@ -3,6 +3,8 @@
 % Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\bibcite}{#1}
+
 \name{ppoints}
 \title{Ordinates for Probability Plotting}
 \usage{
@@ -30,8 +32,8 @@ ppoints(n, a = if(n <= 10) 3/8 else 1/2)
   the set of probabilities at which to evaluate the inverse distribution.
 
   The choice of \code{a} follows the documentation of the function of the
-  same name in Becker \emph{et al} (1988), and appears to have been
-  motivated by results from Blom (1958) on approximations to expect normal
+  same name in \bibcite{Becker \emph{et al} (1988)}, and appears to have been
+  motivated by results from \bibcite{Blom (1958)} on approximations to expect normal
   order statistics (see also \code{\link{quantile}}).
 
   The probability points for the continuous sample quantile types 5 to 9

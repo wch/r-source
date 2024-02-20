@@ -144,7 +144,7 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   \describe{
     \item{On Windows}{If the file length is known, the
       full width of the bar is the known length.  Otherwise the initial
-      width represents 100 Kbytes and is doubled whenever the current width
+      width represents 100 \abbr{Kbyte}s and is doubled whenever the current width
       is exceeded.  (In non-interactive use this uses a text version.  If the
       file length is known, an equals sign represents 2\% of the transfer
       completed: otherwise a dot represents 10Kb.)}
@@ -210,7 +210,7 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
 
   On Windows with \code{method = "libcurl"}, the CA root certificates
   are provided by the OS when \R was linked with \code{libcurl} with
-  \code{Schannel} enabled, which is the current default in Rtools.  This
+  \code{Schannel} enabled, which is the current default in \I{Rtools}.  This
   can be verified by checking that \code{libcurlVersion()} returns a
   version string containing \samp{"Schannel"}.  If it does not, for
   verification to be on the environment variable \env{CURL_CA_BUNDLE}

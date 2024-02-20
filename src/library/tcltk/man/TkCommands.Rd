@@ -272,7 +272,7 @@ tclread(...)
   subcommand.
 
   \code{tktitle} and its assignment form provides an alternate interface
-  to Tk's \code{wm title}
+  to Tk{}'s \code{wm title}
 
   There are far too many of these commands to describe them and their
   arguments in full.  Please refer to the Tcl/Tk documentation for details.

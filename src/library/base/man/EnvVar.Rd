@@ -3,6 +3,8 @@
 % Copyright 2007-2023 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{EnvVar}
 \alias{environment variables}
 \alias{HOME}
@@ -115,7 +117,7 @@
       \code{\link{options}("papersize")}, e.g.\sspace{}used by
       \code{\link{pdf}} and \code{\link{postscript}}.}
     \item{\env{R_PCRE_JIT_STACK_MAXSIZE}:}{Optional.  Consulted when
-      PCRE's \abbr{JIT} pattern compiler is first used.  See \code{\link{grep}}.}
+      \I{PCRE}'s \abbr{JIT} pattern compiler is first used.  See \code{\link{grep}}.}
     \item{\env{R_PDFVIEWER}:}{The path to the default PDF viewer.  Used
       by \command{R CMD Rd2pdf}.}
     \item{\env{R_PLATFORM}:}{The platform -- a string of the form

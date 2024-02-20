@@ -3,6 +3,8 @@
 % Copyright 1995-2019 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{savePlot}
 \alias{savePlot}
 \title{Save Windows Plot to a File}
@@ -53,7 +55,7 @@ savePlot(filename = "Rplot",
 
 \note{
   There is a similar function of the same name but fewer types for
-  cairo-based \code{X11} devices on Unix-alikes, and without the
+  \I{cairo}-based \code{X11} devices on Unix-alikes, and without the
   \code{restoreConsole} argument.
 }
 

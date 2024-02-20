@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \newcommand{\I}{#1}
+\newcommand{\bibcite}{#1}
 
 \name{Random}
 \alias{Random}
@@ -65,28 +66,28 @@ set.seed(seed, kind = NULL, normal.kind = NULL, sample.kind = NULL)
     length 3, where each \code{r[i]} is in \code{1:(p[i] - 1)}, where
     \code{p} is the length 3 vector of primes, \code{p = (30269, 30307,
       30323)}.
-    The Wichmann--Hill generator has a cycle length of
+    The \I{Wichmann}--\I{Hill} generator has a cycle length of
     \eqn{6.9536 \times 10^{12}}{6.9536e12} (=
     \code{prod(p-1)/4}, see \emph{Applied Statistics} (1984)
     \bold{33}, 123 which corrects the original article).
     It exhibits 12 clear failures in the \I{TestU01} Crush suite and 22
-    in the \I{BigCrush} suite (\emph{L'Ecuyer}, 2007).}
+    in the \I{BigCrush} suite (\bibcite{L'Ecuyer, 2007}).}
 
     \item{\code{"Marsaglia-Multicarry"}:}{
     A \emph{multiply-with-carry} RNG is used, as recommended by George
-    Marsaglia in his post to the mailing list \file{sci.stat.math}.
+    \I{Marsaglia} in his post to the mailing list \file{sci.stat.math}.
     It has a period of more than \eqn{2^{60}}{2^60}.
 
-    It exhibits 40 clear failures in L'Ecuyer's \I{TestU01} Crush suite.
-    Combined with Ahrens-Dieter or Kinderman-Ramage it exhibits
+    It exhibits 40 clear failures in \I{L'Ecuyer}'s \I{TestU01} Crush suite.
+    Combined with \I{Ahrens}-\I{Dieter} or \I{Kinderman}-\I{Ramage} it exhibits
     deviations from normality even for univariate distribution
     generation.  See \PR{18168} for a discussion.
 
     The seed is two integers (all values allowed).}
 
     \item{\code{"Super-Duper"}:}{
-    Marsaglia's famous Super-Duper from the 70's.  This is the original
-    version which does \emph{not} pass the MTUPLE test of the Diehard
+    \I{Marsaglia}'s famous Super-Duper from the 70's.  This is the original
+    version which does \emph{not} pass the \I{MTUPLE} test of the \I{Diehard}
     battery.  It has a period of \eqn{\approx 4.6\times 10^{18}}{about
       4.6*10^18} for most initial seeds.  The seed is two integers (all
     values allowed for the first seed: the second must be odd).
@@ -96,11 +97,12 @@ set.seed(seed, kind = NULL, normal.kind = NULL, sample.kind = NULL)
     The two seeds are the Tausworthe and congruence long integers,
     respectively.
 
-    It exhibits 25 clear failures in the \I{TestU01} Crush suite (\emph{L'Ecuyer}, 2007).
+    It exhibits 25 clear failures in the \I{TestU01} Crush suite
+    (L'Ecuyer, 2007). 
     }
 
     \item{\code{"Mersenne-Twister"}:}{
-      From Matsumoto and Nishimura (1998); code updated in 2002.
+      From \bibcite{Matsumoto and Nishimura (1998)}; code updated in 2002.
       A twisted \abbr{GFSR} with period
       \eqn{2^{19937} - 1}{2^19937 - 1} and equidistribution in 623
       consecutive dimensions (over the whole period).  The \sQuote{seed} is a
@@ -109,7 +111,7 @@ set.seed(seed, kind = NULL, normal.kind = NULL, sample.kind = NULL)
 
       R uses its own initialization method due to B. D. Ripley and is
       not affected by the initialization issue in the 1998 code of
-      Matsumoto and Nishimura addressed in a 2002 update.
+      \I{Matsumoto} and \I{Nishimura} addressed in a 2002 update.
 
       It exhibits 2 clear failures in each of the \I{TestU01} Crush and the
       \I{BigCrush} suite (\emph{\I{L'Ecuyer}}, 2007).
@@ -132,7 +134,7 @@ set.seed(seed, kind = NULL, normal.kind = NULL, sample.kind = NULL)
       version: the initialization of the \abbr{GFSR} from the seed was altered.
       \R did not allow you to choose consecutive seeds, the reported
       \sQuote{weakness}, and already scrambled the seeds. Otherwise,
-      the algorithm is identical to Knuth-TAOCP-2002, with the same
+      the algorithm is identical to \I{Knuth-TAOCP-2002}, with the same
       lagged Fibonacci recurrence formula.
 
       Initialization of this generator is done in interpreted \R code
@@ -172,7 +174,7 @@ set.seed(seed, kind = NULL, normal.kind = NULL, sample.kind = NULL)
   \code{"Buggy Kinderman-Ramage"} (not for \code{set.seed}),
   \code{"Ahrens-Dieter"}, \code{"Box-Muller"}, \code{"Inversion"} (the
   default), or \code{"user-supplied"}.  (For inversion, see the
-  reference in \code{\link{qnorm}}.)  The Kinderman-Ramage generator
+  reference in \code{\link{qnorm}}.)  The \I{Kinderman}-\I{Ramage} generator
   used in versions prior to 1.7.0 (now called \code{"Buggy"}) had several
   approximation errors and should only be used for reproduction of old
   results.  The \code{"Box-Muller"} generator is stateful as pairs of
@@ -224,7 +226,7 @@ set.seed(seed, kind = NULL, normal.kind = NULL, sample.kind = NULL)
   Do not rely on randomness of low-order bits from \abbr{RNG}s.  Most of the
   supplied uniform generators return 32-bit integer values that are
   converted to doubles, so they take at most \eqn{2^{32}}{2^32} distinct
-  values and long runs will return duplicated values (Wichmann-Hill is
+  values and long runs will return duplicated values (\I{Wichmann}-\I{Hill} is
   the exception, and all give at least 30 varying bits.)
 }
 \value{

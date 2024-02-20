@@ -3,11 +3,13 @@
 % Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{xfig}
 \alias{xfig}
-\title{XFig Graphics Device}
+\title{\I{XFig} Graphics Device}
 \description{
-  \code{xfig} starts the graphics device driver for producing XFig
+  \code{xfig} starts the graphics device driver for producing \I{XFig}
   (version 3.2) graphics.
 
   It was deprecated in \R 4.4.0: consider using an SVG device for
@@ -65,15 +67,15 @@ xfig(file = if(onefile) "Rplots.fig" else "Rplot\%03d.fig",
   \item{fg}{the initial foreground color to be used.}
   \item{pagecentre}{logical: should the device region be centred on the
     page?}
-  \item{defaultfont}{logical: should the device use xfig's default
+  \item{defaultfont}{logical: should the device use \I{XFig}'s default
     font?}
-  \item{textspecial}{logical: should the device set the textspecial flag
-  for all text elements? This is useful when generating pstex from xfig
+  \item{textspecial}{logical: should the device set the \I{textspecial} flag
+  for all text elements? This is useful when generating \I{pstex} from \I{XFig}
   figures.}
 }
 %%>>> REAL DOC in SOURCE:    ../../../main/devices.c  &   ../../../unix/devPS.c
 \details{
-  Although \code{xfig} can produce multiple plots in one file, the XFig
+  Although \code{xfig} can produce multiple plots in one file, the \I{XFig}
   format does not say how to separate or view them.  So
   \code{onefile = FALSE} is the default.
 
@@ -87,14 +89,14 @@ xfig(file = if(onefile) "Rplots.fig" else "Rplot\%03d.fig",
   \code{cex = 1} corresponds to a square of side 1/72 inch.
 
   %% Did not work when tested.
-  %% Inkscape (\url{https://inkscape.org/}) can imoort and edit XFig files
+  %% Inkscape (\url{https://inkscape.org/}) can imoort and edit \I{XFig} files
   %% and has Windows and macOS binaries.
   
-  Windows users could make use of WinFIG (\url{http://winfig.com/}, shareware).
+  Windows users could make use of \I{WinFIG} (\url{http://winfig.com/}, shareware).
 }
 \note{
   Only some line textures (\code{0 <= lty < 4}) are used.  Eventually this
-  may be partially remedied, but the XFig file format does not allow as
+  may be partially remedied, but the \I{XFig} file format does not allow as
   general line textures as the \R model.  Unimplemented line textures
   are displayed as \emph{dash-double-dotted}.
 

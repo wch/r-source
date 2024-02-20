@@ -3,6 +3,8 @@
 % Copyright 1995-2024 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\bibcite}{#1}
+
 \name{kernel}
 \alias{kernel}
 \alias{bandwidth.kernel}
@@ -52,9 +54,11 @@ is.tskernel(k)
   \code{k <- kernel(*)}, \code{sum(k[ -k$m : k$m ])} is one.
 
   \code{df.kernel} returns the \sQuote{equivalent degrees of freedom} of
-  a smoothing kernel as defined in Brockwell and Davis (1991), page
-  362, and \code{bandwidth.kernel} returns the equivalent bandwidth as
-  defined in Bloomfield (1976), p.\sspace{}201, with a continuity correction.
+  a smoothing kernel as defined in
+  \bibcite{Brockwell and Davis (1991), page 362},
+  and \code{bandwidth.kernel} returns the equivalent bandwidth as
+  defined in \bibcite{Bloomfield (1976), p.\sspace{}201},
+  with a continuity correction.
 }
 \value{
   \code{kernel()} returns an object of class \code{"tskernel"} which is

@@ -6,7 +6,7 @@
 \newcommand{\I}{#1}
 
 \name{balancePOSIXlt}
-\title{Balancing \dQuote{Ragged} and Out-of-range POSIXlt Date-Times}
+\title{Balancing \dQuote{Ragged} and Out-of-range \I{POSIXlt} Date-Times}
 \alias{balancePOSIXlt}
 \alias{unCfillPOSIXlt}
 % used in ../R/datetime.R -- many more in ./DateTimeClasses.Rd
@@ -35,7 +35,7 @@ unCfillPOSIXlt(x)
     classed, true by default.  Using \code{balancePOSIXlt(x, classed = FALSE)}
     is equivalent to but faster than \code{unclass(balancePOSIXlt(x))}.}
 }
-\section{\dQuote{Ragged} and Out-of-range \emph{vs} \dQuote{Balanced} POSIXlt}{
+\section{\dQuote{Ragged} and Out-of-range \emph{vs} \dQuote{Balanced} \I{POSIXlt}}{
   Note that \code{"POSIXlt"} objects \code{x} may have their (9 to 11)
   list components of different \code{\link{length}}s, by simply
   recycling them to full length.  Prior to \R 4.3.0, this has worked in
@@ -53,7 +53,7 @@ unCfillPOSIXlt(x)
   \code{"POSIXlt"} object \code{x} which by default is balanced in both ways:
   All the internal list components are of full length, and their values are
   inside their ranges as specified in \code{\link{as.POSIXlt}}'s
-  \sQuote{Details on POSIXlt}.
+  \sQuote{Details on \I{POSIXlt}}.
   Setting \code{fill.only = TRUE} will only recycle the list components
   to full length, but not check them at all.  This is particularly faster
   when all components of \code{x} are already of full length.
@@ -66,7 +66,7 @@ unCfillPOSIXlt(x)
 \seealso{
   For more details about many aspects of valid \code{POSIXlt} objects, notably
   their internal list components, see \sQuote{\link{DateTimeClasses}}, e.g.,
-  \code{\link{as.POSIXlt}}, notably the section \sQuote{Details on POSIXlt}.
+  \code{\link{as.POSIXlt}}, notably the section \sQuote{Details on \I{POSIXlt}}.
 }
 \examples{
 ## FIXME: this should also work for regular (non-UTC) time zones.

@@ -8,6 +8,8 @@
 % Modified for Rao Score test ("test=" argument) by Peter Dalgaard 2023
 % Changes Copyright R Core Team 2023
 
+\newcommand{\I}{#1}
+
 \name{profile.glm}
 \alias{profile.glm}
 \title{Method for Profiling glm Objects}
@@ -32,7 +34,7 @@
     t-statistics.  Default value chosen to allow profiling at about
     10 parameter values.}
   \item{trace}{logical: should the progress of profiling be reported?}
-  \item{test}{profile Likelihood Ratio test or Rao Score test.}
+  \item{test}{profile Likelihood Ratio test or \I{Rao} Score test.}
   \item{\dots}{further arguments passed to or from other methods.}
 }
 \value{
@@ -46,7 +48,7 @@
   The profile z-statistic is defined either as (case \code{test = "LRT"}) the square root of change in
   deviance with an
   appropriate sign, or (case \code{test = "Rao"}) as the similarly
-  signed square root of the Rao Score test
+  signed square root of the \I{Rao} Score test
   statistic. The latter is defined as the squared gradient of the profile log likelihood
   divided by the profile Fisher information, but more conveniently
   calculated via the deviance of a Gaussian GLM fitted to the residuals

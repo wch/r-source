@@ -5,7 +5,7 @@
 
 \name{plot.HoltWinters}
 \alias{plot.HoltWinters}
-\title{Plot function for HoltWinters objects}
+\title{Plot function for \code{"HoltWinters"} objects}
 \description{
   Produces a chart of the original time series along with the fitted
   values. Optionally, predicted values (and their confidence bounds) can

@@ -3,6 +3,8 @@
 % Copyright 1995-2024 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{options}
 \alias{options}
 \alias{.Options}
@@ -303,10 +305,10 @@ getOption(x, default = NULL)
 
     \item{\code{PCRE_limit_recursion}:}{Logical: should
       \code{\link{grep}(perl = TRUE)} and similar limit the maximal
-      recursion allowed when matching?  Only relevant for PCRE1 and
-      PCRE2 <= 10.23.
+      recursion allowed when matching?  Only relevant for \I{PCRE1} and
+      \I{PCRE2} <= 10.23.
 
-      PCRE can be built not to use a recursion stack (see
+      \I{PCRE} can be built not to use a recursion stack (see
       \code{\link{pcre_config}}), but it uses recursion by default with
       a recursion limit of 10000000 which potentially needs a very large
       C stack: see the discussion at
@@ -314,7 +316,7 @@ getOption(x, default = NULL)
       true, the limit is reduced using \R's estimate of the C stack size
       available (if known), otherwise 10000.  If \code{NA}, the limit is
       imposed only if any input string has 1000 or more bytes.  The
-      limit has no effect when PCRE's Just-in-Time compiler is used.}
+      limit has no effect when PCRE{}'s Just-in-Time compiler is used.}
 
      \item{\code{PCRE_study}:}{Logical or integer: should
       \code{\link{grep}(perl = TRUE)} and similar \sQuote{study} the
@@ -327,7 +329,7 @@ getOption(x, default = NULL)
 
     \item{\code{PCRE_use_JIT}:}{Logical: should \code{\link{grep}(perl =
 	TRUE)}, \code{\link{strsplit}(perl = TRUE)} and similar make use
-      of PCRE's Just-In-Time compiler if available? (This applies only to
+      of PCRE{}'s Just-In-Time compiler if available? (This applies only to
       studied patterns with PCRE1.)  Default: true.  Missing values are
       treated as false.}
 
@@ -350,7 +352,7 @@ getOption(x, default = NULL)
       should usually end in a blank (\code{" "}).}
 
       % verbatim, for checking " \t\n\"\\'`><=%;,|&{()}"
-    \item{\code{rl_word_breaks}:}{(Unix only:) Used for the readline-based terminal
+    \item{\code{rl_word_breaks}:}{(Unix only:) Used for the \I{readline}-based terminal
       interface.  Default value \code{" \\t\\n\\"\\\\'`><=\%;,|&{()}"}.%"
 
       This is the set of characters use to break the input line into
@@ -639,7 +641,7 @@ getOption(x, default = NULL)
       \code{\link{help.request}}).  Can be \code{FALSE} or \code{""}.}
 
     \item{\code{citation.bibtex.max}:}{default 1; the maximal number of
-      bibentries (\code{\link{bibentry}}) in a \code{\link{citation}} for
+      \I{bibentries} (\code{\link{bibentry}}) in a \code{\link{citation}} for
       which the BibTeX version is printed in addition to the text one.}
 
     \item{\code{de.cellwidth}:}{integer: the cell widths (number of
@@ -776,7 +778,7 @@ local({
       or use a personal \file{repositories} file.
 
       Note that you can add more repositories (Bioconductor,
-      R-Forge, RForge.net, \dots) for the current session
+      \I{R-Forge}, \I{RForge.net}, \dots) for the current session
       using \code{\link{setRepositories}}.
     }
 

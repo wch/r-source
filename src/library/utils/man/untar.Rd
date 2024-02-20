@@ -117,17 +117,17 @@ untar(tarfile, files = NULL, list = FALSE, exdir = ".",
     %% bsdtar had it in FreeBSB 5.3 (2004)
     \item{\code{bsdtar}:}{macOS 10.6 and later (and FreeBSD and some
       other OSes) have a \command{tar}
-      from the libarchive project which detects all three forms
+      from the \I{libarchive} project which detects all three forms
       of compression automagically (even if undocumented in macOS).}
 
-    \item{NetBSD:}{It is undocumented if NetBSD's \command{tar} can
+    \item{NetBSD:}{It is undocumented if \I{NetBSD}'s \command{tar} can
       detect compression automagically: for versions before 8 the flag
       for \command{xz} compression was \option{--xz} not \option{-J}.
       So \code{support_old_tars = TRUE} is recommended (or use
       \command{bsdtar} if installed).}
 
     %% https://news.ycombinator.com/item?id=10722697
-    \item{OpenBSD:}{OpenBSD's \command{tar} does not detect compression
+    \item{OpenBSD:}{\I{OpenBSD}'s \command{tar} does not detect compression
       automagically.  It has no support for \command{xz} beyond reporting
       that the file is \command{xz}-compressed.  So \code{support_old_tars
 	= TRUE} is recommended.}

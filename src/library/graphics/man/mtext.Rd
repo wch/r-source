@@ -3,6 +3,8 @@
 % Copyright 1995-2011 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{mtext}
 \title{Write Text into the Margins of a Plot}
 % mtext is defined via do_mtext(.) in  src/main/plot.c ---
@@ -20,7 +22,7 @@ mtext(text, side = 3, line = 0, outer = FALSE, at = NA,
     the \emph{text} to be written.  Other objects are coerced by
     \code{\link{as.graphicsAnnot}}.}
   \item{side}{on which side of the plot (1=bottom, 2=left, 3=top, 4=right).}
-  \item{line}{on which MARgin line, starting at 0 counting outwards.}
+  \item{line}{on which \I{MARgin} line, starting at 0 counting outwards.}
   \item{outer}{use outer margins if available.}
   \item{at}{give location of each string in user coordinates.  If the
      component of \code{at} corresponding to a particular text item is

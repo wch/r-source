@@ -3,6 +3,9 @@
 % Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+\newcommand{\bibcite}{#1}
+
 \name{ks.test}
 \alias{ks.test}
 \alias{ks.test.default}
@@ -93,20 +96,23 @@ ks.test(x, \dots)
   exact p-value is computed if the sample size is less than 100 in the
   one-sample case \emph{and there are no ties}, and if the product of
   the sample sizes is less than 10000 in the two-sample case, with or
-  without ties (using the algorithm described in Schröer and Trenkler, 1995).
+  without ties (using the algorithm described in
+  \bibcite{Schröer and Trenkler (1995)}).
   Otherwise, the p-value is computed via Monte Carlo simulation in the
   two-sample case if \code{simulate.p.value} is \code{TRUE}, or else
   asymptotic distributions are used whose approximations may
   be inaccurate in small samples.  In the one-sample two-sided case,
-  exact p-values are obtained as described in Marsaglia, Tsang & Wang
-  (2003) (but not using the optional approximation in the right tail, so
-  this can be slow for small p-values).  The formula of Birnbaum &
-  Tingey (1951) is used for the one-sample one-sided case.
+  exact p-values are obtained as described in
+  \bibcite{Marsaglia, Tsang & Wang (2003)}
+  (but not using the optional approximation in the right tail, so
+  this can be slow for small p-values).  The formula of
+  \bibcite{Birnbaum & Tingey (1951)} is used for the one-sample
+  one-sided case. 
 
   If a one-sample test is used, the parameters specified in
   \code{\dots} must be pre-specified and not estimated from the data.
   There is some more refined distribution theory for the KS test with
-  estimated parameters (see Durbin, 1973), but that is not implemented
+  estimated parameters (see \bibcite{Durbin, 1973}), but that is not implemented
   in \code{ks.test}.
 }
 \value{
@@ -175,7 +181,7 @@ ks.test(x, \dots)
 \seealso{
   \code{\link{psmirnov}}.
 
-  \code{\link{shapiro.test}} which performs the Shapiro-Wilk test for
+  \code{\link{shapiro.test}} which performs the \I{Shapiro}-\I{Wilk} test for
   normality.
 }
 \examples{

@@ -3,9 +3,11 @@
 % Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{supsmu}
 \alias{supsmu}
-\title{Friedman's SuperSmoother}
+\title{Friedman's \I{SuperSmoother}}
 \description{
   Smooth the (x, y) values by Friedman's \sQuote{super smoother}.
 }

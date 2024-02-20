@@ -3,6 +3,8 @@
 % Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\bibcite}{#1}
+
 \name{mood.test}
 \alias{mood.test}
 \alias{mood.test.default}
@@ -47,7 +49,7 @@ mood.test(x, \dots)
 
   There are more useful tests for this problem.
 
-  In the case of ties, the formulation of Mielke (1967) is employed.
+  In the case of ties, the formulation of \bibcite{Mielke (1967)} is employed.
 }
 \value{
   A list with class \code{"htest"} containing the following components:

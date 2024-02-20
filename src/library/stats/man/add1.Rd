@@ -3,6 +3,8 @@
 % Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{add1}
 \alias{add1}
 \alias{add1.default}
@@ -52,7 +54,7 @@ drop1(object, scope, \dots)
     (\code{lm} models with known scale) or a likelihood-ratio test or a
     test of the reduction in scaled deviance depending on the method.
     For \code{\link{glm}} fits, you can also choose \code{"LRT"} and
-    \code{"Rao"} for likelihood ratio tests and Rao's efficient score test.
+    \code{"Rao"} for likelihood ratio tests and \I{Rao}'s efficient score test.
     The former is synonymous with \code{"Chisq"} (although both have
     an asymptotic chi-square distribution).
     Values can be abbreviated.

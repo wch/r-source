@@ -3,6 +3,8 @@
 % Copyright 1995-2024 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{stackloss}
 \docType{data}
 \alias{stackloss}
@@ -43,8 +45,8 @@ stack.loss
 }
 \details{
   \dQuote{Obtained from 21 days of operation of a plant for the
-    oxidation of ammonia (NH\eqn{_3}{3}) to nitric acid
-    (HNO\eqn{_3}{3}).  The nitric oxides produced are absorbed in a
+    oxidation of ammonia (\I{NH\eqn{_3}{3}}) to nitric acid
+    (\I{HNO\eqn{_3}{3}}).  The nitric oxides produced are absorbed in a
     countercurrent absorption tower}.
   (Brownlee, cited by Dodge, slightly reformatted by MM.)
 

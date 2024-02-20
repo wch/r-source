@@ -3,16 +3,19 @@
 % Copyright 2011-2018 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+\newcommand{\bibcite}{#1}
+
 \name{RNGstreams}
-\title{Implementation of Pierre L'Ecuyer's RngStreams}
+\title{Implementation of \I{Pierre L'Ecuyer}'s \I{RngStreams}}
 \alias{nextRNGStream}
 \alias{nextRNGSubStream}
 \alias{clusterSetRNGStream}
 \alias{mc.reset.stream}
 
 \description{
-  This is an \R re-implementation of Pierre L'Ecuyer's \sQuote{RngStreams}
-  multiple streams of pseudo-random numbers.
+  This is an \R re-implementation of \I{Pierre L'Ecuyer}'s
+  \sQuote{\I{RngStreams}} multiple streams of pseudo-random numbers.
 }
 \usage{
 nextRNGStream(seed)
@@ -31,18 +34,18 @@ mc.reset.stream()
     \code{NULL} not to set reproducible seeds.}
 }
 \details{
-  The \sQuote{RngStream} interface works with (potentially) multiple
+  The \sQuote{\I{RngStreams}} interface works with (potentially) multiple
   streams of pseudo-random numbers: this is particularly suitable for
   working with parallel computations since each task can be assigned a
   separate RNG stream.
 
   This uses as its underlying generator \code{RNGkind("L'Ecuyer-CMRG")},
-  of L'Ecuyer (1999), which has a seed vector of 6 (signed) integers and a
+  of \bibcite{L'Ecuyer (1999)}, which has a seed vector of 6 (signed) integers and a
   period of around \eqn{2^{191}}{2^191}.  Each \sQuote{stream} is a
   subsequence of the period of length \eqn{2^{127}}{2^127} which is in
   turn divided into \sQuote{substreams} of length \eqn{2^{76}}{2^76}.
 
-  The idea of L'Ecuyer \emph{et al} (2002) is to use a separate stream
+  The idea of \bibcite{L'Ecuyer \emph{et al} (2002)} is to use a separate stream
   for each of the parallel computations (which ensures that the random
   numbers generated never get into to sync) and the parallel
   computations can themselves use substreams if required.  The original
@@ -55,10 +58,10 @@ mc.reset.stream()
   then distributes streams to the members of a cluster, optionally
   setting the seed of the streams by \code{set.seed(iseed)} (otherwise
   they are set from the current seed of the master process: after
-  selecting the L'Ecuyer generator).
+  selecting the \I{L'Ecuyer} generator).
 
   When not on Windows, Calling \code{mc.reset.stream()} after setting
-  the L'Ecuyer random number generator and seed makes runs from
+  the \I{L'Ecuyer} random number generator and seed makes runs from
 #ifdef windows
   \code{mcparallel(mc.set.seed = TRUE)}
 #endif

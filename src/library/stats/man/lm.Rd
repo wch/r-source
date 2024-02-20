@@ -3,6 +3,8 @@
 % Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{lm}
 \title{Fitting Linear Models}
 \alias{lm}
@@ -80,7 +82,7 @@ lm(formula, data, subset, weights, na.action,
   %% print.lm():
   \item{digits}{the number of \emph{significant} digits to be
     passed to \code{\link{format}(\link{coef}(x), .)} when
-    \code{\link{print}()}ing.}
+    \I{\code{\link{print}()}ing}.}
 }
 \details{
   Models for \code{lm} are specified symbolically.  A typical model has

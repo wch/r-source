@@ -74,7 +74,7 @@ is.loaded(symbol, PACKAGE = "", type = "")
   \sQuote{R Installation and Administration} manuals for how to create
   and install a suitable DLL.
 
-  Unfortunately some rare platforms (e.g., Compaq Tru64) do not handle
+  Unfortunately some rare platforms (e.g., Compaq \I{Tru64}) do not handle
   the \code{PACKAGE} argument correctly, and may incorrectly find
   symbols linked into \R.
 
@@ -196,7 +196,7 @@ is.loaded(symbol, PACKAGE = "", type = "")
   standard mechanism (\code{LoadLibrary}) for loading DLLs.
 
   The original code for loading DLLs in Unix-alikes was provided by
-  Heiner Schwarte.
+  \I{Heiner Schwarte}.
 }
 #ifdef windows
 \section{Windows}{

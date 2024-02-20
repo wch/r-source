@@ -33,8 +33,8 @@ download.packages(pkgs, destdir, available = NULL,
   \item{repos}{
     character vector, the base URL(s) of the repositories
     to use, i.e., the URL of the CRAN master such as
-    \code{"https://cran.r-project.org"} or its Statlib mirror,
-    \code{"http://lib.stat.cmu.edu/R/CRAN"}.
+    \code{"https://cran.r-project.org"} or ones of its mirrors,
+    \code{"https://cloud.r-project.org"}.
   }
   \item{contriburl}{
     URL(s) of the contrib sections of the

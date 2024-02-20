@@ -3,6 +3,8 @@
 % Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{double}
 \title{Double-Precision Vectors}
 \alias{double}
@@ -76,7 +78,7 @@ as.single(x, \dots)
   \eqn{2 \times 10^{308}}{2e+308}.  It also has special values
   \code{\link{NaN}} (many of them), plus and minus infinity and plus and
   minus zero (although \R acts as if these are the same).  There are
-  also \emph{denormal(ized)} (or \emph{subnormal}) numbers with values
+  also \emph{\I{denormal(ized)}} (or \emph{subnormal}) numbers with values
   below the range given above but represented to less precision.
 
   See \code{\link{.Machine}} for precise information on these limits.

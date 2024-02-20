@@ -3,6 +3,8 @@
 % Copyright 1995-2007 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{Titanic}
 \docType{data}
 \alias{Titanic}
@@ -43,7 +45,7 @@
   Due in particular to the very successful film \sQuote{Titanic}, the last
   years saw a rise in public interest in the Titanic.  Very detailed
   data about the passengers is now available on the Internet, at sites
-  such as \emph{Encyclopedia Titanica}
+  such as \emph{\I{Encyclopedia Titanica}}
   (\url{https://www.encyclopedia-titanica.org/}).
 }
 \source{

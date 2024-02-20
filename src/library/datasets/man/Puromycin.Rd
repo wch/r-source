@@ -3,6 +3,8 @@
 % Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\bibcite}{#1}
+
 \name{Puromycin}
 \docType{data}
 \alias{Puromycin}
@@ -31,7 +33,7 @@
 }
 \details{
   Data on the velocity of an enzymatic reaction were obtained
-  by Treloar (1974).  The number of counts per minute of radioactive
+  by \bibcite{Treloar (1974)}.  The number of counts per minute of radioactive
   product from the reaction was measured as a function of substrate
   concentration in parts per million (ppm) and from these counts the
   initial rate (or velocity) of the reaction was calculated

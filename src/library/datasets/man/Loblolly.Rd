@@ -3,13 +3,15 @@
 % Copyright 1995-2011 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{Loblolly}
 \docType{data}
 \alias{Loblolly}
-\title{Growth of Loblolly pine trees}
+\title{Growth of \I{Loblolly} Pine Trees}
 \description{
   The \code{Loblolly} data frame has 84 rows and 3 columns of records of
-  the growth of Loblolly pine trees.
+  the growth of \I{Loblolly} pine trees.
 }
 \usage{Loblolly}
 \format{

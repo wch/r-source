@@ -80,8 +80,8 @@ dQuote(x, q = getOption("useFancyQuotes"))
   To work around this, the default for \code{options("useFancyQuotes")}
   is \code{FALSE} on Windows except for the \code{Rgui} console.  There
   fancy quotes work with the default Courier New font and more elegantly with
-  Lucida Console and default East Asian fonts, but directional double
-  quotes are missing in raster fonts such as Courier and FixedSys.
+  \I{Lucida Console} and default East Asian fonts, but directional double
+  quotes are missing in raster fonts such as Courier and \I{FixedSys}.
 #endif
 }
 \value{

@@ -8,16 +8,16 @@
 \name{randu}
 \docType{data}
 \alias{randu}
-\title{Random Numbers from Congruential Generator RANDU}
+\title{Random Numbers from Congruential Generator \I{RANDU}}
 \description{
   400 triples of successive random numbers were taken from the VAX
-  FORTRAN function RANDU running under \I{VMS} 1.5.
+  FORTRAN function \I{RANDU} running under \I{VMS} 1.5.
 }
 \usage{randu}
 \details{
   In three dimensional displays it is evident that the triples fall on
   15 parallel planes in 3-space. This can be shown theoretically to be
-  true for all triples from the RANDU generator.
+  true for all triples from the \I{RANDU} generator.
 
   These particular 400 triples start 5 apart in the sequence, that is
   they are ((U[5i+1], U[5i+2], U[5i+3]), i= 0, \dots, 399), and they

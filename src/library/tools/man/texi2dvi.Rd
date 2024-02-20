@@ -77,7 +77,7 @@ texi2pdf(file, clean = FALSE, quiet = TRUE,
 
   \I{MiKTeX} had a \code{texi2dvi} executable until Sept 2015, but no other
   Windows TeX installation that we know of does, so emulation is used on
-  e.g.\sspace{}TeXLive installations on Windows.
+  e.g.\sspace{}\I{TeXLive} installations on Windows.
 #endif
 
   Occasionally indices contain special characters which cause indexing

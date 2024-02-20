@@ -3,6 +3,9 @@
 % Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+\newcommand{\bibcite}{#1}
+
 \name{bandwidth}
 \alias{bw.nrd0}
 \alias{bw.nrd}
@@ -49,7 +52,7 @@ bw.SJ(x, nb = 1000, lower = 0.1 * hmax, upper = hmax,
   It defaults to 0.9 times the
   minimum of the standard deviation and the interquartile range divided by
   1.34 times the sample size to the negative one-fifth power
-  (= Silverman's \sQuote{rule of thumb}, Silverman (1986, page 48, \abbr{eqn} (3.31)))
+  (= \I{Silverman}'s \sQuote{rule of thumb}, \bibcite{Silverman (1986, page 48, \abbr{eqn} (3.31))})
   \emph{unless} the quartiles coincide when a positive result
   will be guaranteed.
 
@@ -59,7 +62,7 @@ bw.SJ(x, nb = 1000, lower = 0.1 * hmax, upper = hmax,
   \code{bw.ucv} and \code{bw.bcv} implement unbiased and
   biased cross-validation respectively.
 
-  \code{bw.SJ} implements the methods of Sheather & Jones (1991)
+  \code{bw.SJ} implements the methods of \bibcite{Sheather & Jones (1991)}
   to select the bandwidth using pilot estimation of derivatives.\cr
   The algorithm for method \code{"ste"} solves an equation (via
   \code{\link{uniroot}}) and because of that, enlarges the interval

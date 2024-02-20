@@ -5,7 +5,7 @@
 
 \name{Rcmd}
 \alias{Rcmd}
-\title{R CMD Interface}
+\title{\command{R CMD} Interface}
 \description{
   Invoke \command{R CMD} tools from within \R.
 }

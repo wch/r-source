@@ -3,6 +3,9 @@
 % Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+\newcommand{\bibcite}{#1}
+
 \name{faithful}
 \docType{data}
 \alias{faithful}
@@ -37,11 +40,11 @@
   more frequent than expected under non-human measurement.  For a
   better version of the eruption times, see the example below.
 
-  There are many versions of this dataset around: Azzalini and Bowman
-  (1990) use a more complete version.
+  There are many versions of this dataset around:
+  \bibcite{Azzalini and Bowman (1990)} use a more complete version.
 }
 \seealso{
-  \code{geyser} in package \CRANpkg{MASS} for the Azzalini--Bowman version.
+  \code{geyser} in package \CRANpkg{MASS} for the \I{Azzalini}--\I{Bowman} version.
 }
 \examples{
 require(stats); require(graphics)

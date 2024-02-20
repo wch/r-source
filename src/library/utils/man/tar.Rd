@@ -179,12 +179,12 @@ tar(tarfile, files = NULL,
   compressor \emph{via} \option{--use-compress-program lz4}: these could
   be supplied in \code{extra_flags}.
   
-  NetBSD prior to 8.0 used flag \option{--xz} rather than \option{-J},
+  \I{NetBSD} prior to 8.0 used flag \option{--xz} rather than \option{-J},
   so this should be used \emph{via} \code{extra_flags = "--xz"} rather
-  than \code{compression = "xz"}.  The commands from OpenBSD and the
+  than \code{compression = "xz"}.  The commands from \I{OpenBSD} and the
   \I{Heirloom Toolchest} are not documented to support \command{xz}.
 
-  The \command{tar} programs in commercial Unixen such as AIX and
+  The \command{tar} programs in commercial Unixen such as \I{AIX} and
   Solaris do not support compression.
 }
 

@@ -3,6 +3,8 @@
 % Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{.Machine}
 \alias{.Machine}
 \concept{long double}
@@ -109,7 +111,7 @@
     also \sQuote{Note}.}
 }
 \details{
-  The algorithm is based on Cody's (1988) subroutine MACHAR.  As all
+  The algorithm is based on Cody's (1988) subroutine \code{MACHAR}.  As all
   current implementations of \R use 32-bit integers and use \abbr{IEC} 60559
   floating-point (double precision) arithmetic, the \code{"integer"} and
   \code{"double"} related values are the same for almost all \R builds.
@@ -138,7 +140,7 @@
   double type of \abbr{IEC} 60559, padded to the double alignment used on the
   platform --- this seems to be the case for the common \R platforms
   using ix86 and x86_64 chips.  There are other implementation of long
-  double, usually in software for example on Sparc Solaris and AIX.
+  double, usually in software for example on \I{Sparc} Solaris and \I{AIX}.
 
   Note that it is legal for a platform to have a \samp{long double} C
   type which is identical to the \samp{double} type --- this happens on

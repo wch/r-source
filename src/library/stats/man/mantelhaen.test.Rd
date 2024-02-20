@@ -3,11 +3,13 @@
 % Copyright 1995-2008 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{mantelhaen.test}
 \alias{mantelhaen.test}
-\title{Cochran-Mantel-Haenszel Chi-Squared Test for Count Data}
+\title{Cochran-Mantel-\I{Haenszel} Chi-Squared Test for Count Data}
 \description{
-  Performs a Cochran-Mantel-Haenszel chi-squared test of the null that
+  Performs a Cochran-Mantel-\I{Haenszel} chi-squared test of the null that
   two nominal variables are conditionally independent in each stratum,
   assuming that there is no three-way interaction.
 }
@@ -32,7 +34,7 @@ mantelhaen.test(x, y = NULL, z = NULL,
   \item{correct}{a logical indicating whether to apply continuity
     correction when computing the test statistic.
     Only used in the 2 by 2 by \eqn{K} case.}
-  \item{exact}{a logical indicating whether the Mantel-Haenszel test or
+  \item{exact}{a logical indicating whether the Mantel-\I{Haenszel} test or
     the exact conditional test (given the strata margins) should be
     computed.
     Only used in the 2 by 2 by \eqn{K} case.}
@@ -44,8 +46,8 @@ mantelhaen.test(x, y = NULL, z = NULL,
   A list with class \code{"htest"} containing the following components:
   \item{statistic}{Only present if no exact test is performed.  In the
     classical case of a 2 by 2 by \eqn{K} table (i.e., of dichotomous
-    underlying variables), the Mantel-Haenszel chi-squared statistic;
-    otherwise, the generalized Cochran-Mantel-Haenszel statistic.}
+    underlying variables), the Mantel-\I{Haenszel} chi-squared statistic;
+    otherwise, the generalized Cochran-Mantel-\I{Haenszel} statistic.}
   \item{parameter}{the degrees of freedom of the approximate chi-squared
     distribution of the test statistic (\eqn{1} in the classical case).
     Only present if no exact test is performed.}
@@ -54,7 +56,7 @@ mantelhaen.test(x, y = NULL, z = NULL,
     Only present in the 2 by 2 by \eqn{K} case.}
   \item{estimate}{an estimate of the common odds ratio.  If an exact
     test is performed, the conditional Maximum Likelihood Estimate is
-    given; otherwise, the Mantel-Haenszel estimate.
+    given; otherwise, the Mantel-\I{Haenszel} estimate.
     Only present in the 2 by 2 by \eqn{K} case.}
   \item{null.value}{the common odds ratio under the null of
     independence, \code{1}.

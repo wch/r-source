@@ -3,6 +3,8 @@
 % Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\bibcite}{#1}
+
 \name{Beta}
 \alias{Beta}
 \alias{dbeta}
@@ -50,7 +52,7 @@ rbeta(n, shape1, shape2, ncp = 0)
   \code{[dpqr]beta()} functions are defined correspondingly.
 
   \code{pbeta} is closely related to the incomplete beta function.  As
-  defined by Abramowitz and Stegun 6.6.1
+  defined by \bibcite{Abramowitz and Stegun 6.6.1}
   \deqn{B_x(a,b) = \int_0^x t^{a-1} (1-t)^{b-1} dt,}{
     B_x(a,b) = integral_0^x t^(a-1) (1-t)^(b-1) dt,}
   and 6.6.2 \eqn{I_x(a,b) = B_x(a,b) / B(a,b)} where

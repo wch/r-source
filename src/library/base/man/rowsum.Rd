@@ -3,6 +3,8 @@
 % Copyright 1995-2011 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{rowsum}
 \alias{rowsum}
 \alias{rowsum.default}
@@ -44,7 +46,7 @@ rowsum(x, group, reorder = TRUE, \dots)
   except when there are very many distinct values of \code{group} and
   \code{x} has few columns.
 
-  The original function was written by Terry Therneau, but this is a
+  The original function was written by \I{Terry Therneau}, but this is a
   new implementation using hashing that is much faster for large matrices.
 
   To sum over all the rows of a matrix (i.e., a single \code{group}) use

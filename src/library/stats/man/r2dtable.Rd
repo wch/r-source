@@ -3,11 +3,13 @@
 % Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{r2dtable}
 \alias{r2dtable}
 \title{Random 2-way Tables with Given Marginals}
 \description{
-  Generate random 2-way tables with given marginals using Patefield's
+  Generate random 2-way tables with given marginals using \I{Patefield}'s
   algorithm.
 }
 \usage{

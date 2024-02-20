@@ -3,6 +3,8 @@
 % Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{curve}
 \title{Draw Function Plots}
 \alias{curve}
@@ -80,7 +82,7 @@ curve(expr, from = NULL, to = NULL, n = 101, add = FALSE,
   This used to be a quick hack which now seems to serve a useful purpose,
   but can give bad results for functions which are not smooth.
 
-  For expensive-to-compute \code{expr}essions, you should use smarter tools.
+  For expensive-to-compute \I{\code{expr}essions}, you should use smarter tools.
 
   The way \code{curve} handles \code{expr} has caused confusion.  It
   first looks to see if \code{expr} is a \link{name} (also known as a

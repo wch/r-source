@@ -3,6 +3,8 @@
 % Copyright 1995-2011 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\bibcite}{#1}
+
 \name{Theoph}
 \docType{data}
 \alias{Theoph}
@@ -37,14 +39,14 @@
   }
 }
 \details{
-  Boeckmann, Sheiner and Beal (1994) report data from a study by
+  \bibcite{Boeckmann, Sheiner and Beal (1994)} report data from a study by
   Dr. Robert Upton of the kinetics of the anti-asthmatic drug
   theophylline.  Twelve subjects were given oral doses of theophylline
   then serum concentrations were measured at 11 time points over the
   next 25 hours.
 
-  These data are analyzed in Davidian and Giltinan (1995) and Pinheiro
-  and Bates (2000) using a two-compartment open pharmacokinetic model,
+  These data are analyzed in \bibcite{Davidian and Giltinan (1995)} and
+  \bibcite{Pinheiro and Bates (2000)} using a two-compartment open pharmacokinetic model,
   for which a self-starting model function, \code{SSfol}, is available.
 
   This dataset was originally part of package \code{nlme}, and that has

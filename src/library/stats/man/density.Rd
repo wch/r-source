@@ -3,6 +3,8 @@
 % Copyright 1995-2024 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\bibcite}{#1}
+
 \name{density}
 \alias{density}
 \alias{density.default}
@@ -33,8 +35,8 @@ density(x, \dots)
     bandwidth.  See \code{\link{bw.nrd}}. \cr The default,
     \code{"nrd0"}, has remained the default for historical and
     compatibility reasons, rather than as a general recommendation,
-    where e.g., \code{"SJ"} would rather fit, see also Venables and
-    Ripley (2002).
+    where e.g., \code{"SJ"} would rather fit, see also
+    \bibcite{Venables and Ripley (2002)}.
 
     The specified (or computed) value of \code{bw} is multiplied by
     \code{adjust}.

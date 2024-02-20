@@ -3,6 +3,8 @@
 % Copyright 2008 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{tkProgressBar}
 \alias{tkProgressBar}
 \alias{getTkProgressBar}
@@ -43,7 +45,7 @@ setTkProgressBar(pb, value, title = NULL, label = NULL)
   The progress bar should be \code{close}d when finished with.
 
   This will use the \code{ttk::progressbar} widget for Tk version 8.5 or
-  later, otherwise \R's copy of BWidget's \code{progressbar}.
+  later, otherwise \R's copy of \I{BWidget}'s \code{progressbar}.
 }
 \value{
   For \code{tkProgressBar} an object of class \code{"tkProgressBar"}.

@@ -78,7 +78,7 @@ Rd2ex(Rd, out = "", defines = .Platform$OS.type,
   }
   \item{toc}{logical: whether the HTML output should include a table
       of contents. Ignored unless \code{standalone = TRUE}. }
-  \item{Rhtml}{logical: whether the output is intended to be a Rhtml
+  \item{Rhtml}{logical: whether the output is intended to be a \I{Rhtml}
       file that can be processed using \CRANpkg{knitr}. If \code{TRUE}, the
       examples section is wrapped inside a \code{rcode} block. }
   \item{Links, Links2}{\code{NULL} or a named (by topics) character vector of

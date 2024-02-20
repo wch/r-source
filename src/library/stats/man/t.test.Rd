@@ -3,6 +3,8 @@
 % Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{t.test}
 \alias{t.test}
 \alias{t.test.default}
@@ -34,8 +36,8 @@ t.test(x, \dots)
     t-test.}
   \item{var.equal}{a logical variable indicating whether to treat the
     two variances as being equal. If \code{TRUE} then the pooled
-    variance is used to estimate the variance otherwise the Welch
-    (or Satterthwaite) approximation to the degrees of freedom is used.}
+    variance is used to estimate the variance otherwise the \I{Welch}
+    (or \I{Satterthwaite}) approximation to the degrees of freedom is used.}
   \item{conf.level}{confidence level of the interval.}
   \item{formula}{a formula of the form \code{lhs ~ rhs} where \code{lhs}
     is a numeric variable giving the data values and \code{rhs} either 
@@ -65,7 +67,7 @@ t.test(x, \dots)
   \code{var.equal} is \code{TRUE} then the pooled estimate of the
   variance is used.  By default, if \code{var.equal} is \code{FALSE}
   then the variance is estimated separately for both groups and the
-  Welch modification to the degrees of freedom is used.
+  \I{Welch} modification to the degrees of freedom is used.
 
   If the input data are effectively constant (compared to the larger of the
   two means) an error is generated.

@@ -3,9 +3,11 @@
 % Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{SSmicmen}
 \encoding{UTF-8}
-\title{Self-Starting Nls Michaelis-Menten Model}
+\title{Self-Starting Nls \I{Michaelis}-\I{Menten} Model}
 \usage{
 SSmicmen(input, Vm, K)
 }
@@ -15,10 +17,10 @@ SSmicmen(input, Vm, K)
  \item{Vm}{a numeric parameter representing the maximum value of the response.}
  \item{K}{a numeric parameter representing the \code{input} value at
    which half the maximum response is attained.  In the field of enzyme
-   kinetics this is called the Michaelis parameter.}
+   kinetics this is called the \I{Michaelis} parameter.}
 }
 \description{
-  This \code{selfStart} model evaluates the Michaelis-Menten model and
+  This \code{selfStart} model evaluates the \I{Michaelis}-\I{Menten} model and
   its gradient.  It has an \code{initial} attribute that
   will evaluate initial estimates of the parameters \code{Vm} and \code{K}
 }

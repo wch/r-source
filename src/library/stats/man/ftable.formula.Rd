@@ -23,7 +23,7 @@
   \item{na.action}{a function which indicates what should happen when
     the data contain \code{NA}s.
     Ignored if \code{data} is a contingency table.}
-  \item{\dots}{further arguments to the default ftable method may also
+  \item{\dots}{further arguments to the default \code{ftable} method may also
     be passed as arguments, see \code{\link{ftable.default}}.}
 }
 \details{

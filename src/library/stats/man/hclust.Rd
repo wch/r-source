@@ -3,6 +3,8 @@
 % Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\bibcite}{#1}
+
 \name{hclust}
 \title{Hierarchical Clustering}
 \alias{hclust}
@@ -124,7 +126,7 @@ hclust(d, method = "complete", members = NULL)
   The one used by option \code{"ward.D"} (equivalent to the only Ward
   option \code{"ward"} in \R versions \eqn{\le}{<=} 3.0.3) \emph{does not} implement
   Ward's (1963) clustering criterion, whereas option \code{"ward.D2"} implements
-  that criterion (Murtagh and Legendre 2014).  With the latter, the
+  that criterion (\bibcite{Murtagh and Legendre 2014}).  With the latter, the
   dissimilarities are \emph{squared} before cluster updating.
   Note that \code{\link[cluster]{agnes}(*, method="ward")} corresponds
   to \code{hclust(*, "ward.D2")}.

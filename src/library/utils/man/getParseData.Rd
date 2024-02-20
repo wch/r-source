@@ -3,6 +3,8 @@
 % Copyright 2012-2021 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{getParseData}
 \alias{getParseData}
 \alias{getParseText}
@@ -33,7 +35,7 @@ getParseText(parseData, id)
 }
 \details{
   In version 3.0.0, the \R{} parser was modified to include code written
-  by Romain Francois in his \pkg{parser} package.  This constructs a
+  by \I{Romain Francois} in his \pkg{parser} package.  This constructs a
   detailed table of information about every token and higher level
   construct in parsed code.  This table is stored in the
   \code{\link{srcfile}} record associated with source references in the

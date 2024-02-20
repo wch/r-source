@@ -3,6 +3,8 @@
 % Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{anova.glm}
 \title{Analysis of Deviance for Generalized Linear Model Fits}
 \usage{
@@ -54,7 +56,7 @@
   the residual degrees of freedom, which is closely related to AIC (and
   a multiple of it if the dispersion is known).
   You can also choose \code{"LRT"} and
-    \code{"Rao"} for likelihood ratio tests and Rao's efficient score test.
+    \code{"Rao"} for likelihood ratio tests and \I{Rao}'s efficient score test.
     The former is synonymous with \code{"Chisq"} (although both have
     an asymptotic chi-square distribution).
 

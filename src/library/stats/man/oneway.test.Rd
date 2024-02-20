@@ -3,6 +3,9 @@
 % Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+\newcommand{\bibcite}{#1}
+
 \name{oneway.test}
 \alias{oneway.test}
 \title{Test for Equal Means in a One-Way Layout}
@@ -28,8 +31,9 @@ oneway.test(formula, data, subset, na.action, var.equal = FALSE)
   \item{var.equal}{a logical variable indicating whether to treat the
     variances in the samples as equal.  If \code{TRUE}, then a simple F
     test for the equality of means in a one-way analysis of variance is
-    performed.  If \code{FALSE}, an approximate method of Welch (1951)
-    is used, which generalizes the commonly known 2-sample Welch test to
+    performed.  If \code{FALSE}, an approximate method of
+    \bibcite{Welch (1951)}
+    is used, which generalizes the commonly known 2-sample \I{Welch} test to
     the case of arbitrarily many samples.}
 }
 \value{

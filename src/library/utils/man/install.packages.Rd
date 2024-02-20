@@ -3,6 +3,8 @@
 % Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{install.packages}
 \alias{install.packages}
 \title{Install Packages from Repositories or Local Files}
@@ -247,10 +249,10 @@ install.packages(pkgs, lib, repos = getOption("repos"),
   package contains no C/C++/Fortran code that needs compilation.
   Otherwise,
   \describe{
-    \item{on Windows,}{you will need to have installed the Rtools
+    \item{on Windows,}{you will need to have installed the \I{Rtools}
   collection as described in the \sQuote{R for Windows FAQ} \emph{and}
   you must have the \env{PATH} environment variable set up as required
-  by Rtools.
+  by \I{Rtools}.
 
   For a 32/64-bit installation of \R on Windows, a small minority of
   packages with compiled code need either \code{INSTALL_opts =
@@ -268,7 +270,7 @@ install.packages(pkgs, lib, repos = getOption("repos"),
     \item{On Unix-alikes,}{when the package contains C/C++/Fortran code
       that needs compilation, suitable compilers and related tools need
       to be installed.  On macOS you need to have installed the
-      \sQuote{Command-line tools for Xcode} (see the
+      \sQuote{Command-line tools for \I{Xcode}} (see the
       \sQuote{R Installation and Administration} manual) and if needed
       by the package a Fortran compiler, and have them in your path.
     }

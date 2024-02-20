@@ -3,6 +3,8 @@
 % Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\bibcite}{#1}
+
 \name{splinefun}
 \alias{spline}
 \alias{splinefun}
@@ -53,8 +55,9 @@ splinefunH(x, y, m)
 \details{
   The inputs can contain missing values which are deleted, so at least
   one complete \code{(x, y)} pair is required.
-  If \code{method = "fmm"}, the spline used is that of Forsythe, Malcolm
-  and Moler (an exact cubic is fitted through the four points at each
+  If \code{method = "fmm"}, the spline used is that of
+  \bibcite{Forsythe, Malcolm and Moler}
+  (an exact cubic is fitted through the four points at each
   end of the data, and this is used to determine the end conditions).
   Natural splines are used when \code{method = "natural"}, and periodic
   splines when \code{method = "periodic"}.

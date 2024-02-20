@@ -3,6 +3,8 @@
 % Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{image}
 \alias{image}
 \alias{image.default}
@@ -127,7 +129,7 @@ image(x, \dots)
 }
 
 \note{
-  Originally based on a function by Thomas Lumley.
+  Originally based on a function by \I{Thomas Lumley}.
 }
 
 \seealso{

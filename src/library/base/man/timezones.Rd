@@ -38,7 +38,7 @@ OlsonNames(tzdir = NULL)
 \details{
   Time zones are a system-specific topic, but these days almost all \R
   platforms use similar underlying code, used by Linux, macOS, Solaris,
-  AIX and FreeBSD, and installed with \R on Windows.  (Unfortunately
+  \I{AIX} and FreeBSD, and installed with \R on Windows.  (Unfortunately
   there are many system-specific errors in the implementations.)  It is
   possible to use the \R sources' version of the code on Unix-alikes as
   well as on Windows: this is the default on macOS.
@@ -159,7 +159,7 @@ OlsonNames(tzdir = NULL)
   the currently selected Olson/\abbr{IANA} database.  The system-specific
   location in the file system varies,
   e.g.\sspace{}\file{/usr/share/zoneinfo} (Linux, macOS, FreeBSD),
-  \file{/usr/share/lib/zoneinfo} (Solaris, AIX), \ldots.  It is likely
+  \file{/usr/share/lib/zoneinfo} (Solaris, \I{AIX}), \ldots.  It is likely
   that there is a file named something like \file{zone1970.tab} or
   (older) \file{zone.tab} under that directory listing the locations
   known as time-zone names (but not for example \code{EST5EDT}).  See
@@ -276,7 +276,7 @@ OlsonNames(tzdir = NULL)
   This section is of background interest for users of a Unix-alike, but
   may help if an \code{NA} value is returned unexpectedly.
 
-  Commercial Unixen such as Solaris and AIX set \env{TZ}, so the value
+  Commercial Unixen such as Solaris and \I{AIX} set \env{TZ}, so the value
   when \R is started is used.
 
   All other common platforms (Linux, macOS, *BSD) use similar schemes,

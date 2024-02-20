@@ -3,6 +3,8 @@
 % Copyright 2015 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{toTitleCase}
 \alias{toTitleCase}
 \title{Convert Titles to Title Case}
@@ -23,9 +25,9 @@ toTitleCase(text)
   \sQuote{for} are not, but not which words fall into each category.
 
   Generally words in all capitals are left alone: this implementation
-  knows about conventional mixed-case words such as \sQuote{LaTeX} and
-  \sQuote{OpenBUGS} and a few technical terms which are not usually
-  capitalized such as \sQuote{jar} and \sQuote{xls}.  However, unknown
+  knows about conventional mixed-case words such as \sQuote{\I{LaTeX}} and
+  \sQuote{\I{OpenBUGS}} and a few technical terms which are not usually
+  capitalized such as \sQuote{\I{jar}} and \sQuote{\I{xls}}.  However, unknown
   technical terms will be capitalized unless they are single words
   enclosed in single quotes: names of packages and libraries should be
   quoted in titles.

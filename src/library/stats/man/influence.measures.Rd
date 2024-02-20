@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \newcommand{\I}{#1}
+\newcommand{\bibcite}{#1}
 
 \name{influence.measures}
 \title{Regression Deletion Diagnostics}
@@ -101,8 +102,8 @@ hat(x, intercept = TRUE)
 \description{
   This suite of functions can be used to compute some of the regression
   (leave-one-out deletion) diagnostics for linear and generalized linear
-  models discussed in Belsley, Kuh and Welsch (1980), Cook and Weisberg (1982),
-  etc.
+  models discussed in \bibcite{Belsley, Kuh and Welsch (1980)},
+  \bibcite{Cook and Weisberg (1982)}, etc.
 }
 \details{
   The primary high-level function is \code{influence.measures} which produces a

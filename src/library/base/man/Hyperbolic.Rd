@@ -3,6 +3,8 @@
 % Copyright 1995-2011 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\bibcite}{#1}
+
 \name{Hyperbolic}
 \title{Hyperbolic Functions}
 \usage{
@@ -34,8 +36,9 @@ atanh(x)
    \code{\link[=S3groupGeneric]{Math}} group generic.
 
    Branch cuts are consistent with the inverse trigonometric functions
-   \code{asin} \emph{et seq}, and agree with those defined in Abramowitz
-   and Stegun, figure 4.7, page 86.   The behaviour actually on the cuts
+   \code{asin} \emph{et seq}, and agree with those defined in
+   \bibcite{Abramowitz & Stegun, figure 4.7, page 86}.
+   The behaviour actually on the cuts
    follows the C99 standard which requires continuity coming round the
    endpoint in a counter-clockwise direction.
 }

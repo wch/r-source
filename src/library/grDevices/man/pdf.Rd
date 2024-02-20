@@ -99,7 +99,7 @@ pdf(file = if(onefile) "Rplots.pdf" else "Rplot\%03d.pdf",
     setting text and calculating string widths?  Defaults to \code{TRUE}.}
   \item{fillOddEven}{logical controlling the polygon fill mode:  see
     \code{\link{polygon}} for details.  Defaults to \code{FALSE}.}
-  \item{compress}{logical.  Should PDF streams be generated with Flate
+  \item{compress}{logical.  Should PDF streams be generated with \I{Flate}
     compression?  Defaults to \code{TRUE}.}
 }
 \details{

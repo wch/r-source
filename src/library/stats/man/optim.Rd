@@ -3,6 +3,9 @@
 % Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+\newcommand{\bibcite}{#1}
+
 \name{optim}
 \alias{optim}
 \alias{optimHess}
@@ -12,7 +15,7 @@
 \title{General-purpose Optimization}
 
 \description{
-  General-purpose optimization based on Nelder--Mead, quasi-Newton and
+  General-purpose optimization based on \I{Nelder}--\I{Mead}, quasi-Newton and
   conjugate-gradient algorithms. It includes an option for
   box-constrained optimization and simulated annealing.
 }
@@ -53,18 +56,21 @@ optimHess(par, fn, gr = NULL, \dots, control = list())
   auxiliary function to compute the Hessian at a later stage if
   \code{hessian = TRUE} was forgotten.
 
-  The default method is an implementation of that of Nelder and Mead
-  (1965), that uses only function values and is robust but relatively
-  slow.  It will work reasonably well for non-differentiable functions.
+  The default method is an implementation of that of
+  \bibcite{Nelder and Mead (1965)},
+  that uses only function values and is robust but relatively slow.
+  It will work reasonably well for non-differentiable functions.
 
   Method \code{"BFGS"} is a quasi-Newton method (also known as a variable
   metric algorithm), specifically that published simultaneously in 1970
-  by Broyden, Fletcher, Goldfarb and Shanno.  This uses function values
+  by \I{Broyden}, \I{Fletcher}, \I{Goldfarb} and \I{Shanno}.
+  This uses function values
   and gradients to build up a picture of the surface to be optimized.
 
   Method \code{"CG"} is a conjugate gradients method based on that by
-  Fletcher and Reeves (1964) (but with the option of Polak--Ribiere or
-  Beale--Sorenson updates).  Conjugate gradient methods will generally
+  \bibcite{Fletcher and Reeves (1964)} (but with the option of
+  \I{Polak}--\I{Ribiere} or \I{Beale}--\I{Sorenson} updates).
+  Conjugate gradient methods will generally
   be more fragile than the BFGS method, but as they do not store a
   matrix they may be successful in much larger optimization problems.
 
@@ -75,11 +81,11 @@ optimHess(par, fn, gr = NULL, \dots, control = list())
   method.  If non-trivial bounds are supplied, this method will be
   selected, with a warning.
 
-  Nocedal and Wright (1999) is a comprehensive reference for the
+  \bibcite{Nocedal and Wright (1999)} is a comprehensive reference for the
   previous three methods.
 
   Method \code{"SANN"} is by default a variant of simulated annealing
-  given in Belisle (1992). Simulated-annealing belongs to the class of
+  given in \bibcite{Belisle (1992)}. Simulated-annealing belongs to the class of
   stochastic global optimization methods. It uses only function values
   but is relatively slow. It will also work for non-differentiable
   functions. This implementation uses the Metropolis function for the
@@ -88,7 +94,8 @@ optimHess(par, fn, gr = NULL, \dots, control = list())
   actual temperature. If a function to generate a new candidate point is
   given, method \code{"SANN"} can also be used to solve combinatorial
   optimization problems. Temperatures are decreased according to the
-  logarithmic cooling schedule as given in Belisle (1992, p.\sspace{}890);
+  logarithmic cooling schedule as given in
+  \bibcite{Belisle (1992, p.\sspace{}890)};
   specifically, the temperature is set to
   \code{temp / log(((t-1) \%/\% tmax)*tmax + exp(1))}, where \code{t} is
   the current iteration step and \code{temp} and \code{tmax} are
@@ -162,7 +169,7 @@ optimHess(par, fn, gr = NULL, \dots, control = list())
       this option to false.}
     \item{\code{type}}{for the conjugate-gradients method.  Takes value
       \code{1} for the Fletcher--Reeves update, \code{2} for
-      Polak--Ribiere and \code{3} for Beale--Sorenson.}
+      \I{Polak}--\I{Ribiere} and \code{3} for \I{Beale}--\I{Sorenson}.}
     \item{\code{lmm}}{is an integer giving the number of BFGS updates
       retained in the \code{"L-BFGS-B"} method, It defaults to \code{5}.}
     \item{\code{factr}}{controls the convergence of the \code{"L-BFGS-B"}
@@ -204,7 +211,7 @@ optimHess(par, fn, gr = NULL, \dots, control = list())
     \describe{
       \item{\code{1}}{indicates that the iteration limit \code{maxit}
       had been reached.}
-      \item{\code{10}}{indicates degeneracy of the Nelder--Mead simplex.}
+      \item{\code{10}}{indicates degeneracy of the \I{Nelder}--\I{Mead} simplex.}
       \item{\code{51}}{indicates a warning from the \code{"L-BFGS-B"}
       method; see component \code{message} for further details.}
       \item{\code{52}}{indicates an error from the \code{"L-BFGS-B"}

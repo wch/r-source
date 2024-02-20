@@ -3,6 +3,8 @@
 % Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{strptime}
 \alias{format.POSIXct}
 \alias{format.POSIXlt}
@@ -45,7 +47,7 @@ strptime(x, format, tz = "")
   \item{usetz}{logical.  Should the time zone abbreviation be appended
     to the output?  This is used in printing times, and more reliable
     than using \code{"\%Z"}.}
-  \item{digits}{integer determining the \code{format()}ing of seconds when
+  \item{digits}{integer determining the \I{\code{format()}ing} of seconds when
     needed.  Note that the defaults for \code{format()} and
     \code{as.character()} differ on purpose, \code{as.character()} giving
     close to full accuracy as it does for numbers.}
@@ -265,7 +267,7 @@ strptime(x, format, tz = "")
   Everyone agrees that years from 1000 to 9999 should be printed with 4
   digits, but the standards do not define what is to be done outside
   that range.  For years 0 to 999 most OSes pad with zeros or spaces to
-  4 characters, but Linux/glibc outputs just the number.
+  4 characters, but Linux/\I{glibc} outputs just the number.
 
   OS facilities will probably not print years before 1 CE (aka 1 AD)
   \sQuote{correctly} (they tend to assume the existence of a year 0: see
@@ -276,7 +278,7 @@ strptime(x, format, tz = "")
   more characters.
 
   Some platforms support modifiers from POSIX 2008 (and others).  On
-  Linux/glibc the format \code{"\%04Y"} assures a minimum of four
+  Linux/\I{glibc} the format \code{"\%04Y"} assures a minimum of four
   characters and zero-padding (the default is no padding).  The internal
   code (as used on Windows and by default on macOS) uses zero-padding by
   default (this can be controlled by environment variable

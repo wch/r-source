@@ -3,6 +3,8 @@
 % Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{anova.mlm}
 \alias{anova.mlm}
 %\alias{anova.mlmlist}
@@ -39,8 +41,8 @@
   the summary table, or a test based on sphericity assumptions (i.e.
   that the covariance is proportional to a given matrix).
 
-  For the multivariate test, Wilks' statistic is most popular in the
-  literature, but the default Pillai--Bartlett statistic is
+  For the multivariate test, \I{Wilks}' statistic is most popular in the
+  literature, but the default \I{Pillai}--\I{Bartlett} statistic is
   recommended by Hand and Taylor (1987).  See
   \code{\link{summary.manova}} for further details.
 

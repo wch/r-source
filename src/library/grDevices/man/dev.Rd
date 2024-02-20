@@ -3,6 +3,8 @@
 % Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{dev}
 \alias{dev.cur}
 \alias{dev.list}
@@ -30,7 +32,7 @@ graphics.off()
 \arguments{
   \item{which}{An integer specifying a device number.}
   \item{\dots}{arguments to be passed to the device selected.}
-  \item{noRStudioGD}{Do not use the RStudio graphics device even if
+  \item{noRStudioGD}{Do not use the \I{RStudio} graphics device even if
     specified as the default device: it does not accept arguments such
     as \code{width} and \code{height}.}
 }

@@ -3,13 +3,15 @@
 % Copyright 2007-2014 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{browseVignettes}
 \alias{browseVignettes}
 \alias{print.browseVignettes}
 \title{List Vignettes in an HTML Browser}
 \description{
   List available vignettes in an HTML browser with links to PDF,
-  LaTeX/noweb source, and (tangled) R code (if available).
+  LaTeX/\I{Noweb} source, and (tangled) R code (if available).
 }
 \usage{
 browseVignettes(package = NULL, lib.loc = NULL, all = TRUE)

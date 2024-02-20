@@ -3,6 +3,8 @@
 % Copyright 1995-2024 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{wilcox.test}
 \title{Wilcoxon Rank Sum and Signed Rank Tests}
 \alias{wilcox.test}
@@ -107,7 +109,7 @@ wilcox.test(x, \dots)
 
   If exact p-values are available, an exact confidence interval is
   obtained by the algorithm described in Bauer (1972), and the
-  Hodges-Lehmann estimator is employed.  Otherwise, the returned
+  \I{Hodges}-\I{Lehmann} estimator is employed.  Otherwise, the returned
   confidence interval and point estimate are based on normal
   approximations.  These are continuity-corrected for the interval but
   \emph{not} the estimate (as the correction depends on the
@@ -145,7 +147,7 @@ wilcox.test(x, \dots)
   rank sum and Mann-Whitney tests.  The two most common definitions
   correspond to the sum of the ranks of the first sample with the
   minimum value (\eqn{m(m+1)/2} for a first sample of size \eqn{m})
-  subtracted or not: \R subtracts.  It seems Wilcoxon's original paper
+  subtracted or not: \R subtracts.  It seems \I{Wilcoxon}'s original paper
   used the unadjusted sum of the ranks but subsequent tables subtracted
   the minimum.
 

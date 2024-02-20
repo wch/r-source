@@ -3,6 +3,8 @@
 % Copyright 1995-2007 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{airquality}
 \docType{data}
 \alias{airquality}
@@ -34,9 +36,9 @@
     in Langleys in the frequency band 4000--7700 Angstroms from
     0800 to 1200 hours at Central Park
     \item \code{Wind}: Average wind speed in miles
-    per hour at 0700 and 1000 hours at LaGuardia Airport
+    per hour at 0700 and 1000 hours at \I{LaGuardia} Airport
     \item \code{Temp}: Maximum daily
-    temperature in degrees Fahrenheit at La Guardia Airport.
+    temperature in degrees Fahrenheit at \I{LaGuardia} Airport.
   }
 }
 \source{

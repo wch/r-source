@@ -3,6 +3,8 @@
 % Copyright 1995-2007 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{ls.diag}
 \title{Compute Diagnostics for \code{lsfit} Regression Results}
 \usage{
@@ -24,7 +26,7 @@ ls.diag(ls.out)
   \item{std.res}{standardized residuals}
   \item{stud.res}{studentized residuals}
   \item{cooks}{Cook's distances}
-  \item{dfits}{DFITS statistics}
+  \item{dfits}{\I{DFITS} statistics}
   \item{correlation}{correlation matrix}
   \item{std.err}{standard errors of the regression coefficients}
   \item{cov.scaled}{Scaled covariance matrix of the coefficients}

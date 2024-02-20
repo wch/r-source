@@ -176,14 +176,14 @@ tiff(filename = "Rplot\%03d.tif",
     system.
 
     \item Where support has been compiled in for \I{cairographics}, plotting
-    on cairo surfaces.  This may use the native platform support for
+    on \I{cairo} surfaces.  This may use the native platform support for
     fonts, or it may use \code{fontconfig} to support a wide range of
     font formats.
   }
   Inevitably there will be differences between the options supported and
   output produced.  Perhaps the most important are support for
   antialiased fonts and semi-transparent colours: the best results are
-  likely to be obtained with the cairo- or Quartz-based devices where
+  likely to be obtained with the \I{cairo}- or Quartz-based devices where
   available.
 
   The default extensions are \file{.jpg} and \file{.tif} on Windows, and

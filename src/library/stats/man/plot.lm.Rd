@@ -3,6 +3,8 @@
 % Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\bibcite}{#1}
+
 \name{plot.lm}
 \alias{plot.lm}
 % \alias{plot.mlm} %which is .NotYetImplemented()
@@ -144,7 +146,7 @@
   distribution.  The saddlepoint approximation is exact for the normal
   and inverse Gaussian family, and holds approximately for the Gamma
   family with small dispersion (large shape) and for the Poisson and
-  binomial families with large counts (Dunn and Smyth 2018).
+  binomial families with large counts (\bibcite{Dunn and Smyth 2018}).
 }
 
 \references{

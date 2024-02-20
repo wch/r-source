@@ -3,6 +3,8 @@
 % Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{QC}
 \title{QC Checks for R Code and/or Documentation}
 \alias{QC}
@@ -94,7 +96,7 @@ nonS3methods(package)
 
   \code{langElts} is a character vector of names of \dQuote{language
     elements} of \R.  These are implemented as \dQuote{very primitive}
-  functions (no argument list; \code{\link{print}()}ing as
+  functions (no argument list; \I{\code{\link{print}()}ing} as
   \code{.Primitive("\var{name}")}).
 
   If using an installed package, the checks needing access to all \R

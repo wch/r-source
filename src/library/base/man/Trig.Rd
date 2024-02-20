@@ -3,6 +3,8 @@
 % Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\bibcite}{#1}
+
 \name{Trig}
 \title{Trigonometric Functions}
 \alias{Trig}
@@ -72,7 +74,7 @@ tanpi(x)
 
 \section{Complex values}{
    For the inverse trigonometric functions, branch cuts are defined as in
-   Abramowitz and Stegun, figure 4.4, page 79.
+   \bibcite{Abramowitz and Stegun, figure 4.4, page 79}.
 
    For \code{asin} and \code{acos}, there are two cuts, both along
    the real axis: \eqn{\left(-\infty, -1\right]}{(-Inf, -1]} and

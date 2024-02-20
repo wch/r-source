@@ -376,7 +376,7 @@ par(\dots, no.readonly = FALSE)
       Not all devices will honour this setting.}
     \item{\code{lty}}{The line type.
       Line types can either be specified as an integer (0=blank, 1=solid
-      (default), 2=dashed, 3=dotted, 4=dotdash, 5=longdash, 6=twodash)
+      (default), 2=dashed, 3=dotted, 4=\I{dotdash}, 5=\I{longdash}, 6=\I{twodash})
       or as one of the character strings \code{"blank"}, \code{"solid"},
       \code{"dashed"}, \code{"dotted"}, \code{"dotdash"},
       \code{"longdash"}, or \code{"twodash"}, where \code{"blank"} uses

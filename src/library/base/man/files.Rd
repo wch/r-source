@@ -3,6 +3,8 @@
 % Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{files}
 \alias{files}
 \alias{file.append}
@@ -87,7 +89,7 @@ Sys.junction(from, to)
 
   \code{file.remove} attempts to remove the files named in its argument.
   On most Unix platforms \sQuote{file} includes \emph{empty}
-  directories, symbolic links, fifos and sockets.  On Windows,
+  directories, symbolic links, \I{fifo}s and sockets.  On Windows,
   \sQuote{file} means a regular file and not, say, an empty directory.
 
   \code{file.rename} attempts to rename files (and \code{from} and

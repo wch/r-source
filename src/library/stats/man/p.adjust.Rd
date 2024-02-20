@@ -3,6 +3,9 @@
 % Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+\newcommand{\bibcite}{#1}
+
 \name{p.adjust}
 \alias{p.adjust}
 \alias{p.adjust.methods}
@@ -26,13 +29,16 @@ p.adjust.methods
     only set this (to non-default) when you know what you are doing!}
 }
 \details{
-  The adjustment methods include the Bonferroni correction
+  The adjustment methods include the \I{Bonferroni} correction
   (\code{"bonferroni"}) in which the p-values are multiplied by the
   number of comparisons.  Less conservative corrections are also
-  included by Holm (1979) (\code{"holm"}), Hochberg (1988)
-  (\code{"hochberg"}), Hommel (1988) (\code{"hommel"}), Benjamini &
-  Hochberg (1995) (\code{"BH"} or its alias \code{"fdr"}), and Benjamini &
-  Yekutieli (2001) (\code{"BY"}), respectively.
+  included by
+  \bibcite{Holm (1979)} (\code{"holm"}),
+  \bibcite{Hochberg (1988)} (\code{"hochberg"}),
+  \bibcite{Hommel (1988)} (\code{"hommel"}),
+  \bibcite{Benjamini & Hochberg (1995)} (\code{"BH"} or its alias
+  \code{"fdr"}), and
+  \bibcite{Benjamini & Yekutieli (2001)} (\code{"BY"}), respectively.
   A pass-through option (\code{"none"}) is also included.
   The set of methods are contained in the \code{p.adjust.methods} vector
   for the benefit of methods that need to have the method as an option
@@ -40,17 +46,18 @@ p.adjust.methods
 
   The first four methods are designed to give strong control of the
   family-wise error rate.  There seems no reason to use the unmodified
-  Bonferroni correction because it is dominated by Holm's method, which
+  \I{Bonferroni} correction because it is dominated by \I{Holm}'s method, which
   is also valid under arbitrary assumptions.
 
-  Hochberg's and Hommel's methods are valid when the hypothesis tests
-  are independent or when they are non-negatively associated (Sarkar,
-  1998; Sarkar and Chang, 1997).  Hommel's method is more powerful than
-  Hochberg's, but the difference is usually small and the Hochberg
+  \I{Hochberg}'s and \I{Hommel}'s methods are valid when the hypothesis tests
+  are independent or when they are non-negatively associated (
+  \bibcite{Sarkar, 1998; Sarkar and Chang, 1997}).
+  \I{Hommel}'s method is more powerful than
+  \I{Hochberg}'s, but the difference is usually small and the \I{Hochberg}
   p-values are faster to compute.
 
   The \code{"BH"} (aka \code{"fdr"}) and \code{"BY"} methods of
-  Benjamini, Hochberg, and Yekutieli control the false discovery rate,
+  \I{Benjamini}, \I{Hochberg}, and \I{Yekutieli} control the false discovery rate,
   the expected proportion of false discoveries amongst the rejected
   hypotheses.  The false discovery rate is a less stringent condition
   than the family-wise error rate, so these methods are more powerful

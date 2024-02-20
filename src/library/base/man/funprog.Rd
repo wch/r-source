@@ -2,6 +2,9 @@
 % Part of the R package, https://www.R-project.org
 % Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
+
+\newcommand{\I}{#1}
+
 \name{funprog}
 \alias{Filter}
 \alias{Find}
@@ -33,7 +36,7 @@ Position(f, x, right = FALSE, nomatch = NA_integer_)
 \arguments{
   \item{f}{a function of the appropriate arity (binary for
     \code{Reduce}, unary for \code{Filter}, \code{Find} and
-    \code{Position}, \eqn{k}-ary for \code{Map} if this is called with
+    \code{Position}, \I{\eqn{k}-ary} for \code{Map} if this is called with
     \eqn{k} arguments).  An arbitrary predicate function for
     \code{Negate}.}
   \item{x}{a vector.}
@@ -49,7 +52,7 @@ Position(f, x, right = FALSE, nomatch = NA_integer_)
     one.}
   \item{nomatch}{the value to be returned in the case when
     \dQuote{no match} (no element satisfying the predicate) is found.}
-  \item{\dots}{vectors to which the function is \code{Map()}ped, and other
+  \item{\dots}{vectors to which the function is \I{\code{Map()}ped}, and other
     arguments of \code{\link{mapply}} passed to it, e.g., \code{MoreArgs}.}
 }
 \details{

@@ -3,6 +3,9 @@
 % Copyright 1995-2008 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+\newcommand{\bibcite}{#1}
+
 \name{summary.manova}
 \alias{summary.manova}
 \alias{print.summary.manova}
@@ -28,16 +31,16 @@
 }
 \details{
   The \code{summary.manova} method uses a multivariate test statistic
-  for the summary table.  Wilks' statistic is most popular in the
-  literature, but the default Pillai--Bartlett statistic is recommended
+  for the summary table.  \I{Wilks}' statistic is most popular in the
+  literature, but the default \I{Pillai}--\I{Bartlett} statistic is recommended
   by Hand and Taylor (1987).
 
   The table gives a transformation of the test statistic which has
   approximately an F distribution.  The approximations used follow
   S-PLUS and SAS (the latter apart from some cases of the
-  Hotelling--Lawley statistic), but many other distributional
-  approximations exist: see Anderson (1984) and Krzanowski and Marriott
-  (1994) for further references.  All four approximate F statistics are
+  \I{Hotelling}--\I{Lawley} statistic), but many other distributional
+  approximations exist: see Anderson (1984) and
+  \bibcite{Krzanowski and Marriott (1994)} for further references.  All four approximate F statistics are
   the same when the term being tested has one degree of freedom, but in
   other cases that for the Roy statistic is an upper bound.
 

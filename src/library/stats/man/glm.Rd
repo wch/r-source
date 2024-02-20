@@ -3,6 +3,9 @@
 % Copyright 1995-2019 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+\newcommand{\bibcite}{#1}
+
 \name{glm}
 \title{Fitting Generalized Linear Models}
 \alias{glm}
@@ -170,9 +173,10 @@ glm.fit(x, y, weights = rep.int(1, nobs),
   \code{formula}, that is first in \code{data} and then in the
   environment of \code{formula}.
 
-  For the background to warning messages about \sQuote{fitted probabilities
-    numerically 0 or 1 occurred} for binomial GLMs, see Venables &
-  Ripley (2002, pp.\sspace{}197--8).
+  For the background to warning messages about
+  \sQuote{\I{fitted probabilities numerically 0 or 1 occurred}}
+  for binomial GLMs, see
+  \bibcite{Venables & Ripley (2002, pp.\sspace{}197--8)}.
 }
 
 \section{Fitting functions}{

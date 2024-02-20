@@ -11,9 +11,9 @@
 \alias{KalmanSmooth}
 \alias{KalmanForecast}
 \alias{makeARIMA}%-> ../R/arima.R
-\title{Kalman Filtering}
+\title{\I{Kalman} Filtering}
 \description{
-  Use Kalman Filtering to find the (Gaussian) log-likelihood, or for
+  Use \I{Kalman} Filtering to find the (Gaussian) log-likelihood, or for
   forecasting or smoothing.
 }
 \usage{
@@ -83,8 +83,8 @@ makeARIMA(phi, theta, Delta, kappa = 1e6,
   \code{SSinit} is therefore recommended, notably also in
   \code{\link{arima}()}.
   The \code{"Rossignol2011"} method has been proposed and partly
-  documented by Raphael Rossignol, Univ. Grenoble, on 2011-09-20 (see
-  PR#14682, below), and later been ported to C by Matwey V. Kornilov.
+  documented by \I{Raphael Rossignol}, Univ. Grenoble, on 2011-09-20 (see
+  PR#14682, below), and later been ported to C by \I{Matwey V. Kornilov}.
   It computes the covariance matrix of
   \eqn{(X_{t-1},...,X_{t-p},Z_t,...,Z_{t-q})}
   by the method of difference equations (page 93 of Brockwell and Davis),

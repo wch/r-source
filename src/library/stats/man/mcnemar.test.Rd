@@ -3,11 +3,13 @@
 % Copyright 1995-2007 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{mcnemar.test}
 \alias{mcnemar.test}
-\title{McNemar's Chi-squared Test for Count Data}
+\title{\I{McNemar}'s Chi-squared Test for Count Data}
 \description{
-  Performs McNemar's chi-squared test for symmetry of rows and columns
+  Performs \I{McNemar}'s chi-squared test for symmetry of rows and columns
   in a two-dimensional contingency table.
 }
 \usage{
@@ -22,7 +24,7 @@ mcnemar.test(x, y = NULL, correct = TRUE)
 }
 \value{
   A list with class \code{"htest"} containing the following components:
-  \item{statistic}{the value of McNemar's statistic.}
+  \item{statistic}{the value of \I{McNemar}'s statistic.}
   \item{parameter}{the degrees of freedom of the approximate
     chi-squared distribution of the test statistic.}
   \item{p.value}{the p-value of the test.}

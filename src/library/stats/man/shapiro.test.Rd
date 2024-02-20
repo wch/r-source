@@ -3,11 +3,14 @@
 % Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+\newcommand{\bibcite}{#1}
+
 \name{shapiro.test}
 \alias{shapiro.test}
-\title{Shapiro-Wilk Normality Test}
+\title{\I{Shapiro}-\I{Wilk} Normality Test}
 \description{
-  Performs the Shapiro-Wilk test of normality.
+  Performs the \I{Shapiro}-\I{Wilk} test of normality.
 }
 \usage{
 shapiro.test(x)
@@ -18,9 +21,9 @@ shapiro.test(x)
 }
 \value{
   A list with class \code{"htest"} containing the following components:
-  \item{statistic}{the value of the Shapiro-Wilk statistic.}
+  \item{statistic}{the value of the \I{Shapiro}-\I{Wilk} statistic.}
   \item{p.value}{an approximate p-value for the test.  This is
-    said in Royston (1995) to be adequate for \code{p.value < 0.1}.}
+    said in \bibcite{Royston (1995)} to be adequate for \code{p.value < 0.1}.}
   \item{method}{the character string \code{"Shapiro-Wilk normality test"}.}
   \item{data.name}{a character string giving the name(s) of the data.}
 }

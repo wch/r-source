@@ -37,7 +37,7 @@ grSoftVersion()
   \item{libtiff}{the version of \code{libtiff} in use, or \code{""} if
     not available.}
 
-  It is conceivable but unlikely that the cairo-based bitmap devices
+  It is conceivable but unlikely that the \I{cairo}-based bitmap devices
   will use different versions linked \emph{via} \I{cairographics},
   especially \code{png(type = "cairo-png")}.
 

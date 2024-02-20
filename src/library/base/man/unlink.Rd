@@ -3,6 +3,8 @@
 % Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{unlink}
 \title{Delete Files and Directories}
 \usage{unlink(x, recursive = FALSE, force = FALSE, expand = TRUE)}
@@ -24,7 +26,7 @@
   not even empty ones.
 
 #ifdef unix
-  On most platforms \sQuote{file} includes symbolic links, fifos and
+  On most platforms \sQuote{file} includes symbolic links, \I{fifo}s and
   sockets.  \code{unlink(x, recursive = TRUE)}
   deletes just the symbolic link if the target of such a link is a directory.
 

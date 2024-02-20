@@ -3,9 +3,11 @@
 % Copyright 2009-2018 Duncan Murdoch and the R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{getWindowsHandles}
 \alias{getWindowsHandles}
-\title{Get handles of Windows in the MS Windows RGui}
+\title{Get handles of Windows in the MS Windows \I{RGui}}
 \description{
   This function gets the Windows handles of visible top level windows or
   windows within the \R MDI frame (when using the \command{Rgui}).

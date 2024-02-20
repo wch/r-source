@@ -5,6 +5,8 @@
 
 % Portions copied from 
 
+\newcommand{\I}{#1}
+
 \name{confint}
 \title{Confidence Intervals for Model Parameters}
 \alias{confint}
@@ -31,7 +33,7 @@ confint(object, parm, level = 0.95, \dots)
     names.  If missing, all parameters are considered.}
   \item{level}{the confidence level required.}
   \item{trace}{ logical.  Should profiling be traced?}
-  \item{test}{use Likelihood Ratio or Rao Score test in profiling.}
+  \item{test}{use Likelihood Ratio or \I{Rao} Score test in profiling.}
   \item{\dots}{additional argument(s) for methods.}
 }
 \value{

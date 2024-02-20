@@ -3,6 +3,8 @@
 % Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\bibcite}{#1}
+
 \name{sprintf}
 \alias{sprintf}
 \alias{gettextf}
@@ -40,8 +42,9 @@ gettextf(fmt, \dots, domain = NULL, trim = TRUE)
   result in a warning. (The format \code{\%.0s} can be used to
   \dQuote{skip} an argument.)
 
-  The following is abstracted from Kernighan and Ritchie (see
-  References): however the actual implementation will follow the C99
+  The following is abstracted from
+  \bibcite{Kernighan and Ritchie (1988)}:
+  however the actual implementation will follow the C99
   standard and fine details (especially the behaviour under user error)
   may depend on the platform. References to numbered arguments come from
   POSIX.

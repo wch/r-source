@@ -3,6 +3,8 @@
 % Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{vcov}
 \title{Calculate Variance-Covariance Matrix for a Fitted Model Object}
 \alias{vcov}
@@ -67,7 +69,7 @@ vcov(object, \dots)
 
   \code{.vcov.aliased()} is an auxiliary function useful for
   \code{vcov} method implementations which have to deal with singular
-  model fits encoded via NA coefficients: It augments a vcov--matrix
+  model fits encoded via NA coefficients: It augments a \I{vcov}--matrix
   \code{vc} by \code{\link{NA}} rows and columns where needed, i.e., when
   some entries of \code{aliased} are true and \code{vc} is of smaller dimension
   than \code{length(aliased)}.

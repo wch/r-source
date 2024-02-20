@@ -3,13 +3,16 @@
 % Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+\newcommand{\bibcite}{#1}
+
 \name{ansari.test}
 \alias{ansari.test}
 \alias{ansari.test.default}
 \alias{ansari.test.formula}
-\title{Ansari-Bradley Test}
+\title{\I{Ansari}-\I{Bradley} Test}
 \description{
-  Performs the Ansari-Bradley two-sample test for a difference in scale
+  Performs the \I{Ansari}-\I{Bradley} two-sample test for a difference in scale
   parameters.
 }
 \usage{
@@ -52,7 +55,7 @@ ansari.test(x, \dots)
   distributions with densities \eqn{f((t-m)/s)/s} and \eqn{f(t-m)},
   respectively, where \eqn{m} is an unknown nuisance parameter and
   \eqn{s}, the ratio of scales, is the parameter of interest.  The
-  Ansari-Bradley test is used for testing the null that \eqn{s} equals
+  \I{Ansari}-\I{Bradley} test is used for testing the null that \eqn{s} equals
   1, the two-sided alternative being that \eqn{s \ne 1}{s != 1} (the
   distributions differ only in variance), and the one-sided alternatives
   being \eqn{s > 1} (the distribution underlying \code{x} has a larger
@@ -65,17 +68,18 @@ ansari.test(x, \dots)
   Optionally, a nonparametric confidence interval and an estimator for
   \eqn{s} are computed.  If exact p-values are available, an exact
   confidence interval is obtained by the algorithm described in Bauer
-  (1972), and the Hodges-Lehmann estimator is employed.  Otherwise, the
+  (1972), and the \I{Hodges}-\I{Lehmann} estimator is employed.  Otherwise, the
   returned confidence interval and point estimate are based on normal
   approximations.
 
   Note that mid-ranks are used in the case of ties rather than average
-  scores as employed in Hollander & Wolfe (1973).  See, e.g., Hajek,
-  Sidak and Sen (1999), pages 131ff, for more information.
+  scores as employed in \bibcite{Hollander & Wolfe (1973)}.
+  See, e.g., \bibcite{Hajek, Sidak and Sen (1999), pages 131ff}, for
+  more information.
 }
 \value{
   A list with class \code{"htest"} containing the following components:
-  \item{statistic}{the value of the Ansari-Bradley test statistic.}
+  \item{statistic}{the value of the \I{Ansari}-\I{Bradley} test statistic.}
   \item{p.value}{the p-value of the test.}
   \item{null.value}{the ratio of scales \eqn{s} under the null, 1.}
   \item{alternative}{a character string describing the alternative
@@ -88,12 +92,12 @@ ansari.test(x, \dots)
     (Only present if argument \code{conf.int = TRUE}.)}
 }
 \note{
-  To compare results of the Ansari-Bradley test to those of the F test
+  To compare results of the \I{Ansari}-\I{Bradley} test to those of the F test
   to compare two variances (under the assumption of normality), observe
   that \eqn{s} is the ratio of scales and hence \eqn{s^2} is the ratio
   of variances (provided they exist), whereas for the F test the ratio
   of variances itself is the parameter of interest.  In particular,
-  confidence intervals are for \eqn{s} in the Ansari-Bradley test but
+  confidence intervals are for \eqn{s} in the \I{Ansari}-\I{Bradley} test but
   for \eqn{s^2} in the F test.
 }
 \references{
@@ -122,7 +126,7 @@ ansari.test(x, \dots)
 
   \code{\link[coin:ScaleTests]{ansari_test}} in package \CRANpkg{coin}
   for exact and approximate \emph{conditional} p-values for the
-  Ansari-Bradley test, as well as different methods for handling ties.
+  \I{Ansari}-\I{Bradley} test, as well as different methods for handling ties.
 }
 \examples{
 ## Hollander & Wolfe (1973, p. 86f):

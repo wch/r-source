@@ -86,7 +86,7 @@ srcref(srcfile, lloc)
 
   The \code{srcfilealias} function produces an object of the descendant
   class \code{srcfilealias}, which gives an alternate name to another
-  srcfile.  This is produced by the parser when a \code{#line} directive
+  \code{srcfile}.  This is produced by the parser when a \code{#line} directive
   is used.
 
   The \code{getSrcLines} function reads the specified lines from

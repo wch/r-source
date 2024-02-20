@@ -3,6 +3,8 @@
 % Copyright 2020 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{userdir}
 \alias{R_user_dir}
 \title{R User Directories}
@@ -19,7 +21,7 @@ R_user_dir(package, which = c("data", "config", "cache"))
     interest.  Can be abbreviated.}
 }
 \details{
-  For desktop environments using X Windows, the freedesktop.org project
+  For desktop environments using X Windows, the \I{freedesktop.org} project
   (formerly X Desktop Group, \abbr{XDG}) developed the \abbr{XDG} Base Directory
   Specification
   (\url{https://specifications.freedesktop.org/basedir-spec}) for

@@ -3,6 +3,9 @@
 % Copyright 1995-2009 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+\newcommand{\bibcite}{#1}
+
 \name{StructTS}
 \alias{StructTS}
 \alias{print.StructTS}
@@ -93,7 +96,7 @@ StructTS(x, type = c("level", "trend", "BSM"), init = NULL,
   \item{call}{the matched call.}
   \item{series}{the name of the series \code{x}.}
   \item{code}{the \code{convergence} code returned by \code{\link{optim}}.}
-  \item{model, model0}{Lists representing the Kalman Filter used in the
+  \item{model, model0}{Lists representing the \I{Kalman} filter used in the
     fitting.  See \code{\link{KalmanLike}}.  \code{model0} is the
     initial state of the filter, \code{model} its final state.}
   \item{xtsp}{the \code{tsp} attributes of \code{x}.}
@@ -117,7 +120,7 @@ StructTS(x, type = c("level", "trend", "BSM"), init = NULL,
 \note{
   Optimization of structural models is a lot harder than many of the
   references admit.  For example, the \code{\link{AirPassengers}} data
-  are considered in Brockwell & Davis (1996): their solution appears to
+  are considered in \bibcite{Brockwell & Davis (1996)}: their solution appears to
   be a local maximum, but nowhere near as good a fit as that produced by
   \code{StructTS}.  It is quite common to find fits with one or more
   variances zero, and this can include \eqn{\sigma^2_\epsilon}{sigma^2_eps}.

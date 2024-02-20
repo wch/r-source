@@ -3,6 +3,9 @@
 % Copyright 1995-2024 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+\newcommand{\bibcite}{#1}
+
 \name{ar}
 \title{Fit Autoregressive Models to Time Series}
 \alias{ar}
@@ -107,11 +110,13 @@ ar.mle(x, aic = TRUE, order.max = NULL, na.action = na.fail,
 
   \code{ar.burg} allows two methods to estimate the innovations
   variance and hence AIC. Method 1 is to use the update given by
-  the Levinson-Durbin recursion (Brockwell and Davis, 1991, (8.2.6)
-  on page 242), and follows S-PLUS.  Method 2 is the mean of the sum
+  the \I{Levinson}-\I{Durbin} recursion
+  (\bibcite{Brockwell and Davis, 1991, (8.2.6) on page 242}),
+  and follows S-PLUS.  Method 2 is the mean of the sum
   of squares of the forward and backward prediction errors
-  (as in Brockwell and Davis, 1996, page 145). Percival and Walden
-  (1998) discuss both. In the multivariate case the estimated
+  (as in \bibcite{Brockwell and Davis, 1996, page 145}).
+  \bibcite{Percival and Walden (1998)} discuss both.
+  In the multivariate case the estimated
   coefficients will depend (slightly) on the variance estimation method.
 
   Remember that \code{ar} includes by default a constant in the model, by

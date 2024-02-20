@@ -3,6 +3,8 @@
 % Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{weekdays}
 \alias{weekdays}
 \alias{weekdays.POSIXt}
@@ -16,7 +18,7 @@
 \alias{julian}
 \alias{julian.POSIXt}
 \alias{julian.Date}
-\title{Extract Parts of a POSIXt or Date Object}
+\title{Extract Parts of a \I{POSIXt} or Date Object}
 \description{
   Extract the weekday, month or quarter, or the Julian time
   (days since some origin).  These are generic functions: the methods

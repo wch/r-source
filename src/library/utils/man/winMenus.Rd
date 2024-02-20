@@ -3,8 +3,10 @@
 % Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{winMenus}
-\title{User Menus under MS Windows (Rgui)}
+\title{User Menus under MS Windows (\I{RGui})}
 \alias{winMenuAdd}
 \alias{winMenuAddItem}
 \alias{winMenuDel}

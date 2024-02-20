@@ -3,12 +3,14 @@
 % Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{medpolish}
-\title{Median Polish (Robust Twoway Decomposition) of a Matrix}
+\title{Median Polish (Robust Two-way Decomposition) of a Matrix}
 \alias{medpolish}
-\concept{twoway}% S-plus name
+\concept{\I{twoway}}% S-plus name
 \description{
-  Fits an additive model (twoway decomposition) using Tukey's
+  Fits an additive model (two-way decomposition) using Tukey's
   \emph{median polish} procedure.
 }
 \usage{

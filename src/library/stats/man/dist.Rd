@@ -3,6 +3,8 @@
 % Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{dist}
 \alias{dist}
 \alias{print.dist}
@@ -40,7 +42,7 @@ as.dist(m, diag = FALSE, upper = FALSE)
     distance matrix should be printed by \code{print.dist}.}
   \item{upper}{logical value indicating whether the upper triangle of the
     distance matrix should be printed by \code{print.dist}.}
-  \item{p}{The power of the Minkowski distance.}
+  \item{p}{The power of the \I{Minkowski} distance.}
   \item{m}{An object with distance information to be converted to a
     \code{"dist"} object.  For the default method, a \code{"dist"}
     object, or a matrix (of distances) or an object which can be coerced
@@ -79,9 +81,9 @@ as.dist(m, diag = FALSE, upper = FALSE)
       and zero elements are \sQuote{off}.  The distance is the
       \emph{proportion} of bits in which only one is on amongst those in
       which at least one is on.
-      This also called \dQuote{Jaccard} distance in some contexts.
+      This also called \dQuote{\I{Jaccard}} distance in some contexts.
       Here, two all-zero observations have distance \code{0}, whereas in
-      traditional Jaccard definitions, the distance would be undefined for
+      traditional \I{Jaccard} definitions, the distance would be undefined for
       that case and give \code{\link{NaN}} numerically.}
 
     \item{\code{minkowski}:}{The \eqn{p} norm, the \eqn{p}th root of the
@@ -94,7 +96,7 @@ as.dist(m, diag = FALSE, upper = FALSE)
   excluded when their contribution to the distance gave \code{NaN} or
   \code{NA}.
   If some columns are excluded in calculating a Euclidean, Manhattan,
-  Canberra or Minkowski distance, the sum is scaled up proportionally to
+  Canberra or \I{Minkowski} distance, the sum is scaled up proportionally to
   the number of columns used.  If all pairs are excluded when
   calculating a particular distance, the value is \code{NA}.
 

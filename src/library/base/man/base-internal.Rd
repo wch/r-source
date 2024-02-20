@@ -3,6 +3,8 @@
 % Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{base-internal}
 \alias{.subset}
 \alias{.subset2}
@@ -284,7 +286,7 @@ lazyLoadDBfetch(key, file, compressed, hook)
   \code{.fixupGFortranStdout} and \code{.fixupGFortranStderr} are helper functions
   to enable standard output and standard error units in \code{gfortran} when
   executing external code via \code{system} and \code{system2}. By default, these
-  units are disabled by the Windows profile when running inside RGui.
+  units are disabled by the Windows profile when running inside \I{RGui}.
 }
 \value{
   \code{.getRequiredPackages} and \code{.getRequiredPackages2}

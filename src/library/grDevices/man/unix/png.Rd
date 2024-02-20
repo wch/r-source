@@ -82,7 +82,7 @@ tiff(filename = "Rplot\%03d.tiff",
 
   \item{type}{character string, one of \code{"Xlib"} or \code{"quartz"}
     (some macOS builds) or \code{"cairo"}.  The latter will only be
-    available if the system was compiled with support for cairo --
+    available if the system was compiled with support for \I{cairo} --
     otherwise \code{"Xlib"} will be used.  The default is set by
     \code{\link{getOption}("bitmapType")} -- the \sQuote{out of the box}
     default is \code{"quartz"} or \code{"cairo"} where available,
@@ -132,7 +132,7 @@ tiff(filename = "Rplot\%03d.tiff",
   each of these devices: this will be reported if you attempt to use
   them on a system where they are not supported.  For \code{type =
   "Xlib"} they may not be usable unless the X11 display is available to
-  the owner of the \R process.  \code{type = "cairo"} requires cairo 1.2
+  the owner of the \R process.  \code{type = "cairo"} requires \I{cairo} 1.2
   or later.  \code{type = "quartz"} uses the \code{\link{quartz}} device
   and so is only available where that is (on some macOS builds: see
   \code{\link{capabilities}("aqua")}).
@@ -189,14 +189,14 @@ tiff(filename = "Rplot\%03d.tiff",
     system.
 
     \item Where support has been compiled in for \I{cairographics}, plotting
-    on cairo surfaces.  This may use the native platform support for
+    on \I{cairo} surfaces.  This may use the native platform support for
     fonts, or it may use \code{fontconfig} to support a wide range of
     font formats.
   }
   Inevitably there will be differences between the options supported and
   output produced.  Perhaps the most important are support for
   antialiased fonts and semi-transparent colours: the best results are
-  likely to be obtained with the cairo- or Quartz-based devices where
+  likely to be obtained with the \I{cairo}- or Quartz-based devices where
   available.
 
   The default extensions are \file{.jpg} and \file{.tif} on Windows, and
@@ -206,7 +206,7 @@ tiff(filename = "Rplot\%03d.tiff",
 \note{
   For \code{type = "Xlib"} these devices are based on the \code{\link{X11}}
   device.  The colour model used will be that set up by
-  \code{X11.options} at the time the first Xlib-based devices was opened
+  \code{X11.options} at the time the first \I{Xlib}-based devices was opened
   (or the first after all such devices have been closed).
 
   Support for compression types depends on the underlying \samp{libtiff}

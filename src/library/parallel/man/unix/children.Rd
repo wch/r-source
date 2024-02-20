@@ -3,6 +3,8 @@
 % Copyright 2009-2016 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{mcchildren}
 \alias{children}
 \alias{readChild}
@@ -54,8 +56,8 @@ mckill(process, signal = 2L)
     (suitable for passing evaluation results).}
   \item{process}{process (object of the class \code{process}) or a
     process ID (\abbr{pid})}
-  \item{signal}{integer: signal to send.  Values of 2 (SIGINT), 9
-    (SIGKILL) and 15 (SIGTERM) are pretty much portable, but for maximal
+  \item{signal}{integer: signal to send.  Values of 2 (\I{SIGINT}), 9
+    (\I{SIGKILL}) and 15 (\I{SIGTERM}) are pretty much portable, but for maximal
     portability use \code{tools::\link{SIGTERM}} and so on.}
 }
 \details{

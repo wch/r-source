@@ -8,7 +8,7 @@
 \title{Generate a Name for a Grob}
 \description{
   This function generates a unique (within-session) name for
-  a grob, based on the grob's class.
+  a grob, based on the grob{}'s class.
 }
 \usage{
 grobName(grob = NULL, prefix = "GRID")

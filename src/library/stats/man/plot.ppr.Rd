@@ -6,6 +6,9 @@
 % file modreg/man/plot.ppr.Rd
 % copyright (C) 1995-8 B. D. Ripley
 %
+
+\newcommand{\I}{#1}
+
 \name{plot.ppr}
 \alias{plot.ppr}
 \title{Plot Ridge Functions for Projection Pursuit Regression Fit}
@@ -32,7 +35,7 @@
     \code{\link{par}("cex")}).}
   \item{main, xlab, ylab}{axis annotations, see also
     \code{\link{title}}.  Can be an expression (depending on \code{i} and
-    \code{bet.i}), as by default which will be \code{eval()}uated.}
+    \code{bet.i}), as by default which will be \I{\code{eval()}uated}.}
   \item{\dots}{further graphical parameters, passed to
     \code{\link{plot}()}.}
 }

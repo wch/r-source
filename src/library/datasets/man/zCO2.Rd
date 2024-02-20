@@ -3,6 +3,8 @@
 % Copyright 1995-20011 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{CO2}
 \docType{data}
 \alias{CO2}
@@ -10,7 +12,7 @@
 \description{
   The \code{CO2} data frame has 84 rows and 5 columns of data from an
   experiment on the cold tolerance of the grass species
-  \emph{Echinochloa crus-galli}.
+  \emph{\I{Echinochloa crus-galli}}.
 }
 \usage{CO2}
 \format{

@@ -2,6 +2,9 @@
 % Part of the R package, https://www.R-project.org
 % Copyright 2022 R Core Team
 % Distributed under GPL 2 or later
+
+\newcommand{\I}{#1}
+
 \name{charClass}
 \alias{charClass}
 \title{Character Classification}
@@ -21,7 +24,7 @@ charClass(x, class)
 \details{
   The classification into character classes is platform-dependent.  The
   classes are determined by internal tables on Windows and (optionally
-  but by default) on macOS and AIX.
+  but by default) on macOS and \I{AIX}.
 
   The character classes are interpreted as follows:
   \describe{

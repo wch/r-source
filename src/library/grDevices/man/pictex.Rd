@@ -3,9 +3,11 @@
 % Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{pictex}
 \alias{pictex}
-\title{A PicTeX Graphics Driver}
+\title{A \I{PicTeX} Graphics Driver}
 \usage{
 pictex(file = "Rplots.tex", width = 5, height = 4, debug = FALSE,
        bg = "white", fg = "black")
@@ -35,7 +37,7 @@ pictex(file = "Rplots.tex", width = 5, height = 4, debug = FALSE,
   Line widths are ignored except when setting the spacing of line textures.
   \code{pch = "."} corresponds to a square of side 1pt.
 
-  This device does not support colour (nor does the PicTeX package),
+  This device does not support colour (nor does the \I{PicTeX} package),
   and all colour settings are ignored.
 
   Note that text is recorded in the file as-is, so annotations involving

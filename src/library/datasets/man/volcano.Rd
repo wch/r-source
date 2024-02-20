@@ -3,14 +3,16 @@
 % Copyright 1995-2007 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\I}{#1}
+
 \name{volcano}
 \docType{data}
 \alias{volcano}
-\title{Topographic Information on Auckland's Maunga Whau Volcano}
+\title{Topographic Information on Auckland's \I{Maunga Whau} Volcano}
 \description{
-  Maunga Whau (Mt Eden) is one of about 50 volcanos in the Auckland
+  \I{Maunga Whau} (Mt Eden) is one of about 50 volcanos in the Auckland
   volcanic field.  This data set gives topographic information for
-  Maunga Whau on a 10m by 10m grid.
+  \I{Maunga Whau} on a 10m by 10m grid.
 }
 \usage{volcano}
 \format{

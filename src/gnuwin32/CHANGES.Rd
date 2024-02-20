@@ -669,7 +669,7 @@
        locale (as they were in most previous releases, but not in
        2.11.0).
       
-      \item \command{R CMD INSTALL} can install zipfiles as binary
+      \item \command{R CMD INSTALL} can install \I{zipfiles} as binary
       packages.
         
       \item Errors in the \file{Rconsole} file are ignored: silently on

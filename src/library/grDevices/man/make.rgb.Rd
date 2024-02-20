@@ -20,7 +20,7 @@ make.rgb(red, green, blue, name = NULL, white = "D65",
 colorConverter(toXYZ, fromXYZ, name, white = NULL, vectorized = FALSE)
 }
 \arguments{
-  \item{red,green,blue}{Chromaticity (\I{xy} or \I{xyY}) of RGB primaries}
+  \item{red,green,blue}{\I{Chromaticity} (\I{xy} or \I{xyY}) of RGB primaries}
   \item{name}{Name for the colour space}
   \item{white}{Character string specifying the reference white (see
     \sQuote{Details}.)}

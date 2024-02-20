@@ -59,16 +59,16 @@
   The mapping of the types of \R arguments to C or Fortran arguments is
 
   \tabular{lll}{
-    \R \tab     C \tab     Fortran\cr
-    integer \tab int * \tab integer\cr
-    numeric \tab double * \tab double precision\cr
-    -- or -- \tab float * \tab real\cr
-    complex \tab Rcomplex * \tab double complex\cr
-    logical \tab int * \tab integer \cr
-    character \tab char ** \tab [see below]\cr
-    raw \tab unsigned char * \tab not allowed\cr
-    list \tab SEXP *\tab not allowed\cr
-    other \tab SEXP\tab not allowed\cr
+    \R              \tab C                     \tab Fortran\cr
+    \code{integer}  \tab \code{int *}          \tab \code{integer}\cr
+    \code{numeric}  \tab \code{double *}       \tab \code{double precision}\cr
+    -- or --        \tab \code{float *}        \tab \code{real}\cr
+    \code{complex}  \tab \code{Rcomplex *}     \tab \code{double complex}\cr
+    \code{logical}  \tab \code{int *}          \tab \code{integer} \cr
+    \code{character}\tab \code{char **}        \tab [see below]\cr
+    \code{raw}      \tab \code{unsigned char *}\tab not allowed\cr
+    \code{list}     \tab \code{SEXP *}         \tab not allowed\cr
+    other           \tab \code{SEXP}           \tab not allowed\cr
   }
 
   \emph{Note:} The C types corresponding to \code{integer} and
