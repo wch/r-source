@@ -73,7 +73,8 @@ NEWS.pdf: NEWS.rds
 	  $(ECHO) "'pdflatex' is needed to make NEWS.pdf but is missing on your system."; \
 	else \
 	 $(ECHO) "creating doc/NEWS.pdf"; \
-	 $(ECHO) 'options(warn=1);tools:::Rd2pdf_NEWS_in_Rd("NEWS.rds", "NEWS.pdf")' |  $(R_EXE); \
+	 $(ECHO) 'options(warn=1);tools:::Rd2pdf_NEWS_in_Rd("NEWS.rds", "NEWS.pdf")' | \
+	 TEXINPUTS="$(top_srcdir)/share/texmf/tex/latex:$$TEXINPUTS" $(R_EXE); \
 	fi
 
 docs3: NEWS.3.rds NEWS.3.html NEWS.3.pdf
@@ -96,7 +97,8 @@ NEWS.3.pdf: NEWS.3.rds
 	  $(ECHO) "'pdflatex' is needed to make NEWS.3.pdf but is missing on your system."; \
 	else \
 	 $(ECHO) "creating NEWS.3.pdf"; \
-	 $(ECHO) 'options(warn=1);tools:::Rd2pdf_NEWS_in_Rd("NEWS.3.rds", "NEWS.3.pdf")' |  $(R_EXE); \
+	 $(ECHO) 'options(warn=1);tools:::Rd2pdf_NEWS_in_Rd("NEWS.3.rds", "NEWS.3.pdf")' | \
+	 TEXINPUTS="$(top_srcdir)/share/texmf/tex/latex:$$TEXINPUTS" $(R_EXE); \
 	fi
 
 ## NEWS.2.html ships as doc/html/NEWS.2.html in the sources.
@@ -121,7 +123,8 @@ NEWS.2.pdf: NEWS.2.rds
 	  $(ECHO) "'pdflatex' is needed to make NEWS.2.pdf but is missing on your system."; \
 	else \
 	 $(ECHO) "creating NEWS.2.pdf"; \
-	 $(ECHO) 'options(warn=1);tools:::Rd2pdf_NEWS_in_Rd("NEWS.2.rds", "NEWS.2.pdf")' |  $(R_EXE); \
+	 $(ECHO) 'options(warn=1);tools:::Rd2pdf_NEWS_in_Rd("NEWS.2.rds", "NEWS.2.pdf")' | \
+	 TEXINPUTS="$(top_srcdir)/share/texmf/tex/latex:$$TEXINPUTS" $(R_EXE); \
 	fi
 
 
