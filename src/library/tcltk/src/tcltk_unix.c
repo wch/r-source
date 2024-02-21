@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000--2022  The R Core Team
+ *  Copyright (C) 2000--2024  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -52,39 +52,41 @@ typedef struct {
 static void (* OldHandler)(void);
 static int OldRwait;
 static int Tcl_loaded = 0;
-
-#define R_TCL_SPIN_MAX 5
+static int Tcl_lock = 0; /* reentrancy guard */
 
 static void TclSpinLoop(void *data)
 {
-    /* In the past, Tcl_ServiceAll() wasn't enough and we used
+    /* In the past, we used
 
 	  while (Tcl_DoOneEvent(TCL_DONT_WAIT)) ;
 
-       but that seems no longer needed and causes infinite recursion
-       with R handlers that have a re-entrancy guard, when TclSpinLoop
-       is invoked from such a handler (seen with Rhttp server).
+       but that caused infinite recursion with R handlers that have a
+       re-entrancy guard, when TclSpinLoop is invoked from such a handler
+       (seen with Rhttp server).
 
-       However, handling certain Tcl events tend to generate further 
-       events (closing a window is typically followed by a WM event
-       saying that the window is now closed, etc.), so we run 
-       Tcl_ServiceAll() a small number of times to try and clear the 
-       queue. Otherwise, the processing of such "knock-on" events would
-       have to wait until the next polling event.
+       Recent Tcl documentation seems to suggests that applications
+       with an external event loop should be calling Tcl_ServiceAll(),
+       instead, but Tcl_ServiceAll() does not queue new events, such
+       as Tcp events (problems reported with a Tcl socket server),
+       because it does not call Tcl_WaitForEvent.
+
+       Therefore, we use a defensive solution (originally intended as
+       temporary in R 4.2.1-3). R 4.3.0-2 used a variant of Tcl_ServiceAll).
     */
 
-    int i = R_TCL_SPIN_MAX;
-	
-    while (i-- && Tcl_ServiceAll())
-        ;
+    int max_ev = 100;
+    while (Tcl_DoOneEvent(TCL_DONT_WAIT) && max_ev) max_ev--;
 }
 
 //extern Rboolean R_isForkedChild;
 static void TclHandler(void)
 {
-    if (!R_isForkedChild)
-	/* there is a reentrancy guard in Tcl_ServiceAll */
+    if (!R_isForkedChild && !Tcl_lock
+       && Tcl_GetServiceMode() != TCL_SERVICE_NONE) {
+	Tcl_lock = 1;
 	(void) R_ToplevelExec(TclSpinLoop, NULL);
+	Tcl_lock = 0;
+    }
     
     OldHandler();
 }
@@ -96,7 +98,7 @@ static void addTcl(void)
     OldHandler = R_PolledEvents;
     OldRwait = R_wait_usec;
     R_PolledEvents = TclHandler;
-    if (R_wait_usec > 1000 || R_wait_usec == 0) R_wait_usec = 1000;
+    if (R_wait_usec > 10000 || R_wait_usec == 0) R_wait_usec = 10000;
 }
 
 #ifdef UNUSED
