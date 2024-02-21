@@ -1621,13 +1621,13 @@ or collation involving @code{NaN} will result in @code{NA}.  They are
 regarded as matching any @code{NaN} value (and no other value, not even
 @code{NA}) by @code{match}.
 
-The @code{NA} of character type is as from R 1.5.0 distinct from the
+The @code{NA} of character type is distinct from the
 string @code{"NA"}.  Programmers who need to specify an explicit string
 @code{NA} should use @samp{NA_character_} rather than @code{"NA"}, or
 set elements to @code{NA} using @code{is.na<-}.
 
-There are constants @code{NA_integer_}, @code{NA_real_},
-@code{NA_complex_} and @code{NA_character_} which will generate (in the
+The constants @code{NA_integer_}, @code{NA_real_},
+@code{NA_complex_} and @code{NA_character_} will generate (in the
 parser) an @code{NA} value of the appropriate type, and will be used in
 deparsing when it is not otherwise possible to identify the type of an
 @code{NA} (and the @code{control} options ask for this to be done).
@@ -4337,8 +4337,10 @@ parser itself.
 
 There are five types of constants: integer, logical, numeric, complex and string.
 
-In addition, there are four special constants, @code{NULL}, @code{NA},
-@code{Inf}, and @code{NaN}.
+In addition, there is the special constant @code{NULL}.
+Also, the numeric @code{Inf}, and @code{NaN}, the logical
+@code{NA}, and @code{NA_character_}, @code{NA_integer_}, @code{NA_real_},
+and @code{NA_complex_} deserve mentioning; for the latter, see @ref{NA handling}.
 
 @code{NULL} is used to indicate the empty object.  @code{NA} is used for
 absent (``Not Available'') data values.  @code{Inf} denotes infinity and
@@ -4346,7 +4348,7 @@ absent (``Not Available'') data values.  @code{Inf} denotes infinity and
 (results of the operations respectively @math{1/0} and @math{0/0}, for
 instance).
 
-Logical constants are either @code{TRUE} or @code{FALSE}.
+Logical constants are either @code{TRUE}, @code{FALSE} or @code{NA}.
 
 Numeric constants follow a similar syntax to that of the @C{} language.
 They consist of an integer part consisting of zero or more digits,
@@ -4559,7 +4561,7 @@ indices.
 
 @quotation
 @multitable @columnfractions 0.3 0.6
-@item @code{+ - * / %% ^} @tab arithmetic
+@item @code{+ - * / %% %/% ^} @tab arithmetic
 @item @code{> >= < <= == !=} @tab relational
 @item @code{! & |} @tab logical
 @item @code{~} @tab model formulae
