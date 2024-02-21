@@ -104,7 +104,7 @@ function(ifile, encoding = "unknown", keepSpacing = TRUE,
                               if(keepSpacing) firstline - prevline else 1L))
 	    }
 	    if (keepSpacing)
-                mycat(rep.int(" ", firstcol - prevcol - 1L), sep = "")
+                mycat(rep.int(" ", max(0, firstcol - prevcol - 1L)), sep = "")
 	    x <- as.character(srcref) # go back to original form
 	    mycat(x, sep = "")
 	    prevcol <<- lastcol
