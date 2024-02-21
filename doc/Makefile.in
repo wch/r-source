@@ -68,14 +68,12 @@ html/NEWS.html: NEWS.rds
 
 PDFLATEX = @PDFLATEX@
 ## needs pdflatex (and more)
-## Need LC_COLLATE to work around the misuse of [A-z] in texi2dvi 1.135
-## (as reported by MM)
 NEWS.pdf: NEWS.rds
 	@if test -z "$(PDFLATEX)"; then \
 	  $(ECHO) "'pdflatex' is needed to make NEWS.pdf but is missing on your system."; \
 	else \
 	 $(ECHO) "creating doc/NEWS.pdf"; \
-	 $(ECHO) 'options(warn=1);tools:::Rd2pdf_NEWS_in_Rd("NEWS.rds", "NEWS.pdf")' |  LC_COLLATE=C $(R_EXE); \
+	 $(ECHO) 'options(warn=1);tools:::Rd2pdf_NEWS_in_Rd("NEWS.rds", "NEWS.pdf")' |  $(R_EXE); \
 	fi
 
 docs3: NEWS.3.rds NEWS.3.html NEWS.3.pdf
@@ -98,7 +96,7 @@ NEWS.3.pdf: NEWS.3.rds
 	  $(ECHO) "'pdflatex' is needed to make NEWS.3.pdf but is missing on your system."; \
 	else \
 	 $(ECHO) "creating NEWS.3.pdf"; \
-	 $(ECHO) 'options(warn=1);tools:::Rd2pdf_NEWS_in_Rd("NEWS.3.rds", "NEWS.3.pdf")' |  LC_COLLATE=C $(R_EXE); \
+	 $(ECHO) 'options(warn=1);tools:::Rd2pdf_NEWS_in_Rd("NEWS.3.rds", "NEWS.3.pdf")' |  $(R_EXE); \
 	fi
 
 ## NEWS.2.html ships as doc/html/NEWS.2.html in the sources.
@@ -123,7 +121,7 @@ NEWS.2.pdf: NEWS.2.rds
 	  $(ECHO) "'pdflatex' is needed to make NEWS.2.pdf but is missing on your system."; \
 	else \
 	 $(ECHO) "creating NEWS.2.pdf"; \
-	 $(ECHO) 'options(warn=1);tools:::Rd2pdf_NEWS_in_Rd("NEWS.2.rds", "NEWS.2.pdf")' |  LC_COLLATE=C $(R_EXE); \
+	 $(ECHO) 'options(warn=1);tools:::Rd2pdf_NEWS_in_Rd("NEWS.2.rds", "NEWS.2.pdf")' |  $(R_EXE); \
 	fi
 
 
