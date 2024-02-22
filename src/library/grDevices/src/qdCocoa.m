@@ -331,10 +331,12 @@ static QuartzFunctions_t *qf;
     ci->pdfMode = NO;
 }
 
+static int sonoma_bug = -1; /* -1 = macOS not checked yet, 0 = no, 1 = yes */
+
 - (void)drawRect:(NSRect)aRect
 {
     CGRect rect;
-    CGContextRef ctx = [[NSGraphicsContext currentContext] graphicsPort];
+    CGContextRef ctx = [NSGraphicsContext currentContext].CGContext;
     /* we have to retain our copy, beause we may need to create a layer
        based on the context in NewPage outside of drawRect: */
     if (ci->context != ctx) {
@@ -342,16 +344,25 @@ static QuartzFunctions_t *qf;
             CGContextRelease(ci->context);
         CGContextRetain(ctx);
     }
+
+    if (sonoma_bug == -1) { /* detect os version to work around the nasty Sonoma drawing bug */
+	NSOperatingSystemVersion osver = [[NSProcessInfo processInfo] operatingSystemVersion];
+	sonoma_bug = (osver.majorVersion == 14 && osver.minorVersion > 1) ? 1 : 0;
+	/* Rprintf("macOS %d.%d.%d, buggy = %d\n", (int)osver.majorVersion, (int)osver.minorVersion,
+	   (int)osver.patchVersion, sonoma_bug); */
+    }
+
     ci->context = ctx;
     ci->bounds = [self bounds];        
+    /* Rprintf("drawRect, ctx=%p, bounds=(%f x %f)\n", ctx, ci->bounds.size.width, ci->bounds.size.height); */
     rect = CGRectMake(0.0, 0.0, ci->bounds.size.width, ci->bounds.size.height);
     
     if (ci->pdfMode) {
+	/* Rprintf("  pdfMode - replaying list\n"); */
 	qf->ReplayDisplayList(ci->qd);
 	return;
     }
 
-    /* Rprintf("drawRect, ctx=%p, bounds=(%f x %f)\n", ctx, ci->bounds.size.width, ci->bounds.size.height); */
     if (!ci->layer) {
         CGSize size = CGSizeMake(ci->bounds.size.width, ci->bounds.size.height);
         /* Rprintf(" - have no layer, creating one (%f x %f)\n", ci->bounds.size.width, ci->bounds.size.height); */
@@ -389,8 +400,24 @@ static QuartzFunctions_t *qf;
         }
     }
     if ([self inLiveResize]) CGContextSetAlpha(ctx, 0.6); 
-    if (ci->layer)
+    if (ci->layer) {
+	/* macOS 14.3.1 has a very bizarre bug which appears to be some kind
+	   of over-zealous optimization where it won't update the view even if
+	   the contents changed after drawing the CGLayer. The only way to prevent
+	   this from happening seems to be to draw something different than
+	   CGLayer each time in the same location before drawing the CGLayer. */
+	static double _q = 0.0;
+	if (sonoma_bug) {
+	    CGContextSaveGState(ctx);
+	    CGRect cr = { 0.0, 0.0, 1.0, 1.0 };
+	    CGContextAddRect(ctx, cr);
+	    CGContextSetRGBFillColor(ctx, _q, 1.0, 1.0, 1.0);
+	    _q += 0.1; if (_q > 1.0) _q -= 1.0;
+	    CGContextFillPath(ctx);
+	    CGContextRestoreGState(ctx);
+	}
         CGContextDrawLayerInRect(ctx, rect, ci->layer);
+    }
     if ([self inLiveResize]) CGContextSetAlpha(ctx, 1.0); 
 }
 
@@ -682,6 +709,7 @@ static void initialize_cocoa() {
 
 static CGContextRef QuartzCocoa_GetCGContext(QuartzDesc_t dev, void *userInfo) {
     QuartzCocoaDevice *qd = (QuartzCocoaDevice*)userInfo;
+    /* if (!qd->pdfMode) Rprintf("QuartzCocoa_GetCGContext(layer=%p) -> %p (check %p)\n", qd->layer, qd->layerContext, qd->layer ? CGLayerGetContext(qd->layer) : 0); */
     return qd->pdfMode ? qd->context : qd->layerContext;
 }
 
@@ -765,6 +793,7 @@ static void QuartzCocoa_NewPage(QuartzDesc_t dev,void *userInfo, int flags) {
         ci->inHistory = -1;
     }
     if (ci->layer) {
+        /* Rprintf(" - releasing old layer (%p - ctx: %p)\n", ci->layer, ci->layerContext); */
         CGLayerRelease(ci->layer);
         ci->layer = 0;
         ci->layerContext = 0;
@@ -785,6 +814,7 @@ static void QuartzCocoa_Sync(QuartzDesc_t dev,void *userInfo) {
      * via setNeedsDisplay: YES has issues since dev.flush() won't
      * be synchronous and thus animation using dev.flush(); dev.hold()
      * will break by the time the event loop is run */
+    /* Rprintf("QuartzCocoa_Sync()\n"); */
     [ci->view display];
 }
 
