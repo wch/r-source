@@ -387,10 +387,9 @@ SEXP dispatchMethod(SEXP op, SEXP sxp, SEXP dotClass, RCNTXT *cptr, SEXP method,
 #else
 		static int option = -1;
 		if (option == -1) {
+		    option = 0; // all: the default
 		    const char *val = getenv("R_USEMETHOD_FORWARD_LOCALS");
-		    if (val == NULL)
-			option = 0;
-		    else {
+		    if (val != NULL) {
 			if (strcmp(val, "all") == 0)
 			    option = 0;
 			else if (strcmp(val, "S4") == 0)
@@ -399,10 +398,8 @@ SEXP dispatchMethod(SEXP op, SEXP sxp, SEXP dotClass, RCNTXT *cptr, SEXP method,
 			    option = 2;
 			else if (strcmp(val, "error") == 0)
 			    option = 3;
-			else {
+			else
 			    warning("bad value for R_USEMETHOD_FORWARD_LOCALS");
-			    option = 0;
-			}
 		    }
 		}
 		SEXP val;
