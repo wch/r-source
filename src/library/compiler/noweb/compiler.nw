@@ -5026,7 +5026,7 @@ cmpfun <- function(f, options = NULL) {
         ncntxt <- make.functionContext(cntxt, formals(f), body(f))
         if (mayCallBrowser(body(f), ncntxt))
             return(f)
-        if (typeof(body(f)) != "language" || body(f)[1] != "{")
+        if (typeof(body(f)) != "language" || body(f)[[1]] != "{")
             loc <- list(expr = body(f), srcref = getExprSrcref(f))
         else
             loc <- NULL
