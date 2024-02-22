@@ -707,6 +707,9 @@
 
       \item \code{predict(<rank-deficient lm>, newdata=*)} fix computing of
       \code{nbasis}, see \I{Russ Lenth}'s comment 29 in \PR{16158}.
+
+      \item Added a work-around for a bug in macOS 14.3.1 and higher which
+      prevents R plots in the Quartz Cocoa device from updating on screen.
     }
   }
 }
