@@ -1,9 +1,13 @@
 
 	**************************************************
 	*	 Windows-specific changes to R		 *
-	*	 See the file NEWS for changes that	 *
-	*        affect all versions of R.		 *
 	**************************************************
+
+	This file covers changes since R 2.0.0 up to R 2.9.2.
+	For later changes see the file CHANGES (up to R 2.15.0)
+	and the subsequent NEWS files.
+	Changes from R 1.0.0 to R 2.0.0 are in CHANGES2.
+	Changes up to R 1.0.0 are in CHANGES1.
 
 
 	**************************************************
@@ -2080,19 +2084,3 @@ BUG FIXES
 
     o	The graphics recording mechanism windows(record = TRUE) could
 	cause memory corruption.
-
-
-
-
-	*********************************************************
-	*							*
-	*	News of 1.x.y and 2.0.0 is in file `CHANGES1'	*
-	*	News of 1.0.0 and earlier is in file `CHANGES0'	*
-	*	These files are available in the source		*
-	*	distribution.					*
-	*							*
-	*********************************************************
-
-%%% Local Variables:
-%%% mode: text
-%%% End:

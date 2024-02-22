@@ -1,8 +1,8 @@
 		Windows-specific changes to R
 		=============================
 
-For changes since the release of R 2.0.0 on 4 Oct 2004 see the files
-CHANGES.
+For changes since the release of R 2.0.0 on 4 Oct 2004 see the file
+CHANGES0.
 
 
 rw2000
@@ -1381,5 +1381,5 @@ used to find the current drive.
 
     -------------------------------------------------------------------
 
-	For changes prior to the release of R 1.0.0 on 29 Feb 2000
-	see the file CHANGES0 in the source distribution.
+	For changes up to the release of R 1.0.0 on 29 Feb 2000
+	see the file CHANGES1 in the source distribution.
