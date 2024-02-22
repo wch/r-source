@@ -1513,8 +1513,8 @@ msgstr[0] " 不正なローマ数字です: %s "
 #~ msgid "modes argument ignored"
 #~ msgstr " モード引数が無視されます "
 
-#~ msgid "too many list items (at most up to number 3899)"
-#~ msgstr " リストの項目が多すぎます（最大でも3899です） "
+#~ msgid "too many list items (at most up to number 3999)"
+#~ msgstr " リストの項目が多すぎます（最大でも3999です） "
 
 #~ msgid "Packages {readRDS() sequentially}:"
 #~ msgstr " パッケージ {readRDS() sequentially}: "

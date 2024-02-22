@@ -1528,8 +1528,8 @@ msgstr[1] "nombres romans incorrects : %s"
 #~ msgid "modes argument ignored"
 #~ msgstr "argument modes ignoré"
 
-#~ msgid "too many list items (at most up to number 3899)"
-#~ msgstr "trop d'entrées de liste (3899 maximum)"
+#~ msgid "too many list items (at most up to number 3999)"
+#~ msgstr "trop d'entrées de liste (3999 maximum)"
 
 #~ msgid "Packages {readRDS() sequentially}:"
 #~ msgstr "Packages {readRDS() séquentiellement} :"

@@ -49,8 +49,8 @@ function(x, type = "arabic", offset = 0, start = 1,
             letters[labels]
     }
     else if(type %in% c("I", "i")) {
-        if(upper > 3899L)
-            stop(gettextf("too many list items (at most up to %d)", 3899L),
+        if(upper > 3999L)
+            stop(gettextf("too many list items (at most up to %d)", 3999L),
                  domain = NA)
         labels <- as.character(as.roman(labels))
         if(type == "i")

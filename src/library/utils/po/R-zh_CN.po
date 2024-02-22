@@ -1521,8 +1521,8 @@ msgstr[0] "罗马数字无效：%s"
 #~ msgid "modes argument ignored"
 #~ msgstr "基本模式参数略过不用"
 
-#~ msgid "too many list items (at most up to number 3899)"
-#~ msgstr "串列项太多(最多只能有3899项("
+#~ msgid "too many list items (at most up to number 3999)"
+#~ msgstr "串列项太多(最多只能有3999项("
 
 #~ msgid "Packages {readRDS() sequentially}:"
 #~ msgstr "程序包{顺序readRDS()}:"

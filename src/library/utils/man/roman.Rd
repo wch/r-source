@@ -37,16 +37,16 @@ sum(r2)
   and  (\code{"\link{Logic}"}), i.e., all \code{"\link{Ops}"} group
   operations work as for regular numbers via \R's integer functionality.
 
-  Only numbers between 1 and 3899 have a unique representation as roman
+  Only numbers between 1 and 3999 have a unique representation as roman
   numbers, and hence others result in \code{as.roman(NA)}.
 
   \code{.romans} is the basic dictionary, a named \code{\link{character}} vector.
 }
 \references{
-  Wikipedia contributors (2006). Roman numerals.
+  Wikipedia contributors (2024). Roman numerals.
   Wikipedia, The Free Encyclopedia.
-  \url{https://en.wikipedia.org/w/index.php?title=Roman_numerals&oldid=78252134}.
-  Accessed September 29, 2006.
+  \url{https://en.wikipedia.org/w/index.php?title=Roman_numerals&oldid=1188781837}.
+  Accessed February 22, 2024.
 }
 \examples{
 ## First five roman 'numbers'.
@@ -65,7 +65,7 @@ cc <- c(NA, 1:3, strrep("I", 0:5))
 (rc <- as.roman(cc)) # two NAs: 0 is not "roman"
 (ic <- as.integer(rc)) # works automatically [without an explicit method]
 rNA <- as.roman(NA)
-## simple consistency checks -- arithmetic when result is in  {1,2,..,3899} :
+## simple consistency checks -- arithmetic when result is in  {1,2,..,3999} :
 stopifnot(identical(rc, as.roman(rc)), # as.roman(.) is "idempotent"
           identical(rc + rc + (3*rc), rc*5),
           identical(ic, c(NA, 1:3, NA, 1:5)),

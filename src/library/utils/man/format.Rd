@@ -29,7 +29,7 @@ formatOL(x, type = "arabic", offset = 0, start = 1,
     or lower case letters are employed (in this case, the number of the
     last item must not exceed 26).  Finally, for \code{"Roman"} or
     \code{"roman"}, the labels are given as upper or lower case roman
-    numerals (with the number of the last item maximally 3899).
+    numerals (with the number of the last item maximally 3999).
     \code{type} can be given as a unique abbreviation of the above, or
     as one of the \acronym{HTML} style tokens \code{"1"} (arabic),
     \code{"A"}/\code{"a"} (alphabetic), or \code{"I"}/\code{"i"}

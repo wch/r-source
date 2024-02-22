@@ -34,7 +34,7 @@
     }
     else
         stop("cannot coerce 'x' to roman")
-    if(check.range) x[x <= 0L | x >= 3900L] <- NA
+    if(check.range) x[x <= 0L | x >= 4000L] <- NA
     class(x) <- "roman"
     x
 }
@@ -111,7 +111,7 @@ function(x) {
     }
 
     x <- as.integer(x)
-    ind <- is.na(x) | (x <= 0L) | (x >= 3900L)
+    ind <- is.na(x) | (x <= 0L) | (x >= 4000L)
     out <- character(length(x))
     out[ind] <- NA
     out[!ind] <- vapply(x[!ind], n2r, "")

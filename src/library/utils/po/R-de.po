@@ -1535,8 +1535,8 @@ msgstr[1] "ungültige römische Zahlen: %s"
 #~ msgid "modes argument ignored"
 #~ msgstr "modes Argument ignoriert"
 
-#~ msgid "too many list items (at most up to number 3899)"
-#~ msgstr "zu viele Listenelemente (höchstens 3899!)"
+#~ msgid "too many list items (at most up to number 3999)"
+#~ msgstr "zu viele Listenelemente (höchstens 3999!)"
 
 #~ msgid "Packages {readRDS() sequentially}:"
 #~ msgstr "Pakete {readRDS() sequentiell}:"
