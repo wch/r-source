@@ -1,6 +1,6 @@
 #  File src/library/tools/R/Rd2HTML.R
 #
-#  Copyright (C) 1995-2023 The R Core Team
+#  Copyright (C) 1995-2024 The R Core Team
 #  Part of the R package, https://www.R-project.org
 #
 #  This program is free software; you can redistribute it and/or modify
@@ -475,7 +475,7 @@ Rd2HTML <-
     ## These correspond to idiosyncratic wrappers
     HTMLLeft <- c("\\abbr"='<abbr>',
                   "\\acronym"='<abbr><span class="acronym">',
-    		  "\\donttest"="",
+    		  "\\donttest"="", "\\dontdiff"="",
     		  "\\env"='<span class="env">',
                   "\\file"='&lsquo;<span class="file">',
                   "\\option"='<span class="option">',
@@ -486,7 +486,7 @@ Rd2HTML <-
                   "\\verb"='<code style="white-space: pre;">&#8288;')
     HTMLRight <- c("\\abbr"="</abbr>",
                    "\\acronym"='</span></abbr>',
-    		   "\\donttest"="",
+    		   "\\donttest"="", "\\dontdiff"="",
     		   "\\env"="</span>",
                    "\\file"='</span>&rsquo;',
                    "\\option"="</span>",
@@ -796,7 +796,7 @@ Rd2HTML <-
                },
                "\\abbr" =,
                "\\acronym" =,
-               "\\donttest" =,
+               "\\donttest" =, "\\dontdiff" =,
                "\\env" =,
                "\\file" =,
                "\\option" =,

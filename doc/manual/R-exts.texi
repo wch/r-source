@@ -7548,6 +7548,7 @@ number generation (for example, @code{x <- rnorm(100)}), or by using
 standard data sets listed by @code{data()} (see @code{?data} for more
 info).
 
+@findex \donttest
 Finally, there is @code{\donttest}, used (at the beginning of a separate
 line) to mark code that should be run by @code{example()} but not by
 @code{R CMD check} (by default: the option @option{--run-donttest} can
@@ -7563,15 +7564,17 @@ be declared in the @file{DESCRIPTION} file.  It is good practice to
 include a comment in the @code{\donttest} section explaining why it is
 needed.
 
-Output from code between comments
+@findex \dontdiff
+Output from code marked with @code{\dontdiff} (requires @R{} >= 4.4.0)
+or between comment lines
 @example
 ## IGNORE_RDIFF_BEGIN
 ## IGNORE_RDIFF_END
 @end example
 @noindent
 is ignored when comparing check output to reference output (a
-@file{-Ex.Rout.save} file).  This markup can also be used for scripts
-under @file{tests}.
+@file{@var{pkg}-Ex.Rout.save} file).
+The comment-based markup can also be used for scripts under @file{tests}.
 
 @findex \keyword
 @item \keyword@{@var{key}@}

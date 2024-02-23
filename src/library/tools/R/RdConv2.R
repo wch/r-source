@@ -965,7 +965,7 @@ checkRd <- function(Rd, defines = .Platform$OS.type, stages = "render",
                    } else warnRd(block, Rdfile, level = 7,
                                  "Tag ", tag, " is only valid in \\usage"),
                    "\\dontrun" =,
-                   "\\donttest" =,
+                   "\\donttest" =, "\\dontdiff" =,
                    "\\dontshow" =,
                    "\\testonly" = if(blocktag == "\\examples")
                    checkCodeBlock(block, blocktag)

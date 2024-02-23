@@ -1,7 +1,7 @@
 #  File src/library/tools/R/Rd2latex.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2022 The R Core Team
+#  Copyright (C) 1995-2024 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -440,7 +440,7 @@ Rd2latex <- function(Rd, out = "", defines = .Platform$OS.type,
                "\\dots" =,
                "\\ldots" = of1(if(inCode || inCodeBlock) "..."  else tag),
                "\\R" = of0(tag, "{}"),
-               "\\donttest" = writeContent(block, tag),
+               "\\donttest" =, "\\dontdiff" = writeContent(block, tag),
                "\\dontrun"= writeDR(block, tag),
                "\\enc" = {
                    ## some people put more things in \enc than a word,

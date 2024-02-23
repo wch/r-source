@@ -1,7 +1,7 @@
 #  File src/library/tools/R/Rd2ex.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2021 The R Core Team
+#  Copyright (C) 1995-2024 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -59,8 +59,15 @@ Rd2ex <-
     render <- function(x, prefix = "")
     {
 	renderDont <- function(txt, comment, label=TRUE, xtra1=comment) {
+            if (length(txt) == 1L) {
+                label1 <- paste0(txt, ": ")
+                label2 <- paste0("End(", txt, ")")
+            } else {
+                label1 <- txt[1L]
+                label2 <- txt[2L]
+            }
 	    if (label)
-		of0("## ", txt, ": ")
+		of0("## ", label1)
 	    ## Special case for one line.
 	    if (xtra1 && length(x) == 1L) {
 		render(x[[1L]], prefix)
@@ -76,12 +83,14 @@ Rd2ex <-
 		if (!grepl("\n$", last[length(last)], perl = TRUE))
 		    writeLines("", con)
 		if (label)
-		    of0("## End(",txt,")")
+		    of0("## ", label2)
 	    }
 	}
 	tag <- attr(x, "Rd_tag")
 	if(tag %in% c("\\dontshow", "\\testonly")) {
 	    renderDont("Don't show", comment=FALSE)
+	} else if (tag == "\\dontdiff") {
+	    renderDont(c("IGNORE_RDIFF_BEGIN", "IGNORE_RDIFF_END"), comment=FALSE)
 	} else if (tag == "\\dontrun") {
 	    renderDont("Not run", commentDontrun, label=commentDontrun)
 	} else if (tag == "\\donttest") {

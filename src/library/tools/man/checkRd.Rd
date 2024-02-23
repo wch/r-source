@@ -82,7 +82,7 @@ checkRd(Rd, defines = .Platform$OS.type, stages = "render",
     -5 \tab \verb{\title} should not end in a period\cr
   }
   and variations with \verb{\method} replaced by \verb{\S3method} or
-  \verb{\S4method}, \verb{\dontrun} replaced by \verb{\donttest} or
+  \verb{\S4method}, \verb{\dontrun} replaced by \verb{\donttest}, \verb{\dontdiff} or
   \verb{\dontshow}, and \verb{\title} replaced by \verb{\section} or
   \verb{\subsection} name.
   \dQuote{Lost braces} are uprated to warning level -1 when they match
