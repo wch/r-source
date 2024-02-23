@@ -24,7 +24,7 @@ axis.Date(side, x, at, format, labels = TRUE, \dots)
     see \code{\link{strftime}}.}
   \item{labels}{either a logical value specifying whether
     annotations are to be made at the tickmarks, or a character vector of
-    labels to be placed at the tickpoints specified by \code{at}.}
+    labels to be placed at the tick points specified by \code{at}.}
   \item{\dots}{further arguments to be passed from or to other methods,
     typically \link{graphical parameters}.}
 }

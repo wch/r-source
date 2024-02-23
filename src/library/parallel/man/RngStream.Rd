@@ -100,7 +100,7 @@ mc.reset.stream()
   The vignette for package \pkg{parallel}.
 }
 \note{
-  Interfaces to L'Ecuyer's C code are available in CRAN
+  Interfaces to \I{L'Ecuyer}'s C code are available in CRAN
   packages \CRANpkg{rlecuyer} and \CRANpkg{rstream}.
 }
 

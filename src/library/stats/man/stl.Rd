@@ -49,7 +49,7 @@ stl(x, s.window, s.degree = 0,
     low-pass filter.  Must be 0 or 1.}
   \item{s.jump, t.jump, l.jump}{integers at least one to increase speed of
     the respective smoother.  Linear interpolation happens between every
-    \code{*.jump}th value.}
+    \code{*.jump}-th value.}
   \item{robust}{logical indicating if robust fitting be used in the
     \code{loess} procedure.}
   \item{inner}{integer; the number of \sQuote{inner} (backfitting)

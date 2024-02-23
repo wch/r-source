@@ -22,7 +22,7 @@ Axis(x = NULL, at = NULL, \dots, side, labels = NULL)
   \item{labels}{this can either be a logical value specifying whether
     (numerical) annotations are to be made at the tickmarks, or a
     character or expression vector of labels to be placed at the
-    tickpoints. If this is specified as a character or expression
+    tick points. If this is specified as a character or expression
     vector, \code{at} should be supplied and they should be the same
     length.}
   \item{\dots}{arguments to be passed to methods and perhaps then to

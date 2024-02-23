@@ -74,7 +74,7 @@ quantile(x, \dots)
   \deqn{Q_{i}(p) = (1 - \gamma)x_{j} + \gamma x_{j+1}}{Q[i](p) = (1 - \gamma) x[j] + \gamma x[j+1],}
   where \eqn{1 \le i \le 9},
   \eqn{\frac{j - m}{n} \le p < \frac{j - m + 1}{n}}{(j-m)/n \le p < (j-m+1)/n},
-  \eqn{x_{j}}{x[j]} is the \eqn{j}th order statistic, \eqn{n} is the
+  \eqn{x_{j}}{x[j]} is the \eqn{j}-th order statistic, \eqn{n} is the
   sample size, the value of \eqn{\gamma} is a function of
   \eqn{j = \lfloor np + m\rfloor}{j = floor(np + m)} and \eqn{g = np + m - j},
   and \eqn{m} is a constant determined by the sample quantile type.
@@ -102,7 +102,7 @@ quantile(x, \dots)
   of \eqn{p}, with \eqn{\gamma = g}{gamma = g} and \eqn{m} given below. The
   sample quantiles can be obtained equivalently by linear interpolation
   between the points \eqn{(p_k,x_k)}{(p[k],x[k])} where \eqn{x_k}{x[k]}
-  is the \eqn{k}th order statistic.  Specific expressions for
+  is the \eqn{k}-th order statistic.  Specific expressions for
   \eqn{p_k}{p[k]} are given below.
 
   \describe{

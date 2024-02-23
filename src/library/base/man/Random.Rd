@@ -98,7 +98,7 @@ set.seed(seed, kind = NULL, normal.kind = NULL, sample.kind = NULL)
     respectively.
 
     It exhibits 25 clear failures in the \I{TestU01} Crush suite
-    (L'Ecuyer, 2007). 
+    (\bibcite{L'Ecuyer, 2007}). 
     }
 
     \item{\code{"Mersenne-Twister"}:}{
@@ -114,7 +114,7 @@ set.seed(seed, kind = NULL, normal.kind = NULL, sample.kind = NULL)
       \I{Matsumoto} and \I{Nishimura} addressed in a 2002 update.
 
       It exhibits 2 clear failures in each of the \I{TestU01} Crush and the
-      \I{BigCrush} suite (\emph{\I{L'Ecuyer}}, 2007).
+      \I{BigCrush} suite (\bibcite{L'Ecuyer, 2007}).
     }
 
     \item{\code{"Knuth-TAOCP-2002"}:}{

@@ -86,8 +86,8 @@ as.dist(m, diag = FALSE, upper = FALSE)
       traditional \I{Jaccard} definitions, the distance would be undefined for
       that case and give \code{\link{NaN}} numerically.}
 
-    \item{\code{minkowski}:}{The \eqn{p} norm, the \eqn{p}th root of the
-      sum of the \eqn{p}th powers of the differences of the components.}
+    \item{\code{minkowski}:}{The \eqn{p} norm, the \eqn{p}-th root of the
+      sum of the \eqn{p}-th powers of the differences of the components.}
   }
 
   Missing values are allowed, and are excluded from all computations

@@ -22,7 +22,7 @@ embed (x, dimension = 1)
   \code{x[t]}, \code{x[t-1]}, \dots, \code{x[t-dimension+1]}, where
   \code{t} is the original index of \code{x}. If \code{x} is a matrix,
   i.e., \code{x} contains more than one variable, then \code{x[t]}
-  consists of the \code{t}th observation on each variable.
+  consists of the \code{t}-th observation on each variable.
 }
 \value{
   A matrix containing the embedded time series \code{x}.

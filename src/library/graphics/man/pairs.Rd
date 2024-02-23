@@ -84,7 +84,7 @@ pairs(x, \dots)
     respectively.}
 }
 \details{
-  The \eqn{ij}th scatterplot contains \code{x[,i]} plotted against
+  The \eqn{ij}-th scatterplot contains \code{x[,i]} plotted against
   \code{x[,j]}.  The scatterplot can be customised by setting panel
   functions to appear as something completely different. The
   off-diagonal panel functions are passed the appropriate columns of

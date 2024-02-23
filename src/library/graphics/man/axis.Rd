@@ -26,7 +26,7 @@ axis(side, at = NULL, labels = TRUE, tick = TRUE, line = NA,
   \item{labels}{this can either be a logical value specifying whether
     (numerical) annotations are to be made at the tickmarks, or a
     character or expression vector of labels to be placed at the
-    tickpoints.  (Other objects are coerced by \code{\link{as.graphicsAnnot}}.)
+    tick points.  (Other objects are coerced by \code{\link{as.graphicsAnnot}}.)
     If this is not logical, \code{at} should also be supplied and of the
     same length.  If \code{labels} is of length zero after coercion,
     it has the same effect as supplying \code{TRUE}.}

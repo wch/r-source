@@ -539,10 +539,17 @@ function(which = NULL, dir = NULL,
                           "post-mortem", "Inter alia", "inter alia",
                           "2nd", "4th", "20th", "100th",
                           "equi-", "intra-", "mis-", "Pre-", "pre-",
-                          "un-", "-ary", "-ness", "-th"),
+                          "un-", "-ary", "-ness"),
                         collapse = "|")),
           sprintf("(%s)\\b",
-                  paste(c("\\(de\\)", "\\(un\\)"),
+                  paste(c("\\(De\\)", "\\(de\\)",
+                          "\\(Un\\)", "\\(un\\)",
+                          ## A literal 'nth' would even be in
+                          ## Wiktionary 
+                          ## (<https://en.wiktionary.org/wiki/nth>), but
+                          ## we typically write \eqn{n}-th which after
+                          ## Rd filtering leaves '-th' by itself ...
+                          "-th", "'th"),
                         collapse = "|")))
 
     program <- aspell_find_program(program)
