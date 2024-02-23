@@ -4,7 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{SSgompertz}
-\title{Self-Starting Nls Gompertz Growth Model}
+\title{Self-Starting Nls \I{Gompertz} Growth Model}
 \usage{
 SSgompertz(x, Asym, b2, b3)
 }
@@ -17,7 +17,7 @@ SSgompertz(x, Asym, b2, b3)
  \item{b3}{a numeric parameter related to the scale the \code{x} axis.}
 }
 \description{
-  This \code{selfStart} model evaluates the Gompertz growth model
+  This \code{selfStart} model evaluates the \I{Gompertz} growth model
   and its gradient.  It has an \code{initial} attribute that
   creates initial estimates of the parameters \code{Asym},
   \code{b2}, and \code{b3}.

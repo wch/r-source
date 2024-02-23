@@ -68,7 +68,7 @@ qqplot(x, y, plot.it = TRUE,
   without ties. Otherwise, asymptotic distributions are used whose approximations may
   be inaccurate in small samples. Monte-Carlo approximations based on
   \code{B} random permutations are computed when \code{simulate = TRUE}.
-  Confidence bands are in agreement with Smirnov's test, that is, the
+  Confidence bands are in agreement with \I{Smirnov}'s test, that is, the
   bisecting line is covered by the band iff the null of both samples coming 
   from the same distribution cannot be rejected at the same level.
 

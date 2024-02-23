@@ -22,8 +22,8 @@ treering
   Each tree ring corresponds to one year.
 }
 \details{
-  The data were recorded by Donald A. Graybill, 1980, from
-  Gt Basin Bristlecone Pine 2805M, 3726-11810 in Methuselah Walk, California.
+  The data were recorded by \I{Donald A. Graybill}, 1980, from
+  \I{Gt Basin Bristlecone} Pine 2805M, 3726-11810 in \I{Methuselah Walk}, California.
 }
 \source{
   Time Series Data Library:

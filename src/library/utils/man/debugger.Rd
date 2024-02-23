@@ -4,7 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{debugger}
-\title{Post-Mortem Debugging}
+\title{\I{Post-Mortem} Debugging}
 \alias{debugger}
 \alias{dump.frames}
 \alias{limitedLabels}

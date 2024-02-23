@@ -15,7 +15,7 @@ spec.pgram(x, spans = NULL, kernel, taper = 0.1,
 \arguments{
   \item{x}{univariate or multivariate time series.}
   \item{spans}{vector of odd integers giving the widths of modified
-    Daniell smoothers to be used to smooth the periodogram.}
+    \I{Daniell} smoothers to be used to smooth the periodogram.}
   \item{kernel}{alternatively, a kernel smoother of class
     \code{"tskernel"}.}
   \item{taper}{specifies the proportion of data to taper.  A split
@@ -36,7 +36,7 @@ spec.pgram(x, spans = NULL, kernel, taper = 0.1,
 \description{
   \code{spec.pgram} calculates the periodogram using a fast Fourier
   transform, and optionally smooths the result with a series of
-  modified Daniell smoothers (moving averages giving half weight to
+  modified \I{Daniell} smoothers (moving averages giving half weight to
   the end values).
 }
 \details{

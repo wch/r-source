@@ -100,7 +100,7 @@ ppr(x, \dots)
   }
   \item{trace}{logical indicating if each spline fit should produce
     diagnostic output (about \code{lambda} and \code{df}), and the
-    supsmu fit about its steps.}
+    \code{supsmu} fit about its steps.}
   \item{\dots}{arguments to be passed to or from other methods.}
   \item{model}{logical.  If true, the model frame is returned.}
 }

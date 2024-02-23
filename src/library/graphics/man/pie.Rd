@@ -61,7 +61,7 @@ pie(x, labels = names(x), edges = 200, radius = 0.8,
     position along a common scale can be made instead of the less
     accurate angle judgements.}
   This statement is based on the empirical investigations of Cleveland
-  and McGill as well as investigations by perceptual psychologists.
+  and \I{McGill} as well as investigations by perceptual psychologists.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

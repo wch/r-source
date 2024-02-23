@@ -6,9 +6,9 @@
 \name{Box.test}
 \alias{Box.test}
 \concept{portmanteau}
-\title{Box-Pierce and Ljung-Box Tests}
+\title{\I{Box}-\I{Pierce} and \I{Ljung}-\I{Box} Tests}
 \description{
-  Compute the Box--Pierce or Ljung--Box test statistic for examining the
+  Compute the \I{Box}--\I{Pierce} or \I{Ljung}--\I{Box} test statistic for examining the
   null hypothesis of independence in a given time series.  These are
   sometimes known as \sQuote{portmanteau} tests.
 }

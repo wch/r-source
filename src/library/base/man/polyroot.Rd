@@ -22,7 +22,7 @@ polyroot(z)
     p(x) = z1 + z2 * x + \ldots + z[n] * x^(n-1)}
   is given by its coefficient vector \code{z[1:n]}.
   \code{polyroot} returns the \eqn{n-1} complex zeros of \eqn{p(x)}
-  using the Jenkins-Traub algorithm.
+  using the \I{Jenkins}-\I{Traub} algorithm.
 
   If the coefficient vector \code{z} has zeroes for the highest powers,
   these are discarded.

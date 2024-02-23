@@ -168,7 +168,7 @@ x \%/\% y
 
   \code{**} is translated in the parser to \code{^}, but this was
   undocumented for many years.  It appears as an index entry in Becker
-  \emph{et al} (1988), pointing to the help for \code{Deprecated} but
+  \abbr{et al.}\sspace(1988), pointing to the help for \code{Deprecated} but
   is not actually mentioned on that page.  Even though it had been
   deprecated in S for 20 years, it was still accepted in \R in 2008.
 }

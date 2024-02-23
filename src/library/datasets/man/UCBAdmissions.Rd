@@ -28,7 +28,7 @@
 }
 \details{
   This data set is frequently used for illustrating Simpson's paradox,
-  see \I{Bickel} \emph{\I{et al}} (1975).  At issue is whether the data show evidence
+  see \I{Bickel} \abbr{et al.}\sspace(1975).  At issue is whether the data show evidence
   of sex bias in admission practices.  There were 2691 male applicants,
   of whom 1198 (44.5\%) were admitted, compared with 1835 female
   applicants of whom 557 (30.4\%) were admitted.  This gives a sample

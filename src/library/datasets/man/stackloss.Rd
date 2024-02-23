@@ -3,14 +3,12 @@
 % Copyright 1995-2024 R Core Team
 % Distributed under GPL 2 or later
 
-\newcommand{\I}{#1}
-
 \name{stackloss}
 \docType{data}
 \alias{stackloss}
 \alias{stack.loss}
 \alias{stack.x}
-\title{Brownlee's Stack Loss Plant Data}
+\title{\I{Brownlee}'s Stack Loss Plant Data}
 \description{
   Operational data of a plant for the oxidation of ammonia to nitric
   acid.
@@ -48,7 +46,7 @@ stack.loss
     oxidation of ammonia (\I{NH\eqn{_3}{3}}) to nitric acid
     (\I{HNO\eqn{_3}{3}}).  The nitric oxides produced are absorbed in a
     countercurrent absorption tower}.
-  (Brownlee, cited by Dodge, slightly reformatted by MM.)
+  (\I{Brownlee}, cited by \I{Dodge}, slightly reformatted by MM.)
 
   \code{Air Flow} represents the rate of operation of the plant.
   \code{Water Temp} is the temperature of cooling water circulated

@@ -78,7 +78,7 @@ aov(formula, data = NULL, projections = FALSE, qr = TRUE,
 }
 \author{
   The design was inspired by the S function of the same name described
-  in Chambers \emph{et al} (1992).
+  in Chambers \abbr{et al.}\sspace(1992).
 }
 \seealso{
   \code{\link{lm}}, \code{\link{summary.aov}},

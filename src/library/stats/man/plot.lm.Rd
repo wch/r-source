@@ -35,7 +35,7 @@
     \code{\link{glm}}.}
   \item{which}{a subset of the numbers \code{1:6}, by default \code{1:3, 5},
     referring to \enumerate{
-      \item "Residuals vs Fitted", aka \sQuote{Tukey-Anscombe} plot % 1
+      \item "Residuals vs Fitted", aka \sQuote{\I{Tukey}-\I{Anscombe}} plot % 1
       \item "Residual Q-Q" plot  % 2
       \item "Scale-Location"     % 3
       \item "Cook's distance"    % 4

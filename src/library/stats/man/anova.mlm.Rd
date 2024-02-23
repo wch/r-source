@@ -3,8 +3,6 @@
 % Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
-\newcommand{\I}{#1}
-
 \name{anova.mlm}
 \alias{anova.mlm}
 %\alias{anova.mlmlist}
@@ -48,8 +46,8 @@
 
   For the \code{"Spherical"} test, proportionality is usually with the
   identity matrix but a different matrix can be specified using \code{Sigma}.
-  Corrections for asphericity known as the Greenhouse--Geisser,
-  respectively Huynh--Feldt, epsilons are given and adjusted \eqn{F} tests are
+  Corrections for asphericity known as the \I{Greenhouse}--\I{Geisser},
+  respectively \I{Huynh}--\I{Feldt}, epsilons are given and adjusted \eqn{F} tests are
   performed.
 
   It is common to transform the observations prior to testing. This
@@ -75,7 +73,7 @@
    An object of class \code{"anova"} inheriting from class \code{"data.frame"}
 }
 \note{
-  The Huynh--Feldt epsilon differs from that calculated by SAS (as of
+  The \I{Huynh}--\I{Feldt} epsilon differs from that calculated by SAS (as of
   v.\sspace{}8.2) except when the \abbr{DF} is equal to the number of observations
   minus one.  This is believed to be a bug in SAS, not in \R.
 }

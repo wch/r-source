@@ -40,14 +40,14 @@ is.tskernel(k)
     kernels of dimension \code{m[j]}, for \code{j in 1:length(m)}.
     Currently this is supported only for the named \code{"*daniell"} kernels.}
   \item{name}{the name the kernel will be called.}
-  \item{r}{the kernel order for a Fejer kernel.}
+  \item{r}{the kernel order for a \I{Fejer} kernel.}
   \item{k, x}{a \code{"tskernel"} object.}
   \item{type, xlab, ylab, main, \dots}{arguments passed to
     \code{\link{plot.default}}.}
 }
 \details{
   \code{kernel} is used to construct a general kernel or named specific
-  kernels.  The modified Daniell kernel halves the end coefficients.
+  kernels.  The modified \I{Daniell} kernel halves the end coefficients.
 
   The \code{\link{[}} method allows natural indexing of kernel objects
   with indices in \code{(-m) : m}.  The normalization is such that for

@@ -28,7 +28,7 @@ tsdiag(object, gof.lag, \dots)
 
   The methods for \code{\link{arima}} and \code{\link{StructTS}} objects
   plots residuals scaled by the estimate of their (individual) variance,
-  and use the Ljung--Box version of the portmanteau test.
+  and use the \I{Ljung}--\I{Box} version of the portmanteau test.
 }
 \value{
   None. Diagnostics are plotted.

@@ -15,7 +15,7 @@
   The tests are described as
   \describe{
     \item{general:}{a non-verbal measure of general intelligence using
-      Cattell's culture-fair test.}
+      \I{Cattell}'s culture-fair test.}
     \item{picture:}{a picture-completion test}
     \item{blocks:}{block design}
     \item{maze:}{mazes}

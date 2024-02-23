@@ -142,7 +142,7 @@ hat(x, intercept = TRUE)
 
   For linear models, \code{rstandard(*, type = "predictive")} provides
   leave-one-out cross validation residuals, and the \dQuote{PRESS}
-  statistic (\bold{PRE}dictive \bold{S}um of \bold{S}quares, the same as
+  statistic (\I{\bold{PRE}dictive \bold{S}um of \bold{S}quares}, the same as
   the CV score) of model \code{model} is \preformatted{   PRESS <- sum(rstandard(model, type="pred")^2)}
 
   The function \code{hat()} exists mainly for S (version 2)

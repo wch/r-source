@@ -20,7 +20,7 @@
   \item{which}{Optionally select subset of parameters to profile.}
   \item{maxsteps}{Maximum number of steps to bracket \code{zmax}.}
   \item{alpha}{Significance level corresponding to \code{zmax}, based on
-    a Scheffe-style multiple testing interval.  Ignored
+    a \I{Scheffe}-style multiple testing interval.  Ignored
     if \code{zmax} is specified.}
   \item{zmax}{Cutoff for the profiled value of the signed root-likelihood.}
   \item{del}{Initial stepsize on root-likelihood scale.}

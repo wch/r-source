@@ -97,7 +97,7 @@ plclust(tree, hang = 0.1, unit = FALSE, level = FALSE, hmin = 0,
   \code{lm.fit} and \code{lm.wfit} which handle null models now.
   Similarly, \code{glm.fit.null} is superseded by \code{glm.fit}.
 
-  \code{mauchley.test} was a misspelling of Mauchly's name, corrected
+  \code{mauchley.test} was a misspelling of \I{Mauchly}'s name, corrected
   by the introduction of \code{\link{mauchly.test}}.
 
   \code{clearNames} had been introduced at about the same time as

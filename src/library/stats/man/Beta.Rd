@@ -61,7 +61,7 @@ rbeta(n, shape1, shape2, ncp = 0)
   \eqn{I_x(a,b)} is \code{pbeta(x, a, b)}.
 
   The noncentral Beta distribution (with \code{ncp} \eqn{ = \lambda})
-  is defined (Johnson \emph{et al}, 1995, pp.\sspace{}502) as the distribution of
+  is defined (Johnson \abbr{et al.}, 1995, pp.\sspace{}502) as the distribution of
   \eqn{X/(X+Y)} where \eqn{X \sim \chi^2_{2a}(\lambda)}{X ~ chi^2_2a(\lambda)}
   and \eqn{Y \sim \chi^2_{2b}}{Y ~ chi^2_2b}.
   There, \eqn{\chi^2_n(\lambda)}{chi^2_n(\lambda)} is the noncentral
@@ -95,7 +95,7 @@ rbeta(n, shape1, shape2, ncp = 0)
   contributed by Catherine Loader (see \code{\link{dbinom}}) if either
   shape parameter is larger than one, otherwise directly from the definition.
   The non-central case is based on the derivation as a Poisson
-  mixture of betas (Johnson \emph{et al}, 1995, pp.\sspace{}502--3).
+  mixture of betas (Johnson \abbr{et al.}, 1995, pp.\sspace{}502--3).
 
   \item The central \code{pbeta} for the default (\code{log_p = FALSE})
   uses a C translation based on

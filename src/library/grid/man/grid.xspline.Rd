@@ -3,8 +3,6 @@
 % Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
-\newcommand{\I}{#1}
-
 \name{grid.xspline}
 \alias{grid.xspline}
 \alias{xsplineGrob}
@@ -70,7 +68,7 @@ xsplineGrob(x = c(0, 0.5, 1, 0.5), y = c(0.5, 1, 0.5, 0),
   approximates the control points (and is
   very similar to a cubic B-spline when the shape is
   1).  If the shape parameter is less than zero, the spline interpolates
-  the control points (and is very similar to a Catmull-Rom spline when
+  the control points (and is very similar to a \I{Catmull}-\I{Rom} spline when
   the shape is -1).  If the shape parameter is 0, the spline forms a
   sharp corner at that control point.
 

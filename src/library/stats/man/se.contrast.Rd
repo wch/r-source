@@ -25,7 +25,7 @@ se.contrast(object, \dots)
    }
  \item{coef}{used when \code{contrast.obj} is a list; it should be a
    vector of the same length as the list with zero sum.  The default
-   value is the first Helmert contrast, which contrasts the first and
+   value is the first \I{Helmert} contrast, which contrasts the first and
    second cell means specified by the list.}
  \item{data}{The data frame used to evaluate \code{contrast.obj}.}
  \item{\dots}{further arguments passed to or from other methods.}

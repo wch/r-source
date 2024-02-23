@@ -1,6 +1,5 @@
 % -*- coding: utf-8 -*-
 \newcommand{\Rlogo}{\if{html}{\figure{../../html/Rlogo.svg}{options: class="toplogo" alt="[R logo]"}}\if{latex}{\figure{Rlogo.pdf}{options: width=0.5in}}}
-\newcommand{\I}{#1}
 
 \name{NEWS}
 \title{R News}
@@ -774,7 +773,7 @@
 
       \item \code{contrib.url(character())} now returns 0-length
       \code{character()} as documented, which also avoids spurious
-      warnings from \code{available.packages()} \I{et al.}\sspace{}in the
+      warnings from \code{available.packages()} \abbr{et al.}\sspace{}in the
       edge case of an empty vector of repository URLs.
 
       \item \code{readChar(., 4e8)} no longer fails, thanks to \I{Kodi Arfer}'s
@@ -1554,7 +1553,7 @@
 
       \item \code{c(a = 1, 2)[[]]} no longer matches \code{2} but rather
       signals a \emph{classed} error.  Reported and analysed by Davis Vaughan in
-      \PR{18367}, a duplicate of \PR{18004}, by \I{Jan Meis} \I{et al.}
+      \PR{18367}, a duplicate of \PR{18004}, by \I{Jan Meis} \abbr{et al.}
       For consistency, \code{NULL[[]]} is also erroneous now.
       \code{x[[]] <- v} gives an error of the same class \code{"MissingSubscriptError"}.
 

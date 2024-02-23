@@ -88,7 +88,7 @@ system2(command, args = character(),
 #ifdef unix
   Timeouts cannot be used with interactive commands: the command is run with
   standard input redirected from \code{/dev/null} and it must not modify
-  terminal settings.  As long as tty \code{tostop} option is disabled, which
+  terminal settings.  As long as \I{tty} \code{tostop} option is disabled, which
   it usually is by default, the executed command may write to standard
   output and standard error.
 #endif

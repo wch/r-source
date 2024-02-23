@@ -22,7 +22,7 @@ line(x, y, iter = 1)
   \item{iter}{positive integer specifying the number of
     \dQuote{polishing} iterations.  Note that this was hard coded to
     \code{1} in \R versions before 3.5.0, and more importantly that such
-    simple iterations may not converge, see Siegel's 9-point example.}
+    simple iterations may not converge, see \I{Siegel}'s 9-point example.}
 }
 \details{
   Cases with missing values are omitted.

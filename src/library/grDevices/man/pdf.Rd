@@ -347,7 +347,7 @@ pdf(file = if(onefile) "Rplots.pdf" else "Rplot\%03d.pdf",
     \item Circles of any radius are allowed.  If \code{useDingbats =
       TRUE}, opaque circles of less than 10 big points radius are
     rendered using char 108 in the Dingbats font: all semi-transparent
-    and larger circles using a \enc{Bézier}{Bezier} curve for each
+    and larger circles using a \I{\enc{Bézier}{Bezier}} curve for each
     quadrant.
     \item Colours are by default specified as \abbr{sRGB}.
   }

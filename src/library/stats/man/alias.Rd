@@ -55,7 +55,7 @@ alias(object, \dots)
     \code{\link{print}} method.}
 }
 \note{
-  The aliasing pattern may depend on the contrasts in use: Helmert
+  The aliasing pattern may depend on the contrasts in use: \I{Helmert}
   contrasts are probably most useful.
 
   The defaults are different from those in S.
@@ -68,7 +68,7 @@ alias(object, \dots)
 }
 \author{
   The design was inspired by the S function of the same name described
-  in Chambers \emph{et al} (1992).
+  in Chambers \abbr{et al.}\sspace(1992).
 }
 \examples{\donttest{% as it loads  MASS
 op <- options(contrasts = c("contr.helmert", "contr.poly"))

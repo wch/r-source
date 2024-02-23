@@ -6,7 +6,7 @@
 \name{attenu}
 \docType{data}
 \alias{attenu}
-\title{The Joyner--Boore Attenuation Data}
+\title{The \I{Joyner}--\I{Boore} Attenuation Data}
 \description{
   This data gives peak accelerations measured at various observation
   stations for 23 earthquakes in California.  The data have been used

@@ -63,13 +63,13 @@ splinefunH(x, y, m)
   splines when \code{method = "periodic"}.
 
   The method \code{"monoH.FC"} computes a \emph{monotone} Hermite spline
-  according to the method of Fritsch and Carlson.  It does so by
+  according to the method of \I{Fritsch} and \I{Carlson}.  It does so by
   determining slopes such that the Hermite spline, determined by
   \eqn{(x_i,y_i,m_i)}{(x[i],y[i],m[i])}, is monotone (increasing or
   decreasing) \bold{iff} the data are.
 
   Method \code{"hyman"} computes a \emph{monotone} cubic spline using
-  Hyman filtering of an \code{method = "fmm"} fit for strictly monotonic
+  \I{Hyman} filtering of an \code{method = "fmm"} fit for strictly monotonic
   inputs.
 
   These interpolation splines can also be used for extrapolation, that is

@@ -41,7 +41,7 @@ xspline(x, y = NULL, shape = 0, open = TRUE, repEnds = TRUE,
   If the shape parameter is greater than zero, the spline approximates
   the control points (and is very similar to a cubic B-spline when the
   shape is 1).  If the shape parameter is less than zero, the spline
-  interpolates the control points (and is very similar to a Catmull-Rom
+  interpolates the control points (and is very similar to a \I{Catmull}-\I{Rom}
   spline when the shape is -1).  If the shape parameter is 0, the spline
   forms a sharp corner at that control point.
 

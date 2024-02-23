@@ -39,7 +39,7 @@ xtfrm(x)
   %% that with the conventional status codes this sorts individuals
   %% still alive before deaths.
 
-  The default method will unclass the object if
+  The default method will \I{unclass} the object if
   \code{\link{is.numeric}(x)} is true but otherwise make use of
   \code{==} and \code{>} methods for the class of \code{x[i]} (for
   integers \code{i}), and the \code{is.na} method for the class of

@@ -3,8 +3,6 @@
 % Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
-\newcommand{\I}{#1}
-
 \name{nls}
 \alias{nls}
 \title{Nonlinear Least Squares}
@@ -33,7 +31,7 @@ nls(formula, data, start, control, algorithm,
     values and their effect.}
   \item{algorithm}{character string specifying the algorithm to use.
     The default algorithm is a Gauss-Newton algorithm.  Other possible
-    values are \code{"plinear"} for the Golub-Pereyra algorithm for
+    values are \code{"plinear"} for the \I{Golub}-\I{Pereyra} algorithm for
     partially linear least-squares models and \code{"port"} for the
     \sQuote{\I{nl2sol}} algorithm from the Port library -- see the
     references.  Can be abbreviated.}

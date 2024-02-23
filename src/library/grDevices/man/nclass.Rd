@@ -26,14 +26,14 @@ nclass.FD(x, digits = 5)
   The suggested number of classes.
 }
 \details{
-  \code{nclass.Sturges} uses Sturges' formula, implicitly basing bin
+  \code{nclass.Sturges} uses \I{Sturges}' formula, implicitly basing bin
   sizes on the range of the data.
 
   \code{nclass.scott} uses Scott's choice for a normal distribution based on
   the estimate of the standard error, unless that is zero where it
   returns \code{1}.
 
-  \code{nclass.FD} uses the Freedman-Diaconis choice based on the
+  \code{nclass.FD} uses the \I{Freedman}-\I{Diaconis} choice based on the
   inter-quartile range (\code{\link{IQR}(signif(x, digits))}) unless that's
   zero where it uses increasingly more extreme symmetric quantiles up to
   c(1,511)/512 and if that difference is still zero, reverts to using

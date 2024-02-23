@@ -17,7 +17,7 @@
   fitted model, and \eqn{k = 2} for the usual AIC, or
   \eqn{k = \log(n)}{k = log(n)}
   (\eqn{n} being the number of observations) for the so-called BIC or \abbr{SBC}
-  (Schwarz's Bayesian criterion).
+  (\I{Schwarz}'s Bayesian criterion).
 }
 \usage{
 AIC(object, \dots, k = 2)

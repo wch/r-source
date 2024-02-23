@@ -35,7 +35,7 @@
   population.
 }
 \details{
-  (paraphrasing Mosteller and Tukey):
+  (paraphrasing \I{Mosteller} and \I{Tukey}):
 
   Switzerland, in 1888, was entering a period known as the
   \emph{demographic transition}; i.e., its fertility was beginning to

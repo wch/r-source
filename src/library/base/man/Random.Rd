@@ -92,9 +92,9 @@ set.seed(seed, kind = NULL, normal.kind = NULL, sample.kind = NULL)
       4.6*10^18} for most initial seeds.  The seed is two integers (all
     values allowed for the first seed: the second must be odd).
 
-    We use the implementation by Reeds \emph{et al} (1982--84).
+    We use the implementation by Reeds \abbr{et al.}\sspace(1982--84).
 
-    The two seeds are the Tausworthe and congruence long integers,
+    The two seeds are the \I{Tausworthe} and congruence long integers,
     respectively.
 
     It exhibits 25 clear failures in the \I{TestU01} Crush suite

@@ -7,7 +7,7 @@
 \alias{mauchly.test}
 \alias{mauchly.test.SSD}
 \alias{mauchly.test.mlm}
-\title{Mauchly's Test of Sphericity}
+\title{\I{Mauchly}'s Test of Sphericity}
 \description{
   Tests whether a Wishart-distributed covariance matrix (or
   transformation thereof) is proportional to a given matrix.

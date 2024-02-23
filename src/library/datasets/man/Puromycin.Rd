@@ -12,7 +12,7 @@
 \description{
   The \code{Puromycin} data frame has 23 rows and 3 columns of the
   reaction velocity versus substrate concentration in an enzymatic
-  reaction involving untreated cells or cells treated with Puromycin.
+  reaction involving untreated cells or cells treated with \I{Puromycin}.
 }
 \usage{Puromycin}
 \format{
@@ -38,7 +38,7 @@
   concentration in parts per million (ppm) and from these counts the
   initial rate (or velocity) of the reaction was calculated
   (counts/min/min).  The experiment was conducted once with the enzyme
-  treated with Puromycin, and once with the enzyme untreated.
+  treated with \I{Puromycin}, and once with the enzyme untreated.
 }
 \source{
   Bates, D.M. and Watts, D.G. (1988),

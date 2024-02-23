@@ -113,7 +113,7 @@ cor.test(x, \dots)
   For Spearman's test, p-values are computed using algorithm AS 89 for
   \eqn{n < 1290} and \code{exact = TRUE}, otherwise via the asymptotic
   \eqn{t} approximation.  Note that these are \sQuote{exact} for \eqn{n
-  < 10}, and use an Edgeworth series approximation for larger sample
+  < 10}, and use an \I{Edgeworth} series approximation for larger sample
   sizes (the cutoff has been changed from the original paper).
 }
 \references{

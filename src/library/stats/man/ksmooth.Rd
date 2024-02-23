@@ -7,7 +7,7 @@
 \alias{ksmooth}
 \title{Kernel Regression Smoother}
 \description{
-  The Nadaraya--Watson kernel regression estimate.
+  The \I{Nadaraya}--\I{Watson} kernel regression estimate.
 }
 \usage{
 ksmooth(x, y, kernel = c("box", "normal"), bandwidth = 0.5,

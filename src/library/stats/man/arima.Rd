@@ -130,7 +130,7 @@ arima(x, order = c(0L, 0L, 0L),
   The exact likelihood is computed via a state-space representation of
   the ARIMA process, and the innovations and their variance found by a
   \I{Kalman} filter.  The initialization of the differenced ARMA process uses
-  stationarity and is based on Gardner \emph{et al} (1980).  For a
+  stationarity and is based on Gardner \abbr{et al.}\sspace(1980).  For a
   differenced process the non-stationary components are given a diffuse
   prior (controlled by \code{kappa}).  Observations which are still
   controlled by the diffuse prior (determined by having a \I{Kalman} gain of

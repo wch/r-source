@@ -90,7 +90,7 @@ rgamma(n, shape, rate = 1, scale = 1/rate)
 %   small \code{scale}, and warns of potential unreliability for
 %   \code{scale < 1e-10}.
 \note{
-  The S (Becker \emph{et al}, 1988) parametrization was via \code{shape}
+  The S (Becker \abbr{et al.}, 1988) parametrization was via \code{shape}
   and \code{rate}: S had no \code{scale} parameter. It is an error
   to supply both \code{scale} and \code{rate}.
 

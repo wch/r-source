@@ -213,7 +213,7 @@ smooth.spline(x, y = NULL, w = NULL, df, spar = NULL, lambda = NULL, cv = FALSE,
   \item{cv.crit}{cross-validation score, \sQuote{generalized} or true, depending
     on \code{cv}.  The CV score is often called \dQuote{PRESS} (and
     labeled on \code{\link{print}()}), for
-    \sQuote{\bold{PRE}diction \bold{S}um of \bold{S}quares}.
+    \I{\sQuote{\bold{PRE}diction \bold{S}um of \bold{S}quares}}.
     Note that this is \emph{not} the same
     as the (CV or GCV) score which is minimized during fitting (and
     returned in \code{crit}), e.g., in the case of \code{nx < n} (where

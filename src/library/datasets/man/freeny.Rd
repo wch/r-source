@@ -8,9 +8,9 @@
 \alias{freeny}
 \alias{freeny.x}
 \alias{freeny.y}
-\title{Freeny's Revenue Data}
+\title{\I{Freeny}'s Revenue Data}
 \description{
-  Freeny's data on quarterly revenue and explanatory variables.
+  \I{Freeny}'s data on quarterly revenue and explanatory variables.
 }
 \usage{
 freeny
@@ -18,7 +18,7 @@ freeny.x
 freeny.y
 }
 \format{
-  There are three \sQuote{freeny} data sets.
+  There are three \sQuote{\I{freeny}} data sets.
 
   \code{freeny.y} is a time series with 39 observations on quarterly
   revenue from (1962,2Q) to (1971,4Q).

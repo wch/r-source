@@ -30,7 +30,7 @@ PP.test(x, lshort = TRUE)
   \code{trunc(4*(n/100)^0.25)}, otherwise
   \code{trunc(12*(n/100)^0.25)} is used.  The p-values are
   interpolated from Table 4.2, page 103 of
-  \bibcite{Banerjee \emph{et al} (1993)}.
+  \bibcite{Banerjee \abbr{et al.}\sspace(1993)}.
 
   Missing values are not handled.
 }
