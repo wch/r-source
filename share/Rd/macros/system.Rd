@@ -52,3 +52,6 @@
 %   \ifelse{html}{\out{<span style="font-family: sans-serif;">#1</span>}}
 % but this does not always work correctly with Rd2HTML() as of 2018-05.
 \newcommand{\proglang}{\ifelse{latex}{\out{\textsf{#1}}}{#1}}
+
+% To get things ignored by RdTextFilter() ...
+\newcommand{\I}{#1}
