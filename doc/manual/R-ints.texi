@@ -913,8 +913,7 @@ If the closure is an S3 generic (that is, contains a call to
 which to do dispatch (normally the first) will be evaluated if it has
 not been already.  If a method has been found which is a closure, a new
 evaluation environment is created for it containing the matched
-arguments of the method plus any new variables defined so far during the
-evaluation of the body of the generic.  (Note that this means changes to
+arguments.  (Note that this means changes to
 the values of the formal arguments in the body of the generic are
 discarded when calling the method, but @emph{actual} argument promises
 which have been forced retain the values found when they were forced.

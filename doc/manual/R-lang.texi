@@ -2972,11 +2972,11 @@ The body of the method is then evaluated in the standard fashion.  In
 particular variable look-up in the body follows the rules for the
 method.  So if the method has an associated environment then that is
 used.  In effect we have replaced the call to the generic by a call to
-the method.  Any local
+the method.  [Prior to @R{} 4.4.0 any local
 @cindex assignment
-assignments in the frame of the generic will be
-carried forward into the call to the method.  Use of this @emph{feature}
-is discouraged.  It is important to realize that control will never
+assignments in the frame of the generic would be
+carried forward into the call to the method; this is no longer the case.]
+It is important to realize that control will never
 return to the generic and hence any expressions after a call to
 @code{UseMethod} will never be executed.
 

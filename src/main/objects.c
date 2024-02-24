@@ -387,7 +387,7 @@ SEXP dispatchMethod(SEXP op, SEXP sxp, SEXP dotClass, RCNTXT *cptr, SEXP method,
 #else
 		static int option = -1;
 		if (option == -1) {
-		    option = 0; // all: the default
+		    option = 3; // error: the default
 		    const char *val = getenv("R_USEMETHOD_FORWARD_LOCALS");
 		    if (val != NULL) {
 			if (strcmp(val, "all") == 0)
@@ -398,6 +398,8 @@ SEXP dispatchMethod(SEXP op, SEXP sxp, SEXP dotClass, RCNTXT *cptr, SEXP method,
 			    option = 2;
 			else if (strcmp(val, "error") == 0)
 			    option = 3;
+			else if (strcmp(val, "warning") == 0)
+			    option = 4;
 			else
 			    warning("bad value for R_USEMETHOD_FORWARD_LOCALS");
 		    }
@@ -438,7 +440,8 @@ SEXP dispatchMethod(SEXP op, SEXP sxp, SEXP dotClass, RCNTXT *cptr, SEXP method,
 #endif
 		    snprintf(buf, sizeof(buf),
 			     "stop(\"getting UseMethod variable '%s' "
-			     "from generic '%s'\")",
+			     "from generic '%s'; "
+			     "this is no longer supported\")",
 			     CHAR(PRINTNAME(TAG(s))),
 			     generic);
 		    val = mkPROMISE(R_ParseString(buf), R_GlobalEnv);

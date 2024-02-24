@@ -437,6 +437,13 @@
       \samp{where} gives the call to the function (if any) calling
       \code{is.R} and which namespace it is from.  Value \samp{self} is
       a variant of \samp{where} for use by \command{R CMD check --as-cran}.
+
+      \item \code{UseMethod()} no longer forwards local variables
+      assigned in the generic function into method call environments
+      before evaluating the method body. This makes method calls behave
+      more like standard function calls and makes method code easier to
+      analyze correctly. For now, attempts to use these variables in a
+      method will signal an error; this will eventually be dropped.
     }
   }
 
