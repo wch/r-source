@@ -69,7 +69,7 @@
 
 \seealso{
   \code{\link{assign}} (and its inverse \code{\link{get}}),
-  for \dQuote{subassignment} such as \code{x[i] <- v},
+  for \dQuote{\I{subassignment}} such as \code{x[i] <- v},
   see \code{\link{[<-}}; % ./Extract.Rd
   further, \code{\link{environment}}.
 }

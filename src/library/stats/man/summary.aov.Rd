@@ -44,7 +44,7 @@
   each term in the model, plus one for \code{"Residuals"} if there
   are any.
 
-  For multistratum fits the return value is a list of such summaries,
+  For \I{multistratum} fits the return value is a list of such summaries,
   one for each stratum.
 }
 \note{

@@ -13,7 +13,7 @@
   Return a listing of the names of grobs or viewports.
 
   This is a generic function with methods for grobs (including
-  gTrees) and viewports (including vpTrees).
+  gTrees) and viewports (including \I{vpTree}s).
 }
 \usage{
 grid.ls(x=NULL, grobs=TRUE, viewports=FALSE, fullNames=FALSE,

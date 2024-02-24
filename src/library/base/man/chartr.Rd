@@ -8,7 +8,7 @@
 \alias{tolower}
 \alias{toupper}
 \alias{casefold}
-\title{Character Translation and Casefolding}
+\title{Character Translation and Case Folding}
 \description{
   Translate characters in character vectors, in particular from upper to
   lower case or vice versa.

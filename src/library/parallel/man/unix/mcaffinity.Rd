@@ -11,7 +11,7 @@
   \code{mcaffinity} retrieves or sets the CPU affinity mask of the
   current process, i.e., the set of CPUs the process is allowed to be
   run on. (CPU here means logical CPU which can be CPU, core or
-  hyperthread unit.)
+  \I{hyperthread} unit.)
 }
 \usage{
 mcaffinity(affinity = NULL)

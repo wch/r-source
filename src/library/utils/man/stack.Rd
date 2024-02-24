@@ -10,11 +10,11 @@
 \alias{unstack}
 \alias{unstack.default}
 \alias{unstack.data.frame}
-\title{Stack or Unstack Vectors from a Data Frame or List}
+\title{Stack or \I{Unstack} Vectors from a Data Frame or List}
 \description{
   Stacking vectors concatenates multiple vectors into a single vector
   along with a factor indicating where each observation originated.
-  Unstacking reverses this operation.
+  \I{Unstacking} reverses this operation.
 }
 \usage{
 stack(x, \dots)

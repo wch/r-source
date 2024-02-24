@@ -55,7 +55,7 @@ grid.abline(intercept, slope, ...)
   line parameterized by \code{intercept} and \code{slope}.
 }
 \value{
-  A functiongrob grob.
+  A \I{functiongrob} grob.
 }
 \author{Paul Murrell}
 \seealso{

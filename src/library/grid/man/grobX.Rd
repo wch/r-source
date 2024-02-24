@@ -17,7 +17,7 @@ grobX(x, theta)
 grobY(x, theta)
 }
 \arguments{
-  \item{x}{A grob, or gList, or gTree, or gPath.}
+  \item{x}{A grob, or \I{gList}, or \I{gTree}, or \I{gPath}.}
   \item{theta}{An angle indicating where the location is
     on the grob boundary.  Can be one of \code{"east"},
     \code{"north"}, \code{"west"}, or \code{"south"},

@@ -44,8 +44,8 @@ grid.grep(path, x = NULL, grobs = TRUE, viewports = FALSE,
   }
 }
 \value{
-  Either a gPath or a vpPath or,
-  if \code{global} is \code{TRUE} a list of gPaths and/or vpPaths.
+  Either a \I{gPath} or a \I{vpPath} or,
+  if \code{global} is \code{TRUE} a list of \I{gPath}s and/or \I{vpPath}s.
 
   If \code{vpPath} is \code{TRUE}, each gPath result will have an
   attribute \code{"vpPath"}.

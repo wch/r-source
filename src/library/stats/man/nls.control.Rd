@@ -5,7 +5,7 @@
 
 \name{nls.control}
 \alias{nls.control}
-\title{Control the Iterations in nls}
+\title{Control the Iterations in \code{nls}}
 \description{
   Allow the user to set some characteristics of the \code{\link{nls}}
   nonlinear least squares algorithm.

@@ -39,7 +39,7 @@ se.contrast(object, \dots)
   significantly different; it can be easier to use \code{se.contrast}
   than compute them directly from the coefficients.
 
-  In multistratum models, the contrasts can appear in more than one
+  In \I{multistratum} models, the contrasts can appear in more than one
   stratum, in which case the standard errors are computed in the lowest
   stratum and adjusted for efficiencies and comparisons between
   strata. (See the comments in the note in the help for

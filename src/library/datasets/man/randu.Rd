@@ -6,7 +6,7 @@
 \name{randu}
 \docType{data}
 \alias{randu}
-\title{Random Numbers from Congruential Generator \I{RANDU}}
+\title{Random Numbers from \I{Congruential} Generator \I{RANDU}}
 \description{
   400 triples of successive random numbers were taken from the VAX
   FORTRAN function \I{RANDU} running under \I{VMS} 1.5.

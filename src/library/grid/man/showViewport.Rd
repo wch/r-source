@@ -23,7 +23,7 @@ showViewport(vp = NULL, recurse = TRUE, depth = NULL,
 \arguments{
   \item{vp}{
     If \code{NULL}, the current viewport tree is displayed.
-    Otherwise, a viewport (or vpList, or vpStack, or vpTree) or
+    Otherwise, a viewport (or \I{vpList}, or \I{vpStack}, or \I{vpTree}) or
     a vpPath that specifies which viewport to display.
   }
   \item{recurse}{

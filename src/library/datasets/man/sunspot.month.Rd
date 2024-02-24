@@ -8,7 +8,7 @@
 \alias{sunspot.month}
 \title{Monthly Sunspot Data, from 1749 to "Present"}
 \description{
-  Monthly numbers of sunspots, as from the World Data Center, aka SIDC.
+  Monthly numbers of sunspots, as from the World Data Center, aka \abbr{SIDC}.
   This is the version of the data that will occasionally be updated when
   new counts become available.%% ~/R/MM/MISC/read-sunspots.R
 }
@@ -26,7 +26,7 @@ sunspot.month
   dataset).
 }
 \source{
-  \I{WDC-SILSO}, Solar Influences Data Analysis Center (SIDC),
+  \I{WDC-SILSO}, Solar Influences Data Analysis Center (\abbr{SIDC}),
   Royal Observatory of Belgium, Av. Circulaire, 3, B-1180 BRUSSELS
   Currently at \url{http://www.sidc.be/silso/datafiles}% was http://sidc.oma.be/sunspot-data/
 }

@@ -68,7 +68,7 @@ is.character(x)
 
   \code{\link{paste}}, \code{\link{substr}} and \code{\link{strsplit}}
   for character concatenation and splitting,
-  \code{\link{chartr}} for character translation and casefolding (e.g.,
+  \code{\link{chartr}} for character translation and case folding (e.g.,
   upper to lower case) and \code{\link{sub}}, \code{\link{grep}} etc for
   string matching and substitutions.  Note that
   \code{help.search(keyword = "character")} gives even more links.

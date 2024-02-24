@@ -82,7 +82,7 @@ browser(text = "", condition = NULL, expr = TRUE, skipCalls = 0L)
   particular typing an object name will cause the object to be printed,
   and \code{ls()} lists the objects in the calling frame.  (If you want
   to look at an object with a name such as \code{n}, print it
-  explicitly, or use autoprint via \code{(n)}.
+  explicitly, or use \I{autoprint} via \code{(n)}.
 
   The number of lines printed for the deparsed call can be limited by
   setting \code{\link{options}(deparse.max.lines)}.

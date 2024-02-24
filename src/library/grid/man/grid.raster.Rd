@@ -77,7 +77,7 @@ rasterGrob(image,
   including \code{alpha}.
 }
 \value{
-  A rastergrob grob.
+  A \I{rastergrob} grob.
 }
 \author{
   Paul Murrell

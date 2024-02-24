@@ -4,7 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{eff.aovlist}
-\title{Compute Efficiencies of Multistratum Analysis of Variance}
+\title{Compute Efficiencies of \I{Multistratum} Analysis of Variance}
 \usage{
 eff.aovlist(aovlist)
 }

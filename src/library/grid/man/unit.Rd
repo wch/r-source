@@ -87,7 +87,7 @@ is.unit(x)
 }.
 
   It is possible to subset unit objects in the normal way and to perform
-  subassignment (see the examples),
+  \I{subassignment} (see the examples),
   but a special function
   \code{unit.c} is provided for combining unit objects.
 

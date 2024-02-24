@@ -81,7 +81,7 @@ addNA(x, ifany = FALSE)
   (\code{!\link{anyDuplicated}(.)}) entries.  If argument \code{ordered}
   is true (or \code{ordered()} is used) the result has class
   \code{c("ordered", "factor")}.
-  Undocumentedly for a long time, \code{factor(x)} loses all
+  \I{Undocumentedly} for a long time, \code{factor(x)} loses all
   \code{\link{attributes}(x)} but \code{"names"}, and resets
   \code{"levels"} and \code{"class"}.
 

@@ -54,7 +54,7 @@ get.gpar(names = NULL)
     \code{fontfamily} \tab The font family \cr
     \code{fontface} \tab The font face (bold, italic, ...) \cr
     \code{lineheight} \tab The height of a line as a multiple of the size of text \cr
-    \code{font} \tab Font face (alias for fontface; for backward compatibility) \cr
+    \code{font} \tab Font face (alias for \code{fontface}; for backward compatibility) \cr
   }
   For more details of many of these, see the help for the corresponding
   graphical parameter \code{\link{par}} in base graphics.  (This may

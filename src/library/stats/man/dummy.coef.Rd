@@ -42,7 +42,7 @@ dummy.coef(object, \dots)
 }
 \value{
   A list giving for each term the values of the coefficients. For a
-  multistratum \code{aov} model, such a list for each stratum.
+  \I{multistratum} \code{aov} model, such a list for each stratum.
 }
 
 \section{Warning}{

@@ -97,7 +97,7 @@ NextMethod(generic = NULL, object = NULL, \dots)
   \code{UseMethod} creates a new function call with
   arguments matched as they came in to the generic.  [Previously local
   variables defined before the call to \code{UseMethod} were retained;
-  this is nolonger the case.] Any
+  this is no longer the case.] Any
   statements after the call to \code{UseMethod} will not be evaluated as
   \code{UseMethod} does not return.  \code{UseMethod} can be called with
   more than two arguments: a warning will be given and additional

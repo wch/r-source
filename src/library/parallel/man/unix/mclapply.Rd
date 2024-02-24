@@ -75,7 +75,7 @@ mcMap(f, ...)
     child process will use the child and not fork again.}
   \item{affinity.list}{a vector (atomic or list) containing the CPU
     affinity mask for each element of \code{X}.  The CPU affinity mask
-    describes on which CPU (core or hyperthread unit) a given item is
+    describes on which CPU (core or \I{hyperthread} unit) a given item is
     allowed to run, see \code{\link{mcaffinity}}.  To use this parameter
     prescheduling has to be deactivated (\code{mc.preschedule = FALSE}).}
 }

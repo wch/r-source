@@ -11,7 +11,7 @@
 \alias{log1p}
 \alias{exp}
 \alias{expm1}
-\title{Logarithms and Exponentials}
+\title{Logarithms and \I{Exponentials}}
 \usage{
 log(x, base = exp(1))
 logb(x, base = exp(1))

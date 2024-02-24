@@ -51,7 +51,7 @@ convertUnit(x, unitTo,
   The conversions occur within the current viewport.
 
   It is not currently possible to convert to all valid coordinate systems
-  (e.g., "strwidth" or "grobwidth").  I'm not sure if all of these
+  (e.g., \code{"strwidth"} or \code{"grobwidth"}).  I'm not sure if all of these
   are impossible, they just seem implausible at this stage.
 
   In normal usage of grid, these functions should not be necessary.

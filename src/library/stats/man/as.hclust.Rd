@@ -7,7 +7,7 @@
 \alias{as.hclust}
 \alias{as.hclust.default}
 \alias{as.hclust.twins}
-\title{Convert Objects to Class hclust}
+\title{Convert Objects to Class \code{"hclust"}}
 \usage{
 as.hclust(x, \dots)
 }

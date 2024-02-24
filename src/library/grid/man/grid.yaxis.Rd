@@ -28,7 +28,7 @@ yaxisGrob(at = NULL, label = TRUE, main = TRUE,
   \item{main}{A logical value indicating whether to draw the axis
     at the left (\code{TRUE}) or at the right (\code{FALSE}) of the
     viewport.}
-  \item{edits}{A gEdit or gEditList containing edit operations
+  \item{edits}{A \I{gEdit} or \I{gEditList} containing edit operations
     to apply (to the children of the axis)
     when the axis is first created and during redrawing
     whenever \code{at} is \code{NULL}.

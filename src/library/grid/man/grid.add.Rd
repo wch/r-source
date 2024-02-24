@@ -26,7 +26,7 @@ setChildren(x, children)
     specifies a gTree on the display list.  For \code{addGrob} this
     specifies a descendant of the specified gTree. }
   \item{child}{ A grob object. }
-  \item{children}{ A gList object. }
+  \item{children}{ A \I{gList} object. }
   \item{strict}{ A boolean indicating whether the gPath must be
     matched exactly. }
   \item{grep}{A boolean indicating whether the \code{gPath} should

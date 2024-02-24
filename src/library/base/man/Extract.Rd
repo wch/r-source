@@ -115,7 +115,7 @@ x$name <- value
   Indexing can occur on the right-hand-side of an expression for
   extraction, or on the left-hand-side for replacement.  When an index
   expression appears on the left side of an assignment (known as
-  \emph{subassignment}) then that part of \code{x} is set to the value
+  \emph{\I{subassignment}}) then that part of \code{x} is set to the value
   of the right hand side of the assignment.  In this case no partial
   matching of character indices is done, and the left-hand-side is
   coerced as needed to accept the values.  For vectors, the answer will
@@ -123,7 +123,7 @@ x$name <- value
   hierarchy raw < logical < integer < double < complex < character <
   list < expression.  Attributes are preserved (although \code{names},
   \code{dim} and \code{dimnames} will be adjusted suitably).
-  Subassignment is done sequentially, so if an index is specified more
+  \I{Subassignment} is done sequentially, so if an index is specified more
   than once the latest assigned value for an index will result.
 
   It is an error to apply any of these operators to an object which is
@@ -278,7 +278,7 @@ x$name <- value
 \section{Character indices}{
   Character indices can in some circumstances be partially matched (see
   \code{\link{pmatch}}) to the names or dimnames of the object being
-  subsetted (but never for subassignment).
+  subsetted (but never for \I{subassignment}).
   Unlike S (Becker \abbr{et al.}\sspace{}p.\sspace{}358), \R never uses partial
   matching when extracting by 
   \code{[}, and partial matching is not by default used by \code{[[}

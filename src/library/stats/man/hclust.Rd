@@ -58,7 +58,7 @@ hclust(d, method = "complete", members = NULL)
     the size of the labels (if plotted) in the same way as \code{\link{text}}.}
 }
 \value{
-  An object of class \bold{hclust} which describes the
+  An object of class \code{"hclust"} which describes the
   tree produced by the clustering process.
   The object is a list with components:
   \item{merge}{an \eqn{n-1} by 2 matrix.

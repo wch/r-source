@@ -8,10 +8,10 @@
 \alias{getWindowTitle}
 \alias{getIdentification}
 \alias{setStatusBar}
-\title{Set the Window Title or the Statusbar of the \I{RGui} in Windows}
+\title{Set the Window Title or the Status Bar of the \I{RGui} in Windows}
 \description{
   Set or get the title of the \R (i.e. \command{RGui}) window  which
-  will appear in the task bar, or set the statusbar (if in use).
+  will appear in the task bar, or set the status bar (if in use).
 }
 \usage{
 setWindowTitle(suffix, title = paste(getIdentification(), suffix))
@@ -43,7 +43,7 @@ setStatusBar(text)
 
   \code{getIdentification} returns the normal window identification.
 
-  \code{setStatusBar} sets the text in the statusbar of an MDI
+  \code{setStatusBar} sets the text in the status bar of an MDI
   frame: if this is not currently shown it is selected and shown.
 }
 \value{
