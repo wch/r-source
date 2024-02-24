@@ -208,6 +208,7 @@ prepends
 preprocessed
 prescheduling
 preselected
+Preselection
 printability
 profiler
 profilers
@@ -239,6 +240,7 @@ rescale
 rescaled
 rescaling
 robustifying
+Rotatable
 saddlepoint
 scalable
 scrollable
