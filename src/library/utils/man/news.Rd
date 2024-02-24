@@ -3,8 +3,6 @@
 % Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
-\newcommand{\I}{#1}
-
 \name{news}
 \title{Build and Query R or Package News Information}
 \alias{news}

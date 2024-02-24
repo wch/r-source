@@ -3,8 +3,6 @@
 % Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
-\newcommand{\I}{#1}
-
 \name{install.packages}
 \alias{install.packages}
 \title{Install Packages from Repositories or Local Files}

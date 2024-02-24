@@ -3,8 +3,6 @@
 % Copyright 2015-2021 R Core Team
 % Distributed under GPL 2 or later
 
-\newcommand{\I}{#1}
-
 \name{libcurlVersion}
 \alias{libcurlVersion}
 \title{

@@ -3,8 +3,6 @@
 % Copyright 2008-2022 R Core Team
 % Distributed under GPL 2 or later
 
-\newcommand{\I}{#1}
-
 \name{Rd2HTML}
 \alias{Rd2txt}
 \alias{Rd2HTML}

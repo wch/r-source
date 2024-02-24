@@ -8,8 +8,6 @@
 % Modified for Rao Score test ("test=" argument) by Peter Dalgaard 2023
 % Changes Copyright R Core Team 2023
 
-\newcommand{\I}{#1}
-
 \name{profile.glm}
 \alias{profile.glm}
 \title{Method for Profiling glm Objects}

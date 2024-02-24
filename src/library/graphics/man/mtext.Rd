@@ -3,8 +3,6 @@
 % Copyright 1995-2011 R Core Team
 % Distributed under GPL 2 or later
 
-\newcommand{\I}{#1}
-
 \name{mtext}
 \title{Write Text into the Margins of a Plot}
 % mtext is defined via do_mtext(.) in  src/main/plot.c ---

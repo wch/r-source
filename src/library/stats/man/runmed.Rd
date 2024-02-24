@@ -3,8 +3,6 @@
 % Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
-\newcommand{\I}{#1}
-
 \name{runmed}
 \title{Running Medians -- Robust Scatter Plot Smoothing}
 \alias{runmed}

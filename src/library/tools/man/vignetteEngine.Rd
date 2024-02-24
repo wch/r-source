@@ -3,8 +3,6 @@
 % Copyright 2013-2019 R Core Team
 % Distributed under GPL 2 or later
 
-\newcommand{\I}{#1}
-
 \name{vignetteEngine}
 \alias{vignetteEngine}
 \title{Set or Get a Vignette Processing Engine}

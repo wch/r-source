@@ -3,8 +3,6 @@
 % Copyright 1995-2007 R Core Team
 % Distributed under GPL 2 or later
 
-\newcommand{\I}{#1}
-
 \name{mcnemar.test}
 \alias{mcnemar.test}
 \title{\I{McNemar}'s Chi-squared Test for Count Data}

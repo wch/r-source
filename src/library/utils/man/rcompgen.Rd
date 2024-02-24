@@ -3,8 +3,6 @@
 % Copyright 2008-2014 R Core Team
 % Distributed under GPL 2 or later
 
-\newcommand{\I}{#1}
-
 \name{rcompgen}
 \alias{rcompgen}
 \alias{rc.settings}

@@ -3,8 +3,6 @@
 % Copyright 1995-2019 R Core Team
 % Distributed under GPL 2 or later
 
-\newcommand{\I}{#1}
-
 \name{buildVignette}
 \alias{buildVignette}
 \title{Build One Vignette}

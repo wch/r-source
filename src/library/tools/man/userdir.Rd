@@ -3,8 +3,6 @@
 % Copyright 2020 R Core Team
 % Distributed under GPL 2 or later
 
-\newcommand{\I}{#1}
-
 \name{userdir}
 \alias{R_user_dir}
 \title{R User Directories}

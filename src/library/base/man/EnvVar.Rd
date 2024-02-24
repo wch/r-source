@@ -3,8 +3,6 @@
 % Copyright 2007-2023 R Core Team
 % Distributed under GPL 2 or later
 
-\newcommand{\I}{#1}
-
 \name{EnvVar}
 \alias{environment variables}
 \alias{HOME}

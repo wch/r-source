@@ -3,8 +3,6 @@
 % Copyright 2011-2023  R Core Team
 % Distributed under GPL 2 or later
 
-\newcommand{\I}{#1}
-
 \name{compactPDF}
 \alias{compactPDF}
 \alias{format.compactPDF}

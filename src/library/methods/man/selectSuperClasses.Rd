@@ -3,8 +3,6 @@
 % Copyright 2009-2016 R Core Team
 % Distributed under GPL 2 or later
 
-\newcommand{\I}{#1}
-
 \name{selectSuperClasses}
 \alias{selectSuperClasses}
 \alias{.selectSuperClasses}

@@ -3,8 +3,6 @@
 % Copyright 2009-2013 R Core Team
 % Distributed under GPL 2 or later
 
-\newcommand{\I}{#1}
-
 \name{SweaveTeXFilter}
 \alias{SweaveTeXFilter}
 \title{Strip R Code out of Sweave File}

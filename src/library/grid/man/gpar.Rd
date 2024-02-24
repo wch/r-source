@@ -3,8 +3,6 @@
 % Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
-\newcommand{\I}{#1}
-
 \name{gpar}
 \alias{gpar}
 \alias{get.gpar}

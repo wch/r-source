@@ -3,8 +3,6 @@
 % Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
-\newcommand{\I}{#1}
-
 \name{qr}
 \alias{qr}
 \alias{qr.default}

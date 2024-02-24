@@ -3,8 +3,6 @@
 % Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
-\newcommand{\I}{#1}
-
 \name{balancePOSIXlt}
 \title{Balancing \dQuote{Ragged} and Out-of-range \I{POSIXlt} Date-Times}
 \alias{balancePOSIXlt}

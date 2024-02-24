@@ -3,8 +3,6 @@
 % Copyright 1995-2009 R Core Team
 % Distributed under GPL 2 or later
 
-\newcommand{\I}{#1}
-
 \name{dataentry}
 \title{Spreadsheet Interface for Entering Data}
 \usage{

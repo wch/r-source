@@ -3,8 +3,6 @@
 % Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
-\newcommand{\I}{#1}
-
 \name{aspell}
 \alias{aspell}
 \title{Spell Check Interface}

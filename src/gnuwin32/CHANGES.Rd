@@ -1,5 +1,3 @@
-\newcommand{\I}{#1}
-
 \name{CHANGES}
 \title{Windows-specific changes to R}
 \encoding{UTF-8}

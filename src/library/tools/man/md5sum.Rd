@@ -3,8 +3,6 @@
 % Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
-\newcommand{\I}{#1}
-
 \name{md5sum}
 \alias{md5sum}
 \title{Compute MD5 Checksums}

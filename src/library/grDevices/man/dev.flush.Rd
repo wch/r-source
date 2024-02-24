@@ -3,8 +3,6 @@
 % Copyright 2011-2013 R Core Team
 % Distributed under GPL 2 or later
 
-\newcommand{\I}{#1}
-
 \name{dev.flush}
 \alias{dev.hold}
 \alias{dev.flush}

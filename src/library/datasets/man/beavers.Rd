@@ -3,8 +3,6 @@
 % Copyright 1994-9 W. N. Venables and B. D. Ripley
 % Distributed under GPL 2 or later
 
-\newcommand{\I}{#1}
-
 \name{beavers}
 \docType{data}
 \alias{beavers}

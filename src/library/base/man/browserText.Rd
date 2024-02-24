@@ -3,8 +3,6 @@
 % Copyright 1995-2011 R Core Team
 % Distributed under GPL 2 or later
 
-\newcommand{\I}{#1}
-
 \name{browserText}
 \alias{browserText}
 \alias{browserCondition}

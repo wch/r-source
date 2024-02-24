@@ -3,8 +3,6 @@
 % Copyright 2011 R Core Team
 % Distributed under GPL 2 or later
 
-\newcommand{\I}{#1}
-
 \name{psnice}
 \alias{psnice}
 \title{Get or Set the Priority (Niceness) of a Process}

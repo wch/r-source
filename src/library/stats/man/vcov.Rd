@@ -3,8 +3,6 @@
 % Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
-\newcommand{\I}{#1}
-
 \name{vcov}
 \title{Calculate Variance-Covariance Matrix for a Fitted Model Object}
 \alias{vcov}

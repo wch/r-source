@@ -3,8 +3,6 @@
 % Copyright 2009-2019 R Core Team
 % Distributed under GPL 2 or later
 
-\newcommand{\I}{#1}
-
 \name{untar}
 \alias{untar}
 \title{

@@ -3,8 +3,6 @@
 % Copyright 2008-2015 R Core Team
 % Distributed under GPL 2 or later
 
-\newcommand{\I}{#1}
-
 \name{rtags}
 \alias{rtags}
 \title{ An \I{Etags}-like Tagging Utility for R }

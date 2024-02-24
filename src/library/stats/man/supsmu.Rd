@@ -3,8 +3,6 @@
 % Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
-\newcommand{\I}{#1}
-
 \name{supsmu}
 \alias{supsmu}
 \title{Friedman's \I{SuperSmoother}}

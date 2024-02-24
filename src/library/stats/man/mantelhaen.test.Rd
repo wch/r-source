@@ -3,8 +3,6 @@
 % Copyright 1995-2008 R Core Team
 % Distributed under GPL 2 or later
 
-\newcommand{\I}{#1}
-
 \name{mantelhaen.test}
 \alias{mantelhaen.test}
 \title{Cochran-Mantel-\I{Haenszel} Chi-Squared Test for Count Data}

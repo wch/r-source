@@ -3,8 +3,6 @@
 % Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
-\newcommand{\I}{#1}
-
 \name{unlink}
 \title{Delete Files and Directories}
 \usage{unlink(x, recursive = FALSE, force = FALSE, expand = TRUE)}

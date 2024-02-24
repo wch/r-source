@@ -3,8 +3,6 @@
 % Copyright 2008-2019 R Core Team
 % Distributed under GPL 2 or later
 
-\newcommand{\I}{#1}
-
 \name{savePlot}
 \alias{savePlot}
 \title{Save Cairo X11 Plot to File}

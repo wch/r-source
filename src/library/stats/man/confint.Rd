@@ -5,8 +5,6 @@
 
 % Portions copied from 
 
-\newcommand{\I}{#1}
-
 \name{confint}
 \title{Confidence Intervals for Model Parameters}
 \alias{confint}

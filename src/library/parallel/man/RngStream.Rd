@@ -3,7 +3,6 @@
 % Copyright 2011-2018 R Core Team
 % Distributed under GPL 2 or later
 
-\newcommand{\I}{#1}
 \newcommand{\bibcite}{#1}
 
 \name{RNGstreams}

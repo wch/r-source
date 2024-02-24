@@ -3,8 +3,6 @@
 % Copyright 2008 R Core Team
 % Distributed under GPL 2 or later
 
-\newcommand{\I}{#1}
-
 \name{tkProgressBar}
 \alias{tkProgressBar}
 \alias{getTkProgressBar}

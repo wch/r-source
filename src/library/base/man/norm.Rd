@@ -4,8 +4,6 @@
 % Copyright 2010--2012 The R Foundation
 % Distributed under GPL 2 or later
 
-\newcommand{\I}{#1}
-
 \name{norm}
 \alias{norm}
 \title{Compute the Norm of a Matrix}

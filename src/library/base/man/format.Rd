@@ -4,8 +4,6 @@
 % Copyright 2003-2016 The R Foundation
 % Distributed under GPL 2 or later
 
-\newcommand{\I}{#1}
-
 \name{format}
 \alias{format}
 \alias{format.AsIs}

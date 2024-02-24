@@ -3,8 +3,6 @@
 % Copyright 2019 R Core Team
 % Distributed under GPL 2 or later
 
-\newcommand{\I}{#1}
-
 \name{UTF8filepaths}
 \alias{file path encoding}
 \alias{UTF-8 file path}
