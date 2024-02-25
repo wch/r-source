@@ -612,6 +612,10 @@
 
       \item \code{axis.Date()} and \code{axis.POSIXct()} now respect the
       \code{par("lab")} setting for the number of \code{pretty()} intervals.
+
+      \item Comparisons for language objects, which are based on
+      deparsing, are now more careful about using accurate deparsed
+      results (\PR{18676}).
     }
   }
 }

@@ -1189,6 +1189,11 @@ options(op)
 ## silently failed much later in R <= 4.3.2.
 
 
+## checks for x == y when operands are call objects, PR18676
+stopifnot(quote({a}) != quote({b}))
+stopifnot(quote(c(1)) != quote(c(1L)))
+stopifnot(quote(c(1.234567890123456)) != quote(c(1.2345678901234567)))
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
