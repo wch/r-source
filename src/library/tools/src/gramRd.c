@@ -3240,7 +3240,7 @@ static SEXP xxusermacro(SEXP macro, SEXP args, YYLTYPE *lloc)
 	    }
 	}
 	str[offset] = '\0';
-	SET_STRING_ELT(ans, i+1, mkChar(str));
+	SET_STRING_ELT(ans, i+1, mkCharCE(str, CE_UTF8));
         vmaxset(vmax);
     }
     RELEASE_SV(args);
