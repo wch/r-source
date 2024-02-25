@@ -73,6 +73,37 @@ attribute_hidden SEXP do_relop(SEXP call, SEXP op, SEXP args, SEXP env)
     return do_relop_dflt(call, op, arg1, arg2);
 }
 
+static void check_lang_compare_OK(SEXP call, SEXP x)
+{
+    static Rboolean env_checked = FALSE;
+    static Rboolean call_compare_OK = TRUE;
+    static Rboolean symbol_compare_OK = TRUE;
+    if (! env_checked) {
+	env_checked= TRUE;
+	const char *val = getenv("_R_ERROR_ON_LANG_EQUALS");
+	if (val != NULL) {
+	    if (strcmp(val, "calls") == 0)
+		call_compare_OK = FALSE;
+	    else if (strcmp(val, "symbols") == 0)
+		symbol_compare_OK = FALSE;
+	    else if (strcmp(val, "all") == 0) {
+		call_compare_OK = FALSE;
+		symbol_compare_OK = FALSE;
+	    }
+	}
+    }
+
+    switch (TYPEOF(x)) {
+    case SYMSXP:
+	if (! symbol_compare_OK)
+	    errorcall(call, _("comparison of symbols is not supported"));
+	break;
+    case LANGSXP:
+	if (! call_compare_OK)
+	    errorcall(call, _("comparison of call objects is not supported"));
+    }
+}
+
 // also called from cmp_relop() in eval.c :
 attribute_hidden SEXP do_relop_dflt(SEXP call, SEXP op, SEXP x, SEXP y)
 {
@@ -138,6 +169,7 @@ attribute_hidden SEXP do_relop_dflt(SEXP call, SEXP op, SEXP x, SEXP y)
     /* That symbols and calls were allowed was undocumented prior to
        R 2.5.0.  We deparse them as deparse() would, minus attributes */
     if ((iS = isSymbol(x)) || TYPEOF(x) == LANGSXP) {
+	check_lang_compare_OK(call, x);
 	SEXP tmp = allocVector(STRSXP, 1);
 	PROTECT(tmp);
 	SET_STRING_ELT(tmp, 0, (iS) ? PRINTNAME(x) :
@@ -149,6 +181,7 @@ attribute_hidden SEXP do_relop_dflt(SEXP call, SEXP op, SEXP x, SEXP y)
 	UNPROTECT(1);
     }
     if ((iS = isSymbol(y)) || TYPEOF(y) == LANGSXP) {
+	check_lang_compare_OK(call, y);
 	SEXP tmp = allocVector(STRSXP, 1);
 	PROTECT(tmp);
 	SET_STRING_ELT(tmp, 0, (iS) ? PRINTNAME(y) :
