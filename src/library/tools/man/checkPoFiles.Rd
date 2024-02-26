@@ -1,6 +1,6 @@
 % File src/library/tools/man/checkRdaFiles.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2012-2014 R Core Team
+% Copyright 2012-2024 R Core Team
 % Distributed under GPL 2 or later
 
 \name{checkPoFiles}
@@ -10,8 +10,8 @@
 \description{
   These functions compare formats embedded in English messages
   with translated strings to check for consistency.  \code{checkPoFile}
-  checks one file, while \code{checkPoFiles} checks all files for a specified
-  language.
+  checks one file, while \code{checkPoFiles} checks all files for specified
+  or all languages.
 }
 \usage{
 checkPoFile(f, strictPlural = FALSE)
@@ -21,11 +21,12 @@ checkPoFiles(language, dir = ".")
   \item{f}{a character string giving a single filepath.}
   \item{strictPlural}{whether to compare formats of singular and plural
     forms in a strict way.}
-  \item{language}{a character string giving a language code.}
+  \item{language}{a character string giving a language code, or a
+    \sQuote{\link{regexp}} (regular expression), to match languages in \code{dir}.
+    Use \code{""} to denote all languages in the \code{dir} path.}
   \item{dir}{a path to a directory in which to check files.}
 }
 \details{
-
   Part of \R's internationalization depends on translations of messages
   in \file{.po} files.  In these files an \sQuote{English} message taken
   from the \R sources is followed by a translation into another
