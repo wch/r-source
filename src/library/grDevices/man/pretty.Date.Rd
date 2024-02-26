@@ -40,12 +40,10 @@
   \code{\link{pretty}} for the default method.
 }
 \examples{
-## time-dependent ==> ignore diffs:
-## IGNORE_RDIFF_BEGIN
+\dontdiff{% time-dependent
 pretty(Sys.Date())
 pretty(Sys.time(), n = 10)
-## IGNORE_RDIFF_END
-
+}
 pretty(as.Date("2000-03-01")) # R 1.0.0 came in a leap year
 
 ## time ranges in diverse scales:% also in ../../../../tests/reg-tests-1c.R

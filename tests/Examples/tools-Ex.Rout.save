@@ -1,13 +1,11 @@
 
-R Under development (unstable) (2023-10-13 r85327) -- "Unsuffered Consequences"
-Copyright (C) 2023 The R Foundation for Statistical Computing
+R Under development (unstable) (2024-02-26 r85989) -- "Unsuffered Consequences"
+Copyright (C) 2024 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
 Type 'license()' or 'licence()' for distribution details.
-
-  Natural language support but running in an English locale
 
 R is a collaborative project with many contributors.
 Type 'contributors()' for more information and
@@ -204,7 +202,7 @@ Error in assertWarning(ff()) :
 > bibstyle("unsorted", sortKeys = function(refs) seq_along(refs),
 +     fmtPrefix = function(paper) paste0("[", paper$.index, "]"),
 +        .init = TRUE)
-<environment: 0x119d11bf0>
+<environment: 0x561c62259098>
 > print(refs, .bibstyle = "unsorted")
 [1] R Core Team (2013). _R: A Language and Environment for Statistical
 Computing_. R Foundation for Statistical Computing, Vienna, Austria.
@@ -1019,23 +1017,23 @@ An illustration of lexical scoping.
 > ### Aliases: R_user_dir
 > 
 > ### ** Examples
-> 
 > ## IGNORE_RDIFF_BEGIN
 > R_user_dir("FOO", "cache")
-[1] "/Users/ripley/Library/Caches/org.R-project.R/R/FOO"
+[1] "/home/smeyer/.cache/R/FOO"
+> 
 > ## Create one, platform agnostically, must work if <normal> :
 > (Rdb <- R_user_dir("base"))
-[1] "/Users/ripley/Library/Application Support/org.R-project.R/R/base"
+[1] "/home/smeyer/.local/share/R/base"
 > if(noD <- !dir.exists(Rdb)) # should work user specifically:
 +     dir.create(Rdb, recursive=TRUE)
 > stopifnot(dir.exists(Rdb)) # "everywhere"
 > dir(Rdb) # typically empty
 character(0)
 > if(noD) unlink(Rdb) # cleaning up
+> 
 > list.files(R_user_dir("grid"), full.names = TRUE)
 character(0)
 > ## IGNORE_RDIFF_END
-> 
 > 
 > 
 > cleanEx()
@@ -1178,7 +1176,7 @@ needs Deep Thought
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  0.163 0.015 0.179 0 0 
+Time elapsed:  1.016 0.004 1.022 0 0 
 > grDevices::dev.off()
 null device 
           1 

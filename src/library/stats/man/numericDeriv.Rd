@@ -61,11 +61,10 @@ abline(h=0, lty=3)
 curve( - dnorm(x), col=2, lty=3, lwd=2, add=TRUE)
 curve(-x*dnorm(x), col=3, lty=3, lwd=2, add=TRUE)
 ##
-## IGNORE_RDIFF_BEGIN
-# shows 1.609e-8 on most platforms
+\dontdiff{# shows 1.609e-8 on most platforms
 all.equal(attr(nD,"gradient"),
           with(myenv, cbind(-dnorm(x), -x*dnorm(x))))
-## IGNORE_RDIFF_END
+}
 }
 \keyword{models}
 

@@ -72,19 +72,20 @@ summary(fm1)
 datN <- data.frame(time = (0:600)/64)
 datN$conc <- predict(fm1, newdata=datN)
 plot(conc ~ time, data=datN) # perfect, no noise
-## IGNORE_RDIFF_BEGIN
+\dontdiff{
 ## Fails by default (scaleOffset=0) on most platforms {also after increasing maxiter !}
 \dontrun{
         nls(conc ~ SSbiexp(time, A1, lrc1, A2, lrc2), data = datN, trace=TRUE)}
 \dontshow{try( # maxiter=10: store less garbage
         nls(conc ~ SSbiexp(time, A1, lrc1, A2, lrc2), data = datN,
             trace=TRUE, control = list(maxiter = 10)) )}
-fmX1 <- nls(conc ~ SSbiexp(time, A1, lrc1, A2, lrc2), data = datN, control = list(scaleOffset=1))
+fmX1 <- nls(conc ~ SSbiexp(time, A1, lrc1, A2, lrc2), data = datN,
+            control = list(scaleOffset=1))
 fmX  <- nls(conc ~ SSbiexp(time, A1, lrc1, A2, lrc2), data = datN,
-           control = list(scaleOffset=1, printEval=TRUE, tol=1e-11, nDcentral=TRUE), trace=TRUE)
+            control = list(scaleOffset=1, printEval=TRUE, tol=1e-11, nDcentral=TRUE), trace=TRUE)
 all.equal(coef(fm1), coef(fmX1), tolerance=0) # ... rel.diff.: 1.57e-6
 all.equal(coef(fm1), coef(fmX),  tolerance=0) # ... rel.diff.: 1.03e-12
-## IGNORE_RDIFF_END
+}
 stopifnot(all.equal(coef(fm1), coef(fmX1), tolerance = 6e-6),
           all.equal(coef(fm1), coef(fmX ), tolerance = 1e-11))
 }

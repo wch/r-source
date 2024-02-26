@@ -46,9 +46,9 @@ R_user_dir(package, which = c("data", "config", "cache"))
   are used if set, and otherwise, defaults appropriate for the \R
   platform in use are employed.
 }
-\examples{
-## IGNORE_RDIFF_BEGIN
+\examples{\dontdiff{
 R_user_dir("FOO", "cache")
+
 ## Create one, platform agnostically, must work if <normal> :
 (Rdb <- R_user_dir("base"))
 if(noD <- !dir.exists(Rdb)) # should work user specifically:
@@ -56,6 +56,6 @@ if(noD <- !dir.exists(Rdb)) # should work user specifically:
 stopifnot(dir.exists(Rdb)) # "everywhere"
 dir(Rdb) # typically empty
 if(noD) unlink(Rdb) # cleaning up
+
 list.files(R_user_dir("grid"), full.names = TRUE)
-## IGNORE_RDIFF_END
-}
+}}

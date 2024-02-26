@@ -134,8 +134,7 @@ for(n in 0:3)
                               "\%d variables have missing values"),
                   n))
 
-\dontrun{
-## for translation, those strings should appear in R-pkg.pot as
+\dontrun{## for translation, those strings should appear in R-pkg.pot as
 msgid        "\%d variable has missing values"
 msgid_plural "\%d variables have missing values"
 msgstr[0] ""
@@ -174,9 +173,8 @@ errMsg(1 + "2")
 ## Usually, you would reset the language to "previous" via
 Sys.setLanguage(oldSet)
 
-## A show off of translations -- platform (font etc) dependent:
+\dontdiff{## A show off of translations -- platform (font etc) dependent:
 ## The translation languages available for "base" R in this version of R:
-## IGNORE_RDIFF_BEGIN
 if(capabilities("NLS")) withAutoprint({
   langs <- list.files(bindtextdomain("R"),
 		      pattern = "^[a-z]{2}(_[A-Z]{2}|@quot)?$")
@@ -188,7 +186,7 @@ if(capabilities("NLS")) withAutoprint({
   (nTrans <- length(unique(txts)))
   (not_translated <- names(txts[txts == txts[["en"]]]))
 })
-## IGNORE_RDIFF_END
+}
 ## Here, we reset to the *original* setting before the full example started:
 if(nzchar(thisLang)) { ## reset to previous and check
   Sys.setLanguage(thisLang)

@@ -282,9 +282,10 @@ plot(x,y, main = "nls(*), data, true function and fit, n=100")
 curve(100 + 10 * exp(x / 2), col = 4, add = TRUE)
 lines(x, predict(nlmod), col = 2)
 
+
 ## Here, requiring close convergence, must use more accurate numerical differentiation,
 ## as this typically gives Error: "step factor .. reduced below 'minFactor' .."
-## IGNORE_RDIFF_BEGIN
+\dontdiff{
 try(nlm1 <- update(nlmod, control = list(tol = 1e-7)))
 o2 <- options(digits = 10) # more accuracy for 'trace'
 ## central differencing works here typically (PR#18165: not converging on *some*):
@@ -295,13 +296,13 @@ ctr2 <- nls.control(nDcentral=TRUE, tol = 8e-8, # <- even smaller than above
               ))
 (nlm2 <- update(nlmod, control = ctr2, trace = TRUE)); options(o2)
 ## --> convergence tolerance  4.997e-8 (in 11 iter.)
-## IGNORE_RDIFF_END
+}
 
 ## The muscle dataset in MASS is from an experiment on muscle
 ## contraction on 21 animals.  The observed variables are Strip
 ## (identifier of muscle), Conc (Cacl concentration) and Length
 ## (resulting length of muscle section).
-## IGNORE_RDIFF_BEGIN
+\dontdiff{
 if(requireNamespace("MASS", quietly = TRUE)) withAutoprint({
 ## The non linear model considered is
 ##       Length = alpha + beta*exp(-Conc/theta) + error
@@ -326,7 +327,7 @@ musc.2 <- nls(Length ~ a[Strip] + b[Strip]*exp(-Conc/th), MASS::muscle,
               start = list(a = rep(b[2], 21), b = rep(b[3], 21), th = b[1]))
 summary(musc.2)
 })
-## IGNORE_RDIFF_END
+}
 \dontshow{options(od)}
 }
 \keyword{nonlinear}

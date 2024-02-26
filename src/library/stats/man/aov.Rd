@@ -102,9 +102,7 @@ aov(terms(yield ~ block + N * P + K, keep.order = TRUE), npk)
 ## as a test, not particularly sensible statistically
 npk.aovE <- aov(yield ~  N*P*K + Error(block), npk)
 npk.aovE
-## IGNORE_RDIFF_BEGIN
-summary(npk.aovE)
-## IGNORE_RDIFF_END
+\dontdiff{summary(npk.aovE)}
 options(op)  # reset to previous
 }
 \keyword{models}

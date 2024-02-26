@@ -70,8 +70,9 @@ file.access(names, mode = 0)
 
 \examples{
 fa <- file.access(dir("."))
-## IGNORE_RDIFF_BEGIN
+\dontdiff{
 table(fa) # count successes & failures
+
 #ifdef windows
 d <- dir(file.path(R.home(), "bin"))
 df <- dir(file.path(R.home(), "bin"), full.names = TRUE)
@@ -80,6 +81,6 @@ d[file.access(df, 1) == 0] # some are executable, some are not
 d[file.access(df, 4) == 0] # hopefully all are readable
 d[file.access(df, 2) == 0] # they may or may not be writable
 #endif
-## IGNORE_RDIFF_END
+}
 }
 \keyword{file}

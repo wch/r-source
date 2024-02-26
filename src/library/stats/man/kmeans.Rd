@@ -162,9 +162,9 @@ kmeans(x,1)$withinss # trivial one-cluster, (its W.SS == ss(x))
 ## random starts do help here with too many clusters
 ## (and are often recommended anyway!):
 ## The ordering of the clusters may be platform-dependent.
-## IGNORE_RDIFF_BEGIN
+\dontdiff{
 (cl <- kmeans(x, 5, nstart = 25))
-## IGNORE_RDIFF_END
+}
 plot(x, col = cl$cluster)
 points(cl$centers, col = 1:5, pch = 8)
 }

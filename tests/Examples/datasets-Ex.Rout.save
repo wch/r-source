@@ -1,13 +1,11 @@
 
-R Under development (unstable) (2024-02-20 r85955) -- "Unsuffered Consequences"
+R Under development (unstable) (2024-02-26 r85989) -- "Unsuffered Consequences"
 Copyright (C) 2024 The R Foundation for Statistical Computing
-Platform: aarch64-apple-darwin23.3.0
+Platform: x86_64-pc-linux-gnu
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
 Type 'license()' or 'licence()' for distribution details.
-
-  Natural language support but running in an English locale
 
 R is a collaborative project with many contributors.
 Type 'contributors()' for more information and
@@ -97,8 +95,8 @@ Nonlinear regression model
      A    lrc 
 19.143 -0.633 
  residual sum-of-squares: 26
-> # using the plinear algorithm  (trace o/p differs by platform)
 > ## IGNORE_RDIFF_BEGIN
+> # using the plinear algorithm  (trace o/p differs by platform)
 > fm2 <- nls(demand ~ (1-exp(-exp(lrc)*Time)), data = BOD,
 +            start = c(lrc = log(.35)), algorithm = "plinear", trace = TRUE)
 32.946    (7.09e-01): par = (-1.0498 22.126)
@@ -3613,7 +3611,7 @@ c0   -5.14
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  0.915 0.059 0.977 0 0 
+Time elapsed:  3.323 0.037 3.359 0 0 
 > grDevices::dev.off()
 null device 
           1 

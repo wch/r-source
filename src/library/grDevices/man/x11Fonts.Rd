@@ -56,14 +56,12 @@ X11Fonts(...)
 \note{
   Available only when \code{\link{capabilities}()[["X11"]]} is true.
 }
-\examples{
-## IGNORE_RDIFF_BEGIN
-if(capabilities()[["X11"]]) withAutoprint({
+\examples{\dontdiff{
+if(capabilities("X11")) withAutoprint({
 X11Fonts()
 X11Fonts("mono")
 utopia <- X11Font("-*-utopia-*-*-*-*-*-*-*-*-*-*-*-*")
 X11Fonts(utopia = utopia)
 })
-## IGNORE_RDIFF_END
-}
+}}
 \keyword{device}

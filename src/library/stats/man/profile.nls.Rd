@@ -57,10 +57,10 @@ fm1 <- nls(demand ~ SSasympOrig(Time, A, lrc), data = BOD)
 # get the profile for the fitted model: default level is too extreme
 pr1 <- profile(fm1, alphamax = 0.05)
 # profiled values for the two parameters
-## IGNORE_RDIFF_BEGIN
+\dontdiff{
 pr1$A
 pr1$lrc
-## IGNORE_RDIFF_END
+}
 # see also example(plot.profile.nls)
 \dontshow{options(od)}
 }

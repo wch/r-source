@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2024-02-24 r85979) -- "Unsuffered Consequences"
+R Under development (unstable) (2024-02-26 r85989) -- "Unsuffered Consequences"
 Copyright (C) 2024 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu
 
@@ -1279,9 +1279,10 @@ Residual standard error: 0.04103 on 7 degrees of freedom
 Error in nls(y ~ cbind(exp(-exp(lrc1) * x), exp(-exp(lrc2) * x)), data = xy,  : 
   number of iterations exceeded maximum of 10
 > ## End(Don't show)
-> fmX1 <- nls(conc ~ SSbiexp(time, A1, lrc1, A2, lrc2), data = datN, control = list(scaleOffset=1))
+> fmX1 <- nls(conc ~ SSbiexp(time, A1, lrc1, A2, lrc2), data = datN,
++             control = list(scaleOffset=1))
 > fmX  <- nls(conc ~ SSbiexp(time, A1, lrc1, A2, lrc2), data = datN,
-+            control = list(scaleOffset=1, printEval=TRUE, tol=1e-11, nDcentral=TRUE), trace=TRUE)
++             control = list(scaleOffset=1, printEval=TRUE, tol=1e-11, nDcentral=TRUE), trace=TRUE)
 0.01722077    (6.55e-02): par = (0.6168807 -1.783839 2.050204 0.2004597)
   It.   1, fac=           1, eval (no.,total): ( 1,  1): new dev = 3.30894e-06
 3.308942e-06  (9.08e-04): par = (0.5798674 -1.784335 2.028943 0.1920502)
@@ -1704,6 +1705,7 @@ attr(,"gradient")
  [9,]    1 -0.0036328431  2.3469622  6.7835933
 [10,]    1 -0.0006683898  0.5619310  1.6833949
 [11,]    1 -0.0002589123  0.2459116  0.7486834
+> 
 > ## IGNORE_RDIFF_BEGIN
 > getInitial(weight ~ SSweibull(Time, Asym, Drop, lrc, pwr), data = Chick.6)
       Asym       Drop        lrc        pwr 
@@ -1726,6 +1728,7 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 
 Residual standard error: 2.061 on 7 degrees of freedom
 
+> 
 > ## Data and Fit:
 > plot(weight ~ Time, Chick.6, xlim = c(0, 21), main = "SSweibull() fit to Chick.6")
 > ux <- par("usr")[1:2]; x <- seq(ux[1], ux[2], length.out=250)
@@ -5114,7 +5117,7 @@ function (V)
         r[seq.int(from = 1L, by = p + 1L, length.out = p)] <- 1
     r
 }
-<bytecode: 0x55c70f498828>
+<bytecode: 0x55c59f5db840>
 <environment: namespace:stats>
 > stopifnot(all.equal(Cl, cov2cor(cov(longley))),
 +           all.equal(cor(longley, method = "kendall"),
@@ -7762,7 +7765,7 @@ attr(,".Environment")
 > environment(as.formula("y ~ x"))
 <environment: R_GlobalEnv>
 > environment(as.formula("y ~ x", env = new.env()))
-<environment: 0x55c7115a67f0>
+<environment: 0x55c5a1749088>
 > 
 > 
 > ## Create a formula for a model with a large number of variables:
@@ -11294,6 +11297,7 @@ Consider specifying 'start' or using a selfStart model
 > curve(100 + 10 * exp(x / 2), col = 4, add = TRUE)
 > lines(x, predict(nlmod), col = 2)
 > 
+> 
 > ## Here, requiring close convergence, must use more accurate numerical differentiation,
 > ## as this typically gives Error: "step factor .. reduced below 'minFactor' .."
 > ## IGNORE_RDIFF_BEGIN
@@ -12680,14 +12684,14 @@ attr(,"class")
 $linkfun
 function (mu) 
 mu^lambda
-<bytecode: 0x55c70e8206f0>
-<environment: 0x55c70e7fb138>
+<bytecode: 0x55c59f7a38e0>
+<environment: 0x55c59f03ad98>
 
 $linkinv
 function (eta) 
 pmax(eta^(1/lambda), .Machine$double.eps)
-<bytecode: 0x55c70e820878>
-<environment: 0x55c70e7fb138>
+<bytecode: 0x55c59f7a3790>
+<environment: 0x55c59f03ad98>
 
 > 
 > 
@@ -16139,16 +16143,12 @@ Contrast 1 Contrast 2 Contrast 3
 > mySSlogis <- selfStart(~ Asym/(1 + exp((xmid - x)/scal)),
 +                        initial = initLogis,
 +                        parameters = c("Asym", "xmid", "scal"))
-> ## Don't show: 
 > ## IGNORE_RDIFF_BEGIN
-> ## End(Don't show)
 > getInitial(weight ~ mySSlogis(Time, Asym, xmid, scal),
 +            data = subset(ChickWeight, Chick == 1))
      Asym      xmid      scal 
 937.03011  35.22296  11.40521 
-> ## Don't show: 
 > ## IGNORE_RDIFF_END
-> ## End(Don't show)
 > 
 > # 'first.order.log.model' is a function object defining a first order
 > # compartment model
@@ -17050,8 +17050,8 @@ Step function with continuity 'f'= 0.2 ,  3 knots at
 > unclass(sfun0)
 function (v) 
 .approxfun(x, y, v, method, yleft, yright, f, na.rm)
-<bytecode: 0x55c71016e850>
-<environment: 0x55c70ee1ba30>
+<bytecode: 0x55c5a02ea8d8>
+<environment: 0x55c59dd641e0>
 attr(,"call")
 stepfun(1:3, y0, f = 0)
 > ls(envir = environment(sfun0))
@@ -18054,9 +18054,9 @@ Warning in toeplitz(letters[1:4], LETTERS[20:26]) :
 > n <- m-k+1
 > ## Convolution
 > W <- toeplitz2(c(rep(0, m-k), wts, rep(0, m-k)), ncol=n)
+> ## IGNORE_RDIFF_BEGIN
 > ## Don't show: 
 > hadM <- isNamespaceLoaded("Matrix")
-> ## IGNORE_RDIFF_BEGIN
 > ## End(Don't show)
 > ## "display" nicely :
 > if(requireNamespace("Matrix"))
@@ -18086,8 +18086,8 @@ Loading required namespace: Matrix
 [17,]  .  .  .  .  .  .  .  .  .  .  .  .  1
 > ## Don't show: 
 > if(!hadM) unloadNamespace("Matrix")
-> ## IGNORE_RDIFF_END
 > ## End(Don't show)
+> ## IGNORE_RDIFF_END
 > ## scale W to have column sums 1:
 > W. <- W / sum(wts)
 > all.equal(rep(1, ncol(W.)), colSums(W.), check.attributes = FALSE)
@@ -19591,7 +19591,7 @@ Number of Fisher Scoring iterations: 6
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  6.053 0.157 6.211 0 0 
+Time elapsed:  5.156 0.137 5.337 0 0 
 > grDevices::dev.off()
 null device 
           1 

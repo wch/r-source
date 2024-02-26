@@ -257,8 +257,10 @@ system is active; if \code{FALSE}, only the Tcl interpreter is available.
   to add the directory where they are found to the Tcl search path with
   \code{addTclPath}.  The return value is a class \code{"tclObj"} object
   if it succeeds, or \code{FALSE} if it fails (when a warning is
-  issued).  To see the current search path as an \R character vector, use
-\preformatted{strsplit(tclvalue('auto_path'), " ")[[1]]}.
+  issued).  To see the current search path as an \R character vector,
+  use: \preformatted{
+    strsplit(tclvalue('auto_path'), " ")[[1]]
+}
 
   The Tcl version (including patch level) is returned as a character
   string (such as \code{"8.6.3"}).
@@ -279,11 +281,11 @@ system is active; if \code{FALSE}, only the Tcl interpreter is available.
 tclVersion()
 
 .Tcl("format \"\%s\\n\" \"Hello, World!\"")
+\dontdiff{
 f <- function() cat("HI!\n")
-## IGNORE_RDIFF_BEGIN
 .Tcl.callback(f)
 .Tcl.args(text = "Push!", command = f) # NB: Different address
-## IGNORE_RDIFF_END
+}
 
 xyzzy <- tclVar(7913)
 tclvalue(xyzzy)
@@ -297,10 +299,8 @@ tcl("set", as.character(xyzzy))
 top <- tktoplevel() # a Tk widget, see Tk-widgets
 ls(envir = top$env, all.names = TRUE)
 }
-
-## IGNORE_RDIFF_BEGIN
+\dontdiff{
 ls(envir = .TkRoot$env, all.names = TRUE) # .Tcl.args put a callback ref in here
-## IGNORE_RDIFF_END
+}
 }
 \keyword{ misc }
-

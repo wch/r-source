@@ -139,9 +139,7 @@ is.hashtab(x)
 \examples{
 ## Create a new empty hash table.
 h1 <- hashtab()
-## IGNORE_RDIFF_BEGIN
 h1
-## IGNORE_RDIFF_END
 
 ## Add some key/value pairs.
 sethash(h1, NULL, 1)
@@ -177,9 +175,7 @@ identical(h1, h2)
 ## set in one, see in the "other"  <==> really one object with 2 names
 sethash(h2, NULL, 77)
 gethash(h1, NULL)
-## IGNORE_RDIFF_BEGIN
 str(h1)
-## IGNORE_RDIFF_END
 
 ## An example of using  maphash():  get all hashkeys of a hash table:
 hashkeys <- function(h) {
@@ -190,10 +186,8 @@ hashkeys <- function(h) {
   val
 }
 
-## IGNORE_RDIFF_BEGIN
 kList <- hashkeys(h1)
-str(kList) # the *order* is "arbitrary" & cannot be "known"
-## IGNORE_RDIFF_END
+\dontdiff{str(kList) # the *order* is "arbitrary" & cannot be "known"}
 }
 
 \keyword{data}

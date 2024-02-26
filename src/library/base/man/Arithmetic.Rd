@@ -218,9 +218,9 @@ x \%\%  3 # is periodic  2 0  1  2 0  1 ...
 x \%\% -3 #  (ditto)    -1 0 -2 -1 0 -2 ...
 x \%/\% 5
 x \%\% Inf # now is defined by limit (gave NaN in earlier versions of R)
-\dontshow{## IGNORE_RDIFF_BEGIN}
+\dontdiff{
 ## Illustrating PR#18677, see above
 1 \%/\% print(0.2, digits=19)
-\dontshow{## IGNORE_RDIFF_END}
+}
 }
 \keyword{arith}

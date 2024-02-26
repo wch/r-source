@@ -36,12 +36,11 @@ as.polySpline(object, \dots)
   \code{\link{splineOrder}}
 }
 \examples{
-% May have rounding errors rather than true 0, e.g, with Apple Accelerate.
 require(graphics)
 ispl <- polySpline(interpSpline( weight ~ height,  women, bSpline = TRUE))
-## IGNORE_RDIFF_BEGIN
+\dontdiff{% May have rounding errors rather than true 0, e.g, with Apple Accelerate.
 print( ispl )   # print the piecewise polynomial representation
-## IGNORE_RDIFF_END
+}
 plot( ispl )    # plots over the range of the knots
 points( women$height, women$weight )
 }

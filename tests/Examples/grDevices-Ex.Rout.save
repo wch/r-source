@@ -1,13 +1,11 @@
 
-R Under development (unstable) (2024-02-19 r85944) -- "Unsuffered Consequences"
+R Under development (unstable) (2024-02-26 r85989) -- "Unsuffered Consequences"
 Copyright (C) 2024 The R Foundation for Statistical Computing
-Platform: aarch64-apple-darwin23.3.0
+Platform: x86_64-pc-linux-gnu
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
 Type 'license()' or 'licence()' for distribution details.
-
-  Natural language support but running in an English locale
 
 R is a collaborative project with many contributors.
 Type 'contributors()' for more information and
@@ -3652,20 +3650,18 @@ attr(,"class")
 > 
 > ### ** Examples
 > 
-> ## time-dependent ==> ignore diffs:
 > ## IGNORE_RDIFF_BEGIN
 > pretty(Sys.Date())
-[1] "2024-02-17" "2024-02-18" "2024-02-19" "2024-02-20" "2024-02-21"
-[6] "2024-02-22"
+[1] "2024-02-24" "2024-02-25" "2024-02-26" "2024-02-27" "2024-02-28"
+[6] "2024-02-29"
 > pretty(Sys.time(), n = 10)
- [1] "2024-02-19 19:19:07 GMT" "2024-02-19 19:19:08 GMT"
- [3] "2024-02-19 19:19:09 GMT" "2024-02-19 19:19:10 GMT"
- [5] "2024-02-19 19:19:11 GMT" "2024-02-19 19:19:12 GMT"
- [7] "2024-02-19 19:19:13 GMT" "2024-02-19 19:19:14 GMT"
- [9] "2024-02-19 19:19:15 GMT" "2024-02-19 19:19:16 GMT"
-[11] "2024-02-19 19:19:17 GMT"
+ [1] "2024-02-26 13:27:03 CET" "2024-02-26 13:27:04 CET"
+ [3] "2024-02-26 13:27:05 CET" "2024-02-26 13:27:06 CET"
+ [5] "2024-02-26 13:27:07 CET" "2024-02-26 13:27:08 CET"
+ [7] "2024-02-26 13:27:09 CET" "2024-02-26 13:27:10 CET"
+ [9] "2024-02-26 13:27:11 CET" "2024-02-26 13:27:12 CET"
+[11] "2024-02-26 13:27:13 CET"
 > ## IGNORE_RDIFF_END
-> 
 > pretty(as.Date("2000-03-01")) # R 1.0.0 came in a leap year
 [1] "2000-02-28" "2000-02-29" "2000-03-01" "2000-03-02" "2000-03-03"
 [6] "2000-03-04"
@@ -4169,9 +4165,8 @@ points cut off after point[39]
 > ### Keywords: device
 > 
 > ### ** Examples
-> 
 > ## IGNORE_RDIFF_BEGIN
-> if(capabilities()[["X11"]]) withAutoprint({
+> if(capabilities("X11")) withAutoprint({
 + X11Fonts()
 + X11Fonts("mono")
 + utopia <- X11Font("-*-utopia-*-*-*-*-*-*-*-*-*-*-*-*")
@@ -4212,7 +4207,6 @@ $mono
 > utopia <- X11Font("-*-utopia-*-*-*-*-*-*-*-*-*-*-*-*")
 > X11Fonts(utopia = utopia)
 > ## IGNORE_RDIFF_END
-> 
 > 
 > 
 > cleanEx()
@@ -4495,7 +4489,7 @@ NULL
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  20.844 0.447 21.37 0 0 
+Time elapsed:  29.951 0.398 30.64 0 0 
 > grDevices::dev.off()
 null device 
           1 

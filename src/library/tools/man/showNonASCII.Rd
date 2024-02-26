@@ -24,7 +24,7 @@ showNonASCIIfile(file)
   This was originally written to help detect non-portable text in
   files in packages.
 
-  It prints all element of \code{x} which contain non-ASCII characters,
+  It prints all elements of \code{x} which contain non-ASCII characters,
   preceded by the element number and with non-ASCII bytes highlighted
   \emph{via} \code{\link{iconv}(sub = "byte")}.
 
@@ -47,9 +47,7 @@ out <- c(
 f <- tempfile()
 cat(out, file = f, sep = "\n")
 
-## IGNORE_RDIFF_BEGIN
-showNonASCIIfile(f)
-## IGNORE_RDIFF_END
+\dontdiff{showNonASCIIfile(f)}
 unlink(f)
 }
 \keyword{utilities}

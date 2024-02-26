@@ -95,10 +95,10 @@ initLogis <- function(mCall, data, LHS, ...) {
 mySSlogis <- selfStart(~ Asym/(1 + exp((xmid - x)/scal)),
                        initial = initLogis,
                        parameters = c("Asym", "xmid", "scal"))
-\dontshow{## IGNORE_RDIFF_BEGIN}
+\dontdiff{
 getInitial(weight ~ mySSlogis(Time, Asym, xmid, scal),
            data = subset(ChickWeight, Chick == 1))
-\dontshow{## IGNORE_RDIFF_END}
+}
 
 # 'first.order.log.model' is a function object defining a first order
 # compartment model
