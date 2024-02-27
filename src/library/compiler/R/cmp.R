@@ -2976,8 +2976,7 @@ cmpfun <- function(f, options = NULL) {
         if (mayCallBrowser(body(f), ncntxt))
             return(f)
         if (typeof(body(f)) != "language" ||
-            ! is.symbol(body(f)[[1]]) ||
-            body(f)[[1]] != "{")
+            ! identical(body(f)[[1]], quote(`{`)))
             loc <- list(expr = body(f), srcref = getExprSrcref(f))
         else
             loc <- NULL
