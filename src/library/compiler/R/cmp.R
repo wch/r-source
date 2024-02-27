@@ -50,7 +50,7 @@ dots.or.missing <- function(args) {
     for (i in 1:length(args)) {
         a <-args[[i]]
         if (missing(a)) return(TRUE) #**** better test?
-        if (typeof(a) == "symbol" && a == "...") return(TRUE)
+        if (identical(a, quote(`...`))) return(TRUE)
     }
     return(FALSE)
 }
@@ -58,7 +58,7 @@ dots.or.missing <- function(args) {
 anyDots <- function(args) {
     for (i in 1:length(args)) {
         a <-args[[i]]
-        if (! missing(a) && typeof(a) == "symbol" && a == "...")
+        if (! missing(a) && identical(a, quote(`...`)))
             return(TRUE)
     }
     return(FALSE)
@@ -1107,7 +1107,7 @@ cmpConst <- function(val, cb, cntxt) {
 }
 
 cmpSym <- function(sym, cb, cntxt, missingOK = FALSE) {
-    if (sym == "...") {
+    if (identical(sym, quote(`...`))) {
         notifyWrongDotsUse("...", cntxt, loc = cb$savecurloc())
         cb$putcode(DOTSERR.OP)
     }
@@ -1197,7 +1197,7 @@ cmpCallArgs <- function(args, cb, cntxt, nse = FALSE) {
             cb$putcode(DOMISSING.OP)
             cmpTag(n, cb)
         }
-        else if (is.symbol(a) && a == "...") {
+        else if (identical(a, quote(`...`))) {
             if (! findLocVar("...", cntxt))
                 notifyWrongDotsUse("...", cntxt, loc = cb$savecurloc())
             cb$putcode(DODOTS.OP)
@@ -1615,7 +1615,7 @@ cmpAssign <- function(e, cb, cntxt) {
     ##    return(cmpSpecial(e, cb, cntxt))
     if (! checkAssign(e, cntxt, loc = cb$savecurloc()))
         return(cmpSpecial(e, cb, cntxt))
-    superAssign <- as.character(e[[1]]) == "<<-"
+    superAssign <- identical(e[[1]], quote(`<<-`))
     lhs <- e[[2]]
     value <- e[[3]]
     symbol <- as.name(getAssignedVar(e, cntxt))
@@ -2543,11 +2543,12 @@ simpleArgs <- function(icall, fnames) {
 is.simpleInternal <- function(def) {
     if (typeof(def) == "closure" && simpleFormals(def)) {
         b <- body(def)
-        if (typeof(b) == "language" && length(b) == 2 && b[[1]] == "{")
+        if (typeof(b) == "language" &&
+            length(b) == 2 &&
+            identical(b[[1]], quote(`{`)))
             b <- b[[2]]
         if (typeof(b) == "language" &&
-            typeof(b[[1]]) == "symbol" &&
-            b[[1]] == ".Internal") {
+            identical(b[[1]], quote(.Internal))) {
             icall <- b[[2]]
             ifun <- icall[[1]]
             typeof(ifun) == "symbol" &&
@@ -2563,7 +2564,9 @@ inlineSimpleInternalCall <- function(e, def) {
     if (! dots.or.missing(e) && is.simpleInternal(def)) {
         forms <- formals(def)
         b <- body(def)
-        if (typeof(b) == "language" && length(b) == 2 && b[[1]] == "{")
+        if (typeof(b) == "language" &&
+            length(b) == 2 &&
+            identical(b[[1]], quote(`{`)))
             b <- b[[2]]
         icall <- b[[2]]
         defaults <- forms ## **** could strip missings but OK not to?
@@ -3073,8 +3076,10 @@ cmpfile <- function(infile, outfile, ascii = FALSE, env = .GlobalEnv,
             e <- forms[[i]]
             sref <- srefs[[i]]
             if (verbose) {
-                if (typeof(e) == "language" && e[[1]] == "<-" &&
-                    typeof(e[[3]]) == "language" && e[[3]][[1]] == "function")
+                if (typeof(e) == "language" &&
+                    identical(e[[1]], quote(`<-`)) &&
+                    typeof(e[[3]]) == "language" &&
+                    identical(e[[3]][[1]], quote(`function`)))
                     cat(paste0("compiling function \"", e[[2]], "\"\n"))
                 else
                     cat(paste("compiling expression", deparse(e, 20)[1],
