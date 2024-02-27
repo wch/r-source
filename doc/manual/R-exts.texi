@@ -9236,11 +9236,11 @@ For example
 > summary(women)
 Called from: summary.data.frame(women)
 Browse[1]> ls()
- [1] "digits" "i"      "lbs"    "lw"     "maxsum" "nm"     "nr"     "nv"
- [9] "object" "sms"    "z"
+ [1] "digits" "i"      "lbs"    "lw"     "maxsum" "ncw"    "nm"     "nr"    
+ [9] "nv"     "object" "sms"    "z"     
 Browse[1]> maxsum
 [1] 7
-Browse[1]>
+Browse[1]> c
      height         weight
  Min.   :58.0   Min.   :115.0
  1st Qu.:61.5   1st Qu.:124.5
