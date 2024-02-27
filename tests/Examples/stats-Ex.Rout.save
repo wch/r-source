@@ -969,7 +969,7 @@ cond     deg0NA deg4NA deg8NA deg0NP deg4NP deg8NP
 > flush(stderr()); flush(stdout())
 > 
 > ### Name: SSasymp
-> ### Title: Self-Starting Nls Asymptotic Regression Model
+> ### Title: Self-Starting 'nls' Asymptotic Model
 > ### Aliases: SSasymp
 > ### Keywords: models
 > 
@@ -1059,7 +1059,7 @@ Residual standard error: 0.7493 on 3 degrees of freedom
 > flush(stderr()); flush(stdout())
 > 
 > ### Name: SSasympOff
-> ### Title: Self-Starting Nls Asymptotic Regression Model with an Offset
+> ### Title: Self-Starting 'nls' Asymptotic Model with an Offset
 > ### Aliases: SSasympOff
 > ### Keywords: models
 > 
@@ -1141,7 +1141,7 @@ Residual standard error: 1.663 on 4 degrees of freedom
 > flush(stderr()); flush(stdout())
 > 
 > ### Name: SSasympOrig
-> ### Title: Self-Starting Nls Asymptotic Regression Model through the Origin
+> ### Title: Self-Starting 'nls' Asymptotic Model through the Origin
 > ### Aliases: SSasympOrig
 > ### Keywords: models
 > 
@@ -1184,7 +1184,7 @@ Residual standard error: 1.663 on 4 degrees of freedom
 > flush(stderr()); flush(stdout())
 > 
 > ### Name: SSbiexp
-> ### Title: Self-Starting Nls Biexponential model
+> ### Title: Self-Starting 'nls' Biexponential Model
 > ### Aliases: SSbiexp
 > ### Keywords: models
 > 
@@ -1308,7 +1308,7 @@ Error in nls(y ~ cbind(exp(-exp(lrc1) * x), exp(-exp(lrc2) * x)), data = xy,  :
 > flush(stderr()); flush(stdout())
 > 
 > ### Name: SSfol
-> ### Title: Self-Starting Nls First-order Compartment Model
+> ### Title: Self-Starting 'nls' First-order Compartment Model
 > ### Aliases: SSfol
 > ### Keywords: models
 > 
@@ -1457,7 +1457,7 @@ Residual standard error: 2.351 on 8 degrees of freedom
 > flush(stderr()); flush(stdout())
 > 
 > ### Name: SSgompertz
-> ### Title: Self-Starting Nls Gompertz Growth Model
+> ### Title: Self-Starting 'nls' Gompertz Growth Model
 > ### Aliases: SSgompertz
 > ### Keywords: models
 > 
@@ -1530,7 +1530,7 @@ Residual standard error: 0.02684 on 13 degrees of freedom
 > flush(stderr()); flush(stdout())
 > 
 > ### Name: SSlogis
-> ### Title: Self-Starting Nls Logistic Model
+> ### Title: Self-Starting 'nls' Logistic Model
 > ### Aliases: SSlogis
 > ### Keywords: models
 > 
@@ -1579,7 +1579,7 @@ Residual standard error: 0.02684 on 13 degrees of freedom
 > flush(stderr()); flush(stdout())
 > 
 > ### Name: SSmicmen
-> ### Title: Self-Starting Nls Michaelis-Menten Model
+> ### Title: Self-Starting 'nls' Michaelis-Menten Model
 > ### Aliases: SSmicmen
 > ### Keywords: models
 > 
@@ -1677,7 +1677,7 @@ Residual standard error: 10.93 on 10 degrees of freedom
 > flush(stderr()); flush(stdout())
 > 
 > ### Name: SSweibull
-> ### Title: Self-Starting Nls Weibull Growth Curve Model
+> ### Title: Self-Starting 'nls' Weibull Growth Curve Model
 > ### Aliases: SSweibull
 > ### Keywords: models
 > 

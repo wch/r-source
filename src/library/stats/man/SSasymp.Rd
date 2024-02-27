@@ -5,7 +5,7 @@
 
 \name{SSasymp}
 \encoding{UTF-8}
-\title{Self-Starting Nls Asymptotic Regression Model}
+\title{Self-Starting \code{nls} Asymptotic Model}
 \usage{
 SSasymp(input, Asym, R0, lrc)
 }

@@ -5,7 +5,7 @@
 
 \name{SSmicmen}
 \encoding{UTF-8}
-\title{Self-Starting Nls \I{Michaelis}-\I{Menten} Model}
+\title{Self-Starting \code{nls} \I{Michaelis}-\I{Menten} Model}
 \usage{
 SSmicmen(input, Vm, K)
 }

@@ -5,7 +5,7 @@
 
 \name{SSlogis}
 \encoding{UTF-8}
-\title{Self-Starting Nls Logistic Model}
+\title{Self-Starting \code{nls} Logistic Model}
 \usage{
 SSlogis(input, Asym, xmid, scal)
 }

@@ -5,7 +5,7 @@
 
 \name{SSasympOrig}
 \alias{SSasympOrig}
-\title{Self-Starting Nls Asymptotic Regression Model through the Origin}
+\title{Self-Starting \code{nls} Asymptotic Model through the Origin}
 \encoding{UTF-8}
 \usage{
 SSasympOrig(input, Asym, lrc)

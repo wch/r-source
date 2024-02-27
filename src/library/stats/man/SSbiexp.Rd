@@ -5,7 +5,7 @@
 
 \name{SSbiexp}
 \encoding{UTF-8}
-\title{Self-Starting Nls Biexponential model}
+\title{Self-Starting \code{nls} Biexponential Model}
 \usage{
 SSbiexp(input, A1, lrc1, A2, lrc2)
 }

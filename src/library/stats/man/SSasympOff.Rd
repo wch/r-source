@@ -5,7 +5,7 @@
 
 \name{SSasympOff}
 \encoding{UTF-8}
-\title{Self-Starting Nls Asymptotic Regression Model with an Offset}
+\title{Self-Starting \code{nls} Asymptotic Model with an Offset}
 \usage{
 SSasympOff(input, Asym, lrc, c0)
 }

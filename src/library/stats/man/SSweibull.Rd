@@ -4,7 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{SSweibull}
-\title{Self-Starting Nls Weibull Growth Curve Model}
+\title{Self-Starting \code{nls} Weibull Growth Curve Model}
 \usage{
 SSweibull(x, Asym, Drop, lrc, pwr)
 }

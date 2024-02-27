@@ -5,7 +5,7 @@
 
 \name{SSfol}
 \encoding{UTF-8}
-\title{Self-Starting Nls First-order Compartment Model}
+\title{Self-Starting \code{nls} First-order Compartment Model}
 \usage{
 SSfol(Dose, input, lKe, lKa, lCl)
 }
