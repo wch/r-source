@@ -4,7 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{SSfpl}
-\title{Self-Starting Nls Four-Parameter Logistic Model}
+\title{Self-Starting \code{nls} Four-Parameter Logistic Model}
 \alias{SSfpl}
 \encoding{UTF-8}
 \usage{

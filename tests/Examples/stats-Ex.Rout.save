@@ -1365,7 +1365,7 @@ Residual standard error: 0.732 on 8 degrees of freedom
 > flush(stderr()); flush(stdout())
 > 
 > ### Name: SSfpl
-> ### Title: Self-Starting Nls Four-Parameter Logistic Model
+> ### Title: Self-Starting 'nls' Four-Parameter Logistic Model
 > ### Aliases: SSfpl
 > ### Keywords: models
 > 
