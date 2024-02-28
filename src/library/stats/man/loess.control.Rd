@@ -4,7 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{loess.control}
-\title{Set Parameters for Loess}
+\title{Set Parameters for \code{loess}}
 \usage{
 loess.control(surface = c("interpolate", "direct"),
               statistics = c("approximate", "exact", "none"),

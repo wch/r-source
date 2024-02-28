@@ -4,7 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{MethodsList}
-\title{MethodsList Objects}
+\title{\code{MethodsList} Objects}
 %
 \alias{listFromMlist}%  only used in listFromMlist(), deprecated below
 \alias{linearizeMlist}% only used in showMlist(), deprecated below

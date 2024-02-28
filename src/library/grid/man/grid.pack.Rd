@@ -66,7 +66,8 @@ packGrob(frame, grob, side = NULL,
   \item{border}{ A \code{unit} object of length 4 indicating the borders
     around the object. }
   \item{dynamic}{ If the width/height is taken from the grob being
-    packed, this boolean flag indicates whether the grobwidth/height
+    packed, this boolean flag indicates whether the
+    \code{"grobwidth"}/\code{"grobheight"} 
     unit refers directly to the grob, or uses a gPath to the grob.
     In the latter case, changes to the grob will trigger a
     recalculation of the width/height.}

@@ -7,7 +7,7 @@
 \alias{anova}
 %\alias{print.anova}
 \concept{regression}
-\title{Anova Tables}
+\title{ANOVA Tables}
 \usage{
 anova(object, \dots)
 }

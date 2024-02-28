@@ -35,7 +35,7 @@
 
   At the time of writing \file{Rdevga} configured the mapping of font
   numbers to fonts, and \file{Rconsole} configured the appearance
-  (single or multiple document interface, toolbar, statusbar on MDI),
+  (single or multiple document interface, toolbar, status bar on MDI),
   size, font and colours of the GUI console, and whether resizing the
   console sets \code{\link{options}("width")}.
 

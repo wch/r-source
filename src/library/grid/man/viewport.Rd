@@ -82,7 +82,7 @@ vpTree(parent, children)
     once it has been pushed onto the viewport tree.  }
   \item{...}{Any number of grid viewport objects.}
   \item{parent}{A grid viewport object.}
-  \item{children}{A vpList object.}
+  \item{children}{A \I{vpList} object.}
 }
 \details{
   The location and size of a viewport are relative to the coordinate

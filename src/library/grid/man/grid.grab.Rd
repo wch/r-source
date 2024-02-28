@@ -54,7 +54,7 @@ grid.grabExpr(expr, warn = 2, wrap = wrap.grobs, wrap.grobs = FALSE,
 
   For each of these functions, the output can be captured in
   two ways.  One way tries to be clever and make a
-  gTree with a childrenvp slot containing all viewports on
+  gTree with a \I{childrenvp} slot containing all viewports on
   the display list (including those
   that are popped) and every
   grob on the display list as a child of the new

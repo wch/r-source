@@ -50,7 +50,7 @@ get.gpar(names = NULL)
     \code{linejoin} \tab Line join style (round, mitre, bevel) \cr
     \code{linemitre} \tab Line mitre limit (number greater than 1) \cr
     \code{fontsize} \tab The size of text (in points) \cr
-    \code{cex} \tab Multiplier applied to fontsize \cr
+    \code{cex} \tab Multiplier applied to \code{fontsize} \cr
     \code{fontfamily} \tab The font family \cr
     \code{fontface} \tab The font face (bold, italic, ...) \cr
     \code{lineheight} \tab The height of a line as a multiple of the size of text \cr

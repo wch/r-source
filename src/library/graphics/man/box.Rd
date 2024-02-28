@@ -7,7 +7,7 @@
 \title{Draw a Box around a Plot}
 \description{
   This function draws a box around the current plot in the given color
-  and linetype.  The \code{bty} parameter determines
+  and line type.  The \code{bty} parameter determines
   the type of box drawn.  See \code{\link{par}} for details.
 }
 \usage{

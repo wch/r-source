@@ -5,7 +5,7 @@
 
 \name{predict.loess}
 \alias{predict.loess}
-\title{Predict Loess Curve or Surface}
+\title{Predict \abbr{LOESS} Curve or Surface}
 \description{
  Predictions from a \code{loess} fit, optionally with standard errors.
 }

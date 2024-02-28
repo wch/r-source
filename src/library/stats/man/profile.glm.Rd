@@ -10,7 +10,7 @@
 
 \name{profile.glm}
 \alias{profile.glm}
-\title{Method for Profiling glm Objects}
+\title{Method for Profiling \code{glm} Objects}
 \description{
   Investigates the profile log-likelihood function for a fitted model of
   class \code{"glm"}.

@@ -6,7 +6,7 @@
 \name{Tailcall}
 \alias{Tailcall}
 \alias{Exec}
-\title{Tailcall and Exec}
+\title{\code{Tailcall} and \code{Exec}}
 \description{
   \code{Tailcall} and \code{Exec} allow writing more
   stack-space-efficient recursive functions in \R.

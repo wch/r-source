@@ -4,7 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{stat.anova}
-\title{GLM Anova Statistics}
+\title{GLM ANOVA Statistics}
 \usage{
 stat.anova(table, test = c("Rao","LRT", "Chisq", "F", "Cp"),
            scale, df.scale, n)

@@ -5,7 +5,7 @@
 
 \name{profile.nls}
 \alias{profile.nls}
-\title{Method for Profiling nls Objects}
+\title{Method for Profiling \code{nls} Objects}
 \description{
   Investigates the profile log-likelihood function for a fitted model of
   class \code{"nls"}.

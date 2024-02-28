@@ -7,7 +7,7 @@
 \docType{data}
 \alias{treering}
 \title{
-  Yearly Treering Data, -6000--1979
+  Yearly Tree-Ring Data, -6000--1979
 }
 \description{
   Contains normalized tree-ring widths in dimensionless units.

@@ -4,7 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{scatter.smooth}
-\title{Scatter Plot with Smooth Curve Fitted by Loess}
+\title{Scatter Plot with Smooth Curve Fitted by \code{loess}}
 \alias{scatter.smooth}
 \alias{loess.smooth}
 \description{
