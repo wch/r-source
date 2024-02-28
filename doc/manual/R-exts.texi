@@ -10032,8 +10032,9 @@ are listed at
 @cputype{x86_64} Linux: the two toolchains often highlight different
 things with more reports from @command{clang} than GCC.
 
-This sanitizer can be combined with the Address Sanitizer by
-@option{-fsanitize=undefined,address} (where both are supported).
+This sanitizer may be combined with the Address Sanitizer by
+@option{-fsanitize=undefined,address} (where both are supported, and we
+have seen library conflicts for @command{clang} 17 and later).
 
 Finer control of what is checked can be achieved by other options.
 
@@ -10130,7 +10131,30 @@ It may or may not be possible to build @R{} itself with
 @abbr{OpenMP}-using code with @command{gcc} but there has been success
 with @command{clang} up to version 16..  However, problems have been
 seen with @command{clang} 17 and later, including missing entry points
-and @R{} builds hanging.
+and @R{} builds hanging.  What has succeeded is to use UBSAN just for
+the package under test (and not in combination with ASAN).  To do so,
+check with an unaltered @R{}, using a custom @file{Makevars} file
+something like
+
+@example
+CC = clang -fsanitize=undefined -fno-sanitize=float-divide-by-zero-fno-omit-frame-pointer
+CXX = clang++ -fsanitize=undefined -fno-sanitize=float-divide-by-zero -fno-omit-frame-pointer -frtti
+
+UBSAN_DIR = /path/to/LLVM18/lib/clang/18/lib/x86_64-unknown-linux-gnu
+SHLIB_LIBADD = $(UBSAN_DIR)/libclang_rt.ubsan_standalone.a $(UBSAN_DIR)/libclang_rt.ubsan_standalone_cxx.a
+@end example
+
+@noindent
+which links the UBSAN libraries statically into the package-under-test's DSO.
+It is also possible to use the dynamic library @emph{via}
+
+@example
+SHLIB_LIBADD = -L$(UBSAN_DIR) -Wl,-rpath,$(UBSAN_DIR) -lclang_rt.ubsan_standalone
+@end example
+@noindent
+provided @code{UBSAN_DIR} is added to the runtime library path (as shown
+or using  @env{LD_LIBRARY_PATH}). @strong{N.B.}: The details, especially
+the paths used, have changed several times recently.
 
 @node Other analyses with `clang', Other analyses with `gcc', Using Undefined Behaviour Sanitizer, Checking memory access
 @subsection Other analyses with `clang'
