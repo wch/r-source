@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2024-02-26 r85989) -- "Unsuffered Consequences"
+R Under development (unstable) (2024-02-28 r85996) -- "Unsuffered Consequences"
 Copyright (C) 2024 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu
 
@@ -5117,7 +5117,7 @@ function (V)
         r[seq.int(from = 1L, by = p + 1L, length.out = p)] <- 1
     r
 }
-<bytecode: 0x55c59f5db840>
+<bytecode: 0x55eaef3702d0>
 <environment: namespace:stats>
 > stopifnot(all.equal(Cl, cov2cor(cov(longley))),
 +           all.equal(cor(longley, method = "kendall"),
@@ -7765,7 +7765,7 @@ attr(,".Environment")
 > environment(as.formula("y ~ x"))
 <environment: R_GlobalEnv>
 > environment(as.formula("y ~ x", env = new.env()))
-<environment: 0x55c5a1749088>
+<environment: 0x55eaf1475c78>
 > 
 > 
 > ## Create a formula for a model with a large number of variables:
@@ -7787,7 +7787,7 @@ y ~ x1 + x2 + x3 + x4 + x5 + x6 + x7 + x8 + x9 + x10 + x11 +
 > flush(stderr()); flush(stdout())
 > 
 > ### Name: formula.nls
-> ### Title: Extract Model Formula from nls Object
+> ### Title: Extract Model Formula from 'nls' Object
 > ### Aliases: formula.nls
 > ### Keywords: models
 > 
@@ -10727,7 +10727,7 @@ Warning in model.matrix.default(~a + b, dd, contrasts.arg = "contr.FOO") :
 > flush(stderr()); flush(stdout())
 > 
 > ### Name: model.tables
-> ### Title: Compute Tables of Results from an Aov Model Fit
+> ### Title: Compute Tables of Results from an 'aov' Model Fit
 > ### Aliases: model.tables model.tables.aov model.tables.aovlist
 > ### Keywords: models
 > 
@@ -12144,7 +12144,7 @@ P value adjustment method: bonferroni
 > flush(stderr()); flush(stdout())
 > 
 > ### Name: plot.isoreg
-> ### Title: Plot Method for isoreg Objects
+> ### Title: Plot Method for 'isoreg' Objects
 > ### Aliases: plot.isoreg lines.isoreg
 > ### Keywords: hplot print
 > 
@@ -12383,7 +12383,7 @@ Warning in xy.coords(x, y, xlabel, ylabel, log) :
 > flush(stderr()); flush(stdout())
 > 
 > ### Name: plot.profile.nls
-> ### Title: Plot a profile.nls Object
+> ### Title: Plot a 'profile.nls' Object
 > ### Aliases: plot.profile.nls
 > ### Keywords: nonlinear regression models
 > 
@@ -12684,14 +12684,14 @@ attr(,"class")
 $linkfun
 function (mu) 
 mu^lambda
-<bytecode: 0x55c59f7a38e0>
-<environment: 0x55c59f03ad98>
+<bytecode: 0x55eaecedba90>
+<environment: 0x55eaef830f00>
 
 $linkinv
 function (eta) 
 pmax(eta^(1/lambda), .Machine$double.eps)
-<bytecode: 0x55c59f7a3790>
-<environment: 0x55c59f03ad98>
+<bytecode: 0x55eaecedb940>
+<environment: 0x55eaef830f00>
 
 > 
 > 
@@ -13615,7 +13615,7 @@ attr(,"constant")
 > flush(stderr()); flush(stdout())
 > 
 > ### Name: predict.loess
-> ### Title: Predict Loess Curve or Surface
+> ### Title: Predict LOESS Curve or Surface
 > ### Aliases: predict.loess
 > ### Keywords: smooth
 > 
@@ -14231,7 +14231,7 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 > flush(stderr()); flush(stdout())
 > 
 > ### Name: profile.glm
-> ### Title: Method for Profiling glm Objects
+> ### Title: Method for Profiling 'glm' Objects
 > ### Aliases: profile.glm
 > ### Keywords: regression models
 > 
@@ -14257,7 +14257,7 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 > flush(stderr()); flush(stdout())
 > 
 > ### Name: profile.nls
-> ### Title: Method for Profiling nls Objects
+> ### Title: Method for Profiling 'nls' Objects
 > ### Aliases: profile.nls
 > ### Keywords: nonlinear regression models
 > 
@@ -15932,7 +15932,7 @@ R_heapsort(1, 11,..): l=6:
 > flush(stderr()); flush(stdout())
 > 
 > ### Name: scatter.smooth
-> ### Title: Scatter Plot with Smooth Curve Fitted by Loess
+> ### Title: Scatter Plot with Smooth Curve Fitted by 'loess'
 > ### Aliases: scatter.smooth loess.smooth
 > ### Keywords: smooth
 > 
@@ -16964,7 +16964,7 @@ Max.     2.00  1.03072752
 > flush(stderr()); flush(stdout())
 > 
 > ### Name: stat.anova
-> ### Title: GLM Anova Statistics
+> ### Title: GLM ANOVA Statistics
 > ### Aliases: stat.anova
 > ### Keywords: regression models
 > 
@@ -17050,8 +17050,8 @@ Step function with continuity 'f'= 0.2 ,  3 knots at
 > unclass(sfun0)
 function (v) 
 .approxfun(x, y, v, method, yleft, yright, f, na.rm)
-<bytecode: 0x55c5a02ea8d8>
-<environment: 0x55c59dd641e0>
+<bytecode: 0x55eaeffae968>
+<environment: 0x55eaee9043a8>
 attr(,"call")
 stepfun(1:3, y0, f = 0)
 > ls(envir = environment(sfun0))
@@ -19591,7 +19591,7 @@ Number of Fisher Scoring iterations: 6
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  5.156 0.137 5.337 0 0 
+Time elapsed:  6.076 0.149 6.227 0 0 
 > grDevices::dev.off()
 null device 
           1 
