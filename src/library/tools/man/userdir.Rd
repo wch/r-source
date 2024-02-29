@@ -51,11 +51,10 @@ R_user_dir("FOO", "cache")
 
 ## Create one, platform agnostically, must work if <normal> :
 (Rdb <- R_user_dir("base"))
-if(noD <- !dir.exists(Rdb)) # should work user specifically:
-    dir.create(Rdb, recursive=TRUE)
-stopifnot(dir.exists(Rdb)) # "everywhere"
+if(newD <- !dir.exists(Rdb)) # should work user specifically:
+    newD <- dir.create(Rdb, recursive=TRUE)% FALSE + warning when testing homeless
 dir(Rdb) # typically empty
-if(noD) unlink(Rdb) # cleaning up
+if(newD) unlink(Rdb) # cleaning up
 
 list.files(R_user_dir("grid"), full.names = TRUE)
 }}
