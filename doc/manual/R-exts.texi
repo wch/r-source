@@ -9069,7 +9069,7 @@ The first report is
    ...
 @end example
 @noindent
-which shows which shared libraries (DSOs) the time was spent in.
+which shows which shared libraries (@abbr{DSO}s) the time was spent in.
 
 @command{perf annotate} can be used on an application built with GCC and
 @option{-ggdb}: it interleaves disassembled and source code.
@@ -10131,8 +10131,8 @@ It may or may not be possible to build @R{} itself with
 @abbr{OpenMP}-using code with @command{gcc} but there has been success
 with @command{clang} up to version 16..  However, problems have been
 seen with @command{clang} 17 and later, including missing entry points
-and @R{} builds hanging.  What has succeeded is to use UBSAN just for
-the package under test (and not in combination with ASAN).  To do so,
+and @R{} builds hanging.  What has succeeded is to use @abbr{UBSAN} just for
+the package under test (and not in combination with @abbr{ASAN}).  To do so,
 check with an unaltered @R{}, using a custom @file{Makevars} file
 something like
 
@@ -10145,7 +10145,7 @@ SHLIB_LIBADD = $(UBSAN_DIR)/libclang_rt.ubsan_standalone.a $(UBSAN_DIR)/libclang
 @end example
 
 @noindent
-which links the UBSAN libraries statically into the package-under-test's DSO.
+which links the @abbr{UBSAN} libraries statically into the package-under-test's @abbr{DSO}.
 It is also possible to use the dynamic library @emph{via}
 
 @example
