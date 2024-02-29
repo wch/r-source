@@ -107,6 +107,12 @@ static SEXP compute_language_relop(SEXP call, SEXP op, SEXP x, SEXP y)
 	    x = installTrChar(STRING_ELT(x, 0));
 	/* fall through */
     case IDENTICAL:
+	if (TYPEOF(x) == STRSXP || TYPEOF(y) == STRSXP)
+	    /* the other operand is a symbol or a call, so signal an
+	       error rather than return a possibly wrong result */
+	    errorcall(call,
+		      _("comparing a symbol or a call to a string "
+			"is not supported"));
 	switch(PRIMVAL(op)) {
 	case EQOP:
 	    return R_compute_identical(x, y, 16) ? R_TrueValue : R_FalseValue;
