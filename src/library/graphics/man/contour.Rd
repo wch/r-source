@@ -53,7 +53,7 @@ contour(x, \dots)
     for the contour labels.  If a character vector of length 2 then
     Hershey vector fonts are used for the contour labels. The first
     element of the vector selects a typeface and the second element
-    selects a fontindex (see \code{\link{text}} for more information).
+    selects a font index (see \code{\link{text}} for more information).
     The default is \code{NULL} on graphics devices with high-quality
     rotation of text and \code{c("sans serif", "plain")} otherwise.}
   \item{xlim, ylim, zlim}{x-, y- and z-limits for the plot.}

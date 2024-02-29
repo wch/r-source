@@ -21,7 +21,7 @@ adjustcolor(col, alpha.f = 1, red.f = 1, green.f = 1, blue.f = 1,
   \item{col}{vector of colors, in any format that \code{\link{col2rgb}()} accepts}
   \item{alpha.f}{factor modifying the opacity alpha; typically in [0,1]}
   \item{red.f, green.f, blue.f}{factors modifying the \dQuote{red-},
-    \dQuote{green-} or \dQuote{blue-}ness of the colors, respectively.}
+    \dQuote{green-} or \I{\dQuote{blue-}ness} of the colors, respectively.}
   \item{offset}{numeric vector of length 4 to offset \code{x :=
       c(r,g,b,alpha)}, where \code{x} is the \eqn{[0,1]}-scaled result of
     \code{\link{col2rgb}(col, alpha=TRUE)}.}

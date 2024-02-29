@@ -535,7 +535,7 @@ function(which = NULL, dir = NULL,
 
     ignore <-
         c(sprintf("\\b(%s)\\b",
-                  paste(c("a priori", "et al", "et seq",
+                  paste(c("a priori", "et seq",
                           "post-mortem", "Inter alia", "inter alia",
                           "2nd", "4th", "20th", "100th",
                           "equi-", "intra-", "mis-", "Pre-", "pre-",

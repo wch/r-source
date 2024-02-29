@@ -63,7 +63,7 @@ palette.colors(n = NULL, palette = "Okabe-Ito", alpha, recycle = FALSE,
   The current palette also applies to re-plotting (for example if an
   on-screen device is resized or \code{\link{dev.copy}} or
   \code{\link{replayPlot}} is used).  The palette is recorded on the
-  displaylist at the start of each page and when it is changed.
+  display list at the start of each page and when it is changed.
 }
 
 \value{

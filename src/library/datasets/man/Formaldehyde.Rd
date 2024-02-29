@@ -9,7 +9,7 @@
 \title{Determination of Formaldehyde}
 \description{
   These data are from a chemical experiment to prepare a standard curve
-  for the determination of formaldehyde by the addition of chromatropic
+  for the determination of formaldehyde by the addition of chromotropic
   acid and concentrated sulphuric acid and the reading of the resulting
   purple color on a spectrophotometer.
 }

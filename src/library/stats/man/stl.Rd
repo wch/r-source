@@ -29,7 +29,7 @@ stl(x, s.window, s.degree = 0,
     greater than one.}
   \item{s.window}{either the character string \code{"periodic"} or the span (in
     lags) of the \I{loess} window for seasonal extraction, which should
-    be odd and at least 7, according to Cleveland et al.  This has no default.}
+    be odd and at least 7, according to Cleveland \abbr{et al.}  This has no default.}
   \item{s.degree}{degree of locally-fitted polynomial in seasonal
     extraction.  Should be zero or one.}
   \item{t.window}{the span (in lags) of the \I{loess} window for trend

@@ -3,6 +3,8 @@
 % Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\bibcite}{#1}
+
 \name{stripchart}
 \title{1-D Scatter Plots}
 \alias{stripchart}
@@ -75,13 +77,28 @@ stripchart(x, \dots)
 }
 \details{
   Extensive examples of the use of this kind of plot can be found in
-  Box, Hunter and Hunter or Seber and Wild.
+  \bibcite{Box, Hunter and Hunter (2005)} or
+  \bibcite{Wild and Seber (2000)}.
 
   The \code{dlab} and \code{glab} labels may be used instead of \code{xlab}
   and \code{ylab} if those are not specified.  \code{dlab} applies to the
   continuous data axis (the X axis unless \code{vertical} is \code{TRUE}),
   \code{glab} to the group axis.
 }
+\references{
+  Box G., Hunter, J. S. and Hunter, W. C. (2005). 
+  \emph{Statistics for Experimenters: Design, Innovation, and Discovery},
+  second edition.
+  New York: Wiley.
+  ISBN: 978-0-471-71813-0.
+  
+  Wild, C. and Seber, G. (2000).
+  \emph{Chance Encounters: A First Course in Data Analysis and
+    Inference}.
+  John Wiley and Sons.
+  ISBN 0-471-32936-3.
+}
+
 \examples{
 x <- stats::rnorm(50)
 xr <- round(x, 1)

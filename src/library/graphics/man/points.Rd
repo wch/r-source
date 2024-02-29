@@ -46,7 +46,7 @@ points(x, \dots)
       \code{\link{postscript}} and \code{\link{xfig}} devices).
 
       For other text symbols, \code{cex = 1} corresponds to the default
-      fontsize of the device, often specified by an argument
+      font size of the device, often specified by an argument
       \code{pointsize}.  For \code{pch} in \code{0:25} the default size
       is about 75\% of the character height (see \code{par("cin")}).
     }

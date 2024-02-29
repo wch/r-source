@@ -25,7 +25,7 @@ replayPlot(x, reloadPkgs=FALSE)
     reattach any packages that were saved as part of the recorded plot.}
 }
 \details{
-  These functions record and replay the displaylist of the current
+  These functions record and replay the display list of the current
   graphics device.  The returned object is of class
   \code{"recordedplot"}, and \code{replayPlot} acts as a \code{print}
   method for that class.
@@ -73,7 +73,7 @@ replayPlot(x, reloadPkgs=FALSE)
   \url{https://stattech.wordpress.fos.auckland.ac.nz/2015/12/21/2015-07-recording-and-replaying-the-graphics-engine-display-list/}
 }
 \seealso{
-  The displaylist can be turned on and off using \code{\link{dev.control}}.
+  The display list can be turned on and off using \code{\link{dev.control}}.
   Initially recording is on for screen devices, and off for print devices.
 }
 \keyword{iplot}
