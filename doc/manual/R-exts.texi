@@ -10137,7 +10137,7 @@ check with an unaltered @R{}, using a custom @file{Makevars} file
 something like
 
 @example
-CC = clang -fsanitize=undefined -fno-sanitize=float-divide-by-zero-fno-omit-frame-pointer
+CC = clang -fsanitize=undefined -fno-sanitize=float-divide-by-zero -fno-omit-frame-pointer
 CXX = clang++ -fsanitize=undefined -fno-sanitize=float-divide-by-zero -fno-omit-frame-pointer -frtti
 
 UBSAN_DIR = /path/to/LLVM18/lib/clang/18/lib/x86_64-unknown-linux-gnu
