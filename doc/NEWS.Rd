@@ -265,6 +265,9 @@
       \item \code{zapsmall()} gets new optional arguments, function
       \code{mFUN} and \code{min.d}, for extra flexibility; fulfills a wish
       in \PR{18199}.  It also becomes implicit S4 generic in \pkg{methods}.
+
+      \item The Rd filter for \code{aspell()} gains an \code{ignore}
+      argument.
     }
   }
 

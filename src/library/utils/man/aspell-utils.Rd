@@ -72,10 +72,11 @@ aspell_write_personal_dictionary_file(x, out, language = "en",
 
   When using Aspell, the vignette checking skips parameters and/or
   options of commands \verb{\Sexpr}, \verb{\citep}, \verb{\code},
-  \verb{\pkg}, \verb{\proglang} and \verb{\samp}.  Further commands can
-  be skipped by adding \verb{--add-tex-command} options to the
-  \code{control} argument.  E.g., to skip both option and parameter of
-  \verb{\mycmd}, add \verb{--add-tex-command='mycmd op'}.
+  \verb{\pkg}, \verb{\proglang} and \verb{\samp} (in addition to the
+  what the Aspell TeX/\LaTeX{} filter skips by default).  Further
+  commands can be skipped by adding \verb{--add-tex-command} options to
+  the \code{control} argument.  E.g., to skip both option and parameter
+  of \verb{\mycmd}, add \verb{--add-tex-command='mycmd op'}.
 
   Suitable values for \code{control}, \code{program},
   \code{dictionaries}, \code{drop} and \code{ignore} can also be

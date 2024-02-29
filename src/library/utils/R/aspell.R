@@ -289,13 +289,8 @@ function(object, ...)
 }
 
 aspell_filter_db <- new.env(hash = FALSE) # small
-aspell_filter_db$Rd <- tools::RdTextFilter
-aspell_filter_db$Sweave <- tools::SweaveTeXFilter
 
-## <FIXME>
-## HACK to add 'ignore' argument for the Rd aspell filter.
-## Perhaps merge this to tools?
-aspell_filter_db$`Rd+ignore` <-
+aspell_filter_db$Rd <- 
 function(ifile, encoding = "unknown",
          drop = character(), keep = character(),
          macros = file.path(R.home("share"), "Rd", "macros", "system.Rd"),
@@ -306,7 +301,8 @@ function(ifile, encoding = "unknown",
 				  macros = macros)
      blank_out_ignores_in_lines(lines, ignore)
 }
-## </FIXME>
+
+aspell_filter_db$Sweave <- tools::SweaveTeXFilter
 
 aspell_find_program <-
 function(program = NULL)
@@ -555,7 +551,7 @@ function(which = NULL, dir = NULL,
     program <- aspell_find_program(program)
 
     aspell(files,
-           filter = list("Rd+ignore", drop = drop, ignore = ignore),
+           filter = list("Rd", drop = drop, ignore = ignore),
            control = aspell_control_R_Rd_files[[names(program)]],
            program = program,
            dictionaries = dictionaries)

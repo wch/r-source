@@ -52,7 +52,9 @@ aspell(files, filter, control = list(), encoding = "unknown",
   \code{aspell()}.
 
   The currently available built-in filters are \code{"Rd"}
-  (corresponding to \code{\link{RdTextFilter}}), \code{"Sweave"}
+  (corresponding to \code{\link{RdTextFilter}}, with additional argument
+  \code{ignore} allowing to give regular expressions for parts of the
+  text to be ignored for spell checking), \code{"Sweave"}
   (corresponding to \code{\link{SweaveTeXFilter}}), \code{"R"},
   \code{"pot"}, \code{"dcf"} and \code{"md"}.
 
