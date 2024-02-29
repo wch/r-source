@@ -101,18 +101,19 @@ static SEXP compute_language_relop(SEXP call, SEXP op, SEXP x, SEXP y)
 
     switch(option) {
     case IDENTICAL_CALLS:
+	/* this assumes strings are cached */
 	if (TYPEOF(x) == SYMSXP && TYPEOF(y) == STRSXP && XLENGTH(y) == 1)
-	    y = installTrChar(STRING_ELT(y, 0));
+	    y = (STRING_ELT(y, 0) == PRINTNAME(x)) ? x : R_NilValue;
 	else if (TYPEOF(y) == SYMSXP && TYPEOF(x) == STRSXP && XLENGTH(x) == 1)
-	    x = installTrChar(STRING_ELT(x, 0));
+	    x = (STRING_ELT(x, 0) == PRINTNAME(y)) ? y : R_NilValue;
 	/* fall through */
     case IDENTICAL:
-	if (TYPEOF(x) == STRSXP || TYPEOF(y) == STRSXP)
-	    /* the other operand is a symbol or a call, so signal an
-	       error rather than return a possibly wrong result */
+	if ((TYPEOF(x) == STRSXP && TYPEOF(y) == SYMSXP) ||
+	    (TYPEOF(y) == STRSXP && TYPEOF(x) == SYMSXP))
+	    /* comparing a symbol and a string could reverse the result
+	       from the default, so signal an error instead */
 	    errorcall(call,
-		      _("comparing a symbol or a call to a string "
-			"is not supported"));
+		      _("comparing a symbol to a string is not supported"));
 	switch(PRIMVAL(op)) {
 	case EQOP:
 	    return R_compute_identical(x, y, 16) ? R_TrueValue : R_FalseValue;
