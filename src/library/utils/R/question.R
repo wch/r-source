@@ -1,7 +1,7 @@
 #  File src/library/utils/R/question.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2017 The R Core Team
+#  Copyright (C) 1995-2024 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -26,11 +26,11 @@ function(e1, e2)
 	type <- substitute(e1)
 	topicExpr <- substitute(e2)
     }
-    search <- (is.call(topicExpr) && topicExpr[[1L]] == "?")
+    search <- (is.call(topicExpr) && topicExpr[[1L]] == quote(`?`))
     if(search) { # ??foo is parsed as `?`(`?`(foo))
 	topicExpr <- topicExpr[[2L]]
-	if (is.call(te <- topicExpr	 ) && te[[1L]] == "?" &&
-	    is.call(te <- topicExpr[[2L]]) && te[[1L]] == "?") {
+	if (is.call(te <- topicExpr	 ) && te[[1L]] == quote(`?`) &&
+	    is.call(te <- topicExpr[[2L]]) && te[[1L]] == quote(`?`)) {
 	    cat("Contacting Delphi...")
 	    flush.console()
 	    Sys.sleep(2 + stats::rpois(1,2))
@@ -39,8 +39,8 @@ function(e1, e2)
 	}
     }
 
-    if (is.call(topicExpr) && (topicExpr[[1L]] == "::" ||
-			       topicExpr[[1L]] == ":::")) {
+    if (is.call(topicExpr) && (topicExpr[[1L]] == quote(`::`) ||
+			       topicExpr[[1L]] == quote(`:::`))) {
 	package <- as.character(topicExpr[[2L]])
 	topicExpr <- topicExpr[[3L]]
     }
@@ -114,7 +114,7 @@ function(expr, envir, doEval = TRUE)
     }
 
     f <- expr[[1L]]                     # the function specifier
-    if (is.call(f) && (f[[1L]] == "::" || f[[1L]] == ":::")) {
+    if (is.call(f) && (f[[1L]] == quote(`::`) || f[[1L]] == quote(`:::`))) {
 	package <- f[[2L]]
 	where <- paste0("package:", package)
 	if (!(where %in% search()))

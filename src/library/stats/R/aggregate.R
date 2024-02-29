@@ -161,7 +161,7 @@ function(x, data, FUN, ..., subset, na.action = na.omit)
     ## need stats:: for non-standard evaluation
     m[[1L]] <- quote(stats::model.frame)
 
-    if (x[[2L]] == ".") {
+    if (x[[2L]] == quote(`.`)) {
         ## LHS is a dot, expand it ...
         ##rhs <- unlist(strsplit(deparse(x[[3L]]), " *[:+] *"))
         ## <NOTE>

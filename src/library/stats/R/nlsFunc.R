@@ -30,7 +30,7 @@ asOneSidedFormula <-
   ## to a one-sided formula
   function(object)
 {
-    if ((mode(object) == "call") && (object[[1L]] == "~") &&
+    if ((mode(object) == "call") && (object[[1L]] == quote(`~`)) &&
         !inherits(object, "formula")) {
         object <- eval(object)
         environment(object) <- .GlobalEnv
