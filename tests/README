@@ -2,8 +2,8 @@ There is a hierarchy of check targets:
 
      make check
 
-for all builders.  It should not need a working latex installation.
-If this works one can be reasonably happy R is working
+for all builders.  It should not need a working LaTeX installation.
+If this succeeds one can be reasonably happy R is working
 and do `make install' (or the equivalent).
 
     make check-devel
@@ -19,21 +19,21 @@ runs all the checks, those in check-devel plus tests of the recommended
 packages.
 
 Note that for complete testing you will need a number of other
-packages installed and available, so if you have a CRAN installation,
-set R_LIBS (perhaps in ~/.R/check.Renviron) to include it before
-running these tests.  For example, some of the tests on 'nlme' depend
+packages installed and available.  For example, some 'nlme' tests depend
 on 'Hmisc', and there are a number of cross references from help pages
-to CRAN packages.
+to CRAN packages.  Set R_LIBS_USER_IN_R_TESTS or R_LIBS to include
+additional library trees before running these checks; the default user
+libraries (R_LIBS_USER) are ignored.
 
 If a check fails there will almost always be a .Rout.fail file with
 the problematic output, so looking at the tail of that file should
 help pinpoint the problem.
 
-The \donttest sections of the examples can be run by
+The \donttest sections of the base examples can be run by
 
-     make check TEST_DONTTEST=TRUE
+     make test-Examples TEST_DONTTEST=TRUE
 
-(but expect some differences from the reference output).  This requires
+(comparison to reference output is disabled in this case).  This requires
 functional Tcl/Tk, e.g. for X11-based versions DISPLAY must be set to
 a usable X server.
 
