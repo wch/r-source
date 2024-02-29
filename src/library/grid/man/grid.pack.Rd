@@ -31,7 +31,7 @@ packGrob(frame, grob, side = NULL,
           dynamic = FALSE)
 }
 \arguments{
-  \item{gPath}{ A gPath object, which specifies a frame on the
+  \item{gPath}{ A \I{gPath} object, which specifies a frame on the
     display list.}
   \item{frame}{ An object of class \code{frame}, typically the output
   from a call to \code{grid.frame}. }
@@ -68,7 +68,7 @@ packGrob(frame, grob, side = NULL,
   \item{dynamic}{ If the width/height is taken from the grob being
     packed, this boolean flag indicates whether the
     \code{"grobwidth"}/\code{"grobheight"} 
-    unit refers directly to the grob, or uses a gPath to the grob.
+    unit refers directly to the grob, or uses a \I{gPath} to the grob.
     In the latter case, changes to the grob will trigger a
     recalculation of the width/height.}
 }

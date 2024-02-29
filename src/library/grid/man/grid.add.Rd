@@ -9,7 +9,7 @@
 \alias{setChildren}
 \title{Add a Grid Graphical Object}
 \description{
-  Add a grob to a gTree or a descendant of a gTree.
+  Add a grob to a \I{gTree} or a descendant of a \I{gTree}.
 }
 \usage{
 grid.add(gPath, child, strict = FALSE, grep = FALSE,
@@ -21,13 +21,13 @@ addGrob(gTree, child, gPath = NULL, strict = FALSE, grep = FALSE,
 setChildren(x, children)
 }
 \arguments{
-  \item{gTree, x}{A gTree object.}
-  \item{gPath}{ A gPath object. For \code{grid.add} this
-    specifies a gTree on the display list.  For \code{addGrob} this
-    specifies a descendant of the specified gTree. }
+  \item{gTree, x}{A \I{gTree} object.}
+  \item{gPath}{ A \I{gPath} object. For \code{grid.add} this
+    specifies a \I{gTree} on the display list.  For \code{addGrob} this
+    specifies a descendant of the specified \I{gTree}. }
   \item{child}{ A grob object. }
   \item{children}{ A \I{gList} object. }
-  \item{strict}{ A boolean indicating whether the gPath must be
+  \item{strict}{ A boolean indicating whether the \I{gPath} must be
     matched exactly. }
   \item{grep}{A boolean indicating whether the \code{gPath} should
     be treated as a regular expression.  Values are recycled across
@@ -40,7 +40,7 @@ setChildren(x, children)
     should be affected.
   }
   \item{warn}{A logical to indicate whether failing to find the
-    specified gPath should trigger an error.  }
+    specified \I{gPath} should trigger an error.  }
   \item{allDevices}{ A boolean indicating whether all open devices
     should
     be searched for matches, or just the current device.
@@ -57,7 +57,7 @@ setChildren(x, children)
   is \code{TRUE} it then redraws everything to reflect the change.
 
   \code{setChildren} is a basic function for setting all children
-  of a gTree at once (instead of repeated calls to \code{addGrob}).
+  of a \I{gTree} at once (instead of repeated calls to \code{addGrob}).
 }
 \value{
   \code{addGrob} returns a grob object;  \code{grid.add} returns \code{NULL}.

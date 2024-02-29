@@ -50,7 +50,7 @@ pattern(grob,
     (see Details).}
   \item{cx1, cy1, r1, cx2, cy2, r2}{The centre and radius of the start
     and end circles for a radial gradient.}
-  \item{grob}{A grob (or a gTree) that will be drawn as the tile in
+  \item{grob}{A grob (or a \I{gTree}) that will be drawn as the tile in
     a pattern fill.}
   \item{x, y, width, height}{The size of the tile for a pattern fill.}
   \item{just, hjust, vjust}{The justification of the tile relative to
@@ -82,8 +82,8 @@ pattern(grob,
   On viewports, gradients and patterns are relative to the entire
   viewport, unless \code{group = FALSE}, in which case they are
   relative to individual grobs as they are drawn.
-  On gTrees, gradients and patterns are relative to a bounding
-  box around all of the children of the gTree,
+  On \I{gTree}s, gradients and patterns are relative to a bounding
+  box around all of the children of the \I{gTree},
   unless \code{group = FALSE}, in which case they are
   relative to individual children as they are drawn.
   On grobs, gradients and patterns are relative to a bounding

@@ -20,7 +20,7 @@ grid.place(gPath, grob, row = 1, col = 1, redraw = TRUE)
 placeGrob(frame, grob, row = NULL, col = NULL)
 }
 \arguments{
-  \item{gPath}{ A gPath object, which specifies a frame on the
+  \item{gPath}{ A \I{gPath} object, which specifies a frame on the
     display list.}
   \item{frame}{ An object of class \code{frame}, typically the output
   from a call to \code{grid.frame}. }

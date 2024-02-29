@@ -55,11 +55,11 @@ vpTree(parent, children)
     For back-compatibility, a logical value of \code{TRUE} corresponds
     to \code{"on"} and \code{FALSE} corresponds to \code{"inherit"}.
 
-    May also be a grob (or a gTree) that describes a clipping path
+    May also be a grob (or a \I{gTree}) that describes a clipping path
     or the result of a call to \code{\link{as.path}}.}
   \item{mask}{One of \code{"none"} (or \code{FALSE})
     or \code{"inherit"} (or \code{TRUE}) 
-    or a grob (or a gTree) or the result of call to
+    or a grob (or a \I{gTree}) or the result of call to
     \code{\link{as.mask}}.  This specifies that the viewport
     should have no mask, or it should inherit the mask of its parent,
     or it should have its own mask, as described by the grob.}

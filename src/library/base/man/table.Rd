@@ -66,7 +66,7 @@ is.table(x)
 }
 \details{
   If the argument \code{dnn} is not supplied, the internal function
-  \code{list.names} is called to compute the \sQuote{dimname names} as
+  \code{list.names} is called to compute the \sQuote{\I{dimname} names} as
   follows:
   If \code{\dots} is one \code{list} with its own \code{\link{names}()},
   these \code{names} are used.  Otherwise, if the

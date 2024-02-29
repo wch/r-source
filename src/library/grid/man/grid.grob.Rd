@@ -62,28 +62,28 @@ is.grob(x)
   \code{gTree()} call the function \code{\link{validDetails}} to check
   that the object returned is internally coherent.
 
-  A \code{"gTree"} can have other grobs as children;  when a gTree is drawn, it
-  draws all of its children.  Before drawing its children, a gTree
+  A \code{"gTree"} can have other grobs as children;  when a \I{gTree} is drawn, it
+  draws all of its children.  Before drawing its children, a \I{gTree}
   pushes its \code{childrenvp} slot and then navigates back up (calls
   \code{\link{upViewport}}) so that the children can specify their location
   within the \code{childrenvp} via a \code{\link{vpPath}}.
 
   Grob names need not be unique in general, but all children of a
-  gTree must have different names.
+  \I{gTree} must have different names.
   A grob name can be any string, though it is not
   advisable to use the \code{\link{gPath}} separator (currently
   \code{::}) in grob names.
 
   The function \code{childNames} returns the names of the grobs
-  which are children of a gTree.
+  which are children of a \I{gTree}.
 
   All grid primitives (\code{\link{grid.lines}}, \code{grid.rect}, ...)
   and some higher-level grid components (e.g., \code{\link{grid.xaxis}}
   and \code{grid.yaxis}) are derived from these classes.
 
   \code{grobTree} is just a convenient wrapper for \code{gTree}
-  when the only components of the gTree are grobs (so all
-  unnamed arguments become children of the gTree).
+  when the only components of the \I{gTree} are grobs (so all
+  unnamed arguments become children of the \I{gTree}).
 
   The \code{grid.grob} function is defunct.
 }

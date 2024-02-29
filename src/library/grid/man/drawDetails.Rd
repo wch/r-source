@@ -11,7 +11,7 @@
 \description{
   These generic hook functions are called whenever a grid grob is drawn.
   They provide an opportunity for customising the drawing of a
-  new class derived from grob (or gTree).
+  new class derived from grob (or \I{gTree}).
 }
 \usage{
 drawDetails(x, recording)
@@ -29,18 +29,18 @@ postDrawDetails(x)
   though they are still run and may still be useful in some contexts.
 
   These functions are called by the \code{grid.draw} methods for grobs
-  and gTrees.
+  and \I{gTree}s.
 
   \code{preDrawDetails} is called first during the drawing of a grob.
   This is where any additional viewports should be pushed.  Note that
   the default behaviour for grobs is to push any viewports in the
-  \code{vp} slot, and for gTrees is to also push and up any viewports in the
+  \code{vp} slot, and for \I{gTree}s is to also push and up any viewports in the
   \code{childrenvp} slot so there is typically nothing to do here.
 
   \code{drawDetails} is called next and is where any additional
   calculations and graphical output should occur.
   Note that the default behaviour
-  for gTrees is to draw all grobs in the \code{children} slot
+  for \I{gTree}s is to draw all grobs in the \code{children} slot
   so there is typically nothing to do here.
 
   \code{postDrawDetails} is called last and should reverse anything

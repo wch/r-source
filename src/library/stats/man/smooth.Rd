@@ -18,7 +18,7 @@ smooth(x, kind = c("3RS3R", "3RSS", "3RSR", "3R", "3", "S"),
   \item{kind}{a character string indicating the kind of smoother required;
     defaults to \code{"3RS3R"}.}
   \item{twiceit}{logical, indicating if the result should be \sQuote{twiced}.
-    Twicing a smoother \eqn{S(y)} means \eqn{S(y) + S(y - S(y))}, i.e.,
+    \I{Twicing} a smoother \eqn{S(y)} means \eqn{S(y) + S(y - S(y))}, i.e.,
     adding smoothed residuals to the smoothed values.  This decreases
     bias (increasing variance).}
   \item{endrule}{a character string indicating the rule for smoothing at the

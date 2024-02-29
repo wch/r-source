@@ -22,20 +22,20 @@ showGrob(x = NULL,
 \arguments{
   \item{x}{
     If \code{NULL}, the current grid scene is labelled.
-    Otherwise, a grob (or gTree) to draw and then label.
+    Otherwise, a grob (or \I{gTree}) to draw and then label.
   }
   \item{gPath}{
     A path identifying a subset of the current scene or grob
     to be labelled.
   }
   \item{strict}{
-    Logical indicating whether the gPath is strict.
+    Logical indicating whether the \I{gPath} is strict.
   }
   \item{grep}{
-    Logical indicating whether the gPath is a regular expression.
+    Logical indicating whether the \I{gPath} is a regular expression.
   }
   \item{recurse}{
-    Should the children of gTrees also be labelled?
+    Should the children of \I{gTree}s also be labelled?
   }
   \item{depth}{
     Only display grobs at the specified depth (may be a vector

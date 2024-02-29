@@ -15,7 +15,7 @@ grid.grep(path, x = NULL, grobs = TRUE, viewports = FALSE,
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{path}{ a gPath or a vpPath or a character value that could be
+  \item{path}{ a \I{gPath} or a \I{vpPath} or a character value that could be
     interpreted as either. }
   \item{x}{ a grob or \code{NULL}.  If \code{NULL}, the display list
     is searched.
@@ -39,7 +39,7 @@ grid.grep(path, x = NULL, grobs = TRUE, viewports = FALSE,
     The value to return if no matches are found.
   }
   \item{vpPath}{
-    A logical value indicating whether to return the vpPath for each
+    A logical value indicating whether to return the \I{vpPath} for each
     grob as an attribute of the result.
   }
 }
@@ -47,7 +47,7 @@ grid.grep(path, x = NULL, grobs = TRUE, viewports = FALSE,
   Either a \I{gPath} or a \I{vpPath} or,
   if \code{global} is \code{TRUE} a list of \I{gPath}s and/or \I{vpPath}s.
 
-  If \code{vpPath} is \code{TRUE}, each gPath result will have an
+  If \code{vpPath} is \code{TRUE}, each \I{gPath} result will have an
   attribute \code{"vpPath"}.
   
   If there are no matches, \code{no.match} is returned.

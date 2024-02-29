@@ -30,7 +30,7 @@ upViewport(n = 1, recording=TRUE)
     pop or navigate up.  The special value \code{0} indicates to
     pop or navigate viewports right up to the root viewport.}
   \item{name}{A character value to identify a viewport in the tree.}
-  \item{strict}{ A boolean indicating whether the vpPath must be
+  \item{strict}{ A boolean indicating whether the \I{vpPath} must be
     matched exactly. }
   \item{recording}{A logical value to indicate whether the viewport
     operation should be recorded on the Grid display list.}

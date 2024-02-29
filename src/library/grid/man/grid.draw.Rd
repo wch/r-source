@@ -18,19 +18,19 @@ grid.draw(x, recording=TRUE)
     operation should be recorded on the Grid display list.}
 }
 \details{
-  This is a generic function with methods for grob and gTree objects.
+  This is a generic function with methods for grob and \I{gTree} objects.
 
-  The grob and gTree methods automatically push any viewports in a
+  The grob and \I{gTree} methods automatically push any viewports in a
   \code{vp} slot and automatically apply any \code{gpar} settings
-  in a \code{gp} slot.  In addition, the gTree method pushes and
+  in a \code{gp} slot.  In addition, the \I{gTree} method pushes and
   ups any viewports in a \code{childrenvp} slot and automatically
   calls \code{grid.draw} for any grobs in a \code{children} slot.
 
-  The methods for grob and gTree call the generic hook functions
+  The methods for grob and \I{gTree} call the generic hook functions
   \code{preDrawDetails}, \code{drawDetails}, and \code{postDrawDetails}
-  to allow classes derived from grob or gTree to perform
+  to allow classes derived from grob or \I{gTree} to perform
   additional viewport pushing/popping and produce additional
-  output beyond the default behaviour for grobs and gTrees.
+  output beyond the default behaviour for grobs and \I{gTree}s.
 }
 \value{
   None.

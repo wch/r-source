@@ -9,7 +9,7 @@
 \alias{removeGrob}
 \title{Remove a Grid Graphical Object}
 \description{
-  Remove a grob from a gTree or a descendant of a gTree.
+  Remove a grob from a \I{gTree} or a descendant of a \I{gTree}.
 }
 \usage{
 grid.remove(gPath, warn = TRUE, strict = FALSE, grep = FALSE,
@@ -21,9 +21,9 @@ removeGrob(gTree, gPath, strict = FALSE, grep = FALSE,
            global = FALSE, warn = TRUE)
 }
 \arguments{
-  \item{gTree}{A gTree object.}
-  \item{gPath}{a gPath object. For \code{grid.remove} this
-    specifies a gTree on the display list.  For \code{removeGrob} this
+  \item{gTree}{A \I{gTree} object.}
+  \item{gPath}{a \I{gPath} object. For \code{grid.remove} this
+    specifies a \I{gTree} on the display list.  For \code{removeGrob} this
     specifies a descendant of the specified \code{gTree}.}
   \item{strict}{a \code{\link{logical}} indicating whether the \code{gPath} must be
     matched exactly.}

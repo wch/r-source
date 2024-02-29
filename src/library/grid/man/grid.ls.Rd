@@ -13,7 +13,7 @@
   Return a listing of the names of grobs or viewports.
 
   This is a generic function with methods for grobs (including
-  gTrees) and viewports (including \I{vpTree}s).
+  \I{gTree}s) and viewports (including \I{vpTree}s).
 }
 \usage{
 grid.ls(x=NULL, grobs=TRUE, viewports=FALSE, fullNames=FALSE,
@@ -62,7 +62,7 @@ grobPathListing(x, ...)
   The default behaviour of this function is to print information
   about the grobs in the current scene.  It is also possible to
   add information about the viewports in the scene.  By default,
-  the listing is recursive, so all children of gTrees and all
+  the listing is recursive, so all children of \I{gTree}s and all
   nested viewports are reported.
 
   The format of the information can be controlled via the \code{print}

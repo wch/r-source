@@ -6,33 +6,33 @@
 \name{grid.reorder}
 \alias{grid.reorder}
 \alias{reorderGrob}
-\title{ Reorder the children of a gTree }
+\title{ Reorder the children of a \I{gTree} }
 \description{
-  Change the order in which the children of a gTree get drawn.
+  Change the order in which the children of a \I{gTree} get drawn.
 }
 \usage{
 grid.reorder(gPath, order, back=TRUE, grep=FALSE, redraw=TRUE)
 reorderGrob(x, order, back=TRUE)
 }
 \arguments{
-  \item{gPath}{A gPath object specifying a gTree within the current
+  \item{gPath}{A \I{gPath} object specifying a \I{gTree} within the current
     scene.}
-  \item{x}{A gTree object to be modified.}
+  \item{x}{A \I{gTree} object to be modified.}
   \item{order}{A character vector or a numeric vector that specifies
-    the new drawing order for the children of the gTree.  May not refer
-    to all children of the gTree (see Details).}
+    the new drawing order for the children of the \I{gTree}.  May not refer
+    to all children of the \I{gTree} (see Details).}
   \item{back}{Controls what happens when the \code{order} does not
-    specify all children of the gTree (see Details).}
+    specify all children of the \I{gTree} (see Details).}
   \item{grep}{Should the \code{gPath} be treated as a regular expression?}
   \item{redraw}{Should the modified scene be redrawn?}
 }
 \details{
   In the simplest case, \code{order} specifies a new ordering for all of
-  the children of the gTree.  The children may be specified either by
+  the children of the \I{gTree}.  The children may be specified either by
   name or by existing numerical order.
 
   If the \code{order} does not
-  specify all children of the gTree then, by default, the children
+  specify all children of the \I{gTree} then, by default, the children
   specified by \code{order} are drawn first and then all remaining
   children are drawn.  If \code{back=FALSE} then the children not
   specified in \code{order} are drawn first, followed by the specified
@@ -45,11 +45,11 @@ reorderGrob(x, order, back=TRUE)
   grobs and viewports (so it is not clear what reordering even means and
   it would be too easy to end up with a scene that would not draw).
   If you want to reorder the grid display list, try \code{grid.grab()}
-  to create a gTree and then reorder (and redraw) that gTree.
+  to create a \I{gTree} and then reorder (and redraw) that \I{gTree}.
 }
 \section{Warning}{
-  This function may return a gTree that will not draw.  For example, a
-  gTree has two children, A and B (in that order),
+  This function may return a \I{gTree} that will not draw.  For example, a
+  \I{gTree} has two children, A and B (in that order),
   and the width of child B depends on the width of child A (e.g., a box
   around a piece of text).  Switching the order so that B is drawn
   before A will not allow B to be drawn.  If this happens with
@@ -60,7 +60,7 @@ reorderGrob(x, order, back=TRUE)
 \value{
   \code{grid.reorder()} is called for its side-effect of modifying the
   current scene.
-  \code{reorderGrob()} returns the modified gTree.
+  \code{reorderGrob()} returns the modified \I{gTree}.
 }
 \author{ Paul Murrell }
 \examples{

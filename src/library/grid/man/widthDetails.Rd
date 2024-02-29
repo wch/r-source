@@ -24,7 +24,7 @@ descentDetails(x)
 \details{
   These functions are called in the calculation of
   \code{"grobwidth"} and \code{"grobheight"} units.
-  Methods should be written for classes derived from grob or gTree
+  Methods should be written for classes derived from grob or \I{gTree}
   where the size of the grob can be determined (see, for example
   \code{grid:::widthDetails.frame}).
 

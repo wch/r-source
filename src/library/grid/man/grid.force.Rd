@@ -33,8 +33,8 @@ grid.revert(x, ...)
 \arguments{
   \item{x}{
     For the default method, \code{x} should not be specified.
-    Otherwise, \code{x} should be a grob or a gPath.
-    If \code{x} is character, it is assumed to be a gPath.
+    Otherwise, \code{x} should be a grob or a \I{gPath}.
+    If \code{x} is character, it is assumed to be a \I{gPath}.
   }
   \item{strict}{
     A boolean indicating whether the \code{path} must be matched
@@ -68,7 +68,7 @@ grid.revert(x, ...)
 
   The \code{grid.force()} function \emph{replaces} a grob with its
   at-drawing-time contents.  For example, an axis will be
-  replaced by a vanilla gTree with lines and text representing
+  replaced by a vanilla \I{gTree} with lines and text representing
   the axis tick marks that were actually drawn.  This makes
   the tick marks
   visible to \code{grid.ls()} and accessible to \code{grid.edit()}.

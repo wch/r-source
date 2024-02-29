@@ -33,11 +33,11 @@ biplot(x, \dots)
     points. The labels can be of different sizes for the two sets by
     supplying a vector of length two.}
   \item{xlabs}{A vector of character strings to label the first set of
-    points: the default is to use the row dimname of \code{x}, or
-    \code{1:n} if the dimname is \code{NULL}.}
+    points: the default is to use the row \I{dimname} of \code{x}, or
+    \code{1:n} if the \I{dimname} is \code{NULL}.}
   \item{ylabs}{A vector of character strings to label the second set of
-    points: the default is to use the row dimname of \code{y}, or
-    \code{1:n} if the dimname is \code{NULL}.}
+    points: the default is to use the row \I{dimname} of \code{y}, or
+    \code{1:n} if the \I{dimname} is \code{NULL}.}
   \item{expand}{An expansion factor to apply when plotting the second set
     of points relative to the first. This can be used to tweak the
     scaling of the two sets to a physically comparable scale.}

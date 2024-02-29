@@ -10,7 +10,7 @@
   This generic hook function is called whenever a grid grob is edited
   via \code{grid.edit} or \code{editGrob}.
   This provides an opportunity for customising the editing of a
-  new class derived from grob (or gTree).
+  new class derived from grob (or \I{gTree}).
 }
 \usage{
 editDetails(x, specs)
@@ -22,9 +22,9 @@ editDetails(x, specs)
 }
 \details{
   This function is called by \code{grid.edit} and \code{editGrob}.
-  A method should be written for classes derived from grob or gTree
+  A method should be written for classes derived from grob or \I{gTree}
   if a change in a slot has an effect on other slots in the grob or
-  children of a gTree (e.g., see \code{grid:::editDetails.xaxis}).
+  children of a \I{gTree} (e.g., see \code{grid:::editDetails.xaxis}).
 
   Note that the slot already has the new value.
 }

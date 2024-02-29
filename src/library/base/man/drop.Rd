@@ -22,7 +22,7 @@ drop(x)
   accompanying \code{dimnames} attribute is adjusted and returned with
   \code{x}: if the result is a vector the \code{names} are taken from
   the \code{dimnames} (if any).  If the result is a length-one vector,
-  the names are taken from the first dimension with a dimname.
+  the names are taken from the first dimension with a \I{dimname}.
 
   Array subsetting (\code{\link{[}}) performs this reduction unless used
   with \code{drop = FALSE}, but sometimes it is useful to invoke

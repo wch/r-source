@@ -34,7 +34,7 @@ yDetails(x, theta)
   These functions are called in the calculation of
   \code{"grobx"} and \code{"groby"} units as produced by
   the \code{grobX} and \code{grobY} functions.
-  Methods should be written for classes derived from grob or gTree
+  Methods should be written for classes derived from grob or \I{gTree}
   where the boundary of the grob can be determined.
 }
 \value{

@@ -24,10 +24,10 @@ editGrob(grob, gPath = NULL, ..., strict = FALSE, grep = FALSE,
 \arguments{
   \item{grob}{A grob object.}
   \item{\dots}{Zero or more named arguments specifying new slot values.}
-  \item{gPath}{ A gPath object. For \code{grid.edit} this
+  \item{gPath}{ A \I{gPath} object. For \code{grid.edit} this
     specifies a grob on the display list.  For \code{editGrob} this
     specifies a descendant of the specified grob. }
-  \item{strict}{ A boolean indicating whether the gPath must be
+  \item{strict}{ A boolean indicating whether the \I{gPath} must be
     matched exactly. }
   \item{grep}{A boolean indicating whether the \code{gPath} should
     be treated as a regular expression.  Values are recycled across
@@ -40,7 +40,7 @@ editGrob(grob, gPath = NULL, ..., strict = FALSE, grep = FALSE,
     should be affected.
   }
   \item{warn}{A logical to indicate whether failing to find the
-    specified gPath should trigger an error.  }
+    specified \I{gPath} should trigger an error.  }
   \item{allDevices}{ A boolean indicating whether all open devices
     should
     be searched for matches, or just the current device.

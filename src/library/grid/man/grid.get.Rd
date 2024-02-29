@@ -20,11 +20,11 @@ grid.gget(\dots, grep = TRUE, global = TRUE)
 getGrob(gTree, gPath, strict = FALSE, grep = FALSE, global = FALSE)
 }
 \arguments{
-  \item{gTree}{A gTree object.}
-  \item{gPath}{ A gPath object. For \code{grid.get} this
+  \item{gTree}{A \I{gTree} object.}
+  \item{gPath}{ A \I{gPath} object. For \code{grid.get} this
     specifies a grob on the display list.  For \code{getGrob} this
-    specifies a descendant of the specified gTree. }
-  \item{strict}{ A boolean indicating whether the gPath must be
+    specifies a descendant of the specified \I{gTree}. }
+  \item{strict}{ A boolean indicating whether the \I{gPath} must be
     matched exactly. }
   \item{grep}{A boolean indicating whether the \code{gPath} should
     be treated as a regular expression.  Values are recycled across

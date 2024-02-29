@@ -135,7 +135,7 @@ Sys.umask(mode = NA)
   instead.  In particular, \file{d:} is not recognized as a directory.
   Nor are \samp{\\\\?\\} prefixes (and similar) supported.
 
-  UTF-8-encoded dirnames not valid in the current locale can be used.
+  UTF-8-encoded \I{dirname}s not valid in the current locale can be used.
 }
 #endif
 

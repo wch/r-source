@@ -24,7 +24,7 @@ showViewport(vp = NULL, recurse = TRUE, depth = NULL,
   \item{vp}{
     If \code{NULL}, the current viewport tree is displayed.
     Otherwise, a viewport (or \I{vpList}, or \I{vpStack}, or \I{vpTree}) or
-    a vpPath that specifies which viewport to display.
+    a \I{vpPath} that specifies which viewport to display.
   }
   \item{recurse}{
     Should the children of the specified viewport also be displayed?
