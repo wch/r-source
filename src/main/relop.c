@@ -73,34 +73,56 @@ attribute_hidden SEXP do_relop(SEXP call, SEXP op, SEXP args, SEXP env)
     return do_relop_dflt(call, op, arg1, arg2);
 }
 
-static void check_lang_compare_OK(SEXP call, SEXP x)
+static SEXP compute_language_relop(SEXP call, SEXP op, SEXP x, SEXP y)
 {
-    static Rboolean env_checked = FALSE;
-    static Rboolean call_compare_OK = TRUE;
-    static Rboolean symbol_compare_OK = TRUE;
-    if (! env_checked) {
-	env_checked= TRUE;
-	const char *val = getenv("_R_ERROR_ON_LANG_EQUALS");
+    static enum {
+	UNINITIALIZED,
+	DEFAULT,
+	IDENTICAL_CALLS,
+	IDENTICAL,
+	ERROR_CALLS,
+	ERROR
+    } option = UNINITIALIZED;
+
+    if (option == UNINITIALIZED) {
+	option = DEFAULT;
+	const char *val = getenv("_R_COMPARE_LANG_OBJECTS");
 	if (val != NULL) {
-	    if (strcmp(val, "calls") == 0)
-		call_compare_OK = FALSE;
-	    else if (strcmp(val, "symbols") == 0)
-		symbol_compare_OK = FALSE;
-	    else if (strcmp(val, "all") == 0) {
-		call_compare_OK = FALSE;
-		symbol_compare_OK = FALSE;
-	    }
+	    if (strcmp(val, "identical_calls") == 0)
+		option = IDENTICAL_CALLS;
+	    else if (strcmp(val, "identical") == 0)
+		option = IDENTICAL;
+	    else if (strcmp(val, "error_calls") == 0)
+		option = ERROR_CALLS;
+	    else if (strcmp(val, "error") == 0)
+		option = ERROR;
 	}
     }
 
-    switch (TYPEOF(x)) {
-    case SYMSXP:
-	if (! symbol_compare_OK)
-	    errorcall(call, _("comparison of symbols is not supported"));
-	break;
-    case LANGSXP:
-	if (! call_compare_OK)
+    switch(option) {
+    case IDENTICAL_CALLS:
+	if (TYPEOF(x) == SYMSXP && TYPEOF(y) == STRSXP && XLENGTH(y) == 1)
+	    y = installTrChar(STRING_ELT(y, 0));
+	else if (TYPEOF(y) == SYMSXP && TYPEOF(x) == STRSXP && XLENGTH(x) == 1)
+	    x = installTrChar(STRING_ELT(x, 0));
+	/* fall through */
+    case IDENTICAL:
+	switch(PRIMVAL(op)) {
+	case EQOP:
+	    return R_compute_identical(x, y, 16) ? R_TrueValue : R_FalseValue;
+	case NEOP:
+	    return R_compute_identical(x, y, 16) ? R_FalseValue : R_TrueValue;
+	default: errorcall(call,
+			   _("comparison (%s) is not possible language types"),
+			   PRIMNAME(op));
+	}
+    case ERROR_CALLS:
+	if (TYPEOF(x) == LANGSXP || TYPEOF(y) == LANGSXP)
 	    errorcall(call, _("comparison of call objects is not supported"));
+	return NULL;
+    case ERROR:
+	errorcall(call, _("comparison of language objects is not supported"));
+    default: return NULL;
     }
 }
 
@@ -165,11 +187,19 @@ attribute_hidden SEXP do_relop_dflt(SEXP call, SEXP op, SEXP x, SEXP y)
     PROTECT_WITH_INDEX(x, &xpi);
     PROTECT_WITH_INDEX(y, &ypi);
 
+    if (isSymbol(x) || TYPEOF(x) == LANGSXP ||
+	isSymbol(y) || TYPEOF(y) == LANGSXP) {
+	SEXP ans = compute_language_relop(call, op, x, y);
+	if (ans != NULL) {
+	    UNPROTECT(2);
+	    return ans;
+	}
+    }
+
     Rboolean iS;
     /* That symbols and calls were allowed was undocumented prior to
        R 2.5.0.  We deparse them as deparse() would, minus attributes */
     if ((iS = isSymbol(x)) || TYPEOF(x) == LANGSXP) {
-	check_lang_compare_OK(call, x);
 	SEXP tmp = allocVector(STRSXP, 1);
 	PROTECT(tmp);
 	SET_STRING_ELT(tmp, 0, (iS) ? PRINTNAME(x) :
@@ -181,7 +211,6 @@ attribute_hidden SEXP do_relop_dflt(SEXP call, SEXP op, SEXP x, SEXP y)
 	UNPROTECT(1);
     }
     if ((iS = isSymbol(y)) || TYPEOF(y) == LANGSXP) {
-	check_lang_compare_OK(call, y);
 	SEXP tmp = allocVector(STRSXP, 1);
 	PROTECT(tmp);
 	SET_STRING_ELT(tmp, 0, (iS) ? PRINTNAME(y) :
