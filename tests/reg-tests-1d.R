@@ -3276,8 +3276,8 @@ a1 <- structure(array(1:7,  7  ), class = "foo")
 a3 <- structure(array(1:24, 2:4), class = "foo")
 stopifnot(exprs = {
     ## these all work as previously
-    head(cForm,1) == `~`()
-    head(cForm,2) == ~some
+    head(cForm,1) == quote(`~`())
+    head(cForm,2) == quote(~some)
     head(cForm) == cForm
     is.call(cl <- quote((Days|Subject)))
     is.call(fL)

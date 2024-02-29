@@ -1098,9 +1098,10 @@ stopifnot(exprs = {
 }) ## all dropped 'offset' in R <= 4.3.2
 ##
 ## PR#18566:
+remattr <- function(x) { attributes(x) <- NULL; x } ## do we already have this?
 t2 <- terms(~ a + b)
 str(dt2 <- drop.terms(t2, 1, keep.response = TRUE))
-stopifnot( drop.terms(t2, 1) == dt2, dt2 == ~ b)
+stopifnot( drop.terms(t2, 1) == dt2, remattr(dt2) == quote(~ b))
 ## gave a+b ~ b in R <= 4.3.2
 
 
