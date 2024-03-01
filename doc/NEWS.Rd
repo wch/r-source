@@ -619,6 +619,9 @@
       \item Comparisons for language objects, which are based on
       deparsing, are now more careful about using accurate deparsed
       results (\PR{18676}).
+
+      \item Plain-text help (\code{Rd2txt}) now correctly preserves
+      blank lines following single-line \verb{\dontrun} code.
     }
   }
 }

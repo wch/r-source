@@ -543,7 +543,6 @@ Rd2txt <-
         } else {
             putf('## Not run: ')
             writeCodeBlock(block, tag)
-            blankLine(0L)
         }
     }
 

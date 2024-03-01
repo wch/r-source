@@ -92,5 +92,6 @@ _E_x_a_m_p_l_e_s:
      %{}
      
      ## Not run: stop("doomed to fail")
+     
      foo(x, y)
      
