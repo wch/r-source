@@ -2708,7 +2708,7 @@ if(FALSE) {
         makeargs <- c("SHLIB_LDFLAGS='$(SHLIB_FCLDFLAGS)'",
                       "SHLIB_LD='$(SHLIB_FCLD)'",
                       ## avoid $(LIBINTL) and $(LIBR)
-                      "ALL_LIBS='$(PKG_LIBS) $(SHLIB_LIBADD)'",
+                      "ALL_LIBS='$(PKG_LIBS) $(SHLIB_LIBADD) $(SAN_LIBS)'",
                       makeargs)
     if (with_objc) shlib_libadd <- c(shlib_libadd, "$(OBJC_LIBS)")
     if (with_f77 || with_f9x) {
