@@ -80,9 +80,9 @@ find("cor", numeric = TRUE)                     # numbers with these names
 find("cor", numeric = TRUE, mode = "function")  # only the second one
 rm(cor)
 
-\dontrun{apropos(".", mode="list")  # a long list}
+\dontrun{apropos(".", mode = "list")  # includes many datasets}
 
-# need a DOUBLE backslash '\\\\' (in case you don't see it anymore)
+# extraction/replacement methods (need a DOUBLE backslash '\\\\')
 apropos("\\\\[")
 
 \donttest{# everything % not diff-able
@@ -97,9 +97,7 @@ apropos("^.$")
 apropos("^..?$")
 # the 2-to-4 letter things
 apropos("^.{2,4}$")
-
-# the 8-and-more letter things
-apropos("^.{8,}$")
+# frequencies of 8-and-more letter things
 table(nchar(apropos("^.{8,}$")))
 }}
 \keyword{data}
