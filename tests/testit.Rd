@@ -94,5 +94,8 @@ foo(\var{x}, \var{y}, ...)
 \examples{
 \\x
 \%\{\}
+
+\dontrun{stop("doomed to fail")}
+
 foo(\var{x}, \var{y})
 }

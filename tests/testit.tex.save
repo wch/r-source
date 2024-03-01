@@ -107,6 +107,9 @@ and is thus output as-is in R \eqn{\ge}{} 4.4.0:
 \begin{ExampleCode}
 \x
 %{}
+
+## Not run: stop("doomed to fail")
+
 foo(x, y)
 \end{ExampleCode}
 \end{Examples}

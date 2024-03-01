@@ -157,6 +157,9 @@ and is thus output as-is in R <code class="reqn">\ge</code> 4.4.0:
 
 <pre><code class='language-R'>\x
 %{}
+
+## Not run: stop("doomed to fail")
+
 foo(<var>x</var>, <var>y</var>)
 </code></pre>
 

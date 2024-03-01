@@ -6,6 +6,9 @@
 
 \x
 %{}
+
+## Not run: stop("doomed to fail")
+
 foo(x, y)
 
 
