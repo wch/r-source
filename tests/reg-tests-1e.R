@@ -1192,7 +1192,7 @@ options(op)
 
 ## checks for x == y when operands are call objects, PR18676
 ## disabled if == for calls would signal an error
-if (is.na(Sys.getenv("_R_ERROR_ON_LANG_EQUALS", unset = NA_character_))) {
+if (is.na(Sys.getenv("_R_COMPARE_LANG_OBJECTS", unset = NA_character_))) {
     stopifnot(quote({a}) != quote({b}))
     stopifnot(quote(c(1)) != quote(c(1L)))
     stopifnot(quote(c(1.234567890123456)) != quote(c(1.2345678901234567)))
