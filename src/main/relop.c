@@ -77,12 +77,35 @@ attribute_hidden SEXP do_relop(SEXP call, SEXP op, SEXP args, SEXP env)
 #define SYMBOL_STRING_MATCH(x, y) \
     (isSymbol(x) && IS_SCALAR_STRING(y) && Seql(PRINTNAME(x), STRING_ELT(y, 0)))
 
+
+static R_INLINE Rboolean compute_lang_equal(SEXP x, SEXP y)
+{
+    if (isSymbol(x))
+	return y == x ||
+	    (IS_SCALAR_STRING(y) && Seql(PRINTNAME(x), STRING_ELT(y, 0)));
+    else if (isSymbol(y))
+	return x == y ||
+	    (IS_SCALAR_STRING(x) && Seql(STRING_ELT(x, 0), PRINTNAME(x)));
+
+    if (TYPEOF(x) == LANGSXP && ATTRIB(x) != R_NilValue)
+	x = LCONS(CAR(x), CDR(x));
+    PROTECT(x);
+    if (TYPEOF(y) == LANGSXP && ATTRIB(y) != R_NilValue)
+	y = LCONS(CAR(y), CDR(y));
+    PROTECT(y);
+
+    Rboolean val = R_compute_identical(x, y, 16);
+    UNPROTECT(2);
+    return val;
+}
+
 static SEXP compute_language_relop(SEXP call, SEXP op, SEXP x, SEXP y)
 {
     static enum {
 	UNINITIALIZED,
 	DEFAULT,
 	IDENTICAL_CALLS,
+	IDENTICAL_CALLS_ATTR,
 	IDENTICAL,
 	ERROR_CALLS,
 	ERROR
@@ -94,6 +117,8 @@ static SEXP compute_language_relop(SEXP call, SEXP op, SEXP x, SEXP y)
 	if (val != NULL) {
 	    if (strcmp(val, "identical_calls") == 0)
 		option = IDENTICAL_CALLS;
+	    else if (strcmp(val, "identical_calls_attr") == 0)
+		option = IDENTICAL_CALLS_ATTR;
 	    else if (strcmp(val, "identical") == 0)
 		option = IDENTICAL;
 	    else if (strcmp(val, "error_calls") == 0)
@@ -105,6 +130,20 @@ static SEXP compute_language_relop(SEXP call, SEXP op, SEXP x, SEXP y)
 
     switch(option) {
     case IDENTICAL_CALLS:
+	/* this should reproduce the current behavior of == and != for
+	   language objects, while signaling errors for <, <=, >, and
+	   >=. */
+	switch(PRIMVAL(op)) {
+	case EQOP:
+	    return compute_lang_equal(x, y) ? R_TrueValue : R_FalseValue;
+	case NEOP:
+	    return compute_lang_equal(x, y) ? R_FalseValue : R_TrueValue;
+	default:
+	    errorcall(call,
+		      _("comparison (%s) is not possible for language types"),
+		      PRIMNAME(op));
+	}
+    case IDENTICAL_CALLS_ATTR:
 	if (isSymbol(x) && IS_SCALAR_STRING(y))
 	    y = Seql(STRING_ELT(y, 0), PRINTNAME(x)) ? x : R_NilValue;
 	else if (isSymbol(y) && IS_SCALAR_STRING(x))
