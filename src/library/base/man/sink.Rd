@@ -101,7 +101,7 @@ i <- 1:10
 outer(i, i)
 sink()
 \dontshow{unlink("sink-examp.txt")}% don't show what confuses newbies
-\donttest{
+\donttest{% but in reg-tests-2.R
 ## capture all the output to a file.
 zz <- file("all.Rout", open = "wt")
 sink(zz)
@@ -110,7 +110,7 @@ try(log("a"))
 ## revert output back to the console -- only then access the file!
 sink(type = "message")
 sink()
-file.show("all.Rout")
+file.show("all.Rout", delete.file = TRUE)
 }}
 \keyword{file}
 \keyword{connection}
