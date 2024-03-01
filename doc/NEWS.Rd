@@ -1222,6 +1222,7 @@
       \dQuote{ragged} and or out-of-range \code{"POSIXlt"} objects more
       correctly, e.g., in subsetting and \I{subassignment}s.  Such objects
       are now documented.
+      Complemented by the low-level \code{unCfillPOSIXlt()} utility.
 
       More experimentally, a \code{"POSIXlt"} object may have an attribute
       \code{"balanced"} indicating if it is known to be filled or fully
