@@ -1,6 +1,6 @@
 % File src/library/utils/man/help.search.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2024 R Core Team
 % Distributed under GPL 2 or later
 
 \name{help.search}
@@ -47,7 +47,8 @@ help.search(pattern, fields = c("alias", "concept", "title"),
     standard categories are listed in file \file{R.home("doc")/KEYWORDS}
     (see also the example) and some package writers have defined their
     own.  If \code{keyword} is specified, \code{agrep} defaults to
-    \code{FALSE}.}  \item{whatis}{a character string to be matched in
+    \code{FALSE}.}
+  \item{whatis}{a character string to be matched in
     the help page topics.}
   \item{ignore.case}{a logical.  If \code{TRUE}, case is ignored during
     matching; if \code{FALSE}, pattern matching is case sensitive.}
@@ -162,15 +163,18 @@ help.search("non-existent topic")
 ??utils::help  # All the topics matching "help" in the utils package
 
 \donttest{
-help.search("print")            # All help pages with topics or title
-                                # matching 'print'
-help.search(apropos = "print")  # The same
+## Documentation with topic/concept/title matching 'print'
+## (disabling fuzzy matching to not also match 'point')
+help.search("print", agrep = FALSE)
+help.search(apropos = "print", agrep = FALSE)  # ignores concepts
 
-help.search(keyword = "hplot")  # All help pages documenting high-level
-                                # plots.
-file.show(file.path(R.home("doc"), "KEYWORDS"))  # show all keywords
+## Help pages with documented topics starting with 'try':
+help.search("^try", fields = "alias")
+alias??"^try"  # the same
 
-## Help pages with documented topics starting with 'try'.
-help.search("\\\\btry", fields = "alias")
-}}
+## Help pages documenting high-level plots:
+help.search(keyword = "hplot")
+}
+RShowDoc("KEYWORDS")  # show all keywords
+}
 \keyword{documentation}
