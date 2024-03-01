@@ -85,7 +85,7 @@ static R_INLINE Rboolean compute_lang_equal(SEXP x, SEXP y)
 	    (IS_SCALAR_STRING(y) && Seql(PRINTNAME(x), STRING_ELT(y, 0)));
     else if (isSymbol(y))
 	return x == y ||
-	    (IS_SCALAR_STRING(x) && Seql(STRING_ELT(x, 0), PRINTNAME(x)));
+	    (IS_SCALAR_STRING(x) && Seql(STRING_ELT(x, 0), PRINTNAME(y)));
 
     if (TYPEOF(x) == LANGSXP && ATTRIB(x) != R_NilValue)
 	x = LCONS(CAR(x), CDR(x));
