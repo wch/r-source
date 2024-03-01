@@ -196,21 +196,14 @@ Rd2ex(Rd, out = "", defines = .Platform$OS.type,
   \code{\link{findHTMLlinks}}, \code{\link{Rd2txt_options}},
   \code{\link{matchConcordance}}.
 }
-\examples{\donttest{
-
-\dontrun{
-## Simulate install and rendering of this page in HTML and text format:
-
-Rd <- file.path("src/library/tools/man/Rd2HTML.Rd")
+\examples{\donttest{% timestamp, browseURL()
+## Simulate rendering of this (installed) page in HTML and text format
+Rd <- Rd_db("tools")[["Rd2HTML.Rd"]]
 
 outfile <- tempfile(fileext = ".html")
-browseURL(Rd2HTML(Rd, outfile, package = "tools",
-          stages = c("install", "render")))
+Rd2HTML(Rd, outfile, package = "tools") |> browseURL()
 
 outfile <- tempfile(fileext = ".txt")
-file.show(Rd2txt(Rd, outfile, package = "tools",
-          stages = c("install", "render")))
-
-checkRd(Rd) # A stricter test than Rd2HTML uses
-}}}
+Rd2txt(Rd, outfile, package = "tools") |> file.show()
+}}
 \keyword{ documentation }

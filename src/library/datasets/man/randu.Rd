@@ -1,6 +1,6 @@
 % File src/library/datasets/man/randu.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2024 R Core Team
 % Distributed under GPL 2 or later
 
 \name{randu}
@@ -32,15 +32,17 @@
   David Donoho
 }
 \examples{
-\donttest{## We could re-generate the dataset by the following R code
+## We could re-generate the dataset by the following R code
 seed <- as.double(1)
 RANDU <- function() {
     seed <<- ((2^16 + 3) * seed) \%\% (2^31)
     seed/(2^31)
 }
+myrandu <- matrix(NA_real_, 400, 3, dimnames = list(NULL, c("x","y","z")))
 for(i in 1:400) {
     U <- c(RANDU(), RANDU(), RANDU(), RANDU(), RANDU())
-    print(round(U[1:3], 6))
-}}
+    myrandu[i,] <- round(U[1:3], 6)
+}
+stopifnot(all.equal(randu, as.data.frame(myrandu), tolerance = 1e-5))
 }
 \keyword{datasets}
