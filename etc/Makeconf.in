@@ -143,6 +143,7 @@ SHLIB_LD = @SHLIB_LD@
 SHLIB_LDFLAGS = @SHLIB_LDFLAGS@@BUILD_LTO_ALL_TRUE@ $(CFLAGS) $(CPICFLAGS) $(LTO_LD)
 ## used for standard packages
 SHLIB_LDFLAGS_R = @SHLIB_LDFLAGS@@BUILD_LTO_TRUE@ $(CFLAGS) $(CPICFLAGS) $(LTO_LD)
+## used in install.R to add OBJC_LIBS, FLIBS ....
 SHLIB_LIBADD = @SHLIB_LIBADD@
 ## We want to ensure libR is picked up from $(R_HOME)/lib
 ## before e.g. /usr/local/lib if a version is already installed.
@@ -183,7 +184,7 @@ ALL_FFLAGS = @R_XTRA_FFLAGS@ $(PKG_FFLAGS) $(FPICFLAGS) $(SHLIB_FFLAGS) $(FFLAGS
 P_FCFLAGS = $(PKG_FFLAGS)
 ALL_FCFLAGS = @R_XTRA_FFLAGS@ $(P_FCFLAGS) $(FPICFLAGS) $(SHLIB_FFLAGS) $(FCFLAGS)
 ## LIBR here as a couple of packages use this without SHLIB_LINK
-ALL_LIBS = $(PKG_LIBS) $(SHLIB_LIBADD) $(LIBR)@DYLIB_UNDEFINED_ALLOWED_FALSE@ $(LIBINTL)
+ALL_LIBS = $(PKG_LIBS) $(SHLIB_LIBADD) $(SAN_LIBS) $(LIBR)@DYLIB_UNDEFINED_ALLOWED_FALSE@ $(LIBINTL)
 
 .SUFFIXES:
 .SUFFIXES: .c .cc .cpp .d .f .f90 .f95 .m .mm .M .o

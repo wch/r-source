@@ -10141,7 +10141,7 @@ CC = clang -fsanitize=undefined -fno-sanitize=float-divide-by-zero -fno-omit-fra
 CXX = clang++ -fsanitize=undefined -fno-sanitize=float-divide-by-zero -fno-omit-frame-pointer -frtti
 
 UBSAN_DIR = /path/to/LLVM18/lib/clang/18/lib/x86_64-unknown-linux-gnu
-SHLIB_LIBADD = $(UBSAN_DIR)/libclang_rt.ubsan_standalone.a $(UBSAN_DIR)/libclang_rt.ubsan_standalone_cxx.a
+SAN_LIBS = $(UBSAN_DIR)/libclang_rt.ubsan_standalone.a $(UBSAN_DIR)/libclang_rt.ubsan_standalone_cxx.a
 @end example
 
 @noindent
@@ -10149,7 +10149,7 @@ which links the @abbr{UBSAN} libraries statically into the package-under-test's 
 It is also possible to use the dynamic library @emph{via}
 
 @example
-SHLIB_LIBADD = -L$(UBSAN_DIR) -Wl,-rpath,$(UBSAN_DIR) -lclang_rt.ubsan_standalone
+SAN_LIBS = -L$(UBSAN_DIR) -Wl,-rpath,$(UBSAN_DIR) -lclang_rt.ubsan_standalone
 @end example
 @noindent
 provided @code{UBSAN_DIR} is added to the runtime library path (as shown
