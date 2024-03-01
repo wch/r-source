@@ -248,15 +248,15 @@ tiff(filename = "Rplot\%03d.tif",
 
 \examples{
 ## copy current plot to a (large) PNG file
-\dontrun{dev.print(png, file = "myplot.png", width = 1024, height = 768)
+\dontrun{dev.print(png, filename = "myplot.png", width = 1024, height = 768)}
 
-png(file = "myplot.png", bg = "transparent")
+png("myplot.png", bg = "transparent")
 plot(1:10)
 rect(1, 5, 3, 7, col = "white")
 dev.off()
 
-jpeg(file = "myplot.jpeg")
+jpeg("myplot.jpeg")
 example(rect)
 dev.off()
-}}
+}
 \keyword{device}
