@@ -73,6 +73,10 @@ attribute_hidden SEXP do_relop(SEXP call, SEXP op, SEXP args, SEXP env)
     return do_relop_dflt(call, op, arg1, arg2);
 }
 
+#define IS_SCALAR_STRING(x) (TYPEOF(x) == STRSXP && XLENGTH(x) == 1)
+#define SYMBOL_STRING_MATCH(x, y) \
+    (isSymbol(x) && IS_SCALAR_STRING(y) && Seql(PRINTNAME(x), STRING_ELT(y, 0)))
+
 static SEXP compute_language_relop(SEXP call, SEXP op, SEXP x, SEXP y)
 {
     static enum {
@@ -101,19 +105,27 @@ static SEXP compute_language_relop(SEXP call, SEXP op, SEXP x, SEXP y)
 
     switch(option) {
     case IDENTICAL_CALLS:
-	/* this assumes strings are cached */
-	if (TYPEOF(x) == SYMSXP && TYPEOF(y) == STRSXP && XLENGTH(y) == 1)
-	    y = (STRING_ELT(y, 0) == PRINTNAME(x)) ? x : R_NilValue;
-	else if (TYPEOF(y) == SYMSXP && TYPEOF(x) == STRSXP && XLENGTH(x) == 1)
-	    x = (STRING_ELT(x, 0) == PRINTNAME(y)) ? y : R_NilValue;
-	/* fall through */
-    case IDENTICAL:
-	if ((TYPEOF(x) == STRSXP && TYPEOF(y) == SYMSXP) ||
-	    (TYPEOF(y) == STRSXP && TYPEOF(x) == SYMSXP))
-	    /* comparing a symbol and a string could reverse the result
-	       from the default, so signal an error instead */
+	if (isSymbol(x) && IS_SCALAR_STRING(y))
+	    y = Seql(STRING_ELT(y, 0), PRINTNAME(x)) ? x : R_NilValue;
+	else if (isSymbol(y) && IS_SCALAR_STRING(x))
+	    x = Seql(STRING_ELT(x, 0), PRINTNAME(y)) ? y : R_NilValue;
+	switch(PRIMVAL(op)) {
+	case EQOP:
+	    return R_compute_identical(x, y, 16) ? R_TrueValue : R_FalseValue;
+	case NEOP:
+	    return R_compute_identical(x, y, 16) ? R_FalseValue : R_TrueValue;
+	default:
 	    errorcall(call,
-		      _("comparing a symbol to a string is not supported"));
+		      _("comparison (%s) is not possible for language types"),
+		      PRIMNAME(op));
+	}
+    case IDENTICAL:
+	if (SYMBOL_STRING_MATCH(x, y) || SYMBOL_STRING_MATCH(y, x))
+	    /* identical(x, y) and the default x == y implementation
+	       would disagree, so signal an error instead */
+	    errorcall(call,
+		      _("comparing this symbol and string pair "
+			"is not supported"));
 	switch(PRIMVAL(op)) {
 	case EQOP:
 	    return R_compute_identical(x, y, 16) ? R_TrueValue : R_FalseValue;
