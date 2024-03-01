@@ -159,14 +159,14 @@ srcref(srcfile, lloc)
   (non-primitive) function (aka \sQuote{closure}).
 }
 \author{Duncan Murdoch}
-\examples{\donttest{ # has timestamp
+\examples{
 src <- srcfile(system.file("DESCRIPTION", package = "base"))
-summary(src)
+\dontdiff{summary(src)}% timestamp
 getSrcLines(src, 1, 4)
 ref <- srcref(src, c(1, 1, 2, 1000))
 ref
 print(ref, useSource = FALSE)
-}}
+}
 
 \keyword{ debugging }
 \keyword{ utilities }

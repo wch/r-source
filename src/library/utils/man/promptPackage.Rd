@@ -51,10 +51,10 @@ promptPackage(package, lib.loc = NULL, filename = NULL,
 }
 \seealso{\code{\link{prompt}}, \code{\link{package.skeleton}}
 }
-\examples{\donttest{
+\examples{
 filename <- tempfile()
-promptPackage("utils", filename = filename)
+\dontdiff{promptPackage("utils", filename = filename)}% random path
 file.show(filename)
 unlink(filename)
-}}
+}
 \keyword{documentation}

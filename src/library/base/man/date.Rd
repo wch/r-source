@@ -29,7 +29,7 @@
   and
   \code{\link{DateTimeClasses}} for objects representing date and time.
 }
-\examples{\donttest{
+\examples{\dontdiff{
 (d <- date())
 nchar(d) == 24
 

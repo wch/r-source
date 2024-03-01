@@ -80,8 +80,8 @@ unclass(on[3:4]) # subsetting
 ## manipulate file modes
 fmode <- as.octmode("170")
 (fmode | "644") & "755"
-\donttest{
-umask <- Sys.umask(NA) # depends on platform
+\dontdiff{
+(umask <- Sys.umask()) # depends on platform
 c(fmode, "666", "755") & !umask
 }
 

@@ -61,9 +61,9 @@
   \code{\link{SSlogis}} for models fitted to this dataset.
 }
 
-\examples{\donttest{
+\examples{
 require(graphics)
 coplot(weight ~ Time | Chick, data = ChickWeight,
        type = "b", show.given = FALSE)
-}}
+}
 \keyword{datasets}

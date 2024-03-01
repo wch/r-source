@@ -79,6 +79,8 @@ Type 'q()' to quit R.
 > ### Keywords: documentation
 > 
 > ### ** Examples
+> 
+> 
 > cleanEx()
 > nameEx("Rd2txt_options")
 > ### * Rd2txt_options
@@ -92,6 +94,12 @@ Type 'q()' to quit R.
 > 
 > ### ** Examples
 > 
+> saveOpts <- Rd2txt_options()
+> Rd2txt_options(minIndent = 4)
+> Rd2txt_options()[["minIndent"]]
+[1] 4
+> Rd2txt_options(saveOpts)
+> stopifnot(identical(Rd2txt_options(), saveOpts))
 > 
 > 
 > 

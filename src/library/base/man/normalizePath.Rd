@@ -93,7 +93,7 @@ normalizePath(path, winslash = "\\\\", mustWork = NA)
 }
 #endif
 
-\examples{\donttest{# random tempdir
+\examples{\dontdiff{% random tempdir
 cat(normalizePath(c(R.home(), tempdir())), sep = "\n")
 }}
 \keyword{ utilities }

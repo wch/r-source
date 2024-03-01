@@ -119,13 +119,13 @@ write.dcf(x, file = "", append = FALSE, useBytes = FALSE,
   \code{\link{available.packages}}, which uses \code{read.dcf} to read
   the indices of package repositories.
 }
-\examples{\donttest{
+\examples{\dontdiff{
 ## Create a reduced version of the DESCRIPTION file in package 'splines'
 x <- read.dcf(file = system.file("DESCRIPTION", package = "splines"),
               fields = c("Package", "Version", "Title"))
 write.dcf(x)
-
-## An online DCF file with multiple records
+}
+\donttest{## An online DCF file with multiple records
 con <- url("https://cran.r-project.org/src/contrib/PACKAGES")
 y <- read.dcf(con, all = TRUE)
 close(con)

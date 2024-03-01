@@ -86,7 +86,7 @@ unlink(fil) # tidy up
 ## difference in blocking
 fil <- tempfile("test")
 cat("123\nabc", file = fil)
-\donttest{readLines(fil) # line with a warning}
+\dontdiff{readLines(fil) # line with a warning}% includes random path
 
 con <- file(fil, "r", blocking = FALSE)
 readLines(con) # "123"

@@ -259,12 +259,11 @@ noquote(format(xx, justify = "right"))
 sprintf("min 10-char string '\%10s'",
         c("a", "ABC", "and an even longer one"))
 
-\donttest{## Platform-dependent bad example from qdapTools 1.0.0:
-## may pad with spaces or zeroes.
-sprintf("\%09s", month.name)}
-
 n <- 1:18
 sprintf(paste0("e with \%2d digits = \%.", n, "g"), n, exp(1))
+
+\dontdiff{## Platform-dependent bad example: may pad with spaces or zeroes
+sprintf("\%09s", month.name)}
 
 ## Using arguments out of order
 sprintf("second \%2$1.0f, first \%1$5.2f, third \%3$1.0f", pi, 2, 3)
