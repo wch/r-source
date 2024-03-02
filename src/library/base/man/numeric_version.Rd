@@ -1,6 +1,6 @@
 % File src/library/base/man/numeric_version.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2024 R Core Team
 % Distributed under GPL 2 or later
 
 \name{numeric_version}
@@ -22,7 +22,6 @@
 \alias{Summary.numeric_version}
 \alias{anyNA.numeric_version}
 \alias{as.character.numeric_version}
-\alias{as.data.frame.numeric_version}
 \alias{as.list.numeric_version}
 \alias{c.numeric_version}
 \alias{duplicated.numeric_version}

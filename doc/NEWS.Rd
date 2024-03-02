@@ -447,6 +447,11 @@
       more like standard function calls and makes method code easier to
       analyze correctly. For now, attempts to use these variables in a
       method will signal an error; this will eventually be dropped.
+
+      \item The 12 \code{as.data.frame.<class>()} methods which were
+      deprecated only via \env{_R_CHECK_AS_DATA_FRAME_EXPLICIT_METHOD_} and
+      in \command{R CMD check --as-cran} are formally deprecated now in
+      favour of calling \code{as.data.frame()} or \code{as.data.frame.vector()}.
     }
   }
 

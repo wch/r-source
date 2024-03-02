@@ -35,7 +35,6 @@ englishMsgs <- {
     }
 }
 cat(sprintf("English messages: %s\n", englishMsgs))
-Sys.setenv("_R_CHECK_AS_DATA_FRAME_EXPLICIT_METHOD_" = "true")# just in case
 
 
 ## very small size hashed environments

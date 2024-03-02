@@ -1,6 +1,6 @@
 % File src/library/base/man/DateTimeClasses.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2022 R Core Team
+% Copyright 1995-2024 R Core Team
 % Distributed under GPL 2 or later
 
 \name{DateTimeClasses}
@@ -28,7 +28,6 @@
 \alias{[<-.POSIXlt}
 \alias{[[.POSIXlt}
 \alias{[[<-.POSIXlt}
-\alias{as.data.frame.POSIXct}
 \alias{as.data.frame.POSIXlt}
 \alias{as.list.POSIXct}
 \alias{as.list.POSIXlt}

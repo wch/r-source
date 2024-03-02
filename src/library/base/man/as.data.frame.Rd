@@ -1,6 +1,6 @@
 % File src/library/base/man/as.data.frame.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2023 R Core Team
+% Copyright 1995-2024 R Core Team
 % Distributed under GPL 2 or later
 
 \name{as.data.frame}
@@ -9,23 +9,14 @@
 \alias{is.data.frame}
 \alias{as.data.frame.AsIs}
 \alias{as.data.frame.character}
-\alias{as.data.frame.complex}
 \alias{as.data.frame.data.frame}
 \alias{as.data.frame.default}
-\alias{as.data.frame.factor}
-\alias{as.data.frame.integer}
 \alias{as.data.frame.list}
-\alias{as.data.frame.logical}
-\alias{as.data.frame.raw}
 \alias{as.data.frame.matrix}
 \alias{as.data.frame.model.matrix}
-\alias{as.data.frame.noquote}
-\alias{as.data.frame.numeric}
-\alias{as.data.frame.ordered}
 \alias{as.data.frame.ts}
 \alias{as.data.frame.vector}
 \alias{as.data.frame.array}
-\alias{as.data.frame.difftime}
 
 \description{
   Functions to check if an object is a data frame, or coerce it if possible.
@@ -100,8 +91,7 @@ is.data.frame(x)
   \code{as.data.frame.vector} for atomic (as by \code{\link{is.atomic}}) \code{x}.
 
   Direct calls of \code{as.data.frame.\var{class}} are still possible (base package!),
-  for 12 atomic base classes, but will be deprecated (already visibly by setting
-  environment variable \env{_R_CHECK_AS_DATA_FRAME_EXPLICIT_METHOD_} to non-empty)
+  for 12 atomic base classes, but are deprecated
   where calling \code{as.data.frame.vector} instead is recommended.
 
   If a list is supplied, each element is converted to a column in the
