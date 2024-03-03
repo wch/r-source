@@ -10045,23 +10045,27 @@ The current set is (on a single line):
 -fsanitize=alignment,bool,bounds,builtin,enum,float-cast-overflow,
 float-divide-by-zero,function,implicit-unsigned-integer-truncation,
 implicit-signed-integer-truncation,implicit-integer-sign-change,
-integer-divide-by-zero,nonnull-attribute,null,object-size,
+integer-divide-by-zero,nonnull-attribute,null,nullability-arg,
+nullability-assign,nullability-return,object-size,
 pointer-overflow,return,returns-nonnull-attribute,shift,
 signed-integer-overflow,unreachable,unsigned-integer-overflow,
 unsigned-shift-base,vla-bound,vptr
 @end example
 
 @noindent
-(plus the more specific versions @code{shift-base} and
-@code{shift-exponent}) a subset of which could be combined with
-@code{address}, or use something like
+(plus the more specific versions @code{array-bounsds},
+@code{local-bounds}, @code{shift-base} and @code{shift-exponent}), or
+use something like
 
 @example
 -fsanitize=undefined -fno-sanitize=float-divide-by-zero
 @end example
 
 @noindent
-Options @code{function}, @code{return} and @code{vptr} apply only to C++: to
+where in recent versions @code{-fno-sanitize=float-divide-by-zero} is the
+default.
+
+Options @code{return} and @code{vptr} apply only to C++: to
 use @code{vptr} its run-time library needs to be linked into the main
 @R{} executable by building the latter with something like
 @example
@@ -10073,11 +10077,16 @@ which allow such divisions as part of @acronym{IEC}@tie{}60559
 arithmetic, and in versions of @command{clang} since June 2019 it is no
 longer part of @option{-fsanitize=undefined}.
 
+There are also groups of options @code{implicit-integer-truncation},
+@code{mplicit-integer-arithmetic-value-change},
+@code{implicit-conversion}, @code{integer} and @code{nullability}.
+
 For GCC see
 @uref{https://gcc.gnu.org/onlinedocs/gcc/Instrumentation-Options.html}
 (or the manual for your version of GCC, installed or @emph{via}
 @uref{https://gcc.gnu.org/onlinedocs/}: look for `Program
-Instrumentation Options') for the options supported by GCC: 10 supported
+Instrumentation Options') for the options supported by GCC: versions 13.x
+supported
 @example
 -fsanitize=alignment,bool,bounds,builtin,enum,integer-divide-by-zero,
 nonnull-attribute,null,object-size,pointer-overflow,return,
@@ -10088,7 +10097,7 @@ unreachable,vla-bound,vptr
 plus the more specific versions @code{shift-base} and
 @code{shift-exponent} and non-default options
 @example
-bound-strict,float-cast-overflow,float-divide-by-zero
+bounds-strict,float-cast-overflow,float-divide-by-zero
 @end example
 @noindent
 where @code{float-divide-by-zero} is not desirable for @R{} uses and
@@ -10107,7 +10116,8 @@ information on where the runtime error occurs, using
 @example
 setenv UBSAN_OPTIONS 'print_stacktrace=1' 
 @end example
-@noindent will include a traceback in the report.  Beyond that, @R{} can
+@noindent
+will include a traceback in the report.  Beyond that, @R{} can
 be run under a debugger with a breakpoint set before the sanitizer
 report is produced: for @command{gdb} or @command{lldb} you could use
 @example
