@@ -104,6 +104,7 @@ static SEXP compute_language_relop(SEXP call, SEXP op, SEXP x, SEXP y)
     static enum {
 	UNINITIALIZED,
 	DEFAULT,
+	EQONLY,
 	IDENTICAL_CALLS,
 	IDENTICAL_CALLS_ATTR,
 	IDENTICAL,
@@ -115,7 +116,9 @@ static SEXP compute_language_relop(SEXP call, SEXP op, SEXP x, SEXP y)
 	option = DEFAULT;
 	const char *val = getenv("_R_COMPARE_LANG_OBJECTS");
 	if (val != NULL) {
-	    if (strcmp(val, "identical_calls") == 0)
+	    if (strcmp(val, "eqonly") == 0)
+		option = EQONLY;
+	    else if (strcmp(val, "identical_calls") == 0)
 		option = IDENTICAL_CALLS;
 	    else if (strcmp(val, "identical_calls_attr") == 0)
 		option = IDENTICAL_CALLS_ATTR;
@@ -129,6 +132,15 @@ static SEXP compute_language_relop(SEXP call, SEXP op, SEXP x, SEXP y)
     }
 
     switch(option) {
+    case EQONLY:
+	switch(PRIMVAL(op)) {
+	case EQOP: return NULL;
+	case NEOP: return NULL;
+	default:
+	    errorcall(call,
+		      _("comparison (%s) is not possible for language types"),
+		      PRIMNAME(op));
+	}
     case IDENTICAL_CALLS:
 	/* this should reproduce the current behavior of == and != for
 	   language objects, while signaling errors for <, <=, >, and
