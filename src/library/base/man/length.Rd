@@ -41,7 +41,7 @@ length(x) <- value
   For vectors (including lists) and factors the length is the number of
   elements.  For an environment it is the number of objects in the
   environment, and \code{NULL} has length 0.  For expressions and
-  pairlists (including \link{language objects} and dotlists) it is the
+  pairlists (including \link{language objects} and dot-dot-dot lists) it is the
   length of the pairlist chain.  All other objects (including functions)
   have length one: note that for functions this differs from S.
 

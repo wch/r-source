@@ -127,8 +127,8 @@
 
       \item \code{filled.contour()} gains a \code{key.border} argument.
 
-      \item \code{tools::update_pkg_po()} getssargaument \code{pot_make} and
-      \code{mo_make} for \emph{not} re-making the corresponding
+      \item \code{tools::update_pkg_po()} gets arguments \code{pot_make}
+      and \code{mo_make} for \emph{not} re-making the corresponding
       files, and additionally a \code{verbose} argument.
 
       \item Hexadecimal string colour specifications are now accepted
@@ -640,7 +640,7 @@
       blank lines following single-line \verb{\dontrun} code.
 
       \item \code{<POSIXlt>[*]} no longer sets wrong \code{"balanced"}
-      attribute, fixing \PR{18681} thanks to Mikael Jagan.
+      attribute, fixing \PR{18681} thanks to \I{Mikael Jagan}.
 
       \item \code{str(<classed-call>)} now deparses the call as expected,
       fixing \PR{18684}, reported by Dave Slager.
