@@ -6,7 +6,6 @@ of the Statistics Department of the University of Auckland.
 Since mid-1997 there has been a core group with write access to the R
 source, currently consisting of
 
-Douglas Bates
 John Chambers
 Peter Dalgaard
 Robert Gentleman
@@ -29,7 +28,7 @@ Simon Urbanek
 
 plus Heiner Schwarte up to October 1999, Guido Masarotto up to June 2003,
 Stefano Iacus up to July 2014, Seth Falcon up to August 2015, Duncan Murdoch
-up to September 2017, and Martin Morgan up to June 2021.
+up to September 2017, Martin Morgan up to June 2021, and Douglas Bates up to March 2024.
 
 
 Current R-core members can be contacted via email to R-project.org
