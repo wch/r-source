@@ -3650,10 +3650,10 @@ stopifnot(identical(y ~ x + x1, UFN[[1]]))
 
 
 ## Corner cases in choose(),
-## misbehaved when n was _nearly_ int, and n - k < k
-stopifnot(choose(4 - 1e-7, 4) == 1)
-stopifnot(choose(4 + 1e-7, 4) == 1)
-## These gave 0 and 4 in R <= 3.6.x
+## misbehaved when n was _nearly_ int, and n - k < k ; thread ending at .../r-devel/2020-January/078948.html
+eps <- c(outer(10^-(6:9), -20:20)) # choose( ~4, 4) ~ 1 :
+stopifnot(abs(choose(4+eps, 4) - 1) < 1e-4)
+## choose(4 -/+ 1e-7, 4) gave 0 and 4 in R <= 3.6.x
 
 
 ## correct error message:
@@ -5213,7 +5213,7 @@ psmm.o <- lapply(h.u, function(hu)
     lapply(fsS, function(f) # older R: f.min = 20 hardwired:
         lapply(nns, pretty, x = c(0, mm/f), high.u=hu, f.min = 20) ))
 summary(warnings())## many; mostly  "very small range 'cell'=0, corrected to 4.45015e-307"
-(To <- table(psAo <- unlist(psmm.o)))
+(To <- table(psAo <- signif(unlist(psmm.o), 13)))
 (nTo <- as.numeric(names(To)))
 range(rEdo <- abs(5e-307/diff(nTo) - 1))
 stopifnot(nTo >= 0, length(nTo) == 11,
