@@ -1,7 +1,7 @@
 #  File src/library/utils/R/str.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2023 The R Core Team
+#  Copyright (C) 1995-2024 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -630,8 +630,12 @@ str.default <-
 	}
 	else { # not char.like
 	    if(!exists("format.fun"))
-		format.fun <-
-		    if(mod == "num" || mod == "cplx") format else as.character
+		format.fun <- switch(mod,
+				     "num" =,
+				     "cplx" = format,
+				     "language" = deParse,
+				     ## otherwise :
+				     as.character)
 	    ## v.len <- max(1,round(v.len))
 	    ile <- min(v.len, le)
 	    formObj <- function(x) maybe_truncate(paste(format.fun(x), collapse = " "),

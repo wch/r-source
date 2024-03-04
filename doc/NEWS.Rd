@@ -137,7 +137,7 @@
 
       Thanks to \I{MikeFC} for the original idea and \I{Ella Kaye},
       \I{Malcolm Barrett}, \I{George Stagg}, and \I{Hanne Oberman} for
-      the patch. 
+      the patch.
 
       \item Plain-text help shows \verb{\var} markup by angle brackets.
 
@@ -633,6 +633,9 @@
 
       \item \code{<POSIXlt>[*]} no longer sets wrong \code{"balanced"}
       attribute, fixing \PR{18681} thanks to Mikael Jagan.
+
+      \item \code{str(<classed-call>)} now deparses the call as expected,
+      fixing \PR{18684}, reported by Dave Slager.
     }
   }
 }
@@ -3008,7 +3011,7 @@
       see also \PR{18190}.
 
       \item Non-integer \code{mgp} \code{par()} settings are now handled
-      correctly in \code{axis()} and \code{mtext()}, thanks to \I{Mikael 
+      correctly in \code{axis()} and \code{mtext()}, thanks to \I{Mikael
       Jagan} and Duncan Murdoch's report and suggestion in \PR{18194}.
 
       \item \code{formatC(x)} returns length zero \code{character()} now,
