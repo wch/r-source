@@ -1202,14 +1202,21 @@ if (is.na(Sys.getenv("_R_COMPARE_LANG_OBJECTS", unset = NA_character_))) {
 x$mon <- 12L
 stopifnot(exprs = {
     identical(12L, x[,"mon"]) # had "balanced" attr.!
+    identical(x, (x1 <- (x[1L])))
     identical(12L, x1$mon)				# (never bug)
     identical("1971-01-01 UTC", format(x, usetz=TRUE))	#  "
     identical(71L, balancePOSIXlt(x)$year)		#  "
-    identical(x, (x1 <- (x[1L])))
     is.na(attr(x1, "balanced")) # was 'TRUE'
 })
-##
+## subsetting set "balanced" incorrectly sometimes in R 4.3.*
 
+
+## str(<classed-language>)
+x_u <- structure(quote(a > 2 * b), class = 'new_class')
+writeLines(sto <- capture.output(str(x_u)))
+stopifnot(grepl("a > 2 * b", sto[[1]], fixed=TRUE), # had ' > a 2 * b'
+          grepl('attr\\(\\*,.*"new_class"', sto[[2]]))
+## previously used as.character() as "last resort" in R <= 4.3.*
 
 
 ## keep at end
