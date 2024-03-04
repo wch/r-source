@@ -390,6 +390,14 @@
       \env{_R_CXX_USE_NO_REMAP_} is set to a true value.  It is planned
       that this will in future become the default for compiling C++.
       %% E.g. become part of \code{check --no-cran} for R 4.5.0.
+
+      \item The new built-in Rd macro \verb{\dontdiff\{\}} can be used
+      to mark example code whose output should be ignored when comparing
+      check output to reference output
+      (\file{tests/Examples/\var{pkg}-Ex.Rout.save}).
+      The \verb{\dontdiff} tag, like \verb{\donttest}, is \emph{not}
+      shown on the rendered help page, so provides a clean alternative
+      to \samp{## IGNORE_RDIFF_(BEGIN|END)} comments.
     }
   }
 
