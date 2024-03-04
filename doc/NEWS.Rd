@@ -86,11 +86,11 @@
       of class \code{"Date"}, \code{"POSIXct"}, and \code{"POSIXlt"} with
       infinite entries, analogously to \code{range.default()}, as proposed
       by Davis Vaughan on R-devel.  Other \code{range()}-methods can make
-      use of new \code{.rangeNum()}.
+      use of new function \code{.rangeNum()}.
 
       \item New \code{.internalGenerics} object complementing
-      \code{.S3PrimitiveGenerics}, for documentation and low-level book
-      keeping.
+      \code{.S3PrimitiveGenerics}, for documentation and low-level
+      book-keeping.
 
       \item \code{grid()} now invisibly returns the x- and y- coordinates
       at which the grid-lines were drawn.
@@ -119,17 +119,17 @@
       \code{"POSIXct"}, and \code{"POSIXlt"} accepts a \code{units}
       argument passed via \code{...}.
 
-      \item Dynamic help now does a much better job rendering package
+      \item Dynamic help now does a much better job of rendering package
       \file{DESCRIPTION} metadata.
 
       \item \code{Rprof()} gains an \code{event} argument and support
       for elapsed (real) time profiling on Unix (\PR{18076}).
 
-      \item \code{filled.contour()} gains \code{key.border} argument.
+      \item \code{filled.contour()} gains a \code{key.border} argument.
 
-      \item \code{tools::update_pkg_po()} gets \code{pot_make} and
-      \code{mo_make} options for \emph{not} re-making the corresponding
-      files, and additionally option \code{verbose}.
+      \item \code{tools::update_pkg_po()} getssargaument \code{pot_make} and
+      \code{mo_make} for \emph{not} re-making the corresponding
+      files, and additionally a \code{verbose} argument.
 
       \item Hexadecimal string colour specifications are now accepted
       in short form, so, for example, we can use \code{"#123"}, which is
@@ -139,7 +139,7 @@
       \I{Malcolm Barrett}, \I{George Stagg}, and \I{Hanne Oberman} for
       the patch. 
 
-      \item Plain-text help shows \verb{\var} markup with angle brackets.
+      \item Plain-text help shows \verb{\var} markup by angle brackets.
 
       \item The new experimental primitive function \code{declare()} is
       intended to eventually allow information about R code to be
@@ -148,7 +148,7 @@
 
       \item Functions \code{psmirnov()}, \code{qsmirnov()} and
       \code{rsmirnov()} in package \pkg{stats} have argument
-      \code{two.sided} changed to \code{alternative}, to take into
+      \code{two.sided} renamed to \code{alternative}, to take into
       account that the permutation distributions of the one-sided
       statistics can be different in the case of ties.  Consequence of
       \PR{18582}.
@@ -167,8 +167,9 @@
       We have simplified the internal code and now basically format the
       real and imaginary parts independently of each other.
 
-      \item New experimental functions \code{Tailcall} and \code{Exec}
-      to support writing stack-space-efficient recursive functions.
+      \item New experimental functions \code{Tailcall()} and
+      \code{Exec()} to support writing stack-space-efficient recursive
+      functions.
 
       \item Where characters are attempted to be plotted by
       \code{pdf()}, \code{postscript()} and \code{xfig()} which are
@@ -205,15 +206,15 @@
       \code{postscript()}.
 
       \item New option \code{catch.script.errors} provides a documented way
-      to catch errors and continue in non-interactive use.
+      to catch errors and then continue in non-interactive use.
 
-      \item \code{L \%||\% R} newly in \pkg{base} is an expressive idiom for the
-      \code{if(!is.null(L)) L else R} or \code{if(is.null(L)) R else L}
-      phrases.
+      \item \code{L \%||\% R} newly in \pkg{base} is an expressive idiom
+      for the phrases \code{if(!is.null(L)) L else R} or
+      \code{if(is.null(L)) R else L}.
 
-      \item \code{warnings()} now always inherits from \code{"warnings"} as
-      documented, now also in the case of no warnings where it
-      previously returned \code{NULL}.
+      \item The return value from \code{warnings()} now always inherits
+      from \code{"warnings"} as documented, now also in the case of no
+      warnings where it previously returned \code{NULL}.
 
       \item \code{as.complex("1i")} now returns \code{0 + 1i} instead of
       \code{NA} with a warning.
@@ -224,14 +225,14 @@
       separately, i.e., without \dQuote{crosstalk} in case of \code{NA}s.
 
       \item On Alpine Linux \code{iconv()} now maps \code{"latin2"},
-      \code{"latin-2"}, \code{"latin9"} and \code{"latin-9"} to names
-      the OS knows about (case-insensitively).
+      \code{"latin-2"}, \code{"latin9"} and \code{"latin-9"} to encoding
+      names the OS knows about (case-insensitively).
 
-      \item \code{iconv(sub = "Unicode")} now zero-pads to four (hex)
-      digits, rather than to 4 or 8.  (This seems to have become the
-      convention once Unicode restricted the number of Unicode points
-      to \eqn{2^{21} - 1}{2^21 - 1} and so will never need more than 6
-      digits.)
+      \item \code{iconv(sub = "Unicode")} now always zero-pads to four
+      (hex) digits, rather than to 4 or 8.  (This seems to have become
+      the convention once Unicode restricted the number of Unicode
+      points to \eqn{2^{21} - 1}{2^21 - 1} and so will never need more
+      than 6 digits.)
 
       \item \code{NCOL(NULL)} now returns 0 instead of 1, for
       consistency with \code{cbind()}.
@@ -263,8 +264,9 @@
       get a \code{check.class} option.
 
       \item \code{zapsmall()} gets new optional arguments, function
-      \code{mFUN} and \code{min.d}, for extra flexibility; fulfills a wish
-      in \PR{18199}.  It also becomes implicit S4 generic in \pkg{methods}.
+      \code{mFUN} and \code{min.d}, for extra flexibility; fulfills a
+      wish in \PR{18199}.  Also, it is now an implicit S4 generic in
+      package \pkg{methods}.
 
       \item The Rd filter for \code{aspell()} gains an \code{ignore}
       argument.
@@ -273,7 +275,7 @@
 
   \subsection{INSTALLATION on a UNIX-ALIKE}{
     \itemize{
-      \item System \I{valgrind} headers are required to use
+      \item System \I{valgrind} headers are now required to use
       \command{configure} option \option{--with-valgrind-instrumentation}
       with value \code{1} or \code{2}.
 
@@ -298,20 +300,21 @@
       not worked reliably since 2019 and has been removed.
 
       \item The minimum \command{autoconf} requirement for a maintainer
-      build has been increased to \command{autoconf}\sspace{}2.71, and
-      it is intended to increase to 2.72 before release. (The issue is
-      better support for \sQuote{C23}: \command{autoconf}\sspace{}2.72
-      requires a C version of C90 or later, but \R has long required C99
-      or later.)
+      build has been increased to \command{autoconf}\sspace{}2.71.
+
+      It is intended to increase this to 2.72 once that becomes widely
+      available.
 
       \item The minimum version requirement for an external LAPACK has
       been reduced to 3.9.0.
 
       \item No default C++ compiler is set if no C++17 compiler is
       detected: there is no longer an automatic fallback to C++14 or
-      C++11.  (Compilers from the last five years should have sufficient
+      C++11.
+
+      Compilers from the last five years should have sufficient
       support: for others macros \code{CXX} and \code{CXXSTD} can be set
-      in file \file{config.site} to provide a fallback if needed.)
+      in file \file{config.site} to provide a fallback if needed.
     }
   }
 
@@ -324,7 +327,7 @@
       Command Line Tools or \I{Xcode} 14.3 or later).
 
       By default the option uses new Accelerate for BLAS calls: to also
-      use it for LAPACK use \option{--with-newAccelerate=lapack}.  The
+      use it for LAPACK use option \option{--with-newAccelerate=lapack}.  The
       later interfaces provide LAPACK 3.9.1 rather than 3.2.1: 3.9.1 is
       from 2021-04 and does not include the improved algorithms
       introduced in LAPACK 3.10.0 (including for BLAS calls).
@@ -399,10 +402,10 @@
       \item New function \code{R_missing()}, factored out from
       \code{do_missing()}, used to fix \PR{18579}.
 
-      \item \code{SEXP} type \code{S4SXP} has been renamed \code{OBJSXP}
+      \item \code{SEXP} type \code{S4SXP} has been renamed to \code{OBJSXP}
       to support experimenting with alternative object systems.  The
       \code{S4SXP} value can still be used in \code{C} code but is now
-      deprecated. Based on contributions from the R Consortium
+      deprecated.  Based on contributions from the R Consortium's
       Object-Oriented Programming Working Group.
 
       \item New function \code{pow1p(x,y)} for accurate \code{(1+x)^y}.
@@ -423,9 +426,9 @@
 
       \item Support for \code{encoding = "MacRoman"} has been removed
       from the \code{pdf()} and \code{postscript()} devices -- this was
-      a legacy encoding supporting classic macOS up to 2001 (with
-      various revisions), and no longer has universal \code{libiconv}
-      support.%% e.g. not in musl
+      a legacy encoding supporting classic macOS up to 2001 and no
+      longer has universal \code{libiconv} support.
+      %% e.g. not in musl
 
       \item \code{is.R()} is deprecated as no other S dialect is known
       to be in use (and this could only identify historical dialects,
@@ -448,7 +451,7 @@
       analyze correctly. For now, attempts to use these variables in a
       method will signal an error; this will eventually be dropped.
 
-      \item The 12 \code{as.data.frame.<class>()} methods which were
+      \item The twelve \code{as.data.frame.<class>()} methods which were
       deprecated only via \env{_R_CHECK_AS_DATA_FRAME_EXPLICIT_METHOD_} and
       in \command{R CMD check --as-cran} are formally deprecated now in
       favour of calling \code{as.data.frame()} or \code{as.data.frame.vector()}.
@@ -465,7 +468,7 @@
       Jack Berry).
 
       \item Probability distribution functions \code{[dpq]<distrib>(x, *)},
-      but also \code{bessel[IKJY](x, .)} are now consistently preserving
+      but also \code{bessel[IKJY](x, .)} now consistently preserve
       \code{attributes(x)} when \code{length(x) == 0}, e.g., for a
       \eqn{2 \times 0}{2 x 0} matrix, thanks to \I{Karolis Koncevičius}'
       report \PR{18509}.
@@ -481,7 +484,7 @@
       notably also for \code{NA} or \code{NA_integer_}.
 
       \item Directories are now omitted by
-      \code{file.copy(,recursive = FALSE)} and in \code{file.append()}
+      \code{file.copy(, recursive = FALSE)} and in \code{file.append()}
       (\PR{17337}).
 
       \item \code{gsub()} and \code{sub()} are now more robust to integer
@@ -497,7 +500,7 @@
       \item \code{density()} more consistently computes grid values for the
       FFT-based convolution, following \I{Robert Schlicht}'s analysis and
       proposal in \PR{18337}, correcting density values typically by a
-      factor of about 0.999.  Optional \code{old.coords=TRUE} provides
+      factor of about 0.999.  Argument \code{old.coords = TRUE} provides
       back compatibility.
 
       \item \code{palette.colors()} gains a \code{name} argument that
@@ -621,8 +624,8 @@
       \item \code{axis.Date()} and \code{axis.POSIXct()} now respect the
       \code{par("lab")} setting for the number of \code{pretty()} intervals.
 
-      \item Comparisons for language objects, which are based on
-      deparsing, are now more careful about using accurate deparsed
+      \item Comparisons for language objects (which are based on
+      deparsing) are now more careful about using accurate deparsed
       results (\PR{18676}).
 
       \item Plain-text help (\code{Rd2txt}) now correctly preserves
