@@ -1589,9 +1589,10 @@ Remember that @LaTeX{} needs to be on the path.
 The front page of a @acronym{CRAN} site has a link `Download R for (Mac)
 OS X' which takes you to a new page. Two files are offered for download,
 @file{R-@value{VERSIONno}-arm64.pkg} and @file{R-@value{VERSIONno}.pkg}.
-Both are for macOS 11 or later (@I{Big Sur}, Monterey, @I{Ventura}, @dots{}).
+Both are for macOS 11 or later (@I{Big Sur}, @I{Monterey}, @I{Ventura},
+@I{Sonoma}, @dots{}).
 
-The first runs is for `Apple Silicon' (aka `M1', `M2' or 'M3') Macs, the
+The first is for `Apple Silicon' (@emph{aka} `M1', `M2' or 'M3') Macs, the
 second for older Macs with an @cputype{x86_64} (Intel) CPU.
 
 Package @file{R-@value{VERSIONno}.pkg} also be installed on `Apple
@@ -5197,9 +5198,10 @@ Windows).
 @cindex macOS
 
 The instructions here are for Intel 64-bit (@cputype{x86_64}) or `Apple
-Silicon' (@cputype{arm64}) builds on macOS 11 (@I{Big Sur}), 12 (Monterey)
-and 13 (@I{Ventura}).  (They may well work on Intel macOS 10.14 or 10.15,
-but are untested there.)
+Silicon' (@cputype{arm64}) builds on macOS 11 (@I{Big Sur}), 12
+(@I{Monterey)}, 13 (@I{Ventura}), 14 (@I{Sonoma}) and likely later.
+(They may well work on Intel macOS 10.14 or 10.15, but are untested
+there.)
 
 @menu
 * Prerequisites::
