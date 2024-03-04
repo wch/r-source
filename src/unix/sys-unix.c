@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *  Copyright (C) 1997--2024  The R Core Team
+ *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -249,14 +249,10 @@ void R_getProcTime(double *data)
     struct rusage self, children;
     getrusage(RUSAGE_SELF, &self);
     getrusage(RUSAGE_CHILDREN, &children);
-    data[0] = (double) self.ru_utime.tv_sec +
-	1e-3 * (self.ru_utime.tv_usec/1000);
-    data[1] = (double) self.ru_stime.tv_sec +
-	1e-3 * (self.ru_stime.tv_usec/1000);
-    data[3] = (double) children.ru_utime.tv_sec +
-	1e-3 * (children.ru_utime.tv_usec/1000);
-    data[4] = (double) children.ru_stime.tv_sec +
-	1e-3 * (children.ru_stime.tv_usec/1000);
+    data[0] = (double)     self.ru_utime.tv_sec + 1e-3 * (double)(    self.ru_utime.tv_usec/1000);
+    data[1] = (double)     self.ru_stime.tv_sec + 1e-3 * (double)(    self.ru_stime.tv_usec/1000);
+    data[3] = (double) children.ru_utime.tv_sec + 1e-3 * (double)(children.ru_utime.tv_usec/1000);
+    data[4] = (double) children.ru_stime.tv_sec + 1e-3 * (double)(children.ru_stime.tv_usec/1000);
 #else
     /* Not known to be currently used */
     struct tms timeinfo;
