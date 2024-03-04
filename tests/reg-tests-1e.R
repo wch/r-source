@@ -1197,6 +1197,20 @@ if (is.na(Sys.getenv("_R_COMPARE_LANG_OBJECTS", unset = NA_character_))) {
     stopifnot(quote(c(1.234567890123456)) != quote(c(1.2345678901234567)))
 }
 
+## <POSIXlt>[] -- PR#18681
+(x <- as.POSIXlt(.POSIXct(0, tz = "UTC"))) # "1970-01-01 UTC"
+x$mon <- 12L
+stopifnot(exprs = {
+    identical(12L, x[,"mon"]) # had "balanced" attr.!
+    identical(12L, x1$mon)				# (never bug)
+    identical("1971-01-01 UTC", format(x, usetz=TRUE))	#  "
+    identical(71L, balancePOSIXlt(x)$year)		#  "
+    identical(x, (x1 <- (x[1L])))
+    is.na(attr(x1, "balanced")) # was 'TRUE'
+})
+##
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

@@ -1266,16 +1266,16 @@ function(x, units = c("secs", "mins", "hours", "days", "months", "years"))
         if(!is.character(j) || (length(j) != 1L))
             stop("component subscript must be a character string")
 
-    setBalanced <- function(.) `attr<-`(., "balanced", TRUE)
     if(mi) # but !mj : x[, ".."]
-        setBalanced(unCfillPOSIXlt(x)[[j]])
+        unCfillPOSIXlt(x)[[j]]
     else {
         if(is.character(i))
             i <- match(i, names(x),
                        incomparables = c("", NA_character_))
         if(mj) # x[i]
-            .POSIXlt(setBalanced(lapply(unCfillPOSIXlt(x), `[`, i, drop = drop)),
-                     attr(x, "tzone"), oldClass(x))
+            `attr<-`(.POSIXlt(lapply(unCfillPOSIXlt(x), `[`, i, drop = drop),
+                              attr(x, "tzone"), oldClass(x)),
+                     "balanced", if(isTRUE(attr(x, "balanced"))) TRUE else NA)
         else # x[i,j]
             unCfillPOSIXlt(x)[[j]][i]
     }

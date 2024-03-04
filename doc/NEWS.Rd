@@ -630,6 +630,9 @@
 
       \item Plain-text help (\code{Rd2txt}) now correctly preserves
       blank lines following single-line \verb{\dontrun} code.
+
+      \item \code{<POSIXlt>[*]} no longer sets wrong \code{"balanced"}
+      attribute, fixing \PR{18681} thanks to Mikael Jagan.
     }
   }
 }
