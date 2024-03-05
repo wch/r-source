@@ -643,7 +643,7 @@
       attribute, fixing \PR{18681} thanks to \I{Mikael Jagan}.
 
       \item \code{str(<classed-call>)} now deparses the call as expected,
-      fixing \PR{18684}, reported by Dave Slager.
+      fixing \PR{18684}, reported by \I{Dave Slager}.
     }
   }
 }

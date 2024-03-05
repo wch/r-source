@@ -47,8 +47,8 @@ qr.R(qr, complete = FALSE)
   \code{ncol(X)}, additional columns from an arbitrary orthogonal
   (unitary) completion of \code{X} are returned.
 
-  \code{qr.Q} returns part or all of \bold{Q}, the order-nrow(X)
-  orthogonal (unitary) transformation represented by \code{qr}.  If
+  \code{qr.Q} returns part or all of \bold{Q}, the orthogonal (unitary)
+  transformation of order \code{nrow(X)} represented by \code{qr}.  If 
   \code{complete} is \code{TRUE}, \bold{Q} has \code{nrow(X)} columns.
   If \code{complete} is \code{FALSE}, \bold{Q} has \code{ncol(X)}
   columns.  When \code{Dvec} is specified, each column of \bold{Q} is
