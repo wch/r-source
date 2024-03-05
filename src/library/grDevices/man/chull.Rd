@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/chull.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2018 R Core Team
+% Copyright 1995-2024 R Core Team
 % Distributed under GPL 2 or later
 
 \name{chull}
@@ -51,12 +51,8 @@ chull(x, y = NULL)
 \examples{
 X <- matrix(stats::rnorm(2000), ncol = 2)
 chull(X)
-\dontrun{
-  # Example usage from graphics package
-  plot(X, cex = 0.5)
-  hpts <- chull(X)
-  hpts <- c(hpts, hpts[1])
-  lines(X[hpts, ])
-}
+
+plot(X, cex = 0.5)
+polygon(X[chull(X), ])
 }
 \keyword{graphs}

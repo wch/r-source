@@ -1,6 +1,6 @@
 % File src/library/utils/man/setRepositories.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2023 R Core Team
+% Copyright 1995-2024 R Core Team
 % Distributed under GPL 2 or later
 
 \name{setRepositories}
@@ -84,6 +84,9 @@ setRepositories(graphics = getOption("menu.graphics"),
 \examples{\dontrun{
 setRepositories(addURLs =
                 c(CRANxtras = "https://www.stats.ox.ac.uk/pub/RWin"))
-setRepositories(name = c("CRAN", "R-Forge", "CRANxtras"))
-}}
+}
+oldrepos <- setRepositories(name = c("CRAN", "R-Forge"))
+\donttest{getOption("repos")}
+options(oldrepos) # restore
+}
 \keyword{ utilities }

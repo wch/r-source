@@ -180,14 +180,13 @@ plot(x, sin(x), type = "o", pch = 21, bg = par("bg"), col = "blue", cex = .6,
  main = 'plot(..., type="o", pch=21, bg=par("bg"))')
 par(op)
 
-\dontrun{
-## The figure was produced by calls like
-png("pch.png", height = 0.7, width = 7, res = 100, units = "in")
+## Illustration of pch = 0:25 (as in the figure shown above in PDF/HTML help)
+\dontrun{png("pch.png", height = 0.7, width = 7, res = 100, units = "in")}
 par(mar = rep(0,4))
 plot(c(-1, 26), 0:1, type = "n", axes = FALSE)
 text(0:25, 0.6, 0:25, cex = 0.5)
 points(0:25, rep(0.3, 26), pch = 0:25, bg = "grey")
-}
+
 
 ##-------- Showing all the extra & some char graphics symbols ---------
 pchShow <-

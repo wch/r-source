@@ -1,6 +1,6 @@
 % File src/library/utils/man/available.packages.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2022 R Core Team
+% Copyright 1995-2024 R Core Team
 % Distributed under GPL 2 or later
 
 \name{available.packages}
@@ -136,7 +136,7 @@ available.packages(contriburl = contrib.url(repos, type), method,
   elements of the filter list to the default filters.
 }
 \value{
-  A matrix with one row per package, row names the package names and
+  A character matrix with one row per package, row names the package names and
   column names including \code{"Package"}, \code{"Version"},
   \code{"Priority"}, \code{"Depends"}, \code{"Imports"},
   \code{"LinkingTo"}, \code{"Suggests"}, \code{"Enhances"},
@@ -157,7 +157,7 @@ available.packages(contriburl = contrib.url(repos, type), method,
   The \sQuote{R Installation and Administration} manual for how to
   set up a repository.
 }
-\examples{\dontrun{
+\examples{\donttest{
 ## Count package licenses
 db <- available.packages(filters = "duplicates")
 table(db[,"License"])
@@ -169,7 +169,8 @@ available.packages(filters = list(
   function (db) db[db[,"Priority"] \%in\% "recommended" &
                    db[,"NeedsCompilation"] == "no", ]
 ))
-
+}
+\dontrun{
 ## Restrict install.packages() (etc) to known-to-be-FOSS packages
 options(available_packages_filters =
   c("R_version", "OS_type", "subarch", "duplicates", "license/FOSS"))

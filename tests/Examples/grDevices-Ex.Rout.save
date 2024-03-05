@@ -620,13 +620,9 @@ $ch
 > X <- matrix(stats::rnorm(2000), ncol = 2)
 > chull(X)
  [1]  61 442 165 899 697 446 975 656 232 557 938 295 495
-> ## Not run: 
-> ##D   # Example usage from graphics package
-> ##D   plot(X, cex = 0.5)
-> ##D   hpts <- chull(X)
-> ##D   hpts <- c(hpts, hpts[1])
-> ##D   lines(X[hpts, ])
-> ## End(Not run)
+> 
+> plot(X, cex = 0.5)
+> polygon(X[chull(X), ])
 > 
 > 
 > 

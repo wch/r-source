@@ -90,10 +90,12 @@ packageStatus(lib.loc = NULL, repositories = NULL, method,
   \code{\link{installed.packages}}, \code{\link{available.packages}}
 }
 \examples{
-\dontrun{
+\donttest{
 x <- packageStatus()
 print(x)
 summary(x)
+}
+\dontrun{
 upgrade(x)
 x <- update(x)
 print(x)
