@@ -7,7 +7,7 @@
 @set RVERSION @RVER@
 @c %**end of header
 @documentlanguage en
-@documentencoding ISO-8859-1
+@documentencoding utf-8
 
 @finalout
 
@@ -42,7 +42,7 @@ B. D. Ripley and D. J. Murdoch, updates by @I{T. Kalibera}  @*
 
 @ifhtml
 @html
-<h2>Version for <tt>@value{VERSION}</tt></h2>
+<h2>Version for <kbd>@value{VERSION}</kbd></h2>
 <address>B. D. Ripley and D. J. Murdoch, updates by @I{T. Kalibera}</address>
 <hr>
 @end html
@@ -1980,7 +1980,7 @@ If you want output to be updated on the console, call
 @set LASTEDIT 2022-04-12
 @ifhtml
 @html
-<hr WIDTH="100%">
+<hr>
 <address>
 Last edited @value{LASTEDIT}: comments to
 <code><a href="mailto:R-windows@@R-project.org">R-windows@@R-project.org</a></code>
