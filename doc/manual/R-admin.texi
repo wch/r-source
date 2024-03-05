@@ -5555,7 +5555,7 @@ Suppose one of these distributions is installed under
 CC="$LOCAL/llvm/bin/clang -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk"
 CXX="$LOCAL/llvm/bin/clang++ -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk"
 OBJC=$CC
-FC=$LOCAL/gfortran/bin/gfortran
+FC=/opt/gfortran/bin/gfortran
 LDFLAGS="-L$LOCAL/llvm/lib -L$LOCAL/lib"
 R_LD_LIBRARY_PATH=$LOCAL/llvm/lib:$LOCAL/lib
 @end example
@@ -5781,13 +5781,13 @@ writing for @cputype{arm64}.}  Builds of @I{OpenJDK} may also be available,
 e.g.@: from @uref{https://adoptium.net, Adoptium},
 @uref{https://www.azul.com/downloads/zulu-community/, Azul} or
 @uref{https://jdk.java.net/}.  We recommend you install a version with
-long-term support, e.g.@: 11 or 17 or (expected in 2023-09) 21 but not
-12--16 nor 18--20 which have/had a 6-month lifetime.  (Note that these
+long-term support, e.g.@: 11, 17 or 21 but not
+12--16, 18--20, 22 which have/had a 6-month lifetime.  (Note that these
 sources may use unusual designations for Intel macOS builds such as
 @code{x86 64-bit} and @code{x64}.)
 
 Binary distributions of @R{} are built against a specific version
-(e.g.@: 11.0.6 or 17.0.1) of Java so @command{sudo R CMD javareconf}
+(e.g.@: 11.0.18 or 17.0.1) of Java so @command{sudo R CMD javareconf}
 will likely be needed to be run before using Java-using packages.
 
 To see what compatible versions of Java are currently installed, run the
@@ -5806,18 +5806,18 @@ compiling @abbr{JNI} programs (used to install packages @CRANpkg{rJava} and
 @CRANpkg{JavaGD}); the latter requires a @abbr{JDK} (Java @abbr{SDK}).  Most
 distributions of Java 9 or later are of a full @abbr{JDK}.
 
-The build process tries to fathom out what @abbr{JRE}/@abbr{JDK} to use, but it may
-need some help, e.g.@: by setting environment variable @env{JAVA_HOME}.
-To select a build from @uref{https://adoptium.net, Adoptium}
-set e.g.@:
+The build process tries to fathom out what @abbr{JRE}/@abbr{JDK} to use,
+but it may need some help, e.g.@: by setting environment variable
+@env{JAVA_HOME}.  To select a build from @uref{https://adoptium.net,
+Adoptium} set e.g.@:
 @example
 JAVA_HOME=/Library/Java/JavaVirtualMachines/termurin-17.jdk/Contents/Home
 @end example
 @noindent
-in @file{config.site}.  For Java 17 from @uref{https://jdk.java.net/}
-(which is no longer available), use
+in @file{config.site}.  For Java 21 from @uref{https://jdk.java.net/}
+(which might no longer be available), use
 @example
-JAVA_HOME=/path/to/jdk-17.jdk/Contents/Home
+JAVA_HOME=/path/to/jdk-21.jdk/Contents/Home
 @end example
 
 For an @cputype{arm64} build, the earliest Java version which is
@@ -5832,8 +5832,8 @@ runtime.
 
 To use Java (specifically, binary package @CRANpkg{rJava}) with a
 @acronym{CRAN} (@cputype{x86_64}) binary distribution of @R{} on
-@cputype{arm64} macOS, install an Intel build of a Java @abbr{JRE} from one of
-the sites linked above, then run @command{sudo R CMD javareconf}.
+@cputype{arm64} macOS, install an Intel build of a Java @abbr{JRE} from
+one of the sites linked above, then run @command{sudo R CMD javareconf}.
 
 @c jdk.java.net no longer has Java 11 nor 17 LTS builds.
 
@@ -5895,9 +5895,9 @@ See also the @file{INSTALL} file in the checkout or directly at
 @uref{https://svn.r-project.org/R-packages/trunk/Mac-GUI/INSTALL}.
 
 @Rapp{} does not need to be installed in any specific way. Building
-@Rapp{} results in the @Rapp{} bundle which appears as one @R{} icon. This
-application bundle can be run anywhere and it is customary to place it
-in the @file{/Applications} folder.
+@Rapp{} results in the @Rapp{} bundle which appears as one @R{}
+icon. This application bundle can be run from anywhere and it is
+customary to place it in the @file{/Applications} folder.
 
 @node Building binary packages, Building for Intel on arm64, Building R.app, macOS
 @subsection Building binary packages
@@ -6293,7 +6293,7 @@ Use of ICU for collation and the @command{configure} option
 @cputype{amd64} (their name for @cputype{x86_64}).  Details of the build
 (and patches applied) are at
 @uref{https://cvsweb.openbsd.org/cgi-bin/cvsweb/ports/math/R/},
-currently updated for @R{} 4.2.1.
+currently updated for @R{} 4.2.3.
 
 @node Cygwin, New platforms, OpenBSD, Platform notes
 @section @I{Cygwin}
