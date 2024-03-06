@@ -3705,37 +3705,6 @@ CRAN main site, but a mirror can be specified by setting environment
 variables @env{R_CRAN_WEB} and (rarely needed) @env{R_CRAN_SRC} to the
 URL of a CRAN mirror.
 
-@c No standard build has multiple sub-architectures as from R 4.2.0.
-@c They are in princople possible, e.g. x86 and x86_64 Linux.
-@c
-@c @quotation Multiple sub-architectures
-@c On systems which support multiple sub-architectures (principally
-@c Windows), @command{R CMD check} will install and check a package which
-@c contains compiled code under all available sub-architectures. (Use
-@c option @option{--force-multiarch} to force this for packages without
-@c compiled code, which are otherwise only checked under the main
-@c sub-architecture.)  This will run the loading tests, examples and
-@c @file{tests} directory under each installed sub-architecture in turn,
-@c and give an error if any fail.  Where environment variables (including
-@c perhaps @env{PATH}) need to be set differently for each
-@c sub-architecture, these can be set in architecture-specific files such
-@c as @file{@var{R_HOME}/etc/x64/Renviron.site}.
-
-@c An alternative approach is to use @command{R CMD check --no-multiarch}
-@c to check the primary sub-architecture, and then to use something like
-@c @command{R --arch=x86_64 CMD check --extra-arch} or (Windows)
-@c @command{/path/to/R/bin/x64/Rcmd check --extra-arch} to run for each
-@c additional sub-architecture just the checks@footnote{loading, examples,
-@c tests, running vignette code} which differ by sub-architecture.  (This
-@c approach is required for packages which are installed by @command{R CMD
-@c INSTALL --merge-multiarch}.)
-
-@c Where packages need additional commands to install all the
-@c sub-architectures these can be supplied by e.g.@:
-@c @option{--install-args=--force-biarch}.
-
-@c @end quotation
-
 
 @node Building package tarballs, Building binary packages, Checking packages, Checking and building packages
 @subsection Building package tarballs
@@ -6172,17 +6141,6 @@ underscore are reserved for system macros and should not be used in
 portable code (including not as guards in C/C++ headers).  Other macros,
 typically upper-case, may be defined by the compiler or system headers
 and can cause problems.
-@c http://lists.x.org/archives/xorg-devel/2013-November/038808.html
-@c The most common issue involves the names of the Intel CPU registers such
-@c as @code{CS}, @code{DS}, @code{ES}, @code{FS}, @code{GS} and @code{SS}
-@c (and more with longer abbreviations@footnote{including @code{EAX},
-@c @code{EBP}, @code{EBX}, @code{ECX}, @code{EDI},@code{EDX}, @code{EFL},
-@c @code{EIP}, @code{ESI} and @code{ESP} .}) defined on i586/x64 Solaris in
-@c @file{<sys/regset.h>} and often included indirectly by @file{<stdlib.h>}
-@c and other core headers.  Further examples are @code{ERR}, @code{VERSION},
-@c @code{LITTLE_ENDIAN}, @code{zero} and @code{I} (which is defined in
-@c Solaris' @file{<complex.h>} as a compiler intrinsic for the imaginary
-@c unit).
 Some of these can be avoided by defining @code{_POSIX_C_SOURCE}
 before including any system headers, but it is better to only use
 all-upper-case names which have a unique prefix such as the package
