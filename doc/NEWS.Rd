@@ -436,27 +436,23 @@
       from the \code{pdf()} and \code{postscript()} devices -- this was
       a legacy encoding supporting classic macOS up to 2001 and no
       longer has universal \code{libiconv} support.
-      %% e.g. not in musl
+      %% e.g. not supported in musl
 
       \item \code{is.R()} is deprecated as no other S dialect is known
       to be in use (and this could only identify historical dialects,
       not future ones).
 
-      For now, further information on calls can be obtained by setting
-      environment variable \env{_R_DEPRECATED_IS_R_}.  Value \samp{warn}
-      gives a warning as per the default except immediately, value
-      \samp{error} turns this warning into an error (so by default gives
-      a traceback), value \samp{traceback} gives a traceback in a
-      message (not a warning, as that may truncate) and value
-      \samp{where} gives the call to the function (if any) calling
-      \code{is.R} and which namespace it is from.  Value \samp{self} is
-      a variant of \samp{where} for use by \command{R CMD check --as-cran}.
+      Further information on calls can be obtained by setting the
+      environment variable \env{_R_DEPRECATED_IS_R_} to \samp{error}
+      which turns the deperecation warning into an error and so by
+      default gives a traceback.  (This is done by \command{R CMD check
+      --as-cran}.)
 
       \item \code{UseMethod()} no longer forwards local variables
       assigned in the generic function into method call environments
       before evaluating the method body. This makes method calls behave
       more like standard function calls and makes method code easier to
-      analyze correctly. For now, attempts to use these variables in a
+      analyze correctly.  For now, attempts to use these variables in a
       method will signal an error; this will eventually be dropped.
 
       \item The twelve \code{as.data.frame.<class>()} methods which were
