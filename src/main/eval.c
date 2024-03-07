@@ -2347,12 +2347,7 @@ static R_INLINE SEXP R_execClosure(SEXP call, SEXP newrho, SEXP sysparent,
     if ((SETJMP(cntxt.cjmpbuf))) {
 	if (!cntxt.jumptarget) {
 	    /* ignores intermediate jumps for on.exits */
-	    if (R_ReturnedValue == R_RestartToken) {
-		cntxt.callflag = CTXT_RETURN;  /* turn restart off */
-		R_ReturnedValue = R_NilValue;  /* remove restart token */
-		cntxt.returnValue = eval(body, newrho);
-	    } else
-		cntxt.returnValue = R_ReturnedValue;
+	    cntxt.returnValue = R_ReturnedValue;
 	}
 	else
 	    cntxt.returnValue = NULL; /* undefined */
@@ -3925,13 +3920,8 @@ attribute_hidden SEXP do_eval(SEXP call, SEXP op, SEXP args, SEXP rho)
 	             env, rho, args, op);
 	if (!SETJMP(cntxt.cjmpbuf))
 	    expr = eval(expr, env);
-	else {
+	else
 	    expr = R_ReturnedValue;
-	    if (expr == R_RestartToken) {
-		cntxt.callflag = CTXT_RETURN;  /* turn restart off */
-		error(_("restarts not supported in 'eval'"));
-	    }
-	}
 	UNPROTECT(1);
 	PROTECT(expr);
 	endcontext(&cntxt);
@@ -3949,13 +3939,9 @@ attribute_hidden SEXP do_eval(SEXP call, SEXP op, SEXP args, SEXP rho)
 		R_Srcref = getSrcref(srcrefs, i);
 		tmp = eval(VECTOR_ELT(expr, i), env);
 	    }
-	} else {
-	    tmp = R_ReturnedValue;
-	    if (tmp == R_RestartToken) {
-		cntxt.callflag = CTXT_RETURN;  /* turn restart off */
-		error(_("restarts not supported in 'eval'"));
-	    }
 	}
+	else
+	    tmp = R_ReturnedValue;
 	UNPROTECT(1);
 	PROTECT(tmp);
 	endcontext(&cntxt);
