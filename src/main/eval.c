@@ -5513,7 +5513,7 @@ static R_INLINE void* BCNALLOC(int nelems) {
 static R_INLINE void BCNPOP_AND_END_CNTXT(void) {
     RCNTXT* cntxt = (RCNTXT *)(R_BCNodeStackTop - RCNTXT_ELEMS);
     endcontext(cntxt);
-    R_BCNodeStackTop -= RCNTXT_ELEMS + 1;
+    R_BCNodeStackTop -= RCNTXT_ELEMS + 1; /* '+ 1' is for the RAWMEM_TAG */
 }
 
 static SEXP bytecodeExpr(SEXP e)
@@ -7056,9 +7056,7 @@ Rboolean attribute_hidden R_BCVersionOK(SEXP s)
     BCODE *pc = BCCODE(s);
     int version = GETOP();
 
-    /* must be kept in sync with bcEval version check */
-    return version < 2 ||
-	(version >= R_bcMinVersion && version <= R_bcVersion);
+    return (version >= R_bcMinVersion && version <= R_bcVersion);
 }
 
 static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
@@ -7083,33 +7081,14 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
   BC_CHECK_SIGINT();
 
   INITIALIZE_MACHINE();
-  codebase = pc = BCCODE(body);
-  constants = BCCONSTS(body);
 
-  /* allow bytecode to be disabled for testing */
-  if (R_disable_bytecode)
+  /* check version and allow bytecode to be disabled for testing */
+  if (R_disable_bytecode || ! R_BCVersionOK(body))
       return eval(bytecodeExpr(body), rho);
 
-  /* check version */
-  /* must be kept in sync with R_BCVersionOK */
-  {
-      int version = GETOP();
-      if (version < R_bcMinVersion || version > R_bcVersion) {
-	  if (version >= 2) {
-#ifdef BC_VERSION_MISMATCH_WARNING
-	      static Rboolean warned = FALSE;
-	      if (! warned) {
-		  warned = TRUE;
-		  warning(_("bytecode version mismatch; using eval"));
-	      }
-#endif
-	      return eval(bytecodeExpr(body), rho);
-	  }
-	  else if (version < R_bcMinVersion)
-	      error(_("bytecode version is too old"));
-	  else error(_("bytecode version is too new"));
-      }
-  }
+  codebase = pc = BCCODE(body);
+  constants = BCCONSTS(body);
+  SKIP_OP(); // pop off version
 
   INCREMENT_BCSTACK_LINKS();
 
