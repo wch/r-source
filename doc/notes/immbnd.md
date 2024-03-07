@@ -86,9 +86,8 @@ without signaling an error.
     transition to an alternate environment or binding representation
     should we wish to do that.
 
-    If immediate values were to be supported more widely it would
-    probably be necessary to suspend the GC when boxing values in
-    `R_expand_binding_value`.
+    In case immediate values are to be supported more widely the GC is
+    suspended when when boxing values in `R_expand_binding_value`.
   
   - Serialization handles environment frames with standard pairlist
     code, so the code not checks for an immediate binding and boxes

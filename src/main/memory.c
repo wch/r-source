@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998--2023  The R Core Team.
+ *  Copyright (C) 1998--2024  The R Core Team.
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -4233,6 +4233,8 @@ attribute_hidden void R_expand_binding_value(SEXP b)
 #if BOXED_BINDING_CELLS
     SET_BNDCELL_TAG(b, 0);
 #else
+    int enabled = R_GCEnabled;
+    R_GCEnabled = FALSE;
     int typetag = BNDCELL_TAG(b);
     if (typetag) {
 	union {
@@ -4266,6 +4268,7 @@ attribute_hidden void R_expand_binding_value(SEXP b)
 	    break;
 	}
     }
+    R_GCEnabled = enabled;
 #endif
 }
 
