@@ -1,7 +1,7 @@
 #  File src/library/tools/R/build.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2023 The R Core Team
+#  Copyright (C) 1995-2024 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -34,7 +34,7 @@ function(filename, desc = file.path(dirname(filename), "DESCRIPTION"))
                  "# Remove the previous line if you edit this file",
     		 "",
     		 "# Export all names",
-		 "exportPattern(\".\")",
+                 "exportPattern(\"^[^.]\")",
 		 if (length(pkgs))
 		     c("",
 		       "# Import all packages listed as Imports or Depends",
