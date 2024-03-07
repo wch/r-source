@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998--2023	The R Core Team.
+ *  Copyright (C) 1998--2024	The R Core Team.
  *  Copyright (C) 1995, 1996	Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -4932,14 +4932,6 @@ static R_INLINE R_bcstack_t *bcStackScalarReal(R_bcstack_t *s, R_bcstack_t *v)
 	    DECREMENT_LINKS((s)->u.sxpval);	\
     } while (0)
 
-/* drop eventually */
-#define OLDBC_INCREMENT_LINKS(s) do {		\
-	if (old_byte_code) INCREMENT_LINKS(s);	\
-    } while (0)
-#define OLDBC_DECLNK_STACK_PTR(s) do {		\
-	if (old_byte_code) DECLNK_STACK_PTR(s);	\
-    } while (0)
-
 #define FastRelop2(op,opval,opsym) do {					\
 	R_bcstack_t vvx, vvy;						\
 	R_bcstack_t *vx = bcStackScalar(R_BCNodeStackTop - 2, &vvx);	\
@@ -6083,7 +6075,6 @@ static int tryAssignDispatch(char *generic, SEXP call, SEXP lhs, SEXP rhs,
 	} \
     } \
     SKIP_OP(); \
-    OLDBC_INCREMENT_LINKS(value); \
     NEXT(); \
 } while (0)
 
@@ -6109,7 +6100,6 @@ static int tryAssignDispatch(char *generic, SEXP call, SEXP lhs, SEXP rhs,
 	    NEXT(); \
 	} \
     } \
-    OLDBC_INCREMENT_LINKS(lhs); \
     NEXT(); \
 } while (0)
 
@@ -6272,7 +6262,6 @@ static R_INLINE void VECSUBSET_PTR(SEXP vec, R_bcstack_t *si,
 	int callidx = GETOP();						\
 	R_bcstack_t *sx = R_BCNodeStackTop - 2;				\
 	R_bcstack_t *si = R_BCNodeStackTop - 1;				\
-	OLDBC_DECLNK_STACK_PTR(sx);					\
 	SEXP vec = GETSTACK_PTR(sx);					\
 	if (si->tag == INTSXP && (sub2 || FAST_VECELT_OK(vec))) {	\
 	    R_xlen_t i = si->u.ival;					\
@@ -6383,7 +6372,6 @@ static R_INLINE void MATSUBSET_PTR(R_bcstack_t *sx,
 #define DO_MATSUBSET(rho, sub2) do {					\
 	int callidx = GETOP();						\
 	R_bcstack_t *sx = R_BCNodeStackTop - 3;				\
-	OLDBC_DECLNK_STACK_PTR(sx);					\
 	MATSUBSET_PTR(sx, R_BCNodeStackTop - 2, R_BCNodeStackTop - 1,	\
 		      sx, rho, constants, callidx, sub2);		\
 	R_BCNodeStackTop -= 2;						\
@@ -6439,7 +6427,6 @@ static R_INLINE void SUBSET_N_PTR(R_bcstack_t *sx, int rank,
 	int callidx = GETOP();						\
 	int rank = GETOP();						\
 	R_bcstack_t *sx = R_BCNodeStackTop - rank - 1;			\
-	OLDBC_DECLNK_STACK_PTR(sx);					\
 	SUBSET_N_PTR(sx, rank, R_BCNodeStackTop - rank, sx, rho,	\
 		     constants, callidx, sub2);				\
 	R_BCNodeStackTop -= rank;					\
@@ -6538,7 +6525,6 @@ static R_INLINE void VECSUBASSIGN_PTR(SEXP vec, R_bcstack_t *srhs,
 	R_bcstack_t *sx = R_BCNodeStackTop - 3;				\
 	R_bcstack_t *srhs = R_BCNodeStackTop - 2;			\
 	R_bcstack_t *si = R_BCNodeStackTop - 1;				\
-	OLDBC_DECLNK_STACK_PTR(sx);					\
 	SEXP vec = GETSTACK_PTR(sx);					\
 	if (MAYBE_SHARED(vec)) {					\
 	    vec = shallow_duplicate(vec);				\
@@ -6617,7 +6603,6 @@ static R_INLINE void MATSUBASSIGN_PTR(R_bcstack_t *sx, R_bcstack_t *srhs,
 #define DO_MATSUBASSIGN(rho, sub2) do {					\
 	int callidx = GETOP();						\
 	R_bcstack_t *sx = R_BCNodeStackTop - 4;				\
-	OLDBC_DECLNK_STACK_PTR(sx);					\
 	MATSUBASSIGN_PTR(sx, R_BCNodeStackTop - 3,			\
 			 R_BCNodeStackTop - 2, R_BCNodeStackTop - 1,	\
 			 sx, rho, constants, callidx, sub2);		\
@@ -6665,7 +6650,6 @@ static R_INLINE void SUBASSIGN_N_PTR(R_bcstack_t *sx, int rank,
 	int callidx = GETOP();						\
 	int rank = GETOP();						\
 	R_bcstack_t *sx = R_BCNodeStackTop - rank - 2;			\
-	OLDBC_DECLNK_STACK_PTR(sx);					\
 	SUBASSIGN_N_PTR(sx, rank, R_BCNodeStackTop - rank - 1,		\
 			R_BCNodeStackTop - rank, sx, rho,		\
 			constants, callidx, sub2);			\
@@ -7108,10 +7092,8 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 
   /* check version */
   /* must be kept in sync with R_BCVersionOK */
-  int old_byte_code = FALSE; /* drop eventually */
   {
       int version = GETOP();
-      if (version < 12) old_byte_code = TRUE;  /* drop eventually */
       if (version < R_bcMinVersion || version > R_bcVersion) {
 	  if (version >= 2) {
 #ifdef BC_VERSION_MISMATCH_WARNING
