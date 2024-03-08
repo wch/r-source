@@ -2879,7 +2879,11 @@ add_dummies <- function(dir, Log)
                      files, ignore.case = TRUE)
         bad <- bad | grepl("(Makefile|~$)", files)
         ## How about any pdf files which look like figures files from vignettes?
-        vigns <- pkgVignettes(dir = pkgdir)
+        ## Note that we are only run if do_install is true ...
+        vigns <-
+            .package_vignettes_via_call_to_R(dir = pkgdir,
+                                             libpaths = c(libdir,
+                                                          .libPaths()))
         if (!is.null(vigns) && length(vigns$docs)) {
             vf <- vigns$names
             pat <- paste(vf, collapse="|")
@@ -2989,12 +2993,12 @@ add_dummies <- function(dir, Log)
                       "Package has no Sweave vignette sources and no VignetteBuilder field.\n")
         }
 
-        libpaths <- .libPaths()
-        if(do_install)
-            .libPaths(c(libdir, libpaths))
-        vigns <- pkgVignettes(dir = pkgdir, check = TRUE)
-        if(do_install)
-            .libPaths(libpaths)
+        vigns <-
+            .package_vignettes_via_call_to_R(dir = pkgdir,
+                                             check = TRUE,
+                                             libpaths = c(if(do_install)
+                                                              libdir,
+                                                          .libPaths()))
         if(length(msg <- vigns[["msg"]])) {
             if(!any) noteLog(Log)
             any <- TRUE

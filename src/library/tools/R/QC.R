@@ -3267,8 +3267,10 @@ function(dir, force_suggests = TRUE, check_incoming = FALSE,
     ## If the package itself is the VignetteBuilder,
     ## we may not have installed it yet.
     defer <- package_name %in%  db["VignetteBuilder"]
-    vigns <- pkgVignettes(dir = dir, subdirs = file.path("inst", "doc"),
-                          check = !defer)
+    vigns <-
+        .package_vignettes_via_call_to_R(dir = dir,
+                                         subdirs = file.path("inst", "doc"),
+                                         check = !defer)
 
     if(length(vigns$msg))
         bad_depends$bad_engine <- vigns$msg
@@ -5218,13 +5220,17 @@ function(dir, doDelete = FALSE)
 
     ## check installed vignette material
     subdir <- file.path("inst", "doc")
-    vigns <- pkgVignettes(dir = dir, subdirs = subdir)
+    vigns <-
+        .package_vignettes_via_call_to_R(dir = dir, subdirs = subdir)
     if (!is.null(vigns) && length(vigns$docs)) {
         vignettes <- basename(vigns$docs)
 
         ## Add vignette output files, if they exist
         tryCatch({
-            vigns <- pkgVignettes(dir = dir, subdirs = subdir, output = TRUE)
+            vigns <-
+                .package_vignettes_via_call_to_R(dir = dir,
+                                                 subdirs = subdir,
+                                                 output = TRUE)
             vignettes <- c(vignettes, basename(vigns$outputs))
         }, error = function(ex) {})
 
@@ -6689,7 +6695,9 @@ function(package, lib.loc = NULL)
     dir <- find.package(package, lib.loc)
     ## FIXME: use Meta directory.
     db <- .read_description(file.path(dir, "DESCRIPTION"))
-    vinfo <- pkgVignettes(dir = dir, subdirs = "doc", source = TRUE)
+    vinfo <- .package_vignettes_via_call_to_R(dir = dir,
+                                              subdirs = "doc",
+                                              source = TRUE)
     Rfiles <- unique(as.character(unlist(vinfo$sources)))
     .check_packages_used_helper(db, Rfiles)
 }

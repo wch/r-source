@@ -2016,6 +2016,23 @@ function(packages = NULL, FUN, ..., pattern = "*", verbose = TRUE,
     out
 }
 
+### ** .package_vignettes_via_call_to_R
+
+.package_vignettes_via_call_to_R <-
+function(dir, ..., libpaths = .libPaths()) {
+    ## pkgVignettes() needs to load the namespaces of the vignette
+    ## builders in order to find the vignette engines, and cannot unload
+    ## again, which may be undesirable (e.g., when calling from the
+    ## master check process *before* installing the package checked.
+    ## pkgVignettes() has a lib.loc argument but that is not passed
+    ## through to loadVignetteBuilder(), so we use .libPaths() instead.
+    fun <- function(dir, ..., libpaths) {
+        .libPaths(libpaths)
+        pkgVignettes(dir = dir, ...)
+    }
+    R(fun, list(dir, ..., libpaths = libpaths), "--vanilla")
+}
+
 ### ** .pandoc_md_for_CRAN
 
 .pandoc_md_for_CRAN <-
