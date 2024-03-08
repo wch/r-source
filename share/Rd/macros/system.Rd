@@ -55,3 +55,7 @@
 
 % To get things ignored by RdTextFilter() ...
 \newcommand{\I}{#1}
+
+% Experimental:
+\newcommand{\bibcite}{#1}
+\newcommand{\bibshow}{#1}
