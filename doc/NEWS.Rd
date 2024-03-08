@@ -448,7 +448,7 @@
 
       Further information on calls can be obtained by setting the
       environment variable \env{_R_DEPRECATED_IS_R_} to \samp{error}
-      which turns the deperecation warning into an error and so by
+      which turns the deprecation warning into an error and so by
       default gives a traceback.  (This is done by \command{R CMD check
       --as-cran}.)
 
