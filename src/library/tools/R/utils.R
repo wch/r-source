@@ -2496,8 +2496,8 @@ function(args, msg)
 ### ** R
 
 R <-
-function(fun, args = list(), opts = character(), env = character(),
-         arch = "", drop = TRUE, timeout = 0)
+function(fun, args = list(), opts = "--no-save --no-restore",
+         env = character(), arch = "", drop = TRUE, timeout = 0)
 {
     .safe_repositories <- function() {
         x <- getOption("repos")
