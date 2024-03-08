@@ -145,7 +145,7 @@ static SEXP	xxlist(SEXP, SEXP);
 static void	xxsavevalue(SEXP, YYLTYPE *);
 static SEXP	xxtag(SEXP, int, YYLTYPE *);
 static SEXP 	xxenv(SEXP, SEXP, SEXP, YYLTYPE *);
-static SEXP	xxmath(SEXP, YYLTYPE *);
+static SEXP	xxmath(SEXP, YYLTYPE *, Rboolean);
 static SEXP	xxblock(SEXP, YYLTYPE *);
 static void	xxSetInVerbEnv(SEXP);
 
@@ -154,6 +154,7 @@ static int	mkText(int);
 static int 	mkComment(int);
 static int      mkVerb(int);
 static int      mkVerbEnv(void);
+static int	mkDollar(int);
 
 static SEXP R_LatexTagSymbol = NULL;
 
@@ -167,6 +168,7 @@ static SEXP R_LatexTagSymbol = NULL;
 %token		MACRO
 %token		TEXT COMMENT
 %token	        BEGIN END VERB
+%token          TWO_DOLLARS
 
 /* Recent bison has <> to represent all of the destructors below, but we don't assume it */
 
@@ -185,8 +187,10 @@ Init:		Items END_OF_INPUT		{ xxsavevalue($1, &@$); YYACCEPT; }
 
 Items:		Item				{ $$ = xxnewlist($1); }
 	|	math				{ $$ = xxnewlist($1); }
+	|       displaymath			{ $$ = xxnewlist($1); }         
 	|	Items Item			{ $$ = xxlist($1, $2); }
-	|	Items math			{ $$ = xxlist($1, $2); } 
+	|	Items math			{ $$ = xxlist($1, $2); }
+	|	Items displaymath		{ $$ = xxlist($1, $2); }
 	
 nonMath:	Item				{ $$ = xxnewlist($1); }
 	|	nonMath Item			{ $$ = xxlist($1, $2); }
@@ -202,7 +206,9 @@ environment:	BEGIN '{' TEXT '}' { xxSetInVerbEnv($3); }
                 Items END '{' TEXT '}' 	{ $$ = xxenv($3, $6, $9, &@$);
                                                   RELEASE_SV($1); RELEASE_SV($7); }
 
-math:		'$' nonMath '$'			{ $$ = xxmath($2, &@$); }
+math:		'$' nonMath '$'			{ $$ = xxmath($2, &@$, FALSE); }
+
+displaymath:    TWO_DOLLARS nonMath TWO_DOLLARS { $$ = xxmath($2, &@$, TRUE); }
 
 block:		'{' Items  '}'			{ $$ = xxblock($2, &@$); }
 	|	'{' '}'				{ $$ = xxblock(NULL, &@$); }
@@ -263,16 +269,17 @@ static SEXP xxenv(SEXP begin, SEXP body, SEXP end, YYLTYPE *lloc)
     return ans;
 }
 
-static SEXP xxmath(SEXP body, YYLTYPE *lloc)
+static SEXP xxmath(SEXP body, YYLTYPE *lloc, Rboolean display)
 {
     SEXP ans;
 #if DEBUGVALS
-    Rprintf("xxmath(body=%p)", body);    
+    Rprintf("xxmath(body=%p, display=%d)", body, display);    
 #endif
     PRESERVE_SV(ans = PairToVectorList(CDR(body)));
     RELEASE_SV(body);
     setAttrib(ans, R_SrcrefSymbol, makeSrcref(lloc, parseState.SrcFile));
-    setAttrib(ans, R_LatexTagSymbol, mkString("MATH"));
+    setAttrib(ans, R_LatexTagSymbol, 
+        mkString(display ? "DISPLAYMATH" : "MATH"));
 #if DEBUGVALS
     Rprintf(" result: %p\n", ans);    
 #endif
@@ -759,7 +766,7 @@ static int token(void)
         case R_EOF:return END_OF_INPUT; 
     	case LBRACE:return c;
     	case RBRACE:return c;
-    	case '$': return c;
+    	case '$': return mkDollar(c);
     } 	    
     return mkText(c);
 }
@@ -809,6 +816,18 @@ static int mkComment(int c)
     PRESERVE_SV(yylval = mkString2(stext,  bp - stext));
     if(st1) free(st1);    
     return COMMENT;
+}
+
+static int mkDollar(int c)
+{
+    int retval = c;
+    
+    if ((c = xxgetc()) == '$')
+        retval = TWO_DOLLARS;
+    else
+        xxungetc(c);
+
+    return retval;
 }
 
 static int mkMarkup(int c)

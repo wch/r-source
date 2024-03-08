@@ -56,6 +56,7 @@ deparseLatex <- function(x, dropBraces = FALSE)
         	Recall(a[[2L]]),
         	"\\end{", a[[1L]], "}"),
         MATH = c("$", Recall(a), "$"), # \( and \) parse as MACRO
+        DISPLAYMATH = c("$$", Recall(a), "$$"),
         NULL = stop("Internal error, no tag", domain = NA)
         ))
         lastTag <- tag
@@ -130,7 +131,8 @@ latexToUtf8 <- function(x)
 			},
 			BLOCK =,
 			ENVIRONMENT =,
-			MATH = {
+			MATH =,
+			DISPLAYMATH = {
 			    args[[k]] <- latexToUtf8(nextobj)
 			    k <- k+1L
 			    getNext <- TRUE
