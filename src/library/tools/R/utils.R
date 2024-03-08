@@ -2508,8 +2508,10 @@ function(fun, args = list(), opts = "--no-save --no-restore",
         c(x, y[match(names(y), names(x), 0L) == 0L])
     }
 
-    tfi <- tempfile("runri")
-    tfo <- tempfile("runro")
+    ## escape issue if we use backslashes in paths, hence convert to "/"
+    tfi <- normalizePath(tempfile("runri"), winslash="/", mustWork=FALSE)
+    tfo <- normalizePath(tempfile("runro"), winslash="/", mustWork=FALSE)
+    
     wrk <- c(sprintf("x <- readRDS(\"%s\")", tfi),
              "options(repos = x$repos)",
              ## need quote = TRUE in case some of args are not self-evaluating
