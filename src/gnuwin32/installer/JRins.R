@@ -40,6 +40,7 @@
     con <- file("R.iss", "w")
     cat("[Setup]\n", file = con)
 
+    aarch64 <- FALSE
     if (havex64) { # 64-bit Intel only
         regfile <- "reg64.iss"
         types <- "types64.iss"
@@ -56,16 +57,31 @@
         else if (grepl("Aarch64", fout, fixed = TRUE)) {
             cat("ArchitecturesInstallIn64BitMode=arm64\n", file = con)
             cat("ArchitecturesAllowed=arm64\n", file = con)
+            aarch64 <- TRUE
         }
     }
     suffix <- "win"
+    if (aarch64) {
+       # To distinguish aarch64 version from x86_64 version installed on
+       # Windows/aarch64 in ARP entries and in shortcuts
+       RverA <- paste0(Rver, " (aarch64)")
+
+       # Inno Setup installs an x86_64 application on Windows 11/aarch64
+       # into "Program Files (x86)", but that doesn't seem to follow Windows
+       # conventions, so use a suffix just in case it is fixed at some
+       # point, to avoid naming conflicts.
+       dsuffix <- "-aarch64"
+    } else {
+       RverA <- Rver
+       dsuffix <- ""
+    }
 
     cat(paste("OutputBaseFilename=", RW, "-", suffix, sep = ""),
-        paste("AppName=R for Windows ", Rver, sep = ""),
-        paste("AppVerName=R for Windows ", Rver, sep = ""),
+        paste("AppName=R for Windows ", RverA, sep = ""),
+        paste("AppVerName=R for Windows ", RverA, sep = ""),
         paste("AppVersion=", Rver, sep = ""),
         paste("VersionInfoVersion=", Rver0, sep = ""),
-        paste("DefaultDirName={code:UserPF}\\R\\", RW, sep = ""),
+        paste("DefaultDirName={code:UserPF}\\R", dsuffix, "\\", RW, sep = ""),
         paste("InfoBeforeFile=", srcdir, "\\doc\\COPYING", sep = ""),
         if(Producer == "R-core") "AppPublisher=R Core Team"
         else paste("AppPublisher=", Producer, sep = ""),
@@ -85,6 +101,7 @@
 
     lines <- readLines(regfile)
     lines <- gsub("@RVER@", Rver, lines)
+    lines <- gsub("@RVERA@", RverA, lines)
     lines <- gsub("@Producer@", Producer, lines)
     writeLines(lines, con)
 

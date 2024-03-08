@@ -1,7 +1,7 @@
 #  File src/library/base/R/library.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2022 The R Core Team
+#  Copyright (C) 1995-2024 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -996,8 +996,11 @@ function(x)
         ## FIXME: could re-use v from "above".
         x.y <- paste0(R.version$major, ".",
                       sub("[.].*", "", R.version$minor))
-        if(.Platform$OS.type == "windows")
+        if(.Platform$OS.type == "windows" && s["machine"] == "x86-64")
             file.path(Sys.getenv("LOCALAPPDATA"), "R", "win-library", x.y)
+        else if (.Platform$OS.type == "windows") # including aarch64
+            file.path(Sys.getenv("LOCALAPPDATA"), "R",
+                      paste0(s["machine"],"-library"), x.y)
         else if(s["sysname"] == "Darwin")
             file.path(home, "Library", "R", s["machine"], x.y, "library")
         else
