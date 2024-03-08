@@ -398,6 +398,10 @@
       The \verb{\dontdiff} tag, like \verb{\donttest}, is \emph{not}
       shown on the rendered help page, so provides a clean alternative
       to \samp{## IGNORE_RDIFF_(BEGIN|END)} comments.
+
+      \item \command{R CMD build} when there is no \file{NAMESPACE}, now
+      uses the recommended \code{exportPattern("^[^.]")}, instead of
+      exporting everything.
     }
   }
 

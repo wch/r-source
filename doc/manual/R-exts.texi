@@ -4276,7 +4276,7 @@ specify the names to export with a regular expression using
 
 @findex exportPattern
 @example
-exportPattern("^[^\\.]")
+exportPattern("^[^.]")
 @end example
 
 @noindent
