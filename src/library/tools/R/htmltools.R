@@ -87,7 +87,7 @@ function(package, dir, lib.loc = NULL, auto = NA, verbose = interactive())
     one <- function(p) {
         if(verbose)
             message(sprintf("* Package: %s", p))
-        db <- tools::Rd_db(p, lib.loc = lib.loc)
+        db <- Rd_db(p, lib.loc = lib.loc)
         files <- sub("[Rr]d$", "html", basename(names(db)))
         results <-
             lapply(files,
@@ -119,7 +119,7 @@ tidy_validate_package_Rd_files_from_dir <- function(dir, auto = NA, verbose) {
     one <- function(d) {
         if(verbose)
             message(sprintf("* Package: %s", basename(d)))
-        db <- tools::Rd_db(dir = d)
+        db <- Rd_db(dir = d)
         if(!is.na(auto)) {
             is <- vapply(db,
                          function(e) {
@@ -134,7 +134,7 @@ tidy_validate_package_Rd_files_from_dir <- function(dir, auto = NA, verbose) {
         results <-
             lapply(db,
                    function(x) {
-                       tools::Rd2HTML(x, out, concordance = TRUE)
+                       Rd2HTML(x, out, concordance = TRUE)
                        tidy_validate(out)
                    })
         tidy_validate_db(results,
