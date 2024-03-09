@@ -126,6 +126,7 @@ struct ParseState {
 				   so, this is the string to end it. If not, 
 				   this is NULL */
     SEXP	xxVerbatimList;/* A STRSXP containing all the verbatim environment names */
+    SEXP	xxVerbList;    /* A STRSXP containing all the verbatim command names */
 
     SEXP     SrcFile;  /* parseLatex will *always* supply a srcfile */
     SEXP mset; /* precious mset for protecting parser semantic values */
@@ -153,6 +154,7 @@ static int	mkMarkup(int);
 static int	mkText(int);
 static int 	mkComment(int);
 static int      mkVerb(int);
+static int	mkVerb2(const char *, int);
 static int      mkVerbEnv(void);
 static int	mkDollar(int);
 
@@ -167,7 +169,8 @@ static SEXP R_LatexTagSymbol = NULL;
 %token		END_OF_INPUT ERROR
 %token		MACRO
 %token		TEXT COMMENT
-%token	        BEGIN END VERB
+%token	        BEGIN END VERB VERB2
+%token          TWO_DOLLARS
 %token          TWO_DOLLARS
 
 /* Recent bison has <> to represent all of the destructors below, but we don't assume it */
@@ -199,6 +202,7 @@ Item:		TEXT				{ $$ = xxtag($1, TEXT, &@$); }
 	|	COMMENT				{ $$ = xxtag($1, COMMENT, &@$); }
 	|	MACRO				{ $$ = xxtag($1, MACRO, &@$); }
 	|	VERB				{ $$ = xxtag($1, VERB, &@$); }
+	|	VERB2				{ $$ = xxtag($1, VERB, &@$); }
 	|	environment			{ $$ = $1; }
 	|	block				{ $$ = $1; }
 	
@@ -490,6 +494,7 @@ static void PutState(ParseState *state) {
     state->xxinitvalue = parseState.xxinitvalue;
     state->xxInVerbEnv = parseState.xxInVerbEnv;
     state->xxVerbatimList = parseState.xxVerbatimList;
+    state->xxVerbList = parseState.xxVerbList;
     state->SrcFile = parseState.SrcFile; 
     state->prevState = parseState.prevState;
 }
@@ -503,6 +508,7 @@ static void UseState(ParseState *state) {
     parseState.xxinitvalue = state->xxinitvalue;
     parseState.xxInVerbEnv = state->xxInVerbEnv;
     parseState.xxVerbatimList = state->xxVerbatimList;
+    parseState.xxVerbList = state->xxVerbList;
     parseState.SrcFile = state->SrcFile; 
     parseState.prevState = state->prevState;
 }
@@ -610,6 +616,12 @@ static int KeywordLookup(const char *s)
 	if (strcmp(keywords[i].name, s) == 0) 
 	    return keywords[i].token;
     }
+    
+    for (i = 0; i < length(parseState.xxVerbList); i++) {
+    	if (strcmp(CHAR(STRING_ELT(parseState.xxVerbList, i)), s) == 0)
+    	    return VERB2;
+    }
+    
     return MACRO;
 }
 
@@ -851,6 +863,8 @@ static int mkMarkup(int c)
         retval = KeywordLookup(stext);
         if (retval == VERB)
             retval = mkVerb(c); /* This makes the yylval */
+        else if (retval == VERB2)
+            retval = mkVerb2(stext, c); /* ditto */
         else if (c != ' ') /* Eat a space, but keep other terminators */
     	    xxungetc(c);
     }
@@ -869,6 +883,25 @@ static int mkVerb(int c)
     int delim = c;   
     
     TEXT_PUSH('\\'); TEXT_PUSH('v'); TEXT_PUSH('e'); TEXT_PUSH('r'); TEXT_PUSH('b');
+    TEXT_PUSH(c);
+    while (((c = xxgetc()) != delim) && c != R_EOF) TEXT_PUSH(c);
+    if (c != R_EOF) TEXT_PUSH(c);
+    
+    PRESERVE_SV(yylval = mkString2(stext, bp - stext));
+    if(st1) free(st1);
+    return VERB;  
+}
+
+static int mkVerb2(const char *s, int c)
+{
+    char st0[INITBUFSIZE];
+    char *st1 = NULL;
+    unsigned int nstext = INITBUFSIZE;
+    char *stext = st0, *bp = st0;
+    int c0, delim = '}';  
+    
+    while (*s) TEXT_PUSH(*s++);
+    
     TEXT_PUSH(c);
     while (((c = xxgetc()) != delim) && c != R_EOF) TEXT_PUSH(c);
     if (c != R_EOF) TEXT_PUSH(c);
@@ -943,7 +976,7 @@ static void PopState(void) {
 
 /* "do_parseLatex" 
 
- .External2("parseLatex", file, srcfile, verbose, basename, warningCalls)
+ .External2("parseLatex", text, srcfile, verbose, verbatim, verb)
  If there is text then that is read and the other arguments are ignored.
 */
 
@@ -970,6 +1003,7 @@ SEXP parseLatex(SEXP call, SEXP op, SEXP args, SEXP env)
     	error(_("invalid '%s' value"), "verbose");
     parseState.xxDebugTokens = asInteger(CAR(args));	args = CDR(args);
     parseState.xxVerbatimList = CAR(args); 		args = CDR(args);
+    parseState.xxVerbList = CAR(args);
 
     s = R_ParseLatex(text, &status, source);
     

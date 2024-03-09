@@ -19,7 +19,8 @@
 parseLatex(text, filename = deparse1(substitute(text)),
            verbose = FALSE,
            verbatim = c("verbatim", "verbatim*",
-                        "Sinput", "Soutput"))
+                        "Sinput", "Soutput"),
+           verb = "\\\\Sexpr")
 deparseLatex(x, dropBraces = FALSE)
 latexToUtf8(x)
 }
@@ -36,6 +37,10 @@ If \code{TRUE}, print debug error messages.
   \item{verbatim}{
 A character vector containing the names of LaTeX environments holding verbatim text.
 }
+  \item{verb}{
+A character vector containing LaTeX macros that should be 
+assumed to hold verbatim text.
+  }
   \item{x}{
 A \code{"LaTeX"} object.
 }
@@ -52,10 +57,11 @@ each macro.  The main intention for this function is to process simple
 LaTeX code used in bibliographic references, not fully general LaTeX
 documents.
 
-Verbose text is allowed in two forms:  the \verb{\\verb} macro (with
-single character delimiters), and environments whose names are listed
-in the \code{verbatim} argument.
-
+Verbose text is allowed in three forms:  the \verb{\\verb} macro (with
+single character delimiters), environments whose names are listed
+in the \code{verbatim} argument, and other macros (with 
+brace delimiters) whose names are listed in the \code{verb}
+argument.
 }
 \value{
 The \code{parseLatex()} function returns a recursive object of class
