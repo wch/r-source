@@ -1,7 +1,7 @@
 #  File src/library/utils/R/aspell.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2019 The R Core Team
+#  Copyright (C) 1995-2024 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -377,6 +377,8 @@ function(x)
     },
              names(x), x)
     y <- data.frame(do.call(rbind, y), stringsAsFactors = FALSE)
+    if(!length(y))
+        y <- list2DF(rep.int(list(character()), 6L))
     names(y) <- c("File", "Line", "Column", "Left", "Original", "Right")
     class(y) <- c("aspell_inspect_context", "data.frame")
     y
@@ -385,6 +387,8 @@ function(x)
 format.aspell_inspect_context <-
 function(x, ..., byfile = FALSE, indent = 2L)
 {
+    if(!nrow(x))
+        return(character())
     chunks <- if(byfile) {
         chunks <- split(x, x$File)
         Map(function(u, e)
@@ -1523,17 +1527,23 @@ function(x)
     Reduce(c, y)[x]
 }
 
-aspell_update_R_dictionary <-
-function(which, new = character())
+aspell_update_dictionary <-
+function(dictionary, add = NULL)
 {
-    which <- which[1L]
-    dir <- file.path(tools:::.R_top_srcdir_from_Rd(),
-                     "share", "dictionaries")
-    txt <- file.path(dir, paste0(which, ".txt"))
-    rds <- file.path(dir, paste0(which, ".rds"))    
+    stopifnot(is.character(dictionary), length(dictionary) == 1L)
+    ## Handle 'dictionary' the same way as the 'dictionaries' argument
+    ## to aspell(): if there is no path separator take as an R system
+    ## dictionary.
+    if(!grepl(.Platform$file.sep, dictionary, fixed = TRUE)) {
+        dictionary <-
+            file.path(tools:::.R_top_srcdir_from_Rd(),
+                      "share", "dictionaries", dictionary)
+    }
+    txt <- paste0(dictionary, ".txt")
+    rds <- paste0(dictionary, ".rds")
     new <- unique(c(if(file.exists(txt))
                         readLines(txt, encoding = "UTF-8"),
-                    enc2utf8(new)))
+                    enc2utf8(add)))
     new <- new[order(tolower(new), new)]
     new <- new[nzchar(new)]
     writeLines(new, txt, useBytes = TRUE)
