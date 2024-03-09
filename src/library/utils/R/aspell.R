@@ -1528,7 +1528,7 @@ function(x)
 }
 
 aspell_update_dictionary <-
-function(dictionary, add = NULL)
+function(dictionary, add = character())
 {
     stopifnot(is.character(dictionary), length(dictionary) == 1L)
     ## Handle 'dictionary' the same way as the 'dictionaries' argument
