@@ -5212,8 +5212,8 @@ add_dummies <- function(dir, Log)
         t1 <- proc.time()
         if(i1) { ## validate
             Tidy <- .find_tidy_cmd()
-            OK <- nzchar(Tidy)
-            if(OK) {
+            OK1 <- nzchar(Tidy)
+            if(OK1) {
                 out <- tempfile()
                 on.exit(unlink(out))
                 if(installed) {
@@ -5222,24 +5222,21 @@ add_dummies <- function(dir, Log)
                     .libPaths(c(libdir, libpaths))
                     on.exit(.libPaths(libpaths), add = TRUE)
                 }
-                results <- lapply(db,
+                results1 <- lapply(db,
                                   function(x)
                                       tryCatch({
                                           Rd2HTML(x, out, concordance = TRUE)
                                           tidy_validate(out, tidy = Tidy)
                                       },
                                       error = identity))
-                names(results) <- names(db)
-                ind <- vapply(results, inherits, NA, "error")
-                results2 <- results[!ind]
-                results2 <- tidy_validate_db(results2, names(results2))
+                results1 <- tidy_validate_db(results1, names(db))
             }
         }
 
         if(i2) { ## math rendering
             OK2 <- !is.null(katex <- .make_KaTeX_checker())
             if(OK2)
-                results3 <-
+                results2 <-
                     check_math_rendering_in_Rd_db(eq = eq,
                                                   katex = katex)
         }
@@ -5248,7 +5245,7 @@ add_dummies <- function(dir, Log)
         print_time(t1, t2, Log)
 
         if(i1) { ## report on validation
-            if(!OK) {
+            if(!OK1) {
                 noteLog(Log)
                 any <- TRUE
                 printLog0(Log,
@@ -5256,28 +5253,27 @@ add_dummies <- function(dir, Log)
                             attr(Tidy, "msg"),
                             "\n"))
             }
-            if(OK && any(ind)) {
+            if(OK1 && length(errors <- attr(results1, "errors"))) {
                 if(!any) noteLog(Log)
                 any <- TRUE
                 printLog0(Log,
                           c("Encountered the following conversion/validation errors:\n",
-                            paste(unlist(lapply(results[ind],
-                                                conditionMessage)),
+                            paste(unlist(lapply(errors, conditionMessage)),
                                   collapse = "\n"),
                             "\n"))
             }
-            if(OK && NROW(results2)) {
+            if(OK1 && NROW(results1)) {
                 if(!any) noteLog(Log)
                 any <- TRUE
                 printLog0(Log,
                           c("Found the following HTML validation problems:\n",
                             sprintf("%s:%s:%s (%s:%s): %s\n",
-                                    sub("[Rr]d$", "html", results2[, "path"]),
-                                    results2[, "line"],
-                                    results2[, "col"],
-                                    results2[, "srcFile"],
-                                    results2[, "srcLine"],
-                                    results2[, "msg"])))
+                                    sub("[Rr]d$", "html", results1[, "path"]),
+                                    results1[, "line"],
+                                    results1[, "col"],
+                                    results1[, "srcFile"],
+                                    results1[, "srcLine"],
+                                    results1[, "msg"])))
             }
         }
 
@@ -5288,15 +5284,15 @@ add_dummies <- function(dir, Log)
                 printLog0(Log,
                           "Skipping checking math rendering: package 'V8' unavailable\n")
             }
-            if(OK2 && NROW(results3)) {
+            if(OK2 && NROW(results2)) {
                 if(!any) noteLog(Log)
                 any <- TRUE
                 printLog0(Log,
                           c("Found the following math rendering problems:\n",
                             sprintf("%s%s: %s\n",
-                                    results3[, 1L],
-                                    results3[, 2L],
-                                    gsub("\n", "\n  ", results3[, 3L]))))
+                                    results2[, 1L],
+                                    results2[, 2L],
+                                    gsub("\n", "\n  ", results2[, 3L]))))
             }
         }
 

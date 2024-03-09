@@ -1,3 +1,21 @@
+#  File src/library/tools/R/CRANtools.R
+#  Part of the R package, https://www.R-project.org
+#
+#  Copyright (C) 2022-2024 The R Core Team
+#
+#  This program is free software; you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation; either version 2 of the License, or
+#  (at your option) any later version.
+#
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  A copy of the GNU General Public License is available at
+#  https://www.R-project.org/Licenses/
+
 tidy_validate <-
 function(f, tidy = "tidy") {
     z <- suppressWarnings(system2(tidy,
@@ -36,10 +54,17 @@ tidy_validate_db <-
 function(x, paths = NULL) {
     if(!is.null(paths))
         names(x) <- paths
-    x <- Filter(length, x)
-    if(!length(x)) return(NULL)
-    cbind(path = rep.int(names(x), vapply(x, nrow, 0)),
-          do.call(rbind, x))
+    i <- vapply(x, inherits, NA, "error")
+    e <- x[i]
+    x <- Filter(length, x[!i])
+    if(!length(x) && !length(e)) return(NULL)
+    y <- cbind(path = rep.int(names(x), vapply(x, nrow, 0)),
+               do.call(rbind, x))
+    if(is.null(y))
+        y <- list()     # cannot set an attr on NULL
+    if(length(e))
+        attr(y, "errors") <- e
+    y
 }
 
 tidy_validate_files <-
@@ -56,10 +81,9 @@ function(files, verbose = interactive()) {
 
 tidy_validate_R_httpd_path <-
 function(path) {
-    ## <FIXME>
-    ## What should we do if httpd() throws an error?
     y <- tryCatch(httpd(path, query = NULL), error = identity)
-    ## </FIXME>
+    if(inherits(y, "error"))
+        return(y)
     if(!is.null(f <- y$file)) {
         ## Should only do this for appropriate content types
         if(is.null(y$"content-type"))
@@ -134,8 +158,11 @@ tidy_validate_package_Rd_files_from_dir <- function(dir, auto = NA, verbose) {
         results <-
             lapply(db,
                    function(x) {
-                       Rd2HTML(x, out, concordance = TRUE)
-                       tidy_validate(out)
+                       tryCatch({
+                           Rd2HTML(x, out, concordance = TRUE)
+                           tidy_validate(out)
+                       },
+                       error = identity)
                    })
         tidy_validate_db(results,
                          sprintf("%s::%s", basename(d), names(db)))
