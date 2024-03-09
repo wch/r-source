@@ -5211,20 +5211,8 @@ add_dummies <- function(dir, Log)
 
         t1 <- proc.time()
         if(i1) { ## validate
-            ## require HTML Tidy, and not macOS's ancient version.
-            msg <- ""
-            Tidy <- Sys.getenv("R_TIDYCMD", "tidy")
-            OK <- nzchar(Sys.which(Tidy))
-            if(OK) {
-                ver <- system2(Tidy, "--version", stdout = TRUE)
-                OK <- startsWith(ver, "HTML Tidy")
-                if(OK) {
-                    OK <- !grepl('Apple Inc. build 2649', ver)
-                    if(!OK) msg <- ": 'tidy' is Apple's too old build"
-                    ## Maybe we should also check version,
-                    ## but e.g. Ubuntu 16.04 does not show one.
-                } else msg <- ": 'tidy' is not HTML Tidy"
-            } else msg <- ": no command 'tidy' found"
+            Tidy <- .find_tidy_cmd()
+            OK <- nzchar(Tidy)
             if(OK) {
                 out <- tempfile()
                 on.exit(unlink(out))
@@ -5289,8 +5277,8 @@ add_dummies <- function(dir, Log)
                 noteLog(Log)
                 any <- TRUE
                 printLog0(Log,
-                          c("Skipping checking HTML validation",
-                            msg,
+                          c("Skipping checking HTML validation: ",
+                            attr(Tidy, "msg"),
                             "\n"))
             }
             if(OK && any(ind)) {

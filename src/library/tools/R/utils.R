@@ -942,6 +942,31 @@ function(v, env, last = NA, default = NA) {
     default
 }
 
+### ** .find_tidy_cmd
+
+.find_tidy_cmd <-
+function(Tidy = Sys.getenv("R_TIDYCMD", "tidy"))
+{
+    ## require HTML Tidy, and not macOS's ancient version.
+    msg <- ""
+    OK <- nzchar(Sys.which(Tidy))
+    if(OK) {
+        ver <- system2(Tidy, "--version", stdout = TRUE)
+        OK <- startsWith(ver, "HTML Tidy")
+        if(OK) {
+            OK <- !grepl('Apple Inc. build 2649', ver)
+            if(!OK) msg <- "'tidy' is Apple's too old build"
+            ## Maybe we should also check version,
+            ## but e.g. Ubuntu 16.04 does not show one.
+        } else msg <- "'tidy' is not HTML Tidy"
+    } else msg <- "no command 'tidy' found"
+    if(nzchar(msg)) {
+        Tidy <- ""
+        attr(Tidy, "msg") <- msg
+    }
+    Tidy
+}   
+
 ### ** .get_BibTeX_errors_from_blg_file
 
 .get_BibTeX_errors_from_blg_file <-
