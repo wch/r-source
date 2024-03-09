@@ -69,15 +69,13 @@ function(ifile, encoding = "unknown", keepSpacing = TRUE,
             && (tags[i] %notin% drop)
             && RdTags(x[[i]]) == "TEXT") {
     	    text1 <- x[[i]][[1L]]
-    	    if (length(grep("[^[:space:]]$", text1))) { # Ends in non-blank
+    	    if (length(grep("[[:alpha:]]$", text1))) { # Ends in alpha
     	    	text2 <- x[[i+1L]]
-    	    	if (length(grep("^[^[:space:]]", text2))) { # Starts non-blank
+    	    	if (length(grep("^[[:alpha:]]", text2))) { # Starts with alpha
     	    	    show(text1)
     	    	    prevcol <<- prevcol+1L # Shift text2 left by one column
     	    	    saveline <- prevline
-    	    	    show(text2)
-    	    	    if (prevline == saveline)
-    	    	    	prevcol <<- prevcol-1L
+    	    	    show(text2, extraSpace = keepSpacing)
     		    result <- TRUE
     		}
     	    }
@@ -85,7 +83,7 @@ function(ifile, encoding = "unknown", keepSpacing = TRUE,
 	result
     }
 
-    show <- function(x) {
+    show <- function(x, extraSpace = FALSE) {
 	srcref <- attr(x, "srcref")
 	firstline <- srcref[1L]
 	lastline <- srcref[3L]
@@ -106,6 +104,12 @@ function(ifile, encoding = "unknown", keepSpacing = TRUE,
 	    if (keepSpacing)
                 mycat(rep.int(" ", max(0, firstcol - prevcol - 1L)), sep = "")
 	    x <- as.character(srcref) # go back to original form
+	    if (extraSpace) {
+	    	if (grepl("[^\n]* ", x))
+	    	    x <- sub(" ", "  ", x)
+	    	else if (firstline == lastline)
+	    	    x <- paste0(x, " ")
+	    }
 	    mycat(x, sep = "")
 	    prevcol <<- lastcol
 	    prevline <<- lastline
