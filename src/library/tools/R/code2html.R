@@ -55,7 +55,10 @@
                 ## Note: sprintf() return 0-length output with 0-length input
                 c(sprintf("<h2>%s</h2>", Title),
                   sprintf("<p>Aliases: %s</p>",
-                          paste(sprintf("<a href='../help/%s'>%s</a>", Aliases, Aliases),
+                          paste(sprintf("<a href='../help/%s'>%s</a>",
+                                        vapply(Aliases, urlify, "",
+                                               reserved = TRUE),
+                                        vapply(Aliases, shtmlify, "")),
                                 collapse = " ")),
                   sprintf("<p>Keywords: %s</p>",
                           paste(sprintf("<a href='/doc/html/Search?category=%s'>%s</a>",
