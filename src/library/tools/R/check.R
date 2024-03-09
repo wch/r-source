@@ -5237,36 +5237,11 @@ add_dummies <- function(dir, Log)
         }
 
         if(i2) { ## math rendering
-            OK2 <- !is.null(.katex <- .make_KaTeX_checker())
-            if(OK2) {
-                results3 <- lapply(eq[, 3L], .katex)
-                msg2 <- vapply(results3, `[[`, "", "error")
-                ind2 <- nzchar(msg2)
-                if(any(ind2)) {
-                    msg2 <- msg2[ind2]
-                    msg2 <- sub("^KaTeX parse error: (.*) at position.*:",
-                               "\\1 in",
-                               msg2)
-                    msg2 <- sub("^KaTeX parse error: ", "", msg2)
-                    ## KaTeX uses
-                    ##   COMBINING LOW LINE  (U+0332)
-                    ##   HORIZONTAL ELLIPSIS (U+2026)
-                    ## for formatting parse errors.  These will not work
-                    ## in non-UTF-8 locales and not well in UTF-8 ones,
-                    ## so change as necessary ...
-                    msg2 <- gsub("\u2026", "...", msg2)
-                    msg2 <- gsub("\u0332", "", msg2)
-                    l1 <- eq[ind2, 5L]
-                    l2 <- eq[ind2, 6L]
-                    tst <- (l1 == l2)
-                    pos <- is.na(tst)
-                    l1[pos] <- ""
-                    pos <- which(!pos)
-                    l1[pos] <- paste0(":", l1[pos])
-                    pos <- which(!tst[pos])
-                    l1[pos] <- paste0(l1[pos], "-", l2[pos])
-                }
-            }
+            OK2 <- !is.null(katex <- .make_KaTeX_checker())
+            if(OK2)
+                results3 <-
+                    check_math_rendering_in_Rd_db(eq = eq,
+                                                  katex = katex)
         }
 
         t2 <- proc.time()
@@ -5313,15 +5288,15 @@ add_dummies <- function(dir, Log)
                 printLog0(Log,
                           "Skipping checking math rendering: package 'V8' unavailable\n")
             }
-            if(OK2 && any(ind2)) {
+            if(OK2 && NROW(results3)) {
                 if(!any) noteLog(Log)
                 any <- TRUE
                 printLog0(Log,
                           c("Found the following math rendering problems:\n",
                             sprintf("%s%s: %s\n",
-                                    eq[ind2, 1L],
-                                    l1,
-                                    gsub("\n", "\n  ", msg2))))
+                                    results3[, 1L],
+                                    results3[, 2L],
+                                    gsub("\n", "\n  ", results3[, 3L]))))
             }
         }
 

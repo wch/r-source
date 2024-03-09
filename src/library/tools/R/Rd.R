@@ -1,7 +1,7 @@
 #  File src/library/tools/R/Rd.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2023 The R Core Team
+#  Copyright (C) 1995-2024 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -987,11 +987,16 @@ function(filebase, key = NULL)
         invisible(res)
 }
 
-# The macros argument can be TRUE, in which case a new environment is created with an empty parent,
-# or the result of a previous call to this function, in which case it becomes the parent,
-# or a filename, in which case that file is loaded first, then the new file into a child environment.
+### * loadRdMacros
 
-# It is not safe to save this environment, as changes to the parser may invalidate its contents.
+## The macros argument can be TRUE, in which case a new environment is
+## created with an empty parent, or the result of a previous call to this
+## function, in which case it becomes the parent, or a filename, in
+## which case that file is loaded first, then the new file into a child
+## environment. 
+
+## It is not safe to save this environment, as changes to the parser may
+## invalidate its contents.
 
 loadRdMacros <- function(file, macros = TRUE) {
     # New macros are loaded into a clean environment
@@ -1020,6 +1025,8 @@ loadRdMacros <- function(file, macros = TRUE) {
     attr(Rd, "macros")
 }
 
+### * initialRdMacros
+
 initialRdMacros <- function(pkglist = NULL,
                             macros = file.path(R.home("share"), "Rd", "macros", "system.Rd")
                             ) {
@@ -1042,6 +1049,8 @@ initialRdMacros <- function(pkglist = NULL,
     macros
 }
 
+### * loadPkgRdMacros
+
 loadPkgRdMacros <- function(pkgdir, macros = NULL) {
     pkglist <- .get_package_metadata(pkgdir)["RdMacros"]
     if (is.na(pkglist))
@@ -1059,6 +1068,48 @@ loadPkgRdMacros <- function(pkgdir, macros = NULL) {
     	macros <- loadRdMacros(f, macros)
 
     macros
+}
+
+### * check_math_rendering_in_Rd_db
+
+check_math_rendering_in_Rd_db <-
+function(db, eq = NULL, katex = .make_KaTeX_checker()) {
+    if(is.null(eq))
+        eq <- .Rd_get_equations_from_Rd_db(db)
+    ## Now eq is a 6-column matrix with
+    ##   file tag latex ascii beg end
+    ## where tag is \eqn or \deqn.
+    out <- matrix(character(), 0L, 3L)
+    results <- lapply(eq[, 3L], katex)
+    msg <- vapply(results, `[[`, "", "error")
+    ind <- nzchar(msg)
+    if(any(ind)) {
+        msg <- msg[ind]
+        msg <- sub("^KaTeX parse error: (.*) at position.*:",
+                   "\\1 in",
+                   msg)
+        msg <- sub("^KaTeX parse error: ", "", msg)
+        ## KaTeX uses
+        ##   COMBINING LOW LINE  (U+0332)
+        ##   HORIZONTAL ELLIPSIS (U+2026)
+        ## for formatting parse errors.  These will not work in
+        ## non-UTF-8 locales and not well in UTF-8 ones, so change as
+        ## necessary ... 
+        msg <- gsub("\u2026", "...", msg)
+        msg <- gsub("\u0332", "", msg)
+        l1 <- eq[ind, 5L]
+        l2 <- eq[ind, 6L]
+        tst <- (l1 == l2)
+        pos <- is.na(tst)
+        l1[pos] <- ""
+        pos <- which(!pos)
+        l1[pos] <- paste0(":", l1[pos])
+        pos <- which(!tst[pos])
+        l1[pos] <- paste0(l1[pos], "-", l2[pos])
+        out <- cbind(eq[ind, 1L], l1, msg)
+    }
+    colnames(out) <- c("path", "pos", "msg")
+    out
 }
 
 ### Local variables: ***
