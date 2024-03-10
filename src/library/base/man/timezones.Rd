@@ -1,6 +1,6 @@
 % File src/library/base/man/timezones.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2023 R Core Team
+% Copyright 1995-2024 R Core Team
 % Distributed under GPL 2 or later
 
 \name{timezones}
@@ -247,6 +247,12 @@ OlsonNames(tzdir = NULL)
   \file{backzone} which differ only from those in the main lists prior
   to 1970 -- these are usually included but may not be in minimalist
   systems.
+
+  %% https://mm.icann.org/pipermail/tz/2024-March/025162.html
+  %% https://mm.icann.org/pipermail/tz/2024-March/025166.html
+  For many years, the legacy names \code{EST5EDT} and \code{PSTPDT}
+  were portable, but \code{musl} (the C runtime used by Alpine Linux)
+  does not use DST with those names.
 }
 
 \note{

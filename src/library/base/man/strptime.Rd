@@ -1,6 +1,6 @@
 % File src/library/base/man/strptime.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2022 R Core Team
+% Copyright 1995-2024 R Core Team
 % Distributed under GPL 2 or later
 
 \name{strptime}
@@ -433,6 +433,7 @@ as.character(z3) # ditto
 options(op)
 
 ## time zone names are not portable, but 'EST5EDT' comes pretty close.
+## (but its interpretation may not be universal: see ?timezones)
 z4 <- strptime(c("2006-01-08 10:07:52", "2006-08-07 19:33:02"),
                "\%Y-\%m-\%d \%H:\%M:\%S", tz = "EST5EDT")
 \donttest{z4 }
