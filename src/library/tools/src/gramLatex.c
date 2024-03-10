@@ -191,6 +191,7 @@ struct ParseState {
 				   so, this is the string to end it. If not, 
 				   this is NULL */
     SEXP	xxVerbatimList;/* A STRSXP containing all the verbatim environment names */
+    SEXP	xxVerbList;    /* A STRSXP containing all the verbatim command names */
 
     SEXP     SrcFile;  /* parseLatex will *always* supply a srcfile */
     SEXP mset; /* precious mset for protecting parser semantic values */
@@ -218,6 +219,7 @@ static int	mkMarkup(int);
 static int	mkText(int);
 static int 	mkComment(int);
 static int      mkVerb(int);
+static int	mkVerb2(const char *, int);
 static int      mkVerbEnv(void);
 static int	mkDollar(int);
 
@@ -266,7 +268,8 @@ extern int yydebug;
     BEGIN = 263,
     END = 264,
     VERB = 265,
-    TWO_DOLLARS = 266
+    VERB2 = 266,
+    TWO_DOLLARS = 267
   };
 #endif
 /* Tokens.  */
@@ -278,7 +281,8 @@ extern int yydebug;
 #define BEGIN 263
 #define END 264
 #define VERB 265
-#define TWO_DOLLARS 266
+#define VERB2 266
+#define TWO_DOLLARS 267
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
@@ -552,23 +556,23 @@ union yyalloc
 #endif /* !YYCOPY_NEEDED */
 
 /* YYFINAL -- State number of the termination state.  */
-#define YYFINAL  24
+#define YYFINAL  25
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   114
+#define YYLAST   122
 
 /* YYNTOKENS -- Number of terminals.  */
-#define YYNTOKENS  15
+#define YYNTOKENS  16
 /* YYNNTS -- Number of nonterminals.  */
 #define YYNNTS  10
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  24
+#define YYNRULES  25
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  41
+#define YYNSTATES  42
 
 /* YYTRANSLATE[YYX] -- Symbol number corresponding to YYX as returned
    by yylex, with out-of-bounds checking.  */
 #define YYUNDEFTOK  2
-#define YYMAXUTOK   266
+#define YYMAXUTOK   267
 
 #define YYTRANSLATE(YYX)                                                \
   ((unsigned int) (YYX) <= YYMAXUTOK ? yytranslate[YYX] : YYUNDEFTOK)
@@ -580,7 +584,7 @@ static const yytype_uint8 yytranslate[] =
        0,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-       2,     2,     2,     2,     2,     2,    14,     2,     2,     2,
+       2,     2,     2,     2,     2,     2,    15,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
@@ -589,7 +593,7 @@ static const yytype_uint8 yytranslate[] =
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-       2,     2,     2,    12,     2,    13,     2,     2,     2,     2,
+       2,     2,     2,    13,     2,    14,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
@@ -603,16 +607,16 @@ static const yytype_uint8 yytranslate[] =
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     1,     2,     3,     4,
-       5,     6,     7,     8,     9,    10,    11
+       5,     6,     7,     8,     9,    10,    11,    12
 };
 
 #if YYDEBUG
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,   183,   183,   184,   185,   188,   189,   190,   191,   192,
-     193,   195,   196,   198,   199,   200,   201,   202,   203,   205,
-     205,   209,   211,   213,   214
+       0,   186,   186,   187,   188,   191,   192,   193,   194,   195,
+     196,   198,   199,   201,   202,   203,   204,   205,   206,   207,
+     209,   209,   213,   215,   217,   218
 };
 #endif
 
@@ -622,9 +626,9 @@ static const yytype_uint8 yyrline[] =
 static const char *const yytname[] =
 {
   "$end", "error", "$undefined", "END_OF_INPUT", "ERROR", "MACRO", "TEXT",
-  "COMMENT", "BEGIN", "END", "VERB", "TWO_DOLLARS", "'{'", "'}'", "'$'",
-  "$accept", "Init", "Items", "nonMath", "Item", "environment", "$@1",
-  "math", "displaymath", "block", YY_NULLPTR
+  "COMMENT", "BEGIN", "END", "VERB", "VERB2", "TWO_DOLLARS", "'{'", "'}'",
+  "'$'", "$accept", "Init", "Items", "nonMath", "Item", "environment",
+  "$@1", "math", "displaymath", "block", YY_NULLPTR
 };
 #endif
 
@@ -634,14 +638,14 @@ static const char *const yytname[] =
 static const yytype_uint16 yytoknum[] =
 {
        0,   256,   257,   258,   259,   260,   261,   262,   263,   264,
-     265,   266,   123,   125,    36
+     265,   266,   267,   123,   125,    36
 };
 # endif
 
-#define YYPACT_NINF -12
+#define YYPACT_NINF -13
 
 #define yypact_value_is_default(Yystate) \
-  (!!((Yystate) == (-12)))
+  (!!((Yystate) == (-13)))
 
 #define YYTABLE_NINF -1
 
@@ -652,11 +656,11 @@ static const yytype_uint16 yytoknum[] =
      STATE-NUM.  */
 static const yytype_int8 yypact[] =
 {
-      32,   -12,   -12,   -12,   -12,   -12,   -11,   -12,   102,    52,
-     102,     5,    42,   -12,   -12,   -12,   -12,   -12,     0,    14,
-     -12,   -12,    62,    92,   -12,   -12,   -12,   -12,   -12,    -3,
-     -12,   -12,   -12,   -12,   -12,    82,    72,     1,     3,    -1,
-     -12
+      32,   -13,   -13,   -13,   -13,   -13,   -12,   -13,   -13,   109,
+      54,   109,     5,    43,   -13,   -13,   -13,   -13,   -13,     0,
+      14,   -13,   -13,    65,    98,   -13,   -13,   -13,   -13,   -13,
+      -4,   -13,   -13,   -13,   -13,   -13,    87,    76,    -1,     3,
+       2,   -13
 };
 
   /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -664,23 +668,23 @@ static const yytype_int8 yypact[] =
      means the default is an error.  */
 static const yytype_uint8 yydefact[] =
 {
-       0,     4,     3,    15,    13,    14,     0,    16,     0,     0,
-       0,     0,     0,     5,    17,     6,     7,    18,     0,     0,
-      11,    24,     0,     0,     1,     2,     8,     9,    10,     0,
-      22,    12,    23,    21,    19,     0,     0,     0,     0,     0,
-      20
+       0,     4,     3,    15,    13,    14,     0,    16,    17,     0,
+       0,     0,     0,     0,     5,    18,     6,     7,    19,     0,
+       0,    11,    25,     0,     0,     1,     2,     8,     9,    10,
+       0,    23,    12,    24,    22,    20,     0,     0,     0,     0,
+       0,    21
 };
 
   /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-     -12,   -12,    -6,     6,    -8,   -12,   -12,    -5,    -4,   -12
+     -13,   -13,    -7,    12,    -9,   -13,   -13,    -6,    -5,   -13
 };
 
   /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
-      -1,    11,    12,    19,    13,    14,    35,    15,    16,    17
+      -1,    12,    13,    20,    14,    15,    36,    16,    17,    18
 };
 
   /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
@@ -688,34 +692,36 @@ static const yytype_int8 yydefgoto[] =
      number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_uint8 yytable[] =
 {
-      20,    18,    20,    22,    26,    24,    29,    27,    28,    39,
-      34,    31,    40,    38,    26,    31,    23,    27,    28,     3,
-       4,     5,     6,     0,     7,    30,     9,     0,    26,    36,
-       0,    27,    28,     1,     0,     2,     0,     3,     4,     5,
-       6,     0,     7,     8,     9,    25,    10,     3,     4,     5,
-       6,     0,     7,     8,     9,     0,    10,     3,     4,     5,
-       6,     0,     7,     8,     9,    21,    10,     3,     4,     5,
-       6,     0,     7,     8,     9,    32,    10,     3,     4,     5,
-       6,    37,     7,     8,     9,     0,    10,     3,     4,     5,
-       6,     0,     7,     8,     9,     0,    10,     3,     4,     5,
-       6,     0,     7,     0,     9,     0,    33,     3,     4,     5,
-       6,     0,     7,     0,     9
+      21,    19,    21,    23,    27,    25,    30,    28,    29,    40,
+      35,    32,    39,     0,    27,    32,    41,    28,    29,     3,
+       4,     5,     6,    24,     7,     8,    31,    10,    27,    37,
+       0,    28,    29,     1,     0,     2,     0,     3,     4,     5,
+       6,     0,     7,     8,     9,    10,    26,    11,     3,     4,
+       5,     6,     0,     7,     8,     9,    10,     0,    11,     3,
+       4,     5,     6,     0,     7,     8,     9,    10,    22,    11,
+       3,     4,     5,     6,     0,     7,     8,     9,    10,    33,
+      11,     3,     4,     5,     6,    38,     7,     8,     9,    10,
+       0,    11,     3,     4,     5,     6,     0,     7,     8,     9,
+      10,     0,    11,     3,     4,     5,     6,     0,     7,     8,
+       0,    10,     0,    34,     3,     4,     5,     6,     0,     7,
+       8,     0,    10
 };
 
 static const yytype_int8 yycheck[] =
 {
-       8,    12,    10,     9,    12,     0,     6,    12,    12,     6,
-      13,    19,    13,    12,    22,    23,    10,    22,    22,     5,
-       6,     7,     8,    -1,    10,    11,    12,    -1,    36,    35,
-      -1,    36,    36,     1,    -1,     3,    -1,     5,     6,     7,
-       8,    -1,    10,    11,    12,     3,    14,     5,     6,     7,
-       8,    -1,    10,    11,    12,    -1,    14,     5,     6,     7,
-       8,    -1,    10,    11,    12,    13,    14,     5,     6,     7,
-       8,    -1,    10,    11,    12,    13,    14,     5,     6,     7,
-       8,     9,    10,    11,    12,    -1,    14,     5,     6,     7,
-       8,    -1,    10,    11,    12,    -1,    14,     5,     6,     7,
-       8,    -1,    10,    -1,    12,    -1,    14,     5,     6,     7,
-       8,    -1,    10,    -1,    12
+       9,    13,    11,    10,    13,     0,     6,    13,    13,     6,
+      14,    20,    13,    -1,    23,    24,    14,    23,    23,     5,
+       6,     7,     8,    11,    10,    11,    12,    13,    37,    36,
+      -1,    37,    37,     1,    -1,     3,    -1,     5,     6,     7,
+       8,    -1,    10,    11,    12,    13,     3,    15,     5,     6,
+       7,     8,    -1,    10,    11,    12,    13,    -1,    15,     5,
+       6,     7,     8,    -1,    10,    11,    12,    13,    14,    15,
+       5,     6,     7,     8,    -1,    10,    11,    12,    13,    14,
+      15,     5,     6,     7,     8,     9,    10,    11,    12,    13,
+      -1,    15,     5,     6,     7,     8,    -1,    10,    11,    12,
+      13,    -1,    15,     5,     6,     7,     8,    -1,    10,    11,
+      -1,    13,    -1,    15,     5,     6,     7,     8,    -1,    10,
+      11,    -1,    13
 };
 
   /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
@@ -723,26 +729,26 @@ static const yytype_int8 yycheck[] =
 static const yytype_uint8 yystos[] =
 {
        0,     1,     3,     5,     6,     7,     8,    10,    11,    12,
-      14,    16,    17,    19,    20,    22,    23,    24,    12,    18,
-      19,    13,    17,    18,     0,     3,    19,    22,    23,     6,
-      11,    19,    13,    14,    13,    21,    17,     9,    12,     6,
-      13
+      13,    15,    17,    18,    20,    21,    23,    24,    25,    13,
+      19,    20,    14,    18,    19,     0,     3,    20,    23,    24,
+       6,    12,    20,    14,    15,    14,    22,    18,     9,    13,
+       6,    14
 };
 
   /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
 static const yytype_uint8 yyr1[] =
 {
-       0,    15,    16,    16,    16,    17,    17,    17,    17,    17,
-      17,    18,    18,    19,    19,    19,    19,    19,    19,    21,
-      20,    22,    23,    24,    24
+       0,    16,    17,    17,    17,    18,    18,    18,    18,    18,
+      18,    19,    19,    20,    20,    20,    20,    20,    20,    20,
+      22,    21,    23,    24,    25,    25
 };
 
   /* YYR2[YYN] -- Number of symbols on the right hand side of rule YYN.  */
 static const yytype_uint8 yyr2[] =
 {
        0,     2,     2,     1,     1,     1,     1,     1,     2,     2,
-       2,     1,     2,     1,     1,     1,     1,     1,     1,     0,
-      10,     3,     3,     3,     2
+       2,     1,     2,     1,     1,     1,     1,     1,     1,     1,
+       0,    10,     3,     3,     3,     2
 };
 
 
@@ -1638,7 +1644,7 @@ yyreduce:
 
   case 17:
 
-    { (yyval) = (yyvsp[0]); }
+    { (yyval) = xxtag((yyvsp[0]), VERB, &(yyloc)); }
 
     break;
 
@@ -1650,36 +1656,42 @@ yyreduce:
 
   case 19:
 
-    { xxSetInVerbEnv((yyvsp[-1])); }
+    { (yyval) = (yyvsp[0]); }
 
     break;
 
   case 20:
+
+    { xxSetInVerbEnv((yyvsp[-1])); }
+
+    break;
+
+  case 21:
 
     { (yyval) = xxenv((yyvsp[-7]), (yyvsp[-4]), (yyvsp[-1]), &(yyloc));
                                                   RELEASE_SV((yyvsp[-9])); RELEASE_SV((yyvsp[-3])); }
 
     break;
 
-  case 21:
+  case 22:
 
     { (yyval) = xxmath((yyvsp[-1]), &(yyloc), FALSE); }
 
     break;
 
-  case 22:
+  case 23:
 
     { (yyval) = xxmath((yyvsp[-1]), &(yyloc), TRUE); }
 
     break;
 
-  case 23:
+  case 24:
 
     { (yyval) = xxblock((yyvsp[-1]), &(yyloc)); }
 
     break;
 
-  case 24:
+  case 25:
 
     { (yyval) = xxblock(NULL, &(yyloc)); }
 
@@ -2199,6 +2211,7 @@ static void PutState(ParseState *state) {
     state->xxinitvalue = parseState.xxinitvalue;
     state->xxInVerbEnv = parseState.xxInVerbEnv;
     state->xxVerbatimList = parseState.xxVerbatimList;
+    state->xxVerbList = parseState.xxVerbList;
     state->SrcFile = parseState.SrcFile; 
     state->prevState = parseState.prevState;
 }
@@ -2212,6 +2225,7 @@ static void UseState(ParseState *state) {
     parseState.xxinitvalue = state->xxinitvalue;
     parseState.xxInVerbEnv = state->xxInVerbEnv;
     parseState.xxVerbatimList = state->xxVerbatimList;
+    parseState.xxVerbList = state->xxVerbList;
     parseState.SrcFile = state->SrcFile; 
     parseState.prevState = state->prevState;
 }
@@ -2319,6 +2333,12 @@ static int KeywordLookup(const char *s)
 	if (strcmp(keywords[i].name, s) == 0) 
 	    return keywords[i].token;
     }
+    
+    for (i = 0; i < length(parseState.xxVerbList); i++) {
+    	if (strcmp(CHAR(STRING_ELT(parseState.xxVerbList, i)), s) == 0)
+    	    return VERB2;
+    }
+    
     return MACRO;
 }
 
@@ -2560,6 +2580,8 @@ static int mkMarkup(int c)
         retval = KeywordLookup(stext);
         if (retval == VERB)
             retval = mkVerb(c); /* This makes the yylval */
+        else if (retval == VERB2)
+            retval = mkVerb2(stext, c); /* ditto */
         else if (c != ' ') /* Eat a space, but keep other terminators */
     	    xxungetc(c);
     }
@@ -2578,6 +2600,25 @@ static int mkVerb(int c)
     int delim = c;   
     
     TEXT_PUSH('\\'); TEXT_PUSH('v'); TEXT_PUSH('e'); TEXT_PUSH('r'); TEXT_PUSH('b');
+    TEXT_PUSH(c);
+    while (((c = xxgetc()) != delim) && c != R_EOF) TEXT_PUSH(c);
+    if (c != R_EOF) TEXT_PUSH(c);
+    
+    PRESERVE_SV(yylval = mkString2(stext, bp - stext));
+    if(st1) free(st1);
+    return VERB;  
+}
+
+static int mkVerb2(const char *s, int c)
+{
+    char st0[INITBUFSIZE];
+    char *st1 = NULL;
+    unsigned int nstext = INITBUFSIZE;
+    char *stext = st0, *bp = st0;
+    int c0, delim = '}';  
+    
+    while (*s) TEXT_PUSH(*s++);
+    
     TEXT_PUSH(c);
     while (((c = xxgetc()) != delim) && c != R_EOF) TEXT_PUSH(c);
     if (c != R_EOF) TEXT_PUSH(c);
@@ -2652,7 +2693,7 @@ static void PopState(void) {
 
 /* "do_parseLatex" 
 
- .External2("parseLatex", file, srcfile, verbose, basename, warningCalls)
+ .External2("parseLatex", text, srcfile, verbose, verbatim, verb)
  If there is text then that is read and the other arguments are ignored.
 */
 
@@ -2679,6 +2720,7 @@ SEXP parseLatex(SEXP call, SEXP op, SEXP args, SEXP env)
     	error(_("invalid '%s' value"), "verbose");
     parseState.xxDebugTokens = asInteger(CAR(args));	args = CDR(args);
     parseState.xxVerbatimList = CAR(args); 		args = CDR(args);
+    parseState.xxVerbList = CAR(args);
 
     s = R_ParseLatex(text, &status, source);
     
