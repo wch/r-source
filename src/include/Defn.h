@@ -1167,7 +1167,7 @@ typedef struct {
 # define SET_PROMISE_LVAL SET_BNDCELL_LVAL
 #else
 # define PRVALUE0(x) ((x)->u.promsxp.value)
-# define PRVALUE PRVALUE0
+# define PRVALUE(x) PRVALUE0(x)
 # define PROMISE_IS_EVALUATED(x) (PRVALUE(x) != R_UnboundValue)
 # define PROMISE_TAG(x) 0
 #endif
