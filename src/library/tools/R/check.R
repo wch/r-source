@@ -1435,6 +1435,37 @@ add_dummies <- function(dir, Log)
                              "Files 'README.md' or 'NEWS.md' cannot be checked without 'pandoc' being installed.\n")
                 }
             }
+            ## CRAN must be able to convert inst/NEWS.Rd to *valid* HTML
+            ## using Rd2HTML_NEWS_in_Rd(): check that this works fine.
+            if(file.exists(nfile <- file.path("inst", "NEWS.Rd")) &&
+               nzchar(Tidy <- .find_tidy_cmd())) {
+                out <- tempfile()
+                bad <- tryCatch({
+                    Rd2HTML_NEWS_in_Rd(nfile, out, concordance = TRUE)
+                    tidy_validate(out, tidy = Tidy)
+                },
+                error = identity)
+                if(inherits(bad, "error")) {
+                    if(!any) noteLog(Log)
+                    any <- TRUE
+                    printLog0(Log,
+                              c("Encountered the following errors for NEWS.Rd HTML conversion/validation:\n",
+                                paste(conditionMessage(bad), collapse = "\n"),
+                                "\n"))
+                }
+                else if(NROW(bad)) {
+                    if(!any) noteLog(Log)
+                    any <- TRUE
+                    printLog0(Log,
+                              c("Found the following validation problem for the NEWS.Rd HTML conversion:\n",
+                                sprintf("NEWS.html:%s:%s (%s:%s): %s\n",
+                                        bad[, "line"],
+                                        bad[, "col"],
+                                        bad[, "srcFile"],
+                                        bad[, "srcLine"],
+                                        bad[, "msg"])))
+                }
+            }
         }
         topfiles <- Sys.glob(c("LICENCE", "LICENSE"))
         if (length(topfiles)) {
