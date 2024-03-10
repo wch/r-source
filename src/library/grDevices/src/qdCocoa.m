@@ -331,25 +331,34 @@ static QuartzFunctions_t *qf;
     ci->pdfMode = NO;
 }
 
+/* we need at least macOS 11 target to worry about the Sonoma bug */
+#if defined (__ENVIRONMENT_MAC_OS_X_VERSION_MIN_REQUIRED__) && (__ENVIRONMENT_MAC_OS_X_VERSION_MIN_REQUIRED__ >= 110000)
+/* since this is a run-time problem, we can't use avalability checks,
+   since we are using macOS 11 SDK target, so we have to determine the
+   run-time version of the macOS */
 static int sonoma_bug = -1; /* -1 = macOS not checked yet, 0 = no, 1 = yes */
+static int has_sonoma_bug() {
+    if (sonoma_bug == -1) { /* detect os version to work around the nasty Sonoma drawing bug */
+    NSOperatingSystemVersion osver = [[NSProcessInfo processInfo] operatingSystemVersion];
+    sonoma_bug = (osver.majorVersion == 14 && osver.minorVersion > 1) ? 1 : 0;
+    /* Rprintf("macOS %d.%d.%d, buggy = %d\n", (int)osver.majorVersion, (int)osver.minorVersion,
+       (int)osver.patchVersion, sonoma_bug); */
+    }
+    return sonoma_bug;
+}
+#define CHECK_SONOMA_BUG 1
+#endif
 
 - (void)drawRect:(NSRect)aRect
 {
     CGRect rect;
-    CGContextRef ctx = [NSGraphicsContext currentContext].CGContext;
+    CGContextRef ctx = [[NSGraphicsContext currentContext] graphicsPort];
     /* we have to retain our copy, beause we may need to create a layer
        based on the context in NewPage outside of drawRect: */
     if (ci->context != ctx) {
         if (ci->context)
             CGContextRelease(ci->context);
         CGContextRetain(ctx);
-    }
-
-    if (sonoma_bug == -1) { /* detect os version to work around the nasty Sonoma drawing bug */
-	NSOperatingSystemVersion osver = [[NSProcessInfo processInfo] operatingSystemVersion];
-	sonoma_bug = (osver.majorVersion == 14 && osver.minorVersion > 1) ? 1 : 0;
-	/* Rprintf("macOS %d.%d.%d, buggy = %d\n", (int)osver.majorVersion, (int)osver.minorVersion,
-	   (int)osver.patchVersion, sonoma_bug); */
     }
 
     ci->context = ctx;
@@ -401,13 +410,14 @@ static int sonoma_bug = -1; /* -1 = macOS not checked yet, 0 = no, 1 = yes */
     }
     if ([self inLiveResize]) CGContextSetAlpha(ctx, 0.6); 
     if (ci->layer) {
+#ifdef CHECK_SONOMA_BUG
 	/* macOS 14.3.1 has a very bizarre bug which appears to be some kind
 	   of over-zealous optimization where it won't update the view even if
 	   the contents changed after drawing the CGLayer. The only way to prevent
 	   this from happening seems to be to draw something different than
 	   CGLayer each time in the same location before drawing the CGLayer. */
-	static double _q = 0.0;
-	if (sonoma_bug) {
+	if (has_sonoma_bug()) {
+	    static double _q = 0.0;
 	    CGContextSaveGState(ctx);
 	    CGRect cr = { 0.0, 0.0, 1.0, 1.0 };
 	    CGContextAddRect(ctx, cr);
@@ -416,6 +426,7 @@ static int sonoma_bug = -1; /* -1 = macOS not checked yet, 0 = no, 1 = yes */
 	    CGContextFillPath(ctx);
 	    CGContextRestoreGState(ctx);
 	}
+#endif
         CGContextDrawLayerInRect(ctx, rect, ci->layer);
     }
     if ([self inLiveResize]) CGContextSetAlpha(ctx, 1.0); 
