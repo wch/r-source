@@ -745,13 +745,13 @@ static R_size_t R_NodesInUse = 0;
     dc__action__(HASHTAB(__n__), dc__extra__); \
     break; \
   case LISTSXP: \
+  case PROMSXP: \
     dc__action__(TAG(__n__), dc__extra__); \
     if (BOXED_BINDING_CELLS || BNDCELL_TAG(__n__) == 0) \
       dc__action__(CAR0(__n__), dc__extra__); \
     dc__action__(CDR(__n__), dc__extra__); \
     break; \
   case CLOSXP: \
-  case PROMSXP: \
   case LANGSXP: \
   case DOTSXP: \
   case SYMSXP: \
@@ -2624,7 +2624,7 @@ attribute_hidden SEXP mkPROMISE(SEXP expr, SEXP rho)
     SET_TYPEOF(s, PROMSXP);
     PRCODE(s) = CHK(expr); INCREMENT_REFCNT(expr);
     PRENV(s) = CHK(rho); INCREMENT_REFCNT(rho);
-    PRVALUE(s) = R_UnboundValue;
+    PRVALUE0(s) = R_UnboundValue;
     PRSEEN(s) = 0;
     ATTRIB(s) = R_NilValue;
     return s;
@@ -4272,6 +4272,15 @@ attribute_hidden void R_expand_binding_value(SEXP b)
 #endif
 }
 
+#ifdef IMMEDIATE_PROMISE_VALUES
+attribute_hidden SEXP R_expand_promise_value(SEXP x)
+{
+    if (PROMISE_TAG(x))
+	R_expand_binding_value(x);
+    return PRVALUE0(x);
+}
+#endif
+
 attribute_hidden void R_args_enable_refcnt(SEXP args)
 {
 #ifdef SWITCH_TO_REFCNT
@@ -4504,9 +4513,15 @@ void (SET_PRVALUE)(SEXP x, SEXP v)
 {
     if (TYPEOF(x) != PROMSXP)
 	error("expecting a 'PROMSXP', not a '%s'", R_typeToChar(x));
-    FIX_REFCNT(x, PRVALUE(x), v);
+#ifdef IMMEDIATE_PROMISE_VALUES
+    if (PROMISE_TAG(x)) {
+	SET_PROMISE_TAG(x, 0);
+	PRVALUE0(x) = R_UnboundValue;
+    }
+#endif
+    FIX_REFCNT(x, PRVALUE0(x), v);
     CHECK_OLD_TO_NEW(x, v);
-    PRVALUE(x) = v;
+    PRVALUE0(x) = v;
 }
 
 attribute_hidden

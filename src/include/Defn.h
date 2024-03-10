@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998--2023  The R Core Team.
+ *  Copyright (C) 1998--2024  The R Core Team.
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -1152,10 +1152,28 @@ typedef struct {
 /* Promise Access Macros */
 #define PRCODE(x)	((x)->u.promsxp.expr)
 #define PRENV(x)	((x)->u.promsxp.env)
-#define PRVALUE(x)	((x)->u.promsxp.value)
 #define PRSEEN(x)	((x)->sxpinfo.gp)
 #define SET_PRSEEN(x,v)	(((x)->sxpinfo.gp)=(v))
-#define PROMISE_IS_EVALUATED(x) (PRVALUE(x) != R_UnboundValue)
+#ifdef IMMEDIATE_PROMISE_VALUES
+# define PRVALUE0(x) ((x)->u.promsxp.value)
+# define PRVALUE(x) \
+    (PROMISE_TAG(x) ? R_expand_promise_value(x) : PRVALUE0(x))
+# define PROMISE_IS_EVALUATED(x) \
+    (PROMISE_TAG(x) || PRVALUE0(x) != R_UnboundValue)
+# define PROMISE_TAG  BNDCELL_TAG
+# define SET_PROMISE_TAG SET_BNDCELL_TAG
+# define SET_PROMISE_DVAL SET_BNDCELL_DVAL
+# define SET_PROMISE_IVAL SET_BNDCELL_IVAL
+# define SET_PROMISE_LVAL SET_BNDCELL_LVAL
+#else
+# define PRVALUE0(x) ((x)->u.promsxp.value)
+# define PRVALUE PRVALUE0
+# define PROMISE_IS_EVALUATED(x) (PRVALUE(x) != R_UnboundValue)
+# define PROMISE_TAG(x) 0
+#endif
+#define PROMISE_DVAL BNDCELL_DVAL
+#define PROMISE_IVAL BNDCELL_IVAL
+#define PROMISE_LVAL BNDCELL_LVAL
 
 /* Hashing Macros */
 #define HASHASH(x)      ((x)->sxpinfo.gp & HASHASH_MASK)
@@ -1261,7 +1279,7 @@ Rboolean (NO_SPECIAL_SYMBOLS)(SEXP b);
    compiled 'for' loops. This could be used more extensively in the
    future, though the ALTREP framework may be a better choice.
 
-   Allocating on the stack memory is also supported; this is currently
+   Allocating memory on the stack is also supported; this is currently
    used for jump buffers.
 */
 typedef struct {
@@ -2181,6 +2199,9 @@ void R_SetPPSize(R_size_t);
 void R_SetNconn(int);
 
 void R_expand_binding_value(SEXP);
+#ifdef IMMEDIATE_PROMISE_VALUES
+SEXP R_expand_promise_value(SEXP);
+#endif
 
 void R_args_enable_refcnt(SEXP);
 void R_try_clear_args_refcnt(SEXP);
