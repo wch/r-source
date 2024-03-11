@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2012-2022   The R Core Team.
+ *  Copyright (C) 2012-2024   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -173,8 +173,10 @@ SEXP nsl(SEXP hostname)
 
 #include <config.h>
 
-/* Would like to identify Alpine Linux/musl here, but they refuse to
-   have a compiler macro. */
+/* Would like to identify musl here, but they refuse to
+   have a compiler macro.
+   (Used by Alpine Linux and other lightweight Linux distros.)
+*/
 SEXP tzcode_type(void)
 {
 #ifdef USE_INTERNAL_MKTIME
