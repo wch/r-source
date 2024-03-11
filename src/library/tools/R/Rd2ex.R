@@ -82,8 +82,10 @@ Rd2ex <-
 		last <- x[[length(x)]]
 		if (!grepl("\n$", last[length(last)], perl = TRUE))
 		    writeLines("", con)
-		if (label)
-		    of0("## ", label2)
+		if (label) {
+		    of0("## ", label2, "\n")
+		    dropNewline <<- TRUE
+		}
 	    }
 	}
 	tag <- attr(x, "Rd_tag")

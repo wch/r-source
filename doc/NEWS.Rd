@@ -645,6 +645,11 @@
 
       \item \code{str(<classed-call>)} now deparses the call as expected,
       fixing \PR{18684}, reported by \I{Dave Slager}.
+
+      \item In Rd examples, code following the closing brace of a
+      \verb{\dontrun}, \verb{\dontshow} or \verb{\donttest} tag
+      on the same line is no longer skipped when \command{R CMD check}
+      runs the examples.
     }
   }
 }

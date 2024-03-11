@@ -73,7 +73,7 @@ writeLines(r"(
 )", f)
 m <- loadRdMacros(f)
 ls(m)
-\donttest{ls(parent.env(m))}  % collation-specific
+\donttest{ls(parent.env(m))}% collation-specific
 ls(parent.env(parent.env(m)))
 parse_Rd(textConnection(r"(\Rlogo)"), fragment = TRUE, macros = m)
 }

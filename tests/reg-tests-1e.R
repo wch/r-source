@@ -1219,6 +1219,17 @@ stopifnot(grepl("a > 2 * b", sto[[1]], fixed=TRUE), # had ' > a 2 * b'
 ## previously used as.character() as "last resort" in R <= 4.3.*
 
 
+## Rd2ex() with code directly following a \dont...{} tag
+rd <- tools::parse_Rd(textConnection(c(
+    "\\name{test}\\title{test}\\examples{",
+    "\\dontshow{if(TRUE)} stop('catch me')",
+    "print(0)}"
+)))
+tools::Rd2ex(rd, tf <- tempfile())
+tools::assertError(source(tf), verbose = TRUE)
+## skipped the stop() and printed 0 in R < 4.4.0
+
+
 ## keep at end
 rbind(last =  proc.time() - .pt,
       total = proc.time())
