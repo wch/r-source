@@ -250,7 +250,7 @@ OlsonNames(tzdir = NULL)
 
   %% https://mm.icann.org/pipermail/tz/2024-March/025162.html
   %% https://mm.icann.org/pipermail/tz/2024-March/025166.html
-  For many years, the legacy names \code{EST5EDT} and \code{PSTPDT}
+  For many years, the legacy names \code{EST5EDT} and \code{PST8PDT}
   were portable, but \code{musl} (the C runtime used by Alpine Linux)
   does not use DST with those names.
 }

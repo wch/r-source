@@ -166,7 +166,7 @@ Sys.getlocale()
 
 ## Date-time  related :
 Sys.getlocale("LC_TIME") -> olcT
-then <- as.POSIXlt("2001-01-01 01:01:01", tz = "UTC+1")
+then <- as.POSIXlt("2001-01-01 01:01:01", tz = "UTC")
 \dontrun{
 c(m = months(then), wd = weekdays(then)) # locale specific
 Sys.setlocale("LC_TIME", "de")     # Solaris: details are OS-dependent
