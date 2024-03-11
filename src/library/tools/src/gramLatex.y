@@ -171,7 +171,6 @@ static SEXP R_LatexTagSymbol = NULL;
 %token		TEXT COMMENT
 %token	        BEGIN END VERB VERB2
 %token          TWO_DOLLARS
-%token          TWO_DOLLARS
 
 /* Recent bison has <> to represent all of the destructors below, but we don't assume it */
 
@@ -898,7 +897,7 @@ static int mkVerb2(const char *s, int c)
     char *st1 = NULL;
     unsigned int nstext = INITBUFSIZE;
     char *stext = st0, *bp = st0;
-    int c0, delim = '}';  
+    int delim = '}';
     
     while (*s) TEXT_PUSH(*s++);
     
