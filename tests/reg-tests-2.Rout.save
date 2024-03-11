@@ -1,6 +1,6 @@
 
-R Under development (unstable) (2023-10-23 r85401) -- "Unsuffered Consequences"
-Copyright (C) 2023 The R Foundation for Statistical Computing
+R Under development (unstable) (2024-03-11 r86096) -- "Unsuffered Consequences"
+Copyright (C) 2024 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -6366,7 +6366,7 @@ function(given = NULL) {
     if (is.null(given)) callObj$default <- TRUE
     callObj
 }
-<bytecode: 0x563a4cd32a90>
+<bytecode: 0x562f0421fcc8>
 > print(foo, useSource = FALSE)
 function (given = NULL) 
 {
@@ -6377,7 +6377,7 @@ function (given = NULL)
         callObj$default <- TRUE
     callObj
 }
-<bytecode: 0x563a4cd32a90>
+<bytecode: 0x562f0421fcc8>
 > attr(foo, "srcref") <- NULL
 > foo
 function (given = NULL) 
@@ -6389,7 +6389,7 @@ function (given = NULL)
         callObj$default <- TRUE
     callObj
 }
-<bytecode: 0x563a4cd32a90>
+<bytecode: 0x562f0421fcc8>
 > (f <- structure(function(){}, note = "just a note",
 +                 yada = function() "not the same"))
 function(){}
@@ -7445,9 +7445,14 @@ Dec 1960 432 432
 > ## Related to PR#15190
 > difftime(
 +     as.POSIXct(c("1970-01-01 00:00:00", "1970-01-01 12:00:00"), tz="EST5EDT"),
-+     as.POSIXct(c("1970-01-01 00:00:00", "1970-01-01 00:00:00"), tz="UTC"))
-Time differences in hours
-[1]  5 17
++     as.POSIXct(c("1970-01-01 00:00:00", "1970-01-01 00:00:00"), tz="UTC")) |>
++     attributes()
+$class
+[1] "difftime"
+
+$units
+[1] "hours"
+
 > ## kept tzone from first arg.
 > 
 > 
@@ -8337,7 +8342,7 @@ Error in f() : argument is missing, with no default
 >     withAutoprint({ show.srcref() })
  language show.srcref()
  - attr(*, "srcref")= 'srcref' int [1:8] 1 21 1 33 21 33 3 3
-  ..- attr(*, "srcfile")=Classes 'srcfilealias', 'srcfile' <environment: 0x563a4c811e70> 
+  ..- attr(*, "srcfile")=Classes 'srcfilealias', 'srcfile' <environment: 0x562f01758010> 
 > ## no   attr(*, "src..")   in R <= 4.3.1
 > ##
 > withAutoprint({

@@ -2907,7 +2907,8 @@ options(op)
 ## Related to PR#15190
 difftime(
     as.POSIXct(c("1970-01-01 00:00:00", "1970-01-01 12:00:00"), tz="EST5EDT"),
-    as.POSIXct(c("1970-01-01 00:00:00", "1970-01-01 00:00:00"), tz="UTC"))
+    as.POSIXct(c("1970-01-01 00:00:00", "1970-01-01 00:00:00"), tz="UTC")) |>
+    attributes()
 ## kept tzone from first arg.
 
 
