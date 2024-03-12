@@ -34,7 +34,7 @@ Type 'q()' to quit R.
 > zz <- url("https://cran.r-project.org/")
 > readLines(zz)
  [1] "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Frameset//EN\" \"http://www.w3.org/TR/html4/frameset.dtd\">"
- [2] "<html>"                                                                                                   
+ [2] "<html lang=en>"                                                                                                   
  [3] "<head>"                                                                                                   
  [4] "<title>The Comprehensive R Archive Network</title>"                                                       
  [5] "<META HTTP-EQUIV=\"content-type\" CONTENT=\"text/html; charset=utf-8\">"                                  
