@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1999--2023  The R Core Team
+ *  Copyright (C) 1999--2024  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -910,7 +910,7 @@ int vasprintf(char **strp, const char *fmt, va_list ap)
 # define R_BUFSIZE BUFSIZE
 // similar to dummy_vfprintf in connections.c
 attribute_hidden
-void Rcons_vprintf(const char *format, va_list arg)
+int Rcons_vprintf(const char *format, va_list arg)
 {
     char buf[R_BUFSIZE], *p = buf;
     int res;
@@ -946,9 +946,11 @@ void Rcons_vprintf(const char *format, va_list arg)
 	    warning(_("printing of extremely long output is truncated"));
     }
 #endif /* HAVE_VASPRINTF */
-    R_WriteConsole(p, (int) strlen(p));
+    res = (int) strlen(p);
+    R_WriteConsole(p, res);
     if(usedRalloc) vmaxset(vmax);
     if(usedVasprintf) free(p);
+    return res;
 }
 
 void Rvprintf(const char *format, va_list arg)
@@ -985,9 +987,11 @@ void Rvprintf(const char *format, va_list arg)
    It is also used in R_Suicide on Unix.
 */
 
-void REvprintf(const char *format, va_list arg)
+attribute_hidden
+int REvprintf_internal(const char *format, va_list arg)
 {
     static char *malloc_buf = NULL;
+    int res;
 
     if (malloc_buf) {
 	char *tmp = malloc_buf;
@@ -1001,27 +1005,28 @@ void REvprintf(const char *format, va_list arg)
 	    R_ErrorCon = 2;
 	} else {
 	    /* Parentheses added for FC4 with gcc4 and -D_FORTIFY_SOURCE=2 */
-	    (con->vfprintf)(con, format, arg);
+	    res = (con->vfprintf)(con, format, arg);
 	    con->fflush(con);
-	    return;
+	    return res;
 	}
     }
     if(R_Consolefile) {
 	/* try to interleave stdout and stderr carefully */
 	if(R_Outputfile && (R_Outputfile != R_Consolefile)) {
 	    fflush(R_Outputfile);
-	    vfprintf(R_Consolefile, format, arg);
+	    res = vfprintf(R_Consolefile, format, arg);
 	    /* normally R_Consolefile is stderr and so unbuffered, but
 	       it can be something else (e.g. stdout on Win9x) */
 	    fflush(R_Consolefile);
-	} else vfprintf(R_Consolefile, format, arg);
+	} else
+	    res = vfprintf(R_Consolefile, format, arg);
     } else {
 	char buf[BUFSIZE];
 	Rboolean printed = FALSE;
 	va_list aq;
 
 	va_copy(aq, arg);
-	int res = Rvsnprintf_mbcs(buf, BUFSIZE, format, aq);
+	res = Rvsnprintf_mbcs(buf, BUFSIZE, format, aq);
 	va_end(aq);
 	if (res >= BUFSIZE) {
 	    /* A very long string has been truncated. Try to allocate a large
@@ -1042,9 +1047,17 @@ void REvprintf(const char *format, va_list arg)
 		free(tmp);
 	    }
 	}
-	if (!printed)
-	    R_WriteConsoleEx(buf, (int) strlen(buf), 1);
+	if (!printed) {
+	    res = (int) strlen(buf);
+	    R_WriteConsoleEx(buf, res, 1);
+	}
     }
+    return res;
+}
+
+void REvprintf(const char *format, va_list arg)
+{
+    REvprintf_internal(format, arg);
 }
 
 int attribute_hidden IndexWidth(R_xlen_t n)

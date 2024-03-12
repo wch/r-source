@@ -83,6 +83,7 @@
  PrintUsage
  ProfileEvent
  PROMISE_IS_EVALUATED
+ REvprintf_internal
  RExitContext
  R_BCIntActive
  R_BCNodeStackBase
