@@ -1,6 +1,6 @@
 % File src/library/base/man/locales.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2023 R Core Team
+% Copyright 1995-2024 R Core Team
 % Distributed under GPL 2 or later
 
 \name{locales}
@@ -57,10 +57,11 @@ Sys.setlocale (category = "LC_ALL", locale = "")
 
   The first seven categories described here are those specified by
   POSIX.  \code{"LC_MESSAGES"} will be \code{"C"} on systems that do not
-  support message translation, and is not supported on Windows, where you
-  \emph{must} use the \env{LANGUAGE} environment variable for message
-  translation, see below and the \code{\link{Sys.setLanguage}()} utility.  Trying
-  to use an unsupported category is an error for \code{Sys.setlocale}.
+  support message translation, and is not supported on Windows, where
+  you \emph{must} use the \env{LANGUAGE} environment variable for
+  message translation, see below and the \code{\link{Sys.setLanguage}()}
+  utility.  Trying to use an unsupported category is an error for
+  \code{Sys.setlocale}.
 
   Note that setting category \code{"LC_ALL"} sets only categories
   \code{"LC_COLLATE"}, \code{"LC_CTYPE"}, \code{"LC_MONETARY"} and
@@ -189,15 +190,18 @@ Sys.getlocale("LC_PAPER")          # may or may not be set
                                    # usually (but not on all platforms)
 Sys.setenv("LANGUAGE" = "es") # set the language for error/warning messages
 }
-\donttest{## some nice formatting; should work on most platforms:
- sys <- Sys.info()[["sysname"]]
- sep <- switch(sys,
+\donttest{## some nice formatting; should work on most platforms,
+          ## macOS does not name the entries.
+ sep <- switch(Sys.info()[["sysname"]],
                "Darwin"=, "SunOS" = "/",
                "Linux" =, "Windows" = ";")
  ##' show a "full" Sys.getlocale() nicely:
  showL <- function(loc) {
      sl <- strsplit(strsplit(loc, sep)[[1L]], "=")
-     setNames(sapply(sl, `[[`, 2L), sapply(sl, `[[`, 1L))
+     if(all(sapply(sl, length) == 2L))
+        setNames(sapply(sl, `[[`, 2L), sapply(sl, `[[`, 1L))
+     else
+       setNames(as.character(sl), .LC.categories[1+seq_along(sl)])
  }
  print.Dlist(lloc <- showL(Sys.getlocale()))
  ## R-supported ones (but LC_ALL):
