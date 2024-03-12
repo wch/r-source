@@ -3824,27 +3824,6 @@ List of 18
 > 
 > ### ** Examples
 > 
-> if(.Platform$OS.type == "unix") { # includes Mac
-+ 
-+  utils::str( quartzFonts() ) # a list(serif = .., sans = .., mono = ..)
-+  quartzFonts("mono") # the list(mono = ..) sublist of quartzFonts()
-+ ## Not run: 
-+ ##D   ## for East Asian locales you can use something like
-+ ##D   quartzFonts(sans = quartzFont(rep("AppleGothic", 4)),
-+ ##D 	      serif = quartzFont(rep("AppleMyungjp", 4)))
-+ ##D   ## since the default fonts may well not have the glyphs needed
-+ ## End(Not run)
-+ }
-List of 3
- $ serif: chr [1:4] "Times-Roman" "Times-Bold" "Times-Italic" "Times-BoldItalic"
- $ sans : chr [1:4] "Helvetica" "Helvetica-Bold" "Helvetica-Oblique" "Helvetica-BoldOblique"
- $ mono : chr [1:4] "Courier" "Courier-Bold" "Courier-Oblique" "Courier-BoldOblique"
-$mono
-[1] "Courier"             "Courier-Bold"        "Courier-Oblique"    
-[4] "Courier-BoldOblique"
-
-> 
-> 
 > 
 > cleanEx()
 > nameEx("recordGraphics")
@@ -4107,24 +4086,6 @@ points cut off after point[39]
 > ### Keywords: device
 > 
 > ### ** Examples
-> 
-> if(.Platform$OS.type == "windows") withAutoprint({
-+   windowsFonts()
-+   windowsFonts("mono")
-+ })
-> ## Not run: 
-> ##D ## set up for Japanese: needs the fonts installed
-> ##D windows()  # make sure we have the right device type (available on Windows only)
-> ##D Sys.setlocale("LC_ALL", "ja")
-> ##D windowsFonts(JP1 = windowsFont("MS Mincho"),
-> ##D              JP2 = windowsFont("MS Gothic"),
-> ##D              JP3 = windowsFont("Arial Unicode MS"))
-> ##D plot(1:10)
-> ##D text(5, 2, "\u{4E10}\u{4E00}\u{4E01}", family = "JP1")
-> ##D text(7, 2, "\u{4E10}\u{4E00}\u{4E01}", family = "JP1", font = 2)
-> ##D text(5, 1.5, "\u{4E10}\u{4E00}\u{4E01}", family = "JP2")
-> ##D text(9, 2, "\u{5100}", family = "JP3")
-> ## End(Not run)
 > 
 > 
 > cleanEx()

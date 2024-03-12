@@ -59,7 +59,6 @@ example(grSoftVersion, run.donttest = TRUE)
 if(.Platform$OS.type == "windows") {
     example(windowsFonts, run.donttest = TRUE)
 } else {
-    example(X11Fonts, run.donttest = TRUE)
     example(quartzFonts, run.donttest = TRUE)
 }
 

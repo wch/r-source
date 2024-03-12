@@ -50,11 +50,12 @@ quartzFonts(...)
 \seealso{
   \code{\link{quartz}} for the default Mac graphics device.
 }
-\examples{
-if(.Platform$OS.type == "unix") { # includes Mac
+\examples{\donttest{% but in reg-examples1.R
+if(.Platform$OS.type == "unix") { # includes macOS
 
- utils::str( quartzFonts() ) # a list(serif = .., sans = .., mono = ..)
- quartzFonts("mono") # the list(mono = ..) sublist of quartzFonts()
+  utils::str( quartzFonts() )  # a list(serif = .., sans = .., mono = ..)
+  quartzFonts("mono")          # the list(mono = ..) sublist of quartzFonts()
+
 \dontrun{
   ## for East Asian locales you can use something like
   quartzFonts(sans = quartzFont(rep("AppleGothic", 4)),
@@ -62,5 +63,5 @@ if(.Platform$OS.type == "unix") { # includes Mac
   ## since the default fonts may well not have the glyphs needed
 }
 }
-}
+}}
 \keyword{device}
