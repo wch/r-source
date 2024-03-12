@@ -3,8 +3,6 @@
 % Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
-\newcommand{\bibshow}{#1}
-
 \name{embedFonts}
 \alias{embedFonts}
 \alias{embedGlyphs}
