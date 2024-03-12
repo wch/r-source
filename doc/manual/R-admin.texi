@@ -1598,7 +1598,7 @@ second for older Macs with an @cputype{x86_64} (Intel) CPU.
 Package @file{R-@value{VERSIONno}.pkg} also be installed on `Apple
 Silicon' CPUs using `Rosetta' emulation@footnote{You may be asked to
 install Rosetta at first use --
-@url{https://support.apple.com/en-us/HT211861} -- which may need
+@url{https://support.apple.com/en-us/102527} -- which may need
 administrator privileges.}, but the native build is preferred.  It is a
 little faster (and for some tasks, considerably so) but may give
 different numerical results from the more common @cputype{x86_64}
