@@ -749,9 +749,9 @@ static const yytype_int8 yytranslate[] =
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,   186,   186,   187,   188,   191,   192,   193,   194,   195,
-     196,   198,   199,   201,   202,   203,   204,   205,   206,   207,
-     209,   209,   213,   215,   217,   218
+       0,   185,   185,   186,   187,   190,   191,   192,   193,   194,
+     195,   197,   198,   200,   201,   202,   203,   204,   205,   206,
+     208,   208,   212,   214,   216,   217
 };
 #endif
 
@@ -2462,7 +2462,7 @@ static int mkVerb2(const char *s, int c)
     char *st1 = NULL;
     unsigned int nstext = INITBUFSIZE;
     char *stext = st0, *bp = st0;
-    int c0, delim = '}';  
+    int delim = '}';
     
     while (*s) TEXT_PUSH(*s++);
     
