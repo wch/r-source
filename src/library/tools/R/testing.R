@@ -629,11 +629,15 @@ testInstalledPackage <-
 ## Defaults for commenting are the same as per-3.2.0 version.
 .createExdotR <-
     function(pkg, pkgdir, silent = FALSE, use_gct = FALSE, addTiming = FALSE,
-             ..., commentDontrun = TRUE, commentDonttest = TRUE)
+             ..., commentDontrun = TRUE, commentDonttest = TRUE,
+             installed = TRUE)
 {
     Rfile <- paste0(pkg, "-Ex.R")
 
-    db <- Rd_db(basename(pkgdir), lib.loc = dirname(pkgdir))
+    db <- if(installed)
+              Rd_db(basename(pkgdir), lib.loc = dirname(pkgdir))
+          else
+              Rd_db(dir = pkgdir)
     if (!length(db)) {
         message("no parsed files found")
         return(invisible(NULL))

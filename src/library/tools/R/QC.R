@@ -6612,7 +6612,8 @@ function(package, dir, lib.loc = NULL)
     pkg_name <- db["Package"]
 
     file <- .createExdotR(pkg_name, dir, silent = TRUE,
-                          commentDonttest = FALSE)
+                          commentDonttest = FALSE,
+                          installed = !missing(package))
     if (is.null(file)) return(invisible(NULL)) # e.g, no examples
     enc <- db["Encoding"]
     if(!is.na(enc) &&
