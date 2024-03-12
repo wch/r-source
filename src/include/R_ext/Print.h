@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998-2024    The R Core Team
+ *  Copyright (C) 1998-2023    The R Core Team
  *
  *  This header file is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -61,13 +61,13 @@ extern "C" {
 # define R_PRINTF_FORMAT(M,N)
 #endif
 
-int Rprintf(const char *, ...) R_PRINTF_FORMAT(1, 2);
-int REprintf(const char *, ...) R_PRINTF_FORMAT(1, 2);
+void Rprintf(const char *, ...) R_PRINTF_FORMAT(1, 2);
+void REprintf(const char *, ...) R_PRINTF_FORMAT(1, 2);
 
 #if !defined(__cplusplus) || defined R_USE_C99_IN_CXX
 
-int Rvprintf(const char *, R_VA_LIST) R_PRINTF_FORMAT(1, 0);
-int REvprintf(const char *, R_VA_LIST) R_PRINTF_FORMAT(1, 0);
+void Rvprintf(const char *, R_VA_LIST) R_PRINTF_FORMAT(1, 0);
+void REvprintf(const char *, R_VA_LIST) R_PRINTF_FORMAT(1, 0);
 
 #endif
 

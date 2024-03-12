@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1999--2024  The R Core Team
+ *  Copyright (C) 1999--2023  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -877,15 +877,13 @@ const char *EncodeChar(SEXP x)
 }
 
 
-int Rprintf(const char *format, ...)
+void Rprintf(const char *format, ...)
 {
-    int res;
     va_list(ap);
 
     va_start(ap, format);
-    res = Rvprintf(format, ap);
+    Rvprintf(format, ap);
     va_end(ap);
-    return res;
 }
 
 /*
@@ -893,15 +891,12 @@ int Rprintf(const char *format, ...)
   anything unless you're sure it won't
   cause problems
 */
-int REprintf(const char *format, ...)
+void REprintf(const char *format, ...)
 {
-    int res;
     va_list(ap);
-
     va_start(ap, format);
-    res = REvprintf(format, ap);
+    REvprintf(format, ap);
     va_end(ap);
-    return res;
 }
 
 #if defined(HAVE_VASPRINTF) && !HAVE_DECL_VASPRINTF
@@ -915,7 +910,7 @@ int vasprintf(char **strp, const char *fmt, va_list ap)
 # define R_BUFSIZE BUFSIZE
 // similar to dummy_vfprintf in connections.c
 attribute_hidden
-int Rcons_vprintf(const char *format, va_list arg)
+void Rcons_vprintf(const char *format, va_list arg)
 {
     char buf[R_BUFSIZE], *p = buf;
     int res;
@@ -951,16 +946,14 @@ int Rcons_vprintf(const char *format, va_list arg)
 	    warning(_("printing of extremely long output is truncated"));
     }
 #endif /* HAVE_VASPRINTF */
-    res = (int) strlen(p);
-    R_WriteConsole(p, res);
+    R_WriteConsole(p, (int) strlen(p));
     if(usedRalloc) vmaxset(vmax);
     if(usedVasprintf) free(p);
-    return res;
 }
 
-int Rvprintf(const char *format, va_list arg)
+void Rvprintf(const char *format, va_list arg)
 {
-    int i=0, con_num=R_OutputCon, res;
+    int i=0, con_num=R_OutputCon;
     Rconnection con;
     va_list argcopy;
     static int printcount = 0;
@@ -970,24 +963,17 @@ int Rvprintf(const char *format, va_list arg)
 	printcount = 0 ;
     }
 
-    res = INT_MAX;
     do{
       con = getConnection(con_num);
       va_copy(argcopy, arg);
       /* Parentheses added for Fedora with -D_FORTIFY_SOURCE=2 */
-      int r = (con->vfprintf)(con, format, argcopy);
-      if (r < res)
-	res = r;
+      (con->vfprintf)(con, format, argcopy);
       va_end(argcopy);
       con->fflush(con);
       con_num = getActiveSink(i++);
     } while(con_num>0);
 
-    if (res == INT_MAX)
-	res = 0;
-    /* return the number of bytes written; if there are multiple sinks, return
-       the minimum */
-    return res;
+
 }
 
 /*
@@ -999,10 +985,9 @@ int Rvprintf(const char *format, va_list arg)
    It is also used in R_Suicide on Unix.
 */
 
-int REvprintf(const char *format, va_list arg)
+void REvprintf(const char *format, va_list arg)
 {
     static char *malloc_buf = NULL;
-    int res;
 
     if (malloc_buf) {
 	char *tmp = malloc_buf;
@@ -1016,28 +1001,27 @@ int REvprintf(const char *format, va_list arg)
 	    R_ErrorCon = 2;
 	} else {
 	    /* Parentheses added for FC4 with gcc4 and -D_FORTIFY_SOURCE=2 */
-	    res = (con->vfprintf)(con, format, arg);
+	    (con->vfprintf)(con, format, arg);
 	    con->fflush(con);
-	    return res;
+	    return;
 	}
     }
     if(R_Consolefile) {
 	/* try to interleave stdout and stderr carefully */
 	if(R_Outputfile && (R_Outputfile != R_Consolefile)) {
 	    fflush(R_Outputfile);
-	    res = vfprintf(R_Consolefile, format, arg);
+	    vfprintf(R_Consolefile, format, arg);
 	    /* normally R_Consolefile is stderr and so unbuffered, but
 	       it can be something else (e.g. stdout on Win9x) */
 	    fflush(R_Consolefile);
-	} else
-	    res = vfprintf(R_Consolefile, format, arg);
+	} else vfprintf(R_Consolefile, format, arg);
     } else {
 	char buf[BUFSIZE];
 	Rboolean printed = FALSE;
 	va_list aq;
 
 	va_copy(aq, arg);
-	res = Rvsnprintf_mbcs(buf, BUFSIZE, format, aq);
+	int res = Rvsnprintf_mbcs(buf, BUFSIZE, format, aq);
 	va_end(aq);
 	if (res >= BUFSIZE) {
 	    /* A very long string has been truncated. Try to allocate a large
@@ -1058,12 +1042,9 @@ int REvprintf(const char *format, va_list arg)
 		free(tmp);
 	    }
 	}
-	if (!printed) {
-	    res = (int) strlen(buf);
-	    R_WriteConsoleEx(buf, res, 1);
-	}
+	if (!printed)
+	    R_WriteConsoleEx(buf, (int) strlen(buf), 1);
     }
-    return res;
 }
 
 int attribute_hidden IndexWidth(R_xlen_t n)
