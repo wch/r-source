@@ -380,7 +380,7 @@ function(package, dir, subdirs = NULL, lib.loc = NULL, output = FALSE,
     if(!dir.exists(docdir)) return(NULL)
 
     # Locate all vignette files
-    buildPkgs <- loadVignetteBuilder(dir, mustwork = FALSE)
+    buildPkgs <- loadVignetteBuilder(dir, mustwork = FALSE, lib.loc = lib.loc)
     engineList <- vignetteEngine(package = buildPkgs)
 
     docs <- names <- engines <- patterns <- character()
@@ -1308,7 +1308,7 @@ vignetteEngine <- local({
 })
 
 loadVignetteBuilder <-
-function(pkgdir, mustwork = TRUE)
+function(pkgdir, mustwork = TRUE, lib.loc = NULL)
 {
     pkgs <- .get_package_metadata(pkgdir)["VignetteBuilder"]
     if (is.na(pkgs))
@@ -1320,7 +1320,8 @@ function(pkgdir, mustwork = TRUE)
     pkgs <- unique(c(pkgs, "utils"))
 
     for (pkg in pkgs) {
-	res <- tryCatch(suppressPackageStartupMessages(loadNamespace(pkg)),
+	res <- tryCatch(suppressPackageStartupMessages(loadNamespace(pkg,
+                                                                     lib.loc = lib.loc)),
                         error = identity)
 	if (mustwork && inherits(res, "error"))
             stop(gettextf("vignette builder '%s' not found", pkg), domain = NA)
