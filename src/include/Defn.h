@@ -1332,7 +1332,7 @@ typedef struct RCNTXT {
     SEXP srcref;	        /* The source line in effect */
     int browserfinish;          /* should browser finish this context without
                                    stopping */
-    SEXP returnValue;           /* only set during on.exit calls */
+    R_bcstack_t returnValue;    /* only set during on.exit calls */
     struct RCNTXT *jumptarget;	/* target for a continuing jump */
     int jumpmask;               /* associated LONGJMP argument */
 } RCNTXT, *context;
@@ -2402,6 +2402,9 @@ extern void *alloca(size_t);
 
 // for reproducibility for now: use exp10 or pown later if accurate enough.
 #define Rexp10(x) pow(10.0, x)
+
+// this produces an initialized structure as a _compount literal_
+#define SEXP_TO_STACKVAL(x) ((R_bcstack_t) { .tag = 0, .u.sxpval = (x) })
 
 #endif /* DEFN_H_ */
 /*

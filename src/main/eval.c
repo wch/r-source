@@ -2299,6 +2299,8 @@ SEXP applyClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho,
     return val;
 }
 
+static SEXP STACKVAL_TO_SEXP(R_bcstack_t);
+
 static R_INLINE SEXP R_execClosure(SEXP call, SEXP newrho, SEXP sysparent,
                                    SEXP rho, SEXP arglist, SEXP op)
 {
@@ -2347,14 +2349,14 @@ static R_INLINE SEXP R_execClosure(SEXP call, SEXP newrho, SEXP sysparent,
     if ((SETJMP(cntxt.cjmpbuf))) {
 	if (!cntxt.jumptarget) {
 	    /* ignores intermediate jumps for on.exits */
-	    cntxt.returnValue = R_ReturnedValue;
+	    cntxt.returnValue = SEXP_TO_STACKVAL(R_ReturnedValue);
 	}
 	else
-	    cntxt.returnValue = NULL; /* undefined */
+	    cntxt.returnValue = SEXP_TO_STACKVAL(NULL); /* undefined */
     }
     else
 	/* make it available to on.exit and implicitly protect */
-	cntxt.returnValue = eval(body, newrho);
+	cntxt.returnValue = SEXP_TO_STACKVAL(eval(body, newrho));
 
     R_Srcref = cntxt.srcref;
     endcontext(&cntxt);
@@ -2367,7 +2369,7 @@ static R_INLINE SEXP R_execClosure(SEXP call, SEXP newrho, SEXP sysparent,
     /* clear R_ReturnedValue to allow GC to reclaim old value */
     R_ReturnedValue = R_NilValue;
 
-    return cntxt.returnValue;
+    return STACKVAL_TO_SEXP(cntxt.returnValue);
 }
 
 SEXP R_forceAndCall(SEXP e, int n, SEXP rho)
@@ -4847,6 +4849,9 @@ static R_INLINE SEXP GETSTACK_PTR_TAG(R_bcstack_t *s)
 
 #define SETSTACK_LOGICAL(i, v) SETSTACK_LOGICAL_PTR(R_BCNodeStackTop + (i), v)
 
+static R_INLINE SEXP STACKVAL_TO_SEXP(R_bcstack_t x) {
+    return GETSTACK_PTR(&x);
+}
 
 /* bcStackScalar() checks whether the object in the specified stack
    location is an immediate scalar or a boxed simple real, integer, or
@@ -8930,7 +8935,7 @@ attribute_hidden SEXP do_returnValue(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP val;
     checkArity(op, args);
-    if (R_ExitContext && (val = R_ExitContext->returnValue)){
+    if (R_ExitContext && (val = STACKVAL_TO_SEXP(R_ExitContext->returnValue))){
 	MARK_NOT_MUTABLE(val);
 	return val;
     }

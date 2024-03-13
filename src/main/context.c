@@ -138,7 +138,7 @@ attribute_hidden void R_run_onexits(RCNTXT *cptr)
 	    R_ExitContext = c;
 	    c->conexit = R_NilValue; /* prevent recursion */
 	    /* we are in intermediate jump, so returnValue is undefined */
-	    c->returnValue = NULL;
+	    c->returnValue = SEXP_TO_STACKVAL(NULL);
 	    R_HandlerStack = c->handlerstack;
 	    R_RestartStack = c->restartstack;
 	    PROTECT(s);
@@ -272,7 +272,7 @@ void begincontext(RCNTXT * cptr, int flags,
     cptr->srcref = R_Srcref;
     cptr->browserfinish = R_GlobalContext->browserfinish;
     cptr->nextcontext = R_GlobalContext;
-    cptr->returnValue = NULL;
+    cptr->returnValue = SEXP_TO_STACKVAL(NULL);
     cptr->jumptarget = NULL;
     cptr->jumpmask = 0;
 
@@ -300,14 +300,16 @@ void endcontext(RCNTXT * cptr)
 	PROTECT(saveretval);
 	PROTECT(s);
 	R_FixupExitingHandlerResult(saveretval);
-	if (cptr->returnValue) // why is this needed???
-	    INCREMENT_LINKS(cptr->returnValue);
+	SEXP cptr_retval =
+	    cptr->returnValue.tag == 0 ? cptr->returnValue.u.sxpval : NULL;
+	if (cptr_retval) // why is this needed???
+	    INCREMENT_LINKS(cptr_retval);
 	for (; s != R_NilValue; s = CDR(s)) {
 	    cptr->conexit = CDR(s);
 	    eval(CAR(s), cptr->cloenv);
 	}
-	if (cptr->returnValue) // why is this needed???
-	    DECREMENT_LINKS(cptr->returnValue);
+	if (cptr_retval) // why is this needed???
+	    DECREMENT_LINKS(cptr_retval);
 	R_ReturnedValue = saveretval;
 	UNPROTECT(2);
 	R_ExitContext = savecontext;

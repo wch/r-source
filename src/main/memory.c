@@ -1818,7 +1818,8 @@ static int RunGenCollect(R_size_t size_needed)
 	FORWARD_NODE(ctxt->handlerstack);  /* the condition handler stack */
 	FORWARD_NODE(ctxt->restartstack);  /* the available restarts stack */
 	FORWARD_NODE(ctxt->srcref);	   /* the current source reference */
-	FORWARD_NODE(ctxt->returnValue);   /* For on.exit calls */
+	if (ctxt->returnValue.tag == 0)    /* For on.exit calls */
+	    FORWARD_NODE(ctxt->returnValue.u.sxpval);
     }
 
     FORWARD_NODE(R_PreciousList);
