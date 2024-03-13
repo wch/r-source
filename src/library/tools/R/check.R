@@ -5260,7 +5260,14 @@ add_dummies <- function(dir, Log)
                                           tidy_validate(out, tidy = Tidy)
                                       },
                                       error = identity))
-                results1 <- tidy_validate_db(results1, names(db))
+                ignore <-
+                    Sys.getenv("_R_CHECK_RD_VALIDATE_RD2HTML_IGNORE_EMPTY_SPANS_",
+                               "true")
+                ignore <- if(config_val_to_logical(ignore))
+                              "Warning: trimming empty <span>"
+                          else
+                              character()
+                results1 <- tidy_validate_db(results1, names(db), ignore)
             }
         }
 

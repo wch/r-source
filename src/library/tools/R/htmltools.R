@@ -18,17 +18,22 @@
 
 tidy_validate <-
 function(f, tidy = "tidy") {
+    ## HTML Tidy complains about empty spans, which may be "ok" (and
+    ## KaTeX uses these to achieve vertical alignment).
+    ## One can suppress these complaints via command line option
+    ##   "--drop-empty-elements no"
+    ## but this suppresses complaints about all empty elements (and not
+    ## only spans).
+    ## To allow experimenting, we provide env var
+    ##   _R_CHECK_RD_VALIDATE_RD2HTML_OPTS_
+    ## for setting command line options.  As of 2024-03, by default we
+    ## leave this empty, and filter out
+    ##    Warning: trimming empty <span>
+    ## messages when checking the Rd2HTML refman conversions.
     z <- suppressWarnings(system2(tidy,
                                   c("-language en", "-qe",
-                                    ## <FIXME>
-                                    ## HTML Tidy complains about empty
-                                    ## spans, which may be ok.
-                                    ## To suppress all such complaints:
-                                    ##   "--drop-empty-elements no",
-                                    ## To allow experimenting for now:
                                     Sys.getenv("_R_CHECK_RD_VALIDATE_RD2HTML_OPTS_",
-                                               "--drop-empty-elements no"),
-                                    ## </FIXME>
+                                               ""),
                                     f),
                                   stdout = TRUE, stderr = TRUE))
     if(!length(z)) return(NULL)
@@ -51,7 +56,7 @@ function(f, tidy = "tidy") {
 }
 
 tidy_validate_db <-
-function(x, paths = NULL) {
+function(x, paths = NULL, ignore = character()) {
     if(!is.null(paths))
         names(x) <- paths
     i <- vapply(x, inherits, NA, "error")
@@ -60,8 +65,11 @@ function(x, paths = NULL) {
     if(!length(x) && !length(e)) return(NULL)
     y <- cbind(path = rep.int(names(x), vapply(x, nrow, 0)),
                do.call(rbind, x))
-    if(is.null(y))
+    if(is.null(y)) {
         y <- list()     # cannot set an attr on NULL
+    } else if(length(ignore)) {
+        y <- y[y[, "msg"] %notin% ignore, , drop = FALSE]
+    }
     if(length(e))
         attr(y, "errors") <- e
     y
