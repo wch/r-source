@@ -938,12 +938,22 @@ attribute_hidden void check_stack_balance(SEXP op, int save)
 	    forcePromise(__x__);		\
     } while (0)
 
+static R_INLINE void PUSH_PENDING_PROMISE(SEXP e, RPRSTACK *cellptr)
+{
+    cellptr->promise = e;
+    cellptr->next = R_PendingPromises;
+    R_PendingPromises = cellptr;
+}
+
+static R_INLINE void POP_PENDING_PROMISE(RPRSTACK *cellptr)
+{
+    R_PendingPromises = cellptr->next;
+}
+
 static void forcePromise(SEXP e)
 {
     if (! PROMISE_IS_EVALUATED(e)) {
 	PROTECT(e);
-	RPRSTACK prstack;
-	SEXP val;
 	if(PRSEEN(e)) {
 	    if (PRSEEN(e) == 1)
 		errorcall(R_GlobalContext->call,
@@ -959,20 +969,19 @@ static void forcePromise(SEXP e)
 	   that can be used to unmark pending promises if a jump out
 	   of the evaluation occurs. */
 	SET_PRSEEN(e, 1);
-	prstack.promise = e;
-	prstack.next = R_PendingPromises;
-	R_PendingPromises = &prstack;
+	RPRSTACK prstack;
+	PUSH_PENDING_PROMISE(e, &prstack);
 
-	val = eval(PRCODE(e), PRENV(e));
+	SEXP val = eval(PRCODE(e), PRENV(e));
+	SET_PRVALUE(e, val);
+	ENSURE_NAMEDMAX(val);
 
 	/* Pop the stack, unmark the promise and set its value field.
 	   Also set the environment to R_NilValue to allow GC to
 	   reclaim the promise environment; this is also useful for
 	   fancy games with delayedAssign() */
-	R_PendingPromises = prstack.next;
+	POP_PENDING_PROMISE(&prstack);
 	SET_PRSEEN(e, 0);
-	SET_PRVALUE(e, val);
-	ENSURE_NAMEDMAX(val);
 	SET_PRENV(e, R_NilValue);
 	UNPROTECT(1); /* e */
     }
