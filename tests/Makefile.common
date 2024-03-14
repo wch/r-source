@@ -252,7 +252,7 @@ stamp-Packages: $(PKG_OBJECTS)
 	@_R_CHECK_FF_CALLS_=registration \
 	  _R_CHECK_CODE_USAGE_WITH_ONLY_BASE_ATTACHED_=true \
 	  $(RCHK) --install=skip --no-build-vignettes \
-	  $(top_srcdir)/src/library/`basename $@ .log` > $@ 2>&1
+	  $(top_srcdir)/src/library/`basename $@ .log` > $@ 2>&1 || (cat $@ && exit 1)
 	@cat $@
 
 test-Gct: $(test-out-gct)
@@ -525,7 +525,7 @@ stamp-Packages2: $(PKG_ROBJECTS)
 	  $(ECHO) "begin checking package '$${p}'"; \
 	  R_LIBS="$(top_builddir)/library:$${R_LIBS}" \
 	 _R_CHECK_FORCE_SUGGESTS_=FALSE $(RCHK) --install=skip \
-	    --library="$(top_builddir)/library" RecPackages/$${p}  > $@ 2>&1
+	    --library="$(top_builddir)/library" RecPackages/$${p}  > $@ 2>&1 || (cat $@ && exit 1)
 	@cat $@
 
 INSTFILES = README \
