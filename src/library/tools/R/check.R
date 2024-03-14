@@ -7580,7 +7580,6 @@ add_dummies <- function(dir, Log)
             do_exit(1L)
 
         closeLog(Log)
-        message("")
 
     } ## end for (pkg in pkgs)
 }

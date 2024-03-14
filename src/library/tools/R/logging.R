@@ -123,6 +123,7 @@ function(Log)
                                        names(counts),
                                        ifelse(counts > 1L, "s", "")),
                                collapse = ", ")))
-        message(sprintf("See\n  %s\nfor details.\n", sQuote(Log$filename)))
+        message(sprintf("See\n  %s\nfor details.", sQuote(Log$filename)))
     }
+    message("")
 }
