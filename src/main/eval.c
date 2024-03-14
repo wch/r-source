@@ -2214,9 +2214,8 @@ static R_INLINE SEXP handle_exec_continuation(SEXP val)
 static R_INLINE SEXP R_execClosure(SEXP call, SEXP newrho, SEXP sysparent,
                                    SEXP rho, SEXP arglist, SEXP op);
 
-/* Apply SEXP op of type CLOSXP to actuals */
-static SEXP applyClosure_core(SEXP call, SEXP op, SEXP arglist, SEXP rho,
-			      SEXP suppliedvars, Rboolean unpromise)
+static SEXP make_applyClosure_env(SEXP call, SEXP op, SEXP arglist, SEXP rho,
+				  SEXP suppliedvars)
 {
     SEXP formals, actuals, savedrho, newrho;
     SEXP f, a;
@@ -2277,10 +2276,16 @@ static SEXP applyClosure_core(SEXP call, SEXP op, SEXP arglist, SEXP rho,
     if (R_envHasNoSpecialSymbols(newrho))
 	SET_NO_SPECIAL_SYMBOLS(newrho);
 
-#ifdef ADJUST_ENVIR_REFCNTS
-    Rboolean is_getter_call =
-	(CADR(call) == R_TmpvalSymbol && ! R_isReplaceSymbol(CAR(call)));
-#endif
+    UNPROTECT(1); /* newrho */
+    return newrho;
+}
+
+/* Apply SEXP op of type CLOSXP to actuals */
+static SEXP applyClosure_core(SEXP call, SEXP op, SEXP arglist, SEXP rho,
+			      SEXP suppliedvars, Rboolean unpromise)
+{
+    SEXP newrho = make_applyClosure_env(call, op, arglist, rho, suppliedvars);
+    PROTECT(newrho);
 
     /*  If we have a generic function we need to use the sysparent of
 	the generic as the sysparent of the method because the method
@@ -2291,6 +2296,8 @@ static SEXP applyClosure_core(SEXP call, SEXP op, SEXP arglist, SEXP rho,
 			     R_GlobalContext->sysparent : rho,
 			     rho, arglist, op);
 #ifdef ADJUST_ENVIR_REFCNTS
+    Rboolean is_getter_call =
+	(CADR(call) == R_TmpvalSymbol && ! R_isReplaceSymbol(CAR(call)));
     R_CleanupEnvir(newrho, val);
     if (is_getter_call && MAYBE_REFERENCED(val))
     	val = shallow_duplicate(val);
