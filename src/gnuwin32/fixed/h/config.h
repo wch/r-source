@@ -875,7 +875,7 @@
 /* #undef HAVE_TIMES */
 
 /* Define to 1 if you have the `timespec_get' function. */
-/* available with Rtools43, but not Rtools42 */
+/* available since Rtools43, but not in Rtools42 */
 /* #define HAVE_TIMESPEC_GET 1 */
 
 /* Define to 1 if your 'struct tm' has tm_gmtoff. */

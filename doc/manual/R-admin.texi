@@ -1441,12 +1441,12 @@ and packages may need to be adapted.
 
 The binary distribution of @R{} is currently built with tools
 from
-@uref{https://CRAN.R-project.org/bin/windows/Rtools/rtools43/rtools.html,Rtools43
+@uref{https://CRAN.R-project.org/bin/windows/Rtools/rtools44/rtools.html,Rtools44
 for Windows}. See 
 @uref{https://CRAN.R-project.org/bin/windows/base/howto-R-devel.html, Building
 R and packages} for more details on how to use it.
 
-The toolset includes compilers (GCC version 12.2.0 with selected additional
+The toolset includes compilers (GCC version 13.2.0 with selected additional
 patches) and runtime libraries from @uref{http://mingw-w64.org/,the
 `@I{MinGW-w64}' project} and a number of pre-compiled static libraries and
 headers used by @R{} and @R{} packages, compiled by
@@ -1455,6 +1455,10 @@ maintained by @I{Tomas Kalibera}).
 The toolset also includes build tools from the
 @uref{https://www.msys2.org/, the 'MSYS2' project}.  Additional build tools
 packaged by 'MSYS2' may be installed via a package manager (@samp{pacman}).
+
+There is also an experimental variant of Rtools44 with support for 64-bit
+ARM CPUs (aarch64) via LLVM 17 toolchain using clang/flang-new compilers,
+lld linker, and libc++. 
 
 The toolsets used for 64-bit Windows from 2008 to 2022 were based on
 @I{MinGW-w64}.  The assistance of @I{Yu Gong} at a crucial step in

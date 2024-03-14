@@ -1,7 +1,8 @@
 #-*- Makefile -*-
 
-## Defaults for user settings, see MkRules.dist for descriptions. Rtools43
-## assumes that the compiler toolchain (e.g. gcc, as, ...) is on PATH
+## Defaults for user settings, see MkRules.dist for descriptions.  Since
+## Rtools42, Rtools assumes that the compiler toolchain (e.g.  gcc, as, ...)
+## is on PATH
 LOCAL_SOFT ?= $(shell which `echo $(CC) | sed -e 's/ .*//g'` | sed -e 's!/bin/[^/]\+!!g')
 EXT_LIBS ?= $(LOCAL_SOFT)
 G_FLAG ?= $(if (USE_LLVM),-g3,-gdwarf-2)

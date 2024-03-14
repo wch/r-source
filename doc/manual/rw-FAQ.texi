@@ -456,7 +456,7 @@ as @I{Msys2} (and hence @I{Rtools}) or @I{Cygwin} set the environment variable
 @env{HOME} to a user directory of their choice. When R is invoked from a
 shell of such an distribution, the home directory in R would hence
 typically not be the Windows "personal" directory. With @I{Rtools40},
-@I{Rtools42} and @I{Rtools43}, it is the user profile (e.g.,
+@I{Rtools42-44}, it is the user profile (e.g.,
 @file{C:\Users\username}). 
 
 The R home directory is the directory where R was installed. You can find
