@@ -9,9 +9,11 @@ xU <- strptime("2022-01-01", "%Y-%m-%d", tz = "UTC")
 xU
 str(unclass(xU))
 
-x0 <- strptime("2022-01-01", "%Y-%m-%d")
+x0 <- strptime("2022-01-01", "%Y-%m-%d") # current time zone
+## IGNORE_RDIFF_BEGIN
 x0
 str(unclass(x0))
+## IGNORE_RDIFF_END
 
 x1 <- strptime("2022-07-01", "%Y-%m-%d", tz = "Europe/London")
 x1
