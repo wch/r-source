@@ -2176,6 +2176,38 @@ static R_INLINE Rboolean is_exec_continuation(SEXP val)
     return (TYPEOF(val) == VECSXP && XLENGTH(val) == 4 &&
 	    VECTOR_ELT(val, 0) == R_exec_token);
 }
+
+static SEXP applyClosure_core(SEXP, SEXP, SEXP, SEXP, SEXP, Rboolean);
+
+static R_INLINE SEXP handle_exec_continuation(SEXP val)
+{
+    while (is_exec_continuation(val)) {
+	SEXP call = PROTECT(VECTOR_ELT(val, 1));
+	SEXP rho = PROTECT(VECTOR_ELT(val, 2));
+	SET_VECTOR_ELT(val, 2, R_NilValue); // to drop REFCNT
+	SEXP op = PROTECT(VECTOR_ELT(val, 3));
+
+	if (TYPEOF(op) == CLOSXP) {
+	    SEXP arglist = PROTECT(promiseArgs(CDR(call), rho));
+	    SEXP suppliedvars = R_NilValue;
+	    val = applyClosure_core(call, op, arglist, rho, suppliedvars, TRUE);
+# ifdef ADJUST_ENVIR_REFCNTS
+	    R_CleanupEnvir(rho, val);
+# endif
+	    UNPROTECT(1); /* arglist */
+	}
+	else {
+	    /* Ideally this should handle BUILTINSXP/SPECIALSXP calls
+	       in the standard way as in eval() or bceval(). For now,
+	       just build a new call and eval. */
+	    SEXP expr = PROTECT(LCONS(op, CDR(call)));
+	    val = eval(expr, rho);
+	    UNPROTECT(1); /* expr */
+	}
+	UNPROTECT(3); /* call, rho, op */
+    }
+    return val;
+}
 #endif
 
 /* Note: GCC will not inline execClosure because it calls setjmp */
@@ -2277,31 +2309,7 @@ SEXP applyClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho,
     SEXP val = applyClosure_core(call, op, arglist, rho,
 				 suppliedvars, unpromise);
 #ifdef SUPPORT_TAILCALL
-    while (is_exec_continuation(val)) {
-	call = PROTECT(VECTOR_ELT(val, 1));
-	rho = PROTECT(VECTOR_ELT(val, 2));
-	SET_VECTOR_ELT(val, 2, R_NilValue); // to drop REFCNT
-	op = PROTECT(VECTOR_ELT(val, 3));
-
-	if (TYPEOF(op) == CLOSXP) {
-	    arglist = PROTECT(promiseArgs(CDR(call), rho));
-	    suppliedvars = R_NilValue;
-	    val = applyClosure_core(call, op, arglist, rho, suppliedvars, TRUE);
-# ifdef ADJUST_ENVIR_REFCNTS
-	    R_CleanupEnvir(rho, val);
-# endif
-	    UNPROTECT(1); /* arglist */
-	}
-	else {
-	    /* Ideally this should handle BUILTINSXP/SPECIALSXP calls
-	       in the standard way as in eval() or bceval(). For now,
-	       just build a new call and eval. */
-	    SEXP expr = PROTECT(LCONS(op, CDR(call)));
-	    val = eval(expr, rho);
-	    UNPROTECT(1); /* expr */
-	}
-	UNPROTECT(3); /* call, rho, op */
-    }
+    val = handle_exec_continuation(val);
 #endif
     return val;
 }
