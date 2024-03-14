@@ -1,6 +1,6 @@
 % File src/library/base/man/as.Date.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2022 R Core Team
+% Copyright 1995-2024 R Core Team
 % Distributed under GPL 2 or later
 
 \name{as.Date}
@@ -28,13 +28,14 @@ as.Date(x, \dots)
 \method{as.Date}{numeric}(x, origin, \dots)
 \method{as.Date}{POSIXct}(x, tz = "UTC", \dots)
 
-\method{format}{Date}(x, \dots)
+\method{format}{Date}(x, format = "\%Y-\%m-\%d", \dots)
 
 \method{as.character}{Date}(x, \dots)
 }
 \arguments{
   \item{x}{an object to be converted.}
-  \item{format}{\code{\link{character}} string.  If not specified, it will try
+  \item{format}{a \code{\link{character}} string.  If not specified when
+    converting from a character representation, it will try
     \code{tryFormats} one by one on the first non-\code{NA} element, and
     give an error if none works.  Otherwise, the processing is via
     \code{\link{strptime}()} whose help page describes available
@@ -47,9 +48,7 @@ as.Date(x, \dots)
     \code{as.Date(origin, \dots)} to such an object or
     \code{\link{missing}}.  In that case, \code{"1970-01-01"} is used.}
   \item{tz}{a time zone name.}
-  \item{\dots}{further arguments to be passed from or to other methods,
-    including \code{format} for \code{as.character} and \code{as.Date}
-    methods.}
+  \item{\dots}{further arguments to be passed from or to other methods.}
 }
 \details{
   The usual vector re-cycling rules are applied to \code{x} and

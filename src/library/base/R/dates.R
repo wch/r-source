@@ -1,7 +1,7 @@
 #  File src/library/base/R/dates.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2022 The R Core Team
+#  Copyright (C) 1995-2024 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -115,7 +115,8 @@ as.Date.default <- function(x, ...)
 ##                          deparse1(substitute(x)) ))
 ## }
 
-format.Date <- function(x, ...) format(as.POSIXlt(x), ...) # does keep names
+format.Date <- function(x, format = "%Y-%m-%d", ...)
+    format(as.POSIXlt(x), format = format, ...) # does keep names
 
 ## keep in sync with  print.POSIX?t()  in ./datetime.R
 print.Date <- function(x, max = NULL, ...)
