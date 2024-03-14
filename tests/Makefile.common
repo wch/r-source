@@ -228,13 +228,13 @@ test-Packages:
 
 ## R_PKGS_BASE is from ../share/make/vars.mk
 test-Packages1:
-	@for p in $(R_PKGS_BASE); do \
+	@fail=; for p in $(R_PKGS_BASE); do \
 	  $(ECHO) "checking package '$${p}'"; \
 	  _R_CHECK_FF_CALLS_=registration \
 	  _R_CHECK_CODE_USAGE_WITH_ONLY_BASE_ATTACHED_=true \
 	  $(RCHK) --install=skip --no-build-vignettes \
-	    $(top_srcdir)/src/library/$${p} || $(ECHO); \
-	done
+	    $(top_srcdir)/src/library/$${p} || fail="$${fail} $${p}"; \
+	done; if test -n "$${fail}"; then $(ECHO) "FAILED:$${fail}"; exit 1; fi
 
 PKG_OBJECTS = $(R_PKGS_BASE:=.log)
 
@@ -495,15 +495,16 @@ test-Packages-Recommended:
 
 test-Packages1-Recommended:
 	@test -d RecPackages || mkdir RecPackages
-	@for p in $(R_PKGS_RECOMMENDED); do \
+	@fail=; for p in $(R_PKGS_RECOMMENDED); do \
 	  rm -Rf RecPackages/$${p}; \
 	  gzip -dc "$(top_srcdir)/src/library/Recommended/$${p}.tgz" | \
 	    (cd RecPackages && $(TAR) -x -f -) ; \
 	  $(ECHO) "checking package '$${p}'"; \
 	  R_LIBS="$(top_builddir)/library:$${R_LIBS}" \
-	    _R_CHECK_FORCE_SUGGESTS_=FALSE $(RCHK) --install=skip \
-	    --library="$(top_builddir)/library" RecPackages/$${p} || $(ECHO); \
-	done
+	  _R_CHECK_FORCE_SUGGESTS_=FALSE \
+	  $(RCHK) --install=skip --library="$(top_builddir)/library" \
+	    RecPackages/$${p} || fail="$${fail} $${p}"; \
+	done; if test -n "$${fail}"; then $(ECHO) "FAILED:$${fail}"; exit 1; fi
 
 PKG_ROBJECTS = $(R_PKGS_RECOMMENDED:=.log)
 
