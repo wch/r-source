@@ -5811,7 +5811,7 @@ static R_INLINE SEXP getvar(SEXP symbol, SEXP rho,
    requested symbol. The symbol from the constant pool is also usually
    not needed. Active bindings will have functions as their values.
    Skipping SYMSXP values rules out R_MissingArg and R_UnboundValue as
-   these are implemented s symbols.  It also rules other symbols, but
+   these are implemented as symbols.  It also rules other symbols, but
    as those are rare they are handled by the getvar() call. */
 #define DO_GETVAR(dd,keepmiss) do { \
     int sidx = GETOP(); \
@@ -7073,23 +7073,65 @@ Rboolean attribute_hidden R_BCVersionOK(SEXP s)
     return (version >= R_bcMinVersion && version <= R_bcVersion);
 }
 
+struct R_bcEval_globals_struct {
+    R_bcstack_t *oldntop;
+    int oldbcintactive;
+    SEXP oldbcbody;
+    void *oldbcpc;
+    SEXP oldsrcref;
+#ifdef BC_PROFILING
+    int old_current_opcode;
+#endif
+    R_bcstack_t *old_bcprot_top;
+    R_bcstack_t *old_bcprot_committed; // **** not sure this is really needed
+};
+
+static R_INLINE void save_bcEval_globals(struct R_bcEval_globals_struct *g,
+					 SEXP body)
+{
+    g->oldntop = R_BCNodeStackTop;
+    g->oldbcintactive = R_BCIntActive;
+    g->oldbcbody = R_BCbody;
+    g->oldbcpc = R_BCpc;
+    g->oldsrcref = R_Srcref;
+#ifdef BC_PROFILING
+    g->old_current_opcode = current_opcode;
+#endif
+    g->old_bcprot_top = R_BCProtTop;
+    g->old_bcprot_committed = R_BCProtCommitted;
+    if (body)
+	INCREMENT_BCSTACK_LINKS();
+}
+
+static R_INLINE void restore_bcEval_globals(struct R_bcEval_globals_struct *g,
+					    SEXP body)
+{
+    if (body) {
+	R_BCNodeStackTop = R_BCProtTop;
+	DECREMENT_BCSTACK_LINKS(g->old_bcprot_top);
+    }
+    R_BCProtCommitted = g->old_bcprot_committed;
+    R_BCNodeStackTop = g->oldntop;
+    R_BCIntActive = g->oldbcintactive;
+    R_BCbody = g->oldbcbody;
+    R_BCpc = g->oldbcpc;
+    R_Srcref = g->oldsrcref;
+#ifdef BC_PROFILING
+    current_opcode = g->old_current_opcode;
+#endif
+}
+
 static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 {
-  SEXP retvalue = R_NilValue, constants;
-  BCODE *pc, *codebase;
-  R_bcstack_t *oldntop = R_BCNodeStackTop;
+  struct R_bcEval_globals_struct globals;
+  save_bcEval_globals(&globals, body);
+
   static int evalcount = 0;
-  SEXP oldsrcref = R_Srcref;
-  int oldbcintactive = R_BCIntActive;
-  SEXP oldbcbody = R_BCbody;
-  void *oldbcpc = R_BCpc;
+
+  SEXP retvalue = R_NilValue;
+  SEXP constants;
+  BCODE *pc, *codebase;
   BCODE *currentpc = NULL;
-
-#ifdef BC_PROFILING
-  int old_current_opcode = current_opcode;
-#endif
-
-  BC_CHECK_SIGINT();
 
   INITIALIZE_MACHINE();
 
@@ -7097,12 +7139,11 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
   if (R_disable_bytecode || ! R_BCVersionOK(body))
       return eval(bytecodeExpr(body), rho);
 
+  BC_CHECK_SIGINT();
+
   codebase = pc = BCCODE(body);
   constants = BCCONSTS(body);
   SKIP_OP(); // pop off version
-
-  R_bcstack_t *old_bcprot_top = R_BCProtTop;
-  INCREMENT_BCSTACK_LINKS();
 
   R_Srcref = R_InBCInterpreter;
   R_BCIntActive = 1;
@@ -8280,18 +8321,7 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
   }
 
  done:
-  R_BCIntActive = oldbcintactive;
-  R_BCbody = oldbcbody;
-  R_BCpc = oldbcpc;
-  R_Srcref = oldsrcref;
-#ifdef BC_PROFILING
-  current_opcode = old_current_opcode;
-#endif
-  if (body) {
-      R_BCNodeStackTop = R_BCProtTop;
-      DECREMENT_BCSTACK_LINKS(old_bcprot_top);
-  }
-  R_BCNodeStackTop = oldntop;
+  restore_bcEval_globals(&globals, body);
   return retvalue;
 }
 
