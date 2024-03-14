@@ -36,8 +36,8 @@ R_BZIPCMD=${R_BZIPCMD-'bzip2'}
 SED=${SED-sed}
 
 ## keep in step with Rprofile.windows
-# INSTALLER-BUILD-x86_64:R_RTOOLS43_PATH="${RTOOLS43_HOME:-c:/rtools43}/x86_64-w64-mingw32.static.posix/bin;${RTOOLS43_HOME:-c:/rtools43}/usr/bin"
-# INSTALLER-BUILD-aarch64:R_RTOOLS43_PATH="${RTOOLS43_AARCH64_HOME:-c:/rtools43-aarch64}/aarch64-w64-mingw32.static.posix/bin;${RTOOLS43_AARCH64_HOME:-c:/rtools43-aarch64}/usr/bin"
+# INSTALLER-BUILD-x86_64:R_RTOOLS44_PATH="${RTOOLS44_HOME:-c:/rtools44}/x86_64-w64-mingw32.static.posix/bin;${RTOOLS44_HOME:-c:/rtools44}/usr/bin"
+# INSTALLER-BUILD-aarch64:R_RTOOLS44_PATH="${RTOOLS44_AARCH64_HOME:-c:/rtools44-aarch64}/aarch64-w64-mingw32.static.posix/bin;${RTOOLS44_AARCH64_HOME:-c:/rtools44-aarch64}/usr/bin"
 #   trailing slash to protect against trailing backslash in PATH
-# INSTALLER-BUILD:PATH="${R_CUSTOM_TOOLS_PATH:-${R_RTOOLS43_PATH}};${PATH}/"
+# INSTALLER-BUILD:PATH="${R_CUSTOM_TOOLS_PATH:-${R_RTOOLS44_PATH}};${PATH}/"
 

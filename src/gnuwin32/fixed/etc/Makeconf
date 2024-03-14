@@ -44,13 +44,13 @@ ifeq ($(R_INSTALLER_BUILD), yes)
   ifneq ($(strip $(R_CUSTOM_TOOLS_SOFT)),)
     LOCAL_SOFT = $(R_CUSTOM_TOOLS_SOFT)
   else
-    ## The rtools43 installer sets RTOOLS43_HOME (or RTOOLS43_AARCH64_HOME)
+    ## The rtools44 installer sets RTOOLS44_HOME (or RTOOLS44_AARCH64_HOME)
 
-    # INSTALLER-BUILD-x86_64: RTOOLS43_HOME ?= c:/rtools43
-    # INSTALLER-BUILD-x86_64: LOCAL_SOFT = $(subst \,/,$(RTOOLS43_HOME))/x86_64-w64-mingw32.static.posix
+    # INSTALLER-BUILD-x86_64: RTOOLS44_HOME ?= c:/rtools44
+    # INSTALLER-BUILD-x86_64: LOCAL_SOFT = $(subst \,/,$(RTOOLS44_HOME))/x86_64-w64-mingw32.static.posix
 
-    # INSTALLER-BUILD-aarch64: RTOOLS43_HOME ?= c:/rtools43-aarch64
-    # INSTALLER-BUILD-aarch64: LOCAL_SOFT = $(subst \,/,$(RTOOLS43_AARCH64_HOME))/aarch64-w64-mingw32.static.posix
+    # INSTALLER-BUILD-aarch64: RTOOLS44_HOME ?= c:/rtools44-aarch64
+    # INSTALLER-BUILD-aarch64: LOCAL_SOFT = $(subst \,/,$(RTOOLS44_AARCH64_HOME))/aarch64-w64-mingw32.static.posix
   endif
 endif
 R_TOOLS_SOFT ?= $(LOCAL_SOFT)
