@@ -147,7 +147,7 @@ install.packages(pkgs, lib, repos = getOption("repos"),
     install of more than one source package.  Values greater than one
     are supported if the \command{make} command specified by
     \code{Sys.getenv("MAKE", "make")} accepts argument
-    \option{-k -j \var{Ncpus}}.
+    \option{-k -j <Ncpus>}.
   }
   \item{verbose}{
     a logical indicating if some \dQuote{progress report} should be given.
@@ -314,7 +314,7 @@ install.packages(pkgs, lib, repos = getOption("repos"),
   Parallel installs are attempted if \code{pkgs} has length greater than
   one and \code{Ncpus > 1}.  It makes use of a parallel \command{make},
   so the \code{make} specified (default \command{make}) when \R was
-  built must be capable of supporting \option{make -j \var{n}}: GNU make,
+  built must be capable of supporting \command{make -j \var{N}}: GNU make,
   \command{dmake} and \command{pmake} do, but Solaris \command{make} and
   older FreeBSD \command{make} do not: if necessary environment variable
   \env{MAKE} can be set for the current session to select a suitable
