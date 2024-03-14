@@ -7165,7 +7165,7 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
   Rboolean smallcache = TRUE;
 #ifdef USE_BINDING_CACHE
   if (useCache) {
-      R_len_t n = LENGTH(constants);
+      R_xlen_t n = XLENGTH(constants);
 # ifdef CACHE_MAX
       if (n > CACHE_MAX) {
 	  n = CACHE_MAX;
