@@ -2154,6 +2154,8 @@ static R_INLINE void R_CleanupEnvir(SEXP rho, SEXP val)
     }
 }
 
+#define NO_CALL_FRAME_ARGS_NR
+
 static void unpromiseArgs(SEXP pargs)
 {
     /* This assumes pargs will no longer be referenced. We could
@@ -5888,6 +5890,7 @@ static R_INLINE SEXP CLOSURE_CALL_FRAME_ARGS(void)
     SEXP args = CALL_FRAME_ARGS();
     /* it would be better not to build this arglist with CONS_NR in
        the first place */
+#ifndef NO_CALL_FRAME_ARGS_NR
     for (SEXP a = args; a  != R_NilValue; a = CDR(a)) {
 	DECREMENT_LINKS(CAR(a));
 	if (! TRACKREFS(a)) {
@@ -5896,6 +5899,7 @@ static R_INLINE SEXP CLOSURE_CALL_FRAME_ARGS(void)
 	    INCREMENT_REFCNT(CDR(a));
 	}
     }
+#endif
     return args;
 }
 
@@ -5926,13 +5930,21 @@ static R_INLINE SEXP CLOSURE_CALL_FRAME_ARGS(void)
 
 /* push an argument to existing call frame */
 /* a call frame always uses boxed stack values, so GETSTACK will not allocate */
-#define PUSHCALLARG(v) do {					\
-	SEXP __cell__ = CONS_NR(v, R_NilValue);			\
-	if (GETSTACK(-2) == R_NilValue) SETSTACK(-2, __cell__); \
-	else SETCDR(GETSTACK(-1), __cell__);			\
-	SETSTACK(-1, __cell__);					\
-	INCREMENT_LINKS(CAR(__cell__));				\
-} while (0)
+#define PUSHCALLARG_EX(v, RC) do {					\
+	SEXP __cell__ =							\
+	    (RC) ? CONS(v, R_NilValue) : CONS_NR(v, R_NilValue);	\
+	if (GETSTACK(-2) == R_NilValue) SETSTACK(-2, __cell__);		\
+	else SETCDR(GETSTACK(-1), __cell__);				\
+	SETSTACK(-1, __cell__);						\
+	if (RC) INCREMENT_NAMED(CAR(__cell__));				\
+	else INCREMENT_LINKS(CAR(__cell__));				\
+    } while (0)
+#define PUSHCALLARG(v) PUSHCALLARG_EX(v, FALSE)
+#ifdef NO_CALL_FRAME_ARGS_NR
+#define PUSHCALLARG_RC(v) PUSHCALLARG_EX(v, TRUE)
+#else
+#define PUSHCALLARG_RC PUSHCALLARG
+#endif
 
 /* place a tag on the most recently pushed call argument */
 #define SETCALLARG_TAG(t) do {			\
@@ -7611,19 +7623,19 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
     OP(MAKEPROM, 1):
       {
 	SEXP code = VECTOR_ELT(constants, GETOP());
-	SEXPTYPE ftype = CALL_FRAME_FTYPE();
-	if (ftype != SPECIALSXP) {
-	  SEXP value;
-	  if (ftype == BUILTINSXP) {
+	switch (CALL_FRAME_FTYPE()) {
+	case CLOSXP:
+	    PUSHCALLARG_RC(mkPROMISE(code, rho));
+	    break;
+	case BUILTINSXP:
 	    if (TYPEOF(code) == BCODESXP)
-	      value = bcEval(code, rho, TRUE);
+		PUSHCALLARG(bcEval(code, rho, TRUE));
 	    else
-	      /* uncommon but possible, the compiler may decide not to compile
-	         an argument expression */
-	      value = eval(code, rho);
-	  } else
-	    value = mkPROMISE(code, rho);
-	  PUSHCALLARG(value);
+		/* uncommon but possible, the compiler may decide not
+		   to compile an argument expression */
+		PUSHCALLARG(eval(code, rho));
+	    break;
+	case SPECIALSXP: break;
 	}
 	NEXT();
       }
