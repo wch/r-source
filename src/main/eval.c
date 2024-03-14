@@ -1043,16 +1043,14 @@ attribute_hidden void R_BCProtReset(R_bcstack_t *ptop)
     DECLNK_stack(ptop);
 }
 
-#define INCREMENT_BCSTACK_LINKS()			\
-    R_bcstack_t *ibcl_oldptop = R_BCProtTop;		\
-    do {						\
+#define INCREMENT_BCSTACK_LINKS() do {			\
 	if (R_BCNodeStackTop > R_BCProtTop)		\
 	    INCLNK_stack(R_BCNodeStackTop);		\
     } while (0)
 
-#define DECREMENT_BCSTACK_LINKS() do {			\
-	if (R_BCProtTop > ibcl_oldptop)			\
-	    DECLNK_stack(ibcl_oldptop);			\
+#define DECREMENT_BCSTACK_LINKS(oldptop) do {		\
+	if (R_BCProtTop > (oldptop))			\
+	    DECLNK_stack(oldptop);			\
     } while (0)
 
 /* Return value of "e" evaluated in "rho". */
@@ -3374,6 +3372,7 @@ static SEXP applydefine(SEXP call, SEXP op, SEXP args, SEXP rho)
 	assignment is right associative i.e.  a <- b <- c is parsed as
 	a <- (b <- c).  */
 
+    R_bcstack_t *old_bcprot_top = R_BCProtTop;
     INCREMENT_BCSTACK_LINKS();
     INCLNK_stack_commit();
 
@@ -3533,7 +3532,7 @@ static SEXP applydefine(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (refrhs) DECREMENT_REFCNT(saverhs);
 #endif
 
-    DECREMENT_BCSTACK_LINKS();
+    DECREMENT_BCSTACK_LINKS(old_bcprot_top);
 
     return saverhs;
 }
@@ -7090,6 +7089,7 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
   constants = BCCONSTS(body);
   SKIP_OP(); // pop off version
 
+  R_bcstack_t *old_bcprot_top = R_BCProtTop;
   INCREMENT_BCSTACK_LINKS();
 
   R_Srcref = R_InBCInterpreter;
@@ -8277,7 +8277,7 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 #endif
   if (body) {
       R_BCNodeStackTop = R_BCProtTop;
-      DECREMENT_BCSTACK_LINKS();
+      DECREMENT_BCSTACK_LINKS(old_bcprot_top);
   }
   R_BCNodeStackTop = oldntop;
   return retvalue;
