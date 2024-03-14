@@ -5573,7 +5573,7 @@ static struct { void *addr; int argc; char *instname; } opinfo[OPCOUNT];
 
 #define BEGIN_MACHINE  NEXT(); init: { loop: switch(which++)
 #define LASTOP } retvalue = R_NilValue; goto done
-#define INITIALIZE_MACHINE() if (body == NULL) goto init
+#define INITIALIZE_MACHINE() int which = 0; if (body == NULL) goto init
 
 #define NEXT() (__extension__ ({currentpc = pc; goto *(*pc++).v;}))
 #define GETOP() (*pc++).i
@@ -7087,9 +7087,6 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 
 #ifdef BC_PROFILING
   int old_current_opcode = current_opcode;
-#endif
-#ifdef THREADED_CODE
-  int which = 0;
 #endif
 
   BC_CHECK_SIGINT();
