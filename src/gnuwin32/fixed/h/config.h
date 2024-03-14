@@ -469,9 +469,11 @@
 
 /* Define to 1 if you have libdeflate headers and library. */
 /* #undef HAVE_LIBDEFLATE */
+#define HAVE_LIBDEFLATE 1
 
 /* Define to 1 if you have the <libdeflate.h> header file. */
 /* #undef HAVE_LIBDEFLATE_H */
+#define HAVE_LIBDEFLATE_H 1
 
 /* Define to 1 if you have the `dl' library (-ldl). */
 /* #undef HAVE_LIBDL */
@@ -1242,6 +1244,7 @@
 
 /* Define to use libdefault rather than libz for lazy-loaded R objects */
 /* #undef USE_LIBDEFLATE */
+#define USE_LIBDEFLATE 1
 
 /* Define if the POSIX multithreading library can be used. (For intl) */
 /* #undef USE_POSIX_THREADS */
