@@ -335,6 +335,20 @@
     }
   }
 
+  \subsection{INSTALLATION on WINDOWS}{
+    \itemize{
+      \item The makefiles and installer scripts for Windows have been
+      tailored to \I{Rtools44}, an update of the \I{Rtools43} toolchain.  It
+      is based on GCC 13 and newer versions of \I{MinGW-W64}, \I{binutils}
+      and libraries (targeting 64-bit Intel CPUs).  R-devel can no longer be
+      built using \I{Rtools43} without changes.
+
+      \I{Rtools44} has experimental suport for 64-bit ARM (aarch64) CPUs via
+      LLVM 17 toolchain using lld, clang/flang-new and libc++.
+    }
+  }
+
+
   %% \subsection{PACKAGE INSTALLATION}{
   %%   \itemize{
   %%     \item .
