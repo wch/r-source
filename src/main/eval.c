@@ -2328,9 +2328,9 @@ static SEXP STACKVAL_TO_SEXP(R_bcstack_t);
 static R_INLINE SEXP R_execClosure(SEXP call, SEXP newrho, SEXP sysparent,
                                    SEXP rho, SEXP arglist, SEXP op)
 {
-    volatile SEXP body;
+    SEXP body;
     RCNTXT cntxt;
-    Rboolean dbg = FALSE;
+    volatile Rboolean dbg = FALSE;
 
     begincontext(&cntxt, CTXT_RETURN, call, newrho, sysparent, arglist, op);
 
