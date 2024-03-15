@@ -387,7 +387,7 @@ SEXP dispatchMethod(SEXP op, SEXP sxp, SEXP dotClass, RCNTXT *cptr, SEXP method,
 #else
 		static int option = -1;
 		if (option == -1) {
-		    option = 3; // error: the default
+		    option = 2; // none: the default
 		    const char *val = getenv("R_USEMETHOD_FORWARD_LOCALS");
 		    if (val != NULL) {
 			if (strcmp(val, "all") == 0)
@@ -407,7 +407,7 @@ SEXP dispatchMethod(SEXP op, SEXP sxp, SEXP dotClass, RCNTXT *cptr, SEXP method,
 		SEXP val;
 		char buf[8192];
 		switch(option) {
-		case 0: // forward all, as in the past
+		case 0: // forward all, as in the past before R 4.4.0
 		    UNPROTECT(1); /* newvars */
 		    newvars = PROTECT(CONS(CAR(s), newvars));
 		    SET_TAG(newvars, TAG(s));

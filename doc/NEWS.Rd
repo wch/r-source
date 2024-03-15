@@ -471,8 +471,7 @@
       assigned in the generic function into method call environments
       before evaluating the method body. This makes method calls behave
       more like standard function calls and makes method code easier to
-      analyze correctly.  For now, attempts to use these variables in a
-      method will signal an error; this will eventually be dropped.
+      analyze correctly.
 
       \item The twelve \code{as.data.frame.<class>()} methods which were
       deprecated only via \env{_R_CHECK_AS_DATA_FRAME_EXPLICIT_METHOD_} and
