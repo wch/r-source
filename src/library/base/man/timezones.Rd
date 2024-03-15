@@ -100,8 +100,8 @@ OlsonNames(tzdir = NULL)
   \samp{Europe/Belfast}, \samp{Europe/Guernsey},
   \samp{Europe/Isle_of_Man} and \samp{Europe/Jersey}.  A few regions are
   also known by a summary of their time zone,
-  e.g.\sspace{}\samp{PST8PDT} is an alias for
-  \samp{America/Los_Angeles}.
+  e.g.\sspace{}\samp{PST8PDT} is (on most but not all systems) an alias
+  for \samp{America/Los_Angeles}.
 
   \code{OlsonNames} returns a character vector, see the examples for
   typical cases.  It may have an attribute \code{"Version"}, something
@@ -257,13 +257,17 @@ OlsonNames(tzdir = NULL)
 
 \note{
   Since 2007 there has been considerable disruption over changes to the
-  timings of the DST transitions, originally aimed at energy
-  conservation.  These often have short notice and time-zone databases
-  may not be up to date.  (Morocco in 2013 announced a change to the end
-  of DST at \emph{a days} notice, and in 2015 North Korea gave imprecise
-  information about a change a week in advance. In 2023 there was chaos
-  in Lebanon as the authorities changed their minds repeatedly and some
-  changes were not widely implemented.)
+  timings of the DST transitions; these often have short notice and
+  time-zone databases may not be up to date.  (Morocco in 2013 announced
+  a change to the end of DST at \emph{a day's} notice.  In
+  2023 there was chaos in Lebanon as the authorities changed their minds
+  repeatedly and some changes were not widely implemented.)
+
+  There have also been changes to the \sQuote{standard} time with little
+  notice (Kazakhstan switched to a single time zone in Mar 2024 with six
+  weeks' notice), and to whether \sQuote{summmer} or \sQuote{winter}
+  time is regarded as \sQuote{standard} (and hence to abbreviations).
+  %% Irish Standard time is used in summer.
 
   On platforms with case-insensitive file systems, time zone names will be
   case-insensitive.  They may or may not be on other platforms and so,
