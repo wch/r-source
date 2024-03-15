@@ -486,6 +486,11 @@
       deprecated only via \env{_R_CHECK_AS_DATA_FRAME_EXPLICIT_METHOD_} and
       in \command{R CMD check --as-cran} are formally deprecated now in
       favour of calling \code{as.data.frame()} or \code{as.data.frame.vector()}.
+
+      \item The default method for the directional comparison operators
+      \code{<}, \code{>}, \code{<=}, and \code{>=} now signals an error
+      when one of the operands is a language objects, i.e. a symbol or a
+      call.
     }
   }
 

@@ -72,10 +72,13 @@ x != y
   also result when character strings are compared and one is not valid
   in the current collation locale.
 
-  Language objects such as symbols and calls are currently deparsed to
-  character strings before comparison. This can be inefficient and may
-  not be what is really wanted. For equality comparisons
-  \code{\link{identical}} is usually a better choice.
+  Language objects such as symbols and calls can only be used as
+  operands for \code{==} and \code{!=}; the other comparisons signal an
+  error when one of the operands is a language object.  Currently
+  language objects are deparsed to character strings before
+  comparison. This can be inefficient and may not be what is really
+  wanted. For equality comparisons \code{\link{identical}} is usually a
+  better choice.
 }
 \value{
   A logical vector indicating the result of the element by element

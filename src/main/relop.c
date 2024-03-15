@@ -103,7 +103,6 @@ static SEXP compute_language_relop(SEXP call, SEXP op, SEXP x, SEXP y)
 {
     static enum {
 	UNINITIALIZED,
-	DEFAULT,
 	EQONLY,
 	IDENTICAL_CALLS,
 	IDENTICAL_CALLS_ATTR,
@@ -113,7 +112,7 @@ static SEXP compute_language_relop(SEXP call, SEXP op, SEXP x, SEXP y)
     } option = UNINITIALIZED;
 
     if (option == UNINITIALIZED) {
-	option = DEFAULT;
+	option = EQONLY;
 	const char *val = getenv("_R_COMPARE_LANG_OBJECTS");
 	if (val != NULL) {
 	    if (strcmp(val, "eqonly") == 0)
