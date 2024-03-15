@@ -5263,7 +5263,7 @@ function(x, ...)
 ### * .check_package_ASCII_code
 
 .check_package_ASCII_code <-
-function(dir, respect_quotes = FALSE)
+function(dir, respect_quotes = FALSE) # by default also look inside quotes
 {
     OS_subdirs <- c("unix", "windows")
     if(!dir.exists(dir))
@@ -5279,7 +5279,7 @@ function(dir, respect_quotes = FALSE)
                                         OS_subdirs = OS_subdirs)
         for(f in R_files) {
             text <- readLines(file.path(code_dir, f), warn = FALSE)
-            if(.Call(C_check_nonASCII, text, !respect_quotes))
+            if(.Call(C_check_nonASCII, text, respect_quotes))
                 wrong_things <- c(wrong_things, f)
         }
     }

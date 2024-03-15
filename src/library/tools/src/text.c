@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2003-2022   The R Core Team.
+ *  Copyright (C) 2003-2024   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -164,7 +164,7 @@ check_nonASCII(SEXP text, SEXP ignore_quotes)
 	inquote = FALSE; /* avoid runaway quotes */
 	for(; *p; p++) {
 	    if(!inquote && *p == '#') break;
-	    if(!inquote || ign) {
+	    if(!inquote || !ign) {
 		if((unsigned int) *p > 127) {
 		    /* Rprintf("%s\n", CHAR(STRING_ELT(text, i)));
 		       Rprintf("found %x\n", (unsigned int) *p); */
