@@ -681,7 +681,14 @@ local({
     bdy <- body(as.data.frame.vector)
     bdy <- bdy[c(1:2, seq_along(bdy)[-1L])] # taking [(1,2,2:n)] to insert at [2]:
     ## deprecation warning only when not called by method dispatch from as.data.frame():
-    bdy[[2L]] <- quote(if((sys.nframe() <= 1L || !identical(sys.function(-1L), as.data.frame)))
+    bdy[[2L]] <- quote(
+        if((sys.nframe() <= 1L ||
+	    !(identical(sys.function(-1L), as.data.frame) || ## when as.data.frame is S4 generic:
+	      (.isMethodsDispatchOn() &&
+	       is(sys.function(-1L), 'derivedDefaultMethod') &&
+	       identical(sys.function(-1L)@generic,
+			 structure('as.data.frame', package = 'base'))
+	       ))))
 	.Deprecated(
 	    msg = gettextf(
 		"Direct call of '%s()' is deprecated.  Use '%s()' or '%s()' instead",

@@ -747,6 +747,13 @@ stopifnot(local({adf <- as.data.frame; identical(adf(1L),(as.data.frame)(1L))}))
 str(d2 <- mapply(as.data.frame, x=1:3, row.names=letters[1:3]))
 stopifnot(is.list(d2), identical(unlist(unname(d2)), 1:3))
 ## gave Error .. sys.call(-1L)[[1L]] .. comparison (!=) is possible only ..
+##
+## Should not warn for a call from a derivedDefaultMethod to the
+## raw S3 method -- implementation detail of S4 dispatch
+setGeneric('as.data.frame')
+as.data.frame(factor(1))
+removeGeneric('as.data.frame')
+## wrongly gave  " Direct call of 'as.data.frame.factor()' is deprecated. "
 
 
 ## qqplot(x,y, *) confidence bands for unequal sized x,y, PR#18570:
