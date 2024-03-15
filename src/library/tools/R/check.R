@@ -1,7 +1,7 @@
 #  File src/library/tools/R/check.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2023 The R Core Team
+#  Copyright (C) 1995-2024 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -1973,7 +1973,7 @@ add_dummies <- function(dir, Log)
 
     check_non_ASCII <- function()
     {
-        checkingLog(Log, "R files for non-ASCII characters")
+        checkingLog(Log, "code files for non-ASCII characters")
         out <- R_runR0("tools:::.check_package_ASCII_code('.')",
                        R_opts2,
                        c("R_DEFAULT_PACKAGES=NULL",
@@ -1987,9 +1987,11 @@ add_dummies <- function(dir, Log)
             wrapLog(msg)
             printLog0(Log, .format_lines_with_indent(out), "\n")
             wrapLog("Portable packages must use only ASCII",
-                    "characters in their R code,\n",
+                    "characters in their R code and NAMESPACE directives,",
                     "except perhaps in comments.\n",
-                    "Use \\uxxxx escapes for other characters.\n")
+                    "Use \\uxxxx escapes for other characters.\n",
+                    "Function", sQuote("tools::showNonASCIIfile"),
+                    "can help in finding non-ASCII characters in files.\n")
         } else resultLog(Log, "OK")
 
         checkingLog(Log, "R files for syntax errors")

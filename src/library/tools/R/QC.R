@@ -5262,28 +5262,26 @@ function(x, ...)
 
 ### * .check_package_ASCII_code
 
+## FIXME: respect_quotes=TRUE does not work well for multi-line quotes
 .check_package_ASCII_code <-
 function(dir, respect_quotes = FALSE) # by default also look inside quotes
 {
-    OS_subdirs <- c("unix", "windows")
     if(!dir.exists(dir))
         stop(gettextf("directory '%s' does not exist", dir), domain = NA)
-    else
-        dir <- file_path_as_absolute(dir)
 
-    code_dir <- file.path(dir, "R")
+    dir <- file_path_as_absolute(dir)
     wrong_things <- character()
-    if(dir.exists(code_dir)) {
-        R_files <- list_files_with_type(code_dir, "code",
-                                        full.names = FALSE,
-                                        OS_subdirs = OS_subdirs)
-        for(f in R_files) {
-            text <- readLines(file.path(code_dir, f), warn = FALSE)
-            if(.Call(C_check_nonASCII, text, respect_quotes))
-                wrong_things <- c(wrong_things, f)
-        }
+    for(f in c(file.path(dir, "NAMESPACE"),
+               list_files_with_type(file.path(dir, "R"), "code",
+                                    OS_subdirs = c("unix", "windows")))) {
+        text <- readLines(f, warn = FALSE)
+        if (.Call(C_check_nonASCII, text, respect_quotes))
+            wrong_things <- c(wrong_things, f)
     }
-    if(length(wrong_things)) cat(wrong_things, sep = "\n")
+    if(length(wrong_things)) {
+        wrong_things <- substring(wrong_things, nchar(dir) + 2L)
+        cat(wrong_things, sep = "\n")
+    }
     invisible(wrong_things)
 }
 

@@ -426,6 +426,10 @@
       \item \command{R CMD build} when there is no \file{NAMESPACE}, now
       uses the recommended \code{exportPattern("^[^.]")}, instead of
       exporting everything.
+
+      \item \command{R CMD check} now warns about non-ASCII characters
+      in the \file{NAMESPACE} file (in addition to \R files). Such
+      packages are not portable and may fail to install on some platforms.
     }
   }
 
