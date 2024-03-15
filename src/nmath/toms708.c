@@ -36,7 +36,7 @@
  *
  *	make CFLAGS='-DDEBUG_bratio  ...'
  *MM (w/ Debug, w/o Optimization):
- (cd `R-devel-pbeta-dbg RHOME`/src/nmath ; gcc -I. -I../../src/include -I../../../R/src/include  -DHAVE_CONFIG_H -fopenmp -g -pedantic -Wall --std=gnu99 -DDEBUG_q -DDEBUG_bratio -Wcast-align -Wclobbered  -c ../../../R/src/nmath/toms708.c -o toms708.o; cd ../..; make R)
+ (cd `R-devel-pbeta-dbg RHOME`/src/nmath ; gcc -I. -I../../src/include -I../../../R/src/include  -DHAVE_CONFIG_H -fopenmp  -g -pedantic -Wall -DDEBUG_bratio -DDEBUG_q -Wcast-align -Wconversion -fno-common -Wno-sign-conversion -Wstrict-prototypes -Wclobbered -Werror=implicit-function-declaration  -c ../../../R/src/nmath/toms708.c -o toms708.o; cd ../..; make R)
 */
 #ifdef DEBUG_bratio
 # define R_ifDEBUG_printf(...) REprintf(__VA_ARGS__)
@@ -136,7 +136,7 @@ bratio(double a, double b, double x, double y, double *w, double *w1,
 /*  eps is a machine dependent constant: the smallest
  *      floating point number for which   1. + eps > 1.
  * NOTE: for almost all purposes it is replaced by 1e-15 (~= 4.5 times larger) below */
-    double eps = 2. * Rf_d1mach(3); /* == DBL_EPSILON (in R, Rmath) */
+    double eps = 2. * Rf_d1mach(3); // == DBL_EPSILON (in R, Rmath), but then set to  1e-15  below
 
 /* ----------------------------------------------------------------------- */
     *w  = R_D__0;
@@ -166,9 +166,9 @@ bratio(double a, double b, double x, double y, double *w, double *w1,
     if (a == 0.) goto L211;
     if (b == 0.) goto L201;
 
-    eps = max(eps, 1e-15);
+    eps = max(eps, 1e-15); // = 1e-15 (for IEEE 754)
     Rboolean a_lt_b = (a < b);
-    if (/* max(a,b) */ (a_lt_b ? b : a) < eps * .001) { /* procedure for a and b < 0.001 * eps */
+    if (/* max(a,b) */ (a_lt_b ? b : a) < eps * .001) { /* procedure for a and b < 0.001 * eps = 1e-18 */
 	// L230:  -- result *independent* of x (!)
 	// *w  = a/(a+b)  and  w1 = b/(a+b) :
 	if(log_p) {
@@ -279,7 +279,7 @@ bratio(double a, double b, double x, double y, double *w, double *w1,
     }
     else { /* L30: -------------------- both  a, b > 1  {a0 > 1  &  b0 > 1} ---*/
 
-	/* lambda := a y - b x  =  (a + b)y  =  a - (a+b)x    {using x + y == 1},
+	/* lambda := a y - b x  =  (a + b)y - b  =  a - (a+b)x    {using x + y == 1},
 	 * ------ using the numerically best version : */
 	lambda = R_FINITE(a+b)
 	    ? ((a > b) ? (a + b) * y - b : a - (a + b) * x)
@@ -357,11 +357,11 @@ L140:
     *w = bup(b0, a0, y0, x0, n, eps, FALSE);
 
     if(*w < DBL_MIN && log_p) { /* do not believe it; try bpser() : */
-	R_ifDEBUG_printf(" L140: bup(b0=%g,..)=%.15g < DBL_MIN - not used; ", b0, *w);
+	R_ifDEBUG_printf(" L140: bup(b0=%g,..)=%.15g < DBL_MIN - not used;\n --> ", b0, *w);
 	/*revert: */ b0 += n;
 	/* which is only valid if b0 <= 1 || b0*x0 <= 0.7 */
 	goto L_w_bpser;
-    }
+    } // else :
     R_ifDEBUG_printf(" L140: *w := bup(b0=%g,..) = %.15g; ", b0, *w);
     if (x0 <= 0.7) {
 	/* log_p :  TODO:  w = bup(.) + bpser(.)  -- not so easy to use log-scale */
@@ -525,11 +525,9 @@ static double bpser(double a, double b, double x, double eps, int log_p)
 /* -----------------------------------------------------------------------
  * Power SERies expansion for evaluating I_x(a,b) when
  *	       b <= 1 or b*x <= 0.7.   eps is the tolerance used.
- * NB: if log_p is TRUE, also use it if   (b < 40  & lambda > 650)
+ * NB: if log_p is TRUE, also use it if   (b < 40  & lambda > 650)   where
+ *                       lambda := a y - b x = (a + b)y - b  = a - (a+b)x   {x + y == 1}
  * ----------------------------------------------------------------------- */
-
-    int i, m;
-    double ans, c, t, u, z, a0, b0, apb;
 
     if (x == 0.) {
 	return R_D__0;
@@ -537,24 +535,26 @@ static double bpser(double a, double b, double x, double eps, int log_p)
 /* ----------------------------------------------------------------------- */
 /*	      compute the factor  x^a/(a*Beta(a,b)) */
 /* ----------------------------------------------------------------------- */
-    a0 = min(a,b);
+    double ans, c, z, a0 = min(a,b);
     if (a0 >= 1.) { /*		 ------	 1 <= a0 <= b0  ------ */
 	z = a * log(x) - betaln(a, b);
 	ans = log_p ? z - log(a) : exp(z) / a;
     }
     else {
-	b0 = max(a,b);
-
+	double t, u, apb, b0 = max(a,b);
 	if (b0 < 8.) {
 
-	    if (b0 <= 1.) { /*	 ------	 a0 < 1	 and  b0 <= 1  ------ */
+	    if (b0 <= 1.) { /*	------  a0 < 1  and  a0 <= b0 <= 1  ------ */
 
 		if(log_p) {
 		    ans = a * log(x);
 		} else {
 		    ans = pow(x, a);
-		    if (ans == 0.) /* once underflow, always underflow .. */
+		    if (ans == 0.) { /* once underflow, always underflow .. */
+			R_ifDEBUG_printf(" bpser(a=%g, b=%g, x=%g): x^a underflows to 0",
+					 a,b,x);
 			return ans;
+		    }
 		}
 		apb = a + b;
 		if (apb > 1.) {
@@ -573,10 +573,10 @@ static double bpser(double a, double b, double x, double eps, int log_p)
 	    } else { /* 	------	a0 < 1 < b0 < 8	 ------ */
 
 		u = gamln1(a0);
-		m = (int)(b0 - 1.);
+		int m = (int)(b0 - 1.);
 		if (m >= 1) {
 		    c = 1.;
-		    for (i = 1; i <= m; ++i) {
+		    for (int i = 1; i <= m; ++i) {
 			b0 += -1.;
 			c *= b0 / (a0 + b0);
 		    }
@@ -610,11 +610,16 @@ static double bpser(double a, double b, double x, double eps, int log_p)
 		ans = a0 / a * exp(z);
 	}
     }
-    R_ifDEBUG_printf(" bpser(a=%g, b=%g, x=%g, log=%d): prelim.ans = %.14g;\n",
-		     a,b,x, log_p, ans);
+    R_ifDEBUG_printf(" bpser(a=%g, b=%g, x=%g, log=%d, eps=%g): %s = %.14g;",
+		     a,b,x, log_p, eps,
+		     log_p ? "log(x^a/(a*B(a,b)))" : "x^a/(a*B(a,b))",  ans);
     if (ans == R_D__0 || (!log_p && a <= eps * 0.1)) {
+	R_ifDEBUG_printf(" = final answer\n");
 	return ans;
     }
+#ifdef DEBUG_bratio
+    else REprintf("\n");
+#endif
 
 /* ----------------------------------------------------------------------- */
 /*		       COMPUTE THE SERIES */
@@ -637,9 +642,9 @@ static double bpser(double a, double b, double x, double eps, int log_p)
 		" bpser(a=%g, b=%g, x=%g,...) did not converge (n=1e7, |w|/tol=%g > 1; A=%g)",
 		a,b,x, fabs(w)/tol, ans);
     }
-    R_ifDEBUG_printf("  -> n=%.0f iterations, |w|=%g %s %g=tol:=eps/a ==> a*sum=%g\n",
-		     n, fabs(w), (fabs(w) > tol) ? ">!!>" : "<=",
-		     tol, a*sum);
+    R_ifDEBUG_printf("  -> n=%.0f iterations, |w|=%g %s %g=tol:=eps/a ==> a*sum=%g %s -1\n",
+		     n, fabs(w), (fabs(w) > tol) ? ">!!>" : "<=", tol,
+		     a*sum, (a*sum > -1.) ? ">" : "<=");
     if(log_p) {
 	if (a*sum > -1.) ans += log1p(a * sum);
 	else {
@@ -677,7 +682,7 @@ static double bup(double a, double b, double x, double y, int n, double eps,
 	k = (int) exparg(0);
 	if (mu > k)
 	    mu = k;
- 	d = exp(-(double) mu);
+ 	d = exp(-(double) mu); // = exp(-709) = 1.216780751..e-308  nowadays
     }
     else {
 	mu = 0;
@@ -1135,7 +1140,9 @@ static void bgrat(double a, double b, double x, double y, double *w,
 	    "bgrat(a=%g, b=%g, x=%g, y=%g): z=%g, b*z == 0 underflow, hence inaccurate pbeta()",
 	    a,b,x,y, z);
 	/* L_Error:    THE EXPANSION CANNOT BE COMPUTED */
-	 *ierr = 1; return;
+	 *ierr = 1;
+	 /* TODO (?):  do not yet return, trying further using log-scale below */
+	 return;
     }
 
 /*                 COMPUTATION OF THE EXPANSION */
@@ -1534,6 +1541,7 @@ static double rlog1(double x)
 {
 /* -----------------------------------------------------------------------
  *             Evaluation of the function  x - ln(1 + x)
+ *                                        ~=~ - log1pmx(x)  in ./pgamma.c
  * ----------------------------------------------------------------------- */
 
     static double a = .0566749439387324;
@@ -1641,8 +1649,9 @@ static double erfc1(int ind, double x)
 /* ----------------------------------------------------------------------- */
 /*         EVALUATION OF THE COMPLEMENTARY ERROR FUNCTION */
 
-/*          ERFC1(IND,X) = ERFC(X)            IF IND = 0 */
-/*          ERFC1(IND,X) = EXP(X*X)*ERFC(X)   OTHERWISE */
+/*          ERFC1(ind,X) = ERFC(X)            if ind = 0
+ *          ERFC1(ind,X) = EXP(X*X)*ERFC(X)   otherwise, the *scaled* erfc(),
+ *	    				      (the only one used here)     */
 /* ----------------------------------------------------------------------- */
 
     /* Initialized data */
@@ -1697,12 +1706,13 @@ static double erfc1(int ind, double x)
 	    return ret_val;
 	}
 	if (ind == 0 && (x > 100. || x * x > -exparg(1))) {
-	    // LIMIT VALUE FOR LARGE POSITIVE X   WHEN IND = 0
+	    // nowadays: -exparg(1) = 709.0825.. : above <===> |x| > 26.6286
+	    // Underflow to limit for large positive x   when ind = 0
 	    // L60:
 	    return 0.;
 	}
 
-	// L30:
+	// L30:  -5.6 < x < -4  or  4 < x <= 26.6286..
 	t = 1. / (x * x);
 	top = (((r[0] * t + r[1]) * t + r[2]) * t + r[3]) * t + r[4];
 	bot = (((s[0] * t + s[1]) * t + s[2]) * t + s[3]) * t + 1.;
@@ -2025,10 +2035,8 @@ L_err:
 static double betaln(double a0, double b0)
 {
 /* -----------------------------------------------------------------------
- *     Evaluation of the logarithm of the beta function  ln(beta(a0,b0))
+ *     Evaluation of the logarithm of the beta function  ln(beta(a0,b0))   -- in R:  lbeta(a0, b0)
  * ----------------------------------------------------------------------- */
-
-    static double e = .918938533204673;/* e == 0.5*LN(2*PI) */
 
     double
 	a = min(a0 ,b0),
@@ -2101,7 +2109,7 @@ static double betaln(double a0, double b0)
 /* ----------------------------------------------------------------------- */
 	// L60:			A >= 8
 /* ----------------------------------------------------------------------- */
-
+	static double e = .918938533204673;/* e == 0.5*LN(2*PI) */
 	double
 	    w = bcorr(a, b),
 	    h = a / b,
@@ -2153,9 +2161,6 @@ static double bcorr(double a0, double b0)
     static double c4 = 8.37308034031215e-4;
     static double c5 = -.00165322962780713;
 
-    /* System generated locals */
-    double ret_val, r1;
-
     /* Local variables */
     double a, b, c, h, t, w, x, s3, s5, x2, s7, s9, s11;
 /* ------------------------ */
@@ -2167,8 +2172,7 @@ static double bcorr(double a0, double b0)
     x = 1. / (h + 1.);
     x2 = x * x;
 
-/*                SET SN = (1 - X^N)/(1 - X) */
-
+/*                SET s<n> := (1 - x^n)/(1 - x) */
     s3 = x + x2 + 1.;
     s5 = x + x2 * s3 + 1.;
     s7 = x + x2 * s5 + 1.;
@@ -2177,21 +2181,14 @@ static double bcorr(double a0, double b0)
 
 /*                SET W = DEL(B) - DEL(A + B) */
 
-/* Computing 2nd power */
-    r1 = 1. / b;
-    t = r1 * r1;
+    t = 1. / b; t *= t; // t := 1 / b^2
     w = ((((c5 * s11 * t + c4 * s9) * t + c3 * s7) * t + c2 * s5) * t + c1 *
 	    s3) * t + c0;
     w *= c / b;
 
 /*                   COMPUTE  DEL(A) + W */
-
-/* Computing 2nd power */
-    r1 = 1. / a;
-    t = r1 * r1;
-    ret_val = (((((c5 * t + c4) * t + c3) * t + c2) * t + c1) * t + c0) / a +
-	    w;
-    return ret_val;
+    t = 1. / a; t *= t; // t:= 1 / a^2
+    return (((((c5 * t + c4) * t + c3) * t + c2) * t + c1) * t + c0) / a + w;
 } /* bcorr */
 
 static double algdiv(double a, double b)
