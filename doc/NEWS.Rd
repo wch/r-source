@@ -273,6 +273,15 @@
     }
   }
 
+  \subsection{INSTALLATION}{
+    \itemize{
+      \item The parser has been updated to work with \I{bison} 3.8.2, 
+      which is now used for the pre-generated parsers in \file{gram.c},
+      \code{file.c}, and \file{gramRd.c}. A few parser error messages 
+      have changed, which may affect code that relies on exact messages.
+    }
+  }
+
   \subsection{INSTALLATION on a UNIX-ALIKE}{
     \itemize{
       \item System \I{valgrind} headers are now required to use
