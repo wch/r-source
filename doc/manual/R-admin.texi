@@ -4643,8 +4643,8 @@ under @file{m4} by @command{autoconf} and @command{aclocal} (part of the
 @pkg{automake} package).  There is a formal version requirement on
 @command{autoconf} of 2.71 or later, but it is unlikely that anything
 other than the most recent versions@footnote{at the time of revision of
-this para in late 2021, @pkg{autoconf-2.71} and
-@pkg{automake-1.16.5}. Subsequently @pkg{autoconf-2.72} has been tested.}
+this para in early 2024, @pkg{autoconf-2.72} and
+@pkg{automake-1.16.5}. Previously @pkg{autoconf-2.71} was used.}
 have been thoroughly tested.
 
 File @file{src/include/config.h} is created by @command{autoheader}
@@ -4654,8 +4654,8 @@ Grammar files @file{*.y} are converted to C sources by an implementation
 of @command{yacc}, usually @command{bison -y}: these are found in
 @file{src/main} and @file{src/library/tools/src}.  It is known that
 earlier versions of @command{bison} generate code which reads (and in
-some cases writes) outside array bounds: @command{bison} 2.6.1 was found
-to be satisfactory.
+some cases writes) outside array bounds: @command{bison} 3.8.2 is
+currently used.
 
 The ultimate sources for package @pkg{compiler} are in its @file{noweb}
 directory.  To re-create the sources from
