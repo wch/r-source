@@ -3198,10 +3198,8 @@ function(dir, force_suggests = TRUE, check_incoming = FALSE,
         }
         if (length(lreqs)) {
             reqs <- unique(sapply(lreqs, `[[`, 1L))
-            reqs <- setdiff(reqs, installed)
-            m <- reqs %in% standard_package_names$stubs
-            if(length(reqs[!m])) {
-                bad <- reqs[!m]
+            bad <- setdiff(reqs, installed)
+            if(length(bad)) {
                 ## EDanalysis has a package in all of Depends, Imports, Suggests.
                 bad1 <-  bad[bad %in% c(depends, imports, links)]
                 if(length(bad1))
@@ -3210,8 +3208,6 @@ function(dir, force_suggests = TRUE, check_incoming = FALSE,
                 if(length(bad2))
                     bad_depends$suggested_but_not_installed <- bad2
             }
-            if(length(reqs[m]))
-                bad_depends$required_but_stub <- reqs[m]
             ## now check versions
             have_ver <- vapply(lreqs, function(x) length(x) == 3L, NA)
             lreqs3 <- lreqs[have_ver]
@@ -3412,14 +3408,6 @@ function(x, ...)
           c(sprintf("Package required and available but unsuitable version: %s", sQuote(bad)),
             "")
       },
-      if(length(bad <- x$required_but_stub) > 1L) {
-          c("Former standard packages required but now defunct:",
-            .pretty_format(bad),
-            "")
-      } else if(length(bad)) {
-          c(sprintf("Former standard package required but now defunct: %s",
-                    sQuote(bad)), "")
-      },
       if(length(bad <- x$suggests_but_not_installed) > 1L) {
           c(.pretty_format2("Packages suggested but not available for checking:",
                             bad),
@@ -3598,15 +3586,10 @@ function(dfile, strict = FALSE, db = NULL)
         ## We allow 'R', which is not a valid package name.
         if(!grepl(sprintf("^(R|%s)$", valid_package_name_regexp), val))
             tmp <- c(tmp, gettext("Malformed package name"))
-        if(!is_base_package) {
-            if(val %in% standard_package_names$base)
-                tmp <- c(tmp,
-                         c("Invalid package name.",
-                           "This is the name of a base package."))
-            else if(val %in% standard_package_names$stubs)
-                tmp <- c(tmp,
-                         c("Invalid package name.",
-                           "This name was used for a base package and is remapped by library()."))
+        if(!is_base_package && val %in% standard_package_names$base) {
+            tmp <- c(tmp,
+                     c("Invalid package name.",
+                       "This is the name of a base package."))
         }
         if(length(tmp))
             out$bad_package <- tmp
