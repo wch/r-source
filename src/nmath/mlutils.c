@@ -1,6 +1,6 @@
 /*
  *  Mathlib : A C Library of Special Functions
- *  Copyright (C) 1998-2006 The R Core Team
+ *  Copyright (C) 1998-2024 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -57,7 +57,8 @@ double R_pow(double x, double y) /* = x ^ y */
 	return(1.);
     if(x == 0.) {
 	if(y > 0.) return(0.);
-	/* y < 0 */return(ML_POSINF);
+	else if(y < 0) return(ML_POSINF);
+	else return(y); /* y is NA or NaN, we assert */
     }
     if (R_FINITE(x) && R_FINITE(y))
 	return(pow(x,y));
@@ -73,7 +74,7 @@ double R_pow(double x, double y) /* = x ^ y */
 	    return((y < 0.)? 0. : ML_POSINF);
 	else {			/* (-Inf) ^ y */
 	    if(R_FINITE(y) && y == floor(y)) /* (-Inf) ^ n */
-		return((y < 0.) ? 0. : (myfmod(y,2.) ? x  : -x));
+		return (y < 0.) ? 0. : (myfmod(y,2.) != 0 ? x  : -x);
 	}
     }
     if(!R_FINITE(y)) {
