@@ -77,7 +77,15 @@ else
 IMPDIR=$(BINDIR)
 endif
 
-LLVMPREF=$(if $(USE_LLVM),llvm-,)
+LLVMPREF=
+ifdef USE_LLVM
+  # only set when BINPREF is empty or ends by /
+  #   to support e.g. BINPREF=aarch64-w64-mingw32.static.posix-
+  ifeq ($(patsubst %/,,$(lastword $(BINPREF))),)
+    LLVMPREF="llvm-"
+  endif
+endif
+
 AR = $(BINPREF)$(LLVMPREF)ar
 CAT=cat
 CC=$(BINPREF)$(CCBASE) $(M_ARCH)

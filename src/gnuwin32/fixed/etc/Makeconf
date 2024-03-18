@@ -62,7 +62,14 @@ LOCAL_CPPFLAGS = -I"$(LOCAL_SOFT)/include"
 LOCAL_LIBS = -L"$(LOCAL_SOFT)/lib$(R_ARCH)" -L"$(LOCAL_SOFT)/lib"
 endif
 
-LLVMPREF = $(if $(USE_LLVM),llvm-,)
+LLVMPREF=
+ifdef USE_LLVM
+  # only set when BINPREF is empty or ends by /
+  #   to support e.g. BINPREF=aarch64-w64-mingw32.static.posix-
+  ifeq ($(patsubst %/,,$(lastword $(BINPREF))),)
+    LLVMPREF="llvm-"
+  endif
+endif
 CCBASE = $(if $(USE_LLVM),clang,gcc)
 DLLTOOL = $(BINPREF)$(LLVMPREF)dlltool --as $(BINPREF)$(LLVMPREF)as $(DT_ARCH)
 DLLTOOLFLAGS = -k

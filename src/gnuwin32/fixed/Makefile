@@ -2,8 +2,12 @@ include ../MkRules
 
 R_HOME = ../../..
 
-# FIXME:  Should find a make where $(abspath ...) works and avoid this...
-LOCAL_SOFT := $(shell ../Rpwd.exe $(LOCAL_SOFT))
+ifeq ($(OS),Windows_NT)
+  # FIXME:  Should find a make where $(abspath ...) works and avoid this...
+  LOCAL_SOFT := $(shell ../Rpwd.exe $(LOCAL_SOFT))
+else
+  LOCAL_SOFT := $(abspath $(LOCAL_SOFT))
+endif
 
 all: profiles fixhtml fixetc fixdoc svnonly
 
