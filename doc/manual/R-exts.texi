@@ -3312,7 +3312,7 @@ LDFLAGS=`"$@{R_HOME@}/bin/R" CMD config LDFLAGS`
 
 cd src
 mkdir build && cd build
-cmake ../libs \
+cmake -S ../libs \
   -DCMAKE_BUILD_TYPE=Release \
   -DBUILD_SHARED_LIBS:bool=OFF \
   -DCMAKE_POSITION_INDEPENDENT_CODE:bool=ON
@@ -3357,7 +3357,7 @@ if test -f "$CMAKE"; then echo "no 'cmake' command found"; exit 1; fi
 @end example
 @noindent
 and for the second approach to substitute @env{CMAKE} into
-@file{src//Makevars}.  This also applies to the ancilliary command
+@file{src//Makevars}.  This also applies to the anciliary command
 @command{ctest}, if used.
 
 @node Checking and building packages, Writing package vignettes, Configure and cleanup, Creating R packages
