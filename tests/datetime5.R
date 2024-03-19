@@ -21,7 +21,7 @@ for (f in ff) {
 ## %P is a glibc extension which we added to IANA tzcode for R. Not in macOS.
 for (f in c("P", "k", "l", "s")) {
     f <- paste0("%", f)
-    cat(sprintf("%s: %s\n", f, format(dt, f)))
+    cat(sprintf("%s: %s\n", f, try(format(dt, f), silent = TRUE)))
 }
 
 ## week numbers

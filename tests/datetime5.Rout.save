@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2022-12-12 r83438) -- "Unsuffered Consequences"
-Copyright (C) 2022 The R Foundation for Statistical Computing
-Platform: aarch64-apple-darwin22.1.0 (64-bit)
+R Under development (unstable) (2024-03-19 r86151) -- "Unsuffered Consequences"
+Copyright (C) 2024 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -74,7 +74,7 @@ Type 'q()' to quit R.
 > ## %P is a glibc extension which we added to IANA tzcode for R. Not in macOS.
 > for (f in c("P", "k", "l", "s")) {
 +     f <- paste0("%", f)
-+     cat(sprintf("%s: %s\n", f, format(dt, f)))
++     cat(sprintf("%s: %s\n", f, try(format(dt, f), silent = TRUE)))
 + }
 %P: am
 %k:  9
