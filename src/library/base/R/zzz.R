@@ -685,7 +685,7 @@ local({
         if((sys.nframe() <= 1L ||
 	    !(identical(sys.function(-1L), as.data.frame) || ## when as.data.frame is S4 generic:
 	      (.isMethodsDispatchOn() &&
-	       is(sys.function(-1L), 'derivedDefaultMethod') &&
+	       methods::is(sys.function(-1L), 'derivedDefaultMethod') &&
 	       identical(sys.function(-1L)@generic,
 			 structure('as.data.frame', package = 'base'))
 	       ))))
