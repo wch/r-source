@@ -5593,9 +5593,16 @@ static struct { void *addr; int argc; char *instname; } opinfo[OPCOUNT];
     goto loop; \
     op_##name
 
-#define BEGIN_MACHINE  NEXT(); init: { loop: switch(which++)
-#define LASTOP } retvalue = R_NilValue; goto done
-#define INITIALIZE_MACHINE() int which = 0; if (body == NULL) goto init
+#define BEGIN_MACHINE NEXT(); init: { int which = 0; loop: switch(which++)
+#define LASTOP } return R_NilValue
+#define INITIALIZE_MACHINE()					\
+    do {							\
+	static Rboolean loop_initialized = FALSE;		\
+	if (! loop_initialized) {				\
+	    loop_initialized = TRUE;				\
+	    goto init;						\
+	}							\
+    } while (0)
 
 #define NEXT() (__extension__ ({currentpc = pc; goto *(*pc++).v;}))
 #define GETOP() (*pc++).i
