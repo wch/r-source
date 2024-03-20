@@ -7181,7 +7181,7 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
       /* initialize binding cache on the stack */
       if (R_BCNodeStackTop + n + 1 > R_BCNodeStackEnd)
 	  nodeStackOverflow();
-      R_BCNodeStackTop->u.ival = n;
+      R_BCNodeStackTop->u.ival = (int)n;
       R_BCNodeStackTop->tag = CACHESZ_TAG;
       R_BCNodeStackTop++;
       vcache = R_BCNodeStackTop;
