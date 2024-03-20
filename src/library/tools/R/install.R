@@ -1,7 +1,7 @@
 #  File src/library/tools/R/install.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2023 The R Core Team
+#  Copyright (C) 1995-2024 The R Core Team
 #
 # NB: also copyright dates in Usages.
 #
@@ -165,7 +165,7 @@ if(FALSE) {
     WINDOWS <- .Platform$OS.type == "windows"
     cross <- Sys.getenv("R_CROSS_BUILD")
     have_cross <- nzchar(cross)
-    if(have_cross && !cross %in% "x64")
+    if(have_cross && !cross %in% c("x64","singlearch"))
         stop("invalid value ", sQuote(cross), " for R_CROSS_BUILD")
     if (have_cross) {
         WINDOWS <- TRUE
@@ -177,13 +177,9 @@ if(FALSE) {
     rarch <- Sys.getenv("R_ARCH") # unix only
     if (WINDOWS && nzchar(.Platform$r_arch))
         rarch <- paste0("/", .Platform$r_arch)
-    cross <- Sys.getenv("R_CROSS_BUILD")
-    if(have_cross && !cross %in% "x64")
-        stop("invalid value ", sQuote(cross), " for R_CROSS_BUILD")
     test_archs <- rarch
     if (have_cross) {
-        WINDOWS <- TRUE
-        r_arch <- paste0("/", cross)
+        rarch = if (cross == "singlearch") "" else paste0("/", cross)
         test_archs <- c()
     }
 
@@ -1313,10 +1309,11 @@ if(FALSE) {
                 } else { ## no src/Makefile.win
                     srcs <- dir(pattern = "\\.([cfmM]|cc|cpp|f90|f95|mm)$",
                                 all.files = TRUE)
-                    archs <- if(have_cross) cross
+                    archs <- if(have_cross) {
+                        if (cross == "singlearch") "" else cross
                     ## else if (!force_both && !grepl(" x64 ", utils::win.version()))
                     ##     "i386"
-                    else {
+                    } else {
                         ## see what is installed
                         ## NB, not R.home("bin")
                         f  <- dir(file.path(R.home(), "bin"))
@@ -2465,10 +2462,10 @@ if(FALSE) {
     WINDOWS <- .Platform$OS.type == "windows"
     cross <- Sys.getenv("R_CROSS_BUILD")
     if(nzchar(cross)) {
-        if(!cross %in% c("i386", "x64"))
+        if(!cross %in% c("x64", "singlearch"))
             stop("invalid value ", sQuote(cross), " for R_CROSS_BUILD")
         WINDOWS <- TRUE
-        Sys.setenv(R_ARCH = paste0("/", cross))
+        Sys.setenv(R_ARCH = if (cross == "singlearch") "" else paste0("/", cross))
     }
 
     if (!WINDOWS) {
