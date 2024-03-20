@@ -61,18 +61,19 @@ OlsonNames(tzdir = NULL)
   If it is unset or empty the \emph{system} time zone is used (the one
   returned by \code{Sys.timezone}).
 
-  %% arguably, 'railway time' in the UK in 1840 was earliest.  Time
-  zones did not come into use until the middle of the nineteenth century
-  and were not widely adopted until the twentieth, and \emph{daylight
-  saving time} (DST, also known as \emph{summer time}) was first
-  introduced in the early twentieth century, most widely in 1916.  Over
-  the last 100 years places have changed their affiliation between major
-  time zones, have opted out of (or in to) DST in various years or
-  adopted DST rule changes late or not at all.  (For example, the UK
-  experimented with DST throughout 1971, only.)  In a few countries (one
-  is the Irish Republic) it is the summer time which is the
-  \sQuote{standard} time and a different name is used in winter.  And
-  there can be multiple changes during a year, for example for Ramadan.
+  %% arguably, 'railway time' in the UK in 1840 was earliest.
+  Time zones did not come into use until the middle of the nineteenth
+  century and were not widely adopted until the twentieth, and
+  \emph{daylight saving time} (DST, also known as \emph{summer time})
+  was first introduced in the early twentieth century, most widely in
+  1916.  Over the last 100 years places have changed their affiliation
+  between major time zones, have opted out of (or in to) DST in various
+  years or adopted DST rule changes late or not at all.  (For example,
+  the UK experimented with DST throughout 1971, only.)  In a few
+  countries (one is the Irish Republic) it is the summer time which is
+  the \sQuote{standard} time and a different name is used in winter.
+  And there can be multiple changes during a year, for example for
+  Ramadan.
 
   A quite common system implementation of \code{POSIXct} was as signed
   32-bit integers and so only went back to the end of 1901: on such
@@ -138,8 +139,13 @@ OlsonNames(tzdir = NULL)
   for more details and references.  By convention, regions with a unique
   time-zone history since 1970 have specific names in the database, but
   those with different earlier histories may not.  Each time zone has
-  one or two (the second for DST) \emph{abbreviations} used when
+  one or two (the second for \sQuote{summer}) \emph{abbreviations} used when
   formatting times.
+
+  %% Debian/Ubuntu: https://mm.icann.org/pipermail/tz/2024-March/058812.html
+  Increasingly OSes are (optionally or always) not including
+  \sQuote{legacy} names such as \code{US/Eastern}: only names of the
+  forms \code{Continent/City} and \code{Etc/...} are fully portable.
 
   The abbreviations used have changed over the years: for example France
   used \samp{PMT} (\sQuote{Paris Mean Time}) from 1891 to 1911 then
