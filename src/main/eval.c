@@ -1053,6 +1053,28 @@ attribute_hidden void R_BCProtReset(R_bcstack_t *ptop)
 	    DECLNK_stack(oldptop);			\
     } while (0)
 
+#define INCREMENT_EVAL_DEPTH() do {		\
+	R_EvalDepth++;				\
+	if (R_EvalDepth > R_Expressions)	\
+	    handle_eval_depth_overflow();	\
+    } while (0)
+
+static void handle_eval_depth_overflow(void)
+{
+    /* This bump of R_Expressions doesn't really work in many cases
+       since jumps (e.g. from explicit return() calls or in UseMethod
+       dispatch) reset this. Something more sophisticated might work,
+       but also increase the risk of a C stack overflow. LT */
+    R_Expressions = R_Expressions_keep + 500;
+
+    /* the condition is pre-allocated and protected with R_PreserveObject */
+    SEXP cond = R_getExpressionStackOverflowError();
+
+    /* We need to pass a NULL call here to circumvent attempts to
+       deparse the call in the error-handler */
+    R_signalErrorCondition(cond, R_NilValue);
+}
+
 /* Return value of "e" evaluated in "rho". */
 
 /* some places, e.g. deparse2buff, call this with a promise and rho = NULL */
@@ -1120,23 +1142,8 @@ SEXP eval(SEXP e, SEXP rho)
        possibility of non-local returns from evaluation.  Without this
        an "expression too complex error" is quite likely. */
 
-    int depthsave = R_EvalDepth++;
-
-    /* We need to explicit set a NULL call here to circumvent attempts
-       to deparse the call in the error-handler */
-    if (R_EvalDepth > R_Expressions) {
-	/* This bump of R_Expressions doesn't really work in many
-	   cases since jumps (e.g. from explicit return() calls or in
-	   UseMethod dispatch) reset this. Something more
-	   sophisticated might work, but also increase the risk of a C
-	   stack overflow. LT */
-	R_Expressions = R_Expressions_keep + 500;
-
-	/* condition is pre-allocated and protected with R_PreserveObject */
-	SEXP cond = R_getExpressionStackOverflowError();
-
-	R_signalErrorCondition(cond, R_NilValue);
-    }
+    int depthsave = R_EvalDepth;
+    INCREMENT_EVAL_DEPTH();
     R_CheckStack();
 
     tmp = R_NilValue;		/* -Wall */
@@ -5450,26 +5457,34 @@ static R_INLINE SEXP getForLoopSeq(int offset, Rboolean *iscompact)
   R_BCNodeStackTop = __ntop__; \
 } while (0)
 
-#define BCNDUP() do { \
-    R_bcstack_t *__ntop__ = R_BCNodeStackTop + 1; \
-    if (__ntop__ > R_BCNodeStackEnd) nodeStackOverflow(); \
-    __ntop__[-1] = __ntop__[-2]; \
-    R_BCNodeStackTop = __ntop__; \
-} while(0)
+#define BCNPUSH_STACKVAL(v) do {				\
+	R_bcstack_t __value__ = (v);				\
+	R_bcstack_t *__ntop__ = R_BCNodeStackTop + 1;		\
+	if (__ntop__ > R_BCNodeStackEnd) nodeStackOverflow();	\
+	__ntop__[-1] = __value__;				\
+	R_BCNodeStackTop = __ntop__;				\
+    } while (0)
 
-#define BCNDUP2ND() do { \
-    R_bcstack_t *__ntop__ = R_BCNodeStackTop + 1; \
-    if (__ntop__ > R_BCNodeStackEnd) nodeStackOverflow(); \
-    __ntop__[-1] = __ntop__[-3]; \
-    R_BCNodeStackTop = __ntop__; \
-} while(0)
+#define BCNDUP() do {						\
+	R_bcstack_t *__ntop__ = R_BCNodeStackTop + 1;		\
+	if (__ntop__ > R_BCNodeStackEnd) nodeStackOverflow();	\
+	__ntop__[-1] = __ntop__[-2];				\
+	R_BCNodeStackTop = __ntop__;				\
+    } while(0)
 
-#define BCNDUP3RD() do { \
-    R_bcstack_t *__ntop__ = R_BCNodeStackTop + 1; \
-    if (__ntop__ > R_BCNodeStackEnd) nodeStackOverflow(); \
-    __ntop__[-1] = __ntop__[-4]; \
-    R_BCNodeStackTop = __ntop__; \
-} while(0)
+#define BCNDUP2ND() do {					\
+	R_bcstack_t *__ntop__ = R_BCNodeStackTop + 1;		\
+	if (__ntop__ > R_BCNodeStackEnd) nodeStackOverflow();	\
+	__ntop__[-1] = __ntop__[-3];				\
+	R_BCNodeStackTop = __ntop__;				\
+    } while(0)
+
+#define BCNDUP3RD() do {					\
+	R_bcstack_t *__ntop__ = R_BCNodeStackTop + 1;		\
+	if (__ntop__ > R_BCNodeStackEnd) nodeStackOverflow();	\
+	__ntop__[-1] = __ntop__[-4];				\
+	R_BCNodeStackTop = __ntop__;				\
+    } while(0)
 
 #define BCNPOP() (R_BCNodeStackTop--, GETSTACK(0))
 #define BCNPOP_IGNORE_VALUE() R_BCNodeStackTop--
@@ -5478,21 +5493,21 @@ static R_INLINE SEXP getForLoopSeq(int offset, Rboolean *iscompact)
 	if (R_BCNodeStackTop + (n) > R_BCNodeStackEnd) nodeStackOverflow(); \
     } while (0)
 
-#define BCIPUSHPTR(v)  do { \
-  void *__value__ = (v); \
-  IStackval *__ntop__ = R_BCIntStackTop + 1; \
-  if (__ntop__ > R_BCIntStackEnd) intStackOverflow(); \
-  *__ntop__[-1].p = __value__; \
-  R_BCIntStackTop = __ntop__; \
-} while (0)
+#define BCIPUSHPTR(v)  do {					\
+	void *__value__ = (v);					\
+	IStackval *__ntop__ = R_BCIntStackTop + 1;		\
+	if (__ntop__ > R_BCIntStackEnd) intStackOverflow();	\
+	*__ntop__[-1].p = __value__;				\
+	R_BCIntStackTop = __ntop__;				\
+    } while (0)
 
-#define BCIPUSHINT(v)  do { \
-  int __value__ = (v); \
-  IStackval *__ntop__ = R_BCIntStackTop + 1; \
-  if (__ntop__ > R_BCIntStackEnd) intStackOverflow(); \
-  __ntop__[-1].i = __value__; \
-  R_BCIntStackTop = __ntop__; \
-} while (0)
+#define BCIPUSHINT(v)  do {					\
+	int __value__ = (v);					\
+	IStackval *__ntop__ = R_BCIntStackTop + 1;		\
+	if (__ntop__ > R_BCIntStackEnd) intStackOverflow();	\
+	__ntop__[-1].i = __value__;				\
+	R_BCIntStackTop = __ntop__;				\
+    } while (0)
 
 #define BCIPOPPTR() ((--R_BCIntStackTop)->p)
 #define BCIPOPINT() ((--R_BCIntStackTop)->i)
@@ -5769,21 +5784,29 @@ static R_INLINE SEXP FIND_VAR_NO_CACHE(SEXP symbol, SEXP rho, SEXP cell)
     else return R_GetVarLocValue(loc);
 }
 
+/* findVar variant that handles dd vars and cached bindings */
+static R_INLINE SEXP findVarEX(SEXP symbol, SEXP rho, Rboolean dd,
+			       R_binding_cache_t vcache, int sidx)
+{
+    if (dd)
+	return ddfindVar(symbol, rho);
+    else if (vcache != NULL) {
+	SEXP cell = GET_BINDING_CELL_CACHE(symbol, rho, vcache, sidx);
+	SEXP value = BINDING_VALUE(cell);
+	if (value == R_UnboundValue)
+	    return FIND_VAR_NO_CACHE(symbol, rho, cell);
+	else
+	    return value;
+    }
+    else
+	return findVar(symbol, rho);
+}
+
 static R_INLINE SEXP getvar(SEXP symbol, SEXP rho,
 			    Rboolean dd, Rboolean keepmiss,
 			    R_binding_cache_t vcache, int sidx)
 {
-    SEXP value;
-    if (dd)
-	value = ddfindVar(symbol, rho);
-    else if (vcache != NULL) {
-	SEXP cell = GET_BINDING_CELL_CACHE(symbol, rho, vcache, sidx);
-	value = BINDING_VALUE(cell);
-	if (value == R_UnboundValue)
-	    value = FIND_VAR_NO_CACHE(symbol, rho, cell);
-    }
-    else
-	value = findVar(symbol, rho);
+    SEXP value = findVarEX(symbol, rho, dd, vcache, sidx);
 
     if (value == R_UnboundValue)
 	UNBOUND_VARIABLE_ERROR(symbol, rho);
@@ -7138,6 +7161,49 @@ static R_INLINE void restore_bcEval_globals(struct R_bcEval_globals_struct *g,
 #endif
 }
 
+struct vcache_struct { R_binding_cache_t vcache; Rboolean smallcache; };
+
+static R_INLINE struct vcache_struct setup_vcache(SEXP body, Rboolean useCache)
+{
+    SEXP constants = BCCONSTS(body);
+    R_binding_cache_t vcache = NULL;
+    Rboolean smallcache = TRUE;
+
+#ifdef USE_BINDING_CACHE
+    if (useCache) {
+	R_xlen_t n = XLENGTH(constants);
+# ifdef CACHE_MAX
+	if (n > CACHE_MAX) {
+	    n = CACHE_MAX;
+	    smallcache = FALSE;
+	}
+# endif
+# ifdef CACHE_ON_STACK
+	/* initialize binding cache on the stack */
+	if (R_BCNodeStackTop + n + 1 > R_BCNodeStackEnd)
+	    nodeStackOverflow();
+	R_BCNodeStackTop->u.ival = (int) n;
+	R_BCNodeStackTop->tag = CACHESZ_TAG;
+	R_BCNodeStackTop++;
+	vcache = R_BCNodeStackTop;
+	while (n > 0) {
+	    SETSTACK_NLNK(0, R_NilValue);
+	    R_BCNodeStackTop++;
+	    n--;
+	}
+# else
+	/* allocate binding cache and protect on stack */
+	vcache = allocVector(VECSXP, n);
+	BCNPUSH(vcache);
+# endif
+    }
+    else smallcache = FALSE;
+#endif
+    R_BCProtTop = R_BCNodeStackTop;
+
+    return (struct vcache_struct) { vcache, smallcache };
+}
+
 static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 {
   struct R_bcEval_globals_struct globals;
@@ -7166,39 +7232,10 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
   R_BCIntActive = 1;
   R_BCbody = body;
   R_BCpc = &currentpc;
-  R_binding_cache_t vcache = NULL;
-  Rboolean smallcache = TRUE;
-#ifdef USE_BINDING_CACHE
-  if (useCache) {
-      R_xlen_t n = XLENGTH(constants);
-# ifdef CACHE_MAX
-      if (n > CACHE_MAX) {
-	  n = CACHE_MAX;
-	  smallcache = FALSE;
-      }
-# endif
-# ifdef CACHE_ON_STACK
-      /* initialize binding cache on the stack */
-      if (R_BCNodeStackTop + n + 1 > R_BCNodeStackEnd)
-	  nodeStackOverflow();
-      R_BCNodeStackTop->u.ival = (int)n;
-      R_BCNodeStackTop->tag = CACHESZ_TAG;
-      R_BCNodeStackTop++;
-      vcache = R_BCNodeStackTop;
-      while (n > 0) {
-	  SETSTACK_NLNK(0, R_NilValue);
-	  R_BCNodeStackTop++;
-	  n--;
-      }
-# else
-      /* allocate binding cache and protect on stack */
-      vcache = allocVector(VECSXP, n);
-      BCNPUSH(vcache);
-# endif
-  }
-  else smallcache = FALSE;
-#endif
-  R_BCProtTop = R_BCNodeStackTop;
+
+  struct vcache_struct vcinfo = setup_vcache(body, useCache);
+  R_binding_cache_t vcache = vcinfo.vcache;
+  Rboolean smallcache = vcinfo.smallcache;
 
   BEGIN_MACHINE {
     OP(BCMISMATCH, 0): error(_("byte code version mismatch"));
