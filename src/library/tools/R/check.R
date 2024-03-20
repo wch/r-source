@@ -7286,9 +7286,13 @@ add_dummies <- function(dir, Log)
             if (identical(desc["Priority"], c(Priority = "base"))) {    # Priority might be missing
                 messageLog(Log, "looks like ", sQuote(pkgname0),
                            " is a base package")
-                messageLog(Log, "skipping installation test")
                 is_base_pkg <- TRUE
                 pkgname <- desc["Package"] # should be same as pkgname0
+                if (pkgname == "tcltk" && !capabilities("tcltk")) {
+                    do_install <- FALSE
+                    messageLog(Log, "stub package: skipping tests requiring installation")
+                } else
+                    messageLog(Log, "skipping installation test")
             }
         }
 

@@ -4623,13 +4623,9 @@ function(package, dir, lib.loc = NULL)
                              lib.loc = lib.loc)
         pkgInfo <- readRDS(pfile)
     } else {
-        outDir <- file.path(tempdir(), "fake_pkg")
-        dir.create(file.path(outDir, "Meta"), FALSE, TRUE)
-        .install_package_description(dir, outDir)
-        pfile <- file.path(outDir, "Meta", "package.rds")
-        pkgInfo <- readRDS(pfile)
-        unlink(outDir, recursive = TRUE)
+        pkgInfo <- .split_description(.get_package_metadata(dir))
     }
+    pkgname <- pkgInfo$DESCRIPTION[["Package"]]
     ## only 'Depends' are guaranteed to be on the search path, but
     ## 'Imports' have to be installed and hence help there will be found
     deps <- c(names(pkgInfo$Depends), names(pkgInfo$Imports))
@@ -4700,7 +4696,7 @@ function(package, dir, lib.loc = NULL)
         deps2 <- c(names(pkgInfo$Depends), names(pkgInfo$Imports),
                    names(pkgInfo$Suggests))
         ## people link to the package itself, although never needed.
-        undeclared <- setdiff(anchors, c(unique(deps2), package, base))
+        undeclared <- setdiff(anchors, c(unique(deps2), pkgname, base))
         if(length(undeclared)) {
             ## Now dig out Enhances
             DESC <- pkgInfo$DESCRIPTION
@@ -4726,7 +4722,7 @@ function(package, dir, lib.loc = NULL)
 
     for (pkg in anchors) {
         ## we can't do this on the current uninstalled package!
-        if (missing(package) && pkg == basename(dir)) next
+        if (missing(package) && pkg == pkgname) next
         this <- have_anchor & (thispkg %in% pkg)
         top <- system.file(package = pkg, lib.loc = lib.loc)
         if(nzchar(top)) {
@@ -5958,8 +5954,7 @@ function(package, dir, lib.loc = NULL)
                  domain = NA)
         else
             dir <- file_path_as_absolute(dir)
-        dfile <- file.path(dir, "DESCRIPTION")
-        db <- .read_description(dfile)
+        db <- .get_package_metadata(dir)
         nsfile <- file.path(dir, "NAMESPACE")
         if(file.exists(nsfile) &&
            inherits(tryCatch(ns <- parseNamespaceFile(basename(dir),
