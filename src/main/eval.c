@@ -5558,6 +5558,11 @@ SEXP R_ClosureExpr(SEXP p)
 }
 
 #ifdef THREADED_CODE
+/* This is based on: Ian Piumarta and Fabio Riccardi (1998),
+   Optimizing Direct Threaded Code by Selective Inlining, in
+   Proceedings of the 1998 ACM SIGPLAN Conference on Programming
+   Language Design and Implementation (PLDI). */
+
 typedef union { void *v; int i; } BCODE;
 
 /* Declare opinfo volatile to prevent gcc 6 from making a local copy
