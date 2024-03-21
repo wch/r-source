@@ -7256,6 +7256,10 @@ bcode_setup_locals(SEXP body, SEXP rho, Rboolean useCache)
     return loc;
 }
 
+static SEXP
+bcEval_loop(struct R_bcEval_locals_struct *,
+	    struct R_bcEval_globals_struct *);
+
 static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 {
   struct R_bcEval_globals_struct globals;
@@ -7265,20 +7269,33 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
   R_Srcref = R_InBCInterpreter;
   R_BCIntActive = 1;
 
-  INITIALIZE_MACHINE();
-
   /* check version and allow bytecode to be disabled for testing */
   if (R_disable_bytecode || ! R_BCVersionOK(body))
       return eval(bytecodeExpr(body), rho);
 
   locals = bcode_setup_locals(body, rho, useCache);
+  return bcEval_loop(&locals, &globals);
+}
 
-  SEXP constants;
+static SEXP bcEval_loop(struct R_bcEval_locals_struct *ploc,
+			struct R_bcEval_globals_struct *pglob)
+{
+  INITIALIZE_MACHINE();
+
+  struct R_bcEval_globals_struct globals = *pglob;
+  struct R_bcEval_locals_struct locals = *ploc;
+
+  SEXP body, rho, constants;
+  Rboolean useCache;
   BCODE *pc, *codebase;
   R_binding_cache_t vcache;
   Rboolean smallcache;
 
   RESTORE_BCEVAL_LOCALS(&locals);
+
+  /***** temporary code make use of useCache to avoid uused variable warning */ 
+  if (! useCache)
+      R_Suicide("bcEval should only be called with useCache as TRUE");
 
   SEXP retvalue = R_NilValue;
 
@@ -8432,7 +8449,7 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 
 #ifdef THREADED_CODE
 static void bcEval_init(void) {
-    bcEval(NULL, NULL, FALSE);
+    bcEval_loop(NULL, NULL);
 }
 
 SEXP R_bcEncode(SEXP bytes)
