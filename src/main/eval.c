@@ -33,6 +33,7 @@
 #include <math.h>
 
 static SEXP bcEval(SEXP, SEXP, Rboolean);
+static void bcEval_init(void);
 
 /* BC_PROFILING needs to be enabled at build time. It is not enabled
    by default as enabling it disables the more efficient threaded code
@@ -4589,9 +4590,7 @@ void R_initialize_bcode(void)
   R_DotFortranSym = install(".Fortran");
   R_DotCSym = install(".C");
 
-#ifdef THREADED_CODE
-  bcEval(NULL, NULL, FALSE);
-#endif
+  bcEval_init();
 
   /* the first constants record always stays in place for protection */
   R_ConstantsRegistry = allocVector(VECSXP, 2);
@@ -7168,6 +7167,37 @@ static R_INLINE void restore_bcEval_globals(struct R_bcEval_globals_struct *g,
 #endif
 }
 
+struct R_bcEval_locals_struct {
+    // bcEval args:
+    SEXP body;
+    SEXP rho;
+    Rboolean useCache;
+    // local variables
+    R_binding_cache_t vcache;
+    Rboolean smallcache;
+    BCODE *pc;
+};
+
+#define SAVE_BCEVAL_LOCALS(loc) do {		\
+	(loc)->body = body;			\
+	(loc)->rho = rho;			\
+	(loc)->useCache = useCache;		\
+	(loc)->vcache = vcache;			\
+	(loc)->smallcache = smallcache;		\
+	(loc)->pc = pc;				\
+    } while (0)
+
+#define RESTORE_BCEVAL_LOCALS(loc) do {		\
+	body = (loc)->body;			\
+	codebase = BCCODE(body);		\
+	constants = BCCONSTS(body);		\
+	rho = (loc)->rho;			\
+	useCache = (loc)->useCache;		\
+	vcache = (loc)->vcache;			\
+	smallcache = (loc)->smallcache;		\
+	pc = (loc)->pc;				\
+    } while (0)
+
 struct vcache_struct { R_binding_cache_t vcache; Rboolean smallcache; };
 
 static R_INLINE struct vcache_struct setup_vcache(SEXP body, Rboolean useCache)
@@ -7211,17 +7241,29 @@ static R_INLINE struct vcache_struct setup_vcache(SEXP body, Rboolean useCache)
     return (struct vcache_struct) { vcache, smallcache };
 }
 
+static R_INLINE struct R_bcEval_locals_struct
+bcode_setup_locals(SEXP body, SEXP rho, Rboolean useCache)
+{
+    struct R_bcEval_locals_struct loc;
+    loc.body = body;
+    loc.rho = rho;
+    loc.useCache = useCache;
+    loc.pc = BCCODE(body) + 1; /* pop off version */
+    struct vcache_struct vcinfo = setup_vcache(body, useCache);
+    loc.vcache = vcinfo.vcache;
+    loc.smallcache = vcinfo.smallcache;
+    R_BCbody = body; //**** move this somewhere else?
+    return loc;
+}
+
 static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 {
   struct R_bcEval_globals_struct globals;
   save_bcEval_globals(&globals, body);
+  struct R_bcEval_locals_struct locals;
 
-  static int evalcount = 0;
-
-  SEXP retvalue = R_NilValue;
-  SEXP constants;
-  BCODE *pc, *codebase;
-  BCODE *currentpc = NULL;
+  R_Srcref = R_InBCInterpreter;
+  R_BCIntActive = 1;
 
   INITIALIZE_MACHINE();
 
@@ -7229,20 +7271,22 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
   if (R_disable_bytecode || ! R_BCVersionOK(body))
       return eval(bytecodeExpr(body), rho);
 
-  BC_CHECK_SIGINT();
+  locals = bcode_setup_locals(body, rho, useCache);
 
-  codebase = pc = BCCODE(body);
-  constants = BCCONSTS(body);
-  SKIP_OP(); // pop off version
+  SEXP constants;
+  BCODE *pc, *codebase;
+  R_binding_cache_t vcache;
+  Rboolean smallcache;
 
-  R_Srcref = R_InBCInterpreter;
-  R_BCIntActive = 1;
-  R_BCbody = body;
+  RESTORE_BCEVAL_LOCALS(&locals);
+
+  SEXP retvalue = R_NilValue;
+
+  BCODE *currentpc = NULL;
   R_BCpc = &currentpc;
 
-  struct vcache_struct vcinfo = setup_vcache(body, useCache);
-  R_binding_cache_t vcache = vcinfo.vcache;
-  Rboolean smallcache = vcinfo.smallcache;
+  static int evalcount = 0;
+  BC_CHECK_SIGINT();
 
   BEGIN_MACHINE {
     OP(BCMISMATCH, 0): error(_("byte code version mismatch"));
@@ -8387,6 +8431,10 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 }
 
 #ifdef THREADED_CODE
+static void bcEval_init(void) {
+    bcEval(NULL, NULL, FALSE);
+}
+
 SEXP R_bcEncode(SEXP bytes)
 {
     SEXP code;
@@ -8474,6 +8522,7 @@ SEXP R_bcDecode(SEXP code) {
     return bytes;
 }
 #else
+static void bcEval_init(void) { return; }
 SEXP R_bcEncode(SEXP x) { return x; }
 SEXP R_bcDecode(SEXP x) { return duplicate(x); }
 #endif
