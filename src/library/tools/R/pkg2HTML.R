@@ -34,33 +34,44 @@
     ## and call Rd_db on those). If 'package' is missing but 'dir' is
     ## not, interpret as source package (no need to unpack)
 
-    ## TODO: support for URLs ?
+    isPkgTarball <- function(x) {
+        length(x) == 1L && 
+            endsWith(x, "tar.gz") &&
+            length(strsplit(basename(x), "_", fixed = TRUE))[[1]] == 2L
+    }
+    isURL <- function(x) {
+        length(x) == 1L && 
+            (startsWith(x, "http://") || startsWith(x, "https://"))
+    }
     db <- 
-        if (!missing(package)) {
-            if (endsWith(package, "tar.gz")) {
-                ## TODO: need to unpack first.
-                ## Copied from src/library/utils/R/unix/mac.install.R::unpackPkg
-                tmpDir <- tempfile("pkg")
-                if (!dir.create(tmpDir))
+        if (!missing(package) && isTRUE(isPkgTarball(package)))
+        {
+            ## If URL, download first
+            if (isURL(package)) {
+                destdir <- tempfile("dir")
+                if (!dir.create(destdir))
                     stop(gettextf("unable to create temporary directory %s",
-                                  sQuote(tmpDir)))
-                utils::untar(package, exdir = tmpDir)
-                pkgdir <- list.dirs(tmpDir, recursive = FALSE)
-                if (length(pkgdir) != 1)
-                    stop(gettextf("expected one package directory, found %d.",
-                                  length(pkgdir)))
-                Rd_db(dir = pkgdir)
+                                  sQuote(destdir)))
+                utils::download.file(package, destfile = file.path(destdir, basename(package)))
+                package <- file.path(destdir, basename(package))
             }
-            else {
-                pkgdir <- system.file(package = package)
-                Rd_db(package)
-            }
+            ## TODO: need to unpack first.
+            ## Copied from src/library/utils/R/unix/mac.install.R::unpackPkg
+            tmpDir <- tempfile("pkg")
+            if (!dir.create(tmpDir))
+                stop(gettextf("unable to create temporary directory %s",
+                              sQuote(tmpDir)))
+            utils::untar(package, exdir = tmpDir)
+            pkgdir <- list.dirs(tmpDir, recursive = FALSE)
+            if (length(pkgdir) != 1)
+                stop(gettextf("expected one package directory, found %d.",
+                              length(pkgdir)))
+            Rd_db(dir = pkgdir)
         }
-        else if (!is.null(dir)) {
-            pkgdir <- dir
-            Rd_db(dir = dir)
+        else {
+            pkgdir <- if (is.null(dir)) find.package(package, lib.loc) else dir
+            Rd_db(package, dir, lib.loc) # FIXME : stages?
         }
-        else stop("one of 'package' and 'dir' must be specified.")
 
     ## create links database for help links
     Links <- findHTMLlinks(pkgdir, level = 0:1)
@@ -85,23 +96,26 @@
 
 
 
-pkg2HTML <- function(package, pkgdir = NULL, descfile,
-                     ## rdfiles = list.files(file.path(pkgdir, "man"),
-                     ##                      full.names = TRUE,
-                     ##                      pattern = "\\.Rd$"),
+pkg2HTML <- function(package, dir = NULL, lib.loc = NULL,
                      outputEncoding = "UTF-8",
-                     stylesheet = "R-refman.css", # will usually not work. Can try "https://cran.r-project.org/doc/manuals/r-devel/R.css"
+                     stylesheet = R.home("doc/html/R-nav.css"),
+                     hooks = list(pkg_href = function(pkg) sprintf("%s.html", pkg)),
                      texmath = getOption("help.htmlmath"),
                      prism = TRUE,
-                     out = "",
+                     out = NULL,
                      ...,
                      Rhtml = tolower(file_ext(out)) == "rhtml",
                      include_description = TRUE)
 {
     if (is.null(texmath)) texmath <- "katex"
-    hcontent <- .convert_package_rdfiles(package, pkgdir, Rhtml = Rhtml, ...)
+    hcontent <- .convert_package_rdfiles(package, dir, lib.loc,
+                                         Rhtml = Rhtml, hooks = hooks, ...)
     descfile <- attr(hcontent, "descfile")
     pkgname <- read.dcf(descfile, fields = "Package")[1, 1]
+    if (is.null(out)) {
+        out <- if (is.null(hooks$pkg_href)) ""
+               else hooks$pkg_href(pkgname)
+    }
     
     ## Sort by name, as in PDF manual (check exact code)
     hcontent <- hcontent[order(vapply(hcontent,

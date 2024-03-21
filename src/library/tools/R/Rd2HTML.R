@@ -224,13 +224,13 @@ string2id <- function(x)
     gsub("%", "+", utils::URLencode(x, reserved = TRUE))
 name2id <- function(x) string2id(x)
 topic2id <- function(x) sprintf("topic+%s", string2id(x))
-topic2href <- function(x, destpkg = NULL, FUN = NULL)
+topic2href <- function(x, destpkg = NULL, hooks = list())
 {
     if (is.null(destpkg)) sprintf("#%s", topic2id(x))
     else {
-        ## FIXME: Do we want to allow FUN to be user-supplied through options()?
-        if (is.null(FUN)) FUN <- function(id, pkg) sprintf("%s.html#%s", pkg, id)
-        FUN(topic2id(x), destpkg)
+        FUN <- hooks$pkg_href
+        if (is.null(FUN)) FUN <- function(pkg) sprintf("%s.html", pkg)
+        sprintf("%s#%s", FUN(destpkg), topic2id(x))
     }
 }
 
@@ -379,6 +379,7 @@ Rd2HTML <-
              texmath = getOption("help.htmlmath"),
              concordance = FALSE,
              standalone = TRUE,
+             hooks = list(),
              toc = isTRUE(getOption("help.htmltoc")),
              Rhtml = FALSE, # TODO: guess from 'out' if non-missing
              ...)
@@ -636,7 +637,9 @@ Rd2HTML <-
                 writeContent(block, tag)
             } else {
                 if (!standalone) {
-                    htmlfile <- topic2href(topic, destpkg = strsplit(htmlfile, "/", fixed = TRUE)[[1]][[3]])
+                    htmlfile <- topic2href(topic,
+                                           destpkg = strsplit(htmlfile, "/", fixed = TRUE)[[1]][[3]],
+                                           hooks = hooks)
                 }
                 else {
                     ## treat links in the same package specially -- was needed for CHM
@@ -697,7 +700,9 @@ Rd2HTML <-
                                             topic2url(parts$targetfile))
                         else if (standalone) paste0("../../", urlify(parts$pkg), "/help/",
                                                     topic2filename(parts$targetfile), ".html")
-                        else topic2href(parts$targetfile, destpkg = urlify(parts$pkg))
+                        else topic2href(parts$targetfile,
+                                        destpkg = urlify(parts$pkg),
+                                        hooks = hooks)
                 else
                     htmlfile <- paste0("../../", urlify(parts$pkg), "/html/",
                                        topic2url(parts$targetfile), ".html") # FIXME Is this always OK ??
