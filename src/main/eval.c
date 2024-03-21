@@ -32,7 +32,7 @@
 #include <errno.h>
 #include <math.h>
 
-static SEXP bcEval(SEXP, SEXP, Rboolean);
+static SEXP bcEval(SEXP, SEXP);
 static void bcEval_init(void);
 
 /* BC_PROFILING needs to be enabled at build time. It is not enabled
@@ -1164,7 +1164,7 @@ SEXP eval(SEXP e, SEXP rho)
 
     switch (TYPEOF(e)) {
     case BCODESXP:
-	tmp = bcEval(e, rho, TRUE);
+	tmp = bcEval(e, rho);
 	    break;
     case SYMSXP:
 	if (e == R_DotsSymbol)
@@ -1947,7 +1947,7 @@ static Rboolean R_compileAndExecute(SEXP call, SEXP rho)
     R_jit_enabled = old_enabled;
 
     if (TYPEOF(code) == BCODESXP) {
-	bcEval(code, rho, TRUE);
+	bcEval(code, rho);
 	ans = TRUE;
     }
 
@@ -7171,7 +7171,6 @@ struct R_bcEval_locals_struct {
     // bcEval args:
     SEXP body;
     SEXP rho;
-    Rboolean useCache;
     // local variables
     R_binding_cache_t vcache;
     Rboolean smallcache;
@@ -7181,7 +7180,6 @@ struct R_bcEval_locals_struct {
 #define SAVE_BCEVAL_LOCALS(loc) do {		\
 	(loc)->body = body;			\
 	(loc)->rho = rho;			\
-	(loc)->useCache = useCache;		\
 	(loc)->vcache = vcache;			\
 	(loc)->smallcache = smallcache;		\
 	(loc)->pc = pc;				\
@@ -7192,7 +7190,6 @@ struct R_bcEval_locals_struct {
 	codebase = BCCODE(body);		\
 	constants = BCCONSTS(body);		\
 	rho = (loc)->rho;			\
-	useCache = (loc)->useCache;		\
 	vcache = (loc)->vcache;			\
 	smallcache = (loc)->smallcache;		\
 	pc = (loc)->pc;				\
@@ -7200,41 +7197,38 @@ struct R_bcEval_locals_struct {
 
 struct vcache_struct { R_binding_cache_t vcache; Rboolean smallcache; };
 
-static R_INLINE struct vcache_struct setup_vcache(SEXP body, Rboolean useCache)
+static R_INLINE struct vcache_struct setup_vcache(SEXP body)
 {
     SEXP constants = BCCONSTS(body);
     R_binding_cache_t vcache = NULL;
     Rboolean smallcache = TRUE;
 
 #ifdef USE_BINDING_CACHE
-    if (useCache) {
-	R_xlen_t n = XLENGTH(constants);
+    R_xlen_t n = XLENGTH(constants);
 # ifdef CACHE_MAX
-	if (n > CACHE_MAX) {
-	    n = CACHE_MAX;
-	    smallcache = FALSE;
-	}
+    if (n > CACHE_MAX) {
+	n = CACHE_MAX;
+	smallcache = FALSE;
+    }
 # endif
 # ifdef CACHE_ON_STACK
-	/* initialize binding cache on the stack */
-	if (R_BCNodeStackTop + n + 1 > R_BCNodeStackEnd)
-	    nodeStackOverflow();
-	R_BCNodeStackTop->u.ival = (int) n;
-	R_BCNodeStackTop->tag = CACHESZ_TAG;
+    /* initialize binding cache on the stack */
+    if (R_BCNodeStackTop + n + 1 > R_BCNodeStackEnd)
+	nodeStackOverflow();
+    R_BCNodeStackTop->u.ival = (int) n;
+    R_BCNodeStackTop->tag = CACHESZ_TAG;
+    R_BCNodeStackTop++;
+    vcache = R_BCNodeStackTop;
+    while (n > 0) {
+	SETSTACK_NLNK(0, R_NilValue);
 	R_BCNodeStackTop++;
-	vcache = R_BCNodeStackTop;
-	while (n > 0) {
-	    SETSTACK_NLNK(0, R_NilValue);
-	    R_BCNodeStackTop++;
-	    n--;
-	}
-# else
-	/* allocate binding cache and protect on stack */
-	vcache = allocVector(VECSXP, n);
-	BCNPUSH(vcache);
-# endif
+	n--;
     }
-    else smallcache = FALSE;
+# else
+    /* allocate binding cache and protect on stack */
+    vcache = allocVector(VECSXP, n);
+    BCNPUSH(vcache);
+# endif
 #endif
     R_BCProtTop = R_BCNodeStackTop;
 
@@ -7242,14 +7236,13 @@ static R_INLINE struct vcache_struct setup_vcache(SEXP body, Rboolean useCache)
 }
 
 static R_INLINE struct R_bcEval_locals_struct
-bcode_setup_locals(SEXP body, SEXP rho, Rboolean useCache)
+bcode_setup_locals(SEXP body, SEXP rho)
 {
     struct R_bcEval_locals_struct loc;
     loc.body = body;
     loc.rho = rho;
-    loc.useCache = useCache;
     loc.pc = BCCODE(body) + 1; /* pop off version */
-    struct vcache_struct vcinfo = setup_vcache(body, useCache);
+    struct vcache_struct vcinfo = setup_vcache(body);
     loc.vcache = vcinfo.vcache;
     loc.smallcache = vcinfo.smallcache;
     R_BCbody = body; //**** move this somewhere else?
@@ -7260,7 +7253,7 @@ static SEXP
 bcEval_loop(struct R_bcEval_locals_struct *,
 	    struct R_bcEval_globals_struct *);
 
-static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
+static SEXP bcEval(SEXP body, SEXP rho)
 {
   struct R_bcEval_globals_struct globals;
   save_bcEval_globals(&globals, body);
@@ -7273,7 +7266,7 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
   if (R_disable_bytecode || ! R_BCVersionOK(body))
       return eval(bytecodeExpr(body), rho);
 
-  locals = bcode_setup_locals(body, rho, useCache);
+  locals = bcode_setup_locals(body, rho);
   return bcEval_loop(&locals, &globals);
 }
 
@@ -7286,16 +7279,11 @@ static SEXP bcEval_loop(struct R_bcEval_locals_struct *ploc,
   struct R_bcEval_locals_struct locals = *ploc;
 
   SEXP body, rho, constants;
-  Rboolean useCache;
   BCODE *pc, *codebase;
   R_binding_cache_t vcache;
   Rboolean smallcache;
 
   RESTORE_BCEVAL_LOCALS(&locals);
-
-  /***** temporary code make use of useCache to avoid uused variable warning */ 
-  if (! useCache)
-      R_Suicide("bcEval should only be called with useCache as TRUE");
 
   SEXP retvalue = R_NilValue;
 
@@ -7739,7 +7727,7 @@ static SEXP bcEval_loop(struct R_bcEval_locals_struct *ploc,
 	    break;
 	case BUILTINSXP:
 	    if (TYPEOF(code) == BCODESXP)
-		PUSHCALLARG(bcEval(code, rho, TRUE));
+		PUSHCALLARG(bcEval(code, rho));
 	    else
 		/* uncommon but possible, the compiler may decide not
 		   to compile an argument expression */
