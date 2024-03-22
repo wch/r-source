@@ -37,7 +37,7 @@
     isPkgTarball <- function(x) {
         length(x) == 1L && 
             endsWith(x, "tar.gz") &&
-            length(strsplit(basename(x), "_", fixed = TRUE))[[1]] == 2L
+            length(strsplit(basename(x), "_", fixed = TRUE)[[1]]) == 2L
     }
     isURL <- function(x) {
         length(x) == 1L && 
