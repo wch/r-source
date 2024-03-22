@@ -1,6 +1,6 @@
 % File src/library/grid/man/arrow.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2024 R Core Team
 % Distributed under GPL 2 or later
 
 \name{arrow}
@@ -9,7 +9,7 @@
 \description{
   Produces a description of what arrows to add to a line.
   The result can be passed to a function that draws a line,
-  e.g., \code{grid.lines}.
+  e.g., \code{\link{grid.lines}}.
 }
 \usage{
 arrow(angle = 30, length = unit(0.25, "inches"),
@@ -28,5 +28,6 @@ arrow(angle = 30, length = unit(0.25, "inches"),
 }
 \examples{
 arrow()
+str(arrow(type = "closed"), give.attr=FALSE)
 }
 \keyword{dplot}
