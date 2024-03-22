@@ -275,9 +275,9 @@
 
   \subsection{INSTALLATION}{
     \itemize{
-      \item The parser has been updated to work with \I{bison} 3.8.2, 
+      \item The parser has been updated to work with \I{bison} 3.8.2,
       which is now used for the pre-generated parsers in \file{gram.c},
-      \code{file.c}, and \file{gramRd.c}. A few parser error messages 
+      \code{file.c}, and \file{gramRd.c}. A few parser error messages
       have changed, which may affect code that relies on exact messages.
     }
   }
@@ -683,6 +683,10 @@
       \verb{\dontrun}, \verb{\dontshow} or \verb{\donttest} tag
       on the same line is no longer skipped when \command{R CMD check}
       runs the examples.
+
+      \item \code{as.data.frame(matrix(*, ncol=0))} now gets valid
+      \code{names()} and \code{colnames()}; reported by \I{Davis Vaughan}
+      on the R-devel list.
     }
   }
 }

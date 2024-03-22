@@ -1237,6 +1237,16 @@ tools::assertError(source(tf), verbose = TRUE)
 ## skipped the stop() and printed 0 in R < 4.4.0
 
 
+## as.data.frame(<empty matrix) ; Davis Vaughan R-devel, 2024-03-21
+for(nr in 0:2) {
+    dput(d0 <- as.data.frame(matrix(nrow = nr, ncol = 0)))
+    stopifnot("names" %in% names(attributes(d0)),
+              identical(character(), names(d0)))
+}
+## had no .$names at all in R < 4.4.0
+
+
+
 ## keep at end
 rbind(last =  proc.time() - .pt,
       total = proc.time())

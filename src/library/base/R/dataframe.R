@@ -15,7 +15,7 @@
 #  https://www.R-project.org/Licenses/
 
 # Statlib code by John Chambers, Bell Labs, 1994
-# Changes Copyright (C) 1998-2023 The R Core Team
+# Changes Copyright (C) 1998-2024 The R Core Team
 
 
 ## As from R 2.4.0, row.names can be either character or integer.
@@ -314,7 +314,7 @@ as.data.frame.matrix <- function(x, row.names = NULL, optional = FALSE, make.nam
     ## Explicitly check for NULL in case nrows==0
     autoRN <- (is.null(row.names) || length(row.names) != nrows)
     if(length(collabs) == ncols)
-	names(value) <- collabs
+	names(value) <- collabs %||% character()
     else if(!optional)
 	names(value) <- paste0("V", ic)
     class(value) <- "data.frame"
