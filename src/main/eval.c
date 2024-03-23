@@ -5521,24 +5521,39 @@ NORET static void nodeStackOverflow(void)
     R_signalErrorCondition(cond, R_CurrentExpression);
 }
 
-/* Allocate consecutive space of nelems node stack elements */
-static R_INLINE void* BCNALLOC(int nelems) {
-    void *ans;
+#define NELEMS_FOR_SIZE(size) \
+    ((int) ((size + sizeof(R_bcstack_t) - 1) / sizeof(R_bcstack_t)))
 
+/* Allocate contiguous space on the node stack */
+static R_INLINE void* BCNALLOC(size_t size)
+{
+    int nelems = NELEMS_FOR_SIZE(size);
     BCNSTACKCHECK(nelems + 1);
     R_BCNodeStackTop->tag = RAWMEM_TAG;
     R_BCNodeStackTop->u.ival = nelems;
     R_BCNodeStackTop++;
-    ans = R_BCNodeStackTop;
+    void *ans = R_BCNodeStackTop;
     R_BCNodeStackTop += nelems;
     return ans;
+}
+
+static R_INLINE void BCNPOP_ALLOC(size_t size)
+{
+    size_t nelems = NELEMS_FOR_SIZE(size);
+    R_BCNodeStackTop -= nelems + 1; /* '+ 1' is for the RAWMEM_TAG */
+}
+
+static R_INLINE void *BCNALLOC_BASE(size_t size)
+{
+    size_t nelems = (size + sizeof(R_bcstack_t) - 1) / sizeof(R_bcstack_t);
+    return R_BCNodeStackTop - nelems;
 }
 
 /* Allocate R context on the node stack */
 #define RCNTXT_ELEMS ((sizeof(RCNTXT) + sizeof(R_bcstack_t) - 1) \
 			/ sizeof(R_bcstack_t))
 
-#define BCNALLOC_CNTXT() (RCNTXT *)BCNALLOC(RCNTXT_ELEMS)
+#define BCNALLOC_CNTXT() (RCNTXT *) BCNALLOC(sizeof(RCNTXT))
 
 static R_INLINE void BCNPOP_AND_END_CNTXT(void) {
     RCNTXT* cntxt = (RCNTXT *)(R_BCNodeStackTop - RCNTXT_ELEMS);
