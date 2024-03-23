@@ -87,6 +87,7 @@ unsplit <- function (value, f, drop = FALSE)
 
 ## utility to convert formula to list suitable for split(f = )
 
+## Typical forms are ~ a + b and ~ list(a, b)
 
 .formula2varlist <- function(formula, data, warnLHS = TRUE, ignoreLHS = warnLHS)
 {
@@ -101,8 +102,14 @@ unsplit <- function (value, f, drop = FALSE)
         }
         if (ignoreLHS) formula <- formula[-2]
     }
-    fterms <- stats::terms(formula)
-    ans <- eval(attr(fterms, "variables"), data, environment(formula))
-    names(ans) <- attr(fterms, "term.labels")
+    ## If formula = ~list(...)
+    if (length(formula[[2]]) > 1L && formula[[2]][[1]] == quote(list)) {
+        ans <- eval(formula[[2]], data, environment(formula))
+    }
+    else {
+        fterms <- stats::terms(formula)
+        ans <- eval(attr(fterms, "variables"), data, environment(formula))
+        names(ans) <- attr(fterms, "term.labels")
+    }
     ans
 }

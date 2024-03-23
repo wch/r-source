@@ -270,6 +270,10 @@
 
       \item The Rd filter for \code{aspell()} gains an \code{ignore}
       argument.
+
+      \item New generic function \code{sort_by()}, primarily useful for
+      the \code{data.frame} method which can be used to sort rows of a
+      data frame by one or more columns.
     }
   }
 

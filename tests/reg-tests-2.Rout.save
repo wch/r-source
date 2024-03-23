@@ -3241,10 +3241,10 @@ Error in `[.data.frame`(x, 1, c("a", "c")) : undefined columns selected
 [21] droplevels    duplicated    edit          format        formula      
 [26] head          is.na         merge         na.exclude    na.omit      
 [31] plot          print         prompt        rbind         row.names    
-[36] row.names<-   rowsum        split         split<-       stack        
-[41] str           subset        summary       t             tail         
-[46] transform     type.convert  unique        unstack       within       
-[51] xtfrm        
+[36] row.names<-   rowsum        sort_by       split         split<-      
+[41] stack         str           subset        summary       t            
+[46] tail          transform     type.convert  unique        unstack      
+[51] within        xtfrm        
 > meth2gen("dendrogram")
  [1] [[            as.dendrogram as.hclust     cophenetic    cut          
  [6] labels        merge         nobs          plot          print        
