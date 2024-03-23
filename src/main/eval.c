@@ -7202,22 +7202,6 @@ struct cntxt_loop_locals {
     BCODE *break_pc;
 };
 
-static R_INLINE BCODE *LOOP_BREAK_PC(int skip)
-{
-    int offset = skip + NELEMS_FOR_SIZE(sizeof(struct cntxt_loop_locals));
-    struct cntxt_loop_locals *saved =
-	(struct cntxt_loop_locals *) (R_BCNodeStackTop - offset);
-    return saved->break_pc;
-}
-
-static R_INLINE BCODE *LOOP_NEXT_PC(int skip)
-{
-    int offset = skip + NELEMS_FOR_SIZE(sizeof(struct cntxt_loop_locals));
-    struct cntxt_loop_locals *saved =
-	(struct cntxt_loop_locals *) (R_BCNodeStackTop - offset);
-    return saved->locals.pc;
-}
-
 #define PUSH_LOOP_LOCALS() do {					\
 	struct cntxt_loop_locals *loc =			\
 	    BCNALLOC(sizeof(struct cntxt_loop_locals));	\
@@ -7243,6 +7227,7 @@ struct bcEval_locals recover_loop_locals(int skip, Rboolean isbreak)
 }
 
 struct vcache_info { R_binding_cache_t vcache; Rboolean smallcache; };
+struct bcEval_jmpbufs { JMP_BUF for_loop, loop; };
 
 static R_INLINE struct vcache_info setup_vcache(SEXP body)
 {
@@ -7298,7 +7283,8 @@ bcode_setup_locals(SEXP body, SEXP rho)
 
 static SEXP
 bcEval_loop(struct bcEval_locals *,
-	    struct bcEval_globals *);
+	    struct bcEval_globals *,
+	    struct bcEval_jmpbufs *);
 
 static SEXP bcEval(SEXP body, SEXP rho)
 {
@@ -7313,12 +7299,32 @@ static SEXP bcEval(SEXP body, SEXP rho)
   if (R_disable_bytecode || ! R_BCVersionOK(body))
       return eval(bytecodeExpr(body), rho);
 
+  /* LONGJMP targets to be shared by all contexts created in bcEval_loop() */
+  struct bcEval_jmpbufs jmpbufs, *jbufp = &jmpbufs;
+  switch (SETJMP(jmpbufs.for_loop)) {
+  case CTXT_BREAK:
+      locals = recover_loop_locals(FOR_LOOP_STATE_SIZE, TRUE);
+      return bcEval_loop(&locals, &globals, jbufp);
+  case CTXT_NEXT:
+      locals = recover_loop_locals(FOR_LOOP_STATE_SIZE, FALSE);
+      return bcEval_loop(&locals, &globals, jbufp);
+  }
+  switch (SETJMP(jmpbufs.loop)) {
+  case CTXT_BREAK:
+      locals = recover_loop_locals(0, TRUE);
+      return bcEval_loop(&locals, &globals, jbufp);
+  case CTXT_NEXT:
+      locals = recover_loop_locals(0, FALSE);
+      return bcEval_loop(&locals, &globals, jbufp);
+  }
+
   locals = bcode_setup_locals(body, rho);
-  return bcEval_loop(&locals, &globals);
+  return bcEval_loop(&locals, &globals, jbufp);
 }
 
 static SEXP bcEval_loop(struct bcEval_locals *ploc,
-			struct bcEval_globals *pglob)
+			struct bcEval_globals *pglob,
+			struct bcEval_jmpbufs *jbufp)
 {
   INITIALIZE_MACHINE();
 
@@ -7389,26 +7395,12 @@ static SEXP bcEval_loop(struct bcEval_locals *ploc,
 
 		begincontext(cntxt, CTXT_LOOP, R_NilValue, rho, R_BaseEnv,
 			     R_NilValue, R_NilValue);
-		switch (SETJMP(cntxt->cjmpbuf)) {
-		case CTXT_BREAK:
-		    pc = LOOP_BREAK_PC(FOR_LOOP_STATE_SIZE);
-		    break;
-		case CTXT_NEXT:
-		    pc = LOOP_NEXT_PC(FOR_LOOP_STATE_SIZE);
-		    break;
-		}
+		cntxt->cjmpbuf_ptr = &(jbufp->for_loop); // SETJMP replacement
 	    }
 	    else {
 		begincontext(cntxt, CTXT_LOOP, R_NilValue, rho, R_BaseEnv,
 			     R_NilValue, R_NilValue);
-		switch (SETJMP(cntxt->cjmpbuf)) {
-		case CTXT_BREAK:
-		    pc = LOOP_BREAK_PC(0);
-		    break;
-		case CTXT_NEXT:
-		    pc = LOOP_NEXT_PC(0);
-		    break;
-		}
+		cntxt->cjmpbuf_ptr = &(jbufp->loop); // SETJMP replacement
 	    }
 	    /* context, offsets on stack, to be popped by ENDLOOPCNTXT */
 	    NEXT();
@@ -8483,7 +8475,7 @@ static SEXP bcEval_loop(struct bcEval_locals *ploc,
 
 #ifdef THREADED_CODE
 static void bcEval_init(void) {
-    bcEval_loop(NULL, NULL);
+    bcEval_loop(NULL, NULL, NULL);
 }
 
 SEXP R_bcEncode(SEXP bytes)
