@@ -274,6 +274,11 @@
       \item New generic function \code{sort_by()}, primarily useful for
       the \code{data.frame} method which can be used to sort rows of a
       data frame by one or more columns.
+
+      \item Licence headers for the RPC code in src/extra/xdr have
+      been updated to use the GPL-compatible licence published by
+      Oracle America in 2010.
+
     }
   }
 

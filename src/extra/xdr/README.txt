@@ -12,7 +12,7 @@ included.
 [A later version of ONC/RPC is available at 
 http://www.plt.rwth-aachen.de/ks/english/oncrpc.html]
 
-For copyright see the Sun copyright in COPYRGHT.TXT and the header
+For copyright see the Oracle copyright in COPYRGHT.TXT and the header
 of xdr.c.
 
 The only changes I made were
@@ -35,3 +35,8 @@ xdr_double, xdr_int, xdr_string, xdrmem_create and xdrstdio_create.
 There was some further tidying up in July 2011 to enable this to be
 used on other systems.  In particular, we replaced 'long' by int32_t
 and 'u_long' by uint32_t to ensure 32-bit types.
+
+The original licence of the Sun RPC code was permissive but not
+GPL-compatible. This changed in 2010 when Oracle relicensed the code
+with a GPL-compatible licence. All RPC licence headers were updated in
+March 2024 to use the 2010 licence.
