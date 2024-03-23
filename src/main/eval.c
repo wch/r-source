@@ -7307,7 +7307,10 @@ static SEXP bcEval_loop(struct bcEval_locals *ploc,
 
   BEGIN_MACHINE {
     OP(BCMISMATCH, 0): error(_("byte code version mismatch"));
-    OP(RETURN, 0): retvalue = GETSTACK(-1); goto done;
+    OP(RETURN, 0):
+      retvalue = GETSTACK(-1);
+      restore_bcEval_globals(&globals, body);
+      return retvalue;
     OP(GOTO, 1):
       {
 	int label = GETOP();
@@ -8441,10 +8444,6 @@ static SEXP bcEval_loop(struct bcEval_locals *ploc,
       }
     LASTOP;
   }
-
- done:
-  restore_bcEval_globals(&globals, body);
-  return retvalue;
 }
 
 #ifdef THREADED_CODE
