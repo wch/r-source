@@ -6833,23 +6833,6 @@ typedef struct {
 	    defineVar(loopinfo->symbol, value, rho);		\
     } while (0)
 
-/* Loops that cannot have their SETJMPs optimized out are bracketed by
-   STARTLOOPCNTXT and ENLOOPCNTXT instructions.  The STARTLOOPCNTXT
-   instruction stores the target offset for a 'break' and then the
-   target offset for a 'next' on the stack. For a 'for' loop the loop
-   state information is then pushed on the stack as well. The
-   following functions retrieve the offsets. */
-
-static R_INLINE int LOOP_BREAK_OFFSET(int loop_state_size)
-{
-    return GETSTACK_IVAL_PTR(R_BCNodeStackTop - 2 - loop_state_size);
-}
-
-static R_INLINE int LOOP_NEXT_OFFSET(int loop_state_size)
-{
-    return GETSTACK_IVAL_PTR(R_BCNodeStackTop - 1 - loop_state_size);
-}
-
 /* Check whether a call is to a base function; if not use AST interpreter */
 /***** need a faster guard check */
 static R_INLINE SEXP SymbolValue(SEXP sym)
@@ -7207,9 +7190,61 @@ struct bcEval_locals {
 	pc = (loc)->pc;				\
     } while (0)
 
-struct vcache_struct { R_binding_cache_t vcache; Rboolean smallcache; };
+/* Loops that cannot have their SETJMPs optimized out are bracketed by
+   STARTLOOPCNTXT and ENLOOPCNTXT instructions.  The STARTLOOPCNTXT
+   instruction allocates a structure on the stack to hold local state
+   as well as the pc values for a 'next' and a 'break'. For a 'for'
+   loop the loop state information is then pushed on the stack as
+   well. */
 
-static R_INLINE struct vcache_struct setup_vcache(SEXP body)
+struct cntxt_loop_locals {
+    struct bcEval_locals locals;
+    BCODE *break_pc;
+};
+
+static R_INLINE BCODE *LOOP_BREAK_PC(int skip)
+{
+    int offset = skip + NELEMS_FOR_SIZE(sizeof(struct cntxt_loop_locals));
+    struct cntxt_loop_locals *saved =
+	(struct cntxt_loop_locals *) (R_BCNodeStackTop - offset);
+    return saved->break_pc;
+}
+
+static R_INLINE BCODE *LOOP_NEXT_PC(int skip)
+{
+    int offset = skip + NELEMS_FOR_SIZE(sizeof(struct cntxt_loop_locals));
+    struct cntxt_loop_locals *saved =
+	(struct cntxt_loop_locals *) (R_BCNodeStackTop - offset);
+    return saved->locals.pc;
+}
+
+#define PUSH_LOOP_LOCALS() do {					\
+	struct cntxt_loop_locals *loc =			\
+	    BCNALLOC(sizeof(struct cntxt_loop_locals));	\
+	SAVE_BCEVAL_LOCALS(&(loc->locals));			\
+	loc->break_pc = break_pc;				\
+    } while (0)
+
+#define POP_LOOP_LOCALS() do {					\
+	BCNPOP_ALLOC(sizeof(struct cntxt_loop_locals));	\
+    } while (0)
+
+static R_INLINE
+struct bcEval_locals recover_loop_locals(int skip, Rboolean isbreak)
+{
+    int offset = skip + NELEMS_FOR_SIZE(sizeof(struct cntxt_loop_locals));
+    struct cntxt_loop_locals *saved =
+	(struct cntxt_loop_locals *) (R_BCNodeStackTop - offset);
+
+    struct bcEval_locals loc = saved->locals;
+    if (isbreak)
+	loc.pc = saved->break_pc;
+    return loc;
+}
+
+struct vcache_info { R_binding_cache_t vcache; Rboolean smallcache; };
+
+static R_INLINE struct vcache_info setup_vcache(SEXP body)
 {
     SEXP constants = BCCONSTS(body);
     R_binding_cache_t vcache = NULL;
@@ -7244,7 +7279,7 @@ static R_INLINE struct vcache_struct setup_vcache(SEXP body)
 #endif
     R_BCProtTop = R_BCNodeStackTop;
 
-    return (struct vcache_struct) { vcache, smallcache };
+    return (struct vcache_info) { vcache, smallcache };
 }
 
 static R_INLINE struct bcEval_locals
@@ -7254,7 +7289,7 @@ bcode_setup_locals(SEXP body, SEXP rho)
     loc.body = body;
     loc.rho = rho;
     loc.pc = BCCODE(body) + 1; /* pop off version */
-    struct vcache_struct vcinfo = setup_vcache(body);
+    struct vcache_info vcinfo = setup_vcache(body);
     loc.vcache = vcinfo.vcache;
     loc.smallcache = vcinfo.smallcache;
     R_BCbody = body; //**** move this somewhere else?
@@ -7339,8 +7374,9 @@ static SEXP bcEval_loop(struct bcEval_locals *ploc,
 	    Rboolean is_for_loop = GETOP();
 	    R_bcstack_t *oldtop = R_BCNodeStackTop;
 	    RCNTXT *cntxt = BCNALLOC_CNTXT();
-	    BCNPUSH_INTEGER(GETOP());       /* pc offset for 'break' */
-	    BCNPUSH_INTEGER((int)(pc - codebase)); /* pc offset for 'next' */
+	    int break_offset = GETOP();
+	    BCODE *break_pc = codebase + break_offset;
+	    PUSH_LOOP_LOCALS();
 	    if (is_for_loop) {
 		/* duplicate the for loop state data on the top of the stack */
 		R_bcstack_t *loopdata = oldtop - FOR_LOOP_STATE_SIZE;
@@ -7355,10 +7391,10 @@ static SEXP bcEval_loop(struct bcEval_locals *ploc,
 			     R_NilValue, R_NilValue);
 		switch (SETJMP(cntxt->cjmpbuf)) {
 		case CTXT_BREAK:
-		    pc = codebase + LOOP_BREAK_OFFSET(FOR_LOOP_STATE_SIZE);
+		    pc = LOOP_BREAK_PC(FOR_LOOP_STATE_SIZE);
 		    break;
 		case CTXT_NEXT:
-		    pc = codebase + LOOP_NEXT_OFFSET(FOR_LOOP_STATE_SIZE);
+		    pc = LOOP_NEXT_PC(FOR_LOOP_STATE_SIZE);
 		    break;
 		}
 	    }
@@ -7367,10 +7403,10 @@ static SEXP bcEval_loop(struct bcEval_locals *ploc,
 			     R_NilValue, R_NilValue);
 		switch (SETJMP(cntxt->cjmpbuf)) {
 		case CTXT_BREAK:
-		    pc = codebase + LOOP_BREAK_OFFSET(0);
+		    pc = LOOP_BREAK_PC(0);
 		    break;
 		case CTXT_NEXT:
-		    pc = codebase + LOOP_NEXT_OFFSET(0);
+		    pc = LOOP_NEXT_PC(0);
 		    break;
 		}
 	    }
@@ -7387,8 +7423,7 @@ static SEXP bcEval_loop(struct bcEval_locals *ploc,
 		/* remove the duplicated for loop state data */
 		R_BCNodeStackTop -= FOR_LOOP_STATE_SIZE;
 	    }
-	    BCNPOP_IGNORE_VALUE(); /* 'next' target */
-	    BCNPOP_IGNORE_VALUE(); /* 'break' target */
+	    POP_LOOP_LOCALS();
 	    BCNPOP_AND_END_CNTXT();
 	    NEXT();
 	}
