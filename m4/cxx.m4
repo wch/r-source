@@ -44,18 +44,17 @@
 #   and this notice are preserved.  This file is offered as-is, without any
 #   warranty.
 
-# cxx_compile_stdcxx serial 18
+# cxx_compile_stdcxx serial 15
 
 dnl  This macro is based on the code from the AX_CXX_COMPILE_STDCXX_11 macro
-dnl  (serial version number 18).
+dnl  (serial version number 13).
 
 dnl  Modifications for R:
 dnl  For C++11 we check that the date on the
 dnl  __cplusplus macro is not too recent so that a C++14 compiler does not
 dnl  pass as a C++11, for example.
 dnl  If e.g. CXX11STD is set, test it first not last.
-dnl  Check "2a" for C++20
-dnl  Add support for C++23, with no new tests
+dnl  Add support for C++20 and C++23, with no new tests (nor does ax_cxx_compile_stdcxx.m4)
 
 AC_DEFUN([AX_CXX_COMPILE_STDCXX], [dnl
   m4_if([$1], [11], [ax_cxx_compile_alternatives="11 0x"],
@@ -118,8 +117,7 @@ dnl If e.g. CXX11STD is set, test it first.  Otherwise test default last.
     dnl HP's aCC needs +std=c++11 according to:
     dnl http://h21007.www2.hp.com/portal/download/files/unprot/aCxx/PDF_Release_Notes/769149-001.pdf
     dnl Cray's crayCC needs "-h std=c++11"
-    dnl MSVC needs -std:c++NN for C++17 and later (default is C++14)
-    dnl All omitted here
+    dnl Both omitted here
     for alternative in ${ax_cxx_compile_alternatives}; do
       for switch in -std=c++${alternative} +std=c++${alternative}; do
         cachevar=AS_TR_SH([ax_cv_cxx_compile_cxx$1_$switch])
@@ -209,8 +207,8 @@ dnl R modification to exclude C++17 compilers
 #endif
 )
 
-dnl  Test body for checking C++17 support
 
+dnl Test body for checking C++17 support
 m4_define([_AX_CXX_COMPILE_STDCXX_testbody_17],
 #ifndef __cplusplus
 #error "This is not a C++ compiler"
@@ -222,12 +220,11 @@ m4_define([_AX_CXX_COMPILE_STDCXX_testbody_17],
   _AX_CXX_COMPILE_STDCXX_testbody_new_in_11
   _AX_CXX_COMPILE_STDCXX_testbody_new_in_14
   _AX_CXX_COMPILE_STDCXX_testbody_new_in_17
-  _AX_CXX_COMPILE_STDCXX_testbody_new_in_20
 #endif  
 )
 
-dnl  Test body for checking C++20 support
 
+dnl Test body for checking C++20 support: R modification
 m4_define([_AX_CXX_COMPILE_STDCXX_testbody_20],
 #ifndef __cplusplus
 #error "This is not a C++ compiler"
@@ -240,7 +237,7 @@ m4_define([_AX_CXX_COMPILE_STDCXX_testbody_20],
 #endif  
 )
 
-dnl  Test body for checking C++23 support: R modification
+dnl Test body for checking C++23 support: R modification
 m4_define([_AX_CXX_COMPILE_STDCXX_testbody_23],
 #ifndef __cplusplus
 #error "This is not a C++ compiler"
@@ -1009,34 +1006,5 @@ namespace cxx17
   }
 
 }  // namespace cxx17
-
-]])
-
-dnl  Tests for new features in C++20
-
-m4_define([_AX_CXX_COMPILE_STDCXX_testbody_new_in_20], [[
-
-#ifndef __cplusplus
-
-#error "This is not a C++ compiler"
-
-#elif __cplusplus < 202002L && !defined _MSC_VER
-
-#error "This is not a C++20 compiler"
-
-#else
-
-#include <version>
-
-namespace cxx20
-{
-
-// As C++20 supports feature test macros in the standard, there is no
-// immediate need to actually test for feature availability on the
-// Autoconf side.
-
-}  // namespace cxx20
-
-#endif  // __cplusplus < 202002L && !defined _MSC_VER
 
 ]])

@@ -765,7 +765,6 @@ if test "${FFLAGS+set}" != set; then
   FFLAGS=${FCFLAGS}
 fi
 
-## This looks for a C++11 compiler: Apple clang++ is not by default
 AC_PROG_CXX
 ## check this actually compiles
 R_PROG_CXX
@@ -1899,9 +1898,7 @@ AC_SUBST(STATICR2)
 AC_SUBST(R_DYLIB_EXT)
 
 ## Test support for C++ standards
-## NB: might already have added -std=gnu++11 or similar.
-CXX0=`echo ${CXX} | sed -e s/-std=gnu++11//`
-R_STDCXX([11], [CXX11], [CXX0])
+R_STDCXX([11], [CXX11], [CXX])
 R_STDCXX([14], [CXX14], [CXX11])
 R_STDCXX([17], [CXX17], [CXX14])
 R_STDCXX([20], [CXX20], [CXX17])
