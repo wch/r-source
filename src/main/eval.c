@@ -5550,15 +5550,12 @@ static R_INLINE void *BCNALLOC_BASE(size_t size)
 }
 
 /* Allocate R context on the node stack */
-#define RCNTXT_ELEMS ((sizeof(RCNTXT) + sizeof(R_bcstack_t) - 1) \
-			/ sizeof(R_bcstack_t))
-
 #define BCNALLOC_CNTXT() (RCNTXT *) BCNALLOC(sizeof(RCNTXT))
 
 static R_INLINE void BCNPOP_AND_END_CNTXT(void) {
-    RCNTXT* cntxt = (RCNTXT *)(R_BCNodeStackTop - RCNTXT_ELEMS);
+    RCNTXT* cntxt = BCNALLOC_BASE(sizeof(RCNTXT));
     endcontext(cntxt);
-    R_BCNodeStackTop -= RCNTXT_ELEMS + 1; /* '+ 1' is for the RAWMEM_TAG */
+    BCNPOP_ALLOC(sizeof(RCNTXT));
 }
 
 static SEXP bytecodeExpr(SEXP e)
@@ -7134,7 +7131,7 @@ Rboolean attribute_hidden R_BCVersionOK(SEXP s)
     return (version >= R_bcMinVersion && version <= R_bcVersion);
 }
 
-struct R_bcEval_globals_struct {
+struct bcEval_globals {
     R_bcstack_t *oldntop;
     int oldbcintactive;
     SEXP oldbcbody;
@@ -7147,7 +7144,7 @@ struct R_bcEval_globals_struct {
     R_bcstack_t *old_bcprot_committed; // **** not sure this is really needed
 };
 
-static R_INLINE void save_bcEval_globals(struct R_bcEval_globals_struct *g,
+static R_INLINE void save_bcEval_globals(struct bcEval_globals *g,
 					 SEXP body)
 {
     g->oldntop = R_BCNodeStackTop;
@@ -7164,7 +7161,7 @@ static R_INLINE void save_bcEval_globals(struct R_bcEval_globals_struct *g,
 	INCREMENT_BCSTACK_LINKS();
 }
 
-static R_INLINE void restore_bcEval_globals(struct R_bcEval_globals_struct *g,
+static R_INLINE void restore_bcEval_globals(struct bcEval_globals *g,
 					    SEXP body)
 {
     if (body) {
@@ -7182,7 +7179,7 @@ static R_INLINE void restore_bcEval_globals(struct R_bcEval_globals_struct *g,
 #endif
 }
 
-struct R_bcEval_locals_struct {
+struct bcEval_locals {
     // bcEval args:
     SEXP body;
     SEXP rho;
@@ -7250,10 +7247,10 @@ static R_INLINE struct vcache_struct setup_vcache(SEXP body)
     return (struct vcache_struct) { vcache, smallcache };
 }
 
-static R_INLINE struct R_bcEval_locals_struct
+static R_INLINE struct bcEval_locals
 bcode_setup_locals(SEXP body, SEXP rho)
 {
-    struct R_bcEval_locals_struct loc;
+    struct bcEval_locals loc;
     loc.body = body;
     loc.rho = rho;
     loc.pc = BCCODE(body) + 1; /* pop off version */
@@ -7265,14 +7262,14 @@ bcode_setup_locals(SEXP body, SEXP rho)
 }
 
 static SEXP
-bcEval_loop(struct R_bcEval_locals_struct *,
-	    struct R_bcEval_globals_struct *);
+bcEval_loop(struct bcEval_locals *,
+	    struct bcEval_globals *);
 
 static SEXP bcEval(SEXP body, SEXP rho)
 {
-  struct R_bcEval_globals_struct globals;
+  struct bcEval_globals globals;
   save_bcEval_globals(&globals, body);
-  struct R_bcEval_locals_struct locals;
+  struct bcEval_locals locals;
 
   R_Srcref = R_InBCInterpreter;
   R_BCIntActive = 1;
@@ -7285,13 +7282,13 @@ static SEXP bcEval(SEXP body, SEXP rho)
   return bcEval_loop(&locals, &globals);
 }
 
-static SEXP bcEval_loop(struct R_bcEval_locals_struct *ploc,
-			struct R_bcEval_globals_struct *pglob)
+static SEXP bcEval_loop(struct bcEval_locals *ploc,
+			struct bcEval_globals *pglob)
 {
   INITIALIZE_MACHINE();
 
-  struct R_bcEval_globals_struct globals = *pglob;
-  struct R_bcEval_locals_struct locals = *ploc;
+  struct bcEval_globals globals = *pglob;
+  struct bcEval_locals locals = *ploc;
 
   SEXP body, rho, constants;
   BCODE *pc, *codebase;
