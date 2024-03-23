@@ -3706,6 +3706,21 @@ CRAN main site, but a mirror can be specified by setting environment
 variables @env{R_CRAN_WEB} and (rarely needed) @env{R_CRAN_SRC} to the
 URL of a CRAN mirror.
 
+It is possible to install a package and then check the installed
+package. To do so first install the package and keep a log of the
+installation:
+@example
+R CMD INSTALL -l @var{libdir} @var{pkg} > @var{pkg}.log 2>&1
+@end example
+@noindent and then use
+@example
+Rdev CMD check -l @var{libdir} --install=check:@var{pkg}.log @var{pkg}
+@end example
+@noindent
+(Specifying the library is required: it ensures that the just-installed
+package is the one checked.  If you know for sure only one copy is
+installed you can use @option{--install=skip}: this is used for @R{}
+installation's @command{make check-recommended}.)
 
 @node Building package tarballs, Building binary packages, Checking packages, Checking and building packages
 @subsection Building package tarballs
