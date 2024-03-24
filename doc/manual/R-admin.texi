@@ -1058,7 +1058,7 @@ The macros @code{CXX} etc are those used by default for C++ code.
 @command{configure} will attempt to set the rest suitably, choosing for
 @code{CXXSTD} and @code{CXX11STD} a suitable flag such as
 @option{-std=gnu++17} for C++17 support (which is required if C++ is to be
-supported by default).  inferred values can be overridden in file
+supported by default).  Inferred values can be overridden in file
 @file{config.site} or on the @command{configure} command line:
 user-supplied values will be tested by compiling some C++11/14/17/20/23
 code.
@@ -5415,6 +5415,12 @@ symlink is broken, the driver will issue a warning and use @code{xcrun
 -show-sdk-path} to try to find an @abbr{SDK} and use its path.  (The @abbr{SDK} path
 is used when using @command{gfortran} to link, so not when building @R{}
 but when installing a few packages.)
+
+A build of @command{gfortran} 13.2 for @code{arm64} macOS 14 is
+available at
+@uref{https://github.com/fxcoudert/gfortran-for-macOS/releases}.
+This can be built for Intel and older OSes from the sources at
+@uref{https://github.com/iains/gcc-13-branch/}.
 
 @node Cairo graphics, Other C/C++ compilers, Fortran compilers, macOS
 @subsection Cairo graphics
