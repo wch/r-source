@@ -1456,9 +1456,9 @@ The toolset also includes build tools from the
 @uref{https://www.msys2.org/, the 'MSYS2' project}.  Additional build tools
 packaged by 'MSYS2' may be installed via a package manager (@samp{pacman}).
 
-There is also an experimental variant of Rtools44 with support for 64-bit
-ARM CPUs (aarch64) via LLVM 17 toolchain using clang/flang-new compilers,
-lld linker, and libc++. 
+There is also an experimental variant of @I{Rtools44} with support for 64-bit
+ARM CPUs (@I{aarch64}) via @I{LLVM} 17 toolchain using @command{clang}/@command{flang-new} compilers,
+@command{lld} linker, and @I{libc++}. 
 
 The toolsets used for 64-bit Windows from 2008 to 2022 were based on
 @I{MinGW-w64}.  The assistance of @I{Yu Gong} at a crucial step in

@@ -275,7 +275,7 @@
       the \code{data.frame} method which can be used to sort rows of a
       data frame by one or more columns.
 
-      \item Licence headers for the RPC code in src/extra/xdr have
+      \item Licence headers for the \abbr{RPC} code in \file{src/extra/xdr} have
       been updated to use the GPL-compatible licence published by
       Oracle America in 2010.
 
@@ -361,8 +361,8 @@
       and libraries (targeting 64-bit Intel CPUs).  R-devel can no longer be
       built using \I{Rtools43} without changes.
 
-      \I{Rtools44} has experimental suport for 64-bit ARM (aarch64) CPUs via
-      LLVM 17 toolchain using lld, clang/flang-new and libc++.
+      \I{Rtools44} has experimental support for 64-bit ARM (\I{aarch64}) CPUs via
+      \I{LLVM} 17 toolchain using \command{lld}, \command{clang}/\command{flang-new} and \I{libc++}.
     }
   }
 
@@ -500,7 +500,7 @@
       in \command{R CMD check --as-cran} are formally deprecated now in
       favour of calling \code{as.data.frame()} or \code{as.data.frame.vector()}.
       The deprecation \dQuote{check} now works also when \code{as.data.frame()}
-      is S4 generic thanks to Ivan Krylov.
+      is S4 generic thanks to \I{Ivan Krylov}.
 
       \item The default method for the directional comparison operators
       \code{<}, \code{>}, \code{<=}, and \code{>=} now signals an error
