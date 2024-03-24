@@ -271,7 +271,7 @@ OlsonNames(tzdir = NULL)
 
   There have also been changes to the \sQuote{standard} time with little
   notice (Kazakhstan switched to a single time zone in Mar 2024 with six
-  weeks' notice), and to whether \sQuote{summmer} or \sQuote{winter}
+  weeks' notice), and to whether \sQuote{summer} or \sQuote{winter}
   time is regarded as \sQuote{standard} (and hence to abbreviations).
   %% Irish Standard time is used in summer.
 

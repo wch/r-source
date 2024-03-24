@@ -3357,7 +3357,7 @@ if test -f "$CMAKE"; then echo "no 'cmake' command found"; exit 1; fi
 @end example
 @noindent
 and for the second approach to substitute @env{CMAKE} into
-@file{src//Makevars}.  This also applies to the anciliary command
+@file{src/Makevars}.  This also applies to the ancillary command
 @command{ctest}, if used.
 
 @node Checking and building packages, Writing package vignettes, Configure and cleanup, Creating R packages
