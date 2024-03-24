@@ -1057,7 +1057,7 @@ CXX23PICFLAGS
 The macros @code{CXX} etc are those used by default for C++ code.
 @command{configure} will attempt to set the rest suitably, choosing for
 @code{CXXSTD} and @code{CXX11STD} a suitable flag such as
-@option{-std=c++17} for C++17 support (which is required if C++ is to be
+@option{-std=gnu++17} for C++17 support (which is required if C++ is to be
 supported by default).  inferred values can be overridden in file
 @file{config.site} or on the @command{configure} command line:
 user-supplied values will be tested by compiling some C++11/14/17/20/23
@@ -1100,7 +1100,7 @@ extensions': what those are is hard to track down.
 
 For the use of C++ in @R{} packages see the `Writing R
 Extensions' manual.  Prior to @R{} 3.6.0 the default C++ standard was
-that of the compiler used: currently it is C++17 (if available).
+that of the compiler used: currently it is C++17.
 
 @uref{https://en.cppreference.com/w/cpp/compiler_support} indicates
 which versions of common compilers support (parts of) which C++
