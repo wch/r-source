@@ -240,7 +240,7 @@ attribute_hidden void NORET R_jumpctxt(RCNTXT * targetcptr, int mask, SEXP val)
     /* usually cptr->cjmpbuf_ptr == NULL, but bcEval_loop() sets a
        non-NULL value to share a jmpbuf among several contexts */
     if (cptr->cjmpbuf_ptr)
-	LONGJMP(*(cptr->cjmpbuf_ptr), mask);
+	LONGJMP((*(cptr->cjmpbuf_ptr)), mask); //**** extra parens until Windows macro is fixed
     else
 	LONGJMP(cptr->cjmpbuf, mask);
 }
