@@ -695,6 +695,13 @@
       \item \code{as.data.frame(matrix(*, ncol=0))} now gets valid
       \code{names()} and \code{colnames()}; reported by \I{Davis Vaughan}
       on the R-devel list.
+
+      \item Internal Mathlib function \code{stirlerr(n)} is now almost
+      fully (52-bit) accurate for all \eqn{n >= ~5.9} and more accurate
+      also in the range \eqn{1 -- 5.9}.  This entails small (\dQuote{after
+      12th decimal}) changes in density functions, e.g., \code{dgamma()}
+      in  \emph{some} regions of their support.   The fix was partly
+      prompted by \I{Morten Welinder}'s \PR{18640}.
     }
   }
 }

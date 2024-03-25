@@ -856,6 +856,19 @@ stopifnot(exprs = {
     pbeta(1,  0, 0) == 1   # gave 0.5
 })
 
+## PR#18640 -- stirlerr(x) concerns (for *non* half-integer x) -- visible in dgamma()
+sh <- 465/32 # = 14.53125
+x0 <- 1/4 + 8:20
+dg1 <- dgamma(x0, sh)
+## 'TRUE' values { = dput(asNumeric(Rmpfr::dgamma(mpfr(x0, 512), sh)), control="digits17") } :
+dgM <- c(0.026214161736344995, 0.045350212095058476, 0.066917055544970391,
+         0.086754619023375584, 0.10102573200716865, 0.10746812620489894,
+         0.10581786016571779, 0.097460173977057932, 0.084678318901885929,
+         0.069890902339799707, 0.055117163281675971, 0.041733282935808788, 0.030464801624510086)
+relE <- dg1/dgM - 1
+relE * 2^53 # 2  2 -2  0  0  2 -1  0  0  2  0  0  2 //  was in {-95 : -91}  in R <= 4.3.*
+stopifnot(abs(relE) < 9e-16) # max{x86_64}: 2.22e-16
+
 
 
 cat("Time elapsed: ", proc.time() - .ptime,"\n")
