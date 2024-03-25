@@ -1359,6 +1359,7 @@ AC_DEFUN([R_PROG_OBJCXX_WORKS],
 dnl we don't use AC_LANG_xx because ObjC++ is not defined as a language (yet)
 dnl (the test program is from the gcc test suite)
 dnl but it needed an #undef (PR#15107)
+dml 2021-11-12 changed to use Foundation as Xcode 13 breaks Object.h.
 cat << \EOF > conftest.mm
 #include <Foundation/Foundation.h>
 #include <iostream>
