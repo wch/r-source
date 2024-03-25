@@ -174,6 +174,7 @@ static void R_restore_globals(RCNTXT *cptr)
     R_BCIntActive = cptr->bcintactive;
     R_BCpc = cptr->bcpc;
     R_BCbody = cptr->bcbody;
+    R_BCFrame = cptr->bcframe;
     R_EvalDepth = cptr->evaldepth;
     vmaxset(cptr->vmax);
     R_interrupts_suspended = cptr->intsusp;
@@ -258,6 +259,7 @@ void begincontext(RCNTXT * cptr, int flags,
     cptr->gcenabled = R_GCEnabled;
     cptr->bcpc = R_BCpc;
     cptr->bcbody = R_BCbody;
+    cptr->bcframe = R_BCFrame;
     cptr->bcintactive = R_BCIntActive;
     cptr->evaldepth = R_EvalDepth;
     cptr->callflag = flags;

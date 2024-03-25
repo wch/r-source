@@ -1154,6 +1154,9 @@ typedef struct {
 #define PRENV(x)	((x)->u.promsxp.env)
 #define PRSEEN(x)	((x)->sxpinfo.gp)
 #define SET_PRSEEN(x,v)	(((x)->sxpinfo.gp)=(v))
+#if ! BOXED_BINDING_CELLS
+# define IMMEDIATE_PROMISE_VALUES
+#endif
 #ifdef IMMEDIATE_PROMISE_VALUES
 # define PRVALUE0(x) ((x)->u.promsxp.value)
 # define PRVALUE(x) \
@@ -1296,6 +1299,9 @@ typedef struct {
 # define RAWMEM_TAG 254
 # define CACHESZ_TAG 253
 
+/* saved bcEval() state for implementing recursion using goto */
+typedef struct R_bcFrame R_bcFrame_type;
+
 #ifdef R_USE_SIGNALS
 /* Stack entry for pending promises */
 typedef struct RPRSTACK {
@@ -1330,6 +1336,7 @@ typedef struct RCNTXT {
     struct RPRSTACK *prstack;   /* stack of pending promises */
     R_bcstack_t *nodestack;
     R_bcstack_t *bcprottop;
+    R_bcFrame_type *bcframe;
     SEXP srcref;	        /* The source line in effect */
     int browserfinish;          /* should browser finish this context without
                                    stopping */
@@ -1460,6 +1467,7 @@ extern0 int	R_BCIntActive INI_as(0); /* bcEval called more recently than
                                             eval */
 extern0 void*	R_BCpc INI_as(NULL);/* current byte code instruction */
 extern0 SEXP	R_BCbody INI_as(NULL); /* current byte code object */
+extern0 R_bcFrame_type *R_BCFrame INI_as(NULL); /* bcEval() frame */
 extern0 SEXP	R_NHeap;	    /* Start of the cons cell heap */
 extern0 SEXP	R_FreeSEXP;	    /* Cons cell free list */
 extern0 R_size_t R_Collected;	    /* Number of free cons cells (after gc) */
@@ -1588,7 +1596,7 @@ extern0 double elapsedLimitValue       	INI_as(-1.0);
 void resetTimeLimits(void);
 void R_CheckTimeLimits(void);
 
-#define R_BCNODESTACKSIZE 200000
+#define R_BCNODESTACKSIZE 300000
 LibExtern R_bcstack_t *R_BCNodeStackTop, *R_BCNodeStackEnd;
 extern0 R_bcstack_t *R_BCNodeStackBase;
 extern0 R_bcstack_t *R_BCProtTop;
