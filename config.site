@@ -241,6 +241,14 @@
 ## "$CXX -E" if it does.
 ## CXXCPP=
 
+## Objective-C(++), mainly for macOS
+## On macOS, Apple clang with additional gcc flag -fobjc-exceptions
+## OBJC=
+## OBJCFLAGS=
+## OBJC_LIBS-
+## Objective-C compiler, usually the same as $CXX $CXXSTD
+## OBJCXX=
+
 ## Tcl/Tk settings.
 ## Use TCLTK_LIBS for all '-L' and '-l' options needed for linking
 ## against the Tcl and Tk library.
