@@ -320,9 +320,8 @@
       \item The minimum \command{autoconf} requirement for a maintainer
       build has been increased to \command{autoconf}\sspace{}2.71.
 
-      It is intended to increase this to 2.72 once that becomes widely
-      available: the distributed \file{configure} file was generated
-      using 2.72.
+      It is intended to increase this to 2.72 for \R 4.5.0: the
+      distributed \file{configure} file was generated using 2.72.
 
       \item The minimum version requirement for an external LAPACK has
       been reduced to 3.9.0.
