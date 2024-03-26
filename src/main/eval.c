@@ -2168,7 +2168,8 @@ static R_INLINE void R_CleanupEnvir(SEXP rho, SEXP val)
     }
 }
 
-#define NO_CALL_FRAME_ARGS_NR
+/* this needs more work -- PUSHCALLARG_RC needed in more places */
+//#define NO_CALL_FRAME_ARGS_NR
 
 static void unpromiseArgs(SEXP pargs)
 {
