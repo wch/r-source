@@ -1246,6 +1246,19 @@ for(nr in 0:2) {
 ## had no .$names at all in R < 4.4.0
 
 
+## C level R_nonInt() less tolerant, used more often
+(gd <- getVaW(dbinom(1234560:1234570, 9876543.2, .5)))
+gp  <- getVaW(pbinom(1234560:1234570, 9876543.2, 1/8))
+(gdp <- getVaW(dpois(9876543 + (2:8)/10, 1e7)))
+stopifnot(exprs = {
+    identical(gd, structure(rep(NaN, 11), warning = "NaNs produced"))
+    identical(gd, gp)
+    identical(gdp, structure(rep(0,7), # only *last* warning:
+                             warning = "non-integer x = 9876543.800000"))
+})
+## did not warn; just treat 98... as an integer in R < 4.4.0
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
