@@ -107,18 +107,18 @@ pkg2HTML <- function(package, dir = NULL, lib.loc = NULL,
                      prism = TRUE,
                      out = NULL,
                      ...,
-                     Rhtml = tolower(file_ext(out)) == "rhtml",
+                     Rhtml = FALSE,
                      include_description = TRUE)
 {
     if (is.null(texmath)) texmath <- "katex"
-    if (is.null(out)) {
-        out <- if (is.null(hooks$pkg_href)) ""
-               else hooks$pkg_href(pkgname)
-    }
     hcontent <- .convert_package_rdfiles(package, dir, lib.loc,
                                          Rhtml = Rhtml, hooks = hooks, ...)
     descfile <- attr(hcontent, "descfile")
     pkgname <- read.dcf(descfile, fields = "Package")[1, 1]
+    if (is.null(out)) {
+        out <- if (is.null(hooks$pkg_href)) ""
+               else hooks$pkg_href(pkgname)
+    }
     
     ## Sort by name, as in PDF manual (check exact code)
     hcontent <- hcontent[order(vapply(hcontent,
