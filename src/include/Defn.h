@@ -28,6 +28,13 @@
 
 #define BYTECODE
 
+#if ( SIZEOF_SIZE_T < SIZEOF_DOUBLE )
+# define BOXED_BINDING_CELLS 1
+#else
+# define BOXED_BINDING_CELLS 0
+# define IMMEDIATE_PROMISE_VALUES
+#endif
+
 /* probably no longer needed */
 #define NEW_CONDITION_HANDLING
 
@@ -448,11 +455,6 @@ typedef union { VECTOR_SEXPREC s; double align; } SEXPREC_ALIGN;
 #define BNDCELL_TAG(e)	((e)->sxpinfo.extra)
 #define SET_BNDCELL_TAG(e, v) ((e)->sxpinfo.extra = (v))
 
-#if ( SIZEOF_SIZE_T < SIZEOF_DOUBLE )
-# define BOXED_BINDING_CELLS 1
-#else
-# define BOXED_BINDING_CELLS 0
-#endif
 #if BOXED_BINDING_CELLS
 /* Use allocated scalars to hold immediate binding values. A little
    less efficient but does not change memory layout or use. These
@@ -1154,9 +1156,6 @@ typedef struct {
 #define PRENV(x)	((x)->u.promsxp.env)
 #define PRSEEN(x)	((x)->sxpinfo.gp)
 #define SET_PRSEEN(x,v)	(((x)->sxpinfo.gp)=(v))
-#if ! BOXED_BINDING_CELLS
-# define IMMEDIATE_PROMISE_VALUES
-#endif
 #ifdef IMMEDIATE_PROMISE_VALUES
 # define PRVALUE0(x) ((x)->u.promsxp.value)
 # define PRVALUE(x) \
@@ -1165,18 +1164,12 @@ typedef struct {
     (PROMISE_TAG(x) || PRVALUE0(x) != R_UnboundValue)
 # define PROMISE_TAG  BNDCELL_TAG
 # define SET_PROMISE_TAG SET_BNDCELL_TAG
-# define SET_PROMISE_DVAL SET_BNDCELL_DVAL
-# define SET_PROMISE_IVAL SET_BNDCELL_IVAL
-# define SET_PROMISE_LVAL SET_BNDCELL_LVAL
 #else
 # define PRVALUE0(x) ((x)->u.promsxp.value)
 # define PRVALUE(x) PRVALUE0(x)
 # define PROMISE_IS_EVALUATED(x) (PRVALUE(x) != R_UnboundValue)
 # define PROMISE_TAG(x) 0
 #endif
-#define PROMISE_DVAL BNDCELL_DVAL
-#define PROMISE_IVAL BNDCELL_IVAL
-#define PROMISE_LVAL BNDCELL_LVAL
 
 /* Hashing Macros */
 #define HASHASH(x)      ((x)->sxpinfo.gp & HASHASH_MASK)
