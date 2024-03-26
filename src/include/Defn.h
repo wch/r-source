@@ -1309,7 +1309,6 @@ typedef struct RCNTXT {
     struct RCNTXT *nextcontext;	/* The next context up the chain */
     int callflag;		/* The context "type" */
     JMP_BUF cjmpbuf;		/* C stack and register information */
-    JMP_BUF *cjmpbuf_ptr;	/* C stack and register information ptr */
     int cstacktop;		/* Top of the pointer protection stack */
     int evaldepth;	        /* evaluation depth at inception */
     SEXP promargs;		/* Promises supplied to closure */

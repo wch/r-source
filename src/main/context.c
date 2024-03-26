@@ -238,12 +238,7 @@ attribute_hidden void NORET R_jumpctxt(RCNTXT * targetcptr, int mask, SEXP val)
 	R_OldCStackLimit = 0;
     }
 
-    /* usually cptr->cjmpbuf_ptr == NULL, but bcEval_loop() sets a
-       non-NULL value to share a jmpbuf among several contexts */
-    if (cptr->cjmpbuf_ptr)
-	LONGJMP(*(cptr->cjmpbuf_ptr), mask);
-    else
-	LONGJMP(cptr->cjmpbuf, mask);
+    LONGJMP(cptr->cjmpbuf, mask);
 }
 
 
@@ -254,7 +249,6 @@ void begincontext(RCNTXT * cptr, int flags,
 		  SEXP syscall, SEXP env, SEXP sysp,
 		  SEXP promargs, SEXP callfun)
 {
-    cptr->cjmpbuf_ptr = NULL;
     cptr->cstacktop = R_PPStackTop;
     cptr->gcenabled = R_GCEnabled;
     cptr->bcpc = R_BCpc;
@@ -946,7 +940,7 @@ SEXP R_UnwindProtect(SEXP (*fun)(void *data), void *data,
 		     void *cleandata, SEXP cont)
 {
     RCNTXT thiscontext;
-    volatile SEXP result;
+    SEXP result;
     Rboolean jump;
 
     /* Allow simple usage with a NULL continuation token. This _could_
