@@ -1,7 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
+ *  Copyright (C) 2004-2024 The R Foundation
  *  Copyright (C) 1998      Ross Ihaka
- *  Copyright (C) 2004-2014 The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -75,8 +75,12 @@ double lchoose(double n, double k)
 #ifndef MATHLIB_STANDALONE
     R_CheckStack();
 #endif
-    if (fabs(k - k0) > 1e-7)
+#define non_INT_WARN_ROUNDING					\
+    /* warn "compatibly" with nmath.h's  R_nonint() : */	\
+    if (fabs(k - k0) > 1e-9 * fmax2(1., fabs(k0)))		\
 	MATHLIB_WARNING2(_("'k' (%.2f) must be integer, rounded to %.0f"), k0, k);
+
+    non_INT_WARN_ROUNDING;
     if (k < 2) {
 	if (k <	 0) return ML_NEGINF;
 	if (k == 0) return 0.;
@@ -118,8 +122,7 @@ double choose(double n, double k)
 #ifndef MATHLIB_STANDALONE
     R_CheckStack();
 #endif
-    if (fabs(k - k0) > 1e-7)
-	MATHLIB_WARNING2(_("'k' (%.2f) must be integer, rounded to %.0f"), k0, k);
+    non_INT_WARN_ROUNDING;
     if (k < k_small_max) {
 	int j;
 	if(n-k < k && n >= 0 && R_IS_INT(n))

@@ -1,6 +1,6 @@
 /*
  *  Mathlib : A C Library of Special Functions
- *  Copyright (C) 1999-2014  The R Core Team
+ *  Copyright (C) 1999-2024  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -124,7 +124,7 @@ double dsignrank(double x, double n, int give_log)
     if (n <= 0)
 	ML_WARN_return_NAN;
 
-    if (fabs(x - R_forceint(x)) > 1e-7)
+    if (R_nonint(x))
 	return(R_D__0);
     x = R_forceint(x);
     if ((x < 0) || (x > (n * (n + 1) / 2)))

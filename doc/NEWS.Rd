@@ -702,6 +702,9 @@
       12th decimal}) changes in density functions, e.g., \code{dgamma()}
       in  \emph{some} regions of their support.   The fix was partly
       prompted by \I{Morten Welinder}'s \PR{18640}.
+
+      \item Numbers like \code{9876543.2} are now considered non-integer by
+      Mathlib internal \code{R_nonint()}, amending original fix of \PR{15734}.
     }
   }
 }

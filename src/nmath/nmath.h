@@ -1,6 +1,6 @@
 /*
  *  Mathlib : A C Library of Special Functions
- *  Copyright (C) 1998-2022  The R Core Team
+ *  Copyright (C) 1998-2024  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -58,8 +58,10 @@ double	Rf_gamma_cody(double);
 #else
 # define R_forceint(x)   round(x)
 #endif
-//R >= 3.1.0:  previously, was defined as  (fabs((x) - R_forceint(x)) > 1e-7)
-# define R_nonint(x) 	  (fabs((x) - R_forceint(x)) > 1e-7*fmax2(1., fabs(x)))
+//R >= 3.1.0; previously: (fabs((x) - R_forceint(x)) > 1e-7)
+//R >= 4.4.0; previously: (fabs((x) - R_forceint(x)) > 1e-7 * fmax2(1., fabs(x)))
+# define R_nonint(x) 	  (fabs((x) - R_forceint(x)) > 1e-9 * fmax2(1., fabs(x)))
+/*						       .... maybe change even to ~ 1e-11 or 12 */
 
 #ifndef MATHLIB_STANDALONE
 
