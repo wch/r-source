@@ -368,6 +368,9 @@ createRedirects <- function(file, Rdobj)
 ##    and missing links (those without an explicit package, and
 ##    those topics not in Links[2]) don't get linked anywhere.
 
+## There is a third use (from R 4.4.0), which is to generate
+## single-page HTML refmans for an entire package via pkg2HTML(),
+## which calles Rd2HTML(standalone = FALSE) for each help page. 
 
 
 Rd2HTML <-

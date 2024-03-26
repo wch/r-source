@@ -26,7 +26,8 @@
 ## This cannot be done per Rd file, but we can switch to mathjaxr if
 ## any Rd file in a package uses mathjaxr
 
-.convert_package_rdfiles <- function(package, dir = NULL, lib.loc = NULL, ...)
+.convert_package_rdfiles <- function(package, dir = NULL, lib.loc = NULL, ...,
+                                     stages = "build")
 {
     ## if 'package' is an installed package (simplest) just use
     ## Rd_db(package) to get parsed Rd files. Otherwise, if 'package'
@@ -66,15 +67,17 @@
             if (length(pkgdir) != 1)
                 stop(gettextf("expected one package directory, found %d.",
                               length(pkgdir)))
-            Rd_db(dir = pkgdir)
+            Rd_db(dir = pkgdir, stages = stages)
         }
         else {
             pkgdir <- if (is.null(dir)) find.package(package, lib.loc) else dir
-            Rd_db(package, dir, lib.loc) # FIXME : stages?
+            Rd_db(package, dir, lib.loc, stages = stages)
         }
 
-    ## create links database for help links
-    Links <- findHTMLlinks(pkgdir, level = 0:1)
+    ## create links database for help links. Level 0 links are
+    ## obtained directly from the db, which is useful for non-installed packages.
+    Links0 <- .build_links_index(db, pkgdir)
+    Links <- c(Links0, findHTMLlinks(pkgdir, level = 1))
     Links2 <- findHTMLlinks(level = 2)
     
     rd2lines <- function(Rd, ...) {
@@ -108,14 +111,14 @@ pkg2HTML <- function(package, dir = NULL, lib.loc = NULL,
                      include_description = TRUE)
 {
     if (is.null(texmath)) texmath <- "katex"
-    hcontent <- .convert_package_rdfiles(package, dir, lib.loc,
-                                         Rhtml = Rhtml, hooks = hooks, ...)
-    descfile <- attr(hcontent, "descfile")
-    pkgname <- read.dcf(descfile, fields = "Package")[1, 1]
     if (is.null(out)) {
         out <- if (is.null(hooks$pkg_href)) ""
                else hooks$pkg_href(pkgname)
     }
+    hcontent <- .convert_package_rdfiles(package, dir, lib.loc,
+                                         Rhtml = Rhtml, hooks = hooks, ...)
+    descfile <- attr(hcontent, "descfile")
+    pkgname <- read.dcf(descfile, fields = "Package")[1, 1]
     
     ## Sort by name, as in PDF manual (check exact code)
     hcontent <- hcontent[order(vapply(hcontent,
