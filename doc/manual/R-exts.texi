@@ -2949,8 +2949,8 @@ there were also additional deprecations.} (`C++14') was published in
 December 2014 and was used by default as from @R{} 4.1.0 if
 supported.  Further revisions `C++17' (in December 2017) and `C++20'
 (with many new features in December 2020) have been published since.
-The next revision, `C++23', is expected in 2023/4 and several compilers
-already have extensive partial support for the current drafts.
+The next revision, `C++23', is expected in 2024 and several compilers
+already have extensive partial support for the final draft.
 
 The default standard for compiling @R{} packages was changed to C++17 in
 @R{} 4.3.0 if supported, and from @R{} 4.4.0 only a C++17 compiler will
@@ -3068,7 +3068,11 @@ feature tests as well as resources such as
 @uref{https://en.cppreference.com/w/cpp/compiler_support},
 @uref{https://gcc.gnu.org/projects/cxx-status.html} and
 @uref{https://clang.llvm.org/cxx_status.html} to see if the features you
-want to use are widely implemented.
+want to use are widely implemented.  In particular, for C++23 @R{}'s
+@command{configure} script only checks for a compiler claiming to be
+later than C++20.@footnote{The @code{__cplusplus} value for C++23 is not yet
+finalized and all but some of the latest compilers use values from earlier
+drafts.}
 
 Attempts to specify an unknown C++ standard are silently ignored: recent
 versions of @R{} throw an error for C++98 and for known standards for
