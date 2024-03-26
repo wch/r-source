@@ -1259,6 +1259,19 @@ stopifnot(exprs = {
 ## did not warn; just treat 98... as an integer in R < 4.4.0
 
 
+## Finally deprecate terms.formula()'s  'abb' and 'neg.out' args:
+tt <- terms(y ~ a+b)
+t0 <- getVaW(terms(y ~ a+b, abb = 1))
+t1 <- getVaW(terms(y ~ a+b, neg.out = 0))
+t2 <- getVaW(terms(y ~ a+b, abb=NA, neg.out=NA))
+stopifnot(exprs = {
+    identical(t0, structure(tt, warning = "setting 'abb' in terms.formula() is deprecated"))
+    identical(t1, structure(tt, warning = "setting 'neg.out' in terms.formula() is deprecated"))
+    identical(t2, t1)
+})
+## deprecation was only on help page  for R 4.3.*
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

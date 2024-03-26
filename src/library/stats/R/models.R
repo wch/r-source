@@ -1,7 +1,7 @@
 #  File src/library/stats/R/models.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2023 The R Core Team
+#  Copyright (C) 1995-2024 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -305,6 +305,8 @@ terms.formula <- function(x, specials = NULL, abb = NULL, data = NULL,
 			  neg.out = TRUE, keep.order = FALSE,
                           simplify = FALSE, ..., allowDotAsName = FALSE)
 {
+    if(!missing(abb))    .Deprecated(msg=gettextf("setting '%s' in terms.formula() is deprecated", "abb"))
+    if(!missing(neg.out)).Deprecated(msg=gettextf("setting '%s' in terms.formula() is deprecated", "neg.out"))
     if(simplify)
     fixFormulaObject <- function(object) {
         Terms <- terms(object)

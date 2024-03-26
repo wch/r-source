@@ -505,6 +505,9 @@
       \code{<}, \code{>}, \code{<=}, and \code{>=} now signals an error
       when one of the operands is a language objects, i.e. a symbol or a
       call.
+
+      \item For \code{terms.formula()}, deprecate \code{abb} and \code{neg.out}
+      arguments \emph{formally} in addition to just documenting it.
     }
   }
 
