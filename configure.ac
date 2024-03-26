@@ -765,6 +765,7 @@ if test "${FFLAGS+set}" != set; then
   FFLAGS=${FCFLAGS}
 fi
 
+## This looks for a C++11 compiler: Apple clang++ is not by default
 AC_PROG_CXX
 ## check this actually compiles
 R_PROG_CXX
@@ -788,7 +789,8 @@ if test "${OBJC}" = gcc; then
   AC_COMPILE_IFELSE([AC_LANG_PROGRAM(,[id foo;])],,[OBJC=''])
   AC_LANG_POP([Objective C])
 fi
-R_PROG_OBJCXX
+## deferred until C++ standard is chosen.
+dnl R_PROG_OBJCXX
 
 ## This has to be R_DEFS as autoconf overrrides DEFS
 R_DEFS=${DEFS}
@@ -1898,11 +1900,15 @@ AC_SUBST(STATICR2)
 AC_SUBST(R_DYLIB_EXT)
 
 ## Test support for C++ standards
+## AC_PROG_CXX might have added -std=gnu++11 or similar
+save_CXX=${CXX}
+CXX=`echo "${CXX}" | sed -e 's/ *-std=[[^ ]]*//'`
 R_STDCXX([11], [CXX11], [CXX])
 R_STDCXX([14], [CXX14], [CXX11])
 R_STDCXX([17], [CXX17], [CXX14])
 R_STDCXX([20], [CXX20], [CXX17])
 R_STDCXX([23], [CXX23], [CXX20])
+CXX=${save_CXX}
 
 ## Set default C++ compiler to C++17 if available, otherwise unset
 if test -n "${CXX}" && test -z "${CXXSTD}"; then
@@ -1915,6 +1921,11 @@ if test -n "${CXX}" && test -z "${CXXSTD}"; then
     AC_MSG_WARN([No C++17 compiler is available so no default C++ compiler is set])
   fi
 fi
+
+CXX_SAVE=${CXX}
+CXX="${CXX} ${CXXSTD}"
+R_PROG_OBJCXX
+CXX=${CXX_SAVE}
 
 ## Only now can we look for the OpenMP flag
 AC_LANG_PUSH(C++)

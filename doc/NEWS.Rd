@@ -333,6 +333,10 @@
       Compilers from the last five years should have sufficient
       support: for others macros \code{CXX} and \code{CXXSTD} can be set
       in file \file{config.site} to provide a fallback if needed.
+
+      The ObjectiveC++ compiler now by default uses the standard
+      selected by \R for C++ (currently C++17) rather than the default
+      standard for the C++ compiler (which on macOS is still C++98).
     }
   }
 

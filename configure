@@ -780,6 +780,7 @@ ALLOCA
 R_OPENMP_FFLAGS
 R_OPENMP_CFLAGS
 OPENMP_CXXFLAGS
+OBJCXX
 SHLIB_CXX23LDFLAGS
 SHLIB_CXX23LD
 CXX23PICFLAGS
@@ -891,7 +892,6 @@ CC23
 C17FLAGS
 CC17
 R_DEFS
-OBJCXX
 ac_ct_OBJC
 OBJCFLAGS
 OBJC
@@ -8474,6 +8474,7 @@ if test "${FFLAGS+set}" != set; then
   FFLAGS=${FCFLAGS}
 fi
 
+## This looks for a C++11 compiler: Apple clang++ is not by default
 
 
 
@@ -9560,143 +9561,7 @@ ac_link='$CC -o conftest$ac_exeext $CFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $
 ac_compiler_gnu=$ac_cv_c_compiler_gnu
 
 fi
-
-
-
-if test ${r_cv_OBJCXX+y}
-then :
-  printf %s "(cached) " >&6
-else case e in #(
-  e)
-if test -n "${OBJCXX}"; then
-  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking whether ${OBJCXX} can compile ObjC++" >&5
-printf %s "checking whether ${OBJCXX} can compile ObjC++... " >&6; }
-cat << \EOF > conftest.mm
-#include <Foundation/Foundation.h>
-#include <iostream>
-
-@interface Greeter : NSObject
-- (void) greet: (const char *)msg;
-@end
-
-@implementation Greeter
-- (void) greet: (const char *)msg { std::cout << msg; }
-@end
-
-int
-main (void)
-{
-  std::cout << "Hello from C++\n";
-  Greeter *obj = [Greeter new];
-  [obj greet: "Hello from Objective-C\n"];
-}
-EOF
-echo "running: ${OBJCXX} -c conftest.mm ${CPPFLAGS} ${OBJCXXFLAGS}" >&5
-if ${OBJCXX} -c conftest.mm ${CPPFLAGS} ${OBJCXXFLAGS} >&5 2>&1; then
-   { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: yes" >&5
-printf "%s\n" "yes" >&6; }
-   rm -Rf conftest conftest.* core
-   OBJCXX=${OBJCXX}
-else
-   { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: no" >&5
-printf "%s\n" "no" >&6; }
-   rm -f conftest.mm
-   OBJCXX=''
-fi
-
-fi
-# try the sequence $OBJCXX, $CXX, $OBJC
-if test -z "${OBJCXX}"; then
-  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking whether ${CXX} can compile ObjC++" >&5
-printf %s "checking whether ${CXX} can compile ObjC++... " >&6; }
-cat << \EOF > conftest.mm
-#include <Foundation/Foundation.h>
-#include <iostream>
-
-@interface Greeter : NSObject
-- (void) greet: (const char *)msg;
-@end
-
-@implementation Greeter
-- (void) greet: (const char *)msg { std::cout << msg; }
-@end
-
-int
-main (void)
-{
-  std::cout << "Hello from C++\n";
-  Greeter *obj = [Greeter new];
-  [obj greet: "Hello from Objective-C\n"];
-}
-EOF
-echo "running: ${CXX} -c conftest.mm ${CPPFLAGS} ${OBJCXXFLAGS}" >&5
-if ${CXX} -c conftest.mm ${CPPFLAGS} ${OBJCXXFLAGS} >&5 2>&1; then
-   { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: yes" >&5
-printf "%s\n" "yes" >&6; }
-   rm -Rf conftest conftest.* core
-   OBJCXX=${CXX}
-else
-   { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: no" >&5
-printf "%s\n" "no" >&6; }
-   rm -f conftest.mm
-   if test -z "${OBJC}"; then
-      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking whether ${OBJC} can compile ObjC++" >&5
-printf %s "checking whether ${OBJC} can compile ObjC++... " >&6; }
-cat << \EOF > conftest.mm
-#include <Foundation/Foundation.h>
-#include <iostream>
-
-@interface Greeter : NSObject
-- (void) greet: (const char *)msg;
-@end
-
-@implementation Greeter
-- (void) greet: (const char *)msg { std::cout << msg; }
-@end
-
-int
-main (void)
-{
-  std::cout << "Hello from C++\n";
-  Greeter *obj = [Greeter new];
-  [obj greet: "Hello from Objective-C\n"];
-}
-EOF
-echo "running: ${OBJC} -c conftest.mm ${CPPFLAGS} ${OBJCXXFLAGS}" >&5
-if ${OBJC} -c conftest.mm ${CPPFLAGS} ${OBJCXXFLAGS} >&5 2>&1; then
-   { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: yes" >&5
-printf "%s\n" "yes" >&6; }
-   rm -Rf conftest conftest.* core
-   OBJCXX=${OBJC}
-else
-   { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: no" >&5
-printf "%s\n" "no" >&6; }
-   rm -f conftest.mm
-
-fi
-
-    fi
-
-fi
-
-fi
-r_cv_OBJCXX="${OBJCXX}"
- ;;
-esac
-fi
-
-OBJCXX="${r_cv_OBJCXX}"
-{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for Objective C++ compiler" >&5
-printf %s "checking for Objective C++ compiler... " >&6; }
-if test -z "${OBJCXX}"; then
-  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: no working ObjC++ compiler found" >&5
-printf "%s\n" "no working ObjC++ compiler found" >&6; }
-else
-  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: ${OBJCXX}" >&5
-printf "%s\n" "${OBJCXX}" >&6; }
-fi
-
-
+## deferred until C++ standard is chosen.
 
 ## This has to be R_DEFS as autoconf overrrides DEFS
 R_DEFS=${DEFS}
@@ -27594,7 +27459,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_verb"
-(eval echo $as_me:27597: \"$ac_link\") >&5
+(eval echo $as_me:27462: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -27672,7 +27537,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_cv_prog_c_v"
-(eval echo $as_me:27675: \"$ac_link\") >&5
+(eval echo $as_me:27540: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -30422,6 +30287,9 @@ fi
 
 
 ## Test support for C++ standards
+## AC_PROG_CXX might have added -std=gnu++11 or similar
+save_CXX=${CXX}
+CXX=`echo "${CXX}" | sed -e 's/ *-std=[^ ]*//'`
 r_save_CXX="${CXX}"
 r_save_CXXFLAGS="${CXXFLAGS}"
 
@@ -31089,8 +30957,13 @@ printf "%s\n" "$ac_res" >&6; }
 
     if test x$ac_success = xno; then
                     for alternative in ${ax_cxx_compile_alternatives}; do
-      for switch in -std=c++${alternative} +std=c++${alternative}; do
-        cachevar=`printf "%s\n" "ax_cv_cxx_compile_cxx11_$switch" | sed "$as_sed_sh"`
+      for switch in -std=c++${alternative} +std=c++${alternative} MSVC; do
+        if test x"$switch" = xMSVC; then
+                                        switch=-std:c++${alternative}
+          cachevar=`printf "%s\n" "ax_cv_cxx_compile_cxx11_${switch}_MSVC" | sed "$as_sed_sh"`
+        else
+          cachevar=`printf "%s\n" "ax_cv_cxx_compile_cxx11_$switch" | sed "$as_sed_sh"`
+        fi
         { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking whether $CXX supports C++11 features with $switch" >&5
 printf %s "checking whether $CXX supports C++11 features with $switch... " >&6; }
 if eval test \${$cachevar+y}
@@ -32667,8 +32540,13 @@ printf "%s\n" "$ac_res" >&6; }
 
     if test x$ac_success = xno; then
                     for alternative in ${ax_cxx_compile_alternatives}; do
-      for switch in -std=c++${alternative} +std=c++${alternative}; do
-        cachevar=`printf "%s\n" "ax_cv_cxx_compile_cxx14_$switch" | sed "$as_sed_sh"`
+      for switch in -std=c++${alternative} +std=c++${alternative} MSVC; do
+        if test x"$switch" = xMSVC; then
+                                        switch=-std:c++${alternative}
+          cachevar=`printf "%s\n" "ax_cv_cxx_compile_cxx14_${switch}_MSVC" | sed "$as_sed_sh"`
+        else
+          cachevar=`printf "%s\n" "ax_cv_cxx_compile_cxx14_$switch" | sed "$as_sed_sh"`
+        fi
         { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking whether $CXX supports C++14 features with $switch" >&5
 printf %s "checking whether $CXX supports C++14 features with $switch... " >&6; }
 if eval test \${$cachevar+y}
@@ -35181,8 +35059,13 @@ printf "%s\n" "$ac_res" >&6; }
 
     if test x$ac_success = xno; then
                     for alternative in ${ax_cxx_compile_alternatives}; do
-      for switch in -std=c++${alternative} +std=c++${alternative}; do
-        cachevar=`printf "%s\n" "ax_cv_cxx_compile_cxx17_$switch" | sed "$as_sed_sh"`
+      for switch in -std=c++${alternative} +std=c++${alternative} MSVC; do
+        if test x"$switch" = xMSVC; then
+                                        switch=-std:c++${alternative}
+          cachevar=`printf "%s\n" "ax_cv_cxx_compile_cxx17_${switch}_MSVC" | sed "$as_sed_sh"`
+        else
+          cachevar=`printf "%s\n" "ax_cv_cxx_compile_cxx17_$switch" | sed "$as_sed_sh"`
+        fi
         { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking whether $CXX supports C++17 features with $switch" >&5
 printf %s "checking whether $CXX supports C++17 features with $switch... " >&6; }
 if eval test \${$cachevar+y}
@@ -36854,6 +36737,8 @@ else case e in #(
 #error "This is not a C++ compiler"
 #elif __cplusplus < 202002L
 #error "This is not a C++20 or later compiler"
+#elif __cplusplus >= 202302L
+# error "This is a C++23 or later compiler"
 #else
 
 
@@ -37640,6 +37525,8 @@ else case e in #(
 #error "This is not a C++ compiler"
 #elif __cplusplus < 202002L
 #error "This is not a C++20 or later compiler"
+#elif __cplusplus >= 202302L
+# error "This is a C++23 or later compiler"
 #else
 
 
@@ -38417,8 +38304,13 @@ printf "%s\n" "$ac_res" >&6; }
 
     if test x$ac_success = xno; then
                     for alternative in ${ax_cxx_compile_alternatives}; do
-      for switch in -std=c++${alternative} +std=c++${alternative}; do
-        cachevar=`printf "%s\n" "ax_cv_cxx_compile_cxx20_$switch" | sed "$as_sed_sh"`
+      for switch in -std=c++${alternative} +std=c++${alternative} MSVC; do
+        if test x"$switch" = xMSVC; then
+                                        switch=-std:c++${alternative}
+          cachevar=`printf "%s\n" "ax_cv_cxx_compile_cxx20_${switch}_MSVC" | sed "$as_sed_sh"`
+        else
+          cachevar=`printf "%s\n" "ax_cv_cxx_compile_cxx20_$switch" | sed "$as_sed_sh"`
+        fi
         { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking whether $CXX supports C++20 features with $switch" >&5
 printf %s "checking whether $CXX supports C++20 features with $switch... " >&6; }
 if eval test \${$cachevar+y}
@@ -38433,6 +38325,8 @@ else case e in #(
 #error "This is not a C++ compiler"
 #elif __cplusplus < 202002L
 #error "This is not a C++20 or later compiler"
+#elif __cplusplus >= 202302L
+# error "This is a C++23 or later compiler"
 #else
 
 
@@ -39225,6 +39119,8 @@ else case e in #(
 #error "This is not a C++ compiler"
 #elif __cplusplus < 202002L
 #error "This is not a C++20 or later compiler"
+#elif __cplusplus >= 202302L
+# error "This is a C++23 or later compiler"
 #else
 
 
@@ -41649,8 +41545,13 @@ printf "%s\n" "$ac_res" >&6; }
 
     if test x$ac_success = xno; then
                     for alternative in ${ax_cxx_compile_alternatives}; do
-      for switch in -std=c++${alternative} +std=c++${alternative}; do
-        cachevar=`printf "%s\n" "ax_cv_cxx_compile_cxx23_$switch" | sed "$as_sed_sh"`
+      for switch in -std=c++${alternative} +std=c++${alternative} MSVC; do
+        if test x"$switch" = xMSVC; then
+                                        switch=-std:c++${alternative}
+          cachevar=`printf "%s\n" "ax_cv_cxx_compile_cxx23_${switch}_MSVC" | sed "$as_sed_sh"`
+        else
+          cachevar=`printf "%s\n" "ax_cv_cxx_compile_cxx23_$switch" | sed "$as_sed_sh"`
+        fi
         { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking whether $CXX supports C++23 features with $switch" >&5
 printf %s "checking whether $CXX supports C++23 features with $switch... " >&6; }
 if eval test \${$cachevar+y}
@@ -43282,6 +43183,7 @@ fi
 
 
 
+CXX=${save_CXX}
 
 ## Set default C++ compiler to C++17 if available, otherwise unset
 if test -n "${CXX}" && test -z "${CXXSTD}"; then
@@ -43295,6 +43197,147 @@ if test -n "${CXX}" && test -z "${CXXSTD}"; then
 printf "%s\n" "$as_me: WARNING: No C++17 compiler is available so no default C++ compiler is set" >&2;}
   fi
 fi
+
+CXX_SAVE=${CXX}
+CXX="${CXX} ${CXXSTD}"
+
+
+
+if test ${r_cv_OBJCXX+y}
+then :
+  printf %s "(cached) " >&6
+else case e in #(
+  e)
+if test -n "${OBJCXX}"; then
+  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking whether ${OBJCXX} can compile ObjC++" >&5
+printf %s "checking whether ${OBJCXX} can compile ObjC++... " >&6; }
+cat << \EOF > conftest.mm
+#include <Foundation/Foundation.h>
+#include <iostream>
+
+@interface Greeter : NSObject
+- (void) greet: (const char *)msg;
+@end
+
+@implementation Greeter
+- (void) greet: (const char *)msg { std::cout << msg; }
+@end
+
+int
+main (void)
+{
+  std::cout << "Hello from C++\n";
+  Greeter *obj = [Greeter new];
+  [obj greet: "Hello from Objective-C\n"];
+}
+EOF
+echo "running: ${OBJCXX} -c conftest.mm ${CPPFLAGS} ${OBJCXXFLAGS}" >&5
+if ${OBJCXX} -c conftest.mm ${CPPFLAGS} ${OBJCXXFLAGS} >&5 2>&1; then
+   { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+printf "%s\n" "yes" >&6; }
+   rm -Rf conftest conftest.* core
+   OBJCXX=${OBJCXX}
+else
+   { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: no" >&5
+printf "%s\n" "no" >&6; }
+   rm -f conftest.mm
+   OBJCXX=''
+fi
+
+fi
+# try the sequence $OBJCXX, $CXX, $OBJC
+if test -z "${OBJCXX}"; then
+  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking whether ${CXX} can compile ObjC++" >&5
+printf %s "checking whether ${CXX} can compile ObjC++... " >&6; }
+cat << \EOF > conftest.mm
+#include <Foundation/Foundation.h>
+#include <iostream>
+
+@interface Greeter : NSObject
+- (void) greet: (const char *)msg;
+@end
+
+@implementation Greeter
+- (void) greet: (const char *)msg { std::cout << msg; }
+@end
+
+int
+main (void)
+{
+  std::cout << "Hello from C++\n";
+  Greeter *obj = [Greeter new];
+  [obj greet: "Hello from Objective-C\n"];
+}
+EOF
+echo "running: ${CXX} -c conftest.mm ${CPPFLAGS} ${OBJCXXFLAGS}" >&5
+if ${CXX} -c conftest.mm ${CPPFLAGS} ${OBJCXXFLAGS} >&5 2>&1; then
+   { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+printf "%s\n" "yes" >&6; }
+   rm -Rf conftest conftest.* core
+   OBJCXX=${CXX}
+else
+   { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: no" >&5
+printf "%s\n" "no" >&6; }
+   rm -f conftest.mm
+   if test -z "${OBJC}"; then
+      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking whether ${OBJC} can compile ObjC++" >&5
+printf %s "checking whether ${OBJC} can compile ObjC++... " >&6; }
+cat << \EOF > conftest.mm
+#include <Foundation/Foundation.h>
+#include <iostream>
+
+@interface Greeter : NSObject
+- (void) greet: (const char *)msg;
+@end
+
+@implementation Greeter
+- (void) greet: (const char *)msg { std::cout << msg; }
+@end
+
+int
+main (void)
+{
+  std::cout << "Hello from C++\n";
+  Greeter *obj = [Greeter new];
+  [obj greet: "Hello from Objective-C\n"];
+}
+EOF
+echo "running: ${OBJC} -c conftest.mm ${CPPFLAGS} ${OBJCXXFLAGS}" >&5
+if ${OBJC} -c conftest.mm ${CPPFLAGS} ${OBJCXXFLAGS} >&5 2>&1; then
+   { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+printf "%s\n" "yes" >&6; }
+   rm -Rf conftest conftest.* core
+   OBJCXX=${OBJC}
+else
+   { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: no" >&5
+printf "%s\n" "no" >&6; }
+   rm -f conftest.mm
+
+fi
+
+    fi
+
+fi
+
+fi
+r_cv_OBJCXX="${OBJCXX}"
+ ;;
+esac
+fi
+
+OBJCXX="${r_cv_OBJCXX}"
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for Objective C++ compiler" >&5
+printf %s "checking for Objective C++ compiler... " >&6; }
+if test -z "${OBJCXX}"; then
+  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: no working ObjC++ compiler found" >&5
+printf "%s\n" "no working ObjC++ compiler found" >&6; }
+else
+  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: ${OBJCXX}" >&5
+printf "%s\n" "${OBJCXX}" >&6; }
+fi
+
+
+CXX=${CXX_SAVE}
 
 ## Only now can we look for the OpenMP flag
 ac_ext=cpp
