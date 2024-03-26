@@ -279,6 +279,9 @@
       been updated to use the GPL-compatible licence published by
       Oracle America in 2010.
 
+      New function \code{pkg2HTML()} in \pkg{tools} to create
+      single-page HTML reference manuals for R packages.
+
     }
   }
 

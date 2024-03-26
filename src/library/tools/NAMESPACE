@@ -2,7 +2,7 @@ useDynLib(tools, .registration = TRUE, .fixes = "C_")
 
 ## Bootstrapping R ==> do _not_ import, rather use  ' :: '
 
-export("Adobe_glyphs", "HTMLheader", "Rcmd", "Rd2HTML", "Rd2ex",
+export("Adobe_glyphs", "HTMLheader", "Rcmd", "Rd2HTML", "pkg2HTML", "Rd2ex",
        "Rd2latex", "Rd2txt", "Rd2txt_options", "RdTextFilter", "Rd_db",
        "Rdiff", "Rdindex", "SweaveTeXFilter", "add_datalist",
        "as.Rconcordance",
