@@ -4214,6 +4214,10 @@ attribute_hidden
 void (SET_BNDCELL_LVAL)(SEXP cell, int v) { SET_BNDCELL_LVAL(cell, v); }
 attribute_hidden
 void (INIT_BNDCELL)(SEXP cell, int type) { INIT_BNDCELL(cell, type); }
+attribute_hidden
+int (PROMISE_TAG)(SEXP cell) { return PROMISE_TAG(cell); }
+attribute_hidden
+void (SET_PROMISE_TAG)(SEXP cell, int val) { SET_PROMISE_TAG(cell, val); }
 
 #define CLEAR_BNDCELL_TAG(cell) do {		\
 	if (BNDCELL_TAG(cell)) {		\

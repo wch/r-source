@@ -621,6 +621,8 @@ void (SET_BNDCELL_IVAL)(SEXP cell, int v);
 void (SET_BNDCELL_LVAL)(SEXP cell, int v);
 void (INIT_BNDCELL)(SEXP cell, int type);
 void SET_BNDCELL(SEXP cell, SEXP val);
+int (PROMISE_TAG)(SEXP e);
+void (SET_PROMISE_TAG)(SEXP e, int v);
 
 /* List Access Functions */
 SEXP (CAR0)(SEXP e);
@@ -1162,8 +1164,8 @@ typedef struct {
     (PROMISE_TAG(x) ? R_expand_promise_value(x) : PRVALUE0(x))
 # define PROMISE_IS_EVALUATED(x) \
     (PROMISE_TAG(x) || PRVALUE0(x) != R_UnboundValue)
-# define PROMISE_TAG  BNDCELL_TAG
-# define SET_PROMISE_TAG SET_BNDCELL_TAG
+# define PROMISE_TAG(x)  BNDCELL_TAG(x)
+# define SET_PROMISE_TAG(x, v) SET_BNDCELL_TAG(x, v)
 #else
 # define PRVALUE0(x) ((x)->u.promsxp.value)
 # define PRVALUE(x) PRVALUE0(x)
