@@ -5834,7 +5834,6 @@ static R_INLINE SEXP findVarEX(SEXP symbol, SEXP rho, Rboolean dd,
 #define PROMISE_DVAL BNDCELL_DVAL
 #define PROMISE_IVAL BNDCELL_IVAL
 #define PROMISE_LVAL BNDCELL_LVAL
-/* for barrier checking */
 
 static R_INLINE SEXP getvar(SEXP symbol, SEXP rho,
 			    Rboolean dd, Rboolean keepmiss,
