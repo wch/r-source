@@ -163,14 +163,14 @@ int sigsuspend(sigset_t* sigset_Info);
 
 we only currently use the case sm=0, so avoid compiler warnings by */
 
-#define sigsetjmp(jb, sm) (jb->mask_was_saved=0, setjmp(jb->jmpbuf))
+#define sigsetjmp(jb, sm) ((jb)->mask_was_saved=0, setjmp((jb)->jmpbuf))
 
 
 /* We can transform this in a function but ... */
 
-#define siglongjmp(jb, val) (((jb->mask_was_saved)?\
-               sigprocmask(SIG_SETMASK, &jb->saved_mask, 0):0),\
-               longjmp(jb->jmpbuf, val))
+#define siglongjmp(jb, val) ((((jb)->mask_was_saved)?\
+               sigprocmask(SIG_SETMASK, &(jb)->saved_mask, 0):0),\
+               longjmp((jb)->jmpbuf, val))
 
 
 
