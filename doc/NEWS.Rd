@@ -6,6 +6,37 @@
 \encoding{UTF-8}
 
 \section{\Rlogo CHANGES IN R-devel}{
+  \subsection{SIGNIFICANT USER-VISIBLE CHANGES}{
+    \itemize{
+      \item .
+    }
+  }
+
+  \subsection{NEW FEATURES}{
+    \itemize{
+      \item .
+    }
+  }
+
+  \subsection{INSTALLATION}{
+    \itemize{
+      \item .
+    }
+  }
+
+  \subsection{PACKAGE INSTALLATION}{
+    \itemize{
+      \item .
+    }
+  }
+
+  \subsection{C-LEVEL FACILITIES}{
+    \itemize{
+      \item .
+    }
+  }
+}
+\section{\Rlogo CHANGES IN R 4.4.0}{
   \subsection{NEW FEATURES}{
     \itemize{
       \item [None yet.]
