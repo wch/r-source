@@ -20,7 +20,7 @@
 ### along with R; if not, a copy is available at
 ### https://www.r-project.org/Licenses/
 
-AC_PREREQ([2.71])
+AC_PREREQ([2.72])
 
 ## We want to get the version number from file 'VERSION' (rather than
 ## specifying the version info in 'configure.ac'.  Hence, we need a bit

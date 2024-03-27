@@ -6,6 +6,21 @@
 \encoding{UTF-8}
 
 \section{\Rlogo CHANGES IN R-devel}{
+  \subsection{NEW FEATURES}{
+    \itemize{
+      \item .
+    }
+  }
+
+  \subsection{INSTALLATION on a UNIX-ALIKE}{
+    \itemize{
+      \item The minimum \command{autoconf} requirement for a maintainer
+      build has been increased to \command{autoconf}\sspace{}2.72.
+    }
+  }
+}
+
+\section{\Rlogo CHANGES IN R 4.4.0}{
   \subsection{SIGNIFICANT USER-VISIBLE CHANGES}{
     \itemize{
       \item Startup banners, \command{R --version}, \code{sessionInfo()}
