@@ -8,7 +8,7 @@
 \section{\Rlogo CHANGES IN R-devel}{
   \subsection{NEW FEATURES}{
     \itemize{
-      \item .
+      \item [None yet.]
     }
   }
 
@@ -16,6 +16,12 @@
     \itemize{
       \item The minimum \command{autoconf} requirement for a maintainer
       build has been increased to \command{autoconf}\sspace{}2.72.
+    }
+  }
+
+  \subsection{DEPRECATED AND DEFUNCT}{
+    \itemize{
+      \item \code{is.R()} is defunct. [Soon \dots.]
     }
   }
 }
