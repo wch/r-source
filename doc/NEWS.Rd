@@ -14,7 +14,20 @@
 
   \subsection{NEW FEATURES}{
     \itemize{
-      \item .
+      \item [None yet.]
+    }
+  }
+
+  \subsection{INSTALLATION on a UNIX-ALIKE}{
+    \itemize{
+      \item The minimum \command{autoconf} requirement for a maintainer
+      build has been increased to \command{autoconf}\sspace{}2.72.
+    }
+  }
+
+  \subsection{DEPRECATED AND DEFUNCT}{
+    \itemize{
+      \item \code{is.R()} is defunct. [Soon \dots.]
     }
   }
 
@@ -33,26 +46,6 @@
   \subsection{C-LEVEL FACILITIES}{
     \itemize{
       \item .
-    }
-  }
-}
-\section{\Rlogo CHANGES IN R 4.4.0}{
-  \subsection{NEW FEATURES}{
-    \itemize{
-      \item [None yet.]
-    }
-  }
-
-  \subsection{INSTALLATION on a UNIX-ALIKE}{
-    \itemize{
-      \item The minimum \command{autoconf} requirement for a maintainer
-      build has been increased to \command{autoconf}\sspace{}2.72.
-    }
-  }
-
-  \subsection{DEPRECATED AND DEFUNCT}{
-    \itemize{
-      \item \code{is.R()} is defunct. [Soon \dots.]
     }
   }
 }
