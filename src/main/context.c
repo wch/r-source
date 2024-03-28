@@ -940,7 +940,7 @@ SEXP R_UnwindProtect(SEXP (*fun)(void *data), void *data,
 		     void *cleandata, SEXP cont)
 {
     RCNTXT thiscontext;
-    SEXP result;
+    volatile SEXP result;
     Rboolean jump;
 
     /* Allow simple usage with a NULL continuation token. This _could_
