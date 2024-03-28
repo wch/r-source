@@ -7289,6 +7289,7 @@ struct R_bcFrame {
     struct bcEval_locals locals;
     RCNTXT *pcntxt; // NULL means this is a promise frame
     union {
+	struct { SEXP newrho; SEXP args; SEXP call; } callvars;
 	struct { SEXP promise; RPRSTACK prstack; } promvars;
     } u;
 };
@@ -7296,6 +7297,12 @@ struct R_bcFrame {
 #define BCFRAME_LOCALS() (&(R_BCFrame->locals))
 #define BCFRAME_GLOBALS() (&(R_BCFrame->globals))
 #define BCFRAME_CNTXT() (R_BCFrame->pcntxt)
+#define BCFRAME_NEWRHO() (R_BCFrame->u.callvars.newrho)
+#define SET_BCFRAME_NEWRHO(val) (R_BCFrame->u.callvars.newrho = (val))
+#define BCFRAME_ARGS() (R_BCFrame->u.callvars.args)
+#define SET_BCFRAME_ARGS(val) (R_BCFrame->u.callvars.args = (val))
+#define BCFRAME_CALL() (R_BCFrame->u.callvars.call)
+#define SET_BCFRAME_CALL(val) (R_BCFrame->u.callvars.call = (val))
 #define BCFRAME_PROMISE() (R_BCFrame->u.promvars.promise)
 #define SET_BCFRAME_PROMISE(val) (R_BCFrame->u.promvars.promise = (val))
 #define BCFRAME_PRSTACK() (&(R_BCFrame->u.promvars.prstack))
@@ -7366,6 +7373,34 @@ bcode_setup_locals(SEXP body, SEXP rho)
     return loc;
 }
 
+static R_INLINE struct bcEval_locals
+setup_bcframe_call(SEXP call, SEXP fun, SEXP args, SEXP rho)
+{
+    SEXP newrho = make_applyClosure_env(call, fun, args, rho, R_NilValue);
+    PROTECT(newrho);
+    R_BCFrame = BCNALLOC_BCFRAME(TRUE);
+    begincontext(BCFRAME_CNTXT(), CTXT_RETURN, call, newrho, rho, args, fun);
+    INCREMENT_EVAL_DEPTH();
+    SET_BCFRAME_NEWRHO(newrho);
+    SET_BCFRAME_CALL(call);
+    SET_BCFRAME_ARGS(args);
+    R_Srcref = getAttrib(fun, R_SrcrefSymbol); // expensive - avoid?
+    R_Visible = TRUE;
+    return bcode_setup_locals(BODY(fun), newrho);
+}
+
+#define START_BCFRAME_CALL(loc) do {				\
+	BC_CHECK_SIGINT();					\
+	*(loc) = setup_bcframe_call(call, fun, args, rho);	\
+	SAVE_BCEVAL_LOCALS(BCFRAME_LOCALS());			\
+    } while (0)
+
+#define DO_INLINE_CLOSURE_CALL_RETURN() do {			\
+	RESTORE_BCEVAL_LOCALS(BCFRAME_LOCALS());		\
+	finish_inline_closure_call();				\
+	NEXT();							\
+    } while (0)
+
 static R_INLINE struct bcEval_locals setup_bcframe_prom(SEXP prom)
 {
     PROTECT(prom);
@@ -7396,6 +7431,51 @@ static R_INLINE struct bcEval_locals setup_bcframe_prom(SEXP prom)
 	BCNPUSH_STACKVAL(ubval);				\
 	NEXT();							\
     } while (0)
+
+#define INLINE_CLOSURE_CALL_OK(fun)				\
+    (! R_disable_bytecode && TYPEOF(BODY(fun)) == BCODESXP &&	\
+     R_BCVersionOK(BODY(fun)) && ! RDEBUG(fun) &&		\
+     ! RSTEP(fun) && ! RDEBUG(rho) &&				\
+     R_GlobalContext->callflag != CTXT_GENERIC)
+
+static R_INLINE void finish_inline_closure_call(void)
+{
+    R_bcstack_t unboxed_val = BCFRAME_CNTXT()->returnValue;
+    endcontext(BCFRAME_CNTXT());
+    SEXP newrho = BCFRAME_NEWRHO();
+    SEXP args = BCFRAME_ARGS();
+    SEXP call = BCFRAME_CALL();
+    restore_bcEval_globals(BCFRAME_GLOBALS());
+
+    if (unboxed_val.tag) {
+#ifdef ADJUST_ENVIR_REFCNTS
+	R_CleanupEnvir(newrho, R_NilValue);
+	unpromiseArgs(args);
+#endif
+	UNPROTECT(1); /* newrho */
+	POP_CALL_FRAME(R_NilValue);/**** maybe unboxed version?*/
+	R_BCNodeStackTop[-1] = unboxed_val;
+    }
+    else {
+	SEXP value = unboxed_val.u.sxpval;
+#ifdef ADJUST_ENVIR_REFCNTS
+	Rboolean is_getter_call =
+	    (CADR(call) == R_TmpvalSymbol &&
+	     ! R_isReplaceSymbol(CAR(call)));
+	R_CleanupEnvir(newrho, value);
+	if (is_getter_call && MAYBE_REFERENCED(value))
+	    value = shallow_duplicate(value);
+	unpromiseArgs(args);
+#endif
+#ifdef SUPPORT_TAILCALL
+	/**** this could try to stay in the same bcEval, but don't
+	      bother for now */
+	value = handle_exec_continuation(value);
+#endif
+	UNPROTECT(1); /* newrho */
+	POP_CALL_FRAME(value);
+    }
+}
 
 static SEXP
 bcEval_loop(struct bcEval_locals *,
@@ -7449,8 +7529,12 @@ static SEXP bcEval_loop(struct bcEval_locals *ploc,
 	  restore_bcEval_globals(&globals);
 	  return retvalue;
       }
-      else
+      else if (BCFRAME_CNTXT() == NULL)
 	  DO_GETVAR_FORCE_PROMISE_RETURN();
+      else {
+	  BCFRAME_CNTXT()->returnValue = R_BCNodeStackTop[-1];
+	  DO_INLINE_CLOSURE_CALL_RETURN();
+      }
     OP(GOTO, 1):
       {
 	int label = GETOP();
@@ -7973,7 +8057,28 @@ static SEXP bcEval_loop(struct bcEval_locals *ploc,
 	  break;
 	case CLOSXP:
 	  args = CLOSURE_CALL_FRAME_ARGS();
-	  value = applyClosure(call, fun, args, rho, R_NilValue, TRUE);
+	  if (INLINE_CLOSURE_CALL_OK(fun)) {
+	      START_BCFRAME_CALL(&locals);
+	      if (SETJMP(BCFRAME_CNTXT()->cjmpbuf)) {
+		  RCNTXT *pcntxt = BCFRAME_CNTXT();
+		  if (! pcntxt->jumptarget) {
+		      /* ignores intermediate jumps for on.exits */
+		      pcntxt->returnValue =
+			  SEXP_TO_STACKVAL(R_ReturnedValue);
+		  }
+		  else
+		      pcntxt->returnValue =
+			  SEXP_TO_STACKVAL(NULL); /* undefined */
+		  DO_INLINE_CLOSURE_CALL_RETURN();
+	      }
+	      else {
+		  RESTORE_BCEVAL_LOCALS(&locals);
+		  NEXT();
+		  /* return cleanup is in DO_INLINE_CLOSURE_CALL_RETURN */
+	      }
+	  }
+	  else
+	      value = applyClosure(call, fun, args, rho, R_NilValue, TRUE);
 	  break;
 	default: error(_("bad function"));
 	}

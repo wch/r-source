@@ -327,6 +327,10 @@
       New function \code{pkg2HTML()} in \pkg{tools} to create
       single-page HTML reference manuals for R packages.
 
+      \item The byte code evaluator now uses less C stack space for
+      recursive calls to byte-compiled functions. It also makes more of
+      an effort to avoid allocations for scalar return values.
+
     }
   }
 
