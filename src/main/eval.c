@@ -1840,7 +1840,7 @@ attribute_hidden SEXP R_cmpfun1(SEXP fun)
     PROTECT(call = lang2(fcall, fun));
     PROTECT(val = eval(call, R_GlobalEnv));
     if (TYPEOF(BODY(val)) != BCODESXP)
-	/* Compilation may have failed because R alocator could not malloc
+	/* Compilation may have failed because R allocator could not malloc
 	   memory to extend the R heap, so we run GC to release some pages.
 	   This problem has been observed while byte-compiling packages on
 	   installation: serialization uses malloc to allocate buffers and
@@ -3970,7 +3970,7 @@ attribute_hidden SEXP do_eval(SEXP call, SEXP op, SEXP args, SEXP rho)
 	UNPROTECT(1);
     }
     else if (TYPEOF(expr) == EXPRSXP) {
-	SEXP srcrefs = getBlockSrcrefs(expr);
+	volatile SEXP srcrefs = getBlockSrcrefs(expr);
 	PROTECT(expr);
 	tmp = R_NilValue;
 	begincontext(&cntxt, CTXT_RETURN, R_GlobalContext->call,
