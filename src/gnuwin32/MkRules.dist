@@ -45,6 +45,11 @@
 # libpng, libjpeg, libtiff, xz.
 # EXT_LIBS = $(LOCAL_SOFT)
 
+# Set to 1 when using LLVM (e.g.  with the recommended toolchain for
+# aarch64)
+# USE_LLVM =
+
+# Debug flag, -gdward-2 can be used with GCC, -g3 can be used with clang.
 # G_FLAG = -gdwarf-2
 
 # Set to YES and specify the path if you want to use the ATLAS BLAS.
@@ -57,10 +62,13 @@
 # checkout with no modifications).
 # USE_SVNVERSION = YES
 
-# Some of the toolchains have prefixes for e.g. ar, gcc.
-# This can also be used to give the full path to the compiler, 
-# including a trailing / .  
-# BINPREF = 
+# Some of the toolchains have prefixes for e.g.  ar, gcc.  This can also be
+# used to give the full path to the compiler, including a trailing / .  When
+# cross-compiling using the recommended toolchain, one would set this to
+# aarch64-w64-mingw32.static.posix- for aarch64 and to
+# x86_64-w64-mingw32.static.posix- for x86_64 target.
+# BINPREF64 =
+
 # Set this to indicate a non-gcc compiler and version
 # COMPILED_BY = <determined automatically>
 
@@ -88,23 +96,29 @@
 # path to parent of ICU headers
 # ICU_PATH =
 # needed libs varies by version and build.
-# ICU_LIBS = -lsicuin -lsicuuc -lsicudt -lstdc++
+# ICU_LIBS = -lsicuin -lsicuuc $(EXT_LIBS)/lib/sicudt.a -lstdc++
 
 # set to use libcurl
 # USE_LIBCURL = YES
 # path to parent of libcurl headers
 # CURL_PATH =
-# libs: currently recommended gcc 12 64-bit toolchain
-# CURL_LIBS=-lcurl -lzstd -lrtmp -lssl -lssh2 -lgcrypt -lcrypto -lgdi32 -lz -lws2_32 -lgdi32 -lcrypt32 -lidn2 -lunistring -liconv -lgpg-error -lwldap32 -lwinmm
+# libs: currently recommended toolchain
+# CURL_LIBS= -lcurl -lpsl -lbcrypt -lzstd -lrtmp -lssl -lssh2 -lbcrypt -lgcrypt \
+#            -lcrypto -lgdi32 -lz \
+#            -lws2_32 -lgdi32 -lcrypt32 -lidn2 -lunistring -liconv -lgpg-error -lwldap32 \
+#            -lwinmm -lbrotlidec -lbrotlicommon
 
 # For the cairographics devices:
 # set to build cairo devices in "cairodevices" or "distribution" targets
 # (they are not built in "all" even if this is set)
 # USE_CAIRO = YES
 # set to cairo headers (included in the recommended toolchain, but under "cairo")
-# CAIRO_CPPFLAGS = -I$(EXT_LIBS)/include/cairo
+# CAIRO_CPPFLAGS = "-I$(EXT_LIBS)/include/cairo -I$(EXT_LIBS)/include/freetype2 \
+#                   -DCAIRO_WIN32_STATIC_BUILD"
 # set to cairo libraries (included in the recommended toolchain)
-# CAIRO_LIBS = "-lcairo -lfontconfig -lfreetype -lpng -lpixman-1 -lexpat -lharfbuzz -lbz2 -lintl -lz -liconv -lgdi32 -lmsimg32"
+# CAIRO_LIBS = "-lcairo -lfontconfig -lfreetype -lpng -lpixman-1 -lexpat -lharfbuzz \
+#               -lbz2 -lintl -lz -liconv -luuid -lstdc++ -lgdi32 -lmsimg32 -lole32 \
+#               -lbrotlidec -lbrotlicommon"
 #
 # Previous versions of R used CAIRO_HOME and an empty value meant to not
 # build cairo. This is no longer used.
@@ -143,6 +157,14 @@
 #   should no longer be needed for newer versions of GCC and the recommended
 #   toolchain)
 #
+#  -Wa,-muse-unaligned-vector-move can be used to make binutils (on x86_64)
+#   turn vectorized instructions requiring aligned vectors into instructions
+#   no requiring them; this can be used as a work-around when compiling with
+#   GCC with AVX2 instructions enabled, for a bug due to which GCC does not
+#   ensure that local variables are 32-byte aligned. See
+#   https://gcc.gnu.org/bugzilla/show_bug.cgi?id=5441
+#   This bug is still present in GCC 13.
+#
 # EOPTS = -mfpmath=sse -msse2 -mstackrealign $(LTO)
 
 # define to -fopenmp if the toolchain has OpenMP support
@@ -169,6 +191,10 @@
 # e.g
 # DLLs64 =
 
+# External build-tree with pre-compiled (e.g. cross-compiled) R binaries.
+# Can be used to cross-compile installer for Windows/aarch64 on
+# Windows/x86_64.
+# CROSS_BUILD =
 
 ## ====== configuration macros for building MSI installer ===========
 
