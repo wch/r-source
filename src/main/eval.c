@@ -1840,7 +1840,7 @@ attribute_hidden SEXP R_cmpfun1(SEXP fun)
     PROTECT(call = lang2(fcall, fun));
     PROTECT(val = eval(call, R_GlobalEnv));
     if (TYPEOF(BODY(val)) != BCODESXP)
-	/* Compilation may have failed because R alocator could not malloc
+	/* Compilation may have failed because R allocator could not malloc
 	   memory to extend the R heap, so we run GC to release some pages.
 	   This problem has been observed while byte-compiling packages on
 	   installation: serialization uses malloc to allocate buffers and
@@ -5869,6 +5869,7 @@ static R_INLINE SEXP getvar(SEXP symbol, SEXP rho,
 
 #ifdef IMMEDIATE_PROMISE_VALUES
 # define SET_PROMISE_VALUE_FROM_STACKVAL(prom, ubval)  do {		\
+	SEXP value;							\
 	SET_PROMISE_TAG(prom, ubval.tag);				\
 	switch ((ubval).tag) {						\
 	case REALSXP: SET_PROMISE_DVAL(prom, (ubval).u.dval); break;	\
@@ -5887,19 +5888,6 @@ static R_INLINE SEXP getvar(SEXP symbol, SEXP rho,
 	ENSURE_NAMEDMAX(value);						\
     } while(0)
 #endif
-
-#define DO_GETVAR_FORCE_PROMISE_RETURN() do {				\
-	R_bcstack_t ubval = R_BCNodeStackTop[-1];			\
-	POP_PENDING_PROMISE(BCFRAME_PRSTACK());				\
-	SEXP prom, value;						\
-	END_BCFRAME_PROM();						\
-	SET_PROMISE_VALUE_FROM_STACKVAL(prom, ubval);			\
-	SET_PRSEEN(prom, 0);						\
-	SET_PRENV(prom, R_NilValue);					\
-	UNPROTECT(1); /* prom */					\
-	BCNPUSH_STACKVAL(ubval);					\
-	NEXT();								\
-    } while (0)
 
 #define INLINE_GETVAR
 #ifdef INLINE_GETVAR
@@ -5968,16 +5956,10 @@ static R_INLINE SEXP getvar(SEXP symbol, SEXP rho,
     if (! keepmiss && TYPEOF(value) == PROMSXP &&			\
 	! PRSEEN(value) && ! PROMISE_IS_EVALUATED(value) &&		\
 	TYPEOF(PRCODE(value)) == BCODESXP) {				\
-	SEXP prom = PROTECT(value);					\
-	SET_PRSEEN(prom, 1);						\
-	START_BCFRAME_PROM();						\
-	PUSH_PENDING_PROMISE(prom, BCFRAME_PRSTACK());			\
-	body = PRCODE(prom);						\
-	rho = PRENV(prom);						\
-	locals = bcode_setup_locals(body, rho);				\
+	START_BCFRAME_PROM(value, &locals);				\
 	RESTORE_BCEVAL_LOCALS(&locals);					\
 	NEXT();								\
-	/* continuation is handled in DO_GETVAR_FORCE_PROMISE_RETURN */	\
+	/* return cleanup is in DO_GETVAR_FORCE_PROMISE_RETURN */	\
     }									\
     BCNPUSH(getvar(symbol, rho, dd, keepmiss, vcache, sidx));		\
     NEXT();								\
@@ -7204,8 +7186,7 @@ struct bcEval_globals {
     int oldevdepth;
 };
 
-static R_INLINE void save_bcEval_globals(struct bcEval_globals *g,
-					 SEXP body)
+static R_INLINE void save_bcEval_globals(struct bcEval_globals *g)
 {
     g->oldntop = R_BCNodeStackTop;
     g->oldbcintactive = R_BCIntActive;
@@ -7219,17 +7200,13 @@ static R_INLINE void save_bcEval_globals(struct bcEval_globals *g,
     g->old_bcprot_top = R_BCProtTop;
     g->old_bcprot_committed = R_BCProtCommitted;
     g->oldevdepth = R_EvalDepth;
-    if (body)
-	INCREMENT_BCSTACK_LINKS();
+    INCREMENT_BCSTACK_LINKS();
 }
 
-static R_INLINE void restore_bcEval_globals(struct bcEval_globals *g,
-					    SEXP body)
+static R_INLINE void restore_bcEval_globals(struct bcEval_globals *g)
 {
-    if (body) {
-	R_BCNodeStackTop = R_BCProtTop;
-	DECREMENT_BCSTACK_LINKS(g->old_bcprot_top);
-    }
+    R_BCNodeStackTop = R_BCProtTop;
+    DECREMENT_BCSTACK_LINKS(g->old_bcprot_top);
     R_EvalDepth = g->oldevdepth;
     R_BCProtCommitted = g->old_bcprot_committed;
     R_BCNodeStackTop = g->oldntop;
@@ -7284,8 +7261,8 @@ struct cntxt_loop_locals {
 };
 
 #define PUSH_LOOP_LOCALS() do {					\
-	struct cntxt_loop_locals *loc =			\
-	    BCNALLOC(sizeof(struct cntxt_loop_locals));	\
+	struct cntxt_loop_locals *loc =				\
+	    BCNALLOC(sizeof(struct cntxt_loop_locals));		\
 	SAVE_BCEVAL_LOCALS(&(loc->locals));			\
 	loc->break_pc = break_pc;				\
     } while (0)
@@ -7324,30 +7301,16 @@ struct R_bcFrame {
 #define BCFRAME_PRSTACK() (&(R_BCFrame->u.promvars.prstack))
 
 /* Allocate R context on the node stack */
-static R_INLINE R_bcFrame_type *BCNALLOC_BCFRAME(SEXP body, Rboolean call)
+static R_INLINE R_bcFrame_type *BCNALLOC_BCFRAME(Rboolean call)
 {
     R_bcstack_t *oldtop = R_BCNodeStackTop;
     RCNTXT *pcntxt = call ? BCNALLOC_CNTXT() : NULL;
     R_bcFrame_type *rec = (R_bcFrame_type *) BCNALLOC(sizeof(R_bcFrame_type));
-    save_bcEval_globals(&(rec->globals), body);
+    save_bcEval_globals(&(rec->globals));
     rec->globals.oldntop = oldtop; // must come after save_bcEval_globals!!
     rec->pcntxt = pcntxt;
     return rec;
 }
-
-#define START_BCFRAME_PROM() do {				\
-	R_BCFrame = BCNALLOC_BCFRAME(body, FALSE);		\
-	SAVE_BCEVAL_LOCALS(BCFRAME_LOCALS());			\
-	INCREMENT_EVAL_DEPTH();					\
-	SET_BCFRAME_PROMISE(prom);				\
-	R_Visible = TRUE;					\
-    } while (0)
-
-#define END_BCFRAME_PROM() do {					\
-	prom = BCFRAME_PROMISE();				\
-	RESTORE_BCEVAL_LOCALS(BCFRAME_LOCALS());		\
-	restore_bcEval_globals(BCFRAME_GLOBALS(), body);	\
-    } while (0)
 
 struct vcache_info { R_binding_cache_t vcache; Rboolean smallcache; };
 
@@ -7403,6 +7366,37 @@ bcode_setup_locals(SEXP body, SEXP rho)
     return loc;
 }
 
+static R_INLINE struct bcEval_locals setup_bcframe_prom(SEXP prom)
+{
+    PROTECT(prom);
+    SET_PRSEEN(prom, 1);
+    R_BCFrame = BCNALLOC_BCFRAME(FALSE);
+    INCREMENT_EVAL_DEPTH();
+    SET_BCFRAME_PROMISE(prom);
+    PUSH_PENDING_PROMISE(prom, BCFRAME_PRSTACK());
+    R_Visible = TRUE;
+    return bcode_setup_locals(PRCODE(prom), PRENV(prom));
+}
+
+#define START_BCFRAME_PROM(prom, loc) do {			\
+	*(loc) = setup_bcframe_prom(prom);			\
+	SAVE_BCEVAL_LOCALS(BCFRAME_LOCALS());			\
+    } while (0)
+
+#define DO_GETVAR_FORCE_PROMISE_RETURN() do {			\
+	R_bcstack_t ubval = R_BCNodeStackTop[-1];		\
+	POP_PENDING_PROMISE(BCFRAME_PRSTACK());			\
+	SEXP prom = BCFRAME_PROMISE();				\
+	RESTORE_BCEVAL_LOCALS(BCFRAME_LOCALS());		\
+	restore_bcEval_globals(BCFRAME_GLOBALS());		\
+	SET_PROMISE_VALUE_FROM_STACKVAL(prom, ubval);		\
+	SET_PRSEEN(prom, 0);					\
+	SET_PRENV(prom, R_NilValue);				\
+	UNPROTECT(1); /* prom */				\
+	BCNPUSH_STACKVAL(ubval);				\
+	NEXT();							\
+    } while (0)
+
 static SEXP
 bcEval_loop(struct bcEval_locals *,
 	    struct bcEval_globals *);
@@ -7410,7 +7404,7 @@ bcEval_loop(struct bcEval_locals *,
 static SEXP bcEval(SEXP body, SEXP rho)
 {
   struct bcEval_globals globals;
-  save_bcEval_globals(&globals, body);
+  save_bcEval_globals(&globals);
   struct bcEval_locals locals;
 
   R_Srcref = R_InBCInterpreter;
@@ -7441,8 +7435,6 @@ static SEXP bcEval_loop(struct bcEval_locals *ploc,
 
   RESTORE_BCEVAL_LOCALS(&locals);
 
-  SEXP retvalue = R_NilValue;
-
   BCODE *currentpc = NULL;
   R_BCpc = &currentpc;
 
@@ -7453,8 +7445,8 @@ static SEXP bcEval_loop(struct bcEval_locals *ploc,
     OP(BCMISMATCH, 0): error(_("byte code version mismatch"));
     OP(RETURN, 0):
       if (R_BCFrame == 0) {
-	  retvalue = GETSTACK(-1);
-	  restore_bcEval_globals(&globals, body);
+	  SEXP retvalue = GETSTACK(-1);
+	  restore_bcEval_globals(&globals);
 	  return retvalue;
       }
       else
@@ -7489,6 +7481,7 @@ static SEXP bcEval_loop(struct bcEval_locals *ploc,
 	    RCNTXT *cntxt = BCNALLOC_CNTXT();
 	    int break_offset = GETOP();
 	    BCODE *break_pc = codebase + break_offset;
+	    SAVE_BCEVAL_LOCALS(&locals);
 	    PUSH_LOOP_LOCALS();
 	    if (is_for_loop) {
 		/* duplicate the for loop state data on the top of the stack */
@@ -7505,13 +7498,10 @@ static SEXP bcEval_loop(struct bcEval_locals *ploc,
 		switch (SETJMP(cntxt->cjmpbuf)) {
 		case CTXT_BREAK:
 		    locals = recover_loop_locals(FOR_LOOP_STATE_SIZE, TRUE);
-		    RESTORE_BCEVAL_LOCALS(&locals);
-		    NEXT();
+		    break;
 		case CTXT_NEXT:
 		    locals = recover_loop_locals(FOR_LOOP_STATE_SIZE, FALSE);
-		    RESTORE_BCEVAL_LOCALS(&locals);
-		    NEXT();
-		default: NEXT();
+		    break;
 		}
 	    }
 	    else {
@@ -7520,15 +7510,14 @@ static SEXP bcEval_loop(struct bcEval_locals *ploc,
 		switch (SETJMP(cntxt->cjmpbuf)) {
 		case CTXT_BREAK:
 		    locals = recover_loop_locals(0, TRUE);
-		    RESTORE_BCEVAL_LOCALS(&locals);
-		    NEXT();
+		    break;
 		case CTXT_NEXT:
 		    locals = recover_loop_locals(0, FALSE);
-		    RESTORE_BCEVAL_LOCALS(&locals);
-		    NEXT();
-		default: NEXT();
+		    break;
 		}
 	    }
+	    RESTORE_BCEVAL_LOCALS(&locals);
+	    NEXT();
 	    /* context, offsets on stack, to be popped by ENDLOOPCNTXT */
 	}
     OP(ENDLOOPCNTXT, 1):
