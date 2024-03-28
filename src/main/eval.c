@@ -3970,7 +3970,7 @@ attribute_hidden SEXP do_eval(SEXP call, SEXP op, SEXP args, SEXP rho)
 	UNPROTECT(1);
     }
     else if (TYPEOF(expr) == EXPRSXP) {
-	SEXP srcrefs = getBlockSrcrefs(expr);
+	volatile SEXP srcrefs = getBlockSrcrefs(expr);
 	PROTECT(expr);
 	tmp = R_NilValue;
 	begincontext(&cntxt, CTXT_RETURN, R_GlobalContext->call,
