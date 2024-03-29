@@ -157,12 +157,12 @@
 #   should no longer be needed for newer versions of GCC and the recommended
 #   toolchain)
 #
-#  -Wa,-muse-unaligned-vector-move can be used to make binutils (on x86_64)
+# -Wa,-muse-unaligned-vector-move can be used to make binutils (on x86_64)
 #   turn vectorized instructions requiring aligned vectors into instructions
 #   no requiring them; this can be used as a work-around when compiling with
 #   GCC with AVX2 instructions enabled, for a bug due to which GCC does not
 #   ensure that local variables are 32-byte aligned. See
-#   https://gcc.gnu.org/bugzilla/show_bug.cgi?id=5441
+#   https://gcc.gnu.org/bugzilla/show_bug.cgi?id=54412
 #   This bug is still present in GCC 13.
 #
 # EOPTS = -mfpmath=sse -msse2 -mstackrealign $(LTO)
