@@ -82,7 +82,7 @@ msgid "'degree' must be integer >= 1"
 msgstr "'degree' 必須大於等於一的整數"
 
 msgid "'df' was too small; have used %d"
-msgstr "'df' 太小了；用過的值為 %d "
+msgstr "'df' 太小了；用過的值為 %d"
 
 msgid "non-finite knots"
 msgstr ""

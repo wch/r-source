@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-07-31 14:59\n"
+"POT-Creation-Date: 2024-03-27 16:14\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -229,6 +229,10 @@ msgstr "'breaks' nie są ściśle rosnące"
 
 msgid "'probability' is an alias for '!freq', however they differ."
 msgstr "'probability' jest aliasem dla '!freq', jednakże różnią się"
+
+#, fuzzy
+msgid "fuzz must be non-negative"
+msgstr "kolory całkowite muszą być nieujemne"
 
 msgid "some 'x' not counted; maybe 'breaks' do not span range of 'x'"
 msgstr "niektóre wartości zmiennej 'x' nie zostały zliczone; być może wartości argumentu 'breaks' nie rozciągają się na cały zakres zmiennej 'x'"

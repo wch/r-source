@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-07-31 14:59\n"
+"POT-Creation-Date: 2024-03-27 16:14\n"
 "PO-Revision-Date: 2022-04-13 12:29+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-Core <R-core@r-project.org>\n"
@@ -140,7 +140,7 @@ msgid "invalid 'given.values'"
 msgstr "ungültige 'given.values'"
 
 msgid "rows * columns too small"
-msgstr " Zeilen * Spalten zu klein"
+msgstr "Zeilen * Spalten zu klein"
 
 msgid "Missing rows: %s"
 msgstr "fehlende Zeilen %s"
@@ -228,6 +228,10 @@ msgstr "'breaks' sind nicht streng monoton steigend"
 
 msgid "'probability' is an alias for '!freq', however they differ."
 msgstr "'probability' ist ein Alias für '!freq', aber sie unterschieden sich"
+
+#, fuzzy
+msgid "fuzz must be non-negative"
+msgstr "ganzzahlige Farbangaben müssen nicht-negativ sein"
 
 msgid "some 'x' not counted; maybe 'breaks' do not span range of 'x'"
 msgstr "einige 'x' nicht gezählt: evtl. überdecken die 'breaks' nicht den gesamten Bereich von 'x'"

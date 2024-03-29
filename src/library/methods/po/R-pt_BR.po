@@ -7,15 +7,15 @@ msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2023-07-31 14:59\n"
-"PO-Revision-Date: 2022-10-23 00:04+0000\n"
-"Last-Translator: Beatriz Milz <milz.bea@gmail.com>\n"
+"PO-Revision-Date: 2024-03-19 12:53+0000\n"
+"Last-Translator: Michael Chirico <michaelchirico4@gmail.com>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.13.1\n"
+"X-Generator: Weblate 4.16.4\n"
 
 msgid "OOPS: something wrong with '.OldClassesPrototypes[[%d]]'"
 msgstr "OOPS: algo errado com '.OldClassesPrototypes[[%d]]'"
@@ -56,33 +56,38 @@ msgstr "S3Part() só é definida para classes criadas por setOldCLass(), classes
 msgid "the 'S3Class' argument must be a superclass of %s:  not true of class %s"
 msgstr "o argumento 'S3Class' deve ser uma subclasse de %s:  não é o caso para a classe \"%s\""
 
-#, fuzzy
 msgid "replacement value must extend class %s, got %s"
-msgstr "Valor de reposição deve estender a classe \"%s\", sem a classe\"%s\""
+msgstr "valor de reposição deve estender a classe \"%s\", classe\"%s\" obtida"
 
 #, fuzzy
 msgid "replacement value must be of class %s, got one of class %s"
 msgstr "Valor de reposição deve estender a classe \"%s\", sem a classe\"%s\""
 
-#, fuzzy
 msgid "no 'replace' method was defined for 'as(x, \"%s\") <- value' for class %s"
-msgstr "nenhum método 'replace' foi definido para as(x,\"%s\") <- valor para a classe \"%s\""
+msgstr ""
+"nenhum método 'replace' foi definido para 'as(x,\"%s\") <- value' para a "
+"classe \"%s"
 
-#, fuzzy
 msgid "the 'coerce' argument to 'setIs' should be a function of one argument, got an object of class %s"
-msgstr "o argumento 'coerce' para 'setId' deve ser uma função de um argumento, mas foi especificado um objeto de classe \"%s\""
+msgstr ""
+"o argumento 'coerce' para 'setIs' deve ser uma função de um argumento, mas "
+"foi especificado um objeto de classe %s"
 
-#, fuzzy
 msgid "the computation: 'as(object,\"%s\") <- value' is valid when object has class %s only if 'is(value, \"%s\")' is TRUE ('class(value)' was %s)"
-msgstr "a instrução: as(object,\"%s\") <- valor é válido quando o objeto for da classe  \"%s\" somente se is(value, \"%s\") for TRUE (class(value) for \"%s\")"
+msgstr ""
+"a instrução: 'as(object,\"%s\") <- valor' é válida quando o objeto for da "
+"classe %s somente se 'is(value, \"%s\")' for TRUE ('class(valor)' é %s)"
 
-#, fuzzy
 msgid "there is no automatic definition for 'as(object, \"%s\") <- value' when object has class %s and no 'replace' argument was supplied; replacement will be an error"
-msgstr "não há definição automática para as(object, \"%s\") <- valor quando o objeto for da classe \"%s\" e nenhum argumento 'replace' foi especificado; substituição retornará um erro"
+msgstr ""
+"não há definição automática para 'as(object, \"%s\") <- valor' quando o "
+"objeto for da classe %s e nenhum argumento 'replace' foi especificado; "
+"substituição retornará um erro"
 
-#, fuzzy
 msgid "the 'replace' argument to setIs() should be a function of 2 or 3 arguments, got an object of class %s"
-msgstr "o argumento 'replace' para setIs() deve ser uma função de 2 ou 3 argumentos, obtido de um objeto da classe \"%s\""
+msgstr ""
+"o argumento 'replace' para setIs() deve ser uma função de 2 ou 3 argumentos, "
+"objeto da classe %s obtido"
 
 msgid "the member classes must be defined: not true of %s"
 msgstr "as classes membro devem ser definidas: não é o caso para %s"
@@ -94,24 +99,26 @@ msgid ""
 "methods:::bind_activation() is defunct;\n"
 " rather provide methods for cbind2() / rbind2()"
 msgstr ""
+"methods:::bind_activation() está extinto;\n"
+" prefira fornecer métodos para cbind2() / rbind2()"
 
-#, fuzzy
 msgid "invalid argument 'name': %s"
-msgstr "Argumento inválido  \"name\": %s"
+msgstr "argumento 'name' inválido: %s"
 
-#, fuzzy
 msgid "%s dispatches internally;  methods can be defined, but the generic function is implicit, and cannot be changed."
-msgstr "'%s' é uma função primitiva; métodos podem ser definidos, mas a função genérica está implícita e não pode ser modificada"
+msgstr ""
+"'%s' é uma função primitiva; métodos podem ser definidos, mas a função "
+"genérica está implícita e não pode ser modificada."
 
-#, fuzzy
 msgid "if the 'def' argument is supplied, it must be a function that calls standardGeneric(\"%s\") or is the default"
-msgstr "se o argumento `def' for fornecido, ele deve ser uma função que chama standardGeneric(\"%s\") para executar os métodos"
+msgstr ""
+"se o argumento 'def' for fornecido, ele deve ser uma função que chama "
+"standardGeneric(\"%s\") para executar os métodos"
 
 #, fuzzy
 msgid "must supply a function skeleton for %s, explicitly or via an existing function"
 msgstr "deve ser especificado o esqueleto de uma funcão, explicitamente ou através de uma função existente"
 
-#, fuzzy
 msgid ""
 "Creating a generic function for %s from %s in %s\n"
 "    (from the saved implicit definition)"
@@ -119,75 +126,71 @@ msgstr ""
 "Criando uma função genérica para %s de %s em %s\n"
 "    (da definição implícita salva)"
 
-#, fuzzy
 msgid "Creating a new generic function for %s in %s"
-msgstr "Criando uma nova função genérica para \"%s\" em \"%s\""
+msgstr "Criando uma nova função genérica para %s em %s"
 
-#, fuzzy
 msgid ""
 "no generic version of %s on package %s is allowed;\n"
 "   a new generic will be assigned for %s"
 msgstr ""
-"Nenhuma versão genérica de %s no pacote %s é pertimida;\n"
-"   uma nova genérica será atribuída com o pacote %s"
+"nenhuma versão genérica de %s é permitida no pacote %s ;\n"
+"   uma nova versão genérica será atribuída para %s"
 
-#, fuzzy
 msgid "fdef appears to be a generic function, but with generic name %s instead of %s"
-msgstr "função \"%s\" parece ser uma função genérica, mas com nome genérico \"%s\""
+msgstr ""
+"fdef parece ser uma função genérica, mas com nome genérico %s em vez de %s"
 
-#, fuzzy
 msgid "generic function %s not found for removal"
-msgstr "função genérica \"%s\" não encontrada para remoção"
+msgstr "função genérica %s não encontrada para remoção"
 
 #, fuzzy
 msgid "a function for argument 'f' must be a generic function"
-msgstr "Uma função para o argumento \"f\" deve ser uma função genérica"
+msgstr "função para o argumento 'f' deve ser uma função genérica"
 
-#, fuzzy
 msgid "the environment %s is locked; cannot assign methods for function %s"
-msgstr "o ambiente \"%s\" está travado; não é possível atribuir métodos para a função \"%s\""
+msgstr ""
+"o ambiente %s está bloqueado; não é possível atribuir métodos para a função "
+"%s"
 
 msgid "the 'where' environment (%s) is a locked namespace; cannot assign methods there"
 msgstr "o ambiente 'where' (%s) é um espaços de nomes bloqueado; não é possível atribuir métodos nele"
 
-#, fuzzy
 msgid "Copying the generic function %s to environment %s, because the previous version was in a sealed namespace (%s)"
-msgstr "copiando a função genérica \"%s\" para o ambiente \"%s\", porque a versão anterior estava em um espaço de nomes selado (%s)"
+msgstr ""
+"copiando a função genérica %s para o ambiente %s, porque a versão anterior "
+"estava em um namespace lacrado (%s)"
 
-#, fuzzy
 msgid "no existing definition for function %s"
-msgstr "nenhuma definição existente para função \"%s\""
+msgstr "nenhuma definição existente para função %s"
 
-#, fuzzy
 msgid "Creating a generic function from function %s in %s"
-msgstr "Criando uma nova função genérica a partir da função \"%s\""
+msgstr "criando uma nova função genérica a partir da função %s em %s"
 
-#, fuzzy
 msgid "Creating a generic function for %s from package %s in %s"
-msgstr "Criando uma nova função genérica para \"%s\" em \"%s\""
+msgstr "criando uma nova função genérica para %s a partir do pacote %s em %s"
 
 #, fuzzy
 msgid "the method for function %s and signature %s is sealed and cannot be re-defined"
 msgstr "o método para a função \"%s\" e assinatura %s está selado e não pode ser redefinido"
 
-#, fuzzy
 msgid "For function %s, signature %s: argument in method definition changed from (%s) to (%s)"
-msgstr "Para a função \"%s\", assinatura \"%s\": argumento nadefinição do método mudou de (%s) para (%s)"
+msgstr ""
+"para a função %s, assinatura %s: argumento na definição do método mudou de "
+"(%s) para (%s)"
 
 msgid "primitive functions cannot be methods; they must be enclosed in a regular function"
 msgstr "funções primitivas não podem ser métodos; elas devem estar dentro de uma função regular"
 
-#, fuzzy
 msgid "invalid method definition: expected a function, got an object of class %s"
-msgstr "definição de método inválida: uma função era esperada, mas foi especificado um objeto de classe \"%s\""
+msgstr ""
+"definição de método inválida: era esperada uma função, mas foi especificado "
+"um objeto de classe %s"
 
-#, fuzzy
 msgid "function supplied as argument 'f' must be a generic"
-msgstr "Função fornecida como argumento \"f\" deve ser genérica"
+msgstr "função fornecida como argumento 'f' deve ser genérica"
 
-#, fuzzy
 msgid "no generic function %s found"
-msgstr "nenhuma função genérica \"%s\" encontrada"
+msgstr "nenhuma função genérica %s encontrada"
 
 #, fuzzy
 msgid "no method found for function %s and signature %s"
@@ -1417,41 +1420,40 @@ msgstr "nenhum método definido para a função '%s' e assinatura %s"
 msgid "unloading 'methods' package ..."
 msgstr ""
 
-#, fuzzy
 msgid "apparently bad method or class metadata in saved environment;"
-msgstr "assinatura deve ser um vetor de classes ou um ambiente"
+msgstr "assinatura deve ser um vetor de classes ou um ambiente;"
 
 msgid "move the file or remove the class/method"
 msgstr ""
 
-#, fuzzy
 msgid "no definition for class %s"
 msgid_plural "no definition for classes %s"
 msgstr[0] "nenhuma definição existente para função '%s'"
-msgstr[1] "nenhuma definição existente para função '%s'"
+msgstr[1] "nenhuma definição existente para funçãoes '%s'"
 
-#, fuzzy
 msgid "in the method signature for function %s invalid argument name in the signature: %s"
 msgid_plural "in the method signature for function %s invalid argument names in the signature: %s"
-msgstr[0] "na assinatura do método da função \"%s\" nomes de argumentos inválidos na assinatura: %s"
-msgstr[1] "na assinatura do método da função \"%s\" nomes de argumentos inválidos na assinatura: %s"
+msgstr[0] ""
+"na assinatura do método da função \"%s\" nomes de argumentos inválidos na "
+"assinatura: %s"
+msgstr[1] ""
+"na assinatura do método da função \"%s\" nomes de argumentos inválidos nas "
+"assinaturas: %s"
 
 msgid "Reported %d ambiguous selection out of %d for function %s\n"
 msgid_plural "Reported %d ambiguous selections out of %d for function %s\n"
 msgstr[0] ""
 msgstr[1] ""
 
-#, fuzzy
 msgid "named elements of prototype do not correspond to slot name: %s"
 msgid_plural "named elements of prototype do not correspond to slot names: %s"
-msgstr[0] "elementos nomeados do protótipo não correspondem aos nomes do slot: %s"
+msgstr[0] "elementos nomeados do protótipo não correspondem ao nome do slot: %s"
 msgstr[1] "elementos nomeados do protótipo não correspondem aos nomes do slot: %s"
 
-#, fuzzy
 msgid "non-argument found in the signature: %s"
 msgid_plural "non-arguments found in the signature: %s"
 msgstr[0] "Nenhum método encontrado para a assinatura %s"
-msgstr[1] "Nenhum método encontrado para a assinatura %s"
+msgstr[1] "Nenhum métodos encontrados para a assinatura %s"
 
 msgid "the formal argument of the generic function for %s (%s) differs from that of the non-generic to be used as the default (%s)"
 msgid_plural "the formal arguments of the generic function for %s (%s) differ from those of the non-generic to be used as the default (%s)"
@@ -1468,15 +1470,18 @@ msgid_plural "invalid names for slots of class %s: %s"
 msgstr[0] ""
 msgstr[1] ""
 
-#, fuzzy
 msgid ""
 "multiple definition of class %s visible (%s); using the definition\n"
 "   in package %s for %s"
 msgid_plural ""
 "multiple definitions of class %s visible (%s); using the definition\n"
 "   in package %s for %s"
-msgstr[0] "nenhuma definição existente para função '%s'"
-msgstr[1] "nenhuma definição existente para função '%s'"
+msgstr[0] ""
+"várias definições de classe %s visível (%s); Usando a definição\n"
+"   no pacote %s para %s"
+msgstr[1] ""
+"várias definições de classe %s visível (%s); Usando a definição\n"
+"   no pacote %s para %s"
 
 msgid "class %s is missing slot from class %s (%s), and no coerce method was supplied"
 msgid_plural "class %s is missing slots from class %s (%s), and no coerce method was supplied"
@@ -1513,11 +1518,13 @@ msgid_plural "Choosing method %s from %d ambiguous possibilities"
 msgstr[0] ""
 msgstr[1] ""
 
-#, fuzzy
 msgid "no definition of class %s in the specified position, %s, definition on : %s"
 msgid_plural "no definition of class %s in the specified position, %s, definitions on : %s"
-msgstr[0] "nenhuma definição existente para função '%s'"
-msgstr[1] "nenhuma definição existente para função '%s'"
+msgstr[0] ""
+"nenhuma definição de classe %s na posição especificada, %s, definiçõe em : %s"
+msgstr[1] ""
+"nenhuma definição de classe %s na posição especificada, %s, definições em : "
+"%s"
 
 #, fuzzy
 #~ msgid "methods cannot be defined for the primitive function %s"

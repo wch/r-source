@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: grDevices 4.1.0\n"
-"Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-11-30 14:39+0100\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-03-27 16:14-0700\n"
 "PO-Revision-Date: 2020-12-09 13:16+0200\n"
 "Last-Translator: r.zakauskas@gmail.com;gabriele.dauksaite@gmail.com\n"
 "Language-Team: Lithuanian\n"
@@ -140,210 +140,210 @@ msgstr "nežinoma paletė (reikia >= 2 spalvų)"
 msgid "maximum number of colors is %d"
 msgstr "didžiausias spalvų skaičius yra %d"
 
-#: devPS.c:592
+#: devPS.c:590
 #, c-format
 msgid "afm file '%s' could not be opened"
 msgstr "afm failas '%s' negali būti atvertas"
 
-#: devPS.c:660
+#: devPS.c:658
 msgid "unknown AFM entity encountered"
 msgstr "nežinoma AFM objekto klaida"
 
-#: devPS.c:776 devPS.c:779 devPS.c:4686 devPS.c:10183 devPicTeX.c:477
+#: devPS.c:773 devPS.c:776 devPS.c:4705 devPS.c:10201 devPicTeX.c:477
 #: devPicTeX.c:479
 #, c-format
 msgid "invalid string in '%s'"
 msgstr "neteisinga eilutė, esanti '%s'"
 
-#: devPS.c:812
+#: devPS.c:810
 #, fuzzy, c-format
 msgid "font width unknown for character 0x%02x in encoding %s"
 msgstr "nežinomas šrifto plotis ženklui 0x%x"
 
-#: devPS.c:875
+#: devPS.c:871
 #, fuzzy, c-format
 msgid "font metrics unknown for Unicode character U+%04X"
 msgstr "nežinoma šrifto metrika unikodo ženklui U+%04x"
 
-#: devPS.c:886
+#: devPS.c:882
 #, c-format
 msgid "unknown encoding '%s' in 'PostScriptMetricInfo'"
 msgstr "nežinoma koduotė '%s', esanti 'PostScriptMetricInfo'"
 
-#: devPS.c:903
+#: devPS.c:899
 #, c-format
 msgid "Unicode character %lc (U+%04X) cannot be converted"
 msgstr ""
 
-#: devPS.c:922 devPS.c:958
+#: devPS.c:918 devPS.c:972
 #, fuzzy, c-format
 msgid "font metrics unknown for character 0x%02x in encoding %s"
 msgstr "nežinoma šrifto metrika ženklui 0x%x"
 
-#: devPS.c:973
+#: devPS.c:987
 #, fuzzy, c-format
 msgid "invalid character (%04X) sent to 'PostScriptCIDMetricInfo' in a single-byte locale"
 msgstr "neteisingas ženklas (%04x) perduotas į 'PostScriptCIDMetricInfo' vienbaitėje koduotės lokalėje"
 
-#: devPS.c:981
+#: devPS.c:995
 msgid "invalid character sent to 'PostScriptCIDMetricInfo' in a single-byte locale"
 msgstr "neteisingas ženklas perduotas į 'PostScriptCIDMetricInfo' vienbaitėje koduotės lokalėje"
 
-#: devPS.c:1093
+#: devPS.c:1107
 msgid "failed to allocate CID font info"
 msgstr "nepavyko paskirti CID šriftų informacijos"
 
-#: devPS.c:1109
+#: devPS.c:1123
 msgid "failed to allocate Type 1 font info"
 msgstr "nepavyko paskirti Tipas 1 šriftų informacijos"
 
-#: devPS.c:1129
+#: devPS.c:1143
 msgid "failed to allocate encoding info"
 msgstr "nepavyko paskirti koduotės informacijos"
 
-#: devPS.c:1147
+#: devPS.c:1161
 msgid "failed to allocate CID font family"
 msgstr "nepavyko paskirti CID šriftų šeimos"
 
-#: devPS.c:1160
+#: devPS.c:1174
 msgid "failed to allocate Type 1 font family"
 msgstr "nepavyko paskirti Tipas 1 šriftų šeimos"
 
-#: devPS.c:1199 devPS.c:1210
+#: devPS.c:1213 devPS.c:1224
 msgid "failed to allocate font list"
 msgstr "nepavyko paskirti šriftų sąrašo"
 
-#: devPS.c:1261
+#: devPS.c:1275
 msgid "failed to allocated encoding list"
 msgstr "nepavyko paskirti koduočių sąrašo"
 
-#: devPS.c:1410
+#: devPS.c:1424
 msgid "truncated string which was too long for copy"
 msgstr "eilutė, kuri buvo per ilga kopijuoti, yra sutrumpinta"
 
-#: devPS.c:1450
+#: devPS.c:1464
 #, c-format
 msgid "failed to load encoding file '%s'"
 msgstr "nepavyko įkelti koduotės failo '%s'"
 
-#: devPS.c:1549 devPS.c:1582
+#: devPS.c:1563 devPS.c:1596
 msgid "invalid font name or more than one font name"
 msgstr "neteisingas vienas ar keli šrifto vardai"
 
-#: devPS.c:1703 devPS.c:1738
+#: devPS.c:1717 devPS.c:1752
 #, c-format
 msgid "font family '%s' not found in PostScript font database"
 msgstr "šrifto šeimos '%s' nepavyko rasti PostScript šriftų duomenų bazėje"
 
-#: devPS.c:1822 devPS.c:1904 devPS.c:1931
+#: devPS.c:1836 devPS.c:1918 devPS.c:1945
 #, c-format
 msgid "font encoding for family '%s' not found in font database"
 msgstr "šriftų duomenų bazėje nepavyko rasti šrifto koduotės šeimai '%s'"
 
-#: devPS.c:1849 devPS.c:1876
+#: devPS.c:1863 devPS.c:1890
 #, c-format
 msgid "font CMap for family '%s' not found in font database"
 msgstr "šriftų duomenų bazėje nepavyko rasti šrifto CMap šeimai '%s'"
 
-#: devPS.c:2071 devPS.c:2151 devPS.c:2219
+#: devPS.c:2085 devPS.c:2165 devPS.c:2233
 #, c-format
 msgid "cannot load afm file '%s'"
 msgstr "nepavyksta įkelti afm failo '%s'"
 
-#: devPS.c:2507
+#: devPS.c:2521
 msgid "corrupt loaded encodings;  encoding not recorded"
 msgstr "sugadinta įkeliama koduotė;  koduotė neįrašyta"
 
-#: devPS.c:2518
+#: devPS.c:2532
 msgid "failed to record device encoding"
 msgstr "nepavyko įrašyti įrenginio koduotės"
 
-#: devPS.c:2689
+#: devPS.c:2703
 msgid "object '.ps.prolog' is not a character vector"
 msgstr "objektas '.ps.prolog' nėra ženklo vektorius"
 
-#: devPS.c:2764 devPS.c:8310 devWindows.c:795
+#: devPS.c:2778 devPS.c:8329 devWindows.c:795
 msgid "invalid line end"
 msgstr "neteisinga eilutės pabaiga"
 
-#: devPS.c:2783 devPS.c:8330 devWindows.c:808
+#: devPS.c:2797 devPS.c:8349 devWindows.c:808
 msgid "invalid line join"
 msgstr "neteisingas eilutės sujungimas"
 
-#: devPS.c:2791
+#: devPS.c:2805
 msgid "invalid line mitre"
 msgstr "neteisingas linijos jungimas 45° nuožambiu kampu"
 
-#: devPS.c:2996 devPS.c:3932 devPS.c:4380 devPS.c:4407 devPS.c:5576
-#: devPS.c:9987 devPS.c:10058
+#: devPS.c:3010 devPS.c:3946 devPS.c:4395 devPS.c:4422 devPS.c:5595
+#: devPS.c:10005 devPS.c:10076
 #, c-format
 msgid "attempt to use invalid font %d replaced by font 1"
 msgstr "bandymas naudoti negaliojantį šriftą %d pakeistas šriftu 1"
 
-#: devPS.c:3233 devPS.c:5029 devPS.c:7717
+#: devPS.c:3247 devPS.c:5048 devPS.c:7736
 #, c-format
 msgid "filename too long in %s()"
 msgstr "failo vardas yra per ilgas %s()"
 
-#: devPS.c:3239 devPS.c:5035 devPS.c:7723
+#: devPS.c:3253 devPS.c:5054 devPS.c:7742
 #, c-format
 msgid "memory allocation problem in %s()"
 msgstr "atminties paskirstymo problema, esanti %s()"
 
-#: devPS.c:3257 devPS.c:7787
+#: devPS.c:3271 devPS.c:7806
 #, c-format
 msgid "encoding path is too long in %s()"
 msgstr "koduojamas kelias per ilgas %s()"
 
-#: devPS.c:3271 devPS.c:5075
+#: devPS.c:3285 devPS.c:5094
 #, c-format
 msgid "failed to load encoding file in %s()"
 msgstr "nepavyko įkelti koduotės failo, esančio %s()"
 
-#: devPS.c:3316 devPS.c:3379 devPS.c:7846 devPS.c:7902 devPS.c:9786
+#: devPS.c:3330 devPS.c:3393 devPS.c:7865 devPS.c:7921 devPS.c:9804
 msgid "invalid font type"
 msgstr "neteisingas šrifto tipas"
 
-#: devPS.c:3340
+#: devPS.c:3354
 msgid "failed to initialise default PostScript font"
 msgstr "nepavyko nustatyti numatytojo PostScript šrifto"
 
-#: devPS.c:3406
+#: devPS.c:3420
 msgid "failed to initialise additional PostScript fonts"
 msgstr "nepavyko nustatyti papildomų PostScript šriftų"
 
-#: devPS.c:3422
+#: devPS.c:3436
 msgid "invalid foreground/background color (postscript)"
 msgstr "netinkama priekinio plano/fono spalva (postScript)"
 
-#: devPS.c:3427
+#: devPS.c:3441
 msgid "'command' is too long"
 msgstr "'command' yra per ilga"
 
-#: devPS.c:3432
+#: devPS.c:3446
 msgid "'postscript(print.it=TRUE)' used with an empty 'print' command"
 msgstr "'postscript(print.it=TRUE)' naudojama su tuščia 'print' komanda"
 
-#: devPS.c:3483
+#: devPS.c:3497
 #, c-format
 msgid "invalid page type '%s' (postscript)"
 msgstr "netinkamas puslapio tipas '%s' (postscript)"
 
-#: devPS.c:3612 devPS.c:4873 devWindows.c:2345
+#: devPS.c:3626 devPS.c:4892 devWindows.c:2345
 msgid "semi-transparency is not supported on this device: reported only once per page"
 msgstr "pusiau skaidrumas šiame įrenginyje nėra palaikomas: pranešama tik kartą puslapyje"
 
-#: devPS.c:3723 devPS.c:3734
+#: devPS.c:3737 devPS.c:3748
 #, c-format
 msgid "cannot open 'postscript' pipe to '%s'"
 msgstr "nepavyksta atverti 'postscript' kanalo '%s'"
 
-#: devPS.c:3745 devPS.c:5294 devPS.c:5307 devPS.c:9047 qdPDF.c:98
+#: devPS.c:3759 devPS.c:5313 devPS.c:5326 devPS.c:9065 qdPDF.c:98
 #, c-format
 msgid "cannot open file '%s'"
 msgstr "nepavyko atverti failo '%s'"
 
-#: devPS.c:3873 devPS.c:3888
+#: devPS.c:3887 devPS.c:3902
 #, c-format
 msgid ""
 "error from postscript() in running:\n"
@@ -352,218 +352,218 @@ msgstr ""
 "klaida iš postscript() vykdant:\n"
 "    %s"
 
-#: devPS.c:3920
+#: devPS.c:3934
 #, c-format
 msgid "CID family '%s' not included in postscript() device"
 msgstr "CID šeima '%s' nėra įtraukta į postscript() įrenginį"
 
-#: devPS.c:3938 devPS.c:3949 devPS.c:4387 devPS.c:4417 devPS.c:4626
+#: devPS.c:3952 devPS.c:3963 devPS.c:4402 devPS.c:4432 devPS.c:4645
 #, c-format
 msgid "family '%s' not included in postscript() device"
 msgstr "šeima '%s' nėra įtraukta į postscript() įrenginį"
 
-#: devPS.c:4454
+#: devPS.c:4469
 #, c-format
 msgid "unknown encoding '%s' in 'mbcsToSbcs'"
 msgstr "nežinoma koduotė '%s', esanti 'mbcsToSbcs'"
 
-#: devPS.c:4563 devPS.c:4570
+#: devPS.c:4582 devPS.c:4589
 #, fuzzy, c-format
 msgid "conversion failure on '%s' in 'mbcsToSbcs': for <%02x>"
 msgstr "'mbcsToSbcs' konvertavimo klaida '%s': taškas pakeistas į <%02x>"
 
-#: devPS.c:4565 devPS.c:4572
+#: devPS.c:4584 devPS.c:4591
 #, c-format
 msgid "conversion failure on '%s' in 'mbcsToSbcs': dot substituted for <%02x>"
 msgstr "'mbcsToSbcs' konvertavimo klaida '%s': taškas pakeistas į <%02x>"
 
-#: devPS.c:4654
+#: devPS.c:4673
 #, c-format
 msgid "failed open converter to encoding '%s'"
 msgstr "nepavyko atverti keitiklio į kodavimą '%s'"
 
-#: devPS.c:4672 devPS.c:5621 devPS.c:10158
+#: devPS.c:4691 devPS.c:5640 devPS.c:10176
 #, c-format
 msgid "failed in text conversion to encoding '%s'"
 msgstr "nepavyko konvertuoti teksto į kodavimą '%s'"
 
-#: devPS.c:4887
+#: devPS.c:4906
 msgid "ran out of colors in xfig()"
 msgstr "xfig() trūksta spalvų"
 
-#: devPS.c:4916
+#: devPS.c:4935
 #, c-format
 msgid "unimplemented line texture %08x: using Dash-double-dotted"
 msgstr "negalima linijos tekstūra %08x naudojant punktyrus dvigubus brūkšnius"
 
-#: devPS.c:4988
+#: devPS.c:5007
 #, c-format
 msgid "unknown postscript font family '%s', using Helvetica"
 msgstr "nežinoma postscript šriftų šeima '%s', naudojant Helvetica"
 
-#: devPS.c:5060
+#: devPS.c:5079
 msgid "invalid foreground/background color (xfig)"
 msgstr "netinkama priekinio plano/fono spalva (xfig)"
 
-#: devPS.c:5093
+#: devPS.c:5112
 msgid "only Type 1 fonts supported for XFig"
 msgstr "tik Tipas 1 šriftai palaikomi XFig"
 
-#: devPS.c:5106
+#: devPS.c:5125
 msgid "failed to initialise default XFig font"
 msgstr "nepavyko nustatyti numatytojo XFig šrifto"
 
-#: devPS.c:5145
+#: devPS.c:5164
 #, c-format
 msgid "invalid page type '%s' (xfig)"
 msgstr "netinkamas puslapio tipas '%s' (xfig)"
 
-#: devPS.c:5153
+#: devPS.c:5172
 #, c-format
 msgid "xfig(%s, onefile=FALSE) will only return the last plot"
 msgstr "xfig(%s, onefile=FALSE) grąžins tik paskutinį grafiką"
 
-#: devPS.c:5286
+#: devPS.c:5305
 msgid "empty file name"
 msgstr "tuščias failo vardas"
 
-#: devPS.c:5353 devPS.c:5405 devPS.c:7541 devPS.c:7585 devPS.c:9108
+#: devPS.c:5372 devPS.c:5424 devPS.c:7560 devPS.c:7604 devPS.c:9126
 msgid "write failed"
 msgstr "įrašyti nepavyko"
 
-#: devPS.c:5610
+#: devPS.c:5629
 #, c-format
 msgid "unable to use encoding '%s'"
 msgstr "negalima naudoti koduotės '%s'"
 
-#: devPS.c:5973
+#: devPS.c:5992
 #, fuzzy
 msgid "Failed to allocate PDF definition string"
 msgstr "nepavyko priskirti apibrėžimų"
 
-#: devPS.c:5995
+#: devPS.c:6014
 msgid "failed to increase definition string (shut down PDF device)"
 msgstr "nepavyko padidinti apibrėžimo eilutės (išjungti PDF įrenginį)"
 
-#: devPS.c:6045
+#: devPS.c:6064
 msgid "failed to increase 'maxDefns'"
 msgstr "nepavyko padidinti 'maxDefns'"
 
-#: devPS.c:6677
+#: devPS.c:6696
 msgid "Drawing not appended to path (contains text)"
 msgstr ""
 
-#: devPS.c:6906
+#: devPS.c:6925
 msgid "Compositing operator has no corresponding blend mode; defaulting to Normal"
 msgstr ""
 
-#: devPS.c:7179
+#: devPS.c:7198
 msgid "Failed to write PDF clipping path"
 msgstr ""
 
-#: devPS.c:7204
+#: devPS.c:7223
 msgid "Failed to write PDF stroke"
 msgstr ""
 
-#: devPS.c:7225
+#: devPS.c:7244
 msgid "Failed to write PDF fill"
 msgstr ""
 
-#: devPS.c:7246
+#: devPS.c:7265
 msgid "Failed to write PDF fillStroke"
 msgstr ""
 
-#: devPS.c:7292
+#: devPS.c:7311
 msgid "Glyph ID larger than 0xFFFF; output will be incorrect"
 msgstr ""
 
-#: devPS.c:7315
+#: devPS.c:7334
 msgid "invalid 'alpha' value in PDF"
 msgstr "neteisinga 'alpha' reikšmė PDF faile"
 
-#: devPS.c:7429 devPS.c:7432
+#: devPS.c:7448 devPS.c:7451
 msgid "failed to increase 'maxRaster'"
 msgstr "nepavyko padidinti 'maxRaster'"
 
-#: devPS.c:7444
+#: devPS.c:7463
 msgid "unable to allocate raster image"
 msgstr "nepavyko priskirti rastrinio vaizdo"
 
-#: devPS.c:7645
+#: devPS.c:7664
 msgid "corrupt loaded encodings;  font not added"
 msgstr "sugadinta įkeliama koduotė;  šriftai nepridėti"
 
-#: devPS.c:7655
+#: devPS.c:7674
 msgid "failed to record device encoding; font not added"
 msgstr "nepavyko įrašyti įrenginio koduotės, šriftai nepridėti"
 
-#: devPS.c:7773
+#: devPS.c:7792
 msgid "increasing the PDF version to 1.2"
 msgstr "atnaujinti PDF versiją į 1.2"
 
-#: devPS.c:7803
+#: devPS.c:7822
 msgid "failed to load default encoding"
 msgstr "nepavyko įkelti numatytosios koduotės"
 
-#: devPS.c:7870
+#: devPS.c:7889
 msgid "failed to initialise default PDF font"
 msgstr "nepavyko nustatyti numatytojo PDF šrifto"
 
-#: devPS.c:7925
+#: devPS.c:7944
 msgid "failed to initialise additional PDF fonts"
 msgstr "nepavyko nustatyti papildomų PDF šriftų"
 
-#: devPS.c:7938
+#: devPS.c:7957
 msgid "failed to allocate rasters"
 msgstr "nepavyko paskirti rastrų"
 
-#: devPS.c:7945
+#: devPS.c:7964
 msgid "failed to allocate masks"
 msgstr "nepavyko paskirti šablonų"
 
-#: devPS.c:7955
+#: devPS.c:7974
 msgid "failed to allocate definitions"
 msgstr "nepavyko priskirti apibrėžimų"
 
-#: devPS.c:8028
+#: devPS.c:8047
 #, c-format
 msgid "invalid paper type '%s' (pdf)"
 msgstr "netinkamas popieriaus tipas '%s' (pdf)"
 
-#: devPS.c:8052
+#: devPS.c:8071
 msgid "invalid foreground/background color (pdf)"
 msgstr "netinkama priekinio plano/fono spalva (PDF)"
 
-#: devPS.c:8159
+#: devPS.c:8178
 msgid "increasing the PDF version to 1.4"
 msgstr "atnaujinti PDF versiją į 1.4"
 
-#: devPS.c:8203 devPS.c:8251
+#: devPS.c:8222 devPS.c:8270
 msgid "unknown 'colormodel', using 'srgb'"
 msgstr "nežinomas 'colormodel' naudojant 'srgb'"
 
-#: devPS.c:8476
+#: devPS.c:8494
 msgid "failed to load sRGB colorspace file"
 msgstr "nepavyko įkelti sRGB spalvų erdvės failo"
 
-#: devPS.c:8808
+#: devPS.c:8826
 msgid "corrupt encodings in PDF device"
 msgstr "sugadinta koduotė PDF įrenginyje"
 
-#: devPS.c:8889
+#: devPS.c:8907
 msgid "increasing the PDF version to 1.3"
 msgstr "atnaujinti PDF versiją į 1.3"
 
-#: devPS.c:9031
+#: devPS.c:9049
 #, c-format
 msgid "cannot open 'pdf' pipe to '%s'"
 msgstr "nepavyksta atverti 'pdf' kanalo '%s'"
 
-#: devPS.c:9037
+#: devPS.c:9055
 msgid "file = \"|cmd\" implies 'onefile = TRUE'"
 msgstr "file = \"|cmd\" reiškia 'onefile = TRUE'"
 
-#: devPS.c:9181
+#: devPS.c:9199
 #, c-format
 msgid ""
 "cannot open 'pdf' file argument '%s'\n"
@@ -572,46 +572,46 @@ msgstr ""
 "nepavyksta atverti 'pdf' failo argumento '%s'\n"
 "  išjunkite PDF įrenginį"
 
-#: devPS.c:9202
+#: devPS.c:9220
 #, c-format
 msgid "Cannot open temporary file '%s' for compression (reason: %s); compression has been turned off for this device"
 msgstr "Negalima atidaryti laikinojo failo '%s' glaudinimui (priežastis: %s); glaudinimas šiam įrenginiui išjungtas"
 
-#: devPS.c:9811 devPS.c:10315 devPS.c:10362
+#: devPS.c:9829 devPS.c:10333 devPS.c:10380
 msgid "failed to find or load PDF font"
 msgstr "nepavyko rasti ir įkelti PDF šrifto"
 
-#: devPS.c:9994 devPS.c:10053
+#: devPS.c:10012 devPS.c:10071
 msgid "Text not added to path containing other drawing"
 msgstr ""
 
-#: devPS.c:10103 devPS.c:10270
+#: devPS.c:10121 devPS.c:10288
 msgid "failed to find or load PDF CID font"
 msgstr "nepavyko rasti ir įkelti PDF CID šrifto"
 
-#: devPS.c:10768 devPS.c:10860 devPicTeX.c:763
+#: devPS.c:10786 devPS.c:10878 devPicTeX.c:763
 #, fuzzy, c-format
 msgid "invalid 'file' parameter in %s"
 msgstr "neteisingas 'family' parametras, esantis %s"
 
-#: devPS.c:10777 devPS.c:10781 devPS.c:10945 devPS.c:10949
+#: devPS.c:10795 devPS.c:10799 devPS.c:10963 devPS.c:10967
 #, c-format
 msgid "invalid 'family' parameter in %s"
 msgstr "neteisingas 'family' parametras, esantis %s"
 
-#: devPS.c:10799 devPS.c:10961
+#: devPS.c:10817 devPS.c:10979
 #, c-format
 msgid "invalid 'fonts' parameter in %s"
 msgstr "neteisingas 'fonts' parametras, esantis %s"
 
-#: devPS.c:10805 devPS.c:10971 devPS.c:10974 devWindows.c:3761
+#: devPS.c:10823 devPS.c:10989 devPS.c:10992 devWindows.c:3761
 #: devWindows.c:3765 devWindows.c:3773 devWindows.c:3784 devWindows.c:3790
 #: devWindows.c:3797 devWindows.c:3804 devWindows.c:3808
 #, c-format
 msgid "invalid value of '%s'"
 msgstr "neteisinga '%s' reikšmė"
 
-#: devPS.c:10818 devPS.c:10888 devPS.c:10988 devPicTeX.c:779 devWindows.c:3849
+#: devPS.c:10836 devPS.c:10906 devPS.c:11006 devPicTeX.c:779 devWindows.c:3849
 #, c-format
 msgid "unable to start %s() device"
 msgstr "nepavyko paleisti %s() įrenginio"

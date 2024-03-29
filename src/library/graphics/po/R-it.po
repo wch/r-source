@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-4-3-BRANCH\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-07-31 14:59\n"
+"POT-Creation-Date: 2024-03-27 16:14\n"
 "PO-Revision-Date: 2022-10-14 10:12+0200\n"
 "Last-Translator: Daniele Medri <dmedri@gmail.com>\n"
 "Language-Team: Italian https://github.com/dmedri/R-italian-lang\n"
@@ -230,6 +230,10 @@ msgstr "'breaks' non sono strettamente crescenti"
 
 msgid "'probability' is an alias for '!freq', however they differ."
 msgstr "'probability' è un alisa per '!freq', comunque sono differenti."
+
+#, fuzzy
+msgid "fuzz must be non-negative"
+msgstr "i colori interi devono essere non negativi"
 
 msgid "some 'x' not counted; maybe 'breaks' do not span range of 'x'"
 msgstr "alcuni valori di 'x' non considerati; forse 'breaks' non copre tutto il range di 'x'"

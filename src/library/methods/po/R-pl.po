@@ -157,7 +157,7 @@ msgid "function supplied as argument 'f' must be a generic"
 msgstr "funkcja dostarczona jako argument 'f' musi być ogólną funkcją"
 
 msgid "no generic function %s found"
-msgstr "nie znaleziono ogólnej funkcji %s "
+msgstr "nie znaleziono ogólnej funkcji %s"
 
 msgid "no method found for function %s and signature %s"
 msgstr "nie znaleziono metody dla funkcji %s oraz sygnatury %s"
@@ -1014,7 +1014,7 @@ msgid "the class of field %s in the object is not compatible with the desired cl
 msgstr "klasa pola %s w obiekcie nie jest zgodna z pożądaną klasą %s w celu"
 
 msgid "%s is not a defined class in this environment"
-msgstr " %s nie jest zdefiniowaną klasą w tym środowisku"
+msgstr "%s nie jest zdefiniowaną klasą w tym środowisku"
 
 msgid "invalid 'Class' argument:  should be a single string"
 msgstr "niepoprawny argument 'Class': powinien być pojedycznym łańcuchem"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-4-3-BRANCH\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-11-30 14:40\n"
+"POT-Creation-Date: 2024-03-27 16:14\n"
 "PO-Revision-Date: 2023-01-19 18:34+0100\n"
 "Last-Translator: Daniele Medri <dmedri@gmail.com>\n"
 "Language-Team: Italian https://github.com/dmedri/R-italian-lang\n"
@@ -592,7 +592,8 @@ msgstr "non posso gestire 'pairwise.complete.obs'"
 msgid "'V' is not a square numeric matrix"
 msgstr "'V' non è una matrice quadrata numerica"
 
-msgid "diag(.) had 0 or NA entries; non-finite result is doubtful"
+#, fuzzy
+msgid "diag(V) had non-positive or NA entries; the non-finite result may be dubious"
 msgstr "diag(.) ha 0 o voci NA; un risultato non-finito è incerto"
 
 msgid "'x' must be a numeric vector"
@@ -2450,8 +2451,9 @@ msgid_plural "unknown names %s in the 'split' list"
 msgstr[0] "%s nome sconosciuto nella lista 'split'"
 msgstr[1] "%s nomi sconosciuti nella lista 'split'"
 
+#, fuzzy
 msgid "extra argument %s is not of class \"%s\""
-msgid_plural "extra arguments %s are not of class \"%s\"s"
+msgid_plural "extra arguments %s are not of class \"%s\""
 msgstr[0] "l'argomento extra %s non è di classe \"%s\""
 msgstr[1] "gli argomenti extra %s non sono di classe \"%s\""
 

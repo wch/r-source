@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: R 3.5.0\n"
-"Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-11-30 14:40+0100\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-03-27 16:15-0700\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -56,86 +56,86 @@ msgstr "nierozpoznane określenie '%s' formatu"
 msgid "at most one asterisk '*' is supported in each conversion specification"
 msgstr "co najwyżej jedna gwiazdka '*' jest wspierana w każdym określeniu zamiany"
 
-#: gramLatex.c:2392 gramRd.c:3996 y.tab.c:3996
+#: gramLatex.c:2592 gramRd.c:3970
 #, c-format
 msgid "unable to allocate buffer for long string at line %d"
 msgstr "nie można przydzielić bufora dla długiego łańcucha w linii %d"
 
-#: gramLatex.c:2635 gramRd.c:4549 gramRd.c:4555 y.tab.c:4549 y.tab.c:4555
+#: gramLatex.c:2869 gramRd.c:4523 gramRd.c:4529
 #, c-format
 msgid "invalid '%s' value"
 msgstr "niepoprawny wartość '%s'"
 
-#: gramRd.c:2549 gramRd.c:2552 y.tab.c:2549 y.tab.c:2552
+#: gramRd.c:2581 gramRd.c:2584
 #, c-format
 msgid "bad markup (extra space?) at %s:%d:%d"
 msgstr "błędne oznakowanie (dodatkowa spacja?) w %s:%d:%d"
 
-#: gramRd.c:3144 y.tab.c:3144
+#: gramRd.c:3117
 #, c-format
 msgid "Macro '%s' previously defined."
 msgstr "Makro '%s' zostało już poprzednio zdefiniowane."
 
-#: gramRd.c:3154 y.tab.c:3154
+#: gramRd.c:3127
 #, c-format
 msgid "At most 4 arguments are allowed for user defined macros."
 msgstr "Co najwyżej 4 argumenty są dozwolone dla makr zdefiniowanych przez użytkownika."
 
-#: gramRd.c:3196 y.tab.c:3196
+#: gramRd.c:3169
 #, c-format
 msgid "No macro definition for '%s'."
 msgstr "Brak makra zdefiniowanego dla '%s'"
 
-#: gramRd.c:3258 y.tab.c:3258
+#: gramRd.c:3231
 #, fuzzy, c-format
 msgid "Not enough arguments passed to user macro '%s'"
 msgstr "Co najwyżej 4 argumenty są dozwolone dla makr zdefiniowanych przez użytkownika."
 
-#: gramRd.c:3398 gramRd.c:3402 y.tab.c:3398 y.tab.c:3402
+#: gramRd.c:3371 gramRd.c:3375
 #, c-format
 msgid "newline within quoted string at %s:%d"
 msgstr "nowa linia wewnątrz cytowanego łańcucha w %s:%d"
 
-#: gramRd.c:3421 y.tab.c:3421
+#: gramRd.c:3394
 #, c-format
 msgid "unable to allocate buffer for long macro at line %d"
 msgstr "nie można przydzielić bufora dla długiego makra w linii %d"
 
-#: gramRd.c:3451 y.tab.c:3451
+#: gramRd.c:3424
 msgid "macros nested too deeply: infinite recursion?"
 msgstr "makra są zagnieżdżone zbyt głęboko: nieskończona rekurencja?"
 
-#: gramRd.c:3858 y.tab.c:3858
+#: gramRd.c:3832
 #, c-format
 msgid "Unable to find macro %s"
 msgstr "Nie można znaleźć makra %s"
 
-#: gramRd.c:4057 y.tab.c:4057
+#: gramRd.c:4031
 #, c-format
 msgid "Unexpected end of input (in %c quoted string opened at %s:%d:%d)"
 msgstr "Nieoczekiwane zakończenie wejścia (w %c cytowanym łańcuchu otwartym w %s:%d:%d)"
 
-#: gramRd.c:4562 y.tab.c:4562
+#: gramRd.c:4536
 msgid "cannot open the connection"
 msgstr "nie można otworzyć połączenia"
 
-#: gramRd.c:4569 y.tab.c:4569
+#: gramRd.c:4543
 msgid "cannot read from this connection"
 msgstr "nie można czytać z tego połączenia"
 
-#: gramRd.c:4577 y.tab.c:4577
+#: gramRd.c:4551
 msgid "invalid Rd file"
 msgstr "niepoprawny plik Rd"
 
-#: gramRd.c:4596 y.tab.c:4596
+#: gramRd.c:4570
 msgid "'deparseRd' only supports deparsing character elements"
 msgstr "'deparseRd' wspiera tylko konwertowanie wyrażenia na łańcuch tekstowy dla elementów znakowych"
 
-#: gramRd.c:4599 y.tab.c:4599
+#: gramRd.c:4573
 msgid "bad state"
 msgstr "błędny stan"
 
-#: gramRd.c:4612 y.tab.c:4612
+#: gramRd.c:4586
 #, c-format
 msgid "bad text mode %d in 'deparseRd'"
 msgstr "błędny tryb %d tekstu w 'deparseRd'"
@@ -143,6 +143,11 @@ msgstr "błędny tryb %d tekstu w 'deparseRd'"
 #: http.c:32
 msgid "invalid bind address specification"
 msgstr "niepoprawne określenie adresu wiążącego"
+
+#: http.c:37
+#, c-format
+msgid "Invalid port number %d: should be in 0:65535, typically above 1024"
+msgstr ""
 
 #: install.c:95
 msgid "path too long"

@@ -2,19 +2,19 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-11-30 14:39\n"
-"PO-Revision-Date: 2023-04-05 09:17+0000\n"
-"Last-Translator: Sovan Karmakar <sovankarmakar01@gmail.com>\n"
+"POT-Creation-Date: 2024-03-27 16:14\n"
+"PO-Revision-Date: 2024-01-12 03:05+0000\n"
+"Last-Translator: Mandal MSH <mshmandal@gmail.com>\n"
 "Language-Team: none\n"
 "Language: bn\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.13.1\n"
+"X-Generator: Weblate 4.16.4\n"
 
 msgid "'%s' is defunct."
-msgstr "'%s' বিলুপ্ত‍।"
+msgstr "'%s' এখন অকার্যকর।"
 
 msgid "Use '%s' instead."
 msgstr "পরিবর্তে '%s' ব্যবহার করুন।"
@@ -29,19 +29,25 @@ msgid "'%s' is deprecated."
 msgstr "'%s' এখানে অপ্রচলিত।"
 
 msgid "See help(\"Deprecated\") and help(\"%s-deprecated\")."
-msgstr "help(\"Deprecated\") আর help(\"%s-deprecated\") দেখুন।"
+msgstr "help(\"Deprecated\") এবং help(\"%s-deprecated\") দেখুন।"
 
 msgid "See help(\"Deprecated\")"
 msgstr "help(\"Deprecated\") দেখুন"
 
+msgid "unsupported value of _R_DEPRECATED_IS_R_,"
+msgstr ""
+
+msgid ", will be ignored"
+msgstr ""
+
 msgid "argument to 'La.svd' must be numeric or complex"
-msgstr "'La.svd' এর আর্গুমেন্ট সংখ্যাসূচক অথবা জটিল সংখ্যা হওয়া উচিত"
+msgstr "'La.svd' এর আর্গুমেন্ট অবশ্যই সংখ্যাসূচক অথবা জটিল সংখ্যা হতে হবে"
 
 msgid "infinite or missing values in 'x'"
-msgstr "'x' অসীম অথবা এর কিছু সংখ্যা নেই"
+msgstr "'x' অসীম অথবা এর কিছু সংখ্যা অনুপস্থিত"
 
 msgid "a dimension is zero"
-msgstr "একটির মাপ শূন্য"
+msgstr "একটি মাত্রা শূন্য"
 
 msgid "\"all\" and \"exact\" are mutually exclusive"
 msgstr "\"all\" আর \"exact\" একে অপরের স্বতন্ত্র"
@@ -88,9 +94,8 @@ msgstr "'%s' লজিক্যাল হওয়া উচিত"
 msgid "dim(X) must have a positive length"
 msgstr "dim(x) ধনাত্মক হওয়া প্রয়োজন"
 
-#, fuzzy
 msgid "'X' must have named dimnames"
-msgstr "'X' এর dimnanes এ নাম থাকতে হবে"
+msgstr "'X' এর dimnames এ নাম থাকতে হবে"
 
 msgid "not all elements of 'MARGIN' are names of dimensions"
 msgstr ""

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-11-30 14:40\n"
+"POT-Creation-Date: 2024-03-27 16:14\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -590,7 +590,8 @@ msgstr "nie można obsłużyć 'pairwise.complete.obs'"
 msgid "'V' is not a square numeric matrix"
 msgstr "'V' nie jest kwadratową macierzą liczbową"
 
-msgid "diag(.) had 0 or NA entries; non-finite result is doubtful"
+#, fuzzy
+msgid "diag(V) had non-positive or NA entries; the non-finite result may be dubious"
 msgstr "'diag(.)' miał 0 lub wpisy NA; nieskończony rezultat jest wątpliwy"
 
 msgid "'x' must be a numeric vector"
@@ -2412,7 +2413,7 @@ msgid "cannot fit an asymptotic regression model to these data"
 msgstr "nie można dopasować modelu regresji asymptotycznej do tych danych"
 
 msgid "too few observations to fit an asymptotic regression model"
-msgstr "zbyt mało obserwacji aby dopasować model regresji asymptotycznej "
+msgstr "zbyt mało obserwacji aby dopasować model regresji asymptotycznej"
 
 msgid "too few distinct input values to fit the 'asympOff' model"
 msgstr "zbyt mało różnych wartości wejściowych aby dopasować model 'asympOff'"
@@ -2477,8 +2478,9 @@ msgstr[0] "nieznana nazwa %s w liście 'split'"
 msgstr[1] "nieznane nazwy %s w liście 'split'"
 msgstr[2] "nieznane nazwy %s w liście 'split'"
 
+#, fuzzy
 msgid "extra argument %s is not of class \"%s\""
-msgid_plural "extra arguments %s are not of class \"%s\"s"
+msgid_plural "extra arguments %s are not of class \"%s\""
 msgstr[0] "dodatkowy argument %s nie jest obiektem klasy \"%s\""
 msgstr[1] "dodatkowe argumenty %s nie są obiektami klasy \"%s\""
 msgstr[2] "dodatkowe argumenty %s nie są obiektami klasy \"%s\""

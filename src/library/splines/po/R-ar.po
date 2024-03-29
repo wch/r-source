@@ -1,0 +1,95 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: R 4.2.0\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2024-03-27 16:14\n"
+"PO-Revision-Date: 2024-03-26 04:47+0000\n"
+"Last-Translator: Michael Chirico <michaelchirico4@gmail.com>\n"
+"Language-Team: none\n"
+"Language: ar\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
+"X-Generator: Weblate 4.16.4\n"
+
+msgid "must have at least 'ord' knots"
+msgstr "يجب أن يكون لديك عقدة \"ord\" على الأقل"
+
+msgid "length of 'derivs' is larger than length of 'x'"
+msgstr "\"derivs\" أطول من \"x\""
+
+msgid "empty 'derivs'"
+msgstr "\"derivs\" فارغة"
+
+msgid "'ord' must be positive integer, at most the number of knots"
+msgstr "يجب أن يكون \"ord\" عددا صحيحا موجبا ، على الأكثر عدد العقد"
+
+msgid "need at least %s (=%d) knots"
+msgstr "تحتاج على الأقل عقدة %s (=%d)"
+
+msgid "the 'x' data must be in the range %g to %g unless you set '%s'"
+msgstr "يجب أن تكون بيانات \"x\" في النطاق%g إلى %g ما لم تقم بتعيين \"%s\""
+
+msgid "%s needs package 'Matrix' correctly installed"
+msgstr "%s يحتاج إلى تثبيت الحزمة \"Matrix\" بشكل صحيح"
+
+msgid "values of 'x' must be distinct"
+msgstr "يجب أن تكون قيم \"x\" مميزة"
+
+msgid "must have at least 'ord'=%d points"
+msgstr "يجب أن يكون لديك على الأقل ord\" =%d\" نقاط"
+
+msgid "'formula' must be of the form \"y ~ x\""
+msgstr "يجب أن تكون \"formula\" بالشكل \"y ~ x\""
+
+msgid "lengths of 'x' and 'y' must match"
+msgstr "يجب أن تتطابق أطوال \"x\" و \"y\""
+
+msgid "values of 'x' must be strictly increasing"
+msgstr "يجب أن تتزايد قيم \"x\" بشكل صارم"
+
+msgid "'ord' must be >= 2"
+msgstr "يجب أن يكون \"ord\" > = 2"
+
+msgid "the range of 'x' values exceeds one period"
+msgstr "يتجاوز نطاق قيم \"x\" نقطة واحدة"
+
+msgid "knot positions must be non-decreasing"
+msgstr "يجب أن تكون مواضع العقدة غير متناقصة"
+
+msgid "lengths of 'x' and 'y' must be the same"
+msgstr "يجب أن يكون طول \"x\" و \"y\" متماثلين"
+
+msgid "'deriv' must be between 0 and %d"
+msgstr "يجب أن يكون \"deriv\" بين 0 و %d"
+
+msgid "knot positions must be strictly increasing"
+msgstr "يجب أن تكون موضع العقدة في ازدياد صارم"
+
+msgid "currently implemented only for cubic splines"
+msgstr "تنفذ حاليا فقط للخطوط المكعبة"
+
+msgid "spline must be monotone"
+msgstr "يجب أن يكون الشريحة رتيبة"
+
+msgid "'degree' must be integer >= 1"
+msgstr "يجب أن تكون \"degree\" عددا صحيحا > = 1"
+
+msgid "'df' was too small; have used %d"
+msgstr "كان \"df\" صغيرا جدا. لقد استخدمت %d"
+
+msgid "non-finite knots"
+msgstr ""
+
+msgid "all interior knots match left boundary knot"
+msgstr ""
+
+msgid "all interior knots match right boundary knot"
+msgstr ""
+
+msgid "shoving 'interior' knots matching boundary knots to inside"
+msgstr ""
+
+msgid "some 'x' values beyond boundary knots may cause ill-conditioned bases"
+msgstr "قد تتسبب بعض قيم \"x\" التي تتجاوز عقدة الحدود في قواعد غير مكيفة"

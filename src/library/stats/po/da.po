@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
-"Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-11-30 14:40+0100\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-03-27 16:14-0700\n"
 "PO-Revision-Date: 2011-12-01 20:24+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -652,156 +652,156 @@ msgstr ""
 msgid "unknown 'method'"
 msgstr ""
 
-#: optimize.c:220 optimize.c:306 optimize.c:528
+#: optimize.c:221 optimize.c:307 optimize.c:529
 msgid "NA replaced by maximum positive value"
 msgstr ""
 
-#: optimize.c:228 optimize.c:318 optimize.c:536
+#: optimize.c:229 optimize.c:319 optimize.c:537
 msgid "NA/Inf replaced by maximum positive value"
 msgstr ""
 
-#: optimize.c:237
+#: optimize.c:238
 msgid "invalid function value in 'optimize'"
 msgstr ""
 
-#: optimize.c:255 optimize.c:347 optimize.c:721
+#: optimize.c:256 optimize.c:348 optimize.c:723
 msgid "attempt to minimize non-function"
 msgstr ""
 
-#: optimize.c:262 optimize.c:269 optimize.c:278 optimize.c:352 optimize.c:357
-#: optimize.c:373
+#: optimize.c:263 optimize.c:270 optimize.c:279 optimize.c:353 optimize.c:358
+#: optimize.c:374
 #, fuzzy, c-format
 msgid "invalid '%s' value"
 msgstr "approx(): ugyldig f-værdi"
 
-#: optimize.c:271 optimize.c:358
+#: optimize.c:272 optimize.c:359
 msgid "'xmin' not less than 'xmax'"
 msgstr ""
 
-#: optimize.c:315
+#: optimize.c:316
 msgid "-Inf replaced by maximally negative value"
 msgstr ""
 
-#: optimize.c:328
+#: optimize.c:329
 msgid "invalid function value in 'zeroin'"
 msgstr ""
 
-#: optimize.c:363 optimize.c:368
+#: optimize.c:364 optimize.c:369
 #, fuzzy, c-format
 msgid "NA value for '%s' is not allowed"
 msgstr "variabel '%s' er ikke numerisk"
 
-#: optimize.c:378
+#: optimize.c:379
 #, fuzzy
 msgid "'maxiter' must be positive"
 msgstr "'m' skal være en liste"
 
-#: optimize.c:520
+#: optimize.c:521
 msgid "non-finite value supplied by 'nlm'"
 msgstr ""
 
-#: optimize.c:555
+#: optimize.c:556
 msgid "invalid function value in 'nlm' optimizer"
 msgstr ""
 
-#: optimize.c:566 optimize.c:581
+#: optimize.c:568 optimize.c:583
 msgid "function value caching for optimization is seriously confused"
 msgstr ""
 
-#: optimize.c:596
+#: optimize.c:598
 msgid "numeric parameter expected"
 msgstr ""
 
-#: optimize.c:600
+#: optimize.c:602
 msgid "conflicting parameter lengths"
 msgstr ""
 
-#: optimize.c:604
+#: optimize.c:606
 #, fuzzy
 msgid "invalid parameter length"
 msgstr "ugyldig argumenttype"
 
-#: optimize.c:614 optimize.c:621
+#: optimize.c:616 optimize.c:623
 #, fuzzy
 msgid "missing value in parameter"
 msgstr "manglende værdi i sidste %d observationer"
 
-#: optimize.c:626
+#: optimize.c:628
 #, fuzzy
 msgid "invalid parameter type"
 msgstr "ugyldig argumenttype"
 
-#: optimize.c:637
+#: optimize.c:639
 msgid "non-positive number of parameters in nlm"
 msgstr ""
 
-#: optimize.c:639
+#: optimize.c:641
 msgid "nlm is inefficient for 1-d problems"
 msgstr ""
 
-#: optimize.c:641
+#: optimize.c:643
 msgid "invalid gradient tolerance in nlm"
 msgstr ""
 
-#: optimize.c:643
+#: optimize.c:645
 msgid "invalid iteration limit in nlm"
 msgstr ""
 
-#: optimize.c:645
+#: optimize.c:647
 msgid "minimization function has no good digits in nlm"
 msgstr ""
 
-#: optimize.c:647
+#: optimize.c:649
 msgid "no analytic gradient to check in nlm!"
 msgstr ""
 
-#: optimize.c:649
+#: optimize.c:651
 msgid "no analytic Hessian to check in nlm!"
 msgstr ""
 
-#: optimize.c:651
+#: optimize.c:653
 msgid "probable coding error in analytic gradient"
 msgstr ""
 
-#: optimize.c:653
+#: optimize.c:655
 msgid "probable coding error in analytic Hessian"
 msgstr ""
 
-#: optimize.c:655
+#: optimize.c:657
 #, c-format
 msgid ""
 "*** unknown error message (msg = %d) in nlm()\n"
 "*** should not happen!"
 msgstr ""
 
-#: optimize.c:666
+#: optimize.c:668
 msgid "Relative gradient close to zero.\n"
 msgstr ""
 
-#: optimize.c:667 optimize.c:671
+#: optimize.c:669 optimize.c:673
 msgid "Current iterate is probably solution.\n"
 msgstr ""
 
-#: optimize.c:670
+#: optimize.c:672
 msgid "Successive iterates within tolerance.\n"
 msgstr ""
 
-#: optimize.c:674
+#: optimize.c:676
 msgid "Last global step failed to locate a point lower than x.\n"
 msgstr ""
 
-#: optimize.c:675
+#: optimize.c:677
 msgid ""
 "Either x is an approximate local minimum of the function,\n"
 "the function is too non-linear for this algorithm,\n"
 "or steptol is too large.\n"
 msgstr ""
 
-#: optimize.c:680
+#: optimize.c:682
 msgid "Iteration limit exceeded.  Algorithm failed.\n"
 msgstr ""
 
-#: optimize.c:683
+#: optimize.c:685
 msgid ""
 "Maximum step size exceeded 5 consecutive times.\n"
 "Either the function is unbounded below,\n"
@@ -810,17 +810,17 @@ msgid ""
 "or stepmx is too small.\n"
 msgstr ""
 
-#: optimize.c:745 optimize.c:750 optimize.c:754 optimize.c:758 optimize.c:762
-#: optimize.c:766 optimize.c:771
+#: optimize.c:747 optimize.c:752 optimize.c:756 optimize.c:760 optimize.c:764
+#: optimize.c:768 optimize.c:773
 #, fuzzy
 msgid "invalid NA value in parameter"
 msgstr "ugyldig værdi for lag.max"
 
-#: optimize.c:800
+#: optimize.c:802
 msgid "hessian supplied is of the wrong length or mode, so ignored"
 msgstr ""
 
-#: optimize.c:804
+#: optimize.c:806
 msgid "gradient supplied is of the wrong length or mode, so ignored"
 msgstr ""
 
@@ -845,7 +845,7 @@ msgstr "ugyldig værdi for lag.max"
 #: port.c:133
 #, c-format
 msgid "Rf_divset: alg = %d must be 1, 2, 3, or 4"
-msgstr "Rf_divsæt: alg = %d skal være 1, 2, 3 eller 4 "
+msgstr "Rf_divsæt: alg = %d skal være 1, 2, 3 eller 4"
 
 #: port.c:149
 msgid "port algorithms 3 or higher are not supported"

@@ -1,0 +1,598 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: R 4.4.0\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2023-07-31 14:59\n"
+"PO-Revision-Date: 2024-01-29 03:05+0000\n"
+"Last-Translator: Heather Turner <ht@heatherturner.net>\n"
+"Language-Team: none\n"
+"Language: en_GB\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.16.4\n"
+
+msgid "invalid 'at' location in 'axis'"
+msgstr "invalid 'at' location in 'axis'"
+
+msgid "invalid to specify axis labels when 'at' is NULL"
+msgstr "invalid to specify axis labels when 'at' is NULL"
+
+msgid "'labels' and 'at' locations must have same length"
+msgstr "'labels' and 'at' locations must have same length"
+
+msgid "logical 'label' supplied of length 0"
+msgstr "logical 'label' supplied of length 0"
+
+msgid "Invalid coordinates"
+msgstr "Invalid coordinates"
+
+msgid "Invalid grob coordinates"
+msgstr "Invalid grob coordinates"
+
+msgid "Invalid gTree coordinates"
+msgstr "Invalid gTree coordinates"
+
+msgid "Closed must not be a missing value"
+msgstr "Closed must not be a missing value"
+
+msgid "end points must not be identical"
+msgstr "end points must not be identical"
+
+msgid "'x1', 'y1', 'x2', and 'y2' must be units"
+msgstr "'x1', 'y1', 'x2', and 'y2' must be units"
+
+msgid "'shape' must be between -1 and 1"
+msgstr "'shape' must be between -1 and 1"
+
+msgid "'squareShape' must be between -1 and 1"
+msgstr "'squareShape' must be between -1 and 1"
+
+msgid "'arrow' must be an arrow object or NULL"
+msgstr "'arrow' must be an arrow object or NULL"
+
+msgid "how did we get here?"
+msgstr "how did we get here?"
+
+msgid "must start new page if showing leaves separately"
+msgstr "must start new page if showing leaves separately"
+
+msgid "invalid 'edit' information"
+msgstr "invalid 'edit' information"
+
+msgid "'gEditList' can only contain 'gEdit' objects"
+msgstr "'gEditList' can only contain 'gEdit' objects"
+
+msgid "invalid 'frame'"
+msgstr "invalid 'frame'"
+
+msgid "invalid 'grob'"
+msgstr "invalid 'grob'"
+
+msgid "invalid 'row' and/or 'col' (no such cell in frame layout)"
+msgstr "invalid 'row' and/or 'col' (no such cell in frame layout)"
+
+msgid "'col' can only be a range of existing columns"
+msgstr "'col' can only be a range of existing columns"
+
+msgid "invalid 'col' specification"
+msgstr "invalid 'col' specification"
+
+msgid "'row' can only be a range of existing rows"
+msgstr "'row' can only be a range of existing rows"
+
+msgid "invalid 'row' specification"
+msgstr "invalid 'row' specification"
+
+msgid "cannot specify more than one of 'side=[\"left\", \"right\"]', 'col', 'col.before', or 'col.after'"
+msgstr ""
+"cannot specify more than one of 'side=[\"left\", \"right\"]', 'col', "
+"'col.before', or 'col.after'"
+
+msgid "must specify exactly one of 'side=[\"top\", \"bottom\"]', 'row', 'row.before', or 'row.after'"
+msgstr ""
+"must specify exactly one of 'side=[\"top\", \"bottom\"]', 'row', "
+"'row.before', or 'row.after'"
+
+msgid "invalid 'n'"
+msgstr "invalid 'n'"
+
+msgid "invalid 'f'"
+msgstr "invalid 'f'"
+
+msgid "'gpar' element '%s' must not be length 0"
+msgstr "'gpar' element '%s' must not be length 0"
+
+msgid "mixture of missing and non-missing values for %s"
+msgstr "mixture of missing and non-missing values for %s"
+
+msgid "'gamma' 'gpar' element is defunct"
+msgstr "'gamma' 'gpar' element is defunct"
+
+msgid "'fill' gpar list components must all be patterns"
+msgstr "'fill' gpar list components must all be patterns"
+
+msgid "invalid 'linemitre' value"
+msgstr "invalid 'linemitre' value"
+
+msgid "invalid 'alpha' value"
+msgstr "invalid 'alpha' value"
+
+msgid "must specify only one of 'font' and 'fontface'"
+msgstr "must specify only one of 'font' and 'fontface'"
+
+msgid "invalid fontface"
+msgstr "invalid fontface"
+
+msgid "argument must be a 'gpar' object"
+msgstr "argument must be a 'gpar' object"
+
+msgid "must specify only valid 'gpar' names"
+msgstr "must specify only valid 'gpar' names"
+
+msgid "invalid display list element"
+msgstr "invalid display list element"
+
+msgid "one or more grobs overwritten (grab WILL not be faithful; try 'wrap.grobs = TRUE')"
+msgstr ""
+"one or more grobs overwritten (grab WILL not be faithful; try 'wrap.grobs = "
+"TRUE')"
+
+msgid "viewport overwritten (grab MAY not be faithful)"
+msgstr "viewport overwritten (grab MAY not be faithful)"
+
+msgid "grob pushed viewports and did not pop/up them (grab MAY not be faithful)"
+msgstr ""
+"grob pushed viewports and did not pop/up them (grab MAY not be faithful)"
+
+msgid "only valid to push viewports"
+msgstr "only valid to push viewports"
+
+msgid "must specify at least one viewport"
+msgstr "must specify at least one viewport"
+
+msgid "Down viewport failed to record on display list"
+msgstr "Down viewport failed to record on display list"
+
+msgid "Down viewport incorrectly recorded on display list"
+msgstr "Down viewport incorrectly recorded on display list"
+
+msgid "must pop at least one viewport"
+msgstr "must pop at least one viewport"
+
+msgid "must navigate up at least one viewport"
+msgstr "must navigate up at least one viewport"
+
+msgid "Invalid number of generations"
+msgstr "Invalid number of generations"
+
+msgid "Invalid 'clearGroups' argument"
+msgstr "Invalid 'clearGroups' argument"
+
+msgid "invalid object inserted on the display list"
+msgstr "invalid object inserted on the display list"
+
+msgid "invalid modification of the display list"
+msgstr "invalid modification of the display list"
+
+msgid "'expr' must return a grob or gList"
+msgstr "'expr' must return a grob or gList"
+
+msgid "invalid 'grob' argument"
+msgstr "invalid 'grob' argument"
+
+msgid "invalid 'vp' slot"
+msgstr "invalid 'vp' slot"
+
+msgid "invalid 'gp' slot"
+msgstr "invalid 'gp' slot"
+
+msgid "invalid 'grob' class"
+msgstr "invalid 'grob' class"
+
+msgid "a 'grob' path must contain at least one 'grob' name"
+msgstr "a 'grob' path must contain at least one 'grob' name"
+
+msgid "unable to coerce to \"gList\""
+msgstr "unable to coerce to \"gList\""
+
+msgid "only 'grobs' allowed in \"gList\""
+msgstr "only 'grobs' allowed in \"gList\""
+
+msgid "invalid element to add to \"gList\""
+msgstr "invalid element to add to \"gList\""
+
+msgid "can only set 'children' for a \"gTree\""
+msgstr "can only set 'children' for a \"gTree\""
+
+msgid "'children' must be a \"gList\""
+msgstr "'children' must be a \"gList\""
+
+msgid "it is only valid to get 'children' from a \"gTree\""
+msgstr "it is only valid to get 'children' from a \"gTree\""
+
+msgid "invalid \"gTree\" class"
+msgstr "invalid \"gTree\" class"
+
+msgid "'allDevices' not yet implemented"
+msgstr "'allDevices' not yet implemented"
+
+msgid "invalid 'gPath'"
+msgstr "invalid 'gPath'"
+
+msgid "invalid 'grep' value"
+msgstr "invalid 'grep' value"
+
+msgid "it is only valid to get a child from a \"gTree\""
+msgstr "it is only valid to get a child from a \"gTree\""
+
+msgid "'gPath' does not specify a valid child"
+msgstr "'gPath' does not specify a valid child"
+
+msgid "it is only valid to set a child of a \"gTree\""
+msgstr "it is only valid to set a child of a \"gTree\""
+
+msgid "it is only valid to set a 'grob' as child of a \"gTree\""
+msgstr "it is only valid to set a 'grob' as child of a \"gTree\""
+
+msgid "New 'grob' name (%s) does not match 'gPath' (%s)"
+msgstr "New 'grob' name (%s) does not match 'gPath' (%s)"
+
+msgid "it is only valid to add a 'grob' to a \"gTree\""
+msgstr "it is only valid to add a 'grob' to a \"gTree\""
+
+msgid "it is only valid to add a child to a \"gTree\""
+msgstr "it is only valid to add a child to a \"gTree\""
+
+msgid "'gPath' (%s) not found"
+msgstr "'gPath' (%s) not found"
+
+msgid "it is only valid to remove a child from a \"gTree\""
+msgstr "it is only valid to remove a child from a \"gTree\""
+
+msgid "it is only valid to edit a child of a \"gTree\""
+msgstr "it is only valid to edit a child of a \"gTree\""
+
+msgid "it is invalid to directly edit the 'children' or 'childrenOrder' slot"
+msgstr "it is invalid to directly edit the 'children' or 'childrenOrder' slot"
+
+msgid "invalid 'result'"
+msgstr "invalid 'result'"
+
+msgid "the new 'grob' must have the same name as the old 'grob'"
+msgstr "the new 'grob' must have the same name as the old 'grob'"
+
+msgid "slot '%s' not found"
+msgstr "slot '%s' not found"
+
+msgid "gPath (%s) not found"
+msgstr "gPath (%s) not found"
+
+msgid "grob '%s' not found"
+msgstr "grob '%s' not found"
+
+msgid "Invalid force target"
+msgstr "Invalid force target"
+
+msgid "Invalid revert target"
+msgstr "Invalid revert target"
+
+msgid "can only reorder 'children' for a \"gTree\""
+msgstr "can only reorder 'children' for a \"gTree\""
+
+msgid "Invalid 'order'"
+msgstr "Invalid 'order'"
+
+msgid "Group definition failed"
+msgstr "Group definition failed"
+
+msgid "Invalid source"
+msgstr "Invalid source"
+
+msgid "Invalid destination"
+msgstr "Invalid destination"
+
+msgid "Unknown group:"
+msgstr "Unknown group:"
+
+msgid "Invalid transform (nothing drawn)"
+msgstr "Invalid transform (nothing drawn)"
+
+msgid "Invalid transform"
+msgstr "Invalid transform"
+
+msgid "'l' must be a layout"
+msgstr "'l' must be a layout"
+
+msgid "'pch' and 'labels' not the same length"
+msgstr "'pch' and 'labels' not the same length"
+
+msgid "'hgap' must be single unit"
+msgstr "'hgap' must be single unit"
+
+msgid "'vgap' must be single unit"
+msgstr "'vgap' must be single unit"
+
+msgid "'nrow' must be >= 1"
+msgstr "'nrow' must be >= 1"
+
+msgid "'ncol' must be >= 1"
+msgstr "'ncol' must be >= 1"
+
+msgid "nrow * ncol < #{legend labels}"
+msgstr "nrow * ncol < #{legend labels}"
+
+msgid "invalid justification"
+msgstr "invalid justification"
+
+msgid "invalid horizontal justification"
+msgstr "invalid horizontal justification"
+
+msgid "invalid vertical justification"
+msgstr "invalid vertical justification"
+
+msgid "'respect' must be logical or an 'nrow' by 'ncol' matrix"
+msgstr "'respect' must be logical or an 'nrow' by 'ncol' matrix"
+
+msgid "invalid 'print' argument"
+msgstr "invalid 'print' argument"
+
+msgid "invalid object in 'listing'"
+msgstr "invalid object in 'listing'"
+
+msgid "invalid listing"
+msgstr "invalid listing"
+
+msgid "invalid 'listing'"
+msgstr "invalid 'listing'"
+
+msgid "Only a grob can be converted to a mask"
+msgstr "Only a grob can be converted to a mask"
+
+msgid "invalid 'origin'"
+msgstr "invalid 'origin'"
+
+msgid "Only a grob can be converted to a path"
+msgstr "Only a grob can be converted to a path"
+
+msgid "colours and stops must be at least length 1"
+msgstr "colours and stops must be at least length 1"
+
+msgid "x1, y1, x2, and y2 must all be length 1"
+msgstr "x1, y1, x2, and y2 must all be length 1"
+
+msgid "cx1, cy1, cx2, cy2, r1, and r2 must all be length 1"
+msgstr "cx1, cy1, cx2, cy2, r1, and r2 must all be length 1"
+
+msgid "x, y, width, and height must all be length 1"
+msgstr "x, y, width, and height must all be length 1"
+
+msgid "Pattern must be based on grob"
+msgstr "Pattern must be based on grob"
+
+msgid "Missing pattern fill has been set to transparent"
+msgstr "Missing pattern fill has been set to transparent"
+
+msgid "grob drawing produces more shapes than grob coords\n(recycling coords)"
+msgstr ""
+"grob drawing produces more shapes than grob coords\n"
+"(recycling coords)"
+
+msgid "Pattern fill applied to object with no inside"
+msgstr "Pattern fill applied to object with no inside"
+
+msgid "'length' must be a 'unit' object"
+msgstr "'length' must be a 'unit' object"
+
+msgid "invalid 'ends' or 'type' argument"
+msgstr "invalid 'ends' or 'type' argument"
+
+msgid "'x' and 'y' must be units"
+msgstr "'x' and 'y' must be units"
+
+msgid "'x' and 'y' must have length 1"
+msgstr "'x' and 'y' must have length 1"
+
+msgid "invalid 'arrow' argument"
+msgstr "invalid 'arrow' argument"
+
+msgid "it is invalid to specify both 'id' and 'id.lengths'"
+msgstr "it is invalid to specify both 'id' and 'id.lengths'"
+
+msgid "'x' and 'y' must be same length"
+msgstr "'x' and 'y' must be same length"
+
+msgid "'x' and 'y' and 'id' must all be same length"
+msgstr "'x' and 'y' and 'id' must all be same length"
+
+msgid "'x' and 'y' and 'id.lengths' must specify same overall length"
+msgstr "'x' and 'y' and 'id.lengths' must specify same overall length"
+
+msgid "'x0', 'y0', 'x1', and 'y1' must be units"
+msgstr "'x0', 'y0', 'x1', and 'y1' must be units"
+
+msgid "'x' and 'y' must be units or NULL"
+msgstr "'x' and 'y' must be units or NULL"
+
+msgid "corrupt 'arrows' object"
+msgstr "corrupt 'arrows' object"
+
+msgid "'x' and 'y' and 'pathId.lengths' must specify same overall length"
+msgstr "'x' and 'y' and 'pathId.lengths' must specify same overall length"
+
+msgid "x and y must be units"
+msgstr "x and y must be units"
+
+msgid "must have exactly 4 control points"
+msgstr "must have exactly 4 control points"
+
+msgid "must have exactly 4 control points per Bezier curve"
+msgstr "must have exactly 4 control points per Bezier curve"
+
+msgid "'x', 'y', and 'r' must be units"
+msgstr "'x', 'y', and 'r' must be units"
+
+msgid "'x', 'y', 'width', and 'height' must be units"
+msgstr "'x', 'y', 'width', and 'height' must be units"
+
+msgid "invalid 'rot' value"
+msgstr "invalid 'rot' value"
+
+msgid "zero-length 'pch'"
+msgstr "zero-length 'pch'"
+
+msgid "'x', 'y' and 'size' must be units"
+msgstr "'x', 'y' and 'size' must be units"
+
+msgid "'x' and 'y' must be 'unit' objects and have the same length"
+msgstr "'x' and 'y' must be 'unit' objects and have the same length"
+
+msgid "'x', 'y', 'width', and 'height' must all be units of length 1"
+msgstr "'x', 'y', 'width', and 'height' must all be units of length 1"
+
+msgid "'x' and 'y' must all be units of length 1"
+msgstr "'x' and 'y' must all be units of length 1"
+
+msgid "'r' must be a 'unit' object"
+msgstr "'r' must be a 'unit' object"
+
+msgid "'x', 'y', 'width', and 'height' must have length 1"
+msgstr "'x', 'y', 'width', and 'height' must have length 1"
+
+msgid "Invalid glyph info"
+msgstr "Invalid glyph info"
+
+msgid "'x' and 'y' must have length > 0"
+msgstr "'x' and 'y' must have length > 0"
+
+msgid "'hjust' and 'vjust' must be glyphJust() values"
+msgstr "'hjust' and 'vjust' must be glyphJust() values"
+
+msgid "'hjust' and 'vjust' must have length 1"
+msgstr "'hjust' and 'vjust' must have length 1"
+
+msgid "Unknown width; using first width"
+msgstr "Unknown width; using first width"
+
+msgid "Unknown anchor; using left justification"
+msgstr "Unknown anchor; using left justification"
+
+msgid "Unknown height; using first height"
+msgstr "Unknown height; using first height"
+
+msgid "Unknown anchor; using bottom justification"
+msgstr "Unknown anchor; using bottom justification"
+
+msgid "'x' and 'units' must have length > 0"
+msgstr "'x' and 'units' must have length > 0"
+
+msgid "invalid 'axis' or 'type'"
+msgstr "invalid 'axis' or 'type'"
+
+msgid "'x' and 'y' must be units and 'device' must be logical"
+msgstr "'x' and 'y' must be units and 'device' must be logical"
+
+msgid "'w' and 'h' must be units and 'device' must be logical"
+msgstr "'w' and 'h' must be units and 'device' must be logical"
+
+msgid "Not a unit object"
+msgstr "Not a unit object"
+
+msgid "'Summary' function '%s' not meaningful for units"
+msgstr "'Summary' function '%s' not meaningful for units"
+
+msgid "operator '%s' not meaningful for units"
+msgstr "operator '%s' not meaningful for units"
+
+msgid "'*' or '/' cannot be used as a unary operator"
+msgstr "'*' or '/' cannot be used as a unary operator"
+
+msgid "only one operand may be a unit"
+msgstr "only one operand may be a unit"
+
+msgid "non-unit operand must be numeric"
+msgstr "non-unit operand must be numeric"
+
+msgid "can't divide with a unit"
+msgstr "can't divide with a unit"
+
+msgid "both operands must be units"
+msgstr "both operands must be units"
+
+msgid "index out of bounds (\"unit\" subsetting)"
+msgstr "index out of bounds (\"unit\" subsetting)"
+
+msgid "Cannot create zero-length unit vector (\"unit\" subsetting)"
+msgstr "Cannot create zero-length unit vector (\"unit\" subsetting)"
+
+msgid "index must be of length 1"
+msgstr "index must be of length 1"
+
+msgid "replacement must be of length 1"
+msgstr "replacement must be of length 1"
+
+msgid "invalid 'theta'"
+msgstr "invalid 'theta'"
+
+msgid "'range' must be numeric"
+msgstr "'range' must be numeric"
+
+msgid "invalid 'gp' value"
+msgstr "invalid 'gp' value"
+
+msgid "invalid 'clip' value"
+msgstr "invalid 'clip' value"
+
+msgid "invalid 'mask' value"
+msgstr "invalid 'mask' value"
+
+msgid "invalid 'xscale' in viewport"
+msgstr "invalid 'xscale' in viewport"
+
+msgid "invalid 'yscale' in viewport"
+msgstr "invalid 'yscale' in viewport"
+
+msgid "invalid 'angle' in viewport"
+msgstr "invalid 'angle' in viewport"
+
+msgid "invalid 'layout' in viewport"
+msgstr "invalid 'layout' in viewport"
+
+msgid "invalid 'layout.pos.row' in viewport"
+msgstr "invalid 'layout.pos.row' in viewport"
+
+msgid "invalid 'layout.pos.col' in viewport"
+msgstr "invalid 'layout.pos.col' in viewport"
+
+msgid "only viewports allowed in 'vpList'"
+msgstr "only viewports allowed in 'vpList'"
+
+msgid "only viewports allowed in 'vpStack'"
+msgstr "only viewports allowed in 'vpStack'"
+
+msgid "'parent' must be a viewport and 'children' must be a 'vpList' in 'vpTree'"
+msgstr ""
+"'parent' must be a viewport and 'children' must be a 'vpList' in 'vpTree'"
+
+msgid "a viewport path must contain at least one viewport name"
+msgstr "a viewport path must contain at least one viewport name"
+
+msgid "must specify at least one of 'x' or 'xscale'"
+msgstr "must specify at least one of 'x' or 'xscale'"
+
+msgid "must specify at least one of 'y' or 'yscale'"
+msgstr "must specify at least one of 'y' or 'yscale'"
+
+msgid "shutting down all devices when unloading 'grid' namespace"
+msgstr "shutting down all devices when unloading 'grid' namespace"
+
+msgid "invalid grob name"
+msgid_plural "invalid grob names"
+msgstr[0] "invalid grob name"
+msgstr[1] "invalid grob names"
+
+msgid "invalid viewport name"
+msgid_plural "invalid viewport names"
+msgstr[0] "invalid viewport name"
+msgstr[1] "invalid viewport names"

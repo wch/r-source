@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
-"Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-11-30 14:40+0100\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-03-27 16:14-0700\n"
 "PO-Revision-Date: 2011-03-26 08:54-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -46,7 +46,7 @@ msgstr ""
 #: grid.c:909 grid.c:914 grid.c:1035 grid.c:1040
 #, fuzzy
 msgid "cannot pop the top-level viewport ('grid' and 'graphics' output mixed?)"
-msgstr "Não é possível mostrar a viewport de nível máximo (saidas gráficas e grid misturadas?) "
+msgstr "Não é possível mostrar a viewport de nível máximo (saidas gráficas e grid misturadas?)"
 
 #: grid.c:1241
 msgid "attempt to plot on null device"

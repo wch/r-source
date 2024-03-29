@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: R 2.1.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2023-11-30 16:47+0100\n"
-"PO-Revision-Date: 2022-10-16 14:04+0000\n"
-"Last-Translator: Gabriel Tormin <gta1998@gmail.com>\n"
+"PO-Revision-Date: 2024-03-18 21:18+0000\n"
+"Last-Translator: Michael Chirico <michaelchirico4@gmail.com>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.13.1\n"
+"X-Generator: Weblate 4.16.4\n"
 "X-Poedit-Country: BRAZIL\n"
 "X-Poedit-Language: Portuguese\n"
 
@@ -61,7 +61,7 @@ msgstr "Fazendo rolagem.\n"
 
 #: src/gnuwin32/console.c:2302
 msgid "  Keyboard: PgUp, PgDown, Ctrl+Arrows, Ctrl+Home, Ctrl+End,\n"
-msgstr "  Teclado:  PgUp, PgDown, Ctrl+Arrows, Ctrl+Home, Ctrl+End,\n"
+msgstr "  Teclado: PgUp, PgDown, Ctrl+Arrows, Ctrl+Home, Ctrl+End,\n"
 
 #: src/gnuwin32/console.c:2303
 msgid ""
@@ -77,7 +77,7 @@ msgstr "Editando.\n"
 
 #: src/gnuwin32/console.c:2305
 msgid "  Moving the cursor: \n"
-msgstr " Movendo o cursor: \n"
+msgstr "  Movendo o cursor: \n"
 
 #: src/gnuwin32/console.c:2306
 msgid "     Left arrow or Ctrl+B: move backward one character;\n"
@@ -115,7 +115,9 @@ msgstr "     Backspace: exclui o caracter precedente;\n"
 # atual ou corrente?
 #: src/gnuwin32/console.c:2314
 msgid "     Ctrl+Del or Ctrl+K: delete text from current character to end of line.\n"
-msgstr "     Ctrl+Del ou Ctrl+K: apaga o texto do caracter atual até o final da linha.\n"
+msgstr ""
+"     Ctrl+Del ou Ctrl+K: apaga o texto do caracter atual até o final da "
+"linha.\n"
 
 #: src/gnuwin32/console.c:2315
 msgid "     Ctrl+U: delete all text from current line.\n"
@@ -127,15 +129,21 @@ msgstr "  Copiar e colar.\n"
 
 #: src/gnuwin32/console.c:2317
 msgid "     Use the mouse (with the left button held down) to mark (select) text.\n"
-msgstr "     Use o mouse (segurando o botão esquerdo) para marcar (selecionar) texto.\n"
+msgstr ""
+"     Use o mouse (segurando o botão esquerdo) para marcar (selecionar) texto."
+"\n"
 
 #: src/gnuwin32/console.c:2318
 msgid "     Use Shift+Del (or Ctrl+C) to copy the marked text to the clipboard and\n"
-msgstr "     Use Shift+Del (ou Ctrl+C) para copiar o texto selecionado para a área de transferência e\n"
+msgstr ""
+"     Use Shift+Del (ou Ctrl+C) para copiar o texto selecionado para a área "
+"de transferência e\n"
 
 #: src/gnuwin32/console.c:2319
 msgid "     Shift+Ins (or Ctrl+V or Ctrl+Y) to paste the content of the clipboard (if any)  \n"
-msgstr "     Shift+Ins (ou Ctrl+V ou Ctrl+Y) para colar o conteúdo da área de transferência (se houver algum)  \n"
+msgstr ""
+"     Shift+Ins (ou Ctrl+V ou Ctrl+Y) para colar o conteúdo da área de "
+"transferência (se houver algum)  \n"
 
 #: src/gnuwin32/console.c:2320
 msgid "     to the console, Ctrl+X first copy then paste\n"
@@ -151,7 +159,8 @@ msgstr "     Ctrl+L: Limpa o console.\n"
 
 #: src/gnuwin32/console.c:2323
 msgid "     Ctrl+O or INS: Toggle overwrite mode: initially off.\n"
-msgstr "     Ctrl+O or INS: Alterna o modo de sobrescrita: inicialmente desligado.\n"
+msgstr ""
+"     Ctrl+O or INS: Alterna o modo de sobrescrita: inicialmente desligado.\n"
 
 #: src/gnuwin32/console.c:2324
 msgid "     Ctrl+T: Interchange current char with one to the left.\n"
@@ -251,11 +260,14 @@ msgstr "     Pressione Ctrl-R\n"
 
 #: src/gnuwin32/editor.c:680
 msgid "     Select \"Run line or selection\" from the \"Edit\" menu\n"
-msgstr "     Seleciome \"Executar linha ou seleção\" a partir do menu \"Editar\"\n"
+msgstr ""
+"     Seleciome \"Executar linha ou seleção\" a partir do menu \"Editar\"\n"
 
 #: src/gnuwin32/editor.c:681
 msgid "     Press the \"Run line or selection\" icon on the toolbar\n"
-msgstr "     Pressione o ícone \"Executar linha ou seleção\" na barra de ferramentas\n"
+msgstr ""
+"     Pressione o ícone \"Executar linha ou seleção\" na barra de "
+"ferramentas\n"
 
 #: src/gnuwin32/editor.c:682
 msgid "This will copy the selected commands to the console and evaluate them.\n"
@@ -827,7 +839,7 @@ msgstr "Pergunta"
 
 #: src/extra/graphapp/dialogs.c:249
 msgid " Change working directory to:"
-msgstr "Mudar o diretório de trabalho para:"
+msgstr " Mudar o diretório de trabalho para:"
 
 #: src/extra/graphapp/dialogs.c:251
 #, c-format

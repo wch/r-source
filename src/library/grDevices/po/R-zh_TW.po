@@ -82,10 +82,10 @@ msgid "'gamma' must be a scalar or 'sRGB'"
 msgstr "'gamma' 的值要麼是數量，要麼是 'sRGB'"
 
 msgid "Color space converter: %s"
-msgstr "顏色空間轉換器: %s "
+msgstr "顏色空間轉換器: %s"
 
 msgid "Reference white: %s"
-msgstr "白色參考: %s "
+msgstr "白色參考: %s"
 
 msgid "display gamma = %s"
 msgstr "顯示 gamma = %s"

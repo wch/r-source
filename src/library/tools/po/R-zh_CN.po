@@ -7,24 +7,22 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-11-30 14:40\n"
-"PO-Revision-Date: 2023-01-30 10:05+0000\n"
-"Last-Translator: Shun Wang <shuonwang@gmail.com>\n"
+"POT-Creation-Date: 2024-03-27 16:15\n"
+"PO-Revision-Date: 2024-03-19 12:53+0000\n"
+"Last-Translator: Michael Chirico <michaelchirico4@gmail.com>\n"
 "Language-Team: Chinese\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.13.1\n"
+"X-Generator: Weblate 4.16.4\n"
 
-#, fuzzy
 msgid "Checking %s"
-msgstr "%s…"
+msgstr "%s 检查中"
 
-#, fuzzy
 msgid "Processing %s ..."
-msgstr "处理%s "
+msgstr "处理%s中 ..."
 
 msgid "argument 'package' must be of length 1"
 msgstr "参数'package'的长度必需为一"
@@ -51,7 +49,7 @@ msgid "Undocumented S4 methods:"
 msgstr "未公开的S4方法:"
 
 msgid "Prototyped non-primitives:"
-msgstr "非原始函数做样机"
+msgstr "Prototyped non-primitives:"
 
 msgid "Undocumented %s:"
 msgstr "未公开的%s:"
@@ -75,16 +73,16 @@ msgid "Variables with usage in Rd file '%s' but not in code:"
 msgstr "数据的使用方法在使用文档对象'%s'里有记录但不在编码里:"
 
 msgid "Argument names in code not in docs:"
-msgstr "参数名字在编码里有记录但不在文件里:"
+msgstr "参数名称在编码里有记录但不在文件里:"
 
 msgid "Argument names in docs not in code:"
-msgstr "参数名字在文件里有记录但不在编码里:"
+msgstr "参数名称在文件里有记录但不在编码里:"
 
 msgid "Mismatches in argument names (first 3):"
-msgstr "参数名字配合错误(开头三个):"
+msgstr "参数名称配合错误(开头三个):"
 
 msgid "Mismatches in argument names:"
-msgstr "参数名字配合错误:"
+msgstr "参数名称配合错误:"
 
 msgid "Mismatches in argument default values (first 3):"
 msgstr "参数默认值配合错误(开头三个):"
@@ -177,7 +175,7 @@ msgid "The package 'dir' argument must be of length 1"
 msgstr "参数'package'的长度必需为一"
 
 msgid "package name '%s' seems invalid; using directory name '%s' instead"
-msgstr "程序包的名字'%s'好象有问题；用文件目录名'%s'替代"
+msgstr "程序包的名称'%s'好象有问题；用文件目录名'%s'替代"
 
 msgid "Vignette dependencies (%s entries) must be contained in the DESCRIPTION Depends/Suggests/Imports entries."
 msgstr "标头从属(%s条目)必需包含在DESCRIPTION文件里的Depends/Suggests/Imports条目中."
@@ -213,7 +211,7 @@ msgid "Offending entries:"
 msgstr "有问题的条目为:"
 
 msgid "Entries must be names of packages optionally followed by '<=' or '>=', white space, and a valid version number in parentheses."
-msgstr "每条目都必需是程序包的名字，名字后面可以跟'<='或'>=', 空格, 或在括号内的适当版本数目."
+msgstr "每条目都必需是程序包的名称，名称后面可以跟'<='或'>=', 空格,或在括号内的适当版本数目."
 
 msgid "Entries with infeasible comparison operator:"
 msgstr "带不可行比较运算符号的条目:"
@@ -375,7 +373,7 @@ msgid "%s calls:"
 msgstr "%s调用："
 
 msgid "Package startup functions should have two arguments with names starting with %s and %s, respectively."
-msgstr "程序包启动函数需要有两个名字分别为%s和%s的参数"
+msgstr "程序包启动函数需要有两个名称分别为%s和%s的参数"
 
 msgid "Package startup functions should not change the search path."
 msgstr "程序包启动函数不应该改变搜索路径"
@@ -391,7 +389,7 @@ msgstr "参见'%2$s'里的%1$s章节"
 
 #, fuzzy
 msgid "Package detach functions should have one argument with name starting with %s."
-msgstr "程序包脱离函数需要有个名字开头为%s的参数。"
+msgstr "程序包脱离函数需要有个名称开头为%s的参数。"
 
 msgid "Package detach functions should not call %s."
 msgstr "程序包脱离函数不应该调用%s 。"
@@ -446,7 +444,7 @@ msgstr ""
 
 #, fuzzy
 msgid "Namespace in Imports field not imported from: %s"
-msgstr "不需要名字空间从属: %s"
+msgstr "不需要命名空间从属: %s"
 
 msgid "Packages in Depends field not imported from:"
 msgstr ""
@@ -498,7 +496,7 @@ msgid "NB: need Internet access to use CRAN incoming checks"
 msgstr "注：需要上网才能用CRAN传入检查"
 
 msgid "Rd files with duplicated name '%s':"
-msgstr "有重复名字'%s'的Rd文件:"
+msgstr "有重复名称'%s'的Rd文件:"
 
 msgid "Rd files with duplicated alias '%s':"
 msgstr "Rd文件不能有重复的别名'%s':"
@@ -538,7 +536,7 @@ msgstr ""
 "可能需要这样的\n"
 "\n"
 "%s\n"
-"在名字空间。"
+"在命名空间。"
 
 msgid "concordance is not valid"
 msgstr ""
@@ -568,7 +566,7 @@ msgid "you must specify 'dir' or 'files'"
 msgstr "你必需在'dir'或'files'中选一个"
 
 msgid "cannot deal with Rd objects with missing/empty names"
-msgstr "无法使用缺少或有空白名字的Rd对象"
+msgstr "无法使用缺少或有空白名称的Rd对象"
 
 msgid "No help on %s found in RdDB %s"
 msgstr "RdDB %2$s里找不到关于%1$s的帮助"
@@ -672,7 +670,7 @@ msgstr "）因此可以冒险各个输出文件"
 
 #, fuzzy
 msgid "Note: skipping %s"
-msgstr "处理%s "
+msgstr "处理%s"
 
 msgid "Error: Vignette '%s' is non-ASCII but has no declared encoding"
 msgstr ""
@@ -715,7 +713,7 @@ msgid "+-+"
 msgstr ""
 
 msgid "In '%s' vignettes '%s' and '%s' have the same vignette name"
-msgstr "'%s'简介里'%s'和'%s'的名字是一样的"
+msgstr "'%s'简介里'%s'和'%s'的名称是一样的"
 
 #, fuzzy
 msgid "Vignette engine package not specified"
@@ -750,7 +748,7 @@ msgstr "必需是字符串或联结"
 
 #, fuzzy
 msgid "Cannot change the %s engine or use an engine of that name"
-msgstr "引擎或用带那个名字的引擎"
+msgstr "引擎或用带那个名称的引擎"
 
 msgid "vignette builder '%s' not found"
 msgstr "找不到'%s'这个简介的作者"
@@ -789,7 +787,7 @@ msgid "cannot create directory '%s'"
 msgstr "无法建立目录'%s'"
 
 msgid "processing %s"
-msgstr "处理%s "
+msgstr "处理%s"
 
 msgid ""
 "running %s on vignette '%s' failed with message:\n"
@@ -809,7 +807,7 @@ msgid "cannot copy '%s' to '%s'"
 msgstr "无法将'%s'拷贝到'%s'"
 
 msgid "WARNING: malformed 'Depends' field in 'DESCRIPTION'"
-msgstr "警告：'DESCRIPTION'里'Depends'项格式不对"
+msgstr "警告：'DESCRIPTION'里'Depends'项格式不正确"
 
 msgid "ERROR: this R is version %s, package '%s' requires R %s %s"
 msgstr "错误：R的版本是%s，程序包'%s'要求版本为%s %s的R"
@@ -854,7 +852,7 @@ msgid "invalid value for '--compact-vignettes', assuming %s"
 msgstr "--compact-vignettes的值无效，假定用%s"
 
 msgid "Error: cannot rename directory to %s"
-msgstr "错误：无法改变目录名字到时%s"
+msgstr "错误：无法改变目录名称到时%s"
 
 msgid "elapsed-time limit of %g %s reached for sub-process"
 msgstr ""
@@ -1150,7 +1148,7 @@ msgid ""
 msgstr ""
 
 msgid "namespace must not be already loaded"
-msgstr "还没有载入名字空间"
+msgstr "还没有载入命名空间"
 
 msgid "all packages should have a NAMESPACE"
 msgstr "所有的程序包都必需有NAMESPACE这个文件"
@@ -1159,7 +1157,7 @@ msgid "package seems to be using lazy loading for data already"
 msgstr "程序包好象已经用数据延迟加载了"
 
 msgid "source list must have names for all elements"
-msgstr "源列里所有单元都必需要带名字"
+msgstr "源列里所有单元都必需要带名称"
 
 msgid "source must be an environment or a list"
 msgstr "源码要么是环境要么是列"
@@ -1182,7 +1180,7 @@ msgstr ""
 
 #, fuzzy
 msgid "DESCRIPTION file not found"
-msgstr "DESCRIPTION文件不对"
+msgstr "DESCRIPTION文件不正确"
 
 #, fuzzy
 msgid "NEWS file not found"
@@ -1213,7 +1211,7 @@ msgid ""
 "  %s\n"
 "contains no \\itemize."
 msgstr ""
-"NEWS.Rd文件格式不对:\n"
+"NEWS.Rd文件格式不正确:\n"
 "开始块\n"
 "  %s\n"
 "没有\\itemize."
@@ -1225,7 +1223,7 @@ msgid ""
 "contains more than one \\itemize.\n"
 "Using the first one."
 msgstr ""
-"NEWS.Rd文件格式不对:\n"
+"NEWS.Rd文件格式不正确:\n"
 "开始块\n"
 "  %s\n"
 "包含多个\\itemize.因此用第一个。"
@@ -1237,7 +1235,7 @@ msgid ""
 "  %s\n"
 "contains no \\item."
 msgstr ""
-"NEWS.Rd文件格式不对:\n"
+"NEWS.Rd文件格式不正确:\n"
 "开始块\n"
 "  %s\n"
 "没有\\itemize."
@@ -1263,10 +1261,6 @@ msgstr "无法建立临时目录%s"
 
 msgid "expected one package directory, found %d."
 msgstr ""
-
-#, fuzzy
-msgid "one of 'package' and 'dir' must be specified."
-msgstr "只能设定一个Rd文件"
 
 msgid "argument '%s' must be a character string or connection"
 msgstr "参数'%s'必需是字符串或联结"
@@ -1324,7 +1318,7 @@ msgid "Running %s"
 msgstr "执行%s"
 
 msgid "Running vignettes for package %s"
-msgstr "执行小文品给程序包%s "
+msgstr "执行小文品给程序包%s"
 
 msgid "Comparing %s to %s ..."
 msgstr "比较%s和%s"
@@ -1465,7 +1459,7 @@ msgid "contains a blank line"
 msgstr "带空行"
 
 msgid "Unknown encoding with non-ASCII data: converting to ASCII"
-msgstr "没有这样带非ASCII数据的编码: 转换为ASCII "
+msgstr "没有这样带非ASCII数据的编码: 转换为ASCII"
 
 #, fuzzy
 msgid "cannot source package code:"
@@ -1585,10 +1579,9 @@ msgid "unable to re-encode %s line %s"
 msgid_plural "unable to re-encode %s lines %s"
 msgstr[0] "无法重新编码%s行%s"
 
-#, fuzzy
 msgid "%s file\n"
 msgid_plural "%s files\n"
-msgstr[0] "文件"
+msgstr[0] "%s文件\n"
 
 #, fuzzy
 msgid "Required field missing or empty:"
@@ -1610,6 +1603,16 @@ msgstr[0] ""
 msgid "Corresponding BibTeX entry:"
 msgid_plural "Corresponding BibTeX entries:"
 msgstr[0] ""
+
+#~ msgid "Bad \\usage lines found in documentation object '%s':"
+#~ msgstr "使用文档对象'%s'有些\\usage不正确:"
+
+#~ msgid "Non-file package-anchored link(s) in documentation object '%s':"
+#~ msgstr "使用文档对象'%s'联结可能不正确:"
+
+#, fuzzy
+#~ msgid "one of 'package' and 'dir' must be specified."
+#~ msgstr "只能设定一个Rd文件"
 
 #~ msgid "parse error in file '%s':"
 #~ msgstr "文件'%s'里句法分析有错误:"

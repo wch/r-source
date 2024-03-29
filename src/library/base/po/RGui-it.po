@@ -8,14 +8,15 @@ msgstr ""
 "Project-Id-Version: R-4-2-BRANCH\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2023-11-30 16:47+0100\n"
-"PO-Revision-Date: \n"
-"Last-Translator: Daniele Medri <dmedri@gmail.com>\n"
+"PO-Revision-Date: 2024-03-18 21:18+0000\n"
+"Last-Translator: Michael Chirico <michaelchirico4@gmail.com>\n"
 "Language-Team: Italian https://github.com/dmedri/R-italian-lang\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.4.2\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.16.4\n"
 
 #: src/gnuwin32/console.c:1200 src/gnuwin32/console.c:1242
 msgid "Not enough memory"
@@ -110,7 +111,9 @@ msgstr "     Backspace: elimina carattere precedente;\n"
 
 #: src/gnuwin32/console.c:2314
 msgid "     Ctrl+Del or Ctrl+K: delete text from current character to end of line.\n"
-msgstr "     Ctrl+Del o Ctrl+K: cancella il testo dal carattere corrente a fine riga.\n"
+msgstr ""
+"     Ctrl+Del o Ctrl+K: cancella il testo dal carattere corrente a fine riga."
+"\n"
 
 #: src/gnuwin32/console.c:2315
 msgid "     Ctrl+U: delete all text from current line.\n"
@@ -122,15 +125,20 @@ msgstr "  Copia e incolla.\n"
 
 #: src/gnuwin32/console.c:2317
 msgid "     Use the mouse (with the left button held down) to mark (select) text.\n"
-msgstr "     Usa il mouse (tasto sinistro abbassato) per selezionare il testo.\n"
+msgstr ""
+"     Usa il mouse (tasto sinistro abbassato) per selezionare il testo.\n"
 
 #: src/gnuwin32/console.c:2318
 msgid "     Use Shift+Del (or Ctrl+C) to copy the marked text to the clipboard and\n"
-msgstr "     Usa Shift+Del (o Ctrl+C) per copiare il testo selezionato negli appunti e\n"
+msgstr ""
+"     Usa Shift+Del (o Ctrl+C) per copiare il testo selezionato negli appunti "
+"e\n"
 
 #: src/gnuwin32/console.c:2319
 msgid "     Shift+Ins (or Ctrl+V or Ctrl+Y) to paste the content of the clipboard (if any)  \n"
-msgstr "     Shift+Ins (o Ctrl+V o Ctrl+Y) per copiare il contenuto della clipboard (se presente)  \n"
+msgstr ""
+"     Shift+Ins (o Ctrl+V o Ctrl+Y) per copiare il contenuto della clipboard ("
+"se presente)  \n"
 
 #: src/gnuwin32/console.c:2320
 msgid "     to the console, Ctrl+X first copy then paste\n"
@@ -138,7 +146,7 @@ msgstr "     nella console, Ctrl+X prima copia e poi incolla\n"
 
 #: src/gnuwin32/console.c:2321
 msgid "  Misc:\n"
-msgstr " Varie:\n"
+msgstr "  Varie:\n"
 
 #: src/gnuwin32/console.c:2322
 msgid "     Ctrl+L: Clear the console.\n"
@@ -146,7 +154,9 @@ msgstr "     Ctrl+L: pulisci console.\n"
 
 #: src/gnuwin32/console.c:2323
 msgid "     Ctrl+O or INS: Toggle overwrite mode: initially off.\n"
-msgstr "     Ctrl+O o INS: attiva/disattiva modalità sovrascrittura: inizialmente inattiva.\n"
+msgstr ""
+"     Ctrl+O o INS: attiva/disattiva modalità sovrascrittura: inizialmente "
+"inattiva.\n"
 
 #: src/gnuwin32/console.c:2324
 msgid "     Ctrl+T: Interchange current char with one to the left.\n"
@@ -250,7 +260,8 @@ msgstr "     Seleziona \"Esegui linea o selezione\" dal menu \"Modifica\"\n"
 
 #: src/gnuwin32/editor.c:681
 msgid "     Press the \"Run line or selection\" icon on the toolbar\n"
-msgstr "     Premi l'icona \"Esegui linea o selezione\" sulla barra degli strumenti\n"
+msgstr ""
+"     Premi l'icona \"Esegui linea o selezione\" sulla barra degli strumenti\n"
 
 #: src/gnuwin32/editor.c:682
 msgid "This will copy the selected commands to the console and evaluate them.\n"

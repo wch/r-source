@@ -1,0 +1,42 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: R 4.4.0\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2023-07-31 14:59\n"
+"PO-Revision-Date: 2023-10-24 03:05+0000\n"
+"Last-Translator: Joan Maspons <joanmaspons@gmail.com>\n"
+"Language-Team: none\n"
+"Language: ca\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.16.4\n"
+
+msgid "named list expected"
+msgstr "s'espera una llista amb noms"
+
+#, fuzzy
+msgid "some named values are not arguments to the supplied log-likelihood"
+msgstr ""
+"alguns valors amb nom no són arguments per al log-likelihood proporcionat"
+
+msgid "Mismatch in length of start values"
+msgstr "No coincideix en la longitud dels valors inicials"
+
+msgid "fixed values violate constraints"
+msgstr "els valors fixats violen les restriccions"
+
+msgid "start values do not satisfy constraints"
+msgstr "els valors inicials no satisfan les restriccions"
+
+msgid "profiling has found a better solution, so original fit had not converged"
+msgstr ""
+"el perfilador ha trobat una solució millor, de manera que l'ajust original "
+"no ha convergit"
+
+msgid "levels truncated to positive values only"
+msgstr "nivells truncats únicament a valors positius"
+
+msgid "extra arguments discarded"
+msgstr "els arguments addicionals s'han descartat"

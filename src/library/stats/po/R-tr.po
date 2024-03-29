@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-11-30 14:40\n"
+"POT-Creation-Date: 2024-03-27 16:14\n"
 "PO-Revision-Date: 2011-04-02 \n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -62,7 +62,7 @@ msgid "the series is entirely NA"
 msgstr "seri tamamen NA"
 
 msgid "frequency must be a positive integer >= 2 for BSM"
-msgstr "BSM için sıklık pozitif, 2 ye eşit veya daha büyük tamsayı olmalı "
+msgstr "BSM için sıklık pozitif, 2 ye eşit veya daha büyük tamsayı olmalı"
 
 msgid "only implemented for univariate time series"
 msgstr "sadece tek değişkenli zaman serileri için tanımlı"
@@ -608,7 +608,8 @@ msgstr "'pairwise.complete.obs' kullanılamıyor"
 msgid "'V' is not a square numeric matrix"
 msgstr "'V' bir sayısal kare matris değil"
 
-msgid "diag(.) had 0 or NA entries; non-finite result is doubtful"
+#, fuzzy
+msgid "diag(V) had non-positive or NA entries; the non-finite result may be dubious"
 msgstr "diag(.) 0 ve NA girişleri içeriyor; sonlu olmayan sonuç tutarsız"
 
 msgid "'x' must be a numeric vector"
@@ -828,7 +829,7 @@ msgstr "faktör analizi sadece sayısal değişkenlere uygulanabilir"
 
 #, fuzzy
 msgid "'covmat' is of unknown type"
-msgstr "bilinmeyen tipte 'covmat' "
+msgstr "bilinmeyen tipte 'covmat'"
 
 msgid "requested scores without an 'x' matrix"
 msgstr "'x' matrisi olmadan puanlar istendi"
@@ -1223,7 +1224,7 @@ msgstr "'k' bir çekirdek değil"
 
 #, fuzzy
 msgid "'x' is shorter than kernel 'k'"
-msgstr "'x' k "
+msgstr "'x' k"
 
 msgid "'kernapply' is not available for object 'x'"
 msgstr "'kernapply' 'x' nesnesi için mevcut değil"
@@ -2540,7 +2541,7 @@ msgstr[1] "'split' listesinde bilinmeyen isim(ler)"
 
 #, fuzzy
 msgid "extra argument %s is not of class \"%s\""
-msgid_plural "extra arguments %s are not of class \"%s\"s"
+msgid_plural "extra arguments %s are not of class \"%s\""
 msgstr[0] "ekstra argümanlar çıkarıldı"
 msgstr[1] "ekstra argümanlar çıkarıldı"
 

@@ -1,0 +1,228 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR The R Core Team
+# This file is distributed under the same license as the R package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: R 4.4.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-03-27 16:14-0700\n"
+"PO-Revision-Date: 2024-03-19 03:05+0000\n"
+"Last-Translator: Michael Chirico <michaelchirico4@gmail.com>\n"
+"Language-Team: none\n"
+"Language: ca\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.16.4\n"
+
+#: gpar.c:632
+msgid "updateGContext must only be called after initGContext"
+msgstr "updateGContext s'ha de cridar després de initGContext"
+
+#: grid.c:199
+#, fuzzy
+msgid "Turning clipping on or off within a (clipping) path is no honoured"
+msgstr "Activar o desactivar el retall dins d'un camí (retallat) no és cap honor"
+
+#: grid.c:241
+#, fuzzy
+msgid "cannot clip to rotated viewport"
+msgstr "no s'ha pogut retallar l'àrea de visualització girada"
+
+#: grid.c:456
+#, fuzzy
+msgid "Clipping paths within a (clipping) path are not honoured"
+msgstr "No es compleixen els camins de retall dins d'un camí (de retall)"
+
+#: grid.c:475
+#, fuzzy
+msgid "Masks within a (clipping) path are not honoured"
+msgstr "No es respecten les màscares dins d'un camí (retallat)"
+
+#: grid.c:699 grid.c:877
+#, c-format
+msgid "Viewport '%s' was not found"
+msgstr ""
+
+#: grid.c:909 grid.c:914 grid.c:1035 grid.c:1040
+msgid "cannot pop the top-level viewport ('grid' and 'graphics' output mixed?)"
+msgstr "no es pot barrejar l'àrea de visualització de nivell superior («grid» i «graphics»?)"
+
+#: grid.c:1241
+msgid "attempt to plot on null device"
+msgstr "s'ha intentat dibuixar en un dispositiu nul"
+
+#: grid.c:1711
+#, fuzzy
+msgid "there is no layout defined"
+msgstr "no hi ha cap disposició definida"
+
+#: grid.c:1933
+#, fuzzy
+msgid "polygon edge not found (zero-width or zero-height?)"
+msgstr "no s'ha trobat la vora del polígon (zero-width o zero-height?)"
+
+#: grid.c:1942
+#, fuzzy
+msgid "polygon edge not found"
+msgstr "no s'ha trobat la vora del polígon"
+
+#: grid.c:2096
+#, fuzzy
+msgid "require at least two points to draw arrow"
+msgstr "requereix com a mínim dos punts per a dibuixar la fletxa"
+
+#: grid.c:2467
+#, fuzzy
+msgid "non-finite control point in Xspline"
+msgstr "punt de control no definit a Xspline"
+
+#: grid.c:3436
+#, fuzzy
+msgid "non-finite x or y in graphics path"
+msgstr "x o y no finalitzades en el camí dels gràfics"
+
+#: grid.c:3487
+msgid "Empty raster"
+msgstr "Ràster buit"
+
+#: grid.c:4038 grid.c:4094
+#, fuzzy
+msgid "Coordinates for text pch not yet supported"
+msgstr "Les coordenades per al text pch encara no són compatibles"
+
+#: grid.c:4099
+#, fuzzy, c-format
+msgid "pch value '%d' is invalid in this locale"
+msgstr "el valor pch «%d» no és vàlid en aquesta configuració regional"
+
+#: grid.c:4920
+#, fuzzy, c-format
+msgid "unimplemented pch value '%d'"
+msgstr "valor de pch no implementat «%d»"
+
+#: grid.c:5079
+msgid "invalid plotting symbol"
+msgstr "el símbol gràfic no és vàlid"
+
+#: grid.c:5197
+#, fuzzy
+msgid "unable to clip to rotated rectangle"
+msgstr "no s'ha pogut retallar el rectangle girat"
+
+#: layout.c:600
+#, fuzzy
+msgid "invalid 'layout.pos.row'"
+msgstr "'layout.pos.row' no és vàlid"
+
+#: layout.c:604
+#, fuzzy
+msgid "invalid 'layout.pos.col'"
+msgstr "'layout.pos.col' no és vàlid"
+
+#: matrix.c:50
+#, fuzzy
+msgid "singular transformation matrix"
+msgstr "matriu de transformació singular"
+
+#: state.c:191
+#, fuzzy
+msgid "unable to store 'grid' state.  Too many devices open?"
+msgstr "no s'ha pogut emmagatzemar l'estat de la graella.  Hi ha massa dispositius oberts?"
+
+#: unit.c:65
+#, fuzzy
+msgid "Cannot create unit scalar from 0-length unit vector"
+msgstr "No es pot crear un escalar d'unitat a partir del vector d'unitat de longitud 0"
+
+#: unit.c:799 unit.c:1298
+#, fuzzy
+msgid "invalid unit or unit not yet implemented"
+msgstr "unitat o unitat encara no implementada"
+
+#: unit.c:1355 unit.c:1386
+#, fuzzy
+msgid "Viewport has zero dimension(s)"
+msgstr "L'àrea de visualització té dimensió zero"
+
+#: unit.c:1418 unit.c:1433 unit.c:1448 unit.c:1463
+#, fuzzy
+msgid "Unsupported unit conversion"
+msgstr "Conversió d'unitat no suportada"
+
+#: unit.c:1555
+#, fuzzy
+msgid "Invalid unit"
+msgstr "Unitat no vàlida"
+
+#: unit.c:1570
+#, fuzzy
+msgid "'units' must be character"
+msgstr "'unitats' ha de ser un caràcter"
+
+#: unit.c:1573
+msgid "'units' must be of length > 0"
+msgstr "'unitats' ha de ser de longitud of 0"
+
+#: unit.c:1584
+#, fuzzy
+msgid "data must be either NULL, have length 1, or match the length of the final unit vector"
+msgstr "les dades han de ser NULL, tenir longitud 1, o coincidir amb la longitud del vector unitari final"
+
+#: unit.c:1596
+#, fuzzy
+msgid "no string supplied for 'strwidth/height' unit"
+msgstr "no s'ha proporcionat cap cadena per a la unitat «strwidth/height»"
+
+#: unit.c:1600
+#, fuzzy
+msgid "no 'grob' supplied for 'grobwidth/height' unit"
+msgstr "no s'ha subministrat cap «grob» per a la unitat «grobwidth/height»"
+
+#: unit.c:1618
+#, fuzzy
+msgid "'gPath' must have depth 1 in 'grobwidth/height' units"
+msgstr "«gPath» ha de tenir profunditat 1 en unitats «grobwidth/height»"
+
+#: unit.c:1623
+#, fuzzy
+msgid "non-NULL value supplied for plain unit"
+msgstr "s'ha proporcionat un valor no nul per a la unitat plana"
+
+#: unit.c:1676 unit.c:1710 unit.c:1759
+#, fuzzy
+msgid "old version of unit class is no longer allowed"
+msgstr "ja no es permet una versió antiga de la classe unitària"
+
+#: unit.c:1682
+#, fuzzy
+msgid "object is not coercible to a unit"
+msgstr "l'objecte no és coercible amb una unitat"
+
+#: unit.c:1708
+#, fuzzy
+msgid "object is not a unit"
+msgstr "l'objecte no és una unitat"
+
+#: unit.c:1840
+#, fuzzy
+msgid "units can only be multiplied with numerics and integers"
+msgstr "les unitats només es poden multiplicar amb nombres i enters"
+
+#: util.c:216
+#, fuzzy
+msgid "Unable to calculate text width/height (using zero)"
+msgstr "No es pot calcular l'amplada/alçada del text (usant zero)"
+
+#: viewport.c:56
+#, fuzzy
+msgid "Mask is not logical value ('none' or 'inherit')"
+msgstr "La màscara no és un valor lògic («none» o «inherit»)"
+
+#: viewport.c:330
+#, fuzzy
+msgid "non-finite location and/or size for viewport"
+msgstr "ubicació i/o mida no acabades per a l'àrea de visualització"

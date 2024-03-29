@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-11-30 14:40+0100\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-03-27 16:14-0700\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -649,118 +649,118 @@ msgstr "'ndeps' yra netinkamo ilgio"
 msgid "unknown 'method'"
 msgstr "nežinomas 'method'"
 
-#: optimize.c:220 optimize.c:306 optimize.c:528
+#: optimize.c:221 optimize.c:307 optimize.c:529
 msgid "NA replaced by maximum positive value"
 msgstr "NA pakeista didžiausia teigiama reikšme"
 
-#: optimize.c:228 optimize.c:318 optimize.c:536
+#: optimize.c:229 optimize.c:319 optimize.c:537
 msgid "NA/Inf replaced by maximum positive value"
 msgstr "NA/Inf pakeista didžiausia teigiama reikšme"
 
-#: optimize.c:237
+#: optimize.c:238
 msgid "invalid function value in 'optimize'"
 msgstr "neleistina funkcijos reikšmė, esanti 'optimize'"
 
-#: optimize.c:255 optimize.c:347 optimize.c:721
+#: optimize.c:256 optimize.c:348 optimize.c:723
 msgid "attempt to minimize non-function"
 msgstr "bandymas sumažinti ne funkciją"
 
-#: optimize.c:262 optimize.c:269 optimize.c:278 optimize.c:352 optimize.c:357
-#: optimize.c:373
+#: optimize.c:263 optimize.c:270 optimize.c:279 optimize.c:353 optimize.c:358
+#: optimize.c:374
 #, c-format
 msgid "invalid '%s' value"
 msgstr "neleistina '%s' reikšmė"
 
-#: optimize.c:271 optimize.c:358
+#: optimize.c:272 optimize.c:359
 msgid "'xmin' not less than 'xmax'"
 msgstr "'xmin' ne mažesnis kaip 'xmax'"
 
-#: optimize.c:315
+#: optimize.c:316
 msgid "-Inf replaced by maximally negative value"
 msgstr "-Inf pakeistas maksimaliai neigiama reikšme"
 
-#: optimize.c:328
+#: optimize.c:329
 msgid "invalid function value in 'zeroin'"
 msgstr "neleistina funkcijos reikšmė 'zeroin'"
 
-#: optimize.c:363 optimize.c:368
+#: optimize.c:364 optimize.c:369
 #, c-format
 msgid "NA value for '%s' is not allowed"
 msgstr "NA reikšmė '%s' neleidžiama"
 
-#: optimize.c:378
+#: optimize.c:379
 msgid "'maxiter' must be positive"
 msgstr "'maxiter' turi būti teigiamas"
 
-#: optimize.c:520
+#: optimize.c:521
 msgid "non-finite value supplied by 'nlm'"
 msgstr "nebaigtinė reikšmė, kurią pateikia ‘nlm’"
 
-#: optimize.c:555
+#: optimize.c:556
 msgid "invalid function value in 'nlm' optimizer"
 msgstr "neleistina funkcijos reikšmė 'nlm' optimizatoriuje"
 
-#: optimize.c:566 optimize.c:581
+#: optimize.c:568 optimize.c:583
 msgid "function value caching for optimization is seriously confused"
 msgstr "funkcijos reikšmės spartinimas dėl optimizavimo yra labai supainioti"
 
-#: optimize.c:596
+#: optimize.c:598
 msgid "numeric parameter expected"
 msgstr "tikėtinas skaitinis parametras"
 
-#: optimize.c:600
+#: optimize.c:602
 msgid "conflicting parameter lengths"
 msgstr "nesuderinami parametrų ilgiai"
 
-#: optimize.c:604
+#: optimize.c:606
 msgid "invalid parameter length"
 msgstr "neleistinas parametro ilgis"
 
-#: optimize.c:614 optimize.c:621
+#: optimize.c:616 optimize.c:623
 msgid "missing value in parameter"
 msgstr "trūkstama parametro reikšmė"
 
-#: optimize.c:626
+#: optimize.c:628
 msgid "invalid parameter type"
 msgstr "netinkamas parametro tipas"
 
-#: optimize.c:637
+#: optimize.c:639
 msgid "non-positive number of parameters in nlm"
 msgstr "neteigiamas parametrų skaičius, esantis nlm"
 
-#: optimize.c:639
+#: optimize.c:641
 msgid "nlm is inefficient for 1-d problems"
 msgstr "nlm yra neefektyvus 1-d problemoms"
 
-#: optimize.c:641
+#: optimize.c:643
 msgid "invalid gradient tolerance in nlm"
 msgstr "neleistinas gradiento nuokrypis, esantis nlm"
 
-#: optimize.c:643
+#: optimize.c:645
 msgid "invalid iteration limit in nlm"
 msgstr "neleistina iteracijos riba, esanti nlm"
 
-#: optimize.c:645
+#: optimize.c:647
 msgid "minimization function has no good digits in nlm"
 msgstr "minimizavimo funkcija neturi gerų skaitmenų, esančių nlm"
 
-#: optimize.c:647
+#: optimize.c:649
 msgid "no analytic gradient to check in nlm!"
 msgstr "nėra analitinio gradiento, kad patikrintumėte nlm!"
 
-#: optimize.c:649
+#: optimize.c:651
 msgid "no analytic Hessian to check in nlm!"
 msgstr "nėra analitinės Hessian funkcijos, kad patikrintumėte nlm!"
 
-#: optimize.c:651
+#: optimize.c:653
 msgid "probable coding error in analytic gradient"
 msgstr "galima kodavimo klaida analiziniame gradiente"
 
-#: optimize.c:653
+#: optimize.c:655
 msgid "probable coding error in analytic Hessian"
 msgstr "tikėtina kodavimo paklaida analitinėje Hessian funkcijoje"
 
-#: optimize.c:655
+#: optimize.c:657
 #, c-format
 msgid ""
 "*** unknown error message (msg = %d) in nlm()\n"
@@ -769,23 +769,23 @@ msgstr ""
 "***nežinomas klaidos pranešimas (msg = %d) esantis nlm()\n"
 "*** neturėtų įvykti!"
 
-#: optimize.c:666
+#: optimize.c:668
 msgid "Relative gradient close to zero.\n"
 msgstr "Santykinis gradientas arti nulio.\n"
 
-#: optimize.c:667 optimize.c:671
+#: optimize.c:669 optimize.c:673
 msgid "Current iterate is probably solution.\n"
 msgstr "Dabartinė iteracija tikriausiai yra sprendimas.\n"
 
-#: optimize.c:670
+#: optimize.c:672
 msgid "Successive iterates within tolerance.\n"
 msgstr "Paeiliui kartojasi netoleravimo ribose.\n"
 
-#: optimize.c:674
+#: optimize.c:676
 msgid "Last global step failed to locate a point lower than x.\n"
 msgstr "Paskutiniam globaliam žingsniui nepavyko rasti taško, mažesnio nei x.\n"
 
-#: optimize.c:675
+#: optimize.c:677
 msgid ""
 "Either x is an approximate local minimum of the function,\n"
 "the function is too non-linear for this algorithm,\n"
@@ -795,11 +795,11 @@ msgstr ""
 "šio algoritmo funkcija yra per daug netiesinė,\n"
 "arba steptol yra per didelis.\n"
 
-#: optimize.c:680
+#: optimize.c:682
 msgid "Iteration limit exceeded.  Algorithm failed.\n"
 msgstr "Viršyta iteracijos riba. Algoritmas nepavyko.\n"
 
-#: optimize.c:683
+#: optimize.c:685
 msgid ""
 "Maximum step size exceeded 5 consecutive times.\n"
 "Either the function is unbounded below,\n"
@@ -813,16 +813,16 @@ msgstr ""
 "iš viršaus tam tikra kryptimi,\n"
 "arba stepmx yra per mažas.\n"
 
-#: optimize.c:745 optimize.c:750 optimize.c:754 optimize.c:758 optimize.c:762
-#: optimize.c:766 optimize.c:771
+#: optimize.c:747 optimize.c:752 optimize.c:756 optimize.c:760 optimize.c:764
+#: optimize.c:768 optimize.c:773
 msgid "invalid NA value in parameter"
 msgstr "neleistina NA reikšmė parametre"
 
-#: optimize.c:800
+#: optimize.c:802
 msgid "hessian supplied is of the wrong length or mode, so ignored"
 msgstr "pateikta netinkamo ilgio arba tipo Hessian funkcija, todėl ignoruojama"
 
-#: optimize.c:804
+#: optimize.c:806
 msgid "gradient supplied is of the wrong length or mode, so ignored"
 msgstr "pateiktas netinkamo ilgio arba tipo gradientas, todėl ignoruojamas"
 

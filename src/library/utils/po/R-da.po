@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-11-30 14:40\n"
+"POT-Creation-Date: 2024-03-27 16:15\n"
 "PO-Revision-Date: 2012-01-09 20:51+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -144,6 +144,9 @@ msgstr ""
 
 msgid "No suitable spell check program found."
 msgstr "Intet egnet stavekontrolprogram blev fundet."
+
+msgid "Performing query %s"
+msgstr ""
 
 #, fuzzy
 msgid ""

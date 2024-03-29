@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tools 4.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-11-30 14:40\n"
+"POT-Creation-Date: 2024-03-27 16:15\n"
 "PO-Revision-Date: 2021-11-08 10:33+0100\n"
 "Last-Translator: r.zakauskas@gmail.com;gabriele.dauksaite@gmail.com\n"
 "Language-Team: Lithuanian\n"
@@ -1211,10 +1211,6 @@ msgstr "nepavyko sukurti temp katalogo %s"
 msgid "expected one package directory, found %d."
 msgstr ""
 
-#, fuzzy
-msgid "one of 'package' and 'dir' must be specified."
-msgstr "tiksliai vienas Rd failas turi būti nurodytas"
-
 msgid "argument '%s' must be a character string or connection"
 msgstr "argumentas '%s' turi būti simbolių eilutė arba ryšys"
 
@@ -1609,6 +1605,10 @@ msgid_plural "Corresponding BibTeX entries:"
 msgstr[0] "Atitinkamas BibTeX įrašas:"
 msgstr[1] "Atitinkami BibTeX įrašai:"
 msgstr[2] "Atitinkamų BibTeX įrašų:"
+
+#, fuzzy
+#~ msgid "one of 'package' and 'dir' must be specified."
+#~ msgstr "tiksliai vienas Rd failas turi būti nurodytas"
 
 #~ msgid "parse error in file '%s':"
 #~ msgstr "analizavimo klaida faile '%s':"

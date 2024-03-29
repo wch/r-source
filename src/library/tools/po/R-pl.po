@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-11-30 14:40\n"
+"POT-Creation-Date: 2024-03-27 16:15\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -83,7 +83,7 @@ msgid "Mismatches in argument names:"
 msgstr "Niezgodność w nazwach argumentów:"
 
 msgid "Mismatches in argument default values (first 3):"
-msgstr "Niezgodność w domyslnych wartościach argumentów (pierwsze 3): "
+msgstr "Niezgodność w domyslnych wartościach argumentów (pierwsze 3):"
 
 msgid "Mismatches in argument default values:"
 msgstr "Niezgodność w domyślnych wartościach argumentów:"
@@ -1226,10 +1226,6 @@ msgstr "nie można utworzyć katalogu tymczasowego %s"
 msgid "expected one package directory, found %d."
 msgstr ""
 
-#, fuzzy
-msgid "one of 'package' and 'dir' must be specified."
-msgstr "dokładnie jeden plik Rd musi zostać określony"
-
 msgid "argument '%s' must be a character string or connection"
 msgstr "argument '%s' musi być łańcuchem tekstowym lub połączeniem"
 
@@ -1624,6 +1620,10 @@ msgid_plural "Corresponding BibTeX entries:"
 msgstr[0] "Odpowiedni wpis BibTeX:"
 msgstr[1] "Odpowiednie wpisy BibTeX:"
 msgstr[2] "Odpowiednie wpisy BibTeX:"
+
+#, fuzzy
+#~ msgid "one of 'package' and 'dir' must be specified."
+#~ msgstr "dokładnie jeden plik Rd musi zostać określony"
 
 #~ msgid "parse error in file '%s':"
 #~ msgstr "błąd przetwarzania w pliku '%s':"

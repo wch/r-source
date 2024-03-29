@@ -1,0 +1,114 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR The R Core Team
+# This file is distributed under the same license as the R package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: R 4.4.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-03-27 16:14-0700\n"
+"PO-Revision-Date: 2023-08-31 12:38+0000\n"
+"Last-Translator: Weblate Admin <gergely@rx.studio>\n"
+"Language-Team: none\n"
+"Language: hi\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 4.16.4\n"
+
+#: fork.c:223
+#, c-format
+msgid "unable to terminate child process: %s"
+msgstr ""
+
+#: fork.c:250
+#, c-format
+msgid "unable to terminate child: %s"
+msgstr ""
+
+#: fork.c:329 fork.c:620 ncpus.c:87 ncpus.c:123 ncpus.c:178
+msgid "memory allocation error"
+msgstr ""
+
+#: fork.c:385 fork.c:389 fork.c:393
+#, c-format
+msgid "invalid '%s' argument"
+msgstr "अमान्य '%s' आर्गुमेंट"
+
+#: fork.c:451
+msgid "Error while shutting down parallel: unable to terminate some child processes\n"
+msgstr ""
+
+#: fork.c:544 fork.c:547
+msgid "unable to create a pipe"
+msgstr ""
+
+#: fork.c:569
+#, c-format
+msgid "unable to fork, possible reason: %s"
+msgstr ""
+
+#: fork.c:761
+msgid "only children can send data to the master process"
+msgstr ""
+
+#: fork.c:763
+msgid "there is no pipe to the master process"
+msgstr ""
+
+#: fork.c:765
+msgid "content to send must be RAW, use serialize() if needed"
+msgstr ""
+
+#: fork.c:774 fork.c:785 fork.c:1204
+msgid "write error, closing pipe to the master"
+msgstr ""
+
+#: fork.c:795
+msgid "only the master process can send data to a child process"
+msgstr ""
+
+#: fork.c:803
+#, c-format
+msgid "child %d does not exist"
+msgstr ""
+
+#: fork.c:809
+msgid "write error"
+msgstr ""
+
+#: fork.c:897
+#, c-format
+msgid "cannot wait for child %d as it does not exist"
+msgstr ""
+
+#: fork.c:956 fork.c:1083
+#, c-format
+msgid "error '%s' in select"
+msgstr ""
+
+#: fork.c:1173
+msgid "'mckill' failed"
+msgstr ""
+
+#: fork.c:1186
+msgid "'mcexit' can only be used in a child process"
+msgstr ""
+
+#: fork.c:1218
+msgid "'mcexit' failed"
+msgstr ""
+
+#: fork.c:1247 fork.c:1256
+msgid "invalid CPU affinity specification"
+msgstr ""
+
+#: fork.c:1267
+msgid "requested CPU set is too large for this system"
+msgstr ""
+
+#: fork.c:1290
+msgid "retrieving CPU affinity set failed"
+msgstr ""

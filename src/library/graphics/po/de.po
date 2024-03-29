@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: R-4.2.0\n"
-"Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-11-30 14:39+0100\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-03-27 16:14-0700\n"
 "PO-Revision-Date: 2022-04-13 12:31+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
@@ -499,7 +499,7 @@ msgstr "Achsenorientierung nicht berechnet"
 
 #: plot3d.c:1082
 msgid "too few parameters"
-msgstr "zu wenig Parameter "
+msgstr "zu wenig Parameter"
 
 #: plot3d.c:1112
 msgid "invalid 'x' limits"

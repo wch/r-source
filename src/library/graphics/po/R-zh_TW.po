@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.5.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-07-31 14:59\n"
+"POT-Creation-Date: 2024-03-27 16:14\n"
 "PO-Revision-Date: 2018-09-16 23:38+0800\n"
 "Last-Translator: Wei-Lun Chao <bluebat@member.fsf.org>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -147,7 +147,7 @@ msgid "rows * columns too small"
 msgstr "行 * 列的結果太小"
 
 msgid "Missing rows: %s"
-msgstr "缺少行: %s "
+msgstr "缺少行: %s"
 
 msgid "'expr' must be a function, or a call or an expression containing '%s'"
 msgstr "'expr' 要麼是函式，要麼呼叫，要麼是包含 '%s' 的運算式"
@@ -171,7 +171,7 @@ msgid "invalid specification of 'breaks'"
 msgstr "'breaks' 定義無效"
 
 msgid "Must specify 'breaks' in hist(<Date>)"
-msgstr " hist(<Date>)必須設定 'breaks'"
+msgstr "hist(<Date>)必須設定 'breaks'"
 
 msgid "'x' must be a numeric vector or matrix"
 msgstr "'x' 要麼是數值向量，要麼是矩陣"
@@ -232,6 +232,10 @@ msgstr "'breaks' 必須嚴格遞增"
 
 msgid "'probability' is an alias for '!freq', however they differ."
 msgstr "'probability' 是 '！freq' 的化名稱，因此它們應該是一樣的。"
+
+#, fuzzy
+msgid "fuzz must be non-negative"
+msgstr "整數顏色值必須是正數"
 
 msgid "some 'x' not counted; maybe 'breaks' do not span range of 'x'"
 msgstr "有些 'x' 值沒有被計數；有可能是因為 'breaks' 沒有跨距整個 'x' 的範圍"

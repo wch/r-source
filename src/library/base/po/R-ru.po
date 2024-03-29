@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-11-30 14:39\n"
+"POT-Creation-Date: 2024-03-27 16:14\n"
 "PO-Revision-Date: 2020-08-19 21:47+0900\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -40,6 +40,13 @@ msgstr "См. help(\"Deprecated\") и help(\"%s-deprecated\")."
 
 msgid "See help(\"Deprecated\")"
 msgstr "См. help(\"Deprecated\")"
+
+msgid "unsupported value of _R_DEPRECATED_IS_R_,"
+msgstr ""
+
+#, fuzzy
+msgid ", will be ignored"
+msgstr "аргумент '%s' не будет учтен"
 
 msgid "argument to 'La.svd' must be numeric or complex"
 msgstr "аргумент 'La.svd' должен быть действительным или комплексным числом"

@@ -1,0 +1,186 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: R 4.4.0\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2023-07-31 14:59\n"
+"PO-Revision-Date: 2024-03-19 03:05+0000\n"
+"Last-Translator: Robert Castelo <robert.castelo@upf.edu>\n"
+"Language-Team: none\n"
+"Language: ca\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.16.4\n"
+
+msgid "invalid value of %s"
+msgstr "valor no vàlid de %s"
+
+#, fuzzy
+msgid "need at least one argument"
+msgstr "necessita almenys un argument"
+
+#, fuzzy
+msgid "zero-length inputs cannot be mixed with those of non-zero length"
+msgstr ""
+"les entrades de longitud zero no es poden barrejar amb les de longitud no "
+"zero"
+
+msgid "dim(X) must have a positive length"
+msgstr "dim(X) ha de tenir una longitud positiva"
+
+msgid "'X' must have named dimnames"
+msgstr "'X' ha de tenir dimnames amb noms"
+
+msgid "not all elements of 'MARGIN' are names of dimensions"
+msgstr "no tots els elements de «MARGIN» són noms de dimensions"
+
+#, fuzzy
+msgid "no cluster 'cl' supplied and none is registered"
+msgstr "no s'ha proporcionat cap clúster «cl» i no n'hi ha cap registrat"
+
+#, fuzzy
+msgid "not a valid cluster"
+msgstr "no és un clúster vàlid"
+
+#, fuzzy
+msgid "unknown cluster type"
+msgstr "tipus de clúster desconegut"
+
+#, fuzzy
+msgid "numeric 'names' must be >= 1"
+msgstr "els 'noms' numèrics han de ser s= 1"
+
+#, fuzzy
+msgid "node of a socket cluster on host %s with pid %d"
+msgstr "node d'un clúster de sòcol a l'amfitrió %s amb el pid %d"
+
+#, fuzzy
+msgid "Connection setup failed or timed out."
+msgstr "La configuració de la connexió ha fallat o ha excedit el temps."
+
+#, fuzzy
+msgid "PORT must be specified"
+msgstr "S'ha d'especificar el PORT"
+
+#, fuzzy
+msgid "'nnodes' must be >= 1"
+msgstr "'nnodes' ha de ser == 1"
+
+#, fuzzy
+msgid "Cluster setup failed."
+msgstr "Ha fallat la configuració del clúster."
+
+#, fuzzy
+msgid "invalid 'child' argument"
+msgstr "argument «child» no vàlid"
+
+#, fuzzy
+msgid "'children' must be a list of processes or a single process"
+msgstr "Els «nens» han de ser una llista de processos o un únic procés"
+
+#, fuzzy
+msgid "'process' must be of class %s"
+msgstr "'process' ha de ser de la classe %s"
+
+#, fuzzy
+msgid "'child' must be a valid child process"
+msgstr "\"fill\" ha de ser un procés fill vàlid"
+
+#, fuzzy
+msgid "'what' must be a character or raw vector"
+msgstr "'què' ha de ser un caràcter o vector cru"
+
+#, fuzzy
+msgid "'mc.cores' must be >= 1"
+msgstr "'mc.cores' ha de ser == 1"
+
+#, fuzzy
+msgid "affinity.list and X must have the same length"
+msgstr "affinity.list i X han de tenir la mateixa longitud"
+
+#, fuzzy
+msgid "%d function calls resulted in an error"
+msgstr "%d crides de funció han resultat en un error"
+
+#, fuzzy
+msgid "'mc.preschedule' must be false if 'affinity.list' is used"
+msgstr "«mc.preschedule» ha de ser fals si s'usa «affinity.list»"
+
+#, fuzzy
+msgid "all scheduled cores encountered errors in user code"
+msgstr "tots els nuclis programats han trobat errors en el codi d'usuari"
+
+#, fuzzy
+msgid "Zero-length inputs cannot be mixed with those of non-zero length"
+msgstr ""
+"Les entrades de longitud zero no es poden barrejar amb les de longitud no "
+"zero"
+
+#, fuzzy
+msgid "invalid 'jobs' argument"
+msgstr "argument «jobs» no vàlid"
+
+#, fuzzy
+msgid "'v' must be a vector"
+msgstr "'v' ha de ser un vector"
+
+#, fuzzy
+msgid "some results may be missing, folded or caused an error"
+msgstr ""
+"pot ser que faltin alguns resultats, estiguin plegats o hagin causat un error"
+
+#, fuzzy
+msgid "fork clusters are not supported on Windows"
+msgstr "els clústers de bifurcació no són compatibles amb Windows"
+
+msgid "'mc.cores' > 1 is not supported on Windows"
+msgstr "«mc.cores» > 1 no és compatible amb Windows"
+
+#, fuzzy
+msgid "Cluster setup failed. %d worker of %d failed to connect."
+msgid_plural "Cluster setup failed. %d of %d workers failed to connect."
+msgstr[0] ""
+"Ha fallat la configuració del clúster. %d treballador de %d no s'ha pogut "
+"connectar."
+msgstr[1] ""
+"Ha fallat la configuració del clúster. %d de %d treballadors no s'han pogut "
+"connectar."
+
+#, fuzzy
+msgid "socket cluster with %d nodes on host %s"
+msgid_plural "socket cluster with %d nodes on hosts %s"
+msgstr[0] "sòcol clúster amb %d nodes a l'amfitrió %s"
+msgstr[1] "sòcol clúster amb %d nodes en els amfitrions %s"
+
+#, fuzzy
+msgid "%d parallel function call did not deliver a result"
+msgid_plural "%d parallel function calls did not deliver results"
+msgstr[0] "%d crida de funció paral·lela no ha donat cap resultat"
+msgstr[1] "%d crides a funcions paral·leles no han donat resultats"
+
+#, fuzzy
+msgid "scheduled core %s did not deliver a result, all values of the job will be affected"
+msgid_plural "scheduled cores %s did not deliver results, all values of the jobs will be affected"
+msgstr[0] ""
+"el nucli planificat %s no ha donat cap resultat, es veuran afectats tots els "
+"valors del treball"
+msgstr[1] ""
+"els nuclis planificats %s no han donat resultats, es veuran afectats tots "
+"els valors dels treballs"
+
+#, fuzzy
+msgid "scheduled core %s encountered error in user code, all values of the job will be affected"
+msgid_plural "scheduled cores %s encountered errors in user code, all values of the jobs will be affected"
+msgstr[0] ""
+"el nucli planificat %s ha trobat un error en el codi d'usuari, tots els "
+"valors del treball es veuran afectats"
+msgstr[1] ""
+"els nuclis planificats %s han trobat errors en el codi d'usuari, tots els "
+"valors dels treballs es veuran afectats"
+
+#, fuzzy
+msgid "%d parallel job did not deliver a result"
+msgid_plural "%d parallel jobs did not deliver results"
+msgstr[0] "%d tasca paral·lela no ha donat cap resultat"
+msgstr[1] "%d treballs paral·lels no han donat resultats"

@@ -6,9 +6,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
-"Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-07-31 14:59+0200\n"
-"PO-Revision-Date: 2022-11-18 10:04+0000\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-03-27 16:14-0700\n"
+"PO-Revision-Date: 2023-12-20 13:03+0000\n"
 "Last-Translator: Shun Wang <shuonwang@gmail.com>\n"
 "Language-Team: Chinese\n"
 "Language: zh_CN\n"
@@ -16,11 +16,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.13.1\n"
+"X-Generator: Weblate 4.16.4\n"
 
 #: class_support.c:29
 msgid "calling the C routine used as an initializer for 'externalptr' objects"
-msgstr "调用C子程式给'externalptr'对象进行初始化"
+msgstr "调用C子程序给'externalptr'对象进行初始化"
 
 #: do_substitute_direct.c:41
 msgid "invalid list for substitution"
@@ -29,11 +29,11 @@ msgstr "置换时用的列表出了错"
 #: methods_list_dispatch.c:129
 #, c-format
 msgid "unexpected type '%s' for condition message"
-msgstr ""
+msgstr "条件消息的未知类型'%s'"
 
 #: methods_list_dispatch.c:132
 msgid "condition message must be length 1"
-msgstr ""
+msgstr "条件消息的长度必须为 1"
 
 #: methods_list_dispatch.c:213
 msgid "could not find the skeleton calls for 'methods' (package detached?): expect very bad things to happen"
@@ -42,16 +42,16 @@ msgstr "没有能够为'methods'找到骨架调用(程序包被拆離了？) ：
 #: methods_list_dispatch.c:279
 #, c-format
 msgid "no \"allMethods\" slot found in object of class \"%s\" used as methods list for function '%s'"
-msgstr "当函数'%2$s'方法列表来用的，类别为\"%1$s\" 的对象缺少\"allMethods\"这么一个类型。"
+msgstr "在类“%s”的对象中找不到用作函数“%s”的方法列表的“allMethods”槽"
 
 #: methods_list_dispatch.c:407
-#, fuzzy, c-format
+#, c-format
 msgid "S language method selection did not return normally when called from internal dispatch for function '%s'"
-msgstr "在为函数'%s'进行内部調度时S语言方法选择出了错"
+msgstr "从函数“%s”的内部调度调用时，S 语言方法选择未正常返回"
 
 #: methods_list_dispatch.c:409
 msgid "Function name for method selection called internally"
-msgstr ""
+msgstr "内部调用的方法选择的函数名称"
 
 #: methods_list_dispatch.c:503
 #, c-format
@@ -85,7 +85,7 @@ msgstr "调用框里找不到'%s'这个符号"
 #: methods_list_dispatch.c:613
 #, c-format
 msgid "invalid symbol in checking for missing argument in method dispatch: expected a name, got an object of class \"%s\""
-msgstr "方法调度在检查短少参数时符号出了错：需要的是个名字，得到的却是类别为\"%s\"的对象"
+msgstr "方法调度在检查短少参数时符号出了错：需要的是个名称，得到的却是类别为\"%s\"的对象"
 
 #: methods_list_dispatch.c:616
 msgid "use of NULL environment is defunct"
@@ -99,7 +99,7 @@ msgstr "方法调度在检查短少参数'%s'时环境出了错：不需要类�
 #: methods_list_dispatch.c:643
 #, c-format
 msgid "error in evaluating the argument '%s' in selecting a method for function '%s': %s"
-msgstr "在为'%2$s'函数选择方法时评估'%1$s'参数出了错: %3$s "
+msgstr "在为函数“%2$s”选择方法时计算参数“%1$s”时出错：%3$s"
 
 #: methods_list_dispatch.c:660
 #, c-format
@@ -119,7 +119,7 @@ msgstr "(在为'%s'函数选择方法时) 调度时的'environment'参数必需�
 #: methods_list_dispatch.c:705
 #, c-format
 msgid "no matching method for function '%s' (argument '%s', with class \"%s\")"
-msgstr "找不到与'%s'函数相配的方法(参数是'%s'，类别为\"%s\")"
+msgstr "找不到与'%s'函数匹配的方法(参数是'%s'，类别为\"%s\")"
 
 #: methods_list_dispatch.c:712
 #, c-format
@@ -129,7 +129,7 @@ msgstr "在方法选择时函数'%s'不能有无默认方法的递归使用"
 #: methods_list_dispatch.c:737
 #, c-format
 msgid "error in evaluating a 'primitive' next method: %s"
-msgstr "評估'primitive'其次方法时出了错: %s "
+msgstr "評估'primitive'其次方法时出了错: %s"
 
 #: methods_list_dispatch.c:893
 #, c-format
@@ -148,7 +148,7 @@ msgstr "'%s'必需是单一字符串(现在它是类别为\"%s\"的对象)"
 
 #: methods_list_dispatch.c:986
 msgid "class should be either a character-string name or a class definition"
-msgstr "类别必需是字符串名字或类别定义"
+msgstr "类别必需是字符串名称或类别定义"
 
 #: methods_list_dispatch.c:1072
 #, c-format

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-11-30 14:40\n"
+"POT-Creation-Date: 2024-03-27 16:14\n"
 "PO-Revision-Date: 2018-04-09 12:10-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team: \n"
@@ -594,7 +594,8 @@ msgstr "'pairwise.complete.obs'를 처리할 수 없습니다"
 msgid "'V' is not a square numeric matrix"
 msgstr "'V'는 수치형 정방행렬이 아닙니다"
 
-msgid "diag(.) had 0 or NA entries; non-finite result is doubtful"
+#, fuzzy
+msgid "diag(V) had non-positive or NA entries; the non-finite result may be dubious"
 msgstr "diag(.)는 0 또는 NA 항목을 가지고 있으므로 유한하지 않은 결과를 얻을 것으로 의심됩니다"
 
 msgid "'x' must be a numeric vector"
@@ -706,7 +707,7 @@ msgid "'x' contains missing values"
 msgstr "'x'는 결측치들을 포함하고 있습니다"
 
 msgid "'weights' must all be finite"
-msgstr "'weights'는 모두 유한한 값을 가지고 있어야 합니다. "
+msgstr "'weights'는 모두 유한한 값을 가지고 있어야 합니다."
 
 msgid "'weights' must not be negative"
 msgstr "'weights'는 반드시 음수이어야 합니다"
@@ -1766,7 +1767,7 @@ msgid "bounds can only be used with method L-BFGS-B (or Brent)"
 msgstr "bounds는 메소드 L-BFGS-B (또는 Brent)에서만 사용할 수 있습니다"
 
 msgid "unknown names in control:"
-msgstr "control에 다음과 같은 알 수 없는 이름이 있습니다: "
+msgstr "control에 다음과 같은 알 수 없는 이름이 있습니다:"
 
 msgid "read the documentation for 'trace' more carefully"
 msgstr "'trace'에 대하여 문서를 좀 더 자세히 읽어보세요"
@@ -2212,7 +2213,7 @@ msgid "unknown string value for s.window"
 msgstr "s.window에 알수없는 문자열 값입니다"
 
 msgid "'cutpoints' must be unique in 0 < cuts < 1, but are ="
-msgstr "'cutpoints'는 반드시 0과 1사이에 고유한 값이어야 하는데 다음과 같습니다  = "
+msgstr "'cutpoints'는 반드시 0과 1사이에 고유한 값이어야 하는데 다음과 같습니다  ="
 
 msgid "'cutpoints' must be unique, but are ="
 msgstr "'cutpoints'는 반드시 고유해야 하는데 다음과 같습니다 ="
@@ -2467,8 +2468,9 @@ msgid "unknown name %s in the 'split' list"
 msgid_plural "unknown names %s in the 'split' list"
 msgstr[0] "'split' 리스트에 알 수 없는 이름 %s가 있습니다"
 
+#, fuzzy
 msgid "extra argument %s is not of class \"%s\""
-msgid_plural "extra arguments %s are not of class \"%s\"s"
+msgid_plural "extra arguments %s are not of class \"%s\""
 msgstr[0] "추가 인자 %1$s는 클래스 \"%2$s\"가 아닙니다"
 
 msgid "%d factor is too many for %d variables"

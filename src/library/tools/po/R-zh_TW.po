@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-11-30 14:40\n"
+"POT-Creation-Date: 2024-03-27 16:15\n"
 "PO-Revision-Date: 2021-11-06 22:40+0100\n"
 "Last-Translator: Wei-Lun Chao <bluebat@member.fsf.org>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -645,7 +645,7 @@ msgstr "簡介原始碼檔案 (%s) 偵測到分享的名稱 (%s) 因此可以冒
 
 #, fuzzy
 msgid "Note: skipping %s"
-msgstr "處理 %s "
+msgstr "處理 %s"
 
 #, fuzzy
 msgid "Error: Vignette '%s' is non-ASCII but has no declared encoding"
@@ -755,7 +755,7 @@ msgid "cannot create directory '%s'"
 msgstr "無法建立目錄 '%s'"
 
 msgid "processing %s"
-msgstr "處理 %s "
+msgstr "處理 %s"
 
 msgid ""
 "running %s on vignette '%s' failed with message:\n"
@@ -817,7 +817,7 @@ msgid "Run R CMD build with --no-build-vignettes to prevent rebuilding."
 msgstr "以 --no-build-vignettes 執行 R 命令組建以避免重新組建。"
 
 msgid "invalid value for '--compact-vignettes', assuming %s"
-msgstr "--compact-vignettes 的值不對，假定用 %s "
+msgstr "--compact-vignettes 的值不對，假定用 %s"
 
 msgid "Error: cannot rename directory to %s"
 msgstr "錯誤：無法變更目錄名稱到時 %s"
@@ -1227,10 +1227,6 @@ msgstr "無法建立臨時目錄 %s"
 msgid "expected one package directory, found %d."
 msgstr ""
 
-#, fuzzy
-msgid "one of 'package' and 'dir' must be specified."
-msgstr "只能設定一個 Rd 檔案"
-
 msgid "argument '%s' must be a character string or connection"
 msgstr "引數 '%s' 必須是字串或聯結"
 
@@ -1286,7 +1282,7 @@ msgid "Running %s"
 msgstr "執行 %s"
 
 msgid "Running vignettes for package %s"
-msgstr "執行簡介給程式套件 %s "
+msgstr "執行簡介給程式套件 %s"
 
 msgid "Comparing %s to %s ..."
 msgstr "比較 %s 和 %s"
@@ -1425,7 +1421,7 @@ msgid "contains a blank line"
 msgstr "帶空列"
 
 msgid "Unknown encoding with non-ASCII data: converting to ASCII"
-msgstr "不明帶非 ASCII 資料的編碼: 轉換為 ASCII "
+msgstr "不明帶非 ASCII 資料的編碼: 轉換為 ASCII"
 
 msgid "cannot source package code:"
 msgstr "無法讀取套件來源編碼"
@@ -1563,6 +1559,10 @@ msgstr[0] "%d 項套件測試失敗"
 msgid "Corresponding BibTeX entry:"
 msgid_plural "Corresponding BibTeX entries:"
 msgstr[0] "相關的 BibTeX 條目："
+
+#, fuzzy
+#~ msgid "one of 'package' and 'dir' must be specified."
+#~ msgstr "只能設定一個 Rd 檔案"
 
 #~ msgid "parse error in file '%s':"
 #~ msgstr "檔案 '%s' 裡句法分析不正確："

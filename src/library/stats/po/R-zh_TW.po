@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.5.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-11-30 14:40\n"
+"POT-Creation-Date: 2024-03-27 16:14\n"
 "PO-Revision-Date: 2018-09-16 23:38+0800\n"
 "Last-Translator: Wei-Lun Chao <bluebat@member.fsf.org>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -46,7 +46,7 @@ msgid "invalid length(x)"
 msgstr "length(x)無效"
 
 msgid "optimization difficulties: %s"
-msgstr "最佳化困難： %s "
+msgstr "最佳化困難： %s"
 
 msgid "optimization failure"
 msgstr "最佳化失敗"
@@ -100,7 +100,7 @@ msgid "x$lag must have at least 1 column"
 msgstr "x$lag 至少需要有一行"
 
 msgid "can use ci.type=\"ma\" only if first lag is 0"
-msgstr "只有在第一個滯後為零時才能用 ci.type=\"ma\" "
+msgstr "只有在第一個滯後為零時才能用 ci.type=\"ma\""
 
 msgid "Page [%d,%d]: i =%s; j =%s"
 msgstr "分頁 [%d,%d]: i =%s; j =%s"
@@ -594,7 +594,8 @@ msgstr "不知如何處理 'pairwise.complete.obs'"
 msgid "'V' is not a square numeric matrix"
 msgstr "'V' 不是正方形的數值矩陣"
 
-msgid "diag(.) had 0 or NA entries; non-finite result is doubtful"
+#, fuzzy
+msgid "diag(V) had non-positive or NA entries; the non-finite result may be dubious"
 msgstr "diag(.)內有 0 或 NA 值；無限值的可靠性不高"
 
 msgid "'x' must be a numeric vector"
@@ -712,7 +713,7 @@ msgid "'weights' must not be negative"
 msgstr "'weights' 不能是負數的"
 
 msgid "sum(weights) != 1  -- will not get true density"
-msgstr " sum(weights) ！= 1，因此無法取得真密度函式"
+msgstr "sum(weights) ！= 1，因此無法取得真密度函式"
 
 msgid "need at least 2 points to select a bandwidth automatically"
 msgstr "自動選擇頻寬至少需要兩個資料點"
@@ -1669,7 +1670,7 @@ msgid "f.lower = f(lower) is NA"
 msgstr "f.lower = f(lower) 的值為 NA"
 
 msgid "f.upper = f(upper) is NA"
-msgstr "f.upper = f(upper) 的值為 NA "
+msgstr "f.upper = f(upper) 的值為 NA"
 
 msgid "invalid 'extendInt'; please report"
 msgstr "'extendInt' 無效；請通報"
@@ -1787,7 +1788,7 @@ msgstr ""
 "用\"Brent\"或直接用 optimize()"
 
 msgid "method = \"Brent\" is only available for one-dimensional optimization"
-msgstr " method = \"Brent\" 只適用於一維最佳化"
+msgstr "method = \"Brent\" 只適用於一維最佳化"
 
 msgid "'lower' and 'upper' must be finite values"
 msgstr "'lower' 和 'upper' 必須都是有限值"
@@ -2136,7 +2137,7 @@ msgid "type = \"partial\" is not yet implemented"
 msgstr "還沒有實作 type=\"partial\"的演算法"
 
 msgid "not a valid \"smooth.spline\" object"
-msgstr " \"smooth.spline\"物件無效"
+msgstr "\"smooth.spline\"物件無效"
 
 msgid "'span' must be between 0 and 1."
 msgstr "'span' 必須在零和一之間。"
@@ -2145,7 +2146,7 @@ msgid "'y' must be numeric vector"
 msgstr "'y' 必須是數值向量"
 
 msgid "number of observations in 'x' and 'y' must match."
-msgstr " 'x' 和 'y' 裡的觀察量數目必須相等。"
+msgstr "'x' 和 'y' 裡的觀察量數目必須相等。"
 
 msgid "number of weights must match number of observations."
 msgstr "權數數目必須和觀察量數目相同。"
@@ -2475,8 +2476,9 @@ msgid "unknown name %s in the 'split' list"
 msgid_plural "unknown names %s in the 'split' list"
 msgstr[0] "'split' 串列裡的名稱 %s 無效"
 
+#, fuzzy
 msgid "extra argument %s is not of class \"%s\""
-msgid_plural "extra arguments %s are not of class \"%s\"s"
+msgid_plural "extra arguments %s are not of class \"%s\""
 msgstr[0] "額外引數 %s 的類別不是\"%s\""
 
 msgid "%d factor is too many for %d variables"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-11-30 14:40\n"
+"POT-Creation-Date: 2024-03-27 16:15\n"
 "PO-Revision-Date: 2018-04-09 12:11-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team: \n"
@@ -146,7 +146,7 @@ msgid "you must specify 'package', 'dir' or 'file'"
 msgstr "'package', 'dir' 또는 'file'을 지정해야 합니다"
 
 msgid "file '%s' does not exist"
-msgstr "파일 '%s'는 존재하지 않습니다 "
+msgstr "파일 '%s'는 존재하지 않습니다"
 
 msgid ""
 "parse error in file '%s':\n"
@@ -201,7 +201,7 @@ msgid "Malformed package version."
 msgstr "잘못된 패키지 버전입니다."
 
 msgid "Malformed maintainer field."
-msgstr "유지보수자 항목이 잘못되었습니다. "
+msgstr "유지보수자 항목이 잘못되었습니다."
 
 msgid "Malformed Depends or Suggests or Imports or Enhances field."
 msgstr "Depends 또는 Suggests 또는 Imports 또는 Enhances 항목이 잘못되었습니다."
@@ -210,7 +210,7 @@ msgid "Offending entries:"
 msgstr "다음과 같은 문제가 되는 항목들이 있습니다:"
 
 msgid "Entries must be names of packages optionally followed by '<=' or '>=', white space, and a valid version number in parentheses."
-msgstr "항목들은 반드시 패키지들의 이름들이어야 하며, 추가정보는 괄호안에 '<=' 또는 '>=', 공백문자, 그리고 유효한 버전정보의 순서로 나열합니다. "
+msgstr "항목들은 반드시 패키지들의 이름들이어야 하며, 추가정보는 괄호안에 '<=' 또는 '>=', 공백문자, 그리고 유효한 버전정보의 순서로 나열합니다."
 
 msgid "Entries with infeasible comparison operator:"
 msgstr "실행할 수 없는 비교연산자가 함께 있는 항목들은 다음과 같습니다:"
@@ -240,7 +240,7 @@ msgid "Malformed Title field: should not end in a period."
 msgstr "Title 항목이 올바르지 않습니다: 마침표로 끝나면 안됩니다."
 
 msgid "Malformed Description field: should contain one or more complete sentences."
-msgstr "Description 항목이 올바르지 않습니다: 하나 이상의 완전한 문장을 포함하고 있어야 합니다. "
+msgstr "Description 항목이 올바르지 않습니다: 하나 이상의 완전한 문장을 포함하고 있어야 합니다."
 
 msgid "See section 'The DESCRIPTION file' in the 'Writing R Extensions' manual."
 msgstr "매뉴얼 'Writing R Extensions'에 있는 섹션 'The DESCRIPTION file'을 살펴보시길 바랍니다."
@@ -341,7 +341,7 @@ msgid "See section 'Cross-references' in the 'Writing R Extensions' manual."
 msgstr "매뉴얼 'Writing R Extensions'에 있는 섹션 'Cross-references'을 살펴보시길 바랍니다."
 
 msgid "Call sequence:"
-msgstr "호출 시퀀스: "
+msgstr "호출 시퀀스:"
 
 msgid "..."
 msgstr ""
@@ -528,7 +528,7 @@ msgid "See chapter 'Writing R documentation' in manual 'Writing R Extensions'."
 msgstr "'Writing R Extensions' 매뉴얼의 'Writing R documentation' 챕터를 보세요."
 
 msgid "missing/empty \\title field in '%s'"
-msgstr "'%s'내에 \\title 항목이 비어있습니다 "
+msgstr "'%s'내에 \\title 항목이 비어있습니다"
 
 msgid "Rd files must have a non-empty \\title."
 msgstr "Rd 파일은 반드시 비어있지 않은 \\title 를 가지고 있어야 합니다."
@@ -573,7 +573,7 @@ msgid "Converting Rd files to LaTeX ..."
 msgstr "Rd 파일들을 LaTeX 로 변환하고 있습니다..."
 
 msgid "-t option without value"
-msgstr "-t 옵션의 값이 없습니다 "
+msgstr "-t 옵션의 값이 없습니다"
 
 msgid "-o option without value"
 msgstr "-o 옵션의 값이 없습니다"
@@ -890,7 +890,7 @@ msgid "Vignettes:"
 msgstr "비니에트:"
 
 msgid "Code demonstrations:"
-msgstr "코드 설명: "
+msgstr "코드 설명:"
 
 msgid "Help pages:"
 msgstr "도움말 페이지:"
@@ -1199,10 +1199,6 @@ msgstr "임시디렉토리 %s를 생성하지 못했습니다"
 
 msgid "expected one package directory, found %d."
 msgstr ""
-
-#, fuzzy
-msgid "one of 'package' and 'dir' must be specified."
-msgstr "반드시 한개의 Rd 파일은 지정되어야 합니다"
 
 msgid "argument '%s' must be a character string or connection"
 msgstr "인자 '%s'는 반드시 문자열 또는 연결이어야 합니다"
@@ -1532,6 +1528,10 @@ msgstr[0] ""
 msgid "Corresponding BibTeX entry:"
 msgid_plural "Corresponding BibTeX entries:"
 msgstr[0] ""
+
+#, fuzzy
+#~ msgid "one of 'package' and 'dir' must be specified."
+#~ msgstr "반드시 한개의 Rd 파일은 지정되어야 합니다"
 
 #~ msgid "parse error in file '%s':"
 #~ msgstr "파일 '%s'에서 파싱에러가 발생했습니다:"

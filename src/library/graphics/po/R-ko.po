@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-07-31 14:59\n"
+"POT-Creation-Date: 2024-03-27 16:14\n"
 "PO-Revision-Date: 2018-04-09 12:06-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team: \n"
@@ -232,6 +232,9 @@ msgstr "'breaks'는 단조증가하지 않습니다"
 
 msgid "'probability' is an alias for '!freq', however they differ."
 msgstr "'probability'은 '!freq'의 alias이지만, 이 둘은 다릅니다"
+
+msgid "fuzz must be non-negative"
+msgstr ""
 
 msgid "some 'x' not counted; maybe 'breaks' do not span range of 'x'"
 msgstr "일부 'x'가 세어지지 않았습니다; 아마도 'breaks'가 'x'의 범위를 모두 포함하지 않은 것 같습니다"

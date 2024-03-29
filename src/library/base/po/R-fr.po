@@ -7,16 +7,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.0.4\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-11-30 14:39\n"
-"PO-Revision-Date: 2022-08-31 15:04+0000\n"
-"Last-Translator: Marcel Ramos <marcel.ramos@sph.cuny.edu>\n"
+"POT-Creation-Date: 2024-03-27 16:14\n"
+"PO-Revision-Date: 2024-03-19 12:53+0000\n"
+"Last-Translator: Michael Chirico <michaelchirico4@gmail.com>\n"
 "Language-Team: French <R-core@r-project.org>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.13.1\n"
+"X-Generator: Weblate 4.16.4\n"
 
 msgid "'%s' is defunct."
 msgstr "'%s' est obsolète et retiré de R."
@@ -38,6 +38,13 @@ msgstr "Voir help(\"Deprecated\") et help(\"%s-deprecated\")."
 
 msgid "See help(\"Deprecated\")"
 msgstr "Voir help(\"Deprecated\")"
+
+msgid "unsupported value of _R_DEPRECATED_IS_R_,"
+msgstr ""
+
+#, fuzzy
+msgid ", will be ignored"
+msgstr "l'argument '%s' sera ignoré"
 
 msgid "argument to 'La.svd' must be numeric or complex"
 msgstr "l'argument pour 'La.svd' doit être numérique ou complexe"
@@ -736,7 +743,7 @@ msgid "unknown match distance components ignored"
 msgstr "composantes de distance sans correspondance ignorées"
 
 msgid "unknown cost components ignored"
-msgstr "composantes de de coût inconnues et donc ignorées"
+msgstr "composantes de coût inconnues et donc ignorées"
 
 msgid "cost components must be non-negative"
 msgstr "les composantes de coût ne peuvent être négatives"
@@ -1812,52 +1819,52 @@ msgstr[1] "Les objets suivants sont masqués depuis %s:"
 
 msgid "invalid 'row.names', length %d for a data frame with %d row"
 msgid_plural "invalid 'row.names', length %d for a data frame with %d rows"
-msgstr[0] "'row.names' incorrect, longueur %d pour un tableau de données ayant %d lignes"
+msgstr[0] "'row.names' incorrect, longueur %d pour un tableau de données ayant %d ligne"
 msgstr[1] "'row.names' incorrect, longueur %d pour un tableau de données ayant %d lignes"
 
 msgid "supplied %d row name for %d rows"
 msgid_plural "supplied %d row names for %d rows"
-msgstr[0] "%d noms de lignes donnés pour %d lignes"
+msgstr[0] "%d nom de ligne donnés pour %d lignes"
 msgstr[1] "%d noms de lignes donnés pour %d lignes"
 
 msgid "replacement has %d row, data has %d"
 msgid_plural "replacement has %d rows, data has %d"
-msgstr[0] "le tableau de remplacement a %d lignes, le tableau remplacé en a %d"
+msgstr[0] "le tableau de remplacement a %d ligne, le tableau remplacé en a %d"
 msgstr[1] "le tableau de remplacement a %d lignes, le tableau remplacé en a %d"
 
 msgid "replacement has %d item, need %d"
 msgid_plural "replacement has %d items, need %d"
-msgstr[0] "le tableau de remplacement a %d éléments, et il en faut %d"
+msgstr[0] "le tableau de remplacement a %d élément, et il en faut %d"
 msgstr[1] "le tableau de remplacement a %d éléments, et il en faut %d"
 
 msgid "replacement element %d is a matrix/data frame of %d row, need %d"
 msgid_plural "replacement element %d is a matrix/data frame of %d rows, need %d"
-msgstr[0] "l'élément de remplacement %d est une matrice / un tableau de données de %d lignes, et il en faut %d"
+msgstr[0] "l'élément de remplacement %d est une matrice / un tableau de données de %d ligne, et il en faut %d"
 msgstr[1] "l'élément de remplacement %d est une matrice / un tableau de données de %d lignes, et il en faut %d"
 
 msgid "replacement element %d has %d row, need %d"
 msgid_plural "replacement element %d has %d rows, need %d"
-msgstr[0] "l'élément de remplacement %d a %d lignes, et il en faut %d"
+msgstr[0] "l'élément de remplacement %d a %d ligne, et il en faut %d"
 msgstr[1] "l'élément de remplacement %d a %d lignes, et il en faut %d"
 
 msgid "replacement element %d has %d row to replace %d rows"
 msgid_plural "replacement element %d has %d rows to replace %d rows"
-msgstr[0] "l'élément de remplacement %d a %d lignes pour remplacer %d lignes"
+msgstr[0] "l'élément de remplacement %d a %d ligne pour remplacer %d lignes"
 msgstr[1] "l'élément de remplacement %d a %d lignes pour remplacer %d lignes"
 
 msgid "%d row in value to replace %d rows"
 msgid_plural "%d rows in value to replace %d rows"
-msgstr[0] "il y a %d lignes dans les valeurs pour remplacer %d lignes"
+msgstr[0] "il y a %d ligne dans les valeurs pour remplacer %d lignes"
 msgstr[1] "il y a %d lignes dans les valeurs pour remplacer %d lignes"
 
 msgid "replacement data has %d row to replace %d rows"
 msgid_plural "replacement data has %d rows to replace %d rows"
-msgstr[0] "les données de remplacement ont %d lignes pour remplacer %d lignes"
+msgstr[0] "les données de remplacement ont %d ligne pour remplacer %d lignes"
 msgstr[1] "les données de remplacement ont %d lignes pour remplacer %d lignes"
 
 msgid "provided %d variable to replace %d variables"
 msgid_plural "provided %d variables to replace %d variables"
-msgstr[0] "%d variables sont fournies pour remplacer %d variables"
+msgstr[0] "%d variable sont fournies pour remplacer %d variables"
 msgstr[1] "%d variables sont fournies pour remplacer %d variables"
 
 msgid "data frame with 0 columns and %d row"
@@ -1885,10 +1892,9 @@ msgid_plural "objects %s not found"
 msgstr[0] "objet %s introuvable"
 msgstr[1] "objets %s introuvables"
 
-#, fuzzy
 msgid "'arg' should be %s"
 msgid_plural "'arg' should be one of %s"
-msgstr[0] "'arg' doit être un de %s"
+msgstr[0] "'arg' doit être %s"
 msgstr[1] "'arg' doit être un de %s"
 
 msgid "'by' must specify a uniquely valid column"
@@ -1908,7 +1914,7 @@ msgstr[1] "Pas de méthodes trouvées dans le package %s pour les requêtes : %s
 
 msgid "requested method not found in environment/package %s: %s when loading %s"
 msgid_plural "requested methods not found in environment/package %s: %s when loading %s"
-msgstr[0] "des méthodes demandées sont introuvables dans l'environnement / le package %s : %s lors du chargement de %s"
+msgstr[0] "des méthode demandées sont introuvables dans l'environnement / le package %s : %s lors du chargement de %s"
 msgstr[1] "des méthodes demandées sont introuvables dans l'environnement / le package %s : %s lors du chargement de %s"
 
 msgid "class %s is not exported by 'namespace:%s'"

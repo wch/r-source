@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: graphics 4.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-07-31 14:59\n"
+"POT-Creation-Date: 2024-03-27 16:14\n"
 "PO-Revision-Date: 2020-11-29 17:23+0200\n"
 "Last-Translator: <r.zakauskas@gmail.com;gabriele.dauksaite@gmail.com>\n"
 "Language-Team: Lithuanian\n"
@@ -224,6 +224,10 @@ msgstr "'breaks' nėra griežtai didėjantis"
 
 msgid "'probability' is an alias for '!freq', however they differ."
 msgstr "'probability' yra slapyvardis '!freq', tačiau jie skiriasi."
+
+#, fuzzy
+msgid "fuzz must be non-negative"
+msgstr "sveikųjų skaičių spalvos turi būti neneigiamos"
 
 msgid "some 'x' not counted; maybe 'breaks' do not span range of 'x'"
 msgstr "kai kurie 'x' neįskaičiuojami; gal 'breaks' neapima 'x'"

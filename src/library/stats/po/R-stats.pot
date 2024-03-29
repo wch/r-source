@@ -1,8 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: R 4.4.0\n"
-"Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-11-30 14:40\n"
+"Project-Id-Version: stats 4.4.0\n"
+"POT-Creation-Date: 2024-03-27 16:14\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -582,7 +581,7 @@ msgstr ""
 msgid "'V' is not a square numeric matrix"
 msgstr ""
 
-msgid "diag(.) had 0 or NA entries; non-finite result is doubtful"
+msgid "diag(V) had non-positive or NA entries; the non-finite result may be dubious"
 msgstr ""
 
 msgid "'x' must be a numeric vector"
@@ -2408,7 +2407,7 @@ msgstr[0]    ""
 msgstr[1]    ""
 
 msgid        "extra argument %s is not of class \"%s\""
-msgid_plural "extra arguments %s are not of class \"%s\"s"
+msgid_plural "extra arguments %s are not of class \"%s\""
 msgstr[0]    ""
 msgstr[1]    ""
 

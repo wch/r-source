@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-11-30 14:40\n"
-"PO-Revision-Date: 2022-12-15 08:04+0000\n"
+"POT-Creation-Date: 2024-03-27 16:14\n"
+"PO-Revision-Date: 2023-12-20 13:03+0000\n"
 "Last-Translator: Shun Wang <shuonwang@gmail.com>\n"
 "Language-Team: Chinese\n"
 "Language: zh_CN\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.13.1\n"
+"X-Generator: Weblate 4.16.4\n"
 
 msgid "models are not all fitted to the same number of observations"
 msgstr "模型拟合时没有用同样大小的数据集"
@@ -46,7 +46,7 @@ msgid "invalid length(x)"
 msgstr "length(x)无效"
 
 msgid "optimization difficulties: %s"
-msgstr "优化困难： %s "
+msgstr "优化难度：%s"
 
 msgid "optimization failure"
 msgstr "优化失败"
@@ -149,7 +149,7 @@ msgid ""
 " does not match the length of the margins, %d"
 msgstr ""
 "FUN的长度, %d,\n"
-"与边缘的长度, %d不相符"
+"与边MARGIN的长度, %d不相符"
 
 msgid "no rows to aggregate"
 msgstr "没有可用来聚合的行"
@@ -569,7 +569,7 @@ msgid "singular contrast matrix"
 msgstr "奇异对比矩阵"
 
 msgid "numeric contrasts or contrast name expected"
-msgstr "需要数值对比或对比的名字"
+msgstr "需要数值对比或对比的名称"
 
 msgid "%s needs package 'Matrix' correctly installed"
 msgstr "%s需要正确安装的'Matrix'程序包"
@@ -601,7 +601,8 @@ msgstr "不知如何處理'pairwise.complete.obs'"
 msgid "'V' is not a square numeric matrix"
 msgstr "'V'不是正方形的数值矩阵"
 
-msgid "diag(.) had 0 or NA entries; non-finite result is doubtful"
+#, fuzzy
+msgid "diag(V) had non-positive or NA entries; the non-finite result may be dubious"
 msgstr "diag(.)内有0或NA值；无限值的可靠性不高"
 
 msgid "'x' must be a numeric vector"
@@ -719,7 +720,7 @@ msgid "'weights' must not be negative"
 msgstr "'weights'不能是负数的"
 
 msgid "sum(weights) != 1  -- will not get true density"
-msgstr " sum(weights) != 1，因此无法取得真密度函数"
+msgstr "sum(weights) != 1，因此无法取得真密度函数"
 
 msgid "need at least 2 points to select a bandwidth automatically"
 msgstr "自动选择頻寬至少需要两个数据点"
@@ -752,7 +753,7 @@ msgid "bad value for 'lag' or 'differences'"
 msgstr "'lag'或'differences'的值有错误"
 
 msgid "'xi' does not have the right length"
-msgstr "'xi'的长度不对"
+msgstr "'xi'的长度不正确"
 
 msgid "incorrect dimensions for 'xi'"
 msgstr "'xi'的尺寸不正确"
@@ -816,7 +817,7 @@ msgid "factor analysis applies only to numerical variables"
 msgstr "因子分析只适用于数值变量"
 
 msgid "'covmat' is of unknown type"
-msgstr "'covmat'的类型不对"
+msgstr "'covmat'的类型不正确"
 
 msgid "requested scores without an 'x' matrix"
 msgstr "被要求的分数没有'x'矩阵"
@@ -983,10 +984,10 @@ msgid "'formula' has '.' in both left and right hand sides"
 msgstr "'formula'的公式左右两边都有'.'"
 
 msgid "incorrect variable names in rhs of formula"
-msgstr "公式右边变量名字不正确"
+msgstr "公式右边变量名称不正确"
 
 msgid "incorrect variable names in lhs of formula"
-msgstr "公式左边变量名字不正确"
+msgstr "公式左边变量名称不正确"
 
 msgid "cannot use dots in formula with given data"
 msgstr "按照所提供的数据无法在公式里用点符号"
@@ -1019,7 +1020,7 @@ msgid "profiling has found a better solution, so original fit had not converged"
 msgstr ""
 
 msgid "'family' not recognized"
-msgstr "'family'设定得不对"
+msgstr "'family'设定得不正确"
 
 msgid "invalid 'method' argument"
 msgstr "'method'参数无效"
@@ -1106,10 +1107,10 @@ msgid ","
 msgstr ","
 
 msgid "using F test with a '%s' family is inappropriate"
-msgstr "将F检验用于%s分布族是不对的"
+msgstr "将F检验用于%s分布族是不正确的"
 
 msgid "using F test with a fixed dispersion is inappropriate"
-msgstr "将F检验用于固定疏散的分布是不对的"
+msgstr "将F检验用于固定疏散的分布是不正确的"
 
 msgid "models with response %s removed because response differs from model 1"
 msgstr "带响应%s的模型被删除了，因为响应同模型1不相对"
@@ -1193,7 +1194,7 @@ msgid "'coef' must be a vector"
 msgstr "'coef'必需是向量"
 
 msgid "'coef' does not have the correct length"
-msgstr "'coef'的长度不对"
+msgstr "'coef'的长度不正确"
 
 msgid "coefficients do not add to 1"
 msgstr "系数总和不是一"
@@ -1315,7 +1316,7 @@ msgid "0 (non-NA) cases"
 msgstr "没有(非NA)案例可用"
 
 msgid "incompatible dimensions"
-msgstr "维度不相配"
+msgstr "维度不匹配"
 
 msgid "missing or negative weights not allowed"
 msgstr "权数不允许是缺失值或负值"
@@ -1337,7 +1338,7 @@ msgid ""
 "lm object does not have a proper 'qr' component.\n"
 " Rank zero or should not have used lm(.., qr=FALSE)."
 msgstr ""
-"lm对象的'qr'组件不对。\n"
+"lm对象的'qr'组件不正确。\n"
 " 其秩零，要么不应该调用lm(.., qr=FALSE)."
 
 #, fuzzy
@@ -1547,7 +1548,7 @@ msgid "this fit does not inherit from \"lm\""
 msgstr "这拟和值不是由\"lm\"继承来的"
 
 msgid "'cterms' argument must match terms in model object"
-msgstr "'cterms'参数必需同模型对象里的项相配"
+msgstr "'cterms'参数必需同模型对象里的项匹配"
 
 msgid "Design is unbalanced - use se.contrast() for se's"
 msgstr "设计不平衡 - 用se.contrast()算标准误"
@@ -1613,7 +1614,7 @@ msgid "'termobj' must be a object of class %s"
 msgstr "'termobj'必需是类别为%s的对象"
 
 msgid "variable '%s' was fitted with type \"%s\" but type \"%s\" was supplied"
-msgstr "变量'%s'是由\"%s\"类别拟合而成，与提供的类别\"%s\"不相配"
+msgstr "变量'%s'是由\"%s\"类别拟合而成，与提供的类别\"%s\"不匹配"
 
 msgid "variables %s were specified with different types from the fit"
 msgstr "设定的变量%s的类别同拟合的类别不相符"
@@ -1640,11 +1641,11 @@ msgid "'offset' must be numeric"
 msgstr "'offset'必需为数值"
 
 msgid "model frame and formula mismatch in model.matrix()"
-msgstr "model.matrix()里的模型框和公式不相配"
+msgstr "model.matrix()里的模型框和公式不匹配"
 
 #, fuzzy
 msgid "non-list contrasts argument ignored"
-msgstr "'contrasts.arg'参数不对"
+msgstr "'contrasts.arg'参数不正确"
 
 #, fuzzy
 msgid "'contrasts.arg' argument must be named"
@@ -1684,7 +1685,7 @@ msgid "f.lower = f(lower) is NA"
 msgstr "f.lower = f(lower)的值为NA"
 
 msgid "f.upper = f(upper) is NA"
-msgstr "f.upper = f(upper)的值为NA "
+msgstr "f.upper = f(upper)的值为NA"
 
 #, fuzzy
 msgid "invalid 'extendInt'; please report"
@@ -1786,7 +1787,7 @@ msgid "bounds can only be used with method L-BFGS-B (or Brent)"
 msgstr "只有在用L-BFGS-B(或Brent)方法时才能定优化界限"
 
 msgid "unknown names in control:"
-msgstr "控制里没有这样的名字"
+msgstr "控制里没有这样的名称"
 
 msgid "read the documentation for 'trace' more carefully"
 msgstr "请小心阅读'trace'文档"
@@ -1805,7 +1806,7 @@ msgstr ""
 "用\"Brent\"或直接用optimize()"
 
 msgid "method = \"Brent\" is only available for one-dimensional optimization"
-msgstr " method = \"Brent\" 只适用于一维优化"
+msgstr "method = \"Brent\" 只适用于一维优化"
 
 msgid "'lower' and 'upper' must be finite values"
 msgstr "'lower'和'upper'必需都是有限值"
@@ -1901,7 +1902,7 @@ msgid "'ppr' applies only to numerical variables"
 msgstr "'ppr'只适用于数值变量"
 
 msgid "mismatched 'x' and 'y'"
-msgstr "'x'和'y'不相配"
+msgstr "'x'和'y'不匹配"
 
 msgid "wrong number of columns in 'x'"
 msgstr "'x'里的列数有误"
@@ -1922,7 +1923,7 @@ msgid "'newdata' does not have named columns matching one or more of the origina
 msgstr "'newdata'的列名同原始数据的列名没有任何相同的"
 
 msgid "'newdata' does not have the correct number of columns"
-msgstr "'newdata'列的数目不对"
+msgstr "'newdata'列的数目不正确"
 
 msgid "both 'x' and 'covmat' were supplied: 'x' will be ignored"
 msgstr "同时提供了'x'和'covmat': 'x'忽略不用"
@@ -2012,7 +2013,7 @@ msgid "ref = %d must be in 1L:%d"
 msgstr "ref = %d必需在1L:%d里"
 
 msgid "failed to guess time-varying variables from their names"
-msgstr "没有能够从它们的名字中来猜测时变参数"
+msgstr "没有能够从它们的名称中来猜测时变参数"
 
 msgid "'varying' arguments must be the same length"
 msgstr "'varying'参数的长度必需相同"
@@ -2158,7 +2159,7 @@ msgid "type = \"partial\" is not yet implemented"
 msgstr "还没有实现type=\"partial\"的算法"
 
 msgid "not a valid \"smooth.spline\" object"
-msgstr " \"smooth.spline\"对象不对"
+msgstr "\"smooth.spline\"对象不正确"
 
 msgid "'span' must be between 0 and 1."
 msgstr "'span'必需在零和一之间。"
@@ -2167,7 +2168,7 @@ msgid "'y' must be numeric vector"
 msgstr "'y'必需是数值向量"
 
 msgid "number of observations in 'x' and 'y' must match."
-msgstr " 'x'和'y'里的观察量数目必需相等。"
+msgstr "'x'和'y'里的观察量数目必需相等。"
 
 msgid "number of weights must match number of observations."
 msgstr "权数数目必需和观察量数目相同。"
@@ -2224,7 +2225,7 @@ msgid "no 'as.stepfun' method available for 'x'"
 msgstr "没有适用于'x'的'as.stepfun'方法"
 
 msgid "not a valid step function"
-msgstr "步驟函数不对"
+msgstr "步驟函数不正确"
 
 msgid "'plot.stepfun' called with wrong type of argument 'x'"
 msgstr "調用'plot.stepfun'时参数'x'的类型有误"
@@ -2240,7 +2241,7 @@ msgid "series is not periodic or has less than two periods"
 msgstr "序列没有周期，或其周期小于二"
 
 msgid "unknown string value for s.window"
-msgstr "s.window所设定的字符串值不对"
+msgstr "s.window所设定的字符串值不正确"
 
 msgid "'cutpoints' must be unique in 0 < cuts < 1, but are ="
 msgstr "'cutpoints'必需在0 < cuts < 1之间，而相互必需不同, 但实际上是 ="
@@ -2312,16 +2313,16 @@ msgid "non-intersecting series"
 msgstr "非相叉序列"
 
 msgid "non-time series not of the correct length"
-msgstr "非时间序列的长度不对"
+msgstr "非时间序列的长度不正确"
 
 msgid "time series contains internal NAs"
 msgstr "时间序列含内部NA"
 
 msgid "series is corrupt, with no 'tsp' attribute"
-msgstr "系列不对：缺少'tsp'这一属性"
+msgstr "系列不正确：缺少'tsp'这一属性"
 
 msgid "series is corrupt: length %d with 'tsp' implying %d"
-msgstr "系列不对：长度为%d的'tsp'意味着%d"
+msgstr "系列不正确：长度为%d的'tsp'意味着%d"
 
 msgid "cannot plot more than 10 series as \"multiple\""
 msgstr "无法将多于10个序列画成\"multiple\""
@@ -2340,13 +2341,13 @@ msgid "'frequency' not changed"
 msgstr "'frequency'没有变化"
 
 msgid "bad value for 'start'"
-msgstr "'start'的值不对"
+msgstr "'start'的值不正确"
 
 msgid "'start' value not changed"
 msgstr "'start'值没有变化"
 
 msgid "bad value for 'end'"
-msgstr "'end'值不对"
+msgstr "'end'值不正确"
 
 msgid "'end' value not changed"
 msgstr "'end'值没有变化"
@@ -2497,10 +2498,11 @@ msgstr[0] "有%d个错误项，但最多只允许有一个"
 
 msgid "unknown name %s in the 'split' list"
 msgid_plural "unknown names %s in the 'split' list"
-msgstr[0] "'split'列表里的名字%s不对"
+msgstr[0] "'split'列表里的名称%s不正确"
 
+#, fuzzy
 msgid "extra argument %s is not of class \"%s\""
-msgid_plural "extra arguments %s are not of class \"%s\"s"
+msgid_plural "extra arguments %s are not of class \"%s\""
 msgstr[0] "额外参数%s的类别不是\"%s\""
 
 msgid "%d factor is too many for %d variables"
@@ -2578,7 +2580,7 @@ msgstr[0] "%d迭代*没有*聚合"
 
 msgid "unrecognized control element named %s ignored"
 msgid_plural "unrecognized control elements named %s ignored"
-msgstr[0] "没有这个叫%s名字的控制元素"
+msgstr[0] "没有这个叫%s名称的控制元素"
 
 msgid "fitting parameter %s without any variables"
 msgid_plural "fitting parameters %s without any variables"

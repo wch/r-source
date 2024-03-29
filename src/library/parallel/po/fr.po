@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: R 4.0.4\n"
-"Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-11-30 14:40+0100\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-03-27 16:14-0700\n"
 "PO-Revision-Date: 2021-02-10 17:48+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -62,7 +62,7 @@ msgstr "aucun canal vers le processus maître"
 msgid "content to send must be RAW, use serialize() if needed"
 msgstr "le contenu à envoyer doit être RAW, utilisez serialize() si nécessaire"
 
-#: fork.c:774 fork.c:785 fork.c:1198
+#: fork.c:774 fork.c:785 fork.c:1204
 msgid "write error, closing pipe to the master"
 msgstr "erreur d'écriture, fermeture du canal vers le processus maître"
 
@@ -79,36 +79,36 @@ msgstr "le processus fils %d n'existe pas"
 msgid "write error"
 msgstr "erreur d'écriture"
 
-#: fork.c:895
+#: fork.c:897
 #, c-format
 msgid "cannot wait for child %d as it does not exist"
 msgstr "impossible d’attendre le processus fils %d parce qu’il n’existe pas"
 
-#: fork.c:954 fork.c:1077
+#: fork.c:956 fork.c:1083
 #, c-format
 msgid "error '%s' in select"
 msgstr "erreur '%s' lors de la sélection"
 
-#: fork.c:1167
+#: fork.c:1173
 msgid "'mckill' failed"
 msgstr "'mckill' a échoué"
 
-#: fork.c:1180
+#: fork.c:1186
 msgid "'mcexit' can only be used in a child process"
 msgstr "'mcexit' peut seulement être utilisé avec un processus fils"
 
-#: fork.c:1212
+#: fork.c:1218
 msgid "'mcexit' failed"
 msgstr "'mcexit' a échoué"
 
-#: fork.c:1241 fork.c:1250
+#: fork.c:1247 fork.c:1256
 msgid "invalid CPU affinity specification"
 msgstr "spécification d'affinité CPU incorrecte"
 
-#: fork.c:1261
+#: fork.c:1267
 msgid "requested CPU set is too large for this system"
 msgstr "le set de CPU demandé est trop large pour ce système"
 
-#: fork.c:1284
+#: fork.c:1290
 msgid "retrieving CPU affinity set failed"
 msgstr "la récupération de l'affinité CPU a échoué"

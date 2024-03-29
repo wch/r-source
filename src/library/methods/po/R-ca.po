@@ -1,0 +1,2082 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: R 4.4.0\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2023-07-31 14:59\n"
+"PO-Revision-Date: 2023-10-14 06:55+0000\n"
+"Last-Translator: Joan Maspons <joanmaspons@gmail.com>\n"
+"Language-Team: none\n"
+"Language: ca\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.16.4\n"
+
+msgid "OOPS: something wrong with '.OldClassesPrototypes[[%d]]'"
+msgstr "Alguna cosa ha anat malament amb '.OldClassesPrototypes[[%d]]'"
+
+#, fuzzy
+msgid "unnamed argument to initialize() for S3 class must have a class definition; %s does not"
+msgstr ""
+"l'argument sense nom per a initialize() per a la classe S3 ha de tenir una "
+"definició de classe; %s no ho fa"
+
+#, fuzzy
+msgid "unnamed argument must extend either the S3 class or the class of the data part; not true of class %s"
+msgstr ""
+"l'argument sense nom ha d'estendre la classe S3 o la classe de la part de "
+"dades; no és cert de la classe %s"
+
+#, fuzzy
+msgid "class %s does not have an S3 data part, and so is of type \"S4\"; no S3 equivalent"
+msgstr ""
+"la classe %s no té una part de dades S3, i per tant és de tipus \"S4\"; no "
+"té equivalent S3"
+
+#, fuzzy
+msgid "class %s is VIRTUAL; not meaningful to create an S4 object from this class"
+msgstr ""
+"la classe %s és VIRTUAL; no té sentit crear un objecte S4 a partir d'aquesta "
+"classe"
+
+#, fuzzy
+msgid "object must be a valid data part for class %s; not true of type %s"
+msgstr ""
+"l'objecte ha de ser una part de dades vàlida per a la classe %s; no és cert "
+"del tipus %s"
+
+#, fuzzy
+msgid "cannot specify matrix() arguments when specifying '.Data'"
+msgstr ""
+"no es poden especificar els arguments de la matriu() en especificar «.Data'"
+
+#, fuzzy
+msgid "cannot specify array() arguments when specifying '.Data'"
+msgstr "no es poden especificar els arguments array() quan s'especifica «.Data'"
+
+#, fuzzy
+msgid "cannot have more than one unnamed argument as environment"
+msgstr "no es pot tenir més d'un argument sense nom com a entorn"
+
+#, fuzzy
+msgid "unnamed argument to new() must be an environment for the new object"
+msgstr "l'argument sense nom a new() ha de ser un entorn per a l'objecte nou"
+
+#, fuzzy
+msgid "methods may not be defined for primitive function %s in this version of R"
+msgstr ""
+"no es poden definir mètodes per a la funció primitiva %s en aquesta versió "
+"de R"
+
+#, fuzzy
+msgid "S3Part() is only defined for classes set up by setOldCLass(), basic classes or subclasses of these:  not true of class %s"
+msgstr ""
+"S3Part() només es defineix per a les classes configurades per setOldCLass(), "
+"classes bàsiques o subclasses d'aquestes: no és cert de la classe %s"
+
+#, fuzzy
+msgid "the 'S3Class' argument must be a superclass of %s:  not true of class %s"
+msgstr ""
+"l'argument «S3Class» ha de ser una superclasse de %s: no és cert de la "
+"classe %s"
+
+#, fuzzy
+msgid "replacement value must extend class %s, got %s"
+msgstr "el valor de substitució ha d'estendre la classe %s, s'ha obtingut %s"
+
+#, fuzzy
+msgid "replacement value must be of class %s, got one of class %s"
+msgstr ""
+"el valor de substitució ha de ser de la classe %s, s'ha obtingut un de la "
+"classe %s"
+
+#, fuzzy
+msgid "no 'replace' method was defined for 'as(x, \"%s\") <- value' for class %s"
+msgstr ""
+"no s'ha definit cap mètode «replace» per a «as(x, \"%s\") s- value» per a la "
+"classe %s"
+
+#, fuzzy
+msgid "the 'coerce' argument to 'setIs' should be a function of one argument, got an object of class %s"
+msgstr ""
+"l'argument «coerce» a «setIs» hauria de ser una funció d'un argument, s'ha "
+"obtingut un objecte de classe %s"
+
+#, fuzzy
+msgid "the computation: 'as(object,\"%s\") <- value' is valid when object has class %s only if 'is(value, \"%s\")' is TRUE ('class(value)' was %s)"
+msgstr ""
+"el càlcul: 'as(objecte,\"%s\") )- valor' és vàlid quan l'objecte té classe "
+"%s només si 'is(valor, \"%s\")' és CERT ('class(valor)' era %s)"
+
+#, fuzzy
+msgid "there is no automatic definition for 'as(object, \"%s\") <- value' when object has class %s and no 'replace' argument was supplied; replacement will be an error"
+msgstr ""
+"no hi ha cap definició automàtica per a 'as(objecte, \"%s\") ;- valor' quan "
+"l'objecte té classe %s i no s'ha proporcionat cap argument 'reemplaça'; la "
+"substitució serà un error"
+
+#, fuzzy
+msgid "the 'replace' argument to setIs() should be a function of 2 or 3 arguments, got an object of class %s"
+msgstr ""
+"l'argument «reemplaça» a setIs() hauria de ser una funció de 2 o 3 "
+"arguments, s'ha obtingut un objecte de classe %s"
+
+#, fuzzy
+msgid "the member classes must be defined: not true of %s"
+msgstr "s'han de definir les classes de membres: no és cert de %s"
+
+#, fuzzy
+msgid "unable to create union class:  could not set members %s"
+msgstr ""
+"no s'ha pogut crear la classe sindical: no s'han pogut establir els membres "
+"%s"
+
+#, fuzzy
+msgid "methods:::bind_activation() is defunct;\n rather provide methods for cbind2() / rbind2()"
+msgstr ""
+"methods:::bindactivation() és obsolet;\n"
+" més aviat proporciona mètodes per a cbind2() / rbind2()"
+
+#, fuzzy
+msgid "invalid argument 'name': %s"
+msgstr "l'argument «name» no és vàlid: %s"
+
+#, fuzzy
+msgid "%s dispatches internally;  methods can be defined, but the generic function is implicit, and cannot be changed."
+msgstr ""
+"%s despatxa internament; els mètodes es poden definir, però la funció "
+"genèrica és implícita i no es pot canviar."
+
+#, fuzzy
+msgid "if the 'def' argument is supplied, it must be a function that calls standardGeneric(\"%s\") or is the default"
+msgstr ""
+"si es proporciona l'argument «def», ha de ser una funció que cridi "
+"«standardGeneric(\"%s\")» o és el valor predeterminat"
+
+#, fuzzy
+msgid "must supply a function skeleton for %s, explicitly or via an existing function"
+msgstr ""
+"s'ha de subministrar un esquelet de funció per a %s, explícitament o a "
+"través d'una funció existent"
+
+#, fuzzy
+msgid "Creating a generic function for %s from %s in %s\n    (from the saved implicit definition)"
+msgstr ""
+"S'està creant una funció genèrica per a %s des de %s a %s\n"
+"    (de la definició implícita desada)"
+
+#, fuzzy
+msgid "Creating a new generic function for %s in %s"
+msgstr "S'està creant una nova funció genèrica per a %s a %s"
+
+#, fuzzy
+msgid "no generic version of %s on package %s is allowed;\n   a new generic will be assigned for %s"
+msgstr ""
+"no es permet cap versió genèrica de %s al paquet %s;\n"
+"   s'assignarà un nou genèric per a %s"
+
+#, fuzzy
+msgid "fdef appears to be a generic function, but with generic name %s instead of %s"
+msgstr ""
+"fdef sembla ser una funció genèrica, però amb el nom genèric %s en lloc de %s"
+
+#, fuzzy
+msgid "generic function %s not found for removal"
+msgstr "no s'ha trobat la funció genèrica %s per a suprimir"
+
+#, fuzzy
+msgid "a function for argument 'f' must be a generic function"
+msgstr "una funció per a l'argument «f» ha de ser una funció genèrica"
+
+#, fuzzy
+msgid "the environment %s is locked; cannot assign methods for function %s"
+msgstr ""
+"l'entorn %s està bloquejat; no es poden assignar mètodes per a la funció %s"
+
+#, fuzzy
+msgid "the 'where' environment (%s) is a locked namespace; cannot assign methods there"
+msgstr ""
+"l'entorn 'on' (%s) és un espai de noms bloquejat; no es poden assignar "
+"mètodes allà"
+
+#, fuzzy
+msgid "Copying the generic function %s to environment %s, because the previous version was in a sealed namespace (%s)"
+msgstr ""
+"S'està copiant la funció genèrica %s a l'entorn %s, perquè la versió "
+"anterior estava en un espai de noms tancat (%s)"
+
+#, fuzzy
+msgid "no existing definition for function %s"
+msgstr "no existeix cap definició per a la funció %s"
+
+#, fuzzy
+msgid "Creating a generic function from function %s in %s"
+msgstr "S'està creant una funció genèrica a partir de la funció %s a %s"
+
+#, fuzzy
+msgid "Creating a generic function for %s from package %s in %s"
+msgstr "S'està creant una funció genèrica per a %s a partir del paquet %s a %s"
+
+#, fuzzy
+msgid "the method for function %s and signature %s is sealed and cannot be re-defined"
+msgstr ""
+"el mètode per a la funció %s i la signatura %s està segellat i no es pot "
+"tornar a definir"
+
+#, fuzzy
+msgid "For function %s, signature %s: argument in method definition changed from (%s) to (%s)"
+msgstr ""
+"Per a la funció %s, signatura %s: l'argument en la definició del mètode ha "
+"canviat de (%s) a (%s)"
+
+#, fuzzy
+msgid "primitive functions cannot be methods; they must be enclosed in a regular function"
+msgstr ""
+"les funcions primitives no poden ser mètodes; han d'estar tancades en una "
+"funció regular"
+
+#, fuzzy
+msgid "invalid method definition: expected a function, got an object of class %s"
+msgstr ""
+"definició de mètode no vàlida: s'esperava una funció, s'ha obtingut un "
+"objecte de classe %s"
+
+#, fuzzy
+msgid "function supplied as argument 'f' must be a generic"
+msgstr "la funció proporcionada com a argument «f» ha de ser un genèric"
+
+#, fuzzy
+msgid "no generic function %s found"
+msgstr "no s'ha trobat cap funció genèrica %s"
+
+#, fuzzy
+msgid "no method found for function %s and signature %s"
+msgstr "no s'ha trobat cap mètode per a la funció %s i signatura %s"
+
+#, fuzzy
+msgid "no environment or package corresponding to argument where=%s"
+msgstr "no hi ha cap entorn o paquet corresponent a l'argument where=%s"
+
+#, fuzzy
+msgid "no generic function found for '%s'"
+msgstr "no s'ha trobat cap funció genèrica per a «%s»"
+
+#, fuzzy
+msgid "no method found for function '%s' and signature %s"
+msgstr "no s'ha trobat cap mètode per a la funció «%s» i la signatura %s"
+
+#, fuzzy
+msgid "'file' must be a character string or a connection"
+msgstr "«file» ha de ser una cadena de caràcters o una connexió"
+
+#, fuzzy
+msgid "argument 'signature' is not meaningful with the current implementation and is ignored \n(extract a subset of the methods list instead)"
+msgstr ""
+"l'argument «signature» no té sentit amb la implementació actual i s'ignora \n"
+"(extreu un subconjunt de la llista de mètodes)"
+
+#, fuzzy
+msgid "no method for %s matches class %s"
+msgstr "cap mètode per a %s coincideix amb la classe %s"
+
+#, fuzzy
+msgid "no method found for signature %s"
+msgstr "no s'ha trobat cap mètode per a la signatura %s"
+
+#, fuzzy
+msgid "%s has no methods defined"
+msgstr "%s no té mètodes definits"
+
+#, fuzzy
+msgid "bad class specified for element %d (should be a single character string)"
+msgstr ""
+"classe incorrecta especificada per a l'element %d (ha de ser una cadena de "
+"caràcters única)"
+
+#, fuzzy
+msgid "first argument should be the names of one of more generic functions (got object of class %s)"
+msgstr ""
+"el primer argument hauria de ser el nom d'una de les funcions més genèriques "
+"(objecte obtingut de la classe %s)"
+
+#, fuzzy
+msgid "must supply 'generic.function' or 'class'"
+msgstr "s'ha de proporcionar «generic.function» o «class»"
+
+#, fuzzy
+msgid "%s is not an S4 generic function in %s; methods not removed"
+msgstr "%s no és una funció genèrica S4 a %s; els mètodes no s'han eliminat"
+
+#, fuzzy
+msgid "cannot remove methods for %s in locked environment/package %s"
+msgstr "no es poden eliminar els mètodes per a %s en l'entorn/paquet blocat %s"
+
+#, fuzzy
+msgid "Restoring default function definition of %s"
+msgstr "S'està restaurant la definició per defecte de la funció de %s"
+
+#, fuzzy
+msgid "error in updating S4 generic function %s; the function definition is not an S4 generic function (class %s)"
+msgstr ""
+"error en actualitzar la funció genèrica S4 %s; la definició de la funció no "
+"és una funció genèrica S4 (classe %s)"
+
+#, fuzzy
+msgid "Function %s is already a group generic; no change"
+msgstr "La funció %s ja és un grup genèric; no hi ha canvis"
+
+#, fuzzy
+msgid "Function %s is a group generic; do not call it directly"
+msgstr "La funció %s és un grup genèric; no la crideu directament"
+
+#, fuzzy
+msgid "callGeneric() must be called from within a method body"
+msgstr "callGeneric() ha de ser cridat des de dins d'un cos del mètode"
+
+#, fuzzy
+msgid "expected a non-empty character string for argument name"
+msgstr "s'esperava una cadena de caràcters no buida per al nom de l'argument"
+
+#, fuzzy
+msgid "generic function supplied was not created for %s"
+msgstr "la funció genèrica subministrada no s'ha creat per a %s"
+
+#, fuzzy
+msgid "%s is a primitive function; its generic form cannot be redefined"
+msgstr "%s és una funció primitiva; la seva forma genèrica no es pot redefinir"
+
+#, fuzzy
+msgid "%s is not currently a generic:  define it first to create a non-default implicit form"
+msgstr ""
+"%s no és actualment un genèric: definiu-lo primer per crear una forma "
+"implícita no predeterminada"
+
+#, fuzzy
+msgid "must provide an environment table; got class %s"
+msgstr "s'ha de proporcionar una taula d'entorn; s'ha obtingut la classe %s"
+
+#, fuzzy
+msgid "original function is prohibited as a generic function"
+msgstr "la funció original està prohibida com a funció genèrica"
+
+#, fuzzy
+msgid "not both functions!"
+msgstr "no totes dues funcions!"
+
+#, fuzzy
+msgid "argument %s is not S4"
+msgstr "l'argument %s no és S4"
+
+#, fuzzy
+msgid "formal arguments differ (in default values?)"
+msgstr "els arguments formals difereixen (en els valors predeterminats?)"
+
+#, fuzzy
+msgid "formal arguments differ: (%s), (%s)"
+msgstr "els arguments formals difereixen: (%s), (%s)"
+
+#, fuzzy
+msgid "value classes differ: %s, %s"
+msgstr "les classes de valors difereixen: %s, %s"
+
+#, fuzzy
+msgid "signatures differ:  (%s), (%s)"
+msgstr "les signatures difereixen: (%s), (%s)"
+
+#, fuzzy
+msgid "package slots  differ: %s, %s"
+msgstr "els espais buits dels paquets difereixen: %s, %s"
+
+#, fuzzy
+msgid "groups differ: %s, %s"
+msgstr "els grups difereixen: %s, %s"
+
+#, fuzzy
+msgid "generic names differ: %s, %s"
+msgstr "els noms genèrics difereixen: %s, %s"
+
+#, fuzzy
+msgid "argument %s must be a generic function or a single character string; got an object of class %s"
+msgstr ""
+"l'argument %s ha de ser una funció genèrica o una cadena de caràcters; s'ha "
+"obtingut un objecte de classe %s"
+
+#, fuzzy
+msgid "non-generic function '%s' given to findMethods()"
+msgstr "funció no genèrica «%s» donada a «findMethods()»"
+
+#, fuzzy
+msgid "only FALSE is meaningful for 'inherited', when 'where' is supplied (got %s)"
+msgstr ""
+"només «FALSE» té sentit per a «heretat», quan se subministra «on» (s'ha "
+"obtingut %s)"
+
+#, fuzzy
+msgid "argument 'f' must be a generic function or %s"
+msgstr "l'argument «f» ha de ser una funció genèrica o %s"
+
+#, fuzzy
+msgid "'%s' is not a known generic function {and 'package' not specified}"
+msgstr "«%s» no és una funció genèrica coneguda {and 'package' no especificada}"
+
+#, fuzzy
+msgid "invalid first argument: should be the name of the first argument in the dispatch"
+msgstr ""
+"el primer argument no és vàlid: hauria de ser el nom del primer argument a "
+"l'enviament"
+
+#, fuzzy
+msgid "duplicate element names in 'MethodsList' at level %d: %s"
+msgstr "noms d'elements duplicats a «MethodsList» al nivell %d: %s"
+
+#, fuzzy
+msgid "element %d at level %d (class %s) cannot be interpreted as a function or named list"
+msgstr ""
+"l'element %d al nivell %d (classe %s) no es pot interpretar com una funció o "
+"llista amb nom"
+
+#, fuzzy
+msgid "arguments 'names' and 'signature' must have the same length"
+msgstr "els arguments «names» i «signature» han de tenir la mateixa longitud"
+
+#, fuzzy
+msgid "inserting method with invalid signature matching argument '...' to class %s"
+msgstr ""
+"s'està inserint el mètode amb l'argument «...» que coincideix amb la "
+"signatura no vàlida a la classe %s"
+
+#, fuzzy
+msgid "inserting method corresponding to empty signature"
+msgstr "mètode d'inserció corresponent a una signatura buida"
+
+#, fuzzy
+msgid "inserting method into non-methods-list object (class %s)"
+msgstr "s'està inserint un mètode en un objecte no-mètodes-llista (classe %s)"
+
+#, fuzzy
+msgid "invalid method sublist"
+msgstr "subllista de mètode no vàlida"
+
+#, fuzzy
+msgid "%f is not a valid generic function: methods list was an object of class %s"
+msgstr ""
+"%f no és una funció genèrica vàlida: la llista de mètodes era un objecte de "
+"la classe %s"
+
+#, fuzzy
+msgid "%s must be TRUE, FALSE, or a named logical vector of those values; got an object of class %s"
+msgstr ""
+"%s ha de ser CERT, FALS o un vector lògic amb nom d'aquests valors; s'ha "
+"obtingut un objecte de classe %s"
+
+#, fuzzy
+msgid "default method must be a method definition, a primitive or NULL: got an object of class %s"
+msgstr ""
+"el mètode per defecte ha de ser una definició de mètode, un primitiu o NULL: "
+"s'ha obtingut un objecte de classe %s"
+
+#, fuzzy
+msgid "trying to match a method signature to an object (of class %s) that is not a generic function"
+msgstr ""
+"s'està intentant fer coincidir una signatura de mètode amb un objecte (de "
+"classe %s) que no és una funció genèrica"
+
+#, fuzzy
+msgid "invalid 'package' slot or attribute, wrong length"
+msgstr "ranura o atribut «package» no vàlids, la longitud és incorrecta"
+
+#, fuzzy
+msgid "invalid element in a list for \"signature\" argument; element %d is neither a class definition nor a class name"
+msgstr ""
+"element no vàlid en una llista per a l'argument «signature»: l'element %d no "
+"és ni una definició de classe ni un nom de classe"
+
+#, fuzzy
+msgid "trying to match a method signature of class %s; expects a list or a character vector"
+msgstr ""
+"s'està intentant fer coincidir una signatura de mètode de la classe %s; "
+"s'espera una llista o un vector de caràcters"
+
+#, fuzzy
+msgid "object to use as a method signature for function %s does not look like a legitimate signature (a vector of single class names): there were %d class names, but %d elements in the signature object"
+msgstr ""
+"l'objecte a utilitzar com a signatura de mètode per a la funció %s no sembla "
+"una signatura legítima (un vector de noms de classe única): hi havia %d noms "
+"de classe, però %d elements a l'objecte de signatura"
+
+#, fuzzy
+msgid "more elements in the method signature (%d) than in the generic signature (%d) for function %s"
+msgstr ""
+"hi ha més elements a la signatura del mètode (%d) que a la signatura "
+"genèrica (%d) per a la funció %s"
+
+#, fuzzy
+msgid "no generic function found corresponding to %s"
+msgstr "no s'ha trobat cap funció genèrica corresponent a %s"
+
+#, fuzzy
+msgid "skipping methods list element %s of unexpected class %s"
+msgstr "s'omet l'element de llista de mètodes %s de la classe inesperada %s"
+
+#, fuzzy
+msgid "%s, along with other use of the \"MethodsList\" metadata objects, is deprecated."
+msgstr ""
+"%s, juntament amb un altre ús dels objectes de metadades «MethodsList», està "
+"obsolet."
+
+#, fuzzy
+msgid "In %s: use of \"MethodsList\" metadata objects is deprecated."
+msgstr "A %s: l'ús d'objectes de metadades «MethodsList» és obsolet."
+
+#, fuzzy
+msgid "Use %s instead."
+msgstr "Utilitzeu %s en el seu lloc."
+
+#, fuzzy
+msgid "%s, along with other use of the \"MethodsList\" metadata objects, is defunct."
+msgstr ""
+"%s, juntament amb un altre ús dels objectes de metadades «MethodsList», està "
+"desaparegut."
+
+#, fuzzy
+msgid "In %s: use of \"MethodsList\" metadata objects is defunct."
+msgstr "A %s: l'ús d'objectes de metadades «MethodsList» està obsolet."
+
+#, fuzzy
+msgid "invalid object for formal method definition: type %s"
+msgstr "objecte no vàlid per a la definició del mètode formal: tipus %s"
+
+#, fuzzy
+msgid "missing package slot (%s) in object of class %s (package info added)"
+msgstr ""
+"manca el forat del paquet (%s) a l'objecte de la classe %s (s'ha afegit la "
+"informació del paquet)"
+
+#, fuzzy
+msgid "'initialize' method returned an object of class %s instead of the required class %s"
+msgstr ""
+"El mètode «inicialitza» ha retornat un objecte de la classe %s en lloc de la "
+"classe requerida %s"
+
+#, fuzzy
+msgid "%d: target \"%s\": chose \"%s\" (others: %s)"
+msgstr "%d: objectiu «%s»: s'ha triat «%s» (altres: %s)"
+
+#, fuzzy
+msgid "Notes: %s."
+msgstr "Notes: %s."
+
+#, fuzzy
+msgid "class generator function for class %s from package %s"
+msgstr "funció generador de classes per a la classe %s des del paquet %s"
+
+#, fuzzy
+msgid "the names in signature for method (%s) do not match %s's arguments (%s)"
+msgstr ""
+"els noms de la signatura del mètode (%s) no coincideixen amb els arguments "
+"de %s (%s)"
+
+#, fuzzy
+msgid "the names in signature for method (%s) do not match function's arguments (%s)"
+msgstr ""
+"els noms de la signatura del mètode (%s) no coincideixen amb els arguments "
+"de la funció (%s)"
+
+#, fuzzy
+msgid "a call to callNextMethod() appears in a call to %s, but the call does not seem to come from either a generic function or another 'callNextMethod'"
+msgstr ""
+"una crida a callNextMethod() apareix en una crida a %s, però la crida no "
+"sembla provenir ni d'una funció genèrica ni d'un altre 'callNextMethod'"
+
+#, fuzzy
+msgid "call to 'callNextMethod' does not appear to be in a 'method' or 'callNextMethod' context"
+msgstr ""
+"la crida a 'callNextMethod' no sembla estar en un context de 'method' o "
+"'callNextMethod'"
+
+#, fuzzy
+msgid "bad object found as method (class %s)"
+msgstr "s'ha trobat un objecte incorrecte com a mètode (classe %s)"
+
+#, fuzzy
+msgid "No next method available"
+msgstr "No hi ha disponible cap mètode següent"
+
+#, fuzzy
+msgid "in constructing the prototype for class %s: prototype has class %s, but the data part specifies class %s"
+msgstr ""
+"en construir el prototip de la classe %s: el prototip té la classe %s, però "
+"la part de dades especifica la classe %s"
+
+#, fuzzy
+msgid "in constructing the prototype for class %s, slots in prototype and not in class: %s"
+msgstr ""
+"en construir el prototip de la classe %s, els espais buits en el prototip i "
+"no en la classe: %s"
+
+#, fuzzy
+msgid "in making the prototype for class %s elements of the prototype failed to match the corresponding slot class: %s"
+msgstr ""
+"en fer el prototip per als elements de la classe %s del prototip no s'ha "
+"pogut concordar amb la classe de ranura corresponent: %s"
+
+#, fuzzy
+msgid "potential cycle in class inheritance: %s has duplicates in superclasses and subclasses (%s)"
+msgstr ""
+"cicle potencial en l'herència de classes: %s té duplicats en superclasses i "
+"subclasses (%s)"
+
+#, fuzzy
+msgid "undefined slot classes in definition of %s: %s"
+msgstr "classes de ranura no definides a la definició de %s: %s"
+
+#, fuzzy
+msgid "(class %s)"
+msgstr "(classe %s)"
+
+#, fuzzy
+msgid "in definition of class %s, information for superclass %s is of class %s (expected \"SClassExtension\")"
+msgstr ""
+"a la definició de la classe %s, la informació per a la superclasse %s és de "
+"la classe %s (s'esperava «SClassExtension»)"
+
+#, fuzzy
+msgid "class %s extends an undefined class, %s"
+msgstr "la classe %s amplia una classe no definida, %s"
+
+#, fuzzy
+msgid "'Class' must be a valid class definition or class"
+msgstr "«Class» ha de ser una definició de classe o classe vàlida"
+
+#, fuzzy
+msgid "trying to assign an object of class %s as the definition of class %s: must supply a \"classRepresentation\" object"
+msgstr ""
+"s'està intentant assignar un objecte de classe %s com a definició de classe "
+"%s: s'ha de proporcionar un objecte «classRepresentation»"
+
+#, fuzzy
+msgid "assigning as %s a class representation with internal name %s"
+msgstr ""
+"s'està assignant com a %s una representació de classe amb el nom intern %s"
+
+#, fuzzy
+msgid "class %s has a locked definition in package %s"
+msgstr "la classe %s té una definició bloquejada al paquet %s"
+
+#, fuzzy
+msgid "'externalptr' objects cannot be initialized from new()"
+msgstr "Els objectes «externalptr» no es poden inicialitzar des de new()"
+
+#, fuzzy
+msgid "initializing objects from class %s with these arguments is not supported"
+msgstr ""
+"no s'admet la inicialització d'objectes de la classe %s amb aquests arguments"
+
+#, fuzzy
+msgid "in defining class %s, the supplied data part class, %s is not valid (must be a basic class or a virtual class combining basic classes)"
+msgstr ""
+"en definir la classe %s, la classe de part de dades proporcionada, %s no és "
+"vàlida (ha de ser una classe bàsica o una classe virtual que combini classes "
+"bàsiques)"
+
+#, fuzzy
+msgid "no definition was found for superclass %s in the specification of class %s"
+msgstr ""
+"no s'ha trobat cap definició per a la superclasse %s en l'especificació de "
+"la classe %s"
+
+#, fuzzy
+msgid "conflicting definition of data part: .Data = %s, superclass implies %s"
+msgstr ""
+"definició conflictiva de la part de dades: .Dades = %s, la superclasse "
+"implica %s"
+
+#, fuzzy
+msgid "a prototype object was supplied with object slot of class %s, but the class definition requires an object that is class %s"
+msgstr ""
+"s'ha proporcionat un objecte prototip amb un espai buit d'objecte de classe "
+"%s, però la definició de classe requereix un objecte que sigui classe %s"
+
+#, fuzzy
+msgid "a prototype was supplied of class %s, but the class definition requires an object that is class %s"
+msgstr ""
+"s'ha proporcionat un prototip de classe %s, però la definició de classe "
+"requereix un objecte que sigui classe %s"
+
+#, fuzzy
+msgid "Definition of slot %s, in class %s, as %s conflicts with definition, inherited from class %s, as %s"
+msgstr ""
+"Definició de la ranura %s, a la classe %s, ja que %s entra en conflicte amb "
+"la definició, heretada de la classe %s, com a %s"
+
+#, fuzzy
+msgid "class %s extends an undefined class (%s)"
+msgstr "la classe %s amplia una classe no definida (%s)"
+
+#, fuzzy
+msgid "The prototype for class %s has undefined slot(s): %s"
+msgstr "El prototip de la classe %s té ranures no definides: %s"
+
+#, fuzzy
+msgid "%s is not eligible to be the data part of another class (must be a basic class or a virtual class with no slots)"
+msgstr ""
+"%s no pot ser part de dades d'una altra classe (ha de ser una classe bàsica "
+"o una classe virtual sense ranures)"
+
+#, fuzzy
+msgid "prototype is a list with named elements (could be ambiguous):  better to use function prototype() to avoid trouble."
+msgstr ""
+"El prototip és una llista amb elements amb nom (podria ser ambigu): millor "
+"utilitzar la funció prototip() per evitar problemes."
+
+#, fuzzy
+msgid "the '%s' list for class %s, includes an undefined class %s"
+msgstr "la llista «%s» de la classe %s, inclou una classe no definida %s"
+
+#, fuzzy
+msgid "class %s is inheriting an inconsistent superclass structure from class %s, inconsistent with %s"
+msgstr ""
+"la classe %s hereta una estructura de superclasse inconsistent de la classe "
+"%s, inconsistent amb %s"
+
+#, fuzzy
+msgid "unable to find a consistent ordering of superclasses for class %s: order chosen is inconsistent with the superclasses of %s"
+msgstr ""
+"no s'ha pogut trobar un ordre coherent de les superclasses per a la classe "
+"%s: l'ordre triat no és coherent amb les superclasses de %s"
+
+#, fuzzy
+msgid "\"class\" is a reserved slot name and cannot be redefined"
+msgstr "«class» és un nom reservat de ranura i no es pot redefinir"
+
+#, fuzzy
+msgid "Data part is undefined for general S4 object"
+msgstr "La part de dades no està definida per a l'objecte general S4"
+
+#, fuzzy
+msgid "no '.Data' slot defined for class %s"
+msgstr "no.S'ha definit la ranura de dades per a la classe %s"
+
+#, fuzzy
+msgid "class %s does not have a data part (a .Data slot) defined"
+msgstr "la classe %s no té una part de dades (a .Espai de dades definit"
+
+#, fuzzy
+msgid "more than one possible class for the data part: using %s rather than %s"
+msgstr ""
+"més d'una classe possible per a la part de dades: s'usarà %s en lloc de %s"
+
+#, fuzzy
+msgid "class cannot have both an ordinary and hidden data type"
+msgstr "la classe no pot tenir un tipus de dades normal i ocult"
+
+#, fuzzy
+msgid "a validity method must be a function of one argument, got an object of class %s"
+msgstr ""
+"un mètode de validesa ha de ser una funció d'un argument, s'ha obtingut un "
+"objecte de classe %s"
+
+#, fuzzy
+msgid "unable to find required package %s"
+msgstr "no s'ha pogut trobar el paquet necessari %s"
+
+#, fuzzy
+msgid "unable to find an environment containing class %s"
+msgstr "no s'ha pogut trobar un entorn que contingui la classe %s"
+
+#, fuzzy
+msgid "Note: some superclasses of class %s in package %s have duplicate definitions.  This definition is not being treated as equivalent to that from package %s"
+msgstr ""
+"Nota: algunes superclasses de la classe %s al paquet %s tenen definicions "
+"duplicades.  Aquesta definició no es tracta com a equivalent a la del paquet "
+"%s"
+
+#, fuzzy
+msgid "Note: the specification for class %s in package %s seems equivalent to one from package %s: not turning on duplicate class definitions for this class."
+msgstr ""
+"Nota: l'especificació de la classe %s al paquet %s sembla equivalent a una "
+"del paquet %s: no s'estan activant les definicions de classe duplicades per "
+"a aquesta classe."
+
+#, fuzzy
+msgid "Found more than one class \"%s\" in cache; using the first, from namespace '%s'"
+msgstr ""
+"S'ha trobat més d'una classe «%s» a la memòria cau; s'usarà la primera, des "
+"de l'espai de noms «%s»"
+
+#, fuzzy
+msgid "Also defined by"
+msgstr "També definit per"
+
+#, fuzzy
+msgid "undefined subclass %s of class %s; definition not updated"
+msgstr ""
+"subclasse no definida %s de la classe %s; la definició no s'ha actualitzat"
+
+#, fuzzy
+msgid "no definition of inheritance from %s to %s, though the relation was implied by the setIs() from %s"
+msgstr ""
+"no hi ha cap definició d'herència de %s a %s, encara que la relació estava "
+"implícita pel setIs() de %s"
+
+#, fuzzy
+msgid "Debugging .checkSubclasses(): assignClassDef(what=\"%s\", *, where=%s, force=TRUE);"
+msgstr ""
+"Depuració .checkSubclasses(): assignClassDef(what=\"%s\", *, where=%s, "
+"force=TRUE);"
+
+#, fuzzy
+msgid "E := environment(): %s; parent.env(E): %s"
+msgstr "E := environment(): %s; parent.env(E): %s"
+
+#, fuzzy
+msgid "argument 'includeSubclasses' must be a logical, either one value or a vector of the same length as argument 'classes'"
+msgstr ""
+"l'argument «includeSubclasses» ha de ser lògic, sigui un valor o un vector "
+"de la mateixa longitud que l'argument «classes»"
+
+#, fuzzy
+msgid "argument 'abbreviate' must be 0, 1, 2, or 3"
+msgstr "l'argument «abreviat» ha de ser 0, 1, 2 o 3"
+
+#, fuzzy
+msgid "needed the supplied labels vector of length %d, got %d"
+msgstr ""
+"es necessita el vector d'etiquetes proporcionat de longitud %d, s'ha "
+"obtingut %d"
+
+#, fuzzy
+msgid "the function being used as %s in making a generic function for %s is currently traced; the function used will have tracing removed"
+msgstr ""
+"la funció que s'utilitza com a %s per a crear una funció genèrica per a %s "
+"actualment està traçada; la funció emprada haurà eliminat el seguiment"
+
+#, fuzzy
+msgid "must supply either a generic function or a function as default for %s"
+msgstr ""
+"s'ha de proporcionar una funció genèrica o una funció per defecte per a %s"
+
+#, fuzzy
+msgid "the %s argument must be NULL or a generic function object; got an object of class %s"
+msgstr ""
+"l'argument %s ha de ser NULL o un objecte de funció genèrica; s'ha obtingut "
+"un objecte de classe %s"
+
+#, fuzzy
+msgid "no suitable arguments to dispatch methods in this function"
+msgstr "no hi ha arguments adequats per a enviar mètodes en aquesta funció"
+
+#, fuzzy
+msgid "making a generic for special function %s"
+msgstr "fent un genèric per a la funció especial %s"
+
+#, fuzzy
+msgid "in method for %s with signature %s:"
+msgstr "en el mètode per a %s amb signatura %s:"
+
+#, fuzzy
+msgid "formal arguments in method and generic do not appear in the same order"
+msgstr ""
+"els arguments formals en mètode i genèric no apareixen en el mateix ordre"
+
+#, fuzzy
+msgid "formal arguments (%s) omitted in the method definition cannot be in the signature"
+msgstr ""
+"els arguments formals (%s) omesos a la definició del mètode no poden estar a "
+"la signatura"
+
+#, fuzzy
+msgid "expanding the signature to include omitted arguments in definition: %s"
+msgstr "expandint la signatura per incloure arguments omesos a la definició: %s"
+
+#, fuzzy
+msgid "methods can add arguments to the generic %s only if '...' is an argument to the generic"
+msgstr ""
+"els mètodes només poden afegir arguments al genèric %s si «...» és un "
+"argument al genèric"
+
+#, fuzzy
+msgid "%s arguments (%s) after %s in the generic must appear in the method, in the same place at the end of the argument list"
+msgstr ""
+"%s arguments (%s) després de %s al genèric han d'aparèixer al mètode, al "
+"mateix lloc al final de la llista d'arguments"
+
+#, fuzzy
+msgid "argument 'f' must be a string, generic function, or primitive: got an ordinary function"
+msgstr ""
+"l'argument «f» ha de ser una cadena, funció genèrica o primitiva: s'ha "
+"obtingut una funció ordinària"
+
+#, fuzzy
+msgid "no generic function found for %s"
+msgstr "no s'ha trobat cap funció genèrica per a %s"
+
+#, fuzzy
+msgid "Empty function name in .getGeneric"
+msgstr "Nom de funció buit a .getGeneric"
+
+#, fuzzy
+msgid "--- caching class"
+msgstr "--- classe de memòria cau"
+
+#, fuzzy
+msgid "--- done caching class"
+msgstr "--- s'ha fet la classe de memòria cau"
+
+#, fuzzy
+msgid "--- getting generic"
+msgstr "--- s'està obtenint el genèric"
+
+#, fuzzy
+msgid "(and methods)"
+msgstr "(i mètodes)"
+
+#, fuzzy
+msgid "--- done getting generic"
+msgstr "--- fet obtenint genèric"
+
+#, fuzzy
+msgid "no methods found for %s; cacheGenericsMetaData() will have no effect"
+msgstr ""
+"no s'han trobat mètodes per a %s; cacheGenericsMetaData() no tindrà cap "
+"efecte"
+
+#, fuzzy
+msgid "invalid value from generic function %s, class %s, expected %s"
+msgstr "valor no vàlid de la funció genèrica %s, classe %s, s'esperava %s"
+
+#, fuzzy
+msgid "\"MethodsList\" is defunct; allMethods now are empty"
+msgstr "«MethodsList» ha desaparegut; allMethods ara està buit"
+
+#, fuzzy
+msgid "the body of the generic function for %s calls 'standardGeneric' to dispatch on a different name (\"%s\")!"
+msgstr ""
+"el cos de la funció genèrica per a %s crida «standardGeneric» per a enviar "
+"amb un nom diferent («%s»)!"
+
+#, fuzzy
+msgid "trying to change the formal arguments in %s in an object of class %s; expected a function definition"
+msgstr ""
+"s'està intentant canviar els arguments formals a %s en un objecte de classe "
+"%s; s'esperava una definició de funció"
+
+#, fuzzy
+msgid "trying to change the formal arguments in %s, but getting the new formals from an object of class %s; expected a function definition"
+msgstr ""
+"s'està intentant canviar els arguments formals a %s, però s'obtenen els "
+"formals nous d'un objecte de classe %s; s'esperava una definició de funció"
+
+#, fuzzy
+msgid "trying to change the formal arguments in %s, but the number of existing arguments is less than the number of new arguments: (%s) vs (%s)"
+msgstr ""
+"s'està intentant canviar els arguments formals a %s, però el nombre "
+"d'arguments existents és menor que el nombre d'arguments nous: (%s) vs (%s)"
+
+#, fuzzy
+msgid "trying to change the formal arguments in %s, but the number of existing arguments is greater than the number of new arguments (the extra arguments won't be used): (%s) vs (%s)"
+msgstr ""
+"s'està intentant canviar els arguments formals a %s, però el nombre "
+"d'arguments existents és més gran que el nombre d'arguments nous (no "
+"s'utilitzaran els arguments addicionals): (%s) vs (%s)"
+
+#, fuzzy
+msgid "in changing formal arguments in %s, some of the old names are not in fact arguments: %s"
+msgstr ""
+"en canviar els arguments formals a %s, alguns dels noms antics no són "
+"arguments de fet: %s"
+
+#, fuzzy
+msgid "got a negative maximum number of frames to look at"
+msgstr "s'ha obtingut un nombre màxim de fotogrames negatiu per a veure"
+
+#, fuzzy
+msgid "%s is not a generic function (or not visible here)"
+msgstr "%s no és una funció genèrica (o no és visible aquí)"
+
+#, fuzzy
+msgid "invalid element in the \"groupMembers\" slot (class %s)"
+msgstr "element no vàlid a la ranura «groupMembers» (classe %s)"
+
+#, fuzzy
+msgid "argument f must be a generic function with signature \"...\""
+msgstr "l'argument f ha de ser una funció genèrica amb signatura \"...\""
+
+#, fuzzy
+msgid "no method or default matching the \"...\" arguments in %s"
+msgstr ""
+"no hi ha cap mètode o predeterminat que coincideixi amb els arguments «...» "
+"a %s"
+
+#, fuzzy
+msgid "multiple direct matches: %s; using the first of these"
+msgstr "múltiples coincidències directes: %s; s'usarà la primera d'aquestes"
+
+#, fuzzy
+msgid "multiple equivalent inherited matches: %s; using the first of these"
+msgstr ""
+"múltiples coincidències heretades equivalents: %s; s'usarà la primera "
+"d'aquestes"
+
+#, fuzzy
+msgid "single string; got an object of class %s"
+msgstr "cadena única; s'ha obtingut un objecte de classe %s"
+
+#, fuzzy
+msgid "multiple definitions exist for class %s, but the supplied package (%s) is not one of them (%s)"
+msgstr ""
+"hi ha múltiples definicions per a la classe %s, però el paquet proporcionat "
+"(%s) no és un d'ells (%s)"
+
+#, fuzzy
+msgid "multiple definitions exist for class %s; should specify one of them (%s), e.g. by className()"
+msgstr ""
+"existeixen múltiples definicions per a la classe %s; hauria d'especificar-ne "
+"una (%s), p. ex. per className()"
+
+#, fuzzy
+msgid "no definition found for class %s"
+msgstr "no s'ha trobat cap definició per a la classe %s"
+
+#, fuzzy
+msgid "missing function for load action: %s"
+msgstr "manca la funció per a l'acció de càrrega: %s"
+
+#, fuzzy
+msgid "error in load action %s for package %s: %s: %s"
+msgstr "error en carregar l'acció %s per al paquet %s: %s: %s"
+
+#, fuzzy
+msgid "non-function action: %s"
+msgstr "acció no funcional: %s"
+
+#, fuzzy
+msgid "action function %s has no arguments, should have at least 1"
+msgstr "la funció d'acció %s no té arguments, hauria de tenir almenys 1"
+
+#, fuzzy
+msgid "some actions are missing: %s"
+msgstr "falten algunes accions: %s"
+
+#, fuzzy
+msgid "%s has a sealed class definition and cannot be redefined"
+msgstr "%s té una definició de classe segellada i no es pot redefinir"
+
+#, fuzzy
+msgid "Argument \"representation\" cannot be used if argument \"slots\" is supplied"
+msgstr ""
+"No es pot utilitzar l'argument «representació» si es proporciona l'argument "
+"«slots»"
+
+#, fuzzy
+msgid "only arguments 'Class' and 'where' can be supplied when argument 'representation' is a 'classRepresentation' object"
+msgstr ""
+"només es poden proporcionar arguments «Class» i «where» quan l'argument "
+"«representation» és un objecte «classRepresentation»"
+
+#, fuzzy
+msgid "error in contained classes (%s) for class %s and unable to remove definition from %s"
+msgstr ""
+"s'ha produït un error en les classes contingudes (%s) per a la classe %s i "
+"no s'ha pogut eliminar la definició de %s"
+
+#, fuzzy
+msgid "error in contained classes (%s) for class %s; class definition removed from %s"
+msgstr ""
+"error en les classes contingudes (%s) per a la classe %s; definició de "
+"classe eliminada de %s"
+
+#, fuzzy
+msgid "error in contained classes (%s) for class %s and unable to restore previous definition from %s"
+msgstr ""
+"error en les classes contingudes (%s) per a la classe %s i no s'ha pogut "
+"restaurar la definició anterior des de %s"
+
+#, fuzzy
+msgid "error in contained classes (%s) for class %s; previous definition restored to %s"
+msgstr ""
+"error en les classes contingudes (%s) per a la classe %s; definició anterior "
+"restaurada a %s"
+
+#, fuzzy
+msgid "element %d of the representation was not a single character string"
+msgstr "l'element %d de la representació no és una cadena de caràcters única"
+
+#, fuzzy
+msgid "duplicate class names among superclasses: %s"
+msgstr "noms de classe duplicats entre superclasses: %s"
+
+#, fuzzy
+msgid "only one data object (unnamed argument to prototype) allowed"
+msgstr ""
+"només es permet un objecte de dades (argument sense nom per al prototip)"
+
+#, fuzzy
+msgid "%s is not a defined class"
+msgstr "%s no és una classe definida"
+
+#, fuzzy
+msgid "%s is not a slot in class %s"
+msgstr "%s no és una ranura a la classe %s"
+
+#, fuzzy
+msgid "assignment of an object of class %s is not valid for slot %s in an object of class %s; is(value, \"%s\") is not TRUE"
+msgstr ""
+"l'assignació d'un objecte de classe %s no és vàlida per a la ranura %s en un "
+"objecte de classe %s; is(valor, \"%s\") no és CERT"
+
+#, fuzzy
+msgid "assignment of an object of class %s is not valid for @%s in an object of class %s; is(value, \"%s\") is not TRUE"
+msgstr ""
+"l'assignació d'un objecte de classe %s no és vàlida per a ;%s en un objecte "
+"de classe %s; is(valor, \"%s\") no és CERT"
+
+#, fuzzy
+msgid "class definition for %s not found (no action taken)"
+msgstr ""
+"no s'ha trobat la definició de la classe per a %s (no s'ha pres cap acció)"
+
+#, fuzzy
+msgid "class %s has multiple definitions visible; only the first removed"
+msgstr ""
+"la classe %s té múltiples definicions visibles; només la primera eliminada"
+
+#, fuzzy
+msgid "invalid class %s object"
+msgstr "objecte de classe %s no vàlid"
+
+#, fuzzy
+msgid "validity method must be NULL or a function of one argument"
+msgstr "el mètode de validesa ha de ser NULL o una funció d'un argument"
+
+#, fuzzy
+msgid "class %s not found on %s; 'resetClass' will have no effect"
+msgstr "no s'ha trobat la classe %s a %s; «resetClass» no tindrà cap efecte"
+
+#, fuzzy
+msgid "argument 'classDef' must be a string or a class representation; got an object of class %s"
+msgstr ""
+"l'argument «classDef» ha de ser una cadena o una representació de classe; "
+"s'ha obtingut un objecte de classe %s"
+
+#, fuzzy
+msgid "class %s is sealed; 'resetClass' will have no effect"
+msgstr "la classe %s està segellada; «resetClass» no tindrà cap efecte"
+
+#, fuzzy
+msgid "cannot use object of class %s in new():  class %s does not extend that class"
+msgstr ""
+"no es pot utilitzar l'objecte de la classe %s a new(): la classe %s no "
+"amplia aquesta classe"
+
+#, fuzzy
+msgid "duplicated slot names: %s"
+msgstr "noms de ranures duplicats: %s"
+
+#, fuzzy
+msgid "class %s is defined, with package %s, but no corresponding metadata object was found (not exported?)"
+msgstr ""
+"la classe %s està definida, amb el paquet %s, però no s'ha trobat cap "
+"objecte de metadades corresponent (no exportat?)"
+
+#, fuzzy
+msgid "no definition of %s to use for %s"
+msgstr "no hi ha cap definició de %s per a %s"
+
+#, fuzzy
+msgid "class definition cannot extend more than one of these data types: %s"
+msgstr ""
+"la definició de classe no pot estendre més d'un d'aquests tipus de dades: %s"
+
+#, fuzzy
+msgid "abnormal type %s is not supported as a superclass of a class definition"
+msgstr ""
+"el tipus anormal %s no és compatible com a superclasse d'una definició de "
+"classe"
+
+#, fuzzy
+msgid "multiple class definitions for %s from packages: %s; picking the first"
+msgstr ""
+"definicions múltiples de classe per a %s dels paquets: %s; s'està "
+"seleccionant la primera"
+
+#, fuzzy
+msgid "no package name supplied and no class definition found for %s"
+msgstr ""
+"no s'ha proporcionat cap nom de paquet i no s'ha trobat cap definició de "
+"classe per a %s"
+
+#, fuzzy
+msgid "argument 'classDef' must be a class definition or the name of a class"
+msgstr ""
+"l'argument «classDef» ha de ser una definició de classe o el nom d'una classe"
+
+#, fuzzy
+msgid "No %s names supplied"
+msgstr "No s'ha proporcionat cap nom %s"
+
+#, fuzzy
+msgid "All %s names must be nonempty in:\n(%s)"
+msgstr ""
+"Tots els noms %s han de ser no buits a:\n"
+"(%s)"
+
+#, fuzzy
+msgid "All %s names must be distinct in:\n(%s)"
+msgstr ""
+"Tots els noms %s han de ser diferents a:\n"
+"(%s)"
+
+#, fuzzy
+msgid "argument %s must be a list or a character vector; got an object of class %s"
+msgstr ""
+"l'argument %s ha de ser una llista o un vector de caràcters; s'ha obtingut "
+"un objecte de la classe %s"
+
+#, fuzzy
+msgid "expected a non-empty character string for argument 'name'"
+msgstr "s'esperava una cadena de caràcters no buida per a l'argument «name»"
+
+#, fuzzy
+msgid "no function %s found"
+msgstr "no s'ha trobat cap funció %s"
+
+#, fuzzy
+msgid "no non-generic function %s found"
+msgstr "no s'ha trobat cap funció no genèrica %s"
+
+#, fuzzy
+msgid "%s is not one of the element names"
+msgstr "%s no és un dels noms dels elements"
+
+#, fuzzy
+msgid "no method or default for coercing %s to %s"
+msgstr "no hi ha cap mètode o predeterminat per coaccionar %s a %s"
+
+#, fuzzy
+msgid "no method or default for as() replacement of %s with Class=\"%s\""
+msgstr ""
+"no hi ha cap mètode o predeterminat per a la substitució as() de %s per "
+"Class=\"%s\""
+
+#, fuzzy
+msgid "trying to set an 'as' relation from %s to itself"
+msgstr "s'està intentant establir una relació 'as' de %s a ell mateix"
+
+#, fuzzy
+msgid "class %s is not defined in this environment"
+msgstr "la classe %s no està definida en aquest entorn"
+
+#, fuzzy
+msgid "class %s is a class union: 'coerce' relations to a class union are not meaningful"
+msgstr ""
+"la classe %s és una unió de classes: les relacions «coerce» amb una unió de "
+"classes no tenen sentit"
+
+#, fuzzy
+msgid "'as' method should have one argument, or match the arguments of coerce(): got  (%s)"
+msgstr ""
+"El mètode «as» hauria de tenir un argument, o coincidir amb els arguments de "
+"coerce(): s'ha obtingut (%s)"
+
+#, fuzzy
+msgid "a 'replace' method definition in 'setAs' must be a function of two arguments, got %d"
+msgstr ""
+"la definició del mètode «reemplaça» a «setAs» ha de ser una funció de dos "
+"arguments, s'ha obtingut %d"
+
+#, fuzzy
+msgid "argument names in 'replace' changed to agree with 'coerce<-' generic:\n%s"
+msgstr ""
+"els noms dels arguments a «reemplaça» han canviat per a estar d'acord amb "
+"«coerce--» genèric:\n"
+"%s"
+
+#, fuzzy
+msgid "ambiguous object (length != 1) to coerce to \"name\""
+msgstr "objecte ambigu (longitud != 1) per coaccionar a «nom»"
+
+#, fuzzy
+msgid "undefined 'coerce' method"
+msgstr "mètode «coerce» no definit"
+
+#, fuzzy
+msgid "methods currently exist for coercing from %s to %s; they will be replaced."
+msgstr ""
+"actualment existeixen mètodes per coaccionar de %s a %s; se substituiran."
+
+#, fuzzy
+msgid "Function must be an S4 generic"
+msgstr "La funció ha de ser un genèric S4"
+
+#, fuzzy
+msgid "method is not being debugged"
+msgstr "el mètode no s'està depurant"
+
+#, fuzzy
+msgid "object %s not found"
+msgstr "no s'ha trobat l'objecte %s"
+
+#, fuzzy
+msgid "object %s not changed (it is not consistent with the current definition of class %s from %s)"
+msgstr ""
+"l'objecte %s no ha canviat (no és coherent amb la definició actual de la "
+"classe %s de %s)"
+
+#, fuzzy
+msgid "no definition for the class of %s (class %s) found"
+msgstr "no s'ha trobat cap definició per a la classe de %s (classe %s)"
+
+#, fuzzy
+msgid "object %s not changed (it does not appear to be from a version of R earlier than 1.8.0)"
+msgstr ""
+"l'objecte %s no ha canviat (no sembla que sigui d'una versió de R anterior a "
+"1.8.0)"
+
+#, fuzzy
+msgid "'class1' must be the name of a class or a class definition"
+msgstr "'class1' ha de ser el nom d'una classe o una definició de classe"
+
+#, fuzzy
+msgid "'class2' must be the name of a class or a class definition"
+msgstr "'class2' ha de ser el nom d'una classe o una definició de classe"
+
+#, fuzzy
+msgid "class %s has no visible definition from package or environment %s"
+msgstr "la classe %s no té una definició visible del paquet o entorn %s"
+
+#, fuzzy
+msgid "cannot create a 'setIs' relation when neither of the classes (%s and %s) is local and modifiable in this package"
+msgstr ""
+"no es pot crear una relació 'setIs' quan cap de les classes (%s i %s) és "
+"local i modificable en aquest paquet"
+
+#, fuzzy
+msgid "class %s is sealed; new superclasses can not be defined, except by 'setClassUnion'"
+msgstr ""
+"la classe %s està segellada; no es poden definir noves superclasses, excepte "
+"per «setClassUnion»"
+
+#, fuzzy
+msgid "class %s is defined (with package slot %s) but no metadata object found to revise %s information---not imported?  Making a copy in package %s"
+msgstr ""
+"la classe %s està definida (amb la ranura del paquet %s), però no s'ha "
+"trobat cap objecte de metadades per revisar la informació %s-- no "
+"importada?  S'està fent una còpia al paquet %s"
+
+#, fuzzy
+msgid "class %s cannot extend class %s"
+msgstr "la classe %s no pot estendre la classe %s"
+
+#, fuzzy
+msgid "both classes must be defined"
+msgstr "cal definir les dues classes"
+
+#, fuzzy
+msgid "invalid index for function argument"
+msgstr "índex no vàlid per a l'argument de funció"
+
+#, fuzzy
+msgid "no function definition found for %s"
+msgstr "no s'ha trobat cap definició de funció per a %s"
+
+#, fuzzy
+msgid "need a definition for the method here"
+msgstr "necessita una definició per al mètode aquí"
+
+#, fuzzy
+msgid "Skeleton of method written to %s"
+msgstr "Esquelet del mètode escrit a %s"
+
+#, fuzzy
+msgid "invalid object in meta table of methods for %s, label %s, had class %s"
+msgstr ""
+"l'objecte de la metataula de mètodes de %s no és vàlid, l'etiqueta %s té la "
+"classe %s"
+
+#, fuzzy
+msgid "invalid mlist element for signature %s at level %d (should be MethodDefinition or .Primitive, had class %s)"
+msgstr ""
+"element mlist no vàlid per a la signatura %s al nivell %d (ha de ser "
+"MethodDefinition o .Primitiu, té classe %s)"
+
+#, fuzzy
+msgid "bad method object stored in method table, class %s"
+msgstr ""
+"objecte de mètode incorrecte emmagatzemat a la taula de mètodes, classe %s"
+
+#, fuzzy
+msgid "invalid object in methods table (%s), expected a method, got an object of class %s"
+msgstr ""
+"objecte no vàlid a la taula de mètodes (%s), s'esperava un mètode, s'ha "
+"obtingut un objecte de classe %s"
+
+#, fuzzy
+msgid "invalid or unset methods table in generic function %s"
+msgstr "taula de mètodes no vàlida o no establerta a la funció genèrica %s"
+
+#, fuzzy
+msgid "trying to find a methods table in a non-generic function"
+msgstr "s'està intentant trobar una taula de mètodes en una funció no genèrica"
+
+#, fuzzy
+msgid "the \"ambiguousMethodSelection\" option should be a function to be called as the condition action; got an object of class %s"
+msgstr ""
+"l'opció «ambiguousMethodSelection» hauria de ser una funció que s'anomenarà "
+"com a acció de condició; s'ha obtingut un objecte de classe %s"
+
+#, fuzzy
+msgid "No simply inherited methods found for function %s; using non-simple method"
+msgstr ""
+"No s'han trobat mètodes simplement heretats per a la funció %s; s'usarà un "
+"mètode no simple"
+
+#, fuzzy
+msgid "Note: method with signature %s chosen for function %s,\n target signature %s.\n %s would also be valid"
+msgstr ""
+"Nota: mètode amb signatura %s triat per a la funció %s,\n"
+" signatura de destinació %s.\n"
+" %s també seria vàlid"
+
+#, fuzzy
+msgid "unable to find an inherited method for function %s for signature %s"
+msgstr ""
+"no s'ha pogut trobar un mètode heretat per a la funció %s per a la signatura "
+"%s"
+
+#, fuzzy
+msgid "failed to find expected group generic function:"
+msgstr "no s'ha pogut trobar la funció genèrica del grup esperada:"
+
+#, fuzzy
+msgid "invalid group generic function in search for inherited method (class %s)"
+msgstr ""
+"funció genèrica de grup no vàlida a la cerca del mètode heretat (classe %s)"
+
+#, fuzzy
+msgid "invalid methods table request"
+msgstr "la petició de taula de mètodes no és vàlida"
+
+#, fuzzy
+msgid "trying to check signature length of group generic '%s', but it is not a group generic"
+msgstr ""
+"s'està intentant comprovar la longitud de la signatura del grup genèric «%s»"
+", però no és un grup genèric"
+
+#, fuzzy
+msgid "trying to check signature length of generic '%s', but it is not a generic function: i = %d, funs = %s, gnames = %s"
+msgstr ""
+"s'està intentant comprovar la longitud de la signatura del genèric «%s», "
+"però no és una funció genèrica: i = %d, funs = %s, gnames = %s"
+
+#, fuzzy
+msgid "no methods table for generic %s from package %s in package %s"
+msgstr ""
+"no hi ha cap taula de mètodes per al genèric %s del paquet %s al paquet %s"
+
+#, fuzzy
+msgid "undefined classes (%s) will be ignored for argument '%s'"
+msgstr "les classes no definides (%s) s'ignoraran per a l'argument «%s»"
+
+#, fuzzy
+msgid "argument 'signatures' must be a character matrix whose rows are method signatures"
+msgstr ""
+"l'argument «signatures» ha de ser una matriu de caràcters les files dels "
+"quals siguin signatures de mètode"
+
+#, fuzzy
+msgid "not allowed to have test==TRUE and an S4Class definition"
+msgstr "no es permet tenir test==TRUE i una definició de S4Class"
+
+#, fuzzy
+msgid "argument 'S4Class' must be a class definition: got an object of class %s"
+msgstr ""
+"l'argument «S4Class» ha de ser una definició de classe: s'ha obtingut un "
+"objecte de classe %s"
+
+#, fuzzy
+msgid "inconsistent old-style class information for %s; the class is defined but does not extend %s and is not valid as the data part"
+msgstr ""
+"informació inconsistent de la classe d'estil antic per a %s; la classe està "
+"definida però no amplia %s i no és vàlida com a part de dades"
+
+#, fuzzy
+msgid "the S3 class of the prototype, \"%s\", is undefined; only allowed when this is the S3 class being registered (\"%s\")"
+msgstr ""
+"la classe S3 del prototip, «%s», no està definida; només es permet quan "
+"aquesta és la classe S3 que s'està registrant («%s»)"
+
+#, fuzzy
+msgid "restoring definition of class %s"
+msgstr "s'està restaurant la definició de la classe %s"
+
+#, fuzzy
+msgid "slot %s: class %s should extend class %s"
+msgstr "ranura %s: la classe %s hauria d'estendre la classe %s"
+
+#, fuzzy
+msgid "invalid S4 class corresponding to S3 class: slots in  S4 version must extend corresponding slots in S3 version: fails for %s"
+msgstr ""
+"classe S4 no vàlida corresponent a la classe S3: els espais buits a la "
+"versió S4 han d'estendre els espais buits corresponents a la versió S3: "
+"falla per a %s"
+
+#, fuzzy
+msgid "explicit coercion of old-style class (%s) is not defined"
+msgstr "no s'ha definit la coerció explícita de la classe d'estil antic (%s)"
+
+#, fuzzy
+msgid "explicit replacement not defined for as(x, \"%s\") <- value for old-style class %s"
+msgstr ""
+"substitució explícita no definida per as(x, \"%s\") s- valor per a la classe "
+"d'estil antic %s"
+
+#, fuzzy
+msgid "argument 'Classes' must be a vector of two classes; got an argument of length %d"
+msgstr ""
+"l'argument «Classes» ha de ser un vector de dues classes; s'ha obtingut un "
+"argument de longitud %d"
+
+#, fuzzy
+msgid "inconsistent old-style class information for %s (maybe mixing old and new classes?)"
+msgstr ""
+"informació de classe inconsistent d'estil antic per a %s (potser barrejant "
+"classes antigues i noves?)"
+
+#, fuzzy
+msgid "'S3Class' only defined for extensions of %s or classes with a data part:  not true of class %s"
+msgstr ""
+"«S3Class» només definit per a extensions de %s o classes amb una part de "
+"dades: no és cert de la classe %s"
+
+#, fuzzy
+msgid "'S3Class' can only assign to S4 objects that extend \"oldClass\"; not true of class %s"
+msgstr ""
+"'S3Class' només es pot assignar a objectes S4 que s'estenen \"oldClass\"; no "
+"és cert de la classe %s"
+
+#, fuzzy
+msgid "Created a package name, %s, when none found"
+msgstr "S'ha creat un nom de paquet, %s, quan no s'ha trobat cap"
+
+#, fuzzy
+msgid "no definition of class %s found"
+msgstr "no s'ha trobat cap definició de la classe %s"
+
+#, fuzzy
+msgid "multiple definitions of %s found; using the one on %s"
+msgstr "s'han trobat múltiples definicions de %s; s'usarà la de %s"
+
+#, fuzzy
+msgid "%s is not a valid field or method name for reference class %s"
+msgstr "%s no és un nom de camp o mètode vàlid per a la classe de referència %s"
+
+#, fuzzy
+msgid "a call to superClass() is in the method %s but there is no superclass definition of this method for class %s"
+msgstr ""
+"una crida a superClass() està en el mètode %s però no hi ha cap definició de "
+"superclasse d'aquest mètode per a la classe %s"
+
+#, fuzzy
+msgid "methods declared in usingMethods() but not found: %s"
+msgstr "mètodes declarats a usingMethods() però no trobats: %s"
+
+#, fuzzy
+msgid "%s is not a reference class"
+msgstr "%s no és una classe de referència"
+
+#, fuzzy
+msgid "%s is not a field in class %s"
+msgstr "%s no és un camp de la classe %s"
+
+#, fuzzy
+msgid "unnamed arguments to $new() must be objects from a reference class; got an object of class %s"
+msgstr ""
+"els arguments sense nom a $new() han de ser objectes d'una classe de "
+"referència; s'ha obtingut un objecte de classe %s"
+
+#, fuzzy
+msgid "%s is not a valid field or method name for this class"
+msgstr "%s no és un nom de camp o mètode vàlid per a aquesta classe"
+
+#, fuzzy
+msgid "the class of field %s in the object is not compatible with the desired class %s in the target"
+msgstr ""
+"la classe del camp %s a l'objecte no és compatible amb la classe desitjada "
+"%s a l'objectiu"
+
+#, fuzzy
+msgid "%s is not a defined class in this environment"
+msgstr "%s no és una classe definida en aquest entorn"
+
+#, fuzzy
+msgid "invalid 'Class' argument:  should be a single string"
+msgstr "argument «Class» no vàlid: hauria de ser una única cadena"
+
+#, fuzzy
+msgid "%s is not one of the reference super classes for this object"
+msgstr "%s no és una de les superclasses de referència per a aquest objecte"
+
+#, fuzzy
+msgid "direct calls to callSuper() are invalid:  should only be called from another method"
+msgstr ""
+"les trucades directes a callSuper() no són vàlides: només s'ha de cridar des "
+"d'un altre mètode"
+
+#, fuzzy
+msgid "%s is not a field in this class"
+msgstr "%s no és un camp d'aquesta classe"
+
+#, fuzzy
+msgid "Methods not found: %s"
+msgstr "Mètodes no trobats: %s"
+
+#, fuzzy
+msgid "the definition of class %s in package %s is locked, methods may not be redefined"
+msgstr ""
+"la definició de la classe %s al paquet %s està bloquejada, els mètodes no es "
+"poden redefinir"
+
+#, fuzzy
+msgid "arguments to methods() must be named, or one named list"
+msgstr "els arguments a methods() han de ser anomenats, o una llista amb nom"
+
+#, fuzzy
+msgid "topic %s is not a method name in class %s\nThe class definition follows"
+msgstr ""
+"el tema %s no és un nom de mètode a la classe %s\n"
+"La definició de classe segueix"
+
+#, fuzzy
+msgid "the definition of class %s in package %s is locked so fields may not be modified"
+msgstr ""
+"la definició de la classe %s al paquet %s està bloquejada, de manera que els "
+"camps no es poden modificar"
+
+#, fuzzy
+msgid "the overriding class (\"%s\") of field %s is not a subclass of the existing field definition (\"%s\")"
+msgstr ""
+"la classe superior («%s») del camp %s no és una subclasse de la definició de "
+"camp existent («%s»)"
+
+#, fuzzy
+msgid "invalid assignment for reference class field %s, should be from class %s or a subclass (was class %s)"
+msgstr ""
+"assignació no vàlida per al camp de classe de referència %s, hauria de ser "
+"de la classe %s o una subclasse (era la classe %s)"
+
+#, fuzzy
+msgid "invalid replacement: reference class field %s is read-only"
+msgstr ""
+"substitució no vàlida: el camp de la classe de referència %s és només de "
+"lectura"
+
+#, fuzzy
+msgid "the 'contains' argument should be the names of superclasses:  got an element of class %s"
+msgstr ""
+"l'argument «conté» hauria de ser el nom de les superclasses: s'ha obtingut "
+"un element de la classe %s"
+
+#, fuzzy
+msgid "no definition found for inherited class: %s"
+msgstr "no s'ha trobat cap definició per a la classe heretada: %s"
+
+#, fuzzy
+msgid "a single class name is needed for field %s, got a character vector of length %d"
+msgstr ""
+"es necessita un nom de classe única per al camp %s, s'ha obtingut un vector "
+"de caràcters de longitud %d"
+
+#, fuzzy
+msgid "class %s for field %s is not defined"
+msgstr "la classe %s per al camp %s no està definida"
+
+#, fuzzy
+msgid "field %s was supplied as an object of class %s; must be a class name or a binding function"
+msgstr ""
+"el camp %s s'ha proporcionat com a objecte de la classe %s; ha de ser un nom "
+"de classe o una funció vinculant"
+
+#, fuzzy
+msgid "code for methods in class %s was not checked for suspicious field assignments (recommended package %s not available?)"
+msgstr ""
+"no s'ha comprovat el codi dels mètodes de la classe %s per a assignacions de "
+"camps sospitosos (el paquet recomanat %s no està disponible?)"
+
+#, fuzzy
+msgid "class %s is defined but is not a reference class"
+msgstr "la classe %s està definida però no és una classe de referència"
+
+#, fuzzy
+msgid "class must be a reference class representation or a character string; got an object of class %s"
+msgstr ""
+"la classe ha de ser una representació de classe de referència o una cadena "
+"de caràcters; s'ha obtingut un objecte de la classe %s"
+
+#, fuzzy
+msgid "not a reference class: %s"
+msgstr "no és una classe de referència: %s"
+
+#, fuzzy
+msgid "local assignment to field name will not change the field:\n    %s\n Did you mean to use \"<<-\"? ( in method %s for class %s)"
+msgstr ""
+"l'assignació local al nom del camp no canviarà el camp:\n"
+"    %s\n"
+" Volies fer servir \"\"?-\"? (al mètode %s per a la classe %s)"
+
+#, fuzzy
+msgid "non-local assignment to non-field names (possibly misspelled?)\n    %s\n( in method %s for class %s)"
+msgstr ""
+"assignació no local a noms no-camp (possiblement mal escrit?)\n"
+"    %s\n"
+"(al mètode %s per a la classe %s)"
+
+#, fuzzy
+msgid "non-local assignment to method names is not allowed\n    %s\n( in method %s for class %s)"
+msgstr ""
+"no es permet l'assignació no local als noms dels mètodes\n"
+"    %s\n"
+"(al mètode %s per a la classe %s)"
+
+#, fuzzy
+msgid "arguments must all be character string names of fields"
+msgstr "tots els arguments han de ser noms de cadenes de caràcters dels camps"
+
+#, fuzzy
+msgid "field %s is already locked"
+msgstr "el camp %s ja està bloquejat"
+
+#, fuzzy
+msgid "field %s of class %s has a non-default binding and cannot be locked"
+msgstr ""
+"el camp %s de la classe %s té una vinculació no predeterminada i no es pot "
+"bloquejar"
+
+#, fuzzy
+msgid "Reference superclasses must come from the same package for the environment to be defined:  got %s and %s"
+msgstr ""
+"Les superclasses de referència han de venir del mateix paquet per a definir "
+"l'entorn: s'han obtingut %s i %s"
+
+#, fuzzy
+msgid "Class %s is not a subclass of %s; functional semantics not defined for this class"
+msgstr ""
+"La classe %s no és una subclasse de %s; la semàntica funcional no està "
+"definida per a aquesta classe"
+
+#, fuzzy
+msgid "Could not find local object in supplied environment"
+msgstr "No s'ha pogut trobar l'objecte local a l'entorn proporcionat"
+
+#, fuzzy
+msgid "invalid 'ignore' argument; should be a class definition or a character vector, got an object of class %s"
+msgstr ""
+"argument «ignore» no vàlid; hauria de ser una definició de classe o un "
+"vector de caràcters, s'ha obtingut un objecte de classe %s"
+
+#, fuzzy
+msgid "An object of class %s"
+msgstr "Un objecte de la classe %s"
+
+#, fuzzy
+msgid "invalid call to 'classLabel': expected a name or a class definition, got an object of class %s"
+msgstr ""
+"crida no vàlida a «classLabel»: s'esperava un nom o una definició de classe, "
+"s'ha obtingut un objecte de la classe %s"
+
+#, fuzzy
+msgid "argument 'signature' is not meaningful for tracing reference methods"
+msgstr ""
+"l'argument «signature» no té sentit per a traçar els mètodes de referència"
+
+#, fuzzy
+msgid "%s is not a method for reference class %s"
+msgstr "%s no és un mètode per a la classe de referència %s"
+
+#, fuzzy
+msgid "argument 'what' should be the name of a function"
+msgstr "argument «quin» hauria de ser el nom d'una funció"
+
+#, fuzzy
+msgid "tracing the internal function %s is not allowed"
+msgstr "no es permet traçar la funció interna %s"
+
+#, fuzzy
+msgid "no function definition for %s found"
+msgstr "no s'ha trobat cap definició de funció per a %s"
+
+#, fuzzy
+msgid "cannot untrace method for %s; no method defined for this signature: %s"
+msgstr ""
+"no es pot deixar de traçar el mètode per a %s; no s'ha definit cap mètode "
+"per a aquesta signatura: %s"
+
+#, fuzzy
+msgid "the method for %s for this signature was not being traced"
+msgstr "el mètode per a %s per a aquesta signatura no s'estava traçant"
+
+#, fuzzy
+msgid "making a traced version of a special; arguments may be altered"
+msgstr "fent una versió traçada d'un especial; els arguments es poden alterar"
+
+#, fuzzy
+msgid "the editing in trace() can only change the body of the function; got an object of class %s"
+msgstr ""
+"l'edició a trace() només pot canviar el cos de la funció; s'ha obtingut un "
+"objecte de classe %s"
+
+#, fuzzy
+msgid "the editing in trace() can only change the body of the function, not the arguments or defaults"
+msgstr ""
+"l'edició a trace() només pot canviar el cos de la funció, no els arguments o "
+"els valors predeterminats"
+
+#, fuzzy
+msgid "cannot use 'at' argument without a trace expression"
+msgstr "no es pot usar l'argument «at» sense una expressió de traça"
+
+#, fuzzy
+msgid "cannot use 'at' argument unless the function body has the form '{ ... }'"
+msgstr ""
+"no es pot usar l'argument «at» tret que el cos de la funció tingui la forma "
+"«{ ... }»"
+
+#, fuzzy
+msgid "assigning over the binding of symbol %s in environment/package %s"
+msgstr "s'està assignant sobre la vinculació del símbol %s a l'entorn/paquet %s"
+
+#, fuzzy
+msgid "setting a method over the binding of symbol %s in environment/package %s"
+msgstr ""
+"s'està establint un mètode sobre la vinculació del símbol %s a l'entorn/"
+"paquet %s"
+
+#, fuzzy
+msgid "Environment of class %s is locked; using global environment for new class"
+msgstr ""
+"L'entorn de la classe %s està bloquejat; s'usarà l'entorn global per a la "
+"classe nova"
+
+#, fuzzy
+msgid "none of the objects in the source code could be found:  need to attach or specify the package"
+msgstr ""
+"no s'ha pogut trobar cap dels objectes del codi font: cal adjuntar o "
+"especificar el paquet"
+
+#, fuzzy
+msgid "objects found in multiple packages: using %s and ignoring %s"
+msgstr "objectes trobats en múltiples paquets: s'usarà %s i s'ignorarà %s"
+
+#, fuzzy
+msgid "package %s is not attached and no namespace found for it"
+msgstr "el paquet %s no està adjuntat i no s'ha trobat cap espai de noms"
+
+#, fuzzy
+msgid "invalid 'source' argument: expected file names or a connection but got an object of class %s"
+msgstr ""
+"argument «source» no vàlid: s'esperava un nom de fitxer o una connexió, però "
+"s'ha obtingut un objecte de classe %s"
+
+#, fuzzy
+msgid "cannot find an environment corresponding to package name '%s\""
+msgstr "no s'ha pogut trobar un entorn corresponent al nom del paquet «%s»"
+
+#, fuzzy
+msgid "supplied package, %s, differs from package inferred from source, %s"
+msgstr ""
+"el paquet proporcionat, %s, difereix del paquet inferit des del codi font, %s"
+
+#, fuzzy
+msgid "cannot insert these (not found in source): %s"
+msgstr "no es poden inserir (no s'han trobat a la font): %s"
+
+#, fuzzy
+msgid "cannot insert methods for these functions (methods table not found in source): %s"
+msgstr ""
+"no s'han pogut inserir mètodes per a aquestes funcions (no s'ha trobat la "
+"taula de metadades en el codi font): %s"
+
+#, fuzzy
+msgid "Non-function objects are not currently inserted (not traceable): %s"
+msgstr ""
+"Actualment no s'insereixen objectes no funcionals (no es pot rastrejar): %s"
+
+#, fuzzy
+msgid "New functions are not currently inserted (not untraceable): %s"
+msgstr "Actualment no s'insereixen funcions noves (no es poden traçar): %s"
+
+#, fuzzy
+msgid "Modified functions inserted through trace(): %s"
+msgstr "Funcions modificades inserides a través de trace(): %s"
+
+#, fuzzy
+msgid "%s() is not a generic function in the target environment -- methods will not be inserted"
+msgstr ""
+"%s() no és una funció genèrica a l'entorn de destinació -- els mètodes no "
+"s'inseriran"
+
+#, fuzzy
+msgid "Methods inserted for function %s(): %s"
+msgstr "Mètodes inserits per a la funció %s(): %s"
+
+#, fuzzy
+msgid "no definition for object %s found in tracing environment"
+msgstr "no s'ha trobat cap definició per a l'objecte %s a l'entorn de seguiment"
+
+#, fuzzy
+msgid "multiple generics match pattern, using table %s"
+msgstr "diversos genèrics coincideixen amb el patró, usant la taula %s"
+
+#, fuzzy
+msgid "does not seem to be a method table for generic %s in tracing environment"
+msgstr ""
+"no sembla que sigui una taula de mètodes per al genèric %s a l'entorn de "
+"seguiment"
+
+#, fuzzy
+msgid "no method in methods table for %s for signature %s"
+msgstr ""
+"no hi ha cap mètode a la taula de mètodes per a %s per a la signatura %s"
+
+#, fuzzy
+msgid "unloading 'methods' package ..."
+msgstr "s'està descarregant el paquet «methods»..."
+
+#, fuzzy
+msgid "apparently bad method or class metadata in saved environment;"
+msgstr "aparentment mal mètode o metadades de classe en l'entorn desat;"
+
+#, fuzzy
+msgid "move the file or remove the class/method"
+msgstr "mou el fitxer o elimina la classe/mètode"
+
+#, fuzzy
+msgid "no definition for class %s"
+msgid_plural "no definition for classes %s"
+msgstr[0] "no hi ha cap definició per a la classe %s"
+msgstr[1] "no hi ha cap definició per a les classes %s"
+
+#, fuzzy
+msgid "in the method signature for function %s invalid argument name in the signature: %s"
+msgid_plural "in the method signature for function %s invalid argument names in the signature: %s"
+msgstr[0] ""
+"al mètode signatura de la funció %s nom d'argument no vàlid a la signatura: "
+"%s"
+msgstr[1] ""
+"en el mètode de signatura de la funció %s noms d'arguments no vàlids a la "
+"signatura: %s"
+
+#, fuzzy
+msgid "Reported %d ambiguous selection out of %d for function %s\n"
+msgid_plural "Reported %d ambiguous selections out of %d for function %s\n"
+msgstr[0] "S'ha informat de %d selecció ambigua de %d per a la funció %s\n"
+msgstr[1] "S'ha informat de %d seleccions ambigües de %d per a la funció %s\n"
+
+#, fuzzy
+msgid "named elements of prototype do not correspond to slot name: %s"
+msgid_plural "named elements of prototype do not correspond to slot names: %s"
+msgstr[0] ""
+"els elements anomenats del prototip no corresponen al nom de la ranura: %s"
+msgstr[1] ""
+"els elements amb nom del prototip no corresponen als noms de les ranures: %s"
+
+#, fuzzy
+msgid "non-argument found in the signature: %s"
+msgid_plural "non-arguments found in the signature: %s"
+msgstr[0] "no s'ha trobat cap argument a la signatura: %s"
+msgstr[1] "no arguments trobats a la signatura: %s"
+
+#, fuzzy
+msgid "the formal argument of the generic function for %s (%s) differs from that of the non-generic to be used as the default (%s)"
+msgid_plural "the formal arguments of the generic function for %s (%s) differ from those of the non-generic to be used as the default (%s)"
+msgstr[0] ""
+"l'argument formal de la funció genèrica per a %s (%s) difereix de la no "
+"genèrica que s'utilitzarà com a predeterminada (%s)"
+msgstr[1] ""
+"els arguments formals de la funció genèrica per a %s (%s) difereixen dels no "
+"genèrics que s'utilitzaran per defecte (%s)"
+
+#, fuzzy
+msgid "duplicated slot name: %s"
+msgid_plural "duplicated slot names: %s"
+msgstr[0] "nom de la ranura duplicat: %s"
+msgstr[1] "noms de ranures duplicats: %s"
+
+#, fuzzy
+msgid "invalid name for slot of class %s: %s"
+msgid_plural "invalid names for slots of class %s: %s"
+msgstr[0] "nom no vàlid per a la ranura de la classe %s: %s"
+msgstr[1] "noms no vàlids per als espais buits de la classe %s: %s"
+
+#, fuzzy
+msgid "multiple definition of class %s visible (%s); using the definition\n   in package %s for %s"
+msgid_plural "multiple definitions of class %s visible (%s); using the definition\n   in package %s for %s"
+msgstr[0] ""
+"la definició múltiple de la classe %s és visible (%s); s'utilitzarà la "
+"definició\n"
+"   al paquet %s per a %s"
+msgstr[1] ""
+"són visibles múltiples definicions de la classe %s (%s); s'utilitzarà la "
+"definició\n"
+"   al paquet %s per a %s"
+
+#, fuzzy
+msgid "class %s is missing slot from class %s (%s), and no coerce method was supplied"
+msgid_plural "class %s is missing slots from class %s (%s), and no coerce method was supplied"
+msgstr[0] ""
+"a la classe %s li manca un espai buit de la classe %s (%s), i no s'ha "
+"proporcionat cap mètode de coerce"
+msgstr[1] ""
+"a la classe %s li falten ranures de la classe %s (%s), i no s'ha "
+"proporcionat cap mètode de coerce"
+
+#, fuzzy
+msgid "slot in class %s must extend corresponding slot in class %s: fails for %s"
+msgid_plural "slots in class %s must extend corresponding slots in class %s: fails for %s"
+msgstr[0] ""
+"la ranura de la classe %s ha d'estendre la ranura corresponent a la classe "
+"%s: falla per a %s"
+msgstr[1] ""
+"els espais buits de la classe %s han d'estendre els espais buits "
+"corresponents a la classe %s: falla per a %s"
+
+#, fuzzy
+msgid "found %d equally good next method"
+msgid_plural "found %d equally good next methods"
+msgstr[0] "trobat %d mètode següent igualment bo"
+msgstr[1] "trobats %d mètodes propers igualment bons"
+
+#, fuzzy
+msgid "Selecting %d method of minimum distance"
+msgid_plural "Selecting %d methods of minimum distance"
+msgstr[0] "Seleccionant el mètode %d de distància mínima"
+msgstr[1] "Seleccionant %d mètodes de distància mínima"
+
+#, fuzzy
+msgid "Selecting %d non-group method"
+msgid_plural "Selecting %d non-group methods"
+msgstr[0] "Seleccionant %d mètode no-grup"
+msgstr[1] "Seleccionant %d mètodes no-grup"
+
+#, fuzzy
+msgid "Selecting %d partially exact-matching method"
+msgid_plural "Selecting %d partially exact-matching methods"
+msgstr[0] "Seleccionant %d mètode de coincidència parcialment exacta"
+msgstr[1] "Seleccionant %d mètodes de coincidència parcialment exacta"
+
+#, fuzzy
+msgid "Choosing method %s from %d ambiguous possibility"
+msgid_plural "Choosing method %s from %d ambiguous possibilities"
+msgstr[0] "Triant el mètode %s des de %d possibilitat ambigua"
+msgstr[1] "Triant el mètode %s a partir de %d possibilitats ambigües"
+
+#, fuzzy
+msgid "no definition of class %s in the specified position, %s, definition on : %s"
+msgid_plural "no definition of class %s in the specified position, %s, definitions on : %s"
+msgstr[0] ""
+"no hi ha cap definició de la classe %s a la posició especificada, %s, "
+"definició a : %s"
+msgstr[1] ""
+"no hi ha cap definició de la classe %s a la posició especificada, %s, "
+"definicions a : %s"

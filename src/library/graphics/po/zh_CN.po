@@ -6,9 +6,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
-"Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-11-30 14:39+0100\n"
-"PO-Revision-Date: 2022-12-08 09:04+0000\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-03-27 16:14-0700\n"
+"PO-Revision-Date: 2023-12-20 13:03+0000\n"
 "Last-Translator: Shun Wang <shuonwang@gmail.com>\n"
 "Language-Team: Chinese\n"
 "Language: zh_CN\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.13.1\n"
+"X-Generator: Weblate 4.16.4\n"
 
 #: base.c:43
 msgid "no base graphics system is registered"
@@ -33,7 +33,7 @@ msgstr "没有注册基础图形系统"
 #: graphics.c:297
 #, c-format
 msgid "bad units specified in '%s'"
-msgstr "'%s'里的单位设定不对"
+msgstr "'%s'里的单位设定不正确"
 
 #: graphics.c:1820 graphics.c:1842
 msgid "attempt to plot on null device"
@@ -71,7 +71,7 @@ msgstr "没有已积活的图形设备"
 
 #: graphics.c:2462
 msgid "plot.new has not been called yet"
-msgstr "还没有调用plot.new "
+msgstr "plot.new尚未被调用"
 
 #: graphics.c:2464
 msgid "invalid graphics state"
@@ -448,7 +448,7 @@ msgstr "'thermometers[,%s]'无效"
 #: plot.c:3903
 #, c-format
 msgid "'thermometers[, %s]' not in [0,1] -- may look funny"
-msgstr "'thermometers[,%s]'在[0,1]范围外--看起来会有点不对"
+msgstr "'thermometers[,%s]'在[0,1]范围外--看起来会有点不正确"
 
 #: plot.c:3906
 msgid "invalid 'thermometers[, 1:2]'"
@@ -460,7 +460,7 @@ msgstr "'boxplots'数据无效(需要五个列)"
 
 #: plot.c:3954
 msgid "'boxplots[, 5]' outside [0,1] -- may look funny"
-msgstr "'boxplots[, 5]'在[0,1]范围外--看起来会有点不对"
+msgstr "'boxplots[, 5]'在[0,1]范围外--看起来会有点不正确"
 
 #: plot.c:3956
 msgid "invalid 'boxplots[, 1:4]'"

@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: R 3.5.1\n"
-"Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-11-30 14:40+0100\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-03-27 16:14-0700\n"
 "PO-Revision-Date: 2018-09-16 23:38+0800\n"
 "Last-Translator: Wei-Lun Chao <bluebat@member.fsf.org>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -656,152 +656,152 @@ msgstr "'ndeps' 長度無效"
 msgid "unknown 'method'"
 msgstr "不明的 'method'"
 
-#: optimize.c:220 optimize.c:306 optimize.c:528
+#: optimize.c:221 optimize.c:307 optimize.c:529
 msgid "NA replaced by maximum positive value"
 msgstr "NA 被換成最大的正值"
 
-#: optimize.c:228 optimize.c:318 optimize.c:536
+#: optimize.c:229 optimize.c:319 optimize.c:537
 msgid "NA/Inf replaced by maximum positive value"
 msgstr "NA/Inf 被換成最大的正值"
 
-#: optimize.c:237
+#: optimize.c:238
 msgid "invalid function value in 'optimize'"
 msgstr "'optimize' 裡的函式值無效"
 
-#: optimize.c:255 optimize.c:347 optimize.c:721
+#: optimize.c:256 optimize.c:348 optimize.c:723
 msgid "attempt to minimize non-function"
 msgstr "不能將非函式最小化"
 
-#: optimize.c:262 optimize.c:269 optimize.c:278 optimize.c:352 optimize.c:357
-#: optimize.c:373
+#: optimize.c:263 optimize.c:270 optimize.c:279 optimize.c:353 optimize.c:358
+#: optimize.c:374
 #, c-format
 msgid "invalid '%s' value"
 msgstr "'%s' 值無效"
 
-#: optimize.c:271 optimize.c:358
+#: optimize.c:272 optimize.c:359
 msgid "'xmin' not less than 'xmax'"
 msgstr "'xmin' 不能小於 xmax"
 
-#: optimize.c:315
+#: optimize.c:316
 msgid "-Inf replaced by maximally negative value"
 msgstr "-Inf 被換成最大的負值"
 
-#: optimize.c:328
+#: optimize.c:329
 msgid "invalid function value in 'zeroin'"
 msgstr "'zeroin' 函式值無效"
 
-#: optimize.c:363 optimize.c:368
+#: optimize.c:364 optimize.c:369
 #, c-format
 msgid "NA value for '%s' is not allowed"
 msgstr "'%s' 裡不可有 NA 值"
 
-#: optimize.c:378
+#: optimize.c:379
 msgid "'maxiter' must be positive"
 msgstr "'maxiter' 必須是正數"
 
-#: optimize.c:520
+#: optimize.c:521
 msgid "non-finite value supplied by 'nlm'"
 msgstr "'nlm' 回覆了無限值"
 
-#: optimize.c:555
+#: optimize.c:556
 msgid "invalid function value in 'nlm' optimizer"
 msgstr "'nlm' 最佳化器裡的函式值無效"
 
-#: optimize.c:566 optimize.c:581
+#: optimize.c:568 optimize.c:583
 msgid "function value caching for optimization is seriously confused"
 msgstr "最佳化時函式值暫存器出了問題"
 
-#: optimize.c:596
+#: optimize.c:598
 msgid "numeric parameter expected"
 msgstr "需要數值參數"
 
-#: optimize.c:600
+#: optimize.c:602
 msgid "conflicting parameter lengths"
 msgstr "參數的長度自相矛盾"
 
-#: optimize.c:604
+#: optimize.c:606
 msgid "invalid parameter length"
 msgstr "參數長度無效"
 
-#: optimize.c:614 optimize.c:621
+#: optimize.c:616 optimize.c:623
 msgid "missing value in parameter"
 msgstr "參數裡不能有缺值"
 
-#: optimize.c:626
+#: optimize.c:628
 msgid "invalid parameter type"
 msgstr "參數種類無效"
 
-#: optimize.c:637
+#: optimize.c:639
 msgid "non-positive number of parameters in nlm"
 msgstr "nlm 參數不能是負的"
 
-#: optimize.c:639
+#: optimize.c:641
 msgid "nlm is inefficient for 1-d problems"
 msgstr "用 nlm 來解決一維問題效率不高"
 
-#: optimize.c:641
+#: optimize.c:643
 msgid "invalid gradient tolerance in nlm"
 msgstr "nlm 裡的梯度容錯無效"
 
-#: optimize.c:643
+#: optimize.c:645
 msgid "invalid iteration limit in nlm"
 msgstr "nlm 裡的迭代極值無效"
 
-#: optimize.c:645
+#: optimize.c:647
 msgid "minimization function has no good digits in nlm"
 msgstr "nlm 最小化函式找不到可適用的數字"
 
-#: optimize.c:647
+#: optimize.c:649
 msgid "no analytic gradient to check in nlm!"
 msgstr "nlm 裡沒有可查的分析梯度！"
 
-#: optimize.c:649
+#: optimize.c:651
 msgid "no analytic Hessian to check in nlm!"
 msgstr "nlm 裡沒有可查的分析海森！"
 
-#: optimize.c:651
+#: optimize.c:653
 msgid "probable coding error in analytic gradient"
 msgstr "分析梯度的程式碼很有可能發生錯誤"
 
-#: optimize.c:653
+#: optimize.c:655
 msgid "probable coding error in analytic Hessian"
 msgstr "分析海森的程式碼很有可能發生錯誤"
 
-#: optimize.c:655
+#: optimize.c:657
 #, c-format
 msgid ""
 "*** unknown error message (msg = %d) in nlm()\n"
 "*** should not happen!"
 msgstr "*** nlm()產生了不明的錯誤資訊(msg = %d) 。這不應該發生！"
 
-#: optimize.c:666
+#: optimize.c:668
 msgid "Relative gradient close to zero.\n"
 msgstr "相對梯度離零太近.\n"
 
-#: optimize.c:667 optimize.c:671
+#: optimize.c:669 optimize.c:673
 msgid "Current iterate is probably solution.\n"
 msgstr "目前的重複值很可能就已經是答案了.\n"
 
-#: optimize.c:670
+#: optimize.c:672
 msgid "Successive iterates within tolerance.\n"
 msgstr "在容錯範圍內連續迭代.\n"
 
-#: optimize.c:674
+#: optimize.c:676
 msgid "Last global step failed to locate a point lower than x.\n"
 msgstr "最後一步的整體最佳化沒有能找到比 x 值要小的一個點.\n"
 
-#: optimize.c:675
+#: optimize.c:677
 msgid ""
 "Either x is an approximate local minimum of the function,\n"
 "the function is too non-linear for this algorithm,\n"
 "or steptol is too large.\n"
 msgstr "要麼 x 已經是函式的本地最小值，要麼這個函式非線性太強，要麼 steptol 設得太大。\n"
 
-#: optimize.c:680
+#: optimize.c:682
 msgid "Iteration limit exceeded.  Algorithm failed.\n"
 msgstr "超過了迭代極值。演算法失敗.\n"
 
-#: optimize.c:683
+#: optimize.c:685
 msgid ""
 "Maximum step size exceeded 5 consecutive times.\n"
 "Either the function is unbounded below,\n"
@@ -814,16 +814,16 @@ msgstr ""
 "從上邊界達到了漸近有限值\n"
 "要麼是 stepmx 設得太小。\n"
 
-#: optimize.c:745 optimize.c:750 optimize.c:754 optimize.c:758 optimize.c:762
-#: optimize.c:766 optimize.c:771
+#: optimize.c:747 optimize.c:752 optimize.c:756 optimize.c:760 optimize.c:764
+#: optimize.c:768 optimize.c:773
 msgid "invalid NA value in parameter"
 msgstr "參數裡的 NA 值無效"
 
-#: optimize.c:800
+#: optimize.c:802
 msgid "hessian supplied is of the wrong length or mode, so ignored"
 msgstr "海森的長度不對或其狀態不對，因此忽略不用"
 
-#: optimize.c:804
+#: optimize.c:806
 msgid "gradient supplied is of the wrong length or mode, so ignored"
 msgstr "梯度的長度或其狀態不對，因此忽略不用"
 
@@ -960,7 +960,7 @@ msgstr "第二引數 'size' 無效"
 #: rcont.c:85
 #, c-format
 msgid "rcont2 [%d,%d]: exp underflow to 0; algorithm failure"
-msgstr " rcont2 [%d,%d]: exp 下益到 0； 演算法失敗"
+msgstr "rcont2 [%d,%d]: exp 下益到 0； 演算法失敗"
 
 #: smooth.c:107
 #, c-format

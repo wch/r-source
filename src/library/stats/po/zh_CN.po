@@ -6,9 +6,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
-"Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-11-30 14:40+0100\n"
-"PO-Revision-Date: 2022-12-09 10:04+0000\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-03-27 16:14-0700\n"
+"PO-Revision-Date: 2023-09-18 03:05+0000\n"
 "Last-Translator: Shun Wang <shuonwang@gmail.com>\n"
 "Language-Team: Chinese\n"
 "Language: zh_CN\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.13.1\n"
+"X-Generator: Weblate 4.16.4\n"
 
 #: Srunmed.c:63
 msgid "bandwidth/span of running medians is larger than n"
@@ -96,7 +96,7 @@ msgstr "'x'为NULL"
 
 #: cov.c:682 cov.c:688
 msgid "incompatible dimensions"
-msgstr "不兼容的量度"
+msgstr "维度不匹配"
 
 #: cov.c:707 cov.c:748 cov.c:781
 msgid "no complete element pairs"
@@ -148,7 +148,7 @@ msgstr "非因子"
 
 #: deriv.c:1087 model.c:99
 msgid "invalid variable names"
-msgstr "变量名字无效"
+msgstr "变量名称无效"
 
 #: deriv.c:1095 deriv.c:1097
 msgid "invalid tag"
@@ -376,7 +376,7 @@ msgstr "变量无效"
 
 #: model.c:101 model.c:106
 msgid "number of variables != number of variable names"
-msgstr "变量数目不等于变量名字数目"
+msgstr "变量数目不等于变量名称数目"
 
 #: model.c:104
 msgid "invalid extra variables"
@@ -384,12 +384,12 @@ msgstr "額外变量无效"
 
 #: model.c:108
 msgid "invalid extra variable names"
-msgstr "额外变量名字无效"
+msgstr "额外变量名称无效"
 
 #: model.c:129
 #, c-format
 msgid "overlong names in '%s'"
-msgstr "'%s'里的名字太长"
+msgstr "'%s'里的名称太长"
 
 #: model.c:156
 #, c-format
@@ -449,7 +449,7 @@ msgstr "模型矩阵的%d项有问题: 没有指定的列"
 
 #: model.c:631 model.c:636 model.c:642 model.c:653 model.c:659 model.c:665
 msgid "term names will be truncated"
-msgstr "项名字太长，被缩短了"
+msgstr "项名称太长，被缩短了"
 
 #: model.c:645
 msgid "complex variables are not currently allowed in model matrices"
@@ -487,7 +487,7 @@ msgstr "ExtractVars里的模型公式无效"
 #: model.c:1636
 #, c-format
 msgid "duplicated name '%s' in data frame using '.'"
-msgstr "在数据框里用'.'时不能有重复的名字’%s'"
+msgstr "在数据框里用'.'时不能有重复的名称’%s'"
 
 #: model.c:1703
 msgid "invalid model formula in EncodeVars"
@@ -576,7 +576,7 @@ msgstr "'rho'必需为环境"
 
 #: nls.c:296
 msgid "'dir' is not a numeric vector of the correct length"
-msgstr "'dir'这个数字向量的长度不对"
+msgstr "'dir'这个数字向量的长度不正确"
 
 #: nls.c:299
 msgid "'central' is NA, but must be TRUE or FALSE"
@@ -644,152 +644,152 @@ msgstr "'ndeps'长度有误"
 msgid "unknown 'method'"
 msgstr "没有这样的'method'"
 
-#: optimize.c:220 optimize.c:306 optimize.c:528
+#: optimize.c:221 optimize.c:307 optimize.c:529
 msgid "NA replaced by maximum positive value"
 msgstr "NA被换成最大的正值"
 
-#: optimize.c:228 optimize.c:318 optimize.c:536
+#: optimize.c:229 optimize.c:319 optimize.c:537
 msgid "NA/Inf replaced by maximum positive value"
 msgstr "NA/Inf被换成最大的正值"
 
-#: optimize.c:237
+#: optimize.c:238
 msgid "invalid function value in 'optimize'"
 msgstr "'optimize'里的函数值无效"
 
-#: optimize.c:255 optimize.c:347 optimize.c:721
+#: optimize.c:256 optimize.c:348 optimize.c:723
 msgid "attempt to minimize non-function"
 msgstr "不能将非函数最小化"
 
-#: optimize.c:262 optimize.c:269 optimize.c:278 optimize.c:352 optimize.c:357
-#: optimize.c:373
+#: optimize.c:263 optimize.c:270 optimize.c:279 optimize.c:353 optimize.c:358
+#: optimize.c:374
 #, c-format
 msgid "invalid '%s' value"
 msgstr "'%s'值无效"
 
-#: optimize.c:271 optimize.c:358
+#: optimize.c:272 optimize.c:359
 msgid "'xmin' not less than 'xmax'"
 msgstr "'xmin'不能小于xmax"
 
-#: optimize.c:315
+#: optimize.c:316
 msgid "-Inf replaced by maximally negative value"
 msgstr "-Inf被换成最大的负值"
 
-#: optimize.c:328
+#: optimize.c:329
 msgid "invalid function value in 'zeroin'"
 msgstr "'zeroin'函数值无效"
 
-#: optimize.c:363 optimize.c:368
+#: optimize.c:364 optimize.c:369
 #, c-format
 msgid "NA value for '%s' is not allowed"
 msgstr "'%s'里不可有NA值"
 
-#: optimize.c:378
+#: optimize.c:379
 msgid "'maxiter' must be positive"
 msgstr "'maxiter'必需是正数"
 
-#: optimize.c:520
+#: optimize.c:521
 msgid "non-finite value supplied by 'nlm'"
 msgstr "'nlm'回复了无限值"
 
-#: optimize.c:555
+#: optimize.c:556
 msgid "invalid function value in 'nlm' optimizer"
 msgstr "'nlm'最佳化器里的函数值无效"
 
-#: optimize.c:566 optimize.c:581
+#: optimize.c:568 optimize.c:583
 msgid "function value caching for optimization is seriously confused"
 msgstr "最佳化时函数值暫存器出了问题"
 
-#: optimize.c:596
+#: optimize.c:598
 msgid "numeric parameter expected"
 msgstr "需要数值参数"
 
-#: optimize.c:600
+#: optimize.c:602
 msgid "conflicting parameter lengths"
 msgstr "参数的长度自相矛盾"
 
-#: optimize.c:604
+#: optimize.c:606
 msgid "invalid parameter length"
 msgstr "参数长度无效"
 
-#: optimize.c:614 optimize.c:621
+#: optimize.c:616 optimize.c:623
 msgid "missing value in parameter"
 msgstr "参数里不能有缺失值"
 
-#: optimize.c:626
+#: optimize.c:628
 msgid "invalid parameter type"
 msgstr "参数类型无效"
 
-#: optimize.c:637
+#: optimize.c:639
 msgid "non-positive number of parameters in nlm"
 msgstr "nlm参数不能是负的"
 
-#: optimize.c:639
+#: optimize.c:641
 msgid "nlm is inefficient for 1-d problems"
 msgstr "用nlm来解决一维问题效率不高"
 
-#: optimize.c:641
+#: optimize.c:643
 msgid "invalid gradient tolerance in nlm"
 msgstr "nlm里的梯度容错无效"
 
-#: optimize.c:643
+#: optimize.c:645
 msgid "invalid iteration limit in nlm"
 msgstr "nlm里的迭代极限无效"
 
-#: optimize.c:645
+#: optimize.c:647
 msgid "minimization function has no good digits in nlm"
 msgstr "nlm最小化函数找不到可适用的数字"
 
-#: optimize.c:647
+#: optimize.c:649
 msgid "no analytic gradient to check in nlm!"
 msgstr "nlm里没有可查的分析梯度!"
 
-#: optimize.c:649
+#: optimize.c:651
 msgid "no analytic Hessian to check in nlm!"
 msgstr "nlm里没有可查的分析海森!"
 
-#: optimize.c:651
+#: optimize.c:653
 msgid "probable coding error in analytic gradient"
 msgstr "分析梯度的代码很有可能出错"
 
-#: optimize.c:653
+#: optimize.c:655
 msgid "probable coding error in analytic Hessian"
 msgstr "分析海森的代码很有可能出错"
 
-#: optimize.c:655
+#: optimize.c:657
 #, c-format
 msgid ""
 "*** unknown error message (msg = %d) in nlm()\n"
 "*** should not happen!"
 msgstr "*** nlm()产生了不知是什么的错误信息(msg = %d) 。这不应该发生!"
 
-#: optimize.c:666
+#: optimize.c:668
 msgid "Relative gradient close to zero.\n"
 msgstr "相对梯度离零太近.\n"
 
-#: optimize.c:667 optimize.c:671
+#: optimize.c:669 optimize.c:673
 msgid "Current iterate is probably solution.\n"
 msgstr "当前的重复值很可能就已经是答案了.\n"
 
-#: optimize.c:670
+#: optimize.c:672
 msgid "Successive iterates within tolerance.\n"
 msgstr "在容错范围内连续迭代.\n"
 
-#: optimize.c:674
+#: optimize.c:676
 msgid "Last global step failed to locate a point lower than x.\n"
 msgstr "最后一步的整体优化没有能找到比x值要小的一个点.\n"
 
-#: optimize.c:675
+#: optimize.c:677
 msgid ""
 "Either x is an approximate local minimum of the function,\n"
 "the function is too non-linear for this algorithm,\n"
 "or steptol is too large.\n"
 msgstr "要么x已经是函数的本地最小值，要么这个函数非线性太强，要么steptol设得太大。\n"
 
-#: optimize.c:680
+#: optimize.c:682
 msgid "Iteration limit exceeded.  Algorithm failed.\n"
 msgstr "超过了迭代极限。算法失败.\n"
 
-#: optimize.c:683
+#: optimize.c:685
 msgid ""
 "Maximum step size exceeded 5 consecutive times.\n"
 "Either the function is unbounded below,\n"
@@ -802,22 +802,22 @@ msgstr ""
 "从上边界达到了渐近有限值\n"
 "要么是stepmx设得太小。\n"
 
-#: optimize.c:745 optimize.c:750 optimize.c:754 optimize.c:758 optimize.c:762
-#: optimize.c:766 optimize.c:771
+#: optimize.c:747 optimize.c:752 optimize.c:756 optimize.c:760 optimize.c:764
+#: optimize.c:768 optimize.c:773
 msgid "invalid NA value in parameter"
 msgstr "参数里的NA值无效"
 
-#: optimize.c:800
+#: optimize.c:802
 msgid "hessian supplied is of the wrong length or mode, so ignored"
 msgstr "海森的长度有误或其状态有误，因此忽略不用"
 
-#: optimize.c:804
+#: optimize.c:806
 msgid "gradient supplied is of the wrong length or mode, so ignored"
 msgstr "梯度的长度或其状态有误，因此忽略不用"
 
 #: pacf.c:87
 msgid "bad Starma struct"
-msgstr "Starma结构不对"
+msgstr "Starma结构不正确"
 
 #: pacf.c:233
 #, c-format
@@ -948,7 +948,7 @@ msgstr "第二参数'size'无效"
 #: rcont.c:85
 #, c-format
 msgid "rcont2 [%d,%d]: exp underflow to 0; algorithm failure"
-msgstr " rcont2 [%d,%d]: exp下益到0； 算法失败"
+msgstr "rcont2 [%d,%d]: exp下益到0； 算法失败"
 
 #: smooth.c:107
 #, c-format
