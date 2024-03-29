@@ -86,7 +86,7 @@ like
 
 and follow the instructions, which install the toolchain under a place
 it (and we) call MXE_ROOT.  (To build R only the
-'rtools43-toolchain-libs-base' version is required.)
+'rtools44-toolchain-libs-base' version is required.)
 
 You will also need to fetch the pre-built Tcl/Tk as described in the
 section 'Building R from source using a toolchain tarball'.  The default
@@ -106,6 +106,20 @@ Then in this directory
 
 make MkRules rbuild rpackages-cross cairodevices
 
+When targeting aarch64 Windows (rather than x86_64), use toolchain bundles
+with "aarch64" in their name, such as 'rtools44-toolchain-libs-base-aarch64'
+and 'rtools44-toolchain-libs-cross-aarch64', and Tcl bundle 'tcltk-aarch64'.
+The cross-compilers run again on x86_64 Linux (based on glibc), such as when
+targeting x86_64 Windows.
+
+For aarch64, use MkRules.local such as
+
+MXE_ROOT = wherever you put it, or /usr/lib/mxe (which was set as a symlink)
+USE_LLVM = 1
+WIN =
+BINPREF64 = $(MXE_ROOT)/usr_aarch64/bin/aarch64-w64-mingw32.static.posix-
+EXT_LIBS = $(MXE_ROOT)/usr_aarch64/aarch64-w64-mingw32.static.posix
+TEXI2ANY = /usr/bin/texi2any
 
 Cross-building packages
 =======================
@@ -128,8 +142,49 @@ binaries.
 
 R CMD INSTALL --build will produce a zipped installation.
 
+The newly installed packages must not be visible to later builds, because
+they are not Linux binaries, so cannot be loaded when they are needed as
+dependencies.  You can use separate library for each package to achieve
+this, or always move away the newly installed package.
+
 Should a package require external libraries, these can be placed under
 LOCAL_SOFT as defined in etc/x64/Makeconf in the copy.
 
+When targeting aarch64 Windows, copy etc/Makeconf from the cross-build
+(R_WIN) over etc/Makeconf of the linux build and edit the copy to have the
+R_XTRA_CPPFLAGS, pointing to the cross-build, as above.  Copy bin/*.dll from
+the cross-build to bin/ in the linux build.  Set R_CROSS_BUILD to
+"singlearch".
 
+Cross-building the aarch64 installer
+====================================
+
+One can cross-compile binaries of R and recommended packages as above and
+then, on Windows/x86_64, build an installer for Windows/aarch64 using these.
+
+First, build a native x86_64 build of R on Windows, including
+"cairodevices", "recommended", "vignettes" and "manuals". This is all done
+automatically when building the installer ("distribution") for x86_64.
+However, such installer has to be copied away because it would be ovewritten
+in the next step.
+
+Then run
+
+make rinstaller CROSS_BUILD=<cross-compiled-binaries>
+
+the tree with cross-compiled-binaries must include:
+
+Tcl (the full Tcl bundle for aarch64)
+library/*/libs/*.dll
+modules/*.dll
+bin/*.dll
+bin/*.exe,
+bin/config.sh
+etc/Makeconf 
+
+Recommended packages must be placed under library, together with the base
+packages.
+
+The version of R and recommended packages must be identical on the Linux and
+the Windows host.
 
