@@ -56,7 +56,6 @@ oldjit <- enableJIT(0)
 l <- function() 1
 body(l) <- code
 
-if (FALSE) ## disable temporarily
 for(jit in 0:2) {
     enableJIT(jit)
     for (opt in 0:3) {

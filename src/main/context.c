@@ -251,6 +251,7 @@ void begincontext(RCNTXT * cptr, int flags,
 {
     cptr->cstacktop = R_PPStackTop;
     cptr->gcenabled = R_GCEnabled;
+    cptr->relpc = R_BCRelPC(R_BCbody, R_BCpc);
     cptr->bcpc = R_BCpc;
     cptr->bcbody = R_BCbody;
     cptr->bcframe = R_BCFrame;

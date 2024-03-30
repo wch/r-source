@@ -6978,6 +6978,16 @@ static SEXP getLocTableElt(ptrdiff_t relpc, SEXP table, SEXP constants)
     return VECTOR_ELT(constants, cidx);
 }
 
+attribute_hidden ptrdiff_t R_BCRelPC(SEXP body, void *currentpc)
+{
+    /* used to capture the pc offset from its codebase at the time a
+       context is created */
+    if (body && currentpc)
+	return *((BCODE **) currentpc) - BCCODE(body);
+    else
+	return -1;
+}
+
 /* Return the srcref/expression for the current instruction/operand
    being executed by the byte-code interpreter, or the one that was
    current when the supplied context was created. */
@@ -6993,6 +7003,10 @@ static SEXP R_findBCInterpreterLocation(RCNTXT *cptr, const char *iname)
     if (ltable == R_NilValue)
 	/* location table not available */
 	return R_NilValue;
+
+    /* use relpc stored in the contect if available */
+    if (cptr && cptr->relpc > 0)
+	return getLocTableElt(cptr->relpc, ltable, constants);
 
     BCODE *codebase = BCCODE(body);
     ptrdiff_t relpc = (*((BCODE **)(cptr ? cptr->bcpc : R_BCpc))) - codebase;
@@ -7384,7 +7398,6 @@ setup_bcframe_call(SEXP call, SEXP fun, SEXP args, SEXP rho)
     SET_BCFRAME_NEWRHO(newrho);
     SET_BCFRAME_CALL(call);
     SET_BCFRAME_ARGS(args);
-    R_Srcref = getAttrib(fun, R_SrcrefSymbol); // expensive - avoid?
     R_Visible = TRUE;
     return bcode_setup_locals(BODY(fun), newrho);
 }
@@ -7478,14 +7491,12 @@ static R_INLINE void finish_inline_closure_call(void)
 }
 
 static SEXP
-bcEval_loop(struct bcEval_locals *,
-	    struct bcEval_globals *);
+bcEval_loop(struct bcEval_locals *);
 
 static SEXP bcEval(SEXP body, SEXP rho)
 {
   struct bcEval_globals globals;
   save_bcEval_globals(&globals);
-  struct bcEval_locals locals;
 
   R_Srcref = R_InBCInterpreter;
   R_BCIntActive = 1;
@@ -7496,16 +7507,16 @@ static SEXP bcEval(SEXP body, SEXP rho)
 
   R_BCFrame = NULL;
 
-  locals = bcode_setup_locals(body, rho);
-  return bcEval_loop(&locals, &globals);
+  struct bcEval_locals locals = bcode_setup_locals(body, rho);
+  SEXP value = bcEval_loop(&locals);
+  restore_bcEval_globals(&globals);
+  return value;  
 }
 
-static SEXP bcEval_loop(struct bcEval_locals *ploc,
-			struct bcEval_globals *pglob)
+static SEXP bcEval_loop(struct bcEval_locals *ploc)
 {
   INITIALIZE_MACHINE();
 
-  struct bcEval_globals globals = *pglob;
   struct bcEval_locals locals = *ploc;
 
   SEXP body, rho, constants;
@@ -7526,7 +7537,6 @@ static SEXP bcEval_loop(struct bcEval_locals *ploc,
     OP(RETURN, 0):
       if (R_BCFrame == 0) {
 	  SEXP retvalue = GETSTACK(-1);
-	  restore_bcEval_globals(&globals);
 	  return retvalue;
       }
       else if (BCFRAME_CNTXT() == NULL)
@@ -8695,7 +8705,7 @@ static SEXP bcEval_loop(struct bcEval_locals *ploc,
 
 #ifdef THREADED_CODE
 static void bcEval_init(void) {
-    bcEval_loop(NULL, NULL);
+    bcEval_loop(NULL);
 }
 
 SEXP R_bcEncode(SEXP bytes)
