@@ -129,10 +129,10 @@ A @emph{package} is a directory of files which extend @R{}, a
 @emph{source package} (the master files of a package), or a tarball
 containing the files of a source package, or an @emph{installed}
 package, the result of running @command{R CMD INSTALL} on a source
-package.  On some platforms (notably macOS and Windows) there are also
-@emph{binary packages}, a zip file or tarball containing the files of an
-installed package which can be unpacked rather than installing from
-sources.
+package.  On some platforms (notably macOS and @cputype{x86_64} Windows)
+there are also @emph{binary packages}, a zip file or tarball containing
+the files of an installed package which can be unpacked rather than
+installing from sources.
 
 A package is @strong{not}@footnote{although this is a persistent
 @I{mis-usage}.  It seems to stem from S, whose analogues of @R{}'s packages
@@ -575,7 +575,9 @@ The @samp{UseLTO} logical field is used to indicate if source code in
 the package@footnote{without a @file{src/Makefile*} file.}  is to be
 compiled with Link-Time Optimization (@pxref{Using Link-time
 Optimization}) if @R{} was installed with @option{--enable-lto} (default
-true) or @option{--enable-lto=R} (default false) (or on Windows if
+true) or @option{--enable-lto=R} (default false) (or on
+Windows@footnote{@abbr{LTO} is not currently supported by the toolchain
+used on @cputype{aarch64}.} if
 @code{LTO_OPT} is set in @file{MkRules}). This can be overridden by the
 flags @option{--use-LTO} and @option{--no-use-LTO}.  @abbr{LTO} is said to give
 most size and performance improvements for large and complex (heavily
@@ -593,7 +595,8 @@ The @samp{ZipData} logical field has been ignored since @R{} 2.13.0.
 
 @c DESCRIPTION field Biarch
 The @samp{Biarch} logical field is used on Windows to select the
-@command{INSTALL} option @option{--force-biarch} for this package.
+@command{INSTALL} option @option{--force-biarch} for this package.  Not
+currently relevant.
 
 @c DESCRIPTION field BuildVignettes
 The @samp{BuildVignettes} logical field can be set to a false value to
@@ -1481,13 +1484,12 @@ small values which are in fact rounding error from zero: consider using
 
 Subdirectory @file{exec} could contain additional executable scripts the
 package needs, typically scripts for interpreters such as the shell,
-Perl, or Tcl.  NB: only files (and not directories) under @file{exec} are
-installed (and those with names starting with a dot are ignored), and
-they are all marked as executable (mode @code{755}, moderated by
+Perl, or Tcl.  NB: only files (and not directories) under @file{exec}
+are installed (and those with names starting with a dot are ignored),
+and they are all marked as executable (mode @code{755}, moderated by
 @samp{umask}) on POSIX platforms.  Note too that this is not suitable
-for executable @emph{programs} since some platforms (including Windows)
-support multiple architectures using the same installed package
-directory.
+for executable @emph{programs} since some platforms support multiple
+architectures using the same installed package directory.
 
 Subdirectory @file{po} is used for files related to @emph{localization}:
 @pxref{Internationalization}.
@@ -2054,7 +2056,7 @@ to try in turn @command{pkg-config --libs} and @command{pkg-config
 to be used.
 
 @c package libproj repeatedly got this wrong in 2020.
-Static libraries are commonly used on macOS (and Windows) to facilitate
+Static libraries are commonly used on macOS and Windows to facilitate
 bundling external software with binary distributions of packages.  This
 means that portable (source) packages need to allow for this.  It is
 @emph{not} safe to just use @command{pkg-config --static --libs}, as
@@ -2435,7 +2437,7 @@ Visual C++), but might be import libraries.  See for example
 @uref{https://sourceware.org/binutils/docs-2.20/ld/WIN32.html#WIN32}.
 
 The fly in the ointment is that the DLL might not be named
-@file{libxxx.dll}, and in fact on 32-bit Windows there is a
+@file{libxxx.dll}, and in fact on 32-bit Windows there was a
 @file{libxml2.dll} whereas on one build for 64-bit Windows the DLL is
 called @file{libxml2-2.dll}.  Using import libraries can cover over
 these differences but can cause equal difficulties.
@@ -2656,7 +2658,7 @@ For a tutorial see
 @uref{https://hpc-tutorials.llnl.gov/posix/}.
 
 POSIX threads are not normally used on Windows, which has its own native
-concepts of threads.  However, there are two projects implementing
+concepts of threads.  However, there have been two projects implementing
 @code{pthreads} on top of Windows, @code{pthreads-w32} and
 @code{winpthreads} (part of the @I{MinGW-w64} project).
 
@@ -3737,7 +3739,7 @@ Packages may be distributed in source form as ``tarballs''
 (@file{.tar.gz} files) or in binary form. The source form can be
 installed on all platforms with suitable tools and is the usual form for
 Unix-like systems; the binary form is platform-specific, and is the more
-common distribution form for the Windows and macOS platforms.
+common distribution form for the macOS and @cputype{x86_64} Windows platforms.
 
 Using @command{R CMD build}, the @R{} package builder, one can build
 @R{} package tarballs from their sources (for example, for subsequent
@@ -3922,10 +3924,10 @@ discussed in the platform-specific FAQs.
 
 Finally, at least one web-based service is available for building binary
 packages from (checked) source code: @I{WinBuilder} (see
-@uref{https://win-builder.R-project.org/}) is able to build Windows
-binaries. Note that this is intended for developers on other platforms
-who do not have access to Windows but wish to provide binaries for the
-Windows platform.
+@uref{https://win-builder.R-project.org/}) is able to build
+@cputype{x86_64} Windows binaries. Note that this is intended for
+developers on other platforms who do not have access to Windows but wish
+to provide binaries for the Windows platform.
 
 @node Writing package vignettes, Package namespaces, Checking and building packages, Creating R packages
 @section Writing package vignettes
@@ -5076,7 +5078,7 @@ for accounts ported from Mojave or earlier it is usually
 @item
 @R{} is not built by default as a shared library on non-Windows
 platforms (although it commonly is on macOS to support the GUI), so
-there need be not a file @file{libR.so} nor @file{libR.dylib}.  Users of
+there need not be a file @file{libR.so} nor @file{libR.dylib}.  Users of
 @command{cmake} or @command{rust} have all too frequently assumed
 otherwise, so do ensure your package is checked under a vanilla @R{} build.
 @ifset UseExternalXrefs
@@ -5714,17 +5716,18 @@ viewer and take many minutes to print (if they can be printed at all).
 
 @command{qpdf} (@uref{https://qpdf.sourceforge.io/}) can compress
 losslessly.  It is fairly readily available (e.g.@: it has binaries for
-Windows and packages in Debian/Ubuntu/Fedora, and is installed as part
-of the @acronym{CRAN} macOS distribution of @R{}).  @command{R CMD
-build} has an option to run @command{qpdf} over PDF files under
-@file{inst/doc} and replace them if at least 10Kb and 10% is saved.  The
-full path to the @command{qpdf} command can be supplied as environment
-variable @env{R_QPDF} (and is on the @acronym{CRAN} binary of @R{} for
-macOS).  It seems @I{MiKTeX} does not use PDF object compression and so
-@command{qpdf} can reduce considerably the sizes of files it outputs:
-@I{MiKTeX}'s defaults can be overridden by code in the preamble of an Sweave
-or @LaTeX{} file --- see how this is done for the @R{} reference manual
-at @uref{https://svn.r-project.org/R/trunk/doc/manual/refman.top}.
+@cputype{x86_64} Windows and packages in Debian/Ubuntu/Fedora, and is
+installed as part of the @acronym{CRAN} macOS distribution of @R{}).
+@command{R CMD build} has an option to run @command{qpdf} over PDF files
+under @file{inst/doc} and replace them if at least 10Kb and 10% is
+saved.  The full path to the @command{qpdf} command can be supplied as
+environment variable @env{R_QPDF} (and is on the @acronym{CRAN} binary
+of @R{} for macOS).  It seems @I{MiKTeX} does not use PDF object
+compression and so @command{qpdf} can reduce considerably the sizes of
+files it outputs: @I{MiKTeX}'s defaults can be overridden by code in the
+preamble of an Sweave or @LaTeX{} file --- see how this is done for the
+@R{} reference manual at
+@uref{https://svn.r-project.org/R/trunk/doc/manual/refman.top}.
 
 Other tools can reduce the size of PDFs containing bitmap images at
 excessively high resolution.  These are often best re-generated (for
@@ -6802,7 +6805,7 @@ the default).
 
 The procedures make use of @code{msgfmt} and @code{xgettext} which are
 part of @acronym{GNU} @code{gettext} and this will need to be installed:
-Windows users can find pre-compiled binaries at
+@cputype{x86_64} Windows users can find pre-compiled binaries at
 @uref{https://www.stats.ox.ac.uk/pub/Rtools/goodies/gettext-tools.zip}.
 
 @menu
@@ -7053,7 +7056,7 @@ writing @R{} packages, particularly those intended for public
 distribution.
 
 @uref{https://win-builder.r-project.org, win-builder.r-project.org}
-offers the automated preparation of (64-bit) Windows binaries from
+offers the automated preparation of (@cputype{x86_64}) Windows binaries from
 well-tested source packages.
 
 R-Forge (@uref{https://R-Forge.r-project.org, R-Forge.r-project.org}) and
@@ -9176,7 +9179,8 @@ command-line version prior to macOS 12.
 @subsection Profiling on Windows
 
 @command{Very Sleepy}
-(@uref{https://github.com/VerySleepy/verysleepy}) has been used.  There were
+(@uref{https://github.com/VerySleepy/verysleepy}) has been used on
+@cputype{x86_64} Windows.  There were
 problems with accessing the debug information, but the best results which
 included function names were obtained by attaching the profiler to an
 existing @command{Rterm} process, either via GUI or using @option{/a:}
@@ -10810,9 +10814,9 @@ subroutine.
 On all @R{} platforms @code{int} and @code{INTEGER} are 32-bit.  Code
 ported from S-PLUS (which uses @code{long *} for @code{logical} and
 @code{integer}) will not work on all 64-bit platforms (although it may
-appear to work on some, including Windows).  Note also that if your
-compiled code is a mixture of C functions and Fortran subprograms the
-argument types must match as given in the table above.
+appear to work on some, including @cputype{x86_64} Windows).  Note also
+that if your compiled code is a mixture of C functions and Fortran
+subprograms the argument types must match as given in the table above.
 
 C type @code{Rcomplex} is a structure with @code{double} members
 @code{r} and @code{i} defined in the header file
@@ -17318,6 +17322,8 @@ makes use of the stack-checking mechanism on a secondary thread.
 
 @node Embedding R under Windows,  , Embedding R under Unix-alikes, Linking GUIs and other front-ends to R
 @section Embedding R under Windows
+
+This section is only about @cputype{x86_64} Windows.
 
 All Windows interfaces to @R{} call entry points in the DLL
 @file{R.dll}, directly or indirectly.  Simpler applications may find it
