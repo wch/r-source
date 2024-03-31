@@ -2650,6 +2650,13 @@ do_serializeToConn(SEXP call, SEXP op, SEXP args, SEXP env)
     return R_NilValue;
 }
 
+static SEXP checkNotPromise(SEXP val)
+{
+    if (TYPEOF(val) == PROMSXP)
+	error(_("cannot return a promise (PROMSXP) object"));
+    return val;
+}
+
 /* unserializeFromConn(conn, hook) used from readRDS().
    It became public in R 2.13.0, and that version added support for
    connections internally */
@@ -2699,7 +2706,7 @@ do_unserializeFromConn(SEXP call, SEXP op, SEXP args, SEXP env)
 	con->close(con);
 	UNPROTECT(1);
     }
-    return ans;
+    return checkNotPromise(ans);
 }
 
 /*
@@ -3330,8 +3337,8 @@ attribute_hidden SEXP
 do_serialize(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     checkArity(op, args);
-    if (PRIMVAL(op) == 2) return R_unserialize(CAR(args), CADR(args));
-
+    if (PRIMVAL(op) == 2) //return R_unserialize(CAR(args), CADR(args));
+	return checkNotPromise(R_unserialize(CAR(args), CADR(args)));
     SEXP object, icon, type, ver, fun;
     object = CAR(args); args = CDR(args);
     icon = CAR(args); args = CDR(args);
