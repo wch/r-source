@@ -1393,7 +1393,7 @@ and use a UTF-8 or Latin-1 locale.
 [The rest of this paragraph is only relevant after release.]
 The @file{bin/windows} directory of a @acronym{CRAN} site contains
 binaries for a base distribution and a large number of add-on packages
-from @acronym{CRAN} to run on 64-bit Windows.
+from @acronym{CRAN} to run on 64-bit @cputype{x86_64} Windows.
 
 R is best tested on current versions of Windows 10 and Windows Server 2022
 with UTF-8 as the charset encoding.  It works also on Windows 11.  It runs
@@ -2109,15 +2109,18 @@ have to use @code{library} to make its functionality available.
 What @code{install.packages} does by default is different on Unix-alikes
 (except macOS) and Windows.  On Unix-alikes it consults the list of
 available @emph{source} packages on @acronym{CRAN} (or other
-repositories), downloads the latest version of the package sources,
-and installs them (via @code{R CMD INSTALL}).  On Windows it looks (by
-default) first at the list of @emph{binary} versions of packages
-available for your version of @R{} and downloads the latest versions (if
-any).  If no binary version is available or the source version is newer,
-it will install the source versions of packages without compiled
-C/C++/Fortran code, and offer to do so for those with, if @command{make}
-is available (and this can be tuned by option
+repositories), downloads the latest version of the package sources, and
+installs them (via @code{R CMD INSTALL}).  On @cputype{x86_64} Windows
+it looks (by default) first at the list of @emph{binary} versions of
+packages available for your version of @R{} and downloads the latest
+versions (if any).  If no binary version is available or the source
+version is newer, it will install the source versions of packages
+without compiled C/C++/Fortran code, and offer to do so for those with,
+if @command{make} is available (and this can be tuned by option
 @code{"install.packages.compile.from.source"}).
+
+[At present binary packages are not distributed for @cputype{aarch64}
+Windows, so most of this subsection only applies to @cputype{x86_64}.]
 
 On Windows @code{install.packages} can also install a binary package
 from a local @file{zip} file (or the URL of such a file) by setting
@@ -2448,9 +2451,9 @@ makefiles in subdirectories.  Fortunately such packages are unusual.
 @subsection Multiple sub-architectures
 
 When installing packages from their sources, there are some extra
-considerations on installations which use sub-architectures.  These are
-commonly used on Windows but can in principle be used on other
-platforms.
+considerations on installations which use sub-architectures.  These were
+commonly used on Windows prior to @R{} 4.2.0 but can in principle be
+used on other platforms.
 
 When a source package is installed by a build of @R{} which supports
 multiple sub-architectures, the normal installation process installs the
@@ -2638,14 +2641,10 @@ wise to have a @file{src/contrib} area with a possibly empty
 
 @item 
 @code{"mac.binary"}: located at
-@file{bin/macosx/contrib/@var{4.y}} for the @acronym{CRAN} builds for
-macOS for @R{} versions @var{4.y.z}, containing
-@file{.tgz} files.
-
-@item 
-@code{"mac.binary.el-capitan"}: located at
-@file{bin/macosx/el-capitan/contrib/@var{3.y}} for the @acronym{CRAN}
-builds for @R{} versions @var{3.y.z}, containing @file{.tgz} files.
+@file{bin/macosx/big-sur-arm64/contrib/@var{4.y}} or
+@file{bin/macosx/big-sur-x86_64/contrib/@var{4.y}}for the @acronym{CRAN}
+builds for macOS for @R{} versions @var{4.y.z}, containing @file{.tgz}
+files. (@file{bin/macosx/contrib/@var{4.y}} for @code{@var{y}} = 0, 1 or 2.)
 @end itemize
 
 Each terminal directory must also contain a @file{PACKAGES} file.  This
