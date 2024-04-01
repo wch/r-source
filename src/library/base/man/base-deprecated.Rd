@@ -10,7 +10,6 @@
 %------ NOTE:  ../R/Deprecated.R   must be synchronized with this!
 \title{Deprecated Functions in Package \pkg{base}}
 %------ PLEASE: put \alias{.} here for EACH !
-\alias{is.R}
 \alias{as.data.frame.raw}
 \alias{as.data.frame.logical}
 \alias{as.data.frame.integer}
@@ -26,16 +25,6 @@
 \description{
   These functions are provided for compatibility with older versions of
   \R only, and may be defunct as soon as the next release.
-
-%% for example 'Spotfire® Enterprise Runtime for R' aka TERR or 'pqR'
-  \code{is.R} tests if it is not running under historical dialects of S
-  (including S-PLUS), but cannot exclude other (including future)
-  programs claiming compatibility with \R.  Its historical definition
-  was
-\preformatted{
-  exists("version") && !is.null(vl <- version$language) && vl == "R"
-}
-  which always evaluates to \code{TRUE} in \R.
 
   The 12 \code{as.data.frame.<cls>} methods have been informally deprecated
   already for \R 4.3.z (via environment variable \env{R_CHECK_AS_DATA_FRAME_EXPLICIT_METHOD},

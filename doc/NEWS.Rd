@@ -27,7 +27,8 @@
 
   \subsection{DEPRECATED AND DEFUNCT}{
     \itemize{
-      \item \code{is.R()} is defunct. [Soon \dots.]
+      \item \code{is.R()} is defunct.  Environnment variable
+      \env{_R_DEPRECATED_IS_R_} no longer has any effect.
     }
   }
 

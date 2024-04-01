@@ -56,27 +56,6 @@
 ## }
 ## </entry>
 
-## Deprecated in 4.4.0
-is.R <- function() {
-    p <- Sys.getenv("_R_DEPRECATED_IS_R_")
-    if(nzchar(p)) {
-        choices <- "error"
-        if (!is.na(i<- pmatch(p, choices)))
-            p <- choices[i]
-        else
-            message("unsupported value of _R_DEPRECATED_IS_R_, ", sQuote(p),
-                    ", will be ignored")
-        if (p == "error") {
-            .Deprecated(package = "base")
-            ## stop will flush out deferred warnings
-            ## temporary, so do not translate
-            stop('deprecation turned into an error', domain = NA)
-        }
-    }
-    .Deprecated(package = "base")
-
-    TRUE
-}
 
 ## Docu-deprecated in 4.3.0
 ## Formally deprecated in 4.4.0

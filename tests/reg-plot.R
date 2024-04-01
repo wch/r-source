@@ -60,8 +60,8 @@ with(trees, symbols(Height, Volume, circles=Girth/24, inches=FALSE,
                     lty="blank", bg="blue"))
 ## in 1.5.0 ignored the lty.
 
-## axis() and par(mgp < 0) {keep this example S+ compatible!}:
-lt <- if(is.R()) "31" else 2
+## axis() and par(mgp < 0)
+lt <-"31" # in R
 x <- seq(-2,3, len=1001)
 op <- par(tck= +0.02, mgp = -c(3,2,0))
 plot(x, x^2 - 1.2, xaxt = "n", xlab="", type ='l', col = 2,

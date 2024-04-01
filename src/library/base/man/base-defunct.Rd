@@ -1,9 +1,10 @@
 % File src/library/base/man/base-defunct.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2023 R Core Team
+% Copyright 1995-2024 R Core Team
 % Distributed under GPL 2 or later
 
 \name{base-defunct}
+\encoding{UTF-8}
 \alias{base-defunct}
 \title{Defunct Functions in Package \pkg{base}}
 %------ PLEASE: put \alias{.} here for  EACH !
@@ -69,6 +70,7 @@
 \alias{default.stringsAsFactors}
 \alias{.__H__.cbind}
 \alias{.__H__.rbind}
+\alias{is.R}
 %
 \description{
   The functions or variables listed here are no longer part of \R as
@@ -167,6 +169,9 @@ unix.time(\dots)  ### -- use  system.time(...)  instead
 
 # Defunct in 4.3.0
 default.stringsAsFactors() # use stringsAsFactors = FALSE instead.
+
+# Defunct in 4.5.0
+is.R()
 }
 \details{
   Some of these have stubs which report that they are defunct, but most
@@ -287,6 +292,17 @@ default.stringsAsFactors() # use stringsAsFactors = FALSE instead.
 
   \code{unix.time} has been an \dQuote{alias} for
   \code{\link{system.time}}, for historical S compatibility.
+
+%% for example 'Spotfire® Enterprise Runtime for R' aka TERR or 'pqR'
+  \code{is.R} tested if it is not running under historical dialects of S
+  (including S-PLUS), but cannot exclude other (including future)
+  programs claiming compatibility with \R.  Its historical definition
+  was
+\preformatted{
+  exists("version") && !is.null(vl <- version$language) && vl == "R"
+}
+  which always evaluates to \code{TRUE} in \R.
+
 }
 \seealso{
   \code{\link{Defunct}}, \code{\link{base-deprecated}}
