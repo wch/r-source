@@ -552,7 +552,7 @@ manuals are built, using @command{make -e}.)  The usual@footnote{on a
 Unix-alike, @samp{inconsolata} is omitted if not found by
 @command{configure}.}  default value for @env{R_RD4PDF} is
 @samp{times,inconsolata,hyper}: omit @samp{inconsolata} if you do not have
-@LaTeX{} package @pkg{inconsolata} installed. As from @R{} 4.2.0,
+@LaTeX{} package @pkg{inconsolata} installed.
 @samp{hyper} is always enabled (with a fallback if @LaTeX{} package
 @pkg{hyperref} is not installed).
 
@@ -910,28 +910,26 @@ environment variable @env{TZ}.
 
 Options @option{--with-internal-iswxxxxx},
 @option{--with-internal-towlower} and @option{--with-internal-wcwidth}
-were introduced in @R{} 4.1.0.  These control the replacement of the
-system wide-character classification (such as @code{iswprint}),
-case-changing (@code{wctrans}) and width (@code{wcwidth} and
-@code{wcswidth}) functions by ones contained in the @R{} sources.
-Replacement of the classification functions has been done for many years
-on macOS and @abbr{AIX} (and Windows): option @option{--with-internal-iswxxxxx}
-allows this to be suppressed on those platforms or used on others.
-Replacing the case-changing functions was new in @R{} 4.1.0 and became the
-default on macOS (and on Windows since @R{} 4.2.0).  Replacement of the
-width functions has also been done for many years and remains the
-default.  These options will only matter to those working with non-ASCII
-character data, especially in languages written in a non-Western
-script@footnote{But on Windows problems have been seen with
-case-changing functions on accented Latin-1 characters.} (which includes
-`symbols' such as emoji).  Note that one of those @code{iswxxxxx} is
-@code{iswprint} which is used to decide whether to output a character as
-a glyph or as a @samp{\U@{xxxxxx@}} escape---for example, try
-@samp{"\U1f600"}, an emoji.  The width functions are of most importance
-in East Asian locale: their values differ between such locales.
-(Replacing the system functions provides a degree of
-platform-independence (including to OS updates) but replaces it with a
-dependence on the @R{} version.)
+control the replacement of the system wide-character classification
+(such as @code{iswprint}), case-changing (@code{wctrans}) and width
+(@code{wcwidth} and @code{wcswidth}) functions by ones contained in the
+@R{} sources.  Replacement of the classification functions has been done
+for many years on macOS and @abbr{AIX} (and Windows): option
+@option{--with-internal-iswxxxxx} allows this to be suppressed on those
+platforms or used on others.  Replacing the case-changing functions is
+the default on macOS and Windows.  Replacement of the width functions
+has also been done for many years and remains the default.  These
+options will only matter to those working with non-ASCII character data,
+especially in languages written in a non-Western script@footnote{But on
+Windows problems have been seen with case-changing functions on accented
+Latin-1 characters.} (which includes `symbols' such as emoji).  Note
+that one of those @code{iswxxxxx} is @code{iswprint} which is used to
+decide whether to output a character as a glyph or as a
+@samp{\U@{xxxxxx@}} escape---for example, try @samp{"\U1f600"}, an
+emoji.  The width functions are of most importance in East Asian locale:
+their values differ between such locales.  (Replacing the system
+functions provides a degree of platform-independence (including to OS
+updates) but replaces it with a dependence on the @R{} version.)
 
 @menu
 * Debugging Symbols::
@@ -1416,10 +1414,10 @@ information on use on older Windows systems.
 @node Building from source, Checking the build, Installing R under Windows, Installing R under Windows
 @section Building from source
 
-It is possible to use other 64-bit toolchains (including `MSYS2') with @abbr{UCRT}
-support to build @R{}, but this manual only documents that used for binary
-distributions of @R{} 4.2.x and later.  When using other toolchains, makefiles of @R{}
-and packages may need to be adapted.
+It is possible to use other 64-bit toolchains (including `MSYS2') with
+@abbr{UCRT} support to build @R{}, but this manual only documents that
+used for recent binary distributions of @R{}.  When using other
+toolchains, makefiles of @R{} and packages may need to be adapted.
 
 @menu
 * The Windows toolset::
@@ -2119,7 +2117,8 @@ argument @code{repos} to @code{NULL}.  @code{Rgui.exe} has a menu
 @code{update.packages} and @code{library}.
 
 Windows binary packages for @R{} ew distributed as a single binary
-containing.  Prior @R{} 4.2.0, they might contain only the 32-bit architecture.
+containing.  Prior to @R{} 4.2.0, they might contain only the 32-bit
+architecture.
 
 @c A few of the binary packages need other software to be installed on your
 @c system.
@@ -2194,7 +2193,7 @@ source versions of packages without compiled C/C++/Fortran code and offer
 to do so for those with, if @command{make} is available.
 
 Note that most binary packages which include compiled code are tied to a
-particular series (e.g.@: @R{} 4.4.x or 4.3.x) of @R{}.
+particular series (e.g.@: @R{} 4.5.x or 4.4.x) of @R{}.
 
 Installing source packages which do not contain compiled code should
 work with no additional tools. For others you will need the `Command
@@ -2211,8 +2210,8 @@ at
 
 Tcl/Tk extension @code{BWidget} used to be
 distributed with @R{} but no longer is; @code{Tktable} has been
-distributed with most versions of @R{} (but not 4.0.0 and not
-@cputype{arm64} builds of 4.1.0 or 4.1.1).
+distributed with recent versions of @R{}.
+% (but not 4.0.0 and not @cputype{arm64} builds of 4.1.0 or 4.1.1).
 
 @c A few of the binary packages need other software to be installed on your
 @c system.  In particular packages using Gtk+ (@CRANpkg{RGtk2},
@@ -2348,9 +2347,9 @@ consistency one can use
 @c headers and libraries@footnote{From Big Sur those libraries are not
 @c publicly visible: rather the system compilers link to `text-based
 @c definition' (@file{.tbd}) files.} of the @abbr{SDK}.
-As from @R{} 4.3.0, @command{R CMD INSTALL} and
-@code{install.packages()} try to invoke @command{configure} with the
-same compilers and flags used to build @R{}.
+@command{R CMD INSTALL} and @code{install.packages()} try to invoke
+@command{configure} with the same compilers and flags used to build
+@R{}.
 
 For @cputype{arm64}, not all configure scripts have been updated to
 recognize the platform and so might need the flag
@@ -2480,8 +2479,7 @@ with a source tarball.
 @node Byte-compilation, External software, Multiple sub-architectures, Installing packages
 @subsection Byte-compilation
 
-As from @R{} 3.6.0, all packages are by default byte-compiled.
-
+Packages are by default byte-compiled on installation.
 Byte-compilation can be controlled on a per-package basis by the
 @samp{ByteCompile} field in the @file{DESCRIPTION} file.
 
@@ -3427,7 +3425,7 @@ The bitmapped graphics devices @code{jpeg()}, @code{png()} and
 @code{tiff()} need the appropriate headers and libraries installed:
 @code{jpeg} (version 6b or later, or @code{libjpeg-turbo}) or
 @code{libpng} (version 1.2.7 or later) and @code{zlib} or @code{libtiff}
-(versions 4.0.[5-10] and 4.[123].0 have been tested) respectively.
+respectively.
 @command{pkg-config} is used if available and so needs the appropriate
 @file{.pc} file (which requires @code{libtiff} version 4.x and is not
 available on all platforms for @code{jpeg} before version 9c).  They
@@ -4674,10 +4672,10 @@ Success in building @R{} depends on the proper installation and functioning
 of support software; your results may differ if you have other versions
 of compilers and support libraries.
 
-Older versions of this manual contain notes on platforms such as @I{HP-UX},
-@abbr{IRIX}, Alpha/@I{OSF1} (for @R{} < 2.10.0, and support has since been removed
-for all of these) and @abbr{AIX} (for @R{} < = 3.5.x) for which we have had no
-recent reports.
+Older versions of this manual contain notes on platforms such as
+@I{HP-UX}, @abbr{IRIX}, Alpha/@I{OSF1} (for @R{} < 2.10.0, and support
+has since been removed for all of these) and @abbr{AIX} (for @R{} < =
+3.5.x) for which we have had no recent reports.
 
 C macros to select particular platforms can be tricky to track down
 (there is a fair amount of misinformation on the Web).  The Wiki
@@ -4959,8 +4957,8 @@ which does not.  One symptom is that @command{configure} does not detect
 FPIEFLAGS=-fPIE
 @end example
 @noindent
-in @file{config.site}. (As from @R{} 4.2.2 @command{configure} tries
-that value if it is unset.)
+in @file{config.site}. (@command{configure} tries that value if it is
+unset.)
 
 @node flang, Intel compilers, Clang, Linux
 @subsection @I{flang}
