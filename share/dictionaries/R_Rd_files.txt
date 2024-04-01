@@ -194,6 +194,7 @@ parallelize
 parallelizes
 parametrized
 parseable
+parsers
 pathnames
 pharmacokinetic
 pharmacokinetics
