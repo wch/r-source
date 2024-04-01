@@ -622,7 +622,7 @@ Books on R by R Core Team members include
 @I{Robert Gentleman} (2008),
 ``R Programming for @I{Bioinformatics}''.
 @I{Chapman & Hall/CRC}, @I{Boca Raton}, FL, ISBN 978-1-420-06367-7,
-@url{https://master.bioconductor.org/help/publications/books/r-programming-for-bioinformatics/}.
+@url{https://bioconductor.org/help/publications/books/r-programming-for-bioinformatics/}.
 
 @I{Stefano M. Iacus} (2008),
 ``Simulation and Inference for Stochastic Differential Equations: With R
@@ -1717,7 +1717,7 @@ project has matured, the functional scope of the software packages
 broadened to include the analysis of all types of genomic data, such as
 SAGE, sequence, or SNP data.  In addition, there are metadata
 (annotation, CDF and probe) and experiment data packages.  See
-@url{https://master.bioconductor.org/install/} for available packages and a
+@url{https://bioconductor.org/install/} for available packages and a
 complete taxonomy via @I{BioC Views}.
 
 @node Other add-on packages,  , Add-on packages from Bioconductor, Which add-on packages exist for R?
