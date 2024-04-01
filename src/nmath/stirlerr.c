@@ -147,6 +147,6 @@ double attribute_hidden stirlerr(double n)
 	if (n > 86)	return (S0-(S1-(S2 -S3/nn)/nn)/nn)/n;
 	if (n > 27)	return (S0-(S1-(S2-(S3 -S4/nn)/nn)/nn)/nn)/n;
 	/* 23.5 < n <= 27 */
-	                return (S0-(S1-(S2-(S3-(S4 -S5/nn)/nn)/nn)/nn)/nn)/n;
+	return (S0-(S1-(S2-(S3-(S4 -S5/nn)/nn)/nn)/nn)/nn)/n;
     }
 }
