@@ -552,7 +552,7 @@ manuals are built, using @command{make -e}.)  The usual@footnote{on a
 Unix-alike, @samp{inconsolata} is omitted if not found by
 @command{configure}.}  default value for @env{R_RD4PDF} is
 @samp{times,inconsolata,hyper}: omit @samp{inconsolata} if you do not have
-@LaTeX{} package @pkg{inconsolata} installed. As from @R{} 4.2.0,
+@LaTeX{} package @pkg{inconsolata} installed.
 @samp{hyper} is always enabled (with a fallback if @LaTeX{} package
 @pkg{hyperref} is not installed).
 
@@ -2119,7 +2119,8 @@ argument @code{repos} to @code{NULL}.  @code{Rgui.exe} has a menu
 @code{update.packages} and @code{library}.
 
 Windows binary packages for @R{} ew distributed as a single binary
-containing.  Prior @R{} 4.2.0, they might contain only the 32-bit architecture.
+containing.  Prior to @R{} 4.2.0, they might contain only the 32-bit
+architecture.
 
 @c A few of the binary packages need other software to be installed on your
 @c system.
@@ -2211,8 +2212,8 @@ at
 
 Tcl/Tk extension @code{BWidget} used to be
 distributed with @R{} but no longer is; @code{Tktable} has been
-distributed with most versions of @R{} (but not 4.0.0 and not
-@cputype{arm64} builds of 4.1.0 or 4.1.1).
+distributed with recent versions of @R{}.
+% (but not 4.0.0 and not @cputype{arm64} builds of 4.1.0 or 4.1.1).
 
 @c A few of the binary packages need other software to be installed on your
 @c system.  In particular packages using Gtk+ (@CRANpkg{RGtk2},
@@ -2480,8 +2481,7 @@ with a source tarball.
 @node Byte-compilation, External software, Multiple sub-architectures, Installing packages
 @subsection Byte-compilation
 
-As from @R{} 3.6.0, all packages are by default byte-compiled.
-
+Packages are by default byte-compiled on installation.
 Byte-compilation can be controlled on a per-package basis by the
 @samp{ByteCompile} field in the @file{DESCRIPTION} file.
 
@@ -3427,7 +3427,7 @@ The bitmapped graphics devices @code{jpeg()}, @code{png()} and
 @code{tiff()} need the appropriate headers and libraries installed:
 @code{jpeg} (version 6b or later, or @code{libjpeg-turbo}) or
 @code{libpng} (version 1.2.7 or later) and @code{zlib} or @code{libtiff}
-(versions 4.0.[5-10] and 4.[123].0 have been tested) respectively.
+respectively.
 @command{pkg-config} is used if available and so needs the appropriate
 @file{.pc} file (which requires @code{libtiff} version 4.x and is not
 available on all platforms for @code{jpeg} before version 9c).  They
@@ -4959,8 +4959,8 @@ which does not.  One symptom is that @command{configure} does not detect
 FPIEFLAGS=-fPIE
 @end example
 @noindent
-in @file{config.site}. (As from @R{} 4.2.2 @command{configure} tries
-that value if it is unset.)
+in @file{config.site}. (@command{configure} tries that value if it is
+unset.)
 
 @node flang, Intel compilers, Clang, Linux
 @subsection @I{flang}
