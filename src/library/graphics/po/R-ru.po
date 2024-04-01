@@ -7,19 +7,19 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.10.0\n"
+"Project-Id-Version: R 4.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2024-03-27 16:14\n"
-"PO-Revision-Date: 2024-03-18 21:18+0000\n"
-"Last-Translator: Michael Chirico <michaelchirico4@gmail.com>\n"
+"POT-Creation-Date: 2024-04-01 10:33\n"
+"PO-Revision-Date: 2024-03-25 14:40+0300\n"
+"Last-Translator: Ivan Krylov <ikrylov@disroot.org>\n"
 "Language-Team: Russian\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=KOI8-R\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 4.16.4\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Poedit-SourceCharset: iso-8859-1\n"
+"X-Generator: Poedit 3.2.2\n"
 
 msgid "'a' is overridden by 'reg'"
 msgstr "'a' отвергнут в пользу 'reg'"
@@ -73,13 +73,13 @@ msgid "Cannot use shading lines in bars when log scale is used"
 msgstr "Не могу затенять линии в столбиках, если используется логарифмическая шкала"
 
 msgid "log scale error: at least one 'height + offset' value <= 0"
-msgstr "Ошибка логарифмической шкалы: at least one 'height + offset' значение <= 0"
+msgstr "ошибка логарифмической шкалы: как минимум одно значение 'height + offset' <= 0"
 
 msgid "log scale error: 'xlim' <= 0"
-msgstr "Ошибка логарифмической шкалы: 'xlim' <= 0"
+msgstr "ошибка логарифмической шкалы: 'xlim' <= 0"
 
 msgid "log scale error: 'ylim' <= 0"
-msgstr "Ошибка логарифмической шкалы: 'ylim' <= 0"
+msgstr "ошибка логарифмической шкалы: 'ylim' <= 0"
 
 msgid "incorrect number of names"
 msgstr "неправильное количество имен"
@@ -302,9 +302,8 @@ msgstr "неправильные длины координат"
 msgid "horizontal specification overrides: Number of columns := %d"
 msgstr "горизонтальное указание превышено: Число колонок := %d"
 
-#, fuzzy
 msgid "'text.width' must be numeric, >= 0, or a scalar NA"
-msgstr "'text.width' должен быть числовым и >= 0"
+msgstr "'text.width' должен быть числовым и >= 0, либо скаляром NA"
 
 msgid "'merge = TRUE' has no effect when no line segments are drawn"
 msgstr "'merge = TRUE' не дает результата, покуда не нарисованы сегменты линии"
@@ -373,7 +372,7 @@ msgid "invalid plot type"
 msgstr "неверный тип графика"
 
 msgid "plot type '%s' will be truncated to first character"
-msgstr ""
+msgstr "тип графика '%s' будет усечён до первого символа"
 
 msgid "invalid plot type '%s'"
 msgstr "неверный тип графика '%s'"
@@ -430,7 +429,7 @@ msgid "a 2-way table has to be specified"
 msgstr "надо указать двумерную таблицу"
 
 msgid "weights are not supported for 2-way table specification"
-msgstr ""
+msgstr "не поддерживаются веса для двумерной таблицы"
 
 msgid "x axis is on a cumulative probability scale, 'xlim' must be in [0,1]"
 msgstr "ось х -- в шкале суммарной вероятности, 'xlim' должен быть в пределах [0,1]"

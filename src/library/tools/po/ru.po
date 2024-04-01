@@ -7,19 +7,19 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.11.0\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-27 16:15-0700\n"
-"PO-Revision-Date: 2020-08-28 16:45+0900\n"
-"Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
+"Project-Id-Version: R 4.4.0\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2024-04-01 10:34-0700\n"
+"PO-Revision-Date: 2024-03-25 14:56+0300\n"
+"Last-Translator: Ivan Krylov <ikrylov@disroot.org>\n"
 "Language-Team: Russian\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=KOI8-R\n"
 "Content-Transfer-Encoding: 8bit\n"
-"First-Translator: Dmitri I GOULIAEV <dmitri.gouliaev@telkel.net\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Poedit 1.8.7.1\n"
+"First-Translator: Dmitri I GOULIAEV <dmitri.gouliaev@telkel.net>\n"
+"X-Generator: Poedit 3.2.2\n"
 
 #: Rmd5.c:47
 msgid "argument 'files' must be character"
@@ -153,11 +153,11 @@ msgstr "неправильное описание адреса привязки"
 #: http.c:37
 #, c-format
 msgid "Invalid port number %d: should be in 0:65535, typically above 1024"
-msgstr ""
+msgstr "Неправильный номер порта %d: должен входить в 0:65535, обычно выше 1024"
 
 #: install.c:95
 msgid "path too long"
-msgstr ""
+msgstr "футь к файлу слишком длинный"
 
 #: install.c:120 install.c:139 install.c:141
 #, c-format

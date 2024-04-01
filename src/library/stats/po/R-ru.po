@@ -8,18 +8,18 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.11.0\n"
+"Project-Id-Version: R 4.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2024-03-27 16:14\n"
-"PO-Revision-Date: 2020-08-28 15:57+0900\n"
-"Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
+"POT-Creation-Date: 2024-04-01 10:34\n"
+"PO-Revision-Date: 2024-03-25 14:51+0300\n"
+"Last-Translator: Ivan Krylov <ikrylov@disroot.org>\n"
 "Language-Team: Russian\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=KOI8-R\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Poedit 1.8.7.1\n"
+"X-Generator: Poedit 3.2.2\n"
 
 msgid "models are not all fitted to the same number of observations"
 msgstr "не все модели были подогнаны под размер данных"
@@ -164,15 +164,13 @@ msgid "arguments must have same length"
 msgstr "аргументы должны иметь одну длину"
 
 msgid "argument 'x' is  missing -- it has been renamed from 'formula'"
-msgstr ""
+msgstr "пропущен аргумент 'x' -- он был переименован из 'formula'"
 
-#, fuzzy
 msgid "argument 'x' must be a formula"
-msgstr "аргумент 'x' должен быть числовым"
+msgstr "аргумент 'x' должен быть формулой"
 
-#, fuzzy
 msgid "formula 'x' must have both left and right hand sides"
-msgstr "'формула' должна иметь и левую, и правую стороны"
+msgstr "формула 'x' должна иметь и левую, и правую стороны"
 
 msgid "cannot change frequency from %g to %g"
 msgstr "не могу изменить частоту с %g на %g"
@@ -502,8 +500,9 @@ msgid "only %d of the first %d eigenvalues are > 0"
 msgstr "только %d из первых %d собственных значений > 0"
 
 msgid "Waiting for profiling to be done..."
-msgstr ""
+msgstr "Выполняю профилирование..."
 
+# FIXME: need to reword confint.R:74
 msgid "Reprofiling for"
 msgstr ""
 
@@ -597,9 +596,8 @@ msgstr "не могу обработать 'pairwise.complete.obs'"
 msgid "'V' is not a square numeric matrix"
 msgstr "'V' не является квадратной числовой матрицей"
 
-#, fuzzy
 msgid "diag(V) had non-positive or NA entries; the non-finite result may be dubious"
-msgstr "у diag(.) 0 или NA вхождений; не-конечный результат сомнителен"
+msgstr "у diag(V) были неположительные или NA элементы; ответ, если и получится конечным, будет сомнителен"
 
 msgid "'x' must be a numeric vector"
 msgstr "'x' должен быть числовым вектором"
@@ -722,7 +720,7 @@ msgid "need at least 2 points to select a bandwidth automatically"
 msgstr "нужны как минимум 2 точки, чтобы выбрать диапазон автоматически"
 
 msgid "Selecting bandwidth *not* using 'weights'"
-msgstr ""
+msgstr "Выбираю диапазон *без* использования 'weights'"
 
 msgid "unknown bandwidth rule"
 msgstr "неизвестное правило диапазона"
@@ -758,7 +756,7 @@ msgid "'x' is not a vector or matrix"
 msgstr "'x' не является вектором или матрицей"
 
 msgid "x[1] != r[1]; using x[1] for diagonal"
-msgstr ""
+msgstr "x[1] != r[1]; использую x[1] на диагонали"
 
 msgid "invalid distance method"
 msgstr "неправильный метод подсчета расстояний"
@@ -995,6 +993,7 @@ msgstr "'row.var.names' пропущены"
 msgid "'col.vars' missing or incorrect"
 msgstr "'col.vars' пропущены или неправильные"
 
+# TODO: reword glm-profile.R:78
 msgid "Parameter:"
 msgstr ""
 
@@ -1005,7 +1004,7 @@ msgid "up"
 msgstr ""
 
 msgid "profiling has found a better solution, so original fit had not converged"
-msgstr ""
+msgstr "профилирование нашло лучшее решение, так что исходное решение не сошлось"
 
 msgid "'family' not recognized"
 msgstr "'family' не распознана"
@@ -1241,13 +1240,12 @@ msgstr "некоторые элементы 'x' нечисловые и будут преобразованы в числа"
 msgid "not enough 'x' data"
 msgstr "недостаточно данных 'x'"
 
-#, fuzzy
+# FIXME: this (and the next one) is better reworded in ks.test.R:39
 msgid "Parameter(s)"
-msgstr "параметры для подгонки"
+msgstr "Параметр(ы)"
 
-#, fuzzy
 msgid "ignored"
-msgstr "' пропущен"
+msgstr "пропущен(ы)"
 
 msgid "not enough 'y' data"
 msgstr "недостаточно данных 'y'"
@@ -1258,28 +1256,23 @@ msgstr "p-value будет примерным в присутствии повторяющихся значений"
 msgid "'y' must be numeric or a function or a string naming a valid function"
 msgstr "'y' должен быть числовым или функцией или строкой именующей правильную функцию"
 
-#, fuzzy
 msgid "ties should not be present for the one-sample Kolmogorov-Smirnov test"
-msgstr "в тесте Колмогорова-Смирнова не должно быть повторяющихся значений"
+msgstr "в тесте согласия Колмогорова не должно быть повторяющихся значений"
 
-#, fuzzy
 msgid "invalid arguments"
-msgstr "неправильный аргумент 'n'"
+msgstr "неправильные аргументы"
 
-#, fuzzy
 msgid "argument 'sizes' must be a vector of length 2"
-msgstr "'interval' должен быть вектором длины 2"
+msgstr "аргумент 'sizes' должен быть вектором длины 2"
 
-#, fuzzy
 msgid "argument 'q' must be numeric"
-msgstr "аргумент 'x' должен быть числовым"
+msgstr "аргумент 'q' должен быть числовым"
 
 msgid "computation of exact probability failed, returning Monte Carlo approximation"
-msgstr ""
+msgstr "не удалось вычислить точную вероятность, возвращаю оценку Монте-Карло"
 
-#, fuzzy
 msgid "argument 'p' must be numeric"
-msgstr "аргумент 'x' должен быть числовым"
+msgstr "аргумент 'p' должен быть числовым"
 
 msgid ""
 "numeric y must be supplied.\n"
@@ -1343,21 +1336,20 @@ msgstr "применение F-критерия для в целом хорошей подгонки бессмысленно"
 msgid "calling predict.lm(<fake-lm-object>) ..."
 msgstr "вызываю predict.lm(<fake-lm-object>) ..."
 
-#, fuzzy
 msgid "prediction from rank-deficient fit"
-msgstr "предсказание от вырожденной подгонки может быть неправильным"
+msgstr "предсказание от неполноранговой подгонки"
 
 msgid "%s; consider predict(., rankdeficient=\"NA\")"
-msgstr ""
+msgstr "%s; попробуйте predict(., rankdeficient=\"NA\")"
 
 msgid "lower-rank qr: determining non-estimable cases"
-msgstr ""
+msgstr "низкоранговое QR-разложение: определяю случаи, для которых может не быть оценки"
 
 msgid "%s; attr(*, \"non-estim\") has doubtful cases"
-msgstr ""
+msgstr "%s; attr(*, \"non-estim\") указывает сомнительные случаи"
 
 msgid "%s: NAs produced for non-estimable cases"
-msgstr ""
+msgstr "%s: возвращаю NA для случаев без возможности оценки"
 
 msgid "predictions on current data refer to _future_ responses"
 msgstr "предсказания на основе текущих данных указывают на _будущие_ зависимости"
@@ -1582,15 +1574,17 @@ msgstr "нет ни компонента terms, ни атрибута"
 msgid "'termlabels' must be a character vector of length at least one"
 msgstr "'termlabels' должен быть текстовым вектором с длиной не меньше единицы"
 
-#, fuzzy
 msgid "'%s' must be a character string"
-msgstr "'sep' должен быть текстовой строкой"
+msgstr "'%s' должен быть текстовой строкой"
 
 msgid "Unparseable 'response' \"%s\"; use is deprecated.  Use as.name(.) or `..`!"
 msgstr "Неразбираемый 'response' \"%s\"; использование не разрешается.  Используйте as.name(.) или `..`!"
 
 msgid "'termobj' must be a object of class %s"
 msgstr "'termobj' должен быть объектом класса %s"
+
+msgid "setting '%s' in terms.formula() is deprecated"
+msgstr ""
 
 msgid "variable '%s' was fitted with type \"%s\" but type \"%s\" was supplied"
 msgstr "переменная '%s' была подогнана к типу \"%s\", а указан тип \"%s\""
@@ -1607,13 +1601,11 @@ msgstr "'data' должно быть таблицей данных, списком либо окружением"
 msgid "variable '%s' is not a factor"
 msgstr "переменная '%s' -- не фактор"
 
-#, fuzzy
 msgid "contrasts dropped from factor %s"
-msgstr "контрасты применяются лишь к факторам"
+msgstr "контрасты удалены для фактора %s"
 
-#, fuzzy
 msgid "contrasts dropped from factor %s due to missing levels"
-msgstr "контрасты могут применяться только к факторам с двумя и более уровнями"
+msgstr "контрасты удалены для фактора %s из-за отсутствующих уровней"
 
 msgid "'offset' must be numeric"
 msgstr "'offset' должен быть числом"
@@ -1706,7 +1698,7 @@ msgid "levels truncated to positive values only"
 msgstr "уровни укорочены до только положительных значений"
 
 msgid "invalid  'attr(rhs, \"gradient\")'"
-msgstr ""
+msgstr "неправильный 'attr(rhs, \"gradient\")'"
 
 msgid "setVarying : 'vary' length must match length of parameters"
 msgstr "setVarying : длина 'vary' должна соответствовать длине параметров"
@@ -1937,7 +1929,7 @@ msgid "elements of 'p' must be in (0,1)"
 msgstr "элементы 'p' должны быть в (0,1)"
 
 msgid "'conf.level' is not a probability"
-msgstr ""
+msgstr "'conf.level' должен быть вероятностью"
 
 msgid "'formula' missing"
 msgstr "'formula' пропущена"
@@ -1991,7 +1983,7 @@ msgid "'lengths(varying)' must all match 'length(times)'"
 msgstr "'lengths(varying)' все должны соответствовать 'length(times)'"
 
 msgid "'idvar' must uniquely identify records"
-msgstr ""
+msgstr "'idvar' должна определять записи единственным образом"
 
 msgid "there are records with missing times, which will be dropped."
 msgstr "здесь есть записи с пропущенными временами, они будут сброшены."
@@ -2026,9 +2018,8 @@ msgstr "диапазон 'k' должен быть >= 1 и нечетным!"
 msgid "argument 'object' has an impossible length"
 msgstr "аргумент 'object' имеет невозможную длину"
 
-#, fuzzy
 msgid "right-hand side of formula is not a call"
-msgstr "неправильная формула %s: не вызов"
+msgstr "правая сторона формулы не является вызовом функции"
 
 msgid "no 'getInitial' method found for \"%s\" objects"
 msgstr "не найдено метода 'getInitial' для объектов \"%s\""
@@ -2240,9 +2231,8 @@ msgstr "'y' пропущено для парного теста"
 msgid "data are essentially constant"
 msgstr "данные абсолютно константны"
 
-#, fuzzy
 msgid "cannot use 'paired' in formula method"
-msgstr "не могу использовать точки в формуле с заданной таблицей данных"
+msgstr "не могу использовать 'paired' в методе для формулы"
 
 msgid "'main' must be TRUE, FALSE, NULL or character (vector)."
 msgstr "'main' должен быть TRUE, FALSE, NULL или текст (вектор)."
@@ -2469,12 +2459,11 @@ msgstr[0] "неизвестное имя %s в 'split'-списке"
 msgstr[1] "неизвестные имена %s в 'split'-списке"
 msgstr[2] "неизвестные имена %s в 'split'-списке"
 
-#, fuzzy
 msgid "extra argument %s is not of class \"%s\""
 msgid_plural "extra arguments %s are not of class \"%s\""
 msgstr[0] "дополнительный аргумент %s не класса \"%s\""
-msgstr[1] "дополнительные аргументы %s не класса \"%s\"s"
-msgstr[2] "дополнительные аргументы %s не класса \"%s\"s"
+msgstr[1] "дополнительные аргументы %s не класса \"%s\""
+msgstr[2] "дополнительные аргументы %s не класса \"%s\""
 
 msgid "%d factor is too many for %d variables"
 msgid_plural "%d factors are too many for %d variables"
@@ -2607,6 +2596,9 @@ msgid_plural "'start.innov' is too short: need %d points"
 msgstr[0] "'start.innov' слишком короткий: нужно %d точку"
 msgstr[1] "'start.innov' слишком короткий: нужно %d точки"
 msgstr[2] "'start.innov' слишком короткий: нужно %d точек"
+
+#~ msgid "diag(.) had 0 or NA entries; non-finite result is doubtful"
+#~ msgstr "у diag(.) 0 или NA вхождений; не-конечный результат сомнителен"
 
 #~ msgid ".nknots.smspl() is now exported; use it instead of n.knots()"
 #~ msgstr ".nknots.smspl() не экспортирован; вместо этого пользуйтесь n.knots()"

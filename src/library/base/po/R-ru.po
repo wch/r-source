@@ -7,18 +7,18 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 4.2.0\n"
+"Project-Id-Version: R 4.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2024-03-27 16:14\n"
-"PO-Revision-Date: 2020-08-19 21:47+0900\n"
-"Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
+"POT-Creation-Date: 2024-04-01 10:33\n"
+"PO-Revision-Date: 2024-03-25 16:30+0300\n"
+"Last-Translator: Ivan Krylov <ikrylov@disroot.org>\n"
 "Language-Team: Russian\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=koi8-r\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Poedit 1.8.7.1\n"
+"X-Generator: Poedit 3.2.2\n"
 
 msgid "'%s' is defunct."
 msgstr "'%s' больше не существует."
@@ -33,20 +33,13 @@ msgid "See help(\"Defunct\")"
 msgstr "См. help(\"Defunct\")"
 
 msgid "'%s' is deprecated."
-msgstr "'%s' устарел"
+msgstr "'%s' устарел."
 
 msgid "See help(\"Deprecated\") and help(\"%s-deprecated\")."
 msgstr "См. help(\"Deprecated\") и help(\"%s-deprecated\")."
 
 msgid "See help(\"Deprecated\")"
 msgstr "См. help(\"Deprecated\")"
-
-msgid "unsupported value of _R_DEPRECATED_IS_R_,"
-msgstr ""
-
-#, fuzzy
-msgid ", will be ignored"
-msgstr "аргумент '%s' не будет учтен"
 
 msgid "argument to 'La.svd' must be numeric or complex"
 msgstr "аргумент 'La.svd' должен быть действительным или комплексным числом"
@@ -246,9 +239,8 @@ msgstr "неправильное количество интервалов"
 msgid "'breaks' are not unique"
 msgstr "'breaks' не уникальны"
 
-#, fuzzy
 msgid "number of intervals and length of 'labels' differ"
-msgstr "длины 'breaks' и 'labels' отличаются"
+msgstr "количество интервалов и длина 'labels' отличаются"
 
 msgid "invalid 'row.names' length"
 msgstr "неправильная длина 'row.names'"
@@ -268,9 +260,8 @@ msgstr "для таблицы данных предложены неправильные 'dimnames'"
 msgid "cannot coerce class %s to a data.frame"
 msgstr "не могу перевести класс %s в data.frame"
 
-#, fuzzy
 msgid "'row.names' is not a character or integer vector of length %d"
-msgstr "'row.names' не текстовый вектор длиной %d -- пропускаю его. Будет ошибка!"
+msgstr "'row.names' не текстовый или целочисленный вектор длины %d"
 
 msgid "mismatch of row names in arguments of 'data.frame', item %d"
 msgstr "несоответствие имен строк в аргументах 'data.frame', позиция %d"
@@ -356,9 +347,8 @@ msgstr "количество колонок аргументов не соответствует друг другу"
 msgid "invalid list argument: all variables should have the same length"
 msgstr "неправильный аргумент списка: длины всех переменных должны быть равны"
 
-#, fuzzy
 msgid "number of columns of result, %d, is not a multiple of vector length %d of arg %d"
-msgstr "количество элементов для замены не кратно длине замены"
+msgstr "количество столбцов возвращаемого значения, %d, не кратно %d, длине аргумента %d"
 
 msgid "<0 rows> (or 0-length row.names)"
 msgstr "<0 строк> (или 'row.names' нулевой длины)"
@@ -487,14 +477,13 @@ msgid "'tzone' attributes are inconsistent"
 msgstr "противоречивые атрибуты 'tzone'"
 
 msgid "as.character(td, ..) no longer obeys a 'format' argument; use format(td, ..) ?"
-msgstr ""
+msgstr "as.character(td, ..) больше не использует аргумент 'format'; попробуйте format(td, ..)?"
 
-#, fuzzy
 msgid "'digits' must be numeric, integer valued"
-msgstr "'trim' должен быть числовым объектом длины 1"
+msgstr "'digits' должен быть численным и целым"
 
 msgid "'tim' is not character or numeric"
-msgstr "'tim' не является функцией или буквой"
+msgstr "'tim' не является строковым или численным"
 
 msgid "need explicit units for numeric conversion"
 msgstr "для числовой конверсии нужно прямо указать единицы"
@@ -648,7 +637,7 @@ msgid "cannot overwrite a non-directory with a directory"
 msgstr "не могу переписать не-директорию поверх директории"
 
 msgid "directories are omitted unless 'recursive = TRUE'"
-msgstr ""
+msgstr "пропускаю директории, если 'recursive' не TRUE"
 
 msgid "file can not be copied both 'from' and 'to'"
 msgstr "файл не может быть скопирован одновременно 'from' и 'to'"
@@ -773,35 +762,32 @@ msgstr "нужны замены для соответствий"
 msgid "No factors specified"
 msgstr "Не определены факторы"
 
-#, fuzzy
 msgid "invalid '%s': type \"%s\""
-msgstr "неправильное значение 'n'"
+msgstr "неправильное значение '%s': тип \"%s\""
 
-#, fuzzy
 msgid "'uplo' must be \"U\" or \"L\""
-msgstr "'wait' должен быть TRUE или FALSE"
+msgstr "'uplo' должен быть \"U\" или \"L\""
 
-#, fuzzy
 msgid "invalid nrow(z)"
-msgstr "неправильное nrow(x)"
+msgstr "неправильное nrow(z)"
 
 msgid "triangular matrix should be square"
 msgstr "треугольная матрица должна быть квадратной"
 
 msgid "using 1-norm approximation for approximate 2-norm"
-msgstr ""
+msgstr "вместо приблизительной 2-нормы использую приблизительную 1-норму"
 
 msgid "norm=\"%s\" not available here; using norm=\"1\""
-msgstr ""
+msgstr "norm=\"%s\" здесь недоступно; использую norm=\"1\""
 
 msgid "unknown conflict policy: %s"
-msgstr "неизвестная политика котфликтов: %s"
+msgstr "неизвестная политика конфликтов: %s"
 
 msgid "only one of 'include.only' and 'exclude' can be used"
 msgstr "можно использовать либо 'include.only', либо 'exclude'"
 
 msgid "package %s has not been installed properly"
-msgstr "пакет %s как следует не установлен"
+msgstr "пакет %s не установлен как следует"
 
 msgid "package %s was built before R 3.0.0: please re-install it"
 msgstr "пакет %s был собран до R 3.0.0: пожалуйста, инсталлируйте его заново"
@@ -816,7 +802,7 @@ msgid "package %s was built for %s"
 msgstr "пакет %s был собран для %s"
 
 msgid "package %s is not installed for 'arch = %s'"
-msgstr "пакет %s не установлен для 'arch=%s'"
+msgstr "пакет %s не был установлен для 'arch = %s'"
 
 msgid ""
 "Conflicts attaching package %s:\n"
@@ -864,7 +850,7 @@ msgid "package %s already present in search()"
 msgstr "пакет %s уже есть в search()"
 
 msgid "'DESCRIPTION' has an 'Encoding' field and re-encoding is not possible"
-msgstr "У 'DESCRIPTION' есть поле 'Encoding', перекодировка невозможна"
+msgstr "У 'DESCRIPTION' есть поле 'Encoding', но перекодировка невозможна"
 
 msgid "%sPackages in library %s:"
 msgstr "%sПакеты в библиотеке %s:"
@@ -961,11 +947,10 @@ msgid "'file' must be specified"
 msgstr "должен быть указан 'file'"
 
 msgid "nothing specified to be save()d"
-msgstr "ничего не задано для save()d"
+msgstr "не указаны объекты для сохранения"
 
-#, fuzzy
 msgid "'%s' must be a non-empty string"
-msgstr "'file' должен быть непустой строкой"
+msgstr "'%s' должен быть непустой строкой"
 
 msgid "'compress' must be logical or character"
 msgstr "'compress' должен быть логическим либо текстовой строкой"
@@ -1385,9 +1370,8 @@ msgstr "неправильная структура 'rle'"
 msgid "... must contain names or character strings"
 msgstr "... должен содержать имена или текстовые строки"
 
-#, fuzzy
 msgid "invalid 'x'"
-msgstr "неправильные 'dims'"
+msgstr "неправильный 'x'"
 
 msgid "incorrect length for 'group'"
 msgstr "неправильная длина 'group'"
@@ -1435,7 +1419,7 @@ msgid "too many arguments"
 msgstr "слишком много аргументов"
 
 msgid "invalid 'compress' argument:"
-msgstr "неправильный аргумент 'compress'"
+msgstr "неправильный аргумент 'compress':"
 
 msgid "'compress' is ignored unless 'file' is a file name"
 msgstr "'compress' игнорируется если 'file' не является именем файла"
@@ -1493,7 +1477,7 @@ msgid "non-finite 'partial'"
 msgstr "не конечная 'partial'"
 
 msgid "'decreasing' of length > 1 is only for method = \"radix\""
-msgstr ""
+msgstr "'decreasing' длины > 1 работает только для method = \"radix\""
 
 msgid "argument lengths differ"
 msgstr "длины аргументов различаются"
@@ -1505,11 +1489,11 @@ msgid ""
 "'x' must be atomic for 'sort.list', method \"shell\" and \"quick\"\n"
 "Have you called 'sort' on a list?"
 msgstr ""
-"'x' для 'sort.list', method \"shell\" и \"quick\" должен быть атомарным\n"
-"Вы вызывали 'sort' на список?"
+"'x' для 'sort.list'(method = \"shell\" или \"quick\") должен быть атомарным\n"
+"Случайно вызвали 'sort' для списка?"
 
 msgid "cannot xtfrm 'x'"
-msgstr ""
+msgstr "не умею делать xtfrm для 'x'"
 
 msgid "'local' must be TRUE, FALSE or an environment"
 msgstr "'local' должен быть TRUE, FALSE, или environment"
@@ -1521,7 +1505,7 @@ msgid "'verbose' is TRUE, 'echo' not; ... coercing 'echo <- TRUE'"
 msgstr "'verbose' является TRUE, а 'echo' -- нет; ... преобразую 'echo <- TRUE'"
 
 msgid "empty file/url name"
-msgstr ""
+msgstr "пустое имя файла или URL"
 
 msgid "unable to find a plausible encoding"
 msgstr "не могу найти правдоподобную кодировку"
@@ -1544,15 +1528,14 @@ msgstr "укажите либо 'file', либо exprsn', но не оба"
 msgid "'%s' is not an existing file"
 msgstr "'%s' не является существующим файлом"
 
-#, fuzzy
 msgid "'formula' must be a formula"
-msgstr "'from' должен быть raw либо текстовой строкой"
+msgstr "'formula' должна быть формулой"
 
 msgid "Unexpected LHS in 'formula' has been ignored."
-msgstr ""
+msgstr "Пропускаю неожиданную левую сторону внутри 'formula'."
 
 msgid "Unexpected LHS in 'formula' has been combined with RHS."
-msgstr ""
+msgstr "Объединяю неожиданную левую сторону из 'formula' с правой стороной."
 
 msgid "Timestamp of %s has changed"
 msgstr "ВременнАя маска %s изменилась"
@@ -1577,7 +1560,7 @@ msgid "additional arguments ignored in warning()"
 msgstr "дополнительные аргументы пропущены в warning()"
 
 msgid "Sys.setenv(LANGUAGE=\"%s\") may have failed"
-msgstr ""
+msgstr "Sys.setenv(LANGUAGE=\"%s\") могло не сработать"
 
 msgid ""
 "Calling 'structure(NULL, *)' is deprecated, as NULL cannot have attributes.\n"
@@ -1635,7 +1618,7 @@ msgid "invalid value of %s"
 msgstr "неправильное значение %s"
 
 msgid "'X' must be a data frame when 'INDEX' is a formula"
-msgstr ""
+msgstr "когда 'INDEX' - это формула, 'X' должен быть data.frame"
 
 msgid "'INDEX' is of length zero"
 msgstr "'INDEX' нулевой длины"
@@ -1665,7 +1648,7 @@ msgid "Removing %s"
 msgstr "Удаление %s"
 
 msgid "Registering 'evaluate' as low-level callback"
-msgstr "Регистрация 'evaluate' низкоуровневый обратный вызов"
+msgstr "Регистрирую 'evaluate' как низкоуровневый обратный вызов"
 
 msgid "Timing stopped at:"
 msgstr "Тайминг остановлен на:"
@@ -1685,12 +1668,11 @@ msgstr "'width' должна быть положительной"
 msgid "No traceback available"
 msgstr "Трассировка недоступна"
 
-#, fuzzy
 msgid "invalid non-character version specification 'x' (type: %s)"
-msgstr "неправильное указание версии %s"
+msgstr "неправильное указание версии 'x' (тип: %s, должен быть строкой)"
 
 msgid "Calls"
-msgstr ""
+msgstr "Вызовы"
 
 msgid "invalid version specification %s"
 msgstr "неправильное указание версии %s"
@@ -1714,13 +1696,13 @@ msgid "'tags' must be a character vector of the same length as 'x'"
 msgstr "'tags' должен быть текстовым вектором той же длины, что и 'x'"
 
 msgid "Summary of (a total of %d) warning messages:"
-msgstr "Конспект (из %d) предупреждений:"
+msgstr "Сводка (из %d) предупреждений:"
 
 msgid "invalid 'digits'"
 msgstr "неправильные 'digits'"
 
 msgid "Direct call of '%s()' is deprecated.  Use '%s()' or '%s()' instead"
-msgstr ""
+msgstr "Прямой вызов '%s()' больше не рекомендуется. Пожалуйста, используйте '%s()' или '%s()'"
 
 msgid "arguments 'show.output.on.console', 'minimized' and 'invisible' are for Windows only"
 msgstr "аргументы у 'show.output.on.console', 'minimized' и 'invisible' только для Windows"
@@ -1737,9 +1719,8 @@ msgstr "'ignore.stderr' должен быть TRUE или FALSE"
 msgid "'wait' must be TRUE or FALSE"
 msgstr "'wait' должен быть TRUE или FALSE"
 
-#, fuzzy
 msgid "'receive.console.signals' must be TRUE or FALSE"
-msgstr "'intern' должен быть TRUE или FALSE"
+msgstr "'receive.console.signals' должен быть TRUE или FALSE"
 
 msgid "'input' must be a character vector or 'NULL'"
 msgstr "'input' должен быть текстовым вектором либо 'NULL'"
@@ -1909,7 +1890,8 @@ msgstr[0] "%s не найден"
 msgstr[1] "%s не найден"
 msgstr[2] "%s не найден"
 
-#, fuzzy
+# форма множественного числа везде, поскольку msgstr[0] может быть
+# выбрано как для length(choices) == 1, так и 101
 msgid "'arg' should be %s"
 msgid_plural "'arg' should be one of %s"
 msgstr[0] "'arg' должен быть одним из %s"
@@ -1918,9 +1900,9 @@ msgstr[2] "'arg' должен быть одним из %s"
 
 msgid "'by' must specify a uniquely valid column"
 msgid_plural "'by' must specify uniquely valid columns"
-msgstr[0] "'by' должен определять правильные колонку"
-msgstr[1] "'by' должен определять правильные колонки"
-msgstr[2] "'by' должен определять правильные колонки"
+msgstr[0] "'by' должен определять правильную колонку единственным образом"
+msgstr[1] "'by' должен определять правильные колонки единственным образом"
+msgstr[2] "'by' должен определять правильные колонки единственным образом"
 
 msgid "Function found when exporting methods from the namespace %s which is not S4 generic: %s"
 msgid_plural "Functions found when exporting methods from the namespace %s which are not S4 generic: %s"
@@ -1991,6 +1973,12 @@ msgstr[1] ""
 msgstr[2] ""
 "В %s :\n"
 " дополнительные аргументы %s не будут учтены"
+
+#~ msgid "unsupported value of _R_DEPRECATED_IS_R_,"
+#~ msgstr "непонятное значение _R_DEPRECATED_IS_R_,"
+
+#~ msgid ", will be ignored"
+#~ msgstr ", не будет учтено"
 
 #~ msgid "norm '%s' currently always uses exact = FALSE"
 #~ msgstr "norm '%s' сейчас всегда использует exact = FALSE"

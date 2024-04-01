@@ -7,18 +7,18 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.9.0\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-27 16:14-0700\n"
-"PO-Revision-Date: 2020-08-27 19:22+0900\n"
-"Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
+"Project-Id-Version: R 4.4.0\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2024-04-01 10:33-0700\n"
+"PO-Revision-Date: 2024-03-25 14:44+0300\n"
+"Last-Translator: Ivan Krylov <ikrylov@disroot.org>\n"
 "Language-Team: Russian\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=KOI8-R\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Poedit 1.8.7.1\n"
+"X-Generator: Poedit 3.2.2\n"
 
 #: gpar.c:632
 msgid "updateGContext must only be called after initGContext"
@@ -43,7 +43,7 @@ msgstr "Маски внутри контуров отсечения игнорируются"
 #: grid.c:699 grid.c:877
 #, c-format
 msgid "Viewport '%s' was not found"
-msgstr ""
+msgstr "Не могу найти оконницу '%s'"
 
 #: grid.c:909 grid.c:914 grid.c:1035 grid.c:1040
 msgid "cannot pop the top-level viewport ('grid' and 'graphics' output mixed?)"
@@ -83,17 +83,17 @@ msgstr "Пустой растр"
 
 #: grid.c:4038 grid.c:4094
 msgid "Coordinates for text pch not yet supported"
-msgstr ""
+msgstr "Эта версия не может задать координаты для текстового 'pch'"
 
 #: grid.c:4099
 #, c-format
 msgid "pch value '%d' is invalid in this locale"
-msgstr ""
+msgstr "значение 'pch' = '%d' некорректно в текущей локали"
 
 #: grid.c:4920
 #, c-format
 msgid "unimplemented pch value '%d'"
-msgstr ""
+msgstr "значение 'pch' = '%d' не реализовано"
 
 #: grid.c:5079
 msgid "invalid plotting symbol"
@@ -185,7 +185,7 @@ msgstr "единицы можно умножать только на целые или десятичные числа"
 
 #: util.c:216
 msgid "Unable to calculate text width/height (using zero)"
-msgstr ""
+msgstr "Не могу посчитать ширину/высоту текста (использую 0)"
 
 #: viewport.c:56
 msgid "Mask is not logical value ('none' or 'inherit')"

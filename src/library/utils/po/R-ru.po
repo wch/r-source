@@ -8,18 +8,18 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.11.0\n"
+"Project-Id-Version: R 4.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2024-03-27 16:15\n"
-"PO-Revision-Date: 2024-03-18 21:18+0000\n"
-"Last-Translator: Michael Chirico <michaelchirico4@gmail.com>\n"
+"POT-Creation-Date: 2024-03-25 17:46\n"
+"PO-Revision-Date: 2024-03-25 15:00+0300\n"
+"Last-Translator: Ivan Krylov <ikrylov@disroot.org>\n"
 "Language-Team: Russian\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=KOI8-R\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 4.16.4\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Poedit 3.2.2\n"
 
 msgid ""
 "RShowDoc() should be used with a character string argument specifying\n"
@@ -35,10 +35,10 @@ msgid "document not found"
 msgstr "документ не найден"
 
 msgid "some options in argument 'restrict' were not recognized and hence ignored"
-msgstr ""
+msgstr "не могу распознать и поэтому игнорирую некоторые опции в аргументе 'restrict'"
 
 msgid "argument 'format' is deprecated and has no affect on search results"
-msgstr ""
+msgstr "аргумент 'format' больше не работает (и не влияет на результаты поиска)"
 
 msgid "A search query has been submitted to %s"
 msgstr "Поисковый запрос должен быть послан в %s"
@@ -126,7 +126,7 @@ msgid "Filter '%s' is not available."
 msgstr "Фильтр '%s' недоступен."
 
 msgid "Invalid 'filter' argument."
-msgstr "Неправильный аргумент 'filter'"
+msgstr "Неправильный аргумент 'filter'."
 
 msgid ""
 "The following dictionaries were not found:\n"
@@ -149,7 +149,7 @@ msgid "No suitable spell check program found."
 msgstr "Не найдено подходящей программы проверки грамматики."
 
 msgid "Performing query %s"
-msgstr ""
+msgstr "Выполняю запрос %s"
 
 msgid ""
 "Use <code> %s </code> \n"
@@ -231,7 +231,6 @@ msgstr "'FUN' должен быть функцией или NULL"
 msgid "cannot handle S4 methods yet"
 msgstr "пока не могу работать с методами S4"
 
-#, fuzzy
 msgid "'package' must be a character vector or NULL"
 msgstr "'package' должен быть текстовой строкой или NULL"
 
@@ -374,16 +373,14 @@ msgstr "'form' должен быть двусторонней формулой"
 msgid "'form' must be a two-sided formula with one term on each side"
 msgstr "'form' должен быть двусторонней формулой с одним термином на каждой стороне"
 
-#, fuzzy
 msgid "invalid object for 'as.environment'"
-msgstr "неправильный аргумент 'socket'"
+msgstr "неправильный аргумент для 'as.environment'"
 
-#, fuzzy
 msgid "invalid 'n' - must contain at least one non-missing element, got none."
 msgstr "неправильный 'n' - должен иметь хотя бы один не-пропущенный элемент, но таких нет."
 
 msgid "invalid 'n' - must be numeric, possibly NA."
-msgstr ""
+msgstr "неправильный 'n' - должен быть численным, возможно NA."
 
 msgid "invalid 'n' - must have length one when dim(x) is NULL, got %d"
 msgstr "неправильный 'n' - должен быть длиной 1 в случае если dim(x) является NULL, но он %d"
@@ -468,9 +465,8 @@ msgstr "Отменено пользователем"
 msgid "Unable to connect to CRAN to check R version."
 msgstr "Не могу соединиться с CRAN, чтобы проверить версию R."
 
-#, fuzzy
 msgid "argument %s must be a character string"
-msgstr "аргумент %s должен быть одной текстовой строкой"
+msgstr "аргумент %s должен быть текстовой строкой"
 
 msgid "incorrect field specification"
 msgstr "неправильное указание поля"
@@ -515,9 +511,8 @@ msgstr "Если браузер, запущенный '%s', уже работает, он *не* перезагрузился, и В
 msgid "Otherwise, be patient ..."
 msgstr "Если нет, ждите..."
 
-#, fuzzy
 msgid "'%s' must be a non-empty character string"
-msgstr "'url' должен быть непустой текстовой строкой"
+msgstr "'%s' должен быть непустой текстовой строкой"
 
 msgid "no package '%s' was found"
 msgstr "не найден пакет '%s'"
@@ -543,9 +538,8 @@ msgstr "не могу обновить HTML-индекс пакетов"
 msgid "done"
 msgstr "готово"
 
-#, fuzzy
 msgid "Source must be a seekable connection"
-msgstr "'file' должен быть текстовой строкой строка или соединением"
+msgstr "Исходный файл должно быть возможно перематывать"
 
 msgid "menu() cannot be used non-interactively"
 msgstr "menu() нельзя использовать неинтерактивно"
@@ -623,7 +617,7 @@ msgid "directory '%s' already exists"
 msgstr "папка '%s' уже есть"
 
 msgid "generic functions and other S4 objects (e.g., '%s') cannot be dumped; use the 'code_files' argument"
-msgstr "Общие функции и другие объекты S4 (например, '%s') не могут быть сброшены; используйте аргумент 'code_files'"
+msgstr "не могу сохранить как текст общие функции и другие объекты S4 (например, '%s'); используйте аргумент 'code_files'"
 
 msgid "invalid 'type'; must be a character string"
 msgstr "неправильный 'type'; должен быть текстовой строкой"
@@ -698,10 +692,10 @@ msgid "cannot set repositories non-interactively"
 msgstr "не могу установить хранилища неинтерактивно"
 
 msgid "invalid options(\"pkgType\"); must be a character string"
-msgstr "неправильныая options(\"pkgType\"); должна быть текстовой строкой"
+msgstr "неправильная options(\"pkgType\"); должна быть текстовой строкой"
 
 msgid "No matching repositories found for"
-msgstr ""
+msgstr "Не нашлось соответствующих репозиториев для"
 
 msgid ","
 msgstr ","
@@ -725,9 +719,8 @@ msgstr ""
 "Не знаю, в какой элемент 'lib' устанавливать зависимости\n"
 "пропускаю зависимости"
 
-#, fuzzy
 msgid "'%s' must be a character string"
-msgstr "'unzip' должен быть одной текстовой строкой"
+msgstr "'%s' должен быть текстовой строкой"
 
 msgid "type 'binary' is not supported on this platform"
 msgstr "тип 'binary' на этой платформе не поддерживается"
@@ -800,28 +793,23 @@ msgid "files: %s"
 msgstr "files: %s"
 
 msgid "Windows default 'timeout' command is not usable for parallel installs"
-msgstr ""
+msgstr "Команда 'timeout' из Windows не подходит для параллельной установки пакетов"
 
 msgid "timeouts for parallel installs require the 'timeout' command"
 msgstr "таймауты для параллельной инсталляции требуют команду 'timeout'"
 
-#, fuzzy
 msgid "installation of package %s failed"
-msgstr "скачивание пакета %s не удалось"
+msgstr "установка пакета %s не удалась"
 
-#, fuzzy
 msgid "installation of %d packages failed:  %s"
-msgstr ""
-"установка одного или более пакетов завершилась с ошибкой,\n"
-"  возможно %s"
+msgstr "установка %d пакетов(а) завершилась с ошибкой:  %s"
 
-#, fuzzy
 msgid ""
 "installation of %d packages failed:\n"
 "  %s"
 msgstr ""
-"установка одного или более пакетов завершилась с ошибкой,\n"
-"  возможно %s"
+"установка %d пакетов(а) завершилась с ошибкой:\n"
+"  %s"
 
 msgid ""
 "The downloaded source packages are in\n"
@@ -843,7 +831,7 @@ msgid "'file' must be \"\" or an open connection object"
 msgstr "'file' должен быть \"\" или открытым соединением"
 
 msgid "'char' must have a non-zero width"
-msgstr ""
+msgstr "'char' должен иметь ненулевую ширину"
 
 msgid "must have 'max' > 'min'"
 msgstr "должен быть 'max' > 'min'"
@@ -882,7 +870,7 @@ msgid "No DIF data on clipboard"
 msgstr "В буфере обмена нет DIF-данных"
 
 msgid "file had no lines"
-msgstr "У файла нет строк"
+msgstr "у файла нет строк"
 
 msgid "row and column counts not found"
 msgstr "подсчет строк и колонок не найден"
@@ -1031,9 +1019,8 @@ msgstr "Количество токенов в 'pattern' != 'length(proto)'"
 msgid "The number of tokens is not consistent across 'x'"
 msgstr "Количество токенов в пределах 'x' не согласовано"
 
-#, fuzzy
 msgid "cannot coerce %s to TRUE or FALSE"
-msgstr "не могу перевести %s в логическую"
+msgstr "не могу перевести %s в TRUE или FALSE"
 
 msgid "no lines found in %s"
 msgstr "в '%s' нет строк"
@@ -1207,9 +1194,8 @@ msgstr "'wget' с ненулевым статусом выхода"
 msgid "'curl' call had nonzero exit status"
 msgstr "'curl' с ненулевым статусом выхода"
 
-#, fuzzy
 msgid "invalid method:"
-msgstr "неправильный формат"
+msgstr "неправильный метод:"
 
 msgid "download had nonzero exit status"
 msgstr "у скачивания ненулевой статус выхода"
@@ -1297,8 +1283,8 @@ msgstr[2] "%d Sweave-файлов с базовым именем %s найдены"
 msgid "Output/used file:  "
 msgid_plural "Output/used files:  "
 msgstr[0] "Файл вывода:  "
-msgstr[1] "Файл вывода:  "
-msgstr[2] "Файл вывода:  "
+msgstr[1] "Файлы вывода:  "
+msgstr[2] "Файлы вывода:  "
 
 msgid "%d occurrence in %s"
 msgid_plural "%d occurrences in %s"
@@ -1308,9 +1294,9 @@ msgstr[2] "%d вхождений в %s"
 
 msgid "Invalid role specification: %s."
 msgid_plural "Invalid role specifications: %s."
-msgstr[0] "Неправильное указание роли: %s"
-msgstr[1] "Неправильные указания ролей: %s"
-msgstr[2] "Неправильные указания ролей: %s"
+msgstr[0] "Неправильное указание роли: %s."
+msgstr[1] "Неправильные указания ролей: %s."
+msgstr[2] "Неправильные указания ролей: %s."
 
 msgid "A bibentry of bibtype %s has to specify the field: %s"
 msgid_plural "A bibentry of bibtype %s has to specify the fields: %s"
@@ -1342,12 +1328,11 @@ msgstr[0] "объект '%s' не найден"
 msgstr[1] "объекты '%s' не найдены"
 msgstr[2] "объекты '%s' не найдены"
 
-#, fuzzy
 msgid "package %s is a base package, and cannot be removed"
 msgid_plural "packages %s are base packages, and cannot be removed"
-msgstr[0] "пакет '%s' -- это базовый пакет, он не будет установлен"
-msgstr[1] "пакет '%s' -- это базовый пакеты, они не будут установлены"
-msgstr[2] "пакет '%s' -- это базовый пакеты, они не будут установлены"
+msgstr[0] "пакет '%s' -- это базовый пакет, он не будет удалён"
+msgstr[1] "пакеты '%s' -- это базовые пакеты, они не будут удалены"
+msgstr[2] "пакеты '%s' -- это базовые пакеты, они не будут удалены"
 
 msgid ""
 "Removing package from %s\n"
@@ -1378,8 +1363,14 @@ msgid_plural ""
 "Versions of these packages for your version of R might be available elsewhere,\n"
 "see the ideas at\n"
 msgstr[0] ""
+"Другая версия этого пакета может быть доступна для Вашей версии R из других источников,\n"
+"см. возможные варианты на\n"
 msgstr[1] ""
+"Другие версии этих пакетов могут быть доступны для Вашей версии R из других источников,\n"
+"см. возможные варианты на\n"
 msgstr[2] ""
+"Другие версии этих пакетов могут быть доступны для Вашей версии R из других источников,\n"
+"см. возможные варианты на\n"
 
 msgid "package %s is not available %s"
 msgid_plural "packages %s are not available %s"
@@ -1471,9 +1462,9 @@ msgstr[2] "последняя запись неполная, %d строк не обработаны"
 
 msgid "invalid roman numeral: %s"
 msgid_plural "invalid roman numerals: %s"
-msgstr[0] "Неправильные римский номер: %s"
-msgstr[1] "Неправильные римские номера: %s"
-msgstr[2] "Неправильные римские номера: %s"
+msgstr[0] "неправильное римское число: %s"
+msgstr[1] "неправильные римские числа: %s"
+msgstr[2] "неправильные римские числа: %s"
 
 #~ msgid "file 'filelist' is missing for directory %s"
 #~ msgstr "файл 'filelist' в папке %s не найден"
@@ -1554,8 +1545,8 @@ msgstr[2] "Неправильные римские номера: %s"
 #~ msgid "modes argument ignored"
 #~ msgstr "аргумент 'modes' пропущен"
 
-#~ msgid "too many list items (at most up to number 3999)"
-#~ msgstr "слишком много элементов в списке (самое большее 3999)"
+#~ msgid "too many list items (at most up to number 3899)"
+#~ msgstr "слишком много элементов в списке (самое большее 3899)"
 
 #~ msgid "Packages {readRDS() sequentially}:"
 #~ msgstr "Пакеты {readRDS() последовательно}:"

@@ -7,18 +7,18 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.11.0\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-27 16:14-0700\n"
-"PO-Revision-Date: 2020-08-27 18:57+0900\n"
-"Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
+"Project-Id-Version: R 4.4.0\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2024-04-01 10:33-0700\n"
+"PO-Revision-Date: 2024-03-25 14:40+0300\n"
+"Last-Translator: Ivan Krylov <ikrylov@disroot.org>\n"
 "Language-Team: Russian\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=KOI8-R\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Poedit 1.8.7.1\n"
+"X-Generator: Poedit 3.2.2\n"
 
 #: axis_scales.c:37 axis_scales.c:38 axis_scales.c:50
 #, c-format
@@ -27,7 +27,7 @@ msgstr "'%s' должен быть числовым длины %d"
 
 #: clippath.c:36
 msgid "Clipping path ignored (device is appending path)"
-msgstr ""
+msgstr "Игнорирую контур усечения (устройство дописывает контур)"
 
 #: colors.c:69
 #, c-format
@@ -158,14 +158,14 @@ msgid "invalid string in '%s'"
 msgstr "неправильная строка в '%s'"
 
 #: devPS.c:810
-#, fuzzy, c-format
+#, c-format
 msgid "font width unknown for character 0x%02x in encoding %s"
-msgstr "неизвестна ширина символа 0x%x"
+msgstr "неизвестна ширина символа 0x%02x в кодировке %s"
 
 #: devPS.c:871
-#, fuzzy, c-format
+#, c-format
 msgid "font metrics unknown for Unicode character U+%04X"
-msgstr "неизвестны шрифтовые метрики для символа Юникода U+%04x"
+msgstr "неизвестны шрифтовые метрики для символа Юникода U+%04X"
 
 #: devPS.c:882
 #, c-format
@@ -175,17 +175,17 @@ msgstr "неизвестная кодировка '%s' в 'PostScriptMetricInfo'"
 #: devPS.c:899
 #, c-format
 msgid "Unicode character %lc (U+%04X) cannot be converted"
-msgstr ""
+msgstr "Не могу перевести символ Юникода %lc (U+%04X)"
 
 #: devPS.c:918 devPS.c:972
-#, fuzzy, c-format
+#, c-format
 msgid "font metrics unknown for character 0x%02x in encoding %s"
-msgstr "неизвестны шрифтовые метрики для символа 0x%x"
+msgstr "неизвестны шрифтовые метрики для символа 0x%02x в кодировке %s"
 
 #: devPS.c:987
-#, fuzzy, c-format
+#, c-format
 msgid "invalid character (%04X) sent to 'PostScriptCIDMetricInfo' in a single-byte locale"
-msgstr "неправильный символ (%04x) послан в 'PostScriptCIDMetricInfo' на однобайтной локали"
+msgstr "неправильный символ (%04X) передан в 'PostScriptCIDMetricInfo' на однобайтной локали"
 
 #: devPS.c:995
 msgid "invalid character sent to 'PostScriptCIDMetricInfo' in a single-byte locale"
@@ -370,9 +370,9 @@ msgid "unknown encoding '%s' in 'mbcsToSbcs'"
 msgstr "неизвестная кодировка '%s' в 'mbcsToSbcs'"
 
 #: devPS.c:4582 devPS.c:4589
-#, fuzzy, c-format
+#, c-format
 msgid "conversion failure on '%s' in 'mbcsToSbcs': for <%02x>"
-msgstr "ошибка конвертации '%s' в 'mbcsToSbcs': <%02x> заменено на точку"
+msgstr "ошибка конвертации '%s' в 'mbcsToSbcs': для <%02x>"
 
 #: devPS.c:4584 devPS.c:4591
 #, c-format
@@ -452,31 +452,31 @@ msgstr "не могу увеличить 'maxDefns'"
 
 #: devPS.c:6696
 msgid "Drawing not appended to path (contains text)"
-msgstr ""
+msgstr "Не добавляю объект к контуру (текущий контур содержит текст)"
 
 #: devPS.c:6925
 msgid "Compositing operator has no corresponding blend mode; defaulting to Normal"
-msgstr ""
+msgstr "Не задан режим смешения для оператора композиции; выбираю Normal"
 
 #: devPS.c:7198
 msgid "Failed to write PDF clipping path"
-msgstr ""
+msgstr "Не удалось записать контур усечения PDF"
 
 #: devPS.c:7223
 msgid "Failed to write PDF stroke"
-msgstr ""
+msgstr "Не удалось записать штрих PDF"
 
 #: devPS.c:7244
 msgid "Failed to write PDF fill"
-msgstr ""
+msgstr "Не удалось записать заливку PDF"
 
 #: devPS.c:7265
 msgid "Failed to write PDF fillStroke"
-msgstr ""
+msgstr "Не удалось записать PDF fillStroke"
 
 #: devPS.c:7311
 msgid "Glyph ID larger than 0xFFFF; output will be incorrect"
-msgstr ""
+msgstr "Номер глифа превышает 0xFFFF; результат будет некорректен"
 
 #: devPS.c:7334
 msgid "invalid 'alpha' value in PDF"
@@ -584,16 +584,16 @@ msgstr "не удалось найти или загрузить шрифт PDF"
 
 #: devPS.c:10012 devPS.c:10071
 msgid "Text not added to path containing other drawing"
-msgstr ""
+msgstr "Не добавляю текст к контуру, содержащему другие объекты"
 
 #: devPS.c:10121 devPS.c:10288
 msgid "failed to find or load PDF CID font"
 msgstr "не удалось найти или загрузить CID-шрифт PDF"
 
 #: devPS.c:10786 devPS.c:10878 devPicTeX.c:763
-#, fuzzy, c-format
+#, c-format
 msgid "invalid 'file' parameter in %s"
-msgstr "неправильный параметр 'family' в %s"
+msgstr "неправильный параметр 'file' в %s"
 
 #: devPS.c:10795 devPS.c:10799 devPS.c:10963 devPS.c:10967
 #, c-format
@@ -619,84 +619,80 @@ msgstr "не могу запустить устройство %s()"
 
 #: devQuartz.c:471
 msgid "Quartz gradients exhausted (failed to increase maxPatterns)"
-msgstr ""
+msgstr "Закончились градиенты Quartz (не удалось нарастить maxPatterns)"
 
 #: devQuartz.c:477
 msgid "Quartz patterns exhausted (failed to increase maxPatterns)"
-msgstr ""
+msgstr "Закончились паттерны Quartz (не удалось нарастить maxPatterns)"
 
 #: devQuartz.c:518 cairo/cairoFns.c:350
 msgid "Attempt to release non-existent pattern"
-msgstr ""
+msgstr "Попытка закрыть несуществующий паттерн"
 
 #: devQuartz.c:555
 msgid "Quartz patterns exhausted"
-msgstr ""
+msgstr "Закончились паттерны Quartz"
 
 #: devQuartz.c:621 devQuartz.c:636 devQuartz.c:638 devQuartz.c:669
 #: devQuartz.c:671
-#, fuzzy
 msgid "Failed to create gradient"
-msgstr "не могу увеличить 'maxDefns'"
+msgstr "Не могу создать градиент"
 
 #: devQuartz.c:653 devQuartz.c:686
 msgid "Unsupported gradient fill extend type; using 'pad'"
-msgstr ""
+msgstr "Неподдерживаемый тип расширения заливки; использую 'pad'"
 
 #: devQuartz.c:729 devQuartz.c:762
-#, fuzzy
 msgid "Failed to create pattern"
-msgstr "не могу разместить растры"
+msgstr "Не могу создать паттерн"
 
 #: devQuartz.c:752
 msgid "Unsupported pattern extend mode;  using \"repeat\""
-msgstr ""
+msgstr "Неподдерживаемый режим расширения паттерна; использую \"repeat\""
 
 #: devQuartz.c:814
 msgid "Quartz clipping paths exhausted (failed to increase maxClipPaths)"
-msgstr ""
+msgstr "Закончились контуры усечения Quartz (не удалось нарастить maxClipPaths)"
 
 #: devQuartz.c:863
 msgid "Quartz clipping paths exhausted"
-msgstr ""
+msgstr "Закончились контуры усечения Quartz"
 
 #: devQuartz.c:871
-#, fuzzy
 msgid "Failed to create clipping path"
-msgstr "не могу разместить список кодировок"
+msgstr "Не могу создать путь усечения"
 
 #: devQuartz.c:964
 msgid "Quartz masks exhausted (failed to increase maxMasks)"
-msgstr ""
+msgstr "Закончились маски Quartz (не удалось нарастить maxMasks)"
 
 #: devQuartz.c:1015
 msgid "Quartz masks exhausted"
-msgstr ""
+msgstr "Закончились маски Quartz"
 
 #: devQuartz.c:1031
-#, fuzzy
 msgid "Failed to create Quartz mask"
-msgstr "не могу разместить маски"
+msgstr "Не могу создать маску Quartz"
 
 #: devQuartz.c:1100
 msgid "Quartz groups exhausted (failed to increase maxGroups)"
-msgstr ""
+msgstr "Закончились группы Quartz (не удалось нарастить maxGroups)"
 
 #: devQuartz.c:1128 cairo/cairoFns.c:920
 msgid "Attempt to release non-existent group"
-msgstr ""
+msgstr "Попытка закрыть несуществующую группу"
 
 #: devQuartz.c:1157
 msgid "Quartz groups exhausted"
-msgstr ""
+msgstr "Закончились группы Quartz"
 
 #: devQuartz.c:1177
 msgid "Add compositing operator not supported; falling back to over"
-msgstr ""
+msgstr "Композиция сложением не поддерживается; использую перезапись"
 
 #: devQuartz.c:1265 cairo/cairoFns.c:877
 msgid "Groups exhausted"
-msgstr ""
+msgstr "Закончились группы"
 
 #: devQuartz.c:1655
 #, c-format
@@ -714,24 +710,23 @@ msgstr "нельзя найти шрифт семейства \"%s\""
 
 #: devQuartz.c:2682 cairo/cairoFns.c:528
 msgid "Attempt to reuse non-existent clipping path"
-msgstr ""
+msgstr "Попытка повторно использовать несуществующий контур усечения"
 
 #: devQuartz.c:2703 cairo/cairoFns.c:541
 msgid "Attempt to release non-existent clipping path"
-msgstr ""
+msgstr "Попытка закрыть несуществующий контур усечения"
 
 #: devQuartz.c:2719
 msgid "Ignored alpha mask (not supported on this device)"
-msgstr ""
+msgstr "Игнорирую маску прозрачности (не поддерживается этим устройством)"
 
 #: devQuartz.c:2758 cairo/cairoFns.c:688
 msgid "Attempt to release non-existent mask"
-msgstr ""
+msgstr "Попытка закрыть несуществующую маску"
 
 #: devQuartz.c:3040
-#, fuzzy
 msgid "Failed to load font"
-msgstr "не могу разместить список шрифтов"
+msgstr "Не могу загрузить шрифт"
 
 #: devQuartz.c:3135 devQuartz.c:3140
 msgid "invalid 'file' argument"
@@ -743,7 +738,7 @@ msgstr "неправильный размер устройства quartz()"
 
 #: devQuartz.c:3195
 msgid "unable to create device description"
-msgstr "не могу создать описание устройства."
+msgstr "не могу создать описание устройства"
 
 #: devQuartz.c:3245
 msgid "unable to create quartz() device target, given type may not be supported"
@@ -833,7 +828,7 @@ msgstr "Не хватает памяти для масштабирования. Отключаю alpha-blending"
 
 #: devWindows.c:2170
 msgid "a clipboard metafile can store only one figure."
-msgstr "метафайл в буфере обмена может хранить только одну фигуру"
+msgstr "метафайл в буфере обмена может хранить только одну фигуру."
 
 #: devWindows.c:2176
 #, c-format
@@ -903,15 +898,15 @@ msgstr "аргумент NA неправильный"
 
 #: group.c:38
 msgid "Group definition ignored (device is appending path)"
-msgstr ""
+msgstr "Игнорирую определение группы (устройство дописывает контур)"
 
 #: group.c:57
 msgid "Group use ignored (device is appending path)"
-msgstr ""
+msgstr "Игнорирую применение группы (устройство дописывает контур)"
 
 #: mask.c:37
 msgid "Mask ignored (device is appending path)"
-msgstr ""
+msgstr "Игнорирую маску (устройство дописывает контур)"
 
 #: qdBitmap.c:84
 #, c-format
@@ -946,44 +941,43 @@ msgstr "не могу запустить устройство '%s'"
 
 #: cairo/cairoFns.c:148
 msgid "Cairo patterns exhausted (failed to increase maxPatterns)"
-msgstr ""
+msgstr "Закончились паттерны Cairo (не удалось нарастить maxPatterns)"
 
 #: cairo/cairoFns.c:195
 msgid "Cairo patterns exhausted"
-msgstr ""
+msgstr "Закончились паттерны Cairo"
 
 #: cairo/cairoFns.c:392
 msgid "Cairo clipping paths exhausted (failed to increase maxClipPaths)"
-msgstr ""
+msgstr "Закончились контуры усечения Cairo (не удалось нарастить maxClipPaths)"
 
 #: cairo/cairoFns.c:439
 msgid "Cairo clipping paths exhausted"
-msgstr ""
+msgstr "Закончились контуры усечения Cairo"
 
 #: cairo/cairoFns.c:571
 msgid "Cairo masks exhausted (failed to increase maxMasks)"
-msgstr ""
+msgstr "Закончились маски Cairo (не удалось нарастить maxMasks)"
 
 #: cairo/cairoFns.c:619
 msgid "Cairo masks exhausted"
-msgstr ""
+msgstr "Закончились маски Cairo"
 
 #: cairo/cairoFns.c:649
 msgid "Ignored luminance mask (not supported on this device)"
-msgstr ""
+msgstr "Игнорирую маску светимости (не поддерживается этим устройством)"
 
 #: cairo/cairoFns.c:719
 msgid "Cairo groups exhausted (failed to increase maxGroups)"
-msgstr ""
+msgstr "Закончились группы Cairo (не удалось нарастить maxGroups)"
 
 #: cairo/cairoFns.c:773
 msgid "Cairo groups exhausted"
-msgstr ""
+msgstr "Закончились группы Cairo"
 
 #: cairo/cairoFns.c:2394
-#, fuzzy
 msgid "Font file not found; matching font family and face"
-msgstr "Семейство шрифтов не найдено в базе данных Quartz"
+msgstr "Файл шрифта не найден; ищу по семейству и названию шрифта"
 
 #~ msgid "Impossible to load Rbitmap.dll"
 #~ msgstr "Невозможно загрузить Rbitmap.dll"
