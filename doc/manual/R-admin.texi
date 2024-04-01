@@ -878,19 +878,9 @@ R --arch=@var{name} CMD make check[-devel|all]
 to select a sub-architecture to check.
 
 Sub-architectures were also used on Windows, but by selecting executables
-within the appropriate @file{bin} directory,
-@file{@var{R_HOME}/bin/x64}.  For
-backwards compatibility there are executables
-@file{@var{R_HOME}/bin/R.exe} and @file{@var{R_HOME}/bin/Rscript.exe}:
-these will run an executable from one of the subdirectories, which one
-being taken first from the
-@enindex R_ARCH
-@env{R_ARCH} environment variable, then from the
-@option{--arch} command-line option@footnote{with possible values
-@samp{i386}, @samp{x64}, @samp{32} and @samp{64}.} and finally from the
-installation default (which is 32-bit for a combined 32/64 bit @R{}
-installation). @R{} 4.2.0 follows the scheme, but supports and includes
-only 64-bit builds.
+within the appropriate @file{bin} directory such as
+@file{@var{R_HOME}/bin/x64}. As from @R{} 4.2.0 only thw @samp{x64}
+subdirectory is used.
 
 
 @node Other Options, Testing a Unix-alike Installation, Sub-architectures, Installing R under Unix-alikes
@@ -927,7 +917,7 @@ case-changing (@code{wctrans}) and width (@code{wcwidth} and
 Replacement of the classification functions has been done for many years
 on macOS and @abbr{AIX} (and Windows): option @option{--with-internal-iswxxxxx}
 allows this to be suppressed on those platforms or used on others.
-Replacing the case-changing functions was new in @R{} 4.1.0 and the
+Replacing the case-changing functions was new in @R{} 4.1.0 and became the
 default on macOS (and on Windows since @R{} 4.2.0).  Replacement of the
 width functions has also been done for many years and remains the
 default.  These options will only matter to those working with non-ASCII
@@ -1395,7 +1385,7 @@ The @file{bin/windows} directory of a @acronym{CRAN} site contains
 binaries for a base distribution and a large number of add-on packages
 from @acronym{CRAN} to run on 64-bit @cputype{x86_64} Windows.
 
-R is best tested on current versions of Windows 10 and Windows Server 2022
+R is most tested on current versions of Windows 10 and Windows Server 2022
 with UTF-8 as the charset encoding.  It works also on Windows 11.  It runs
 on older versions of Windows, but normally with other charset encoding and
 may require manual installation of the Universal C Runtime (@abbr{UCRT}).
@@ -1446,15 +1436,15 @@ for Windows}. See
 @uref{https://CRAN.R-project.org/bin/windows/base/howto-R-devel.html, Building
 R and packages} for more details on how to use it.
 
-The toolset includes compilers (GCC version 13.2.0 with selected additional
-patches) and runtime libraries from @uref{http://mingw-w64.org/,the
-`@I{MinGW-w64}' project} and a number of pre-compiled static libraries and
-headers used by @R{} and @R{} packages, compiled by
-@uref{https://mxe.cc/,'MXE'} (M cross environment, with updates
-maintained by @I{Tomas Kalibera}).
-The toolset also includes build tools from the
-@uref{https://www.msys2.org/, the 'MSYS2' project}.  Additional build tools
-packaged by 'MSYS2' may be installed via a package manager (@samp{pacman}).
+The toolset includes compilers (currently GCC version 13.2.0 with
+selected additional patches) and runtime libraries from
+@uref{http://mingw-w64.org/,the `@I{MinGW-w64}' project} and a number of
+pre-compiled static libraries and headers used by @R{} and @R{}
+packages, compiled by @uref{https://mxe.cc/,'MXE'} (M cross environment,
+with updates maintained by @I{Tomas Kalibera}).  The toolset also
+includes build tools from the @uref{https://www.msys2.org/, the 'MSYS2'
+project}.  Additional build tools packaged by 'MSYS2' may be installed
+via a package manager (@samp{pacman}).
 
 There is also an experimental variant of @I{Rtools44} with support for 64-bit
 ARM CPUs (@I{aarch64}) via @I{LLVM} 17 toolchain using @command{clang}/@command{flang-new} compilers,
@@ -2128,9 +2118,8 @@ argument @code{repos} to @code{NULL}.  @code{Rgui.exe} has a menu
 @code{Packages} with a GUI interface to @code{install.packages},
 @code{update.packages} and @code{library}.
 
-Windows binary packages for @R{} are distributed as a single binary
-containing either or both architectures (32- and 64-bit). From @R{} 4.2.0,
-they always contain only the 64-bit architecture.
+Windows binary packages for @R{} ew distributed as a single binary
+containing.  Prior @R{} 4.2.0, they might contain only the 32-bit architecture.
 
 @c A few of the binary packages need other software to be installed on your
 @c system.
@@ -2642,7 +2631,7 @@ wise to have a @file{src/contrib} area with a possibly empty
 @item 
 @code{"mac.binary"}: located at
 @file{bin/macosx/big-sur-arm64/contrib/@var{4.y}} or
-@file{bin/macosx/big-sur-x86_64/contrib/@var{4.y}}for the @acronym{CRAN}
+@file{bin/macosx/big-sur-x86_64/contrib/@var{4.y}} for the @acronym{CRAN}
 builds for macOS for @R{} versions @var{4.y.z}, containing @file{.tgz}
 files. (@file{bin/macosx/contrib/@var{4.y}} for @code{@var{y}} = 0, 1 or 2.)
 @end itemize
@@ -2827,7 +2816,7 @@ in most of the Chinese-speaking world.
 macOS supports locales in its own particular way, but the @R{} GUI tries to
 make this easier for users. See
 @uref{https://developer.apple.com/library/archive/documentation/MacOSX/Conceptual/BPInternational/}
-for how users can set their locales.  As with Windows, end users will
+for how users can set their locales.  End users will
 generally only see lists of languages/territories.  Users of @R{} in a
 terminal may need to set the locale to something like @samp{en_GB.UTF-8}
 if it defaults to @samp{C} (as it sometimes does when logging in
