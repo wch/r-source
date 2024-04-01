@@ -289,7 +289,7 @@ src/main/xspline.c
 src/modules/lapack/dlapack.f, cmplx.f, dlamc.f, *.f90
 
   Extracted from
-  *  -- LAPACK computational routine (version 3.11.0) --
+  *  -- LAPACK computational routine (version 3.12.0) --
   *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
   *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
   *     November 2017
@@ -298,17 +298,17 @@ src/modules/lapack/dlapack.f, cmplx.f, dlamc.f, *.f90
   For version 3.7.0, many of the copyright dates were updated
   even for routines which have not been changed for years.
 
-  LAPACK 3.11.0 contains a LICENSE file, copied to src/modules/lapack
+  LAPACK 3.12.0 contains a LICENSE file, copied to src/modules/lapack
   (but many of these routines were originally copied from earlier
   versions of LAPACK).  For binary distributions it is reproduced here:
 
   --- src/modules/lapack/LICENSE ---
-  Copyright (c) 1992-2022 The University of Tennessee and The University
+  Copyright (c) 1992-2023 The University of Tennessee and The University
                           of Tennessee Research Foundation.  All rights
                           reserved.
-  Copyright (c) 2000-2022 The University of California Berkeley. All
+  Copyright (c) 2000-2023 The University of California Berkeley. All
                           rights reserved.
-  Copyright (c) 2006-2022 The University of Colorado Denver.  All rights
+  Copyright (c) 2006-2023 The University of Colorado Denver.  All rights
                           reserved.
 
   $COPYRIGHT$
@@ -356,14 +356,14 @@ src/modules/lapack/dlapack.f, cmplx.f, dlamc.f, *.f90
 
 src/extra/blas/*.{f,f90}
 
-These are derived from the LAPACK 3.11.0 sources, so the previous
+These are derived from the LAPACK 3.12.0 sources, so the previous
 item applies.
 
 src/extra/xdr/*
 
   Copyright (2010) Oracle America, Inc.
 
-  See the file src/extra/xdr/copyrght.txt The requires the licence to
+  See the file src/extra/xdr/copyrght.txt. That requires the licence to
   be included in binary distributions, so we repeat it here:
 
  * Copyright (c) 2010, Oracle America, Inc.
@@ -819,5 +819,57 @@ is:
   LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
   ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
   POSSIBILITY OF SUCH DAMAGE.
+
+	---------------------------------------------------
+
+Binary distributions of R may include compiled code from an external
+static LAPACK library whose license is give above (possibly with a
+differnt version and date).
+
+	---------------------------------------------------
+
+
+Binary distributions of R may include compiled code from the libjpeg
+library which requires us to state
+
+""this software is based in part on the work of the Independent JPEG Group".
+
+(https://jpegclub.org/reference/libjpeg-license/)
+
+	---------------------------------------------------
+
+Binary distributions of R may include compiled code from the webp
+library (linked from libtiff) whose licence requires inclusion in
+binary distributions:
+
+Copyright (c) 2010, Google Inc. All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are
+met:
+
+  * Redistributions of source code must retain the above copyright
+    notice, this list of conditions and the following disclaimer.
+
+  * Redistributions in binary form must reproduce the above copyright
+    notice, this list of conditions and the following disclaimer in
+    the documentation and/or other materials provided with the
+    distribution.
+
+  * Neither the name of Google nor the names of its contributors may
+    be used to endorse or promote products derived from this software
+    without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 	---------------------------------------------------
