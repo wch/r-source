@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2024-03-27 16:14\n"
+"POT-Creation-Date: 2024-04-01 09:28\n"
 "PO-Revision-Date: 2024-03-19 03:05+0000\n"
 "Last-Translator: Michael Chirico <michaelchirico4@gmail.com>\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -34,13 +34,6 @@ msgstr "help(\"Deprecated\") と help(\"%s-deprecated\") を見て下さい"
 
 msgid "See help(\"Deprecated\")"
 msgstr "help(\"Deprecated\") を見て下さい"
-
-msgid "unsupported value of _R_DEPRECATED_IS_R_,"
-msgstr ""
-
-#, fuzzy
-msgid ", will be ignored"
-msgstr "'drop' 引数は無視されます"
 
 msgid "argument to 'La.svd' must be numeric or complex"
 msgstr "'La.svd' への引数は数値か複素数でなければなりません"
@@ -1957,6 +1950,10 @@ msgid_plural ""
 msgstr[0] ""
 "%s中:\n"
 " 余分な引数 %s は無視されます"
+
+#, fuzzy
+#~ msgid ", will be ignored"
+#~ msgstr "'drop' 引数は無視されます"
 
 #~ msgid "norm '%s' currently always uses exact = FALSE"
 #~ msgstr " norm '%s' は現在は常に exact = FALSE を使用します "

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.5.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2024-03-27 16:14\n"
+"POT-Creation-Date: 2024-04-01 09:28\n"
 "PO-Revision-Date: 2021-01-27 10:34+0100\n"
 "Last-Translator: Wei-Lun Chao <bluebat@member.fsf.org>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -38,13 +38,6 @@ msgstr "見 help(\"Deprecated\")和 help(\"%s-deprecated\")。"
 
 msgid "See help(\"Deprecated\")"
 msgstr "見 help(\"Deprecated\")"
-
-msgid "unsupported value of _R_DEPRECATED_IS_R_,"
-msgstr ""
-
-#, fuzzy
-msgid ", will be ignored"
-msgstr "忽略 'drop' 引數"
 
 msgid "argument to 'La.svd' must be numeric or complex"
 msgstr "'La.svd' 的引數必須是數值或複數值"
@@ -1946,6 +1939,10 @@ msgid_plural ""
 msgstr[0] ""
 "於 %s：\n"
 " 額外引數 %s 忽略不用"
+
+#, fuzzy
+#~ msgid ", will be ignored"
+#~ msgstr "忽略 'drop' 引數"
 
 #~ msgid "norm '%s' currently always uses exact = FALSE"
 #~ msgstr "範數 '%s' 現在總是用 exact = FALSE"

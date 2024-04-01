@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-4.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2024-03-27 16:14\n"
+"POT-Creation-Date: 2024-04-01 09:29\n"
 "PO-Revision-Date: 2024-03-19 12:53+0000\n"
 "Last-Translator: Michael Chirico <michaelchirico4@gmail.com>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -1590,6 +1590,9 @@ msgstr "Nicht zu parsende 'response' \"%s\"; Nutzung ist veraltet.  Nutze as.nam
 
 msgid "'termobj' must be a object of class %s"
 msgstr "'termobj' muss ein Objekt aus der Klasse %s sein"
+
+msgid "setting '%s' in terms.formula() is deprecated"
+msgstr ""
 
 msgid "variable '%s' was fitted with type \"%s\" but type \"%s\" was supplied"
 msgstr "Variable '%s' wurde mit Typ \"%s\" gefitted, angegeben wurde aber Typ \"%s\""

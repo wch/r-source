@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2024-03-27 16:14\n"
+"POT-Creation-Date: 2024-04-01 09:28\n"
 "PO-Revision-Date: 2024-02-28 00:52+0000\n"
 "Last-Translator: Michael Chirico <michaelchirico4@gmail.com>\n"
 "Language-Team: none\n"
@@ -33,12 +33,6 @@ msgstr "انظر help(\"Deprecated\") وhelp(\"%s-deprecated\") ."
 
 msgid "See help(\"Deprecated\")"
 msgstr "انظرhelp(\"Deprecated\")"
-
-msgid "unsupported value of _R_DEPRECATED_IS_R_,"
-msgstr ""
-
-msgid ", will be ignored"
-msgstr ""
 
 msgid "argument to 'La.svd' must be numeric or complex"
 msgstr "الوسيط إلى \"La.svd\" يجب أن يكون رقمي أو معقد"

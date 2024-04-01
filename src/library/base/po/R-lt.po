@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2024-03-27 16:14\n"
+"POT-Creation-Date: 2024-04-01 09:28\n"
 "PO-Revision-Date: 2021-01-27 10:37+0100\n"
 "Last-Translator: <r.zakauskas@gmail.com;gabriele.dauksaite@gmail.com>\n"
 "Language-Team: Lithuanian\n"
@@ -37,13 +37,6 @@ msgstr "Žiūrėkite help(\"Deprecated\") ir help(\"%s-deprecated\")."
 
 msgid "See help(\"Deprecated\")"
 msgstr "Žiūrėkite help(\"Deprecated\")"
-
-msgid "unsupported value of _R_DEPRECATED_IS_R_,"
-msgstr ""
-
-#, fuzzy
-msgid ", will be ignored"
-msgstr "'drop' argumentas bus ignoruojamas"
 
 msgid "argument to 'La.svd' must be numeric or complex"
 msgstr "argumentas 'La.svd' turi būti skaitinis arba kompleksinis"
@@ -1995,6 +1988,10 @@ msgstr[1] ""
 msgstr[2] ""
 "%s :\n"
 "%s papildomų argumentų bus ignoruojama"
+
+#, fuzzy
+#~ msgid ", will be ignored"
+#~ msgstr "'drop' argumentas bus ignoruojamas"
 
 #~ msgid "norm '%s' currently always uses exact = FALSE"
 #~ msgstr "norma '%s' šiuo metu visada naudoja exact = FALSE"

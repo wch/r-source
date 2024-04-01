@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2024-03-27 16:14\n"
+"POT-Creation-Date: 2024-04-01 09:28\n"
 "PO-Revision-Date: 2012-09-28 22:18+0200\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <i18n-nn@lister.ping.uio.no>\n"
@@ -34,13 +34,6 @@ msgstr "Sjå help(\"Deprecated\") og help(\"%s-deprecated\")."
 
 msgid "See help(\"Deprecated\")"
 msgstr "Sjå help(\"Deprecated\")"
-
-msgid "unsupported value of _R_DEPRECATED_IS_R_,"
-msgstr ""
-
-#, fuzzy
-msgid ", will be ignored"
-msgstr "«drop»-argumentet vert ignorert"
 
 msgid "argument to 'La.svd' must be numeric or complex"
 msgstr "argument til «La.svd» må vera numeriske eller komplekse"
@@ -2081,6 +2074,10 @@ msgid_plural ""
 " extra arguments %s will be disregarded"
 msgstr[0] "ekstraargument(a) «%s» vert ikkje brukt(e)"
 msgstr[1] "ekstraargument(a) «%s» vert ikkje brukt(e)"
+
+#, fuzzy
+#~ msgid ", will be ignored"
+#~ msgstr "«drop»-argumentet vert ignorert"
 
 #~ msgid "norm '%s' currently always uses exact = FALSE"
 #~ msgstr "norma «%s» brukar alltid «exact = FALSE»"

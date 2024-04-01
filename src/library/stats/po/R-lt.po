@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: stats 4.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2024-03-27 16:14\n"
+"POT-Creation-Date: 2024-04-01 09:29\n"
 "PO-Revision-Date: 2021-10-15 18:44+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -1581,6 +1581,9 @@ msgstr "Nepalyginamas 'response' \"%s\"; naudojimas prieštarauja.  Naudokite as
 
 msgid "'termobj' must be a object of class %s"
 msgstr "'termobj' turi būti klasės %s objektas"
+
+msgid "setting '%s' in terms.formula() is deprecated"
+msgstr ""
 
 msgid "variable '%s' was fitted with type \"%s\" but type \"%s\" was supplied"
 msgstr "kintamasis '%s' buvo pritaikytas tipui \"%s\", bet tipas \"%s\" buvo pateiktas"

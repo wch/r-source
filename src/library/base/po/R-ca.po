@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2024-03-27 16:14\n"
+"POT-Creation-Date: 2024-04-01 09:28\n"
 "PO-Revision-Date: 2023-11-20 03:05+0000\n"
 "Last-Translator: Robert Castelo <robert.castelo@upf.edu>\n"
 "Language-Team: none\n"
@@ -33,13 +33,6 @@ msgstr "Vegeu help(\"Deprecated\") i help(\"%s-deprecated\")."
 
 msgid "See help(\"Deprecated\")"
 msgstr "Vegeu help(\"Deprecated\")"
-
-msgid "unsupported value of _R_DEPRECATED_IS_R_,"
-msgstr ""
-
-#, fuzzy
-msgid ", will be ignored"
-msgstr "s'ignorarà l'argument «%s»"
 
 msgid "argument to 'La.svd' must be numeric or complex"
 msgstr "l'argument de «La.svd» ha de ser numèric o complex"
@@ -1942,6 +1935,10 @@ msgstr[0] ""
 msgstr[1] ""
 "A %s :\n"
 " s'ignoraran els arguments addicionals %s"
+
+#, fuzzy
+#~ msgid ", will be ignored"
+#~ msgstr "s'ignorarà l'argument «%s»"
 
 #~ msgid "norm '%s' currently always uses exact = FALSE"
 #~ msgstr "la norma «%s» actualment sempre usa «exact = FALSE»"

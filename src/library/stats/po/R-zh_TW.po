@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.5.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2024-03-27 16:14\n"
+"POT-Creation-Date: 2024-04-01 09:29\n"
 "PO-Revision-Date: 2018-09-16 23:38+0800\n"
 "Last-Translator: Wei-Lun Chao <bluebat@member.fsf.org>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -1597,6 +1597,9 @@ msgstr ""
 
 msgid "'termobj' must be a object of class %s"
 msgstr "'termobj' 必須是類別為 %s 的物件"
+
+msgid "setting '%s' in terms.formula() is deprecated"
+msgstr ""
 
 msgid "variable '%s' was fitted with type \"%s\" but type \"%s\" was supplied"
 msgstr "變數 '%s' 是由\"%s\"類別擬合而成，與提供的類別\"%s\"不符合"

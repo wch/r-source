@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2024-03-27 16:14\n"
+"POT-Creation-Date: 2024-04-01 09:28\n"
 "PO-Revision-Date: 2024-03-20 03:05+0000\n"
 "Last-Translator: \"Luis D. Verde Arregoitia\" <luisd@ciencias.unam.mx>\n"
 "Language-Team: none\n"
@@ -33,13 +33,6 @@ msgstr "Ver help(\"Deprecated\") y help(\"%s-deprecated\")."
 
 msgid "See help(\"Deprecated\")"
 msgstr "Ver help(\"Deprecated\")"
-
-msgid "unsupported value of _R_DEPRECATED_IS_R_,"
-msgstr ""
-
-#, fuzzy
-msgid ", will be ignored"
-msgstr "el argumento '%s' será ignorado"
 
 msgid "argument to 'La.svd' must be numeric or complex"
 msgstr "el argumento para 'La.svd' debe ser numérico o complejo"
@@ -1995,6 +1988,10 @@ msgid_plural ""
 " extra arguments %s will be disregarded"
 msgstr[0] ""
 msgstr[1] ""
+
+#, fuzzy
+#~ msgid ", will be ignored"
+#~ msgstr "el argumento '%s' será ignorado"
 
 #, fuzzy
 #~ msgid "package %s does not have a namespace and should be re-installed"

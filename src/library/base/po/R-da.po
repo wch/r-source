@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2024-03-27 16:14\n"
+"POT-Creation-Date: 2024-04-01 09:28\n"
 "PO-Revision-Date: 2015-03-25 14:20+0200\n"
 "Last-Translator: Joe Hansen <joedalton2@yahoo.dk>\n"
 "Language-Team: Danish <debian-l10n-danish@lists.debian.org>\n"
@@ -44,13 +44,6 @@ msgstr "Se help(\"Deprecated\") og help(\"%s-deprecated\")."
 
 msgid "See help(\"Deprecated\")"
 msgstr "Se help(\"Deprecated\")"
-
-msgid "unsupported value of _R_DEPRECATED_IS_R_,"
-msgstr ""
-
-#, fuzzy
-msgid ", will be ignored"
-msgstr "'drop'-argument vil blive ignoreret"
 
 msgid "argument to 'La.svd' must be numeric or complex"
 msgstr "argument for 'La.svd' skal være numerisk eller kompleks"
@@ -2005,6 +1998,10 @@ msgid_plural ""
 " extra arguments %s will be disregarded"
 msgstr[0] "ekstra argument %s vil blive ignoreret"
 msgstr[1] "ekstra argumentet %s vil blive ignoreret"
+
+#, fuzzy
+#~ msgid ", will be ignored"
+#~ msgstr "'drop'-argument vil blive ignoreret"
 
 #~ msgid "norm '%s' currently always uses exact = FALSE"
 #~ msgstr "norm '%s' bruger i øjeblikket altid præcis = FALSE"

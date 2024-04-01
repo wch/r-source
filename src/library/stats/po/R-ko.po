@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2024-03-27 16:14\n"
+"POT-Creation-Date: 2024-04-01 09:29\n"
 "PO-Revision-Date: 2018-04-09 12:10-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team: \n"
@@ -1595,6 +1595,9 @@ msgstr ""
 
 msgid "'termobj' must be a object of class %s"
 msgstr "'termobj'은 반드시 클래스 %s인 객체이어야 합니다"
+
+msgid "setting '%s' in terms.formula() is deprecated"
+msgstr ""
 
 msgid "variable '%s' was fitted with type \"%s\" but type \"%s\" was supplied"
 msgstr "변수 '%1$s'는 유형 \"%2$s\"과 함께 적합되었어야 하는데 유형 \"%3$s\"이 제공되었었습니다"

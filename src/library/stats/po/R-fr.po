@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.0.4\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2024-03-27 16:14\n"
+"POT-Creation-Date: 2024-04-01 09:29\n"
 "PO-Revision-Date: 2023-04-14 03:05+0000\n"
 "Last-Translator: Hugo Gruson <hugo.gruson@normalesup.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -1588,6 +1588,9 @@ msgstr "Impossible d’analyser le code de la reponse \"%s\" ; cet usage est obs
 
 msgid "'termobj' must be a object of class %s"
 msgstr "'termobj' doit être un objet de classe %s"
+
+msgid "setting '%s' in terms.formula() is deprecated"
+msgstr ""
 
 msgid "variable '%s' was fitted with type \"%s\" but type \"%s\" was supplied"
 msgstr "la variable '%s' a été ajustée avec le type \"%s\" mais le type \"%s\" a été fourni"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2024-03-27 16:14\n"
+"POT-Creation-Date: 2024-04-01 09:28\n"
 "PO-Revision-Date: 2023-12-20 13:03+0000\n"
 "Last-Translator: Shun Wang <shuonwang@gmail.com>\n"
 "Language-Team: Chinese\n"
@@ -38,13 +38,6 @@ msgstr "见help(\"Deprecated\")和help(\"%s-deprecated\")。"
 
 msgid "See help(\"Deprecated\")"
 msgstr "见help(\"Deprecated\")"
-
-msgid "unsupported value of _R_DEPRECATED_IS_R_,"
-msgstr ""
-
-#, fuzzy
-msgid ", will be ignored"
-msgstr "忽略'%s'参数值"
 
 msgid "argument to 'La.svd' must be numeric or complex"
 msgstr "'La.svd'的参数必需是数值或复数值"
@@ -1942,6 +1935,10 @@ msgid_plural ""
 "In %s :\n"
 " extra arguments %s will be disregarded"
 msgstr[0] "额外参数%s忽略不用"
+
+#, fuzzy
+#~ msgid ", will be ignored"
+#~ msgstr "忽略'%s'参数值"
 
 #~ msgid "norm '%s' currently always uses exact = FALSE"
 #~ msgstr "范数'%s'现在总是用exact = FALSE"
