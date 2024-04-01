@@ -27,7 +27,7 @@
 
   \subsection{DEPRECATED AND DEFUNCT}{
     \itemize{
-      \item \code{is.R()} is defunct.  Environnment variable
+      \item \code{is.R()} is defunct.  Environment variable
       \env{_R_DEPRECATED_IS_R_} no longer has any effect.
     }
   }
@@ -387,7 +387,7 @@
       support: for others macros \code{CXX} and \code{CXXSTD} can be set
       in file \file{config.site} to provide a fallback if needed.
 
-      The ObjectiveC++ compiler now by default uses the standard
+      The Objective-C++ compiler now by default uses the standard
       selected by \R for C++ (currently C++17) rather than the default
       standard for the C++ compiler (which on macOS is still C++98).
     }
@@ -756,15 +756,15 @@
       \code{names()} and \code{colnames()}; reported by \I{Davis Vaughan}
       on the R-devel list.
 
-      \item Internal Mathlib function \code{stirlerr(n)} is now almost
+      \item Internal \I{Mathlib} function \code{stirlerr(n)} is now almost
       fully (52-bit) accurate for all \eqn{n >= ~5.9} and more accurate
       also in the range \eqn{1 -- 5.9}.  This entails small (\dQuote{after
-      12th decimal}) changes in density functions, e.g., \code{dgamma()}
+      \I{12th} decimal}) changes in density functions, e.g., \code{dgamma()}
       in  \emph{some} regions of their support.   The fix was partly
       prompted by \I{Morten Welinder}'s \PR{18640}.
 
       \item Numbers like \code{9876543.2} are now considered non-integer by
-      Mathlib internal \code{R_nonint()}, amending original fix of \PR{15734}.
+      \I{Mathlib} internal \code{R_nonint()}, amending original fix of \PR{15734}.
     }
   }
 }
