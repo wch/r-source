@@ -3699,7 +3699,7 @@ if test "${have_lzma}" = yes; then
   AC_CHECK_HEADERS(lzma.h, [have_lzma=yes], [have_lzma=no])
 fi
 if test "x${have_lzma}" = xyes; then
-AC_CACHE_CHECK([if lzma version >= 5.0.3], [r_cv_have_lzma],
+AC_CACHE_CHECK([if lzma version >= 5.0.3, < 5.6.0], [r_cv_have_lzma],
 [AC_LANG_PUSH(C)
 r_save_LIBS="${LIBS}"
 LIBS="-llzma ${LIBS}"
@@ -3711,8 +3711,10 @@ AC_RUN_IFELSE([AC_LANG_SOURCE([[
 int main(void) {
     unsigned int ver = lzma_version_number();
     // This is 10000000*major + 10000*minor + 10*revision + [012]
+    // Where 2 is 'stable'.
     // I.e. xyyyzzzs and 5.1.2 would be 50010020
-    exit(ver < 50000030);
+    // 2024-04-01: exclude 5.6.[01] as possibly insecure.
+    exit ((ver < 50000030) & (ver > 50060000) & (ver < 50060020));
 }
 ]])], [r_cv_have_lzma=yes], [r_cv_have_lzma=no], [r_cv_have_lzma=no])
 LIBS="${r_save_LIBS}"
