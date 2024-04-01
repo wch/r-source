@@ -617,7 +617,7 @@ Rd2HTML <-
                     if (standalone)
                         paste0("../../", urlify(package), "/help/", topic2filename(topic), ".html")
                     else
-                        topic2href(topic)
+                        topic2href(topic) # htmlfile is actually a link target within current file
                 writeHref()
                 return()
 
