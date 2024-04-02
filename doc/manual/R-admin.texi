@@ -3455,7 +3455,7 @@ historically has been part of @file{libc} on a Unix-alike.  (In
 principle @command{man xdr_string} should tell you which library is
 needed, but it often does not: on some OSes it is provided by
 @code{libnsl}.)  However some builds@footnote{Including that used by
-Fedora.} of @code{glibc} omit or hide it with the intention that the
+Fedora 28.} of @code{glibc} omit or hide it with the intention that the
 @acronym{TI-RPC} library be used, in which case @code{libtirpc} (and its
 development version) should be installed, and its headers@footnote{@R{}
 uses @file{rpc/xdr.h} but that includes @file{netconfig.h} from the top
@@ -3495,8 +3495,8 @@ a useful checklist for other systems:
 @example
 bzip2 cairo fontconfig freetype fribidi gcc gcc-gfortran gcc-c++ glib2
 glibc harfbuzz lapack libX11 libXext libXt libcurl libdeflate libicu
-libjpeg libpng libtiff libtirpc libxcrypt ncurses pango
-pkgconf-pkg-config pcre2 readline tcl tk xz zlib
+libjpeg libpng libtiff libxcrypt ncurses pango pkgconf-pkg-config pcre2
+readline tcl tk xz zlib
 @end example
 @noindent
 plus, preferably a TeX installation and Java.
