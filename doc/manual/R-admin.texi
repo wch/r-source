@@ -879,7 +879,7 @@ to select a sub-architecture to check.
 
 Sub-architectures were also used on Windows, but by selecting executables
 within the appropriate @file{bin} directory such as
-@file{@var{R_HOME}/bin/x64}. As from @R{} 4.2.0 only thw @samp{x64}
+@file{@var{R_HOME}/bin/x64}. As from @R{} 4.2.0 only the @samp{x64}
 subdirectory is used.
 
 

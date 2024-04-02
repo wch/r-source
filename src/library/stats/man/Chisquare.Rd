@@ -96,7 +96,7 @@ rchisq(n, df, ncp = 0)
 
   Ding, C. G. (1992)
   Algorithm AS275: Computing the non-central chi-squared
-  distribution function. \emph{Appl.Statist.}, \bold{41} 478--482.
+  distribution function. \emph{Applied Statistics}, \bold{41} 478--482.
 
   which computes the lower tail only (so the upper tail suffers from
   cancellation and a warning will be given when this is likely to be

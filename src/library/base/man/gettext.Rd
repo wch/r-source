@@ -98,7 +98,7 @@ Sys.setLanguage(lang, unset = "en")
   emptying) the cache of already translated strings; it returns \code{TRUE}
   when \abbr{NLS} is enabled.
 
-  The utility \code{Sys.setlanguage(lang)} combines setting the
+  The utility \code{Sys.setLanguage(lang)} combines setting the
   \env{LANGUAGE} environment variable with flushing the translation cache
   by \code{bindtextdomain(NULL)}.
 }
