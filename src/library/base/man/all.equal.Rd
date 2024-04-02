@@ -221,10 +221,13 @@ all.equalShow <- function (...) {
 # checks, showing error in any case:
 stopifnot(all.equalShow(x1, x1.)) # -> relative err: 8.66002e-10
 tryCatch(error=identity, stopifnot(all.equalShow(x1, 2*x1))) -> eAe
-cat(eaMsg <- conditionMessage(eAe), "\n")
-stopifnot(inherits(eAe, "error"), # stopifnot() giving smart msg:
-          grepl("are not equal", eaMsg, fixed=TRUE))
-
+stopifnot(inherits(eAe, "error"))
+# stopifnot(all.equal....()) giving smart msg:
+cat(conditionMessage(eAe), "\n")
+\dontshow{
+if (Sys.getenv("LANGUAGE") == "en" || !capabilities("NLS"))
+  stopifnot(grepl("are not equal", conditionMessage(eAe), fixed=TRUE))
+}
 two <- structure(2, foo = 1, class = "bar")
 all.equal(two^20, 2^20) # lots of diff
 all.equal(two^20, 2^20, check.attributes = FALSE)# "target is bar, current is numeric"
