@@ -1219,7 +1219,7 @@ wtr_build_spec(const wchar_t *s, struct wtr_spec *trs) {
 	    _new->type = WTR_RANGE;
 	    if (s[i] > s[i + 2])
 		error(_("decreasing range specification ('%lc-%lc')"),
-		      s[i], s[i + 2]);
+		      (wint_t)s[i], (wint_t)s[i + 2]);
 	    _new->u.r.first = s[i];
 	    _new->u.r.last = s[i + 2];
 	    i = i + 3;
