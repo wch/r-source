@@ -134,7 +134,7 @@ double attribute_hidden stirlerr(double n)
 	/* if (n >  5.7)	return (S0-(S1-(S2-(S3-(S4-(S5-(S6-(S7-(S8-(S9-(S10-(S11-(S12-S13/nn)/nn)/nn)/nn)/nn)/nn)/nn)/nn)/nn)/nn)/nn)/nn)/nn)/n; skip k= 14 */
 	if (n >  6.1)	return (S0-(S1-(S2-(S3-(S4-(S5-(S6-(S7-(S8-(S9-(S10-(S11-(S12-(S13-S14/nn)/nn)/nn)/nn)/nn)/nn)/nn)/nn)/nn)/nn)/nn)/nn)/nn)/nn)/n; // k = 15
 	/* ....		return (S0-(S1-(S2-(S3-(S4-(S5-(S6-(S7-(S8-(S9-(S10-(S11-(S12-(S13-(S14-S15/nn)/nn)/nn)/nn)/nn)/nn)/nn)/nn)/nn)/nn)/nn)/nn)/nn)/nn)/nn)/n;
-	 * skip order k=16 : never "good" for double prec
+	 * skip order k=16 : never "good" for double prec */
 	/* 6.1 >= n > 5.25 */
 	return (S0-(S1-(S2-(S3-(S4-(S5-(S6-(S7-(S8-(S9-(S10-(S11-(S12-(S13-(S14-(S15-S16/nn)/nn)/nn)/nn)/nn)/nn)/nn)/nn)/nn)/nn)/nn)/nn)/nn)/nn)/nn)/nn)/n;
 	/* return (S0-(S1-(S2-(S3-(S4-(S5-(S6-(S7-(S8-(S9-(S10-(S11-(S12-(S13-(S14-(S15-(S16-S17/nn)/nn)/nn)/nn)/nn)/nn)/nn)/nn)/nn)/nn)/nn)/nn)/nn)/nn)/nn)/nn)/nn)/n; */
@@ -147,6 +147,6 @@ double attribute_hidden stirlerr(double n)
 	if (n > 86)	return (S0-(S1-(S2 -S3/nn)/nn)/nn)/n;
 	if (n > 27)	return (S0-(S1-(S2-(S3 -S4/nn)/nn)/nn)/nn)/n;
 	/* 23.5 < n <= 27 */
-	                return (S0-(S1-(S2-(S3-(S4 -S5/nn)/nn)/nn)/nn)/nn)/n;
+	return (S0-(S1-(S2-(S3-(S4 -S5/nn)/nn)/nn)/nn)/nn)/n;
     }
 }
