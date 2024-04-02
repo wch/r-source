@@ -1,6 +1,6 @@
 % File src/library/stats/man/isoreg.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2023 R Core Team
+% Copyright 1995-2024 R Core Team
 % Distributed under GPL 2 or later
 
 \name{isoreg}
@@ -46,13 +46,16 @@ isoreg(x, y = NULL)
   \item{call}{the \code{\link{call}} to \code{isoreg()} used.}
 }
 \note{
+  The inputs can be long vectors, but \code{iKnots} will wrap around at
+  \eqn{2^{31}{2^31}.
+  
   The code should be improved to accept \emph{weights} additionally and
   solve the corresponding weighted least squares problem.\cr
   \sQuote{Patches are welcome!}
 }
 \references{
   Barlow, R. E., Bartholomew, D. J., Bremner, J. M., and Brunk, H. D. (1972)
-  \emph{Statistical inference under order restrictions}; Wiley, London.
+  \emph{Statistical Inference under Order Restrictions}; Wiley, London.
 
   Robertson, T., Wright, F. T. and Dykstra, R. L. (1988)
   \emph{Order Restricted Statistical Inference}; Wiley, New York.
