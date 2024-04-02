@@ -89,7 +89,7 @@ packageStatus(lib.loc = NULL, repositories = NULL, method,
 }
 \examples{
 \donttest{
-x <- packageStatus()
+x <- packageStatus(repositories = contrib.url(findCRANmirror("web")))
 print(x)
 summary(x)
 }
