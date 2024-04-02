@@ -47,7 +47,7 @@ isoreg(x, y = NULL)
 }
 \note{
   The inputs can be long vectors, but \code{iKnots} will wrap around at
-  \eqn{2^{31}{2^31}.
+  \eqn{2^{31}}{2^31}.
   
   The code should be improved to accept \emph{weights} additionally and
   solve the corresponding weighted least squares problem.\cr
