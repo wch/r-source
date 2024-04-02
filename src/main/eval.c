@@ -7543,6 +7543,7 @@ static SEXP bcEval_loop(struct bcEval_locals *ploc)
   RESTORE_BCEVAL_LOCALS(&locals);
 
   BCODE *currentpc = NULL;
+  void *oldbcpc = R_BCpc;
   R_BCpc = &currentpc;
 
   static int evalcount = 0;
@@ -7552,6 +7553,7 @@ static SEXP bcEval_loop(struct bcEval_locals *ploc)
     OP(BCMISMATCH, 0): error(_("byte code version mismatch"));
     OP(RETURN, 0):
       if (R_BCFrame == 0) {
+	  R_BCpc = oldbcpc;
 	  SEXP retvalue = GETSTACK(-1);
 	  return retvalue;
       }
