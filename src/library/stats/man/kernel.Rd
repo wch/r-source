@@ -3,8 +3,6 @@
 % Copyright 1995-2024 R Core Team
 % Distributed under GPL 2 or later
 
-\newcommand{\bibcite}{#1}
-
 \name{kernel}
 \alias{kernel}
 \alias{bandwidth.kernel}

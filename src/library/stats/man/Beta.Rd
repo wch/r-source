@@ -3,8 +3,6 @@
 % Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
-\newcommand{\bibcite}{#1}
-
 \name{Beta}
 \alias{Beta}
 \alias{dbeta}

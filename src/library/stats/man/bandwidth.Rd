@@ -3,8 +3,6 @@
 % Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
-\newcommand{\bibcite}{#1}
-
 \name{bandwidth}
 \alias{bw.nrd0}
 \alias{bw.nrd}

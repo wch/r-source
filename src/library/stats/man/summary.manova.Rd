@@ -3,8 +3,6 @@
 % Copyright 1995-2008 R Core Team
 % Distributed under GPL 2 or later
 
-\newcommand{\bibcite}{#1}
-
 \name{summary.manova}
 \alias{summary.manova}
 \alias{print.summary.manova}

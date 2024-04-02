@@ -3,8 +3,6 @@
 % Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
-\newcommand{\bibcite}{#1}
-
 \name{stripchart}
 \title{1-D Scatter Plots}
 \alias{stripchart}
