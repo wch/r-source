@@ -3,7 +3,7 @@
  * Copyright (C) 1995  Brian Ripley
  * ---
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2003-2023	The R Core Team
+ *  Copyright (C) 2003-2024	The R Core Team
  *  Copyright (C) 2003-2023	The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -20,6 +20,8 @@
  *  along with this program; if not, a copy is available at
  *  https://www.R-project.org/Licenses/
  */
+
+// This is written to allow for long vectors, but the return values are not
 
 #include "modreg.h"
 
@@ -62,13 +64,13 @@ SEXP isoreg(SEXP y)
 	    }
 	}/* tmp := max{i= kn+1,.., n} slope(p[kn] -> p[i])  and
 	  *  ip = argmax{...}... */
-	INTEGER(iKnots)[n_ip++] = ip;
+	INTEGER(iKnots)[n_ip++] = (int) ip;
 	for (i = known; i < ip; i++)
 	    REAL(yf)[i] = (REAL(yc)[ip] - REAL(yc)[known]) / (ip - known);
     } while ((known = ip) < n);
 
     if (n_ip < n)
-	SET_VECTOR_ELT(ans, 3, lengthgets(iKnots, n_ip));
+	SET_VECTOR_ELT(ans, 3, xlengthgets(iKnots, n_ip));
     UNPROTECT(1);
     return(ans);
 }
