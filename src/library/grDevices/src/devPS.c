@@ -4568,12 +4568,12 @@ next_char:
 		else if (wc == 0x2605 || wc == 0x2737) fix = "*";
 		if (!fix) {
 		    if (fail)
-			error("conversion failure on '%s' in 'mbcsToSbcs': for %lc (U+%04X)", in, wc, wc);
+			error("conversion failure on '%s' in 'mbcsToSbcs': for %lc (U+%04X)", in, (wint_t)wc, (unsigned int)wc);
 		    else if(!silent)
-			warning("conversion failure on '%s' in 'mbcsToSbcs': for %lc (U+%04X)", in, wc, wc);
+			warning("conversion failure on '%s' in 'mbcsToSbcs': for %lc (U+%04X)", in, (wint_t)wc, (unsigned int)wc);
 		    fix = ".";  // default fix is one dot per char
 		} else if(!silent)
-		    warning("for '%s' in 'mbcsToSbcs': %s substituted for %lc (U+%04X)", in, fix, wc, wc);
+		    warning("for '%s' in 'mbcsToSbcs': %s substituted for %lc (U+%04X)", in, fix, (wint_t)wc, (unsigned int)wc);
 		size_t nfix = strlen(fix);
 		for (int j = 0; j < nfix; j++) *o_buf++ = *fix++;
 		o_len -= nfix; i_buf += clen; i_len -= clen;
