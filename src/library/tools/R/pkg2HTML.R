@@ -56,7 +56,7 @@
                 utils::download.file(package, destfile = file.path(destdir, basename(package)))
                 package <- file.path(destdir, basename(package))
             }
-            ## TODO: need to unpack first.
+            ## Unpack first.
             ## Copied from src/library/utils/R/unix/mac.install.R::unpackPkg
             tmpDir <- tempfile("pkg")
             if (!dir.create(tmpDir))
@@ -71,12 +71,13 @@
         }
         else {
             pkgdir <- if (is.null(dir)) find.package(package, lib.loc) else dir
-            Rd_db(package, dir, lib.loc, stages = stages)
+            if (is.null(dir)) Rd_db(package, , lib.loc, stages = stages)
+            else Rd_db(, dir, lib.loc, stages = stages)
         }
 
     ## create links database for help links. Level 0 links are
     ## obtained directly from the db, which is useful for non-installed packages.
-    Links0 <- .build_links_index(db, pkgdir)
+    Links0 <- .build_links_index(Rd_contents(db), basename(pkgdir))
     Links <- c(Links0, findHTMLlinks(pkgdir, level = 1))
     Links2 <- findHTMLlinks(level = 2)
     
@@ -111,7 +112,7 @@ pkg2HTML <- function(package, dir = NULL, lib.loc = NULL,
                      include_description = TRUE)
 {
     if (is.null(texmath)) texmath <- "katex"
-    hcontent <- .convert_package_rdfiles(package, dir, lib.loc,
+    hcontent <- .convert_package_rdfiles(package = package, dir = dir, lib.loc = lib.loc,
                                          Rhtml = Rhtml, hooks = hooks, ...)
     descfile <- attr(hcontent, "descfile")
     pkgname <- read.dcf(descfile, fields = "Package")[1, 1]
