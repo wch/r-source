@@ -2116,9 +2116,9 @@ argument @code{repos} to @code{NULL}.  @code{Rgui.exe} has a menu
 @code{Packages} with a GUI interface to @code{install.packages},
 @code{update.packages} and @code{library}.
 
-Windows binary packages for @R{} ew distributed as a single binary
-containing.  Prior to @R{} 4.2.0, they might contain only the 32-bit
-architecture.
+Windows binary packages for @R{} were distributed as a single binary
+containing either or both architectures (32- and 64-bit).  Prior to @R{}
+4.2.0, they might contain only the 32-bit architecture.
 
 @c A few of the binary packages need other software to be installed on your
 @c system.
