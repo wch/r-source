@@ -514,6 +514,10 @@
       Object-Oriented Programming Working Group.
 
       \item New function \code{pow1p(x,y)} for accurate \code{(1+x)^y}.
+
+      \item \code{mkCharLenCE} was incorrectly documented to take a
+      \code{size_t} length but was implemented with \code{int} (and
+      character strings in \R are limited to \eqn{2^{31 - 1}}{2^31 - 1} bytes).
     }
   }
 

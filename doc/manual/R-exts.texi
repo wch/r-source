@@ -14428,7 +14428,7 @@ with any other value causing the byte to produce no output.
 There is also
 
 @example
-SEXP mkCharLenCE(const char *, size_t, cetype_t);
+SEXP mkCharLenCE(const char *, int, cetype_t);
 @end example
 
 @noindent

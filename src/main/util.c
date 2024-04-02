@@ -903,7 +903,7 @@ attribute_hidden SEXP do_basename(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    size_t ff = ll;
 	    /* find start of file part */
 	    while(ff && pp[ff-1] != fsp) ff--;
-	    SET_STRING_ELT(ans, i, mkCharLenCE(pp+ff, ll-ff, CE_NATIVE));
+	    SET_STRING_ELT(ans, i, mkCharLenCE(pp+ff, (int)(ll-ff), CE_NATIVE));
 	}
     }
     UNPROTECT(1);
@@ -1025,7 +1025,7 @@ attribute_hidden SEXP do_dirname(SEXP call, SEXP op, SEXP args, SEXP rho)
 		    SET_STRING_ELT(ans, i, mkCharLenCE(&fsp, 1, CE_NATIVE));
 		    continue;
 		}
-		SET_STRING_ELT(ans, i, mkCharLenCE(pp, ll, CE_NATIVE));
+		SET_STRING_ELT(ans, i, mkCharLenCE(pp, (int)ll, CE_NATIVE));
 	    } else
 		/* empty pathname is invalid, but returned */
 		SET_STRING_ELT(ans, i, mkChar(""));
