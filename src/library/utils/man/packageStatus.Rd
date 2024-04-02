@@ -1,6 +1,6 @@
 % File src/library/utils/man/packageStatus.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2017 R Core Team
+% Copyright 1995-2024 R Core Team
 % Distributed under GPL 2 or later
 
 \name{packageStatus}
@@ -32,9 +32,11 @@ packageStatus(lib.loc = NULL, repositories = NULL, method,
     of \code{NULL} corresponds to all libraries currently known.}
   \item{repositories}{a character vector of URLs describing the location of \R
     package repositories on the Internet or on the local machine.
-    If specified as \code{NULL}, derive appropriate URLs from \link{option}
-    \code{"repos"}.}
-  \item{method}{Download method, see \code{\link{download.file}}.}
+    These should be full paths to the appropriate \file{contrib}
+    sections of the repositories.
+    The default (\code{NULL}) derives URLs from \link{option}
+    \code{"repos"} and \code{type}.}
+  \item{method}{download method, see \code{\link{download.file}}.}
   \item{type}{type of package distribution:
     see \code{\link{install.packages}}.}
   \item{object}{an object of class \code{"packageStatus"} as returned by
@@ -48,10 +50,6 @@ packageStatus(lib.loc = NULL, repositories = NULL, method,
     for other methods: currently not used.}
 }
 \details{
-  The URLs in \code{repositories} should be full paths to the
-  appropriate contrib sections of the repositories.  The default is
-  \code{contrib.url(getOption("repos"))}.
-
   There are \code{print} and \code{summary} methods for the
   \code{"packageStatus"} objects: the \code{print} method gives a brief
   tabular summary and the \code{summary} method prints the results.
