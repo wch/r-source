@@ -828,7 +828,6 @@ differnt version and date).
 
 	---------------------------------------------------
 
-
 Binary distributions of R may include compiled code from the libjpeg
 library which requires us to state
 
@@ -871,5 +870,11 @@ DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
 THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+	---------------------------------------------------
+
+Binary distributions of R may include compiled code from the zstd
+reference library which is distributed under BSD-3 or GPL-2, and used
+here under the latter.
 
 	---------------------------------------------------
