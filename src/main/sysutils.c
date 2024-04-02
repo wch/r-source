@@ -1163,7 +1163,7 @@ size_t Riconv (void *cd, const char **inbuf, size_t *inbytesleft,
 	size_t back_outbytesleft = needed;
 
 	iconv(rcd->cd_back, NULL, NULL, NULL, NULL);
-	int back_res = iconv(rcd->cd_back,
+	size_t back_res = iconv(rcd->cd_back,
 	      (ICONV_CONST char **) &back_inbuf,
 	      &back_inbytesleft,
 	      (ICONV_CONST char **) &back_outbuf,
