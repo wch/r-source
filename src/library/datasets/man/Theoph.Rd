@@ -3,8 +3,6 @@
 % Copyright 1995-2011 R Core Team
 % Distributed under GPL 2 or later
 
-\newcommand{\bibcite}{#1}
-
 \name{Theoph}
 \docType{data}
 \alias{Theoph}

@@ -3,8 +3,6 @@
 % Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
-\newcommand{\bibcite}{#1}
-
 \name{binom.test}
 \alias{binom.test}
 \title{Exact Binomial Test}

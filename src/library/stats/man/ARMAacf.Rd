@@ -3,8 +3,6 @@
 % Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
-\newcommand{\bibcite}{#1}
-
 \name{ARMAacf}
 \alias{ARMAacf}
 \title{Compute Theoretical ACF for an ARMA Process}
