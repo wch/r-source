@@ -62,6 +62,7 @@ EXPORTS
  zhpr_
  zrotg_
  zscal_
+ zspmv_
  zswap_
  zsymm_
  zsyr2k_
