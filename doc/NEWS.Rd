@@ -359,7 +359,7 @@
 
       \item If the \code{libdeflate} library and headers are available,
       \code{libdeflate} rather than \code{libz} is used to (de)compress
-      \R objects in lazy-load databases,  Typically tasks spend up to 5\% of
+      \R objects in lazy-load databases.  Typically tasks spend up to 5\% of
       their time on such operations, although creating lazy-data
       databases is one of the exceptions.
 
@@ -4784,7 +4784,7 @@
       \command{configure} and \command{cleanup} scripts for
       non-\I{Bourne}-shell code (\sQuote{bashisms}).
 
-      \item \command{R CMD check --as-cran} now runs \code{\\donttest}
+      \item \command{R CMD check --as-cran} now runs \verb{\donttest}
       examples (which are run by \code{example()}) instead of
       instructing the tester to do so.  This can be temporarily
       circumvented during development by setting environment variable

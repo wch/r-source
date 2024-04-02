@@ -54,7 +54,7 @@ getDLLRegisteredRoutines(dll, addNames = TRUE)
   and processed by the R internals.  In other words, it uses the extended
   information.
 
-  There is \code{print} methods for the class, which prints only the
+  There is a \code{print} method for the class, which prints only the
   types which have registered routines.
 }
 \value{
