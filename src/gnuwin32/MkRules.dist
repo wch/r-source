@@ -159,7 +159,7 @@
 #
 # -Wa,-muse-unaligned-vector-move can be used to make binutils (on x86_64)
 #   turn vectorized instructions requiring aligned vectors into instructions
-#   no requiring them; this can be used as a work-around when compiling with
+#   not requiring them; this can be used as a work-around when compiling with
 #   GCC with AVX2 instructions enabled, for a bug due to which GCC does not
 #   ensure that local variables are 32-byte aligned. See
 #   https://gcc.gnu.org/bugzilla/show_bug.cgi?id=54412
