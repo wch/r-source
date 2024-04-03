@@ -79,7 +79,8 @@ memDecompress(from,
 
   The headers and sources can be downloaded from
   \url{https://github.com/ebiggers/libdeflate} and pre-built versions
-  are available for most Linux distributions.
+  are available for most Linux distributions.  It is used for binary
+  Windows distributions.
 }
 
 \value{
@@ -95,7 +96,8 @@ memDecompress(from,
   \url{https://en.wikipedia.org/wiki/Data_compression} for background on
   data compression, \url{https://zlib.net/},
   \url{https://en.wikipedia.org/wiki/Gzip}, \url{http://www.bzip.org/},
-  \url{https://en.wikipedia.org/wiki/Bzip2}, \url{https://xz.tukaani.org/xz-utils/}
+  \url{https://en.wikipedia.org/wiki/Bzip2},
+  %% \url{https://xz.tukaani.org/xz-utils/}
   and \url{https://en.wikipedia.org/wiki/XZ_Utils} for references about the
   particular schemes used.
 }
