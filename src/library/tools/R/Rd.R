@@ -358,13 +358,16 @@ function(dir = NULL, files = NULL,
     } else
     	db <- list()
 
-    # The built_file is a file of partially processed Rd objects, where build time
-    # \Sexprs have been evaluated.  We'll put the object in place of its
-    # filename to continue processing.
+    ## The built_file is a file of partially processed Rd objects, where
+    ## build time \Sexprs have been evaluated.  We'll put the object in
+    ## place of its filename to continue processing.
+    ## Similarly for later_file.
 
+    basenames <- basename(files)    
     names(files) <- files
+    files <- as.list(files)
+    
     if(!is.null(built_file) && file_test("-f", built_file)) {
-        basenames <- basename(files)
  	built <- readRDS(built_file)
  	names_built <- names(built)
         ## Hmm ... why are we doing this?
@@ -379,22 +382,19 @@ function(dir = NULL, files = NULL,
  	built[names_built %notin% basenames] <- NULL
  	if (length(built)) {
  	    which <- match(names(built), basenames)
- 	    if (all(file_test("-nt", built_file, files[which]))) {
- 	    	files <- as.list(files)
+ 	    if (all(file_test("-nt", built_file, names(files)[which]))) {
 	    	files[which] <- built
 	    }
 	}
     }
     if("later" %in% stages) {
         if(!is.null(later_file) && file_test("-f", later_file)) {
-            basenames <- basename(names(files))
             later <- readRDS(later_file)
             names_later <- names(later)
             later[names_later %notin% basenames] <- NULL
             if (length(later)) {
                 which <- match(names(later), basenames)
                 if (all(file_test("-nt", later_file, names(files)[which]))) {
-                    files <- as.list(files)
                     files[which] <- later
                 }
             }
