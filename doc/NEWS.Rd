@@ -337,7 +337,7 @@
 
   \subsection{INSTALLATION}{
     \itemize{
-      \item The parser has been updated to work with \I{bison} 3.8.2,
+      \item The parser has been updated to work with \command{bison} 3.8.2,
       which is now used for the pre-generated parsers in \file{gram.c},
       \code{file.c}, and \file{gramRd.c}. A few parser error messages
       have changed, which may affect code that relies on exact messages.
@@ -417,10 +417,11 @@
       and libraries (targeting 64-bit Intel CPUs).  R-devel can no longer be
       built using \I{Rtools43} without changes.
 
-      \I{Rtools44} has experimental support for 64-bit ARM (\I{aarch64}) CPUs via
-      \I{LLVM} 17 toolchain using \command{lld}, \command{clang}/\command{flang-new} and \I{libc++}.
-    }
+     \item \I{Rtools44} has experimental support for 64-bit ARM
+     (\code{aarch64}) CPUs \emph{via} the \I{LLVM} 17 toolchain using
+     \command{lld}, \command{clang}/\command{flang-new} and \code{libc++}.
   }
+}
 
 
   %% \subsection{PACKAGE INSTALLATION}{
@@ -517,7 +518,7 @@
 
       \item \code{mkCharLenCE} was incorrectly documented to take a
       \code{size_t} length but was implemented with \code{int} (and
-      character strings in \R are limited to \eqn{2^{31 - 1}}{2^31 - 1} bytes).
+      character strings in \R are limited to \eqn{2^{31} - 1}{2^31 - 1} bytes).
     }
   }
 
@@ -529,7 +530,7 @@
 
       \item The legacy graphics devices \code{pictex()} and
       \code{xfig()} are now deprecated.  They do not support recent
-      graphics enhancements and their font-handling is rudimentary. The
+      graphics enhancements and their font handling is rudimentary. The
       intention is to retain them for historical interest as long as
       they remain somewhat functional.
 
