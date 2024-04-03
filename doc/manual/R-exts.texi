@@ -1261,7 +1261,7 @@ Fortran usually work for the platform's native compilers.
 If your code needs to depend on the platform there are certain defines
 which can used in C or C++.  On all Windows builds (even 64-bit ones)
 @samp{_WIN32} will be defined: on 64-bit Windows builds also
-@samp{_WIN64}. For Winodws on ARM, test for @samp{_M_ARM64} or both
+@samp{_WIN64}. For Windows on ARM, test for @samp{_M_ARM64} or both
 @samp{_WIN32} and @samp{__aarch64__}.  On macOS @samp{__APPLE__} is
 defined@footnote{There is also @samp{__APPLE_CC__}, but that indicates a
 compiler with Apple-specific features not the OS, although for
