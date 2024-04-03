@@ -4488,9 +4488,23 @@ static void mbcsToSbcs(const char *in, char *out, const char *encoding,
     void *cd = NULL;
     const char *i_buf; char *o_buf;
     size_t i_len, o_len, status;
+    const char *fromenc = (enc == CE_UTF8) ? "UTF-8" : "";
 
-    if ((void*)-1 ==
-	(cd = Riconv_open(encoding, (enc == CE_UTF8) ? "UTF-8" : "")))
+#ifdef Win32
+    if (utf8locale) {
+	/* //nobestfit is not portable, only supported by R's customized
+	   copy of win_iconv */
+	size_t needed = strlen(encoding) + strlen("//nobestfit") + 1;
+	R_CheckStack2(needed);
+	char toenc[needed];
+	snprintf(toenc, needed, "%s//nobestfit", encoding);
+	cd = Riconv_open(toenc, fromenc);
+    } else
+	cd = Riconv_open(encoding, fromenc);
+#else
+    cd = Riconv_open(encoding, fromenc);
+#endif
+    if (cd == (void*)-1)
 	error(_("unknown encoding '%s' in 'mbcsToSbcs'"), encoding);
 
     if (!silent) {

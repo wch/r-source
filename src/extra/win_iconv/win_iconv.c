@@ -25,6 +25,7 @@
    - set errno on error
    - XP-compatibility for WC_NO_BEST_FIT_CHARS -- use only for ASCII
      by default, control via R_WIN_ICONV_BEST_FIT environment variable
+   - iconv_open option NOBESTFIT
 
 A reasonably complete list is at
 http://msdn.microsoft.com/en-us/library/windows/desktop/dd317756%28v=vs.85%29.aspx
@@ -54,6 +55,7 @@ static int R_WIN_ICONV_best_fit = 1; /* R addition */
 #define FLAG_USE_BOM            1
 #define FLAG_TRANSLIT           2 /* //TRANSLIT */
 #define FLAG_IGNORE             4 /* //IGNORE */
+#define FLAG_NO_BEST_FIT        8 /* //NOBESTFIT */
 
 typedef unsigned char uchar;
 typedef unsigned short ushort;
@@ -978,6 +980,9 @@ make_csconv(const char *_name, csconv_t *cv)
 	    flag |= FLAG_TRANSLIT;
 	else if (_stricmp(p + 2, "ignore") == 0)
 	    flag |= FLAG_IGNORE;
+	else if (_stricmp(p + 2, "nobestfit") == 0)
+	    /* R addition for internal use, may be removed without notice */
+	    flag |= FLAG_NO_BEST_FIT;
 	*p = 0;
     }
 
@@ -1302,7 +1307,8 @@ kernel_wctomb(csconv_t *cv, ushort *wbuf, int wbufsize, uchar *buf, int bufsize)
 	   Windows 2000.
 	 */
     if ( !(cv->flags & FLAG_TRANSLIT) &&
-          (cv->codepage == 20127 || R_WIN_ICONV_best_fit == 0) )
+          (cv->codepage == 20127 || R_WIN_ICONV_best_fit == 0 ||
+	                            (cv->flags & FLAG_NO_BEST_FIT)) )
 	flags |= WC_NO_BEST_FIT_CHARS;
 #endif
     }
