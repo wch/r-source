@@ -4693,6 +4693,7 @@ macOS: __APPLE__
 NetBSD: __NetBSD__
 OpenBSD: __OpenBSD__
 Windows: _WIN32, _WIN64
+Windows on 64-but ARM: _M_ARM64 or _WIN32 plus __aarch64__
 @end example
 
 Identifying compilers can be very tricky.  GCC defines @code{__GNUC__},

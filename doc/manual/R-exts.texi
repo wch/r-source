@@ -1261,12 +1261,13 @@ Fortran usually work for the platform's native compilers.
 If your code needs to depend on the platform there are certain defines
 which can used in C or C++.  On all Windows builds (even 64-bit ones)
 @samp{_WIN32} will be defined: on 64-bit Windows builds also
-@samp{_WIN64}.  On macOS @samp{__APPLE__} is defined@footnote{There is
-also @samp{__APPLE_CC__}, but that indicates a compiler with
-Apple-specific features not the OS, although for historical reasons is
-is defined by @I{LLVM} @command{clang}.  It is used in
-@file{Rinlinedfuns.h}.}; for an `Apple Silicon' platform, test for both
-@samp{__APPLE__} and @samp{__arm64__}.
+@samp{_WIN64}. For Winodws on ARM, test for @samp{_M_ARM64} or both
+@samp{_WIN32} and @samp{__aarch64__}.  On macOS @samp{__APPLE__} is
+defined@footnote{There is also @samp{__APPLE_CC__}, but that indicates a
+compiler with Apple-specific features not the OS, although for
+historical reasons is is defined by @I{LLVM} @command{clang}.  It is
+used in @file{Rinlinedfuns.h}.}; for an `Apple Silicon' platform, test
+for both @samp{__APPLE__} and @samp{__arm64__}.
 
 The default rules can be tweaked by setting macros@footnote{the POSIX
 terminology, called `make variables' by GNU make.} in a file
@@ -2631,7 +2632,7 @@ or @R{} itself).   Also, implementation-specific variables such as
 There is no direct support for the POSIX threads (more commonly known as
 @code{pthreads}): by the time we considered adding it several packages
 were using it unconditionally so it seems that nowadays it is
-universally available on POSIX operating systems (hence not Windows).
+universally available on POSIX operating systems.
 
 For reasonably recent versions of @command{gcc} and @command{clang} the
 correct specification is
@@ -2657,21 +2658,13 @@ versions of OpenBSD used a different library name).
 For a tutorial see
 @uref{https://hpc-tutorials.llnl.gov/posix/}.
 
-POSIX threads are not normally used on Windows, which has its own native
-concepts of threads.  However, there have been two projects implementing
-@code{pthreads} on top of Windows, @code{pthreads-w32} and
-@code{winpthreads} (part of the @I{MinGW-w64} project).
-
-Whether Windows toolchains implement @code{pthreads} is up to the
-toolchain provider.  A @command{make} variable
-@code{SHLIB_PTHREAD_FLAGS} is available for use in
-@file{src/Makevars.win} or @file{Makevars.ucrt}: this should be included in both
-@code{PKG_CPPFLAGS} (or the Fortran compiler flags) and @code{PKG_LIBS}.
+POSIX threads are not normally used on Windows which has its own native
+concepts of threads: however, recent toolchains do provide the
+@code{pthreads} header and library.
 
 The presence of a working @code{pthreads} implementation cannot be
 unambiguously determined without testing for yourself: however, that
-@samp{_REENTRANT} is defined@footnote{some Windows toolchains had the
-typo @samp{_REENTRANCE} instead.} in C/C++ code is a good indication.
+@samp{_REENTRANT} is defined in C/C++ code is a good indication.
 
 Note that not all @code{pthreads} implementations are equivalent as parts
 are optional (see
@@ -5715,8 +5708,8 @@ quality. Not only do large files take up space: they can stress the PDF
 viewer and take many minutes to print (if they can be printed at all).
 
 @command{qpdf} (@uref{https://qpdf.sourceforge.io/}) can compress
-losslessly.  It is fairly readily available (e.g.@: it has binaries for
-@cputype{x86_64} Windows and packages in Debian/Ubuntu/Fedora, and is
+losslessly.  It is fairly readily available (e.g.@: it is included in
+@code{rtools}, has packages in Debian/Ubuntu/Fedora, and is
 installed as part of the @acronym{CRAN} macOS distribution of @R{}).
 @command{R CMD build} has an option to run @command{qpdf} over PDF files
 under @file{inst/doc} and replace them if at least 10Kb and 10% is
@@ -6320,6 +6313,11 @@ but
 @example
 #ifdef _WIN32
 // Windows-specific code
+# if defined(_M_ARM64) || defined(__aarch64__)
+// for ARM
+# else
+// for Intel
+# endif
 #else
 // Unix-alike code
 #endif
