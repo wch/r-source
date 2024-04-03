@@ -393,7 +393,7 @@ function(dir = NULL, files = NULL,
             later[names_later %notin% basenames] <- NULL
             if (length(later)) {
                 which <- match(names(later), basenames)
-                if (all(file_test("-nt", later_file, files[which]))) {
+                if (all(file_test("-nt", later_file, names(files)[which]))) {
                     files <- as.list(files)
                     files[which] <- later
                 }
