@@ -877,4 +877,8 @@ Binary distributions of R may include compiled code from the zstd
 reference library which is distributed under BSD-3 or GPL-2, and used
 here under the latter.
 
+Binary distributions of R may include compiled code from the freetype
+library which is distributed under the FreeType License or GPL-2, and
+used here under the latter.
+
 	---------------------------------------------------
