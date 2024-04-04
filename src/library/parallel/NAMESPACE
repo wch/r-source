@@ -14,7 +14,7 @@ export(closeNode, clusterApply, clusterApplyLB, clusterCall,
        mcmapply, parApply, parCapply, parLapply, parLapplyLB,
        parRapply, parSapply, parSapplyLB, pvec, recvData,
        recvOneData, sendData, setDefaultCluster, splitIndices,
-       stopCluster)
+       stopCluster, registerClusterType)
 
 S3method(print, SOCKcluster)
 S3method(print, SOCKnode)

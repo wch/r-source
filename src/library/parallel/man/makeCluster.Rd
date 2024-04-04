@@ -14,6 +14,7 @@
 \alias{sendData}
 \alias{setDefaultCluster}
 \alias{getDefaultCluster}
+\alias{registerClusterType}
 \alias{R_PARALLEL_PORT}
 
 \title{

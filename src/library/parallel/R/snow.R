@@ -144,6 +144,14 @@ setDefaultClusterOptions <- function(...) {
         assign(names[i], list[[i]], envir = defaultClusterOptions)
 }
 
+clusterStarters <- new.env()
+registerClusterType <- function(type, starter, make.default = FALSE) {
+    if (exists(type, clusterStarters))
+        warning(sprintf("replacing registration for cluster type '%s'", type))
+    assign(type, starter, clusterStarters)
+    if (make.default)
+        setDefaultClusterOptions(type = type)
+}
 
 makeCluster <-
     function (spec, type = getClusterOption("type"), ...)
@@ -154,7 +162,9 @@ makeCluster <-
            SOCK = snow::makeSOCKcluster(names = spec, ...),
            MPI = snow::makeMPIcluster(count = spec, ...),
            ## NWS = snow::makeNWScluster(names = spec, ...),
-           stop("unknown cluster type"))
+           if (exists(type, clusterStarters))
+               get(type, clusterStarters)(spec, ...)
+           else stop(sprintf("unknown cluster type: '%s'", type)))
 }
 
 
