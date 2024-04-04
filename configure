@@ -52520,8 +52520,8 @@ fi
 done
 fi
 if test "x${have_lzma}" = xyes; then
-{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking if lzma version >= 5.0.3, < 5.5.0" >&5
-printf %s "checking if lzma version >= 5.0.3, < 5.5.0... " >&6; }
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking if lzma version >= 5.0.3" >&5
+printf %s "checking if lzma version >= 5.0.3... " >&6; }
 if test ${r_cv_have_lzma+y}
 then :
   printf %s "(cached) " >&6
@@ -52549,9 +52549,8 @@ int main(void) {
     unsigned int ver = lzma_version_number();
     // This is 10000000*major + 10000*minor + 10*revision + [012]
     // Where 2 is 'stable'.
-    // I.e. xyyyzzzs and 5.1.2 would be 50010022
-    // 2024-04-01: exclude 5.5(alpha) and 5.6.[01] as possibly insecure.
-    exit ((ver < 50000030) | ((ver >= 50050000) & (ver < 50060020)));
+    // I.e. xyyyzzzs and 5.1.2 is 50010022, so this allows 5.0.3 alpha/beta
+    exit(ver < 50000030);
 }
 
 _ACEOF
