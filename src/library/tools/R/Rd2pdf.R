@@ -148,8 +148,8 @@
                            list(identity, texify),
                            c(3L, 3L))
             ## Fancy escaping should not be needed for arXiv ids.
-            text <- mygsub("<(arXiv:|arxiv:)([[:alnum:]/.-]+)([[:space:]]*\\[[^]]+\\])?>",
-                           "<}\\\\Rhref{https://arxiv.org/abs/\\2}{\\1\\2}\\\\AsIs{\\3>",
+            text <- mygsub("<(arXiv|arxiv):([[:alnum:]/.-]+)([[:space:]]*\\[[^]]+\\])?>",
+                           "<}\\\\Rhref{https://doi.org/10.48550/arXiv.\\2}{doi:10.48550/arXiv.\\2}\\\\AsIs{>",
                            text)
         }
         text <- paste0("\\AsIs{", text, "}")

@@ -8073,20 +8073,20 @@ function(dir, localOnly = FALSE, pkgSize = NA)
         }
         if(remote) {
             ## Also check arXiv ids.
-            pat <- "<(arXiv:)([[:alnum:]/.-]+)([[:space:]]*\\[[^]]+\\])?>"
+            pat <- "<(arXiv|arxiv):(([[:alpha:].-]+/)?[[:digit:].]+)(v[[:digit:]]+)?([[:space:]]*\\[[^]]+\\])?>"
             dsc <- meta["Description"]
             ids <- .gregexec_at_pos(pat, dsc, gregexpr(pat, dsc), 3L)
             if(length(ids)) {
-                ini <- "https://arxiv.org/abs/"
-                udb <- url_db(paste0(ini, ids),
+                ini <- "10.48550/arXiv."
+                ddb <- doi_db(paste0(ini, ids),
                               rep.int("DESCRIPTION", length(ids)))
-                bad <- tryCatch(check_url_db(udb,
+                bad <- tryCatch(check_doi_db(ddb,
                                              parallel =
                                                  check_urls_in_parallel),
                                 error = identity)
                 if(!inherits(bad, "error") && length(bad))
                     out$bad_arXiv_ids <-
-                        substring(bad$URL, nchar(ini) + 1L)
+                        substring(bad$DOI, nchar(ini) + 1L)
             }
             ## Also check ORCID iDs.
             odb <- .ORCID_iD_db_from_package_sources(dir)
@@ -8915,7 +8915,7 @@ function(x, ...)
             if(length(y <- x$descr_bad_arXiv_ids)) {
                 paste(c("The Description field contains",
                         paste0("  ", y),
-                        "Please write arXiv ids as <arXiv:YYMM.NNNNN>."),
+                        "Please refer to arXiv e-prints via their arXiv DOI <doi:10.48550/arXiv.YYMM.NNNNN>."),
                       collapse = "\n")
             },
            if(length(y <- x$descr_replace_by_DOI)) {

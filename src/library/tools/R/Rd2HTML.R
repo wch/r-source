@@ -1461,8 +1461,8 @@ function(dir)
                       function(u) utils::URLencode(u, TRUE),
                       ## </FIXME>
                       2L)
-            x <- trfm("&lt;(arXiv|arxiv):([[:alnum:]/.-]+)([[:space:]]*\\[[^]]+\\])?&gt;",
-                      "&lt;<a href=\"https://arxiv.org/abs/%s\">arXiv:\\2</a>\\3&gt;",
+            x <- trfm("&lt;(arXiv|arxiv):(([[:alpha:].-]+/)?[[:digit:].]+)(v[[:digit:]]+)?([[:space:]]*\\[[^]]+\\])?&gt;",
+                      "&lt;<a href=\"https://doi.org/10.48550/arXiv.%s\">doi:10.48550/arXiv.\\2</a>&gt;",
                       x,
                       urlify,
                       2L)
