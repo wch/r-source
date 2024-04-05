@@ -847,6 +847,12 @@ options(op)
 ## silently failed much later in R <= 4.3.2.
 
 
+## error jump happened after mutation through R 4.3.3
+x <- expression(a)
+tryCatch(x[[2]] <- list(), error = invisible)
+stopifnot(identical(x, expression(a)))
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
