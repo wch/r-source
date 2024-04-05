@@ -114,6 +114,7 @@ pkg2HTML <- function(package, dir = NULL, lib.loc = NULL,
 {
     if (is.null(texmath)) texmath <- "katex"
     hcontent <- .convert_package_rdfiles(package = package, dir = dir, lib.loc = lib.loc,
+                                         outputEncoding = outputEncoding,
                                          Rhtml = Rhtml, hooks = hooks, ...)
     descfile <- attr(hcontent, "descfile")
     pkgname <- read.dcf(descfile, fields = "Package")[1, 1]
