@@ -1272,6 +1272,12 @@ stopifnot(exprs = {
 ## deprecation was only on help page  for R 4.3.*
 
 
+## error jump happened after mutation through R 4.3.3
+x <- expression(a)
+tryCatch(x[[2]] <- list(), error = invisible)
+stopifnot(identical(x, expression(a)))
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

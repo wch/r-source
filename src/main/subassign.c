@@ -100,11 +100,17 @@
 #endif
 
 #ifdef COMPUTE_REFCNT_VALUES
-/* Set element to R_NilValue to decrement REFCNT on old value. */
+/* Set elements to R_NilValue to decrement REFCNT on old value. */
 /* Might be good to have an ALTREP-friendlier version */
-#define CLEAR_VECTOR_ELT(x, i) SET_VECTOR_ELT(x, i, R_NilValue)
+# define CLEAR_VECTOR(x) do {					\
+	if (TYPEOF(x) == EXPRSXP || TYPEOF(x) == VECSXP) {	\
+	    R_xlen_t len = XLENGTH(x);				\
+	    for (R_xlen_t i = 0; i < len; i++)			\
+		SET_VECTOR_ELT(x, i, R_NilValue);		\
+	}							\
+    } while (0)
 #else
-#define CLEAR_VECTOR_ELT(x, i) do { } while (0)
+# define CLEAR_VECTOR(x) do { } while (0)
 #endif
 
 static R_INLINE SEXP getNames(SEXP x)
@@ -230,10 +236,8 @@ static SEXP EnlargeVector(SEXP x, R_xlen_t newlen)
 	break;
     case EXPRSXP:
     case VECSXP:
-	for (R_xlen_t i = 0; i < len; i++) {
+	for (R_xlen_t i = 0; i < len; i++)
 	    SET_VECTOR_ELT(newx, i, VECTOR_ELT(x, i));
-	    CLEAR_VECTOR_ELT(x, i);
-	}
 	for (R_xlen_t i = len; i < newtruelen; i++)
 	    SET_VECTOR_ELT(newx, i, R_NilValue);
 	break;
@@ -660,6 +664,7 @@ static SEXP VectorAssign(SEXP call, SEXP rho, SEXP x, SEXP s, SEXP y)
     /* Here we make sure that the LHS has */
     /* been coerced into a form which can */
     /* accept elements from the RHS. */
+    SEXP old_x = x;
     int which = SubassignTypeFix(&x, &y, stretch, 1, call, rho);
     /* = 100 * TYPEOF(x) + TYPEOF(y);*/
     if (n == 0) {
@@ -888,6 +893,8 @@ static SEXP VectorAssign(SEXP call, SEXP rho, SEXP x, SEXP s, SEXP y)
 	}
     }
     UNPROTECT(4);
+    if (old_x != x)
+	CLEAR_VECTOR(old_x);
     return x;
 }
 
@@ -1707,7 +1714,6 @@ static SEXP DeleteOneVectorListItem(SEXP x, R_xlen_t which)
 	for (i = 0 ; i < n; i++) {
 	    if(i != which)
 		SET_VECTOR_ELT(y, k++, VECTOR_ELT(x, i));
-	    CLEAR_VECTOR_ELT(x, i);
 	}
 	PROTECT(xnames = getAttrib(x, R_NamesSymbol));
 	if (xnames != R_NilValue) {
@@ -1852,6 +1858,7 @@ do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    offset = OneIndex(x, thesub, xlength(x), 0, &newname,
 			      recursed ? len-1 : -1, R_NilValue);
 	    if (isVectorList(x) && isNull(y)) {
+		SEXP old_x = x;
 		x = DeleteOneVectorListItem(x, offset);
 		if(recursed) {
 		    if(isVectorList(xup)) SET_VECTOR_ELT(xup, off, x);
@@ -1861,7 +1868,11 @@ do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 					       FALSE);
 			UNPROTECT(1); /* x */
 		    }
-		} else xtop = x;
+		} else {
+		    xtop = x;
+		    if (old_x != x)
+			CLEAR_VECTOR(old_x);
+		}
 		UNPROTECT(4); /* xup, x, args, y */
 		return xtop;
 	    }
@@ -1895,6 +1906,7 @@ do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    UNPROTECT(1); /* indx */
 	}
 
+	SEXP old_x = x;
 	which = SubassignTypeFix(&x, &y, stretch, 2, call, rho);
 
 	PROTECT(x);
@@ -2040,6 +2052,9 @@ do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    else
 		SET_STRING_ELT(names, offset, newname);
 	}
+	if (old_x != x && ! recursed)
+	    // might be safe even if recursed is TRUE, but avoid for now
+	    CLEAR_VECTOR(old_x);
 	UNPROTECT(4); /* y, x, xup, x */
 	PROTECT(x);
 	PROTECT(xup);
@@ -2249,11 +2264,11 @@ SEXP R_subassign3_dflt(SEXP call, SEXP x, SEXP nlist, SEXP val)
 			    SET_STRING_ELT(ansnames, ii, STRING_ELT(names, i));
 			    ii++;
 			}
-			CLEAR_VECTOR_ELT(x, i);
 		    }
 		    setAttrib(ans, R_NamesSymbol, ansnames);
 		    copyMostAttrib(x, ans);
 		    UNPROTECT(2);
+		    CLEAR_VECTOR(x); // OK since x != ans
 		    x = ans;
 		}
 		/* else x is unchanged */
@@ -2285,10 +2300,8 @@ SEXP R_subassign3_dflt(SEXP call, SEXP x, SEXP nlist, SEXP val)
 		SEXP ans, ansnames;
 		PROTECT(ans = allocVector(VECSXP, nx + 1));
 		PROTECT(ansnames = allocVector(STRSXP, nx + 1));
-		for (i = 0; i < nx; i++) {
+		for (i = 0; i < nx; i++)
 		    SET_VECTOR_ELT(ans, i, VECTOR_ELT(x, i));
-		    CLEAR_VECTOR_ELT(x, i);
-		}
 		if (isNull(names)) {
 		    for (i = 0; i < nx; i++)
 			SET_STRING_ELT(ansnames, i, R_BlankString);
@@ -2303,6 +2316,7 @@ SEXP R_subassign3_dflt(SEXP call, SEXP x, SEXP nlist, SEXP val)
 		setAttrib(ans, R_NamesSymbol, ansnames);
 		copyMostAttrib(x, ans);
 		UNPROTECT(2);
+		CLEAR_VECTOR(x); // OK since x != ans
 		x = ans;
 	    }
 	}
