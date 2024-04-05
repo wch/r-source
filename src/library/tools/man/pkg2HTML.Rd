@@ -13,7 +13,7 @@
 \usage{
 pkg2HTML(package, dir = NULL, lib.loc = NULL,
          outputEncoding = "UTF-8",
-         stylesheet = R.home("doc/html/R-nav.css"),
+         stylesheet = file.path(R.home("doc"), "html", "R-nav.css"),
          hooks = list(pkg_href = function(pkg) sprintf("\%s.html", pkg)),
          texmath = getOption("help.htmlmath"),
          prism = TRUE,
@@ -75,7 +75,7 @@ pkg2HTML(package, dir = NULL, lib.loc = NULL,
 }
 
 \value{
-  The name of the output file(invisibly).
+  The name of the output file (invisibly).
 }
 \author{
   Deepayan Sarkar

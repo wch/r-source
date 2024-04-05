@@ -1,6 +1,6 @@
 #  File src/library/tools/R/pkg2HTML.R
 #
-#  Copyright (C) 2023 The R Core Team
+#  Copyright (C) 2023-2024 The R Core Team
 #  Part of the R package, https://www.R-project.org
 #
 #  This program is free software; you can redistribute it and/or modify
@@ -103,7 +103,7 @@
 
 pkg2HTML <- function(package, dir = NULL, lib.loc = NULL,
                      outputEncoding = "UTF-8",
-                     stylesheet = R.home("doc/html/R-nav.css"),
+                     stylesheet = file.path(R.home("doc"), "html", "R-nav.css"),
                      hooks = list(pkg_href = function(pkg) sprintf("%s.html", pkg)),
                      texmath = getOption("help.htmlmath"),
                      prism = TRUE,
