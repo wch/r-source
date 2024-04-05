@@ -102,6 +102,9 @@
 #ifdef COMPUTE_REFCNT_VALUES
 /* Set elements to R_NilValue to decrement REFCNT on old value. */
 /* Might be good to have an ALTREP-friendlier version */
+/* This should only be used after any operations that could signal an
+   error, otherwise an error will leave the original LHS object in a
+   partially mutated state */
 # define CLEAR_VECTOR(x) do {					\
 	if (TYPEOF(x) == EXPRSXP || TYPEOF(x) == VECSXP) {	\
 	    R_xlen_t len = XLENGTH(x);				\
