@@ -1970,7 +1970,7 @@ minimal version of @I{Bourne}-style @command{sh}. As from @R{} 4.2.0,
 @file{configure.ucrt}) is run the environment variables @env{R_HOME}
 (which uses @samp{/} as the file separator), @env{R_ARCH} and
 @env{R_ARCH_BIN} will be set.  Use @env{R_ARCH} to decide if this is a
-64-bit build (its value there is @samp{/x64}) and to install DLLs to the
+64-bit build for Intel (its value there is @samp{/x64}) and to install DLLs to the
 correct place (@file{$@{R_HOME@}/libs$@{R_ARCH@}}).  Use
 @env{R_ARCH_BIN} to find the correct place under the @file{bin}
 directory, e.g.@: @file{$@{R_HOME@}/bin$@{R_ARCH_BIN@}/Rscript.exe}.  If
@@ -11074,8 +11074,8 @@ environment variable, but with lowest priority: note that it does not
 include the directory from which the DLL was loaded.  It is possible to
 add a single path with quite high priority @emph{via} the @code{DLLpath}
 argument to @code{dyn.load}.  This is (by default) used by
-@code{library.dynam} to include the package's @file{libs/x64} directory
-in the DLL search path.
+@code{library.dynam} to include the package's @file{libs/x64} directory (on
+Intel) in the DLL search path.
 
 
 @node Registering native routines, Creating shared objects, dyn.load and dyn.unload, System and foreign language interfaces
