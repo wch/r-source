@@ -85,7 +85,8 @@ that version.  The main R FAQ can be found at
 
 The information here applies only to recent versions of R for Windows.
 It is biased towards users of 64-bit Windows and since R 4.2.0, only 64-bit
-builds of R are provided.
+builds of R are provided. R 4.4.0 has experimental native support for Windows
+on 64-bit ARM.
 
 
 @newchap{}
@@ -162,8 +163,8 @@ Windows Vista SP2 and Windows Server 2008 SP2.
 
 We primarily test on versions of Windows currently supported by Microsoft,
 recently mainly Windows 10, Windows Server 2022 and sometimes on Windows 11. 
-The most thorough testing is done via CRAN packages checks: for R 4.3 this
-has been on Windows Server 2022.  R 4.3.0 has been tested to install, start
+The most thorough testing is done via CRAN packages checks: for R 4.3-4.4
+this has been on Windows Server 2022.  R 4.3-4.4.0 has been tested to install, start
 and pass its own checks also on Windows 7 and Windows 8.1, but it has not
 been tested with contributed packages.
 
@@ -171,6 +172,16 @@ For UTF-8 to be the native encoding, you need R at least 4.2 and at least
 Windows 10 (version 1903) on desktop systems, Windows Server 2022 on
 long-term support server systems or Windows Server 1903 from the semi-annual
 channel.
+
+R 4.4 has experimental native support for Windows on ARM, which requires at
+least Windows 11.  The testing of native builds of R on Windows on ARM has
+been limited.  R was tested to install, start and pass its own checks, but
+there were no regular CRAN package checks and the number of installable CRAN
+packages was lower than on Intel.  One can also install R 4.4 for Intel on
+Windows on ARM and use it via emulation, but numerical differences have been
+observed.  The native build on R for Windows on ARM installs into a
+different directory by default and uses a different library, so it can
+coexist with an installation of the Intel build.
 
 Your file system must allow case-honouring long file names (as is likely
 except perhaps for some network-mounted systems).  An installation takes
@@ -208,6 +219,8 @@ location in that case is the User Program Files folder (typically
 default location was the Windows "personal" directory  (typically
 @file{C:\Users\username\Documents}). Once R is installed, one may open the
 installation directory in explorer using @code{shell.exec(R.home())}.
+
+The native build for Windows on ARM uses a different installer.
 
 You may need to
 confirm that you want to proceed with installing a program from an
@@ -353,6 +366,9 @@ directory with earlier versions of R), nothing has to be done when the
 major and minor version of R (@var{x.y}) stays the same, but it may still be
 an opportunity to run @code{update.packages(checkBuilt=TRUE, ask=FALSE)}.
 
+With native build of R on Windows on ARM, the folder name is different, it
+includes @file{aarch64-library} instead of @file{win-library}.
+
 When the minor or even major version of R changes, one has to install all
 required packages again.  The new version of R will use a different location
 for the personal library and the old personal library will be left intact
@@ -410,6 +426,8 @@ batch file might contain (as one line)
 @example
 path_to_R\bin\x64\Rterm.exe --no-restore --no-save < %1 > %1.out 2>&1
 @end example
+
+Exclude @file{\x64} from the above with native builds of R on ARM.
 
 @noindent
 The purpose of @code{2>&1} is to redirect warnings and errors to the
@@ -476,6 +494,8 @@ On the command line as name=value pairs.  For example in the shortcut to
 @example
 "path_to_R\bin\x64\Rgui.exe" HOME=p:/ R_LIBS=p:/myRlib
 @end example
+
+Exclude @file{\x64} from the above with native builds of R on ARM.
 
 @item
 In an environment file @file{.Renviron} in the working directory
@@ -640,6 +660,9 @@ This is less of a problem with 64-bit builds of R, which use SSE
 instructions for computations instead of the @abbr{FPU}. We may be able to remove
 this handling of the @abbr{FPU} control word in future versions of R.
 
+This handling is specific to Intel processors, it does not apply to native
+builds of R on ARM.
+
 See also @code{?dyn.load}.
 
 @node Other strange crashes., Why does R never use more than 50% of my CPU?, What does 'DLL attempted to change FPU control word' mean?, Installation and Usage
@@ -682,7 +705,7 @@ use multiple CPUs or multiple threads.
 @node Does R run under Windows 7?, Quotes don't come out right on the console/terminal/pager, Why does R never use more than 50% of my CPU?, Installation and Usage
 @section Does R run under Windows 7/8/10/11/Server 2012/2016/2022?
 
-R 4.3 code base still conservatively uses features of Windows 7 and
+R 4.4 code base still conservatively uses features of Windows 7 and
 later only when available, and otherwise falls back to older features, so it
 might still run on 7, but this is minimally tested (see Q2.2), and the code
 is tuned for newer systems.  Some performance @I{work-arounds} for old Windows
@@ -690,6 +713,8 @@ systems past their end of support may be removed, such as a custom memory
 allocator removed in R 4.2.
 
 Since 4.2, R uses UTF-8 as the native encoding on recent Windows (see Q2.2).
+
+R on Windows on ARM requires at least Windows 11. 
 
 Earlier versions of Windows had user and Administrator accounts, and
 user accounts could be given administrative privileges (by being added to
@@ -881,8 +906,8 @@ examples in this FAQ.
 @node Should I run 32-bit or 64-bit R?, Can both 32- and 64-bit R be installed on the same machine?, Can I use R on 64-bit Windows?, Installation and Usage
 @section Should I run 32-bit or 64-bit R?
 
-Obviously, only relevant if you are using 64-bit Windows.
-Since R 4.2.0, 32-bit builds are no longer provided.
+Since R 4.2.0, 32-bit builds are no longer provided.  With older versions of
+R, this question is only relevant if you are using 64-bit Windows.
 
 For most users we would recommend using the `native' build, that is the
 32-bit version on 32-bit Windows and the 64-bit version of 64-bit Windows.
@@ -915,10 +940,11 @@ similarly for 32-bit Microsoft Office.)
 @node Can both 32- and 64-bit R be installed on the same machine?, Rcmd is not found in my PATH!, Should I run 32-bit or 64-bit R?, Installation and Usage
 @section Can both 32- and 64-bit R be installed on the same machine?
 
-Obviously, only relevant if the machine is running a 64-bit version of
+Since R 4.2.0, 32-bit builds are no longer provided.
+
+With older version of R, this question is only relevant if the machine is running a 64-bit version of
 Windows -- simply select both when using the installer.  You can also go
 back and add 64-bit components to a 32-bit install, or @emph{vice versa}.
-Since R 4.2.0, 32-bit builds are no longer provided.
 
 For many Registry items, 32- and 64-bit programs have different views of
 the Registry, but clashes can occur.  The most obvious problem is the
@@ -945,12 +971,12 @@ edit the @env{PATH}.
 The element you want to add to the path is something like
 
 @example
-c:\Program Files\R\R-4.3.0\bin\x64
+c:\Program Files\R\R-4.4.0\bin\x64
 @end example
 
 @noindent
 for 64-bit @command{Rcmd.exe}, replacing @code{x64} by @code{i386} for
-32-bit.
+32-bit, removing @code{x64} for native build on ARM.
 
 How you set the path depends on your OS version.  Under recent versions,
 go to `User Accounts' in the Control Panel, and select your account and
@@ -1187,7 +1213,7 @@ CRAN or from a local @code{.zip} file by using @code{install.packages}:
 see its help page.  There are menu items on the @code{Packages} menu to
 provide a point-and-click interface to package installation.  The
 packages for each minor (4.x.?) version will be stored in a separate area,
-so for R 4.3.? the files are in @file{bin/windows/contrib/4.3}.
+so for R 4.4.? the files are in @file{bin/windows/contrib/4.4}.
 
 @c Note that the binary versions on CRAN are unsupported: see
 @c @uref{https://CRAN.R-project.org/@/bin/@/windows/@/contrib/@/4.3/@/ReadMe},
@@ -1217,6 +1243,9 @@ If you have a source package that is known to work on a Unix-alike
 system, you can try the automated Windows binary package builder
 documented at @url{https://win-builder.R-project.org}.
 
+The native (default) builds of R 4.4.0 for Windows on ARM only install
+packages from source. This may be changed in the future.
+
 @node I don't have permission to write to the @RWVER@\library directory, The packages I installed do not appear in the HTML help system, Can I install packages into libraries in this version?, Packages
 @section I don't have permission to write to the @file{@RWVER@\library} directory.
 
@@ -1240,7 +1269,8 @@ library(mypkg, lib.loc="p:/myRlib")
 You can also have a personal library, which defaults to the directory
 @file{R\win-library\@var{x.y}} of your @file{$@{LOCALAPPDATA@}} directory
 (e.g. @file{C:\Users\username\AppData\Local}) for versions
-@var{x.y.z} since R 4.2.0. With older versions of R, it was a subdirectory
+@var{x.y.z} since R 4.2.0. With native build of R on ARM, the name includes
+@file{aarch64-library} instead of @file{win-library}. With older versions of R, it was a subdirectory
 of your home directory by default. This location can be changed by setting the
 environment variable @env{R_LIBS_USER}, and can be found from inside R
 by running @code{Sys.getenv("R_LIBS_USER")}.  This will only be used if
@@ -1291,7 +1321,7 @@ You can tell the version the package was compiled for by looking at the
 For a small number of binary packages you need to install additional
 software and have its DLLs in your @code{PATH}.  Windows will normally
 give an informative message about a certain DLL not being found. See
-@uref{https://CRAN.R-project.org/@/bin/@/windows/@/contrib/@/4.3/@/ReadMe} for a
+@uref{https://CRAN.R-project.org/@/bin/@/windows/@/contrib/@/4.4/@/ReadMe} for a
 listing of some of these packages (notably @code{RGtk2}, @code{cairoDevice},
 @code{rggobi}, @code{rJava}, @code{rjags} and some of the packages connecting to databases).
 
@@ -1784,6 +1814,8 @@ Administration' manual for how to build an ATLAS @file{Rblas.dll} tuned
 to your system using the R sources.  Unfortunately the process has been
 less successful when tried for the common current CPUs.
 
+With a native build of R on ARM, exclude @file{\x64} from the above.
+
 @c Versions of Dr Kazushige Goto's BLAS (see
 @c @uref{https://en.wikipedia.org/wiki/Kazushige_Goto}) for 64-bit Windows
 @c by Ei-Ji Nakama can be found at
@@ -1810,7 +1842,8 @@ and Administration' manual.  Then you can use
 @end example
 @noindent
 to make @file{foo.dll}.  Use @command{...\bin\x64\R CMD SHLIB --help} for
-further options, or see @code{?SHLIB}.
+further options, or see @code{?SHLIB}. 
+With a native build of R on ARM, exclude @file{\x64} from the above.
 
 @c If you want to use Visual C++, Borland C++ or other compilers, see the
 @c appropriate section in @file{README.packages}.
@@ -1846,7 +1879,8 @@ See the `R Installation and Administration' manual (for the version of R you
 want to install) and @uref{https://CRAN.R-project.org/bin/windows/Rtools/}
 for links to detailed information on how to build R and R packages from
 source using corresponding versions of @I{Rtools} and for additional hints for
-debugging on Windows.
+debugging on Windows, including how to debug a native build of R on ARM. The
+description here only covers Intel builds of R.
 
 You will need a suitable version of @command{gdb} which matches your
 compiler.  Then you can debug by
