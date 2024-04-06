@@ -332,6 +332,11 @@
       recursive calls to byte-compiled functions. It also makes more of
       an effort to avoid allocations for scalar return values.
 
+      \item New completion option \code{backtick} (disabled by default)
+      allows non-syntactic completions to be wrapped in backquotes. This
+      is currently only useful for Jupyter notebooks via the
+      \pkg{IRkernel} package, and may cause problems for other backends.
+      
     }
   }
 

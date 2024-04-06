@@ -120,13 +120,20 @@ findFuzzyMatches <- function(pattern, values) {
 }
 
 
-findMatches <- function(pattern, values, fuzzy)
+findMatches <- function(pattern, values, fuzzy, backtick)
 {
-    if (missing(fuzzy)) fuzzy <- .CompletionEnv$settings[["fuzzy"]]
-    if (fuzzy)
-        findFuzzyMatches(pattern, values)
-    else
-        findExactMatches(pattern, values)
+    if (missing(fuzzy)) fuzzy <- isTRUE(.CompletionEnv$settings[["fuzzy"]])
+    if (missing(backtick)) backtick <- isTRUE(.CompletionEnv$settings[["backtick"]])
+    comps <- 
+        if (fuzzy)
+            findFuzzyMatches(pattern, values)
+        else
+            findExactMatches(pattern, values)
+    if (backtick && length(comps) && all(nzchar(comps)))
+        comps <- vapply(comps,
+                        FUN = function(comp) deparse1(as.name(comp), backtick = TRUE),
+                        FUN.VALUE = "")
+    comps
 }
 
 fuzzyApropos <- function(what)
@@ -190,7 +197,7 @@ fuzzyApropos <- function(what)
 
 ## modifies settings:
 
-rc.settings <- function(ops, ns, args, dots, func, ipck, S3, data, help, argdb, fuzzy, quotes, files)
+rc.settings <- function(ops, ns, args, dots, func, ipck, S3, data, help, argdb, fuzzy, quotes, files, backtick)
 {
     if (length(match.call()) == 1) return(unlist(.CompletionEnv[["settings"]]))
     checkAndChange <- function(what, value)
@@ -213,6 +220,7 @@ rc.settings <- function(ops, ns, args, dots, func, ipck, S3, data, help, argdb, 
     if (!missing(files)) checkAndChange("files", files)
     if (!missing(quotes))checkAndChange("quotes", quotes)
     if (!missing(fuzzy)) checkAndChange("fuzzy", fuzzy)
+    if (!missing(backtick)) checkAndChange("backtick", backtick)
     invisible()
 }
 
@@ -1074,6 +1082,9 @@ fileCompletions <- function(token)
                                            fullToken$start-2L,
                                            fullToken$start-1L)) %in% c("::")))
             ## in anticipation that we will handle this eventually:
+
+## TODO: Detect cases where backtick has already been inserted by the user, and handle appropriately
+
 ##             probablyBacktick <- (fullToken$start >= 1L &&
 ##                                  ((substr(.CompletionEnv[["linebuffer"]],
 ##                                           fullToken$start,
@@ -1413,7 +1424,7 @@ assign("settings",
        list(ops = TRUE, ns = TRUE,
             args = TRUE, dots = TRUE, func = FALSE,
             ipck = FALSE, S3 = TRUE, data = TRUE,
-            help = TRUE, argdb = TRUE, fuzzy = FALSE,
+            help = TRUE, argdb = TRUE, fuzzy = FALSE, backtick = FALSE,
             files = TRUE, # FIXME: deprecate in favour of quotes
             quotes = TRUE),
        envir = .CompletionEnv)
