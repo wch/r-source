@@ -635,7 +635,7 @@ getOption(x, default = NULL)
       \code{\link{browseURL}} for further details.}
 
     \item{\code{ccaddress}:}{default Cc: address used by
-      \code{\link{create.post}} (and hence\code{\link{bug.report}} and
+      \code{\link{create.post}} (and hence \code{\link{bug.report}} and
       \code{\link{help.request}}).  Can be \code{FALSE} or \code{""}.}
 
     \item{\code{citation.bibtex.max}:}{default 1; the maximal number of
@@ -678,6 +678,10 @@ getOption(x, default = NULL)
       values are \code{"katex"} (equivalent to \code{NULL}, the default)
       and \code{"mathjax"}; for all other values basic substitutions are
       used. }
+
+    \item{\code{help.htmltoc}:}{default for the \code{toc} argument
+      of \code{\link{Rd2HTML}}, controlling whether a table of contents
+      should be included. }
 
     \item{\code{HTTPUserAgent}:}{string used as the \sQuote{user agent} in
       HTTP(S) requests by \code{\link{download.file}}, \code{\link{url}}

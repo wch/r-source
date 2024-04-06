@@ -1382,7 +1382,7 @@ fileCompletions <- function(token)
         "askYesNo", "BioC_mirror", "ccaddress", "checkPackageLicense",
         "conflicts.policy", "de.cellwidth", "deparse.max.lines", "digits.secs",
         "download.file.extra", "download.file.method", "error",
-        "help.htmlmath", "help.ports", "help_type", "install.lock",
+        "help.htmlmath", "help.htmltoc", "help.ports", "help_type", "install.lock",
         "install.packages.check.source",
         "install.packages.compile.from.source",
         "interrupt", "Ncpus", "save.defaults", "save.image.defaults",

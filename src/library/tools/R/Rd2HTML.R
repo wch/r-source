@@ -1143,7 +1143,7 @@ Rd2HTML <-
     ## Write a navigation menu (if toc == TRUE) based on toc_entries
     writeNav <- function() {
 
-        of0('<nav aria-label="Topic Navigation">\n',
+        of0('<nav class="topic" aria-label="Section Navigation">\n',
             '<div class="dropdown-menu">\n',
             '<h1>Contents</h1>\n',
             '<ul class="menu">\n')
@@ -1327,7 +1327,7 @@ Rd2HTML <-
                 of0('<hr /><div style="text-align: center;">[', version,
                     if (!no_links) '<a href="00Index.html">Index</a>',
                     ']</div>')
-            of1('</main>')
+            of1('</main>\n')
             if (toc) writeNav()
             of1(paste(hfcomps$footer, collapse = "")) # write out footer
         }

@@ -128,7 +128,19 @@ span.rlang {
 }
 
 
-/* Navigation TOC */
+/* Navigation TOC:
+
+nav.topic is for dynamic help pages, and should be hidden on narrow screens.
+
+nav.package is for single page manuals for an entire package, as
+produced by pkg2HTML(), and should be shown on top on narrow screens.
+
+*/
+
+
+nav.topic {
+    display: none; /* hide TOC on narrow screens */
+}
 
 nav {
     /* width: 100%; */
@@ -176,6 +188,10 @@ nav a:hover {
 
     header.top { display: none }
     
+    nav.topic {
+	display: block; /* show TOC on wide screens */
+    }
+
     .container {
 	padding-right: 10px;
 	padding-left: 10px;

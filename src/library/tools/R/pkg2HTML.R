@@ -153,7 +153,7 @@ pkg2HTML <- function(package, dir = NULL, lib.loc = NULL,
     writeHTML(hfcomps$header, sep = "", append = FALSE)
     ## writeHTML(sprintf("<header class='top'><h1>Package {%s}</h1><hr></header>",
     ##                   pkgname))
-    writeHTML('<nav aria-label="Topic Navigation">',
+    writeHTML('<nav class="package" aria-label="Topic Navigation">',
               '<div class="dropdown-menu">',
               sprintf('<h1>Package {%s}</h1>', pkgname),
               '<h2>Contents</h2>',
