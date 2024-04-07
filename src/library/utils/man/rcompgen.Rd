@@ -32,7 +32,7 @@
 \usage{
 
 rc.settings(ops, ns, args, dots, func, ipck, S3, data, help,
-            argdb, fuzzy, quotes, files)
+            argdb, fuzzy, quotes, files, backtick)
 
 rc.status()
 rc.getOption(name)
@@ -46,7 +46,7 @@ rc.options(\dots)
 \S3method{.DollarNames}{environment}(x, pattern = "")
 \S3method{.AtNames}{default}(x, pattern = "")
 
-findMatches(pattern, values, fuzzy)
+findMatches(pattern, values, fuzzy, backtick)
 
 }
 
@@ -104,6 +104,11 @@ findMatches(pattern, values, fuzzy)
     exact matches are found.  This feature is experimental and the
     details can change. In \code{findMatches}, this argument defaults to
     the current setting. }
+
+  \item{backtick}{ Logical flag. If enabled, non-syntactic completions
+    are wrapped in backticks to make them syntactically valid. This is
+    useful only if the backend can handle such completions. In
+    \code{findMatches}, this argument defaults to the current setting. }
 
   \item{quotes}{ Logical flag. Enables completion in \R code when inside
     quotes.  This normally leads to filename completion, but can be
