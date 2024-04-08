@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2024-01-05 r85780) -- "Unsuffered Consequences"
+R Under development (unstable) (2024-04-08 r86358) -- "Unsuffered Consequences"
 Copyright (C) 2024 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu
 
@@ -65,7 +65,12 @@ Type 'q()' to quit R.
 ‰
 > 
 > ## compress = FALSE makes this humna-readable and diff-able.
-> pdf("PDF-encoding.pdf", width = 5, height = 5, compress = FALSE)
+> ## hard-code encoding ISOLatin1.enc to match reference output
+> ## (e.g. Windows default WinAnsi.enc, so CP-1252, has a special character
+> ##  for bullet, fancy double quotes, per mille and other Unicode characters
+> ##  used in the tests, while ISOLatin1.enc does not)
+> pdf("PDF-encoding.pdf", width = 5, height = 5, compress = FALSE,
++     encoding="ISOLatin1.enc")
 > plot(1:11, 0:10, type = "n")
 > text(0.5+seq_along(one), 1, one, adj = c(0,0))
 > text(0.5+seq_along(two_1), 3, two_1, adj = c(0,0))
@@ -80,7 +85,7 @@ Type 'q()' to quit R.
 > six <- "\U0001f604" # emoji from WhatsR
 > cat(six, sep ="  "); cat("\n")
 😄
-> # cyrillic fron mapmisc
+> # cyrillic from mapmisc
 > seven <- "\u0423\u043b\u0430\u0430\u043d\u0431\u0430\u0430\u0442\u0430\u0440"
 > cat(seven, sep ="  "); cat("\n")
 Улаанбаатар
@@ -156,7 +161,7 @@ null device
 > 
 > 
 > ## Also try postscript
-> postscript("PS-encoding.ps", width = 5, height = 5)
+> postscript("PS-encoding.ps", width = 5, height = 5, encoding="ISOLatin1.enc")
 > plot(1:11, 0:10, type = "n")
 > text(0.5+seq_along(one), 1, one, adj = c(0,0))
 > text(0.5+seq_along(two_1), 3, two_1, adj = c(0,0))
@@ -254,4 +259,4 @@ null device
 > 
 > proc.time()
    user  system elapsed 
-  0.848   0.085   1.150 
+  0.147   0.016   0.159 

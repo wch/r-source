@@ -44,7 +44,12 @@ four <- "\u2030" # permille.  macOS and R map to o/oo.
 cat(four, sep ="  "); cat("\n")
 
 ## compress = FALSE makes this humna-readable and diff-able.
-pdf("PDF-encoding.pdf", width = 5, height = 5, compress = FALSE)
+## hard-code encoding ISOLatin1.enc to match reference output
+## (e.g. Windows default WinAnsi.enc, so CP-1252, has a special character
+##  for bullet, fancy double quotes, per mille and other Unicode characters
+##  used in the tests, while ISOLatin1.enc does not)
+pdf("PDF-encoding.pdf", width = 5, height = 5, compress = FALSE,
+    encoding="ISOLatin1.enc")
 plot(1:11, 0:10, type = "n")
 text(0.5+seq_along(one), 1, one, adj = c(0,0))
 text(0.5+seq_along(two_1), 3, two_1, adj = c(0,0))
@@ -57,7 +62,7 @@ five <- c("\u03b1", "\u03bc", "\u2211", "\u25cf", "\u25b2", "\u221e", "\uB3C4")
 cat(five, sep ="  "); cat("\n")
 six <- "\U0001f604" # emoji from WhatsR
 cat(six, sep ="  "); cat("\n")
-# cyrillic fron mapmisc
+# cyrillic from mapmisc
 seven <- "\u0423\u043b\u0430\u0430\u043d\u0431\u0430\u0430\u0442\u0430\u0440"
 cat(seven, sep ="  "); cat("\n")
 ## Latin-2 example from package 'ggenealogy'
@@ -101,7 +106,7 @@ dev.off()
 
 
 ## Also try postscript
-postscript("PS-encoding.ps", width = 5, height = 5)
+postscript("PS-encoding.ps", width = 5, height = 5, encoding="ISOLatin1.enc")
 plot(1:11, 0:10, type = "n")
 text(0.5+seq_along(one), 1, one, adj = c(0,0))
 text(0.5+seq_along(two_1), 3, two_1, adj = c(0,0))

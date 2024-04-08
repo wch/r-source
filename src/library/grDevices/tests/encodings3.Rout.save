@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2024-01-05 r85780) -- "Unsuffered Consequences"
+R Under development (unstable) (2024-04-08 r86358) -- "Unsuffered Consequences"
 Copyright (C) 2024 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu
 
@@ -55,7 +55,11 @@ Type 'q()' to quit R.
 > cat(four, sep ="  "); cat("\n")
 ㏂  ㏘
 > 
-> pdf("Encoding3.pdf", width = 7, height = 7, compress = FALSE)
+> ## hard-code encoding ISOLatin1.enc to match reference output
+> ## (e.g.  Windows default WinAnsi.enc, so CP-1252, has a special character
+> ##  for U+2122, while ISOLatin1.enc does not)
+> pdf("Encoding3.pdf", width = 7, height = 7, compress = FALSE,
++     encoding="ISOLatin1.enc")
 > plot(1:10, 1:10, type = "n")
 > text(0.5+seq_along(two), 2, two, adj = c(0,0))
 > text(0.5+seq_along(three), 3, three, adj = c(0,0))
@@ -87,4 +91,4 @@ null device
 > 
 > proc.time()
    user  system elapsed 
-  0.493   0.105   0.759 
+  0.103   0.020   0.115 
