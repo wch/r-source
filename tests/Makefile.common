@@ -334,7 +334,7 @@ test-Regexp:
 test-Segfault:
 	@$(ECHO) "running tests to possibly trigger segfaults"
 	@$(MK) $(test-out-segfault) RVAL_IF_DIFF=0
-	-@rm -Rf data dumpdata.R ./-package.Rd ./-Ex.R .Rd F.Rd [a-z]*0.Rd Rprof.out Rplots* \
+	-@rm -Rf data dumpdata.R ./-package.Rd ./-Ex.R .Rd l0.Rd m0.Rd df0.Rd Rprof.out Rplots* \
 	    PACKAGES PACKAGES.gz [A-Za-z]*-package.Rd FALSE.* mirrors.html
 
 test-Translation:
