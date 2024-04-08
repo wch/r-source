@@ -5529,7 +5529,7 @@ NORET static void nodeStackOverflow(void)
 }
 
 #define NELEMS_FOR_SIZE(size) \
-    ((int) ((size + sizeof(R_bcstack_t) - 1) / sizeof(R_bcstack_t)))
+    ((int) (((size) + sizeof(R_bcstack_t) - 1) / sizeof(R_bcstack_t)))
 
 /* Allocate contiguous space on the node stack */
 static R_INLINE void* BCNALLOC(size_t size)
@@ -7273,15 +7273,15 @@ struct cntxt_loop_locals {
     BCODE *break_pc;
 };
 
-#define PUSH_LOOP_LOCALS() do {					\
+#define PUSH_LOOP_LOCALS(bpc) do {				\
 	struct cntxt_loop_locals *loc =				\
 	    BCNALLOC(sizeof(struct cntxt_loop_locals));		\
 	SAVE_BCEVAL_LOCALS(&(loc->locals));			\
-	loc->break_pc = break_pc;				\
+	loc->break_pc = (bpc);					\
     } while (0)
 
 #define POP_LOOP_LOCALS() do {					\
-	BCNPOP_ALLOC(sizeof(struct cntxt_loop_locals));	\
+	BCNPOP_ALLOC(sizeof(struct cntxt_loop_locals));		\
     } while (0)
 
 static R_INLINE
@@ -7506,20 +7506,19 @@ static R_INLINE void finish_force_promise(void)
      ! RSTEP(fun) && ! RDEBUG(rho) &&				\
      R_GlobalContext->callflag != CTXT_GENERIC)
 
-static SEXP
-bcEval_loop(struct bcEval_locals *);
+static SEXP bcEval_loop(struct bcEval_locals *);
 
 static SEXP bcEval(SEXP body, SEXP rho)
 {
+  /* check version and allow bytecode to be disabled for testing */
+  if (R_disable_bytecode || ! R_BCVersionOK(body))
+      return eval(bytecodeExpr(body), rho);
+
   struct bcEval_globals globals;
   save_bcEval_globals(&globals);
 
   R_Srcref = R_InBCInterpreter;
   R_BCIntActive = 1;
-
-  /* check version and allow bytecode to be disabled for testing */
-  if (R_disable_bytecode || ! R_BCVersionOK(body))
-      return eval(bytecodeExpr(body), rho);
 
   R_BCFrame = NULL;
 
@@ -7552,7 +7551,7 @@ static SEXP bcEval_loop(struct bcEval_locals *ploc)
   BEGIN_MACHINE {
     OP(BCMISMATCH, 0): error(_("byte code version mismatch"));
     OP(RETURN, 0):
-      if (R_BCFrame == 0) {
+      if (R_BCFrame == NULL) {
 	  R_BCpc = oldbcpc;
 	  SEXP retvalue = GETSTACK(-1);
 	  return retvalue;
@@ -7593,8 +7592,9 @@ static SEXP bcEval_loop(struct bcEval_locals *ploc)
 	    RCNTXT *cntxt = BCNALLOC_CNTXT();
 	    int break_offset = GETOP();
 	    BCODE *break_pc = codebase + break_offset;
+	    struct bcEval_locals locals;
 	    SAVE_BCEVAL_LOCALS(&locals);
-	    PUSH_LOOP_LOCALS();
+	    PUSH_LOOP_LOCALS(break_pc);
 	    if (is_for_loop) {
 		/* duplicate the for loop state data on the top of the stack */
 		R_bcstack_t *loopdata = oldtop - FOR_LOOP_STATE_SIZE;
@@ -7602,7 +7602,8 @@ static SEXP bcEval_loop(struct bcEval_locals *ploc)
 		for (int i = 0; i < FOR_LOOP_STATE_SIZE; i++)
 		    R_BCNodeStackTop[i] = loopdata[i];
 		R_BCNodeStackTop += FOR_LOOP_STATE_SIZE;
-		SET_FOR_LOOP_BCPROT_OFFSET((int)(R_BCProtTop - R_BCNodeStackBase));
+		SET_FOR_LOOP_BCPROT_OFFSET((int)(R_BCProtTop -
+						 R_BCNodeStackBase));
 		INCLNK_stack(R_BCNodeStackTop);
 
 		begincontext(cntxt, CTXT_LOOP, R_NilValue, rho, R_BaseEnv,
