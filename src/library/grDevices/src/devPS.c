@@ -4522,6 +4522,7 @@ next_char:
 		(int) utf8toucs(&wc, i_buf); // gives -1 for a conversion error
 	    if (res != -1) {
 		R_wchar_t ucs = wc;
+		R_CheckStack2(clen + 1);
 		char badchar[clen + 1];
 		memcpy(badchar, i_buf, clen);
 		badchar[clen] = '\0';
