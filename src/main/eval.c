@@ -6859,7 +6859,7 @@ typedef struct {
 #define GET_FOR_LOOP_BINDING() GETSTACK_SXPVAL(-3)
 #define GET_FOR_LOOP_SEQ() GETSTACK_SXPVAL(-4)
 #define SET_FOR_LOOP_SEQ(v) SETSTACK(-4, v);
-#define SET_FOR_LOOP_BCPROT_OFFSET(v) SETSTACK_INTEGER(-5, v)
+#define SET_FOR_LOOP_BCPROT_OFFSET(v) SETSTACK_INTEGER(-5, (int) (v))
 #define GET_FOR_LOOP_BCPROT_OFFSET() GETSTACK_IVAL_PTR(R_BCNodeStackTop - 5)
 #define INSERT_FOR_LOOP_BCPROT_OFFSET() do {				\
 	/* insert space for the BCProt offset below the sequence */	\
@@ -7602,8 +7602,7 @@ static SEXP bcEval_loop(struct bcEval_locals *ploc)
 		for (int i = 0; i < FOR_LOOP_STATE_SIZE; i++)
 		    R_BCNodeStackTop[i] = loopdata[i];
 		R_BCNodeStackTop += FOR_LOOP_STATE_SIZE;
-		SET_FOR_LOOP_BCPROT_OFFSET((int)(R_BCProtTop -
-						 R_BCNodeStackBase));
+		SET_FOR_LOOP_BCPROT_OFFSET(R_BCProtTop - R_BCNodeStackBase);
 		INCLNK_stack(R_BCNodeStackTop);
 
 		begincontext(cntxt, CTXT_LOOP, R_NilValue, rho, R_BaseEnv,
@@ -7712,7 +7711,7 @@ static SEXP bcEval_loop(struct bcEval_locals *ploc)
 	}
 	/* the seq, binding cell, and value on the stack are now boxed */
 
-	SET_FOR_LOOP_BCPROT_OFFSET((int)(R_BCProtTop - R_BCNodeStackBase));
+	SET_FOR_LOOP_BCPROT_OFFSET(R_BCProtTop - R_BCNodeStackBase);
 	INCLNK_stack(R_BCNodeStackTop);
 
 	BC_CHECK_SIGINT();
