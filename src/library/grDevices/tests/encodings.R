@@ -162,8 +162,9 @@ if(!inherits(res6, "try-error")) message("error check failed on 'six'")
 res7 <- try(text(1.5, 8, seven, adj = c(0,0)))
 if(!inherits(res7, "try-error")) message("error check failed on 'seven'")
 ## 'eight' may or may not fail -- does on glibc, does not on macOS.
-res8 <- try(text(1.5, 9, eight, adj = c(0,0)))
-if(!inherits(res8, "try-error")) message("error check failed on 'eight'")
+res8 <- try(text(1.5, 9, eight, adj = c(0,0)), silent=TRUE)
+## disable this check as the results are platform dependent
+## if(!inherits(res8, "try-error")) message("error check failed on 'eight'")
 dev.off()
 unlink(tf)
 
