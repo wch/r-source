@@ -35,7 +35,11 @@ four <- c(0x33C2, 0x33D8)
 four <- intToUtf8(four, TRUE)
 cat(four, sep ="  "); cat("\n")
 
-pdf("Encoding3.pdf", width = 7, height = 7, compress = FALSE)
+## hard-code encoding ISOLatin1.enc to match reference output
+## (e.g.  Windows default WinAnsi.enc, so CP-1252, has a special character
+##  for U+2122, while ISOLatin1.enc does not)
+pdf("Encoding3.pdf", width = 7, height = 7, compress = FALSE,
+    encoding="ISOLatin1.enc")
 plot(1:10, 1:10, type = "n")
 text(0.5+seq_along(two), 2, two, adj = c(0,0))
 text(0.5+seq_along(three), 3, three, adj = c(0,0))
