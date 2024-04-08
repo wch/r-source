@@ -140,7 +140,11 @@ Sys.setenv("_R_CHECK_MBCS_CONVERSION_FAILURE_" = "TRUE")
 if(musl) q("no")
 
 tf <- tempfile(fileext = ".pdf")
-pdf(tf, width = 5, height = 5)
+## note that using the default on Windows (WinAnsi.enc) enables some
+## transliterations that would cause output differences in these tests
+## (alpha, micro and infinity from "five" will get transliterated by
+## Windows)
+pdf(tf, width = 5, height = 5, encoding="ISOLatin1.enc")
 plot(1:11, 0:10, type = "n")
 ## tranliterations done in mbcsToSbcs (when they will warn) if not
 ## done by the OS (which will be silent).
