@@ -19,6 +19,12 @@ if(sys["sysname"] == "Darwin" &&
     files[ind] <- sub("^ref", "ref-macOS", files[ind])
 }
 
+if(.Platform$OS.type == "windows") {
+    ind <- files %in% c("ref/PDF-encoding.pdf", "ref/PS-encoding.ps",
+                        "ref/Encoding3.pdf")
+    files[ind] <- sub("^ref", "ref-windows", files[ind])
+}
+
 cnt <- 0L
 for(f in files) {
     ff <- basename(f)
