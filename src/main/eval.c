@@ -6371,7 +6371,7 @@ static R_INLINE void VECSUBSET_PTR(SEXP vec, R_bcstack_t *si,
     args = CONS_NR(idx, R_NilValue);
     args = CONS_NR(vec, args);
     PROTECT(args);
-    SEXP call = callidx < 0 ? consts : VECTOR_ELT(consts, callidx);
+    SEXP call = callidx < 0 ? R_NilValue : VECTOR_ELT(consts, callidx);
     if (subset2)
 	value = do_subset2_dflt(call, R_Subset2Sym, args, rho);
     else
@@ -6488,7 +6488,7 @@ static R_INLINE void MATSUBSET_PTR(R_bcstack_t *sx,
     args = CONS_NR(idx, args);
     args = CONS_NR(mat, args);
     PROTECT(args);
-    SEXP call = callidx < 0 ? consts : VECTOR_ELT(consts, callidx);
+    SEXP call = callidx < 0 ? R_NilValue : VECTOR_ELT(consts, callidx);
     if (subset2)
 	value = do_subset2_dflt(call, R_Subset2Sym, args, rho);
     else
@@ -6542,7 +6542,7 @@ static R_INLINE void SUBSET_N_PTR(R_bcstack_t *sx, int rank,
 
     /* fall through to the standard default handler */
     PROTECT(args = CONS_NR(x, getStackArgsList(rank, si)));
-    SEXP call = callidx < 0 ? consts : VECTOR_ELT(consts, callidx);
+    SEXP call = callidx < 0 ? R_NilValue : VECTOR_ELT(consts, callidx);
     if (subset2)
 	value = do_subset2_dflt(call, R_Subset2Sym, args, rho);
     else
@@ -6631,7 +6631,7 @@ static R_INLINE void VECSUBASSIGN_PTR(SEXP vec, R_bcstack_t *srhs,
     args = CONS_NR(idx, args);
     args = CONS_NR(vec, args);
     PROTECT(args);
-    SEXP call = callidx < 0 ? consts : VECTOR_ELT(consts, callidx);
+    SEXP call = callidx < 0 ? R_NilValue : VECTOR_ELT(consts, callidx);
     MARK_ASSIGNMENT_CALL(call);
     if (subassign2)
 	vec = do_subassign2_dflt(call, R_Subassign2Sym, args, rho);
@@ -6718,7 +6718,7 @@ static R_INLINE void MATSUBASSIGN_PTR(R_bcstack_t *sx, R_bcstack_t *srhs,
     args = CONS_NR(idx, args);
     args = CONS_NR(mat, args);
     PROTECT(args);
-    SEXP call = callidx < 0 ? consts : VECTOR_ELT(consts, callidx);
+    SEXP call = callidx < 0 ? R_NilValue : VECTOR_ELT(consts, callidx);
     MARK_ASSIGNMENT_CALL(call);
     if (subassign2)
 	mat = do_subassign2_dflt(call, R_Subassign2Sym, args, rho);
@@ -6764,7 +6764,7 @@ static R_INLINE void SUBASSIGN_N_PTR(R_bcstack_t *sx, int rank,
     args = CONS_NR(value, R_NilValue);
     SET_TAG(args, R_valueSym);
     PROTECT(args = CONS_NR(x, addStackArgsList(rank, si, args)));
-    SEXP call = callidx < 0 ? consts : VECTOR_ELT(consts, callidx);
+    SEXP call = callidx < 0 ? R_NilValue : VECTOR_ELT(consts, callidx);
     MARK_ASSIGNMENT_CALL(call);
     if (subassign2)
 	x = do_subassign2_dflt(call, R_Subassign2Sym, args, rho);
