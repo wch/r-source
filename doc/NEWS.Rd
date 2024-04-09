@@ -334,7 +334,7 @@
 
       \item New completion option \code{backtick} (disabled by default)
       allows non-syntactic completions to be wrapped in backquotes. This
-      is currently only useful for Jupyter notebooks via the
+      is currently only useful for \I{Jupyter} notebooks via the
       \pkg{IRkernel} package, and may cause problems for other backends.
       
     }
