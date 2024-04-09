@@ -52,8 +52,8 @@ Exec(expr, envir)
   \code{Tailcall} or \code{Exec}, not the previous call whose stack
   entry has been replaced.
 }
-\note{\code{Tailcall} and \code{Exec} are experimental and may not be
-  included in a released version of \R.
+\note{\code{Tailcall} and \code{Exec} are experimental and may be
+  changed or dropped in future released versions of \R.
 }
 \seealso{
   \code{\link{Recall}} and \code{\link{force}}.
@@ -71,7 +71,7 @@ lfact <- function(n) {
     }
     lfact_iter(0, n)
 }
-suppressWarnings(10 ^ lfact(3)) # first Tailcall in a session warns
+10 ^ lfact(3)
 lfact(100000)
 
 ## simplified variant of do.call using Exec:
