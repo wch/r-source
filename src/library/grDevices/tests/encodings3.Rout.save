@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2024-04-08 r86358) -- "Unsuffered Consequences"
+R Under development (unstable) (2024-04-09 r86373) -- "Unsuffered Consequences"
 Copyright (C) 2024 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu
 
@@ -31,12 +31,9 @@ Type 'q()' to quit R.
 +     warning("encodings3.R requires a UTF-8 locale")
 +     q("no")
 + }
-> ## musl will substitute * for all of these.
-> musl <- grepl("musl", R.version$os)
-> if(musl) q("no")
 > 
 > 
-> ## Two-ckar fixups
+> ## Two-char fixups
 > two <- c(0x2260, 0x226A, 0x226B, 0x2025, 0x203C, 0x2122)
 > two <- intToUtf8(two, TRUE)
 > cat(two, sep ="  "); cat("\n")
@@ -55,6 +52,7 @@ Type 'q()' to quit R.
 > cat(four, sep ="  "); cat("\n")
 ㏂  ㏘
 > 
+> ## musl will substitute * for all of these characters in pdf().
 > ## hard-code encoding ISOLatin1.enc to match reference output
 > ## (e.g.  Windows default WinAnsi.enc, so CP-1252, has a special character
 > ##  for U+2122, while ISOLatin1.enc does not)
@@ -91,4 +89,4 @@ null device
 > 
 > proc.time()
    user  system elapsed 
-  0.103   0.020   0.115 
+  0.105   0.026   0.130 
