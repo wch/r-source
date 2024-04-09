@@ -65,7 +65,7 @@ clusterCall  <- function(cl = NULL, fun, ...)
 
 
 clusterEvalQ <- function(cl = NULL, expr)
-    clusterCall(cl, eval, substitute(expr), env=.GlobalEnv)
+    clusterCall(cl, eval, substitute(expr), envir = .GlobalEnv)
 
 clusterExport <- local({
     gets <- function(n, v) { assign(n, v, envir = .GlobalEnv); NULL }
