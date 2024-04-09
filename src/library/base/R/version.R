@@ -307,7 +307,7 @@ function(..., na.rm)
         stop(gettextf("%s not defined for \"numeric_version\" objects",
                       .Generic), domain = NA)
     x <- do.call(c, lapply(list(...), as.numeric_version))
-    v <- xtfrm(x)
+    v <- .encode_numeric_version(x)
     if(!na.rm && length(pos <- which(is.na(v)))) {
         y <- x[pos[1L]]
         if(as.character(.Generic) == "range")
