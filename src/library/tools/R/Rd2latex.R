@@ -85,8 +85,13 @@ Rd2latex <- function(Rd, out = "", defines = .Platform$OS.type,
     conc <- if(concordance) activeConcordance() # else NULL
     
     last_char <- ""
+    skipNewline <- FALSE
     of0 <- function(...) of1(paste0(...))
     of1 <- function(text) {
+        if (skipNewline) {
+            skipNewline <<- FALSE
+            if (text == "\n") return()
+        }
     	if (concordance)
     	    conc$addToConcordance(text)
         nc <- nchar(text)
@@ -120,14 +125,13 @@ Rd2latex <- function(Rd, out = "", defines = .Platform$OS.type,
 
     startByte <- function(x) {
     	srcref <- attr(x, "srcref")
-    	if (is.null(srcref)) NA
+    	if (is.null(srcref)) -1L
     	else srcref[2L]
     }
 
     addParaBreaks <- function(x, tag) {
-        start <- startByte(x)
         if (isBlankLineRd(x)) "\n"
-	else if (identical(start, 1L)) psub("^\\s+", "", x)
+        else if (startByte(x) == 1L) psub("^\\s+", "", x)
         else x
     }
 
@@ -365,8 +369,10 @@ Rd2latex <- function(Rd, out = "", defines = .Platform$OS.type,
                TEXT = of1(addParaBreaks(texify(block), blocktag)),
                USERMACRO =,
                "\\newcommand" =,
-               "\\renewcommand" =,
-               COMMENT = {},
+               "\\renewcommand" = {},
+               COMMENT = if (startByte(block) == 1L ||
+                             (!inCodeBlock && last_char == "")) # indented comment line
+                             skipNewline <<- TRUE,
                LIST = writeContent(block, tag),
                ## Avoid Rd.sty's \describe, \Enumerate and \Itemize:
                ## They don't support verbatim arguments, which we might need.

@@ -16,6 +16,8 @@ _A_r_g_u_m_e_n_t_s:
 
 _D_e_t_a_i_l_s:
 
+     Included conditional content.
+
      Escaped backslash '\x'.
 
      '%{}'
@@ -93,5 +95,6 @@ _E_x_a_m_p_l_e_s:
      
      ## Not run: stop("doomed to fail")
      
-     foo(x, y)
+     foo(x,
+         y)
      

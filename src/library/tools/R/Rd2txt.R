@@ -508,11 +508,16 @@ Rd2txt <-
         put(txt)
     }
 
-    # This function strips pending blank lines, then adds n new ones.
+    ## Strip a pending blank line
+    stripBlankLine <- function() {
+        n <- length(buffer)
+        strip <- n > 0L && grepl("^[[:blank:]]*$", buffer[n])
+        if (strip) buffer <<- buffer[-n]
+        strip
+    }
+    ## Strip pending blank lines, then add n new ones.
     blankLine <- function(n = 1L) {
-    	while (length(buffer) &&
-               grepl("^[[:blank:]]*$", buffer[length(buffer)]))
-    	    buffer <<- buffer[-length(buffer)]
+    	while (stripBlankLine()) NULL
 	flushBuffer()
 	if (n > haveBlanks) {
 	    buffer <<- rep_len("", n - haveBlanks)
@@ -571,8 +576,11 @@ Rd2txt <-
                TEXT = if(blocktag == "\\command") putw(block) else putw(unescape(tabExpand(block))),
                USERMACRO =,
                "\\newcommand" =,
-               "\\renewcommand" =,
-               COMMENT = {},
+               "\\renewcommand" = {},
+               COMMENT = {
+                   stripBlankLine()     # drop indentation
+                   linestart <<- FALSE  # eat subsequent \n also for non-indented comments
+               },
                LIST = writeContent(block, tag),
                "\\describe" = {
                	   blankLine(0L)
@@ -848,10 +856,11 @@ Rd2txt <-
                    "\\dots" =, # \ldots is not really allowed
                    "\\ldots" = put("..."),
                    "\\dontrun"= writeDR(block, tag),
+                   COMMENT = # skip over whole comment lines, only (as in Rd2ex)
+                       if (attr(block, "srcref")[2L] == 1L) linestart <<- FALSE,
 		   USERMACRO =,
 		   "\\newcommand" =,
 		   "\\renewcommand" =,
-                   COMMENT =,
                    "\\dontshow" =,
                    "\\testonly" = {}, # do nothing
                    ## All the markup such as \emph
