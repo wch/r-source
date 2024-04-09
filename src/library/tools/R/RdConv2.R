@@ -376,9 +376,12 @@ processRdIfdefs <- function(blocks, defines)
                         block <- tagged(block[[2L]], "#expanded")
                         setDynamicFlags(block, flag)
                     } else
-                        tagged(paste(tag, target, "not active"),
-                               "COMMENT",
-                               attr(block, "srcref"))
+                        tagged(list(
+                            tagged(paste(tag, target, "not active"),
+                                   "COMMENT", attr(block, "srcref")),
+                            tagged("\n",
+                                   "TEXT", attr(block, "srcref"))
+                        ), "#expanded")
 	    }
 	}
 	if (is.list(block)) {

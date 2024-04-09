@@ -23,8 +23,6 @@ paragraph
 %
 \begin{Details}
 Included
-
-
 conditional content.
 
 Escaped backslash \code{\bsl{}x}.
@@ -116,7 +114,6 @@ and is thus output as-is in R \eqn{\ge}{} 4.4.0:
 ## Not run: stop("doomed to fail")
 
 foo(x,
-
     y)
 \end{ExampleCode}
 \end{Examples}

@@ -444,9 +444,14 @@ Rd2HTML <-
         else toc_entries <- list()
     }
 
+    skipNewline <- FALSE
     of0 <- function(...)
         of1(paste0(...))
     of1 <- function(text) {
+        if (skipNewline) {
+            skipNewline <<- FALSE
+            if (text == "\n") return()
+        }
     	if (concordance)
     	    conc$addToConcordance(text)
         writeLinesUTF8(text, con, outputEncoding, sep = "")
@@ -508,7 +513,7 @@ Rd2HTML <-
 	## TODO: can we get 'start col' if no srcref ?
 	if (utils:::getSrcByte(x) == 1L) x <- psub("^\\s+", "", x)
 	if (isFALSE(inPara) && !all(grepl("^[[:blank:]\n]*$", x, perl = TRUE))) {
-	    x <- c("<p>", x)
+	    x <- paste0("<p>", x)
 	    inPara <<- TRUE
 	}
         x
@@ -744,8 +749,9 @@ Rd2HTML <-
                TEXT = of1(if(doParas && !inAsIs) addParaBreaks(htmlify(block)) else vhtmlify(block)),
                USERMACRO =,
                "\\newcommand" =,
-               "\\renewcommand" =,
-               COMMENT = {},
+               "\\renewcommand" = {},
+               COMMENT = if (utils:::getSrcByte(block) == 1L)
+                             skipNewline <<- TRUE,
                LIST = writeContent(block, tag),
                "\\describe"=,
                "\\enumerate"=,

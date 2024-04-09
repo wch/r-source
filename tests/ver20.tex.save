@@ -31,7 +31,6 @@ And if we do escape: \bsl{}\$ \bsl{}\# \bsl{}\_ , and with three backslashes, \b
 \deqn{a < b > c | d, x^y}{}
 \deqn{\$k > \#k, x_y, x\_y}{}
 
-
 group-weighting from \$[N\_iP\_i(1-P\_i)]\$
 
 \begin{alltt}

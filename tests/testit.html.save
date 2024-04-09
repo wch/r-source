@@ -48,7 +48,6 @@ foo(<var>x</var>, <var>y</var>, ...)
 
 <p>Included
 
-
 conditional content.
 </p>
 <p>Escaped backslash <code>\x</code>.
@@ -166,7 +165,6 @@ and is thus output as-is in R <code class="reqn">\ge</code> 4.4.0:
 ## Not run: stop("doomed to fail")
 
 foo(<var>x</var>,
-
     <var>y</var>)
 </code></pre>
 
