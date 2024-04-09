@@ -14,12 +14,9 @@ if (!l10n_info()[["UTF-8"]]) {
     warning("encodings3.R requires a UTF-8 locale")
     q("no")
 }
-## musl will substitute * for all of these.
-musl <- grepl("musl", R.version$os)
-if(musl) q("no")
 
 
-## Two-ckar fixups
+## Two-char fixups
 two <- c(0x2260, 0x226A, 0x226B, 0x2025, 0x203C, 0x2122)
 two <- intToUtf8(two, TRUE)
 cat(two, sep ="  "); cat("\n")
@@ -35,6 +32,7 @@ four <- c(0x33C2, 0x33D8)
 four <- intToUtf8(four, TRUE)
 cat(four, sep ="  "); cat("\n")
 
+## musl will substitute * for all of these characters in pdf().
 ## hard-code encoding ISOLatin1.enc to match reference output
 ## (e.g.  Windows default WinAnsi.enc, so CP-1252, has a special character
 ##  for U+2122, while ISOLatin1.enc does not)
