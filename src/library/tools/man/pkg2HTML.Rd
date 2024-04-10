@@ -18,6 +18,7 @@ pkg2HTML(package, dir = NULL, lib.loc = NULL,
          texmath = getOption("help.htmlmath"),
          prism = TRUE,
          out = NULL,
+         toc_entry = c("title", "name"),
          ...,
          Rhtml = FALSE,
          include_description = TRUE)
@@ -44,12 +45,16 @@ pkg2HTML(package, dir = NULL, lib.loc = NULL,
     is used to determine the output HTML file path given a package name
     as input.
   }
-  \item{texmath, prism}{ logical flags, passed on to
-    \code{\link{Rd2HTML}}.
+  \item{texmath, prism}{ logical flags, as described in
+    \code{\link{Rd2HTML}}. The current implementation does not correctly
+    handle packages that use the \code{\link[mathjaxr]{mathjaxr}}
+    package.
   }
   \item{out}{a filename or connection object to which to write the
     output.  The default \code{out = ""} is equivalent to
     \code{out = \link{stdout}()}.}
+  \item{toc_entry}{ Determines whether the entry for a help page in the
+    table of contents is the name of the help page or its title. }
   \item{...}{additional arguments, passed on to
     \code{\link{Rd2HTML}}. The \code{stages} argument, if specified, is
     passed on to \code{\link{Rd_db}}.
