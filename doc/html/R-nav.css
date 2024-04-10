@@ -7,7 +7,7 @@
 
 */
 
-rimage img { /* from knitr - for examples and demos */
+.rimage img { /* from knitr - for examples and demos */
     width: 96%;
     margin-left: 2%;
 } 	

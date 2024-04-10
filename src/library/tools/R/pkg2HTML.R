@@ -27,7 +27,7 @@
 ## any Rd file in a package uses mathjaxr
 
 .convert_package_rdfiles <- function(package, dir = NULL, lib.loc = NULL, ...,
-                                     stages = "build",
+                                     stages = c("build", "install", "render", "later"),
                                      xLinks = character(0))
 {
     ## if 'package' is an installed package (simplest) just use
@@ -71,6 +71,7 @@
             Rd_db(dir = pkgdir, stages = stages)
         }
         else {
+            ## FIXME: needs cleanup
             pkgdir <- if (is.null(dir)) find.package(package, lib.loc) else dir
             if (is.null(dir)) Rd_db(package, , lib.loc, stages = stages)
             else Rd_db(, dir, lib.loc, stages = stages)
@@ -108,14 +109,17 @@ pkg2HTML <- function(package, dir = NULL, lib.loc = NULL,
                      texmath = getOption("help.htmlmath"),
                      prism = TRUE,
                      out = NULL,
+                     toc_entry = c("title", "name"),
                      ...,
                      Rhtml = FALSE,
                      include_description = TRUE)
 {
     if (is.null(texmath)) texmath <- "katex"
+    toc_entry <- match.arg(toc_entry)
     hcontent <- .convert_package_rdfiles(package = package, dir = dir, lib.loc = lib.loc,
                                          outputEncoding = outputEncoding,
-                                         Rhtml = Rhtml, hooks = hooks, ...)
+                                         Rhtml = Rhtml, hooks = hooks,
+                                         texmath = texmath, prism = prism, ...)
     descfile <- attr(hcontent, "descfile")
     pkgname <- read.dcf(descfile, fields = "Package")[1, 1]
     if (is.null(out)) {
@@ -131,9 +135,9 @@ pkg2HTML <- function(package, dir = NULL, lib.loc = NULL,
     rdtitles <- vapply(hcontent, function(h) h$info$title[[1L]], "")
     ## rdtitles <- vapply(hcontent, function(h) h$info$htmltitle[[1L]], "") # FIXME: has extra <p>
 
-    ## toclines <- sprintf("<li><a href='#%s'><em>%s</em></a></li>", rdnames, rdtitles)
-
-    toclines <- sprintf("<li><a href='#%s'>%s</a></li>", rdnames, rdtitles)
+    toclines <- switch(toc_entry,
+                       title = sprintf("<li><a href='#%s'>%s</a></li>", rdnames, rdtitles),
+                       name = sprintf("<li><a href='#%s'>%s</a></li>", rdnames, rdnames))
 
     ## Now to make a file with header + DESCRIPTION + TOC + content + footer
 
