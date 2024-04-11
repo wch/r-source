@@ -66,6 +66,8 @@ zhetri.f
 zhetrs.f
 zhgeqz.f
 zhpcon.f
+zhpev.f
+zhptrd.f
 zhptrf.f
 zhptri.f
 zhptrs.f
@@ -148,7 +150,6 @@ zpstrf.f
 zrot.f
 zrscl.f
 zspcon.f
-zspmv.f
 zspr.f
 zsptrf.f
 zsptri.f
@@ -201,3 +202,4 @@ zunmlq.f
 zunmql.f
 zunmqr.f
 zunmtr.f
+zupgtr.f

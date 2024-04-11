@@ -125,12 +125,14 @@ for recent RcppArmadillo with LLVM clang 15.
 
 zrscl needed for zgetf2 in 3.12.0
 
-zlansp zlantp zlatps zppcon zpptrf zpptri zpptrs zspcon zspmv
+zlansp zlantp zlatps zppcon zpptrf zpptri zpptrs zspcon
 zspr zsptrf zsptri zsptrs zsycon zsytrs ztpcon ztptri ztptrs
 zhecon zhetrf zhetri zhetrs
 zhpcon zhptrf zhptri zhptrs zlanhp
 
-at the request of the Matrix maintainers.
+plus   zspmv   for BLAS
+
+at the request of the Matrix maintainers
 
 We still include the deprecated (in LAPACK 3.6.0) subroutines in files
 DEPRECATED/dgegv.f DEPRECATED/dgeqpf.f DEPRECATED/dggsvd.f DEPRECATED/dggsvp.f

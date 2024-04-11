@@ -2371,11 +2371,12 @@ F77_NAME(zlacn2)(const La_INT *n, La_complex *v, La_complex *x,
  * Added in R 4.4.0
 */
 La_extern double
-F77_NAME(zlansp)(const char* norm, const char* uplo, const char* diag,
-		 const La_INT *m, const La_INT *n, La_complex *a,
-		 const La_INT *lda, double *work FCLEN FCLEN FCLEN);
+F77_NAME(zlansp)(const char* norm, const char* uplo,
+		 const La_INT *n, La_complex *ap,
+		 double *work FCLEN FCLEN);
 La_extern double
-F77_NAME(zlansy)(const char* norm, const char* uplo, La_INT *n, La_complex *a,
+F77_NAME(zlansy)(const char* norm, const char* uplo,
+		 const La_INT *n, La_complex *a, const La_INT *lda,
 		 double *work FCLEN FCLEN);
 
 /* ZLANTR  -  return the value of the one norm, or the Frobenius norm,
@@ -2420,15 +2421,15 @@ F77_NAME(zppcon)(const char* uplo, const La_INT* n,
 
 La_extern void
 F77_NAME(zpptrf)(const char* uplo, const La_INT* n,
-		 La_complex* a, const La_INT* lda, La_INT* info FCLEN);
+		 La_complex *ap, La_INT *info FCLEN);
 
 La_extern void
 F77_NAME(zpptri)(const char* uplo, const La_INT* n,
-		 La_complex* a, const La_INT* lda, La_INT* info FCLEN);
+		 La_complex *ap, La_INT *info FCLEN);
 
 La_extern void
 F77_NAME(zpptrs)(const char* uplo, const La_INT* n,
-		 const La_INT* nrhs, const La_complex* a, const La_INT* lda,
+		 const La_INT *nrhs, const La_complex *a,
 		 La_complex* b, const La_INT* ldb, La_INT* info FCLEN);
 
 La_extern void
@@ -2870,8 +2871,9 @@ F77_NAME(zgebak)(const char* job, const char* side, La_INT *n, La_INT *ilo,
 		 La_INT *ldv, La_INT *info FCLEN FCLEN);
 
 La_extern void
-F77_NAME(zgebal)(const char* job, La_INT *n, La_complex *a, La_INT *
-		 *lda, La_INT *ilo, La_INT *ihi, double *scale, La_INT *info FCLEN);
+F77_NAME(zgebal)(const char *job, const La_INT *n, La_complex *a,
+		 const La_INT *lda, La_INT *ilo, La_INT *ihi, double *scale,
+		 La_INT *info FCLEN);
 
 La_extern void
 F77_NAME(zgebd2)(La_INT *m, La_INT *n, La_complex *a,
@@ -3076,21 +3078,6 @@ F77_NAME(zspcon)(const char* uplo, const La_INT *n, const La_complex *ap,
 		 double *rcond,
 		 La_complex *work, La_INT *info FCLEN);
 
-/* ZSPMV  performs the matrix-vector operation
- *
- *    y := alpha*A*x + beta*y,
- *
- * where alpha and beta are scalars, x and y are n element vectors and
- * A is an n by n symmetric matrix, supplied in packed form.
- * Added in R 4.4.0
-*/
-La_extern void
-F77_NAME(zspmv)(const char* uplo, const La_INT *n, const La_complex* alpha,
-		const La_complex *ap,
-		const La_complex* x, const La_INT* incx,
-		const La_complex* beta,
-		La_complex* y, const La_INT* incy FCLEN);
-
 La_extern void
 F77_NAME(zsptrf)(const char* uplo, const La_INT *n, La_complex *ap,
 		 La_INT *ipiv, La_INT *info FCLEN);
@@ -3267,7 +3254,7 @@ F77_NAME(zgelsd)(La_INT *m, La_INT *n, La_INT *nrhs,
 
 /* More Complex for R 4.4.0  --- Complex Hermitian (incl "crossprod") */
 
-La_extern void
+La_extern double
 F77_NAME(zlanhp)(const char* norm, const char* uplo,
 		 La_INT const* n,
 		 La_complex const* AP,
@@ -3316,7 +3303,20 @@ F77_NAME(zhetrs)(const char* uplo, La_INT const* n, La_INT const* nrhs,
 		 La_complex* B, La_INT const* ldb,
 		 La_INT* info FCLEN);
 
+La_extern void
+F77_NAME(zgees)(const char *jobvs, const char *sort,
+		 La_LGL (*select)(const La_complex *),
+		 const La_INT *n, La_complex *a, const La_INT *lda,
+		 La_INT *sdim, La_complex *w, La_complex *vs, const La_INT *ldvs,
+		 La_complex *work, const La_INT *lwork, double *rwork, La_LGL *bwork,
+		 La_INT *info FCLEN FCLEN);
 
+La_extern void
+F77_NAME(zhpev)(const char *jobz, const char *uplo,
+		 const La_INT *n, La_complex *ap,
+		 double *w, La_complex *z, const La_INT *ldz,
+		 La_complex *work, double *rwork,
+		 La_INT *info FCLEN FCLEN);
 
 /* =========================== DEPRECATED ==============================
 

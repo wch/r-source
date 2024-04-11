@@ -457,6 +457,20 @@ F77_NAME(dsyr2k)(const char *uplo, const char *trans,
 		    FCLEN FCLEN FCLEN);
 /* #endif */
 
+/* ZSPMV  performs the matrix-vector operation
+ *
+ *     y := alpha*A*x + beta*y,
+ *
+ * where alpha and beta are scalars, x and y are n element vectors
+ * and A is an n by n symmetric matrix, supplied in packed form.
+ * Added in R 4.4.0
+ */
+BLAS_extern void
+F77_NAME(zspmv)(const char *uplo, const BLAS_INT *n,
+		 const BLAS_complex *alpha, const BLAS_complex *ap,
+		 const BLAS_complex *x, const BLAS_INT *incx,
+		 const BLAS_complex *beta, BLAS_complex *y, const BLAS_INT *incy FCLEN);
+
 #ifdef  __cplusplus
 }
 #endif
