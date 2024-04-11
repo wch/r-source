@@ -1311,6 +1311,8 @@ Rd2HTML <-
         info$name <- name
         info$title <- rdfragment2text(title)
         info$htmltitle <- info$title # Rd2HTML(fragment = TRUE) gives unbalanced <p>
+        info$mathjaxr <- uses_mathjaxr(Rd)
+        info$pkgsummary <- FALSE # possibly updated below if alias ends with '-package'
 	if (concordance)
 	    conc$saveSrcref(title)
 	writeContent(title, sections[1])
@@ -1319,6 +1321,7 @@ Rd2HTML <-
         if (!standalone) {
             ## create empty spans with aliases as id, so that we can link
             for (a in trimws(unlist(Rd[ which(sections == "\\alias") ]))) {
+                if (endsWith(a, "-package")) info$pkgsummary <- TRUE
                 of0("<span id='", topic2id(a), "'></span>")
             }
         }

@@ -27,7 +27,7 @@
 ## any Rd file in a package uses mathjaxr
 
 .convert_package_rdfiles <- function(package, dir = NULL, lib.loc = NULL, ...,
-                                     stages = c("build", "install", "render", "later"),
+                                     stages = c("build", "later", "install", "render"),
                                      xLinks = character(0))
 {
     ## if 'package' is an installed package (simplest) just use
@@ -127,10 +127,17 @@ pkg2HTML <- function(package, dir = NULL, lib.loc = NULL,
                else hooks$pkg_href(pkgname)
     }
     
-    ## Sort by name, as in PDF manual (check exact code)
+    ## Sort by name, as in PDF manual (check exact code). The
+    ## '<pkg>-package.Rd' summary page, if present, should come first.
     hcontent <- hcontent[order(vapply(hcontent,
                                       function(h) h$info$name,
                                       ""))]
+    if (length(hcontent) > 1 &&
+        length(wsumm <- which(vapply(hcontent,
+                                     function(h) isTRUE(h$info$pkgsummary),
+                                     FALSE))) > 0L) {
+        hcontent <- c(hcontent[wsumm], hcontent[-wsumm])
+    }
     rdnames <- vapply(hcontent, function(h) h$info$name, "")
     rdtitles <- vapply(hcontent, function(h) h$info$title[[1L]], "")
     ## rdtitles <- vapply(hcontent, function(h) h$info$htmltitle[[1L]], "") # FIXME: has extra <p>
