@@ -39,6 +39,10 @@
 
 .make_R.wxs <- function(RW, srcdir, personal = "0")
 {
+    ## The layout of 64-bit Intel builds is different so that it matches
+    ## previous versions of R which supported sub-architectures (32-bit and
+    ## 64-bit Intel) and installing files for both at the same time.
+
     havex64 <- file_test("-d", file.path(srcdir, "bin", "x64"))
 
     personal <- personal == "1"
@@ -55,6 +59,27 @@
     nc <- 1
     guuids <- function() {x <- uuids[nc]; nc <<- nc + 1L; x}
 
+    aarch64 <- FALSE
+    if (!havex64) { 
+        fout <- system(
+                    paste("file", shQuote(file.path(srcdir, "bin", "R.exe"))),
+                    intern=TRUE)
+        if (grepl("Aarch64", fout, fixed = TRUE))
+            aarch64 <- TRUE
+    }
+
+    if (aarch64) {
+       # To distinguish aarch64 version from x86_64 version installed on
+       # Windows/aarch64 in ARP entries and in shortcuts
+       RverA <- paste0("aarch64 ", Rver)
+       dsuffix <- "-aarch64"
+    } else {
+       if (havex64)
+           RverA <- paste0("x64 ", Rver)
+       else
+           RverA <- Rver
+       dsuffix <- ""
+    }
 
     con <- file("R.wxs", "w")
     cat(file = con, sep = "\n",
@@ -63,9 +88,7 @@
         '  <Product Manufacturer="R Core Team" ',
         '   Id="*"',
         '   Language="1033"',
-        sprintf('   Name="R%s %s (via msi)"',
-                ifelse(havex64, " x64", ""),
-                Rver),
+        sprintf('   Name="R %s (via msi)"', RverA),
         sprintf('   Version="%s"', Rver0),
         '   UpgradeCode="309E663C-CA7A-40B9-8822-5D466F1E2AF9">',
         '    <Package Id="*" ',
@@ -73,9 +96,10 @@
         sprintf('     Description="R %s Installer"', Rver),
         '     Comments="R Language and Environment"',
         '     Manufacturer="R Core Team"',
-        if (havex64) '     InstallerVersion="200"'
-        else '     InstallerVersion="100"',
-        if (havex64) '     Platform="x64"',
+        if (aarch64) '     InstallerVersion="500"'
+        else '     InstallerVersion="200"',
+        if (havex64) '     Platform="x64"'
+        else if (aarch64) '    Platform="arm64"',
         '     Languages="1033"',
         '     Compressed="yes"',
         if (personal) 'InstallPrivileges="limited"',
@@ -102,7 +126,7 @@
     rx2 <- ' *<File Id=\"([^\"]*).* (src|Source)=\"([^\"]*)\".*'
     rx3 <- paste(".*\\", srcdir, "\\", sep = "")
     comps <- ids <- nm <- character()
-    rgui <- rgui64 <- rhelp <- 'unknown'
+    rgui <- rhelp <- 'unknown'
     comp <- id <- 'unknown'
     rx3 <- paste(".*", srcdir0, "/", sep="")
     rx3 <- ".*SourceDir/"
@@ -113,7 +137,8 @@
             fn <- sub(rx2, "\\1", f)
             src <- sub(rx3, "", sub(rx2, "\\3", f), fixed = TRUE)
             src <- gsub("\\", "/", src, fixed = TRUE)
-            if(grepl("bin/x64/Rgui.exe$", src)) rgui64 <- fn
+            if(havex64 && grepl("bin/x64/Rgui.exe$", src)) rgui <- fn
+            if(!havex64 && grepl("bin/Rgui.exe$", src)) rgui <- fn
             if(grepl("doc/html/index.html$", src)) rhelp <- fn
             ids <- c(ids, id)
             nm <- c(nm, src)
@@ -129,7 +154,6 @@
         f <- sub(name0, "/>", f, fixed = TRUE)
         cat("    ", f, "\n", file=con, sep="")
     }
-    if (rgui == "unknown") rgui <- rgui64
 
 
     cat(file = con, sep = "\n", '',
@@ -137,44 +161,34 @@
         '',
         ## empty components to work around bug in Windows Installer
         ## offering to install components with no features from the network
-        sprintf('    <Component Id="dummyman" Guid="%s"></Component>', guuids()),
-        sprintf('    <Component Id="dummytcl" Guid="%s"></Component>', guuids()),
         sprintf('    <Component Id="dummystart" Guid="%s"></Component>', guuids()),
         '',
-        if (havex64)
-        '      <Directory Id=\'ProgramFiles64Folder\' Name=\'PFiles\'>'
-        else
-        '      <Directory Id=\'ProgramFilesFolder\' Name=\'PFiles\'>',
-        "        <Directory Id='Rdir' Name='R'>",
+        '      <Directory Id=\'ProgramFiles64Folder\' Name=\'PFiles\'>',
+        sprintf("        <Directory Id='Rdir' Name='R%s'>", dsuffix),
         sprintf("         <Directory Id='INSTALLDIR' Name='%s'>", srcdir),
         "         </Directory>",
         "        </Directory>",
         "      </Directory>")
 
     cat(file = con, sep="\n",
-'      <Directory Id="PersonalFolder" Name="Personal">',
-'        <Directory Id="STARTDIR" Name="R"></Directory>',
-'      </Directory>')
-
-    cat(file = con, sep="\n",
 '      <Directory Id="StartMenuFolder" Name="SMenu">',
 '        <Directory Id="ProgramMenuFolder" Name="Programs">',
-'          <Directory Id="RMENU" Name="R">')
-    if (havex64)
-        cat(file = con, sep="\n",
-sprintf('             <Component Id="shortcut64" Guid="%s">', guuids()),
-'              <Shortcut Id="Rgui64StartMenuShortcut" Directory="RMENU"',
-sprintf('               Name="R x64 %s" Target="[!%s]" ', Rver, rgui64),
-'               WorkingDirectory="STARTDIR" />',
+sprintf('          <Directory Id="RMENU" Name="R%s">', dsuffix))
+
+    cat(file = con, sep="\n",
+sprintf('            <Component Id="shortcut64" Guid="%s">', guuids()),
+'              <Shortcut Id="RguiStartMenuShortcut" Directory="RMENU"',
+sprintf('               Name="R %s" Target="[!%s]" ', RverA, rgui),
+'               WorkingDirectory="PersonalFolder" Arguments="--cd-to-userdocs"/>',
             ## stop validation errors
 '            <RegistryValue Root="HKCU" Key="Software\\R-core\\R" Name="installed" Type="integer" Value="1" KeyPath="yes"/>',
 '            </Component>')
 
     cat(file = con, sep="\n",
-sprintf('             <Component Id="shortcut1" Guid="%s">', guuids()),
+sprintf('            <Component Id="shortcut1" Guid="%s">', guuids()),
 '              <Shortcut Id="HelpStartMenuShortcut" Directory="RMENU"',
-sprintf('               Name="R %s Help" Target="[!%s]"', Rver, rhelp),
-'               WorkingDirectory="STARTDIR" />',
+sprintf('               Name="R %s Help" Target="[!%s]"', RverA, rhelp),
+'               WorkingDirectory="PersonalFolder" />',
             ## The next two stop validation errors
 '            <RemoveFolder Id="RMENU" On="uninstall"/>',
 '            <RegistryValue Root="HKCU" Key="Software\\R-core\\R" Name="installed" Type="integer" Value="1" KeyPath="yes"/>',
@@ -183,11 +197,11 @@ sprintf('               Name="R %s Help" Target="[!%s]"', Rver, rhelp),
 '        </Directory>',
 '      </Directory>',
 '      <Directory Id="DesktopFolder" Name="Desktop">')
-    if (havex64)
+
         cat(file = con, sep="\n",
 sprintf('        <Component Id="desktopshortcut64" DiskId="1" Guid="%s">', guuids()),
-sprintf('          <Shortcut Id="Rgui64DesktopShortcut" Directory="DesktopFolder" Name="R x64 %s"', Rver),
-sprintf('           WorkingDirectory="STARTDIR" Target="[!%s]" />', rgui64),
+sprintf('          <Shortcut Id="RguiDesktopShortcut" Directory="DesktopFolder" Name="R %s"', RverA),
+sprintf('           WorkingDirectory="PersonalFolder" Target="[!%s]" Arguments="--cd-to-userdocs"/>', rgui),
 '            <RegistryValue Root="HKCU" Key="Software\\R-core\\R" Name="installed" Type="integer" Value="1" KeyPath="yes"/>',
 '        </Component>')
        cat(file = con, sep="\n",
@@ -198,8 +212,8 @@ sprintf('           WorkingDirectory="STARTDIR" Target="[!%s]" />', rgui64),
 '          <Directory Id="InternetExplorer" Name="Internet Explorer">',
 '            <Directory Id="QuickLaunch" Name="Quick Launch">',
 sprintf('              <Component Id="quickshortcut0" DiskId="1" Guid="%s">', guuids()),
-sprintf('                <Shortcut Id="RguiQuickShortcut" Directory="QuickLaunch" Name="R %s"', Rver),
-sprintf('                 WorkingDirectory="STARTDIR" Target="[!%s]" />', rgui),
+sprintf('                <Shortcut Id="RguiQuickShortcut" Directory="QuickLaunch" Name="R %s"', RverA),
+sprintf('                 WorkingDirectory="PersonalFolder" Target="[!%s]" Arguments="--cd-to-userdocs"/>', rgui),
 '                <RegistryValue Root="HKCU" Key="Software\\R-core\\R" Name="installed" Type="integer" Value="1" KeyPath="yes"/>',
 '              </Component>',
 '            </Directory>',
@@ -209,26 +223,32 @@ sprintf('                 WorkingDirectory="STARTDIR" Target="[!%s]" />', rgui),
 '',
 ''
 )
-    if(havex64) { # go in 64-bit registry
+
+    ## registry
     cat(file = con, sep="\n",
-sprintf('      <Component Id="registry64" Guid="%s" Win64="yes">', guuids()),
-'        <RegistryKey Id="Rx64InstallPath" Root="HKMU" Key="Software\\R-core\\R" Action="create">',
+sprintf('      <Component Id="registry64" Guid="%s">', guuids()),
+'        <RegistryKey Root="HKMU" Key="Software\\R-core\\R">',
 '         <RegistryValue Name="InstallPath" Type="string" Value="[INSTALLDIR]"/>',
 '         <RegistryValue Name="Current Version" Type="string" Value="[RVersion]"/>',
 '        </RegistryKey>',
-'        <RegistryKey Id="Rx64CurrentVerInstallPath" Root="HKMU" Key="Software\\R-core\\R\\[RVersion]" Action="createAndRemoveOnUninstall">',
+'        <RegistryKey Root="HKMU" Key="Software\\R-core\\R\\[RVersion]">',
 '         <RegistryValue Name="InstallPath" Type="string" Value="[INSTALLDIR]"/>',
 '        </RegistryKey>',
-'        <RegistryKey Id="R64InstallPath" Root="HKMU" Key="Software\\R-core\\R64" Action="create">',
+'')
+    if (havex64)
+        cat(file = con, sep="\n",
+'        <RegistryKey Root="HKMU" Key="Software\\R-core\\R64">',
 '         <RegistryValue Name="InstallPath" Type="string" Value="[INSTALLDIR]"/>',
 '         <RegistryValue Name="Current Version" Type="string" Value="[RVersion]"/>',
 '        </RegistryKey>',
-'        <RegistryKey Id="R64CurrentVerInstallPath" Root="HKMU" Key="Software\\R-core\\R64\\[RVersion]" Action="createAndRemoveOnUninstall">',
+'        <RegistryKey Root="HKMU" Key="Software\\R-core\\R64\\[RVersion]">',
 '         <RegistryValue Name="InstallPath" Type="string" Value="[INSTALLDIR]"/>',
 '        </RegistryKey>',
+'')
+
+    cat(file = con, sep="\n",
 '      </Component>',
 '')
-}
 
     ## file associations
     cat(file = con, sep="\n",
@@ -256,15 +276,6 @@ sprintf("           <Verb Id='open' Command='Open' TargetFile='%s' Argument='\"%
             "      <ComponentRef Id='", id, "' />\n", sep="")
     cat(file = con, '    </Feature>\n')
 
-    cat(file = con, sep="\n",
-        '',
-        '    <Feature Id="startup" Title="Starting Directory" Description="Set starting directory for R shortcuts" Level="1"',
-        '     ConfigurableDirectory="STARTDIR"',
-        '     InstallDefault="local" AllowAdvertise="no"',
-        '     Absent="disallow">',
-        '     <ComponentRef Id="dummystart" />',
-        '    </Feature>\n')
-
     if (havex64) {
     cat(file = con, sep="\n",
         '',
@@ -283,12 +294,12 @@ sprintf("           <Verb Id='open' Command='Open' TargetFile='%s' Argument='\"%
         '     AllowAdvertise="no" Display="expand">',
         "      <Feature Id='sshortcuts' Title='Start Menu Shortcuts' Description='Install Start menu shortcuts' Level='1'",
         "       ConfigurableDirectory='RMENU' InstallDefault='local' AllowAdvertise='no'>",
-        if (havex64) "        <ComponentRef Id='shortcut64' />",
+        "        <ComponentRef Id='shortcut64' />",
         "        <ComponentRef Id='shortcut1' />",
         "      </Feature>",
         "      <Feature Id='dshortcut' Title='Desktop Shortcut' Description='Install Desktop shortcut' Level='1'",
         "       InstallDefault='local' AllowAdvertise='no'>",
-        if (havex64) "        <ComponentRef Id='desktopshortcut64' />",
+        "        <ComponentRef Id='desktopshortcut64' />",
         "      </Feature>",
         '      <Feature Id="qshortcut" Title="Quicklaunch Shortcut" Description="Install Quick Launch shortcut" Level="1000"',
         '       InstallDefault="local" AllowAdvertise="no">',
@@ -299,7 +310,7 @@ sprintf("           <Verb Id='open' Command='Open' TargetFile='%s' Argument='\"%
     cat(file = con, sep="\n",
         '    <Feature Id="registryversion" Title="Save Version in Registry"',
         '     Description="Save the R version and install path in the Registry" Level="1" InstallDefault="local" AllowAdvertise="no">',
-        if (havex64) "      <ComponentRef Id='registry64' />",
+        "      <ComponentRef Id='registry64' />",
         "    </Feature>",
         '    <Feature Id="associate" Title="Associate with .RData files"',
         '     Description="Associate R with .RData files" Level="1" InstallDefault="local" AllowAdvertise="no">',
