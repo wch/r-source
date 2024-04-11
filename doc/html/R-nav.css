@@ -212,6 +212,9 @@ nav a:hover {
 	float: left;
 	width: 300px;
     }
+    nav hr {
+	display: none;
+    }
 
     .dropdown-menu {
 	max-height: 95vh;

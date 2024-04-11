@@ -1373,20 +1373,17 @@ findHTMLlinks <- function(pkgDir = "", lib.loc = NULL, level = 0:2)
 
     Links <- list()
     if (2 %in% level)
-        Links <- c(Links, lapply(rev(lib.loc), .find_HTML_links_in_library))
+        Links <- c(Links, lapply(lib.loc, .find_HTML_links_in_library))
     if (1 %in% level) {
         base <- unlist(.get_standard_package_names()[c("base", "recommended")],
                        use.names = FALSE)
-        Links <- c(Links,
-                   lapply(file.path(.Library, base),
-                          .find_HTML_links_in_package))
+        Links <- c(lapply(file.path(.Library, base),
+                          .find_HTML_links_in_package),
+                   Links)
     }
     if (0 %in% level && nzchar(pkgDir))
-        Links <- c(Links, list(.find_HTML_links_in_package(pkgDir)))
+        Links <- c(list(.find_HTML_links_in_package(pkgDir)), Links)
     Links <- unlist(Links)
-
-    ## now latest names are newest, so
-    Links <- rev(Links)
     Links <- Links[!duplicated(names(Links))]
     gsub("[Rr]d$", "html", Links)
 }
