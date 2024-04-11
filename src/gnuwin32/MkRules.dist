@@ -200,7 +200,7 @@
 
 # location where WiX 3.x executables were installed. Spaces allowed.
 # The MSI uses '/bin': other packagings may not
-# WIX3DIR = C:/packages/WiX3.5/bin
+# WIX3DIR = C:/packages/WiX3.14/bin
 
 # set to 1 for a non-elevated per-user installer
 # WIX_PERSONAL = 0
