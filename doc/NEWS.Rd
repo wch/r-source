@@ -779,6 +779,10 @@
       \item Rd comment lines no longer cause broken paragraphs in the
       rendered PDF and plain-text help. In code blocks, pure comment
       lines (starting with \samp{\%}) no longer produce an empty line.
+
+      \item \code{xtabs(Freq ~ .)} now consistently defaults to
+      \code{na.action = na.pass}, using \code{na.rm = FALSE} (added as an
+      argument) when summing over \code{Freq} (\PR{17770}).
     }
   }
 }

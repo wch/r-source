@@ -19443,42 +19443,40 @@ Test for independence of all factors:
 22 Rejected   Male    F  351
 23 Admitted Female    F   24
 24 Rejected Female    F  317
-> tools::assertError(# 'na.fail' should fail :
-+      xtabs(Freq ~ Gender + Admit, DN, na.action=na.fail), verbose=TRUE)
-Asserted error: missing values in object
-> op <- options(na.action = "na.omit") # the "factory" default
-> (xtabs(Freq ~ Gender + Admit, DN) -> xtD)
-        Admit
-Gender   Admitted Rejected
-  Male       1078     1286
-  Female      540     1270
-> noC <- function(O) `attr<-`(O, "call", NULL)
-> ident_noC <- function(x,y) identical(noC(x), noC(y))
-> stopifnot(exprs = {
-+   ident_noC(xtD, xtabs(Freq ~ Gender + Admit, DN, na.action = na.omit))
-+   ident_noC(xtD, xtabs(Freq ~ Gender + Admit, DN, na.action = NULL))
-+ })
-> 
-> xtabs(Freq ~ Gender + Admit, DN, na.action = na.pass)
+> (xtNA <- xtabs(Freq ~ Gender + Admit, DN))     # NA prints 'invisibly'
         Admit
 Gender   Admitted Rejected
   Male       1078     1286
   Female      540         
-> ## The Female:Rejected combination has NA 'Freq' (and NA prints 'invisibly' as "")
-> (xtNA <- xtabs(Freq ~ Gender + Admit, DN, addNA = TRUE)) # ==> count NAs
+> print(xtNA, na.print = "NA")                   # show NA's better
+        Admit
+Gender   Admitted Rejected
+  Male       1078     1286
+  Female      540       NA
+> xtabs(Freq ~ Gender + Admit, DN, na.rm = TRUE) # ignore missing Freq
+        Admit
+Gender   Admitted Rejected
+  Male       1078     1286
+  Female      540     1270
+> ## Use addNA = TRUE to tabulate missing factor levels:
+> xtabs(Freq ~ Gender + Admit, DN, addNA = TRUE)
         Admit
 Gender   Admitted Rejected <NA>
   Male       1078     1286  327
   Female      540             0
   <NA>         17        0    0
-> ## show NA's better via  na.print = ".." :
-> print(xtNA, na.print= "NA")
+> xtabs(Freq ~ Gender + Admit, DN, addNA = TRUE, na.rm = TRUE)
         Admit
 Gender   Admitted Rejected <NA>
   Male       1078     1286  327
-  Female      540       NA    0
+  Female      540     1270    0
   <NA>         17        0    0
-> 
+> ## na.action = na.omit removes all rows with NAs right from the start:
+> xtabs(Freq ~ Gender + Admit, DN, na.action = na.omit)
+        Admit
+Gender   Admitted Rejected
+  Male       1078     1286
+  Female      540     1270
 > 
 > ## Create a nice display for the warp break data.
 > warpbreaks$replicate <- rep_len(1:9, 54)
