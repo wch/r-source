@@ -1,7 +1,7 @@
 #  File src/library/tools/R/testing.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2023 The R Core Team
+#  Copyright (C) 1995-2024 The R Core Team
 #
 # NB: also copyright date in Usage.
 #
@@ -492,8 +492,12 @@ testInstalledPackage <-
     if ("vignettes" %in% types && dir.exists(file.path(pkgdir, "doc"))) {
         message(gettextf("Running vignettes for package %s", sQuote(pkg)),
                 domain = NA)
-        writeLines(format(checkVignettes(pkg, lib.loc = lib.loc,
-                                         latex = FALSE, weave = TRUE)))
+        out <- format(checkVignettes(pkg, lib.loc = lib.loc,
+                                     latex = FALSE, weave = TRUE))
+        if (length(out)) {
+            writeLines(out)
+            return(invisible(1L))
+        }
     }
 
     invisible(0L)
