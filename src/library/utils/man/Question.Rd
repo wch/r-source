@@ -1,6 +1,6 @@
 % File src/library/utils/man/Question.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2017 R Core Team
+% Copyright 1995-2024 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Question}
@@ -30,8 +30,9 @@
     help on \code{topic} in package \pkg{\var{pkg}}.
   }
   \item{type}{the special type of documentation to use for this topic;
-    for example, if the type is \code{class}, documentation is
-    provided for the class with name \code{topic}.
+    for example, type \code{package} will look for the overview help page
+    of a package named \code{topic}, and if the type is \code{class},
+    documentation is provided for the S4 class with name \code{topic}.
     See the Section \sQuote{S4 Method Documentation} for the uses of
     \code{type} to get help on formal methods, including
     \code{methods?\var{function}} and \code{method?\var{call}}.
@@ -106,6 +107,8 @@
 ?`+`
 
 ?women                  # information about data set "women"
+
+package?parallel        # overview help page of package 'parallel'
 
 \dontrun{
 require(methods)
