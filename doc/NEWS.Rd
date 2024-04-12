@@ -783,6 +783,10 @@
       \item \code{xtabs(Freq ~ .)} now consistently defaults to
       \code{na.action = na.pass}, using \code{na.rm = FALSE} (added as an
       argument) when summing over \code{Freq} (\PR{17770}).
+
+      \item \code{tools::testInstalledPackage()} is no longer silent
+      about failures from running examples or tests and its return code
+      no longer ignores failures from checking vignettes.
     }
   }
 }
