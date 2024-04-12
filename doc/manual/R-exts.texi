@@ -7177,7 +7177,7 @@ file ready for manual editing.  Methods are defined for documenting
 functions (which fill in the proper function and argument names) and
 data frames.  There are also functions @code{promptData},
 @code{promptPackage}, @code{promptClass}, and @code{promptMethods} for
-other types of @file{Rd} file.
+other types of @file{Rd} files.
 
 The general syntax of @file{Rd} files is summarized below.  For a detailed
 technical discussion of current @file{Rd} syntax, see
@@ -7723,9 +7723,8 @@ another @file{Rd} file, it is helpful to use this as an additional
 Skeletons of documentation for a package can be generated using the
 function @code{promptPackage()}.  If the @code{final = TRUE} argument
 is used, then the @file{Rd} file will be generated in final form, containing
-the information that would be produced by
-@code{library(help = @var{pkgname})}. Otherwise (the default) comments
-will be inserted giving suggestions for content.
+only basic information from the @file{DESCRIPTION} file. Otherwise (the
+default) comments will be inserted giving suggestions for content.
 
 Apart from the mandatory @code{\name} and @code{\title} and the
 @code{@var{pkgname}-package} alias, the only requirement for the package
