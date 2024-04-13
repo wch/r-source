@@ -49,6 +49,13 @@
       \item .
     }
   }
+
+  \subsection{UTILITIES}{
+    \itemize{
+      \item \command{R CMD check --as-cran} will compile C++ code with
+      \code{-DR_NO_REMAP}.
+    }
+  }
 }
 
 \section{\Rlogo CHANGES IN R 4.4.0}{
