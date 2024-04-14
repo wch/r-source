@@ -1,6 +1,6 @@
 % File src/library/stats/man/xtabs.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2018 R Core Team
+% Copyright 1995-2024 R Core Team
 % Distributed under GPL 2 or later
 
 \name{xtabs}
@@ -14,16 +14,16 @@
 }
 \usage{
 xtabs(formula = ~., data = parent.frame(), subset, sparse = FALSE,
-      na.action, addNA = FALSE, exclude = if(!addNA) c(NA, NaN),
-      drop.unused.levels = FALSE)
+      na.action, na.rm = FALSE, addNA = FALSE,
+      exclude = if(!addNA) c(NA, NaN), drop.unused.levels = FALSE)
 
 \method{print}{xtabs}(x, na.print = "", \dots)
 }
 \arguments{
   \item{formula}{a \link{formula} object with the cross-classifying variables
-    (separated by \code{+}) on the right hand side (or an object which
+    (separated by \code{+}) on the right-hand side (or an object which
     can be coerced to a formula).  Interactions are not allowed.  On the
-    left hand side, one may optionally give a vector or a matrix of
+    left-hand side, one may optionally give a vector or a matrix of
     counts; in the latter case, the columns are interpreted as
     corresponding to the levels of a variable.  This is useful if the
     data have already been tabulated, see the examples below.}
@@ -39,15 +39,17 @@ xtabs(formula = ~., data = parent.frame(), subset, sparse = FALSE,
     Only works for two factors (since there
     are no higher-order sparse array classes yet).
   }
-  \item{na.action}{a \code{\link{function}} which indicates what should happen when
-    the data contain \code{\link{NA}}s.  If unspecified, and
-    \code{addNA} is true, this is set to \code{\link{na.pass}}.  When it
-    is \code{\link{na.omit}} and \code{formula} has a left hand side (with
-    counts), \code{\link{sum}(*, na.rm = TRUE)} is used instead of
-    \code{sum(*)} for the counts.}
-  \item{addNA}{logical indicating if \code{NA}s should get a separate
-    level and be counted, using \code{\link{addNA}(*, ifany=TRUE)} and
-    setting the default for \code{na.action} to \code{na.pass}.}
+  \item{na.action}{a \code{\link{function}} which indicates what should
+    happen when the variables in \code{formula} (or \code{subset})
+    contain \code{\link{NA}}s.  Defaults to \code{\link{na.pass}},
+    so \code{na.rm} and \code{addNA}, respectively, control the
+    handling of missing values for the two sides of the \code{formula}.
+    Using \code{\link{na.omit}} removes any incomplete cases.}
+  \item{na.rm}{logical: should missing values on the left-hand side of the
+    \code{formula} be treated as zero when computing the \code{\link{sum}}?}
+  \item{addNA}{logical indicating if \code{NA}s in the factors should get a separate
+    level and be counted, using \code{\link{addNA}(*, ifany=TRUE)}.
+    This has no effect if \code{na.action = na.omit}.}
   \item{exclude}{a vector of values to be excluded when forming the
     set of levels of the classifying factors.}
   \item{drop.unused.levels}{a logical indicating whether to drop unused
@@ -70,9 +72,9 @@ xtabs(formula = ~., data = parent.frame(), subset, sparse = FALSE,
   factors (note that the function \code{\link{chisq.test}} currently
   only handles 2-d tables).
 
-  If a left hand side is given in \code{formula}, its entries are simply
-  summed over the cells corresponding to the right hand side; this also
-  works if the lhs does not give counts.
+  If a left-hand side is given in \code{formula}, its entries are simply
+  summed over the cells corresponding to the right-hand side; this also
+  works if the LHS does not give counts.
 
   For variables in \code{formula} which are factors, \code{exclude}
   must be specified explicitly; the default exclusions will not be used.
@@ -80,9 +82,9 @@ xtabs(formula = ~., data = parent.frame(), subset, sparse = FALSE,
   In \R versions before 3.4.0, e.g., when \code{na.action = na.pass},
   sometimes zeroes (\code{0}) were returned instead of \code{NA}s.
 
-  Note that when \code{addNA} is false as by default, and \code{na.action}
-  is not specified (or set to \code{NULL}), in effect \code{na.action =
-    getOption("na.action", default=na.omit)} is used; see also the examples.
+  In \R versions before 4.4.0, when \code{!addNA} as by default,
+  the default \code{na.action} was \code{\link{na.omit}}, effectively
+  treating missing counts as zero.
 }
 \value{
   By default, when \code{sparse = FALSE},
@@ -124,23 +126,14 @@ summary(xtabs(Freq ~ ., DF))
 ## with NA's
 DN <- DF; DN[cbind(6:9, c(1:2,4,1))] <- NA
 DN # 'Freq' is missing only for (Rejected, Female, B)
-tools::assertError(# 'na.fail' should fail :
-     xtabs(Freq ~ Gender + Admit, DN, na.action=na.fail), verbose=TRUE)
-op <- options(na.action = "na.omit") # the "factory" default
-(xtabs(Freq ~ Gender + Admit, DN) -> xtD)
-noC <- function(O) `attr<-`(O, "call", NULL)
-ident_noC <- function(x,y) identical(noC(x), noC(y))
-stopifnot(exprs = {
-  ident_noC(xtD, xtabs(Freq ~ Gender + Admit, DN, na.action = na.omit))
-  ident_noC(xtD, xtabs(Freq ~ Gender + Admit, DN, na.action = NULL))
-})
-
-xtabs(Freq ~ Gender + Admit, DN, na.action = na.pass)
-## The Female:Rejected combination has NA 'Freq' (and NA prints 'invisibly' as "")
-(xtNA <- xtabs(Freq ~ Gender + Admit, DN, addNA = TRUE)) # ==> count NAs
-## show NA's better via  na.print = ".." :
-print(xtNA, na.print= "NA")
-
+(xtNA <- xtabs(Freq ~ Gender + Admit, DN))     # NA prints 'invisibly'
+print(xtNA, na.print = "NA")                   # show NA's better
+xtabs(Freq ~ Gender + Admit, DN, na.rm = TRUE) # ignore missing Freq
+## Use addNA = TRUE to tabulate missing factor levels:
+xtabs(Freq ~ Gender + Admit, DN, addNA = TRUE)
+xtabs(Freq ~ Gender + Admit, DN, addNA = TRUE, na.rm = TRUE)
+## na.action = na.omit removes all rows with NAs right from the start:
+xtabs(Freq ~ Gender + Admit, DN, na.action = na.omit)
 
 ## Create a nice display for the warp break data.
 warpbreaks$replicate <- rep_len(1:9, 54)

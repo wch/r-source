@@ -1,7 +1,7 @@
 #  File src/library/stats/R/xtabs.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2020 The R Core Team
+#  Copyright (C) 1995-2024 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -17,11 +17,12 @@
 #  https://www.R-project.org/Licenses/
 
 xtabs <- function(formula = ~., data = parent.frame(), subset, sparse = FALSE,
-		  na.action, addNA = FALSE, exclude = if(!addNA) c(NA, NaN),
-		  drop.unused.levels = FALSE)
+                  na.action, na.rm = FALSE,
+                  addNA = FALSE, exclude = if(!addNA) c(NA, NaN),
+                  drop.unused.levels = FALSE)
 {
     if (missing(formula) && missing(data))
-	stop("must supply either 'formula' or 'data'")
+	stop("must supply 'formula' or 'data'")
     if(!missing(formula)){
 	## We need to coerce the formula argument now, but model.frame
 	## will coerce the original version later.
@@ -34,8 +35,8 @@ xtabs <- function(formula = ~., data = parent.frame(), subset, sparse = FALSE,
     m <- match.call(expand.dots = FALSE)
     if (is.matrix(eval(m$data, parent.frame())))
 	m$data <- as.data.frame(data)
-    m$... <- m$exclude <- m$drop.unused.levels <- m$sparse <- m$addNA <- NULL
-    if(addNA && missing(na.action)) m$na.action <- quote(na.pass)
+    m$... <- m$exclude <- m$drop.unused.levels <- m$sparse <- m$na.rm <- m$addNA <- NULL
+    if(missing(na.action)) m$na.action <- quote(na.pass)
     ## need stats:: for non-standard evaluation
     m[[1L]] <- quote(stats::model.frame)
     mf <- eval(m, parent.frame())
@@ -58,10 +59,6 @@ xtabs <- function(formula = ~., data = parent.frame(), subset, sparse = FALSE,
 	if(addNA) u <- addNA(u, ifany=TRUE)
 	u[ , drop = drop.unused.levels]
     })
-    naAct <- m$na.action %||% getOption("na.action", default = quote(na.omit))
-    na.rm <- ## true iff na.action is na.omit
-	identical(naAct, quote(na.omit)) || identical(naAct, na.omit) ||
-        identical(naAct, "na.omit")
     if(!sparse) {
 	x <-
 	    if(is.null(y))
@@ -102,6 +99,7 @@ xtabs <- function(formula = ~., data = parent.frame(), subset, sparse = FALSE,
 	cols <- by[[2L]]
         dnms <- lapply(by, levels)
 	x <- if (is.null(y)) rep.int(1, length(rows)) else as.double(y)
+	## implicit sum(), see Note and Examples in class?dgTMatrix
 	methods::as(methods::new("dgTMatrix", x = x, Dimnames = dnms,
 				 i = as.integer(rows) - 1L,
 				 j = as.integer(cols) - 1L,

@@ -1278,6 +1278,12 @@ tryCatch(x[[2]] <- list(), error = invisible)
 stopifnot(identical(x, expression(a)))
 
 
+## table |> as.data.frame() |> xtabs() round-trip with missing counts
+tab <- replace(UCBAdmissions[,,1], 1, NA)
+stopifnot(identical(c(xtabs(Freq ~ ., as.data.frame(tab))), c(tab)))
+## NA turned into 0 in R < 4.4.0
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

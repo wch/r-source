@@ -700,7 +700,7 @@ DN <- DF; DN[cbind(6:9, c(1:2,4,1))] <- NA; DN
 
 tools::assertError(# 'na.fail' should fail :
 	   xtabs(Freq ~ Gender + Admit, DN, na.action = na.fail))
-xt. <- xtabs(Freq ~ Gender + Admit, DN)
+xt. <- xtabs(Freq ~ Gender + Admit, DN, na.action = na.omit)
 xtp <- xtabs(Freq ~ Gender + Admit, DN, na.action = na.pass)
 xtN <- xtabs(Freq ~ Gender + Admit, DN, addNA = TRUE)
 res1 <- xt - xtp
@@ -718,7 +718,7 @@ if(requireNamespace('Matrix', lib.loc=.Library, quietly = TRUE)) {
     xtS <- xtabs(Freq ~ Gender + Admit, DN, na.action = na.pass, sparse = TRUE)# error in R <= 3.3.2
     xtNS <- xtabs(Freq ~ Gender + Admit, DN, addNA = TRUE, sparse = TRUE)
     stopifnot(
-        eq_A(xt., xtabs(Freq ~ Gender + Admit, DN, sparse = TRUE)),
+        eq_A(xt., xtabs(Freq ~ Gender + Admit, DN, na.action = na.omit, sparse = TRUE)),
         eq_A(xtp, xtS),
         eq_A(xtN, xtNS)
    )
