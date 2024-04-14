@@ -399,7 +399,12 @@ testInstalledPackage <-
             if (.Platform$OS.type == "windows") Sys.setenv(R_LIBS="")
             else cmd <- paste("R_LIBS=", cmd)
             res <- system(cmd)
-            if (res) return(invisible(1L)) else file.rename(failfile, outfile)
+            if (res) {
+                message(gettextf("Error: running examples in %s failed", sQuote(Rfile)),
+                        domain = NA)
+                return(invisible(1L))
+            } else
+                file.rename(failfile, outfile)
 
             savefile <- paste0(outfile, ".save")
             if (!is.null(srcdir)) savefile <- file.path(srcdir, savefile)
@@ -475,6 +480,8 @@ testInstalledPackage <-
            res <- system(cmd)
             if (res) {
                 file.rename(outfile, paste0(outfile, ".fail"))
+                message(gettextf("Error: running the tests in %s failed", sQuote(f)),
+                        domain = NA)
                 return(invisible(1L))
             }
             savefile <- paste0(outfile, ".save")
