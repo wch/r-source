@@ -1261,7 +1261,7 @@ Fortran usually work for the platform's native compilers.
 If your code needs to depend on the platform there are certain defines
 which can used in C or C++.  On all Windows builds (even 64-bit ones)
 @samp{_WIN32} will be defined: on 64-bit Windows builds also
-@samp{_WIN64}. For Winodws on ARM, test for @samp{_M_ARM64} or both
+@samp{_WIN64}. For Windows on ARM, test for @samp{_M_ARM64} or both
 @samp{_WIN32} and @samp{__aarch64__}.  On macOS @samp{__APPLE__} is
 defined@footnote{There is also @samp{__APPLE_CC__}, but that indicates a
 compiler with Apple-specific features not the OS, although for
@@ -14484,19 +14484,19 @@ header files when using these entry points.
 @end quotation
 
 This remapping can cause problems@footnote{Known problems have been
-defining @code{LENGTH}, @code{error}, @code{length}, @code{vector} and
-@code{warning}: whether these matter depends on the OS and toolchain,
-with many problem reports involving @command{clang++}.  As from @I{LLVM}
-@command{clang} 13.0.0, the remapping of @code{match} breaks the
-subsequent inclusion of @file{omp.h}.}, and can be eliminated by
-defining @code{R_NO_REMAP} (before including any @R{} headers) and
-prepending @samp{Rf_} to @emph{all} the function names used from
-@file{Rinternals.h} and @file{R_ext/Error.h}.  These problems can
-usually be avoided by including other headers (such as system headers
-and those for external software used by the package) before any @R{}
-headers. (Headers from other packages may include @R{} headers directly
-or @emph{via} inclusion from further packages, and may define
-@code{R_NO_REMAP} with or without including @file{Rinternals.h}.)
+defining @code{LENGTH}, @code{error}, @code{length}, @code{match},
+@code{vector} and @code{warning}: whether these matter depends on the OS
+and toolchain, with many problem reports involving @command{clang++}.},
+@c As from @I{LLVM} @command{clang} 13.0.0, the remapping of @code{match}
+@c breaks the subsequent inclusion of @file{omp.h}.
+and can be eliminated by defining @code{R_NO_REMAP} (before including
+any @R{} headers) and prepending @samp{Rf_} to @emph{all} the function
+names used from @file{Rinternals.h} and @file{R_ext/Error.h}.  These
+problems can usually be avoided by including other headers (such as
+system headers and those for external software used by the package)
+before any @R{} headers. (Headers from other packages may include @R{}
+headers directly or @emph{via} inclusion from further packages, and may
+define @code{R_NO_REMAP} with or without including @file{Rinternals.h}.)
 
 We can classify the entry points as
 
@@ -16513,9 +16513,10 @@ Let us re-iterate the advice to include in C++ code system headers
 before the @R{} header files, especially @file{Rinternals.h} (included
 by @file{Rdefines.h}) and @file{Rmath.h}, which redefine names which may
 be used in system headers, or (preferably) to define @code{R_NO_REMAP}.
-Setting the environment variable @env{_R_CXX_USE_NO_REMAP_} to a true value
-allows the need for this to be tested, as it causes @command{R CMD
-INSTALL} to compile C++ code defining @code{R_NO_REMAP}.
+Setting the environment variable @env{_R_CXX_USE_NO_REMAP_} to a true
+value allows the need for this to be tested, as it causes @command{R CMD
+INSTALL} to compile C++ code defining @code{R_NO_REMAP}.  This is
+planned to become the default in future.
 
 @node Generic functions and methods, Linking GUIs and other front-ends to R, The R API, Top
 @chapter Generic functions and methods
