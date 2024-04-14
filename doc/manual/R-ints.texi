@@ -216,7 +216,7 @@ these are sometimes lumped into a pseudo-type @code{FUNSXP} with code
 have formals, body and environment.
 
 @cindex S4 type
-The @code{SEXPTYPE} @code{OBJ} is for S4 and other objects which do not
+The @code{SEXPTYPE} @code{OBJSXP} is for S4 and other objects which do not
 consist solely of a simple type such as an atomic vector or function.
 
 
