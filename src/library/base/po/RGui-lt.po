@@ -8,15 +8,17 @@ msgstr ""
 "Project-Id-Version: R 4.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2023-11-30 16:47+0100\n"
-"PO-Revision-Date: 2020-12-08 12:02+0200\n"
-"Last-Translator: r.zakauskas@gmail.com;gabriele.dauksaite@gmail.com\n"
+"PO-Revision-Date: 2024-03-18 21:18+0000\n"
+"Last-Translator: Michael Chirico <michaelchirico4@gmail.com>\n"
 "Language-Team: Lithuanian\n"
 "Language: lt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=CP1257\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Poedit 2.4.1\n"
+"Plural-Forms: nplurals=3; plural=(n % 10 == 1 && (n % 100 < 11 || n % 100 > "
+"19)) ? 0 : ((n % 10 >= 2 && n % 10 <= 9 && (n % 100 < 11 || n % 100 > 19)) ? "
+"1 : 2);\n"
+"X-Generator: Weblate 4.16.4\n"
 
 #: src/gnuwin32/console.c:1200 src/gnuwin32/console.c:1242
 msgid "Not enough memory"
@@ -111,7 +113,9 @@ msgstr "     Backspace: iðtrinti ankstesná simbolá;\n"
 
 #: src/gnuwin32/console.c:2314
 msgid "     Ctrl+Del or Ctrl+K: delete text from current character to end of line.\n"
-msgstr "     Ctrl+Del arba Ctrl+K: ðalinti tekstà nuo dabartinio simbolio iki eilutës pabaigos.\n"
+msgstr ""
+"     Ctrl+Del arba Ctrl+K: ðalinti tekstà nuo dabartinio simbolio iki "
+"eilutës pabaigos.\n"
 
 #: src/gnuwin32/console.c:2315
 msgid "     Ctrl+U: delete all text from current line.\n"
@@ -123,15 +127,20 @@ msgstr "  Kopijuoti ir áklijuoti.\n"
 
 #: src/gnuwin32/console.c:2317
 msgid "     Use the mouse (with the left button held down) to mark (select) text.\n"
-msgstr "     Norëdami paþymëti tekstà naudokite pelæ (laikyti kairájá mygtukà).\n"
+msgstr ""
+"     Norëdami paþymëti tekstà naudokite pelæ (laikyti kairájá mygtukà).\n"
 
 #: src/gnuwin32/console.c:2318
 msgid "     Use Shift+Del (or Ctrl+C) to copy the marked text to the clipboard and\n"
-msgstr "     Naudoti Shift+Del (arba Ctrl+C) nukipijuoti paþymëtà tekstà á iðkarpinæ ir\n"
+msgstr ""
+"     Naudoti Shift+Del (arba Ctrl+C) nukipijuoti paþymëtà tekstà á iðkarpinæ "
+"ir\n"
 
 #: src/gnuwin32/console.c:2319
 msgid "     Shift+Ins (or Ctrl+V or Ctrl+Y) to paste the content of the clipboard (if any)  \n"
-msgstr "     Shift+Ins (arba Ctrl+V arba Ctrl+Y) áklijuoti iðkarpinës turiná (jei yra)  \n"
+msgstr ""
+"     Shift+Ins (arba Ctrl+V arba Ctrl+Y) áklijuoti iðkarpinës turiná (jei "
+"yra)  \n"
 
 #: src/gnuwin32/console.c:2320
 msgid "     to the console, Ctrl+X first copy then paste\n"
@@ -147,7 +156,8 @@ msgstr "     Ctrl+L: iðvalyti konsolæ.\n"
 
 #: src/gnuwin32/console.c:2323
 msgid "     Ctrl+O or INS: Toggle overwrite mode: initially off.\n"
-msgstr "     Ctrl+O arba INS: perjungti perraðymo reþimà: ið pradþiø iðjungta.\n"
+msgstr ""
+"     Ctrl+O arba INS: perjungti perraðymo reþimà: ið pradþiø iðjungta.\n"
 
 #: src/gnuwin32/console.c:2324
 msgid "     Ctrl+T: Interchange current char with one to the left.\n"
@@ -247,11 +257,14 @@ msgstr "     Spausti Ctrl-R\n"
 
 #: src/gnuwin32/editor.c:680
 msgid "     Select \"Run line or selection\" from the \"Edit\" menu\n"
-msgstr "     Ið meniu „Redaguoti“ pasirinkite „Vykdyti eilutæ arba pasirinkimà“\n"
+msgstr ""
+"     Ið meniu „Redaguoti“ pasirinkite „Vykdyti eilutæ arba pasirinkimà“\n"
 
 #: src/gnuwin32/editor.c:681
 msgid "     Press the \"Run line or selection\" icon on the toolbar\n"
-msgstr "     Árankiø juostoje paspauskite piktogramà „Vykdyti eilutæ arba pasirinkimà“\n"
+msgstr ""
+"     Árankiø juostoje paspauskite piktogramà „Vykdyti eilutæ arba "
+"pasirinkimà“\n"
 
 #: src/gnuwin32/editor.c:682
 msgid "This will copy the selected commands to the console and evaluate them.\n"

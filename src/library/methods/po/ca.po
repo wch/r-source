@@ -1,0 +1,161 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR The R Core Team
+# This file is distributed under the same license as the R package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: R 4.4.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-03-27 16:14-0700\n"
+"PO-Revision-Date: 2024-03-20 03:05+0000\n"
+"Last-Translator: Lluís <lluis.revilla+weblate@gmail.com>\n"
+"Language-Team: none\n"
+"Language: ca\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.16.4\n"
+
+#: class_support.c:29
+msgid "calling the C routine used as an initializer for 'externalptr' objects"
+msgstr "cridant la rutina C utilitzada com a inicialitzador per als objectes «externalptr»"
+
+#: do_substitute_direct.c:41
+msgid "invalid list for substitution"
+msgstr "llista no vàlida per a la substitució"
+
+#: methods_list_dispatch.c:129
+#, c-format
+msgid "unexpected type '%s' for condition message"
+msgstr "tipus «%s» inesperat per al missatge de condició"
+
+#: methods_list_dispatch.c:132
+msgid "condition message must be length 1"
+msgstr "el missatge de condició ha de ser de longitud 1"
+
+#: methods_list_dispatch.c:213
+msgid "could not find the skeleton calls for 'methods' (package detached?): expect very bad things to happen"
+msgstr "no s'han pogut trobar l'esquelet de les crides per a «methods» (paquet desvinculat?): s'espera que passin coses molt dolentes"
+
+#: methods_list_dispatch.c:279
+#, c-format
+msgid "no \"allMethods\" slot found in object of class \"%s\" used as methods list for function '%s'"
+msgstr "no s'ha trobat cap slot «allMethods» a l'objecte de la classe «%s» utilitzat com a llista de mètodes per a la funció «%s»"
+
+#: methods_list_dispatch.c:407
+#, c-format
+msgid "S language method selection did not return normally when called from internal dispatch for function '%s'"
+msgstr "La selecció del mètode del llenguatge S no ha retornat normalment quan s'ha cridat des d'un despatxador intern per a la funció «%s»"
+
+#: methods_list_dispatch.c:409
+msgid "Function name for method selection called internally"
+msgstr "Nom de la funció per a la selecció del mètode cridada internament"
+
+#: methods_list_dispatch.c:503
+#, c-format
+msgid "no generic function definition found for '%s'"
+msgstr "no s'ha trobat cap definició de funció genèrica per a «%s»"
+
+#: methods_list_dispatch.c:504
+#, c-format
+msgid "no generic function definition found for '%s' in the supplied environment"
+msgstr "no s'ha trobat cap definició de funció genèrica per a «%s» en l'entorn proporcionat"
+
+#: methods_list_dispatch.c:539
+#, c-format
+msgid "invalid generic function object for method selection for function '%s': expected a function or a primitive, got an object of class \"%s\""
+msgstr "objecte de funció genèrica no vàlid per a la selecció de mètodes per a la funció «%s»: s'esperava una funció o un primitiu, s'ha trobat un objecte de classe «%s»"
+
+#: methods_list_dispatch.c:554
+#, c-format
+msgid "no direct or inherited method for function '%s' for this call"
+msgstr "no hi ha cap mètode directe o heretat per a la funció «%s» per aquesta crida"
+
+#: methods_list_dispatch.c:584 methods_list_dispatch.c:1163
+msgid "invalid object (non-function) used as method"
+msgstr "objecte no vàlid (no-funció) utilitzat com a mètode"
+
+#: methods_list_dispatch.c:605
+#, c-format
+msgid "could not find symbol '%s' in frame of call"
+msgstr "no s'ha pogut trobar el símbol «%s» en el marc de la crida"
+
+#: methods_list_dispatch.c:613
+#, c-format
+msgid "invalid symbol in checking for missing argument in method dispatch: expected a name, got an object of class \"%s\""
+msgstr "símbol no vàlid a la comprovació d'arguments no disponibles en despatxar el mètode: s'esperava un nom, s'ha trobat un objecte de la classe «%s»"
+
+#: methods_list_dispatch.c:616
+msgid "use of NULL environment is defunct"
+msgstr "l'ús de l'entorn NULL és obsolet"
+
+#: methods_list_dispatch.c:620
+#, c-format
+msgid "invalid environment in checking for missing argument, '%s', in methods dispatch: got an object of class \"%s\""
+msgstr "entorn no vàlid en comprovar arguments no disponibles, «%s», en despatxarmètodes: s'ha trobat un objecte de classe «%s»"
+
+#: methods_list_dispatch.c:643
+#, c-format
+msgid "error in evaluating the argument '%s' in selecting a method for function '%s': %s"
+msgstr "error en avaluar l'argument «%s» en seleccionar un mètode per a la funció «%s»: %s"
+
+#: methods_list_dispatch.c:660
+#, c-format
+msgid "object of class \"%s\" used as methods list for function '%s' ( no 'argument' slot)"
+msgstr "objecte de classe «%s» utilitzat com a llista de mètodes per a la funció «%s» (no hi ha cap slot «argument»)"
+
+#: methods_list_dispatch.c:671
+#, c-format
+msgid "(in selecting a method for function '%s') '...' and related variables cannot be used for methods dispatch"
+msgstr "(en seleccionar un mètode per a la funció «%s») «...» i les variables relacionades no es poden utilitzar per despatxar mètodes"
+
+#: methods_list_dispatch.c:674
+#, c-format
+msgid "(in selecting a method for function '%s') the 'environment' argument for dispatch must be an R environment; got an object of class \"%s\""
+msgstr "(en seleccionar un mètode per a la funció «%s») l'argument «environment» per a despatxar ha de ser un entorn d'R; s'ha trobat un objecte la classe «%s»"
+
+#: methods_list_dispatch.c:705
+#, c-format
+msgid "no matching method for function '%s' (argument '%s', with class \"%s\")"
+msgstr "no hi ha cap mètode coincident per a la funció «%s» (argument «%s», amb classe «%s»)"
+
+#: methods_list_dispatch.c:712
+#, c-format
+msgid "recursive use of function '%s' in method selection, with no default method"
+msgstr "ús recursiu de la funció «%s» en la selecció de mètodes, sense cap mètode predeterminat"
+
+#: methods_list_dispatch.c:737
+#, c-format
+msgid "error in evaluating a 'primitive' next method: %s"
+msgstr "s'ha produït un error en avaluar el següent mètode «primitiu»: %s"
+
+#: methods_list_dispatch.c:893
+#, c-format
+msgid "'%s' must be a single string (got a character vector of length %d)"
+msgstr "«%s» ha de ser una sola cadena (s'ha trobat un vector de caràcters de longitud %d)"
+
+#: methods_list_dispatch.c:897
+#, c-format
+msgid "'%s' must be a non-empty string; got an empty string"
+msgstr "«%s» ha de ser una cadena no buida; s'ha trobat una cadena buida"
+
+#: methods_list_dispatch.c:901
+#, c-format
+msgid "'%s' must be a single string (got an object of class \"%s\")"
+msgstr "«%s» ha de ser una sola cadena (s'ha trobat un objecte de classe «%s»)"
+
+#: methods_list_dispatch.c:986
+msgid "class should be either a character-string name or a class definition"
+msgstr "la classe hauria de ser una cadena de caràcters de noms o una definició de la classe"
+
+#: methods_list_dispatch.c:1072
+#, c-format
+msgid "failed to get the generic for the primitive \"%s\""
+msgstr "no s'ha pogut obtenir el genèric per al primitiu «%s»"
+
+#: methods_list_dispatch.c:1079
+#, c-format
+msgid "expected a generic function or a primitive for dispatch, got an object of class \"%s\""
+msgstr "s'esperava una funció genèrica o un primitiu per a despatxar, s'ha trobat un objecte de classe «%s»"

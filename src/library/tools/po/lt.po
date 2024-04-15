@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: tools 4.1.0\n"
-"Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-11-30 14:40+0100\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-03-27 16:15-0700\n"
 "PO-Revision-Date: 2021-11-06 22:43+0100\n"
 "Last-Translator: r.zakauskas@gmail.com;gabriele.dauksaite@gmail.com\n"
 "Language-Team: Lithuanian\n"
@@ -58,86 +58,86 @@ msgstr "neatpažinto formato specifikacija '%s'"
 msgid "at most one asterisk '*' is supported in each conversion specification"
 msgstr "ne daugiau kaip viena žvaigždutė '*' yra palaikoma kiekvienoje konvertavimo specifikacijoje"
 
-#: gramLatex.c:2392 gramRd.c:3996 y.tab.c:3996
+#: gramLatex.c:2592 gramRd.c:3970
 #, c-format
 msgid "unable to allocate buffer for long string at line %d"
 msgstr "nepavyko priskirti buferio ilgoms eilutėms eilutėje %d"
 
-#: gramLatex.c:2635 gramRd.c:4549 gramRd.c:4555 y.tab.c:4549 y.tab.c:4555
+#: gramLatex.c:2869 gramRd.c:4523 gramRd.c:4529
 #, c-format
 msgid "invalid '%s' value"
 msgstr "neteisinga '%s' reikšmė"
 
-#: gramRd.c:2549 gramRd.c:2552 y.tab.c:2549 y.tab.c:2552
+#: gramRd.c:2581 gramRd.c:2584
 #, c-format
 msgid "bad markup (extra space?) at %s:%d:%d"
 msgstr "blogas žymėjimas (papildoma vieta?) %s:%d:%d"
 
-#: gramRd.c:3144 y.tab.c:3144
+#: gramRd.c:3117
 #, c-format
 msgid "Macro '%s' previously defined."
 msgstr "Anksčiau apibrėžta makrokomanda '%s'."
 
-#: gramRd.c:3154 y.tab.c:3154
+#: gramRd.c:3127
 #, c-format
 msgid "At most 4 arguments are allowed for user defined macros."
 msgstr "Vartotojo apibrėžtoms makrokomandoms leidžiami ne daugiau kaip 4 argumentai."
 
-#: gramRd.c:3196 y.tab.c:3196
+#: gramRd.c:3169
 #, c-format
 msgid "No macro definition for '%s'."
 msgstr "Nėra '%s' makrokomandos apibrėžimo."
 
-#: gramRd.c:3258 y.tab.c:3258
+#: gramRd.c:3231
 #, c-format
 msgid "Not enough arguments passed to user macro '%s'"
 msgstr "Nepakanka argumentų, perduotų vartotojo makrokomandai '%s'"
 
-#: gramRd.c:3398 gramRd.c:3402 y.tab.c:3398 y.tab.c:3402
+#: gramRd.c:3371 gramRd.c:3375
 #, c-format
 msgid "newline within quoted string at %s:%d"
 msgstr "nauja eilutė cituojamoje eilutėje ties %s:%d"
 
-#: gramRd.c:3421 y.tab.c:3421
+#: gramRd.c:3394
 #, c-format
 msgid "unable to allocate buffer for long macro at line %d"
 msgstr "nepavyko priskirti buferio ilgoms makrokomandoms eilutėje %d"
 
-#: gramRd.c:3451 y.tab.c:3451
+#: gramRd.c:3424
 msgid "macros nested too deeply: infinite recursion?"
 msgstr "makrokomandos įdėtos per giliai: begalinė rekursija?"
 
-#: gramRd.c:3858 y.tab.c:3858
+#: gramRd.c:3832
 #, c-format
 msgid "Unable to find macro %s"
 msgstr "Nepavyko rasti makrokomandos %s"
 
-#: gramRd.c:4057 y.tab.c:4057
+#: gramRd.c:4031
 #, c-format
 msgid "Unexpected end of input (in %c quoted string opened at %s:%d:%d)"
 msgstr "Netikėta įvesties pabaiga (%c cituojama eilutė atidaryta ties %s:%d:%d)"
 
-#: gramRd.c:4562 y.tab.c:4562
+#: gramRd.c:4536
 msgid "cannot open the connection"
 msgstr "negalima atidaryti ryšio"
 
-#: gramRd.c:4569 y.tab.c:4569
+#: gramRd.c:4543
 msgid "cannot read from this connection"
 msgstr "negalima skaityti iš šio ryšio"
 
-#: gramRd.c:4577 y.tab.c:4577
+#: gramRd.c:4551
 msgid "invalid Rd file"
 msgstr "neleistinas Rd failas"
 
-#: gramRd.c:4596 y.tab.c:4596
+#: gramRd.c:4570
 msgid "'deparseRd' only supports deparsing character elements"
 msgstr "‘deparseRd’ palaiko tik pašalinančio pobūdžio elementus"
 
-#: gramRd.c:4599 y.tab.c:4599
+#: gramRd.c:4573
 msgid "bad state"
 msgstr "bloga būsena"
 
-#: gramRd.c:4612 y.tab.c:4612
+#: gramRd.c:4586
 #, c-format
 msgid "bad text mode %d in 'deparseRd'"
 msgstr "netinkamas teksto režimas %d, esantis 'deparseRd'"
@@ -145,6 +145,11 @@ msgstr "netinkamas teksto režimas %d, esantis 'deparseRd'"
 #: http.c:32
 msgid "invalid bind address specification"
 msgstr "netinkama susiejimo adreso specifikacija"
+
+#: http.c:37
+#, c-format
+msgid "Invalid port number %d: should be in 0:65535, typically above 1024"
+msgstr ""
 
 #: install.c:95
 msgid "path too long"

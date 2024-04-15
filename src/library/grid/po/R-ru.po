@@ -7,18 +7,18 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.11.0\n"
+"Project-Id-Version: R 4.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-07-31 14:59\n"
-"PO-Revision-Date: 2020-08-27 19:13+0900\n"
-"Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
+"POT-Creation-Date: 2024-03-25 17:46\n"
+"PO-Revision-Date: 2024-03-25 14:43+0300\n"
+"Last-Translator: Ivan Krylov <ikrylov@disroot.org>\n"
 "Language-Team: Russian\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=KOI8-R\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Poedit 1.8.7.1\n"
+"X-Generator: Poedit 3.2.2\n"
 
 msgid "invalid 'at' location in 'axis'"
 msgstr "неправильная позиция 'at' в 'axis'"
@@ -32,20 +32,17 @@ msgstr "положения 'labels' и 'at' должны иметь одинаковую длину"
 msgid "logical 'label' supplied of length 0"
 msgstr "предложенная логическая 'label' нулевой длины"
 
-#, fuzzy
 msgid "Invalid coordinates"
-msgstr "неправильный 'order'"
+msgstr "Неправильные координаты"
 
-#, fuzzy
 msgid "Invalid grob coordinates"
-msgstr "Неправильное имя 'grob'"
+msgstr "Неправильные координаты 'grob'"
 
-#, fuzzy
 msgid "Invalid gTree coordinates"
-msgstr "неправильный класс \"gTree\""
+msgstr "Неправильные координаты 'gTree'"
 
 msgid "Closed must not be a missing value"
-msgstr ""
+msgstr "'closed' не должно быть пропущенным"
 
 msgid "end points must not be identical"
 msgstr "конечные точки не должны быть одинаковы"
@@ -117,7 +114,7 @@ msgid "'gamma' 'gpar' element is defunct"
 msgstr "элемент 'gamma' 'gpar' больше не существует"
 
 msgid "'fill' gpar list components must all be patterns"
-msgstr ""
+msgstr "компоненты списка 'gpar$fill' все должны быть паттернами"
 
 msgid "invalid 'linemitre' value"
 msgstr "неправильное значение 'linemitre'"
@@ -285,10 +282,10 @@ msgid "can only reorder 'children' for a \"gTree\""
 msgstr "могу только переопределить 'children' для \"gTree\""
 
 msgid "Invalid 'order'"
-msgstr "неправильный 'order'"
+msgstr "Неправильный 'order'"
 
 msgid "Group definition failed"
-msgstr ""
+msgstr "Не удалось задать группу"
 
 msgid "Invalid source"
 msgstr "Неправильный источник"
@@ -297,10 +294,10 @@ msgid "Invalid destination"
 msgstr "Неправильное назначение"
 
 msgid "Unknown group:"
-msgstr ""
+msgstr "Неизвестная группа:"
 
 msgid "Invalid transform (nothing drawn)"
-msgstr ""
+msgstr "Неправильное преобразование (ничего не нарисовано)"
 
 msgid "Invalid transform"
 msgstr "Неверное преобразование"
@@ -351,13 +348,13 @@ msgid "invalid 'listing'"
 msgstr "неправильный список"
 
 msgid "Only a grob can be converted to a mask"
-msgstr ""
+msgstr "Только 'grob' можно преобразовать в маску"
 
 msgid "invalid 'origin'"
 msgstr "неправильный 'origin'"
 
 msgid "Only a grob can be converted to a path"
-msgstr ""
+msgstr "Только 'grob' можно преобразовать в контур"
 
 msgid "colours and stops must be at least length 1"
 msgstr "'colours' и 'stops' должны быть длины 1 или больше"
@@ -381,10 +378,11 @@ msgid ""
 "grob drawing produces more shapes than grob coords\n"
 "(recycling coords)"
 msgstr ""
+"рисование данного 'grob' дало больше фигур, чем дано координат\n"
+"(рециркулирую координаты)"
 
-#, fuzzy
 msgid "Pattern fill applied to object with no inside"
-msgstr "Градиентная заливка применена к объекту без внутренностей"
+msgstr "Заливка паттерном применена к объекту без внутренностей"
 
 msgid "'length' must be a 'unit' object"
 msgstr "'length' должен быть объектом-единицей"
@@ -464,33 +462,29 @@ msgstr "'r' должен быть объектом-единицей"
 msgid "'x', 'y', 'width', and 'height' must have length 1"
 msgstr "'x', 'y', 'width', и 'height' должны иметь длину 1"
 
-#, fuzzy
 msgid "Invalid glyph info"
-msgstr "Неверное преобразование"
+msgstr "Неверная информация о глифе"
 
-#, fuzzy
 msgid "'x' and 'y' must have length > 0"
-msgstr "'x' и 'y' должны иметь длину 1"
+msgstr "'x' и 'y' должны иметь длину > 0"
 
 msgid "'hjust' and 'vjust' must be glyphJust() values"
-msgstr ""
+msgstr "'hjust' и 'vjust' должны быть значениями glyphJust()"
 
-#, fuzzy
 msgid "'hjust' and 'vjust' must have length 1"
-msgstr "'x' и 'y' должны иметь длину 1"
+msgstr "'hjust' и 'vjust' должны иметь длину 1"
 
 msgid "Unknown width; using first width"
-msgstr ""
+msgstr "Неизвестная ширина; использую первую ширину"
 
-#, fuzzy
 msgid "Unknown anchor; using left justification"
-msgstr "неправильное горизонтальное выравнивание"
+msgstr "Неизвестный якорь; использую горизонтальное выравнивание"
 
 msgid "Unknown height; using first height"
-msgstr ""
+msgstr "Неизвестная высота; использую первую высоту"
 
 msgid "Unknown anchor; using bottom justification"
-msgstr ""
+msgstr "Неизвестный якорь; использую выравнивание по низу"
 
 msgid "'x' and 'units' must have length > 0"
 msgstr "'x' и 'units' должен иметь длину > 0"
@@ -498,13 +492,11 @@ msgstr "'x' и 'units' должен иметь длину > 0"
 msgid "invalid 'axis' or 'type'"
 msgstr "неправильный 'axis' или 'type'"
 
-#, fuzzy
 msgid "'x' and 'y' must be units and 'device' must be logical"
-msgstr "'x' и 'y'  должны быть единицами и иметь одну длину"
+msgstr "'x' и 'y'  должны быть единицами, а 'device' должен быть логическим"
 
-#, fuzzy
 msgid "'w' and 'h' must be units and 'device' must be logical"
-msgstr "'x' и 'y'  должны быть единицами и иметь одну длину"
+msgstr "'w' и 'h'  должны быть единицами, а 'device' должен быть логическим"
 
 msgid "Not a unit object"
 msgstr "Неправильный единичный объект"
@@ -555,7 +547,7 @@ msgid "invalid 'clip' value"
 msgstr "неправильное значение 'clip'"
 
 msgid "invalid 'mask' value"
-msgstr "Неправильное значение 'mask'"
+msgstr "неправильное значение 'mask'"
 
 msgid "invalid 'xscale' in viewport"
 msgstr "неправильное 'xscale' в оконнице"
@@ -598,15 +590,15 @@ msgstr "выключаю все устройства после выгрузки пространства имен 'grid'"
 
 msgid "invalid grob name"
 msgid_plural "invalid grob names"
-msgstr[0] "Неправильное имя 'grob'"
-msgstr[1] "Неправильные имена 'grob'"
-msgstr[2] "Неправильные имена 'grob'"
+msgstr[0] "неправильное имя 'grob'"
+msgstr[1] "неправильные имена 'grob'"
+msgstr[2] "неправильные имена 'grob'"
 
 msgid "invalid viewport name"
 msgid_plural "invalid viewport names"
-msgstr[0] "Неправильное имя оконницы"
-msgstr[1] "Неправильные имена оконниц"
-msgstr[2] "Неправильные имена оконниц"
+msgstr[0] "неправильное имя оконницы"
+msgstr[1] "неправильные имена оконниц"
+msgstr[2] "неправильные имена оконниц"
 
 #~ msgid "'x' argument must be a unit object"
 #~ msgstr "аргумент 'x' должен быть объектом-единицей"

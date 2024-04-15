@@ -8,8 +8,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: R 2.10.0\n"
-"Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-07-31 14:59+0200\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-03-27 16:15-0700\n"
 "PO-Revision-Date: 2020-08-27 19:23+0900\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -53,11 +53,11 @@ msgstr "аргументы неправильного типа"
 msgid "no DISPLAY variable so Tk is not available"
 msgstr "нет переменной DISPLAY, поэтому Tk недоступен"
 
-#: tcltk_unix.c:111
+#: tcltk_unix.c:113
 msgid "Tcl is not loaded"
 msgstr "Tcl не загружен"
 
-#: tcltk_unix.c:115
+#: tcltk_unix.c:117
 msgid "Tcl is not last loaded handler"
 msgstr "Tcl не является последней загруженной инструкцией"
 

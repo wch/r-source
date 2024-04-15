@@ -3,17 +3,18 @@ msgstr ""
 "Project-Id-Version: R 3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2023-11-30 16:47+0100\n"
-"PO-Revision-Date: \n"
-"Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
+"PO-Revision-Date: 2024-03-18 21:18+0000\n"
+"Last-Translator: Michael Chirico <michaelchirico4@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
-"Language: pl_PL\n"
+"Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
+"|| n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 4.16.4\n"
 "na-Revision-Date: 2012-05-29 07:55+0100\n"
-"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 2.0.4\n"
 
 # src/gnuwin32/console.c: 1167
 # G_("Not enough memory")
@@ -128,7 +129,7 @@ msgstr "  Historia: Strzałki Up oraz Down, Ctrl+P, Ctrl+N\n"
 
 #: src/gnuwin32/console.c:2311
 msgid "  Deleting:\n"
-msgstr "Kasowanie:\n"
+msgstr "  Kasowanie:\n"
 
 #: src/gnuwin32/console.c:2312
 msgid "     Del or Ctrl+D: delete current character or selection;\n"
@@ -140,7 +141,8 @@ msgstr "     Backspace: usuń poprzedni znak;\n"
 
 #: src/gnuwin32/console.c:2314
 msgid "     Ctrl+Del or Ctrl+K: delete text from current character to end of line.\n"
-msgstr "     Ctrl+Del lub Ctrl+K: usuń tekst od bieżącego znaku do końca linii.\n"
+msgstr ""
+"     Ctrl+Del lub Ctrl+K: usuń tekst od bieżącego znaku do końca linii.\n"
 
 #: src/gnuwin32/console.c:2315
 msgid "     Ctrl+U: delete all text from current line.\n"
@@ -148,19 +150,24 @@ msgstr "     Ctrl+U: usuń cały tekst z bieżącej linii.\n"
 
 #: src/gnuwin32/console.c:2316
 msgid "  Copy and paste.\n"
-msgstr "Kopiuj i wklej.\n"
+msgstr "  Kopiuj i wklej.\n"
 
 #: src/gnuwin32/console.c:2317
 msgid "     Use the mouse (with the left button held down) to mark (select) text.\n"
-msgstr "     Użyj myszki (z naciśniętym lewym przyciskiem myszki) by zaznaczyć (wybrać) tekst.\n"
+msgstr ""
+"     Użyj myszki (z naciśniętym lewym przyciskiem myszki) by zaznaczyć "
+"(wybrać) tekst.\n"
 
 #: src/gnuwin32/console.c:2318
 msgid "     Use Shift+Del (or Ctrl+C) to copy the marked text to the clipboard and\n"
-msgstr "     Użyj Shift+Del (lub Ctrl+C) by skopiować zaznaczony tekst do schowka i\n"
+msgstr ""
+"     Użyj Shift+Del (lub Ctrl+C) by skopiować zaznaczony tekst do schowka i\n"
 
 #: src/gnuwin32/console.c:2319
 msgid "     Shift+Ins (or Ctrl+V or Ctrl+Y) to paste the content of the clipboard (if any)  \n"
-msgstr "     Shift+Ins (lub Ctrl+V lub Ctrl+Y) by wkleić zawartość schowka (jeśli jakaś jest)  \n"
+msgstr ""
+"     Shift+Ins (lub Ctrl+V lub Ctrl+Y) by wkleić zawartość schowka (jeśli "
+"jakaś jest)  \n"
 
 #: src/gnuwin32/console.c:2320
 msgid "     to the console, Ctrl+X first copy then paste\n"
@@ -168,7 +175,7 @@ msgstr "     do konsoli, Ctrl+X najpierw kopiuje potem wkleja\n"
 
 #: src/gnuwin32/console.c:2321
 msgid "  Misc:\n"
-msgstr " Różne:\n"
+msgstr "  Różne:\n"
 
 #: src/gnuwin32/console.c:2322
 msgid "     Ctrl+L: Clear the console.\n"
@@ -176,7 +183,8 @@ msgstr "     Ctrl+L: Wyczyść konsolę.\n"
 
 #: src/gnuwin32/console.c:2323
 msgid "     Ctrl+O or INS: Toggle overwrite mode: initially off.\n"
-msgstr "     Ctrl+O lub INS: Przełącz tryb nadpisywania: początkowo wyłączony.\n"
+msgstr ""
+"     Ctrl+O lub INS: Przełącz tryb nadpisywania: początkowo wyłączony.\n"
 
 #: src/gnuwin32/console.c:2324
 msgid "     Ctrl+T: Interchange current char with one to the left.\n"
@@ -308,15 +316,16 @@ msgstr "Aby uruchomić linijkę lub sekcję kodu R, zaznacz kod i albo:\n"
 
 #: src/gnuwin32/editor.c:679
 msgid "     Press Ctrl-R\n"
-msgstr "    Naciśnij Ctrl-R\n"
+msgstr "     Naciśnij Ctrl-R\n"
 
 #: src/gnuwin32/editor.c:680
 msgid "     Select \"Run line or selection\" from the \"Edit\" menu\n"
-msgstr "     Wybierz \"Uruchom linię lub zaznaczenie\" z menu \"Edycja\" \n"
+msgstr "     Wybierz \"Uruchom linię lub zaznaczenie\" z menu \"Edycja\"\n"
 
 #: src/gnuwin32/editor.c:681
 msgid "     Press the \"Run line or selection\" icon on the toolbar\n"
-msgstr "     Naciśnij ikonę \"Uruchom linię lub zaznaczenie\" na pasku narzędzi\n"
+msgstr ""
+"     Naciśnij ikonę \"Uruchom linię lub zaznaczenie\" na pasku narzędzi\n"
 
 #: src/gnuwin32/editor.c:682
 msgid "This will copy the selected commands to the console and evaluate them.\n"
@@ -1323,7 +1332,7 @@ msgstr "Pytanie"
 # G_(" Change working directory to:")
 #: src/extra/graphapp/dialogs.c:249
 msgid " Change working directory to:"
-msgstr "Zmień katalog roboczy na:"
+msgstr " Zmień katalog roboczy na:"
 
 # src/extra/graphapp/dialogs.c: 205
 # G_("Unable to set '%s' as working directory")

@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: R-4-3-BRANCH\n"
-"Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-11-30 14:40+0100\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-03-27 16:15-0700\n"
 "PO-Revision-Date: 2022-10-14 10:45+0200\n"
 "Last-Translator: Daniele Medri <dmedri@gmail.com>\n"
 "Language-Team: Italian https://github.com/dmedri/R-italian-lang\n"
@@ -59,86 +59,86 @@ msgstr "specificazione formato '%s' non riconosciuto"
 msgid "at most one asterisk '*' is supported in each conversion specification"
 msgstr "almeno un asterisco '*' è supportato in ogni specificazione di conversione"
 
-#: gramLatex.c:2392 gramRd.c:3996 y.tab.c:3996
+#: gramLatex.c:2592 gramRd.c:3970
 #, c-format
 msgid "unable to allocate buffer for long string at line %d"
 msgstr "non è possibile allocare un buffer stringhe long alla linea %d"
 
-#: gramLatex.c:2635 gramRd.c:4549 gramRd.c:4555 y.tab.c:4549 y.tab.c:4555
+#: gramLatex.c:2869 gramRd.c:4523 gramRd.c:4529
 #, c-format
 msgid "invalid '%s' value"
 msgstr "valore '%s' non valido"
 
-#: gramRd.c:2549 gramRd.c:2552 y.tab.c:2549 y.tab.c:2552
+#: gramRd.c:2581 gramRd.c:2584
 #, c-format
 msgid "bad markup (extra space?) at %s:%d:%d"
 msgstr "markup errato (troppi spazi?) in %s:%d:%d"
 
-#: gramRd.c:3144 y.tab.c:3144
+#: gramRd.c:3117
 #, c-format
 msgid "Macro '%s' previously defined."
 msgstr "Macro '%s' precedentemente definita."
 
-#: gramRd.c:3154 y.tab.c:3154
+#: gramRd.c:3127
 #, c-format
 msgid "At most 4 arguments are allowed for user defined macros."
 msgstr "Almeno 4 argomenti sono ammessi per le macro definite dall'utente."
 
-#: gramRd.c:3196 y.tab.c:3196
+#: gramRd.c:3169
 #, c-format
 msgid "No macro definition for '%s'."
 msgstr "Nessuna definizione macro per '%s'."
 
-#: gramRd.c:3258 y.tab.c:3258
+#: gramRd.c:3231
 #, c-format
 msgid "Not enough arguments passed to user macro '%s'"
 msgstr "Gli argomenti passati alla macro utente '%s' non sono abbastanza"
 
-#: gramRd.c:3398 gramRd.c:3402 y.tab.c:3398 y.tab.c:3402
+#: gramRd.c:3371 gramRd.c:3375
 #, c-format
 msgid "newline within quoted string at %s:%d"
 msgstr "newline dentro una stringa virgolettata in %s: %d"
 
-#: gramRd.c:3421 y.tab.c:3421
+#: gramRd.c:3394
 #, c-format
 msgid "unable to allocate buffer for long macro at line %d"
 msgstr "non è possibile allocare il buffer per macro long in %d"
 
-#: gramRd.c:3451 y.tab.c:3451
+#: gramRd.c:3424
 msgid "macros nested too deeply: infinite recursion?"
 msgstr "macro annidate troppo profondamente: ricorsione infinita?"
 
-#: gramRd.c:3858 y.tab.c:3858
+#: gramRd.c:3832
 #, c-format
 msgid "Unable to find macro %s"
 msgstr "Non è possibile trovare la macro %s"
 
-#: gramRd.c:4057 y.tab.c:4057
+#: gramRd.c:4031
 #, c-format
 msgid "Unexpected end of input (in %c quoted string opened at %s:%d:%d)"
 msgstr "Fine inattesa dell'input (nella %c stringa virgolettata aperta in %s:%d:%d)"
 
-#: gramRd.c:4562 y.tab.c:4562
+#: gramRd.c:4536
 msgid "cannot open the connection"
 msgstr "non è possibile aprire la connessione"
 
-#: gramRd.c:4569 y.tab.c:4569
+#: gramRd.c:4543
 msgid "cannot read from this connection"
 msgstr "non è possibile leggere da questa connessione"
 
-#: gramRd.c:4577 y.tab.c:4577
+#: gramRd.c:4551
 msgid "invalid Rd file"
 msgstr "file Rd non valido"
 
-#: gramRd.c:4596 y.tab.c:4596
+#: gramRd.c:4570
 msgid "'deparseRd' only supports deparsing character elements"
 msgstr "'deparseRd' supporta unicamente il deparsing di elementi carattere"
 
-#: gramRd.c:4599 y.tab.c:4599
+#: gramRd.c:4573
 msgid "bad state"
 msgstr "stato errato"
 
-#: gramRd.c:4612 y.tab.c:4612
+#: gramRd.c:4586
 #, c-format
 msgid "bad text mode %d in 'deparseRd'"
 msgstr "modalità testo errata %d in 'deparseRd'"
@@ -146,6 +146,11 @@ msgstr "modalità testo errata %d in 'deparseRd'"
 #: http.c:32
 msgid "invalid bind address specification"
 msgstr "specificazione indirizzo bind non valida"
+
+#: http.c:37
+#, c-format
+msgid "Invalid port number %d: should be in 0:65535, typically above 1024"
+msgstr ""
 
 #: install.c:95
 msgid "path too long"

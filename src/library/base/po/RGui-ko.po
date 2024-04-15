@@ -9,14 +9,15 @@ msgstr ""
 "Project-Id-Version: R-3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2023-11-30 16:47+0100\n"
-"PO-Revision-Date: 2018-04-09 12:05-0600\n"
-"Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
+"PO-Revision-Date: 2024-03-18 21:18+0000\n"
+"Last-Translator: Michael Chirico <michaelchirico4@gmail.com>\n"
 "Language-Team: \n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 4.16.4\n"
 
 #: src/gnuwin32/console.c:1200 src/gnuwin32/console.c:1242
 msgid "Not enough memory"
@@ -123,15 +124,19 @@ msgstr "  복사하여 붙여넣기.\n"
 
 #: src/gnuwin32/console.c:2317
 msgid "     Use the mouse (with the left button held down) to mark (select) text.\n"
-msgstr "     복사할 텍스트를 선택하기 위해서는 (좌측 버튼을 누른채로) 마우스를 이용하세요. \n"
+msgstr "     복사할 텍스트를 선택하기 위해서는 (좌측 버튼을 누른채로) 마우스를 "
+"이용하세요.\n"
 
 #: src/gnuwin32/console.c:2318
 msgid "     Use Shift+Del (or Ctrl+C) to copy the marked text to the clipboard and\n"
-msgstr "     선택된 텍스트를 클립보드에 복사하기 위해서는 Shift+Del (또는 Ctrl+C)를 사용합니다. \n"
+msgstr "     선택된 텍스트를 클립보드에 복사하기 위해서는 Shift+Del (또는 Ctrl+C)를 "
+"사용합니다.\n"
 
 #: src/gnuwin32/console.c:2319
 msgid "     Shift+Ins (or Ctrl+V or Ctrl+Y) to paste the content of the clipboard (if any)  \n"
-msgstr "     클립보드에 있는 내용을 콘솔에 붙여넣고자 한다면 Shift+Ins (또는 Ctrl+V 혹은 Ctrl+Y)를 사용할 수 있습니다.\n"
+msgstr ""
+"     클립보드에 있는 내용을 콘솔에 붙여넣고자 한다면 Shift+Ins (또는 Ctrl+V "
+"혹은 Ctrl+Y)를 사용할 수 있습니다.  \n"
 
 #: src/gnuwin32/console.c:2320
 msgid "     to the console, Ctrl+X first copy then paste\n"
@@ -824,7 +829,7 @@ msgstr "질문"
 
 #: src/extra/graphapp/dialogs.c:249
 msgid " Change working directory to:"
-msgstr "작업디렉토리를 다음의 위치로 변경:"
+msgstr " 작업디렉토리를 다음의 위치로 변경:"
 
 #: src/extra/graphapp/dialogs.c:251
 #, c-format

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-11-30 14:39\n"
+"POT-Creation-Date: 2024-03-27 16:14\n"
 "PO-Revision-Date: 2022-08-31 15:04+0000\n"
 "Last-Translator: Krye Kuzhinieri <sundley.12345@gmail.com>\n"
 "Language-Team: Albanian <https://translate.rx.studio/projects/r-project/base-r/sq/>\n"
@@ -33,6 +33,12 @@ msgstr "Shiko help(\"Depreated\") dhe help(\"%s-deprecated\")."
 
 msgid "See help(\"Deprecated\")"
 msgstr "Shiko help(\"Deprecated\")"
+
+msgid "unsupported value of _R_DEPRECATED_IS_R_,"
+msgstr ""
+
+msgid ", will be ignored"
+msgstr ""
 
 msgid "argument to 'La.svd' must be numeric or complex"
 msgstr "argumentet e 'La.svd'-së duhet të jenë numerike apo komplekse"

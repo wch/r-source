@@ -6,9 +6,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.0\n"
-"Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-11-30 14:40+0100\n"
-"PO-Revision-Date: 2023-01-30 10:05+0000\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-03-27 16:14-0700\n"
+"PO-Revision-Date: 2023-12-20 13:03+0000\n"
 "Last-Translator: Shun Wang <shuonwang@gmail.com>\n"
 "Language-Team: Chinese\n"
 "Language: zh_CN\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.13.1\n"
+"X-Generator: Weblate 4.16.4\n"
 
 #: fork.c:223
 #, fuzzy, c-format
@@ -24,9 +24,9 @@ msgid "unable to terminate child process: %s"
 msgstr "无法分叉，可能的原因是：%s"
 
 #: fork.c:250
-#, fuzzy, c-format
+#, c-format
 msgid "unable to terminate child: %s"
-msgstr "无法建立管道"
+msgstr "无法终止子进程：%s"
 
 #: fork.c:329 fork.c:620 ncpus.c:87 ncpus.c:123 ncpus.c:178
 msgid "memory allocation error"
@@ -62,7 +62,7 @@ msgstr "有没可以接到主进程的管道"
 msgid "content to send must be RAW, use serialize() if needed"
 msgstr "发送的内容必须是原始的，如果需要的话请用serialize（）"
 
-#: fork.c:774 fork.c:785 fork.c:1198
+#: fork.c:774 fork.c:785 fork.c:1204
 msgid "write error, closing pipe to the master"
 msgstr "写入错误，请关闭通往主进程的管道"
 
@@ -79,36 +79,36 @@ msgstr "不存在%d这个子进程"
 msgid "write error"
 msgstr "写入错误"
 
-#: fork.c:895
+#: fork.c:897
 #, fuzzy, c-format
 msgid "cannot wait for child %d as it does not exist"
 msgstr "不存在%d这个子进程"
 
-#: fork.c:954 fork.c:1077
+#: fork.c:956 fork.c:1083
 #, c-format
 msgid "error '%s' in select"
 msgstr "选择时出了'%s'这样一个错"
 
-#: fork.c:1167
+#: fork.c:1173
 msgid "'mckill' failed"
 msgstr "'mckill'失败"
 
-#: fork.c:1180
+#: fork.c:1186
 msgid "'mcexit' can only be used in a child process"
 msgstr "'mcexit'只能用于子进程"
 
-#: fork.c:1212
+#: fork.c:1218
 msgid "'mcexit' failed"
 msgstr "'mcexit'失败"
 
-#: fork.c:1241 fork.c:1250
+#: fork.c:1247 fork.c:1256
 msgid "invalid CPU affinity specification"
 msgstr "CPU亲和力规范无效"
 
-#: fork.c:1261
+#: fork.c:1267
 msgid "requested CPU set is too large for this system"
 msgstr "所需要的CPU设置对于这个系统来说太大了"
 
-#: fork.c:1284
+#: fork.c:1290
 msgid "retrieving CPU affinity set failed"
 msgstr "无法收取CPU亲和力"

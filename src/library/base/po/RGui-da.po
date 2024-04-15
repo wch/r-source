@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: RGUi\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2023-11-30 16:47+0100\n"
-"PO-Revision-Date: 2014-03-18 23:36+0200\n"
-"Last-Translator: Joe Hansen <joedalton2@yahoo.dk>\n"
+"PO-Revision-Date: 2024-03-18 21:18+0000\n"
+"Last-Translator: Michael Chirico <michaelchirico4@gmail.com>\n"
 "Language-Team: Danish <debian-l10n-danish@lists.debian.org>\n"
 "Language: da\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Pootle 2.1.6\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.16.4\n"
 
 #: src/gnuwin32/console.c:1200 src/gnuwin32/console.c:1242
 msgid "Not enough memory"
@@ -112,7 +112,9 @@ msgstr "     Slet tilbage: Slet foregående tegn;\n"
 
 #: src/gnuwin32/console.c:2314
 msgid "     Ctrl+Del or Ctrl+K: delete text from current character to end of line.\n"
-msgstr "     Ctrl+Del eller Ctrl+K: Slet tekst fra aktuel tegn til slutningen af linjen.\n"
+msgstr ""
+"     Ctrl+Del eller Ctrl+K: Slet tekst fra aktuel tegn til slutningen af "
+"linjen.\n"
 
 #: src/gnuwin32/console.c:2315
 msgid "     Ctrl+U: delete all text from current line.\n"
@@ -124,15 +126,20 @@ msgstr "  Kopier og indsæt.\n"
 
 #: src/gnuwin32/console.c:2317
 msgid "     Use the mouse (with the left button held down) to mark (select) text.\n"
-msgstr "     Brug musen (med den venstre tast nede) til at markere (vælge) tekst.\n"
+msgstr ""
+"     Brug musen (med den venstre tast nede) til at markere (vælge) tekst.\n"
 
 #: src/gnuwin32/console.c:2318
 msgid "     Use Shift+Del (or Ctrl+C) to copy the marked text to the clipboard and\n"
-msgstr "     Brug Skift+Del (eller Ctrl+C) til at kopiere den markerede tekst til udklipsholderen og\n"
+msgstr ""
+"     Brug Skift+Del (eller Ctrl+C) til at kopiere den markerede tekst til "
+"udklipsholderen og\n"
 
 #: src/gnuwin32/console.c:2319
 msgid "     Shift+Ins (or Ctrl+V or Ctrl+Y) to paste the content of the clipboard (if any)  \n"
-msgstr "     Skift+Ins (eller Ctrl+V eller Ctrl+Y) til at indsætte indholdet af udklipsholderen (hvis der er noget)  \n"
+msgstr ""
+"     Skift+Ins (eller Ctrl+V eller Ctrl+Y) til at indsætte indholdet af "
+"udklipsholderen (hvis der er noget)  \n"
 
 #: src/gnuwin32/console.c:2320
 msgid "     to the console, Ctrl+X first copy then paste\n"
@@ -148,7 +155,8 @@ msgstr "     Ctrl+L: Ryd konsollen.\n"
 
 #: src/gnuwin32/console.c:2323
 msgid "     Ctrl+O or INS: Toggle overwrite mode: initially off.\n"
-msgstr "     Ctrl+O eller INS: Skift tilstand for overskrivning: Som start slukket.\n"
+msgstr ""
+"     Ctrl+O eller INS: Skift tilstand for overskrivning: Som start slukket.\n"
 
 #: src/gnuwin32/console.c:2324
 msgid "     Ctrl+T: Interchange current char with one to the left.\n"

@@ -10,15 +10,15 @@ msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2023-11-30 16:47+0100\n"
-"PO-Revision-Date: 2011-04-02 18:17+0200\n"
-"Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
+"PO-Revision-Date: 2024-03-18 21:18+0000\n"
+"Last-Translator: Michael Chirico <michaelchirico4@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 1.0\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 4.16.4\n"
 
 #: src/gnuwin32/console.c:1200 src/gnuwin32/console.c:1242
 msgid "Not enough memory"
@@ -53,7 +53,7 @@ msgstr "Seçileni kaydet"
 
 #: src/gnuwin32/console.c:2194
 msgid "Save console contents to"
-msgstr "Konsol içeriklerini dosyaya kaydet "
+msgstr "Konsol içeriklerini dosyaya kaydet"
 
 #: src/gnuwin32/console.c:2301
 msgid "Scrolling.\n"
@@ -61,7 +61,7 @@ msgstr "Kaydırma.\n"
 
 #: src/gnuwin32/console.c:2302
 msgid "  Keyboard: PgUp, PgDown, Ctrl+Arrows, Ctrl+Home, Ctrl+End,\n"
-msgstr "Klavye: PgUp, PgDown, Ctrl+Ok Tuşları, Ctrl+Home, Ctrl+End,\n"
+msgstr "  Klavye: PgUp, PgDown, Ctrl+Ok Tuşları, Ctrl+Home, Ctrl+End,\n"
 
 #: src/gnuwin32/console.c:2303
 msgid ""
@@ -113,7 +113,9 @@ msgstr "     Backspace: önceki karakteri sil;\n"
 
 #: src/gnuwin32/console.c:2314
 msgid "     Ctrl+Del or Ctrl+K: delete text from current character to end of line.\n"
-msgstr "     Ctrl+Del yada Ctrl+K: metni geçerli karakterden satır sonuna kadar sil.\n"
+msgstr ""
+"     Ctrl+Del yada Ctrl+K: metni geçerli karakterden satır sonuna kadar sil."
+"\n"
 
 #: src/gnuwin32/console.c:2315
 msgid "     Ctrl+U: delete all text from current line.\n"
@@ -125,15 +127,17 @@ msgstr "  Kopyalama ve yapıştırma.\n"
 
 #: src/gnuwin32/console.c:2317
 msgid "     Use the mouse (with the left button held down) to mark (select) text.\n"
-msgstr "     Metni işaretlemek (seçmek) için fareyi (sol tuşuna basılı tutarak) kullan.\n"
+msgstr ""
+"     Metni işaretlemek (seçmek) için fareyi (sol tuşuna basılı tutarak) "
+"kullan.\n"
 
 #: src/gnuwin32/console.c:2318
 msgid "     Use Shift+Del (or Ctrl+C) to copy the marked text to the clipboard and\n"
-msgstr "     Seçili metni panoya kopyalamak Shift+Del (veya Ctrl+C), \n"
+msgstr "     Seçili metni panoya kopyalamak Shift+Del (veya Ctrl+C),\n"
 
 #: src/gnuwin32/console.c:2319
 msgid "     Shift+Ins (or Ctrl+V or Ctrl+Y) to paste the content of the clipboard (if any)  \n"
-msgstr "      (eğer varsa) pano içeriğini konsola yapıştırmak için\n"
+msgstr "     (eğer varsa) pano içeriğini konsola yapıştırmak için\n"
 
 #: src/gnuwin32/console.c:2320
 msgid "     to the console, Ctrl+X first copy then paste\n"
@@ -151,7 +155,8 @@ msgstr "     Ctrl+L: Konsolu temizle.\n"
 
 #: src/gnuwin32/console.c:2323
 msgid "     Ctrl+O or INS: Toggle overwrite mode: initially off.\n"
-msgstr "     Ctrl+O veya INS: Üstüne yazma modunu değiştir: başlangıçta kapalıdır.\n"
+msgstr ""
+"     Ctrl+O veya INS: Üstüne yazma modunu değiştir: başlangıçta kapalıdır.\n"
 
 #: src/gnuwin32/console.c:2324
 msgid "     Ctrl+T: Interchange current char with one to the left.\n"
@@ -288,7 +293,7 @@ msgstr "Kes"
 #: src/gnuwin32/pager.c:488 src/gnuwin32/rui.c:936 src/gnuwin32/rui.c:1176
 #: src/gnuwin32/rui.c:1232
 msgid "Copy"
-msgstr "Kopyala "
+msgstr "Kopyala"
 
 #: src/gnuwin32/editor.c:702 src/gnuwin32/editor.c:823 src/gnuwin32/rui.c:937
 #: src/gnuwin32/rui.c:1180 src/gnuwin32/rui.c:1233
@@ -342,7 +347,7 @@ msgstr "Kaydet"
 
 #: src/gnuwin32/editor.c:807
 msgid "Save as..."
-msgstr "Farklı kaydet ... "
+msgstr "Farklı kaydet ..."
 
 #: src/gnuwin32/editor.c:810 src/gnuwin32/pager.c:480 src/gnuwin32/rui.c:1226
 #: src/library/grDevices/src/devWindows.c:1660
@@ -399,7 +404,7 @@ msgstr "Düzenleyici penceresi oluşturulamadı"
 
 #: src/gnuwin32/editor.c:924
 msgid "Untitled"
-msgstr "İsimsiz "
+msgstr "İsimsiz"
 
 #: src/gnuwin32/extra.c:1052
 msgid "Select file"
@@ -692,7 +697,7 @@ msgstr "Dosya(ları) görüntüle..."
 
 #: src/gnuwin32/rui.c:1216
 msgid "Load Workspace..."
-msgstr "Çalışma Alanı Aç... "
+msgstr "Çalışma Alanı Aç..."
 
 #: src/gnuwin32/rui.c:1217
 msgid "Save Workspace..."
@@ -1049,11 +1054,11 @@ msgstr "TIFF dosyası"
 
 #: src/library/grDevices/src/devWindows.c:952
 msgid "Jpeg file"
-msgstr "Jpeg dosyası "
+msgstr "Jpeg dosyası"
 
 #: src/library/grDevices/src/devWindows.c:974
 msgid "Postscript file"
-msgstr "Postscript dosyası "
+msgstr "Postscript dosyası"
 
 #: src/library/grDevices/src/devWindows.c:986
 msgid "PDF file"
@@ -1070,11 +1075,11 @@ msgstr "seçilen dosya yolu çok uzun: sadece 512 bayta kadar izin verilir"
 
 #: src/library/grDevices/src/devWindows.c:1212
 msgid "No plot to replace!"
-msgstr "Değiştirilecek grafik yok! "
+msgstr "Değiştirilecek grafik yok!"
 
 #: src/library/grDevices/src/devWindows.c:1262
 msgid "Variable name"
-msgstr "Değişken adı "
+msgstr "Değişken adı"
 
 #: src/library/grDevices/src/devWindows.c:1271
 #, fuzzy
@@ -1097,15 +1102,15 @@ msgstr "Konumlayıcıyı durdur"
 #: src/library/grDevices/src/devWindows.c:1623
 #: src/library/grDevices/src/devWindows.c:1627
 msgid "Stop"
-msgstr "Dur "
+msgstr "Dur"
 
 #: src/library/grDevices/src/devWindows.c:1629
 msgid "Continue"
-msgstr "Devam et "
+msgstr "Devam et"
 
 #: src/library/grDevices/src/devWindows.c:1633
 msgid "Next"
-msgstr "Sonraki "
+msgstr "Sonraki"
 
 #: src/library/grDevices/src/devWindows.c:1634
 msgid "Next plot"
@@ -1113,7 +1118,7 @@ msgstr "Sonraki grafik"
 
 #: src/library/grDevices/src/devWindows.c:1640
 msgid "Save as"
-msgstr "Farklı Kaydet "
+msgstr "Farklı Kaydet"
 
 #: src/library/grDevices/src/devWindows.c:1649
 #: src/library/grDevices/src/devWindows.c:1651
@@ -1148,7 +1153,7 @@ msgstr "Kayıt"
 
 #: src/library/grDevices/src/devWindows.c:1667
 msgid "Add\tINS"
-msgstr "Ekle\tINS "
+msgstr "Ekle\tINS"
 
 #: src/library/grDevices/src/devWindows.c:1668
 msgid "Replace"
@@ -1156,11 +1161,11 @@ msgstr "Değiştir"
 
 #: src/library/grDevices/src/devWindows.c:1670
 msgid "Previous\tPgUp"
-msgstr "Geri\tPgUp "
+msgstr "Geri\tPgUp"
 
 #: src/library/grDevices/src/devWindows.c:1671
 msgid "Next\tPgDown"
-msgstr "İleri\tPgDown "
+msgstr "İleri\tPgDown"
 
 #: src/library/grDevices/src/devWindows.c:1673
 msgid "Save to variable..."
@@ -1208,7 +1213,7 @@ msgstr "Postscript olarak farklı kaydet"
 
 #: src/library/grDevices/src/devWindows.c:3214
 msgid "Locator is active"
-msgstr "Konumlayıcı aktif "
+msgstr "Konumlayıcı aktif"
 
 #: src/library/grDevices/src/devWindows.c:3884
 msgid "Waiting to confirm page change..."

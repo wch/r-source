@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.5.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-11-30 14:39\n"
+"POT-Creation-Date: 2024-03-27 16:14\n"
 "PO-Revision-Date: 2021-01-27 10:34+0100\n"
 "Last-Translator: Wei-Lun Chao <bluebat@member.fsf.org>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -38,6 +38,13 @@ msgstr "見 help(\"Deprecated\")和 help(\"%s-deprecated\")。"
 
 msgid "See help(\"Deprecated\")"
 msgstr "見 help(\"Deprecated\")"
+
+msgid "unsupported value of _R_DEPRECATED_IS_R_,"
+msgstr ""
+
+#, fuzzy
+msgid ", will be ignored"
+msgstr "忽略 'drop' 引數"
 
 msgid "argument to 'La.svd' must be numeric or complex"
 msgstr "'La.svd' 的引數必須是數值或複數值"
@@ -165,7 +172,7 @@ msgid "an object with that name already exists"
 msgstr "物件的名稱已經存在"
 
 msgid "autoloader did not find '%s' in '%s'"
-msgstr "自動載入器在 '%2$s' 找不到 '%1$s' "
+msgstr "自動載入器在 '%2$s' 找不到 '%1$s'"
 
 msgid "can only splice inside a call"
 msgstr ""
@@ -340,7 +347,7 @@ msgid "duplicate subscripts for columns"
 msgstr "行裡有重複的索引"
 
 msgid "only valid calls are x[[j]] <- value or x[[i,j]] <- value"
-msgstr "正確呼叫的寫法是 x[[j]] <- value 或 x[[i,j]] <- value "
+msgstr "正確呼叫的寫法是 x[[j]] <- value 或 x[[i,j]] <- value"
 
 msgid "replacing element in non-existent column: %s"
 msgstr "在不存在的行裡替換單元: %s"
@@ -435,7 +442,7 @@ msgid "'length.out' must be of length 1"
 msgstr "'length.out' 的長度必須為一"
 
 msgid "exactly two of 'to', 'by' and 'length.out' / 'along.with' must be specified"
-msgstr " 'to'，'by'，'length.out'/'along.with' 中四個只能同時選兩個"
+msgstr "'to'，'by'，'length.out'/'along.with' 中四個只能同時選兩個"
 
 msgid "'by' must be of length 1"
 msgstr "'by' 的長度必須為一"
@@ -570,7 +577,7 @@ msgid "'x' must be a square matrix"
 msgstr "'x' 必須是正方形矩陣"
 
 msgid "'determinant' not currently defined for complex matrices"
-msgstr "目前還不能算複數矩陣的 'determinant' "
+msgstr "目前還不能算複數矩陣的 'determinant'"
 
 msgid "'nrow' or 'ncol' cannot be specified when 'x' is a matrix"
 msgstr "如果 'x' 是矩陣的話不能直接設定 'nrow' 或 'ncol'"
@@ -706,7 +713,7 @@ msgid "'mode' must be \"double\" (\"real\"), \"integer\" or \"character\""
 msgstr "'mode' 的值必須是\"double\" (\"real\")， \"integer\"或\"character\"中的一個"
 
 msgid "coercing argument to \"character\" for format=\"s\""
-msgstr "用 format=\"s\"時引數被強迫轉變成\"character\" "
+msgstr "用 format=\"s\"時引數被強迫轉變成\"character\""
 
 msgid "'format' must be one of {\"f\",\"e\",\"E\",\"g\",\"G\", \"fg\", \"s\"}"
 msgstr "'format' 的值必須從{\"f\",\"e\",\"E\",\"g\",\"G\"，\"fg\"，\"s\"}中選一個"
@@ -808,13 +815,13 @@ msgid "only one of 'include.only' and 'exclude' can be used"
 msgstr ""
 
 msgid "package %s has not been installed properly"
-msgstr "沒有正確安裝套件 %s "
+msgstr "沒有正確安裝套件 %s"
 
 msgid "package %s was built before R 3.0.0: please re-install it"
 msgstr "套件 %s 是在 R 版本 3.0.0 之前建的：您得重新安裝"
 
 msgid "This is R %s, package %s needs %s %s"
-msgstr "這是 R%s，套件 %s 需要 %s %s "
+msgstr "這是 R%s，套件 %s 需要 %s %s"
 
 msgid "package %s was built under R version %s"
 msgstr "套件 %s 是用 R 版本 %s 來建造的"
@@ -1212,7 +1219,7 @@ msgid "no function found corresponding to methods exports from %s for: %s"
 msgstr "從 %s 匯出功能裡找不到適用於 %s 的相應方法"
 
 msgid "in %s methods for export not found: %s"
-msgstr "用於匯出的 %s 方法不存在：%s "
+msgstr "用於匯出的 %s 方法不存在：%s"
 
 msgid "---- export method"
 msgstr ""
@@ -1369,7 +1376,7 @@ msgid "argument is not a QR decomposition"
 msgstr "引數不是 QR 分解"
 
 msgid "invalid NCOL(y)"
-msgstr " NCOL(y)無效"
+msgstr "NCOL(y)無效"
 
 msgid "not implemented for complex 'qr'"
 msgstr "沒有在複數 'qr' 內實作"
@@ -1492,7 +1499,7 @@ msgid "'x' must be atomic"
 msgstr "'x' 必須為基元"
 
 msgid "'index.return' only for 'na.last = NA'"
-msgstr "只有 'na.last = NA' 才能用 'index.return' "
+msgstr "只有 'na.last = NA' 才能用 'index.return'"
 
 msgid "unsupported options for partial sorting"
 msgstr "部分排序時不支援這些選項"

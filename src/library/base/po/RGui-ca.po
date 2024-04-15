@@ -1,0 +1,1205 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR The R Core Team
+# This file is distributed under the same license as the R package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: R 4.4.0\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2023-11-30 16:47+0100\n"
+"PO-Revision-Date: 2024-03-18 06:08+0000\n"
+"Last-Translator: Robert Castelo <robert.castelo@upf.edu>\n"
+"Language-Team: none\n"
+"Language: ca\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.16.4\n"
+
+#: src/gnuwin32/console.c:1200 src/gnuwin32/console.c:1242
+msgid "Not enough memory"
+msgstr "Memòria insuficient"
+
+#: src/gnuwin32/console.c:1289 src/gnuwin32/console.c:1293
+msgid "Insufficient memory: text not copied to the clipboard"
+msgstr "Memòria insuficient: el text no s'ha copiat al porta-retalls"
+
+#: src/gnuwin32/console.c:1331 src/extra/graphapp/clipboard.c:53
+#: src/extra/graphapp/clipboard.c:79
+msgid "Unable to open the clipboard"
+msgstr "No s'ha pogut obrir el porta-retalls"
+
+#: src/gnuwin32/console.c:1977
+msgid "Insufficient memory. Please close the console"
+msgstr "Memòria insuficient. Tanqueu la consola"
+
+#: src/gnuwin32/console.c:2033 src/gnuwin32/console.c:2087
+#: src/gnuwin32/preferences.c:342
+#, c-format
+msgid ""
+"Font %s-%d-%d  not found.\n"
+"Using system fixed font"
+msgstr ""
+"No s'ha trobat el tipus de lletra %s-%d-%d.\n"
+"Utilitzant el tipus de lletra fix del sistema"
+
+#: src/gnuwin32/console.c:2192
+msgid "Save selection to"
+msgstr "Desa la selecció a"
+
+#: src/gnuwin32/console.c:2194
+msgid "Save console contents to"
+msgstr "Desa el contingut de la consola a"
+
+#: src/gnuwin32/console.c:2301
+msgid "Scrolling.\n"
+msgstr "Desplaçament.\n"
+
+#: src/gnuwin32/console.c:2302
+msgid "  Keyboard: PgUp, PgDown, Ctrl+Arrows, Ctrl+Home, Ctrl+End,\n"
+msgstr "  Teclat: PgUp, PgDown, Ctrl+Arrows, Ctrl+Home, Ctrl+End,\n"
+
+#: src/gnuwin32/console.c:2303
+msgid ""
+"  Mouse: use the scrollbar(s).\n"
+"\n"
+msgstr ""
+"  Ratolí: utilitza la/es barra/es de desplaçament.\n"
+"\n"
+
+#: src/gnuwin32/console.c:2304
+msgid "Editing.\n"
+msgstr "Edició.\n"
+
+#: src/gnuwin32/console.c:2305
+msgid "  Moving the cursor: \n"
+msgstr "  Movent el cursor: \n"
+
+#: src/gnuwin32/console.c:2306
+msgid "     Left arrow or Ctrl+B: move backward one character;\n"
+msgstr "     Fletxa esquerra o Ctrl+B: mou un caràcter enrere;\n"
+
+#: src/gnuwin32/console.c:2307
+msgid "     Right arrow or Ctrl+F: move forward one character;\n"
+msgstr "     Fletxa dreta o Ctrl+F: mou un caràcter endavant;\n"
+
+#: src/gnuwin32/console.c:2308
+msgid "     Home or Ctrl+A: go to beginning of line;\n"
+msgstr "     Inici o Ctrl+A: va al començament de la línia;\n"
+
+#: src/gnuwin32/console.c:2309
+msgid "     End or Ctrl+E: go to end of line;\n"
+msgstr "     Fi o Ctrl+E: va al final de la línia;\n"
+
+#: src/gnuwin32/console.c:2310
+msgid "  History: Up and Down Arrows, Ctrl+P, Ctrl+N\n"
+msgstr "  Històric: Fletxes amunt i avall, Ctrl+P, Ctrl+N\n"
+
+#: src/gnuwin32/console.c:2311
+msgid "  Deleting:\n"
+msgstr "  Eliminant:\n"
+
+#: src/gnuwin32/console.c:2312
+msgid "     Del or Ctrl+D: delete current character or selection;\n"
+msgstr "     Del o Ctrl+D: elimina el caràcter o la selecció actual;\n"
+
+#: src/gnuwin32/console.c:2313
+msgid "     Backspace: delete preceding character;\n"
+msgstr "     Backspace: elimina el caràcter anterior;\n"
+
+#: src/gnuwin32/console.c:2314
+msgid "     Ctrl+Del or Ctrl+K: delete text from current character to end of line.\n"
+msgstr "     Ctrl+Supr o Ctrl+K: suprimeix el text del caràcter actual al final de la línia.\n"
+
+#: src/gnuwin32/console.c:2315
+msgid "     Ctrl+U: delete all text from current line.\n"
+msgstr "     Ctrl+U: elimina tot el text de la línia actual.\n"
+
+#: src/gnuwin32/console.c:2316
+msgid "  Copy and paste.\n"
+msgstr "  Copia i enganxa.\n"
+
+#: src/gnuwin32/console.c:2317
+msgid "     Use the mouse (with the left button held down) to mark (select) text.\n"
+msgstr "     Utilitzeu el ratolí (amb el botó esquerre premut) per a marcar (seleccionar) text.\n"
+
+#: src/gnuwin32/console.c:2318
+msgid "     Use Shift+Del (or Ctrl+C) to copy the marked text to the clipboard and\n"
+msgstr "     Utilitzeu Maj+Supr (o Ctrl+C) per a copiar el text marcat al porta-retalls i\n"
+
+#: src/gnuwin32/console.c:2319
+msgid "     Shift+Ins (or Ctrl+V or Ctrl+Y) to paste the content of the clipboard (if any)  \n"
+msgstr "     Maj+Ins (o Ctrl+V o Ctrl+Y) per a enganxar el contingut del porta-retalls (si n'hi ha cap)  \n"
+
+#: src/gnuwin32/console.c:2320
+msgid "     to the console, Ctrl+X first copy then paste\n"
+msgstr "     a la consola, Ctrl+X primer copia i després enganxa\n"
+
+#: src/gnuwin32/console.c:2321
+msgid "  Misc:\n"
+msgstr "  Miscel·lània:\n"
+
+#: src/gnuwin32/console.c:2322
+msgid "     Ctrl+L: Clear the console.\n"
+msgstr "     Ctrl+L: Neteja la consola.\n"
+
+#: src/gnuwin32/console.c:2323
+msgid "     Ctrl+O or INS: Toggle overwrite mode: initially off.\n"
+msgstr "     Ctrl+O o INS: Commuta el mode de sobreescriptura: inicialment desactivat.\n"
+
+#: src/gnuwin32/console.c:2324
+msgid "     Ctrl+T: Interchange current char with one to the left.\n"
+msgstr "     Ctrl+T: intercanvia el caràcter actual amb el de l'esquerra.\n"
+
+#: src/gnuwin32/console.c:2325
+msgid ""
+"\n"
+"Note: Console is updated only when some input is required.\n"
+msgstr ""
+"\n"
+"Nota: la consola només s'actualitza quan cal una entrada.\n"
+
+#: src/gnuwin32/console.c:2326
+msgid ""
+"  Use Ctrl+W to toggle this feature off/on.\n"
+"\n"
+msgstr ""
+"  Utilitzeu Ctrl+W per a desactivar/activar aquesta funció.\n"
+"\n"
+
+#: src/gnuwin32/console.c:2327
+msgid ""
+"Use ESC to stop the interpreter.\n"
+"\n"
+msgstr ""
+"Utilitzeu ESC per aturar l'intèrpret.\n"
+"\n"
+
+#: src/gnuwin32/console.c:2328
+msgid ""
+"TAB starts completion of the current word.\n"
+"\n"
+msgstr ""
+"TAB comença la compleció de la paraula actual.\n"
+"\n"
+
+#: src/gnuwin32/console.c:2329
+msgid "Standard Windows hotkeys can be used to switch to the\n"
+msgstr "Les tecles de drecera estàndard de Windows es poden utilitzar per canviar al\n"
+
+#: src/gnuwin32/console.c:2330
+msgid "graphics device (Ctrl+Tab or Ctrl+F6 in MDI, Alt+Tab in SDI)"
+msgstr "dispositiu de gràfics (Ctrl+Tab o Ctrl+F6 en MDI, Alt+Tab en SDI)"
+
+#: src/gnuwin32/editor.c:89 src/gnuwin32/editor.c:91
+msgid "R Editor"
+msgstr "Editor de l'R"
+
+#: src/gnuwin32/editor.c:162
+#, c-format
+msgid "unable to open file %s for reading"
+msgstr "no s'ha pogut obrir el fitxer %s per a lectura"
+
+#: src/gnuwin32/editor.c:187
+#, c-format
+msgid "Could not read from file '%s'"
+msgstr "No s'ha pogut llegir el fitxer «%s»"
+
+#: src/gnuwin32/editor.c:220
+#, c-format
+msgid "Could not save file '%s'"
+msgstr "No s'ha pogut desar el fitxer «%s»"
+
+#: src/gnuwin32/editor.c:240
+msgid "Save script as"
+msgstr "Desa l'script com a"
+
+#: src/gnuwin32/editor.c:439 src/gnuwin32/editor.c:765 src/gnuwin32/pager.c:441
+#: src/gnuwin32/rui.c:1164
+msgid "Open script"
+msgstr "Obre l'script"
+
+#: src/gnuwin32/editor.c:571 src/gnuwin32/pager.c:195 src/gnuwin32/pager.c:215
+msgid "No RGui console to paste to"
+msgstr "No hi ha cap consola RGui a la qual enganxar"
+
+#: src/gnuwin32/editor.c:673
+msgid "R EDITOR\n"
+msgstr "EDITOR R\n"
+
+#: src/gnuwin32/editor.c:675
+msgid "A standard text editor for editing and running R code.\n"
+msgstr "Un editor de text estàndard per a editar i executar codi de l'R.\n"
+
+#: src/gnuwin32/editor.c:677
+msgid "RUNNING COMMANDS\n"
+msgstr "EXECUTAR ORDRES\n"
+
+#: src/gnuwin32/editor.c:678
+msgid "To run a line or section of R code, select the code and either\n"
+msgstr "Per a executar una línia o una secció de codi d'R, seleccioneu el codi i ja sigui\n"
+
+#: src/gnuwin32/editor.c:679
+msgid "     Press Ctrl-R\n"
+msgstr "     Premeu Ctrl-R\n"
+
+#: src/gnuwin32/editor.c:680
+msgid "     Select \"Run line or selection\" from the \"Edit\" menu\n"
+msgstr "     Seleccioneu «Executa la línia o la selecció» des del menú «Edita»\n"
+
+#: src/gnuwin32/editor.c:681
+msgid "     Press the \"Run line or selection\" icon on the toolbar\n"
+msgstr "     Premeu la icona «Executa la línia o la selecció» a la barra d'eines\n"
+
+#: src/gnuwin32/editor.c:682
+msgid "This will copy the selected commands to the console and evaluate them.\n"
+msgstr "Això copiarà les ordres seleccionades a la consola i les avaluarà.\n"
+
+#: src/gnuwin32/editor.c:683
+msgid "If there is no selection, this will just run the current line and advance\n"
+msgstr "Si no hi ha cap selecció, això executarà la línia actual i avançarà\n"
+
+#: src/gnuwin32/editor.c:684
+msgid "the cursor by one line.\n"
+msgstr "el cursor per una línia.\n"
+
+#: src/gnuwin32/editor.c:696 src/gnuwin32/editor.c:773
+#: src/gnuwin32/editor.c:831
+msgid "Run line or selection"
+msgstr "Executa la línia o la selecció"
+
+#: src/gnuwin32/editor.c:698 src/gnuwin32/editor.c:816
+msgid "Undo"
+msgstr "Desfés"
+
+#: src/gnuwin32/editor.c:700 src/gnuwin32/editor.c:819
+msgid "Cut"
+msgstr "Retalla"
+
+#: src/gnuwin32/editor.c:701 src/gnuwin32/editor.c:821 src/gnuwin32/pager.c:315
+#: src/gnuwin32/pager.c:488 src/gnuwin32/rui.c:936 src/gnuwin32/rui.c:1176
+#: src/gnuwin32/rui.c:1232
+msgid "Copy"
+msgstr "Copia"
+
+#: src/gnuwin32/editor.c:702 src/gnuwin32/editor.c:823 src/gnuwin32/rui.c:937
+#: src/gnuwin32/rui.c:1180 src/gnuwin32/rui.c:1233
+msgid "Paste"
+msgstr "Enganxa"
+
+#: src/gnuwin32/editor.c:703 src/gnuwin32/editor.c:825
+msgid "Delete"
+msgstr "Suprimeix"
+
+#: src/gnuwin32/editor.c:705 src/gnuwin32/editor.c:827 src/gnuwin32/pager.c:318
+#: src/gnuwin32/pager.c:494 src/gnuwin32/rui.c:943 src/gnuwin32/rui.c:1237
+msgid "Select all"
+msgstr "Selecciona-ho tot"
+
+#: src/gnuwin32/editor.c:769
+msgid "Save script"
+msgstr "Desa l'script"
+
+#: src/gnuwin32/editor.c:777 src/gnuwin32/pager.c:461
+#: src/library/grDevices/src/devWindows.c:1607
+msgid "Return focus to Console"
+msgstr "Retorna el focus a la consola"
+
+#: src/gnuwin32/editor.c:780
+msgid "Print script"
+msgstr "Imprimeix l'script"
+
+#: src/gnuwin32/editor.c:782 src/gnuwin32/pager.c:456 src/gnuwin32/rui.c:1192
+#: src/library/grDevices/src/devWindows.c:1601
+msgid "Print"
+msgstr "Imprimeix"
+
+#: src/gnuwin32/editor.c:800 src/gnuwin32/pager.c:477 src/gnuwin32/rui.c:1210
+#: src/library/utils/src/windows/dataentry.c:1835
+#: src/library/grDevices/src/devWindows.c:1639
+msgid "File"
+msgstr "Fitxer"
+
+#: src/gnuwin32/editor.c:801 src/gnuwin32/pager.c:478 src/gnuwin32/rui.c:1212
+msgid "New script"
+msgstr "Nou script"
+
+#: src/gnuwin32/editor.c:803 src/gnuwin32/pager.c:479 src/gnuwin32/rui.c:1213
+msgid "Open script..."
+msgstr "Obre l'script..."
+
+#: src/gnuwin32/editor.c:805
+msgid "Save"
+msgstr "Desa"
+
+#: src/gnuwin32/editor.c:807
+msgid "Save as..."
+msgstr "Desa com a..."
+
+#: src/gnuwin32/editor.c:810 src/gnuwin32/pager.c:480 src/gnuwin32/rui.c:1226
+#: src/library/grDevices/src/devWindows.c:1660
+#: src/library/grDevices/src/devWindows.c:1702
+msgid "Print..."
+msgstr "Imprimeix..."
+
+#: src/gnuwin32/editor.c:813
+msgid "Close script"
+msgstr "Tanca l'script"
+
+#: src/gnuwin32/editor.c:815 src/gnuwin32/pager.c:487 src/gnuwin32/rui.c:1231
+#: src/library/utils/src/windows/dataentry.c:1841
+msgid "Edit"
+msgstr "Edita"
+
+#: src/gnuwin32/editor.c:829 src/gnuwin32/rui.c:1238
+msgid "Clear console"
+msgstr "Neteja la consola"
+
+#: src/gnuwin32/editor.c:833
+msgid "Run all"
+msgstr "Executa-ho tot"
+
+#: src/gnuwin32/editor.c:836
+msgid "Find..."
+msgstr "Cerca..."
+
+#: src/gnuwin32/editor.c:838
+msgid "Replace..."
+msgstr "Substitueix..."
+
+#: src/gnuwin32/editor.c:841 src/gnuwin32/rui.c:1242
+msgid "GUI preferences..."
+msgstr "Preferències de la IGU..."
+
+#: src/gnuwin32/editor.c:851 src/gnuwin32/rui.c:1274
+#: src/library/utils/src/windows/dataentry.c:1742
+#: src/library/utils/src/windows/dataentry.c:1852
+msgid "Help"
+msgstr "Ajuda"
+
+#: src/gnuwin32/editor.c:852
+msgid "Editor"
+msgstr "Editor"
+
+#: src/gnuwin32/editor.c:911
+msgid "Maximum number of editors reached"
+msgstr "Nombre màxim d'editors assolit"
+
+#: src/gnuwin32/editor.c:916
+msgid "Unable to create editor window"
+msgstr "No s'ha pogut crear la finestra de l'editor"
+
+#: src/gnuwin32/editor.c:924
+msgid "Untitled"
+msgstr "Sense títol"
+
+#: src/gnuwin32/extra.c:1052
+msgid "Select file"
+msgstr "Seleccioneu un fitxer"
+
+#: src/gnuwin32/pager.c:83 src/gnuwin32/pager.c:99
+msgid "Error opening file"
+msgstr "Error en obrir el fitxer"
+
+#: src/gnuwin32/pager.c:88 src/gnuwin32/pager.c:106
+msgid "Insufficient memory to display file in internal pager"
+msgstr "Memòria insuficient per a mostrar el fitxer en el paginador intern"
+
+#: src/gnuwin32/pager.c:187 src/gnuwin32/pager.c:199 src/gnuwin32/pager.c:219
+#: src/gnuwin32/rui.c:306 src/gnuwin32/rui.c:333
+msgid "No selection"
+msgstr "Cap selecció"
+
+#: src/gnuwin32/pager.c:316 src/gnuwin32/pager.c:446 src/gnuwin32/pager.c:490
+msgid "Paste to console"
+msgstr "Enganxa a la consola"
+
+#: src/gnuwin32/pager.c:317 src/gnuwin32/pager.c:451 src/gnuwin32/pager.c:492
+msgid "Paste commands to console"
+msgstr "Enganxa les ordres a la consola"
+
+#: src/gnuwin32/pager.c:320 src/gnuwin32/rui.c:946
+#: src/library/utils/src/windows/dataentry.c:1748
+#: src/library/grDevices/src/devWindows.c:1699
+msgid "Stay on top"
+msgstr "Queda't a dalt"
+
+#: src/gnuwin32/pager.c:322 src/gnuwin32/pager.c:485
+#: src/library/utils/src/windows/dataentry.c:1750
+#: src/library/utils/src/windows/dataentry.c:1837
+msgid "Close"
+msgstr "Tanca"
+
+#: src/gnuwin32/pager.c:482 src/gnuwin32/rui.c:1227
+msgid "Save to File..."
+msgstr "Desa a un fitxer..."
+
+#: src/gnuwin32/pager.c:497 src/gnuwin32/rui.c:1244
+msgid "View"
+msgstr "Visualitza"
+
+#: src/gnuwin32/pager.c:529
+msgid "Unable to create pager window"
+msgstr "No s'ha pogut crear la finestra del paginador"
+
+#: src/gnuwin32/preferences.c:307
+msgid ""
+"The overall console properties cannot be changed\n"
+"on a running console.\n"
+"\n"
+"Save the preferences and restart Rgui to apply them.\n"
+msgstr ""
+"No es poden canviar les propietats generals de la consola\n"
+"en una consola en execució.\n"
+"\n"
+"Deseu les preferències i reinicieu l'Rgui per aplicar-les.\n"
+
+#: src/gnuwin32/preferences.c:311
+msgid ""
+"The language for menus cannot be changed on a\n"
+" running console.\n"
+"\n"
+"Save the preferences and restart Rgui to apply to menus.\n"
+msgstr ""
+"La llengua dels menús no es pot canviar a una\n"
+" consola que s'està executant.\n"
+"\n"
+"Deseu les preferències i reinicieu l'Rgui per aplicar-la als menús.\n"
+
+#: src/gnuwin32/preferences.c:380
+msgid "Changes in pager size will not apply to any open pagers"
+msgstr "Els canvis en la mida del paginador no s'aplicaran a cap paginador obert"
+
+#: src/gnuwin32/preferences.c:386
+msgid ""
+"Do not change pager type if any pager is open\n"
+"Proceed?"
+msgstr ""
+"No canvieu el tipus de paginador si hi ha algun paginador obert\n"
+"Procedeixo?"
+
+#: src/gnuwin32/preferences.c:420
+msgid "Select directory for file 'Rconsole'"
+msgstr "Seleccioneu el directori per al fitxer «Rconsole»"
+
+#: src/gnuwin32/preferences.c:515
+msgid "Select 'Rconsole' file"
+msgstr "Seleccioneu el fitxer «Rconsole»"
+
+#: src/gnuwin32/preferences.c:703
+#, c-format
+msgid "Ignored '%s' at line %d of file %s"
+msgstr "S'ha ignorat «%s» a la línia %d del fitxer %s"
+
+#: src/gnuwin32/preferences.c:804
+msgid "Rgui Configuration Editor"
+msgstr "Editor de configuració de l'Rgui"
+
+#: src/gnuwin32/rui.c:215
+msgid "Select file to source"
+msgstr "Selecciona el fitxer per interpretar"
+
+#: src/gnuwin32/rui.c:233
+msgid "Select image to load"
+msgstr "Seleccioneu la imatge a carregar"
+
+#: src/gnuwin32/rui.c:245
+msgid "Save image in"
+msgstr "Desa la imatge en"
+
+#: src/gnuwin32/rui.c:259
+msgid "Load history from"
+msgstr "Carrega l'historial des de"
+
+#: src/gnuwin32/rui.c:268
+msgid "Save history in"
+msgstr "Desa l'historial a"
+
+#: src/gnuwin32/rui.c:315 src/gnuwin32/rui.c:324
+msgid "No text available"
+msgstr "No hi ha text disponible"
+
+#: src/gnuwin32/rui.c:373
+msgid "Name of data frame or matrix"
+msgstr "Nom del data frame o matriu"
+
+#: src/gnuwin32/rui.c:380
+#, c-format
+msgid "'%s' cannot be found"
+msgstr "No s'ha pogut trobar «%s»"
+
+#: src/gnuwin32/rui.c:524
+msgid "Are you sure?"
+msgstr "N'esteu segur?"
+
+#: src/gnuwin32/rui.c:619
+msgid "Help on"
+msgstr "Ajuda sobre"
+
+#: src/gnuwin32/rui.c:675
+msgid "Search help"
+msgstr "Cerca ajuda"
+
+#: src/gnuwin32/rui.c:690
+msgid "Search for words in help list archives and documentation"
+msgstr "Cerca paraules en arxius de llistes de correu i documentació"
+
+#: src/gnuwin32/rui.c:705
+msgid "Apropos"
+msgstr "Quant a"
+
+#: src/gnuwin32/rui.c:932
+msgid "Can only drag-and-drop .R, .RData and .rda files"
+msgstr "Només es poden arrossegar i deixar anar fitxers .R, .RData i .rda"
+
+#: src/gnuwin32/rui.c:938 src/gnuwin32/rui.c:1234
+msgid "Paste commands only"
+msgstr "Enganxa només les ordres"
+
+#: src/gnuwin32/rui.c:939 src/gnuwin32/rui.c:1184
+msgid "Copy and paste"
+msgstr "Copia i enganxa"
+
+#: src/gnuwin32/rui.c:941
+msgid "Clear window"
+msgstr "Neteja la finestra"
+
+#: src/gnuwin32/rui.c:945 src/gnuwin32/rui.c:1257
+msgid "Buffered output"
+msgstr "Sortida amb buffer"
+
+#: src/gnuwin32/rui.c:985
+msgid "Packages"
+msgstr "Paquets"
+
+#: src/gnuwin32/rui.c:986
+msgid "Load package..."
+msgstr "Carrega el paquet..."
+
+#: src/gnuwin32/rui.c:988
+msgid "Set CRAN mirror..."
+msgstr "Estableix la rèplica de CRAN..."
+
+#: src/gnuwin32/rui.c:990
+msgid "Select repositories..."
+msgstr "Selecciona els repositoris..."
+
+#: src/gnuwin32/rui.c:992
+msgid "Install package(s)..."
+msgstr "Instal·la paquet/s..."
+
+#: src/gnuwin32/rui.c:994
+msgid "Update packages..."
+msgstr "Actualitza els paquets..."
+
+#: src/gnuwin32/rui.c:997
+msgid "Install package(s) from local files..."
+msgstr "Instal·la paquet/s des de fitxers locals..."
+
+#: src/gnuwin32/rui.c:1021
+msgid "FAQ on R"
+msgstr "PMF sobre l'R"
+
+#: src/gnuwin32/rui.c:1023
+msgid "FAQ on R for &Windows"
+msgstr "PMF sobre R per a &Windows"
+
+#: src/gnuwin32/rui.c:1029 src/gnuwin32/rui.c:1032
+msgid "Manuals (in PDF)"
+msgstr "Manuals (en PDF)"
+
+#: src/gnuwin32/rui.c:1062
+msgid "R functions (text)..."
+msgstr "Funcions d'R (text)..."
+
+#: src/gnuwin32/rui.c:1064
+msgid "Html help"
+msgstr "Ajuda Html"
+
+#: src/gnuwin32/rui.c:1066
+msgid "Search help..."
+msgstr "Cerca ajuda..."
+
+#: src/gnuwin32/rui.c:1071
+msgid "Apropos..."
+msgstr "Quant a..."
+
+#: src/gnuwin32/rui.c:1073
+msgid "R Project home page"
+msgstr "Pàgina d'inici del projecte R"
+
+#: src/gnuwin32/rui.c:1074
+msgid "CRAN home page"
+msgstr "Pàgina d'inici del CRAN"
+
+#: src/gnuwin32/rui.c:1076
+msgid "About"
+msgstr "Quant a"
+
+#: src/gnuwin32/rui.c:1085 src/extra/graphapp/gmenus.c:52
+msgid "Windows"
+msgstr "Windows"
+
+#: src/gnuwin32/rui.c:1086 src/extra/graphapp/gmenus.c:53
+msgid "Cascade"
+msgstr "Cascada"
+
+#: src/gnuwin32/rui.c:1087 src/extra/graphapp/gmenus.c:54
+msgid "Tile &Horizontally"
+msgstr "Mosaica &horitzontalment"
+
+#: src/gnuwin32/rui.c:1088 src/extra/graphapp/gmenus.c:55
+msgid "Tile &Vertically"
+msgstr "Mosaica &verticalment"
+
+#: src/gnuwin32/rui.c:1089
+msgid "Minimize group"
+msgstr "Minimitza el grup"
+
+#: src/gnuwin32/rui.c:1090
+msgid "Restore group"
+msgstr "Restaura el grup"
+
+#: src/gnuwin32/rui.c:1168
+msgid "Load workspace"
+msgstr "Carrega l'espai de treball"
+
+#: src/gnuwin32/rui.c:1172
+msgid "Save workspace"
+msgstr "Desa l'espai de treball"
+
+#: src/gnuwin32/rui.c:1188
+msgid "Stop current computation"
+msgstr "Atura el càlcul actual"
+
+#: src/gnuwin32/rui.c:1211
+msgid "Source R code..."
+msgstr "Codi font de l'R..."
+
+#: src/gnuwin32/rui.c:1214
+msgid "Display file(s)..."
+msgstr "Mostra el/s fitxer/s..."
+
+#: src/gnuwin32/rui.c:1216
+msgid "Load Workspace..."
+msgstr "Carrega un espai de treball..."
+
+#: src/gnuwin32/rui.c:1217
+msgid "Save Workspace..."
+msgstr "Desa l'espai de treball..."
+
+#: src/gnuwin32/rui.c:1219
+msgid "Load History..."
+msgstr "Carrega l'historial..."
+
+#: src/gnuwin32/rui.c:1221
+msgid "Save History..."
+msgstr "Desa l'historial..."
+
+#: src/gnuwin32/rui.c:1224
+msgid "Change dir..."
+msgstr "Canvia el directori..."
+
+#: src/gnuwin32/rui.c:1229
+msgid "Exit"
+msgstr "Surt"
+
+#: src/gnuwin32/rui.c:1236
+msgid "Copy and Paste"
+msgstr "Copia i enganxa"
+
+#: src/gnuwin32/rui.c:1240
+msgid "Data editor..."
+msgstr "Editor de dades..."
+
+#: src/gnuwin32/rui.c:1245
+msgid "Toolbar"
+msgstr "Barra d'eines"
+
+#: src/gnuwin32/rui.c:1246
+msgid "Statusbar"
+msgstr "Barra d'estat"
+
+#: src/gnuwin32/rui.c:1250
+msgid "Misc"
+msgstr "Miscel·lània"
+
+#: src/gnuwin32/rui.c:1251
+msgid "Stop current computation           \tESC"
+msgstr "Atura el càlcul actual           \tESC"
+
+#: src/gnuwin32/rui.c:1253
+msgid "Stop all computations"
+msgstr "Atura tots els càlculs"
+
+#: src/gnuwin32/rui.c:1255
+msgid "Break to debugger"
+msgstr "Salta al depurador"
+
+#: src/gnuwin32/rui.c:1258
+msgid "Word completion"
+msgstr "Compleció de paraules"
+
+#: src/gnuwin32/rui.c:1260
+msgid "Filename completion"
+msgstr "Compleció del nom de fitxer"
+
+#: src/gnuwin32/rui.c:1267
+msgid "List objects"
+msgstr "Llista els objectes"
+
+#: src/gnuwin32/rui.c:1268
+msgid "Remove all objects"
+msgstr "Elimina tots els objectes"
+
+#: src/gnuwin32/rui.c:1269
+msgid "List search &path"
+msgstr "Llista el camí de cerca"
+
+#: src/gnuwin32/rui.c:1275
+msgid "Console"
+msgstr "Consola"
+
+#: src/gnuwin32/rui.c:1336
+msgid "'mname' is limited to 1000 bytes"
+msgstr "«mname» està limitat a 1000 bytes"
+
+#: src/gnuwin32/rui.c:1381
+#, c-format
+msgid "menu %s does not exist"
+msgstr "el menú %s no existeix"
+
+#: src/gnuwin32/rui.c:1434
+msgid "'menu' is limited to 500 bytes"
+msgstr "El «menú» està limitat a 500 bytes"
+
+#: src/gnuwin32/rui.c:1444
+msgid "base menu does not exist"
+msgstr "el menú base no existeix"
+
+#: src/gnuwin32/rui.c:1459
+msgid "failed to allocate menu"
+msgstr "no s'ha pogut assignar el menú"
+
+#: src/gnuwin32/rui.c:1476 src/gnuwin32/rui.c:1600
+msgid "menu + item is limited to 1000 bytes"
+msgstr "menú + element està limitat a 1000 bytes"
+
+#: src/gnuwin32/rui.c:1484 src/gnuwin32/rui.c:1567
+msgid "menu does not exist"
+msgstr "el menú no existeix"
+
+#: src/gnuwin32/rui.c:1502 src/gnuwin32/rui.c:1525 src/gnuwin32/rui.c:1530
+msgid "failed to allocate char storage"
+msgstr "no s'ha pogut assignar l'emmagatzematge de caràcters"
+
+#: src/gnuwin32/rui.c:1538
+msgid "failed to allocate menuitem"
+msgstr "no s'ha pogut assignar l'element del menú"
+
+#: src/gnuwin32/rui.c:1590
+msgid "menu not found"
+msgstr "no s'ha trobat el menú"
+
+#: src/gnuwin32/rui.c:1608
+msgid "menu or item does not exist"
+msgstr "el menú o l'element no existeix"
+
+#: src/gnuwin32/system.c:565
+msgid "Save workspace image?"
+msgstr "Voleu desar la imatge de l'espai de treball?"
+
+#: src/extra/graphapp/clipboard.c:69 src/extra/graphapp/clipboard.c:73
+msgid "Insufficient memory: cell not copied to the clipboard"
+msgstr "Memòria insuficient: la cel·la no s'ha copiat al porta-retalls"
+
+#: src/extra/graphapp/dialogs.c:144 src/extra/graphapp/dialogs.c:161
+#: src/extra/graphapp/dialogs.c:178
+msgid "Question"
+msgstr "Pregunta"
+
+#: src/extra/graphapp/dialogs.c:249
+msgid " Change working directory to:"
+msgstr " Canvia el directori de treball a:"
+
+#: src/extra/graphapp/dialogs.c:251
+#, c-format
+msgid "Unable to set '%s' as working directory"
+msgstr "No s'ha pogut establir «%s» com a directori de treball"
+
+#: src/extra/graphapp/dialogs.c:705 src/extra/graphapp/dialogs.c:723
+#: src/extra/graphapp/dialogs.c:729 src/extra/graphapp/dialogs.c:839
+#: src/extra/graphapp/dialogs.c:853 src/extra/graphapp/dialogs.c:859
+#: src/library/utils/src/windows/widgets.c:127
+msgid "Cancel"
+msgstr "Cancel·la"
+
+#: src/extra/graphapp/dialogs.c:725 src/extra/graphapp/dialogs.c:855
+#: src/library/utils/src/windows/widgets.c:126
+msgid "OK"
+msgstr "D'acord"
+
+#: src/extra/graphapp/dialogs.c:847
+msgid "User"
+msgstr "Usuari"
+
+#: src/extra/graphapp/dialogs.c:848
+msgid "Password"
+msgstr "Contrasenya"
+
+#: src/extra/graphapp/dialogs.c:1034 src/extra/graphapp/dialogs.c:1040
+#, c-format
+msgid "\"%s\" not found"
+msgstr "No s'ha trobat «%s»"
+
+#: src/extra/graphapp/gmenus.c:56
+msgid "Arrange Icons"
+msgstr "Organitza les icones"
+
+#: src/extra/graphapp/metafile.c:55
+msgid "Unable to save metafile to the clipboard"
+msgstr "No s'ha pogut desar el metafitxer al porta-retalls"
+
+#: src/extra/graphapp/metafile.c:117
+msgid "Unable to create metafile"
+msgstr "No s'ha pogut crear el metafitxer"
+
+#: src/extra/graphapp/metafile.c:122
+msgid "Insufficient memory to create metafile"
+msgstr "Memòria insuficient per a crear el metafitxer"
+
+#: src/extra/graphapp/printer.c:111
+msgid "Unable to choose printer"
+msgstr "No s'ha pogut triar la impressora"
+
+#: src/extra/graphapp/printer.c:139
+msgid "Insufficient memory for new printer"
+msgstr "Memòria insuficient per a la impressora nova"
+
+#: src/extra/graphapp/printer.c:175
+msgid "Unable to start the print job"
+msgstr "No s'ha pogut iniciar el treball d'impressió"
+
+#: src/library/utils/src/windows/dataentry.c:251
+#: src/library/utils/src/windows/dataentry.c:1896
+#: src/library/utils/src/windows/dataentry.c:1899
+#: src/library/utils/src/windows/dataentry.c:1930
+msgid "invalid argument"
+msgstr "argument no vàlid"
+
+#: src/library/utils/src/windows/dataentry.c:298
+msgid "invalid type for value"
+msgstr "tipus no vàlid per al valor"
+
+#: src/library/utils/src/windows/dataentry.c:309
+msgid "Data Editor"
+msgstr "Editor de dades"
+
+#: src/library/utils/src/windows/dataentry.c:359
+#: src/library/utils/src/windows/dataentry.c:1889
+msgid "dataentry: internal memory problem"
+msgstr "entrada de dades: problema intern de memòria"
+
+#: src/library/utils/src/windows/dataentry.c:662
+#: src/library/utils/src/windows/dataentry.c:1263
+msgid "dataentry: internal memory error"
+msgstr "entrada de dades: error intern de memòria"
+
+#: src/library/utils/src/windows/dataentry.c:785
+#: src/library/utils/src/windows/dataentry.c:798
+msgid "internal type error in dataentry"
+msgstr "error de tipus intern a d'entrada de dades"
+
+#: src/library/utils/src/windows/dataentry.c:893
+msgid "dataentry: parse error on string"
+msgstr "entrada de dades: error d'anàlisi de cadena"
+
+#: src/library/utils/src/windows/dataentry.c:1037
+msgid "dataentry: expression too long"
+msgstr "entrada de dades: expressió massa llarga"
+
+#: src/library/utils/src/windows/dataentry.c:1516
+msgid "column names cannot be blank"
+msgstr "els noms de les columnes no poden estar en blanc"
+
+#: src/library/utils/src/windows/dataentry.c:1562
+msgid "Variable editor"
+msgstr "Editor de variables"
+
+#: src/library/utils/src/windows/dataentry.c:1567
+msgid "variable name"
+msgstr "nom de la variable"
+
+#: src/library/utils/src/windows/dataentry.c:1569
+msgid "type"
+msgstr "tipus"
+
+#: src/library/utils/src/windows/dataentry.c:1684
+msgid "Cell width(s)"
+msgstr "Amplada de la/es cel·la/es"
+
+#: src/library/utils/src/windows/dataentry.c:1690
+msgid "Cell width"
+msgstr "Amplada de la cel·la"
+
+#: src/library/utils/src/windows/dataentry.c:1693
+msgid "variable"
+msgstr "variable"
+
+#: src/library/utils/src/windows/dataentry.c:1736
+msgid ""
+"Navigation.\n"
+"  Keyboard: cursor keys move selection\n"
+"\tTab move right, Shift+Tab moves left\n"
+"\tPgDn or Ctrl+F: move down one screenful\n"
+"\tPgUp or Ctrl+B: move up one screenful\n"
+"\tHome: move to (1,1) cell\n"
+"\tEnd: show last rows of last column.\n"
+"   Mouse: left-click in a cell, use the scrollbar(s).\n"
+"\n"
+"Editing.\n"
+"  Type in the currently hightlighted cell\n"
+"  Double-click in a cell for an editable field\n"
+"\n"
+"Misc.\n"
+"  Ctrl-L redraws the screen, auto-resizing the columns\n"
+"  Ctrl-C copies selected cell\n"
+"  Ctrl-V pastes to selected cell\n"
+"  Right-click menu for copy, paste, autosize currently selected column\n"
+"\n"
+msgstr ""
+"Navegació.\n"
+"  Teclat: les tecles de cursor mouen la selecció\n"
+"\tTabulador mou a la dreta, Maj+Tab mou a l'esquerra\n"
+"\tAvPàg o Ctrl+F: mou avall una pantalla\n"
+"\tRePàg o Ctrl+B: mou amunt una pantalla\n"
+"\tInici: mou a la cel·la (1,1)\n"
+"\tFi: mostra les últimes files de l'última columna.\n"
+"   Ratolí: feu clic esquerre en una cel·la, utilitzeu la/es barra/es de desplaçament.\n"
+"\n"
+"Edició.\n"
+"  Escriviu a la cel·la amb el focus actual\n"
+"  Feu doble clic en una cel·la per a un camp editable\n"
+"\n"
+"Miscel·lània.\n"
+"  Ctrl-L torna a dibuixar la pantalla, redimensionant automàticament les columnes\n"
+"  Ctrl-C copia la cel·la seleccionada\n"
+"  Ctrl-V enganxa a la cel·la seleccionada\n"
+"  Menú del clic dret per a copiar, enganxar, autoajustar la mida de la columna seleccionada\n"
+"\n"
+
+#: src/library/utils/src/windows/dataentry.c:1744
+msgid "Copy selected cell"
+msgstr "Copia la cel·la seleccionada"
+
+#: src/library/utils/src/windows/dataentry.c:1745
+msgid "Paste to selected cell"
+msgstr "Enganxa a la cel·la seleccionada"
+
+#: src/library/utils/src/windows/dataentry.c:1746
+msgid "Autosize column"
+msgstr "Mida automàtica de la columna"
+
+#: src/library/utils/src/windows/dataentry.c:1842
+msgid "Copy  \tCTRL+C"
+msgstr "Copia  \tCTRL+C"
+
+#: src/library/utils/src/windows/dataentry.c:1844
+msgid "Paste \tCTRL+V"
+msgstr "Enganxa \tCTRL+V"
+
+#: src/library/utils/src/windows/dataentry.c:1846
+msgid "Delete\tDEL"
+msgstr "Suprimeix\tSupr"
+
+#: src/library/utils/src/windows/dataentry.c:1849
+msgid "Cell widths ..."
+msgstr "Amplada de les cel·les..."
+
+#: src/library/utils/src/windows/dataentry.c:1853
+msgid "Data editor"
+msgstr "Editor de dades"
+
+#: src/library/grDevices/src/devWindows.c:943
+msgid "Portable network graphics file"
+msgstr "Fitxer Portable network graphics (PNG)"
+
+#: src/library/grDevices/src/devWindows.c:946
+msgid "Windows bitmap file"
+msgstr "Fitxer de mapa de bits del Windows"
+
+#: src/library/grDevices/src/devWindows.c:949
+msgid "TIFF file"
+msgstr "Fitxer TIFF"
+
+#: src/library/grDevices/src/devWindows.c:952
+msgid "Jpeg file"
+msgstr "Fitxer Jpeg"
+
+#: src/library/grDevices/src/devWindows.c:974
+msgid "Postscript file"
+msgstr "Fitxer Postscript"
+
+#: src/library/grDevices/src/devWindows.c:986
+msgid "PDF file"
+msgstr "Fitxer PDF"
+
+#: src/library/grDevices/src/devWindows.c:998
+msgid "Enhanced metafiles"
+msgstr "Metafitxers millorats"
+
+#: src/library/grDevices/src/devWindows.c:1001
+#: src/library/grDevices/src/devWindows.c:3557
+msgid "file path selected is too long: only 512 bytes are allowed"
+msgstr "el camí al fitxer seleccionat és massa llarg: només es permeten 512 bytes"
+
+#: src/library/grDevices/src/devWindows.c:1212
+msgid "No plot to replace!"
+msgstr "No hi ha cap gràfic per reemplaçar!"
+
+#: src/library/grDevices/src/devWindows.c:1262
+msgid "Variable name"
+msgstr "Nom de la variable"
+
+#: src/library/grDevices/src/devWindows.c:1271
+msgid "Variable doesn't contain any plots!"
+msgstr "La variable no conté cap gràfic!"
+
+#: src/library/grDevices/src/devWindows.c:1286
+msgid "Name of variable to save to"
+msgstr "Nom de la variable a on desar"
+
+#: src/library/grDevices/src/devWindows.c:1595
+msgid "Copy to the clipboard as a metafile"
+msgstr "Copia al porta-retalls com a metafitxer"
+
+#: src/library/grDevices/src/devWindows.c:1613
+#: src/library/grDevices/src/devWindows.c:1624
+msgid "Stop locator"
+msgstr "Atura el localitzador"
+
+#: src/library/grDevices/src/devWindows.c:1623
+#: src/library/grDevices/src/devWindows.c:1627
+msgid "Stop"
+msgstr "Atura"
+
+#: src/library/grDevices/src/devWindows.c:1629
+msgid "Continue"
+msgstr "Continua"
+
+#: src/library/grDevices/src/devWindows.c:1633
+msgid "Next"
+msgstr "Següent"
+
+#: src/library/grDevices/src/devWindows.c:1634
+msgid "Next plot"
+msgstr "Gràfic següent"
+
+#: src/library/grDevices/src/devWindows.c:1640
+msgid "Save as"
+msgstr "Desa com a"
+
+#: src/library/grDevices/src/devWindows.c:1649
+#: src/library/grDevices/src/devWindows.c:1651
+#: src/library/grDevices/src/devWindows.c:1653
+#, c-format
+msgid "%s quality..."
+msgstr "Qualitat %s..."
+
+#: src/library/grDevices/src/devWindows.c:1655
+msgid "Copy to the clipboard"
+msgstr "Copia al porta-retalls"
+
+#: src/library/grDevices/src/devWindows.c:1656
+msgid "as a Bitmap\tCTRL+C"
+msgstr "com a mapa de bits\tCTRL+C"
+
+#: src/library/grDevices/src/devWindows.c:1657
+msgid "as a Metafile\tCTRL+W"
+msgstr "com a metafitxer\tCTRL+W"
+
+#: src/library/grDevices/src/devWindows.c:1662
+msgid "close Device"
+msgstr "tanca el dispositiu"
+
+#: src/library/grDevices/src/devWindows.c:1663
+msgid "History"
+msgstr "Historial"
+
+#: src/library/grDevices/src/devWindows.c:1664
+msgid "Recording"
+msgstr "Enregistrant"
+
+#: src/library/grDevices/src/devWindows.c:1667
+msgid "Add\tINS"
+msgstr "Afegeix\tINS"
+
+#: src/library/grDevices/src/devWindows.c:1668
+msgid "Replace"
+msgstr "Reemplaça"
+
+#: src/library/grDevices/src/devWindows.c:1670
+msgid "Previous\tPgUp"
+msgstr "Anterior\tRePàg"
+
+#: src/library/grDevices/src/devWindows.c:1671
+msgid "Next\tPgDown"
+msgstr "Següent\tAvPàg"
+
+#: src/library/grDevices/src/devWindows.c:1673
+msgid "Save to variable..."
+msgstr "Desa a una variable..."
+
+#: src/library/grDevices/src/devWindows.c:1674
+msgid "Get from variable..."
+msgstr "Obtén de la variable..."
+
+#: src/library/grDevices/src/devWindows.c:1676
+msgid "Clear history"
+msgstr "Neteja l'historial"
+
+#: src/library/grDevices/src/devWindows.c:1677
+msgid "Resize"
+msgstr "Redimensiona"
+
+#: src/library/grDevices/src/devWindows.c:1678
+msgid "R mode"
+msgstr "Mode R"
+
+#: src/library/grDevices/src/devWindows.c:1680
+msgid "Fit to window"
+msgstr "Ajusta a la finestra"
+
+#: src/library/grDevices/src/devWindows.c:1682
+msgid "Fixed size"
+msgstr "Mida fixa"
+
+#: src/library/grDevices/src/devWindows.c:1689
+msgid "Copy as metafile"
+msgstr "Copia com a metafitxer"
+
+#: src/library/grDevices/src/devWindows.c:1691
+msgid "Copy as bitmap"
+msgstr "Copia com a mapa de bits"
+
+#: src/library/grDevices/src/devWindows.c:1694
+msgid "Save as metafile..."
+msgstr "Desa com a metafitxer..."
+
+#: src/library/grDevices/src/devWindows.c:1696
+msgid "Save as postscript..."
+msgstr "Desa com a postscript..."
+
+#: src/library/grDevices/src/devWindows.c:3214
+msgid "Locator is active"
+msgstr "El localitzador està actiu"
+
+#: src/library/grDevices/src/devWindows.c:3884
+msgid "Waiting to confirm page change..."
+msgstr "S'està esperant per confirmar el canvi de pàgina..."
+
+#: src/library/grDevices/src/devWindows.c:3896
+msgid "Click or hit ENTER for next page"
+msgstr "Feu clic o premeu la tecla de retorn per a la pàgina següent"

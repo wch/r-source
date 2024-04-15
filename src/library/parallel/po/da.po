@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
-"Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-11-30 14:40+0100\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-03-27 16:14-0700\n"
 "PO-Revision-Date: 2011-11-29 09:15+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -61,7 +61,7 @@ msgstr "der er ingen datakanal til overprocessen"
 msgid "content to send must be RAW, use serialize() if needed"
 msgstr "indhold at sende skal være RAW (RÅ), brug serialize() hvis krævet"
 
-#: fork.c:774 fork.c:785 fork.c:1198
+#: fork.c:774 fork.c:785 fork.c:1204
 msgid "write error, closing pipe to the master"
 msgstr "skrivefejl, lukke datakanal til overproces"
 
@@ -78,39 +78,39 @@ msgstr "underproces %d findes ikke"
 msgid "write error"
 msgstr "skrivefejl"
 
-#: fork.c:895
+#: fork.c:897
 #, fuzzy, c-format
 msgid "cannot wait for child %d as it does not exist"
 msgstr "underproces %d findes ikke"
 
-#: fork.c:954 fork.c:1077
+#: fork.c:956 fork.c:1083
 #, c-format
 msgid "error '%s' in select"
 msgstr "fejl '%s' i select"
 
-#: fork.c:1167
+#: fork.c:1173
 #, fuzzy
 msgid "'mckill' failed"
 msgstr "mckill fejlede"
 
-#: fork.c:1180
+#: fork.c:1186
 #, fuzzy
 msgid "'mcexit' can only be used in a child process"
 msgstr "mcexit kan kun bruges i en underproces"
 
-#: fork.c:1212
+#: fork.c:1218
 #, fuzzy
 msgid "'mcexit' failed"
 msgstr "mcexit fejlede"
 
-#: fork.c:1241 fork.c:1250
+#: fork.c:1247 fork.c:1256
 msgid "invalid CPU affinity specification"
 msgstr ""
 
-#: fork.c:1261
+#: fork.c:1267
 msgid "requested CPU set is too large for this system"
 msgstr ""
 
-#: fork.c:1284
+#: fork.c:1290
 msgid "retrieving CPU affinity set failed"
 msgstr ""

@@ -1,0 +1,190 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR The R Core Team
+# This file is distributed under the same license as the R package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: R 4.4.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-03-27 16:15-0700\n"
+"PO-Revision-Date: 2023-12-20 03:05+0000\n"
+"Last-Translator: Heather Turner <ht@heatherturner.net>\n"
+"Language-Team: none\n"
+"Language: en_GB\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.16.4\n"
+
+#: Rmd5.c:47
+msgid "argument 'files' must be character"
+msgstr "argument 'files' must be character"
+
+#: Rmd5.c:63
+#, c-format
+msgid "md5 failed on file '%ls'"
+msgstr "md5 failed on file '%ls'"
+
+#: Rmd5.c:65
+#, c-format
+msgid "md5 failed on file '%s'"
+msgstr "md5 failed on file '%s'"
+
+#: getfmts.c:61
+#, c-format
+msgid "only %d arguments are allowed"
+msgstr "only %d arguments are allowed"
+
+#: getfmts.c:66
+msgid "'fmt' is not a character vector"
+msgstr "'fmt' is not a character vector"
+
+#: getfmts.c:69
+msgid "'fmt' must be length 1"
+msgstr "'fmt' must be length 1"
+
+#: getfmts.c:75
+#, c-format
+msgid "'fmt' length exceeds maximal format length %d"
+msgstr "'fmt' length exceeds maximal format length %d"
+
+#: getfmts.c:96
+#, c-format
+msgid "unrecognised format specification '%s'"
+msgstr "unrecognised format specification '%s'"
+
+#: getfmts.c:136
+msgid "at most one asterisk '*' is supported in each conversion specification"
+msgstr "at most one asterisk '*' is supported in each conversion specification"
+
+#: gramLatex.c:2592 gramRd.c:3970
+#, c-format
+msgid "unable to allocate buffer for long string at line %d"
+msgstr "unable to allocate buffer for long string at line %d"
+
+#: gramLatex.c:2869 gramRd.c:4523 gramRd.c:4529
+#, c-format
+msgid "invalid '%s' value"
+msgstr "invalid '%s' value"
+
+#: gramRd.c:2581 gramRd.c:2584
+#, c-format
+msgid "bad markup (extra space?) at %s:%d:%d"
+msgstr "bad markup (extra space?) at %s:%d:%d"
+
+#: gramRd.c:3117
+#, c-format
+msgid "Macro '%s' previously defined."
+msgstr "Macro '%s' previously defined."
+
+#: gramRd.c:3127
+#, c-format
+msgid "At most 4 arguments are allowed for user defined macros."
+msgstr "At most 4 arguments are allowed for user defined macros."
+
+#: gramRd.c:3169
+#, c-format
+msgid "No macro definition for '%s'."
+msgstr "No macro definition for '%s'."
+
+#: gramRd.c:3231
+#, c-format
+msgid "Not enough arguments passed to user macro '%s'"
+msgstr "Not enough arguments passed to user macro '%s'"
+
+#: gramRd.c:3371 gramRd.c:3375
+#, c-format
+msgid "newline within quoted string at %s:%d"
+msgstr "newline within quoted string at %s:%d"
+
+#: gramRd.c:3394
+#, c-format
+msgid "unable to allocate buffer for long macro at line %d"
+msgstr "unable to allocate buffer for long macro at line %d"
+
+#: gramRd.c:3424
+msgid "macros nested too deeply: infinite recursion?"
+msgstr "macros nested too deeply: infinite recursion?"
+
+#: gramRd.c:3832
+#, c-format
+msgid "Unable to find macro %s"
+msgstr "Unable to find macro %s"
+
+#: gramRd.c:4031
+#, c-format
+msgid "Unexpected end of input (in %c quoted string opened at %s:%d:%d)"
+msgstr "Unexpected end of input (in %c quoted string opened at %s:%d:%d)"
+
+#: gramRd.c:4536
+msgid "cannot open the connection"
+msgstr "cannot open the connection"
+
+#: gramRd.c:4543
+msgid "cannot read from this connection"
+msgstr "cannot read from this connection"
+
+#: gramRd.c:4551
+msgid "invalid Rd file"
+msgstr "invalid Rd file"
+
+#: gramRd.c:4570
+msgid "'deparseRd' only supports deparsing character elements"
+msgstr "'deparseRd' only supports deparsing character elements"
+
+#: gramRd.c:4573
+msgid "bad state"
+msgstr "bad state"
+
+#: gramRd.c:4586
+#, c-format
+msgid "bad text mode %d in 'deparseRd'"
+msgstr "bad text mode %d in 'deparseRd'"
+
+#: http.c:32
+msgid "invalid bind address specification"
+msgstr "invalid bind address specification"
+
+#: http.c:37
+#, c-format
+msgid "Invalid port number %d: should be in 0:65535, typically above 1024"
+msgstr ""
+
+#: install.c:95
+msgid "path too long"
+msgstr "path too long"
+
+#: install.c:120 install.c:139 install.c:141
+#, c-format
+msgid "invalid '%s' argument"
+msgstr "invalid '%s' argument"
+
+#: install.c:170
+msgid "write error during file append"
+msgstr "write error during file append"
+
+#: pdscan.c:67
+msgid "too many items"
+msgstr "too many items"
+
+#: pdscan.c:115
+msgid "non-character argument"
+msgstr "non-character argument"
+
+#: signals.c:42
+msgid "pskill() is not supported on this platform"
+msgstr "pskill() is not supported on this platform"
+
+#: signals.c:140
+msgid "psnice() is not supported on this platform"
+msgstr "psnice() is not supported on this platform"
+
+#: text.c:69
+msgid "invalid argument type"
+msgstr "invalid argument type"
+
+#: text.c:225 text.c:247
+msgid "out of memory"
+msgstr "out of memory"

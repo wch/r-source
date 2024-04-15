@@ -8,8 +8,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
-"Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-11-30 14:39+0100\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-03-27 16:14-0700\n"
 "PO-Revision-Date: 2011-04-02 18:24+0200\n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -314,7 +314,7 @@ msgstr "geçersiz grafik yapısı"
 #: plot.c:1408
 #, c-format
 msgid "'x' and 'y' lengths differ in %s()"
-msgstr "%s() içinde 'x' ve 'y' uzunlukları farklı "
+msgstr "%s() içinde 'x' ve 'y' uzunlukları farklı"
 
 #: plot.c:1616
 #, c-format

@@ -14,94 +14,94 @@ msgstr ""
 "X-Generator: Pootle 2.0.5 \n"
 
 msgid "cannot handle object of mode '%s'"
-msgstr " モード '%s' のオブジェクトは処理できません "
+msgstr "モード '%s' のオブジェクトは処理できません"
 
 msgid "cannot change names on Tcl array"
-msgstr " Tcl array 上で名前を変更することは出来ません "
+msgstr "Tcl array 上で名前を変更することは出来ません"
 
 msgid "cannot set length of Tcl array"
-msgstr " Tcl array の長さを設定することは出来ません "
+msgstr "Tcl array の長さを設定することは出来ません"
 
 msgid "Tcl package '%s' not found"
-msgstr " Tcl パッケージ '%s' が見つかりません "
+msgstr "Tcl パッケージ '%s' が見つかりません"
 
 msgid "The tkGUI is not available under Windows"
-msgstr " tkGUI は、Windowsでは利用できません "
+msgstr "tkGUI は、Windowsでは利用できません"
 
 msgid "File"
-msgstr " ファイル "
+msgstr "ファイル"
 
 msgid "Demos"
-msgstr " デモ "
+msgstr "デモ"
 
 msgid "Packages"
-msgstr " パッケージ "
+msgstr "パッケージ"
 
 msgid "Help"
-msgstr " ヘルプ "
+msgstr "ヘルプ"
 
 msgid "Source R code"
-msgstr " R のソースコード "
+msgstr "R のソースコード"
 
 msgid "Quit"
-msgstr " 終了 "
+msgstr "終了"
 
 msgid "Save workspace"
-msgstr " 作業スペースを保存してください "
+msgstr "作業スペースを保存してください"
 
 msgid "Don't save workspace"
-msgstr " 作業スペースを保存しないでください "
+msgstr "作業スペースを保存しないでください"
 
 msgid "t test"
-msgstr " ｔ 検定 "
+msgstr "ｔ 検定"
 
 msgid "Density"
-msgstr " 密度 "
+msgstr "密度"
 
 msgid "Interactive linear fitting"
-msgstr " 対話的な線形当てはめ "
+msgstr "対話的な線形当てはめ"
 
 msgid "R FAQ"
-msgstr " R の FAQ "
+msgstr "R の FAQ"
 
 msgid "Load"
-msgstr " ロード "
+msgstr "ロード"
 
 msgid "Go get them!"
-msgstr " それを入手してください! "
+msgstr "それを入手してください!"
 
 msgid "Load packages"
-msgstr " パッケージをロードしてください "
+msgstr "パッケージをロードしてください"
 
 msgid "Install packages from CRAN"
-msgstr " CRAN からパッケージをインストールしてください "
+msgstr "CRAN からパッケージをインストールしてください"
 
 msgid "Help topic:"
-msgstr " ヘルプのトピック: "
+msgstr "ヘルプのトピック:"
 
 msgid "Manuals in PDF format"
-msgstr " PDF 形式のマニュアル "
+msgstr "PDF 形式のマニュアル"
 
 msgid "OK"
-msgstr " OK "
+msgstr "OK"
 
 msgid "Cancel"
-msgstr " キャンセル "
+msgstr "キャンセル"
 
 msgid "'pb' is not from class %s"
-msgstr " 'pb' はクラス %s 由来ではありません "
+msgstr "'pb' はクラス %s 由来ではありません"
 
 msgid "'filters' must be a 2-column character matrix"
-msgstr " 'filter' は 2 つの列を持つ文字行列でなければなりません "
+msgstr "'filter' は 2 つの列を持つ文字行列でなければなりません"
 
 msgid "tcltk DLL is linked to"
 msgstr ""
 
 msgid "Tcl/Tk support is not available on this system"
-msgstr " Tcl/Tk サポートファイルはこのシステムでは利用できません "
+msgstr "Tcl/Tk サポートファイルはこのシステムでは利用できません"
 
 msgid "Tcl/Tk support files were not installed"
-msgstr " Tcl/Tk サポートファイルはインストールされていません "
+msgstr "Tcl/Tk サポートファイルはインストールされていません"
 
 #~ msgid "Loading Tcl/Tk interface ..."
 #~ msgstr "Tcl/Tkインターフェースのロード中 "

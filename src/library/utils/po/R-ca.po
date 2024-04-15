@@ -1,0 +1,1835 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: R 4.4.0\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2024-03-27 16:15\n"
+"PO-Revision-Date: 2024-03-20 03:05+0000\n"
+"Last-Translator: Joan Maspons <joanmaspons@gmail.com>\n"
+"Language-Team: none\n"
+"Language: ca\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.16.4\n"
+
+msgid ""
+"RShowDoc() should be used with a character string argument specifying\n"
+"   a documentation file"
+msgstr ""
+"RShowDoc() s'hauria d'utilitzar amb un argument de tipus cadena de caràcters especificant\n"
+"…un fitxer de documentació"
+
+msgid "no documentation for %s found in package %s"
+msgstr "no s'ha trobat cap documentació per a %s al paquet %s"
+
+msgid "document not found"
+msgstr "no s'ha trobat el document"
+
+#, fuzzy
+msgid "some options in argument 'restrict' were not recognized and hence ignored"
+msgstr "algunes opcions de l'argument «restrict» no s'han reconegut i per tant s'han ignorat"
+
+#, fuzzy
+msgid "argument 'format' is deprecated and has no affect on search results"
+msgstr "l'argument «format» és obsolet i no afecta els resultats de la cerca"
+
+#, fuzzy
+msgid "A search query has been submitted to %s"
+msgstr "S'ha enviat una consulta de cerca a %s"
+
+#, fuzzy
+msgid "The results page should open in your browser shortly"
+msgstr "La pàgina de resultats s'ha d'obrir al navegador en breu"
+
+#, fuzzy
+msgid "reference to unknown chunk %s"
+msgstr "referència al fragment desconegut %s"
+
+#, fuzzy
+msgid "no Sweave file with name %s found"
+msgstr "no s'ha trobat cap fitxer de Sweave amb el nom %s"
+
+#, fuzzy
+msgid "more than one syntax specification found, using the first one"
+msgstr "s'ha trobat més d'una especificació de sintaxi, s'usarà la primera"
+
+#, fuzzy
+msgid "object %s does not have class \"SweaveSyntax\""
+msgstr "l'objecte %s no té la classe «SweaveSyntax»"
+
+#, fuzzy
+msgid "recursive Sweave input %s in stack"
+msgstr "entrada recursiva de Sweave %s a la pila"
+
+#, fuzzy
+msgid "target syntax not of class %s"
+msgstr "la sintaxi de destinació no és de la classe %s"
+
+#, fuzzy
+msgid "target syntax contains no translation table"
+msgstr "la sintaxi de destinació no conté cap taula de traducció"
+
+#, fuzzy
+msgid ""
+"parse error or empty option in\n"
+"%s"
+msgstr ""
+"analitza l'error o l'opció buida a\n"
+"%s"
+
+#, fuzzy
+msgid "Warning: unknown option '--clean='%s"
+msgstr "Avís: l'opció «%s» és desconeguda"
+
+#, fuzzy
+msgid "Warning: unknown option %s"
+msgstr "Avís: l'opció %s és desconeguda"
+
+#, fuzzy
+msgid "Output file:"
+msgstr "Fitxer de sortida:"
+
+#, fuzzy
+msgid "Compacting PDF document"
+msgstr "Compactant el document PDF"
+
+#, fuzzy
+msgid "path to %s contains spaces,"
+msgstr "el camí a %s conté espais,"
+
+#, fuzzy
+msgid "this may cause problems when running LaTeX"
+msgstr "això pot causar problemes en executar LaTeX"
+
+#, fuzzy
+msgid "the output file '%s' has disappeared"
+msgstr "el fitxer de sortida «%s» ha desaparegut"
+
+#, fuzzy
+msgid "invalid value for %s : %s"
+msgstr "valor no vàlid per a %s : %s"
+
+#, fuzzy
+msgid "value of 'results' option should be lowercase"
+msgstr "el valor de l'opció «resultats» hauria de ser minúscules"
+
+#, fuzzy
+msgid "value of 'strip.white' option should be lowercase"
+msgstr "el valor de l'opció «strip.white» hauria de ser en minúscules"
+
+#, fuzzy
+msgid "elements of 'what' after the first will be ignored"
+msgstr "s'ignoraran els elements de «què» després del primer"
+
+#, fuzzy
+msgid "Yes"
+msgstr "Sí"
+
+#, fuzzy
+msgid "No"
+msgstr "No"
+
+msgid "Cancel"
+msgstr "Cancel·la"
+
+#, fuzzy
+msgid "Unrecognized response"
+msgstr "Resposta no reconeguda"
+
+#, fuzzy
+msgid "No suitable spell-checker program found"
+msgstr "No s'ha trobat cap programa de verificació ortogràfica adequat"
+
+#, fuzzy
+msgid "Filter '%s' is not available."
+msgstr "El filtre '%s' no està disponible."
+
+#, fuzzy
+msgid "Invalid 'filter' argument."
+msgstr "Argument «filter» no vàlid."
+
+#, fuzzy
+msgid ""
+"The following dictionaries were not found:\n"
+"%s"
+msgstr ""
+"No s'han trobat els diccionaris següents:\n"
+"%s"
+
+#, fuzzy
+msgid "Processing file %s"
+msgstr "S'està processant el fitxer %s"
+
+#, fuzzy
+msgid ""
+"Running aspell failed with diagnostics:\n"
+"%s"
+msgstr ""
+"Ha fallat l'execució de l'aspell amb els diagnòstics:\n"
+"%s"
+
+#, fuzzy
+msgid "No suitable spell check program found."
+msgstr "No s'ha trobat cap programa de verificació ortogràfica adequat."
+
+msgid "Performing query %s"
+msgstr ""
+
+#, fuzzy
+msgid ""
+"Use <code> %s </code> \n"
+" to list the vignettes in all <strong>available</strong> packages."
+msgstr ""
+"Utilitza <code> %s </code> \n"
+" per a llistar les vinyetes en tots els <strong>disponibles</strong> paquets."
+
+#, fuzzy
+msgid "No vignettes found by %s"
+msgstr "No s'ha trobat cap vinyeta per %s"
+
+#, fuzzy
+msgid "Package %s: DESCRIPTION file not found"
+msgstr "Paquet %s: no s'ha trobat el fitxer de descripció"
+
+#, fuzzy
+msgid "'file' must be NULL, a character string or a connection"
+msgstr "«file» ha de ser NULL, una cadena de caràcters o una connexió"
+
+#, fuzzy
+msgid "'full.names' must be TRUE for multiple paths."
+msgstr "«full.names» ha de ser CERT per a múltiples camins."
+
+#, fuzzy
+msgid "Timestamp file no longer exists."
+msgstr "El fitxer de marca horària ja no existeix."
+
+#, fuzzy
+msgid "Not all arguments are of the same length, the following need to be recycled: %s"
+msgstr "No tots els arguments són de la mateixa longitud, cal reciclar els següents: %s"
+
+#, fuzzy
+msgid "Use either %s or %s/%s but not both."
+msgstr "Utilitzeu %s o %s/%s però no ambdós."
+
+#, fuzzy
+msgid "It is recommended to use %s instead of %s."
+msgstr "Es recomana utilitzar %s en lloc de %s."
+
+#, fuzzy
+msgid "Use either %s or %s but not both."
+msgstr "Utilitzeu %s o %s però no ambdós."
+
+#, fuzzy
+msgid "It is recommended to use %s/%s instead of %s/%s/%s."
+msgstr "Es recomana utilitzar %s/%s en lloc de %s/%s/%s."
+
+#, fuzzy
+msgid "method is only applicable to %s objects"
+msgstr "el mètode només és aplicable als objectes %s"
+
+#, fuzzy
+msgid "all arguments must be of class %s"
+msgstr "tots els arguments han de ser de la classe %s"
+
+#, fuzzy
+msgid "all fields have to be named"
+msgstr "cal anomenar tots els camps"
+
+#, fuzzy
+msgid "%s has to be one of %s"
+msgstr "%s ha de ser un de %s"
+
+msgid "subscript out of bounds"
+msgstr "subíndex fora dels límits"
+
+#, fuzzy
+msgid "%s should be one of %s"
+msgstr "%s hauria de ser un de %s"
+
+#, fuzzy
+msgid "To cite package %s in publications use:"
+msgstr "Per citar el paquet %s a les publicacions, utilitzeu:"
+
+#, fuzzy
+msgid "A BibTeX entry for LaTeX users is"
+msgstr "Una entrada BibTeX per a usuaris de LaTeX és"
+
+#, fuzzy
+msgid ""
+"Dropping invalid entry %d:\n"
+"%s"
+msgstr ""
+"S'està descartant l'entrada no vàlida %d:\n"
+"%s"
+
+#, fuzzy
+msgid "could not determine year for %s from package DESCRIPTION file"
+msgstr "no s'ha pogut determinar l'any de %s a partir del fitxer de descripció del paquet"
+
+#, fuzzy
+msgid "ATTENTION: This citation information has been auto-generated from the package DESCRIPTION file and may need manual editing, see %s."
+msgstr "ATENCIÓ: Aquesta informació de citació s'ha generat automàticament a partir del fitxer de descripció del paquet i pot necessitar edició manual, vegeu %s."
+
+#, fuzzy
+msgid "'FUN' must be a function or NULL"
+msgstr "«FUN» ha de ser una funció o NULL"
+
+#, fuzzy
+msgid "cannot handle S4 methods yet"
+msgstr "encara no es poden gestionar els mètodes S4"
+
+#, fuzzy
+msgid "'package' must be a character vector or NULL"
+msgstr "«package» ha de ser un vector de caràcters o NULL"
+
+#, fuzzy
+msgid "data index for package %s is invalid and will be ignored"
+msgstr "l'índex de dades del paquet %s no és vàlid i s'ignorarà"
+
+#, fuzzy
+msgid "data set %s not found"
+msgstr "no s'ha trobat el conjunt de dades %s"
+
+#, fuzzy
+msgid "an object named %s already exists and will not be overwritten"
+msgstr "ja existeix un objecte anomenat %s i no se sobreescriurà"
+
+#, fuzzy
+msgid "only 'html = TRUE' is supported on this platform"
+msgstr "només s'admet «html = TRUE» en aquesta plataforma"
+
+#, fuzzy
+msgid "kind '%s' not yet implemented"
+msgstr "el tipus «%s» encara no està implementat"
+
+#, fuzzy
+msgid "wrong number of table row entries"
+msgstr "nombre incorrecte d'entrades de fila de la taula"
+
+#, fuzzy
+msgid "wrong argument to 'dataentry'"
+msgstr "argument incorrecte a «dataentry»"
+
+#, fuzzy
+msgid "could not restore type information"
+msgstr "no s'ha pogut restaurar la informació del tipus"
+
+#, fuzzy
+msgid "'modes' argument ignored"
+msgstr "s'ha ignorat l'argument «modes»"
+
+#, fuzzy
+msgid "'names' argument ignored"
+msgstr "s'ha ignorat l'argument «names»"
+
+#, fuzzy
+msgid "could not restore variables properly"
+msgstr "no s'han pogut restaurar les variables correctament"
+
+#, fuzzy
+msgid "did not assign() anything"
+msgstr "no s'ha assignat() res"
+
+#, fuzzy
+msgid "Cannot debug primitive functions unless they are implicit generics (requires loading the methods package)"
+msgstr "No es poden depurar les funcions primitives llevat que siguin genèrics implícits (cal carregar el paquet de mètodes)"
+
+#, fuzzy
+msgid "error in trying to evaluate the expression for argument %s (%s)"
+msgstr "error en intentar avaluar l'expressió de l'argument %s (%s)"
+
+#, fuzzy
+msgid "Browsing in the environment with call:"
+msgstr "Navegant en l'entorn amb trucada:"
+
+#, fuzzy
+msgid "'dump' is not an object of class %s"
+msgstr "«dump» no és un objecte de la classe %s"
+
+#, fuzzy
+msgid "Message:"
+msgstr "Missatge:"
+
+#, fuzzy
+msgid "'dump' is empty"
+msgstr "«dump» és buit"
+
+#, fuzzy
+msgid "Available environments had calls:"
+msgstr "Els entorns disponibles tenien trucades:"
+
+#, fuzzy
+msgid "Enter an environment number, or 0 to exit"
+msgstr "Introduïu un número d'entorn, o 0 per a sortir"
+
+#, fuzzy
+msgid "recover called non-interactively; frames dumped, use debugger() to view"
+msgstr "recupera cridats no interactivament; fotogrames bolcats, usa debugger() per a veure"
+
+#, fuzzy
+msgid "No suitable frames for recover()"
+msgstr "No hi ha fotogrames adequats per a «recuper()»"
+
+#, fuzzy
+msgid "No demo found for topic %s"
+msgstr "No s'ha trobat cap demostració per al tema %s"
+
+#, fuzzy
+msgid ""
+"Demo for topic %s' found more than once,\n"
+"using the one found in %s"
+msgstr ""
+"S'ha trobat la demostració del tema %s més d'una vegada,\n"
+"s'està utilitzant el trobat a %s"
+
+#, fuzzy
+msgid "invalid 'data' argument"
+msgstr "argument «data» no vàlid"
+
+#, fuzzy
+msgid "invalid 'modes' argument"
+msgstr "argument «modes» no vàlid"
+
+#, fuzzy
+msgid "invalid 'x' argument"
+msgstr "argument «x» no vàlid"
+
+#, fuzzy
+msgid "can only handle vector and factor elements"
+msgstr "només pot gestionar elements vectorials i factor"
+
+#, fuzzy
+msgid "invalid factor levels in '%s'"
+msgstr "nivells de factor no vàlids a «%s»"
+
+#, fuzzy
+msgid "added factor levels in '%s'"
+msgstr "s'han afegit nivells de factor a «%s»"
+
+#, fuzzy
+msgid "edited row names contain duplicates and will be ignored"
+msgstr "els noms de les files editades contenen duplicats i s'ignoraran"
+
+#, fuzzy
+msgid "invalid input matrix"
+msgstr "matriu d'entrada no vàlida"
+
+#, fuzzy
+msgid "class of 'name' will be discarded"
+msgstr "es descartarà la classe «name»"
+
+#, fuzzy
+msgid "cannot edit NULL row names"
+msgstr "no s'han pogut editar els noms de files nuls"
+
+#, fuzzy
+msgid "no help found for %s"
+msgstr "no s'ha trobat cap ajuda per a %s"
+
+#, fuzzy
+msgid "%s has a help file but no examples"
+msgstr "%s té un fitxer d'ajuda però no hi ha exemples"
+
+#, fuzzy
+msgid "Line number missing"
+msgstr "Falta el número de línia"
+
+#, fuzzy
+msgid "'fix' requires a name"
+msgstr "«fix» requereix un nom"
+
+#, fuzzy
+msgid "too many list items (at most up to %d)"
+msgstr "hi ha massa elements de llista (com a màxim fins a %d)"
+
+#, fuzzy
+msgid "no vector columns were selected"
+msgstr "no s'ha seleccionat cap columna vectorial"
+
+#, fuzzy
+msgid "non-vector columns will be ignored"
+msgstr "s'ignoraran les columnes no vectorials"
+
+#, fuzzy
+msgid "at least one vector element is required"
+msgstr "es requereix almenys un element vectorial"
+
+#, fuzzy
+msgid "non-vector elements will be ignored"
+msgstr "s'ignoraran els elements que no siguin vectors"
+
+#, fuzzy
+msgid "'form' must be a two-sided formula"
+msgstr "«form» ha de ser una fórmula de dues cares"
+
+#, fuzzy
+msgid "'form' must be a two-sided formula with one term on each side"
+msgstr "\"forma\" ha de ser una fórmula de dues cares amb un terme a cada costat"
+
+#, fuzzy
+msgid "invalid object for 'as.environment'"
+msgstr "objecte no vàlid per a «as.environment»"
+
+#, fuzzy
+msgid "invalid 'n' - must contain at least one non-missing element, got none."
+msgstr "'n' no vàlid - ha de contenir almenys un element no-perdut, no en té cap."
+
+#, fuzzy
+msgid "invalid 'n' - must be numeric, possibly NA."
+msgstr "«n» no vàlid - ha de ser numèric, possiblement NA."
+
+#, fuzzy
+msgid "invalid 'n' - must have length one when dim(x) is NULL, got %d"
+msgstr "«n» no vàlid - ha de tenir una longitud quan dim(x) és NULL, s'ha obtingut %d"
+
+#, fuzzy
+msgid "invalid 'n' - length(n) must be <= length(dim(x)), got %d > %d"
+msgstr "'n' no vàlid - la longitud ha de ser <= length(dim(x)), got %d > %d"
+
+#, fuzzy
+msgid "no method found for %s(., n=%s) and class %s"
+msgstr "no s'ha trobat cap mètode per a %s(., n=%s) i la classe %s"
+
+#, fuzzy
+msgid ""
+"tail(., addrownums = V) is deprecated.\n"
+"Use"
+msgstr ""
+"tail(., addrownums = V) és obsolet.\n"
+"Utilitza"
+
+#, fuzzy
+msgid "tail(., keepnums = V) instead."
+msgstr "tail(., keepnums = V) en el seu lloc."
+
+#, fuzzy
+msgid "tail(., addrownums=.) is"
+msgstr "tail(., addrownums=.) és"
+
+#, fuzzy
+msgid ""
+"deprecated.\n"
+"Use"
+msgstr ""
+"obsolet.\n"
+"Utilitza"
+
+#, fuzzy
+msgid "tail(., keepnums=.) instead."
+msgstr "tail(., keepnums=.) en el seu lloc."
+
+#, fuzzy
+msgid "'topic' should be a name, length-one character vector or reserved word"
+msgstr "'tòpic' ha de ser un nom, un vector de caràcters de longitud u o una paraula reservada"
+
+#, fuzzy
+msgid "No documentation for %s in specified packages and libraries:"
+msgstr "No hi ha documentació per a %s als paquets i biblioteques especificats:"
+
+#, fuzzy
+msgid "you could try %s"
+msgstr "podeu provar %s"
+
+#, fuzzy
+msgid "Help for topic %s is not in any loaded package but can be found in the following packages:"
+msgstr "L'ajuda per al tema %s no es troba en cap paquet carregat, però es pot trobar en els següents paquets:"
+
+#, fuzzy
+msgid "Package"
+msgstr "Paquet"
+
+#, fuzzy
+msgid "Library"
+msgstr "Biblioteca"
+
+#, fuzzy
+msgid "Help on topic %s was found in the following packages:"
+msgstr "S'ha trobat ajuda sobre el tema %s als següents paquets:"
+
+#, fuzzy
+msgid "Choose one"
+msgstr "Trieu-ne un"
+
+#, fuzzy
+msgid "Using the first match ..."
+msgstr "S'està utilitzant la primera coincidència..."
+
+#, fuzzy
+msgid "HTML help is unavailable"
+msgstr "L'ajuda HTML no està disponible"
+
+#, fuzzy
+msgid "R Help on %s"
+msgstr "Ajuda de l'R sobre %s"
+
+msgid "invalid %s argument"
+msgstr "argument %s no vàlid"
+
+#, fuzzy
+msgid "package %s exists but was not installed under R >= 2.10.0 so help cannot be accessed"
+msgstr "el paquet %s existeix però no s'ha instal·lat sota R == 2.10.0, per tant no es pot accedir a l'ajuda"
+
+#, fuzzy
+msgid "creation of %s failed"
+msgstr "ha fallat la creació de %s"
+
+#, fuzzy
+msgid "Saving help page to %s"
+msgstr "S'està desant la pàgina d'ajuda a %s"
+
+#, fuzzy
+msgid "Cancelled by user"
+msgstr "Cancel·lat per l'usuari"
+
+#, fuzzy
+msgid "Unable to connect to CRAN to check R version."
+msgstr "No s'ha pogut connectar al CRAN per a comprovar la versió de l'R."
+
+#, fuzzy
+msgid "argument %s must be a character string"
+msgstr "l'argument %s ha de ser una cadena de caràcters"
+
+#, fuzzy
+msgid "incorrect field specification"
+msgstr "especificació de camp incorrecta"
+
+#, fuzzy
+msgid "do not know what to search"
+msgstr "no sé què cercar"
+
+#, fuzzy
+msgid "argument 'help.db' is deprecated"
+msgstr "l'argument «help.db» és obsolet"
+
+#, fuzzy
+msgid "incorrect type specification"
+msgstr "especificació de tipus incorrecta"
+
+#, fuzzy
+msgid "no information in the database for package %s: need 'rebuild = TRUE'?"
+msgstr "no hi ha informació a la base de dades per al paquet %s: cal «rebuild = TRUE»?"
+
+#, fuzzy
+msgid "incorrect 'agrep' specification"
+msgstr "especificació «agrep» incorrecta"
+
+#, fuzzy
+msgid "package %s has empty hsearch data - strangely"
+msgstr "el paquet %s té dades hsearch buides - estranyament"
+
+#, fuzzy
+msgid "removing all entries with invalid multi-byte character data"
+msgstr "s'estan eliminant totes les entrades amb dades de caràcters multibyte no vàlides"
+
+#, fuzzy
+msgid "invalid browser name, check options(\"browser\")."
+msgstr "el nom del navegador no és vàlid, comproveu les opcions («navegador»)."
+
+#, fuzzy
+msgid "help.start() requires the HTTP server to be running"
+msgstr "help.start() requereix que el servidor HTTP s'estigui executant"
+
+#, fuzzy
+msgid ""
+"If nothing happens, you should open\n"
+"%s yourself"
+msgstr ""
+"Si no passa res, hauríeu d'obrir\n"
+"%s mateix"
+
+#, fuzzy
+msgid "If the browser launched by '%s' is already running, it is *not* restarted, and you must switch to its window."
+msgstr "Si el navegador llançat per «%s» ja s'està executant, *no* es reiniciarà i haureu de canviar a la seva finestra."
+
+#, fuzzy
+msgid "Otherwise, be patient ..."
+msgstr "En cas contrari, sigues pacient..."
+
+#, fuzzy
+msgid "'%s' must be a non-empty character string"
+msgstr "«%s» ha de ser una cadena de caràcters no buida"
+
+#, fuzzy
+msgid "no package '%s' was found"
+msgstr "no s'ha trobat cap paquet «%s»"
+
+#, fuzzy
+msgid "metadata of package '%s' is corrupt"
+msgstr "les metadades del paquet «%s» estan malmeses"
+
+#, fuzzy
+msgid "DESCRIPTION file of package '%s' is corrupt"
+msgstr "el fitxer de descripció del paquet «%s» està corromput"
+
+#, fuzzy
+msgid "'DESCRIPTION' file has an 'Encoding' field and re-encoding is not possible"
+msgstr "El fitxer «DESCRIPTION» té un camp «Encoding» i no és possible tornar a codificar"
+
+#, fuzzy
+msgid "DESCRIPTION file of package '%s' is missing or broken"
+msgstr "falta el fitxer de descripció del paquet «%s» o està trencat"
+
+#, fuzzy
+msgid "Invalid \"Built\":"
+msgstr "«Built» no vàlid:"
+
+#, fuzzy
+msgid "cannot update HTML package index"
+msgstr "no s'ha pogut actualitzar l'índex del paquet HTML"
+
+msgid "done"
+msgstr "fet"
+
+#, fuzzy
+msgid "Source must be a seekable connection"
+msgstr "L'origen ha de ser una connexió que es pugui cercar"
+
+#, fuzzy
+msgid "menu() cannot be used non-interactively"
+msgstr "menu() no es pot utilitzar sense interacció"
+
+#, fuzzy
+msgid "Enter an item from the menu, or 0 to exit"
+msgstr "Introduïu un element del menú, o 0 per a sortir"
+
+#, fuzzy
+msgid "%d errors caught in %s.  The error messages and their frequencies are"
+msgstr "%d errors detectats a %s.  Els missatges d'error i les seves freqüències són"
+
+#, fuzzy
+msgid "invalid query"
+msgstr "consulta no vàlida"
+
+#, fuzzy
+msgid "For SI units, specify 'standard = \"SI\"'"
+msgstr "Per a les unitats del SI, especifiqueu «estàndard = «SI»"
+
+#, fuzzy
+msgid "Unit \"%s\" is not part of standard \"%s\""
+msgstr "La unitat «%s» no forma part de l'estàndard «%s»"
+
+#, fuzzy
+msgid "'%s' is a formal generic function; S3 methods will not likely be found"
+msgstr "«%s» és una funció genèrica formal; és probable que no es trobin mètodes S3"
+
+#, fuzzy
+msgid "no function '%s' is visible"
+msgstr "no hi ha cap funció visible «%s»"
+
+#, fuzzy
+msgid "generic function '%s' dispatches methods for generic '%s'"
+msgstr "funció genèrica «%s» distribueix mètodes per al genèric «%s»"
+
+#, fuzzy
+msgid "function '%s' appears not to be S3 generic; found functions that look like S3 methods"
+msgstr "la funció «%s» no sembla genèrica de S3; s'han trobat funcions que semblen mètodes S3"
+
+#, fuzzy
+msgid "'class' is of length > 1; only the first element will be used"
+msgstr "'classe' és de longitud ; 1; només s'utilitzarà el primer element"
+
+#, fuzzy
+msgid "must supply 'generic.function' or 'class'"
+msgstr "s'ha de proporcionar «generic.function» o «class»"
+
+#, fuzzy
+msgid "no function '%s' could be found"
+msgstr "no s'ha trobat cap funció «%s»"
+
+#, fuzzy
+msgid "S3 method '%s' not found"
+msgstr "No s'ha trobat el mètode S3 «%s»"
+
+#, fuzzy
+msgid "environment specified is not a package"
+msgstr "l'entorn especificat no és un paquet"
+
+#, fuzzy
+msgid "changing locked binding for %s in %s whilst loading %s"
+msgstr "s'està canviant la vinculació bloquejada per a %s a %s mentre es carrega %s"
+
+#, fuzzy
+msgid "changing locked binding for %s in %s"
+msgstr "s'està canviant la vinculació bloquejada per a %s a %s"
+
+#, fuzzy
+msgid "'fixInNamespace' requires a name"
+msgstr "«fixInNamespace» necessita un nom"
+
+#, fuzzy
+msgid "only numeric indices can be used"
+msgstr "només es poden utilitzar índexs numèrics"
+
+#, fuzzy
+msgid "Malformed package name."
+msgstr "Nom de paquet mal format."
+
+#, fuzzy
+msgid "cannot create directory '%s'"
+msgstr "no es pot crear el directori «%s»"
+
+#, fuzzy
+msgid "'code_files' must be a character vector"
+msgstr "«codefiles» ha de ser un vector de caràcters"
+
+#, fuzzy
+msgid "'list' must be a character vector naming R objects"
+msgstr "«list» ha de ser un vector de caràcters que nomeni els objectes R"
+
+#, fuzzy
+msgid "no R objects specified or available"
+msgstr "no s'ha especificat o disponible cap objecte R"
+
+#, fuzzy
+msgid "directory '%s' already exists"
+msgstr "el directori «%s» ja existeix"
+
+#, fuzzy
+msgid "generic functions and other S4 objects (e.g., '%s') cannot be dumped; use the 'code_files' argument"
+msgstr "les funcions genèriques i altres objectes S4 (p. ex., «%s») no es poden bolcar; utilitzeu l'argument «codefiles»"
+
+#, fuzzy
+msgid "invalid 'type'; must be a character string"
+msgstr "«type» no vàlid; ha de ser una cadena de caràcters"
+
+#, fuzzy
+msgid "unable to access index for repository %s"
+msgstr "no s'ha pogut accedir a l'índex per al repositori %s"
+
+#, fuzzy
+msgid "invalid 'filters' argument."
+msgstr "argument «filters» no vàlid."
+
+#, fuzzy
+msgid "specifying 'contriburl' or 'available' requires a single type, not type = \"both\""
+msgstr "especificar «contriburl» o «disponible» requereix un únic tipus, no tipus = «ambdós»"
+
+#, fuzzy
+msgid "package '%s' in library '%s' will not be updated"
+msgstr "el paquet «%s» de la biblioteca «%s» no s'actualitzarà"
+
+#, fuzzy
+msgid "invalid 'oldPkgs'; must be a character vector or a result from old.packages()"
+msgstr "«oldPkgs» no és vàlid; ha de ser un vector de caràcters o un resultat de old.packages()"
+
+#, fuzzy
+msgid "ill-formed 'instPkgs' matrix"
+msgstr "matriu «instPkgs» mal formada"
+
+#, fuzzy
+msgid "no installed packages for (invalid?) 'lib.loc=%s'"
+msgstr "no hi ha paquets instal·lats per a (no vàlid?) 'lib.loc=%s'"
+
+#, fuzzy
+msgid "no new packages are available"
+msgstr "no hi ha paquets nous disponibles"
+
+#, fuzzy
+msgid "metadata of %s is corrupt"
+msgstr "les metadades de %s estan malmeses"
+
+#, fuzzy
+msgid "'priority' must be character or NULL"
+msgstr "«priority» ha de ser un caràcter o NULL"
+
+#, fuzzy
+msgid "Updating HTML index of packages in '.Library'"
+msgstr "S'està actualitzant l'índex HTML dels paquets a '.Biblioteca'"
+
+#, fuzzy
+msgid "'destdir' is not a directory"
+msgstr "«destdir» no és un directori"
+
+#, fuzzy
+msgid "no package %s at the repositories"
+msgstr "no hi ha cap paquet %s als repositoris"
+
+#, fuzzy
+msgid "invalid 'type'"
+msgstr "«type» no vàlid"
+
+#, fuzzy
+msgid "package %s does not exist on the local repository"
+msgstr "el paquet %s no existeix al repositori local"
+
+#, fuzzy
+msgid "download of package %s failed"
+msgstr "ha fallat la baixada del paquet %s"
+
+#, fuzzy
+msgid "--- Please select a CRAN mirror for use in this session ---"
+msgstr "--- Si us plau, seleccioneu una rèplica CRAN per utilitzar en aquesta sessió ---"
+
+#, fuzzy
+msgid "trying to use CRAN without setting a mirror"
+msgstr "s'està intentant utilitzar la CRAN sense establir una rèplica"
+
+#, fuzzy
+msgid "'download.file()' error code '%d'"
+msgstr "Codi d'error «%d» de «download.file()»"
+
+#, fuzzy
+msgid "failed to download mirrors file (%s); using local file '%s'"
+msgstr "no s'ha pogut baixar el fitxer de rèpliques (%s); s'usarà el fitxer local «%s»"
+
+#, fuzzy
+msgid "cannot choose a"
+msgstr "no es pot triar un"
+
+#, fuzzy
+msgid "mirror non-interactively"
+msgstr "emmiralla no interactivament"
+
+#, fuzzy
+msgid "cannot set repositories non-interactively"
+msgstr "no s'han pogut establir els dipòsits de forma no interactiva"
+
+#, fuzzy
+msgid "invalid options(\"pkgType\"); must be a character string"
+msgstr "options(\"pkgType\") no vàlid; ha de ser una cadena de caràcters"
+
+#, fuzzy
+msgid "No matching repositories found for"
+msgstr "No s'ha trobat cap repositori coincident per a"
+
+msgid ","
+msgstr ","
+
+#, fuzzy
+msgid "--- Please select repositories for use in this session ---"
+msgstr "--- Si us plau, seleccioneu els repositoris per utilitzar en aquesta sessió ---"
+
+#, fuzzy
+msgid "%s must be supplied"
+msgstr "%s ha de ser subministrat"
+
+#, fuzzy
+msgid "every package depends on at least one other"
+msgstr "cada paquet depèn almenys d'un altre"
+
+#, fuzzy
+msgid "packages %s are mutually dependent"
+msgstr "els paquets %s són mútuament dependents"
+
+#, fuzzy
+msgid ""
+"Do not know which element of 'lib' to install dependencies into\n"
+"skipping dependencies"
+msgstr ""
+"No se sap en quin element de la «lib» s'instal·laran les dependències\n"
+"s'ometen les dependències"
+
+#, fuzzy
+msgid "'%s' must be a character string"
+msgstr "«%s» ha de ser una cadena de caràcters"
+
+#, fuzzy
+msgid "type 'binary' is not supported on this platform"
+msgstr "el tipus 'binari' no és compatible amb aquesta plataforma"
+
+#, fuzzy
+msgid "no packages were specified"
+msgstr "no s'ha especificat cap paquet"
+
+#, fuzzy
+msgid "'lib = \"%s\"' is not writable"
+msgstr "'lib = \"%s\"' no es pot escriure"
+
+#, fuzzy
+msgid "Would you like to use a personal library instead?"
+msgstr "Voleu utilitzar una biblioteca personal en el seu lloc?"
+
+#, fuzzy
+msgid "unable to install packages"
+msgstr "no s'han pogut instal·lar els paquets"
+
+#, fuzzy
+msgid ""
+"Would you like to create a personal library\n"
+"%s\n"
+"to install packages into?"
+msgstr ""
+"Voleu crear una biblioteca personal\n"
+"%s\n"
+"per instal·lar paquets?"
+
+#, fuzzy
+msgid "unable to create %s"
+msgstr "no s'ha pogut crear %s"
+
+#, fuzzy
+msgid "inferring 'repos = NULL' from 'pkgs'"
+msgstr "s'està inferint «repos = NULL» des de «pkgs»"
+
+#, fuzzy
+msgid "unable to create temporary directory %s"
+msgstr "no s'ha pogut crear el directori temporal %s"
+
+#, fuzzy
+msgid "type == \"both\" can only be used on Windows or a CRAN build for macOS"
+msgstr "type == \"tots dos\" només es pot utilitzar en Windows o en una construcció CRAN per a macOS"
+
+#, fuzzy
+msgid "type == \"both\" cannot be used with 'repos = NULL'"
+msgstr "el tipus == \"ambdues\" no es pot utilitzar amb 'repos = NULL'"
+
+#, fuzzy
+msgid "source repository is unavailable to check versions"
+msgstr "el repositori font no està disponible per a comprovar les versions"
+
+#, fuzzy
+msgid "cannot install macOS binary packages on Windows"
+msgstr "no s'han pogut instal·lar els paquets binaris macOS al Windows"
+
+#, fuzzy
+msgid "cannot install macOS binary packages on this platform"
+msgstr "no es poden instal·lar els paquets binaris macOS en aquesta plataforma"
+
+#, fuzzy
+msgid "cannot install Windows binary packages on this platform"
+msgstr "no s'han pogut instal·lar els paquets binaris del Windows en aquesta plataforma"
+
+#, fuzzy
+msgid ""
+"This version of R is not set up to install source packages\n"
+"If it was installed from an RPM, you may need the R-devel RPM"
+msgstr ""
+"Aquesta versió de l'R no està configurada per instal·lar els paquets d'origen\n"
+"Si s'ha instal·lat des d'un RPM, és possible que necessiteu el RPM de velocitat"
+
+#, fuzzy
+msgid "system (cmd0): %s"
+msgstr "sistema (cmd0): %s"
+
+#, fuzzy
+msgid "installation of package %s had non-zero exit status"
+msgstr "la instal·lació del paquet %s té un estat de sortida diferent de zero"
+
+#, fuzzy
+msgid "foundpkgs: %s"
+msgstr "foundpkgs: %s"
+
+#, fuzzy
+msgid "files: %s"
+msgstr "fitxers: %s"
+
+#, fuzzy
+msgid "Windows default 'timeout' command is not usable for parallel installs"
+msgstr "L'ordre «timeout» predeterminada de Windows no es pot utilitzar per a instal·lacions paral·leles"
+
+#, fuzzy
+msgid "timeouts for parallel installs require the 'timeout' command"
+msgstr "els temps d'espera per a les instal·lacions paral·leles requereixen l'ordre «timeout»"
+
+#, fuzzy
+msgid "installation of package %s failed"
+msgstr "ha fallat la instal·lació del paquet %s"
+
+#, fuzzy
+msgid "installation of %d packages failed:  %s"
+msgstr "ha fallat la instal·lació de %d paquets: %s"
+
+#, fuzzy
+msgid ""
+"installation of %d packages failed:\n"
+"  %s"
+msgstr ""
+"ha fallat la instal·lació de %d paquets:\n"
+"  %s"
+
+#, fuzzy
+msgid ""
+"The downloaded source packages are in\n"
+"\t%s"
+msgstr ""
+"Els paquets d'origen baixats són a\n"
+"\t%s"
+
+#, fuzzy
+msgid "The namespace for package \"%s\" is locked; no changes in the global variables list may be made."
+msgstr "L'espai de noms per al paquet «%s» està bloquejat; no es poden fer canvis a la llista de variables globals."
+
+#, fuzzy
+msgid "'env' must be an environment"
+msgstr "«env» ha de ser un entorn"
+
+#, fuzzy
+msgid "no object named '%s' to show"
+msgstr "no hi ha cap objecte anomenat «%s» per mostrar"
+
+#, fuzzy
+msgid "'file' must be \"\" or an open connection object"
+msgstr "«file» ha de ser «» o bé un objecte de connexió obert"
+
+#, fuzzy
+msgid "'char' must have a non-zero width"
+msgstr "«char» ha de tenir una amplada diferent de zero"
+
+#, fuzzy
+msgid "must have 'max' > 'min'"
+msgstr "ha de tenir «max» > «min»"
+
+#, fuzzy
+msgid "'pb' is not from class %s"
+msgstr "«pb» no és de la classe %s"
+
+#, fuzzy
+msgid "cannot determine a usable name"
+msgstr "no es pot determinar un nom utilitzable"
+
+#, fuzzy
+msgid "Created file named %s."
+msgstr "S'ha creat el fitxer anomenat %s."
+
+#, fuzzy
+msgid "Edit the file and move it to the appropriate directory."
+msgstr "Editeu el fitxer i moveu-lo al directori adequat."
+
+#, fuzzy
+msgid "cannot determine import name"
+msgstr "no s'ha pogut determinar el nom d'importació"
+
+#, fuzzy
+msgid "no documentation of type %s and topic %s (or error in processing help)"
+msgstr "no hi ha documentació del tipus %s i del tema %s (o hi ha un error en processar l'ajuda)"
+
+#, fuzzy
+msgid "the object of class %s in the function call %s could not be used as a documentation topic"
+msgstr "l'objecte de la classe %s a la crida de funció %s no s'ha pogut utilitzar com a tema de documentació"
+
+#, fuzzy
+msgid "no methods for %s and no documentation for it as a function"
+msgstr "no hi ha mètodes per a %s ni documentació per a aquesta funció"
+
+#, fuzzy
+msgid "no method defined for function %s and signature %s"
+msgstr "no hi ha cap mètode definit per a la funció %s i signatura %s"
+
+#, fuzzy
+msgid "no documentation for function %s and signature %s"
+msgstr "no hi ha documentació per a la funció %s i signatura %s"
+
+#, fuzzy
+msgid "No DIF data on clipboard"
+msgstr "No hi ha dades DIF al porta-retalls"
+
+#, fuzzy
+msgid "file had no lines"
+msgstr "el fitxer no té línies"
+
+#, fuzzy
+msgid "row and column counts not found"
+msgstr "no s'ha trobat el recompte de files i columnes"
+
+#, fuzzy
+msgid "More rows than specified in header; maybe use 'transpose=TRUE'"
+msgstr "Més files de les especificades a la capçalera; potser utilitzeu «transpose=TRUE»"
+
+#, fuzzy
+msgid "Unrecognized special data value"
+msgstr "Valor de dades especials no reconegut"
+
+#, fuzzy
+msgid "More columns than specified in header; maybe use 'transpose=TRUE'"
+msgstr "Més columnes de les especificades a la capçalera; potser utilitzeu «transpose=TRUE»"
+
+#, fuzzy
+msgid "Unrecognized value indicator"
+msgstr "Indicador de valor no reconegut"
+
+#, fuzzy
+msgid "no lines available in input"
+msgstr "no hi ha línies disponibles a l'entrada"
+
+#, fuzzy
+msgid "header and 'col.names' are of different lengths"
+msgstr "la capçalera i «col.names» tenen diferents longituds"
+
+#, fuzzy
+msgid "more columns than column names"
+msgstr "més columnes que noms de columnes"
+
+#, fuzzy
+msgid "more column names than columns"
+msgstr "més noms de columna que columnes"
+
+#, fuzzy
+msgid "rows are empty: giving up"
+msgstr "les files estan buides: s'abandona"
+
+#, fuzzy
+msgid "not all columns named in 'colClasses' exist"
+msgstr "no existeixen totes les columnes anomenades a «colClasses»"
+
+#, fuzzy
+msgid "invalid numeric 'as.is' expression"
+msgstr "expressió «as.is» numèrica no vàlida"
+
+#, fuzzy
+msgid "not all columns named in 'as.is' exist"
+msgstr "no existeixen totes les columnes anomenades a «as.is»"
+
+#, fuzzy
+msgid "'as.is' has the wrong length %d  != cols = %d"
+msgstr "'as.is' té una longitud incorrecta %d != cols = %d"
+
+#, fuzzy
+msgid "invalid 'row.names' specification"
+msgstr "especificació «row.names» no vàlida"
+
+msgid "invalid 'row.names' length"
+msgstr "la longitud de «row.names» no és vàlida"
+
+msgid "duplicate 'row.names' are not allowed"
+msgstr "no es permeten «row.names» duplicats"
+
+msgid "missing values in 'row.names' are not allowed"
+msgstr "no es permeten valors no disponibles a «row.names»"
+
+#, fuzzy
+msgid "missing lengths for some fields"
+msgstr "manca longituds per a alguns camps"
+
+#, fuzzy
+msgid "invalid format"
+msgstr "format no vàlid"
+
+#, fuzzy
+msgid "transfer failure"
+msgstr "ha fallat la transferència"
+
+#, fuzzy
+msgid "%s option must be a length one character vector or NULL"
+msgstr "l'opció %s ha de ser un vector de longitud d'un caràcter o NULL"
+
+msgid "'file' must be a character string or connection"
+msgstr "«file» ha de ser una cadena de caràcters o una connexió"
+
+#, fuzzy
+msgid "'as.is' should be specified by the caller; using TRUE"
+msgstr "El cridador ha d'especificar «as.is», usant «TRUE»"
+
+#, fuzzy
+msgid "empty beginning of file"
+msgstr "el començament del fitxer és buit"
+
+#, fuzzy
+msgid "first five rows are empty: giving up"
+msgstr "les cinc primeres files estan buides: s'abandona"
+
+#, fuzzy
+msgid "relist() requires recursively unlisted objects."
+msgstr "relist() requereix objectes no llistats recursivament."
+
+#, fuzzy
+msgid "The 'flesh' argument does not contain a skeleton attribute."
+msgstr "L'argument «flesh» no conté un atribut d'esquelet."
+
+#, fuzzy
+msgid "Either ensure you unlist a relistable object, or specify the skeleton separately."
+msgstr "Assegureu-vos de no llistar un objecte reenumerable, o especifiqueu l'esquelet per separat."
+
+#, fuzzy
+msgid "cannot coerce 'x' to roman"
+msgstr "no es pot coaccionar «x» al roman"
+
+#, fuzzy
+msgid "Could not create file %s, aborting"
+msgstr "No s'ha pogut crear el fitxer %s, s'interromp"
+
+#, fuzzy
+msgid "no valid packages were specified"
+msgstr "no s'ha especificat cap paquet vàlid"
+
+#, fuzzy
+msgid "invalid 'socket' argument"
+msgstr "argument «socket» no vàlid"
+
+#, fuzzy
+msgid "'port' must be integer of length 1"
+msgstr "«port» ha de ser un enter de longitud 1"
+
+#, fuzzy
+msgid "'host' must be character of length 1"
+msgstr "«host» ha de ser un caràcter de longitud 1"
+
+#, fuzzy
+msgid "can only receive calls on local machine"
+msgstr "només es poden rebre trucades a la màquina local"
+
+#, fuzzy
+msgid "socket not established"
+msgstr "sòcol no establert"
+
+#, fuzzy
+msgid "argument is not a function or language object:"
+msgstr "l'argument no és una funció o un objecte de llenguatge:"
+
+#, fuzzy
+msgid "str.data.frame() called with non-data.frame -- coercing to one."
+msgstr "str.data.frame() cridada amb un «non-data.frame» -- coaccionant a un."
+
+#, fuzzy
+msgid "invalid options(\"str\") -- using defaults instead"
+msgstr "opcions no vàlides («str») -- s'usen els valors predeterminats"
+
+#, fuzzy
+msgid "invalid components in options(\"str\"): %s"
+msgstr "components no vàlids a options(\"str\"): %s"
+
+#, fuzzy
+msgid "'str.default': 'le' is NA, so taken as 0"
+msgstr "'str.default': 'le' és NA, es pren com a 0"
+
+#, fuzzy
+msgid "'nchar.max = %d' is too small"
+msgstr "'nchar.max = %d' és massa petit"
+
+#, fuzzy
+msgid "Not a validObject():"
+msgstr "No és un validObject():"
+
+#, fuzzy
+msgid "'object' does not have valid levels()"
+msgstr "«object» no té «levels()» vàlid"
+
+#, fuzzy
+msgid "'digits' and 'digits.d' are both specified and the latter is not used"
+msgstr "S'especifiquen «digits» i «digits.d» i no s'utilitza aquest últim"
+
+#, fuzzy
+msgid "The number of captures in 'pattern' != 'length(proto)'"
+msgstr "El nombre de captures a «patró» != «longitud(proto)»"
+
+#, fuzzy
+msgid "The number of tokens != 'length(proto)'"
+msgstr "El nombre de tokens != 'length(proto)'"
+
+#, fuzzy
+msgid "The number of tokens is not consistent across 'x'"
+msgstr "El nombre de tokens no és coherent amb «x»"
+
+#, fuzzy
+msgid "cannot coerce %s to TRUE or FALSE"
+msgstr "no es pot coaccionar %s a lògic"
+
+#, fuzzy
+msgid "no lines found in %s"
+msgstr "no s'ha trobat cap línia a %s"
+
+#, fuzzy
+msgid "profile does not contain memory information"
+msgstr "el perfil no conté informació de memòria"
+
+#, fuzzy
+msgid "profile does not contain line information"
+msgstr "el perfil no conté informació de línia"
+
+#, fuzzy
+msgid "no events were recorded"
+msgstr "no s'han enregistrat esdeveniments"
+
+#, fuzzy
+msgid "argument 'compressed' is ignored for the internal method"
+msgstr "l'argument «comprimit» s'ignora per al mètode intern"
+
+#, fuzzy
+msgid "invalid 'tarfile' argument"
+msgstr "argument «tarfile» no vàlid"
+
+#, fuzzy
+msgid "'compressed' must be logical or character"
+msgstr "'comprimit' ha de ser lògic o caràcter"
+
+#, fuzzy
+msgid "No %s command found"
+msgstr "No s'ha trobat cap ordre %s"
+
+#, fuzzy
+msgid "gzip"
+msgstr "gzip"
+
+#, fuzzy
+msgid "bzip2"
+msgstr "bzip2"
+
+#, fuzzy
+msgid "xz"
+msgstr "xz"
+
+#, fuzzy
+msgid "failed to create directory %s"
+msgstr "no s'ha pogut crear el directori %s"
+
+#, fuzzy
+msgid "invalid octal digit"
+msgstr "dígit octal no vàlid"
+
+#, fuzzy
+msgid "removing drive '%s'"
+msgstr "s'està eliminant la unitat «%s»"
+
+#, fuzzy
+msgid "removing leading '/'"
+msgstr "s'està eliminant el «/» inicial"
+
+#, fuzzy
+msgid "path starts with '~'"
+msgstr "el camí comença amb «»"
+
+#, fuzzy
+msgid "path contains '..'"
+msgstr "el camí conté «..»"
+
+#, fuzzy
+msgid "path is empty"
+msgstr "el camí està buit"
+
+#, fuzzy
+msgid "'tarfile' must be a character string or a connection"
+msgstr "«tarfile» ha de ser una cadena de caràcters o una connexió"
+
+#, fuzzy
+msgid "incomplete block on file"
+msgstr "bloc incomplet al fitxer"
+
+#, fuzzy
+msgid "incomplete block: rather use gzfile(.) created connection?"
+msgstr "bloc incomplet: uso més aviat gzfile(.) per a crear una connexió?"
+
+#, fuzzy
+msgid "invalid name field in tarball"
+msgstr "el nom del camp de l'arxiu tar no és vàlid"
+
+#, fuzzy
+msgid "checksum error for entry '%s'"
+msgstr "error de suma de verificació per a l'entrada '%s'"
+
+#, fuzzy
+msgid "failed to copy %s to %s"
+msgstr "no s'ha pogut copiar %s a %s"
+
+#, fuzzy
+msgid "unsupported entry type"
+msgstr "tipus d'entrada no compatible"
+
+msgid "file '%s' not found"
+msgstr "no s'ha trobat el fitxer «%s»"
+
+#, fuzzy
+msgid "file '%s' did not have execute permissions: corrected"
+msgstr "el fitxer «%s» no té permisos d'execució: s'ha corregit"
+
+#, fuzzy
+msgid "file size is limited to 8GB"
+msgstr "la mida del fitxer està limitada a 8 GB"
+
+#, fuzzy
+msgid "invalid uid value replaced by that for user 'nobody'"
+msgstr "el valor uid no és vàlid substituït pel de l'usuari «nobody»"
+
+#, fuzzy
+msgid "invalid gid value replaced by that for user 'nobody'"
+msgstr "el valor del gid no és vàlid substituït pel de l'usuari «nobody»"
+
+#, fuzzy
+msgid ""
+"vignette %s found more than once,\n"
+"using the one found in %s"
+msgstr ""
+"S'ha trobat la vinyeta %s més d'una vegada,\n"
+"s'està utilitzant el trobat a %s"
+
+#, fuzzy
+msgid "vignette %s not found"
+msgstr "No s'ha trobat el vinyetatge %s"
+
+#, fuzzy
+msgid "vignette %s has no PDF/HTML"
+msgstr "el vinyetatge %s no té PDF/HTML"
+
+#, fuzzy
+msgid "vignette %s has no R code"
+msgstr "el vinyetatge %s no té codi R"
+
+#, fuzzy
+msgid "select.list() cannot be used non-interactively"
+msgstr "select.list() no es pot utilitzar de forma no interactiva"
+
+#, fuzzy
+msgid "'title' must be NULL or a length-1 character vector"
+msgstr "«title» ha de ser NULL o un vector de caràcters de longitud 1"
+
+#, fuzzy
+msgid "Enter one or more numbers separated by spaces and then ENTER, or 0 to cancel"
+msgstr "Introduïu un o més números separats per espais i després introduïu, o 0 per a cancel·lar"
+
+#, fuzzy
+msgid "Invalid input, please try again"
+msgstr "Entrada no vàlida, torneu-ho a provar"
+
+#, fuzzy
+msgid "'quote' must be 'TRUE', 'FALSE' or numeric"
+msgstr "«quote» ha de ser «TRUE», «FALSE» o numèric"
+
+#, fuzzy
+msgid "invalid numbers in 'quote'"
+msgstr "números no vàlids a «quote»"
+
+#, fuzzy
+msgid "invalid 'quote' specification"
+msgstr "especificació «quote» no vàlida"
+
+#, fuzzy
+msgid "'col.names = NA' makes no sense when 'row.names = FALSE'"
+msgstr "'col.names = NA' no té sentit quan 'row.names = FALSE'"
+
+#, fuzzy
+msgid "invalid 'col.names' specification"
+msgstr "especificació «col.names» no vàlida"
+
+#, fuzzy
+msgid "appending column names to file"
+msgstr "s'estan afegint els noms de les columnes al fitxer"
+
+#, fuzzy
+msgid "attempt to set '%s' ignored"
+msgstr "s'ha ignorat l'intent d'establir «%s»"
+
+#, fuzzy
+msgid "'files' must be a character vector specifying one or more filepaths"
+msgstr "«files» ha de ser un vector de caràcters que especifiqui un o més camins de fitxers"
+
+#, fuzzy
+msgid "cannot find program to open 'mailto:' URIs: reverting to 'method=\"none\"'"
+msgstr "no s'ha pogut trobar el programa per a obrir els URI «mailto:»: s'està tornant a «method=\"none»»"
+
+#, fuzzy
+msgid "Using the browser to open a mailto: URI"
+msgstr "Utilitzant el navegador per obrir un mailto: URI"
+
+#, fuzzy
+msgid "must specify 'address'"
+msgstr "s'ha d'especificar «address»"
+
+#, fuzzy
+msgid "'subject' is missing"
+msgstr "Falta el «subjecte»"
+
+#, fuzzy
+msgid "'ccaddress' must be of length 1"
+msgstr "'construcció' ha de ser de longitud 1"
+
+#, fuzzy
+msgid "'url' must be a length-one character vector"
+msgstr "'url' ha de ser un vector de caràcters de longitud u"
+
+msgid "'headers' must have names and must not be NA"
+msgstr "«headers» ha de tenir noms i no pot ser NA"
+
+#, fuzzy
+msgid "'destfile' must be a length-one character vector"
+msgstr "«destfile» ha de ser un vector de caràcters de longitud u"
+
+#, fuzzy
+msgid "'wget' call had nonzero exit status"
+msgstr "La crida «wget» té un estat de sortida diferent de zero"
+
+#, fuzzy
+msgid "'curl' call had nonzero exit status"
+msgstr "La crida «curl» no té estat de sortida zero"
+
+#, fuzzy
+msgid "invalid method:"
+msgstr "mètode no vàlid:"
+
+#, fuzzy
+msgid "download had nonzero exit status"
+msgstr "la baixada té un estat de sortida diferent de zero"
+
+#, fuzzy
+msgid "'tar' returned non-zero exit code %d"
+msgstr "'tar' ha retornat un codi de sortida no nul %d"
+
+#, fuzzy
+msgid "file %s is not a macOS binary package"
+msgstr "el fitxer %s no és un paquet binari macOS"
+
+#, fuzzy
+msgid "package %s successfully unpacked and MD5 sums checked"
+msgstr "el paquet %s s'ha desempaquetat correctament i s'han marcat les sumes MD5"
+
+#, fuzzy
+msgid ""
+"ERROR: failed to lock directory %s for modifying\n"
+"Try removing %s"
+msgstr ""
+"ERROR: no s'ha pogut blocar el directori %s per modificar-lo\n"
+"Proveu d'eliminar %s"
+
+#, fuzzy
+msgid "ERROR: failed to create lock directory %s"
+msgstr "ERROR: no s'ha pogut crear el directori de bloqueig %s"
+
+#, fuzzy
+msgid "restored %s"
+msgstr "s'ha restaurat %s"
+
+#, fuzzy
+msgid "unable to move temporary installation %s to %s"
+msgstr "no s'ha pogut moure la instal·lació temporal %s a %s"
+
+#, fuzzy
+msgid "cannot remove prior installation of package %s"
+msgstr "no es pot eliminar la instal·lació prèvia del paquet %s"
+
+#, fuzzy
+msgid ""
+"The downloaded binary packages are in\n"
+"\t%s"
+msgstr ""
+"Els paquets binaris baixats són a\n"
+"\t%s"
+
+#, fuzzy
+msgid "'memory.size()' is Windows-specific"
+msgstr "«memory.size()» és específic de Windows"
+
+#, fuzzy
+msgid "'memory.limit()' is Windows-specific"
+msgstr "«memory.limit()» és específic de Windows"
+
+#, fuzzy
+msgid "method 'mailx' is Unix-only"
+msgstr "el mètode «mailx» és només Unix"
+
+#, fuzzy
+msgid "zip file %s not found"
+msgstr "no s'ha trobat el fitxer zip %s"
+
+#, fuzzy
+msgid "failed to create %s"
+msgstr "no s'ha pogut crear %s"
+
+#, fuzzy
+msgid "there is no 'libs' directory in package %s"
+msgstr "no hi ha cap directori «libs» al paquet %s"
+
+#, fuzzy
+msgid "unable to move temporary installation %s to %s, copying instead"
+msgstr "no s'ha pogut moure la instal·lació temporal %s a %s, s'està copiant"
+
+#, fuzzy
+msgid "unable to copy temporary installation %s to %s"
+msgstr "no s'ha pogut copiar la instal·lació temporal %s a %s"
+
+#, fuzzy
+msgid "Only '*.zip' and '*.tar.gz' files can be installed."
+msgstr "Només es poden instal·lar els fitxers «*.zip» i «*.tar.gz»."
+
+#, fuzzy
+msgid "'memory.size()' is no longer supported"
+msgstr "'memory.size()' ja no és compatible"
+
+#, fuzzy
+msgid "'memory.limit()' is no longer supported"
+msgstr "'memory.limit()' ja no és compatible"
+
+#, fuzzy
+msgid "winDialog() cannot be used non-interactively"
+msgstr "winDialog() no es pot utilitzar de forma no interactiva"
+
+#, fuzzy
+msgid "winDialogString() cannot be used non-interactively"
+msgstr "winDialogString() no es pot utilitzar de forma no interactiva"
+
+#, fuzzy
+msgid "%d Sweave file for basename %s found"
+msgid_plural "%d Sweave files for basename %s found"
+msgstr[0] "S'ha trobat %d fitxer de suavitat per al nom base %s"
+msgstr[1] "S'han trobat %d fitxers de suavitat per al nom base %s"
+
+#, fuzzy
+msgid "Output/used file:  "
+msgid_plural "Output/used files:  "
+msgstr[0] "Fitxer de sortida/utilitzat:  "
+msgstr[1] "Fitxers de sortida/utilitzats:  "
+
+#, fuzzy
+msgid "%d occurrence in %s"
+msgid_plural "%d occurrences in %s"
+msgstr[0] "%d coincidència a %s"
+msgstr[1] "%d ocurrències a %s"
+
+#, fuzzy
+msgid "Invalid role specification: %s."
+msgid_plural "Invalid role specifications: %s."
+msgstr[0] "Especificació de rol no vàlida: %s."
+msgstr[1] "Especificacions de rol no vàlides: %s."
+
+#, fuzzy
+msgid "A bibentry of bibtype %s has to specify the field: %s"
+msgid_plural "A bibentry of bibtype %s has to specify the fields: %s"
+msgstr[0] "Un bibentry del bibtype %s ha d'especificar el camp: %s"
+msgstr[1] "Un bibentry del bibtype %s ha d'especificar els camps: %s"
+
+#, fuzzy
+msgid "class discarded from column %s"
+msgid_plural "classes discarded from columns %s"
+msgstr[0] "s'ha descartat la classe de la columna %s"
+msgstr[1] "classes descartades de les columnes %s"
+
+#, fuzzy
+msgid "matched %d object."
+msgid_plural "matched %d objects."
+msgstr[0] "objecte %d coincident."
+msgstr[1] "%d objectes coincidents."
+
+#, fuzzy
+msgid "%d error caught in %s: %s"
+msgid_plural "%d times caught the same error in %s: %s"
+msgstr[0] "%d error detectat a %s: %s"
+msgstr[1] "%d vegades s'ha detectat el mateix error a %s: %s"
+
+#, fuzzy
+msgid "object '%s' not found"
+msgid_plural "objects '%s' not found"
+msgstr[0] "no s'ha trobat l'objecte «%s»"
+msgstr[1] "no s'han trobat els objectes «%s»"
+
+#, fuzzy
+msgid "package %s is a base package, and cannot be removed"
+msgid_plural "packages %s are base packages, and cannot be removed"
+msgstr[0] "el paquet %s és un paquet base, i no es pot eliminar"
+msgstr[1] "els paquets %s són paquets base, i no es poden eliminar"
+
+#, fuzzy
+msgid ""
+"Removing package from %s\n"
+"(as %s is unspecified)"
+msgid_plural ""
+"Removing packages from %s\n"
+"(as %s is unspecified)"
+msgstr[0] ""
+"S'està eliminant el paquet de %s\n"
+"(com %s no està especificat)"
+msgstr[1] ""
+"S'estan suprimint els paquets de %s\n"
+"(com %s no està especificat)"
+
+#, fuzzy
+msgid "package %s is a base package, and should not be updated"
+msgid_plural "packages %s are base packages, and should not be updated"
+msgstr[0] "el paquet %s és un paquet base, i no s'hauria d'actualitzar"
+msgstr[1] "els paquets %s són paquets base, i no s'haurien d'actualitzar"
+
+#, fuzzy
+msgid ""
+"A version of this package for your version of R might be available elsewhere,\n"
+"see the ideas at\n"
+msgid_plural ""
+"Versions of these packages for your version of R might be available elsewhere,\n"
+"see the ideas at\n"
+msgstr[0] ""
+"Una versió d'aquest paquet per a la vostra versió de l'R podria estar disponible en un altre lloc,\n"
+"veure les idees a\n"
+msgstr[1] ""
+"Les versions d'aquests paquets per a la vostra versió de l'R podrien estar disponibles en altres llocs,\n"
+"veure les idees a\n"
+
+#, fuzzy
+msgid "package %s is not available %s"
+msgid_plural "packages %s are not available %s"
+msgstr[0] "el paquet %s no està disponible %s"
+msgstr[1] "els paquets %s no estan disponibles %s"
+
+#, fuzzy
+msgid "dependency %s is not available"
+msgid_plural "dependencies %s are not available"
+msgstr[0] "la dependència %s no està disponible"
+msgstr[1] "les dependències %s no estan disponibles"
+
+#, fuzzy
+msgid "also installing the dependency %s"
+msgid_plural "also installing the dependencies %s"
+msgstr[0] "també s'està instal·lant la dependència %s"
+msgstr[1] "també s'estan instal·lant les dependències %s"
+
+#, fuzzy
+msgid "package %s is in use and will not be installed"
+msgid_plural "packages %s are in use and will not be installed"
+msgstr[0] "el paquet %s està en ús i no s'instal·larà"
+msgstr[1] "els paquets %s estan en ús i no s'instal·laran"
+
+#, fuzzy
+msgid ""
+"Installing package into %s\n"
+"(as %s is unspecified)"
+msgid_plural ""
+"Installing packages into %s\n"
+"(as %s is unspecified)"
+msgstr[0] ""
+"S'està instal·lant el paquet a %s\n"
+"(com %s no està especificat)"
+msgstr[1] ""
+"S'estan instal·lant els paquets a %s\n"
+"(com %s no està especificat)"
+
+#, fuzzy
+msgid "'lib' element %s is not a writable directory"
+msgid_plural "'lib' elements %s are not writable directories"
+msgstr[0] "L'element «lib» %s no és un directori on es pot escriure"
+msgstr[1] "Els elements 'lib' %s no són directoris escrivibles"
+
+#, fuzzy
+msgid "There is a binary version available but the source version is later"
+msgid_plural "There are binary versions available but the source versions are later"
+msgstr[0] "Hi ha disponible una versió binària, però la versió d'origen és posterior"
+msgstr[1] "Hi ha versions binàries disponibles, però les versions d'origen són posteriors"
+
+#, fuzzy
+msgid "Do you want to install from sources the package which needs compilation?"
+msgid_plural "Do you want to install from sources the packages which need compilation?"
+msgstr[0] "Voleu instal·lar des del codi font el paquet que necessita compilació?"
+msgstr[1] "Voleu instal·lar des del codi font els paquets que necessiten compilació?"
+
+#, fuzzy
+msgid "Package which is only available in source form, and may need compilation of C/C++/Fortran"
+msgid_plural "Packages which are only available in source form, and may need compilation of C/C++/Fortran"
+msgstr[0] "El paquet que només està disponible en forma de codi font, i pot necessitar la compilació de C/C++/Fortran"
+msgstr[1] "Paquets que només estan disponibles en forma d'origen, i poden necessitar la compilació de C/C++/Fortran"
+
+#, fuzzy
+msgid "installing the source package %s"
+msgid_plural "installing the source packages %s"
+msgstr[0] "s'està instal·lant el paquet font %s"
+msgstr[1] "s'estan instal·lant els paquets font %s"
+
+#, fuzzy
+msgid "package %s is available as a source package but not as a binary"
+msgid_plural "packages %s are available as source packages but not as binaries"
+msgstr[0] "el paquet %s està disponible com a paquet font però no com a binari"
+msgstr[1] "els paquets %s estan disponibles com a paquets d'origen però no com a binaris"
+
+#, fuzzy
+msgid "There is a binary version available (and will be installed) but the source version is later"
+msgid_plural "There are binary versions available (and will be installed) but the source versions are later"
+msgstr[0] "Hi ha disponible una versió binària (i s'instal·larà), però la versió d'origen és posterior"
+msgstr[1] "Hi ha versions binàries disponibles (i s'instal·laran), però les versions d'origen són posteriors"
+
+#, fuzzy
+msgid "last record incomplete, %d line discarded"
+msgid_plural "last record incomplete, %d lines discarded"
+msgstr[0] "últim registre incomplet, s'ha descartat %d línia"
+msgstr[1] "últim registre incomplet, %d línies descartades"
+
+#, fuzzy
+msgid "invalid roman numeral: %s"
+msgid_plural "invalid roman numerals: %s"
+msgstr[0] "el nombre roman no és vàlid: %s"
+msgstr[1] "nombres romans no vàlids: %s"
+
+#, fuzzy
+#~ msgid "file 'filelist' is missing for directory %s"
+#~ msgstr "falta el fitxer «filelist» per al directori %s"

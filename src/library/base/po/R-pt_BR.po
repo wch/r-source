@@ -6,16 +6,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-11-30 14:39\n"
-"PO-Revision-Date: 2022-10-23 00:04+0000\n"
-"Last-Translator: Beatriz Milz <milz.bea@gmail.com>\n"
+"POT-Creation-Date: 2024-03-27 16:14\n"
+"PO-Revision-Date: 2024-03-19 12:53+0000\n"
+"Last-Translator: Michael Chirico <michaelchirico4@gmail.com>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.13.1\n"
+"X-Generator: Weblate 4.16.4\n"
 
 msgid "'%s' is defunct."
 msgstr "'%s' foi extinto."
@@ -37,6 +37,13 @@ msgstr "Veja help(\"Deprecated\") e help(\"%s-deprecated\")."
 
 msgid "See help(\"Deprecated\")"
 msgstr "Veja help(\"Deprecated\")"
+
+msgid "unsupported value of _R_DEPRECATED_IS_R_,"
+msgstr ""
+
+#, fuzzy
+msgid ", will be ignored"
+msgstr "argumento '%s' será ignorado"
 
 msgid "argument to 'La.svd' must be numeric or complex"
 msgstr "argumento de 'La.svd' deve ser numérico ou complexo"
@@ -63,10 +70,10 @@ msgid "'kind' must be a character string of length 1 (RNG to be used)."
 msgstr "'kind' deve ser uma string de caracteres de comprimento 1 (RNG a ser usado)."
 
 msgid "'%s' is not a valid abbreviation of an RNG"
-msgstr "'%s' não é uma abreviação válida de RNG"
+msgstr "'%s' não é uma abreviação válida de uma RNG"
 
 msgid "'normal.kind' must be a character string of length 1"
-msgstr "'normal.kind' deve ser uma string de caracteres de tamanho 1"
+msgstr "'normal.kind' deve ser uma string de tamanho 1"
 
 msgid "'%s' is not a valid choice"
 msgstr "'%s' não é uma escolha válida"
@@ -93,7 +100,7 @@ msgid "dim(X) must have a positive length"
 msgstr "dim(X) deve ter um comprimento positivo"
 
 msgid "'X' must have named dimnames"
-msgstr "'X' deve ser dimnames nomeados"
+msgstr "'X' deve ter dimnames nomeados"
 
 msgid "not all elements of 'MARGIN' are names of dimensions"
 msgstr "nem todos os elementos de 'MARGIN' são nomes de dimensões"
@@ -116,9 +123,8 @@ msgstr "valor incorreto para 'MARGIN'"
 msgid "dim(x) must have a positive length"
 msgstr "dim(x) deve ter um comprimento positivo"
 
-#, fuzzy
 msgid "'pos=1' is not possible and has been warned about for years"
-msgstr "*** 'pos=1' não é possível; usando 'pos=2' por enquanto."
+msgstr "'pos=1' não é possível e tem gerado um alerta por anos"
 
 msgid "file '%s' not found"
 msgstr "arquivo '%s' não encontrado"
@@ -196,7 +202,7 @@ msgid "condition handlers must be functions"
 msgstr "gerenciadores de condições devem ser funções"
 
 msgid "pushing duplicate `%s` handler on top of the stack"
-msgstr ""
+msgstr "levando gerenciador de `%s` duplicado ao topo da pilha"
 
 msgid "argument 'where' of length 0"
 msgstr "argumento 'where' com comprimento 0"
@@ -237,9 +243,8 @@ msgstr "número de intervalos inválido"
 msgid "'breaks' are not unique"
 msgstr "'breaks' não são únicos"
 
-#, fuzzy
 msgid "number of intervals and length of 'labels' differ"
-msgstr "comprimentos de 'breaks' e 'labels' são diferentes"
+msgstr "número de intervalos e comprimentos de 'labels' são diferentes"
 
 msgid "invalid 'row.names' length"
 msgstr "comprimento inválido de 'row.names'"
@@ -259,9 +264,8 @@ msgstr "'dimnames' inválidos para um data frame"
 msgid "cannot coerce class %s to a data.frame"
 msgstr "não é possível fazer coerção de classe %s para um data.frame"
 
-#, fuzzy
 msgid "'row.names' is not a character or integer vector of length %d"
-msgstr "'row.names' não é um vetor de caracteres de comprimento %d -- omitindo. Será um erro!"
+msgstr "'row.names' não é um vetor de caracteres ou inteiros de comprimento %d"
 
 msgid "mismatch of row names in arguments of 'data.frame', item %d"
 msgstr "pareamento errado de nomes de linhas nos argumentos de 'data.frame', item %d"
@@ -309,7 +313,7 @@ msgid "'value' is the wrong length"
 msgstr "'value' é do comprimento errado"
 
 msgid "unsupported matrix index in replacement"
-msgstr "índice matriz não permitido no substituto"
+msgstr "índice de matriz não permitido na substituição"
 
 msgid "need 0, 1, or 2 subscripts"
 msgstr "são necessários 0, 1 ou 2 subscritos"
@@ -357,9 +361,8 @@ msgstr "<0 linhas> (ou row.names de comprimento 0)"
 msgid "invalid 'max' / getOption(\"max.print\"):"
 msgstr "'max' / getOption(\"max.print\") inválido:"
 
-#, fuzzy
 msgid "non-numeric-alike variable(s) in data frame:"
-msgstr "variável não numérica no data frame:"
+msgstr "variável(is) não numérica(s) ou similar(es) no data frame:"
 
 msgid ","
 msgstr ","
@@ -370,9 +373,8 @@ msgstr "%s definido somente para data frames com tamanhos iguais"
 msgid "list of length %d not meaningful"
 msgstr "lista de comprimento %d sem sentido"
 
-#, fuzzy
 msgid "only defined on a data frame with all numeric-alike variables"
-msgstr "somente definido para um data frame com todas as variáveis numéricas ou complexas"
+msgstr "somente definido para um data frame com todas as variáveis numéricas ou similares"
 
 msgid "cannot xtfrm data frames"
 msgstr "não é possível aplicar xtfrm a um data frame"
@@ -520,7 +522,7 @@ msgid "no Olson database found"
 msgstr "base de dados Olson não encontrada"
 
 msgid "'file' must be a character string or connection"
-msgstr "'file' deve ser uma string de caracteres ou conexão"
+msgstr "'file' deve ser uma string ou conexão"
 
 msgid ""
 "Invalid DCF format.\n"
@@ -1175,7 +1177,7 @@ msgid "S4 exports specified in 'NAMESPACE' but not defined in package %s"
 msgstr "exportações S4 especificadas em 'NAMESPACE' mas não definidas no pacote %s"
 
 msgid "-- processing S4 stuff for"
-msgstr ""
+msgstr "-- processamento de S4 para"
 
 msgid "--- caching metadata"
 msgstr "--- cacheando metadados"
@@ -1211,7 +1213,7 @@ msgid "in package %s methods %s were specified for export but not defined"
 msgstr "no pacote %s métodos %s foram especificados para exportação mas não foram definidos"
 
 msgid "-- done processing S4 stuff for"
-msgstr ""
+msgstr "-- processamento de S4 concluído para"
 
 msgid "--- processing exports for"
 msgstr "--- processando exportações para"
@@ -1319,7 +1321,7 @@ msgid "no arguments"
 msgstr "sem argumentos"
 
 msgid "an argument will be fractionally recycled"
-msgstr "um argumento vai ser reciclado parcialmente"
+msgstr "um argumento será reciclado parcialmente"
 
 msgid "invalid ncol(x)"
 msgstr "ncol(x) inválido"
@@ -1844,22 +1846,20 @@ msgid_plural "replacement element %d has %d rows to replace %d rows"
 msgstr[0] "elemento substituto %d tem %d linha para substituir %d linhas"
 msgstr[1] "elemento substituto %d tem %d linhas para substituir %d linhas"
 
-#, fuzzy
 msgid "%d row in value to replace %d rows"
 msgid_plural "%d rows in value to replace %d rows"
-msgstr[0] "%d linhas no valor para substituir %d linhas"
-msgstr[1] "%d linhas no valor para substituir %d linhas"
+msgstr[0] "%d linha no valor vai substituir %d linhas"
+msgstr[1] "%d linhas no valor vão substituir %d linhas"
 
 msgid "replacement data has %d row to replace %d rows"
 msgid_plural "replacement data has %d rows to replace %d rows"
 msgstr[0] "dados substitutos tem %d linha para substituir %d linhas"
 msgstr[1] "dados substitutos têm %d linhas para substituir %d linhas"
 
-#, fuzzy
 msgid "provided %d variable to replace %d variables"
 msgid_plural "provided %d variables to replace %d variables"
-msgstr[0] "especificadas %d variáveis para substituir %d variáveis"
-msgstr[1] "especificadas %d variáveis para substituir %d variáveis"
+msgstr[0] "%d variável especificada vai substituir %d variáveis"
+msgstr[1] "%d variáveis especificadas vão substituir %d variáveis"
 
 msgid "data frame with 0 columns and %d row"
 msgid_plural "data frame with 0 columns and %d rows"
@@ -1886,17 +1886,15 @@ msgid_plural "objects %s not found"
 msgstr[0] "objeto %s não encontrado"
 msgstr[1] "objetos %s não encontrado"
 
-#, fuzzy
 msgid "'arg' should be %s"
 msgid_plural "'arg' should be one of %s"
-msgstr[0] "'arg' deve ser um dentre %s"
+msgstr[0] "'arg' deve ser %s"
 msgstr[1] "'arg' deve ser um dentre %s"
 
-#, fuzzy
 msgid "'by' must specify a uniquely valid column"
 msgid_plural "'by' must specify uniquely valid columns"
-msgstr[0] "'by' deve especificar coluna(s) válida(s)"
-msgstr[1] "'by' deve especificar coluna(s) válida(s)"
+msgstr[0] "'by' deve unicamente especificar coluna válida"
+msgstr[1] "'by' deve unicamente especificar colunas válidas"
 
 msgid "Function found when exporting methods from the namespace %s which is not S4 generic: %s"
 msgid_plural "Functions found when exporting methods from the namespace %s which are not S4 generic: %s"

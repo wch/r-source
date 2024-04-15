@@ -3,15 +3,15 @@ msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2023-11-30 14:39\n"
-"PO-Revision-Date: 2023-02-17 10:05+0000\n"
-"Last-Translator: Ella Kaye <ella.kaye@gmail.com>\n"
+"PO-Revision-Date: 2023-12-19 16:15+0000\n"
+"Last-Translator: Heather Turner <ht@heatherturner.net>\n"
 "Language-Team: English\n"
 "Language: en_GB\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.13.1\n"
+"X-Generator: Weblate 4.16.4\n"
 
 msgid "invalid 'filename'"
 msgstr "invalid 'filename'"
@@ -35,499 +35,500 @@ msgid "increasing 'x' and 'y' values expected"
 msgstr "increasing 'x' and 'y' values expected"
 
 msgid "no proper 'z' matrix specified"
-msgstr ""
+msgstr "no proper 'z' matrix specified"
 
 msgid "dimensions of 'x', 'y' and 'z' do not match"
-msgstr ""
+msgstr "dimensions of 'x', 'y' and 'z' do not match"
 
 msgid "finite coordinates are needed"
-msgstr ""
+msgstr "finite coordinates are needed"
 
 msgid "'bias' must be positive"
-msgstr ""
+msgstr "'bias' must be positive"
 
 msgid "'alpha' must be false if 'space' is specified"
-msgstr ""
+msgstr "'alpha' must be false if 'space' is specified"
 
 msgid "at least 3 columns needed"
-msgstr ""
+msgstr "at least 3 columns needed"
 
 msgid "rgb matrix must be numeric"
-msgstr ""
+msgstr "rgb matrix must be numeric"
 
 msgid "rgb matrix must have 3 rows"
-msgstr ""
+msgstr "rgb matrix must have 3 rows"
 
 msgid "rgb values must be in [0, maxColorValue]"
-msgstr ""
+msgstr "rgb values must be in [0, maxColorValue]"
 
 msgid "'start' and 'end' must be distinct and in [0, 1]."
-msgstr ""
+msgstr "'start' and 'end' must be distinct and in [0, 1]."
 
 msgid "'palette' does not match any given palette"
-msgstr ""
+msgstr "'palette' does not match any given palette"
 
 msgid "'palette' is ambiguous"
-msgstr ""
+msgstr "'palette' is ambiguous"
 
 msgid "'n' set to %s, the maximum available for %s palette"
-msgstr ""
+msgstr "'n' set to %s, the maximum available for %s palette"
 
 msgid "'gamma' must be a scalar or 'sRGB'"
-msgstr ""
+msgstr "'gamma' must be a scalar or 'sRGB'"
 
 msgid "Color space converter: %s"
-msgstr ""
+msgstr "Colour space converter: %s"
 
 msgid "Reference white: %s"
-msgstr ""
+msgstr "Reference white: %s"
 
 msgid "display gamma = %s"
-msgstr ""
+msgstr "display gamma = %s"
 
 msgid "'from' must be a \"colorConverter\" object or a string"
-msgstr ""
+msgstr "'from' must be a \"colorConverter\" object or a string"
 
 msgid "'to' must be a \"colorConverter\" object or a string"
-msgstr ""
+msgstr "'to' must be a \"colorConverter\" object or a string"
 
 msgid "'from.ref.white' disagrees with definition of %s"
-msgstr ""
+msgstr "'from.ref.white' disagrees with definition of %s"
 
 msgid "'to.ref.white' disagrees with definition of %s"
-msgstr ""
+msgstr "'to.ref.white' disagrees with definition of %s"
 
-#, fuzzy
 msgid "color spaces use different reference whites"
-msgstr "colour spaces use different reference whites."
+msgstr "colour spaces use different reference whites"
 
 msgid "'name' must be a character vector"
-msgstr ""
+msgstr "'name' must be a character vector"
 
 msgid "cannot shut down device 1 (the null device)"
-msgstr ""
+msgstr "cannot shut down device 1 (the null device)"
 
 msgid "cannot supply 'which' and 'device' at the same time"
-msgstr ""
+msgstr "cannot supply 'which' and 'device' at the same time"
 
 msgid "cannot copy from the null device"
-msgstr ""
+msgstr "cannot copy from the null device"
 
 msgid "cannot copy to the null device"
-msgstr ""
+msgstr "cannot copy to the null device"
 
 msgid "cannot copy device to itself"
-msgstr ""
+msgstr "cannot copy device to itself"
 
 msgid "'device' should be a function"
-msgstr ""
+msgstr "'device' should be a function"
 
 msgid "no device to print from"
-msgstr ""
+msgstr "no device to print from"
 
 msgid "can only print from a screen device"
-msgstr ""
+msgstr "can only print from a screen device"
 
 msgid "need to specify one of 'width' and 'height'"
-msgstr ""
+msgstr "need to specify one of 'width' and 'height'"
 
 msgid "dev.control() called without an open graphics device"
-msgstr ""
+msgstr "dev.control() called without an open graphics device"
 
 msgid "argument is missing with no default"
-msgstr ""
+msgstr "argument is missing with no default"
 
 msgid "dev.displaylist() called without an open graphics device"
-msgstr ""
+msgstr "dev.displaylist() called without an open graphics device"
 
 msgid "invalid setting for 'getOption(\"device\")'"
-msgstr ""
+msgstr "invalid setting for 'getOption(\"device\")'"
 
 msgid "device '%s' not found"
-msgstr ""
+msgstr "device '%s' not found"
 
 msgid "no suitable unused file name for pdf()"
-msgstr ""
+msgstr "no suitable unused file name for pdf()"
 
 msgid "dev.new(): using pdf(file=\"%s\")"
-msgstr ""
+msgstr "dev.new(): using pdf(file=\"%s\")"
 
 msgid "no suitable unused file name for postscript()"
-msgstr ""
+msgstr "no suitable unused file name for postscript()"
 
 msgid "dev.new(): using postscript(file=\"%s\")"
-msgstr ""
+msgstr "dev.new(): using postscript(file=\"%s\")"
 
 msgid "Invalid capabilities - alert the device maintainer"
-msgstr ""
+msgstr "Invalid capabilities - alert the device maintainer"
 
 msgid "Invalid span weight"
-msgstr ""
+msgstr "Invalid span weight"
 
 msgid "length of arguments must match (and be greater than 0)"
-msgstr ""
+msgstr "length of arguments must match (and be greater than 0)"
 
 msgid "Invalid glyph width(s)"
-msgstr ""
+msgstr "Invalid glyph width(s)"
 
 msgid "Invalid glyph width"
-msgstr ""
+msgstr "Invalid glyph width"
 
 msgid "Unknown width; using left anchor"
-msgstr ""
+msgstr "Unknown width; using left anchor"
 
 msgid "Invalid glyph height(s)"
-msgstr ""
+msgstr "Invalid glyph height(s)"
 
 msgid "Invalid glyph height"
-msgstr ""
+msgstr "Invalid glyph height"
 
 msgid "Unknown height; using bottom anchor"
-msgstr ""
+msgstr "Unknown height; using bottom anchor"
 
 msgid "Invalid glyph anchor"
-msgstr ""
+msgstr "Invalid glyph anchor"
 
 msgid "Font file longer than 500 will be truncated"
-msgstr ""
+msgstr "Font file longer than 500 will be truncated"
 
 msgid "Font family longer than 200 will be truncated"
-msgstr ""
+msgstr "Font family longer than 200 will be truncated"
 
 msgid "PostScript font name longer than 200 will be truncated"
-msgstr ""
+msgstr "PostScript font name longer than 200 will be truncated"
 
 msgid "Font information is inconsistent"
-msgstr ""
+msgstr "Font information is inconsistent"
 
 msgid "List must include at least one font"
-msgstr ""
+msgstr "List must include at least one font"
 
 msgid "Invalid glyph font"
-msgstr ""
+msgstr "Invalid glyph font"
 
 msgid "Invalid font list"
-msgstr ""
+msgstr "Invalid font list"
 
 msgid "Unknown font"
-msgstr ""
+msgstr "Unknown font"
 
 msgid "There must be anchors named \"left\" and \"bottom\""
-msgstr ""
+msgstr "There must be anchors named \"left\" and \"bottom\""
 
 msgid "Invalid glyph info"
-msgstr ""
+msgstr "Invalid glyph info"
 
 msgid "Invalid compositing operator"
-msgstr ""
+msgstr "Invalid compositing operator"
 
 msgid "wrong 'type'; should never happen, please report!"
-msgstr ""
+msgstr "wrong 'type'; should never happen, please report!"
 
 msgid "Invalid mask type"
-msgstr ""
+msgstr "Invalid mask type"
 
 msgid "Invalid fill rule"
-msgstr ""
+msgstr "Invalid fill rule"
 
 msgid "Invalid pattern type"
-msgstr ""
+msgstr "Invalid pattern type"
 
 msgid "Invalid 'extend' value"
-msgstr ""
+msgstr "Invalid 'extend' value"
 
 msgid "'%s' is deprecated."
-msgstr ""
+msgstr "'%s' is deprecated."
 
 msgid "invalid arguments in '%s' (need named args)"
-msgstr ""
+msgstr "invalid arguments in '%s' (need named args)"
 
 msgid "'name.opt' must be character, name of an existing list"
-msgstr ""
+msgstr "'name.opt' must be character, name of an existing list"
 
 msgid "cannot reset non-existent '%s'"
-msgstr ""
+msgstr "cannot reset non-existent '%s'"
 
 msgid "invalid options in '%s'"
-msgstr ""
+msgstr "invalid options in '%s'"
 
 msgid "NOT changing %s"
-msgstr ""
+msgstr "NOT changing %s"
 
 msgid "argument 'append' is for back-compatibility and will be ignored"
-msgstr ""
+msgstr "argument 'append' is for back-compatibility and will be ignored"
 
 msgid "unknown family '%s'"
-msgstr ""
+msgstr "unknown family '%s'"
 
 msgid "invalid 'family' argument"
-msgstr ""
+msgstr "invalid 'family' argument"
 
 msgid "'title' argument \"%s\" contains invalid characters"
-msgstr ""
+msgstr "'title' argument \"%s\" contains invalid characters"
 
 msgid "invalid 'file' argument '%s'"
-msgstr ""
+msgstr "invalid 'file' argument '%s'"
 
 msgid "invalid PDF version"
-msgstr ""
+msgstr "invalid PDF version"
 
 msgid "Invalid font type"
-msgstr ""
+msgstr "Invalid font type"
 
 msgid "invalid family name in font specification"
-msgstr ""
+msgstr "invalid family name in font specification"
 
 msgid "invalid metric information in font specification"
-msgstr ""
+msgstr "invalid metric information in font specification"
 
 msgid "invalid encoding in font specification"
-msgstr ""
+msgstr "invalid encoding in font specification"
 
 msgid "Not a CID font"
-msgstr ""
+msgstr "Not a CID font"
 
 msgid "invalid CMap name in font specification"
-msgstr ""
+msgstr "invalid CMap name in font specification"
 
 msgid "invalid 'cmapEncoding' in font specification"
-msgstr ""
+msgstr "invalid 'cmapEncoding' in font specification"
 
 msgid "invalid PDF resource in font specification"
-msgstr ""
+msgstr "invalid PDF resource in font specification"
 
 msgid "Invalid font database name"
-msgstr ""
+msgstr "Invalid font database name"
 
 msgid "font %s already in use"
-msgstr ""
+msgstr "font %s already in use"
 
 msgid "invalid arguments in '%s' (must be font names)"
-msgstr ""
+msgstr "invalid arguments in '%s' (must be font names)"
 
 msgid "unknown font"
-msgstr ""
+msgstr "unknown font"
 
 msgid "font encoding mismatch '%s'/'%s'"
-msgstr ""
+msgstr "font encoding mismatch '%s'/'%s'"
 
 msgid "'%s' must be a non-empty character string"
-msgstr ""
+msgstr "'%s' must be a non-empty character string"
 
 msgid "GhostScript was not found"
-msgstr ""
+msgstr "GhostScript was not found"
 
 msgid "invalid output format"
-msgstr ""
+msgstr "invalid output format"
 
 msgid "status %d in running command '%s'"
-msgstr ""
+msgstr "status %d in running command '%s'"
 
 msgid "'file' must be a non-empty character string"
-msgstr ""
+msgstr "'file' must be a non-empty character string"
 
 msgid "Invalid 'glyphInfo'"
-msgstr ""
+msgstr "Invalid 'glyphInfo'"
 
 msgid "failed to add more ticks; 'min.n' too large?"
-msgstr ""
+msgstr "failed to add more ticks; 'min.n' too large?"
 
 msgid "a raster matrix must be character, or numeric, or logical"
-msgstr ""
+msgstr "a raster matrix must be character, or numeric, or logical"
 
 msgid "a raster array must be numeric"
-msgstr ""
+msgstr "a raster array must be numeric"
 
 msgid "a raster array must have exactly 3 dimensions"
-msgstr ""
+msgstr "a raster array must have exactly 3 dimensions"
 
 msgid "a raster array must have exactly 3 or 4 planes"
-msgstr ""
+msgstr "a raster array must have exactly 3 or 4 planes"
 
 msgid "'drop' is always implicitly FALSE in '[.raster'"
-msgstr ""
+msgstr "'drop' is always implicitly FALSE in '[.raster'"
 
 msgid "invalid raster subsetting"
-msgstr ""
+msgstr "invalid raster subsetting"
 
 msgid "invalid raster subassignment"
-msgstr ""
+msgstr "invalid raster subassignment"
 
 msgid "operator not meaningful for raster objects"
-msgstr ""
+msgstr "operator not meaningful for raster objects"
 
 msgid "no current device to record from"
-msgstr ""
+msgstr "no current device to record from"
 
 msgid "argument is not of class %s"
-msgstr ""
+msgstr "argument is not of class %s"
 
 msgid "invalid \"recordedplot\":"
-msgstr ""
+msgstr "invalid \"recordedplot\":"
 
 msgid "snapshot recorded in different R version (pre 3.3.0)"
-msgstr ""
+msgstr "snapshot recorded in different R version (pre 3.3.0)"
 
 msgid "snapshot recorded in different R version (%s)"
-msgstr ""
+msgstr "snapshot recorded in different R version (%s)"
 
 msgid "snapshot contains invalid graphics call"
-msgstr ""
+msgstr "snapshot contains invalid graphics call"
 
 msgid "'nbin' must be numeric of length 1 or 2"
-msgstr ""
+msgstr "'nbin' must be numeric of length 1 or 2"
 
 msgid "'bandwidth' must be numeric"
-msgstr ""
+msgstr "'bandwidth' must be numeric"
 
 msgid "'bandwidth' must be positive"
-msgstr ""
+msgstr "'bandwidth' must be positive"
 
 msgid "Must have the ('Recommended') package \"KernSmooth\" installed"
-msgstr ""
+msgstr "Must have the ('Recommended') package \"KernSmooth\" installed"
 
 msgid "'r' must be a \"range\", hence of length 2"
-msgstr ""
+msgstr "'r' must be a \"range\", hence of length 2"
 
 msgid "points cut off after point[%d]"
-msgstr ""
+msgstr "points cut off after point[%d]"
 
 msgid "invalid first argument"
-msgstr ""
+msgstr "invalid first argument"
 
 msgid "'x' is a list, but does not have components 'x' and 'y'"
-msgstr ""
+msgstr "'x' is a list, but does not have components 'x' and 'y'"
 
 msgid "'x' and 'y' lengths differ"
-msgstr ""
+msgstr "'x' and 'y' lengths differ"
 
 msgid "invalid first argument [bad language object]"
-msgstr ""
+msgstr "invalid first argument [bad language object]"
 
 msgid "at least 2 columns needed"
-msgstr ""
+msgstr "at least 2 columns needed"
 
 msgid "'x' is a list, but does not have components 'x', 'y'  and 'z'"
-msgstr ""
+msgstr "'x' is a list, but does not have components 'x', 'y' and 'z'"
 
 msgid "'x', 'y' and 'z' lengths differ"
-msgstr ""
+msgstr "'x', 'y' and 'z' lengths differ"
 
 msgid "'file' is missing with no default"
-msgstr ""
+msgstr "'file' is missing with no default"
 
 msgid "unrecognized format of gs -help"
-msgstr ""
+msgstr "unrecognised format of gs -help"
 
 msgid "device '%s' is not available"
-msgstr ""
+msgstr "device '%s' is not available"
 
 msgid ""
 "Available devices are:\n"
 "%s"
 msgstr ""
+"Available devices are:\n"
+"%s"
 
 msgid "invalid width"
-msgstr ""
+msgstr "invalid width"
 
 msgid "invalid height"
-msgstr ""
+msgstr "invalid height"
 
 msgid "'res' must be specified unless 'units = \"px\"'"
-msgstr ""
+msgstr "'res' must be specified unless 'units = \"px\"'"
 
 msgid "'filename' must be a non-empty character string"
-msgstr ""
+msgstr "'filename' must be a non-empty character string"
 
 msgid "type = \"quartz\" is unavailable. trying \"Xlib\""
-msgstr ""
+msgstr "type = \"quartz\" is unavailable; trying \"Xlib\""
 
 msgid "type = \"cairo\" is unavailable. trying \"Xlib\""
-msgstr ""
+msgstr "type = \"cairo\" is unavailable; trying \"Xlib\""
 
 msgid "type = \"cairo-png\" is unavailable. trying \"Xlib\""
-msgstr ""
+msgstr "type = \"cairo-png\" is unavailable; trying \"Xlib\""
 
 msgid "compression is not supported for type = \"quartz\""
-msgstr ""
+msgstr "compression is not supported for type = \"quartz\""
 
 msgid "invalid 'title'"
-msgstr ""
+msgstr "invalid 'title'"
 
 msgid "invalid 'file'"
-msgstr ""
+msgstr "invalid 'file'"
 
 msgid "invalid Quartz font:  must be 4 strings"
-msgstr ""
+msgstr "invalid Quartz font: must be 4 strings"
 
 msgid "invalid arguments in 'quartzFonts' (must be font names)"
-msgstr ""
+msgstr "invalid arguments in 'quartzFonts' (must be font names)"
 
 msgid "invalid arguments in 'quartzFonts' (need named args)"
-msgstr ""
+msgstr "invalid arguments in 'quartzFonts' (need named args)"
 
 msgid "cairo-based types are not supported on this build - using \"Xlib\""
-msgstr ""
+msgstr "cairo-based types are not supported on this build - using \"Xlib\""
 
 msgid "unknown family for X11(type = \"XLib\")"
-msgstr ""
+msgstr "unknown family for X11(type = \"XLib\")"
 
 msgid "invalid X11 font specification:"
-msgstr ""
+msgstr "invalid X11 font specification:"
 
 msgid "invalid arguments in 'X11Fonts' (must be font names)"
-msgstr ""
+msgstr "invalid arguments in 'X11Fonts' (must be font names)"
 
 msgid "invalid arguments in 'X11Fonts' (need named args)"
-msgstr ""
+msgstr "invalid arguments in 'X11Fonts' (need named args)"
 
 msgid "no such device"
-msgstr ""
+msgstr "no such device"
 
 msgid "can only copy from 'X11(type=\"*cairo\")' devices"
-msgstr ""
+msgstr "can only copy from 'X11(type=\"*cairo\")' devices"
 
 msgid "invalid value for 'rescale'"
-msgstr ""
+msgstr "invalid value for 'rescale'"
 
 msgid "Calls like '%s' are unsafe and should be replaced by '%s'"
-msgstr ""
+msgstr "Calls like '%s' are unsafe and should be replaced by '%s'"
 
 msgid "can only bring windows devices to the front"
-msgstr ""
+msgstr "can only bring windows devices to the front"
 
 msgid "'type' not applicable to the R console"
-msgstr ""
+msgstr "'type' not applicable to the R console"
 
 msgid "can only manipulate windows devices"
-msgstr ""
+msgstr "can only manipulate windows devices"
 
 msgid "can only copy from 'windows' devices"
-msgstr ""
+msgstr "can only copy from 'windows' devices"
 
 msgid "subscript out of range"
-msgstr ""
+msgstr "subscript out of range"
 
 msgid "invalid Windows font:  must be a single font family name"
-msgstr ""
+msgstr "invalid Windows font: must be a single font family name"
 
 msgid "invalid arguments in 'windowsFonts' (must be font names)"
-msgstr ""
+msgstr "invalid arguments in 'windowsFonts' (must be font names)"
 
 msgid "invalid arguments in 'windowsFonts' (need named args)"
-msgstr ""
+msgstr "invalid arguments in 'windowsFonts' (need named args)"
 
 msgid "invalid argument name %s in '%s'"
 msgid_plural "invalid argument names %s in '%s'"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "invalid argument name %s in '%s'"
+msgstr[1] "invalid argument names %s in '%s'"
 
 msgid "differs between new and previous"
 msgid_plural "differ between new and previous"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "differs between new and previous"
+msgstr[1] "differ between new and previous"
 
 msgid "%d %s value <= 0 omitted from logarithmic plot"
 msgid_plural "%d %s values <= 0 omitted from logarithmic plot"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d %s value <= 0 omitted from logarithmic plot"
+msgstr[1] "%d %s values <= 0 omitted from logarithmic plot"

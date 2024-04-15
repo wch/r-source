@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: stats 4.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-11-30 14:40\n"
+"POT-Creation-Date: 2024-04-15 12:10\n"
 "PO-Revision-Date: 2021-10-15 18:44+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -589,7 +589,8 @@ msgstr "negalima apdoroti 'pairwise.complete.obs'"
 msgid "'V' is not a square numeric matrix"
 msgstr "'V' nėra kvadratiė skaitinė matrica"
 
-msgid "diag(.) had 0 or NA entries; non-finite result is doubtful"
+#, fuzzy
+msgid "diag(V) had non-positive or NA entries; the non-finite result may be dubious"
 msgstr "diag(.) turėjo 0 arba NA įrašus; abejotinas ne baigtinis rezultatas"
 
 msgid "'x' must be a numeric vector"
@@ -1581,6 +1582,9 @@ msgstr "Nepalyginamas 'response' \"%s\"; naudojimas prieštarauja.  Naudokite as
 msgid "'termobj' must be a object of class %s"
 msgstr "'termobj' turi būti klasės %s objektas"
 
+msgid "setting '%s' in terms.formula() is deprecated"
+msgstr ""
+
 msgid "variable '%s' was fitted with type \"%s\" but type \"%s\" was supplied"
 msgstr "kintamasis '%s' buvo pritaikytas tipui \"%s\", bet tipas \"%s\" buvo pateiktas"
 
@@ -2383,7 +2387,8 @@ msgstr "Reikalaujamas conf.level nepasiekiamas"
 msgid "cannot compute confidence interval when all observations are tied"
 msgstr "negali apskaičiuoti pasitikėjimo intervalo, kai visi stebėjimai yra susieti"
 
-msgid "must supply either 'formula' or 'data'"
+#, fuzzy
+msgid "must supply 'formula' or 'data'"
 msgstr "turite pateikti arba 'formula', arba 'data'"
 
 msgid "%s applies only to two-way tables"
@@ -2461,8 +2466,9 @@ msgstr[0] "nežinomas vardas %s 'split' sąraše"
 msgstr[1] "nežinomi vardai %s 'split' sąraše"
 msgstr[2] "nežinomų vardų %s 'split' sąraše"
 
+#, fuzzy
 msgid "extra argument %s is not of class \"%s\""
-msgid_plural "extra arguments %s are not of class \"%s\"s"
+msgid_plural "extra arguments %s are not of class \"%s\""
 msgstr[0] "papildomas argumentas %s nėra \"%s\" klasės"
 msgstr[1] "papildomi argumentai %s nėra \"%s\" klasės"
 msgstr[2] "papildomų argumentų %s nėra \"%s\" klasės"

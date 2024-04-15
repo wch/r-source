@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.0.4\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-11-30 14:40\n"
+"POT-Creation-Date: 2024-04-15 12:10\n"
 "PO-Revision-Date: 2023-04-14 03:05+0000\n"
 "Last-Translator: Hugo Gruson <hugo.gruson@normalesup.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -594,7 +594,8 @@ msgstr "impossible de gérer 'pairwise.complete.obs'"
 msgid "'V' is not a square numeric matrix"
 msgstr "'V' n'est pas une matrice carrée numérique"
 
-msgid "diag(.) had 0 or NA entries; non-finite result is doubtful"
+#, fuzzy
+msgid "diag(V) had non-positive or NA entries; the non-finite result may be dubious"
 msgstr "diag(.) à 0 ou NA entrées ; les résultats non finis sont douteux"
 
 msgid "'x' must be a numeric vector"
@@ -1588,6 +1589,9 @@ msgstr "Impossible d’analyser le code de la reponse \"%s\" ; cet usage est obs
 msgid "'termobj' must be a object of class %s"
 msgstr "'termobj' doit être un objet de classe %s"
 
+msgid "setting '%s' in terms.formula() is deprecated"
+msgstr ""
+
 msgid "variable '%s' was fitted with type \"%s\" but type \"%s\" was supplied"
 msgstr "la variable '%s' a été ajustée avec le type \"%s\" mais le type \"%s\" a été fourni"
 
@@ -2388,7 +2392,8 @@ msgstr "Requête 'conf.level' impossible à atteindre"
 msgid "cannot compute confidence interval when all observations are tied"
 msgstr "impossible de calculer un intervalle de confiance avec des observations toutes égales"
 
-msgid "must supply either 'formula' or 'data'"
+#, fuzzy
+msgid "must supply 'formula' or 'data'"
 msgstr "il faut fournir soit 'formula', soit 'data'"
 
 msgid "%s applies only to two-way tables"
@@ -2461,8 +2466,9 @@ msgid_plural "unknown names %s in the 'split' list"
 msgstr[0] "nom %s inconnu dans la liste 'split'"
 msgstr[1] "noms %s inconnus dans la liste 'split'"
 
+#, fuzzy
 msgid "extra argument %s is not of class \"%s\""
-msgid_plural "extra arguments %s are not of class \"%s\"s"
+msgid_plural "extra arguments %s are not of class \"%s\""
 msgstr[0] "l'argument supplémentaire %s n'est pas un \"%s\""
 msgstr[1] "les arguments supplémentaires %s ne sont pas des \"%s\""
 

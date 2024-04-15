@@ -8,14 +8,15 @@ msgstr ""
 "Project-Id-Version: R-4.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2023-11-30 16:47+0100\n"
-"PO-Revision-Date: 2023-01-28 21:04+0000\n"
-"Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
+"PO-Revision-Date: 2024-03-18 21:18+0000\n"
+"Last-Translator: Michael Chirico <michaelchirico4@gmail.com>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n == 1 ? 0 : 1;\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.16.4\n"
 
 #: src/gnuwin32/console.c:1200 src/gnuwin32/console.c:1242
 msgid "Not enough memory"
@@ -65,7 +66,7 @@ msgid ""
 "  Mouse: use the scrollbar(s).\n"
 "\n"
 msgstr ""
-" Maus: nutze die Scrollbar(s).\n"
+"  Maus: nutze die Scrollbar(s).\n"
 "\n"
 
 #: src/gnuwin32/console.c:2304
@@ -110,7 +111,9 @@ msgstr "     Backspace: lösche vorhergehendes Zeichen;\n"
 
 #: src/gnuwin32/console.c:2314
 msgid "     Ctrl+Del or Ctrl+K: delete text from current character to end of line.\n"
-msgstr "     Strg+Entf oder Strg+K: lösche Text vom aktuellen Zeichen bis zum Zeilenende.\n"
+msgstr ""
+"     Strg+Entf oder Strg+K: lösche Text vom aktuellen Zeichen bis zum "
+"Zeilenende.\n"
 
 #: src/gnuwin32/console.c:2315
 msgid "     Ctrl+U: delete all text from current line.\n"
@@ -122,15 +125,21 @@ msgstr "  Copy und Paste.\n"
 
 #: src/gnuwin32/console.c:2317
 msgid "     Use the mouse (with the left button held down) to mark (select) text.\n"
-msgstr "     Nutze die Maus (linke Taste gedrückt) um Text zu markieren (auszuwählen).\n"
+msgstr ""
+"     Nutze die Maus (linke Taste gedrückt) um Text zu markieren "
+"(auszuwählen).\n"
 
 #: src/gnuwin32/console.c:2318
 msgid "     Use Shift+Del (or Ctrl+C) to copy the marked text to the clipboard and\n"
-msgstr "     Nutzte Shift+Entf (oder Strg+C) um markierten Text in die Zwischenablage zu kopieren und\n"
+msgstr ""
+"     Nutzte Shift+Entf (oder Strg+C) um markierten Text in die "
+"Zwischenablage zu kopieren und\n"
 
 #: src/gnuwin32/console.c:2319
 msgid "     Shift+Ins (or Ctrl+V or Ctrl+Y) to paste the content of the clipboard (if any)  \n"
-msgstr "     Shift+Einf (oder Strg+V oder Strg+Y) um den Inhalt der Zwischenablage einzufügen (falls nicht leer)  \n"
+msgstr ""
+"     Shift+Einf (oder Strg+V oder Strg+Y) um den Inhalt der Zwischenablage "
+"einzufügen (falls nicht leer)  \n"
 
 #: src/gnuwin32/console.c:2320
 msgid "     to the console, Ctrl+X first copy then paste\n"
@@ -146,7 +155,9 @@ msgstr "     Strg+L: Leere die Konsole.\n"
 
 #: src/gnuwin32/console.c:2323
 msgid "     Ctrl+O or INS: Toggle overwrite mode: initially off.\n"
-msgstr "     Strg+O: Zwischen Überschreiben und Einfügen hin und herschalten, steht anfangs auf Einfügen.\n"
+msgstr ""
+"     Strg+O: Zwischen Überschreiben und Einfügen hin und herschalten, steht "
+"anfangs auf Einfügen.\n"
 
 #: src/gnuwin32/console.c:2324
 msgid "     Ctrl+T: Interchange current char with one to the left.\n"
@@ -165,7 +176,7 @@ msgid ""
 "  Use Ctrl+W to toggle this feature off/on.\n"
 "\n"
 msgstr ""
-" Nutze Strg+W um dieses Feature an- und auszuschalten.\n"
+"  Nutze Strg+W um dieses Feature an- und auszuschalten.\n"
 "\n"
 
 #: src/gnuwin32/console.c:2327
@@ -246,7 +257,8 @@ msgstr "     drücke Strg+R\n"
 
 #: src/gnuwin32/editor.c:680
 msgid "     Select \"Run line or selection\" from the \"Edit\" menu\n"
-msgstr "     wähle \"Ausführung Zeile oder Auswahl\" aus dem \"Bearbeiten\" Menü\n"
+msgstr ""
+"     wähle \"Ausführung Zeile oder Auswahl\" aus dem \"Bearbeiten\" Menü\n"
 
 #: src/gnuwin32/editor.c:681
 msgid "     Press the \"Run line or selection\" icon on the toolbar\n"

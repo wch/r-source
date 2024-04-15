@@ -8,13 +8,15 @@ msgstr ""
 "Project-Id-Version: R 2.15.2\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2023-11-30 16:47+0100\n"
-"PO-Revision-Date: 2012-10-26 22:30+0330\n"
-"Last-Translator: Seyed Mahmood Taghavi Shahri <taghavi_m@razi.tums.ac.ir>\n"
+"PO-Revision-Date: 2024-03-18 21:18+0000\n"
+"Last-Translator: Michael Chirico <michaelchirico4@gmail.com>\n"
 "Language-Team: Persian\n"
 "Language: fa\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 4.16.4\n"
 
 #: src/gnuwin32/console.c:1200 src/gnuwin32/console.c:1242
 msgid "Not enough memory"
@@ -57,14 +59,16 @@ msgstr "راهنمای پیمایش کنسول \n"
 
 #: src/gnuwin32/console.c:2302
 msgid "  Keyboard: PgUp, PgDown, Ctrl+Arrows, Ctrl+Home, Ctrl+End,\n"
-msgstr " و کنترل کلیدهای جهتی Ctrl+End و Ctrl+Home و PgDown و PgUp :صفحه‌کلید \n"
+msgstr ""
+"  و کنترل کلیدهای جهتی Ctrl+End و Ctrl+Home و PgDown و PgUp :صفحه‌کلید\n"
 
 #: src/gnuwin32/console.c:2303
 msgid ""
 "  Mouse: use the scrollbar(s).\n"
 "\n"
 msgstr ""
-" موشی: از میله لغزشی که در لبه راست یا پایین کنسول ظاهر می‌شود استفاده کنید \n"
+"  موشی: از میله لغزشی که در لبه راست یا پایین کنسول ظاهر می‌شود استفاده "
+"کنید\n"
 "\n"
 
 #: src/gnuwin32/console.c:2304
@@ -73,85 +77,91 @@ msgstr "راهنمای ویرایش در کنسول \n"
 
 #: src/gnuwin32/console.c:2305
 msgid "  Moving the cursor: \n"
-msgstr "برای جابجایی مکان‌نمای چشمک‌زن: \n"
+msgstr "  برای جابجایی مکان‌نمای چشمک‌زن: \n"
 
 #: src/gnuwin32/console.c:2306
 msgid "     Left arrow or Ctrl+B: move backward one character;\n"
-msgstr " مکان‌نمای چشمک‌زن را یک حرف به عقب می‌برد Ctrl+B کلید جهتی چپ یا \n"
+msgstr "     مکان‌نمای چشمک‌زن را یک حرف به عقب می‌برد Ctrl+B کلید جهتی چپ یا\n"
 
 #: src/gnuwin32/console.c:2307
 msgid "     Right arrow or Ctrl+F: move forward one character;\n"
-msgstr " مکان‌نمای چشمک‌زن را یک حرف به جلو می‌برد Ctrl+F کلید جهتی راست یا \n"
+msgstr ""
+"     مکان‌نمای چشمک‌زن را یک حرف به جلو می‌برد Ctrl+F کلید جهتی راست یا\n"
 
 #: src/gnuwin32/console.c:2308
 msgid "     Home or Ctrl+A: go to beginning of line;\n"
-msgstr " مکان‌نمای چشمک‌زن را به ابتدای خط انتقال می‌دهد Ctrl+A یا Home \n"
+msgstr "     مکان‌نمای چشمک‌زن را به ابتدای خط انتقال می‌دهد Ctrl+A یا Home\n"
 
 #: src/gnuwin32/console.c:2309
 msgid "     End or Ctrl+E: go to end of line;\n"
-msgstr " مکان‌نمای چشمک‌زن را به انتهای خط انتقال می‌دهد Ctrl+E یا End \n"
+msgstr "     مکان‌نمای چشمک‌زن را به انتهای خط انتقال می‌دهد Ctrl+E یا End\n"
 
 #: src/gnuwin32/console.c:2310
 msgid "  History: Up and Down Arrows, Ctrl+P, Ctrl+N\n"
-msgstr " تاریخچه را نشان می‌دهند Ctrl+N و Ctrl+P کلیدهای جهتی بالا و پایین یا \n"
+msgstr ""
+"  تاریخچه را نشان می‌دهند Ctrl+N و Ctrl+P کلیدهای جهتی بالا و پایین یا\n"
 
 #: src/gnuwin32/console.c:2311
 msgid "  Deleting:\n"
-msgstr "برای پاک کردن متن: \n"
+msgstr "  برای پاک کردن متن:\n"
 
 #: src/gnuwin32/console.c:2312
 msgid "     Del or Ctrl+D: delete current character or selection;\n"
-msgstr " حرف (جاری) سمت راست یا محدوده منتخب را پاک می‌کند Ctrl+D یا Del \n"
+msgstr "     حرف (جاری) سمت راست یا محدوده منتخب را پاک می‌کند Ctrl+D یا Del\n"
 
 #: src/gnuwin32/console.c:2313
 msgid "     Backspace: delete preceding character;\n"
-msgstr " حرف (قبلی) سمت چپ را پاک می‌کند Backspace \n"
+msgstr "     حرف (قبلی) سمت چپ را پاک می‌کند Backspace\n"
 
 #: src/gnuwin32/console.c:2314
 msgid "     Ctrl+Del or Ctrl+K: delete text from current character to end of line.\n"
-msgstr " از حرف (جاری) سمت راست تا انتهای خط را پاک می‌کند Ctrl+K یا Ctrl+Del \n"
+msgstr ""
+"     از حرف (جاری) سمت راست تا انتهای خط را پاک می‌کند Ctrl+K یا Ctrl+Del\n"
 
 #: src/gnuwin32/console.c:2315
 msgid "     Ctrl+U: delete all text from current line.\n"
-msgstr " نمام متن خط جاری را پاک می‌کند Ctrl+U \n"
+msgstr "     نمام متن خط جاری را پاک می‌کند Ctrl+U\n"
 
 #: src/gnuwin32/console.c:2316
 msgid "  Copy and paste.\n"
-msgstr "برای کپی و جای گذاری: \n"
+msgstr "  برای کپی و جای گذاری:\n"
 
 #: src/gnuwin32/console.c:2317
 msgid "     Use the mouse (with the left button held down) to mark (select) text.\n"
-msgstr " برای علامت‌گذاری متن (انتخاب) از موشی (با نگه داشتن دکمه چپ) استفاده کنید \n"
+msgstr ""
+"     برای علامت‌گذاری متن (انتخاب) از موشی (با نگه داشتن دکمه چپ) استفاده "
+"کنید\n"
 
 #: src/gnuwin32/console.c:2318
 msgid "     Use Shift+Del (or Ctrl+C) to copy the marked text to the clipboard and\n"
-msgstr " برای کپی متن علامت‌گذاری به کلیپ‌بورد بکار می‌رود Shift+Del یا Ctrl+C \n"
+msgstr ""
+"     برای کپی متن علامت‌گذاری به کلیپ‌بورد بکار می‌رود Shift+Del یا Ctrl+C\n"
 
 #: src/gnuwin32/console.c:2319
 msgid "     Shift+Ins (or Ctrl+V or Ctrl+Y) to paste the content of the clipboard (if any)  \n"
 msgstr ""
-" در کنسول برای Shift+Ins یا Ctrl+Y یا Ctrl+V \n"
-" جای گذاری محتوای کلیپ‌بورد (اگر وجود داشته باشد) بکار می‌رود \n"
+"     در کنسول برای Shift+Ins یا Ctrl+Y یا Ctrl+V \n"
+" جای گذاری محتوای کلیپ‌بورد (اگر وجود داشته باشد) بکار می‌رود  \n"
 
 #: src/gnuwin32/console.c:2320
 msgid "     to the console, Ctrl+X first copy then paste\n"
-msgstr " از متن کپی گرفته و همزمان جای گذاری می کند Ctrl+X \n"
+msgstr "     از متن کپی گرفته و همزمان جای گذاری می کند Ctrl+X\n"
 
 #: src/gnuwin32/console.c:2321
 msgid "  Misc:\n"
-msgstr "راهنمای موارد دیگر \n"
+msgstr "  راهنمای موارد دیگر\n"
 
 #: src/gnuwin32/console.c:2322
 msgid "     Ctrl+L: Clear the console.\n"
-msgstr " متن کنسول را پاک می‌کند Ctrl+L \n"
+msgstr "     متن کنسول را پاک می‌کند Ctrl+L\n"
 
 #: src/gnuwin32/console.c:2323
 msgid "     Ctrl+O or INS: Toggle overwrite mode: initially off.\n"
-msgstr " حالت جای‌نوشت را که ابتدائا خاموش است روشن می‌کند Ctrl+O یا INS \n"
+msgstr "     حالت جای‌نوشت را که ابتدائا خاموش است روشن می‌کند Ctrl+O یا INS\n"
 
 #: src/gnuwin32/console.c:2324
 msgid "     Ctrl+T: Interchange current char with one to the left.\n"
-msgstr " حروف راست و چپ مکان‌نمای چشمک‌زن را با هم عوض می‌کند Ctrl+T \n"
+msgstr "     حروف راست و چپ مکان‌نمای چشمک‌زن را با هم عوض می‌کند Ctrl+T\n"
 
 #: src/gnuwin32/console.c:2325
 msgid ""
@@ -166,7 +176,7 @@ msgid ""
 "  Use Ctrl+W to toggle this feature off/on.\n"
 "\n"
 msgstr ""
-" بکار می‌رود Ctrl+W برای تغییر حالت خروجی به لحظه‌ای و بالعکس \n"
+"  بکار می‌رود Ctrl+W برای تغییر حالت خروجی به لحظه‌ای و بالعکس\n"
 "\n"
 
 #: src/gnuwin32/console.c:2327
@@ -174,7 +184,7 @@ msgid ""
 "Use ESC to stop the interpreter.\n"
 "\n"
 msgstr ""
-" برای توقف محاسبات نرم‌افزار بکار می‌رود ESC \n"
+"برای توقف محاسبات نرم‌افزار بکار می‌رود ESC\n"
 "\n"
 
 #: src/gnuwin32/console.c:2328
@@ -182,16 +192,16 @@ msgid ""
 "TAB starts completion of the current word.\n"
 "\n"
 msgstr ""
-" در هنگام تایپ دستورات باعث کامل نمودن نام اشیاء و توابع می‌شود TAB \n"
+"در هنگام تایپ دستورات باعث کامل نمودن نام اشیاء و توابع می‌شود TAB\n"
 "\n"
 
 #: src/gnuwin32/console.c:2329
 msgid "Standard Windows hotkeys can be used to switch to the\n"
-msgstr " با کلیدهای تعریف شده در ویندوز می‌توان بین پنجره‌ها جابه‌جا شد \n"
+msgstr "با کلیدهای تعریف شده در ویندوز می‌توان بین پنجره‌ها جابه‌جا شد \n"
 
 #: src/gnuwin32/console.c:2330
 msgid "graphics device (Ctrl+Tab or Ctrl+F6 in MDI, Alt+Tab in SDI)"
-msgstr " SDI در حالت Alt+Tab و MDI در حالت Ctrl+F6 یا Ctrl+Tab"
+msgstr "SDI در حالت Alt+Tab و MDI در حالت Ctrl+F6 یا Ctrl+Tab"
 
 #: src/gnuwin32/editor.c:89 src/gnuwin32/editor.c:91
 msgid "R Editor"
@@ -239,31 +249,34 @@ msgstr "راهنمای اجرای دستورات از داخل ویرایشگر 
 
 #: src/gnuwin32/editor.c:678
 msgid "To run a line or section of R code, select the code and either\n"
-msgstr " مکان‌نمای چشمک‌زن را در خطی که قصد اجرای دستورات آن را دارید قرار دهید \n"
+msgstr "مکان‌نمای چشمک‌زن را در خطی که قصد اجرای دستورات آن را دارید قرار دهید \n"
 
 #: src/gnuwin32/editor.c:679
 msgid "     Press Ctrl-R\n"
-msgstr " و یا محدوده مورد نظر را با فشرده نگه داشتن دکمه چپ موشی انتخاب نمایید \n"
+msgstr ""
+"     و یا محدوده مورد نظر را با فشرده نگه داشتن دکمه چپ موشی انتخاب نمایید\n"
 
 #: src/gnuwin32/editor.c:680
 msgid "     Select \"Run line or selection\" from the \"Edit\" menu\n"
-msgstr " سپس از منوی ویرایش گزینه اجرای خط جاری یا محدوده منتخب را برگزینید \n"
+msgstr ""
+"     سپس از منوی ویرایش گزینه اجرای خط جاری یا محدوده منتخب را برگزینید\n"
 
 #: src/gnuwin32/editor.c:681
 msgid "     Press the \"Run line or selection\" icon on the toolbar\n"
-msgstr " را فشار دهید Ctrl-R یا شمایل مذکور در نوارابزار را تلیک کنید و یا \n"
+msgstr ""
+"     را فشار دهید Ctrl-R یا شمایل مذکور در نوارابزار را تلیک کنید و یا\n"
 
 #: src/gnuwin32/editor.c:682
 msgid "This will copy the selected commands to the console and evaluate them.\n"
-msgstr " مراحل فوق باعث جای گذاری کپی دستورات در کنسول و اجرای آن می‌شود \n"
+msgstr "مراحل فوق باعث جای گذاری کپی دستورات در کنسول و اجرای آن می‌شود \n"
 
 #: src/gnuwin32/editor.c:683
 msgid "If there is no selection, this will just run the current line and advance\n"
-msgstr " اگر هیچ محدوده‌ای انتخاب نشده باشد، دستورات خط جاری اجرا می‌گردد \n"
+msgstr "اگر هیچ محدوده‌ای انتخاب نشده باشد، دستورات خط جاری اجرا می‌گردد \n"
 
 #: src/gnuwin32/editor.c:684
 msgid "the cursor by one line.\n"
-msgstr " و پس از آن مکان‌نمای چشمک‌زن به ابتدای خط بعد منتقل می‌شود \n"
+msgstr "و پس از آن مکان‌نمای چشمک‌زن به ابتدای خط بعد منتقل می‌شود \n"
 
 #: src/gnuwin32/editor.c:696 src/gnuwin32/editor.c:773
 #: src/gnuwin32/editor.c:831
@@ -477,7 +490,7 @@ msgid ""
 "Do not change pager type if any pager is open\n"
 "Proceed?"
 msgstr ""
-" !وقتی پنجره پیجر (نمایش پرونده) باز است، نوع پیجر را تغییر ندهید \n"
+"!وقتی پنجره پیجر (نمایش پرونده) باز است، نوع پیجر را تغییر ندهید \n"
 "با این وجود باز هم می‌خواهید ادامه می‌دهید؟"
 
 #: src/gnuwin32/preferences.c:420
@@ -823,7 +836,7 @@ msgstr "سوال"
 
 #: src/extra/graphapp/dialogs.c:249
 msgid " Change working directory to:"
-msgstr "مکان پوشه کاری را می توانید تغییر دهید:"
+msgstr " مکان پوشه کاری را می توانید تغییر دهید:"
 
 #: src/extra/graphapp/dialogs.c:251
 #, c-format
@@ -835,7 +848,7 @@ msgstr "به عنوان پوشه‌کاری '%s' ناتوان در تنظیم"
 #: src/extra/graphapp/dialogs.c:853 src/extra/graphapp/dialogs.c:859
 #: src/library/utils/src/windows/widgets.c:127
 msgid "Cancel"
-msgstr " لغو "
+msgstr "لغو"
 
 #: src/extra/graphapp/dialogs.c:725 src/extra/graphapp/dialogs.c:855
 #: src/library/utils/src/windows/widgets.c:126

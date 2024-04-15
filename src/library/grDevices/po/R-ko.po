@@ -52,7 +52,7 @@ msgid "'bias' must be positive"
 msgstr "'bias'는 반드시 양수이어야 합니다"
 
 msgid "'alpha' must be false if 'space' is specified"
-msgstr "'space'가 지정되었다면 'alpha'는 반드시 거짓이어야 합니다 "
+msgstr "'space'가 지정되었다면 'alpha'는 반드시 거짓이어야 합니다"
 
 msgid "at least 3 columns needed"
 msgstr "최소한 3개의 열들이 필요합니다"
@@ -493,7 +493,7 @@ msgid "unknown family for X11(type = \"XLib\")"
 msgstr "X11(type = \"XLib\")에 알 수 없는 페밀리입니다"
 
 msgid "invalid X11 font specification:"
-msgstr "유효하지 않은 X11 폰트 지정입니다: "
+msgstr "유효하지 않은 X11 폰트 지정입니다:"
 
 msgid "invalid arguments in 'X11Fonts' (must be font names)"
 msgstr "'X11Fonts'에 유효하지 않은 인자들이 있습니다 (반드시 폰트명이어야 합니다)"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-11-30 14:40\n"
+"POT-Creation-Date: 2024-03-27 16:15\n"
 "PO-Revision-Date: 2012-12-30 23:32+0330\n"
 "Last-Translator: Seyed Mahmood Taghavi Shahri <taghavi_m@razi.tums.ac.ir>\n"
 "Language-Team: Persian\n"
@@ -134,6 +134,9 @@ msgid ""
 msgstr ""
 
 msgid "No suitable spell check program found."
+msgstr ""
+
+msgid "Performing query %s"
 msgstr ""
 
 msgid ""

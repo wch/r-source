@@ -9,14 +9,15 @@ msgstr ""
 "Project-Id-Version: R 3.5.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2023-07-31 14:59\n"
-"PO-Revision-Date: 2021-11-06 17:41+0100\n"
-"Last-Translator: Wei-Lun Chao <bluebat@member.fsf.org>\n"
+"PO-Revision-Date: 2024-03-19 03:05+0000\n"
+"Last-Translator: Michael Chirico <michaelchirico4@gmail.com>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
 "Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 4.16.4\n"
 
 msgid "OOPS: something wrong with '.OldClassesPrototypes[[%d]]'"
 msgstr "啊呀：'.OldClassesPrototypes[[%d]]' 那裡發生錯誤了"
@@ -106,7 +107,7 @@ msgstr "必須提供函式 %s 的骨架，要麼是明確地提供，要麼透�
 msgid ""
 "Creating a generic function for %s from %s in %s\n"
 "    (from the saved implicit definition)"
-msgstr " %3$s 裡的從 %2$s 為 %1$s 建立新的泛型函式(從儲存的隱含定義)"
+msgstr "%3$s 裡的從 %2$s 為 %1$s 建立新的泛型函式(從儲存的隱含定義)"
 
 msgid "Creating a new generic function for %s in %s"
 msgstr "為 %2$s 裡的 %1$s 建立新的泛型函式"
@@ -235,7 +236,7 @@ msgid "%s is a primitive function; its generic form cannot be redefined"
 msgstr "%s 是基元函式；其泛型形式是不能被重新定義的"
 
 msgid "%s is not currently a generic:  define it first to create a non-default implicit form"
-msgstr "%s 目前不是泛型函式：請先將之定義以建立一個非較默隱含形式 "
+msgstr "%s 目前不是泛型函式：請先將之定義以建立一個非較默隱含形式"
 
 msgid "must provide an environment table; got class %s"
 msgstr "必須提供環境表；得到的是 %s 類別"
@@ -534,7 +535,7 @@ msgid "argument 'includeSubclasses' must be a logical, either one value or a vec
 msgstr "引數 'includeSubclasses' 必須是邏輯值，要麼是單一值要麼是向量，其長度應同引數 'classes' 相等"
 
 msgid "argument 'abbreviate' must be 0, 1, 2, or 3"
-msgstr "引數 'abbreviate' 必須為零，1，2，或 3 "
+msgstr "引數 'abbreviate' 必須為零，1，2，或 3"
 
 msgid "needed the supplied labels vector of length %d, got %d"
 msgstr "需要的是長度為 %d 而不是 %d 的標籤向量"
@@ -884,7 +885,7 @@ msgid "need a definition for the method here"
 msgstr "這裡需要方法定義"
 
 msgid "Skeleton of method written to %s"
-msgstr "方法骨架寫於 %s "
+msgstr "方法骨架寫於 %s"
 
 msgid "invalid object in meta table of methods for %s, label %s, had class %s"
 msgstr "元方法表裡方法 %1$s，標籤 %2$s 的物件不對，類別不應該是 %3$s"
@@ -1242,7 +1243,7 @@ msgid "unloading 'methods' package ..."
 msgstr "卸載 'methods' 程式套件"
 
 msgid "apparently bad method or class metadata in saved environment;"
-msgstr "儲存的環境中出現了不良方法或類別後設資料；"
+msgstr "儲存的環境中出現了不良方法或類別後設資料;"
 
 msgid "move the file or remove the class/method"
 msgstr "移動檔案或刪除類別/方法"

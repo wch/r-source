@@ -7,11 +7,11 @@
 # This file is distributed under the same license as the R package.
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.9.0\n"
+"Project-Id-Version: R 4.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-07-31 14:59\n"
-"PO-Revision-Date: 2020-08-27 19:44+0900\n"
-"Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
+"POT-Creation-Date: 2024-03-25 17:46\n"
+"PO-Revision-Date: 2023-12-17 11:22+0300\n"
+"Last-Translator: Ivan Krylov <ikrylov@disroot.org>\n"
 "Language-Team: Russian\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
@@ -88,16 +88,16 @@ msgid "'df' was too small; have used %d"
 msgstr "'df' был слишком мал; использован %d"
 
 msgid "non-finite knots"
-msgstr ""
+msgstr "не-конечные координаты узлов"
 
 msgid "all interior knots match left boundary knot"
-msgstr ""
+msgstr "все внутренние узлы совпадают с левым граничным узлом"
 
 msgid "all interior knots match right boundary knot"
-msgstr ""
+msgstr "все внутренние узлы совпадают с правым граничным узлом"
 
 msgid "shoving 'interior' knots matching boundary knots to inside"
-msgstr ""
+msgstr "пододвигаю 'внутренние' узлы, которые совпали с граничными, внутрь"
 
 msgid "some 'x' values beyond boundary knots may cause ill-conditioned bases"
 msgstr "некоторые значения 'x' за граничными узлами могут привести к неправильно обусловленным основаниям"

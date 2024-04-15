@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: R-4-3-BRANCH\n"
-"Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-07-31 14:59+0200\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-03-27 16:15-0700\n"
 "PO-Revision-Date: 2022-10-14 10:43+0200\n"
 "Last-Translator: Daniele Medri <dmedri@gmail.com>\n"
 "Language-Team: Italian https://github.com/dmedri/R-italian-lang\n"
@@ -51,10 +51,10 @@ msgstr "l'argomento non è del tipo corretto"
 msgid "no DISPLAY variable so Tk is not available"
 msgstr "nessuna variabile DISPLAY perciò Tk non è disponibile"
 
-#: tcltk_unix.c:111
+#: tcltk_unix.c:113
 msgid "Tcl is not loaded"
 msgstr "Tcl non è caricato"
 
-#: tcltk_unix.c:115
+#: tcltk_unix.c:117
 msgid "Tcl is not last loaded handler"
 msgstr "Tcl non è l'ultimo gestore caricato"

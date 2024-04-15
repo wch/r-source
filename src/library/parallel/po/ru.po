@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: R 2.14.0\n"
-"Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-11-30 14:40+0100\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-03-27 16:14-0700\n"
 "PO-Revision-Date: 2020-08-27 19:52+0900\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian <ru@li.org>\n"
@@ -63,7 +63,7 @@ msgstr "нет трубы к мастер-процессу"
 msgid "content to send must be RAW, use serialize() if needed"
 msgstr "посылаемый контент должен быть RAW, используйте serialize(), если надо"
 
-#: fork.c:774 fork.c:785 fork.c:1198
+#: fork.c:774 fork.c:785 fork.c:1204
 msgid "write error, closing pipe to the master"
 msgstr "ошибка записи, закрываю трубу к мастеру"
 
@@ -80,36 +80,36 @@ msgstr "дочерний процесс %d не существует"
 msgid "write error"
 msgstr "ошибка записи"
 
-#: fork.c:895
+#: fork.c:897
 #, c-format
 msgid "cannot wait for child %d as it does not exist"
 msgstr "не могу дождаться дочернего процесса %d , потому что его нет"
 
-#: fork.c:954 fork.c:1077
+#: fork.c:956 fork.c:1083
 #, c-format
 msgid "error '%s' in select"
 msgstr "ошибка '%s' в выборе"
 
-#: fork.c:1167
+#: fork.c:1173
 msgid "'mckill' failed"
 msgstr "'mckill' не удался"
 
-#: fork.c:1180
+#: fork.c:1186
 msgid "'mcexit' can only be used in a child process"
 msgstr "'mcexit' может быть использован только в дочернем процессе"
 
-#: fork.c:1212
+#: fork.c:1218
 msgid "'mcexit' failed"
 msgstr "'mcexit' не удался"
 
-#: fork.c:1241 fork.c:1250
+#: fork.c:1247 fork.c:1256
 msgid "invalid CPU affinity specification"
 msgstr "неправильное описание привязки CPU"
 
-#: fork.c:1261
+#: fork.c:1267
 msgid "requested CPU set is too large for this system"
 msgstr "запрошенная установка CPU слишком велика для этой системы"
 
-#: fork.c:1284
+#: fork.c:1290
 msgid "retrieving CPU affinity set failed"
 msgstr "загрузка привязки установки CPU не удалась"

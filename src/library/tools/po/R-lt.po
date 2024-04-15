@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tools 4.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-11-30 14:40\n"
+"POT-Creation-Date: 2024-04-15 12:10\n"
 "PO-Revision-Date: 2021-11-08 10:33+0100\n"
 "Last-Translator: r.zakauskas@gmail.com;gabriele.dauksaite@gmail.com\n"
 "Language-Team: Lithuanian\n"
@@ -1211,10 +1211,6 @@ msgstr "nepavyko sukurti temp katalogo %s"
 msgid "expected one package directory, found %d."
 msgstr ""
 
-#, fuzzy
-msgid "one of 'package' and 'dir' must be specified."
-msgstr "tiksliai vienas Rd failas turi būti nurodytas"
-
 msgid "argument '%s' must be a character string or connection"
 msgstr "argumentas '%s' turi būti simbolių eilutė arba ryšys"
 
@@ -1245,6 +1241,10 @@ msgstr "bandymas '%s' nepavyko"
 msgid "Testing examples for package %s"
 msgstr "Paketo %s tikrinimo pavyzdžiai"
 
+#, fuzzy
+msgid "Error: running examples in %s failed"
+msgstr "nepavyko 'texi2dvi' esančio '%s' vykdymas"
+
 msgid "comparing %s to %s ..."
 msgstr "lyginant %s su %s ..."
 
@@ -1268,6 +1268,10 @@ msgstr "Vykdomi specialūs paketo %s testai"
 
 msgid "Running %s"
 msgstr "Vykdoma %s"
+
+#, fuzzy
+msgid "Error: running the tests in %s failed"
+msgstr "nepavyko 'texi2dvi' esančio '%s' vykdymas"
 
 msgid "Running vignettes for package %s"
 msgstr "Vykdomos vinjetės paketui %s"
@@ -1609,6 +1613,10 @@ msgid_plural "Corresponding BibTeX entries:"
 msgstr[0] "Atitinkamas BibTeX įrašas:"
 msgstr[1] "Atitinkami BibTeX įrašai:"
 msgstr[2] "Atitinkamų BibTeX įrašų:"
+
+#, fuzzy
+#~ msgid "one of 'package' and 'dir' must be specified."
+#~ msgstr "tiksliai vienas Rd failas turi būti nurodytas"
 
 #~ msgid "parse error in file '%s':"
 #~ msgstr "analizavimo klaida faile '%s':"
