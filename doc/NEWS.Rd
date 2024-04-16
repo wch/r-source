@@ -115,9 +115,9 @@
       thanks to suggestions by \I{Ivan Krylov} and others on R-devel.
 
       \item New startup option \option{--max-connections} to set the
-      maximum number of connections for the session.  Defaults to 128 as
-      before: allowed values up to 4096 (but resource limits may in practice
-      restrict to smaller values).
+      maximum number of simultaneous connections for the session.
+      Defaults to 128 as before: allowed values up to 4096 (but resource
+      limits may in practice restrict to smaller values).
 
       \item \R on Windows (since Windows 10 2004) now uses the new Segment
       Heap allocator. This may improve performance of some memory-intensive
@@ -152,8 +152,8 @@
 
       \item \code{kappa(., exact = TRUE, norm = *)} now works for all
       norms and also for complex matrices.  In symmetric / triangular
-      cases, new argument \code{uplo = "U" | "L"} allows to specify the
-      upper or lower triangular part.
+      cases, the  new argument \code{uplo = "U" | "L"} allows the
+      upper or lower triangular part to be specified.
 
       \item \code{memDecompress(type = "unknown")} recognizes compression
       in the default \sQuote{\I{zlib}} format as used by
@@ -195,12 +195,12 @@
       \item Plain-text help shows \verb{\var} markup by angle brackets.
 
       \item The new experimental primitive function \code{declare()} is
-      intended to eventually allow information about R code to be
+      intended to eventually allow information about \R{} code to be
       communicated to the interpreter, compiler, and code analysis
       tools. The syntax for declarations is still being developed.
 
       \item Functions \code{psmirnov()}, \code{qsmirnov()} and
-      \code{rsmirnov()} in package \pkg{stats} have argument
+      \code{rsmirnov()} in package \pkg{stats} have had argument
       \code{two.sided} renamed to \code{alternative}, to take into
       account that the permutation distributions of the one-sided
       statistics can be different in the case of ties.  Consequence of
@@ -302,7 +302,7 @@
       \item The included LAPACK sources have been updated to version
       3.12.0 and some further double-complex routines added.
 
-      \item There are new font families for the 2014-5 URW 2.0 fonts
+      \item There are new font families for the 2014--5 URW 2.0 fonts
       (see \code{?pdf}) which are included in recent versions of
       Ghostscript.  These have font widths for most Greek glyphs and a
       few others which were missing from the original versions (whose
@@ -328,9 +328,9 @@
       the \code{data.frame} method which can be used to sort rows of a
       data frame by one or more columns.
 
-      \item Licence headers for the \abbr{RPC} code in \file{src/extra/xdr} have
-      been updated to use the GPL-compatible licence published by
-      Oracle America in 2010.
+      \item The icence headers for the \abbr{RPC} code in
+      \file{src/extra/xdr} have been updated to use the GPL-compatible
+      licence published by Oracle America in 2010.
 
       \item New function \code{pkg2HTML()} in \pkg{tools} to create
       single-page HTML reference manuals for R packages.
@@ -577,7 +577,7 @@
 
       \item The default method for the directional comparison operators
       \code{<}, \code{>}, \code{<=}, and \code{>=} now signals an error
-      when one of the operands is a language objects, i.e. a symbol or a
+      when one of the operands is a language object, i.e. a symbol or a
       call.
 
       \item For \code{terms.formula()}, deprecate \code{abb} and \code{neg.out}
@@ -1197,7 +1197,7 @@
 
       \item \code{as.data.frame()}'s default method now also works fine
       with atomic objects inheriting from classes such as \code{"roman"},
-      \code{"octmode"} and \code{"hexmode"}, such fulfilling the wish of
+      \code{"octmode"} and \code{"hexmode"}, thus fulfilling the wish of
       \PR{18421}, by \I{Benjamin Feakins}.
 
       \item The \code{as.data.frame.vector()} utility now errors for
