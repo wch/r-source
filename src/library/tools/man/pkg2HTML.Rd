@@ -25,14 +25,13 @@ pkg2HTML(package, dir = NULL, lib.loc = NULL,
          include_description = TRUE)
 }
 \arguments{
-
-  \item{package}{ character string giving either the name of an
-    installed package, or a file path or URL pointing to a source tarball.
+  \item{package}{ typically a character string giving the name of an
+    installed package. Can also be a file path or URL pointing to a source
+    tarball (this feature is experimental).
   }
   \item{dir}{ character string giving the path to a directory containing
     an installed or source package.
   }
-
   \item{lib.loc}{a character vector describing the location of \R
     library trees to search through, or \code{NULL}. Passed on to
     \code{\link{find.package}} and \code{\link{Rd_db}}.
