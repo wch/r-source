@@ -758,7 +758,7 @@ testInstalledBasic <- function(scope = c("basic", "devel", "both", "internet", "
                 stop("creation of ", sQuote(f), " failed", domain = NA)
             ## This needs an extra trailing space to match the .Rin.R rule
             cat("\n", file = f, append = TRUE)
-            on.exit(unlink(f))
+            on.exit(unlink(f), add = TRUE)
         }
         message("  running code in ", sQuote(f), domain = NA)
         outfile <- sub("rout$", "Rout", paste0(fR, "out"))
