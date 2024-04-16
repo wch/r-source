@@ -21,6 +21,7 @@ pkg2HTML(package, dir = NULL, lib.loc = NULL,
          toc_entry = c("title", "name"),
          ...,
          Rhtml = FALSE,
+         mathjax_config = file.path(R.home("doc"), "html", "mathjax-config.js"),
          include_description = TRUE)
 }
 \arguments{
@@ -45,10 +46,15 @@ pkg2HTML(package, dir = NULL, lib.loc = NULL,
     is used to determine the output HTML file path given a package name
     as input.
   }
-  \item{texmath, prism}{ logical flags, as described in
-    \code{\link{Rd2HTML}}. The current implementation does not correctly
-    handle packages that use the \code{\link[mathjaxr]{mathjaxr}}
-    package.
+  \item{texmath}{ character string controlling math rendering library to
+    be used, either \code{"katex"} or \code{"mathjax"}. The default is
+    to use \code{"katex"}, unless the package appears to use the
+    \code{\link[mathjaxr]{mathjaxr}} package in at least one of its
+    documentation files. The support for MathJax is experimental and may
+    not work well.
+  }
+  \item{prism}{ logical flag controlling code highlighting, as described in
+    \code{\link{Rd2HTML}}.
   }
   \item{out}{a filename or connection object to which to write the
     output.  The default \code{out = ""} is equivalent to
@@ -62,6 +68,10 @@ pkg2HTML(package, dir = NULL, lib.loc = NULL,
   \item{Rhtml}{logical: whether the output is intended to be a \I{Rhtml}
     file that can be processed using \CRANpkg{knitr}. If \code{TRUE}, the
     examples section is wrapped inside a \code{rcode} block.
+  }
+  \item{mathjax_config}{ character string giving path of file containing
+    configuration instructions for mathjax. Relevant only if
+    \code{texmath = "mathjax"}.
   }
   \item{include_description}{ logical flag indicating whether the output
     should begin with the contents of the \code{DESCRIPTION} file.
