@@ -112,14 +112,14 @@ pkg2HTML <- function(package, dir = NULL, lib.loc = NULL,
                      toc_entry = c("title", "name"),
                      ...,
                      Rhtml = FALSE,
+                     mathjax_config = file.path(R.home("doc"), "html", "mathjax-config.js"),
                      include_description = TRUE)
 {
-    if (is.null(texmath)) texmath <- "katex"
     toc_entry <- match.arg(toc_entry)
     hcontent <- .convert_package_rdfiles(package = package, dir = dir, lib.loc = lib.loc,
                                          outputEncoding = outputEncoding,
                                          Rhtml = Rhtml, hooks = hooks,
-                                         texmath = texmath, prism = prism, ...)
+                                         texmath = "katex", prism = prism, ...)
     descfile <- attr(hcontent, "descfile")
     pkgname <- read.dcf(descfile, fields = "Package")[1, 1]
     if (is.null(out)) {
@@ -141,10 +141,13 @@ pkg2HTML <- function(package, dir = NULL, lib.loc = NULL,
     rdnames <- vapply(hcontent, function(h) h$info$name, "")
     rdtitles <- vapply(hcontent, function(h) h$info$title[[1L]], "")
     ## rdtitles <- vapply(hcontent, function(h) h$info$htmltitle[[1L]], "") # FIXME: has extra <p>
+    use_mathjax <- any(vapply(hcontent, function(h) h$info$mathjaxr, FALSE))
+    if (missing(texmath) || is.null(texmath))
+        texmath <- if (use_mathjax) "mathjax" else "katex"
 
-    toclines <- switch(toc_entry,
-                       title = sprintf("<li><a href='#%s'>%s</a></li>", rdnames, rdtitles),
-                       name = sprintf("<li><a href='#%s'>%s</a></li>", rdnames, rdnames))
+    toclines <- sprintf("<li><a href='#%s'>%s</a></li>",
+                        name2id(rdnames),
+                        switch(toc_entry, title = rdtitles, name = rdnames))
 
     ## Now to make a file with header + DESCRIPTION + TOC + content + footer
 
@@ -154,8 +157,9 @@ pkg2HTML <- function(package, dir = NULL, lib.loc = NULL,
                        css = stylesheet,
                        outputEncoding = outputEncoding,
                        dynamic = FALSE, prism = prism,
-                       doTexMath = TRUE, # FIXME should depend on mathjaxr use...
-                       texmath = texmath)
+                       doTexMath = TRUE,
+                       texmath = if (use_mathjax) "mathjax" else texmath,
+                       MATHJAX_CONFIG_STATIC = mathjax_config)
 
     writeHTML <- function(..., sep = "\n", append = TRUE)
         cat(..., file = out, sep = sep, append = append)
