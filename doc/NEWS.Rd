@@ -14,7 +14,9 @@
 
   \subsection{NEW FEATURES}{
     \itemize{
-      \item [None yet.]
+      \item \code{as.integer(rl)} and hence \code{as.raw(rl)} now work for
+      a \code{list} of \code{raw(1)} elements, as proposed by Michael
+      Chirico's \PR{18696}.
     }
   }
 
@@ -340,7 +342,7 @@
       the \code{data.frame} method which can be used to sort rows of a
       data frame by one or more columns.
 
-      \item The icence headers for the \abbr{RPC} code in
+      \item The licence headers for the \abbr{RPC} code in
       \file{src/extra/xdr} have been updated to use the GPL-compatible
       licence published by Oracle America in 2010.
 
@@ -355,7 +357,6 @@
       allows non-syntactic completions to be wrapped in backquotes. This
       is currently only useful for \I{Jupyter} notebooks via the
       \pkg{IRkernel} package, and may cause problems for other backends.
-      
     }
   }
 

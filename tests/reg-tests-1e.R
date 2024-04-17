@@ -1283,20 +1283,19 @@ tab <- replace(UCBAdmissions[,,1], 1, NA)
 stopifnot(identical(c(xtabs(Freq ~ ., as.data.frame(tab))), c(tab)))
 ## NA turned into 0 in R < 4.4.0
 
+
 ## PR#16358 overflowing exponents.
 x <- 1e999999999999
 stopifnot(identical(x, Inf))
+
 
 ## PR#17199: these were zero on systems where long double == double.
 x <- as.numeric(c("0x1.00000000d0000p-987",
                   "0x1.0000000000000p-1022",
                   "0x1.f89fc1a6f6613p-974"))
+x
 y <- c(7.645296e-298, 2.225074e-308, 1.23456e-293)
 stopifnot(all.equal(x, y))
-
-as.double("0x1.00000000d0000p-987")    # should be 7.645296e-298
-as.double("0x1.0000000000000p-1022")   # should be 2.225074e-308
-as.double("0x1.f89fc1a6f6613p-974")    # should be 1.23456e-293
 
 
 ## require a non-empty exponent digit sequence in R_strtod.
@@ -1304,11 +1303,36 @@ as.double("0x1.f89fc1a6f6613p-974")    # should be 1.23456e-293
 {
     ## someone set options(warn = 2) above
     op <- options(warn = 1L)
-    stopifnot(is.na(as.numeric("1234E")), is.na(as.numeric("0x1234p")),
+    stopifnot(is.na(as.numeric("1234E" )), is.na(as.numeric("0x1234p")),
               is.na(as.numeric("1234E+")), is.na(as.numeric("0x1234p-")))
     stopifnot(as.numeric("1234E0") == 1234, as.numeric("0x1234p0") == 4660)
     options(op)
 }
+
+
+## as.<atomic>(<list of raw(1)>) , PR#18696
+i  <- 1:11           ; il <- as.list(i)
+ch <- as.character(i); cl <- as.list(ch)
+r  <- as.raw      (i); rl <- as.list(r)
+stopifnot(exprs = {
+    is.list(cl) ; is.list(il) ; is.list(rl)
+    ## as.<atomType>(<list of <atomType>(1)):
+    identical(ch, as.character(cl))
+    identical(i,  as.integer  (il))
+    identical(r,  as.raw      (rl))
+    ## as.integer() works for the "character list" `cl` :
+    identical(as.integer(cl), i)
+    identical(as.integer(cl),
+              as.integer(ch))
+    ## as.double() works for "integer list"  `il`
+    identical(as.double(il),
+              as.double(i))
+    ## new as.integer() for raw:
+    identical(i, as.integer(rl))
+})
+## as.raw(rl) and as.integer(rl) failed in R <= 4.4.x
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
