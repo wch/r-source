@@ -2063,6 +2063,27 @@ int attribute_hidden Rf_AdobeSymbol2ucs2(int n)
     else return 0;
 }
 
+/* Introduced on 2008-03-21 with comment
+
+       use our own strtod/atof to mitigate effects of setting LC_NUMERIC
+
+   Also allows complete control of which non-numeric strings are
+   accepted; e.g. glibc allows NANxxxx, macOS NAN(s), this accepts "NA".
+
+   Exported and in Utils.h (but not in R-exts).
+
+   Variants:
+   R_strtod4 is used by scan(), allows the decimal point (byte) to be
+   specified and whether "NA" is accepted.
+
+   R_strtod5 is used by type_convert(numerals=) (utils/src/io.c)
+
+   The parser uses R_atof (and handles non-numeric strings itself).
+   That is the same as R_strtod but ignores endptr. 
+   Also used by gnuwin32/windlgs/src/ttest.c, 
+   exported and in Utils.h (but not in R-exts).
+*/
+
 double R_strtod5(const char *str, char **endptr, char dec,
 		 Rboolean NA, int exact)
 {
