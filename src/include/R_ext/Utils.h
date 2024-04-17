@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998-2019    The R Core Team
+ *  Copyright (C) 1998-2024    The R Core Team
  *
  *  This header file is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -24,7 +24,7 @@
  * Generally useful  UTILITIES  *NOT* relying on R internals (from Defn.h)
  */
 
-/* Included by R.h: API */
+/* Included by R.h: some are API (documented in R-exts) */
 
 #ifndef R_EXT_UTILS_H_
 #define R_EXT_UTILS_H_
@@ -88,7 +88,7 @@ Rboolean StringTrue(const char *);
 Rboolean isBlankString(const char *);
 
 /* These two are guaranteed to use '.' as the decimal point,
-   and to accept "NA".
+   and to accept "NA".  Neither are API.
  */
 double R_atof(const char *str);
 double R_strtod(const char *c, char **end);
