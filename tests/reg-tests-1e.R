@@ -1283,7 +1283,16 @@ tab <- replace(UCBAdmissions[,,1], 1, NA)
 stopifnot(identical(c(xtabs(Freq ~ ., as.data.frame(tab))), c(tab)))
 ## NA turned into 0 in R < 4.4.0
 
-
+## require a non-empty exponent digit sequence in R_strtod.
+## R 4.4.0 (and many accounts) accepted empty one.
+{
+    ## someone set options(warn = 2) above
+    op <- options(warn = 1L)
+    stopifnot(is.na(as.numeric("1234E")), is.na(as.numeric("0x1234p")),
+              is.na(as.numeric("1234E+")), is.na(as.numeric("0x1234p-")))
+    stopifnot(as.numeric("1234E0") == 1234, as.numeric("0x1234p0") == 4660)
+    options(op)
+}
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

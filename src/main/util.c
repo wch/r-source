@@ -2138,7 +2138,14 @@ double R_strtod5(const char *str, char **endptr, char dec,
 	    /* The test for n is in response to PR#16358; it's not right if the exponent is
 	       very large, but the overflow or underflow below will handle it. */
 #define MAX_EXPONENT_PREFIX 9999
-	    for (n = 0; *p >= '0' && *p <= '9'; p++) n = (n < MAX_EXPONENT_PREFIX) ? n * 10 + (*p - '0') : n;
+	    int ndig = 0;
+	    for (n = 0; *p >= '0' && *p <= '9'; p++, ndig++)
+		n = (n < MAX_EXPONENT_PREFIX) ? n * 10 + (*p - '0') : n;
+	    if (ndig == 0) {
+		ans = NA_REAL;
+		p = str; /* back out */
+		goto done;
+	    }
 	    if (ans != 0.0) { /* PR#15976:  allow big exponents on 0 */
 		LDOUBLE fac = 1.0;
 		expn += expsign * n;
@@ -2179,13 +2186,21 @@ double R_strtod5(const char *str, char **endptr, char dec,
     strtod_EXACT_CLAUSE;
 
     if (*p == 'e' || *p == 'E') {
+	int ndigits = 0;
 	int expsign = 1;
 	switch(*++p) {
 	case '-': expsign = -1;
 	case '+': p++;
 	default: ;
 	}
-	for (n = 0; *p >= '0' && *p <= '9'; p++) n = (n < MAX_EXPONENT_PREFIX) ? n * 10 + (*p - '0') : n;
+	// C17 §6.4.4.2 requires a non-empty 'digit sequence'
+	for (n = 0; *p >= '0' && *p <= '9'; p++, ndigits++)
+	    n = (n < MAX_EXPONENT_PREFIX) ? n * 10 + (*p - '0') : n;
+	if (ndigits == 0) {
+	    ans = NA_REAL;
+	    p = str; /* back out */
+	    goto done;
+	}
 	expn += expsign * n;
     }
 
