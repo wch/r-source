@@ -1287,6 +1287,18 @@ stopifnot(identical(c(xtabs(Freq ~ ., as.data.frame(tab))), c(tab)))
 x <- 1e999999999999
 stopifnot(identical(x, Inf))
 
+## PR#17199: these were zero on systems where long double == double.
+x <- as.numeric(c("0x1.00000000d0000p-987",
+                  "0x1.0000000000000p-1022",
+                  "0x1.f89fc1a6f6613p-974"))
+y <- c(7.645296e-298, 2.225074e-308, 1.23456e-293)
+stopifnot(all.equal(x, y))
+
+as.double("0x1.00000000d0000p-987")    # should be 7.645296e-298
+as.double("0x1.0000000000000p-1022")   # should be 2.225074e-308
+as.double("0x1.f89fc1a6f6613p-974")    # should be 1.23456e-293
+
+
 ## require a non-empty exponent digit sequence in R_strtod.
 ## R 4.4.0 (and many accounts) accepted empty one.
 {
