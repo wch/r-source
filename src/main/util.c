@@ -2156,9 +2156,8 @@ double R_strtod5(const char *str, char **endptr, char dec,
 	    case '+': p++;
 	    default: ;
 	    }
-	    /* The test for n is in response to PR#16358; it's not right if the exponent is
-	       very large, but the overflow or underflow below will handle it. */
 #define MAX_EXPONENT_PREFIX 9999
+	    /* exponents beyond ca +1024/-1070 over/underflow */
 	    int ndig = 0;
 	    for (n = 0; *p >= '0' && *p <= '9'; p++, ndig++)
 		n = (n < MAX_EXPONENT_PREFIX) ? n * 10 + (*p - '0') : n;
@@ -2214,6 +2213,13 @@ double R_strtod5(const char *str, char **endptr, char dec,
 	case '+': p++;
 	default: ;
 	}
+	/* The test for n is in response to PR#16358; which was
+	   parsing 1e999999999999.
+	   It's not right if the exponent is very large, but the
+	   overflow or underflow below will handle it.
+	   1e308 is already Inf, but negative expoents can go down to -323
+	   before undeflowing to zero.
+	*/
 	// C17 §6.4.4.2 requires a non-empty 'digit sequence'
 	for (n = 0; *p >= '0' && *p <= '9'; p++, ndigits++)
 	    n = (n < MAX_EXPONENT_PREFIX) ? n * 10 + (*p - '0') : n;

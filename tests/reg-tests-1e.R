@@ -1283,6 +1283,10 @@ tab <- replace(UCBAdmissions[,,1], 1, NA)
 stopifnot(identical(c(xtabs(Freq ~ ., as.data.frame(tab))), c(tab)))
 ## NA turned into 0 in R < 4.4.0
 
+## PR#16358 overflowing exponents.
+x <- 1e999999999999
+stopifnot(identical(x, Inf))
+
 ## require a non-empty exponent digit sequence in R_strtod.
 ## R 4.4.0 (and many accounts) accepted empty one.
 {
