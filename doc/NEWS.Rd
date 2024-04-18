@@ -61,12 +61,20 @@
 }
 
 \section{\Rlogo CHANGES IN R 4.4.0 patched}{
+  \subsection{C-LEVEL FACILITIES}{
+    \itemize{
+      \item Functions \code{R_atof} and \code{R_strtod} declared in
+      header \file{R_ext/Utils.h} are now documented in
+      \sQuote{Writing R Extensions} and so formally part of the API.
+    }
+  }
+
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{as.numeric()}, \code{scan()}, \code{type.convert()}
       and other places which use the internal C function \code{R_strtod} now
       require a \emph{non-empty} digit sequence in a decimal or binary
-      exponent.  This aligns with the C standard for \code{strtod} and
+      exponent.  This aligns with the C/POSIX standard for \code{strtod} and
       with \code{?NumericConstants}.
     }
   }
