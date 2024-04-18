@@ -24,7 +24,7 @@
  * Generally useful  UTILITIES  *NOT* relying on R internals (from Defn.h)
  */
 
-/* Included by R.h: some are API (documented in R-exts) */
+/* Included by R.h: some are API (documented in R-exts), others are noted */
 
 #ifndef R_EXT_UTILS_H_
 #define R_EXT_UTILS_H_
@@ -79,8 +79,10 @@ void F77_NAME(qsort3)(double *v,            int *ii, int *jj);
 /* ../../main/util.c  and others : */
 const char *R_ExpandFileName(const char *);
 #ifdef Win32
+// not API
 const char *R_ExpandFileNameUTF8(const char *);
 #endif
+// this group is not API
 void	setIVector(int*, int, int);
 void	setRVector(double*, int, double);
 Rboolean StringFalse(const char *);
@@ -114,6 +116,7 @@ int F77_SUB(interv)(double *xt, int *n, double *x,
 		    Rboolean *rightmost_closed, Rboolean *all_inside,
 		    int *ilo, int *mflag);
 #endif
+// not API
 void find_interv_vec(double *xt, int *n,	double *x,   int *nx,
 		     int *rightmost_closed, int *all_inside, int *indx);
 
