@@ -90,7 +90,7 @@ Rboolean StringTrue(const char *);
 Rboolean isBlankString(const char *);
 
 /* These two are guaranteed to use '.' as the decimal point,
-   and to accept "NA".  Neither are API.
+   and to accept "NA". Documented since 4.4.0 patched.
  */
 double R_atof(const char *str);
 double R_strtod(const char *c, char **end);
