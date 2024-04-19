@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997--2023  The R Core Team
+ *  Copyright (C) 1997--2024  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -588,21 +588,29 @@ attribute_hidden SEXP do_nargs(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 
-/* formerly used in subscript.c, in Utils.h */
+/* formerly used in subscript.c, in Utils.h
+      Does not know about long vectors ....
 attribute_hidden void setIVector(int * vec, int len, int val)
 {
     for (int i = 0; i < len; i++) vec[i] = val;
 }
+*/
 
 
 /* unused in R, in Utils.h, may have been used in Rcpp at some point,
-      but not any more (as per Nov. 2018)  */
+      but not any more (as per Nov. 2018).
+      Does not know about long vectors ....
+      RcppClassic has its own version.
 attribute_hidden void setRVector(double * vec, int len, double val)
 {
     for (int i = 0; i < len; i++) vec[i] = val;
 }
+*/
 
-/* unused in R, in Rinternals.h */
+/* unused in R, in Defn.h, formerly remapped in Rinternals.h
+      Unused in R.
+      Does not know about long vectors ....
+*/
 void setSVector(SEXP * vec, int len, SEXP val)
 {
     for (int i = 0; i < len; i++) vec[i] = val;

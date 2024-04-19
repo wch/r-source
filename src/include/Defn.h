@@ -1703,7 +1703,7 @@ SEXP Rf_installS3Signature(const char *, const char *);
 Rboolean Rf_isFree(SEXP);
 Rboolean Rf_isUnmodifiedSpecSym(SEXP sym, SEXP env);
 SEXP Rf_matchE(SEXP, SEXP, int, SEXP);
-void Rf_setSVector(SEXP*, int, SEXP);
+// void Rf_setSVector(SEXP*, int, SEXP);
 SEXP Rf_stringSuffix(SEXP, int);
 const char * Rf_translateChar0(SEXP);
 
