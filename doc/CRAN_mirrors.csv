@@ -15,7 +15,8 @@ Name,Country,City,URL,Host,Maintainer,OK,CountryCode,Comment
 "Bulgaria [https]",Bulgaria,Sofia,https://ftp.uni-sofia.bg/CRAN/,"Sofia University","Alexander Velin <velin # fccf.net>",1,bg,"secure_mirror_from_master"
 "Canada (BC) [https]",Canada,Burnaby,https://mirror.rcg.sfu.ca/mirror/CRAN/,"Simon Fraser University, Burnaby","research-support # sfu.ca",1,ca
 "Canada (MB) [https]",Canada,Winnipeg,https://muug.ca/mirror/cran/,"Manitoba Unix User Group","mirror # muug.ca",1,ca,"secure_mirror_from_master"
-"Canada (ON) [https]",Canada,Waterloo,https://mirror.csclub.uwaterloo.ca/CRAN/,"University of Waterloo","syscom # csclub.uwaterloo.ca",1,ca,"secure_mirror_from_master"
+"Canada (ON 1) [https]",Canada,Waterloo,https://mirror.csclub.uwaterloo.ca/CRAN/,"University of Waterloo","syscom # csclub.uwaterloo.ca",1,ca,"secure_mirror_from_master"
+"Canada (ON 2) [https]",Canada,Hamilton,https://cran.mirror.rafal.ca/,"Rafal Rzeczkowski","Rafal Rzeczkowski <mirror-CRAN # mail.rafal.ca>",1,ca,
 "Chile (Santiago) [https]",Chile,Santiago,https://cran.dcc.uchile.cl/,"Departamento de Ciencias de la Computación, Universidad de Chile","Mauricio Vargas <mvargas # dcc.uchile.cl>",1,cl,"secure_mirror_from_master"
 "China (Beijing 1) [https]",China,Beijing,https://mirrors.tuna.tsinghua.edu.cn/CRAN/,"TUNA Team, Tsinghua University","Justin Wong <justin.w.xd # gmail.com>",1,cn,
 "China (Beijing 2) [https]",China,Beijing,https://mirrors.bfsu.edu.cn/CRAN/,"Beijing Foreign Studies University","Aron Xu <aron # bfsu.edu.cn>",1,cn,"secure_mirror_from_master"
