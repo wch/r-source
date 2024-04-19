@@ -298,7 +298,7 @@ set.seed(seed, kind = NULL, normal.kind = NULL, sample.kind = NULL)
   \emph{ACM Transactions on Mathematical Software}, \bold{33}, Article 22.
   \doi{10.1145/1268776.1268777}.
   \cr The \I{TestU01} C library is available from
-  \url{http://simul.iro.umontreal.ca/testu01/tu01.html} or also
+  \url{https://simul.iro.umontreal.ca/testu01/tu01.html} or also
   \url{https://github.com/umontreal-simul/TestU01-2009}.
 
   Marsaglia, G. (1997).
