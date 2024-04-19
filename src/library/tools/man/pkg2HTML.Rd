@@ -49,7 +49,7 @@ pkg2HTML(package, dir = NULL, lib.loc = NULL,
     be used, either \code{"katex"} or \code{"mathjax"}. The default is
     to use \code{"katex"}, unless the package appears to use the
     \code{\link[mathjaxr]{mathjaxr}} package in at least one of its
-    documentation files. The support for MathJax is experimental and may
+    documentation files. The support for \I{MathJax} is experimental and may
     not work well.
   }
   \item{prism}{ logical flag controlling code highlighting, as described in
@@ -69,7 +69,7 @@ pkg2HTML(package, dir = NULL, lib.loc = NULL,
     examples section is wrapped inside a \code{rcode} block.
   }
   \item{mathjax_config}{ character string giving path of file containing
-    configuration instructions for mathjax. Relevant only if
+    configuration instructions for \I{MathJax}. Relevant only if
     \code{texmath = "mathjax"}.
   }
   \item{include_description}{ logical flag indicating whether the output
