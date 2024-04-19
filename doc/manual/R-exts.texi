@@ -16063,7 +16063,7 @@ longer recommended.
 @deftypefunx void R_strtod (const char* @var{str}, char ** @var{end})
 Implementations of the C99/POSIX functions @code{atof} and @code{strtod}
 which guarantee platform-dependent behaviour, including always using the
-period as the decimal point @emph{aka} `radix character' and converting
+period as the decimal point @emph{aka} `@I{radix character}' and converting
 @code{"NA"} to R's @code{NA_REAL_} .
 @end deftypefun
 
