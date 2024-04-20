@@ -3357,9 +3357,13 @@ function(dir, force_suggests = TRUE, check_incoming = FALSE,
                         bad_depends$suggested_but_not_installed)
         weak2 <- sapply(weak, function(x) suppressWarnings(mt(x)))
         miss2 <- is.na(weak2)
-        if (any(miss1) || any(miss2)) {
-            ## This may not be local and needs a complete CRAN mirror
-            db <- CRAN_package_db()[, c("Package", "Maintainer")]
+        if((any(miss1) || any(miss2)) &&
+           !inherits(tryCatch(db <- CRAN_package_db()[, c("Package",
+                                                          "Maintainer")],
+                              ## This may not be local and needs a
+                              ## complete CRAN mirror.
+                              error = identity),
+                     "error")) {
             orphaned <- db[db$Maintainer == "ORPHANED" , 1L]
             s2 <- intersect(strict[miss1], orphaned)
             w2 <- intersect(weak[miss2], orphaned)
