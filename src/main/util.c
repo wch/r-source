@@ -590,6 +590,7 @@ attribute_hidden SEXP do_nargs(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 /* formerly used in subscript.c, in Utils.h
       Does not know about long vectors ....
+      Commented out 2024-02
 attribute_hidden void setIVector(int * vec, int len, int val)
 {
     for (int i = 0; i < len; i++) vec[i] = val;
@@ -601,6 +602,7 @@ attribute_hidden void setIVector(int * vec, int len, int val)
       but not any more (as per Nov. 2018).
       Does not know about long vectors ....
       RcppClassic has its own version.
+      Commented out 2024-02
 attribute_hidden void setRVector(double * vec, int len, double val)
 {
     for (int i = 0; i < len; i++) vec[i] = val;
@@ -610,11 +612,12 @@ attribute_hidden void setRVector(double * vec, int len, double val)
 /* unused in R, in Defn.h, formerly remapped in Rinternals.h
       Unused in R.
       Does not know about long vectors ....
-*/
+      Commented out 2024-02
 void setSVector(SEXP * vec, int len, SEXP val)
 {
     for (int i = 0; i < len; i++) vec[i] = val;
 }
+*/
 
 
 Rboolean isFree(SEXP val)
