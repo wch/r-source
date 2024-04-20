@@ -1151,6 +1151,39 @@ function()
     rdxrefs
 }
 
+### * .Rd_xrefs_with_missing_anchors
+
+.Rd_xrefs_with_missing_anchors <-
+function(dir)
+{
+    ## Find the Rd xrefs with non-anchored targets not in the level 0 or
+    ## 1 aliases (package itself and standard packages).
+    
+    ## Argh.
+    ## We cannot simply use
+    ##   findHTMLlinks(dir, level = c(0L, 1L))
+    ## as this takes level 0 for an *installed* package.
+    ## So we need the package Rd db for both aliases and rdxrefs.
+
+    db <- Rd_db(dir = dir)
+    if(!length(db)) return()
+    aliases <- lapply(db, .Rd_get_metadata, "alias")
+    rdxrefs <- lapply(db, .Rd_get_xrefs)
+    rdxrefs <- cbind(do.call(rbind, rdxrefs),
+                     Source = rep.int(names(rdxrefs),
+                                      vapply(rdxrefs,
+                                             NROW,
+                                             0L)))
+    anchors <- rdxrefs[, "Anchor"]
+    if(any(ind <- startsWith(anchors, "=")))
+        rdxrefs[ind, 1L : 2L] <- cbind(sub("^=", "", anchors[ind]), "")
+    rdxrefs <- rdxrefs[!nzchar(rdxrefs[, "Anchor"]), , drop = FALSE]
+    aliases <- c(unlist(aliases, use.names = FALSE),
+                 names(findHTMLlinks(dir, level = 1L)))
+    if(any(ind <- is.na(match(rdxrefs[, "Target"], aliases))))
+        unique(rdxrefs[ind, , drop = FALSE])
+    else NULL
+}
 
 ### Local variables: ***
 ### mode: outline-minor ***
