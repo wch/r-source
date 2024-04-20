@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1999-2022 The R Core Team.
+ *  Copyright (C) 1999-2024 The R Core Team.
  *
  *  This header file is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -83,11 +83,7 @@ extern void R_chk_free(void *);
 #define F77_COM(x)     F77_CALL(x)
 #define F77_COMDECL(x) F77_CALL(x)
 
-/* Deprecated in R 2.15.0, non-API
-#if !defined(NO_CALL_R) && defined(DECLARE_LEGACY_CALL_R)
-void	call_R(char*, long, void**, char**, long*, char**, long, char**);
-#endif
-*/
+/* call_R was deprecated in R 2.15.0, removed in R 4.2.0 */
 
 #ifdef  __cplusplus
 }
