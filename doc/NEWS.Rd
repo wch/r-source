@@ -48,7 +48,8 @@
 
   \subsection{C-LEVEL FACILITIES}{
     \itemize{
-      \item .
+      \item The non-API and hidden entry points \code{Rf_setIVector},
+      \code{Rf_setRVector} and \code{Rf_setSVector} have been removed.     
     }
   }
 
@@ -66,6 +67,11 @@
       \item Functions \code{R_atof} and \code{R_strtod} declared in
       header \file{R_ext/Utils.h} are now documented in
       \sQuote{Writing R Extensions} and so formally part of the API.
+
+      \item The non-API entry points \code{Rf_setSVector},
+      \code{Rf_StringFalse}, \code{Rf_StringTrue} and
+      \code{Rf_isBlankString} have been added to those reported by
+      \command{R CMD check}.
     }
   }
 
