@@ -1196,33 +1196,49 @@ void R_maphashC(R_hashtab_type h, void (*FUN)(SEXP, SEXP, void *), void *data);
 void R_clrhash(R_hashtab_type h);
 
 
-/* stuff that probably shouldn't be in the API but is getting used */
+/* Rest of this file
+   Stuff that is not API and probably should not be but is getting used.
+ */
 
-void (SET_TYPEOF)(SEXP x, int v); // used by Rcpp
-void (SET_OBJECT)(SEXP x, int v); // used by Rcpp
-void (SET_S4_OBJECT)(SEXP x); // used by Rcpp (maybe?)
-void (UNSET_S4_OBJECT)(SEXP x); // used by Rcpp (maybe?)
-const char *R_curErrorBuf(void); // used by unix */
-int (IS_SCALAR)(SEXP x, int type); // used by symengine */
+void (SET_TYPEOF)(SEXP x, int v); // used by Rcpp and much more
+// used by Rcpp (not?), Matrix and more and in an example in R-exts.
+void (SET_OBJECT)(SEXP x, int v); // used by Rcpp (not?), Matrix and more
+void (SET_S4_OBJECT)(SEXP x); // used by Rcpp (not?) RTMB collapse data.table essentials fstcore nanotime qs redland tau this.path tiblle vctrs
+void (UNSET_S4_OBJECT)(SEXP x); // used by Rcpp (not?) collapse data.table essentials slam vctrs
+const char *R_curErrorBuf(void); // used by unix
+int (IS_SCALAR)(SEXP x, int type); // used by symengine
 Rboolean Rf_psmatch(const char *, const char *, Rboolean); // used by rgl
 
-/* used in a couple of packages but should probably be dropped */
+/* used in a couple of packages but should probably be dropped 
+   error_return: grr nanonext rJava rbedrock
+   errorcall_return: Runuran(with call=NULL)
+*/
 				/* match(.) NOT reached : for -Wall */
 #define error_return(msg)	{ Rf_error(msg);	   return R_NilValue; }
 #define errorcall_return(cl,msg){ Rf_errorcall(cl, msg);   return R_NilValue; }
 
-void (SETLENGTH)(SEXP x, R_xlen_t v); // used by data.table and others
-void (SET_TRUELENGTH)(SEXP x, R_xlen_t v); // used by data.table and others
+void (SETLENGTH)(SEXP x, R_xlen_t v); /* used by data.table RMySQL
+				       * RPostgreSQL TPmsm XML bit64
+				       * duckdb geepack oce rjson tpr */
+void (SET_TRUELENGTH)(SEXP x, R_xlen_t v); /* used by data.table brio
+					    * collapse duckdb hipread
+					    * htmltools meltr multbxxc
+					    * qs riskscores rlang
+					    * this.path tibblify
+					    * tidyfast vctrs
+					    * yyjsonr */
 int  (SETLEVELS)(SEXP x, int v); // used by quotedargs
 
-void (SET_ENVFLAGS)(SEXP x, int v); // used by rlang and others
-void SET_FRAME(SEXP x, SEXP v); // used by rlang and others
-void SET_ENCLOS(SEXP x, SEXP v); // used by rlang and others
-void SET_HASHTAB(SEXP x, SEXP v); // used by rlang and others
+// used by BMA R6 admisc box collapse declared drake rlang this.path
+void (SET_ENVFLAGS)(SEXP x, int v);
+void SET_FRAME(SEXP x, SEXP v); // used by cli mmap pack qs webfakes
+void SET_ENCLOS(SEXP x, SEXP v); // used by cli pak qs rlang tibblify webfakes
+void SET_HASHTAB(SEXP x, SEXP v); // used by cli mmap pak qs webfakes
 
-void SET_PRENV(SEXP x, SEXP v); // used by dplyr, others
-void SET_PRVALUE(SEXP x, SEXP v); // used by dplyr, others
-void SET_PRCODE(SEXP x, SEXP v); // used by magrittr, others
+// used by dplyr magrittr nseval quotedargs this.path
+void SET_PRENV(SEXP x, SEXP v); 
+void SET_PRVALUE(SEXP x, SEXP v); // also S7
+void SET_PRCODE(SEXP x, SEXP v); 
 
 void *(STDVEC_DATAPTR)(SEXP x); // used by vroom
 
@@ -1240,7 +1256,7 @@ void (SET_NAMED)(SEXP x, int v);
 // used by rlang
 #define BODY_EXPR(e) R_ClosureExpr(e)
 
-// used by BIOC::matter; mightbe reasonable to include in API
+// used by BioC::matter; might be reasonable to include in API
 SEXP R_tryWrap(SEXP);
 
 #ifdef __cplusplus
