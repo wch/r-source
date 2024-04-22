@@ -1169,6 +1169,14 @@ enum {SORTED_DECR_NA_1ST = -2,
 			    sorted == SORTED_DECR_NA_1ST)
 
 
+/* ====================== public but non-API entry points =================
+
+   "not documented and subject to change without notice."
+
+   and that includes possible removal.
+ */
+
+    
 /* Experimental C interface for experimental hash table support
 
    Not in the API (at least not yet) but declared here to allow some
@@ -1203,10 +1211,10 @@ void R_clrhash(R_hashtab_type h);
 void (SET_TYPEOF)(SEXP x, int v); // used by Rcpp and much more
 // used by Rcpp (not?), Matrix and more and in an example in R-exts.
 void (SET_OBJECT)(SEXP x, int v); // used by Rcpp (not?), Matrix and more
-void (SET_S4_OBJECT)(SEXP x); // used by Rcpp (not?) RTMB collapse data.table essentials fstcore nanotime qs redland tau this.path tiblle vctrs
+void (SET_S4_OBJECT)(SEXP x); // used by Rcpp (not?) RTMB RcppInt64 data.table fstcore nanotime qs redland tau this.path tiblle
 void (UNSET_S4_OBJECT)(SEXP x); // used by Rcpp (not?) collapse data.table essentials slam vctrs
-const char *R_curErrorBuf(void); // used by unix
-int (IS_SCALAR)(SEXP x, int type); // used by symengine
+const char *R_curErrorBuf(void); // used by Rserve gert unix
+int (IS_SCALAR)(SEXP x, int type); // used by rbedrock symengine this.path
 Rboolean Rf_psmatch(const char *, const char *, Rboolean); // used by rgl
 
 /* used in a couple of packages but should probably be dropped 
@@ -1217,43 +1225,35 @@ Rboolean Rf_psmatch(const char *, const char *, Rboolean); // used by rgl
 #define error_return(msg)	{ Rf_error(msg);	   return R_NilValue; }
 #define errorcall_return(cl,msg){ Rf_errorcall(cl, msg);   return R_NilValue; }
 
-void (SETLENGTH)(SEXP x, R_xlen_t v); /* used by data.table RMySQL
-				       * RPostgreSQL TPmsm XML bit64
-				       * duckdb geepack oce rjson tpr */
-void (SET_TRUELENGTH)(SEXP x, R_xlen_t v); /* used by data.table brio
-					    * collapse duckdb hipread
-					    * htmltools meltr multbxxc
-					    * qs riskscores rlang
-					    * this.path tibblify
-					    * tidyfast vctrs
-					    * yyjsonr */
-int  (SETLEVELS)(SEXP x, int v); // used by quotedargs
+void (SETLENGTH)(SEXP x, R_xlen_t v); // used by many packages
+void (SET_TRUELENGTH)(SEXP x, R_xlen_t v); // used by many packages
+int  (SETLEVELS)(SEXP x, int v); // used by qs quotedargs
 
-// used by BMA R6 admisc box collapse declared drake rlang this.path
+// used by admisc arcpbf b64 box clarabel collapse declared drake fcl rlang this.path
 void (SET_ENVFLAGS)(SEXP x, int v);
-void SET_FRAME(SEXP x, SEXP v); // used by cli mmap pack qs webfakes
-void SET_ENCLOS(SEXP x, SEXP v); // used by cli pak qs rlang tibblify webfakes
-void SET_HASHTAB(SEXP x, SEXP v); // used by cli mmap pak qs webfakes
+void SET_FRAME(SEXP x, SEXP v); // used by cli mmap qs webfakes
+void SET_ENCLOS(SEXP x, SEXP v); // used by arcpbf b64 clarabel cli fcl magrittr mmap qs rlang  webfakes
+void SET_HASHTAB(SEXP x, SEXP v); // used by cli mmap qs webfakes
 
-// used by dplyr magrittr nseval quotedargs this.path
+// used by S7 arcpbf b64 clarabel dplyr fcl magrittr nseval quotedargs this.path
 void SET_PRENV(SEXP x, SEXP v); 
-void SET_PRVALUE(SEXP x, SEXP v); // also S7
+void SET_PRVALUE(SEXP x, SEXP v);
 void SET_PRCODE(SEXP x, SEXP v); 
 
-void *(STDVEC_DATAPTR)(SEXP x); // used by vroom
+void *(STDVEC_DATAPTR)(SEXP x); // used by vctrs vroom
 
 /* Growable vector support */ // used by multbxxc
 int (IS_GROWABLE)(SEXP x);
 void (SET_GROWABLE_BIT)(SEXP x);
 
-// used by quotedargs
+// used in quotedargs
 #define BCODE_CONSTS(x) CDR(x) // re-enable in Defn.h after removing here
-void (SET_NAMED)(SEXP x, int v);
+void (SET_NAMED)(SEXP x, int v); // used by fastmatch quotedargs
 
-// used by igraph, lazyeval, nseval, rlang
+// used in igraph lazyeval nseval rlang
 #define PREXPR(e) R_PromiseExpr(e)
 
-// used by rlang
+// used in rlang
 #define BODY_EXPR(e) R_ClosureExpr(e)
 
 // used by BioC::matter; might be reasonable to include in API
