@@ -18,7 +18,9 @@
  */
 
 /* 
-   Not part of the API, subject to change at any time.
+   This API is experimental and may change on short notice.
+   Package authors using this API should be prepared to adapt to changes
+   when they occur.
 */
 
 #ifndef R_EXT_ALTREP_H_
