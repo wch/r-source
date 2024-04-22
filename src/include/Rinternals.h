@@ -472,6 +472,7 @@ double Rf_asReal(SEXP x);
 Rcomplex Rf_asComplex(SEXP x);
 
 
+// also included in R_ext/Rallocators.h
 #ifndef R_ALLOCATOR_TYPE
 #define R_ALLOCATOR_TYPE
 typedef struct R_allocator R_allocator_t;
