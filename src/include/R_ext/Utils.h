@@ -108,7 +108,7 @@ void R_CheckStack(void);
 void R_CheckStack2(R_SIZE_T);
 
 
-/* ../../appl/interv.c: also in Applic.h */
+/* ../../appl/interv.c: first also in Applic.h */
 int findInterval(double *xt, int n, double x,
 		 Rboolean rightmost_closed,  Rboolean all_inside, int ilo,
 		 int *mflag);
