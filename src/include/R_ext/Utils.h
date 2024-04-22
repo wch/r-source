@@ -125,7 +125,7 @@ void find_interv_vec(double *xt, int *n,	double *x,   int *nx,
 		     int *rightmost_closed, int *all_inside, int *indx);
 */
 
-/* ../../appl/maxcol.c: also in Applic.h */
+/* ../../appl/maxcol.c */
 void R_max_col(double *matrix, int *nr, int *nc, int *maxes, int *ties_meth);
 
 #ifdef  __cplusplus
