@@ -1189,6 +1189,26 @@ compareVersion <- function(a, b)
     db
 }
 
+.write_repositories <-
+function(repos, file = stdout(), ...)
+{
+    ## Use .write_repositories(getOption("repos")) to write the current
+    ## option to a file which can be re-used by other R processes.
+    x <- list(...)
+    n <- length(repos)
+    h <- "menu_name\tURL\tdefault\tsource\twin.binary\tmac.binary"
+    s <- sprintf(paste(rep.int("%s", 7L), collapse = "\t"),
+                 names(repos),
+                 names(repos),
+                 repos,
+                 rep_len(x$default %||% "TRUE", n),
+                 rep_len(x$source  %||% "NA", n),
+                 rep_len(x$win.binary %||% "NA", n),
+                 rep_len(x$mac.binary %||% "NA", n))
+    writeLines(c(h, s), file)
+}
+
+
 ### default changed to https: for R 3.3.0
 .expand_BioC_repository_URLs <- function(x)
 {
