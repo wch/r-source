@@ -14519,6 +14519,12 @@ Do not use these in distributed code.
 @item hidden
 Entry points that are where possible (Windows and some modern Unix-alike
 compilers/loaders when using @R{} as a shared library) not exported.
+
+@item experimental
+Entry points declared in an installed header file that are part of an
+experimental API, such as @file{R_ext/Altrep.h}. These are subject to
+change, so package authors wishing to use these should be prepared to
+adapt.
 @end table
 
 @node Memory allocation, Error signaling, The R API, The R API
