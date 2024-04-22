@@ -8025,7 +8025,7 @@ class (in package @pkg{stats}).  To make these easy to read in the
 source file, @code{\code@{"\linkS4class@{abc@}"@}} expands to the form
 given above.
 
-There are two other forms with an optional argument, specified as
+There are two other forms with an optional `anchor' argument, specified as
 @code{\link[@var{pkg}]@{@var{foo}@}} and
 @code{\link[@var{pkg:bar}]@{@var{foo}@}}, to link to topics
 @code{@var{foo}} and @code{@var{bar}} respectively in the package
