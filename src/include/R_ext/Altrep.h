@@ -17,6 +17,10 @@
  *  https://www.R-project.org/Licenses/
  */
 
+/* 
+   Not part of the API, subject to change at any time.
+*/
+
 #ifndef R_EXT_ALTREP_H_
 #define R_EXT_ALTREP_H_
 
