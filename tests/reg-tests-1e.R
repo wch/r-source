@@ -1333,6 +1333,54 @@ stopifnot(exprs = {
 ## as.raw(rl) and as.integer(rl) failed in R <= 4.4.x
 
 
+## as.data.frame.matrix(<NA in rownames>, make.names = NA)
+(m12 <- matrix(1:6, 2,3, dimnames=list(rn <- c('r1', 'r2'),
+                                       cn <- c(NA, "NA", 'c3'))))
+m2 <- m12; rownames(m2)[1] <- NA; m2
+m  <- m2 ; rownames(m )[2] <- "NA"; m
+d   <- as.data.frame(m)
+d2  <- as.data.frame(m2)
+d12 <- as.data.frame(m12)
+d0 <- d; row.names(d0) <- NULL; d0
+##   NA NA c3
+## 1  1  3  5
+## 2  2  4  6
+stopifnot(exprs = {
+    identical(2:3, dim(m))
+    identical(2:3, dim(m2))
+    identical(cn, colnames(m))
+    identical(cn, colnames(m2))
+    identical(cn, colnames(m12))
+    ## data frames too
+    identical(2:3, dim(d))
+    identical(2:3, dim(d2))
+    identical(cn, colnames(d))
+    identical(cn, colnames(d2))
+    identical(cn, colnames(d12))
+})
+## (*not* wrongly):
+rownames(d)  # [1] "NA..1" "NA."
+rownames(d2) # [1] "NA."  "r2"
+rownames(d12)# [1] "r1"   "r2"
+## want the rownames to be treated differently ---> bug for make.names=NA
+as.data.frame(m,  make.names=FALSE) |> assertErrV()
+as.data.frame(m2, make.names=FALSE) |> assertErrV()
+as.data.frame(m2, make.names=TRUE)  # (the  PR#18702 -- print.data.frame  "bug")
+(m0 <- m[FALSE, ])
+i0 <- integer(0); (d00 <- `names<-`(data.frame(i0, i0, i0), cn))
+stopifnot(exprs = {
+    identical(d00, as.data.frame(m0, make.names=TRUE))
+    identical(d00, as.data.frame(m0, make.names=NA))
+    identical(d00, as.data.frame(m0, make.names=FALSE))
+    identical(d12, as.data.frame(m12, make.names=TRUE))  ## as above; rownames "r1" "r2"
+    identical(d12, as.data.frame(m12, make.names=NA))
+    identical(d12, as.data.frame(m12, make.names=FALSE))
+    identical(d0,  as.data.frame(m,   make.names=NA)) # internal default row names
+    identical(-2L, .row_names_info(d0))
+})
+## the last lost row.names => dim(.) was 0 x 3  instead of  d0's  2 x 3, in R <= 4.4.0
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

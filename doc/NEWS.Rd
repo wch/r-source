@@ -82,6 +82,9 @@
       require a \emph{non-empty} digit sequence in a decimal or binary
       exponent.  This aligns with the C/POSIX standard for \code{strtod} and
       with \code{?NumericConstants}.
+
+      \item \code{as.data.frame(m, make.names=NA)} now works correctly for
+      a matrix \code{m} with \code{NA}'s in row names.
     }
   }
 }
