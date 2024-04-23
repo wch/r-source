@@ -4970,7 +4970,7 @@ libraries.  The compiler is currently named @command{flang-new} but has been
 announced to be renamed to @command{flang} when more nearly complete (and
 at some earlier point in its development was known as @command{f18}).
 
-The version in @I{LLVM} 16 was able to build @R{} on @cputype{x86_64} Linux
+The version in @I{LLVM} 16 and later was able to build @R{} on @cputype{x86_64} Linux
 with
 @example
 FC=/path/to/flang-new
@@ -5041,7 +5041,7 @@ Standalone installers (which are free-of-charge) are available from
 @uref{https://www.intel.com/content/www/us/en/developer/articles/tool/oneapi-standalone-components.html}:
 they are also part of the @I{oneAPI} Base and HPC (for Fortran) toolkits.
 
-We tried the compilers in @I{oneAPI} 2024.0.2 and 2023.x.y using (the paths
+We tried the compilers in @I{oneAPI} 2024.1.0 and 2023.x.y using (the paths
 do differ by compiler version)
 @example
 IP=/path/to/compilers/bin/
@@ -5093,7 +5093,7 @@ version of @command{clang}: the Intel manual suggests checking
 @abbr{LTO}: it is not clear if the Fortran one does.
 
 @c https://community.intel.com/t5/Intel-C-Compiler/Troubles-with-getrusage-when-using-icx/m-p/1509374#M41116
-For some versions, including 2023.2.0, all CPU times in e.g.@:
+For some recent versions (including 2023.2.0) all CPU times in e.g.@:
 @code{proc.time()} are reported as zero.  If you see this, uncomment the
 @samp{INTEL_ICX_FIX} setting in @file{config.site} and re-build.
 
