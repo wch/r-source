@@ -679,8 +679,8 @@ nonAPI <- c("chol_", "chol2inv_", "cg_", "ch_", "rg_",
 ## non-API in Applic.h
 ## future <- c("dqrcf_", "dqrdc2_", "dqrls_", "dqrqty_", "dqrqy_")
 ## d1mach_ and i1mach_ are mentioned (since R 2.15.3) in R-exts.
-            "R_Pretty", ## hidden, so unlikely to be used
-            "optimf9")  ## used by pcaPP
+            "R_Pretty", ## hidden, so unlikely to be usable
+            "optif9")   ## used by pcaPP
 
 ## ## non-API header Altrep.h: used by
 ## ## arrow cli duckdb igraph isotree nanoarrow outliertree readsparse rlas stringfish vctrs vroom
