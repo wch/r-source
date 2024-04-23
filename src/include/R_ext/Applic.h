@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998-2023   The R Core Team
+ *  Copyright (C) 1998-2024   The R Core Team
  *
  *  This header file is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -83,7 +83,7 @@ void lbfgsb(int n, int m, double *x, double *l, double *u, int *nbd,
 void samin(int n, double *pb, double *yb, optimfn fn, int maxit,
 	   int tmax, double ti, int trace, void *ex);
 
-/* appl/interv.c: Also in Utils.h, used in package eco */
+/* appl/interv.c: Also in Utils.h, used in former package eco */
 int findInterval(double *xt, int n, double x,
 		 Rboolean rightmost_closed,  Rboolean all_inside, int ilo,
 		 int *mflag);
@@ -110,7 +110,9 @@ void F77_NAME(dqrxb)(double *x, int *n, int *k, double *qraux,
 
 /* hidden, for use in R.bin/R.dll/libR.so */
 
-/* appl/pretty.c: for use in engine.c and util.c */
+/* appl/pretty.c: for use in engine.c and util.c
+   FIXME: move out of this header
+*/
 double R_pretty(double *lo, double *up, int *ndiv, int min_n,
 		double shrink_sml, const double high_u_fact[],
 		int eps_correction, int return_bounds);
@@ -130,7 +132,7 @@ void fdhess(int n, double *x, double fval, fcn_p fun, void *state,
 	    double *h, int nfd, double *step, double *f, int ndigit,
 	    double *typx);
 
-/* Also used in packages nlme, pcaPP */
+/* Foremerly used in package nlme, still used by pcaPP */
 void optif9(int nr, int n, double *x,
 	    fcn_p fcn, fcn_p d1fcn, d2fcn_p d2fcn,
 	    void *state, double *typsiz, double fscale, int method,
