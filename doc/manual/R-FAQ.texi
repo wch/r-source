@@ -26,7 +26,7 @@
 @c things.
 @c For now, simply hard-wire the year again.
 @c @include version.texi
-@set FAQ_YEAR 2023
+@set FAQ_YEAR 2024
 @c </FIXME>
 
 @macro CRAN{}
@@ -2762,6 +2762,9 @@ To sort the rows within a data frame, with respect to the values in one
 or more of the columns, simply use @code{order()} (e.g.,
 @code{DF[order(DF$a, DF[["b"]]), ]} to sort the data frame @code{DF} on
 columns named @code{a} and @code{b}).
+
+From R 4.4.0, @code{sort_by()} provides a less verbose alternative
+with a formula interface (e.g., @code{sort_by(DF, ~a + b)}).
 
 @node Why does the help.start() search engine not work?, Why did my .Rprofile stop working when I updated R?, How can I sort the rows of a data frame?, R Miscellanea
 @section Why does the help.start() search engine not work?
