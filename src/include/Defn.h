@@ -2408,7 +2408,7 @@ extern void *alloca(size_t);
 // for reproducibility for now: use exp10 or pown later if accurate enough.
 #define Rexp10(x) pow(10.0, x)
 
-// this produces an initialized structure as a _compount literal_
+// this produces an initialized structure as a _compound literal_
 #define SEXP_TO_STACKVAL(x) ((R_bcstack_t) { .tag = 0, .u.sxpval = (x) })
 
 #endif /* DEFN_H_ */
