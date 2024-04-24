@@ -1,6 +1,6 @@
 % File src/library/graphics/man/grid.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2023 R Core Team
+% Copyright 1995-2024 R Core Team
 % Distributed under GPL 2 or later
 
 \name{grid}
@@ -27,6 +27,10 @@ grid(nx = NULL, ny = nx, col = "lightgray", lty = "dotted",
     alignment with the axis tick marks are active.  Setting \code{equilogs =
       FALSE} in that case gives \emph{non equidistant} tick aligned
     grid lines.}
+}
+\value{
+  A list of the x (\code{"atx"}) and y (\code{"aty"}) coordinates at
+  which the grid lines were drawn is returned invisibly.
 }
 \note{
   If more fine tuning is required, use \code{\link{abline}(h = ., v = .)}
