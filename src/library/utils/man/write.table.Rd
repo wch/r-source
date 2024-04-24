@@ -1,6 +1,6 @@
 % File src/library/utils/man/write.table.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2024 R Core Team
 % Distributed under GPL 2 or later
 
 \name{write.table}
@@ -110,7 +110,7 @@ write.csv2(\dots)
   e.g.\sspace{}\code{file = file("filename", "wb")}.
 }
 \section{CSV files}{
-  By default there is no column name for a column of row names.  If
+  By default, \code{write.table} does not output a column name for a column of row names.  If
   \code{col.names = NA} and \code{row.names = TRUE} a blank column name
   is added, which is the convention used for CSV files to be read by
   spreadsheets.  Note that such CSV files can be read in \R by
