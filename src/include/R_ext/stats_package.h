@@ -21,6 +21,8 @@
  *  https://www.R-project.org/Licenses/
  */
 
+/* Not part of the API */
+
 #ifndef R_STATS_PACKAGE_H
 #define R_STATS_PACKAGE_H
 #include <Rconfig.h>

@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1999--2023  The R Core Team.
+ *  Copyright (C) 1999--2024  The R Core Team.
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This header file is free software; you can redistribute it and/or modify
@@ -1169,6 +1169,14 @@ enum {SORTED_DECR_NA_1ST = -2,
 			    sorted == SORTED_DECR_NA_1ST)
 
 
+/* ====================== public but non-API entry points =================
+
+   "not documented and subject to change without notice."
+
+   and that includes possible removal.
+ */
+
+    
 /* Experimental C interface for experimental hash table support
 
    Not in the API (at least not yet) but declared here to allow some
@@ -1196,7 +1204,9 @@ void R_maphashC(R_hashtab_type h, void (*FUN)(SEXP, SEXP, void *), void *data);
 void R_clrhash(R_hashtab_type h);
 
 
-/* stuff that probably shouldn't be in the API but is getting used */
+/* Rest of this file
+   Stuff that is not API and probably should not be but is getting used.
+ */
 
 void (SET_TYPEOF)(SEXP x, int v); // used by Rcpp
 void (SET_OBJECT)(SEXP x, int v); // used by Rcpp

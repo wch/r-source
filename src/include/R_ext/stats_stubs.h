@@ -21,6 +21,8 @@
  *  https://www.R-project.org/Licenses/
  */
 
+/* Not part of the API */
+
 #include <Rconfig.h>
 #include <Rinternals.h>
 #include <R_ext/Rdynload.h>

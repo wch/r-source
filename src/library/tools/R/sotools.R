@@ -559,7 +559,7 @@ nonAPI <- c("chol_", "chol2inv_", "cg_", "ch_", "rg_",
             "fft_factor", "fft_work", "Brent_fmin", "optif0",
 
 ## then entry points which are not attribute-hidden
-## and in a non-API header or no header at all.
+## and in a non-API header or no header at all or marked as non-API in a header
 
             "OutDec", "PRIMOFFSET", "RC_fopen", "R_CollectFromIndex",
             "R_CompiledFileName", "R_FileExists",
@@ -657,6 +657,10 @@ nonAPI <- c("chol_", "chol2inv_", "cg_", "ch_", "rg_",
 
 ## non-API and long deprecated in R_ext/RS.h (and as call_S in S.h)
             "call_R",
+## non-API, declared in Defn.h
+            "Rf_setSVector",
+## non-API, declared in Utils.h
+            "Rf_StringFalse", "Rf_StringTrue", "Rf_isBlankString",
 
 ## in the non-API header R_ext/Connections.h
             "R_new_custom_connection", "R_ReadConnection",

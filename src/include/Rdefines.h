@@ -179,12 +179,13 @@ typedef struct SEXPREC s_object;
 #  endif
 #endif
 
-#define COPY_TO_USER_STRING(x)	mkChar(x)
-#define CREATE_STRING_VECTOR(x)	mkChar(x)
+#define COPY_TO_USER_STRING(x)	Rf_mkChar(x)
+#define CREATE_STRING_VECTOR(x)	Rf_mkChar(x)
 
+// createFunctionCall seems not to exist.
 #define CREATE_FUNCTION_CALL(name, argList) createFunctionCall(name, argList)
 
-#define EVAL(x)			eval(x,R_GlobalEnv)
+#define EVAL(x)			Rf_eval(x,R_GlobalEnv)
 
 
 #endif

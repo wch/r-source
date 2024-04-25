@@ -24,6 +24,8 @@
 /*
   Experimental: included by src/library/stats/src/distance.c
 
+  Not part of the API.
+
   Note that only uses R_num_math_threads: it is not clear
   R_num_math_threads should be exposed at all.
 

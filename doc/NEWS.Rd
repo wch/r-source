@@ -5,6 +5,31 @@
 \title{R News}
 \encoding{UTF-8}
 
+\section{\Rlogo CHANGES IN R 4.4.0 patched}{
+  \subsection{C-LEVEL FACILITIES}{
+    \itemize{
+      \item Functions \code{R_atof} and \code{R_strtod} declared in
+      header \file{R_ext/Utils.h} are now documented in
+      \sQuote{Writing R Extensions} and so formally part of the API.
+
+      \item The non-API entry points \code{Rf_setSVector},
+      \code{Rf_StringFalse}, \code{Rf_StringTrue} and
+      \code{Rf_isBlankString} have been added to those reported by
+      \command{R CMD check}.
+    }
+  }
+
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item \code{as.numeric()}, \code{scan()}, \code{type.convert()}
+      and other places which use the internal C function \code{R_strtod} now
+      require a \emph{non-empty} digit sequence in a decimal or binary
+      exponent.  This aligns with the C/POSIX standard for \code{strtod} and
+      with \code{?NumericConstants}.
+    }
+  }
+}
+
 \section{\Rlogo CHANGES IN R 4.4.0}{
   \subsection{SIGNIFICANT USER-VISIBLE CHANGES}{
     \itemize{
@@ -275,7 +300,7 @@
       the \code{data.frame} method which can be used to sort rows of a
       data frame by one or more columns.
 
-      \item The icence headers for the \abbr{RPC} code in
+      \item The licence headers for the \abbr{RPC} code in
       \file{src/extra/xdr} have been updated to use the GPL-compatible
       licence published by Oracle America in 2010.
 
@@ -290,7 +315,6 @@
       allows non-syntactic completions to be wrapped in backquotes. This
       is currently only useful for \I{Jupyter} notebooks via the
       \pkg{IRkernel} package, and may cause problems for other backends.
-      
     }
   }
 
