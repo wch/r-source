@@ -1,7 +1,7 @@
 #  File src/library/tools/R/admin.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2023 The R Core Team
+#  Copyright (C) 1995-2024 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -710,10 +710,7 @@ function(dir, outDir, keep.source = TRUE)
              domain = NA)
 
     ## We have to be careful to avoid repeated rebuilding.
-    vignettePDFs <-
-        file.path(outVignetteDir,
-                  sub("$", ".pdf",
-                      basename(file_path_sans_ext(vigns$docs))))
+    vignettePDFs <- file.path(outVignetteDir, paste0(vigns$names, ".pdf"))
     upToDate <- file_test("-nt", vignettePDFs, vigns$docs)
 
     ## The primary use of this function is to build and install PDF
@@ -756,12 +753,8 @@ function(dir, outDir, keep.source = TRUE)
         })
         ## In case of an error, do not clean up: should we point to
         ## buildDir for possible inspection of results/problems?
-        ## We need to ensure that vignetteDir is in TEXINPUTS and BIBINPUTS.
+        ## We need to ensure that the src vignettes dir is in (TEX|BIB)INPUTS.
         if (vignette_is_tex(output)) {
-	    ## <FIXME>
-	    ## What if this fails?
-            ## Now gives a more informative error texi2pdf fails
-            ## or if it does not produce a <name>.pdf.
             tryCatch({
                 texi2pdf(file = output, quiet = TRUE, texinputs = vigns$dir)
                 output <- find_vignette_product(name, by = "texi2pdf", engine = engine)
@@ -770,7 +763,6 @@ function(dir, outDir, keep.source = TRUE)
                  sQuote(output), conditionMessage(e)),
                  domain = NA, call. = FALSE)
             })
-	    ## </FIXME>
 	}
 
         if(!file.copy(output, outVignetteDir, overwrite = TRUE))
@@ -780,6 +772,7 @@ function(dir, outDir, keep.source = TRUE)
                  domain = NA)
     }
 
+    if (any(!upToDate))
     compactPDF(outVignetteDir, gs_quality = "ebook")
 
     ## Need to change out of this dir before we delete it,
