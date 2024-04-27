@@ -58,7 +58,7 @@ time-varying variable.
 <<>>=
 set.seed(12345)
 n <- 5
-d1 <- data.frame(sex = sample(c("M", "F"), n, rep = TRUE),
+d1 <- data.frame(sex = sample(c("M", "F"), n, replace = TRUE),
                  ht.before = round(rnorm(n, 165, 6), 1),
                  ht.after = round(rnorm(n, 165, 6), 1),
                  wt.before = round(rnorm(n, 80, 6)),
@@ -103,7 +103,7 @@ to be \dQuote{nicely} formatted.  Suppose we instead had
 
 <<>>=
 n <- 5
-d2 <- data.frame(sex = sample(c("M", "F"), n, rep = TRUE),
+d2 <- data.frame(sex = sample(c("M", "F"), n, replace = TRUE),
                  ht_before = round(rnorm(n, 165, 6), 1),
                  ht_after = round(rnorm(n, 165, 6), 1),
                  wt_before = round(rnorm(n, 80, 6)),
@@ -292,7 +292,7 @@ Conversion from long to wide format is generally simpler. Let us
 simulate long format data from the same hypothetical setup.
 
 <<>>=
-d3 <- data.frame(sex = sample(c("M", "F"), 2 * n, rep = TRUE),
+d3 <- data.frame(sex = sample(c("M", "F"), 2 * n, replace = TRUE),
                  ht = round(rnorm(2 * n, 165, 6), 1),
                  wt = round(rnorm(2 * n, 80, 6)),
                  subject = rep(1:n, 2),
@@ -325,7 +325,7 @@ in the dataset we have created. Let us fix that:
 
 <<>>=
 n <- 10
-d4 <- data.frame(sex = rep(sample(c("M", "F"), n, rep = TRUE), 2),
+d4 <- data.frame(sex = rep(sample(c("M", "F"), n, replace = TRUE), 2),
                  ht = round(rnorm(2 * n, 165, 6), 1),
                  wt = round(rnorm(2 * n, 80, 6)),
                  subject = rep(1:n, 2),
