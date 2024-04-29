@@ -50,7 +50,7 @@ asOneSidedFormula <-
                         character = as.name(object),
                         expression = object[[1L]],
                         stop(gettextf("'%s' cannot be of mode '%s'",
-                                      substitute(object), mode(object)),
+                                      deparse1(substitute(object)), mode(object)),
                              domain = NA)
                         ))
     class(ff) <- "formula"
