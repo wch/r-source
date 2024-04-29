@@ -306,9 +306,10 @@ function(..., na.rm)
     }
     else
         switch(.Generic,
-               max = x[which(v == max(v))],
-               min = x[which(v == min(v))],
-               range = x[c(which(v == min(v)), which(v == max(v)))])
+               max = x[which(v == max(v))[1L]],
+               min = x[which(v == min(v))[1L]],
+               range = x[c(which(v == min(v))[1L],
+                           which(v == max(v))[1L])])
 }
 
 as.character.numeric_version <-
