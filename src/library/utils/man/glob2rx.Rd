@@ -1,7 +1,7 @@
 % File src/library/utils/man/glob2rx.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2008 R Core Team
-% Copyright 2002-2008 The R Foundation
+% Copyright 1995-2024 R Core Team
+% Copyright 2002-2024 The R Foundation
 % Distributed under GPL 2 or later
 
 \name{glob2rx}
@@ -10,6 +10,9 @@
 \description{
   Change \emph{wildcard} aka \emph{globbing} patterns into the
   corresponding regular expressions (\code{\link{regexp}}).
+
+  This is also a practical didactical example for the use of
+  \code{\link{sub}()} and regular expressions.
 }
 \usage{
 glob2rx(pattern, trim.head = FALSE, trim.tail = TRUE)
@@ -31,7 +34,8 @@ glob2rx(pattern, trim.head = FALSE, trim.tail = TRUE)
 
   Note that now even \samp{(}, \samp{[} and \samp{\{} can be used
   in \code{pattern}, but \code{glob2rx()} may not work correctly with
-  arbitrary characters in \code{pattern}.
+  arbitrary characters in \code{pattern}, for example escaped special
+  characters.
 }
 \value{
   A character vector of the same length as the input \code{pattern}
@@ -42,6 +46,8 @@ glob2rx(pattern, trim.head = FALSE, trim.tail = TRUE)
 \seealso{
   \code{\link{regexp}} about regular expression,
   \code{\link{sub}}, etc about substitutions using regexps.
+  \code{\link{Sys.glob}} does wildcard expansio, i.e., \dQuote{globbing} on
+  file paths more subtly, e.g., allowing to escape special characters.
 }
 \examples{
 stopifnot(glob2rx("abc.*") == "^abc\\\\.",% '\\' doubled in Rd file!

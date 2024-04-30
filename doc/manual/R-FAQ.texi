@@ -253,7 +253,6 @@ modify the R source code archive, currently consisting of
 @I{Ross Ihaka},
 @I{Tomas Kalibera},
 @I{Michael Lawrence},
-@I{Friedrich Leisch},
 @I{Uwe Ligges},
 @I{Thomas Lumley},
 @I{Martin Maechler},
@@ -273,8 +272,9 @@ plus
 @I{Stefano Iacus} up to July 2014, 
 @I{Seth Falcon} up to August 2015, 
 @I{Duncan Murdoch} up to September 2017, 
-@I{Martin Morgan} up to June 2021, and 
-@I{Douglas Bates} up to March 2024.
+@I{Martin Morgan} up to June 2021,
+@I{Douglas Bates} up to March 2024, and 
+@I{Friedrich Leisch} up to April 2024.
 
 R has a home page at @url{https://www.R-project.org/}.  It is
 @url{https://www.gnu.org/philosophy/free-sw.html, free software}
