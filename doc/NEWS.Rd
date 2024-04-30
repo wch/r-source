@@ -374,6 +374,9 @@
       allows non-syntactic completions to be wrapped in backquotes. This
       is currently only useful for \I{Jupyter} notebooks via the
       \pkg{IRkernel} package, and may cause problems for other backends.
+
+      \item The numeric version creators now stop on invalid
+      non-character version specifications.
     }
   }
 
