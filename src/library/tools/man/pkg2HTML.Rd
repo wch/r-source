@@ -56,8 +56,8 @@ pkg2HTML(package, dir = NULL, lib.loc = NULL,
     \code{\link{Rd2HTML}}.
   }
   \item{out}{a filename or connection object to which to write the
-    output.  The default \code{out = ""} is equivalent to
-    \code{out = \link{stdout}()}.}
+    output.  By default (\code{NULL}), the filename is inferred from
+    \code{hooks$pkg_href}, which defaults to \file{\var{pkg}.html}.}
   \item{toc_entry}{ Determines whether the entry for a help page in the
     table of contents is the name of the help page or its title. }
   \item{...}{additional arguments, passed on to
