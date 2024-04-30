@@ -107,7 +107,7 @@ row.names.default <- function(x) if(!is.null(dim(x))) rownames(x)# else NULL
         if(isFALSE(make.names))
             stop("missing values in 'row.names' are not allowed")
         if(is.na(make.names)) # automatic row.names
-            value <- .set_row_names(n)
+            value <- .set_row_names(if(n > 0) n else length(value))
         else if(!isTRUE(make.names)) stop("invalid 'make.names'")
         else # make.names = TRUE: amend 'value' to correct ones:
             value <- make.names(value, unique=TRUE)
