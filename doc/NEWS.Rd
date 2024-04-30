@@ -15,8 +15,8 @@
   \subsection{NEW FEATURES}{
     \itemize{
       \item \code{as.integer(rl)} and hence \code{as.raw(rl)} now work for
-      a \code{list} of \code{raw(1)} elements, as proposed by Michael
-      Chirico's \PR{18696}.
+      a \code{list} of \code{raw(1)} elements, as proposed by \I{Michael
+      Chirico}'s \PR{18696}.
     }
   }
 
@@ -85,6 +85,10 @@
 
       \item \code{as.data.frame(m, make.names=NA)} now works correctly for
       a matrix \code{m} with \code{NA}'s in row names.
+
+      \item The error message from \code{<POSIXlt>[["hour"]]} and similar
+      now mentions \code{*[[, "hour"]]}, as wished for in \PR{17409} and
+      proposed by \I{Michael Chirico}.
     }
   }
 }

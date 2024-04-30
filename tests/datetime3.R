@@ -3,6 +3,8 @@
 
 .pt <- proc.time()
 
+tryCmsg <- function(expr) tryCatch(expr, error = conditionMessage) # typically == *$message
+assertErrV <- function(...) tools::assertError(..., verbose=TRUE)
 options(warn = max(1, getOption("warn")))
 
 if(!nzchar(Sys.getenv("_R_CHECK_DATETIME3_NO_TZ_"))) withAutoprint({
@@ -574,6 +576,17 @@ ct <- .POSIXct(c(-1.25, -1, 0, 1), tz = "UTC")
 (d2 <-        as.POSIXlt(as.POSIXct(lt)) - ct)
 stopifnot(d1 == 0, d2 == 0)
 ## where (1 0 0 0) and (2 0 0 0) {w/ "internal" tz src} in R <= 4.3.1
+
+## [[ method uses underlying class names as a backup
+(pl <- as.POSIXlt(as.POSIXct("2024-04-25 12:34:56") + c(a = 0, mday = 10)))
+assertErrV(pl[["b"]])
+stopifnot(exprs = {
+  identical(pl[["a"]],    pl[[1L]]) # both as previously
+  identical(pl[["mday"]], pl[[2L]])
+  identical(pl[,"mday"], rep(25L,  2))
+  identical(pl[,"yday"], rep(115L, 2))
+  grepl('x[, "yday"]', print(tryCmsg(pl[["yday"]])))# new error msg
+})
 
 
 
