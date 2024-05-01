@@ -881,7 +881,7 @@ prb <- 0.995
 stopifnot(exprs = {
     qb6 == c(6001:6004,6004:6005) # not in R 4.4.0, nor 4.1.0
     1 > pqb6 & pqb6 >= 0.05       #  "
-X    0.05 > pqb6_1 & pqb6_1 >= 0.035# "
+    0.05 > pqb6_1 & pqb6_1 >= 0.035# "
 })
 ## was wrong for R versions in [4.1.1, 4.4.0]
 
