@@ -879,7 +879,7 @@ prb <- 0.995
 (pqb6   <- pbinom(qb6,   size = sz, prob = prb))
 (pqb6_1 <- pbinom(qb6-1, size = sz, prob = prb))
 stopifnot(exprs = {
-    qb6 == c(6001:6004,6004:6005) # not in R 4.4.0, nor 4.1.0
+    qb6 == c(6001:6004,6004:6005) # not in R 4.4.0, nor 4.1.1
     1 > pqb6 & pqb6 >= 0.05       #  "
     0.05 > pqb6_1 & pqb6_1 >= 0.035# "
 })
