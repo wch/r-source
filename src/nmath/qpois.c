@@ -64,7 +64,7 @@ double qpois(double p, double lambda, int lower_tail, int log_p)
     double
 	mu = lambda,
 	sigma = sqrt(lambda),
-	// had gamma = sigma; PR#8058 should be kurtosis which is mu^-0.5 = 1/sigma
+	// had gamma = sigma; PR#8058 should be skewness which is mu^-0.5 = 1/sigma
 	gamma = 1.0/sigma;
 
      R_DBG_printf("qpois(p=%.12g, lambda=%.15g, l.t.=%d, log=%d):"
