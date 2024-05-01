@@ -49,7 +49,7 @@
   \subsection{C-LEVEL FACILITIES}{
     \itemize{
       \item The non-API and hidden entry points \code{Rf_setIVector},
-      \code{Rf_setRVector} and \code{Rf_setSVector} have been removed.     
+      \code{Rf_setRVector} and \code{Rf_setSVector} have been removed.
     }
   }
 
@@ -89,6 +89,10 @@
       \item The error message from \code{<POSIXlt>[["hour"]]} and similar
       now mentions \code{*[[, "hour"]]}, as wished for in \PR{17409} and
       proposed by \I{Michael Chirico}.
+
+      \item \code{qbinom()} and potentially \code{qpois()}, \code{qnbinom()},
+      no longer sometimes fail accurate inversion (of \code{pbinom()},
+      etc), thanks to Christopher Chang's report and patch in \PR{18711}.
     }
   }
 }
