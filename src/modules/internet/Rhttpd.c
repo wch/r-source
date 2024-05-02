@@ -301,7 +301,7 @@ static int add_worker(httpd_conn_t *c) {
     for (; i < MAX_WORKERS; i++)
 	if (!workers[i]) {
 #ifdef _WIN32
-	    DBG(printf("registering worker %p as %d (thread=0x%x)\n", (void*) c, i, (int) c->thread));
+	    DBG(printf("registering worker %p as %d (thread=%p)\n", (void*) c, i, (void *) c->thread));
 #else
 	    DBG(printf("registering worker %p as %d (handler=%p)\n", (void*) c, i, (void*) c->ih));
 #endif
@@ -904,7 +904,8 @@ static void worker_input_handler(void *data) {
 	char *s = c->line_buf;
 	ssize_t n = recv(c->sock, c->line_buf + c->line_pos, 
 			 LINE_BUF_SIZE - c->line_pos - 1, 0);
-	DBG(printf("[recv n=%d, line_pos=%d, part=%d]\n", n, c->line_pos, (int)c->part));
+	DBG(printf("[recv n=%lld, line_pos=%llu, part=%d]\n", (long long)n,
+	           (unsigned long long)c->line_pos, (int)c->part));
 	if (n < 0) { /* error, scrape this worker */
 	    remove_worker(c);
 	    return;
@@ -1108,10 +1109,12 @@ static void worker_input_handler(void *data) {
     }
     if (c->part == PART_BODY && c->body) { /* BODY  - this branch always returns */
 	if (c->body_pos < c->content_length) { /* need to receive more ? */
-	    DBG(printf("BODY: body_pos=%d, content_length=%ld\n", c->body_pos, c->content_length));
+	    DBG(printf("BODY: body_pos=%llu, content_length=%ld\n",
+	        (unsigned long long)c->body_pos, c->content_length));
 	    ssize_t n = recv(c->sock, c->body + c->body_pos, 
 			    c->content_length - c->body_pos, 0);
-	    DBG(printf("      [recv n=%d - had %u of %lu]\n", n, c->body_pos, c->content_length));
+	    DBG(printf("      [recv n=%lld - had %llu of %lu]\n", (long long)n,
+	        (unsigned long long)c->body_pos, c->content_length));
 	    c->line_pos = 0;
 	    if (n < 0) { /* error, scrap this worker */
 		remove_worker(c);
@@ -1211,7 +1214,7 @@ static WSAEVENT server_thread_should_stop = NULL;
  */
 static LRESULT CALLBACK RhttpdWindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
-    DBG(Rprintf("RhttpdWindowProc(%x, %x, %x, %x)\n", (int) hwnd, (int) uMsg, (int) wParam, (int) lParam));
+    DBG(Rprintf("RhttpdWindowProc(%p, %x, %x, %x)\n", (void *) hwnd, (int) uMsg, (int) wParam, (int) lParam));
     if (hwnd == message_window && uMsg == WM_RHTTP_CALLBACK) {
 	httpd_conn_t *c = (httpd_conn_t*) lParam;
 	process_request_main_thread(c);
