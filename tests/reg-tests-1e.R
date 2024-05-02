@@ -1380,6 +1380,12 @@ stopifnot(exprs = {
 })
 ## the last lost row.names => dim(.) was 0 x 3  instead of  d0's  2 x 3, in R <= 4.4.0
 
+## Scan should not treat "NA" as double/complex when na.strings doesn't
+## include it (PR#17289)
+(r <- tryCid(scan(text="NA", what=double(), na.strings=character())))
+stopifnot(inherits(r, "error"))
+(r <- tryCid(scan(text="NA", what=complex(), na.strings=character())))
+stopifnot(inherits(r, "error"))
 
 
 ## keep at end

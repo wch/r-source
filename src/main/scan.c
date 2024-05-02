@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998-2023   The R Core Team.
+ *  Copyright (C) 1998-2024   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -522,7 +522,7 @@ static void extractItem(char *buffer, SEXP ans, R_xlen_t i, LocalData *d)
 	if (isNAstring(buffer, 0, d))
 	    REAL(ans)[i] = NA_REAL;
 	else {
-	    REAL(ans)[i] = Strtod(buffer, &endp, TRUE, d);
+	    REAL(ans)[i] = Strtod(buffer, &endp, FALSE, d);
 	    if (!isBlankString(endp))
 		expected("a real", buffer, d);
 	}
@@ -531,7 +531,7 @@ static void extractItem(char *buffer, SEXP ans, R_xlen_t i, LocalData *d)
 	if (isNAstring(buffer, 0, d))
 	    COMPLEX(ans)[i].r = COMPLEX(ans)[i].i = NA_REAL;
 	else {
-	    COMPLEX(ans)[i] = strtoc(buffer, &endp, TRUE, d);
+	    COMPLEX(ans)[i] = strtoc(buffer, &endp, FALSE, d);
 	    if (!isBlankString(endp))
 		expected("a complex", buffer, d);
 	}
