@@ -1292,6 +1292,13 @@ static void srv_input_handler(void *data)
     if (c->ih) c->ih->userData = c;
     add_worker(c);
 #else
+    /* The accepted socket inherits properties of the socket listened to.
+       The server socket is non-blocking, because WSAEventSelect has been used on it.
+       Make sure the accepted socket is blocking. */
+    WSAEventSelect(c->sock, NULL, 0);
+    unsigned long mode = 0;
+    ioctlsocket(c->sock, FIONBIO, &mode);
+
     if (!add_worker(c)) { /* create worker thread only if the worker
 			   * was accepted */
 	if (!(c->thread = CreateThread(NULL, 0, WorkerThreadProc,
