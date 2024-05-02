@@ -496,9 +496,9 @@ static void process_request(httpd_conn_t *c)
 
     /* SendMessage is synchronous, so it will wait until the message
      * is processed */
-    DBG(Rprintf("enqueuing process_request_main_thread\n"));
+    DBG(printf("enqueuing process_request_main_thread\n"));
     SendMessage(message_window, WM_RHTTP_CALLBACK, 0, (LPARAM) c);
-    DBG(Rprintf("process_request_main_thread returned\n"));
+    DBG(printf("process_request_main_thread returned\n"));
 
     ReleaseMutex(process_request_mutex);
 }
@@ -527,7 +527,7 @@ static SEXP handler_for_path(const char *path) {
 	    char fn[64];
 	    memcpy(fn, e, c - e); /* create a local C string with the name for the install() call */
 	    fn[c - e] = 0;
-	    DBG(Rprintf("handler_for_path('%s'): looking up custom handler '%s'\n", path, fn));
+	    DBG(printf("handler_for_path('%s'): looking up custom handler '%s'\n", path, fn));
 	    /* we cache custom_handlers_env so in case it has not been loaded yet, fetch it */
 	    if (!custom_handlers_env) {
 		if (!R_HandlersName) R_HandlersName = install(".httpd.handlers.env");
@@ -543,7 +543,7 @@ static SEXP handler_for_path(const char *path) {
 	    }
 	}
     }
-    DBG(Rprintf(" - falling back to default httpd\n"));
+    DBG(printf(" - falling back to default httpd\n"));
     return install("httpd");
 }
 
@@ -557,7 +557,7 @@ static void process_request_(void *ptr)
     int code = 200;
     const void *vmax = NULL;
 
-    DBG(Rprintf("process request for %p\n", (void*) c));
+    DBG(printf("process request for %p\n", (void*) c));
     if (!c || !c->url) return; /* if there is not enough to process, bail out */
     vmax = vmaxget();
     s = c->url;
@@ -578,7 +578,7 @@ static void process_request_(void *ptr)
 				  LCONS(handler_for_path(c->url), sArgs),
 				  sTrue));
 	SET_TAG(CDR(CDR(x)), install("silent"));
-	DBG(Rprintf("eval(try(httpd('%s'),silent=TRUE))\n", c->url));
+	DBG(printf("eval(try(httpd('%s'),silent=TRUE))\n", c->url));
 	
 	/* evaluate the above in the tools namespace */
 	SEXP toolsNS = PROTECT(R_FindNamespace(mkString("tools")));
@@ -619,7 +619,7 @@ static void process_request_(void *ptr)
 	if (TYPEOF(x) == STRSXP && LENGTH(x) > 0) { /* string means there was an error */
 	    const char *s = translateCharUTF8(STRING_ELT(x, 0));
 	    send_http_response(c, " 500 Evaluation error\r\nConnection: close\r\nContent-type: text/plain\r\n\r\n");
-	    DBG(Rprintf("respond with 500 and content: %s\n", translateChar(STRING_ELT(x, 0))));
+	    DBG(printf("respond with 500 and content: %s\n", translateChar(STRING_ELT(x, 0))));
 	    if (c->method != METHOD_HEAD)
 		send_response(c->sock, s, strlen(s));
 	    c->attr |= CONNECTION_CLOSE; /* force close */
@@ -1214,7 +1214,7 @@ static WSAEVENT server_thread_should_stop = NULL;
  */
 static LRESULT CALLBACK RhttpdWindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
-    DBG(Rprintf("RhttpdWindowProc(%p, %x, %x, %x)\n", (void *) hwnd, (int) uMsg, (int) wParam, (int) lParam));
+    DBG(printf("RhttpdWindowProc(%p, %x, %x, %x)\n", (void *) hwnd, (int) uMsg, (int) wParam, (int) lParam));
     if (hwnd == message_window && uMsg == WM_RHTTP_CALLBACK) {
 	httpd_conn_t *c = (httpd_conn_t*) lParam;
 	process_request_main_thread(c);
