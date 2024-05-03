@@ -254,29 +254,6 @@ defaultDumpName <-
 }
 
 
-mergeMethods <-
-    ## merge the methods in the second MethodsList object into the first,
-    ## and return the merged result.
-    function(m1, m2, genericLabel = character())
-{
-    .MlistDefunct("mergeMethods()")
-    if(length(genericLabel) && is(m2, "MethodsList"))
-        m2 <- .GenericInPrimitiveMethods(m2, genericLabel)
-    if(is.null(m1) || is(m1, "EmptyMethodsList"))
-        return(m2)
-    tmp <- listFromMlist(m2)
-    sigs <- tmp[[1]]
-    methods <- tmp[[2]]
-    for(i in seq_along(sigs)) {
-        sigi <- sigs[[i]]
-        if(.noMlists() && !identical(unique(sigi), "ANY"))
-          next
-        args <- names(sigi)
-        m1 <- insertMethod(m1, as.character(sigi), args, methods[[i]], FALSE)
-    }
-    m1
-}
-
 doPrimitiveMethod <-
   ## do a primitive call to builtin function 'name' the definition and call
   ## provided, and carried out in the environment 'ev'.

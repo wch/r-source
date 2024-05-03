@@ -46,8 +46,7 @@
   by the user.
 
   Partly, they work with S4 classes which are also normally not for the
-  user, see their help page \code{\linkS4class{optionalMethods}}.
-  
+  user, see their help page \code{\linkS4class{optionalMethod}}.
 }
 \usage{
 getGeneric(f, mustFind=FALSE, where, package)
@@ -103,7 +102,7 @@ insertClassMethods(methods, Class, value, fieldNames, returnAll)
 balanceMethodsList(mlist, args, check = TRUE) # <- defunct since R 4.5.0
 
 substituteFunctionArgs(def, newArgs, args = formalArgs(def),
-                       silent = FALSE, functionName = "a function") 
+                       silent = FALSE, functionName = "a function")
 
 .valueClassTest(object, classes, fname)
 }

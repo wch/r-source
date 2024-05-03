@@ -37,6 +37,46 @@
 
 ## <entry>
 ## Defunct in 4.5.0
+MethodsListSelect <-
+  ## select the element of a MethodsList object corresponding to the
+  ## actual arguments (as defined in the suppled environment),
+  ## and return the object, extended to include that method if necessary.
+  ##
+  ## Works recursively.  At each level finds an argument name from the current `mlist'
+  ## object, and evaluates this argument (if it is not missing), then uses the
+  ## class of the result to select an element of `mlist'.  If such an element
+  ## exists and is another `MethodsList' object, `MethodsListSelect'  calls itself recursively
+  ## to resolve using further arguments.  Matching includes using a default selection or
+  ## a method specifically linked to class `"missing"'.  Once a function is found, it
+  ## is returned as the value.  If matching fails,  NULL is returned.
+    function(f, env,
+             mlist = NULL,
+             fEnv = if(is(fdef, "genericFunction")) environment(fdef) else baseenv(),
+             finalDefault = finalDefaultMethod(mlist),
+             evalArgs = TRUE,
+             useInherited = TRUE,  ## supplied when evalArgs is FALSE
+             fdef = getGeneric(f, where = env), # MUST BE SAFE FROM RECUSIVE METHOD SELECTION
+             resetAllowed = TRUE # FALSE when called from selectMethod, .findNextMethod
+ )
+{
+    .MlistDefunct("MethodsListSelect()")
+}
+## </entry>
+
+
+## <entry>
+## Defunct in 4.5.0
+mergeMethods <-
+    ## merge the methods in the second MethodsList object into the first,
+    ## and return the merged result.
+    function(m1, m2, genericLabel = character())
+{
+    .MlistDefunct("mergeMethods()")
+}
+## </entry>
+
+## <entry>
+## Defunct in 4.5.0
 ## Removed in 4.5.0
 ## --------- <----- 'sub-entry' separator
 ## showMlist <-
