@@ -54,4 +54,4 @@ psnice(pid = Sys.getpid(), value = NA_integer_)
   \code{\link{pskill}}.
 }
 
-\keyword{ utility }
+\keyword{ utilities }

@@ -59,4 +59,4 @@ stopifnot(length(attributes(E ))  > 0,
           is.null(attributes(E.)))
 options(op) # reset to previous state
 }
-\keyword{utility}
+\keyword{utilities}

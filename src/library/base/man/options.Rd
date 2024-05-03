@@ -879,8 +879,8 @@ options(error = quote({dump.frames(to.file = TRUE); q()}))
 }
 
   # Compare the two ways to get an option and use it
-  # acconting for the possibility it might not be set.
-if(as.logical(getOption("performCleanp", TRUE)))
+  # accounting for the possibility it might not be set.
+if(as.logical(getOption("performCleanup", TRUE)))
    cat("do cleanup\n")
 
 \dontrun{

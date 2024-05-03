@@ -110,7 +110,7 @@ heatmap(x, Rowv = NULL, Colv = if(symm)"Rowv" else NULL,
 
   \code{heatmap()} uses \code{\link{layout}} and draws the
   \code{\link{image}} in the lower right corner of a 2x2 layout.
-  Consequentially, it can \bold{not} be used in a multi column/row
+  Consequently, it can \bold{not} be used in a multi column/row
   layout, i.e., when \code{\link{par}(mfrow = *)} or \code{(mfcol = *)}
   has been called.
 }

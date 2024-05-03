@@ -122,5 +122,5 @@ bibstyle("unsorted", sortKeys = function(refs) seq_along(refs),
        .init = TRUE)
 print(refs, .bibstyle = "unsorted")
 }
-\keyword{ utilties }
+\keyword{ utilities }
 \keyword{ documentation }

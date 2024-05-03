@@ -38,7 +38,7 @@ zapsmall(x, digits = getOption("digits"),
 \examples{
 x2 <- pi * 100^(-2:2)/10
    print(  x2, digits = 4)
-zapsmall(  x2) # automatical digits
+zapsmall(  x2) # automatic digits
 zapsmall(  x2, digits = 4)
 zapsmall(c(x2, Inf)) # round()s to integer ..
 zapsmall(c(x2, Inf), min.d=-Inf) # everything  is small wrt  Inf

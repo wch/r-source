@@ -26,4 +26,4 @@ splitIndices(nx, ncl)
 \examples{
 splitIndices(20, 3)
 }
-\keyword{ utility }
+\keyword{ utilities }

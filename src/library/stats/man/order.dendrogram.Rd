@@ -9,7 +9,7 @@
 \alias{labels.dendrogram}
 \title{Ordering or Labels of the Leaves in a Dendrogram}
 \description{
-  Theses functions return the order (index) or the \code{"label"}
+  These functions return the order (index) or the \code{"label"}
   attribute for the leaves in a
   dendrogram.  These indices can then be used to access the appropriate
   components of any additional data.

@@ -82,4 +82,4 @@ findPkgAll <- function(pkg)
 findPkgAll("MASS")
 findPkgAll("knitr")
 }
-\keyword{files}
+\keyword{file}

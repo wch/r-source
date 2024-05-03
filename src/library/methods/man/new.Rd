@@ -39,7 +39,7 @@ named classes.}
 \section{Initialize Methods}{
 The generic function \code{initialize} is not called directly.
 A call to \code{new} begins by copying the prototype object from
-  the class definition, and then calls \code{intialize()} with this
+  the class definition, and then calls \code{initialize()} with this
   object as the first argument, followed by the \dots{} arguments. 
 
   The interpretation of the \code{\dots} arguments in a call to a

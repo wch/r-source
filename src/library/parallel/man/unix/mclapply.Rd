@@ -206,7 +206,7 @@ B <- runif(2500000,0,100)
 C <- runif(5000000,0,100)
 first <- function(i) head(sort(i), n = 1)
 
-# Restict all elements of X to run on CPU 1 and 2
+# Restrict all elements of X to run on CPU 1 and 2
 affL <- list(c(1,2), c(1,2), c(1,2))
 mclapply(list(A, A, A), first, mc.preschedule = FALSE, affinity.list = affL)
 
