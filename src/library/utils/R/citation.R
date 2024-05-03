@@ -1,7 +1,7 @@
 #  File src/library/utils/R/citation.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2023 The R Core Team
+#  Copyright (C) 1995-2024 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -1401,8 +1401,8 @@ function(package = "base", lib.loc = NULL, auto = NULL)
             z$note <- paste(z$note, rfr, sep = "/r")
     }
 
-    if((is.null(meta$Repository) ||
-        identical(meta$Repository, "Bioconductor")) &&
+    if((is.null(meta$Repository) || # older BioC releases
+        startsWith(meta$Repository, "Bioconductor")) && # "Bioconductor 3.19"
        !is.null(meta$git_url) &&
        startsWith(meta$git_url,
                   "https://git.bioconductor.org/packages")) {
