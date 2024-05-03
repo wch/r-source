@@ -1,6 +1,6 @@
 
-R Under development (unstable) (2023-08-15 r84951) -- "Unsuffered Consequences"
-Copyright (C) 2023 The R Foundation for Statistical Computing
+R Under development (unstable) (2024-04-19 r86451) -- "Unsuffered Consequences"
+Copyright (C) 2024 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -47,7 +47,7 @@ Extends:
 Class "genericFunction", directly
 Class "function", by class "genericFunction", distance 2
 Class "OptionalFunction", by class "function", distance 3
-Class "PossibleMethod", by class "function", distance 3
+Class "PossibleMethod", by class "genericFunction", distance 3
 Class "optionalMethod", by class "genericFunction", distance 4
 
 Known Subclasses: "standardGenericWithTrace"

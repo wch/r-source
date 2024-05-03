@@ -36,7 +36,7 @@
 \section{Extends}{
   Class \code{"function"}, from data part.\cr
   Class \code{"PossibleMethod"}, directly.\cr
-  Class \code{"OptionalMethods"}, by class \code{"function"}.
+  Class \code{"optionalMethod"}, by class \code{"function"}.
 }
 \details{
   Method definition objects are functions with additional information

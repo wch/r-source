@@ -1,6 +1,6 @@
 % File src/library/methods/man/MethodWithNext-class.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2024 R Core Team
 % Distributed under GPL 2 or later
 
 \name{MethodWithNext-class}
@@ -33,14 +33,12 @@
   Class \code{"MethodDefinition"}, directly.\cr
   Class \code{"function"}, from data part.\cr
   Class \code{"PossibleMethod"}, by class \code{"MethodDefinition"}.\cr
-  Class \code{"OptionalMethods"}, by class \code{"MethodDefinition"}.
+  Class \code{"optionalMethod"}, by class \code{"MethodDefinition"}.
 }
 \section{Methods}{
   \describe{
     \item{findNextMethod}{\code{signature(method = "MethodWithNext")}:
       used internally by method dispatch. }
-    \item{loadMethod}{\code{signature(method = "MethodWithNext")}: used
-      internally by method dispatch. }
     \item{show}{\code{signature(object = "MethodWithNext")} }
   }
 }

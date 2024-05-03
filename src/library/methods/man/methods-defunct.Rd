@@ -1,9 +1,10 @@
 % File src/library/methods/man/methods-defunct.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2024 R Core Team
 % Distributed under GPL 2 or later
 
 \name{methods-defunct}
+\title{Defunct Functions in Package \pkg{methods}}
 \alias{methods-defunct}
 \alias{getAllMethods}
 \alias{mlistMetaName}
@@ -21,7 +22,33 @@
 \alias{trySilent}
 \alias{traceOn}
 \alias{traceOff}
-\title{Defunct Functions in Package \pkg{methods}}
+%--------------- former \code{MethodsList} Objects ------------------------------
+% \code{MethodsList-class}:   ~~~~~~~~~~~
+\alias{MethodsList-class}
+\alias{body<-,MethodDefinition-method}
+%-----
+\alias{listFromMlist}%  only used in listFromMlist()
+\alias{linearizeMlist}% only used in showMlist()
+% finalDefaultMethod() [somewhat important]:
+\alias{finalDefaultMethod}
+%% were deprecated since R 3.2.0:
+\alias{MethodsList}
+\alias{makeMethodsList}
+\alias{SignatureMethod}
+\alias{insertMethod}
+\alias{inheritedSubMethodLists}
+\alias{showMlist}
+\alias{print.MethodsList}
+\alias{emptyMethodsList}
+\alias{insertMethodInEmptyList}
+\alias{mergeMethods}
+\alias{MethodsListSelect}
+% already removed:
+% \alias{linearizeMlist}
+% \alias{listFromMlist}
+% \alias{showMlist}
+
+%--------------------------- former {MethodsList} Objects -----------------------
 \description{
   Defunct functions in package \pkg{methods}.
 }

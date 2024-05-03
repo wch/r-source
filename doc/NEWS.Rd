@@ -31,6 +31,10 @@
     \itemize{
       \item \code{is.R()} is defunct.  Environment variable
       \env{_R_DEPRECATED_IS_R_} no longer has any effect.
+
+      \item Several deprecated auxiliary functions and the
+      \code{MethodsList} class for S4 method handling are now defunct in
+      package \pkg{methods}, or have even been removed.
     }
   }
 

@@ -27,9 +27,8 @@
              }, where = where)
     ## some classes in methods package are unions--now they can be officially
     setClassUnion("OptionalFunction", c("function", "NULL"), where)
-    setClassUnion("PossibleMethod", c("function", "MethodDefinition"), where)
-    clList <- c("ClassUnionRepresentation", "OptionalFunction",
-                "PossibleMethod")
+    ## rather in ./MethodsListClass.R  .InitMethod...(): setClassUnion("PossibleMethod", .....)
+    clList <- c("ClassUnionRepresentation", "OptionalFunction")
     assign(".SealedClasses", c(get(".SealedClasses", where), clList), where)
 }
 

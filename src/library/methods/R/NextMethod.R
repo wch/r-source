@@ -1,7 +1,7 @@
 #  File src/library/methods/R/NextMethod.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2016 The R Core Team
+#  Copyright (C) 1995-2024 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -140,9 +140,6 @@ callNextMethod <- function(...) {
         .Call(C_R_nextMethodCall, call, callEnv)
     }
 }
-
-## Skeleton for the generic in ./MethodsListClass.R :
-loadMethod <- function(method, fname, envir) method
 
 .doSubNextCall <- function(call, method) {
     idrop <- match("drop", names(call))

@@ -1,7 +1,7 @@
 #  File src/library/methods/R/methodsTable.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2023 The R Core Team
+#  Copyright (C) 1995-2024 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -208,13 +208,14 @@
 }
 
 
-.mlistAddToTable <- function(generic, mlist, table = new.env(TRUE, fenv), add = TRUE) {
+## called only from  .setupMethodsTables()  [further below]:
+.mtableAddToTable <- function(generic, mlist, table = new.env(TRUE, fenv), add = TRUE) {
   fenv <- environment(generic)
   signature <- generic@signature
-    if(!exists(".SigLength", envir = fenv, inherits = FALSE))
+  if(!exists(".SigLength", envir = fenv, inherits = FALSE))
      .setupMethodsTables(generic)
   n <- get(".SigLength", envir = fenv, inherits = FALSE)
-  .storeMlist(table, rep("ANY", n), mlist, 1,  add, fenv)
+  .storeMtable(table, rep("ANY", n), mlist, 1,  add, fenv)
   ## check for more args in the mlist than in the table
   nNow <- get(".SigLength", envir = fenv, inherits = FALSE)
   if(nNow > n) {
@@ -225,17 +226,13 @@
 }
 
 ## utility now *only* called once above
-.storeMlist <- function(table, sig, mlist, i, add, fenv) {
-    ## once generic functions are installed from 2.11.0 or later, this should
-    ## only be called with mlist a method or NULL.
-    if(is.null(mlist)) return(table)
-    m <- if(is(mlist, "MethodsList")) { .MlistDefunct(); mlist@methods }
-	 else list(ANY=mlist)
+.storeMtable <- function(table, sig, method, i, add, fenv) {
+    ## method: a method or NULL.
+    if(is.null(method)) return(table)
+    ## else
+    m <- list(ANY=method)
 
-  ## once MethodsList is defunct, this should be rewritten (and renamed!)
-
-  ## the methods slot is a list named by class, with elements either
-  ## method definitions or mlists
+  ## the methods slot is a list named by class, with elements method definitions
   classes <- names(m)
   for(j in seq_along(m)) {
     el <- m[[j]]
@@ -248,17 +245,10 @@
     }
     else if(is(el,"MethodsList")) {
 	.MlistDefunct()
-      i1 <- i+1
-      if(i1 >= length(sig)) {
-        ## a reset of the labels will be needed
-        assign(".SigLength", i1, envir = fenv)
-        sig <- c(sig, rep("ANY", i1-length(sig)))
-      }
-      Recall(table, sig, el, i1, add, fenv)
     }
     else
       stop(gettextf(
-   "invalid mlist element for signature %s at level %d (should be MethodDefinition or .Primitive, had class %s)",
+   "invalid method element for signature %s at level %d (should be MethodDefinition or .Primitive, had class %s)",
                     sQuote(classes[[j]]),
                     i,
                     dQuote(class(el))),
@@ -270,8 +260,8 @@
 .cacheMethodInTable <- function(fdef, sig, def,
                                 table = get(".AllMTable", envir = fenv)) {
     ## store method in cache table.
-    ## called from setMethod()
-    ## also Called from cacheMethod (from as(), as<-())
+    ## called from setMethod(), and 
+    ## also   from cacheMethod (from as(), as<-())
   fenv <- environment(fdef)
   if(missing(table) && !exists(".AllMTable", envir = fenv, inherits = FALSE))
     .setupMethodsTables(fdef)
@@ -975,8 +965,8 @@
     argSyms <- lapply(generic@signature, as.name)
     assign(".SigArgs", argSyms, envir = env)
     if(initialize) {
-        mlist <- generic@default # from 2.11.0: method, primitive or NULL, not MethodsList
-        mtable <- .mlistAddToTable(generic, mlist) # by default, adds to an empty table
+        mtable <- generic@default # from 2.11.0: method, primitive or NULL, not MethodsList
+        mtable <- .mtableAddToTable(generic, mtable) # by default, adds to an empty table
         assign(".MTable", mtable, envir = env)
     }
     else ## the current .MTable

@@ -60,8 +60,8 @@
 }
 \section{Extends}{
   Class \code{"function"}, from data part.\cr
-  Class \code{"OptionalMethods"}, by class \code{"function"}.\cr
-  Class \code{"PossibleMethod"}, by class \code{"function"}.
+  Classes \code{"optionalMethod"}, \code{"PossibleMethod"}, and
+  \code{"OptionalFunction"} by class \code{"function"}.
 }
 \section{Methods}{
   Generic function objects are used in the creation and dispatch of
