@@ -20,6 +20,18 @@
 /* This is a small HTTP server that serves requests by evaluating
  * the httpd() function and passing the result to the browser. */
 
+/* Note that the server runs partially on the main R thread (it has to,
+   because it uses R), and it also sends the response mostly from the
+   main thread. It is thus not possible to use the server from the R thread
+   itself, e.g. via download.file(), because of a deadlock between the
+   server and the client, when the data isn't sent in a single chunk.
+   On Unix, the deadlock could also happen when the client is sending a
+   request to the server (and the request isn't sent in a single chunk).
+
+   This cannot happen with the intended use of this server, when it is used
+   to serve help pages to an external client (a web browser).
+*/
+
 /* Example:
    httpd <- function(path,query=NULL,...) {
       cat("Request for:", path,"\n"); print(query);
