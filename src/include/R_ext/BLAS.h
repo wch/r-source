@@ -30,8 +30,6 @@
    $(BLAS_LIBS) $(FLIBS)
  */
 
-/* Part of the API */
-
 #ifndef R_BLAS_H
 #define R_BLAS_H
 

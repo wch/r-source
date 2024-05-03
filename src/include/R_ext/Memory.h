@@ -24,7 +24,7 @@
  * Memory Allocation (garbage collected) --- INCLUDING S compatibility ---
  */
 
-/* Included by R.h: API */
+/* Included by R.h: Part of the API. */
 
 #ifndef R_EXT_MEMORY_H_
 #define R_EXT_MEMORY_H_

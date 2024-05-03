@@ -21,7 +21,7 @@
  *  https://www.R-project.org/Licenses/
  */
 
-/* Included by R.h: API */
+/* Included by R.h: Part of the API. */
 
 #ifndef R_COMPLEX_H
 #define R_COMPLEX_H
