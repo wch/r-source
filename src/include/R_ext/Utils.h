@@ -83,12 +83,11 @@ const char *R_ExpandFileName(const char *);
 // not API
 const char *R_ExpandFileNameUTF8(const char *);
 #endif
-// this group is not API
-/*
-  attribute_hidden and no longer used.
+/*  attribute_hidden and no longer used.
 void	setIVector(int*, int, int);
 void	setRVector(double*, int, double);
 */
+/* Not API */
 Rboolean StringFalse(const char *); // used by iotools
 Rboolean StringTrue(const char *); // used by iotools
 Rboolean isBlankString(const char *); // used by iotools and openxlsx2
@@ -108,7 +107,9 @@ void R_CheckStack(void);
 void R_CheckStack2(R_SIZE_T);
 
 
-/* ../../appl/interv.c: first also in Applic.h */
+/* ../../appl/interv.c: first also in Applic.h 
+   Both are API
+*/
 int findInterval(double *xt, int n, double x,
 		 Rboolean rightmost_closed,  Rboolean all_inside, int ilo,
 		 int *mflag);

@@ -85,16 +85,21 @@ int R_registerRoutines(DllInfo *info, const R_CMethodDef * const croutines,
 Rboolean R_useDynamicSymbols(DllInfo *info, Rboolean value);
 Rboolean R_forceSymbols(DllInfo *info, Rboolean value);
 
+/* Not API */
 DllInfo *R_getDllInfo(const char *name);
 
 /* To be used by applications embedding R to register their symbols
-   that are not related to any dynamic module */
+   that are not related to any dynamic module/
+
+   Not API
+*/
 DllInfo *R_getEmbeddingDllInfo(void);
 
 typedef struct Rf_RegisteredNativeSymbol R_RegisteredNativeSymbol;
 typedef enum {R_ANY_SYM=0, R_C_SYM, R_CALL_SYM, R_FORTRAN_SYM, R_EXTERNAL_SYM} NativeSymbolType;
 
 
+/* Not API */
 DL_FUNC R_FindSymbol(char const *, char const *,
 		       R_RegisteredNativeSymbol *symbol);
 
@@ -103,6 +108,8 @@ DL_FUNC R_FindSymbol(char const *, char const *,
    for use from C code in a package.  The registration part probably
    ought to be integrated with the other registrations.  The naming of
    these routines may be less than ideal.
+
+   Declarations in the manual, so API
 */
 
 void R_RegisterCCallable(const char *package, const char *name, DL_FUNC fptr);

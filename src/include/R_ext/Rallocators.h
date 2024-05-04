@@ -24,7 +24,8 @@
  *  Definition of the R_allocator_t structure for custom allocators
  *  to be used with allocVector3()
  *
- * Not API
+ *  allocVector3 is also not declared as API in
+ * Rinternals.h nor documented in R-ests.
  */
 
 #ifndef R_EXT_RALLOCATORS_H_
