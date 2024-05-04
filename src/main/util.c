@@ -2081,7 +2081,7 @@ int attribute_hidden Rf_AdobeSymbol2ucs2(int n)
    Also allows complete control of which non-numeric strings are
    accepted; e.g. glibc allows NANxxxx, macOS NAN(s), this accepts "NA".
 
-   Exported and in Utils.h (but not in R-exts).
+   Exported and in Utils.h (but only in R-exts as of 4.4.1).
 
    Variants:
    R_strtod4 is used by scan(), allows the decimal point (byte) to be
