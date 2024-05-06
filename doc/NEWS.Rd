@@ -29,6 +29,9 @@
 
       \item \code{as.data.frame(m, make.names=NA)} now works correctly for
       a matrix \code{m} with \code{NA}'s in row names.
+
+      \item The internal help server on Windows can again serve requests
+      sent in quick succession, fixing a regression in \R 4.4.0.
     }
   }
 }
