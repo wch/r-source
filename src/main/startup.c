@@ -238,7 +238,8 @@ void R_SizeFromEnv(Rstart Rp)
 	else
 	    Rp->max_vsize = value;
     }
-#if defined(__APPLE__) && defined(_SC_PHYS_PAGES) && defined(_SC_PAGE_SIZE)
+#if defined(__APPLE__) && defined(_SC_PHYS_PAGES) && defined(_SC_PAGE_SIZE) \
+    && (SIZEOF_SIZE_T > 4)
     /* For now only on macOS place a default limit on the vector heap
        size to avoid having R killed due to memory overcommit.
        Setting the limit at the maximum of 16Gb and available physical
