@@ -97,6 +97,9 @@
       \item \code{qbinom()} and potentially \code{qpois()}, \code{qnbinom()},
       no longer sometimes fail accurate inversion (of \code{pbinom()},
       etc), thanks to Christopher Chang's report and patch in \PR{18711}.
+
+      \item The internal help server on Windows can again serve requests
+      sent in quick succession, fixing a regression in \R 4.4.0.
     }
   }
 }
