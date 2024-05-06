@@ -32,9 +32,17 @@
       \item \code{is.R()} is defunct.  Environment variable
       \env{_R_DEPRECATED_IS_R_} no longer has any effect.
 
-      \item Several deprecated auxiliary functions and the
-      \code{MethodsList} class for S4 method handling are now defunct in
-      package \pkg{methods}, or have even been removed.
+      \item Deprecated (for more than 9 years!) functions
+      \code{linearizeMlist}, \code{listFromMlist}, and \code{showMlist} and
+      the \code{"MethodsList"} class for S4 method handling were removed
+      from package \pkg{methods}.
+      Deprecated functions \code{balanceMethodsList}, \code{emptyMethodsList},
+      \code{inheritedSubMethodLists}, \code{insertMethod},
+      \code{insertMethodInEmptyList}, \code{makeMethodsList},
+      \code{mergeMethods}, \code{MethodsList}, \code{MethodsListSelect}, and
+      \code{SignatureMethod} were made defunct, as were the
+      \code{"MethodsList"} branches of functions \code{assignMethodsMetaData},
+      \code{finalDefaultMethod}, and \code{MethodAddCoerce}.
     }
   }
 
