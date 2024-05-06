@@ -217,7 +217,7 @@ finalDefaultMethod <-
            || is.null(method))
           break
         if(is(method, "MethodsList")) {
-	    .MlistDeprecated()
+	    .MlistDefunct()
             method <-  slot(method, "methods")[["ANY"]]
         } else
           stop(gettextf(
