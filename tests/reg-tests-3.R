@@ -253,7 +253,7 @@ stopifnot(exprs = {
 pkg <- "nlme"
 (hasME <- requireNamespace(pkg, quietly=TRUE, lib.loc = .Library))
 if(hasME) withAutoprint({
-    c2 <- citation(package=pkg)
+    c2 <- citation(pkg, .Library)
     ## avoid spurious diffs:
     c2$author[[1]]$given[[1]] <- "J."
     c2$year[[1]] <- "9999"
@@ -277,6 +277,13 @@ if(hasME) withAutoprint({
         nchar(f2N[ie]) < nchar(f2B[ie])
         startsWith(f2B[ie], f2N[ie])
       })
+
+    desc <- packageDescription(pkg, .Library)
+    desc$URL <- paste(URL1 <- "https://example.org",
+                      "https://example.com", sep = "\n") # via continuation line
+    desc$Repository <- NULL
+    c3 <- citation(auto = desc)
+    stopifnot(identical(print(c3$url), URL1)) # R <= 4.4.0 gave both URLs
 })
 
 cat('Time elapsed: ', proc.time(),'\n')

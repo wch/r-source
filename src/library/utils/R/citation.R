@@ -1439,13 +1439,15 @@ function(package = "base", lib.loc = NULL, auto = NULL)
     }
 
     if(!length(z$url) && !is.null(url <- meta$URL)) {
+        ## WRE: "a list of URLs separated by commas or whitespace".
         ## Cannot have several URLs in BibTeX and bibentry object URL
         ## fields (PR #16240).
-        if(grepl("[, ]", url)) {
+        if(length(urls <- strsplit(url, "[, \n]+")[[1L]]) > 1L) {
             ## Show the first URL as the BibTeX url, and add the others
             ## to the note (PR#18547).
-            z$url <- sub(",.*", "", url)
-            z$note <- paste0(z$note, sub("^[^,]*, ?", ", ", url))
+            z$url <- urls[1L]
+            z$note <- paste0(c(z$note, sprintf("\\url{%s}", urls[-1L])),
+                             collapse = ", ")
         } else
             z$url <- url
     }

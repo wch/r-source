@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2024-02-15 r85920) -- "Unsuffered Consequences"
+R Under development (unstable) (2024-05-07 r86527) -- "Unsuffered Consequences"
 Copyright (C) 2024 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu
 
@@ -927,8 +927,8 @@ standardGeneric for "chol2inv" defined from package "base"
 
 function (x, ...) 
 standardGeneric("chol2inv")
-<bytecode: 0x5582a67fbc00>
-<environment: 0x5582a67f7608>
+<bytecode: 0x55b47a1434b0>
+<environment: 0x55b47a13b088>
 Methods may be defined for arguments: x
 Use  showMethods(chol2inv)  for currently available ones.
 > 
@@ -969,7 +969,7 @@ packages.
 > (hasME <- requireNamespace(pkg, quietly=TRUE, lib.loc = .Library))
 [1] TRUE
 > if(hasME) withAutoprint({
-+     c2 <- citation(package=pkg)
++     c2 <- citation(pkg, .Library)
 +     ## avoid spurious diffs:
 +     c2$author[[1]]$given[[1]] <- "J."
 +     c2$year[[1]] <- "9999"
@@ -993,8 +993,15 @@ packages.
 +         nchar(f2N[ie]) < nchar(f2B[ie])
 +         startsWith(f2B[ie], f2N[ie])
 +       })
++ 
++     desc <- packageDescription(pkg, .Library)
++     desc$URL <- paste(URL1 <- "https://example.org",
++                       "https://example.com", sep = "\n") # via continuation line
++     desc$Repository <- NULL
++     c3 <- citation(auto = desc)
++     stopifnot(identical(print(c3$url), URL1)) # R <= 4.4.0 gave both URLs
 + })
-> c2 <- citation(package = pkg)
+> c2 <- citation(pkg, .Library)
 > c2$author[[1]]$given[[1]] <- "J."
 > c2$year[[1]] <- "9999"
 > c2$note[[1]] <- sub("3.1-[0-9]*$", "3.1-999", c2$note[[1]])
@@ -1066,7 +1073,13 @@ A BibTeX entry for LaTeX users is
 +     startsWith(f2B[ie], f2N[ie])
 + })
 [1] 4
+> desc <- packageDescription(pkg, .Library)
+> desc$URL <- paste(URL1 <- "https://example.org", "https://example.com", sep = "\n")
+> desc$Repository <- NULL
+> c3 <- citation(auto = desc)
+> stopifnot(identical(print(c3$url), URL1))
+[1] "https://example.org"
 > 
 > cat('Time elapsed: ', proc.time(),'\n')
-Time elapsed:  2.245 0.124 2.369 0.001 0 
+Time elapsed:  2.884 0.14 3.09 0.003 0 
 > 
