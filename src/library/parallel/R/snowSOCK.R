@@ -1,7 +1,7 @@
 #  File src/library/parallel/R/snowSOCK.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2023 The R Core Team
+#  Copyright (C) 1995-2024 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -125,7 +125,8 @@ newPSOCKnode <- function(machine = "localhost", ...,
               class = if(useXDR) "SOCKnode" else "SOCK0node")
 }
 
-closeNode.SOCKnode <- closeNode.SOCK0node <- function(node) close(node$con)
+## Let the OS close the connection (see stopCluster).
+closeNode.SOCKnode <- closeNode.SOCK0node <- function(node) {}
 
 sendData.SOCKnode <- function(node, data) serialize(data, node$con)
 sendData.SOCK0node <- function(node, data) serialize(data, node$con, xdr = FALSE)
@@ -267,6 +268,29 @@ print.SOCKnode <- print.SOCK0node <- function(x, ...)
                     sQuote(x[["host"]]), pid)
     cat(msg, "\n", sep = "")
     invisible(x)
+}
+
+stopCluster.SOCKcluster <- function(cl = NULL)
+{
+    for (n in cl) postNode(n, "DONE")
+    cons <- lapply(cl, function(x) x$con)
+
+    ## Wait (with a timeout) for the worker connection to be closed by the
+    ## OS, so that the cleanup of the worker's R session has a chance to run
+    ## before stopCluster() finishes (PR#18133).
+
+    t0 <- Sys.time()
+    cleanup_timeout <- 5
+    while(length(cons) > 0) {
+        done <- socketSelect(cons, write = FALSE, timeout = cleanup_timeout)
+        for(con in cons[done]) close(con)
+        cons <- cons[!done]
+        if (difftime(Sys.time(), t0, units="secs") > cleanup_timeout)
+          break
+    }
+
+    ## Close the remaining worker connections unconditionally.
+    for(con in cons) close(con)
 }
 
 .workRSOCK <- function()

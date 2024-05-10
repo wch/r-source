@@ -29,6 +29,7 @@ S3method(recvOneData, SOCKcluster)
 S3method(sendData, SOCKnode)
 S3method(sendData, SOCK0node)
 S3method(stopCluster, default)
+S3method(stopCluster, SOCKcluster)
 
 ## To support snow clusters
 #S3method(closeNode, NWSnode)
