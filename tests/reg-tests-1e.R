@@ -1380,12 +1380,29 @@ stopifnot(exprs = {
 })
 ## the last lost row.names => dim(.) was 0 x 3  instead of  d0's  2 x 3, in R <= 4.4.0
 
+
 ## Scan should not treat "NA" as double/complex when na.strings doesn't
 ## include it (PR#17289)
 (r <- tryCid(scan(text="NA", what=double(), na.strings=character())))
 stopifnot(inherits(r, "error"))
 (r <- tryCid(scan(text="NA", what=complex(), na.strings=character())))
 stopifnot(inherits(r, "error"))
+
+
+## PR#18143: debugcall(<S3Generic>()) when an S4-generic version is cached
+stopifnot(exprs = {
+    isGeneric("summary", getNamespace("stats4"))
+    isNamespaceLoaded("stats4")
+    isS3stdGeneric(summary) # cached S4 generic is not visible
+})
+debugcall(summary(factor(1)))
+## failed in R <= 4.4.0 with Error in fdef@signature :
+##   no applicable method for `@` applied to an object of class "function"
+stopifnot(isdebugged(summary.factor))
+undebug(summary.factor)
+stopifnot(!isdebugged(summary.factor))
+unloadNamespace("stats4")
+
 
 
 ## keep at end

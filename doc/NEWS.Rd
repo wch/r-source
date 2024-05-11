@@ -108,6 +108,10 @@
 
       \item The internal help server on Windows can again serve requests
       sent in quick succession, fixing a regression in \R 4.4.0.
+
+      \item \code{debugcall(\var{S3Generic}())} now also works when a
+      corresponding S4-generic version is in the \pkg{methods} cache
+      (\PR{18143}).
     }
   }
 }
