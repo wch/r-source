@@ -2914,7 +2914,8 @@ For Intel's @command{ifx} see
 For LLVM's @command{flang-new} see
 @uref{https://flang.llvm.org/docs/F202X.html}.
 @code{gfortran} does not have complete support even for the 2008 and
-2018 standards, but recent versions support the option @option{-std=f2023}.
+2018 standards, but the option @option{-std=f2023} is supported from
+version 14.1.
 @c https://gcc.gnu.org/wiki/Fortran2008Status
 @c https://gcc.gnu.org/wiki/Fortran2018Status
 
@@ -5234,6 +5235,8 @@ makefiles in sub-directories may also need to define @code{NDEBUG}.
 
 This applies not only to your own code but to any external software you
 compile in or link to.
+
+Nor should Fortran code call @code{STOP} nor @code{EXIT} (a GNU extension).
 
 @item
 Compiled code should not write to @file{stdout} or @file{stderr} and C++
