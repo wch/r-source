@@ -151,6 +151,8 @@ so_symbol_names_table <-
       "linux, Fortran, gfortran, random_number, _gfortran_rand",
       "linux, Fortran, gfortran, random_seed, _gfortran_random_seed_i4",
       "linux, Fortran, gfortran, random_seed, _gfortran_random_seed_i8",
+      "linux, Fortran, gfortran, exit, _gfortran_exit_i4",
+      "linux, Fortran, gfortran, exit, _gfortran_exit_i8",
 
       ## Classic flang from Dec 2017 (and untested since)
       "linux, Fortran, ClassicFlang, open, f90io_open03",
@@ -297,6 +299,8 @@ so_symbol_names_table <-
       "macos, Fortran, gfortran, random_number, __gfortran_rand",
       "macos, Fortran, gfortran, random_seed, __gfortran_random_seed_i4",
       "macos, Fortran, gfortran, random_seed, __gfortran_random_seed_i8",
+      "macos, Fortran, gfortran, exit, __gfortran_exit_i4",
+      "macos, Fortran, gfortran, exit, __gfortran_exit_i8",
 
       ## This is old: freebsd defaults to clang these days, and
       ## gfortran and (classic) flang are available (and 'f18' will be)
@@ -445,6 +449,8 @@ so_symbol_names_table <-
       "windows, Fortran, gfortran, random_number, _gfortran_random_r16",
       "windows, Fortran, gfortran, random_seed, _gfortran_random_seed_i4",
       "windows, Fortran, gfortran, random_seed, _gfortran_random_seed_i8",
+      "windows, Fortran, gfortran, exit, _gfortran_exit_i4",
+      "windows, Fortran, gfortran, exit, _gfortran_exit_i8",
 
       ## currently copy from Linux
       ## flang-new but executable already named 'flang'
