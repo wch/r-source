@@ -87,6 +87,16 @@
     }
   }
 
+  \subsection{UTILITIES}{
+    \itemize{
+      \item \command{R CMD check} now reports as warnings  what
+      \command{gfortran} calls \sQuote{Fortran 2018 deleted features}, all
+      of which have long been marked as \sQuote{obsolescent} and some of
+      which were deleted in Fortran 2008 or earlier.  Fortran compilers
+      are no longer required to support these.
+    }
+  }
+
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{as.numeric()}, \code{scan()}, \code{type.convert()}

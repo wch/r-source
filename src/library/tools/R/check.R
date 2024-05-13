@@ -5822,7 +5822,12 @@ add_dummies <- function(dir, Log)
                              "warning: .* \\[-Wincompatible-pointer-types-discards-qualifiers\\]",
 
                              ## LLVM clang 16
-                             " warning: use of unary operator that may be intended as compound assignment"
+                             " warning: use of unary operator that may be intended as compound assignment",
+
+                             ## LLVM flang warnings:
+                             ## Includes Hollerith constants
+                             ## does not complain about 'Shared DO termination'
+                             "(portability: A DO loop should terminate with an END DO or CONTINUE|portability: deprecated usage|in the context: arithmetic IF statement)"
                              )
 
                 warn_re <- paste0("(", paste(warn_re, collapse = "|"), ")")
