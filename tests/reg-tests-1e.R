@@ -1404,6 +1404,12 @@ stopifnot(!isdebugged(summary.factor))
 unloadNamespace("stats4")
 
 
+## PR#18724 - toTitleCase(character(0))
+ch0 <- character(0L)
+stopifnot(identical(ch0, tools::toTitleCase(ch0)))
+## was list() in R <= 4.4.0
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

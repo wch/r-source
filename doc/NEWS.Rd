@@ -112,6 +112,10 @@
       \item \code{debugcall(\var{S3Generic}())} now also works when a
       corresponding S4-generic version is in the \pkg{methods} cache
       (\PR{18143}).
+
+      \item Package \pkg{tools}' \code{toTitleCase(ch0)} now returns
+      \code{character(0)} when \code{ch0} is of zero length; fixing
+      \PR{18724}, reported by David Hugh Jones.
     }
   }
 }
