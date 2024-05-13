@@ -297,7 +297,7 @@ stopCluster.SOCKcluster <- function(cl = NULL)
     }
 
     ## Close the remaining worker connections unconditionally.
-    for(n in nodes) closeNode(con)
+    for(n in nodes) closeNode(n)
 }
 
 .workRSOCK <- function()
