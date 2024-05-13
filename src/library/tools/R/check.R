@@ -5868,8 +5868,10 @@ add_dummies <- function(dir, Log)
                 lines <- filtergrep(ex_re, lines, useBytes = TRUE)
 
                 ## and gfortran 9 warnings about F2018
-                ex_re <- "^Warning: Fortran 2018 deleted feature:"
-                lines <- filtergrep(ex_re, lines, useBytes = TRUE)
+                ## No longer filtered in R 4.5.0.
+                ## Many are errors with -std=f2018
+                ## ex_re <- "^Warning: Fortran 2018 deleted feature:"
+                ## lines <- filtergrep(ex_re, lines, useBytes = TRUE)
 
                 ## and gfortran 10 warnings
                 ex_re <- "^Warning: Array.*is larger than limit set"
