@@ -5822,7 +5822,12 @@ add_dummies <- function(dir, Log)
                              "warning: .* \\[-Wincompatible-pointer-types-discards-qualifiers\\]",
 
                              ## LLVM clang 16
-                             " warning: use of unary operator that may be intended as compound assignment"
+                             " warning: use of unary operator that may be intended as compound assignment",
+
+                             ## LLVM flang warnings:
+                             ## Includes Hollerith constants
+                             ## does not complain about 'Shared DO termination'
+                             "(portability: A DO loop should terminate with an END DO or CONTINUE|portability: deprecated usage|in the context: arithmetic IF statement)"
                              )
 
                 warn_re <- paste0("(", paste(warn_re, collapse = "|"), ")")
@@ -5868,8 +5873,10 @@ add_dummies <- function(dir, Log)
                 lines <- filtergrep(ex_re, lines, useBytes = TRUE)
 
                 ## and gfortran 9 warnings about F2018
-                ex_re <- "^Warning: Fortran 2018 deleted feature:"
-                lines <- filtergrep(ex_re, lines, useBytes = TRUE)
+                ## No longer filtered in R 4.5.0.
+                ## Many are errors with -std=f2018
+                ## ex_re <- "^Warning: Fortran 2018 deleted feature:"
+                ## lines <- filtergrep(ex_re, lines, useBytes = TRUE)
 
                 ## and gfortran 10 warnings
                 ex_re <- "^Warning: Array.*is larger than limit set"
