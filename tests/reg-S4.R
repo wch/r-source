@@ -877,3 +877,14 @@ body(cd@contains[["A"]]@coerce)[[2]] ## >>   value <- methods::new("A")
 setClass("foo", slots = c(y = "numeric"))
 setClass("bar", contains = "foo")
 body(getClass("bar")@contains[[1]]@coerce)[[2]]
+
+
+## PR#17496: sealClass()
+setClass("foo", slots = c(name = "character"), sealed = TRUE)
+stopifnot(isSealedClass("foo"))
+tools::assertError(setClass("foo"))
+stopifnot(removeClass("foo"))
+setClass("foo")
+sealClass("foo") # failed in R < 4.5.0
+stopifnot(isSealedClass("foo"))
+stopifnot(removeClass("foo"))

@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2024-04-19 r86451) -- "Unsuffered Consequences"
+R Under development (unstable) (2024-05-13 r86546) -- "Unsuffered Consequences"
 Copyright (C) 2024 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu
 
@@ -1175,4 +1175,15 @@ value <- methods::new("A")
 > setClass("bar", contains = "foo")
 > body(getClass("bar")@contains[[1]]@coerce)[[2]]
 class(from) <- "foo"
+> 
+> 
+> ## PR#17496: sealClass()
+> setClass("foo", slots = c(name = "character"), sealed = TRUE)
+> stopifnot(isSealedClass("foo"))
+> tools::assertError(setClass("foo"))
+> stopifnot(removeClass("foo"))
+> setClass("foo")
+> sealClass("foo") # failed in R < 4.5.0
+> stopifnot(isSealedClass("foo"))
+> stopifnot(removeClass("foo"))
 > 
