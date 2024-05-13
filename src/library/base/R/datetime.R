@@ -1,7 +1,7 @@
 #  File src/library/base/R/datetime.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2023 The R Core Team
+#  Copyright (C) 1995-2024 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -1509,7 +1509,12 @@ OlsonNames <- function(tzdir = NULL)
 `[[.POSIXlt` <- function(x, i, drop = TRUE)
 {
     if(!missing(i) && is.character(i)) {
-        i <- match(i, names(x), incomparables = c("", NA_character_))
+        idx <- match(i, names(x), incomparables = c("", NA_character_))
+        if (length(i) == 1L && is.na(idx) && i %in% names(unclass(x[[1L]])))
+            stop(gettextf(
+                'No element named "%s" found in x, did you mean x[, "%1$s"] instead?', i),
+                domain = NA)
+        i <- idx
     }
     .POSIXlt(lapply(unCfillPOSIXlt(x), `[[`, i, drop = drop),
              attr(x, "tzone"), oldClass(x))
