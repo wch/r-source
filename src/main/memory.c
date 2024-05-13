@@ -4494,7 +4494,19 @@ SEXP (HASHTAB)(SEXP x) { return CHK(HASHTAB(CHK(x))); }
 int (ENVFLAGS)(SEXP x) { return ENVFLAGS(CHK(x)); }
 
 void (SET_FRAME)(SEXP x, SEXP v) { FIX_REFCNT(x, FRAME(x), v); CHECK_OLD_TO_NEW(x, v); FRAME(x) = v; }
-void (SET_ENCLOS)(SEXP x, SEXP v) { FIX_REFCNT(x, ENCLOS(x), v); CHECK_OLD_TO_NEW(x, v); ENCLOS(x) = v; }
+
+void (SET_ENCLOS)(SEXP x, SEXP v)
+{
+    if (TYPEOF(v) != ENVSXP)
+	error(_("'parent' is not an environment"));
+    for (SEXP e = v; e != R_NilValue; e = ENCLOS(e))
+	if (e == x)
+	    error(_("cycles in parent chains are not allowed"));
+    FIX_REFCNT(x, ENCLOS(x), v);
+    CHECK_OLD_TO_NEW(x, v);
+    ENCLOS(x) = v;
+}
+
 void (SET_HASHTAB)(SEXP x, SEXP v) { FIX_REFCNT(x, HASHTAB(x), v); CHECK_OLD_TO_NEW(x, v); HASHTAB(x) = v; }
 void (SET_ENVFLAGS)(SEXP x, int v) { SET_ENVFLAGS(x, v); }
 

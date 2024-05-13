@@ -62,6 +62,10 @@
     \itemize{
       \item The non-API and hidden entry points \code{Rf_setIVector},
       \code{Rf_setRVector} and \code{Rf_setSVector} have been removed.
+
+      \item The internal code for changing the parent of an environment
+      now signals an error if the new parent is not an environment or if
+      the change would create a cycle in the parent chain.
     }
   }
 
