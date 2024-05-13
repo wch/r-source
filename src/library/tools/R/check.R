@@ -5824,6 +5824,9 @@ add_dummies <- function(dir, Log)
                              ## LLVM clang 16
                              " warning: use of unary operator that may be intended as compound assignment",
 
+                             ## Apple and LLVM clang
+                             " warning: switch condition has boolean value \\[-Wswitch-bool\\]",
+
                              ## LLVM flang warnings:
                              ## Includes Hollerith constants
                              ## does not complain about 'Shared DO termination'
