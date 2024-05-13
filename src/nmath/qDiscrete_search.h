@@ -1,6 +1,6 @@
 /*
  *  Mathlib : A C Library of Special Functions
- *  Copyright (C) 2000-2021 The R Core Team
+ *  Copyright (C) 2000-2024 The R Core Team
  *  Copyright (C) 2005-2021 The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -18,7 +18,7 @@
  *  https://www.R-project.org/Licenses/
  */
 
-/* This is #included  from ./qnbinom.c , .........
+/* This is #included  from ./qpois.c ./qbinom.c, ./qnbinom{,_mu}.c
 */
 
 #define PST_0(a, b) a ## b
@@ -31,7 +31,7 @@
 #define _qDIST_  PASTE(q, _thisDIST_)
 /**
    For a discrete distribution on  the integers,
-   For P(x) := <pDist>(x, <distPars>),  find p-quantile  y(p)   :<==>   P(y) < p <= P(y)
+   For P(x) := <pDist>(x, <distPars>),  find p-quantile  y = y(p)   :<==>   P(y-1) < p <= P(y)
 
    @param y    current guess
    @param *z   := <pDist>(y, ..)
@@ -90,38 +90,44 @@ static double DO_SEARCH_FUN(_dist_PARS_DECL_)
     }
     else { // (lower_tail, *z < p)  or  (upper tail, *z >= p): search to the __right__
 	for(int iter = 0; ; iter++) {
+	    double prevy = y;
+	    double newz = -1.; // -Wall
 #ifndef MATHLIB_STANDALONE
 	    if(iter % 10000 == 0) R_CheckUserInterrupt();
 #endif
 	    y += incr;
 #ifdef _dist_MAX_y
 	    if(y < _dist_MAX_y)
-		*z = P_DIST(y, _dist_PARS_);
+		newz = P_DIST(y, _dist_PARS_);
 	    else if(y > _dist_MAX_y)
 		y = _dist_MAX_y;
 #else
-	    *z = P_DIST(y, _dist_PARS_);
+	    newz = P_DIST(y, _dist_PARS_);
 #endif
 
 	    if(
 #ifdef _dist_MAX_y
 		y == _dist_MAX_y ||
 #endif
-		ISNAN(*z) || (lower_tail ? (*z >= p) : (*z < p)))
+		ISNAN(newz) || (lower_tail ? (newz >= p) : (newz < p)))
 	    {
 		R_DBG_printf("  new y=%.15g, z=%g = " AS_CHAR(_pDIST_) "(y,*) %s;"
-			     " ==> search() returns after %d iter.\n", y, *z,
-			     ISNAN(*z) ? "is NaN" : (lower_tail ? ">= p" : "< p"), iter);
-		return y;
+			     " ==> search() returns after %d iter.\n", y, newz,
+			     ISNAN(newz) ? "is NaN" : (lower_tail ? ">= p" : "< p"), iter);
+		if (incr <= 1) {
+		    *z = newz;
+		    return y;
+		}
+		return prevy;
 	    }
+	    *z = newz;
 	}
     }
 } // do_search()
 
 
 /*
-* Note : "same" code in qbinom.c, qnbinom.c __FIXME__ NOT YET for qpois() ??
-* FIXME: This is far from optimal [cancellation for p ~= 1, etc]:
+* Note : called in qbinom.c, qnbinom.c but not (yet) qpois.c -- NB: only DBG_print()ing; *no other* effect
 */
 #define q_DISCRETE_01_CHECKS() do {					\
     double p_n; /* p  in the "normal" (lower_tail=TRUE, log.p=FALSE) scale */ \
