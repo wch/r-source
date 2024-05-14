@@ -46,7 +46,7 @@ glob2rx(pattern, trim.head = FALSE, trim.tail = TRUE)
 \seealso{
   \code{\link{regexp}} about regular expression,
   \code{\link{sub}}, etc about substitutions using regexps.
-  \code{\link{Sys.glob}} does wildcard expansio, i.e., \dQuote{globbing} on
+  \code{\link{Sys.glob}} does wildcard expansion, i.e., \dQuote{globbing} on
   file paths more subtly, e.g., allowing to escape special characters.
 }
 \examples{
