@@ -2904,14 +2904,14 @@ complete support only from version 2023.0.0.}.
 It is good practice to describe a Fortran version requirement in
 @file{DESCRIPTION}'s @samp{SystemRequirements} field.  Note that this is
 purely for information: the package also needs a @command{configure}
-script to determine the compiler and set approrpriate option(s) and test
+script to determine the compiler and set appropriate option(s) and test
 that the features needed from the standard are actually supported.
 
-The Fortran 2023 released in Nov 2023: as usual compiler vedors are
+The Fortran 2023 released in Nov 2023: as usual compiler vendors are
 introducing support incrementally.
 For Intel's @command{ifx} see
 @uref{https://www.intel.com/content/www/us/en/developer/articles/technical/fortran-language-and-openmp-features-in-ifx.html#Fortran%20Standards}.
-For LLVM's @command{flang-new} see
+For @I{LLVM}'s @command{flang-new} see
 @uref{https://flang.llvm.org/docs/F202X.html}.
 @code{gfortran} does not have complete support even for the 2008 and
 2018 standards, but the option @option{-std=f2023} is supported from
