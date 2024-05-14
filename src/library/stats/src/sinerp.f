@@ -32,7 +32,7 @@ C Pass 1
       wjm2(1)=0d0
       wjm2(2)=0d0
       wjm1(1)=0d0
-      do 100 i=1,nk
+      do i=1,nk
          j=nk-i+1
          c0 = 1d0/abd(4,j)
          if(j.le.nk-3)then
@@ -64,21 +64,21 @@ C Pass 1
          wjm2(1)=wjm1(1)
          wjm2(2)=p1ip(3,j)
          wjm1(1)=p1ip(4,j)
- 100  continue
+      end do
 
       if(flag.ne.0) then
 
 C     ____ Pass 2 _____  Compute p2ip  [never from R's code!]
-         do 120 i=1,nk
+         do i=1,nk
             j=nk-i+1
 C           for(k=1;k<=4 & j+k-1<=nk;k=k+1) { p2ip(.) = .. }:
             do k=1,4
                if(j+k-1 .gt. nk) goto 120
                p2ip(j,j+k-1) = p1ip(5-k,j)
             end do
- 120     continue
+ 120     end do
 
-         do 170 i=1,nk
+         do i=1,nk
             j=nk-i+1
 c           for(k=j-4;k>=1;k=k-1){
             if(j-4 .ge. 1) then
@@ -91,7 +91,7 @@ c           for(k=j-4;k>=1;k=k-1){
      &                 c3*p2ip(k+1,j) )
                end do
             endif
- 170     continue
+         end do
       endif
       return
       end

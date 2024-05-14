@@ -78,7 +78,7 @@ c     initialize
       data i/1/
 
       bvalue = 0.d0
-      if (jderiv .ge. k) go to 99
+      if (jderiv .ge. k) return
 c
 c  *** find  i  s.t.  1 <= i < n+k  and  t(i) < t(i+1) and
 c      t(i) <= x < t(i+1) . if no such i can be found,  x  lies
@@ -89,7 +89,7 @@ c      (the asymmetry in this choice of  i  makes  f  rightcontinuous)
          i = interv ( t, n+k, x, 0, 0, i, mflag)
          if (mflag .ne. 0) then
             call rwarn('bvalue()  mflag != 0: should never happen!')
-            go to 99
+            return
          endif
       else
          i = n
@@ -99,7 +99,7 @@ c  *** if k = 1 (and jderiv = 0), bvalue = bcoef(i).
       km1 = k - 1
       if (km1 .le. 0) then
          bvalue = bcoef(i)
-         go to 99
+         return
       endif
 c
 c  *** store the k b-spline coefficients relevant for the knot interval
@@ -110,18 +110,18 @@ c     to t(n+k) appropriately.
       jcmin = 1
       imk = i - k
       if (imk .ge. 0) then
-         do 9 j=1,km1
+         do j=1,km1
             dm(j) = x - t(i+1-j)
- 9       continue
+         end do
       else
          jcmin = 1 - imk
-         do 5 j=1,i
+         do j=1,i
             dm(j) = x - t(i+1-j)
- 5       continue
-         do 6 j=i,km1
+         end do
+         do j=i,km1
             aj(k-j) = 0.d0
             dm(j) = dm(i)
- 6       continue
+         end do
       endif
 c
       jcmax = k
@@ -135,13 +135,13 @@ c     -  9911         format(' i+j, lent ',2(i6,1x))
  19      continue
       else
          jcmax = k + nmi
-         do 15 j=1,jcmax
+         do j=1,jcmax
             dp(j) = t(i+j) - x
- 15      continue
-         do 16 j=jcmax,km1
+         end do
+         do j=jcmax,km1
             aj(j+1) = 0.d0
             dp(j) = dp(jcmax)
- 16      continue
+         end do
       endif
 
 c
@@ -151,15 +151,15 @@ c
 c
 c               *** difference the coefficients  jderiv  times.
       if (jderiv .ge. 1) then
-         do 23 j=1,jderiv
+         do j=1,jderiv
             kmj = k-j
             fkmj = dble(kmj)
             ilo = kmj
-            do 24 jj=1,kmj
+            do jj=1,kmj
                aj(jj) = ((aj(jj+1) - aj(jj))/(dm(ilo) + dp(jj)))*fkmj
                ilo = ilo - 1
- 24         continue
- 23      continue
+            end do
+         end do
       endif
 
 c
@@ -168,18 +168,18 @@ c     given its relevant b-spline coeffs in aj(1),...,aj(k-jderiv).
 
       if (jderiv .ne. km1) then
          jdrvp1 = jderiv + 1
-         do 33 j=jdrvp1,km1
+         do j=jdrvp1,km1
             kmj = k-j
             ilo = kmj
-            do 34 jj=1,kmj
+            do jj=1,kmj
                aj(jj) = (aj(jj+1)*dm(ilo) + aj(jj)*dp(jj)) /
      *              (dm(ilo)+dp(jj))
                ilo = ilo - 1
- 34         continue
- 33      continue
+            end do
+         end do
       endif
 
       bvalue = aj(1)
 c
-   99 return
+      return
       end

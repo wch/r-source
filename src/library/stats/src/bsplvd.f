@@ -58,15 +58,15 @@ c     for the current order. these are stored in column k+1-current
 c     order  before  bsplvb  is called to put values for the next
 c     higher order on top of it.
       ideriv = mhigh
-      do 15 m=2,mhigh
+      do m=2,mhigh
          jp1mid = 1
-         do 11 j=ideriv,k
+         do j=ideriv,k
             dbiatx(j,ideriv) = dbiatx(jp1mid,1)
             jp1mid = jp1mid + 1
-   11       continue
+         end do
          ideriv = ideriv - 1
          call bsplvb(t,lent,kp1-ideriv,2,x,left,dbiatx)
-   15    continue
+         end do
 c
 c     at this point,  b(left-k+i, k+1-j)(x) is in  dbiatx(i,j) for
 c     i=j,...,k and j=1,...,mhigh ('=' nderiv). in particular, the
@@ -75,17 +75,17 @@ c     responding derivatives of b-splines in subsequent columns, gene-
 c     rate their b-repr. by differencing, then evaluate at  x.
 c
       jlow = 1
-      do 20 i=1,k
-         do 19 j=jlow,k
+      do i=1,k
+         do j=jlow,k
             a(j,i) = 0d0
-   19       continue
+         end do
          jlow = i
          a(i,i) = 1d0
-   20    continue
+      end do
 c     at this point, a(.,j) contains the b-coeffs for the j-th of the
 c     k  b-splines of interest here.
 c
-      do 45 m=2,mhigh
+      do m=2,mhigh
          kp1mm = kp1 - m
          fkp1mm = dble(kp1mm)
          il = left
@@ -95,17 +95,17 @@ c        for j=1,...,k, construct b-coeffs of  (m-1)st  derivative of
 c        b-splines from those for preceding derivative by differencing
 c        and store again in  a(.,j) . the fact that  a(i,j) = 0  for
 c        i < j  is used.sed.
-         do 25 ldummy=1,kp1mm
+         do ldummy=1,kp1mm
             factor = fkp1mm/(t(il+kp1mm) - t(il))
 c           the assumption that t(left) < t(left+1) makes denominator
 c           in  factor  nonzero.
-            do 24 j=1,i
+            do j=1,i
                a(i,j) = (a(i,j) - a(i-1,j))*factor
-   24          continue
+            end do
             il = il - 1
             i = i - 1         
-   25       continue
-c
+         end do
+c     
 c        for i=1,...,k, combine b-coeffs a(.,i) with b-spline values
 c        stored in dbiatx(.,m) to get value of  (m-1)st  derivative of
 c        i-th b-spline (of interest here) at  x , and store in
@@ -113,15 +113,15 @@ c        dbiatx(i,m). storage of this value over the value of a b-spline
 c        of order m there is safe since the remaining b-spline derivat-
 c        ive of the same order do not use this value due to the fact
 c        that  a(j,i) = 0  for j < i .
-         do 40 i=1,k
+         do i=1,k
             sum = 0.d0
             jlow = max0(i,m)
-            do 35 j=jlow,k
+            do j=jlow,k
                sum = a(j,i)*dbiatx(j,m) + sum
-   35       continue
+            end do
             dbiatx(i,m) = sum
-   40    continue
-   45 continue
+         end do
+      end do
       end
 
       subroutine bsplvb ( t, lent,jhigh, index, x, left, biatx )
@@ -217,11 +217,11 @@ c
          deltar(j) = t(left+j) - x
          deltal(j) = x - t(left+1-j)
          saved = 0d0
-         do 26 i=1,j
+         do i=1,j
             term = biatx(i)/(deltar(i) + deltal(jp1-i))
             biatx(i) = saved + deltar(i)*term
             saved = deltal(jp1-i)*term
-   26       continue
+         end do
          biatx(jp1) = saved
          j = jp1
          if (j .lt. jhigh)              go to 20

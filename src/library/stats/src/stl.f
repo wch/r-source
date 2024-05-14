@@ -30,9 +30,9 @@ c Var
       logical userw
 
       userw = .false.
-      do 1 i = 1,n
+      do i = 1,n
          trend(i) = 0.d0
- 1    continue
+      end do
 c the three spans must be at least three and odd:
       newns = max0(3,ns)
       newnt = max0(3,nt)
@@ -51,9 +51,9 @@ c --- outer loop -- robustnes iterations
       k = k+1
       if(k .gt. no) goto 10
 
-      do 3 i = 1,n
+      do i = 1,n
          work(i,1) = trend(i)+season(i)
- 3    continue
+      end do
       call stlrwt(y,n,work(1,1),rw)
       userw = .true.
       goto 100
@@ -89,11 +89,11 @@ c Var
       if(len .ge. n) then
          nleft = 1
          nright = n
-         do 20 i = 1,n,newnj
+         do i = 1,n,newnj
             call stlest(y,n,len,ideg,dble(i),ys(i),nleft,nright,res,
      &           userw,rw,ok)
             if(.not. ok) ys(i) = y(i)
- 20      continue
+         end do
 
       else
 
@@ -101,7 +101,7 @@ c Var
             nsh = (len+1)/2
             nleft = 1
             nright = len
-            do 30 i = 1,n
+            do i = 1,n
                if(i .gt. nsh  .and.  nright .ne. n) then
                   nleft = nleft+1
                   nright = nright+1
@@ -109,10 +109,10 @@ c Var
                call stlest(y,n,len,ideg,dble(i),ys(i),nleft,nright,res,
      &              userw,rw,ok)
                if(.not. ok) ys(i) = y(i)
- 30         continue
+            end do
          else
             nsh = (len+1)/2
-            do 40 i = 1,n,newnj
+            do i = 1,n,newnj
                if(i .lt. nsh) then
                   nleft = 1
                   nright = len
@@ -127,19 +127,19 @@ c Var
                call stlest(y,n,len,ideg,dble(i),ys(i),nleft,nright,res,
      &              userw,rw,ok)
                if(.not. ok) ys(i) = y(i)
- 40         continue
+            end do
 
          endif
 
       endif
 
       if(newnj .ne. 1) then
-         do 45 i = 1,n-newnj,newnj
+         do i = 1,n-newnj,newnj
             delta = (ys(i+newnj)-ys(i))/dble(newnj)
-            do 47 j = i+1,i+newnj-1
+            do j = i+1,i+newnj-1
                ys(j) = ys(i)+delta*dble(j-i)
- 47         continue
- 45      continue
+            end do
+         end do
          k = ((n-1)/newnj)*newnj+1
 
          if(k .ne. n) then
@@ -149,9 +149,9 @@ c Var
 
             if(k .ne. n-1) then
                delta = (ys(n)-ys(k))/dble(n-k)
-               do 55 j = k+1,n-1
+               do j = k+1,n-1
                   ys(j) = ys(k)+delta*dble(j-k)
- 55            continue
+               end do
             endif
          endif
       endif
@@ -176,7 +176,7 @@ c Var
       h9 = 0.999d0*h
       h1 = 0.001d0*h
       a = 0.d0
-      do 60 j = nleft,nright
+      do j = nleft,nright
          r = abs(dble(j)-xs)
          if(r .le. h9) then
             if(r .le. h1) then
@@ -189,36 +189,36 @@ c Var
          else
             w(j) = 0.d0
          endif
- 60   continue
+      end do
 
       if(a .le. 0.d0) then
          ok = .false.
       else
          ok = .true.
-         do 69 j = nleft,nright
+         do j = nleft,nright
             w(j) = w(j)/a
- 69      continue
+         end do
          if((h .gt. 0.d0) .and. (ideg .gt. 0)) then
             a = 0.d0
-            do 73 j = nleft,nright
+            do j = nleft,nright
                a = a+w(j)*dble(j)
- 73         continue
+            end do
             b = xs-a
             c = 0.d0
-            do 75 j = nleft,nright
+            do j = nleft,nright
                c = c+w(j)*(dble(j)-a)**2
- 75         continue
+            end do
             if(sqrt(c) .gt. 0.001d0*range) then
                b = b/c
-               do 79 j = nleft,nright
+               do j = nleft,nright
                   w(j) = w(j)*(b*(dble(j)-a)+1.0d0)
- 79            continue
+               end do
             endif
          endif
          ys = 0.d0
-         do 81 j = nleft,nright
+         do j = nleft,nright
             ys = ys+w(j)*y(j)
- 81      continue
+         end do
       endif
 
       return
@@ -251,19 +251,19 @@ c Var
       newn = n-len+1
       flen = dble(len)
       v = 0.d0
-      do 3 i = 1,len
+      do i = 1,len
          v = v+x(i)
- 3    continue
+      end do
       ave(1) = v/flen
       if(newn .gt. 1) then
          k = len
          m = 0
-         do 7 j = 2, newn
+         do j = 2, newn
             k = k+1
             m = m+1
             v = v-x(m)+x(k)
             ave(j) = v/flen
- 7       continue
+         end do
       endif
       return
       end
@@ -280,24 +280,24 @@ c Arg
 c Var
       integer i,j
 
-      do 80 j = 1,ni
-         do 1 i = 1,n
+      do j = 1,ni
+         do i = 1,n
             work(i,1) = y(i)-trend(i)
- 1       continue
+         end do
          call stlss(work(1,1),n,np,ns,isdeg,nsjump,userw,rw,work(1,2),
      &        work(1,3),work(1,4),work(1,5),season)
          call stlfts(work(1,2),n+2*np,np,work(1,3),work(1,1))
          call stless(work(1,3),n,nl,ildeg,nljump,.false.,work(1,4),
      &        work(1,1),work(1,5))
-         do 3 i = 1,n
+         do i  = 1,n
             season(i) = work(np+i,2)-work(i,1)
- 3       continue
-         do 5 i = 1,n
+         end do
+         do i = 1,n
             work(i,1) = y(i)-season(i)
- 5       continue
+         end do
          call stless(work(1,1),n,nt,itdeg,ntjump,userw,rw,trend,
      &        work(1,3))
- 80   continue
+      end do
       return
       end
 
@@ -314,9 +314,9 @@ c Var
       integer mid(2), i
       double precision cmad, c9, c1, r
 
-      do 7 i = 1,n
+      do i = 1,n
          rw(i) = abs(y(i)-fit(i))
- 7    continue
+      end do
       mid(1) = n/2+1
       mid(2) = n-mid(1)+1
       call psort(rw,n,mid,2)
@@ -324,7 +324,7 @@ c Var
 c     = 6 * MAD
       c9 = 0.999d0*cmad
       c1 = 0.001d0*cmad
-      do 10 i = 1,n
+      do i = 1,n
          r = abs(y(i)-fit(i))
          if(r .le. c1) then
             rw(i) = 1.d0
@@ -333,7 +333,7 @@ c     = 6 * MAD
          else
             rw(i) = 0.d0
          endif
- 10   continue
+      end do
       return
       end
 
@@ -355,15 +355,15 @@ c Var
 
       if(np .lt. 1) return
 
-      do 200 j = 1, np
+      do j = 1, np
          k = (n-j)/np+1
-         do 10 i = 1,k
+         do i = 1,k
             work1(i) = y((i-1)*np+j)
- 10      continue
+         end do
          if(userw) then
-            do 12 i = 1,k
+            do i = 1,k
                work3(i) = rw((i-1)*np+j)
- 12         continue
+            end do
          endif
          call stless(work1,k,ns,isdeg,nsjump,userw,work3,work2(2),work4)
          xs = 0
@@ -376,11 +376,11 @@ c Var
          call stlest(work1,k,ns,isdeg,xs,work2(k+2),nleft,k,work4,
      &        userw,work3,ok)
          if(.not. ok) work2(k+2) = work2(k+1)
-         do 18 m = 1,k+2
+         do m = 1,k+2
             season((m-1)*np+j) = work2(m)
- 18      continue
+         end do
 
- 200  continue
+      end do
 
       return
       end
@@ -420,9 +420,9 @@ c Var
       nsjump = max0(1,int(float(newns)/10 + 0.9))
       ntjump = max0(1,int(float(nt)/10 + 0.9))
       nljump = max0(1,int(float(nl)/10 + 0.9))
-      do 2 i = 1,n
+      do i = 1,n
          trend(i) = 0.d0
- 2    continue
+      end do
       call stlstp(y,n,newnp,newns,nt,nl,isdeg,itdeg,ildeg,nsjump,
      &     ntjump,nljump,ni,.false.,rw,season,trend,work)
 
@@ -431,11 +431,11 @@ c Var
          j=1
 C        Loop  --- 15 robustness iterations
  100     if(j .le. 15) then
-            do 35 i = 1,n
+            do i = 1,n
                work(i,6) = season(i)
                work(i,7) = trend(i)
                work(i,1) = trend(i)+season(i)
- 35        continue
+            end do
             call stlrwt(y,n,work(1,1),rw)
             call stlstp(y, n, newnp, newns, nt,nl, isdeg,itdeg,ildeg,
      &           nsjump,ntjump,nljump, ni, .true.,
@@ -447,7 +447,7 @@ C        Loop  --- 15 robustness iterations
             mint = work(1,7)
             maxds = abs(work(1,6) - season(1))
             maxdt = abs(work(1,7) - trend(1))
-            do   137 i = 2,n
+            do i = 2,n
                if(maxs .lt. work(i,6)) maxs = work(i,6)
                if(maxt .lt. work(i,7)) maxt = work(i,7)
                if(mins .gt. work(i,6)) mins = work(i,6)
@@ -456,7 +456,7 @@ C        Loop  --- 15 robustness iterations
                dift = abs(work(i,7) - trend(i))
                if(maxds .lt. difs) maxds = difs
                if(maxdt .lt. dift) maxdt = dift
- 137        continue
+            end do
             if((maxds/(maxs-mins) .lt. 0.01d0) .and.
      &         (maxdt/(maxt-mint) .lt. 0.01d0))   goto 300
             continue
@@ -469,9 +469,9 @@ C        end Loop
       else
 c       .not. robust
 
-         do 150 i = 1,n
+         do i = 1,n
             rw(i) = 1.0d0
- 150     continue
+         end do
       endif
 
       return
