@@ -62,9 +62,9 @@ c --- end Loop
 
 c     robustness weights when there were no robustness iterations:
       if(no .le. 0) then
-         do 15 i = 1,n
+         do i = 1,n
             rw(i) = 1.d0
- 15      continue
+         end do
       endif
       return
       end

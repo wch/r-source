@@ -127,12 +127,12 @@ c
       jcmax = k
       nmi = n - i
       if (nmi .ge. 0) then
-         do 19 j=1,km1
+         do j=1,km1
 C     the following if() happens; e.g. in   pp <- predict(cars.spl, xx)
 c     -       if( (i+j) .gt. lent) write(6,9911) i+j,lent
 c     -  9911         format(' i+j, lent ',2(i6,1x))
             dp(j) = t(i+j) - x
- 19      continue
+         end do
       else
          jcmax = k + nmi
          do j=1,jcmax
@@ -145,9 +145,9 @@ c     -  9911         format(' i+j, lent ',2(i6,1x))
       endif
 
 c
-      do 21 jc=jcmin,jcmax
+      do jc=jcmin,jcmax
          aj(jc) = bcoef(imk + jc)
- 21   continue
+      end do
 c
 c               *** difference the coefficients  jderiv  times.
       if (jderiv .ge. 1) then
