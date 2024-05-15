@@ -4497,6 +4497,9 @@ void (SET_FRAME)(SEXP x, SEXP v) { FIX_REFCNT(x, FRAME(x), v); CHECK_OLD_TO_NEW(
 
 void (SET_ENCLOS)(SEXP x, SEXP v)
 {
+    if (v == R_NilValue)
+	/* mainly to handle unserializing old files */
+	v = R_EmptyEnv;
     if (TYPEOF(v) != ENVSXP)
 	error(_("'parent' is not an environment"));
     for (SEXP e = v; e != R_NilValue; e = ENCLOS(e))
