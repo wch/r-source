@@ -6659,6 +6659,7 @@ function(dir, testdir, lib.loc = NULL)
         ## checking.
         repos <- .get_standard_repository_URLs()
         available <- utils::available.packages(repos = repos)
+        if (nrow(available)) # cannot filter when offline
         res[1L : 3L] <- lapply(bad, intersect, available[, "Package"])
     }
     res
