@@ -1187,6 +1187,7 @@ vignetteEngine <- local({
         key
     }
 
+    ## FIXME: return a character vector, not stop here.
     getEngine <- function(name, package) {
         if (missing(name)) {
             result <- as.list(registry)
