@@ -6408,8 +6408,8 @@ add_dummies <- function(dir, Log)
                 summaryLog(Log)
                 do_exit(1L)
             } else if (length(res$required_for_checking_but_not_installed)) {
-                warningLog(Log, "Skipping vignette re-building")
-                do_build_vignettes  <<- FALSE
+                warningLog(Log, "Cannot process vignettes")
+                do_vignettes  <<- FALSE
                 printLog0(Log, paste(out, collapse = "\n"))
             } else {
                 if( length(res[["orphaned"]]) || length(res[["orphaned1"]]) )
