@@ -1195,8 +1195,10 @@ vignetteEngine <- local({
                pkgs <- sapply(result, function(engine) engine$package)
                keep <- is.element(pkgs, package)
                if (!any(keep)) {
-                   stop(gettextf("None of packages %s have registered vignette engines",
-                                 paste(sQuote(package), collapse = ", ")),
+                   msg <-ngettext(length(package),
+                                  "Package %s does not have a registered vignette engine",
+                                  "None of packages %s have registered vignette engines")
+                   stop(sprintf(msg, paste(sQuote(package), collapse = ", ")),
                         domain = NA)
                }
                result <- result[keep]
