@@ -3459,7 +3459,7 @@ function(x, ...)
             },
             "")
       },
-      if(length(bad <- x$missing_vignette_depends)) {
+      if(length(bad <- x$missing_rdmacros_depends)) {
           c(if(length(bad) > 1L)
                 .pretty_format2("RdMacros packages not required:", bad)
             else
