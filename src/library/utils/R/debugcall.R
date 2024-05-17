@@ -1,7 +1,7 @@
 ##  File src/library/utils/R/debugcall.R
 ##  Part of the R package, https://www.R-project.org
 ##
-##  Copyright (C) 1995-2023 The R Core Team
+##  Copyright (C) 1995-2024 The R Core Team
 ##
 ##  This program is free software; you can redistribute it and/or modify
 ##  it under the terms of the GNU General Public License as published by
@@ -30,7 +30,8 @@
     mcall <- match.call(func, call)
 
     env <- parent.frame(2L)
-    if(!(have.methods && methods::isGeneric(funsym))) { # not S4-generic
+    isS4Generic <- have.methods && methods::isGeneric(funsym, env)
+    if(!isS4Generic) {
         s3ret <- isS3stdGeneric(func)
         if(s3ret) {
             genname <- names(s3ret)
