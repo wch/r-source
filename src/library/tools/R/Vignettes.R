@@ -386,7 +386,7 @@ function(package, dir, subdirs = NULL, lib.loc = NULL, output = FALSE,
 
     # Locate all vignette files
     buildPkgs <- loadVignetteBuilder(dir, mustwork = FALSE, lib.loc = lib.loc)
-    engineList <- vignetteEngine(package = buildPkgs)
+    engineList <- vignetteEngine(package = buildPkgs) # could be character()
 
     docs <- names <- engines <- patterns <- character()
     allFiles <- list.files(docdir, all.files = FALSE, full.names = TRUE)
@@ -1196,11 +1196,13 @@ vignetteEngine <- local({
                pkgs <- sapply(result, function(engine) engine$package)
                keep <- is.element(pkgs, package)
                if (!any(keep)) {
+                   ## was stop() in R 4.4.0
                    msg <-ngettext(length(package),
                                   "Package %s does not have a registered vignette engine",
                                   "None of packages %s have registered vignette engines")
-                   stop(sprintf(msg, paste(sQuote(package), collapse = ", ")),
-                        domain = NA)
+                   warning(sprintf(msg, paste(sQuote(package), collapse = ", ")),
+                           domain = NA, call. = FALSE)
+                   ## return character() below
                }
                result <- result[keep]
                pkgs <- pkgs[keep]

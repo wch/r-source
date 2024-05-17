@@ -676,6 +676,7 @@ add_dummies <- function(dir, Log)
         }
         if (dir.exists("inst/doc") && do_install) check_doc_contents()
         if (dir.exists("vignettes")) check_vign_contents(ignore_vignettes)
+        ## FIXME: remove this long-obsolete check
         if (!ignore_vignettes) {
             if (dir.exists("inst/doc") && !dir.exists("vignettes")) {
                 pattern <- vignetteEngine("Sweave")$pattern
@@ -686,15 +687,15 @@ add_dummies <- function(dir, Log)
                 if (!is.na(buildPkgs)) {
                     buildPkgs <- unlist(strsplit(buildPkgs, ","))
                     buildPkgs <- unique(gsub('[[:space:]]', '', buildPkgs))
-                    engineList <- try(vignetteEngine(package = buildPkgs))
-                    if (!inherits(engineList, "try-catch"))
-                        for(nm in names(engineList)) {
-                            pattern <- engineList[[nm]]$pattern
-                            sources <- c(sources,
-                                         setdiff(list.files(file.path("inst", "doc"),
-                                                            pattern = pattern),
-                                                 list.files("vignettes", pattern = pattern)))
-                        }
+                    ## next could be character()
+                    engineList <- vignetteEngine(package = buildPkgs)
+                    for(nm in names(engineList)) {
+                        pattern <- engineList[[nm]]$pattern
+                        sources <- c(sources,
+                                     setdiff(list.files(file.path("inst", "doc"),
+                                                        pattern = pattern),
+                                             list.files("vignettes", pattern = pattern)))
+                    }
                 }
                 sources <- unique(sources)
                 if(length(sources)) {
