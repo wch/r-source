@@ -3253,6 +3253,8 @@ function(dir, force_suggests = TRUE, check_incoming = FALSE,
             bad2 <- setdiff(bad2, bad)
             if(length(bad2))
                 bad_depends$required_for_checking_but_not_installed <- bad2
+            if (length(VB) && !dir.exists(file.path(dir, "vignettes")))
+                bad_depends$no_vignettes <- VB
         }
     }
     ## FIXME: is this still needed now we do dependency analysis?
@@ -3447,6 +3449,14 @@ function(x, ...)
             },
             strwrap(gettextf("Vignette dependencies (%s entries) must be contained in the DESCRIPTION Depends/Suggests/Imports entries.",
                              "\\VignetteDepends{}")),
+            "")
+      },
+      if(length(bad <- x$no_vignettes)) {
+          c(if(length(bad) > 1L) {
+                c("Vignette dependencies required without any vignettes:", .pretty_format(bad))
+            } else {
+                sprintf("Vignette dependency required without any vignettes:: %s", sQuote(bad))
+            },
             "")
       },
       if(length(bad <- x$missing_rdmacros_depends)) {

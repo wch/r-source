@@ -686,6 +686,7 @@ add_dummies <- function(dir, Log)
                 if (!is.na(buildPkgs)) {
                     buildPkgs <- unlist(strsplit(buildPkgs, ","))
                     buildPkgs <- unique(gsub('[[:space:]]', '', buildPkgs))
+                    ## next could be character()
                     engineList <- vignetteEngine(package = buildPkgs)
                     for(nm in names(engineList)) {
                         pattern <- engineList[[nm]]$pattern
@@ -6390,6 +6391,7 @@ add_dummies <- function(dir, Log)
                          "hdOnly",
                          "orphaned2", "orphaned", "orphaned1",
                          "required_for_checking_but_not_installed",
+                         "no_vignettes",
                          if(!check_incoming) "bad_engine")
             if(!all(names(res) %in% allowed)) {
                 errorLog(Log)

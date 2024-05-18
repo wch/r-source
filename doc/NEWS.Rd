@@ -54,6 +54,11 @@
       \item \code{debugcall(\var{S3Generic}())} now also works when a
       corresponding S4-generic version is in the \pkg{methods} cache
       (\PR{18143}).
+
+      \item \command{R CMD check} is no longer broken (without a check
+      result and no explanation in \file{00check.log}) for a package
+      which declares an invalid \code{VignetteBuilder} in
+      \file{DESCRIPTION} but has no vignettes.
     }
   }
 }

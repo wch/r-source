@@ -2904,14 +2904,14 @@ complete support only from version 2023.0.0.}.
 It is good practice to describe a Fortran version requirement in
 @file{DESCRIPTION}'s @samp{SystemRequirements} field.  Note that this is
 purely for information: the package also needs a @command{configure}
-script to determine the compiler and set approrpriate option(s) and test
+script to determine the compiler and set appropriate option(s) and test
 that the features needed from the standard are actually supported.
 
-The Fortran 2023 released in Nov 2023: as usual compiler vedors are
+The Fortran 2023 released in Nov 2023: as usual compiler vendors are
 introducing support incrementally.
 For Intel's @command{ifx} see
 @uref{https://www.intel.com/content/www/us/en/developer/articles/technical/fortran-language-and-openmp-features-in-ifx.html#Fortran%20Standards}.
-For LLVM's @command{flang-new} see
+For @I{LLVM}'s @command{flang-new} see
 @uref{https://flang.llvm.org/docs/F202X.html}.
 @code{gfortran} does not have complete support even for the 2008 and
 2018 standards, but the option @option{-std=f2023} is supported from
@@ -6576,6 +6576,22 @@ The use of @code{DFLOAT}, which was superseded by @code{DBLE} in Fortran
 similar.
 
 @item
+Use of what @command{gfprtran} calls `Fortran 2018 deleted features',
+although most were `deleted' in earlier standards: those itmeize here
+were deleted in Fortran 2008.  (In the Fortran standards `deleted' means
+features that compilers are not required to implement.) These include
+@itemize
+@item
+Aritmmetic @code{IF} statements.
+@item
+@code{DO} loops whch are not terminated with a @code{END DO} or
+@code{CONTINUE} statement.  (Unlabelled @code{DO} loops terminated by
+@code{END DO} are preferred for readability.)
+@item
+Labelled @code{DO} loops sharing a terminating @code{CONTINUE} statement.
+@end itemize
+
+@item
 The use of GNU Fortran extensions.  Some are listed at
 @uref{https://gcc.gnu.org/onlinedocs/gfortran/Extensions-implemented-in-GNU-Fortran.html}.
 Others which have caused problems include @code{etime}, @code{getpid},
@@ -6639,16 +6655,49 @@ works around this for packages without a @file{src/Makefile}.
 @c Intel has fpp.
 Use of extensions @file{.F} and @code{.F90} to indicate source code to
 be preprocessed: the preprocessor used is compiler-specific and may or
-may not be @command{cpp}.
+may not be @command{cpp}.  Compilers may even preproces files with
+extension @file{.f} or @file{.f90} (Intel does).
 
 @item
 Fixed form Fortran (with extension @file{.f}) should only use 72
 columns, and free-form at most 132 columns.  This includes trailing
 comments.  Over-long lines may be silently truncated or give a warning.
-%% The Intel compilers warn.
+@c The Intel compilers warn.
 
+@item
+Tabs are not part of the Fortran character set: compilers tend to accept
+them but how they are interpreted is compiler-specific.
+
+@item
+Fortran-66-style Hollerith constants.
 @end itemize
 
+As well as `deleted features', Fortran standards have `obsolescent
+features'.  These are similar to `deprecated' in other languages, but
+the Fortran standards committee has said it will only move them to
+`deleted' status when they are no longer much used.  These include
+@itemize
+@item
+@code{ENTTRY} statements.
+@item
+@code{FORALL} statements.
+@item
+Labelled @code{DO} statements.
+@item
+@code{COMMON} and @code{EQUIVALENCE} statements, and @code{BLOCK DATA}
+units.
+@item
+Computed @code{GOTO} statmennts, replaced by @code{SELECT CASE}.
+@item
+Statement functions.
+@item
+@code{DATA} statments after executable statements.
+@item
+Specific (rather than generic) names for intrinsic functions.
+@end itemize
+@noindent
+@code{gfortran} with option @option{-std=f2018} will warn about these:
+@R{} will report only in the installation log.
 
 @node Binary distribution,  , Portable Fortran code, Writing portable packages
 @subsection Binary distribution
@@ -8043,7 +8092,7 @@ class (in package @pkg{stats}).  To make these easy to read in the
 source file, @code{\code@{"\linkS4class@{abc@}"@}} expands to the form
 given above.
 
-There are two other forms with an optional argument, specified as
+There are two other forms with an optional `anchor' argument, specified as
 @code{\link[@var{pkg}]@{@var{foo}@}} and
 @code{\link[@var{pkg:bar}]@{@var{foo}@}}, to link to topics
 @code{@var{foo}} and @code{@var{bar}} respectively in the package
@@ -16081,7 +16130,7 @@ longer recommended.
 @deftypefunx void R_strtod (const char* @var{str}, char ** @var{end})
 Implementations of the C99/POSIX functions @code{atof} and @code{strtod}
 which guarantee platform-dependent behaviour, including always using the
-period as the decimal point @emph{aka} `radix character' and converting
+period as the decimal point @emph{aka} `@I{radix character}' and converting
 @code{"NA"} to R's @code{NA_REAL_} .
 @end deftypefun
 
