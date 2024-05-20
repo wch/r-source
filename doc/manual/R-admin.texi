@@ -5304,14 +5304,25 @@ PKG_CONFIG_PATH=$LOCAL/lib/pkgconfig:/usr/lib/pkgconfig
 further flags are desirable in @file{config.site}:
 @example
 CFLAGS="-falign-functions=8 -g -O2"
+@end example
+@noindent
+is needed to inter-work with @command{gfortran} without segfaulting in
+some packages.  Some builds of @command{gfortran} have targetted the
+current version of macOS (unlike @command{clang}), causing linker
+warnings) to avoid these use
+@example
+FFLAGS="-g -O2 -mmacosx-version-min=11.0"
+FCFLAGS="-g -O2 -mmacosx-version-min=11.0"
+@end example
+@noindent
+or perhaps
+@example
 FFLAGS="-g -O2 -mmacos-version-min=11.0"
 FCFLAGS="-g -O2 -mmacos-version-min=11.0"
 @end example
 @noindent
-(the first flag in @code{CFLAGS} is needed to inter-work with the
-@command{gfortran} without segfaulting in some packages, and some builds
-of @command{gfortran} have targetted the current version of macOS (unlike
-@command{clang}, causing linker warnings).
+where @code{11.0} can be replaced by @code{12.0}, @code{13.0} or
+@code{14.0} for macOS 12.x, 13.x and 14.x.
 
 To install packages using compiled code one needs the Command Line Tools
 (or @I{Xcode}) and appropriate compilers, e.g.@: the C/C++ compilers from
@@ -5390,7 +5401,7 @@ contains the correct information.
 @node Fortran compilers, Cairo graphics, Prerequisites, macOS
 @subsection Fortran compiler
 
-There is `universal' (Intel and @code{arm64}) build of
+There is a `universal' (Intel and @code{arm64}) build of
 @command{gfortran} 12.2 at
 @uref{https://mac.r-project.org/tools/gfortran-12.2-universal.pkg}.
 This installs into @file{/opt/gfortran}.
@@ -5403,11 +5414,12 @@ symlink is broken, the driver will issue a warning and use @code{xcrun
 is used when using @command{gfortran} to link, so not when building @R{}
 but when installing a few packages.)
 
-A build of @command{gfortran} 13.2 for @code{arm64} macOS 14 is
+Builds of @command{gfortran} 13.2 and 14.1 for @code{arm64} macOS 14 are
 available at
-@uref{https://github.com/fxcoudert/gfortran-for-macOS/releases}.
-This can be built for Intel and older OSes from the sources at
-@uref{https://github.com/iains/gcc-13-branch/}.
+@uref{https://github.com/fxcoudert/gfortran-for-macOS/releases}.  These
+can be built for Intel and older OSes from the sources at
+@uref{https://github.com/iains/gcc-13-branch/} and
+@code{gcc-14-branch/}.
 
 @node Cairo graphics, Other C/C++ compilers, Fortran compilers, macOS
 @subsection Cairo graphics
