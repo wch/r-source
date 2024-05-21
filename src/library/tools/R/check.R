@@ -4126,6 +4126,27 @@ add_dummies <- function(dir, Log)
                     printLog(Log, "The error occurred in:\n\n")
                     printLog0(Log, txt, "\n")
                 }
+                if(do_timings) {
+                    theta <-
+                        as.numeric(Sys.getenv("_R_CHECK_EXAMPLE_TIMING_THRESHOLD_",
+                                              "5"))
+                    tfile <- paste0(pkgname, "-Ex.timings")
+                    times <-
+                        utils::read.table(tfile, header = TRUE, row.names = 1L,
+                                      colClasses = c("character", rep.int("numeric", 3)))
+                    o <- order(times[[1L]] + times[[2L]], decreasing = TRUE)
+                    times <- times[o, ]
+                    keep <- ((times[[1L]] + times[[2L]] > theta) |
+                             (times[[3L]] > theta))
+                    if(any(keep)) {
+                        printLog(Log,
+                                 sprintf("Examples with CPU (user + system) or elapsed time > %gs\n",
+                                         theta))
+                        out <- utils::capture.output(format(times[keep, ]))
+                        printLog0(Log, paste(out, collapse = "\n"), "\n")
+                    }
+                }
+
                 return(FALSE)
             }
 
