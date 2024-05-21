@@ -1678,7 +1678,7 @@ as on any other Unix-alike: see the next chapter of this manual.  There
 are some small differences which may surprise users of @R{} on other
 platforms, notably the default location of the personal library
 directory (under @file{~/Library/R}, e.g.@:
-@file{~/Library/R/x86_64/4.2/library}), and that warnings, messages and
+@file{~/Library/R/x86_64/4.4/library}), and that warnings, messages and
 other output to @file{stderr} are highlighted in bold.
 
 @c https://ryanhomer.github.io/posts/build-openmp-macos-catalina-complete
@@ -1738,11 +1738,11 @@ upright ones.
 
 @R{} for macOS consists of two parts: the GUI (@Rapp{}) and the R
 framework. @I{Un-installation} is as simple as removing those folders
-(e.g.@: by dragging them onto the Bin aka Trash). The typical installation will
-install the GUI into the @file{/Applications/R.app} folder and the R
-framework into the @file{/Library/Frameworks/R.framework} folder.  The
-links to @file{R} and @file{Rscript} in @file{/usr/local/bin} should
-also be removed.
+(e.g.@: by dragging them onto the Bin@footnote{Formerly known as the
+Trash.}). The typical installation will install the GUI into the
+@file{/Applications/R.app} folder and the R framework into the
+@file{/Library/Frameworks/R.framework} folder.  The links to @file{R}
+and @file{Rscript} in @file{/usr/local/bin} should also be removed.
 
 If you want to get rid of @R{} more completely using a Terminal, simply
 run:
@@ -1806,7 +1806,7 @@ versions are installed under
 different @samp{4.x.y} versions installed for the same @samp{x} and CPU
 type.
 
-@Rapp{} will always run the `current' version, that is the last
+@Rapp{} will always run the `current' version of @R{}, that is the last
 installed version.
 
 @node Running R, Add-on packages, Installing R under macOS, Top
@@ -5392,7 +5392,7 @@ above) or @command{xattr -c} to remove extended attributes.
 @command{configure} defaults to @option{--with-internal-tzcode} on
 macOS.  The native implementation used to be unusable on earlier
 versions (with a 32-bit @code{time_t} and/or timezone tables missing
-information beyond the 32-bit range).  For, e.g.@:, macOS 12.6, option
+information beyond the 32-bit range).  As from macOS 12.6, option
 @option{--without-internal-tzcode} can be used to override this and @R{}
 contains sufficient workarounds (for example, the native code fails to
 recognize dates with a negative @code{tm_year}, that is dates before
@@ -5600,7 +5600,7 @@ installed under @file{/usr/local} and not supersede the system
 versions.
 
 Parallel installation of packages will make use of the utility
-@command{timeout} if available.  A dual-architecture build can be
+@command{timeout} if available.  A `universal'  build can be
 downloaded from @uref{https://www.stats.ox.ac.uk/pub/bdr/timeout}: make
 it executable (@code{chmod 755 timeout}) and put it somewhere on your
 path.
@@ -5764,7 +5764,7 @@ but it may need some help, e.g.@: by setting environment variable
 @env{JAVA_HOME}.  To select a build from @uref{https://adoptium.net,
 Adoptium} set e.g.@:
 @example
-JAVA_HOME=/Library/Java/JavaVirtualMachines/termurin-17.jdk/Contents/Home
+JAVA_HOME=/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home
 @end example
 @noindent
 in @file{config.site}.  For Java 21 from @uref{https://jdk.java.net/}
@@ -5868,8 +5868,8 @@ Current @acronym{CRAN} macOS distributions are targeted at @I{Big Sur}
 so it is wise to ensure that the compilers generate code that will run
 on @I{Big Sur} or later.  With the recommended compilers we can use
 @example
-CC="clang -mmacosx-version-min=11.0"
-CXX="clang++ -mmacosx-version-min=11.0"
+CC="clang -mmacos-version-min=11.0"
+CXX="clang++ -mmacos-version-min=11.0"
 FC="/opt//gfortran/bin/gfortran -mmacosx-version-min=11.0"
 @end example
 @noindent
@@ -5935,7 +5935,7 @@ any issues with C++ libraries.
 @subsection Building for Intel on @samp{arm64}
 
 Should one want to build @R{} for Intel on an @cputype{arm64} @I{Big Sur}
-Mac, add the target for the C and C++ compilers:
+Mac, add the target for the compilers:
 
 @example
 CC="clang -arch x86_64
