@@ -1798,8 +1798,8 @@ versions can be installed together.} of the @R{} framework which it
 finds installed.  This can be avoided by using @command{pkgutil
 --forget} (see the previous section).  However, note that different
 versions are installed under
-@file{/Library/Frameworks/R.framework/Versions} as @file{4.4} (or
-@file{4.4-arm64}), @file{4.3} and so on, so it is not possible to have
+@file{/Library/Frameworks/R.framework/Versions} as @file{4.4-arm64} (or
+@file{4.4-x86_64}), @file{4.3} and so on, so it is not possible to have
 different @samp{4.x.y} versions installed for the same @samp{x} and CPU
 type.
 
@@ -5189,7 +5189,7 @@ partially or completely remove them.
 
 The Command Line Tools provide C and C++ compilers derived from @I{LLVM}'s
 @command{clang} but nowadays known as `Apple clang' with different
-versioning (so Apple clang 14 is unrelated to @I{LLVM} clang 14).
+versioning (so Apple clang 15 is unrelated to @I{LLVM} clang 15).
 
 @item
 A Fortran compiler. @xref{Fortran compilers}.
@@ -5308,7 +5308,7 @@ CFLAGS="-falign-functions=8 -g -O2"
 is needed to inter-work with @command{gfortran} without segfaulting in
 some packages.  Some builds of @command{gfortran} have targetted the
 current version of macOS (unlike @command{clang}), causing linker
-warnings) to avoid these use
+warnings: to avoid these use
 @example
 FFLAGS="-g -O2 -mmacosx-version-min=11.0"
 FCFLAGS="-g -O2 -mmacosx-version-min=11.0"
@@ -5331,14 +5331,14 @@ requirements such as component @command{pkgconfig} (and to set
 
 @c svn was in CLT 11.3.1, even in the opensource.apple.com repository
 A subversion client can be obtained from
-@uref{https://mac.r-project.org/tools/}, for example by
+@uref{https://mac.r-project.org/tools/}, for example by (Apple Silicon)
 @example
 curl -OL https://mac.r-project.org/tools/subversion-1.14.1-darwin.20-arm64.tar.gz
 tar xf subversion-1.14.1-darwin.20-arm64.tar.gz 
 sudo cp subversion-1.14.1-darwin-20-arm64/svn $LOCAL/bin
 @end example
 @noindent
-or
+or (Intel)
 @example
 curl -OL https://mac.r-project.org/tools/subversion-1.14.0-darwin15.6.tar.gz
 tar xf subversion-1.14.0-darwin15.6.tar.gz
@@ -5590,10 +5590,10 @@ Checking packages thoroughly requires @I{Ghostscript} (part of the full
 the @file{bin} directory of a binary installation of @R{}, usually
 @file{/Library/@/Frameworks/@/R.framework/@/Resources/@/bin/@/qpdf}).
 
-@command{R CMD check --as-cran} makes use of `HTML Tidy'.  macOS has
-a version in @file{/usr/bin/tidy} dating from 2006 which is far too
-old and is skipped.  Up-to-date versions can be installed from
-@uref{http://binaries.html-tidy.org/}. 
+@command{R CMD check --as-cran} makes use of `HTML Tidy'.  macOS at the
+time of writing has a version in @file{/usr/bin/tidy} dating from 2006
+which is far too old.  Up-to-date versions can be
+installed from @uref{http://binaries.html-tidy.org/}.
 
 One macOS quirk is that the default path has @file{/usr/local/bin} after
 @file{/usr/bin}, contrary to common practice on Unix-alikes.  This means
@@ -5805,9 +5805,9 @@ selected by the option
 @example
 ./configure --enable-R-framework
 @end example
-
+@noindent
 (This is intended to be used with an Apple toolchain: others may not
-support frameworks correctly but those from @I{LLVM} do.)
+support frameworks correctly but those from @I{LLVM} have done so.)
 
 It is only needed if you want to build @R{} for use with the @Rapp{}
 console, and implies @option{--enable-R-shlib} to build @R{} as a
@@ -5926,7 +5926,7 @@ PKG_LIBS = /usr/local/llvm/lib/libc++.a /usr/local/llvm/lib/libc++abi.a
 in @file{src/Makevars}.  It would also be possible to static link the
 Fortran runtime libraries @file{libgfortran.a} and @file{libquadmath.a}
 should the Fortran compiler have later versions (but @command{gfortran}
-8--13 all have version @code{5}).
+8--14 all have version @code{5}).
 @end itemize
 @noindent
 The @acronym{CRAN} binary packages are built with the Apple compiler on
