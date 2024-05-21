@@ -66,6 +66,13 @@
       \item The internal code for changing the parent of an environment
       now signals an error if the new parent is not an environment or if
       the change would create a cycle in the parent chain.
+
+      \item The \sQuote{Writing R Extensions} \I{Texinfo} source now
+      contains very experimental annotations for more clearly
+      identifying the API status of C entry points. These annotations
+      are used to produce indices for API, experimental API, and
+      embedded API entry points in the rendered versions.  This is very
+      preliminary and may be dropped if a better approach emerges.
     }
   }
 
