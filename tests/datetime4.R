@@ -47,7 +47,7 @@ strptime("2022-01-01 -1500", "%Y-%m-%d %z", tz = "UTC")
 ## extreme values for as.Date (negative ones were wrong in R 4.2.2)
 as.Date(2^(30:33))
 as.Date(-2^(30:33))
-## tm$year will overflow ints in less than 800 milion years from present.
+## tm$year will overflow ints in less than 800 billion days from present.
 as.Date(c(7e11, 8e11, -7e11, -8e11))
 
 

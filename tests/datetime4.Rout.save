@@ -179,7 +179,7 @@ Warning in strptime("2022-01-01 -1500", "%Y-%m-%d %z", tz = "UTC") :
 [1] "2941775-04-07"  "5881580-07-12"  "11761191-01-21" "23520412-02-10"
 > as.Date(-2^(30:33))
 [1] "-2937836-09-26"  "-5877641-06-23"  "-11757252-12-12" "-23516473-11-23"
-> ## tm$year will overflow ints in less than 800 milion years from present.
+> ## tm$year will overflow ints in less than 800 billion days from present.
 > as.Date(c(7e11, 8e11, -7e11, -8e11))
 [1] "1916536874-11-22"  NA                  "-1916532935-02-09"
 [4] NA                 

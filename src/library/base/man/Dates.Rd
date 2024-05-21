@@ -60,8 +60,8 @@
   as midnight in UTC.
 
   Printing dates involves conversion to class \code{"\link{POSIXlt}"}
-  which treats dates of more than about 780 million years from present
-  as \code{NA}.
+  which treats dates of more than about 780 billion days (2.1 billion
+  years) from present as \code{NA}.
   
   For the many methods see \code{methods(class = "Date")}.  Several are
   documented separately, see below.
