@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997--2023  The R Core Team
+ *  Copyright (C) 1997--2024  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -1310,7 +1310,8 @@ int cmdlineoptions(int ac, char **av)
 	    if(!ifp) R_Suicide(_("creation of tmpfile failed -- set TMPDIR suitably?"));
 	    /* Unix does unlink(ifile) here, but Windows cannot delete open files */
 	}
-	fwrite(cmdlines, strlen(cmdlines)+1, 1, ifp);
+	if (fwrite(cmdlines, 1, strlen(cmdlines), ifp) != strlen(cmdlines))
+	    R_Suicide("fwrite error in cmdlineoptions");
 	fflush(ifp);
 	rewind(ifp);
     }
