@@ -192,6 +192,7 @@ checkLibRfuns <- function(lpath) {
     api <- transform(funAPI(), unmapped = unmap(name), name = NULL, loc = NULL)
     val <- merge(lsyms, api, all.x = TRUE)
     val <- val[order(val$api), ]
+    val$unmapped <- NULL ## not needed in final output
     rownames(val) <- NULL
     val
 }
@@ -206,6 +207,7 @@ readFileSyms <- function(fpath) {
 }
 
 ## crude approach based on string matching
+## **** this is to crude -- needs to allow more
 inRfunsCrude <- function(syms) {
     syms <- union(syms[syms == toupper(syms)],
                   grep("^_?Rf?_", syms, value = TRUE))
@@ -247,3 +249,37 @@ Rfuns <- function() {
         apidata$rfuns <- getRfuns()
     apidata$rfuns
 }
+
+
+##
+## Check an installed package's use of R entry points
+##
+
+checkPkgRfuns <- function(pkg, lib.loc = NULL) {
+    libdir <- system.file("libs", package = pkg, lib.loc = lib.loc)
+    libs <- Sys.glob(file.path(libdir, sprintf("*%s", .Platform$dynlib.ext)))
+    if (length(libs) > 0) {
+        val <- do.call(rbind, lapply(libs, checkLibRfuns))
+        unique(val)
+    }
+    else NULL
+}
+
+checkAllPkgFuns <- function(lib.loc = NULL, priority = NULL,
+                            all = FALSE, verbose = FALSE) {
+    p <- rownames(installed.packages(lib.loc = lib.loc, priority = priority))
+    checkOne <- function(pkg) {
+        if (verbose) cat(pkg, "\n")
+        data <- checkPkgRfuns(pkg, lib.loc = lib.loc)
+        if (! is.null(data))
+            transform(data, pkg = rep(pkg, nrow(data)))
+    }
+    val <- lapply(rownames(installed.packages(lib.loc = "library")), checkOne)
+    val <- do.call(rbind, val)
+    if (! all)
+        val <- val[is.na(val$apitype), ]
+    rownames(val) <- NULL
+    val
+}
+
+
