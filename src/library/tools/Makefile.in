@@ -30,10 +30,10 @@ update:
 
 ## This is deliberately conservative: -nt seems to work differently in some shells
 ## We first use mkdesc2 (with date) to install the DESCRIPTION, then re-install
-all: Makefile DESCRIPTION $(WRE_DATA)
+all: Makefile DESCRIPTION
 	@$(ECHO) "building package '$(pkg)'"
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)
-	@$(MAKE) mkR1 mkdesc2
+	@$(MAKE) mkR1 mkdesc2  $(WRE_DATA)
 	@$(MAKE) mksrc
 	@if ! test -f $(top_builddir)/library/$(pkg)/R/$(pkg); then \
 	  $(INSTALL_DATA) all.R $(top_builddir)/library/$(pkg)/R/$(pkg); \
