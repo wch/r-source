@@ -3543,9 +3543,9 @@ development files installed.
 
 The build process looks for Java support on the host system, and if it
 finds it sets some settings which are useful for Java-using packages
-(such as @CRANpkg{rJava} and @CRANpkg{JavaGD}: these require a full
-@abbr{JDK}).  This check can be suppressed by configure option
-@option{--disable-java}.
+(such as @CRANpkg{rJava} and @CRANpkg{JavaGD}: installing these from
+source requires a full @abbr{JDK}).  This check can be suppressed by
+configure option @option{--disable-java}.
 @enindex JAVA_HOME
 Configure variable @env{JAVA_HOME} can be set to point to a specific
 @abbr{JRE}/@abbr{JDK}, on the @command{configure} command line or in the environment.
@@ -3596,12 +3596,10 @@ Java 8 aka 1.8.0).
 
 `Non-server' Oracle distributions of Java as from version 11 are of a
 full @abbr{JDK}.  However, Linux distributions can be confusing: for example
-Fedora 34 had
+Fedora 38 had
 @example
 java-1.8.0-openjdk
 java-1.8.0-openjdk-devel
-java-openjdk
-java-openjdk-devel
 java-11-openjdk
 java-11-openjdk-devel
 java-17-openjdk
@@ -3615,7 +3613,7 @@ where the @code{-devel} @abbr{RPM}s are needed to complete the @abbr{JDK}. Debia
 @example
 sudo apt install default-jdk
 @end example
-@c https://www.digitalocean.com/community/tutorials/how-to-install-java-with-apt-on-ubuntu-18-04
+@c https://www.digitalocean.com/community/tutorials/how-to-install-java-with-apt-on-ubuntu-22-04
 
 @node Other compiled languages,  , Java support, Useful libraries and programs
 @subsection Other compiled languages
@@ -5729,19 +5727,31 @@ macOS does not comes with an installed Java runtime (@abbr{JRE}) and a
 macOS upgrade may remove one if already installed: it is intended to be
 installed at first use.  Check if a @abbr{JRE} is installed by running
 @command{java -version} in a @command{Terminal} window: if Java is not
-installed@footnote{In the unlikely event that the version reported does
-not start with @code{1.8.0}, @code{11} or higher you need to update your
-Java.} this may prompt you to install it.@footnote{Not at the time of
-writing for @cputype{arm64}.}  Builds of @I{OpenJDK} may also be
-available, e.g.@: from @uref{https://adoptium.net,
-Adoptium}@footnote{which website works with Safari but not some other
-browsers.}.  We recommend you install a version with long-term support,
-e.g.@: 17 or 21 but not 18--20, 22 which have/had a 6-month lifetime.
-(Note that Java distribution sites may use unusual designations for
-Intel macOS builds such as @code{aarch64} and @code{x64}.)
+installed on an Intel Mac this may prompt you to install it. We
+recommend you install a version with long-term support, e.g.@: 17 or
+21@footnote{The planned nextLTS release is 25 in September 2025.  Java 8
+@emph{aka} 1.8.0 is still LTS but some packages require 11 or later.}
+but not 18--20, 22--24 with a 6-month lifetime.
+
+The currently simplest way to install Java is from
+@uref{https://adoptium.net, Adoptium}@footnote{which website works with
+Safari but not some other browsers.}: this installs into an
+Apple-standard location and so works with @command{/usr/bin/java}. Other
+builds are available from
+@uref{https://www.azul.com/downloads/zulu-community/?os=macos&architecture=arm-64-bit&package=jdk}
+and from @I{OpenJDK} at @uref{https://jdk.java.net/}, for which
+@env{JAVA_HOME} may need to be set both when configuring @R{} and at
+runtime.  Note that Java distribution sites may use unusual designations
+for macOS CPUs such as @code{AArch64}, @code{x64} or @code{x86
+64-bit}.
+
 
 Binary distributions of @R{} are built against a specific version
-(e.g.@: 11.0.18 or 17.0.1) of Java so @command{sudo R CMD javareconf}
+(e.g.@: 11.0.18 or 17.0.1) of Java so
+@example
+sudo R CMD javareconf
+@end example
+@noindent
 will likely be needed to be run before using Java-using packages.
 
 To see what compatible versions of Java are currently installed, run the
@@ -5758,7 +5768,7 @@ between these, both when @R{} is built from the sources and when
 Configuring and building @R{} both looks for a @abbr{JRE} and for support for
 compiling @abbr{JNI} programs (used to install packages @CRANpkg{rJava} and
 @CRANpkg{JavaGD}); the latter requires a @abbr{JDK} (Java @abbr{SDK}).  Most
-distributions of Java 9 or later are of a full @abbr{JDK}.
+distributions of Java 11 or later are of a full @abbr{JDK}.
 
 The build process tries to fathom out what @abbr{JRE}/@abbr{JDK} to use,
 but it may need some help, e.g.@: by setting environment variable
@@ -5774,20 +5784,8 @@ in @file{config.site}.  For Java 21 from @uref{https://jdk.java.net/}
 JAVA_HOME=/path/to/jdk-21.jdk/Contents/Home
 @end example
 
-For an @cputype{arm64} build, the earliest Java version which is
-officially supported is 17.  The currently simplest way to install Java
-is from @uref{https://adoptium.net, Adoptium} (who call the architecture
-@cputype{aarch64}): this installs into an Apple-standard location and so
-works with @command{/usr/bin/java}. Other builds are available from
-@uref{https://www.azul.com/downloads/zulu-community/?os=macos&architecture=arm-64-bit&package=jdk}
-and from @I{OpenJDK} at @uref{https://jdk.java.net/}, for which
-@env{JAVA_HOME} may need to be set both when configuring @R{} and at
-runtime.
-
-@c To use Java (specifically, binary package @CRANpkg{rJava}) with a
-@c @acronym{CRAN} (@cputype{x86_64}) binary distribution of @R{} on
-@c @cputype{arm64} macOS, install an Intel build of a Java @abbr{JRE} from
-@c one of the sites linked above, then run @command{sudo R CMD javareconf}.
+@c For an @cputype{arm64} build, the earliest Java version which is
+@c officially supported is 17.
 
 @c jdk.java.net no longer has Java 11 nor 17 LTS builds.
 
