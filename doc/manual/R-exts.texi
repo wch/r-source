@@ -14814,9 +14814,6 @@ never from front-ends.  They are not thread-safe.
 
 @node User-controlled memory,  , Transient storage allocation, Memory allocation
 @subsection User-controlled memory
-@apifun R_Calloc
-@apifun R_Realloc
-@apifun R_Free
 
 The other form of memory allocation is an interface to @code{malloc},
 the interface providing @R{} error signaling.  This memory lasts until
@@ -14832,6 +14829,9 @@ The interface macros are
 void R_Free(@var{any} *@var{p})
 @end group
 @end example
+@apifun R_Calloc
+@apifun R_Realloc
+@apifun R_Free
 
 @noindent
 providing analogues of @code{calloc}, @code{realloc} and @code{free}.
@@ -14860,6 +14860,15 @@ Memory obtained by these macros should be aligned in the same way as
 Historically the macros @code{Calloc}, @code{Free} and @code{Realloc}
 were used, and these remain available unless  @code{STRICT_R_HEADERS}
 was defined prior to the inclusion of the header.
+
+@code{R_Calloc}, @code{R_Realloc}, and @code{R_Free} are currently
+implemented as macros expanding to calls to @code{R_chk_calloc},
+@code{R_chk_realloc}, and @code{R_chk_free}, respectively. These should
+not be called directly as they may be removed in the future.
+@comment detecting direct use of these is hard, so mark as 'experimental'
+@eapifun R_chk_calloc
+@eapifun R_chk_realloc
+@eapifun R_chk_free
 
 @findex CallocCharBuf
 @findex Memcpy
