@@ -184,7 +184,7 @@ dropBraces <- function(lines) {
 ## Check a shared library's use of R entry points
 ##
 
-checkLibRfuns <- function(lpath) {
+checkLibAPI <- function(lpath) {
     ldata <- readFileSyms(lpath)
     lsyms <- subset(ldata, type == "U")$name
     lsyms <- inRfuns(lsyms)
@@ -255,29 +255,30 @@ Rfuns <- function() {
 ## Check an installed package's use of R entry points
 ##
 
-checkPkgRfuns <- function(pkg, lib.loc = NULL) {
+checkPkgAPI <- function(pkg, lib.loc = NULL, all = FALSE) {
     libdir <- system.file("libs", package = pkg, lib.loc = lib.loc)
     libs <- Sys.glob(file.path(libdir, sprintf("*%s", .Platform$dynlib.ext)))
     if (length(libs) > 0) {
-        val <- do.call(rbind, lapply(libs, checkLibRfuns))
-        unique(val)
+        val <- do.call(rbind, lapply(libs, checkLibAPI))
+        if (! all)
+            val <- val[is.na(val$apitype), ]
+        val <- unique(val)
+        rownames(val) <- NULL
+        val
     }
     else NULL
 }
 
-checkAllPkgFuns <- function(lib.loc = NULL, priority = NULL,
+checkAllPkgsAPI <- function(lib.loc = NULL, priority = NULL,
                             all = FALSE, verbose = FALSE) {
     p <- rownames(installed.packages(lib.loc = lib.loc, priority = priority))
     checkOne <- function(pkg) {
         if (verbose) cat(pkg, "\n")
-        data <- checkPkgRfuns(pkg, lib.loc = lib.loc)
+        data <- checkPkgAPI(pkg, lib.loc = lib.loc)
         if (! is.null(data))
             transform(data, pkg = rep(pkg, nrow(data)))
     }
-    val <- lapply(rownames(installed.packages(lib.loc = "library")), checkOne)
-    val <- do.call(rbind, val)
-    if (! all)
-        val <- val[is.na(val$apitype), ]
+    val <- do.call(rbind, lapply(p, checkOne))
     rownames(val) <- NULL
     val
 }
