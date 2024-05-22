@@ -13060,8 +13060,8 @@ be shared by any @code{STRSXP} needing an element representing the same
 string. @R{} maintains a global cache of @code{CHARSXP}s so that there
 is only ever one @code{CHARSXP} representing a given string in memory.
 
-@findex mkChar
-@findex mkCharLen
+@apifun mkChar
+@apifun mkCharLen
 You can obtain a @code{CHARSXP} by calling @code{mkChar} and providing a
 @abbr{NUL}-terminated C-style string.  This function will return a pre-existing
 @code{CHARSXP} if one with a matching string already exists, otherwise
@@ -13323,9 +13323,12 @@ Function @code{R_BindingIsLocked} corresponds to  @R{}'s @code{bindingIsLocked} 
 @eapifun R_MakeActiveBinding
 @eapifun R_unLockBinding
 
+The C function @code{inherits} corresponds to the @R{} function of the
+same name.
+@apifun inherits
+
 @node Named objects and copying,  , Some convenience functions, Handling R objects in C
 @subsection Named objects and copying
-@apifun duplicate
 @cindex Copying objects
 
 [The @code{NAMED} mechanism has been replaced by reference counting.]
@@ -13346,7 +13349,10 @@ usual @R{} semantics are to apply.  Note that whereas @code{.C} and
 @code{.Fortran} do copy their arguments (unless the dangerous @code{dup
 = FALSE} is used), @code{.Call} and @code{.External} do not.  So
 @code{duplicate} is commonly called on arguments to @code{.Call} before
-modifying them.
+modifying them. If only the sop level is modified it may suffice to call
+@code{shallow_duplicate}.
+@apifun duplicate
+@apifun shallow_duplicate
 
 However, at least some of this copying is unneeded.  In the first
 assignment shown, @code{x <- 1:10}, @R{} first creates an object with
@@ -13811,7 +13817,7 @@ and evaluating, consider the following fragment of
     UNPROTECT(1);
 @end example
 @findex allocList
-@findex SET_TAG
+@apifun SET_TAG
 
 @noindent
 At this point @code{CAR(a)} is the @R{} object to be printed, the
@@ -14506,8 +14512,8 @@ have to fully materialize the object.
 @node Character encoding issues,  , Vector accessor functions, System and foreign language interfaces
 @section Character encoding issues
 
-@findex translateChar
-@findex translateCharUTF8
+@apifun translateChar
+@apifun translateCharUTF8
 @code{CHARSXP}s can be marked as coming from a known encoding (Latin-1
 or UTF-8).  This is mainly intended for human-readable output, and most
 packages can just treat such @code{CHARSXP}s as a whole.  However, if
@@ -14529,8 +14535,8 @@ Both @code{translateChar} and @code{translateCharUTF8} will translate
 any input, using escapes such as @samp{<A9>} and @samp{<U+0093>} to
 represent untranslatable parts of the input.
 
-@findex getCharCE
-@findex mkCharCE
+@apifun getCharCE
+@apifun mkCharCE
 There is a public interface to the encoding marked on @code{CHARSXPs}
 @emph{via}
 
@@ -14555,7 +14561,7 @@ string is treated as a series of bytes.  (See the comments under
 
 Function
 
-@findex reEnc
+@apifun reEnc
 @example
 const char *reEnc(const char *x, cetype_t ce_in, cetype_t ce_out,
                   int subst);
@@ -14570,7 +14576,7 @@ invalid input: this is done byte-by-byte with @code{1} indicates to
 output hex of the form @code{<a0>}, and @code{2} to replace by @code{.},
 with any other value causing the byte to produce no output.
 
-@findex mkCharLenCE
+@apifun mkCharLenCE
 There is also
 
 @example
@@ -14730,6 +14736,7 @@ included by @file{R.h}.
 @apifun vmaxget
 @apifun vmaxset
 @apifun nrows
+@apifun ncols
 
 Here @R{} will reclaim the memory at the end of the call to @code{.C},
 @code{.Call} or @code{.External}.  Use
@@ -14918,6 +14925,8 @@ subroutine rexit(@var{message})
 subroutine rwarn(@var{message})
 @end group
 @end example
+@apifun rexit
+@apifun rwarn
 
 Messages of more than 255 characters are truncated, with a warning.
 
@@ -16299,6 +16308,7 @@ of @R{} function @code{findInterval} for details.
 There is also an @code{F77_CALL(interv)()} version of
 @code{findInterval()} with the same arguments, but all pointers.
 @end deftypefun
+@apifun interv
 
 A system-independent interface to produce the name of a temporary
 file is provided as
