@@ -234,9 +234,9 @@ platforms including @samp{@var{cpu}-*-linux-gnu} for the
 @c Actually, see https://packages.debian.org/unstable/math/r-base-core as
 @c the build daemon is not used for all platforms; note also that Debian
 @c has x86_64 <=> amd64, ix86 <=> i386.
-@samp{x86_64-@/apple-@/darwin} and
 @samp{aarch64-@/apple-@/darwin}@footnote{aka `Apple Silicon', known to
-some as @samp{arm64-@/apple-@/darwin}.}  as well as perhaps (it is
+some as @samp{arm64-@/apple-@/darwin}.} and
+@samp{x86_64-@/apple-@/darwin}  as well as perhaps (it is
 tested less frequently on these platforms) @samp{x86_64-@/*-@/freebsd},
 @samp{x86_64-@/*-@/openbsd} and @samp{powerpc-@/ibm-@/aix6*}
 
@@ -1582,22 +1582,22 @@ Remember that @LaTeX{} needs to be on the path.
 @c
 The front page of a @acronym{CRAN} site has a link `Download R for (Mac)
 OS X' which takes you to a new page. Two files are offered for download,
-@file{R-@value{VERSIONno}-arm64.pkg} and @file{R-@value{VERSIONno}.pkg}.
+@file{R-@value{VERSIONno}-arm64.pkg} and @file{R-@value{VERSIONno}-x86_64.pkg}.
 Both are for macOS 11 or later (@I{Big Sur}, @I{Monterey}, @I{Ventura},
 @I{Sonoma}, @dots{}).
 
-The first is for `Apple Silicon' (@emph{aka} `M1', `M2' or 'M3') Macs, the
+The first is for `Apple Silicon' (@emph{aka} `M1', `M2', @dots{}) Macs, the
 second for older Macs with an @cputype{x86_64} (Intel) CPU.
 
-Package @file{R-@value{VERSIONno}.pkg} also be installed on `Apple
-Silicon' CPUs using `Rosetta' emulation@footnote{You may be asked to
-install Rosetta at first use --
-@url{https://support.apple.com/en-us/102527} -- which may need
-administrator privileges.}, but the native build is preferred.  It is a
-little faster (and for some tasks, considerably so) but may give
-different numerical results from the more common @cputype{x86_64}
-platforms (on Windows, Linux, @dots{} as well as macOS) as ARM hardware
-lacks extended-precision floating-point operations.
+@c Package @file{R-@value{VERSIONno}.pkg} also be installed on `Apple
+@c Silicon' CPUs using `Rosetta' emulation@footnote{You may be asked to
+@c install Rosetta at first use --
+@c @url{https://support.apple.com/en-us/102527} -- which may need
+@c administrator privileges.}, but the native build is preferred.  It is a
+@c little faster (and for some tasks, considerably so) but may give
+@c different numerical results from the more common @cputype{x86_64}
+@c platforms (on Windows, Linux, @dots{} as well as macOS) as ARM hardware
+@c lacks extended-precision floating-point operations.
 
 It is important that if you use a binary installer package that your OS
 is fully updated: look at `Software Update' in 'System Preferences'
@@ -1678,18 +1678,17 @@ as on any other Unix-alike: see the next chapter of this manual.  There
 are some small differences which may surprise users of @R{} on other
 platforms, notably the default location of the personal library
 directory (under @file{~/Library/R}, e.g.@:
-@file{~/Library/R/x86_64/4.4/library}), and that warnings, messages and
+@file{~/Library/R/arm64/4.4/library}), and that warnings, messages and
 other output to @file{stderr} are highlighted in bold.
 
 @c https://ryanhomer.github.io/posts/build-openmp-macos-catalina-complete
-Those using the @command{zsh} shell (the default for new user accounts
-as from Catalina) might find the command @command{R} being masked by the
-@command{zsh} builtin @command{r} (which recalls commands).  One can use
-a full path to @R{} in an alias, or add @code{disable r} to
-@file{~/.zshrc}.
+Those using the @command{zsh} shell (the default for new user accounts)
+might find the command @command{R} being masked by the @command{zsh}
+builtin @command{r} (which recalls commands).  One can use a full path
+to @R{} in an alias, or add @code{disable r} to @file{~/.zshrc}.
 
-If you have installed both installer packages on an @code{arm64} Mac,
-the last installed will be used.
+@c If you have installed both installer packages on an @code{arm64} Mac,
+@c the last installed will be used.
 
 @c https://stat.ethz.ch/pipermail/r-sig-mac/2014-October/011131.html
 It has been reported that running @Rapp{} may fail if no preferences are
@@ -1754,9 +1753,9 @@ sudo rm -Rf /Library/Frameworks/R.framework /Applications/R.app \
 
 The installation consists of up to four Apple packages:@footnote{At the
 time of writing: use @command{pkgutil --pkgs | grep -i org.r-project} to
-check.} for the Intel build, @code{org.R-project.x86_64.R.fw.pkg},
-@code{org.R-project.x86_64.R.GUI.pkg}, @code{org.r-project.x86_64.tcltk}
-and @code{org.r-project.x86_64.texinfo}. You can use @code{sudo pkgutil
+check.} for the `Apple Silicon' build, @code{org.R-project.arm64.R.fw.pkg},
+@code{org.R-project.arm64.R.GUI.pkg}, @code{org.r-project.arm64.tcltk}
+and @code{org.r-project.arm64.texinfo}. You can use @code{sudo pkgutil
 --forget} if you want the Apple Installer to forget about the package
 without deleting its files (useful for the @R{} framework when
 installing multiple @R{} versions in parallel), or after you have
@@ -1764,17 +1763,17 @@ deleted the files. @strong{NB:} the package names are case-sensitive and
 the @R{} domain is named inconsistently.
 
 Uninstalling the Tcl/Tk and @I{Texinfo} components (which are installed under
-@file{/opt/R/x86_64} on a @cputype{x86_64} build and @file{/opt/R/arm64}
-for an @cputype{arm64} one) is not as simple.  You can list the files
+@file{/opt/R/arm64} on a @cputype{arm64} build and @file{/opt/R/x86_64}
+for an @cputype{x86_64} one) is not as simple.  You can list the files
 they installed in a Terminal by e.g.@:
 
 @example
-pkgutil --files org.r-project.x86_64.tcltk
-pkgutil --files org.r-project.x86_64.texinfo
+pkgutil --files org.r-project.arm64.tcltk
+pkgutil --files org.r-project.arm64.texinfo
 @end example
 
 @noindent
-(For the `Apple Silicon' build, replace @code{x86_64} by @code{arm64}.)
+(For the `Intel build, replace @code{arm64} by @code{x86_64}.)
 These are paths relative to @file{/}, the root of the file system.
 @c Maybe too dangerous for naive users.
 @c file.remove removes empty directories on Unix.
@@ -1790,19 +1789,19 @@ These are paths relative to @file{/}, the root of the file system.
 @c run as the owner of @file{/usr/local}.
 
 If you are not compiling @R{} nor installing packages from source you
-could remove all of @file{/opt/R/x86_64} or @file{/opt/R/arm64}.
+could remove all of @file{/opt/R/arm64} or @file{/opt/R/x86_64}.
 
 @node Multiple versions,  , Uninstalling under macOS, Installing R under macOS
 @section Multiple versions
 
 The installer will remove any previous version@footnote{More precisely,
-of the Apple package of the same name: this means that Intel and ARM
+of the Apple package of the same name: this means that ARM and Intel
 versions can be installed together.} of the @R{} framework which it
 finds installed.  This can be avoided by using @command{pkgutil
 --forget} (see the previous section).  However, note that different
 versions are installed under
-@file{/Library/Frameworks/R.framework/Versions} as @file{4.4} (or
-@file{4.4-arm64}), @file{4.3} and so on, so it is not possible to have
+@file{/Library/Frameworks/R.framework/Versions} as @file{4.4-arm64} (or
+@file{4.4-x86_64}), @file{4.3} and so on, so it is not possible to have
 different @samp{4.x.y} versions installed for the same @samp{x} and CPU
 type.
 
@@ -5156,8 +5155,8 @@ there.)
 @node Prerequisites, Fortran compilers, macOS, macOS
 @subsection Prerequisites
 
-The Intel components install into @file{/opt/R/x86_64}, the Apple
-silicon ones into @file{/opt/R/arm64}.  This may not exist@footnote{it
+The Apple silicon conmponents install into @file{/opt/R/arm64}, the
+Intel ones into @file{/opt/R/x86_64}.  That may not exist@footnote{it
 will if @R{} has been installed from @acronym{CRAN} since @R{} 4.3.0.}
 so it is simplest to first create the directory and adjust its ownership
 if desired: for example by
@@ -5167,12 +5166,12 @@ sudo mkdir -p /opt/R/arm64
 sudo chown -R $USER /opt/R
 @end example
 @noindent
-Also, add @file{/opt/R/x86_64/bin} or @file{/opt/R/arm64/bin} to your path.
+Also, add @file{/opt/R/arm64/bin} or @file{/opt/R/x86_64/bin} to your path.
 
 Define an appropriate variable in your Terminal:
 @example
-set LOCAL=/opt/R/x86_64 # Intel
 set LOCAL=/opt/R/arm64  # Apple Silicon
+set LOCAL=/opt/R/x86_64 # Intel
 @end example
 @noindent
 to use the code snippets here.
@@ -5192,7 +5191,7 @@ partially or completely remove them.
 
 The Command Line Tools provide C and C++ compilers derived from @I{LLVM}'s
 @command{clang} but nowadays known as `Apple clang' with different
-versioning (so Apple clang 14 is unrelated to @I{LLVM} clang 14).
+versioning (so Apple clang 15 is unrelated to @I{LLVM} clang 15).
 
 @item
 A Fortran compiler. @xref{Fortran compilers}.
@@ -5213,14 +5212,14 @@ ones are for macOS 10.13--10.15.
 
 Or this can be done manually, by for example
 @example
-curl -OL https://mac.r-project.org/bin/darwin20/x86_64/pcre2-10.42-darwin.20-x86_64.tar.xz
-sudo tar -xvzf pcre2-10.42-darwin.20-x86_64.tar.gz -C /
-curl -OL https://mac.r-project.org/bin/darwin20/x86_64/xz-5.4.2-darwin.20-x86_64.tar.xz
-sudo tar -xvzf xz-5.4.2-darwin.20-x86_64.tar.xz -C /
+curl -OL https://mac.r-project.org/bin/darwin20/arm64/pcre2-10.42-darwin.20-arm64.tar.xz
+sudo tar -xvzf pcre2-10.42-darwin.20-arm64.tar.gz -C /
+curl -OL https://mac.r-project.org/bin/darwin20/arm64/xz-5.4.2-darwin.20-arm64.tar.xz
+sudo tar -xvzf xz-5.4.2-darwin.20-arm64.tar.xz -C /
 @end example
 @noindent
-(@command{sudo} is not needed if your account owns @file{/opt/R/x86_64} or
-@file{/opt/R/arm64} as appropriate.)
+(@command{sudo} is not needed if your account owns @file{/opt/R/arm64} or
+@file{/opt/R/x86_64} as appropriate.)
 
 Messages like @samp{opt/R/: Can't restore time} should be ignored.
 @end itemize
@@ -5311,7 +5310,7 @@ CFLAGS="-falign-functions=8 -g -O2"
 is needed to inter-work with @command{gfortran} without segfaulting in
 some packages.  Some builds of @command{gfortran} have targetted the
 current version of macOS (unlike @command{clang}), causing linker
-warnings) to avoid these use
+warnings: to avoid these use
 @example
 FFLAGS="-g -O2 -mmacosx-version-min=11.0"
 FCFLAGS="-g -O2 -mmacosx-version-min=11.0"
@@ -5334,14 +5333,19 @@ requirements such as component @command{pkgconfig} (and to set
 
 @c svn was in CLT 11.3.1, even in the opensource.apple.com repository
 A subversion client can be obtained from
-@uref{https://mac.r-project.org/tools/}, for example by
+@uref{https://mac.r-project.org/tools/}, for example by (Apple Silicon)
+@example
+curl -OL https://mac.r-project.org/tools/subversion-1.14.1-darwin.20-arm64.tar.gz
+tar xf subversion-1.14.1-darwin.20-arm64.tar.gz 
+sudo cp subversion-1.14.1-darwin-20-arm64/svn $LOCAL/bin
+@end example
+@noindent
+or (Intel)
 @example
 curl -OL https://mac.r-project.org/tools/subversion-1.14.0-darwin15.6.tar.gz
 tar xf subversion-1.14.0-darwin15.6.tar.gz
 sudo cp subversion-1.14.0-darwin15.6/svn $LOCAL/bin
 @end example
-@noindent
-(There also an @code{arm64} version on that web page.)
 
 If building software or installing source packages with @command{cmake}
 (or a non-Apple @command{make}) for `Apple Silicon' ensure it contains
@@ -5403,7 +5407,7 @@ contains the correct information.
 @node Fortran compilers, Cairo graphics, Prerequisites, macOS
 @subsection Fortran compiler
 
-There is a `universal' (Intel and @code{arm64}) build of
+There is a `universal' (@code{arm64} and Intel) build of
 @command{gfortran} 12.2 at
 @uref{https://mac.r-project.org/tools/gfortran-12.2-universal.pkg}.
 This installs into @file{/opt/gfortran}.
@@ -5578,8 +5582,8 @@ inconsolata texinfo} .} @pkg{helvetic}, @pkg{inconsolata} and
 packages needed to check @acronym{CRAN} increased this to about 600MB.}
 @samp{TeX Live Utility} (available @emph{via} the @I{MacTeX} front page)
 provides a graphical means to manage @TeX{} packages.  These contain
-executables which run natively on both @cputype{x86_64} and
-@cputype{arm64}.
+executables which run natively on both @cputype{arm64} and
+@cputype{x86_64}.
 
 Checking packages thoroughly requires @I{Ghostscript} (part of the full
 @I{MacTeX} distribution or separately from
@@ -5588,10 +5592,10 @@ Checking packages thoroughly requires @I{Ghostscript} (part of the full
 the @file{bin} directory of a binary installation of @R{}, usually
 @file{/Library/@/Frameworks/@/R.framework/@/Resources/@/bin/@/qpdf}).
 
-@command{R CMD check --as-cran} makes use of `HTML Tidy'.  macOS has
-a version in @file{/usr/bin/tidy} dating from 2006 which is far too
-old and is skipped.  Up-to-date versions can be installed from
-@uref{http://binaries.html-tidy.org/}. 
+@command{R CMD check --as-cran} makes use of `HTML Tidy'.  macOS at the
+time of writing has a version in @file{/usr/bin/tidy} dating from 2006
+which is far too old.  Up-to-date versions can be
+installed from @uref{http://binaries.html-tidy.org/}.
 
 One macOS quirk is that the default path has @file{/usr/local/bin} after
 @file{/usr/bin}, contrary to common practice on Unix-alikes.  This means
@@ -5746,8 +5750,8 @@ will likely be needed to be run before using Java-using packages.
 To see what compatible versions of Java are currently installed, run the
 appropriate one of
 @example
-/usr/libexec/java_home -V -a x86_64
 /usr/libexec/java_home -V -a arm64
+/usr/libexec/java_home -V -a x86_64
 @end example
 @noindent
 If needed, set the environment variable @env{JAVA_HOME} to choose
@@ -5783,10 +5787,10 @@ and from @I{OpenJDK} at @uref{https://jdk.java.net/}, for which
 @env{JAVA_HOME} may need to be set both when configuring @R{} and at
 runtime.
 
-To use Java (specifically, binary package @CRANpkg{rJava}) with a
-@acronym{CRAN} (@cputype{x86_64}) binary distribution of @R{} on
-@cputype{arm64} macOS, install an Intel build of a Java @abbr{JRE} from
-one of the sites linked above, then run @command{sudo R CMD javareconf}.
+@c To use Java (specifically, binary package @CRANpkg{rJava}) with a
+@c @acronym{CRAN} (@cputype{x86_64}) binary distribution of @R{} on
+@c @cputype{arm64} macOS, install an Intel build of a Java @abbr{JRE} from
+@c one of the sites linked above, then run @command{sudo R CMD javareconf}.
 
 @c jdk.java.net no longer has Java 11 nor 17 LTS builds.
 
@@ -5803,9 +5807,9 @@ selected by the option
 @example
 ./configure --enable-R-framework
 @end example
-
+@noindent
 (This is intended to be used with an Apple toolchain: others may not
-support frameworks correctly but those from @I{LLVM} do.)
+support frameworks correctly but those from @I{LLVM} have done so.)
 
 It is only needed if you want to build @R{} for use with the @Rapp{}
 console, and implies @option{--enable-R-shlib} to build @R{} as a
@@ -5924,7 +5928,7 @@ PKG_LIBS = /usr/local/llvm/lib/libc++.a /usr/local/llvm/lib/libc++abi.a
 in @file{src/Makevars}.  It would also be possible to static link the
 Fortran runtime libraries @file{libgfortran.a} and @file{libquadmath.a}
 should the Fortran compiler have later versions (but @command{gfortran}
-8--13 all have version @code{5}).
+8--14 all have version @code{5}).
 @end itemize
 @noindent
 The @acronym{CRAN} binary packages are built with the Apple compiler on
