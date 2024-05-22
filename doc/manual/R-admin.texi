@@ -5129,8 +5129,8 @@ Windows).
 @section macOS
 @cindex macOS
 
-The instructions here are for Intel 64-bit (@cputype{x86_64}) or `Apple
-Silicon' (@cputype{arm64}) builds on macOS 11 (@I{Big Sur}), 12
+The instructions here are for `Apple Silicon' (@cputype{arm64}) or Intel
+64-bit (@cputype{x86_64}) builds on macOS 11 (@I{Big Sur}), 12
 (@I{Monterey)}, 13 (@I{Ventura}), 14 (@I{Sonoma}) and likely later.
 (They may well work on Intel macOS 10.14 or 10.15, but are untested
 there.)
@@ -5725,21 +5725,20 @@ includes @code{Tktable} and the @acronym{CRAN} package
 @c details see @uref{https://www.macstrategy.com/article.php?3}.} and
 @c distribution of Java for all platforms changed in 2018.
 
-macOS does not comes with an installed Java runtime (@abbr{JRE}) and a macOS
-upgrade may remove one if already installed: it is intended to be
+macOS does not comes with an installed Java runtime (@abbr{JRE}) and a
+macOS upgrade may remove one if already installed: it is intended to be
 installed at first use.  Check if a @abbr{JRE} is installed by running
 @command{java -version} in a @command{Terminal} window: if Java is not
 installed@footnote{In the unlikely event that the version reported does
 not start with @code{1.8.0}, @code{11} or higher you need to update your
-Java.} this should prompt you to install it.@footnote{Not at the time of
-writing for @cputype{arm64}.}  Builds of @I{OpenJDK} may also be available,
-e.g.@: from @uref{https://adoptium.net, Adoptium},
-@uref{https://www.azul.com/downloads/zulu-community/, Azul} or
-@uref{https://jdk.java.net/}.  We recommend you install a version with
-long-term support, e.g.@: 11, 17 or 21 but not
-12--16, 18--20, 22 which have/had a 6-month lifetime.  (Note that these
-sources may use unusual designations for Intel macOS builds such as
-@code{x86 64-bit} and @code{x64}.)
+Java.} this may prompt you to install it.@footnote{Not at the time of
+writing for @cputype{arm64}.}  Builds of @I{OpenJDK} may also be
+available, e.g.@: from @uref{https://adoptium.net,
+Adoptium}@footnote{which website works with Safari but not some other
+browsers.}.  We recommend you install a version with long-term support,
+e.g.@: 17 or 21 but not 18--20, 22 which have/had a 6-month lifetime.
+(Note that Java distribution sites may use unusual designations for
+Intel macOS builds such as @code{aarch64} and @code{x64}.)
 
 Binary distributions of @R{} are built against a specific version
 (e.g.@: 11.0.18 or 17.0.1) of Java so @command{sudo R CMD javareconf}
