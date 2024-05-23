@@ -49,15 +49,15 @@ function(package, lib.loc = NULL, format = NULL, reader = NULL)
     dir <- system.file(package = package, lib.loc = lib.loc)
     ## Or maybe use find.package()?
 
-    ## <FIXME>
+    ## <NOTE>
     ## We had planned to eventually add support for DESCRIPTION
     ##   News/File
     ##   News/Format
     ##   News/Reader
     ##   News/Reader@R
-    ## entries.  But now that we're moving to NEWS.Rd, there seems
-    ## little point in providing format/reader support ...
-    ## </FIXME>
+    ## entries.  But now that there are NEWS.Rd and NEWS.md, there
+    ## seems little point in providing format/reader support ...
+    ## </NOTE>
 
     ## Look for new-style inst/NEWS.Rd installed as NEWS.Rd
     ## If not found, look for NEWS.md.

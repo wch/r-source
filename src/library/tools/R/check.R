@@ -2558,7 +2558,7 @@ add_dummies <- function(dir, Log)
                   "The \\usage entries must correspond to syntactically",
                   "valid R code.\n")
             any <- FALSE
-            ## <FIXME>
+            ## <NOTE>
             ## Hack to see whether all issues are from internal Rd files
             ## checked specially and only give a NOTE in this case.
             ## Ideally, we would use R() to get the check object and be
@@ -2584,7 +2584,7 @@ add_dummies <- function(dir, Log)
                 wrapLog(msg_doc_files)
                 wrapLog(msg_writing_Rd)
             }
-            ## </FIXME>
+            ## </NOTE>
 
             if (R_check_Rd_style && haveR) {
                 msg_doc_style <-
@@ -4314,7 +4314,7 @@ add_dummies <- function(dir, Log)
             }
             ## It ran, but did it create any examples?
             if (file.exists(exfile)) {
-                ## <FIXME>
+                ## <NOTE>
                 ## This used to be
                 ##   enc <- if (!is.na(e <- desc["Encoding"])) {
                 ##       paste0("--encoding=", e)
@@ -4332,7 +4332,7 @@ add_dummies <- function(dir, Log)
                     if(length(suppressMessages(showNonASCIIfile(exfile)))) {
                         "--encoding=UTF-8"
                     } else ""
-                ## </FIXME>
+                ## </NOTE>
                 if (!this_multiarch) {
                     exout <- paste0(pkgname, "-Ex.Rout")
                     if(!run_one_arch(exfile, exout)) maybe_exit(1L)

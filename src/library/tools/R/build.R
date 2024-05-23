@@ -721,14 +721,6 @@ inRbuildignore <- function(files, pkgdir) {
             if(dep$version >= package_version(ver)) return()
         }
 
-        ## <FIXME>
-        ## This should no longer be necessary?
-        ## <COMMENT>
-        ## on.exit(Sys.setlocale("LC_CTYPE", Sys.getlocale("LC_CTYPE")))
-        ## Sys.setlocale("LC_CTYPE", "C")
-        ## </COMMENT>
-        ## </FIXME>
-
         flatten <- function(x) {
             if(length(x) == 3L)
                 paste0(x$name, " (", x$op, " ", x$version, ")")

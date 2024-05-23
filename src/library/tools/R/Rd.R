@@ -21,10 +21,6 @@
 Rd_info <-
 function(file, encoding = "unknown")
 {
-    ## <FIXME>
-    ## This used to work only for a given Rd file.
-    ## now only for a parsed Rd object.
-
     if(inherits(file, "Rd")) {
         Rd <- file
         description <- attr(attr(Rd, "srcref"), "srcfile")$filename
@@ -620,7 +616,7 @@ function(x, predicate)
         ## <FIXME>
         ## Should we do f(e) if not is.list(e)?
         e
-        ## <FIXME>
+        ## </FIXME>
     }
     recurse(x)
 }

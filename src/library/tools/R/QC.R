@@ -1623,7 +1623,7 @@ function(x, ...)
                              })),
                "")
 
-    ## <FIXME>
+    ## <NOTE>
     ## Terrible hack, see comments on
     ##    __R_CHECK_DOC_FILES_NOTE_IF_ALL_SPECIAL__
     ## in check.R
@@ -1633,6 +1633,7 @@ function(x, ...)
                    "FALSE") == "TRUE") &&
        isTRUE(attr(x, "all_special")))
         y <- c(y, "All issues in internal Rd files checked specially.")
+    ## </NOTE>
 
     y
 }
@@ -9715,21 +9716,7 @@ function(x)
     ## transformations before collapsing ...
     txt <- .dquote_method_markup(txt, .S3_method_markup_regexp)
     txt <- .dquote_method_markup(txt, .S4_method_markup_regexp)
-    ## <FIXME>
-    ## Commented 2023-08-11: remove eventually.
-    ## ## Stop doing this.
-    ## ## Transform <<see below>> style markup so that we can catch and
-    ## ## throw it, rather than "basically ignore" it by putting it in the
-    ## ## bad_lines attribute.
-    ## txt <- gsub("(<<?see below>>?)", "`\\1`", txt)
-    ## </FIXME>
     ## \usage is only 'verbatim-like'
-    ## ## <FIXME>
-    ## ## 'LanguageClasses.Rd' in package methods has '"\{"' in its usage.
-    ## ## But why should it use the backslash escape?
-    ## txt <- gsub("\\{", "{", txt, fixed = TRUE)
-    ## txt <- gsub("\\}", "}", txt, fixed = TRUE)
-    ## ## </FIXME>
     ## now any valid escape by \ is
     ##   \a \b \f \n \r \t \u \U \v \x \' \" \\ or \octal
     txt <- gsub("(^|[^\\])\\\\($|[^abfnrtuUvx0-9'\"\\])",

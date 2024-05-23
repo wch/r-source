@@ -213,8 +213,6 @@ function(dir) {
 
 ### ** reQuote
 
-## <FIXME>
-## Move into base eventually ...
 reQuote <-
 function(x)
 {
@@ -224,7 +222,6 @@ function(x)
     regmatches(x, m) <- lapply(regmatches(x, m), escape)
     x
 }
-## </FIXME>
 
 ### ** showNonASCII
 

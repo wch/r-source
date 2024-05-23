@@ -230,10 +230,6 @@ function(flavors = NULL)
                            "web/checks/check_details.rds")
     if(!is.null(flavors))
         db <- db[!is.na(match(db$Flavor, flavors)), ]
-    ## <FIXME>
-    ## Remove eventually ...
-    class(db) <- c("CRAN_check_details", "check_details", "data.frame")
-    ## </FIXME>
     db
 }
 

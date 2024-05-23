@@ -745,19 +745,6 @@ function(log, drop = TRUE, ...)
         }
     }
 
-    ## ## <FIXME>
-    ## ## Remove eventually.
-    ## len <- length(lines)
-    ## end <- lines[len]
-    ## if(length(end) &&
-    ##    grepl(re <- "^(\\*.*\\.\\.\\.)(\\* elapsed time.*)$", end,
-    ##          perl = TRUE, useBytes = TRUE)) {
-    ##     lines <- c(lines[seq_len(len - 1L)],
-    ##                sub(re, "\\1", end, perl = TRUE, useBytes = TRUE),
-    ##                sub(re, "\\2", end, perl = TRUE, useBytes = TRUE))
-    ## }
-    ## ## </FIXME
-
     lines
 }
 
