@@ -191,7 +191,7 @@ checkLibAPI <- function(lpath) {
     lsyms <- data.frame(name = lsyms, unmapped = unmap(lsyms))
     api <- transform(funAPI(), unmapped = unmap(name), name = NULL, loc = NULL)
     val <- merge(lsyms, api, all.x = TRUE)
-    val <- val[order(val$api), ]
+    val <- val[order(val$apitype), ]
     val$unmapped <- NULL ## not needed in final output
     rownames(val) <- NULL
     val
@@ -200,7 +200,7 @@ checkLibAPI <- function(lpath) {
 readFileSyms <- function(fpath) {
     ## this uses nm
     ## could try objdump if nm doesn't work
-    v <- tools:::read_symbols_from_object_file(fpath)
+    v <- read_symbols_from_object_file(fpath)
     if (is.null(v))
         data.frame(name = character(0), type = character(0))
     else as.data.frame(v)[c("name", "type")]
@@ -271,7 +271,8 @@ checkPkgAPI <- function(pkg, lib.loc = NULL, all = FALSE) {
 
 checkAllPkgsAPI <- function(lib.loc = NULL, priority = NULL,
                             all = FALSE, verbose = FALSE) {
-    p <- rownames(installed.packages(lib.loc = lib.loc, priority = priority))
+    p <- rownames(utils::installed.packages(lib.loc = lib.loc,
+                                            priority = priority))
     checkOne <- function(pkg) {
         if (verbose) cat(pkg, "\n")
         data <- checkPkgAPI(pkg, lib.loc = lib.loc)
