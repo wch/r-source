@@ -1128,16 +1128,14 @@ function(new, old, outputs = FALSE)
 
     ## Drop checks that are OK in both versions
     x.issue <- !is.na(match(db$Status.x,
-                            c("ERROR","FAILURE","NOTE","WARNING")))
+                            c("NOTE", "WARNING", "ERROR", "FAILURE")))
     y.issue <- !is.na(match(db$Status.y,
-                            c("ERROR","FAILURE","NOTE","WARNING")))
+                            c("NOTE", "WARNING", "ERROR", "FAILURE")))
     db <- db[x.issue | y.issue,]
 
     ## Even with the above simplification, missing entries do not
     ## necessarily indicate "OK" (checks could have been skipped).
     ## Hence leave as missing and show as empty in the diff.
-    ## An exception to this rule is made if we find an "ERROR" result
-    ## as this may explain skipped checks.
 
     sx <- as.character(db$Status.x)
     sy <- as.character(db$Status.y)
