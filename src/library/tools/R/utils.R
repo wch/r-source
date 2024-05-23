@@ -972,19 +972,35 @@ function(v, env, last = NA, default = NA) {
 .find_tidy_cmd <-
 function(Tidy = Sys.getenv("R_TIDYCMD", "tidy"))
 {
-    ## require HTML Tidy, and not macOS's ancient version.
+    ## Require a recent enough version of HTML Tidy.
+    ## We really need HTML Tidy 5.0.0 or later, and all these versions
+    ## should have tidy --version match
+    ##   ^HTML Tidy .*version (\\d+\\.\\d+\\.\\d+)
+    ## See
+    ## <https://github.com/htacg/tidy-html5/blob/next/README/VERSION.md>
+    ## and
+    ## <https://bugs.r-project.org/show_bug.cgi?id=18731>.
     msg <- ""
     OK <- nzchar(Sys.which(Tidy))
     if(OK) {
         ver <- system2(Tidy, "--version", stdout = TRUE)
-        OK <- startsWith(ver, "HTML Tidy")
+        mat <- regexec("^HTML Tidy .*version (\\d+\\.\\d+\\.\\d+)$",
+                       ver)
+        ver <- regmatches(ver, mat)[[1L]][2L]
+        OK <- !is.na(ver)
         if(OK) {
-            OK <- !grepl('Apple Inc. build 2649', ver)
-            if(!OK) msg <- "'tidy' is Apple's too old build"
-            ## Maybe we should also check version,
-            ## but e.g. Ubuntu 16.04 does not show one.
-        } else msg <- "'tidy' is not HTML Tidy"
-    } else msg <- "no command 'tidy' found"
+            ## Minimum version requirement.
+            req <- "5.0.0"
+            OK <- numeric_version(ver) >= req
+            if(!OK)
+                msg <-
+                    sprintf("'%s' is too old: need version %s, found %s",
+                            Tidy, req, ver)
+        } else
+            msg <-
+                sprintf("'%s' doesn't look like recent enough HTML Tidy",
+                        Tidy)
+    } else msg <- sprintf("no command '%s' found", Tidy)
     if(nzchar(msg)) {
         Tidy <- ""
         attr(Tidy, "msg") <- msg
