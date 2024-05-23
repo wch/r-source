@@ -468,6 +468,15 @@ aspell_control_R_manuals <-
            "--add-texinfo-ignore=deqn",
            "--add-texinfo-ignore=eqn",
            "--add-texinfo-ignore=pkg",
+           "--add-texinfo-ignore=apifun",
+           "--add-texinfo-ignore=apihdr",
+           "--add-texinfo-ignore=comment",
+           "--add-texinfo-ignore=defcodeindex",
+           "--add-texinfo-ignore=eapifun",
+           "--add-texinfo-ignore=eapihdr",
+           "--add-texinfo-ignore=embfun",
+           "--add-texinfo-ignore=embhdr",
+           "--add-texinfo-ignore=embvar",
            character()
            ),
          hunspell =
