@@ -14683,7 +14683,7 @@ change, so package authors wishing to use these should be prepared to
 adapt.
 
 @item embedding
-Entry points intended primarily for embedding ar and creating new
+Entry points intended primarily for embedding and creating new
 front-ends. It is not clear that this needs to be a separate category
 but it may be useful to keep it separate for now.
 @end table
@@ -17996,7 +17996,7 @@ will only be changed after deprecation.
 
 Entry points and variables listed in this index and in header files
 listed here are part of an experimental API, such as
-R_ext/Altrep.h. These are subject to change, so package authors wishing
+@file{R_ext/Altrep.h}. These are subject to change, so package authors wishing
 to use these should be prepared to adapt.
 
 @printindex ae

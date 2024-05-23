@@ -2254,7 +2254,7 @@ CXX20FLAGS = $CXXFLAGS
 CXX23FLAGS = $CXXFLAGS
 @end example
 @noindent
-(the current SDK can be found by running @command{xcrun -show-sdk-path})
+(the current @I{SDK} can be found by running @command{xcrun -show-sdk-path})
 and for the current macOS distribution of @command{gfortran} at
 @uref{https://mac.r-project.org/tools/}
 @example
@@ -5117,7 +5117,7 @@ there.)
 @node Prerequisites, Fortran compilers, macOS, macOS
 @subsection Prerequisites
 
-The Apple silicon conmponents install into @file{/opt/R/arm64}, the
+The Apple silicon components install into @file{/opt/R/arm64}, the
 Intel ones into @file{/opt/R/x86_64}.  That may not exist@footnote{it
 will if @R{} has been installed from @acronym{CRAN} since @R{} 4.3.0.}
 so it is simplest to first create the directory and adjust its ownership
@@ -5716,8 +5716,8 @@ installed at first use.  Check if a @abbr{JRE} is installed by running
 @command{java -version} in a @command{Terminal} window: if Java is not
 installed on an Intel Mac this may prompt you to install it. We
 recommend you install a version with long-term support, e.g.@: 17 or
-21@footnote{The planned nextLTS release is 25 in September 2025.  Java 8
-@emph{aka} 1.8.0 is still LTS but some packages require 11 or later.}
+21@footnote{The planned @I{nextLTS} release is 25 in September 2025.  Java 8
+@emph{aka} 1.8.0 is still @I{LTS} but some packages require 11 or later.}
 but not 18--20, 22--24 with a 6-month lifetime.
 
 The currently simplest way to install Java is from
