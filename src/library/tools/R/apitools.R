@@ -186,10 +186,13 @@ dropBraces <- function(lines) {
 
 checkLibAPI <- function(lpath) {
     ldata <- readFileSyms(lpath)
-    lsyms <- subset(ldata, type == "U")$name
+    lsyms <- ldata[ldata$type == "U", ]$name
     lsyms <- inRfuns(lsyms)
     lsyms <- data.frame(name = lsyms, unmapped = unmap(lsyms))
-    api <- transform(funAPI(), unmapped = unmap(name), name = NULL, loc = NULL)
+    api <- funAPI()
+    api$unmapped <- unmap(api$name)
+    api$name <- NULL
+    api$loc <- NULL
     val <- merge(lsyms, api, all.x = TRUE)
     val <- val[order(val$apitype), ]
     val$unmapped <- NULL ## not needed in final output
@@ -240,8 +243,9 @@ getRfuns <- function() {
     ofiles <- c(file.path(R.home("bin"), "exec", "R"),
                 dir(R.home("lib"), pattern = pat, full.names = TRUE),
                 dir(R.home("modules"), pattern = pat, full.names = TRUE))
-    fdata <- do.call(rbind, lapply(ofiles, readFileSyms))
-    subset(fdata, type == "T")$name
+    data <- do.call(rbind, lapply(ofiles, readFileSyms))
+    fdata <- data[data$type == "T", ]
+    fdata$name
 }
 
 Rfuns <- function() {
@@ -277,7 +281,8 @@ checkAllPkgsAPI <- function(lib.loc = NULL, priority = NULL, all = FALSE,
     checkOne <- function(pkg) {
         data <- checkPkgAPI(pkg, lib.loc = lib.loc)
         if (! is.null(data))
-            transform(data, pkg = rep(pkg, nrow(data)))
+            data$pkg <- rep(pkg, nrow(data))
+        data
     }
     val <- do.call(rbind, .package_apply(p, checkOne,
                                          Ncpus = Ncpus, verbose = verbose))
