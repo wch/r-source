@@ -529,7 +529,7 @@ function(db, remote = TRUE, verbose = FALSE, parallel = FALSE, pool = NULL)
             }
         }
         ##
-        if((s != "200") && use_curl) {
+        if((s != "200") && (use_curl || parallel)) {
             g <- .curl_GET_status_code(u)
             if(g == "200") {
                 s <- g
@@ -777,8 +777,12 @@ function(urls, verbose = FALSE, ids = urls)
         urls, verbose, ids)
 
 .fetch_headers_via_curl <-
-function(urls, verbose = FALSE, pool = NULL) {
-    out <- .curl_multi_run_worker(urls, TRUE, verbose, pool)
+function(urls, verbose = FALSE, pool = NULL)
+{
+    out <- .curl_multi_run_worker(urls, TRUE, verbose, pool,
+                                  c(.curl_handle_default_opts,
+                                    list(http_version = 2L,
+                                         ssl_enable_alpn = 0L)))
     ind <- !vapply(out, inherits, NA, "error")
     if(any(ind))
         out[ind] <- lapply(out[ind],
@@ -791,7 +795,6 @@ function(urls, verbose = FALSE, pool = NULL) {
                            })
     out
 }
-
 
 .curl_multi_run_worker <-
 function(urls, nobody = FALSE, verbose = FALSE, pool = NULL,
@@ -913,6 +916,4 @@ function(x)
 
 .curl_handle_default_opts <-
     list(cookiesession = 1L,
-         followlocation = 1L,
-         http_version = 2L,
-         ssl_enable_alpn = 0L)
+         followlocation = 1L)
