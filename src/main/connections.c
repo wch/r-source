@@ -230,7 +230,7 @@ int getActiveSink(int n)
 
 static void conFinalizer(SEXP ptr)
 {
-    int i, ncon;
+    int i, ncon = 0;
     void *cptr = R_ExternalPtrAddr(ptr);
 
     if(!cptr) return;
