@@ -29,11 +29,10 @@
 @end macro
 @macro apivar {f}
 @apindex \f\
-@findex \f\
+@vindex \f\
 @end macro
 @macro apihdr {f}
 @apindex \f\
-@findex \f\
 @end macro
 
 @macro eapifun {f}
@@ -42,11 +41,10 @@
 @end macro
 @macro eapivar {f}
 @aeindex \f\
-@findex \f\
+@vindex \f\
 @end macro
 @macro eapihdr {f}
 @aeindex \f\
-@findex \f\
 @end macro
 
 @macro embfun {f}
@@ -55,11 +53,10 @@
 @end macro
 @macro embvar {f}
 @emindex \f\
-@findex \f\
+@vindex \f\
 @end macro
 @macro embhdr {f}
 @emindex \f\
-@findex \f\
 @end macro
 
 @copying
@@ -14949,7 +14946,7 @@ Messages of more than 255 characters are truncated, with a warning.
 @apifun R_unif_index
 @apifun GetRNGstate
 @apifun PutRNGstate
-@apifun .Random.seed
+@vindex .Random.seed
 @c @apifun seed_in
 @c @apifun seed_out
 
