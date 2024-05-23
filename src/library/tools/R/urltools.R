@@ -530,7 +530,7 @@ function(db, remote = TRUE, verbose = FALSE, parallel = FALSE, pool = NULL)
         }
         ##
         if((s != "200") && (use_curl || parallel)) {
-            g <- .curl_GET_status_code(u)
+            g <- .curl_fetch_memory_status_code(u)
             if(g == "200") {
                 s <- g
                 msg <- "OK"
@@ -879,7 +879,7 @@ function(urls, nobody = FALSE, verbose = FALSE, pool = NULL,
     out
 }
 
-.curl_GET_status_code <-
+.curl_fetch_memory_status_code <-
 function(u, verbose = FALSE, opts = NULL)
 {
     if(verbose)
