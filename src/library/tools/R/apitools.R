@@ -269,19 +269,18 @@ checkPkgAPI <- function(pkg, lib.loc = NULL, all = FALSE) {
     else NULL
 }
 
-checkAllPkgsAPI <- function(lib.loc = NULL, priority = NULL,
-                            all = FALSE, verbose = FALSE) {
+checkAllPkgsAPI <- function(lib.loc = NULL, priority = NULL, all = FALSE,
+                            Ncpus = getOption("Ncpus", 1L),
+                            verbose = getOption("verbose")) {
     p <- rownames(utils::installed.packages(lib.loc = lib.loc,
                                             priority = priority))
     checkOne <- function(pkg) {
-        if (verbose) cat(pkg, "\n")
         data <- checkPkgAPI(pkg, lib.loc = lib.loc)
         if (! is.null(data))
             transform(data, pkg = rep(pkg, nrow(data)))
     }
-    val <- do.call(rbind, lapply(p, checkOne))
+    val <- do.call(rbind, .package_apply(p, checkOne,
+                                         Ncpus = Ncpus, verbose = verbose))
     rownames(val) <- NULL
     val
 }
-
-
