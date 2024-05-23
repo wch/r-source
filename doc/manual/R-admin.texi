@@ -1197,7 +1197,7 @@ linking process: set the make macro @samp{LTO} to something like
 @file{config.site}.
 
 Under some circumstances and for a few packages, the PIC flags have
-needed overriding on Linux with GCC 9 and later: e.g@: use in
+needed overriding on Linux with GCC 9: e.g@: use in
 @file{config.site}:
 @example
 CPICFLAGS=-fPIC
@@ -1209,12 +1209,11 @@ CXX20PICFLAGS=-fPIC
 FPICFLAGS=-fPIC
 @end example
 @noindent
-We suggest only using these if the problem is encountered (it was not
-seen on @acronym{CRAN} with GCC 10 at the time of writing).
+We suggest only using these if the problem is encountered (it had not
+been seen on @acronym{CRAN} with GCC 10--14 at the time of writing).
 
 Note that @R{} may need to be re-compiled after even a minor update to
-the compiler (e.g.@: from 10.1 to 10.2) but this may not be clear from
-confused compiler messages.
+the compiler (e.g.@: from 13.1 to 13.2).
 
 @node LTO with LLVM, LTO for package checking, LTO with GCC, Link-Time Optimization
 @subsubsection @abbr{LTO} with @I{LLVM}
@@ -2238,24 +2237,25 @@ So for example you could select a specific @I{LLVM}
 @command{clang} for both C and C++ with extensive checking by having in
 @file{~/.R/Makevars}
 @example
-CC = /usr/local/clang/bin/clang -isysroot
-  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk
-CXX = /usr/local/clang/bin/clang++ -isysroot
-  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk
+SDK=/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk
+CC = /usr/local/clang/bin/clang -isysroot $(SDK)
+CXX = /usr/local/clang/bin/clang++ -isysroot $(SDK)
 CXX11 = $CXX
 CXX14 = $CXX
 CXX17 = $CXX
 CXX20 = $CXX
+CXX23 = $CXX
 CFLAGS = -g -O2 -Wall -pedantic -Wconversion -Wno-sign-conversion
 CXXFLAGS = -g -O2 -Wall -pedantic -Wconversion -Wno-sign-conversion
 CXX11FLAGS = $CXXFLAGS
 CXX14FLAGS = $CXXFLAGS
 CXX17FLAGS = $CXXFLAGS
 CXX20FLAGS = $CXXFLAGS
+CXX23FLAGS = $CXXFLAGS
 @end example
 @noindent
-(long lines split for the manual only) and for the current macOS
-distribution of @command{gfortran} at
+(the current SDK can be found by running @command{xcrun -show-sdk-path})
+and for the current macOS distribution of @command{gfortran} at
 @uref{https://mac.r-project.org/tools/}
 @example
 FC = /opt/gfortran/bin/gfortran
@@ -2281,21 +2281,6 @@ for the @code{libomp.dylib} library to be found at both install time and run
 time, for example by copying/linking it somewhere that is searched such
 as @file{/usr/local/lib}.
 
-@c Seems unneeded as running from the R executable forces x86_64 compiles.
-@c
-@c Installing a source package containing C/C++ code into @acronym{CRAN}
-@c distribution of @R{} running on an @cputype{arm64} Mac requires telling
-@c the compiler(s) to generate Intel code.  For example, for Command Line
-@c Tools / Xcode 12.x one could have in @file{~/.R/Makevars}
-
-@c @example
-@c CC = clang -target x86_64-apple-macos10.15
-@c CXX = clang++ -target x86_64-apple-macos10.15
-@c @end example
-
-@c @noindent
-@c (Using @code{-arch x86_64} also works.)
-
 Apple includes many Open Source libraries in macOS but increasingly
 without the corresponding headers (not even in @I{Xcode} nor the Command
 Line Tools): they are often rather old versions.  If installing packages
@@ -2306,21 +2291,8 @@ But sometimes it is desirable/necessary to use Apple's dynamically
 linked library, in which case appropriate headers could be extracted
 from the sources@footnote{Note that capitalization and versioning may
 differ from the Open Source project.} available @emph{via}
-@uref{https://opensource.apple.com} -- this has been used for
+@uref{https://opensource.apple.com/releases} -- this has been used for
 @code{iodbc}.
-
-@c Those using Command Line Tools / Xcode 12 or later (as released for
-@c macOS 11 `Big Sur') probably want to arrange that the flag
-
-@c @example
-@c -Wno-implicit-function-declaration
-@c @end example
-
-@c @noindent
-@c is part of @code{CFLAGS}.  Apple has changed the default to make
-@c implicit declarations a compilation error and authors of packages and
-@c external software have been unaware that this might be done --- most
-@c issues seen were in @command{configure} scripts.
 
 Some care may be needed with selecting compilers when installing external
 software for use with packages.  The `system' compilers as used when
@@ -2339,31 +2311,25 @@ consistency one can use
 
 @noindent
 (avoiding @command{autoconf}'s default @option{-g}).
-@c Be careful if you
-@c put the @file{/usr/local/gfortran/bin} directory on your path as that
-@c contains (real) @command{gcc} and @command{g++} which may be found
-@c rather the Apple-provided commands, and may not be able to find the
-@c headers and libraries@footnote{From Big Sur those libraries are not
-@c publicly visible: rather the system compilers link to `text-based
-@c definition' (@file{.tbd}) files.} of the @abbr{SDK}.
 @command{R CMD INSTALL} and @code{install.packages()} try to invoke
 @command{configure} with the same compilers and flags used to build
 @R{}.
 
-For @cputype{arm64}, not all configure scripts have been updated to
-recognize the platform and so might need the flag
-@option{--build=aarch64-apple-darwin20.1.0}.  Also, be aware that
-running the compilers from a @cputype{x86_64} application switches them
-to generating code for that CPU: this applies to a Terminal, a shell,
-older @command{cmake} or (non-system) @command{make}, and from
-@command{R CMD INSTALL} or @code{install.packages()}.  One can use
+@c For @cputype{arm64}, not all configure scripts have been updated to
+@c recognize the platform and so might need the flag
+@c @option{--build=aarch64-apple-darwin20.1.0}.
+@c Also, be aware that
+@c running the compilers from a @cputype{x86_64} application switches them
+@c to generating code for that CPU: this applies to a Terminal, a shell,
+@c older @command{cmake} or (non-system) @command{make}, and from
+@c @command{R CMD INSTALL} or @code{install.packages()}.  One can use
 
-@example
-./configure CC="clang -arch arm64" CFLAGS=-O2 CXX="clang++ -arch arm64" CXXFLAGS=-O2
-@end example
+@c @example
+@c ./configure CC="clang -arch arm64" CFLAGS=-O2 CXX="clang++ -arch arm64" CXXFLAGS=-O2
+@c @end example
 
-@noindent
-to force @cputype{arm64} code.
+@c @noindent
+@c to force @cputype{arm64} code.
 
 
 @node Customizing package compilation, Multiple sub-architectures, macOS packages, Installing packages
@@ -5421,7 +5387,14 @@ available at
 @uref{https://github.com/fxcoudert/gfortran-for-macOS/releases}.  These
 can be built for Intel and older OSes from the sources at
 @uref{https://github.com/iains/gcc-13-branch/} and
-@code{gcc-14-branch/}.
+@code{gcc-14-branch/}.  To use one of the pre-built compilers with Apple
+@command{clang} needs something like
+@example
+LDFLAGS="-L/opt/R/arm64/lib -rpath /usr/local/gfortran/lib"
+@end example
+@noindent
+in @file{config.site} to ensure the Fortran run-time libraries are
+found.
 
 @node Cairo graphics, Other C/C++ compilers, Fortran compilers, macOS
 @subsection Cairo graphics
@@ -5495,27 +5468,26 @@ what is missing.  At the time of writing using pre-built components
 @node Other C/C++ compilers, Other libraries, Cairo graphics, macOS
 @subsection Other C/C++ compilers
 
-Other distributions of @command{clang} may be available from
-@uref{https://github.com/llvm/llvm-project/releases/} (recently only for
-@code{arm64} and usually unsigned/not notarized which makes them hard to
-use).  In particular, these include support for @abbr{OpenMP} which Apple
-@command{clang} does not.  Some of these have included support for the
-@abbr{ASan} and @abbr{UBSan} sanitizers.
+@c Un May 2024, 18.1.6 was the final release of that series, but the
+@c latest binary build was 17.0.6.
+Other pre-compiled distributions of @command{clang} may be available
+from @uref{https://github.com/llvm/llvm-project/releases/} (recently
+only for @code{arm64} and usually unsigned/not notarized which makes
+them hard to use).  In particular, these include support for
+@abbr{OpenMP} which Apple @command{clang} does not.  Some of these have
+included support for the @abbr{ASan} and @abbr{UBSan} sanitizers.
 
 Suppose one of these distributions is installed under
 @file{$LOCAL/llvm}. Use a file @file{config.site} containing
 @example
-CC="$LOCAL/llvm/bin/clang -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk"
-CXX="$LOCAL/llvm/bin/clang++ -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk"
+SDK=`xcrun -show-sdk-path`
+CC="$LOCAL/llvm/bin/clang -isysroot $SDK"
+CXX="$LOCAL/llvm/bin/clang++ -isysroot $SDK"
 OBJC=$CC
 FC=/opt/gfortran/bin/gfortran
 LDFLAGS="-L$LOCAL/llvm/lib -L$LOCAL/lib"
 R_LD_LIBRARY_PATH=$LOCAL/llvm/lib:$LOCAL/lib
 @end example
-@noindent
-Should the location of the @abbr{SDK} change (or where @I{Xcode} provides the @abbr{SDK}
-rather than the Command Line Tools), it can be found by running
-@command{xcrun -show-sdk-path}.
 
 The care to specify library paths is to ensure that the @abbr{OpenMP} runtime
 library, here @file{$LOCAL/llvm/lib/libomp.dylib}, is found when needed.
@@ -5528,11 +5500,26 @@ in the @command{configure} output.  Also, @samp{R_LD_LIBRARY_PATH} needs
 to be set to find the latest version of the C++ run-time libraries
 rather than the system ones.
 
-It is usually possible to build @R{} with GCC (built from the sources,
-from a @command{gfortran} distribution, from @I{Homebrew}, @dots{}).  When
-last tested@footnote{with @command{gcc} 10.2.} it was not possible to
-use @command{gcc} to build the @code{quartz()} device, so
-@command{configure --without-aqua} may be required.
+It is normally possible to build @R{} with GCC (built from the sources,
+from a @command{gfortran} distribution, from @I{Homebrew}, @dots{}).
+@c re-trested with GCC 14.1
+When last tested it was not possible to use @command{gcc} to build the
+@code{quartz()} device, so @command{configure --without-aqua} may be
+required.  @R{} was built and tested with the GCC 14.1 compilers in the
+@code{arm64} @command{gfortran} distribution mentioned above using a
+@file{config.site} containing
+@example
+CC=/usr/local/gfortran/bin/gcc
+CXX=/usr/local/gfortran/bin/g++
+FC=/usr/local/gfortran/bin/gfortran
+CFLAGS="-g -O2 -Wall -pedantic -Wstrict-prototypes"
+C17FLAGS="-g -O2 -Wall -pedantic -Wno-strict-prototypes"
+C90FLAGS=$C17FLAGS
+C99FLAGS=$C17FLAGS
+CXXFLAGS="-g -O2 -Wall -pedantic"
+CPPFLAGS='-isystem /opt/R/arm64/include'
+LDFLAGS=-L/opt/R/arm64/lib
+@end example
 
 It is usually possible to add some @abbr{OpenMP} support to the Apple
 @command{clang} compilers: see @uref{https://mac.r-project.org/openmp/}.
