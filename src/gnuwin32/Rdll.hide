@@ -12,6 +12,7 @@
  ALTREP_UNSERIALIZE_EX
  ALTSTRING_SET_ELT
  ALTVEC_EXTRACT_SUBSET
+ ASSIGNMENT_PENDING
  BASE_SYM_CACHED
  BINDING_IS_LOCKED
  BM_norm_keep
@@ -54,19 +55,26 @@
  BZ2_hbMakeCodeLengths
  BZ2_indexIntoF
  BZ2_rNums
+ CAR0
  CONS_NR
  CPFun
  ConsoleAcceptCmd
+ DECREMENT_REFCNT
+ DISABLE_REFCNT
  DebugMenuitem
  DefaultPalette
+ ENABLE_REFCNT
+ ENSURE_NAMED
  EhiWakeUp
  EncodeEnvironment
  EncodeExtptr
  EncodeReal2
  HASHASH
- INIT_BNDCELL
  IF_PROMSXP_SET_PRVALUE
+ INCREMENT_REFCNT
+ INIT_BNDCELL
  IS_ACTIVE_BINDING
+ IS_ASSIGNMENT_CALL
  IS_BYTES
  IS_LATIN1
  IS_SPECIAL_SYMBOL
@@ -76,15 +84,24 @@
  Init_R_Variables
  LOCK_BINDING
  LoadInitFile
+ MARK
+ MARK_ASSIGNMENT_CALL
+ MAYBEJIT
  MDIset
  MDIsize
+ MISSING
  MainThread
+ NOJIT
  NO_SPECIAL_SYMBOLS
+ PROMISE_IS_EVALUATED
+ PROMISE_TAG
  PrintUsage
  ProfileEvent
- PROMISE_IS_EVALUATED
+ RAISE_NAMED
  REvprintf_internal
  RExitContext
+ RSTEP
+ RTRACE
  R_BCIntActive
  R_BCNodeStackBase
  R_BCProtReset
@@ -222,6 +239,7 @@
  R_XDRDecodeInteger
  R_XDREncodeDouble
  R_XDREncodeInteger
+ R_allocObject
  R_args_enable_refcnt
  R_binary
  R_checkConstants
@@ -252,12 +270,14 @@
  R_dot_Group
  R_dot_Methods
  R_expand_binding_value
+ R_expand_promise_value
  R_fgetc
  R_findBCInterpreterSrcref
  R_findExecContext
  R_findParentContext
  R_fixslash
  R_flexiblas_info
+ R_gc_running
  R_getBCInterpreterExpression
  R_getClockIncrement
  R_getCurrentSrcref
@@ -351,7 +371,6 @@
  Rconn_getline
  Rcons_vprintf
  Rconsolesetwidth
- Rf_applyClosure
  Rf_AdobeSymbol2ucs2
  Rf_BindDomain
  Rf_CheckFormals
@@ -423,6 +442,7 @@
  Rf_WarningMessage
  Rf_addMissingVarsToNewEnv
  Rf_allocCharsxp
+ Rf_applyClosure
  Rf_asVecSize
  Rf_bd0
  Rf_chebyshev_eval
@@ -533,8 +553,10 @@
  Rvsnprintf_mbcs
  Rwin_rename
  Rwin_wrename
+ SETTER_CLEAR_NAMED
  SET_ACTIVE_BINDING_BIT
  SET_ASCII
+ SET_ASSIGNMENT_PENDING
  SET_BASE_SYM_CACHED
  SET_BNDCELL
  SET_BNDCELL_DVAL
@@ -544,16 +566,28 @@
  SET_BYTES
  SET_CACHED
  SET_CXTAIL
+ SET_DDVAL
  SET_HASHASH
+ SET_INTERNAL
  SET_LATIN1
+ SET_MAYBEJIT
+ SET_MISSING
+ SET_NOJIT
  SET_NO_SPECIAL_SYMBOLS
  SET_PRIMOFFSET
+ SET_PRINTNAME
+ SET_PROMISE_TAG
+ SET_RSTEP
+ SET_RTRACE
  SET_SPECIAL_SYMBOL
+ SET_SYMVALUE
  SET_UTF8
  Sys_TempDir
+ TRACKREFS
  UNIMPLEMENTED_TYPEt
  UNLOCK_BINDING
  UNSET_BASE_SYM_CACHED
+ UNSET_MAYBEJIT
  UNSET_NO_SPECIAL_SYMBOLS
  UNSET_SPECIAL_SYMBOL
  UTF8in
@@ -771,8 +805,8 @@
  do_curlGetHeaders
  do_curlVersion
  do_date
- do_declare
  do_debug
+ do_declare
  do_delayed
  do_deparse
  do_detach
