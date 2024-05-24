@@ -12879,6 +12879,8 @@ SEXP out(SEXP x, SEXP y)
 @}
 @end group
 @end example
+@apivar R_NamesSymbol
+@apivar R_DimNamesSymbol
 
 This example introduces several new features.  The @code{getAttrib} and
 @code{setAttrib}
@@ -13025,6 +13027,7 @@ SEXP getListElement(SEXP list, const char *str)
 @}
 @end group
 @end example
+@apivar R_NilValue
 
 @noindent
 and enables us to say
@@ -14227,8 +14230,8 @@ The source references added by the parser are recorded by @R{}'s evaluator
 as it evaluates code. Two functions
 make these available to debuggers running C code:
 @findex R_Srcref
-@findex R_GetCurrentSrcref
-@findex R_GetSrcFilename
+@apifun R_GetCurrentSrcref
+@apifun R_GetSrcFilename
 
 @example
 SEXP R_GetCurrentSrcref(int skip);
@@ -17477,6 +17480,7 @@ void R_CleanUp (SA_TYPE saveact, int status, int RunLast)
 @embfun R_SaveGlobalEnv
 @embfun Rf_KillAllDevices
 @embfun CleanEd
+@embfun R_CleanUp
 @embfun fpu_setup
 
 These callbacks should never be changed in a running @R{} session (and
