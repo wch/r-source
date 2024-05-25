@@ -13798,18 +13798,12 @@ this will only be clear to those with a knowledge of a LISP-like
 language.
 
 As a more comprehensive example of constructing an @R{} call in C code
-and evaluating, consider the following fragment of
-@code{printAttributes} in @file{src/main/print.c}.
+and evaluating, consider the following fragment. Similar code appears in
+the definition of @code{do_docall} in @file{src/main/coerce.c}.
 
 @example
-    /* Need to construct a call to
-       print(CAR(a), digits=digits)
-       based on the R_print structure, then eval(call, env).
-       See do_docall for the template for this sort of thing.
-    */
     SEXP s, t;
-    t = s = PROTECT(allocList(3));
-    SET_TYPEOF(s, LANGSXP);
+    t = s = PROTECT(allocLang(3));
     SETCAR(t, install("print")); t = CDR(t);
     SETCAR(t,  CAR(a)); t = CDR(t);
     SETCAR(t, ScalarInteger(digits));
@@ -13817,9 +13811,15 @@ and evaluating, consider the following fragment of
     eval(s, env);
     UNPROTECT(1);
 @end example
-@apifun allocList
 @apifun allocLang
-@comment mention allocLang and get rid of SET_TYPEOF
+@apifun SET_TAG
+The function @code{allocLang} is available as of @R{} 4 4.1; for older
+versions replace @code{allocLang(3)} with
+@example
+LCONS(R_NilValue, allocList(2))
+@end example
+@apifun LCONS
+@apifun allocList
 
 @noindent
 At this point @code{CAR(a)} is the @R{} object to be printed, the
