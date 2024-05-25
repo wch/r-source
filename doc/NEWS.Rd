@@ -16,6 +16,10 @@
       \code{Rf_StringFalse}, \code{Rf_StringTrue} and
       \code{Rf_isBlankString} have been added to those reported by
       \command{R CMD check}.
+
+      \item The new function \code{Rf_allocLang} is now available. This
+      provides an alternative to the idiom of calling
+      \code{Rf_allocList} followed by \code{SET_TYPEOF}.
     }
   }
 
