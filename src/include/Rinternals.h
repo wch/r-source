@@ -485,6 +485,7 @@ char * Rf_acopy_string(const char *);
 SEXP Rf_alloc3DArray(SEXPTYPE, int, int, int);
 SEXP Rf_allocArray(SEXPTYPE, SEXP);
 SEXP Rf_allocMatrix(SEXPTYPE, int, int);
+SEXP Rf_allocLang(int);
 SEXP Rf_allocList(int);
 SEXP Rf_allocS4Object(void);
 SEXP Rf_allocSExp(SEXPTYPE);
@@ -863,6 +864,7 @@ void R_orderVector1(int *indx, int n, SEXP x,       Rboolean nalast, Rboolean de
 #define allocFormalsList4	Rf_allocFormalsList4
 #define allocFormalsList5	Rf_allocFormalsList5
 #define allocFormalsList6	Rf_allocFormalsList6
+#define allocLang		Rf_allocLang
 #define allocList		Rf_allocList
 #define allocMatrix		Rf_allocMatrix
 #define allocS4Object		Rf_allocS4Object

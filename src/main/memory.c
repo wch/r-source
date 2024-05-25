@@ -2994,6 +2994,14 @@ SEXP allocList(int n)
     return result;
 }
 
+SEXP allocLang(int n)
+{
+    if (n > 0)
+	return LCONS(R_NilValue, allocList(n - 1));
+    else
+	return R_NilValue;
+}
+
 SEXP allocS4Object(void)
 {
    SEXP s;

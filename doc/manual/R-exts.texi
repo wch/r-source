@@ -12986,6 +12986,7 @@ LISP-like lists (now called ``pairlists'') to S-like generic vectors.
 As a result, the appropriate test for an object of mode @code{list} is
 @code{isNewList}, and we need @code{allocVector(VECSXP, @var{n}}) and
 @emph{not} @code{allocList(@var{n})}.
+@apifun allocList
 
 List elements can be retrieved or set by direct access to the elements
 of the generic vector.  Suppose we have a list object
@@ -13816,8 +13817,9 @@ and evaluating, consider the following fragment of
     eval(s, env);
     UNPROTECT(1);
 @end example
-@findex allocList
-@apifun SET_TAG
+@apifun allocList
+@apifun allocLang
+@comment mention allocLang and get rid of SET_TYPEOF
 
 @noindent
 At this point @code{CAR(a)} is the @R{} object to be printed, the
