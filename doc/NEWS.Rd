@@ -73,6 +73,10 @@
       are used to produce indices for API, experimental API, and
       embedded API entry points in the rendered versions.  This is very
       preliminary and may be dropped if a better approach emerges.
+
+      \item The new function \code{Rf_allocLang} is now available. This
+      provides an alternative to the idiom of calling
+      \code{Rf_allocList} followed by \code{SET_TYPEOF}.      
     }
   }
 
