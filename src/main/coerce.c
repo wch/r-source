@@ -2737,8 +2737,7 @@ attribute_hidden SEXP do_docall(SEXP call, SEXP op, SEXP args, SEXP rho)
     n = length(args);
     PROTECT(names = getAttrib(args, R_NamesSymbol));
 
-    PROTECT(c = call = allocList(n + 1));
-    SET_TYPEOF(c, LANGSXP);
+    PROTECT(c = call = allocLang(n + 1));
     if( isString(fun) ) {
 	const char *str = translateChar(STRING_ELT(fun, 0));
 	if (streql(str, ".Internal")) error("illegal usage");

@@ -117,8 +117,7 @@ static SEXP FindTaggedItem(SEXP lst, SEXP tag)
 static SEXP makeErrorCall(SEXP fun)
 {
   SEXP call;
-  PROTECT(call = allocList(1));
-  SET_TYPEOF(call, LANGSXP);
+  PROTECT(call = allocLang(1));
   SETCAR(call, fun);
   UNPROTECT(1);
   return call;

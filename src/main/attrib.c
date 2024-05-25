@@ -929,8 +929,7 @@ attribute_hidden SEXP do_namesgets(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP names = CADR(args);
     if (names != R_NilValue &&
 	! (TYPEOF(names) == STRSXP && ATTRIB(names) == R_NilValue)) {
-	PROTECT(call = allocList(2));
-	SET_TYPEOF(call, LANGSXP);
+	PROTECT(call = allocLang(2));
 	SETCAR(call, R_AsCharacterSymbol);
 	SETCADR(call, names);
 	names = eval(call, env);
