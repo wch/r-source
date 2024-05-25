@@ -76,7 +76,13 @@
 
       \item The new function \code{Rf_allocLang} is now available. This
       provides an alternative to the idiom of calling
-      \code{Rf_allocList} followed by \code{SET_TYPEOF}.      
+      \code{Rf_allocList} followed by \code{SET_TYPEOF}.
+
+      \item \code{SET_TYPEOF} now signals an error unless the old and
+      new types have compatible memory structure and content. Use of
+      \code{SET_TYPE} in package C code should be avoided and may be
+      deprecated in the near future. It is better to allocate an object
+      of the proper type in the first place.      
     }
   }
 

@@ -2047,7 +2047,9 @@ attribute_hidden SEXP R_tryUnwrap(SEXP x)
 	    /* Clear the fields to drop reference counts and set the
 	       type to LISTSXP to limit errors in case the object is
 	       still live. */
-	    SET_TYPEOF(x, LISTSXP);
+	    void ALTREP_SET_TYPEOF(SEXP, int); /* in memory.c */
+	    ALTREP_SET_TYPEOF(x, LISTSXP);
+	    SETALTREP(x, 0);
 	    SET_ATTRIB(x, R_NilValue);
 	    SETCAR(x, R_NilValue);
 	    SETCDR(x, R_NilValue);

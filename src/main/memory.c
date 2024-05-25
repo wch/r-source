@@ -3896,7 +3896,6 @@ void (SET_ATTRIB)(SEXP x, SEXP v) {
     ATTRIB(x) = v;
 }
 void (SET_OBJECT)(SEXP x, int v) { SET_OBJECT(CHK(x), v); }
-void (SET_TYPEOF)(SEXP x, int v) { SET_TYPEOF(CHK(x), v); }
 void (SET_NAMED)(SEXP x, int v)
 {
 #ifndef SWITCH_TO_REFCNT
@@ -3916,6 +3915,64 @@ void SHALLOW_DUPLICATE_ATTRIB(SEXP to, SEXP from) {
     SET_OBJECT(CHK(to), OBJECT(from));
     IS_S4_OBJECT(from) ?  SET_S4_OBJECT(to) : UNSET_S4_OBJECT(to);
 }
+
+NORET static void bad_SET_TYPEOF(int from, int to)
+{
+    error(_("can't change type from %s to %s"),
+	  sexptype2char(from), sexptype2char(to));
+}
+
+static void check_SET_TYPEOF(SEXP x, int v)
+{
+    if (ALTREP(x))
+	error(_("can't change the type of an ALTREP object from %s to %s"),
+	      sexptype2char(TYPEOF(x)), sexptype2char(v));
+    switch (TYPEOF(x)) {
+    case LISTSXP:
+    case LANGSXP:
+    case DOTSXP:
+	if (BNDCELL_TAG(x))
+	    error(_("can't change the type of a binding cell"));
+	switch (v) {
+	case LISTSXP:
+	case LANGSXP:
+	case DOTSXP:
+	case BCODESXP: return;
+	default: bad_SET_TYPEOF(TYPEOF(x), v);
+	}
+    case INTSXP:
+    case LGLSXP:
+	switch (v) {
+	case INTSXP:
+	case LGLSXP: return;
+	default: bad_SET_TYPEOF(TYPEOF(x), v);
+	}
+    case VECSXP:
+    case EXPRSXP:
+	switch (v) {
+	case VECSXP:
+	case EXPRSXP: return;
+	default: bad_SET_TYPEOF(TYPEOF(x), v);
+	}
+    default: bad_SET_TYPEOF(TYPEOF(x), v);
+    }
+}
+
+void (SET_TYPEOF)(SEXP x, int v)
+{
+    /* Ideally this should not exist as a function outsie of base, but
+       it was shown in WRE and is used in a good number of packages.
+       So try to make it a little safer by only allowing some type
+       changes.
+    */
+    if (TYPEOF(CHK(x)) != v) {
+	check_SET_TYPEOF(x, v);
+	SET_TYPEOF(CHK(x), v);
+    }
+}
+
+attribute_hidden
+void (ALTREP_SET_TYPEOF)(SEXP x, int v) { SET_TYPEOF(CHK(x), v); }
 
 void (ENSURE_NAMEDMAX)(SEXP x) { ENSURE_NAMEDMAX(CHK(x)); }
 attribute_hidden void (ENSURE_NAMED)(SEXP x) { ENSURE_NAMED(CHK(x)); }
