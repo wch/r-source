@@ -1,16 +1,32 @@
  ALTCOMPLEX_ELT
+ ALTCOMPLEX_SET_ELT
  ALTINTEGER_ELT
+ ALTINTEGER_MAX
+ ALTINTEGER_MIN
+ ALTINTEGER_SET_ELT
+ ALTINTEGER_SUM
+ ALTLIST_ELT
  ALTLIST_SET_ELT
  ALTLOGICAL_ELT
+ ALTLOGICAL_SET_ELT
+ ALTLOGICAL_SUM
  ALTRAW_ELT
+ ALTRAW_SET_ELT
  ALTREAL_ELT
+ ALTREAL_MAX
+ ALTREAL_MIN
+ ALTREAL_SET_ELT
+ ALTREAL_SUM
  ALTREP_COERCE
  ALTREP_DUPLICATE_EX
  ALTREP_INSPECT
  ALTREP_SERIALIZED_CLASS
  ALTREP_SERIALIZED_STATE
+ ALTREP_SET_TYPEOF
+ ALTREP_TRUELENGTH
  ALTREP_UNSERIALIZE_EX
  ALTSTRING_SET_ELT
+ ALTVEC_DATAPTR_OR_NULL
  ALTVEC_EXTRACT_SUBSET
  ASSIGNMENT_PENDING
  BASE_SYM_CACHED
@@ -83,6 +99,7 @@
  Init_R_Machine
  Init_R_Variables
  LOCK_BINDING
+ LOGICAL_IS_SORTED
  LoadInitFile
  MARK
  MARK_ASSIGNMENT_CALL
@@ -106,6 +123,7 @@
  R_BCNodeStackBase
  R_BCProtReset
  R_BCProtTop
+ R_BCRelPC
  R_BCVersionOK
  R_BCbody
  R_BCpc
@@ -209,6 +227,7 @@
  R_SetMaxNSize
  R_SetMaxVSize
  R_SetNconn
+ R_SetOption
  R_SetOptionWarn
  R_SetOptionWidth
  R_SetPPSize
@@ -425,6 +444,7 @@
  Rf_PrintVersion
  Rf_PrintVersionString
  Rf_PrintVersion_part_1
+ Rf_PrintWarnings
  Rf_RealFromComplex
  Rf_RealFromInteger
  Rf_RealFromLogical
@@ -536,6 +556,7 @@
  Rf_utf8toucs32
  Rf_vectorIndex
  Rf_wcs4toutf8
+ Rf_wcstoutf8
  Rf_wtransChar2
  Rf_yychar
  Rf_yylval
@@ -1250,6 +1271,7 @@
  dos_wglobfree
  drawconsole
  dt_invalidate_locale
+ dummy54321
  editorchecksave
  editorcleanall
  editorsetfont
@@ -1512,6 +1534,7 @@
  newpager
  newxbuf
  nl_Rdummy
+ orderVector1
  pR_ShowMessage
  pagerMultiple
  pagerbclose
