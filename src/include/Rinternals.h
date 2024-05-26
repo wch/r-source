@@ -233,12 +233,17 @@ Rboolean (Rf_isObject)(SEXP s);
 #endif
 
 /* Macros for some common idioms. */
-#ifdef SWITCH_TO_REFCNT
-# define MAYBE_SHARED(x) (REFCNT(x) > 1)
-# define NO_REFERENCES(x) (REFCNT(x) == 0)
+#ifdef USE_RINTERNALS
+# ifdef SWITCH_TO_REFCNT
+#  define MAYBE_SHARED(x) (REFCNT(x) > 1)
+#  define NO_REFERENCES(x) (REFCNT(x) == 0)
+# else
+#  define MAYBE_SHARED(x) (NAMED(x) > 1)
+#  define NO_REFERENCES(x) (NAMED(x) == 0)
+# endif
 #else
-# define MAYBE_SHARED(x) (NAMED(x) > 1)
-# define NO_REFERENCES(x) (NAMED(x) == 0)
+int (MAYBE_SHARED)(SEXP x);
+int (NO_REFERENCES)(SEXP x);
 #endif
 #define MAYBE_REFERENCED(x) (! NO_REFERENCES(x))
 #define NOT_SHARED(x) (! MAYBE_SHARED(x))

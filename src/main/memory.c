@@ -3866,6 +3866,8 @@ attribute_hidden int (TRACKREFS)(SEXP x) { return TRACKREFS(CHK(x)); }
 int (ALTREP)(SEXP x) { return ALTREP(CHK(x)); }
 int (IS_SCALAR)(SEXP x, int type) { return IS_SCALAR(CHK(x), type); }
 void (MARK_NOT_MUTABLE)(SEXP x) { MARK_NOT_MUTABLE(CHK(x)); }
+int (MAYBE_SHARED)(SEXP x) { return MAYBE_SHARED(CHK(x)); }
+int (NO_REFERENCES)(SEXP x) { return NO_REFERENCES(CHK(x)); }
 
 attribute_hidden int (MARK)(SEXP x) { return MARK(CHK(x)); }
 attribute_hidden
