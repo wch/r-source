@@ -13347,11 +13347,10 @@ assignments @code{y} and @code{x} are bound to the same @code{SEXPREC}
 (the structure a @code{SEXP} points to).  This means that any code which
 alters one of them has to make a copy before modifying the copy if the
 usual @R{} semantics are to apply.  Note that whereas @code{.C} and
-@code{.Fortran} do copy their arguments (unless the dangerous @code{dup
-= FALSE} is used), @code{.Call} and @code{.External} do not.  So
-@code{duplicate} is commonly called on arguments to @code{.Call} before
-modifying them. If only the sop level is modified it may suffice to call
-@code{shallow_duplicate}.
+@code{.Fortran} do copy their arguments, @code{.Call} and
+@code{.External} do not.  So @code{duplicate} is commonly called on
+arguments to @code{.Call} before modifying them. If only the top level
+is modified it may suffice to call @code{shallow_duplicate}.
 @apifun duplicate
 @apifun shallow_duplicate
 
@@ -13413,26 +13412,14 @@ make no reference to @code{x}, and no one is going to attempt a direct
 call such as @code{y <- "foo<-"(x)}.)
 
 This mechanism was replaced in @R{} 4.0.0. To
-support future changes, package code should use the macros
-@code{MAYBE_REFERENCED}, @code{MAYBE_SHARED}, and
-@code{MARK_NOT_MUTABLE}. These currently correspond to
+support future changes, package code should use @code{NO_REFERENCES},
+@code{MAYBE_REFERENCED}, @code{NOT_SHARED}, @code{MAYBE_SHARED}, and
+@code{MARK_NOT_MUTABLE}.
+@apifun NO_REFERENCES
 @apifun MAYBE_REFERENCED
+@apifun NOT_SHARED
 @apifun MAYBE_SHARED
 @apifun MARK_NOT_MUTABLE
-
-@table@code
-@item MAYBE_REFERENCED(x)
-@code{NAMED(x) > 0}
-@item MAYBE_SHARED(x)
-@code{NAMED(x) > 1}
-@item MARK_NOT_MUTABLE(x)
-@code{SET_NAMED(x, NAMEDMAX)}
-@end table
-
-@c commented out as people misread this as general.
-@c Currently all arguments to a @code{.Call} call will have @code{NAMED}
-@c set to 2 or higher and so users must assume that they need to be duplicated
-@c before alteration.
 
 @node Interface functions .Call and .External, Evaluating R expressions from C, Handling R objects in C, System and foreign language interfaces
 @section Interface functions @code{.Call} and @code{.External}
