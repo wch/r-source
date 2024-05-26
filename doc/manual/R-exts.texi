@@ -14096,11 +14096,14 @@ Here, we are entering a for loop.  We loop through each of the
 variables.  In the @code{for} loop, we first create a symbol
 corresponding to the @I{@code{i}-th} element of the @code{STRSXP}
 @code{theta}.  Here, @code{STRING_ELT(theta, i)} accesses the
-@I{@code{i}-th} element of the @code{STRSXP} @code{theta}.  Macro
+@I{@code{i}-th} element of the @code{STRSXP} @code{theta}.
 @code{CHAR()} extracts the actual character
 representation@footnote{@pxref{Character encoding issues} for why this
 might not be what is required.} of it: it returns a pointer.  We then
 install the name and use @code{findVar} to find its value.
+@apifun CHAR
+@comment FIXME in packages CHAR is remapped to R_CHAR; menion that here?
+@apifun R_CHAR
 
 @example
 @group
