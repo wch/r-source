@@ -174,7 +174,7 @@ static SEXP getActiveValue(SEXP fun)
 #define ISNULL(x) ((x) == R_NilValue)
 
 /* Function to determine whethr an environment contains special symbols */
-Rboolean R_envHasNoSpecialSymbols (SEXP env)
+attribute_hidden Rboolean R_envHasNoSpecialSymbols (SEXP env)
 {
     SEXP frame;
 
@@ -3493,7 +3493,7 @@ Rboolean R_BindingIsActive(SEXP sym, SEXP env)
     }
 }
 
-Rboolean R_HasFancyBindings(SEXP rho)
+attribute_hidden Rboolean R_HasFancyBindings(SEXP rho)
 {
     if (IS_HASHED(rho)) {
 	SEXP table, chain;
@@ -3637,7 +3637,7 @@ SEXP R_NewEnv(SEXP enclos, int hash, int size)
 	return NewEnvironment(R_NilValue, R_NilValue, enclos);
 }
 
-void R_RestoreHashCount(SEXP rho)
+attribute_hidden void R_RestoreHashCount(SEXP rho)
 {
     if (IS_HASHED(rho)) {
 	SEXP table;
@@ -4525,6 +4525,7 @@ Rboolean attribute_hidden isUnmodifiedSpecSym(SEXP sym, SEXP env) {
     return TRUE;
 }
 
+attribute_hidden
 void findFunctionForBodyInNamespace(SEXP body, SEXP nsenv, SEXP nsname) {
     if (R_IsNamespaceEnv(nsenv) != TRUE)
 	error("argument 'nsenv' is not a namespace");

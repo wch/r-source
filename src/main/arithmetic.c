@@ -2318,7 +2318,8 @@ attribute_hidden SEXP do_math5(SEXP call, SEXP op, SEXP args, SEXP env)
 #endif /* Math5 is there */
 
 /* This is used for experimenting with parallelized nmath functions -- LT */
-CCODE R_get_arith_function(int which)
+/* Hide for now */
+attribute_hidden CCODE R_get_arith_function(int which)
 {
     switch (which) {
     case 1: return do_math1;
