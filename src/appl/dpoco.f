@@ -58,7 +58,7 @@ c     subroutines and functions
 c
 c     linpack dpofa
 c     blas daxpy,ddot,dscal,dasum
-c     fortran dabs,dmax1,dreal,dsign
+c     fortran abs,max,sign
 c
       subroutine dpoco(a,lda,n,rcond,z,info)
       integer lda,n,info
@@ -79,13 +79,13 @@ c
          jm1 = j - 1
          if (jm1 .lt. 1) go to 20
          do 10 i = 1, jm1
-            z(i) = z(i) + dabs(a(i,j))
+            z(i) = z(i) + abs(a(i,j))
    10    continue
    20    continue
    30 continue
       anorm = 0.0d0
       do 40 j = 1, n
-         anorm = dmax1(anorm,z(j))
+         anorm = max(anorm,z(j))
    40 continue
 c
 c     factor
@@ -106,24 +106,24 @@ c
             z(j) = 0.0d0
    50    continue
          do 110 k = 1, n
-            if (z(k) .ne. 0.0d0) ek = dsign(ek,-z(k))
-            if (dabs(ek-z(k)) .le. a(k,k)) go to 60
-               s = a(k,k)/dabs(ek-z(k))
+            if (z(k) .ne. 0.0d0) ek = sign(ek,-z(k))
+            if (abs(ek-z(k)) .le. a(k,k)) go to 60
+               s = a(k,k)/abs(ek-z(k))
                call dscal(n,s,z,1)
                ek = s*ek
    60       continue
             wk = ek - z(k)
             wkm = -ek - z(k)
-            s = dabs(wk)
-            sm = dabs(wkm)
+            s = abs(wk)
+            sm = abs(wkm)
             wk = wk/a(k,k)
             wkm = wkm/a(k,k)
             kp1 = k + 1
             if (kp1 .gt. n) go to 100
                do 70 j = kp1, n
-                  sm = sm + dabs(z(j)+wkm*a(k,j))
+                  sm = sm + abs(z(j)+wkm*a(k,j))
                   z(j) = z(j) + wk*a(k,j)
-                  s = s + dabs(z(j))
+                  s = s + abs(z(j))
    70          continue
                if (s .ge. sm) go to 90
                   t = wkm - wk
@@ -142,8 +142,8 @@ c        solve r*y = w
 c
          do 130 kb = 1, n
             k = n + 1 - kb
-            if (dabs(z(k)) .le. a(k,k)) go to 120
-               s = a(k,k)/dabs(z(k))
+            if (abs(z(k)) .le. a(k,k)) go to 120
+               s = a(k,k)/abs(z(k))
                call dscal(n,s,z,1)
   120       continue
             z(k) = z(k)/a(k,k)
@@ -159,8 +159,8 @@ c        solve trans(r)*v = y
 c
          do 150 k = 1, n
             z(k) = z(k) - ddot(k-1,a(1,k),1,z(1),1)
-            if (dabs(z(k)) .le. a(k,k)) go to 140
-               s = a(k,k)/dabs(z(k))
+            if (abs(z(k)) .le. a(k,k)) go to 140
+               s = a(k,k)/abs(z(k))
                call dscal(n,s,z,1)
                ynorm = s*ynorm
   140       continue
@@ -174,8 +174,8 @@ c        solve r*z = v
 c
          do 170 kb = 1, n
             k = n + 1 - kb
-            if (dabs(z(k)) .le. a(k,k)) go to 160
-               s = a(k,k)/dabs(z(k))
+            if (abs(z(k)) .le. a(k,k)) go to 160
+               s = a(k,k)/abs(z(k))
                call dscal(n,s,z,1)
                ynorm = s*ynorm
   160       continue

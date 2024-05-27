@@ -50,7 +50,7 @@ c
 c     subroutines and functions
 c
 c     blas daxpy,ddot
-c     fortran min0
+c     fortran min
 c
 c     internal variables
 c
@@ -60,7 +60,7 @@ c
 c     solve trans(r)*y = b
 c
       do 10 k = 1, n
-         lm = min0(k-1,m)
+         lm = min(k-1,m)
          la = m + 1 - lm
          lb = k - lm
          t = ddot(lm,abd(la,k),1,b(lb),1)
@@ -71,7 +71,7 @@ c     solve r*x = y
 c
       do 20 kb = 1, n
          k = n + 1 - kb
-         lm = min0(k-1,m)
+         lm = min(k-1,m)
          la = m + 1 - lm
          lb = k - lm
          b(k) = b(k)/abd(m+1,k)

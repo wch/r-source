@@ -81,7 +81,7 @@ c
 c     dqrdc2 uses the following functions and subprograms.
 c
 c     blas daxpy,ddot,dscal,dnrm2
-c     fortran dabs,dmax1,min0,dsqrt
+c     fortran abs,max,min,sqrt
 c
       subroutine dqrdc2(x,ldx,n,p,tol,k,qraux,jpvt,work)
       integer ldx,n,p

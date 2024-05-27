@@ -76,7 +76,7 @@ c
 c     dqrdc uses the following functions and subprograms.
 c
 c     blas daxpy,ddot,dscal,dswap,dnrm2
-c     fortran dabs,dmax1,min0,dsqrt
+c     fortran abs,max,min,sqrt
 c
       subroutine dqrdc(x,ldx,n,p,qraux,jpvt,work,job)
       integer ldx,n,p,job
@@ -137,7 +137,7 @@ c
 c
 c     perform the householder reduction of x.
 c
-      lup = min0(n,p)
+      lup = min(n,p)
       do 200 l = 1, lup
          if (l .lt. pl .or. l .ge. pu) go to 120
 c
@@ -182,12 +182,12 @@ c
                   call daxpy(n-l+1,t,x(l,l),1,x(l,j),1)
                   if (j .lt. pl .or. j .gt. pu) go to 150
                   if (qraux(j) .eq. 0.0d0) go to 150
-                     tt = 1.0d0 - (dabs(x(l,j))/qraux(j))**2
-                     tt = dmax1(tt,0.0d0)
+                     tt = 1.0d0 - (aabs(x(l,j))/qraux(j))**2
+                     tt = max(tt,0.0d0)
                      t = tt
                      tt = 1.0d0 + 0.05d0*tt*(qraux(j)/work(j))**2
                      if (tt .eq. 1.0d0) go to 130
-                        qraux(j) = qraux(j)*dsqrt(t)
+                        qraux(j) = qraux(j)*sqrt(t)
                      go to 140
   130                continue
                         qraux(j) = dnrm2(n-l,x(l+1,j),1)

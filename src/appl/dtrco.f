@@ -50,7 +50,7 @@ c
 c     subroutines and functions
 c
 c     blas daxpy,dscal,dasum
-c     fortran dabs,dmax1,dsign
+c     fortran abs,max,sign
 c
 c     internal variables
 c
@@ -69,7 +69,7 @@ c
          if (lower) l = n + 1 - j
          i1 = 1
          if (lower) i1 = j
-         tnorm = dmax1(tnorm,dasum(l,t(i1,j),1))
+         tnorm = max(tnorm,dasum(l,t(i1,j),1))
    10 continue
 c
 c     rcond = 1/(norm(t)*(estimate of norm(inverse(t)))) .
@@ -88,16 +88,16 @@ c
       do 100 kk = 1, n
          k = kk
          if (lower) k = n + 1 - kk
-         if (z(k) .ne. 0.0d0) ek = dsign(ek,-z(k))
-         if (dabs(ek-z(k)) .le. dabs(t(k,k))) go to 30
-            s = dabs(t(k,k))/dabs(ek-z(k))
+         if (z(k) .ne. 0.0d0) ek = sign(ek,-z(k))
+         if (abs(ek-z(k)) .le. abs(t(k,k))) go to 30
+            s = abs(t(k,k))/abs(ek-z(k))
             call dscal(n,s,z,1)
             ek = s*ek
    30    continue
          wk = ek - z(k)
          wkm = -ek - z(k)
-         s = dabs(wk)
-         sm = dabs(wkm)
+         s = abs(wk)
+         sm = abs(wkm)
          if (t(k,k) .eq. 0.0d0) go to 40
             wk = wk/t(k,k)
             wkm = wkm/t(k,k)
@@ -112,9 +112,9 @@ c
             j2 = n
             if (lower) j2 = k - 1
             do 60 j = j1, j2
-               sm = sm + dabs(z(j)+wkm*t(k,j))
+               sm = sm + abs(z(j)+wkm*t(k,j))
                z(j) = z(j) + wk*t(k,j)
-               s = s + dabs(z(j))
+               s = s + abs(z(j))
    60       continue
             if (s .ge. sm) go to 80
                w = wkm - wk
@@ -136,8 +136,8 @@ c
       do 130 kk = 1, n
          k = n + 1 - kk
          if (lower) k = kk
-         if (dabs(z(k)) .le. dabs(t(k,k))) go to 110
-            s = dabs(t(k,k))/dabs(z(k))
+         if (abs(z(k)) .le. abs(t(k,k))) go to 110
+            s = abs(t(k,k))/abs(z(k))
             call dscal(n,s,z,1)
             ynorm = s*ynorm
   110    continue

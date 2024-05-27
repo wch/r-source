@@ -100,7 +100,7 @@ c     dsvdc uses the following functions and subprograms.
 c
 c     external drot
 c     blas daxpy,ddot,dscal,dswap,dnrm2,drotg
-c     fortran dabs,dmax1,max0,min0,mod,dsqrt
+c     fortran abs,max,min,mod,sqrt
 c
       subroutine dsvdc(x,ldx,n,p,s,e,u,ldu,v,ldv,work,job,info)
       integer ldx,n,p,ldu,ldv,job,info
@@ -132,7 +132,7 @@ c
       wantv = .false.
       jobu = mod(job,100)/10
       ncu = n
-      if (jobu .gt. 1) ncu = min0(n,p)
+      if (jobu .gt. 1) ncu = min(n,p)
       if (jobu .ne. 0) wantu = .true.
       if (mod(job,10) .ne. 0) wantv = .true.
 c
@@ -140,9 +140,9 @@ c     reduce x to bidiagonal form, storing the diagonal elements
 c     in s and the super-diagonal elements in e.
 c
       info = 0
-      nct = min0(n-1,p)
-      nrt = max0(0,min0(p-2,n))
-      lu = max0(nct,nrt)
+      nct = min(n-1,p)
+      nrt = max(0,min(p-2,n))
+      lu = max(nct,nrt)
       if (lu .lt. 1) go to 170
       do 160 l = 1, lu
          lp1 = l + 1
@@ -226,7 +226,7 @@ c
 c
 c     set up the final bidiagonal matrix or order m.
 c
-      m = min0(p,n+1)
+      m = min(p,n+1)
       nctp1 = nct + 1
       nrtp1 = nrt + 1
       if (nct .lt. p) s(nctp1) = x(nctp1,nctp1)
@@ -329,9 +329,9 @@ c
             l = m - ll
 c        ...exit
             if (l .eq. 0) go to 400
-            test = dabs(s(l)) + dabs(s(l+1))
-            ztest = test + dabs(e(l))
-            acc = dabs(test - ztest)/(1.0d-100 + test)
+            test = abs(s(l)) + abs(s(l+1))
+            ztest = test + abs(e(l))
+            acc = abs(test - ztest)/(1.0d-100 + test)
             if (acc .gt. 1.d-15) goto 380
 c            if (ztest .ne. test) go to 380
                e(l) = 0.0d0
@@ -351,11 +351,11 @@ c        ......exit
 c           ...exit
                if (ls .eq. l) go to 440
                test = 0.0d0
-               if (ls .ne. m) test = test + dabs(e(ls))
-               if (ls .ne. l + 1) test = test + dabs(e(ls-1))
-               ztest = test + dabs(s(ls))
+               if (ls .ne. m) test = test + abs(e(ls))
+               if (ls .ne. l + 1) test = test + abs(e(ls-1))
+               ztest = test + abs(s(ls))
 c 1.0d-100 is to guard against a zero matrix, hence zero test
-               acc = dabs(test - ztest)/(1.0d-100 + test)
+               acc = abs(test - ztest)/(1.0d-100 + test)
                if (acc .gt. 1.d-15) goto 420
 c               if (ztest .ne. test) go to 420
                   s(ls) = 0.0d0
@@ -432,8 +432,8 @@ c
 c
 c           calculate the shift.
 c
-            scale = dmax1(dabs(s(m)),dabs(s(m-1)),dabs(e(m-1)),
-     *                    dabs(s(l)),dabs(e(l)))
+            scale = max(abs(s(m)),abs(s(m-1)),abs(e(m-1)),
+     *                  abs(s(l)),dabs(e(l)))
             sm = s(m)/scale
             smm1 = s(m-1)/scale
             emm1 = e(m-1)/scale
@@ -443,7 +443,7 @@ c
             c = (sm*emm1)**2
             shift = 0.0d0
             if (b .eq. 0.0d0 .and. c .eq. 0.0d0) go to 550
-               shift = dsqrt(b**2+c)
+               shift = sqrt(b**2+c)
                if (b .lt. 0.0d0) shift = -shift
                shift = c/(b + shift)
   550       continue

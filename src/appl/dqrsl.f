@@ -135,7 +135,7 @@ c
 c     dqrsl uses the following functions and subprograms.
 c
 c     BLAS      daxpy,dcopy,ddot
-c     Fortran   dabs,min0,mod
+c     Fortran   min,mod
 c
       subroutine dqrsl(x,ldx,n,k,qraux,y,qy,qty,b,rsd,xb,job,info)
       integer ldx,n,k,job,info
@@ -160,7 +160,7 @@ c
       cb = mod(job,1000)/100 .ne. 0
       cr = mod(job,100)/10 .ne. 0
       cxb = mod(job,10) .ne. 0
-      ju = min0(k,n-1)
+      ju = min(k,n-1)
 c
 c     special action when n=1.
 c

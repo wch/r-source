@@ -45,7 +45,7 @@ c           the following program segment will set up the input.
 c
 c                   m = (band width above diagonal)
 c                   do 20 j = 1, n
-c                      i1 = max0(1, j-m)
+c                      i1 = max(1, j-m)
 c                      do 10 i = i1, j
 c                         k = i-j+m+1
 c                         abd(k,j) = a(i,j)
@@ -58,7 +58,7 @@ c
 c     subroutines and functions
 c
 c     blas ddot
-c     fortran max0,sqrt
+c     fortran max,sqrt
 c
 c     internal variables
 c
@@ -72,8 +72,8 @@ c
             info = j
             s = 0.0d0
             ik = m + 1
-            jk = max0(j-m,1)
-            mu = max0(m+2-j,1)
+            jk = max(j-m,1)
+            mu = max(m+2-j,1)
             if (m .lt. mu) go to 20
             do 10 k = mu, m
 

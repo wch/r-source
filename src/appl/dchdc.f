@@ -78,7 +78,7 @@ c     university of maryland.
 c
 c
 c     blas daxpy,dswap
-c     fortran dsqrt
+c     fortran sqrt
 c
 c     internal variables
 c
@@ -205,7 +205,7 @@ c
 c
 c        reduction step. pivoting is contained across the rows.
 c
-         work(k) = dsqrt(a(k,k))
+         work(k) = sqrt(a(k,k))
          a(k,k) = work(k)
          if (p .lt. kp1) go to 260
          do 250 j = kp1, p
