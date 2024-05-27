@@ -182,7 +182,7 @@ c
                   call daxpy(n-l+1,t,x(l,l),1,x(l,j),1)
                   if (j .lt. pl .or. j .gt. pu) go to 150
                   if (qraux(j) .eq. 0.0d0) go to 150
-                     tt = 1.0d0 - (aabs(x(l,j))/qraux(j))**2
+                     tt = 1.0d0 - (abs(x(l,j))/qraux(j))**2
                      tt = max(tt,0.0d0)
                      t = tt
                      tt = 1.0d0 + 0.05d0*tt*(qraux(j)/work(j))**2
