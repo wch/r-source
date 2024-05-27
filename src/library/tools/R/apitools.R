@@ -20,8 +20,7 @@
 ## Work out the function API from information in WRE
 ##
 
-## eventually either install this or get from svn:
-## wreloc <- file.path(R.home("doc"), "R-ext.texi")
+## WRE data is now installed in system.file(package = "tools", "wre.txt")
 ## WRE(newpath) forces a new load with the new path.
 
 apidata <-
@@ -288,4 +287,68 @@ checkAllPkgsAPI <- function(lib.loc = NULL, priority = NULL, all = FALSE,
                                          Ncpus = Ncpus, verbose = verbose))
     rownames(val) <- NULL
     val
+}
+
+
+##
+## Find R entry points and variables used in installed packages
+##
+
+
+clear_rownames <- function(val) {
+    rownames(val) <- NULL
+    val
+}
+
+rbind_list <- function(args)
+    clear_rownames(do.call(rbind, args))
+
+ofile_syms <- function(fname, keep = c("F", "V", "U")) {
+    ## this uses nm on Linux/macOS; probably doesn't work on Windows, so bail
+    stopifnot(isFALSE(.Platform$OS.type == "windows"))
+    v <- tools:::read_symbols_from_object_file(fname)
+    if (is.character(v) && nrow(v) == 0)
+        stop("no symbols; file may have been stripped")
+    if (is.null(v))
+        data.frame(name = character(0), type = character(0))
+    else {
+        match_type <-function(type)
+            ifelse(type == "T", "F", ifelse(type == "U", "U", "V"))
+        val <- as.data.frame(v)[c("name", "type")]
+        val <- val[val$type %in% c("U", "B", "D", "T"), ]
+        val$type <- match_type(val$type)
+        val <- val[val$type %in% keep, ]
+        val
+    }    
+}
+
+Rsyms <- function(keep = c("F", "V")) {
+    rsyms <- apidata$rsyms
+    if (is.null(rsyms)) {
+        ofiles <- c(file.path(R.home("bin"), "exec", "R"),
+                    dir(R.home("lib"), full.names = TRUE),
+                    dir(R.home("modules"), full.names = TRUE))
+        rsyms <- rbind_list(lapply(ofiles, ofile_syms, keep))
+        apidata$rsyms <- rsyms
+    }
+    rsyms
+}
+
+pkgRsyms <- function(pkg, lib.loc = NULL) {
+    libdir <- system.file("libs", package = pkg, lib.loc = lib.loc)
+    libs <- Sys.glob(file.path(libdir, "*.so"))
+    if (length(libs) > 0) {
+        val <- rbind_list(lapply(libs, ofile_syms, keep = "U"))
+        val$package <- rep(pkg, nrow(val))
+        val$type <- NULL
+        merge(val, Rsyms())
+    }
+    else NULL
+}
+
+allPkgsRsyms <- function(lib.loc = NULL,
+                           Ncpus = getOption("Ncpus", 1L),
+                           verbose = getOption("verbose")) {
+    p <- rownames(utils::installed.packages(lib.loc = lib.loc))
+    rbind_list(.package_apply(p, pkgRsyms, Ncpus = Ncpus, verbose = verbose))
 }
