@@ -10845,6 +10845,7 @@ LTO = -flto
 * External pointers and weak references::
 * Vector accessor functions::
 * Character encoding issues::
+* Writing compact-representation-friendly code::
 @end menu
 
 @node  Operating system access, Interface functions .C and .Fortran, System and foreign language interfaces, System and foreign language interfaces
@@ -14519,7 +14520,7 @@ have to fully materialize the object.
 @apifun SET_REAL_ELT
 
 
-@node Character encoding issues,  , Vector accessor functions, System and foreign language interfaces
+@node Character encoding issues, Writing compact-representation-friendly code, Vector accessor functions, System and foreign language interfaces
 @section Character encoding issues
 
 @apifun translateChar
@@ -14596,6 +14597,57 @@ SEXP mkCharLenCE(const char *, int, cetype_t);
 @noindent
 to create marked character strings of a given length.
 
+@node Writing compact-representation-friendly code, , Character encoding issues, System and foreign language interfaces
+
+@section Writing compact-representation-friendly code
+
+A simple way to iterate in C over the elements of an atomic vector is to
+obtain a data pointer and index into that pointer with standard C
+indexing. However, if the object has a compact representation, then
+obtaining the data pointer will force the object to be fully
+materialized. An alternative is to use one of the following functions to
+query whether a data pointer is available.
+
+@deftypefun {const int *} LOGICAL_OR_NULL (SEXP @var{x})
+@deftypefunx {const int *} INTEGER_OR_NULL (SEXP @var{x})
+@deftypefunx {const double *} REAL_OR_NULL (SEXP @var{x})
+@deftypefunx {const Rcomplex *} COMPLEX_OR_NULL (SEXP @var{x})
+@deftypefunx {const Rbyte *} RAW_OR_NULL (SEXP @var{x})
+@comment @deftypefun {const void *} DATAPTR_OR_NULL (SEXP @var{x})
+These functions will return a data pointer if one is available.  For
+vectors with a compact representation these functions will return
+@code{NULL}.
+@end deftypefun
+@eapifun LOGICAL_OR_NULL
+@eapifun INTEGER_OR_NULL
+@eapifun REAL_OR_NULL
+@eapifun COMPLEX_OR_NULL
+@eapifun RAW_OR_NULL
+
+If a data pointer is not available, then code can access elements one at
+a time with functions like @code{REAL_ELT}. This is often sufficient,
+but in some cases can be inefficient. An alternative is to request data
+for contiguous blocks of elements. For a good choice of block size this
+can be nearly as efficient as direct pointer access.
+
+@deftypefun R_xlen_t INTEGER_GET_REGION (SEXP @var{sx}, R_xlen_t @var{i}, R_xlen_t @var{n}, int *@var{buf})
+@deftypefunx R_xlen_t LOGICAL_GET_REGION (SEXP @var{sx}, R_xlen_t @var{i}, R_xlen_t @var{n}, int *@var{buf})
+@deftypefunx R_xlen_t REAL_GET_REGION (SEXP @var{sx}, R_xlen_t @var{i}, R_xlen_t @var{n}, double *@var{buf})
+@deftypefunx R_xlen_t COMPLEX_GET_REGION (SEXP @var{sx}, R_xlen_t @var{i}, R_xlen_t @var{n}, Rcomplex *@var{buf})
+@deftypefunx R_xlen_t RAW_GET_REGION (SEXP @var{sx}, R_xlen_t @var{i}, R_xlen_t @var{n}, Rbyte *@var{buf})
+These functions copy a contiguous set of up to @code{n} elements
+starting with element @code{i} into a buffer @code{buf}. The return
+value is the actual number of elements copied, which may be less than
+@code{n}.
+@end deftypefun
+@eapifun INTEGER_GET_REGION
+@eapifun LOGICAL_GET_REGION
+@eapifun REAL_GET_REGION
+@eapifun COMPLEX_GET_REGION
+@eapifun RAW_GET_REGION
+
+Macros in @file{R_ext/Itermacros.h} may help in implementing an
+iteration strategy.
 
 @node The R API, Generic functions and methods, System and foreign language interfaces, Top
 @chapter The R @acronym{API}: entry points for C code
