@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--2023  The R Core Team
+ *  Copyright (C) 1998--2024  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -590,7 +590,7 @@ static void drawcol(DEstruct DE, int whichcol)
 
     find_coords(DE, 0, col, &src_x, &src_y);
     cleararea(DE, src_x, src_y, bw, DE->windowHeight, DE->p->guiColors[dataeditbg]);
-    cleararea(DE, src_x, src_y, bw, DE->box_h, bbg);
+    cleararea(DE, src_x, src_y, bw, DE->box_h, DE->p->guiColors[dataeditnbg]);
     for (i = 0; i < DE->nhigh; i++)
 	drawrectangle(DE, src_x, DE->hwidth + i * DE->box_h, bw, DE->box_h, 1, 1);
 
@@ -618,7 +618,8 @@ static void drawrow(DEstruct DE, int whichrow)
 
     find_coords(DE, row, 0, &src_x, &src_y);
     cleararea(DE, src_x, src_y, DE->windowWidth, DE->box_h,
-	      (whichrow > 0) ? DE->p->guiColors[dataeditbg] : bbg);
+	      (whichrow > 0) ? DE->p->guiColors[dataeditbg] :
+	                       DE->p->guiColors[dataeditnbg]);
     drawrectangle(DE, src_x, src_y, DE->boxw[0], DE->box_h, 1, 1);
 
     snprintf(rlab, 15, DE->labform, whichrow);
@@ -938,7 +939,8 @@ static void printstring(DEstruct DE, const char *ibuf, int buflen,
     find_coords(DE, row, col, &x_pos, &y_pos);
     if (col == 0) bw = DE->boxw[0]; else bw = BOXW(col+DE->colmin-1);
     cleararea(DE, x_pos + 1, y_pos + 1, bw - 1, DE->box_h - 1,
-	      (row==0 || col==0) ? bbg:DE->p->guiColors[dataeditbg]);
+	      (row==0 || col==0) ? 
+              DE->p->guiColors[dataeditnbg]:DE->p->guiColors[dataeditbg]);
     fw = min(BUFSIZE, (bw - 8)/(DE->p->fw));
     bufw = min(fw, buflen);
     strncpy(buf, ibuf, bufw);

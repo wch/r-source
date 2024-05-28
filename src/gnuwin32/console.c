@@ -3,7 +3,7 @@
  *  file console.c
  *  Copyright (C) 1998--2003  Guido Masarotto and Brian Ripley
  *  Copyright (C) 2004-8      The R Foundation
- *  Copyright (C) 2004-2023   The R Core Team
+ *  Copyright (C) 2004-2024   The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -314,7 +314,8 @@ rgb guiColors[numGuiColors] = {
 	White, Black, gaRed, /* consolebg, consolefg, consoleuser, */
 	White, Black, gaRed, /* pagerbg, pagerfg, pagerhighlight,  */
 	White, Black, gaRed, /* dataeditbg, dataeditfg, dataedituser */
-	White, Black         /* editorbg, editorfg                 */
+	White, Black,        /* editorbg, editorfg                 */
+	White                /* dataeditnbg                        */
 };
 
 extern int R_HistorySize;  /* from Defn.h */

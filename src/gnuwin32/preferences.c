@@ -2,7 +2,7 @@
  *  R : A Computer Language for Statistical Data Analysis
  *  file preferences.c
  *  Copyright (C) 2000      Guido Masarotto and Brian Ripley
- *                2004-2023 R Core Team
+ *                2004-2024 R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -71,7 +71,7 @@ static const char *FontsList[] = {"Courier", "Courier New", "FixedSys", "FixedFo
 static const char *GuiElementNames[numGuiColors+1] = {"background", "normaltext", "usertext",
 						"pagerbg", "pagertext", "highlight",
 						"dataeditbg", "dataedittext", "dataedituser",
-						"editorbg", "editortext", NULL};
+						"editorbg", "editortext", "dataeditnbg", NULL};
 static const char *BlinkList[] = {"None", "Partial", "Full"};
 static window wconfig;
 static button bApply, bSave, bLoad, bOK, bCancel;
@@ -145,6 +145,7 @@ void getDefaults(Gui gui)
     gui->guiColors[dataedituser] = gaRed;    
     gui->guiColors[editorbg] = White;
     gui->guiColors[editorfg] = Black;    
+    gui->guiColors[dataeditnbg] = White;    
     gui->prows = 25;
     gui->pcols = 80;
     gui->pagerMultiple = 0;
@@ -739,11 +740,11 @@ static void cSDI(button b)
 static rgb whichbg[numGuiColors] = { consolebg, consolebg, consolebg,
                                      pagerbg, pagerbg, pagerbg,
                                      dataeditbg, dataeditbg, dataeditbg,
-                                     editorbg, editorbg };
+                                     editorbg, editorbg, dataeditnbg };
 static rgb whichfg[numGuiColors] = { consolefg, consolefg, consoleuser,
 				     pagerfg, pagerfg, pagerhighlight,
 				     dataeditfg, dataeditfg, dataedituser,
-				     editorfg, editorfg };
+				     editorfg, editorfg, dataeditfg };
 static void clickColor(control c, int argument)
 {
     int element = cmatch(gettext(guielement), GuiElementNames);
