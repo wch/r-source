@@ -14150,7 +14150,7 @@ protected locations and return the answer @code{ans}.
 @section Parsing R code from C
 @cindex Parsing R code from C
 
-Suppose an @R{} extension want to accept an @R{} expression from the
+Suppose an @R{} extension wants to accept an @R{} expression from the
 user and evaluate it.  The previous section covered evaluation, but the
 expression will be entered as text and needs to be parsed first.  A
 small part of @R{}'s parse interface is declared in header file
@@ -14210,6 +14210,24 @@ object or the @R{} @code{NULL} object (as in the example above). If a
 attached to the result, containing a list of @code{srcref} objects of
 the same length as the expression, to allow it to be echoed with its
 original formatting.
+
+Two higher-level alternatives are @code{R_ParseString} and
+@code{R_ParseEvalString}:
+
+@deftypefun SEXP R_ParseString (const char *@var{str})
+@deftypefunx SEXP R_ParseEvalString (const char *@var{str}, SEXP @var{env})
+@code{R_ParseString} Parses the code in @var{str} and returns the
+resulting expression. An error is signaled if parsing @var{str} produces
+more than one @R{} expression.  @code{R_ParseEvalString } first parses
+@code{str}, then evaluates the expression in the environment @var{env},
+and returns the result.
+@end deftypefun
+@apifun R_ParseString
+@apifun R_ParseEvalString
+An example from @file{src/main/objects.c}:
+@example
+call = R_ParseString("base::nameOfClass(X)");
+@end example
 
 @menu
 * Accessing source references::
