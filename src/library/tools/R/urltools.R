@@ -779,10 +779,7 @@ function(urls, verbose = FALSE, ids = urls)
 .fetch_headers_via_curl <-
 function(urls, verbose = FALSE, pool = NULL)
 {
-    out <- .curl_multi_run_worker(urls, TRUE, verbose, pool,
-                                  c(.curl_handle_default_opts,
-                                    list(http_version = 2L,
-                                         ssl_enable_alpn = 0L)))
+    out <- .curl_multi_run_worker(urls, TRUE, verbose, pool)
     ind <- !vapply(out, inherits, NA, "error")
     if(any(ind))
         out[ind] <- lapply(out[ind],
