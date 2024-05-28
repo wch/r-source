@@ -4724,9 +4724,9 @@ attribute_hidden void (SET_BYTES)(SEXP x) { SET_BYTES(CHK(x)); }
 attribute_hidden void (SET_LATIN1)(SEXP x) { SET_LATIN1(CHK(x)); }
 attribute_hidden void (SET_UTF8)(SEXP x) { SET_UTF8(CHK(x)); }
 attribute_hidden void (SET_ASCII)(SEXP x) { SET_ASCII(CHK(x)); }
-int  (ENC_KNOWN)(SEXP x) { return ENC_KNOWN(CHK(x)); }
+/*attribute_hidden*/ int  (ENC_KNOWN)(SEXP x) { return ENC_KNOWN(CHK(x)); }
 attribute_hidden void (SET_CACHED)(SEXP x) { SET_CACHED(CHK(x)); }
-attribute_hidden int  (IS_CACHED)(SEXP x) { return IS_CACHED(CHK(x)); }
+/*attribute_hidden*/ int  (IS_CACHED)(SEXP x) { return IS_CACHED(CHK(x)); }
 
 /*******************************************/
 /* Non-sampling memory use profiler
