@@ -211,7 +211,7 @@ INLINE_FUN R_xlen_t XTRUELENGTH(SEXP x)
     return ALTREP(x) ? ALTREP_TRUELENGTH(x) : STDVEC_TRUELENGTH(x);
 }
 
-HIDDEN INLINE_FUN int LENGTH_EX(SEXP x, const char *file, int line)
+/*HIDDEN*/ INLINE_FUN int LENGTH_EX(SEXP x, const char *file, int line)
 {
     if (x == R_NilValue) return 0;
     R_xlen_t len = XLENGTH(x);
