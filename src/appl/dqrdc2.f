@@ -104,7 +104,7 @@ c       avoid accessing element beyond the bound
             work(j,1) = qraux(j)
             work(j,2) = qraux(j)
             if(work(j,2) .eq. 0.0d0) work(j,2) = 1.0d0
-         end do
+         end do                 ! j
       end if
 c
 c     perform the householder reduction of x.
@@ -127,9 +127,9 @@ c
                t = x(i,l)
                do j=l+1,p
                   x(i,j-1) = x(i,j)
-               end do
+               end do           ! j
                x(i,p) = t
-            end do
+            end do              ! i
             i = jpvt(l)
             t = qraux(l)
             tt = work(l,1)
@@ -139,13 +139,13 @@ c
                qraux(j-1) = qraux(j)
                work(j-1,1) = work(j,1)
                work(j-1,2) = work(j,2)
-            end do
+            end do              ! j
             jpvt(p) = i
             qraux(p) = t
             work(p,1) = tt
             work(p,2) = ttt
             k = k - 1
-         end do
+         end do                 ! (no index)
          if (l .ne. n) then
 c
 c           compute the householder transformation for column l.
@@ -178,7 +178,7 @@ c In this version we need accurate norms, so re-compute often.
                            work(j,1) = qraux(j)
                         end if
                      end if
-                  end do
+                  end do        ! j
                end if
 c
 c              Save the transformation.
@@ -187,7 +187,7 @@ c
                x(l,l) = -nrmxl
             end if
          end if
-      end do
+      end do                    ! l
       k = min(k - 1, n)
       return
       end

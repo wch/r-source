@@ -38,7 +38,7 @@ C
 C     For each point I, find its two closest centres, IC1(I) and
 C     IC2(I).     Assign it to IC1(I).
 C
-      DO 60 I = 1, M
+      DO I = 1, M
         IC1(I) = 1
         IC2(I) = 2
         DO IL = 1, 2
@@ -46,33 +46,33 @@ C
           DO J = 1, N
             DA = A(I,J) - C(IL,J)
             DT(IL) = DT(IL) + DA*DA
-          end DO
+          end DO ! J
         end DO ! IL
         IF (DT(1) .GT. DT(2)) THEN
-          IC1(I) = 2
-          IC2(I) = 1
-          TEMP = DT(1)
-          DT(1) = DT(2)
-          DT(2) = TEMP
+           IC1(I) = 2
+           IC2(I) = 1
+           TEMP = DT(1)
+           DT(1) = DT(2)
+           DT(2) = TEMP
         END IF
-        DO 50 L = 3, K
-          DB = ZERO
-          DO J = 1, N
-            DC = A(I,J) - C(L,J)
-            DB = DB + DC*DC
-            IF (DB .GE. DT(2)) GO TO 50
-          end DO
-          IF (DB .ge. DT(1)) then
-             DT(2) = DB
-             IC2(I) = L
-          else
-             DT(2) = DT(1)
-             IC2(I) = IC1(I)
-             DT(1) = DB
-             IC1(I) = L
-          end IF
- 50    CONTINUE
- 60    CONTINUE
+        DO L = 3, K
+           DB = ZERO
+           DO J = 1, N
+              DC = A(I,J) - C(L,J)
+              DB = DB + DC*DC
+              IF (DB .GE. DT(2)) GO TO 50
+           end DO               ! J
+           IF (DB .ge. DT(1)) then
+              DT(2) = DB
+              IC2(I) = L
+           else
+              DT(2) = DT(1)
+              IC2(I) = IC1(I)
+              DT(1) = DB
+              IC1(I) = L
+           end IF
+ 50     END DO                  ! L
+      END DO                    ! I
 C
 C     Update cluster centres to be the average of points contained
 C     within them.
@@ -81,15 +81,15 @@ C     NC(L) := #{units in cluster L},  L = 1..K
         NC(L) = 0
         DO J = 1, N
            C(L,J) = ZERO
-        end DO
-      end DO
+        end DO                  ! J
+      end DO                    ! L
       DO I = 1, M
         L = IC1(I)
         NC(L) = NC(L) + 1
         DO J = 1, N
            C(L,J) = C(L,J) + A(I,J)
-        end DO
-      end DO
+        end DO ! J
+      end DO ! I
 C
 C     Check to see if there is any empty cluster at this stage
 C
@@ -101,7 +101,7 @@ C
         AA = NC(L)
         DO J = 1, N
            C(L,J) = C(L,J) / AA
-        end DO
+        end DO ! J
 C
 C     Initialize AN1, AN2, ITRAN & NCP
 C     AN1(L) = NC(L) / (NC(L) - 1)
@@ -118,7 +118,7 @@ C
         IF (AA .GT. ONE) AN1(L) = AA / (AA - ONE)
         ITRAN(L) = 1
         NCP(L) = -1
-      end DO
+      end DO                    ! I
 
       INDX = 0
       DO IJ = 1, ITER
@@ -425,7 +425,7 @@ C
            DO J = 1, N
               C(L1,J) = (C(L1,J) * AL1 - A(I,J)) / ALW
               C(L2,J) = (C(L2,J) * AL2 + A(I,J)) / ALT
-           end DO
+           end DO ! J
            NC(L1) = NC(L1) - 1
            NC(L2) = NC(L2) + 1
            AN2(L1) = ALW / AL1
@@ -440,7 +440,7 @@ C
 C     If no re-allocation took place in the last M steps, return.
 C
    60   IF (ICOUN .EQ. M) RETURN
-      end do
+      end do                    ! I
 
       call rchkusr() ! allow user interrupt
       GO TO 10
