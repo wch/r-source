@@ -603,7 +603,7 @@ static FILE *R_popen_timeout(const char *cmd, const char *type, int timeout)
     }
 }
 
-int R_pclose_timeout(FILE *fp)
+static int R_pclose_timeout(FILE *fp)
 {
     if (fp != tost.fp)
 	/* should not happen */
@@ -722,7 +722,7 @@ typedef struct ppg_elt {
 
 static ppg_t *ppg = NULL;
 
-FILE *R_popen_pg(const char *cmd, const char *type)
+attribute_hidden FILE *R_popen_pg(const char *cmd, const char *type)
 {
     /* close-on-exec is not supported */
     if (!type || type[1] ||  (type[0] != 'r' && type[0] != 'w')) {
@@ -802,7 +802,7 @@ FILE *R_popen_pg(const char *cmd, const char *type)
     }
 }
 
-int R_pclose_pg(FILE *fp)
+attribute_hidden int R_pclose_pg(FILE *fp)
 {
     ppg_t *prev = NULL;
     for (ppg_t *p = ppg; p != NULL; p = p->next) {

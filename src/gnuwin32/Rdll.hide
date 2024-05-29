@@ -146,6 +146,7 @@
  R_DevicesSymbol
  R_DisableNLinBrowser
  R_DotEnvSymbol
+ R_EnsureFDLimit
  R_ErrorCon
  R_EvalDepth
  R_ExactSymbol
@@ -219,11 +220,13 @@
  R_Quiet
  R_ReadItemDepth
  R_RecursiveSymbol
+ R_ReleaseMSet
  R_RestartStack
  R_RestartToken
  R_ReturnedValue
  R_SaveToFile
  R_SaveToFileV
+ R_SerializeInfo
  R_SessionContext
  R_SetMaxNSize
  R_SetMaxVSize
@@ -376,7 +379,6 @@
  R_tzset
  R_tzsetwall
  R_unary
- R_unserialize
  R_vmakeErrorCondition
  R_warn_partial_match_args
  R_warn_partial_match_attr
@@ -532,6 +534,7 @@
  Rf_printwhere
  Rf_promiseArgs
  Rf_qchisq_appr
+ Rf_reEnc3
  Rf_readS3VarsFromFrame
  Rf_regcomp
  Rf_regerror

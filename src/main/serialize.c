@@ -2291,7 +2291,7 @@ SEXP R_Unserialize(R_inpstream_t stream)
     return obj;
 }
 
-SEXP R_SerializeInfo(R_inpstream_t stream)
+attribute_hidden SEXP R_SerializeInfo(R_inpstream_t stream)
 {
     int version;
     int writer_version, min_reader_version, vv, vp, vs;
@@ -2975,7 +2975,7 @@ R_serialize(SEXP object, SEXP icon, SEXP ascii, SEXP Sversion, SEXP fun)
 }
 
 
-attribute_hidden SEXP R_unserialize(SEXP icon, SEXP fun)
+static SEXP R_unserialize(SEXP icon, SEXP fun)
 {
     struct R_inpstream_st in;
     SEXP (*hook)(SEXP, SEXP);

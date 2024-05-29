@@ -1473,6 +1473,8 @@ LibExtern int	R_PPStackSize	INI_as(R_PPSSIZE); /* The stack size (elements) */
 LibExtern int	R_PPStackTop;	    /* The top of the stack */
 LibExtern SEXP*	R_PPStack;	    /* The pointer protection stack */
 
+void R_ReleaseMSet(SEXP mset, int keepSize);
+
 /* Evaluation Environment */
 extern0 SEXP	R_CurrentExpr;	    /* Currently evaluating expression */
 extern0 SEXP	R_ReturnedValue;    /* Slot for return-ing values */
@@ -2273,6 +2275,7 @@ size_t wcstoutf8(char *s, const wchar_t *wc, size_t n);
 SEXP Rf_installTrChar(SEXP);
 
 const wchar_t *wtransChar(SEXP x); /* from sysutils.c */
+const char *Rf_reEnc3(const char *x, const char *fromcode, const char *tocode, int subst);
 
 #define mbs_init(x) memset(x, 0, sizeof(mbstate_t))
 size_t Mbrtowc(wchar_t *wc, const char *s, size_t n, mbstate_t *ps);
@@ -2295,7 +2298,10 @@ void invalidate_cached_recodings(void);  /* from sysutils.c */
 void resetICUcollator(Rboolean disable); /* from util.c */
 void dt_invalidate_locale(void); /* from Rstrptime.h */
 extern int R_OutputCon; /* from connections.c */
+
 extern int R_InitReadItemDepth, R_ReadItemDepth; /* from serialize.c */
+SEXP R_SerializeInfo(R_inpstream_t ips);
+
 void get_current_mem(size_t *,size_t *,size_t *); /* from memory.c */
 unsigned long get_duplicate_counter(void);  /* from duplicate.c */
 void reset_duplicate_counter(void);  /* from duplicate.c */

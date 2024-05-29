@@ -3758,7 +3758,7 @@ void R_ReleaseFromMSet(SEXP x, SEXP mset)
 
 /* Release all objects from the multi-set, but the multi-set can be used for
    preserving more objects. */
-void R_ReleaseMSet(SEXP mset, int keepSize)
+attribute_hidden void R_ReleaseMSet(SEXP mset, int keepSize)
 {
     checkMSet(mset);
     SEXP store = CAR(mset);
