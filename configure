@@ -9129,7 +9129,7 @@ if test "${r_cv_prog_cc_vis}" = yes; then
   fi
 fi
 case  "${CC}" in
-  ## Intel compiler: note that -c99 may have been appended
+  ## Obsolete Intel compiler: note that -c99 may have been appended
   *icc*)
     C_VISIBILITY=
     ;;
@@ -9187,7 +9187,7 @@ if test "${r_cv_prog_cxx_vis}" = yes; then
   fi
 fi
 case  "${CXX}" in
-  ## Intel compiler
+  ## Obsolete Intel compilers
   *icc*|*icpc*)
     CXX_VISIBILITY=
     ;;
@@ -9238,7 +9238,7 @@ if test "${r_cv_prog_fc_vis}" = yes; then
   fi
 fi
 case  "${FC}" in
-  ## Intel compiler
+  ## Obsolete Intel compilers
   *ifc|*ifort)
     F_VISIBILITY=
     ;;
