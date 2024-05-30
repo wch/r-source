@@ -2011,7 +2011,7 @@ SEXP deparse1(SEXP,Rboolean,int);
 SEXP deparse1m(SEXP call, Rboolean abbrev, int opts);
 SEXP deparse1w(SEXP,Rboolean,int);
 SEXP deparse1line (SEXP, Rboolean);
-SEXP deparse1line_(SEXP, Rboolean, int);
+SEXP deparse1line_ex(SEXP, Rboolean, int);
 SEXP deparse1s(SEXP call);
 int DispatchAnyOrEval(SEXP, SEXP, const char *, SEXP, SEXP, SEXP*, int, int);
 int DispatchOrEval(SEXP, SEXP, const char *, SEXP, SEXP, SEXP*, int, int);

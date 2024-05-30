@@ -1099,7 +1099,8 @@ static SEXP coerceVectorList(SEXP v, SEXPTYPE type)
 #endif
 	    else
 		SET_STRING_ELT(rval, i,
-			       STRING_ELT(deparse1line_(VECTOR_ELT(v, i), 0, NICE_NAMES),
+			       STRING_ELT(deparse1line_ex(VECTOR_ELT(v, i),
+							  0, NICE_NAMES),
 					  0));
 	}
     }

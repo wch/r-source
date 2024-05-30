@@ -320,7 +320,8 @@ static SEXP deparse1WithCutoff(SEXP call, Rboolean abbrev, int cutoff,
  * This is needed in terms.formula, where we must be able
  * to deparse a term label into a single line of text so
  * that it can be reparsed correctly */
-SEXP deparse1line_(SEXP call, Rboolean abbrev, int opts)
+attribute_hidden
+SEXP deparse1line_ex(SEXP call, Rboolean abbrev, int opts)
 {
     Rboolean backtick=TRUE;
     int lines;
@@ -357,7 +358,7 @@ SEXP deparse1line_(SEXP call, Rboolean abbrev, int opts)
 
 SEXP deparse1line(SEXP call, Rboolean abbrev)
 {
-    return deparse1line_(call, abbrev, SIMPLEDEPARSE);
+    return deparse1line_ex(call, abbrev, SIMPLEDEPARSE);
 }
 
 
