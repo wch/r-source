@@ -4047,7 +4047,7 @@ attribute_hidden void (SETALTREP)(SEXP x, int v) { SETALTREP(x, v); }
 #endif
 
 /* temporary, to ease transition away from remapping */
-R_xlen_t Rf_XLENGTH(SEXP x) { return XLENGTH(x); }
+R_xlen_t Rf_XLENGTH(SEXP x) { return XLENGTH(CHK2(x)); }
 
 const char *(R_CHAR)(SEXP x) {
     if(TYPEOF(x) != CHARSXP) // Han-Tak proposes to prepend  'x && '
