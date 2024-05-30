@@ -2013,7 +2013,8 @@ static int RunGenCollect(R_size_t size_needed)
 
 
 /* public interface for controlling GC torture settings */
-/* maybe, but in no header */
+/* maybe, but in no header, and now hidden */
+attribute_hidden
 void R_gc_torture(int gap, int wait, Rboolean inhibit)
 {
     if (gap != NA_INTEGER && gap >= 0)
@@ -3453,7 +3454,7 @@ void unprotect_ptr(SEXP s)
 
 /* Debugging function:  is s protected? */
 
-int Rf_isProtected(SEXP s)
+attribute_hidden int Rf_isProtected(SEXP s)
 {
     R_CHECK_THREAD;
     int i = R_PPStackTop;

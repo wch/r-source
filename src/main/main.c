@@ -67,6 +67,7 @@ attribute_hidden void nl_Rdummy(void)
  * in separate platform dependent modules.
  */
 
+attribute_hidden
 void Rf_callToplevelHandlers(SEXP expr, SEXP value, Rboolean succeeded,
 			     Rboolean visible);
 
@@ -194,7 +195,7 @@ typedef struct {
  The "cursor" for the input buffer is moved to the next starting
  point, i.e. the end of the first line or after the first ;.
  */
-int
+attribute_hidden int
 Rf_ReplIteration(SEXP rho, int savestack, int browselevel, R_ReplState *state)
 {
     int c, browsevalue;
@@ -1629,6 +1630,7 @@ static Rboolean Rf_RunningToplevelHandlers = FALSE;
   since they could be more identified by an invariant (rather than
   position).
  */
+attribute_hidden
 R_ToplevelCallbackEl *
 Rf_addTaskCallback(R_ToplevelCallback cb, void *data,
 		   void (*finalizer)(void *), const char *name, int *pos)
@@ -1780,7 +1782,7 @@ R_removeTaskCallback(SEXP which)
     return ScalarLogical(val);
 }
 
-SEXP
+attribute_hidden SEXP
 R_getTaskCallbackNames(void)
 {
     SEXP ans;
@@ -1883,7 +1885,7 @@ static void defineVarInc(SEXP sym, SEXP val, SEXP rho)
     INCREMENT_NAMED(val); /* in case this is used in a NAMED build */
 }
 
-Rboolean
+attribute_hidden Rboolean
 R_taskCallbackRoutine(SEXP expr, SEXP value, Rboolean succeeded,
 		      Rboolean visible, void *userData)
 {

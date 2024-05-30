@@ -190,11 +190,11 @@ attribute_hidden NORET SEXP do_untracemem(SEXP call, SEXP op, SEXP args, SEXP rh
 #endif /* R_MEMORY_PROFILING */
 
 #ifndef R_MEMORY_PROFILING
-void memtrace_report(void* old, void *_new) {
+attribute_hidden void memtrace_report(void* old, void *_new) {
     return;
 }
 #else
-static void memtrace_stack_dump(void)
+attribute_hidden static void memtrace_stack_dump(void)
 {
     RCNTXT *cptr;
 

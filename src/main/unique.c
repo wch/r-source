@@ -1333,6 +1333,7 @@ static SEXP asUTF8(SEXP x)
 }
     
 // workhorse of R's match() and hence also  " ix %in% itable "
+static /* or attribute_hidden? */
 SEXP match5(SEXP itable, SEXP ix, int nmatch, SEXP incomp, SEXP env)
 {
     R_xlen_t n = xlength(ix);

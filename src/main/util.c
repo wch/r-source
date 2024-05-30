@@ -635,19 +635,19 @@ Rboolean isFree(SEXP val)
 /* a debugger such as gdb, so you don't have to remember */
 /* the names of the data structure components. */
 
-int dtype(SEXP q)
+attribute_hidden int dtype(SEXP q)
 {
     return((int)TYPEOF(q));
 }
 
 
-SEXP dcar(SEXP l)
+attribute_hidden SEXP dcar(SEXP l)
 {
     return(CAR(l));
 }
 
 
-SEXP dcdr(SEXP l)
+attribute_hidden SEXP dcdr(SEXP l)
 {
     return(CDR(l));
 }
@@ -1722,7 +1722,7 @@ attribute_hidden SEXP do_validEnc(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 
 /* MBCS-aware versions of common comparisons.  Only used for ASCII c */
-char *Rf_strchr(const char *s, int c)
+attribute_hidden char *Rf_strchr(const char *s, int c)
 {
     char *p = (char *)s;
     mbstate_t mb_st;
@@ -2275,6 +2275,7 @@ done:
 }
 
 
+attribute_hidden
 double R_strtod4(const char *str, char **endptr, char dec, Rboolean NA)
 {
     return R_strtod5(str, endptr, dec, NA, FALSE);

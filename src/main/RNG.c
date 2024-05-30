@@ -597,12 +597,15 @@ attribute_hidden SEXP do_setseed (SEXP call, SEXP op, SEXP args, SEXP env)
 
 /* The following entry points provide compatibility with S. */
 /* These entry points should not be used by new R code. */
+/* These entry points are now hidden */
 
+attribute_hidden
 void seed_in(long *ignored)
 {
     GetRNGstate();
 }
 
+attribute_hidden
 void seed_out(long *ignored)
 {
     PutRNGstate();
