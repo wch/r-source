@@ -591,6 +591,7 @@ int R_EditFiles(int nfile, const char **file, const char **title,
 
 /* Returns the limit on the number of open files. On error or when no
    limit is known, returns a negative number. */
+attribute_hidden /* would need to be in an installed header if not hidden */
 int R_GetFDLimit(void) {
 
 #if defined(HAVE_SYS_RESOURCE_H) && defined(HAVE_GETRLIMIT)

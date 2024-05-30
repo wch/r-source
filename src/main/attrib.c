@@ -1171,6 +1171,7 @@ attribute_hidden SEXP do_dimnames(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 }
 
+static /* would need to be in a header if not static */
 SEXP R_dim(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans;

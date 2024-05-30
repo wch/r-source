@@ -552,6 +552,7 @@ SEXP nthcdr(SEXP s, int n)
 }
 
 /* Destructively removes R_NilValue ('NULL') elements from a pairlist. */
+attribute_hidden /* would need to be in an installed header if not hidden */
 SEXP R_listCompact(SEXP s, Rboolean keep_initial) {
     if(!keep_initial)
     // skip initial NULL values
@@ -1481,8 +1482,8 @@ utf8towcs(wchar_t *wc, const char *s, size_t n)
     return (size_t) res;
 }
 
-size_t
-utf8towcs4(R_wchar_t *wc, const char *s, size_t n)
+attribute_hidden /* would need to be in an installed header if not hidden */
+size_t utf8towcs4(R_wchar_t *wc, const char *s, size_t n)
 {
     ssize_t m, res = 0;
     const char *t;
@@ -1737,7 +1738,7 @@ char *Rf_strchr(const char *s, int c)
     return (char *)NULL;
 }
 
-char *Rf_strrchr(const char *s, int c)
+attribute_hidden char *Rf_strrchr(const char *s, int c)
 {
     char *p = (char *)s, *plast = NULL;
     mbstate_t mb_st;

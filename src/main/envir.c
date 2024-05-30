@@ -3943,7 +3943,7 @@ attribute_hidden SEXP R_getNSValue(SEXP call, SEXP ns, SEXP name, int exported)
     return NULL; /* not reached */
 }
 
-SEXP do_getNSValue(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_getNSValue(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);
     SEXP ns = CAR(args);

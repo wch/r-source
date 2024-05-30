@@ -1781,6 +1781,7 @@ const wchar_t *wtransChar(SEXP x)
 }
 
 /* Variant which returns NULL (with a warning) when conversion fails. */
+attribute_hidden /* would need to be in an installed header if not hidden */
 const wchar_t *wtransChar2(SEXP x)
 {
     CHECK_CHARSXP(x);
@@ -2197,6 +2198,7 @@ extern char * mkdtemp (char *template);
 # include <ctype.h>
 #endif
 
+attribute_hidden /* would need to be in an installed header if not hidden */
 void R_reInitTempDir(int die_on_fail)
 {
     char *tmp = NULL, *tm;

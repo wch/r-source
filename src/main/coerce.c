@@ -1859,6 +1859,7 @@ int asInteger(SEXP x)
     return NA_INTEGER;
 }
 
+attribute_hidden /* would need to be in an installed header if not hidden */
 R_xlen_t asXLength(SEXP x)
 {
     const R_xlen_t na = -999; /* any negative number should do */

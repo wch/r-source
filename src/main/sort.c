@@ -434,7 +434,7 @@ attribute_hidden SEXP do_sort(SEXP call, SEXP op, SEXP args, SEXP rho)
     return(ans); /* wrapping with metadata happens at end of sort.int */
 }
 
-Rboolean fastpass_sortcheck(SEXP x, int wanted) {
+static Rboolean fastpass_sortcheck(SEXP x, int wanted) {
     if(!KNOWN_SORTED(wanted)) 
 	return FALSE;
 

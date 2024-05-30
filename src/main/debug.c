@@ -115,7 +115,9 @@ attribute_hidden SEXP do_traceOnOff(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 // GUIs, packages, etc can query:
+attribute_hidden /* would need to be in an installed header if not hidden */
 Rboolean R_current_debug_state(void) { return GET_DEBUG_STATE; }
+attribute_hidden /* would need to be in an installed header if not hidden */
 Rboolean R_current_trace_state(void) { return GET_TRACE_STATE; }
 
 

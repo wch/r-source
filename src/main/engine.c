@@ -2888,7 +2888,7 @@ void GEdirtyDevice(pGEDevDesc dd)
     dd->dirty = TRUE;
 }
 
-void GEcleanDevice(pGEDevDesc dd)
+attribute_hidden void GEcleanDevice(pGEDevDesc dd)
 {
 #ifdef R_GE_DEBUG
     if (getenv("R_GE_DEBUG_dirty")) {

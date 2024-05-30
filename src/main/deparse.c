@@ -188,6 +188,7 @@ attribute_hidden SEXP do_deparse(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 // deparse1() version *looking* at getOption("deparse.max.lines")
+attribute_hidden /* would need to be in an installed header if not hidden */
 SEXP deparse1m(SEXP call, Rboolean abbrev, int opts)
 {
     Rboolean backtick = TRUE;

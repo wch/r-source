@@ -146,7 +146,7 @@
 #define n_max (100)
 
 // Compute  d_n(x) = (d/dx)^n cot(x)  ; cot(x) := cos(x) / sin(x)
-double d_n_cot(double x, int n)
+static double d_n_cot(double x, int n)
 {
     if (n == 0)
 	return cos(x)/sin(x);
