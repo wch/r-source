@@ -237,6 +237,16 @@ inRfuns <- function(syms) {
         syms[unmap(syms) %in% unmap(rfuns)]
 }
 
+cleanRfuns <- function(val) {
+    ## if Rf_XLENGTH and XLENGTH are both there then keep Rf_XLENGTH
+    if (any(grepl("^_*Rf_XLENGTH_*$", val)) &&
+        any(grepl("^_*XLENGTH_*$", val)))
+        val <- val[! grepl("^_*XLENGTH_*$", val)]
+    
+    ## drop tre_ stuff if it is there and some others
+    val[! grepl("tre_|^_*(main|MAIN|start)_*$|yyparse", val)]
+}
+
 getRfuns <- function() {
     pat <- sprintf("(\\.dylib|%s)$", .Platform$dynlib.ext)
     ofiles <- c(file.path(R.home("bin"), "exec", "R"),
@@ -244,7 +254,7 @@ getRfuns <- function() {
                 dir(R.home("modules"), pattern = pat, full.names = TRUE))
     data <- do.call(rbind, lapply(ofiles, readFileSyms))
     fdata <- data[data$type == "T", ]
-    fdata$name
+    cleanRfuns(fdata$name)
 }
 
 Rfuns <- function() {
@@ -352,3 +362,4 @@ allPkgsRsyms <- function(lib.loc = NULL,
     p <- rownames(utils::installed.packages(lib.loc = lib.loc))
     rbind_list(.package_apply(p, pkgRsyms, Ncpus = Ncpus, verbose = verbose))
 }
+
