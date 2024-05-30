@@ -1,6 +1,6 @@
 % File src/library/base/man/difftime.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2023 R Core Team
+% Copyright 1995-2024 R Core Team
 % Distributed under GPL 2 or later
 
 \name{difftime}
@@ -65,7 +65,8 @@ as.difftime(tim, format = "\%X", units = "auto", tz = "UTC")
 }
 \details{
   Function \code{difftime} calculates a difference of two date/time
-  objects and returns an object of class \code{"difftime"} with an
+  objects, \code{time1} (end) and \code{time2} (beginning), and
+  returns an object of class \code{"difftime"} with an
   attribute indicating the units.  The
   \code{\link[=S3groupGeneric]{Math}} group method provides
   \code{\link{round}}, \code{\link{signif}}, \code{\link{floor}},
