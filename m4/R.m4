@@ -663,7 +663,7 @@ dnl SHLIB_LD=ld for native C compilers (problem with non-PIC 'crt0.o',
 dnl see 'Individual platform overrides' in section 'DLL stuff' in file
 dnl 'configure.ac'.
 dnl
-dnl Using the Intel Fortran compiler (ifc) one typically gets incorrect
+dnl Using the pre-2023 Intel Fortran compiler (ifc) one typically gets incorrect
 dnl flags, as the output from _AC_PROG_F77_V_OUTPUT() contains double
 dnl quoted options, e.g. "-mGLOB_options_string=......", see also e.g.
 dnl http://www.octave.org/octave-lists/archive/octave-maintainers.2002/msg00038.html.
@@ -4147,12 +4147,12 @@ if test "${r_cv_prog_cc_vis}" = yes; then
     C_VISIBILITY="-fvisibility=hidden"
   fi
 fi
-dnl Need to exclude Intel compilers, where this does not work correctly.
+dnl Need to exclude pre-2023 Intel compilers, where this does not work correctly.
 dnl The flag is documented and is effective, but also hides
 dnl unsatisfied references. We cannot test for GCC, as icc passes that test.
 dnl Seems to work for the revamped icx.
 case  "${CC}" in
-  ## Intel compiler: note that -c99 may have been appended
+  ## Obsolete Intel compiler: note that -c99 may have been appended
   *icc*)
     C_VISIBILITY=
     ;;
@@ -4173,12 +4173,12 @@ if test "${r_cv_prog_cxx_vis}" = yes; then
     CXX_VISIBILITY="-fvisibility=hidden"
   fi
 fi
-dnl Need to exclude Intel compilers, where this does not work correctly.
+dnl Need to exclude pre-2023 Intel compilers, where this does not work correctly.
 dnl The flag is documented and is effective, but also hides
 dnl unsatisfied references. We cannot test for GCC, as icc passes that test.
 dnl Seems to work for the revamped icpx.
 case  "${CXX}" in
-  ## Intel compiler
+  ## Obsolete Intel compilers
   *icc*|*icpc*)
     CXX_VISIBILITY=
     ;;
@@ -4200,9 +4200,9 @@ if test "${r_cv_prog_fc_vis}" = yes; then
   fi
 fi
 dnl flang accepts this but ignores it.
-dnl Need to exclude Intel compilers, but ifx seems to work.
+dnl Need to exclude pre-2023 Intel compilers, but ifx seems to work.
 case  "${FC}" in
-  ## Intel compiler
+  ## Obsolete Intel compilers
   *ifc|*ifort)
     F_VISIBILITY=
     ;;
