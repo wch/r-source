@@ -313,7 +313,7 @@ SEXP allocArray(SEXPTYPE mode, SEXP dims)
 /* attribute.  Note that this function mutates x. */
 /* Duplication should occur before this is called. */
 
-SEXP DropDims(SEXP x)
+attribute_hidden SEXP DropDims(SEXP x)
 {
     PROTECT(x);
     SEXP dims = getAttrib(x, R_DimSymbol);

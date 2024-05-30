@@ -1470,7 +1470,7 @@ SEXP Rf_installChar(SEXP x)
 
    Use for writeLines/Bin/Char, the first only with useBytes = TRUE.
 */
-const char *translateChar0(SEXP x)
+attribute_hidden const char *translateChar0(SEXP x)
 {
     CHECK_CHARSXP(x);
     if(IS_BYTES(x)) return CHAR(x);
@@ -1960,6 +1960,7 @@ void reEnc2(const char *x, char *y, int ny,
 
 /* A version that works with arbitrary iconv encodings, used for getting
    escaped invalid characters for error messages. */
+attribute_hidden
 const char *reEnc3(const char *x,
                    const char *fromcode, const char *tocode, int subst)
 {

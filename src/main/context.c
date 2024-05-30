@@ -528,7 +528,7 @@ attribute_hidden SEXP R_sysfunction(int n, RCNTXT *cptr)
 /* browser contexts are a bit special because they are transient and for  */
 /* any closure context with the debug bit set one will be created; so we  */
 /* need to count those as well                                            */
-int countContexts(int ctxttype, int browser) {
+attribute_hidden int countContexts(int ctxttype, int browser) {
     int n=0;
     RCNTXT *cptr;
 

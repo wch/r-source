@@ -1030,7 +1030,7 @@ int_arraySubscript(int dim, SEXP s, SEXP dims, SEXP x, SEXP call)
 typedef SEXP AttrGetter(SEXP x, SEXP data);
 typedef SEXP (*StringEltGetter)(SEXP x, int i);
 
-SEXP
+attribute_hidden SEXP
 arraySubscript(int dim, SEXP s, SEXP dims, AttrGetter dng,
 	       StringEltGetter strg, SEXP x)
 {

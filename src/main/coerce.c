@@ -1329,7 +1329,7 @@ SEXP coerceVector(SEXP v, SEXPTYPE type)
 #undef COERCE_ERROR
 
 
-SEXP CreateTag(SEXP x)
+attribute_hidden SEXP CreateTag(SEXP x)
 {
     if (isNull(x) || isSymbol(x))
 	return x;
@@ -1786,7 +1786,7 @@ attribute_hidden SEXP do_ascall(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 
 /* return int, not Rboolean, for NA_LOGICAL : */
-int asLogical2(SEXP x, int checking, SEXP call)
+attribute_hidden int asLogical2(SEXP x, int checking, SEXP call)
 {
     int warn = 0;
 

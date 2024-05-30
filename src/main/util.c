@@ -621,7 +621,7 @@ void setSVector(SEXP * vec, int len, SEXP val)
 */
 
 
-Rboolean isFree(SEXP val)
+attribute_hidden Rboolean isFree(SEXP val)
 {
     SEXP t;
     for (t = R_FreeSEXP; t != R_NilValue; t = CAR(t))

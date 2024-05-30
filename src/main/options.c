@@ -137,7 +137,7 @@ SEXP GetOption1(SEXP tag)
     return CAR(opt);
 }
 
-int FixupWidth(SEXP width, warn_type warn)
+attribute_hidden int FixupWidth(SEXP width, warn_type warn)
 {
     int w = asInteger(width);
     if (w == NA_INTEGER || w < R_MIN_WIDTH_OPT || w > R_MAX_WIDTH_OPT) {
@@ -155,7 +155,7 @@ int GetOptionWidth(void)
     return FixupWidth(GetOption1(install("width")), iWARN);
 }
 
-int FixupDigits(SEXP digits, warn_type warn)
+attribute_hidden int FixupDigits(SEXP digits, warn_type warn)
 {
     int d = asInteger(digits);
     if (d == NA_INTEGER || d < R_MIN_DIGITS_OPT || d > R_MAX_DIGITS_OPT) {

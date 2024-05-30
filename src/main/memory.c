@@ -3044,26 +3044,31 @@ static SEXP allocFormalsList(int nargs, ...)
 }
 
 
+attribute_hidden /* would need to be in an installed header if not hidden */
 SEXP allocFormalsList2(SEXP sym1, SEXP sym2)
 {
     return allocFormalsList(2, sym1, sym2);
 }
 
+attribute_hidden /* would need to be in an installed header if not hidden */
 SEXP allocFormalsList3(SEXP sym1, SEXP sym2, SEXP sym3)
 {
     return allocFormalsList(3, sym1, sym2, sym3);
 }
 
+attribute_hidden /* would need to be in an installed header if not hidden */
 SEXP allocFormalsList4(SEXP sym1, SEXP sym2, SEXP sym3, SEXP sym4)
 {
     return allocFormalsList(4, sym1, sym2, sym3, sym4);
 }
 
+attribute_hidden /* would need to be in an installed header if not hidden */
 SEXP allocFormalsList5(SEXP sym1, SEXP sym2, SEXP sym3, SEXP sym4, SEXP sym5)
 {
     return allocFormalsList(5, sym1, sym2, sym3, sym4, sym5);
 }
 
+attribute_hidden /* would need to be in an installed header if not hidden */
 SEXP allocFormalsList6(SEXP sym1, SEXP sym2, SEXP sym3, SEXP sym4,
 		       SEXP sym5, SEXP sym6)
 {
