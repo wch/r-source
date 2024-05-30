@@ -1722,7 +1722,7 @@ attribute_hidden SEXP do_validEnc(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 
 /* MBCS-aware versions of common comparisons.  Only used for ASCII c */
-attribute_hidden char *Rf_strchr(const char *s, int c)
+char *Rf_strchr(const char *s, int c)
 {
     char *p = (char *)s;
     mbstate_t mb_st;
