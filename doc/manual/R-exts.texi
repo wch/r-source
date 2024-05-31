@@ -14649,6 +14649,19 @@ value is the actual number of elements copied, which may be less than
 Macros in @file{R_ext/Itermacros.h} may help in implementing an
 iteration strategy.
 
+Some functions useful in implementing new alternate representation
+classes, beyond those defined in @code{R_ext/Altrep.h}, include
+@code{ALTREP}, @code{ALTREP_CLASS}, @code{R_altrep_data1},
+@code{R_set_altrep_data1}, @code{R_altrep_data2}, and
+@code{R_set_altrep_data2}.
+@eapifun ALTREP
+@eapifun ALTREP_CLASS
+@eapifun R_altrep_data1
+@eapifun R_set_altrep_data1
+@eapifun R_set_altrep_data2
+@eapifun R_altrep_data2
+@eapihdr R_ext/Altrep.h
+
 @node The R API, Generic functions and methods, System and foreign language interfaces, Top
 @chapter The R @acronym{API}: entry points for C code
 
