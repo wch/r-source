@@ -3504,7 +3504,7 @@ static SEXP install_and_save2(char * text, char * savetext)
 
 static int token(void)
 {
-    int c;
+    int c, clen, i;
     wchar_t wc;
 
     if (SavedToken) {
@@ -3728,7 +3728,7 @@ static int token(void)
 	yytext[1] = '\0';
 	return c;
     default:
-	int clen = 1;
+	clen = 1;
 	if (mbcslocale) {
 	    // FIXME potentially need R_wchar_t with UTF-8 Windows.
 	    clen = mbcs_get_next(c, &wc);
@@ -3737,7 +3737,7 @@ static int token(void)
 	}
 	DECLARE_YYTEXT_BUFP(yyp);
 	YYTEXT_PUSH(c, yyp);
-	for(int i = 1; i < clen ; i++)
+	for(i = 1; i < clen ; i++)
 	    YYTEXT_PUSH(xxgetc(), yyp);
 	YYTEXT_PUSH('\0', yyp);
 	return (clen == 1) ? c : ERROR;
