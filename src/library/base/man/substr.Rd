@@ -1,6 +1,6 @@
 % File src/library/base/man/substr.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2023 R Core Team
+% Copyright 1995-2024 R Core Team
 % Distributed under GPL 2 or later
 
 \name{substr}
@@ -18,8 +18,8 @@ substring(text, first, last = 1000000L) <- value
 }
 \arguments{
   \item{x, text}{a character vector.}
-  \item{start, first}{integer.  The first element to be extracted or replaced.}
-  \item{stop, last}{integer.  The last element to be extracted or replaced.}
+  \item{start, first}{integer.  The first character to be extracted or replaced.}
+  \item{stop, last}{integer.  The last character to be extracted or replaced.}
   \item{value}{a character vector, recycled if necessary.}
 }
 \description{
@@ -32,7 +32,8 @@ substring(text, first, last = 1000000L) <- value
   length of the longest \emph{provided} none are of zero length.
 
   When extracting, if \code{start} is larger than the string length then
-  \code{""} is returned.
+  \code{""} is returned. If \code{stop} is larger than the string length
+  then the portion until the end of the string is returned.
 
   For the extraction functions, \code{x} or \code{text} will be
   converted to a character vector by \code{\link{as.character}} if it is not
@@ -43,10 +44,10 @@ substring(text, first, last = 1000000L) <- value
   replaced is longer than the replacement string, then only the
   portion the length of the string is replaced.
 
-  If any argument is an \code{NA} element, the corresponding element of
+  If any argument has an \code{NA} element, the corresponding element of
   the answer is \code{NA}.
 
-  Elements of the result will be have the encoding declared as that of
+  Elements of the result will have the encoding declared as that of
   the current locale (see \code{\link{Encoding}}) if the corresponding
   input had a declared Latin-1 or UTF-8 encoding and the current locale
   is either Latin-1 or UTF-8.
@@ -57,7 +58,8 @@ substring(text, first, last = 1000000L) <- value
 }
 \value{
   For \code{substr}, a character vector of the same length and with the
-  same attributes as \code{x} (after possible coercion).
+  same attributes as \code{x} (after possible coercion). \code{start} and
+  \code{stop} are recycled as necessary.
 
   For \code{substring}, a character vector of length the longest of the
   arguments.  This will have names taken from \code{x} (if it has any
