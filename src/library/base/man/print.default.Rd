@@ -1,6 +1,6 @@
 % File src/library/base/man/print.default.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2020 R Core Team
+% Copyright 1995-2024 R Core Team
 % Distributed under GPL 2 or later
 
 \name{print.default}
@@ -60,6 +60,12 @@
   trailing zeroes, the number of decimal places is reduced until at
   least one element has a non-zero final digit.  Decimal points are only
   included if at least one decimal place is selected.
+
+  You can suppress \dQuote{exponential} / \code{scientific} notation in
+  printing of numbers (atomic vectors \code{x}),
+  via \code{format(., scientific=FALSE)}, see the \code{prI()} example
+  below, or also by increasing global option \code{scipen}, e.g.,
+  \code{\link{options}(scipen = 12)}.
 
   Attributes are printed respecting their class(es), using the values of
   \code{digits} to \code{print.default}, but using the default values
@@ -153,5 +159,9 @@ M <- cbind(I = 1, matrix(1:10000, ncol = 10,
                          dimnames = list(NULL, LETTERS[1:10])))
 utils::head(M)        # makes more sense than
 print(M, max = 1000)  # prints 90 rows and a message about omitting 910
+
+(x <- 2^seq(-8, 30, by=1/4)) # auto-prints; by default all in "exponential" format
+prI <- function(x) noquote(format(x, scientific = FALSE))
+prI(x) # prints more "nicely" (using a bit more space)
 }
 \keyword{print}
