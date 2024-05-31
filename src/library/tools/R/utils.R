@@ -1,7 +1,7 @@
 #  File src/library/tools/R/utils.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2023 The R Core Team
+#  Copyright (C) 1995-2024 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -826,7 +826,7 @@ function(x)
                     "\\makeatother"),
                   collapse = ""),
             x, x)
-}     
+}
 
 ### ** .file_path_relative_to_dir
 
@@ -990,7 +990,7 @@ function(Tidy = Sys.getenv("R_TIDYCMD", "tidy"))
         attr(Tidy, "msg") <- msg
     }
     Tidy
-}   
+}
 
 ### ** .get_BibTeX_errors_from_blg_file
 
@@ -2561,7 +2561,7 @@ function(fun, args = list(), opts = "--no-save --no-restore",
     ## escape issue if we use backslashes in paths, hence convert to "/"
     tfi <- normalizePath(tempfile("runri"), winslash="/", mustWork=FALSE)
     tfo <- normalizePath(tempfile("runro"), winslash="/", mustWork=FALSE)
-    
+
     wrk <- c(sprintf("x <- readRDS(\"%s\")", tfi),
              "options(repos = x$repos)",
              ## need quote = TRUE in case some of args are not self-evaluating
@@ -2698,7 +2698,7 @@ function(text)
     }
     if(typeof(text) != "character")
         stop("'text' must be a character vector")
-    sapply(text, titleCase1, USE.NAMES = FALSE)
+    vapply(text, titleCase1, "<chr>", USE.NAMES = FALSE)
 }
 
 ### ** path_and_libPath

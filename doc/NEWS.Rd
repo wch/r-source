@@ -59,6 +59,10 @@
       corresponding S4-generic version is in the \pkg{methods} cache
       (\PR{18143}).
 
+      \item Package \pkg{tools}' \code{toTitleCase(ch0)} now returns
+      \code{character(0)} when \code{ch0} is of zero length; fixing
+      \PR{18724}, reported by David Hugh Jones.
+
       \item \command{R CMD check} is no longer broken (without a check
       result and no explanation in \file{00check.log}) for a package
       which declares an invalid \code{VignetteBuilder} in
