@@ -367,6 +367,7 @@ NORET static void raiseLexError(const char *, int,
 # include <langinfo.h>
 #endif
 
+// FIXME potentially need R_wchar_t with UTF-8 Windows.
 static int mbcs_get_next(int c, wchar_t *wc)
 {
     int i, res, clen = 1; char s[9];
@@ -1127,16 +1128,16 @@ static const yytype_int8 yytranslate[] =
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int16 yyrline[] =
 {
-       0,   445,   445,   446,   447,   448,   449,   452,   453,   454,
-     457,   458,   461,   462,   463,   464,   465,   467,   468,   470,
-     471,   472,   473,   474,   476,   477,   478,   479,   480,   481,
-     482,   483,   484,   485,   486,   487,   488,   489,   490,   491,
-     492,   493,   494,   495,   496,   497,   498,   500,   501,   502,
-     503,   504,   505,   506,   507,   508,   509,   510,   511,   512,
-     513,   514,   515,   516,   517,   518,   519,   520,   521,   522,
-     526,   529,   532,   536,   537,   538,   539,   540,   541,   544,
-     545,   548,   549,   550,   551,   552,   553,   554,   555,   558,
-     559,   560,   561,   562,   566
+       0,   446,   446,   447,   448,   449,   450,   453,   454,   455,
+     458,   459,   462,   463,   464,   465,   466,   468,   469,   471,
+     472,   473,   474,   475,   477,   478,   479,   480,   481,   482,
+     483,   484,   485,   486,   487,   488,   489,   490,   491,   492,
+     493,   494,   495,   496,   497,   498,   499,   501,   502,   503,
+     504,   505,   506,   507,   508,   509,   510,   511,   512,   513,
+     514,   515,   516,   517,   518,   519,   520,   521,   522,   523,
+     527,   530,   533,   537,   538,   539,   540,   541,   542,   545,
+     546,   549,   550,   551,   552,   553,   554,   555,   556,   559,
+     560,   561,   562,   563,   567
 };
 #endif
 
@@ -6029,10 +6030,26 @@ static int token(void)
 	yytext[1] = '\0';
 	yylval = install(yytext);
 	return c;
-    default:
-        yytext[0] = (char) c;
-        yytext[1] = '\0';
+    case '\n':
+    case ',':
+    case ';':
+	yytext[0] = (char) c;
+	yytext[1] = '\0';
 	return c;
+    default:
+	int clen = 1;
+	if (mbcslocale) {
+	    // FIXME potentially need R_wchar_t with UTF-8 Windows.
+	    clen = mbcs_get_next(c, &wc);
+	    if (clen == -1)
+		return END_OF_INPUT; /* EOF whilst reading MBCS char */
+	}
+	DECLARE_YYTEXT_BUFP(yyp);
+	YYTEXT_PUSH(c, yyp);
+	for(int i = 1; i < clen ; i++)
+	    YYTEXT_PUSH(xxgetc(), yyp);
+	YYTEXT_PUSH('\0', yyp);
+	return (clen == 1) ? c : ERROR;
     }
 }
 
@@ -6616,10 +6633,10 @@ static void finalizeData(void){
     PROTECT(tokens = allocVector( STRSXP, nloc ) );
     for (int i=0; i<nloc; i++) {
         int token = _TOKEN(i);
-        int xlat = yytranslate[token];
+        int xlat = YYTRANSLATE(token);
         if (xlat == 2) /* "unknown" */
             xlat = token;
-        if (xlat < YYNTOKENS + YYNNTS)
+        if (xlat >= 0 && xlat < YYNTOKENS + YYNNTS)
     	    SET_STRING_ELT(tokens, i, mkChar(yytname[xlat]));
     	else { /* we have a token which doesn't have a name, e.g. an illegal character as in PR#15518 */
     	    char name[2];
