@@ -200,7 +200,7 @@ InputHandler *R_InputHandlers = &BasicInputHandler;
   Initialize the input source handlers used to check for input on the
   different file descriptors.
  */
-InputHandler * initStdinHandler(void)
+attribute_hidden InputHandler * initStdinHandler(void)
 {
     InputHandler *inputs;
 
@@ -334,6 +334,7 @@ int Rg_wait_usec = 0;
 static int setSelectMask(InputHandler *, fd_set *);
 
 
+attribute_hidden
 fd_set *R_checkActivityEx(int usec, int ignore_stdin, void (*intr)(void))
 {
     int maxfd;

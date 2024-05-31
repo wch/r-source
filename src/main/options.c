@@ -168,7 +168,8 @@ attribute_hidden int FixupDigits(SEXP digits, warn_type warn)
     }
     return d;
 }
-int GetOptionDigits(void)
+
+attribute_hidden int GetOptionDigits(void)
 {
     return FixupDigits(GetOption1(install("digits")), iWARN);
 }

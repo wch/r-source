@@ -304,7 +304,7 @@ static int match_to_obj(SEXP arg, SEXP obj) {
    which should be explicitly converted when an S3 method is applied
    to an object from an S4 subclass.
 */
-int isBasicClass(const char *ss) {
+attribute_hidden int isBasicClass(const char *ss) {
     static SEXP s_S3table = NULL;
     if(!s_S3table) {
       s_S3table = findVarInFrame3(R_MethodsNamespace, install(".S3MethodsClasses"), TRUE);
@@ -320,7 +320,7 @@ int isBasicClass(const char *ss) {
 
 /* Note that ./attrib.c 's S4_extends() has an alternative
    'sanity check for methods package available' */
-Rboolean R_has_methods_attached(void) {
+attribute_hidden Rboolean R_has_methods_attached(void) {
     return(
 	isMethodsDispatchOn() &&
 	// based on unlockBinding() in ../library/methods/R/zzz.R  {since 2003}:
@@ -1113,6 +1113,7 @@ attribute_hidden SEXP do_inherits(SEXP call, SEXP op, SEXP args, SEXP env)
  *
  * @return index of match or -1 for no match
  */
+attribute_hidden
 int R_check_class_and_super(SEXP x, const char **valid, SEXP rho)
 {
     int ans;
@@ -1708,7 +1709,7 @@ SEXP R_do_MAKE_CLASS(const char *what)
 
 // similar, but gives NULL instead of an error for a non-existing class
 // and 'what' is never checked
-SEXP R_getClassDef_R(SEXP what)
+attribute_hidden SEXP R_getClassDef_R(SEXP what)
 {
     static SEXP s_getClassDef = NULL;
     if(!s_getClassDef) s_getClassDef = install("getClassDef");
@@ -1729,7 +1730,7 @@ SEXP R_getClassDef(const char *what)
     return ans;
 }
 
-Rboolean R_isVirtualClass(SEXP class_def, SEXP env)
+attribute_hidden Rboolean R_isVirtualClass(SEXP class_def, SEXP env)
 {
     if(!isMethodsDispatchOn()) return(FALSE);
     static SEXP isVCl_sym = NULL;
@@ -1743,7 +1744,7 @@ Rboolean R_isVirtualClass(SEXP class_def, SEXP env)
     return ans;
 }
 
-Rboolean R_extends(SEXP class1, SEXP class2, SEXP env)
+attribute_hidden Rboolean R_extends(SEXP class1, SEXP class2, SEXP env)
 {
     if(!isMethodsDispatchOn()) return(FALSE);
     static SEXP extends_sym = NULL;

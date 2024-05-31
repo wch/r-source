@@ -180,6 +180,7 @@ const char *EncodeExtptr(SEXP x)
     return buf;
 }
 
+attribute_hidden
 const char *EncodeReal(double x, int w, int d, int e, char cdec)
 {
     char dec[2];

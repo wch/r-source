@@ -3684,7 +3684,7 @@ SEXP R_PackageEnvName(SEXP rho)
 	return R_NilValue;
 }
 
-SEXP R_FindPackageEnv(SEXP info)
+attribute_hidden SEXP R_FindPackageEnv(SEXP info)
 {
     SEXP expr, val;
     PROTECT(info);
