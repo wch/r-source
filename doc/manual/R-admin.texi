@@ -5013,7 +5013,8 @@ Standalone installers (which are free-of-charge) are available from
 @uref{https://www.intel.com/content/www/us/en/developer/articles/tool/oneapi-standalone-components.html}:
 they are also part of the @I{oneAPI} Base and HPC (for Fortran) toolkits.
 
-We tried the compilers in @I{oneAPI} 2024.1.0 and 2023.x.y using (the paths
+We tried the compilers in @I{oneAPI} 2024.1.x@footnote{2024.1.2 for
+C/C++, 2024.1.0 for Fortran.} and 2023.x.y using (the paths
 do differ by compiler version)
 @example
 IP=/path/to/compilers/bin/
@@ -5040,7 +5041,7 @@ MKL="-L$@{MKL_LIB_PATH@} -lmkl_intel_lp64 -lmkl_core -lmkl_sequential"
 ./configure --with-blas="$MKL" --with-lapack
 @end example
 @noindent
-and the build passed its checks with @I{MKL} 2023.2.0 (but not 2024.0 on the
+and the build passed its checks with @I{MKL} 2023.2.0 (but not 2024.x on the
 hardware tested).  It may also be possible to use a compiler option like
 @option{-qmkl=sequential}.
 
