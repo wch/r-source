@@ -6120,7 +6120,7 @@ add_dummies <- function(dir, Log)
                     if (std < 17) {
                         noteLog(Log,
                                 sprintf("  Specified C++%d: please drop specification unless essential", std))
-                    ## sinece R 4.4.0 C++17 support is required.
+                    ## since R 4.4.0 C++17 support is required.
                     ## } else if (std >= 17) {
                     ##     resultLog(Log, "OK")
                     ##     printLog(Log,
