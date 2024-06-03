@@ -7894,6 +7894,11 @@ function(dir, localOnly = FALSE, pkgSize = NA)
                         descr, ignore.case = TRUE)))
         out$descr_bad_arXiv_ids <- descr[ind]
 
+    ## Check URL field
+    if(!is.na(v <- meta["URL"]) &&
+       length(z <- .bad_DESCRIPTION_URL_field_parts(v)))
+        out$url_field_parts <- z
+    
     skip_dates <-
         config_val_to_logical(Sys.getenv("_R_CHECK_CRAN_INCOMING_SKIP_DATES_",
                                          "FALSE"))
@@ -8946,7 +8951,13 @@ function(x, ...)
                        "Please use permanent DOI markup for linking to publications as in <doi:prefix/suffix>."),
                        collapse = "\n")
             }
-            )),
+           )),
+      fmt(c(if(length(y <- x$url_field_parts)) {
+                paste(c("The URL field contains the following bad parts:",
+                        paste0("  ", y),
+                        strwrap("The URL field should be a list of URLs separated by commas or whitespace.")),
+                      collapse = "\n")
+            })),
       fmt(c(if(length(x$GNUmake)) {
                 "GNU make is a SystemRequirements."
             })),
@@ -10243,6 +10254,24 @@ function(x, ...)
           c("Data objects in 'data' directory not in 'datalist':",
             fmt(y)))
 }
+
+### ** .bad_DESCRIPTION_URL_field_parts
+
+.bad_DESCRIPTION_URL_field_parts <- 
+function(s)
+{
+    if(is.na(s)) return(character())
+    y <- .get_urls_from_DESCRIPTION_URL_field(s)
+    z <- strsplit(s,
+                  "[[:space:]]*(\\([^)]*\\))?([,[:space:]]+|$)")[[1L]]
+    if(length(y) == length(z))
+        character()
+    else {
+        z <- z %w/o% y
+        z[!grepl("^<?(svn://|doi:)", z)]
+    }
+}
+        
 
 ### Local variables: ***
 ### mode: outline-minor ***
