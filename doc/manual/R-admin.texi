@@ -2359,7 +2359,7 @@ problems} can be specified @emph{via} the environment variable
 Package developers are encouraged to use this mechanism to enable a
 reasonable amount of diagnostic messaging (``warnings'') when compiling,
 such as e.g.@: @option{-Wall -pedantic} for tools from GCC, the GNU
-Compiler Collection, and for LLVM (@command{clang} and @command{flang-new}).
+Compiler Collection, and for @I{LLVM} (@command{clang} and @command{flang-new}).
 
 Note that this mechanism can also be used when it is necessary to change
 the optimization level whilst installing a particular package.  For
