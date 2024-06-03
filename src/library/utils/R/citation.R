@@ -1442,14 +1442,20 @@ function(package = "base", lib.loc = NULL, auto = NULL)
         ## WRE: "a list of URLs separated by commas or whitespace".
         ## Cannot have several URLs in BibTeX and bibentry object URL
         ## fields (PR #16240).
-        if(length(urls <- strsplit(url, "[, \n]+")[[1L]]) > 1L) {
-            ## Show the first URL as the BibTeX url, and add the others
-            ## to the note (PR#18547).
+        ## In c84505 we folloed the suggestion of PR#18547: in case
+        ## of using a URL field with multiple URLs, show the first URL
+        ## as the BibTeX url, and add the others to the note.  However,
+        ## * typically the noted (secondary) URLs get shown ahead of the
+        ##   primary (first) URL;
+        ## * showing several URLs generally is "too much" for the
+        ##   bibliographic information;
+        ## * one can typically use the primary URL to point to the
+        ##   secondary ones,
+        ## Hence, we no longer add to the note, and only put the primary
+        ## URL in the url.
+        urls <- tools:::.get_urls_from_DESCRIPTION_URL_field(meta$URL)
+        if(length(urls))
             z$url <- urls[1L]
-            z$note <- paste0(c(z$note, sprintf("\\url{%s}", urls[-1L])),
-                             collapse = ", ")
-        } else
-            z$url <- url
     }
 
     header <- if(!auto_was_meta) {
