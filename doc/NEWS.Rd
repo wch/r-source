@@ -5,7 +5,7 @@
 \title{R News}
 \encoding{UTF-8}
 
-\section{\Rlogo CHANGES IN R 4.4.0 patched}{
+\section{\Rlogo CHANGES IN R 4.4.1}{
   \subsection{C-LEVEL FACILITIES}{
     \itemize{
       \item Functions \code{R_atof} and \code{R_strtod} declared in
