@@ -5311,9 +5311,17 @@ add_dummies <- function(dir, Log)
             if(!OK1) {
                 noteLog(Log)
                 any <- TRUE
+                txt <-
+                    paste("Please obtain a recent version of HTML Tidy",
+                          "by downloading a binary release",
+                          "or compiling the source code from",
+                          "<https://www.html-tidy.org/>.")
+                txt <- paste(strwrap(txt), collapse = "\n")
                 printLog0(Log,
                           c("Skipping checking HTML validation: ",
                             attr(Tidy, "msg"),
+                            ".\n",
+                            txt,
                             "\n"))
             }
             if(OK1 && length(errors <- attr(results1, "errors"))) {
