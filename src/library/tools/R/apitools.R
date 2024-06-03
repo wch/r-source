@@ -316,7 +316,7 @@ rbind_list <- function(args)
 ofile_syms <- function(fname, keep = c("F", "V", "U")) {
     ## this uses nm on Linux/macOS; probably doesn't work on Windows, so bail
     stopifnot(isFALSE(.Platform$OS.type == "windows"))
-    v <- tools:::read_symbols_from_object_file(fname)
+    v <- read_symbols_from_object_file(fname)
     if (is.character(v) && nrow(v) == 0) 
         ofile_syms_od(fname, keep)
     else if (is.null(v))
