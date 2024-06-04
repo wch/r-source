@@ -359,10 +359,10 @@ double R_pow_di(double, int);
 
 	/* Random Number Generators */
 
-double	norm_rand(void);
-double	unif_rand(void);
+double	norm_rand(void); //not remapped
+double	unif_rand(void); //not remapped
 double  R_unif_index(double);
-double	exp_rand(void);
+double	exp_rand(void); //not remapped
 #ifdef MATHLIB_STANDALONE
 void	set_seed(unsigned int, unsigned int);
 void	get_seed(unsigned int *, unsigned int *);
@@ -554,14 +554,14 @@ double dwilcox(double, double, double, int);
 double pwilcox(double, double, double, int, int);
 double qwilcox(double, double, double, int, int);
 double rwilcox(double, double);
-void wilcox_free(void);
+void wilcox_free(void); // not remapped
 	/* Wilcoxon Signed Rank Distribution */
 
 double dsignrank(double, double, int);
 double psignrank(double, double, int, int);
 double qsignrank(double, double, int, int);
 double rsignrank(double);
-void signrank_free(void);
+void signrank_free(void); // not remapped
 
 	/* Gamma and Related Functions */
 double	gammafn(double);

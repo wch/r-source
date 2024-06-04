@@ -14729,6 +14729,14 @@ headers directly or @emph{via} inclusion from further packages, and may
 define @code{R_NO_REMAP} with or without including @file{Rinternals.h}.)
 @apihdr R_ext/Error.h
 
+Some of these entry points are declared in header @file{Rmaht.h}, most
+of which are remapped there.  That remapping can be eliminated by
+defining @code{R_NO_REMAP_RMATH} (before including any @R{} headers) and
+prepending @samp{Rf_} to the function names used from that header except
+@example
+exp_rand norm_rand unif_rand signrank_free wilcox_free
+@end example
+
 We can classify the entry points as
 
 @table @emph

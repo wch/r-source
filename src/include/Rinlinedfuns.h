@@ -77,7 +77,7 @@
 #include <string.h> /* for strlen, strcmp */
 
 /* define inline-able functions */
-#if defined(TESTING_WRITE_BARRIER) || defined(COMPILING_R)
+#ifdef TESTING_WRITE_BARRIER
 # define STRICT_TYPECHECK
 # define CATCH_ZERO_LENGTH_ACCESS
 #endif
@@ -96,7 +96,7 @@ SEXP CAR(SEXP e);
 #endif
 
 #ifdef STRICT_TYPECHECK
-HIDDEN INLINE_FUN void CHKVEC(SEXP x) {
+INLINE_FUN void CHKVEC(SEXP x) {
     switch (TYPEOF(x)) {
     case CHARSXP:
     case LGLSXP:
@@ -320,7 +320,7 @@ INLINE_FUN R_xlen_t XTRUELENGTH(SEXP x)
 # define CHECK_VECTOR_RAW_ELT(x, i) do { } while(0)
 #endif
 
-HIDDEN INLINE_FUN int *LOGICAL0(SEXP x) {
+INLINE_FUN int *LOGICAL0(SEXP x) {
     CHECK_STDVEC_LGL(x);
     return (int *) STDVEC_DATAPTR(x);
 }
@@ -333,7 +333,7 @@ HIDDEN INLINE_FUN void SET_SCALAR_LVAL(SEXP x, Rboolean v) {
     LOGICAL0(x)[0] = v;
 }
 
-HIDDEN INLINE_FUN int *INTEGER0(SEXP x) {
+INLINE_FUN int *INTEGER0(SEXP x) {
     CHECK_STDVEC_INT(x);
     return (int *) STDVEC_DATAPTR(x);
 }
@@ -346,7 +346,7 @@ HIDDEN INLINE_FUN void SET_SCALAR_IVAL(SEXP x, int v) {
     INTEGER0(x)[0] = v;
 }
 
-/*HIDDEN*/ INLINE_FUN double *REAL0(SEXP x) {
+INLINE_FUN double *REAL0(SEXP x) {
     CHECK_STDVEC_REAL(x);
     return (double *) STDVEC_DATAPTR(x);
 }
@@ -359,7 +359,7 @@ HIDDEN INLINE_FUN void SET_SCALAR_DVAL(SEXP x, double v) {
     REAL0(x)[0] = v;
 }
 
-/*HIDDEN*/ INLINE_FUN Rcomplex *COMPLEX0(SEXP x) {
+INLINE_FUN Rcomplex *COMPLEX0(SEXP x) {
     CHECK_STDVEC_CPLX(x);
     return (Rcomplex *) STDVEC_DATAPTR(x);
 }
@@ -372,7 +372,7 @@ HIDDEN INLINE_FUN void SET_SCALAR_CVAL(SEXP x, Rcomplex v) {
     COMPLEX0(x)[0] = v;
 }
 
-HIDDEN INLINE_FUN Rbyte *RAW0(SEXP x) {
+INLINE_FUN Rbyte *RAW0(SEXP x) {
     CHECK_STDVEC_RAW(x);
     return (Rbyte *) STDVEC_DATAPTR(x);
 }
