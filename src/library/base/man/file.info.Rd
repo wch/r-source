@@ -1,6 +1,6 @@
 % File src/library/base/man/file.info.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2022 R Core Team
+% Copyright 1995-2024 R Core Team
 % Distributed under GPL 2 or later
 
 \name{file.info}
@@ -81,6 +81,10 @@ file.size(\dots)
     \code{"win32"}, \code{"win64"} and \code{"unknown"}.  Note that a
     file (e.g., a script file) can be executable according to the mode
     bits but not executable in this sense.}
+  \item{uname:}{character, user name.}
+  \item{udomain:}{character, user domain name.}
+  User name and domain will be \code{NA} when they cannot be resolved,
+  e.g. because of insufficient permissions or a network failure.
    }}
  }
 
@@ -92,8 +96,8 @@ file.size(\dots)
   Entries for non-existent or non-readable files will be \code{NA}.
 
   The \code{uid}, \code{gid}, \code{uname} and \code{grname} columns
-  may not be supplied on a non-POSIX Unix-alike system, and will not be
-  on Windows.
+  may not be supplied on a non-POSIX Unix-alike system, and except
+  \code{uname} will not be on Windows.
 
   What is meant by the three file times depends on the OS and file
   system.  On Windows native file systems \code{ctime} is the file

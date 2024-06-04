@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998--2023 The R Core Team
+ *  Copyright (C) 1998--2024 The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -65,6 +65,7 @@
 
 #ifdef Win32
 #include <windows.h>
+#include <aclapi.h>			/* for GetSecurityInfo */
 typedef BOOLEAN (WINAPI *PCSL)(LPWSTR, LPWSTR, DWORD);
 const char *formatError(DWORD res);  /* extra.c */
 /* Windows does not have link(), but it does have CreateHardLink() on NTFS */
@@ -805,13 +806,18 @@ attribute_hidden SEXP do_filerename(SEXP call, SEXP op, SEXP args, SEXP rho)
 attribute_hidden SEXP do_fileinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP fn, ans, ansnames, fsize, mtime, ctime, atime, isdir,
-	mode, xxclass;
+	mode, xxclass, uname = R_NilValue, udomain = R_NilValue;
+    const void *vmax = vmaxget();
 #ifdef UNIX_EXTRAS
     SEXP uid = R_NilValue, gid = R_NilValue,
-	uname = R_NilValue, grname = R_NilValue; // silence -Wall
+	grname = R_NilValue; // silence -Wall
 #endif
 #ifdef Win32
     SEXP exe = R_NilValue;
+    char *ubuf = NULL;
+    DWORD ubuflen = 0;
+    char *dbuf = NULL;
+    DWORD dbuflen = 0;
     struct _stati64 sb;
 #else
     struct stat sb;
@@ -829,7 +835,7 @@ attribute_hidden SEXP do_fileinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
 #ifdef UNIX_EXTRAS
 	ncols = 10;
 #elif defined(Win32)
-	ncols = 7;
+	ncols = 9;
 #endif
     }
     PROTECT(ans = allocVector(VECSXP, ncols));
@@ -860,6 +866,10 @@ attribute_hidden SEXP do_fileinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
 #ifdef Win32
 	exe = SET_VECTOR_ELT(ans, 6, allocVector(STRSXP, n));
 	SET_STRING_ELT(ansnames, 6, mkChar("exe"));
+	uname = SET_VECTOR_ELT(ans, 7, allocVector(STRSXP, n));
+	SET_STRING_ELT(ansnames, 7, mkChar("uname"));
+	udomain = SET_VECTOR_ELT(ans, 8, allocVector(STRSXP, n));
+	SET_STRING_ELT(ansnames, 8, mkChar("udomain"));
 #endif
     }
     for (int i = 0; i < n; i++) {
@@ -997,6 +1007,60 @@ attribute_hidden SEXP do_fileinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
 			}
 		    SET_STRING_ELT(exe, i, mkChar(s));
 		}
+		{
+		    HANDLE h;
+		    PSID owner_sid;
+		    SID_NAME_USE suse = SidTypeUnknown;
+		    PSECURITY_DESCRIPTOR sd = NULL;
+		    DWORD saveerr = ERROR_SUCCESS;
+		    int ok = 0;
+		    h = CreateFileW(wfn, GENERIC_READ,
+				    FILE_SHARE_DELETE | FILE_SHARE_READ | FILE_SHARE_WRITE,
+				    NULL, OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS, NULL);
+		    ok = (h != INVALID_HANDLE_VALUE);
+
+		    ok = ok && (GetSecurityInfo(h, SE_FILE_OBJECT,
+					        OWNER_SECURITY_INFORMATION,
+					        &owner_sid,
+					        NULL, NULL, NULL, &sd)
+		                == ERROR_SUCCESS);
+		    if (ok) {
+			DWORD ulen = ubuflen;
+			DWORD dlen = dbuflen;
+			ok = LookupAccountSid(NULL, owner_sid, ubuf, &ulen,
+			                      dbuf, &dlen, &suse);
+			if (!ok
+			    && GetLastError() == ERROR_INSUFFICIENT_BUFFER
+			    && (ulen > ubuflen || dlen > dbuflen)) {
+
+			    if (ulen > ubuflen) {
+				ubuf = R_alloc(ulen, 1);
+				ubuflen = ulen;
+			    }
+			    if (dlen > dbuflen) {
+				dbuf = R_alloc(dlen, 1);
+				dbuflen = dlen;
+			    }
+			    ok = LookupAccountSid(NULL, owner_sid, ubuf, &ulen,
+			                          dbuf, &dlen, &suse);
+			}
+		    }
+		    if (!ok)
+			saveerr = GetLastError();
+		    if (sd)
+			LocalFree(sd);
+		    if (h != INVALID_HANDLE_VALUE)
+			CloseHandle(h);
+		    if (ok) {
+			SET_STRING_ELT(uname, i, mkChar(ubuf));
+			SET_STRING_ELT(udomain, i, mkChar(dbuf));
+		    } else {
+			warning(_("cannot resolve owner of file '%ls': %s"),
+				wfn, formatError(saveerr));
+			SET_STRING_ELT(uname, i, NA_STRING);
+			SET_STRING_ELT(udomain, i, NA_STRING);
+		    }
+		}
 #endif
 	    }
 	} else {
@@ -1022,6 +1086,7 @@ attribute_hidden SEXP do_fileinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
     setAttrib(ans, R_NamesSymbol, ansnames);
     PROTECT(xxclass = mkString("octmode"));
     classgets(mode, xxclass);
+    vmaxset(vmax);
     UNPROTECT(3);
     return ans;
 }
