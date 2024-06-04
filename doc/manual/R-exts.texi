@@ -12696,12 +12696,36 @@ and @code{character()}.  One distinction is that whereas the @R{}
 functions always initialize the elements of the vector,
 @code{allocVector} only does so for lists, expressions and character
 vectors (the cases where the elements are themselves @R{} objects).
+Other useful allocation functions are @code{alloc3DArray},
+@code{allocArray}, and @code{allocMatrix}.
+@apifun alloc3DArray
+@apifun allocArray
+@apifun allocMatrix
+
+At times it can be useful to allocate a larger initial result vector and
+resize it to a shorter length if that is sufficient. The functions
+@code{lengthgets} and @code{xlengthgets} accomplish this; they are
+analogous to using @code{length(x) <- n} in @R{}. Typically these
+functions return a freshly allocated object, but in some cases they may
+re-use the supplied object.
+@apifun lengthgets
+@apifun xlengthgets
+
+When creating new result objects it can be useful to fill them in with
+values from an existing object. The functions @code{copyVector} and
+@code{copyMatrix} can be used for this. @code{copyMostAttributes} can
+also simplify setting up a result object; is is used internally for
+results of arithmetic operations.
+@apifun copyVector
+@apifun copyMatrix
+@apifun copyMostAttrib
 
 If storage is required for C objects during the calculations this is
 best allocating by calling @code{R_alloc}; @pxref{Memory allocation}.
 All of these memory allocation routines do their own error-checking, so
 the programmer may assume that they will raise an error and not return
 if the memory cannot be allocated.
+@apifun R_alloc
 
 @node Details of R types, Attributes, Allocating storage, Handling R objects in C
 @subsection Details of R types
@@ -13229,6 +13253,7 @@ a test of a length-2 @code{"dim"} attribute.
 @apifun isList
 @apifun isOrdered
 @apifun isUnordered
+@apifun isS4
 @comment @apifun isNumber
 @comment @apifun isFrame
 @example
@@ -13250,6 +13275,7 @@ Rboolean isNewList(SEXP);
 Rboolean isList(SEXP);
 Rboolean isOrdered(SEXP);
 Rboolean isUnordered(SEXP);
+Rboolean isS4(SEXP);
 @comment Rboolean isNumber(SEXP);
 @comment Rboolean isFrame (SEXP);
 @end group
@@ -13661,6 +13687,8 @@ implementation this is also true of @code{NA} as it is a type of
 re-write the code to handle @code{NA}s using macros defined in
 @file{R_ext/Arith.h} included by @file{R.h}.
 @apihdr R_ext/Arith.h
+@comment listing this here since it is hard to pick up from R_ext/Arith.h
+@apifun R_isnancpp
 
 The code changes are the same in any of the versions of @code{convolve2}
 or @code{convolveE}:
@@ -14650,7 +14678,7 @@ Macros in @file{R_ext/Itermacros.h} may help in implementing an
 iteration strategy.
 
 Some functions useful in implementing new alternate representation
-classes, beyond those defined in @code{R_ext/Altrep.h}, include
+classes, beyond those defined in @file{R_ext/Altrep.h}, include
 @code{ALTREP}, @code{ALTREP_CLASS}, @code{R_altrep_data1},
 @code{R_set_altrep_data1}, @code{R_altrep_data2}, and
 @code{R_set_altrep_data2}.
