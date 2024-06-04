@@ -6577,14 +6577,14 @@ similar.
 
 @item
 Use of what @command{gfprtran} calls `Fortran 2018 deleted features',
-although most were `deleted' in earlier standards: those itmeize here
+although most were `deleted' in earlier standards: those itemized here
 were deleted in Fortran 2008.  (In the Fortran standards `deleted' means
 features that compilers are not required to implement.) These include
 @itemize
 @item
 Aritmmetic @code{IF} statements.
 @item
-@code{DO} loops whch are not terminated with a @code{END DO} or
+@code{DO} loops which are not terminated with a @code{END DO} or
 @code{CONTINUE} statement.  (Unlabelled @code{DO} loops terminated by
 @code{END DO} are preferred for readability.)
 @item
@@ -6655,7 +6655,7 @@ works around this for packages without a @file{src/Makefile}.
 @c Intel has fpp.
 Use of extensions @file{.F} and @code{.F90} to indicate source code to
 be preprocessed: the preprocessor used is compiler-specific and may or
-may not be @command{cpp}.  Compilers may even preproces files with
+may not be @command{cpp}.  Compilers may even preprocess files with
 extension @file{.f} or @file{.f90} (Intel does).
 
 @item
@@ -6687,11 +6687,11 @@ Labelled @code{DO} statements.
 @code{COMMON} and @code{EQUIVALENCE} statements, and @code{BLOCK DATA}
 units.
 @item
-Computed @code{GOTO} statmennts, replaced by @code{SELECT CASE}.
+Computed @code{GOTO} statements, replaced by @code{SELECT CASE}.
 @item
 Statement functions.
 @item
-@code{DATA} statments after executable statements.
+@code{DATA} statements after executable statements.
 @item
 Specific (rather than generic) names for intrinsic functions.
 @end itemize
@@ -14565,6 +14565,14 @@ system headers and those for external software used by the package)
 before any @R{} headers. (Headers from other packages may include @R{}
 headers directly or @emph{via} inclusion from further packages, and may
 define @code{R_NO_REMAP} with or without including @file{Rinternals.h}.)
+
+Some of these entry points are declared in header @file{Rmath.h}, most
+of which are remapped there.  That remapping can be eliminated by
+defining @code{R_NO_REMAP_RMATH} (before including any @R{} headers) and
+prepending @samp{Rf_} to the function names used from that header except
+@example
+exp_rand norm_rand unif_rand signrank_free wilcox_free
+@end example
 
 We can classify the entry points as
 
