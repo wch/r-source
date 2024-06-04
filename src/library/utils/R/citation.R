@@ -1442,7 +1442,7 @@ function(package = "base", lib.loc = NULL, auto = NULL)
         ## WRE: "a list of URLs separated by commas or whitespace".
         ## Cannot have several URLs in BibTeX and bibentry object URL
         ## fields (PR #16240).
-        ## In c84505 we folloed the suggestion of PR#18547: in case
+        ## In c84505 we followed the suggestion of PR#18547: in case
         ## of using a URL field with multiple URLs, show the first URL
         ## as the BibTeX url, and add the others to the note.  However,
         ## * typically the noted (secondary) URLs get shown ahead of the
