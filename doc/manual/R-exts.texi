@@ -14729,7 +14729,7 @@ headers directly or @emph{via} inclusion from further packages, and may
 define @code{R_NO_REMAP} with or without including @file{Rinternals.h}.)
 @apihdr R_ext/Error.h
 
-Some of these entry points are declared in header @file{Rmaht.h}, most
+Some of these entry points are declared in header @file{Rmath.h}, most
 of which are remapped there.  That remapping can be eliminated by
 defining @code{R_NO_REMAP_RMATH} (before including any @R{} headers) and
 prepending @samp{Rf_} to the function names used from that header except
