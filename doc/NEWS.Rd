@@ -86,6 +86,9 @@
     \itemize{
       \item \command{R CMD check --as-cran} will compile C++ code with
       \code{-DR_NO_REMAP}.
+
+      \item \command{R CMD check --as-cran} notes bad parts in
+      \file{DESCRIPTION} file URL fields.
     }
   }
 }
