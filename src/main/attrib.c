@@ -1171,9 +1171,11 @@ attribute_hidden SEXP do_dimnames(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 }
 
-static /* would need to be in a header if not static */
-SEXP R_dim(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_dim(SEXP call, SEXP op, SEXP args, SEXP env)
 {
+    checkArity(op, args);
+    check1arg(args, call, "x");
+
     SEXP ans;
     /* DispatchOrEval internal generic: dim */
     if (DispatchOrEval(call, op, "dim", args, env, &ans, 0, /* argsevald: */ 1))
@@ -1182,13 +1184,6 @@ SEXP R_dim(SEXP call, SEXP op, SEXP args, SEXP env)
     ans = getAttrib(CAR(args), R_DimSymbol);
     UNPROTECT(1);
     return ans;
-}
-
-attribute_hidden SEXP do_dim(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-    checkArity(op, args);
-    check1arg(args, call, "x");
-    return R_dim(call, op, args, env);
 }
 
 attribute_hidden SEXP do_dimgets(SEXP call, SEXP op, SEXP args, SEXP env)
