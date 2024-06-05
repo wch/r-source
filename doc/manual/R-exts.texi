@@ -14524,8 +14524,12 @@ For example, the return type of @code{REAL_RO} is @code{const double *}
 @apifun LOGICAL_RO
 @apifun RAW_RO
 @apifun COMPLEX_RO
-These accessor functions check that they are being used on an appropriate
-type of @code{SEXP}.
+@apifun STRING_PTR_RO
+@apifun VECTOR_PTR_RO
+These accessor functions check that they are being used on an
+appropriate type of @code{SEXP}.  For @code{VECSXP} and @code{STRSXP}
+objects only read-only pointers are available as modifying their data
+directly would violate assumptions the memory manager depends on.
 
 Formerly it was possible for packages to obtain internal versions of
 some accessors by defining @samp{USE_RINTERNALS} before including
