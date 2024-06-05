@@ -16602,6 +16602,48 @@ the C++ code to be unwound, and then use the continuation token in the a
 call @code{R_ContinueUnwind(cont)} to resume the non-local transfer of
 control within R.
 
+An older interface for the simpler @code{R_MakeUnwindCont} usage remains
+available:
+
+@example
+SEXP R_ExecWithCleanup(SEXP (*fun)(void *), void *data,
+		       void (*cleanfun)(void *), void *cleandata);
+@end example
+@apifun R_ExecWithCleanup
+
+@code{cleanfun} is called on both regular returns and non-local
+transfers of control, but without an indication of which form of exit is
+occurring.
+
+The function @code{R_ToplevelExec} can be used to execute code without
+allowing any non-local transfers of control, including by user
+interrupts or invoking @code{abort} restarts.
+@example
+Rboolean R_ToplevelExec(void (*fun)(void *), void *data);
+@end example
+@apifun R_ToplevelExec
+The return value is @code{TRUE} if @code{fun} returns normally and
+@code{FALSE} if @code{fun} exits with a jump to top level.  @code{fun}
+is called with a new top-level context. Condition handlers and other
+features of the current top level context when @code{R_ToplevelExec} is
+called will not be seen by the code in @code{fun}.  Two convenience
+functions built on @code{R_ToplevelExec} are @code{R_tryEval} and
+@code{R_tryEvalSilent}.
+@example
+SEXP R_tryEval(SEXP e, SEXP env, int *ErrorOccurred);
+SEXP R_tryEvalSilent(SEXP e, SEXP env, int *ErrorOccurred)
+@end example
+@apifun R_tryEvalSilent
+@apifun R_tryEval
+These return a @code{NULL} pointer if evaluating the expression results
+in a jump to top level.
+
+Using @code{R_ToplevelExec} is usually only appropriate in situations
+where one might want to run code in a separate thread if that was an
+option. For example, finalizers are run in a separate top level
+context. The other functions mentioned in this section will usually be
+more appropriate choices.
+
 @node Allowing interrupts, Platform and version information, Condition handling and cleanup code, The R API
 @section Allowing interrupts
 @cindex Interrupts
