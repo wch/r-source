@@ -13254,7 +13254,7 @@ a test of a length-2 @code{"dim"} attribute.
 @apifun isOrdered
 @apifun isUnordered
 @apifun isS4
-@comment @apifun isNumber
+@apifun isNumber
 @comment @apifun isFrame
 @example
 @group
@@ -13276,7 +13276,7 @@ Rboolean isList(SEXP);
 Rboolean isOrdered(SEXP);
 Rboolean isUnordered(SEXP);
 Rboolean isS4(SEXP);
-@comment Rboolean isNumber(SEXP);
+Rboolean isNumber(SEXP);
 @comment Rboolean isFrame (SEXP);
 @end group
 @end example
@@ -13351,9 +13351,10 @@ Function @code{R_BindingIsLocked} corresponds to  @R{}'s @code{bindingIsLocked} 
 @eapifun R_MakeActiveBinding
 @eapifun R_unLockBinding
 
-The C function @code{inherits} corresponds to the @R{} function of the
-same name.
+The C functions @code{inherits} and @code{topenv} correspond to the @R{}
+functions of the same name.
 @apifun inherits
+@apifun topenv
 
 @node Named objects and copying,  , Some convenience functions, Handling R objects in C
 @subsection Named objects and copying
