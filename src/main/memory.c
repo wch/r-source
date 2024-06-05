@@ -4216,6 +4216,14 @@ NORET SEXP * (VECTOR_PTR)(SEXP x)
   error(_("not safe to return vector pointer"));
 }
 
+const SEXP *(VECTOR_PTR_RO)(SEXP x) {
+    if(TYPEOF(x) != VECSXP)
+	error("%s() can only be applied to a '%s', not a '%s'",
+	      "STRING_PTR_RO", "list", R_typeToChar(x));
+    CHKZLN(x);
+    return VECTOR_PTR_RO(x);
+}
+
 void (SET_STRING_ELT)(SEXP x, R_xlen_t i, SEXP v) {
     if(TYPEOF(CHK(x)) != STRSXP)
 	error("%s() can only be applied to a '%s', not a '%s'",
