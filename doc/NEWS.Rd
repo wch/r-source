@@ -91,6 +91,13 @@
       \file{DESCRIPTION} file URL fields.
     }
   }
+
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item Auto-generated \code{citation()} entries no longer include
+      (additional) URLs in the \samp{note} field (\PR{18547}).
+    }
+  }
 }
 
 \section{\Rlogo CHANGES IN R 4.4.1}{
