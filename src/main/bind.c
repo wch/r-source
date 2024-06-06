@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997--2023  The R Core Team
+ *  Copyright (C) 1997--2024  The R Core Team
  *  Copyright (C) 2002--2020  The R Foundation
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
@@ -1120,11 +1120,11 @@ attribute_hidden SEXP do_bind(SEXP call, SEXP op, SEXP args, SEXP env)
 	method = findFun(install(generic), R_MethodsNamespace);
     }
     if (method != R_NilValue) { // found an S3 or S4 method
+	PROTECT(method);
 	if (missingDL)
 	    args = CDR(args); /* discard 'deparse.level' */
 	else
 	    SET_TAG(args, install("deparse.level")); /* tag 'deparse.level' */
-	PROTECT(method);
 	SEXP ans = applyClosure(call, method, args, env, R_NilValue, TRUE);
 	UNPROTECT(2);
 	return ans;
