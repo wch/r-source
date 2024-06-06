@@ -15183,9 +15183,9 @@ by something like (fixed-form Fortran 90 code):
 @apifun ISNAN
 @apifun R_FINITE
 @apifun R_IsNaN
-@apifun R_PosInf
-@apifun R_NegInf
-@apifun NA_REAL
+@apivar R_PosInf
+@apivar R_NegInf
+@apivar NA_REAL
 
 A set of functions is provided to test for @code{NA}, @code{Inf},
 @code{-Inf} and @code{NaN}.  These functions are accessed @emph{via} macros:
