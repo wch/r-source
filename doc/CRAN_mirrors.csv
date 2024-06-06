@@ -97,7 +97,7 @@ Thailand,Thailand,Hatyai,http://mirrors.psu.ac.th/pub/cran/,"Prince of Songkla U
 "USA (NC) [https]",USA,Durham,https://archive.linux.duke.edu/cran/,"Duke University, Durham, NC","csi-linux-admins # duke.edu",1,us
 "USA (OH) [https]",USA,Cleveland,https://cran.case.edu/,"Case Western Reserve University, Cleveland, OH","""Alberto H. Santana"" <ahs4 # case.edu>",1,us,"secure_mirror_from_master"
 "USA (OR) [https]",USA,Corvallis,https://ftp.osuosl.org/pub/cran/,"Oregon State University","support # Osuosl.org",1,us,"secure_mirror_from_master"
-"USA (PA 1) [https]",USA,Pittsburgh,https://lib.stat.cmu.edu/R/CRAN/,"Statlib, Carnegie Mellon University, Pittsburgh, PA","Carl Skipper <remarks # stat.cmu.edu>",1,us,"secure_mirror_from_master"
+"USA (PA 1) [https]",USA,Pittsburgh,https://lib.stat.cmu.edu/R/CRAN/,"Statlib, Carnegie Mellon University, Pittsburgh, PA","Jacob Gordon <remarks # stat.cmu.edu>",1,us,"secure_mirror_from_master"
 "USA (PA 2) [https]",USA,Pittsburgh,https://cran.mirrors.hoobly.com/,"Hoobly Classifieds, Pittsburgh, PA","Peter Grigor <pgrigor # hoobly.com>",1,us
 "USA (TN) [https]",USA,"Oak Ridge",https://mirrors.nics.utk.edu/cran/,"National Institute for Computational Sciences, Oak Ridge, TN","help # nics.utk.edu",1,us,"secure_mirror_from_master"
 "United Arab Emirates [https]","United Arab Emirates","Abu Dhabi",https://cran.nyuad.nyu.edu/,"New York University in Abu Dhabi","nyuad.cran # nyu.edu",1,ae,"secure_mirror_from_master"
