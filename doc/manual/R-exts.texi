@@ -12938,11 +12938,11 @@ need to add a symbol for it @emph{via} a call to
 
 @example
 @group
-    SEXP version;
-    version = PROTECT(allocVector(REALSXP, 1));
-    REAL(version)[0] = 3.0;
-    setAttrib(ans, install("version"), version);
-    UNPROTECT(1);
+SEXP version;
+version = PROTECT(allocVector(REALSXP, 1));
+REAL(version)[0] = 3.0;
+setAttrib(ans, install("version"), version);
+UNPROTECT(1);
 @end group
 @end example
 
@@ -12954,7 +12954,7 @@ consider code such as
 @example
 static SEXP VerSymbol = NULL;
 ...
-    if (VerSymbol == NULL) VerSymbol = install("version");
+if (VerSymbol == NULL) VerSymbol = install("version");
 @end example
 
 @noindent
@@ -12964,12 +12964,23 @@ This example can be simplified by another convenience function:
 
 @example
 @group
-    SEXP version = PROTECT(ScalarReal(3.0));
-    setAttrib(ans, install("version"), version);
-    UNPROTECT(1);
+SEXP version = PROTECT(ScalarReal(3.0));
+setAttrib(ans, install("version"), version);
+UNPROTECT(1);
 @end group
 @end example
 
+If a result is to be a vector with all elements named, then
+@code{mkNamed} can be used to allocate a vector of a specified type.
+Names are provided as a C vector of strings terminated by an empty
+string:
+@example
+@group
+const char *nms[] = @{"xi", "yi", "zi", ""@};
+mkNamed(VECSXP, nms);
+@end group
+@end example
+@apifun mkNamed
 
 @node Classes, Handling lists, Attributes, Handling R objects in C
 @subsection Classes
@@ -13352,9 +13363,11 @@ Function @code{R_BindingIsLocked} corresponds to  @R{}'s @code{bindingIsLocked} 
 @eapifun R_unLockBinding
 
 The C functions @code{inherits} and @code{topenv} correspond to the @R{}
-functions of the same name.
+functions of the same name. The C function @code{GetOption1} corresponds
+to the @R{} function @code{getOption} without specifying a default.
 @apifun inherits
 @apifun topenv
+@apifun GetOption1
 
 Some convenience functions for working with pairlist objects include
 @code{copyListMatrix}, @code{VectorToPairList}, and
