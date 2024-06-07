@@ -13255,7 +13255,7 @@ a test of a length-2 @code{"dim"} attribute.
 @apifun isUnordered
 @apifun isS4
 @apifun isNumber
-@comment @apifun isFrame
+@apifun isDataFrame
 @example
 @group
 Rboolean isVector(SEXP);
@@ -13277,7 +13277,7 @@ Rboolean isOrdered(SEXP);
 Rboolean isUnordered(SEXP);
 Rboolean isS4(SEXP);
 Rboolean isNumber(SEXP);
-@comment Rboolean isFrame (SEXP);
+Rboolean isDataFrame (SEXP);
 @end group
 @end example
 
@@ -13355,6 +13355,13 @@ The C functions @code{inherits} and @code{topenv} correspond to the @R{}
 functions of the same name.
 @apifun inherits
 @apifun topenv
+
+Some convenience functions for working with pairlist objects include
+@code{copyListMatrix}, @code{VectorToPairList}, and
+@code{PairToVectorList}
+@eapifun copyListMatrix
+@eapifun VectorToPairList
+@eapifun PairToVectorList
 
 @node Named objects and copying,  , Some convenience functions, Handling R objects in C
 @subsection Named objects and copying

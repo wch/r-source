@@ -936,6 +936,7 @@ void R_orderVector1(int *indx, int n, SEXP x,       Rboolean nalast, Rboolean de
 #define isArray			Rf_isArray
 #define isBasicClass            Rf_isBasicClass
 #define isComplex		Rf_isComplex
+#define isDataFrame		Rf_isDataFrame
 #define isEnvironment		Rf_isEnvironment
 #define isExpression		Rf_isExpression
 #define isFactor		Rf_isFactor
@@ -1060,6 +1061,7 @@ Rboolean Rf_conformable(SEXP, SEXP);
 SEXP	 Rf_elt(SEXP, int);
 Rboolean Rf_inherits(SEXP, const char *);
 Rboolean Rf_isArray(SEXP);
+Rboolean Rf_isDataFrame(SEXP);
 Rboolean Rf_isFactor(SEXP);
 Rboolean Rf_isFrame(SEXP);
 Rboolean Rf_isFunction(SEXP);

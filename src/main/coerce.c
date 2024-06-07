@@ -2067,7 +2067,7 @@ attribute_hidden SEXP do_is(SEXP call, SEXP op, SEXP args, SEXP rho)
 	break;
 /* no longer used: is.data.frame is R code
     case 80:
-	LOGICAL0(ans)[0] = isFrame(CAR(args));
+	LOGICAL0(ans)[0] = isDataFrame(CAR(args));
 	break;
 */
 

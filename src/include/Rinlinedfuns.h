@@ -890,7 +890,7 @@ INLINE_FUN Rboolean isVector(SEXP s)/* === isVectorList() or isVectorAtomic() */
     }
 }
 
-INLINE_FUN Rboolean isFrame(SEXP s)
+INLINE_FUN Rboolean isDataFrame(SEXP s)
 {
     SEXP klass;
     int i;
@@ -901,6 +901,9 @@ INLINE_FUN Rboolean isFrame(SEXP s)
     }
     return FALSE;
 }
+/* keep available under old name for now */
+INLINE_FUN Rboolean isFrame(SEXP s) { return isDataFrame(s); }
+
 
 /* DIFFERENT than R's  is.language(.) in ../main/coerce.c [do_is(), case 301:]
  *                                    which is   <=>  SYMSXP || LANGSXP || EXPRSXP */

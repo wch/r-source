@@ -1028,7 +1028,7 @@ static void printAttributes(SEXP s, R_PrintData *data, Rboolean useSlots)
 		if(TAG(a) == R_ClassSymbol)
 		    goto nextattr;
 	    }
-	    if(isFrame(s)) {
+	    if(isDataFrame(s)) {
 		if(TAG(a) == R_RowNamesSymbol)
 		    goto nextattr;
 	    }
