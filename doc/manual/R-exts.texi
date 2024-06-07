@@ -12982,7 +12982,7 @@ mkNamed(VECSXP, nms);
 @end example
 @apifun mkNamed
 
-@node Classes, Handling lists, Attributes, Handling R objects in C
+@node Classes, S4 objects, Attributes, Handling R objects in C
 @subsection Classes
 @cindex Classes
 
@@ -13012,6 +13012,35 @@ We can use
 As the value is a character vector, we have to know how to create that
 from a C character array, which we do using the function
 @code{mkChar}.
+
+@node S4 objects, Handling lists, Classes, Handling R objects in C
+@subsection S4 objects
+@cindex S4 objects
+
+Several functions are available for working with S4 objects and classes
+in C, including:
+
+@comment FIXME: this needs fleshing out
+@example
+SEXP allocS4Object(void);
+SEXP asS4(SEXP, Rboolean, int);
+int R_check_class_etc(SEXP x, const char **valid);
+SEXP R_do_MAKE_CLASS(const char *what);
+SEXP R_do_new_object(SEXP class_def);
+SEXP R_do_slot(SEXP obj, SEXP name);
+SEXP R_do_slot_assign(SEXP obj, SEXP name, SEXP value);
+SEXP R_getClassDef  (const char *what);
+int R_has_slot(SEXP obj, SEXP name);
+@end example
+@eapifun allocS4Object
+@eapifun asS4
+@eapifun R_check_class_etc
+@eapifun R_do_MAKE_CLASS
+@eapifun R_do_new_object
+@eapifun R_do_slot
+@eapifun R_do_slot_assign
+@eapifun R_getClassDef
+@eapifun R_has_slot
 
 @node Handling lists, Handling character data, Classes, Handling R objects in C
 @subsection Handling lists
