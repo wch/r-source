@@ -1922,6 +1922,8 @@ nonS3methods <- function(package)
                          "dim.rename.nc", "open.nc", "print.nc"),
              Rmpfr = c("mpfr.is.0", "mpfr.is.integer"),
              SMPracticals = "exp.gibbs",
+             SparseM = c("as.matrix.csc","as.matrix.csr", "as.matrix.ssc", "as.matrix.ssr", "as.matrix.coo",
+                         "is.matrix.csc","is.matrix.csr", "is.matrix.ssc", "is.matrix.ssr", "is.matrix.coo"),
              TANOVA = "sigma.hat",
              TeachingDemos = "sigma.test",
              XML = "text.SAX",
