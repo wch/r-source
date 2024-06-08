@@ -7565,7 +7565,7 @@ function(dir, localOnly = FALSE, pkgSize = NA)
         if(length(containsBuildSexprs)) {
             built_file <- file.path(dir, "build", "partial.rdb")
             if(!file.exists(built_file))
-                out$missing_manual_rdb <- TRUE
+                out$missing_partial_rdb <- TRUE
             else {
                 ## Merge in the partial db: there could be build Sexprs
                 ## giving install/render Sexprs ...
@@ -7574,12 +7574,19 @@ function(dir, localOnly = FALSE, pkgSize = NA)
                 Rdb[pos > 0L] <- built[pos]
             }
         }
-        needRefMan <-
+        containsLaterSexprs <-
             any(vapply(Rdb,
                        function(Rd)
                            any(.Rd_get_Sexpr_build_time_info(Rd)["later"]),
                        NA))
-        if(needRefMan &&
+        if(containsLaterSexprs &&
+           !file.exists(file.path(dir, "build", "stage23.rdb")))
+            out$missing_stage23_rdb <- TRUE
+        ## (Could checks whether this really contain all possibly unsafe
+        ## install/render Sexprs.)
+        if(containsLaterSexprs &&
+           config_val_to_logical(Sys.getenv("_R_CHECK_NOTE_MISSING_MANUAL_PDF",
+                                            "FALSE")) &&
            !file.exists(file.path(dir, "build",
                                   paste0( meta[["Package"]], ".pdf"))))
             out$missing_manual_pdf <- TRUE
@@ -8752,11 +8759,17 @@ function(x, ...)
                   paste0("  ", y)),
                 collapse = "\n")
       },
-      fmt(c(if(length(y <- x$missing_manual_rdb)) {
-                "Package has help file(s) containing build-stage \\Sexpr{} expressions but no 'build/partial.rdb' file."
+      fmt(c(if(length(y <- x$missing_partial_rdb)) {
+                paste(strwrap("Package has help file(s) containing build-stage \\Sexpr{} expressions but no 'build/partial.rdb' file."),
+                      collapse = "\n")
+            },
+            if(length(y <- x$missing_stage23_rdb)) {
+                paste(strwrap("Package has help file(s) containing later-stage \\Sexpr{} expressions but no 'build/stage23.rdb' file."),
+                      collapse = "\n")
             },
             if(length(y <- x$missing_manual_pdf)) {
-                "Package has help file(s) containing install/render-stage \\Sexpr{} expressions but no prebuilt PDF manual."
+                paste(strwrap("Package has help file(s) containing install/render-stage \\Sexpr{} expressions but no prebuilt PDF manual."),
+                      collapse = "\n")
             })),
       fmt(c(if(length(y <- x$dotjava)) {
                 "Package installs .java files."
