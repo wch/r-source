@@ -1525,9 +1525,17 @@ function(x)
 }
 
 format.citation <-
-function(x, style = "citation", ...) format.bibentry(x, style = style, ...)
+function(x, style = "citation", ...)
+    format.bibentry(x, style = style, ...)
 print.citation <-
-function(x, style = "citation", ...) print.bibentry(x, style = style, ...)
+function(x, style = "citation", ...)
+    print.bibentry(x, style = style, ...)
+
+as.data.frame.citation <-
+function(x, row.names = NULL, optional = FALSE, ...) {
+    x <- as.bibentry(x)
+    NextMethod()
+}
 
 as.bibentry <-
 function(x)
