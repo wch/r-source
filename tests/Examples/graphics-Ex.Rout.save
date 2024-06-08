@@ -1,6 +1,6 @@
 
-R Under development (unstable) (2023-09-08 r85109) -- "Unsuffered Consequences"
-Copyright (C) 2023 The R Foundation for Statistical Computing
+R Under development (unstable) (2024-06-08 r86705) -- "Unsuffered Consequences"
+Copyright (C) 2024 The R Foundation for Statistical Computing
 Platform: aarch64-apple-darwin22.6.0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -1076,6 +1076,23 @@ List of 2
 > plot(8:270, log="xy") ; grid(equilogs = FALSE) -> grll
 > stopifnot(identical(grll, list(atx = c(1, 2, 5, 10, 20, 50, 100, 200),
 +                                aty = c(         10, 20, 50, 100, 200))))
+> 
+> x <- 2^(-9:70)
+> plot(log(x) ~ x, log="xy")
+Warning in xy.coords(x, y, xlabel, ylabel, log) :
+  10 y values <= 0 omitted from logarithmic plot
+> grll <- grid(equilogs = FALSE, col = adjustcolor("green", 1/3))
+> gr20 <- grid(nintLog = 20)
+> gr25 <- grid(nintLog = 25, col="thistle")
+> str(gr25)
+List of 2
+ $ atx: num [1:26] 1e-03 1e-02 1e-01 1e+00 1e+01 1e+02 1e+03 1e+04 1e+05 1e+06 ...
+ $ aty: num [1:2] 1 10
+> stopifnot(exprs = {
++     grll$aty == c(1, 2, 5, 10, 20, 50)
++     length(gr20$atx) >= 20 # 24 effectively
++     all.equal(10^(-3:22), gr25$atx, tol = 1e-15)  # even tol = 0
++ })
 > 
 > 
 > 

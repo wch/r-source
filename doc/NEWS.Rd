@@ -16,7 +16,9 @@
     \itemize{
       \item \code{as.integer(rl)} and hence \code{as.raw(rl)} now work for
       a \code{list} of \code{raw(1)} elements, as proposed by \I{Michael
-      Chirico}'s \PR{18696}.
+	Chirico}'s \PR{18696}.
+
+      \item \pkg{graphics}' \code{grid()} gains optional argument \code{nintLog}.
     }
   }
 

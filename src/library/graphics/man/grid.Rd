@@ -12,7 +12,7 @@
 }
 \usage{
 grid(nx = NULL, ny = nx, col = "lightgray", lty = "dotted",
-     lwd = par("lwd"), equilogs = TRUE)
+     lwd = par("lwd"), equilogs = TRUE, nintLog = NULL)
 }
 \arguments{
   \item{nx, ny}{number of cells of the grid in x and y direction.  When
@@ -27,6 +27,9 @@ grid(nx = NULL, ny = nx, col = "lightgray", lty = "dotted",
     alignment with the axis tick marks are active.  Setting \code{equilogs =
       FALSE} in that case gives \emph{non equidistant} tick aligned
     grid lines.}
+  \item{nintLog}{one or two integers (or \code{NULL}), passed to
+    \code{\link{axTicks}()} when \code{nx} or \code{ny} are to be
+    determined; effective only with log coordinates.}
 }
 \value{
   A list of the x (\code{"atx"}) and y (\code{"aty"}) coordinates at
@@ -72,5 +75,17 @@ plot(8:270, log="xy") ; grid() # at (1, 10, 100); if preferring "all" grid lines
 plot(8:270, log="xy") ; grid(equilogs = FALSE) -> grll
 stopifnot(identical(grll, list(atx = c(1, 2, 5, 10, 20, 50, 100, 200),
                                aty = c(         10, 20, 50, 100, 200))))
+
+x <- 2^(-9:70)
+plot(log(x) ~ x, log="xy")
+grll <- grid(equilogs = FALSE, col = adjustcolor("green", 1/3))
+gr20 <- grid(nintLog = 20)
+gr25 <- grid(nintLog = 25, col="thistle")
+str(gr25)
+stopifnot(exprs = {
+    grll$aty == c(1, 2, 5, 10, 20, 50)
+    length(gr20$atx) >= 20 # 24 effectively
+    all.equal(10^(-3:22), gr25$atx, tol = 1e-15)  # even tol = 0
+})
 }
 \keyword{aplot}
