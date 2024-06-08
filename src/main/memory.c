@@ -2435,6 +2435,9 @@ void *R_realloc_gc(void *p, size_t n)
 
 SEXP allocSExp(SEXPTYPE t)
 {
+    if (t == NILSXP)
+	/* R_NilValue should be the only NILSXP object */
+	return R_NilValue;
     SEXP s;
     if (FORCE_GC || NO_FREE_NODES()) {
 	R_gc_internal(0);
