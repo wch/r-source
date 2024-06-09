@@ -1,7 +1,7 @@
 #  File src/library/tools/R/urltools.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 2015-2023 The R Core Team
+#  Copyright (C) 2015-2024 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -529,7 +529,7 @@ function(db, remote = TRUE, verbose = FALSE, parallel = FALSE, pool = NULL)
             }
         }
         ##
-        if((s != "200") && (use_curl || parallel)) {
+        if((s != "200") && use_curl) {
             g <- .curl_fetch_memory_status_code(u)
             if(g == "200") {
                 s <- g
@@ -663,6 +663,22 @@ function(db, remote = TRUE, verbose = FALSE, parallel = FALSE, pool = NULL)
         ##                     sub(pat, "\\2", urlspos[ind]))
         ## but using the parts is considerably faster ...
         headers <- .fetch_headers(urlspos)
+        if(parallel &&
+           any(ind <- vapply(headers,
+                             function(e) {
+                                 if(inherits(e, "error")) -1L
+                                 else attr(e, "status")
+                             },
+                             0L) != 200)) {
+            ## We also re-check non-200 results in .check_http_A().
+            ## Not very useful the way we currently show progress:
+            ##   if(verbose)
+            ##       message(sprintf("found %d non-OK responses, re-fetching ...",
+            ##                       sum(ind)))
+            headers[ind] <-
+                .fetch_headers_via_curl(urlspos[ind],
+                                        verbose, pool, FALSE)
+        }
         results <- do.call(rbind, Map(.check_http, urlspos, headers))
         status <- as.numeric(results[, 1L])
         ## 405 is HTTP not allowing HEAD requests
@@ -777,9 +793,9 @@ function(urls, verbose = FALSE, ids = urls)
         urls, verbose, ids)
 
 .fetch_headers_via_curl <-
-function(urls, verbose = FALSE, pool = NULL)
+function(urls, verbose = FALSE, pool = NULL, nobody = TRUE)
 {
-    out <- .curl_multi_run_worker(urls, TRUE, verbose, pool)
+    out <- .curl_multi_run_worker(urls, nobody, verbose, pool)
     ind <- !vapply(out, inherits, NA, "error")
     if(any(ind))
         out[ind] <- lapply(out[ind],
@@ -815,9 +831,11 @@ function(urls, nobody = FALSE, verbose = FALSE, pool = NULL,
                 return()
             }
             if (done >= length) {
-                cat("\r", strrep(" ", nchar(fmt)), "\r", sep = "")
+                cat("\r", strrep(" ", nchar(fmt)), "\r", sep = "",
+                    file = stderr())
             } else {
-                cat(sprintf(fmt, done, length), sep = "")
+                cat(sprintf(fmt, done, length), sep = "",
+                    file = stderr())
             }
         }
         environment(bar$update) <- bar
