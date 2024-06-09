@@ -58,6 +58,9 @@ export("R_user_dir")
 
 export(".print.via.format")
 
+export("check_package_urls",
+       "check_package_dois")
+
 exportPattern("^SIG.+")
 
 S3method("[", "check_details_changes")

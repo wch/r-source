@@ -18,7 +18,12 @@
       a \code{list} of \code{raw(1)} elements, as proposed by \I{Michael
 	Chirico}'s \PR{18696}.
 
-      \item \pkg{graphics}' \code{grid()} gains optional argument \code{nintLog}.
+      \item \pkg{graphics}' \code{grid()} gains optional argument
+      \code{nintLog}.
+
+      \item New functions \code{check_package_urls()} and
+      \code{check_package_dois()} in package \pkg{tools} for checking
+      URLs and DOIs in package sources.
     }
   }
 
