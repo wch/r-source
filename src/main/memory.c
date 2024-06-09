@@ -4550,6 +4550,11 @@ SEXP (BODY)(SEXP x) { return CHK(BODY(CHK(x))); }
 SEXP (CLOENV)(SEXP x) { return CHK(CLOENV(CHK(x))); }
 int (RDEBUG)(SEXP x) { return RDEBUG(CHK(x)); }
 attribute_hidden int (RSTEP)(SEXP x) { return RSTEP(CHK(x)); }
+#define CHKCLOSXP(x) \
+    if (TYPEOF(x) != CLOSXP) error(_("argument is not a closure"))
+SEXP R_ClosureFormals(SEXP x) { CHKCLOSXP(x); return (FORMALS)(x); }
+SEXP R_ClosureBody(SEXP x) { CHKCLOSXP(x); return (BODY)(x); }
+SEXP R_ClosureEnv(SEXP x) { CHKCLOSXP(x); return (CLOENV)(x); }
 
 void (SET_FORMALS)(SEXP x, SEXP v) { FIX_REFCNT(x, FORMALS(x), v); CHECK_OLD_TO_NEW(x, v); FORMALS(x) = v; }
 void (SET_BODY)(SEXP x, SEXP v) { FIX_REFCNT(x, BODY(x), v); CHECK_OLD_TO_NEW(x, v); BODY(x) = v; }

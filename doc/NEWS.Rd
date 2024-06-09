@@ -91,6 +91,11 @@
       arguments are valid and should be used instead of
       \code{allocSExp(CLOSXP} followed by \code{SET_FORMALS},
       \code{SET_BODY}, and \code{SET_CLOENV}.
+
+      \item New API functions \code{R_ClosureFormals},
+      \code{R_ClosureBody}, and \code{R_ClosureEnv} for extrancting
+      closure components.  The existing functions \code{R_ClosureExpr}
+      and \code{R_BytecodeExpr} have also been added to the API.
     }
   }
 

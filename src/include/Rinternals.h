@@ -350,6 +350,9 @@ void SET_FORMALS(SEXP x, SEXP v);
 void SET_BODY(SEXP x, SEXP v);
 void SET_CLOENV(SEXP x, SEXP v);
 SEXP R_mkClosure(SEXP, SEXP, SEXP);
+SEXP R_ClosureFormals(SEXP);
+SEXP R_ClosureBody(SEXP);
+SEXP R_ClosureEnv(SEXP);
 
 /* Symbol Access Functions */
 SEXP (PRINTNAME)(SEXP x);

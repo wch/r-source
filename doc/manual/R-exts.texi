@@ -13150,6 +13150,17 @@ New function closure objects can be created with  @code{R_mkClosure}:
 SEXP R_mkClosure(SEXP formals, SEXP body, SEXP rho);
 @end example
 @apifun R_mkClosure
+The components of a closure can be extracted with
+@code{R_ClosureFormals}, @code{R_ClosureBody}, and @code{R_ClosureEnv}.
+For a byte compiled closure @code{R_ClosureBody} returns the compiled
+body.  @code{R_ClosureExpr} returns the body expression for both
+compiled and uncompiled closures. The expression for a compiled object
+can be obtained with @code{R_BytecodeExpr}.
+@apifun R_ClosureFormals
+@apifun R_ClosureBody
+@apifun R_ClosureEnv
+@apifun R_ClosureExpr
+@apifun R_BytecodeExpr
 
 @node Finding and setting variables, Some convenience functions, Working with closures, Handling R objects in C
 @subsection Finding and setting variables
