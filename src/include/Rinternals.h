@@ -349,6 +349,7 @@ void (SET_RTRACE)(SEXP x, int v);
 void SET_FORMALS(SEXP x, SEXP v);
 void SET_BODY(SEXP x, SEXP v);
 void SET_CLOENV(SEXP x, SEXP v);
+SEXP R_mkClosure(SEXP, SEXP, SEXP);
 
 /* Symbol Access Functions */
 SEXP (PRINTNAME)(SEXP x);

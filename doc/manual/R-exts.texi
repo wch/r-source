@@ -12503,7 +12503,9 @@ right type.
 * Attributes::
 * Classes::
 * Handling lists::
+* S4 objects::
 * Handling character data::
+* Working with closures::
 * Finding and setting variables::
 * Some convenience functions::
 * Named objects and copying::
@@ -13105,7 +13107,7 @@ and enables us to say
 @end group
 @end example
 
-@node Handling character data, Finding and setting variables, Handling lists, Handling R objects in C
+@node Handling character data, Working with closures, Handling lists, Handling R objects in C
 @subsection Handling character data
 @cindex handling character data
 
@@ -13139,7 +13141,17 @@ Note that @R{} character strings are restricted to @code{2^31 - 1}
 bytes, and hence so should the input to @code{mkChar} be (C allows
 longer strings on 64-bit platforms).
 
-@node Finding and setting variables, Some convenience functions, Handling character data, Handling R objects in C
+@node Working with closures, Finding and setting variables, Handling character data, Handling R objects in C
+@subsection Working with closures
+@cindex Working with closures
+
+New function closure objects can be created with  @code{R_mkClosure}:
+@example
+SEXP R_mkClosure(SEXP formals, SEXP body, SEXP rho);
+@end example
+@apifun R_mkClosure
+
+@node Finding and setting variables, Some convenience functions, Working with closures, Handling R objects in C
 @subsection Finding and setting variables
 @cindex Finding variables
 @cindex Setting variables

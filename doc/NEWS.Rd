@@ -86,6 +86,11 @@
       \code{SET_TYPE} in package C code should be avoided and may be
       deprecated in the near future. It is better to allocate an object
       of the proper type in the first place.      
+
+      \item New API function \code{R_mkClosure}. This checks that its
+      arguments are valid and should be used instead of
+      \code{allocSExp(CLOSXP} followed by \code{SET_FORMALS},
+      \code{SET_BODY}, and \code{SET_CLOENV}.
     }
   }
 
