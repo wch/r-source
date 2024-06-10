@@ -13405,6 +13405,8 @@ versions of @R{}'s @code{any(duplicated(.))}.
 Function @code{R_compute_identical} corresponds to @R{}'s @code{identical} function.
 @eapifun R_compute_identical
 Function @code{R_BindingIsLocked} corresponds to  @R{}'s @code{bindingIsLocked} function.
+Function @code{R_ParentEnv} corresponds to @R{}'1 @code{parent.env}.
+@apifun R_ParentEnv
 @eapifun R_ActiveBindingFunction
 @eapifun R_BindingIsActive
 @eapifun R_BindingIsLocked

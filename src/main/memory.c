@@ -4604,6 +4604,9 @@ SEXP (FRAME)(SEXP x) { return CHK(FRAME(CHK(x))); }
 SEXP (ENCLOS)(SEXP x) { return CHK(ENCLOS(CHK(x))); }
 SEXP (HASHTAB)(SEXP x) { return CHK(HASHTAB(CHK(x))); }
 int (ENVFLAGS)(SEXP x) { return ENVFLAGS(CHK(x)); }
+#define CHKENVSXP(x) \
+    if (TYPEOF(x) != ENVSXP) error(_("argument is not an environment"))
+SEXP R_ParentEnv(SEXP x) { CHKENVSXP(x); return (ENCLOS)(x); }
 
 void (SET_FRAME)(SEXP x, SEXP v) { FIX_REFCNT(x, FRAME(x), v); CHECK_OLD_TO_NEW(x, v); FRAME(x) = v; }
 

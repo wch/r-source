@@ -96,6 +96,8 @@
       \code{R_ClosureBody}, and \code{R_ClosureEnv} for extrancting
       closure components.  The existing functions \code{R_ClosureExpr}
       and \code{R_BytecodeExpr} have also been added to the API.
+
+      \item New API function \code{R_ParentEnv}.
     }
   }
 
