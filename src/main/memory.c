@@ -4603,7 +4603,7 @@ void (SET_INTERNAL)(SEXP x, SEXP v) {
 attribute_hidden void (SET_DDVAL)(SEXP x, int v) { SET_DDVAL(CHK(x), v); }
 
 /* Environment Accessors */
-/* looks line R_NilValue is still showing up in internals */
+/* looks like R_NilValue is still showing up in internals */
 #define CHKENVSXP(x)						\
     if (TYPEOF(x) != ENVSXP && x != R_NilValue)			\
 	error(_("argument is not an environment or NULL"))
