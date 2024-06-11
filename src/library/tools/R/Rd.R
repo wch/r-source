@@ -1181,6 +1181,32 @@ function(dir)
     else NULL
 }
 
+### * .Rd_aliases_db_to_data_frame
+
+.Rd_aliases_db_to_data_frame <-
+function(x)
+{
+    wrk <- function(a, p) {
+        cbind(unlist(a, use.names = FALSE),
+              rep.int(paste0(p, "::", names(a)), lengths(a)))
+    }
+    y <- as.data.frame(do.call(rbind, Map(wrk, x, names(x))))
+    colnames(y) <- c("Alias", "Source")
+    y
+}
+
+### * .Rd_rdxrefs_db_to_data_frame
+
+.Rd_rdxrefs_db_to_data_frame <-
+function(x)
+{
+    wrk <- function(u, p) {
+        u$Source <- sprintf("%s::%s", p, u$Source)
+        u
+    }
+    do.call(rbind, Map(wrk, lapply(x, as.data.frame), names(x)))
+}
+
 ### Local variables: ***
 ### mode: outline-minor ***
 ### outline-regexp: "### [*]+" ***
