@@ -579,7 +579,7 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
     sprintf("^<?((https?://|)orcid.org/)?(%s)>?$", .ORCID_iD_regexp)
 
 .ORCID_iD_db_from_package_sources <-
-function(dir)
+function(dir, add = FALSE)
 {
     meta <- .get_package_metadata(dir, FALSE)
     ids1 <- ids2 <- character()
@@ -605,8 +605,15 @@ function(dir)
                                   }),
                            use.names = FALSE)
     }
-    rbind(if(length(ids1)) cbind(ids1, "DESCRIPTION"),
-          if(length(ids2)) cbind(ids2, "inst/CITATION"))
+    
+    db  <- data.frame(ID = c(ids1, ids2),
+                      Parent = c(rep_len("DESCRIPTION",
+                                         length(ids1)),
+                                 rep_len("inst/CITATION",
+                                         length(ids2))))
+    if(add) 
+        db$Parent <- file.path(basename(dir), db$Parent)
+    db
 }
 
 ### ** .vc_dir_names
