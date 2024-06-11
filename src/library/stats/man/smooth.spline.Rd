@@ -272,7 +272,7 @@ smooth.spline(x, y = NULL, w = NULL, df, spar = NULL, lambda = NULL, cv = FALSE,
 \source{
   This function is based on code in the \code{GAMFIT} Fortran program by
   T. Hastie and R. Tibshirani (originally taken from
-  \url{http://lib.stat.cmu.edu/general/gamfit})
+  \url{https://lib.stat.cmu.edu/general/gamfit})
    which makes use of spline code by Finbarr O'Sullivan.  Its design
   parallels the \code{smooth.spline} function of Chambers & Hastie (1992).
 }
