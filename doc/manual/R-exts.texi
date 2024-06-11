@@ -13260,6 +13260,9 @@ first.
 @apifun asReal
 @apifun asComplex
 @apifun asChar
+The function @code{asCharacterFactor} converts a factor to a character
+vector.
+@apifun asCharacterFactor
 
 To return a length-one real vector we can use
 
@@ -13377,12 +13380,15 @@ the @I{@var{n}-th} position in the pairlist (whose @code{CAR} is the
 @apifun lastElt
 @apifun nthcdr
 
-Functions @code{str2type} and @code{type2str} map @R{}
-length-one character strings to and from @code{SEXPTYPE} numbers, and
+Functions @code{str2type} and @code{type2str} map @R{} length-one
+character strings to and from @code{SEXPTYPE} numbers, and
 @code{type2char} maps numbers to C character strings.
+@code{type2str_nowarn} does not issue a warning if the @code{SEXPTYPE}
+is invalid.
 @apifun str2type
 @apifun type2str
 @apifun type2char
+@apifun type2str_nowarn
 
 @comment Want to encourage use of some of the more stable and useful R_*
 @comment and Rf_* functions:
@@ -13422,6 +13428,23 @@ to the @R{} function @code{getOption} without specifying a default.
 @apifun inherits
 @apifun topenv
 @apifun GetOption1
+@code{GetOptionWidth} returns the value of the @code{width} option as an
+@code{int}.
+@apifun GetOptionWidth
+The C function @code{nlevels} returns the number of levels of a factor.
+Unlike its @R{} counterpart ir always returns zero for non-factors.
+@eapifun nlevels
+
+For vectors the C function @code{duplicated} returns a logical vector
+indicating for each element whether it is duplicated or not. A second
+argument specifies the direction of the search.
+@eapifun duplicated
+
+The C function @code{R_lsInternal3} returns a character vector of the
+names of variables in an environment. The second and third arguments
+specify whether all names are desired and whether the result should be
+sorted.
+@eapifun R_lsInternal3
 
 Some convenience functions for working with pairlist objects include
 @code{copyListMatrix}, @code{VectorToPairList}, and
@@ -15125,7 +15148,7 @@ void warningcall_immediate(SEXP @var{call}, const char * @var{format}, ...);
 @apifun warning
 @apifun errorcall
 @apifun warningcall
-@findex warningcall_immediate
+@apifun warningcall_immediate
 
 @noindent
 These have the same call sequences as calls to @code{printf}, but in the
@@ -17746,6 +17769,8 @@ void R_CleanUp (SA_TYPE saveact, int status, int RunLast)
 @embfun CleanEd
 @embfun R_CleanUp
 @embfun fpu_setup
+@comment FIXME need to mention R_RunPendingFinalizers in text
+@embfun R_RunPendingFinalizers
 
 These callbacks should never be changed in a running @R{} session (and
 hence cannot be called from an extension package).
