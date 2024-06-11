@@ -14600,10 +14600,13 @@ For example, the return type of @code{REAL_RO} is @code{const double *}
 @apifun COMPLEX_RO
 @apifun STRING_PTR_RO
 @apifun VECTOR_PTR_RO
+@apifun DATAPTR_RO
 These accessor functions check that they are being used on an
 appropriate type of @code{SEXP}.  For @code{VECSXP} and @code{STRSXP}
 objects only read-only pointers are available as modifying their data
 directly would violate assumptions the memory manager depends on.
+@code{DATAPTR_RO} returns a generic read-only data pointer for any
+vector object.
 
 Formerly it was possible for packages to obtain internal versions of
 some accessors by defining @samp{USE_RINTERNALS} before including
@@ -14720,7 +14723,7 @@ query whether a data pointer is available.
 @deftypefunx {const double *} REAL_OR_NULL (SEXP @var{x})
 @deftypefunx {const Rcomplex *} COMPLEX_OR_NULL (SEXP @var{x})
 @deftypefunx {const Rbyte *} RAW_OR_NULL (SEXP @var{x})
-@comment @deftypefun {const void *} DATAPTR_OR_NULL (SEXP @var{x})
+@deftypefunx {const void *} DATAPTR_OR_NULL (SEXP @var{x})
 These functions will return a data pointer if one is available.  For
 vectors with a compact representation these functions will return
 @code{NULL}.
@@ -14730,6 +14733,7 @@ vectors with a compact representation these functions will return
 @eapifun REAL_OR_NULL
 @eapifun COMPLEX_OR_NULL
 @eapifun RAW_OR_NULL
+@eapifun DATAPTR_OR_NULL
 
 If a data pointer is not available, then code can access elements one at
 a time with functions like @code{REAL_ELT}. This is often sufficient,
@@ -14768,6 +14772,32 @@ classes, beyond those defined in @file{R_ext/Altrep.h}, include
 @eapifun R_set_altrep_data2
 @eapifun R_altrep_data2
 @eapihdr R_ext/Altrep.h
+
+For some objects it may be possible to very efficiently determine
+whether the object is sorted or contains no @code{NA} values. These
+functions can be used to query this information:
+
+@deftypefun int LOGICAL_NO_NA (SEXP @var{x})
+@deftypefunx int INTEGER_NO_NA (SEXP @var{x})
+@deftypefunx int REAL_NO_NA (SEXP @var{x})
+@deftypefunx int STRING_NO_NA (SEXP @var{x})
+A @code{TRUE} result means it is known that there are no @code{NA}
+values.  A @code{FALSE} result means it is not known whether there are
+any @code{NA} values.
+@end deftypefun
+@eapifun LOGICAL_NO_NA
+@eapifun INTEGER_NO_NA
+@eapifun REAL_NO_NA
+@eapifun STRING_NO_NA
+@deftypefun int INTEGER_IS_SORTED (SEXP @var{x})
+@deftypefunx int REAL_IS_SORTED (SEXP @var{x})
+@deftypefunx int STRING_IS_SORTED (SEXP @var{x})
+These functions return one of @code{SORTED_DECR}, @code{SORTED_INCR}, or
+@code{UNKNOWN_SORTEDNESS}.
+@end deftypefun
+@eapifun INTEGER_IS_SORTED
+@eapifun REAL_IS_SORTED
+@eapifun STRING_IS_SORTED
 
 @node The R API, Generic functions and methods, System and foreign language interfaces, Top
 @chapter The R @acronym{API}: entry points for C code
