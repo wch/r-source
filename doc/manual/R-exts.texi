@@ -11880,6 +11880,15 @@ the exact version of @pkg{packA} or there needs to be a mechanism for
 @pkg{packB} to test at runtime the version of @pkg{packA} it is linked
 to matches that it was compiled against.
 
+On rare occasions in can be useful for C code in one package to
+dynamically look up the address in another package. This can be done
+using @code{R_FindSymbol}:
+@example
+DL_FUNC R_FindSymbol(char const *name, char const *pkg,
+		     R_RegisteredNativeSymbol *symbol);
+@end example
+@apifun R_FindSymbol
+
 @node Creating shared objects, Interfacing C++ code, Registering native routines, System and foreign language interfaces
 @section Creating shared objects
 @cindex Creating shared objects
@@ -12984,6 +12993,13 @@ mkNamed(VECSXP, nms);
 @end example
 @apifun mkNamed
 
+Symbols can also be installed or retrieved based on a name in a
+@code{CHARSXP} object using either @code{Rf_installChar} or
+@code{Rf_installTrChar}. These used to differ in handling character
+encoding but have been identical since @R{} 4.0.0.
+@apifun Rf_installChar
+@apifun Rf_installTrChar
+
 @node Classes, S4 objects, Attributes, Handling R objects in C
 @subsection Classes
 @cindex Classes
@@ -13189,7 +13205,7 @@ SEXP getvar(SEXP name, SEXP rho)
 @}
 @end group
 @end example
-@findex installChar
+@apifun installChar
 
 The main work is done by
 @findex findVar
@@ -13447,12 +13463,34 @@ sorted.
 @eapifun R_lsInternal3
 
 Some convenience functions for working with pairlist objects include
-@code{copyListMatrix}, @code{VectorToPairList}, and
+@code{copyListMatrix}, @code{listAppend}, @code{isVectorizable}, @code{VectorToPairList}, and
 @code{PairToVectorList}
 @eapifun copyListMatrix
+@eapifun listAppend
+@eapifun isVectorizable
 @eapifun VectorToPairList
 @eapifun PairToVectorList
 
+Some convenience functions for working with name spaces and environments
+include @code{R_existsVarInFrame}, @code{R_removeVarFromFrame},
+@code{R_PackageEnvName}, @code{R_IsPackageEnv}, @code{R_FindNamespace},
+@code{R_IsNamespaceEnv}, and @code{R_NamespaceEnvSpec}.
+@eapifun R_existsVarInFrame
+@eapifun R_removeVarFromFrame
+@eapifun R_PackageEnvName
+@eapifun R_IsPackageEnv
+@eapifun R_FindNamespace
+@eapifun R_NamespaceEnvSpec
+@eapifun R_IsNamespaceEnv
+
+The C functions @code{match} and @code{psmatch} correspond to the @R{} functions by the name name.
+@eapifun match
+@eapifun pmatch
+
+The C functions @code{R_forceAndCall} and @code{isUnsorted} correspond
+to the @R{} functions code{forceAndCall} and @code{is.unsorted}.
+@eapifun R_forceAndCall
+@eapifun isUnsorted
 @node Named objects and copying,  , Some convenience functions, Handling R objects in C
 @subsection Named objects and copying
 @cindex Copying objects
@@ -14839,6 +14877,8 @@ These functions return one of @code{SORTED_DECR}, @code{SORTED_INCR}, or
 * Re-encoding::
 * Condition handling and cleanup code::
 * Allowing interrupts::
+* C stack checking::
+* Custom serialization input and output::
 * Platform and version information::
 * Inlining C functions::
 * Controlling visibility::
@@ -16805,8 +16845,80 @@ Note that it is possible that the code behind one of the entry points
 defined here if called from your C or Fortran code could be interruptible
 or generate an error and so not return to your code.
 
+@node C stack checking, Custom serialization input and output, Allowing interrupts, The R API
+@section C stack checking
+@cindex C stack checking
+@R{} provides a framework for detecting when the amount of C stack is
+too low.  Two functions are available:
+@example
+void R_CheckStack(void)
+void R_CheckStack2(size_t extra)
+@end example
+@apifun R_CheckStack
+@apifun R_CheckStack2
+These functions signal an error when a low stack condition is detected.
 
-@node Platform and version information, Inlining C functions, Allowing interrupts, The R API
+This mechanism is not always available (@xref{Threading issues}) and it
+is best to avoid deep recursions in C and to track recursion depth when
+using recursion is not avoidable. C compilers will often optimize tail
+recursions to avoid consuming C stack, so it is best to write code in a
+tail-recursive form when possible.
+
+
+@node Custom serialization input and output, Platform and version information, C stack checking, The R API
+@section Custom serialization input and output
+@cindex Serialization
+
+The internal serialization code uses a framework for serializing from and
+to different output media. This framework has been in use internally for
+some time, but its use in packages is highly experimental and may need
+to be changed or dropped once some experience is gained. Package authors
+considering using this framework should keep this in mind.
+
+Client code will define a persistent stream structure with declarations
+like
+@example
+struct R_outpstream_st out;
+struct R_inpstream_st in;
+@end example
+These are filled in by calling these functions with appropriate arguments:
+@example
+void R_InitInPStream(R_inpstream_t stream, R_pstream_data_t data,
+                     R_pstream_format_t type,
+                     int (*inchar)(R_inpstream_t),
+                     void (*inbytes)(R_inpstream_t, void *, int),
+                     SEXP (*phook)(SEXP, SEXP), SEXP pdata);
+void R_InitOutPStream(R_outpstream_t stream, R_pstream_data_t data,
+                      R_pstream_format_t type, int version,
+                      void (*outchar)(R_outpstream_t, int),
+                      void (*outbytes)(R_outpstream_t, void *, int),
+                      SEXP (*phook)(SEXP, SEXP), SEXP pdata);
+@end example
+Code should not depend on the fields of the stream structures. Simpler
+initializers are available for serializing to or from a file pointer:
+@example
+void R_InitFileOutPStream(R_outpstream_t stream, FILE *fp,
+			  R_pstream_format_t type, int version,
+			  SEXP (*phook)(SEXP, SEXP), SEXP pdata);
+void R_InitFileInPStream(R_inpstream_t stream, FILE *fp,
+			 R_pstream_format_t type,
+			 SEXP (*phook)(SEXP, SEXP), SEXP pdata);
+@end example
+
+Once the stream structures are set up they can be used by calling
+@example
+void R_Serialize(SEXP s, R_outpstream_t stream)
+SEXP R_Unserialize(R_inpstream_t stream)
+@end example
+Examples can be found in the @R{} sources in @file{src/main/serialize.c}.
+@eapifun R_InitFileOutPStream
+@eapifun R_InitFileInPStream
+@eapifun R_InitInPStream
+@eapifun R_Unserialize
+@eapifun R_InitOutPStream
+@eapifun R_Serialize
+
+@node Platform and version information, Inlining C functions, Custom serialization input and output, The R API
 @section Platform and version information
 @cindex Version information from C
 @cindex @I{OpenMP}
@@ -17062,6 +17174,8 @@ packages
 packages that need to share in the @R{} event loops (not Windows)
 @end multitable
 @end quotation
+@comment ideally this should get some text:
+@eapifun R_GetX11Image
 
 The following headers are included by @file{R.h}:
 
