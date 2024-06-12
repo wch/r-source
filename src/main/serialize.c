@@ -2234,7 +2234,6 @@ static void DecodeVersion(int packed, int *v, int *p, int *s)
     *s = packed;
 }
 
-static SEXP checkNotPromise(SEXP);
 SEXP R_Unserialize(R_inpstream_t stream)
 {
     int version;
@@ -2289,7 +2288,7 @@ SEXP R_Unserialize(R_inpstream_t stream)
     }
     UNPROTECT(1);
 
-    return checkNotPromise(obj);
+    return obj;
 }
 
 attribute_hidden SEXP R_SerializeInfo(R_inpstream_t stream)
