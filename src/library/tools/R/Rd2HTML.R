@@ -1388,6 +1388,37 @@ findHTMLlinks <- function(pkgDir = "", lib.loc = NULL, level = 0:2)
     gsub("[Rr]d$", "html", Links)
 }
 
+.find_HTML_links <-
+function(pkg.dir, lib.loc = NULL, level = 0 : 3)
+{
+    ## A variant of the above which splits levels for base and
+    ## recommended packages, such that
+    ##   Level 0: this package (installed in pkg.dir)
+    ##   Level 1: base packages
+    ##   Level 2: recommended packages
+    ##   Level 3: all packages installed in lib.loc
+    if (is.null(lib.loc)) lib.loc <- .libPaths()
+
+    Links <- list()
+    if(3 %in% level)
+        Links <- c(Links, lapply(lib.loc, .find_HTML_links_in_library))
+    if(2 %in% level)
+        Links <- c(lapply(file.path(.Library,
+                                    .get_standard_package_names()$recommended),
+                          .find_HTML_links_in_package),
+                   Links)
+    if(1 %in% level)
+        Links <- c(lapply(file.path(.Library,
+                                    .get_standard_package_names()$base),
+                          .find_HTML_links_in_package),
+                   Links)
+    if (0 %in% level && nzchar(pkg.dir))
+        Links <- c(list(.find_HTML_links_in_package(pkg.dir)), Links)
+    Links <- unlist(Links)
+    Links <- Links[!duplicated(names(Links))]
+    gsub("[Rr]d$", "html", Links)
+}
+
 ## These helper functions can optionally return the absolute path as
 ## well (in the local file system)
 
