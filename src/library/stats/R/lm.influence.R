@@ -1,7 +1,7 @@
 #  File src/library/stats/R/lm.influence.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2020 The R Core Team
+#  Copyright (C) 1995-2024 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -41,6 +41,9 @@ weighted.residuals <- function(obj, drop0 = TRUE)
     } else r
 }
 
+qr.influence <- function(qr, res, tol = 10 * .Machine$double.eps)
+    .Call(C_influence, qr, res, tol)
+
 lm.influence <- function (model, do.coef = TRUE)
 {
     wt.res <- weighted.residuals(model)
@@ -74,15 +77,14 @@ lm.influence <- function (model, do.coef = TRUE)
             q <- NCOL(e)
             ## NB: The following relies on recycling: diag(v) %*% A == A * v
             ## so we need a for loop for the mlm case
-            if (is.mlm){
+            res$coefficients <-
+              if(is.mlm) {
                 cf <- array(0, c(n,k,q))
                 for ( j in seq_len(q) )
                     cf[,,j] <- invRQtt * ifelse(hat == 1, 0, e[,j]/(1-hat))
-            } else
-                cf <- invRQtt * ifelse(hat == 1, 0, e/(1-hat))
-
-
-            res$coefficients <- cf
+                cf
+              } else
+                invRQtt * ifelse(hat == 1, 0, e/(1-hat))
         }
 
 

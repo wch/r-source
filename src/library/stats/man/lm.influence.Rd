@@ -1,26 +1,33 @@
 % File src/library/stats/man/lm.influence.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2022 R Core Team
+% Copyright 1995-2024 R Core Team
 % Distributed under GPL 2 or later
 
 \name{lm.influence}
 \title{Regression Diagnostics}
+\alias{lm.influence}
+\alias{influence}
+\alias{influence.lm}
+\alias{influence.glm}
+\alias{qr.influence}
 \usage{
 influence(model, \dots)
 \method{influence}{lm}(model, do.coef = TRUE, \dots)
 \method{influence}{glm}(model, do.coef = TRUE, \dots)
 
 lm.influence(model, do.coef = TRUE)
+
+qr.influence(qr, res, tol = 10 * .Machine$double.eps)
 }
-\alias{lm.influence}
-\alias{influence}
-\alias{influence.lm}
-\alias{influence.glm}
 \arguments{
   \item{model}{an object as returned by \code{\link{lm}} or \code{\link{glm}}.}
   \item{do.coef}{logical indicating if the changed \code{coefficients}
     (see below) are desired.  These need \eqn{O(n^2 p)} computing time.}
   \item{\dots}{further arguments passed to or from other methods.}
+  \item{qr}{typically the result of \code{\link{qr}()}, a \code{\link{list}}
+    of class \code{"qr"}.}
+  \item{res}{numerical vector of model residuals.}
+  \item{tol}{non-negative numerical tolerance.}
 }
 \description{
   This function provides the basic quantities which are
@@ -43,6 +50,10 @@ lm.influence(model, do.coef = TRUE)
 
   \code{\link{naresid}} is applied to the results and so will fill in
   with \code{NA}s it the fit had \code{na.action = na.exclude}.
+
+  \code{qr.influence()} is a \emph{low level} interface to parts of
+  \code{lm.influence(*, doc.coef = FALSE)} provided for cases where speed
+  is more important than user safety.
 }
 \value{
   A list containing the following components of the same length or
@@ -61,6 +72,9 @@ lm.influence(model, do.coef = TRUE)
     GLMs can result in this being \code{NaN}.)}
   \item{wt.res}{a vector of \emph{weighted} (or for class \code{glm}
     rather \emph{deviance}) residuals.}
+
+  \code{qr.influence()} returns list with the two components \code{hat} and
+  \code{sigma}, as above but without \code{\link{names}}.
 }
 \note{
   The \code{coefficients} returned by the \R version
@@ -103,6 +117,12 @@ summary(lm.SR <- lm(sr ~ pop15 + pop75 + dpi + ddpi,
                     data = LifeCycleSavings),
         correlation = TRUE)
 utils::str(lmI <- lm.influence(lm.SR))
+
+qRes <- qr(lm.SR) # == lm.SR $ qr
+qrI <- qr.influence(qRes, residuals(lm.SR))
+strip <- function(x) lapply(lapply(x, unname), drop)
+stopifnot(identical(strip(qrI),
+                    strip(lmI[c("hat", "sigma")])))
 
 ## For more "user level" examples, use example(influence.measures)
 }

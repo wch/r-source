@@ -9360,7 +9360,7 @@ it = 10 -2.083333 -2.083333
 > 
 > ### Name: lm.influence
 > ### Title: Regression Diagnostics
-> ### Aliases: lm.influence influence influence.lm influence.glm
+> ### Aliases: lm.influence influence influence.lm influence.glm qr.influence
 > ### Keywords: regression
 > 
 > ### ** Examples
@@ -9411,6 +9411,12 @@ List of 4
   ..- attr(*, "names")= chr [1:50] "Australia" "Austria" "Belgium" "Bolivia" ...
  $ wt.res      : Named num [1:50] 0.864 0.616 2.219 -0.698 3.553 ...
   ..- attr(*, "names")= chr [1:50] "Australia" "Austria" "Belgium" "Bolivia" ...
+> 
+> qRes <- qr(lm.SR) # == lm.SR $ qr
+> qrI <- qr.influence(qRes, residuals(lm.SR))
+> strip <- function(x) lapply(lapply(x, unname), drop)
+> stopifnot(identical(strip(qrI),
++                     strip(lmI[c("hat", "sigma")])))
 > 
 > ## For more "user level" examples, use example(influence.measures)
 > 

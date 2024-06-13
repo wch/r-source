@@ -27,6 +27,10 @@
 
       \item New \code{head()} and \code{tail()} methods for class
       \code{"ts"} time series, proposed by Spencer Graves on R-devel.
+
+      \item New \code{qr.influence()}, a \dQuote{bare bones} interface to
+      the \code{lm.influence()} leave-one-out diagnostics computations;
+      wished for in \PR{18739}.
     }
   }
 
