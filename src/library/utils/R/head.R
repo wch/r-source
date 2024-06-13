@@ -1,7 +1,7 @@
 #  File src/library/utils/R/head.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2023 The R Core Team
+#  Copyright (C) 1995-2024 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -28,7 +28,7 @@
 
 
 ## check for acceptable n, called by several head() and tail() methods
-checkHT <- function(n, d) {
+.checkHT <- function(n, d) {
     len <- length(n)
     msg <- if(len == 0 || all(is.na(n)))
         gettext("invalid 'n' - must contain at least one non-missing element, got none.")
@@ -40,7 +40,7 @@ checkHT <- function(n, d) {
         gettextf("invalid 'n' - length(n) must be <= length(dim(x)), got %d > %d",
                  len, length(d))
     else return(invisible())
-    ## report the caller, not checkHT():
+    ## report the caller, not .checkHT():
     stop(simpleError(msg, call = sys.call(-1L)))
 }
 
@@ -49,7 +49,7 @@ head <- function(x, ...) UseMethod("head")
 
 head.default <- function(x, n = 6L, ...)
 {
-    checkHT(n, dx <- dim(x))
+    .checkHT(n, dx <- dim(x))
     if(!is.null(dx))
         head.array(x, n, ...)
     else if(length(n) == 1L) {
@@ -66,7 +66,7 @@ head.matrix <-
 ## used on arrays (incl. matrices), data frames, .. :
 head.array <- function(x, n = 6L, ...)
 {
-    checkHT(n, d <- dim(x))
+    .checkHT(n, d <- dim(x))
     args <- rep(alist(x, , drop = FALSE), c(1L, length(d), 1L))
     ## non-specified dimensions (ie dims > length(n) or n[i] is NA) will stay missing / empty:
     ii <- which(!is.na(n[seq_along(d)]))
@@ -89,7 +89,7 @@ head.function <- function(x, n = 6L, ...)
 {
     ## Do n check while dim(x) is NULL
     ## not later when dim(lines) is length 2
-    checkHT(n, dim(x))
+    .checkHT(n, dim(x))
     lines <- as.matrix(deparse(x))
     dimnames(lines) <- list(seq_along(lines),"")
     noquote(head(lines, n=n))
@@ -99,7 +99,7 @@ tail <- function(x, ...) UseMethod("tail")
 
 tail.default <- function (x, n = 6L, keepnums = FALSE, addrownums, ...)
 {
-    checkHT(n, dx <- dim(x))
+    .checkHT(n, dx <- dim(x))
     if(!is.null(dx))
         tail.array(x, n=n, keepnums=keepnums, addrownums=addrownums, ...)
     else if(length(n) == 1L) {
@@ -123,7 +123,7 @@ tail.array <- function(x, n = 6L, keepnums = TRUE, addrownums, ...)
             keepnums <- addrownums
     }
 
-    checkHT(n, d <- dim(x))
+    .checkHT(n, d <- dim(x))
     ## non-specified dimensions (ie length(n) < length(d) or n[i] is NA) will stay missing / empty:
     ii <- which(!is.na(n[seq_along(d)]))
     sel <- lapply(ii, function(i) {
@@ -183,7 +183,7 @@ tail.ftable <- function(x, n = 6L, keepnums = FALSE, addrownums, ...) {
 
 tail.function <- function(x, n = 6L, ...)
 {
-    checkHT(n, dim(x))
+    .checkHT(n, dim(x))
     lines <- as.matrix(deparse(x))
     dimnames(lines) <- list(seq_along(lines),"")
     noquote(tail(lines, n=n))

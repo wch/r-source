@@ -1,6 +1,6 @@
 % File src/library/stats/man/ts.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2023 R Core Team
+% Copyright 1995-2024 R Core Team
 % Distributed under GPL 2 or later
 
 \name{ts}
@@ -14,6 +14,8 @@
 \alias{is.mts}
 \alias{[.ts}
 \alias{t.ts}
+\alias{head.ts}
+\alias{tail.ts}
 \description{
   The function \code{ts} is used to create time-series objects.
 
@@ -60,8 +62,7 @@ is.mts(x)
 \details{
   The function \code{ts} is used to create time-series objects.  These
   are vectors or matrices which inherit from class \code{"ts"} (and have
-  additional
-  attributes) which represent data which has been sampled at equispaced
+  additional attributes) which represent data sampled at equispaced
   points in time.  In the matrix case, each column of the matrix
   \code{data} is assumed to contain a single (univariate) time series.
   Time series must have at least one observation, and although they need
@@ -130,11 +131,20 @@ gnp <- ts(cumsum(1 + round(rnorm(100), 2)),
           start = c(1954, 7), frequency = 12)
 plot(gnp) # using 'plot.ts' for time-series plot
 
+\donttest{utils:: methods(class = "ts") # all functions with methods available for "ts"}
+
+## "ts" methods for head() and tail()
+utils:: head(lynx, 4)
+utils:: tail(lynx, -7)
+\dontshow{ stopifnot(is.ts(head(lynx, -6)),
+                     is.ts(tail(lynx, 3)))
+}
+
 ## Multivariate
 z <- ts(matrix(rnorm(300), 100, 3), start = c(1961, 1), frequency = 12)
 class(z)
 is.mts(z)
-head(z) # as "matrix"
+head(z) # "ts" method ==> incl. times:
 plot(z)
 plot(z, plot.type = "single", lty = 1:3)
 

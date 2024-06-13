@@ -6,7 +6,8 @@ importFrom(grDevices, as.graphicsAnnot, dev.cur, dev.flush, dev.hold,
            dev.interactive, dev.new, dev.set, devAskNewPage,
            extendrange, n2mfrow, palette, xy.coords)
 importFrom('utils',
-           count.fields, flush.console, modifyList, str, tail)
+           count.fields, flush.console, modifyList, str,
+           head, tail, .checkHT)
 
 export(.checkMFClasses, .getXlevels, .MFclass, .nknots.smspl,
        acf, acf2AR, add.scope,
@@ -253,6 +254,7 @@ S3method(getInitial, formula)
 S3method(getInitial, selfStart)
 S3method(hatvalues, lm)
 S3method(hatvalues, smooth.spline)
+S3method(head, ts)
 S3method(identify, hclust)
 S3method(influence, glm)
 S3method(influence, lm)
@@ -495,6 +497,7 @@ S3method(str, logLik)
 S3method(t, ts)
 S3method(t.test, default)
 S3method(t.test, formula)
+S3method(tail, ts)
 S3method(terms, aovlist)
 S3method(terms, default)
 S3method(terms, formula)

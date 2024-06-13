@@ -1,6 +1,6 @@
 % File src/library/utils/man/head.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2022 R Core Team
+% Copyright 1995-2024 R Core Team
 % Distributed under GPL 2 or later
 
 \name{head}
@@ -19,15 +19,16 @@
 \alias{tail.table}
 \alias{tail.matrix}
 \alias{tail.array}
+\alias{.checkHT}
 \description{
   Returns the first or last parts of a vector, matrix, table, data frame
   or function.  Since \code{head()} and \code{tail()} are generic
-  functions, they may also have been extended to other classes.
+  functions, they have been extended to other classes, including
+  \code{"\link[stats]{ts}"} from \pkg{stats}.
 }
 \usage{
 head(x, \dots)
 \method{head}{default}(x, n = 6L, \dots)
-% head.matrix(x, n = 6L, \dots) # <-- gives NOTE, even though exported
 \method{head}{matrix}(x, n = 6L, \dots) # is exported as head.matrix()
 ## NB: The methods for 'data.frame' and 'array'  are identical to the 'matrix' one
 
@@ -43,6 +44,8 @@ tail(x, \dots)
 
 \method{tail}{ftable}(x, n = 6L, keepnums = FALSE, addrownums, \dots)
 \method{tail}{function}(x, n = 6L, \dots)
+
+.checkHT(function(n, d) 
 }
 \arguments{
   \item{x}{an object}
@@ -63,6 +66,9 @@ tail(x, \dots)
     instead. Taken as the value of \code{keepnums} if it is explicitly
     set when \code{keepnums} is not.}
   \item{\dots}{arguments to be passed to or from other methods.}
+  \item{d}{typically \code{dim(x)}, hence \code{NULL} or a (typically integer, short)
+    vector.}
+
 }
 \details{
   For vector/array based objects, \code{head()} (\code{tail()}) returns
@@ -102,6 +108,9 @@ tail(x, \dots)
   As \code{\link{data.frame}} subsetting (\sQuote{indexing}) keeps
   \code{\link{attributes}}, so do the \code{head()} and \code{tail()}
   methods for data frames.
+
+  The auxiliary function \code{.checkHT(d, n)} is useful in \code{head(x, n)} or
+  \code{tail(x, n)} methods, checking validity of \code{d <- dim(x)} and \code{n}.
 }
 \value{
   An object (usually) like \code{x} but generally smaller.  Hence, for

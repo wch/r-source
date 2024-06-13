@@ -24,6 +24,9 @@
       \item New functions \code{check_package_urls()} and
       \code{check_package_dois()} in package \pkg{tools} for checking
       URLs and DOIs in package sources.
+
+      \item New \code{head()} and \code{tail()} methods for class
+      \code{"ts"} time series, proposed by Spencer Graves on R-devel.
     }
   }
 
@@ -85,7 +88,7 @@
       new types have compatible memory structure and content. Use of
       \code{SET_TYPE} in package C code should be avoided and may be
       deprecated in the near future. It is better to allocate an object
-      of the proper type in the first place.      
+      of the proper type in the first place.
 
       \item New API function \code{R_mkClosure}. This checks that its
       arguments are valid and should be used instead of
@@ -93,7 +96,7 @@
       \code{SET_BODY}, and \code{SET_CLOENV}.
 
       \item New API functions \code{R_ClosureFormals},
-      \code{R_ClosureBody}, and \code{R_ClosureEnv} for extrancting
+      \code{R_ClosureBody}, and \code{R_ClosureEnv} for extracting
       closure components.  The existing functions \code{R_ClosureExpr}
       and \code{R_BytecodeExpr} have also been added to the API.
 

@@ -1,7 +1,7 @@
 #  File src/library/stats/R/ts.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2023 The R Core Team
+#  Copyright (C) 1995-2024 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -849,4 +849,28 @@ arima.sim <- function(model, n, rand.gen = rnorm,
     if(n.start > 0) x <- x[-(seq_len(n.start))]
     if(d > 0) x <- diffinv(x, differences = d)
     as.ts(x)
+}
+
+
+## Originally from Spencer Graves, to R-devel@R-..., 9 Jun 2024 :
+head.ts <- function(x, n = 6L, ...) {
+   .checkHT(n, d <- dim(x))
+   tmx <- as.numeric(time(x))
+   firstn <- head(tmx, n[1L])
+   if(!is.null(d) && length(n) >= 2L) { # matrix
+       cols <- head(1:d[2], n[2L])
+       x <- x[, cols[1L]:tail(cols, 1L), drop=FALSE]
+   }
+   window(x, firstn[1L], tail(firstn, 1L))
+}
+
+tail.ts <- function (x, n = 6L, ...) {
+    .checkHT(n, d <- dim(x))
+    tmx <- as.numeric(time(x))
+    lastn <- tail(tmx, n[1L])
+    if(!is.null(d) && length(n) >= 2L) { # matrix
+        cols <- head(1:d[2], n[2L])
+        x <- x[, cols[1L]:tail(cols, 1L), drop=FALSE]
+    }
+    window(x, lastn[1L], tail(lastn, 1L))
 }
