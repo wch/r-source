@@ -13488,7 +13488,7 @@ The C functions @code{match} and @code{psmatch} correspond to the @R{} functions
 @eapifun pmatch
 
 The C functions @code{R_forceAndCall} and @code{isUnsorted} correspond
-to the @R{} functions code{forceAndCall} and @code{is.unsorted}.
+to the @R{} functions @code{forceAndCall} and @code{is.unsorted}.
 @eapifun R_forceAndCall
 @eapifun isUnsorted
 @node Named objects and copying,  , Some convenience functions, Handling R objects in C
