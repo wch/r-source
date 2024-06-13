@@ -48,7 +48,7 @@ all: Makefile DESCRIPTION
 mkR: mkR1
 
 $(WRE_DATA): $(WRE_SRC)
-	grep -E '^@(api|eapi|emb)(fun|var|hdr)' $< > $@
+	@grep -E '^@(api|eapi|emb)(fun|var|hdr)' $< > $@
 
 include $(top_srcdir)/share/make/basepkg.mk
 
