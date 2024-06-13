@@ -27,6 +27,9 @@
 ### <gabembecker@gmail.com>, 2019
 
 
+## TEMPORARY workaround for S4-head() method defining already installed
+## packages before they are re-installed:
+checkHT <-
 ## check for acceptable n, called by several head() and tail() methods
 .checkHT <- function(n, d) {
     len <- length(n)
