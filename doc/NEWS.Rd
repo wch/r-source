@@ -105,6 +105,14 @@
       and \code{R_BytecodeExpr} have also been added to the API.
 
       \item New API function \code{R_ParentEnv}.
+
+      \item Some non-API entry points have been added to those reported
+      by \command{R CMD check}: \code{SYMVALUE}, \code{INTERNAL},
+      \code{DDVAL}, \code{ENSURE_NAMEDMAX}, \code{NAMED},
+      \code{COMPLEX0}, \code{REAL0}, \code{LEVELS}, \code{FRAME},
+      \code{HASHTAB}, \code{IS_ASCII}, \code{IS_UTF8}. Any declarations
+      for these in public header files will be removed in the near
+      future, and they will be hidden where possible.
     }
   }
 
