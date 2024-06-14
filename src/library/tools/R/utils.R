@@ -605,13 +605,13 @@ function(dir, add = FALSE)
                                   }),
                            use.names = FALSE)
     }
-    
+
     db  <- data.frame(ID = c(ids1, ids2),
                       Parent = c(rep_len("DESCRIPTION",
                                          length(ids1)),
                                  rep_len("inst/CITATION",
                                          length(ids2))))
-    if(add) 
+    if(add)
         db$Parent <- file.path(basename(dir), db$Parent)
     db
 }
@@ -1980,7 +1980,7 @@ nonS3methods <- function(package)
              splusTimeDate = "sort.list",
              splusTimeSeries = "sort.list",
 	     stats = c("anova.lmlist", "expand.model.frame", "fitted.values",
-		       "influence.measures", "lag.plot", "t.test",
+		       "influence.measures", "lag.plot", "qr.influence", "t.test",
                        "plot.spec.phase", "plot.spec.coherency"),
              stremo = "sigma.hat",
              supclust = c("sign.change", "sign.flip"),
