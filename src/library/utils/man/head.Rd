@@ -45,7 +45,7 @@ tail(x, \dots)
 \method{tail}{ftable}(x, n = 6L, keepnums = FALSE, addrownums, \dots)
 \method{tail}{function}(x, n = 6L, \dots)
 
-.checkHT(function(n, d) 
+.checkHT(n, d) 
 }
 \arguments{
   \item{x}{an object}
