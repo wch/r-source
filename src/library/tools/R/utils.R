@@ -571,7 +571,7 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
 ### ** .ORCID_iD_regexp
 
 .ORCID_iD_regexp <-
-    "([[:digit:]]{4}[-]){3}[[:digit:]]{3}[[:alnum:]]"
+    "[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{3}[X0-9]$"
 
 ### ** .ORCID_iD_variants_regexp
 
