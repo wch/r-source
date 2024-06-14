@@ -626,7 +626,7 @@ nonAPI <- c("chol_", "chol2inv_", "cg_", "ch_", "rg_",
             "tql2_", "tqlrat_", "tred1_", "tred2_", "utf8locale", "yylloc",
             "R_opendir", "R_readdir", "R_closedir",
             # "signrank_free", "wilcox_free" are API only from 4.2.0
-            "ENSURE_NAMEDMAX", "IS_ASCII", "IS_UTF8",
+            "ENSURE_NAMEDMAX", "IS_ASCII", "IS_UTF8", "SET_PRSEEN",
 
 ## Rinterface.h, Rembedded.h, R_ext/{RStartup,eventloop}.h
             "AllDevicesKilled", "R_CStackLimit", "R_CStackStart",
@@ -661,7 +661,7 @@ nonAPI <- c("chol_", "chol2inv_", "cg_", "ch_", "rg_",
             "ptr_R_savehistory", "ptr_do_dataentry", "ptr_do_dataviewer",
             "ptr_do_selectlist", "readconsolecfg", "removeInputHandler",
             "run_Rmainloop", "setup_Rmainloop",
-            "DDVAL", "NAMED", "INTERNAL", "SYMVALUE",
+            "DDVAL", "NAMED", "INTERNAL", "SYMVALUE", "PRSEEN",
             "REAL0", "COMPLEX0", "LEVELS", "FRAME", "HASHTAB",
 
 ## non-API, removed in R 4.5.0 and long deprecated in R_ext/RS.h (and as call_S in S.h)

@@ -107,12 +107,13 @@
       \item New API function \code{R_ParentEnv}.
 
       \item Some non-API entry points have been added to those reported
-      by \command{R CMD check}: \code{SYMVALUE}, \code{INTERNAL},
-      \code{DDVAL}, \code{ENSURE_NAMEDMAX}, \code{NAMED},
-      \code{COMPLEX0}, \code{REAL0}, \code{LEVELS}, \code{FRAME},
-      \code{HASHTAB}, \code{IS_ASCII}, \code{IS_UTF8}. Any declarations
-      for these in public header files will be removed in the near
-      future, and they will be hidden where possible.
+      by \command{R CMD check}: \code{COMPLEX0}, \code{DDVAL},
+      \code{ENSURE_NAMEDMAX}, \code{FRAME}, \code{HASHTAB},
+      \code{INTERNAL}, \code{IS_ASCII}, \code{IS_UTF8}, \code{LEVELS},
+      \code{NAMED}, \code{PRSEEN}, \code{REAL0}, \code{SET_PRSEEN}, and
+      \code{SYMVALUE}. Any declarations for these in public header files
+      will be removed in the near future, and they will be hidden where
+      possible.
     }
   }
 
