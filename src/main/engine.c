@@ -65,7 +65,8 @@ static GESystemDesc* registeredSystems[MAX_GRAPHICS_SYSTEMS];
  */
 
 static void unregisterOne(pGEDevDesc dd, int systemNumber) {
-    if (dd->gesd[systemNumber] != NULL) {
+    if (dd->gesd[systemNumber] != NULL &&
+	dd->gesd[systemNumber]->callback != NULL) {
 	(dd->gesd[systemNumber]->callback)(GE_FinaliseState, dd, R_NilValue);
 	free(dd->gesd[systemNumber]);
 	dd->gesd[systemNumber] = NULL;
