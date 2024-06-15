@@ -51,7 +51,8 @@
 \details{
   The default for printing \code{NA}s is to print \code{NA} (without
   quotes) unless this is a character \code{NA} \emph{and} \code{quote =
-    FALSE}, when \samp{<NA>} is printed.
+    FALSE}, when \samp{<NA>} is printed.  When \code{na.print} is not \code{NULL},
+  it handles how character \code{NA} is displayed, with no interaction with \code{quote}.
 
   The same number of decimal places is used throughout a vector.  This
   means that \code{digits} specifies the minimum number of significant
