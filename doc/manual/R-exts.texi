@@ -14943,12 +14943,13 @@ We can classify the entry points as
 @item API
 Entry points which are documented in this manual and declared in an
 installed header file.  These can be used in distributed packages and
-ideally will only be changed after deprecation.
+ideally will only be changed after deprecation. @xref{API index}.
 
 @item public
-Entry points declared in an installed header file that are exported
-on all @R{} platforms but are not documented and subject to change
-without notice.
+Entry points declared in an installed header file that are exported on
+all @R{} platforms but are not documented and subject to change without
+notice. Do not use these in distributed code. Their declarations will
+eventually be moved out of installed header files.
 
 @item private
 Entry points that are used when building @R{} and exported on all @R{}
@@ -14963,18 +14964,15 @@ compilers/loaders when using @R{} as a shared library) not exported.
 Entry points declared in an installed header file that are part of an
 experimental API, such as @file{R_ext/Altrep.h}. These are subject to
 change, so package authors wishing to use these should be prepared to
-adapt.
+adapt. @xref{Experimental API index}.
 
 @item embedding
 Entry points intended primarily for embedding and creating new
 front-ends. It is not clear that this needs to be a separate category
-but it may be useful to keep it separate for now.
+but it may be useful to keep it separate for now. @xref{Embedding API
+index}.
 @end table
 @eapihdr R_ext/Altrep.h
-
-@comment FIXME ideally these should be links: feel free to add
-See API index, Experimental API index, Embedding API index for the
-classification of entry points in this document.
 
 @comment FIXME be more explicit as: ask on the R-devel mailing list or
 @comment post a WISHLIST PR
