@@ -86,8 +86,15 @@ function(given = NULL, family = NULL, middle = NULL,
         ## to character).
         ## In principle, all non-NULL arguments whould be character:
         ## maybe this should be checked for?
-        .canonicalize <- function(s)
-            if(.is_not_nonempty_text(s)) NULL else trimws(s)
+        .canonicalize <- function(s) {
+            if(.is_not_nonempty_text(s)) NULL
+            else {
+                if(!is.character(s))
+                    warning(gettextf("Arguments of person() should be character or NULL"),
+                            domain = NA)
+                trimws(s)
+            }
+        }
         given <- .canonicalize(given)
         family <- .canonicalize(family)
         email <- .canonicalize(email)
