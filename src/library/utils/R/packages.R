@@ -18,8 +18,9 @@
 
 available.packages <-
 function(contriburl = contrib.url(repos, type), method,
-         fields = NULL, type = getOption("pkgType"),
-         filters = NULL, repos = getOption("repos"),
+         fields = getOption("available_packages_fields"),
+         type = getOption("pkgType"), filters = NULL,
+         repos = getOption("repos"),
          ignore_repo_cache = FALSE, max_repo_cache_age,
          quiet = TRUE, ...)
 {
