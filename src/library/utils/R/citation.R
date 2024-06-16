@@ -1388,9 +1388,13 @@ function(package = "base", lib.loc = NULL, auto = NULL)
               )
 
     ## CRAN-style repositories: CRAN, R-Forge, Bioconductor
-    if(identical(meta$Repository, "CRAN"))
+    if(identical(meta$Repository, "CRAN")) {
         z$url <-
             sprintf("https://CRAN.R-project.org/package=%s", package)
+        if(!is.na(d <- meta[["Date/Publication"]]) &&
+           (as.Date(d) <= Sys.Date() - 1L))
+            z$doi <- sprintf("10.32614/CRAN.package.%s", package)
+    }
 
     if(identical(meta$Repository, "R-Forge")) {
         z$url <- if(!is.null(rfp <- meta$"Repository/R-Forge/Project"))
