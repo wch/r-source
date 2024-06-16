@@ -2444,13 +2444,52 @@ add_dummies <- function(dir, Log)
                           sprintf("tools:::.check_Rd_xrefs(package = \"%s\")\n", pkgname)
                           else
                           sprintf("tools:::.check_Rd_xrefs(dir = \"%s\")\n", pkgdir))
+            any <- FALSE
             out <- R_runR0(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
             if (length(out)) {
                 if (!all(grepl("(Package[s]? unavailable to check|Unknown package.*in Rd xrefs|Undeclared package.*in Rd xrefs)", out)))
                     warningLog(Log)
                 else noteLog(Log)
+                any <- TRUE
                 printLog0(Log, paste(c(out, ""), collapse = "\n"))
-            } else resultLog(Log, "OK")
+            }
+
+            ## The above checks whether Rd xrefs can be resolved within
+            ## the package itself, the base and recommended packages,
+            ## and its Imports and Depends.  Nowadays, we prefer that Rd
+            ## xrefs to aliases not in the package itself and the base
+            ## packages have package anchors so there is no ambiguity in
+            ## resolving the xrefs,  Hence, at least optionally note the
+            ## xrefs missing such package anchors.
+            ##
+            ## However, .Rd_xrefs_with_missing_package_anchors() uses
+            ## the package source directory whereas the above uses
+            ## .Rd_check_xrefs() typically for installed packages, so we
+            ## do the optional check separately for now.
+
+            if(config_val_to_logical(Sys.getenv("_R_CHECK_XREFS_NOTE_MISSING_PACKAGE_ANCHORS_",
+                                                "FALSE"))) {
+                bad <- tryCatch(.Rd_xrefs_with_missing_package_anchors(pkgdir),
+                                error = identity)
+                if(!inherits(bad, "error") && length(bad)) {
+                    bad <- split(bad[, "Target"], bad[, "Source"])
+                    msg <- c(if(any) "",
+                             strwrap("Found the following Rd file(s) with Rd \\link{} targets missing package anchors:"),
+                             sprintf("  %s: %s",
+                                     names(bad),
+                                     strwrap(vapply(bad, paste, "",
+                                                    collapse = ", "),
+                                             exdent = 4L, indent = 0L)),
+                             strwrap("Please provide package anchors for all Rd \\link{} targets not in the package itself and the base packages."))
+                    if(!any) {
+                        noteLog(Log)
+                        any <- TRUE
+                    }
+                    printLog0(Log, paste(c(msg, ""), collapse = "\n"))
+                }
+            }
+            if(!any)
+                resultLog(Log, "OK")
         }
 
         ## Check for missing documentation entries.
