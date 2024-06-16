@@ -2654,7 +2654,7 @@ attribute_hidden /* for now */
 NORET void R_signalErrorConditionEx(SEXP cond, SEXP call, int exitOnly)
 {
     /* caller must make sure that 'cond' and 'call' are protected. */
-    R_signalCondition(cond, call, FALSE, exitOnly);
+    R_signalCondition(cond, call, TRUE, exitOnly);
 
     /* the first element of 'cond' must be a scalar string to be used
        as the error message in default error processing. */
@@ -2664,8 +2664,7 @@ NORET void R_signalErrorConditionEx(SEXP cond, SEXP call, int exitOnly)
     if (TYPEOF(elt) != STRSXP || LENGTH(elt) != 1)
 	error(_("first element of condition object must be a scalar string"));
 
-    /* handler stack has been unwound so this uses the default handler */
-    errorcall(call, "%s", CHAR(STRING_ELT(elt, 0)));
+    errorcall_dflt(call, "%s", translateChar(STRING_ELT(elt, 0)));
 }
 
 attribute_hidden /* for now */
