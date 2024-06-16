@@ -1,8 +1,8 @@
 \name{doitools}
 \alias{check_package_dois}
-\title{Check Package DOIs}
+\title{Check Package \abbr{DOI}s}
 \description{
-  Check DOIs in package sources.
+  Check \abbr{DOI}s in package sources.
 }
 \usage{
 check_package_dois(dir, verbose = FALSE)
@@ -14,14 +14,14 @@ check_package_dois(dir, verbose = FALSE)
     progress.}
 }
 \details{
-  Checking DOIs is performed in parallel using \CRANpkg{curl} (so this
+  Checking \abbr{DOI}s is performed in parallel using \CRANpkg{curl} (so this
   must be installed for checking).
 
-  The DOIs checked are extracted from the package \file{DESCRIPTION}
-  (\samp{<doi:...>} URIs in the \samp{Description} field), Rd and
+  The \abbr{DOI}s checked are extracted from the package \file{DESCRIPTION}
+  (\samp{<doi:...>} \abbr{URI}s in the \samp{Description} field), Rd and
   \file{CITATION} files.
 
-  The DOIs are checked via \samp{HEAD} requests to the DOI system Proxy
+  The \abbr{DOI}s are checked via \samp{HEAD} requests to the DOI system Proxy
   Server REST API.
 }
 \value{

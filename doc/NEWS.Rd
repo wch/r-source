@@ -23,7 +23,7 @@
 
       \item New functions \code{check_package_urls()} and
       \code{check_package_dois()} in package \pkg{tools} for checking
-      URLs and DOIs in package sources.
+      URLs and \abbr{DOI}s in package sources.
 
       \item New \code{head()} and \code{tail()} methods for class
       \code{"ts"} time series, proposed by Spencer Graves on R-devel.

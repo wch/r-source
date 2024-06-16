@@ -13448,7 +13448,7 @@ to the @R{} function @code{getOption} without specifying a default.
 @code{int}.
 @apifun GetOptionWidth
 The C function @code{nlevels} returns the number of levels of a factor.
-Unlike its @R{} counterpart ir always returns zero for non-factors.
+Unlike its @R{} counterpart it always returns zero for non-factors.
 @eapifun nlevels
 
 For vectors the C function @code{duplicated} returns a logical vector
