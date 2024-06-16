@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997--2023  The R Core Team
+ *  Copyright (C) 1997--2024  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -1524,9 +1524,13 @@ attribute_hidden SEXP do_attr(SEXP call, SEXP op, SEXP args, SEXP env)
 	       partial match on "names" */
 	    tag = R_NamesSymbol;
 	    PROTECT(t = getAttrib(s, tag));
-	    if(t != R_NilValue && R_warn_partial_match_attr)
-		warningcall(call, _("partial match of '%s' to '%s'"), str,
-			    CHAR(PRINTNAME(tag)));
+	    if(t != R_NilValue && R_warn_partial_match_attr) {
+		SEXP cond =
+		    R_makePartialMatchWarningCondition(call, install(str), tag);
+		PROTECT(cond);
+		R_signalWarningCondition(cond);
+		UNPROTECT(1);
+	    }
 	    UNPROTECT(2);
 	    return t;
 	}
@@ -1547,9 +1551,13 @@ attribute_hidden SEXP do_attr(SEXP call, SEXP op, SEXP args, SEXP env)
 	UNPROTECT(1);
 	return R_NilValue;
     }
-    if (match == PARTIAL && R_warn_partial_match_attr)
-	warningcall(call, _("partial match of '%s' to '%s'"), str,
-		    CHAR(PRINTNAME(tag)));
+    if (match == PARTIAL && R_warn_partial_match_attr) {
+	SEXP cond =
+	    R_makePartialMatchWarningCondition(call, install(str), tag);
+	PROTECT(cond);
+	R_signalWarningCondition(cond);
+	UNPROTECT(1);
+    }
 
     ans =  getAttrib(s, tag);
     UNPROTECT(1);
