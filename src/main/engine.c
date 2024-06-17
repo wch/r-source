@@ -65,9 +65,12 @@ static GESystemDesc* registeredSystems[MAX_GRAPHICS_SYSTEMS];
  */
 
 static void unregisterOne(pGEDevDesc dd, int systemNumber) {
-    if (dd->gesd[systemNumber] != NULL &&
-	dd->gesd[systemNumber]->callback != NULL) {
-	(dd->gesd[systemNumber]->callback)(GE_FinaliseState, dd, R_NilValue);
+    if (dd->gesd[systemNumber] != NULL) {
+        /* Defensive */
+        if (dd->gesd[systemNumber]->callback != NULL) {
+            (dd->gesd[systemNumber]->callback)(GE_FinaliseState, dd, 
+                                               R_NilValue);
+        }
 	free(dd->gesd[systemNumber]);
 	dd->gesd[systemNumber] = NULL;
     }
@@ -113,13 +116,12 @@ static void registerOne(pGEDevDesc dd, int systemNumber, GEcallback cb) {
 	(GESystemDesc*) calloc(1, sizeof(GESystemDesc));
     if (dd->gesd[systemNumber] == NULL)
 	error(_("unable to allocate memory (in GEregister)"));
+    dd->gesd[systemNumber]->callback = cb;
     result = cb(GE_InitState, dd, R_NilValue);
     if (isNull(result)) {
         /* tidy up */
         free(dd->gesd[systemNumber]);
 	error(_("unable to allocate memory (in GEregister)"));
-    } else {
-        dd->gesd[systemNumber]->callback = cb;
     }
 }
 
