@@ -526,6 +526,8 @@ SEXP Rf_findVar(SEXP, SEXP);
 SEXP Rf_findVarInFrame(SEXP, SEXP);
 SEXP Rf_findVarInFrame3(SEXP, SEXP, Rboolean);
 Rboolean R_existsVarInFrame(SEXP, SEXP);
+SEXP R_getVar(SEXP, SEXP, Rboolean);
+SEXP R_getVarEx(SEXP, SEXP, Rboolean, SEXP);
 void R_removeVarFromFrame(SEXP, SEXP);
 SEXP Rf_getAttrib(SEXP, SEXP);
 SEXP Rf_GetArrayDimnames(SEXP);
