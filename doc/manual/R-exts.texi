@@ -14884,6 +14884,7 @@ These functions return one of @code{SORTED_DECR}, @code{SORTED_INCR}, or
 * Controlling visibility::
 * Standalone Mathlib::
 * Organization of header files::
+* Moving into C API compliance::
 @end menu
 
 There are a large number of entry points in the @R{} executable/DLL that
@@ -17134,7 +17135,7 @@ get_seed(unsigned int *, unsigned int *)
 @noindent
 to read the seeds).
 
-@node Organization of header files,  , Standalone Mathlib, The R API
+@node Organization of header files, Moving into C API compliance, Standalone Mathlib, The R API
 @section Organization of header files
 
 The header files which @R{} installs are in directory
@@ -17218,6 +17219,181 @@ allows the need for this to be tested, as it causes @command{R CMD
 INSTALL} to compile C++ code defining @code{R_NO_REMAP}.
 @env{_R_CXX_USE_NO_REMAP_} is set by @command{R CMD check --as-cran} and
 is planned to become the default in future.
+
+@node Moving into C API compliance,  , Organization of header files, The R API
+@section Moving into C API compliance
+
+Work is in progress to clarify and tighten the C API for extending R
+code.  This will help make package C code more robust, and will
+facilitate maintaining and improving the R source code without impacting
+package space. In the process a number of entry points intended for
+internal use will be removed from installed header files or hidden, and
+others will be replaced by more robust versions better suited for use in
+package C code.  This section describes how packages can move from using
+non-API entry points to using ones available and supported in the API.
+
+@strong{Work in progress:} This section is a work in progress and will
+be adjusted as changes are made to the API.
+
+@menu
+* Some API replacements for non-API entry points::
+* Creating environments::
+* Creating call expressions::
+* Creating closures::
+* Some backports::
+@end menu
+
+@node Some API replacements for non-API entry points, Creating environments,  , Moving into C API compliance
+@subsection Some API replacements for non-API entry points
+
+Some non-API entry points intended for internal use have long had entry
+points in the API that can be used instead. In other cases new entry
+point have been added that are more appropriate for use in packages;
+typically these include more extensive error checking on arguments.
+
+This table lists some non-API functions used in packages and the API
+functions that should be used instead:
+
+@table @code
+@item EXTPTR_PROT
+@itemx EXTPTR_TAG
+@itemx EXTPTR_PTR
+      Use @code{R_ExternalPtrProtected}, @code{R_ExternalPtrTag}, and
+      @code{R_ExternalPtrAddr}.
+@item OBJECT
+@itemx IS_S4_OBJECT
+       Use @code{isObject} and @code{isS4}.
+@item GetOption
+      Use @code{GetOption1}.
+@item R_lsInternal
+      Use @code{R_lsInternal3}.
+@item REAL0
+@itemx COMPLEX0
+       Use @code{REAL} and @code{COMPLEX}.
+@item STRING_PTR 
+@itemx DATAPTR       
+@itemx STDVEC_DATAPTR
+       Use @code{STRING_PTR_RO} and @code{DATAPTR_RO}. Obtaining
+        writable pointers to these data can violate the memory manager's
+        integrity assumptions and is not supported.
+@item isFrame
+      Use @code{isDataFrame}, added in @R{} 4.5.0.
+@item BODY           
+@itemx FORMALS        
+@itemx CLOENV         
+       Use @code{R_ClosureBody}, @code{R_ClosureFormals}, and
+       @code{R_ClosureEnv}; these were added in @R{} 4.5.0.
+@item ENCLOS
+      Use @code{R_ParentEnv}, added in @R{} 4.5.0.
+@end table
+
+For recently added entry points packages that need to be compiled
+under older versions that do not yet contain these entry points can
+use back-ported versions defined conditionally. @xref{Some backports}.
+
+@comment FIXME: need to figure out about allocSExp(DOTSXP)
+
+@node Creating environments, Creating call expressions, Some API replacements for non-API entry points, Moving into C API compliance
+@subsection Creating environments
+
+An idiom appearing in a number of packages is to create an environment
+as
+
+@example
+SEXP env = allocSExp(ENVSXP);
+SET_ENCLOS(env, parent);
+@end example
+
+The function @code{allocSExp} and mutation functions like
+@code{SET_ENCLOS}, @code{SET_FRAME}, and @code{SET_HASHTAB} are not part
+of the API as they expose internal structure that might need to change
+in the future.  A proper constructor function should be used
+instead. The constructor function for environments is @code{R_NewEnv},
+so the new environment should be created as
+
+@example
+SEXP env = R_NewEnv(parent, FALSE, 0);
+@end example
+
+@node Creating call expressions, Creating closures, Creating environments, Moving into C API compliance
+@subsection Creating call expressions
+
+Another idiom used in some packages is to create a call expression with
+space for two arguments as
+
+@example
+SEXP expr = allocList(3);
+SET_TYPEOF(expr, "LANGSXP");
+@end example
+
+and then fill in the function and argument expressions.
+@code{SET_TYPEOF} will also not be available to packages in the
+future. An alternative way to construct the expression that will work in
+any @R{} version is
+
+@example
+SEXP expr = LCONS(R_NilValue, allocList(2));
+@end example
+
+@R{} 4.4.1 adds the constructor @code{allocLang}, so the expression can be
+created as
+
+@example
+SEXP env = allocLang(3);
+@end example
+
+@node Creating closures, Some backports, Creating call expressions, Moving into C API compliance
+@subsection Creating closures
+
+Yet another common idiom is to create a new closure as
+
+@example
+SEXP fun = Rf_allocSExp(CLOSXP);
+SET_FORMALS(fun, formals);
+SET_BODY(fun, body);
+SET_CLOENV(fun, env);
+@end example
+
+@R{} 4.5.0 adds the constructor @code{R_mkClosure}; this can be used as
+
+@example
+SEXP fun = R_mkClosure(formals, body, env);
+@end example
+
+@node Some backports, , Creating closures, Moving into C API compliance
+@subsection Some backports
+
+This section lists backports of recently added definitions that can be
+used in packages that need to be compiled under older versions of @R{}
+that do not yet contain these entry points.
+
+@example
+#if R_VERSION < R_Version(4, 4, 1)
+SEXP allocLang(int n)
+@{
+    if (n > 0)
+	  return LCONS(R_NilValue, allocList(n - 1));
+    else
+	  return R_NilValue;
+@}
+#endif
+
+#if R_VERSION < R_Version(4, 5, 0)
+# define isDataFrame(x) isFrame(x)
+# define R_ClosureFormals(x) FORMALS(x)
+# define R_ClosureEnv(x) CLOENV(x)
+# define R_ParentEnv(x) ENCLOS(x)
+
+SEXP R_mkClosure(SEXP formals, SEXP body, SEXP env)
+@{
+    SEXP fun = Rf_allocSExp(CLOSXP);
+    SET_FORMALS(fun, formals);
+    SET_BODY(fun, body);
+    SET_CLOENV(fun, env);
+    return fun;
+@}
+#endif
+@end example
 
 @node Generic functions and methods, Linking GUIs and other front-ends to R, The R API, Top
 @chapter Generic functions and methods

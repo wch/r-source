@@ -115,6 +115,12 @@
       and \code{SYMVALUE}. Any declarations for these in public header
       files will be removed in the near future, and they will be hidden
       where possible.
+
+      \item \sQuote{Writing R Extensions} has a new section
+      \sQuote{Moving into C API compliance} to help package authors move
+      away from using non-API endpoints. This section will continue to
+      be updated as work on clarifying and tightening the C API
+      continues.
     }
   }
 
