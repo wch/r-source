@@ -26,7 +26,11 @@ elif test "$1" -eq 6 -a "$2" -eq 8; then
 	/<h1 class="settitle"/d
 	EOF
 else
-  cat ${sedscriptini} > ${sedscriptuse}
+  ## Texinfo < 6.8 lacks the viewport declaration
+  cat "${sedscriptini}" - >"${sedscriptuse}" <<-EOF
+	s/<meta name="desc/<meta name="viewport" content="width=device-width,initial-scale=1">\\
+	<meta name="desc/
+	EOF
 fi
 ${SED} -f ${sedscriptuse} $3.tmp > $3
 rm -f ${sedscriptuse}
