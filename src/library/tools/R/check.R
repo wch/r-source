@@ -3803,9 +3803,30 @@ add_dummies <- function(dir, Log)
             haveObjs <- any(grepl("^ *Object", out))
             pat <- paste("possibly from",
                          sQuote("(abort|assert|exit|_exit|_Exit|stop)"))
+            rempat <- "REAL0|COMPLEX0|ddfind|DDVAL|ENSURE_NAMEDMAX|INTERNAL"
             if(haveObjs && any(grepl(pat, out)) && pkgname %notin% "parallel")
                 ## need _exit in forked child
                 warningLog(Log)
+            ## Very crude hack to escalete NOTE about some non-API
+            ## calls to a WARNING. Hopefully this can be dropped again
+            ## soon.
+            else if (length(grep("Found non-API", out)) &&
+                     any(grepl(rempat, out))) {
+                warningLog(Log)
+                if (any(grepl("calls", out))) {
+                    ep <- Filter(function(x) any(grepl(x, out)),
+                                 strsplit(rempat, "\\|")[[1]])
+                    epq <- paste(sQuote(ep), collapse = ", ")
+                    out <- paste(c(out,
+                                   "These entry points may be removed soon:",
+                                   epq),
+                                 collapse = "\n")
+                }
+                else
+                    out <- paste(c(out,
+                                   "This entry point may be removed soon."),
+                                 collapse = "\n")
+            }
             else {
                 ## look for Fortran detritus
                 pat1 <- paste("possibly from", sQuote("(open|close|rewind)"))
