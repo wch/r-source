@@ -3018,7 +3018,7 @@ make uninstall
 @end example
 
 @noindent
-will @I{(un)instal}l the header @file{Rmath.h} and shared and static
+will @I{(un)install} the header @file{Rmath.h} and shared and static
 @enindex DESTDIR
 libraries (if built).  Both @code{prefix=} and @env{DESTDIR} are
 supported, together with more precise control as described for the main

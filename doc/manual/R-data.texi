@@ -2045,7 +2045,7 @@ sink(zz)
 example(lm, prompt.echo = "> ")
 sink()
 close(zz)
-## now `ex.lm.out' contains the output for futher processing.
+## now `ex.lm.out' contains the output for further processing.
 ## Look at it by, e.g.,
 cat(ex.lm.out, sep = "\n")
 @end example

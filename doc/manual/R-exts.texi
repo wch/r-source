@@ -1302,13 +1302,13 @@ C and fixed-form Fortran can be used together, and mixing C, C++ and
 Fortran usually work for the platform's native compilers.
 
 If your code needs to depend on the platform there are certain defines
-which can used in C or C++.  On all Windows builds (even 64-bit ones)
+which can be used in C or C++.  On all Windows builds (even 64-bit ones)
 @samp{_WIN32} will be defined: on 64-bit Windows builds also
 @samp{_WIN64}. For Windows on ARM, test for @samp{_M_ARM64} or both
 @samp{_WIN32} and @samp{__aarch64__}.  On macOS @samp{__APPLE__} is
 defined@footnote{There is also @samp{__APPLE_CC__}, but that indicates a
 compiler with Apple-specific features not the OS, although for
-historical reasons is is defined by @I{LLVM} @command{clang}.  It is
+historical reasons it is defined by @I{LLVM} @command{clang}.  It is
 used in @file{Rinlinedfuns.h}.}; for an `Apple Silicon' platform, test
 for both @samp{__APPLE__} and @samp{__arm64__}.
 
@@ -5341,7 +5341,7 @@ points in the copy in the package.  We have even seen problems with
 entry point name @code{myprintf}, which is a system entry
 point@footnote{in @file{libselinux}.} on some Linux systems.
 
-@c example fron package fst on M1 mac in 2022-02.
+@c example from package fst on M1 mac in 2022-02.
 A related issue is the naming of libraries built as part of the package
 installation.  macOS and Windows have case-insensitive file systems, so
 using
@@ -6621,7 +6621,7 @@ The use of @code{DFLOAT}, which was superseded by @code{DBLE} in Fortran
 similar.
 
 @item
-Use of what @command{gfprtran} calls `Fortran 2018 deleted features',
+Use of what @command{gfortran} calls `Fortran 2018 deleted features',
 although most were `deleted' in earlier standards: those itemized here
 were deleted in Fortran 2008.  (In the Fortran standards `deleted' means
 features that compilers are not required to implement.) These include
@@ -12728,7 +12728,7 @@ re-use the supplied object.
 When creating new result objects it can be useful to fill them in with
 values from an existing object. The functions @code{copyVector} and
 @code{copyMatrix} can be used for this. @code{copyMostAttributes} can
-also simplify setting up a result object; is is used internally for
+also simplify setting up a result object; it is used internally for
 results of arithmetic operations.
 @apifun copyVector
 @apifun copyMatrix
@@ -13486,7 +13486,7 @@ include @code{R_existsVarInFrame}, @code{R_removeVarFromFrame},
 @eapifun R_NamespaceEnvSpec
 @eapifun R_IsNamespaceEnv
 
-The C functions @code{match} and @code{psmatch} correspond to the @R{} functions by the name name.
+The C functions @code{match} and @code{psmatch} correspond to the @R{} functions by the same name.
 @eapifun match
 @eapifun pmatch
 
@@ -13968,7 +13968,7 @@ the definition of @code{do_docall} in @file{src/main/coerce.c}.
 @end example
 @apifun allocLang
 @apifun SET_TAG
-The function @code{allocLang} is available as of @R{} 4 4.1; for older
+The function @code{allocLang} is available as of @R{} 4.4.1; for older
 versions replace @code{allocLang(3)} with
 @example
 LCONS(R_NilValue, allocList(2))
@@ -15752,7 +15752,7 @@ However, recent versions of @command{gfortran} @emph{via} the option
 @code{int_least32_t *}: `Link-Time Optimization' will report @code{int
 *} as a mismatch. It is possible to use @code{iso_c_binding} in Fortran
 2003 to map LOGICAL variables to the C99 type @code{_Bool}, but it is
-usually simpler to pass integers to and fro.
+usually simpler to pass integers.
 
 @node Passing functions,  , Fortran LOGICAL, Calling C from Fortran and vice versa
 @subsection Passing functions

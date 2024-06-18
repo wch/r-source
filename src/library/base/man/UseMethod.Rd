@@ -175,7 +175,7 @@ NextMethod(generic = NULL, object = NULL, \dots)
 \seealso{
   The draft \sQuote{R Language Definition}.
 
-  \code{\link{methods}}, \code{\link{class}} incl \code{\link{.class2}()};
+  \code{\link{methods}}, \code{\link{class}} incl.\sspace\code{\link{.class2}};
   \code{\link{getS3method}}, \code{\link{is.object}}.
 }
 \references{
