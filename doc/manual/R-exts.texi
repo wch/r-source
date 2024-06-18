@@ -110,6 +110,9 @@ foreign language interfaces, and the @R{} @acronym{API}.
 * Linking GUIs and other front-ends to R::
 * Function and variable index::
 * Concept index::
+* API index::
+* Experimental API index::
+* Embedding API index::
 @end menu
 
 @node Acknowledgements, Creating R packages, Top, Top
@@ -12511,8 +12514,8 @@ right type.
 * Details of R types::
 * Attributes::
 * Classes::
-* Handling lists::
 * S4 objects::
+* Handling lists::
 * Handling character data::
 * Working with closures::
 * Finding and setting variables::
@@ -14769,7 +14772,6 @@ SEXP mkCharLenCE(const char *, int, cetype_t);
 to create marked character strings of a given length.
 
 @node Writing compact-representation-friendly code, , Character encoding issues, System and foreign language interfaces
-
 @section Writing compact-representation-friendly code
 
 A simple way to iterate in C over the elements of an atomic vector is to
