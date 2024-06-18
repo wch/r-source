@@ -4158,15 +4158,14 @@ To see what methods are available we can use @code{methods()}
 
 @example
 > methods(coef)
-[1] coef.aov*         coef.Arima*       coef.default*     coef.listof*
-[5] coef.nls*         coef.summary.nls*
-
-   Non-visible functions are asterisked
+[1] coef.aov*     coef.Arima*   coef.default* coef.listof*  coef.maov*   
+[6] coef.nls*    
+see '?methods' for accessing help and source code
 @end example
 
 @noindent
 In this example there are six methods, none of which can be seen by
-typing its name.  We can read these by either of
+typing its name (as indicated by the asterisk).  We can read these by either of
 
 @findex getAnywhere
 @findex getS3method
@@ -4178,17 +4177,21 @@ It was found in the following places
   namespace:stats
 with value
 
-function (object, ...)
+function (object, complete = FALSE, ...)
 @{
-    z <- object$coef
-    z[!is.na(z)]
+    cf <- object$coefficients
+    if (complete) 
+        cf
+    else cf[!is.na(cf)]
 @}
 
 > getS3method("coef", "aov")
-function (object, ...)
+function (object, complete = FALSE, ...)
 @{
-    z <- object$coef
-    z[!is.na(z)]
+    cf <- object$coefficients
+    if (complete) 
+        cf
+    else cf[!is.na(cf)]
 @}
 @end example
 
