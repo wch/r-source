@@ -96,7 +96,7 @@ docs: html
 	  $(ECHO) "file $@ will be missing and linked from CRAN"; \
 	else \
 	  $(ECHO) "creating doc/manual/$@"; \
-	  $(TEXI2HTML) -D UseExternalXrefs -I$(srcdir) $< -o $@.tmp || touch $@; \
+	  $(TEXI2HTML) -D UseExternalXrefs -I$(srcdir) $< -o $@.tmp || exit 1; \
 	  SED="$(SED)" $(SHELL) $(srcdir)/texi2html.sh \
 	    $(TEXI2ANY_VERSION_MAJ) $(TEXI2ANY_VERSION_MIN) $@; \
 	  rm -f $@.tmp; \

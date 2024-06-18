@@ -43,7 +43,6 @@ TEXI2HTML = LC_ALL=C $(TEXI2ANY) $(TEXI2ANY_HTML_OPTS)
 TEXI2TEXT = LC_ALL=C $(TEXI2ANY) $(TEXI2ANY_TEXT_OPTS)
 
 R_PAPERSIZE = a4
-# omit 'hyper' to omit the hyperlinks
 R_RD4PDF = times,inconsolata,hyper
 
 texinputs_BASE = $(R_PKGS_BASE:=-pkg.tex)
@@ -62,7 +61,7 @@ all: pdf
 ifneq "$(TEXI2ANY)" "missing"
 .texi.html:
 	@$(ECHO) "creating doc/manual/$@"
-	@$(TEXI2HTML) -D UseExternalXrefs -I$(srcdir) $< -o $@.tmp || touch $@
+	@$(TEXI2HTML) -D UseExternalXrefs -I$(srcdir) $< -o $@.tmp || exit 1
 	@$(SED) -f $(srcdir)/quot.sed $@.tmp > $@
 	@rm -f $@.tmp
 
