@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1999-2017  The R Core Team
+ *  Copyright (C) 1999-2024  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -41,7 +41,7 @@ SEXP getListElement(SEXP list, char *str)
     int i;
 
     for (i = 0; i < length(list); i++)
-	if (strcmp(CHAR(STRING_ELT(names, i)), str) == 0) {
+	if (strcmp(CHAR(STRING_ELT(names, i)), str) == 0) { /* ASCII only */
 	    elmt = VECTOR_ELT(list, i);
 	    break;
 	}

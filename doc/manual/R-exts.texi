@@ -13097,7 +13097,7 @@ one in package @pkg{stats}) is very useful:
 
 @example
 @group
-/* get the list element named str, or return NULL */
+/* get the list element named str (ASCII), or return NULL */
 
 SEXP getListElement(SEXP list, const char *str)
 @{
@@ -13107,6 +13107,7 @@ SEXP getListElement(SEXP list, const char *str)
 @group
     for (int i = 0; i < length(list); i++)
         if(strcmp(CHAR(STRING_ELT(names, i)), str) == 0) @{
+           /* ASCII only */
            elmt = VECTOR_ELT(list, i);
            break;
         @}
@@ -13125,6 +13126,9 @@ and enables us to say
   g = REAL(getListElement(a, "g"))[0];
 @end group
 @end example
+
+This code only works for names that are ASCII (@pxref{Character encoding
+issues}). 
 
 @node Handling character data, Working with closures, Handling lists, Handling R objects in C
 @subsection Handling character data
@@ -13146,6 +13150,10 @@ use).  Since @code{CHARSXP}s are immutable, the same @code{CHARSXP} can
 be shared by any @code{STRSXP} needing an element representing the same
 string. @R{} maintains a global cache of @code{CHARSXP}s so that there
 is only ever one @code{CHARSXP} representing a given string in memory.
+It most cases it is easier to use @code{translateChar}
+or @code{translateCharUTF8} to obtain the C string and it is safer
+against potential future changes in R (@pxref{Character encoding
+issues}).
 
 @apifun mkChar
 @apifun mkCharLen
@@ -13729,10 +13737,11 @@ value of its arguments if they are vector types.
 @group
 SEXP showArgs(SEXP args)
 @{
+    void *vmax = vmaxget();
     args = CDR(args); /* skip 'name' */
     for(int i = 0; args != R_NilValue; i++, args = CDR(args)) @{
         const char *name =
-            isNull(TAG(args)) ? "" : CHAR(PRINTNAME(TAG(args)));
+            isNull(TAG(args)) ? "" : translateChar(PRINTNAME(TAG(args)));
         SEXP el = CAR(args);
         if (length(el) == 0) @{
             Rprintf("[%d] '%s' R type, length 0\n", i+1, name);
@@ -13762,7 +13771,7 @@ SEXP showArgs(SEXP args)
 @group
         case STRSXP:
             Rprintf("[%d] '%s' %s\n", i+1, name,
-                   CHAR(STRING_ELT(el, 0)));
+                   translateChar(STRING_ELT(el, 0)));
            break;
 @end group
 @group
@@ -13770,6 +13779,7 @@ SEXP showArgs(SEXP args)
             Rprintf("[%d] '%s' R type\n", i+1, name);
        @}
     @}
+    vmaxset(vmax);
     return R_NilValue;
 @}
 @end group
