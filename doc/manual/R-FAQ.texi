@@ -1805,41 +1805,42 @@ This produces something like
 @quotation
 @cartouche
 @smallexample
-Packages in `/home/me/lib/R':
+Packages in library '/home/me/lib/R':
 
 mystuff       My own R functions, nicely packaged but not documented
 
-Packages in `/usr/local/lib/R/library':
+Packages in library '/usr/local/lib/R/library':
 
-KernSmooth    Functions for kernel smoothing for Wand & Jones (1995)
+KernSmooth    Functions for Kernel Smoothing Supporting Wand & Jones (1995)
 MASS          Support Functions and Datasets for Venables and Ripley's MASS
 Matrix        Sparse and Dense Matrix Classes and Methods
-base          The R Base package
-boot          Bootstrap R (S-Plus) Functions (Canty)
+base          The R Base Package
 boot          Bootstrap Functions (Originally by Angelo Canty for S)
 class         Functions for Classification
 cluster       "Finding Groups in Data": Cluster Analysis Extended
               Rousseeuw et al.
 codetools     Code Analysis Tools for R
+compiler      The R Compiler Package
 datasets      The R Datasets Package
-foreign       Read Data Stored by Minitab, S, SAS, SPSS, Stata, Systat,
-              dBase, ...
+foreign       Read Data Stored by 'Minitab', 'S', 'SAS', 'SPSS', 'Stata',
+              'Systat', 'Weka', 'dBase', ...
 grDevices     The R Graphics Devices and Support for Colours and Fonts
 graphics      The R Graphics Package
 grid          The Grid Graphics Package
-lattice       Lattice Graphics
+lattice       Trellis Graphics for R
 methods       Formal Methods and Classes
-mgcv          GAMs with GCV/AIC/REML smoothness estimation and GAMMs
-              by PQL
+mgcv          Mixed GAM Computation Vehicle with Automatic Smoothness
+              Estimation
 nlme          Linear and Nonlinear Mixed Effects Models
-nnet          Feed-forward Neural Networks and Multinomial Log-Linear
+nnet          Feed-Forward Neural Networks and Multinomial Log-Linear
               Models
-rpart         Recursive Partitioning
+parallel      Support for Parallel Computation in R
+rpart         Recursive Partitioning and Regression Trees
 spatial       Functions for Kriging and Point Pattern Analysis
 splines       Regression Spline Functions and Classes
 stats         The R Stats Package
-stats4        Statistical functions using S4 Classes
-survival      Survival analysis, including penalised likelihood
+stats4        Statistical Functions using S4 Classes
+survival      Survival Analysis
 tcltk         Tcl/Tk Interface
 tools         Tools for Package Development
 utils         The R Utils Package
