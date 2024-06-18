@@ -1861,15 +1861,14 @@ library(help = @var{pkg})
 help(package = @var{pkg})
 @end example
 
-You can unload the loaded package @var{pkg} by
+You can remove the loaded package @var{pkg} from the @code{search()} path by
 
 @example
-detach("package:@var{pkg}", unload = TRUE)
+detach("package:@var{pkg}")
 @end example
 
 @noindent
-(where @code{unload = TRUE} is needed only for packages with a
-namespace, see @code{?unload}).
+(which does not by default unload the namespace, see @code{?detach}).
 
 @node How can add-on packages be removed?, How can I create an R package?, How can add-on packages be used?, R Add-On Packages
 @section How can add-on packages be removed?
@@ -3014,7 +3013,7 @@ constructs the path.  For example, to save results into files
 @example
 for(i in 1:100) @{
   ## Calculations constructing "some_object" ...
-  fp <- file.path("Results", paste("result", i, ".rda", sep = ""))
+  fp <- file.path("Results", paste0("result", i, ".rda"))
   save(list = "some_object", file = fp)
 @}
 @end example
