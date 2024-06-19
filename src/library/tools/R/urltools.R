@@ -811,7 +811,7 @@ function(urls, verbose = FALSE, pool = NULL, nobody = TRUE)
 
 .curl_multi_run_worker <-
 function(urls, nobody = FALSE, verbose = FALSE, pool = NULL,
-         opts = NULL)
+         opts = NULL, hdrs = NULL)
 {
     ## Use 'nobody = TRUE' to fetch only headers.
     
@@ -863,6 +863,8 @@ function(urls, nobody = FALSE, verbose = FALSE, pool = NULL,
         u <- urls[[i]]
         h <- curl::new_handle(url = u)
         curl::handle_setopt(h, .list = opts)
+        if(length(hdrs))
+            curl::handle_setheaders(h, .list = hdrs)
         if(grepl("^https?://github[.]com", u) &&
            nzchar(a <- Sys.getenv("GITHUB_PAT", ""))) {
             curl::handle_setheaders(h, "Authorization" = paste("token", a))
