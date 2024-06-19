@@ -119,7 +119,7 @@ help.search(pattern, fields = c("alias", "concept", "title"),
   documentation directory are taken as concepts.  For standard keyword
   entries different from \samp{internal}, the corresponding descriptions
   from file \file{KEYWORDS} are additionally taken as concepts.  All
-  \samp{\concept} entries used as concepts.  
+  \samp{\concept} entries used as concepts.
 
   Vignettes are searched as follows.  The \code{"name"} and
   \code{"alias"} are both the base of the vignette filename, and the
@@ -156,8 +156,10 @@ help.search(pattern, fields = c("alias", "concept", "title"),
   \code{\link{apropos}} uses regexps and has nice examples.
 }
 \examples{
-help.search("linear models")    # In case you forgot how to fit linear
-                                # models
+\dontshow{help.search("linear models", lib.loc = .Library) # (limit to "base + Rec." packages)}
+\dontrun{ 
+help.search("linear models")  # In case you forgot how to fit linear models
+}
 help.search("non-existent topic")
 
 ??utils::help  # All the topics matching "help" in the utils package
