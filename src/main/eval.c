@@ -2584,7 +2584,7 @@ static SEXP EnsureLocal(SEXP symbol, SEXP rho, R_varloc_t *ploc)
 {
     SEXP vl;
 
-    if ((vl = findVarInFrame3(rho, symbol, TRUE)) != R_UnboundValue) {
+    if ((vl = findVarInFrame(rho, symbol)) != R_UnboundValue) {
 	vl = eval(symbol, rho);	/* for promises */
 	if(MAYBE_SHARED(vl)) {
 	    /* Using R_shallow_duplicate_attr may defer duplicating

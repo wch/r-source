@@ -549,7 +549,7 @@ static SEXP handler_for_path(const char *path) {
 	    }
 	    /* we only proceed if .httpd.handlers.env really exists */
 	    if (TYPEOF(custom_handlers_env) == ENVSXP) {
-		SEXP cl = findVarInFrame3(custom_handlers_env, install(fn), TRUE);
+		SEXP cl = findVarInFrame(custom_handlers_env, install(fn));
 		if (cl != R_UnboundValue && TYPEOF(cl) == CLOSXP) /* we need a closure */
 		    return cl;
 	    }

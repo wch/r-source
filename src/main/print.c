@@ -341,7 +341,7 @@ static void PrintObjectS4(SEXP s, R_PrintData *data)
     if (methodsNS == R_UnboundValue)
 	error("missing methods namespace: this should not happen");
 
-    SEXP fun = findVarInFrame3(methodsNS, install("show"), TRUE);
+    SEXP fun = findVarInFrame(methodsNS, install("show"));
     if (TYPEOF(fun) == PROMSXP) {
 	PROTECT(fun);
 	fun = eval(fun, R_BaseEnv);
@@ -788,18 +788,18 @@ static void PrintSpecial(SEXP s, R_PrintData *data)
     char *nm = PRIMNAME(s);
     SEXP env, s2;
     PROTECT_INDEX xp;
-    PROTECT_WITH_INDEX(env = findVarInFrame3(R_BaseEnv,
-					     install(".ArgsEnv"), TRUE),
+    PROTECT_WITH_INDEX(env = findVarInFrame(R_BaseEnv,
+					    install(".ArgsEnv")),
 		       &xp);
     if (TYPEOF(env) == PROMSXP) REPROTECT(env = eval(env, R_BaseEnv), xp);
-    s2 = findVarInFrame3(env, install(nm), TRUE);
+    s2 = findVarInFrame(env, install(nm));
     if(s2 == R_UnboundValue) {
-	REPROTECT(env = findVarInFrame3(R_BaseEnv,
-					install(".GenericArgsEnv"), TRUE),
+	REPROTECT(env = findVarInFrame(R_BaseEnv,
+				       install(".GenericArgsEnv")),
 		  xp);
 	if (TYPEOF(env) == PROMSXP)
 	    REPROTECT(env = eval(env, R_BaseEnv), xp);
-	s2 = findVarInFrame3(env, install(nm), TRUE);
+	s2 = findVarInFrame(env, install(nm));
     }
     if(s2 != R_UnboundValue) {
 	SEXP t;

@@ -171,7 +171,7 @@ static SEXP findFunInEnvRange(SEXP symbol, SEXP rho, SEXP target)
 {
     SEXP vl;
     while(rho != R_EmptyEnv) {
-	vl = findVarInFrame3(rho, symbol, TRUE);
+	vl = findVarInFrame(rho, symbol);
 	if (vl != R_UnboundValue) {
 	    if (TYPEOF(vl) == PROMSXP) {
 		PROTECT(vl);
@@ -195,7 +195,7 @@ static SEXP findFunWithBaseEnvAfterGlobalEnv(SEXP symbol, SEXP rho)
 {
     SEXP vl;
     while(rho != R_EmptyEnv) {
-	vl = findVarInFrame3(rho, symbol, TRUE);
+	vl = findVarInFrame(rho, symbol);
 	if (vl != R_UnboundValue) {
 	    if (TYPEOF(vl) == PROMSXP) {
 		PROTECT(vl);
@@ -264,7 +264,7 @@ SEXP R_LookupMethod(SEXP method, SEXP rho, SEXP callrho, SEXP defrho)
     /* We assume here that no one registered a non-function */
     if (!s_S3MethodsTable)
 	s_S3MethodsTable = install(".__S3MethodsTable__.");
-    SEXP table = findVarInFrame3(defrho, s_S3MethodsTable, TRUE);
+    SEXP table = findVarInFrame(defrho, s_S3MethodsTable);
     if (TYPEOF(table) == PROMSXP) {
 	PROTECT(table);
 	table = eval(table, R_BaseEnv);
@@ -272,7 +272,7 @@ SEXP R_LookupMethod(SEXP method, SEXP rho, SEXP callrho, SEXP defrho)
     }
     if (TYPEOF(table) == ENVSXP) {
 	PROTECT(table);
-	REPROTECT(val = findVarInFrame3(table, method, TRUE), validx);
+	REPROTECT(val = findVarInFrame(table, method), validx);
 	UNPROTECT(1); /* table */
 	if (TYPEOF(val) == PROMSXP) 
 	    REPROTECT(val = eval(val, rho), validx);
@@ -307,7 +307,8 @@ static int match_to_obj(SEXP arg, SEXP obj) {
 attribute_hidden int isBasicClass(const char *ss) {
     static SEXP s_S3table = NULL;
     if(!s_S3table) {
-      s_S3table = findVarInFrame3(R_MethodsNamespace, install(".S3MethodsClasses"), TRUE);
+      s_S3table = findVarInFrame(R_MethodsNamespace,
+				 install(".S3MethodsClasses"));
       if(s_S3table == R_UnboundValue)
 	error(_("no '.S3MethodsClass' table, cannot use S4 objects with S3 methods ('methods' package not attached?)"));
       if (TYPEOF(s_S3table) == PROMSXP)  /* findVar... ignores lazy data */
@@ -315,7 +316,7 @@ attribute_hidden int isBasicClass(const char *ss) {
     }
     if(s_S3table == R_UnboundValue)
       return FALSE; /* too screwed up to do conversions */
-    return findVarInFrame3(s_S3table, install(ss), FALSE) != R_UnboundValue;
+    return R_existsVarInFrame(s_S3table, install(ss));
 }
 
 /* Note that ./attrib.c 's S4_extends() has an alternative
@@ -769,7 +770,7 @@ attribute_hidden SEXP do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
 
     s = CADDR(args); /* this is ... and we need to see if it's bound */
     if (s == R_DotsSymbol) {
-	t = findVarInFrame3(env, s, TRUE);
+	t = findVarInFrame(env, s);
 	if (t != R_NilValue && t != R_MissingArg) {
 	    SET_TYPEOF(t, LISTSXP); /* a safe mutation */
 	    s = matchmethargs(matchedarg, t);
@@ -1280,11 +1281,11 @@ static SEXP dispatchNonGeneric(SEXP name, SEXP env, SEXP fdef)
     symbol = installTrChar(asChar(name));
     for(rho = ENCLOS(env); rho != R_EmptyEnv;
 	rho = ENCLOS(rho)) {
-	fun = findVarInFrame3(rho, symbol, TRUE);
+	fun = findVarInFrame(rho, symbol);
 	if(fun == R_UnboundValue) continue;
 	switch(TYPEOF(fun)) {
 	case CLOSXP:
-	    value = findVarInFrame3(CLOENV(fun), R_dot_Generic, TRUE);
+	    value = findVarInFrame(CLOENV(fun), R_dot_Generic);
 	    if(value == R_UnboundValue) break;
 	case BUILTINSXP:  case SPECIALSXP:
 	default:

@@ -755,14 +755,14 @@ SEXP R_nextMethodCall(SEXP matched_call, SEXP ev)
     /* for primitive .nextMethod's, suppress further dispatch to avoid
      * going into an infinite loop of method calls
     */
-    PROTECT(op = findVarInFrame3(ev, R_dot_nextMethod, TRUE));
+    PROTECT(op = findVarInFrame(ev, R_dot_nextMethod));
     if(op == R_UnboundValue)
 	error("internal error in 'callNextMethod': '.nextMethod' was not assigned in the frame of the method call");
     PROTECT(e = shallow_duplicate(matched_call));
     prim_case = isPrimitive(op);
     if (!prim_case) {
         if (inherits(op, "internalDispatchMethod")) {
-	    SEXP generic = findVarInFrame3(ev, R_dot_Generic, TRUE);
+	    SEXP generic = findVarInFrame(ev, R_dot_Generic);
 	    if(generic == R_UnboundValue)
 	        error("internal error in 'callNextMethod': '.Generic' was not assigned in the frame of the method call");
 	    PROTECT(generic);

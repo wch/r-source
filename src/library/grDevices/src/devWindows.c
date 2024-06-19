@@ -376,7 +376,7 @@ static void init_PS_PDF(void)
 {
     SEXP call, initS, grNS=R_FindNamespace(mkString("grDevices"));
 
-    initS = findVarInFrame3(grNS, install("initPSandPDFfonts"), TRUE);
+    initS = findVarInFrame(grNS, install("initPSandPDFfonts"));
     if(initS == R_UnboundValue)
 	error("missing initPSandPDFfonts() in grDevices namespace: this should not happen");
     PROTECT(call = lang1(initS));
