@@ -3896,18 +3896,17 @@ function(aar, strict = FALSE)
                     if(all(has_no_name |
                            vapply(aar, function(e) "aut" %notin% e$role, NA)))
                         out$bad_authors_at_R_field_has_no_author_roles <- TRUE
-                    has_bad_ORCID_identifiers <-
-                        vapply(aar,
-                               function(e) {
-                                   e <- e$comment
-                                   e <- e[names(e) == "ORCID"]
-                                   any(!grepl(.ORCID_iD_variants_regexp,
-                                              e))
-                               },
-                               NA)
-                    if(any(has_bad_ORCID_identifiers))
+                    ids <- .ORCID_iD_from_person(aar)
+                    pos <- which(!is.na(ids))
+                    ids <- ids[pos]
+                    pos <- pos[!.ORCID_iD_is_valid(ids)]
+                    if(length(pos))
                         out$bad_authors_at_R_field_has_persons_with_bad_ORCID_identifiers <-
-                            format(aar[has_bad_ORCID_identifiers])
+                            format(aar[pos])
+                    ids <- ids[duplicated(ids)]
+                    if(length(ids))
+                        out$bad_authors_at_R_field_has_persons_with_dup_ORCID_identifiers<-
+                            ids
                 }
                 if(strict >= 3L) {
                     non_standard_roles <-
@@ -4009,6 +4008,10 @@ function(x)
       },
       if(length(bad <- x[["bad_authors_at_R_field_has_persons_with_bad_ORCID_identifiers"]])) {
           c(gettext("Authors@R field gives persons with invalid ORCID identifiers:"),
+            paste0("  ", bad))
+      },
+      if(length(bad <- x[["bad_authors_at_R_field_has_persons_with_dup_ORCID_identifiers"]])) {
+          c(gettext("Authors@R field gives persons with duplicated ORCID identifiers:"),
             paste0("  ", bad))
       }
       )
@@ -8131,17 +8134,10 @@ function(dir, localOnly = FALSE, pkgSize = NA)
                 odb <- odb[ind, , drop = FALSE]
             }
             if(NROW(odb)) {
-                ids <- sub(.ORCID_iD_variants_regexp, "\\3", odb[, 1L])
-                ini <- "https://orcid.org/"
-                udb <- url_db(paste0(ini, ids), odb[, 2L])
-                bad <- tryCatch(check_url_db(udb,
-                                             parallel =
-                                                 check_urls_in_parallel),
-                                error = identity)
-                if(!inherits(bad, "error") && length(bad))
-                    out$bad_ORCID_iDs <-
-                        cbind(substring(bad$URL, nchar(ini) + 1L),
-                              bad[, 2L])
+                ids <- .ORCID_iD_canonicalize(odb[, 1L])
+                bad <- ids[!.ORCID_iD_is_alive(ids)]
+                if(length(bad))
+                    out$bad_ORCID_iDs <- bad
             }
         }
     }
