@@ -14754,6 +14754,46 @@ string is treated as a series of bytes.  (See the comments under
 
 Function
 
+@eapifun charIsASCII
+@example
+Rboolean charIsASCII(SEXP);
+@end example
+
+@noindent
+can be used to detect whether a given @code{CHARSXP} represents an ASCII
+string. The implementation is equivalent to checking individual characters,
+but may be faster.
+
+Function
+
+@eapifun charIsUTF8
+@example
+Rboolean charIsUTF8(SEXP);
+@end example
+
+@noindent
+can be used to detect whether the internal representation of a given
+@code{CHARSXP} accessed via @code{CHAR} is UTF-8 (including ASCII).  This
+function is rarely needed and specifically is not needed with
+@code{translateCharUTF8}, because such check is already included.  However,
+when needed, it is better to use it in preference of @code{getCharCE}, as it
+is safer against future changes in the semantics of encoding marks.  Note
+that @code{charIsUTF8()} is not equivalent to @code{getCharCE() == CE_UTF8}.
+
+Similarly, function
+
+@eapifun charIsLatin1
+@example
+Rboolean charIsLatin1(SEXP);
+@end example
+
+@noindent
+can be used to detect whether the internal representation of a given
+@code{CHARSXP} accessed via @code{CHAR} is latin1 (including ASCII).  It is
+not equivalent to to @code{getCharCE() == CE_LATIN1}.
+
+Function
+
 @apifun reEnc
 @example
 const char *reEnc(const char *x, cetype_t ce_in, cetype_t ce_out,
@@ -17295,6 +17335,11 @@ functions that should be used instead:
        @code{R_ClosureEnv}; these were added in @R{} 4.5.0.
 @item ENCLOS
       Use @code{R_ParentEnv}, added in @R{} 4.5.0.
+@item IS_ASCII
+      Use @code{charIsASCII}, added in @R{} 4.5.0.
+@item IS_UTF8
+      Use @code{charIsUTF8}, added in @R{} 4.5.0, and check semantical
+      differences.
 @end table
 
 For recently added entry points packages that need to be compiled
@@ -17352,7 +17397,7 @@ created as
 SEXP env = allocLang(3);
 @end example
 
-@node Creating closures, Some backports, Creating call expressions, Moving into C API compliance
+@node Creating closures, Querying CHARSXP encoding, Creating call expressions, Moving into C API compliance
 @subsection Creating closures
 
 Yet another common idiom is to create a new closure as
@@ -17370,7 +17415,41 @@ SET_CLOENV(fun, env);
 SEXP fun = R_mkClosure(formals, body, env);
 @end example
 
-@node Some backports, , Creating closures, Moving into C API compliance
+@node Querying CHARSXP encoding, Some backports, Creating closures, Moving into C API compliance
+@subsection Querying CHARSXP encoding
+
+A number of packages query encoding bits set on CHARSXP objects via macros
+@code{IS_ASCII} and @code{IS_UTF8}, some packages also via @code{IS_BYTES}
+and @code{IS_LATIN1}.  These macros are not part of the API and packages
+have been copying their definition and directly accessing the bits in
+memory. The structure of the object header is, however, internal to @R{} and
+may have to change in the future.
+
+@code{IS_ASCII} can be replaced by @code{charIsASCII}, added in @R{} 4.5.0. 
+It can also be replaced by code that checks individual characters (bytes).
+
+Information provided by the other macros is available via function
+@code{getCharCE}, which has been part of the API since @R{} 2.7.0.  Before
+switching to @code{getCharCE}, packages are, however, advised to check
+whether the encoding information is really needed and whether it is used
+correctly.
+
+Most code should be able to work with complete CHARSXPs and never look at
+the individual bytes.  When access to characters and bytes (of strings other
+than @code{CE_BYTES}) is needed, one would use @code{translateChar} or
+@code{translateCharUTF8}.  These functions internally already check the
+encoding and whether the string is ASCII and only translate when needed,
+which should be rarely since @R{} >= 4.2.0 (UTF-8 is used as native encoding
+on most systems running R).
+
+Several packages use the encoding information to find out whether an
+internal string representation visible via @code{CHAR} is UTF-8 or latin1. 
+@R{} 4.5.0 provides functions @code{charIsUTF8} and @code{charIsLatin1} for
+this purpose, which are simpler to use and safer against future changes. 
+Note that both will be true for ASCII strings and they handle also native
+strings when running in the corresponding locale.
+
+@node Some backports, , Querying CHARSXP encoding, Moving into C API compliance
 @subsection Some backports
 
 This section lists backports of recently added definitions that can be

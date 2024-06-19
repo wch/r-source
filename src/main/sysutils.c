@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997-2023   The R Core Team
+ *  Copyright (C) 1997-2024   The R Core Team
  *  Copyright (C) 1995-1996   Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -919,6 +919,30 @@ cetype_t getCharCE(SEXP x)
     else if(IS_LATIN1(x)) return CE_LATIN1;
     else if(IS_BYTES(x)) return CE_BYTES;
     else return CE_NATIVE;
+}
+
+Rboolean charIsASCII(SEXP x)
+{
+    CHECK_CHARSXP(x);
+    return IS_ASCII(x) ? TRUE : FALSE;
+}
+
+Rboolean charIsUTF8(SEXP x)
+{
+    CHECK_CHARSXP(x);
+    if (IS_ASCII(x) || IS_UTF8(x)) return TRUE;
+    if (IS_LATIN1(x) || IS_BYTES(x) || !utf8locale || x == NA_STRING)
+	return FALSE;
+    return TRUE;
+}
+
+Rboolean charIsLatin1(SEXP x)
+{
+    CHECK_CHARSXP(x);
+    if (IS_ASCII(x) || IS_LATIN1(x)) return TRUE;
+    if (!latin1locale || IS_UTF8(x) || IS_BYTES(x) || x == NA_STRING)
+	return FALSE;
+    return TRUE;
 }
 
 #ifdef __APPLE__

@@ -617,6 +617,9 @@ typedef enum {
 } cetype_t;
 
 cetype_t Rf_getCharCE(SEXP);
+Rboolean Rf_charIsASCII(SEXP);
+Rboolean Rf_charIsUTF8(SEXP);
+Rboolean Rf_charIsLatin1(SEXP);
 SEXP Rf_mkCharCE(const char *, cetype_t);
 SEXP Rf_mkCharLenCE(const char *, int, cetype_t);
 const char *Rf_reEnc(const char *x, cetype_t ce_in, cetype_t ce_out, int subst);
@@ -893,6 +896,9 @@ void R_orderVector1(int *indx, int n, SEXP x,       Rboolean nalast, Rboolean de
 #define asLogical2		Rf_asLogical2
 #define asReal			Rf_asReal
 #define asS4			Rf_asS4
+#define charIsASCII		Rf_charIsASCII
+#define charIsUTF8		Rf_charIsUTF8
+#define charIsLatin1		Rf_charIsLatin1
 #define classgets		Rf_classgets
 #define coerceVector		Rf_coerceVector
 #define conformable		Rf_conformable
