@@ -684,7 +684,7 @@ nonAPI <- c("chol_", "chol2inv_", "cg_", "ch_", "rg_",
             "REAL0", "COMPLEX0", "LEVELS", "FRAME", "HASHTAB",
             "ENVFLAGS", "RDEBUG", "SET_RDEBUG",
             "STRING_PTR", "VECTOR_PTR",
-            "SET_FORMALS", "SET_BODY", "SET_CLOENV",
+            "SET_FORMALS", "SET_BODY", "SET_CLOENV", "Rf_findVarInFrame3",
 ## in the non-API header R_ext/Connections.h
             "R_new_custom_connection", "R_ReadConnection",
             "R_WriteConnection", "R_GetConnection",
