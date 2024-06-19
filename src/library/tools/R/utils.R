@@ -2117,7 +2117,7 @@ function(file, encoding = NA, keep.source = getOption("keep.source"))
     cfile <- file.path(dir, path)
     cinfo <- .read_citation_quietly(cfile, meta)
     if(!inherits(cinfo, "error")) {
-        aut <- cinfo$author
+        aut <- do.call(c, lapply(unclass(cinfo), `[[`, "author"))
         if(inherits(aut, "person"))
             return(aut)
     }
