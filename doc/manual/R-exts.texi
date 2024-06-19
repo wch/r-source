@@ -17340,6 +17340,8 @@ functions that should be used instead:
 @item IS_UTF8
       Use @code{charIsUTF8}, added in @R{} 4.5.0, and check semantical
       differences.
+@item findVarInFrame3
+      Use @code{R_existsVarInFrame} to test for existence.
 @end table
 
 For recently added entry points packages that need to be compiled
