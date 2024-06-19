@@ -1656,9 +1656,7 @@ function(dir)
                     c(e$family,
                       paste0("<",
                              paste0("https://replace.me.by.orcid.org/",
-                                    sub(.ORCID_iD_variants_regexp,
-                                        "\\3",
-                                        comment[pos])),
+                                    .ORCID_iD_canonicalize(comment[pos])),
                              ">"))
                 e$comment <- if(len < length(comment))
                                  comment[-pos]

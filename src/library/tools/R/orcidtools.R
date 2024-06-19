@@ -28,30 +28,39 @@
 
 ### ** .ORCID_iD_canonicalize
 
-.ORCID_iD_canonicalize <- function(s)
-    sub(.ORCID_iD_variants_regexp, "\\3", s)
+.ORCID_iD_canonicalize <- function(x)
+    sub(.ORCID_iD_variants_regexp, "\\3", x)
 
 ### ** .ORCID_iD_is_valid
 
-.ORCID_iD_is_valid <- function(s) {
-    if(!grepl(.ORCID_iD_variants_regexp, s))
-        return(FALSE)
-    s <- .ORCID_iD_canonicalize(s)
-    ## Checksum test, see
-    ## <https://support.orcid.org/hc/en-us/articles/360006897674-Structure-of-the-ORCID-Identifier>
-    s <- strsplit(gsub("-", "", s, fixed = TRUE), "")[[1L]]
-    x <- as.numeric(s[-16L])
-    t <- sum(x * 2 ^ (15L : 1L))
-    rem <- t %% 11
-    res <- (12 - rem) %% 11
-    z <- if(res == 10) "X" else as.character(res)
-    z == s[16L]
+.ORCID_iD_is_valid <- function(x) {
+    one <- function(s) {
+        if(!grepl(.ORCID_iD_variants_regexp, s))
+            return(FALSE)
+        s <- .ORCID_iD_canonicalize(s)
+        ## Checksum test, see
+        ## <https://support.orcid.org/hc/en-us/articles/360006897674-Structure-of-the-ORCID-Identifier>
+        s <- strsplit(gsub("-", "", s, fixed = TRUE), "")[[1L]]
+        x <- as.numeric(s[-16L])
+        t <- sum(x * 2 ^ (15L : 1L))
+        rem <- t %% 11
+        res <- (12 - rem) %% 11
+        z <- if(res == 10) "X" else as.character(res)
+        z == s[16L]
+    }
+    vapply(x, one, NA)
 }
 
 ### ** .ORCID_iD_is_alive
 
-.ORCID_iD_is_alive <- function(s) {
-    ## See <https://info.orcid.org/documentation/api-tutorials/api-tutorial-read-data-on-a-record/#h-a-note-on-non-existent-orcids>
+.ORCID_iD_is_alive <- function(x) {
+    ## See
+    ## <https://info.orcid.org/documentation/api-tutorials/api-tutorial-read-data-on-a-record/#h-a-note-on-non-existent-orcids>
+    ## Assume all given ids are canonical.
+    urls <- sprintf("https://orcid.org/%s", x)
+    hdrs <- list("Accept" = "application/xml")
+    resp <- .curl_multi_run_worker(urls, nobody = TRUE, hdrs = hdrs)
+    vapply(resp, .curl_response_status_code, 0L) == 200L
 }
 
 ### ** .ORCID_iD_from_person
