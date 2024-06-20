@@ -14777,7 +14777,8 @@ can be used to detect whether the internal representation of a given
 function is rarely needed and specifically is not needed with
 @code{translateCharUTF8}, because such check is already included.  However,
 when needed, it is better to use it in preference of @code{getCharCE}, as it
-is safer against future changes in the semantics of encoding marks.  Note
+is safer against future changes in the semantics of encoding marks and
+covers strings internally represented in the native encoding.  Note
 that @code{charIsUTF8()} is not equivalent to @code{getCharCE() == CE_UTF8}.
 
 Similarly, function
@@ -17338,8 +17339,7 @@ functions that should be used instead:
 @item IS_ASCII
       Use @code{charIsASCII}, added in @R{} 4.5.0.
 @item IS_UTF8
-      Use @code{charIsUTF8}, added in @R{} 4.5.0, and check semantical
-      differences.
+      Use @code{charIsUTF8}, added in @R{} 4.5.0, or avoid completely.
 @item findVarInFrame3
       Use @code{R_existsVarInFrame} to test for existence.
 @end table
@@ -17447,9 +17447,31 @@ on most systems running R).
 Several packages use the encoding information to find out whether an
 internal string representation visible via @code{CHAR} is UTF-8 or latin1. 
 @R{} 4.5.0 provides functions @code{charIsUTF8} and @code{charIsLatin1} for
-this purpose, which are simpler to use and safer against future changes. 
-Note that both will be true for ASCII strings and they handle also native
-strings when running in the corresponding locale.
+this purpose, which are safer against future changes and handle also native
+strings when running in the corresponding locale.  Note that both will be
+true for ASCII strings.
+
+A pattern used in several packages is
+@example
+char *asutf8(SEXP c)
+@{
+  if (!IS_UTF8(s) && !IS_ASCII(s))  // not compliant
+    return Rf_translateCharUTF8(s);
+   else
+    return CHAR(s);
+@}
+@end example
+
+to make this code compliant, simply call
+@example
+char *asutf8(SEXP c)
+@{
+  return Rf_translateCharUTF8(s); // compliant
+@}
+@end example
+
+as the encoding flags are already checked in @code{translateCharUTF8}. Also
+note the non-compliant check doesn't handle native encoding.
 
 @node Some backports, , Querying CHARSXP encoding, Moving into C API compliance
 @subsection Some backports
