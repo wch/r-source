@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  file util.c
- *  Copyright (C) 2005--2023  The R Core Team
+ *  Copyright (C) 2005--2024  The R Core Team
  *  Copyright (C) 1998--2003  Guido Masarotto and Brian Ripley
  *  Copyright (C) 2004	      The R Foundation
  *
@@ -292,15 +292,17 @@ SEXP writeClipboard(SEXP text, SEXP sformat)
 
     n = length(text);
     if(n > 0) {
-	int len = 1;
+	int len = 0;
 	if(raw) len = n;
-	else if (format == CF_UNICODETEXT)
+	else if (format == CF_UNICODETEXT) {
+	    len = 2; /* terminator */
 	    for(i = 0; i < n; i++)
 		len += 2 * (wcslen(wtransChar(STRING_ELT(text, i))) + 2);
-	else if (format == CF_TEXT || format == CF_OEMTEXT || format == CF_DIF)
+	} else if (format == CF_TEXT || format == CF_OEMTEXT || format == CF_DIF) {
+	    len = 1; /* terminator */
 	    for(i = 0; i < n; i++)
 		len += strlen(translateChar(STRING_ELT(text, i))) + 2;
-	else
+	} else
 	    error("'raw = FALSE' and format is a not a known text format");
 
 	if ( (hglb = GlobalAlloc(GHND, len)) &&
