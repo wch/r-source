@@ -3857,8 +3857,10 @@ function(aar, strict = FALSE)
 {
     out <- list()
     if(is.na(aar)) return(out)
-    aar <- tryCatch(utils:::.read_authors_at_R_field(aar),
-                    error = identity)
+    ## <FIXME>
+    ## Perhaps better to actually capture warnings?
+    aar <- suppressWarnings(tryCatch(utils:::.read_authors_at_R_field(aar),
+                                     error = identity))
     if(inherits(aar, "error")) {
         out$bad_authors_at_R_field <- conditionMessage(aar)
     } else {
