@@ -17421,9 +17421,9 @@ SEXP fun = R_mkClosure(formals, body, env);
 @end example
 
 @node Querying CHARSXP encoding, Some backports, Creating closures, Moving into C API compliance
-@subsection Querying CHARSXP encoding
+@subsection Querying @code{CHARSXP} encoding
 
-A number of packages query encoding bits set on CHARSXP objects via macros
+A number of packages query encoding bits set on @code{CHARSXP} objects via macros
 @code{IS_ASCII} and @code{IS_UTF8}, some packages also via @code{IS_BYTES}
 and @code{IS_LATIN1}.  These macros are not part of the API and packages
 have been copying their definition and directly accessing the bits in
@@ -17439,7 +17439,7 @@ switching to @code{getCharCE}, packages are, however, advised to check
 whether the encoding information is really needed and whether it is used
 correctly.
 
-Most code should be able to work with complete CHARSXPs and never look at
+Most code should be able to work with complete @code{CHARSXP}s and never look at
 the individual bytes.  When access to characters and bytes (of strings other
 than @code{CE_BYTES}) is needed, one would use @code{translateChar} or
 @code{translateCharUTF8}.  These functions internally already check the
