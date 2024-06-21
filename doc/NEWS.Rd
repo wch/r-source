@@ -127,6 +127,14 @@
       \item Some \samp{NOTE}s for use of non-API entry points have been
       upgraded to \samp{WARNING}s in preparation for removing
       declarations and, where possible, hiding these entry points.
+
+      \item Additional non-API entry points added to those reported by
+      \command{R CMD check}: \code{IS_LONG_VEC}, \code{PRCODE},
+      \code{PRENV}, \code{PRVALUE}, \code{R_nchar},
+      \code{Rf_isValidString}, \code{Rf_isValidStringF},
+      \code{Rf_NonNullStringMatch}, \code{Rf_StringBlank},
+      \code{SET_TYPEOF}, \code{TRUELENGTH}, \code{XLENGTH_EX},
+      and \code{XTRUELENGTH}.
     }
   }
 
