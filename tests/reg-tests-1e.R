@@ -1421,6 +1421,12 @@ L <- list(A = FALSE); names(L) <- NA
     dL1 <- as.data.frame.list(L, col.names = names(L))
     dL2 <- as.data.frame.list(L, col.names = names(L), check.names=FALSE)
 str(dL  <- as.data.frame.list(L, new.names=TRUE))
+## check.names = TRUE,  fix.empty.names = TRUE  are default :
+prblN <- c("", "var 2")
+dp11 <- as.data.frame(setNames(list(1, 23), prblN))
+dp01 <- as.data.frame(setNames(list(1, 23), prblN), check.names=FALSE)
+dp00 <- as.data.frame(setNames(list(1, 23), prblN), check.names=FALSE, fix.empty.names=FALSE)
+dp10 <- as.data.frame(setNames(list(1, 23), prblN), check.names=TRUE , fix.empty.names=FALSE)
 stopifnot(exprs = {
     is.na(names(x))
     is.data.frame(fx)
@@ -1429,8 +1435,12 @@ stopifnot(exprs = {
     identical(NA_character_, names(dL))
     identical(nms, names( dN))
     identical(nms, names(fdN)) # was    .. .. "NA" "NA"
-    identical(dL1, dL2)# was always TRUE
-    identical(dL, dL1) # was FALSE
+    identical(dL1, dL2)# was FALSE ("NA vs "NA.")
+    identical(dL, dL1) # was always TRUE;  ditto these {wrong for a couple of hours}:
+    names(dp11) == c("X1", "var.2")
+    names(dp01) == c( "1", "var 2")
+    names(dp00) == c( "" , "var 2") # == prblN
+    names(dp10) == c( "" , "var.2")
 })
 ## format() and as.data.frame(<list>, col.names=*, check.names=FALSE) *did*
 ## change  NA names() into "NA"  for R <= 4.4.1

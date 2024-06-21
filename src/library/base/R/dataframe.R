@@ -238,9 +238,8 @@ as.data.frame.list <-
 		   stringsAsFactors = stringsAsFactors),
 	      if(!missing(row.names)) list(row.names = row.names))
     x <- do.call(data.frame, c(x, alis))
-    if(Nnms && !identical(col.names, nx <- names(x)) &&
-       length(nx) == length(col.names)) ## e.g. w/  NA_character_  in col.names
-       names(x) <- col.names
+    if(Nnms && length(names(x)) == length(col.names) && any(naNm <- is.na(col.names)))
+       names(x)[naNm] <- col.names[naNm]
     if(any.m) names(x) <- sub("^\\.\\.adfl\\.", "", names(x))
     x
 }
