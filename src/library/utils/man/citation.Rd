@@ -47,11 +47,13 @@ citFooter(...)
 
   Execute function \code{citation()} for information on how to cite the
   base R system in publications.  If the name of a non-base package is
-  given, the function either returns the information contained in the
-  \file{CITATION} file of the package (using \code{readCitationFile}
-  with \code{meta} equal to \code{packageDescription(package, lib.loc)})
-  or auto-generates citation information from the \file{DESCRIPTION}
-  file.
+  given, as controlled by the \code{auto} argument, the function either
+  returns the information contained in the \file{CITATION} file of the
+  package (using \code{readCitationFile} with \code{meta} equal to
+  \code{packageDescription(package, lib.loc)}) or auto-generates
+  citation information from the \file{DESCRIPTION} file.  For CRAN and
+  Bioconductor packages, auto-generating automatically adds package URLs
+  and DOIs.
 
   Packages can use an \samp{Authors@R} field in their
   \file{DESCRIPTION} to provide (\R code giving) a

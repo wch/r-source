@@ -135,6 +135,10 @@
       \code{Rf_NonNullStringMatch}, \code{Rf_StringBlank},
       \code{SET_TYPEOF}, \code{TRUELENGTH}, \code{XLENGTH_EX},
       and \code{XTRUELENGTH}.
+
+      \item Package \code{citation()} results auto-generated from the
+      package metadata now also provide package DOIs for CRAN and
+      Bioconductor packages.
     }
   }
 
@@ -156,7 +160,7 @@
       \item \code{as.data.frame.list()} gets new option \code{new.names}
       and now preserves \code{NA} names, thus fixing the \code{format()}
       method for data frames, and also bug \PR{18745}.
-      Relatedly, the \code{format()} method gets option \code{cut.names}.
+      \I{Relatedly}, the \code{format()} method gets option \code{cut.names}.
     }
   }
 }
