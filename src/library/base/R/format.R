@@ -1,7 +1,7 @@
 #  File src/library/base/R/format.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2021 The R Core Team
+#  Copyright (C) 1995-2024 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -80,6 +80,8 @@ format.default <-
     }
 }
 
+## Here in base, as used by summary.table()'s printing
+## NB:  stats ::: format_perc()
 format.pval <- function(pv, digits = max(1L, getOption("digits") - 2L),
 			eps = .Machine$double.eps, na.form = "NA", ...)
 {
@@ -134,7 +136,8 @@ formatC <- function (x, digits = NULL, width = NULL,
     }
     ## sanity check for flags added 2.1.0
     flag <- as.character(flag)
-    if(length(flag) != 1) stop("'flag' must be a string, i.e., of length 1")
+    if(length(flag) != 1)
+	stop(gettextf("'%s' must be a character string", "flag"), domain = NA)
     nf <- strsplit(flag, "")[[1L]]
     if(!all(nf %in% c("0", "+", "-", " ", "#", "'", "I")))
 	stop("'flag' should contain only characters from [0+- #'I]")
@@ -237,7 +240,7 @@ format.factor <- function (x, ...)
                      dim=dim(x), dimnames=dimnames(x)), ...)
 
 
-format.data.frame <- function(x, ..., justify = "none")
+format.data.frame <- function(x, ..., justify = "none", cut.names = TRUE)
 {
     nc <- length(x)
     if(!nc) return(x) # 0 columns: evade problems, notably for nrow() > 0
@@ -251,13 +254,14 @@ format.data.frame <- function(x, ..., justify = "none")
 	for(i in seq_len(nc)) {
 	    len <- NROW(rval[[i]])
 	    if(len == nr) next
-	    if(length(dim(rval[[i]])) == 2L) {
-		rval[[i]] <- if(len < nr)
-		    rbind(rval[[i]], matrix(NA, nr-len, ncol(rval[[i]])))
-		else rval[[i]][seq_len(nr),]
-	    } else {
-		rval[[i]] <- if(len < nr) c(rval[[i]], rep.int(NA, nr-len))
-		else rval[[i]][seq_len(nr)]
+            rval[[i]] <-
+                if(length(dim(rval[[i]])) == 2L) {
+                    if(len < nr)
+                        rbind(rval[[i]], matrix(NA, nr-len, ncol(rval[[i]])))
+                    else rval[[i]][seq_len(nr),]
+                } else {
+                    if(len < nr) c(rval[[i]], rep.int(NA, nr-len))
+                    else rval[[i]][seq_len(nr)]
 	    }
 	}
     }
@@ -269,7 +273,7 @@ format.data.frame <- function(x, ..., justify = "none")
                             row.names = seq_len(nr),
                             col.names = names(x),
                             optional = TRUE, # <=> check.names = FALSE
-                            fix.empty.names = FALSE, cut.names = TRUE)
+                            fix.empty.names = FALSE, cut.names = cut.names)
     attr(y, "row.names") <- row.names(x)
     y
 }

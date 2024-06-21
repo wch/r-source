@@ -216,12 +216,12 @@ as.data.frame.data.frame <- function(x, row.names = NULL, ...)
 as.data.frame.list <-
     function(x, row.names = NULL, optional = FALSE, ...,
 	     cut.names = FALSE, col.names = names(x), fix.empty.names = TRUE,
+             new.names = !missing(col.names),
              check.names = !optional,
              stringsAsFactors = FALSE)
 {
     ## need to protect names in x.
     ## truncate any of more than 256 (or cut.names) bytes:
-    new.nms <- !missing(col.names)
     if(cut.names) {
 	maxL <- if(is.logical(cut.names)) 256L else as.integer(cut.names)
 	if(any(long <- nchar(col.names, "bytes", keepNA = FALSE) > maxL))
@@ -232,12 +232,15 @@ as.data.frame.list <-
 	       ## c("row.names", "check.rows", ...., "stringsAsFactors"),
 	       col.names, 0L)
     if(any.m <- any(m)) col.names[m] <- paste0("..adfl.", col.names[m])
-    if(new.nms || any.m || cut.names) names(x) <- col.names
+    if(Nnms <- new.names || any.m || cut.names) names(x) <- col.names
     ## data.frame() is picky with its 'row.names':
     alis <- c(list(check.names = check.names, fix.empty.names = fix.empty.names,
 		   stringsAsFactors = stringsAsFactors),
 	      if(!missing(row.names)) list(row.names = row.names))
     x <- do.call(data.frame, c(x, alis))
+    if(Nnms && !identical(col.names, nx <- names(x)) &&
+       length(nx) == length(col.names)) ## e.g. w/  NA_character_  in col.names
+       names(x) <- col.names
     if(any.m) names(x) <- sub("^\\.\\.adfl\\.", "", names(x))
     x
 }

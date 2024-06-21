@@ -144,6 +144,11 @@
     \itemize{
       \item Auto-generated \code{citation()} entries no longer include
       (additional) URLs in the \samp{note} field (\PR{18547}).
+
+      \item \code{as.data.frame.list()} gets new option \code{new.names}
+      and now preserves \code{NA} names, thus fixing the \code{format()}
+      method for data frames, and also bug \PR{18745}.
+      Relatedly, the \code{format()} method gets option \code{cut.names}.
     }
   }
 }

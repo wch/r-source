@@ -29,6 +29,7 @@ as.data.frame(x, row.names = NULL, optional = FALSE, \dots)
 
 \method{as.data.frame}{list}(x, row.names = NULL, optional = FALSE, \dots,
               cut.names = FALSE, col.names = names(x), fix.empty.names = TRUE,
+              new.names = !missing(col.names),
               check.names = !optional,
               stringsAsFactors = FALSE)
 
@@ -62,6 +63,7 @@ is.data.frame(x)
   \item{col.names}{(optional) character vector of column names.}
   \item{fix.empty.names}{logical indicating if empty column names, i.e.,
     \code{""} should be fixed up (in \code{\link{data.frame}}) or not.}
+  \item{new.names}{logical indicating that \code{col.names} should be set explicitly.}
   \item{check.names}{logical; passed to the \code{\link{data.frame}()} call.}
   %% matrix method:
   \item{make.names}{a \code{\link{logical}}, i.e., one of \code{FALSE, NA, TRUE},
