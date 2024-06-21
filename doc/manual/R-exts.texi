@@ -13494,9 +13494,12 @@ include @code{R_existsVarInFrame}, @code{R_removeVarFromFrame},
 @eapifun R_NamespaceEnvSpec
 @eapifun R_IsNamespaceEnv
 
-The C functions @code{match} and @code{psmatch} correspond to the @R{} functions by the same name.
+The C functions @code{match} and @code{pmatch} correspond to the @R{}
+functions by the same name.
 @eapifun match
 @eapifun pmatch
+The C-level workhorse for partial matching is provided by @code{psmatch}.
+@eapifun psmatch
 
 The C functions @code{R_forceAndCall} and @code{isUnsorted} correspond
 to the @R{} functions @code{forceAndCall} and @code{is.unsorted}.
