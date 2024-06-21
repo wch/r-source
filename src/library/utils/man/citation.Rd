@@ -52,8 +52,8 @@ citFooter(...)
   package (using \code{readCitationFile} with \code{meta} equal to
   \code{packageDescription(package, lib.loc)}) or auto-generates
   citation information from the \file{DESCRIPTION} file.  For CRAN and
-  Bioconductor packages, auto-generating automatically adds package URLs
-  and DOIs.
+  Bioconductor packages, auto-generating automatically adds package
+  \abbr{URL}s and \abbr{DOI}s.
 
   Packages can use an \samp{Authors@R} field in their
   \file{DESCRIPTION} to provide (\R code giving) a

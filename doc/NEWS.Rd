@@ -136,7 +136,7 @@
       and \code{XTRUELENGTH}.
 
       \item Package \code{citation()} results auto-generated from the
-      package metadata now also provide package DOIs for CRAN and
+      package metadata now also provide package \abbr{DOI}s for CRAN and
       Bioconductor packages.
     }
   }
