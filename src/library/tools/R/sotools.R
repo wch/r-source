@@ -686,7 +686,7 @@ nonAPI <- c("chol_", "chol2inv_", "cg_", "ch_", "rg_",
             "STRING_PTR", "VECTOR_PTR",
             "SET_FORMALS", "SET_BODY", "SET_CLOENV", "Rf_findVarInFrame3",
             "IS_LONG_VEC", "PRCODE", "PRENV", "PRVALUE", "R_nchar",
-            "Rf_isValidString", "Rf_isValidStringF", "Rf_NonNullStringMatch",
+            "Rf_NonNullStringMatch",
             "Rf_StringBlank", "SET_TYPEOF", "TRUELENGTH", "XLENGTH_EX",
             "XTRUELENGTH",
 ## in the non-API header R_ext/Connections.h

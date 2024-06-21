@@ -13349,6 +13349,8 @@ a test of a length-2 @code{"dim"} attribute.
 @apifun isS4
 @apifun isNumber
 @apifun isDataFrame
+@apifun Rf_isValidString
+@apifun Rf_isValidStringF
 @example
 @group
 Rboolean isVector(SEXP);
@@ -13371,6 +13373,8 @@ Rboolean isUnordered(SEXP);
 Rboolean isS4(SEXP);
 Rboolean isNumber(SEXP);
 Rboolean isDataFrame (SEXP);
+Rboolean Rf_isValidString(SEXP);
+Rboolean Rf_isValidStringF(SEXP);
 @end group
 @end example
 
