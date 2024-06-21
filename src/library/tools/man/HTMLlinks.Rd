@@ -11,7 +11,7 @@
   documentation.
 }
 \usage{
-findHTMLlinks(pkgDir = "", lib.loc = NULL, level = 0:2)
+findHTMLlinks(pkgDir = "", lib.loc = NULL, level = 0:3)
 }
 \arguments{
   \item{pkgDir}{the top-level directory of an installed package.  The
@@ -26,10 +26,10 @@ findHTMLlinks(pkgDir = "", lib.loc = NULL, level = 0:2)
   \itemize{
     \item The package in \code{pkgDir}: this is used when converting
     HTML help for that package (level 0).
-    \item The base and recommended packages (level 1).
+    \item The base and recommended packages (levels 1 and 2).
     \item Other packages found in the library trees specified by
     \code{lib.loc} in the order of the trees and alphabetically within a
-    library tree (level 2).
+    library tree (level 3).
   }
 }
 \value{
