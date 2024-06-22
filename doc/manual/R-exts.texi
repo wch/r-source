@@ -13381,6 +13381,7 @@ Some additional predicates:
 @eapifun StringFalse
 @eapifun StringTrue
 @eapifun IS_LONG_VEC
+@eapifun IS_SCALAR
 @example
 @group
 Rboolean Rf_isValidString(SEXP);
@@ -13390,6 +13391,7 @@ Rboolean Rf_StringBlank(SEXP);
 Rboolean StringFalse(const char *); 
 Rboolean StringTrue(const char *);
 int IS_LONG_VEC(SEXP);
+int IS_SCALAR(SEXP, int);
 @end group
 @end example
 
