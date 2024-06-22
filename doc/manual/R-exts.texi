@@ -17298,6 +17298,7 @@ be adjusted as changes are made to the API.
 * Creating environments::
 * Creating call expressions::
 * Creating closures::
+* Querying CHARSXP encoding::
 * Some backports::
 @end menu
 
