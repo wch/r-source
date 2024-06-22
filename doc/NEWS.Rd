@@ -31,6 +31,9 @@
       \item New \code{qr.influence()}, a \dQuote{bare bones} interface to
       the \code{lm.influence()} leave-one-out diagnostics computations;
       wished for in \PR{18739}.
+
+      \item New function \code{grepv} identical to \code{grep} except
+      with the default \code{value = TRUE}. 
     }
   }
 

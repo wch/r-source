@@ -6,6 +6,7 @@
 \name{grep}
 \title{Pattern Matching and Replacement}
 \alias{grep}
+\alias{grepv}
 \alias{grepl}
 \alias{sub}
 \alias{gsub}
@@ -14,7 +15,7 @@
 \alias{regexec}
 \alias{gregexec}
 \description{
-  \code{grep}, \code{grepl}, \code{regexpr}, \code{gregexpr}, 
+  \code{grep}, \code{grepv}, \code{grepl}, \code{regexpr}, \code{gregexpr}, 
   \code{regexec} and \code{gregexec} search for matches to argument
   \code{pattern} within each element of a character vector: they differ in
   the format of and amount of detail in the results.
@@ -25,6 +26,9 @@
 \usage{
 grep(pattern, x, ignore.case = FALSE, perl = FALSE, value = FALSE,
      fixed = FALSE, useBytes = FALSE, invert = FALSE)
+
+grepv(pattern, x, ignore.case = FALSE, perl = FALSE, value = TRUE,
+      fixed = FALSE, useBytes = FALSE, invert = FALSE)
 
 grepl(pattern, x, ignore.case = FALSE, perl = FALSE,
       fixed = FALSE, useBytes = FALSE)
@@ -108,6 +112,9 @@ gregexec(pattern, text, ignore.case = FALSE, perl = FALSE,
   it is an error for \code{pattern} to be \code{NA}, otherwise \code{NA}
   is permitted and gives an \code{NA} match.
 
+  \code{grep} and \code{grepv} only differ in the default of the
+  \code{value} argument.
+  
   Both \code{grep} and \code{grepl} take missing values in \code{x} as
   not matching a non-missing \code{pattern}.
 
