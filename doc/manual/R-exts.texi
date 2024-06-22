@@ -13349,8 +13349,6 @@ a test of a length-2 @code{"dim"} attribute.
 @apifun isS4
 @apifun isNumber
 @apifun isDataFrame
-@apifun Rf_isValidString
-@apifun Rf_isValidStringF
 @example
 @group
 Rboolean isVector(SEXP);
@@ -13373,8 +13371,25 @@ Rboolean isUnordered(SEXP);
 Rboolean isS4(SEXP);
 Rboolean isNumber(SEXP);
 Rboolean isDataFrame (SEXP);
+@end group
+@end example
+Some additional predicates:
+@eapifun Rf_isValidString
+@eapifun Rf_isValidStringF
+@eapifun isBlankString
+@eapifun StringBlank
+@eapifun StringFalse
+@eapifun StringTrue
+@eapifun IS_LONG_VEC
+@example
+@group
 Rboolean Rf_isValidString(SEXP);
 Rboolean Rf_isValidStringF(SEXP);
+Rboolean isBlankString(const char *);
+Rboolean Rf_StringBlank(SEXP);
+Rboolean StringFalse(const char *); 
+Rboolean StringTrue(const char *);
+int IS_LONG_VEC(SEXP);
 @end group
 @end example
 

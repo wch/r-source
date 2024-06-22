@@ -667,8 +667,6 @@ nonAPI <- c("chol_", "chol2inv_", "cg_", "ch_", "rg_",
             "call_R",
 ## non-API, declared in Defn.h
             "Rf_setSVector",
-## non-API, declared in Utils.h
-            "Rf_StringFalse", "Rf_StringTrue", "Rf_isBlankString",
 ## non-API, declared in Rinternals.h
             ## not yet, in Rcpp headers "SET_TYPEOF",
             ## not yet, used in an example in R-exts "SET_OBJECT",
@@ -685,9 +683,9 @@ nonAPI <- c("chol_", "chol2inv_", "cg_", "ch_", "rg_",
             "ENVFLAGS", "RDEBUG", "SET_RDEBUG",
             "STRING_PTR", "VECTOR_PTR",
             "SET_FORMALS", "SET_BODY", "SET_CLOENV", "Rf_findVarInFrame3",
-            "IS_LONG_VEC", "PRCODE", "PRENV", "PRVALUE", "R_nchar",
+            "PRCODE", "PRENV", "PRVALUE", "R_nchar",
             "Rf_NonNullStringMatch",
-            "Rf_StringBlank", "SET_TYPEOF", "TRUELENGTH", "XLENGTH_EX",
+            "SET_TYPEOF", "TRUELENGTH", "XLENGTH_EX",
             "XTRUELENGTH",
 ## in the non-API header R_ext/Connections.h
             "R_new_custom_connection", "R_ReadConnection",
