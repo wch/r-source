@@ -18270,10 +18270,15 @@ event loops, using types and functions declared in the header
 @file{src/unix/sys-std.c}.  It is possible to add (or remove) an input
 handler for events on a particular file descriptor, or to set a polling
 interval (@emph{via} @code{R_wait_usec}) and a function to be called
-periodically @emph{via} @code{R_PolledEvents}: the polling mechanism is used by
-the @pkg{tcltk} package.
+periodically @emph{via} @code{R_PolledEvents}: the polling mechanism is
+used by the @pkg{tcltk} package. Input handlers are managed with
+@code{addInputHandler},@code{getInputHandler}, and
+@code{removeInputHandler}.
 @embfun R_PolledEvents
 @embfun R_wait_usec
+@embfun addInputHandler
+@embfun getInputHandler
+@embfun removeInputHandler
 
 It is not intended that these facilities are used by packages, but if
 they are needed exceptionally, the package should ensure that it cleans
