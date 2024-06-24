@@ -13063,7 +13063,7 @@ int R_has_slot(SEXP obj, SEXP name);
 @eapifun R_getClassDef
 @eapifun R_has_slot
 
-@node Handling lists, Handling character data, Classes, Handling R objects in C
+@node Handling lists, Handling character data, S4 objects, Handling R objects in C
 @subsection Handling lists
 @cindex Handling lists
 
@@ -16889,7 +16889,7 @@ option. For example, finalizers are run in a separate top level
 context. The other functions mentioned in this section will usually be
 more appropriate choices.
 
-@node Allowing interrupts, Platform and version information, Condition handling and cleanup code, The R API
+@node Allowing interrupts, C stack checking, Condition handling and cleanup code, The R API
 @section Allowing interrupts
 @cindex Interrupts
 
@@ -18722,7 +18722,7 @@ to use these should be prepared to adapt.
 
 @printindex ae
 
-@node Embedding API index, , API index, Top
+@node Embedding API index,  , Experimental API index, Top
 @unnumbered Embedding API index
 
 Functions, variables, and header files to support creating alternate
