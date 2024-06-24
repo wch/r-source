@@ -347,7 +347,7 @@ static int ReaderThreadTabHook(char *buf, int offset, int *loc)
     completionrequest.buf = buf;
     completionrequest.offset = offset;
     completionrequest.loc = loc;
-    SendMessage(ReadMsgWindow, WM_RREADMSG_EVENT, 0,
+    PostMessage(ReadMsgWindow, WM_RREADMSG_EVENT, 0,
 	       (LPARAM) 2 /* completion needed */);
     WaitForSingleObject(completionrequest.done, INFINITE);
     return completionrequest.result;
@@ -359,7 +359,7 @@ static void __cdecl ReaderThread(void *unused)
     while(1) {
 	WaitForSingleObject(EhiWakeUp,INFINITE);
 	tlen = InThreadReadConsole(tprompt,tbuf,tlen,thist);
-	SendMessage(ReadMsgWindow, WM_RREADMSG_EVENT, 0,
+	PostMessage(ReadMsgWindow, WM_RREADMSG_EVENT, 0,
 	           (LPARAM) 1 /* line available */);
     }
 }
