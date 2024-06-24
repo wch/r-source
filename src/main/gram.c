@@ -67,7 +67,6 @@
 
 
 /* First part of user prologue.  */
-#line 2 "gram.y"
 
 /*
  *  R : A Computer Language for Statistical Data Analysis
@@ -464,7 +463,6 @@ static int	xxvalue(SEXP, int, YYLTYPE *);
 #define YYSTYPE		SEXP
 
 
-#line 468 "y.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -2277,565 +2275,378 @@ yyreduce:
   switch (yyn)
     {
   case 2: /* prog: END_OF_INPUT  */
-#line 446 "gram.y"
                                                 { Status = 0; YYACCEPT; }
-#line 2283 "y.tab.c"
     break;
 
   case 3: /* prog: '\n'  */
-#line 447 "gram.y"
                                                 { Status = 2; yyresult = xxvalue(NULL,2,NULL); YYACCEPT; }
-#line 2289 "y.tab.c"
     break;
 
   case 4: /* prog: expr_or_assign_or_help '\n'  */
-#line 448 "gram.y"
                                                 { Status = 3; yyresult = xxvalue(yyvsp[-1],3,&(yylsp[-1])); YYACCEPT; }
-#line 2295 "y.tab.c"
     break;
 
   case 5: /* prog: expr_or_assign_or_help ';'  */
-#line 449 "gram.y"
                                                 { Status = 4; yyresult = xxvalue(yyvsp[-1],4,&(yylsp[-1])); YYACCEPT; }
-#line 2301 "y.tab.c"
     break;
 
   case 6: /* prog: error  */
-#line 450 "gram.y"
                                                 { Status = 1; YYABORT; }
-#line 2307 "y.tab.c"
     break;
 
   case 7: /* expr_or_assign_or_help: expr  */
-#line 453 "gram.y"
                                                 { yyval = yyvsp[0]; }
-#line 2313 "y.tab.c"
     break;
 
   case 8: /* expr_or_assign_or_help: expr_or_assign_or_help EQ_ASSIGN expr_or_assign_or_help  */
-#line 454 "gram.y"
                                                                                 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); setId((yyloc)); }
-#line 2319 "y.tab.c"
     break;
 
   case 9: /* expr_or_assign_or_help: expr_or_assign_or_help '?' expr_or_assign_or_help  */
-#line 455 "gram.y"
                                                                                 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); setId((yyloc)); }
-#line 2325 "y.tab.c"
     break;
 
   case 10: /* expr_or_help: expr  */
-#line 458 "gram.y"
                                                     { yyval = yyvsp[0]; }
-#line 2331 "y.tab.c"
     break;
 
   case 11: /* expr_or_help: expr_or_help '?' expr_or_help  */
-#line 459 "gram.y"
                                                     { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); setId((yyloc)); }
-#line 2337 "y.tab.c"
     break;
 
   case 12: /* expr: NUM_CONST  */
-#line 462 "gram.y"
                                                 { yyval = yyvsp[0];	setId((yyloc)); }
-#line 2343 "y.tab.c"
     break;
 
   case 13: /* expr: STR_CONST  */
-#line 463 "gram.y"
                                                 { yyval = yyvsp[0];	setId((yyloc)); }
-#line 2349 "y.tab.c"
     break;
 
   case 14: /* expr: NULL_CONST  */
-#line 464 "gram.y"
                                                 { yyval = yyvsp[0];	setId((yyloc)); }
-#line 2355 "y.tab.c"
     break;
 
   case 15: /* expr: PLACEHOLDER  */
-#line 465 "gram.y"
                                                 { yyval = yyvsp[0];	setId((yyloc)); }
-#line 2361 "y.tab.c"
     break;
 
   case 16: /* expr: SYMBOL  */
-#line 466 "gram.y"
                                                 { yyval = yyvsp[0];	setId((yyloc)); }
-#line 2367 "y.tab.c"
     break;
 
   case 17: /* expr: '{' exprlist '}'  */
-#line 468 "gram.y"
                                                 { yyval = xxexprlist(yyvsp[-2],&(yylsp[-2]),yyvsp[-1]); setId((yyloc)); }
-#line 2373 "y.tab.c"
     break;
 
   case 18: /* expr: '(' expr_or_assign_or_help ')'  */
-#line 469 "gram.y"
                                                 { yyval = xxparen(yyvsp[-2],yyvsp[-1]);	setId((yyloc)); }
-#line 2379 "y.tab.c"
     break;
 
   case 19: /* expr: '-' expr  */
-#line 471 "gram.y"
                                                 { yyval = xxunary(yyvsp[-1],yyvsp[0]);	setId((yyloc)); }
-#line 2385 "y.tab.c"
     break;
 
   case 20: /* expr: '+' expr  */
-#line 472 "gram.y"
                                                 { yyval = xxunary(yyvsp[-1],yyvsp[0]);	setId((yyloc)); }
-#line 2391 "y.tab.c"
     break;
 
   case 21: /* expr: '!' expr  */
-#line 473 "gram.y"
                                                 { yyval = xxunary(yyvsp[-1],yyvsp[0]);	setId((yyloc)); }
-#line 2397 "y.tab.c"
     break;
 
   case 22: /* expr: '~' expr  */
-#line 474 "gram.y"
                                                 { yyval = xxunary(yyvsp[-1],yyvsp[0]);	setId((yyloc)); }
-#line 2403 "y.tab.c"
     break;
 
   case 23: /* expr: '?' expr_or_assign_or_help  */
-#line 475 "gram.y"
                                                 { yyval = xxunary(yyvsp[-1],yyvsp[0]);	setId((yyloc)); }
-#line 2409 "y.tab.c"
     break;
 
   case 24: /* expr: expr ':' expr  */
-#line 477 "gram.y"
                                                 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]);	setId((yyloc)); }
-#line 2415 "y.tab.c"
     break;
 
   case 25: /* expr: expr '+' expr  */
-#line 478 "gram.y"
                                                 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]);	setId((yyloc)); }
-#line 2421 "y.tab.c"
     break;
 
   case 26: /* expr: expr '-' expr  */
-#line 479 "gram.y"
                                                 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]);	setId((yyloc)); }
-#line 2427 "y.tab.c"
     break;
 
   case 27: /* expr: expr '*' expr  */
-#line 480 "gram.y"
                                                 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]);	setId((yyloc)); }
-#line 2433 "y.tab.c"
     break;
 
   case 28: /* expr: expr '/' expr  */
-#line 481 "gram.y"
                                                 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]);	setId((yyloc)); }
-#line 2439 "y.tab.c"
     break;
 
   case 29: /* expr: expr '^' expr  */
-#line 482 "gram.y"
                                                 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]);	setId((yyloc)); }
-#line 2445 "y.tab.c"
     break;
 
   case 30: /* expr: expr SPECIAL expr  */
-#line 483 "gram.y"
                                                 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]);	setId((yyloc)); }
-#line 2451 "y.tab.c"
     break;
 
   case 31: /* expr: expr '~' expr  */
-#line 484 "gram.y"
                                                 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]);	setId((yyloc)); }
-#line 2457 "y.tab.c"
     break;
 
   case 32: /* expr: expr LT expr  */
-#line 485 "gram.y"
                                                 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]);	setId((yyloc)); }
-#line 2463 "y.tab.c"
     break;
 
   case 33: /* expr: expr LE expr  */
-#line 486 "gram.y"
                                                 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]);	setId((yyloc)); }
-#line 2469 "y.tab.c"
     break;
 
   case 34: /* expr: expr EQ expr  */
-#line 487 "gram.y"
                                                 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]);	setId((yyloc)); }
-#line 2475 "y.tab.c"
     break;
 
   case 35: /* expr: expr NE expr  */
-#line 488 "gram.y"
                                                 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]);	setId((yyloc)); }
-#line 2481 "y.tab.c"
     break;
 
   case 36: /* expr: expr GE expr  */
-#line 489 "gram.y"
                                                 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]);	setId((yyloc)); }
-#line 2487 "y.tab.c"
     break;
 
   case 37: /* expr: expr GT expr  */
-#line 490 "gram.y"
                                                 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]);	setId((yyloc)); }
-#line 2493 "y.tab.c"
     break;
 
   case 38: /* expr: expr AND expr  */
-#line 491 "gram.y"
                                                 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]);	setId((yyloc)); }
-#line 2499 "y.tab.c"
     break;
 
   case 39: /* expr: expr OR expr  */
-#line 492 "gram.y"
                                                 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]);	setId((yyloc)); }
-#line 2505 "y.tab.c"
     break;
 
   case 40: /* expr: expr AND2 expr  */
-#line 493 "gram.y"
                                                 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]);	setId((yyloc)); }
-#line 2511 "y.tab.c"
     break;
 
   case 41: /* expr: expr OR2 expr  */
-#line 494 "gram.y"
                                                 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]);	setId((yyloc)); }
-#line 2517 "y.tab.c"
     break;
 
   case 42: /* expr: expr PIPE expr  */
-#line 495 "gram.y"
                                                 { yyval = xxpipe(yyvsp[-2],yyvsp[0],&(yylsp[0]));       setId((yyloc)); }
-#line 2523 "y.tab.c"
     break;
 
   case 43: /* expr: expr PIPEBIND expr  */
-#line 496 "gram.y"
                                                 { yyval = xxpipebind(yyvsp[-1],yyvsp[-2],yyvsp[0],&(yylsp[-1]));	setId((yyloc)); }
-#line 2529 "y.tab.c"
     break;
 
   case 44: /* expr: expr LEFT_ASSIGN expr  */
-#line 497 "gram.y"
                                                 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]);	setId((yyloc)); }
-#line 2535 "y.tab.c"
     break;
 
   case 45: /* expr: expr RIGHT_ASSIGN expr  */
-#line 498 "gram.y"
                                                 { yyval = xxbinary(yyvsp[-1],yyvsp[0],yyvsp[-2]);	setId((yyloc)); }
-#line 2541 "y.tab.c"
     break;
 
   case 46: /* expr: FUNCTION '(' formlist ')' cr expr_or_assign_or_help  */
-#line 500 "gram.y"
                                                 { yyval = xxdefun(yyvsp[-5],yyvsp[-3],yyvsp[0],&(yyloc)); 	setId((yyloc)); }
-#line 2547 "y.tab.c"
     break;
 
   case 47: /* expr: '\\' '(' formlist ')' cr expr_or_assign_or_help  */
-#line 501 "gram.y"
                                                                                                                                 { yyval = xxdefun(R_FunctionSymbol,yyvsp[-3],yyvsp[0],&(yyloc)); 	setId((yyloc)); }
-#line 2553 "y.tab.c"
     break;
 
   case 48: /* expr: expr '(' sublist ')'  */
-#line 502 "gram.y"
                                                 { yyval = xxfuncall(yyvsp[-3],yyvsp[-1]);  setId((yyloc)); modif_token( &(yylsp[-3]), SYMBOL_FUNCTION_CALL ) ; }
-#line 2559 "y.tab.c"
     break;
 
   case 49: /* expr: IF ifcond expr_or_assign_or_help  */
-#line 503 "gram.y"
                                                         { yyval = xxif(yyvsp[-2],yyvsp[-1],yyvsp[0]);	setId((yyloc)); }
-#line 2565 "y.tab.c"
     break;
 
   case 50: /* expr: IF ifcond expr_or_assign_or_help ELSE expr_or_assign_or_help  */
-#line 504 "gram.y"
                                                                                 { yyval = xxifelse(yyvsp[-4],yyvsp[-3],yyvsp[-2],yyvsp[0]);	setId((yyloc)); }
-#line 2571 "y.tab.c"
     break;
 
   case 51: /* expr: FOR forcond expr_or_assign_or_help  */
-#line 505 "gram.y"
                                                                 { yyval = xxfor(yyvsp[-2],yyvsp[-1],yyvsp[0]);	setId((yyloc)); }
-#line 2577 "y.tab.c"
     break;
 
   case 52: /* expr: WHILE cond expr_or_assign_or_help  */
-#line 506 "gram.y"
                                                     { yyval = xxwhile(yyvsp[-2],yyvsp[-1],yyvsp[0]);	setId((yyloc)); }
-#line 2583 "y.tab.c"
     break;
 
   case 53: /* expr: REPEAT expr_or_assign_or_help  */
-#line 507 "gram.y"
                                                     { yyval = xxrepeat(yyvsp[-1],yyvsp[0]);	setId((yyloc)); }
-#line 2589 "y.tab.c"
     break;
 
   case 54: /* expr: expr LBB sublist ']' ']'  */
-#line 508 "gram.y"
                                                 { yyval = xxsubscript(yyvsp[-4],yyvsp[-3],yyvsp[-2]);	setId((yyloc)); }
-#line 2595 "y.tab.c"
     break;
 
   case 55: /* expr: expr '[' sublist ']'  */
-#line 509 "gram.y"
                                                 { yyval = xxsubscript(yyvsp[-3],yyvsp[-2],yyvsp[-1]);	setId((yyloc)); }
-#line 2601 "y.tab.c"
     break;
 
   case 56: /* expr: SYMBOL NS_GET SYMBOL  */
-#line 510 "gram.y"
                                                 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]);      setId((yyloc)); modif_token( &(yylsp[-2]), SYMBOL_PACKAGE ) ; }
-#line 2607 "y.tab.c"
     break;
 
   case 57: /* expr: SYMBOL NS_GET STR_CONST  */
-#line 511 "gram.y"
                                                 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]);      setId((yyloc)); modif_token( &(yylsp[-2]), SYMBOL_PACKAGE ) ; }
-#line 2613 "y.tab.c"
     break;
 
   case 58: /* expr: STR_CONST NS_GET SYMBOL  */
-#line 512 "gram.y"
                                                 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]);	setId((yyloc)); }
-#line 2619 "y.tab.c"
     break;
 
   case 59: /* expr: STR_CONST NS_GET STR_CONST  */
-#line 513 "gram.y"
                                                 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]);	setId((yyloc)); }
-#line 2625 "y.tab.c"
     break;
 
   case 60: /* expr: SYMBOL NS_GET_INT SYMBOL  */
-#line 514 "gram.y"
                                                 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]);      setId((yyloc)); modif_token( &(yylsp[-2]), SYMBOL_PACKAGE ) ;}
-#line 2631 "y.tab.c"
     break;
 
   case 61: /* expr: SYMBOL NS_GET_INT STR_CONST  */
-#line 515 "gram.y"
                                                 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]);      setId((yyloc)); modif_token( &(yylsp[-2]), SYMBOL_PACKAGE ) ;}
-#line 2637 "y.tab.c"
     break;
 
   case 62: /* expr: STR_CONST NS_GET_INT SYMBOL  */
-#line 516 "gram.y"
                                                 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]);	setId((yyloc)); }
-#line 2643 "y.tab.c"
     break;
 
   case 63: /* expr: STR_CONST NS_GET_INT STR_CONST  */
-#line 517 "gram.y"
                                                 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]);	setId((yyloc)); }
-#line 2649 "y.tab.c"
     break;
 
   case 64: /* expr: expr '$' SYMBOL  */
-#line 518 "gram.y"
                                                 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]);	setId((yyloc)); }
-#line 2655 "y.tab.c"
     break;
 
   case 65: /* expr: expr '$' STR_CONST  */
-#line 519 "gram.y"
                                                 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]);	setId((yyloc)); }
-#line 2661 "y.tab.c"
     break;
 
   case 66: /* expr: expr '@' SYMBOL  */
-#line 520 "gram.y"
                                                 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]);      setId((yyloc)); modif_token( &(yylsp[0]), SLOT ) ; }
-#line 2667 "y.tab.c"
     break;
 
   case 67: /* expr: expr '@' STR_CONST  */
-#line 521 "gram.y"
                                                 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]);	setId((yyloc)); }
-#line 2673 "y.tab.c"
     break;
 
   case 68: /* expr: NEXT  */
-#line 522 "gram.y"
                                                 { yyval = xxnxtbrk(yyvsp[0]);	setId((yyloc)); }
-#line 2679 "y.tab.c"
     break;
 
   case 69: /* expr: BREAK  */
-#line 523 "gram.y"
                                                 { yyval = xxnxtbrk(yyvsp[0]);	setId((yyloc)); }
-#line 2685 "y.tab.c"
     break;
 
   case 70: /* cond: '(' expr_or_help ')'  */
-#line 527 "gram.y"
                                                         { yyval = xxcond(yyvsp[-1]);   }
-#line 2691 "y.tab.c"
     break;
 
   case 71: /* ifcond: '(' expr_or_help ')'  */
-#line 530 "gram.y"
                                                         { yyval = xxifcond(yyvsp[-1]); }
-#line 2697 "y.tab.c"
     break;
 
   case 72: /* forcond: '(' SYMBOL IN expr_or_help ')'  */
-#line 533 "gram.y"
                                                         { yyval = xxforcond(yyvsp[-3],yyvsp[-1]);	setId((yyloc)); }
-#line 2703 "y.tab.c"
     break;
 
   case 73: /* exprlist: %empty  */
-#line 537 "gram.y"
                                                 { yyval = xxexprlist0();	setId((yyloc)); }
-#line 2709 "y.tab.c"
     break;
 
   case 74: /* exprlist: expr_or_assign_or_help  */
-#line 538 "gram.y"
                                                         { yyval = xxexprlist1(yyvsp[0], &(yylsp[0])); }
-#line 2715 "y.tab.c"
     break;
 
   case 75: /* exprlist: exprlist ';' expr_or_assign_or_help  */
-#line 539 "gram.y"
                                                         { yyval = xxexprlist2(yyvsp[-2], yyvsp[0], &(yylsp[0])); }
-#line 2721 "y.tab.c"
     break;
 
   case 76: /* exprlist: exprlist ';'  */
-#line 540 "gram.y"
                                                 { yyval = yyvsp[-1];		setId((yyloc)); }
-#line 2727 "y.tab.c"
     break;
 
   case 77: /* exprlist: exprlist '\n' expr_or_assign_or_help  */
-#line 541 "gram.y"
                                                         { yyval = xxexprlist2(yyvsp[-2], yyvsp[0], &(yylsp[0])); }
-#line 2733 "y.tab.c"
     break;
 
   case 78: /* exprlist: exprlist '\n'  */
-#line 542 "gram.y"
                                                 { yyval = yyvsp[-1];}
-#line 2739 "y.tab.c"
     break;
 
   case 79: /* sublist: sub  */
-#line 545 "gram.y"
                                                 { yyval = xxsublist1(yyvsp[0]);	  }
-#line 2745 "y.tab.c"
     break;
 
   case 80: /* sublist: sublist cr ',' sub  */
-#line 546 "gram.y"
                                                 { yyval = xxsublist2(yyvsp[-3],yyvsp[0]); }
-#line 2751 "y.tab.c"
     break;
 
   case 81: /* sub: %empty  */
-#line 549 "gram.y"
                                                 { yyval = xxsub0();	 }
-#line 2757 "y.tab.c"
     break;
 
   case 82: /* sub: expr_or_help  */
-#line 550 "gram.y"
                                                 { yyval = xxsub1(yyvsp[0], &(yylsp[0]));  }
-#line 2763 "y.tab.c"
     break;
 
   case 83: /* sub: SYMBOL EQ_ASSIGN  */
-#line 551 "gram.y"
                                                 { yyval = xxsymsub0(yyvsp[-1], &(yylsp[-1])); 	modif_token( &(yylsp[0]), EQ_SUB ) ; modif_token( &(yylsp[-1]), SYMBOL_SUB ) ; }
-#line 2769 "y.tab.c"
     break;
 
   case 84: /* sub: SYMBOL EQ_ASSIGN expr_or_help  */
-#line 552 "gram.y"
                                                 { yyval = xxsymsub1(yyvsp[-2],yyvsp[0], &(yylsp[-2])); 	modif_token( &(yylsp[-1]), EQ_SUB ) ; modif_token( &(yylsp[-2]), SYMBOL_SUB ) ; }
-#line 2775 "y.tab.c"
     break;
 
   case 85: /* sub: STR_CONST EQ_ASSIGN  */
-#line 553 "gram.y"
                                                 { yyval = xxsymsub0(yyvsp[-1], &(yylsp[-1])); 	modif_token( &(yylsp[0]), EQ_SUB ) ; }
-#line 2781 "y.tab.c"
     break;
 
   case 86: /* sub: STR_CONST EQ_ASSIGN expr_or_help  */
-#line 554 "gram.y"
                                                     { yyval = xxsymsub1(yyvsp[-2],yyvsp[0], &(yylsp[-2])); 	modif_token( &(yylsp[-1]), EQ_SUB ) ; }
-#line 2787 "y.tab.c"
     break;
 
   case 87: /* sub: NULL_CONST EQ_ASSIGN  */
-#line 555 "gram.y"
                                                 { yyval = xxnullsub0(&(yylsp[-1])); 	modif_token( &(yylsp[0]), EQ_SUB ) ; }
-#line 2793 "y.tab.c"
     break;
 
   case 88: /* sub: NULL_CONST EQ_ASSIGN expr_or_help  */
-#line 556 "gram.y"
                                                     { yyval = xxnullsub1(yyvsp[0], &(yylsp[-2])); 	modif_token( &(yylsp[-1]), EQ_SUB ) ; }
-#line 2799 "y.tab.c"
     break;
 
   case 89: /* formlist: %empty  */
-#line 559 "gram.y"
                                                 { yyval = xxnullformal(); }
-#line 2805 "y.tab.c"
     break;
 
   case 90: /* formlist: SYMBOL  */
-#line 560 "gram.y"
                                                 { yyval = xxfirstformal0(yyvsp[0]); 	modif_token( &(yylsp[0]), SYMBOL_FORMALS ) ; }
-#line 2811 "y.tab.c"
     break;
 
   case 91: /* formlist: SYMBOL EQ_ASSIGN expr_or_help  */
-#line 561 "gram.y"
                                                 { yyval = xxfirstformal1(yyvsp[-2],yyvsp[0]); 	modif_token( &(yylsp[-2]), SYMBOL_FORMALS ) ; modif_token( &(yylsp[-1]), EQ_FORMALS ) ; }
-#line 2817 "y.tab.c"
     break;
 
   case 92: /* formlist: formlist ',' SYMBOL  */
-#line 562 "gram.y"
                                                 { yyval = xxaddformal0(yyvsp[-2],yyvsp[0], &(yylsp[0]));   modif_token( &(yylsp[0]), SYMBOL_FORMALS ) ; }
-#line 2823 "y.tab.c"
     break;
 
   case 93: /* formlist: formlist ',' SYMBOL EQ_ASSIGN expr_or_help  */
-#line 564 "gram.y"
                                                 { yyval = xxaddformal1(yyvsp[-4],yyvsp[-2],yyvsp[0],&(yylsp[-2])); modif_token( &(yylsp[-2]), SYMBOL_FORMALS ) ; modif_token( &(yylsp[-1]), EQ_FORMALS ) ;}
-#line 2829 "y.tab.c"
     break;
 
   case 94: /* cr: %empty  */
-#line 567 "gram.y"
                                                 { EatLines = 1; }
-#line 2835 "y.tab.c"
     break;
 
 
-#line 2839 "y.tab.c"
 
       default: break;
     }
@@ -3064,7 +2875,6 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 569 "gram.y"
 
 
 
