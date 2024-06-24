@@ -1714,7 +1714,7 @@ static SEXP get_package_CEntry_table(const char *package)
 	R_PreserveObject(CEntryTable);
     }
     pname = install(package);
-    penv = findVarInFrame(CEntryTable, pname);
+    penv = R_findVarInFrame(CEntryTable, pname);
     if (penv == R_UnboundValue) {
 	penv = R_NewHashedEnv(R_NilValue, 0);
 	defineVar(pname, penv, CEntryTable);
@@ -1738,7 +1738,7 @@ DL_FUNC R_GetCCallable(const char *package, const char *name)
 {
     SEXP penv = get_package_CEntry_table(package);
     PROTECT(penv);
-    SEXP eptr = findVarInFrame(penv, install(name));
+    SEXP eptr = R_findVarInFrame(penv, install(name));
     UNPROTECT(1);
     if (eptr == R_UnboundValue)
 	error(_("function '%s' not provided by package '%s'"), name, package);

@@ -329,7 +329,7 @@ static void RNG_Init(RNGtype kind, Int32 seed)
 
 static SEXP GetSeedsFromVar(void)
 {
-    SEXP seeds = findVarInFrame(R_GlobalEnv, R_SeedsSymbol);
+    SEXP seeds = R_findVarInFrame(R_GlobalEnv, R_SeedsSymbol);
     if (TYPEOF(seeds) == PROMSXP)
 	seeds = eval(R_SeedsSymbol, R_GlobalEnv);
     return seeds;
@@ -449,7 +449,7 @@ void PutRNGstate(void)
     int len_seed = RNG_Table[RNG_kind].n_seed;
     int kinds = RNG_kind + 100 * N01_kind + 10000 * Sample_kind;
 
-    SEXP seeds = findVarInFrame(R_GlobalEnv, R_SeedsSymbol);
+    SEXP seeds = R_findVarInFrame(R_GlobalEnv, R_SeedsSymbol);
     if (NOT_SHARED(seeds) && ATTRIB(seeds) == R_NilValue &&
 	TYPEOF(seeds) == INTSXP && XLENGTH(seeds) == len_seed + 1) {
 	/* it is safe to resuse the existing .Random.seed vector */

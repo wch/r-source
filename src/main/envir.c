@@ -869,7 +869,7 @@ attribute_hidden void unbindVar(SEXP symbol, SEXP rho)
   findVarLocInFrame
 
   Look up the location of the value of a symbol in a
-  single environment frame.  Almost like findVarInFrame, but
+  single environment frame.  Almost like R_findVarInFrame, but
   does not return the value. R_NilValue if not found.
 
   Callers set *canCache = TRUE or NULL
@@ -978,7 +978,7 @@ void R_SetVarLocValue(R_varloc_t vl, SEXP value)
 
 /*----------------------------------------------------------------------
 
-  findVarInFrame
+  R_findVarInFrame
 
   Look up the value of a symbol in a single environment frame.	This
   is the basic building block of all variable lookups.
@@ -1159,12 +1159,12 @@ void readS3VarsFromFrame(SEXP rho,
 slowpath:
     /* fall back to the slow but general implementation */
 
-    *dotGeneric = findVarInFrame(rho, R_dot_Generic);
-    *dotClass = findVarInFrame(rho, R_dot_Class);
-    *dotMethod = findVarInFrame(rho, R_dot_Method);
-    *dotGroup = findVarInFrame(rho, R_dot_Group);
-    *dotGenericCallEnv = findVarInFrame(rho, R_dot_GenericCallEnv);
-    *dotGenericDefEnv = findVarInFrame(rho, R_dot_GenericDefEnv);
+    *dotGeneric = R_findVarInFrame(rho, R_dot_Generic);
+    *dotClass = R_findVarInFrame(rho, R_dot_Class);
+    *dotMethod = R_findVarInFrame(rho, R_dot_Method);
+    *dotGroup = R_findVarInFrame(rho, R_dot_Group);
+    *dotGenericCallEnv = R_findVarInFrame(rho, R_dot_GenericCallEnv);
+    *dotGenericDefEnv = R_findVarInFrame(rho, R_dot_GenericDefEnv);
 }
 
 
@@ -1231,7 +1231,7 @@ attribute_hidden SEXP R_findVar(SEXP symbol, SEXP rho)
        will also handle all frames if rho is a global frame other than
        R_GlobalEnv */
     while (rho != R_GlobalEnv && rho != R_EmptyEnv) {
-	vl = findVarInFrame(rho, symbol);
+	vl = R_findVarInFrame(rho, symbol);
 	if (vl != R_UnboundValue) return (vl);
 	rho = ENCLOS(rho);
     }
@@ -1241,7 +1241,7 @@ attribute_hidden SEXP R_findVar(SEXP symbol, SEXP rho)
 	return R_UnboundValue;
 #else
     while (rho != R_EmptyEnv) {
-	vl = findVarInFrame(rho, symbol);
+	vl = R_findVarInFrame(rho, symbol);
 	if (vl != R_UnboundValue) return (vl);
 	rho = ENCLOS(rho);
     }
@@ -1279,7 +1279,7 @@ static SEXP findVarLoc(SEXP symbol, SEXP rho)
 	return R_NilValue;
 #else
     while (rho != R_EmptyEnv) {
-	vl = findVarInLocFrame(rho, symbol, NULL);
+	vl = R_findVarInLocFrame(rho, symbol, NULL);
 	if (vl != R_NilValue) return vl;
 	rho = ENCLOS(rho);
     }
@@ -1310,7 +1310,7 @@ findVar1(SEXP symbol, SEXP rho, SEXPTYPE mode, int inherits)
 {
     SEXP vl;
     while (rho != R_EmptyEnv) {
-	vl = findVarInFrame(rho, symbol);
+	vl = R_findVarInFrame(rho, symbol);
 	if (vl != R_UnboundValue) {
 	    if (mode == ANYSXP) return vl;
 	    if (TYPEOF(vl) == PROMSXP) {
@@ -1429,7 +1429,7 @@ SEXP ddfind(int i, SEXP rho)
     if(i <= 0)
 	error(_("indexing '...' with non-positive index %d"), i);
     /* first look for ... symbol  */
-    SEXP vl = findVar(R_DotsSymbol, rho);
+    SEXP vl = R_findVar(R_DotsSymbol, rho);
     if (vl != R_UnboundValue) {
 	if (length_DOTS(vl) >= i) {
 	    vl = nthcdr(vl, i - 1);
@@ -1467,7 +1467,7 @@ attribute_hidden SEXP do_dotsElt(SEXP call, SEXP op, SEXP args, SEXP env)
 attribute_hidden SEXP do_dotsLength(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     checkArity(op, args);
-    SEXP vl = findVar(R_DotsSymbol, env);
+    SEXP vl = R_findVar(R_DotsSymbol, env);
     if (vl == R_UnboundValue)
 	error(_("incorrect context: the current call has no '...' to look in"));
     // else
@@ -1477,7 +1477,7 @@ attribute_hidden SEXP do_dotsLength(SEXP call, SEXP op, SEXP args, SEXP env)
 attribute_hidden SEXP do_dotsNames(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     checkArity(op, args);
-    SEXP vl = findVar(R_DotsSymbol, env);
+    SEXP vl = R_findVar(R_DotsSymbol, env);
     PROTECT(vl);
     if (vl == R_UnboundValue)
 	error(_("incorrect context: the current call has no '...' to look in"));
@@ -1523,7 +1523,7 @@ SEXP dynamicfindVar(SEXP symbol, RCNTXT *cptr)
     SEXP vl;
     while (cptr != R_ToplevelContext) {
 	if (cptr->callflag & CTXT_FUNCTION) {
-	    vl = findVarInFrame(cptr->cloenv, symbol);
+	    vl = R_findVarInFrame(cptr->cloenv, symbol);
 	    if (vl != R_UnboundValue) return vl;
 	}
 	cptr = cptr->nextcontext;
@@ -1573,9 +1573,9 @@ SEXP findFun3(SEXP symbol, SEXP rho, SEXP call)
 	    vl = findGlobalVar(symbol);
 #endif
 	else
-	    vl = findVarInFrame(rho, symbol);
+	    vl = R_findVarInFrame(rho, symbol);
 #else
-	vl = findVarInFrame(rho, symbol);
+	vl = R_findVarInFrame(rho, symbol);
 #endif
 	if (vl != R_UnboundValue) {
 	    if (TYPEOF(vl) == PROMSXP) {
@@ -2287,7 +2287,7 @@ SEXP R_getVarEx(SEXP sym, SEXP rho, Rboolean inherits, SEXP ifnotfound)
     if (TYPEOF(rho) != ENVSXP)
 	error(_("second argument to '%s' must be an environment"), __func__);
 
-    SEXP val = inherits ? findVar(sym, rho) : findVarInFrame(rho, sym);
+    SEXP val = inherits ? R_findVar(sym, rho) : R_findVarInFrame(rho, sym);
     if (val == R_MissingArg)
 	error(_("argument \"%s\" is missing, with no default"),
 	      EncodeChar(PRINTNAME(sym)));
@@ -3740,10 +3740,10 @@ Rboolean R_IsNamespaceEnv(SEXP rho)
     if (rho == R_BaseNamespace)
 	return TRUE;
     else if (TYPEOF(rho) == ENVSXP) {
-	SEXP info = findVarInFrame(rho, R_NamespaceSymbol);
+	SEXP info = R_findVarInFrame(rho, R_NamespaceSymbol);
 	if (info != R_UnboundValue && TYPEOF(info) == ENVSXP) {
 	    PROTECT(info);
-	    SEXP spec = findVarInFrame(info, install("spec"));
+	    SEXP spec = R_findVarInFrame(info, install("spec"));
 	    UNPROTECT(1);
 	    if (spec != R_UnboundValue &&
 		TYPEOF(spec) == STRSXP && LENGTH(spec) > 0)
@@ -3771,10 +3771,10 @@ SEXP R_NamespaceEnvSpec(SEXP rho)
     if (rho == R_BaseNamespace)
 	return R_BaseNamespaceName;
     else if (TYPEOF(rho) == ENVSXP) {
-	SEXP info = findVarInFrame(rho, R_NamespaceSymbol);
+	SEXP info = R_findVarInFrame(rho, R_NamespaceSymbol);
 	if (info != R_UnboundValue && TYPEOF(info) == ENVSXP) {
 	    PROTECT(info);
-	    SEXP spec = findVarInFrame(info, install("spec"));
+	    SEXP spec = R_findVarInFrame(info, install("spec"));
 	    UNPROTECT(1);
 	    if (spec != R_UnboundValue &&
 		TYPEOF(spec) == STRSXP && LENGTH(spec) > 0)
@@ -3822,7 +3822,7 @@ attribute_hidden SEXP do_regNS(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
     name = checkNSname(call, CAR(args));
     val = CADR(args);
-    if (findVarInFrame(R_NamespaceRegistry, name) != R_UnboundValue)
+    if (R_findVarInFrame(R_NamespaceRegistry, name) != R_UnboundValue)
 	errorcall(call, _("namespace already registered"));
     defineVar(name, val, R_NamespaceRegistry);
     return R_NilValue;
@@ -3835,7 +3835,7 @@ attribute_hidden SEXP do_unregNS(SEXP call, SEXP op, SEXP args, SEXP rho)
     int hashcode;
     checkArity(op, args);
     name = checkNSname(call, CAR(args));
-    if (findVarInFrame(R_NamespaceRegistry, name) == R_UnboundValue)
+    if (R_findVarInFrame(R_NamespaceRegistry, name) == R_UnboundValue)
 	errorcall(call, _("namespace not registered"));
     if( !HASHASH(PRINTNAME(name)))
 	hashcode = R_Newhashpjw(CHAR(PRINTNAME(name)));
@@ -3853,7 +3853,7 @@ attribute_hidden SEXP do_getRegNS(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
     name = checkNSname(call, PROTECT(coerceVector(CAR(args), SYMSXP)));
     UNPROTECT(1);
-    val = findVarInFrame(R_NamespaceRegistry, name);
+    val = R_findVarInFrame(R_NamespaceRegistry, name);
 
     switch(PRIMVAL(op)) {
     case 0: // get..()
@@ -3877,7 +3877,7 @@ attribute_hidden SEXP do_getNSRegistry(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 static SEXP getVarValInFrame(SEXP rho, SEXP sym, int unbound_ok)
 {
-    SEXP val = findVarInFrame(rho, sym);
+    SEXP val = R_findVarInFrame(rho, sym);
     if (! unbound_ok && val == R_UnboundValue)
 	error(_("object '%s' not found"), EncodeChar(PRINTNAME(sym)));
     if (TYPEOF(val) == PROMSXP) {
@@ -3936,7 +3936,7 @@ attribute_hidden SEXP R_getNSValue(SEXP call, SEXP ns, SEXP name, int exported)
 	PROTECT(ns);
     else {
 	SEXP pkg = checkNSname(call, ns);
-	ns = findVarInFrame(R_NamespaceRegistry, pkg);
+	ns = R_findVarInFrame(R_NamespaceRegistry, pkg);
 	if (ns == R_UnboundValue)
 	    ns = callR1(R_loadNamespaceSymbol, pkg);
 	PROTECT(ns);

@@ -86,7 +86,8 @@ static void getParseFilename(char* buffer, size_t buflen)
     if (R_ParseErrorFile) {
 	if (isEnvironment(R_ParseErrorFile)) {
 	    SEXP filename;
-	    PROTECT(filename = findVar(install("filename"), R_ParseErrorFile));
+	    PROTECT(filename = R_findVar(install("filename"),
+					 R_ParseErrorFile));
 	    if (isString(filename) && length(filename)) {
 		strncpy(buffer, CHAR(STRING_ELT(filename, 0)), buflen - 1);
 		buffer[buflen - 1] = '\0';

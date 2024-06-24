@@ -424,7 +424,7 @@ static R_INLINE
 void patchArgument(SEXP suppliedSlot, SEXP name, fstype_t *farg, SEXP cloenv) {
     SEXP value = CAR(suppliedSlot);
     if (value == R_MissingArg) {
-        value = findVarInFrame(cloenv, name);
+        value = R_findVarInFrame(cloenv, name);
         if (value == R_MissingArg) {
             if (farg) *farg = FS_MATCHED_MISSING;
             return;

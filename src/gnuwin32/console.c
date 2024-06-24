@@ -963,7 +963,7 @@ static void performCompletion(control c)
 	    return;
 	}
 	/* First check if namespace is loaded */
-	if(findVarInFrame(R_NamespaceRegistry, install("utils"))
+	if(R_findVarInFrame(R_NamespaceRegistry, install("utils"))
 	   != R_UnboundValue) completion_available = 1;
 	else { /* Then try to load it */
 	    char *p = "try(loadNamespace('utils'), silent=TRUE)";
@@ -974,7 +974,7 @@ static void performCompletion(control c)
 		    eval(VECTOR_ELT(cmdexpr, i), R_GlobalEnv);
 	    }
 	    UNPROTECT(2);
-	    if(findVarInFrame(R_NamespaceRegistry, install("utils"))
+	    if(R_findVarInFrame(R_NamespaceRegistry, install("utils"))
 	       != R_UnboundValue) completion_available = 1;
 	    else {
 		completion_available = 0;

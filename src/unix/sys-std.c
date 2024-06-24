@@ -776,7 +776,7 @@ static void initialize_rlcompletion(void)
 	    return;
 	}
 	/* First check if namespace is loaded */
-	if(findVarInFrame(R_NamespaceRegistry, install("utils"))
+	if(R_findVarInFrame(R_NamespaceRegistry, install("utils"))
 	   != R_UnboundValue) rcompgen_active = 1;
 	else { /* Then try to load it */
 	    SEXP cmdSexp, cmdexpr;
@@ -791,7 +791,7 @@ static void initialize_rlcompletion(void)
 		    eval(VECTOR_ELT(cmdexpr, i), R_GlobalEnv);
 	    }
 	    UNPROTECT(2);
-	    if(findVarInFrame(R_NamespaceRegistry, install("utils"))
+	    if(R_findVarInFrame(R_NamespaceRegistry, install("utils"))
 	       != R_UnboundValue) rcompgen_active = 1;
 	    else {
 		rcompgen_active = 0;

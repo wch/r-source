@@ -460,7 +460,7 @@ attribute_hidden SEXP do_dump(SEXP call, SEXP op, SEXP args, SEXP rho)
     int nout = 0;
     for (int i = 0; i < nobjs; i++, o = CDR(o)) {
 	SET_TAG(o, installTrChar(STRING_ELT(names, i)));
-	SETCAR(o, findVar(TAG(o), source));
+	SETCAR(o, R_findVar(TAG(o), source));
 	if (CAR(o) == R_UnboundValue)
 	    warning(_("object '%s' not found"), EncodeChar(PRINTNAME(TAG(o))));
 	else nout++;

@@ -728,7 +728,7 @@ static SEXP S4_extends(SEXP klass, Rboolean use_tab) {
     }
     class = translateChar(STRING_ELT(klass, 0)); /* TODO: include package attr. */
     if(use_tab) {
-	val = findVarInFrame(R_S4_extends_table, install(class));
+	val = R_findVarInFrame(R_S4_extends_table, install(class));
 	vmaxset(vmax);
 	if(val != R_UnboundValue)
 	    return val;

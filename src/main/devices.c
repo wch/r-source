@@ -51,7 +51,7 @@ static SEXP R_INLINE getSymbolValue(SEXP symbol)
 {
     if (TYPEOF(symbol) != SYMSXP)
 	error("argument to 'getSymbolValue' is not a symbol");
-    return findVar(symbol, R_BaseEnv);
+    return R_findVar(symbol, R_BaseEnv);
 }
 
 /*
@@ -144,7 +144,7 @@ pGEDevDesc GEcurrentDevice(void)
 		grDevices need not be in the search path.
 		So we look for it first on the global search path.
 	    */
-	    defdev = findVar(devName, R_GlobalEnv);
+	    defdev = R_findVar(devName, R_GlobalEnv);
 	    if(defdev != R_UnboundValue) {
 		PROTECT(defdev = lang1(devName));
 		eval(defdev, R_GlobalEnv);
@@ -155,11 +155,11 @@ pGEDevDesc GEcurrentDevice(void)
 		   The option is unlikely to be set if it is not loaded,
 		   as the default setting is in grDevices:::.onLoad.
 		*/
-		SEXP ns = findVarInFrame(R_NamespaceRegistry,
-					 install("grDevices"));
+		SEXP ns = R_findVarInFrame(R_NamespaceRegistry,
+					   install("grDevices"));
 		PROTECT(ns);
 		if(ns != R_UnboundValue &&
-		   findVar(devName, ns) != R_UnboundValue) {
+		   R_findVar(devName, ns) != R_UnboundValue) {
 		    PROTECT(defdev = lang1(devName));
 		    eval(defdev, ns);
 		    UNPROTECT(1);

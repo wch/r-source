@@ -2370,7 +2370,7 @@ R_GetSrcFilename(SEXP srcref)
     SEXP srcfile = getAttrib(srcref, R_SrcfileSymbol);
     if (TYPEOF(srcfile) != ENVSXP)
 	return ScalarString(mkChar(""));
-    srcfile = findVar(install("filename"), srcfile);
+    srcfile = R_findVar(install("filename"), srcfile);
     if (TYPEOF(srcfile) != STRSXP)
 	return ScalarString(mkChar(""));
     return srcfile;

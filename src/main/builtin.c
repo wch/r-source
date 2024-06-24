@@ -215,12 +215,12 @@ attribute_hidden SEXP do_args(SEXP call, SEXP op, SEXP args, SEXP rho)
 	SEXP env, s2;
 	PROTECT_INDEX xp;
 
-	PROTECT_WITH_INDEX(env = findVarInFrame(R_BaseEnv,
-						install(".ArgsEnv")),
+	PROTECT_WITH_INDEX(env = R_findVarInFrame(R_BaseEnv,
+						  install(".ArgsEnv")),
 			   &xp);
 
 	if (TYPEOF(env) == PROMSXP) REPROTECT(env = eval(env, R_BaseEnv), xp);
-	PROTECT(s2 = findVarInFrame(env, install(nm)));
+	PROTECT(s2 = R_findVarInFrame(env, install(nm)));
 	if(s2 != R_UnboundValue) {
 	    s = duplicate(s2);
 	    SET_BODY(s, R_NilValue);
@@ -229,10 +229,10 @@ attribute_hidden SEXP do_args(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    return s;
 	}
 	UNPROTECT(1); /* s2 */
-	REPROTECT(env = findVarInFrame(R_BaseEnv, install(".GenericArgsEnv")),
+	REPROTECT(env = R_findVarInFrame(R_BaseEnv, install(".GenericArgsEnv")),
 		  xp);
 	if (TYPEOF(env) == PROMSXP) REPROTECT(env = eval(env, R_BaseEnv), xp);
-	PROTECT(s2 = findVarInFrame(env, install(nm)));
+	PROTECT(s2 = R_findVarInFrame(env, install(nm)));
 	if(s2 != R_UnboundValue) {
 	    s = allocSExp(CLOSXP);
 	    SET_FORMALS(s, FORMALS(s2));
@@ -969,7 +969,7 @@ static SEXP expandDots(SEXP el, SEXP rho)
 
     while (el != R_NilValue) {
 	if (CAR(el) == R_DotsSymbol) {
-	    SEXP h = PROTECT(findVar(CAR(el), rho));
+	    SEXP h = PROTECT(R_findVar(CAR(el), rho));
 	    if (TYPEOF(h) == DOTSXP || h == R_NilValue) {
 		while (h != R_NilValue) {
 		    SETCDR(tail, CONS(CAR(h), R_NilValue));

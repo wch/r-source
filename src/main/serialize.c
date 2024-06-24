@@ -3225,7 +3225,7 @@ static SEXP R_getVarsFromFrame(SEXP vars, SEXP env, SEXP forcesxp)
     for (i = 0; i < len; i++) {
 	sym = installTrChar(STRING_ELT(vars, i));
 
-	tmp = findVarInFrame(env, sym);
+	tmp = R_findVarInFrame(env, sym);
 	if (tmp == R_UnboundValue) {
 /*		PrintValue(env);
 		PrintValue(R_GetTraceback(0)); */  /* DJM debugging */
