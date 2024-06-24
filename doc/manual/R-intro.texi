@@ -127,17 +127,14 @@ correspondence to @email{R-help@@R-project.org}.
 
 @subheading Suggestions to the reader
 
-Most @R{} novices will start with the introductory session in Appendix
-A.  This should give some familiarity with the style of @R{} sessions
+Most @R{} novices will start with @ref{A sample session}.
+This should give some familiarity with the style of @R{} sessions
 and more importantly some instant feedback on what actually happens.
 
 Many users will come to @R{} mainly for its graphical facilities.
 @xref{Graphics}, which can be read at almost any time and need not wait
 until all the preceding sections have been digested.
 
-@menu
-* Introduction and preliminaries::
-@end menu
 
 @node Introduction and preliminaries, Simple manipulations numbers and vectors, Preface, Top
 @chapter Introduction and preliminaries
@@ -148,6 +145,7 @@ until all the preceding sections have been digested.
 * R and statistics::            
 * R and the window system::     
 * Using R interactively::       
+* An introductory session::     
 * Getting help::                
 * R commands; case sensitivity etc::  
 * Recall and correction of previous commands::  
@@ -344,6 +342,7 @@ follow is basically the same.  Create a folder as the working directory,
 and set that in the @file{Start In} field in your @R{} shortcut.
 Then launch @R{} by double clicking on the icon.
 
+@node An introductory session
 @section An introductory session
 
 Readers wishing to get a feel for @R{} at a computer before proceeding
@@ -784,9 +783,6 @@ sqrt(-17+0i)
 @noindent
 will do the computations as complex numbers.
 
-@menu
-* Generating regular sequences::
-@end menu
 
 @node Generating regular sequences, Logical vectors, Vector arithmetic, Simple manipulations numbers and vectors
 @section Generating regular sequences
@@ -1687,10 +1683,6 @@ in this case the dimension vector is ignored.  This is not the case,
 however, if the single index is not a vector but itself an array, as we
 next discuss.
 
-@menu
-* Index matrices::
-* The array() function::
-@end menu
 
 @node Index matrices, The array() function, Array indexing, Arrays and matrices
 @section Index matrices
@@ -2828,9 +2820,6 @@ where the @code{header=TRUE} option specifies that the first line is a
 line of headings, and hence, by implication from the form of the file,
 that no explicit row labels are given.
 
-@menu
-* The scan() function::
-@end menu
 
 @node The scan() function, Accessing builtin datasets, The read.table() function, Reading data from files
 @section The @code{scan()} function
@@ -3908,10 +3897,6 @@ area <- function(f, a, b, eps = 1.0e-06, lim = 10) @{
 @}
 @end example
 
-@menu
-* Scope::
-* Object orientation::
-@end menu
 
 @node Scope, Customizing the environment, More advanced examples, Writing your own functions
 @section Scope
