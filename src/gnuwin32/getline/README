@@ -43,8 +43,9 @@ Thanks to the following people who have provided enhancements and fixes:
 
 PS: I don't have, and don't want to add, a vi mode, sorry.
 
-This version is with modifications by R Core, including a Windows port, support
-for multi-byte characters and partial support for Unicode sequences.
+This version is with modifications by R Core, including a Windows port,
+support for multi-byte characters, support for lines of arbitrary length and
+partial support for Unicode sequences.
 
 ************************** End-User Interface ***************************
 
@@ -118,7 +119,7 @@ Entering characters by code:
 The programmer accesses input-edit through these functions, and optionally
 through three additional function pointer hooks.  The four functions are:
 
-int getline(char *prompt, char *buf, int buflen)
+int getline(const char *prompt, char *buf, int buflen)
 
 	Prints the prompt and allows the user to edit the current line.  A
         pointer to a buffer to store the line is passed in "buf" with the
@@ -137,6 +138,16 @@ int getline(char *prompt, char *buf, int buflen)
         output have been redirected the main program should use buffered IO
         (stdio) rather than the slow 1 character read()s that getline uses. 
         Returns non-zero on EOF.
+
+int getline2(const char *prompt, char **buf)
+
+        The same as getline(), but the buffer is allocated dynamically, so
+        that the line length is unlimited.  It has to be freed by the caller
+        using gl_free().
+
+void gl_free(void *ptr)
+
+        Free buffer returned by getline2().
 
 void gl_setwidth(int width)
 

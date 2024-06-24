@@ -402,9 +402,34 @@ static int
 CharReadConsole(const char *prompt, unsigned char *buf, int len,
                 int addtohistory)
 {
-    int res = getline(prompt, (char *)buf, len);
-    if (addtohistory) gl_histadd((char *)buf);
-    return !res;
+    /* Long lines are returned in multiple consecutive calls to
+       CharReadConsole() */
+    static char *line = NULL;
+    static size_t offset = 0;
+    static size_t remaining = 0;
+    static int res = 0;
+
+    if (!line) {
+	res = getline2(prompt, &line);
+	if (addtohistory) gl_histadd(line);
+	offset = 0;
+	remaining = strlen(line); /* may be zero */
+    }
+
+    int tocopy = remaining;
+    if (tocopy > len - 1) tocopy = len - 1;
+
+    memcpy(buf, line + offset, tocopy);
+    buf[tocopy] = '\0';
+    remaining -= tocopy;
+    offset += tocopy;
+
+    if (!remaining) {
+	gl_free(line);
+	line = NULL;
+	return !res; /* return 0 on EOF */
+    } else
+	return 1;
 }
 
 /*3: (as InThreadReadConsole) and 4: non-interactive */

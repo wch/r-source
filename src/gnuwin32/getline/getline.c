@@ -58,7 +58,7 @@ extern Rboolean mbcslocale;
    edit buffer gl_buf. As in the original version, symbols not starting with
    "w_" hold offsets in bytes.
  */
-static int      BUF_SIZE;               /* dimension of the buffer received*/
+static int      BUF_SIZE;               /* dimension of the buffer received */
 static int      gl_init_done = -1;	/* terminal mode flag  */
 static int      gl_w_termw = 80;	/* actual terminal width */
 static int      gl_w_width = 0;		/* net size available for input */
@@ -68,6 +68,7 @@ static int      gl_pos, gl_cnt = 0;     /* position and size of input */
 static int      gl_w_pos;
 static int      gl_w_cnt = 0;
 static char    *gl_buf;                 /* input buffer */
+static int	gl_buf_expandable = 0;	/* input buffer grows as needed */
 static char    *gl_killbuf = NULL;      /* killed text */
 static const char    *gl_prompt;	/* to save the prompt string */
 static int      gl_search_mode = 0;	/* search mode flag */
@@ -440,6 +441,18 @@ void gl_error(const char *const buf)
     longjmp(gl_jmp,1);
 }
 
+static void*
+gl_realloc(void *ptr, int olditems, int newitems, size_t itemsize)
+{
+    void *res;
+    if (!(res = realloc(ptr, newitems * itemsize)))
+	gl_error("\n*** Error: getline(): not enough memory.\n");
+    memset(((char *)res) + olditems * itemsize,
+           0,
+           (newitems - olditems) * itemsize);
+    return res;
+}
+
 static void
 gl_init(void)
 /* set up variables and terminal */
@@ -451,8 +464,8 @@ gl_init(void)
     }
     if (isatty(0) == 0 || isatty(1) == 0)
 	gl_error("\n*** Error: getline(): not interactive, use stdio.\n");
-    if (!(gl_killbuf=calloc(BUF_SIZE,sizeof(char))))
-        gl_error("\n*** Error: getline(): not enough memory.\n");
+
+    gl_killbuf = gl_realloc(NULL, 0, BUF_SIZE, sizeof(char));
 
     gl_nat_to_ucs = Riconv_open("UCS-4LE", "");
     if (gl_nat_to_ucs == (void *)-1) 
@@ -467,12 +480,10 @@ gl_init(void)
     gl_oem_to_ucs = Riconv_open(oemname, "UCS-4LE");
     if (gl_oem_to_ucs == (void *)-1)
 	gl_error("\n*** Error: getline(): unable to convert from OEM CP.\n"); 
-    if (!(gl_b2w_map = calloc(BUF_SIZE, sizeof(size_t))))
-	gl_error("\n*** Error: getline(): not enough memory.\n");
-    if (!(gl_w2b_map = calloc(BUF_SIZE, sizeof(size_t))))
-	gl_error("\n*** Error: getline(): not enough memory.\n");
-    if (!(gl_w2e_map = calloc(BUF_SIZE, sizeof(size_t))))
-	gl_error("\n*** Error: getline(): not enough memory.\n");
+
+    gl_b2w_map = gl_realloc(NULL, 0, BUF_SIZE, sizeof(size_t)); 
+    gl_w2b_map = gl_realloc(NULL, 0, BUF_SIZE, sizeof(size_t)); 
+    gl_w2e_map = gl_realloc(NULL, 0, BUF_SIZE, sizeof(size_t)); 
 
     gl_char_init();
     gl_init_done = 1;
@@ -501,6 +512,27 @@ gl_cleanup(void)
     if (gl_w2e_map)
         free(gl_w2e_map);
     gl_init_done = 0;
+}
+
+static void
+gl_buf_expand(int needed)
+{
+    if (needed <= BUF_SIZE || !gl_buf_expandable)
+	return;
+
+    int newsize = BUF_SIZE * 2;
+    if (!newsize)
+	newsize = 128;
+    while (newsize < needed)
+	newsize *= 2;
+
+    gl_buf = gl_realloc(gl_buf, BUF_SIZE, newsize, sizeof(char));
+    gl_killbuf = gl_realloc(gl_killbuf, BUF_SIZE, newsize, sizeof(char));
+    gl_b2w_map = gl_realloc(gl_b2w_map, BUF_SIZE, newsize, sizeof(size_t)); 
+    gl_w2b_map = gl_realloc(gl_w2b_map, BUF_SIZE, newsize, sizeof(size_t)); 
+    gl_w2e_map = gl_realloc(gl_w2e_map, BUF_SIZE, newsize, sizeof(size_t)); 
+
+    BUF_SIZE = newsize;
 }
 
 void
@@ -671,14 +703,12 @@ update_map(size_t change)
 }
 
 /* Returns 1 on EOF */
-int
-getline(const char *prompt, char *buf, int buflen)
+static int
+getline0(const char *prompt)
 {
     int c, loc, tmp;
+    char *stmp;
 
-    BUF_SIZE = buflen;
-    gl_buf = buf;
-    gl_buf[0] = '\0';
     if (setjmp(gl_jmp)) {
 	if (gl_init_done > 0) {
 	    gl_newline();
@@ -762,7 +792,9 @@ getline(const char *prompt, char *buf, int buflen)
 	      case '\014': gl_redraw();				/* ^L */
 		break;
 	      case '\016': 					/* ^N, VK_DOWN */
-		strncpy(gl_buf, gl_hist_next(), BUF_SIZE-2);
+		stmp = gl_hist_next();
+		gl_buf_expand(strlen(stmp) + 2);
+		strncpy(gl_buf, stmp, BUF_SIZE-2);
 		gl_buf[BUF_SIZE-2] = '\0';
                 if (gl_in_hook)
 	            gl_in_hook(gl_buf);
@@ -771,7 +803,9 @@ getline(const char *prompt, char *buf, int buflen)
 	      case '\017': gl_overwrite = !gl_overwrite;       	/* ^O */
 		break;
 	      case '\020': 					/* ^P, VK_UP */
-		strncpy(gl_buf, gl_hist_prev(),BUF_SIZE-2);
+		stmp = gl_hist_prev();
+		gl_buf_expand(strlen(stmp) + 2);
+		strncpy(gl_buf, stmp, BUF_SIZE-2);
 		gl_buf[BUF_SIZE-2] = '\0';
                 if (gl_in_hook)
 	            gl_in_hook(gl_buf);
@@ -798,14 +832,18 @@ getline(const char *prompt, char *buf, int buflen)
 		if (c == '[') {
 		    switch(c = gl_getc()) {
 		      case 'A':             			/* up */
-		        strncpy(gl_buf, gl_hist_prev(), BUF_SIZE-2);
+			stmp = gl_hist_prev();
+			gl_buf_expand(strlen(stmp) + 2);
+		        strncpy(gl_buf, stmp, BUF_SIZE-2);
 		        gl_buf[BUF_SIZE-2] = '\0';
 		        if (gl_in_hook)
 	                    gl_in_hook(gl_buf);
 		        gl_fixup(gl_prompt, 0, BUF_SIZE);
 		        break;
 		      case 'B':                         	/* down */
-		        strncpy(gl_buf, gl_hist_next(), BUF_SIZE-2);
+			stmp = gl_hist_next();
+			gl_buf_expand(strlen(stmp) + 2);
+		        strncpy(gl_buf, stmp, BUF_SIZE-2);
 		        gl_buf[BUF_SIZE-2] = '\0';
                         if (gl_in_hook)
 	                    gl_in_hook(gl_buf);
@@ -846,6 +884,44 @@ getline(const char *prompt, char *buf, int buflen)
     return 0;
 }
 
+/* returns 1 on eof */
+/* The line is stored into buf of size buflen, attempts to enter a longer line
+   are ignored with a beep signal. */
+int
+getline(const char *prompt, char *buf, int buflen)
+{
+    BUF_SIZE = buflen;
+    gl_buf_expandable = 0;
+    gl_buf = buf;
+    gl_buf[0] = '\0';
+    return getline0(prompt);
+}
+
+/* returns 1 on eof */
+/* The line is stored into a dynamically allocated buffer. The buffer has to
+   be freed by the caller using gl_free() when no longer needed. */
+int
+getline2(const char *prompt, char **buf)
+{
+    BUF_SIZE = 128; /* initial size */
+    gl_buf_expandable = 1;
+    if (!(gl_buf = malloc(BUF_SIZE * sizeof(char))))
+	gl_error("\n*** Error: getline(): not enough memory.\n");
+    gl_buf[0] = '\0';
+    int res = getline0(prompt);
+    if (buf) {
+	*buf = gl_buf;
+	gl_buf = NULL;
+    }
+    return res;
+}
+
+void gl_free(void *ptr)
+{
+    if (ptr)
+	free(ptr);
+}
+
 /* Adds bytes from s to the current position of the buffer. The input
    needs to only include complete edit units. */
 static void
@@ -866,6 +942,7 @@ gl_addbytes(const char *s)
     }
     if (len > del) {
 	/* expanding buffer */
+	gl_buf_expand(gl_cnt + len - del + 2);
 	if (gl_cnt + len - del >= BUF_SIZE - 1) 
 	    gl_error("\n*** Error: getline(): input buffer overflow\n");
 	for (i = gl_cnt; i >= gl_pos + del; i--)
@@ -894,6 +971,7 @@ gl_addchar(int c)
     char *outbuf;
     int i;
 
+    gl_buf_expand(gl_cnt + 3);
     if (gl_cnt >= BUF_SIZE - 2)
 	gl_putc('\a');
     else if (iswprint(c)) {
@@ -920,6 +998,7 @@ gl_addchar(int c)
 	    left = gl_edit_unit_size_left();
 	  
 	    if (left > 0) { 
+		gl_buf_expand(gl_cnt + clen + 2);
 		if (gl_cnt + clen >= BUF_SIZE - 1)
 		    gl_error("\n*** Error: getline(): input buffer overflow\n");
 
@@ -1002,6 +1081,7 @@ gl_newline(void)
     /* shifts line back to start position */
     int loc = gl_b_from_w(gl_w_align_left(gl_w_width - 5));
 
+    gl_buf_expand(gl_cnt + 2);
     if (gl_cnt >= BUF_SIZE - 1) { 
         gl_error("\n*** Error: getline(): input buffer overflow\n");
     }
@@ -1583,7 +1663,8 @@ search_addchar(int c)
 	    gl_buf[0] = 0;
 	    hist_pos = hist_last;
 	}
-	strncpy(gl_buf, hist_buf[hist_pos],BUF_SIZE-2);
+	gl_buf_expand(strlen(hist_buf[hist_pos]) + 2);
+	strncpy(gl_buf, hist_buf[hist_pos], BUF_SIZE-2);
         gl_buf[BUF_SIZE-2] = '\0' ;
     }
     if ((loc = strstr(gl_buf, search_string)) != 0) {
@@ -1631,6 +1712,7 @@ search_back(int new_search)
 	       gl_fixup(search_prompt, 0, 0);
 	       found = 1;
 	    } else if ((loc = strstr(p, search_string)) != 0) {
+	       gl_buf_expand(strlen(p) + 2);
 	       strncpy(gl_buf, p, BUF_SIZE-2);
                gl_buf[BUF_SIZE-2] = '\0';
 	       gl_fixup(search_prompt, 0, loc - p);
@@ -1665,6 +1747,7 @@ search_forw(int new_search)
 	       gl_fixup(search_prompt, 0, 0);
 	       found = 1;
 	    } else if ((loc = strstr(p, search_string)) != 0) {
+	       gl_buf_expand(strlen(p) + 2);
 	       strncpy(gl_buf, p, BUF_SIZE-2);
                gl_buf[BUF_SIZE-2] = '\0';
 	       gl_fixup(search_prompt, 0, loc - p);

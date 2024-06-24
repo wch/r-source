@@ -6,7 +6,8 @@
 typedef size_t (*gl_strwidth_proc)(const char *);
 
 /* read a line of input */
-int             getline(const char *prompt, char *buf, int maxlen);  
+int             getline(const char *prompt, char *buf, int maxlen);
+int             getline2(const char *prompt, char **buf);
 
 void            gl_setwidth(int);		/* specify width of screen */
 void            gl_histadd(const char *);	/* adds entries to hist */
@@ -16,6 +17,7 @@ void		gl_savehistory(const char *, int size);
 void            gl_hist_init(int, int);		/* set up history buffer */
 char    	*gl_hist_next(void);	/* return ptr to next item */
 char    	*gl_hist_prev(void);	/* return ptr to prev item */
+void		gl_free(void *ptr);
 
 extern int 	(*gl_in_hook)(char *);
 extern int 	(*gl_out_hook)(char *);
