@@ -49,7 +49,7 @@ This manual is for R, version @value{VERSION}.
 @c @end ifnothtml
 
 @ifnottex
-@node Top, Introduction, (dir), (dir)
+@node Top
 @top R Language Definition
 
 This is an introduction to the @R{} language, explaining evaluation,
@@ -60,24 +60,7 @@ forth.
 
 @end ifnottex
 
-@menu
-* Introduction::                
-* Objects::                     
-* Evaluation of expressions::   
-* Functions::                   
-* Object-oriented programming::  
-* Computing on the language::   
-* System and foreign language interfaces::  
-* Exception handling::          
-* Debugging::                   
-* Parser::                      
-* Function and Variable Index::  
-* Concept Index::               
-* References::                  
-@end menu
-
-@node Introduction, Objects, Top, Top
-@comment  node-name,  next,  previous,  up
+@node Introduction
 @chapter Introduction
 
 @R{} is a system for statistical computation and graphics. It
@@ -146,9 +129,10 @@ details how to extend @R{} using compiled code.
 
 
 
-@node Objects, Evaluation of expressions, Introduction, Top
+@node Objects
 @chapter Objects
 
+@c FIXME:
 @c needs to be clarified. What is a pointer, what is the pointed object,
 @c what is the context of the pointed object?
 In every computer language
@@ -255,33 +239,12 @@ doesn't affect the computations, however, when dealing with foreign
 languages or the operating system it is often necessary to ensure that
 an object is of the correct type.
 
-@menu
-* Basic types::                 
-* Attributes::                  
-* Special compound objects::    
-@end menu
 
-@node Basic types, Attributes, Objects, Objects
-@cindex type
+@node Basic types
 @section Basic types
+@cindex type
 
-
-@menu
-* Vector objects::              
-* List objects::                
-* Language objects::            
-* Expression objects::          
-* Function objects::            
-* NULL object::                 
-* Builtin objects and special forms::  
-* Promise objects::             
-* Dot-dot-dot::                 
-* Environment objects::         
-* Pairlist objects::            
-* Any-type::                    
-@end menu
-
-@node Vector objects, List objects, Basic types, Basic types
+@node Vector objects
 @subsection Vectors
 
 @cindex vector
@@ -324,7 +287,7 @@ Thus, an @R{} @emph{string} is internally a @code{STRSXP} with one element, a
 @code{CHARSXP}.}
 
 
-@node List objects, Language objects, Vector objects, Basic types
+@node List objects
 @subsection Lists
 
 Lists (``generic vectors'') are another kind of data storage.  Lists
@@ -339,7 +302,7 @@ These are explained in detail in @ref{Indexing}.
 Lists are vectors, and the basic vector types are referred to as
 @emph{atomic vectors} where it is necessary to exclude lists.
 
-@node Language objects, Expression objects, List objects, Basic types
+@node Language objects
 @subsection Language objects
 
 There are three types of objects that constitute the @R{} language.
@@ -372,11 +335,8 @@ Components of the
 parse tree can be extracted using the standard
 indexing operations.
 
-@menu
-* Symbol objects::              
-@end menu
 
-@node Symbol objects,  , Language objects, Language objects
+@node Symbol objects
 @subsubsection Symbol objects
 
 
@@ -402,7 +362,7 @@ using @code{as.character} and @code{as.name}.
 They naturally appear as atoms of parsed expressions, try e.g.@:
 @code{as.list(quote(x + y))}.
 
-@node Expression objects, Function objects, Language objects, Basic types
+@node Expression objects
 @subsection Expression objects
 
 In @R{} one can have objects of type @code{"expression"}.  An
@@ -425,7 +385,7 @@ An
 expression object behaves much like a list and its components should
 be accessed in the same way as the components of a list.
 
-@node Function objects, NULL object, Expression objects, Basic types
+@node Function objects
 @subsection Function objects
 
 @cindex function
@@ -485,7 +445,7 @@ structures using @code{as.list} and @code{as.function}.
 These have been included to provide compatibility with @Sl{} and their
 use is discouraged.
 
-@node NULL object, Builtin objects and special forms, Function objects, Basic types
+@node NULL object
 @subsection NULL
 
 There is a special object called @code{NULL}.  It is used whenever there
@@ -499,7 +459,7 @@ test for @code{NULL} use @code{is.null}.  You cannot set attributes on
 @code{NULL}.
 
 
-@node Builtin objects and special forms, Promise objects, NULL object, Basic types
+@node Builtin objects and special forms
 @subsection Builtin objects and  special forms
 
 These two kinds of object contain the builtin
@@ -519,7 +479,7 @@ The @code{is.primitive} function can distinguish them from interpreted
 @cindex function
 functions.
 
-@node Promise objects, Dot-dot-dot, Builtin objects and special forms, Basic types
+@node Promise objects
 @subsection Promise objects
 
 @cindex promise
@@ -550,7 +510,7 @@ expression.  There is generally no way in @R{} code to check whether an
 object is a promise or not, nor is there a way to use @R{} code to
 determine the environment of a promise.
 
-@node Dot-dot-dot, Environment objects, Promise objects, Basic types
+@node Dot-dot-dot
 @subsection Dot-dot-dot
 
 The @code{...} object type is stored as a type of pairlist.  The
@@ -583,7 +543,7 @@ If a function has @code{...} as a formal argument then any actual
 arguments that do not match a formal argument are matched with
 @code{...}.
 
-@node Environment objects, Pairlist objects, Dot-dot-dot, Basic types
+@node Environment objects
 @subsection Environments
 
 @cindex environment
@@ -627,7 +587,7 @@ environment to several symbols and change one, the others will change
 too.  In particular, assigning attributes to an environment can lead to
 surprises.
 
-@node Pairlist objects, Any-type, Environment objects, Basic types
+@node Pairlist objects
 @subsection Pairlist objects
 
 @cindex pairlist
@@ -658,7 +618,7 @@ subsetted) converted to a generic vector.
 
 In a very few cases pairlists are user-visible: one is @code{.Options}.
 
-@node Any-type,  , Pairlist objects, Basic types
+@node Any-type
 @subsection The ``Any'' type
 
 It is not really possible for an object to be of ``Any'' type, but it is
@@ -670,7 +630,7 @@ coercion should not be done.
 @c @node External pointer objects
 @c @subsection External pointer objects
 
-@node Attributes, Special compound objects, Basic types, Objects
+@node Attributes
 @section Attributes
 @cindex attributes
 
@@ -685,6 +645,7 @@ of the attributes can be obtained using @code{attributes} and set by
 individual components are accessed using @code{attr} and @code{attr<-}.
 @findex attr
 @findex attr<-
+@c FIXME:
 @c Shouldn't we discuss replacement functions before this?
 
 @c This is a bad example: levels<- is generic.
@@ -707,16 +668,8 @@ during
 evaluation.  The class structure in @R{} is described in detail
 in @ref{Object-oriented programming}.
 
-@menu
-* Names::                       
-* Dimensions::                  
-* Dimnames::                    
-* Classes::                     
-* Time series attributes::      
-* Copying of attributes::       
-@end menu
 
-@node Names, Dimensions, Attributes, Attributes
+@node Names
 @subsection Names
 
 A @code{names} attribute, when present, labels the individual elements of
@@ -739,7 +692,7 @@ attribute is really constructed from the tags of the list components.
 For one-dimensional arrays the @code{names} attribute really accesses
 @code{dimnames[[1]]}.
 
-@node Dimensions, Dimnames, Names, Attributes
+@node Dimensions
 @subsection Dimensions
 
 The @code{dim} attribute is used to implement arrays.  The content of
@@ -754,7 +707,7 @@ A vector is not the same as a one-dimensional array since the latter has
 a @code{dim} attribute of length one, whereas the former has no
 @code{dim} attribute.
 
-@node Dimnames, Classes, Dimensions, Attributes
+@node Dimnames
 @subsection Dimnames
 
 Arrays may name each dimension separately using the @code{dimnames}
@@ -762,7 +715,7 @@ attribute which is a list of character vectors.  The @code{dimnames}
 list may itself have names which are then used for extent headings when
 printing arrays.
 
-@node Classes, Time series attributes, Dimnames, Attributes
+@node Classes
 @subsection Classes
 
 @R{} has an elaborate class system@footnote{actually two, but this draft
@@ -779,14 +732,14 @@ available specific creation and
 @cindex coercion
 coercion functions should be preferred.
 
-@node Time series attributes, Copying of attributes, Classes, Attributes
+@node Time series attributes
 @subsection Time series attributes
 
 The @code{tsp} attribute is used to hold parameters of time series,
 start, end, and frequency.  This construction is mainly used to handle
 series with periodic substructure such as monthly or quarterly data.
 
-@node Copying of attributes,  , Time series attributes, Attributes
+@node Copying of attributes
 @subsection Copying of attributes
 
 Whether attributes should be copied when an object is altered is a
@@ -813,15 +766,11 @@ The default method for sorting drops all attributes except names, which
 are sorted along with the object.
 
 
-@node Special compound objects,  , Attributes, Objects
+@node Special compound objects
 @section Special compound objects
 
-@menu
-* Factors::                     
-* Data frame objects::          
-@end menu
 
-@node Factors, Data frame objects, Special compound objects, Special compound objects
+@node Factors
 @subsection Factors
 
 Factors are used to describe items that can have a finite number of
@@ -844,7 +793,7 @@ implementation in order to make some calculations easier.  This,
 however, is an implementation issue and is not guaranteed to hold in all
 implementations of @R{}.
 
-@node Data frame objects,  , Factors, Special compound objects
+@node Data frame objects
 @subsection Data frame objects
 
 Data frames are the @R{} structures which most closely mimic the SAS or
@@ -862,82 +811,59 @@ writing such arrays are not generally handled correctly.
 
 @c FIXME: these details really need to be filled in
 
-@c  @node Type checking and coercion,  , Special compound objects, Objects
+@c  @node Type checking and coercion
 @c  @section Type checking and coercion
 
 @c  For most of the basic data types we can check the type and coerce
 @c  objects of one type to another type.  Should we have a table???
 
-@c  @menu
-@c  * mode/typeof::
-@c  * Specific types::
-@c  * Metatypes::
-@c  @end menu
-
-@c  @node mode/typeof, Specific types, Type checking and coercion, Type checking and coercion
+@c  @node mode/typeof
 @c  @subsection mode/typeof
 
-@c  @node Specific types, Metatypes, mode/typeof, Type checking and coercion
+@c  @node Specific types
 @c  @subsection Specific types
 
-@c  @node Metatypes,  , Specific types, Type checking and coercion
+@c  @node Metatypes
 @c  @subsection Metatypes
 
 @c  @findex is.numeric
 @c  @findex is.finite
 
 @c ------------------------------
-@c  @node Data structures, Evaluation of expressions, Objects, Top
+@c  @node Data structures
 @c  @chapter Data structures
 
-@c  @menu
-@c  * Vectors::
-@c  * Lists::
-@c  * Arrays::
-@c  * Matrices::
-@c  * Assignment::
-@c  * Matrix operations::
-@c  * Data Frames::
-@c  @end menu
-
-@c  @node Vectors, Lists, Data structures, Data structures
+@c  @node Vectors
 @c  @section Vectors
 
-@c  @node Lists, Arrays, Vectors, Data structures
+@c  @node Lists
 @c  @section Lists
 
-@c  @node Arrays, Matrices, Lists, Data structures
+@c  @node Arrays
 @c  @section Arrays
 
-@c  @node Matrices, Assignment, Arrays, Data structures
+@c  @node Matrices
 @c  @section Matrices
 
-@c  @node Assignment, Matrix operations, Matrices, Data structures
+@c  @node Assignment
 @c  @section Assignment
 
-@c  @menu
-@c  * simple::
-@c  * indexed::
-@c  * function::
-@c  @end menu
-
-@c  @node simple, indexed, Assignment, Assignment
+@c  @node simple
 @c  @subsection simple
 
-@c  @node indexed, function, simple, Assignment
+@c  @node indexed
 @c  @subsection indexed
 
-@c  @node function,  , indexed, Assignment
+@c  @node function
 @c  @subsection function
 
-@c  @node Matrix operations, Data Frames, Assignment, Data structures
+@c  @node Matrix operations
 @c  @section Matrix operations
 
-@c  @node Data Frames,  , Matrix operations, Data structures
+@c  @node Data Frames
 @c  @section Data Frames
 
-@node Evaluation of expressions, Functions, Objects, Top
-@comment  node-name,  next,  previous,  up
+@node Evaluation of expressions
 @chapter Evaluation of expressions
 
 When a user types a command at the prompt (or when an expression is read
@@ -956,25 +882,12 @@ be sufficient documentation.
 
 Users can construct expressions and invoke the evaluator on them.
 
-@menu
-* Simple evaluation::           
-* Control structures::          
-* Elementary arithmetic operations::  
-* Indexing::                    
-* Scope of variables::          
-@end menu
 
-@node Simple evaluation, Control structures, Evaluation of expressions, Evaluation of expressions
+@node Simple evaluation
 @section Simple evaluation
 
-@menu
-* Constants::                   
-* Symbol lookup::               
-* Function calls::              
-* Operators::                   
-@end menu
 
-@node Constants, Symbol lookup, Simple evaluation, Simple evaluation
+@node Constants
 @subsection Constants
 
 Any number typed directly at the prompt is a constant and is evaluated.
@@ -1015,7 +928,7 @@ e.g.@: @code{12iL} gives an error.
 
 Constants are fairly boring and to do more we need symbols.
 
-@node Symbol lookup, Function calls, Constants, Simple evaluation
+@node Symbol lookup
 @subsection Symbol lookup
 
 When a new variable is created it must have a
@@ -1044,7 +957,7 @@ directly, except when doing ``programming on the language''
 @c FIXME: Probably needs to go somewhere, but not here (parser section?)
 @c FIXME: Up to date info is in the subsection 'Reserved words'.
 
-@c  @node Key words, Calling functions, Symbol lookup, Simple evaluation
+@c  @node Key words
 @c  @subsection Key words
 
 @c  @R{} contains a number of key words.  These are symbols that the parser
@@ -1072,7 +985,7 @@ directly, except when doing ``programming on the language''
 
 @c  @end quotation
 
-@node Function calls, Operators, Symbol lookup, Simple evaluation
+@node Function calls
 @subsection Function calls
 
 Most of the computations carried out in @R{} involve the evaluation of
@@ -1127,7 +1040,7 @@ avoid unnecessary data duplication.)
 @c array, matrix, list, structure (with a warning to use the
 @c latter with discretion),
 
-@node Operators,  , Function calls, Simple evaluation
+@node Operators
 @subsection Operators
 
 @R{} allows the use of arithmetic expressions using operators similar to
@@ -1260,7 +1173,7 @@ could have used  @code{`[`(x, 2)} instead of @code{x[2]}.
 @R{}'s indexing operations contain many advanced features which are
 further described in @ref{Indexing}.
 
-@node Control structures, Elementary arithmetic operations, Simple evaluation, Evaluation of expressions
+@node Control structures
 @section Control structures
 
 Computation in @R{} consists of sequentially evaluating
@@ -1308,16 +1221,8 @@ block.
 [1] 5
 @end example
 
-@menu
-* if::                          
-* Looping::                     
-* repeat::                      
-* while::                       
-* for::                         
-* switch::                      
-@end menu
 
-@node if, Looping, Control structures, Control structures
+@node if
 @subsection if
 
 The @code{if}/@code{else} statement conditionally evaluates two
@@ -1389,7 +1294,7 @@ only be evaluated if @var{statement1} is @code{FALSE} and
 There is no limit to the number of @code{else if} clauses that are
 permitted.
 
-@node Looping, repeat, if, Control structures
+@node Looping
 @subsection Looping
 
 @R{} has three statements that provide explicit
@@ -1415,7 +1320,7 @@ of the loop (if there is one) is then executed.  No statement below
 The value returned by a loop statement is always @code{NULL}
 and is returned invisibly.
 
-@node repeat, while, Looping, Control structures
+@node repeat
 @subsection repeat
 @findex repeat
 
@@ -1432,7 +1337,7 @@ When using @code{repeat}, @var{statement} must be a block statement.
 You need to both perform some computation and test whether or not to
 break from the loop and usually this requires two statements.
 
-@node while, for, repeat, Control structures
+@node while
 @subsection while
 @findex while
 
@@ -1448,7 +1353,7 @@ where @var{statement1} is evaluated and if its value is @code{TRUE} then
 @var{statement2} is evaluated.  This process continues until
 @var{statement1} evaluates to @code{FALSE}.
 
-@node for, switch, while, Control structures
+@node for
 @subsection for
 @findex for
 
@@ -1467,7 +1372,7 @@ variable @var{name} still exists after the loop has concluded and it has
 the value of the last element of @var{vector} that the loop was
 evaluated for.
 
-@node switch,  , for, Control structures
+@node switch
 @subsection switch
 @findex switch
 
@@ -1539,21 +1444,15 @@ may not be the best way to select one for evaluation.  It is often
 better to use @code{eval} and the subset operator, @code{[[}, directly
 via @code{eval(x[[condition]])}.
 
-@node Elementary arithmetic operations, Indexing, Control structures, Evaluation of expressions
+@node Elementary arithmetic operations
 @section Elementary arithmetic operations
 
-@menu
-* Recycling rules::             
-* Propagation of names::        
-* Dimensional attributes::      
-* NA handling::                 
-@end menu
 
 In this section, we discuss the finer points of the rules that apply to
 basic operation like addition or multiplication of two vectors or
 matrices.
 
-@node Recycling rules, Propagation of names, Elementary arithmetic operations, Elementary arithmetic operations
+@node Recycling rules
 @subsection Recycling rules
 If one tries to add two structures with a different number of elements,
 then the shortest is recycled to length of longest.  That is, if for
@@ -1564,7 +1463,7 @@ vector is not a multiple of the shorter one, a warning is given.
 As from @R{} 1.4.0, any arithmetic operation involving a zero-length
 vector has a zero-length result.
 
-@node Propagation of names, Dimensional attributes, Recycling rules, Elementary arithmetic operations
+@node Propagation of names
 @subsection Propagation of names
 @cindex name
 propagation of names (first one wins, I think - also if it has no
@@ -1572,13 +1471,13 @@ names?? ---- first one *with names* wins, recycling causes shortest to
 lose names)
 
 
-@node Dimensional attributes, NA handling, Propagation of names, Elementary arithmetic operations
+@node Dimensional attributes
 @subsection Dimensional attributes
 
 (matrix+matrix, dimensions must match. vector+matrix: first recycle,
 then check if dims fit, error if not)
 
-@node NA handling,  , Dimensional attributes, Elementary arithmetic operations
+@node NA handling
 @subsection NA handling
 
 Missing values in the statistical sense, that is, variables whose value
@@ -1635,7 +1534,7 @@ deparsing when it is not otherwise possible to identify the type of an
 There is no @code{NA} value for raw vectors.
 
 
-@node Indexing, Scope of variables, Elementary arithmetic operations, Evaluation of expressions
+@node Indexing
 @section Indexing
 
 @R{} contains several constructs which allow access to individual
@@ -1685,14 +1584,8 @@ index.  That is, the index is not computable: for cases where you need
 to evaluate an expression to find the index, use @code{x[[expr]]}.
 Applying @code{$} to a non-recursive object is an error.
 
-@menu
-* Indexing by vectors::         
-* Indexing matrices and arrays::  
-* Indexing other structures::   
-* Subset assignment::           
-@end menu
 
-@node Indexing by vectors, Indexing matrices and arrays, Indexing, Indexing
+@node Indexing by vectors
 @subsection Indexing by vectors
 
 @R{} allows some powerful constructions using vectors as indices.  We
@@ -1730,8 +1623,6 @@ length as @code{x}.  If it is shorter, then its elements will be
 recycled as discussed in @ref{Elementary arithmetic operations}.  If it
 is longer, then @code{x} is conceptually extended with @code{NA}s. The
 selected values of @code{x} are those for which @code{i} is @code{TRUE}.
-@c @findex TRUE
-@c @findex FALSE
 
 @cindex partial matching
 @item
@@ -1782,7 +1673,7 @@ former case, but those for integer indices in the latter.
 Indexing with @code{[} will also carry out the relevant subsetting of
 any names attributes.
 
-@node Indexing matrices and arrays, Indexing other structures, Indexing by vectors, Indexing
+@node Indexing matrices and arrays
 @subsection Indexing matrices and arrays
 
 @cindex index
@@ -1858,7 +1749,7 @@ Some operations such as @code{m[FALSE, ]} result in structures in which
 a dimension has zero extent.  @R{} generally tries to handle these
 structures sensibly.
 
-@node Indexing other structures, Subset assignment, Indexing matrices and arrays, Indexing
+@node Indexing other structures
 @subsection Indexing other structures
 
 The operator @code{[} is a generic function which allows class methods
@@ -1886,7 +1777,7 @@ environments.  Only character indices are allowed and no partial
 matching is done.
 
 
-@node Subset assignment,  , Indexing other structures, Indexing
+@node Subset assignment
 @subsection Subset assignment
 @cindex assignment
 @cindex complex assignment
@@ -2059,7 +1950,7 @@ variable with the same name as the target variable of a
 @c  @end example
 
 
-@node Scope of variables,  , Indexing, Evaluation of expressions
+@node Scope of variables
 @section Scope of variables
 @cindex scope
 
@@ -2073,14 +1964,8 @@ Pascal.  However, @R{} is a @emph{functional programming language} and
 allows dynamic creation and manipulation of functions and language
 objects, and has additional features reflecting this fact.
 
-@menu
-* Global environment::          
-* Lexical environment::         
-* Stacks::                      
-* Search path::                 
-@end menu
 
-@node Global environment, Lexical environment, Scope of variables, Scope of variables
+@node Global environment
 @subsection Global environment
 
 The global
@@ -2092,7 +1977,7 @@ object to belong to the global environment.  Its enclosing environment
 is the next environment on the search path, and so on back to the
 empty environment that is the enclosure of the base environment.
 
-@node Lexical environment, Stacks, Global environment, Scope of variables
+@node Lexical environment
 @subsection Lexical environment
 
 Every call to a
@@ -2134,7 +2019,7 @@ to the environment of the base package.  If the variable is not
 found there, the search will proceed next to the empty environment, and
 will fail.
 
-@node Stacks, Search path, Lexical environment, Scope of variables
+@node Stacks
 @subsection The call stack
 
 Every time a
@@ -2188,7 +2073,7 @@ Calls @code{sys.frames}, @code{sys.parents} and @code{sys.calls}.
 Get the evaluation frame for the specified parent context.
 @end table
 
-@node Search path,  , Stacks, Scope of variables
+@node Search path
 @subsection Search path
 
 In addition to the evaluation
@@ -2215,16 +2100,11 @@ masked by objects of the same name in the global environment or in other
 packages.
 
 
-@node Functions, Object-oriented programming, Evaluation of expressions, Top
+@node Functions
 @chapter Functions
 
-@menu
-* Writing functions::           
-* Functions as objects::        
-* Evaluation::                  
-@end menu
 
-@node Writing functions, Functions as objects, Functions, Functions
+@node Writing functions
 @section Writing functions
 
 While @R{} can be very useful as a data analysis tool most users very
@@ -2245,12 +2125,8 @@ See section `Writing R documentation' in the `Writing R Extensions'
 manual.
 @end ifclear
 
-@menu
-* Syntax and examples::         
-* Arguments::                   
-@end menu
 
-@node Syntax and examples, Arguments, Writing functions, Writing functions
+@node Syntax and examples
 @subsection Syntax and examples
 
 The syntax for writing a
@@ -2290,7 +2166,7 @@ Here is a simple function: @code{echo <- function(x) print(x)}.  So
 @code{echo} is a function that takes a single argument and when
 @code{echo} is invoked it prints its argument.
 
-@node Arguments,  , Syntax and examples, Writing functions
+@node Arguments
 @subsection Arguments
 
 The formal arguments to the function define the variables whose values
@@ -2326,7 +2202,7 @@ function that takes an arbitrary number of arguments.  It
 can be used to absorb some arguments into an intermediate function which
 can then be extracted by functions called subsequently.
 
-@node Functions as objects, Evaluation, Writing functions, Functions
+@node Functions as objects
 @section Functions as objects
 
 Functions are first class objects in @R{}.  They can be used anywhere
@@ -2334,17 +2210,11 @@ that an @R{} object is required.  In particular they can be passed as
 arguments to functions and returned as values from functions.  See 
 @ref{Function objects} for the details.
 
-@node Evaluation,  , Functions as objects, Functions
+@node Evaluation
 @section Evaluation
 
-@menu
-* Evaluation environment::      
-* Argument matching::           
-* Argument evaluation::         
-* Scope::                       
-@end menu
 
-@node Evaluation environment, Argument matching, Evaluation, Evaluation
+@node Evaluation environment
 @subsection Evaluation environment
 
 When a
@@ -2365,7 +2235,7 @@ associated with the function being invoked.  This may be different from
 this does not have to be true and functions defined in packages with
 namespaces (normally) have the package namespace as their environment.
 
-@node Argument matching, Argument evaluation, Evaluation environment, Evaluation
+@node Argument matching
 @subsection Argument matching
 
 This subsection applies to closures but not to primitive functions.  The
@@ -2417,7 +2287,7 @@ Argument matching is augmented by the functions @code{match.arg},
 Access to the partial matching algorithm used by @R{} is via
 @code{pmatch}.
 
-@node Argument evaluation, Scope, Argument matching, Evaluation
+@node Argument evaluation
 @subsection Argument evaluation
 
 One of the most important things to know about the
@@ -2520,7 +2390,7 @@ This happens whenever an unevaluated argument is passed as an argument
 to another function.  When forcing a promise, other promises in its
 expression will also be forced recursively as they are evaluated.
 
-@node Scope,  , Argument evaluation, Evaluation
+@node Scope
 @subsection Scope
 
 @cindex scope
@@ -2610,7 +2480,7 @@ indicating that @code{y} is not found, unless there is a variable
 @c environment or workspace.  These rules are very similar to
 @c the scoping rules used in the @code{C} language.
 
-@c @node Closures,  , Evaluation, Functions
+@c @node Closures
 @c section Closures
 
 @c A @emph{closure} is a
@@ -2622,14 +2492,14 @@ indicating that @code{y} is not found, unless there is a variable
 
 @c See also 'dot-dot-dot' above
 
-@c  @node Miscellanea,  , Closures, Functions
+@c  @node Miscellanea
 @c  @section Miscellanea
 
 @c  - g(...), ..1,
 
 @c  - Recall()
 
-@node Object-oriented programming, Computing on the language, Functions, Top
+@node Object-oriented programming
 @chapter Object-oriented programming
 
 @cindex object-oriented
@@ -2704,17 +2574,8 @@ when it exists.
 @c  representation for some of the more common distributions.
 @c </FIXME>
 
-@menu
-* Definition::                  
-* Inheritance::                 
-* Method dispatching::          
-* UseMethod::                   
-* NextMethod::                  
-* Group methods::               
-* Writing methods::             
-@end menu
 
-@node Definition, Inheritance, Object-oriented programming, Object-oriented programming
+@node Definition
 @section Definition
 
 Rather than having a full-fledged
@@ -2861,7 +2722,7 @@ The bulk of the uses of this methodology are to provide specialized
 printing for objects of different types; there are about 40 methods for
 @code{print}.
 
-@node Inheritance, Method dispatching, Definition, Object-oriented programming
+@node Inheritance
 @section Inheritance
 
 @cindex evaluation
@@ -2873,7 +2734,7 @@ currently being evaluated, finds the next class from the
 
 FIXME: something is missing here
 
-@node Method dispatching, UseMethod, Inheritance, Object-oriented programming
+@node Method dispatching
 @section Method dispatching
 
 @cindex function, generic
@@ -2907,7 +2768,7 @@ any number of elements.  Each of these is a string that defines a class.
 When a generic function is invoked the class of its first argument is
 examined.
 
-@node UseMethod, NextMethod, Method dispatching, Object-oriented programming
+@node UseMethod
 @section @code{UseMethod}
 @findex UseMethod
 
@@ -2994,7 +2855,7 @@ the method; these remain as they were in the call to the generic.  This
 is in contrast to @code{NextMethod} where the arguments in the call to
 the next method can be altered.
 
-@node NextMethod, Group methods, UseMethod, Object-oriented programming
+@node NextMethod
 @section @code{NextMethod}
 @findex NextMethod
 
@@ -3065,12 +2926,12 @@ Values for lookup:
 @c   what its used for but I don't currently think it's involved in the
 @c   dispatch.
 
-@c  @node Implicit dispatching, Group methods, NextMethod, Object-oriented programming
+@c  @node Implicit dispatching
 @c  @section Implicit dispatching
 
 @c  What is implicit dispatching????
 
-@node Group methods, Writing methods, NextMethod, Object-oriented programming
+@node Group methods
 @section Group methods
 
 For several types of
@@ -3119,7 +2980,7 @@ class that was used to determine the method.  Otherwise the
 corresponding element of @code{.Method} is set to the zero length
 string, @code{""}.
 
-@node Writing methods,  , Group methods, Object-oriented programming
+@node Writing methods
 @section Writing methods
 
 Users can easily write their own methods and generic functions.  A
@@ -3145,20 +3006,16 @@ that output and provides a nice readable version of it.  The user then
 needs only remember that @code{print} or @code{summary} will provide
 nice output for the results of any analysis.
 
-@c  @node Modeling functions, Graphics model, Object-oriented programming, Top
+@c  @node Modeling functions
 @c  @chapter Modeling functions
 
-@c  @node Graphics model, Computing on the language, Modeling functions, Top
+@c  @node Graphics model
 @c  @chapter Graphics model
 
-@c  @menu
-@c  * Math expressions in text::
-@c  @end menu
-
-@c  @node Math expressions in text,  , Graphics model, Graphics model
+@c  @node Math expressions in text
 @c  @section Math expressions in text
 
-@node Computing on the language, System and foreign language interfaces, Object-oriented programming, Top
+@node Computing on the language
 @chapter Computing on the language
 
 @R{} belongs to a class of programming languages in which subroutines
@@ -3194,16 +3051,8 @@ mathematical expressions.
 In this chapter, we give an introduction to the set of facilities that
 are available for computing on the language.
 
-@menu
-* Direct manipulation of language objects::  
-* Substitutions::               
-* More on evaluation::          
-* Evaluation of expression objects::  
-* Manipulation of function calls::  
-* Manipulation of functions::   
-@end menu
 
-@node Direct manipulation of language objects, Substitutions, Computing on the language, Computing on the language
+@node Direct manipulation of language objects
 @section Direct manipulation of language objects
 
 There are three kinds of language objects that are available for
@@ -3323,7 +3172,7 @@ to the original expression (up to rounding error).
 ...internal storage of flow control constructs...note Splus
 incompatibility...
 
-@node Substitutions, More on evaluation, Direct manipulation of language objects, Computing on the language
+@node Substitutions
 @section Substitutions
 
 It is in fact not often that one wants to modify the innards of an
@@ -3474,7 +3323,7 @@ optional argument to compute the values in a different
 environment. The syntax for @code{bquote} is borrowed from the LISP
 backquote macro.
 
-@node More on evaluation, Evaluation of expression objects, Substitutions, Computing on the language
+@node More on evaluation
 @section More on evaluation
 
 @cindex evaluation
@@ -3529,7 +3378,7 @@ This is also true when evaluating in lists, but the original list does
 not change because one is really working on a copy.
 
 
-@node Evaluation of expression objects, Manipulation of function calls, More on evaluation, Computing on the language
+@node Evaluation of expression objects
 @section Evaluation of expression objects
 
 Objects of mode @code{"expression"} are defined in @ref{Expression
@@ -3588,7 +3437,7 @@ I.e., @code{e} and @code{ee} look identical when printed, but one is a
 call that generates an expression object and the other is the object
 itself.
 
-@node Manipulation of function calls, Manipulation of functions, Evaluation of expression objects, Computing on the language
+@node Manipulation of function calls
 @section Manipulation of function calls
 
 It is possible for a
@@ -3748,7 +3597,7 @@ aspects of lazy evaluation and argument substitution in the function
 itself.  A similar remark applies to the @code{call} function.
 
 
-@node Manipulation of functions,  , Manipulation of function calls, Computing on the language
+@node Manipulation of functions
 @section Manipulation of functions
 
 It is often useful to be able to manipulate the components of a
@@ -3789,16 +3638,11 @@ information is lost when @code{as.list} is used, whereas
 @code{as.function} has an argument that allows the environment to be
 set.
 
-@node System and foreign language interfaces, Exception handling, Computing on the language, Top
+@node System and foreign language interfaces
 @chapter System and foreign language interfaces
 
-@menu
-* Operating system access::     
-* Foreign language interfaces::  
-* .Internal and .Primitive::    
-@end menu
 
-@node Operating system access, Foreign language interfaces, System and foreign language interfaces, System and foreign language interfaces
+@node Operating system access
 @section Operating system access
 
 Access to the operating system shell is via the @R{} function
@@ -3884,7 +3728,7 @@ platform-independent way.
 @end multitable
 @end quotation
 
-@node Foreign language interfaces, .Internal and .Primitive, Operating system access, System and foreign language interfaces
+@node Foreign language interfaces
 @section Foreign language interfaces
 @findex .C
 @findex .Fortran
@@ -3910,7 +3754,7 @@ other languages which can generate C interfaces, for example C++.
 Functions @code{.Call} and @code{.External} provide interfaces which allow
 compiled code (primarily compiled @C{} code) to manipulate @R{} objects.
 
-@node .Internal and .Primitive,  , Foreign language interfaces, System and foreign language interfaces
+@node .Internal and .Primitive
 @section .Internal and .Primitive
 @findex .Internal
 @findex .Primitive
@@ -3926,7 +3770,7 @@ See section `.Internal vs .Primitive' in the `R Internals' manual.
 
 
 
-@node Exception handling, Debugging, System and foreign language interfaces, Top
+@node Exception handling
 @chapter Exception handling
 
 The exception handling facilities in @R{} are provided through two
@@ -3934,21 +3778,15 @@ mechanisms.  Functions such as @code{stop} or @code{warning} can be
 called directly or options such as @code{"warn"} can be used to control
 the handling of problems.
 
-@menu
-* stop::                        
-* warning::                     
-* on.exit::                     
-* Error options::               
-@end menu
 
-@node stop, warning, Exception handling, Exception handling
+@node stop
 @section stop
 @findex stop
 
 A call to @code{stop} halts the evaluation of the current expression,
 prints the message argument and returns execution to top-level.
 
-@node warning, on.exit, stop, Exception handling
+@node warning
 @section warning
 @findex warning
 @findex warnings
@@ -3969,7 +3807,7 @@ occurred is printed.  In either case @code{last.warning} contains the
 vector of messages, and @code{warnings} provides a way to access and
 print it.
 
-@node on.exit, Error options, warning, Exception handling
+@node on.exit
 @section on.exit
 @findex on.exit
 
@@ -3988,7 +3826,7 @@ immediate jump to top-level without further processing of the
 @code{on.exit} takes a single argument which is an expression to be
 evaluated when the function is exited.
 
-@c @node restart, Error options, on.exit, Exception handling
+@c @node restart
 @c @section restart
 @c @findex restart
 
@@ -4014,7 +3852,7 @@ evaluated when the function is exited.
 @c that was in effect at the time that the error that triggered the jump
 @c was signalled.
 
-@node Error options,  , on.exit, Exception handling
+@node Error options
 @section Error options
 
 There are a number of @code{options} variables that can be used to
@@ -4040,7 +3878,7 @@ One can use @code{options(error = expression(q("yes")))} to get @R{} to
 quit when an error has been signalled.  In this case an error will cause
 @R{} to shut down and the global environment will be saved.
 
-@node Debugging, Parser, Exception handling, Top
+@node Debugging
 @chapter Debugging
 
 Debugging code has always been a bit of an art.  @R{} provides several
@@ -4090,14 +3928,8 @@ statements in that language is provided.  Execution will halt on the
 next statement that is evaluated in @R{}. A symbolic debugger such as
 @code{gdb} can be used to debug compiled code.
 
-@menu
-* browser::                     
-* debug/undebug::               
-* trace/untrace::               
-* traceback::                   
-@end menu
 
-@node browser, debug/undebug, Debugging, Debugging
+@node browser
 @section browser
 @findex browser
 
@@ -4119,7 +3951,7 @@ Browse[1]> get("c")
 Browse[1]>
 @end example
 
-@node debug/undebug, trace/untrace, browser, Debugging
+@node debug/undebug
 @section @code{debug}/@code{undebug}
 @findex debug
 @findex undebug
@@ -4165,7 +3997,7 @@ exiting from: mean.default(1:10)
 [1] 5.5
 @end example
 
-@node trace/untrace, traceback, debug/undebug, Debugging
+@node trace/untrace
 @section trace/untrace
 @findex trace
 @findex untrace
@@ -4187,7 +4019,7 @@ removed by calling @code{untrace} with the function as an argument.
 trace: "[<-"(*tmp*, 3, value = 4)
 @end example
 
-@node traceback,  , trace/untrace, Debugging
+@node traceback
 @section traceback
 @findex traceback
 
@@ -4197,7 +4029,7 @@ When an error has caused a jump to top-level a special variable called
 call that was active at the time the error occurred.  An examination of
 @code{.Traceback} can be carried out by a call to @code{traceback}.
 
-@node Parser, Function and Variable Index, Debugging, Top
+@node Parser
 @chapter Parser
 @cindex parsing
 
@@ -4207,26 +4039,12 @@ causes the specified instructions to be carried out.  The internal form
 is itself an @R{} object and can be saved and otherwise manipulated
 within the @R{} system.
 
-@menu
-* The parsing process::         
-* Comments::                    
-* Tokens::                      
-* Expressions::                 
-* Directives::                  
-@end menu
 
-@node The parsing process, Comments, Parser, Parser
-@comment  node-name,  next,  previous,  up
+@node The parsing process
 @section The parsing process
 
-@menu
-* Modes of parsing::            
-* Internal representation::     
-* Deparsing::                   
-@end menu
 
-@node Modes of parsing, Internal representation, The parsing process, The parsing process
-@comment  node-name,  next,  previous,  up
+@node Modes of parsing
 @subsection Modes of parsing
 
 Parsing in @R{} occurs in three different variants:
@@ -4261,8 +4079,7 @@ Character strings, or vectors thereof, can be parsed using the
 @code{text=} argument to @code{parse}.  The strings are treated exactly
 as if they were the lines of an input file.
 
-@node Internal representation, Deparsing, Modes of parsing, The parsing process
-@comment  node-name,  next,  previous,  up
+@node Internal representation
 @subsection Internal representation
 
 @cindex parsing
@@ -4279,8 +4096,7 @@ formal and actual arguments.  Note that @emph{all} @R{} syntax elements
 are treated in this way, e.g.@: the assignment @code{x <- 1} is encoded
 as @code{"<-"(x, 1)}.
 
-@node Deparsing,  , Internal representation, The parsing process
-@comment  node-name,  next,  previous,  up
+@node Deparsing
 @subsection Deparsing
 
 Any @R{} object can be converted to an @R{} expression using
@@ -4295,8 +4111,7 @@ but there are a couple of awkward exceptions, mostly involving
 expressions that weren't generated from a textual representation in the
 first place.
 
-@node Comments, Tokens, The parsing process, Parser
-@comment  node-name,  next,  previous,  up
+@node Comments
 @section Comments
 
 @cindex comments
@@ -4311,8 +4126,7 @@ the @code{#} character is inside a quoted string. For example,
 > y <- "  #... but this is not."
 @end example
 
-@node Tokens, Expressions, Comments, Parser
-@comment  node-name,  next,  previous,  up
+@node Tokens
 @section Tokens
 
 Tokens are the elementary building blocks of a programming language.
@@ -4320,19 +4134,9 @@ They are recognised during @emph{lexical analysis} which (conceptually,
 at least) takes place prior to the syntactic analysis performed by the
 parser itself.
 
-@menu
-* Literal constants::           
-* Identifiers::                 
-* Reserved words::              
-* Special operators::           
-* Separators::                  
-* Operator tokens::             
-* Grouping::                    
-* Indexing tokens::             
-@end menu
 
-@node Literal constants, Identifiers, Tokens, Tokens
-@comment  node-name,  next,  previous,  up
+@c avoid clash with node "Constants" in "Simple evaluation" further above
+@node Literal constants
 @subsection Constants
 
 There are five types of constants: integer, logical, numeric, complex and string.
@@ -4454,7 +4258,7 @@ A @abbr{NUL} (@code{\0}) is not allowed in a character string, so using
 warning): further characters up to the closing quote are scanned but
 ignored.
 
-@node Identifiers, Reserved words, Literal constants, Tokens
+@node Identifiers
 @subsection Identifiers
 
 @cindex identifier
@@ -4489,7 +4293,7 @@ following pairs are @emph{not} equivalent
 @end multitable
 @end quotation
 
-@node Reserved words, Special operators, Identifiers, Tokens
+@node Reserved words
 @subsection Reserved words
 
 The following identifiers have a special meaning and cannot be used
@@ -4502,7 +4306,7 @@ NA NA_integer_ NA_real_ NA_complex_ NA_character_
 ... ..1 ..2 @r{etc.}
 @end example
 
-@node Special operators, Separators, Reserved words, Tokens
+@node Special operators
 @subsection Special operators
 
 @R{} allows user-defined infix operators.  These have the form of a
@@ -4516,7 +4320,7 @@ Note that the following operators are predefined:
 %% %*% %/% %in% %o% %x% %||%
 @end example
 
-@c  @node Special symbols, Separators, Special operators, Tokens
+@c  @node Special symbols
 @c  @subsection Special symbols
 
 @c  @c (I can't for the life of me remember what I intended here... -pd)
@@ -4524,7 +4328,7 @@ Note that the following operators are predefined:
 @c  words"
 @c FIXME: get this clarified
 
-@node Separators, Operator tokens, Special operators, Tokens
+@node Separators
 @subsection Separators
 
 Although not strictly tokens, stretches of whitespace characters
@@ -4554,7 +4358,7 @@ incomplete, or invalid as soon as the user presses @key{RET}.
 The comma (@samp{,}) is used to separate function arguments and multiple
 indices.
 
-@node Operator tokens, Grouping, Separators, Tokens
+@node Operator tokens
 @subsection Operator tokens
 
 @R{} uses the following operator tokens
@@ -4574,7 +4378,7 @@ indices.
 @noindent
 (Several of the operators have different meaning inside model formulas)
 
-@node Grouping, Indexing tokens, Operator tokens, Tokens
+@node Grouping
 @subsection Grouping
 
 Ordinary parentheses---@samp{(} and @samp{)}---are used for explicit
@@ -4584,7 +4388,7 @@ function definitions and function calls.
 Braces---@samp{@{} and @samp{@}}---delimit blocks of expressions in
 function definitions, conditional expressions, and iterative constructs.
 
-@node Indexing tokens,  , Grouping, Tokens
+@node Indexing tokens
 @subsection Indexing tokens
 
 Indexing of arrays and vectors is performed using the single and double
@@ -4593,7 +4397,7 @@ may be done using the @samp{$} operator.
 
 @c ------end of  @section Tokens ------------
 
-@node Expressions, Directives, Tokens, Parser
+@node Expressions
 @section Expressions
 
 An @R{} program consists of a sequence of @R{} expressions.  An
@@ -4604,19 +4408,11 @@ parts (which may themselves be expressions).
 The following sections detail the various syntactical constructs that
 are available.
 
-@menu
-* Function calls (expressions)::  
-* Infix and prefix operators::  
-* Index constructions::         
-* Compound expressions::        
-* Flow control elements::       
-* Function definitions::        
-@end menu
 
 @c  need "(expressions)" or something to differentiate from node
 @c  "Function calls" (way) above :
 
-@node Function calls (expressions), Infix and prefix operators, Expressions, Expressions
+@node Function calls (expressions)
 @subsection Function calls
 
 @cindex function
@@ -4653,7 +4449,7 @@ g(tag = value, , 5)
 (function(x) x^2)(5)
 @end example
 
-@node Infix and prefix operators, Index constructions, Function calls (expressions), Expressions
+@node Infix and prefix operators
 @subsection Infix and prefix operators
 
 The order of precedence (highest first) of the operators is
@@ -4716,7 +4512,7 @@ an assignment, as far as the parser is concerned (@code{2 + 2 <- 5} is a
 valid expression as far as the parser is concerned.  The evaluator will
 object, though).  Similar comments apply to the model formula operator.
 
-@node Index constructions, Compound expressions, Infix and prefix operators, Expressions
+@node Index constructions
 @subsection Index constructions
 
 @R{} has three indexing constructs, two of which are syntactically
@@ -4748,13 +4544,13 @@ Here, @var{object} is as above, whereas @var{tag} is an identifier or a
 text string.  Internally, it is stored as a function call with name
 @code{"$"}
 
-@c  @node Assignments, Model formulae, Index constructions, Expressions
+@c  @node Assignments
 @c  @subsection Assignments
 
-@c  @node Model formulae, Flow control elements, Assignments, Expressions
+@c  @node Model formulae
 @c  @subsection Model formulae
 
-@node Compound expressions, Flow control elements, Index constructions, Expressions
+@node Compound expressions
 @subsection Compound expressions
 
 A compound expression is of the form
@@ -4767,7 +4563,7 @@ The semicolons may be replaced by newlines.  Internally, this is stored
 as a function call with @code{"@{"} as the function name and the
 expressions as arguments.
 
-@node Flow control elements, Function definitions, Compound expressions, Expressions
+@node Flow control elements
 @subsection Flow control elements
 
 @R{} contains the following control structures as special syntactic
@@ -4800,7 +4596,7 @@ Internally, the constructs are stored as function calls:
 "next"()
 @end example
 
-@node Function definitions,  , Flow control elements, Expressions
+@node Function definitions
 @subsection Function definitions
 
 A
@@ -4827,7 +4623,7 @@ the @var{body}.  The @var{arglist} is stored as a tagged pairlist where
 the tags are the argument names and the values are the default
 expressions.
 
-@node Directives,  , Expressions, Parser
+@node Directives
 @section Directives
 
 @cindex #line
@@ -4856,20 +4652,20 @@ diagnostic messages refer to the original file.
 
 
 @c -- We can probably lose this given the brevity of the section
-@c  @node Summary ,  , Syntactic elements, Parser
+@c  @node Summary
 @c  @section Summary of language
 
-@node Function and Variable Index, Concept Index, Parser, Top
+@node Function and Variable Index
 @unnumbered Function and Variable Index
 
 @printindex vr
 
-@node Concept Index, References, Function and Variable Index, Top
+@node Concept Index
 @unnumbered Concept Index
 
 @printindex cp
 
-@node References,  , Concept Index, Top
+@node References
 @appendix References
 
 @I{Richard A.@: Becker}, @I{John M.@: Chambers} and @I{Allan R.@: Wilks} (1988),
