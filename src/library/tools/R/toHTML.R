@@ -340,7 +340,7 @@ function(x, header = TRUE, ...)
             ## Need to ignore results of the above translation ...
             ## Regexp based on Perl HTML::TextToHTML, note that the dash
             ## must be last ...
-            s <- .gsub_with_transformed_matches("([^>\"])((https?|ftp)://[[:alnum:]/.:@+\\_~%#?=&;,-]+[[:alnum:]/])",
+            s <- .gsub_with_transformed_matches("([^>\"?])((https?|ftp)://[[:alnum:]/.:@+\\_~%#?=&;,-]+[[:alnum:]/])",
                                                 "\\1<a href=\"%s\">\\2</a>",
                                                 s,
                                                 urlify,

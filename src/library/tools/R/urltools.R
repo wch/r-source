@@ -206,7 +206,7 @@ function(v)
     m <- gregexpr(pattern, v)
     urls <- c(urls, .gregexec_at_pos(pattern, v, m, 3L))
     regmatches(v, m) <- ""
-    pattern <- "(^|[^>\"])((https?|ftp)://[^[:space:],]*)"
+    pattern <- "(^|[^>\"?])((https?|ftp)://[^[:space:],]*)"
     m <- gregexpr(pattern, v)
     urls <- c(urls, .gregexec_at_pos(pattern, v, m, 3L))
     urls
@@ -223,7 +223,7 @@ function(v)
     urls <- c(urls, .gregexec_at_pos(pattern, v, m, 3L))
     regmatches(v, m) <- ""
     pattern <-
-        "([^>\"])((https?|ftp)://[[:alnum:]/.:@+\\_~%#?=&;,-]+[[:alnum:]/])"
+        "([^>\"?])((https?|ftp)://[[:alnum:]/.:@+\\_~%#?=&;,-]+[[:alnum:]/])"
     m <- gregexpr(pattern, v)
     urls <- c(urls, .gregexec_at_pos(pattern, v, m, 3L))
     regmatches(v, m) <- ""
