@@ -2475,11 +2475,11 @@ add_dummies <- function(dir, Log)
                     bad <- split(bad[, "Target"], bad[, "Source"])
                     msg <- c(if(any) "",
                              strwrap("Found the following Rd file(s) with Rd \\link{} targets missing package anchors:"),
-                             sprintf("  %s: %s",
-                                     names(bad),
-                                     strwrap(vapply(bad, paste, "",
-                                                    collapse = ", "),
-                                             exdent = 4L, indent = 0L)),
+                             strwrap(sprintf("  %s: %s",
+                                             names(bad),
+                                             vapply(bad, paste, "",
+                                                    collapse = ", ")),
+                                     exdent = 4L, indent = 2L),
                              strwrap("Please provide package anchors for all Rd \\link{} targets not in the package itself and the base packages."))
                     if(!any) {
                         noteLog(Log)
