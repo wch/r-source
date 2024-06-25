@@ -108,7 +108,7 @@ library(methods)
 \dontrun{
 debugonce(sample)
 ## only the first call will be debugged
-sampe(10, 1)
+sample(10, 1)
 sample(10, 1)
 }
 }
