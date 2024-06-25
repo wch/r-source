@@ -8137,9 +8137,9 @@ function(dir, localOnly = FALSE, pkgSize = NA)
             }
             if(NROW(odb)) {
                 ids <- .ORCID_iD_canonicalize(odb[, 1L])
-                bad <- ids[!.ORCID_iD_is_alive(ids)]
-                if(length(bad))
-                    out$bad_ORCID_iDs <- bad
+                pos <- which(!.ORCID_iD_is_alive(ids))
+                if(length(pos))
+                    out$bad_ORCID_iDs <- odb[pos, , drop = FALSE]
             }
         }
     }
