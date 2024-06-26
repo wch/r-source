@@ -268,7 +268,7 @@ features of @R{} is a straightforward if somewhat tedious procedure, and
 will not be considered further here.  Users in difficulty should seek
 local expert help.
 
-@node Using R interactively, Getting help, R and the window system, Introduction and preliminaries
+@node Using R interactively, An introductory session, R and the window system, Introduction and preliminaries
 @section Using R interactively
 
 When you use the @R{} program it issues a prompt when it expects input
@@ -342,14 +342,14 @@ follow is basically the same.  Create a folder as the working directory,
 and set that in the @file{Start In} field in your @R{} shortcut.
 Then launch @R{} by double clicking on the icon.
 
-@node An introductory session
+@node An introductory session, Getting help, Using R interactively, Introduction and preliminaries
 @section An introductory session
 
 Readers wishing to get a feel for @R{} at a computer before proceeding
 are strongly advised to work through the introductory session
 given in @ref{A sample session}.
 
-@node Getting help, R commands; case sensitivity etc, Using R interactively, Introduction and preliminaries
+@node Getting help, R commands; case sensitivity etc, An introductory session, Introduction and preliminaries
 @section Getting help with functions and features
 @findex help
 
