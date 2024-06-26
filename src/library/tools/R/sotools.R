@@ -688,6 +688,7 @@ nonAPI <- c("chol_", "chol2inv_", "cg_", "ch_", "rg_",
             "SET_TYPEOF", "TRUELENGTH", "XLENGTH_EX",
             "XTRUELENGTH", "Rf_gsetVar",
             "Rf_isValidString", "Rf_isValidStringF",
+            "R_shallow_duplicate_attr",
 ## in the non-API header R_ext/Connections.h
             "R_new_custom_connection", "R_ReadConnection",
             "R_WriteConnection", "R_GetConnection",
