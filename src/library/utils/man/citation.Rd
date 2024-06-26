@@ -45,16 +45,25 @@ citFooter(...)
   today.  Please give credit where credit is due and cite \R and \R
   packages when you use them for data analysis.
 
-  Execute function \code{citation()} for information on how to cite the
-  base R system in publications.  If the name of a non-base package is
-  given, as controlled by the \code{auto} argument, the function either
-  returns the information contained in the \file{CITATION} file of the
-  package (using \code{readCitationFile} with \code{meta} equal to
-  \code{packageDescription(package, lib.loc)}) or auto-generates
-  citation information from the \file{DESCRIPTION} file.  For CRAN and
-  Bioconductor packages, auto-generating automatically adds package
-  \abbr{URL}s and \abbr{DOI}s.
+  Use \code{citation()} (without arguments) for information on how to
+  cite the base R system in publications.
 
+  If \code{citation()} is called with \code{package} the name of a
+  non-base package, as controlled by the \code{auto} argument it either
+  returns the information contained in the package \file{CITATION} file
+  or auto-generates citation information from the package
+  \file{DESCRIPTION} file.  By default (\code{auto = NULL}), the
+  \file{CITATION} file is used if it exists, in which case it is read
+  via \code{readCitationFile} with \code{meta} equal to
+  \code{packageDescription(package, lib.loc)}.  One can force
+  auto-generation via \code{auto = TRUE}.
+
+  The auto-generated citation includes \abbr{URL}s for packages
+  installed from the standard repositories CRAN and Bioconductor and
+  from development platforms such as \I{GitHub}, \I{GitLab}, or
+  \I{R-Forge}.  In case of CRAN and Bioconductor, \abbr{DOI}s are
+  included as well.
+  
   Packages can use an \samp{Authors@R} field in their
   \file{DESCRIPTION} to provide (\R code giving) a
   \code{\link{person}} object with a refined, machine-readable

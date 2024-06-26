@@ -1318,7 +1318,13 @@ function(package = "base", lib.loc = NULL, auto = NULL)
             citfile <- file.path(dir, "inst", "CITATION")
             test <- file_test("-f", citfile)
         }
-        if(is.null(auto)) auto <- !test
+        if(is.null(auto) || is.na(auto))
+            auto <- !test
+        else if(!auto && !test)
+            stop(gettextf("package %s has no %s file: only auto-generation is possible",
+                          sQuote(package),
+                          sQuote("CITATION")),
+                 domain = NA)
         ## if CITATION is available
         if(!auto) {
             return(readCitationFile(citfile, meta))
