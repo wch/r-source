@@ -63,12 +63,14 @@ function(x, paths = NULL, ignore = character()) {
     e <- x[i]
     x <- Filter(length, x[!i])
     if(!length(x) && !length(e)) return(NULL)
-    y <- cbind(path = rep.int(names(x), vapply(x, nrow, 0)),
-               do.call(rbind, x))
+    y <- do.call(rbind, x)
     if(is.null(y)) {
-        y <- list()     # cannot set an attr on NULL
-    } else if(length(ignore)) {
-        y <- y[y[, "msg"] %notin% ignore, , drop = FALSE]
+        y <- list() # cannot set an attr on NULL
+    } else {
+        y <- cbind(path = rep.int(names(x), vapply(x, nrow, 0)), y)
+        if(length(ignore)) {
+            y <- y[y[, "msg"] %notin% ignore, , drop = FALSE]
+        }
     }
     if(length(e))
         attr(y, "errors") <- e
