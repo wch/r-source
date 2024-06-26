@@ -1418,29 +1418,39 @@ dN <- data.frame(a  = c(1,NA),     b  = c("a",NA),
 names(dN) <- nms <- c("num", "ch", NA, NA)
 (fdN <- format(dN))
 L <- list(A = FALSE); names(L) <- NA
-    dL1 <- as.data.frame.list(L, col.names = names(L))
-    dL2 <- as.data.frame.list(L, col.names = names(L), check.names=FALSE)
-str(dL  <- as.data.frame.list(L, new.names=TRUE))
-## check.names = TRUE,  fix.empty.names = TRUE  are default :
-prblN <- c("", "var 2")
-dp11 <- as.data.frame(setNames(list(1, 23), prblN))
-dp01 <- as.data.frame(setNames(list(1, 23), prblN), check.names=FALSE)
-dp00 <- as.data.frame(setNames(list(1, 23), prblN), check.names=FALSE, fix.empty.names=FALSE)
-dp10 <- as.data.frame(setNames(list(1, 23), prblN), check.names=TRUE , fix.empty.names=FALSE)
+names(dL  <- as.data.frame.list(L))                                          # "NA."
+names(dL1 <- as.data.frame.list(L, col.names = names(L)))                    # "NA."
+names(dL2 <- as.data.frame.list(L, col.names = names(L), check.names=FALSE)) #  NA  (was "NA")
+names(dL1.<- as.data.frame.list(L,                       check.names=FALSE)) # "NA"
+names(dLn <- as.data.frame.list(L, new.names = TRUE,     check.names=FALSE)) #  NA  (was "NA")
+prblN <- c("", "var 2"); L2 <- `names<-`(list(1, 23), prblN)
+##                        check.names = TRUE, fix.empty.names = TRUE  are default :
+dp11 <- as.data.frame(L2)
+dp01 <- as.data.frame(L2, check.names=FALSE)
+dp00 <- as.data.frame(L2, check.names=FALSE, fix.empty.names=FALSE)
+dp10 <- as.data.frame(L2, check.names=TRUE , fix.empty.names=FALSE)
+L3 <- c(L, list(row.names = 2))
+names(dL3  <- as.data.frame.list(L3))                    # "NA." "row.names"
+names(dL3n <- as.data.frame.list(L3, check.names=FALSE)) #  NA   "row.names", was "NA" "rown..."
+names(dL3nn<- as.data.frame.list(L3, check.names=FALSE, new.names=FALSE)) # #     "NA" "rown..."
 stopifnot(exprs = {
     is.na(names(x))
     is.data.frame(fx)
     identical(NA_character_, names(x))
     identical(NA_character_, names(fx)) # was "NA"  wrongly
-    identical(NA_character_, names(dL))
+    identical(NA_character_, names(dLn))#  "   "
+    identical(NA_character_, names(dL2))#  "   "
     identical(nms, names( dN))
     identical(nms, names(fdN)) # was    .. .. "NA" "NA"
-    identical(dL1, dL2)# was FALSE ("NA vs "NA.")
-    identical(dL, dL1) # was always TRUE;  ditto these {wrong for a couple of hours}:
+    identical(dLn, dL2) # was always TRUE;  ditto these {wrong for a couple of hours}:
     names(dp11) == c("X1", "var.2")
     names(dp01) == c( "1", "var 2")
     names(dp00) == c( "" , "var 2") # == prblN
     names(dp10) == c( "" , "var.2")
+    identical(names(L3), names(dL3n)) # now.  The next 3 are not new:
+    identical("NA.", names(dL))
+    identical("NA.", names(dL3)  [[1]])
+    identical("NA" , names(dL3nn)[[1]])
 })
 ## format() and as.data.frame(<list>, col.names=*, check.names=FALSE) *did*
 ## change  NA names() into "NA"  for R <= 4.4.1
