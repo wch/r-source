@@ -13374,8 +13374,6 @@ Rboolean isDataFrame (SEXP);
 @end group
 @end example
 Some additional predicates:
-@eapifun Rf_isValidString
-@eapifun Rf_isValidStringF
 @eapifun isBlankString
 @eapifun StringBlank
 @eapifun StringFalse
@@ -13384,8 +13382,6 @@ Some additional predicates:
 @eapifun IS_SCALAR
 @example
 @group
-Rboolean Rf_isValidString(SEXP);
-Rboolean Rf_isValidStringF(SEXP);
 Rboolean isBlankString(const char *);
 Rboolean Rf_StringBlank(SEXP);
 Rboolean StringFalse(const char *); 
