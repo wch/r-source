@@ -64,6 +64,8 @@ test-src-reg-1 = array-subset.R \
 ## added to in Makefile.win
 test-src-reg-1e =
 test-src-reg = $(test-src-reg-1) $(test-src-reg-1e)
+## to be run with $(R2), not forcing LC_ALL=C
+test-src-reg-enc = reg-encodings.R
 ## overridden in Makefile if recommended packages are not installed.
 ## *-src-reg3 are sloppy (*.Rout may differ from *.Rout.save):
 test-src-reg3 = reg-tests-3.R reg-examples3.R reg-plot-latin1.R
@@ -85,6 +87,7 @@ test-out-primitive = $(test-src-primitive:.R=.Rout)
 test-out-large = $(test-src-large:.R=.Rout)
 test-out-random = $(test-src-random:.R=.Rout)
 test-out-reg = $(test-src-reg:.R=.Rout)
+test-out-reg-enc = $(test-src-reg-enc:.R=.Rout)
 test-out-regexp = $(test-src-regexp:.R=.Rout)
 test-out-reg3 = $(test-src-reg3:.R=.Rout)
 test-out-segfault = $(test-src-segfault:.R=.Rout)
@@ -95,7 +98,7 @@ test-out-misc-dev = $(test-src-misc-dev:.R=.Rout)
 ## This macro is used only for dependencies and for distclean
 test-out = $(test-out-strict) $(test-out-sloppy) $(test-out-demo) $(test-out-gct) \
 	$(test-out-internet) \
-	$(test-out-random) $(test-out-reg) $(test-out-reg3) \
+	$(test-out-random) $(test-out-reg) $(test-out-reg-enc) $(test-out-reg3) \
 	$(test-out-segfault) $(test-out-isas) \
 	$(test-out-internet2) $(test-out-internet-dev) \
 	$(test-out-CRANtools) $(test-out-large) $(test-out-primitive) $(test-out-dt) \
@@ -324,6 +327,7 @@ test-Reg:
 	else \
 	  $(MK) $(test-out-reg) RVAL_IF_DIFF=1; \
 	fi
+	@$(MK) $(test-out-reg-enc) R="$(R2)"
 	@$(MK) $(test-out-reg3) RVAL_IF_DIFF=0
 
 test-Regexp:
@@ -538,7 +542,7 @@ INSTFILES = README \
 	$(test-src-internet-dev) internet.Rout.save \
 	$(test-src-primitive) \
 	$(test-src-random) p-r-random-tests.Rout.save \
-	$(test-src-reg) $(test-src-reg3) \
+	$(test-src-reg) $(test-src-reg-enc) $(test-src-reg3) \
 	  reg-S4.Rout.save \
 	  reg-IO.Rout.save reg-IO2.Rout.save \
 	  reg-plot.pdf.save reg-tests-2.Rout.save reg-tests-3.Rout.save \

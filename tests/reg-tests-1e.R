@@ -261,17 +261,6 @@ stopifnot(identical(o1,o2))
 ## the ordered() call has failed in R <= 4.2.x
 
 
-## source() with multiple encodings
-if (l10n_info()$"UTF-8" || l10n_info()$"Latin-1") {
-    writeLines('x <- "fa\xE7ile"', tf <- tempfile(), useBytes = TRUE)
-    tools::assertError(source(tf, encoding = "UTF-8"))
-    source(tf, encoding = c("UTF-8", "latin1"))
-    ## in R 4.2.{0,1} gave Warning (that would now be an error):
-    ##   'length(x) = 2 > 1' in coercion to 'logical(1)'
-    if (l10n_info()$"UTF-8") stopifnot(identical(Encoding(x), "UTF-8"))
-}
-
-
 ## multi-line Rd macro definition
 rd <- tools::parse_Rd(textConnection(r"(
 \newcommand{\mylongmacro}{

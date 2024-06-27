@@ -201,16 +201,9 @@ nchar(x, "w", allowNA = TRUE)
 
 
 ## str() on large strings
-if (l10n_info()$"UTF-8" || l10n_info()$"Latin-1") {
-  cc <- "J\xf6reskog" # valid in "latin-1"; invalid multibyte string in UTF-8
-  .tmp <- capture.output(
-  str(cc) # failed in some R-devel versions
-  )
-  stopifnot(grepl("chr \"J.*reskog\"", .tmp))
+nchar(L <- strrep(paste(LETTERS, collapse="."), 100000), type="b") # 5.1 M
+str(L)
 
-  print(nchar(L <- strrep(paste(LETTERS, collapse="."), 100000), type="b")) # 5.1 M
-  print(str(L))
-}
 
 if(require("Matrix", .Library)) {
     M <- Matrix(diag(1:10), sparse=TRUE) # a "ddiMatrix"
