@@ -935,7 +935,6 @@ TEXI2DVICMD
 TEXI2DVI
 TEXI2ANY_VERSION_MIN
 TEXI2ANY_VERSION_MAJ
-HAVE_TEXI2ANY_V7_TRUE
 INSTALL_INFO
 TEXI2ANY
 MAKEINDEX
@@ -6048,12 +6047,6 @@ printf "%s\n" "$as_me: WARNING: ${warn_info}" >&2;}
 else
   TEXI2ANY="${TEXI2ANY}"
 fi
-if test "${r_cv_prog_texi2any_v7}" != yes; then
-  HAVE_TEXI2ANY_V7_TRUE='#'
-else
-  HAVE_TEXI2ANY_V7_TRUE=
-fi
-
 TEXI2ANY_VERSION_MAJ=${r_cv_prog_texi2any_version_maj}
 
 TEXI2ANY_VERSION_MIN=${r_cv_prog_texi2any_version_min}
@@ -27459,7 +27452,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_verb"
-(eval echo $as_me:27462: \"$ac_link\") >&5
+(eval echo $as_me:27455: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -27537,7 +27530,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_cv_prog_c_v"
-(eval echo $as_me:27540: \"$ac_link\") >&5
+(eval echo $as_me:27533: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
