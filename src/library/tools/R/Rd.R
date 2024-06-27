@@ -1173,7 +1173,7 @@ function(dir, level = 1)
         rdxrefs[ind, 1L : 2L] <- cbind(sub("^=", "", anchors[ind]), "")
     rdxrefs <- rdxrefs[!nzchar(rdxrefs[, "Anchor"]), , drop = FALSE]
     aliases <- c(unlist(aliases, use.names = FALSE),
-                 names(.find_HTML_links(level = level)))
+                 names(findHTMLlinks(level = level)))
     if(any(ind <- is.na(match(rdxrefs[, "Target"], aliases))))
         unique(rdxrefs[ind, , drop = FALSE])
     else NULL

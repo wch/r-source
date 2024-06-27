@@ -1362,34 +1362,7 @@ Rd2HTML <-
 ## The following functions return 'relative' links assuming that all
 ## packages are installed in the same virtual library tree.
 
-## findHTMLlinks <- function(pkgDir = "", lib.loc = NULL, level = 0:2)
-## {
-##     ## The priority order is
-##     ## This package (level 0)
-##     ## The standard packages (level 1)
-##     ## along lib.loc (level 2)
-
-##     if (is.null(lib.loc)) lib.loc <- .libPaths()
-
-##     Links <- list()
-##     if (2 %in% level)
-##         Links <- c(Links, lapply(lib.loc, .find_HTML_links_in_library))
-##     if (1 %in% level) {
-##         base <- unlist(.get_standard_package_names()[c("base", "recommended")],
-##                        use.names = FALSE)
-##         Links <- c(lapply(file.path(.Library, base),
-##                           .find_HTML_links_in_package),
-##                    Links)
-##     }
-##     if (0 %in% level && nzchar(pkgDir))
-##         Links <- c(list(.find_HTML_links_in_package(pkgDir)), Links)
-##     Links <- unlist(Links)
-##     Links <- Links[!duplicated(names(Links))]
-##     gsub("[Rr]d$", "html", Links)
-## }
-
 findHTMLlinks <-
-.find_HTML_links <-
 function(pkgDir, lib.loc = NULL, level = 0 : 3)
 {
     ## A variant of the above which splits levels for base and
