@@ -8136,7 +8136,7 @@ function(dir, localOnly = FALSE, pkgSize = NA)
                 ind <- grepl(.ORCID_iD_variants_regexp, odb[, 1L])
                 odb <- odb[ind, , drop = FALSE]
             }
-            if(NROW(odb)) {
+            if(NROW(odb) && requireNamespace("curl", quietly = TRUE)) {
                 ids <- .ORCID_iD_canonicalize(odb[, 1L])
                 pos <- which(!.ORCID_iD_is_alive(ids))
                 if(length(pos))
