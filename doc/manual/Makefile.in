@@ -96,7 +96,9 @@ docs: html
 	  $(ECHO) "file $@ will be missing and linked from CRAN"; \
 	else \
 	  $(ECHO) "creating doc/manual/$@"; \
-	  $(TEXI2HTML) -D UseExternalXrefs -I$(srcdir) $< -o $@.tmp || exit 1; \
+	  $(TEXI2HTML) -D UseExternalXrefs -I$(srcdir) \
+	    `test $(TEXI2ANY_VERSION_MAJ) -ge 7 && $(ECHO) -c HTMLXREF_MODE=none` \
+	    $< -o $@.tmp || exit 1; \
 	  SED="$(SED)" $(SHELL) $(srcdir)/texi2html.sh \
 	    $(TEXI2ANY_VERSION_MAJ) $(TEXI2ANY_VERSION_MIN) $@; \
 	  rm -f $@.tmp; \
@@ -213,20 +215,31 @@ version.texi: Makefile $(top_srcdir)/VERSION $(SVN_REV)
 	  $(ECHO) "@afourpaper" >> $@ ; \
 	fi
 
+## https://www.gnu.org/software/texinfo/manual/texinfo/html_node/HTML-Xref-Configuration.html
+## EPUB cannot link local files and the system htmlxref.cnf lacks R-FAQ
+## (for the HTML manuals we use an override to produce only local xrefs)
+htmlxref.cnf:
+	@($(ECHO) "R = https://CRAN.R-project.org/doc/manuals"; \
+	  for f in $(OBJECTS_HTML); do $(ECHO) $${f%.html} mono '$${R}'/$${f}; done) > $@
+
 html: $(OBJECTS_HTML)
 	@(cd ../html; $(MAKE) index.html)
 
-R-admin.html: $(texiincludes) $(srcdir)/Rman.css $(srcdir)/texi2html.sh
-R-data.html: $(texiincludes) $(srcdir)/Rman.css $(srcdir)/texi2html.sh
-R-exts.html: $(texiincludes) $(srcdir)/Rman.css $(srcdir)/texi2html.sh
-R-intro.html: stamp-images-html $(texiincludes) $(srcdir)/Rman.css $(srcdir)/texi2html.sh
-R-ints.html: $(texiincludes) $(srcdir)/Rman.css $(srcdir)/texi2html.sh
-R-lang.html: $(texiincludes) $(srcdir)/Rman.css $(srcdir)/texi2html.sh
-R-FAQ.html: $(srcdir)/R-defs.texi $(srcdir)/Rman.css $(srcdir)/texi2html.sh
+$(OBJECTS_HTML): htmlxref.cnf $(srcdir)/Rman.css $(srcdir)/texi2html.sh
+R-admin.html: $(texiincludes)
+R-data.html: $(texiincludes)
+R-exts.html: $(texiincludes)
+R-intro.html: stamp-images-html $(texiincludes)
+R-ints.html: $(texiincludes)
+R-lang.html: $(texiincludes)
+R-FAQ.html: $(srcdir)/R-defs.texi
 
 ebooks: epub mobi
 epub: $(OBJECTS_EPUB)
 mobi: $(OBJECTS_MOBI)
+
+$(OBJECTS_EPUB): htmlxref.cnf $(srcdir)/texi2epub.sh
+$(OBJECTS_MOBI): htmlxref.cnf
 
 info: $(OBJECTS_INFO)
 R-admin.info: $(texiincludes)
@@ -398,7 +411,7 @@ clean:
 	  *.ky *.kys *.log *.out *.pdf *.pg *.pgs *.ps *.ps-2 *.tmp \
 	  *.toc *.tp *.vr *.vrs \
 	  *-pkg.tex refman.i?? refman.tex fullrefman.i?? fullrefman.tex \
-	  version.tex version.texi
+	  version.tex version.texi htmlxref.cnf
 	-@rm -f stamp-*
 	-@rm -f *.epub *.mobi rw-FAQ rw-FAQ.html
 distclean: clean
