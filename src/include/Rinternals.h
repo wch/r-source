@@ -265,6 +265,9 @@ void SET_ATTRIB(SEXP x, SEXP v);
 void DUPLICATE_ATTRIB(SEXP to, SEXP from);
 void SHALLOW_DUPLICATE_ATTRIB(SEXP to, SEXP from);
 void (MARK_NOT_MUTABLE)(SEXP x);
+void CLEAR_ATTRIB(SEXP x);
+int  (ANY_ATTRIB)(SEXP x);
+#define NO_ATTRIB(x) (! ANY_ATTRIB(x))
 
 /* S4 object testing */
 int (IS_S4_OBJECT)(SEXP x);

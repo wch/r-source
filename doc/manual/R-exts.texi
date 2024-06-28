@@ -13554,7 +13554,10 @@ another.  This can be done using @code{DUPLICATE_ATTRIB} or
 @code{SHALLOW_DUPLICATE_ATTRIB}
 @apifun DUPLICATE_ATTRIB
 @apifun SHALLOW_DUPLICATE_ATTRIB
-
+@code{ANY_ATTRIB} checks whether there are any attributes and
+@code{CLEAR_ATTRIB} removes all attributes.
+@apifun ANY_ATTRIB
+@apifun CLEAR_ATTRIB
 
 However, at least some of this copying is unneeded.  In the first
 assignment shown, @code{x <- 1:10}, @R{} first creates an object with
