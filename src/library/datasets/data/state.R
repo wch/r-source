@@ -60,7 +60,7 @@ factor(c(4, 9, 8, 5, 9, 8, 1, 3, 3, 3, 9, 8, 6, 6, 7, 7, 4, 5,
 factor(c(2, 4, 4, 2, 4, 4, 1, 2, 2, 2, 4, 4, 3, 3, 3, 3, 2, 2,
 1, 2, 1, 3, 3, 2, 3, 4, 3, 4, 1, 1, 4, 1, 2, 3, 3, 2, 4, 1, 1, 2, 3, 2,
 2, 4, 1, 2, 4, 2, 3, 4), levels=1:4,
-label = c("Northeast", "South", "North Central", "West"))
+labels = c("Northeast", "South", "North Central", "West"))
 
 "state.x77" <-
 structure(c(3615, 365, 2212, 2110, 21198, 2541, 3100, 579, 8277, 4931,

@@ -26,8 +26,8 @@ finaliseGroup <- function(x) {
         ##
         ## Justification of the current viewport must also be preserved
         ## so that transformation on group use is calculated correctly.
-        hjust <- resolveHJust(cvp$just, cvp$hjust)
-        vjust <- resolveVJust(cvp$just, cvp$vjust)
+        hjust <- resolveHJust(cvp$justification, cvp$hjust)
+        vjust <- resolveVJust(cvp$justification, cvp$vjust)
         pushViewport(viewport(hjust, vjust,
                               just=c(hjust, vjust),
                               mask="none",
@@ -40,8 +40,8 @@ finaliseGroup <- function(x) {
     if (is.grob(x$dst)) {
         destination <- function() {
             cvp <- current.viewport()
-            hjust <- resolveHJust(cvp$just, cvp$hjust)
-            vjust <- resolveVJust(cvp$just, cvp$vjust)
+            hjust <- resolveHJust(cvp$justification, cvp$hjust)
+            vjust <- resolveVJust(cvp$justification, cvp$vjust)
             pushViewport(viewport(hjust, vjust,
                                   just=c(hjust, vjust),
                                   mask="none",
@@ -80,11 +80,11 @@ recordGroup <- function(x, ref) {
     group <- list(ref=ref,
                   ## Record location, size, angle for re-use in
                   ## different viewport
-                  xy=deviceLoc(unit(resolveHJust(cvp$just, cvp$hjust), "npc"),
-                               unit(resolveVJust(cvp$just, cvp$vjust), "npc"),
+                  xy=deviceLoc(unit(resolveHJust(cvp$justification, cvp$hjust), "npc"),
+                               unit(resolveVJust(cvp$justification, cvp$vjust), "npc"),
                                valueOnly=TRUE, device=TRUE),
-                  xyin=deviceLoc(unit(resolveHJust(cvp$just, cvp$hjust), "npc"),
-                                 unit(resolveVJust(cvp$just, cvp$vjust), "npc"),
+                  xyin=deviceLoc(unit(resolveHJust(cvp$justification, cvp$hjust), "npc"),
+                                 unit(resolveVJust(cvp$justification, cvp$vjust), "npc"),
                                  valueOnly=TRUE, device=FALSE),
                   wh=c(convertX(unit(1, "npc"), "in", valueOnly=TRUE),
                        convertY(unit(1, "npc"), "in", valueOnly=TRUE)),
@@ -134,8 +134,8 @@ defnTranslate <- function(group, inverse=FALSE, device=TRUE) {
 
 useTranslate <- function(inverse=FALSE, device=TRUE) {
     cvp <- current.viewport()
-    xy <- deviceLoc(unit(resolveHJust(cvp$just, cvp$hjust), "npc"),
-                    unit(resolveVJust(cvp$just, cvp$vjust), "npc"),
+    xy <- deviceLoc(unit(resolveHJust(cvp$justification, cvp$hjust), "npc"),
+                    unit(resolveVJust(cvp$justification, cvp$vjust), "npc"),
                     valueOnly=TRUE, device=device)
     if (inverse) {
         groupTranslate(-xy$x, -xy$y)
