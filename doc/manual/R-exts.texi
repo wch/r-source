@@ -13206,11 +13206,13 @@ SEXP getvar(SEXP name, SEXP rho)
 @{
     SEXP ans;
 
-    if(!isString(name) || length(name) != 1)
+    if (!isString(name) || length(name) != 1)
         error("name is not a single string");
-    if(!isEnvironment(rho))
+    if (!isEnvironment(rho))
         error("rho should be an environment");
-    ans = findVar(installChar(STRING_ELT(name, 0)), rho);
+    ans = R_getVar(installChar(STRING_ELT(name, 0)), rho, TRUE);
+    if (TYPEOF(ans) != REALSXP || length(ans) == 0)
+        error("value is not a numeric vector with at least one element");
     Rprintf("first value is %f\n", REAL(ans)[0]);
     return R_NilValue;
 @}
@@ -13219,13 +13221,20 @@ SEXP getvar(SEXP name, SEXP rho)
 @apifun installChar
 
 The main work is done by
-@findex findVar
-@code{findVar}, but to use it we need to install @code{name} as a name
+@apifun R_getVar
+@code{R_getVar}, but to use it we need to install @code{name} as a name
 in the symbol table.  As we wanted the value for internal use, we return
 @code{NULL}.
 
-Similar functions with syntax
+@code{R_getVar} is similar to the @R{} function @code{get}. It signals
+an error if there is no binding for the variable in the
+environment. @code{R_getVarEx} can be used to return a default value if
+no binding is found; this corresponds to the @R{} function @code{get0}.
+@apifun R_getVarEx
+The third argument to @code{R_getVar} and @code{R_getVarEx} corresponds
+to the @code{inherits} argument to the @R{} function @code{get}.
 
+Functions with syntax
 @example
 @group
 void defineVar(SEXP symbol, SEXP value, SEXP rho)
