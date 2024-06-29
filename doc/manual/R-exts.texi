@@ -17381,8 +17381,28 @@ functions that should be used instead:
       Use @code{charIsASCII}, added in @R{} 4.5.0.
 @item IS_UTF8
       Use @code{charIsUTF8}, added in @R{} 4.5.0, or avoid completely.
+@item allocSExp
+      Use an appropriate constructor.
 @item findVarInFrame3
       Use @code{R_existsVarInFrame} to test for existence.
+@item findVar
+@itemx findVarInFrame
+       Use @code{R_getVar} or @code{R_getVarEx}, added in @R{} 4.5.0.
+       In some cases using @code{eval} may suffice.
+@item ATTRIB
+      Use @code{getAttrib} for individual attributes. To test whether
+      there are any attributes use @code{ANY_ATTRIB}, added in @R{}
+      4.5.0.
+@item SET_ATTRIB
+@itemx SET_OBJECT
+       Use @code{setAttrib} for individual attributes,
+       @code{DUPLICATE_ATTRIB} or @code{SHALLOW_DUPLICATE_ATTRIB} for
+       copying attributes from one object to another. Use
+       @code{CLEAR_ATTRIB} for removing all attributes, added in @R{}
+       4.5.0.
+@item R_GetCurrentEnv
+      Use @code{environment()} at the @R{} level and pass the result as
+      an argument to your C function.
 @end table
 
 For recently added entry points packages that need to be compiled
