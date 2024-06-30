@@ -3867,12 +3867,12 @@ add_dummies <- function(dir, Log)
             if(nRS)
                 msg <- c(msg,
                          "It is good practice to register native routines and to disable symbol search.\n")
+            msg2 <- "See 'Writing portable packages' in the 'Writing R Extensions' manual"
+            msg3 <- "and section 'Moving into C API compliance' for issues with the use of non-API entry points.\n"
             wrapLog("\n", paste(msg, collapse = " "), "\n",
-                    "See 'Writing portable packages'",
-                    "in the 'Writing R Extensions' manual.",
-                    "See section 'Moving into C API compliance' in the ",
-                    "'Writing R Extensions' manual for issues with use ",
-                    "of non-API entry points.\n")
+                    if(nAPIs) paste0(msg2, ",\n", msg3)
+                    else paste0(msg2, ".")
+                    )
         } else resultLog(Log, "OK")
     }
 
