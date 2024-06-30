@@ -17332,6 +17332,8 @@ be adjusted as changes are made to the API.
 * Creating call expressions::
 * Creating closures::
 * Querying CHARSXP encoding::
+* Working with attributes::
+* Working with variable bindings::
 * Some backports::
 @end menu
 
@@ -17534,6 +17536,38 @@ char *asutf8(SEXP c)
 as the encoding flags are already checked in @code{translateCharUTF8}. Also
 note the non-compliant check doesn't handle native encoding.
 
+@node Working with attributes, Working with variable bindings, Querying CHARSXP encoding, Moving into C API compliance
+@subsection Working with attributes
+
+The current implementation (@R{} 4.5.0) represents attributes internally
+as a linked list. It may be useful to change this at some point, so
+external code should not rely on this representation. The low-level
+functions @code{ATTRIB} and @code{SET_ATTRIB} reveal this representation
+and are therefore not part of the API. Individual attributes can be
+accessed and set with @code{getAttrib} and @code{setAttrib}. Attributes
+can be copied from one object to another with @code{DUPLICATE_ATTRIB}
+and @code{SHALLOW_DUPLICATE_ATTRIB}. The @code{CLEAR_ATTRIB} function
+added in @R{} 4.5.0 can be used to remove all attributes. These
+functions ensure can that certain consistency requirements are
+maintained, such as setting the object bit according to whether a class
+attribute is present.
+
+Some additional functions may be added for working with attributes.
+
+@node Working with variable bindings, Some backports, Working with attributes, Moving into C API compliance
+@subsection Working variable bindings
+
+The functions @code{findVar} and @code{findVarInFrame} have been used in
+a number of packages but are too low level to be part of the API. For
+most uses the functions @code{R_getVar} and @code{R_getVarEx} added in
+@R{} 4.5.0 will be sufficient. These are analogous to the R functions
+@code{get} and @code{get0}.
+
+In rare cases package @R{} or C code may want to obtain more detailed
+information on a binding, such as whether the binding is delayed or
+not. This is currently not possible within the API, but is under
+consideration.
+
 @node Some backports, , Querying CHARSXP encoding, Moving into C API compliance
 @subsection Some backports
 
@@ -17565,6 +17599,13 @@ SEXP R_mkClosure(SEXP formals, SEXP body, SEXP env)
     SET_BODY(fun, body);
     SET_CLOENV(fun, env);
     return fun;
+@}
+
+void CLEAR_ATTRIB(SEXP x)
+@{
+    SET_ATTRIB(CHK(x), R_NilValue);
+    SET_OBJECT(x, 0);
+    UNSET_S4_OBJECT(x);
 @}
 #endif
 @end example
