@@ -178,8 +178,9 @@ version.texi: Makefile.win $(top_srcdir)/VERSION $(SVN_REV)
 mostlyclean: clean
 clean:
 	@-rm -f *.aux *.toc *refman.i?? *.out *.log
-	@-rm -f *.cp *.cps *.en *.ens *.fn *.fns *.ky *.kys \
+	@-rm -f *.cp *.cps *.fn *.fns *.ky *.kys \
 	  *.out *.pg *.pgs *.tmp *.tp *.vr *.vrs \
+	  R-admin.en* R-exts.ae* R-exts.ap* R-exts.em* \
 	  version.tex version.texi refman.tex fullrefman.tex *-pkg.tex
 distclean: clean
 	@-rm -f *.pdf *.info* *.html

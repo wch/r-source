@@ -407,9 +407,10 @@ clean:
 	@if test "$(BUILDDIR_IS_SRCDIR)" = no ; then \
 	  rm -Rf $(INSTFILES) images; \
 	fi
-	-@rm -f *.aux *.cp *.cps *.dvi *.en *.ens *.fn *.fns *.html *.info* \
+	-@rm -f *.aux *.cp *.cps *.dvi *.fn *.fns *.html *.info* \
 	  *.ky *.kys *.log *.out *.pdf *.pg *.pgs *.ps *.ps-2 *.tmp \
 	  *.toc *.tp *.vr *.vrs \
+	  R-admin.en* R-exts.ae* R-exts.ap* R-exts.em* \
 	  *-pkg.tex refman.i?? refman.tex fullrefman.i?? fullrefman.tex \
 	  version.tex version.texi htmlxref.cnf
 	-@rm -f stamp-*
