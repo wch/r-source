@@ -42,7 +42,7 @@ TEXI2ANY_TEXT_OPTS = --number-sections --fill-column=76 --no-split --no-headers
 TEXI2HTML = $(TEXI2ANY) $(TEXI2ANY_HTML_OPTS)
 TEXI2TEXT = $(TEXI2ANY) $(TEXI2ANY_TEXT_OPTS)
 ## some broken versions of texi2dvi need C collation.
-TEXI2DVI = LC_COLLATE=C @TEXI2DVI@ --texinfo="@set UseExternalXrefs "
+TEXI2DVI = LC_COLLATE=C @TEXI2DVI@
 TEXI2PDF = $(TEXI2DVI) --pdf
 PDFLATEX = @PDFLATEX@
 ## These are used to check if there is a non-empty path to the
@@ -96,7 +96,7 @@ docs: html
 	  $(ECHO) "file $@ will be missing and linked from CRAN"; \
 	else \
 	  $(ECHO) "creating doc/manual/$@"; \
-	  $(TEXI2HTML) -D UseExternalXrefs -I$(srcdir) \
+	  $(TEXI2HTML) -I$(srcdir) \
 	    `test $(TEXI2ANY_VERSION_MAJ) -ge 7 && $(ECHO) -c HTMLXREF_MODE=none` \
 	    $< -o $@.tmp || exit 1; \
 	  SED="$(SED)" $(SHELL) $(srcdir)/texi2html.sh \
@@ -109,7 +109,7 @@ docs: html
 	  $(ECHO) "ERROR: 'texi2any' v5.1 or later needed but missing on your system."; \
 	  exit 1; \
 	fi
-	$(TEXI2ANY) --enable-encoding -D UseExternalXrefs -I$(srcdir) $<
+	$(TEXI2ANY) --enable-encoding -I$(srcdir) $<
 
 .texi.pdf:
 	@if test -z "$(TEXI2DVI0)"; then \

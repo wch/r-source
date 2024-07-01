@@ -1903,17 +1903,11 @@ package subdirectory may also contain files @file{INDEX},
 @file{NAMESPACE}, @file{configure}, @file{cleanup}, @file{LICENSE},
 @file{LICENCE}, @file{COPYING} and @file{NEWS}.
 
-@ifclear UseExternalXrefs
-See section ``Creating R packages'' in @cite{Writing R Extensions}, for
-details.  This manual is included in the R distribution, @pxref{What
+@xref{Creating R packages, , , R-exts, Writing R Extensions}
+for details.  This manual is included in the R distribution, @pxref{What
 documentation exists for R?}, and gives information on package
 structure, the configure and cleanup mechanisms, and on automated
 package checking and building.
-@end ifclear
-@ifset UseExternalXrefs
-@xref{Creating R packages, , Creating R packages, R-exts, Writing R Extensions},
-for details.
-@end ifset
 
 R version 1.3.0 has added the function @code{package.skeleton()} which
 will set up directories, save data and code, and create skeleton help
@@ -3324,15 +3318,9 @@ cases you don't want anything printed.
 Roughly speaking, you need to start R inside the debugger, load the
 code, send an interrupt, and then set the required breakpoints.
 
-@ifclear UseExternalXrefs
-See section ``Finding entry points in dynamically loaded code'' in
-@cite{Writing R Extensions}.  This manual is included in the R
-distribution, @pxref{What documentation exists for R?}.
-@end ifclear
-@ifset UseExternalXrefs
 @xref{Finding entry points, , Finding entry points in dynamically loaded
-code, R-exts, Writing R Extensions}.
-@end ifset
+code, R-exts, Writing R Extensions}.  This manual is included in the R
+distribution, @pxref{What documentation exists for R?}.
 
 @node How can I inspect R objects when debugging?, How can I change compilation flags?, How can I debug dynamically loaded code?, R Programming
 @section How can I inspect R objects when debugging?
@@ -3340,14 +3328,8 @@ code, R-exts, Writing R Extensions}.
 The most convenient way is to call @code{R_PV} from the symbolic
 debugger.
 
-@ifclear UseExternalXrefs
-See section ``Inspecting R objects when debugging'' in @cite{Writing R
-Extensions}.
-@end ifclear
-@ifset UseExternalXrefs
 @xref{Inspecting R objects, , Inspecting R objects when debugging,
 R-exts, Writing R Extensions}.
-@end ifset
 
 @node How can I change compilation flags?, How can I debug S4 methods?, How can I inspect R objects when debugging?, R Programming
 @section How can I change compilation flags?
@@ -3358,26 +3340,7 @@ Suppose you have C code file for @I{dynloading} into R, but you want to use
 
 Starting with R 2.1.0, users can provide personal @file{Makevars} configuration
 files in @file{$@env{HOME}/.R} to override the default flags.
-@ifclear UseExternalXrefs
-See section ``Add-on packages'' in @cite{R Installation and
-Administration}.
-@end ifclear
-@ifset UseExternalXrefs
-@xref{Add-on packages, , Add-on packages, R-admin,
-R Installation and Administration}.
-@end ifset
-
-@c For earlier versions of R, you could change the file
-@c @file{@var{R_HOME}/etc/Makeconf} to reflect your preferences, or (at
-@c least for systems using @acronym{GNU} Make) override them by the
-@c environment variable @env{MAKEFLAGS}.
-@c @ifclear UseExternalXrefs
-@c See section ``Creating shared objects'' in @cite{Writing R Extensions}.
-@c @end ifclear
-@c @ifset UseExternalXrefs
-@c @xref{Creating shared objects, , Creating shared objects, R-exts,
-@c Writing R Extensions}.
-@c @end ifset
+@xref{Add-on packages, , , R-admin, R Installation and Administration}.
 
 @node How can I debug S4 methods?,  , How can I change compilation flags?, R Programming
 @section How can I debug S4 methods?

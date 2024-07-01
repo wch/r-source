@@ -1609,12 +1609,7 @@ override for @code{c}.
 The rest of @R{} should where possible make use of the allocators made
 available by file @file{src/main/memory.c}, which are also the methods
 recommended in
-@ifset UseExternalXrefs
-@ref{Memory allocation, , Memory allocation, R-exts, Writing R Extensions}
-@end ifset
-@ifclear UseExternalXrefs
-section `Memory allocation' in the `Writing R Extensions' manual
-@end ifclear
+@ref{Memory allocation, , , R-exts, Writing R Extensions}
 @findex R_alloc
 @findex R_Calloc
 @findex R_Realloc
@@ -1840,12 +1835,7 @@ and @code{libtiff} libraries.
 @subsection Hiding C entry points
 
 We make use of the visibility mechanisms discussed in
-@ifset UseExternalXrefs
-@ref{Controlling visibility, , Controlling visibility, R-exts, Writing R Extensions},
-@end ifset
-@ifclear UseExternalXrefs
-section `Controlling Visibility' in the `Writing R Extensions' manual,
-@end ifclear
+@ref{Controlling visibility, , , R-exts, Writing R Extensions}.
 C entry points not needed outside the main @R{} executable/dynamic
 library (and in particular in no package nor module) should be prefixed
 by @code{attribute_hidden}.
@@ -2379,12 +2369,7 @@ of these requirements.
 
 The process of marking messages (errors, warnings etc) for translation
 in an @R{} package is described in
-@ifset UseExternalXrefs
-@ref{Internationalization, , Internationalization, R-exts, Writing R Extensions},
-@end ifset
-@ifclear UseExternalXrefs
-section `Internationalization' in the `Writing R Extensions' manual,
-@end ifclear
+@ref{Internationalization, , , R-exts, Writing R Extensions},
 and the standard packages included with @R{} have (with an exception in
 @pkg{grDevices} for the menus of the @code{windows()} device) been
 internationalized in the same way as other packages.
@@ -2511,13 +2496,8 @@ See file @file{po/README} for how to update the message templates and catalogs.
 * Help::                        
 @end menu
 
-The structure of a @emph{source} packages is described in 
-@ifset UseExternalXrefs
-@ref{Creating R packages, , Creating R packages, R-exts, Writing R Extensions}: 
-@end ifset
-@ifclear UseExternalXrefs
-section `Creating R packages' in the `Writing R Extensions' manual:
-@end ifclear
+The structure of @emph{source} packages is described in
+@ref{Creating R packages, , , R-exts, Writing R Extensions}:
 this chapter is concerned with the structure of @emph{installed}
 packages. 
 
@@ -4312,13 +4292,7 @@ install log for non-portable flags (for example those added to
 are reported, except @option{-Wall}, @option{-Wextra} and
 @option{-Weverything}, and flags which appear to be attempts to suppress
 warnings are highlighted.
-See
-@ifset UseExternalXrefs
-@ref{Writing portable packages, , Writing portable packages, R-exts, Writing R Extensions}
-@end ifset
-@ifclear UseExternalXrefs
-section `Writing portable packages' in the `Writing R Extensions' manual
-@end ifclear
+@xref{Writing portable packages, , , R-exts, Writing R Extensions}
 for the rationale of this check (and why even @option{-Werror} is
 unsafe).
 
