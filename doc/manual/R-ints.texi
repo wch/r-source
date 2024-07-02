@@ -4735,7 +4735,7 @@ A simple @command{make}, considering the features of @command{make} in
 @samp{%}, the automatic variable @samp{$^}, the @samp{+=} syntax to
 append to the value of a variable, the (``safe'') inclusion of makefiles
 with no error, conditional execution, and many more, must not be used
-(see Chapter ``Features'' in the @cite{@acronym{GNU} Make Manual} for
+(@pxref{Features, , , make, The @acronym{GNU} Make Manual} for
 more information).  On the other hand, building @R{} in a separate
 directory (not containing the sources) should work provided that
 @command{make} supports the @code{VPATH} mechanism.
@@ -4761,8 +4761,8 @@ are available at
 Under Windows, most users will not have these tools installed, and you
 should not require their presence for the operation of your package.
 However, users who install your package from source will have them, as
-they can be assumed to have followed the instructions in ``the Windows
-toolset'' appendix of the ``R Installation and Administration'' manual
+they can be assumed to have followed the instructions in
+@ref{The Windows toolset, , , R-admin, R Installation and Administration}
 to obtain them.  Redirection cannot be assumed to be available via
 @command{system} as this does not use a standard shell (let alone a
 @I{Bourne} shell).

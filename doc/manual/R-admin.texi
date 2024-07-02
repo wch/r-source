@@ -1054,8 +1054,9 @@ Clang 13 and @code{-std=c++23} from Clang 17.  Apple Clang supports
 `Standards' for @command{g++} starting with @samp{gnu} enable `GNU
 extensions': what those are is hard to track down.
 
-For the use of C++ in @R{} packages see the `Writing R
-Extensions' manual.  Prior to @R{} 3.6.0 the default C++ standard was
+For the use of C++ in @R{} packages,
+@pxref{, , , R-exts, Writing R Extensions}.
+Prior to @R{} 3.6.0 the default C++ standard was
 that of the compiler used: currently it is C++17.
 
 @uref{https://en.cppreference.com/w/cpp/compiler_support} indicates

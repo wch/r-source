@@ -3380,8 +3380,9 @@ using these utilities.
 @end quotation
 
 @quotation Note to Windows users
-@code{R CMD build} may make use of the Windows toolset (see the ``R
-Installation and Administration'' manual) if present and in your path,
+@code{R CMD build} may make use of the Windows toolset
+(@pxref{The Windows toolset, , , R-admin, R Installation and Administration})
+if present and in your path,
 and it is required for packages which need it to install (including
 those with @file{configure.win},  @file{cleanup.win}, @file{configure.ucrt}
 or @file{cleanup.ucrt} scripts or a
