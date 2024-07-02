@@ -28,11 +28,11 @@
       \item New \code{head()} and \code{tail()} methods for class
       \code{"ts"} time series, proposed by Spencer Graves on R-devel.
 
-      \item New \code{qr.influence()}, a \dQuote{bare bones} interface to
-      the \code{lm.influence()} leave-one-out diagnostics computations;
-      wished for in \PR{18739}.
+      \item New \code{qr.influence()} function, a \dQuote{bare bones}
+      interface to the \code{lm.influence()} leave-one-out diagnostics
+      computations; wished for in \PR{18739}.
 
-      \item New function \code{grepv} identical to \code{grep} except
+      \item New function \code{grepv()} identical to \code{grep()} except
       with the default \code{value = TRUE}. 
     }
   }
@@ -153,8 +153,8 @@
       \item \command{R CMD check --as-cran} will compile C++ code with
       \code{-DR_NO_REMAP}.
 
-      \item \command{R CMD check --as-cran} notes bad parts in
-      \file{DESCRIPTION} file URL fields.
+      \item \command{R CMD check --as-cran} notes bad parts in the
+      \file{DESCRIPTION} file's URL fields.
     }
   }
 
@@ -163,10 +163,10 @@
       \item Auto-generated \code{citation()} entries no longer include
       (additional) URLs in the \samp{note} field (\PR{18547}).
 
-      \item \code{as.data.frame.list()} gets new option \code{new.names}
+      \item \code{as.data.frame.list()} gets a new option \code{new.names}
       and now preserves \code{NA} names, thus fixing the \code{format()}
       method for data frames, and also bug \PR{18745}.
-      \I{Relatedly}, the \code{format()} method gets option \code{cut.names}.
+      \I{Relatedly}, the \code{format()} method gets an option \code{cut.names}.
     }
   }
 }
