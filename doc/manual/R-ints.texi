@@ -4735,7 +4735,7 @@ A simple @command{make}, considering the features of @command{make} in
 @samp{%}, the automatic variable @samp{$^}, the @samp{+=} syntax to
 append to the value of a variable, the (``safe'') inclusion of makefiles
 with no error, conditional execution, and many more, must not be used
-(@pxref{Features, , , make, The @acronym{GNU} Make Manual} for
+(see Chapter ``Features'' in the @cite{@acronym{GNU} Make Manual} for
 more information).  On the other hand, building @R{} in a separate
 directory (not containing the sources) should work provided that
 @command{make} supports the @code{VPATH} mechanism.
