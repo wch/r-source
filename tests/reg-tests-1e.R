@@ -425,7 +425,8 @@ options(op)
 
 ## handling of invalid Encoding / unsupported conversion in packageDescription()
 dir.create(pkgpath <- tempfile())
-writeLines(c("Version: 1.0", "Encoding: FTU-8"), # (sic!)
+writeLines(c(sprintf("Package: %s", basename(pkgpath)),
+             "Version: 1.0", "Encoding: FTU-8"), # (sic!)
            file.path(pkgpath, "DESCRIPTION"))
 stopifnot(suppressWarnings(packageVersion(basename(pkgpath),
                                           dirname(pkgpath))) == "1.0")

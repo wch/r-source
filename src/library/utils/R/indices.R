@@ -73,6 +73,12 @@ packageDescription <-
     } else file <- ""
 
     if(nzchar(file)) {
+        ## Could have found a pkgpath matching pkg ignoring case
+        ## (PR#18751):
+        if(is.null(pkgname <- desc[["Package"]]) || (pkgname != pkg)) {
+            warning(gettextf("no package '%s' was found", pkg), domain = NA)
+            return(NA)
+        }
         ## read the Encoding field if any
         enc <- desc[["Encoding"]]
         if(!is.null(enc) && !is.na(encoding)) {
