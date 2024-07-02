@@ -356,7 +356,7 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
         on.exit(Sys.unsetenv("TEXINDY"), add = TRUE)
         opt_pdf <- if(pdf) "--pdf" else ""
         opt_quiet <- if(quiet) "--quiet" else ""
-        opt_extra <- ""
+        opt_extra <- "--max-iterations=20"
         out <- .system_with_capture(texi2dvi, "--help")
 
         if(length(grep("--no-line-error", out$stdout)))
@@ -364,10 +364,6 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
         ## (Maybe change eventually: the current heuristics for finding
         ## error messages in log files should work for both regular and
         ## file line error indicators.)
-
-        ## This is present in texinfo after late 2009, so really >= 5.0.
-        if(any(grepl("--max-iterations=N", out$stdout)))
-            opt_extra <- c(opt_extra, "--max-iterations=20")
 
         ## and work around a bug in texi2dvi
         ## https://stat.ethz.ch/pipermail/r-devel/2011-March/060262.html

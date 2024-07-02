@@ -41,6 +41,9 @@
     \itemize{
       \item The minimum \command{autoconf} requirement for a maintainer
       build has been increased to \command{autoconf}\sspace{}2.72.
+
+      \item Building the HTML (and Info) versions of the R manuals now
+      requires \command{texi2any} from \I{Texinfo} 6.1 or later.
     }
   }
 

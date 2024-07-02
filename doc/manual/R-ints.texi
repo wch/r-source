@@ -4777,10 +4777,10 @@ Perl version 5 is needed for the maintainer-only script
 @findex Perl
 
 @item
-@command{texinfo} version 5.1 or later is needed to build the HTML, PDF
+@command{texi2any} version 6.1 or later is needed to build the HTML
 and Info files for the @R{} manuals written in the @acronym{GNU} @I{Texinfo}
 system.  And that requires Perl.
-@findex makeinfo
+@findex texi2any
 @end itemize
 
 It is also important that code is written in a way that allows others to

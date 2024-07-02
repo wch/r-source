@@ -86,8 +86,8 @@ texi2pdf(file, clean = FALSE, quiet = TRUE,
 
 \note{
   %% configure just looks for a texi2dvi command and does not check its
-  %% version.  Howvever, it is normally distributed with texinfo, and
-  %% that is checked to be >= 5.1.
+  %% version.  However, it is normally distributed with texinfo, and
+  %% that is checked to be >= 6.1.
   %% The macOS distribution by default installs /usr/local/bin/texi2dvi,
   %% but that is optional and macOS has /usr/bin/texi2dvi stuck at 4.8.
   There are various versions of the \command{texi2dvi} script on
@@ -104,8 +104,7 @@ texi2pdf(file, clean = FALSE, quiet = TRUE,
   exist but the other two approaches do not (and may get confused by
   such files).
   
-  Where supported (\command{texi2dvi} 5.0 and later;
-  \command{texify.exe} from \I{MiKTeX}), option \option{--max-iterations=20}
+  Option \option{--max-iterations=20}
   is used to avoid infinite retries.
   
   The emulation mode supports \code{quiet = TRUE} from \R 3.2.3 only.

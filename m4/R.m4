@@ -196,7 +196,7 @@ if test -n "${TEXI2ANY}"; then
                 false)
   AC_SUBST(INSTALL_INFO)
 fi
-if test "${r_cv_prog_texi2any_v5}" != yes; then
+if test "${r_cv_prog_texi2any_v6}" != yes; then
   warn_info="you cannot build info or HTML versions of the R manuals"
   AC_MSG_WARN([${warn_info}])
   TEXI2ANY=""
@@ -209,8 +209,8 @@ AC_SUBST([TEXI2ANY_VERSION_MIN], [${r_cv_prog_texi2any_version_min}])
 
 ## _R_PROG_TEXI2ANY_VERSION
 ## ------------------------
-## Building the R Texinfo manuals requires texinfo v5.1 or later.
-## Set shell variable r_cv_prog_texi2any_v5 to 'yes' if a recent
+## Building the R manuals requires Texinfo v6.1 or later.
+## Set shell variable r_cv_prog_texi2any_v6 to 'yes' if a recent
 ## enough texi2any aka  makeinfo is found, and to 'no' otherwise.
 ## If you change the minimum version here, also change it in
 ## doc/manual/Makefile.in and doc/manual/R-admin.texi.
@@ -224,24 +224,24 @@ AC_CACHE_VAL([r_cv_prog_texi2any_version_maj],
 AC_CACHE_VAL([r_cv_prog_texi2any_version_min],
 [r_cv_prog_texi2any_version_min=`echo ${r_cv_prog_texi2any_version} | \
   cut -f2 -d. | tr -dc '0123456789.'`])
-AC_CACHE_CHECK([whether texi2any version is at least 5.1],
-                [r_cv_prog_texi2any_v5],
+AC_CACHE_CHECK([whether texi2any version is at least 6.1],
+                [r_cv_prog_texi2any_v6],
 [if test -z "${r_cv_prog_texi2any_version_maj}" \
      || test -z "${r_cv_prog_texi2any_version_min}"; then
-  r_cv_prog_texi2any_v5=no
-elif test ${r_cv_prog_texi2any_version_maj} -gt 5; then
-  r_cv_prog_texi2any_v5=yes
-elif test ${r_cv_prog_texi2any_version_maj} -lt 5 \
+  r_cv_prog_texi2any_v6=no
+elif test ${r_cv_prog_texi2any_version_maj} -gt 6; then
+  r_cv_prog_texi2any_v6=yes
+elif test ${r_cv_prog_texi2any_version_maj} -lt 6 \
      || test ${r_cv_prog_texi2any_version_min} -lt 1; then
-  r_cv_prog_texi2any_v5=no
+  r_cv_prog_texi2any_v6=no
 else
-  r_cv_prog_texi2any_v5=yes
+  r_cv_prog_texi2any_v6=yes
 fi])
   ## Also record whether texi2any is at least 7 to appropriately handle
   ## HTML and EPUB output changes, see
   ## <https://lists.gnu.org/archive/html/bug-texinfo/2022-11/msg00036.html>.
 AC_CACHE_VAL([r_cv_prog_texi2any_v7],
-[if test ${r_cv_prog_texi2any_v5} = yes \
+[if test ${r_cv_prog_texi2any_v6} = yes \
      && test ${r_cv_prog_texi2any_version_maj} -ge 7; then
   r_cv_prog_texi2any_v7=yes
 else

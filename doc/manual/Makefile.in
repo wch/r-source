@@ -92,7 +92,7 @@ docs: html
 
 .texi.html:
 	@if test -z "$(TEXI2ANY)"; then \
-	  $(ECHO) "'texi2any' v5.1 or later needed to make HTML docs but missing on your system." ; \
+	  $(ECHO) "'texi2any' v6.1 or later needed to make HTML docs but missing on your system." ; \
 	  $(ECHO) "file $@ will be missing and linked from CRAN"; \
 	else \
 	  $(ECHO) "creating doc/manual/$@"; \
@@ -106,7 +106,7 @@ docs: html
 
 .texi.info:
 	@if test -z "$(TEXI2ANY)"; then \
-	  $(ECHO) "ERROR: 'texi2any' v5.1 or later needed but missing on your system."; \
+	  $(ECHO) "ERROR: 'texi2any' v6.1 or later needed but missing on your system."; \
 	  exit 1; \
 	fi
 	$(TEXI2ANY) --enable-encoding -I$(srcdir) $<
@@ -354,7 +354,7 @@ install-images-pdf: installdirs
 	@-for f in $(srcdir)/images/*.pdf; do \
 	  $(INSTALL_DATA) $${f} "$(DESTDIR)$(rdocdir)/manual/images"; \
 	done
-## if there is no makeinfo >= 5.1 then there are no html pages
+## if there is no makeinfo >= 6.1 then there are no html pages
 install-html: installdirs
 	@for f in $(OBJECTS_HTML); do \
 	  if test -f $${f} ; then \
@@ -431,7 +431,7 @@ distdir: $(DISTFILES)
 	    || exit 1; \
 	done
 	@if test -z "$(TEXI2ANY)"; then \
-	  $(ECHO) "ERROR: 'texi2any' v5.1 or later needed but missing on your system."; \
+	  $(ECHO) "ERROR: 'texi2any' v6.1 or later needed but missing on your system."; \
 	  exit 1; \
 	fi
 #	$(distdir)/doc/html has already been created
@@ -443,7 +443,7 @@ front-matter: ${top_builddir}/doc/RESOURCES ${top_builddir}/doc/FAQ
 
 ${top_builddir}/doc/RESOURCES: $(srcdir)/resources.texi
 	@if test -z "$(TEXI2ANY)"; then \
-	  $(ECHO) "'texi2any' v5.1 or later needed to make HTML docs but missing on your system." ; \
+	  $(ECHO) "'texi2any' v6.1 or later needed to make HTML docs but missing on your system." ; \
 	  $(ECHO) "file doc/RESOURCES will be missing"; \
 	else \
 	  $(ECHO) "creating RESOURCES"; \
@@ -452,7 +452,7 @@ ${top_builddir}/doc/RESOURCES: $(srcdir)/resources.texi
 
 ${top_builddir}/doc/FAQ: $(srcdir)/R-FAQ.texi $(srcdir)/R-defs.texi
 	@if test -z "$(TEXI2ANY)"; then \
-	  $(ECHO) "'texi2any' v5.1 or later needed to make HTML docs but missing on your system." ; \
+	  $(ECHO) "'texi2any' v6.1 or later needed to make HTML docs but missing on your system." ; \
 	  $(ECHO) "file doc/FAQ will be missing"; \
 	else \
 	  $(ECHO) "creating FAQ"; \
@@ -463,7 +463,7 @@ html-non-svn: ../html/resources.html
 
 ../html/resources.html: $(srcdir)/resources.texi
 	@if test -z "$(TEXI2ANY)"; then \
-	  $(ECHO) "'texi2any' v5.1 or later needed to make HTML docs but missing on your system." ; \
+	  $(ECHO) "'texi2any' v6.1 or later needed to make HTML docs but missing on your system." ; \
 	  $(ECHO) "file doc/html/resources.html will be missing"; \
 	else \
 	  $(ECHO) "creating doc/html/resources.html"; \

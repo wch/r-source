@@ -380,15 +380,14 @@ directory.  You can copy the script to a place where users can invoke
 it, for example to @file{/usr/local/bin}.  In addition,
 @HTML{} versions of the R manuals (e.g., @file{R-exts.html}, the
 ``Writing R Extensions'' manual) are built in the @file{doc/manual}
-subdirectory.
+subdirectory (if a suitable @command{texi2any} program was found).
 
 Use @kbd{make pdf} to build PDF (Portable Document Format)
 versions of the R manuals, including
 @file{fullrefman.pdf} (an R object reference index).  Manuals written in the
-@acronym{GNU} @I{Texinfo} system can also be converted to info files
+@acronym{GNU} @I{Texinfo} system can also be converted to @file{.info} files
 suitable for reading online with Emacs or stand-alone @acronym{GNU}
-Info; use @kbd{make info} to create these versions (note that this
-requires @I{Makeinfo} version 4.5).
+Info; use @kbd{make info} to create these files.
 
 Finally, use @kbd{make check} to find out whether your R system works
 correctly.

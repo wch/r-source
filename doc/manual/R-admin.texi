@@ -425,10 +425,10 @@ There is a set of manuals that can be built from the sources,
 @table @samp
 @item fullrefman
 Printed versions of all the help pages for base and recommended packages
-(around 3750 pages).
+(around 3900 pages).
 @item refman
 Printed versions of the help pages for selected base packages (around
-2200 pages)
+2300 pages)
 @item R-FAQ
 R @acronym{FAQ}
 @item R-intro
@@ -439,6 +439,8 @@ R @acronym{FAQ}
 ``R Installation and Administration'', this manual.
 @item R-exts
 ``Writing R Extensions''.
+@item R-ints
+``R Internals''.
 @item R-lang
 ``The R Language Definition''.
 @end table
@@ -446,17 +448,18 @@ R @acronym{FAQ}
 @noindent
 To make these (with @samp{fullrefman} rather than @samp{refman}), use
 
+@c FIXME: mention HTML versions built by default from make docs
 @example
 make pdf      @r{to create PDF versions}
 make info     @r{to create info files (not @samp{refman} nor @samp{fullrefman}).}
 @end example
 
-@c texi2any from Mar 2013.
+@c texi2any from Feb 2016.
 You will not be able to build any of these unless you have
-@command{texi2any} version 5.1 or later installed, and for PDF you must
+@command{texi2any} version 6.1 or later installed, and for PDF you must
 have @command{texi2dvi} and @file{texinfo.tex} installed (which are part
-of the @acronym{GNU} @pkg{texinfo} distribution but are, especially
-@file{texinfo.tex}, often made part of the @TeX{} package in
+of the @acronym{GNU} @I{Texinfo} distribution but are, especially
+@file{texinfo.tex}, often made part of the @TeX{} package @pkg{texinfo} in
 re-distributions).  The path to @command{texi2any} can be set by macro
 @samp{TEXI2ANY} in @file{config.site}.  NB: @command{texi2any} requires
 @command{perl}.
@@ -3189,12 +3192,12 @@ looking in @file{/usr/xpg4/bin} which is used on some commercial
 Unixes).
 
 You will not be able to build most of the manuals unless you have
-@command{texi2any} version 5.1 or later installed (which requires
+@command{texi2any} version 6.1 or later installed (which requires
 @command{perl}), and if not most of the @HTML{} manuals will be linked
 to a version on @acronym{CRAN}. To make PDF versions of the manuals you
 will also need file @file{texinfo.tex} installed (which is part of the
-@acronym{GNU} @pkg{texinfo} distribution but is often made part of the
-@TeX{} package in re-distributions) as well as
+@acronym{GNU} @I{Texinfo} distribution but is often made part of the
+@TeX{} package @pkg{texinfo} in re-distributions) as well as
 @command{texi2dvi}.@footnote{@command{texi2dvi} is normally a shell
 script.  Some of the issues which have been observed with broken
 versions of @command{texi2dvi} can be circumvented by setting the
@@ -5113,13 +5116,13 @@ Support for Cairo-based graphics devices. @xref{Cairo graphics}.
 A TeX installation. @xref{Other libraries}.
 
 @item
-@command{texi2any} from a @samp{texinfo} distribution, which requires
+@command{texi2any} from a @I{Texinfo} distribution, which requires
 @command{perl} (currently a default part of macOS but it has been
 announced that it may not be in future).
 @c macOS 10.15 release notes, but is in 11
 @c https://developer.apple.com/documentation/macos-release-notes/macos-catalina-10_15-release-notes
 A version of @command{texi2any} has been included in the binary
-distribution of @R{} and there is a @code{texinfo} component at
+distribution of @R{} and there is a @samp{texinfo} component at
 @uref{https://mac.r-project.org/bin/}.
 @end itemize
 
