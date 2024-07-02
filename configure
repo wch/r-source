@@ -5947,27 +5947,27 @@ else case e in #(
 esac
 fi
 
-{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking whether texi2any version is at least 5.1" >&5
-printf %s "checking whether texi2any version is at least 5.1... " >&6; }
-if test ${r_cv_prog_texi2any_v5+y}
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking whether texi2any version is at least 6.1" >&5
+printf %s "checking whether texi2any version is at least 6.1... " >&6; }
+if test ${r_cv_prog_texi2any_v6+y}
 then :
   printf %s "(cached) " >&6
 else case e in #(
   e) if test -z "${r_cv_prog_texi2any_version_maj}" \
      || test -z "${r_cv_prog_texi2any_version_min}"; then
-  r_cv_prog_texi2any_v5=no
-elif test ${r_cv_prog_texi2any_version_maj} -gt 5; then
-  r_cv_prog_texi2any_v5=yes
-elif test ${r_cv_prog_texi2any_version_maj} -lt 5 \
+  r_cv_prog_texi2any_v6=no
+elif test ${r_cv_prog_texi2any_version_maj} -gt 6; then
+  r_cv_prog_texi2any_v6=yes
+elif test ${r_cv_prog_texi2any_version_maj} -lt 6 \
      || test ${r_cv_prog_texi2any_version_min} -lt 1; then
-  r_cv_prog_texi2any_v5=no
+  r_cv_prog_texi2any_v6=no
 else
-  r_cv_prog_texi2any_v5=yes
+  r_cv_prog_texi2any_v6=yes
 fi ;;
 esac
 fi
-{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $r_cv_prog_texi2any_v5" >&5
-printf "%s\n" "$r_cv_prog_texi2any_v5" >&6; }
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $r_cv_prog_texi2any_v6" >&5
+printf "%s\n" "$r_cv_prog_texi2any_v6" >&6; }
   ## Also record whether texi2any is at least 7 to appropriately handle
   ## HTML and EPUB output changes, see
   ## <https://lists.gnu.org/archive/html/bug-texinfo/2022-11/msg00036.html>.
@@ -5975,7 +5975,7 @@ if test ${r_cv_prog_texi2any_v7+y}
 then :
   printf %s "(cached) " >&6
 else case e in #(
-  e) if test ${r_cv_prog_texi2any_v5} = yes \
+  e) if test ${r_cv_prog_texi2any_v6} = yes \
      && test ${r_cv_prog_texi2any_version_maj} -ge 7; then
   r_cv_prog_texi2any_v7=yes
 else
@@ -6039,7 +6039,7 @@ test -n "$INSTALL_INFO" || INSTALL_INFO="false"
 
 
 fi
-if test "${r_cv_prog_texi2any_v5}" != yes; then
+if test "${r_cv_prog_texi2any_v6}" != yes; then
   warn_info="you cannot build info or HTML versions of the R manuals"
   { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: ${warn_info}" >&5
 printf "%s\n" "$as_me: WARNING: ${warn_info}" >&2;}
