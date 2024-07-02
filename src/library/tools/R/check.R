@@ -7128,6 +7128,7 @@ add_dummies <- function(dir, Log)
         Sys.setenv("_R_CHECK_MBCS_CONVERSION_FAILURE_" = "TRUE")
         Sys.setenv("_R_CHECK_VALIDATE_UTF8_" = "TRUE")
         Sys.setenv("_R_CXX_USE_NO_REMAP_" = "TRUE")
+        Sys.setenv("_R_CHECK_XREFS_NOTE_MISSING_PACKAGE_ANCHORS_" = "TRUE")
         R_check_vc_dirs <- TRUE
         R_check_executables_exclusions <- FALSE
         R_check_doc_sizes2 <- TRUE
