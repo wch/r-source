@@ -4499,7 +4499,7 @@ in the rest of this section.
 File @file{configure} is created from @file{configure.ac} and the files
 under @file{m4} by @command{autoconf} and @command{aclocal} (part of the
 @pkg{automake} package).  There is a formal version requirement on
-@command{autoconf} of 2.71 or later, but it is unlikely that anything
+@command{autoconf} of 2.72 or later, but it is unlikely that anything
 other than the most recent versions@footnote{at the time of revision of
 this para in early 2024, @pkg{autoconf-2.72} and
 @pkg{automake-1.16.5}. Previously @pkg{autoconf-2.71} was used.}
