@@ -5832,9 +5832,13 @@ add_dummies <- function(dir, Log)
                              "\\[-W#warnings\\]",
                              "\\[-Wrange-loop-construct\\]",
                              "\\[-Warray-parameter=\\]",
+                             ## GCC 14's C++ stdlib (as seen for TMB headers)
+                             "\\[-Wtemplate-id-cdtor\\]",
                              ## clang version (not Apple clang)
                              "\\[-Warray-parameter\\]",
-                             "\\[-Wuse-after-free\\]"
+                             "\\[-Wuse-after-free\\]",
+                             ## rustc
+                             "^warning: use of deprecated"
                             )
 
                 ## warning most seen with -D_FORTIFY_SOURCE
