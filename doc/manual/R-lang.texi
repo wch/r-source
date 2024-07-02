@@ -2,7 +2,6 @@
 @c %**start of header
 @setfilename R-lang.info
 @settitle R Language Definition
-@setchapternewpage on
 @c %**end of header
 
 @syncodeindex fn vr

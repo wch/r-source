@@ -2,9 +2,8 @@
 @c %**start of header
 @setfilename resources.info
 @settitle R Resources
-@c %**end of header
-
 @paragraphindent 0
+@c %**end of header
 
 @c NOTE:
 @c This file is currently written for standalone usage only.
@@ -14,9 +13,9 @@
 @c </NOTE>
 
 @ifinfo
+@node Top
 @sp 1
-@c Original header was centered, hence the @w{}.  Argh.
-@w{                            }AVAILABLE R RESOURCES
+@center AVAILABLE R RESOURCES
 @sp 1
 @end ifinfo
 
@@ -30,19 +29,11 @@
 @end html
 @end ifhtml
 
-@node Top, FAQ, (dir), (dir)
 
-@menu
-* FAQ::                         
-* Mailing lists::               
-* Archives::                    
-* Bug-tracking system::         
-@end menu
-
-@node FAQ, Mailing lists, Top, Top
+@node FAQ
 @chapter FAQ
 
-A collection of @uref{faq.html, , Frequently Asked Questions} and their
+A collection of Frequently Asked Questions and their
 answers is maintained by @email{Kurt.Hornik@@R-project.org, Kurt Hornik}
 and can be found at the @acronym{URL}
 
@@ -52,11 +43,12 @@ and can be found at the @acronym{URL}
 
 @ifinfo
 A text version is in file @file{FAQ} in this directory, and an
-@acronym{HTML} version is available as file @file{doc/html/faq.html} and
+@acronym{HTML} version is available as file @file{doc/manual/R-FAQ.html} and
 via the on-line help (on the index page given by @code{help.start()}).
 @end ifinfo
 
-@node Mailing lists, Archives, FAQ, Top
+
+@node Mailing lists
 @chapter Mailing lists
 
 Thanks to @email{Martin.Maechler@@R-project.org, Martin Maechler} there
@@ -69,7 +61,8 @@ See
 
 for details.
 
-@node Archives, Bug-tracking system, Mailing lists, Top
+
+@node Archives
 @chapter Archives
 
 The Comprehensive R Archive Network (@acronym{CRAN}) is a collection of
@@ -82,7 +75,8 @@ information on daily mirrors available from
 @uref{https://CRAN.R-project.org/mirrors.html}
 @end quotation
 
-@node Bug-tracking system,  , Archives, Top
+
+@node Bug-tracking system
 @chapter Bug-tracking system
 
 R has a bug-tracking system (or perhaps a bug-filing system is a more
@@ -91,6 +85,7 @@ precise description) available on the net at
 @quotation
 @uref{https://bugs.R-project.org/}
 @end quotation
+
 
 @bye
 

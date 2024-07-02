@@ -2,7 +2,6 @@
 @c %**start of header
 @setfilename R-data.info
 @settitle R Data Import/Export
-@setchapternewpage on
 @c %**end of header
 
 @syncodeindex fn vr
@@ -45,7 +44,7 @@ This manual is for R, version @value{VERSION}.
 @c @end ifnothtml
 
 @ifnottex
-@node Top, Acknowledgements, (dir), (dir)
+@node Top
 @top R Data Import/Export
 
 This is a guide to importing and exporting data to and from R.
@@ -54,23 +53,9 @@ This is a guide to importing and exporting data to and from R.
 
 @end ifnottex
 
-@menu
-* Acknowledgements::            
-* Introduction::                
-* Spreadsheet-like data::       
-* Importing from other statistical systems::  
-* Relational databases::        
-* Binary files::                
-* Image files::                 
-* Connections::                 
-* Network interfaces::          
-* Reading Excel spreadsheets::  
-* References::                  
-* Function and variable index::  
-* Concept index::               
-@end menu
 
-@node Acknowledgements, Introduction, Top, Top
+
+@node Acknowledgements
 @unnumbered Acknowledgements
 
 The relational databases part of this manual is based in part on an
@@ -152,7 +137,8 @@ principal authors of the packages mentioned are
 @I{Brian Ripley} is the author of the support for connections.
 
 
-@node Introduction, Spreadsheet-like data, Acknowledgements, Top
+
+@node Introduction
 @chapter Introduction
 
 Reading data into a statistical system for analysis and exporting the
@@ -201,13 +187,8 @@ This manual was first written in 2000, and the number of scope of @R{}
 packages has increased a hundredfold since.  For specialist data formats
 it is worth searching to see if a suitable package already exists.
 
-@menu
-* Imports::                     
-* Export to text files::        
-* XML::                         
-@end menu
 
-@node Imports, Export to text files, Introduction, Introduction
+@node Imports
 @section Imports
 @findex scan
 
@@ -246,11 +227,14 @@ extraction operation can be done directly from an @R{} package:
 @xref{Relational databases}.  Importing data via network connections is
 discussed in @ref{Network interfaces}.
 
+
+@c Keep this single-item menu to avoid a spurious warning about
+@c an unreferenced node when making info with Texinfo 6.8 and 7.0.
 @menu
 * Encodings::                   
 @end menu
 
-@node Encodings,  , Imports, Imports
+@node Encodings
 @subsection Encodings
 @cindex Encodings
 
@@ -298,7 +282,8 @@ Note that @code{utf8} is not a valid encoding name (@code{UTF-8} is),
 and @code{macintosh} is the most portable name for what is sometimes
 called `Mac Roman' encoding. 
 
-@node Export to text files, XML, Imports, Introduction
+
+@node Export to text files
 @section Export to text files
 @cindex Exporting to a text file
 
@@ -453,7 +438,8 @@ Function @code{write.foreign} in package @CRANpkg{foreign} uses
 that will read this text file into another statistical package. There is
 currently support for export to @code{SAS}, @code{SPSS} and @code{Stata}.
 
-@node XML,  , Export to text files, Introduction
+
+@node XML
 @section XML
 @cindex XML
 
@@ -497,25 +483,20 @@ provided by package @CRANpkg{xml2}.
 emphasis on human-readability: it is supported by package
 @CRANpkg{yaml}.
 
-@node Spreadsheet-like data, Importing from other statistical systems, Introduction, Top
+
+
+@node Spreadsheet-like data
 @chapter Spreadsheet-like data
 @cindex Spreadsheet-like data
 
-@menu
-* Variations on read.table::    
-* Fixed-width-format files::    
-* Data Interchange Format (DIF)::  
-* Using scan directly::         
-* Re-shaping data::             
-* Flat contingency tables::     
-@end menu
 
 In @ref{Export to text files} we saw a number of variations on the
 format of a spreadsheet-like text file, in which the data are presented
 in a rectangular grid, possibly with row and column labels.  In this
 section we consider importing such files into @R{}.
 
-@node Variations on read.table, Fixed-width-format files, Spreadsheet-like data, Spreadsheet-like data
+
+@node Variations on read.table
 @section  Variations on @code{read.table}
 @findex read.table
 
@@ -768,7 +749,7 @@ rows to be read (and a mild over-estimate is better than not specifying
 this at all).  See the examples in later sections.
 
 
-@node Fixed-width-format files, Data Interchange Format (DIF), Variations on read.table, Spreadsheet-like data
+@node Fixed-width-format files
 @section Fixed-width-format files
 @cindex Fixed-width-format files
 
@@ -786,12 +767,12 @@ recommend using the facilities of a language like @code{perl} to
 pre-process the file.
 @cindex @I{perl}
 
-
 @findex read.fortran
 Function @code{read.fortran} is a similar function for fixed-format files,
 using Fortran-style column specifications.
 
-@node Data Interchange Format (DIF), Using scan directly, Fixed-width-format files, Spreadsheet-like data
+
+@node Data Interchange Format (DIF)
 @section Data Interchange Format (DIF)
 @cindex Data Interchange Format (DIF)
 
@@ -808,7 +789,8 @@ from there directly.  It is slightly more robust than
 @code{read.table("clipboard")} in handling spreadsheets with empty
 cells.
 
-@node Using scan directly, Re-shaping data, Data Interchange Format (DIF), Spreadsheet-like data
+
+@node Using scan directly
 @section  Using @code{scan} directly
 @findex scan
 
@@ -896,7 +878,7 @@ basic reads in Windows take at least as twice as long as these Linux
 times) and on the precise state of the garbage collector.
 
 
-@node Re-shaping data, Flat contingency tables, Using scan directly, Spreadsheet-like data
+@node Re-shaping data
 @section Re-shaping data
 @cindex Re-shaping data
 
@@ -978,7 +960,8 @@ than the one column in this example. With @code{direction="wide"},
 Some people prefer the tools in packages @CRANpkg{reshape},
 @CRANpkg{reshape2} and @CRANpkg{plyr}.
 
-@node Flat contingency tables,  , Re-shaping data, Spreadsheet-like data
+
+@node Flat contingency tables
 @section Flat contingency tables
 @cindex Flat contingency tables
 
@@ -1031,7 +1014,8 @@ in the data, and create the contingency table from this using
 @code{xtabs}.
 
 
-@node Importing from other statistical systems, Relational databases, Spreadsheet-like data, Top
+
+@node Importing from other statistical systems
 @chapter Importing from other statistical systems
 @cindex Importing from other statistical systems
 
@@ -1044,12 +1028,8 @@ specific versions of the other system (often in the early 2000s), and
 have not necessarily been updated for the most recent versions of the
 other system.
 
-@menu
-* EpiInfo Minitab SAS S-PLUS SPSS Stata Systat::  
-* Octave::                      
-@end menu
 
-@node EpiInfo Minitab SAS S-PLUS SPSS Stata Systat, Octave, Importing from other statistical systems, Importing from other statistical systems
+@node EpiInfo Minitab SAS S-PLUS SPSS Stata Systat
 @section @I{EpiInfo}, @I{Minitab}, S-PLUS, SAS, SPSS, @I{Stata}, @I{Systat}
 
 The recommended package @CRANpkg{foreign} provides import facilities for
@@ -1139,7 +1119,7 @@ machines (such as from Windows).  These have extension @file{.sys}
 or (more recently) @file{.syd}.
 
 
-@node Octave,  , EpiInfo Minitab SAS S-PLUS SPSS Stata Systat, Importing from other statistical systems
+@node Octave
 @section Octave
 @cindex Octave
 @findex read.octave
@@ -1153,19 +1133,16 @@ most of the common types of variables, including the standard atomic
 ranges, and boolean scalars and matrices) and recursive (structs, cells,
 and lists) ones.
 
-@node Relational databases, Binary files, Importing from other statistical systems, Top
+
+
+@node Relational databases
 @chapter Relational databases
 
 @cindex Relational databases
 @cindex DBMS
 
-@menu
-* Why use a database?::         
-* Overview of RDBMSs::          
-* R interface packages::        
-@end menu
 
-@node Why use a database?, Overview of RDBMSs, Relational databases, Relational databases
+@node Why use a database?
 @section Why use a database?
 
 There are limitations on the types of data that @R{} handles well.
@@ -1219,7 +1196,8 @@ is used by KDE4 to store personal information.  Several macOS
 applications, including Mail and Address Book, use SQLite.
 @c https://www.actualtech.com/sqlite_applications.php
 
-@node Overview of RDBMSs, R interface packages, Why use a database?, Relational databases
+
+@node Overview of RDBMSs
 @section Overview of RDBMSs
 
 Traditionally there had been large (and expensive) commercial @abbr{RDBMS}s
@@ -1254,12 +1232,7 @@ sometimes pronounced `sequel': see Bowman @emph{@I{et al.}@:} 1996 and Kline
 and Kline 2001) which these @abbr{DBMS}s support to varying degrees.
 
 
-@menu
-* SQL queries::                 
-* Data types::                  
-@end menu
-
-@node SQL queries, Data types, Overview of RDBMSs, Overview of RDBMSs
+@node SQL queries
 @subsection @acronym{SQL} queries
 @cindex SQL queries
 
@@ -1330,7 +1303,7 @@ DELETE or UPDATE data.  A table is destroyed by a DROP TABLE `query'.
 Kline and Kline (2001) discuss the details of the implementation of SQL
 in Microsoft SQL Server 2000, Oracle, MySQL and PostgreSQL.
 
-@node Data types,  , SQL queries, Overview of RDBMSs
+@node Data types
 @subsection Data types
 
 Data can be stored in a database in various data types.  The range of
@@ -1369,7 +1342,8 @@ timezone}.  Other types widely implemented are @code{text} and
 The more comprehensive of the @R{} interface packages hide the type
 conversion issues from the user.
 
-@node R interface packages,  , Overview of RDBMSs, Relational databases
+
+@node R interface packages
 @section R interface packages
 
 There are several packages available on @acronym{CRAN} to help @R{}
@@ -1401,13 +1375,7 @@ which are queried using JavaScript rather than SQL.  Package
 @CRANpkg{mongolite} is another client using @pkg{mongodb}'s C driver.
 
 
-@menu
-* DBI::                         
-* RODBC::                       
-@end menu
-
-
-@node DBI, RODBC, R interface packages, R interface packages
+@node DBI
 @subsection Packages using DBI
 @cindex MySQL database system
 
@@ -1498,7 +1466,7 @@ Arkansas          8.8     190       50 19.5
 > dbDisconnect(con)
 @end smallexample
 
-@node RODBC,  , DBI, R interface packages
+@node RODBC
 @subsection Package @pkg{RODBC}
 @cindex ODBC
 @cindex Open Database Connectivity
@@ -1655,7 +1623,7 @@ differences.
 
 
 
-@c @node RPgSQL,  , RODBC, R interface packages
+@c @node RPgSQL
 @c @subsection Package RPgSQL
 @c @cindex PostgreSQL database system
 
@@ -1773,21 +1741,16 @@ differences.
 @c within a data frame and PostgreSQL types.
 
 
-@node Binary files, Image files, Relational databases, Top
+
+@node Binary files
 @chapter Binary files
 @cindex Binary files
-
-@menu
-* Binary data formats::         
-* dBase files (DBF)::           
-@end menu
 
 Binary connections (@ref{Connections}) are now the preferred way to
 handle binary files.
 
 
-
-@node Binary data formats, dBase files (DBF), Binary files, Binary files
+@node Binary data formats
 @section Binary data formats
 @findex hdf5
 @cindex Hierarchical Data Format
@@ -1816,7 +1779,8 @@ version 3 files.
 The availability of software to support these formats is somewhat
 limited by platform, especially on Windows.
 
-@node dBase files (DBF),  , Binary data formats, Binary files
+
+@node dBase files (DBF)
 @section @I{dBase} files (@I{DBF})
 
 @cindex @I{dBase}
@@ -1846,7 +1810,9 @@ comprehensive facilities to read @abbr{DBF} files @emph{via} Microsoft's @I{dBas
 @code{odbcDriverConnect}).
 @findex odbcConnectDbase
 
-@node Image files, Connections, Binary files, Top
+
+
+@node Image files
 @chapter Image files
 
 A particular class of binary files are those representing images, and a
@@ -1887,7 +1853,8 @@ different format from JPEG, and not currently supported in the macOS
 nor Windows binary versions of @CRANpkg{rgdal}).
 
 
-@node Connections, Network interfaces, Image files, Top
+
+@node Connections
 @chapter Connections
 
 @cindex Connections
@@ -1896,16 +1863,7 @@ Ripley (2001), a set of functions to replace the use of file names by a
 flexible interface to file-like objects.
 
 
-@menu
-* Types of connections::        
-* Output to connections::       
-* Input from connections::      
-* Listing and manipulating connections::  
-* Binary connections::          
-@end menu
-
-
-@node Types of connections, Output to connections, Connections, Connections
+@node Types of connections
 @section Types of connections
 @cindex Connections
 
@@ -1995,7 +1953,7 @@ Sockets can also be used as connections via function
 read from, and both client and server sockets can be used.
 
 
-@node Output to connections, Input from connections, Types of connections, Connections
+@node Output to connections
 @section Output to connections
 @cindex Connections
 
@@ -2050,7 +2008,8 @@ close(zz)
 cat(ex.lm.out, sep = "\n")
 @end example
 
-@node Input from connections, Listing and manipulating connections, Output to connections, Connections
+
+@node Input from connections
 @section Input from connections
 
 @findex scan
@@ -2089,11 +2048,14 @@ For convenience, if the @code{file} argument specifies a FTP, HTTP or
 @abbr{HTTPS} @acronym{URL}, the @acronym{URL} is opened for reading via
 @code{url}.  Specifying files via @samp{file://foo.bar} is also allowed.
 
+
+@c Keep this single-item menu to avoid a spurious warning about
+@c an unreferenced node when making info with Texinfo 6.8 and 7.0.
 @menu
 * Pushback::                    
 @end menu
 
-@node Pushback,  , Input from connections, Input from connections
+@node Pushback
 @subsection @I{Pushback}
 
 @findex pushBack.
@@ -2130,7 +2092,8 @@ Read 4 items
 
 @I{Pushback} is only available for connections opened for input in text mode.
 
-@node Listing and manipulating connections, Binary connections, Input from connections, Connections
+
+@node Listing and manipulating connections
 @section Listing and manipulating connections
 @cindex Connections
 
@@ -2155,7 +2118,7 @@ writing at its current position.  It works only for @code{file}
 connections, and is not implemented on all platforms.
 
 
-@node Binary connections,  , Listing and manipulating connections, Connections
+@node Binary connections
 @section Binary connections
 @cindex Binary files
 
@@ -2218,11 +2181,13 @@ of bytes terminated by a zero byte.  Functions @code{readChar} and
 @code{writeChar} provide greater flexibility.
 
 
+@c Keep this single-item menu to avoid a spurious warning about
+@c an unreferenced node when making info with Texinfo 6.8 and 7.0.
 @menu
 * Special values::              
 @end menu
 
-@node Special values,  , Binary connections, Binary connections
+@node Special values
 @subsection Special values
 
 Functions @code{readBin} and @code{writeBin} will pass missing and
@@ -2254,18 +2219,15 @@ provision to recognize character values as missing (as this can be done
 by re-assigning them once read).
 
 
-@node Network interfaces, Reading Excel spreadsheets, Connections, Top
-@chapter Network interfaces
 
-@menu
-* Reading from sockets::        
-* Using download.file::         
-@end menu
+@node Network interfaces
+@chapter Network interfaces
 
 Some limited facilities are available to exchange data at a lower level
 across network connections.
 
-@node Reading from sockets, Using download.file, Network interfaces, Network interfaces
+
+@node Reading from sockets
 @section Reading from sockets
 
 @cindex Sockets
@@ -2285,7 +2247,7 @@ The earlier low-level interface is given by functions @code{make.socket},
 @code{read.socket}, @code{write.socket} and @code{close.socket}.
 
 
-@node Using download.file,  , Reading from sockets, Network interfaces
+@node Using download.file
 @section Using @code{download.file}
 
 Function @code{download.file} is provided to read a file from a Web
@@ -2296,7 +2258,8 @@ Often this can be avoided, as functions such as @code{read.table} and
 as the @code{file} argument.
 
 
-@node Reading Excel spreadsheets, References, Network interfaces, Top
+
+@node Reading Excel spreadsheets
 @chapter Reading Excel spreadsheets
 
 @findex .xls
@@ -2373,8 +2336,10 @@ Package @CRANpkg{XLConnect} can read, write and manipulate both Excel
 Package @CRANpkg{readxl} can read both Excel 97--2003 and Excel 2007/10
 spreadsheets, using an included C library.
 
-@node References, Function and variable index, Reading Excel spreadsheets, Top
-@appendix References
+
+
+@node References
+@unnumbered References
 
 @noindent
 @I{R.@: A.@: Becker}, @I{J.@: M.@: Chambers} and @I{A.@: R.@: Wilks} (1988),
@@ -2429,12 +2394,14 @@ Connections.
 @emph{@I{MySQL & mSQL}}.
 @I{O'Reilly}.
 
-@node Function and variable index, Concept index, References, Top
+
+@node Function and variable index
 @unnumbered Function and variable index
 
 @printindex vr
 
-@node Concept index,  , Function and variable index, Top
+
+@node Concept index
 @unnumbered Concept index
 
 @printindex cp

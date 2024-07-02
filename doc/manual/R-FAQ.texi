@@ -1,11 +1,8 @@
 \input texinfo
-
 @c %**start of header
 @setfilename R-FAQ.info
 @settitle R FAQ
-@setchapternewpage on
-@documentlanguage en
-@documentencoding UTF-8
+@paragraphindent 0
 @c %**end of header
 
 @dircategory Programming
@@ -70,7 +67,7 @@ Frequently Asked Questions on R  @*
 @c @end ifnothtml
 
 @ifnottex
-@node Top, Introduction, (dir), (dir)
+@node Top
 @top R FAQ
 @c @ifhtml
 @c @html
@@ -84,31 +81,13 @@ This document contains answers to some of the most frequently asked
 questions about R.
 @end ifnottex
 
-@menu
-* Introduction::
-* R Basics::
-* R and S::
-* R Web Interfaces::
-* R Add-On Packages::
-* R and Emacs::
-* R Miscellanea::
-* R Programming::
-* R Bugs::
-* Acknowledgments::
-@end menu
 
-@node Introduction, R Basics, Top, Top
+
+@node Introduction
 @chapter Introduction
 
-@menu
-* Legalese::
-* Obtaining this document::
-* Citing this document::
-* Notation::
-* Feedback::
-@end menu
 
-@node Legalese, Obtaining this document, Introduction, Introduction
+@node Legalese
 @section Legalese
 
 Copyright @copyright{} 1998--2020 @I{Kurt Hornik} @*
@@ -131,8 +110,7 @@ available at
 @url{https://www.R-project.org/Licenses/}
 @end display
 
-
-@node Obtaining this document, Citing this document, Legalese, Introduction
+@node Obtaining this document
 @section Obtaining this document
 
 The latest version of this document is always available from
@@ -145,7 +123,7 @@ From there, you can obtain versions converted to
 @url{https://CRAN.R-project.org/doc/manuals/R-FAQ.html,, @HTML{}} and
 @url{https://CRAN.R-project.org/doc/manuals/R-FAQ.pdf,, PDF}.
 
-@node Citing this document, Notation, Obtaining this document, Introduction
+@node Citing this document
 @section Citing this document
 
 In publications, please refer to this @acronym{FAQ} as @I{Hornik} and R Core Team
@@ -163,14 +141,13 @@ In publications, please refer to this @acronym{FAQ} as @I{Hornik} and R Core Tea
 @end group
 @end example
 
-
-@node Notation, Feedback, Citing this document, Introduction
+@node Notation
 @section Notation
 
 Everything should be pretty standard.  @samp{R>} is used for the R
 prompt, and a @samp{$} for the shell prompt (where applicable).
 
-@node Feedback,  , Notation, Introduction
+@node Feedback
 @section Feedback
 
 Feedback via email to @email{R-devel@@R-project.org} is most welcome.
@@ -189,27 +166,13 @@ know.
 @c rw-FAQ versions?
 @c </FIXME>
 
-@node R Basics, R and S, Introduction, Top
+
+
+@node R Basics
 @chapter R Basics
 
-@menu
-* What is R?::
-* What machines does R run on?::
-* What is the current version of R?::
-* How can R be obtained?::
-* How can R be installed?::
-* Are there Unix-like binaries for R?::
-* What documentation exists for R?::
-* Citing R::
-* What mailing lists exist for R?::
-* What is CRAN?::
-* Can I use R for commercial purposes?::
-* Why is R named R?::
-* What is the R Foundation?::
-* What is R-Forge?::
-@end menu
 
-@node What is R?, What machines does R run on?, R Basics, R Basics
+@node What is R?
 @section What is R?
 
 R is a system for statistical computation and graphics.  It consists of
@@ -283,7 +246,7 @@ distributed under a @acronym{GNU}-style
 official part of the @url{https://www.gnu.org/, @acronym{GNU}} project
 (``@acronym{GNU} S'').
 
-@node What machines does R run on?, What is the current version of R?, What is R?, R Basics
+@node What machines does R run on?
 @section What machines does R run on?
 
 R is being developed for the Unix-like, Windows and Mac families of
@@ -324,7 +287,7 @@ platforms including @var{cpu}-linux-gnu for the @I{i386},
 
 If you know about other platforms, please drop us a note.
 
-@node What is the current version of R?, How can R be obtained?, What machines does R run on?, R Basics
+@node What is the current version of R?
 @section What is the current version of R?
  
 R uses a `major.minor.patchlevel' numbering scheme.  Based on this,
@@ -337,7 +300,7 @@ introduced in r-devel, while r-patched is for bug fixes mostly.
 See @url{https://CRAN.R-project.org/sources.html} for the current
 versions of r-release, r-patched and r-devel.
 
-@node How can R be obtained?, How can R be installed?, What is the current version of R?, R Basics
+@node How can R be obtained?
 @section How can R be obtained?
 
 Sources, binaries and documentation for R can be obtained via @CRAN{},
@@ -380,16 +343,10 @@ versions of R can be found at
 @c The sources of the development version are also available via anonymous
 @c CVS.  See @url{http://anoncvs.R-project.org} for more information.
 
-@node How can R be installed?, Are there Unix-like binaries for R?, How can R be obtained?, R Basics
+@node How can R be installed?
 @section How can R be installed?
 
-@menu
-* How can R be installed (Unix-like)::
-* How can R be installed (Windows)::
-* How can R be installed (Mac)::
-@end menu
-
-@node How can R be installed (Unix-like), How can R be installed (Windows), How can R be installed?, How can R be installed?
+@node How can R be installed (Unix-like)
 @subsection How can R be installed (Unix-like)
 
 If R is already installed, it can be started by typing @kbd{R} at the
@@ -466,7 +423,7 @@ To install info and PDF versions of the manuals, use
 @kbd{make install-info} and @kbd{make install-pdf},
 respectively.
 
-@node How can R be installed (Windows), How can R be installed (Mac), How can R be installed (Unix-like), How can R be installed?
+@node How can R be installed (Windows)
 @subsection How can R be installed (Windows)
 
 The @file{bin/windows} directory of a @CRAN{} site contains binaries for
@@ -483,7 +440,7 @@ versions of R.
 See the @url{https://CRAN.R-project.org/bin/windows/base/rw-FAQ.html,
 ``R for Windows @acronym{FAQ}''} for more details.
 
-@node How can R be installed (Mac),  , How can R be installed (Windows), How can R be installed?
+@node How can R be installed (Mac)
 @subsection How can R be installed (Mac)
 
 The @file{bin/macosx} directory of a @CRAN{} site contains a standard
@@ -500,7 +457,8 @@ macOS @acronym{FAQ}''} has more details.
 Snapshots of the r-patched and r-devel versions of R are available as
 Apple installer packages at @uref{https://mac.R-project.org}.
 
-@node Are there Unix-like binaries for R?, What documentation exists for R?, How can R be installed?, R Basics
+
+@node Are there Unix-like binaries for R?
 @section Are there Unix-like binaries for R?
 
 Binary distributions of R are available on many Unix-like OSes: only
@@ -552,7 +510,7 @@ information about @abbr{RPM}s for openSUSE.
 No other binary distributions are currently publicly available via
 @CRAN{}.
 
-@node What documentation exists for R?, Citing R, Are there Unix-like binaries for R?, R Basics
+@node What documentation exists for R?
 @section What documentation exists for R?
 
 Online documentation for most of the functions and variables in R
@@ -657,7 +615,7 @@ implementing R is described in @I{Ihaka} & @I{Gentleman} (1996),
 @emph{Journal of Computational and Graphical Statistics}, @strong{5}, 299--314
 (@doi{10.1080/10618600.1996.10474713}).
 
-@node Citing R, What mailing lists exist for R?, What documentation exists for R?, R Basics
+@node Citing R
 @section Citing R
 
 To cite R in publications, use
@@ -682,7 +640,7 @@ determined as @code{R.version$year}.
 Citation strings (or Bib@TeX{} entries) for R and R packages can also be
 obtained by @code{citation()}.
 
-@node What mailing lists exist for R?, What is CRAN?, Citing R, R Basics
+@node What mailing lists exist for R?
 @section What mailing lists exist for R?
 
 Thanks to @email{Martin.Maechler@@R-project.org, Martin Maechler}, there
@@ -768,7 +726,7 @@ the R mailing lists.
 @c details on RSS feeds.
 @c </FIXME>
 
-@node What is CRAN?, Can I use R for commercial purposes?, What mailing lists exist for R?, R Basics
+@node What is CRAN?
 @section What is @acronym{CRAN}?
 
 The ``Comprehensive R Archive Network'' (@CRAN{}) is a collection of
@@ -807,7 +765,7 @@ Since March 2016, ``old'' material is made available from a central
 Please always use the @acronym{URL} of the master site when referring to
 @CRAN{}.
 
-@node Can I use R for commercial purposes?, Why is R named R?, What is CRAN?, R Basics
+@node Can I use R for commercial purposes?
 @section Can I use R for commercial purposes?
 
 R is released under the
@@ -850,7 +808,7 @@ these may be used or seek the advice of your legal counsel.
 None of the discussion in this section constitutes legal advice.  The R
 Core Team does not provide legal advice under any circumstances.
 
-@node Why is R named R?, What is the R Foundation?, Can I use R for commercial purposes?, R Basics
+@node Why is R named R?
 @section Why is R named R?
 
 The name is partly based on the (first) names of the first two R authors
@@ -860,7 +818,7 @@ Bell Labs language `S' (@pxref{What is S?}).
 @c At the time the name was coined no one expected that the software would
 @c get used outside of Auckland, so it seemed ok to make a joke of it.
 
-@node What is the R Foundation?, What is R-Forge?, Why is R named R?, R Basics
+@node What is the R Foundation?
 @section What is the R Foundation?
 
 The R Foundation is a not for profit organization working in the public
@@ -872,7 +830,7 @@ development community, and to hold and administer the copyright of R
 software and documentation.  See
 @url{https://www.R-project.org/foundation/} for more information.
 
-@node What is R-Forge?,  , What is the R Foundation?, R Basics
+@node What is R-Forge?
 @section What is R-Forge?
 
 R-Forge (@url{https://R-Forge.R-project.org/}) offers a central platform
@@ -887,18 +845,12 @@ development using R-Forge'', @url{https://journal.R-project.org/, ,
 @emph{The R Journal}}, @strong{1}(1):9--14.
 
 
-@node R and S, R Web Interfaces, R Basics, Top
+
+@node R and S
 @chapter R and S
 
-@menu
-* What is S?::
-* What is S-PLUS?::
-* What are the differences between R and S?::
-* Is there anything R can do that S-PLUS cannot?::
-* What is R-plus?::
-@end menu
 
-@node What is S?, What is S-PLUS?, R and S, R and S
+@node What is S?
 @section What is S?
 
 S is a very high level language and an environment for data analysis and
@@ -965,14 +917,14 @@ for further information on the ``Evolution of the S Language''.
 @c about S''} contains further information about S, but is not
 @c up-to-date.
 
-@node What is S-PLUS?, What are the differences between R and S?, What is S?, R and S
+@node What is S-PLUS?
 @section What is @sc{S-Plus}?
 
 @SPLUS{} is a value-added version of S sold by
 @url{https://www.tibco.com/, TIBCO Software Inc} as `@I{TIBCO Spotfire S+}'.
 See @url{https://en.wikipedia.org/wiki/S-PLUS} for more information.
 
-@node What are the differences between R and S?, Is there anything R can do that S-PLUS cannot?, What is S-PLUS?, R and S
+@node What are the differences between R and S?
 @section What are the differences between R and S?
 
 We can regard S as a language with three current implementations or
@@ -985,13 +937,8 @@ the S language, i.e., the difference between the R and S @emph{engines}.
 For the remainder of this section, ``S'' refers to the S engines and not
 the S language.
 
-@menu
-* Lexical scoping::
-* Models::
-* Others::
-@end menu
 
-@node Lexical scoping, Models, What are the differences between R and S?, What are the differences between R and S?
+@node Lexical scoping
 @subsection Lexical scoping
 
 Contrary to other implementations of the S language, R has adopted an
@@ -1248,7 +1195,7 @@ it using @code{ess-transcript-mode}, as well as save source copies of
 all functions and data used.
 @end quotation
 
-@node Models, Others, Lexical scoping, What are the differences between R and S?
+@node Models
 @subsection Models
 
 There are some differences in the modeling code, such as
@@ -1274,7 +1221,7 @@ specifying a model with no intercept.  Models with no parameters at all
 can be specified by @code{y ~ 0}.
 @end itemize
 
-@node Others,  , Models, What are the differences between R and S?
+@node Others
 @subsection  Others
 
 Apart from lexical scoping and its implications, R follows the S
@@ -1483,7 +1430,7 @@ documenting the difference as you see it).  Of course, it would be
 useful if you were to implement the change yourself and make sure it
 works.
 
-@node Is there anything R can do that S-PLUS cannot?, What is R-plus?, What are the differences between R and S?, R and S
+@node Is there anything R can do that S-PLUS cannot?
 @section Is there anything R can do that @sc{S-Plus} cannot?
 
 Since almost anything you can do in R has source code that you could
@@ -1502,7 +1449,7 @@ impressive on-line example.  More details can be found in
 @emph{Journal of Computational and Graphical Statistics}, @strong{9}, 582--599
 (@doi{10.1080/10618600.2000.10474900}).
 
-@node What is R-plus?,  , Is there anything R can do that S-PLUS cannot?, R and S
+@node What is R-plus?
 @section What is R-plus?
 
 For a very long time, there was no such thing.
@@ -1528,7 +1475,9 @@ See also
 @url{https://en.wikipedia.org/wiki/R_programming_language#Commercialized_versions_of_R}
 for pointers to commercialized versions of R.
 
-@node R Web Interfaces, R Add-On Packages, R and S, Top
+
+
+@node R Web Interfaces
 @chapter R Web Interfaces
 
 Please refer to the @CRAN{} task view on ``Web Technologies and
@@ -1548,29 +1497,17 @@ and
 ``Using R via PHP for Teaching Purposes: @I{R-php}''
 (@doi{10.18637/jss.v017.i04}).
 
-@node R Add-On Packages, R and Emacs, R Web Interfaces, Top
+
+
+@node R Add-On Packages
 @chapter R Add-On Packages
 
-@menu
-* Which add-on packages exist for R?::
-* How can add-on packages be installed?::
-* How can add-on packages be used?::
-* How can add-on packages be removed?::
-* How can I create an R package?::
-* How can I contribute to R?::
-@end menu
 
-@node Which add-on packages exist for R?, How can add-on packages be installed?, R Add-On Packages, R Add-On Packages
+@node Which add-on packages exist for R?
 @section Which add-on packages exist for R?
 
-@menu
-* Add-on packages in R::
-* Add-on packages from CRAN::
-* Add-on packages from Bioconductor::
-* Other add-on packages::
-@end menu
 
-@node Add-on packages in R, Add-on packages from CRAN, Which add-on packages exist for R?, Which add-on packages exist for R?
+@node Add-on packages in R
 @subsection Add-on packages in R
 
 The R distribution comes with the following packages:
@@ -1619,7 +1556,7 @@ R utility functions.
 @c recommended package @CRANpkg{MASS}, and package @pkg{mle} moved to
 @c @pkg{stats4}.
 
-@node Add-on packages from CRAN, Add-on packages from Bioconductor, Add-on packages in R, Which add-on packages exist for R?
+@node Add-on packages from CRAN
 @subsection Add-on packages from @acronym{CRAN}
 
 The @CRAN{} @file{src/contrib} area contains a wealth of add-on
@@ -1692,7 +1629,7 @@ all packages for special areas of interest.
 @c D. Ripley.  Note that this repository is a default repository for recent
 @c versions of R for Windows.
 
-@c @node Add-on packages from Omegahat, Add-on packages from Bioconductor, Add-on packages from CRAN, Which add-on packages exist for R?
+@c @node Add-on packages from Omegahat
 @c @subsection Add-on packages from Omegahat
 
 @c The @url{http://www.omegahat.net/, Omega Project for Statistical
@@ -1703,7 +1640,7 @@ all packages for special areas of interest.
 @c See @url{http://www.omegahat.net/} for information on most R packages
 @c available from the Omega project.
 
-@node Add-on packages from Bioconductor, Other add-on packages, Add-on packages from CRAN, Which add-on packages exist for R?
+@node Add-on packages from Bioconductor
 @subsection Add-on packages from Bioconductor
 
 @url{https://www.bioconductor.org/, Bioconductor} is an open source and
@@ -1720,7 +1657,7 @@ SAGE, sequence, or SNP data.  In addition, there are metadata
 @url{https://bioconductor.org/install/} for available packages and a
 complete taxonomy via @I{BioC Views}.
 
-@node Other add-on packages,  , Add-on packages from Bioconductor, Which add-on packages exist for R?
+@node Other add-on packages
 @subsection Other add-on packages
 
 Many more packages are available from places other than the default
@@ -1731,7 +1668,7 @@ R-Forge provides a @CRAN{} style repository at
 More code has been posted to the R-help mailing list, and can be
 obtained from the mailing list archive.
 
-@node How can add-on packages be installed?, How can add-on packages be used?, Which add-on packages exist for R?, R Add-On Packages
+@node How can add-on packages be installed?
 @section How can add-on packages be installed?
 
 (Unix-like only.)  The add-on packages on @CRAN{} come as gzipped tar
@@ -1788,7 +1725,7 @@ information.
 @c @code{export} statement is needed or allowed in this file; see the
 @c on-line help for @code{Startup} for more information.)
 
-@node How can add-on packages be used?, How can add-on packages be removed?, How can add-on packages be installed?, R Add-On Packages
+@node How can add-on packages be used?
 @section How can add-on packages be used?
 
 To find out which additional packages are available on your system, type
@@ -1870,7 +1807,7 @@ detach("package:@var{pkg}")
 @noindent
 (which does not by default unload the namespace, see @code{?detach}).
 
-@node How can add-on packages be removed?, How can I create an R package?, How can add-on packages be used?, R Add-On Packages
+@node How can add-on packages be removed?
 @section How can add-on packages be removed?
 
 Use
@@ -1892,7 +1829,7 @@ To remove from library @var{lib}, do
 $ R CMD REMOVE -l @var{lib} @var{pkg_1} @dots{} @var{pkg_n}
 @end example
 
-@node How can I create an R package?, How can I contribute to R?, How can add-on packages be removed?, R Add-On Packages
+@node How can I create an R package?
 @section How can I create an R package?
 
 A package consists of a subdirectory containing a file
@@ -1915,7 +1852,7 @@ files for a set of R functions and datasets.
 
 @xref{What is CRAN?}, for information on uploading a package to @CRAN{}.
 
-@node How can I contribute to R?,  , How can I create an R package?, R Add-On Packages
+@node How can I contribute to R?
 @section How can I contribute to R?
 
 R is in active development and there is always a risk of bugs creeping
@@ -1928,16 +1865,13 @@ intermediate repository for more or less finalized ideas and plans for
 the R statistical system.  It contains (pointers to) TODO lists, RFCs,
 various other writeups, ideas lists, and SVN miscellanea.
 
-@node R and Emacs, R Miscellanea, R Add-On Packages, Top
+
+
+@node R and Emacs
 @chapter R and Emacs
 
-@menu
-* Is there Emacs support for R?::
-* Should I run R from within Emacs?::
-* Debugging R from within Emacs::
-@end menu
 
-@node Is there Emacs support for R?, Should I run R from within Emacs?, R and Emacs, R and Emacs
+@node Is there Emacs support for R?
 @section Is there Emacs support for R?
 
 There is an Emacs package called @acronym{ESS} (``Emacs Speaks
@@ -1984,7 +1918,7 @@ Please send bug reports and suggestions on @acronym{ESS} to
 within Emacs by typing @kbd{M-x ess-submit-bug-report} or using the
 @I{[ESS]} or @I{[iESS]} pulldown menus.
 
-@node Should I run R from within Emacs?, Debugging R from within Emacs, Is there Emacs support for R?, R and Emacs
+@node Should I run R from within Emacs?
 @section Should I run R from within Emacs?
 
 Yes, instead of just running it in a console, @emph{definitely}.  As an
@@ -2014,7 +1948,7 @@ To specify command line arguments for the inferior R process, use
 @c This prompts you for the arguments; in particular, you can increase
 @c the memory size this way (@pxref{Why does R run out of memory?}).
 
-@node Debugging R from within Emacs,  , Should I run R from within Emacs?, R and Emacs
+@node Debugging R from within Emacs
 @section Debugging R from within Emacs
 
 To debug R ``from within Emacs'', there are several possibilities.  To
@@ -2056,57 +1990,13 @@ dir /opt/R/src/nmath
 dir /opt/R/src/unix
 @end example
 
-@node R Miscellanea, R Programming, R and Emacs, Top
+
+
+@node R Miscellanea
 @chapter R Miscellanea
 
-@menu
-* How can I set components of a list to NULL?::
-* How can I save my workspace?::
-* How can I clean up my workspace?::
-* How can I get eval() and D() to work?::
-* Why do my matrices lose dimensions?::
-* How does autoloading work?::
-* How should I set options?::
-* How do file names work in Windows?::
-* Why does plotting give a color allocation error?::
-* How do I convert factors to numeric?::
-* Are Trellis displays implemented in R?::
-* What are the enclosing and parent environments?::
-* How can I substitute into a plot label?::
-* What are valid names?::
-* Are GAMs implemented in R?::
-* Why is the output not printed when I source() a file?::
-* Why does outer() behave strangely with my function?::
-* Why does the output from anova() depend on the order of factors in the model?::
-* How do I produce PNG graphics in batch mode?::
-* How can I get command line editing to work?::
-* How can I turn a string into a variable?::
-* Why do lattice/trellis graphics not work?::
-* How can I sort the rows of a data frame?::
-* Why does the help.start() search engine not work?::
-* Why did my .Rprofile stop working when I updated R?::
-* Where have all the methods gone?::
-* How can I create rotated axis labels?::
-* Why is read.table() so inefficient?::
-* What is the difference between package and library?::
-* I installed a package but the functions are not there::
-* Why doesn't R think these numbers are equal?::
-* How can I capture or ignore errors in a long simulation?::
-* Why are powers of negative numbers wrong?::
-* How can I save the result of each iteration in a loop into a separate file?::
-* Why are p-values not displayed when using lmer()?::
-* Why are there unwanted borders::
-* Why does backslash behave strangely inside strings?::
-* How can I put error bars or confidence bands on my plot?::
-* How do I create a plot with two y-axes?::
-* How do I access the source code for a function?::
-* Why does summary() report strange results for the R^2 estimate when I fit a linear model with no intercept?::
-* Why is R apparently not releasing memory?::
-* How can I enable secure https downloads in R?::
-* How can I get CRAN package binaries for outdated versions of R?::
-@end menu
 
-@c @node Why does R run out of memory?, Why does sourcing a correct file fail?, R Miscellanea, R Miscellanea
+@c @node Why does R run out of memory?
 @c @section Why does R run out of memory?
 
 @c Versions of R prior to 1.2.0 used a @emph{static} memory model.  At
@@ -2128,14 +2018,14 @@ dir /opt/R/src/unix
 @c objects cannot be allocated even when there is apparently enough memory
 @c for them.
 
-@c @node Why does sourcing a correct file fail?, How can I set components of a list to NULL?, Why does R run out of memory?, R Miscellanea
+@c @node Why does sourcing a correct file fail?
 @c @section Why does sourcing a correct file fail?
 
 @c Versions of R prior to 1.2.1 may have had problems parsing files not
 @c ending in a newline.  Earlier R versions had a similar problem when
 @c reading in data files.  This should no longer happen.
 
-@node How can I set components of a list to NULL?, How can I save my workspace?, R Miscellanea, R Miscellanea
+@node How can I set components of a list to NULL?
 @section How can I set components of a list to NULL?
 
 You can use
@@ -2153,7 +2043,7 @@ the list.
 For dropping the row names of a matrix @code{x}, it may be easier to use
 @code{rownames(x) <- NULL}, similarly for column names.
 
-@node How can I save my workspace?, How can I clean up my workspace?, How can I set components of a list to NULL?, R Miscellanea
+@node How can I save my workspace?
 @section How can I save my workspace?
 
 @code{save.image()} saves the objects in the user's @code{.GlobalEnv} to
@@ -2161,7 +2051,7 @@ the file @file{.RData} in the R startup directory.  (This is also what
 happens after @kbd{q("yes")}.)  Using @code{save.image(@var{file})} one
 can save the image under a different name.
 
-@node How can I clean up my workspace?, How can I get eval() and D() to work?, How can I save my workspace?, R Miscellanea
+@node How can I clean up my workspace?
 @section How can I clean up my workspace?
 
 To remove all objects in the currently active environment (typically
@@ -2175,7 +2065,7 @@ rm(list = ls(all.names = TRUE))
 (Without @option{all = TRUE}, only the objects with names not starting
 with a @samp{.} are removed.)
 
-@node How can I get eval() and D() to work?, Why do my matrices lose dimensions?, How can I clean up my workspace?, R Miscellanea
+@node How can I get eval() and D() to work?
 @section How can I get @code{eval()} and @code{D()} to work?
 
 Strange things will happen if you use @code{eval(print(x), envir = e)}
@@ -2216,7 +2106,7 @@ g(a * b)
 
 See the help page for @code{deriv()} for more examples.
 
-@node Why do my matrices lose dimensions?, How does autoloading work?, How can I get eval() and D() to work?, R Miscellanea
+@node Why do my matrices lose dimensions?
 @section Why do my matrices lose dimensions?
 
 When a matrix with a single row or column is created by a subscripting
@@ -2251,7 +2141,7 @@ rewritten as
 somerows <- mat[index, , drop = FALSE]
 @end example
 
-@node How does autoloading work?, How should I set options?, Why do my matrices lose dimensions?, R Miscellanea
+@node How does autoloading work?
 @section How does autoloading work?
 
 Autoloading is rarely used since packages became lazy-loaded.
@@ -2269,7 +2159,7 @@ does not occupy memory (yet).
 
 See the help page for @code{autoload()} for a very nice example.
 
-@node How should I set options?, How do file names work in Windows?, How does autoloading work?, R Miscellanea
+@node How should I set options?
 @section How should I set options?
 
 The function @code{options()} allows setting and examining a variety of
@@ -2307,7 +2197,7 @@ using @kbd{options(OPT = VAL)} correctly updates it.  Local copies of
 @code{.Options}, either in @code{.GlobalEnv} or in a function
 environment (frame), are just silently disregarded.
 
-@node How do file names work in Windows?, Why does plotting give a color allocation error?, How should I set options?, R Miscellanea
+@node How do file names work in Windows?
 @section How do file names work in Windows?
 
 As R uses C-style string handling, @samp{\} is treated as an escape
@@ -2318,7 +2208,7 @@ When you really need a @samp{\}, you have to escape it with another
 Thus, in filenames use something like @code{"c:\\data\\money.dat"}.  You
 can also replace @samp{\} by @samp{/} (@code{"c:/data/money.dat"}).
 
-@node Why does plotting give a color allocation error?, How do I convert factors to numeric?, How do file names work in Windows?, R Miscellanea
+@node Why does plotting give a color allocation error?
 @section Why does plotting give a color allocation error?
 
 This is about a problem rarely seen with modern X11 installations.
@@ -2339,7 +2229,7 @@ You could also set the @code{colortype} of @code{X11()} to
 @code{"pseudo.cube"} rather than the default @code{"pseudo"}.  See the
 help page for @code{X11()} for more information.
 
-@c  @node Is R Y2K-compliant?, How do I convert factors to numeric?, Why does plotting give a color allocation error?, R Miscellanea
+@c  @node Is R Y2K-compliant?
 @c  @section Is R Y2K-compliant?
 
 @c  We expect R to be Y2K compliant when compiled and run on a Y2K compliant
@@ -2351,7 +2241,7 @@ help page for @code{X11()} for more information.
 @c  R, like any other programming language, can be used to write programs
 @c  and manipulate data in ways that are not Y2K compliant.
 
-@node How do I convert factors to numeric?, Are Trellis displays implemented in R?, Why does plotting give a color allocation error?, R Miscellanea
+@node How do I convert factors to numeric?
 @section How do I convert factors to numeric?
 
 It may happen that when reading numeric data into R (usually, when
@@ -2373,7 +2263,7 @@ In any case, do not call @code{as.numeric()} or their likes directly for
 the task at hand (as @code{as.numeric()} or @code{unclass()} give the
 internal codes).
 
-@node Are Trellis displays implemented in R?, What are the enclosing and parent environments?, How do I convert factors to numeric?, R Miscellanea
+@node Are Trellis displays implemented in R?
 @section Are Trellis displays implemented in R?
 
 The recommended package @CRANpkg{lattice} (which is based on base
@@ -2391,7 +2281,7 @@ aspect ratio of the plot.
 use it in R.  The name ``lattice'' has been chosen for the R
 equivalent.)
 
-@node What are the enclosing and parent environments?, How can I substitute into a plot label?, Are Trellis displays implemented in R?, R Miscellanea
+@node What are the enclosing and parent environments?
 @section What are the enclosing and parent environments?
 
 Inside a function you may want to access variables in two additional
@@ -2440,7 +2330,7 @@ between R and S is to say that in S the enclosing environment is
 @emph{always} the global workspace, but in R the enclosing environment
 is wherever the function was created.
 
-@node How can I substitute into a plot label?, What are valid names?, What are the enclosing and parent environments?, R Miscellanea
+@node How can I substitute into a plot label?
 @section How can I substitute into a plot label?
 
 Often, it is desired to use the value of an R object in a plot label,
@@ -2469,7 +2359,7 @@ values.
 
 There are more examples in the mailing list archives.
 
-@node What are valid names?, Are GAMs implemented in R?, How can I substitute into a plot label?, R Miscellanea
+@node What are valid names?
 @section What are valid names?
 
 When creating data frames using @code{data.frame()} or
@@ -2517,7 +2407,7 @@ to do with names in the language, but it is traditional to call these
 strings file ``names''.
 @end enumerate
 
-@node Are GAMs implemented in R?, Why is the output not printed when I source() a file?, What are valid names?, R Miscellanea
+@node Are GAMs implemented in R?
 @section Are GAM@w{s} implemented in R?
 
 Package @CRANpkg{gam} from @CRAN{} implements all the Generalized
@@ -2530,7 +2420,7 @@ for example).  Package @CRANpkg{gss} can fit spline-based GAM@w{s} too.  And
 if you can accept regression splines you can use @code{glm()}.  For
 Gaussian GAM@w{s} you can use @code{bruto()} from package @CRANpkg{mda}.
 
-@node Why is the output not printed when I source() a file?, Why does outer() behave strangely with my function?, Are GAMs implemented in R?, R Miscellanea
+@node Why is the output not printed when I source() a file?
 @section Why is the output not printed when I source() a file?
 
 Most R commands do not generate any output. The command
@@ -2573,7 +2463,7 @@ print(summary(glm(y~x+z, family=binomial)))
 @noindent
 instead, or use @code{source(@var{file}, echo=TRUE)}.
 
-@node Why does outer() behave strangely with my function?, Why does the output from anova() depend on the order of factors in the model?, Why is the output not printed when I source() a file?, R Miscellanea
+@node Why does outer() behave strangely with my function?
 @section Why does outer() behave strangely with my function?
 
 As the help for @code{outer()} indicates, it does not work on arbitrary
@@ -2614,7 +2504,7 @@ outer(1:4, 1:2, FUN = wrapper, my.fun = foo, happy = 10)
 
 Scalar functions can also be vectorized using @code{Vectorize()}.
 
-@node Why does the output from anova() depend on the order of factors in the model?, How do I produce PNG graphics in batch mode?, Why does outer() behave strangely with my function?, R Miscellanea
+@node Why does the output from anova() depend on the order of factors in the model?
 @section Why does the output from @code{anova()} depend on the order of factors in the model?
 
 In a model such as @code{~A+B+A:B}, R will report the difference in sums
@@ -2640,7 +2530,7 @@ easily.  Any two models can be compared with @code{anova(@var{model1},
 @var{model2})}, and @code{drop1(@var{model1})} will show the sums of
 squares resulting from dropping single terms.
 
-@node How do I produce PNG graphics in batch mode?, How can I get command line editing to work?, Why does the output from anova() depend on the order of factors in the model?, R Miscellanea
+@node How do I produce PNG graphics in batch mode?
 @section How do I produce PNG graphics in batch mode?
 
 Under a Unix-like, if your installation supports the
@@ -2662,7 +2552,7 @@ install), which is an X11 server that does not require a screen.
 @c ; and there is the @CRANpkg{GDD} package from @CRAN{}, which produces
 @c PNG, JPEG and GIF bitmaps without X11.
 
-@node How can I get command line editing to work?, How can I turn a string into a variable?, How do I produce PNG graphics in batch mode?, R Miscellanea
+@node How can I get command line editing to work?
 @section How can I get command line editing to work?
 
 The Unix-like command-line interface to R can only provide the inbuilt
@@ -2674,7 +2564,7 @@ needed: users of Linux binary distributions will need to install
 packages such as @code{libreadline-dev} (Debian) or
 @code{readline-devel} (Red Hat).
 
-@node How can I turn a string into a variable?, Why do lattice/trellis graphics not work?, How can I get command line editing to work?, R Miscellanea
+@node How can I turn a string into a variable?
 @section How can I turn a string into a variable?
 
 If you have
@@ -2737,7 +2627,7 @@ vars[["a"]]
 @noindent
 without any of this messing about.
 
-@node Why do lattice/trellis graphics not work?, How can I sort the rows of a data frame?, How can I turn a string into a variable?, R Miscellanea
+@node Why do lattice/trellis graphics not work?
 @section Why do lattice/trellis graphics not work?
 
 The most likely reason is that you forgot to tell R to display the
@@ -2749,7 +2639,7 @@ interactively at the command line, the result is automatically printed,
 but in @code{source()} or inside your own functions you will need an
 explicit @code{print()} statement.
 
-@node How can I sort the rows of a data frame?, Why does the help.start() search engine not work?, Why do lattice/trellis graphics not work?, R Miscellanea
+@node How can I sort the rows of a data frame?
 @section How can I sort the rows of a data frame?
 
 To sort the rows within a data frame, with respect to the values in one
@@ -2760,7 +2650,7 @@ columns named @code{a} and @code{b}).
 From R 4.4.0, @code{sort_by()} provides a less verbose alternative
 with a formula interface (e.g., @code{sort_by(DF, ~a + b)}).
 
-@node Why does the help.start() search engine not work?, Why did my .Rprofile stop working when I updated R?, How can I sort the rows of a data frame?, R Miscellanea
+@node Why does the help.start() search engine not work?
 @section Why does the help.start() search engine not work?
 
 Since R 2.10.0, the browser-based search engine in @code{help.start()}
@@ -2770,7 +2660,7 @@ function properly, one needed a compatible version of Java installed on
 the system and linked to the browser, and both Java @emph{and}
 JavaScript enabled in the browser.
 
-@node Why did my .Rprofile stop working when I updated R?, Where have all the methods gone?, Why does the help.start() search engine not work?, R Miscellanea
+@node Why did my .Rprofile stop working when I updated R?
 @section Why did my @I{.Rprofile} stop working when I updated R?
 
 Did you read the @file{NEWS} file?  For functions that are not in the
@@ -2790,13 +2680,7 @@ grDevices::ps.options(horizontal = FALSE)
 utils::help.start()
 @end example
 
-@c <FIXME>
-@c 3.0.0
-@noindent
-(@code{graphics::ps.options(horizontal = FALSE)} in R 1.9.x).
-@c </FIXME>
-
-@node Where have all the methods gone?, How can I create rotated axis labels?, Why did my .Rprofile stop working when I updated R?, R Miscellanea
+@node Where have all the methods gone?
 @section Where have all the methods gone?
 
 Many functions, particularly S3 methods, are now hidden in namespaces.
@@ -2815,7 +2699,7 @@ of package @code{"bar"} use @code{bar:::foo}.  Don't use these
 constructions to call unexported functions in your own code---they are
 probably unexported for a reason and may change without warning.
 
-@node How can I create rotated axis labels?, Why is read.table() so inefficient?, Where have all the methods gone?, R Miscellanea
+@node How can I create rotated axis labels?
 @section How can I create rotated axis labels?
 
 To rotate axis labels (using base graphics), you need to use
@@ -2851,7 +2735,7 @@ Also see Figure 1 and associated code in
 ``Integrating grid Graphics Output with Base Graphics Output'',
 @emph{R News}, @strong{3/2}, 7--12.
 
-@node Why is read.table() so inefficient?, What is the difference between package and library?, How can I create rotated axis labels?, R Miscellanea
+@node Why is read.table() so inefficient?
 @section Why is read.table() so inefficient?
 
 By default, @code{read.table()} needs to read in everything as character
@@ -2861,7 +2745,7 @@ time and memory.  Performance can substantially be improved by using the
 @code{colClasses} argument to specify the classes to be assumed for the
 columns of the table.
 
-@node What is the difference between package and library?, I installed a package but the functions are not there, Why is read.table() so inefficient?, R Miscellanea
+@node What is the difference between package and library?
 @section What is the difference between package and library?
 
 A @dfn{package} is a standardized collection of material extending R,
@@ -2876,7 +2760,7 @@ containing packages.
 ``R Help Desk: Package Management'', @emph{R News}, @strong{3/3},
 37--39.
 
-@node I installed a package but the functions are not there, Why doesn't R think these numbers are equal?, What is the difference between package and library?, R Miscellanea
+@node I installed a package but the functions are not there
 @section I installed a package but the functions are not there
 
 To actually @emph{use} the package, it needs to be @emph{loaded} using
@@ -2885,7 +2769,7 @@ To actually @emph{use} the package, it needs to be @emph{loaded} using
 See @ref{R Add-On Packages} and @ref{What is the difference between
 package and library?} for more information.
 
-@node Why doesn't R think these numbers are equal?, How can I capture or ignore errors in a long simulation?, I installed a package but the functions are not there, R Miscellanea
+@node Why doesn't R think these numbers are equal?
 @section Why doesn't R think these numbers are equal?
 
 The only numbers that can be represented exactly in R's numeric type are
@@ -2944,7 +2828,7 @@ R> print(matrix(c(.3,  .6,  .9, .3 + .6)), digits = 18)
 @end example
 
 
-@node How can I capture or ignore errors in a long simulation?, Why are powers of negative numbers wrong?, Why doesn't R think these numbers are equal?, R Miscellanea
+@node How can I capture or ignore errors in a long simulation?
 @section How can I capture or ignore errors in a long simulation?
 
 Use @code{try()}, which returns an object of class @code{"try-error"}
@@ -2961,7 +2845,7 @@ would return the coefficients if the @code{lm()} call succeeded and
 would return @code{c(NaN, NaN, NaN, NaN)} if it failed (presumably there
 are supposed to be 4 coefficients in this example).
 
-@node Why are powers of negative numbers wrong?, How can I save the result of each iteration in a loop into a separate file?, How can I capture or ignore errors in a long simulation?, R Miscellanea
+@node Why are powers of negative numbers wrong?
 @section Why are powers of negative numbers wrong?
 
 You are probably seeing something like
@@ -2995,7 +2879,7 @@ R> as.list(quote(-2^2))
 2^2
 @end example
 
-@node How can I save the result of each iteration in a loop into a separate file?, Why are p-values not displayed when using lmer()?, Why are powers of negative numbers wrong?, R Miscellanea
+@node How can I save the result of each iteration in a loop into a separate file?
 @section How can I save the result of each iteration in a loop into a separate file?
 
 One way is to use @code{paste()} (or @code{sprintf()}) to concatenate a
@@ -3012,14 +2896,14 @@ for(i in 1:100) @{
 @}
 @end example
 
-@node Why are p-values not displayed when using lmer()?, Why are there unwanted borders, How can I save the result of each iteration in a loop into a separate file?, R Miscellanea
+@node Why are p-values not displayed when using lmer()?
 @section Why are @math{p}-values not displayed when using @code{lmer()}?
 
 Doug Bates has kindly provided an extensive response in a post to the 
 r-help list, which can be reviewed at
 @uref{https://stat.ethz.ch/pipermail/r-help/2006-May/094765.html}.
 
-@node Why are there unwanted borders, Why does backslash behave strangely inside strings?, Why are p-values not displayed when using lmer()?, R Miscellanea
+@node Why are there unwanted borders
 @section Why are there unwanted borders, lines or grid-like artifacts when viewing a plot saved to a PS or PDF file?
 
 This can occur when using functions such as @code{polygon()},
@@ -3062,7 +2946,7 @@ Then restart @I{Okular}.  Change the final word to @samp{Enabled} to restore
 the original setting.
 @end ftable
 
-@node Why does backslash behave strangely inside strings?, How can I put error bars or confidence bands on my plot?, Why are there unwanted borders, R Miscellanea
+@node Why does backslash behave strangely inside strings?
 @section Why does backslash behave strangely inside strings?
 
 This question most often comes up in relation to file names (see
@@ -3119,7 +3003,7 @@ In versions of R up to 2.4.1 an unknown escape sequence like @samp{\p}
 was quietly interpreted as just @samp{p}.  Current versions of R emit a
 warning.
 
-@node How can I put error bars or confidence bands on my plot?, How do I create a plot with two y-axes?, Why does backslash behave strangely inside strings?, R Miscellanea
+@node How can I put error bars or confidence bands on my plot?
 @section How can I put error bars or confidence bands on my plot?
 
 Some functions will display a particular kind of plot with error bars,
@@ -3148,7 +3032,7 @@ displayed with @code{Dotplot()} or @code{xYplot()} in the
 @CRANpkg{Hmisc} package and @code{segplot()} in the
 @CRANpkg{latticeExtra} package.
 
-@node How do I create a plot with two y-axes?, How do I access the source code for a function?, How can I put error bars or confidence bands on my plot?, R Miscellanea
+@node How do I create a plot with two y-axes?
 @section How do I create a plot with two y-axes?
 
 Creating a graph with two y-axes, i.e., with two sorts of data that are
@@ -3164,7 +3048,7 @@ package) automate the process somewhat.
 @c for more information, including strong arguments against this sort of
 @c graph.
 
-@node How do I access the source code for a function?, Why does summary() report strange results for the R^2 estimate when I fit a linear model with no intercept?, How do I create a plot with two y-axes?, R Miscellanea
+@node How do I access the source code for a function?
 @section How do I access the source code for a function?
 
 In most cases, typing the name of the function will print its source 
@@ -3173,7 +3057,7 @@ a complete overview on how to access source code, see @I{Uwe Ligges} (2006),
 ``Help Desk: Accessing the sources'', @emph{R News}, @strong{6/4},
 43--45 (@url{https://CRAN.R-project.org/doc/Rnews/Rnews_2006-4.pdf}).
 
-@node Why does summary() report strange results for the R^2 estimate when I fit a linear model with no intercept?, Why is R apparently not releasing memory?, How do I access the source code for a function?, R Miscellanea
+@node Why does summary() report strange results for the R^2 estimate when I fit a linear model with no intercept?
 @section Why does summary() report strange results for the R^2 estimate when I fit a linear model with no intercept?
 
 As described in @code{?summary.lm}, when the intercept is zero (e.g.,
@@ -3205,7 +3089,7 @@ of the variance, is the model where @math{E[Y]=0} everywhere.  (If you
 don't know @I{a priori} that @math{E[Y]=0} when @math{x=0}, then you
 probably shouldn't be fitting a line through the origin.)
 
-@node Why is R apparently not releasing memory?, How can I enable secure https downloads in R?, Why does summary() report strange results for the R^2 estimate when I fit a linear model with no intercept?, R Miscellanea
+@node Why is R apparently not releasing memory?
 @section Why is R apparently not releasing memory?
 
 This question is often asked in different flavors along the lines of
@@ -3260,7 +3144,7 @@ Unix-like systems) it is possible to use the @code{mallinfo} system call
 query the allocator about the layout of the allocations, including the
 actually used memory as well as unused memory that cannot be released.
 
-@node How can I enable secure https downloads in R?, How can I get CRAN package binaries for outdated versions of R?, Why is R apparently not releasing memory?, R Miscellanea
+@node How can I enable secure https downloads in R?
 @section How can I enable secure @I{https} downloads in R?
 
 From R 4.2.0, @code{"libcurl"} download method is always available and
@@ -3271,7 +3155,7 @@ since R 3.3.0 everywhere but Windows where the default method
 So nothing needs to be done to access @samp{https://} websites in recent
 versions of R.
 
-@node How can I get CRAN package binaries for outdated versions of R?,  , How can I enable secure https downloads in R?, R Miscellanea
+@node How can I get CRAN package binaries for outdated versions of R?
 @section How can I get CRAN package binaries for outdated versions of R?
 
 Since March 2016, Windows and macOS binaries of @CRAN{} packages for old
@@ -3288,18 +3172,13 @@ local(@{r <- getOption("repos")
 @noindent
 (see @code{?options} for more information).
 
-@node R Programming, R Bugs, R Miscellanea, Top
+
+
+@node R Programming
 @chapter R Programming
 
-@menu
-* How should I write summary methods?::
-* How can I debug dynamically loaded code?::
-* How can I inspect R objects when debugging?::
-* How can I change compilation flags?::
-* How can I debug S4 methods?::
-@end menu
 
-@node How should I write summary methods?, How can I debug dynamically loaded code?, R Programming, R Programming
+@node How should I write summary methods?
 @section How should I write summary methods?
 
 Suppose you want to provide a summary method for class @code{"foo"}.
@@ -3312,7 +3191,7 @@ return something useful, as sometimes you need to grab something
 computed by @code{summary()} inside a function or similar.  In such
 cases you don't want anything printed.
 
-@node How can I debug dynamically loaded code?, How can I inspect R objects when debugging?, How should I write summary methods?, R Programming
+@node How can I debug dynamically loaded code?
 @section How can I debug dynamically loaded code?
 
 Roughly speaking, you need to start R inside the debugger, load the
@@ -3322,7 +3201,7 @@ code, send an interrupt, and then set the required breakpoints.
 code, R-exts, Writing R Extensions}.  This manual is included in the R
 distribution, @pxref{What documentation exists for R?}.
 
-@node How can I inspect R objects when debugging?, How can I change compilation flags?, How can I debug dynamically loaded code?, R Programming
+@node How can I inspect R objects when debugging?
 @section How can I inspect R objects when debugging?
 
 The most convenient way is to call @code{R_PV} from the symbolic
@@ -3331,7 +3210,7 @@ debugger.
 @xref{Inspecting R objects, , Inspecting R objects when debugging,
 R-exts, Writing R Extensions}.
 
-@node How can I change compilation flags?, How can I debug S4 methods?, How can I inspect R objects when debugging?, R Programming
+@node How can I change compilation flags?
 @section How can I change compilation flags?
 
 Suppose you have C code file for @I{dynloading} into R, but you want to use
@@ -3342,7 +3221,7 @@ Starting with R 2.1.0, users can provide personal @file{Makevars} configuration
 files in @file{$@env{HOME}/.R} to override the default flags.
 @xref{Add-on packages, , , R-admin, R Installation and Administration}.
 
-@node How can I debug S4 methods?,  , How can I change compilation flags?, R Programming
+@node How can I debug S4 methods?
 @section How can I debug S4 methods?
 
 Use the @code{trace()} function with argument @code{signature=} to add
@@ -3350,15 +3229,13 @@ calls to the browser or any other code to the method that will be
 dispatched for the corresponding signature.  See @code{?trace} for
 details.
 
-@node R Bugs, Acknowledgments, R Programming, Top
+
+
+@node R Bugs
 @chapter R Bugs
 
-@menu
-* What is a bug?::
-* How to report a bug::
-@end menu
 
-@node What is a bug?, How to report a bug, R Bugs, R Bugs
+@node What is a bug?
 @section What is a bug?
 
 If R executes an illegal instruction, or dies with an operating system
@@ -3409,7 +3286,7 @@ See also ``Making sure it's a bug'' in
 @uref{https://www.r-project.org/bugs.html, Bug Reporting in R} for more
 information.
 
-@node How to report a bug,  , What is a bug?, R Bugs
+@node How to report a bug
 @section How to report a bug
 
 When you decide that there is a bug, it is important to report it and to
@@ -3502,8 +3379,10 @@ last translator (listed at the top of the appropriate @samp{.po} file)
 or to the translation team as listed at
 @url{https://developer.R-project.org/TranslationTeams.html}.
 
-@node Acknowledgments,  , R Bugs, Top
-@chapter Acknowledgments
+
+
+@node Acknowledgments
+@unnumbered Acknowledgments
 
 Of course, many many thanks to Robert and Ross for the R system, and to
 the package writers and porters for adding to it.
@@ -3522,7 +3401,9 @@ Special thanks go to
 @I{Andreas Weingessel}
 for their comments which helped me improve this @acronym{FAQ}.
 
+@c FIXME:
 More to come soon @dots{}
+
 
 @bye
 
