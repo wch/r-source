@@ -61,7 +61,9 @@ all: pdf
 ifneq "$(TEXI2ANY)" "missing"
 .texi.html:
 	@$(ECHO) "creating doc/manual/$@"
-	@$(TEXI2HTML) -I$(srcdir) $< -o $@.tmp || exit 1
+	@$(TEXI2HTML) -I$(srcdir) \
+	  -c TOP_NODE_UP_URL=../html/index.html \
+	  $< -o $@.tmp || exit 1
 	@$(SED) -f $(srcdir)/quot.sed $@.tmp > $@
 	@rm -f $@.tmp
 
