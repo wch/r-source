@@ -3105,9 +3105,9 @@ The discussion above is about the standard @R{} ways of compiling C++:
 it will not apply to packages using @file{src/Makefile} or building in a
 subdirectory that do not set the C++ standard.  And compilers' default
 C++ standards varies widely and gets changed frequently by vendors --
-for example Apple clang up to at least 15 defaults to C++98, @I{LLVM}
+for example Apple clang up to at least 16 defaults to C++98, @I{LLVM}
 clang 14--15 to C++14, @I{LLVM} clang 16--18 to C++17 and @command{g++}
-11--13 to C++17.
+11--14 to C++17.
 
 For a package with a @file{src/Makefile} (or a Windows analogue),
 a non-default C++ compiler can be selected by including something like
@@ -3169,7 +3169,7 @@ compiler is to include an empty C++ file in @file{src}..
 @subsection C standards
 
 C has had standards C89/C90, C99, C11, C17 (also known as C18), and C23
-is in final draft and expected to be published in early 2024.  C11 was a
+is in final draft and expected to be published in 2024.  C11 was a
 minor change to C99 which introduced some new features and made others
 optional, and C17 is a `bug-fix' update to C11.  On the other hand, C23
 makes extensive changes, including making @code{bool}, @code{true} and
