@@ -70,6 +70,8 @@ extern void R_WaitEvent(void);
 # define alloca(x) __builtin_alloca((x))
 #endif
 
+#include <Defn.h>
+
 static void performCompletion(control c);
 
 

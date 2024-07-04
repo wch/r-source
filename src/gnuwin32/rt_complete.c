@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  file rt_complete.c
- *  Copyright (C) 2007-2022 The R Core Team.
+ *  Copyright (C) 2007-2024 The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -34,6 +34,7 @@
 
 #include <Rinternals.h>
 #include <R_ext/Parse.h>
+#include <Defn.h>
 
 static int completion_available = -1;
 
