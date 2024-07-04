@@ -1,4 +1,4 @@
-#  File src/library/tools/R/CRANtools.R
+#  File src/library/tools/R/htmltools.R
 #  Part of the R package, https://www.R-project.org
 #
 #  Copyright (C) 2022-2024 The R Core Team

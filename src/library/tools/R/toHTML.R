@@ -1,7 +1,9 @@
-toHTML <- function(x, ...) UseMethod("toHTML")
-
+#  File src/library/tools/R/toHTML.R
+#  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2021 The R Core Team
+#  Copyright (C) 1995-2024 The R Core Team
+
+toHTML <- function(x, ...) UseMethod("toHTML")
 
 HTMLheader <-
 function(title="R", logo=TRUE,
@@ -539,9 +541,3 @@ HTMLcomponents <- function(title = "R", logo = FALSE,
 
     return(list(header = header, footer = footer))
 }
-
-
-
-
-
-
