@@ -122,9 +122,9 @@ function(x, ...)
 
     vchunks <- split(x, x$Version)
     vchunks <-
-        vchunks[order(as.numeric_version(sub(" *patched", ".1",
-                                             names(vchunks))),
-                      decreasing = TRUE)]
+        vchunks[order(numeric_version(sub(" *patched", ".1", names(vchunks)),
+                                      strict = FALSE), # "R-devel" -> NA
+                      na.last = FALSE, decreasing = TRUE)]
     dates <- vapply(vchunks, function(v) v$Date[1L], "")
     vheaders <- sprintf("<h2>Changes in version %s%s</h2>",
                         names(vchunks),

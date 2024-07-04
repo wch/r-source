@@ -1,6 +1,6 @@
 % File src/library/utils/man/news.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2023 R Core Team
+% Copyright 1995-2024 R Core Team
 % Distributed under GPL 2 or later
 
 \name{news}
@@ -143,6 +143,7 @@ db <- news()
 \dontshow{
   vv <- capture.output(print(db, doBrowse=FALSE))  # without an error
   stopifnot(is.character(vv), length(vv) >= 3) # was wrong (for weeks during devel.)
+  html <- tools::toHTML(subset(db, is.na(Version))) # emulate doBrowse with query
 }
 ## Bug fixes with PR number in 4.0.0.
 db4 <- news(Version == "4.0.0" & grepl("^BUG", Category) & grepl("PR#", Text),
