@@ -16026,16 +16026,16 @@ Performs ``transfer of sign'' and is defined as @eqn{|x| *
 
 @apifun fprec
 @deftypefun double fprec (double @var{x}, double @var{digits})
-Returns the value of @var{x} rounded to @var{digits} decimal digits
-(after the decimal point).
+Returns the value of @var{x} rounded to @var{digits} @emph{significant}
+decimal digits.
 
 This is the function used by @R{}'s @code{signif()}.
 @end deftypefun
 
 @apifun fround
 @deftypefun double fround (double @var{x}, double @var{digits})
-Returns the value of @var{x} rounded to @var{digits} @emph{significant}
-decimal digits.
+Returns the value of @var{x} rounded to @var{digits} decimal digits
+(after the decimal point).
 
 This is the function used by @R{}'s @code{round()}.  (Note that C99/C++11
 provide a @code{round} function but C++98 need not.)
