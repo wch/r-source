@@ -14,7 +14,7 @@ is.recursive(x)
 \description{
   \code{is.atomic} returns \code{TRUE} if \code{x} is of an atomic type
   and \code{FALSE} otherwise.
-  \code{is.atomic(NULL) returns \code{FALSE} since \R version 4.4.0.
+  \code{is.atomic(NULL)} returns \code{FALSE} since \R version 4.4.0.
 
   \code{is.recursive} returns \code{TRUE} if \code{x} has a recursive
   (list-like) structure and \code{FALSE} otherwise.
