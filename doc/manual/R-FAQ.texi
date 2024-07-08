@@ -483,25 +483,27 @@ provided by @I{Michael Rutter}, see
 @url{https://CRAN.R-project.org/bin/linux/ubuntu/index.html} for
 instructions.
 
-R binaries for Fedora, maintained by @I{Tom ``Spot'' Callaway}, are provided
-as part of the Fedora distribution and can be accessed through
-@command{yum}, the @abbr{RPM} installer/updater.  Note that the ``Software''
-application (gnome-software), which is the default @acronym{GUI} for
-software installation in Fedora 20, cannot be used to install R.  It is
-therefore recommended to use the yum command line tool.
-The Fedora R @abbr{RPM} is a ``meta-package'' which installs all the user and
-developer components of R (available separately as @code{R-core} and
-@code{R-devel}), as well as @code{R-java}, which ensures that R is
-configured for use with Java.  The R @abbr{RPM} also installs the standalone R
-math library (@code{libRmath} and @code{libRmath-devel}), although this
-is not necessary to use R.  When a new version of R is released, there
-may be a delay of up to 2 weeks until the Fedora @abbr{RPM} becomes publicly
-available, as it must pass through the Fedora review process.
-@abbr{RPM}s for a selection of R packages are also provided by Fedora.  The
-Extra Packages for Enterprise Linux (@abbr{EPEL}) project
-(@url{https://docs.fedoraproject.org/en-US/epel/}) provides ports of the Fedora
-@abbr{RPM}s for @I{RedHat Enterprise Linux} and compatible distributions (e.g.,
-@I{Centos}, Scientific Linux, Oracle Linux).
+R binaries for Fedora, maintained by @I{Tom ``Spot'' Callaway} and
+@I{Iñaki Ucar}, are provided as part of the Fedora distribution and can
+be accessed through @command{dnf}, the @abbr{RPM} installer/updater.
+The Fedora R @abbr{RPM} is a ``meta-package'' which installs all the
+user and developer components of R (available separately as
+@code{R-core} and @code{R-core-devel}), as well as @code{R-java} and
+@code{R-java-devel}, which ensures that R is configured for use with
+Java.  The R @abbr{RPM} also installs the standalone R math library
+(@code{libRmath} and @code{libRmath-devel}), although this is not
+necessary to use R.  When a new version of R is released, there may be a
+delay of up to 2 weeks until the Fedora @abbr{RPM} becomes publicly
+available, as it must pass through the Fedora update process.
+The Extra Packages for Enterprise Linux (@abbr{EPEL}) project
+(@url{https://docs.fedoraproject.org/en-US/epel/}) provides ports of the
+Fedora @abbr{RPM}s for @I{RedHat Enterprise Linux} and compatible
+distributions (e.g., @I{CentOS Stream}, @I{Scientific Linux}, @I{Oracle
+Linux}, @I{AlmaLinux}, or @I{Rocky Linux} among others).
+@abbr{RPM}s for selection of R packages are also provided by Fedora.
+Additional @abbr{RPM}s for R packages are maintained by @I{Iñaki Ucar}
+on @I{Fedora Copr}.  See @url{https://CRAN.R-project.org/bin/linux/fedora/}
+for further details and installation instructions.
 
 No other binary distributions are currently publicly available via
 @CRAN{}.
