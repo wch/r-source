@@ -15026,7 +15026,7 @@ giving the error message. (Don't do this if the string contains @samp{%}
 or might otherwise be interpreted as a format.)
 
 These are defined in header @file{R_ext/Error.h} included by @file{R.h}.
-@strong{NB}: when @code{R_NO_REMAP} is defined (as is recommeneded for
+@strong{NB}: when @code{R_NO_REMAP} is defined (as is recommended for
 C++ code), @code{Rf_error} etc must be used.
 
 
