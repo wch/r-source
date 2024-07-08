@@ -2918,6 +2918,11 @@ cmi.o dmi.o: iface.o
 @end example
 
 @noindent
+Some maintainers have found it difficult to find @emph{all} the module
+dependencies which leads to hard-to-reproduce installation failures.
+There are tools available to find these, including the Intel compiler's
+flag @option{-gen-dep} and @code{makedepf90}.
+
 Note that it is not portable (although some platforms do accept it) to
 define a module of the same name in multiple source files.
 @c As was done by frailtypack in 2018-12: gfortran accepted this, ODS
@@ -12557,7 +12562,7 @@ indicate @var{TRUE} or @var{FALSE}.
 
 What happens if the @code{SEXP} is not of the correct type?  Sometimes
 you have no other option except to generate an error.  You can use the
-function @code{error} for this.  It is usually better to coerce the
+function @code{Rf_error} for this.  It is usually better to coerce the
 object to the correct type.  For example, if you find that an
 @code{SEXP} is of the type @code{INTEGER}, but you need a @code{REAL}
 object, you can change the type by using
@@ -15020,8 +15025,9 @@ simplest case can be called with a single character string argument
 giving the error message. (Don't do this if the string contains @samp{%}
 or might otherwise be interpreted as a format.)
 
-These are defined in header @file{R_ext/Error.h} included by
-@file{R.h}.
+These are defined in header @file{R_ext/Error.h} included by @file{R.h}.
+@strong{NB}: when @code{R_NO_REMAP} is defined (as is recommeneded for
+C++ code), @code{Rf_error} etc must be used.
 
 
 @c 1-item menu: kept to avoid spurious warning from makeinfo 6.8/7.0
@@ -15033,8 +15039,8 @@ These are defined in header @file{R_ext/Error.h} included by
 @subsection Error signaling from Fortran
 @cindex Error signaling from Fortran
 
-There are two interface function provided to call @code{error} and
-@code{warning} from Fortran code, in each case with a simple character
+There are two interface function provided to call @code{Rf_error} and
+@code{Rf_warning} from Fortran code, in each case with a simple character
 string argument.  They are defined as
 
 @example
@@ -15157,7 +15163,7 @@ by something like (fixed-form Fortran 90 code):
           subroutine putRNGseed() bind(C, name = "PutRNGstate")
           end subroutine putRNGseed
         end interface
-      end module
+      end module rngfuncs
       
       subroutine testit
       use rngfuncs
@@ -15166,7 +15172,7 @@ by something like (fixed-form Fortran 90 code):
       X = unifRand()
       print *, X
       call putRNGSeed()
-      end
+      end subroutine testit
 @end example
 
 
@@ -16551,7 +16557,7 @@ These are currently implemented using the R-level @code{tryCatch}
 mechanism so are subject to some overhead.
 
 @code{R_withCallingErrorHandler} establishes a calling handler for
-conditions inheriting form class @code{error}.  It establishes the
+conditions inheriting from class @code{error}.  It establishes the
 handler without calling back into @R{} and will therefore be more
 efficient.
 
