@@ -503,9 +503,6 @@ Extra Packages for Enterprise Linux (@abbr{EPEL}) project
 @abbr{RPM}s for @I{RedHat Enterprise Linux} and compatible distributions (e.g.,
 @I{Centos}, Scientific Linux, Oracle Linux).
 
-See @url{https://CRAN.R-project.org/bin/linux/suse/README.html} for
-information about @abbr{RPM}s for openSUSE.
-
 No other binary distributions are currently publicly available via
 @CRAN{}.
 
@@ -2624,7 +2621,32 @@ vars[["a"]]
 @end example
 
 @noindent
-without any of this messing about.
+without any of this messing about.  This becomes especially true if you
+are finding yourself creating and trying to programmatically access
+groups of related variables such as @code{result1}, @code{result2},
+@code{result3}, and so on: instead of fighting against the language to
+use
+
+@example
+assign(paste0("result", i), process(get(paste0("dataset", i))))
+@end example
+
+@noindent
+it is much easier to put the related variables in lists and use
+
+@example
+result[[i]] <- process(dataset[[i]])
+@end example
+
+@noindent
+and, eventually,
+
+@example
+result <- lapply(dataset, process)
+@end example
+
+@noindent
+which is easy to replace with @code{parLapply} for parallel processing.
 
 @node Why do lattice/trellis graphics not work?
 @section Why do lattice/trellis graphics not work?
