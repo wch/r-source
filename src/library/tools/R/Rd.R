@@ -626,7 +626,7 @@ function(x, predicate)
 ## Determine whether Rd has \Sexprs which R CMD build needs to handle at
 ## build stage (expand into the partial Rd db), "later" (build
 ## refman.pdf) or "never" (\Sexprs from \PR or \doi can always safely
-## be expanded).
+## be expanded). Needs unprocessed install \Sexprs.
 
 .Rd_get_Sexpr_build_time_info <-
 function(x)
@@ -649,7 +649,7 @@ function(x)
                    function(e) {
                        flags <- getDynamicFlags(e)
                        if(flags["build"])
-                           "build"
+                           return("build")
                        else if(flags["install"]) {
                            s <- trimws(paste(as.character(e),
                                              collapse = ""))
