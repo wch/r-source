@@ -18097,12 +18097,14 @@ interval (@emph{via} @code{R_wait_usec}) and a function to be called
 periodically @emph{via} @code{R_PolledEvents}: the polling mechanism is
 used by the @pkg{tcltk} package. Input handlers are managed with
 @code{addInputHandler},@code{getInputHandler}, and
-@code{removeInputHandler}.
+@code{removeInputHandler}. The handlers are held in a linked list
+@code{R_InputHandlers}.
 @embfun R_PolledEvents
 @embfun R_wait_usec
 @embfun addInputHandler
 @embfun getInputHandler
 @embfun removeInputHandler
+@embvar R_InputHandlers
 
 It is not intended that these facilities are used by packages, but if
 they are needed exceptionally, the package should ensure that it cleans
