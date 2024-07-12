@@ -1500,8 +1500,8 @@ installation can be tested.
 @itemize @bullet
 @item
 R commands can be interrupted by @key{Esc} in @command{Rgui.exe}
-and @key{Ctrl-break} or @key{Ctrl-C} in @command{Rterm.exe}:
-@key{Ctrl-C} is used for copying in @command{Rgui.exe}.
+and @kbd{Ctrl-break} or @kbd{Ctrl-C} in @command{Rterm.exe}:
+@kbd{Ctrl-C} is used for copying in @command{Rgui.exe}.
 
 @item 
 Command-line editing is always available, but is somewhat simpler than the
@@ -1593,12 +1593,12 @@ act on it).
 @node What does TAB completion do?
 @section What does TAB completion do?
 
-Both @command{Rgui} and @command{Rterm} support @kbd{TAB} completion.
-Hitting @kbd{TAB} whilst entering a command line completes the current
-`word' as far as is unambiguously possible.  Hitting @kbd{TAB} a second
+Both @command{Rgui} and @command{Rterm} support @key{TAB} completion.
+Hitting @key{TAB} whilst entering a command line completes the current
+`word' as far as is unambiguously possible.  Hitting @key{TAB} a second
 time then shows a list of possible completions (or the first few if
 there are many): the user can then enter one or more characters and hit
-@kbd{TAB} again.
+@key{TAB} again.
 
 What is it `completing'?  There are two modes: within an unterminated
 (single- or double-) quoted expression it completes file
@@ -1607,7 +1607,7 @@ file paths, but can complete most relative or absolute file paths,
 including drives and spaces. Relative paths on drives are not handled,
 for example.}  Otherwise, it is completing R expressions: most obviously
 it will match visible R object names and keywords, so @kbd{apr} followed
-by @kbd{TAB} will (in a vanilla session) complete to @code{apropos}.
+by @key{TAB} will (in a vanilla session) complete to @code{apropos}.
 After a function name and parenthesis (e.g.@: @kbd{apropos(}) it will
 complete argument names (and @kbd{=}), and after @kbd{$} or @kbd{@@} it
 will complete list components or slot names respectively.
@@ -1698,7 +1698,7 @@ and so these problems should disappear.
 
 This is deliberate: the console output is buffered and re-written in
 chunks to be faster and less distracting.  You can turn buffering off or
-on from the `Misc' menu or the right-click menu: @key{Ctrl-W} toggles
+on from the `Misc' menu or the right-click menu: @kbd{Ctrl-W} toggles
 the setting.
 
 If you are sourcing R code or writing from a function, there is another
@@ -1711,7 +1711,7 @@ the buffer and so update the console.
 
 They only @strong{seem} to be truncated: that $ at the end indicates you
 can scroll the window to see the rest of the line.  Use the horizontal
-scrollbar or the @key{CTRL + left/right arrow} keys to scroll
+scrollbar or the @kbd{@key{CTRL} + left/right arrow} keys to scroll
 horizontally. (The @key{left/right arrow} keys work in the pager too.)
 
 

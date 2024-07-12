@@ -9186,7 +9186,7 @@ also accepted
 @itemize @bullet
 @item @code{n}
 
-Enter `step-through' mode.  In this mode, hitting return executes the
+Enter `step-through' mode.  In this mode, hitting the return key (@key{RET}) executes the
 next line of code (more precisely one line and any continuation lines).
 Typing @code{c} will continue to the end of the current context, e.g.@:
 to the end of the current loop or function.
@@ -10304,7 +10304,7 @@ prompt.
 @item
 Set the breakpoints in your code.
 @item
-Continue execution of @R{} by typing @kbd{signal 0@key{RET}}.
+Continue execution of @R{} by typing @kbd{signal 0} and hitting return (@key{RET}).
 @end itemize
 
 Under Windows signals may not be able to be used, and if so the procedure is
