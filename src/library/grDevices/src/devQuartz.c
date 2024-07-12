@@ -3002,14 +3002,12 @@ void RQuartz_glyph(int n, int *glyphs, double *x, double *y,
 
     Rboolean grouping = QuartzBegin(&ctx, &layer, xd);
 
-    char url[501];
-    snprintf(url, 500, "file://%s", R_GE_glyphFontFile(font));
-    CFStringRef cfFontFileName = 
-        CFStringCreateWithCString(NULL, url, kCFStringEncodingUTF8);
-    CFURLRef cfFontURL = CFURLCreateWithString(NULL, cfFontFileName, NULL);
+    const char* path = R_GE_glyphFontFile(font);
+    CFURLRef cfFontURL = CFURLCreateFromFileSystemRepresentation(NULL, (const UInt8*)path, strlen(path), false);
+    if (!cfFontURL)
+        error(_("Invalid font path: \"%s\""), path);
     CFArrayRef cfFontDescriptors = 
         CTFontManagerCreateFontDescriptorsFromURL(cfFontURL);
-    CFRelease(cfFontFileName);
     CFRelease(cfFontURL);
     int n_fonts = CFArrayGetCount(cfFontDescriptors);
     if (n_fonts > 0) {
