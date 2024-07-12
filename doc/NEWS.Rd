@@ -233,6 +233,10 @@
       result and no explanation in \file{00check.log}) for a package
       which declares an invalid \code{VignetteBuilder} in
       \file{DESCRIPTION} but has no vignettes.
+
+      \item The Quartz device could segfault in cases where paths with
+      spaces are used in the new glyph drawing API. Thanks to Tomek
+      Gieorgijewski (\PR{18758}).
     }
   }
 }
