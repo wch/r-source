@@ -303,7 +303,8 @@ xfig <- function (file = if(onefile) "Rplots.fig" else "Rplot%03d.fig",
 pdf <- function(file = if(onefile) "Rplots.pdf" else "Rplot%03d.pdf",
                 width, height, onefile, family, title, fonts, version,
                 paper, encoding, bg, fg, pointsize, pagecentre, colormodel,
-                useDingbats, useKerning, fillOddEven, compress)
+                useDingbats, useKerning, fillOddEven, compress,
+                timestamp, producer, author)
 {
     ## do initialization if needed
     initPSandPDFfonts()
@@ -327,6 +328,9 @@ pdf <- function(file = if(onefile) "Rplots.pdf" else "Rplot%03d.pdf",
     if(!missing(useKerning)) new$useKerning <- useKerning
     if(!missing(fillOddEven)) new$fillOddEven <- fillOddEven
     if(!missing(compress)) new$compress <- compress
+    if(!missing(timestamp)) new$timestamp <- timestamp
+    if(!missing(producer)) new$producer <- producer
+    if(!missing(author)) new$author <- author
 
     old <- check.options(new, name.opt = ".PDF.Options", envir = .PSenv)
 
@@ -378,7 +382,8 @@ pdf <- function(file = if(onefile) "Rplots.pdf" else "Rplot%03d.pdf",
               old$width, old$height, old$pointsize, onefile, old$pagecentre,
               old$title, old$fonts, version[1L], version[2L],
               old$colormodel, old$useDingbats, old$useKerning,
-              old$fillOddEven, old$compress)
+              old$fillOddEven, old$compress,
+              old$timestamp, old$producer, old$author)
     invisible()
 }
 
@@ -686,7 +691,10 @@ assign(".PDF.Options",
          useDingbats = FALSE,
          useKerning = TRUE,
          fillOddEven = FALSE,
-         compress = TRUE), envir = .PSenv)
+         compress = TRUE,
+         timestamp = TRUE,
+         producer = TRUE,
+         author = ""), envir = .PSenv)
 assign(".PDF.Options.default",
        get(".PDF.Options", envir = .PSenv),
        envir = .PSenv)

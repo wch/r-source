@@ -34,6 +34,11 @@
 
       \item New function \code{grepv()} identical to \code{grep()} except
       with the default \code{value = TRUE}. 
+
+      \item \code{pdf()} gains an \code{author} argument to set the
+      corresponding metadata field, and logical arguments
+      \code{timestamp} and \code{producer} to optionally omit the
+      respective metadata.  (Thanks to Edzer Pebesma.)
     }
   }
 

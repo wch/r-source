@@ -2886,7 +2886,7 @@ Sturges   Scott      FD
 > flush(stderr()); flush(stdout())
 > 
 > ### Name: pdf.options
-> ### Title: Auxiliary Function to Set/View Defaults for Arguments of pdf
+> ### Title: Auxiliary Function to Set/View Defaults for Arguments of 'pdf'
 > ### Aliases: pdf.options
 > ### Keywords: device
 > 
@@ -2894,7 +2894,7 @@ Sturges   Scott      FD
 > 
 > pdf.options(bg = "pink")
 > utils::str(pdf.options())
-List of 18
+List of 21
  $ width      : num 7
  $ height     : num 7
  $ onefile    : logi TRUE
@@ -2913,6 +2913,9 @@ List of 18
  $ useKerning : logi TRUE
  $ fillOddEven: logi FALSE
  $ compress   : logi TRUE
+ $ timestamp  : logi TRUE
+ $ producer   : logi TRUE
+ $ author     : chr ""
 > pdf.options(reset = TRUE) # back to factory-fresh
 > 
 > 
