@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2004-2023   The R Core Team
+ *  Copyright (C) 2004--2024  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *  Copyright (C) 1998--2003  Guido Masarotto and Brian Ripley
  *  Copyright (C) 2004        The R Foundation
@@ -464,6 +464,9 @@ static void SaveAsPDF(pDevDesc dd, const char *fn)
     char family[256], encoding[256], bg[256], fg[256];
     const char **afmpaths = NULL;
     Rboolean useCompression = FALSE;
+    Rboolean timestamp = TRUE;
+    Rboolean producer = TRUE;
+    const char *author = "";
 
     if (!ndd) {
 	R_ShowMessage(_("Not enough memory to copy graphics window"));
@@ -506,7 +509,8 @@ static void SaveAsPDF(pDevDesc dd, const char *fn)
 					 GE_INCHES, gdd),
 			((gadesc*) dd->deviceSpecific)->basefontsize,
 			1, 0, "R Graphics Output", R_NilValue, 1, 4,
-			"rgb", TRUE, TRUE, xd->fillOddEven, useCompression))
+			"rgb", TRUE, TRUE, xd->fillOddEven, useCompression,
+			timestamp, producer, author))
 	PrivateCopyDevice(dd, ndd, "PDF");
 }
 
