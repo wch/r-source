@@ -1,6 +1,6 @@
 % File src/library/utils/man/methods.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2023 R Core Team
+% Copyright 1995-2024 R Core Team
 % Distributed under GPL 2 or later
 
 \name{methods}
@@ -16,7 +16,7 @@
 \usage{% --> ../R/objects.R :
    methods(generic.function, class, all.names = FALSE, dropPath = FALSE)
 .S3methods(generic.function, class, envir = parent.frame(),
-                                    all.names = FALSE, dropPath = FALSE)
+                                    all.names = FALSE, dropPath = FALSE, useEnv = FALSE)
 
 \S3method{format}{MethodsFunction}(x, byclass = attr(x, "byclass"), \dots)
 \S3method{print}{MethodsFunction}(x, byclass = attr(x, "byclass"), \dots)
@@ -39,6 +39,9 @@
     back compatible and typically desired for \I{\code{print()}ing}, with or
     without asterisk; \code{dropPath=TRUE} has been hard coded in \R 4.3.0
     and is faster for non-small \code{\link{search}()} paths.}
+  \item{useEnv}{a \code{\link{logical}} indicating if \code{envir} should
+    be searched in addition to the (much reduced in case of \code{dropPath=TRUE})
+    \code{\link{search}()} path.}
   \item{x}{typically the result of \code{methods(..)}, an \R object of S3
     class \code{"MethodsFunction"}, see \sQuote{Value} below.}
   \item{byclass}{an optional \code{\link{logical}} allowing to override

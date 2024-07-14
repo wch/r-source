@@ -92,7 +92,7 @@ unlink("myLib", recursive = TRUE)
 dir.create("myLib")
 install.packages("myTst", lib = "myLib", repos=NULL, type = "source")
 print(installed.packages(lib.loc= "myLib", priority= "NA"))## (PR#13332)
-stopifnot(require("myTst",lib = "myLib"))
+stopifnot(require("myTst", lib.loc = "myLib"))
 sm <- findMethods(show, where= as.environment("package:myTst"))
 stopifnot(sm@names == "foo")
 unlink("myTst_*")
@@ -400,10 +400,14 @@ if(okA) {
   if(interactive()) { ## << "FIXME!"  This (sink(.) ..) fails, when run via 'make'.
     ## install.packages() should give "the correct" error but we cannot catch it
     ## One level lower is not much better, needing sink() as capture.output() fails
-    ftf <- file(tf <- tempfile("inst_pkg"), open = "wt")
-    sink(ftf); sink(ftf, type = "message")# "message" should be sufficient
-    eval(instEXPR)
-    sink(type="message"); sink()## ; close(ftf); rm(ftf)# end sink()
+    tryInst <- function(tfile) {
+        ftf <- file(tfile, open = "wt")
+        sink(ftf); sink(ftf, type = "message")# "message" should be sufficient
+        on.exit({ sink(type="message"); sink(); close(ftf) })
+        eval(instEXPR)
+    }
+    tf <- tempfile("inst_pkg")
+    instR <- tryInst(tf)
     writeLines(paste(" ", msgs <- readLines(tf)))
     message(err <- grep("^ERROR:", msgs, value=TRUE))
     stopifnot(exprs = {
@@ -418,6 +422,18 @@ if(okA) {
 } else message("pkgA/DESCRIPTION  not available")
 showProc.time()
 
+require(PkgC, lib.loc = "myLib")
+(r <- methods(PkgC:::foobar))# "should" return non-empty even when neither S3 generic nor method was exported
+meths <- paste("foobar", c("Date", "default"), sep = ".")
+try(PkgC:::foobar(pi))    # -> foobar.default is *not* 'found'
+PkgC:::foobar(Sys.Date()) # -> foobar.Date   *is* found b/c  S3method(.)
+stopifnot(exprs = {
+    inherits(r, "MethodsFunction")
+    r == meths # may change if add an extra star
+    nrow(mi <- attr(r, "info")) == 2
+    identical(meths, rownames(mi))
+})
+## failed up to R 4.4.x
 
 ## R CMD check should *not* warn about \Sexpr{} built sections in Rd (PR#17479):
 writeLines(msg <- capture.output(

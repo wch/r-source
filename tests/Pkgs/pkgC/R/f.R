@@ -7,6 +7,16 @@ Cfun <- function(x) {
        cbind(x, b=x+2))
 }
 
+
+## S3 generic and method -- both *not* exported; -- methods(pkgC:::foobar)  should still work:
+foobar <- function(x) { UseMethod("foobar") }
+foobar.default <- function(x) { cat("foobar.default(x):, x="); str(x) }
+foobar.Date <- function(x) {
+    r <- x + 1
+    cat("foobar.Date(.): next day is: ", format(r), "\n")
+    invisible(r)
+}
+
 ## Pkg 'ecd' had
 ## setClassUnion("numericMpfr", c("numeric", "mpfr", "mpfrArray"))
 ##
