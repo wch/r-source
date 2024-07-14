@@ -33,7 +33,10 @@
       computations; wished for in \PR{18739}.
 
       \item New function \code{grepv()} identical to \code{grep()} except
-      with the default \code{value = TRUE}. 
+      with the default \code{value = TRUE}.
+
+      \item \code{methods(<pkg>:::<genfun>)} now does report methods when
+      neither the generic nor the methods have been exported.
 
       \item \code{pdf()} gains an \code{author} argument to set the
       corresponding metadata field, and logical arguments
@@ -128,7 +131,7 @@
       \code{SYMVALUE}, and \code{VECTOR_PTR}. Any declarations for these
       in public header files will be removed in the near future, and
       they will be hidden where possible.
-      
+
       \item \sQuote{Writing R Extensions} has a new section
       \sQuote{Moving into C API compliance} to help package authors move
       away from using non-API endpoints. This section will continue to

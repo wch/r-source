@@ -3861,6 +3861,19 @@ Residuals 42  29204   695.3
 
 > ##  had integer overflows in 1.8.1, and silly shifts of decimal point
 > 
+> ## PR#8934 stem() with correct width
+> stem(c(8.48, 9.58, 9.96))
+
+  The decimal point is at the |
+
+   8 | 
+   8 | 5
+   9 | 
+   9 | 6
+  10 | 0
+
+> ## wrongly indented  '10 |'  since even before R 1.0.0
+> 
 > 
 > ## PR#6633 warnings with vector op matrix, and more
 > set.seed(1)
