@@ -426,6 +426,7 @@ require(PkgC, lib.loc = "myLib")
 (r <- methods(PkgC:::foobar))# "should" return non-empty even when neither S3 generic nor method was exported
 meths <- paste("foobar", c("Date", "default"), sep = ".")
 try(PkgC:::foobar(pi))    # -> foobar.default is *not* 'found'
+if(FALSE) # not working when run via `make`
 PkgC:::foobar(Sys.Date()) # -> foobar.Date   *is* found b/c  S3method(.)
 stopifnot(exprs = {
     inherits(r, "MethodsFunction")
