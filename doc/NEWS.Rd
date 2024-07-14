@@ -175,6 +175,10 @@
       and now preserves \code{NA} names, thus fixing the \code{format()}
       method for data frames, and also bug \PR{18745}.
       \I{Relatedly}, the \code{format()} method gets an option \code{cut.names}.
+
+      \item \code{stem()} correctly formats also in cases where rounding
+      up, e.g., from 9.96 to 10 needs more digits; thanks to Ella Kaye and
+      Kelly Bodwin, fixing \PR{8934} during \sQuote{R Dev Day} at useR!2024.
     }
   }
 }
