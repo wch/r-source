@@ -32,6 +32,10 @@
       interface to the \code{lm.influence()} leave-one-out diagnostics
       computations; wished for in \PR{18739}.
 
+      \item Package \code{citation()} results auto-generated from the
+      package metadata now also provide package \abbr{DOI}s for CRAN and
+      Bioconductor packages.
+
       \item New function \code{grepv()} identical to \code{grep()} except
       with the default \code{value = TRUE}.
 
@@ -150,9 +154,10 @@
       \code{SET_TYPEOF}, \code{TRUELENGTH}, \code{XLENGTH_EX},
       and \code{XTRUELENGTH}.
 
-      \item Package \code{citation()} results auto-generated from the
-      package metadata now also provide package \abbr{DOI}s for CRAN and
-      Bioconductor packages.
+      \item Memory allocation messages now use the (non-standard notation)
+      \code{"Mb"}, \code{"Gb"} , \dots, and \code{"Mbytes"} strings as
+      \emph{arguments} instead of as part of the (translatable format)
+      string.  This is one step for \PR{18297}; from Henrik Bengtsson.
     }
   }
 

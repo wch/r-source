@@ -2327,13 +2327,13 @@ char *R_alloc(size_t nelem, int eltsize)
 #ifdef LONG_VECTOR_SUPPORT
 	/* 64-bit platform: previous version used REALSXPs */
 	if(dsize > R_XLEN_T_MAX)  /* currently 4096 TB */
-	    error(_("cannot allocate memory block of size %0.f Tb"),
-		  dsize/R_pow_di(1024.0, 4));
+	    error(_("cannot allocate memory block of size %0.f %s"),
+		  dsize/R_pow_di(1024.0, 4), "Tb");
 	s = allocVector(RAWSXP, size + 1);
 #else
 	if(dsize > R_LEN_T_MAX) /* must be in the Gb range */
-	    error(_("cannot allocate memory block of size %0.1f Gb"),
-		  dsize/R_pow_di(1024.0, 3));
+	    error(_("cannot allocate memory block of size %0.1f %s"),
+		  dsize/R_pow_di(1024.0, 3), "Gb");
 	s = allocVector(RAWSXP, size + 1);
 #endif
 	ATTRIB(s) = R_VStack;
@@ -2912,16 +2912,16 @@ SEXP allocVector3(SEXPTYPE type, R_xlen_t length, R_allocator_t *allocator)
 		R_VSize = old_R_VSize;
 		if(dsize > 1024.0*1024.0)
 		    errorcall(R_NilValue,
-			      _("cannot allocate vector of size %0.1f Gb"),
-			      dsize/1024.0/1024.0);
+			      _("cannot allocate vector of size %0.1f %s"),
+			      dsize/1024.0/1024.0, "Gb");
 		if(dsize > 1024.0)
 		    errorcall(R_NilValue,
-			      _("cannot allocate vector of size %0.1f Mb"),
-			      dsize/1024.0);
+			      _("cannot allocate vector of size %0.1f %s"),
+			      dsize/1024.0, "Mb");
 		else
 		    errorcall(R_NilValue,
-			      _("cannot allocate vector of size %0.f Kb"),
-			      dsize);
+			      _("cannot allocate vector of size %0.f %s"),
+			      dsize, "Kb");
 	    }
 	    s->sxpinfo = UnmarkedNodeTemplate.sxpinfo;
 	    INIT_REFCNT(s);
@@ -3260,13 +3260,13 @@ static void R_gc_internal(R_size_t size_needed)
 	nfrac = (100.0 * ncells) / R_NSize;
 	/* We try to make this consistent with the results returned by gc */
 	ncells = 0.1*ceil(10*ncells * sizeof(SEXPREC)/Mega);
-	REprintf("\n%.1f Mbytes of cons cells used (%d%%)\n",
-		 ncells, (int) (nfrac + 0.5));
+	REprintf("\n%.1f %s of cons cells used (%d%%)\n",
+		 ncells, "Mbytes", (int) (nfrac + 0.5));
 	vcells = R_VSize - VHEAP_FREE();
 	vfrac = (100.0 * vcells) / R_VSize;
 	vcells = 0.1*ceil(10*vcells * vsfac/Mega);
-	REprintf("%.1f Mbytes of vectors used (%d%%)\n",
-		 vcells, (int) (vfrac + 0.5));
+	REprintf("%.1f %s of vectors used (%d%%)\n",
+		 vcells, "Mbytes", (int) (vfrac + 0.5));
     }
 
 #ifdef IMMEDIATE_FINALIZERS
@@ -4925,8 +4925,8 @@ void *R_AllocStringBuffer(size_t blen, R_StringBuffer *buf)
     if(!buf->data) {
 	buf->bufsize = 0;
 	/* don't translate internal error message */
-	error("could not allocate memory (%u Mb) in C function 'R_AllocStringBuffer'",
-	      (unsigned int) blen/1024/1024);
+	error("could not allocate memory (%u %s) in C function 'R_AllocStringBuffer'",
+	      (unsigned int) blen/1024/1024, "Mb");
     }
     return buf->data;
 }
