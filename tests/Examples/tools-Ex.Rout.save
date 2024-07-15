@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2024-03-31 r86238) -- "Unsuffered Consequences"
+R Under development (unstable) (2024-07-15 r86900) -- "Unsuffered Consequences"
 Copyright (C) 2024 The R Foundation for Statistical Computing
-Platform: aarch64-apple-darwin23.4.0
+Platform: x86_64-pc-linux-gnu
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -989,6 +989,38 @@ An illustration of lexical scoping.
 <p>
 </p>
 </div></body></html>
+> 
+> 
+> 
+> cleanEx()
+> nameEx("toTitleCase")
+> ### * toTitleCase
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: toTitleCase
+> ### Title: Convert Titles to Title Case
+> ### Aliases: toTitleCase
+> 
+> ### ** Examples
+> 
+> toTitleCase("bayesian network modeling and analysis")
+[1] "Bayesian Network Modeling and Analysis"
+> toTitleCase("ensemble tool for predictions from species distribution models")
+[1] "Ensemble Tool for Predictions from Species Distribution Models"
+> ## Treatment after "-":
+> toTitleCase("small- and large-scale analysis") # lowercase "and"
+[1] "Small- and Large-Scale Analysis"
+> 
+> toTitleCase("a small fox is jumping")    # "a Small Fox is .."     (the 'a' may change)% i.e. BUG
+[1] "a Small Fox is Jumping"
+> toTitleCase("is a small fox jumping?")   # "Is a Small Fox .."     (fine)
+[1] "Is a Small Fox Jumping?"
+> ## After ":", start a new sentence
+> toTitleCase("a pangram: the quick brown fox jumps over the lazy dog")
+[1] "a Pangram: The Quick Brown Fox Jumps over the Lazy Dog"
+> toTitleCase("asking -- 'is a small fox jumping?'") # ".. -- Is a Small ..."     (fine)
+[1] "Asking -- 'Is a Small Fox Jumping?'"
 > 
 > 
 > 

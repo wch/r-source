@@ -2688,13 +2688,15 @@ function(text)
         ## do not remove capitalization immediately after ": " or "- "
         ind <- grep("[-:]$", xx); ind <- ind[ind + 2L <= length(l)]
         ind <- ind[(xx[ind + 1L] == " ") & grepl("^['[:alnum:]]", xx[ind + 2L])]
+        # don't capitalize lpat words after hyphenation
+        ind <- ind[!(xx[ind] == "-" & grepl(lpat, xx[ind + 2L]))]
         l[ind + 2L] <- FALSE
         ## Also after " (e.g. "A Book Title")
         ind <- which(xx == '"'); ind <- ind[ind + 1L <= length(l)]
         l[ind + 1L] <- FALSE
         xx[l] <- tolower(xx[l])
         keep <- havecaps | l | (nchar(xx) == 1L) | alone
-        xx[!keep] <- sapply(xx[!keep], do1)
+        xx[!keep] <- vapply(xx[!keep], do1, "<chr>")
         paste(xx, collapse = "")
     }
     if(typeof(text) != "character")

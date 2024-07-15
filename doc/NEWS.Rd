@@ -184,6 +184,10 @@
       \item \code{stem()} correctly formats also in cases where rounding
       up, e.g., from 9.96 to 10 needs more digits; thanks to Ella Kaye and
       Kelly Bodwin, fixing \PR{8934} during \sQuote{R Dev Day} at useR!2024.
+
+      \item \pkg{tools}' \code{toTitleCase()} now works better, fixing
+      \PR{18674}, thanks to Shannon Pileggi, Sarah Zeller, Reiko Okamoto,
+      and Hugo Gruson's \sQuote{R Dev Day} effort.
     }
   }
 }

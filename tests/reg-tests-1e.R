@@ -1394,6 +1394,14 @@ stopifnot(!isdebugged(summary.factor))
 unloadNamespace("stats4")
 
 
+## PR#18674 - toTitleCase() incorrectly capitalizes conjunctions
+## (e.g. 'and') when using suspensive hyphenation
+stopifnot(exprs = {
+    identical(tools::toTitleCase("pre and post estimation"),  "Pre and Post Estimation")
+    identical(tools::toTitleCase("pre- and post estimation"), "Pre- and Post Estimation")
+    identical(tools::toTitleCase("pre- and post-estimation"), "Pre- and Post-Estimation")
+})
+
 ## PR#18724 - toTitleCase(character(0))
 ch0 <- character(0L)
 stopifnot(identical(ch0, tools::toTitleCase(ch0)))
