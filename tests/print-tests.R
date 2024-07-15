@@ -339,5 +339,22 @@ as.complex(1:10)
 as.raw(1:10)
 options(o)
 
+## print() max.print and max for matrices (w/ many columns)  --  PR#15027
+## whenever the columns are larger than max.print, no values inside the matrix are displayed
+print(matrix(nrow = 100, ncol = 4), max = 5)
+print(matrix(nrow = 100, ncol = 100), max = 40) # omitting rows and columns
+print(matrix(nrow =  10, ncol = 4), max = 3)    #   (ditto)
+print(matrix(nrow =   0, ncol = 4), max = 3)    # omitting 1 column
+print(matrix(nrow =  10, ncol = 2), max = 5)    # omitting rows
+print(matrix(nrow =   1, ncol = 6), max = 5)    # omitting cols, at least one row prints
+## ----- "higher" arrays ("rank >= 3"): --------
+## FIXME: in R 4.4.0 there should be a warning for omitted rows
+print(array(dim = c(2, 2, 1)), max = 2)
+## FIXME: this does not print anything but it should show
+##        at least one element according to the logic of max.print
+print(array(dim = c(2, 2, 1)), max = 1)
+
+
+
 ## Cleanup
 rm(print.foo, obj, a, b, c, d, o)

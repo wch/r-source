@@ -188,6 +188,12 @@
       \item \pkg{tools}' \code{toTitleCase()} now works better, fixing
       \PR{18674}, thanks to Shannon Pileggi, Sarah Zeller, Reiko Okamoto,
       and Hugo Gruson's \sQuote{R Dev Day} effort.
+
+      \item Printing matrices (typically with many rows and or columns) now
+      also omits columns when desirable according to option \code{max.print},
+      or argument \code{max}, respectively.  This is primarily the work of
+      Lorena Abad, Ekaterina Akimova, Hanne Oberman, Abhishek Ulayil, and
+      Lionel Henry at the \sQuote{R Dev Day}, thus fixing \PR{15027}.
     }
   }
 }

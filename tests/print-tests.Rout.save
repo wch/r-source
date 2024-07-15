@@ -1,6 +1,6 @@
 
-R Under development (unstable) (2023-08-31 r85038) -- "Unsuffered Consequences"
-Copyright (C) 2023 The R Foundation for Statistical Computing
+R Under development (unstable) (2024-07-15 r86901) -- "Unsuffered Consequences"
+Copyright (C) 2024 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -940,6 +940,53 @@ NULL
 [1] 01 02 03 04 05
  [ reached getOption("max.print") -- omitted 5 entries ]
 > options(o)
+> 
+> ## print() max.print and max for matrices (w/ many columns)  --  PR#15027
+> ## whenever the columns are larger than max.print, no values inside the matrix are displayed
+> print(matrix(nrow = 100, ncol = 4), max = 5)
+       [,1] [,2] [,3] [,4]
+  [1,]   NA   NA   NA   NA
+ [ reached getOption("max.print") -- omitted 99 rows ]
+> print(matrix(nrow = 100, ncol = 100), max = 40) # omitting rows and columns
+       [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13]
+  [1,]   NA   NA   NA   NA   NA   NA   NA   NA   NA    NA    NA    NA    NA
+       [,14] [,15] [,16] [,17] [,18] [,19] [,20] [,21] [,22] [,23] [,24] [,25]
+  [1,]    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA
+       [,26] [,27] [,28] [,29] [,30] [,31] [,32] [,33] [,34] [,35] [,36] [,37]
+  [1,]    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA
+       [,38] [,39] [,40]
+  [1,]    NA    NA    NA
+ [ reached getOption("max.print") -- omitted 99 rows and 60 columns ]
+> print(matrix(nrow =  10, ncol = 4), max = 3)    #   (ditto)
+      [,1] [,2] [,3]
+ [1,]   NA   NA   NA
+ [ reached getOption("max.print") -- omitted 9 rows and 1 column ]
+> print(matrix(nrow =   0, ncol = 4), max = 3)    # omitting 1 column
+     [,1] [,2] [,3]
+ [ reached getOption("max.print") -- omitted 1 column ]
+> print(matrix(nrow =  10, ncol = 2), max = 5)    # omitting rows
+      [,1] [,2]
+ [1,]   NA   NA
+ [2,]   NA   NA
+ [ reached getOption("max.print") -- omitted 8 rows ]
+> print(matrix(nrow =   1, ncol = 6), max = 5)    # omitting cols, at least one row prints
+     [,1] [,2] [,3] [,4] [,5]
+[1,]   NA   NA   NA   NA   NA
+ [ reached getOption("max.print") -- omitted 1 column ]
+> ## ----- "higher" arrays ("rank >= 3"): --------
+> ## FIXME: in R 4.4.0 there should be a warning for omitted rows
+> print(array(dim = c(2, 2, 1)), max = 2)
+, , 1
+
+     [,1] [,2]
+[1,]   NA   NA
+
+> ## FIXME: this does not print anything but it should show
+> ##        at least one element according to the logic of max.print
+> print(array(dim = c(2, 2, 1)), max = 1)
+ [ reached getOption("max.print") -- omitted 1 matrix slice(s) ]
+> 
+> 
 > 
 > ## Cleanup
 > rm(print.foo, obj, a, b, c, d, o)
