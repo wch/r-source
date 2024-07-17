@@ -45,7 +45,7 @@
       \item \code{pdf()} gains an \code{author} argument to set the
       corresponding metadata field, and logical arguments
       \code{timestamp} and \code{producer} to optionally omit the
-      respective metadata.  (Thanks to Edzer Pebesma.)
+      respective metadata.  (Thanks to \I{Edzer Pebesma}.)
     }
   }
 
@@ -157,7 +157,7 @@
       \item Memory allocation messages now use the (non-standard notation)
       \code{"Mb"}, \code{"Gb"} , \dots, and \code{"Mbytes"} strings as
       \emph{arguments} instead of as part of the (translatable format)
-      string.  This is one step for \PR{18297}; from Henrik Bengtsson.
+      string.  This is one step for \PR{18297}; from \I{Henrik Bengtsson}.
     }
   }
 
@@ -182,18 +182,22 @@
       \I{Relatedly}, the \code{format()} method gets an option \code{cut.names}.
 
       \item \code{stem()} correctly formats also in cases where rounding
-      up, e.g., from 9.96 to 10 needs more digits; thanks to Ella Kaye and
-      Kelly Bodwin, fixing \PR{8934} during \sQuote{R Dev Day} at useR!2024.
+      up, e.g., from 9.96 to 10 needs more digits; thanks to
+      \I{Ella Kaye} and \I{Kelly Bodwin}, fixing \PR{8934} during
+      \sQuote{\I{R Dev Day}} at \I{useR!2024}. 
 
       \item \pkg{tools}' \code{toTitleCase()} now works better, fixing
-      \PR{18674}, thanks to Shannon Pileggi, Sarah Zeller, Reiko Okamoto,
-      and Hugo Gruson's \sQuote{R Dev Day} effort.
+      \PR{18674}, thanks to \I{Shannon Pileggi}, \I{Sarah Zeller},
+      \I{Reiko Okamoto}, and \I{Hugo Gruson}'s \sQuote{\I{R Dev Day}}
+      effort. 
 
-      \item Printing matrices (typically with many rows and or columns) now
-      also omits columns when desirable according to option \code{max.print},
-      or argument \code{max}, respectively.  This is primarily the work of
-      Lorena Abad, Ekaterina Akimova, Hanne Oberman, Abhishek Ulayil, and
-      Lionel Henry at the \sQuote{R Dev Day}, thus fixing \PR{15027}.
+      \item Printing matrices (typically with many rows and or columns)
+      now also omits columns when desirable according to option
+      \code{max.print}, or argument \code{max}, respectively.
+      This is primarily the work of \I{Lorena Abad},
+      \I{Ekaterina Akimova}, \I{Hanne Oberman}, \I{Abhishek Ulayil},
+      and \I{Lionel Henry} at the \sQuote{\I{R Dev Day}}, thus fixing
+      \PR{15027}.
     }
   }
 }
@@ -262,8 +266,8 @@
       \file{DESCRIPTION} but has no vignettes.
 
       \item The Quartz device could segfault in cases where paths with
-      spaces are used in the new glyph drawing API. Thanks to Tomek
-      Gieorgijewski (\PR{18758}).
+      spaces are used in the new glyph drawing API.
+      Thanks to \I{Tomek Gieorgijewski} (\PR{18758}).
     }
   }
 }
