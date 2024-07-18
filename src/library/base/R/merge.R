@@ -83,11 +83,11 @@ merge.data.frame <-
     }
     else {
         if(any(by.x == 0L)) {
-            x <- cbind(Row.names = I(row.names(x)), x)
+            x <- cbind(Row.names = row.names(x), x)
             by.x <- by.x + 1L
         }
         if(any(by.y == 0L)) {
-            y <- cbind(Row.names = I(row.names(y)), y)
+            y <- cbind(Row.names = row.names(y), y)
             by.y <- by.y + 1L
         }
         row.names(x) <- NULL
