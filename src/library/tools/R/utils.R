@@ -936,8 +936,15 @@ function(Tidy = Sys.getenv("R_TIDYCMD", "tidy"))
     OK <- nzchar(Sys.which(Tidy))
     if(OK) {
         ver <- system2(Tidy, "--version", stdout = TRUE)
-        mat <- regexec("^HTML Tidy .*version (\\d+\\.\\d+\\.\\d+)$",
-                       ver)
+        ## Argh.  We used to match with
+        ##   ^HTML Tidy .*version (\\d+\\.\\d+\\.\\d+)$
+        ## but HTML Tidy 5.8.0 has added l10n to its version info.  For
+        ## now, this always seems to match
+        ##   ^HTML Tidy .* (\\d+\\.\\d+\\.\\d+)$
+        ## if this changes, we could try getting the version info with
+        ## LC_MESSAGES= (set to empty) which seems to get the English
+        ## default.
+        mat <- regexec("^HTML Tidy .* (\\d+\\.\\d+\\.\\d+)$", ver)
         ver <- regmatches(ver, mat)[[1L]][2L]
         OK <- !is.na(ver)
         if(OK) {
