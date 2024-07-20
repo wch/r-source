@@ -756,7 +756,7 @@ install.packages <-
     av2 <- NULL
     if(is.null(available)) {
         filters <- getOption("available_packages_filters")
-        if(!is.null(filters)) {
+        if(!is.null(filters) || ("filters" %in% ...names())) {        
             available <- available.packages(contriburl = contriburl,
                                             method = method, ...)
         } else {
