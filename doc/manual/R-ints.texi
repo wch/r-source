@@ -4509,6 +4509,11 @@ into errors.  On most platforms invalid bytes in these files get
 converted to escapes (see @code{iconv(sub = "byte")}), but on others
 these lead to installation failure.
 Default: unset (but true for CRAN submission checks).
+
+@item _R_CHECK_XREFS_NOTE_MISSING_PACKAGE_ANCHORS_
+If set to a true value, check whether Rd cross-references to targets not
+in the package itself or the base packages have package anchors.
+Default: false (but true for CRAN submission checks).
 @end vtable
 
 The following variables control checks for undeclared/unconditional use
@@ -4620,6 +4625,7 @@ _R_CHECK_URLS_SHOW_301_STATUS_=true
 _R_CHECK_UNDOC_USE_ALL_NAMES_=true
 _R_CHECK_S3_METHODS_SHOW_POSSIBLE_ISSUES_=true
 _R_CHECK_RD_NOTE_LOST_BRACES_=true
+_R_CHECK_XREFS_NOTE_MISSING_PACKAGE_ANCHORS_=true
 @end example
 
 @noindent
