@@ -1454,6 +1454,13 @@ stopifnot(exprs = {
 ## change  NA names() into "NA"  for R <= 4.4.1
 
 
+## warning for even *potential* underflow
+B <- 2e306
+stopifnot(beta(B, 4*B) == 0,
+          all.equal(-5.00402423538187888e306, lbeta(B, 4*B), tolerance = 5e-16))
+## no longer warns - as we require IEEE_745
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

@@ -202,6 +202,15 @@
   }
 }
 
+\section{\Rlogo CHANGES IN R 4.4.1 patched}{
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item Mathlib function \code{lgammacor(x)} no longer warns about
+      underflow to zero for large \code{x}.
+    }
+  }
+}
+
 \section{\Rlogo CHANGES IN R 4.4.1}{
   \subsection{C-LEVEL FACILITIES}{
     \itemize{
