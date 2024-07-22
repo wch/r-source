@@ -19,8 +19,8 @@ runs all the checks, those in check-devel plus tests of the recommended
 packages.
 
 Note that for complete testing you will need a number of other
-packages installed and available.  For example, some 'nlme' tests depend
-on 'Hmisc', and there are a number of cross references from help pages
+packages installed and available.  For example,
+there are a number of cross references from help pages
 to CRAN packages.  Set R_LIBS_USER_IN_R_TESTS or R_LIBS to include
 additional library trees before running these checks; the default user
 libraries (R_LIBS_USER) are ignored.
