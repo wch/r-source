@@ -59,7 +59,7 @@ cmdscale(d, k = 2, eig = FALSE, add = FALSE, x.ret = FALSE,
   could be in fewer than \code{n - 1} dimensions.
 }
 \value{
-  If \code{.list} is false (as per default), a matrix with \code{k}
+  If \code{list.} is false (as per default), a matrix with \code{k}
   columns whose rows give the coordinates of the points chosen to
   represent the dissimilarities.
 

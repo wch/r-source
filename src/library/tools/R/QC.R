@@ -3456,7 +3456,7 @@ function(x, ...)
           c(if(length(bad) > 1L) {
                 c("Vignette dependencies required without any vignettes:", .pretty_format(bad))
             } else {
-                sprintf("Vignette dependency required without any vignettes:: %s", sQuote(bad))
+                sprintf("Vignette dependency required without any vignettes: %s", sQuote(bad))
             },
             "")
       },

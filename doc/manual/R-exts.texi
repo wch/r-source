@@ -14593,7 +14593,7 @@ Rboolean charIsLatin1(SEXP);
 @noindent
 can be used to detect whether the internal representation of a given
 @code{CHARSXP} accessed via @code{CHAR} is latin1 (including ASCII).  It is
-not equivalent to to @code{getCharCE() == CE_LATIN1}.
+not equivalent to @code{getCharCE() == CE_LATIN1}.
 
 Function
 
