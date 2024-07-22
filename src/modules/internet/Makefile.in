@@ -45,7 +45,7 @@ $(internet_la): $(OBJECTS)
 	$(SHLIB_LINK) -o $@ $(OBJECTS) $(internet_la_LIBADD)
 ## <FIXME>
 ## Not sure if we want to do this ...
-	@$(MAKE) rhome="$(abs_top_builddir)" install
+	@$(MAKE) DESTDIR="" rhome="$(abs_top_builddir)" install
 ## </FIXME>
 
 install: installdirs

@@ -36,7 +36,7 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status $(SOURCES_C)
 
 R:
 	@$(MAKE) $(Rblas_la)
-	@$(MAKE) rhome="$(abs_top_builddir)" Rblas_install
+	@$(MAKE) DESTDIR="" rhome="$(abs_top_builddir)" Rblas_install
 
 blas2.o: blas2.f90
 	$(FC) $(ALL_FCFLAGS) -c @FCFLAGS_f90@ $< -o $@

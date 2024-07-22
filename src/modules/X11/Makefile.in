@@ -54,7 +54,7 @@ Makedeps: Makefile $(DEPENDS)
 
 R: Makedeps
 	@$(MAKE) $(R_X11_la) $(R_de_la)
-	@$(MAKE) rhome="$(abs_top_builddir)" install
+	@$(MAKE) DESTDIR="" rhome="$(abs_top_builddir)" install
 
 $(R_X11_la): $(OBJECTS)
 	$(SHLIB_LINK) -o $@ $(OBJECTS) $(R_X11_la_LIBADD)

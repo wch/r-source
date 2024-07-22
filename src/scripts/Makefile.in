@@ -31,7 +31,7 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 
 R: $(SCRIPTS_B) R.fe
-	@$(MAKE) rhome=$(top_builddir) install-cmds
+	@$(MAKE) DESTDIR="" rhome=$(top_builddir) install-cmds
 	@$(INSTALL_SCRIPT) R.fe $(top_builddir)/bin/R
 
 ## <NOTE>

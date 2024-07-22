@@ -96,14 +96,14 @@ dlartg.o dlassq.o zlartg.o zlassq.o la_xisnan.o: la_constants.o
 dlassq.o zlassq.o: la_xisnan.o
 
 R: Makedeps
-@USE_EXTERNAL_LAPACK_FALSE@	@$(MAKE) rhome="$(abs_top_builddir)" $(Rlapack_la) Rlapack_install
+@USE_EXTERNAL_LAPACK_FALSE@	@$(MAKE) DESTDIR="" rhome="$(abs_top_builddir)" $(Rlapack_la) Rlapack_install
 	@$(MAKE) $(lapack_la)
 
 $(lapack_la): $(lapack_la_OBJECTS)
 	$(SHLIB_LINK) -o $@ $(lapack_la_LDFLAGS) $(lapack_la_OBJECTS) $(lapack_la_LIBADD) $(EXTRA_LIBS)
 ## <FIXME>
 ## Not sure if we want to do this ...
-	@$(MAKE) rhome="$(abs_top_builddir)" install
+	@$(MAKE) DESTDIR="" rhome="$(abs_top_builddir)" install
 ## </FIXME>
 
 ## Include BLAS here, as with (static) ATLAS that pulls all the

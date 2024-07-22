@@ -36,7 +36,7 @@ R: Makefile svnonly
 	  (cd $${d} && $(MAKE) $@) || exit 1; \
 	done
 	@if test "$(BUILDDIR_IS_SRCDIR)" = no ; then \
-	  $(MAKE) rdocdir=$(top_builddir)/doc install-sources; \
+	  $(MAKE) DESTDIR="" rdocdir=$(top_builddir)/doc install-sources; \
 	fi
 
 ## man pages last: currently needs perl (which is *not* checked at configure time);

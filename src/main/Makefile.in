@@ -158,10 +158,10 @@ libR.a: $(OBJECTS) $(STATIC_LIBS)
 	@rm -Rf libs
 
 install-bin-local: $(R_binary)
-	@$(MAKE) rhome="$(abs_top_builddir)" install-bin
+	@$(MAKE) DESTDIR="" rhome="$(abs_top_builddir)" install-bin
 
 install-static-local: libR.a
-	@$(MAKE) rhome="$(abs_top_builddir)" install-static
+	@$(MAKE) DESTDIR="" rhome="$(abs_top_builddir)" install-static
 
 $(top_builddir)/etc/R.exp: $(OBJECTS) $(MAIN_LIBS)
 	@$(SHELL) $(top_srcdir)/tools/ldAIX4 -o $@ $(OBJECTS) $(MAIN_LIBS)
@@ -180,7 +180,7 @@ $(libR_la): $(libR_la_OBJECTS) $(libR_la_DEPENDENCIES)
 	$(DYLIB_LINK) $(LIBR_LDFLAGS) -o $@ $(libR_la_OBJECTS) $(libR_la_LIBADD)
 
 install-lib-local: $(libR_la)
-	@$(MAKE) rhome="$(abs_top_builddir)" install-lib
+	@$(MAKE) DESTDIR="" rhome="$(abs_top_builddir)" install-lib
 
 
 # suppress #line directives

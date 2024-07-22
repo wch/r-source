@@ -323,7 +323,7 @@ R-intro.pdf: stamp-images-pdf $(texiincludes)
 R-ints.pdf: $(texiincludes)
 stamp-images-pdf:
 	@if test "$(BUILDDIR_IS_SRCDIR)" = no ; then \
-	  $(MAKE) rdocdir=$(top_builddir)/doc install-images-pdf; \
+	  $(MAKE) DESTDIR="" rdocdir=$(top_builddir)/doc install-images-pdf; \
 	fi
 	@touch $@
 R-lang.pdf: $(texiincludes)
@@ -347,7 +347,7 @@ install-images-html: installdirs
 	done
 stamp-images-html:
 	@if test "$(BUILDDIR_IS_SRCDIR)" = no ; then \
-	  $(MAKE) rdocdir=$(top_builddir)/doc install-images-html; \
+	  $(MAKE) DESTDIR="" rdocdir=$(top_builddir)/doc install-images-html; \
 	fi
 	@touch $@
 install-images-pdf: installdirs
