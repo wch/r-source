@@ -757,7 +757,7 @@ install.packages <-
     if(is.null(available)) {
         filters <- getOption("available_packages_filters")
         if(!is.null(filters) ||
-           !is.na(pmatch(...names(), "filters"))) {
+           any(!is.na(pmatch(...names(), "filters")))) {
             available <- available.packages(contriburl = contriburl,
                                             method = method, ...)
         } else {
