@@ -231,43 +231,13 @@ function(x, ...)
 function(x, name)
 {
     ## <COMMENT Z>
-    ## extract internal list elements, return list if length > 1, vector
-    ## otherwise (to mirror the behaviur of the input format for
-    ## person())
+    ## Return list if length > 1, vector otherwise (to mirror the
+    ## behavior of the input format for person()).
     ## </COMMENT>
-    name <- match.arg(name,
-                      c(person_field_names,
-                        "first", "last", "middle")) # for now ...
-    ## <COMMENT Z>
-    ## Let's be nice and support first/middle/last for now.
-    ## </COMMENT>
-    if(name %in% c("first", "last", "middle")) {
-        message(gettextf("It is recommended to use %s/%s instead of %s/%s/%s.",
-                         sQuote("given"), sQuote("family"),
-                         sQuote("first"), sQuote("middle"), sQuote("last")),
-                domain = NA)
-        oname <- name
-	name <- switch(name,
-	    "first" = "given",
-	    "middle" = "given",
-	    "last" = "family"
-	)
-    } else {
-        oname <- name
-    }
-
-    rval <- lapply(unclass(x), function(p) p[[name]])
-
-    if(oname == "first") rval <- lapply(rval, head, 1L)
-    if(oname == "middle") {
-        rval <- lapply(rval, tail, -1L)
-        if(any(ind <- (lengths(rval) == 0L)))
-            rval[ind] <- vector("list", length = sum(ind))
-    }
-
-    if(length(rval) == 1L) rval <- rval[[1L]]
-    
-    rval
+    name <- match.arg(name, person_field_names)
+    y <- lapply(unclass(x), `[[`, name)
+    if(length(y) == 1L) y <- y[[1L]]
+    y
 }
 
 `$<-.person` <-
