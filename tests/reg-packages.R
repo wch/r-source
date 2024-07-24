@@ -422,19 +422,20 @@ if(okA) {
 } else message("pkgA/DESCRIPTION  not available")
 showProc.time()
 
-require(PkgC, lib.loc = "myLib")
-(r <- methods(PkgC:::foobar))# "should" return non-empty even when neither S3 generic nor method was exported
-meths <- paste("foobar", c("Date", "default"), sep = ".")
-try(PkgC:::foobar(pi))    # -> foobar.default is *not* 'found'
-if(FALSE) # not working when run via `make`
-PkgC:::foobar(Sys.Date()) # -> foobar.Date   *is* found b/c  S3method(.)
-stopifnot(exprs = {
-    inherits(r, "MethodsFunction")
-    r == meths # may change if add an extra star
-    nrow(mi <- attr(r, "info")) == 2
-    identical(meths, rownames(mi))
-})
-## failed up to R 4.4.x
+if (requireNamespace("PkgC", lib.loc = "myLib")) {
+    (r <- methods(PkgC:::foobar))# "should" return non-empty even when neither S3 generic nor method was exported
+    meths <- paste("foobar", c("Date", "default"), sep = ".")
+    try(PkgC:::foobar(pi))    # -> foobar.default is *not* 'found'
+    if(FALSE) # not working when run via `make`
+        PkgC:::foobar(Sys.Date()) # -> foobar.Date   *is* found b/c  S3method(.)
+    stopifnot(exprs = {
+        inherits(r, "MethodsFunction")
+        r == meths # may change if add an extra star
+        nrow(mi <- attr(r, "info")) == 2
+        identical(meths, rownames(mi))
+    })
+    ## failed up to R 4.4.x
+}
 
 ## R CMD check should *not* warn about \Sexpr{} built sections in Rd (PR#17479):
 writeLines(msg <- capture.output(
