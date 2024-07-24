@@ -226,7 +226,7 @@ SEXP devcap(SEXP args)
     UNPROTECT(1);
 
     /* Further capabilities can be filled in by device */
-    if (dd->deviceVersion >= R_GE_group) {
+    if (dd->deviceVersion >= R_GE_group && dd->capabilities) {
         devcap = dd->capabilities(capabilities);
     } else {
         devcap = capabilities;
