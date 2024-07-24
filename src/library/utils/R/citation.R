@@ -190,13 +190,34 @@ function(role)
     role
 }
 
-`[[.person` <-
-`[.person` <-
-function(x, i)
-{
-    rval <- unclass(x)[i]
-    class(rval) <- class(x)
-    return(rval)
+person_field_names <-
+    c("given", "family", "role", "email", "comment")
+
+`[.person` <- function(x, i, j) {
+    y <- unclass(x)[i]
+    if(missing(j)) {
+        class(y) <- class(x)
+    } else {
+        j <- match.arg(j, person_field_names)
+        y <- lapply(y, `[[`, j)
+    }
+    y
+}
+
+`[[.person` <- function(x, i, j) {
+    ## if(missing(i))
+    ##     stop(gettext("missing subscript",
+    ##                  domain = NA))
+    i <- seq_along(x)[[i]]
+    y <- unclass(x)[[i]]
+    if(missing(j)) {
+        y <- list(y)
+        class(y) <- class(x)
+    } else {
+        j <- match.arg(j, person_field_names)
+        y <- y[[j]]
+    }
+    y
 }
 
 print.person <-
@@ -215,7 +236,7 @@ function(x, name)
     ## person())
     ## </COMMENT>
     name <- match.arg(name,
-                      c("given", "family", "role", "email", "comment",
+                      c(person_field_names,
                         "first", "last", "middle")) # for now ...
     ## <COMMENT Z>
     ## Let's be nice and support first/middle/last for now.
@@ -245,13 +266,14 @@ function(x, name)
     }
 
     if(length(rval) == 1L) rval <- rval[[1L]]
+    
     rval
 }
 
 `$<-.person` <-
 function(x, name, value)
 {
-    name <- match.arg(name, c("given", "family", "role", "email", "comment"))
+    name <- match.arg(name, person_field_names)
     x <- .listify(unclass(x))
     value <- rep_len(value, length(x))
 
