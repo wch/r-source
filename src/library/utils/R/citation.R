@@ -193,7 +193,9 @@ function(role)
 person_field_names <-
     c("given", "family", "role", "email", "comment")
 
-`[.person` <- function(x, i, j) {
+`[.person` <- 
+function(x, i, j)
+{
     y <- unclass(x)[i]
     if(missing(j)) {
         class(y) <- class(x)
@@ -204,10 +206,9 @@ person_field_names <-
     y
 }
 
-`[[.person` <- function(x, i, j) {
-    ## if(missing(i))
-    ##     stop(gettext("missing subscript",
-    ##                  domain = NA))
+`[[.person` <-
+function(x, i, j)
+{
     i <- seq_along(x)[[i]]
     y <- unclass(x)[[i]]
     if(missing(j)) {
@@ -219,6 +220,48 @@ person_field_names <-
     }
     y
 }
+
+`[<-.person` <-
+function(x, i, j, value)
+{
+    y <- unclass(x)
+    if(missing(j))
+        y[i] <- as.person(value)
+    else {
+        j <- match.arg(j, person_field_names)
+        p <- seq_along(x)[i]
+        value <- rep_len(value, length(p))
+        if(j == "role")
+            value <- lapply(value, .canonicalize_person_role)
+        for(i in p) 
+            y[[i]][[j]] <- if(.is_not_nonempty_text(value[[i]]))
+                               NULL
+                           else as.character(value[[i]])
+    }
+    class(y) <- class(x)
+    y
+}
+        
+`[[<-.person` <-
+function(x, i, j, value)
+{
+    i <- seq_along(x)[[i]]
+    y <- unclass(x)
+    if(missing(j))
+        y[i] <- as.person(value)
+    else {
+        j <- match.arg(j, person_field_names)
+        if(j == "role")
+            value <- .canonicalize_person_role(value)
+        y[[i]][[j]] <- if(.is_not_nonempty_text(value))
+                           NULL
+                       else as.character(value)
+    }
+    class(y) <- class(x)
+    y
+}
+        
+
 
 print.person <-
 function(x, ...)
