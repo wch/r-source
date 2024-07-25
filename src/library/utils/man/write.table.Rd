@@ -165,7 +165,7 @@ write.csv2(\dots)
 }
 
 \examples{
-x <- data.frame(a = I("a \" quote"), b = pi)
+x <- data.frame(a = "a \" quote", b = pi)
 tf <- tempfile(fileext = ".csv")
 
 ## To write a CSV file for input to Excel one might use

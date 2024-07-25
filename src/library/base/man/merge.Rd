@@ -127,14 +127,13 @@ merge(x, y, \dots)
 
 \examples{
 authors <- data.frame(
-    ## I(*) : use character columns of names to get sensible sort order
-    surname = I(c("Tukey", "Venables", "Tierney", "Ripley", "McNeil")),
+    surname = c("Tukey", "Venables", "Tierney", "Ripley", "McNeil"),
     nationality = c("US", "Australia", "US", "UK", "Australia"),
     deceased = c("yes", rep("no", 4)))
 authorN <- within(authors, { name <- surname; rm(surname) })
 books <- data.frame(
-    name = I(c("Tukey", "Venables", "Tierney",
-             "Ripley", "Ripley", "McNeil", "R Core")),
+    name = c("Tukey", "Venables", "Tierney",
+             "Ripley", "Ripley", "McNeil", "R Core"),
     title = c("Exploratory Data Analysis",
               "Modern Applied Statistics ...",
               "LISP-STAT",
