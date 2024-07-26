@@ -4234,7 +4234,7 @@ SEXP *(STRING_PTR)(SEXP x) {
 const SEXP *(STRING_PTR_RO)(SEXP x) {
     if(TYPEOF(x) != STRSXP)
 	error("%s() can only be applied to a '%s', not a '%s'",
-	      "STRING_PTR_RO", "character", R_typeToChar(x));
+	      __func__, "character", R_typeToChar(x));
     CHKZLN(x);
     return STRING_PTR_RO(x);
 }
@@ -4247,7 +4247,7 @@ NORET SEXP * (VECTOR_PTR)(SEXP x)
 const SEXP *(VECTOR_PTR_RO)(SEXP x) {
     if(TYPEOF(x) != VECSXP)
 	error("%s() can only be applied to a '%s', not a '%s'",
-	      "STRING_PTR_RO", "list", R_typeToChar(x));
+	      __func__, "list", R_typeToChar(x));
     CHKZLN(x);
     return VECTOR_PTR_RO(x);
 }
