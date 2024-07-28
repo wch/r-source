@@ -205,7 +205,7 @@
 \section{\Rlogo CHANGES IN R 4.4.1 patched}{
   \subsection{BUG FIXES}{
     \itemize{
-      \item Mathlib function \code{lgammacor(x)} no longer warns about
+      \item \I{Mathlib} function \code{lgammacor(x)} no longer warns about
       underflow to zero for large \code{x}.
 
       \item Text widths and heights were incorrectly reported by the
