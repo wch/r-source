@@ -261,8 +261,6 @@ function(x, i, j, value)
     y
 }
         
-
-
 print.person <-
 function(x, ...)
 {
@@ -1089,9 +1087,8 @@ function(x, name)
     if(!length(x)) return(NULL)
 
     ## <COMMENT Z>
-    ## Extract internal list elements, return list if length > 1, vector
-    ## otherwise (to mirror the behaviour of the input format for
-    ## bibentry())
+    ## Return list if length > 1, vector otherwise (to mirror the
+    ## behavior of the input format for bibentry()).
     ## </COMMENT>
     is_attribute <- name %in% bibentry_attribute_names
     rval <- if(is_attribute) lapply(unclass(x), attr, name)
@@ -1675,6 +1672,40 @@ function(x)
                                 gsub("\"", "\\\"", display[ind], fixed=TRUE))
     }
     paste(display, address)
+}
+
+.authors_at_R_field_from_author_and_maintainer <-
+function(a, m)
+{
+    p <- as.person(a)
+    r <- p[, "role"]
+    e <- p[, "email"]
+    ## If there are no aut roles yet, give everyone an aut role.
+    i <- (lengths(lapply(r, intersect, "aut")) > 0L)
+    if(!any(i))
+        p[, "role"] <- r <- lapply(r, union, "aut")
+    ## Do we already have a cre role with email?
+    i <- (lengths(lapply(r, intersect, "cre")) > 0L)
+    j <- (lengths(e) > 0L)
+    if(any(i & j))
+        return(structure(p, case = 1))
+    ## No such luck.
+    ## Can we match the maintainer name?
+    s <- format(p, include = c("given", "family"))
+    k <- which(nzchar(s) & startsWith(tolower(m), tolower(s)))
+    ## If so, add cre role and email as necessary.
+    if(length(k)) {
+        k <- k[1L]
+        if(!i[k])
+            p[[k, "role"]] <- c(r[[k]], "cre")
+        if(!j[k])
+            p[[k, "email"]] <- tolower(sub(".*<(.*)>.*", "\\1", m))
+        return(structure(p, case = 2))
+    }
+    ## Otherwise need to add the maintainer.
+    m <- as.person(m)
+    m$role <- "cre"
+    structure(c(p, m), case = 3)
 }
 
 ## Cite using the default style (which is usually citeNatbib)
