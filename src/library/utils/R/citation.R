@@ -749,7 +749,8 @@ function(x, i, drop = TRUE)
 }
 
 bibentry_format_styles <-
-    c("text", "Bibtex", "citation", "html", "latex", "textVersion", "R")
+    c("text", "Bibtex", "citation", "html", "latex", "textVersion", "R",
+      "md")
 
 .bibentry_match_format_style <-
 function(style)
@@ -793,6 +794,15 @@ function(x, style = "text", .bibstyle = NULL,
         else if(is.character(macros))
             macros <- tools::loadRdMacros(macros,
                                           tools:::initialRdMacros())
+        if(style == "md") {
+            tmp <- tempfile()
+            on.exit(unlink(tmp), add = TRUE)
+            txt <- c("\\renewcommand{\\bold}{\\out{**#1**}}",
+                     "\\renewcommand{\\href}{\\out{[#2](#1)}}",
+                     "\\renewcommand{\\doi}{\\out{[doi:#1](https://doi.org/#1)}}")
+            writeLines(txt, tmp)
+            macros <- tools::loadRdMacros(tmp, macros)
+        }
         vapply(.bibentry_expand_crossrefs(x),
                function(y) {
                    txt <- tools::toRd(y, style = .bibstyle)
@@ -875,7 +885,8 @@ function(x, style = "text", .bibstyle = NULL,
                    unlist(out)
                },
                "citation" = format_as_citation(.bibentry(x), msg = citMsg),
-               "R" = .format_bibentry_as_R_code(x, ...)
+               "R" = .format_bibentry_as_R_code(x, ...),
+               "md" = format_via_Rd(tools::Rd2txt)
                )
     as.character(out)
 }
