@@ -80,7 +80,8 @@
 
   \subsection{INSTALLATION}{
     \itemize{
-      \item .
+      \item Control of symbol visibility is now suported on macOS (the
+      previous check only worked on ELF platforms).
     }
   }
 

@@ -4108,19 +4108,28 @@ done
 AC_DEFUN([R_GCC4_VISIBILITY],
 [AC_CACHE_CHECK([whether __attribute__((visibility())) is supported],
                 [r_cv_visibility_attribute],
-[cat > conftest.c <<EOF
+[r_cv_visibility_attribute=no
+case "${host_os}" in
+    darwin*)
+      dnl Assume works on macOS
+      r_cv_visibility_attribute=yes
+      ;;
+
+  *)
+cat > conftest.c <<EOF
 int foo __attribute__ ((visibility ("hidden"))) = 1;
 int bar __attribute__ ((visibility ("default"))) = 1;
 #ifndef __GNUC__
 # error unsupported compiler
 #endif
 EOF
-r_cv_visibility_attribute=no
-if AC_TRY_COMMAND(${CC-cc} -Werror -S conftest.c -o conftest.s 1>&AS_MESSAGE_LOG_FD); then
- if grep '\.hidden.*foo' conftest.s >/dev/null; then
-    r_cv_visibility_attribute=yes
- fi
-fi
+      if AC_TRY_COMMAND(${CC-cc} -Werror -S conftest.c -o conftest.s 1>&AS_MESSAGE_LOG_FD); then
+        if grep '\.hidden.*foo' conftest.s >/dev/null; then
+           r_cv_visibility_attribute=yes
+        fi
+      fi
+      ;; 
+esac
 rm -f conftest.[cs]
 ])
 if test $r_cv_visibility_attribute = yes; then
