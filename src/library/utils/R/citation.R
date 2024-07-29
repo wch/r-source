@@ -209,7 +209,10 @@ function(x, i, j)
 `[[.person` <-
 function(x, i, j)
 {
-    i <- seq_along(x)[[i]]
+    s <- seq_along(x)
+    if(is.character(i))
+        names(s) <- names(x)
+    i <- s[[i]]
     y <- unclass(x)[[i]]
     if(missing(j)) {
         y <- list(y)
@@ -229,7 +232,10 @@ function(x, i, j, value)
         y[i] <- as.person(value)
     else {
         j <- match.arg(j, person_field_names)
-        p <- seq_along(x)[i]
+        s <- seq_along(x)
+        if(!missing(i) && is.character(i))
+            names(s) <- names(x)
+        p <- s[i]
         value <- rep_len(value, length(p))
         if(j == "role")
             value <- lapply(value, .canonicalize_person_role)
@@ -245,7 +251,10 @@ function(x, i, j, value)
 `[[<-.person` <-
 function(x, i, j, value)
 {
-    i <- seq_along(x)[[i]]
+    s <- seq_along(x)
+    if(is.character(i))
+        names(s) <- names(x)
+    i <- s[[i]]
     y <- unclass(x)
     if(missing(j))
         y[i] <- as.person(value)
