@@ -470,7 +470,7 @@ function(x,
          list(given = " ", family = " ", email = ", ",
               role = ", ", comment = ", "),
          ...,
-         style = c("text", "R")
+         style = c("text", "R", "md")
          )
 {
     if(!length(x)) return(character())
@@ -508,7 +508,7 @@ function(x,
         x <- lapply(x,
                     function(e) {
                         e$comment <-
-                            .expand_ORCID_identifier(e$comment)
+                            .expand_ORCID_identifier(e$comment, style)
                         e
                     })
 
@@ -557,21 +557,18 @@ function(object, escape = FALSE, ...)
     paste(object[nzchar(object)], collapse = " and ")
 }
 
-.canonicalize_ORCID_identifier <-
-function(x)
-{
-    paste0("https://orcid.org/",
-           sub(tools:::.ORCID_iD_variants_regexp, "\\3", x))
-}
-
 .expand_ORCID_identifier <-
-function(x)
+function(x, style = "text")
 {
     if(any(ind <- ((names(x) == "ORCID") &
-                   grepl(tools:::.ORCID_iD_variants_regexp, x))))
-        x[ind] <- paste0("<",
-                         .canonicalize_ORCID_identifier(x[ind]),
-                         ">")
+                   grepl(tools:::.ORCID_iD_variants_regexp, x)))) {
+        oid <- tools:::.ORCID_iD_canonicalize(x[ind])
+        x[ind] <- if(style == "md")
+                      sprintf("[ORCID %s](https://orcid.org/%s)",
+                              oid, oid)
+                  else
+                      sprintf("<https://orcid.org/%s>", oid)
+    }
     x
 }
 

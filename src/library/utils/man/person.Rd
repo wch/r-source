@@ -34,7 +34,7 @@ as.person(x)
        collapse = list(given = " ", family = " ", email = ", ",
                        role = ", ", comment = ", "),
        ...,
-       style = c("text", "R")
+       style = c("text", "R", "md")
 )
 
 \method{toBibtex}{person}(object, escape = FALSE, ...)
