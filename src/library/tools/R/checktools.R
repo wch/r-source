@@ -145,20 +145,24 @@ function(dir,
         ## Determine and download reverse dependencies to be checked as
         ## well.
 
-        reverse <- as.list(reverse)
-        ## Merge with defaults, using partial name matching.
         defaults <- list(which = c("Depends", "Imports", "LinkingTo"),
                          recursive = FALSE,
                          repos = getOption("repos"))
-        pos <- pmatch(names(reverse), names(defaults), nomatch = 0L)
-        defaults[pos] <- reverse[pos > 0L]
+        if(!is.character(reverse)) {
+            reverse <- as.list(reverse)
+            ## Merge with defaults, using partial name matching.
+            pos <- pmatch(names(reverse), names(defaults), nomatch = 0L)
+            defaults[pos] <- reverse[pos > 0L]
+        }
 
         subset_reverse_repos <- !identical(defaults$repos, getOption("repos"))
         if(subset_reverse_repos &&
            !all(defaults$repos %in% getOption("repos")))
             stop("'reverse$repos' should be a subset of getOption(\"repos\")")
 
-        rnames <- if(is.list(defaults$which)) {
+        rnames <- if(is.character(reverse)) {
+            reverse
+        } else if(is.list(defaults$which)) {
             ## No recycling of repos for now.
             defaults$recursive <- rep_len(as.list(defaults$recursive),
                                           length(defaults$which))
