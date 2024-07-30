@@ -106,9 +106,12 @@ glyphVJust <- function(y, glyphInfo, vjust) {
 
 drawDetails.glyphgrob <- function(x, recording=TRUE) {
     ## Calculate runs of glyphs
+    glyph_run_cols <- intersect(
+      c("font", "size", "rot", "colour"),
+      names(x$glyphInfo$glyphs)
+    )
     fontstring <- unlist(do.call(paste,
-                                 c(x$glyphInfo$glyphs[c("font", "size",
-                                                        "colour")],
+                                 c(x$glyphInfo$glyphs[glyph_run_cols],
                                    list(sep=":"))))
     runs <- rle(fontstring)
     ## Calculate final glyph positions

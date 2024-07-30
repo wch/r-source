@@ -670,6 +670,8 @@ SEXP R_GE_glyphY(SEXP glyphs);
 SEXP R_GE_glyphFont(SEXP glyphs);
 SEXP R_GE_glyphSize(SEXP glyphs);
 SEXP R_GE_glyphColour(SEXP glyphs);
+SEXP R_GE_glyphRotation(SEXP glyphs);
+Rboolean R_GE_hasGlyphRotation(SEXP glyphs);
 
 const char* R_GE_glyphFontFile(SEXP glyphFont);
 int R_GE_glyphFontIndex(SEXP glyphFont);

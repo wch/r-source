@@ -199,7 +199,9 @@ testGlyph(Montserrat, hjust=glyphJust(0, "tight"), vjust="baseline")
 HersheyLabel("tight left (baseline) justification\n(tiny bit further left)",
              y=.2)
 
-## rotated glyphs
+## rotated glyphs:
+
+### viewport rotation
 grid.newpage()
 pushViewport(viewport(angle=30))
 grid.segments(0,.5,1,.5, gp=gpar(col="grey"))
@@ -215,6 +217,34 @@ grid.segments(.5,0, .5,1, gp=gpar(col="grey"))
 testGlyph(Montserrat, hjust="left", vjust="baseline")
 popViewport()
 HersheyLabel("rotated (left baseline justified) glyphs", y=.2)
+
+### glyph rotation
+rotationInfo <- MontserratInfo
+rotationInfo$rot <- rep(180, 6)
+rotation <- do.call(glyphInfo, rotationInfo)
+grid.newpage()
+grid.segments(0,.5,1,.5, gp=gpar(col="grey"))
+testGlyph(rotation)
+HersheyLabel("glyphs with rotation (180 degrees)", y=.2)
+
+# Different rotation for each glyph works as well:
+sepRotInfo <- MontserratInfo
+sepRotInfo$id <- rep(499, 6)
+sepRotInfo$rot <- seq(from = 0, to = 90, length = 6)
+sepRot <- do.call(glyphInfo, sepRotInfo)
+grid.newpage()
+grid.segments(0,.5,1,.5, gp=gpar(col="grey"))
+testGlyph(sepRot)
+HersheyLabel("glyphs with different rotations", y=.2)
+
+# Rotation of glyphs inside a rotated viewport works:
+grid.newpage()
+pushViewport(viewport(angle=30))
+grid.segments(0,.5,1,.5, gp=gpar(col="grey"))
+grid.segments(.5,0, .5,1, gp=gpar(col="grey"))
+testGlyph(sepRot)
+popViewport()
+HersheyLabel("rotated glyphs inside rotated viewport", y=.2)
 
 ## glyph x/y/width/height
 grid.newpage()

@@ -81,6 +81,10 @@ static void renderGlyphs(SEXP runs, SEXP glyphInfo, SEXP x, SEXP y,
         SEXP font = VECTOR_ELT(fonts, 
                                INTEGER(R_GE_glyphFont(glyphs))[offset] - 1);
         double size = REAL(R_GE_glyphSize(glyphs))[offset];
+        double glyphRotation = R_GE_hasGlyphRotation(glyphs) ? 
+          REAL(R_GE_glyphRotation(glyphs))[offset] :
+          0.0;
+        double finalRotation = rotationAngle + glyphRotation;
         char colstr[51];
         strncpy(colstr, CHAR(STRING_ELT(R_GE_glyphColour(glyphs), offset)), 
                 50);
@@ -90,7 +94,7 @@ static void renderGlyphs(SEXP runs, SEXP glyphInfo, SEXP x, SEXP y,
                 gx + offset, 
                 gy + offset, 
                 font,
-                size, colour, rotationAngle,
+                size, colour, finalRotation,
                 dd);
         offset = offset + runLength;
     }

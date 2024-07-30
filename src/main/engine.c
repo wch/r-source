@@ -3845,6 +3845,7 @@ SEXP R_GE_glyphInfoFonts(SEXP glyphInfo) {
 #define glyph_font          3
 #define glyph_size          4
 #define glyph_colour        5
+#define glyph_rotation      6
 
 SEXP R_GE_glyphID(SEXP glyphs) {
     return VECTOR_ELT(glyphs, glyph_id);
@@ -3863,6 +3864,12 @@ SEXP R_GE_glyphSize(SEXP glyphs) {
 }
 SEXP R_GE_glyphColour(SEXP glyphs) {
     return VECTOR_ELT(glyphs, glyph_colour);
+}
+SEXP R_GE_glyphRotation(SEXP glyphs) {
+  return VECTOR_ELT(glyphs, glyph_rotation);
+}
+Rboolean R_GE_hasGlyphRotation(SEXP glyphs) {
+  return LENGTH(glyphs) > glyph_rotation;
 }
 
 #define glyph_font_file     0

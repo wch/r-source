@@ -180,7 +180,7 @@ glyphInfo <- function(id, x, y, font, size,
                       fontList,
                       width, height,
                       hAnchor, vAnchor,
-                      col=NA) {
+                      col=NA, rot=0) {
     id <- as.integer(id)
     x <- as.numeric(x)
     y <- as.numeric(y)
@@ -191,6 +191,7 @@ glyphInfo <- function(id, x, y, font, size,
     if (any(is.na(font)) || !all(font %in% seq_along(fontList)))
         stop("Unknown font")
     size <- as.numeric(size)
+    rot <- as.numeric(rot)
     ## Check colour (allow any R colour spec)
     nacol <- is.na(col)
     if (any(!nacol)) {
@@ -239,8 +240,8 @@ glyphInfo <- function(id, x, y, font, size,
     ## Build glyph info
     dropNA <- !(is.na(id) | is.na(x) | is.na(y) |
                 ## is.na(font) already checked
-                is.na(size))
-    glyphs <- data.frame(id, x, y, font, size)[dropNA, ]
+                is.na(size) | is.na(rot))
+    glyphs <- data.frame(id, x, y, font, size, rot)[dropNA, ]
     if (nrow(glyphs) < 1)
         stop("Invalid glyph info")
     ## Colour can be NA
@@ -249,6 +250,10 @@ glyphInfo <- function(id, x, y, font, size,
     } else {
         glyphs$colour <- col
     }
+    ## Reorder to ensure backwards compatibility with code
+    ## where rot was not yet included.
+    col_order <- c("id", "x", "y", "font", "size", "colour", "rot")
+    glyphs <- glyphs[, col_order, drop = FALSE]
     ## Construct final structure
     info <- list(glyphs=glyphs, fonts=fontList,
                  width=width, height=height,

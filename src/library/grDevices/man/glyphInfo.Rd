@@ -20,14 +20,14 @@
 \title{Describe a Set of Typeset Glyphs}
 \description{
   Create an object that contains information about typeset glyphs.
-  This includes glyph identifiers, glyph locations, font and colour
-  information, and metric information.
+  This includes glyph identifiers, glyph locations, font, colour 
+  and rotation information, and metric information.
 }
 
 \usage{
 glyphInfo(id, x, y, font, size, fontList, 
           width, height, hAnchor, vAnchor,
-          col=NA)
+          col=NA, rot=0)
 
 glyphFont(file, index, family, weight, style, PSname=NA)
 glyphFontList(...)
@@ -62,6 +62,7 @@ glyphJust(just, ...)
     (against which to \code{"bottom"} justify), 
     but can also be result from a call to \code{glyphAnchor()}.}
   \item{col}{An R colour value for each glyph. Can be \code{NA}.}
+  \item{rot}{The angle to rotate each glyph.}
   \item{file}{Character path to font file.}
   \item{index}{Numeric index of font within font file.}
   \item{family}{Character name of font family.}
@@ -80,9 +81,9 @@ glyphJust(just, ...)
 \value{
   The result from \code{glyphInfo()} is an \code{"RGlyphInfo"} object,
   essentially a data frame with each row
-  containing id, location, font, and colour for a glyph.
-  The metric information (widths and anchors) are stored as attributes
-  of the data frame.
+  containing id, location, font, colour and rotation for a glyph.
+  The metric information (widths and anchors) are stored 
+  as attributes of the data frame.
 
   \code{glyphAnchor()}, \code{glyphWidth()}, and \code{glyphHeight()}
   return values that can be used to specify \code{width}, \code{height},
@@ -131,6 +132,6 @@ glyphJust(just, ...)
   width and height metrics.
 }
 \section{Warning}{
-  Any glyph with \code{NA} in any of \code{id}, \code{x}, \code{y}, or
-  \code{size} is silently dropped.
+  Any glyph with \code{NA} in any of \code{id}, \code{x}, \code{y}, 
+  \code{size} or \code{rot} is silently dropped.
 }
