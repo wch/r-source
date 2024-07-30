@@ -1235,16 +1235,36 @@ add_dummies <- function(dir, Log)
                      strwrap(sQuote(db$file[!keep]), indent = 2L, exdent = 2L))
             printLog0(Log, paste(msg, collapse = "\n"), "\n")
         }
-        pdfs <- file.path("inst", "doc", db[keep, ]$PDF)
-        missing <- !file.exists(pdfs)
-        if(any(missing)) {
+        elts <- file.path("inst", "doc", db[keep, ]$PDF)
+        miss <- !file.exists(elts)
+        if(any(miss)) {
             if(!any) warningLog(Log)
             any <- TRUE
             msg <- c("Output(s) listed in 'build/vignette.rds' but not in package:",
-                     strwrap(sQuote(pdfs[missing]), indent = 2L, exdent = 2L))
+                     strwrap(sQuote(elts[miss]), indent = 2L, exdent = 2L))
             printLog0(Log, paste(msg, collapse = "\n"), "\n")
         }
-        if (!any) resultLog(Log, "OK")
+        elts <- db[keep, ]$File
+        miss <- (nzchar(elts) &
+                 !file.exists(file.path("inst", "doc", elts)))
+        if(any(miss)) {
+            if(!any) warningLog(Log)
+            any <- TRUE
+            msg <- c("Source(s) listed in 'build/vignette.rds' but not in package:",
+                     strwrap(sQuote(elts[miss]), indent = 2L, exdent = 2L))
+            printLog0(Log, paste(msg, collapse = "\n"), "\n")
+        }            
+        elts <- db[keep, ]$R
+        miss <- (nzchar(elts) &
+                 !file.exists(file.path("inst", "doc", elts)))
+        if(any(miss)) {
+            if(!any) warningLog(Log)
+            any <- TRUE
+            msg <- c("R code(s) listed in 'build/vignette.rds' but not in package:",
+                     strwrap(sQuote(elts[miss]), indent = 2L, exdent = 2L))
+            printLog0(Log, paste(msg, collapse = "\n"), "\n")
+        }            
+        if(!any) resultLog(Log, "OK")
     }
 
     check_top_level <- function()
