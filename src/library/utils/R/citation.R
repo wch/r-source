@@ -727,30 +727,69 @@ function(x)
     unlist(keys)
 }
 
-`[[.bibentry` <-
 `[.bibentry` <-
-function(x, i, drop = TRUE)
+function(x, i, j, drop = TRUE)    
 {
     if(!length(x)) return(x)
 
-    cl <- class(x)
-    class(x) <- NULL
-    ## For character subscripting, use keys if there are no names.
-    ## Note that creating bibentries does not add the keys as names:
-    ## assuming that both can independently be set, we would need to
-    ## track whether names were auto-generated or not.
-    ## (We could consider providing a names() getter which returns given
-    ## names or keys as used for character subscripting, though).
-    if(is.character(i) && is.null(names(x)))
-        names(x) <- .bibentry_get_key(x)
-    y <- x[i]
+    s <- seq_along(x)
+    if(!missing(i) && is.character(i)) {
+        ## For character subscript i, use keys if there are no names.
+        ## Note that creating bibentries does not add the keys as names: 
+        ## assuming that both can independently be set, we would need to
+        ## track whether names were auto-generated or not.
+        ## (We could consider providing a names() getter which returns
+        ## given names or keys as used for character subscripting,
+        ## though). 
+        names(s) <- names(x)
+        if(is.null(names(s)))
+            names(s) <- .bibentry_get_key(x)
+    }
+    i <- s[i]
+    y <- unclass(x)[i]
     if(!all(ok <- lengths(y) > 0L)) {
         warning("subscript out of bounds")
         y <- y[ok]
     }
-    if(!drop)
-        attributes(y) <- attributes(x)[bibentry_list_attribute_names]
-    class(y) <- cl
+    if(missing(j)) {
+        if(!drop)
+            attributes(y) <-
+                attributes(x)[bibentry_list_attribute_names]
+        class(y) <- class(x)
+    } else {
+        stopifnot(is.character(j),
+                  length(j) == 1L)
+        y <- if(j %in% bibentry_attribute_names)
+                 lapply(y, attr, j)
+             else
+                 lapply(y, `[[`, tolower(j))
+    }
+    y
+}
+
+`[[.bibentry` <-
+function(x, i, j)    
+{
+    s <- seq_along(x)
+    if(is.character(i)) {
+        ## See comments in [ method.
+        names(s) <- names(x)
+        if(is.null(names(s)))
+            names(s) <- .bibentry_get_key(x)
+    }
+    i <- s[[i]]
+    y <- unclass(x)[[i]]
+    if(missing(j)) {
+        y <- list(y)
+        class(y) <- class(x)
+    } else {
+        stopifnot(is.character(j),
+                  length(j) == 1L)
+        y <- if(j %in% bibentry_attribute_names)
+                 attr(y, j)
+             else
+                 y[[tolower(j)]]
+    }
     y
 }
 
