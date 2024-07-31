@@ -45,10 +45,16 @@
       \item \code{pdf()} gains an \code{author} argument to set the
       corresponding metadata field, and logical arguments
       \code{timestamp} and \code{producer} to optionally omit the
-      respective metadata.  (Thanks to \I{Edzer Pebesma}.)
+      respective metadata.
+      (Thanks to \I{Edzer Pebesma}.)
 
       \item \code{grDevices::glyphInfo()} gains \code{rot} argument
-      to allow per-glyph rotation.   (Thanks to \I{Daniel Sabanes Bove}.)
+      to allow per-glyph rotation.
+      (Thanks to \I{Daniel Sabanes Bove}.)
+
+      \item Package \pkg{tools} now exports functions
+      \code{CRAN_current_db()}, \code{CRAN_aliases_db()},
+      \code{CRAN_rdxrefs_db()}, and \code{CRAN_archive_db()}.
     }
   }
 
