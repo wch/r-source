@@ -2983,9 +2983,11 @@ add_dummies <- function(dir, Log)
             pat <- paste(vf, collapse="|")
             pat <- paste0("^(", pat, ")-[0-9]+[.]pdf")
             bad <- bad | grepl(pat, files)
+            bad <- bad & is.na(match(files, basename(vigns$docs)))
         }
         bad <- bad | grepl("^fig.*[.]pdf$", files)
         badf <- files[bad]
+        
         dirs <- basename(list.dirs(doc_dir, recursive = FALSE))
         badd <- dirs[dirs %in% c("auto", "Bilder", "fig", "figs", "figures",
                                  "Figures", "img", "images", "JSSstyle",
