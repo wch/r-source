@@ -4367,9 +4367,12 @@ add_dummies <- function(dir, Log)
                 cmd <- paste0("invisible(tools::Rdiff('",
                               exout, "', '", exsave, "',TRUE,TRUE))")
                 out <- R_runR0(cmd, R_opts2)
-                resultLog(Log, "OK")
-                if(length(out))
-                    printLog0(Log, paste(c("", out, ""), collapse = "\n"))
+                if(length(out)) {
+                    noteLog(Log)
+                    printLog0(Log, paste(out, collapse = "\n"), "\n")
+                }
+                else
+                    resultLog(Log, "OK")
             }
 
             TRUE
