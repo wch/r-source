@@ -727,24 +727,20 @@ function(x)
     unlist(keys)
 }
 
+.bibentry_names_or_keys <-
+function(x)
+{
+    if(is.null(y <- names(x)))
+        y <- .bibentry_get_key(x)
+    y
+}
+
 `[.bibentry` <-
 function(x, i, j, drop = TRUE)    
 {
     if(!length(x)) return(x)
 
-    s <- seq_along(x)
-    if(!missing(i) && is.character(i)) {
-        ## For character subscript i, use keys if there are no names.
-        ## Note that creating bibentries does not add the keys as names: 
-        ## assuming that both can independently be set, we would need to
-        ## track whether names were auto-generated or not.
-        ## (We could consider providing a names() getter which returns
-        ## given names or keys as used for character subscripting,
-        ## though). 
-        names(s) <- names(x)
-        if(is.null(names(s)))
-            names(s) <- .bibentry_get_key(x)
-    }
+    s <- .bibentry_seq_along(x, i)
     i <- s[i]
     y <- unclass(x)[i]
     if(!all(ok <- lengths(y) > 0L)) {
@@ -770,13 +766,7 @@ function(x, i, j, drop = TRUE)
 `[[.bibentry` <-
 function(x, i, j)    
 {
-    s <- seq_along(x)
-    if(is.character(i)) {
-        ## See comments in [ method.
-        names(s) <- names(x)
-        if(is.null(names(s)))
-            names(s) <- .bibentry_get_key(x)
-    }
+    s <- .bibentry_seq_along(x, i)
     i <- s[[i]]
     y <- unclass(x)[[i]]
     if(missing(j)) {
@@ -791,6 +781,24 @@ function(x, i, j)
                  y[[tolower(j)]]
     }
     y
+}
+
+.bibentry_seq_along <-
+function(x, i = NULL)
+{
+    ## When subscripting bibentries with character subscript i, we use
+    ## keys if there are no names. 
+    ## Note that creating bibentries does not add the keys as names: 
+    ## assuming that both can independently be set, we would need to
+    ## track whether names were auto-generated or not.
+    ## We could consider providing a names() getter which returns
+    ## given names or keys as used for character subscripting, though:
+    ## as of 2024-08 we have .bibentry_names_or_keys() for this.
+    s <- seq_along(x)
+    if(!missing(i) && is.character(i)) {
+        names(s) <- .bibentry_names_or_keys(x)
+    }
+    s
 }
 
 bibentry_format_styles <-
