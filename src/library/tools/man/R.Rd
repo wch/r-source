@@ -33,12 +33,13 @@ R(fun, args = list(), opts = "--no-save --no-restore",
     ignored if 0.}
 }
 \details{
-  The given function and argument list are serialized into a tempfile.
+  The given function and argument list are serialized into a
+  \I{tempfile}.
   Then, an inferior R process is run via (a wrapper for)
   \code{\link{system2}()} as controlled by arguments \code{opts},
   \code{env}, \code{arch} and \code{timeout}, the input of which loads
-  the tempfile and calls the function with the argument list.  It is
-  ensured that an appropriate CRAN mirror is set.
+  the \I{tempfile} and calls the function with the argument list.
+  It is ensured that an appropriate CRAN mirror is set.
 }
 \value{
   In case of \dQuote{success} (see above), the value of the function

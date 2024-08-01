@@ -14,7 +14,7 @@ parse_URI_reference(x)
     source directory.}
   \item{verbose}{a logical indicating if output should monitor check
     progress.}
-  \item{x}{a character vector of URIs.}
+  \item{x}{a character vector of \abbr{URI}s.}
 }
 \details{
   Checking URLs is performed in parallel using \CRANpkg{curl} (so this
