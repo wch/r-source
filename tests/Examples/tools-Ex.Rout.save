@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2024-07-30 r86939) -- "Unsuffered Consequences"
+R Under development (unstable) (2024-07-31 r86945) -- "Unsuffered Consequences"
 Copyright (C) 2024 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu
 
@@ -65,6 +65,71 @@ Type 'q()' to quit R.
 <div style="text-align: center;">
 <a href="/doc/html/index.html"><img class="arrow" src="/doc/html/up.jpg" alt="[Top]" /></a>
 </div>
+> 
+> 
+> 
+> cleanEx()
+> nameEx("R")
+> ### * R
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: R
+> ### Title: Call Function in Inferior R Process
+> ### Aliases: R
+> 
+> ### ** Examples
+> 
+> ## Compute cos(0) in an inferior R process.
+> ## By default, only return the value of the function call.
+> R(cos, list(0))
+[1] 1
+> ## If 'drop = FALSE', we also get status, stdout and stderr.
+> R(cos, list(0), drop = FALSE)
+$value
+[1] 1
+
+$status
+[1] 0
+
+$stdout
+ [1] ""                                                                                 
+ [2] "R Under development (unstable) (2024-07-31 r86945) -- \"Unsuffered Consequences\""
+ [3] "Copyright (C) 2024 The R Foundation for Statistical Computing"                    
+ [4] "Platform: x86_64-pc-linux-gnu"                                                    
+ [5] ""                                                                                 
+ [6] "R is free software and comes with ABSOLUTELY NO WARRANTY."                        
+ [7] "You are welcome to redistribute it under certain conditions."                     
+ [8] "Type 'license()' or 'licence()' for distribution details."                        
+ [9] ""                                                                                 
+[10] "R is a collaborative project with many contributors."                             
+[11] "Type 'contributors()' for more information and"                                   
+[12] "'citation()' on how to cite R or R packages in publications."                     
+[13] ""                                                                                 
+[14] "Type 'demo()' for some demos, 'help()' for on-line help, or"                      
+[15] "'help.start()' for an HTML browser interface to help."                            
+[16] "Type 'q()' to quit R."                                                            
+[17] ""                                                                                 
+[18] "> x <- readRDS(\"/tmp/RtmplAYNCR/runri21acba5d0b9fff\")"                          
+[19] "> options(repos = x$repos)"                                                       
+[20] "> y <- tryCatch(list(do.call(x$fun, x$args, quote = TRUE)), error = identity)"    
+[21] "> saveRDS(y, \"/tmp/RtmplAYNCR/runro21acba2ad86f30\")"                            
+[22] "> "                                                                               
+
+$stderr
+character(0)
+
+> 
+> ## A call giving an error:
+> (e <- tryCatch(R(stop, list("FOOBAR")), error = identity))
+<inferiorCallError: error in inferior call:
+  FOOBAR>
+> ## The inferior R process ran successfully:
+> e$status
+[1] 0
+> ## The function call gave an error:
+> e$value
+<simpleError in do.call(x$fun, x$args, quote = TRUE): FOOBAR>
 > 
 > 
 > 
@@ -211,7 +276,7 @@ Error in assertWarning(ff()) :
 > bibstyle("unsorted", sortKeys = function(refs) seq_along(refs),
 +     fmtPrefix = function(paper) paste0("[", paper$.index, "]"),
 +        .init = TRUE)
-<environment: 0x56164bea85a0>
+<environment: 0x56179f508250>
 > print(refs, .bibstyle = "unsorted")
 [1] R Core Team (2013). _R: A Language and Environment for Statistical
 Computing_. R Foundation for Statistical Computing, Vienna, Austria.
@@ -1064,6 +1129,32 @@ An illustration of lexical scoping.
 > 
 > 
 > cleanEx()
+> nameEx("urltools")
+> ### * urltools
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: urltools
+> ### Title: Check Package URLs
+> ### Aliases: check_package_urls parse_URI_reference
+> ### Keywords: utilities
+> 
+> ### ** Examples
+> 
+> ## Examples from RFC 3986.
+> parse_URI_reference(c("foo://example.com:8042/over/there?name=ferret#nose",
++                       "urn:example:animal:ferret:nose",
++                       "mailto:John.Doe@example.com",
++                       "tel:+1-816-555-1212"))
+  scheme        authority                       path       query fragment
+1    foo example.com:8042                /over/there name=ferret     nose
+2    urn                  example:animal:ferret:nose                     
+3 mailto                        John.Doe@example.com                     
+4    tel                             +1-816-555-1212                     
+> 
+> 
+> 
+> cleanEx()
 > nameEx("userdir")
 > ### * userdir
 > 
@@ -1232,7 +1323,7 @@ needs Deep Thought
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  0.313 0.014 0.329 0 0 
+Time elapsed:  0.336 0.008 0.719 0.303 0.066 
 > grDevices::dev.off()
 null device 
           1 
