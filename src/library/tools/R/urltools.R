@@ -42,7 +42,8 @@ function(x)
     } else {
         y <- matrix(character(), 0L, 5L)
     }
-    colnames(y) <- c("scheme", "authority", "path", "query", "fragment")
+    y <- as.data.frame(y)
+    names(y) <- c("scheme", "authority", "path", "query", "fragment")
     y
 }
 
