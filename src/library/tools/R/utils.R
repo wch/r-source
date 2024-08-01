@@ -2598,10 +2598,11 @@ function(fun, args = list(), opts = "--no-save --no-restore",
         if (inherits(val, "condition")) {
             ## maybe wrap in a classed error and include some of res
             msg <- paste0("error in inferior call:\n  ", conditionMessage(val))
-            stop(errorCondition(msg,
+            stop(do.call(errorCondition,
+                         c(list(message = msg, 
                                 class = "inferiorCallError",
-                                res = res,
-                                error = val))
+                                value = val),
+                           res)))
         }
         else {
             val <- val[[1L]]
@@ -2614,9 +2615,10 @@ function(fun, args = list(), opts = "--no-save --no-restore",
     else
         ## again maybe wrap in a classed error  and include some of res
         ## might want to distinguish two errors by sub-classes
-        stop(errorCondition("inferior call failed",
-                            class = "inferiorCallError",
-                            res = res))
+        stop(do.call(errorCondition,
+                     c(list(message = "inferior call failed",
+                            class = "inferiorCallError"),
+                       res = res)))
 }
 
 ### ** Rcmd
