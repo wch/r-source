@@ -783,6 +783,79 @@ function(x, i, j)
     y
 }
 
+`[<-.bibentry` <-
+function(x, i, j, value)
+{
+    y <- unclass(x)
+    if(missing(j)) {
+        y[i] <- as.bibentry(value)
+    } else {
+        stopifnot(is.character(j),
+                  length(j) == 1L)
+        s <- .bibentry_seq_along(x, i)
+        p <- s[i]
+        ## See $<-.bibentry ...
+        value <- rep_len(.listify(value), length(x))
+        if(j == "bibtype")
+            value <- .bibentry_canonicalize_bibtype_value(value)
+        for(i in p) {
+            if(j %in% bibentry_attribute_names) {
+                attr(y[[i]], j) <-
+                    if(is.null(value[[i]]))
+                        NULL
+                    else
+                        paste(value[[i]])
+            } else {
+                y[[i]][[tolower(j)]] <-
+                    if(is.null(value[[i]]))
+                        NULL
+                    else if(j %in% c("author", "editor"))
+                        as.person(value[[i]])
+                    else
+                        paste(value[[i]])
+            }
+            .bibentry_check_bibentry1(y[[i]])
+        }
+    }
+    class(y) <- class(x)
+    y
+}
+    
+`[[<-.bibentry` <-
+function(x, i, j, value)
+{
+    s <- .bibentry_seq_along(x, i)
+    i <- s[[i]]
+    y <- unclass(x)    
+    if(missing(j)) {
+        y[i] <- as.bibentry(value)
+    } else {
+        stopifnot(is.character(j),
+                  length(j) == 1L)
+        if(j == "bibtype")
+            value <-
+                .bibentry_canonicalize_bibtype_value(list(value))[[1L]]
+        if(j %in% bibentry_attribute_names) {
+            attr(y[[i]], j) <-
+                if(is.null(value))
+                    NULL
+                else
+                    paste(value)
+        } else {
+            y[[i]][[tolower(j)]] <-
+                if(is.null(value))
+                    NULL
+                else if(j %in% c("author", "editor"))
+                    as.person(value)
+                else
+                    paste(value)
+        }
+        .bibentry_check_bibentry1(y[[i]])
+    }
+    class(y) <- class(x)
+    y
+}       
+
 .bibentry_seq_along <-
 function(x, i = NULL)
 {
@@ -1165,10 +1238,7 @@ function(x, name)
 `$<-.bibentry` <-
 function(x, name, value)
 {
-    is_attribute <- name %in% bibentry_attribute_names
-
     x <- unclass(x)
-    if(!is_attribute) name <- tolower(name)
 
     ## recycle value
     value <- rep_len(.listify(value), length(x))
@@ -1179,14 +1249,14 @@ function(x, name, value)
 
     ## replace all values
     for(i in seq_along(x)) {
-        if(is_attribute) {
+        if(name %in% bibentry_attribute_names) {
 	    attr(x[[i]], name) <-
                 if(is.null(value[[i]]))
                     NULL
                 else
                     paste(value[[i]])
 	} else {
-	    x[[i]][[name]] <-
+	    x[[i]][[tolower(name)]] <-
                 if(is.null(value[[i]]))
                     NULL
                 else if(name %in% c("author", "editor"))
