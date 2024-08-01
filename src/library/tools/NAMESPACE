@@ -62,7 +62,10 @@ export("R_user_dir")
 export(".print.via.format")
 
 export("check_package_urls",
-       "check_package_dois")
+       "check_package_dois",
+       "parse_URI_reference")
+
+export("R")
 
 exportPattern("^SIG.+")
 
