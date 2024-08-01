@@ -55,6 +55,9 @@
       \item Package \pkg{tools} now exports functions
       \code{CRAN_current_db()}, \code{CRAN_aliases_db()},
       \code{CRAN_rdxrefs_db()}, and \code{CRAN_archive_db()}.
+
+      \item Package \pkg{tools} now exports functions
+      \code{R()} and \code{parse_URI_reference()}.
     }
   }
 
