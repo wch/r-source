@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2024-08-01 r86954) -- "Unsuffered Consequences"
+R Under development (unstable) (2024-08-01 r86957) -- "Unsuffered Consequences"
 Copyright (C) 2024 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu
 
@@ -95,7 +95,7 @@ $status
 
 $stdout
  [1] ""                                                                                 
- [2] "R Under development (unstable) (2024-08-01 r86954) -- \"Unsuffered Consequences\""
+ [2] "R Under development (unstable) (2024-08-01 r86957) -- \"Unsuffered Consequences\""
  [3] "Copyright (C) 2024 The R Foundation for Statistical Computing"                    
  [4] "Platform: x86_64-pc-linux-gnu"                                                    
  [5] ""                                                                                 
@@ -111,16 +111,17 @@ $stdout
 [15] "'help.start()' for an HTML browser interface to help."                            
 [16] "Type 'q()' to quit R."                                                            
 [17] ""                                                                                 
-[18] "> x <- readRDS(\"/tmp/Rtmpa05XU3/runri2447a365273007\")"                          
+[18] "> x <- readRDS(\"/tmp/Rtmpe6jyFK/runri2595b5455bd5f7\")"                          
 [19] "> options(repos = x$repos)"                                                       
 [20] "> y <- tryCatch(list(do.call(x$fun, x$args, quote = TRUE)), error = identity)"    
-[21] "> saveRDS(y, \"/tmp/Rtmpa05XU3/runro2447a3756c0041\")"                            
+[21] "> saveRDS(y, \"/tmp/Rtmpe6jyFK/runro2595b54aedd2bc\")"                            
 [22] "> "                                                                               
 
 $stderr
 character(0)
 
 > ## IGNORE_RDIFF_END
+>     
 > 
 > ## A call giving an error:
 > (e <- tryCatch(R(stop, list("FOOBAR")), error = identity))
@@ -278,7 +279,7 @@ Error in assertWarning(ff()) :
 > bibstyle("unsorted", sortKeys = function(refs) seq_along(refs),
 +     fmtPrefix = function(paper) paste0("[", paper$.index, "]"),
 +        .init = TRUE)
-<environment: 0x5637ccb3e828>
+<environment: 0x55c75b13de28>
 > print(refs, .bibstyle = "unsorted")
 [1] R Core Team (2013). _R: A Language and Environment for Statistical
 Computing_. R Foundation for Statistical Computing, Vienna, Austria.
@@ -1325,7 +1326,7 @@ needs Deep Thought
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  0.315 0.018 0.699 0.321 0.043 
+Time elapsed:  0.338 0.004 0.721 0.338 0.039 
 > grDevices::dev.off()
 null device 
           1 
