@@ -239,10 +239,8 @@ function(x, i, j, value)
         value <- rep_len(value, length(p))
         if(j == "role")
             value <- lapply(value, .canonicalize_person_role)
-        for(i in p) 
-            y[[i]][[j]] <- if(.is_not_nonempty_text(value[[i]]))
-                               NULL
-                           else as.character(value[[i]])
+        for(i in p)
+            y[[i]] <- .person_elt_fld_gets(y[[i]], j, value[[i]])            
     }
     class(y) <- class(x)
     y
@@ -262,12 +260,19 @@ function(x, i, j, value)
         j <- match.arg(j, person_field_names)
         if(j == "role")
             value <- .canonicalize_person_role(value)
-        y[[i]][[j]] <- if(.is_not_nonempty_text(value))
-                           NULL
-                       else as.character(value)
+        y[[i]] <- .person_elt_fld_gets(y[[i]], j, value)
     }
     class(y) <- class(x)
     y
+}
+
+.person_elt_fld_gets <-
+function(x, j, v)
+{
+    x[[j]] <- if(.is_not_nonempty_text(v))
+                  NULL
+              else as.character(v)
+    x
 }
         
 print.person <-
@@ -301,13 +306,10 @@ function(x, name, value)
         value <- lapply(value, .canonicalize_person_role)
 
     for(i in seq_along(x)) {
-        x[[i]][[name]] <- if(.is_not_nonempty_text(value[[i]]))
-            NULL
-        else as.character(value[[i]])
+        x[[i]] <- .person_elt_fld_gets(x[[i]], name, value[[i]])
     }
 
-    class(x) <- "person"
-    x
+    .person(x)
 }
 
 c.person <-
@@ -798,23 +800,9 @@ function(x, i, j, value)
         value <- rep_len(.listify(value), length(x))
         if(j == "bibtype")
             value <- .bibentry_canonicalize_bibtype_value(value)
+        a <- (j %in% bibentry_attribute_names)
         for(i in p) {
-            if(j %in% bibentry_attribute_names) {
-                attr(y[[i]], j) <-
-                    if(is.null(value[[i]]))
-                        NULL
-                    else
-                        paste(value[[i]])
-            } else {
-                y[[i]][[tolower(j)]] <-
-                    if(is.null(value[[i]]))
-                        NULL
-                    else if(j %in% c("author", "editor"))
-                        as.person(value[[i]])
-                    else
-                        paste(value[[i]])
-            }
-            .bibentry_check_bibentry1(y[[i]])
+            y[[i]] <- .bibentry_elt_fld_gets(y[[i]], j, value[[i]], a)
         }
     }
     class(y) <- class(x)
@@ -835,22 +823,8 @@ function(x, i, j, value)
         if(j == "bibtype")
             value <-
                 .bibentry_canonicalize_bibtype_value(list(value))[[1L]]
-        if(j %in% bibentry_attribute_names) {
-            attr(y[[i]], j) <-
-                if(is.null(value))
-                    NULL
-                else
-                    paste(value)
-        } else {
-            y[[i]][[tolower(j)]] <-
-                if(is.null(value))
-                    NULL
-                else if(j %in% c("author", "editor"))
-                    as.person(value)
-                else
-                    paste(value)
-        }
-        .bibentry_check_bibentry1(y[[i]])
+        a <- (j %in% bibentry_attribute_names)
+        y[[i]] <- .bibentry_elt_fld_gets(y[[i]], j, value, a)
     }
     class(y) <- class(x)
     y
@@ -872,6 +846,27 @@ function(x, i = NULL)
         names(s) <- .bibentry_names_or_keys(x)
     }
     s
+}
+
+.bibentry_elt_fld_gets <- function(x, j, v, a) {
+    if(a) {
+        attr(x, j) <-
+            if(is.null(v))
+                NULL
+            else
+                paste(v)
+    } else {
+        j <- tolower(j)
+        x[[j]] <-
+            if(is.null(v))
+                NULL
+            else if(j %in% c("author", "editor"))
+                as.person(v)
+            else
+                paste(v)
+    }
+    .bibentry_check_bibentry1(x)
+    x
 }
 
 bibentry_format_styles <-
@@ -1247,27 +1242,12 @@ function(x, name, value)
     if(name == "bibtype")
         value <- .bibentry_canonicalize_bibtype_value(value)
 
-    ## replace all values
+    ## replace all values and check whether all elements still have
+    ## their required fields:
+    a <- (name %in% bibentry_attribute_names)
     for(i in seq_along(x)) {
-        if(name %in% bibentry_attribute_names) {
-	    attr(x[[i]], name) <-
-                if(is.null(value[[i]]))
-                    NULL
-                else
-                    paste(value[[i]])
-	} else {
-	    x[[i]][[tolower(name)]] <-
-                if(is.null(value[[i]]))
-                    NULL
-                else if(name %in% c("author", "editor"))
-                    as.person(value[[i]])
-                else
-                    paste(value[[i]])
-        }
+        x[[i]] <- .bibentry_elt_fld_gets(x[[i]], name, value[[i]], a)
     }
-
-    ## check whether all elements still have their required fields
-    for(i in seq_along(x)) .bibentry_check_bibentry1(x[[i]])
 
     .bibentry(x)
 }
