@@ -462,7 +462,7 @@ add_dummies <- function(dir, Log)
         xtra <- Sys.getenv("_R_CHECK_THINGS_IN_OTHER_DIRS_XTRA_", "")
         xtra <- if (nzchar(xtra)) strsplit(xtra, ";", fixed = TRUE)[[1L]]
                 else character()
-        dirs <- c(home, "/tmp", '/dev/shm',
+        dirs <- c(home, dirname(tempdir()), '/dev/shm',
                   ## taken from tools::R_user_dir, but package rappdirs
                   ## is similar with other possibilities on Windows.
                   if (.Platform$OS.type == "windows")
