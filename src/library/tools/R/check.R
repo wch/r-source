@@ -435,7 +435,8 @@ add_dummies <- function(dir, Log)
 
     snapshot <- function()
     {
-        snap1 <- function(dir, recursive = TRUE, user, notemp = FALSE)
+        snap1 <- function(dir, recursive = TRUE, user, udomain = NA,
+                          notemp = FALSE)
         {
             foo <- list.files(dir, recursive = recursive, full.names = TRUE,
                               include.dirs = TRUE, no.. = TRUE)
@@ -446,11 +447,17 @@ add_dummies <- function(dir, Log)
                 foo <- foo[!(poss & isdir)]
             }
             owner <- file.info(foo)[, "uname"]
-            foo[owner == user]
+            sel <- (owner == user)
+            if (!is.na(udomain)) {
+                odomain <- file.info(foo)[, "udomain"]
+                sel <- sel & (odomain == udomain)
+            }
+            foo[sel]
         }
         ## This should always give the uname for files created by the
         ## current user:
         user <- Sys.info()[["effective_user"]]
+        udomain <- Sys.info()["udomain"]  ## NA (nonexistent) on Unix
         home <- normalizePath("~")
         xtra <- Sys.getenv("_R_CHECK_THINGS_IN_OTHER_DIRS_XTRA_", "")
         xtra <- if (nzchar(xtra)) strsplit(xtra, ";", fixed = TRUE)[[1L]]
@@ -470,11 +477,12 @@ add_dummies <- function(dir, Log)
                   else file.path(home, ".local", "share"),
                   xtra)
         x <- vector("list", length(dirs)); names(x) <- dirs
-        x[[1]] <- snap1(dirs[1], FALSE, user)
-        x[[2]] <- snap1(dirs[2], FALSE, user, TRUE)
-        x[[3]] <- snap1(dirs[3], TRUE, user)
-        x[[4]] <- snap1(dirs[4], TRUE, user)
-        for (i in seq_along(xtra)) x[[4+i]] <- snap1(dirs[4+i], FALSE, user)
+        x[[1]] <- snap1(dirs[1], FALSE, user, udomain)
+        x[[2]] <- snap1(dirs[2], FALSE, user, udomain, TRUE)
+        x[[3]] <- snap1(dirs[3], TRUE, user, udomain)
+        x[[4]] <- snap1(dirs[4], TRUE, user, udomain)
+        for (i in seq_along(xtra))
+            x[[4+i]] <- snap1(dirs[4+i], FALSE, user, udomain)
         x
     }
 
