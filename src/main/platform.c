@@ -1014,8 +1014,8 @@ attribute_hidden SEXP do_fileinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
 		    PSECURITY_DESCRIPTOR sd = NULL;
 		    DWORD saveerr = ERROR_SUCCESS;
 		    int ok = 0;
-		    /* NOTE: GENERIC_READ asks for too much
-		       (e.g. access denied for junctions) */
+		    /* NOTE: GENERIC_READ would be asking too much
+		       (e.g. junctions under Users/Default in Windows 10) */
 		    h = CreateFileW(wfn, READ_CONTROL,
 				    FILE_SHARE_DELETE | FILE_SHARE_READ | FILE_SHARE_WRITE,
 				    NULL, OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS, NULL);
