@@ -3,7 +3,7 @@
  *  file extra.c
  *  Copyright (C) 1998--2003  Guido Masarotto and Brian Ripley
  *  Copyright (C) 2004	      The R Foundation
- *  Copyright (C) 2005--2023  The R Core Team
+ *  Copyright (C) 2005--2024  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -168,8 +168,75 @@ SEXP in_loadRconsole(SEXP sfile)
     return R_NilValue;
 }
 
+/* returns R_alloc'd results */
+static int getCurrentUserAndDomain(char **user, char **domain)
+{
+    int ok = 0;
+    HANDLE h = INVALID_HANDLE_VALUE;
+    DWORD err;
+    DWORD tilen = 0;
+    PTOKEN_USER t = NULL;
+    char *ubuf = NULL;
+    DWORD ulen = 0;
+    char *dbuf = NULL;
+    DWORD dlen = 0;
+    SID_NAME_USE suse = SidTypeUnknown;
+
+    ok = OpenThreadToken(GetCurrentThread(), TOKEN_QUERY, TRUE, &h);
+    if (!ok) {
+	err = GetLastError();
+	if (err == ERROR_NO_TOKEN || err == ERROR_NO_IMPERSONATION_TOKEN)
+	    ok = OpenProcessToken(GetCurrentProcess(), TOKEN_QUERY, &h);
+    }
+
+    ok = ok && !GetTokenInformation(h, TokenUser, NULL, 0, &tilen)
+	 && GetLastError() == ERROR_INSUFFICIENT_BUFFER;
+
+    if (ok) {
+	t = (PTOKEN_USER) R_alloc(tilen, 1);
+	ok = GetTokenInformation(h, TokenUser, t, tilen, &tilen);
+    }
+
+    if (ok) {
+	ok = !LookupAccountSid(NULL, t->User.Sid, ubuf, &ulen, dbuf, &dlen,
+	                       &suse)
+	     && GetLastError() == ERROR_INSUFFICIENT_BUFFER;
+
+	if (ok) {
+	    ubuf = R_alloc(ulen, 1);
+	    dbuf = R_alloc(dlen, 1);
+	    ok = LookupAccountSid(NULL, t->User.Sid, ubuf, &ulen, dbuf, &dlen,
+	                          &suse);
+	}
+    }
+
+    if (!ok)
+	err = GetLastError();
+
+    if (h != INVALID_HANDLE_VALUE)
+	CloseHandle(h);
+
+    if (ok) {
+	if (user)
+	    *user = ubuf;
+	if (domain)
+	    *domain = dbuf;
+	return 1;
+    } else {
+	if (user)
+	    *user = NULL;
+	if (domain)
+	    *domain = NULL;
+	SetLastError(err);
+	return 0;
+    }
+}
+
+
 #include <lmcons.h>
 typedef void (WINAPI *PGNSI)(LPSYSTEM_INFO);
+
+const char *formatError(DWORD res);
 
 /* base::Sys.info */
 // keep in step with src/library/utils/src/windows/util.c
@@ -178,11 +245,14 @@ SEXP do_sysinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXP ans, ansnames;
     OSVERSIONINFOEX osvi;
     char ver[256], buf[1000];
-    wchar_t name[MAX_COMPUTERNAME_LENGTH + 1], user[UNLEN+1];
-    DWORD namelen = MAX_COMPUTERNAME_LENGTH + 1, userlen = UNLEN+1;
+    wchar_t name[MAX_COMPUTERNAME_LENGTH + 1];
+    DWORD namelen = MAX_COMPUTERNAME_LENGTH + 1;
+    const void *vmax = vmaxget();
+    char *uname;
+    char *udomain;
 
     checkArity(op, args);
-    PROTECT(ans = allocVector(STRSXP, 8));
+    PROTECT(ans = allocVector(STRSXP, 9));
     osvi.dwOSVersionInfoSize = sizeof(OSVERSIONINFOEX);
     if(!GetVersionEx((OSVERSIONINFO *)&osvi))
 	error(_("unsupported version of Windows"));
@@ -258,12 +328,18 @@ SEXP do_sysinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
 #else
     SET_STRING_ELT(ans, 4, mkChar("x86"));
 #endif
-    GetUserNameW(user, &userlen);
-    wcstoutf8(buf, user, sizeof(buf));
-    SET_STRING_ELT(ans, 5, mkCharCE(buf, CE_UTF8));
+    if (!getCurrentUserAndDomain(&uname, &udomain)) {
+	SET_STRING_ELT(ans, 5, mkChar("unknown"));
+	SET_STRING_ELT(ans, 8, mkChar("unknown"));
+	warning(_("cannot resolve current user or domain: '%s'"),
+	       formatError(GetLastError()));
+    } else {
+	SET_STRING_ELT(ans, 5, mkChar(uname));
+	SET_STRING_ELT(ans, 8, mkChar(udomain));
+    }
     SET_STRING_ELT(ans, 6, STRING_ELT(ans, 5));
     SET_STRING_ELT(ans, 7, STRING_ELT(ans, 5));
-    PROTECT(ansnames = allocVector(STRSXP, 8));
+    PROTECT(ansnames = allocVector(STRSXP, 9));
     SET_STRING_ELT(ansnames, 0, mkChar("sysname"));
     SET_STRING_ELT(ansnames, 1, mkChar("release"));
     SET_STRING_ELT(ansnames, 2, mkChar("version"));
@@ -272,7 +348,9 @@ SEXP do_sysinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
     SET_STRING_ELT(ansnames, 5, mkChar("login"));
     SET_STRING_ELT(ansnames, 6, mkChar("user"));
     SET_STRING_ELT(ansnames, 7, mkChar("effective_user"));
+    SET_STRING_ELT(ansnames, 8, mkChar("udomain"));
     setAttrib(ans, R_NamesSymbol, ansnames);
+    vmaxset(vmax);
     UNPROTECT(2);
     return ans;
 }
