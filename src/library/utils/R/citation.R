@@ -474,9 +474,10 @@ function(x,
          style = c("text", "R", "md")
          )
 {
-    if(!length(x)) return(character())
-
     style <- match.arg(style)
+
+    if(!length(x))
+        return(if(style == "R") "person()" else character())
 
     if(style == "R") return(.format_person_as_R_code(x))
 
@@ -908,9 +909,10 @@ function(x, style = "text", .bibstyle = NULL,
          macros = NULL,
          ...)
 {
-    if(!length(x)) return(character())
-
     style <- .bibentry_match_format_style(style)
+
+    if(!length(x))
+        return(if(style == "R") "bibentry()" else character())
 
     if(sort) x <- sort(x, .bibstyle = .bibstyle)
     x$.index <- as.list(seq_along(x))
