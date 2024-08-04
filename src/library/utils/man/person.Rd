@@ -68,7 +68,7 @@ as.person(x)
   \item{\dots}{currently not used.}
   \item{style}{a character string specifying the print style, with 
     \code{"R"} yielding formatting as R code and \code{"md"} yielding
-    Markdown (with email addresses and ORCID iDs hyperlinked).}
+    Markdown (with email addresses and \I{ORCID iD}s hyperlinked).}
   \item{object}{an \R object inhering from class \code{"person"}.}
   \item{escape}{a logical indicating whether non-ASCII characters should
     be translated to LaTeX escape sequences.}
