@@ -41,9 +41,9 @@ parse_URI_reference(x)
   For \code{check_url_db()}, a data frame inheriting from class
   \code{check_url_db} with information on the URL check problems found.
 
-  For \code{parse_URI_reference()}, a character frame with variables
-  \code{scheme}, \code{authority}, \code{path}, \code{query} and
-  \code{fragment}. 
+  For \code{parse_URI_reference()}, a data frame with character
+  variables \code{scheme}, \code{authority}, \code{path}, \code{query}
+  and \code{fragment}. 
 }
 \note{
   This functionality is still experimental: interfaces may change in

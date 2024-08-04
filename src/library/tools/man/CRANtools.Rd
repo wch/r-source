@@ -69,10 +69,10 @@ CRAN_archive_db()
   Packages with all-OK checks are indicated via a \code{*} \code{Check}
   wildcard name and OK \code{Status}.
 
-  \code{CRAN_check_issues()} returns a character frame with additional
+  \code{CRAN_check_issues()} returns a information on additional
   check issues (including the memory-access check results made available
   from \url{https://www.stats.ox.ac.uk/pub/bdr/memtests/}) as a
-  character frame with variables \code{Package}, \code{Version},
+  data frame with character variables \code{Package}, \code{Version},
   \code{kind} (an identifier for the issue) and \code{href} (a URL with
   information on the issue).
 
