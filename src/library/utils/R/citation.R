@@ -285,6 +285,7 @@ function(x, ...)
 `$.person` <-
 function(x, name)
 {
+    if(!length(x)) return(NULL)
     ## <COMMENT Z>
     ## Return list if length > 1, vector otherwise (to mirror the
     ## behavior of the input format for person()).
@@ -299,17 +300,15 @@ function(x, name)
 function(x, name, value)
 {
     name <- match.arg(name, person_field_names)
-    x <- .listify(unclass(x))
-    value <- rep_len(value, length(x))
-
+    y <- unclass(x)
+    value <- rep_len(.listify(value), length(y))
     if(name == "role")
         value <- lapply(value, .canonicalize_person_role)
-
-    for(i in seq_along(x)) {
-        x[[i]] <- .person_elt_fld_gets(x[[i]], name, value[[i]])
+    for(i in seq_along(y)) {
+        y[[i]] <- .person_elt_fld_gets(y[[i]], name, value[[i]])
     }
-
-    .person(x)
+    class(y) <- class(x)
+    y
 }
 
 c.person <-
@@ -756,8 +755,6 @@ function(x)
 `[.bibentry` <-
 function(x, i, j, drop = TRUE)    
 {
-    if(!length(x)) return(x)
-
     s <- .bibentry_seq_along(x, i)
     i <- s[i]
     y <- unclass(x)[i]
@@ -1233,7 +1230,6 @@ function(x)
 function(x, name)
 {
     if(!length(x)) return(NULL)
-
     ## <COMMENT Z>
     ## Return list if length > 1, vector otherwise (to mirror the
     ## behavior of the input format for bibentry()).
@@ -1249,23 +1245,20 @@ function(x, name)
 `$<-.bibentry` <-
 function(x, name, value)
 {
-    x <- unclass(x)
-
+    y <- unclass(x)
     ## recycle value
     value <- rep_len(.listify(value), length(x))
-
     ## check bibtype
     if(name == "bibtype")
         value <- .bibentry_canonicalize_bibtype_value(value)
-
     ## replace all values and check whether all elements still have
     ## their required fields:
     a <- (name %in% bibentry_attribute_names)
-    for(i in seq_along(x)) {
-        x[[i]] <- .bibentry_elt_fld_gets(x[[i]], name, value[[i]], a)
+    for(i in seq_along(y)) {
+        y[[i]] <- .bibentry_elt_fld_gets(y[[i]], name, value[[i]], a)
     }
-
-    .bibentry(x)
+    class(y) <- class(x)
+    y
 }
 
 .bibentry_canonicalize_bibtype_value <-
