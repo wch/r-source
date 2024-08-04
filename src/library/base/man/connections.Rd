@@ -536,7 +536,7 @@ socketTimeout(socket, timeout = -1)
 #endif
 #ifdef unix
   in mode \code{"r"} only.  This reads the X11 primary selection (see
-  \url{https://specifications.freedesktop.org/clipboards-spec/clipboards-latest.txt}),
+  \url{https://specifications.freedesktop.org/clipboards-spec/latest}),
   which can also be specified as \code{"X11_primary"} and the secondary
   selection as \code{"X11_secondary"}.  On most systems the clipboard
   selection (that used by \sQuote{Copy} from an \sQuote{Edit} menu) can
