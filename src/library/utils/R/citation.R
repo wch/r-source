@@ -574,6 +574,22 @@ function(x, style = "text")
     x
 }
 
+rep.person <-
+function(x, ...)
+{
+    y <- NextMethod("rep")
+    class(y) <- class(x)
+    y
+}
+
+unique.person <-
+function(x, ...)
+{
+    y <- NextMethod("unique")
+    class(y) <- class(x)
+    y
+}
+
 as.data.frame.person <- as.data.frame.vector
 
 ######################################################################
