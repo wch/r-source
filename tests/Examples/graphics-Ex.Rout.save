@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2023-09-08 r85109) -- "Unsuffered Consequences"
-Copyright (C) 2023 The R Foundation for Statistical Computing
-Platform: aarch64-apple-darwin22.6.0
+R version 4.4.1 Patched (2024-07-31 r86978) -- "Race for Your Life"
+Copyright (C) 2024 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -1719,6 +1719,11 @@ List of 2
 > ##--- log axis :
 > plot(1:10, exp(1:10), log = "y", main = "log =\"y\"", xlab = "xlab")
 > for(s in 1:4) mtext(paste("mtext(...,side=", s ,")"), side = s)
+> 
+> ##--- illustrating padj behavior :
+> plot(0, axes=FALSE, ann=FALSE, frame.plot=TRUE)
+> for(si in 1:4) mtext(c("padj=0", "-----------", "padj=1"),
++                      side = si, padj = c(0, 0.5, 1))
 > 
 > 
 > 
