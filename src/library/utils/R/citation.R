@@ -389,8 +389,17 @@ function(x)
     ## Step C.
     as_person1 <- function(x) {
         comment <- if(grepl("\\(.*\\)", x))
-            sub(".*\\(([^)]*)\\).*", "\\1", x)
-        else NULL
+                       sub(".*\\(([^)]*)\\).*", "\\1", x)
+                   else NULL
+        if(!is.null(comment)) {
+            chunks <- strsplit(comment, ", ", fixed = TRUE)[[1L]]
+            if(any(i <- grepl(tools:::.ORCID_iD_variants_regexp,
+                              chunks))) {
+                chunks[i] <- tools:::.ORCID_iD_canonicalize(chunks[i])
+                names(chunks)[i] <- "ORCID"
+                comment <- chunks
+            }
+        }
         x <- sub("[[:space:]]*\\([^)]*\\)", "", x)
         email <- if(grepl("<.*>", x))
             unlist(strsplit(gsub("[[:space:]]*", "",
