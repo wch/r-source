@@ -1261,7 +1261,7 @@ add_dummies <- function(dir, Log)
             msg <- c("Source(s) listed in 'build/vignette.rds' but not in package:",
                      strwrap(sQuote(elts[miss]), indent = 2L, exdent = 2L))
             printLog0(Log, paste(msg, collapse = "\n"), "\n")
-        }            
+        }
         elts <- db[keep, ]$R
         miss <- (nzchar(elts) &
                  !file.exists(file.path("inst", "doc", elts)))
@@ -1271,7 +1271,7 @@ add_dummies <- function(dir, Log)
             msg <- c("R code(s) listed in 'build/vignette.rds' but not in package:",
                      strwrap(sQuote(elts[miss]), indent = 2L, exdent = 2L))
             printLog0(Log, paste(msg, collapse = "\n"), "\n")
-        }            
+        }
         if(!any) resultLog(Log, "OK")
     }
 
@@ -2995,7 +2995,7 @@ add_dummies <- function(dir, Log)
         }
         bad <- bad | grepl("^fig.*[.]pdf$", files)
         badf <- files[bad]
-        
+
         dirs <- basename(list.dirs(doc_dir, recursive = FALSE))
         badd <- dirs[dirs %in% c("auto", "Bilder", "fig", "figs", "figures",
                                  "Figures", "img", "images", "JSSstyle",
@@ -5957,6 +5957,7 @@ add_dummies <- function(dir, Log)
 
                              ## Apple and LLVM clang
                              " warning: switch condition has boolean value \\[-Wswitch-bool\\]",
+                             " warning: .* \\[-Wembedded-directive\\]",
 
                              ## LLVM flang warnings:
                              ## Includes Hollerith constants
