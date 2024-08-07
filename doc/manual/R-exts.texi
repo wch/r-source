@@ -616,7 +616,7 @@ hence not available automatically along with it).  Many packages using
 suggests and so the user package needs to do so too and include this in
 @samp{VignetteBuilder}.
 
-@c This included latin2 but we now know musl does not support it. 
+@c This included latin2 but we now know musl does not support it.
 @c DESCRIPTION field Encoding
 If the @file{DESCRIPTION} file is not entirely in @acronym{ASCII} it
 should contain an @samp{Encoding} field specifying an encoding.  This is
@@ -685,8 +685,8 @@ codes.
 An @samp{RdMacros} field can be used to hold a comma-separated list of
 packages from which the current package will import @file{Rd} macro
 definitions.  These package should also be listed in @samp{Imports}
-(or @samp{Depends}).  The macros in these packages will be 
-imported after the system macros, in the 
+(or @samp{Depends}).  The macros in these packages will be
+imported after the system macros, in the
 order listed in the @samp{RdMacros} field, before any macro definitions
 in the current package are loaded.  Macro definitions in individual
 @file{.Rd} files in the @file{man} directory are loaded last, and are
@@ -1543,7 +1543,7 @@ namespace).
 
 If you are not using @samp{LazyData} and either your data files are large
 or e.g., you use @file{data/foo.R} scripts to produce your data, loading
-your namespace, you 
+your namespace, you
 can speed up installation by providing a file @file{datalist} in the
 @file{data} subdirectory.  This should have one line per topic that
 @code{data()} will find, in the format @samp{foo} if @code{data(foo)}
@@ -1897,7 +1897,7 @@ config --help} for details.  If you do, it is essential that you use
 both the command and the appropriate flags, so that for example
 @samp{CC} must always be used with @samp{CFLAGS} and (for code to be
 linked into a shared library) @samp{CPICFLAGS}.  For Fortran, be careful
-to use @samp{FC FFLAGS FPICFLAGS} for fixed-form Fortran and 
+to use @samp{FC FFLAGS FPICFLAGS} for fixed-form Fortran and
 @samp{FC FCFLAGS FPICFLAGS} for free-form Fortran.
 
 As from @R{} 4.3.0, variables
@@ -1929,7 +1929,7 @@ AX_BLAS([], AC_MSG_ERROR([could not find your BLAS library], 1))
 @end example
 @noindent
 Note that @code{FLIBS} as determined by @R{} must be used to ensure that
-Fortran code works on all @R{} platforms.  
+Fortran code works on all @R{} platforms.
 
 
 @strong{N.B.}: If the @command{configure} script creates files, e.g.@:
@@ -2692,7 +2692,7 @@ PKG_LIBS = -LCsdp/lib -lsdp $(LAPACK_LIBS) $(BLAS_LIBS) $(FLIBS)
 
 $(SHLIB): Csdp/lib/libsdp.a
 
-Csdp/lib/libsdp.a:      
+Csdp/lib/libsdp.a:
         @@(cd Csdp/lib && $(MAKE) libsdp.a \
           CC="$(CC)" CFLAGS="$(CFLAGS) $(CPICFLAGS)" AR="$(AR)" RANLIB="$(RANLIB)")
 @end smallexample
@@ -2899,7 +2899,7 @@ version 14.1.
 @c (search for `Oracle Developer Studio 12.6: Fortran User's Guide' and
 @c look for §4.6).
 @c Intel Fortran had full Fortran 2008 support from version 17.0, and some
-@c 2018 support in version 16.0 and more in version 19.0.  
+@c 2018 support in version 16.0 and more in version 19.0.
 
 Modern versions of Fortran support modules, whereby compiling one source
 file creates a module file which is then included in others.  (Module
@@ -3952,7 +3952,7 @@ placing them in the @file{inst/doc} hierarchy of the source package or
 by using calls to @code{system.file()}.  All other files needed to
 re-make the vignettes (such as @LaTeX{} style files, Bib@TeX{} input
 files and files for any figures not created by running the code in the
-vignette) must be in the vignette source directory.  @code{R CMD check} 
+vignette) must be in the vignette source directory.  @code{R CMD check}
 will check that vignette production has succeeded by comparing
 modification times of output files in @file{inst/doc} with
 the source in @file{vignettes}.
@@ -6073,7 +6073,7 @@ conflicts with @code{std::make_unique} from C++14 and @code{std::byte},
 @item
 In C++ code
 @example
-using namesapace std; 
+using namesapace std;
 @end example
 @noindent
 is not good practice, and has caused platform-dependent errors if
@@ -8434,7 +8434,7 @@ will expand to
 \Sexpr[results=rd]@{tools:::Rd_expr_PR(1234)@}
 @end example
 @noindent
-when parsed.  
+when parsed.
 
 Some macros that might be of general use are:
 @ftable @code
@@ -9160,8 +9160,8 @@ For example
 > summary(women)
 Called from: summary.data.frame(women)
 Browse[1]> ls()
- [1] "digits" "i"      "lbs"    "lw"     "maxsum" "ncw"    "nm"     "nr"    
- [9] "nv"     "object" "sms"    "z"     
+ [1] "digits" "i"      "lbs"    "lw"     "maxsum" "ncw"    "nm"     "nr"
+ [9] "nv"     "object" "sms"    "z"
 Browse[1]> maxsum
 [1] 7
 Browse[1]> c
@@ -9336,7 +9336,7 @@ something like
 options(expressions=500)
 @end example
 
-@noindent 
+@noindent
 and re-run the example showing the error.
 
 Sometimes there is warning that clearly is the precursor to some later
@@ -10028,10 +10028,10 @@ Other useful flags include
 @noindent
 which causes the first report to be fatal (it always is for the
 @code{unreachable} and @code{return} suboptions).  For more detailed
-information on where the runtime error occurs, using 
+information on where the runtime error occurs, using
 
 @example
-setenv UBSAN_OPTIONS 'print_stacktrace=1' 
+setenv UBSAN_OPTIONS 'print_stacktrace=1'
 @end example
 @noindent
 will include a traceback in the report.  Beyond that, @R{} can
@@ -10503,7 +10503,7 @@ the dylibs including those in packages.
 
 It may be simplest to attach the debugger to a running process (see
 above).  Specifically, run @R{} and when it is at the prompt just before
-a command that is to be debugged, at a terminal 
+a command that is to be debugged, at a terminal
 
 @example
 ps -ef | grep exec/R
@@ -10767,7 +10767,7 @@ package writers using the same symbol name, and such name clashes are
 normally sufficient to cause @R{} to crash.  (If it is not present and
 the call is from the body of a function defined in a package namespace,
 the shared object loaded by the first (if any) @code{useDynLib}
-directive will be used.) 
+directive will be used.)
 @c However, prior to @R{} 2.15.2 the detection of the correct namespace is
 @c unreliable and you are strongly recommended to use the @code{PACKAGE}
 @c argument for packages to be used with earlier versions of @R{}.
@@ -11785,7 +11785,7 @@ ignored. Since @R{} 4.2.0, @file{Makevars.ucrt} will be used in preference to
 @file{Makevars.win} and @file{src/Makefile.ucrt} will be used in preference
 to @file{src/Makefile.win}.
 For past experiences of building DLLs with a variety of
-compilers, see file @samp{README.packages}.  
+compilers, see file @samp{README.packages}.
 Under Windows you can supply an exports definitions file called
 @file{@var{dllname}-win.def}: otherwise all entry points in objects (but
 not libraries) supplied to @code{R CMD SHLIB} will be exported from the
@@ -12274,7 +12274,7 @@ pointer to a structure with typedef @code{SEXPREC}.  Think of this
 structure as a @emph{variant type} that can handle all the usual types
 of @R{} objects, that is vectors of various modes, functions,
 environments, language objects and so on.  The details are given later
-in this section and in 
+in this section and in
 @ref{R Internal Structures, , , R-ints, R Internals},
 but for most
 purposes the programmer does not need to know them.  Think rather of a
@@ -12327,8 +12327,8 @@ stack-based, so @code{UNPROTECT(@var{n})} unprotects the last @var{n}
 objects which were protected.  The calls to @code{PROTECT} and
 @code{UNPROTECT} must balance when the user's code returns and should
 balance in all functions.  @R{} will warn about
-@code{"stack imbalance in .Call"} (or @code{.External}) if the 
-housekeeping is wrong. 
+@code{"stack imbalance in .Call"} (or @code{.External}) if the
+housekeeping is wrong.
 
 Here is a small example of creating an @R{} numeric vector in C code:
 
@@ -12422,7 +12422,7 @@ protecting objects, certain rules have to be followed:
 
 @itemize
 
-@item 
+@item
 Pointer-protection balance.  Calls to @code{PROTECT} and @code{UNPROTECT}
 should balance in each function.  A function may only call @code{UNPROTECT} or
 @code{REPROTECT} on objects it has itself protected.  Note that the pointer
@@ -12537,7 +12537,7 @@ Among the important internal @code{SEXPTYPE}s are @code{LANGSXP},
 @code{CHARSXP}, @code{PROMSXP}, etc.  (@strong{N.B.}: although it is
 possible to return objects of internal types, it is unsafe to do so as
 assumptions are made about how they are handled which may be violated at
-user-level evaluation.)  More details are given in 
+user-level evaluation.)  More details are given in
 @ref{R Internal Structures, , , R-ints, R Internals}.
 
 Unless you are very sure about the type of the arguments, the code
@@ -12886,7 +12886,7 @@ and enables us to say
 @end example
 
 This code only works for names that are ASCII (@pxref{Character encoding
-issues}). 
+issues}).
 
 @node Handling character data
 @subsection Handling character data
@@ -13151,7 +13151,7 @@ Some additional predicates:
 @group
 Rboolean isBlankString(const char *);
 Rboolean Rf_StringBlank(SEXP);
-Rboolean StringFalse(const char *); 
+Rboolean StringFalse(const char *);
 Rboolean StringTrue(const char *);
 int IS_LONG_VEC(SEXP);
 int IS_SCALAR(SEXP, int);
@@ -13951,7 +13951,7 @@ Here is the complete C code which we will explain section by section.
 
 @example
 @group
-#include <R.h> 
+#include <R.h>
 #include <Rinternals.h>
 #include <float.h> /* for DBL_EPSILON */
 
@@ -14403,7 +14403,7 @@ Package @CRANpkg{RODBC} uses external pointers to maintain its
 connections open at once, and the status information for each is stored
 in a C structure (pointed to by @code{thisHandle} in the code extract
 below) that is returned @emph{via} an external pointer as part of the
-@pkg{RODBC} 
+@pkg{RODBC}
 `channel' (as the @code{"handle_ptr"} attribute).  The external pointer
 is created by
 
@@ -15390,7 +15390,7 @@ in C code (@pxref{Registering native routines}).  For example
 @example
 init.c:10:13: warning: type of 'vsom_' does not match original
  declaration [-Wlto-type-mismatch]
-  extern void F77_NAME(vsom)(void *, void *, void *, void *, 
+  extern void F77_NAME(vsom)(void *, void *, void *, void *,
     void *, void *, void *, void *, void *);
 vsom.f90:20:33: note: type mismatch in parameter 9
    subroutine vsom(neurons,dt,dtrows,dtcols,xdim,ydim,alpha,train)
@@ -15440,7 +15440,7 @@ which gives
 @example
 void rmsg_ (char *msg, size_t msg_len);
 @end example
-@noindent 
+@noindent
 (where @code{size_t} applies to version 8 and later).  We could re-write
 that portably in C as
 @example
@@ -15454,7 +15454,7 @@ void F77_NAME(rmsg)(char *msg, FC_LEN_T msg_len)
     char cmsg[msg_len+1];
     strncpy(cmsg, msg, msg_len);
     cmsg[msg_len] = '\0'; // nul-terminate the string, to be sure
-    // do something with 'cmsg' 
+    // do something with 'cmsg'
 @}
 @end example
 @noindent
@@ -15474,12 +15474,12 @@ void F77_NAME(rmsg)(char *msg, FC_LEN_T msg_len)
     char cmsg[msg_len+1];
     strncpy(cmsg, msg, msg_len);
     cmsg[msg_len] = '\0';
-    // do something with 'cmsg' 
+    // do something with 'cmsg'
 @}
 #else
 void F77_NAME(rmsg)(char *msg)
 @{
-    // do something with 'msg' 
+    // do something with 'msg'
 @}
 #endif
 @end example
@@ -15564,7 +15564,7 @@ the character length(s) from C to Fortran. A portable way to do this is
 # define FCONE
 #endif
 ...
-        F77_CALL(dgemm)("N", "T", &nrx, &ncy, &ncx, &one, x, 
+        F77_CALL(dgemm)("N", "T", &nrx, &ncy, &ncx, &one, x,
                         &nrx, y, &nry, &zero, z, &nrx FCONE FCONE);
 @end example
 @noindent
@@ -15756,7 +15756,7 @@ void rmultinom(int n, double* prob, int K, int* rN)
 @end example
 @noindent
 where @code{K = length(prob)},
-@iftex 
+@iftex
 @tex
 $\pi :=$ @code{prob[]},
 @end tex
@@ -15836,7 +15836,7 @@ function, which is the derivative of @code{lgammafn}. In other words,
 @code{trigamma(x) == psigamma(x,1)}, etc.
 The underlying workhorse, @code{dpsifn()}, is useful, e.g., when several derivatives of
 @eqn{\log\Gamma=, log Gamma=}@code{lgammafn} are desired.  It computes and
-returns in @code{ans[]} the length-@var{m} sequence 
+returns in @code{ans[]} the length-@var{m} sequence
 @eqn{(-1)^{k+1} / \Gamma(k+1) * \psi^{(k)}(x), (-1)^(k+1) / gamma(k+1) * psi(k;x)} for
 @eqn{k = n \ldots n+m-1, k = n ... n+m-1}, where @eqn{\psi^{(k)}(x), psi(k;x)}
 is the @I{k-th} derivative of @eqn{\psi(x), Psi(x)}, i.e.,
@@ -15896,7 +15896,7 @@ as @R{}) for the cases where @var{x}, @var{y} or @var{i} are 0 or
 missing or infinite or @code{NaN}.
 
 @code{pow1p(@var{x}, @var{y})} computes @code{(1 + @var{x})^@var{y}}, accurately
-even for small @var{x}, i.e., @eqn{|x| \ll 1, |x| << 1}. 
+even for small @var{x}, i.e., @eqn{|x| \ll 1, |x| << 1}.
 @end deftypefun
 
 @apifun log1p
@@ -16444,7 +16444,7 @@ A @code{NULL} prefix or extension is replaced by @code{""}.  Note that
 the return value is dynamically allocated and should be freed using
 @code{R_free_tmpnam} when no longer needed (unlike the
 system call @code{tmpnam}). Freeing the result using @code{free} is no
-longer recommended. 
+longer recommended.
 @end deftypefun
 
 @apifun R_atof
@@ -16989,7 +16989,7 @@ above (no longer maintained)
 @item @file{Rversion.h} @tab @R{} version information
 @item @file{Rinterface.h} @tab for add-on front-ends (Unix-alikes only)
 @item @file{Rembedded.h} @tab for add-on front-ends
-@item @file{R_ext/Applic.h} @tab optimization and integration
+@item @file{R_ext/Applic.h} @tab optimization, integration and some Lapack ones)
 @item @file{R_ext/BLAS.h} @tab C definitions for BLAS routines
 @item @file{R_ext/Callbacks.h} @tab C (and R function) top-level task
 handlers
@@ -17100,17 +17100,17 @@ functions that should be used instead:
 @item REAL0
 @itemx COMPLEX0
        Use @code{REAL} and @code{COMPLEX}.
-@item STRING_PTR 
-@itemx DATAPTR       
+@item STRING_PTR
+@itemx DATAPTR
 @itemx STDVEC_DATAPTR
        Use @code{STRING_PTR_RO} and @code{DATAPTR_RO}. Obtaining
         writable pointers to these data can violate the memory manager's
         integrity assumptions and is not supported.
 @item isFrame
       Use @code{isDataFrame}, added in @R{} 4.5.0.
-@item BODY           
-@itemx FORMALS        
-@itemx CLOENV         
+@item BODY
+@itemx FORMALS
+@itemx CLOENV
        Use @code{R_ClosureBody}, @code{R_ClosureFormals}, and
        @code{R_ClosureEnv}; these were added in @R{} 4.5.0.
 @item ENCLOS
@@ -17226,7 +17226,7 @@ have been copying their definition and directly accessing the bits in
 memory. The structure of the object header is, however, internal to @R{} and
 may have to change in the future.
 
-@code{IS_ASCII} can be replaced by @code{charIsASCII}, added in @R{} 4.5.0. 
+@code{IS_ASCII} can be replaced by @code{charIsASCII}, added in @R{} 4.5.0.
 It can also be replaced by code that checks individual characters (bytes).
 
 Information provided by the other macros is available via function
@@ -17244,7 +17244,7 @@ which should be rarely since @R{} >= 4.2.0 (UTF-8 is used as native encoding
 on most systems running R).
 
 Several packages use the encoding information to find out whether an
-internal string representation visible via @code{CHAR} is UTF-8 or latin1. 
+internal string representation visible via @code{CHAR} is UTF-8 or latin1.
 @R{} 4.5.0 provides functions @code{charIsUTF8} and @code{charIsLatin1} for
 this purpose, which are safer against future changes and handle also native
 strings when running in the corresponding locale.  Note that both will be
@@ -17773,7 +17773,7 @@ invocation of @command{make}, see @ref{Writing portable packages}.
 all:
       $(MAKE) -f "$@{R_HOME@}/etc$@{R_ARCH@}/Makeconf" -f Makefile.inner
 @end example
-  
+
 Additional flags which @code{$(MAIN_LINK)} includes are, amongst others,
 those to select @abbr{OpenMP} and @option{--export-dynamic} for the GNU linker
 on some platforms.  In principle @code{$(LIBS)} is not needed
@@ -18310,7 +18310,7 @@ int main (int argc, char **argv)
     Rp->ShowMessage = askok;
     Rp->YesNoCancel = askyesnocancel;
     Rp->Busy = myBusy;
-    
+
     Rp->R_Quiet = TRUE;        /* Default is FALSE */
     Rp->R_Interactive = FALSE; /* Default is TRUE */
     Rp->RestoreAction = SA_RESTORE;
@@ -18542,5 +18542,6 @@ front ends and other forms of embedding @R{}.
 @bye
 
 @c Local Variables: ***
-@c mode: TeXinfo ***
+@c mode: texinfo ***
+@c TeX-master: t ***
 @c End: ***

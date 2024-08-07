@@ -159,6 +159,10 @@
       upgraded to \samp{WARNING}s in preparation for removing
       declarations and, where possible, hiding these entry points.
 
+      \item The set of Lapack (double and complex) routines in API headers
+      \file{R_ext/Lapack.h} and \file{R_ext/Applic.h} has been extended,
+      mostly to routines actually in use from packages.
+
       \item Additional non-API entry points added to those reported by
       \command{R CMD check}: \code{IS_LONG_VEC}, \code{PRCODE},
       \code{PRENV}, \code{PRVALUE}, \code{R_nchar},
@@ -197,12 +201,12 @@
       \item \code{stem()} correctly formats also in cases where rounding
       up, e.g., from 9.96 to 10 needs more digits; thanks to
       \I{Ella Kaye} and \I{Kelly Bodwin}, fixing \PR{8934} during
-      \sQuote{\I{R Dev Day}} at \I{useR!2024}. 
+      \sQuote{\I{R Dev Day}} at \I{useR!2024}.
 
       \item \pkg{tools}' \code{toTitleCase()} now works better, fixing
       \PR{18674}, thanks to \I{Shannon Pileggi}, \I{Sarah Zeller},
       \I{Reiko Okamoto}, and \I{Hugo Gruson}'s \sQuote{\I{R Dev Day}}
-      effort. 
+      effort.
 
       \item Printing matrices (typically with many rows and or columns)
       now also omits columns when desirable according to option

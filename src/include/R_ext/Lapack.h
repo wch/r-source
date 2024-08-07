@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2003-2024 The R Core Team.
+ *  Copyright (C) 2003-2024 The R Core Team
  *  Copyright (C) 2008-2019 The R Foundation
  *
  *  This header file is free software; you can redistribute it and/or modify
@@ -29,7 +29,7 @@
 
    Part of the API.
 
-   R packages that use these should have PKG_LIBS in src/Makevars include 
+   R packages that use these should have PKG_LIBS in src/Makevars include
    $(LAPACK_LIBS) $(BLAS_LIBS) $(FLIBS)
  */
 
@@ -44,10 +44,10 @@
 // configure checked that Fortran INTEGER is 32-bit and the same as C int.
 
 /* logicals need checking (already they are compiler-dependent)
-   LAPACKE has 
+   LAPACKE has
      #define lapack_logical lapack_int
    hence int32_t/int64_t
-   But that is not what Fortran comoilers do (int_least32_t for gfortran) 
+   But that is not what Fortran comoilers do (int_least32_t for gfortran)
    OTOH the Accelerate headers use int/long.
 */
 
@@ -78,6 +78,11 @@ extern "C" {
    In the LAPACK sources in the INSTALL directory.
 */
 extern void F77_NAME(ilaver)(La_INT *major, La_INT *minor, La_INT *patch);
+extern int  F77_NAME(ilaenv)(La_INT *ispec, /* input code determining the desired info */
+			     const char *name, /* name of calling subroutine */
+			     const char *opts, /* options of caller, e.g. 'UTN' for (UPLO = 'U', TRANS = 'T', DIAG = 'N') */
+			     /* "problem dimensions" of subroutine  <name>() ; may not all be required : */
+			     La_INT *n1, La_INT *n2, La_INT *n3, La_INT *n4);
 
 // Never defined by R itself.
 #ifndef La_extern
@@ -95,6 +100,11 @@ extern void F77_NAME(ilaver)(La_INT *major, La_INT *minor, La_INT *patch);
  * or signal error(): */
 // La_extern char La_rcond_type(const char *typstr);
 
+
+/* DISNAN returns .TRUE. if its argument is NaN, and .FALSE. otherwise. */
+/*        To be replaced by the Fortran 2003 intrinsic in the future. */
+La_extern La_LGL
+F77_NAME(disnan)(const La_INT* din);
 
 /* Selected Double Precision Lapack Routines
    ========
@@ -243,7 +253,7 @@ F77_NAME(dgees)(const char* jobvs, const char* sort,
 		const La_INT* n, double* a, const La_INT* lda,
 		La_INT* sdim, double* wr, double* wi,
 		double* vs, const La_INT* ldvs,
-		double* work, const La_INT* lwork, La_LGL* bwork, La_INT* info 
+		double* work, const La_INT* lwork, La_LGL* bwork, La_INT* info
 		FCLEN FCLEN);
 /* DGEESX - compute for an N-by-N real nonsymmetric matrix A, the */
 /* eigenvalues, the real Schur form T, and, optionally, the matrix */
@@ -436,7 +446,7 @@ F77_NAME(dgges)(const char* jobvsl, const char* jobvsr, const char* sort,
 		double* alphai, const double* beta,
 		double* vsl, const La_INT* ldvsl,
 		double* vsr, const La_INT* ldvsr,
-		double* work, const La_INT* lwork, La_LGL* bwork, La_INT* info 
+		double* work, const La_INT* lwork, La_LGL* bwork, La_INT* info
 		FCLEN FCLEN FCLEN);
 
 /* DGGGLM - solve a general Gauss-Markov linear model (GLM) problem */
@@ -847,6 +857,18 @@ F77_NAME(dpotf2)(const char* uplo, const La_INT* n,
 La_extern void
 F77_NAME(dpotrf)(const char* uplo, const La_INT* n,
 		 double* a, const La_INT* lda, La_INT* info FCLEN);
+ /* DPOTRF2  computes the Cholesky factorization of a real symmetric */
+ /* positive definite matrix A using the recursive algorithm. */
+La_extern void
+F77_NAME(dpotrf2)(const char* uplo, const La_INT* n,
+		  double* a, const La_INT* lda, La_INT* info FCLEN);
+/* DPFTRF computes the Cholesky factorization of a real symmetric */
+/* positive definite matrix A (which is in RFP format). */
+La_extern void
+F77_NAME(dpftrf)(const char* transr, const char* uplo, const La_INT* n,
+		 double* a, La_INT* info FCLEN FCLEN);
+
+
 /* DPOTRI - compute the inverse of a real symmetric positive */
 /* definite matrix A using the Cholesky factorization A = U**T*U */
 /* or A = L*L**T computed by DPOTRF */
@@ -1176,7 +1198,7 @@ F77_NAME(dsptri)(const char* uplo, const La_INT* n,
 La_extern void
 F77_NAME(dsptrs)(const char* uplo, const La_INT* n,
 		 const La_INT* nrhs, const double* ap,
-		 const La_INT* ipiv, double* b, const La_INT* ldb, 
+		 const La_INT* ipiv, double* b, const La_INT* ldb,
 		 La_INT* info FCLEN);
 
 
@@ -1263,6 +1285,14 @@ F77_NAME(dsycon)(const char* uplo, const La_INT* n,
 		 const La_INT* ipiv,
 		 const double* anorm, double* rcond,
 		 double* work, La_INT* iwork, La_INT* info FCLEN);
+/* DSYEQUB computes row and column scalings intended to equilibrate a */
+/* symmetric matrix A (with respect to the Euclidean norm) and reduce */
+/* its condition number.  */
+La_extern void
+F77_NAME(dsyequb)(const char* uplo, const La_INT* n,
+		  const double* a, const La_INT* lda,
+		  double* s, double* scond, double* amax,
+		  double* work, La_INT* info FCLEN);
 /* DSYEV - compute all eigenvalues and, optionally, eigenvectors */
 /* of a real symmetric matrix A */
 La_extern void
@@ -1443,6 +1473,12 @@ F77_NAME(dtbtrs)(const char* uplo, const char* trans,
 		 const double* ab, const La_INT* ldab,
 		 double* b, const La_INT* ldb, La_INT* info FCLEN FCLEN FCLEN);
 
+/* DTFSM solves a matrix equation ('a' is a triangular matrix in Rectangular Full Packed (RFP) */
+La_extern void
+F77_NAME(dtfsm)(const char* transr, const char* side, const char* uplo, const char* trans, const char* diag,
+		const La_INT* m, const La_INT* n, const double* alpha, const double* a,
+		double* b, const La_INT* ldb FCLEN FCLEN FCLEN FCLEN FCLEN);
+
 //* Double precision Triangular matrices Generalized problems  -> DTG
 
 /* DTGEVC - compute some or all of the right and/or left */
@@ -1512,9 +1548,19 @@ F77_NAME(dtptrs)(const char* uplo, const char* trans,
 		 const La_INT* nrhs, const double* ap,
 		 double* b, const La_INT* ldb, La_INT* info
 #ifdef usePR18534fix
-		 FCLEN		 
+		 FCLEN
 #endif
 		 FCLEN FCLEN);
+
+/* DTPTTR copies a triangular matrix from the standard packed format (TP) to the standard full format (TR) */
+La_extern void
+F77_NAME(dtpttr)(const char* uplo, const La_INT* n, const double* ap,
+		 double *a, const La_INT* lda, const La_INT* info FCLEN);
+/* DTRTTP copies a triangular matrix from the standard full format (TR) to the standard packed format (TP) */
+La_extern void
+F77_NAME(dtrttp)(const char* uplo, const La_INT* n,
+		 const double* a, const La_INT* lda,
+		 double *ap, const La_INT* info FCLEN);
 
 //* Double precision TRiangular matrices -> DTR
 
@@ -1574,7 +1620,7 @@ F77_NAME(dtrsen)(const char* job, const char* compq,
 		 double* wr, double* wi,
 		 La_INT* m, double* s, double* sep,
 		 double* work, const La_INT* lwork,
-		 La_INT* iwork, const La_INT* liwork, La_INT* info 
+		 La_INT* iwork, const La_INT* liwork, La_INT* info
 		 FCLEN FCLEN);
 
 /* DTRSNA - estimate reciprocal condition numbers for specified */
@@ -1625,7 +1671,7 @@ F77_NAME(dtrtrs)(const char* uplo, const char* trans,
 
 
 
-//* Double precision utilities in Lapack 
+//* Double precision utilities in Lapack
 
 /* DHGEQZ - implement a single-/double-shift version of the QZ */
 /* method for finding the generalized eigenvalues */
@@ -1742,7 +1788,7 @@ F77_NAME(dlaed2)(const La_INT* k, const La_INT* n, double* d,
 La_extern void
 F77_NAME(dlaed3)(const La_INT* k, const La_INT* n, const La_INT* n1,
 		 double* d, double* q, const La_INT* ldq,
-		 const double* rho, double* dlamda, double* q2, 
+		 const double* rho, double* dlamda, double* q2,
 		 La_INT* indx, La_INT* ctot, double* w,
 		 double* s, La_INT* info);
 /* DLAED4 - subroutine computes the I-th updated eigenvalue of a */
@@ -2043,7 +2089,7 @@ F77_NAME(dlaqge)(const La_INT* m, const La_INT* n,
 La_extern void
 F77_NAME(dlaqsb)(const char* uplo, const La_INT* n, const La_INT* kd,
 		 double* ab, const La_INT* ldab, const double* s,
-		 const double* scond, const double* amax, 
+		 const double* scond, const double* amax,
 		 const char* equed FCLEN FCLEN);
 /* DLAQSP - equilibrate a symmetric matrix A using the scaling */
 /* factors in the vector S */
@@ -2496,7 +2542,7 @@ F77_NAME(dggev)(const char* jobvl, const char* jobvr, La_INT *n, double *
 		La_INT *info FCLEN FCLEN);
 
 La_extern void
-F77_NAME(dggevx)(const char* balanc, const char* jobvl, const char* jobvr, const char* 
+F77_NAME(dggevx)(const char* balanc, const char* jobvl, const char* jobvr, const char*
 	sense, La_INT *n, double *a, La_INT *lda, double *b,
 	La_INT *ldb, double *alphar, double *alphai, double *
 	beta, double *vl, La_INT *ldvl, double *vr, La_INT *ldvr,
@@ -2605,7 +2651,7 @@ F77_NAME(dlarz)(const char* side, La_INT *m, La_INT *n, La_INT *l,
 		La_INT *ldc, double *work FCLEN);
 
 La_extern void
-F77_NAME(dlarzb)(const char* side, const char* trans, const char* direct, const char* 
+F77_NAME(dlarzb)(const char* side, const char* trans, const char* direct, const char*
 	storev, La_INT *m, La_INT *n, La_INT *k, La_INT *l, double *v,
 	 La_INT *ldv, double *t, La_INT *ldt, double *c, La_INT *
 		 ldc, double *work, La_INT *ldwork
@@ -2757,7 +2803,7 @@ F77_NAME(dspgvd)(La_INT *itype, const char* jobz, const char* uplo, La_INT *
 		 La_INT *liwork, La_INT *info FCLEN FCLEN);
 
 La_extern void
-F77_NAME(dspgvx)(La_INT *itype, const char* jobz, const char* range, const char* 
+F77_NAME(dspgvx)(La_INT *itype, const char* jobz, const char* range, const char*
 		 uplo, La_INT *n, double *ap, double *bp, double *vl,
 		 double *vu, La_INT *il, La_INT *iu, double *abstol, La_INT *
 		 *m, double *w, double *z, La_INT *ldz, double *work,
@@ -2836,6 +2882,12 @@ F77_NAME(dtgsyl)(const char* trans, La_INT *ijob, La_INT *m, La_INT *
 	scale, double *dif, double *work, La_INT *lwork, La_INT *
 		 iwork, La_INT *info FCLEN);
 
+/* DTRTTF copies a triangular matrix from the standard full format (TR) to the rectangular full packed (RFP) format (TF) */
+La_extern void
+F77_NAME(dtrttf)(const char* transr, const char* uplo, const La_INT *n,
+		 const double* a, const La_INT *lda,
+		 double* arf, La_INT *info FCLEN FCLEN);
+
 La_extern void
 F77_NAME(dtzrzf)(La_INT *m, La_INT *n, double *a, La_INT *
 	lda, double *tau, double *work, La_INT *lwork, La_INT *info);
@@ -2854,6 +2906,7 @@ F77_NAME(dpstrf)(const char* uplo, const La_INT* n,
  */
 La_extern La_LGL *
 F77_NAME(lsame)(const char* ca, const char* cb FCLEN FCLEN);
+
 
 La_extern void
 F77_NAME(zbdsqr)(const char* uplo, La_INT *n, La_INT *ncvt, La_INT *
@@ -2938,6 +2991,17 @@ F77_NAME(zgetrs)(const char* trans, La_INT *n, La_INT *nrhs,
 		 La_INT *ldb, La_INT *info FCLEN);
 
 
+/* ZHEEVD computes the eigenvalues and, optionally, the left and/or right eigenvectors for HE matrices
+ * Added in R 4.5.0
+ */
+La_extern void
+F77_NAME(zheevd)(const char* jobz, const char* uplo, const La_INT *n,
+		 La_complex *a, La_INT *lda,
+		 double* w,
+		 La_complex *work, const La_INT *lwork,
+ 		 double    *rwork, const La_INT *lrwork,
+		 La_INT    *iwork, const La_INT *liwork, La_INT *info FCLEN FCLEN);
+
 La_extern void
 F77_NAME(zhetd2)(const char* uplo, La_INT *n, La_complex *a, La_INT *lda, double *d,
 		 double *e, La_complex *tau, La_INT *info FCLEN);
@@ -2981,7 +3045,7 @@ F77_NAME(zlanhe)(const char* norm,  const char* uplo, La_INT *n, La_complex *a,
 		 La_INT *lda, double *work FCLEN FCLEN);
 
 La_extern double
-F77_NAME(zlanhs)(const char* norm, La_INT *n, La_complex *a, La_INT *lda, 
+F77_NAME(zlanhs)(const char* norm, La_INT *n, La_complex *a, La_INT *lda,
 		 double *work FCLEN);
 
 La_extern double
@@ -3006,7 +3070,7 @@ F77_NAME(zlarf)(const char* side, La_INT *m, La_INT *n, La_complex
 		ldc, La_complex *work FCLEN);
 
 La_extern void
-F77_NAME(zlarfb)(const char* side, const char* trans, 
+F77_NAME(zlarfb)(const char* side, const char* trans,
 		 const char* direct, const char*  storev,
 		 La_INT *m, La_INT *n, La_INT *k, La_complex *v, La_INT *ldv,
 		 La_complex *t, La_INT *ldt, La_complex *c, La_INT *
@@ -3056,7 +3120,7 @@ F77_NAME(zlatrd)(const char* uplo, La_INT *n, La_INT *nb,
 		 La_complex *w, La_INT *ldw FCLEN);
 
 La_extern void
-F77_NAME(zlatrs)(const char* uplo, const char* trans, 
+F77_NAME(zlatrs)(const char* uplo, const char* trans,
 		 const char* diag, const char*  normin,
 		 La_INT *n, La_complex *a, La_INT *lda, La_complex *x,
 		 double *scale, double *cnorm, La_INT *info
@@ -3130,7 +3194,7 @@ F77_NAME(ztptri)(const char* uplo, const char* diag, const La_INT* n, La_complex
 		 La_INT *info FCLEN FCLEN);
 
 La_extern void
-F77_NAME(ztptrs)(const char* uplo, const char* trans, const char* diag, 
+F77_NAME(ztptrs)(const char* uplo, const char* trans, const char* diag,
 		 const La_INT* n, const La_INT* nrhs, const La_complex* ap,
 		 La_complex* b, const La_INT* ldb, La_INT* info FCLEN FCLEN FCLEN);
 
@@ -3246,11 +3310,61 @@ F77_NAME(zgesdd)(const char* jobz,
 		 La_complex *vt, const La_INT *ldvt,
 		 La_complex *work, const La_INT *lwork, double *rwork,
 		 La_INT *iwork, La_INT *info FCLEN);
+
+/* ZGELS solves overdetermined or underdetermined systems for GE matrices */
+La_extern void
+F77_NAME(zgels)(const char* trans, const La_INT *m, const La_INT *n, const La_INT *nrhs,
+		La_complex *a, const La_INT *lda,
+		La_complex *b, const La_INT *ldb, La_complex *work, const La_INT *lwork,
+		La_INT *info FCLEN);
+
 La_extern void
 F77_NAME(zgelsd)(La_INT *m, La_INT *n, La_INT *nrhs,
 	La_complex *a, La_INT *lda, La_complex *b, La_INT *ldb, double *s,
-        double *rcond, La_INT *rank, 
+        double *rcond, La_INT *rank,
         La_complex *work, La_INT *lwork, double *rwork, La_INT *iwork, La_INT *info);
+
+/* ZGESVX computes the solution to system of linear equations A * X = B for GE matrices */
+La_extern void
+F77_NAME(zgesvx)(const char* fact, const char* trans, const La_INT *n, const La_INT *nrhs,
+		 La_complex *a,  const La_INT *lda,
+		 La_complex *af, const La_INT *ldaf, La_INT *ipiv,
+		 char* equed, double *r, double *c,
+		 La_complex *b, const La_INT *ldb,
+		 La_complex *x, const La_INT *ldx,
+		 double *rcond, double *ferr, double *berr,
+		 La_complex *work, double *rwork,
+		 La_INT *info FCLEN FCLEN FCLEN); /* FCLEN also for 'equed' */
+
+/* ZGGES computes the eigenvalues, the Schur form, and, optionally, the matrix of Schur vectors for GE matrices */
+La_extern void
+F77_NAME(zgges)(const char* jobvsl, const char* jobvsr, const char* sort,
+		void *selctg, /* <--- FIXME: a fortran  logical function of two complex arguments*/
+/* .. Function Arguments .. \\ LOGICAL SELCTG \\ EXTERNAL SELCTG
+*  SELCTG is a LOGICAL FUNCTION of two COMPLEX*16 arguments
+*       SELCTG must be declared EXTERNAL in the calling subroutine.
+*       If SORT = 'N', SELCTG is not referenced.
+*       If SORT = 'S', SELCTG is used to select eigenvalues to sort
+*       to the top left of the Schur form. */
+		const La_INT *n,
+		La_complex *a, const La_INT *lda,
+		La_complex *b, const La_INT *ldb,
+		La_INT *sdim, La_complex *alpha, La_complex *beta,
+		La_complex *vsl, const La_INT *ldvsl,
+		La_complex *vsr, const La_INT *ldvsr,
+		La_complex *work, const La_INT *lwork,
+		double *rwork, La_LGL *bwork,
+		La_INT *info FCLEN FCLEN FCLEN);
+
+/* ZGGEV computes the eigenvalues and, optionally, the left and/or right eigenvectors for GE matrices */
+La_extern void
+F77_NAME(zggev)(const char* jobvl, const char* jobvr, const La_INT *n,
+		La_complex *a, const La_INT *lda,
+		La_complex *b, const La_INT *ldb, La_complex *alpha, La_complex *beta,
+		La_complex *vl, const La_INT *ldvl,
+		La_complex *vr, const La_INT *ldvr,
+		La_complex *work, const La_INT *lwork, double *rwork,
+		La_INT *info FCLEN FCLEN);
 
 /* More Complex for R 4.4.0  --- Complex Hermitian (incl "crossprod") */
 
@@ -3259,6 +3373,11 @@ F77_NAME(zlanhp)(const char* norm, const char* uplo,
 		 La_INT const* n,
 		 La_complex const* AP,
 		 double* work FCLEN FCLEN);
+
+/* ZLARTG generates a plane rotation with real cosine and complex sine */
+La_extern void
+F77_NAME(zlartg)(const La_complex* F, const La_complex* G,
+		 double* C, La_complex* S, La_complex* R);
 
 La_extern void
 F77_NAME(zhpcon)(const char* uplo, La_INT const* n, La_complex const* AP,
@@ -3269,7 +3388,7 @@ F77_NAME(zhpcon)(const char* uplo, La_INT const* n, La_complex const* AP,
 La_extern void
 F77_NAME(zhptrf)(const char* uplo, La_INT const* n, La_complex* AP, La_INT* ipiv,
 		 La_INT* info FCLEN);
-    
+
 La_extern void
 F77_NAME(zhptri)(const char* uplo, La_INT const* n, La_complex* AP, La_INT const* ipiv,
 		 La_complex* work, La_INT* info FCLEN);
@@ -3317,6 +3436,52 @@ F77_NAME(zhpev)(const char *jobz, const char *uplo,
 		 double *w, La_complex *z, const La_INT *ldz,
 		 La_complex *work, double *rwork,
 		 La_INT *info FCLEN FCLEN);
+
+
+/* ZROT applies a plane rotation with real cosine and complex sine to a pair of complex vectors */
+La_extern void
+F77_NAME(zrot)(const La_INT *n,
+	       La_complex *cx, const La_INT *incx,
+	       La_complex *cy, const La_INT *incy, double *c, La_complex *s);
+
+/* ZTGSEN reorders the generalized Schur decomposition of a complex matrix pair (A, B),
+ *      (A, B) must be in generalized Schur canonical form, i.e., A and B are both upper triangular.
+ * ZTGSEN also computes the generalized eigenvalues of (A, B) */
+La_extern void
+F77_NAME(ztgsen)(const La_INT *ijob, const La_LGL *wantq, const La_LGL *wantz,
+		 const La_LGL *select, const La_INT *n,
+		 La_complex *a, const La_INT *lda,
+		 La_complex *b, const La_INT *ldb,
+		 La_complex *alpha, La_complex *beta,
+		 La_complex *q, const La_INT *ldq,
+		 La_complex *z, const La_INT *ldz,
+		 La_INT *m, double *pl, double *pr, double *dif,
+		 La_complex *work, const La_INT *lwork,
+		 La_INT    *iwork, const La_INT *liwork, La_INT *info);
+
+/* ZTRSEN reorders the Schur factorization of a complex matrix A = Q*T*Q**H,
+   so that a selected cluster of eigenvalues appears in the leading positions
+   on the diagonal of the upper triangular matrix T, and the leading columns
+   of Q form an orthonormal basis of the corresponding right invariant subspace. */
+La_extern void
+F77_NAME(ztrsen)(const char* job, const char* compq, const La_LGL *select, const La_INT *n,
+		 La_complex *t, const La_INT *ldt,
+		 La_complex *q, const La_INT *ldq, La_complex *w,
+		 La_INT *m, double *s, double *sep,
+		 La_complex *work, const La_INT *lwork, La_INT *info FCLEN FCLEN);
+
+/* ZTRSYL solves the complex Sylvester matrix equation
+       op(A)*X + X*op(B) = scale*C   or
+       op(A)*X - X*op(B) = scale*C,
+   where op(A) = A or A**H, and A and B are both upper triangular. */
+La_extern void
+F77_NAME(ztrsyl)(const char* trana, const char* tranb, const La_INT *isgn,
+		 const La_INT *m, const La_INT *n,
+		 const La_complex *a, const La_INT *lda,
+		 const La_complex *b, const La_INT *ldb,
+		 La_complex *c, const La_INT *ldc, double *scale,
+		 La_INT *info FCLEN FCLEN);
+
 
 /* =========================== DEPRECATED ==============================
 

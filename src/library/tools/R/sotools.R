@@ -1,11 +1,11 @@
 #  File src/library/tools/R/sotools.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 2011-2023 The R Core Team
+#  Copyright (C) 2011-2024 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
-#  the Free Software Foundation; either version 2 of the License, or
+#  the Free Software Foundation; either version 3 of the License, or
 #  (at your option) any later version.
 #
 #  This program is distributed in the hope that it will be useful,
@@ -693,11 +693,12 @@ nonAPI <- c("chol_", "chol2inv_", "cg_", "ch_", "rg_",
             "R_new_custom_connection", "R_ReadConnection",
             "R_WriteConnection", "R_GetConnection",
 
-## non-API in Applic.h
-## future <- c("dqrcf_", "dqrdc2_", "dqrls_", "dqrqty_", "dqrqy_")
-## d1mach_ and i1mach_ are mentioned (since R 2.15.3) in R-exts.
+## in ../../../include/R_ext/Applic.h -- these are API now:
+## 	"dqrcf_", "dqrqty_", "dqrqy_", "dqrrsd_", "dqrxb_",
+##	"dqrdc2_", "dqrls_",
+## "d1mach_" and "i1mach_" are API now in R-exts.
             "R_Pretty") ## hidden, so unlikely to be usable
-##          "optif9")   ## used by nlme and pcaPP
+##          "optif9")   ## used by pcaPP
 
 ## grDevices uses R_Home R_InputHandlers R_TempDir R_Visible R_cairoCdynload R_fopen R_gzclose R_gzgets R_gzopen R_isForkedChild Rf_envlength Rf_strIsASCII Rf_utf8towcs Rg_set_col_ptrs Ri18n_wcwidth addInputHandler do_X11 do_contourLines do_getGraphicsEventEnv do_getSnapshot do_playSnapshot do_saveplot locale2charset mbcsToUcs2 ptr_R_ProcessEvents
 

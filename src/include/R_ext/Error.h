@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998-2023   The R Core Team
+ *  Copyright (C) 1998-2024   The R Core Team
  *
  *  This header file is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -27,6 +27,7 @@
 #define R_ERROR_H_
 
 #include <R_ext/Print.h>
+#include <R_ext/RS.h>		/* for F77_... */
 
 #ifdef  __cplusplus
 extern "C" {
@@ -58,7 +59,13 @@ NORET void WrongArgCount(const char *);
 void	Rf_warning(const char *, ...) R_PRINTF_FORMAT(1,2);
 
 void 	R_ShowMessage(const char *s);
-    
+
+#ifdef FC_LEN_T
+NORET void F77_NAME(xerbla)(const char *srname, int *info, const FC_LEN_T srname_len);
+#else
+NORET void F77_NAME(xerbla)(const char *srname, int *info);
+#endif
+
 
 #ifdef  __cplusplus
 }
