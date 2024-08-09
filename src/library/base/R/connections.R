@@ -1,7 +1,7 @@
 #  File src/library/base/R/connections.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2021 The R Core Team
+#  Copyright (C) 1995-2024 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -241,7 +241,7 @@ closeAllConnections <- function()
 {
     ## first re-divert any diversion of stderr.
     i <- sink.number(type = "message")
-    if(i > 0L) sink(stderr(), type = "message")
+    if(i != 2L) sink(stderr(), type = "message")
     ## now unwind the sink diversion stack.
     n <- sink.number()
     if(n > 0L) for(i in seq_len(n)) sink()

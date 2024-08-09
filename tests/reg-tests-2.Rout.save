@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2024-03-11 r86096) -- "Unsuffered Consequences"
+R Under development (unstable) (2024-08-07 r86984) -- "Unsuffered Consequences"
 Copyright (C) 2024 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu
 
@@ -1473,6 +1473,9 @@ Error in log("a") : non-numeric argument to mathematical function
 > 
 > ## bail out
 > closeAllConnections()
+Warning message:
+In .Internal(gc(verbose, reset, full)) :
+  closing unused connection 3 (all.Rout)
 > (foo <- showConnections())
      description class mode text isopen can read can write
 > stopifnot(nrow(foo) == 0)
@@ -6379,7 +6382,7 @@ function(given = NULL) {
     if (is.null(given)) callObj$default <- TRUE
     callObj
 }
-<bytecode: 0x562f0421fcc8>
+<bytecode: 0x5576bf5fbdf8>
 > print(foo, useSource = FALSE)
 function (given = NULL) 
 {
@@ -6390,7 +6393,7 @@ function (given = NULL)
         callObj$default <- TRUE
     callObj
 }
-<bytecode: 0x562f0421fcc8>
+<bytecode: 0x5576bf5fbdf8>
 > attr(foo, "srcref") <- NULL
 > foo
 function (given = NULL) 
@@ -6402,7 +6405,7 @@ function (given = NULL)
         callObj$default <- TRUE
     callObj
 }
-<bytecode: 0x562f0421fcc8>
+<bytecode: 0x5576bf5fbdf8>
 > (f <- structure(function(){}, note = "just a note",
 +                 yada = function() "not the same"))
 function(){}
@@ -8355,7 +8358,7 @@ Error in f() : argument is missing, with no default
 >     withAutoprint({ show.srcref() })
  language show.srcref()
  - attr(*, "srcref")= 'srcref' int [1:8] 1 21 1 33 21 33 3 3
-  ..- attr(*, "srcfile")=Classes 'srcfilealias', 'srcfile' <environment: 0x562f01758010> 
+  ..- attr(*, "srcfile")=Classes 'srcfilealias', 'srcfile' <environment: 0x5576bf84ef28> 
 > ## no   attr(*, "src..")   in R <= 4.3.1
 > ##
 > withAutoprint({

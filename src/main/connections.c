@@ -5355,13 +5355,15 @@ attribute_hidden SEXP do_sink(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    error(_("sink stack is full"));
 	switch_or_tee_stdout(icon, closeOnExit, tee);
     } else {
-	if(icon < 0) {
-	    R_ReleaseObject(getConnection(R_ErrorCon)->ex_ptr);
+	if(icon < 0 || icon == 2) {
+	    if (R_ErrorCon > 2)
+		R_ReleaseObject(getConnection(R_ErrorCon)->ex_ptr);
 	    R_ErrorCon = 2;
 	} else {
-	    getConnection(icon); /* check validity */
+	    Rconnection con = getConnection(icon); /* check validity */
 	    R_ErrorCon = icon;
-	    R_PreserveObject(getConnection(icon)->ex_ptr);
+	    if (icon > 2)
+		R_PreserveObject(con->ex_ptr);
 	}
     }
 
