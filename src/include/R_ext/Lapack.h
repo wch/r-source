@@ -78,11 +78,12 @@ extern "C" {
    In the LAPACK sources in the INSTALL directory.
 */
 extern void F77_NAME(ilaver)(La_INT *major, La_INT *minor, La_INT *patch);
-extern int  F77_NAME(ilaenv)(La_INT *ispec, /* input code determining the desired info */
+extern int  F77_NAME(ilaenv)(const La_INT *ispec, /* input code determining the desired info */
 			     const char *name, /* name of calling subroutine */
 			     const char *opts, /* options of caller, e.g. 'UTN' for (UPLO = 'U', TRANS = 'T', DIAG = 'N') */
 			     /* "problem dimensions" of subroutine  <name>() ; may not all be required : */
-			     La_INT *n1, La_INT *n2, La_INT *n3, La_INT *n4);
+			     const La_INT *n1, const La_INT *n2,
+			     const La_INT *n3, const La_INT *n4 FCLEN FCLEN);
 
 // Never defined by R itself.
 #ifndef La_extern
