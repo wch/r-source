@@ -5958,6 +5958,7 @@ add_dummies <- function(dir, Log)
                              ## Apple and LLVM clang
                              " warning: switch condition has boolean value \\[-Wswitch-bool\\]",
                              " warning: .* \\[-Wembedded-directive\\]",
+                             " warning: using directive refers to implicitly-defined namespace",
 
                              ## LLVM flang warnings:
                              ## Includes Hollerith constants
