@@ -71,7 +71,7 @@ msgstr "R_pretty(): interval molt petit «cel·la»=%g, corregit a %g"
 #: src/appl/pretty.c:146
 #, c-format
 msgid "R_pretty(): very large range 'cell'=%g, corrected to %g"
-msgstr "Rpretty(): interval molt gran «cel·la»=%g, corregit a %g"
+msgstr "R_pretty(): interval molt gran «cel·la»=%g, corregit a %g"
 
 #: src/gnuwin32/dynload.c:118
 #, c-format
@@ -780,7 +780,7 @@ msgstr "tipus no implementat %d a «createRSymbolObject»"
 #: src/main/Rdynload.c:1655
 #, fuzzy
 msgid "R_getRegisteredRoutines() expects a DllInfo reference"
-msgstr "RgetRegisteredRoutines() espera una referència de DllInfo"
+msgstr "R_getRegisteredRoutines() espera una referència de DllInfo"
 
 #: src/main/Rdynload.c:1744
 #, fuzzy, c-format
@@ -4526,7 +4526,7 @@ msgstr "el marcador de posició de la canonada només es pot utilitzar com a arg
 #: src/main/gram.y:1335
 #, fuzzy, c-format
 msgid "'=>' is disabled; set '_R_USE_PIPEBIND_' envvar to a true value to enable it (%s:%d:%d)"
-msgstr "«=>» està desactivat; establiu «RUSEPIPEBIND» envvar a un valor real per a habilitar-lo (%s:%d:%d)"
+msgstr "«=>» està desactivat; establiu «R_USE_PIPEBIND» envvar a un valor real per a habilitar-lo (%s:%d:%d)"
 
 #: src/main/gram.y:1411
 #, fuzzy, c-format
@@ -5030,7 +5030,7 @@ msgstr "no s'ha pogut assignar espai per a l'element de crida de retorn de nivel
 #: src/main/main.c:1728
 #, fuzzy
 msgid "negative index passed to R_removeTaskCallbackByIndex"
-msgstr "Índex negatiu passat a RremoveTaskCallbackByIndex"
+msgstr "Índex negatiu passat a R_removeTaskCallbackByIndex"
 
 #: src/main/main.c:1855
 #, fuzzy, c-format
@@ -5202,18 +5202,18 @@ msgstr "unprotectptr: no s'ha trobat el punter"
 #, fuzzy, c-format
 msgid "R_Reprotect: only %d protected item, can't reprotect index %d"
 msgid_plural "R_Reprotect: only %d protected items, can't reprotect index %d"
-msgstr[0] "RReprotect: només %d element protegit, no es pot reprotegir l'índex %d"
-msgstr[1] "RReprotect: només %d elements protegits, no es pot reprotegir l'índex %d"
+msgstr[0] "R_Reprotect: només %d element protegit, no es pot reprotegir l'índex %d"
+msgstr[1] "R_Reprotect: només %d elements protegits, no es pot reprotegir l'índex %d"
 
 #: src/main/memory.c:3528
 #, fuzzy, c-format
 msgid "'R_Calloc' could not allocate memory (%llu of %llu bytes)"
-msgstr "'RCalloc' no ha pogut assignar memòria (%llu de %llu bytes)"
+msgstr "'R_Calloc' no ha pogut assignar memòria (%llu de %llu bytes)"
 
 #: src/main/memory.c:3539
 #, fuzzy, c-format
 msgid "'R_Realloc' could not re-allocate memory (%llu bytes)"
-msgstr "'RRealloc' no ha pogut reassignar la memòria (%llu bytes)"
+msgstr "'R_Realloc' no ha pogut reassignar la memòria (%llu bytes)"
 
 #: src/main/memory.c:3949
 #, fuzzy, c-format
@@ -5228,12 +5228,12 @@ msgstr "no és segur retornar el punter del vector"
 #: src/main/memory.c:4140
 #, fuzzy, c-format
 msgid "attempt to set index %lld/%lld in SET_STRING_ELT"
-msgstr "s'ha intentat establir l'índex %lld/%lld a SETSTRINGELT"
+msgstr "s'ha intentat establir l'índex %lld/%lld a SET_STRING_ELT"
 
 #: src/main/memory.c:4161
 #, fuzzy, c-format
 msgid "attempt to set index %lld/%lld in SET_VECTOR_ELT"
-msgstr "s'ha intentat establir l'índex %lld/%lld a SETVECTORELT"
+msgstr "s'ha intentat establir l'índex %lld/%lld a SET_VECTOR_ELT"
 
 #: src/main/memory.c:4344 src/main/memory.c:4353 src/main/memory.c:4366
 #: src/main/memory.c:4383 src/main/memory.c:4398 src/main/memory.c:4414
@@ -5485,7 +5485,7 @@ msgstr "El paquet «mètodes» encara no s'ha carregat"
 #: src/main/objects.c:1725
 #, fuzzy
 msgid "R_getClassDef(.) called with NULL string pointer"
-msgstr "RgetClassDef(.) cridat amb un punter de cadena nul"
+msgstr "R_getClassDef(.) cridat amb un punter de cadena nul"
 
 #: src/main/objects.c:1772
 #, fuzzy
@@ -5807,7 +5807,7 @@ msgstr "error de lectura a «%s»"
 #: src/main/platform.c:2193
 #, fuzzy
 msgid "setting 'LC_NUMERIC' may cause R to function strangely"
-msgstr "establir «LCNUMERIC» pot fer que l'R funcioni estranyament"
+msgstr "establir «LC_NUMERIC» pot fer que l'R funcioni estranyament"
 
 #: src/main/platform.c:2206
 #, fuzzy, c-format
@@ -6170,7 +6170,7 @@ msgstr "cadena UTF-8 no vàlida"
 #: src/main/raw.c:391
 #, fuzzy
 msgid "argument 'allow_surrogate_pairs' must be TRUE or FALSE"
-msgstr "l'argument «allowsurrogatepairs» ha de ser CERT o FALS"
+msgstr "l'argument «allow_surrogate_pairs» ha de ser CERT o FALS"
 
 #: src/main/relop.c:140 src/main/relop.c:154 src/main/relop.c:169
 #, fuzzy, c-format
@@ -7177,7 +7177,7 @@ msgstr "%d arguments no utilitzats pel format"
 #: src/main/startup.c:72
 #, fuzzy
 msgid "R_LibraryFileName: buffer too small"
-msgstr "RLibraryFileName: la memòria intermèdia és massa petita"
+msgstr "R_LibraryFileName: la memòria intermèdia és massa petita"
 
 #: src/main/subassign.c:142
 #, fuzzy
@@ -7617,27 +7617,27 @@ msgstr "punt Unicode %u no vàlid"
 #: src/main/sysutils.c:2224
 #, fuzzy
 msgid "'R_USER' not set"
-msgstr "no s'ha definit «RUSER»"
+msgstr "no s'ha definit «R_USER»"
 
 #: src/main/sysutils.c:2245 src/main/sysutils.c:2273
 #, fuzzy
 msgid "cannot allocate 'R_TempDir'"
-msgstr "no es pot assignar «RTempDir»"
+msgstr "no es pot assignar «R_TempDir»"
 
 #: src/main/sysutils.c:2267
 #, fuzzy
 msgid "'R_TempDir' contains space"
-msgstr "'RTempDir' conté espai"
+msgstr "'R_TempDir' conté espai"
 
 #: src/main/sysutils.c:2279
 #, fuzzy
 msgid "cannot create 'R_TempDir'"
-msgstr "no s'ha pogut crear «RTempDir»"
+msgstr "no s'ha pogut crear «R_TempDir»"
 
 #: src/main/sysutils.c:2285 src/main/sysutils.c:2296 src/main/sysutils.c:2301
 #, fuzzy
 msgid "unable to set R_SESSION_TMPDIR"
-msgstr "no s'ha pogut establir RSESSIONTMPDIR"
+msgstr "no s'ha pogut establir R_SESSION_TMPDIR"
 
 #: src/main/sysutils.c:2351
 #, fuzzy
@@ -7647,7 +7647,7 @@ msgstr "nom temporal massa llarg"
 #: src/main/sysutils.c:2355
 #, fuzzy
 msgid "allocation failed in R_tmpnam2"
-msgstr "ha fallat l'assignació a Rtmpnam2"
+msgstr "ha fallat l'assignació a R_tmpnam2"
 
 #: src/main/sysutils.c:2361
 #, fuzzy
