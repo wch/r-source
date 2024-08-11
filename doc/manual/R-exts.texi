@@ -14738,7 +14738,9 @@ there that can be included too, but many of the features they contain
 should be regarded as undocumented and unstable.
 
 Most of these header files, including all those included by @file{R.h},
-can be used from C++ code.
+can be used from C++ code.  (However, they cannot safely be included in
+a @code{extern "C" @{ @}} block as they may include C++ headers when
+included from C++ code---and whether this succeeds is system-specific).
 
 @quotation Note
 Because @R{} re-maps many of its external names to avoid clashes with
