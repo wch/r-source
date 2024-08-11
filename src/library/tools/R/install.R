@@ -2762,6 +2762,8 @@ if(FALSE) {
                   )
     if(config_val_to_logical(Sys.getenv("_R_CXX_USE_NO_REMAP_", "FALSE")))
          makeargs <- c(makeargs, "CXX_DEFS=-DR_NO_REMAP")
+    if(config_val_to_logical(Sys.getenv("_R_USE_STRICT_R_HEADERS_", "FALSE")))
+         makeargs <- c(makeargs, "XDEFS=-DSTRICT_R_HEADERS=1")
 
     cmd <- paste(MAKE, p1(paste("-f", shQuote(makefiles))), p1(makeargs),
                  p1(makeobjs))

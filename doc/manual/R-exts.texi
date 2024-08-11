@@ -16100,11 +16100,11 @@ natural logarithm (@code{log(x)} in @R{}).
 @end quotation
 
 @apihdr R_ext/Constants.h
-There are a set of constants (@code{PI}, @code{DOUBLE_EPS}) (and so on)
-defined (unless @code{STRICT_R_HEADERS} is defined) in the included
-header @file{R_ext/Constants.h}, mainly for compatibility with @Sl{}.
-All but @code{PI} are deprecated and should be replaced by the C99/C++11
-versions used in that file.
+For compatibility with @Sl{} this file defines the constant @code{PI}
+(unless @code{STRICT_R_HEADERS} is defined): this is deprecated and
+should be replaced by @code{M_PI}. @file{Constants.h} includes either C
+header @file{float.h} or C++ header @file{cfloat}, which provide
+constants such as @code{DBL_MAX}.
 
 @apivar TRUE
 @apivar FALSE
