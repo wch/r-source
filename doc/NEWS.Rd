@@ -58,6 +58,17 @@
 
       \item Package \pkg{tools} now exports functions
       \code{R()} and \code{parse_URI_reference()}.
+
+      \item It is now possible to set the background color for row and
+      column names in the data editor on Windows (\command{Rgui}).
+
+      \item \command{Rterm} on Windows now accepts input lines of unlimited
+      length.
+
+      \item \code{file.info()} on Windows now provides file owner name and
+      domain.
+
+      \item \code{Sys.info()} on Windows now provides current user domain.
     }
   }
 
