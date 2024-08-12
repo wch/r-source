@@ -176,9 +176,13 @@
       \emph{arguments} instead of as part of the (translatable format)
       string.  This is one step for \PR{18297}; from \I{Henrik Bengtsson}.
 
-      \item Header \file{Constants.h} (included by \file{R.h}) now
-      includes header  \file{float.h} or \file{cfloat} for constants such as
-      \code{DBL_MAX} even if \file{STRICT_R_HEADERS} is defined.
+      \item Header \file{R_ext/Constants.h} (included by \file{R.h}) now
+      includes header \file{float.h} or \file{cfloat} for constants such
+      as \code{DBL_MAX} even if \file{STRICT_R_HEADERS} is defined.
+
+      \item The legecy definition of \code{PI} in
+      \file{R_ext/Constants.h}  (included by \file{R.h} will be removeed
+      shortly: use \code{M_PI} instead.
     }
   }
 

@@ -14971,8 +14971,9 @@ Memory obtained by these macros should be aligned in the same way as
 @apifun Free
 @c The R_ forms were introduced in 2016-09, hence for R 3.4.0
 Historically the macros @code{Calloc}, @code{Free} and @code{Realloc}
-were used, and these remain available unless  @code{STRICT_R_HEADERS}
-was defined prior to the inclusion of the header.
+were used, and these remain available unless @code{STRICT_R_HEADERS}
+was defined prior to the inclusion of the header, but these are likely to
+be removed in the near future.
 
 @code{R_Calloc}, @code{R_Realloc}, and @code{R_Free} are currently
 implemented as macros expanding to calls to @code{R_chk_calloc},
