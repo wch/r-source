@@ -193,6 +193,10 @@
 
       \item \command{R CMD check --as-cran} notes bad parts in the
       \file{DESCRIPTION} file's URL fields.
+
+      \item Installation will define \code{STRICT_R_HEADER} if
+      environment variable \env{_R_USE_STRICT_R_HEADERS_} is set to a
+      true value: this is done by \command{R CMD check --as-cran}.
     }
   }
 
