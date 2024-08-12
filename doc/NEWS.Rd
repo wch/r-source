@@ -181,7 +181,7 @@
       as \code{DBL_MAX} even if \file{STRICT_R_HEADERS} is defined.
 
       \item The legecy definition of \code{PI} in
-      \file{R_ext/Constants.h}  (included by \file{R.h} will be removeed
+      \file{R_ext/Constants.h} (included by \file{R.h}) will be removeed
       shortly: use \code{M_PI} instead.
     }
   }
