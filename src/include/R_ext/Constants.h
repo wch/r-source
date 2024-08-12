@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998-2022   The R Core Team.
+ *  Copyright (C) 1998-2024   The R Core Team.
  *
  *  This header file is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -27,7 +27,9 @@
 #ifndef R_EXT_CONSTANTS_H_
 #define R_EXT_CONSTANTS_H_
 
-/* usually in math.h, but not with strict C99/C++11 compliance */
+/* usually in math.h, but not with strict C99/C++11 compliance.
+   Also in Rmath.h
+ */
 #ifndef M_PI
 #define M_PI 3.141592653589793238462643383279502884197169399375
 #endif
@@ -36,12 +38,14 @@
   S-compatibility defines.
  */
 #ifdef __cplusplus
-#include <cfloat>   /* Defines the RHSs, C++11 and later */
+# include <cfloat>   /* Defines the RHSs, C++11 and later */
 #else
-#include <float.h>  /* Defines the RHSs, C99 and later */
+# include <float.h>  /* Defines the RHSs, C99 and later */
 #endif
+
 #ifndef STRICT_R_HEADERS
-#define PI             M_PI
+# define PI             M_PI
+#endif
 
 /* The DOUBLE_* defines were deprecated in R 4.2.0 and removed in 4.3.0.
 #define DOUBLE_DIGITS  DBL_MANT_DIG
@@ -49,6 +53,5 @@
 #define DOUBLE_XMAX    DBL_MAX
 #define DOUBLE_XMIN    DBL_MIN
 */
-#endif
 
 #endif /* R_EXT_CONSTANTS_H_ */
