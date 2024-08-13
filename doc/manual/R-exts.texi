@@ -6240,7 +6240,7 @@ use C code (which can normally be mixed with C++ code in a package).
 Include only what is essential in @code{extern "C" @{@}} blocks in C++
 code.  In particular it is not portable to include @R{} headers in such
 blocks (although they are themselves C code, they may include C++ system
-headers and the oublic ones already enclose their declarations in such a
+headers and the public ones already enclose their declarations in such a
 block).  And maintainers have include @R{} headers from other headers
 included in such a block.
 @c obscure compilation failures seen with clang++/libc++
