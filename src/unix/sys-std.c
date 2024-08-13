@@ -1053,7 +1053,7 @@ Rstd_ReadConsole(const char *prompt, unsigned char *buf, int len,
 
 	if (rl_rest) {
 	    /* remaining line data (too long line) from a previous call */
-	    size_t r = strlen(rl_rest + rl_rest_offset);
+	    size_t r = strlen((char *)rl_rest + rl_rest_offset);
 	    if (r < len) {
 		memcpy(buf, rl_rest + rl_rest_offset, r);
 		buf[r] = '\0'; /* buf[r-1] is \n */
