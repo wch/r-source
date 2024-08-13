@@ -69,6 +69,10 @@
       domain.
 
       \item \code{Sys.info()} on Windows now provides current user domain.
+
+      \item \code{findInterval()} gets new options \code{checkSorted} and
+      \code{checkNA} which allow to skip relatively costly checks; related
+      to \PR{16567}.
     }
   }
 

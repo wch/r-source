@@ -1,6 +1,6 @@
 % File src/library/base/man/findInterval.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2024 R Core Team
 % Distributed under GPL 2 or later
 
 \name{findInterval}
@@ -8,7 +8,7 @@
 \title{Find Interval Numbers or Indices}
 \usage{
 findInterval(x, vec, rightmost.closed = FALSE, all.inside = FALSE,
-             left.open = FALSE)
+             left.open = FALSE, checkSorted = TRUE, checkNA = TRUE)
 }
 \arguments{
   \item{x}{numeric.}
@@ -24,6 +24,13 @@ findInterval(x, vec, rightmost.closed = FALSE, all.inside = FALSE,
     swapped with \eqn{<} (and \eqn{>} with \eqn{\ge}), and
     \code{rightmost.closed} means \sQuote{leftmost is closed}.  This may
     be useful, e.g., in survival analysis computations.}
+  \item{checkSorted}{logical indicating if \code{vec} should be checked,
+    i.e., \code{\link{is.unsorted(vec)}} is asserted to be false.  Setting
+    this to \code{FALSE} skips the check gaining speed, but may return
+    nonsense results in case \code{vec} is not sorted.}
+  \item{checkNA}{logical indicating if each \code{x[i]} should be checked
+    as with \code{\link{is.na}(.)}.  Setting this to \code{FALSE} in case
+    of \code{NA}'s in \code{x[]} may result in platform dependent nonsense.}
 }
 \description{
   Given a vector of non-decreasing breakpoints in \code{vec}, find the
@@ -88,6 +95,9 @@ X <- sort(round(stats::rt(N, df = 2), 2))
 tt <- c(-100, seq(-2, 2, length.out = 201), +100)
 it <- findInterval(tt, X)
 tt[it < 1 | it >= N] # only first and last are outside range(X)
+stopifnot(identical(it, ## suppressing the checks is faster *BUT* dangerous, unless
+                    ##     you *know* that X is sorted   and   tt contains no NA's
+                    findInterval(tt, X, checkSorted=FALSE, checkNA=FALSE)))
 
 ##  'left.open = TRUE' means  "mirroring" :
 N <- length(v)
