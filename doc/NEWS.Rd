@@ -174,7 +174,7 @@
       upgraded to \samp{WARNING}s in preparation for removing
       declarations and, where possible, hiding these entry points.
 
-      \item The set of Lapack (double and complex) routines in API headers
+      \item The set of LAPACK (double and complex) routines in API headers
       \file{R_ext/Lapack.h} and \file{R_ext/Applic.h} has been extended,
       mostly to routines actually in use from packages.
 
