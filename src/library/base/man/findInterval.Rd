@@ -25,7 +25,7 @@ findInterval(x, vec, rightmost.closed = FALSE, all.inside = FALSE,
     \code{rightmost.closed} means \sQuote{leftmost is closed}.  This may
     be useful, e.g., in survival analysis computations.}
   \item{checkSorted}{logical indicating if \code{vec} should be checked,
-    i.e., \code{\link{is.unsorted(vec)}} is asserted to be false.  Setting
+    i.e., \code{\link{is.unsorted}(vec)} is asserted to be false.  Setting
     this to \code{FALSE} skips the check gaining speed, but may return
     nonsense results in case \code{vec} is not sorted.}
   \item{checkNA}{logical indicating if each \code{x[i]} should be checked
