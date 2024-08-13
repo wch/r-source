@@ -17860,13 +17860,16 @@ a state terminates (@code{@var{which}=0}).
 
 These functions interact with a console.
 
-@code{R_ReadConsole} prints the given prompt at the console and then
-does a @code{fgets(3)}--like operation, transferring up to @var{buflen}
-characters into the buffer @var{buf}. The last two bytes should be
-set to @samp{"\n\0"} to preserve sanity.  If @var{hist} is non-zero,
-then the line should be added to any command history which is being
-maintained.  The return value is 0 is no input is available and >0
-otherwise.
+@code{R_ReadConsole} prints the given prompt at the console and then does a
+@code{fgets(3)}--like operation, writing up to @var{buflen} bytes into the
+buffer @var{buf}.  The last of the bytes written should be @samp{"\0"}. 
+When there is enough space in the buffer to hold the full input line
+including the line terminator, the line terminator should be included. 
+Otherwise, the rest of the line should be returned in subsequent calls to
+@code{R_ReadConsole}.  The last call should return data terminated by the line
+terminator.  If @var{hist} is non-zero, then the line should be added to any
+command history which is being maintained.  The return value is 0 if no
+input is available and >0 otherwise.
 
 @code{R_WriteConsoleEx} writes the given buffer to the console,
 @var{otype} specifies the output type (regular output or
