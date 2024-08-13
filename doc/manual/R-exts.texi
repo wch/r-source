@@ -353,7 +353,8 @@ Version: 0.5-1
 Date: 2015-01-01
 Title: My First Collection of Functions
 Authors@@R: c(person("Joe", "Developer", role = c("aut", "cre"),
-                     email = "Joe.Developer@@some.domain.net"),
+                     email = "Joe.Developer@@some.domain.net",
+                     comment = c(ORCID = "nnnn-nnnn-nnnn-nnnn")),
               person("Pat", "Developer", role = "aut"),
               person("A.", "User", role = "ctb",
                      email = "A.User@@whereever.net"))
@@ -482,6 +483,9 @@ Auto-generated package citation information takes advantage of this
 specification. The @samp{Author} and @samp{Maintainer} fields are
 auto-generated from it if needed when building@footnote{at least if this
 is done in a locale which matches the package encoding.}  or installing.
+Note that for CRAN submissions, providing @samp{Authors@R} is required,
+and providing @abbr{ORCID} identifiers (see \url{https://orcid.org/})
+where possible is strongly encouraged.
 
 @findex COPYRIGHTS
 @c DESCRIPTION field Copyright
@@ -17001,7 +17005,7 @@ above (no longer maintained)
 @item @file{Rversion.h} @tab @R{} version information
 @item @file{Rinterface.h} @tab for add-on front-ends (Unix-alikes only)
 @item @file{Rembedded.h} @tab for add-on front-ends
-@item @file{R_ext/Applic.h} @tab optimization, integration and some Lapack ones)
+@item @file{R_ext/Applic.h} @tab optimization, integration and some LAPACK ones)
 @item @file{R_ext/BLAS.h} @tab C definitions for BLAS routines
 @item @file{R_ext/Callbacks.h} @tab C (and R function) top-level task
 handlers
