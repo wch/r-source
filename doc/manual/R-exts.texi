@@ -6237,6 +6237,15 @@ The most portable way to interface to other software with a C API is to
 use C code (which can normally be mixed with C++ code in a package).
 
 @item
+Include only what is essential in @code{extern "C" @{@}} blocks in C++
+code.  In particular it is not portable to include @R{} headers in such
+blocks (although they are themselves C code, they may include C++ system
+headers and the oublic ones already enclose their declarations in such a
+block).  And maintainers have include @R{} headers from other headers
+included in such a block.
+@c obscure compilation failures seen with clang++/libc++
+
+@item
 @code{reinterpret_cast} in C++ is not safe for pointers: for example the types
 may have different alignment requirements.  Use @code{memcpy} to copy
 the contents to a fresh variable of the destination type.
@@ -16103,9 +16112,9 @@ natural logarithm (@code{log(x)} in @R{}).
 @apihdr R_ext/Constants.h
 For compatibility with @Sl{} this file defines the constant @code{PI}
 (unless @code{STRICT_R_HEADERS} is defined): this is deprecated and
-should be replaced by @code{M_PI}. @file{Constants.h} includes either C
-header @file{float.h} or C++ header @file{cfloat}, which provide
-constants such as @code{DBL_MAX}.
+should be replaced by @code{M_PI}.  Header @file{Constants.h} includes
+either C header @file{float.h} or C++ header @file{cfloat}, which
+provide constants such as @code{DBL_MAX}.
 
 @apivar TRUE
 @apivar FALSE

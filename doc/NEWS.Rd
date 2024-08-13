@@ -191,9 +191,11 @@
       includes header \file{float.h} or \file{cfloat} for constants such
       as \code{DBL_MAX} even if \file{STRICT_R_HEADERS} is defined.
 
-      \item The legecy definition of \code{PI} in
-      \file{R_ext/Constants.h} (included by \file{R.h}) will be removeed
-      shortly: use \code{M_PI} instead.
+      \item It is intended that \file{STRICT_R_HEADERS} will become the
+      default prior to release.  This will remove the legacy definitions
+      of \code{PI}, \code{Calloc}, \code{Realloc} and \code{Free}: use
+      \code{M_PI}, \code{R_Calloc}, \code{R_Realloc} or \code{R_Free}
+      instead.
     }
   }
 
