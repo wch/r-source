@@ -69,7 +69,9 @@
 
 #if !defined(HAVE_WORKING_LOG1P)
 /* remap to avoid problems with getting the right entry point */
+extern "C" {
 double  Rlog1p(double);
+}
 #define log1p Rlog1p
 #endif
 

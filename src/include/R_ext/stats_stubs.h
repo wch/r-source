@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2007--2020  The R Core Team.
+ *  Copyright (C) 2007--2024  The R Core Team.
  *
  *  This header file is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -21,7 +21,7 @@
  *  https://www.R-project.org/Licenses/
  */
 
-/* Not part of the API */
+/* Not part of the API, not callable from C++ */
 
 #include <Rconfig.h>
 #include <Rinternals.h>
