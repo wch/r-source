@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2023  The R Core Team
+ *  Copyright (C) 1997--2024  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -562,6 +562,7 @@ struct _R_ReadlineData {
  int readline_len;
  int readline_eof;
  unsigned char *readline_buf;
+ unsigned char *readline_rest;
  R_ReadlineData *prev;
 
 };
@@ -685,15 +686,33 @@ static void readline_handler(char *line)
 	if (strlen(line) && rl_top->readline_addtohistory)
 	    add_history(line);
 # endif
-	/* We need to append a \n if the completed line would fit in the
-	   buffer but not otherwise.  Byte [buflen] is zeroed in
-	   the caller.
-	*/
-	strncpy((char *)rl_top->readline_buf, line, buflen);
+	/* line does not include \n. We should behave like fgets(), so pretend
+	   that the line terminator was read and return it in the buffer. We
+	   should terminate the string by \0 (regardless of that R_ReplConsole
+	   is robust against non-termination).
+
+	   If the line does not fit into the buffer, we should only return
+	   a \0 terminated prefix that fits (not terminated by \n\0), like
+	   fgets(). We place the rest into readline_rest so that it can
+	   be returned by subsequent calls to ReadConsole.
+
+	   In principle. we might as well return the original buffer with the
+	   whole line we get from readline, but the readline documentation
+	   states that the buffer should be freed by the _handler_ (emphasis
+	   added) when it is done with it. So better copy to be safe. */
 	size_t l = strlen(line);
 	if(l < buflen - 1) {
+	    memcpy(rl_top->readline_buf, line, l);
 	    rl_top->readline_buf[l] = '\n';
 	    rl_top->readline_buf[l+1] = '\0';
+	} else {
+	    memcpy(rl_top->readline_buf, line, buflen - 1);
+	    rl_top->readline_buf[buflen - 1] = '\0';
+	    size_t lrest = l - buflen + 1;
+	    rl_top->readline_rest = R_Calloc(lrest + 2, unsigned char);
+	    memcpy(rl_top->readline_rest, line + buflen - 1, lrest);
+	    rl_top->readline_rest[lrest] = '\n';
+	    rl_top->readline_rest[lrest + 1] = '\0';
 	}
     }
     else {
@@ -1029,10 +1048,31 @@ Rstd_ReadConsole(const char *prompt, unsigned char *buf, int len,
     }
     else {
 #ifdef HAVE_LIBREADLINE
+	static unsigned char *rl_rest = NULL;
+	static size_t rl_rest_offset = 0;
+
+	if (rl_rest) {
+	    /* remaining line data (too long line) from a previous call */
+	    size_t r = strlen(rl_rest + rl_rest_offset);
+	    if (r < len) {
+		memcpy(buf, rl_rest + rl_rest_offset, r);
+		buf[r] = '\0'; /* buf[r-1] is \n */
+		R_Free(rl_rest);
+		rl_rest = NULL;
+		rl_rest_offset = 0;
+	    } else {
+		memcpy(buf, rl_rest + rl_rest_offset, len - 1);
+		buf[len - 1] = '\0';
+		rl_rest_offset += len - 1;
+	    }
+	    return 1;
+	}
+	
 	R_ReadlineData rl_data;
 	if (UsingReadline) {
 	    rl_data.readline_gotaline = 0;
 	    rl_data.readline_buf = buf;
+	    rl_data.readline_rest = NULL;
 	    rl_data.readline_addtohistory = addtohistory;
 	    rl_data.readline_len = len;
 	    rl_data.readline_eof = 0;
@@ -1101,6 +1141,8 @@ Rstd_ReadConsole(const char *prompt, unsigned char *buf, int len,
 		    rl_callback_read_char();
 		    if(rl_data.readline_eof || rl_data.readline_gotaline) {
 			rl_top = rl_data.prev;
+			if (rl_data.readline_rest)
+			    rl_rest = rl_data.readline_rest;
 			return(rl_data.readline_eof ? 0 : 1);
 		    }
 		}
