@@ -238,6 +238,9 @@ attribute_hidden void NORET R_jumpctxt(RCNTXT * targetcptr, int mask, SEXP val)
 	R_OldCStackLimit = 0;
     }
 
+    if (mask == 0)
+	mask = 1; // make sure the return value for SETJMP is not zero
+
     LONGJMP(cptr->cjmpbuf, mask);
 }
 
