@@ -49,6 +49,8 @@ is.raw(x)
   \code{NA} are set to \code{0} (the \code{nul} byte).
 
   \code{as.raw} and \code{is.raw} are \link{primitive} functions.
+
+  \code{as.raw} is a generic function.
 }
 \seealso{
   \code{\link{charToRaw}}, \code{\link{rawShift}}, etc.
