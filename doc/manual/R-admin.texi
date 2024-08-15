@@ -125,10 +125,13 @@ the patched version of the current release being available via
 Subversion.)
 
 The tarballs are available from
-@uref{https://stat.ethz.ch/R/daily/}.  Download
+@uref{https://cran.r-project.org/src/base-prerelease}.  Download
 @file{R-patched.tar.gz} or @file{R-devel.tar.gz} (or the @file{.tar.bz2}
 versions) and unpack as described in the previous section.  They are
-built in exactly the same way as distributions of @R{} releases.
+built in exactly the same way and on the same platform as distributions
+of @R{} releases. Notice, that you probably want to use the CRAN master
+site for this, due to propagation delays. An
+alternative source of daily snapshots is maintained at @uref{https://stat.ethz.ch/R/daily/}.
 
 
 @c Keep this single-item menu to avoid a spurious warning about
