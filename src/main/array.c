@@ -1273,7 +1273,7 @@ attribute_hidden SEXP do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     SEXP x = CAR(args), y = CADR(args), ans;
     if (OBJECT(x) || OBJECT(y)) {
-	SEXP s, value;
+	SEXP s; //, value;
 	/* Remove argument names to ensure positional matching */
 	for(s = args; s != R_NilValue; s = CDR(s)) SET_TAG(s, R_NilValue);
 
