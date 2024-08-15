@@ -3747,6 +3747,9 @@ add_dummies <- function(dir, Log)
                 ## skip stuff before building libs
                 ll <- grep("^[*][*] libs", lines, useBytes = TRUE)
                 if (length(ll)) lines <- lines[-seq_len(ll[1L])]
+                ## drop GCC 14 diagnostics lines with code literals
+                patt <- "^[[:digit:]]+ \\|"
+                lines <- lines[!grepl(patt, lines, useBytes = TRUE)]
                 poss <- grep(" -[Wmf]", lines,  useBytes = TRUE, value = TRUE)
                 ## compilation lines start at the left margin,
                 ## and are not configure/echo lines
