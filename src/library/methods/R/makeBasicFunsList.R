@@ -120,6 +120,14 @@ utils::globalVariables(".addBasicGeneric")
 		    knownMembers = c("Arith", "Compare", "Logic"),
                     package = "base")
 
+    ## The matrixOps group
+    members <- c("%*%")
+    for(f in members)
+	funs <- .addBasicGeneric(funs, f, function(x, y) standardGeneric(""),
+				 "matrixOps")
+
+    setGroupGeneric(where = where, "matrixOps", function(x, y) NULL,
+		    knownMembers = members, package = "base")
 
     ## The Summary group
 

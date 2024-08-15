@@ -41,8 +41,6 @@ list(
 , "[<-" = function(x, i, j, ..., value) standardGeneric("[<-")
 , "[[" = function(x, i, j, ...) standardGeneric("[[")
 , "[[<-" = function(x, i, j, ..., value) standardGeneric("[[<-")
-### S4 generic via R_possible_dispatch in do_matprod
-, "%*%" = function(x, y) standardGeneric("%*%")
 , "crossprod" = function(x, y=NULL, ...) standardGeneric("crossprod")
 , "tcrossprod"= function(x, y=NULL, ...) standardGeneric("tcrossprod")
 , "xtfrm" = function(x) standardGeneric("xtfrm")

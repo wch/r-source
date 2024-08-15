@@ -22,7 +22,7 @@
   Group generic methods can be defined for the following pre-specified groups of
   functions, \code{Math}, \code{Ops}, \code{matrixOps}, \code{Summary} and \code{Complex}.
   (There are no objects of these names in base \R, but there are in the
-  \pkg{methods} package, not yet for \code{matrixOps}.)
+  \pkg{methods} package.)
 
   A method defined for an individual member of the group takes
   precedence over a method defined for the group as a whole.

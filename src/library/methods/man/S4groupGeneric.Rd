@@ -8,6 +8,7 @@
 \alias{GroupGenericFunctions}
 \alias{Math}
 \alias{Ops}
+\alias{matrixOps}
 \alias{Summary}
 \alias{Arith}
 \alias{Logic}
@@ -35,6 +36,7 @@
 Arith(e1, e2)
 Compare(e1, e2)
 Ops(e1, e2)
+matrixOps(x, y)
 Logic(e1, e2)
 Math(x)
 Math2(x, digits)
@@ -42,7 +44,7 @@ Summary(x, \dots, na.rm = FALSE)
 Complex(z)
 }
 \arguments{
-  \item{x, z, e1, e2}{objects.}
+  \item{x, y, z, e1, e2}{objects.}
   \item{digits}{number of digits to be used in \code{round} or \code{signif}.}
   \item{\dots}{further arguments passed to or from methods.}
   \item{na.rm}{logical: should missing values be removed?}
@@ -62,8 +64,8 @@ Complex(z)
   method selection, see \code{\link{Methods_Details}}.
 
 There are also
-  S3 groups \code{Math}, \code{Ops}, \code{Summary} and
-  \code{Complex}, see \code{?\link{S3groupGeneric}},
+  S3 groups \code{Math}, \code{Ops}, \code{Summary}, \code{Complex}
+  and \code{matrixOps}, see \code{?\link{S3groupGeneric}},
   with no corresponding \R objects, but these are irrelevant for S4
   group generic functions.
 
@@ -97,6 +99,7 @@ There are also
       \code{"prod"}, \code{"sum"}, \code{"any"}, \code{"all"}}
     \item{\code{Complex}}{\code{"Arg"}, \code{"Conj"}, \code{"Im"},
       \code{"Mod"}, \code{"Re"}}
+    \item{\code{matrixOps}}{\code{"\%*\%"}}
   }
   Note that \code{Ops} merely consists of three sub groups.
 
