@@ -312,6 +312,8 @@ CVS).
 
 Tarballs with daily snapshots of the r-devel and r-patched development
 versions of R can be found at
+@url{https://cran.r-project.org/src/base-prerelease}. An alternative
+source is
 @url{https://stat.ethz.ch/R/daily/}.
 
 @c Sources are also available via anonymous rsync.  Use
