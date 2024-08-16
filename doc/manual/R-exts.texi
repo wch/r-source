@@ -6077,7 +6077,7 @@ conflicts with @code{std::make_unique} from C++14 and @code{std::byte},
 @item
 In C++ code
 @example
-using namesapace std;
+using namespace std;
 @end example
 @noindent
 is not good practice, and has caused platform-dependent errors if
