@@ -6087,7 +6087,7 @@ included by other headers). The best practice is to use explicit
 be in that namespace.  It is an error to use @code{using namesapace
 std} before including any C++ headers, and some recent compilers will
 warn if this is done.
-@c Both LLVM and Apple clang do.
+@c LLVM and Apple clang and Intel icpx do.
 
 @item
 @c including @I{LLVM} clang as from 4.0.0
