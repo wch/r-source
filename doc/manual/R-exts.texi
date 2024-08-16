@@ -6084,7 +6084,7 @@ is not good practice, and has caused platform-dependent errors if
 included before headers, especially system headers (which may be
 included by other headers). The best practice is to use explicit
 @code{std::} prefixes for all functions declared by the C++ standard to
-be in that namespace.  It is an error to use @code{using namesapace
+be in that namespace.  It is an error to use @code{using namespace
 std} before including any C++ headers, and some recent compilers will
 warn if this is done.
 @c LLVM and Apple clang and Intel icpx do.
