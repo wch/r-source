@@ -1713,42 +1713,72 @@ static void draweditline(control c)
 }
 
 /* This needs to convert the nul-terminated wchar_t string 'in' to a
-   sensible strinf in buf[len].  It must not be empty, as R will
-   interpret that as EOF, and it should end in \n, as 'in' should do.
+   sensible string in buf.  It must not be empty, as R will
+   interpret that as EOF, but 'in' would not be empty. The returned string
+   should end in \n when 'in' does. The string is malloc'd by wcstobuf().
 
    Our strategy is to convert character by character to the current
    Windows locale, using \uxxxx escapes for invalid characters.
 */
 
-static void wcstobuf(char *buf, int len, const wchar_t *in)
+static void wcstobuf(char **buf, const wchar_t *in)
 {
-    int used, tot = 0;
-    char *p = buf, tmp[7];
-    const wchar_t *wc = in;
+    int used;
+    char *p, tmp[MB_CUR_MAX];
+    const wchar_t *wc;
     wchar_t wc_check;
     mbstate_t mb_st;
 
-    for(; wc; wc++, p+=used, tot+=used) {
-	if(tot >= len - 2) break;
-	used = wctomb(p, *wc);
+    size_t needed = 0;
+    for(wc = in; *wc; wc++) {
+	used = wctomb(tmp, *wc);
 	if (used >= 0) {
 	    /* conversion was successful, but check that converting back gets
 	       the original result (it does not with best-fit transliteration)
 	       NOTE: WideCharToMultiByte may be faster */
 	    memset(&mb_st, 0, sizeof(mbstate_t));
+	    if (mbrtowc(&wc_check, tmp, used, &mb_st) < 0 || wc_check != *wc)
+		used = -1;
+	}
+	if (used < 0)
+	    used = 6;  /* \unnnn */
+	needed += used;
+    }
+    needed++; /* \0 */
+
+    *buf = malloc(needed);
+    if (!*buf) {
+	R_ShowMessage(G_("Not enough memory"));
+	return;
+    }
+
+    for(wc = in, p = *buf; *wc; wc++, p+=used) {
+	used = wctomb(p, *wc);
+	if (used >= 0) {
+	    memset(&mb_st, 0, sizeof(mbstate_t));
 	    if (mbrtowc(&wc_check, p, used, &mb_st) < 0 || wc_check != *wc) 
 		used = -1;
 	}
 	if (used < 0) {
-	    snprintf(tmp, 7, "\\u%x", *wc);
-	    used = strlen(tmp);
-	    memcpy(p, tmp, used);
+	    /* Note that this hack only works inside string literals, where
+	       the parser accepts such escapes. Outside, one gets an error.
+	       This is not relevant with UTF-8 as the native encoding. */
+	    snprintf(p, 7, "\\u%04x", *wc);
+	    used = 6;
 	}
     }
-    *p++ = '\n'; *p = '\0';
+    *p = '\0';
 }
 
-int consolereads(control c, const char *prompt, char *buf, int len,
+/* len is a suggested number of characters per line. The line or its segment
+  is returned in malloc'd buffer as *buf and is zero-terminated.
+  The terminator is preceeded by \n only in the last segment of the
+  line.
+
+  The code may be simpler if changed to reading lines of arbitrary length,
+  but getting there might not be worth the effort. */
+
+int consolereads0(control c, const char *prompt, char **buf, int len,
 		 int addtohistory)
 {
     ConsoleData p = getdata(c);
@@ -1901,7 +1931,8 @@ int consolereads(control c, const char *prompt, char *buf, int len,
 			cur_line[max_pos + 1] = L'\0';
 		    } else
 			cur_line[max_pos] = L'\0';
-		    wcstobuf(buf, len, cur_line);
+		    if (buf)
+			wcstobuf(buf, cur_line);
 		    //sprintf(buf, "%ls", cur_line);
 		    //if(strlen(buf) == 0) strcpy(buf, "invalid input\n");
 		    CURROW = -1;
@@ -1917,6 +1948,108 @@ int consolereads(control c, const char *prompt, char *buf, int len,
 	}
 	draweditline(c);
     }
+}
+
+int consolereads(control c, const char *prompt, char *buf, int len,
+		 int addtohistory)
+{
+    static char *line = NULL;
+    static size_t offset = 0;
+    static int res = 0;
+
+    if (!line) {
+	char *segment;
+	size_t slen;
+	size_t llen;
+
+	segment = NULL;
+	res = consolereads0(c, prompt, &segment, len, addtohistory);
+	if (!segment) {
+	    /* error */
+	    buf[0] = '\0';
+	    return res;
+	}
+	slen = strlen(segment);
+	if (!slen || (segment[slen - 1] == '\n' && slen < len - 1)
+	    || len == slen - 1) {
+
+	    /* line ends within the segment (common case) or
+	       segment is empty (should not happen) or
+	       internal segment of line of same length as buffer */
+
+	    memcpy(buf, segment, slen);
+	    free(segment);
+	    buf[slen] = '\0';
+	    return res;
+	}
+
+	/* Now read the (rest of) the line and only after that present it
+	   to the parser. This is an emulation of the parse loop but is
+	   robust to variations in the number of bytes read in each iteration.
+
+	   The problem is that consolereads0() cannot easily cap
+	   the number of bytes read to an exact boundary, because it was
+	   designed to work on wchar_ts (BMP characters): these differ in
+	   length in multi-byte representation and they may be replaced
+	   by escapes to avoid transliteration.
+
+	   This hence captures some of the behavior of the parse loop by
+	   assuming a certain way to compute the continuation prompt. Also,
+	   it post-pones detection of some parse/lexer errors until the
+	   line is finished (so as if the editor allowed entering unlimited
+	   lines, but without actually fully supporting editing of such lines)
+	*/
+	line = segment;
+	llen = slen;
+	offset = 0;
+	segment = NULL;
+
+	while(slen && line[llen - 1] != '\n') {
+	    const char *cprompt = CHAR(STRING_ELT(
+	                              GetOption1(install("continue")), 0));
+	    res |= consolereads0(c, cprompt, &segment, len, addtohistory);
+	    if (!segment) {
+		/* error */
+		buf[0] = '\0';
+		free(line);
+		line = NULL;
+		return res;
+	    }
+		
+	    slen = strlen(segment);
+	    char *newline = realloc(line, llen + slen + 1);
+	    if (!newline) {
+		/* allocation error */
+		buf[0] = '\0';
+		free(segment);
+		free(line);
+		line = NULL;
+		return res;
+	    }
+	    line = newline;
+	    memcpy(line + llen, segment, slen);
+	    llen += slen;
+	    line[llen] = '\0';
+	    free(segment);
+	    segment = NULL;
+	}
+    }
+
+    if (line) {
+	size_t rlen = strlen(line + offset);
+	if (rlen < len) {
+	    memcpy(buf, line + offset, rlen);
+	    buf[rlen] = '\0';
+	    free(line);
+	    line = NULL;
+	    offset = 0;
+	} else {
+	    memcpy(buf, line + offset, len - 1);
+	    buf[len - 1] = '\0';
+	    offset += len - 1;
+	}
+    }
+    return res;
 }
 
 void console_sbf(control c, int pos)
