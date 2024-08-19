@@ -335,6 +335,7 @@ newconsoledata(font f, int rows, int cols, int bufbytes, int buflines,
     p->kind = kind;
     /* PR#14624 claimed this was needed, with no example */
     p->chbrk = p->modbrk = '\0';
+    p->pushed_back_char = L'\0';
     if (kind == CONSOLE) {
 	p->lbuf = newxbuf(bufbytes, buflines, SLBUF);
 	if (!p->lbuf) {
@@ -1619,6 +1620,11 @@ static wchar_t consolegetc(control c)
     wchar_t ch;
 
     p = getdata(c);
+    if (p->pushed_back_char) {
+	ch = p->pushed_back_char;
+	p->pushed_back_char = L'\0';
+	return ch;
+    }
     while((p->numkeys == 0) && (!p->clp))
     {
 	R_WaitEvent();
@@ -1674,6 +1680,22 @@ static wchar_t consolegetc(control c)
     return ch;
 }
 
+/* only works for a single wide character; only used at the end of line
+   during overflow */
+static void consoleungetc(control c, wchar_t ch)
+{
+    ConsoleData p;
+
+    p = getdata(c);
+    p->pushed_back_char = ch;
+}
+
+/*
+Has been used before at the end of line (during overflow); does not correctly
+handle completed input from clipboard (e.g. pasting a single character),
+it erroneously provides previous keyboard input (the completed clipboard
+input is lost).
+
 static void consoleunputc(control c)
 {
     ConsoleData p = getdata(c);
@@ -1685,6 +1707,7 @@ static void consoleunputc(control c)
 	else p->firstkey = NKEYS - 1;
     }
 }
+*/
 
 /* This scrolls as far left as possible */
 static void checkvisible(control c)
@@ -1920,7 +1943,7 @@ int consolereads0(control c, const char *prompt, char **buf, int len,
 		if (chtype || (cur_char == L'\n') || (cur_char == EOFKEY)) {
 		    if (chtype) {
 			if (cur_pos == max_pos) {
-			    consoleunputc(c);
+			    consoleungetc(c, cur_char);
 			} else {
 			    gabeep();
 			    break;

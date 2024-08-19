@@ -2,7 +2,7 @@
  *  R : A Computer Language for Statistical Data Analysis
  *  file consolestructs.h
  *  Copyright (C) 2004-8      The R Foundation
- *  Copyright (C) 2023        The R Core Team
+ *  Copyright (C) 2024        The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -71,6 +71,8 @@ struct structConsoleData {
     int cursor_blink;
 
     menuitem mcopy, mpaste, mpastecmds, mpopcopy, mpoppaste, mpoppastecmds;
+
+    wchar_t pushed_back_char;	/* consolegetc, consoleungetc */
 };
 
 typedef struct structConsoleData *ConsoleData;
