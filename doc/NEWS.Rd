@@ -54,10 +54,14 @@
 
       \item Package \pkg{tools} now exports functions
       \code{CRAN_current_db()}, \code{CRAN_aliases_db()},
-      \code{CRAN_rdxrefs_db()}, and \code{CRAN_archive_db()}.
+      \code{CRAN_rdxrefs_db()}, \code{CRAN_archive_db()}, and
+      \code{CRAN_authors_db()}.
 
       \item Package \pkg{tools} now exports functions
       \code{R()} and \code{parse_URI_reference()}.
+
+      \item Package \pkg{tools} now exports functions
+      \code{base_aliases_db()} and \code{base_rdxrefs_db()}.
 
       \item It is now possible to set the background color for row and
       column names in the data editor on Windows (\command{Rgui}).
