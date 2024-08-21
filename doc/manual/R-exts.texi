@@ -4913,7 +4913,9 @@ SystemRequirements: GNU make
 and ensure that you use the value of environment variable @env{MAKE}
 (and not just @command{make}) in your scripts.  (On some platforms GNU
 make is available under a name such as @command{gmake}, and there
-@code{SystemRequirements} is used to set @env{MAKE}.)
+@code{SystemRequirements} is used to set @env{MAKE}.)  Your
+@code{configure} script (or similar) does need to check that the
+executable pointed to by @env{MAKE} is indeed GNU make.
 
 If you only need GNU make for parts of the package which are rarely
 needed (for example to create bibliography files under
