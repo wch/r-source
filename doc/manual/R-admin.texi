@@ -4904,7 +4904,7 @@ Standalone installers (which are free-of-charge) are available from
 @uref{https://www.intel.com/content/www/us/en/developer/articles/tool/oneapi-standalone-components.html}:
 they are also part of the @I{oneAPI} Base and HPC (for Fortran) toolkits.
 
-We tried the compilers in @I{oneAPI} 2024.2.0 and 2023.x.y using (the paths
+We tried the compilers in @I{oneAPI} 2024.2.1 and 2023.x.y using (the paths
 do differ by compiler version)
 @example
 IP=/path/to/compilers/bin/
