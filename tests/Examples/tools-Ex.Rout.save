@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2024-08-01 r86957) -- "Unsuffered Consequences"
+R Under development (unstable) (2024-08-21 r87032) -- "Unsuffered Consequences"
 Copyright (C) 2024 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu
 
@@ -33,6 +33,7 @@ Type 'q()' to quit R.
 > ### Aliases: CRAN_package_db CRAN_check_results CRAN_check_details
 > ###   CRAN_check_issues summarize_CRAN_check_status R_CRAN_WEB R_CRAN_SRC
 > ###   CRAN_current_db CRAN_aliases_db CRAN_rdxrefs_db CRAN_archive_db
+> ###   CRAN_authors_db
 > 
 > ### ** Examples
 > 
@@ -95,7 +96,7 @@ $status
 
 $stdout
  [1] ""                                                                                 
- [2] "R Under development (unstable) (2024-08-01 r86957) -- \"Unsuffered Consequences\""
+ [2] "R Under development (unstable) (2024-08-21 r87032) -- \"Unsuffered Consequences\""
  [3] "Copyright (C) 2024 The R Foundation for Statistical Computing"                    
  [4] "Platform: x86_64-pc-linux-gnu"                                                    
  [5] ""                                                                                 
@@ -111,10 +112,10 @@ $stdout
 [15] "'help.start()' for an HTML browser interface to help."                            
 [16] "Type 'q()' to quit R."                                                            
 [17] ""                                                                                 
-[18] "> x <- readRDS(\"/tmp/Rtmpe6jyFK/runri2595b5455bd5f7\")"                          
+[18] "> x <- readRDS(\"/tmp/RtmppU3jOk/runri1222936a0e6877\")"                          
 [19] "> options(repos = x$repos)"                                                       
 [20] "> y <- tryCatch(list(do.call(x$fun, x$args, quote = TRUE)), error = identity)"    
-[21] "> saveRDS(y, \"/tmp/Rtmpe6jyFK/runro2595b54aedd2bc\")"                            
+[21] "> saveRDS(y, \"/tmp/RtmppU3jOk/runro1222932d23e62e\")"                            
 [22] "> "                                                                               
 
 $stderr
@@ -279,7 +280,7 @@ Error in assertWarning(ff()) :
 > bibstyle("unsorted", sortKeys = function(refs) seq_along(refs),
 +     fmtPrefix = function(paper) paste0("[", paper$.index, "]"),
 +        .init = TRUE)
-<environment: 0x55c75b13de28>
+<environment: 0x55a55e43e3c0>
 > print(refs, .bibstyle = "unsorted")
 [1] R Core Team (2013). _R: A Language and Environment for Statistical
 Computing_. R Foundation for Statistical Computing, Vienna, Austria.
@@ -1326,7 +1327,7 @@ needs Deep Thought
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  0.338 0.004 0.721 0.338 0.039 
+Time elapsed:  0.333 0.016 0.729 0.293 0.082 
 > grDevices::dev.off()
 null device 
           1 
