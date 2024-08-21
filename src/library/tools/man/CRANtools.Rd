@@ -17,6 +17,7 @@
 \alias{CRAN_aliases_db}
 \alias{CRAN_rdxrefs_db}
 \alias{CRAN_archive_db}
+\alias{CRAN_authors_db}
 \description{
   Tools for obtaining information about current and archived packages in
   the \abbr{CRAN} package repository, and the check status of the
@@ -37,6 +38,8 @@ CRAN_current_db()
 CRAN_aliases_db()
 CRAN_rdxrefs_db()
 CRAN_archive_db()
+
+CRAN_authors_db()
 }
 \arguments{
   \item{packages}{a character vector of package names.}
@@ -76,7 +79,7 @@ CRAN_archive_db()
   \code{kind} (an identifier for the issue) and \code{href} (a URL with
   information on the issue).
 
-  \code{CRAN_current_db()} returns a data fame with the
+  \code{CRAN_current_db()} returns a data frame with the
   \code{\link{file.info}()} of all current package sources in the
   \abbr{CRAN} package repository.
 
@@ -91,6 +94,13 @@ CRAN_archive_db()
   \code{CRAN_archive_db()} returns the \code{\link{file.info}()} of all
   archived packages sources in the \abbr{CRAN} package repository, as a
   per-package named list of data frames.
+
+  \code{CRAN_authors_db()} returns information on the authors of the
+  current CRAN packages extracted from the \samp{Authors@R} fields in
+  the package \file{DESCRIPTION} files, as a data frame with character
+  columns giving the given and family names, email addresses,
+  \abbr{ORCID} identifier, roles, and comments of the person entries,
+  and the corresponding package.
 }
 
 \value{
@@ -123,7 +133,8 @@ CRAN_archive_db()
   Functions
   \code{CRAN_current_db()},
   \code{CRAN_aliases_db()},
-  \code{CRAN_rdxrefs_db()} and
+  \code{CRAN_rdxrefs_db()},
+  \code{CRAN_authors_db()} and
   \code{CRAN_archive_db()}
   (also used by \command{R CMD check})
   use \env{R_CRAN_SRC} rather than \env{R_CRAN_WEB}.

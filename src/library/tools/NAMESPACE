@@ -55,7 +55,8 @@ export("CRAN_package_db",
        "CRAN_aliases_db",
        "CRAN_archive_db",
        "CRAN_current_db",
-       "CRAN_rdxrefs_db")
+       "CRAN_rdxrefs_db",
+       "CRAN_authors_db")
 
 export("base_aliases_db",
        "base_rdxrefs_db")
