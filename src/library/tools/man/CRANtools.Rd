@@ -1,6 +1,6 @@
 % File src/library/tools/man/CRANtools.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2016-2022 R Core Team
+% Copyright 2016-2024 R Core Team
 % Distributed under GPL 2 or later
 
 \name{CRANtools}
@@ -121,14 +121,19 @@ CRAN_archive_db()
   need to set \env{R_CRAN_WEB} to point to a full mirror.
 
   Functions
-  \code{CRAN_current_db},
-  \code{CRAN_aliases_db},
-  \code{CRAN_rdxrefs_db} and
-  \code{CRAN_archive_db}
+  \code{CRAN_current_db()},
+  \code{CRAN_aliases_db()},
+  \code{CRAN_rdxrefs_db()} and
+  \code{CRAN_archive_db()}
   (also used by \command{R CMD check})
   use \env{R_CRAN_SRC} rather than \env{R_CRAN_WEB}.
   The mirror to be used is reported by
   \code{utils::\link{findCRANmirror}("src")}.
+}
+
+\seealso{
+  \code{\link{base_aliases_db}()} and \code{\link{base_rdxrefs_db}()}
+  for getting the Rd aliases and cross-references in the base packages.
 }
 
 %% Tested in tests/CRANtools.R

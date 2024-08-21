@@ -57,6 +57,9 @@ export("CRAN_package_db",
        "CRAN_current_db",
        "CRAN_rdxrefs_db")
 
+export("base_aliases_db",
+       "base_rdxrefs_db")
+
 export("R_user_dir")
 
 export(".print.via.format")

@@ -260,6 +260,11 @@ function()
     read_CRAN_object(CRAN_baseurl_for_src_area(),
                      "src/contrib/Meta/archive.rds")
 
+CRAN_authors_db <-
+function()
+    read_CRAN_object(CRAN_baseurl_for_src_area(),
+                     "src/contrib/Meta/authors.rds")
+
 CRAN_current_db <-
 function()
     read_CRAN_object(CRAN_baseurl_for_src_area(),
