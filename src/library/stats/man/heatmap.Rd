@@ -54,10 +54,12 @@ heatmap(x, Rowv = NULL, Colv = if(symm)"Rowv" else NULL,
   \item{revC}{logical indicating if the column order should be
     \I{\code{\link{rev}}ersed} for plotting, such that e.g., for the
     symmetric case, the symmetry axis is as usual.}
-  \item{scale}{character indicating if the values should be centered and
-    scaled in either the row direction or the column direction, or
-    none.  The default is \code{"row"} if \code{symm} false, and
-    \code{"none"} otherwise.}
+  \item{scale}{character indicating if the values on the heatmap should
+    be centered and scaled in either the row direction or the column
+    direction, or none.  The default is \code{"row"} if \code{symm}
+    false, and \code{"none"} otherwise. This scaling only affects the
+    \emph{colour} scale; it does not scale the original data.  See the
+    Examples.}
   \item{na.rm}{logical indicating whether \code{NA}'s should be removed.}
   \item{margins}{numeric vector of length 2 containing the margins
     (see \code{\link{par}(mar = *)}) for column and row names, respectively.}
@@ -154,6 +156,23 @@ heatmap(x, Rowv = NA, col = cm.colors(256), scale = "column",
 heatmap(x, Rowv = NA, Colv = NA, scale = "column",
         main = "heatmap(*, NA, NA) ~= image(t(x))")
 %% also want example using the `add.exp' argument!
+
+## Demonstration of the 'scale' argument:
+## The only change in the code is the 'scale' arg.
+## The only visible change is in the color scale on the heatmap
+## (the original data are not scaled).
+
+heatmap(x, col = terrain.colors(128), scale = "column",
+        RowSideColors = rc,
+        ColSideColors = cc,
+        margins = c(5,10),
+        main = "heatmap(<Mtcars data>, ..., scale = \"column\")")
+heatmap(x, col = terrain.colors(128), scale = "none",
+        RowSideColors = rc,
+        ColSideColors = cc,
+        margins = c(5,10),
+        main = "heatmap(<Mtcars data>, ..., scale = \"none\")")
+
 
 round(Ca <- cor(attitude), 2)
 symnum(Ca) # simple graphic
