@@ -231,12 +231,13 @@
       method for data frames, and also bug \PR{18745}.
       \I{Relatedly}, the \code{format()} method gets an option \code{cut.names}.
 
-      \item \code{stem()} correctly formats also in cases where rounding
-      up, e.g., from 9.96 to 10 needs more digits; thanks to
-      \I{Ella Kaye} and \I{Kelly Bodwin}, fixing \PR{8934} during
-      \sQuote{\I{R Dev Day}} at \I{useR!2024}.
+      \item \code{stem()} formats correctly also in cases where rounding
+      up, e.g., from 9.96 to 10 needs more digits; thanks to \I{Ella
+      Kaye} and \I{Kelly Bodwin}, fixing \PR{8934} during \sQuote{\I{R
+      Dev Day}} at \I{useR!2024}.
 
-      Additionally, \code{stem(x}} now works normally also when \code{length(x) == 1}.
+      Additionally, \code{stem(x)} now works normally also when
+      \code{length(x) == 1}.
 
       \item \pkg{tools}' \code{toTitleCase()} now works better, fixing
       \PR{18674}, thanks to \I{Shannon Pileggi}, \I{Sarah Zeller},
