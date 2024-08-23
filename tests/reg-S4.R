@@ -888,3 +888,7 @@ setClass("foo")
 sealClass("foo") # failed in R < 4.5.0
 stopifnot(isSealedClass("foo"))
 stopifnot(removeClass("foo"))
+
+
+## show(<non-syntactic name>) should recommend backticks for showMethods()
+stopifnot(any(grepl("showMethods(`body<-`)", capture.output(show(`body<-`)), fixed=TRUE)))

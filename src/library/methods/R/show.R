@@ -107,8 +107,8 @@ show <- function(object) showDefault(object)
                   pkg <- object@package
                   exported <- pkg == ".GlobalEnv" || isBaseNamespace(ns <- asNamespace(pkg)) ||
                       nam %in% names(.getNamespaceInfo(ns, "exports"))
-                  showGen <- if(exported) nam # was dQuote(nam, NULL)
-                             else paste(pkg, nam, sep=":::")
+                  qnam <- deparse1(as.name(nam), backtick = TRUE) # was dQuote(nam, NULL)
+                  showGen <- if(exported) qnam else paste(pkg, qnam, sep=":::")
                   cat("Methods may be defined for arguments: ",
                       paste0(object@signature, collapse=", "), "\n",
                       "Use  showMethods(", showGen,
