@@ -696,6 +696,10 @@ print.ls_str <- function(x, max.level = 1, give.attr = FALSE,
     strargs <- c(list(max.level = max.level, give.attr = give.attr,
                       digits.d = digits), args)
     n. <- substr(tempfile("ls_str_", tmpdir=""), 2L, 20L)
+    if(is.na(L <- Sys.getenv("LANGUAGE", unset=NA)) || L != "en") {
+        Sys.setLanguage("en") # for "<missing>" to work below
+        on.exit(if(is.na(L)) Sys.unsetenv("LANGUAGE") else Sys.setenv(LANGUAGE = L))
+    }
     for(nam in x) {
 	cat(nam, ": ")
 	## check missingness, e.g. inside debug(.) :
@@ -712,9 +716,8 @@ print.ls_str <- function(x, max.level = 1, give.attr = FALSE,
 	o <- tryCatch(get(nam, envir = E, mode = M),
 		      error = function(e){ attr(e, eA) <- TRUE; e })
 	if(inherits(o, "error") &&  isTRUE(attr(o, eA))) {
-	    cat(## FIXME: only works with "C" (or English) LC_MESSAGES locale!
-		if(length(grep("missing|not found", o$message)))
-		"<missing>" else o$message, "\n", sep = "")
+	    cat(if(grepl("missing|not found", o$message)) "<missing>" else o$message,
+                "\n", sep = "")
 	}
 	else {
 	    ## do.call(str, c(list(o), strargs),
