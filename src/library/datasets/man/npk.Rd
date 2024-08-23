@@ -1,9 +1,10 @@
 % File src/library/datasets/man/npk.Rd
 % Part of the R package, https://www.R-project.org
-% copyright (C) 1999 W. N. Venables and B. D. Ripley
+% Copyright (C) 1999 W. N. Venables and B. D. Ripley
 % Distributed under GPL 2 or later
 
 \name{npk}
+\docType{data}
 \alias{npk}
 \title{
   Classical N, P, K Factorial Experiment

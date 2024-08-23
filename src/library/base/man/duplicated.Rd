@@ -22,7 +22,7 @@
   indicating which elements (rows) are duplicates.
 
   \code{anyDuplicated(.)} is a \dQuote{generalized} more efficient
-  version \code{any(duplicated(.))}, returning positive integer indices
+  version of \code{any(duplicated(.))}, returning positive integer indices
   instead of just \code{TRUE}.
 }
 \usage{

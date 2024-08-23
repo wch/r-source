@@ -131,7 +131,7 @@ is.hashtab(x)
   }
 
   As an experimental feature, the element operator \code{[[} can also be
-  used get or set hash table entries, and \code{length} can be used to
+  used to get or set hash table entries, and \code{length} can be used to
   obtain the number of entries. It is not yet clear whether this is a
   good idea.
 }

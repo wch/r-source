@@ -56,7 +56,7 @@ heatmap(x, Rowv = NULL, Colv = if(symm)"Rowv" else NULL,
     symmetric case, the symmetry axis is as usual.}
   \item{scale}{character indicating if the values on the heatmap should
     be centered and scaled in either the row direction or the column
-    direction, or none.  The default is \code{"row"} if \code{symm}
+    direction, or none.  The default is \code{"row"} if \code{symm} is
     false, and \code{"none"} otherwise. This scaling only affects the
     \emph{colour} scale; it does not scale the original data.  See the
     Examples.}
