@@ -1,7 +1,7 @@
 #  File src/library/base/R/stop.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2022 The R Core Team
+#  Copyright (C) 1995-2024 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -128,15 +128,26 @@ gettextf <- function(fmt, ..., domain = NULL, trim = TRUE)
 ## the default domain="R"  seems to work for all of base R: {"R", "R-base", "RGui"}
 Sys.setLanguage <- function(lang, unset = "en")
 {
+    if (!capabilities("NLS") || is.na(.popath)) {
+        warning(gettextf("no natural language support or missing translations"), domain=NA)
+        return(invisible(""))
+    }
     stopifnot(is.character(lang), length(lang) == 1L, # e.g., "es" , "fr_CA"
               lang == "C" || grepl("^[a-z][a-z]", lang))
     curLang <- Sys.getenv("LANGUAGE", unset = NA) # so it can be reset
     if(is.na(curLang) || !nzchar(curLang))
         curLang <- unset # "factory" default
+    if(isC <- identical("C", Sys.getlocale())) { ## e.g. LC_ALL=C R  on Linux
+        lcSet <- if(.Platform[["OS.type"]] == "unix")
+                     Sys.setlocale("LC_MESSAGES", "en_US.UTF-8")
+        ## TODOs: 1) does  en_US.UTF-8  always exist?   2) need to deal w/ Windows ?
+        ok.lc <- !is.null(lcSet) && nzchar(lcSet) # NULL or ""  are not ok
+        if(!ok.lc) warning(gettextf("In a bare C locale, could not change language"), domain=NA)
+    } else ok.lc <- TRUE
     ok <- Sys.setenv(LANGUAGE=lang)
     if(!ok)
         warning(gettextf('Sys.setenv(LANGUAGE="%s") may have failed', lang), domain=NA)
     ok. <- capabilities("NLS") &&
         isTRUE(bindtextdomain(NULL)) # only flush the cache (of already translated strings)
-    invisible(structure(curLang, ok = ok && ok.))
+    invisible(structure(curLang, ok = ok && ok.lc && ok.))
 }

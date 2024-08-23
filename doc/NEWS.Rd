@@ -248,6 +248,9 @@
       \I{Ekaterina Akimova}, \I{Hanne Oberman}, \I{Abhishek Ulayil},
       and \I{Lionel Henry} at the \sQuote{\I{R Dev Day}}, thus fixing
       \PR{15027}.
+
+      \item \code{Sys.setLanguage()} now works in an \command{LC_ALL=C R} session
+      on some platforms.
     }
   }
 }
