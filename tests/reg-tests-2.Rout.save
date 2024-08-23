@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2024-08-07 r86984) -- "Unsuffered Consequences"
+R Under development (unstable) (2024-08-23 r87041) -- "Unsuffered Consequences"
 Copyright (C) 2024 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu
 
@@ -3876,6 +3876,15 @@ Residuals 42  29204   695.3
   10 | 0
 
 > ## wrongly indented  '10 |'  since even before R 1.0.0
+> 
+> ## stem(<length 1>) now produces output
+> stem(123)
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  1 | 2
+
+> ## length(x) == 1  was explicitly skipped in R <= 4.4.z
 > 
 > 
 > ## PR#6633 warnings with vector op matrix, and more

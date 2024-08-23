@@ -236,6 +236,8 @@
       \I{Ella Kaye} and \I{Kelly Bodwin}, fixing \PR{8934} during
       \sQuote{\I{R Dev Day}} at \I{useR!2024}.
 
+      Additionally, \code{stem(x}} now works normally also when \code{length(x) == 1}.
+
       \item \pkg{tools}' \code{toTitleCase()} now works better, fixing
       \PR{18674}, thanks to \I{Shannon Pileggi}, \I{Sarah Zeller},
       \I{Reiko Okamoto}, and \I{Hugo Gruson}'s \sQuote{\I{R Dev Day}}

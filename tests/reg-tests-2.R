@@ -1196,6 +1196,10 @@ stem(c(rep(1, 10), 1+1.e-10), atom=0) # integer-overflow is avoided.
 stem(c(8.48, 9.58, 9.96))
 ## wrongly indented  '10 |'  since even before R 1.0.0
 
+## stem(<length 1>) now produces output
+stem(123)
+## length(x) == 1  was explicitly skipped in R <= 4.4.z
+
 
 ## PR#6633 warnings with vector op matrix, and more
 set.seed(1)
