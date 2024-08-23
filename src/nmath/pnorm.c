@@ -1,6 +1,6 @@
 /*
  *  Mathlib : A C Library of Special Functions
- *  Copyright (C) 2000-2023 The R Core Team
+ *  Copyright (C) 2000-2024 The R Core Team
  *  Copyright (C) 2003	    The R Foundation
  *  Copyright (C) 1998	    Ross Ihaka
  *
@@ -223,7 +223,7 @@ void pnorm_both(double x, double *cum, double *ccum, int i_tail, int log_p)
  * Note that we do want symmetry(0), lower/upper -> hence use y
  */
     else if((log_p && y < 1e170) /* avoid underflow below */
-	/*  ^^^^^ MM FIXME: could speed up for log_p and  |x| >> 5.657 !
+	/*  ^^^^^ MM FIXME: could speed up for log_p and  y := |x| >> 5.657 !
 	 * Then, make use of  Abramowitz & Stegun, 26.2.13, p.932,  something like
 
 	 * Even smarter: work with   example(pnormAsymp, package="DPQ")
@@ -243,9 +243,12 @@ void pnorm_both(double x, double *cum, double *ccum, int i_tail, int log_p)
  	 well, actually  x = -1.34..e154 = -sqrt(DBL_MAX) already overflows x^2
 	 The largest x for which  x/2*x is finite is
 	 x = +/- 1.89615038e154 ~= sqrt(2) * sqrt(.Machine$double.xmax)
+
+	 NB: allowing "DENORMS" ==> boundaries at +/- 38.4674  <--> qnorm(log(2^-1074), log.p=TRUE)
+	 --                               rather than 37.5193 (up to R 4.4.x)
 	*/
-	    || (lower && -37.5193 < x  &&  x < 8.2924)
-	    || (upper && -8.2924  < x  &&  x < 37.5193)
+	    || (lower && -38.4674 < x  &&  x < 8.2924)
+	    || (upper && -8.2924  < x  &&  x < 38.4674)
 	) {
 
 	/* Evaluate pnorm for x in (-37.5, -5.657) union (5.657, 37.5) */
@@ -261,7 +264,7 @@ void pnorm_both(double x, double *cum, double *ccum, int i_tail, int log_p)
 
 	do_del(x);
 	swap_tail;
-    } else { /* large x such that probs are 0 or 1 */
+    } else { /* large |x| such that probs are 0 or 1 */
 	if(x > 0) {	*cum = R_D__1; *ccum = R_D__0;	}
 	else {	        *cum = R_D__0; *ccum = R_D__1;	}
     }

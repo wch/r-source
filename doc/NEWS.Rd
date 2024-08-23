@@ -77,6 +77,8 @@
       \item \code{findInterval()} gets new options \code{checkSorted} and
       \code{checkNA} which allow to skip relatively costly checks; related
       to \PR{16567}.
+
+      \item \code{pnorm(x)} underflows more gracefully.
     }
   }
 
