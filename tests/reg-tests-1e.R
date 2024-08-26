@@ -1485,11 +1485,10 @@ M <- alist(.=)$.
 stopifnot(missing(M))
 try( M ) # --> Error: argument "M" is missing, with no default  (typically English)
 ls.str(pattern = "^M$") # (typically:)   M : <missing>
-(oL <- Sys.setLanguage("de"))
-try( M ) # --> Error : Argument "M" fehlt (ohne Standardwert)
+(oL <- tryCatch(Sys.setLanguage("de"), warning = identity, error = identity))
+try( M ) # in good case --> Error : Argument "M" fehlt (ohne Standardwert)
 (out <- capture.output(ls.str(pattern = "^M$")))
-# reset LANGUAGE, etc where needed (and see effect):
-rm(M); if(attr(oL,"ok")) Sys.setLanguage(oL)
+rm(M); if(attr(oL,"ok")) Sys.setLanguage(oL) # reset LANGUAGE etc
 stopifnot(endsWith(out, "<missing>"))
 ## failed in R <= 4.4.1; out was  "M : Argument \"M\" fehlt <...>"
 
