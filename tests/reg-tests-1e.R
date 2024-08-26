@@ -1488,7 +1488,7 @@ ls.str(pattern = "^M$") # (typically:)   M : <missing>
 (oL <- tryCatch(Sys.setLanguage("de"), warning = identity, error = identity))
 try( M ) # in good case --> Error : Argument "M" fehlt (ohne Standardwert)
 (out <- capture.output(ls.str(pattern = "^M$")))
-rm(M); if(attr(oL,"ok")) Sys.setLanguage(oL) # reset LANGUAGE etc
+rm(M); if(isTRUE(attr(oL,"ok"))) Sys.setLanguage(oL) # reset LANGUAGE etc
 stopifnot(endsWith(out, "<missing>"))
 ## failed in R <= 4.4.1; out was  "M : Argument \"M\" fehlt <...>"
 
