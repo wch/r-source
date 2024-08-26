@@ -1,6 +1,6 @@
 % File src/library/utils/man/install.packages.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2023 R Core Team
+% Copyright 1995-2024 R Core Team
 % Distributed under GPL 2 or later
 
 \name{install.packages}
@@ -72,8 +72,7 @@ install.packages(pkgs, lib, repos = getOption("repos"),
     Incompatible with \code{type = "both"}.
   }
   \item{method}{
-    download method, see \code{\link{download.file}}.  Unused if
-    a non-\code{NULL} \code{available} is supplied.
+    download method, see \code{\link{download.file}}.
   }
   \item{available}{
     a matrix as returned by \code{\link{available.packages}}
