@@ -1,6 +1,6 @@
 % File src/library/base/man/gettext.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2023 R Core Team
+% Copyright 1995-2024 R Core Team
 % Distributed under GPL 2 or later
 
 \name{gettext}
@@ -27,7 +27,7 @@ ngettext(n, msg1, msg2, domain = NULL)
 
 bindtextdomain(domain, dirname = NULL)
 
-Sys.setLanguage(lang, unset = "en")
+Sys.setLanguage(lang, unset = "en", allowC4en = TRUE)
 }
 \arguments{
   \item{\dots}{one or more character vectors.}
@@ -46,6 +46,9 @@ Sys.setLanguage(lang, unset = "en")
   \item{unset}{a string, specifying the default language assumed to be
     current in the case \code{\link{Sys.getenv}("LANGUAGE")} is unset or
     empty.}
+  \item{allowC4en}{logical indicating if a current (sometimes \dQuote{hard})
+    setting of language \code{"C"} is acceptable for \code{lang = "en"}.  In that
+    case, \code{\link{message}()} is called instead of \code{\link{warning}()}.}
 }
 \details{
   If \code{domain} is \code{NULL} (the default) in \code{gettext}
@@ -70,7 +73,7 @@ Sys.setLanguage(lang, unset = "en")
 
   The \emph{language} to be used for message translation is determined by
   your OS default and/or the locale setting at \R's startup, see
-  \code{\link{Sys.getlocale}()}, and notably the \env{LANGUAGE} environment 
+  \code{\link{Sys.getlocale}()}, and notably the \env{LANGUAGE} environment
   variable, and also \code{Sys.setLanguage()} here.
 
   Conventionally the domain for \R warning/error messages in package

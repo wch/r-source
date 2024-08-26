@@ -255,7 +255,8 @@
       \PR{15027}.
 
       \item \code{Sys.setLanguage()} now works in an \command{LC_ALL=C R} session
-      on some platforms.
+      on some platforms, warns about \emph{some} failures to change the
+      language and gets an option related to these warning messages.
 
       \item Printing \code{ls.str()} now tries harder to show
       \code{"<missing>"} even when \R's language setting is not English.
