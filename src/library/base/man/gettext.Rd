@@ -1,4 +1,4 @@
-% File src/library/base/man/gettext.Rd
+se% File src/library/base/man/gettext.Rd
 % Part of the R package, https://www.R-project.org
 % Copyright 1995-2024 R Core Team
 % Distributed under GPL 2 or later
@@ -27,7 +27,7 @@ ngettext(n, msg1, msg2, domain = NULL)
 
 bindtextdomain(domain, dirname = NULL)
 
-Sys.setLanguage(lang, unset = "en", allowC4en = TRUE)
+Sys.setLanguage(lang, unset = "en", C.vs.en = c("silent", "msg", "warn"))
 }
 \arguments{
   \item{\dots}{one or more character vectors.}
@@ -46,9 +46,11 @@ Sys.setLanguage(lang, unset = "en", allowC4en = TRUE)
   \item{unset}{a string, specifying the default language assumed to be
     current in the case \code{\link{Sys.getenv}("LANGUAGE")} is unset or
     empty.}
-  \item{allowC4en}{logical indicating if a current (sometimes \dQuote{hard})
-    setting of language \code{"C"} is acceptable for \code{lang = "en"}.  In that
-    case, \code{\link{message}()} is called instead of \code{\link{warning}()}.}
+  \item{C.vs.en}{a string specifying how a current (sometimes \dQuote{hard})
+    setting of language \code{"C"} is treated for \code{lang = "en"}.
+    When \code{"silent"}, nothing is signalled, when \code{"msg"}, a
+    \code{\link{message}()} and if \code{"warn"} a \code{\link{warning}()}
+    is signalled.}
 }
 \details{
   If \code{domain} is \code{NULL} (the default) in \code{gettext}

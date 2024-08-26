@@ -126,18 +126,23 @@ gettextf <- function(fmt, ..., domain = NULL, trim = TRUE)
 
 ## Could think of using *several* domains, i.e. domain = vector; but seems complicated;
 ## the default domain="R"  seems to work for all of base R: {"R", "R-base", "RGui"}
-Sys.setLanguage <- function(lang, unset = "en", allowC4en = TRUE)
+Sys.setLanguage <- function(lang, unset = "en", C.vs.en = c("silent", "msg", "warn"))
 {
-    if (!capabilities("NLS") || is.na(.popath)) {
-        warning(gettextf("no natural language support or missing translations"), domain=NA)
-        return(invisible(structure("", ok = FALSE)))
-    }
     stopifnot(is.character(lang), length(lang) == 1L, # e.g., "es" , "fr_CA"
               lang == "C" || grepl("^[a-z][a-z]", lang))
     curLang <- Sys.getenv("LANGUAGE", unset = NA) # so it can be reset
+    if (!capabilities("NLS") || is.na(.popath)) {
+        warning(gettextf("no natural language support or missing translations"), domain=NA)
+        return(invisible(structure(curLang, ok = FALSE)))
+    }
     if(is.na(curLang) || !nzchar(curLang))
         curLang <- unset # "factory" default
-    Warning <- if(allowC4en && startsWith(lang, "en")) message else warning
+    Warning <- if(startsWith(lang, "en"))
+                   switch(match.arg(C.vs.en),
+                          silent = function(...){},
+                          msg  = message,
+                          warn = warning)
+               else warning
     if(identical("C", Sys.getlocale()) && lang != "C") { ## e.g. LC_ALL=C R  on Linux
         lcSet <- if(.Platform[["OS.type"]] == "unix")
                      Sys.setlocale("LC_MESSAGES", "en_US.UTF-8")
