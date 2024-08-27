@@ -27,7 +27,7 @@ ngettext(n, msg1, msg2, domain = NULL)
 
 bindtextdomain(domain, dirname = NULL)
 
-Sys.setLanguage(lang, unset = "en", C.vs.en = c("silent", "msg", "warn"))
+Sys.setLanguage(lang, unset = "en", C.vs.en = c("msg", "warn", "silent"))
 }
 \arguments{
   \item{\dots}{one or more character vectors.}
@@ -48,7 +48,7 @@ Sys.setLanguage(lang, unset = "en", C.vs.en = c("silent", "msg", "warn"))
     empty.}
   \item{C.vs.en}{a string specifying how a current (sometimes \dQuote{hard})
     setting of language \code{"C"} is treated for \code{lang = "en"}.
-    When \code{"silent"}, nothing is signalled, when \code{"msg"}, a
+    When \code{"silent"}, nothing happens, when \code{"msg"}, a
     \code{\link{message}()} and if \code{"warn"} a \code{\link{warning}()}
     is signalled.}
 }

@@ -697,7 +697,7 @@ print.ls_str <- function(x, max.level = 1, give.attr = FALSE,
                       digits.d = digits), args)
     n. <- substr(tempfile("ls_str_", tmpdir=""), 2L, 20L)
     if(is.na(L <- Sys.getenv("LANGUAGE", unset=NA)) || L != "en") {
-        Sys.setLanguage("en") # for "<missing>" to work below
+        Sys.setLanguage("en", C.vs.en="silent") # for "<missing>" to work below
         on.exit(if(is.na(L)) Sys.unsetenv("LANGUAGE") else Sys.setenv(LANGUAGE = L))
     }
     for(nam in x) {

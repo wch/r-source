@@ -126,17 +126,17 @@ gettextf <- function(fmt, ..., domain = NULL, trim = TRUE)
 
 ## Could think of using *several* domains, i.e. domain = vector; but seems complicated;
 ## the default domain="R"  seems to work for all of base R: {"R", "R-base", "RGui"}
-Sys.setLanguage <- function(lang, unset = "en", C.vs.en = c("silent", "msg", "warn"))
+Sys.setLanguage <- function(lang, unset = "en", C.vs.en = c("msg", "warn", "silent"))
 {
     stopifnot(is.character(lang), length(lang) == 1L, # e.g., "es" , "fr_CA"
               lang == "C" || grepl("^[a-z][a-z]", lang))
     curLang <- Sys.getenv("LANGUAGE", unset = NA) # so it can be reset
+    if(is.na(curLang) || !nzchar(curLang))
+        curLang <- unset # "factory" default
     if (!capabilities("NLS") || is.na(.popath)) {
         warning(gettextf("no natural language support or missing translations"), domain=NA)
         return(invisible(structure(curLang, ok = FALSE)))
     }
-    if(is.na(curLang) || !nzchar(curLang))
-        curLang <- unset # "factory" default
     Warning <- if(startsWith(lang, "en"))
                    switch(match.arg(C.vs.en),
                           silent = function(...){},
