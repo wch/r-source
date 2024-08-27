@@ -203,7 +203,15 @@ Name: European Union Public License
 Version: 1.1
 Abbrev: EUPL
 FSF: free (https://www.gnu.org/licenses/license-list.html#EUPL)
-OSI: open (https://opensource.org/licenses/EUPL-1.1)
+OSI: open but superseded (https://opensource.org/licenses/EUPL-1.1)
+URL: https://joinup.ec.europa.eu/software/page/eupl
+FOSS: yes
+
+Name: European Union Public License
+Version: 1.2
+Abbrev: EUPL
+FSF: free (https://www.gnu.org/licenses/license-list.html#EUPL)
+OSI: open (https://opensource.org/licenses/EUPL-1.2)
 URL: https://joinup.ec.europa.eu/software/page/eupl
 FOSS: yes
 
