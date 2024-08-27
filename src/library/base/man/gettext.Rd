@@ -1,4 +1,4 @@
-se% File src/library/base/man/gettext.Rd
+% File src/library/base/man/gettext.Rd
 % Part of the R package, https://www.R-project.org
 % Copyright 1995-2024 R Core Team
 % Distributed under GPL 2 or later
