@@ -496,9 +496,10 @@ getGeneric <-
     pkg == ".GlobalEnv" || isBaseNamespace(ns <- asNamespace(pkg)) ||
         name %in% names(.getNamespaceInfo(ns, "exports"))
 
-.maybeUnhideName <- function(name, pkg)
-    if(.isExported(name, pkg)) name else paste(pkg, name, sep=":::")
-
+.maybeUnhideName <- function(name, pkg, qName = FALSE) {
+    nm <- if(qName) deparse1(as.name(name), backtick = TRUE) else name
+    if(.isExported(name, pkg)) nm else paste(pkg, nm, sep=":::")
+}
 
 ## cache and retrieve generic functions.  If the same generic name
 ## appears for multiple packages, a named list of the generics is cached.

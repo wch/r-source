@@ -105,10 +105,9 @@ show <- function(object) showDefault(object)
                   cat("\n")
                   show(object@.Data)
                   pkg <- object@package
-                  qnam <- deparse1(as.name(nam), backtick = TRUE) # was dQuote(nam, NULL)
                   cat("Methods may be defined for arguments: ",
                       paste0(object@signature, collapse=", "), "\n",
-                      "Use  showMethods(", .maybeUnhideName(qnam, pkg),
+                      "Use  showMethods(", .maybeUnhideName(nam, pkg, qName = TRUE),
                       ")  for currently available ones.\n", sep="")
                   if(.simpleInheritanceGeneric(object))
                       cat("(This generic function excludes non-simple inheritance; see ?setIs)\n")
