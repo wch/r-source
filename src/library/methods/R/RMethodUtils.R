@@ -491,6 +491,15 @@ getGeneric <-
     value
 }
 
+##' Is `name` from package `pkg` *exported* from the package namespace ?
+.isExported <- function(name, pkg)
+    pkg == ".GlobalEnv" || isBaseNamespace(ns <- asNamespace(pkg)) ||
+        name %in% names(.getNamespaceInfo(ns, "exports"))
+
+.maybeUnhideName <- function(name, pkg)
+    if(.isExported(name, pkg)) name else paste(pkg, name, sep=":::")
+
+
 ## cache and retrieve generic functions.  If the same generic name
 ## appears for multiple packages, a named list of the generics is cached.
 .genericTable <- new.env(TRUE, baseenv())
@@ -740,9 +749,9 @@ getGenerics <- function(where, searchForm = FALSE)
         ## all the packages cached ==? all packages with methods
         ## globally visible.  Assertion based on cacheMetaData + setMethod
         fdefs <- as.list(.genericTable, all.names=TRUE, sorted=TRUE)
-        fnames <- mapply(function(nm, obj) {
-            if (is.list(obj)) names(obj) else nm
-        }, names(fdefs), fdefs, SIMPLIFY=FALSE)
+        fnames <- mapply(function(nm, obj) if(is.list(obj)) names(obj) else nm,
+                         names(fdefs), fdefs, SIMPLIFY=FALSE)
+### FIXME: at least *optionally*  we want to filter (aka "drop") *non*-exported S4 generics
         packages <- lapply(fdefs, .packageForGeneric)
         new("ObjectsWithPackage", unlist(fnames), package=unlist(packages))
     }

@@ -1,7 +1,7 @@
 #  File src/library/methods/R/show.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2020 The R Core Team
+#  Copyright (C) 1995-2024 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -105,13 +105,10 @@ show <- function(object) showDefault(object)
                   cat("\n")
                   show(object@.Data)
                   pkg <- object@package
-                  exported <- pkg == ".GlobalEnv" || isBaseNamespace(ns <- asNamespace(pkg)) ||
-                      nam %in% names(.getNamespaceInfo(ns, "exports"))
                   qnam <- deparse1(as.name(nam), backtick = TRUE) # was dQuote(nam, NULL)
-                  showGen <- if(exported) qnam else paste(pkg, qnam, sep=":::")
                   cat("Methods may be defined for arguments: ",
                       paste0(object@signature, collapse=", "), "\n",
-                      "Use  showMethods(", showGen,
+                      "Use  showMethods(", .maybeUnhideName(qnam, pkg),
                       ")  for currently available ones.\n", sep="")
                   if(.simpleInheritanceGeneric(object))
                       cat("(This generic function excludes non-simple inheritance; see ?setIs)\n")
