@@ -26,8 +26,14 @@
 #ifndef R_ERROR_H_
 #define R_ERROR_H_
 
+#if defined(__cplusplus) && !defined(DO_NOT_USE_CXX_HEADERS)
+# include <cstddef>
+#else
+# include <stddef.h> /* for size_t */
+#endif
+
 #include <R_ext/Print.h>
-#include <R_ext/RS.h>		/* for F77_... */
+#include <Rconfig.h>            /* for HAVE_F77_UNDERSCORE */
 
 #ifdef  __cplusplus
 extern "C" {
@@ -56,16 +62,25 @@ NORET void Rf_error(const char *, ...) R_PRINTF_FORMAT(1, 2);
 NORET void UNIMPLEMENTED(const char *);
 NORET void WrongArgCount(const char *);
 
-void	Rf_warning(const char *, ...) R_PRINTF_FORMAT(1,2);
+void Rf_warning(const char *, ...) R_PRINTF_FORMAT(1,2);
 
-void 	R_ShowMessage(const char *s);
+void R_ShowMessage(const char *s);
 
-#ifdef FC_LEN_T
-NORET void F77_NAME(xerbla)(const char *srname, int *info, const FC_LEN_T srname_len);
+#ifdef HAVE_F77_UNDERSCORE
+/* F77_NAME is in RS.h, but better not include it here (e.g. due to
+   name conflicts involving symbols defined with !STRICT_R_HEADERS) */
+# ifdef FC_LEN_T
+NORET void xerbla_(const char *srname, int *info, const FC_LEN_T srname_len);
+# else
+NORET void xerbla_(const char *srname, int *info);
+# endif
 #else
-NORET void F77_NAME(xerbla)(const char *srname, int *info);
+# ifdef FC_LEN_T
+NORET void xerbla(const char *srname, int *info, const FC_LEN_T srname_len);
+# else
+NORET void xerbla(const char *srname, int *info);
+# endif
 #endif
-
 
 #ifdef  __cplusplus
 }
