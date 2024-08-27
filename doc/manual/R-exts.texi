@@ -12427,7 +12427,7 @@ unprotected.
 @apifun R_ReleaseObject
 There is another way to avoid the effects of garbage collection: a call
 to @code{R_PreserveObject} adds an object to an internal list of objects
-not to be collects, and a subsequent call to @code{R_ReleaseObject}
+not to be collected, and a subsequent call to @code{R_ReleaseObject}
 removes it from that list.  This provides a way for objects which are
 not returned as part of @R{} objects to be protected across calls to
 compiled code: on the other hand it becomes the user's responsibility to
