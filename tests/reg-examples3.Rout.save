@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2022-03-19 r81942) -- "Unsuffered Consequences"
-Copyright (C) 2022 The R Foundation for Statistical Computing
-Platform: x86_64-pc-linux-gnu (64-bit)
+R Under development (unstable) (2024-08-27 r87063) -- "Unsuffered Consequences"
+Copyright (C) 2024 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -256,7 +256,13 @@ t   -1   -1 -0.2471257  0.2688164
 > 
 > ## using sparse contrasts: % useful, once model.matrix() works with these :
 > ffs <- fff
-> contrasts(ffs) <- contr.sum(5, sparse = TRUE)[, 1:2]; contrasts(ffs)
+> if(requireNamespace("Matrix", lib.loc=.Library)) withAutoprint({
++ contrasts(ffs) <- contr.sum(5, sparse = TRUE)[, 1:2]; contrasts(ffs)
++ stopifnot(all.equal(ffs, fff))
++ contrasts(ffs) <- contr.sum(5, sparse = TRUE); contrasts(ffs)
++ })
+> contrasts(ffs) <- contr.sum(5, sparse = TRUE)[, 1:2]
+> contrasts(ffs)
   [,1] [,2]       [,3]       [,4]
 a    1    0 -0.2471257  0.2688164
 c    0    1 -0.2471257  0.2688164
@@ -264,7 +270,8 @@ i    0    0 -0.1498721 -0.8817814
 s    0    0  0.8912491  0.0753323
 t   -1   -1 -0.2471257  0.2688164
 > stopifnot(all.equal(ffs, fff))
-> contrasts(ffs) <- contr.sum(5, sparse = TRUE); contrasts(ffs)
+> contrasts(ffs) <- contr.sum(5, sparse = TRUE)
+> contrasts(ffs)
 5 x 4 sparse Matrix of class "dgCMatrix"
              
 a  1  .  .  .
@@ -446,7 +453,7 @@ Standard deviations:
 + 	 terms = "log(dist)", main = "Transformed")
 > 
 > # xtabs.Rd
-> if(require("Matrix")) {
+> if(require("Matrix", .Library)) {
 +  ## similar to "nlme"s  'ergoStool' :
 +  d.ergo <- data.frame(Type = paste0("T", rep(1:4, 9*4)),
 +                       Subj = gl(9, 4, 36*4))

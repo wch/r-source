@@ -104,7 +104,7 @@ cbind(npk, foo)
 ## failed in R < 2.10.0
 
 
-if(suppressMessages(require("Matrix"))) {
+if(suppressMessages(require("Matrix", .Library))) {
   print(cS. <- contr.SAS(5, sparse = TRUE))
   stopifnot(all(contr.SAS(5) == cS.),
 	    all(contr.helmert(5, sparse = TRUE) == contr.helmert(5)))
@@ -131,7 +131,7 @@ print(xtabs(~ x1 + x2, exclude = 'c', na.action = na.pass))
 
 ## median should work by default for a suitable S4 class.
 ## adapted from adaptsmoFMRI
-if(suppressMessages(require("Matrix"))) {
+if(suppressMessages(require("Matrix", .Library))) {
     x <- matrix(c(1,2,3,4))
     print(m <- median(x))
     stopifnot(all.equal(m, median(as(x, "denseMatrix"))))
@@ -169,7 +169,7 @@ if(require("MASS")) {
 }
 ## the error was in lm.(w)fit
 
-if(require("Matrix")) {
+if(require("Matrix", .Library)) {
  m1 <- m2 <- m <- matrix(1:12, 3,4)
  dimnames(m2) <- list(LETTERS[1:3],
                       letters[1:4])
@@ -277,6 +277,10 @@ if(hasME) withAutoprint({
     desc$Repository <- NULL
     c3 <- citation(auto = desc)
     stopifnot(identical(print(c3$url), URL1)) # R <= 4.4.0 gave both URLs
+
+    unloadNamespace(pkg)
 })
+
+
 
 cat('Time elapsed: ', proc.time(),'\n')

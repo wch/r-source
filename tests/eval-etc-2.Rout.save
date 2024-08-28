@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2023-10-23 r85391) -- "Unsuffered Consequences"
-Copyright (C) 2023 The R Foundation for Statistical Computing
-Platform: aarch64-apple-darwin22.6.0
+R Under development (unstable) (2024-08-27 r87063) -- "Unsuffered Consequences"
+Copyright (C) 2024 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -56,7 +56,7 @@ Type 'q()' to quit R.
 +         cat(nm, ": ", sep = .... [TRUNCATED] 
 > rm("srcdir")
 > 
-> require("Matrix")
+> require("Matrix", .Library)
 Loading required package: Matrix
 > D5. <- Diagonal(x = 5:1)
 > D5N <- D5.; D5N[5,5] <- NA

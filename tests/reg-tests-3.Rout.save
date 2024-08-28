@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2024-06-18 r86779) -- "Unsuffered Consequences"
+R Under development (unstable) (2024-08-27 r87063) -- "Unsuffered Consequences"
 Copyright (C) 2024 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu
 
@@ -689,7 +689,7 @@ Loading required package: survival
 > ## failed in R < 2.10.0
 > 
 > 
-> if(suppressMessages(require("Matrix"))) {
+> if(suppressMessages(require("Matrix", .Library))) {
 +   print(cS. <- contr.SAS(5, sparse = TRUE))
 +   stopifnot(all(contr.SAS(5) == cS.),
 + 	    all(contr.helmert(5, sparse = TRUE) == contr.helmert(5)))
@@ -756,7 +756,7 @@ x1     a b <NA>
 > 
 > ## median should work by default for a suitable S4 class.
 > ## adapted from adaptsmoFMRI
-> if(suppressMessages(require("Matrix"))) {
+> if(suppressMessages(require("Matrix", .Library))) {
 +     x <- matrix(c(1,2,3,4))
 +     print(m <- median(x))
 +     stopifnot(all.equal(m, median(as(x, "denseMatrix"))))
@@ -814,7 +814,7 @@ X2 0           1  0
 
 > ## the error was in lm.(w)fit
 > 
-> if(require("Matrix")) {
+> if(require("Matrix", .Library)) {
 +  m1 <- m2 <- m <- matrix(1:12, 3,4)
 +  dimnames(m2) <- list(LETTERS[1:3],
 +                       letters[1:4])
@@ -995,6 +995,8 @@ packages.
 +     desc$Repository <- NULL
 +     c3 <- citation(auto = desc)
 +     stopifnot(identical(print(c3$url), URL1)) # R <= 4.4.0 gave both URLs
++ 
++     unloadNamespace(pkg)
 + })
 > c2 <- citation(pkg, .Library)
 > c2$author[[1]]$given[[1]] <- "J."
@@ -1078,6 +1080,9 @@ A BibTeX entry for LaTeX users is
 > c3 <- citation(auto = desc)
 > stopifnot(identical(print(c3$url), URL1))
 [1] "https://example.org"
+> unloadNamespace(pkg)
+> 
+> 
 > 
 > cat('Time elapsed: ', proc.time(),'\n')
 Time elapsed:  2.176 0.139 2.315 0.002 0 
