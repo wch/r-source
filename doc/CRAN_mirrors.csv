@@ -29,7 +29,7 @@ Name,Country,City,URL,Host,Maintainer,OK,CountryCode,Comment
 "China (Nanjing) [https]",China,Nanjing,https://mirrors.nju.edu.cn/CRAN/,"eScience Center, Nanjing University","my # yaoge123.com",1,cn,"secure_mirror_from_master"
 "China (Shanghai 2) [https]",China,Shanghai,https://mirrors.sjtug.sjtu.edu.cn/cran/,"Shanghai Jiao Tong University","Alex Chi <iskyzh # gmail.com>",1,cn,"secure_mirror_from_master"
 "China (Shenzhen) [https]",China,Shenzhen,https://mirrors.sustech.edu.cn/CRAN/,"Southern University of Science and Technology (SUSTech)","cra # sustech.edu.cn",1,cn,"secure_mirror_from_master"
-"China (Wuhan) [https]",China,Wuhan,https://mirrors.hust.edu.cn/CRAN/,"Huazhong University of Science and Technology","mirror_support # hust.edu.cn",1,cn
+"China (Wuhan) [https]",China,Wuhan,https://mirrors.hust.edu.cn/CRAN/,"Huazhong University of Science and Technology","mirror_support # hust.edu.cn",1,cn,"secure_mirror_from_master"
 "China (Xianyang) [https]",China,Xianyang,https://mirrors.nwafu.edu.cn/cran/,"Northwest A&F University (NWAFU)","dingyuxiao99 # nwafu.edu.cn",1,cn
 "Colombia (Cali) [https]",Colombia,Cali,https://www.icesi.edu.co/CRAN/,"Icesi University","adminred # Icesi.edu.co",1,co,"secure_mirror_from_master"
 "Costa Rica [https]","Costa Rica","San José",https://mirror.uned.ac.cr/cran/,"Distance State University (UNED)","rherrerav # uned.ac.cr",1,cr,"secure_mirror_from_master"
@@ -66,7 +66,7 @@ Name,Country,City,URL,Host,Maintainer,OK,CountryCode,Comment
 "Netherlands (Amsterdam) [https]","Netherlands",Amsterdam,https://mirrors.evoluso.com/CRAN/,"Evoluso.com","mirrors # evoluso.com",1,nl,
 "Netherlands (Dronten) [https]","Netherlands",Dronten,https://mirror.lyrahosting.com/CRAN/,"Lyra Hosting","admin # lyrahosting.com",1,nl,"secure_mirror_from_master"
 "New Zealand [https]","New Zealand",Auckland,https://cran.stat.auckland.ac.nz/,"University of Auckland","s.urbanek # auckland.ac.nz",1,nz,"secure_mirror_from_master"
-"Norway [https]",Norway,Bergen,https://cran.uib.no/,"University of Bergen","sundrift # It.uib.no",1,no,"secure_mirror_from_master"
+"Norway [https]",Norway,Bergen,https://cran.uib.no/,"University of Bergen","sundrift # It.uib.no",1,no,"secure_mirror_from_master,maintainer_address_bounces"
 "Poland [https]",Poland,Warsaw,https://cran.mi2.ai/,"MI2.ai, Warsaw University of Technology","przemyslaw.biecek # gmail.com",1,pl
 "Portugal (Lisbon) [https]",Portugal,Lisbon,https://cran.radicaldevelop.com/,"RadicalDevelop, Lda","geral # radicaldevelop.com",1,pt
 "Russia (Novosibirsk) [https]",Russia,Novosibirsk,https://mirror.truenetwork.ru/CRAN/,"Truenetwork","mirror # truenetwork.ru",1,ru
@@ -83,7 +83,7 @@ Thailand,Thailand,Hatyai,http://mirrors.psu.ac.th/pub/cran/,"Prince of Songkla U
 "UK (Bristol) [https]",UK,Bristol,https://www.stats.bris.ac.uk/R/,"University of Bristol","Oliver Johnson <O.Johnson # bristol.ac.uk>, it-zone-d # bristol.ac.uk",1,uk,"secure_mirror_from_master"
 "UK (London 1) [https]",UK,London,https://cran.ma.imperial.ac.uk/,"Imperial College London","andy.thomas # imperial.ac.uk",1,uk,"secure_mirror_from_master"
 "UK (Warwick)",UK,Coventry,https://anorien.csc.warwick.ac.uk/CRAN/," University of Warwick","David Quigley <D.Quigley # warwick.ac.uk>",1,uk
-"USA (IA) [https]",USA,Ames,https://mirror.las.iastate.edu/CRAN/,"Iowa State University, Ames, IA","statit # iastate.edu",1,us,"secure_mirror_from_master"
+"USA (IA) [https]",USA,Ames,https://mirror.las.iastate.edu/CRAN/,"Iowa State University, Ames, IA","cran-mirror # iastate.edu",1,us,"secure_mirror_from_master"
 "USA (IN)",USA,Bloomington,http://ftp.ussg.iu.edu/CRAN/,"Indiana University","rtadmin # indiana.edu",1,us
 "USA (MI) [https]",USA,"Ann Arbor",https://repo.miserver.it.umich.edu/cran/,"MBNI, University of Michigan, Ann Arbor, MI","linux-mirrors # umich.edu",1,us,"secure_mirror_from_master"
 "USA (MO) [https]",USA,"St. Louis",https://cran.wustl.edu/,"Washington University, St. Louis, MO","Jonathan Rapkin <rapkin # wustl.edu>",1,us,"secure_mirror_from_master"
