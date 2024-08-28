@@ -2098,8 +2098,9 @@ function(file, encoding = NA, keep.source = getOption("keep.source"))
 
 ### ** .persons_from_metadata
 
-.persons_from_metadata <- function(dir) {
-    meta <- .get_package_metadata(dir)
+.persons_from_metadata <- function(dir, meta = NULL) {
+    if(is.null(meta))
+        meta <- .get_package_metadata(dir)
     if(!is.na(aar <- meta["Authors@R"])) {
         aar <- tryCatch(utils:::.read_authors_at_R_field(aar),
                         error = identity)
