@@ -1720,8 +1720,8 @@ HTTP server and by client.  There should be no space in the host part of
 an @samp{http://} URL, and spaces in the remainder should be encoded,
 with each space replaced by @samp{%20}.
 
-Other characters may benefit from being encoded: see the help on
-@code{URLencode()}.
+Reserved characters should be encoded unless used in their reserved
+sense: see the help on @code{URLencode()}.
 
 The canonical URL for a @acronym{CRAN} package is
 @example
