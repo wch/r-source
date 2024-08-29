@@ -126,6 +126,10 @@ void attribute_no_sanitizer_instrumentation R_CheckStack2(size_t extra)
     int dummy;
     intptr_t usage = R_CStackDir * (R_CStackStart - (uintptr_t)&dummy);
 
+    if (INTPTR_MAX - usage < extra)
+	/* addition would overflow, this is definitely too much */
+	R_SignalCStackOverflow(INTPTR_MAX);
+
     /* do it this way, as some compilers do usage + extra
        in unsigned arithmetic */
     usage += extra;
@@ -2814,10 +2818,10 @@ SEXP R_makeOutOfBoundsError(SEXP x, int subscript, SEXP sindex,
 				    "%s", R_MSG_subs_o_b);
     PROTECT(cond);
 
-    /* In some cases the 'sbscript' argument is negative, indicating
+    /* In some cases the 'subscript' argument is negative, indicating
        that which subscript is out of bounds is not known. We could
        probably do better, but for now report 'subscript' as NA in the
-       condition objec. */
+       condition object. */
     SEXP ssub = ScalarInteger(subscript >= 0 ? subscript + 1 : NA_INTEGER);
     PROTECT(ssub);
 
