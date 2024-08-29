@@ -7518,8 +7518,15 @@ function(dir, localOnly = FALSE, pkgSize = NA)
         p <- strsplit(meta[field], " *, *")[[1L]]
         ## multicore has been superseded by parallel.  Almost all of
         ## snow has been too, so it should be optional.
-        p2 <- grep("^(multicore|snow|doSNOW)( |\\(|$)", p, value = TRUE)
-        uses <- c(uses, p2)
+        ## <NOTE>
+        ## However, as of 2024-08 there are still 40 and 64 CRAN
+        ## packages which at least suggest snow or doSNOW, respectively,
+        ## apparently needing the functionality of snow not ported to
+        ## parallel (MPI, ...).  Hence better to no longer NOTE their
+        ## use.
+        ##   p2 <- grep("^(multicore|snow|doSNOW)( |\\(|$)", p, value = TRUE)
+        ##   uses <- c(uses, p2)
+        ## </NOTE>
         ## BRugs and R2OpenBUGS have a SystemRequirements of OpenBUGS.
         ## which requires ix86 (not x86-64) and currently installs
         ## only on Linux using a compiler supporting -m32.
