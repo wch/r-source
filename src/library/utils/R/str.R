@@ -712,6 +712,7 @@ print.ls_str <- function(x, max.level = 1, give.attr = FALSE,
 ##__	    str(get(nam, envir = E, mode = M),
 ##__		max.level = max.level, give.attr = give.attr, ...)
 
+        ## FIXME: get() should rather return a *classed* error in this case
 	eA <- sprintf("%s:%s", nam, n.)
 	o <- tryCatch(get(nam, envir = E, mode = M),
 		      error = function(e){ attr(e, eA) <- TRUE; e })
