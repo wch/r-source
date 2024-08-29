@@ -4622,7 +4622,9 @@ add_dummies <- function(dir, Log)
                     ## check o/p might be in a different encoding.
                     lines <- readLines(logf, warn = FALSE)
                     if(any(grepl("Running R code.*times elapsed time",
-                                 lines, useBytes = TRUE)))
+                                 lines, useBytes = TRUE)) ||
+                       any(startsWith(lines, "  Comparing") &
+                           !endsWith(lines, "... OK")))
                         any <- TRUE
                 }
                 if(any) noteLog(Log) else resultLog(Log, "OK")
