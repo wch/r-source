@@ -34,7 +34,6 @@
 # include <cstdio>
 # include <climits>
 # include <cstddef>
-extern "C" {
 #else
 # include <stdio.h>
 # include <limits.h> /* for INT_MAX */
@@ -52,17 +51,21 @@ extern "C" {
 
 #include <R_ext/libextern.h>
 
-typedef unsigned char Rbyte;
-
-/* type for length of (standard, not long) vectors etc */
-typedef int R_len_t;
-#define R_LEN_T_MAX INT_MAX
-
 /* both config.h and Rconfig.h set SIZEOF_SIZE_T, but Rconfig.h is
    skipped if config.h has already been included. */
 #ifndef R_CONFIG_H
 # include <Rconfig.h>
 #endif
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+typedef unsigned char Rbyte;
+
+/* type for length of (standard, not long) vectors etc */
+typedef int R_len_t;
+#define R_LEN_T_MAX INT_MAX
 
 #if ( SIZEOF_SIZE_T > 4 )
 # define LONG_VECTOR_SUPPORT

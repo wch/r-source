@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--2022  The R Core Team.
+ *  Copyright (C) 1998--2024  The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -33,14 +33,37 @@
 #ifndef RINTERFACE_H_
 #define RINTERFACE_H_
 
-#include <R_ext/Boolean.h>
+#ifdef CSTACK_DEFNS
+/* duplicating older Defn.h.
+   Note: this is never used when including Rinterface.h from R itself
+*/
+# if !defined(HAVE_UINTPTR_T) && !defined(uintptr_t)
+ typedef unsigned long uintptr_t;
+# else
+#  ifndef __cplusplus
+#   include <stdint.h>
+#  elif __cplusplus >= 201103L
+#   include <cstdint>
+#  endif
+# endif
+#endif
 
 #ifdef __cplusplus
 /* we do not support DO_NOT_USE_CXX_HEADERS in this file */
 # include <cstdio>
-extern "C" {
 #else
 # include <stdio.h>
+#endif
+
+#include <R_ext/Boolean.h>
+
+#ifdef R_INTERFACE_PTRS
+# include <Rinternals.h> // for SEXP
+# include <R_ext/RStartup.h> // for SA_TYPE
+#endif
+
+#ifdef __cplusplus
+extern "C" {
 #endif
 
 // See R_ext/Error.h
@@ -112,15 +135,6 @@ extern int R_running_as_main_program;
 /* duplicating older Defn.h.
    Note: this is never used when including Rinterface.h from R itself
 */
-#if !defined(HAVE_UINTPTR_T) && !defined(uintptr_t)
- typedef unsigned long uintptr_t;
-#else
-# ifndef __cplusplus
-#  include <stdint.h>
-# elif __cplusplus >= 201103L
-#  include <cstdint>
-# endif
-#endif
 
 extern uintptr_t R_CStackLimit;	/* C stack limit */
 extern uintptr_t R_CStackStart;	/* Initial stack address */
@@ -129,8 +143,6 @@ extern uintptr_t R_CStackStart;	/* Initial stack address */
 /* formerly in src/unix/devUI.h */
 
 #ifdef R_INTERFACE_PTRS
-#include <Rinternals.h> // for SEXP
-#include <R_ext/RStartup.h> // for SA_TYPE
 
 #ifdef __SYSTEM__
 # define extern

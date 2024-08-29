@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001-11 The R Core Team.
+ *  Copyright (C) 2001-24 The R Core Team.
  *
  *  This header file is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -44,6 +44,7 @@
 # endif
 #endif
 
+#include <R_ext/libextern.h>
 #include <R_ext/Boolean.h>
 
 #ifdef __cplusplus
@@ -973,7 +974,6 @@ Rboolean doesIdle(pDevDesc dd);
         Rf_onintr(); \
 } while(0)
     
-#include <R_ext/libextern.h>
 LibExtern Rboolean R_interrupts_suspended;    
 LibExtern int R_interrupts_pending;
 extern void Rf_onintr(void);

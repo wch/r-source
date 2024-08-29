@@ -21,6 +21,11 @@
  *  Assume C declarations for C++
  */
 
+#include <stdio.h>
+#include <stdlib.h>
+
+#include <R_ext/libextern.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif /* begin normal C declarations */
@@ -29,8 +34,6 @@ extern "C" {
  *  Definition of some constants.
  */
 
-#include <stdio.h>
-#include <stdlib.h>
 
 #ifndef Pi
 #define Pi 3.14159265359
@@ -1251,7 +1254,6 @@ void	showcaret(control c, int showing);
  *  Library supplied variables.
  */
 
-#include <R_ext/libextern.h>
 #undef LibExtern
 #ifdef GA_DLL_BUILD
 # define LibExtern extern

@@ -74,10 +74,6 @@ PROTECTED void updatestatus(const char *text);
 PROTECTED font new_font_object(HFONT hf);
 UINT default_font_charset(void);
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -86,6 +82,10 @@ extern "C" {
 
 
 #include <commdlg.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 #ifdef __MWERKS__
     /* Metrowerks Codewarrior Cross-Platform C/C++ Compiler */

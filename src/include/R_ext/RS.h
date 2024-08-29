@@ -36,7 +36,7 @@
 # define R_SIZE_T size_t
 #endif
 
-#include <Rconfig.h>		/* for F77_APPEND_UNDERSCORE */
+#include <Rconfig.h>		/* for HAVE_F77_UNDERSCORE */
 
 #ifdef  __cplusplus
 extern "C" {

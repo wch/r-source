@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001-21 The R Core Team.
+ *  Copyright (C) 2001-24 The R Core Team.
  *
  *  This header file is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -229,8 +229,15 @@ typedef struct {
 
 typedef R_GE_gcontext* pGEcontext;
 
+#ifdef __cplusplus
+}
+#endif
 
 #include <R_ext/GraphicsDevice.h> /* needed for DevDesc */
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 typedef struct _GEDevDesc GEDevDesc;
 
