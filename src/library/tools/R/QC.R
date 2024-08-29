@@ -7903,7 +7903,7 @@ function(dir, localOnly = FALSE, pkgSize = NA)
     if(!isTRUE(out$descr_bad_start) && !grepl("^['\"]?[[:upper:]]", descr))
         out$descr_bad_initial <- TRUE
     descr <- strwrap(descr)
-    if(any(ind <- grepl("(^|[^<])https?://", descr))) {
+    if(any(ind <- grepl("(^|[^</\"])https?://", descr))) {
         ## Could try to filter out the matches for DOIs and arXiv ids
         ## noted differently below: not entirely straightforward when
         ## matching wrapped texts for to ease reporting ...
