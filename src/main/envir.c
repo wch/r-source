@@ -2138,9 +2138,13 @@ attribute_hidden SEXP do_get(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     /* Search for the object */
     rval = findVar1mode(t1, genv, gmode, wants_S4, ginherits, PRIMVAL(op));
-    if (rval == R_MissingArg)
-	error(_("argument \"%s\" is missing, with no default"),
-	      CHAR(PRINTNAME(t1)));
+    if (rval == R_MissingArg) { // signal a *classed* error:
+	SEXP cond = R_makeErrorCondition(call, "getMissingError", NULL, 0,
+		_("argument \"%s\" is missing, with no default"), CHAR(PRINTNAME(t1)));
+	PROTECT(cond);
+	R_signalErrorCondition(cond, call);
+	UNPROTECT(1); /* cond; not reached */
+    }
 
     switch (PRIMVAL(op) ) {
     case 0: // exists(.) :

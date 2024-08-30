@@ -79,6 +79,8 @@
       to \PR{16567}.
 
       \item \code{pnorm(x)} underflows more gracefully.
+
+      \item \code{get(nam, env)} now signals a \emph{classed} error (\code{"getMissingError"})
     }
   }
 
@@ -258,8 +260,8 @@
       on some platforms, warns about \emph{some} failures to change the
       language and gets an option related to these warning messages.
 
-      \item Printing \code{ls.str()} now tries harder to show
-      \code{"<missing>"} even when \R's language setting is not English.
+      \item Printing \code{ls.str()} now shows \code{"<missing>"} even when
+      \R's language setting is not English.
     }
   }
 }

@@ -696,28 +696,14 @@ print.ls_str <- function(x, max.level = 1, give.attr = FALSE,
     strargs <- c(list(max.level = max.level, give.attr = give.attr,
                       digits.d = digits), args)
     n. <- substr(tempfile("ls_str_", tmpdir=""), 2L, 20L)
-    if(is.na(L <- Sys.getenv("LANGUAGE", unset=NA)) || L != "en") {
-        Sys.setLanguage("en", C.vs.en="silent") # for "<missing>" to work below
-        on.exit(if(is.na(L)) Sys.unsetenv("LANGUAGE") else Sys.setenv(LANGUAGE = L))
-    }
     for(nam in x) {
 	cat(nam, ": ")
 	## check missingness, e.g. inside debug(.) :
-
-##__ Why does this give	 too many <missing> in some case?
-##__	if(eval(substitute(missing(.), list(. = as.name(nam))),
-##__		envir = E))
-##__	    cat("<missing>\n")
-##__	else
-##__	    str(get(nam, envir = E, mode = M),
-##__		max.level = max.level, give.attr = give.attr, ...)
-
-        ## FIXME: get() should rather return a *classed* error in this case
-	eA <- sprintf("%s:%s", nam, n.)
+	eA <- sprintf("%s:%s", nam, n.) # need a 'mark' in case nam *is* an error object
 	o <- tryCatch(get(nam, envir = E, mode = M),
 		      error = function(e){ attr(e, eA) <- TRUE; e })
 	if(inherits(o, "error") &&  isTRUE(attr(o, eA))) {
-	    cat(if(grepl("missing|not found", o$message)) "<missing>" else o$message,
+            cat(if(inherits(o, "getMissingError")) "<missing>" else o$message,
                 "\n", sep = "")
 	}
 	else {
