@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2024-05-13 r86546) -- "Unsuffered Consequences"
+R Under development (unstable) (2024-08-27 r87063) -- "Unsuffered Consequences"
 Copyright (C) 2024 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu
 
@@ -1177,17 +1177,13 @@ value <- methods::new("A")
 class(from) <- "foo"
 > 
 > 
-> ## PR#17496: sealClass()
-> setClass("foo", slots = c(name = "character"), sealed = TRUE)
-> stopifnot(isSealedClass("foo"))
-> tools::assertError(setClass("foo"))
-> stopifnot(removeClass("foo"))
-> setClass("foo")
-> sealClass("foo") # failed in R < 4.5.0
-> stopifnot(isSealedClass("foo"))
-> stopifnot(removeClass("foo"))
 > 
+> ## ----- from here on, keep at EOF -----
 > 
-> ## show(<non-syntactic name>) should recommend backticks for showMethods()
-> stopifnot(any(grepl("showMethods(`body<-`)", capture.output(show(`body<-`)), fixed=TRUE)))
+> cat('Time elapsed: ', proc.time(),'\n')
+Time elapsed:  0.869 0.169 1.642 0.001 0.003 
+> 
+> ### NB: Only add new tests here _IF_   checking output,
+> ### --  otherwise use ./classes-methods.R
+> ###			^^^^^^^^^^^^^^^^^
 > 

@@ -496,9 +496,24 @@ getGeneric <-
     pkg == ".GlobalEnv" || isBaseNamespace(ns <- asNamespace(pkg)) ||
         name %in% names(.getNamespaceInfo(ns, "exports"))
 
-.maybeUnhideName <- function(name, pkg, qName = FALSE) {
+##' is `name` "visually exported", i.e., exported from pkg in search()
+.isExportedVis <- function(name, pkg)
+    (pkg == ".GlobalEnv" || paste0("package:", pkg) %in% search()[-1L]) &&
+     (isBaseNamespace(ns <- asNamespace(pkg)) ||
+      name %in% names(.getNamespaceInfo(ns, "exports")))
+
+##' "Minimal" valid name when `name` is from `pkg` (which can be ".GlobalEnv")
+##' @param name string
+##' @param pkg  string
+##' @param qName logical(-alike)
+##' @return string
+.minimalName <- function(name, pkg, qName = FALSE, chkXport = TRUE) {
     nm <- if(qName) deparse1(as.name(name), backtick = TRUE) else name
-    if(.isExported(name, pkg)) nm else paste(pkg, nm, sep=":::")
+    if(chkXport && .isExported(name, pkg)) {
+        if(pkg == ".GlobalEnv" || paste0("package:", pkg) %in% search()[-1L])
+            nm
+        else paste(pkg, nm, sep="::")
+    } else   paste(pkg, nm, sep=":::")
 }
 
 ## cache and retrieve generic functions.  If the same generic name

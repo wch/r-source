@@ -879,16 +879,11 @@ setClass("bar", contains = "foo")
 body(getClass("bar")@contains[[1]]@coerce)[[2]]
 
 
-## PR#17496: sealClass()
-setClass("foo", slots = c(name = "character"), sealed = TRUE)
-stopifnot(isSealedClass("foo"))
-tools::assertError(setClass("foo"))
-stopifnot(removeClass("foo"))
-setClass("foo")
-sealClass("foo") # failed in R < 4.5.0
-stopifnot(isSealedClass("foo"))
-stopifnot(removeClass("foo"))
 
+## ----- from here on, keep at EOF -----
 
-## show(<non-syntactic name>) should recommend backticks for showMethods()
-stopifnot(any(grepl("showMethods(`body<-`)", capture.output(show(`body<-`)), fixed=TRUE)))
+cat('Time elapsed: ', proc.time(),'\n')
+
+### NB: Only add new tests here _IF_   checking output,
+### --  otherwise use ./classes-methods.R
+###			^^^^^^^^^^^^^^^^^

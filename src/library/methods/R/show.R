@@ -53,8 +53,10 @@ showExtraSlots <- function(object, ignore) {
     if(is(ignore, "classRepresentation"))
       ignore <- slotNames(ignore)
     else if(!is(ignore, "character"))
-      stop(gettextf("invalid 'ignore' argument; should be a class definition or a character vector, got an object of class %s", dQuote(class(ignore))),
-           domain = NA)
+        stop(gettextf(
+              "invalid 'ignore' argument; should be a class definition or a character vector, got an object of class %s",
+                      dQuote(class(ignore))),
+             domain = NA)
     slots <- slotNames(class(object))
     for(s in slots[is.na(match(slots, ignore))]) {
         cat("Slot ",s, ":\n", sep="")
@@ -105,10 +107,42 @@ show <- function(object) showDefault(object)
                   cat("\n")
                   show(object@.Data)
                   pkg <- object@package
+                  ## Find "correct" pkg in case in case object was e.g.  Matrix::`diag<-`
+                  ## where pkg is "base" (!)
+                  ## This is imperfect (but clearly better than nothing):
+                  mayMulti <- FALSE
+                  if(notGen <- !(if(pkg == ".GlobalEnv")
+                                      isGeneric(nam)
+                                 else isGeneric(nam, getNamespace(pkg)))) {
+                      ## other namespaces where a generic may live:
+                      nss <- Filter(function(.) methods:::.hasS4MetaData(getNamespace(.)),
+                                    setdiff(loadedNamespaces(), c(pkg, "base")))
+                      hasGen <- vapply(nss, function(ns) isGeneric(nam, getNamespace(ns)), NA)
+                      if(notGen <- !any(hasGen))
+                          ## if(notGen <- !isGeneric(nam, getNamespace(pkg <- "base")))
+                          pkg <- "<pkg>"
+                      else {
+                          mayMulti <- TRUE
+                          pkgs <- nss[hasGen] # with length >= 1
+                          pkg <- pkgs[[1L]] # take the first
+                      }
+                  }
+                  ##    grepl("::", so <- as.character(substitute(object)), fixed=TRUE))
+                  ##        pkg <-  .......
                   cat("Methods may be defined for arguments: ",
                       paste0(object@signature, collapse=", "), "\n",
-                      "Use  showMethods(", .maybeUnhideName(nam, pkg, qName = TRUE),
-                      ")  for currently available ones.\n", sep="")
+                      "Use  showMethods(", .minimalName(nam, pkg, qName = TRUE, chkXport = !notGen),
+                      ")  for currently available ones", sep="")
+                  if(notGen) {
+                      cat(" where <pkg> does not seem to be among the loadedNamespaces()")
+                  } else if(mayMulti && length(pkgs) > 1L) { ## pkg == pkgs[[1]]
+                      pkgs <- pkgs[-1L] # => length(pkgs) >= 1
+                      pkgs <- dQuote(pkgs, FALSE)
+                      cat(sprintf(" where additionally to %s, the <pkg> could also be %s", pkg,
+                                  if(length(pkgs) == 1L) pkgs
+                                  else paste("one of", paste0(pkgs, collapse = ", "))))
+                  }
+                  cat(".\n")
                   if(.simpleInheritanceGeneric(object))
                       cat("(This generic function excludes non-simple inheritance; see ?setIs)\n")
               },

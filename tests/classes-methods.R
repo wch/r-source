@@ -19,6 +19,7 @@ if(require("Matrix", lib.loc = .Library, quietly = TRUE)) {
 	      identical(D5N, pmin(D5N, 5)),
 	      identical(as.matrix(pmin(D5N +1, 3)),
 			pmin(as.matrix(D5N)+1, 3)),
+              is.function(Matrix::crossprod), # needed Matrix 1.6-1.1 for R-devel, Sep.2023
 	      ##
 	      TRUE)
 
@@ -158,3 +159,39 @@ stopifnot(exprs = {
     grepl('x = "numeric", y = "missing"', attr(err1, "condition")$message)
     identical(err1, err1Y) # (as $call is empty)
 })
+
+
+## PR#17496: sealClass()
+setClass("foo", slots = c(name = "character"), sealed = TRUE)
+stopifnot(isSealedClass("foo"))
+tools::assertError(setClass("foo"))
+stopifnot(removeClass("foo"))
+setClass("foo")
+sealClass("foo") # failed in R < 4.5.0
+stopifnot(isSealedClass("foo"))
+stopifnot(removeClass("foo"))
+
+
+## show(<non-syntactic name>) should recommend backticks for showMethods()
+stopifnot(any(grepl("showMethods(`body<-`)", capture.output(show(`body<-`)), fixed=TRUE)))
+
+## show( <genericFunction>)  should use correct " Use  showMethods(.....) for ...."
+pkg <- "Matrix"
+if(length(P <- grep(pkg, search(), fixed=TRUE, value=TRUE)))
+    detach(P, character.only=TRUE, force=TRUE)
+(hasME <- requireNamespace(pkg, quietly=TRUE, lib.loc = .Library))
+if(hasME) {
+    capture.output( show(Matrix::"diag<-") ) |> tail(1) -> out1
+    stopifnot(grepl("showMethods(Matrix::`diag<-`)", out1, fixed=TRUE))
+    ##
+    if(require(pkg, character.only=TRUE)) {
+        capture.output( show(Matrix::"diag<-") ) |> tail(1) -> out1
+        stopifnot(grepl("showMethods(`diag<-`)", out1, fixed=TRUE))
+        detach(paste0("package:", pkg), character.only=TRUE, unload=TRUE)
+    } else
+        unloadNamespace(pkg)
+}
+
+
+
+cat('Time elapsed: ', proc.time(),'\n')
