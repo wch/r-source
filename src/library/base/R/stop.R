@@ -144,13 +144,16 @@ Sys.setLanguage <- function(lang, unset = "en", C.vs.en = c("msg", "warn", "sile
                           warn = warning)
                else warning
     if(identical("C", Sys.getlocale()) && lang != "C") { ## e.g. LC_ALL=C R  on Linux
-        lcSet <- if(.Platform[["OS.type"]] == "unix")
-                     Sys.setlocale("LC_MESSAGES", "en_US.UTF-8")
-        ## TODOs: 1) does  en_US.UTF-8  always exist?
+        lcSet <- if(.Platform[["OS.type"]] == "unix") # works to "undo LC_ALL=C"
+                     paste0(collapse="", vapply(c("LC_ALL", "LC_MESSAGES"),
+                                                \(a) Sys.setlocale(a, "en_US.UTF-8"), ""))
+        ## TODOs: 1) we assume   en_US.UTF-8  exists on all "unix"
         ##        2) How to deal w/ Windows ? {can set things but with *no* effect}
         ok.lc <- !is.null(lcSet) && nzchar(lcSet) # NULL or ""  are not ok
         if(!ok.lc)
-            Warning(gettextf("In a bare C locale, could not change language"), domain=NA)
+            Warning(gettextf(
+                "In bare C locale: LANGUAGE reset, but message language may be unchanged"),
+                domain=NA)
     } else ok.lc <- TRUE
     ok <- Sys.setenv(LANGUAGE=lang)
     if(!ok)
