@@ -1078,6 +1078,8 @@ static void handle_eval_depth_overflow(void)
 
 /* Return value of "e" evaluated in "rho". */
 
+static void MISSING_ARGUMENT_ERROR(SEXP symbol, SEXP rho);
+
 /* some places, e.g. deparse2buff, call this with a promise and rho = NULL */
 SEXP eval(SEXP e, SEXP rho)
 {
@@ -1181,12 +1183,7 @@ SEXP eval(SEXP e, SEXP rho)
 	    /* the error signaled here for a missing ..d matches the one
 	       signaled in getvar() for byte compiled code, but ...elt()
 	       signals a slightly different error (see PR18661) */
-	    const char *n = CHAR(PRINTNAME(e));
-	    if(*n) errorcall(getLexicalCall(rho),
-			     _("argument \"%s\" is missing, with no default"),
-			     CHAR(PRINTNAME(e)));
-	    else errorcall(getLexicalCall(rho),
-			   _("argument is missing, with no default"));
+	    MISSING_ARGUMENT_ERROR(e, rho);
 	}
 	else if (TYPEOF(tmp) == PROMSXP) {
 	    ENSURE_PROMISE_IS_EVALUATED(tmp);
@@ -3060,7 +3057,6 @@ static Rboolean checkTailPosition(SEXP call, SEXP code, SEXP rho)
     else return FALSE;
 }
 
-static void MISSING_ARGUMENT_ERROR(SEXP symbol, SEXP rho);
 attribute_hidden SEXP do_tailcall(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
 #ifdef SUPPORT_TAILCALL
