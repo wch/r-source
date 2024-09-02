@@ -1,7 +1,7 @@
 #  File src/library/utils/R/packages.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2023 The R Core Team
+#  Copyright (C) 1995-2024 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -749,6 +749,11 @@ download.packages <- function(pkgs, destdir, available = NULL,
         available <-
             available.packages(contriburl = contriburl, method = method, ...)
 
+    if (missing(method) || method == "auto" || method == "libcurl")
+        bulkdown <- matrix(character(), 0L, 3L)
+    else
+        bulkdown <- NULL
+   
     retval <- matrix(character(), 0L, 2L)
     for(p in unique(pkgs))
     {
@@ -800,15 +805,44 @@ download.packages <- function(pkgs, destdir, available = NULL,
                 url <- paste(repos, fn, sep = "/")
                 destfile <- file.path(destdir, fn)
 
-                res <- try(download.file(url, destfile, method, mode = "wb",
-                                         ...))
-                if(!inherits(res, "try-error") && res == 0L)
-                    retval <- rbind(retval, c(p, destfile))
-                else
-                    warning(gettextf("download of package %s failed", sQuote(p)),
-                            domain = NA, immediate. = TRUE)
+                if (is.null(bulkdown)) {
+                    # serial download
+                    res <- try(download.file(url, destfile, method, mode = "wb",
+                                             ...))
+                    if(!inherits(res, "try-error") && res == 0L)
+                        retval <- rbind(retval, c(p, destfile))
+                    else
+                        warning(gettextf("download of package %s failed", sQuote(p)),
+                                domain = NA, immediate. = TRUE)
+                } else
+                    bulkdown <- rbind(bulkdown, c(p, destfile, url))
             }
         }
+    }
+
+    if (!is.null(bulkdown) && nrow(bulkdown) > 0) {
+        # bulk download using libcurl
+        urls <- bulkdown[,3]
+        destfiles <- bulkdown[,2]
+        ps <- bulkdown[,1]
+                                           
+        res <- try(download.file(urls, destfiles, "libcurl", mode = "wb", ...))
+        if(!inherits(res, "try-error") && res == 0L) {
+            if (length(urls) > 1) {
+                retvals <- attr(res, "retvals")
+                for(i in seq_along(retvals)) {
+                    if (retvals[i] == 0L)
+                        retval <- rbind(retval, c(ps[i], destfiles[i]))
+                    else
+                        warning(gettextf("download of package %s failed",
+                                sQuote(ps[i])), domain = NA, immediate. = TRUE)
+                }
+            } else
+                retval <- rbind(retval, c(ps, destfiles))
+        } else
+            for(p in ps)
+                warning(gettextf("download of package %s failed", sQuote(p)),
+                        domain = NA, immediate. = TRUE)            
     }
 
     retval

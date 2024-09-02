@@ -1,7 +1,7 @@
 #  File src/library/utils/R/packages2.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2023 The R Core Team
+#  Copyright (C) 1995-2024 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -398,21 +398,42 @@ install.packages <-
         if(nonlocalrepos) {
             df <- function(p, destfile, method, ...)
                 download.file(p, destfile, method, mode = "wb", ...)
-            urls <- pkgs[web]
-            for (p in unique(urls)) {
-                this <- pkgs == p
-                destfile <- file.path(tmpd, basename(p))
-                res <- try(df(p, destfile, method, ...))
-                if(!inherits(res, "try-error") && res == 0L)
-                    pkgs[this] <- destfile
-                else {
-                    ## There will be enough notification from the try()
-                    pkgs[this] <- NA
+            urls <- unique(pkgs[web])
+            
+            if (missing(method) || method == "auto" || method == "libcurl") {
+                # bulk download using libcurl
+                destfiles <- file.path(tmpd, basename(urls))
+                res <- try(df(urls, destfiles, "libcurl", ...))
+                if(!inherits(res, "try-error") && res == 0L) {
+                    if (length(urls) > 1) {
+                        retvals <- attr(res, "retvals")
+                        for(i in seq_along(retvals)) {
+                            this <- pkgs == urls[i]
+                            if (retvals[i] == 0L)
+                                pkgs[this] <- destfiles[i]
+                            else
+                                pkgs[this] <- NA
+                        }
+                    } else
+                        pkgs[web] <- destfiles
+                } else
+                    pkgs[web] <- NA 
+            } else {
+                # serial download
+                for (p in urls) {
+                    this <- pkgs == p
+                    destfile <- file.path(tmpd, basename(p))
+                    res <- try(df(p, destfile, method, ...))
+                    if(!inherits(res, "try-error") && res == 0L)
+                        pkgs[this] <- destfile
+                    else {
+                        ## There will be enough notification from the try()
+                        pkgs[this] <- NA
+                    }
                 }
-           }
+            }
         }
     }
-
 
     ## Look at type == "both"
     ## NB it is only safe to use binary packages with a macOS
