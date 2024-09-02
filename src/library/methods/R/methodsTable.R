@@ -173,7 +173,7 @@
     if(is.environment(current)) {
         if(is.environment(obj))
             list2env(as.list(obj, all.names=TRUE), current)
-        else if(is(obj, "MethdodDefinition")) {
+        else if(is(obj, "MethodDefinition")) {
             var <- .pkgMethodLabel(obj)
             if(nzchar(var)) assign(var, obj, envir = current)
         }
@@ -1159,12 +1159,14 @@ useMTable <- function(onOff = NA)
                              check = TRUE, inherited = FALSE)
 {
     name <- if(inherited) ".AllMTable" else ".MTable"
-    if(check && !exists(name, envir = env, inherits = FALSE)) {
-	.setupMethodsTables(fdef, initialize = TRUE)
-	if(!exists(name, envir = env, inherits = FALSE))
-	    stop("invalid methods table request")
+    if(check) {
+        get0(name, envir = env, inherits = FALSE) %||% {
+            .setupMethodsTables(fdef, initialize = TRUE)
+            get0(name, envir = env, inherits = FALSE) %||% stop("invalid methods table request") 
+        }
     }
-    get(name, envir = env)
+    else
+        get(name, envir = env)
 }
 
 .getGenericSigLength <- function(fdef, env = environment(fdef), check = TRUE) {
