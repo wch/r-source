@@ -40,16 +40,15 @@ function(x, y)
        (length(dy <- duplicated(y)) == length(y))) {
         if(!isa(x, cy))
             x <- c(y0, x)
+        x <- x[!dx]
+        y <- y[!dy]
     } else {
         x <- as.vector(x)
+        x <- x[!duplicated(x)]
         y <- as.vector(y)
-        y0 <- y[integer()]
-        dx <- duplicated(x)
-        dy <- duplicated(y)
+        y <- y[!duplicated(y)]
     }
-    x <- x[!dx]
-    y <- y[!dy & (match(y, x, 0L) == 0L)]
-    c(x, y)
+    c(x, y[match(y, x, 0L) == 0L])
 }
 
 intersect <-
