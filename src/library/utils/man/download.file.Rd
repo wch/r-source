@@ -1,6 +1,6 @@
 % File src/library/utils/man/download.file.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2022 R Core Team
+% Copyright 1995-2024 R Core Team
 % Distributed under GPL 2 or later
 
 \name{download.file}
@@ -274,7 +274,12 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   An (invisible) integer code, \code{0} for success and non-zero for
   failure.  For the \code{"wget"} and \code{"curl"} methods this is the
   status code returned by the external program.  The \code{"internal"}
-  method can return \code{1}, but will in most cases throw an error.
+  method can return \code{1}, but will in most cases throw an error.  When
+  simultaneously downloading two or more files (see the \code{url} argument)
+  and download of at least one file succeeds, \code{0} is returned with
+  attribute \code{retvals}, which provides an integer vector of the same
+  length as \code{url} with a result code for each file (\code{0} for
+  success and non-zero for failure).
 
   What happens to the destination file(s) in the case of error depends
   on the method and \R{} version. Currently the \code{"internal"},
