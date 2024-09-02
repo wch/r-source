@@ -3,7 +3,7 @@
 \title{Split Array/Matrix By Its Margins}
 \description{Split an array or matrix by its margins.}
 \usage{
-asplit(x, MARGIN)
+asplit(x, MARGIN, drop = FALSE)
 }
 \arguments{
   \item{x}{an array, including a matrix.}
@@ -12,10 +12,13 @@ asplit(x, MARGIN)
     columns, \code{c(1, 2)} indicates rows and columns.
     Where \code{x} has named dimnames, it can be a character vector
     selecting dimension names.}
+  \item{drop}{a logical indicating whether the splits should drop
+    dimensions and dimnames.}
 }
 \value{
   A \dQuote{list array} with dimension \eqn{dv} and each element an
-  array of dimension \eqn{de} and dimnames preserved as available, where
+  array of dimension \eqn{de} and dimnames preserved as available if
+  \code{drop} is false and a vector otherwise, where
   \eqn{dv} and \eqn{de} are, respectively, the dimensions of \code{x}
   included and not included in \code{MARGIN}.
 }

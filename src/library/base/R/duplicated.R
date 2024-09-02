@@ -57,7 +57,7 @@ function(x, incomparables = FALSE, MARGIN = 1L, fromLast = FALSE, ...)
                       paste(dx, collapse = ",")),
              domain = NA)
     temp <- if((ndim > 1L) && (prod(dx[-MARGIN]) > 1L))
-                asplit(x, MARGIN)
+                asplit(x, MARGIN, TRUE)
             else x
     res <- duplicated.default(temp, fromLast = fromLast, ...)
     dim(res) <- dim(temp)
@@ -96,7 +96,7 @@ function(x, incomparables = FALSE, MARGIN = 1L, fromLast = FALSE, ...)
                       paste(dx, collapse = ",")),
              domain = NA)
     temp <- if((ndim > 1L) && (prod(dx[-MARGIN]) > 1L))
-                asplit(x, MARGIN)
+                asplit(x, MARGIN, TRUE)
             else x
     anyDuplicated.default(temp, fromLast = fromLast)
 }
@@ -147,7 +147,7 @@ function(x, incomparables = FALSE, MARGIN = 1, fromLast = FALSE, ...)
                       paste(dx, collapse = ",")),
              domain = NA)
     temp <- if((ndim > 1L) && (prod(dx[-MARGIN]) > 1L))
-                asplit(x, MARGIN)
+                asplit(x, MARGIN, TRUE)
             else x
     args <- rep(alist(a=), ndim)
     names(args) <- NULL

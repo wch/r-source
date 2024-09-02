@@ -111,7 +111,7 @@ function(x, sep = "", base = list(LETTERS), unique = TRUE)
 ## (With 'X' replaced by 'x').
 
 asplit <-
-function(x, MARGIN)
+function(x, MARGIN, drop = FALSE)
 {
     ## Ensure that x is an array object
     dl <- length(dim(x))
@@ -146,7 +146,12 @@ function(x, MARGIN)
     d2 <- prod(d.ans)
     newx <- aperm(x, c(s.call, s.ans))
     dim(newx) <- c(prod(d.call), d2)
-    ans <- lapply(seq_len(d2), function(i) array(newx[,i], d.call, dn.call))
+    ans <- if(drop)
+               lapply(seq_len(d2),
+                      function(i) newx[, i])
+           else
+               lapply(seq_len(d2),
+                      function(i) array(newx[,i], d.call, dn.call))
     array(ans, d.ans, dn.ans)
 }
 
