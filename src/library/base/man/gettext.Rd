@@ -27,7 +27,8 @@ ngettext(n, msg1, msg2, domain = NULL)
 
 bindtextdomain(domain, dirname = NULL)
 
-Sys.setLanguage(lang, unset = "en", C.vs.en = c("msg", "warn", "silent"))
+Sys.setLanguage(lang, unset = "en", C.vs.en = c("msg", "warn", "silent"),
+                force = FALSE)
 }
 \arguments{
   \item{\dots}{one or more character vectors.}
@@ -51,6 +52,11 @@ Sys.setLanguage(lang, unset = "en", C.vs.en = c("msg", "warn", "silent"))
     When \code{"silent"}, nothing happens, when \code{"msg"}, a
     \code{\link{message}()} and if \code{"warn"} a \code{\link{warning}()}
     is signalled.}
+  \item{force}{logical indicating if in case of a \dQuote{hard} set
+    \code{"C"} locale, \code{Sys.setLanguage()} should try modifying the
+    locale (to \code{"en"}) in order to subsequently set the desired language
+    \code{lang}, currently only when \code{\link{.Platform}[["OS.type"]]}
+    is \code{"unix"}.}
 }
 \details{
   If \code{domain} is \code{NULL} (the default) in \code{gettext}

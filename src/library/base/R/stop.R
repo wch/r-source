@@ -126,7 +126,8 @@ gettextf <- function(fmt, ..., domain = NULL, trim = TRUE)
 
 ## Could think of using *several* domains, i.e. domain = vector; but seems complicated;
 ## the default domain="R"  seems to work for all of base R: {"R", "R-base", "RGui"}
-Sys.setLanguage <- function(lang, unset = "en", C.vs.en = c("msg", "warn", "silent"))
+Sys.setLanguage <- function(lang, unset = "en",
+                            C.vs.en = c("msg", "warn", "silent"), force = FALSE)
 {
     stopifnot(is.character(lang), length(lang) == 1L, # e.g., "es" , "fr_CA"
               lang == "C" || grepl("^[a-z][a-z]", lang))
@@ -144,6 +145,7 @@ Sys.setLanguage <- function(lang, unset = "en", C.vs.en = c("msg", "warn", "sile
                           warn = warning)
                else warning
     if(identical("C", Sys.getlocale()) && lang != "C") { ## e.g. LC_ALL=C R  on Linux
+      if(force) {
         lcSet <- if(.Platform[["OS.type"]] == "unix") # works to "undo LC_ALL=C"
                      paste0(collapse="", vapply(c("LC_ALL", "LC_MESSAGES"),
                                                 \(a) Sys.setlocale(a, "en_US.UTF-8"), ""))
@@ -154,10 +156,15 @@ Sys.setLanguage <- function(lang, unset = "en", C.vs.en = c("msg", "warn", "sile
             Warning(gettextf(
                 "In bare C locale: LANGUAGE reset, but message language may be unchanged"),
                 domain=NA)
+      } else { # !force (default) :
+          Warning(gettextf("In bare C locale, not forcing locale; possibly use 'force = TRUE'?"),
+                  domain=NA)
+          return(invisible(structure(curLang, ok = FALSE)))
+      }
     } else ok.lc <- TRUE
     ok <- Sys.setenv(LANGUAGE=lang)
     if(!ok)
-        Warning(gettextf('Sys.setenv(LANGUAGE="%s") may have failed', lang), domain=NA)
+        warning(gettextf('Sys.setenv(LANGUAGE="%s") may have failed', lang), domain=NA)
     ok. <- capabilities("NLS") &&
         isTRUE(bindtextdomain(NULL)) # only flush the cache (of already translated strings)
     invisible(structure(curLang, ok = ok && ok.lc && ok.))
