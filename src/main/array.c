@@ -2334,3 +2334,72 @@ attribute_hidden SEXP do_maxcol(SEXP call, SEXP op, SEXP args, SEXP rho)
     UNPROTECT(nprot);
     return ans;
 }
+
+#define ASPLIT_ITERATE( __body__ ) do {			\
+	for(i = 0; i < n2; i++) {			\
+	    PROTECT(e = allocVector(TYPEOF(x), n1));	\
+	    for(j = 0; j < n1; j++, k++) {		\
+		__body__ ;				\
+	    }						\
+	    if(keepdim) {				\
+		e = dimgets(e, dc);			\
+		if(havednc) {				\
+		    e = dimnamesgets(e, dnc);		\
+		}					\
+	    }						\
+	    UNPROTECT(1);				\
+	    SET_VECTOR_ELT(y, i, e);			\
+	}						\
+    } while (0)
+
+attribute_hidden SEXP do_asplit(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    checkArity(op, args);
+
+    SEXP x = CAR(args);   args = CDR(args);
+    SEXP da = CAR(args);  args = CDR(args);
+    SEXP dc = CAR(args);  args = CDR(args);
+    SEXP dna = CAR(args); args = CDR(args); 
+    SEXP dnc = CAR(args); args = CDR(args);
+    SEXP d1 = CAR(args);  args = CDR(args);
+    SEXP d2 = CAR(args);  args = CDR(args);
+    SEXP drop = CAR(args);
+    SEXP y, e;
+    int i, j, k, n1, n2;
+    Rboolean havednc, keepdim;
+    n1 = asInteger(d1);
+    n2 = asInteger(d2);
+    havednc = (!isNull(dnc) && length(dnc) > 0);
+    keepdim = (!asLogical(drop));
+    PROTECT(y = allocVector(VECSXP, n2));
+    y = dimgets(y, da);
+    if(!isNull(dna) && (length(dna) > 0)) {
+	y = dimnamesgets(y, dna);
+    }
+    k = 0;
+    switch(TYPEOF(x)) {
+    case LGLSXP:
+    case INTSXP:
+	ASPLIT_ITERATE( INTEGER(e)[j] = INTEGER(x)[k] );
+	break;
+    case REALSXP:
+	ASPLIT_ITERATE( REAL(e)[j] = REAL(x)[k] );
+	break;
+    case CPLXSXP:
+	ASPLIT_ITERATE( COMPLEX(e)[j] = COMPLEX(x)[k] );
+	break;
+    case STRSXP:
+	ASPLIT_ITERATE( SET_STRING_ELT(e, j, STRING_ELT(x, k)) );
+	break;
+    case VECSXP:
+	ASPLIT_ITERATE( SET_VECTOR_ELT(e, j, VECTOR_ELT(x, k)) );
+	break;
+    case RAWSXP:
+	ASPLIT_ITERATE( RAW(e)[j] = RAW(x)[k] );
+	break;
+    default:
+	UNIMPLEMENTED_TYPE("asplit", x);
+    }
+    UNPROTECT(1);
+    return y;
+}

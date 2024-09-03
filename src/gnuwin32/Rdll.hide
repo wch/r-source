@@ -759,6 +759,7 @@
  do_arrangeWindows
  do_array
  do_asCharacterFactor
+ do_asplit
  do_asPOSIXct
  do_asPOSIXlt
  do_as_environment
