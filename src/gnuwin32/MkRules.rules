@@ -5,7 +5,7 @@
 ## for Intel targets) is on PATH
 LOCAL_SOFT ?= $(shell which `echo $(CC) | sed -e 's/ .*//g'` | sed -e 's!/bin/[^/]\+!!g')
 EXT_LIBS ?= $(LOCAL_SOFT)
-G_FLAG ?= $(if (USE_LLVM),-g3,-gdwarf-2)
+G_FLAG ?= $(if $(USE_LLVM),-g3,-gdwarf-2)
 USE_ATLAS ?= NO
 ATLAS_PATH ?= 
 TOOL_PATH ?=
