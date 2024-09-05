@@ -49,6 +49,12 @@
 # aarch64)
 # USE_LLVM =
 
+# Set to NO to disable pkg-config. Otherwise, pkg-config will be used when
+# available to figure out C preprocessor flags and linking commands to link
+# R (and packages part of R distribution) against external libraries.
+# It is assumed that when available, pkg-config is on PATH.
+# USE_PKG_CONFIG =
+
 # Debug flag, -gdward-2 can be used with GCC, -g3 can be used with clang.
 # G_FLAG = -gdwarf-2
 

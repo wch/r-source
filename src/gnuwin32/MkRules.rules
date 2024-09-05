@@ -23,25 +23,65 @@ DT_ARCH ?=
 ## assumptions are made about the target (it is used with aarch64 builds)
 WIN ?= 64
 
+USE_PKG_CONFIG ?= 1
+ifdef USE_PKG_CONFIG
+  ifeq (,$(shell pkg-config --version 2>/dev/null))
+    USE_PKG_CONFIG =
+  endif
+  ifeq ($(filter-out no NO 0 off OFF,$(USE_PKG_CONFIG)),)
+    USE_PKG_CONFIG =
+  endif
+endif
+
 USE_ICU ?= YES
 ICU_PATH ?= 
-ICU_LIBS ?= -lsicuin -lsicuuc $(EXT_LIBS)/lib/sicudt.a -lstdc++
-# (dynamic linking) ICU_LIBS ?= -licuin -licuuc -licudt -lstdc++
 USE_CAIRO ?= YES
-CAIRO_CPPFLAGS ?= "-I$(EXT_LIBS)/include/cairo -I$(EXT_LIBS)/include/freetype2 -DCAIRO_WIN32_STATIC_BUILD"
-## support freetype, curl built with libbrotli and without
-LIBBROTLI = $(or $(and $(wildcard $(EXT_LIBS)/lib/libbrotlidec.a),-lbrotlidec -lbrotlicommon),)
-## support curl built with libpsl and without
-LIBPSL = $(or $(and $(wildcard $(EXT_LIBS)/lib/libpsl.a),-lpsl),)
-CAIRO_LIBS ?= "-lcairo -lfontconfig -lfreetype -lpng -lpixman-1 -lexpat -lharfbuzz \
-              -lbz2 -lintl -lz -liconv -luuid -lstdc++ -lgdi32 -lmsimg32 -lole32 \
-              $(LIBBROTLI)"
 CURL_CA_BUNDLE ?=
 USE_LIBCURL = yes
-CURL_LIBS ?= -lcurl $(LIBPSL) -lbcrypt -lzstd -lrtmp -lssl -lssh2 -lbcrypt -lgcrypt \
-             -lcrypto -lgdi32 -lz \
-             -lws2_32 -lgdi32 -lcrypt32 -lidn2 -lunistring -liconv -lgpg-error -lwldap32 \
-             -lwinmm $(LIBBROTLI)
+
+ifndef USE_PKG_CONFIG
+  ICU_LIBS ?= -lsicuin -lsicuuc $(EXT_LIBS)/lib/sicudt.a -lstdc++
+  # (dynamic linking) ICU_LIBS ?= -licuin -licuuc -licudt -lstdc++
+
+  CAIRO_CPPFLAGS ?= "-I$(EXT_LIBS)/include/cairo -I$(EXT_LIBS)/include/freetype2 -DCAIRO_WIN32_STATIC_BUILD"
+  ## support freetype, curl built with libbrotli and without
+  LIBBROTLI = $(or $(and $(wildcard $(EXT_LIBS)/lib/libbrotlidec.a),-lbrotlidec -lbrotlicommon),)
+  ## support curl built with libpsl and without
+  LIBPSL = $(or $(and $(wildcard $(EXT_LIBS)/lib/libpsl.a),-lpsl),)
+  CAIRO_LIBS ?= "-lcairo -lfontconfig -lfreetype -lpng -lpixman-1 -lexpat -lharfbuzz \
+                -lbz2 -lintl -lz -liconv -luuid -lstdc++ -lgdi32 -lmsimg32 -lole32 \
+                $(LIBBROTLI)"
+
+  CURL_LIBS ?= -lcurl $(LIBPSL) -lbcrypt -lzstd -lrtmp -lssl -lssh2 -lbcrypt -lgcrypt \
+               -lcrypto -lgdi32 -lz \
+               -lws2_32 -lgdi32 -lcrypt32 -lidn2 -lunistring -liconv -lgpg-error -lwldap32 \
+               -lwinmm $(LIBBROTLI)
+else
+  ifndef ICU_LIBS
+    # Some builds of ICU provide two data libraries, a small one 
+    # with no data (e.g. libsicudt.a) and a large one with the
+    # real data (e.g. sicudt.a). We want to link the large one
+    # in that case, but pkg-config may return the small one.
+    ICU_LIBS = $(patsubst -l%icudt, \
+      $(or $(firstword $(wildcard \
+        $(EXT_LIBS)/lib/icudt.dll $(EXT_LIBS)/bin/icudt.dll \
+        $(EXT_LIBS)/lib/icudt.a $(EXT_LIBS)/bin/icudt.a \
+        $(EXT_LIBS)/lib/sicudt.a $(EXT_LIBS)/bin/sicudt.a)), \
+      -l%icudt), \
+      $(shell pkg-config --libs icu-i18n))
+  endif
+
+  ifdef USE_LLVM
+    # work-around for incorrect .pc file
+    CAIRO_CPPFLAGS ?= "$(shell pkg-config --cflags cairo-fc) -I$(EXT_LIBS)/include/freetype2"
+  else
+    CAIRO_CPPFLAGS ?= "$(shell pkg-config --cflags cairo-fc)"
+  endif
+
+  CAIRO_LIBS ?= "$(shell pkg-config --libs cairo-fc)"
+
+  CURL_LIBS ?= $(shell pkg-config --libs libcurl)  
+endif
 
 BUILD_HTML ?= NO
 MIKTEX ?= TRUE

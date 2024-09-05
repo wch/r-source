@@ -44,7 +44,7 @@ R:
 	fi
 	@for pkg in $(R_PKGS_BASE1); do \
 	  $(MAKE) -C $${pkg} -f Makefile.win \
-             R_ARCH=$(R_ARCH) EXT_LIBS="$(EXT_LIBS)" \
+             R_ARCH=$(R_ARCH) EXT_LIBS="$(EXT_LIBS)" USE_PKG_CONFIG=$(USE_PKG_CONFIG) \
 	     all install-tests || exit 1; \
 	done
 	@$(MAKE) -C translations -f Makefile.win
@@ -113,7 +113,7 @@ metadata:
 clean:
 	@for pkg in $(R_PKGS_BASE); do \
 	  $(MAKE) --no-print-directory -C $${pkg} \
-	    -f Makefile.win R_ARCH=$(R_ARCH) clean-win; \
+	    -f Makefile.win R_ARCH=$(R_ARCH) USE_PKG_CONFIG=$(USE_PKG_CONFIG) clean-win; \
 	done
 	-@rm -f stamp-*
 
@@ -150,6 +150,8 @@ R_PKGS_SRC = graphics grid methods parallel splines stats tools utils tcltk grDe
 cross:
 	@for pkg in $(R_PKGS_SRC); do \
 	  echo "$(MAKE) -C $${pkg}/src -f Makefile.win"; \
-	  $(MAKE) -C $${pkg}/src -f Makefile.win R_ARCH=$(R_ARCH) || exit 1; \
+	  $(MAKE) -C $${pkg}/src -f Makefile.win \
+              R_ARCH=$(R_ARCH) \
+              USE_PKG_CONFIG=$(USE_PKG_CONFIG) || exit 1; \
 	done
 

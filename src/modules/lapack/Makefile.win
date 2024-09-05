@@ -19,7 +19,9 @@ LIBSOURCES90 = dlartg.f90 dlassq.f90 la_constants.f90 la_xisnan.f90 \
 LIBOBJECTS = $(LIBSOURCES:.f=.o) $(LIBSOURCES90:.f90=.o) init_win.o Rlapackrc.o
 
 CPPFLAGS = -I../../include -DHAVE_CONFIG_H
-dlamch-FFLAGS = -ffloat-store
+ifndef USE_LLVM
+  dlamch-FFLAGS = -ffloat-store
+endif
 
 la_constants.mod: la_constants.o
 la_xisnan.mod: la_xisnan.o

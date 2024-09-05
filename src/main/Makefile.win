@@ -68,11 +68,20 @@ saveload-CPPFLAGS = -I../extra/xdr
 serialize-CPPFLAGS = -I../extra/xdr
 sysutils-CPPFLAGS = -I../gnuwin32
 
-connections-CPPFLAGS = -DLZMA_API_STATIC -I"$(EXT_LIBS)"/include
 dounzip-CPPFLAGS = -I$(EXT_LIBS)/include
-grep-CPPFLAGS = -DPCRE2_STATIC -I../extra -I../gnuwin32 -I"$(EXT_LIBS)"/include
-platform-CPPFLAGS += -DPCRE2_STATIC -DLZMA_API_STATIC -I"$(EXT_LIBS)"/include
-util-CPPFLAGS = -DLZMA_API_STATIC -I"$(EXT_LIBS)"/include
+grep-CPPFLAGS = -I../extra -I../gnuwin32 
+
+ifndef USE_PKG_CONFIG
+  connections-CPPFLAGS = -DLZMA_API_STATIC -I"$(EXT_LIBS)"/include
+  grep-CPPFLAGS += -DPCRE2_STATIC -I"$(EXT_LIBS)"/include
+  platform-CPPFLAGS += -DPCRE2_STATIC -DLZMA_API_STATIC -I"$(EXT_LIBS)"/include
+  util-CPPFLAGS = -DLZMA_API_STATIC -I"$(EXT_LIBS)"/include
+else
+  connections-CPPFLAGS = $(shell pkg-config --cflags liblzma)
+  grep-CPPFLAGS += $(shell pkg-config --cflags libpcre2-8)
+  platform-CPPFLAGS += $(shell pkg-config --cflags liblzma libpcre2-8)
+  util-CPPFLAGS = $(shell pkg-config --cflags liblzma)
+endif
 
 ifdef USE_ICU
 platform-CPPFLAGS += -DUSE_ICU -I"$(ICU_PATH)"/include
