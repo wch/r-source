@@ -526,8 +526,13 @@ function(x,
     if(any(include == "comment"))
         x <- lapply(x,
                     function(e) {
-                        e$comment <-
-                            .expand_ORCID_identifier(e$comment, style)
+                        u <- .expand_ORCID_identifier(e$comment, style)
+                        if(!is.null(v <- names(u))) {
+                            i <- which(nzchar(v))
+                            if(length(i))
+                                u[i] <- paste0(v[i], ": ", u[i])
+                        }
+                        e$comment <- u
                         e
                     })
 
