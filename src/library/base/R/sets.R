@@ -22,31 +22,30 @@
 ## i.e., "vector-like".
 ## In the "same-kind" case we test for vector-like whether subscripting
 ## no items from x or y retains the class.
-## Where needed, we also check whether duplicated() on x or y has the
-## same length as x or y: for consistency this could always be done, at
-## a possible loss of efficiency where not needed.
 ## </NOTE>
 
 union <-
 function(x, y)
 {
+    if(!is.null(x)) {
+        x <- unique(x)
+        names(x) <- NULL
+    }
+    if(!is.null(y)) {
+        y <- unique(y)
+        names(y) <- NULL
+    }
     if(is.null(x)) return(y)
     if(is.null(y)) return(x)
     cx <- class(x)
     cy <- class(y)
     if((isa(x, cy) || isa(y, cx)) &&
-       identical(class(y0 <- y[integer()]), cy) &&
-       (length(dx <- duplicated(x)) == length(x)) &&
-       (length(dy <- duplicated(y)) == length(y))) {
+       identical(class(tryCatch(y[0L], error = identity)), cy)) {
         if(!isa(x, cy))
-            x <- c(y0, x)
-        x <- x[!dx]
-        y <- y[!dy]
+            x <- c(y[0L], x)
     } else {
         x <- as.vector(x)
-        x <- x[!duplicated(x)]
         y <- as.vector(y)
-        y <- y[!duplicated(y)]
     }
     c(x, y[match(y, x, 0L) == 0L])
 }
@@ -54,39 +53,34 @@ function(x, y)
 intersect <-
 function(x, y)
 {
-    if(is.null(x) || is.null(y))
-        return(NULL)
+    if(is.null(x) || is.null(y)) return(NULL)
+    x <- unique(x)
+    names(x) <- NULL
+    y <- unique(y)
+    names(y) <- NULL
     cx <- class(x)
     cy <- class(y)    
-    if((isa(x, cy) || isa(y, cx)) &&
-       identical(class(y0 <- y[integer()]), cy) &&
-       (length(dx <- duplicated(x)) == length(x))) {
-        x <- x[!dx]
-    } else {
+    if(!((isa(x, cy) || isa(y, cx)) &&
+         identical(class(tryCatch(y[0L], error = identity)), cy))) {
         x <- as.vector(x)
-        x <- x[!duplicated(x)]
         y <- as.vector(y)
-        y0 <- y[integer()]
     }
     ## Combining with y0 in the common class case is needed e.g. for
     ## factors to combine levels, and otherwise to get a common mode.
-    c(x[match(x, y, 0L) > 0L], y0)
+    c(x[match(x, y, 0L) > 0L], y[0L])
 }
 
 setdiff <-
 function(x, y)
 {
-    if(is.null(x) || is.null(y))
-        return(x)
+    if(is.null(x)) return(NULL)
+    x <- unique(x)
+    names(x) <- NULL
     cx <- class(x)
-    cy <- class(y)    
-    if((isa(x, cy) || isa(y, cx)) &&
-       identical(class(x[integer()]), cx) &&
-       (length(dx <- duplicated(x)) == length(x))) {
-        x <- x[!dx]
-    } else {
+    cy <- class(y)
+    if(!((isa(x, cy) || isa(y, cx)) &&
+         identical(class(tryCatch(y[0L], error = identity)), cy))) {
         x <- as.vector(x)
-        x <- x[!duplicated(x)]
         y <- as.vector(y)
     }
     x[match(x, y, 0L) == 0L]
@@ -98,7 +92,7 @@ function(x, y)
     cx <- class(x)
     cy <- class(y)    
     if(!((isa(x, cy) || isa(y, cx)) &&
-         identical(class(x[integer()]), cx))) {
+         identical(class(tryCatch(x[0L], error = identity)), cx))) {
         x <- as.vector(x)
         y <- as.vector(y)
     }
@@ -116,7 +110,7 @@ function(el, set)
     cx <- class(x)
     cy <- class(y)    
     if(!((isa(x, cy) || isa(y, cx)) &&
-         identical(class(x[integer()]), cx))) {
+         identical(class(tryCatch(x[0L], error = identity)), cx))) {
         x <- as.vector(x)
         y <- as.vector(y)
     }

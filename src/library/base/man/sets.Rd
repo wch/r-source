@@ -44,7 +44,7 @@ is.element(el, set)
   \dQuote{same kind} (in the sense that \code{\link{isa}(x, class(y))}
   or \code{\link{isa}(y, class(x))} which appear to be
   \dQuote{vector-like} (in the sense that subscripting \code{x} and/or
-  \code{y} by \code{integer()} leaves the class unchanged) are no longer
+  \code{y} by \code{0L} leaves the class unchanged) are no longer
   transformed.   In particular, union, intersection and set difference
   of two factors now give factors (see the examples). 
   
