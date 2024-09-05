@@ -513,8 +513,12 @@ tar <- function(tarfile, files = NULL,
             header[117:123] <- charToRaw(sprintf("%07o", gid))
 	}
         header[137:147] <- charToRaw(sprintf("%011o", as.integer(info$mtime)))
-        if (info$isdir) header[157L] <- charToRaw("5")
-        else {
+        ## size is 0 for directories and for links.
+        size <- info$size
+        if (info$isdir) {
+            header[157L] <- charToRaw("5")
+            size <- 0
+        } else {
             lnk <- Sys.readlink(f)
             if(is.na(lnk)) lnk <- ""
             header[157L] <- charToRaw(ifelse(nzchar(lnk), "2", "0"))
@@ -529,8 +533,6 @@ tar <- function(tarfile, files = NULL,
                 size <- 0
             }
         }
-        ## size is 0 for directories and it seems for links.
-        size <- if(info$isdir) 0 else info$size
         if(size >= 8^11) stop("file size is limited to 8GB")
         header[125:135] <- .Call(C_octsize, size)
         ## the next two are what POSIX says, not what GNU tar does.
