@@ -23,8 +23,8 @@
 
 #define R_USE_SIGNALS 1
 #include <Defn.h>
+/* -> Errormsg.h , R_ext/Error.h */
 #include <Internal.h>
-/* -> Errormsg.h */
 #include <Startup.h> /* rather cleanup ..*/
 #include <Rconnections.h>
 #include <Rinterface.h>
@@ -755,9 +755,6 @@ verrorcall_dflt(SEXP call, const char *format, va_list ap)
 	allowedConstsChecks--;
 	R_checkConstants(TRUE);
     }
-    RCNTXT cntxt;
-    char *p, *tr;
-    int oldInError;
 
     if (inError) {
 	/* fail-safe handler for recursive errors */
@@ -781,8 +778,10 @@ verrorcall_dflt(SEXP call, const char *format, va_list ap)
     }
 
     /* set up a context to restore inError value on exit */
+    RCNTXT cntxt;
     begincontext(&cntxt, CTXT_CCODE, R_NilValue, R_BaseEnv, R_BaseEnv,
 		 R_NilValue, R_NilValue);
+    int oldInError;
     cntxt.cend = &restore_inError;
     cntxt.cenddata = &oldInError;
     oldInError = inError;
@@ -854,7 +853,7 @@ verrorcall_dflt(SEXP call, const char *format, va_list ap)
     }
     else {
 	Rsnprintf_mbcs(errbuf, BUFSIZE, _("Error: "));
-	p = errbuf + strlen(errbuf);
+	char *p = errbuf + strlen(errbuf);
 	Rvsnprintf_mbcs(p, max(msg_len - strlen(errbuf), 0), format, ap);
     }
     /* Approximate truncation detection, may produce false positives.  Assumes
@@ -867,13 +866,13 @@ verrorcall_dflt(SEXP call, const char *format, va_list ap)
 	mbcsTruncateToValid(errbuf);
 	ERRBUFCAT("...\n");
     } else {
-	p = errbuf + nc - 1;
+	char *p = errbuf + nc - 1;
 	if(*p != '\n') {
 	    ERRBUFCAT("\n");  // guaranteed to have room for this
 	    ++nc;
 	}
 	if(R_ShowErrorCalls && call != R_NilValue) {  /* assume we want to avoid deparse */
-	    tr = R_ConciseTraceback(call, 0);
+	    char *tr = R_ConciseTraceback(call, 0);
 	    size_t nc_tr = strlen(tr);
 	    if (nc_tr) {
 		char * call_trans = _("Calls:");
@@ -2752,7 +2751,30 @@ SEXP R_makeErrorCondition(SEXP call,
     va_end(ap);
     return cond;
 }
-			  
+
+NORET void R_MissingArgError_c(const char* arg, SEXP call, const char* subclass)
+{
+    if (call == R_CurrentExpression) /* as error() */
+	call = getCurrentCall();
+    PROTECT(call);
+    SEXP cond;
+    if(*arg)
+	cond = R_makeErrorCondition(call, "missingArgError", subclass, 0,
+				    _("argument \"%s\" is missing, with no default"), arg);
+    else
+	cond = R_makeErrorCondition(call, "missingArgError", subclass, 0,
+				    _("argument is missing, with no default"));
+    PROTECT(cond);
+    R_signalErrorCondition(cond, call);
+    UNPROTECT(2); /* not reached */
+}
+
+NORET void R_MissingArgError(SEXP symbol, SEXP call, const char* subclass)
+{
+    R_MissingArgError_c(CHAR(PRINTNAME(symbol)), call, subclass);
+}
+
+
 attribute_hidden /* for now */
 void R_setConditionField(SEXP cond, R_xlen_t idx, const char *name, SEXP val)
 {

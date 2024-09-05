@@ -80,7 +80,10 @@
 
       \item \code{pnorm(x)} underflows more gracefully.
 
-      \item \code{get(nam, env)} now signals a \emph{classed} error (\code{"getMissingError"})
+      \item \code{get(nam, env)} now signals a \emph{classed} error,
+      \code{"getMissingError"}, as \dQuote{subclass} of
+      \code{"missingArgError"}  where the latter is used also in similar
+      situations, e.g., \code{f <- function(x) exp(x); try(f())} .
     }
   }
 

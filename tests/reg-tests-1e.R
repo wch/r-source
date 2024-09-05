@@ -1484,6 +1484,8 @@ if(attr(oL, "ok") && capabilities("NLS") && !is.na(.popath)
 M <- alist(.=)$.
 stopifnot(missing(M))
 try( M ) # --> Error: argument "M" is missing, with no default  (typically English)
+(e0 <- tryCatch(M, error=identity)) # <evalError: argument "M" is missing, with no default>
+stopifnot(c("evalError", "missingArgError", "error") %in% class(e0))
 ls.str(pattern = "^M$") # (typically:)   M : <missing>
 (oL <- tryCatch(Sys.setLanguage("de"), warning = identity, error = identity))
 try( M ) # in good case --> Error : Argument "M" fehlt (ohne Standardwert)
@@ -1491,6 +1493,42 @@ try( M ) # in good case --> Error : Argument "M" fehlt (ohne Standardwert)
 rm(M); if(isTRUE(attr(oL,"ok"))) Sys.setLanguage(oL) # reset LANGUAGE etc
 stopifnot(endsWith(out, "<missing>"))
 ## failed in R <= 4.4.1; out was  "M : Argument \"M\" fehlt <...>"
+
+
+## "missingArgError" w/ subclasses:
+getER <- function(expr) tryCatch(force(expr), error=\(.).)
+(ee <- getER((function(x)x)()))
+class(ee) #  "evalError" "missingArgError"  "error" "condition"
+f <- function() identity()
+e2 <- attr(try(f()), "condition") # Error in identity() : argument "x" is missing, with no default
+f <- compiler::cmpfun(f)
+e3 <- getER(f())
+f <- function(arg) is.factor(arg)
+g <- function(x) f(x)
+e4 <- getER(f())
+e5 <- getER(g())
+f <- compiler::cmpfun(f)
+g <- compiler::cmpfun(g)
+e4c <- getER(f())
+e5c <- getER(g())
+eev <- getER((function() eval(quote(expr = )))())
+is.evalErr   <- function(E) c("evalError",   "missingArgError", "error") %in% class(E)
+is.getvarErr <- function(E) c("getvarError", "missingArgError", "error") %in% class(E)
+f <- function(x) exp(x); eM <- getER(f()) # *not* the same as e2
+eM2 <- getER((function(x) exp(x))()) # same as eM
+stopifnot(exprs = {
+    is.evalErr(ee)
+    is.evalErr(e4)
+    is.evalErr(e5)
+    is.evalErr(eev)
+    is.evalErr(eM)
+    is.evalErr(eM2)
+    identical(e2, e3)
+    is.getvarErr(e2)
+    is.getvarErr(e4c)
+    is.getvarErr(e5c)
+})
+## all these classed errors are new in R >= 4.5.0
 
 
 
