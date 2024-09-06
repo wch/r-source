@@ -74,7 +74,22 @@ extern void R_chk_free(void *);
 
 /* S Like Fortran Interface */
 /* These may not be adequate everywhere. Convex had _ prepending common
-   blocks, and some compilers may need to specify Fortran linkage */
+   blocks, and some compilers may need to specify Fortran linkage.
+
+   Note that this is an F77 interface, intended only for valid F77
+   names of <= 6 ASCII characters (and no underscores) and there is an
+   implicit assumption that the Fortran compiler maps names to
+   lower-case (and 'x' is lower-case when called).
+
+   The configure code has
+
+   HAVE_F77_EXTRA_UNDERSCORE
+   Define if your Fortran compiler appends an extra_underscore to
+   external names containing an underscore.
+
+   but that is not used here (and none of gfortran, flang-new nor
+   x86_64 ifx do so: earlier Intel x86 compilere might have).
+ */
 
 #ifdef HAVE_F77_UNDERSCORE
 # define F77_CALL(x)	x ## _
