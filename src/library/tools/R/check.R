@@ -1074,9 +1074,9 @@ add_dummies <- function(dir, Log)
                 ## Quick fix for consequences of c87095.
                 if(diff[1L]
                    && grepl("<https://orcid.org/", y[1L], fixed = TRUE)) {
-                    y1 <- sub("ORCID: <https://orcid.org/",
-                              "<https://orcid.org/",
-                              y[1L], fixed = TRUE)
+                    y1 <- gsub("ORCID: <https://orcid.org/",
+                               "<https://orcid.org/",
+                               y[1L], fixed = TRUE)
                     diff[1L] <- clean_up(y1) != yorig[1L]
                 }
                 ## </FIXME>
