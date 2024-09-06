@@ -1071,12 +1071,22 @@ add_dummies <- function(dir, Log)
                 y <- sapply(y, clean_up)
                 diff <- y != yorig
                 ## <FIXME>
+                ## Quick fix for consequences of c87095.
+                if(diff[1L]
+                   && grepl("<https://orcid.org/", y[1L], fixed = TRUE)) {
+                    y1 <- sub("ORCID: <https://orcid.org/",
+                              "<https://orcid.org/",
+                              y[1L], fixed = TRUE)
+                    diff[1L] <- clean_up(y1) != yorig[1L]
+                }
+                ## </FIXME>
+                ## <FIXME>
+                ## Remove eventually.
                 if(diff[1L]
                    && grepl("https://orcid.org/", y[1L], fixed = TRUE)) {
                     ## Argh.  Might be from using the new ORCID id
                     ## mechanism but having built with R < 3.5.0.
                     ## Let's ignore ...
-                    ## Remove eventually.
                     aar$comment <- lapply(aar$comment, unname)
                     y1 <- utils:::.format_authors_at_R_field_for_author(aar)
                     diff[1L] <- clean_up(y1) != yorig[1L]
