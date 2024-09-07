@@ -15353,13 +15353,14 @@ to define a function in C to be called from Fortran
 to declare a Fortran routine in C before use
 @item F77_CALL(@var{name})
 to call a Fortran routine from C
-@item F77_COMDECL(@var{name})
-to declare a Fortran common block in C
-@item F77_COM(@var{name})
-to access a Fortran common block from C
+@c Never used in R nor current packages
+@c @item F77_COMDECL(@var{name})
+@c to declare a Fortran common block in C
+@c @item F77_COM(@var{name})
+@c to access a Fortran common block from C
 @end table
 
-On most current platforms these are all the same, but it is unwise to
+On current platforms these are the same, but it is unwise to
 rely on this.  Note that names containing underscores were not legal in
 Fortran 77, and are not portably handled by the above macros.  (Also,
 all Fortran names for use by @R{} are lower case, but this is not
