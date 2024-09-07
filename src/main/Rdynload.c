@@ -1107,6 +1107,8 @@ R_dlsym(DllInfo *info, char const *name,
     snprintf(buf, len, "_%s", name);
 #endif
 
+/* HAVE_F77_EXTRA_UNDERSCORE is only use here and not in F77_NAME etc.
+   It seems of only historical interest */
 #ifdef HAVE_F77_UNDERSCORE
     if(symbol && symbol->type == R_FORTRAN_SYM) {
 	strcat(buf, "_");

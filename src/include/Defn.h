@@ -897,6 +897,7 @@ extern void R_WaitEvent(void);
 # define FILESEP     "/"
 #endif /* Win32 */
 
+/* A minimal version of F77_SUB from RS.h */
 #ifdef HAVE_F77_UNDERSCORE
 # define F77_SYMBOL(x)	x ## _
 # define F77_QSYMBOL(x)	#x "_"

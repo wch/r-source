@@ -88,7 +88,8 @@ extern void R_chk_free(void *);
    external names containing an underscore.
 
    but that is not used here (and none of gfortran, flang-new nor
-   x86_64 ifx do so: earlier Intel x86 compilere might have).
+   x86_64 ifx do so: earlier Intel x86 compilere might have).  It is
+   used in Rdynload.c to support .Fortran.
  */
 
 #ifdef HAVE_F77_UNDERSCORE

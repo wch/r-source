@@ -753,7 +753,7 @@ static void download_close_finished(download_cleanup_info *c)
 	/* compute URL index */
 	int *url_errs = NULL;
 	curl_easy_getinfo(msg->easy_handle, CURLINFO_PRIVATE, &url_errs);
-	int i = url_errs - c->errs;
+	int i = (int)(url_errs - c->errs);
 
         if (msg->data.result != CURLE_OK)
             download_report_url_error(msg);
