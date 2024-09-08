@@ -84,6 +84,9 @@
       \code{"getMissingError"}, as \dQuote{subclass} of
       \code{"missingArgError"}  where the latter is used also in similar
       situations, e.g., \code{f <- function(x) exp(x); try(f())} .
+
+      \item The set operations now avoid the \code{as.vector()}
+      transformation for same-kind apparently vector-like operands.
     }
   }
 
