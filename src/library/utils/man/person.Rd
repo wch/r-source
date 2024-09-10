@@ -174,7 +174,7 @@ as.person(x)
   below).
 
   Where more than one entity is given a \code{"cph"} role, the
-  \code{comment} field should be uswd to delimit who owns the copyright
+  \code{comment} field should be used to delimit who owns the copyright
   to what parts of the package.
 }
 \seealso{
