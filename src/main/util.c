@@ -55,6 +55,8 @@ void R_wfixslash(wchar_t *s);
 extern "C" {
 #endif
 
+
+/*  F77_SYMBOL is defined in Defn.h as a minimal F77_SUB. */
 #if defined FC_LEN_T
 # include <stddef.h>
 void F77_SYMBOL(rwarnc)(char *msg, int *nchar, FC_LEN_T msg_len);

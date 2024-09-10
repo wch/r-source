@@ -76,6 +76,9 @@ extern void R_chk_free(void *);
 /* These may not be adequate everywhere. Convex had _ prepending common
    blocks, and some compilers may need to specify Fortran linkage.
 
+   HP-UX did not add a trailing underscore.  (It still existed in
+   2024, but R poiorts had not been seen for many years.)
+
    Note that this is an F77 interface, intended only for valid F77
    names of <= 6 ASCII characters (and no underscores) and there is an
    implicit assumption that the Fortran compiler maps names to
@@ -90,6 +93,14 @@ extern void R_chk_free(void *);
    but that is not used here (and none of gfortran, flang-new nor
    x86_64 ifx do so: earlier Intel x86 compilere might have).  It is
    used in Rdynload.c to support .Fortran.
+
+   These macros have always been the same in R.  Their documented uses are
+
+   F77_SUB to define a function in C to be called from Fortran 
+   F77_NAME to declare a Fortran routine in C before use 
+   F77_CALL to call a Fortran routine from C
+
+   F77_SYMNOL in Defn.h is the same as F77_SUB.
  */
 
 #ifdef HAVE_F77_UNDERSCORE
@@ -99,6 +110,7 @@ extern void R_chk_free(void *);
 #endif
 #define F77_NAME(x)    F77_CALL(x)
 #define F77_SUB(x)     F77_CALL(x)
+/* Last two are historical from S, not used in R,, not longer documented */
 #define F77_COM(x)     F77_CALL(x)
 #define F77_COMDECL(x) F77_CALL(x)
 

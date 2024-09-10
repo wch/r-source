@@ -252,6 +252,7 @@ static const R_CallMethodDef CallEntries[] = {
     {NULL, NULL, 0}
 };
 
+/* One could argue that these are calls and so should be F77_CALL */
 #define FDEF(name)  {#name, (DL_FUNC) &F77_NAME(name), sizeof(name ## _types)/sizeof(name ## _types[0]), name ##_types}
 
 
