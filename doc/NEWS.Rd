@@ -1,6 +1,5 @@
 % -*- coding: utf-8 -*-
 \newcommand{\Rlogo}{\if{html}{\figure{../../html/Rlogo.svg}{options: class="toplogo" alt="[R logo]"}}\if{latex}{\figure{Rlogo.pdf}{options: width=0.5in}}}
-\newcommand{\abbr}[1]{#1}
 
 \name{NEWS}
 \title{R News}
