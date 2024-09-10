@@ -1,6 +1,6 @@
 % File src/library/utils/man/person.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2020 R Core Team
+% Copyright 1995-2024 R Core Team
 % Distributed under GPL 2 or later
 
 \name{person}
@@ -138,7 +138,9 @@ as.person(x)
       substantial contributions to the package.}
     \item{\code{"cph"}}{(Copyright holder) Use for all copyright
       holders.  This is a legal concept so should use the legal name of
-      an institution or corporate body.}
+      an institution or corporate body.  Note that authors which are
+      \sQuote{natural persons} are by default copyright holders and so
+      do not need to be given this role.}
     \item{\code{"cre"}}{(Creator) Use for the package maintainer.}
     \item{\code{"ctb"}}{(Contributor) Use for authors who have made
       smaller contributions (such as code patches etc.) but should not
@@ -170,7 +172,10 @@ as.person(x)
   information), and be displayed as the corresponding \abbr{URI}s by the
   \code{print()} and \code{format()} methods (see \bold{Examples}
   below).
-  
+
+  Where more than one entity is given a \code{"cph"} role, the
+  \code{comment} field should be uswd to delimit who owns the copyright
+  to what parts of the package.
 }
 \seealso{
   \code{\link{citation}}
