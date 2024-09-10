@@ -1,7 +1,7 @@
 /*
  *  Mathlib - A Mathematical Function Library
  *  Copyright (C) 1998  Ross Ihaka
- *  Copyright (C) 2000-2014 The R Core Team
+ *  Copyright (C) 2000-2024 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -53,7 +53,7 @@ attribute_hidden double Rf_d1mach(int i)
 extern "C" 
 #endif
 
-double F77_NAME(d1mach)(int *i)
+double F77_SUB(d1mach)(int *i)
 {
     return Rf_d1mach(*i);
 }

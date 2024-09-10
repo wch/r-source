@@ -1,7 +1,7 @@
 /*
  *  Mathlib - A Mathematical Function Library
  *  Copyright (C) 1998  Ross Ihaka
- *  Copyright (C) 2000-7 The R Core Team
+ *  Copyright (C) 2000-2024 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -51,7 +51,7 @@ attribute_hidden int Rf_i1mach(int i)
     }
 }
 
-int F77_NAME(i1mach)(int *i)
+int F77_SUB(i1mach)(int *i)
 {
     return Rf_i1mach(*i);
 }

@@ -1127,10 +1127,10 @@ attribute_hidden void CustomPrintValue(SEXP s, SEXP env)
 
 attribute_hidden
 #ifdef FC_LEN_T
-void F77_NAME(dblep0) (const char *label, int *nchar, double *data, int *ndata,
+void F77_SUB(dblep0) (const char *label, int *nchar, double *data, int *ndata,
 		       const FC_LEN_T label_len)
 #else
-void F77_NAME(dblep0) (const char *label, int *nchar, double *data, int *ndata)
+void F77_SUB(dblep0) (const char *label, int *nchar, double *data, int *ndata)
 #endif
 {
     int nc = *nchar;
@@ -1147,10 +1147,10 @@ void F77_NAME(dblep0) (const char *label, int *nchar, double *data, int *ndata)
 
 attribute_hidden
 #ifdef FC_LEN_T
-void F77_NAME(intpr0) (const char *label, int *nchar, int *data, int *ndata,
+void F77_SUB(intpr0) (const char *label, int *nchar, int *data, int *ndata,
 		       const FC_LEN_T label_len)
 #else
-void F77_NAME(intpr0) (const char *label, int *nchar, int *data, int *ndata)
+void F77_SUB(intpr0) (const char *label, int *nchar, int *data, int *ndata)
 #endif
 {
     int nc = *nchar;
@@ -1168,10 +1168,10 @@ void F77_NAME(intpr0) (const char *label, int *nchar, int *data, int *ndata)
 
 attribute_hidden
 #ifdef FC_LEN_T
-void F77_NAME(realp0) (const char *label, int *nchar, float *data, int *ndata,
+void F77_SUB(realp0) (const char *label, int *nchar, float *data, int *ndata,
 		      const FC_LEN_T label_len)
 #else
-void F77_NAME(realp0) (const char *label, int *nchar, float *data, int *ndata)
+void F77_SUB(realp0) (const char *label, int *nchar, float *data, int *ndata)
 #endif
 {
     int nc = *nchar, nd = *ndata;
@@ -1198,10 +1198,10 @@ void F77_NAME(realp0) (const char *label, int *nchar, float *data, int *ndata)
 /* Fortran-callable error routine for lapack */
 
 #ifdef FC_LEN_T
-NORET void F77_NAME(xerbla)(const char *srname, int *info,
+NORET void F77_SUB(xerbla)(const char *srname, int *info,
 			    const FC_LEN_T srname_len)
 #else
-NORET void F77_NAME(xerbla)(const char *srname, int *info)
+NORET void F77_SUB(xerbla)(const char *srname, int *info)
 #endif
 {
    /* srname is not null-terminated.  It will be 6 characters for
