@@ -483,7 +483,7 @@ Auto-generated package citation information takes advantage of this
 specification. The @samp{Author} and @samp{Maintainer} fields are
 auto-generated from it if needed when building@footnote{at least if this
 is done in a locale which matches the package encoding.}  or installing.
-Note that for CRAN submissions, providing @samp{Authors@R} is required,
+Note that for CRAN submissions, providing @samp{Authors@@R} is required,
 and providing @abbr{ORCID} identifiers (see @url{https://orcid.org/})
 where possible is strongly encouraged.
 
