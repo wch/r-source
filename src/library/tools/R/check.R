@@ -323,6 +323,7 @@ add_dummies <- function(dir, Log)
         text <- strsplit(text, "\n")[[1L]]
         printLog(Log, paste(strwrap(text), collapse = "\n"), "\n")
     }
+    InstLog <-NA_character_ # set in check_src()
 
   ## used for R_runR2 and
   ## .check_package_description
@@ -667,7 +668,9 @@ add_dummies <- function(dir, Log)
                     wrapLog(msg)
                 }
             }
-        }
+         }
+
+        check_rust()
 
         miss <- file.path("inst", "doc", c("Rplots.ps", "Rplots.pdf"))
         if (any(f <- file.exists(miss))) {
@@ -3752,6 +3755,7 @@ add_dummies <- function(dir, Log)
                        else
                            file.path(pkgoutdir, "00install.out")
             if (file.exists(instlog) && dir.exists('src')) {
+                InstLog <<- instlog
                 checkingLog(Log, "compilation flags used")
                 lines <- readLines(instlog, warn = FALSE)
                 ## skip stuff before building libs
@@ -3917,6 +3921,39 @@ add_dummies <- function(dir, Log)
                     else paste0(msg2, ".")
                     )
         } else resultLog(Log, "OK")
+    }
+
+    check_rust <- function()
+    {
+        ## It is impossible to tell definiitively if a package
+        ## compiles rust code.  SystemRequirements in DESCRIPTION is
+        ## fres-format, and only advisory.  So we look at the
+        ## installation log, which we found in check_src()
+        if (is.na(InstLog)) return (NA)
+        ##message("InstLog = ", InstLog)
+        lines <- readLines(InstLog, warn = FALSE)
+        l1 <- grep("(cargo build|   Compiling )", lines)
+        if(!length(l1)) return(NA)
+        checkingLog(Log, "Rust compilation")
+        msg <- character(); OK <- TRUE
+        if(any(grep("Downloading crates ...", lines))) {
+            OK <- FALSE
+            msg <- c(msg, "Downloads Rust crates")
+        }
+        lines <- lines[1:l1[1L]]
+        patt <- "rustc *[[:digit:]]+[].][[:digit:]]"
+        ans <- any(grepl(patt, lines, ignore.case = TRUE))
+        if(!ans) {
+            OK <- FALSE
+            msg <- c(msg, "No rustc version reported prior to compilation")
+##            print(lines)
+        }
+        if(OK)
+            resultLog(Log, "OK")
+        else {
+            msg <- paste(paste0("  ", msg), collapse = "\n")
+            warningLog(Log, msg)
+        }
     }
 
     check_loading <- function(arch = "")
