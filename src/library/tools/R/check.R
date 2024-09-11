@@ -3934,13 +3934,14 @@ add_dummies <- function(dir, Log)
         lines <- readLines(InstLog, warn = FALSE)
         l1 <- grep("(cargo build|   Compiling )", lines)
         if(!length(l1)) return(NA)
+        l2 <- grep("   Compiling ", lines)
         checkingLog(Log, "Rust compilation")
         msg <- character(); OK <- TRUE
-        if(any(grep("Downloading crates ...", lines))) {
+        if(any(grep("Downloading crates ...", lines, fixed = TRUE))) {
             OK <- FALSE
             msg <- c(msg, "Downloads Rust crates")
         }
-        lines <- lines[1:l1[1L]]
+        lines <- if(length(l2)) lines[1:l2[1L]] else lines[1:l1[1L]]
         patt <- "rustc *[[:digit:]]+[].][[:digit:]]"
         ans <- any(grepl(patt, lines, ignore.case = TRUE))
         if(!ans) {
