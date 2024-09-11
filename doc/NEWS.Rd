@@ -97,6 +97,9 @@
 
       \item Building the HTML (and Info) versions of the R manuals now
       requires \command{texi2any} from \I{Texinfo} 6.1 or later.
+
+      \item Failures in building the manuals under \file{doc} now abort
+      the installation, removing sny file which caused the failure.
     }
   }
 

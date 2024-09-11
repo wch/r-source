@@ -191,7 +191,7 @@ $(texinputs_BASE): FORCE
 	  "tools:::.Rdnewer(\"$(top_srcdir)/src/library/$${pkg}\", \"$@\")"; then \
 	  $(ECHO) "collecting LaTeX docs for package '$${pkg}' ..."; \
 	  $(ECHO) "tools:::.pkg2tex(\"$(top_builddir)/library/$${pkg}\")" \
-	    | LC_ALL=C $(R_EXE) ; \
+	    | LC_ALL=C $(R_EXE) || rm $^ ; \
 	fi)
 FORCE:
 
@@ -201,7 +201,7 @@ $(texinputs_RECOMMENDED): FORCE
 	    -print 2> /dev/null | grep $@ > /dev/null; then :; else \
 	  $(ECHO) "collecting LaTeX docs for package '$${pkg}' ..."; \
 	  $(ECHO) "tools:::.pkg2tex(\"$(top_builddir)/library/$${pkg}\")" \
-	    | LC_ALL=C $(R_EXE) ; \
+	    | LC_ALL=C $(R_EXE) || rm $^ ; \
 	fi)
 
 version.texi: Makefile $(top_srcdir)/VERSION $(SVN_REV)

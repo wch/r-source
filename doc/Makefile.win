@@ -14,28 +14,28 @@ all: NEWS.rds html/NEWS.html NEWS NEWS.pdf NEWS.2.rds NEWS.3.rds \
 NEWS.rds: NEWS.Rd
 	@$(ECHO) "options(warn=1);saveRDS(tools:::prepare_Rd(tools::parse_Rd(\"$<\", \
 	  macros = \"../share/Rd/macros/system.Rd\"), stages = \"install\", \
-	  warningCalls = FALSE), \"$@\")" | $(R_EXE)
+	  warningCalls = FALSE), \"$@\")" | $(R_EXE) || rm $^
 
 NEWS.2.rds: NEWS.2.Rd
 	@$(ECHO) "options(warn=1);saveRDS(tools:::prepare_Rd(tools::parse_Rd(\"$<\", \
 	  macros = \"../share/Rd/macros/system.Rd\"), stages = \"install\", \
-	  warningCalls = FALSE), \"$@\")" | $(R_EXE)
+	  warningCalls = FALSE), \"$@\")" | $(R_EXE) || rm $^
 
 NEWS.3.rds: NEWS.3.Rd
 	@$(ECHO) "options(warn=1);saveRDS(tools:::prepare_Rd(tools::parse_Rd(\"$<\", \
 	  macros = \"../share/Rd/macros/system.Rd\"), stages = \"install\", \
-	  warningCalls = FALSE), \"$@\")" | $(R_EXE)
+	  warningCalls = FALSE), \"$@\")" | $(R_EXE) || rm $^
 
 CHANGES.rds: ../src/gnuwin32/CHANGES.Rd
 	@$(ECHO) "options(warn=1);saveRDS(tools:::prepare_Rd(tools::parse_Rd(\"$<\", \
 	  macros = \"../share/Rd/macros/system.Rd\"), stages = \"install\", \
-	  warningCalls = FALSE), \"$@\")" | $(R_EXE)
+	  warningCalls = FALSE), \"$@\")" | $(R_EXE) || rm $^
 
 ## Force ASCII output, for portability on Windows
 NEWS: NEWS.rds
 	@$(ECHO) "creating doc/NEWS"
 	@$(ECHO) "options(warn=1);tools:::Rd2txt_NEWS_in_Rd(\"$<\", \"$@\", \
-	  outputEncoding = \"ASCII//TRANSLIT\")" | $(R_EXE)
+	  outputEncoding = \"ASCII//TRANSLIT\")" | $(R_EXE) || rm $^
 
 ## Should be allowed to fail if pdflatex is not available
 NEWS.pdf: NEWS.rds
@@ -45,15 +45,15 @@ NEWS.pdf: NEWS.rds
 
 CHANGES: CHANGES.rds
 	@$(ECHO) "options(warn=1);tools:::Rd2txt_NEWS_in_Rd(\"$<\", \"$@\", \
-	  outputEncoding = \"ASCII//TRANSLIT\")" | $(R_EXE)
+	  outputEncoding = \"ASCII//TRANSLIT\")" | $(R_EXE) || rm $^
 
 html/NEWS.html: NEWS.rds
 	@$(ECHO) "options(warn=1);tools:::Rd2HTML_NEWS_in_Rd(\"$<\", \"$@\")" | \
-	  $(R_EXE)
+	  $(R_EXE) || rm $^
 
 html/CHANGES.html: CHANGES.rds
 	@$(ECHO) "options(warn=1);tools:::Rd2HTML_NEWS_in_Rd(\"$<\", \"$@\")" | \
-	  $(R_EXE)
+	  $(R_EXE) || rm $^
 
 clean:
 	@rm -f NEWS.rds html/NEWS.html NEWS NEWS.pdf \

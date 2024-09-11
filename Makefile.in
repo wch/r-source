@@ -69,7 +69,7 @@ R: Makefile svnonly
 	  $(ECHO) "you should 'make docs' now ..."
 
 docs: R FORCE
-	-@(cd doc && $(MAKE) $@)
+	@(cd doc && $(MAKE) $@)
 	-@(cd src/library && $(MAKE) $@)
 FORCE:
 
