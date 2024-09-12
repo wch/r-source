@@ -50,9 +50,9 @@ ifndef USE_PKG_CONFIG
              -ltiff $(LIBLERC) $(LIBDEFLATE) \
              -ljpeg -lzstd -lz -lwebp $(LIBSHARPYUV) -llzma
 else
-  PKG_LIBS += $(shell pkg-config --libs --static libpng libjpeg libtiff-4 zlib)
-  winbitmap-CPPFLAGS += $(shell pkg-config --cflags libpng libjpeg libtiff-4)
-  devPS-CPPFLAGS += $(shell pkg-config --cflags zlib)
+  PKG_LIBS += $(shell $(PKG_CONFIG) --libs libpng libjpeg libtiff-4 zlib)
+  winbitmap-CPPFLAGS += $(shell $(PKG_CONFIG) --cflags libpng libjpeg libtiff-4)
+  devPS-CPPFLAGS += $(shell $(PKG_CONFIG) --cflags zlib)
 endif
 
 all: makeMakedeps shlib

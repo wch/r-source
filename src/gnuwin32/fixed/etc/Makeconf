@@ -71,6 +71,7 @@ ifdef USE_LLVM
   endif
 endif
 CCBASE = $(if $(USE_LLVM),clang,gcc)
+PKG_CONFIG = $(BINPREF)pkg-config
 DLLTOOL = $(BINPREF)$(LLVMPREF)dlltool --as $(BINPREF)$(LLVMPREF)as $(DT_ARCH)
 DLLTOOLFLAGS = -k
 NM = $(BINPREF)$(LLVMPREF)nm

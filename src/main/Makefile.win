@@ -77,10 +77,10 @@ ifndef USE_PKG_CONFIG
   platform-CPPFLAGS += -DPCRE2_STATIC -DLZMA_API_STATIC -I"$(EXT_LIBS)"/include
   util-CPPFLAGS = -DLZMA_API_STATIC -I"$(EXT_LIBS)"/include
 else
-  connections-CPPFLAGS = $(shell pkg-config --cflags liblzma)
-  grep-CPPFLAGS += $(shell pkg-config --cflags libpcre2-8)
-  platform-CPPFLAGS += $(shell pkg-config --cflags liblzma libpcre2-8)
-  util-CPPFLAGS = $(shell pkg-config --cflags liblzma)
+  connections-CPPFLAGS = $(shell $(PKG_CONFIG) --cflags liblzma)
+  grep-CPPFLAGS += $(shell $(PKG_CONFIG) --cflags libpcre2-8)
+  platform-CPPFLAGS += $(shell $(PKG_CONFIG) --cflags liblzma libpcre2-8)
+  util-CPPFLAGS = $(shell $(PKG_CONFIG) --cflags liblzma)
 endif
 
 ifdef USE_ICU

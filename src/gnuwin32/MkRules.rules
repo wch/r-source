@@ -23,9 +23,11 @@ DT_ARCH ?=
 ## assumptions are made about the target (it is used with aarch64 builds)
 WIN ?= 64
 
+PKG_CONFIG ?= $(BINPREF)pkg-config
+
 USE_PKG_CONFIG ?= 1
 ifdef USE_PKG_CONFIG
-  ifeq (,$(shell pkg-config --version 2>/dev/null))
+  ifeq (,$(shell $(PKG_CONFIG) --version 2>/dev/null))
     USE_PKG_CONFIG =
   endif
   ifeq ($(filter-out no NO 0 off OFF,$(USE_PKG_CONFIG)),)
@@ -73,19 +75,19 @@ else
         $(EXT_LIBS)/lib/icudt.a $(EXT_LIBS)/bin/icudt.a \
         $(EXT_LIBS)/lib/sicudt.a $(EXT_LIBS)/bin/sicudt.a)), \
       -l%icudt), \
-      $(shell pkg-config --libs --static icu-i18n))
+      $(shell $(PKG_CONFIG) --libs icu-i18n))
   endif
 
   ifdef USE_LLVM
     # work-around for incorrect .pc file
-    CAIRO_CPPFLAGS ?= "$(shell pkg-config --cflags cairo-fc) -I$(EXT_LIBS)/include/freetype2"
+    CAIRO_CPPFLAGS ?= "$(shell $(PKG_CONFIG) --cflags cairo-fc) -I$(EXT_LIBS)/include/freetype2"
   else
-    CAIRO_CPPFLAGS ?= "$(shell pkg-config --cflags cairo-fc)"
+    CAIRO_CPPFLAGS ?= "$(shell $(PKG_CONFIG) --cflags cairo-fc)"
   endif
 
-  CAIRO_LIBS ?= "$(shell pkg-config --libs --static cairo-fc)"
+  CAIRO_LIBS ?= "$(shell $(PKG_CONFIG) --libs cairo-fc)"
 
-  CURL_LIBS ?= $(shell pkg-config --libs --static libcurl)  
+  CURL_LIBS ?= $(shell $(PKG_CONFIG) --libs libcurl)  
 endif
 
 BUILD_HTML ?= NO
@@ -138,6 +140,7 @@ endif
 AR = $(BINPREF)$(LLVMPREF)ar
 CAT=cat
 CC=$(BINPREF)$(CCBASE) $(M_ARCH)
+
 CP=cp
 # as set by make
 CPP=$(CC) -E

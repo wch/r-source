@@ -31,8 +31,8 @@ ifndef USE_PKG_CONFIG
   PKG_CPPFLAGS += -DLZMA_API_STATIC -I"$(EXT_LIBS)/include"
   PKG_LIBS += -L"$(EXT_LIBS)"/lib$(R_ARCH) -llzma
 else
-  PKG_CPPFLAGS += $(shell pkg-config --cflags liblzma)
-  PKG_LIBS += $(shell pkg-config --libs liblzma)
+  PKG_CPPFLAGS += $(shell $(PKG_CONFIG) --cflags liblzma)
+  PKG_LIBS += $(shell $(PKG_CONFIG) --libs liblzma)
 endif
 
 all: makeMakedeps shlib

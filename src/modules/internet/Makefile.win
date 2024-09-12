@@ -21,8 +21,8 @@ ifdef USE_LIBCURL
     libcurl-CPPFLAGS += -DCURL_STATICLIB -I"$(CURL_PATH)"/include
     EXTRA_LIBS += -L"$(CURL_PATH)"/lib$(R_ARCH) $(CURL_LIBS)
   else
-    libcurl-CPPFLAGS += $(shell pkg-config --cflags libcurl)
-    EXTRA_LIBS += $(shell pkg-config --libs libcurl)
+    libcurl-CPPFLAGS += $(shell $(PKG_CONFIG) --cflags libcurl)
+    EXTRA_LIBS += $(shell $(PKG_CONFIG) --libs libcurl)
   endif
 endif
 
