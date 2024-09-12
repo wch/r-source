@@ -196,7 +196,7 @@ attribute_hidden void memtrace_report(void* old, void *_new) {
     return;
 }
 #else
-attribute_hidden static void memtrace_stack_dump(void)
+static void memtrace_stack_dump(void)
 {
     RCNTXT *cptr;
 
