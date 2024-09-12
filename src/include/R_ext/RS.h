@@ -110,7 +110,7 @@ extern void R_chk_free(void *);
 #endif
 #define F77_NAME(x)    F77_CALL(x)
 #define F77_SUB(x)     F77_CALL(x)
-/* Last two are historical from S, not used in R,, not longer documented */
+/* Last two are historical from S, not used in R, deprecated and not longer documented */
 #define F77_COM(x)     F77_CALL(x)
 #define F77_COMDECL(x) F77_CALL(x)
 

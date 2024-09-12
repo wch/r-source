@@ -308,6 +308,11 @@
       \item The new function \code{Rf_allocLang} is now available. This
       provides an alternative to the idiom of calling
       \code{Rf_allocList} followed by \code{SET_TYPEOF}.
+
+      \item The S-compatibility macros \code{F77_COM} and
+      \code{F77_COMDECL} defined in header \file{R_ext/RS.h} are
+      deprecated and will be removed shortly.  We could find no record
+      of their use.
     }
   }
 
