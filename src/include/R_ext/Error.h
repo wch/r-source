@@ -66,9 +66,16 @@ void Rf_warning(const char *, ...) R_PRINTF_FORMAT(1,2);
 
 void R_ShowMessage(const char *s);
 
+#if 0
+/* xerbla is a a C function intended to be called from Fortran.
+ * It wraps Rf_error, so use that directtly from C/C++
+*/
 #ifdef HAVE_F77_UNDERSCORE
 /* F77_NAME is in RS.h, but better not include it here (e.g. due to
-   name conflicts involving symbols defined with !STRICT_R_HEADERS) */
+ * name conflicts involving symbols defined with !STRICT_R_HEADERS) .
+ * However, using a trailing underline is not universal, and print.c
+ * uses F77_SUB.
+ */
 # ifdef FC_LEN_T
 NORET void xerbla_(const char *srname, int *info, const FC_LEN_T srname_len);
 # else
@@ -80,6 +87,8 @@ NORET void xerbla(const char *srname, int *info, const FC_LEN_T srname_len);
 # else
 NORET void xerbla(const char *srname, int *info);
 # endif
+#endif
+
 #endif
 
 #ifdef  __cplusplus
