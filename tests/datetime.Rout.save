@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2022-03-19 r81942) -- "Unsuffered Consequences"
-Copyright (C) 2022 The R Foundation for Statistical Computing
-Platform: x86_64-pc-linux-gnu (64-bit)
+R Under development (unstable) (2024-09-12 r87140) -- "Unsuffered Consequences"
+Copyright (C) 2024 The R Foundation for Statistical Computing
+Platform: aarch64-apple-darwin23.6.0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -48,10 +48,11 @@ Type 'q()' to quit R.
 [1] "2040-07-01 12:00:00 BST"
 > 
 > Sys.setenv(TZ = "EST5EDT")  # also pretty much portable.
+> ## However, tzdata 2024b changed this from EST to LMY (and by 238s)
 > (z <- as.POSIXct("1848-01-01 12:00"))
-[1] "1848-01-01 12:00:00 EST"
+[1] "1848-01-01 12:00:00 LMT"
 > c(unclass(z))
-[1] -3849922800
+[1] -3849923038
 > ## see comment above
 > as.POSIXct("2040-01-01 12:00")
 [1] "2040-01-01 12:00:00 EST"
