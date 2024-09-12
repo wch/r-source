@@ -99,8 +99,6 @@ extern void R_chk_free(void *);
    F77_SUB to define a function in C to be called from Fortran 
    F77_NAME to declare a Fortran routine in C before use 
    F77_CALL to call a Fortran routine from C
-
-   F77_SYMNOL in Defn.h is the same as F77_SUB.
  */
 
 #ifdef HAVE_F77_UNDERSCORE

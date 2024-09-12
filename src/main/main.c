@@ -2000,14 +2000,14 @@ R_addTaskCallback(SEXP f, SEXP data, SEXP useData, SEXP name)
 # include <R_ext/RS.h>
 # if defined FC_LEN_T
 # include <stddef.h>
-void F77_SYMBOL(rwarnc)(char *msg, int *nchar, FC_LEN_T msg_len);
+void F77_SUB(rwarnc)(char *msg, int *nchar, FC_LEN_T msg_len);
 attribute_hidden void dummy54321(void)
 {
     int nc = 5;
     F77_CALL(rwarnc)("dummy", &nc, (FC_LEN_T) 5);
 }
 # else
-void F77_SYMBOL(rwarnc)(char *msg, int *nchar);
+void F77_SUB(rwarnc)(char *msg, int *nchar);
 attribute_hidden void dummy54321(void)
 {
     int nc = 5;

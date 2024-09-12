@@ -73,8 +73,8 @@ static R_CallMethodDef callMethods [] = {
     {NULL, NULL, 0}
 };
 
-/* F77_SYMBOL is defined in Defn.h */
-#define FDEF(name, n)  {#name, (DL_FUNC) &F77_SYMBOL(name), n, NULL}
+#include <R_ext/RS.h>
+#define FDEF(name, n)  {#name, (DL_FUNC) &F77_SUB(name), n, NULL}
 static R_FortranMethodDef fortranMethods[] = {
     /* LINPACK */
     FDEF(dqrcf, 8), // qr and auxiliaries
