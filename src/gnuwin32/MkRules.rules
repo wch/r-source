@@ -38,6 +38,11 @@ ICU_PATH ?=
 USE_CAIRO ?= YES
 CURL_CA_BUNDLE ?=
 USE_LIBCURL = yes
+ifndef USE_ICU
+  ifeq ($(filter-out no NO,$(USE_ICU)),)
+    USE_ICU =
+  endif
+endif
 
 ifndef USE_PKG_CONFIG
   ICU_LIBS ?= -lsicuin -lsicuuc $(EXT_LIBS)/lib/sicudt.a -lstdc++
@@ -68,7 +73,7 @@ else
         $(EXT_LIBS)/lib/icudt.a $(EXT_LIBS)/bin/icudt.a \
         $(EXT_LIBS)/lib/sicudt.a $(EXT_LIBS)/bin/sicudt.a)), \
       -l%icudt), \
-      $(shell pkg-config --libs icu-i18n))
+      $(shell pkg-config --libs --static icu-i18n))
   endif
 
   ifdef USE_LLVM
@@ -78,9 +83,9 @@ else
     CAIRO_CPPFLAGS ?= "$(shell pkg-config --cflags cairo-fc)"
   endif
 
-  CAIRO_LIBS ?= "$(shell pkg-config --libs cairo-fc)"
+  CAIRO_LIBS ?= "$(shell pkg-config --libs --static cairo-fc)"
 
-  CURL_LIBS ?= $(shell pkg-config --libs libcurl)  
+  CURL_LIBS ?= $(shell pkg-config --libs --static libcurl)  
 endif
 
 BUILD_HTML ?= NO
