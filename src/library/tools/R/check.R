@@ -5924,8 +5924,10 @@ add_dummies <- function(dir, Log)
                              "\\[-Warray-parameter\\]",
                              "\\[-Wuse-after-free\\]",
                              ## rustc
-                             "^warning: use of deprecated"
-                            )
+                             "^warning: use of deprecated",
+                             ## gcc warnings usually about malloc
+                             ": warning: .* \\[-Walloc-size-larger-than\\]"
+                             )
 
                 ## warning most seen with -D_FORTIFY_SOURCE
                 warn_re <- c(warn_re,
@@ -6012,6 +6014,7 @@ add_dummies <- function(dir, Log)
                              " warning: switch condition has boolean value \\[-Wswitch-bool\\]",
                              " warning: .* \\[-Wembedded-directive\\]",
                              " warning: using directive refers to implicitly-defined namespace",
+                             "\\[-Wgnu-zero-variadic-macro-arguments\\]",
 
                              ## LLVM flang warnings:
                              ## Includes Hollerith constants
