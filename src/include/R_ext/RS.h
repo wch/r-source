@@ -110,10 +110,11 @@ extern void R_chk_free(void *);
 #endif
 #define F77_NAME(x)    F77_CALL(x)
 #define F77_SUB(x)     F77_CALL(x)
-/* Last two are historical from S, not used in R, deprecated and not longer documented */
+/* Last two were historical from S, not used in R, deprecated in 4.4.2, removed in 4.5.0
 #define F77_COM(x)     F77_CALL(x)
 #define F77_COMDECL(x) F77_CALL(x)
-
+*/
+ 
 /* call_R was deprecated in R 2.15.0, removed in R 4.2.0 */
 
 #ifdef  __cplusplus

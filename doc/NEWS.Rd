@@ -217,6 +217,9 @@
       of \code{PI}, \code{Calloc}, \code{Realloc} and \code{Free}: use
       \code{M_PI}, \code{R_Calloc}, \code{R_Realloc} or \code{R_Free}
       instead.
+
+      \item The deprecated S-compatibility macros \code{F77_COM} and
+      \code{F77_COMDECL} have been removed from header \file{R_ext/RS.h}.
     }
   }
 

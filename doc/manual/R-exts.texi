@@ -15354,6 +15354,7 @@ to declare a Fortran routine in C before use
 @item F77_CALL(@var{name})
 to call a Fortran routine from C
 @c Never used in R nor current packages
+@c Deprecated in R 4.4.2, removed in R 4.5.0.
 @c @item F77_COMDECL(@var{name})
 @c to declare a Fortran common block in C
 @c @item F77_COM(@var{name})
