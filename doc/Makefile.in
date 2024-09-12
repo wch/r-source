@@ -57,14 +57,14 @@ Rscript.1:
 NEWS.rds: $(srcdir)/NEWS.Rd
 	@$(ECHO) "options(warn=1);saveRDS(tools:::prepare_Rd(tools::parse_Rd(\"$(srcdir)/NEWS.Rd\", \
 	  macros = \"../share/Rd/macros/system.Rd\"), stages = 'install', warningCalls = FALSE), \
-	  'NEWS.rds')" | $(R_EXE) || rm $^
+	  'NEWS.rds')" | $(R_EXE) || rm $*
 
 NEWS: NEWS.rds
 	@$(ECHO) "creating doc/NEWS"
-	@$(ECHO) 'options(warn=1);tools:::Rd2txt_NEWS_in_Rd("NEWS.rds", "NEWS")' |  $(R_EXE) || rm $^
+	@$(ECHO) 'options(warn=1);tools:::Rd2txt_NEWS_in_Rd("NEWS.rds", "NEWS")' |  $(R_EXE) || rm $*
 
 html/NEWS.html: NEWS.rds
-	@$(ECHO) 'options(warn=1);tools:::Rd2HTML_NEWS_in_Rd("NEWS.rds", "html/NEWS.html")' |  $(R_EXE) || rm $^
+	@$(ECHO) 'options(warn=1);tools:::Rd2HTML_NEWS_in_Rd("NEWS.rds", "html/NEWS.html")' |  $(R_EXE) || rm $*
 
 PDFLATEX = @PDFLATEX@
 ## needs pdflatex (and more)
@@ -74,7 +74,7 @@ NEWS.pdf: NEWS.rds
 	else \
 	 $(ECHO) "creating doc/NEWS.pdf"; \
 	 $(ECHO) 'options(warn=1);tools:::Rd2pdf_NEWS_in_Rd("NEWS.rds", "NEWS.pdf")' | \
-	 TEXINPUTS="$(top_srcdir)/share/texmf/tex/latex:$$TEXINPUTS" $(R_EXE) || rm $^; \
+	 TEXINPUTS="$(top_srcdir)/share/texmf/tex/latex:$$TEXINPUTS" $(R_EXE) || rm $*; \
 	fi
 
 docs3: NEWS.3.rds NEWS.3.html NEWS.3.pdf
@@ -82,15 +82,15 @@ docs3: NEWS.3.rds NEWS.3.html NEWS.3.pdf
 NEWS.3.rds: $(srcdir)/NEWS.3.Rd
 	@$(ECHO) "options(warn=1);saveRDS(tools:::prepare_Rd(tools::parse_Rd(\"$(srcdir)/NEWS.3.Rd\", \
 	  macros = \"../share/Rd/macros/system.Rd\"), stages = 'install', warningCalls = FALSE), \
-	  'NEWS.3.rds')" | $(R_EXE) || rm $^
+	  'NEWS.3.rds')" | $(R_EXE) || rm $*
 
 NEWS.3: NEWS.3.rds
 	@$(ECHO) "creating NEWS.3"
-	@$(ECHO) 'options(warn=1);tools:::Rd2txt_NEWS_in_Rd("NEWS.3.rds", "NEWS.3")' |  $(R_EXE) || rm $^
+	@$(ECHO) 'options(warn=1);tools:::Rd2txt_NEWS_in_Rd("NEWS.3.rds", "NEWS.3")' |  $(R_EXE) || rm $*
 
 NEWS.3.html: NEWS.3.rds
 	@$(ECHO) "creating NEWS.3.html"
-	@$(ECHO) 'options(warn=1);tools:::Rd2HTML_NEWS_in_Rd("NEWS.3.rds", "NEWS.3.html")' |  $(R_EXE) || rm $^
+	@$(ECHO) 'options(warn=1);tools:::Rd2HTML_NEWS_in_Rd("NEWS.3.rds", "NEWS.3.html")' |  $(R_EXE) || rm $*
 
 NEWS.3.pdf: NEWS.3.rds
 	@if test -z "$(PDFLATEX)"; then \
@@ -98,7 +98,7 @@ NEWS.3.pdf: NEWS.3.rds
 	else \
 	 $(ECHO) "creating NEWS.3.pdf"; \
 	 $(ECHO) 'options(warn=1);tools:::Rd2pdf_NEWS_in_Rd("NEWS.3.rds", "NEWS.3.pdf")' | \
-	 TEXINPUTS="$(top_srcdir)/share/texmf/tex/latex:$$TEXINPUTS" $(R_EXE) || rm $^; \
+	 TEXINPUTS="$(top_srcdir)/share/texmf/tex/latex:$$TEXINPUTS" $(R_EXE) || rm $*; \
 	fi
 
 ## NEWS.2.html ships as doc/html/NEWS.2.html in the sources.
@@ -107,16 +107,16 @@ docs2: NEWS.2.rds NEWS.2.html NEWS.2.pdf
 NEWS.2.rds: $(srcdir)/NEWS.2.Rd
 	@$(ECHO) "options(warn=1);saveRDS(tools:::prepare_Rd(tools::parse_Rd(\"$(srcdir)/NEWS.2.Rd\", \
 	  macros = \"../share/Rd/macros/system.Rd\"), stages = 'install', warningCalls = FALSE), \
-	  'NEWS.2.rds')" | $(R_EXE) || rm $^
+	  'NEWS.2.rds')" | $(R_EXE) || rm $*
 
 ## NB: this is only the top part of NEWS.2 in the sources.
 NEWS.2: NEWS.2.rds
 	@$(ECHO) "creating NEWS.2"
-	@$(ECHO) 'options(warn=1);tools:::Rd2txt_NEWS_in_Rd("NEWS.2.rds", "NEWS.2")' |  $(R_EXE) || rm $^
+	@$(ECHO) 'options(warn=1);tools:::Rd2txt_NEWS_in_Rd("NEWS.2.rds", "NEWS.2")' |  $(R_EXE) || rm $*
 
 NEWS.2.html: NEWS.2.rds
 	@$(ECHO) "creating NEWS.2.html"
-	@$(ECHO) 'options(warn=1);tools:::Rd2HTML_NEWS_in_Rd("NEWS.2.rds", "NEWS.2.html")' |  $(R_EXE) || rm $^
+	@$(ECHO) 'options(warn=1);tools:::Rd2HTML_NEWS_in_Rd("NEWS.2.rds", "NEWS.2.html")' |  $(R_EXE) || rm $*
 
 NEWS.2.pdf: NEWS.2.rds
 	@if test -z "$(PDFLATEX)"; then \
@@ -124,7 +124,7 @@ NEWS.2.pdf: NEWS.2.rds
 	else \
 	 $(ECHO) "creating NEWS.2.pdf"; \
 	 $(ECHO) 'options(warn=1);tools:::Rd2pdf_NEWS_in_Rd("NEWS.2.rds", "NEWS.2.pdf")' | \
-	 TEXINPUTS="$(top_srcdir)/share/texmf/tex/latex:$$TEXINPUTS" $(R_EXE) || rm $^; \
+	 TEXINPUTS="$(top_srcdir)/share/texmf/tex/latex:$$TEXINPUTS" $(R_EXE) || rm $*; \
 	fi
 
 
