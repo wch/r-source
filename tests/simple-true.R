@@ -7,6 +7,7 @@ is.recursive(expression(1+3, 2/sqrt(pi)))# fix PR#9
 
 ## sum():
 all(1:12 == cumsum(rep(1,12)))
+set.seed(1998-09-11)
 x <- rnorm(127); sx <- sum(x);	abs((sum(rev(x)) -sx)) < 1e-12 * abs(sx)
 
 ## seq():
