@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2024-01-26 r85832) -- "Unsuffered Consequences"
+R Under development (unstable) (2024-09-12 r87138) -- "Unsuffered Consequences"
 Copyright (C) 2024 The R Foundation for Statistical Computing
 Platform: aarch64-apple-darwin23.3.0
 
@@ -26,6 +26,7 @@ Type 'q()' to quit R.
 > ## sum():
 > all(1:12 == cumsum(rep(1,12)))
 [1] TRUE
+> set.seed(1998-09-11)
 > x <- rnorm(127); sx <- sum(x);	abs((sum(rev(x)) -sx)) < 1e-12 * abs(sx)
 [1] TRUE
 > 
