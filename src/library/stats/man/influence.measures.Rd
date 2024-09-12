@@ -176,10 +176,10 @@ hat(x, intercept = TRUE)
   \emph{An R and S-Plus Companion to Applied Regression}.
   Sage Publ.
 
-  Fox, J. and Weisberg, S. (2011).
-  \emph{An R Companion to Applied Regression}, second edition.
-  Sage Publ;
-  \url{https://socialsciences.mcmaster.ca/jfox/Books/Companion/}.
+  Fox, J. and Weisberg, S. (2019).
+  \emph{An R Companion to Applied Regression}, third edition.
+  Sage Publications.
+  \url{https://www.john-fox.ca/Companion/}.
 }
 \seealso{
   \code{\link{influence}} (containing \code{\link{lm.influence}}).

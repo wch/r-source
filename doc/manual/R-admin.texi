@@ -125,7 +125,7 @@ the patched version of the current release being available via
 Subversion.)
 
 The tarballs are available from
-@uref{https://cran.r-project.org/src/base-prerelease}.  Download
+@uref{https://cran.r-project.org/src/base-prerelease/}.  Download
 @file{R-patched.tar.gz} or @file{R-devel.tar.gz} (or the @file{.tar.bz2}
 versions) and unpack as described in the previous section.  They are
 built in exactly the same way and on the same platform as distributions
