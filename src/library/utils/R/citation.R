@@ -128,6 +128,18 @@ function(given = NULL, family = NULL, middle = NULL,
                 else
                     names(comment)[ind] <- "ORCID"
             }
+            if(any(ind <- (names(comment) == "ORCID"))) {
+                ids <- comment[ind]
+                bad <- which(!tools:::.ORCID_iD_is_valid(ids))
+                if(length(bad)) {
+                    warning(sprintf(ngettext(length(bad),
+                                             "Invalid ORCID iD: %s.",
+                                             "Invalid ORCID iDs: %s."),
+                                    paste(sQuote(ids[bad]),
+                                          collapse = ", ")),
+                            domain = NA)
+                }
+            }
         }
 
         rval <- list(given = given, family = family, role = role,
