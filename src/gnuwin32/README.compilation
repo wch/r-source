@@ -150,6 +150,13 @@ this, or always move away the newly installed package.
 Should a package require external libraries, these can be placed under
 LOCAL_SOFT as defined in etc/x64/Makeconf in the copy.
 
+Some packages use pkg-config to query C flags or libraries to link and
+unconditionally use "pkg-config" from PATH.  For such packages one has to
+arrange for "pkg-config" on PATH to call to the appropriate pkg-config
+wrapper for the target platform and toolchain.  With Rtools, it is
+"x86_64-w64-mingw32.static.posix-pkg-config".  This is not needed for
+building R itself, R uses the wrapper directly.
+
 When targeting aarch64 Windows, copy etc/Makeconf from the cross-build
 (R_WIN) over etc/Makeconf of the linux build and edit the copy to have the
 R_XTRA_CPPFLAGS, pointing to the cross-build, as above.  Copy bin/*.dll from
