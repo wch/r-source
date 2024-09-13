@@ -131,10 +131,12 @@ xyTable <- function(x, y = NULL, digits)
 	    orderxy <- order(x, y)
 	    x <- x[orderxy]
 	    y <- y[orderxy]
-	    first <- c(TRUE, (x[-1L] != x[-n]) | (y[-1L] != y[-n]))
+	    first <- which(c(TRUE,
+	                     (x[-1L] != x[-n]) | xor(is.na(x[-1L]), is.na(x[-n])) |
+	                     (y[-1L] != y[-n]) | xor(is.na(y[-1L]), is.na(y[-n]))))
 	    x <- x[first]
 	    y <- y[first]
-	    diff(c((1L:n)[first], n + 1L))
+	    diff(c(first, n + 1L))
 	}
 	else integer()
 

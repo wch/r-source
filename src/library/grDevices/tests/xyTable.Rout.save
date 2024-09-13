@@ -1,0 +1,99 @@
+
+R Under development (unstable) (2024-09-12 r87143) -- "Unsuffered Consequences"
+Copyright (C) 2024 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> ## [Bug 18654] xyTable fails when both x and y are NA (2024-01-16)
+> ##             https://bugs.r-project.org/show_bug.cgi?id=18654
+> ## Attachment 3292 https://bugs.r-project.org/attachment.cgi?id=3292
+> ## Scenarios authored by Heather Turner in comments #1 and #5
+> 
+> ## Case 2: one variable has NA - works fine
+> ## (first combination from Case 1 now has NA)
+> iris2 <- iris[1:10, 3:4]
+> iris2[3, 1] <- NA
+> xyTable(iris2)
+$x
+[1] 1.4 1.4 1.5 1.5 1.7  NA
+
+$y
+[1] 0.2 0.3 0.1 0.2 0.4 0.2
+
+$number
+[1] 4 1 1 2 1 1
+
+> 
+> ## Case 3: both x and y are NA for one case - no good
+> ## (`number` should be the same as for Case 2)
+> iris3 <- iris[1:10, 3:4]
+> iris3[3, ] <- NA
+> xyTable(iris3)
+$x
+[1] 1.4 1.4 1.5 1.5 1.7  NA
+
+$y
+[1] 0.2 0.3 0.1 0.2 0.4  NA
+
+$number
+[1] 4 1 1 2 1 1
+
+> 
+> 
+> ## Case 4: both x and y are NA for >1 case - no good
+> ## (records with both NA are not aggregated)
+> iris4 <- iris[1:10, 3:4]
+> iris4[c(3, 5), ] <- NA
+> xyTable(iris4)
+$x
+[1] 1.4 1.4 1.5 1.5 1.7  NA
+
+$y
+[1] 0.2 0.3 0.1 0.2 0.4  NA
+
+$number
+[1] 3 1 1 2 1 2
+
+> 
+> ## Case 5: NA in y when x is duplicated
+> iris5 <- iris[1:10, 3:4]
+> iris5[4, 2] <- NA
+> xyTable(iris5)
+$x
+[1] 1.3 1.4 1.4 1.5 1.5 1.5 1.7
+
+$y
+[1] 0.2 0.2 0.3 0.1 0.2  NA 0.4
+
+$number
+[1] 1 4 1 1 1 1 1
+
+> 
+> ## Case 6: NA in y when x is duplicated
+> iris6 <- iris[1:10, 3:4]
+> iris6[] <- NA
+> xyTable(iris6)
+$x
+[1] NA
+
+$y
+[1] NA
+
+$number
+[1] 10
+
+> 
+> proc.time()
+   user  system elapsed 
+  0.156   0.015   0.168 

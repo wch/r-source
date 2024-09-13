@@ -274,6 +274,10 @@
 
       \item Printing \code{ls.str()} now shows \code{"<missing>"} even when
       \R's language setting is not English.
+
+      \item \code{xyTable()} now handles and reports \code{NA}s
+      fixing \PR{18654}.
+      Thanks to Heather Turner and Zhian Kamvar for report and patch.
     }
   }
 }

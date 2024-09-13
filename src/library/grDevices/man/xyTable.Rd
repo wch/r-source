@@ -30,11 +30,21 @@ xyTable(x, y = NULL, digits)
   \item{number}{multiplicities (positive integers); i.e.,
     \code{number[i]} is the multiplicity of \code{(x[i], y[i])}.}
 }
+\note{
+  Missing values in the coordinates are counted towards the multiplicities. The
+  sum of the multiplicities will equal the number of coordinates.
+}
 \seealso{\code{\link{sunflowerplot}} which typically uses
   \code{xyTable()}; \code{\link{signif}}.
 }
 \examples{
 xyTable(iris[, 3:4], digits = 6)
+
+## If missing coordinates exist, they are also counted
+iris2 <- iris[1:10, 3:4]
+iris2[4, 2] <- NA
+iris2[c(3, 5), ] <- NA
+xyTable(iris2)
 
 ## Discretized uncorrelated Gaussian:
 \dontshow{set.seed(1)}
