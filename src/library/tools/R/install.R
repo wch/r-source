@@ -1468,11 +1468,11 @@ if(FALSE) {
                 setwd(wd2)
             }
         }
-        if (WINDOWS && "x64" %in% test_archs) {
-            ## we cannot actually test x64 unless this is 64-bit
-            ## Windows, even if it is installed.
-            if (!grepl(" x64 ", utils::win.version())) test_archs <- "i386"
-        }
+        # if (WINDOWS && "x64" %in% test_archs) {
+        #     ## we cannot actually test x64 unless this is 64-bit
+        #    ## Windows, even if it is installed.
+        #     if (!grepl(" x64 ", utils::win.version())) test_archs <- "i386"
+        #}
 
         if (have_cross) Sys.unsetenv("R_ARCH")
 
