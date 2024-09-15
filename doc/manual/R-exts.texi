@@ -6302,20 +6302,21 @@ include it.
 Be careful if using @code{malloc} or @code{calloc}.  First, their return
 value must always be checked to see if the allocation succeeded -- it is
 almost always easier to use @R{}'s @code{R_Calloc}, which does check.
-Second, the first argument is of type @code{size_t} and recent compilers
-are warning about passing signed arguments (which could get promoted to
-ridiculously large values).
+Second, the first argument is of type @code{size_t}@footnote{an unsigned
+64-bit integer type on recent @R{} platforms.} and some recent compilers
+warn about passing @code{int} (signed) arguments (which could get
+promoted to ridiculously large values).
 
 @item
 For C code, consider using the flag @option{-Wstrict-prototypes} which
-is supported by @command{gcc} and @I{LLVM} and Apple @command{clang}.  This
-has found quite a number of errors where functions have been declared
-without arguments and is likely to become the default in future
-compilers.  (It already is for @I{LLVM} @command{clang} in C23 mode.)  Note
-that using @code{f()} for a function without any parameters was
-deprecated in C99 and C11, but it expected to be non-deprecated in C23.
-However, @code{f(void)} is supported by all standards and avoids any
-uncertainty.
+is supported by @command{gcc} and @I{LLVM} and Apple @command{clang}.
+This has found quite a number of errors where functions have been
+declared without arguments and is likely to become the default in future
+compilers.  (It already is for Apple @command{clang} and for @I{LLVM}
+@command{clang} in C23 mode.)  Note that using @code{f()} for a function
+without any parameters was deprecated in C99 and C11, but it expected to
+be non-deprecated in C23.  However, @code{f(void)} is supported by all
+standards and avoids any uncertainty.
 @c draft n3054 §6.7.6.3 point 13 and footnote.
 
 @I{LLVM} @command{clang} has a separate warning
