@@ -6028,11 +6028,12 @@ add_dummies <- function(dir, Log)
 
                 lines <- grep(warn_re, lines, value = TRUE, useBytes = TRUE)
 
-                ## gcc (even 9) seems not to know the size of pointers, so skip
-                ## some from -Walloc-size-larger-than= and -Wstringop-overflow=
+                ## "gcc (even 9) seems not to know the size of pointers, so skip
+                ## some from -Walloc-size-larger-than= and -Wstringop-overflow="
 ##                lines <- grep("exceeds maximum object size.*-W(alloc-size-larger-than|stringop-overflow)", lines,
-                ## some those from -Wstringop-overflow=: the alloc-size
-                ## ones are genuine.
+                ## Skip those from -Wstringop-overflow=
+                ## The alloc-size ones are genuine,
+                ## seen from malloc, alloc and (C++) new called with 'int' size
                 lines <- grep("exceeds maximum object size.*-Wstringop-overflow", lines,
                               value = TRUE, useBytes = TRUE, invert = TRUE)
 
