@@ -6373,7 +6373,7 @@ something like
     error("Actual: %0.f; Expected %0.f\n", (double) XLENGTH(Robj), (double) nelem);
 @end example
 @noindent
-@c x86_64 as a 52-bit design limit.
+@c x86_64 has a 52-bit design limit.
 @c Linux and Windows are said to have 48-bit virtual address limits.
 (This could print to full precision, lengths well beyond the address space
 limits of current OSes, let alone practical limits.)
@@ -6388,6 +6388,12 @@ as @code{int64_t}.
 @c macOS maps int64_t to 'long long'
 So the values will need to be cast to the type assumed by the format
 (and @code{%lld} was not supported on Windows until @R{}@tie{}4.2.0).
+
+@item
+Variadic macros in C or C++ only portably allow a non-zero number of
+arguments, although some compilers have allowed zero, often with a
+warning. The latter was standardized in C++20 using the @code{__VA_OPT__}
+maacro.  C23 will also allow zero arguments in a similar way.
 
 @end itemize
 
