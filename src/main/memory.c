@@ -159,7 +159,7 @@ static R_INLINE SEXP CHK(SEXP x)
     /* **** NULL check because of R_CurrentExpr */
     if (x != NULL && TYPEOF(x) == FREESXP)
 	error("unprotected object (%p) encountered (was %s)",
-	      x, sexptype2char(OLDTYPE(x)));
+	      (void *)x, sexptype2char(OLDTYPE(x)));
     return x;
 }
 #else
