@@ -79,7 +79,9 @@
                                       "12" = "Monterey",
                                       "13" = "Ventura",
                                       "14" = "Sonoma",
-                                      "15" = "Sequoia"),
+                                      "15" = "Sequoia"
+                                      ## if you add an entry here, change the <= above.
+                                      ),
                                ver)
                    else
                        sprintf("macOS %s", ver)
