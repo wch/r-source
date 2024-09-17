@@ -103,6 +103,13 @@ function(Log, text = "")
     Log$notes <- Log$notes + 1L
 }
 
+infoLog <-
+function(Log, text = "")
+{
+    resultLog(Log, "INFO")
+    if(nzchar(text)) printLog(Log, text, "\n")
+}
+
 summaryLog <-
 function(Log)
 {

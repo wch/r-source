@@ -776,7 +776,7 @@ function(log, drop_ok = TRUE, ...)
         drop_ok_status_tags <- drop_ok
         drop_ok <- TRUE
     } else {
-        drop_ok_status_tags <- c("OK", "NONE", "SKIPPED")
+        drop_ok_status_tags <- c("OK", "NONE", "SKIPPED", "INFO")
     }
 
     ## Start by reading in.

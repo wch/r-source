@@ -6322,7 +6322,10 @@ add_dummies <- function(dir, Log)
         if(!is.na(total) &&
            total > 1024 * as.numeric(Sys.getenv("_R_CHECK_PKG_SIZES_THRESHOLD_", unset = 5)) && # report at 5Mb
            pkgname != "Matrix") { # <- large recommended package
-            noteLog(Log)
+            if(R_check_use_log_info)
+                infoLog(Log)
+            else
+                noteLog(Log)
             printLog(Log, sprintf("  installed size is %4.1fMb\n", total/1024))
             rest <- res2[-nrow(res2), ]
             rest[, 2L] <- sub("./", "", rest[, 2L], fixed=TRUE)
@@ -7176,6 +7179,10 @@ add_dummies <- function(dir, Log)
 
     if (!nzchar(check_subdirs)) check_subdirs <- R_check_subdirs_strict
 
+    R_check_use_log_info <-
+        config_val_to_logical(Sys.getenv("_R_CHECK_LOG_USE_INFO_",
+                                         "FALSE"))
+    
     if (as_cran) {
         if (extra_arch) {
             message("'--as-cran' turns off '--extra-arch'")
