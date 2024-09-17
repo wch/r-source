@@ -72,7 +72,7 @@
                                       "16" = "Big Sur ...",
                                       ""),
                                ver)
-                   else if(ver1[1L] <= "14")
+                   else if(ver1[1L] <= "15")
                         sprintf("macOS %s %s",
                                switch(ver1[1L],
                                       "11" = "Big Sur",
