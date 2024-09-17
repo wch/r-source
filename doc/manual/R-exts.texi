@@ -321,9 +321,12 @@ utilities do not accept spaces in file paths): non-English alphabetic
 characters cannot be guaranteed to be supported in all locales.  It
 would be good practice to avoid the shell metacharacters
 @code{()@{@}'[]$~}: @code{~} is also used as part of `8.3' filenames on
-Windows.  In addition, packages are normally distributed as tarballs,
-and these have a limit on path lengths: for maximal portability 100
-bytes.
+Windows.  In addition, some applications on Windows can only work with path
+names of certain length, following an earlier limit in the Windows operating
+system. Packages are normally distributed as tarballs, and these have a limit
+on path lengths. So, to be friendly to users who themselves may want to use a
+relatively long path where they extract the package, and for maximal 
+portability, 100 bytes.
 
 A source package if possible should not contain binary executable files:
 they are not portable, and a security risk if they are of the
