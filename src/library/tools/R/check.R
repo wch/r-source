@@ -2856,7 +2856,12 @@ add_dummies <- function(dir, Log)
             if (length(out)) {
                 bad <- startsWith(out, "Warning:")
                 bad2 <-  any(grepl("(unable to find required package|there is no package called)", out))
-                if(any(bad) || bad2) warningLog(Log) else noteLog(Log)
+                if(any(bad) || bad2)
+                    warningLog(Log)
+                else if(R_check_use_log_info)
+                    infoLog(Log)
+                else
+                    noteLog(Log)
                 printLog0(Log, .format_lines_with_indent(out), "\n")
                 if(bad2)
                     if(R_cdo_data || R_check_suggests_only)
@@ -2876,7 +2881,10 @@ add_dummies <- function(dir, Log)
             if(thislazy || lazyz0) {
                 checkingLog(Log, "LazyData")
                 if (thislazy && !dir.exists("data")) {
-                    noteLog(Log)
+                    if(R_check_use_log_info)
+                        infoLog(Log)
+                    else
+                        noteLog(Log)
                     printLog0(Log,
                               "  'LazyData' is specified without a 'data' directory\n")
                     if(lazyz0)
@@ -3358,8 +3366,14 @@ add_dummies <- function(dir, Log)
                 if(!is.na(SysReq) &&
                    grepl("GNU [Mm]ake",
                          gsub("[[:space:]]+", " ", SysReq))) {
-                    if(!config_val_to_logical(Sys.getenv("_R_CHECK_CRAN_INCOMING_NOTE_GNU_MAKE_", "FALSE"))) {
-                        noteLog(Log, "GNU make is a SystemRequirements.")
+                    if(!config_val_to_logical(Sys.getenv("_R_CHECK_CRAN_INCOMING_NOTE_GNU_MAKE_",
+                                                         "FALSE"))) {
+                        if(R_check_use_log_info)
+                            infoLog(Log,
+                                    "GNU make is a SystemRequirements.")
+                        else
+                            noteLog(Log,
+                                    "GNU make is a SystemRequirements.")
                     } else resultLog(Log, "OK")
                 } else {
                     warningLog(Log, "Found the following file(s) containing GNU extensions:")
@@ -6438,13 +6452,24 @@ add_dummies <- function(dir, Log)
                 ## Special-case when there is only the maintainer
                 ## address to note (if at all).
                 maintainer <- res$Maintainer
+                ## <FIXME>
+                ## Env var _R_CHECK_MAINTAINER_ADDRESS_ seems unused?
                 if(nzchar(maintainer) &&
                    identical(maintainer,
                              Sys.getenv("_R_CHECK_MAINTAINER_ADDRESS_"))) {
                     resultLog(Log, "OK")
                     out <- character()
                 }
-                else resultLog(Log, "Note_to_CRAN_maintainers")
+                ## </FIXME>
+                else {
+                    ## <FIXME>
+                    ## Why do we want to note the maintainer address?
+                    if(R_check_use_log_info)
+                        infoLog(Log)
+                    else
+                        resultLog(Log, "Note_to_CRAN_maintainers")
+                    ## </FIXME>
+                }
             } else if(length(res$bad_package)) {
                 errorLog(Log)
                 bad <- TRUE
@@ -6615,7 +6640,10 @@ add_dummies <- function(dir, Log)
             } else {
                 if( length(res[["orphaned"]]) || length(res[["orphaned1"]]) )
                     warningLog(Log)
-                else noteLog(Log)
+                else if(R_check_use_log_info)
+                    infoLog(Log)
+                else
+                    noteLog(Log)
                 printLog0(Log, paste(out, collapse = "\n"))
                 ## if(length(res$orphaned2))
                 ##     wrapLog("\nSuggested packages need to be used conditionally:",
