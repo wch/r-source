@@ -87,6 +87,10 @@
 
       \item The set operations now avoid the \code{as.vector()}
       transformation for same-kind apparently vector-like operands.
+
+      \item \code{md5sum()} can be used to compute an MD5 hash of a raw
+      vector of bytes by using the \code{bytes=} argument instead
+      of \code{files=}. The two arguments are mutually exclusive.
     }
   }
 

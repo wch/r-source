@@ -100,6 +100,8 @@ struct md5_ctx
    resulting message digest number will be written into the 16 bytes
    beginning at RESBLOCK.  */
 extern int md5_stream __P ((FILE *stream, void *resblock));
+/* same as above for a buffer instead of file; returns resblock on success */
+extern void* md5_buffer __P ((const char *buffer, size_t len, void *resblock));
 
 #ifndef ROL_UNUSED
 /* The following is from gnupg-1.0.2's cipher/bithelp.h.  */
