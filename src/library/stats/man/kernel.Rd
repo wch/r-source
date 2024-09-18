@@ -38,7 +38,7 @@ is.tskernel(k)
     kernels of dimension \code{m[j]}, for \code{j in 1:length(m)}.
     Currently this is supported only for the named \code{"*daniell"} kernels.}
   \item{name}{the name the kernel will be called.}
-  \item{r}{the kernel order for a \I{Fejer} kernel.}
+  \item{r}{the kernel order for a \I{Dirichlet} or \I{Fejer} kernel.}
   \item{k, x}{a \code{"tskernel"} object.}
   \item{type, xlab, ylab, main, \dots}{arguments passed to
     \code{\link{plot.default}}.}
@@ -103,4 +103,3 @@ plot(kernel("modified.daniell", c(7,5,3)))
 spectrum(sunspot.year, kernel = kernel("daniell", c(11,7,3)), log = "no")
 }
 \keyword{ts}
-
