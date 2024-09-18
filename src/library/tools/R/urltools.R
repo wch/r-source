@@ -940,7 +940,8 @@ function(x)
          followlocation = 1L)
 
 .curl_handle_default_hdrs <-
-    list("User-Agent" = "curl")
+    list("User-Agent" =
+             Sys.getenv("_R_CHECK_URLS_CURL_USER_AGENT_", "curl"))
 
 check_package_urls <-
 function(dir, verbose = FALSE)
