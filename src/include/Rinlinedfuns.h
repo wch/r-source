@@ -30,9 +30,11 @@
 #ifndef R_INLINES_H_
 #define R_INLINES_H_
 
+#if defined(__GNUC_STDC_INLINE__) && !defined(C99_INLINE_SEMANTICS)
 /* Probably not able to use C99 semantics in gcc < 4.3.0 */
-#if __GNUC__ == 4 && __GNUC_MINOR__ >= 3 && defined(__GNUC_STDC_INLINE__) && !defined(C99_INLINE_SEMANTICS)
-#define C99_INLINE_SEMANTICS 1
+# if defined(__clang__) || __GNUC__ > 4 || __GNUC__ == 4 && __GNUC_MINOR__ >= 3
+#  define C99_INLINE_SEMANTICS 1
+# endif
 #endif
 
 /* Apple's gcc build >5400 (since Xcode 3.0) doesn't support GNU inline in C99 mode 
