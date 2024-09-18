@@ -285,6 +285,10 @@
 
       \item \code{as(*, "raw")} now works as documented, thanks to \I{Mikael
       Jagan}'s \PR{18795}.
+
+      \item Informational messages of e.g., \code{print(1:1e4, max=1000)},
+      now correctly mention \code{max} in addition to
+      \code{getOption("max.print")}.
     }
   }
 }

@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-2023	The R Core Team.
+ *  Copyright (C) 2000-2024	The R Core Team.
  *  Copyright (C) 1995-1998	Robert Gentleman and Ross Ihaka.
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -29,9 +29,9 @@
  *  do_printdefault
  *	    -> PrintObject (if S4 dispatch needed)
  *	    -> PrintValueRec
- *		-> PrintGenericVector	-> PrintDispatch & PrintValueRec
- *		-> printList		-> PrintDispatch & PrintValueRec
- *		-> printAttributes	-> PrintValueRec  (recursion)
+ *		-> PrintGenericVector	-> PrintDispatch & PrintValueRec & printAttributes
+ *		-> printList		->      "               "               "
+ *		-> printAttributes	-> PrintValueRec  ([Rec]ursion)
  *		-> PrintSpecial
  *		-> PrintExpression
  *		-> PrintClosure         -> PrintLanguage
@@ -612,7 +612,7 @@ static void PrintGenericVector(SEXP s, R_PrintData *data)
 	    }
 	    Rprintf("\n");
 	    if(n_pr < ns)
-		Rprintf(" [ reached getOption(\"max.print\") -- omitted %lld entries ]\n",
+		Rprintf(" [ reached 'max' / getOption(\"max.print\") -- omitted %lld entries ]\n",
 			(long long)ns - n_pr);
 	}
 	else { /* ns = length(s) == 0 */

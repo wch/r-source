@@ -378,7 +378,7 @@ void printMatrix(SEXP x, int offset, SEXP dim, int quote, int right,
 	UNIMPLEMENTED_TYPE("printMatrix", x);
     }
     if (r_pr < r || c_pr < c) {
-	Rprintf(" [ reached getOption(\"max.print\") -- omitted");
+	Rprintf(" [ reached 'max' / getOption(\"max.print\") -- omitted");
 	if (r_pr < r) {
     	    Rprintf(ngettext(" %d row", " %d rows", r - r_pr), r - r_pr);
 	}
@@ -502,7 +502,7 @@ void printArray(SEXP x, SEXP dim, int quote, int right, SEXP dimnames)
 	}
 
 	if(max_reached && nb_pr < nb) {
-	    Rprintf(" [ reached getOption(\"max.print\") -- omitted");
+	    Rprintf(" [ reached 'max' / getOption(\"max.print\") -- omitted");
 	    if(nr_last < nr) Rprintf(" %d row(s) and", nr - nr_last);
 	    Rprintf(" %d matrix slice(s) ]\n", nb - nb_pr);
 	}
