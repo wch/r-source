@@ -32,9 +32,9 @@
 # define min(a, b) (a < b ? a : b)
 #endif
 
+#include <Defn.h>
 #include <Rinternals.h>
 #include <R_ext/Parse.h>
-#include <Defn.h>
 
 static int completion_available = -1;
 
