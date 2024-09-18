@@ -30,9 +30,11 @@
 #ifndef R_INLINES_H_
 #define R_INLINES_H_
 
+#if defined(__GNUC_STDC_INLINE__) && !defined(C99_INLINE_SEMANTICS)
 /* Probably not able to use C99 semantics in gcc < 4.3.0 */
-#if __GNUC__ == 4 && __GNUC_MINOR__ >= 3 && defined(__GNUC_STDC_INLINE__) && !defined(C99_INLINE_SEMANTICS)
-#define C99_INLINE_SEMANTICS 1
+# if defined(__clang__) || __GNUC__ > 4 || __GNUC__ == 4 && __GNUC_MINOR__ >= 3
+#  define C99_INLINE_SEMANTICS 1
+# endif
 #endif
 
 /* Apple's gcc build >5400 (since Xcode 3.0) doesn't support GNU inline in C99 mode 
@@ -54,6 +56,8 @@
    Do this even for __GNUC_GNUC_INLINE__ to shut up warnings in 4.2.x.
    __GNUC_STDC_INLINE__ and __GNUC_GNU_INLINE__ were added in gcc 4.2.0.
 */
+/* object files will not contain definitions of functions declared
+   "extern inline" in gnu90 inline mode */
 # if defined(__GNUC_STDC_INLINE__) || defined(__GNUC_GNU_INLINE__)
 #  define INLINE_FUN extern __attribute__((gnu_inline)) inline
 # else
@@ -65,7 +69,7 @@
 #if C99_INLINE_SEMANTICS
 # undef INLINE_FUN
 # ifdef COMPILING_R
-/* force exported copy */
+/* force exported copy (in inlined.c) */
 #  define INLINE_FUN extern inline
 # else
 /* either inline or link to extern version at compiler's choice */
