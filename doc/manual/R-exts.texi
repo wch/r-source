@@ -6393,10 +6393,10 @@ So the values will need to be cast to the type assumed by the format
 (and @code{%lld} was not supported on Windows until @R{}@tie{}4.2.0).
 
 @item
-Variadic macros in C or C++ only portably allow a non-zero number of
+@I{Variadic} macros in C or C++ only portably allow a non-zero number of
 arguments, although some compilers have allowed zero, often with a
 warning. The latter was standardized in C++20 using the @code{__VA_OPT__}
-maacro.  C23 will also allow zero arguments in a similar way.
+macro.  C23 will also allow zero arguments in a similar way.
 
 @end itemize
 
