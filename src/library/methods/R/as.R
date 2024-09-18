@@ -298,7 +298,7 @@ setAs <-
  "POSIXct",  "POSIXlt", "Date",  "array",  "call",  "character",  "complex",  "data.frame",
  "double",
  "environment",  "expression",  "factor",  "formula",  "function",  "integer",
- "list",  "logical",  "matrix",  "name",  "numeric",  "ordered",
+ "list",  "logical",  "matrix",  "name",  "numeric",  "ordered", "raw",
   "single",  "table",   "vector")
   basics <- basics[!is.na(match(basics,.BasicClasses))]
   for(what in basics) {

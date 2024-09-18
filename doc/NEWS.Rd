@@ -281,7 +281,10 @@
 
       \item \code{xyTable()} now handles and reports \code{NA}s
       fixing \PR{18654}.
-      Thanks to Heather Turner and Zhian Kamvar for report and patch.
+      Thanks to \I{Heather Turner} and \I{Zhian Kamvar} for report and patch.
+
+      \item \code{as(*, "raw")} now works as documented, thanks to \I{Mikael
+      Jagan}'s \PR{18795}.
     }
   }
 }
