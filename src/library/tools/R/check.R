@@ -2487,12 +2487,13 @@ add_dummies <- function(dir, Log)
                           sprintf("tools:::.check_Rd_xrefs(dir = \"%s\")\n", pkgdir))
             any <- FALSE
             out <- R_runR0(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
-            if (length(out)) {
-                if (!all(grepl("(Package[s]? unavailable to check|Unknown package.*in Rd xrefs|Undeclared package.*in Rd xrefs)", out)))
-                    warningLog(Log)
-                else noteLog(Log)
+            if(length(out) &&
+               !all(grepl("(Package[s]? unavailable to check|Unknown package.*in Rd xrefs|Undeclared package.*in Rd xrefs)",
+                          out))) {
+                warningLog(Log)
                 any <- TRUE
                 printLog0(Log, paste(c(out, ""), collapse = "\n"))
+                out <- NULL
             }
 
             ## The above checks whether Rd xrefs can be resolved within
@@ -2529,6 +2530,18 @@ add_dummies <- function(dir, Log)
                     printLog0(Log, paste(c(msg, ""), collapse = "\n"))
                 }
             }
+
+            if(length(out)) {
+                if(!any) {
+                    if(R_check_use_install_log)
+                        infoLog(Log)
+                    else
+                        noteLog(Log)
+                    any <- TRUE
+                }
+                printLog0(Log, paste(c(out, ""), collapse = "\n"))
+            }
+            
             if(!any)
                 resultLog(Log, "OK")
         }
@@ -6480,7 +6493,22 @@ add_dummies <- function(dir, Log)
                       isTRUE(res$empty_Maintainer_name) ||
                       isTRUE(res$Maintainer_needs_quotes))
                 warningLog(Log)
-            else if(length(res) > 1L) noteLog(Log)
+            else if(length(res) > 1L) {
+                if((all(names(res) %in%
+                        c("Maintainer",
+                          "spelling",
+                          "suggests_or_enhances_not_in_mainstream_repositories",
+                          "additional_repositories_analysis_results")))
+                   ## Maybe using Filter(NROW, res) is safe enough?
+                   && (NROW(res$spelling) == 0L)
+                   && (NROW(y <- res$additional_repositories_analysis_results) 
+                       == length(res$suggests_or_enhances_not_in_mainstream_repositories))
+                   && all(y[, 2L] == "yes")
+                   && R_check_use_log_info)
+                    infoLog(Log)
+                else
+                    noteLog(Log)
+            }
             else resultLog(Log, "OK")
             printLog0(Log, c(paste(out, collapse = "\n\n"), "\n"))
             if(bad) maybe_exit(1L)
