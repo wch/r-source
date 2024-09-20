@@ -27,11 +27,24 @@
 #undef _
 
 #include "tools.h"
-#define ROL_UNUSED
-#include "md5.h"
+#include "sha256.h"
+
+#define SHA256_HASH_SIZE 32
+#define SHA256_HEX_SIZE  64
+
+/* convenience fn for init + process + finish */
+static void *Rsha256_buffer (const void *buffer, size_t len, void *resblock)
+{
+  struct sha256_ctx ctx;
+  Rsha256_init_ctx(&ctx);
+  Rsha256_process_bytes(buffer, len, &ctx);
+  return Rsha256_finish_ctx(&ctx, resblock);
+}
+
+/* This is essentailly identical to Rmd5 */
 
 /* .Call so manages R_alloc stack */
-SEXP Rmd5(SEXP files)
+SEXP Rsha256(SEXP files)
 {
     SEXP ans;
     int i, j, nfiles = length(files), res;
@@ -40,17 +53,17 @@ SEXP Rmd5(SEXP files)
 #else
     const char *path;
 #endif
-    char out[33];
+    char out[SHA256_HEX_SIZE + 1];
     FILE *fp;
-    unsigned char resblock[16];
+    unsigned char resblock[SHA256_HASH_SIZE];
 
     /* RAW mode: hash of one buffer instead of files */
     if (TYPEOF(files) == RAWSXP) {
 	/* there is really no failure possible, but just in case... */
-	if (!md5_buffer((const char *) RAW(files), XLENGTH(files), resblock))
+	if (!Rsha256_buffer((const void *) RAW(files), XLENGTH(files), resblock))
 	    return ScalarString(NA_STRING);
-	for(j = 0; j < 16; j++)
-	    snprintf (out+2*j, 33-2*j, "%02x", resblock[j]);
+	for(j = 0; j < SHA256_HASH_SIZE; j++)
+	  snprintf (out+2*j, sizeof(out) - 2*j, "%02x", resblock[j]);
 	return mkString(out);
     }
     /* otherwise list of files */
@@ -67,17 +80,17 @@ SEXP Rmd5(SEXP files)
 	if(!fp) {
 	    SET_STRING_ELT(ans, i, NA_STRING);
 	} else {
-	    res = md5_stream(fp, &resblock);
+	    res = Rsha256_stream(fp, &resblock);
 	    if(res) {
 #ifdef _WIN32
-		warning(_("md5 failed on file '%ls'"), wpath);
+		warning(_("sha256 failed on file '%ls'"), wpath);
 #else
-		warning(_("md5 failed on file '%s'"), path);
+		warning(_("sha256 failed on file '%s'"), path);
 #endif
 		SET_STRING_ELT(ans, i, NA_STRING);
 	    } else {
-		for(j = 0; j < 16; j++)
-		    snprintf (out+2*j, 33-2*j, "%02x", resblock[j]);
+		for(j = 0; j < SHA256_HASH_SIZE; j++)
+		  snprintf (out+2*j, sizeof(out) - 2*j, "%02x", resblock[j]);
 		SET_STRING_ELT(ans, i, mkChar(out));
 	    }
 	    fclose(fp);

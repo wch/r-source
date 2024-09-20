@@ -22,7 +22,7 @@ export("Adobe_glyphs", "HTMLheader", "Rcmd", "Rd2HTML", "pkg2HTML", "Rd2ex",
        "makevars_site", "makevars_user",
        "matchConcordance",
        nonS3methods,
-       "make_translations_pkg", "md5sum",
+       "make_translations_pkg", "md5sum", "sha256sum",
        package.dependencies,# R/package.dependencies.R man/package.dependencies.Rd
        getDepList, pkgDepends, installFoundDepends,# R/pkgDepends.R man/getDepList.Rd man/installFoundDepends.Rd
        vignetteDepends, # deprecated, too as it calls  getDepList()

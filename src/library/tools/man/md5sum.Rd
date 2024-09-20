@@ -1,6 +1,6 @@
 % File src/library/tools/man/md5sum.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2024 R Core Team
 % Distributed under GPL 2 or later
 
 \name{md5sum}
@@ -44,7 +44,7 @@ md5sum(files, bytes)
   a 2001 release of \code{glibc}.
 }
 \seealso{
-  \code{\link{checkMD5sums}}
+  \code{\link{checkMD5sums}}, \code{\link{sha256sum}}
 }
 \examples{
 as.vector(md5sum(dir(R.home(), pattern = "^COPY", full.names = TRUE)))

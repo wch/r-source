@@ -42,6 +42,7 @@ static const R_CallMethodDef CallEntries[] = {
     CALLDEF(dirchmod, 2),
     CALLDEF(getfmts, 1),
     CALLDEF(Rmd5, 1),
+    CALLDEF(Rsha256, 1),
     CALLDEF(check_nonASCII, 2),
     CALLDEF(check_nonASCII2, 1),
     CALLDEF(doTabExpand, 2),
