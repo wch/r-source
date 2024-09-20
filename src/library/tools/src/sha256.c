@@ -19,6 +19,11 @@
  *  https://www.R-project.org/Licenses/
  */
 
+/*
+  extracted from the public domain version SHA-crypt.txt verison 0.6
+  (2016-8-31) by Ulrich Drepper
+*/
+
 #include <Rconfig.h>
 #include <sys/types.h>
 
@@ -284,7 +289,7 @@ void sha256_process_bytes (const void *buffer, size_t len, struct sha256_ctx *ct
 	  left_over -= 64;
 	  memcpy (ctx->buffer, &ctx->buffer[64], left_over);
 	}
-      ctx->buflen = left_over;
+      ctx->buflen = (unsigned int) left_over;
     }
 }
 

@@ -506,6 +506,10 @@ src/library/tools/src/md5.[ch]
 
     Copyright (C) 1995, 1996, 2001 Free Software Foundation, Inc.
 
+src/library/tools/src/sha256.c
+
+    extracted from the public domain version SHA-crypt.txt verison 0.6
+    (2016-8-31) by Ulrich Drepper
 
 src/extra/intl/*
 

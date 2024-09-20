@@ -92,8 +92,9 @@
       vector of bytes by using the \code{bytes=} argument instead
       of \code{files=}. The two arguments are mutually exclusive.
 
-      \item Added \code{sha256sum()} analogous to \code{md5sum()},
-      but implementing the SHA-256 hashing algorithm.
+      \item Added function \code{sha256sum()} in package \pkg{tools}
+      analogous to \code{md5sum()} implementing the SHA-256 hashing
+      algorithm.
     }
   }
 
