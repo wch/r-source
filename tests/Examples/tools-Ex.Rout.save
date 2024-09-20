@@ -939,6 +939,28 @@ function (x, ...)
 > 
 > 
 > cleanEx()
+> nameEx("sha256sum")
+> ### * sha256sum
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: sha256sum
+> ### Title: Compute SHA256 Checksums
+> ### Aliases: sha256sum
+> ### Keywords: utilities
+> 
+> ### ** Examples
+> 
+> as.vector(sha256sum(dir(R.home(), pattern = "^COPY", full.names = TRUE)))
+[1] "e6d6a009505e345fe949e1310334fcb0747f28dae2856759de102ab66b722cb4"
+> sha256sum(bytes=raw())
+[1] "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+> sha256sum(bytes=charToRaw("abc"))
+[1] "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad"
+> 
+> 
+> 
+> cleanEx()
 > nameEx("showNonASCII")
 > ### * showNonASCII
 > 
