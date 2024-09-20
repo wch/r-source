@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1999-2016  The R Core Team
+ *  Copyright (C) 1999-2024  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -35,10 +35,12 @@ w_init(int m, int n)
     double ***w;
 
     w = (double ***) R_alloc(m + 1, sizeof(double **));
-    memset(w, '\0', (m+1) * sizeof(double**));
+    if (m+1)
+	memset(w, '\0', (m+1) * sizeof(double**));
     for (i = 0; i <= m; i++) {
 	w[i] = (double**) R_alloc(n + 1, sizeof(double *));
-	memset(w[i], '\0', (n+1) * sizeof(double*));
+	if (n+1)
+	    memset(w[i], '\0', (n+1) * sizeof(double*));
     }
     return(w);
 }
@@ -57,7 +59,8 @@ cansari(int k, int m, int n, double ***w)
 
     if (w[m][n] == 0) {
 	w[m][n] = (double *) R_alloc(u + 1, sizeof(double));
-	memset(w[m][n], '\0', (u + 1) * sizeof(double));
+	if (u+1)
+	    memset(w[m][n], '\0', (u + 1) * sizeof(double));
 	for (i = 0; i <= u; i++)
 	    w[m][n][i] = -1;
     }

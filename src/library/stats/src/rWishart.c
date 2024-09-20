@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2012-2022  The R Core Team
+ *  Copyright (C) 2012-2024  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -92,7 +92,8 @@ rWishart(SEXP ns, SEXP nuP, SEXP scal)
     scCp = R_Calloc(psqr, double);
 
     Memcpy(scCp, REAL(scal), psqr);
-    memset(tmp, 0, psqr * sizeof(double));
+    if (psqr)
+	memset(tmp, 0, psqr * sizeof(double));
     F77_CALL(dpotrf)("U", &(dims[0]), scCp, &(dims[0]), &info FCONE); // LAPACK
     if (info)
 	error(_("'scal' matrix is not positive-definite"));

@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2016--2023   The R Core Team
+ *  Copyright (C) 2016--2024   The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -690,7 +690,8 @@ static R_INLINE SEXP ExpandDeferredStringElt(SEXP x, R_xlen_t i)
     if (val == R_NilValue) {
 	R_xlen_t n = XLENGTH(x);
 	val = allocVector(STRSXP, n);
-	memset(STDVEC_DATAPTR(val), 0, n * sizeof(SEXP));
+	if (n)
+	    memset(STDVEC_DATAPTR(val), 0, n * sizeof(SEXP));
 	SET_DEFERRED_STRING_EXPANDED(x, val);
     }
 

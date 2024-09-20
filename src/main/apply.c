@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-2023  The R Core Team
+ *  Copyright (C) 2000-2024  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -206,7 +206,7 @@ attribute_hidden SEXP do_vapply(SEXP call, SEXP op, SEXP args, SEXP rho)
 		case STRSXP:  SET_STRING_ELT(ans, i, STRING_ELT(val, 0)); break;
 		case VECSXP:  SET_VECTOR_ELT(ans, i, VECTOR_ELT(val, 0)); break;
 		}
-	    } else { // commonLen > 1 (typically, or == 0) :
+	    } else if (commonLen) { // commonLen > 1
 		switch (commonType) {
 		case REALSXP:
 		    memcpy(REAL(ans) + common_len_offset,

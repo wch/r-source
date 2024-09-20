@@ -48,6 +48,8 @@ extern "C" {
 extern void *R_chk_calloc(R_SIZE_T, R_SIZE_T);
 extern void *R_chk_realloc(void *, R_SIZE_T);
 extern void R_chk_free(void *);
+extern void *R_chk_memcpy(void *, const void *, R_SIZE_T);
+extern void *R_chk_memset(void *, int, R_SIZE_T);
 
 #ifndef STRICT_R_HEADERS
 /* S-PLUS 3.x but not 5.x NULLed the pointer in Free.
@@ -64,10 +66,10 @@ extern void R_chk_free(void *);
 #define R_Free(p)      (R_chk_free( (void *)(p) ), (p) = NULL)
 
 /* Nowadays API: undocumented until 4.1.2: widely used. */
-#define Memcpy(p,q,n)  memcpy( p, q, (R_SIZE_T)(n) * sizeof(*p) )
+#define Memcpy(p,q,n)  R_chk_memcpy( p, q, (R_SIZE_T)(n) * sizeof(*p) )
 
 /* Nowadays API: added for 3.0.0 but undocumented until 4.1.2. */
-#define Memzero(p,n)  memset(p, 0, (R_SIZE_T)(n) * sizeof(*p))
+#define Memzero(p,n)  R_chk_memset(p, 0, (R_SIZE_T)(n) * sizeof(*p))
 
 /* API: Added in R 2.6.0 */
 #define CallocCharBuf(n) (char *) R_chk_calloc(((R_SIZE_T)(n))+1, sizeof(char))

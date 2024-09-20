@@ -2000,7 +2000,8 @@ int consolereads(control c, const char *prompt, char *buf, int len,
 	       segment is empty (should not happen) or
 	       internal segment of line of same length as buffer */
 
-	    memcpy(buf, segment, slen);
+	    if (slen)
+		memcpy(buf, segment, slen);
 	    free(segment);
 	    buf[slen] = '\0';
 	    return res;

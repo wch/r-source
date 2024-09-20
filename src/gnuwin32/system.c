@@ -419,7 +419,8 @@ CharReadConsole(const char *prompt, unsigned char *buf, int len,
     int tocopy = remaining;
     if (tocopy > len - 1) tocopy = len - 1;
 
-    memcpy(buf, line + offset, tocopy);
+    if (tocopy)
+	memcpy(buf, line + offset, tocopy);
     buf[tocopy] = '\0';
     remaining -= tocopy;
     offset += tocopy;

@@ -180,7 +180,8 @@ C_bincount(double *x, R_xlen_t n, double *breaks, R_xlen_t nb, int *count,
     R_xlen_t i, lo, hi, nb1 = nb - 1, new;
 
     // for(i = 0; i < nb1; i++) count[i] = 0;
-    memset(count, 0, nb1 * sizeof(int));
+    if (nb1)
+	memset(count, 0, nb1 * sizeof(int));
 
     for(i = 0 ; i < n ; i++)
 	if(R_FINITE(x[i])) { // left in as a precaution

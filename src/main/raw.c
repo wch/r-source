@@ -451,7 +451,7 @@ attribute_hidden SEXP do_intToUtf8(SEXP call, SEXP op, SEXP args, SEXP env)
 		this = 0x10000 + (hi << 10) + lo;
 	    }
 	    used = inttomb(buf, this);
-	    memcpy(tmp + len, buf, used);
+	    if (used) memcpy(tmp + len, buf, used);
 	    len += used;
 	}
 	PROTECT(ans = allocVector(STRSXP, 1));

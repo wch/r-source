@@ -670,7 +670,8 @@ static SEXP xxusermacro(SEXP macro, SEXP args, YYLTYPE *lloc)
 	    SEXP stri = CAR(si);
 	    if (!isComment(stri)) {
 		int nc = LENGTH(STRING_ELT(stri, 0));
-		memcpy(str + offset, CHAR(STRING_ELT(stri, 0)), nc);
+		if (nc)
+		    memcpy(str + offset, CHAR(STRING_ELT(stri, 0)), nc);
 		offset += nc;
 	    }
 	}

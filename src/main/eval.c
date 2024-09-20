@@ -8715,6 +8715,8 @@ attribute_hidden SEXP R_bcEncode(SEXP bytes)
     m = (sizeof(BCODE) + sizeof(int) - 1) / sizeof(int);
 
     n = LENGTH(bytes);
+    if (n == 0)
+	return R_NilValue;
     ipc = INTEGER(bytes);
 
     v = ipc[0];

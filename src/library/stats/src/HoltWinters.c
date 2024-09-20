@@ -1,6 +1,6 @@
 /*  R : A Computer Language for Statistical Data Analysis
  *
- *  Copyright (C) 2003-7  The R Core Team
+ *  Copyright (C) 2003-24  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -54,7 +54,7 @@ void HoltWinters (double *x,
     /* copy start values to the beginning of the vectors */
     level[0] = *a;
     if (*dotrend == 1) trend[0] = *b;
-    if (*doseasonal == 1) memcpy(season, s, *period * sizeof(double));
+    if (*doseasonal == 1 && *period) memcpy(season, s, *period * sizeof(double));
 
     for (i = *start_time - 1; i < *xl; i++) {
 	/* indices for period i */

@@ -2805,7 +2805,8 @@ static SEXP mkStringUTF8(const ucs_t *wcs, int cnt)
 #endif
     R_CheckStack2(nb);
     char s[nb];
-    memset(s, 0, nb); /* safety */
+    if (nb)
+	memset(s, 0, nb); /* safety */
     // This used to differentiate WC_NOT_UNICODE but not needed
     wcstoutf8(s, (const wchar_t *)wcs, sizeof(s));
     PROTECT(t = allocVector(STRSXP, 1));

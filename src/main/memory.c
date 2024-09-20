@@ -2388,10 +2388,11 @@ char *S_realloc(char *p, long new, long old, int size)
     size_t nold;
     char *q;
     /* shrinking is a no-op */
-    if(new <= old) return p; // so nnew > 0 below
+    if(new <= old) return p; // so new > 0 below
     q = R_alloc((size_t)new, size);
     nold = (size_t)old * size;
-    memcpy(q, p, nold);
+    if (nold)
+	memcpy(q, p, nold);
     memset(q + nold, 0, (size_t)new*size - nold);
     return q;
 }
@@ -3565,6 +3566,16 @@ void R_chk_free(void *ptr)
     /* if(!ptr) warning("attempt to free NULL pointer by Free"); */
     if(ptr) free(ptr); /* ANSI C says free has no effect on NULL, but
 			  better to be safe here */
+}
+
+void *R_chk_memcpy(void *dest, const void *src, size_t n)
+{
+    return n ? memcpy(dest, src, n) : dest;
+}
+
+void *R_chk_memset(void *s, int c, size_t n)
+{
+    return n ? memset(s, c, n) : s;
 }
 
 /* This code keeps a list of objects which are not assigned to variables

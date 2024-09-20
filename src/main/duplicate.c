@@ -60,11 +60,11 @@
   else { \
       R_xlen_t __this; \
       type *__to = fun(to), *__from = fun(from); \
-      do { \
+      while(__n__ > 0) { \
 	 __this = (__n__ < 1000000) ? __n__ : 1000000; \
 	 memcpy(__to, __from, __this * sizeof(type));  \
 	 __n__ -= __this;  __to += __this; __from += __this; \
-      } while(__n__ > 0); \
+      } \
   } \
   DUPLICATE_ATTRIB(to, from, deep);		 \
   COPY_TRUELENGTH(to, from); \
@@ -76,7 +76,7 @@
   PROTECT(from); \
   PROTECT(to = allocVector(TYPEOF(from), __n__)); \
   if (__n__ == 1) fun(to)[0] = fun(from)[0]; \
-  else memcpy(fun(to), fun(from), __n__ * sizeof(type)); \
+  else if (__n__) memcpy(fun(to), fun(from), __n__ * sizeof(type)); \
   DUPLICATE_ATTRIB(to, from, deep); \
   COPY_TRUELENGTH(to, from); \
   UNPROTECT(2); \

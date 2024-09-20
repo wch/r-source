@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997--2023  The R Core Team
+ *  Copyright (C) 1997--2024  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -1274,7 +1274,8 @@ static void ExtractVars(SEXP formula)
 static SEXP AllocTerm(void) // (<global> nwords)
 {
     SEXP term = allocVector(INTSXP, nwords); // caller must PROTECT
-    memset(INTEGER(term), 0, nwords * sizeof(int));
+    if (nwords)
+	memset(INTEGER(term), 0, nwords * sizeof(int));
     return term;
 }
 

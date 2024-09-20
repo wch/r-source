@@ -168,7 +168,7 @@ xdrmem_getbytes(
 
 	if ((xdrs->x_handy -= len) < 0)
 		return (FALSE);
-	memcpy(addr, xdrs->x_private, len);
+	if (len) memcpy(addr, xdrs->x_private, len);
 	xdrs->x_private += len;
 	return (TRUE);
 }
@@ -182,7 +182,7 @@ xdrmem_putbytes(
 
 	if ((xdrs->x_handy -= len) < 0)
 		return (FALSE);
-	memcpy(xdrs->x_private, addr, len);
+	if (len) memcpy(xdrs->x_private, addr, len);
 	xdrs->x_private += len;
 	return (TRUE);
 }

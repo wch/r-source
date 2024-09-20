@@ -1769,12 +1769,12 @@ attribute_hidden SEXP do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 		char *ptr = R_alloc(n * sizeof(Rbyte) + 2 * NG, 1);
 		memset(ptr, FILL, n * sizeof(Rbyte) + 2 * NG);
 		ptr += NG;
-		memcpy(ptr, RAW(s), n);
+		if (n) memcpy(ptr, RAW(s), n);
 		cargs[na] = (void *) ptr;
 	    } else if (MAYBE_REFERENCED(s)) {
 		n = XLENGTH(s);
 		SEXP ss = allocVector(t, n);
-		memcpy(RAW(ss), RAW(s), n * sizeof(Rbyte));
+		if (n) memcpy(RAW(ss), RAW(s), n * sizeof(Rbyte));
 		SET_VECTOR_ELT(ans, na, ss);
 		cargs[na] = (void*) RAW(ss);
 #ifdef R_MEMORY_PROFILING
@@ -1794,11 +1794,11 @@ attribute_hidden SEXP do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 		char *ptr = R_alloc(n * sizeof(int) + 2 * NG, 1);
 		memset(ptr, FILL, n * sizeof(int) + 2 * NG);
 		ptr += NG;
-		memcpy(ptr, INTEGER(s), n * sizeof(int));
+		if (n) memcpy(ptr, INTEGER(s), n * sizeof(int));
 		cargs[na] = (void*) ptr;
 	    } else if (MAYBE_REFERENCED(s)) {
 		SEXP ss = allocVector(t, n);
-		memcpy(INTEGER(ss), INTEGER(s), n * sizeof(int));
+		if (n) memcpy(INTEGER(ss), INTEGER(s), n * sizeof(int));
 		SET_VECTOR_ELT(ans, na, ss);
 		cargs[na] = (void*) INTEGER(ss);
 #ifdef R_MEMORY_PROFILING
@@ -1824,11 +1824,11 @@ attribute_hidden SEXP do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 		char *ptr = R_alloc(n * sizeof(double) + 2 * NG, 1);
 		memset(ptr, FILL, n * sizeof(double) + 2 * NG);
 		ptr += NG;
-		memcpy(ptr, REAL(s), n * sizeof(double));
+		if (n) memcpy(ptr, REAL(s), n * sizeof(double));
 		cargs[na] = (void*) ptr;
 	    } else if (MAYBE_REFERENCED(s)) {
 		SEXP ss  = allocVector(t, n);
-		memcpy(REAL(ss), REAL(s), n * sizeof(double));
+		if (n) memcpy(REAL(ss), REAL(s), n * sizeof(double));
 		SET_VECTOR_ELT(ans, na, ss);
 		cargs[na] = (void*) REAL(ss);
 #ifdef R_MEMORY_PROFILING
@@ -1847,11 +1847,11 @@ attribute_hidden SEXP do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 		char *ptr = R_alloc(n * sizeof(Rcomplex) + 2 * NG, 1);
 		memset(ptr, FILL, n * sizeof(Rcomplex) + 2 * NG);
 		ptr += NG;
-		memcpy(ptr, COMPLEX(s), n * sizeof(Rcomplex));
+		if (n) memcpy(ptr, COMPLEX(s), n * sizeof(Rcomplex));
 		cargs[na] = (void*) ptr;
 	    } else if (MAYBE_REFERENCED(s)) {
 		SEXP ss = allocVector(t, n);
-		memcpy(COMPLEX(ss), COMPLEX(s), n * sizeof(Rcomplex));
+		if (n) memcpy(COMPLEX(ss), COMPLEX(s), n * sizeof(Rcomplex));
 		SET_VECTOR_ELT(ans, na, ss);
 		cargs[na] = (void*) COMPLEX(ss);
 #ifdef R_MEMORY_PROFILING
@@ -2561,7 +2561,7 @@ attribute_hidden SEXP do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if (copy) {
 		s = allocVector(type, n);
 		unsigned char *ptr = (unsigned char *) p;
-		memcpy(RAW(s), ptr, n * sizeof(Rbyte));
+		if (n) memcpy(RAW(s), ptr, n * sizeof(Rbyte));
 		ptr += n * sizeof(Rbyte);
 		for (int i = 0; i < NG; i++)
 		    if(*ptr++ != FILL)
@@ -2580,7 +2580,7 @@ attribute_hidden SEXP do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if (copy) {
 		s = allocVector(type, n);
 		unsigned char *ptr = (unsigned char *) p;
-		memcpy(INTEGER(s), ptr, n * sizeof(int));
+		if (n) memcpy(INTEGER(s), ptr, n * sizeof(int));
 		ptr += n * sizeof(int);
 		for (int i = 0; i < NG; i++)
 		    if(*ptr++ != FILL)
@@ -2634,7 +2634,7 @@ attribute_hidden SEXP do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 			REAL(s)[i] = (double) sptr[i];
 		} else {
 		    unsigned char *ptr = (unsigned char *) p;
-		    memcpy(REAL(s), ptr, n * sizeof(double));
+		    if (n) memcpy(REAL(s), ptr, n * sizeof(double));
 		    ptr += n * sizeof(double);
 		    for (int i = 0; i < NG; i++)
 			if(*ptr++ != FILL)
@@ -2662,7 +2662,7 @@ attribute_hidden SEXP do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if (copy) {
 		s = allocVector(type, n);
 		unsigned char *ptr = (unsigned char *) p;
-		memcpy(COMPLEX(s), p, n * sizeof(Rcomplex));
+		if (n) memcpy(COMPLEX(s), p, n * sizeof(Rcomplex));
 		ptr += n * sizeof(Rcomplex);
 		for (int i = 0; i < NG;  i++)
 		    if(*ptr++ != FILL)

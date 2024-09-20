@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1999-2016   The R Core Team.
+ *  Copyright (C) 1999-2024   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -40,7 +40,8 @@ ckendall(int k, int n, double **w)
     if ((k < 0) || (k > u)) return(0);
     if (w[n] == 0) {
 	w[n] = (double *) R_alloc(u + 1, sizeof(double));
-	memset(w[n], '\0', sizeof(double) * (u+1));
+	if (u+1)
+	    memset(w[n], '\0', sizeof(double) * (u+1));
 	for (i = 0; i <= u; i++) w[n][i] = -1;
     }
     if (w[n][k] < 0) {
@@ -82,7 +83,8 @@ pkendall(int len, double *Q, double *P, int n)
     double **w;
 
     w = (double **) R_alloc(n + 1, sizeof(double *));
-    memset(w, '\0', sizeof(double*) * (n+1));
+    if (n+1)
+	memset(w, '\0', sizeof(double*) * (n+1));
 
     for (i = 0; i < len; i++) {
 	q = floor(Q[i] + 1e-7);

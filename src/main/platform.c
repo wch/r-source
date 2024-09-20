@@ -1427,7 +1427,8 @@ size_t path_buffer_append(R_StringBuffer *pb, const char *name, size_t len)
     size_t newlen = len + namelen + 1;
     if (newlen > pb->bufsize)
 	R_AllocStringBuffer(newlen, pb);
-    memcpy(pb->data + len, name, namelen);
+    if (namelen)
+	memcpy(pb->data + len, name, namelen);
     pb->data[newlen - 1] = '\0';
 #ifdef Unix
     if (newlen > R_PATH_MAX) 
@@ -1453,7 +1454,8 @@ Rboolean search_setup(R_StringBuffer *pb, SEXP path, R_DIR **dir,
     size_t len = strlen(dnp);
     if (len + 1 > pb->bufsize)
 	R_AllocStringBuffer(len + 1, pb);
-    memcpy(pb->data, dnp, len);
+    if (len)
+	memcpy(pb->data, dnp, len);
 
     /* open directory */
     pb->data[len] = '\0';
@@ -1696,7 +1698,8 @@ attribute_hidden SEXP do_listdirs(SEXP call, SEXP op, SEXP args, SEXP rho)
 		add_to_ans(&ans, "", &count, &countmax, idx);
 	    } else {
 		char *dnp = R_alloc(len + 1, 1);
-		memcpy(dnp, pb.data, len);
+		if (len)
+		    memcpy(dnp, pb.data, len);
 		/* remove trailing separator if added by search_setup */
 		if (added_separator)
 		    dnp[len - 1] = '\0';

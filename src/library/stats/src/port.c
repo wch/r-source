@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2005-2022   The R Core Team.
+ *  Copyright (C) 2005-2024   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -236,7 +236,8 @@ double F77_NAME(dv2nrm)(int *n, const double x[])
 void F77_NAME(dv7cpy)(int *n, double dest[], const double src[])
 {
     /* Was memcpy, but overlaps seen */
-    memmove(dest, src, *n * sizeof(double));
+    if (*n)
+	memmove(dest, src, *n * sizeof(double));
 }
 
 /* dv7ipr... applies forward permutation to vector.  */

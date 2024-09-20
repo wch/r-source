@@ -4318,7 +4318,7 @@ SEXP mkCharLenCE(const char *name, int len, cetype_t enc)
 	   representing this string, and EncodeString() is the most
 	   comprehensive */
 	c = allocCharsxp(len);
-	memcpy(CHAR_RW(c), name, len);
+	if (len) memcpy(CHAR_RW(c), name, len);
 	switch(enc) {
 	case CE_UTF8: SET_UTF8(c); break;
 	case CE_LATIN1: SET_LATIN1(c); break;
@@ -4356,7 +4356,7 @@ SEXP mkCharLenCE(const char *name, int len, cetype_t enc)
     if (cval == R_NilValue) {
 	/* no cached value; need to allocate one and add to the cache */
 	PROTECT(cval = allocCharsxp(len));
-	memcpy(CHAR_RW(cval), name, len);
+	if (len) memcpy(CHAR_RW(cval), name, len);
 	switch(enc) {
 	case CE_NATIVE:
 	    break;          /* don't set encoding */
