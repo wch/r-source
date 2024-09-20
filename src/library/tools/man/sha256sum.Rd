@@ -14,7 +14,7 @@ sha256sum(files, bytes)
 }
 \arguments{
   \item{files}{character. The paths of file(s) whose contents are to be hashed.}
-  \item{bytes}{raw. Bytes to be hashed.
+  \item{bytes}{\code{\link{raw}}. Bytes to be hashed.
     NB: \code{bytes} and \code{files} are mutually exclusive.}
 }
 \details{
@@ -36,7 +36,7 @@ sha256sum(files, bytes)
 }
 \source{
   The underlying C code was written by \I{Ulrich Drepper}, extracted from
-  the public domain version SHA-crypt.txt verison 0.6 (2016-8-31).
+  the public domain version SHA-crypt.txt version 0.6 (2016-8-31).
 }
 \seealso{
   \code{\link{md5sum}}

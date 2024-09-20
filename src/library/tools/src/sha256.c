@@ -20,7 +20,7 @@
  */
 
 /*
-  extracted from the public domain version SHA-crypt.txt verison 0.6
+  extracted from the public domain version SHA-crypt.txt version 0.6
   (2016-8-31) by Ulrich Drepper
 */
 
