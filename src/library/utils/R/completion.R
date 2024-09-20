@@ -122,7 +122,7 @@ findFuzzyMatches <- function(pattern, values) {
 
 findMatches <- function(pattern, values, fuzzy, backtick)
 {
-    if (missing(fuzzy)) fuzzy <- isTRUE(.CompletionEnv$settings[["fuzzy"]])
+    if (missing(fuzzy))    fuzzy    <- isTRUE(.CompletionEnv$settings[["fuzzy"]])
     if (missing(backtick)) backtick <- isTRUE(.CompletionEnv$settings[["backtick"]])
     comps <- 
         if (fuzzy)

@@ -1354,7 +1354,7 @@ attribute_hidden SEXP do_mmap_file(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP stype = CADR(args);
     SEXP sptrOK = CADDR(args);
     SEXP swrtOK = CADDDR(args);
-    SEXP sserOK = CADDDR(CDR(args));
+    SEXP sserOK = CAD4R(args);
 
     int type = REALSXP;
     if (stype != R_NilValue) {

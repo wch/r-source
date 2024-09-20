@@ -333,7 +333,7 @@ checkSlotAssignment <- function(obj, name, value)
        as(value, slotClass, strict=FALSE, ext = ok)
 }
 
-## slightly simpler verison to be called from do_attrgets()
+## slightly simpler version to be called from do_attrgets()
 checkAtAssignment <- function(cl, name, valueClass)
 {
     ClassDef <- getClass(cl) # fails if cl not a defined class (!)

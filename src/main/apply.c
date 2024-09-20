@@ -366,7 +366,7 @@ attribute_hidden SEXP do_rapply(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 /**
  * Recursively check if  X  is a tree with only factor leaves;
- *   the "work horse" for do_islistfactor()
+ *   the workhorse for do_islistfactor()
  * @param X  list or expression
  * @return TRUE(1), FALSE(0) or NA_LOGICAL
  */

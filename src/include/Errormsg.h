@@ -23,15 +23,15 @@
 #ifndef ERRORMSG_H
 #define ERRORMSG_H
 
-/* Used in ../main/sub*.c */
+/* Used now only in ../main/errors.c */
 #define R_MSG_subs_o_b	_("subscript out of bounds")
 #define R_MSG_ob_nonsub _("object of type '%s' is not subsettable")
 #define R_MSG_miss_subs _("missing subscript")
 
-/*---- Packaged Error & Warning Messages ---- 
+/*---- Packaged Error & Warning Messages ----
  *---- ================================= ----*/
 
-/* ---> Handling & I18n 
+/* ---> Handling & I18n
  * via ErrorMessage() and WarningMessage() in ../../main/errors.c */
 
 typedef enum {

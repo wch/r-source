@@ -184,7 +184,7 @@ static int defaultLocaleACP(const char *ctype)
     r = wcstombs(defaultCP, wdefaultCP, n);
     if (r == (size_t)-1 || r >= n)
 	return 0;
-	     
+
     if (!isdigit(defaultCP[0]))
 	return 0;
     return atoi(defaultCP);
@@ -235,7 +235,7 @@ attribute_hidden void R_check_locale(void)
     }
 #endif
     mbcslocale = MB_CUR_MAX > 1;
-    R_MB_CUR_MAX = MB_CUR_MAX;
+    R_MB_CUR_MAX = (int)MB_CUR_MAX;
 #ifdef __sun
     /* Solaris 10 (at least) has MB_CUR_MAX == 3 in some, but ==4
        in other UTF-8 locales. The former does not allow working
@@ -734,7 +734,7 @@ attribute_hidden SEXP do_filerename(SEXP call, SEXP op, SEXP args, SEXP rho)
 	error(_("invalid '%s' argument"), "to");
     n1 = LENGTH(f1); n2 = LENGTH(f2);
    if (n2 != n1)
-	error(_("'from' and 'to' are of different lengths"));
+       error(_("'%s' and '%s' are of different lengths"), "from", "to");
     PROTECT(ans = allocVector(LGLSXP, n1));
     for (i = 0; i < n1; i++) {
 	if (STRING_ELT(f1, i) == NA_STRING ||
@@ -1244,7 +1244,7 @@ R_DIR *R_opendir(const char *name)
 	vmaxset(vmax);
 	free(rdir);
 	return NULL;
-    }	
+    }
     rdir->hfind = INVALID_HANDLE_VALUE;
     rdir->cbuff.data = NULL;
     rdir->cbuff.bufsize = 0;
@@ -1332,7 +1332,7 @@ int R_closedir(R_DIR *rdir)
     int res = closedir(rdir->dirp);
     free(rdir);
     return res;
-#endif    
+#endif
 }
 
 #ifdef Win32
@@ -1366,7 +1366,7 @@ attribute_hidden R_WDIR *R_wopendir(const wchar_t *name)
     if (!rdir->pattern) {
 	free(rdir);
 	return NULL;
-    }	
+    }   
     rdir->hfind = INVALID_HANDLE_VALUE;
     return rdir;
 }
@@ -1431,7 +1431,7 @@ size_t path_buffer_append(R_StringBuffer *pb, const char *name, size_t len)
 	memcpy(pb->data + len, name, namelen);
     pb->data[newlen - 1] = '\0';
 #ifdef Unix
-    if (newlen > R_PATH_MAX) 
+    if (newlen > R_PATH_MAX)
 	warning(_("over-long path"));
 #endif
     return newlen;
@@ -1556,6 +1556,9 @@ list_files(R_StringBuffer *pb, size_t offset, size_t len, int *count, SEXP *pans
     } // end while()
 }
 
+/* .Internal(list.files(path, pattern, all.files, full.names, recursive,
+                        ignore.case, include.dirs, no..))
+*/
 attribute_hidden SEXP do_listfiles(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     int countmax = 128;
@@ -1690,7 +1693,7 @@ attribute_hidden SEXP do_listdirs(SEXP call, SEXP op, SEXP args, SEXP rho)
 	   directory with full.names == TRUE and "" with full.names = FALSE.
 	   list.files(recursive = TRUE, include.dirs = TRUE) does not do
 	   that.
-    
+
 	   This block mimicks the previous behavior but could be removed when
 	   that is no longer needed (from here and search_setup). */
 	if (recursive) {
@@ -2638,7 +2641,6 @@ attribute_hidden SEXP do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
 #else
     LOGICAL(ans)[i++] = FALSE;
 #endif
-
 
     setAttrib(ans, R_NamesSymbol, ansnames);
     UNPROTECT(2);
@@ -3847,9 +3849,8 @@ do_compilerVersion(SEXP call, SEXP op, SEXP args, SEXP rho)
 #else
     SET_STRING_ELT(ans, 1, mkChar(""));
 #endif
-    
     UNPROTECT(2);
-   return ans;
+    return ans;
 }
 
 

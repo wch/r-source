@@ -104,10 +104,11 @@ aov <- function(formula, data = NULL, projections = FALSE, qr = TRUE,
             qtx <- qtx * wts
         }
         qty <- as.matrix(qr.qty(qr.e, resp))
-        if((nc <- ncol(qty)) > 1L) {
-            dny <- colnames(resp) %||% paste0("Y", 1L:nc)
-            dimnames(qty) <- list(seq(nrow(qty)), dny)
-        } else dimnames(qty) <- list(seq(nrow(qty)), NULL)
+        dimnames(qty) <- list(seq(nrow(qty)),
+                              if((nc <- ncol(qty)) > 1L)
+                                  colnames(resp) %||% paste0("Y", 1L:nc)
+                              ## else NULL
+                              )
         qtx <- qr.qty(qr.e, qtx)
         dimnames(qtx) <- list(seq(nrow(qtx)) , dnx)
         for(i in seq_along(nmstrata)) {

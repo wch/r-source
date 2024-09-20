@@ -1053,7 +1053,7 @@ function(x, style = "text", .bibstyle = NULL,
         switch(style,
                "text" = format_via_Rd(tools::Rd2txt),
                "html" = format_via_Rd(tools::Rd2HTML),
-               "latex" = format_via_Rd(tools::Rd2latex),
+               "latex"= format_via_Rd(tools::Rd2latex),
                "Bibtex" = {
                    unlist(lapply(x,
                                  function(y)

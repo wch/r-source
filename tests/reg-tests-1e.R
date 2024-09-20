@@ -860,8 +860,8 @@ tools::assertWarning(verbose=TRUE, # *same* warning (1-norm instead of 2-)
 kz2La
 ## 4) kappa.qr(z) implicitly assumes nrow(z$qr) >= ncol(z$qr) ..
 (kzqr2 <- kappa(qr(cbind(zm, zm + 1)))) # gave Error .. matrix should be square
-all.equal(0.058131632, (rcTm <- rcond(zm, triangular=TRUE          )), tol=0) # 3.178e-9
-all.equal(0.047891278, (rcTL <- rcond(zm, triangular=TRUE, uplo="L")), tol=0) # 4.191e-9
+all.equal(0.058131632, print(rcTm <- rcond(zm, triangular=TRUE          )), tol=0) # 3.178e-9
+all.equal(0.047891278, print(rcTL <- rcond(zm, triangular=TRUE, uplo="L")), tol=0) # 4.191e-9
 ## New: can use norm "M" or "F" for exact=TRUE:
 (kz <- kappa(zm, norm="M", exact = TRUE)) # 2.440468
 (kF <- kappa(zm, norm="F", exact = TRUE)) # 6.448678

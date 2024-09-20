@@ -3395,3 +3395,7 @@ withAutoprint({
     1 + 2
 })
 ## temporarily wrongly showed " withAutoprint({ "
+
+
+# ----- Last line -------------
+cat('Time elapsed: ', proc.time(),'\n')

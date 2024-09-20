@@ -5511,8 +5511,9 @@ NORET static void nodeStackOverflow(void)
 {
     /* condition is pre-allocated and protected with R_PreserveObject */
     SEXP cond = R_getNodeStackOverflowError();
-
+    PROTECT(cond);
     R_signalErrorCondition(cond, R_CurrentExpression);
+    UNPROTECT(1); /* not reached */
 }
 
 #define NELEMS_FOR_SIZE(size) \

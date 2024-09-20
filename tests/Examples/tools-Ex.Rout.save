@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2024-08-21 r87032) -- "Unsuffered Consequences"
+R Under development (unstable) (2024-09-20 r87182) -- "Unsuffered Consequences"
 Copyright (C) 2024 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu
 
@@ -96,7 +96,7 @@ $status
 
 $stdout
  [1] ""                                                                                 
- [2] "R Under development (unstable) (2024-08-21 r87032) -- \"Unsuffered Consequences\""
+ [2] "R Under development (unstable) (2024-09-20 r87182) -- \"Unsuffered Consequences\""
  [3] "Copyright (C) 2024 The R Foundation for Statistical Computing"                    
  [4] "Platform: x86_64-pc-linux-gnu"                                                    
  [5] ""                                                                                 
@@ -945,7 +945,7 @@ function (x, ...)
 > flush(stderr()); flush(stdout())
 > 
 > ### Name: sha256sum
-> ### Title: Compute SHA256 Checksums
+> ### Title: Compute SHA-256 Checksums
 > ### Aliases: sha256sum
 > ### Keywords: utilities
 > 
