@@ -242,6 +242,12 @@
       \item Installation will define \code{STRICT_R_HEADERS} if
       environment variable \env{_R_USE_STRICT_R_HEADERS_} is set to a
       true value: this is done by \command{R CMD check --as-cran}.
+
+      \item \command{R CMD check} now reports more warnings on
+      long-deprecated/obsolete Fortran features from
+      \command{gfortran -Wall}.  For hints on how to modernize these,
+      see
+      \url{https://fortranwiki.org/fortran/show/Modernizing+Old+Fortran}.
     }
   }
 

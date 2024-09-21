@@ -6206,6 +6206,8 @@ add_dummies <- function(dir, Log)
                           ## "arithmetic IF statement at \\(1\\)",
                           ## Reported as from 2024-09
                           ## "Obsolescent feature:",
+                          ## see e.g. https://fortranwiki.org/fortran/show/Modernizing+Old+Fortran
+                          "Obsolescent feature: Statement function",
                           "Nonconforming tab character (in|at)")
                     warn_re <- c(warn_re,
                                  "Warning: .*\\[-Wconversion]",
