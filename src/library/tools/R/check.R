@@ -2541,7 +2541,7 @@ add_dummies <- function(dir, Log)
                 }
                 printLog0(Log, paste(c(out, ""), collapse = "\n"))
             }
-            
+
             if(!any)
                 resultLog(Log, "OK")
         }
@@ -6194,21 +6194,25 @@ add_dummies <- function(dir, Log)
                 ## something "true".
                 ## All gfortran -Wall warnings start Warning: so have been
                 ## included.  We exclude some now.
+
                 check_src_flag <- Sys.getenv("_R_CHECK_WALL_FORTRAN_", "FALSE")
                 if (!config_val_to_logical(check_src_flag)) {
                     warn_re <-
                         c("Label .* at \\(1\\) defined but not used",
-                          "Line truncated at \\(1\\)",
-                          "ASSIGN statement at \\(1\\)",
-                          "Assigned GOTO statement at \\(1\\)",
-                          "arithmetic IF statement at \\(1\\)",
-                          "Nonconforming tab character (in|at)",
-                          "Obsolescent feature:")
+                          "Line truncated at \\(1\\)", # none currently
+                          ## None of these left
+                          ## "ASSIGN statement at \\(1\\)",
+                          ## "Assigned GOTO statement at \\(1\\)",
+                          ## "arithmetic IF statement at \\(1\\)",
+                          ## Reported as from 2024-09
+                          ## "Obsolescent feature:",
+                          "Nonconforming tab character (in|at)")
                     warn_re <- c(warn_re,
                                  "Warning: .*\\[-Wconversion]",
                                  ## We retain [-Wuninitialized]
                                  "Warning: .*\\[-Wmaybe-uninitialized]",
-                                 "Warning: .*\\[-Wintrinsic-shadow]",
+                                 ## Reported as from 2004-09
+                                 ## "Warning: .*\\[-Wintrinsic-shadow]",
                                  ## R itself uses these, the latter in LAPACK
                                  "Warning: GNU Extension: DOUBLE COMPLEX",
                                  "Warning: GNU Extension: .*COMPLEX[*]16"
@@ -6501,7 +6505,7 @@ add_dummies <- function(dir, Log)
                           "additional_repositories_analysis_results")))
                    ## Maybe using Filter(NROW, res) is safe enough?
                    && (NROW(res$spelling) == 0L)
-                   && (NROW(y <- res$additional_repositories_analysis_results) 
+                   && (NROW(y <- res$additional_repositories_analysis_results)
                        == length(res$suggests_or_enhances_not_in_mainstream_repositories))
                    && all(y[, 2L] == "yes")
                    && R_check_use_log_info)
@@ -7238,7 +7242,7 @@ add_dummies <- function(dir, Log)
     R_check_use_log_info <-
         config_val_to_logical(Sys.getenv("_R_CHECK_LOG_USE_INFO_",
                                          "FALSE"))
-    
+
     if (as_cran) {
         if (extra_arch) {
             message("'--as-cran' turns off '--extra-arch'")
