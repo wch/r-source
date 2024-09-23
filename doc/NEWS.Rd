@@ -93,7 +93,7 @@
       of \code{files=}. The two arguments are mutually exclusive.
 
       \item Added function \code{sha256sum()} in package \pkg{tools}
-      analogous to \code{md5sum()} implementing the SHA-256 hashing
+      analogous to \code{md5sum()} implementing the \abbr{SHA}-256 hashing
       algorithm.
     }
   }

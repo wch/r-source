@@ -5,9 +5,9 @@
 
 \name{sha256sum}
 \alias{sha256sum}
-\title{Compute SHA-256 Checksums}
+\title{Compute \abbr{SHA}-256 Checksums}
 \description{
-  Compute the 32-byte SHA-256 hashes of one or more files, or a raw vector of bytes.
+  Compute the 32-byte \abbr{SHA}-256 hashes of one or more files, or a raw vector of bytes.
 }
 \usage{
 sha256sum(files, bytes)
@@ -18,7 +18,7 @@ sha256sum(files, bytes)
     NB: \code{bytes} and \code{files} are mutually exclusive.}
 }
 \details{
-  A SHA-256 \sQuote{hash} or \sQuote{checksum} or \sQuote{message digest} is
+  A \abbr{SHA}-256 \sQuote{hash} or \sQuote{checksum} or \sQuote{message digest} is
   a 256-bit summary of the file contents represented by 64 hexadecimal
   digits.
 
