@@ -322,8 +322,8 @@ if(FALSE) {
         do_exit_on_error()
     }
 
-    pkgerrmsg <- function(msg, pkg)
-	errmsg(msg, " for package ", sQuote(pkg))
+    pkgerrmsg <- function(msg, pkg, ...)
+	errmsg(msg, " for package ", sQuote(pkg), ...)
 
     ## 'pkg' is the absolute path to package sources.
     do_install <- function(pkg)
@@ -1006,10 +1006,14 @@ if(FALSE) {
             if (length(miss) > 1)
                  pkgerrmsg(sprintf("dependencies %s are not available",
                                    paste(sQuote(miss), collapse = ", ")),
-                           pkg_name)
+                           pkg_name,
+			   sprintf("\nPerhaps try a variation of:\ninstall.packages(c(%s))",
+				   paste(shQuote(miss), collapse = ", ")))
             else if (length(miss))
                 pkgerrmsg(sprintf("dependency %s is not available",
-                                  sQuote(miss)), pkg_name)
+                                  sQuote(miss)), pkg_name,
+                          sprintf("\nPerhaps try a variation of:\ninstall.packages(%s)",
+                                  shQuote(miss)))
          }
 
         starsmsg(stars, "installing *source* package ",
