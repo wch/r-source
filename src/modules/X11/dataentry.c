@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--2022  The R Core Team
+ *  Copyright (C) 1998--2024  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -158,7 +158,7 @@ static void drawrectangle(DEstruct, int, int, int, int, int, int);
 static void drawtext(DEstruct, int, int, char*, int);
 static void RefreshKeyboardMapping(DEEvent *ioevent);
 static void Rsync(DEstruct);
-static int textwidth(DEstruct, const char*, int);
+static int textwidth(DEstruct, const char*);
 static int WhichEvent(DEEvent ioevent);
 
 static void R_ProcessX11Events(void *data);
@@ -593,20 +593,20 @@ static void drawwindow(DEstruct DE)
     if(DE->isEditor) {
 	/* draw the quit etc boxes */
 
-	i = textwidth(DE, "Quit", 4);
+	i = textwidth(DE, "Quit");
 	box_coords[0] = st = DE->fullwindowWidth - 6 - DE->bwidth;
 	box_coords[1] = st - i;
 	drawrectangle(DE, st - i, 3, i + 4, DE->hht - 6, 1, 1);
 	drawtext(DE, st + 2 - i, DE->hht - 7, "Quit", 4);
 
 	box_coords[4] = st = st - 5*i;
-	i = textwidth(DE, "Paste", 5);
+	i = textwidth(DE, "Paste");
 	box_coords[5] = st - i;
 	drawrectangle(DE, st - i, 3, i + 4, DE->hht - 6, 1, 1);
 	drawtext(DE, st + 2 - i, DE->hht - 7, "Paste", 5);
 
 	box_coords[2] = st = st - 2*i;
-	i = textwidth(DE, "Copy", 4);
+	i = textwidth(DE, "Copy");
 	box_coords[3] = st - i;
 	drawrectangle(DE, st - i, 3, i + 4, DE->hht - 6, 1, 1);
 	drawtext(DE, st + 2 - i, DE->hht - 7, "Copy", 4);
@@ -806,10 +806,10 @@ static int get_col_width(DEstruct DE, int col)
 	if(lab != NA_STRING) strp = CHAR(lab); else strp = "var12";
 	PrintDefaults();
 
-	w = textwidth(DE, strp, (int) strlen(strp));
+	w = textwidth(DE, strp);
 	for (i = 0; i < INTEGER(DE->lens)[col - 1]; i++) {
 	    strp = EncodeElement(tmp, i, 0, '.');
-	    w1 = textwidth(DE, strp, (int) strlen(strp));
+	    w1 = textwidth(DE, strp);
 	    if (w1 > w) w = w1;
 	}
 	if(w < 0.5*DE->box_w) w = (int) (0.5*DE->box_w);
@@ -1216,7 +1216,7 @@ static void printstring(DEstruct DE, const char *ibuf, int buflen, int row,
 	    w_p=wcs;
 	    cnt = (int) wcsrtombs(s,(const wchar_t **)&w_p,sizeof(s)-1,NULL);
 	    s[cnt]='\0';
-	    if (textwidth(DE, s, (int) strlen(s)) < (bw - DE->text_offset)) break;
+	    if (textwidth(DE, s) < (bw - DE->text_offset)) break;
 	    *(++wcspc) = L'<';
 	}
     } else {
@@ -1226,7 +1226,7 @@ static void printstring(DEstruct DE, const char *ibuf, int buflen, int row,
 	    w_p=wcs;
 	    cnt = (int) wcsrtombs(s,(const wchar_t **)&w_p,sizeof(s)-1,NULL);
 	    s[cnt]='\0';
-	    if (textwidth(DE, s, (int) strlen(s)) < (bw - DE->text_offset)) break;
+	    if (textwidth(DE, s) < (bw - DE->text_offset)) break;
 	    *(wcspbuf + i - 2) = L'>';
 	    *(wcspbuf + i - 1) = L'\0';
 	}
@@ -1958,7 +1958,7 @@ static Rboolean initwin(DEstruct DE, const char *title) /* TRUE = Error */
     DE->nboxchars = asInteger(GetOption1(install("de.cellwidth")));
     if (DE->nboxchars == NA_INTEGER || DE->nboxchars < 0) DE->nboxchars = 0;
 
-    twidth = textwidth(DE, digits, (int) strlen(digits));
+    twidth = textwidth(DE, digits);
 
     if (DE->nboxchars > 0) twidth = (twidth * DE->nboxchars)/10;
     DE->box_w = twidth + 4;
@@ -1978,8 +1978,8 @@ static Rboolean initwin(DEstruct DE, const char *title) /* TRUE = Error */
     /* this used to presume 4 chars sufficed for row numbering */
     labdigs = max(3, 1+ (int) floor(log10((double)DE->ymaxused)));
     snprintf(DE->labform, 15, "%%%dd", labdigs);
-    DE->boxw[0] = (int)( 0.1*labdigs*textwidth(DE, "0123456789", 10)) +
-	textwidth(DE, " ", 1) + 8;
+    DE->boxw[0] = (int)( 0.1*labdigs*textwidth(DE, "0123456789")) +
+	textwidth(DE, " ") + 8;
     for(i = 1; i < 100; i++) DE->boxw[i] = get_col_width(DE, i);
 
     /* try for a window width that covers all the columns, or is around
@@ -1995,7 +1995,7 @@ static Rboolean initwin(DEstruct DE, const char *title) /* TRUE = Error */
     if(DE->windowWidth == 0) DE->windowWidth = w;
     DE->windowWidth += 2;
     /* allow enough width for buttons */
-    minwidth = (int)(7.5 * textwidth(DE, "Paste", 5));
+    minwidth = (int)(7.5 * textwidth(DE, "Paste"));
     if(DE->windowWidth < minwidth) DE->windowWidth = minwidth;
 
     ioscreen = DefaultScreen(iodisplay);
@@ -2177,9 +2177,11 @@ static Rboolean initwin(DEstruct DE, const char *title) /* TRUE = Error */
        dimensions as above */
 
     /* font size consideration */
-    for(i = 0; i < (sizeof(menu_label)/sizeof(char *)); i++)
-	twidth = (twidth<textwidth(DE, menu_label[i],(int) strlen(menu_label[i]))) ?
-	    textwidth(DE, menu_label[i],(int) strlen(menu_label[i])) : twidth;
+    for(i = 0; i < (sizeof(menu_label)/sizeof(char *)); i++) {
+	int twidthi = textwidth(DE, menu_label[i]);
+	if (twidthi > twidth)
+	    twidth = twidthi;
+    }
 
     menuwindow = XCreateSimpleWindow(iodisplay, root, 0, 0, twidth,
 				     4 * DE->box_h, 2, ioblack, iowhite);
@@ -2302,23 +2304,19 @@ static void Rsync(DEstruct DE)
     XSync(iodisplay, 0);
 }
 
-static int textwidth(DEstruct DE, const char *text, int nchar)
+static int textwidth(DEstruct DE, const char *text)
 {
     int ans;
-    char *buf = CallocCharBuf(nchar);
-    strncpy(buf, text, nchar);
     if(mbcslocale) {
 #ifdef HAVE_XUTF8TEXTESCAPEMENT
 	if (utf8locale)
-	    ans = Xutf8TextEscapement(font_set, buf, nchar);
+	    ans = Xutf8TextEscapement(font_set, text, (int)strlen(text));
 	else
 #endif
-	    ans = XmbTextEscapement(font_set, buf, nchar);
-	R_Free(buf);
+	    ans = XmbTextEscapement(font_set, text, (int)strlen(text));
 	return ans;
     }
-    ans = XTextWidth(DE->font_info, buf, nchar);
-    R_Free(buf);
+    ans = XTextWidth(DE->font_info, text, (int)strlen(text));
     return ans;
 }
 
