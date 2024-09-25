@@ -1708,7 +1708,7 @@ function(dir)
             gsub(sprintf("&lt;https://replace.me.by.orcid.org/(%s)&gt;",
                          .ORCID_iD_regexp),
                  paste0("<a href=\"https://orcid.org/\\1\">",
-                        "<img alt=\"ORCID iD\"",
+                        "<img alt=\"ORCID iD\" ",
                         if(dynamic)
                             "src=\"/doc/html/orcid.svg\" "
                         else
