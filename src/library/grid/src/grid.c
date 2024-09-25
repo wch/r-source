@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 2001-3 Paul Murrell
- *                2003-2023 The R Core Team
+ *                2003-2024 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -4944,7 +4944,7 @@ static SEXP gridPoints(SEXP x, SEXP y, SEXP pch, SEXP size,
     R_GE_gcontext gc, gcCache;
     LTransform transform;
     SEXP currentvp, currentgp;
-    SEXP savedFill;
+    SEXP savedFill = R_NilValue;
     SEXP result = R_NilValue;
     SEXP resultNames = R_NilValue;
     /* Get the current device 
