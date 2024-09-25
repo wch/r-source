@@ -7323,6 +7323,7 @@ add_dummies <- function(dir, Log)
         if(is.na(R_check_Rd_validate_Rd2HTML))
             R_check_Rd_validate_Rd2HTML <- TRUE
         R_check_Rd_math_rendering <- TRUE
+        R_check_use_log_info <- TRUE
 
     } else {
         ## do it this way so that INSTALL produces symbols.rds
