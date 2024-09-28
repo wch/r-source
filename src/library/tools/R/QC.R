@@ -8516,10 +8516,11 @@ function(dir, localOnly = FALSE, pkgSize = NA)
     if(!foss && analyze_license(l_d)$is_verified)
         out$new_license <- list(meta["License"], l_d)
 
-    ## for incoming check we may want to check for GNU make in SystemRequirements here
-        ## in order to auto-accept packages once this was already accepted before
-        if(config_val_to_logical(Sys.getenv("_R_CHECK_CRAN_INCOMING_NOTE_GNU_MAKE_",
-                                           "FALSE"))){
+    ## for incoming check we may want to check for GNU make in
+    ## SystemRequirements here in order to auto-accept packages once
+    ## this was already accepted before
+    if(config_val_to_logical(Sys.getenv("_R_CHECK_CRAN_INCOMING_NOTE_GNU_MAKE_",
+                                        "FALSE"))){
         SysReq <- meta["SystemRequirements"]
         if(!is.na(SysReq) && grepl("GNU [Mm]ake", SysReq)) {
             out$GNUmake <- TRUE
