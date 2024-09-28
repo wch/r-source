@@ -6470,25 +6470,13 @@ add_dummies <- function(dir, Log)
             if(length(out) == 1L && startsWith(out, "Maintainer: ")) {
                 ## Special-case when there is only the maintainer
                 ## address to note (if at all).
-                maintainer <- res$Maintainer
-                ## <FIXME>
-                ## Env var _R_CHECK_MAINTAINER_ADDRESS_ seems unused?
-                if(nzchar(maintainer) &&
-                   identical(maintainer,
-                             Sys.getenv("_R_CHECK_MAINTAINER_ADDRESS_"))) {
-                    resultLog(Log, "OK")
-                    out <- character()
-                }
-                ## </FIXME>
-                else {
-                    ## <FIXME>
-                    ## Why do we want to note the maintainer address?
-                    if(R_check_use_log_info)
-                        infoLog(Log)
-                    else
-                        resultLog(Log, "Note_to_CRAN_maintainers")
-                    ## </FIXME>
-                }
+                ## We used to note via 'Note_to_CRAN_maintainers' unless
+                ## it agreed with the _R_CHECK_MAINTAINER_ADDRESS_ env
+                ## var which apparently never got used.
+                ## As of 2024-09, nobody remembers why we did either: so
+                ## simply say OK.
+                resultLog(Log, "OK")
+                out <- character()
             } else if(length(res$bad_package)) {
                 errorLog(Log)
                 bad <- TRUE
@@ -6516,7 +6504,8 @@ add_dummies <- function(dir, Log)
                     noteLog(Log)
             }
             else resultLog(Log, "OK")
-            printLog0(Log, c(paste(out, collapse = "\n\n"), "\n"))
+            if(length(out))
+                printLog0(Log, c(paste(out, collapse = "\n\n"), "\n"))
             if(bad) maybe_exit(1L)
         } else resultLog(Log, "OK")
     }
