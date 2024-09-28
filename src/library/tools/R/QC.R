@@ -8098,6 +8098,18 @@ function(dir, localOnly = FALSE, pkgSize = NA)
                     (substring(bad$URL, ncp + 1L) == package))
             if(any(ind))
                 bad[ind, c("Status", "Message")] <- ""
+            if(NROW(bad)) {
+                ## Drop non-OK results which are "basically ok" or one
+                ## can do nothing about.
+                dom <- parse_URI_reference(bad$URL)$authority
+                val <- bad$Status
+                ind <- ((endsWith(dom, "shinyapps.io") &
+                         (val == "202")) |
+                        (endsWith(dom, "linkedin.com") &
+                         (val == "999")))
+                if(any(ind))
+                    bad <- bad[!ind, ]
+            }
             if(NROW(bad))
                 out$bad_urls <- bad
         }
@@ -8903,6 +8915,21 @@ function(x, ...)
                 paste(sprintf("  Canonical %s.R-project.org URLs use https.",
                               elts),
                       collapse = "\n")
+            },
+            if(length(y) &&
+               any(ind <-
+                       (grepl(re_or(c("^https://pubmed.ncbi.nlm.nih.gov/[0-9]+",
+                                      "^https://www.ncbi.nlm.nih.gov/pmc/articles/PMC[0-9]+/$",
+                                      "^https://academic.oup.com/.*(/[0-9]*){4}$",
+                                      "^https://www.sciencedirect.com/science/article")),
+                              y$URL)))) {
+                ## <FIXME>
+                ## Ideally we would complain about such URLs in general
+                ## and not only when the URL checks were not OK.
+                paste(c("Please use DOIs for the following publisher URLs:",
+                        paste0("  ", y$URL[ind])),
+                      collapse = "\n")
+                ## </FIXME>
             },
             if(length(y <- x$no_url_checks) && y) {
                 "Checking URLs requires 'libcurl' support in the R build."
