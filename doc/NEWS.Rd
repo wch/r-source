@@ -299,6 +299,11 @@
       \item Informational messages of e.g., \code{print(1:1e4, max=1000)},
       now correctly mention \code{max} in addition to
       \code{getOption("max.print")}.
+
+      \item \pkg{methods}' internal \code{.requirePackage()} now re-enables
+      primitive method dispatch when needed; thanks to \I{Ivan Krylov}
+      for demystifying CRAN package check failures on the R*devel mailing
+      lists.
     }
   }
 }
