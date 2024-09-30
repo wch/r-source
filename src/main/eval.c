@@ -7463,11 +7463,11 @@ static R_INLINE void finish_force_promise(void)
     POP_PENDING_PROMISE(BCFRAME_PRSTACK());
     SEXP prom = BCFRAME_PROMISE();
     R_bcstack_t ubval = POP_BCFRAME(FALSE);
+    BCNPUSH_STACKVAL(ubval); /* push early to protect */
     SET_PROMISE_VALUE_FROM_STACKVAL(prom, ubval);
     SET_PRSEEN(prom, 0);
     SET_PRENV(prom, R_NilValue);
     UNPROTECT(1); /* prom */
-    BCNPUSH_STACKVAL(ubval);
 }
 
 #define DO_GETVAR_FORCE_PROMISE_RETURN() do {			\
