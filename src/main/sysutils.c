@@ -975,15 +975,26 @@ Rboolean charIsLatin1(SEXP x)
    This feature, currently only available for stateless conversions together
    with R_MACOS_LIBICONV_WORKAROUND, detects transliteration by converting
    the result back to the original encoding, compares with the original and
-   then re-rums the conversion only to the to-be-transliterated character. 
+   then re-runs the conversion only to the to-be-transliterated character. 
    This wouldn't work in cases when the conversion isn't unique, but such
    cases are unlikely (note implementations of iconv, including libiconv in
    macOS 14.1, do not support decomposed forms).
    
    Enabled at runtime via _R_ICONV_UNDO_TRANSLITERATION_.
 */
-
 # define R_MACOS_LIBICONV_UNDO_TRANSLITERATION
+
+/* Work-around for libiconv in macOS (problem seen in 14.7).  This version of
+   libiconv accepts BOM for UTF-16, but on error (including EINVAL when it
+   is not given enough input, which is a normal situation in processing a
+   stream) it forgets the byte-order it has learned from the BOM.  Also, in
+   some cases it forgets the BOM on reset (iconv(cd, NULL, NULL, NULL,
+   NULL). The default is big-endian ordering even on little-endian
+   machines, so this particularly causes trouble when reading inputs
+   produced on Windows.  The work-around falls back to UTF-16LE/BE or 
+   UTF32-LE/BE based on the BOM, if present. */
+# define R_MACOS_LIBICONV_HANDLE_BOM
+
 #endif
 
 #ifdef R_MACOS_LIBICONV_WORKAROUND
@@ -994,6 +1005,11 @@ typedef struct {
     Rboolean undo_transliteration;
     size_t buflen;
     char *buf;
+    Rboolean handle_bom;
+    size_t bomlen;
+    char *tocode;
+    char start[4];
+    size_t startlen;
 } Riconv_cd;
 
 static Rboolean is_stateful(const char *code)
@@ -1047,7 +1063,35 @@ static Rboolean is_unicode(const char *code)
     return FALSE;
 }
 # endif 
+
+static int iconv_close_internal(Riconv_cd *rcd)
+{
+    int res = 0;
+
+    if (rcd->cd != (iconv_t)-1)
+	res = iconv_close(rcd->cd);
+
+# ifdef R_MACOS_LIBICONV_HANDLE_BOM
+    if (rcd->handle_bom && rcd->tocode)
+	free(rcd->tocode);
+# endif
+
+# ifdef R_MACOS_LIBICONV_UNDO_TRANSLITERATION
+    if (rcd->undo_transliteration) {
+	if (rcd->buf)
+	    free(rcd->buf);
+	if (rcd->cd_back != (iconv_t)-1) {
+	    if (iconv_close(rcd->cd_back))
+		res = -1;
+	}
+    }
+# endif
+
+    free(rcd);
+    return res;
+}
 #endif
+
 
 static void *iconv_open_internal(const char *tocode, const char *fromcode)
 {
@@ -1066,7 +1110,30 @@ static void *iconv_open_internal(const char *tocode, const char *fromcode)
     rcd->cd = cd;
     rcd->reset_after_error = !(is_stateful(tocode) || is_stateful(fromcode));
 
-    rcd->undo_transliteration = FALSE;
+    rcd->handle_bom = FALSE;
+    rcd->undo_transliteration = FALSE; /* for cleanup */
+
+# ifdef R_MACOS_LIBICONV_HANDLE_BOM
+    if (!strcasecmp(fromcode, "UTF-16") || !strcasecmp(fromcode,"UNICODE")) {
+	rcd->handle_bom = TRUE;
+	rcd->bomlen = 2;
+    } else if (!strcasecmp(fromcode, "UTF-32")) {
+	rcd->handle_bom = TRUE;
+	rcd->bomlen = 4;
+    }
+    if (rcd->handle_bom) {
+	rcd->startlen = 0;
+	size_t len = strlen(tocode)+1;
+	rcd->tocode = malloc(len);
+	if (!rcd->tocode) {
+	    iconv_close_internal(rcd);
+	    errno = ENOMEM;
+	    return (void *)(iconv_t)-1;
+	}
+	memcpy(rcd->tocode, tocode, len);
+    }
+# endif
+
 # ifdef R_MACOS_LIBICONV_UNDO_TRANSLITERATION
     rcd->undo_transliteration =
         !is_unicode(tocode) && rcd->reset_after_error;
@@ -1077,16 +1144,16 @@ static void *iconv_open_internal(const char *tocode, const char *fromcode)
 	rcd->undo_transliteration = FALSE;
 
     if (rcd->undo_transliteration) {
+	rcd->buf = NULL; /* for cleanup */
 	rcd->cd_back = iconv_open(fromcode, tocode);
 	if (rcd->cd_back == (iconv_t)-1) {
-	    iconv_close((iconv_t)rcd->cd);
+	    iconv_close_internal(rcd);
 	    return (iconv_t)-1;
 	}
 	rcd->buflen = 8192;
 	rcd->buf = malloc(rcd->buflen);
 	if (!rcd->buf) {
-	    iconv_close((iconv_t)rcd->cd);
-	    iconv_close((iconv_t)rcd->cd_back);
+	    iconv_close_internal(rcd);
 	    return (iconv_t)-1;
 	}
     }
@@ -1133,6 +1200,12 @@ size_t Riconv (void *cd, const char **inbuf, size_t *inbytesleft,
 #ifdef R_MACOS_LIBICONV_WORKAROUND
     Riconv_cd *rcd = (Riconv_cd *)cd;
 
+# ifdef R_MACOS_LIBICONV_HANDLE_BOM
+    const char *prev_inbuf = NULL;
+    if (rcd->handle_bom && inbuf)
+	prev_inbuf = *inbuf;
+# endif
+
 # ifdef R_MACOS_LIBICONV_UNDO_TRANSLITERATION
     const char *old_inbuf = NULL;
     size_t old_inbytesleft = 0;
@@ -1166,6 +1239,42 @@ size_t Riconv (void *cd, const char **inbuf, size_t *inbytesleft,
 	iconv(rcd->cd, NULL, NULL, NULL, NULL);
 	errno = saveerrno;
 	}
+
+# ifdef R_MACOS_LIBICONV_HANDLE_BOM
+    if (rcd->handle_bom && prev_inbuf && inbuf) {
+	size_t tocopy = rcd->bomlen - rcd->startlen;
+	ptrdiff_t avail = *inbuf - prev_inbuf;
+
+	if (avail < tocopy)
+	    tocopy = (size_t) avail;
+	memcpy(rcd->start + rcd->startlen, prev_inbuf, tocopy);
+	rcd->startlen += tocopy;
+	
+	if (rcd->startlen == rcd->bomlen) {
+	    const char *new_fromcode = NULL;
+
+	    if (rcd->bomlen == 2) {
+		if (!memcmp(rcd->start, "\xff\xfe", 2))
+		    new_fromcode = "UTF-16LE";
+		else if (!memcmp(rcd->start, "\xfe\xff", 2))
+		    new_fromcode = "UTF-16BE";
+	    } else if (rcd->bomlen == 4) {
+		if (!memcmp(rcd->start, "\xff\xfe\x00\x00", 4))
+		    new_fromcode = "UTF-32LE";
+		else if (!memcmp(rcd->start, "\x00\x00\xfe\xff", 4))
+		    new_fromcode = "UTF-32BE";
+	    }
+	    if (new_fromcode) {
+		iconv_close((iconv_t) rcd->cd);
+		rcd->cd = iconv_open(rcd->tocode, new_fromcode);
+	    }
+
+	    free(rcd->tocode);
+	    rcd->tocode = NULL; /* for cleanup */
+	    rcd->handle_bom = FALSE;
+	}
+    }
+# endif
 
 # ifdef R_MACOS_LIBICONV_UNDO_TRANSLITERATION
     if (rcd->undo_transliteration &&
@@ -1244,15 +1353,7 @@ int Riconv_close (void *cd)
     return iconv_close((iconv_t) cd);
 
 #else
-    Riconv_cd *rcd = (Riconv_cd *)cd;
-    int res = iconv_close(rcd->cd);
-# ifdef R_MACOS_LIBICONV_UNDO_TRANSLITERATION
-    if (rcd->undo_transliteration) {
-	free(rcd->buf);
-	if (iconv_close(rcd->cd_back)) res = -1;
-    }
-# endif
-    return res;
+    return iconv_close_internal((Riconv_cd *)cd);
 #endif
 }
 
