@@ -1067,11 +1067,12 @@ stopifnot(exprs = {
 
 ## invalid user device function  options(device = *) -- PR#15883
 graphics.off() # just in case
-op <- options(device=function(...){}) # non-sense device
+op <- options(device = function(...){}, warn = 1) # non-sense device
 assertErrV(plot.new())
 if(no.grid <- !("grid" %in% loadedNamespaces())) requireNamespace("grid")
 assertErrV(grid::grid.newpage())
-if(no.grid) unloadNamespace("grid") ; options(op)
+if(no.grid) unloadNamespace("grid") # Warning: shutting down all devices ...
+options(op)
 if(!dev.interactive(orNone = TRUE))
    pdf("reg-tests-1d.pdf", encoding = "ISOLatin1.enc")# revert to reasonable device
 ## both errors gave segfaults in R <= 3.4.1
