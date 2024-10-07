@@ -948,19 +948,25 @@ Rboolean charIsLatin1(SEXP x)
 }
 
 #ifdef __APPLE__
-/* Work-around for libiconv in macOS 14.1. When an invalid input byte is
-   encountered while converting, one has to re-set the converter state.
-   Otherwise, subsequent valid bytes may be reported as invalid and libiconv
-   may crash R due to an assertion failure. The problem does not seem to
-   happen when the converter is re-set after error.
+/* Work-around for system libiconv in macOS 14.1. When an invalid input byte
+   is encountered while converting, subsequent valid bytes may be reported as
+   invalid and libiconv may crash R due to an assertion failure e.g. once
+   then converting an empty input. The problem does not seem to
+   happen when the converter is re-set after error. The problem has been
+   observed in libiconv-86 (which came with macOS 14.1) but no longer
+   in libiconv-92 (macOS 14.2).
 
    While often one should reset the converter in such situation in order to
    support stateful encodings properly, the problem has been seen even when
-   converting from UTF-8 to UTF-8.
+   converting from UTF-8 to UTF-8 (UTF-8 is stateless).
 
    This work-around automatically re-sets the converter in Riconv in case
-   of error for stateless encodings. */
-# define R_MACOS_LIBICONV_WORKAROUND
+   of error for stateless encodings. It is enabled only based on a runtime
+   check for the issue (also to avoid to running into problems with BOM
+   handling, see R_MACOS_LIBICONV_HANDLE_BOM). 
+
+   Can be disabled via env. variable _R_ICONV_RESET_AFTER_ERROR_. */
+# define R_MACOS_LIBICONV_RESET_AFTER_ERROR
 
 /* A hack to detect and undo transliteration (experimental, likely to change
    or be removed).  While POSIX says that iconv should transliterate or
@@ -972,29 +978,44 @@ Rboolean charIsLatin1(SEXP x)
    macOS 14.1 has a libiconv implementation which transliterates many
    characters.
 
-   This feature, currently only available for stateless conversions together
-   with R_MACOS_LIBICONV_WORKAROUND, detects transliteration by converting
-   the result back to the original encoding, compares with the original and
-   then re-runs the conversion only to the to-be-transliterated character. 
-   This wouldn't work in cases when the conversion isn't unique, but such
-   cases are unlikely (note implementations of iconv, including libiconv in
-   macOS 14.1, do not support decomposed forms).
+   This feature, currently only available for stateless conversions, detects
+   transliteration by converting the result back to the original encoding,
+   compares with the original and then re-runs the conversion only to the
+   to-be-transliterated character. This wouldn't work in cases when the
+   conversion isn't unique, but such cases are unlikely (note implementations
+   of iconv, including libiconv in macOS 14.1, do not support decomposed
+   forms).
    
-   Enabled at runtime via _R_ICONV_UNDO_TRANSLITERATION_.
-*/
+   Enabled at runtime via env. variable _R_ICONV_UNDO_TRANSLITERATION_. */
 # define R_MACOS_LIBICONV_UNDO_TRANSLITERATION
 
-/* Work-around for libiconv in macOS (problem seen in 14.7).  This version of
+/* Work-around for libiconv in macOS 14.1.  This version of
    libiconv accepts BOM for UTF-16, but on error (including EINVAL when it
    is not given enough input, which is a normal situation in processing a
-   stream) it forgets the byte-order it has learned from the BOM.  Also, in
-   some cases it forgets the BOM on reset (iconv(cd, NULL, NULL, NULL,
-   NULL). The default is big-endian ordering even on little-endian
+   stream) it forgets the byte-order it has learned from the BOM. This
+   problem was observed in libiconv-86 (which came with macOS 14.1) and
+   still exists in libiconv-107 (in macOS 15.0).
+
+   Also, in some cases iconv forgets the BOM on reset, i.e.
+   iconv(cd, NULL, NULL, NULL, NULL) and then starts producing unexpected
+   results. The default is usually big-endian ordering even on little-endian
    machines, so this particularly causes trouble when reading inputs
    produced on Windows.  The work-around falls back to UTF-16LE/BE or 
-   UTF32-LE/BE based on the BOM, if present. */
+   UTF32-LE/BE based on the BOM, if present. This problem has been seen
+   already in libiconv-64 (macOS 13.5) and is present also in some other
+   iconv implementations, where the byte-order learned from the BOM is
+   incorrectly treated as being part of the encoding state (but UTF-16
+   and UTF-32 is stateless and the byte-order learned from the BOM 
+   should be write-once property of the conversion descriptor). */
 # define R_MACOS_LIBICONV_HANDLE_BOM
+#endif
 
+#ifndef R_MACOS_LIBICONV_WORKAROUND
+# if defined(R_MACOS_LIBICONV_RESET_AFTER_ERROR) \
+     || defined(R_MACOS_LIBICONV_UNDO_TRANSLITERATION) \
+     || defined(R_MACOS_LIBICONV_HANDLE_BOM)
+#  define R_MACOS_LIBICONV_WORKAROUND
+# endif
 #endif
 
 #ifdef R_MACOS_LIBICONV_WORKAROUND
@@ -1064,6 +1085,17 @@ static Rboolean is_unicode(const char *code)
 }
 # endif 
 
+/* only for debugging, may be removed */
+static int macos_libiconv_verbose(void) {
+    static int verbose = -1;
+
+    if (verbose == -1) {
+	char *p = getenv("_R_ICONV_VERBOSE_");
+	verbose = p && StringTrue(p);
+    }
+    return verbose;
+}
+
 static int iconv_close_internal(Riconv_cd *rcd)
 {
     int res = 0;
@@ -1092,6 +1124,193 @@ static int iconv_close_internal(Riconv_cd *rcd)
 }
 #endif
 
+#ifdef R_MACOS_LIBICONV_HANDLE_BOM
+
+/* Try converting input in UTF-16 iteratively (first 5 bytes, then the
+   remaining byte) to UTF-8. The result should be "23".
+   See fails_iteratively_with_bom().
+ 
+   1 when iconv "successfully" returns wrong result
+   -1 on (other) error
+   0 on no error and correct result
+*/
+static int fails_iteratively_when_incomplete(char *input)
+{
+    iconv_t cd = iconv_open("UTF-8", "UTF-16");
+    if (cd == (iconv_t)-1)
+	return -1;
+
+    char output[6]; // UTF-8-BOM (possibly) + "23" + NUL
+    char *inbuf = input;
+    size_t inbytesleft = 5;
+    char *outbuf = output;
+    size_t outbytesleft = 6;
+
+    size_t res = iconv(cd, &inbuf, &inbytesleft, &outbuf, &outbytesleft);
+    if (res != (size_t)-1 || errno != EINVAL) {
+	iconv_close(cd);
+	return -1;
+    }
+
+    inbytesleft = 6 - (5 - inbytesleft);
+    res = iconv(cd, &inbuf, &inbytesleft, &outbuf, &outbytesleft);
+    iconv_close(cd);
+    if (res == (size_t)-1)
+	return -1;
+    *outbuf = 0;
+
+    /* remove UTF-8 BOM if present (unlikely) */
+    int offset = 0;
+    if ((outbuf - output >= 3) && !memcmp(output, "\xef\xbb\xbf", 3))
+	offset = 3;
+
+    if (!memcmp(output + offset, "23", 3))
+	return 0; /* success, conversion works iteratively */
+    else
+	return 1; /* wrong result */ 
+}
+
+/* Try converting input in UTF-16 iteratively (first 4 bytes, then 
+   re-set, then remaining two bytes) to UTF-8. The result should be "23".
+   See fails_iteratively_with_bom().
+ 
+   1 when iconv "successfully" returns wrong result
+   -1 on (other) error
+   0 on no error and correct result
+*/
+static int fails_iteratively_with_reset(char *input)
+{
+    iconv_t cd = iconv_open("UTF-8", "UTF-16");
+    if (cd == (iconv_t)-1)
+	return -1;
+
+    char output[6]; // UTF-8-BOM (possibly) + "23" + NUL
+    char *inbuf = input;
+    size_t inbytesleft = 4;
+    char *outbuf = output;
+    size_t outbytesleft = 6;
+
+    size_t res = iconv(cd, &inbuf, &inbytesleft, &outbuf, &outbytesleft);
+    if (res == (size_t)-1) {
+	iconv_close(cd);
+	return -1;
+    }
+    iconv(cd, NULL, NULL, NULL, NULL);
+
+    inbytesleft = 6 - (4 - inbytesleft);
+    res = iconv(cd, &inbuf, &inbytesleft, &outbuf, &outbytesleft);
+    iconv_close(cd);
+    if (res == (size_t)-1)
+	return -1;
+    *outbuf = 0;
+
+    /* remove UTF-8 BOM if present (unlikely) */
+    int offset = 0;
+    if ((outbuf - output >= 3) && !memcmp(output, "\xef\xbb\xbf", 3)) {
+	if (macos_libiconv_verbose()) 
+	    fprintf(stderr, "ICONV: UTF-8 with BOM produced.\n");
+	offset = 3;
+    }
+
+    if (!memcmp(output + offset, "23", 3))
+	return 0; /* success, conversion works iteratively */
+    else
+	return 1; /* wrong result */ 
+}
+
+/* Test whether iterative conversion from UTF-16 with a BOM to UTF-8 fails
+   by producing an incorrect result. This has been observed in Apple libiconv
+   on macOS. A runtime test is used as that version cannot be reliably
+   detected.
+
+   1 when iconv "successfully" returns wrong result
+   -1 on (other) error
+   0 on no error and correct result
+*/
+static int fails_iteratively_with_bom(void)
+{
+    unsigned words[] = { 0xfeff /* BOM */, 0x32 /* 2 */, 0x33 /* 3 */};
+    char big[6];
+    char little[6];
+
+    for(int i = 0; i < 6; i += 2) {
+	unsigned w = words[i/2];
+	big[i] = little[i+1] = w >> 8;
+	big[i+1] = little[i] = w & 0xff;
+    }
+
+    int ile = fails_iteratively_when_incomplete(little);
+    int ibe = fails_iteratively_when_incomplete(big);
+
+    int rle = fails_iteratively_with_reset(little);
+    int rbe = fails_iteratively_with_reset(big);
+
+    if (macos_libiconv_verbose()) {
+	fprintf(stderr, "ICONV: Fails iteratively when incomplete (LE): %d.\n",
+	        ile);
+	fprintf(stderr, "ICONV: Fails iteratively when incomplete (BE): %d.\n",
+	        ibe);
+	fprintf(stderr, "ICONV: Fails iteratively with reset (LE): %d.\n",
+	        rle);
+	fprintf(stderr, "ICONV: Fails iteratively with reset (BE): %d.\n",
+	        rbe);
+    }
+
+    if (ile == 1 || ibe == 1 || rle == 1 || rbe == 1)
+	return 1;
+    if (ile == -1 || ibe == -1 || rle == -1 || rbe == -1)
+	return -1;
+    return 0;
+}
+
+/* Test whether iconv, after encountering an invalid byte in input, keeps
+   incorrectly reporting as invalid also additional valid bytes. This has
+   been observed in Apple libiconv on macOS. A runtime test is used as that
+   version cannot be reliably detected.
+
+   1 when iconv "successfully" returns wrong result
+   -1 on (other) error
+   0 on no error and correct result */
+static int breaks_after_invalid_byte(void)
+{
+    char *input = "1" "\xFC" "3456789";
+
+    iconv_t cd = iconv_open("UTF-8", "UTF-8");
+    if (cd == (iconv_t)-1)
+        return -1;
+
+    char output[10];
+    char *inbuf = input;
+    size_t inbytesleft = 10;
+    char *outbuf = output;
+    size_t outbytesleft = 10;
+
+    size_t res = iconv(cd, &inbuf, &inbytesleft, &outbuf, &outbytesleft);
+    if (res != (size_t)-1 || (errno != EILSEQ && errno != EINVAL)
+        || outbytesleft != 9 || inbytesleft != 9) {
+
+	iconv_close(cd);
+	return -1;
+    }
+
+    /* advance over invalid byte */
+    inbuf++;
+    inbytesleft--;
+
+    res = iconv(cd, &inbuf, &inbytesleft, &outbuf, &outbytesleft);
+    iconv_close(cd);
+    if (res == (size_t)-1 && (errno == EINVAL || errno == EILSEQ))
+        return 1; /* input incorrectly reported as invalid */
+    *outbuf = '\0';
+    if (memcmp(output, "13456789", 9)) {
+	if (macos_libiconv_verbose())
+	    fprintf(stderr, "ICONV: Incorrect conversion with invalid byte.\n");
+	return -1; /* wrong result for other reason */
+    }
+
+    return 0; /* success, handling invalid bytes works */
+}
+#endif
 
 static void *iconv_open_internal(const char *tocode, const char *fromcode)
 {
@@ -1108,19 +1327,63 @@ static void *iconv_open_internal(const char *tocode, const char *fromcode)
 	return (void *)(iconv_t)-1;
     }
     rcd->cd = cd;
-    rcd->reset_after_error = !(is_stateful(tocode) || is_stateful(fromcode));
 
+    rcd->reset_after_error = FALSE;
     rcd->handle_bom = FALSE;
     rcd->undo_transliteration = FALSE; /* for cleanup */
 
+# ifdef R_MACOS_LIBICONV_RESET_AFTER_ERROR
+    static int iconv_use_reset_after_error = -1; /* -1: not known yet */
+
+    if (iconv_use_reset_after_error)
+	rcd->reset_after_error = !is_stateful(tocode)
+	                         && !is_stateful(fromcode);
+
+    if (rcd->reset_after_error && iconv_use_reset_after_error == -1) {
+	/* a run-time check whether iconv needs reset after error */
+	int bib = breaks_after_invalid_byte();
+	if (macos_libiconv_verbose())
+	    fprintf(stderr, "ICONV: Breaks after invalid bytes: %d.\n", bib);
+
+	char *p = getenv("_R_ICONV_RESET_AFTER_ERROR_");
+	if (bib == 1 && (!p || !StringFalse(p))) {
+	    if (macos_libiconv_verbose())
+		fprintf(stderr, "ICONV: Reset after error enabled.\n");
+	    iconv_use_reset_after_error = 1;
+	} else {
+	    iconv_use_reset_after_error = 0;
+	    rcd->reset_after_error = FALSE;
+	}
+   } 
+# endif
+
 # ifdef R_MACOS_LIBICONV_HANDLE_BOM
-    if (!strcasecmp(fromcode, "UTF-16") || !strcasecmp(fromcode,"UNICODE")) {
-	rcd->handle_bom = TRUE;
-	rcd->bomlen = 2;
-    } else if (!strcasecmp(fromcode, "UTF-32")) {
-	rcd->handle_bom = TRUE;
-	rcd->bomlen = 4;
+    static int iconv_needs_bom_handling = -1; /* -1: not known yet */
+
+    if (iconv_needs_bom_handling) {
+	if (!strcasecmp(fromcode, "UTF-16")
+	    || !strcasecmp(fromcode,"UNICODE")) {
+
+	    rcd->handle_bom = TRUE;
+	    rcd->bomlen = 2;
+	} else if (!strcasecmp(fromcode, "UTF-32")) {
+	    rcd->handle_bom = TRUE;
+	    rcd->bomlen = 4;
+	}
     }
+
+    if (rcd->handle_bom && iconv_needs_bom_handling == -1) {
+	/* a run-time check whether iconv needs bom handling */
+	if (fails_iteratively_with_bom() == 1) {
+	    if (macos_libiconv_verbose()) 
+		fprintf(stderr, "ICONV: BOM handling enabled.\n");
+	    iconv_needs_bom_handling = 1;
+	} else {
+	    iconv_needs_bom_handling = 0;
+	    rcd->handle_bom = FALSE;
+	}
+    }
+
     if (rcd->handle_bom) {
 	rcd->startlen = 0;
 	size_t len = strlen(tocode)+1;
@@ -1135,9 +1398,9 @@ static void *iconv_open_internal(const char *tocode, const char *fromcode)
 # endif
 
 # ifdef R_MACOS_LIBICONV_UNDO_TRANSLITERATION
-    rcd->undo_transliteration =
-        !is_unicode(tocode) && rcd->reset_after_error;
-	/* (!(is_stateful(tocode) || is_stateful(fromcode))  */
+    rcd->undo_transliteration = !is_unicode(tocode)
+                                && !is_stateful(tocode)
+                                && !is_stateful(fromcode);
 
     char *p = getenv("_R_ICONV_UNDO_TRANSLITERATION_");
     if (!p || !StringTrue(p))
@@ -1232,13 +1495,15 @@ size_t Riconv (void *cd, const char **inbuf, size_t *inbytesleft,
                        outbuf, outbytesleft);
 
 #ifdef R_MACOS_LIBICONV_WORKAROUND
+# ifdef R_MACOS_LIBICONV_RESET_AFTER_ERROR
     if (rcd->reset_after_error &&
 	(res == (size_t)-1 && (errno == EILSEQ || errno == EINVAL))) {
 
 	int saveerrno = errno;
 	iconv(rcd->cd, NULL, NULL, NULL, NULL);
 	errno = saveerrno;
-	}
+    }
+# endif
 
 # ifdef R_MACOS_LIBICONV_HANDLE_BOM
     if (rcd->handle_bom && prev_inbuf && inbuf) {
