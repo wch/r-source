@@ -3717,7 +3717,46 @@ do_eSoftVersion(SEXP call, SEXP op, SEXP args, SEXP rho)
 #else
     snprintf(p, 256, "%s", "unknown");
 #endif
+#if defined(HAVE_DLADDR) && defined(HAVE_REALPATH) && defined(HAVE_DLSYM) \
+    && defined(HAVE_DECL_RTLD_DEFAULT) && HAVE_DECL_RTLD_DEFAULT \
+    && defined(HAVE_DECL_RTLD_NEXT) && HAVE_DECL_RTLD_NEXT && defined(__APPLE__)
+
+    /* Look for function iconv_open and try to figure out in which
+       binary/shared library it is defined. See BLAS detection below
+       for detailed comments for how this is done, and keep the code
+       in sync. This is used on macOS to help identifying when a system
+       version of libiconv is used, which can be mapped to a specific
+       patch via https://opensource.apple.com/releases/ that cannot be
+       differentiated using _libiconv_version (i.e. 1.11 maps to
+       different patches with different problems).
+    */
+    {
+	void *addr = dlsym(RTLD_DEFAULT, "iconv_open");
+	Dl_info dl_info;
+	char buf[R_PATH_MAX+1];
+	const char *path = NULL;
+	if (addr && dladdr(addr, &dl_info)) {
+	    path = realpath(dl_info.dli_fname, buf);
+	    if (!path && errno == ENOENT)
+		path = dl_info.dli_fname;
+	}
+	Rboolean ok = FALSE;
+	if (path) {
+	    size_t len = strlen(p) + strlen(path) + 1 + 1;
+	    char *iver = malloc(len);
+	    if (iver) {
+		snprintf(iver, len, "%s %s", p, path);
+		SET_STRING_ELT(ans, i, mkChar(iver));
+		free(iver);
+		ok = TRUE;
+	    }
+	}
+	if (!ok)
+	    SET_STRING_ELT(ans, i, mkChar(p));
+    }
+#else
     SET_STRING_ELT(ans, i, mkChar(p));
+#endif
     SET_STRING_ELT(nms, i++, mkChar("iconv"));
 #ifdef HAVE_LIBREADLINE
     /* libedit reports "EditLine wrapper": so we look at
