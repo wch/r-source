@@ -1262,6 +1262,9 @@ static int fails_iteratively_with_bom(void)
 	return -1;
     return 0;
 }
+#endif
+
+#ifdef R_MACOS_LIBICONV_RESET_AFTER_ERROR
 
 /* Test whether iconv, after encountering an invalid byte in input, keeps
    incorrectly reporting as invalid also additional valid bytes. This has
