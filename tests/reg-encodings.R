@@ -355,3 +355,10 @@ writeBin(le, lefile)
 lecon <- file(lefile, encoding = "UTF-16", open="r")
 stopifnot(identical(readLines(lecon), "12345678901234567890"))
 close(lecon)
+
+## Test that this doesn't crash to test a work-around in R for a bug in
+## libiconv-86 on macOS.
+r <- charToRaw("Hello world")
+r[3] <- as.raw(0xfc)  # invalid
+iconv(list(r), "", "", sub = "byte")
+
