@@ -27,7 +27,7 @@
   \R only, and may be defunct as soon as the next release.
 
   The 12 \code{as.data.frame.<cls>} methods have been informally deprecated
-  already for \R 4.3.z (via environment variable \env{R_CHECK_AS_DATA_FRAME_EXPLICIT_METHOD},
+  already for \R 4.3.z (via environment variable \env{_R_CHECK_AS_DATA_FRAME_EXPLICIT_METHOD_},
   but also in package checks) and formally from \R 4.4.0.
   They are replaced typically by \code{\link{as.data.frame}()} or possibly \code{as.data.frame.vector()}.
 }
