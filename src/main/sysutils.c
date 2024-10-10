@@ -791,6 +791,8 @@ attribute_hidden SEXP do_iconv(SEXP call, SEXP op, SEXP args, SEXP env)
 	    } else if(res == -1 && sub &&
 		      (errno == EILSEQ || errno == EINVAL)) {
 		/* it seems this gets thrown for non-convertible input too */
+		/* EINVAL returned for invalid input on macOS with system
+		   libiconv */
 		res = Riconv(obj, NULL, NULL, &outbuf, &outb);	
 		if (res == -1 && errno == E2BIG) {
 		    R_AllocStringBuffer(2*cbuff.bufsize, &cbuff);
