@@ -198,7 +198,7 @@
   }
   The components must be in this order: that was only minimally checked
   prior to \R 4.3.0.  All objects created in \R 4.3.0 have the optional
-  components.  From earlier versions of \R, he last two components will
+  components.  From earlier versions of \R, the last two components will
   not be present for times in UTC and are platform-dependent.  Currently
   \code{gmtoff} is set on almost all current platforms: those based on
   BSD or \code{glibc} (including Linux and macOS) and those using the

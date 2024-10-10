@@ -1804,7 +1804,7 @@ as C entry points via this file: the former are lower-cased and have an
 underline as suffix, and the suffixed name should be included in the
 file.  Some entry points exist only on Windows or need to be visible
 only on Windows, and some notes on these are provided in file
-@file{src/gnuwin32/Maintainters.notes}.
+@file{src/gnuwin32/Maintainers.notes}.
 
 Because of the advantages of reducing the number of visible entry
 points, they should be declared @code{attribute_hidden} where possible.
