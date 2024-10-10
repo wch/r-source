@@ -651,7 +651,8 @@ sectionTitles <-
       "\\arguments"="Arguments", "\\format"="Format", "\\details"="Details",
       "\\note"="Note", "\\section"="section", "\\author"="Author(s)",
       "\\references"="References", "\\source"="Source",
-      "\\seealso"="See Also", "\\examples"="Examples", "\\value"="Value")
+      "\\seealso"="See Also", "\\examples"="Examples", "\\value"="Value",
+      "\\title"="Title", "\\name"="Name")
 
 psub <- function(pattern, replacement, x)
     gsub(pattern, replacement, x, perl = TRUE)
