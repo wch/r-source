@@ -791,11 +791,20 @@ attribute_hidden SEXP do_iconv(SEXP call, SEXP op, SEXP args, SEXP env)
 	    } else if(res == -1 && sub &&
 		      (errno == EILSEQ || errno == EINVAL)) {
 		/* it seems this gets thrown for non-convertible input too */
+		/* 
+		   Should re-set with a stateful encoding, but some iconv
+                   implementations forget byte-order learned from BOM.
+
+		/*
+		  Should re-set with a stateful encoding, but some iconv
+		  implementations forget byte-order learned from BOM.
+
 		res = Riconv(obj, NULL, NULL, &outbuf, &outb);	
 		if (res == -1 && errno == E2BIG) {
 		    R_AllocStringBuffer(2*cbuff.bufsize, &cbuff);
 		    goto top_of_loop;
-		}	
+		}
+		*/
 		if(fromUTF8 && streql(sub, "Unicode")) {
 		    if(outb < 13) {
 			R_AllocStringBuffer(2*cbuff.bufsize, &cbuff);
