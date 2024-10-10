@@ -330,6 +330,11 @@
       \item The Quartz device could segfault in cases where paths with
       spaces are used in the new glyph drawing API.
       Thanks to \I{Tomek Gieorgijewski} (\PR{18758}).
+
+      \item On macOS in R CRAN builds, it is again possible to read
+      little-endian UTF-16 text with a BOM from a connection using
+      \code{encoding="UTF-16"}.  Users building R from source should avoid
+      using the system libiconv in macOS 14.1 and later.
     }
   }
 }
