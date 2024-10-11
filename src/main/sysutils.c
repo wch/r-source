@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997-2023   The R Core Team
+ *  Copyright (C) 1997-2024   The R Core Team
  *  Copyright (C) 1995-1996   Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -794,10 +794,6 @@ attribute_hidden SEXP do_iconv(SEXP call, SEXP op, SEXP args, SEXP env)
 		/* 
 		   Should re-set with a stateful encoding, but some iconv
                    implementations forget byte-order learned from BOM.
-
-		/*
-		  Should re-set with a stateful encoding, but some iconv
-		  implementations forget byte-order learned from BOM.
 
 		res = Riconv(obj, NULL, NULL, &outbuf, &outb);	
 		if (res == -1 && errno == E2BIG) {
