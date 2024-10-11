@@ -1242,7 +1242,7 @@ static int fails_iteratively_with_bom(void)
 
     for(int i = 0; i < 6; i += 2) {
 	unsigned w = words[i/2];
-	big[i] = little[i+1] = w >> 8;
+	big[i] = little[i+1] = (char) (w >> 8);
 	big[i+1] = little[i] = w & 0xff;
     }
 
