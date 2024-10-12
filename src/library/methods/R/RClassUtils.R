@@ -1833,6 +1833,10 @@ substituteFunctionArgs <-
     if(!is.null(pkgN <- get0(".packageName", topEnv, inherits=TRUE)) &&
        .identC(package, pkgN))
         return(topEnv) # kludge for source'ing package code
+    ## If called from .findInheritedMethods which disables S4 primitive dispatch,
+    ## allow it here, as namespace loading hooks may need it:
+    if(!.allowPrimitiveMethods(TRUE))
+        on.exit(.allowPrimitiveMethods(FALSE))
     if(nzchar(package) && require(package, character.only = TRUE)) {}
     else {
         if(mustFind)

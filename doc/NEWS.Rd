@@ -32,6 +32,11 @@
       little-endian UTF-16 text with a BOM from a connection using
       \code{encoding="UTF-16"}.  Users building R from source should avoid
       using the system libiconv in macOS 14.1 and later.
+
+      \item \pkg{methods}' internal \code{.requirePackage()} now re-enables
+      primitive method dispatch when needed; thanks to \I{Ivan Krylov}
+      for demystifying CRAN package check failures on the R*devel mailing
+      lists.
     }
   }
 }
