@@ -362,3 +362,13 @@ r <- charToRaw("Hello world")
 r[3] <- as.raw(0xfc)  # invalid
 iconv(list(r), "", "", sub = "byte")
 
+## Test substitution of invalid bytes in iconv() with UTF-16 input.  As of R
+## 4.5, the input should advance by code unit size (two bytes, not one)
+## when an invalid byte is encountered. Also, running into invalid bytes
+## should not let libiconv forget about the byte-order specified via BOM.
+r8 <- charToRaw("Hello world")
+r16 <- c(as.raw(0xff), as.raw(0xfe), rbind(r8, as.raw(0)))  # little-endian
+r16[7] <- as.raw(0x00)  # invalid (unpaired surrogate)
+r16[8] <- as.raw(0xd8)
+stopifnot(identical(iconv(list(r16), "UTF-16", "UTF-8", sub="byte"),
+          "He<00><d8>lo world"))
