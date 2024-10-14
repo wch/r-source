@@ -95,6 +95,14 @@
       \item Added function \code{sha256sum()} in package \pkg{tools}
       analogous to \code{md5sum()} implementing the \abbr{SHA}-256 hashing
       algorithm.
+
+      \item The \code{xtfrm()} method for class \code{"AsIs"} is now
+      considerably faster thanks to a patch provided by \I{Ivan Krylov}.
+
+      \item The \code{merge()} method for data frames will no longer
+      convert row names used for indexing using \code{I()}, which will
+      lead to faster execution in cases where \code{sort = TRUE} and
+      \code{all.x} and/or \code{all.y} are set to \code{TRUE}.
     }
   }
 
@@ -332,9 +340,9 @@
       Thanks to \I{Tomek Gieorgijewski} (\PR{18758}).
 
       \item On macOS in R CRAN builds, it is again possible to read
-      little-endian UTF-16 text with a BOM from a connection using
+      little-endian UTF-16 text with a \abbr{BOM} from a connection using
       \code{encoding="UTF-16"}.  Users building R from source should avoid
-      using the system libiconv in macOS 14.1 and later.
+      using the system \code{libiconv} in macOS 14.1 and later.
     }
   }
 }
