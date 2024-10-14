@@ -16485,7 +16485,7 @@ longer recommended.
 @deftypefun double R_atof (const char* @var{str})
 @deftypefunx double R_strtod (const char* @var{str}, char ** @var{end})
 Implementations of the C99/POSIX functions @code{atof} and @code{strtod}
-which guarantee platform-dependent behaviour, including always using the
+which guarantee platform- and locale-independent behaviour, including always using the
 period as the decimal point @emph{aka} `@I{radix character}' and returning
 R's @code{NA_REAL_} for all unconverted strings, including @code{"NA"}.
 @end deftypefun
