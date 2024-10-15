@@ -901,7 +901,7 @@ function(urls, nobody = FALSE, verbose = FALSE, pool = NULL,
 }
 
 .curl_fetch_memory_status_code <-
-function(u, verbose = FALSE, opts = NULL)
+function(u, verbose = FALSE, opts = NULL, hdrs = NULL)
 {
     if(verbose)
         message(sprintf("processing %s", u))
@@ -913,6 +913,9 @@ function(u, verbose = FALSE, opts = NULL)
         opts <- c(opts,
                   list(connecttimeout = timeout,
                        timeout = timeout))
+
+    if(is.null(hdrs))
+        hdrs <- .curl_handle_default_hdrs
     
     ## Configure curl handle for better luck with JSTOR URLs/DOIs.
     ## Alternatively, special-case requests to
@@ -920,6 +923,8 @@ function(u, verbose = FALSE, opts = NULL)
     ##   https?://www.jstor.org
     h <- curl::new_handle()
     curl::handle_setopt(h, .list = opts)
+    if(length(hdrs))
+        curl::handle_setheaders(h, .list = hdrs)
     if(startsWith(u, "https://github.com") &&
        nzchar(a <- Sys.getenv("GITHUB_PAT", "")))
         curl::handle_setheaders(h, "Authorization" = paste("token", a))
