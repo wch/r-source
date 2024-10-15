@@ -2,7 +2,7 @@ Name,Country,City,URL,Host,Maintainer,OK,CountryCode,Comment
 "0-Cloud [https]",0-Cloud,0-Cloud,https://cloud.r-project.org/,"Automatic redirection to servers worldwide, currently sponsored by Posit","cran # rstudio.com",1,us,"secure_mirror_from_master"
 "Argentina (La Plata)",Argentina,"La Plata",http://mirror.fcaglp.unlp.edu.ar/CRAN/,"Universidad Nacional de La Plata","esuarez # Fcaglp.unlp.edu.ar",1,ar
 "Australia (Canberra) [https]",Australia,Canberra,https://cran.csiro.au/,CSIRO,"ben.tan # csiro.au, Jayesh.joshi # csiro.au, CSIROServiceDesk # csiro.au",1,au,"secure_mirror_from_master"
-"Australia (Melbourne 1) [https]",Australia,Melbourne,https://mirror.aarnet.edu.au/pub/CRAN/,AARNET,"<sysadmin # aarnet.edu.au>",1,au,"secure_mirror_from_master"
+"Australia (Melbourne 1) [https]",Australia,Melbourne,https://mirror.aarnet.edu.au/pub/CRAN/,AARNET,"mirror-admins # aarnet.edu.au",1,au,"secure_mirror_from_master"
 "Australia (Melbourne 2) [https]",Australia,Melbourne,https://cran.ms.unimelb.edu.au/,"School of Mathematics and Statistics, University of Melbourne","sys-unix # lists.unimelb.edu.au",1,au,"secure_mirror_from_master"
 "Austria (Wien 1) [https]",Austria,Wien,https://cran.wu.ac.at/,"Wirtschaftsuniversität Wien","CRAN # R-project.org",1,at,"secure_mirror_from_master"
 "Austria (Wien 2) [https]",Austria,Wien,https://mirror.honeybet.de/,easyname.at,"timo # volleyballer.de",1,at
