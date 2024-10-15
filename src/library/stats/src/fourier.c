@@ -29,15 +29,7 @@
 #endif
 
 #include <Defn.h>
-
-#undef _
-#ifdef ENABLE_NLS
-#include <libintl.h>
-#define _(String) dgettext ("stats", String)
-#else
-#define _(String) (String)
-#endif
-
+#include "statsErr.h"
 
 // workhorse routines from fft.c
 void fft_factor(int n, int *pmaxf, int *pmaxp);

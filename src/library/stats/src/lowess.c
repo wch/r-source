@@ -22,18 +22,13 @@
 # include <config.h>
 #endif
 
-#ifdef ENABLE_NLS
-#include <libintl.h>
-#define _(String) dgettext ("stats", String)
-#else
-#define _(String) (String)
-#endif
-
 #include <math.h>
 #include <Rmath.h>		/* fmax2, imin2, imax2 */
 #include <R_ext/Applic.h>	/* prototypes for lowess and clowess */
 #include <R_ext/Boolean.h>
 #include <R_ext/Utils.h>	/* rPsort() */
+#include "statsErr.h"
+
 #ifdef DEBUG_lowess
 # include <R_ext/Print.h>
 #endif

@@ -11,13 +11,6 @@
 #include <config.h>
 #endif
 
-#ifdef ENABLE_NLS
-#include <libintl.h>
-#define _(String) dgettext ("stats", String)
-#else
-#define _(String) (String)
-#endif
-
 #include <math.h>
 
 #include <R_ext/Random.h>
@@ -26,6 +19,7 @@
 #include <R_ext/Error.h>
 #include <R_ext/Print.h>
 #include <R_ext/Utils.h>
+#include "statsErr.h"
 #ifdef DEBUG_rcont2
 # include <limits.h>
 #endif

@@ -25,13 +25,7 @@
 #include <Defn.h>
 
 #include "statsR.h"
-#undef _
-#ifdef ENABLE_NLS
-#include <libintl.h>
-#define _(String) dgettext ("stats", String)
-#else
-#define _(String) (String)
-#endif
+#include "statsErr.h"
 
 /* inline-able versions, used just once! */
 static R_INLINE Rboolean isUnordered_int(SEXP s)

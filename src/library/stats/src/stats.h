@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2005-2020  The R Core Team
+ *  Copyright (C) 2005-2024  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -21,15 +21,8 @@
 #define R_STATS_H
 
 /* definitions not involving SEXPs, including those for .Fortran. */
-
-#ifdef ENABLE_NLS
-#include <libintl.h>
-#define _(String) dgettext ("stats", String)
-#else
-#define _(String) (String)
-#endif
-
 #include <R_ext/RS.h>
+#include "statsErr.h"
 
 /* A starting point to extract such prototypes for .Fortran calls is
 

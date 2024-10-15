@@ -337,12 +337,7 @@ L50:
 #include <R.h>
 #include <Rinternals.h>
 #include "statsR.h"
-#ifdef ENABLE_NLS
-#include <libintl.h>
-#define _(String) dgettext ("stats", String)
-#else
-#define _(String) (String)
-#endif
+#include "statsErr.h"
 
 SEXP LogLin(SEXP dtab, SEXP conf, SEXP table, SEXP start, 
 	    SEXP snmar, SEXP eps, SEXP iter) 

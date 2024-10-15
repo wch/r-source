@@ -30,6 +30,7 @@
 #include <float.h>
 #include <R.h>
 #include <Rinternals.h>
+#include "statsErr.h"
 #include "nls.h"
 
 #ifndef MIN

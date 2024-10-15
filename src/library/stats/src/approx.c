@@ -23,18 +23,11 @@
 #endif
 
 #include <R_ext/Arith.h>
-#include <R_ext/Error.h>
 #include <R_ext/Applic.h>
 #include <Rinternals.h> // for R_xlen_t
+#include "statsErr.h"
 #ifdef DEBUG_approx
 # include <R_ext/Print.h>
-#endif
-
-#ifdef ENABLE_NLS
-#include <libintl.h>
-#define _(String) dgettext ("stats", String)
-#else
-#define _(String) (String)
 #endif
 
 /* Linear and Step Function Interpolation */

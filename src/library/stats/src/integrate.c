@@ -24,13 +24,8 @@
 #include <math.h> // for isfinite
 #include <Rinternals.h>
 #include <R_ext/Applic.h>
+#include "statsErr.h"
 
-#ifdef ENABLE_NLS
-#include <libintl.h>
-#define _(String) dgettext ("stats", String)
-#else
-#define _(String) (String)
-#endif
 
 /* called via .External(.) :*/
 SEXP call_dqags(SEXP args);

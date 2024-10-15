@@ -27,17 +27,11 @@
 #include <math.h>
 
 #include <Rinternals.h> /* Arith.h, Boolean.h, Error.h, Memory.h .. */
+#include "statsErr.h"
 
 typedef enum {
     sm_NO_ENDRULE, sm_COPY_ENDRULE, sm_TUKEY_ENDRULE
 } R_SM_ENDRULE;
-
-#ifdef ENABLE_NLS
-#include <libintl.h>
-#define _(String) dgettext ("stats", String)
-#else
-#define _(String) (String)
-#endif
 
 static double med3(double u, double v, double w)
 {
