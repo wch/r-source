@@ -2430,7 +2430,7 @@ add_dummies <- function(dir, Log)
             out <- R_runR0(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
             if (length(out)) {
                 ## <FIXME>
-                ## We should really use R() instead if R_runR0() to get
+                ## We should really use R() instead of R_runR0() to get
                 ## the computed check results object itself.
                 ## Change eventually ...
                 ## </FIXME>
@@ -2487,6 +2487,12 @@ add_dummies <- function(dir, Log)
                           sprintf("tools:::.check_Rd_xrefs(dir = \"%s\")\n", pkgdir))
             any <- FALSE
             out <- R_runR0(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
+            ## <FIXME>
+            ## tools:::.check_Rd_xrefs() has localized messages, so
+            ## grepping on its output is not a good idea.
+            ## We should really use R() instead of R_runR0() to get
+            ## the computed check results object itself.
+            ## </FIXME>
             if(length(out) &&
                !all(grepl("(Package[s]? unavailable to check|Unknown package.*in Rd xrefs|Undeclared package.*in Rd xrefs)",
                           out))) {
@@ -2533,7 +2539,9 @@ add_dummies <- function(dir, Log)
 
             if(length(out)) {
                 if(!any) {
-                    if(R_check_use_install_log)
+                    if(R_check_use_log_info &&
+                       !length(grep("Unknown package.*in Rd xrefs",
+                                    out)))
                         infoLog(Log)
                     else
                         noteLog(Log)
