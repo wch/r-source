@@ -310,8 +310,12 @@
 
       \item \pkg{methods}' internal \code{.requirePackage()} now re-enables
       primitive method dispatch when needed; thanks to \I{Ivan Krylov}
-      for demystifying CRAN package check failures on the R*devel mailing
+      for demystifying CRAN package check failures on the R-devel mailing
       lists.
+
+      \item \code{rowSums(A, dims = dd)}, \code{colMeans(..)}, etc, give a
+      more helpful error message when \code{dd} is not of length one,
+      thanks to \I{Michael Chirico}'s \PR{18811}.
     }
   }
 }

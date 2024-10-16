@@ -1,6 +1,6 @@
 % File src/library/base/man/colSums.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2024 R Core Team
 % Distributed under GPL 2 or later
 
 \name{colSums}
@@ -14,7 +14,7 @@
 \alias{.rowMeans}
 \title{Form Row and Column Sums and Means}
 \description{
-  Form row and column sums and means for numeric arrays (or data frames).
+  Form (generalized) row and column sums and means for numeric arrays (or data frames).
 }
 \usage{
 colSums (x, na.rm = FALSE, dims = 1)
@@ -22,8 +22,8 @@ rowSums (x, na.rm = FALSE, dims = 1)
 colMeans(x, na.rm = FALSE, dims = 1)
 rowMeans(x, na.rm = FALSE, dims = 1)
 
-.colSums(x, m, n, na.rm = FALSE)
-.rowSums(x, m, n, na.rm = FALSE)
+.colSums (x, m, n, na.rm = FALSE)
+.rowSums (x, m, n, na.rm = FALSE)
 .colMeans(x, m, n, na.rm = FALSE)
 .rowMeans(x, m, n, na.rm = FALSE)
 }
@@ -34,7 +34,7 @@ rowMeans(x, na.rm = FALSE, dims = 1)
     vector of length \code{m * n}).}
   \item{na.rm}{logical.  Should missing values (including \code{NaN})
     be omitted from the calculations?}
-  \item{dims}{integer: Which dimensions are regarded as \sQuote{rows} or
+  \item{dims}{integer number: Which dimensions are regarded as \sQuote{rows} or
     \sQuote{columns} to sum over.  For \code{row*}, the sum or mean is
     over dimensions \code{dims+1, \dots}; for \code{col*} it is over
     dimensions \code{1:dims}.}

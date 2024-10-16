@@ -1531,6 +1531,15 @@ stopifnot(exprs = {
 ## all these classed errors are new in R >= 4.5.0
 
 
+## colSums / rowSums(*, dims = <not scalar>) - PR#18811
+A <- array(1:120, dim=2:5)
+ch1 <- tryCmsg(colSums (A, dims=1:2))
+ch2 <- tryCmsg(rowMeans(A, dims=1:2))
+stopifnot(identical(ch1, ch2),
+          identical(ch1, "invalid 'dims'"))
+## error msg was  "'length = 2' in coercion to 'logical(1)'"
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
