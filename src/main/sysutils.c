@@ -864,14 +864,16 @@ attribute_hidden SEXP do_iconv(SEXP call, SEXP op, SEXP args, SEXP env)
 		    goto next_char;
 		} else {
 		    if (!inp_unit_size) {
-			size_t flen = strlen(from);
-			if (!strncasecmp(from, "UTF-16", flen) ||
-			    !strncasecmp(from, "UCS-2", flen))
+			if (!strncasecmp(from, "UTF-16", 6) ||
+			    !strncasecmp(from, "UCS-2", 5))
 			    inp_unit_size = 2;
-			else if (!strncasecmp(from, "UTF-32", flen) ||
-			           !strncasecmp(from, "UCS-4", flen))
+			else if (!strncasecmp(from, "UTF-32", 6) ||
+			           !strncasecmp(from, "UCS-4", 5))
 			    inp_unit_size = 4;
 			else
+			    /* encodings supported directly by CHARSXP,
+			       including the native encoding, all use
+			       unit size 1 */
 			    inp_unit_size = 1;
 		    } 
 		    for(int i = 0; i < inp_unit_size && inb > 0; i++) {
