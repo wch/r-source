@@ -7240,7 +7240,7 @@ add_dummies <- function(dir, Log)
 
     R_check_use_log_info <-
         config_val_to_logical(Sys.getenv("_R_CHECK_LOG_USE_INFO_",
-                                         "FALSE"))
+                                         "TRUE"))
 
     if (as_cran) {
         if (extra_arch) {
