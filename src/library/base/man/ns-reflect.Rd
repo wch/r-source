@@ -54,7 +54,7 @@ getNamespaceVersion(ns)
   the namespaces that import namespace \code{ns}.
 }
 \note{
-  Comparison of versions should use \code{\ink{compareVersion} or
+  Comparison of versions should use \code{\link{compareVersion}} or
 \preformatted{
     as.package_version(getNamespaceVersion(ns))
 }
