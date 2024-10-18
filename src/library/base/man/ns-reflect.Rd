@@ -1,6 +1,6 @@
 % File src/library/base/man/ns-reflect.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2003-2020 R Core Team
+% Copyright 2003-2024 R Core Team
 % Distributed under GPL 2 or later
 
 \name{ns-reflect}
@@ -48,10 +48,16 @@ getNamespaceVersion(ns)
   and subject to change.
 
   \code{getNamespaceName} and \code{getNamespaceVersion} return the name
-  and version of the namespace \code{ns}.
+  and version of the namespace \code{ns} as character strings.
 
   \code{getNamespaceUsers} returns a character vector of the names of
   the namespaces that import namespace \code{ns}.
+}
+\note{
+  Comparison of versions should use \code{\ink{compareVersion} or
+\preformatted{
+    as.package_version(getNamespaceVersion(ns))
+}
 }
 \keyword{internal}
 \author{Luke Tierney}
