@@ -1,6 +1,6 @@
 % File src/library/utils/man/compareVersion.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2024 R Core Team
 % Distributed under GPL 2 or later
 
 \name{compareVersion}
@@ -19,6 +19,8 @@ compareVersion(a, b)
   \code{0} if the numbers are equal, \code{-1} if \code{b} is later
   and \code{1} if \code{a} is later (analogous to the C function
   \code{strcmp}).
+
+  Gives an \R error on malformed inputs.
 }
 \details{
   \R package version numbers are of the form \code{x.y-z} for integers

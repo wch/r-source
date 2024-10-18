@@ -753,7 +753,7 @@ download.packages <- function(pkgs, destdir, available = NULL,
         bulkdown <- matrix(character(), 0L, 3L)
     else
         bulkdown <- NULL
-   
+
     retval <- matrix(character(), 0L, 2L)
     for(p in unique(pkgs))
     {
@@ -825,7 +825,7 @@ download.packages <- function(pkgs, destdir, available = NULL,
         urls <- bulkdown[,3]
         destfiles <- bulkdown[,2]
         ps <- bulkdown[,1]
-                                           
+
         res <- try(download.file(urls, destfiles, "libcurl", mode = "wb", ...))
         if(!inherits(res, "try-error") && res == 0L) {
             if (length(urls) > 1) {
@@ -842,7 +842,7 @@ download.packages <- function(pkgs, destdir, available = NULL,
         } else
             for(p in ps)
                 warning(gettextf("download of package %s failed", sQuote(p)),
-                        domain = NA, immediate. = TRUE)            
+                        domain = NA, immediate. = TRUE)
     }
 
     retval
@@ -1043,8 +1043,11 @@ compareVersion <- function(a, b)
 {
     if(is.na(a)) return(-1L)
     if(is.na(b)) return(1L)
+    ## The nest two could be skipped if(inherits(x), "numeric_version")
+    ## but the saving would be small.
     a <- as.integer(strsplit(a, "[.-]")[[1L]])
     b <- as.integer(strsplit(b, "[.-]")[[1L]])
+    ## This does not handle malformed inputs which will give an error.
     for(k in seq_along(a))
         if(k <= length(b)) {
             if(a[k] > b[k]) return(1) else if(a[k] < b[k]) return(-1L)
