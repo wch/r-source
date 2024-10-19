@@ -103,6 +103,13 @@
       convert row names used for indexing using \code{I()}, which will
       lead to faster execution in cases where \code{sort = TRUE} and
       \code{all.x} and/or \code{all.y} are set to \code{TRUE}.
+
+      \item \pkg{methods} package internal \code{.requirePackage()} now
+      calls \code{requireNamespace(p)} instead of \code{require(p)}, hence
+      no longer adding packages to the \code{search()} path in cases
+      methods or class definitions are needed.  Consequently, previous
+      workflows relying on the old behaviour will have to be amended by
+      adding corresponding \code{library(p)} calls.
     }
   }
 
