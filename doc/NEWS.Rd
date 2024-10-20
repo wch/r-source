@@ -5,7 +5,7 @@
 \title{R News}
 \encoding{UTF-8}
 
-\section{\Rlogo CHANGES IN R 4.4.1 patched}{
+\section{\Rlogo CHANGES IN R 4.4.2}{
   \subsection{C-LEVEL FACILITIES}{
     \itemize{
       \item The S-compatibility macros \code{F77_COM} and
