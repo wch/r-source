@@ -21,8 +21,6 @@
 #### R based engine for  R CMD INSTALL SHLIB Rprof
 ####
 
-##' @param args
-
 ## R developers can use this to debug the function by running it
 ## directly as tools:::.install_packages(args), where the args should
 ## be what commandArgs(TRUE) would return, that is a character vector
@@ -49,7 +47,6 @@ if(FALSE) {
 
 
 
-##' @return ...
 .install_packages <- function(args = NULL, no.q = interactive(), warnOption = 1)
 {
     ## calls system() on Windows for
@@ -1008,12 +1005,13 @@ if(FALSE) {
                                    paste(sQuote(miss), collapse = ", ")),
                            pkg_name,
 			   sprintf("\nPerhaps try a variation of:\ninstall.packages(c(%s))",
-				   paste(shQuote(miss), collapse = ", ")))
+				   paste(sQuote(miss, FALSE), collapse = ", ")))
             else if (length(miss))
                 pkgerrmsg(sprintf("dependency %s is not available",
-                                  sQuote(miss)), pkg_name,
+                                  sQuote(miss)),
+                          pkg_name,
                           sprintf("\nPerhaps try a variation of:\ninstall.packages(%s)",
-                                  shQuote(miss)))
+                                  sQuote(miss, FALSE)))
          }
 
         starsmsg(stars, "installing *source* package ",
@@ -1603,7 +1601,7 @@ if(FALSE) {
 	    file.remove(Sys.glob(file.path(instdir, "demo", "*")))
 	    res <- try(.install_package_demos(".", instdir))
 	    if (inherits(res, "try-error"))
-		pkgerrmsg("ERROR: installing demos failed")
+		pkgerrmsg("installing demos failed", pkg_name)
 	    Sys.chmod(Sys.glob(file.path(instdir, "demo", "*")), fmode)
 	}
 
