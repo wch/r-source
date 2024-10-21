@@ -1,7 +1,7 @@
 #  File src/library/tools/R/md5.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2022 The R Core Team
+#  Copyright (C) 1995-2024 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -18,9 +18,9 @@
 
 md5sum <- function(files, bytes) {
     if (!missing(files) && !missing(bytes))
-        stop("files and bytes are mutually exclusive")
+        stop("'files' and 'bytes' are mutually exclusive")
     if (!missing(bytes)) {
-        if (!is.raw(bytes)) stop("bytes must be a raw vector")
+        if (!is.raw(bytes)) stop("'bytes' must be a raw vector")
         .Call(C_Rmd5, bytes)
     } else {
         files <- path.expand(files)

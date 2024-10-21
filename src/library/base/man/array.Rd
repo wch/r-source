@@ -57,7 +57,7 @@ is.array(x)
 
   \code{is.array} is a \link{primitive} function.
 
-  For a list array, the \code{print} methods prints entries of length
+  For a list array, the \code{print} method prints entries of length
   not one in the form \samp{integer,7} indicating the type and length.
 }
 \value{

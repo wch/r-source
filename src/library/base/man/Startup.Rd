@@ -206,7 +206,7 @@
 %% R_PROFILE is used in src/main/startup.c
 \seealso{
   For the definition of the \sQuote{home} directory on Windows see the
-  \file{rw-FAQ} Q2.14.  It can be found from a running \R by
+  \file{rw-FAQ} 2.13.  It can be found from a running \R by
   \code{Sys.getenv("R_USER")}.
 
   \code{\link{.Last}} for final actions at the close of an \R session.

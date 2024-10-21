@@ -32,7 +32,8 @@ md5sum(files, bytes)
   correctly and not subsequently accidentally modified.
 }
 \value{
-  A character vector of the same length as \code{files}, with names
+  If used with \code{files},
+  a character vector of the same length as \code{files}, with names
   equal to \code{files} (possibly expanded).  The elements will be
   \code{NA} for non-existent or unreadable files, otherwise a
   32-character string of hexadecimal digits.

@@ -81,7 +81,7 @@ graphics.off()
 
   \code{dev.list} returns the numbers of all open devices, except device
   1, the null device.  This is a numeric vector with a
-  \code{\link{names}} attribute giving the device names, or \code{NULL} is
+  \code{\link{names}} attribute giving the device names, or \code{NULL} if
   there is no open device.
 
   \code{dev.next} and \code{dev.prev} return the number and name of the

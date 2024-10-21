@@ -27,7 +27,8 @@ sha256sum(files, bytes)
   mode (almost always text mode where there is more than one).
 }
 \value{
-  A character vector of the same length as \code{files}, with names
+  If used with \code{files},
+  a character vector of the same length as \code{files}, with names
   equal to \code{files} (possibly expanded).  The elements will be
   \code{NA} for non-existent or unreadable files, otherwise a
   64-character string of hexadecimal digits.
@@ -36,7 +37,7 @@ sha256sum(files, bytes)
 }
 \source{
   The underlying C code was written by \I{Ulrich Drepper}, extracted from
-  the public domain version SHA-crypt.txt version 0.6 (2016-8-31).
+  the public domain version \file{SHA-crypt.txt} version 0.6 (2016-8-31).
 }
 \seealso{
   \code{\link{md5sum}}

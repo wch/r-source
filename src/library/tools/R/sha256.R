@@ -18,9 +18,9 @@
 
 sha256sum <- function(files, bytes) {
     if (!missing(files) && !missing(bytes))
-        stop("files and bytes are mutually exclusive")
+        stop("'files' and 'bytes' are mutually exclusive")
     if (!missing(bytes)) {
-        if (!is.raw(bytes)) stop("bytes must be a raw vector")
+        if (!is.raw(bytes)) stop("'bytes' must be a raw vector")
         .Call(C_Rsha256, bytes)
     } else {
         files <- path.expand(files)
