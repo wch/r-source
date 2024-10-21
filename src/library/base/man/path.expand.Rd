@@ -31,8 +31,9 @@ path.expand(path)
   }
    \item{On Windows:}{
   The definition of the \sQuote{home} directory is in the \file{rw-FAQ}
-  Q2.14: it is taken from the \env{R_USER} environment variable when
-  \code{path.expand} is first called in a session.
+  Q~2.13: it is taken from the \env{R_USER} environment variable (or
+  possibly \env{HOME} if \env{R_USER} is not set)
+  when \code{path.expand} is first called in a session.
 
   The \sQuote{path names} need not exist nor be valid path names.
   }
