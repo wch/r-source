@@ -396,8 +396,11 @@ testInstalledPackage <-
             cmd <- paste(shQuote(file.path(R.home("bin"), "R")),
                          "CMD BATCH --vanilla --no-timing", Ropts,
                          shQuote(Rfile), shQuote(failfile))
-            if (.Platform$OS.type == "windows") Sys.setenv(R_LIBS="")
-            else cmd <- paste("R_LIBS=", cmd)
+            if (.Platform$OS.type == "windows") {
+                Sys.setenv(R_LIBS="")
+                cmd <- paste(cmd, "LANGUAGE=C")
+            } else
+                cmd <- paste("R_LIBS= LANGUAGE=C", cmd)
             res <- system(cmd)
             if (res) {
                 message(gettextf("Error: running examples in %s failed", sQuote(Rfile)),
