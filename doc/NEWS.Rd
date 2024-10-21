@@ -315,11 +315,6 @@
       now correctly mention \code{max} in addition to
       \code{getOption("max.print")}.
 
-      \item \pkg{methods}' internal \code{.requirePackage()} now re-enables
-      primitive method dispatch when needed; thanks to \I{Ivan Krylov}
-      for demystifying CRAN package check failures on the R-devel mailing
-      lists.
-
       \item \code{rowSums(A, dims = dd)}, \code{colMeans(..)}, etc, give a
       more helpful error message when \code{dd} is not of length one,
       thanks to \I{Michael Chirico}'s \PR{18811}.
@@ -354,6 +349,11 @@
       little-endian UTF-16 text with a \abbr{BOM} from a connection using
       \code{encoding="UTF-16"}.  Users building R from source should avoid
       using the system \code{libiconv} in macOS 14.1 and later.
+
+      \item \pkg{methods}' internal \code{.requirePackage()} now re-enables
+      primitive method dispatch when needed; thanks to \I{Ivan Krylov}
+      for demystifying CRAN package check failures on the R-devel mailing
+      list.
     }
   }
 }
