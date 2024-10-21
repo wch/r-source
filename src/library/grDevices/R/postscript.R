@@ -1027,7 +1027,8 @@ embedFonts <- function(file, # The ps or pdf file to convert
 embedGlyphs <- function(file, glyphInfo, outfile = file,
                         options = character()) {
     if (!is.character(file) || length(file) != 1L || !nzchar(file))
-        stop("'file' must be a non-empty character string")
+        stop(gettextf("'%s' must be a non-empty character string", "file"),
+             domain = NA)
     infoList <- FALSE
     if (!inherits(glyphInfo, "RGlyphInfo")) {
         if (is.list(glyphInfo)) {

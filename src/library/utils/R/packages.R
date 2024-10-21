@@ -25,7 +25,7 @@ function(contriburl = contrib.url(repos, type), method,
          quiet = TRUE, ...)
 {
     if (!is.character(type))
-        stop("invalid 'type'; must be a character string")
+        stop(gettextf("'%s' must be a character string", "type"), domain = NA)
     requiredFields <-
         c(tools:::.get_standard_repository_db_fields(), "File")
     if (is.null(fields))
@@ -364,7 +364,7 @@ update.packages <- function(lib.loc = NULL, repos = getOption("repos"),
                             checkBuilt = FALSE, type = getOption("pkgType"))
 {
     if (!is.character(type))
-        stop("invalid 'type'; must be a character string")
+        stop(gettextf("'%s' must be a character string", "type"), domain = NA)
     force(ask)  # just a check that it is valid before we start work
     text.select <- function(old)
     {
@@ -473,7 +473,7 @@ old.packages <- function(lib.loc = NULL, repos = getOption("repos"),
                          ..., type = getOption("pkgType"))
 {
     if (!is.character(type))
-        stop("invalid 'type'; must be a character string")
+        stop(gettextf("'%s' must be a character string", "type"), domain = NA)
     if(is.null(lib.loc))
         lib.loc <- .libPaths()
     if(!missing(instPkgs)) {
@@ -525,7 +525,7 @@ new.packages <- function(lib.loc = NULL, repos = getOption("repos"),
                          ..., type = getOption("pkgType"))
 {
     if (!is.character(type))
-        stop("invalid 'type'; must be a character string")
+        stop(gettextf("'%s' must be a character string", "type"), domain = NA)
     ask  # just a check that it is valid before we start work
     if(type == "both" && (!missing(contriburl) || !is.null(available))) {
         stop("specifying 'contriburl' or 'available' requires a single type, not type = \"both\"")
@@ -738,7 +738,7 @@ download.packages <- function(pkgs, destdir, available = NULL,
                               method, type = getOption("pkgType"), ...)
 {
     if (!is.character(type))
-        stop("invalid 'type'; must be a character string")
+        stop(gettextf("'%s' must be a character string", "type"), domain = NA)
     nonlocalcran <- !all(startsWith(contriburl, "file:"))
     if(nonlocalcran && !dir.exists(destdir))
         stop("'destdir' is not a directory")
@@ -858,7 +858,7 @@ resolvePkgType <- function(type) {
 contrib.url <- function(repos, type = getOption("pkgType"))
 {
     if (!is.character(type))
-        stop("invalid 'type'; must be a character string")
+        stop(gettextf("'%s' must be a character string", "type"), domain = NA)
     type <- resolvePkgType(type)
     if(is.null(repos)) return(NULL)
     if(!length(repos)) return(character())

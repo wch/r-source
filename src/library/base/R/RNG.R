@@ -1,7 +1,7 @@
 #  File src/library/base/R/RNG.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2019 The R Core Team
+#  Copyright (C) 1995-2022 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -33,7 +33,7 @@ RNGkind <- function(kind = NULL, normal.kind = NULL, sample.kind = NULL)
     do.set <- length(kind) > 0L
     if(do.set) {
 	if(!is.character(kind) || length(kind) > 1L)
-	    stop("'kind' must be a character string of length 1 (RNG to be used).")
+	    stop("'kind' must be a character string (RNG to be used).")
 	if(is.na(i.knd <- pmatch(kind, kinds) - 1L))
 	    stop(gettextf("'%s' is not a valid abbreviation of an RNG", kind),
                  domain = NA)
@@ -42,7 +42,8 @@ RNGkind <- function(kind = NULL, normal.kind = NULL, sample.kind = NULL)
 
     if(!is.null(normal.kind)) {
 	if(!is.character(normal.kind) || length(normal.kind) != 1L)
-	    stop("'normal.kind' must be a character string of length 1")
+	    stop(gettextf("'%s' must be a character string", "normal.kind"),
+		 domain = NA)
         normal.kind <- pmatch(normal.kind, n.kinds) - 1L
         if(is.na(normal.kind))
 	    stop(gettextf("'%s' is not a valid choice", normal.kind),
@@ -55,7 +56,8 @@ RNGkind <- function(kind = NULL, normal.kind = NULL, sample.kind = NULL)
 
     if(!is.null(sample.kind)) {
         if(!is.character(sample.kind) || length(sample.kind) != 1L)
-            stop("'sample.kind' must be a character string of length 1")
+	    stop(gettextf("'%s' must be a character string", "sample.kind"),
+		 domain = NA)
         sample.kind <- pmatch(sample.kind, s.kinds) - 1L
         if(is.na(sample.kind))
             stop(gettextf("'%s' is not a valid choice", sample.kind),
@@ -82,7 +84,7 @@ set.seed <- function(seed, kind = NULL, normal.kind = NULL, sample.kind = NULL)
     s.kinds <- c("Rounding", "Rejection", "default")
     if(length(kind) ) {
 	if(!is.character(kind) || length(kind) > 1L)
-	    stop("'kind' must be a character string of length 1 (RNG to be used).")
+	    stop("'kind' must be a character string (RNG to be used).")
 	if(is.na(i.knd <- pmatch(kind, kinds) - 1L))
 	    stop(gettextf("'%s' is not a valid abbreviation of an RNG", kind),
                  domain = NA)
@@ -91,7 +93,8 @@ set.seed <- function(seed, kind = NULL, normal.kind = NULL, sample.kind = NULL)
 
     if(!is.null(normal.kind)) {
 	if(!is.character(normal.kind) || length(normal.kind) != 1L)
-	    stop("'normal.kind' must be a character string of length 1")
+	    stop(gettextf("'%s' must be a character string", "normal.kind"),
+		 domain = NA)
         normal.kind <- pmatch(normal.kind, n.kinds) - 1L
         if(is.na(normal.kind))
 	    stop(gettextf("'%s' is not a valid choice", normal.kind),
@@ -103,7 +106,8 @@ set.seed <- function(seed, kind = NULL, normal.kind = NULL, sample.kind = NULL)
     }
     if(!is.null(sample.kind)) {
         if(!is.character(sample.kind) || length(sample.kind) != 1L)
-            stop("'sample.kind' must be a character string of length 1")
+	    stop(gettextf("'%s' must be a character string", "sample.kind"),
+		 domain = NA)
         sample.kind <- pmatch(sample.kind, s.kinds) - 1L
         if(is.na(sample.kind))
             stop(gettextf("'%s' is not a valid choice", sample.kind),

@@ -37,7 +37,7 @@ function(x)
     ## Turn a possibly relative file path absolute, performing tilde
     ## expansion if necessary.
     if(length(x) != 1L)
-        stop("'x' must be a single character string")
+        stop(gettextf("'%s' must be a character string", "x"), domain=NA)
     if(!file.exists(epath <- path.expand(x)))
         stop(gettextf("file '%s' does not exist", x),
              domain = NA)

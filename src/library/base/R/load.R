@@ -1,7 +1,7 @@
 #  File src/library/base/R/load.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2022 The R Core Team
+#  Copyright (C) 1995-2024 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -91,7 +91,7 @@ save <- function(..., list = character(),
         }
         if (is.character(file)) {
 	    if(!nzchar(file)) 
-                stop(gettextf("'%s' must be a non-empty string", "file"), domain = NA)
+                stop(gettextf("'%s' must be a non-empty character string", "file"), domain = NA)
 	    if(!is.character(compress)) {
 		if(!is.logical(compress))
 		    stop("'compress' must be logical or character")
@@ -130,7 +130,7 @@ save.image <- function (file = ".RData", version = NULL, ascii = FALSE,
                         compress = !ascii, safe = TRUE)
 {
     if (!is.character(file) || length(file) != 1 || file == "")
-        stop(gettextf("'%s' must be a non-empty string", "file"), domain = NA)
+        stop(gettextf("'%s' must be a non-empty character string", "file"), domain = NA)
     opts <- getOption("save.image.defaults")
     if(is.null(opts)) opts <- getOption("save.defaults")
 

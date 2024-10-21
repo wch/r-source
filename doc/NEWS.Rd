@@ -110,6 +110,10 @@
       methods or class definitions are needed.  Consequently, previous
       workflows relying on the old behaviour will have to be amended by
       adding corresponding \code{library(p)} calls.
+
+      \item More R level messages use a common format containing
+      \code{"character string"} for more consistency and less translation
+      work.
     }
   }
 

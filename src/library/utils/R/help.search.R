@@ -1,7 +1,7 @@
 #  File src/library/utils/R/help.search.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2022 The R Core Team
+#  Copyright (C) 1995-2024 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -121,13 +121,13 @@ function(pattern, fields = c("alias", "concept", "title"),
          types = getOption("help.search.types"))
 {
     ### Argument handling.
-    .wrong_args <- function(args)
-	gettextf("argument %s must be a character string", sQuote(args))
+    .wrong_arg <- function(arg)
+	gettextf("'%s' must be a character string", arg)
     if(is.logical(verbose)) verbose <- 2 * as.integer(verbose)
     fuzzy <- agrep
     if(!missing(pattern)) {
 	if(!is.character(pattern) || (length(pattern) > 1L))
-	    stop(.wrong_args("pattern"), domain = NA)
+	    stop(.wrong_arg("pattern"), domain = NA)
 	i <- pmatch(fields, hsearch_db_fields)
 	if(anyNA(i))
 	    stop("incorrect field specification")
@@ -135,14 +135,14 @@ function(pattern, fields = c("alias", "concept", "title"),
 	    fields <- hsearch_db_fields[i]
     } else if(!missing(apropos)) {
 	if(!is.character(apropos) || (length(apropos) > 1L))
-	    stop(.wrong_args("apropos"), domain = NA)
+	    stop(.wrong_arg("apropos"), domain = NA)
 	else {
 	    pattern <- apropos
 	    fields <- c("alias", "title")
 	}
     } else if(!missing(keyword)) {
 	if(!is.character(keyword) || (length(keyword) > 1L))
-	    stop(.wrong_args("keyword"), domain = NA)
+	    stop(.wrong_arg("keyword"), domain = NA)
 	else {
 	    pattern <- keyword
 	    fields <- "keyword"
@@ -150,7 +150,7 @@ function(pattern, fields = c("alias", "concept", "title"),
 	}
     } else if(!missing(whatis)) {
 	if(!is.character(whatis) || (length(whatis) > 1))
-	    stop(.wrong_args("whatis"), domain = NA)
+	    stop(.wrong_arg("whatis"), domain = NA)
 	else {
 	    pattern <- whatis
 	    fields <- "alias"
