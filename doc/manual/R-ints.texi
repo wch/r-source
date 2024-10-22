@@ -4514,6 +4514,13 @@ Default: unset (but true for CRAN submission checks).
 If set to a true value, check whether Rd cross-references to targets not
 in the package itself or the base packages have package anchors.
 Default: false (but true for CRAN submission checks).
+
+@item _R_CHECK_PACKAGE_DATASETS_SUPPRESS_NOTES_
+If false report the use of non-ASCII
+strings marked as UTF-8, Latin-1 or @code{"bytes"} as part of
+@samp{checking data for non-ASCII characters}. Non-ASCII strings of
+unknown encoding are always reported.
+Default: true, but false prior on @R{} 4.5.0.
 @end vtable
 
 The following variables control checks for undeclared/unconditional use

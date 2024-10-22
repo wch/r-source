@@ -4969,7 +4969,7 @@ function(x, ...)
 
     suppress_notes <-
         config_val_to_logical(Sys.getenv("_R_CHECK_PACKAGE_DATASETS_SUPPRESS_NOTES_",
-                                         "FALSE"))
+                                         "TRUE"))
 
     c(character(),
       if((n <- x$latin1) && !suppress_notes) {
@@ -7952,7 +7952,7 @@ function(dir, localOnly = FALSE, pkgSize = NA)
                       collapse = "\n")
         }
     }
-    
+
     skip_dates <-
         config_val_to_logical(Sys.getenv("_R_CHECK_CRAN_INCOMING_SKIP_DATES_",
                                          "FALSE"))
@@ -10342,7 +10342,7 @@ function(x, ...)
 
 ### ** .bad_DESCRIPTION_URL_field_parts
 
-.bad_DESCRIPTION_URL_field_parts <- 
+.bad_DESCRIPTION_URL_field_parts <-
 function(s)
 {
     if(is.na(s)) return(character())
@@ -10356,7 +10356,7 @@ function(s)
         z[!grepl("^<?(svn://|doi:)", z)]
     }
 }
-        
+
 
 ### Local variables: ***
 ### mode: outline-minor ***
