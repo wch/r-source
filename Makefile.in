@@ -287,7 +287,7 @@ checkdistcomplete:
 	rm -Rf $${dirname}; \
 	echo "Checking $${distname}.tar.gz"; \
 	$(R_GZIPCMD) -d -c $${distname}.tar.gz | $(TAR) -x -f -; \
-	diff -r $${dirname} $(srcdir) | grep "^Only in $(srcdir)" | grep -v "^Only in.*[.]svn"; \
+	LANGUAGE=C diff -r $${dirname} $(srcdir) | grep "^Only in $(srcdir)" | grep -v "^Only in.*[.]svn"; \
 	rm -Rf $${dirname}
 
 info pdf:
