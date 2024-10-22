@@ -1,6 +1,6 @@
 % File src/library/tools/man/QC.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2023 R Core Team
+% Copyright 1995-2024 R Core Team
 % Distributed under GPL 2 or later
 
 \name{QC}
@@ -49,8 +49,10 @@ nonS3methods(package)
 }
 \details{
   \code{checkDocFiles} checks, for all Rd files in a package, whether all
-  arguments shown in the usage sections of the Rd file are documented in
-  its arguments section.  It also reports duplicated entries in the
+  functions shown in the usage section of the Rd file have a corresponding
+  \verb{\alias},%(except if any ends with \samp{-deprecated})
+  and all of their arguments are documented in
+  the arguments section.  It also reports duplicated entries in the
   arguments section, and \sQuote{over-documented} arguments which are
   given in the arguments section but not in the usage.
 
