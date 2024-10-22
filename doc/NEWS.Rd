@@ -273,6 +273,9 @@
       character data.  Set environment variable
       \env{_R_CHECK_PACKAGE_DATASETS_SUPPRESS_NOTES_}
       to a false value for the previous behaviour.
+
+      \item \code{tools::checkDocFiles()} now also notes \emph{nullary}
+      functions shown in the usage section without corresponding \verb{\alias}.
     }
   }
 

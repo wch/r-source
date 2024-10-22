@@ -1442,7 +1442,7 @@ function(package, dir, lib.loc = NULL, chkInternal = NULL)
         ## try to deal with data set documentation.
         ind <- vapply(exprs,
                       function(e)
-                          length(e) > 1L && !is_data_for_dataset(e),
+                          is.call(e) && !is_data_for_dataset(e),
                       NA, USE.NAMES=FALSE)
         exprs <- exprs[ind]
         ## Split out replacement function usages.
