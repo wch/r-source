@@ -203,7 +203,6 @@
   Internal Grid functions
 }
 \usage{
-current.rotation() 
 grid.multipanel(x = stats::runif(90), y = stats::runif(90),
                 z = stats::runif(90), nplots = 9, nrow = 5, ncol = 2,
                 newpage = TRUE, vp = NULL) 
