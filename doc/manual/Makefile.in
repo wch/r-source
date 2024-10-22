@@ -436,10 +436,12 @@ distdir: $(DISTFILES)
 	  exit 1; \
 	fi
 #	$(distdir)/doc/html has already been created
+#	NB: the pre-built R-admin.html is referenced from INSTALL and configure
 	@$(TEXI2HTML) --no-headers --number-sections \
 	  $(srcdir)/R-admin.texi -I$(srcdir) \
 	  -o $(distdir)/../html/R-admin.html
 
+## referenced from the top-level README
 front-matter: ${top_builddir}/doc/RESOURCES ${top_builddir}/doc/FAQ
 
 ${top_builddir}/doc/RESOURCES: $(srcdir)/resources.texi

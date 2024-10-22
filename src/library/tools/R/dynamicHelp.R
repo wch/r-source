@@ -146,13 +146,14 @@ httpd <- function(path, query, ...)
     }
 
     .HTMLusermanuals <- function() {
+        ## FIXME: recommended packages might not be available
         pkgs <- unlist(.get_standard_package_names())
 
         out <- HTMLheader("R User Manuals")
         for (pkg in pkgs) {
             vinfo <- getVignetteInfo(pkg)
      	    if (nrow(vinfo))
-         	out <- c(out, paste0('<h2>Manuals in package', sQuote(pkg),'</h2>'),
+         	out <- c(out, paste0('<h2>Manuals in package ', sQuote(pkg),'</h2>'),
          		 makeVignetteTable(cbind(Package=pkg, vinfo[,c("File", "Title", "PDF", "R"), drop = FALSE])))
      	}
         out <- c(out, "<hr/>\n</div></body></html>")
