@@ -66,6 +66,12 @@
   For the many methods see \code{methods(class = "Date")}.  Several are
   documented separately, see below.
 }
+\section{Warning}{
+  Do not use \code{\link{identical}()} on objects of class \code{"Date"}.
+  Their \code{\link{storage.mode}} may be \code{"dpuble"} or
+  \code{"integer"}, and which is chosen has depended on the version of
+  \R used to create the object.
+}
 \seealso{
   \code{\link{Sys.Date}} for the current date.
 
