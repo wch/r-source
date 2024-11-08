@@ -2,7 +2,7 @@
 %{
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997--2023  The R Core Team
+ *  Copyright (C) 1997--2024  The R Core Team
  *  Copyright (C) 2009--2011  Romain Francois
  *  Copyright (C) 1995--1997  Robert Gentleman and Ross Ihaka
  *
@@ -2620,7 +2620,8 @@ static int NumericValue(int c)
 		    YYTEXT_PUSH(c, yyp);
 		if (nd == 0) return ERROR;
 	    }
-            if (seendot && !seenexp) return ERROR;
+// ?NumericComstants says exponent is optional (as does C99)
+//            if (seendot && !seenexp) return ERROR;
 	    if (c == 'L') /* for getParseData */
 	    {
 		// seenexp will be checked later

@@ -5,6 +5,30 @@
 \title{R News}
 \encoding{UTF-8}
 
+\section{\Rlogo CHANGES IN R 4.4.2 patched}{
+ \subsection{C-LEVEL FACILITIES}{
+    \itemize{
+      \item The functions \code{R_strtod} and \code{R_atof} now allow
+      hexadecimal constants without an exponent, for compatibility with
+      their C99 versions (\PR{18805}).
+    }
+  }
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item \code{kappa(A, exact=TRUE)} for singular \code{A} returns
+      \code{Inf} more generally, fixing \PR{18817} reported by
+      \I{Mikael Jagan}.
+
+      \item Fixed URLs of the sun spots (\code{sunspot.month} etc) data
+      sets and mention future changes due to recalibration.
+
+      \item The parser now accepts hexadecimal constants with a decimal
+      point without an exponent (taken as \code{p0}) as documented in
+      \code{?NumericConstants} (\PR{18819}).
+    }
+  }
+}
+
 \section{\Rlogo CHANGES IN R 4.4.2}{
   \subsection{C-LEVEL FACILITIES}{
     \itemize{
