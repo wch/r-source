@@ -1,6 +1,6 @@
 % File src/library/datasets/man/sunspot.year.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2024 R Core Team
 % Distributed under GPL 2 or later
 
 \name{sunspot.year}
@@ -30,16 +30,16 @@ sunspot.year
   
   Regularly updated yearly sunspot numbers are available from
   \I{WDC-SILSO}, Royal Observatory of Belgium, at
-  \url{http://www.sidc.be/silso/datafiles}
+  \url{https://www.sidc.be/SILSO/datafiles}% was http://www.sidc.be/silso/datafiles
 }
 \examples{
 utils::str(sm <- sunspots)# the monthly version we keep unchanged
 utils::str(sy <- sunspot.year)
 ## The common time interval
 (t1 <- c(max(start(sm), start(sy)),     1)) # Jan 1749
-(t2 <- c(min(  end(sm)[1],end(sy)[1]), 12)) # Dec 1983
+(t2 <- c(min(  end(sm)[1],end(sy)[1]), 12)) # Dec 1983 (will not be updated!)
 s.m <- window(sm, start=t1, end=t2)
-s.y <- window(sy, start=t1, end=t2[1]) # {irrelevant warning}
+s.y <- window(sy, start=t1, end=t2[1])
 stopifnot(length(s.y) * 12 == length(s.m),
           ## The yearly series *is* close to the averages of the monthly one:
           all.equal(s.y, aggregate(s.m, FUN = mean), tolerance = 0.0020))
