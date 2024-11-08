@@ -1,6 +1,6 @@
 % File src/library/base/man/kappa.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2023 R Core Team
+% Copyright 1995-2024 R Core Team
 % Copyright 2008-2010 The R Foundation
 % Distributed under GPL 2 or later
 
@@ -203,5 +203,15 @@ iX <- pinv(m79)
 kappa(m79, exact=TRUE, norm="1", inv_z = iX)
 kappa(m79, exact=TRUE, norm="M", inv_z = iX)
 kappa(m79, exact=TRUE, norm="I", inv_z = iX)
+
+## Using a more "accurate" than default inv_z [example by Cleve Moler]:
+A <- rbind(c(4.1,   2.8),
+           c(9.676, 6.608))
+kappa(A) # -> Inf
+kappa(A, exact=TRUE) # 8.675057e+15 ( 2-norm )
+
+## now for the 1-norm :
+try(kappa(A, exact=TRUE, norm = "1")) #-> Error: computationally singular
+    kappa(A, exact=TRUE, norm = "1", inv_z = solve(A, tol = 1e-19)) ## 5.22057e16
 }
 \keyword{math}

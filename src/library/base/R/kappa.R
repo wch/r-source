@@ -1,7 +1,7 @@
 #  File src/library/base/R/kappa.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1998-2023 The R Core Team
+#  Copyright (C) 1998-2024 The R Core Team
 #  Copyright (C) 1998 B. D. Ripley
 #
 #  This program is free software; you can redistribute it and/or modify
@@ -73,8 +73,8 @@ kappa.default <- function(z, exact = FALSE,
     nNorm <- is.null(norm)
     if(exact) {
 	if(nNorm || norm == "2") {
-	    s <- svd(z, nu = 0L, nv = 0L)$d
-	    max(s)/min(s[s > 0])
+	    s <- svd(z, nu = 0L, nv = 0L)$d # decreasing, non-negative
+	    if(s[1]) s[1]/s[length(s)] else Inf # when s is all zero
 	}
 	else {
 	    if(nNorm) norm <- "1"
@@ -115,8 +115,9 @@ kappa.qr <- function(z, ...)
         return(0)
     if(exact) {
         if(is.null(norm) || identical("2", norm)) { # 2-norm : *not* assuming 'triangular'
+            ## identically to kappa.default(z, exact=TRUE) :
             s <- svd(z, nu = 0L, nv = 0L)$d
-            max(s)/min(s[s > 0]) ## <==> kappa.default(z, exact=TRUE)
+            if(s[1]) s[1]/s[length(s)] else Inf
         }
         else norm(z, type=norm) * norm(solve(z), type=norm) # == kappa.default(z, exact=TRUE, norm=norm,..)
     }
