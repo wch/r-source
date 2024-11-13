@@ -14580,14 +14580,15 @@ defining @code{LENGTH}, @code{error}, @code{length}, @code{match},
 and toolchain, with many problem reports involving @command{clang++}.},
 @c As from @I{LLVM} @command{clang} 13.0.0, the remapping of @code{match}
 @c breaks the subsequent inclusion of @file{omp.h}.
-and can be eliminated by defining @code{R_NO_REMAP} (before including
-any @R{} headers) and prepending @samp{Rf_} to @emph{all} the function
-names used from @file{Rinternals.h} and @file{R_ext/Error.h}.  These
-problems can usually be avoided by including other headers (such as
-system headers and those for external software used by the package)
-before any @R{} headers. (Headers from other packages may include @R{}
-headers directly or @emph{via} inclusion from further packages, and may
-define @code{R_NO_REMAP} with or without including @file{Rinternals.h}.)
+and can be eliminated by defining @code{R_NO_REMAP}@footnote{this will
+become the default for C++ code in @R{} 4.5.0.} (before including any
+@R{} headers) and prepending @samp{Rf_} to @emph{all} the function names
+used from @file{Rinternals.h} and @file{R_ext/Error.h}.  These problems
+can usually be avoided by including other headers (such as system
+headers and those for external software used by the package) before any
+@R{} headers. (Headers from other packages may include @R{} headers
+directly or @emph{via} inclusion from further packages, and may define
+@code{R_NO_REMAP} with or without including @file{Rinternals.h}.)
 
 Some of these entry points are declared in header @file{Rmath.h}, most
 of which are remapped there.  That remapping can be eliminated by
@@ -14766,8 +14767,9 @@ Memory obtained by these macros should be aligned in the same way as
 @findex Free
 @c The R_ forms were introduced in 2016-09, hence for R 3.4.0
 Historically the macros @code{Calloc}, @code{Free} and @code{Realloc}
-were used, and these remain available unless  @code{STRICT_R_HEADERS}
-was defined prior to the inclusion of the header.
+were used, and these remain available prior to @R{} 4.5.0 unless
+@code{STRICT_R_HEADERS} was defined prior to the inclusion of the
+header.
 
 @findex CallocCharBuf
 @findex Memcpy
@@ -15837,10 +15839,11 @@ natural logarithm (@code{log(x)} in @R{}).
 @end quotation
 
 For compatibility with @Sl{} this file defines the constant @code{PI}
-(unless @code{STRICT_R_HEADERS} is defined): this is deprecated and
-should be replaced by @code{M_PI}. @file{Constants.h} includes either C
-header @file{float.h} or C++ header @file{cfloat}, which provide
-constants such as @code{DBL_MAX}.
+(priot to @R{} 4.5.0 and unless @code{STRICT_R_HEADERS} is defined):
+this is deprecated and should be replaced by
+@code{M_PI}. @file{Constants.h} includes either C header @file{float.h}
+or C++ header @file{cfloat}, which provide constants such as
+@code{DBL_MAX}.
 
 @findex TRUE
 @findex FALSE
@@ -16627,8 +16630,8 @@ by @file{Rdefines.h}) and @file{Rmath.h}, which redefine names which may
 be used in system headers, or (preferably) to define @code{R_NO_REMAP}.
 Setting the environment variable @env{_R_CXX_USE_NO_REMAP_} to a true
 value allows the need for this to be tested, as it causes @command{R CMD
-INSTALL} to compile C++ code defining @code{R_NO_REMAP}.  This is
-planned to become the default in future.
+INSTALL} to compile C++ code defining @code{R_NO_REMAP}.  This will become
+the default as from @R{} 4.5.0.
 
 @node Generic functions and methods, Linking GUIs and other front-ends to R, The R API, Top
 @chapter Generic functions and methods
