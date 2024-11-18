@@ -318,9 +318,12 @@ utilities do not accept spaces in file paths): non-English alphabetic
 characters cannot be guaranteed to be supported in all locales.  It
 would be good practice to avoid the shell metacharacters
 @code{()@{@}'[]$~}: @code{~} is also used as part of `8.3' filenames on
-Windows.  In addition, packages are normally distributed as tarballs,
-and these have a limit on path lengths: for maximal portability 100
-bytes.
+Windows.  In addition, some applications on Windows can only work with path
+names of certain length, following an earlier limit in the Windows operating
+system. Packages are normally distributed as tarballs, and these have a limit
+on path lengths. So, to be friendly to users who themselves may want to use a
+relatively long path where they extract the package, and for maximal
+portability, 100 bytes.
 
 A source package if possible should not contain binary executable files:
 they are not portable, and a security risk if they are of the
@@ -623,7 +626,7 @@ hence not available automatically along with it).  Many packages using
 suggests and so the user package needs to do so too and include this in
 @samp{VignetteBuilder}.
 
-@c This included latin2 but we now know musl does not support it. 
+@c This included latin2 but we now know musl does not support it.
 @c DESCRIPTION field Encoding
 If the @file{DESCRIPTION} file is not entirely in @acronym{ASCII} it
 should contain an @samp{Encoding} field specifying an encoding.  This is
@@ -692,8 +695,8 @@ codes.
 An @samp{RdMacros} field can be used to hold a comma-separated list of
 packages from which the current package will import @file{Rd} macro
 definitions.  These package should also be listed in @samp{Imports}
-(or @samp{Depends}).  The macros in these packages will be 
-imported after the system macros, in the 
+(or @samp{Depends}).  The macros in these packages will be
+imported after the system macros, in the
 order listed in the @samp{RdMacros} field, before any macro definitions
 in the current package are loaded.  Macro definitions in individual
 @file{.Rd} files in the @file{man} directory are loaded last, and are
@@ -1550,7 +1553,7 @@ namespace).
 
 If you are not using @samp{LazyData} and either your data files are large
 or e.g., you use @file{data/foo.R} scripts to produce your data, loading
-your namespace, you 
+your namespace, you
 can speed up installation by providing a file @file{datalist} in the
 @file{data} subdirectory.  This should have one line per topic that
 @code{data()} will find, in the format @samp{foo} if @code{data(foo)}
@@ -1903,7 +1906,7 @@ config --help} for details.  If you do, it is essential that you use
 both the command and the appropriate flags, so that for example
 @samp{CC} must always be used with @samp{CFLAGS} and (for code to be
 linked into a shared library) @samp{CPICFLAGS}.  For Fortran, be careful
-to use @samp{FC FFLAGS FPICFLAGS} for fixed-form Fortran and 
+to use @samp{FC FFLAGS FPICFLAGS} for fixed-form Fortran and
 @samp{FC FCFLAGS FPICFLAGS} for free-form Fortran.
 
 As from @R{} 4.3.0, variables
@@ -1935,7 +1938,7 @@ AX_BLAS([], AC_MSG_ERROR([could not find your BLAS library], 1))
 @end example
 @noindent
 Note that @code{FLIBS} as determined by @R{} must be used to ensure that
-Fortran code works on all @R{} platforms.  
+Fortran code works on all @R{} platforms.
 
 
 @strong{N.B.}: If the @command{configure} script creates files, e.g.@:
@@ -2717,7 +2720,7 @@ PKG_LIBS = -LCsdp/lib -lsdp $(LAPACK_LIBS) $(BLAS_LIBS) $(FLIBS)
 
 $(SHLIB): Csdp/lib/libsdp.a
 
-Csdp/lib/libsdp.a:      
+Csdp/lib/libsdp.a:
         @@(cd Csdp/lib && $(MAKE) libsdp.a \
           CC="$(CC)" CFLAGS="$(CFLAGS) $(CPICFLAGS)" AR="$(AR)" RANLIB="$(RANLIB)")
 @end smallexample
@@ -2923,7 +2926,7 @@ version 14.1.
 @c (search for `Oracle Developer Studio 12.6: Fortran User's Guide' and
 @c look for §4.6).
 @c Intel Fortran had full Fortran 2008 support from version 17.0, and some
-@c 2018 support in version 16.0 and more in version 19.0.  
+@c 2018 support in version 16.0 and more in version 19.0.
 
 Modern versions of Fortran support modules, whereby compiling one source
 file creates a module file which is then included in others.  (Module
@@ -3353,11 +3356,11 @@ mylibs:
         (cd libs; \
           CC="$(CC)" CFLAGS="$(CFLAGS)" \
           CPPFLAGS="$(CPPFLAGS)" LDFLAGS="$(LDFLAGS)" \
-	  cmake . \
-	    -DCMAKE_BUILD_TYPE=Release \
-	    -DBUILD_SHARED_LIBS:bool=OFF \
-	    -DCMAKE_POSITION_INDEPENDENT_CODE:bool=ON; \
-	  $(MAKE))
+          cmake . \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DBUILD_SHARED_LIBS:bool=OFF \
+            -DCMAKE_POSITION_INDEPENDENT_CODE:bool=ON; \
+          $(MAKE))
 
 @end example
 @noindent
@@ -3999,7 +4002,7 @@ placing them in the @file{inst/doc} hierarchy of the source package or
 by using calls to @code{system.file()}.  All other files needed to
 re-make the vignettes (such as @LaTeX{} style files, Bib@TeX{} input
 files and files for any figures not created by running the code in the
-vignette) must be in the vignette source directory.  @code{R CMD check} 
+vignette) must be in the vignette source directory.  @code{R CMD check}
 will check that vignette production has succeeded by comparing
 modification times of output files in @file{inst/doc} with
 the source in @file{vignettes}.
@@ -6062,7 +6065,7 @@ Other GNU extensions which have bitten package writers are the use of
 non-portable characters such as @samp{$} in identifiers and use of C++
 headers under @file{ext}.
 
-item
+@item
 Including C-style headers in C++ code is not portable.  Including the
 legacy header@footnote{which often is the same as the header included by
 the C compiler, but some compilers have wrappers for some of the C
@@ -6155,7 +6158,7 @@ conflicts with @code{std::make_unique} from C++14 and @code{std::byte},
 @item
 In C++ code
 @example
-using namespace std; 
+using namespace std;
 @end example
 @noindent
 is not good practice, and has caused platform-dependent errors if
@@ -6450,7 +6453,7 @@ something like
     error("Actual: %0.f; Expected %0.f\n", (double) XLENGTH(Robj), (double) nelem);
 @end example
 @noindent
-@c x86_64 as a 52-bit design limit.
+@c x86_64 has a 52-bit design limit.
 @c Linux and Windows are said to have 48-bit virtual address limits.
 (This could print to full precision, lengths well beyond the address space
 limits of current OSes, let alone practical limits.)
@@ -6597,7 +6600,7 @@ The use of @code{DFLOAT}, which was superseded by @code{DBLE} in Fortran
 similar.
 
 @item
-Use of what @command{gfprtran} calls `Fortran 2018 deleted features',
+Use of what @command{gfortran} calls `Fortran 2018 deleted features',
 although most were `deleted' in earlier standards: those itemized here
 were deleted in Fortran 2008.  (In the Fortran standards `deleted' means
 features that compilers are not required to implement.) These include
@@ -8553,7 +8556,7 @@ will expand to
 \Sexpr[results=rd]@{tools:::Rd_expr_PR(1234)@}
 @end example
 @noindent
-when parsed.  
+when parsed.
 
 Some macros that might be of general use are:
 @ftable @code
@@ -8790,7 +8793,7 @@ Although the deparsing cannot do so, we recommend the consistent use of
 the preferred assignment operator @samp{<-} (rather than @samp{=}) for
 assignment.  Many package authors use a version of Emacs (on a
 Unix-alike or Windows) to edit @R{} code, using the @I{ESS[S]} mode of the
-@acronym{ESS} Emacs package.  See 
+@acronym{ESS} Emacs package.  See
 @ifset UseExternalXrefs
 @ref{R coding standards, , R coding standards, R-ints, R Internals}
 @end ifset
@@ -9162,19 +9165,19 @@ The first line had to be done as root.
 
 The first report shows in which library (etc) the time was spent:
 @example
-	CPU_CLK_UNHALT...|
-	  samples|      %|
-	------------------
-	   278341 91.9947 R
-	    18290  6.0450 libc.so.6
-	     2277  0.7526 kallsyms
-	     1426  0.4713 stats.so
-	      739  0.2442 libRblas.so
-	      554  0.1831 libz.so.1.2.11
-	      373  0.1233 libm.so.6
-	      352  0.1163 libtirpc.so.3.0.0
-	      153  0.0506 ld-linux-x86-64.so.2
-	       12  0.0040 methods.so
+        CPU_CLK_UNHALT...|
+          samples|      %|
+        ------------------
+           278341 91.9947 R
+            18290  6.0450 libc.so.6
+             2277  0.7526 kallsyms
+             1426  0.4713 stats.so
+              739  0.2442 libRblas.so
+              554  0.1831 libz.so.1.2.11
+              373  0.1233 libm.so.6
+              352  0.1163 libtirpc.so.3.0.0
+              153  0.0506 ld-linux-x86-64.so.2
+               12  0.0040 methods.so
 @end example
 @noindent
 (@code{kallsyms} is the kernel.)
@@ -9303,8 +9306,8 @@ For example
 > summary(women)
 Called from: summary.data.frame(women)
 Browse[1]> ls()
- [1] "digits" "i"      "lbs"    "lw"     "maxsum" "ncw"    "nm"     "nr"    
- [9] "nv"     "object" "sms"    "z"     
+ [1] "digits" "i"      "lbs"    "lw"     "maxsum" "ncw"    "nm"     "nr"
+ [9] "nv"     "object" "sms"    "z"
 Browse[1]> maxsum
 [1] 7
 Browse[1]> c
@@ -9478,7 +9481,7 @@ something like
 options(expressions=500)
 @end example
 
-@noindent 
+@noindent
 and re-run the example showing the error.
 
 Sometimes there is warning that clearly is the precursor to some later
@@ -10178,10 +10181,10 @@ Other useful flags include
 @noindent
 which causes the first report to be fatal (it always is for the
 @code{unreachable} and @code{return} suboptions).  For more detailed
-information on where the runtime error occurs, using 
+information on where the runtime error occurs, using
 
 @example
-setenv UBSAN_OPTIONS 'print_stacktrace=1' 
+setenv UBSAN_OPTIONS 'print_stacktrace=1'
 @end example
 @noindent
 will include a traceback in the report.  Beyond that, @R{} can
@@ -10659,7 +10662,7 @@ the dylibs including those in packages.
 
 It may be simplest to attach the debugger to a running process (see
 above).  Specifically, run @R{} and when it is at the prompt just before
-a command that is to be debugged, at a terminal 
+a command that is to be debugged, at a terminal
 
 @example
 ps -ef | grep exec/R
@@ -10948,7 +10951,7 @@ package writers using the same symbol name, and such name clashes are
 normally sufficient to cause @R{} to crash.  (If it is not present and
 the call is from the body of a function defined in a package namespace,
 the shared object loaded by the first (if any) @code{useDynLib}
-directive will be used.) 
+directive will be used.)
 @c However, prior to @R{} 2.15.2 the detection of the correct namespace is
 @c unreliable and you are strongly recommended to use the @code{PACKAGE}
 @c argument for packages to be used with earlier versions of @R{}.
@@ -11528,9 +11531,9 @@ nm -g /path/to/splines.so | grep " T "
 @noindent
 This indicates that there are two relevant entry points. (They may or
 may not have a leading underscore, as here. Fortran entry points will
-have a trailing underscore.)  Check in the @R{} code that they are
-called by the package and how: in this case they are used by
-@code{.Call}.
+have a trailing underscore on all current platforms.)  Check in the @R{}
+code that they are called by the package and how: in this case they are
+used by @code{.Call}.
 
 Alternatively, examine the package's @R{} code for all @code{.C},
 @code{.Fortran}, @code{.Call} and @code{.External} calls.
@@ -11964,7 +11967,7 @@ ignored. Since @R{} 4.2.0, @file{Makevars.ucrt} will be used in preference to
 @file{Makevars.win} and @file{src/Makefile.ucrt} will be used in preference
 to @file{src/Makefile.win}.
 For past experiences of building DLLs with a variety of
-compilers, see file @samp{README.packages}.  
+compilers, see file @samp{README.packages}.
 Under Windows you can supply an exports definitions file called
 @file{@var{dllname}-win.def}: otherwise all entry points in objects (but
 not libraries) supplied to @code{R CMD SHLIB} will be exported from the
@@ -12130,9 +12133,10 @@ as the library (and what that was is often undocumented).
 @c distributions.
 
 Even fewer external libraries use C++ internally but present a C
-interface, such as @CRANpkg{rgeos}.  These require the C++ runtime
-library to be linked into the package's shared object/DLL, and this is
-best done by including a dummy C++ file in the package sources.
+interface, such as GEOS used by @CRANpkg{sf} and other packages..  These
+require the C++ runtime library to be linked into the package's shared
+object/DLL, and this is best done by including a dummy C++ file in the
+package sources.
 
 There is a trend to link to the C++ interfaces offered by C software
 such as @pkg{hdf5}, @pkg{pcre} and @pkg{ImageMagick}.  Their C
@@ -12150,14 +12154,14 @@ because output is not guaranteed to appear on the @R{} console, and this
 warning applies equally to Fortran output to units @code{*}
 and @code{6}. @xref{Printing from Fortran}, which describes workarounds.
 
-In the past most Fortran compilers implemented I/O on top of the C I/O
-system and so the two interworked successfully.  This was true of
-@command{g77}, but it is less true of @command{gfortran} as used in
-@command{gcc} 4 and later.  In particular, any package that makes use of
-Fortran I/O will when compiled on Windows interfere with C I/O: when the
-Fortran I/O support code is initialized (typically when the package is
-loaded) the C @code{stdout} and @code{stderr} are switched to @abbr{LF} line
-endings.  (Function @code{init} in file
+When @R{} was first developed, most Fortran compilers implemented I/O on
+top of the C I/O system and so the two interworked successfully.  This
+was true of @command{g77}, but no longer of @command{gfortran} as used
+in @command{gcc} 4 and later.  In particular, any package that makes use
+of Fortran I/O will when compiled on Windows interfere with C I/O: when
+the Fortran I/O support code is initialized (typically when the package
+is loaded) the C @code{stdout} and @code{stderr} are switched to
+@abbr{LF} line endings.  (Function @code{init} in file
 @file{src/modules/lapack/init_win.c} shows how to mitigate this.  In a
 package this would look something like
 @example
@@ -12456,7 +12460,7 @@ pointer to a structure with typedef @code{SEXPREC}.  Think of this
 structure as a @emph{variant type} that can handle all the usual types
 of @R{} objects, that is vectors of various modes, functions,
 environments, language objects and so on.  The details are given later
-in this section and in 
+in this section and in
 @ifset UseExternalXrefs
 @ref{R Internal Structures, , R Internal Structures, R-ints, R Internals},
 @end ifset
@@ -12526,8 +12530,8 @@ stack-based, so @code{UNPROTECT(@var{n})} unprotects the last @var{n}
 objects which were protected.  The calls to @code{PROTECT} and
 @code{UNPROTECT} must balance when the user's code returns and should
 balance in all functions.  @R{} will warn about
-@code{"stack imbalance in .Call"} (or @code{.External}) if the 
-housekeeping is wrong. 
+@code{"stack imbalance in .Call"} (or @code{.External}) if the
+housekeeping is wrong.
 
 Here is a small example of creating an @R{} numeric vector in C code:
 
@@ -12621,7 +12625,7 @@ protecting objects, certain rules have to be followed:
 
 @itemize
 
-@item 
+@item
 Pointer-protection balance.  Calls to @code{PROTECT} and @code{UNPROTECT}
 should balance in each function.  A function may only call @code{UNPROTECT} or
 @code{REPROTECT} on objects it has itself protected.  Note that the pointer
@@ -12674,7 +12678,7 @@ functions always initialize the elements of the vector,
 vectors (the cases where the elements are themselves @R{} objects).
 
 If storage is required for C objects during the calculations this is
-best allocating by calling @code{R_alloc}; @pxref{Memory allocation}.
+best allocated by calling @code{R_alloc}; @pxref{Memory allocation}.
 All of these memory allocation routines do their own error-checking, so
 the programmer may assume that they will raise an error and not return
 if the memory cannot be allocated.
@@ -12712,7 +12716,7 @@ Among the important internal @code{SEXPTYPE}s are @code{LANGSXP},
 @code{CHARSXP}, @code{PROMSXP}, etc.  (@strong{N.B.}: although it is
 possible to return objects of internal types, it is unsafe to do so as
 assumptions are made about how they are handled which may be violated at
-user-level evaluation.)  More details are given in 
+user-level evaluation.)  More details are given in
 @ifset UseExternalXrefs
 @ref{R Internal Structures, , R Internal Structures, R-ints, R Internals}.
 @end ifset
@@ -12985,7 +12989,7 @@ one in package @pkg{stats}) is very useful:
 
 @example
 @group
-/* get the list element named str, or return NULL */
+/* get the list element named str (ASCII), or return NULL */
 
 SEXP getListElement(SEXP list, const char *str)
 @{
@@ -13277,8 +13281,8 @@ length-one character strings to and from @code{SEXPTYPE} numbers, and
 @subsubsection Semi-internal convenience functions
 
 There is quite a collection of functions that may be used in your C code
-@emph{if} you are willing to adapt to rare ``API'' changes.
-These typically contain ``workhorses'' of their @R{} counterparts.
+@emph{if} you are willing to adapt to rare API changes.
+These typically contain the ``workhorses'' of their @R{} counterparts.
 
 Functions @code{any_duplicated} and @code{any_duplicated3} are fast
 versions of @R{}'s @code{any(duplicated(.))}.
@@ -13505,7 +13509,7 @@ of the interface they are objects that are already in use.  The macros
 @findex CAD5R
 
 @noindent
-provide convenient ways to access the first four arguments.  More
+provide convenient ways to access the first five arguments.  More
 generally we can use the
 @findex CAR
 @findex CDR
@@ -13947,7 +13951,7 @@ Here is the complete C code which we will explain section by section.
 
 @example
 @group
-#include <R.h> 
+#include <R.h>
 #include <Rinternals.h>
 #include <float.h> /* for DBL_EPSILON */
 
@@ -14322,8 +14326,8 @@ Weak references are used to allow the programmer to maintain information
 on entities without preventing the garbage collection of the entities
 once they become unreachable.
 
-A weak reference contains a key and a value.  The value is reachable is
-if it either reachable directly or @emph{via} weak references with reachable
+A weak reference contains a key and a value.  The value is reachable
+if it is either reachable directly or @emph{via} weak references with reachable
 keys.  Once a value is determined to be unreachable during garbage
 collection, the key and value are set to @code{R_NilValue} and the
 finalizer will be run later in the garbage collection.
@@ -14358,7 +14362,7 @@ A toy example of the use of weak references can be found at
 @uref{https://homepage.stat.uiowa.edu/~luke/R/references/weakfinex.html},
 but that is used to add finalizers to external pointers which can now be
 done more directly.  At the time of writing no @acronym{CRAN} or
-Bioconductor package uses weak references.
+Bioconductor package used weak references.
 
 
 @menu
@@ -14373,7 +14377,7 @@ Package @CRANpkg{RODBC} uses external pointers to maintain its
 connections open at once, and the status information for each is stored
 in a C structure (pointed to by @code{thisHandle} in the code extract
 below) that is returned @emph{via} an external pointer as part of the
-@pkg{RODBC} 
+@pkg{RODBC}
 `channel' (as the @code{"handle_ptr"} attribute).  The external pointer
 is created by
 
@@ -14546,7 +14550,7 @@ to create marked character strings of a given length.
 @end menu
 
 There are a large number of entry points in the @R{} executable/DLL that
-can be called from C code (and some that can be called from Fortran
+can be called from C code (and a few that can be called from Fortran
 code).  Only those documented here are stable enough that they will only
 be changed with considerable notice.
 
@@ -14577,7 +14581,8 @@ header files when using these entry points.
 This remapping can cause problems@footnote{Known problems have been
 defining @code{LENGTH}, @code{error}, @code{length}, @code{match},
 @code{vector} and @code{warning}: whether these matter depends on the OS
-and toolchain, with many problem reports involving @command{clang++}.},
+and toolchain, with many problem reports involving Apple or LLVM
+@command{clang++}.},
 @c As from @I{LLVM} @command{clang} 13.0.0, the remapping of @code{match}
 @c breaks the subsequent inclusion of @file{omp.h}.
 and can be eliminated by defining @code{R_NO_REMAP}@footnote{this will
@@ -14883,11 +14888,12 @@ PutRNGstate();
 These essentially read in (or create) @code{.Random.seed} and write it
 out after use.
 
-These are defined in header @file{R_ext/Random.h}.
+These are defined in header @file{R_ext/Random.h}. These functiosns are
+never remapped.
 
 The random number generator is private to @R{}; there is no way to
-select the kind of RNG nor set the seed except by evaluating calls to the
-@R{} functions.
+select the kind of RNG nor set the seed except by evaluating calls to
+the @R{} functions which do so.
 
 The C code behind @R{}'s @code{r@var{xxx}} functions can be accessed by
 including the header file @file{Rmath.h}; @xref{Distribution functions}.
@@ -14903,7 +14909,7 @@ Those calls should also be preceded and followed by calls to
 
 It was explained earlier that Fortran random-number generators should
 not be used in @R{} packages, not least as packages cannot safely
-initialize them.  Rather a package should call @R{}'s built in
+initialize them.  Rather a package should call @R{}'s built-in
 generators: one way to do so is to use C wrappers like
 @example
 #include <R_ext/RS.h>
@@ -14947,7 +14953,7 @@ by something like (fixed-form Fortran 90 code):
           end subroutine putRNGseed
         end interface
       end module rngfuncs
-      
+
       subroutine testit
       use rngfuncs
       double precision X
@@ -14992,7 +14998,7 @@ some platforms, on which @code{R_FINITE} is a macro expanding to
 @code{isfinite}.
 
 Currently in C code @code{ISNAN} is a macro calling @code{isnan}.
-(Since this gives problems on some C++ systems, if the @R{} headers is
+(Since this gives problems on some C++ systems, if the @R{} headers are
 called from C++ code a function call is used.)
 
 You can check for @code{Inf} or @code{-Inf} by testing equality to
@@ -15118,7 +15124,7 @@ to call a Fortran routine from C
 @c to access a Fortran common block from C
 @end table
 
-On most current platforms these are all the same, but it is unwise to
+On current platforms these are the same, but it is unwise to
 rely on this.  Note that names containing underscores were not legal in
 Fortran 77, and are not portably handled by the above macros.  (Also,
 all Fortran names for use by @R{} are lower case, but this is not
@@ -15170,20 +15176,16 @@ in C code (@pxref{Registering native routines}).  For example
 @example
 init.c:10:13: warning: type of 'vsom_' does not match original
  declaration [-Wlto-type-mismatch]
-  extern void F77_NAME(vsom)(void *, void *, void *, void *, 
+  extern void F77_NAME(vsom)(void *, void *, void *, void *,
     void *, void *, void *, void *, void *);
 vsom.f90:20:33: note: type mismatch in parameter 9
    subroutine vsom(neurons,dt,dtrows,dtcols,xdim,ydim,alpha,train)
 vsom.f90:20:33: note: 'vsom' was previously declared here
 @end example
+@noindent
 shows that a subroutine has been registered with 9 arguments (as that is
 what the @code{.Fortran} call used) but only has 8.
 
-@menu
-* Fortran character strings::
-* Fortran LOGICAL::
-* Passing functions::
-@end menu
 
 @node Fortran character strings, Fortran LOGICAL, Calling C from Fortran and vice versa, Calling C from Fortran and vice versa
 @subsection Fortran character strings
@@ -15225,7 +15227,7 @@ which gives
 @example
 void rmsg_ (char *msg, size_t msg_len);
 @end example
-@noindent 
+@noindent
 (where @code{size_t} applies to version 8 and later).  We could re-write
 that portably in C as
 @example
@@ -15239,7 +15241,7 @@ void F77_NAME(rmsg)(char *msg, FC_LEN_T msg_len)
     char cmsg[msg_len+1];
     strncpy(cmsg, msg, msg_len);
     cmsg[msg_len] = '\0'; // nul-terminate the string, to be sure
-    // do something with 'cmsg' 
+    // do something with 'cmsg'
 @}
 @end example
 @noindent
@@ -15259,12 +15261,12 @@ void F77_NAME(rmsg)(char *msg, FC_LEN_T msg_len)
     char cmsg[msg_len+1];
     strncpy(cmsg, msg, msg_len);
     cmsg[msg_len] = '\0';
-    // do something with 'cmsg' 
+    // do something with 'cmsg'
 @}
 #else
 void F77_NAME(rmsg)(char *msg)
 @{
-    // do something with 'msg' 
+    // do something with 'msg'
 @}
 #endif
 @end example
@@ -15349,7 +15351,7 @@ the character length(s) from C to Fortran. A portable way to do this is
 # define FCONE
 #endif
 ...
-        F77_CALL(dgemm)("N", "T", &nrx, &ncy, &ncx, &one, x, 
+        F77_CALL(dgemm)("N", "T", &nrx, &ncy, &ncx, &one, x,
                         &nrx, y, &nry, &zero, z, &nrx FCONE FCONE);
 @end example
 @noindent
@@ -15369,7 +15371,7 @@ However, recent versions of @command{gfortran} @emph{via} the option
 @code{int_least32_t *}: `Link-Time Optimization' will report @code{int
 *} as a mismatch. It is possible to use @code{iso_c_binding} in Fortran
 2003 to map LOGICAL variables to the C99 type @code{_Bool}, but it is
-usually simpler to pass integers to and fro.
+usually simpler to pass integers.
 
 @node Passing functions,  , Fortran LOGICAL, Calling C from Fortran and vice versa
 @subsection Passing functions
@@ -15411,7 +15413,7 @@ using @command{f2c}.
 for example numerical linear algebra computations and special functions.
 
 The header files @file{R_ext/BLAS.h}, @file{R_ext/Lapack.h} and
-@file{R_ext/Linpack.h} contains declarations of the BLAS, LAPACK and
+@file{R_ext/Linpack.h} contain declarations of the BLAS, LAPACK and
 LINPACK linear algebra functions included in @R{}.  These are expressed
 as calls to Fortran subroutines, and they will also be usable from
 users' Fortran code.  Although not part of the official @acronym{API},
@@ -15422,6 +15424,10 @@ The header file @file{Rmath.h} lists many other functions that are
 available and documented in the following subsections. Many of these are
 C interfaces to the code behind @R{} functions, so the @R{} function
 documentation may give further details.
+
+If @code{R_NO_REMAP_RMATH} most of these will need to be prefixed by
+@code{Rf_}: see the header file for which ones.
+
 
 @menu
 * Distribution functions::
@@ -15540,7 +15546,7 @@ void rmultinom(int n, double* prob, int K, int* rN)
 @end example
 @noindent
 where @code{K = length(prob)},
-@iftex 
+@iftex
 @tex
 $\pi :=$ @code{prob[]},
 @end tex
@@ -15557,6 +15563,7 @@ function @code{wilcox_free()} should be called, and similarly
 @code{signrank_free()} for the signed rank functions.
 @findex wilcox_free
 @findex signrank_free
+@c wilcox_free and signrank_free are never remapped.
 Since @code{wilcox_free()} and @code{signrank_free()} were only added to
 @file{Rmath.h} in @R{}@tie{} 4.2.0, their use requires something like
 @example
@@ -15609,7 +15616,7 @@ function, which is the derivative of @code{lgammafn}. In other words,
 @code{trigamma(x) == psigamma(x,1)}, etc.
 The underlying workhorse, @code{dpsifn()}, is useful, e.g., when several derivatives of
 @eqn{\log\Gamma=, log Gamma=}@code{lgammafn} are desired.  It computes and
-returns in @code{ans[]} the length-@var{m} sequence 
+returns in @code{ans[]} the length-@var{m} sequence
 @eqn{(-1)^{k+1} / \Gamma(k+1) * \psi^{(k)}(x), (-1)^(k+1) / gamma(k+1) * psi(k;x)} for
 @eqn{k = n \ldots n+m-1, k = n ... n+m-1}, where @eqn{\psi^{(k)}(x), psi(k;x)}
 is the @I{k-th} derivative of @eqn{\psi(x), Psi(x)}, i.e.,
@@ -15659,7 +15666,7 @@ as @R{}) for the cases where @var{x}, @var{y} or @var{i} are 0 or
 missing or infinite or @code{NaN}.
 
 @code{pow1p(@var{x}, @var{y})} computes @code{(1 + @var{x})^@var{y}}, accurately
-even for small @var{x}, i.e., @eqn{|x| \ll 1, |x| << 1}. 
+even for small @var{x}, i.e., @eqn{|x| \ll 1, |x| << 1}.
 @end deftypefun
 
 @deftypefun double log1p (double @var{x})
@@ -15705,6 +15712,7 @@ Computes @code{log(gamma(@var{x} + 1))} (@emph{log(gamma(1 @I{@b{p}lus} x))}),
 accurately even for small @var{x}, i.e., @eqn{0 < x < 0.5, 0 < x < 0.5}.
 @end deftypefun
 
+@c cospi sinpi tanpi are never remapped.
 @deftypefun double cospi (double @var{x})
 Computes @code{cos(pi * x)} (where @code{pi} is 3.14159...),
 accurately, notably for half integer @var{x}.
@@ -15883,6 +15891,7 @@ which passes back the gradient in the @code{gr} argument.  No function
 is provided for finite-differencing, nor for approximating the Hessian
 at the result.
 
+@c None of these are remapped.
 The interfaces (defined in header @file{R_ext/Applic.h}) are
 
 @itemize @bullet
@@ -16160,15 +16169,16 @@ A @code{NULL} prefix or extension is replaced by @code{""}.  Note that
 the return value is dynamically allocated and should be freed using
 @code{R_free_tmpnam} when no longer needed (unlike the
 system call @code{tmpnam}). Freeing the result using @code{free} is no
-longer recommended. 
+longer recommended.
 @end deftypefun
 
-@deftypefun void R_atof (const char* @var{str})
-@deftypefunx void R_strtod (const char* @var{str}, char ** @var{end})
+@deftypefun double R_atof (const char* @var{str})
+@deftypefunx double R_strtod (const char* @var{str}, char ** @var{end})
 Implementations of the C99/POSIX functions @code{atof} and @code{strtod}
-which guarantee platform-dependent behaviour, including always using the
-period as the decimal point @emph{aka} `@I{radix character}' and converting
-@code{"NA"} to R's @code{NA_REAL_} .
+which guarantee platform- and locale-independent behaviour, including
+always using the period as the decimal point @emph{aka} `@I{radix
+character}' and returning R's @code{NA_REAL_} for all unconverted
+strings, including @code{"NA"}.
 @end deftypefun
 
 
@@ -16237,14 +16247,14 @@ within C code:
 #include <Rinternals.h>
 
 SEXP R_tryCatchError(SEXP (*fun)(void *data), void *data,
-		     SEXP (*hndlr)(SEXP cond, void *hdata), void *hdata);
+                     SEXP (*hndlr)(SEXP cond, void *hdata), void *hdata);
 
 SEXP R_tryCatch(SEXP (*fun)(void *data), void *data,
-		SEXP,
-		SEXP (*hndlr)(SEXP cond, void *hdata), void *hdata,
-		void (*clean)(void *cdata), void *cdata);
+                SEXP,
+                SEXP (*hndlr)(SEXP cond, void *hdata), void *hdata,
+                void (*clean)(void *cdata), void *cdata);
 SEXP R_withCallingErrorHandler(SEXP (*fun)(void *data), void *data,
-			       SEXP (*hndlr)(SEXP cond, void *hdata), void *hdata)
+                               SEXP (*hndlr)(SEXP cond, void *hdata), void *hdata)
 @end example
 @findex R_tryCatchError
 @findex R_tryCatch
@@ -16495,7 +16505,7 @@ flags are accepted, not that they actually hide symbols.
 The visibility mechanism is not available on Windows, but there is an
 equally effective way to control which entry points are visible, by
 supplying a definitions file
-@file{@var{pkgnme}/src/@var{pkgname}-win.def}: only entry points
+@file{@var{pkgname}/src/@var{pkgname}-win.def}: only entry points
 listed in that file will be visible.  Again using @pkg{stats} as an
 example, it has
 
@@ -16574,7 +16584,7 @@ above (no longer maintained)
 @item @file{Rversion.h} @tab @R{} version information
 @item @file{Rinterface.h} @tab for add-on front-ends (Unix-alikes only)
 @item @file{Rembedded.h} @tab for add-on front-ends
-@item @file{R_ext/Applic.h} @tab optimization and integration
+@item @file{R_ext/Applic.h} @tab optimization, integration and some LAPACK ones)
 @item @file{R_ext/BLAS.h} @tab C definitions for BLAS routines
 @item @file{R_ext/Callbacks.h} @tab C (and R function) top-level task
 handlers
@@ -17038,7 +17048,7 @@ all: myfe
 myfe.o: myfe.c
         $(CC) $(ALL_CPPFLAGS) $(CFLAGS) -c myfe.c -o $@@
 
-## replace $(LIBR) $(LIBS) by $(STATIC_LIBR) if R was build with a static libR
+## replace $(LIBR) $(LIBS) by $(STATIC_LIBR) if R was built with a static libR
 myfe: myfe.o
         $(MAIN_LINK) -o $@@ myfe.o $(LIBR) $(LIBS)
 @end example
@@ -17061,7 +17071,7 @@ invocation of @command{make}, see @ref{Writing portable packages}.
 all:
       $(MAKE) -f "$@{R_HOME@}/etc$@{R_ARCH@}/Makeconf" -f Makefile.inner
 @end example
-  
+
 Additional flags which @code{$(MAIN_LINK)} includes are, amongst others,
 those to select @abbr{OpenMP} and @option{--export-dynamic} for the GNU linker
 on some platforms.  In principle @code{$(LIBS)} is not needed
@@ -17579,7 +17589,7 @@ int main (int argc, char **argv)
     Rp->ShowMessage = askok;
     Rp->YesNoCancel = askyesnocancel;
     Rp->Busy = myBusy;
-    
+
     Rp->R_Quiet = TRUE;        /* Default is FALSE */
     Rp->R_Interactive = FALSE; /* Default is TRUE */
     Rp->RestoreAction = SA_RESTORE;
