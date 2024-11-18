@@ -1597,17 +1597,30 @@ tools::assertWarning(verbose=TRUE,
 ## format.POSIXlt() of Jan.1 if  1941 or '42 is involved:
 tJan1 <- function(n1, n2)
     strptime(paste0(n1:n2,"/01/01"), "%Y/%m/%d", tz="CET")
-wDSTJan1 <- function(n1, n2)
-    which("CEST" == sub(".* ", '', format(tJan1(n1,n2), usetz=TRUE)))
-(w8 <- wDSTJan1(1801, 2300))
-(w9 <- wDSTJan1(1901, 2300))
-stopifnot(identical(w8, 141:142),# exactly 1941:1942 had CEST on Jan.1
-          identical(w9,  41: 42))
+f8 <- format(tJan1(1801, 2300), usetz=TRUE)
+f9 <- format(tJan1(1901, 2300), usetz=TRUE)
+rle8 <- rle(s8 <- sub(".* ",'', f8))
+rle9 <- rle(s9 <- sub(".* ",'', f9))
+w8 <- which(s8 == "CEST")
+w9 <- which(s9 == "CEST")
+## IGNORE_RDIFF_BEGIN
+rle8
+## very platform dependently; originally got
+##   lengths: int [1:3] 140 2 358
+##   values : chr [1:3] "CET" "CEST" "CET"
+w8 # 141 142
+w9 #  41  42
+## IGNORE_RDIFF_END
+## Debian's tzdata 2024b no longer contains "legacy" (but tzdata-legacy does)
+## --> everything "CET" [ <==> !length(w..) ]
+stopifnot(!length(w8) || identical(w8, 141:142),# exactly 1941:1942 had CEST on Jan.1
+          !length(w9) || identical(w9,  41: 42))
 ## for R-devel Jan.2016 to Mar.14 -- *AND* for R 3.2.4 -- the above gave
 ## integer(0)  and  c(41:42, 99:100, ..., 389:390)  respectively
-
+##
 ## the above gives 1:142 and 1:42 respectively on Solaris 10 when not using
 ## --with-internal-tzcode; R-Admin recommends --with-internal-tzcode.
+
 
 ## tsp<- did not remove mts class
 z <- ts(cbind(1:5,1:5))
