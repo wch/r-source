@@ -39,7 +39,8 @@ strptime(x, format, tz = "")
     methods is
     \code{"\%Y-\%m-\%d \%H:\%M:\%S"} if any element has a time
     component which is not midnight, and \code{"\%Y-\%m-\%d"}
-    otherwise.  If \code{\link{options}("digits.secs")} is set, up to
+    otherwise.  If \code{digits} is not \code{NULL}, i.e., by default when
+    \code{\link{options}("digits.secs")} is set, up to
     the specified number of digits will be printed for seconds.}
   \item{\dots}{further arguments to be passed from or to other methods.}
   \item{usetz}{logical.  Should the time zone abbreviation be appended
@@ -235,11 +236,10 @@ strptime(x, format, tz = "")
 
   Specific to \R is \code{\%OSn}, which for output gives the seconds
   truncated to \code{0 <= n <= 6} decimal places (and if \code{\%OS} is
-  not followed by a digit, it uses the setting of
-  \code{\link{getOption}("digits.secs")}, or if that is unset, \code{n =
-  0}).  Further, for \code{strptime} \code{\%OS} will input seconds
-  including fractional seconds.  Note that \code{\%S} does not read
-  fractional parts on output.
+  not followed by a digit, it uses \code{digits} unless that is
+  \code{NULL}, when \code{n = 0}).  Further, for \code{strptime}
+  \code{\%OS} will input seconds including fractional seconds.  Note that
+  \code{\%S} does not read fractional parts on output.
 
   The behaviour of other conversion specifications (and even if other
   character sequences commencing with \code{\%} \emph{are} conversion
@@ -307,7 +307,7 @@ strptime(x, format, tz = "")
   year.  (On some platforms this works better after conversion to
   \code{"POSIXct"}.  Some platforms only recognize hour or half-hour
   offsets for output.)%% strftime in macOS 13.
-  
+
   Using \code{\%z} for input makes most sense with \code{tz = "UTC"}.
 }
 
@@ -426,7 +426,8 @@ stopifnot(identical(format(z2), as.character(z2)))
 
 ## time with fractional seconds
 z3 <- strptime("20/2/06 11:16:16.683", "\%d/\%m/\%y \%H:\%M:\%OS") \donttest{
-z3 # prints without fractional seconds by default, digits.sec = NULL ("= 0")}
+z3 # prints without fractional seconds by default, digits.sec = NULL ("= 0")
+print(z3, digits = 3) # shows extra digits}
 op <- options(digits.secs = 3)
 \donttest{z3 # shows the 3 extra digits}
 as.character(z3) # ditto
