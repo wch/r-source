@@ -1433,8 +1433,8 @@ The binary distribution of @R{} is currently built with tools
 from
 @uref{https://CRAN.R-project.org/bin/windows/Rtools/rtools44/rtools.html,Rtools44
 for Windows}. See 
-@uref{https://CRAN.R-project.org/bin/windows/base/howto-R-devel.html, Building
-R and packages} for more details on how to use it.
+@uref{https://CRAN.R-project.org/bin/windows/base/howto-@value{RWTVERSION}.html,
+Building @value{RWTVERSION} and packages on Windows} for more details on how to use it.
 
 The toolset includes compilers (currently GCC version 13.2.0 with
 selected additional patches) and runtime libraries from
@@ -2137,8 +2137,8 @@ code, and @code{install.packages(type="source")} will work for such
 packages. Those with compiled code need the tools (see @ref{The Windows
 toolset}). The tools are found automatically by @R{} when installed by
 the toolset installer. See
-@uref{https://cran.r-project.org/bin/windows/base/howto-R-devel.html,Building
-R and packages} for more details.
+@uref{https://cran.r-project.org/bin/windows/base/howto-@value{RWTVERSION}.html,
+Building @value{RWTVERSION} and packages on Windows} for more details.
 
 Occasional permission problems after unpacking source packages have been
 seen on some systems: these have been circumvented by setting the
