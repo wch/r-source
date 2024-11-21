@@ -2856,10 +2856,13 @@ if(FALSE) {
 	if (file.exists(file.path(outDir, "demo")))
 	    cat('<li><a href="../demo">Code demos</a>.  Use <a href="../../utils/help/demo">demo()</a> to run them.</li>\n',
 		 sep = "", file=conn)
-	if (any(file.exists(file.path(outDir,
-                                      c("NEWS", "NEWS.Rd", "NEWS.md")))))
-	    cat('<li><a href="../NEWS">Package NEWS</a>.</li>\n',
-		 sep = "", file=conn)
+        for(nfile in c("NEWS", "NEWS.Rd", "NEWS.md")) {
+            if(file.exists(file.path(outDir, nfile))) {
+                cat('<li><a href="../', nfile, '">Package NEWS</a>.</li>\n',
+                    sep = "", file=conn)
+                break
+            }
+        }
 
         cat('</ul>\n\n<h2>Help Pages</h2>\n\n\n',
             sep ="", file = conn)
