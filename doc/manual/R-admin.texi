@@ -1102,7 +1102,7 @@ suffice.
 @subsection C standards
 
 Compiling @R{} requires C99 or later: C11 and C17 are minor updates, but
-the substantial update planned for `C23' (now expected @emph{ca} April
+the substantial update planned for `C23' (finally published in October
 2024) will also be supported.
 
 As from @R{} 4.3.0 there is support for packages to indicate their

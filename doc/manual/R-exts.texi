@@ -3201,15 +3201,14 @@ compiler is to include an empty C++ file in @file{src}..
 @subsection C standards
 
 C has had standards C89/C90, C99, C11, C17 (also known as C18), and C23
-is in final draft and expected to be published in 2024.  C11 was a
-minor change to C99 which introduced some new features and made others
-optional, and C17 is a `bug-fix' update to C11.  On the other hand, C23
-makes extensive changes, including making @code{bool}, @code{true} and
-@code{false} reserved words, finally disallowing K&R-style function
-declarations and clarifying the formerly deprecated meaning of function
-declarations with an empty parameter list to mean zero
-parameters. (There are many other additions: see for example
-@uref{https://en.cppreference.com/w/c/23}.)
+(published in 2024).  C11 was a minor change to C99 which introduced
+some new features and made others optional, and C17 is a `bug-fix'
+update to C11.  On the other hand, C23 makes extensive changes,
+including making @code{bool}, @code{true} and @code{false} reserved
+words, finally disallowing K&R-style function declarations and
+clarifying the formerly deprecated meaning of function declarations with
+an empty parameter list to mean zero parameters. (There are many other
+additions: see for example @uref{https://en.cppreference.com/w/c/23}.)
 
 The @command{configure} script in recent versions of @R{} aims to choose
 a C compiler which supports C11: as the default in recent versions of
@@ -3237,8 +3236,8 @@ LDFLAGS=`"$@{R_HOME@}/bin/R" CMD config LDFLAGS`
 The (claimed) C standard in use can be checked by the macro
 @code{__STDC_VERSION__}. This is undefined in C89/C90 and should have
 values @code{199901L}, @code{201112L} and @code{201710L} for C99, C11
-and C17.  As C23 is not yet published there is as yet no definitive
-value: compilers are currently using @code{202000L}.
+and C17.  The definitive value for C23 seems to be @code{202311L} but
+compilers are currently using @code{202000L}.
 @c https://gustedt.gitlabpages.inria.fr/c23-library/
 C23 has macros similar to C++ `feature tests' for many of its changes,
 for example @code{__STDC_VERSION_LIMITS_H__}.
@@ -6234,12 +6233,12 @@ run-time path to the library.
 
 @item
 Package authors commonly assume things are part of C/C++ when they are
-not: the most common example is POSIX@footnote{Although this is expected
-to be part of C23, full support of that is years away.} function
-@code{strdup}.  The most common C library on Linux, @code{glibc}, will
-hide the declarations of such extensions unless a `feature-test macro'
-is defined @strong{before} (almost) any system header is included.  So
-for @code{strdup} you need
+not: the most common example is POSIX@footnote{Although this was added
+for C23, full support of that is years away.} function @code{strdup}.
+The most common C library on Linux, @code{glibc}, will hide the
+declarations of such extensions unless a `feature-test macro' is defined
+@strong{before} (almost) any system header is included.  So for
+@code{strdup} you need
 @example
 #define _POSIX_C_SOURCE 200809L
 ...
@@ -6394,8 +6393,8 @@ This has found quite a number of errors where functions have been
 declared without arguments and is likely to become the default in future
 compilers.  (It already is for Apple @command{clang} and for @I{LLVM}
 @command{clang} in C23 mode.)  Note that using @code{f()} for a function
-without any parameters was deprecated in C99 and C11, but it expected to
-be non-deprecated in C23.  However, @code{f(void)} is supported by all
+without any parameters was deprecated in C99 and C11, but it became
+non-deprecated in C23.  However, @code{f(void)} is supported by all
 standards and avoids any uncertainty.
 @c draft n3054 §6.7.6.3 point 13 and footnote.
 
@@ -6466,6 +6465,12 @@ as @code{int64_t}.
 @c macOS maps int64_t to 'long long'
 So the values will need to be cast to the type assumed by the format
 (and @code{%lld} was not supported on Windows until @R{}@tie{}4.2.0).
+
+@item
+@I{Variadic} macros in C or C++ only portably allow a non-zero number of
+arguments, although some compilers have allowed zero, often with a
+warning. The latter was standardized in C++20 using the @code{__VA_OPT__}
+macro.  C23 also allows zero arguments in a similar way.
 
 @end itemize
 
@@ -11614,7 +11619,7 @@ is easy to specify the arguments for @code{.Call} (all @code{SEXP}) and
 and @code{.Fortran} are all pointers, specifying them as @code{void *}
 suffices. (For most platforms one can omit all the arguments, although
 link-time optimization will warn, as will compilers set up to warn on
-strict prototypes -- and C23 will require correct arguments.)
+strict prototypes -- and C23 requires correct arguments.)
 
 Using @option{-fc-prototypes-external} will give a prototype using
 @code{int_least32_t *lgl} for Fortran @code{LOGICAL LGL}, but this is
