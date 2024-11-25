@@ -212,7 +212,7 @@ static RCNTXT *first_jump_target(RCNTXT *cptr, int mask)
 
 /* R_jumpctxt - jump to the named context */
 
-attribute_hidden void NORET R_jumpctxt(RCNTXT * targetcptr, int mask, SEXP val)
+attribute_hidden NORET void R_jumpctxt(RCNTXT * targetcptr, int mask, SEXP val)
 {
     Rboolean savevis = R_Visible;
     RCNTXT *cptr;
@@ -331,7 +331,7 @@ void endcontext(RCNTXT * cptr)
 
 /* findcontext - find the correct context */
 
-attribute_hidden void NORET findcontext(int mask, SEXP env, SEXP val)
+attribute_hidden NORET void findcontext(int mask, SEXP env, SEXP val)
 {
     RCNTXT *cptr;
     cptr = R_GlobalContext;
@@ -353,7 +353,7 @@ attribute_hidden void NORET findcontext(int mask, SEXP env, SEXP val)
     }
 }
 
-attribute_hidden void NORET R_JumpToContext(RCNTXT *target, int mask, SEXP val)
+attribute_hidden NORET void R_JumpToContext(RCNTXT *target, int mask, SEXP val)
 {
     RCNTXT *cptr;
     for (cptr = R_GlobalContext;

@@ -2603,11 +2603,10 @@ void GLine(double x1, double y1, double x2, double y2, int coords, pGEDevDesc dd
 */
 static void (*old_close)(pDevDesc) = NULL;
 
-static void
 #ifndef WIN32
 NORET
 #endif
-locator_close(pDevDesc dd)
+static void locator_close(pDevDesc dd)
 {
     if(old_close) old_close(dd);
     dd->close = old_close;
