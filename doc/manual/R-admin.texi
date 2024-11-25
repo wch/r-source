@@ -1101,17 +1101,25 @@ suffice.
 @node C standards, Link-Time Optimization, C++ Support, Other Options
 @subsection C standards
 
+Comiling @R{} requires some POSIX features (such as
+@code{strdup}@footnote{this is part of C23, but part of the C library
+not the compiler.} and the @code{ssize_t} type) not in the C
+standards. Typically compilers make these available, but @strong{not} if
+strict C compliance is specified by for example @option{-std=c17}.  So
+if you want to specify a non-default standard use something like
+@option{-std=gnu23}.
+
 Compiling @R{} requires C99 or later: C11 and C17 are minor updates, but
-the substantial update planned for `C23' (finally published in October
-2024) will also be supported.
+the substantial update `C23' (finally published in October 2024) is also
+supported for current versions of GCC and @command{clang}.
 
 As from @R{} 4.3.0 there is support for packages to indicate their
 preferred C version.  Macros @code{CC17}, @code{C17FLAGS}, @code{CC23}
 and @code{C23FLAGS} can be set in @file{config.site} (there are examples
 there).  Those for C17 should support C17 or earlier and not allow C23
 additions so for example @code{bool}, @code{true} and @code{false} can
-be used as identifiers.  Those for C23 should support new types such as
-@code{bool}.
+be used as identifiers.  Those for C23 should support the new types such
+as @code{bool}.
 
 Some compilers warn enthusiastically about prototypes.  For most,
 omitting @option{-Wstrict-prototypes} in @code{C17FLAGS} suffices.
