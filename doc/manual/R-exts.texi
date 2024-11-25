@@ -3236,8 +3236,11 @@ LDFLAGS=`"$@{R_HOME@}/bin/R" CMD config LDFLAGS`
 The (claimed) C standard in use can be checked by the macro
 @code{__STDC_VERSION__}. This is undefined in C89/C90 and should have
 values @code{199901L}, @code{201112L} and @code{201710L} for C99, C11
-and C17.  The definitive value for C23 seems to be @code{202311L} but
-compilers are currently using @code{202000L}.
+and C17.  The definitive value for C23 is @code{202311L} but some
+compilers@footnote{for example @command{gcc} 14 and Apple
+@command{clang} 16, but not LLVM @command{clang 18} and later.} are
+currently using @code{202000L} and requiring the standard to be
+specified as @code{c2x}.
 @c https://gustedt.gitlabpages.inria.fr/c23-library/
 C23 has macros similar to C++ `feature tests' for many of its changes,
 for example @code{__STDC_VERSION_LIMITS_H__}.
