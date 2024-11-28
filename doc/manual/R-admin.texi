@@ -1101,7 +1101,7 @@ suffice.
 @node C standards, Link-Time Optimization, C++ Support, Other Options
 @subsection C standards
 
-Comiling @R{} requires some POSIX features (such as
+Compiling @R{} requires some POSIX features (such as
 @code{strdup}@footnote{this is part of C23, but part of the C library
 not the compiler.} and the @code{ssize_t} type) not in the C
 standards. Typically compilers make these available, but @strong{not} if
