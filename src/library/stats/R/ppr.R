@@ -65,6 +65,8 @@ function(x, y, weights=rep(1,n), ww=rep(1,q), nterms, max.terms=nterms,
         stop("'ppr' applies only to numerical variables")
     n <- nrow(x)
     if(nrow(y) != n) stop("mismatched 'x' and 'y'")
+    if(length(weights) != n)
+        stop("mismatched 'x' and 'weights'")
     p <- ncol(x)
     q <- ncol(y)
     xnames <- if(!is.null(dimnames(x))) dimnames(x)[[2L]] else paste0("X", 1L:p)

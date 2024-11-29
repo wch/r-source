@@ -40,7 +40,11 @@
       \item \code{rbind()} now works correctly when inputs include a raw
       vector and a logical, integer or double vector -- previously the
       inclusion of the latter was garbled.
-     }
+
+      \item \code{smooth.spline()} checks validoity of its arguements
+      \code{df.offset} and \code{penalty}: it could segfault if they
+      were \code{NULL}.
+    }
   }
 }
 

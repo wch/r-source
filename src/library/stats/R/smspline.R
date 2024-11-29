@@ -166,6 +166,10 @@ smooth.spline <-
     ## icrit {../src/sslvrg.f}:
     ##		(0 = no crit,  1 = GCV ,  2 = ord.CV , 3 = df-matching)
     icrit <- if(is.na(cv)) 0L else if(cv) 2L else 1L
+    if(!is.numeric(df.offset) || df.offset < 0)
+        stop("df.offset must be numeric and >= 0")
+    if(!is.numeric(penalty) || penalty <= 0)
+        stop("penalty must be numeric and > 0")
     dofoff <- df.offset
     if(!missing(df)) { # not when cv was NA
 	if(df > 1 && df <= nx) {

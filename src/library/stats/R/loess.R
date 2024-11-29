@@ -316,6 +316,10 @@ predLoess <-
     order.drop.sqr <- (2L - drop.square)[order.parametric]
     storage.mode(x) <- "double"
     storage.mode(y) <- "double"
+    ## package intamap somehow gets NULL
+    N <- nrow(x)
+    if (length(weights) < N) weights <- rep(1, N)
+    if (length(robust) < N) robust <- rep(1, N)
     if(surface == "direct") {
         nas <- rowSums(is.na(newx)) > 0
         fit <- rep_len(NA_real_, length(nas))
