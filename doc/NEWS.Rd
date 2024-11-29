@@ -38,8 +38,8 @@
       \code{?NumericConstants} (\PR{18819}).
 
       \item \code{rbind()} now works correctly when inputs include a raw
-      vector and a logical, integer or double vector: previously the
-      includsion of the latter was garbled.
+      vector and a logical, integer or double vector -- previously the
+      inclusion of the latter was garbled.
      }
   }
 }
