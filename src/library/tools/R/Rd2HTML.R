@@ -1320,7 +1320,7 @@ Rd2HTML <-
 	inPara <- FALSE
         if (!standalone) {
             ## create empty spans with aliases as id, so that we can link
-            for (a in trimws(unlist(Rd[ which(sections == "\\alias") ]))) {
+            for (a in unique(trimws(unlist(Rd[ which(sections == "\\alias") ])))) {
                 if (endsWith(a, "-package")) info$pkgsummary <- TRUE
                 of0("<span id='", topic2id(a), "'></span>")
             }
