@@ -42,7 +42,13 @@ getGenerics(where, searchForm = FALSE)
 \section{Summary of Functions}{
   \describe{
     \item{\code{isGeneric}:}{
-      Is there a function named \code{f}, and if so, is it a generic?
+      If \code{fdef} is \code{NULL}, then test if there is a formal
+      generic function named \code{f} in the current search path or in
+      the position specified by \code{where}.
+
+      If \code{fdef} is non-\code{NULL}, then test if it is a formal
+      generic function, with name matching \code{f} if \code{f} is not
+      missing.
 
       The \code{getName} argument allows a function to find the name
       from a function definition.  If it is \code{TRUE} then the name of
@@ -51,14 +57,12 @@ getGenerics(where, searchForm = FALSE)
 
       The behavior of \code{isGeneric} and \code{\link{getGeneric}} for
       primitive functions is slightly different.  These functions don't
-      exist as formal function objects (for efficiency and historical
-      reasons), regardless of whether methods have been defined for
-      them.  A call to \code{isGeneric} tells you whether methods have
-      been defined for this primitive function, anywhere in the current
-      search list, or in the specified position \code{where}.  In
-      contrast, a call to \code{\link{getGeneric}} will return what the
-      generic for that function would be, even if no methods have been
-      currently defined for it.
+      exist as formal generic function objects (for efficiency and
+      historical reasons), regardless of whether methods have been
+      defined for them.  For a primitive function, \code{isGeneric}
+      tests whether non-default methods have been defined, whereas
+      \code{\link{getGeneric}} returns what the formal generic function
+      object would be, even if no methods have been defined.
     }
 
     \item{\code{removeGeneric}, \code{removeMethods}:}{

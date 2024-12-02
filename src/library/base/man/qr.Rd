@@ -1,6 +1,6 @@
 % File src/library/base/man/qr.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2016 R Core Team
+% Copyright 1995-2024 R Core Team
 % Distributed under GPL 2 or later
 
 \name{qr}
@@ -105,8 +105,10 @@ as.qr(x)
     and the lower triangle contains information on the \eqn{\bold{Q}} of
     the decomposition (stored in compact form).  Note that the storage
     used by \I{DQRDC} and \I{DGEQP3} differs.}
-  \item{qraux}{a vector of length \code{ncol(x)} which contains
+  \item{qraux}{a vector of length \code{ncol(x)} in the LINPACK case
+    and \code{min(dim(x))} in the LAPACK case, which contains
     additional information on \eqn{\bold{Q}}.}
+
   \item{rank}{the rank of \code{x} as computed by the decomposition(*):
     always full rank in the LAPACK case.}
   \item{pivot}{information on the pivoting strategy used during
@@ -127,7 +129,7 @@ as.qr(x)
   For \code{qr}, the LINPACK routine \code{DQRDC} (but modified to
   \code{dqrdc2}(*)) and the LAPACK
   routines \code{DGEQP3} and \code{ZGEQP3}.  Further LINPACK and LAPACK
-  routines are used for \code{qr.coef}, \code{qr.qy} and \code{qr.aty}.
+  routines are used for \code{qr.coef}, \code{qr.qy} and \code{qr.qty}.
 
   LAPACK and LINPACK are from \url{https://netlib.org/lapack/} and
   \url{https://netlib.org/linpack/} and their guides are listed

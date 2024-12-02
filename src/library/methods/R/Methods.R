@@ -267,27 +267,26 @@ isGeneric <-
         ## a successful search will usually end here w/o other tests
          if(!is.null(fdef))
            return(if(getName) fdef@generic else TRUE)
-     }
+    }
     if(is.null(fdef))
         fdef <- getFunction(f, where=where, mustFind = FALSE)
     if(is.null(fdef))
       return(FALSE)
     ## check primitives. These are never found as explicit generic functions.
-    if(isBaseFun(fdef)) {
-        if(is.character(f) && f %in% "as.double") f <- "as.numeric"
-        ## the definition of isGeneric() for a base function is that methods are defined
+    if(is.primitive(fdef)) {
+        ## the definition of isGeneric() for such a function is that methods are defined
         ## (other than the default primitive)
-        gen <- genericForBasic(f, mustFind = FALSE)
-        return(is.function(gen) && length(names(.getMethodsTable(gen))) > 1L)
+        gen <- genericForBasic(.primname(fdef), mustFind = FALSE)
+        return(
+            if(is.function(gen) && length(names(.getMethodsTable(gen))) > 1L)
+                if(getName) gen@generic else TRUE
+            else FALSE)
     }
     if(!is(fdef, "genericFunction"))
         return(FALSE)
     gen <- fdef@generic # the name with package attribute
     if(missing(f) || .identC(gen, f)) {
-	if(getName)
-	    gen
-	else
-	    TRUE
+	if(getName) gen else TRUE
     }
     else {
         warning(gettextf(

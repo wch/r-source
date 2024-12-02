@@ -1,17 +1,17 @@
 % File src/library/grDevices/man/windowsFonts.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2007, 2018 R Core Team
+% Copyright 1995-2024 R Core Team
 % Distributed under GPL 2 or later
 
 \name{windowsFonts}
+\title{Windows Fonts}
 \alias{windowsFont}
 \alias{windowsFonts}
 \concept{fonts}
-\title{Windows Fonts}
 \description{
-  These functions handle the translation of a device-independent R graphics
-  font family name to a windows font description  and are available only
-  on Windows.
+  These functions handle the translation of a device-independent \R
+  graphics font family name to a windows font description and are available
+  only on Windows.
 }
 \usage{
 windowsFont(family)

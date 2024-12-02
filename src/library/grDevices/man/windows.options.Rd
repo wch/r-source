@@ -1,13 +1,14 @@
 % File src/library/grDevices/man/pdf.options.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2024 R Core Team
 % Distributed under GPL 2 or later
 
 \name{windows.options}
 \alias{windows.options}
 \title{Auxiliary Function to Set/View Defaults for Arguments of windows()}
 \description{
-  The auxiliary function \code{windows.options} can be used to set or view
+  Only available on Windows,
+  the auxiliary function \code{windows.options} can be used to set or view
   (if called without arguments) the default values for the arguments of
   \code{\link{windows}}.
 
