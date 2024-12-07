@@ -5998,7 +5998,7 @@ functionality.
 Both the compiler and OS (@emph{via} system header files, which may
 differ by architecture even for nominally the same OS) affect the
 compilability of C/C++ code.  Compilers from the GCC, @I{LLVM}
-(@command{clang} and @command{flang}) Intel and Oracle Developer Studio
+(@command{clang} and @command{flang-new}) Intel and Oracle Developer Studio
 suites have been used with @R{}, and both @I{LLVM} @command{clang} and
 Oracle have more than one implementation of C++ headers and library.
 The range of possibilities makes comprehensive empirical checking
