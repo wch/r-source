@@ -1131,12 +1131,12 @@ later of Apple clang warn by default in all modes if @option{-Wall} or
 @node Link-Time Optimization,  , C standards, Other Options
 @subsection Link-Time Optimization
 
-There is support for using link-time optimization (@abbr{LTO}) if the toolchain
-supports it: configure with flag @option{--enable-lto}.  When @abbr{LTO} is
-enabled it is used for compiled code in add-on packages unless the flag
-@option{--enable-lto=R} is used@footnote{Then recommended packages
-installed as part of the @R{} installation do use @abbr{LTO}, but not packages
-installed later.}.
+There is support for using link-time optimization (@abbr{LTO}) if the
+toolchain supports it: configure with flag @option{--enable-lto}.  When
+@abbr{LTO} is enabled it is also used for compiled code in add-on
+packages unless the flag @option{--enable-lto=R} is used@footnote{Then
+all add-on packages, including recommended packages are not installed
+with @abbr{LTO}.}.
 
 The main benefit seen to date from @abbr{LTO} has been detecting long-standing
 bugs in the ways packages pass arguments to compiled code and between
@@ -1221,10 +1221,10 @@ FPICFLAGS=-fPIC
 @end example
 @noindent
 We suggest only using these if the problem is encountered (it had not
-been seen on @acronym{CRAN} with GCC 10--14 at the time of writing).
+been seen on @acronym{CRAN} with GCC 10--15 at the time of writing).
 
-Note that @R{} may need to be re-compiled after even a minor update to
-the compiler (e.g.@: from 13.1 to 13.2).
+Note that @R{} will usually need to be re-compiled after even a minor
+update to the compiler (e.g.@: from 13.1 to 13.2).
 
 @node LTO with LLVM, LTO for package checking, LTO with GCC, Link-Time Optimization
 @subsubsection @abbr{LTO} with @I{LLVM}
@@ -5732,17 +5732,19 @@ macOS does not comes with an installed Java runtime (@abbr{JRE}) and a
 macOS upgrade may remove one if already installed: it is intended to be
 installed at first use.  Check if a @abbr{JRE} is installed by running
 @command{java -version} in a @command{Terminal} window: if Java is not
-installed on an Intel Mac this may prompt you to install it. We
-recommend you install a version with long-term support, e.g.@: 17 or
-21@footnote{The planned nextLTS release is 25 in September 2025.  Java 8
-@emph{aka} 1.8.0 is still LTS but some packages require 11 or later.}
-but not 18--20, 22--24 with a 6-month lifetime.
+installed this may prompt you to install it from Oracle@footnote{Oracle
+Java has a restrictive licence, unlike distributions based on OpenJDK.}
+(but see the next paragraph).  We recommend you install a version with
+long-term support, e.g.@: 17 or 21@footnote{The planned @I{nextLTS}
+release is 25 in September 2025.  Java 8 @emph{aka} 1.8.0 is still
+@I{LTS} but some packages require 11 or later.}  but not 18--20, 22--24
+with a 6-month lifetime.
 
 The currently simplest way to install Java is from
 @uref{https://adoptium.net, Adoptium}@footnote{which website works with
 Safari but not some other browsers.}: this installs into an
 Apple-standard location and so works with @command{/usr/bin/java}. Other
-builds are available from
+builds of OpenJDK are available from
 @uref{https://www.azul.com/downloads/zulu-community/?os=macos&architecture=arm-64-bit&package=jdk}
 and from @I{OpenJDK} at @uref{https://jdk.java.net/}, for which
 @env{JAVA_HOME} may need to be set both when configuring @R{} and at
