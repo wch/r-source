@@ -74,8 +74,11 @@ attribute_hidden SEXP do_qsort(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    PROTECT(indx = allocVector(REALSXP, n));
 	    double *ix = REAL(indx);
 	    for(R_xlen_t i = 0; i < n; i++) ix[i] = (double) (i+1);
-	    if(x_int) R_qsort_int_R(ivx, ix, 1, n);
-	    else R_qsort_R(vx, ix, 1, n);
+	    // do not need to sort 0-length array
+	    if (n > 0) {
+		if(x_int) R_qsort_int_R(ivx, ix, 1, n);
+		else R_qsort_R(vx, ix, 1, n);
+	    }
 	} else
 #endif
 	{
@@ -83,8 +86,11 @@ attribute_hidden SEXP do_qsort(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    int *ix = INTEGER(indx);
 	    int nn = (int) n;
 	    for(int i = 0; i < nn; i++) ix[i] = i+1;
-	    if(x_int) R_qsort_int_I(ivx, ix, 1, nn);
-	    else R_qsort_I(vx, ix, 1, nn);
+	    // do not need to sort 0-length array
+	    if (nn > 0) {
+		if(x_int) R_qsort_int_I(ivx, ix, 1, nn);
+		else R_qsort_I(vx, ix, 1, nn);
+	    }
 	}
 
 	SET_VECTOR_ELT(ans, 0, sx);

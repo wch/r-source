@@ -51,6 +51,9 @@
 
       \item \code{isGeneric(fdef = print)} now works, fixing \PR{18369}
       thanks to \I{Mikael Jagan}.
+
+      \item \code{sort(x, method = "qsort")} made illegal accesses when
+      \code{x} has length 0.
     }
   }
 }
