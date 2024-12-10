@@ -74,7 +74,7 @@ lsf.str(pos = length(search()), pattern = "file")
 ## ["browser/debug mode"]:
 tt <- function(x, y = 1) { aa <- 7; r <- x + y; ls.str() }
 (nms <- sapply(strsplit(capture.output(tt(2))," *: *"), `[`, 1))
-stopifnot(nms == c("aa", "r","x","y"))
+stopifnot(setequal(nms, c("aa", "r","x","y")))% collation-specific
 }
 \keyword{print}
 \keyword{utilities}
