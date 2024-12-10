@@ -213,7 +213,7 @@ processRdChunk <- function(code, stage, options, env, macros)
         res <- character(0)
 
         tags <- RdTags(code)
-        if (length(bad <- setdiff(tags, c("RCODE", "COMMENT"))))
+        if (length(bad <- setdiff(tags, c("RCODE", "TEXT", "COMMENT"))))
             ## also USERMACROs are currently not supported inside \Sexpr{}
             warnRd(code, Rdfile, "\\Sexpr expects R code; found ",
                    paste0(sQuote(bad), collapse = ", "))
@@ -379,6 +379,7 @@ processRdIfdefs <- function(blocks, defines)
                         tagged(list(
                             tagged(paste(tag, target, "not active"),
                                    "COMMENT", attr(block, "srcref")),
+                            ## converters expect (and drop) newline from COMMENT
                             tagged("\n",
                                    "TEXT", attr(block, "srcref"))
                         ), "#expanded")

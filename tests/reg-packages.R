@@ -460,7 +460,8 @@ stopifnot(exprs = {
 any(grepl("See Also:", helptxt, fixed = TRUE)) == (.Platform$OS.type == "windows")
 
 ## post-build macros can contain conditional defines
-tools::Rd2txt(installedRdDB[["nestedDefinesOK.Rd"]])
+tools::Rd2txt(installedRdDB[["nestedDefinesOK.Rd"]],
+              options = list(underline_titles = FALSE))
 deparsedLines <- as.character(installedRdDB[["nestedDefinesOK.Rd"]])
 stopifnot(("unix" %in% deparsedLines) == (.Platform$OS.type == "unix"),
           ("windows" %in% deparsedLines) == (.Platform$OS.type == "windows"))
