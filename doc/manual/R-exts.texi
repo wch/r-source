@@ -9922,15 +9922,16 @@ threaded programs.
 @subsection Using the Address Sanitizer
 
 @c https://github.com/google/sanitizers/wiki/AddressSanitizer
-@command{AddressSanitizer} (`@abbr{ASan}') is a tool with similar aims to the
-memory checker in @command{valgrind}.  It is available with suitable
-builds@footnote{currently on @cputype{x86_64}/@cputype{ix86} Linux and
-FreeBSD, with some support for Intel macOS but not
-with the toolchain normally used with @R{}. (There is a faster variant,
-@I{HWASAN}, for @cputype{aarch64} only.)  On some platforms the runtime
-library, @pkg{libasan}, needs to be installed separately, and for
-checking C++ you may also need @pkg{libubsan}.} of @command{gcc} and
-@command{clang} on common Linux and macOS platforms.  See
+@command{AddressSanitizer} (`@abbr{ASan}') is a tool with similar aims
+to the memory checker in @command{valgrind}.  It is available with
+suitable builds@footnote{currently on @cputype{x86_64}/@cputype{ix86}
+Linux and FreeBSD, with some support for macOS -- see
+@uref{https://developer.apple.com/documentation/xcode/diagnosing-memory-thread-and-crash-issues-early}. (There
+is a faster variant, @I{HWASAN}, for @cputype{aarch64} only.)  On some
+platforms the runtime library, @pkg{libasan}, needs to be installed
+separately, and for checking C++ you may also need @pkg{libubsan}.} of
+@command{gcc} and @command{clang} on common Linux and macOS platforms.
+See
 @uref{https://clang.llvm.org/docs/UsersManual.html#controlling-code-generation},
 @uref{https://clang.llvm.org/docs/AddressSanitizer.html} and
 @uref{https://github.com/google/sanitizers}.
@@ -10101,10 +10102,12 @@ might be @code{NA_INTEGER}.
 `@I{UBSanitizer}' is a tool for C/C++ source code selected by
 @option{-fsanitize=undefined} in suitable builds@footnote{On some
 platforms the runtime library, @pkg{libubsan}, needs to be installed
-separately.} of @command{clang} and GCC.  Its (main) runtime library is
-linked into each package's DLL, so it is less often needed to be
-included in @env{MAIN_LDFLAGS}.  Platforms supported by @command{clang}
-are listed at
+separately.  For macOS, see
+@uref{https://developer.apple.com/documentation/xcode/diagnosing-memory-thread-and-crash-issues-early}.}
+of @command{clang} and GCC.  Its (main) runtime library is linked into
+each package's DLL, so it is less often needed to be included in
+@env{MAIN_LDFLAGS}.  Platforms supported by @command{clang} are listed
+at
 @uref{https://clang.llvm.org/docs/UndefinedBehaviorSanitizer.html#supported-platforms}:
 @acronym{CRAN} uses it for C/C++ with both GCC and @command{clang} on
 @cputype{x86_64} Linux: the two toolchains often highlight different
