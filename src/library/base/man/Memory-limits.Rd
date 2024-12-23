@@ -69,9 +69,9 @@ limit vmemoryuse 4096m
 \section{Windows}{
   The address-space limit is 2\abbr{Gb} under 32-bit Windows unless the OS's
   default has been changed to allow more (up to 3\abbr{Gb}).  See
-  \url{https://docs.microsoft.com/en-gb/windows/desktop/Memory/physical-address-extension}
+  \url{https://learn.microsoft.com/en-gb/windows/desktop/Memory/physical-address-extension}
   and
-  \url{https://docs.microsoft.com/en-gb/windows/desktop/Memory/4-gigabyte-tuning}.
+  \url{https://learn.microsoft.com/en-gb/windows/desktop/Memory/4-gigabyte-tuning}.
   Under most 64-bit versions of Windows the limit for a 32-bit build
   of \R is 4\abbr{Gb}: for the oldest ones it is 2\abbr{Gb}.  The limit for a 64-bit
   build of \R (imposed by the OS) is 8Tb.

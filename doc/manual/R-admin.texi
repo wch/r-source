@@ -5579,7 +5579,8 @@ Mac users.  Earlier versions of macOS came with an Aqua Tcl/Tk
 distribution but these were often not at all recent versions of Tcl/Tk.
 It is better to install Tcl/Tk 8.6.x from the sources@footnote{Configure
 Tk with @option{--enable-aqua}.} or a binary distribution from
-@uref{https://www.activestate.com/products/tcl/}.  For the latter,
+@uref{https://www.activestate.com/platform/supported-languages/tcl/}.
+For the latter,
 configure @R{} with
 @example
 --with-tcl-config=/Library/Frameworks/Tcl.framework/tclConfig.sh 

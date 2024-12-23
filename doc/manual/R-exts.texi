@@ -8999,7 +8999,7 @@ be current.
 Options include using @command{sprof} for a shared object, and
 @command{oprofile} (see @uref{https://oprofile.sourceforge.io/news/})
 and @command{perf} (see
-@uref{https://perf.wiki.kernel.org/index.php/Tutorial}) for any
+@uref{https://perfwiki.github.io/}) for any
 executable or shared object.  These seem less widely supplied than they
 used to be.  There is also `Google Performance Tools', also known as
 @pkg{gperftools} or @pkg{google-perftools}.

@@ -317,7 +317,7 @@ set.seed(seed, kind = NULL, normal.kind = NULL, sample.kind = NULL)
   \emph{ACM Transactions on Modeling and Computer Simulation},
   \bold{8}, 3--30.\cr
   Source code formerly at \code{http://www.math.keio.ac.jp/~matumoto/emt.html}.\cr
-  Now see \url{http://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/VERSIONS/C-LANG/c-lang.html}.
+  Now see \url{https://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/VERSIONS/C-LANG/c-lang.html}.
 
   Reeds, J., Hubert, S. and Abrahams, M. (1982--4).
   C implementation of SuperDuper, University of California at Berkeley.
