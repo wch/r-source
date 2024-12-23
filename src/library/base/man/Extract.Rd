@@ -1,6 +1,6 @@
 % File src/library/base/man/Extract.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2022 R Core Team
+% Copyright 1995-2024 R Core Team
 % Copyright 2002-2022 The R Foundation
 % Distributed under GPL 2 or later
 
@@ -203,6 +203,8 @@ x$name <- value
   index \code{i} is a vector of length \code{p}, \code{alist[[i]]} is
   equivalent to \code{alist[[i1]]\dots[[ip]]} providing all but the
   final indexing results in a list.
+
+  Attempts to extract a non-existent element return \code{NULL}.
 
   Note that in all three kinds of replacement, a value of \code{NULL}
   deletes the corresponding item of the list.  To set entries to
