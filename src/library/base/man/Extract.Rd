@@ -204,7 +204,7 @@ x$name <- value
   equivalent to \code{alist[[i1]]\dots[[ip]]} providing all but the
   final indexing results in a list.
 
-  Attempts to extract a non-existent element return \code{NULL}.
+  Attempts to extract a non-existent element by name return \code{NULL}.
 
   Note that in all three kinds of replacement, a value of \code{NULL}
   deletes the corresponding item of the list.  To set entries to
@@ -212,7 +212,7 @@ x$name <- value
 
   When \code{$<-} is applied to a \code{NULL} \code{x}, it first coerces
   \code{x} to \code{list()}.  This is what also happens with \code{[[<-}
-  where in \R versions less than 4.y.z, a length one value resulted in a
+  where in \R versions before 4.0.0, a length one value resulted in a
   length one (atomic) \emph{vector}.
 }
 
