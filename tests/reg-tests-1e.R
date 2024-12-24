@@ -1669,6 +1669,14 @@ stopifnot(identical(gen, isGeneric("+", getName = TRUE)), # the latter always wo
           identical(gen, structure("+", package = "base")),
           isGeneric("+"), isGeneric("+", fdef = `+`))
 
+## These gave array-accss errors and perhaps segfaults in R <= 4.4.2
+ix <- integer(0)
+sort.int(ix, method = "quick")
+sort.int(ix, method = "quick", index.return = TRUE)
+x <- double(0)
+sort.int(x, method = "quick")
+sort.int(x, method = "quick", index.return = TRUE)
+
 
 
 ## keep at end

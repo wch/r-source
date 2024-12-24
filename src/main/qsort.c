@@ -100,11 +100,14 @@ attribute_hidden SEXP do_qsort(SEXP call, SEXP op, SEXP args, SEXP rho)
 	setAttrib(ans, R_NamesSymbol, ansnames);
 	UNPROTECT(4);
 	return ans;
-    } else {
-	if(x_int)
-	    R_qsort_int(ivx, 1, n);
-	else
-	    R_qsort(vx, 1, n);
+    } else { // not indx_ret
+	// do not need to sort 0-length array
+	if( n > 0) {
+	    if(x_int)
+		R_qsort_int(ivx, 1, n);
+	    else
+		R_qsort(vx, 1, n);
+	}
 
 	UNPROTECT(1);
 	return sx;
