@@ -479,6 +479,9 @@
 
       \item \code{sort(x, method = "qsort")} made illegal accesses when
       \code{x} has length 0.
+
+      \item \code{dir.create()} is protected against being passed an
+      empty string as its \code{path} argument.
     }
   }
 }

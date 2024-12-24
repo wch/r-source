@@ -2680,6 +2680,7 @@ attribute_hidden SEXP do_dircreate(SEXP call, SEXP op, SEXP args, SEXP env)
     mode = asInteger(CADDDR(args));
     if (mode == NA_LOGICAL) mode = 0777;
     strcpy(dir, R_ExpandFileName(translateCharFP(STRING_ELT(path, 0))));
+    if (strlen(dir) == 0) error(_("zero-length 'path' argument"));
     /* remove trailing slashes */
     p = dir + strlen(dir) - 1;
     while (*p == '/' && strlen(dir) > 1) *p-- = '\0';
@@ -2737,6 +2738,7 @@ attribute_hidden SEXP do_dircreate(SEXP call, SEXP op, SEXP args, SEXP env)
     recursive = asLogical(CADDR(args));
     if (recursive == NA_LOGICAL) recursive = 0;
     p = filenameToWchar(STRING_ELT(path, 0), TRUE);
+    if (wcslen(p) == 0) error(_("zero-length 'path' argument"));
     dir = (wchar_t*) R_alloc(wcslen(p) + 1, sizeof(wchar_t));
     wcscpy(dir, p);
     R_wfixbackslash(dir);
