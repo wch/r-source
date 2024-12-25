@@ -345,9 +345,8 @@ static void ProbSampleReplace(int n, double *p, int *perm, int nans, int *ans)
 static void
 walker_ProbSampleReplace(int n, double *p, int *a, int nans, int *ans)
 {
-    double *q, rU;
-    int i, j, k;
-    int *HL, *H, *L;
+    int *HL;
+    double *q;
 
     /* Create the alias tables.
        The idea is that for HL[0] ... L-1 label the entries with q < 1
@@ -364,26 +363,28 @@ walker_ProbSampleReplace(int n, double *p, int *a, int nans, int *ans)
 	HL = R_Calloc(n, int);
 	q = R_Calloc(n, double);
     }
-    H = HL - 1; L = HL + n;
-    for (i = 0; i < n; i++) {
+    int *H = HL, *L = HL + n;
+    for (int i = 0; i < n; i++) {
 	q[i] = p[i] * n;
-	if (q[i] < 1.) *++H = i; else *--L = i;
+	if (q[i] < 1.) *H++ = i; else *--L = i;
     }
-    if (H >= HL && L < HL + n) { /* So some q[i] are >= 1 and some < 1 */
-	for (k = 0; k < n - 1; k++) {
-	    i = HL[k];
-	    j = *L;
+    if (H > HL && L < HL + n) { /* So some q[i] are >= 1 and some < 1 */
+	for (int k = 0; k < n - 1; k++) {
+	    int i = HL[k];
+	    int j = *L;
 	    a[i] = j;
-	    q[j] += q[i] - 1;
+	    q[j] += q[i] - 1.;
 	    if (q[j] < 1.) L++;
 	    if(L >= HL + n) break; /* now all are >= 1 */
 	}
     }
-    for (i = 0; i < n; i++) q[i] += i;
+    for (int i = 0; i < n; i++) q[i] += i;
 
     /* generate sample */
     Sampletype Sample_kind = R_sample_kind();
-    for (i = 0; i < nans; i++) {
+    double rU;
+    for (int i = 0; i < nans; i++) {
+	int k;
 	if (Sample_kind == ROUNDING) {
 	    rU = unif_rand() * n;
 	    k = (int) rU;
