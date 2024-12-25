@@ -349,6 +349,9 @@ SEXP LogLin(SEXP dtab, SEXP conf, SEXP table, SEXP start,
 	maxit = asInteger(iter), 
 	nlast, ifault;
     double maxdev = asReal(eps);
+    if (ncon == 0 || nmar == 0)
+	Rf_error("invalid zero-length input(s): ncon %d, nmar %d",
+		 ncon, nmar);
     SEXP fit = PROTECT(TYPEOF(start) == REALSXP ? duplicate(start) :
 		       coerceVector(start, REALSXP)),
 	locmar = PROTECT(allocVector(INTSXP, ncon)),
