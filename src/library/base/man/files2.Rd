@@ -1,6 +1,6 @@
 % File src/library/base/man/files.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2023 R Core Team
+% Copyright 1995-2024 R Core Team
 % Distributed under GPL 2 or later
 
 \name{files2}
@@ -24,7 +24,8 @@ Sys.umask(mode = NA)
 }
 \arguments{
   \item{path}{a character vector containing a single path name.  Tilde
-    expansion (see \code{\link{path.expand}}) is done.}
+    expansion (see \code{\link{path.expand}}) is done.  Necessarily a
+    non-empty string.}
   \item{paths}{character vectors containing file or directory paths.  Tilde
     expansion (see \code{\link{path.expand}}) is done.}
   \item{showWarnings}{logical; should the warnings on failure be shown?}
@@ -106,7 +107,8 @@ Sys.umask(mode = NA)
   system).  So treat documentation cautiously if you are using, say, a
   FAT/FAT32 or network-mounted file system.
 
-  See \link{files} for how file paths with marked encodings are interpreted.
+  See the help on \link{files} for how file paths with marked encodings
+  are interpreted.
 }
 \value{
   \code{dir.exists} returns a logical vector of \code{TRUE} or
