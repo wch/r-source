@@ -1444,6 +1444,8 @@ L40: /* Find location, if any, of pastp */
 	else if (stp[ipn] > test2)
 	    ipn = nr[ipn];
 	else {
+	    if (INT_MAX - ifrq[ipn] < ifreq)
+		Rf_error("integer overflow in exact computation");
 	    ifrq[ipn] += ifreq;
 	    return;
 	}

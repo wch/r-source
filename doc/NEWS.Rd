@@ -482,6 +482,10 @@
 
       \item \code{dir.create()} is protected against being passed an
       empty string as its \code{path} argument.
+
+      \item Silent integer overflow could occur in the
+       \sQuote{exact} computations for \code{fisher.test()} for
+       unrealistic inputs: this is now an error.
     }
   }
 }
