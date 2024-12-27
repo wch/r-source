@@ -1,6 +1,6 @@
 % File src/library/stats/man/fisher.test.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2022 R Core Team
+% Copyright 1995-2024 R Core Team
 % Distributed under GPL 2 or later
 
 \name{fisher.test}
@@ -24,9 +24,9 @@ fisher.test(x, y = NULL, workspace = 200000, hybrid = FALSE,
   \item{workspace}{an integer specifying the size of the workspace
     used in the network algorithm.  In units of 4 bytes.  Only used for
     non-simulated p-values larger than \eqn{2 \times 2}{2 by 2} tables.
-    Since \R version 3.5.0, this also increases the internal stack size
-    which allows larger problems to be solved, however sometimes needing
-    hours.  In such cases, \code{simulate.p.values=TRUE} may be more
+    This also increases the internal stack size
+    which allows larger problems to be solved, sometimes needing
+    hours.  In such cases, \code{simulate.p.values = TRUE} may be more
     reasonable.}
     \item{hybrid}{a logical. Only used for larger than \eqn{2 \times 2}{2 by 2}
     tables, in which cases it indicates whether the exact probabilities
@@ -34,7 +34,7 @@ fisher.test(x, y = NULL, workspace = 200000, hybrid = FALSE,
   \item{hybridPars}{a numeric vector of length 3, by default describing
     \dQuote{Cochran's conditions} for the validity of the chi-squared
     approximation, see \sQuote{Details}.}
-  \item{control}{a list with named components for low level algorithm
+  \item{control}{a list with named components for low-level algorithm
     control.  At present the only one used is \code{"mult"}, a positive
     integer \eqn{\ge 2} with default 30 used only for larger than
     \eqn{2 \times 2}{2 by 2} tables.  This says how many times as much
@@ -56,7 +56,7 @@ fisher.test(x, y = NULL, workspace = 200000, hybrid = FALSE,
     p-values by Monte Carlo simulation, in larger than \eqn{2 \times
       2}{2 by 2} tables.}
   \item{B}{an integer specifying the number of replicates used in the
-    Monte Carlo test.}
+    Monte Carlo test when \code{simulate.p.value} is true.}
 }
 \value{
   A list with class \code{"htest"} containing the following components:
@@ -83,7 +83,7 @@ fisher.test(x, y = NULL, workspace = 200000, hybrid = FALSE,
   length.  Incomplete cases are removed, vectors are coerced into
   factor objects, and the contingency table is computed from these.
 
-  For \eqn{2 \times 2}{2 by 2} cases, p-values are obtained directly
+  For \eqn{2 \times 2}{2 by 2} tables, p-values are obtained directly
   using the (central or non-central) hypergeometric
   distribution. Otherwise, computations are based on a C version of the
   FORTRAN subroutine \code{FEXACT} which implements the network developed by
@@ -105,7 +105,7 @@ fisher.test(x, y = NULL, workspace = 200000, hybrid = FALSE,
   alternative for a one-sided test is based on the odds ratio, so
   \code{alternative = "greater"} is a test of the odds ratio being bigger
   than \code{or}.
-
+%
   Two-sided tests are based on the probabilities of the tables, and take
   as \sQuote{more extreme} all tables with probabilities less than or
   equal to that of the observed table, the p-value being the sum of such
@@ -120,16 +120,9 @@ fisher.test(x, y = NULL, workspace = 200000, hybrid = FALSE,
   cells have expected counts at least 5 (\code{= expect}), otherwise
   the exact calculation is used.  A corresponding \code{if()} decision
   is made for all sub-tables considered.
-  %
-  Accidentally, \R has used \code{180} instead of \code{80} as
-  \code{percent}, i.e., \code{hybridPars[2]} in \R versions between
-  3.0.0 and 3.4.1 (inclusive), i.e., the 2nd of the \code{hybridPars}
-  (all of which used to be hard-coded previous to \R 3.5.0).
-  Consequently, in these versions of \R, \code{hybrid=TRUE} never made a
-  difference.
 
   In the \eqn{r \times c}{r x c} case with \eqn{r > 2} or \eqn{c > 2},
-  internal tables can get too large for the exact test in which case an
+  internal tables can be too large for the exact test in which case an
   error is signalled.  Apart from increasing \code{workspace}
   sufficiently, which then may lead to very long running times, using
   \code{simulate.p.value = TRUE} may then often be sufficient and hence
@@ -243,7 +236,7 @@ MP6 <- rbind(
         c(1,1,2,0,0,0,1),
         c(0,1,1,1,1,0,0))
 fisher.test(MP6)
-# Exactly the same p-value, as Cochran's conditions are never met:
-fisher.test(MP6, hybrid=TRUE)
+# Exactly the same p-value, as Cochran's conditions are not met:
+fisher.test(MP6, hybrid = TRUE)
 }
 \keyword{htest}
