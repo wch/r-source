@@ -424,6 +424,10 @@
       an error in the future, when \code{s} is not a string with exactly
       one character.
 
+      \item When \code{s <- getOption("OutDec")} is not a string of one
+      character, a warning is signalled now whenever it is used in internal
+      C code, notably when calling the default methods of \code{format()}.
+
       \item \code{pwilcox()} and \code{qwilcox()} now check for user
       interrupt less frequently.
     }

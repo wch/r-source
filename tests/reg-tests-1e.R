@@ -3,7 +3,8 @@
 .pt <- proc.time()
 tryCid <- function(expr) tryCatch(expr, error = identity)
 tryCmsg<- function(expr) tryCatch(expr, error = conditionMessage) # typically == *$message
-assertErrV <- function(...) tools::assertError(..., verbose=TRUE)
+assertErrV  <- function(...) tools::assertError  (..., verbose=TRUE)
+assertWarnV <- function(...) tools::assertWarning(..., verbose=TRUE)
 `%||%` <- function (L, R)  if(is.null(L)) R else L
 ##' get value of `expr` and keep warning as attribute (if there is one)
 getVaW <- function(expr) {
@@ -464,8 +465,8 @@ mod2 <- local({
        offset = { print("world"); x-y })
 }) # rank-deficient in "subtle" way {warning/NA may not be needed}; just show for now:
 nd <- data.frame(x = 1:5)
-tools::assertWarning(print(predict(mod2, newdata=nd, rankdeficient = "warnif")))
-                           predict(mod2, newdata=nd, rankdeficient = "NA")
+assertWarnV(print(predict(mod2, newdata=nd, rankdeficient = "warnif")))
+                  predict(mod2, newdata=nd, rankdeficient = "NA") # NA's but no warning
 nm5 <- as.character(1:5)
 stopifnot(exprs = {
     all.equal(setNames(rep(0, 5), nm5), predict(mod2), tol=1e-13) # pred: 1.776e-15
@@ -507,7 +508,7 @@ stopifnot(all.equal(urf$root, 0.88653, tolerance = 1e-4))
 
 
 ## chkDots() in subset.data.frame() to prevent usage errors
-tools::assertWarning(subset(data.frame(y = 1), y = 2), verbose = TRUE)
+assertWarnV(subset(data.frame(y = 1), y = 2))
 ## R < 4.3.0 was silent about unused ... arguments
 
 
@@ -518,8 +519,8 @@ a <- 1:2
 assertErrV(a:1) # numerical expression has length > 1
 assertErrV(2:a) #  "         "          "      "
 Sys.unsetenv("_R_CHECK_LENGTH_COLON_")
-tools::assertWarning(s1 <- a:1, verbose=TRUE)
-tools::assertWarning(s2 <- 2:a, verbose=TRUE)
+assertWarnV(s1 <- a:1)
+assertWarnV(s2 <- 2:a)
 stopifnot(identical(s1, 1L), identical(s2, 2:1))
 Sys.setenv("_R_CHECK_LENGTH_COLON_" = oldV)# reset
 ## always only warned in R <= 4.2.z
@@ -802,11 +803,9 @@ km1d <- kappa(m, norm = "1", method = "direct")
 all.equal(km1d, 7.6, tol=0) # 1.17e-16  {was wrongly 11.907 in R <= 4.3.1}
 ## 2) kappa(z, norm="2", LINPACK=TRUE) silently returns estimate of the *1*-norm cond.nr.
 (km1 <- kappa(m, norm = "1")) # 4.651847 {unchanged}
-tools::assertWarning(verbose=TRUE, # now *warns*
-                     km2L <- kappa(m, norm="2", LINPACK=TRUE))
+assertWarnV( km2L <- kappa(m, norm="2", LINPACK=TRUE)) # now *warns*
 ## 3) kappa(z, norm="2", LINPACK=FALSE) throws an error
-tools::assertWarning(verbose=TRUE, # *same* warning (1-norm instead of 2-)
-                     km2La <- kappa(m, norm="2", LINPACK=FALSE))
+assertWarnV(km2La <- kappa(m, norm="2", LINPACK=FALSE))# same warning (1-norm instead of 2-)
 km2La
 ## 4) kappa.qr(z) implicitly assumes nrow(z$qr) >= ncol(z$qr), not true in general
 (kqrm2 <- kappa(qr(cbind(m, m + 1))))
@@ -853,10 +852,8 @@ stopifnot(exprs = {
 (zm <- m + 1i*c(1,-(1:2))*(m/4))
 (kz1d <- kappa(zm, norm = "1", method = "direct"))
 (kz1  <- kappa(zm, norm = "1"))# meth = "qr"
-tools::assertWarning(verbose=TRUE, # now *warns* {gave *error* previously}
-                     kz2L <- kappa(zm, norm="2", LINPACK=TRUE))
-tools::assertWarning(verbose=TRUE, # *same* warning (1-norm instead of 2-)
-                     kz2La <- kappa(zm, norm="2", LINPACK=FALSE))
+assertWarnV(kz2L  <- kappa(zm, norm="2", LINPACK=TRUE))# now *warns* {gave *error* previously}
+assertWarnV(kz2La <- kappa(zm, norm="2", LINPACK=FALSE))# same warning (1-norm instead of 2-)
 kz2La
 ## 4) kappa.qr(z) implicitly assumes nrow(z$qr) >= ncol(z$qr) ..
 (kzqr2 <- kappa(qr(cbind(zm, zm + 1)))) # gave Error .. matrix should be square
@@ -1026,7 +1023,7 @@ stopifnot(identical(tt, drop.terms(tt, dropx = 0[0], keep.response=TRUE)))
 
 
 ## as.complex("<num>i") -- should work (and fail/warn) as the parser does:
-tools::assertWarning(cc <- as.complex("12iL"), verbose=TRUE)
+       assertWarnV(  cc <- as.complex("12iL"))
 tools::assertWarning(cF <- as.complex("12irene"))
 tools::assertWarning(cI <- as.complex("12I"))
 stopifnot(is.na(cc), is.na(cF), is.na(cI),
@@ -1477,6 +1474,8 @@ if(attr(oL, "ok") && capabilities("NLS") && !is.na(.popath)
     stopifnot(is.character(print("checking 'out' : ")),
               grepl("^argument non num.rique pour un ", out))
 ## was *not* switched to French (when this was run via 'make ..')
+## reset {just in case}:
+Sys.setLanguage("en")
 
 
 ## print( ls.str() ) using '<missing>' also in non-English setup:
@@ -1605,9 +1604,9 @@ assertErrV(options(scipen = NULL))# would work (but ..) in R <= 4.4.2
 assertErrV(options(scipen = 1:2)) # would just work
 assertErrV(options(scipen = 1e99))# would "work" w/ 2 warnings and invalid setting
 stopifnot(identical(getOption("scipen"), scipenO))# unchanged
-tools::assertWarning(verbose=TRUE, options(scipen = -100  ))# warns and sets to min = -9
+assertWarnV(options(scipen = -100))# warns and sets to min = -9
 stopifnot(identical(getOption("scipen"), -9L))
-tools::assertWarning(verbose=TRUE, options(scipen = 100000))# warns and sets to max = 9999
+assertWarnV(options(scipen = 100000))# warns and sets to max = 9999
 stopifnot(identical(getOption("scipen"), 9999L))
 ## setting to NULL  would invalidate as.character(Sys.time())
 
@@ -1676,6 +1675,24 @@ sort.int(ix, method = "quick", index.return = TRUE)
 x <- double(0)
 sort.int(x, method = "quick")
 sort.int(x, method = "quick", index.return = TRUE)
+
+
+## More warning for  _illegal_ OutDec -- even auto print() ing now warns when OutDec is illegal:
+assertWarnV(op <- options(OutDec = "_._", scipen = 6, warn = 1))
+assertWarnV( print(pi) ) # _new_ warning ... "will become an error"
+writeLines(m <- capture.output(format(pi), type = "message"))
+## Warning in prettyNum(.Internal(format(x, trim, digits, nsmall, width, 3L,  :
+##   the decimal mark is more than one character wide; this will become an error
+assertWarnV(options(OutDec = ""))
+m2 <- tryCatch(print(pi), warning = conditionMessage)
+assertWarnV( print(pi * 10^(-4:4)) ) # _new_ warning
+if(englishMsgs) stopifnot(exprs = {
+    grepl("^Warning in prettyNum\\(\\.Internal\\(format\\(", m[1])
+    grepl("the decimal mark is more than one character wide", m[length(m)])
+    grepl("the decimal mark is less than one character wide", m2)
+})
+## now warn from format() and (only once) from print()
+options(op) # return to sanity + warn=2
 
 
 

@@ -515,7 +515,7 @@ attribute_hidden SEXP do_format(SEXP call, SEXP op, SEXP args, SEXP env)
 	my_OutDec = OutDec; // default
     else {
 	static char sdec[11];
-#define _WARN_decimal_mark_non_1 // were *not* warning here by default since 2015-06-19
+#undef  _WARN_decimal_mark_non_1 /* as we now warn in EncodeReal0() */
 #ifdef  _WARN_decimal_mark_non_1
  	if(R_nchar(STRING_ELT(CAR(args), 0), Chars,
 		   /* allowNA = */ FALSE, /* keepNA = */ FALSE,

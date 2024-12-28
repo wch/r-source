@@ -180,6 +180,9 @@ const char *EncodeExtptr(SEXP x)
     return buf;
 }
 
+int Rstrwid(const char *str, int slen, cetype_t ienc, int quote); /* below */
+#define strwidth(x) Rstrwid(x, (int) strlen(x), CE_NATIVE, 0)
+
 attribute_hidden
 const char *EncodeReal(double x, int w, int d, int e, char cdec)
 {
@@ -202,14 +205,13 @@ const char *EncodeReal0(double x, int w, int d, int e, const char *dec)
 	else snprintf(buff, NB, "%*s", min(w, (NB-1)), "-Inf");
     }
     else if (e) {
-	if(d) {
+	if(d) { // '#' flag
 	    snprintf(fmt, 20, "%%#%d.%de", min(w, (NB-1)), d);
-	    snprintf(buff, NB, fmt, x);
 	}
 	else {
 	    snprintf(fmt, 20, "%%%d.%de", min(w, (NB-1)), d);
-	    snprintf(buff, NB, fmt, x);
 	}
+	snprintf(buff, NB, fmt, x);
     }
     else { /* e = 0 */
 	snprintf(fmt, 20, "%%%d.%df", min(w, (NB-1)), d);
@@ -217,7 +219,12 @@ const char *EncodeReal0(double x, int w, int d, int e, const char *dec)
     }
     buff[NB-1] = '\0';
 
-    if(strcmp(dec, ".")) {
+    if(strcmp(dec, ".")) { /* replace "." by dec */
+	int len = strwidth(dec); /* 3·14 must work */
+	if(len != 1) warning(
+	    _("the decimal mark is %s than one character wide; this will become an error"),
+	    (len > 1) ? "more" : "less");
+
 	char *p, *q;
 	for(p = buff, q = buff2; *p; p++) {
 	    if(*p == '.') for(const char *r = dec; *r; r++) *q++ = *r;
@@ -230,6 +237,7 @@ const char *EncodeReal0(double x, int w, int d, int e, const char *dec)
     return out;
 }
 
+// A copy of EncodeReal0() -- additionally dropping trailing zeros:
 static const char
 *EncodeRealDrop0(double x, int w, int d, int e, const char *dec)
 {
@@ -247,12 +255,11 @@ static const char
     else if (e) {
 	if(d) {
 	    snprintf(fmt, 20, "%%#%d.%de", min(w, (NB-1)), d);
-	    snprintf(buff, NB, fmt, x);
 	}
 	else {
 	    snprintf(fmt, 20, "%%%d.%de", min(w, (NB-1)), d);
-	    snprintf(buff, NB, fmt, x);
 	}
+	snprintf(buff, NB, fmt, x);
     }
     else { /* e = 0 */
 	snprintf(fmt, 20, "%%%d.%df", min(w, (NB-1)), d);
@@ -274,7 +281,12 @@ static const char
 	}
     }
 
-    if(strcmp(dec, ".")) {
+    if(strcmp(dec, ".")) { /* replace "." by dec */
+	int len = strwidth(dec); /* 3·14 must work */
+	if(len != 1) warning(
+	    _("the decimal mark is %s than one character wide; this will become an error"),
+	    (len > 1) ? "more" : "less");
+
 	char *p, *q;
 	for(p = buff, q = buff2; *p; p++) {
 	    if(*p == '.') for(const char *r = dec; *r; r++) *q++ = *r;
@@ -1063,7 +1075,7 @@ void REvprintf(const char *format, va_list arg)
 
 int attribute_hidden IndexWidth(R_xlen_t n)
 {
-    return (int) (log10(n + 0.5) + 1);
+    return (int) (log10((double)n + 0.5) + 1);
 }
 
 attribute_hidden void VectorIndex(R_xlen_t i, int w)
