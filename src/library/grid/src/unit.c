@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 2001-3 Paul Murrell
- *                2003-2020 The R Core Team
+ *                2003-2024 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -1949,7 +1949,7 @@ SEXP summaryUnits(SEXP units, SEXP op_type) {
 	SET_STRING_ELT(cl, 0, mkChar("unit"));
 	SET_STRING_ELT(cl, 1, mkChar("unit_v2"));
 
-	int is_type[m];
+	int is_type[m > 0 ? m : 1L]; // mmight be zero which would not be legal C.
 	int all_type = 1;
 	
 	for (int i = 0; i < n; i++) {
