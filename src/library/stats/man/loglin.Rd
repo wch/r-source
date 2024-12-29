@@ -1,6 +1,6 @@
 % File src/library/stats/man/loglin.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2018 R Core Team
+% Copyright 1995-2024 R Core Team
 % Distributed under GPL 2 or later
 
 \name{loglin}
@@ -29,7 +29,8 @@ loglin(table, margin, start = rep(1, length(table)), fit = FALSE,
     1 (sometimes represented as \sQuote{[12][13]}).
 
     The names of factors (i.e., \code{names(dimnames(table))}) may be
-    used rather than numeric indices.
+    used rather than numeric indices.  Or \code{NULL} or \code{list()}
+    to specify fitting no margins.
   }
   \item{start}{a starting estimate for the fitted table.  This optional
     argument is important for incomplete tables with structural zeros
@@ -38,13 +39,13 @@ loglin(table, margin, start = rep(1, length(table)), fit = FALSE,
     the others can be taken as one.}
   \item{fit}{a logical indicating whether the fitted values should be
     returned.}
-  \item{eps}{maximum deviation allowed between observed and fitted
-    margins.}
+  \item{eps}{bound for allowed deviation (largest absolute value of the
+    difference) between observed and fitted margins.}
   \item{iter}{maximum number of iterations.}
   \item{param}{a logical indicating whether the parameter values should
     be returned.}
   \item{print}{a logical.  If \code{TRUE}, the number of iterations and
-    the final deviation are printed.}
+    the final deviation (if there were any iterations) are printed.}
 }
 \value{
   A list with the following components.
@@ -54,7 +55,7 @@ loglin(table, margin, start = rep(1, length(table)), fit = FALSE,
     adjustment for structural zeros.}
   \item{margin}{list of the margins that were fit.  Basically the same
     as the input \code{margin}, but with numbers replaced by names
-    where possible.}
+    where possible.  Will be \code{NULL} if the input is.}
   \item{fit}{An array like \code{table} containing the fitted values.
     Only returned if \code{fit} is \code{TRUE}.}
   \item{param}{A list containing the estimated parameters of the
