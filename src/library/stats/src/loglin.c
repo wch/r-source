@@ -43,11 +43,11 @@ loglin(int nvar, int *dim, int ncon, int *config, int ntab,
 
     /* Parameter adjustments */
     --dim;
-    --locmar;
-    config -= nvar + 1;
+//    --locmar;
+//    config -= nvar + 1;
     --fit;
     --table;
-    --marg;
+//    --marg;
     --u;
     --dev;
 
@@ -91,7 +91,7 @@ L40:
     if (y == 0.) goto L5;
     x /= y;
     for (i = 1; i <= size; i++) fit[i] = x * fit[i];
-    if (ncon <= 0 || config[nvar + 1] == 0) return;
+    if (ncon <= 0 || config[0] == 0) return;
 
     /* Allocate marginal tables */
 
@@ -99,14 +99,14 @@ L40:
     for (i = 1; i <= ncon; i++) {
 	/* A zero beginning a configuration indicates that the list is
 	   completed */
-	if (config[i * nvar + 1] == 0)  goto L160;
+	if (config[i * nvar + 1 - (nvar+1)] == 0)  goto L160;
 	/* Get marginal table size.  While doing this task, see if the
 	   configuration list contains duplications or elements out of
 	   range. */
 	size = 1;
 	for (j = 0; j < nvar; j++) check[j] = 0;
 	for (j = 1; j <= nvar; j++) {
-	    k = config[j + i * nvar];
+	    k = config[j + i * nvar - (nvar+1)];
 	    /* A zero indicates the end of the string. */
 	    if (k == 0) goto L130;
 	    /* See if element is valid. */
@@ -128,11 +128,11 @@ L130:
 	if (size > nu) goto L35;
 
 	/* LOCMAR points to marginal tables to be placed in MARG */
-	locmar[i] = point;
+	locmar[i-1] = point;
 	point += size;
     }
 
-    /* Get N, number of valid configurations */
+    /* Get N, number of valid configations */
 
     i = ncon + 1;
 L160:
@@ -146,9 +146,9 @@ L160:
 
     for (i = 1; i <= n; i++) {
 	for (j = 1; j <= nvar; j++) {
-	    icon[j - 1] = config[j + i * nvar];
+	    icon[j - 1] = config[j + i * nvar - (nvar+1)];
 	}
-	collap(nvar, &table[1], &marg[1], locmar[i], &dim[1], icon);
+	collap(nvar, &table[1], marg, locmar[i-1], &dim[1], icon);
     }
 
     /* Perform iterations */
@@ -158,9 +158,10 @@ L160:
 	   marginal during a cycle */
 	xmax = 0.;
 	for (i = 1; i <= n; i++) {
-	    for (j = 1; j <= nvar; j++) icon[j - 1] = config[j + i * nvar];
+	    for (j = 1; j <= nvar; j++)
+		icon[j - 1] = config[j + i * nvar - (nvar+1)];
 	    collap(nvar, &fit[1], &u[1], 1, &dim[1], icon);
-	    adjust(nvar, &fit[1], &u[1], &marg[1], &locmar[i], &dim[1], icon, &xmax);
+	    adjust(nvar, &fit[1], &u[1], marg, &locmar[i-1], &dim[1], icon, &xmax);
 	}
 	/* Test convergence */
 	dev[k] = xmax;
@@ -349,9 +350,8 @@ SEXP LogLin(SEXP dtab, SEXP conf, SEXP table, SEXP start,
 	maxit = asInteger(iter), 
 	nlast, ifault;
     double maxdev = asReal(eps);
-    if (ncon == 0 || nmar == 0)
-	Rf_error("invalid zero-length input(s): ncon %d, nmar %d",
-		 ncon, nmar);
+//    if (ncon == 0 || nmar == 0)
+//	Rf_error("invalid zero-length input(s): ncon %d, nmar %d", ncon, nmar);
     SEXP fit = PROTECT(TYPEOF(start) == REALSXP ? duplicate(start) :
 		       coerceVector(start, REALSXP)),
 	locmar = PROTECT(allocVector(INTSXP, ncon)),

@@ -46,8 +46,12 @@ loglin <- function(table, margin, start = rep(1, length(table)), fit =
 
     z <- .Call(C_LogLin, dtab, conf, table, start, nmar, eps, iter)
 
-    if (print)
-        cat(z$nlast, "iterations: deviation", z$dev[z$nlast], "\n")
+    if (print) {
+        if(z$nlast > 0)
+            cat(z$nlast, "iterations: deviation", z$dev[z$nlast], "\n")
+        else
+            cat(z$nlast, "iterations\n")
+    }
 
     fit <- z$fit
     attributes(fit) <- attributes(table)
