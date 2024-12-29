@@ -113,19 +113,21 @@ loglin <- function(table, margin, start = rep(1, length(table)), fit =
         parnam[1L] <- "(Intercept)"
         fit <- fit - parval[[1L]]
 
-        ## Get the u_i(B) in the rows of 'dyadic', see above.
-        dyadic <- NULL
-        while(any(terms > 0)) {
-            dyadic <- cbind(dyadic, terms %% 2)
-            terms <- terms %/% 2
-        }
-        dyadic <- dyadic[order(rowSums(dyadic)), , drop = FALSE]
+        if(parlen > 1) {
+            ## Get the u_i(B) in the rows of 'dyadic', see above.
+            dyadic <- NULL
+            while(any(terms > 0)) {
+                dyadic <- cbind(dyadic, terms %% 2)
+                terms <- terms %/% 2
+            }
+            dyadic <- dyadic[order(rowSums(dyadic)), , drop = FALSE]
 
-        for (i in 2 : parlen) {
-            vars <- which(dyadic[i - 1, ] > 0)
-            parval[[i]] <- apply(fit, vars, mean)
-            parnam[i] <- paste(varnames[vars], collapse = ".")
-            fit <- sweep(fit, vars, parval[[i]], check.margin=FALSE)
+            for (i in 2 : parlen) {
+                vars <- which(dyadic[i - 1, ] > 0)
+                parval[[i]] <- apply(fit, vars, mean)
+                parnam[i] <- paste(varnames[vars], collapse = ".")
+                fit <- sweep(fit, vars, parval[[i]], check.margin=FALSE)
+            }
         }
 
         names(parval) <- parnam

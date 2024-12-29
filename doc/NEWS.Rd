@@ -490,7 +490,13 @@
       \item Silent integer overflow could occur in the
        \sQuote{exact} computations for \code{fisher.test()} for
        unrealistic inputs: this is now an error.
-    }
+
+       \item Some inalid C-level memory accesses are avoided for
+       \code{loglin(, margin = NULL)}.
+
+       \code{loglin(, param = TRUE)} no longer gives an eror in corner
+       cases such as a one-dimensional input.
+     }
   }
 }
 
