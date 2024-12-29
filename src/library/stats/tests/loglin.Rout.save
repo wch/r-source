@@ -1,0 +1,116 @@
+
+R Under development (unstable) (2024-12-28 r87474) -- "Unsuffered Consequences"
+Copyright (C) 2024 The R Foundation for Statistical Computing
+Platform: aarch64-apple-darwin24.2.0
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> ### examples from investigating UBSAN reports in vcdExtra::seq_loglm
+> 
+> x <- margin.table(Titanic, 1)
+> ## Next two had UBSAN reports in R 4.5.0 from using --x on a 0-length R-allocated  array.
+> loglin(x, NULL)
+0 iterations
+$lrt
+[1] 475.8113
+
+$pearson
+[1] 467.8069
+
+$df
+[1] 3
+
+$margin
+NULL
+
+> loglin(x, list())
+0 iterations
+$lrt
+[1] 475.8113
+
+$pearson
+[1] 467.8069
+
+$df
+[1] 3
+
+$margin
+list()
+
+> 
+> loglin(x, list(1))
+2 iterations: deviation 0 
+$lrt
+[1] 0
+
+$pearson
+[1] 0
+
+$df
+[1] 0
+
+$margin
+$margin[[1]]
+[1] "Class"
+
+
+> 
+> ## failed in R 4.4.2 as R code assumed >= 2 parameters
+> loglin(x, NULL, param = TRUE)
+0 iterations
+$lrt
+[1] 475.8113
+
+$pearson
+[1] 467.8069
+
+$df
+[1] 3
+
+$margin
+NULL
+
+$param
+$param$`(Intercept)`
+[1] 6.310373
+
+
+> loglin(x, list(1), param = TRUE)
+2 iterations: deviation 0 
+$lrt
+[1] 0
+
+$pearson
+[1] 0
+
+$df
+[1] 0
+
+$margin
+$margin[[1]]
+[1] "Class"
+
+
+$param
+$param$`(Intercept)`
+[1] 6.195379
+
+$param$Class
+       1st        2nd        3rd       Crew 
+-0.4115541 -0.5428901  0.3642359  0.5902083 
+
+
+> 
+> proc.time()
+   user  system elapsed 
+  0.068   0.012   0.078 
