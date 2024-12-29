@@ -42,14 +42,14 @@ loglin(int nvar, int *dim, int ncon, int *config, int ntab,
     double x, y, xmax;
 
     /* Parameter adjustments */
-    --dim;
-    --locmar;
-    config -= nvar + 1;
-    --fit;
-    --table;
-    --marg;
-    --u;
-    --dev;
+//    --dim;
+//    --locmar;
+//    config -= nvar + 1;
+//    --fit;
+//    --table;
+//    --marg;
+//    --u;
+//    --dev;
 
     /* Function body */
 
@@ -68,7 +68,7 @@ L5:
 
 L10:
     size = 1;
-    for (j = 1; j <= nvar; j++) {
+    for (j = 0; j < nvar; j++) {
 	if (dim[j] <= 0) goto L5;
 	size *= dim[j];
     }
@@ -79,7 +79,7 @@ L35:
 L40:
     x = 0.;
     y = 0.;
-    for (i = 1; i <= size; i++) {
+    for (i = 0; i < size; i++) {
 	if (table[i] < 0. || fit[i] < 0.) goto L5;
 	x += table[i];
 	y += fit[i];
@@ -90,8 +90,8 @@ L40:
 
     if (y == 0.) goto L5;
     x /= y;
-    for (i = 1; i <= size; i++) fit[i] = x * fit[i];
-    if (ncon <= 0 || config[nvar + 1] == 0) return;
+    for (i = 0; i < size; i++) fit[i] = x * fit[i];
+    if (ncon <= 0 || config[0] == 0) return;
 
     /* Allocate marginal tables */
 
@@ -99,14 +99,14 @@ L40:
     for (i = 1; i <= ncon; i++) {
 	/* A zero beginning a configuration indicates that the list is
 	   completed */
-	if (config[i * nvar + 1] == 0)  goto L160;
+	if (config[i * nvar + 1 - (nvar+1)] == 0)  goto L160;
 	/* Get marginal table size.  While doing this task, see if the
 	   configuration list contains duplications or elements out of
 	   range. */
 	size = 1;
 	for (j = 0; j < nvar; j++) check[j] = 0;
 	for (j = 1; j <= nvar; j++) {
-	    k = config[j + i * nvar];
+	    k = config[j + i * nvar - (nvar+1)];
 	    /* A zero indicates the end of the string. */
 	    if (k == 0) goto L130;
 	    /* See if element is valid. */
@@ -119,7 +119,7 @@ L100:
 	    if (check[k - 1]) goto L95;
 	    check[k - 1] = 1;
 	    /* Get size */
-	    size *= dim[k];
+	    size *= dim[k-1];
 	}
 
 	/* Since U is used to store fitted marginals, size must not
@@ -128,11 +128,11 @@ L130:
 	if (size > nu) goto L35;
 
 	/* LOCMAR points to marginal tables to be placed in MARG */
-	locmar[i] = point;
+	locmar[i-1] = point;
 	point += size;
     }
 
-    /* Get N, number of valid configurations */
+    /* Get N, number of valid configations */
 
     i = ncon + 1;
 L160:
@@ -146,9 +146,9 @@ L160:
 
     for (i = 1; i <= n; i++) {
 	for (j = 1; j <= nvar; j++) {
-	    icon[j - 1] = config[j + i * nvar];
+	    icon[j - 1] = config[j + i * nvar - (nvar+1)];
 	}
-	collap(nvar, &table[1], &marg[1], locmar[i], &dim[1], icon);
+	collap(nvar, table, marg, locmar[i-1], dim, icon);
     }
 
     /* Perform iterations */
@@ -158,12 +158,13 @@ L160:
 	   marginal during a cycle */
 	xmax = 0.;
 	for (i = 1; i <= n; i++) {
-	    for (j = 1; j <= nvar; j++) icon[j - 1] = config[j + i * nvar];
-	    collap(nvar, &fit[1], &u[1], 1, &dim[1], icon);
-	    adjust(nvar, &fit[1], &u[1], &marg[1], &locmar[i], &dim[1], icon, &xmax);
+	    for (j = 1; j <= nvar; j++)
+		icon[j - 1] = config[j + i * nvar - (nvar+1)];
+	    collap(nvar, fit, u, 1, dim, icon);
+	    adjust(nvar, fit, u, marg, &locmar[i-1], dim, icon, &xmax);
 	}
 	/* Test convergence */
-	dev[k] = xmax;
+	dev[k-1] = xmax;
 	if (xmax < maxdev) goto L240;
     }
     if (maxit > 1) goto L230;
@@ -354,6 +355,8 @@ SEXP LogLin(SEXP dtab, SEXP conf, SEXP table, SEXP start,
 	maxit = asInteger(iter), 
 	nlast, ifault;
     double maxdev = asReal(eps);
+//    if (ncon == 0 || nmar == 0)
+//	Rf_error("invalid zero-length input(s): ncon %d, nmar %d", ncon, nmar);
     SEXP fit = PROTECT(TYPEOF(start) == REALSXP ? duplicate(start) :
 		       coerceVector(start, REALSXP)),
 	locmar = PROTECT(allocVector(INTSXP, ncon)),
