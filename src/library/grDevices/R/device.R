@@ -1,7 +1,7 @@
 #  File src/library/grDevices/R/device.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2019 The R Core Team
+#  Copyright (C) 1995-2024 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@ dev.interactive <- function(orNone = FALSE)
     .known_interactive_devices <- deviceIsInteractive()
     if(.Device %in% .known_interactive_devices) return(TRUE)
     if(!(orNone && .Device == "null device")) return(FALSE)
-    ## at this point we have mo active device.
+    ## at this point we have no active device.
     newdev <- getOption("device")
     if(is.character(newdev)) newdev %in% .known_interactive_devices
     else { # a function
@@ -365,7 +365,7 @@ dev.capabilities <- function(what = NULL)
     ## the right sort of structure
     if (!(is.list(capabilities) &&
           length(capabilities) == ncap &&
-          all(sapply(capabilities, class) == "integer")))
+          all(vapply(capabilities, is.integer, NA))))
         stop("Invalid capabilities - alert the device maintainer")
 
     z <- vector("list", ncap)
@@ -387,11 +387,8 @@ dev.capabilities <- function(what = NULL)
     z[[3L]] <- c(NA, "no", "yes", "non-missing")[capabilities[[3L]] + 1L]
     z[[4L]] <- c(NA, FALSE, TRUE)[capabilities[[4L]] + 1L]
     z[[5L]] <- c(NA, FALSE, TRUE)[capabilities[[5L]] + 1L]
-    z[[6L]] <- c( "", 
-                  if (capabilities[[6L]][1L]) "MouseDown",
-                  if (capabilities[[6L]][2L]) "MouseMove",
-                  if (capabilities[[6L]][3L]) "MouseUp",
-                  if (capabilities[[6L]][4L]) "Keybd" )[-1L]
+    ## Events
+    z[[6L]] <- c("MouseDown", "MouseMove", "MouseUp", "Keybd", "Idle")[ as.logical(capabilities[[6L]]) ]
     ## Patterns
     if (length(capabilities[[7]]) == 1 && is.na(capabilities[[7]])) {
         z[[7]] <- NA
