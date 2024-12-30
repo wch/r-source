@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1999-2022   The R Core Team.
+ *  Copyright (C) 1999-2024   The R Core Team.
  *
  *  Based on ACM TOMS643 (1993)
  *
