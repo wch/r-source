@@ -1,7 +1,7 @@
 #  File src/library/utils/R/sessionInfo.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2023 The R Core Team
+#  Copyright (C) 1995-2024 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -175,8 +175,11 @@ print.sessionInfo <- function(x, locale = TRUE, tzone = locale,
         if(nzchar(blas))   cat("BLAS:  ",   blas, "\n")
         if(nzchar(lapack)) cat("LAPACK:", lapack)
     }
-    if(nzchar(lapack) && nzchar(LAver <- x$LA_version) && !grepl(LAver, lapack, fixed=TRUE))
-        cat(";  LAPACK version", LAver)
+    if(nzchar(LAver <- x$LA_version)) {
+        if(nzchar(lapack) && !grepl(LAver, lapack, fixed=TRUE))
+            cat(";  LAPACK version", LAver)
+        else cat("  LAPACK version", LAver)
+    }
     cat("\n\n")
     if(RNG) {
         cat("Random number generation:\n"

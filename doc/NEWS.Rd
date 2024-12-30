@@ -140,6 +140,9 @@
 
       \item Status reporting in \code{download.file()} has been extended to
       report the outcome for individual files in simultaneous download.
+
+      \item If \code{La_library()} is empty, \code{sessionInfo()} still
+      reports \code{La_version()} when available.
     }
   }
 
