@@ -73,12 +73,8 @@ Sys.info()
   used (and not the many BSD and GNU extensions).  \command{whoami} is
   equivalent to \command{id -un} (on Solaris, \command{/usr/xpg4/bin/id -un}).
 
-  Windows may report unexpected versions: there, see the help for
-#ifdef windows
-    \code{\link{win.version}()}.
-#else
-    \code{win.version()}.
-#endif
+  Windows may report unexpected versions: see the help for
+  \code{\link{win.version}}.
 }
 
 \seealso{
