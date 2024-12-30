@@ -9921,6 +9921,11 @@ problems in the system software and not the package nor @R{}.  A couple
 of reports have been of `heap-use-after-free' errors in the X11
 libraries called from Tcl/Tk.
 
+Apple provide a version of the address sanitizer in recent versions of
+its C/C++ compiler.  This will proably give messages about
+`malloc: nano zone abandoned' which are innocuous and can be suppressed
+by setting environmant variable @env{MallocNanoZone} to @code{0}.
+@c https://stackoverflow.com/questions/64126942/malloc-nano-zone-abandoned-due-to-inability-to-preallocate-reserved-vm-space
 
 @c 1-item menu: kept to avoid spurious warning from makeinfo 6.8/7.0
 @menu
@@ -9942,7 +9947,7 @@ variable
 ASAN_OPTIONS='detect_leaks=1'
 @end example
 @noindent
-However, this was made the default as from @command{clang} 3.5 and
+However, this was made the default as from LLVM @command{clang} 3.5 and
 @command{gcc} 5.1.0.
 
 When @abbr{LSan} is enabled, leaks give the process a failure error status (by
@@ -9957,6 +9962,9 @@ checking use
 @example
 setenv ASAN_OPTIONS 'alloc_dealloc_mismatch=0:detect_leaks=0:detect_odr_violation=0'
 @end example
+
+The leak sanitizer is not part of @abbr{ASan} in the Apple
+@command{clang} implementation.
 
 @abbr{LSan} also has a `stand-alone' mode where it is compiled in using
 @option{-fsanitize=leak} and avoids the run-time overhead of @abbr{ASan}.
@@ -10098,8 +10106,8 @@ For more details on the topic see
 It may or may not be possible to build @R{} itself with
 @option{-fsanitize=undefined}: problems have in the past been seen with
 @abbr{OpenMP}-using code with @command{gcc} but there has been success
-with @command{clang} up to version 16..  However, problems have been
-seen with @command{clang} 17 and later, including missing entry points
+with LLVM @command{clang} up to version 16..  However, problems have been
+seen with LLVM @command{clang} 17 and later, including missing entry points
 and @R{} builds hanging.  What has succeeded is to use @abbr{UBSAN} just for
 the package under test (and not in combination with @abbr{ASAN}).  To do so,
 check with an unaltered @R{}, using a custom @file{Makevars} file
@@ -10125,16 +10133,29 @@ provided @code{UBSAN_DIR} is added to the runtime library path (as shown
 or using  @env{LD_LIBRARY_PATH}). @strong{N.B.}: The details, especially
 the paths used, have changed several times recently.
 
+Apple provides a version of the undefined behaviour sanitizer in recent
+versions of its C/C++ compiler.  @R{} was built with Apple
+@command{clang} 16 with @file{config.site} containing
+@noindent
+@example
+CC="clang -fsanitize=address,undefined"
+CXX="clang++ -fsanitize=address,undefined"
+@end example
+@noindent
+and passed its checks.
+
 @node Other analyses with `clang'
 @subsection Other analyses with `clang'
 
-Recent versions of @command{clang} on @cputype{x86_64} Linux have
-`@I{ThreadSanitizer}' (@uref{https://github.com/google/sanitizers/wiki#threadsanitizer}),
-a `data race detector for C/C++ programs', and `@I{MemorySanitizer}'
+Recent versions of LLVM @command{clang} on Linux have
+`@I{ThreadSanitizer}'
+(@uref{https://github.com/google/sanitizers/wiki#threadsanitizer}), a
+`data race detector for C/C++ programs', and `@I{MemorySanitizer}'
 (@uref{https://clang.llvm.org/docs/MemorySanitizer.html},
-@uref{https://github.com/google/sanitizers})
-for the detection of uninitialized memory.  Both are based on and
-provide similar functionality to tools in @command{valgrind}.
+@uref{https://github.com/google/sanitizers}) for the detection of
+uninitialized memory.  Both are based on and provide similar
+functionality to tools in @command{valgrind}.  The @I{ThreadSanitizer}
+is also available for Apple @command{clang} on macOS.
 
 @command{clang} has a `Static Analyzer' which can be run on the source
 files during compilation: see @uref{https://clang-analyzer.llvm.org/}.
