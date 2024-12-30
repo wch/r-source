@@ -1470,12 +1470,13 @@ if(inherits(oL, "warning")) {
 (out <- tryCmsg(1 + "2"))
 if(attr(oL, "ok") && capabilities("NLS") && !is.na(.popath)
    && !grepl("macOS", osVersion) # macOS fails currently
-   )
+   ) {
     stopifnot(is.character(print("checking 'out' : ")),
               grepl("^argument non num.rique pour un ", out))
-## was *not* switched to French (when this was run via 'make ..')
-## reset {just in case}:
-Sys.setLanguage("en")
+    ## was *not* switched to French (when this was run via 'make ..')
+    ## reset {just in case}:
+    Sys.setLanguage("en")
+}
 
 
 ## print( ls.str() ) using '<missing>' also in non-English setup:
