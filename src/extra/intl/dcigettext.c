@@ -1252,7 +1252,8 @@ _nl_find_msg (struct loaded_l10nfile *domain_file,
 	      __libc_lock_lock (lock);
 
 	      inbuf = (const unsigned char *) result;
-	      outbuf = freemem + sizeof (size_t);
+	      // avoid UBSAN warning on macOS
+	      outbuf = freemem ? freemem + sizeof (size_t): freemem;
 
 	      malloc_count = 0;
 	      while (1)
