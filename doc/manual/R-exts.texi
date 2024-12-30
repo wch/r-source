@@ -5033,13 +5033,16 @@ POSIX and not supported on all the platforms @R{} is used on.
 The variable @samp{OSTYPE} is shell-specific and its values are
 rather unpredictable and may include a version such as
 @samp{darwin19.0}: @command{`uname`} is often what is intended (with
-common values @samp{Darwin}, @samp{Linux} and @samp{SunOS}).
+common values @samp{Darwin} and @samp{Linux}).
 
 On macOS which shell @file{/bin/sh} invokes is user- and
 platform-dependent: it might be @command{bash} version 3.2,
 @command{dash} or @command{zsh} (for new accounts it is @command{zsh},
 for accounts ported from Mojave or earlier it is usually
 @command{bash}).
+
+It is not portable to specify @command{bash} as the shell let alone a
+specific path such as @file{/bin/bash}.
 
 @item
 @R{} is not built by default as a shared library on non-Windows
@@ -5910,6 +5913,12 @@ before @emph{any} headers.  (@code{strdup}, @code{strncasecmp} and
 @code{strnlen} are such functions --  there were several older platforms
 which did not have the POSIX 2008 function @code{strnlen}.)
 
+`Linux' is not a well-defined operating system: it is a kernel plus a
+collection of components.  Most distributions use @code{glibc} to
+provide most of the C headers and run-time library, but others, notably
+Alpine Linux, use other implementations such as @code{musl} --- see
+@uref{https://wiki.musl-libc.org/functional-differences-from-glibc.html}.
+
 However, some common errors are worth pointing out here.  It can be
 helpful to look up functions at
 @uref{https://cplusplus.com/reference/} or
@@ -6023,7 +6032,8 @@ included by other headers on Linux and Windows but not macOS.)
 these in other headers. @command{g++}@tie{}13 requires the
 explicit inclusion of @code{<cstdint>} for types such as @code{uint32_t}
 which was previously included implicitly.  (For more such, see
-@uref{https://gcc.gnu.org/gcc-13/porting_to.html}.)
+@uref{https://gcc.gnu.org/gcc-13/porting_to.html}.)  There are further
+instances of this in @command{g++}@tie{}15: see @uref{https://gcc.gnu.org/gcc-13/porting_to.html}.
 
 Note that @code{malloc}, @code{calloc}, @code{realloc} and @code{free}
 are defined by C99 in the header @file{stdlib.h} and (in the
@@ -6036,6 +6046,9 @@ say that is declared in headers @code{unistd.h} and @code{sys/types.h},
 and the latter is often included indirectly by other headers on some
 but not all systems.
 
+POSIX mandates the header @code{unistd.h}: most but not all OSes supply
+header @code{sys/unistd.h} as a wrapper, so this should not be used.
+
 Similarly for constants: for example @code{SIZE_MAX} is defined in
 @code{stdint.h} alongside @code{size_t}.
 
@@ -6045,6 +6058,10 @@ and often @acronym{CRAN} submissions attempt to use @file{endian.h}.
 The latter is a @code{glibc} extension: some OSes have
 @file{machine/endian.h} or @file{sys/endian.h} but some have neither.
 @c macOS has machine/endian.h.  Solaris had none.
+Header @file{execinfo.h} is only available on a few OSes: formwrly nor
+in MacOS nor Solaris, and currently not on Linux systems (such as Aloine
+Linux)using @code{musl}.  Nor is header @file{fpu_control.h} avaialble
+on macOS nor @code{musl}.
 
 @item
 Use @code{#include "my.h"} not @code{#include <my.h>} for headers in
