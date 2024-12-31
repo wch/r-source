@@ -291,8 +291,9 @@
       \code{XLENGTH_EX}, and \code{XTRUELENGTH}.
 
       \item Enable defining \env{R_NO_REMAP_RMATH} and calling
-      \code{Rf_*()} as has been documented in WRE for a while, fixing
-      \PR{18800} thanks to \I{Mikael Jagan} and \I{Suharto Anggono}.
+      \code{Rf_*()} as has been documented in
+      \sQuote{Writing R Extensions} for a while, fixing \PR{18800}
+      thanks to \I{Mikael Jagan} and \I{Suharto Anggono}.
     }
   }
 
@@ -304,7 +305,7 @@
       variable \env{_R_CXX_USE_NO_REMAP_} to a false value (but that will
       be removed in the near future).
 
-      `Writing R Extensions' has been revised to describe the remapped
+      \sQuote{Writing R Extensions} has been revised to describe the remapped
       entry points, for with the \code{Rf_} prefix remains optional when
       used from C code (but is recommended for new C code).
 
@@ -497,7 +498,7 @@
        \item Some invalid C-level memory accesses are avoided for
        \code{loglin(, margin = NULL)}.
 
-       \code{loglin(, param = TRUE)} no longer gives an eror in corner
+       \code{loglin(, param = TRUE)} no longer gives an error in corner
        cases such as a one-dimensional input.
 
        \item \code{dev.capabilities() $ events} now reports \code{"Idle"} if
