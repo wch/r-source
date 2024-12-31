@@ -4383,7 +4383,7 @@ R_CONFIG_ARGS="${ac_configure_args}"
 
 
 ## Shortcut for musl which refuses to identify itself at C level
-if test "${host_os}" == "linux-musl"; then
+if test "${host_os}" = "linux-musl"; then
 
 printf "%s\n" "#define OS_MUSL 1" >>confdefs.h
 
@@ -60383,7 +60383,7 @@ rm -f core conftest.err conftest.$ac_objext conftest.beam \
     as_fn_error $? "--with-newAccelerate requires macOS SDK >= 14.3." "$LINENO" 5
   fi
 fi
- if test "x${use_accelerate}" == xyes; then
+ if test "x${use_accelerate}" = xyes; then
   BUILD_NEW_ACCELERATE_TRUE=
   BUILD_NEW_ACCELERATE_FALSE='#'
 else
@@ -60391,7 +60391,7 @@ else
   BUILD_NEW_ACCELERATE_FALSE=
 fi
 
- if test "x${use_accelerate_lapack}" == xyes; then
+ if test "x${use_accelerate_lapack}" = xyes; then
   BUILD_NEW_ACCELERATE_LAPACK_TRUE=
   BUILD_NEW_ACCELERATE_LAPACK_FALSE='#'
 else
