@@ -1141,6 +1141,27 @@ function()
     aliases
 }
 
+### * base_keyword_db
+
+## <FIXME>
+## Basically the same as base_aliases_db(): ideally we'd have a common
+## code base so that we can easily add base_concept_db().
+base_keyword_db <-
+function()
+{
+    packages <- .get_standard_package_names()$base
+    keywords <-
+        lapply(packages,
+               function(p) {
+                   db <- Rd_db(p, lib.loc = .Library)
+                   keywords <- lapply(db, .Rd_get_metadata, "keyword")
+                   keywords
+               })
+    names(keywords) <- packages
+    keywords
+}
+## </FIXME>
+
 ### * base_rdxrefs_db
 
 base_rdxrefs_db <- 
@@ -1209,6 +1230,28 @@ function(x)
     colnames(y) <- c("Alias", "Source")
     y
 }
+
+### * .Rd_keyword_db_to_data_frame
+
+## <FIXME>
+## Basically the same as .Rd_aliases_db_to_data_frame(): ideally we'd
+## have a common code base so that we can easily add
+## .Rd_concept_db_to_data_frame().
+## Or have .Rd_metadata_db_to_data_frame(x, kind) ...
+.Rd_keyword_db_to_data_frame <-
+function(x)
+{
+    wrk <- function(a, p) {
+        cbind(unlist(a, use.names = FALSE),
+              rep.int(paste0(p, "::", names(a)), lengths(a)))
+    }
+    x <- Filter(length, x)
+    y <- as.data.frame(do.call(rbind,
+                               Map(wrk, x, names(x), USE.NAMES = FALSE)))
+    colnames(y) <- c("Keyword", "Source")
+    y
+}
+## </FIXME>
 
 ### * .Rd_rdxrefs_db_to_data_frame
 
