@@ -136,7 +136,7 @@ R_CONFIG_ARGS="${ac_configure_args}"
 AC_SUBST(R_CONFIG_ARGS)
 
 ## Shortcut for musl which refuses to identify itself at C level
-if test "${host_os}" == "linux-musl"; then
+if test "${host_os}" = "linux-musl"; then
   AC_DEFINE(OS_MUSL, 1, [Define if running on Linux-musl])
 fi
 
@@ -2995,9 +2995,9 @@ sdk_OK=no)
 dnl No longer used as we only build (or not) BLAS and LAPACK shims
 dnl  AC_DEFINE(USE_NEW_ACCELERATE, 1, [Define to use Apple's (new) Accelerate])
 fi
-AM_CONDITIONAL(BUILD_NEW_ACCELERATE, [test "x${use_accelerate}" == xyes])
+AM_CONDITIONAL(BUILD_NEW_ACCELERATE, [test "x${use_accelerate}" = xyes])
 AM_CONDITIONAL(BUILD_NEW_ACCELERATE_LAPACK,
-              [test "x${use_accelerate_lapack}" == xyes])
+              [test "x${use_accelerate_lapack}" = xyes])
 
 dnl record compiler versions
 CC_VER=`${CC} --version | ${SED} -n 1p`
