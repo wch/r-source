@@ -7275,9 +7275,6 @@ file @file{Normal.Rd} documents the density, distribution function,
 quantile function and generation of random variates for the normal
 distribution, and hence starts with
 
-@c dnorm is remapped to Rf_dnorm4
-@c pnorm is remapped to Rf_pnorm5
-@c qnorm is remapped to Rf_qnorm5
 @example
 @group
 \name@{Normal@}
@@ -15768,6 +15765,9 @@ distributions are available as entry points.
 The arguments for the entry points follow the pattern of those for the
 normal distribution:
 
+@c dnorm is remapped to Rf_dnorm4
+@c pnorm is remapped to Rf_pnorm5
+@c qnorm is remapped to Rf_qnorm5
 @example
 @group
 double dnorm(double @var{x}, double @var{mu}, double @var{sigma}, int @var{give_log});
