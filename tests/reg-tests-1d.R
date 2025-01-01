@@ -646,16 +646,14 @@ D1 <- as.Date("2017-01-06")
 D2 <- as.Date("2017-01-12")
 seqD1 <- seq.Date(D1, D2, by = "1 day")
 stopifnot(exprs = {
-    identical(seqD1, seq(D1, D2)) # by = "days" now implicit default
+    identical(seqD1, seq(D1, D2)) # by = "days" implicit default since R >= 4.5
     identical(seqD1, seq(D1, D2, by = "1 days"))
     ## These  work "accidentally" via seq -> seq.default + "Date"-arithmetic (but *not* seq.Date):
     ## are equal, but 2nd is "double"
     seqD1 == seq(by = 1, from = D1, length.out = 7)
     seqD1 == seq(by = 1,   to = D2, length.out = 7)
     seqD1 == seq(by = 1L,  to = D2, length.out = 7)
-    ## not (yet) identical(seqD1, seq(by = 1L, from = D1, length.out = 7))
-    ## swap order of (by, to) ==> *FAILS* because directly calls seq.Date() - FIXME?
-    TRUE ||
+    identical(seqD1, seq.Date(by = 1L, from = D1, length.out = 7)) # S3: need seq.Date()
     identical(seqD1, seq(to = D2,  by = 1, length.out = 7))
     ## above had failed in R-devel for a couple of days
     identical(seq(9L, by = -1L, length.out = 4L), 9:6)
