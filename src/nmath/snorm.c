@@ -1,7 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
+ *  Copyright (C) 2000-2025 The R Core Team
  *  Copyright (C) 1998   Ross Ihaka
- *  Copyright (C) 2000-2022 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -267,7 +267,7 @@ double norm_rand(void)
 	/* unif_rand() alone is not of high enough precision */
 	u1 = unif_rand();
 	u1 = (int)(BIG*u1) + unif_rand();
-	return qnorm5(u1/BIG, 0.0, 1.0, 1, 0);
+	return qnorm(u1/BIG, 0.0, 1.0, 1, 0);
     case KINDERMAN_RAMAGE: /* see Reference above */
 	/* corrected version from Josef Leydold
 	 * */
