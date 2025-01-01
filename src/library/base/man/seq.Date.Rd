@@ -1,6 +1,6 @@
 % File src/library/base/man/seq.Date.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2024 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{seq.Date}
@@ -14,11 +14,11 @@
 \method{seq}{Date}(from, to, by, length.out = NULL, along.with = NULL, \dots)
 }
 \arguments{
-  \item{from}{starting date.  Required.}
-  \item{to}{end date.  Optional.}
-  \item{by}{increment of the sequence.  Optional.  See \sQuote{Details}.}
+  \item{from}{starting date; optional.}
+  \item{to}{end date; optional.}
+  \item{by}{increment of the sequence; optional.  See \sQuote{Details}.}
   \item{length.out}{integer, optional.  Desired length of the sequence.}
-  \item{along.with}{take the length from the length of this argument.}
+  \item{along.with}{optional; take the length from the length of this argument.}
   \item{\dots}{arguments passed to or from other methods.}
 }
 \details{
@@ -39,7 +39,8 @@
 }
 \value{
   A vector of class \code{"Date"}.
-  Type \code{"\link{integer}"} is preserved.
+  Type \code{"\link{integer}"} is often preserved on purpose, saving
+  \code{\link{object.size}}.
 }
 \seealso{\code{\link{Date}}}
 
@@ -50,6 +51,9 @@ seq(as.Date("1910/1/1"), as.Date("1999/1/1"), "years")
 seq(as.Date("2000/1/1"), by = "month", length.out = 12)
 ## quarters
 seq(as.Date("2000/1/1"), as.Date("2003/1/1"), by = "quarter")
+
+## 3-week period ending on a fixed date
+seq(to = as.Date("2024-06-18"), by = "day", length.out = 21)
 
 ## find all 7th of the month between two dates, the last being a 7th.
 st <- as.Date("1998-12-17")

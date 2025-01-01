@@ -35,7 +35,7 @@ stopifnot(identical(capture.output(D[0]), "POSIXlt of length 0"))
 ## They printed as   '[1] "Date of length 0"'  etc in R < 3.5.0
 
 
-## rep.POSIXt(*, by="n  DSTdays") - PR#17342
+## seq.POSIXt(*, by="n  DSTdays") - PR#17342
 x <- seq(as.POSIXct("1982-04-15 05:00", tz="US/Central"),
          as.POSIXct("1994-10-15",       tz="US/Central"), by="360 DSTdays")
 stopifnot(length(x) == 13, diff((as.numeric(x) - 39600)/86400) == 360)
@@ -655,6 +655,90 @@ stopifnot(exprs = {
                         strsplit(split = "@",
                                  gsub('" "', '@', sub(".$", '', sub('^\\[1\\] "', '', pxx))))[[1L]]))
 })
+
+## `from = *` now optional in seq.Date(), seq.POSIXt() ----- PR#17672 ----------------------------
+## somewhat full set of regression tests, given relatively large refactoring
+## 1)  seq.POSIXt()
+from <- ISOdate(2024,1,2)
+to   <- ISOdate(2024,3,4, 5,6,7, tz="Asia/Singapore")
+by <- "2 weeks"
+length.out <- 4L
+frI <- `storage.mode<-`(from, "integer")
+toI <- `storage.mode<-`( to , "integer")
+All.eq0 <- function(x,y, ...) all.equal(x, y, tolerance = 0, ...)
+stopifnot(exprs = {
+  ## NB: use 'from' on LHS of reference to ensure the time zone of 'from' is used in the result
+  identical(seq(from, to, by=by), from + 2*7*86400*(0:4))
+  identical(seq(from, to, length.out=length.out),
+            from + seq(0, difftime(to, from, units="secs"), length.out=length.out))
+  identical(seq(from,  by=by, length.out=length.out), from + 2*7*86400*seq(0, length.out-1L))
+  identical(seq(to=to, by=by, length.out=length.out),  to  - 2*7*86400*seq(length.out-1L, 0))
+  ##
+  ## variations on 'by'
+  identical(seq(from, to, by= '2 months'), from + c(0, 86400*c(31+29))) # + Warning .check_tzones() .. inconsistent
+  identical(seq(to, from, by='-2 months'),  to  - c(0, 86400*c(31+29))) # (ditto)
+  identical(seq(from, to, by=as.difftime(30, units='days')), from + 30*86400*(0:2))
+  identical(seq(from, to, by=30*86400), from + 30*86400*(0:2))
+  ##
+  ## missing from=
+  identical(seq(to=to, by='day',     length.out=6), to - 86400*(5:0))
+  identical(seq(to=to, by='-3 days', length.out=6), to + 3*86400*(5:0))
+  identical(seq(to=to, by='2 months',length.out=3), to - 86400*c(31+29+31+30, 31+29, 0))
+  identical(seq(to=to, by='quarter', length.out=3), to - 86400*c(31+29+31+30+31+30, 31+29+31, 0))
+  identical(seq(to=to, by='year',    length.out=3), to - 86400*c(366+365, 366, 0))
+  ## type
+  is.double(from)
+  is.integer(ss <- seq(from, from+9, length.out=10L))
+})
+## various invalid inputs
+assertErrV(seq(from=from))
+assertErrV(seq(to=to))
+assertErrV(seq(from, to))
+assertErrV(seq(from, by=by))
+assertErrV(seq(from, length.out=length.out))
+assertErrV(seq(to=to, by=by))
+assertErrV(seq(to=to, length.out=length.out))
+assertErrV(seq(from, to, by=by, length.out=length.out))
+
+## 2)  seq.Date()
+to <- as.Date(to); from <- as.Date(from)
+frI <- `storage.mode<-`(from, "integer")
+toI <- `storage.mode<-`( to , "integer")
+stopifnot(exprs = {
+  identical(seq(from, to, by=by), from + 2*7*(0:4))
+  identical(seq(from, to, length.out=length.out),
+            from + seq(0, difftime(to, from, units="days"), length.out=length.out))
+  All.eq0(seq(from,  by=by, length.out=length.out), from + 2*7*seq(0, length.out-1L))
+  All.eq0(seq(to=to, by=by, length.out=length.out),   to - 2*7*seq(length.out-1L, 0))
+  identical(seq(from, to), seq(from=from, to=to, by = "days") -> s.)
+  identical(structure(19724:19727, class = "Date"), seq(from , length.out=length.out) -> s.f)
+  identical(structure(19782:19785, class = "Date"), seq(to=to, length.out=length.out) -> s.t)
+  ##
+  ## variations on 'by'
+  identical(seq(from, to, by='2 months'), from + c(0, c(31+29)))
+  identical(seq(to, from, by='-2 months'), to - c(0, c(31+29)))
+  identical(seq(from, to, by=as.difftime(30, units='days')), from + 30*(0:2))
+  identical(seq(from, to, by=30), from + 30*(0:2))
+  ##
+  ## missing from=
+  All.eq0 ( seq(to=to, by='day',     length.out=6), to - (5:0))
+  All.eq0 ( seq(to=to, by='-3 days', length.out=6), to + 3*(5:0))
+  identical(seq(to=to, by='2 months',length.out=3), to - c(31+29+31+30, 31+29, 0))
+  identical(seq(to=to, by='quarter', length.out=3), to - c(31+29+31+30+31+30, 31+29+31, 0))
+  identical(seq(to=to, by='year',    length.out=3), to - c(366+365, 366, 0))
+  is.integer(sI <- seq(frI, toI))
+  is.integer(s2 <- seq(to = toI, length.out = length.out))
+  is.integer(s3 <- seq(frI,      length.out = length.out))
+  identical(sI, s.)
+  identical(s2, s.t)
+  identical(s3, s.f)
+})
+## various invalid inputs
+assertErrV(seq(from=from))
+assertErrV(seq(to=to))
+assertErrV(seq(from, by=by))
+assertErrV(seq(to=to, by=by))
+assertErrV(seq(from, to, by=by, length.out=length.out))
 
 
 ## keep at end

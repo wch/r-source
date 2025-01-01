@@ -1,6 +1,6 @@
 % File src/library/base/man/seq.POSIXt.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2017 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{seq.POSIXt}
@@ -13,9 +13,9 @@
 \method{seq}{POSIXt}(from, to, by, length.out = NULL, along.with = NULL, \dots)
 }
 \arguments{
-  \item{from}{starting date.  Required.}
-  \item{to}{end date.  Optional.}
-  \item{by}{increment of the sequence.  Optional.  See \sQuote{Details}.}
+  \item{from}{starting date; optional.}
+  \item{to}{end date; optional.}
+  \item{by}{increment of the sequence; optional.  See \sQuote{Details}.}
   \item{length.out}{integer, optional.  Desired length of the sequence.}
   \item{along.with}{take the length from the length of this argument.}
   \item{\dots}{arguments passed to or from other methods.}
@@ -24,7 +24,7 @@
   \code{by} can be specified in several ways.
   \itemize{
     \item A number, taken to be in seconds.
-    \item A object of class \code{\link{difftime}}
+    \item An object of class \code{\link{difftime}}
     \item A character string, containing one of \code{"sec"},
     \code{"min"}, \code{"hour"}, \code{"day"}, \code{"DSTday"},
     \code{"week"}, \code{"month"}, \code{"quarter"} or \code{"year"}.
@@ -37,16 +37,17 @@
   period of 144 hours), but \code{"7 DSTdays"} can be used as an
   alternative.  \code{"month"} and \code{"year"} allow for DST.
 
-  The \link{time zone} of the result is taken from \code{from}: remember
-  that GMT means UTC (and not the time zone of Greenwich, England) and so
-  does not have daylight savings time.
+  The \link{time zone} of the result is taken from \code{from} unless only
+  \code{to} is provided: remember that GMT means UTC (and not the time
+  zone of Greenwich, England) and so does not have daylight savings time.
 
   Using \code{"month"} first advances the month without changing the
   day: if this results in an invalid day of the month, it is counted
   forward into the next month: see the examples.
 }
 \value{
-  A vector of class \code{"POSIXct"}.
+  A vector of class \code{"POSIXct"}, internally of type
+  \code{"\link{double}"} or \code{"\link{integer}"}.
 }
 
 \seealso{\code{\link{DateTimeClasses}}}
@@ -63,6 +64,9 @@ seq(ISOdate(1990,1,1), ISOdate(2000,1,1), by = "quarter") # or "3 months"
 seq(c(ISOdate(2000,3,20)), by = "day", length.out = 10)
 seq(c(ISOdate(2000,3,20)), by = "DSTday", length.out = 10)
 seq(c(ISOdate(2000,3,20)), by = "7 DSTdays", length.out = 4)
+
+## 24-hour period ending at a fixed time
+seq(to = ISOdate(2024,1,2, 3,4,5), by = "hour", length.out = 24)
 }
 \keyword{manip}
 \keyword{chron}
