@@ -1477,6 +1477,8 @@ if(attr(oL, "ok") && capabilities("NLS") && !is.na(.popath)
     ## reset {just in case}:
     Sys.setLanguage("en")
 }
+## reset {just in case}:
+Sys.setLanguage("en")
 
 
 ## print( ls.str() ) using '<missing>' also in non-English setup:
@@ -1669,7 +1671,7 @@ stopifnot(identical(gen, isGeneric("+", getName = TRUE)), # the latter always wo
           identical(gen, structure("+", package = "base")),
           isGeneric("+"), isGeneric("+", fdef = `+`))
 
-## These gave array-accss errors and perhaps segfaults in R <= 4.4.2
+## These gave array-access errors and perhaps segfaults in R <= 4.4.2
 ix <- integer(0)
 sort.int(ix, method = "quick")
 sort.int(ix, method = "quick", index.return = TRUE)
@@ -1695,6 +1697,19 @@ if(englishMsgs) stopifnot(exprs = {
 ## now warn from format() and (only once) from print()
 options(op) # return to sanity + warn=2
 
+
+## sessionInfo() *prints*  La_version() when not empty
+si <- sessionInfo()
+str( osi <- capture.output(si)); hasLA <- nzchar(si$LAPACK); si$LAPACK <- ""
+osi.noLA <- capture.output(si)
+iLA <- which(osi != osi.noLA)
+cbind(osi, osi.noLA)[iLA,] # was empty ..
+if(length(iLA) && nzchar(La_version())) { cat("sessionInfo - La_* checking: ")
+    stopifnot(nzchar(v.noLA <- osi.noLA[iLA]),
+              grepl(paste0(v.noLA,"$"),  osi[iLA]))
+    cat("ok\n")
+}
+## the "LAPACK: .." was entirely empty when  si$LAPACK was ""
 
 
 ## keep at end
