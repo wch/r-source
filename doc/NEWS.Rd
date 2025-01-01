@@ -144,6 +144,10 @@
       \item If \code{La_library()} is empty, \code{sessionInfo()} still
       reports \code{La_version()} when available.
 
+      \item \code{seq.int(from, to, by, ....)} when \eqn{|by| = 1} now
+      behaves as if \code{by} was omitted, and hence returns \code{from:to},
+      possibly integer.
+
       \item \code{seq.Date(from, to, by, ....)} and \code{seq.POSIXt(..)}
       now also work when \code{from} is missing and sufficient further
       arguments are provided, thanks to \I{Michael Chirico}'s report, patch

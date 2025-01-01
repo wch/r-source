@@ -644,7 +644,7 @@ stopifnot(exprs = {
 ## had failed in R-devel for a few days
 D1 <- as.Date("2017-01-06")
 D2 <- as.Date("2017-01-12")
-seqD1 <- seq.Date(D1, D2, by = "1 day")
+seqD1 <- seq(D1, D2, by = "1 day")
 stopifnot(exprs = {
     identical(seqD1, seq(D1, D2)) # by = "days" implicit default since R >= 4.5
     identical(seqD1, seq(D1, D2, by = "1 days"))
