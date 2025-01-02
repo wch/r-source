@@ -177,16 +177,16 @@ tre_tnfa_run_parallel(const tre_tnfa_t *tnfa, const void *string, int len,
     /* Get the various pointers within tmp_buf (properly aligned). */
     tmp_tags = (void *)buf;
     tmp_buf = buf + tbytes;
-    tmp_buf += ALIGN(tmp_buf, long);
+    tmp_buf += ALIGN(tmp_buf, anytype);
     reach_next = (void *)tmp_buf;
     tmp_buf += rbytes;
-    tmp_buf += ALIGN(tmp_buf, long);
+    tmp_buf += ALIGN(tmp_buf, anytype);
     reach = (void *)tmp_buf;
     tmp_buf += rbytes;
-    tmp_buf += ALIGN(tmp_buf, long);
+    tmp_buf += ALIGN(tmp_buf, anytype);
     reach_pos = (void *)tmp_buf;
     tmp_buf += pbytes;
-    tmp_buf += ALIGN(tmp_buf, long);
+    tmp_buf += ALIGN(tmp_buf, anytype);
     for (i = 0; i < tnfa->num_states; i++)
       {
 	reach[i].tags = (void *)tmp_buf;

@@ -155,6 +155,15 @@ typedef enum { STR_WIDE, STR_BYTE, STR_MBS, STR_USER } tre_str_type_t;
    ? (sizeof(type) - (((size_t)ptr) % sizeof(type))) \
    : 0)
 
+/* R addition, only "long" has been used before for alignment of allocated
+   data. With C11, one could use max_align_t. */
+typedef union {
+    void *ptr;
+    void (*funptr)(void);
+    long long ll;
+    double dbl;
+} anytype;
+
 #undef MAX
 #undef MIN
 #define MAX(a, b) (((a) >= (b)) ? (a) : (b))
