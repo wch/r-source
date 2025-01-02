@@ -20,6 +20,12 @@
    See the file COPYLIB.TXT for details.
 */
 
+/* R modification: mheader union (instead of simply long size) to force
+   alignment of allocated data. With C11, one could use max_align_t. 
+
+   Copyright (C) 2025  The R Core Team
+*/
+
 #include <stdlib.h>
 #include "internal.h"
 
@@ -46,24 +52,33 @@ char *	memjoin(char *a, char *b);
 
 #define TRACEAR(a)
 
+typedef union {
+    long size;
+
+    void *dummy_ptr;
+    void (*dummy_funptr)(void);
+    long long dummy_ll;
+    double dummy_dbl;
+} mheader;
+
 char * memalloc(long size)
 {
-    long *block;
+    char *block;
     char *a;
     long i, datasize;
     TRACEAR("alloc");
     datasize = (((size + 4) >> 2) << 2);
 #ifdef COMPILER
 #if (COMPILER <= 16)
-    if ((sizeof(long)+datasize) >= (1<<16))
+    if ((sizeof(mheader)+datasize) >= (1<<16))
 	return NULL;
 #endif
 #endif
-    block = (long *) malloc(sizeof(long) + datasize);
+    block = (char *) malloc(sizeof(mheader) + datasize);
     if (block == NULL)
 	return NULL;
-    block[0] = size;
-    a = (char *) & block[1];
+    ((mheader *)block)->size = size;
+    a = block + sizeof(mheader);
     for (i=0; i<datasize; i++)
 	a[i] = '\0';
     return a;
@@ -71,7 +86,7 @@ char * memalloc(long size)
 
 char * memrealloc(char *a, long new_size)
 {
-    long *block;
+    char *block;
     long i, size, oldsize, newsize;
     TRACEAR("realloc");
     if (new_size <= 0) {
@@ -84,8 +99,8 @@ char * memrealloc(char *a, long new_size)
 	size = 0;
     }
     else {
-	block = ((long*)a) - 1;
-	size = block[0];
+	block = a - sizeof(mheader);
+	size = ((mheader *)block)->size;
     }
 
     oldsize = size ? (((size + 4) >> 2) << 2) : 0;
@@ -94,35 +109,35 @@ char * memrealloc(char *a, long new_size)
     if ( newsize != oldsize ) {
 #ifdef COMPILER
 #if (COMPILER <= 16)
-	if ((sizeof(long)+newsize) >= (1<<16))
+	if ((sizeof(mheader)+newsize) >= (1<<16))
 	    return NULL;
 #endif
 #endif
-	block = (long *) realloc(block, sizeof(long) + newsize);
+	block = (char *) realloc(block, sizeof(mheader) + newsize);
 	if (block == NULL)
 	    return NULL;
-	a = (char *) & block[1];
+	a = block + sizeof(mheader);
 	for (i=oldsize; i<newsize; i++)
 	    a[i] = '\0';
     }
 
-    block[0] = new_size;
+    ((mheader *)block)->size = new_size;
     return a;
 }
 
 long memlength(char *a)
 {
-    return (a) ? ((long*)(a)-1)[0] : 0;
+    return (a) ? ((mheader *)(a - sizeof(mheader)))->size : 0;
 }
 
 void memfree(char *a)
 {
-    if (a) free((long*)(a)-1);
+    if (a) free(a - sizeof(mheader));
 }
 
 char * memexpand(char *a, long extra)
 {
-    long *block;
+    char *block;
     long i, size, oldsize, newsize;
     TRACEAR("exp");
     if (extra == 0)
@@ -133,8 +148,8 @@ char * memexpand(char *a, long extra)
 	size = 0;
     }
     else {
-	block = ((long*)a) - 1;
-	size = block[0];
+	block = a - sizeof(mheader);
+	size = ((mheader *)block)->size;
     }
 
     oldsize = size ? (((size + 4) >> 2) << 2) : 0;
@@ -143,19 +158,19 @@ char * memexpand(char *a, long extra)
     if ( newsize != oldsize ) {
 #ifdef COMPILER
 #if (COMPILER <= 16)
-	if ((sizeof(long)+newsize) >= (1<<16))
+	if ((sizeof(mheader)+newsize) >= (1<<16))
 	    return NULL;
 #endif
 #endif
-	block = (long *) realloc(block, sizeof(long) + newsize);
+	block = (char *) realloc(block, sizeof(mheader) + newsize);
 	if (block == NULL)
 	    return NULL;
-	a = (char *) & block[1];
+	a = block + sizeof(mheader);
 	for (i=oldsize; i<newsize; i++)
 	    a[i] = '\0';
     }
 
-    block[0] = size + extra;
+    ((mheader *)block)->size = size + extra;
     return a;
 }
 
@@ -172,3 +187,4 @@ char * memjoin(char *a, char *b)
     }
     return a;
 }
+
