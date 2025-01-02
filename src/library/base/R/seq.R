@@ -1,7 +1,7 @@
 #  File src/library/base/R/seq.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2021 The R Core Team
+#  Copyright (C) 1995-2025 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -37,7 +37,7 @@ seq.default <-
     }
     else if(!missing(length.out)) {
         len <- length(length.out)
-        if(!len) stop("argument 'length.out' must be of length 1")
+        if(!len) stop(gettextf("'%s' must be of length 1", "length.out"), domain=NA)
         if(len > 1L) {
             warning("first element used of 'length.out' argument")
             length.out <- length.out[1L]
@@ -46,8 +46,8 @@ seq.default <-
 	    length.out <- as.numeric(ceiling(length.out))
     }
     chkDots(...)
-    if (!missing(from) && length(from) != 1L) stop("'from' must be of length 1")
-    if (!missing(to) && length(to) != 1L) stop("'to' must be of length 1")
+    if (!missing(from) && length(from) != 1L) stop(gettextf("'%s' must be of length 1", "from"), domain=NA)
+    if (!missing( to ) && length( to ) != 1L) stop(gettextf("'%s' must be of length 1",  "to" ), domain=NA)
     if (!missing(from) && # For seq("2","5") but not breaking seq(to=1, from=as.Date(.)):
         !is.finite(if(is.character(from)) from <- as.numeric(from) else from))
 	stop("'from' must be a finite number")
@@ -61,7 +61,7 @@ seq.default <-
 	    int <- is.logint(from) && is.logint(to)
 	    del <- to - if(int) as.double(from) else from
 	    if(del == 0 && to == 0) return(to)
-            if (length(by) != 1L) stop("'by' must be of length 1")
+            if (length(by) != 1L) stop(gettextf("'%s' must be of length 1", "by"), domain=NA)
 	    if(!is.logint(by))
 		int <- FALSE
 	    else if(!int)

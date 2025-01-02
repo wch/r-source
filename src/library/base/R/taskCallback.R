@@ -94,7 +94,7 @@ function(handlers = list(), registered = FALSE, verbose = FALSE)
     remove <- function(which)
     {
         if (length(which) != 1L)
-            stop("'which' must be of length 1")
+            stop(gettextf("'%s' must be of length 1", "which"), domain=NA)
         if(is.character(which)) {
             tmp <- match(which, names(handlers))
             if(is.na(tmp))

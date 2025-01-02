@@ -197,8 +197,7 @@ system.file <- function(..., package = "base", lib.loc = NULL, mustWork = FALSE)
 {
     if(nargs() == 0L)
         return(file.path(.Library, "base"))
-    if(length(package) != 1L)
-        stop("'package' must be of length 1")
+    if (length(package) != 1L) stop(gettextf("'%s' must be of length 1", "package"), domain=NA)
     packagePath <- find.package(package, lib.loc, quiet = TRUE)
     ans <- if(length(packagePath)) {
         FILES <- file.path(packagePath, ...)
