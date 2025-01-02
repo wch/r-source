@@ -42,7 +42,7 @@ main(int argc, char** argv)
     printf("dnorm(0.7) = %.12g\n", dn);
     printf("qnorm(0.7) = %.12g\n", qn);
     printf("pnorm(qnorm(..)) = %.12g\n", pnorm(qn, 0., 1., 0, 0));
-    // now _two_ of the  normal.kind :
+    // several  RNGkind(normal.kind = *) :
     N01_kind = AHRENS_DIETER;
     set_seed(123, 456); printf("one normal %f\n", norm_rand());
     N01_kind = BOX_MULLER;
