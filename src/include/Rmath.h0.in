@@ -199,7 +199,6 @@ double  Rlog1p(double);
 # include <R_ext/Boolean.h>
 #endif
 
-
 #if !defined(MATHLIB_STANDALONE)
 #define bessel_i	Rf_bessel_i
 #define bessel_j	Rf_bessel_j
@@ -345,11 +344,11 @@ double  Rlog1p(double);
 #define sign		Rf_sign
 #define tetragamma	Rf_tetragamma
 #define trigamma	Rf_trigamma
+#endif /* if not STANDALONE */
 
-#define dnorm Rf_dnorm4
-#define pnorm Rf_pnorm5
-#define qnorm Rf_qnorm5
-#endif /* not ..STANDALONE */
+#define dnorm dnorm4
+#define pnorm pnorm5
+#define qnorm qnorm5
 
 #ifdef  __cplusplus
 extern "C" {
