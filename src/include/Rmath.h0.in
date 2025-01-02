@@ -1,6 +1,6 @@
 /* -*- C -*-
  *  Mathlib : A C Library of Special Functions
- *  Copyright (C) 1998-2024  The R Core Team
+ *  Copyright (C) 1998-2025  The R Core Team
  *  Copyright (C) 2004       The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -200,7 +200,7 @@ double  Rlog1p(double);
 #endif
 
 
-#if !defined(MATHLIB_STANDALONE) && !defined(R_NO_REMAP_RMATH)
+#if !defined(MATHLIB_STANDALONE)
 #define bessel_i	Rf_bessel_i
 #define bessel_j	Rf_bessel_j
 #define bessel_k	Rf_bessel_k
@@ -345,11 +345,11 @@ double  Rlog1p(double);
 #define sign		Rf_sign
 #define tetragamma	Rf_tetragamma
 #define trigamma	Rf_trigamma
-#endif
 
-#define dnorm dnorm4
-#define pnorm pnorm5
-#define qnorm qnorm5
+#define dnorm Rf_dnorm4
+#define pnorm Rf_pnorm5
+#define qnorm Rf_qnorm5
+#endif /* not ..STANDALONE */
 
 #ifdef  __cplusplus
 extern "C" {
@@ -620,6 +620,157 @@ double tanpi(double);
 #endif
 double Rtanpi(double); /* our own in any case */
 
+#if !defined(MATHLIB_STANDALONE) && defined(R_NO_REMAP_RMATH)
+#undef bessel_i
+#undef bessel_j
+#undef bessel_k
+#undef bessel_y
+#undef bessel_i_ex
+#undef bessel_j_ex
+#undef bessel_k_ex
+#undef bessel_y_ex
+#undef beta
+#undef choose
+#undef dbeta
+#undef dbinom
+#undef dbinom_raw
+#undef dcauchy
+#undef dchisq
+#undef dexp
+#undef df
+#undef dgamma
+#undef dgeom
+#undef dhyper
+#undef digamma
+#undef dlnorm
+#undef dlogis
+#undef dnbeta
+#undef dnbinom
+#undef dnbinom_mu
+#undef dnchisq
+#undef dnf
+#undef dnorm4
+#undef dnt
+#undef dpois_raw
+#undef dpois
+#undef dpsifn
+#undef dsignrank
+#undef dt
+#undef dtukey
+#undef dunif
+#undef dweibull
+#undef dwilcox
+#undef fmax2
+#undef fmin2
+#undef fprec
+#undef fround
+#undef ftrunc
+#undef fsign
+#undef gammafn
+#undef imax2
+#undef imin2
+#undef lbeta
+#undef lchoose
+#undef lgammafn
+#undef lgammafn_sign
+#undef lgamma1p
+#undef pow1p
+#undef log1mexp
+#undef log1pexp
+#undef log1pmx
+#undef logspace_add
+#undef logspace_sub
+#undef logspace_sum
+#undef pbeta
+#undef pbeta_raw
+#undef pbinom
+#undef pcauchy
+#undef pchisq
+#undef pentagamma
+#undef pexp
+#undef pf
+#undef pgamma
+#undef pgeom
+#undef phyper
+#undef plnorm
+#undef plogis
+#undef pnbeta
+#undef pnbinom
+#undef pnbinom_mu
+#undef pnchisq
+#undef pnf
+#undef pnorm5
+#undef pnorm_both
+#undef pnt
+#undef ppois
+#undef psignrank
+#undef psigamma
+#undef pt
+#undef ptukey
+#undef punif
+#undef pweibull
+#undef pwilcox
+#undef qbeta
+#undef qbinom
+#undef qcauchy
+#undef qchisq
+#undef qchisq_appr
+#undef qexp
+#undef qf
+#undef qgamma
+#undef qgeom
+#undef qhyper
+#undef qlnorm
+#undef qlogis
+#undef qnbeta
+#undef qnbinom
+#undef qnbinom_mu
+#undef qnchisq
+#undef qnf
+#undef qnorm5
+#undef qnt
+#undef qpois
+#undef qsignrank
+#undef qt
+#undef qtukey
+#undef qunif
+#undef qweibull
+#undef qwilcox
+#undef rbeta
+#undef rbinom
+#undef rcauchy
+#undef rchisq
+#undef rexp
+#undef rf
+#undef rgamma
+#undef rgeom
+#undef rhyper
+#undef rlnorm
+#undef rlogis
+#undef rmultinom
+#undef rnbeta
+#undef rnbinom
+#undef rnbinom_mu
+#undef rnchisq
+#undef rnf
+#undef rnorm
+#undef rnt
+#undef rpois
+#undef rsignrank
+#undef rt
+#undef rtukey
+#undef runif
+#undef rweibull
+#undef rwilcox
+#undef sign
+#undef tetragamma
+#undef trigamma
+
+#undef dnorm
+#undef pnorm
+#undef qnorm
+#endif /* not STANDALONE *and* R_NO_REMAP_RMATH */
+
 /* ----------------- Private part of the header file ------------------- */
 
 #if defined(MATHLIB_STANDALONE) && !defined(MATHLIB_PRIVATE_H)
@@ -652,7 +803,7 @@ R_EXTERN int N01_kind;
 extern int N01_kind;
 # endif
 
-#endif /* MATHLIB_STANDALONE */
+#endif /* MATHLIB_STANDALONE and not PRIVATE_H */
 
 #ifdef  __cplusplus
 }
