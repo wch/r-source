@@ -86,16 +86,19 @@ all: Makefile inc static shared
 inc: Makefile
 	(cd ../../include; $(MAKE) Rmath.h)
 
-#check: all # clean
 
+# check: clean  -- takes ~ 5 sec --> just  'rm test':
+#      : all  -- not as dependency, but directly, possibly parallelized:
 check:
-	@rm -f check.log
+	@rm -f check.log test
 	@if test -n "${TEST_MC_CORES}"; then \
-	  $(MAKE) -j ${TEST_MC_CORES} all > check.log 2>&1; \
+	  echo "using ${TEST_MC_CORES} cores" > check.log; \
+	  $(MAKE) -j  ${TEST_MC_CORES} all   >> check.log 2>&1; \
 	  $(MAKE) -f test >> check.log 2>&1; \
 	else \
 	  $(MAKE) all test > check.log 2>&1; \
 	fi
+	@tail check.log
 	@$(ECHO) "check output can be found in src/nmath/standalone/check.log"
 
 Copy:
