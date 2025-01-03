@@ -1712,6 +1712,17 @@ if(length(iLA) && nzchar(La_version())) { cat("sessionInfo - La_* checking: ")
 ## the "LAPACK: .." was entirely empty when  si$LAPACK was ""
 
 
+## arima(*, seasonal = <numeric>)
+(m <- tryCmsg( arima(presidents, order=c(2,0,1), seasonal=c(1, 0)) ))
+stopifnot(exprs = {
+    grepl("'seasonal'", m, fixed=TRUE)
+    !englishMsgs ||
+    grepl("must be a non-negative numeric vector", m, fixed=TRUE)
+})
+## gave solve.default() error (as wrong model failed fitting)
+
+
+
 ## keep at end
 rbind(last =  proc.time() - .pt,
       total = proc.time())

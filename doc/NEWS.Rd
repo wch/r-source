@@ -515,7 +515,11 @@
 
       \item \code{dev.capabilities() $ events} now reports \code{"Idle"} if
       the device provides it, fixing \PR{18836}, thanks to \I{Trevor Davis}.
-     }
+
+      \item \code{arima(.., seasonal = <wrong-vector>)} correctly errors
+      now, ditto for \code{arima0()}, thanks to \I{Norbert Kuder}'s report
+      on the R-devel list.
+    }
   }
 }
 

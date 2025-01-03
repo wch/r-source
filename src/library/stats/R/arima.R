@@ -1,7 +1,7 @@
 #  File src/library/stats/R/arima.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 2002-2015 The R Core Team
+#  Copyright (C) 2002-2025 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -52,7 +52,7 @@ arima <- function(x, order = c(0L, 0L, 0L),
         .Call(C_ARIMA_Like, y, mod, 0L, TRUE)
     }
 
-    ## the objective function called by optim()
+    ## the objective function called by optim(); using  {coef, mask, arma, mod, ....}
     armafn <- function(p, trans)
     {
         par <- coef
@@ -124,10 +124,11 @@ arima <- function(x, order = c(0L, 0L, 0L),
             if(!is.numeric(seasonal$order) || length(seasonal$order) != 3L
                || any(seasonal$order < 0L))
                 stop("'seasonal$order' must be a non-negative numeric vector of length 3")
-        } else if(is.numeric(order)) {
-            if(length(order) == 3L) seasonal <- list(order=seasonal)
-            else ("'seasonal' is of the wrong length")
-        } else stop("'seasonal' must be a list with component 'order'")
+        } else if(is.numeric(seasonal)) { # meant to be  seasonal$order
+            if(length(seasonal) != 3L || any(seasonal < 0))
+                stop("if not a list, 'seasonal' must be a non-negative numeric vector of length 3")
+            seasonal <- list(order=seasonal)
+        } else stop("'seasonal' is neither a list with component 'order' nor a numeric vector of length 3")
 
     if (is.null(seasonal$period) || is.na(seasonal$period) || seasonal$period == 0)
         seasonal$period <- frequency(x)
@@ -290,14 +291,15 @@ arima <- function(x, order = c(0L, 0L, 0L),
             }
         }
         trarma <- .Call(C_ARIMA_transPars, init, arma, transform.pars)
-	mod <- makeARIMA(trarma[[1L]], trarma[[2L]], Delta, kappa, SSinit)
         res <- if(no.optim)
             list(convergence = 0, par = numeric(),
                  value = armafn(numeric(), as.logical(transform.pars)))
-        else
+        else {
+            mod <- makeARIMA(trarma[[1L]], trarma[[2L]], Delta, kappa, SSinit)
             optim(init[mask], armafn, method = optim.method,
                   hessian = TRUE, control = optim.control,
                   trans = as.logical(transform.pars))
+        }
         if(res$convergence > 0)
             warning(gettextf("possible convergence problem: optim gave code = %d",
                              res$convergence), domain = NA)
@@ -333,9 +335,8 @@ arima <- function(x, order = c(0L, 0L, 0L),
         } else var <- if(no.optim) numeric() else solve(res$hessian * n.used)
         trarma <- .Call(C_ARIMA_transPars, coef, arma, FALSE)
 	mod <- makeARIMA(trarma[[1L]], trarma[[2L]], Delta, kappa, SSinit)
-        val <- if(ncxreg > 0L)
-            arimaSS(x - xreg %*% coef[narma + (1L:ncxreg)], mod)
-        else arimaSS(x, mod)
+        val <- arimaSS(if(ncxreg > 0L) x - xreg %*% coef[narma + (1L:ncxreg)]
+                       else x, mod)
         sigma2 <- val[[1L]][1L]/n.used
     }
     value <- 2 * n.used * res$value + n.used + n.used * log(2 * pi)

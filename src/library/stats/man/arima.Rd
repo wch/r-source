@@ -1,6 +1,6 @@
 % File src/library/stats/man/arima.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2024 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{arima}
@@ -24,13 +24,13 @@ arima(x, order = c(0L, 0L, 0L),
 \arguments{
   \item{x}{a univariate time series}
 
-  \item{order}{A specification of the non-seasonal part of the ARIMA
+  \item{order}{a specification of the non-seasonal part of the ARIMA
     model: the three integer components \eqn{(p, d, q)} are the AR order, the
     degree of differencing, and the MA order.}
 
-  \item{seasonal}{A specification of the seasonal part of the ARIMA
+  \item{seasonal}{a specification of the seasonal part of the ARIMA
     model, plus the period (which defaults to \code{frequency(x)}).
-    This may be a list with components \code{order} and
+    This may be a \code{\link{list}} with components \code{order} and
     \code{period}, or just a numeric vector of length 3 which
     specifies the seasonal \code{order}.  In the latter case the
     default period is used.}
@@ -38,7 +38,8 @@ arima(x, order = c(0L, 0L, 0L),
   \item{xreg}{Optionally, a vector or matrix of external regressors,
     which must have the same number of rows as \code{x}.}
 
-  \item{include.mean}{Should the ARMA model include a mean/intercept term?  The
+  \item{include.mean}{logical indicating if the ARMA model should include a
+    mean/intercept term.  The
     default is \code{TRUE} for undifferenced series, and it is ignored
     for ARIMA models with differencing.}
 
