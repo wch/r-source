@@ -480,6 +480,10 @@
 ##   -O0 and -O1 seem to work with 2023.2.0
 ## INTEL_ICX_FIX=-O0
 
+## Additional INSTALL_opts for recommended packages.
+##  Can be used for --dsym on macOS.
+## REC_INSTALL_OPT=
+
 ## Programs which configure will look for on the path
 ## AR
 ## GETWD=pwd

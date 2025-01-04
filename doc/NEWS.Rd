@@ -168,6 +168,10 @@
 
       \item Failures in building the manuals under \file{doc} now abort
       the installation, removing any file which caused the failure.
+
+      \item There is now support for installing the debug symbols for
+      recommended packages on macOS: see \samp{REC_INSTALL_OPT} in file
+      \file{config.site}.
     }
   }
 
@@ -338,6 +342,11 @@
 
       \item \code{tools::checkDocFiles()} notes more cases of
       usage documentation without corresponding \verb{\alias}.
+
+      \item \code{R CMD check} with a true value for environment variable
+      \env{_R_CHECK_BASHISMS_} checks more thoroughly, including for
+      \command{bash} scripts and components of
+      \command{autoconf}-generated \command{configure} scripts.
     }
   }
 
