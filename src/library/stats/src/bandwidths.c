@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  bandwidth.c by W. N. Venables and B. D. Ripley  Copyright (C) 1994-2001
- *  Copyright (C) 2012-2020  The R Core Team
+ *  Copyright (C) 2012-2025  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -113,15 +113,16 @@ SEXP bw_den(SEXP nbin, SEXP sx)
 {
     int nb = asInteger(nbin), n = LENGTH(sx);
     double xmin, xmax, rang, dd, *x = REAL(sx);
-
     xmin = R_PosInf; xmax = R_NegInf;
     for (int i = 0; i < n; i++) {
 	if(!R_FINITE(x[i]))
-	    error(_("non-finite x[%d] in bandwidth calculation"), i+1);
+	    Rf_error(_("non-finite x[%d] in bandwidth calculation"), i+1);
 	if(x[i] < xmin) xmin = x[i];
 	if(x[i] > xmax) xmax = x[i];
     }
     rang = (xmax - xmin) * 1.01;
+    if(rang == 0.0)
+	Rf_error(_("data are constant in bandwidth calculation"));
     dd = rang / nb;
 
     SEXP ans = PROTECT(allocVector(VECSXP, 2)),
