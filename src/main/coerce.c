@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997-2023  The R Core Team
+ *  Copyright (C) 1997-2025  The R Core Team
  *  Copyright (C) 2003-2023  The R Foundation
  *  Copyright (C) 1995,1996  Robert Gentleman, Ross Ihaka
  *
@@ -1379,8 +1379,6 @@ static SEXP asFunction(SEXP x)
     return f;
 }
 
-//#define R_LESS_COERCION_FROM_NULL
-// cannot yet build methods package with R_NO_LOGICAL_COERCION_FROM_NULL
 static SEXP ascommon(SEXP call, SEXP u, SEXPTYPE type)
 {
     /* -> as.vector(..) or as.XXX(.) : coerce 'u' to 'type' : */
@@ -1392,19 +1390,6 @@ static SEXP ascommon(SEXP call, SEXP u, SEXPTYPE type)
     else if (isVector(u) || isList(u) || isLanguage(u)
 	     || (isSymbol(u) && type == EXPRSXP)) {
 	SEXP v;
-#ifdef R_LESS_COERCION_FROM_NULL
-	if(TYPEOF(u) == NILSXP && type == REALSXP)
-	    errorcall(call, _(COERCE_ERROR_STRING),
-		      R_typeToChar(u), type2char(type));
-	if(TYPEOF(u) == NILSXP && type == INTSXP)
-	    errorcall(call, _(COERCE_ERROR_STRING),
-		      R_typeToChar(u), type2char(type));
-#endif
-#ifdef R_NO_LOGICAL_COERCION_FROM_NULL
-	if(TYPEOF(u) == NILSXP && type == LGLSXP)
-	    errorcall(call, _(COERCE_ERROR_STRING),
-		      R_typeToChar(u), type2char(type));
-#endif
 	if (type != ANYSXP && TYPEOF(u) != type) v = coerceVector(u, type);
 	else v = u;
 
