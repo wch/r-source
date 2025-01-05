@@ -9939,7 +9939,10 @@ Apple provide a version of the address sanitizer in recent versions of
 its C/C++ compiler.  This will probably give messages about
 @I{`malloc: nano zone abandoned'} which are innocuous and can be suppressed
 by setting environment variable @env{MallocNanoZone} to @code{0}.
+It can be heloful to install debug symbols (@command{INSTALL --dsym} for
+the package under test and particularly for reverse dependences.
 @c https://stackoverflow.com/questions/64126942/malloc-nano-zone-abandoned-due-to-inability-to-preallocate-reserved-vm-space
+
 
 @c 1-item menu: kept to avoid spurious warning from makeinfo 6.8/7.0
 @menu
