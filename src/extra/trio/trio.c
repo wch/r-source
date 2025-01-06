@@ -3418,9 +3418,11 @@ TRIO_ARGS6((self, number, flags, width, precision, base),
       /* need round-to-even rule here.  Applies only if base == 10 */
       if(base == 10 && i == integerDigits - 1 && fractionDigits == 0 
 	 && integerAdjust == 0.5) {
-	  int ii = (int) trio_floor(integerNumber/ 
-				    TrioPower(base, integerDigits - i - 1));
-	  if(ii % 2 == 0)
+	  trio_long_double_t ldi;
+	  ldi = trio_floor(integerNumber/ 
+			   TrioPower(base, integerDigits - i - 1));
+	  int ii = (int) trio_fmod(ldi, 2.0);
+	  if(ii == 0)
 	      workNumber = trio_floor(((integerNumber + integerAdjust - 1e-7)
 				/ TrioPower(base, integerDigits - i - 1)));
 	  else
@@ -3485,8 +3487,9 @@ TRIO_ARGS6((self, number, flags, width, precision, base),
 	  fractionNumber *= dblBase;
 	  fractionAdjust *= dblBase;
 	  if(base == 10 && i == fractionDigits - 1) {
-	      int ii = (int) trio_floor(fractionNumber);
-	      if(ii % 2 == 0)
+	      trio_long_double_t ldi = trio_floor(fractionNumber);
+	      int ii = (int)trio_fmod(ldi, 2.0);
+	      if(ii == 0)
 		  workNumber = trio_floor(fractionNumber + 
 					  fractionAdjust*(1-1e-14));
 	      else
