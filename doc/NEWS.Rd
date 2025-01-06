@@ -155,6 +155,9 @@
 
       The \code{Date} method also works for \code{seq(from, to)}, when
       \code{by} is missing and now defaults to \code{"1 days"}.
+
+      Both methods return or keep internal type \code{"integer"} more
+      consistently now.  Also, \code{as.POSIXct({})} is internally integer.
     }
   }
 

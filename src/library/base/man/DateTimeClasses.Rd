@@ -1,6 +1,6 @@
 % File src/library/base/man/DateTimeClasses.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2024 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{DateTimeClasses}
@@ -339,6 +339,11 @@
   The \emph{order} of the list components of \code{"POSIXlt"} objects
   must not be changed, as several C-based conversion methods rely on the
   order for efficiency.
+
+  Do not use \code{\link{identical}()} on objects of class \code{"POSIXct"},
+  rather \code{\link{==}} or \code{\link{all.equal}}.
+  Their \code{\link{storage.mode}} may be \code{"double"} or
+  \code{"integer"} and you should not rely on which is chosen.
 }
 \examples{\dontdiff{
 (z <- Sys.time())             # the current date, as class "POSIXct"

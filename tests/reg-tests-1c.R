@@ -1467,8 +1467,9 @@ stopifnot(
 ## and length 1 or 2 instead of about 6 in R 3.2.4
 (p2 <- chkPretty(as.POSIXct("2002-02-02 02:02", tz = "GMT-1"), n = 5, min.n = 5))
 stopifnot(length(p2) >= 5+1,
-	  identical(p2, structure(1012611717 + (0:5), class = c("POSIXct", "POSIXt"),
-				  tzone = "GMT-1", labels = time2d(57 + (0:5)), format = "%S")))
+	  identical(p2, structure(1012611717L + (0:5), class = c("POSIXct", "POSIXt"),
+				  tzone = "GMT-1", labels = time2d(57 + (0:5)), format = "%S"))
+          )
 ## failed in R 3.2.4
 (T3 <- structure(1460019857.25, class = c("POSIXct", "POSIXt")))# typical Sys.date()
 chkPretty(T3, 1) # error in svn 70438

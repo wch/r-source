@@ -656,6 +656,17 @@ stopifnot(exprs = {
                                  gsub('" "', '@', sub(".$", '', sub('^\\[1\\] "', '', pxx))))[[1L]]))
 })
 
+## as.POSIXct({}) internally
+L <- list(-1:1, {}, 2:4)
+(r <- do.call(c, lapply(L, as.POSIXct)))
+stopifnot(exprs = {
+    inherits(r, "POSIXct")
+    identical(-1:4, as.vector(r))
+    identical(integer(0), as.vector(as.POSIXct({})))
+})
+## was internally "double" in R <= 4.4.x
+
+
 ## `from = *` now optional in seq.Date(), seq.POSIXt() ----- PR#17672 ----------------------------
 ## somewhat full set of regression tests, given relatively large refactoring
 ## 1)  seq.POSIXt()
@@ -665,14 +676,18 @@ by <- "2 weeks"
 length.out <- 4L
 frI <- `storage.mode<-`(from, "integer")
 toI <- `storage.mode<-`( to , "integer")
+## 2 weeks in sec
+wks2sec <- as.integer( 2*7*86400 )
 All.eq0 <- function(x,y, ...) all.equal(x, y, tolerance = 0, ...)
+## (Checking assumptions (dbl <-> int) here which useRs/developers should *not* make)
 stopifnot(exprs = {
   ## NB: use 'from' on LHS of reference to ensure the time zone of 'from' is used in the result
-  identical(seq(from, to, by=by), from + 2*7*86400*(0:4))
+  identical(seq(from, to, by=by), from + wks2sec*(0:4))
   identical(seq(from, to, length.out=length.out),
             from + seq(0, difftime(to, from, units="secs"), length.out=length.out))
-  identical(seq(from,  by=by, length.out=length.out), from + 2*7*86400*seq(0, length.out-1L))
-  identical(seq(to=to, by=by, length.out=length.out),  to  - 2*7*86400*seq(length.out-1L, 0))
+  ##
+  identical(seq(from,  by=by, length.out=length.out), frI + wks2sec*seq(0, length.out-1L))
+  identical(seq(to=to, by=by, length.out=length.out), toI - wks2sec*seq(length.out-1L, 0))
   ##
   ## variations on 'by'
   identical(seq(from, to, by= '2 months'), from + c(0, 86400*c(31+29))) # + Warning .check_tzones() .. inconsistent
@@ -681,8 +696,8 @@ stopifnot(exprs = {
   identical(seq(from, to, by=30*86400), from + 30*86400*(0:2))
   ##
   ## missing from=
-  identical(seq(to=to, by='day',     length.out=6), to - 86400*(5:0))
-  identical(seq(to=to, by='-3 days', length.out=6), to + 3*86400*(5:0))
+  identical(seq(to=to, by='day',     length.out=6), toI -    86400L*(5:0))
+  identical(seq(to=to, by='-3 days', length.out=6), toI + 3L*86400L*(5:0))
   identical(seq(to=to, by='2 months',length.out=3), to - 86400*c(31+29+31+30, 31+29, 0))
   identical(seq(to=to, by='quarter', length.out=3), to - 86400*c(31+29+31+30+31+30, 31+29+31, 0))
   identical(seq(to=to, by='year',    length.out=3), to - 86400*c(366+365, 366, 0))

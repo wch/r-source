@@ -1,6 +1,6 @@
 % File src/library/base/man/as.POSIXlt.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2024 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{as.POSIX*}
@@ -118,7 +118,10 @@ as.POSIXct(strptime("2010-10-31 01:30:00", "\%Y-\%m-\%d \%H:\%M:\%S"))
 
 \value{
   \code{as.POSIXct} and \code{as.POSIXlt} return an object of the
-  appropriate class.  If \code{tz} was specified, \code{as.POSIXlt}
+  appropriate class, see \code{\link{POSIXt}} and its \sQuote{Warnings}
+  section on too narrow assumptions.
+
+  If \code{tz} was specified, \code{as.POSIXlt}
   will give an appropriate \code{"tzone"} attribute.  Date-times known
   to be invalid will be returned as \code{NA}.
 }

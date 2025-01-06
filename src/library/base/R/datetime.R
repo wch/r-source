@@ -979,7 +979,7 @@ function(from, to, by, length.out = NULL, along.with = NULL, ...)
     valid <- 0L
     if (inherits(by, "difftime")) {
         units(by) <- "secs"
-        by <- as.vector(by)
+        by <- as.vector(by) # simple numeric (int/dbl)
     } else if(is.character(by)) {
         by2 <- strsplit(by, " ", fixed = TRUE)[[1L]]
         if(length(by2) > 2L || length(by2) < 1L)
@@ -996,14 +996,13 @@ function(from, to, by, length.out = NULL, along.with = NULL, ...)
     } else if(!is.numeric(by)) stop("invalid mode for 'by'")
     if(is.na(by)) stop("'by' is NA")
 
-    # if one of secs, mins, hours, days, or weeks
-    if(valid <= 5L) { # days or weeks
+    if(valid <= 5L) { # one of secs, mins, hours, days, or weeks
        res <- switch(missing_arg,
            from       = seq.int(to   = unclass(cto),   by = by,           length.out = length.out),
            to         = seq.int(from = unclass(cfrom), by = by,           length.out = length.out),
            length.out = seq.int(from = unclass(cfrom), to = unclass(cto), by = by)
        )
-       return(.POSIXct(as.numeric(res), tz))
+       return(.POSIXct(res, tz))
     }
     lres <- as.POSIXlt(if (missing_arg != "from") from else to)
     if (missing_arg == "length.out") lto <- as.POSIXlt(to)

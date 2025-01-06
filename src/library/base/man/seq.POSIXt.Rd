@@ -7,7 +7,7 @@
 \alias{seq.POSIXt}
 \title{Generate Regular Sequences of Times}
 \description{
-  The method for \code{\link{seq}} for date-time classes.
+  The method for \code{\link{seq}} for date-time (\code{"\link{POSIXt}"}) classes.
 }
 \usage{
 \method{seq}{POSIXt}(from, to, by, length.out = NULL, along.with = NULL, \dots)
