@@ -1477,8 +1477,6 @@ if(attr(oL, "ok") && capabilities("NLS") && !is.na(.popath)
     ## reset {just in case}:
     Sys.setLanguage("en")
 }
-## reset {just in case}:
-Sys.setLanguage("en")
 
 
 ## print( ls.str() ) using '<missing>' also in non-English setup:
