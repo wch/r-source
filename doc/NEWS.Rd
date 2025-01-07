@@ -156,6 +156,9 @@
       The \code{Date} method also works for \code{seq(from, to)}, when
       \code{by} is missing and now defaults to \code{"1 days"}.
 
+      It is now documented (and tested) that the \code{by} string may be
+      \emph{abbreviated} in both \code{seq} methods.
+
       Both methods return or keep internal type \code{"integer"} more
       consistently now.  Also, \code{as.POSIXct({})} is internally integer.
     }

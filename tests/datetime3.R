@@ -683,6 +683,8 @@ All.eq0 <- function(x,y, ...) all.equal(x, y, tolerance = 0, ...)
 stopifnot(exprs = {
   ## NB: use 'from' on LHS of reference to ensure the time zone of 'from' is used in the result
   identical(seq(from, to, by=by), from + wks2sec*(0:4))
+  identical(seq(from, to, by=by),
+            seq(from, to, by="2 w")) # may abbreviate
   identical(seq(from, to, length.out=length.out),
             from + seq(0, difftime(to, from, units="secs"), length.out=length.out))
   ##
@@ -732,11 +734,16 @@ stopifnot(exprs = {
   ## variations on 'by'
   identical(seq(from, to, by='2 months'), from + c(0, c(31+29)))
   identical(seq(to, from, by='-2 months'), to - c(0, c(31+29)))
+  identical(seq(to, from, by='-2 m'     ), to - c(0, c(31+29)))
   identical(seq(from, to, by=as.difftime(30, units='days')), from + 30*(0:2))
   identical(seq(from, to, by=30), from + 30*(0:2))
+  all.equal(seq(from, to, by = "1 week"), seq(from, by = "w", length.out = 9)) # TODO ident. ?
+  identical(seq(frI, toI, by = "1 week"), seq(from, by = "w", length.out = 9))
   ##
   ## missing from=
-  All.eq0 ( seq(to=to, by='day',     length.out=6), to - (5:0))
+  identical(seq(to=to, by='day',     length.out=6),
+            seq(to=to,               length.out=6))
+  All.eq0 ( seq(to=to,               length.out=6), to - (5:0))
   All.eq0 ( seq(to=to, by='-3 days', length.out=6), to + 3*(5:0))
   identical(seq(to=to, by='2 months',length.out=3), to - c(31+29+31+30, 31+29, 0))
   identical(seq(to=to, by='quarter', length.out=3), to - c(31+29+31+30+31+30, 31+29+31, 0))

@@ -1004,6 +1004,7 @@ function(from, to, by, length.out = NULL, along.with = NULL, ...)
        )
        return(.POSIXct(res, tz))
     }
+    ## months or longer -->  via  POSIXlt
     lres <- as.POSIXlt(if (missing_arg != "from") from else to)
     if (missing_arg == "length.out") lto <- as.POSIXlt(to)
     if(valid == 7L) { # years

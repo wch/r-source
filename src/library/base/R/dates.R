@@ -270,13 +270,15 @@ seq.Date <- function(from, to, by, length.out = NULL, along.with = NULL, ...)
         units(by) <- "days"
         by <- as.vector(by)
     } else if(is.character(by)) {
-        by2 <- strsplit(by, " ", fixed = TRUE)[[1L]]
-        if(length(by2) > 2L || length(by2) < 1L)
+        nby2 <- length(by2 <- strsplit(by, " ", fixed = TRUE)[[1L]])
+        if(nby2 > 2L || nby2 < 1L)
             stop("invalid 'by' string")
-        valid <- pmatch(by2[length(by2)],
-                        c("days", "weeks", "months", "quarters", "years"))
+        bys <- c("days", "weeks", "months", "quarters", "years")
+        valid <- pmatch(by2[nby2], bys) 
         if(is.na(valid)) stop("invalid string for 'by'")
+        by <- bys[valid] # had *partial* match
         if(valid > 2L) { # seq.POSIXt handles the logic for non-arithmetic cases
+            if (nby2 == 2L) by <- paste(by2[1L], by)
             res <- switch(missing_arg,
               from       = seq(to   = as.POSIXlt(to),   by = by,             length.out = length.out),
               to         = seq(from = as.POSIXlt(from), by = by,             length.out = length.out),
@@ -285,7 +287,7 @@ seq.Date <- function(from, to, by, length.out = NULL, along.with = NULL, ...)
             return(as.Date(res))
         }
         by <- c(1L, 7L)[valid]
-        if (length(by2) == 2L) by <- by * as.integer(by2[1L])
+        if (nby2 == 2L) by <- by * as.integer(by2[1L])
     }
     else if(!is.numeric(by)) stop("invalid mode for 'by'")
     if(is.na(by)) stop("'by' is NA")

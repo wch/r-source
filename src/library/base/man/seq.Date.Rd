@@ -27,7 +27,8 @@
     \item A number, taken to be in days.
     \item A object of class \code{\link{difftime}}
     \item A character string, containing one of \code{"day"},
-    \code{"week"}, \code{"month"}, \code{"quarter"} or \code{"year"}.
+    \code{"week"}, \code{"month"}, \code{"quarter"} or \code{"year"}, or a
+    \code{\link{pmatch}()}able abbreviaton of these.
     This can optionally be preceded by a (positive or negative) integer
     and a space, or followed by \code{"s"}.
 
@@ -55,11 +56,15 @@ seq(as.Date("2000/1/1"), as.Date("2003/1/1"), by = "quarter")
 ## 3-week period ending on a fixed date
 seq(to = as.Date("2024-06-18"), by = "day", length.out = 21)
 
-## find all 7th of the month between two dates, the last being a 7th.
+## find all 7th of the month _strictly_ inside two dates, the last being a 7th.
 st <- as.Date("1998-12-17")
 en <- as.Date("2000-1-7")
 ll <- seq(en, st, by = "-1 month")
-rev(ll[ll > st & ll < en])
+rev(ll[st < ll & ll < en])
+
+## can abbreviate 'month' to 'm':
+identical(seq(st, en, by = "m"),
+          seq(st, en, by = "1 month"))
 }
 \keyword{manip}
 \keyword{chron}
