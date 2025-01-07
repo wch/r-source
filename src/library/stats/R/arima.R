@@ -291,15 +291,14 @@ arima <- function(x, order = c(0L, 0L, 0L),
             }
         }
         trarma <- .Call(C_ARIMA_transPars, init, arma, transform.pars)
+        mod <- makeARIMA(trarma[[1L]], trarma[[2L]], Delta, kappa, SSinit) # for armafn()
         res <- if(no.optim)
             list(convergence = 0, par = numeric(),
                  value = armafn(numeric(), as.logical(transform.pars)))
-        else {
-            mod <- makeARIMA(trarma[[1L]], trarma[[2L]], Delta, kappa, SSinit)
+        else
             optim(init[mask], armafn, method = optim.method,
                   hessian = TRUE, control = optim.control,
                   trans = as.logical(transform.pars))
-        }
         if(res$convergence > 0)
             warning(gettextf("possible convergence problem: optim gave code = %d",
                              res$convergence), domain = NA)
