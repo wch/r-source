@@ -97,9 +97,10 @@ check:
 	  $(MAKE) -f test >> check.log 2>&1; \
 	else \
 	  $(MAKE) all test > check.log 2>&1; \
-	fi
-	@tail check.log
-	@$(ECHO) "check output can be found in src/nmath/standalone/check.log"
+	fi || { \
+	  $(ECHO) "==> src/nmath/standalone/check.log <=="; \
+	  tail check.log && exit 1; \
+	}
 
 Copy:
 	@$(ECHO) "Copying source files"

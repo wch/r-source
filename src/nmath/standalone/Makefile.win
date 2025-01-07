@@ -52,8 +52,10 @@ check: distclean
 	  $(MAKE) -f Makefile.win test >> check.log 2>&1; \
 	else \
 	  $(MAKE) -f Makefile.win all test > check.log 2>&1; \
-	fi
-	@$(ECHO) "check output can be found in src/nmath/standalone/check.log"
+	fi || { \
+	  $(ECHO) "==> src/nmath/standalone/check.log <=="; \
+	  tail check.log && exit 1; \
+	}
 
 clean:
 	@$(RM) $(SOURCES_NMATH) *.o *.d *.def Makedeps stamp-src
