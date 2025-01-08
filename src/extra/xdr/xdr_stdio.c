@@ -7,17 +7,41 @@
 /* Local mod: assumes _WIN32 is i386 and little-endian generic is 32-bit */
 #if defined(_WIN32) || defined(__CYGWIN__)
 static uint32_t ntohl(uint32_t x)
-{ /* could write VC++ inline assembler, but not worth it for now */
-#if (defined(__i386) || defined(__x86_64)) && !defined(_MSC_VER)
+{ 
+# ifdef XDR_ASSEMBLY
+#  undef XDR_ASSEMBLY
+# endif
+
+# if (defined(__i386) || defined(__x86_64)) && !defined(_MSC_VER)
+#  define XDR_ASSEMBLY
+# endif
+
+# if defined(XDR_ASSEMBLY) && defined(__has_feature)
+#  if __has_feature(address_sanitizer)
+#   undef XDR_ASSEMBLY
+#  endif
+# endif
+
+# if defined(XDR_ASSEMBLY) && \
+     (defined(__SANITIZE_ADDRESS__) || defined(__SANITIZE_THREAD__))
+#  undef XDR_ASSEMBLY
+# endif
+
+# ifdef XDR_ASSEMBLY
+  /* could write VC++ inline assembler, but not worth it for now */
   __asm__("xchgb %b0,%h0\n\t"	/* swap lower bytes	*/
 	  "rorl $16,%0\n\t"	/* swap words		*/
 	  "xchgb %b0,%h0"       /* swap higher bytes	*/
 	  :"=q" (x)
 	  : "0" (x));
   return x;
-#else
+# else
   return((x << 24) | ((x & 0xff00) << 8) | ((x & 0xff0000) >> 8) | (x >> 24));
-#endif
+# endif
+
+# ifdef XDR_ASSEMBLY
+#  undef XDR_ASSEMBLY
+# endif
 }
 #else /* net is big-endian: little-endian hosts need byte-swap code */
 #ifndef WORDS_BIGENDIAN
