@@ -5015,10 +5015,21 @@ which is @command{bash}-specific (first set the variable then export it
 by name).
 
 Using @code{test -e} (or @code{[ -e ]}) in shell scripts is not fully
-portable@footnote{it was not in the @I{Bourne} shell, and was not supported
-by Solaris 10.}: @code{-f} is normally what is intended.  Flags
-@option{-a} and @option{-o} are nowadays declared obsolescent by POSIX
-and should not be used.
+portable@footnote{it was not in the @I{Bourne} shell, and was not
+supported by Solaris 10.}: @code{-f} is normally what is intended.
+Flags @option{-a} and @option{-o} are nowadays declared obsolescent by
+POSIX and should not be used.  They are easily replaced by more legible
+forms: replace
+@example
+test A -a B
+test A -o B
+@end example
+@noindent
+by
+@example
+test A && test B
+test A || test B
+@end example
 
 Use of `brace expansion', e.g.,
 @example
@@ -5026,6 +5037,9 @@ rm -f src/*.@{o,so,d@}
 @end example
 @noindent
 is not portable.
+
+The string equality operator in shell tests is @code{=} : @code{==} is
+a GNU extension.
 
 The @option{-o} flag for @command{set} in shell scripts is optional in
 POSIX and not supported on all the platforms @R{} is used on.
