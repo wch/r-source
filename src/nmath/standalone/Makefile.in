@@ -136,7 +136,7 @@ $(libRmath_la): $(libRmath_la_OBJECTS)
 	$(DYLIB_LINK) -o $@ $(libRmath_la_LDFLAGS) $(libRmath_la_OBJECTS) $(LIBM)
 
 test: $(srcdir)/test.c
-	$(CC) -o $@ $(ALL_CPPFLAGS) $(ALL_CFLAGS) $(srcdir)/test.c -L. -lRmath $(LIBM)
+	$(CC) -o $@ $(ALL_CPPFLAGS) $(ALL_CFLAGS) $(srcdir)/test.c libRmath.a $(LIBM)
 	./$@
 
 install: installdirs install-header @WANT_R_FRAMEWORK_FALSE@ install-pc
