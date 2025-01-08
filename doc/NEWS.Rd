@@ -141,6 +141,10 @@
       \item Status reporting in \code{download.file()} has been extended to
       report the outcome for individual files in simultaneous download.
 
+      \item The Rd \verb{\link} macro now allows markup in the link text
+      when the topic is given by the optional argument, e.g.,
+      \samp{\link[=gamma]{\eqn{\Gamma(x)}}}.
+
       \item If \code{La_library()} is empty, \code{sessionInfo()} still
       reports \code{La_version()} when available.
 
@@ -1648,7 +1652,7 @@
       again marks methods from package \pkg{base} as \code{visible}.
 
       Also, the visibility of non-\pkg{base} methods is again determined by
-      the method's presence in \code{\link{search}()}.
+      the method's presence in \code{search()}.
 
       \item \code{tools::Rdiff()} is now more robust against invalid
       strings, fixing installation tests on Windows without \I{Rtools}
@@ -4478,7 +4482,7 @@
 
       \item \code{sum(df)} and similar \code{"Summary"}- and
       \code{"Math"}-group member functions now work for data frames
-      \code{df} with \code{\link{logical}} columns, notably also of zero
+      \code{df} with \code{logical} columns, notably also of zero
       rows.  (Reported to R-devel by Martin \dQuote{b706}.)
 
       \item \code{unsplit()} had trouble with \I{tibble}s due to unsound use of
