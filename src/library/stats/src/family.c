@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2005-2022  The R Core Team
+ *  Copyright (C) 2005-2025  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -59,11 +59,11 @@ static R_INLINE double x_d_opx(double x) {return x/(1 + x);}
 SEXP logit_link(SEXP mu)
 {
     int i, n = LENGTH(mu);
+    if (!n || !isReal(mu))
+	error(_("Argument %s must be a nonempty numeric vector"), "mu");
     SEXP ans = PROTECT(shallow_duplicate(mu));
     double *rans = REAL(ans), *rmu=REAL(mu);
 
-    if (!n || !isReal(mu))
-	error(_("Argument %s must be a nonempty numeric vector"), "mu");
     for (i = 0; i < n; i++)
 	rans[i] = log(x_d_omx(rmu[i]));
     UNPROTECT(1);
@@ -72,12 +72,12 @@ SEXP logit_link(SEXP mu)
 
 SEXP logit_linkinv(SEXP eta)
 {
-    SEXP ans = PROTECT(shallow_duplicate(eta));
     int i, n = LENGTH(eta);
-    double *rans = REAL(ans), *reta = REAL(eta);
-
     if (!n || !isReal(eta))
 	error(_("Argument %s must be a nonempty numeric vector"), "eta");
+    SEXP ans = PROTECT(shallow_duplicate(eta));
+    double *rans = REAL(ans), *reta = REAL(eta);
+
     for (i = 0; i < n; i++) {
 	double etai = reta[i], tmp;
 	tmp = (etai < MTHRESH) ? DBL_EPSILON :
@@ -90,12 +90,12 @@ SEXP logit_linkinv(SEXP eta)
 
 SEXP logit_mu_eta(SEXP eta)
 {
-    SEXP ans = PROTECT(shallow_duplicate(eta));
     int i, n = LENGTH(eta);
-    double *rans = REAL(ans), *reta = REAL(eta);
-
     if (!n || !isReal(eta))
 	error(_("Argument %s must be a nonempty numeric vector"), "eta");
+    SEXP ans = PROTECT(shallow_duplicate(eta));
+    double *rans = REAL(ans), *reta = REAL(eta);
+
     for (i = 0; i < n; i++) {
 	double etai = reta[i];
 	double opexp = 1 + exp(etai);
