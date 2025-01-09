@@ -1,7 +1,7 @@
 #  File src/library/tools/R/QC.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2024 The R Core Team
+#  Copyright (C) 1995-2025 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -4819,6 +4819,7 @@ function(package, dir, lib.loc = NULL)
                     domain = NA)
     }
     ## The bad ones:
+    ## The bad ones:
     bad <- db[, "bad"] == "TRUE"
     out <- list(bad = split(db[bad, "report"], db[bad, "File"]))
     if(mind_suspects && any(ind <- db[, "suspect"] == "TRUE")) {
@@ -7030,7 +7031,7 @@ function(x, ...)
     } else character()
     if(length(x$bad_S4methods)) {
         msg <- ngettext(length(x$bad_S4methods),
-                        "Found a.Internal call in methods for the following S4 generic:",
+                        "Found a .Internal call in methods for the following S4 generic:",
                         "Found .Internal calls in methods for the following S4 generics:"
                         )
         out <- c(out, strwrap(msg), .pretty_format(x$bad_S4methods))
