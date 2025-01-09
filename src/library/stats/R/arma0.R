@@ -1,7 +1,7 @@
 #  File src/library/stats/R/arma0.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1999-2019 The R Core Team
+#  Copyright (C) 1999-2025 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -16,8 +16,8 @@
 #  A copy of the GNU General Public License is available at
 #  https://www.R-project.org/Licenses/
 
-arima0 <- function(x, order = c(0, 0, 0),
-                   seasonal = list(order = c(0, 0, 0), period = NA),
+arima0 <- function(x, order = c(0L, 0L, 0L),
+                   seasonal = list(order = c(0L, 0L, 0L), period = NA),
                    xreg = NULL, include.mean = TRUE, delta = 0.01,
                    transform.pars = TRUE, fixed = NULL, init = NULL,
                    method = c("ML", "CSS"), n.cond,
@@ -41,7 +41,7 @@ arima0 <- function(x, order = c(0, 0, 0),
     {
         ## polyroot can't cope with leading zero.
         q <- length(ma)
-        q0 <- max(which(c(1,ma) != 0)) - 1
+        q0 <- max(which(c(1,ma) != 0)) - 1L
         if(!q0) return(ma)
         roots <- polyroot(c(1, ma[1L:q0]))
         ind <- Mod(roots) < 1
@@ -55,9 +55,10 @@ arima0 <- function(x, order = c(0, 0, 0),
     }
 
     series <- deparse1(substitute(x))
-    if(NCOL(x) > 1)
+    if(NCOL(x) > 1L)
         stop("only implemented for univariate time series")
     method <- match.arg(method)
+
     x <- as.ts(x)
     if(!is.numeric(x))
         stop("'x' must be numeric")
@@ -72,12 +73,13 @@ arima0 <- function(x, order = c(0, 0, 0),
             if(is.null(seasonal$order))
                 stop("'seasonal' must be a list with component 'order'")
             if(!is.numeric(seasonal$order) || length(seasonal$order) != 3L
-               || any(seasonal$order < 0))
+               || any(seasonal$order < 0L))
                 stop("'seasonal$order' must be a non-negative numeric vector of length 3")
-        } else if(is.numeric(order)) {
-            if(length(order) == 3) seasonal <- list(order=seasonal)
-            else ("'seasonal' is of the wrong length")
-        } else stop("'seasonal' must be a list with component 'order'")
+        } else if(is.numeric(seasonal)) { # meant to be  seasonal$order
+            if(length(seasonal) != 3L || any(seasonal < 0))
+                stop("if not a list, 'seasonal' must be a non-negative numeric vector of length 3")
+            seasonal <- list(order=seasonal)
+        } else stop("'seasonal' is neither a list with component 'order' nor a numeric vector of length 3")
 
     if(is.null(seasonal$period) || is.na(seasonal$period)
        || seasonal$period == 0) seasonal$period <- frequency(x)
@@ -167,7 +169,7 @@ arima0 <- function(x, order = c(0, 0, 0),
                 if(!arCheck(init[1L:arma[1L]]))
                     stop("non-stationary AR part")
             if(arma[3L] > 0)
-                if(!arCheck(init[sum(arma[1L:2]) + 1L:arma[3L]]))
+                if(!arCheck(init[sum(arma[1L:2L]) + 1L:arma[3L]]))
                     stop("non-stationary seasonal AR part")
             ## enforce invertibility
             if(arma[2L] > 0) {
@@ -175,7 +177,7 @@ arima0 <- function(x, order = c(0, 0, 0),
                 init[ind] <- maInvert(init[ind])
             }
             if(arma[4L] > 0) {
-                ind <- sum(arma[1L:3]) + 1L:arma[4L]
+                ind <- sum(arma[1L:3L]) + 1L:arma[4L]
                 init[ind] <- maInvert(init[ind])
             }
             init <- .Call(C_Invtrans, G, as.double(init))
@@ -210,12 +212,12 @@ arima0 <- function(x, order = c(0, 0, 0),
     class(resid) <- "ts"
     n.used <- sum(!is.na(resid))
     nm <- NULL
-    if(arma[1L] > 0) nm <- c(nm, paste0("ar", 1L:arma[1L]))
-    if(arma[2L] > 0) nm <- c(nm, paste0("ma", 1L:arma[2L]))
-    if(arma[3L] > 0) nm <- c(nm, paste0("sar", 1L:arma[3L]))
-    if(arma[4L] > 0) nm <- c(nm, paste0("sma", 1L:arma[4L]))
+    if(arma[1L] > 0L) nm <- c(nm, paste0("ar", 1L:arma[1L]))
+    if(arma[2L] > 0L) nm <- c(nm, paste0("ma", 1L:arma[2L]))
+    if(arma[3L] > 0L) nm <- c(nm, paste0("sar", 1L:arma[3L]))
+    if(arma[4L] > 0L) nm <- c(nm, paste0("sma", 1L:arma[4L]))
     fixed[mask] <- coef
-    if(ncxreg > 0) {
+    if(ncxreg > 0L) {
         nm <- c(nm, cn)
         if(!orig.xreg) {
             ind <- narma + 1L:ncxreg
@@ -255,11 +257,9 @@ print.arima0 <- function(x, digits = max(3L, getOption("digits") - 3L),
     print.default(coef, print.gap = 2)
     cm <- x$call$method
     if(is.null(cm) || cm != "CSS")
-        cat("\nsigma^2 estimated as ",
-            format(x$sigma2, digits = digits),
-            ":  log likelihood = ", format(round(x$loglik,2)),
-            ",  aic = ", format(round(x$aic,2)),
-            "\n", sep = "")
+        cat("\nsigma^2 estimated as ", format(x$sigma2, digits = digits),
+            ":  log likelihood = ", format(round(x$loglik, 2L)),
+            ",  aic = ", format(round(x$aic, 2L)), "\n", sep = "")
     else
         cat("\nsigma^2 estimated as ",
             format(x$sigma2, digits = digits),
@@ -294,12 +294,12 @@ predict.arima0 <-
         xm <- drop(as.matrix(newxreg) %*% coefs[-(1L:narma)])
     } else xm <- 0
     ## check invertibility of MA part(s)
-    if(arma[2L] > 0) {
+    if(arma[2L] > 0L) {
         ma <- coefs[arma[1L] + 1L:arma[2L]]
         if(any(Mod(polyroot(c(1, ma))) < 1))
             warning("MA part of model is not invertible")
     }
-    if(arma[4L] > 0) {
+    if(arma[4L] > 0L) {
         ma <- coefs[sum(arma[1L:3L]) + 1L:arma[4L]]
         if(any(Mod(polyroot(c(1, ma))) < 1))
             warning("seasonal MA part of model is not invertible")
