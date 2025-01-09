@@ -1,7 +1,7 @@
 #  File src/library/tools/R/install.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2024 The R Core Team
+#  Copyright (C) 1995-2025 The R Core Team
 #
 # NB: also copyright dates in Usages.
 #
@@ -2815,7 +2815,8 @@ if(FALSE) {
             ## report the SDK in use: we want to know what it is symlinked to
             sdk <- try(system2("xcrun", "--show-sdk-path", TRUE, TRUE), silent = TRUE)
             if(!inherits(sdk, "try-error")) {
-                sdk <- Sys.readlink(sdk)
+                sdk <- if (length(attr(sdk, "status"))) NA_character_
+                       else Sys.readlink(sdk)
                 message("using SDK: ", sQuote(sdk))
             }
         }
