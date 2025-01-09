@@ -65,16 +65,17 @@ SEXP logit_link(SEXP mu)
     double *rans = REAL(ans), *rmu=REAL(mu);
 
     for (i = 0; i < n; i++)
-	rans[i] = log(x_d_omx(rmu[i]));
+	rans[i] = log(x_d_omx(rmu[i]));// log( x/(1-x) )
     UNPROTECT(1);
     return ans;
 }
 
 SEXP logit_linkinv(SEXP eta)
 {
-    int i, n = LENGTH(eta);
-    if (!n || !isReal(eta))
+    int i, n = LENGTH(eta), nprot = 1;
+    if (!n || !isNumeric(eta))
 	error(_("Argument %s must be a nonempty numeric vector"), "eta");
+    if (!isReal(eta)) {eta = PROTECT(coerceVector(eta, REALSXP)); nprot++;}
     SEXP ans = PROTECT(shallow_duplicate(eta));
     double *rans = REAL(ans), *reta = REAL(eta);
 
@@ -84,7 +85,7 @@ SEXP logit_linkinv(SEXP eta)
 	    ((etai > THRESH) ? INVEPS : exp(etai));
 	rans[i] = x_d_opx(tmp);
     }
-    UNPROTECT(1);
+    UNPROTECT(nprot);
     return ans;
 }
 
