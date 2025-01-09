@@ -59,15 +59,18 @@
       empty string as its \code{path} argument.
 
       \item Silent integer overflow could occur in the
-       \sQuote{exact} computations for \code{fisher.test()} for
-       unrealistic inputs: this is now an error.
+      \sQuote{exact} computations for \code{fisher.test()} for
+      unrealistic inputs: this is now an error.
 
-       \item Some inalid C-level memory accesses are avoided for
-       \code{loglin(, margin = NULL)}.
+      \item Some invalid C-level memory accesses are avoided for
+      \code{loglin(, margin = NULL)}.
 
-       \code{loglin(, param = TRUE)} no longer gives an eror in corner
-       cases such as a one-dimensional input.
-     }
+      \code{loglin(, param = TRUE)} no longer gives an error in corner
+      cases such as a one-dimensional input.
+
+      \item \code{dev.capabilities() $ events} now reports \code{"Idle"} if
+      the device provides it, fixing \PR{18836}, thanks to \I{Trevor Davis}.
+    }
   }
 }
 

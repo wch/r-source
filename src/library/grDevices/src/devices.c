@@ -174,11 +174,12 @@ SEXP devcap(SEXP args)
 
     /* FIXME:  there should be a way for a device to declare its own
                events, and return information on how to set them */
-    PROTECT(events = allocVector(INTSXP, 4));
+    PROTECT(events = allocVector(INTSXP, 5));
     INTEGER(events)[0] = (int)(dd->canGenMouseDown);
     INTEGER(events)[1] = (int)(dd->canGenMouseMove);
     INTEGER(events)[2] = (int)(dd->canGenMouseUp);
     INTEGER(events)[3] = (int)(dd->canGenKeybd);
+    INTEGER(events)[4] = (int)(dd->canGenIdle);
     SET_VECTOR_ELT(capabilities, R_GE_capability_events, events);
     UNPROTECT(1);
 
