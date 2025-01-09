@@ -1,6 +1,6 @@
 
-R Under development (unstable) (2024-03-04 r86047) -- "Unsuffered Consequences"
-Copyright (C) 2024 The R Foundation for Statistical Computing
+R version 4.4.2 Patched (2025-01-08 r87545) -- "Pile of Leaves"
+Copyright (C) 2025 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -3158,7 +3158,7 @@ HI -126.25 31.75
 > require(stats); require(graphics)
 > ## Compare the monthly series
 > plot (sunspot.month,
-+       main="sunspot.month & sunspots [package'datasets']", col=2)
++       main="sunspot.month & sunspots [package 'datasets']", col=2)
 > lines(sunspots) # -> faint differences where they overlap
 > 
 > ## Now look at the difference :
@@ -3166,7 +3166,7 @@ HI -126.25 31.75
 +     tsp(sunspot.month)[c(1,3)]) ## Start & Periodicity are the same
 [1] TRUE
 > n1 <- length(sunspots)
-> table(eq <- sunspots == sunspot.month[1:n1]) #>  132  are different !
+> table(eq <- sunspots == sunspot.month[1:n1]) #>  143  are different !
 
 FALSE  TRUE 
   143  2677 
@@ -3320,7 +3320,7 @@ FALSE  TRUE
 [142,] 2790 1981.417     90.0     90.9       1.0
 [143,] 2819 1983.833     33.3     33.4       0.3
 > 
-> ## How to recreate the "old" sunspot.month (R <= 3.0.3):
+> ## How to recreate the "old" sunspot.month (R <= 3.0.3) =: sunspot.month.0
 > .sunspot.diff <- cbind(
 +     i = c(1202L, 1256L, 1258L, 1301L, 1407L, 1429L, 1452L, 1455L,
 +           1663L, 2151L, 2329L, 2498L, 2594L, 2694L, 2819L),
@@ -3329,6 +3329,7 @@ FALSE  TRUE
 > ssm0 <- sunspot.month[1:2988]
 > with(as.data.frame(.sunspot.diff), ssm0[i] <<- ssm0[i] - res10/10)
 > sunspot.month.0 <- ts(ssm0, start = 1749, frequency = 12)
+> stopifnot(length(sunspot.month.0) == 2988)
 > 
 > 
 > 
@@ -3352,10 +3353,10 @@ FALSE  TRUE
 > ## The common time interval
 > (t1 <- c(max(start(sm), start(sy)),     1)) # Jan 1749
 [1] 1749    1
-> (t2 <- c(min(  end(sm)[1],end(sy)[1]), 12)) # Dec 1983
+> (t2 <- c(min(  end(sm)[1],end(sy)[1]), 12)) # Dec 1983 (will not be updated!)
 [1] 1983   12
 > s.m <- window(sm, start=t1, end=t2)
-> s.y <- window(sy, start=t1, end=t2[1]) # {irrelevant warning}
+> s.y <- window(sy, start=t1, end=t2[1])
 > stopifnot(length(s.y) * 12 == length(s.m),
 +           ## The yearly series *is* close to the averages of the monthly one:
 +           all.equal(s.y, aggregate(s.m, FUN = mean), tolerance = 0.0020))
