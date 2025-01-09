@@ -215,7 +215,7 @@
 
   \subsection{PACKAGE INSTALLATION}{
     \itemize{
-      \item .
+      \item Source installs now report the package version in the log.
     }
   }
 

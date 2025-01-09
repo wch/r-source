@@ -1019,6 +1019,11 @@ if(FALSE) {
 
         stars <- "**"
 
+        starsmsg(stars,
+                 sprintf("this is package %s version %s",
+                         sQuote(desc["Package"]),
+                         sQuote(desc["Version"])))
+
         res <- checkMD5sums(pkg_name, getwd())
         if(!is.na(res) && res) {
             starsmsg(stars,
