@@ -5224,7 +5224,9 @@ function(dir, doDelete = FALSE)
         all_files <- mydir(demo_dir)
         demo_files <- list_files_with_type(demo_dir, "demo",
                                            full.names = FALSE)
-        wrong <- setdiff(all_files, c("00Index", demo_files))
+	save_files <- paste0(sub("r$", "R", demo_files), "out.save")        
+        wrong <- setdiff(all_files,
+                         c("00Index", demo_files, save_files))
         if(length(wrong)) {
             wrong_things$demo <- wrong
             if(doDelete) unlink(file.path(dir, "demo", wrong))
