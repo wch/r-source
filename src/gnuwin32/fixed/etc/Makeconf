@@ -32,6 +32,7 @@ IMPDIR = bin
 M_ARCH =
 DT_ARCH =
 RC_ARCH =
+FLIBS =
 # Used by packages tcltk and tkrplot
 TCL_HOME = $(R_HOME)/Tcl
 
@@ -154,10 +155,8 @@ F_VISIBILITY =
 ## FC is the compiler used for all Fortran as from R 3.6.0
 ifdef USE_LLVM
   FC = $(BINPREF)flang $(M_ARCH)
-  FLIBS = -lFortranRuntime -lFortranDecimal -lFortran_main -lc++ -lm 
 else
   FC = $(BINPREF)gfortran $(M_ARCH)
-  FLIBS = -lgfortran -lm -lquadmath
 endif
 FCFLAGS = -O3 $(FDEBUGFLAG) @EOPTS@ $(LTO)
 ## additional libs needed when linking with $(FC), e.g. on some Oracle compilers
