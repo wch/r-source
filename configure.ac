@@ -1110,7 +1110,7 @@ if test "x${use_long_double}" = xyes; then
   AC_DEFINE(HAVE_LONG_DOUBLE, 1, [Define if you wish to use the 'long double' type.])
   AC_CHECK_SIZEOF(long double)
 else
-  AC_MSG_WARN([Not using the 'long double' type])
+  AC_MSG_NOTICE([Not using the 'long double' type])
 fi
 
 R_PROG_CC_MAKEFRAG
