@@ -432,7 +432,9 @@ HTMLcomponents <- function(title = "R", logo = FALSE,
                            MATHJAX_CONFIG_STATIC = file.path(Rhome, "doc/html/mathjax-config.js"),
                            PRISM_JS_STATIC = c("https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js",
                                                "https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-r.min.js"),
-                           PRISM_CSS_STATIC = "https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css")
+                           PRISM_CSS_STATIC = "https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css",
+                           language = NA_character_
+                           )
 {
     header <- character(0)
     footer <- character(0)
@@ -475,7 +477,10 @@ HTMLcomponents <- function(title = "R", logo = FALSE,
     }
 
     addh('<!DOCTYPE html>',
-         "<html>",
+         if(!is.na(language))
+             sprintf('<html lang="%s">', language)
+         else
+             "<html>",
          '<head><title>')
 
     ## headtitle <- strwrap(.Rd_format_title(.Rd_get_title(Rd)),

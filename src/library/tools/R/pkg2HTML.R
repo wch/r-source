@@ -121,7 +121,8 @@ pkg2HTML <- function(package, dir = NULL, lib.loc = NULL,
                                          Rhtml = Rhtml, hooks = hooks,
                                          texmath = "katex", prism = prism, ...)
     descfile <- attr(hcontent, "descfile")
-    pkgname <- read.dcf(descfile, fields = "Package")[1, 1]
+    descmeta <- .read_description(descfile)
+    pkgname <- descmeta["Package"]
     if (is.null(out)) {
         out <- if (is.null(hooks$pkg_href)) ""
                else hooks$pkg_href(pkgname)
@@ -149,6 +150,16 @@ pkg2HTML <- function(package, dir = NULL, lib.loc = NULL,
                         name2id(rdnames),
                         switch(toc_entry, title = rdtitles, name = rdnames))
 
+    language <- descmeta["Language"]
+    if(is.na(language))
+        language <- "en"
+    else if(grepl(",", language))
+        language <- NA_character_
+    ## If DESCRIPTION specifices several languages, we currently cannot
+    ## tell which one will be used for the package Rd files.  We could
+    ## guess to use the first language given, for now simply take the
+    ## language as unknown.
+    
     ## Now to make a file with header + DESCRIPTION + TOC + content + footer
 
     hfcomps <- # should we be able to specify static URLs here?
@@ -159,7 +170,8 @@ pkg2HTML <- function(package, dir = NULL, lib.loc = NULL,
                        dynamic = FALSE, prism = prism,
                        doTexMath = TRUE,
                        texmath = if (use_mathjax) "mathjax" else texmath,
-                       MATHJAX_CONFIG_STATIC = mathjax_config)
+                       MATHJAX_CONFIG_STATIC = mathjax_config,
+                       language = language)
 
     writeHTML <- function(..., sep = "\n", append = TRUE)
         cat(..., file = out, sep = sep, append = append)

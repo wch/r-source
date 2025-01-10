@@ -1011,8 +1011,8 @@ Rd2HTML <-
     	    	leavePara(FALSE)
     	    	if (!inlist) {
     	    	    switch(blocktag,
-                           "\\value" =  of1('<table>\n'),
-                           "\\arguments" = of1('<table>\n'),
+                           "\\value" =  of1('<table role = "presentation">\n'),
+                           "\\arguments" = of1('<table role = "presentation">\n'),
                            "\\itemize" = of1("<ul>\n"),
                            "\\enumerate" = of1("<ol>\n"),
                            "\\describe" = of1("<dl>\n"))
@@ -1717,9 +1717,9 @@ function(dir)
                  paste0("<a href=\"https://orcid.org/\\1\">",
                         "<img alt=\"ORCID iD\" ",
                         if(dynamic)
-                            "src=\"/doc/html/orcid.svg\" "
+                            " src=\"/doc/html/orcid.svg\" "
                         else
-                            "src=\"https://cloud.R-project.org/web/orcid.svg\" ",
+                            " src=\"https://cloud.R-project.org/web/orcid.svg\" ",
                         "style=\"width:16px; height:16px; margin-left:4px; margin-right:4px; vertical-align:middle\"",
                         " /></a>"),
                  desc["Author"])
@@ -1736,7 +1736,7 @@ function(dir)
     ##   AUTHORS COPYRIGHTS
     ## </TODO>
 
-    c("<table>",
+    c("<table role='presentation'>",
       sprintf("<tr>\n<td>%s:</td>\n<td>%s</td>\n</tr>",
               names(desc), desc),
       "</table>")
