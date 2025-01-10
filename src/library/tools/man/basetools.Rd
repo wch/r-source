@@ -11,8 +11,13 @@
   Tools for obtaining information about base packages.
 }
 \usage{
-base_aliases_db()
-base_rdxrefs_db()
+base_aliases_db(verbose = FALSE, Ncpus = getOption("Ncpus", 1L))
+base_rdxrefs_db(verbose = FALSE, Ncpus = getOption("Ncpus", 1L))
+}
+\arguments{
+  \item{verbose}{logical.  Should packages be listed as they are
+    processed?}
+  \item{Ncpus}{the number of parallel processes to use for processing.}
 }
 \details{
   \code{base_aliases_db()} returns the Rd aliases in the base

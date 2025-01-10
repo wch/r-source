@@ -1124,64 +1124,46 @@ function(db, eq = NULL, katex = .make_KaTeX_checker()) {
     out
 }
 
+### * base_Rd_metadata_db
+
+base_Rd_metadata_db <-
+function(kind, verbose = TRUE, Ncpus = getOption("Ncpus", 1L)) 
+{
+    .package_apply(.get_standard_package_names()$base,
+                   function(p) {
+                       lapply(Rd_db(p, lib.loc = .Library),
+                              .Rd_get_metadata, kind)
+                   },
+                   verbose = verbose, Ncpus = Ncpus)
+}
+
 ### * base_aliases_db
 
-base_aliases_db <- 
-function()
-{
-    packages <- .get_standard_package_names()$base
-    aliases <-
-        lapply(packages,
-               function(p) {
-                   db <- Rd_db(p, lib.loc = .Library)
-                   aliases <- lapply(db, .Rd_get_metadata, "alias")
-                   aliases
-               })
-    names(aliases) <- packages
-    aliases
-}
-
+base_aliases_db <-
+function(verbose = FALSE, Ncpus = getOption("Ncpus", 1L))
+    base_Rd_metadata_db("alias", verbose = verbose, Ncpus = Ncpus)
+    
 ### * base_keyword_db
 
-## <FIXME>
-## Basically the same as base_aliases_db(): ideally we'd have a common
-## code base so that we can easily add base_concept_db().
 base_keyword_db <-
-function()
-{
-    packages <- .get_standard_package_names()$base
-    keywords <-
-        lapply(packages,
-               function(p) {
-                   db <- Rd_db(p, lib.loc = .Library)
-                   keywords <- lapply(db, .Rd_get_metadata, "keyword")
-                   keywords
-               })
-    names(keywords) <- packages
-    keywords
-}
-## </FIXME>
+function(verbose = FALSE, Ncpus = getOption("Ncpus", 1L))
+    base_Rd_metadata_db("keyword", verbose = verbose, Ncpus = Ncpus)
 
 ### * base_rdxrefs_db
 
 base_rdxrefs_db <- 
-function()
+function(verbose = FALSE, Ncpus = getOption("Ncpus", 1L))
 {
-    packages <- .get_standard_package_names()$base
-    rdxrefs <-
-        lapply(packages,
-               function(p) {
-                   db <- Rd_db(p, lib.loc = .Library)
-                   rdxrefs <- lapply(db, .Rd_get_xrefs)
-                   rdxrefs <- cbind(do.call(rbind, rdxrefs),
-                                    Source = rep.int(names(rdxrefs),
-                                                     vapply(rdxrefs,
-                                                            NROW,
-                                                            0L)))
-                   rdxrefs
-               })
-    names(rdxrefs) <- packages
-    rdxrefs
+    .package_apply(.get_standard_package_names()$base,
+                   function(p) {
+                       db <- Rd_db(p, lib.loc = .Library)
+                       rdxrefs <- lapply(db, .Rd_get_xrefs)
+                       cbind(do.call(rbind, rdxrefs),
+                             Source = rep.int(names(rdxrefs),
+                                              vapply(rdxrefs, NROW,
+                                                     0L)))
+                   },
+                   verbose = verbose, Ncpus = Ncpus)
 }
 
 ### * .Rd_xrefs_with_missing_package_anchors
@@ -1216,42 +1198,32 @@ function(dir, level = 1)
     else NULL
 }
 
+### * .Rd_metadata_db_to_data_frame
+
+.Rd_metadata_db_to_data_frame <- 
+function(x, kind)
+{
+    wrk <- function(a, p) {
+        cbind(unlist(a, use.names = FALSE),
+              rep.int(paste0(p, "::", names(a)), lengths(a)))
+    }
+    y <- as.data.frame(do.call(rbind,
+                               Map(wrk, x, names(x), USE.NAMES = FALSE)))
+    colnames(y) <- c(kind, "Source")
+    y
+}    
+        
 ### * .Rd_aliases_db_to_data_frame
 
 .Rd_aliases_db_to_data_frame <-
 function(x)
-{
-    wrk <- function(a, p) {
-        cbind(unlist(a, use.names = FALSE),
-              rep.int(paste0(p, "::", names(a)), lengths(a)))
-    }
-    y <- as.data.frame(do.call(rbind,
-                               Map(wrk, x, names(x), USE.NAMES = FALSE)))
-    colnames(y) <- c("Alias", "Source")
-    y
-}
+    .Rd_metadata_db_to_data_frame(x, "Alias")
 
 ### * .Rd_keyword_db_to_data_frame
 
-## <FIXME>
-## Basically the same as .Rd_aliases_db_to_data_frame(): ideally we'd
-## have a common code base so that we can easily add
-## .Rd_concept_db_to_data_frame().
-## Or have .Rd_metadata_db_to_data_frame(x, kind) ...
 .Rd_keyword_db_to_data_frame <-
 function(x)
-{
-    wrk <- function(a, p) {
-        cbind(unlist(a, use.names = FALSE),
-              rep.int(paste0(p, "::", names(a)), lengths(a)))
-    }
-    x <- Filter(length, x)
-    y <- as.data.frame(do.call(rbind,
-                               Map(wrk, x, names(x), USE.NAMES = FALSE)))
-    colnames(y) <- c("Keyword", "Source")
-    y
-}
-## </FIXME>
+    .Rd_metadata_db_to_data_frame(x, "Keyword")
 
 ### * .Rd_rdxrefs_db_to_data_frame
 
