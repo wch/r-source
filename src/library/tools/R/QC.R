@@ -7646,7 +7646,7 @@ function(dir, localOnly = FALSE, pkgSize = NA)
         bad <- lapply(Rdb,
                       function(Rd) {
                           Rd <- Rd[RdTags(Rd) %in% c("\\keyword", "\\concept")]
-                          Rd[grepl("[,\n]",
+                          Rd[grepl("[,;\t\n]",
                                    trimws(vapply(Rd, paste, "",
                                                  collapse = "\n"))) &
                              !vapply(Rd,
