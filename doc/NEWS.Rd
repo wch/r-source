@@ -535,8 +535,8 @@
       now, ditto for \code{arima0()}, thanks to \I{Norbert Kuder}'s report
       on the R-devel list.
 
-      \item \code{binomial(<link>)$linkinv(eta)} now also works for
-      \code{"logit"} link when \code{is.integer(eta)}.
+      \item \code{binomial(<link>)$linkinv(eta)} and \code{.. $mu.eta(eta)}
+      now also work for \code{"logit"} link when \code{is.integer(eta)}.
     }
   }
 }

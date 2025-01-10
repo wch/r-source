@@ -1722,11 +1722,14 @@ stopifnot(exprs = {
 ## gave solve.default() error (as wrong model failed fitting)
 
 
-##  binomial()$linkinv(<int>)
+##  binomial()$ linkinv(<int>)  and  binomial()$ mu.eta(<int>)
 lnks <- c("logit", "probit", "cloglog", "cauchit", "log")
 binIlink <- function(eta) sapply(lnks, function(lnk) binomial(lnk)$linkinv(eta))
+binImuEt <- function(eta) sapply(lnks, function(lnk) binomial(lnk)$mu.eta (eta))
 stopifnot(identical(binIlink(          0:3),
                     binIlink(as.double(0:3))))
+stopifnot(identical(binImuEt(          0:3),
+                    binImuEt(as.double(0:3))))
 ## integer type was not allowed for logit (only) in R <= 4.4.2
 
 
