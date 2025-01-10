@@ -9954,7 +9954,7 @@ its C/C++ compiler.  This will probably give messages about
 @I{`malloc: nano zone abandoned'} which are innocuous and can be suppressed
 by setting environment variable @env{MallocNanoZone} to @code{0}.
 It can be helpful to install debug symbols (@command{INSTALL --dsym} for
-the package under test and particularly for reverse dependences.
+the package under test and particularly for reverse dependencies.
 @c https://stackoverflow.com/questions/64126942/malloc-nano-zone-abandoned-due-to-inability-to-preallocate-reserved-vm-space
 
 
