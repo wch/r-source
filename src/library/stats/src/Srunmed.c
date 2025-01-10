@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2012-2023  The R Core Team
+ *  Copyright (C) 2012-2025  The R Core Team
  *  Copyright (C) 2003       The R Foundation
  *  Copyright (C) 1995-2002  Martin Maechler <maechler@stat.math.ethz.ch>
  *
@@ -213,9 +213,10 @@ R_xlen_t R_firstNA_dbl(const double x[], R_xlen_t n) {
 // .Call()ed from ../R/runmed.R
 SEXP runmed(SEXP sx, SEXP stype, SEXP sk, SEXP end, SEXP naAct, SEXP printLev)
 {
-    if (TYPEOF(sx) != REALSXP) error("numeric 'x' required");
-    double *x = REAL(sx), *xx;
     R_xlen_t n = XLENGTH(sx);
+    int nprot = 1;
+    if (!isReal(sx)) {sx = PROTECT(coerceVector(sx, REALSXP)); nprot++;}
+    double *x = REAL(sx), *xx;
     int type        = asInteger(stype),
 	k           = asInteger(sk),
 	end_rule    = asInteger(end),
@@ -315,6 +316,6 @@ SEXP runmed(SEXP sx, SEXP stype, SEXP sk, SEXP end, SEXP naAct, SEXP printLev)
 	default: error(_("na_action logic error (%d), please report!"), na_action);
 	}
     }
-    UNPROTECT(1);
+    UNPROTECT(nprot);
     return ans;
 }

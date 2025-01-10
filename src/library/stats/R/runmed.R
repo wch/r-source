@@ -1,7 +1,7 @@
 #  File src/library/stats/R/runmed.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 2003-2020 The R Foundation
+#  Copyright (C) 2003-2025 The R Foundation
 #  Copyright (C) 1995      Berwin A. Turlach
 #  Ported to R, added interface to Stuetzle's code and further enhanced
 #  by Martin Maechler,
@@ -66,8 +66,8 @@ runmed <- function(x, k, endrule = c("median","keep","constant"),
 	    "       na.*='%s' ( => iNAct=%d))\n"),
 		    k, endrule, iend, algorithm, na.actions[[iNAct]], iNAct))
     res <- switch(algorithm,
-                  Turlach  = .Call(C_runmed, as.double(x), 1, k, iend, iNAct, print.level),
-                  Stuetzle = .Call(C_runmed, as.double(x), 0, k, iend, iNAct, print.level))
+                  Turlach  = .Call(C_runmed, x, 1, k, iend, iNAct, print.level),
+                  Stuetzle = .Call(C_runmed, x, 0, k, iend, iNAct, print.level))
     if(endrule == "median") res <- smoothEnds(res, k = k)
 
     ## Setting attribute has the advantage that the result immediately plots
