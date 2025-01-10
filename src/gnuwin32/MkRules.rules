@@ -97,6 +97,7 @@ TEXI2ANY ?= texi2any
 TEXI2DVI = env COMSPEC= texi2dvi
 MAKEINFO = texi2any
 EOPTS ?= $(if $(USE_LLVM),,-mfpmath=sse -msse2 -mstackrealign)
+SANOPTS ?=
 OPENMP ?= -fopenmp
 PTHREAD ?= -pthread
 ISDIR ?= C:/Program Files (x86)/Inno Setup 6
@@ -145,7 +146,7 @@ CC=$(BINPREF)$(CCBASE) $(M_ARCH)
 CP=cp
 # as set by make
 CPP=$(CC) -E
-DLL=$(CC)
+DLL=$(CC) $(SANOPTS)
 DLLTOOL=$(BINPREF)$(LLVMPREF)dlltool
 ## some versions have trouble with paths, so we always need this
 ## even for native builds
@@ -222,7 +223,7 @@ SORT=sort
 
 ## $($*-LINKFLAGS) is used for Rgui Rterm and Rscript
 %.exe:
-	$(LINKER) $(LINKFLAGS) $($*-LINKFLAGS) -o $@ $^ $($*-LIBS) $(LIBS)
+	$(LINKER) $(LINKFLAGS) $($*-LINKFLAGS) $(SANOPTS) -o $@ $^ $($*-LIBS) $(LIBS)
 
 ## It does little sense to have $($*-DLLFLAGS) here (and not in etc/Makeconf)
 ## $($*-DLLLIBS) is used for R and lapack

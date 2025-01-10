@@ -80,7 +80,7 @@ RESCOMP = $(BINPREF)$(LLVMPREF)windres $(RC_ARCH)
 ## MAIN_LD needs to be set by the package
 LINKER = $(MAIN_LD)
 ## as a default
-DLL = $(CC)
+DLL = $(CC) @SANOPTS@
 
 ## Things defined in Renviron on Unix
 SED = sed
@@ -104,23 +104,23 @@ AR = $(BINPREF)$(LLVMPREF)ar
 BLAS_LIBS = -L"$(R_HOME)/$(IMPDIR)" -lRblas
 C_VISIBILITY = 
 CC = $(BINPREF)$(CCBASE) $(M_ARCH)
-CFLAGS = -O3 -Wall $(DEBUGFLAG) @EOPTS@ $(LTO)
+CFLAGS = -O3 -Wall $(DEBUGFLAG) @EOPTS@ @SANOPTS@ $(LTO)
 CPICFLAGS = 
 CPPFLAGS =
 CC17 = $(BINPREF)$(CCBASE) $(M_ARCH)
-C17FLAGS = -O3 -Wall $(DEBUGFLAG) -std=gnu17 @EOPTS@ $(LTO)
+C17FLAGS = -O3 -Wall $(DEBUGFLAG) -std=gnu17 @EOPTS@ @SANOPTS@ $(LTO)
 CC23 = $(BINPREF)$(CCBASE) $(M_ARCH)
-C23FLAGS = -O3 -Wall $(DEBUGFLAG) -std=gnu2x @EOPTS@ $(LTO)
+C23FLAGS = -O3 -Wall $(DEBUGFLAG) -std=gnu2x @EOPTS@ @SANOPTS@ $(LTO)
 CC90 = $(BINPREF)$(CCBASE) $(M_ARCH)
-C90FLAGS = -O3 -Wall $(DEBUGFLAG) -std=gnu90 @EOPTS@ $(LTO)
+C90FLAGS = -O3 -Wall $(DEBUGFLAG) -std=gnu90 @EOPTS@ @SANOPTS@ $(LTO)
 CC99 = $(BINPREF)$(CCBASE) $(M_ARCH)
-C99FLAGS = -O3 -Wall $(DEBUGFLAG) -std=gnu99 @EOPTS@ $(LTO)
+C99FLAGS = -O3 -Wall $(DEBUGFLAG) -std=gnu99 @EOPTS@ @SANOPTS@ $(LTO)
 CXX = $(BINPREF)$(if $(USE_LLVM),clang++,g++) -std=gnu++17 $(M_ARCH)
 CXXCPP = $(CXX) -E
-CXXFLAGS = -O2 -Wall $(DEBUGFLAG) @EOPTS@ $(LTO)
+CXXFLAGS = -O2 -Wall $(DEBUGFLAG) @EOPTS@ @SANOPTS@ $(LTO)
 CXXPICFLAGS =
 CXX11 = $(BINPREF)$(if $(USE_LLVM),clang++,g++) $(M_ARCH)
-CXX11FLAGS = -O2 -Wall $(DEBUGFLAG) @EOPTS@ $(LTO)
+CXX11FLAGS = -O2 -Wall $(DEBUGFLAG) @EOPTS@ @SANOPTS@ $(LTO)
 CXX11PICFLAGS =
 CXX11STD = -std=gnu++11
 ## these settings are for GCC >= 10
@@ -233,7 +233,7 @@ SHLIB_FCLD = $(FC)
 ## ideally -shared -static-libgfortran, but not for gcc 4.2.1
 SHLIB_FCLDFLAGS = -shared
 SHLIB_FFLAGS = 
-SHLIB_LD = $(CC)
+SHLIB_LD = $(CC) @SANOPTS@
 SHLIB_LDFLAGS = -shared
 SHLIB_LIBADD =
 SHLIB_LINK = $(SHLIB_LD) -Wl,--export-all-symbols $(SHLIB_LDFLAGS) $(LDFLAGS)

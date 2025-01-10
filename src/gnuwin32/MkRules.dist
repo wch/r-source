@@ -177,6 +177,11 @@
 #
 # EOPTS = -mfpmath=sse -msse2 -mstackrealign $(LTO)
 
+# sanitizer options to be passed to the compiler and linker; this requires
+# support in the compiler toolchain
+# e.g. -fsanitize=address,undefined,bounds
+# SANOPTS = 
+
 # define to -fopenmp if the toolchain has OpenMP support
 # OPENMP = -fopenmp
 

@@ -31,6 +31,7 @@ fixetc: $(ETC) ../MkRules Makefile
 	$(SED) -e 's/WIN = 64/WIN = $(WIN)/' \
 	  -e "s/-O3/-O2/" \
 	  -e "s/@EOPTS@/$(EOPTS)/" \
+	  -e "s/@SANOPTS@/$(SANOPTS)/" \
 	  -e "s|BINPREF =|BINPREF ?= $(BINPREF)|" \
 	  -e "s|USE_LLVM =|USE_LLVM ?= $(USE_LLVM)|" \
 	  -e "s|COMPILED_BY =|COMPILED_BY = $(COMPILED_BY)|" \
