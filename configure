@@ -26837,8 +26837,8 @@ printf "%s\n" "#define SIZEOF_LONG_DOUBLE $ac_cv_sizeof_long_double" >>confdefs.
 
 
 else
-  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: Not using the 'long double' type" >&5
-printf "%s\n" "$as_me: WARNING: Not using the 'long double' type" >&2;}
+  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: Not using the 'long double' type" >&5
+printf "%s\n" "$as_me: Not using the 'long double' type" >&6;}
 fi
 
 
