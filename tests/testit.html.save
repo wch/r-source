@@ -28,7 +28,7 @@ foo(<var>x</var>, <var>y</var>, ...)
 
 <h3>Arguments</h3>
 
-<table>
+<table role = "presentation">
 <tr><td><code id="x">x</code>, <code id="y">y</code></td>
 <td>
 

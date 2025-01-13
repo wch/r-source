@@ -26,7 +26,7 @@ function processMathHTML() {
 
 <h3>Arguments</h3>
 
-<table>
+<table role = "presentation">
 <tr><td><code id="foo">foo</code></td>
 <td>
 <p>item 1</p>
