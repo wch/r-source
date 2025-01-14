@@ -10294,7 +10294,6 @@ the paths used, have changed several times recently.
 Apple provides a version of the undefined behaviour sanitizer in recent
 versions of its C/C++ compiler.  @R{} was built with Apple
 @command{clang} 16 with @file{config.site} containing
-@noindent
 @example
 CC="clang -fsanitize=address,undefined"
 CXX="clang++ -fsanitize=address,undefined"
