@@ -28,7 +28,7 @@
     \item A object of class \code{\link{difftime}}
     \item A character string, containing one of \code{"day"},
     \code{"week"}, \code{"month"}, \code{"quarter"} or \code{"year"}, or a
-    \code{\link{pmatch}()}able abbreviaton of these.
+    \code{\link{pmatch}()}able abbreviation of these.
     This can optionally be preceded by a (positive or negative) integer
     and a space, or followed by \code{"s"}.
 
