@@ -1037,6 +1037,12 @@
 /* Define if you have the X11/Xmu headers and libraries. */
 /* #undef HAVE_X11_Xmu */
 
+/* Define if your system has zstd >= 1.3.3. */
+#define HAVE_ZSTD 1
+
+/* Define if zstd has ZSTD_decompressBound */
+#define HAVE_ZSTD_DECOMPRESSBOUND 1
+
 /* Define to 1 if you have the `__cospi' function. */
 /* #undef HAVE___COSPI */
 
