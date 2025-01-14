@@ -3814,6 +3814,50 @@ fi
 ])# R_LZMA
 
 
+## R_ZSTD
+## -------
+## Try finding libzstd library and headers.
+## We check that both are installed,
+AC_DEFUN([R_ZSTD],
+[AC_CHECK_LIB(zstd, ZSTD_versionNumber, [have_zstd=yes], [have_zstd=no])
+if test "${have_zstd}" = yes; then
+  AC_CHECK_HEADERS(zstd.h, [have_zstd=yes], [have_zstd=no])
+fi
+if test "x${have_zstd}" = xyes; then
+AC_CACHE_CHECK([if zstd version >= 1.3.3], [r_cv_have_zstd],
+[AC_LANG_PUSH(C)
+r_save_LIBS="${LIBS}"
+LIBS="-lzstd ${LIBS}"
+AC_RUN_IFELSE([AC_LANG_SOURCE([[
+#ifdef HAVE_ZSTD_H
+#include <zstd.h>
+#endif
+#include <stdlib.h>
+int main(void) {
+    exit(ZSTD_versionNumber() < 10303);
+}
+]])], [r_cv_have_zstd=yes], [r_cv_have_zstd=no], [r_cv_have_zstd=no])
+LIBS="${r_save_LIBS}"
+AC_LANG_POP(C)])
+fi
+if test "x${r_cv_have_zstd}" = xno; then
+  have_zstd=no
+fi
+if test "x${have_zstd}" = xyes; then
+  AC_DEFINE(HAVE_ZSTD, 1, [Define if your system has zstd >= 1.3.3.])
+  LIBS="-lzstd ${LIBS}"
+  # check if we can use single-shot decompression on stream-compressed files (was added as static in 1.4.0)
+  AC_CHECK_FUNC(ZSTD_decompressBound, [have_zstd_decompressbound=yes], [have_zstd_decompressbound=no])
+  if test "x${have_zstd_decompressbound}" = xyes; then
+    AC_DEFINE(HAVE_ZSTD_DECOMPRESSBOUND, 1, [Define if zstd has ZSTD_decompressBound])
+  fi
+# so far we don't require it, but we might
+#else
+#  AC_MSG_ERROR("libzstd library and headers are required")
+fi
+])# R_ZSTD
+
+
 ## R_SYS_POSIX_LEAPSECONDS
 ## -----------------------
 ## See if your system time functions do not count leap seconds, as

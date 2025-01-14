@@ -2387,7 +2387,278 @@ newxzfile(const char *description, const char *mode, int type, int compress)
     return new;
 }
 
-typedef enum { COMP_UNKNOWN = 0, COMP_GZ, COMP_BZ, COMP_XZ } comp_type;
+
+#ifdef HAVE_ZSTD
+
+#ifndef HAVE_ZSTD_DECOMPRESSBOUND
+static unsigned long long ZSTD_decompressBound(const void* src, size_t srcSize) {
+    /* FIXME: it is stupid, but we could add a full streaming decompression pass as a fall-back */
+    error("The used zstd library does not include support for streaming decompression bounds so we cannot decompress streams in memory.");
+}
+#else
+/* seems silly, but this is needed to declare ZSTD_decompressBound */
+#define ZSTD_STATIC_LINKING_ONLY 1
+#endif
+
+#include <zstd.h>
+
+typedef struct zstdfileconn {
+    FILE *fp;
+    ZSTD_DCtx *dc;
+    ZSTD_CCtx *cc;
+    ZSTD_inBuffer  input;
+    ZSTD_outBuffer output;
+    unsigned char *inbuf, *outbuf;
+    size_t buf_size;
+    int compress;
+} *Rzstdfileconn;
+
+static Rboolean zstdfile_open(Rconnection con)
+{
+    Rzstdfileconn zstd = con->private;
+    char mode[] = "rb";
+    const char *name;
+
+    con->canwrite = (con->mode[0] == 'w' || con->mode[0] == 'a');
+    con->canread = !con->canwrite;
+    /* regardless of the R view of the file, the file must be opened in
+       binary mode where it matters */
+    mode[0] = con->mode[0];
+    errno = 0; /* precaution */
+    name = R_ExpandFileName(con->description);
+    zstd->fp = R_fopen(name, mode);
+    if(!zstd->fp) {
+	warning(_("cannot open compressed file '%s', probable reason '%s'"),
+		name, strerror(errno));
+	return FALSE;
+    }
+    if (isDir(zstd->fp)) {
+	fclose(zstd->fp);
+	warning(_("cannot open file '%s': it is a directory"), name);
+	return FALSE;
+    }
+    if (!zstd->inbuf) {
+	/* to ballpark: minimum is ZSTD_BLOCKSIZE_MAX = 128k, for output add block header (512) + hash(4) */
+	zstd->buf_size = 512*1024;
+	if (!(zstd->inbuf = (unsigned char*) malloc(zstd->buf_size)) ||
+	    !(zstd->outbuf = (unsigned char*) malloc(zstd->buf_size))) {
+	    warning(_("cannot initialize zstd decompressor"));
+	    return FALSE;
+	}
+    }
+    zstd->input.src = zstd->inbuf;
+    zstd->input.size = zstd->input.pos = 0;
+    zstd->output.dst = zstd->outbuf;
+    zstd->output.size = zstd->output.pos = 0;
+    if(con->canread) {
+	if (!(zstd->dc = ZSTD_createDCtx())) {
+	    warning(_("cannot initialize zstd decompressor"));
+	    return FALSE;
+	}
+    } else {
+	if (!(zstd->cc = ZSTD_createCCtx())) {
+	    warning(_("cannot initialize zstd compressor"));
+	    return FALSE;
+	}
+	/* official sizes could be obtained via:
+	size_t const buffInSize  = ZSTD_CStreamInSize();
+	size_t const buffOutSize = ZSTD_CStreamOutSize(); */
+	ZSTD_CCtx_setParameter(zstd->cc, ZSTD_c_compressionLevel, zstd->compress);
+	ZSTD_CCtx_setParameter(zstd->cc, ZSTD_c_checksumFlag, 1);
+	/* if we want threading: ZSTD_CCtx_setParameter(cctx, ZSTD_c_nbWorkers, nbThreads); */
+    }
+    con->isopen = TRUE;
+    con->text = strchr(con->mode, 'b') ? FALSE : TRUE;
+    set_buffer(con);
+    set_iconv(con);
+    con->save = -1000;
+    return TRUE;
+}
+
+static int zstdfile_fflush(Rconnection con) {
+    Rzstdfileconn zstd = con->private;
+    /* compression must flush internal buffers to finish the last frame */
+    if (con->canwrite) {
+	ZSTD_inBuffer input = { zstd->inbuf, 0, 0 };
+	size_t rem = 0;
+	do {
+	    zstd->output.size = zstd->buf_size;
+	    zstd->output.pos = 0;
+	    rem = ZSTD_compressStream2(zstd->cc, &zstd->output, &input, ZSTD_e_end);
+	    if (zstd->output.pos) {
+		size_t res = fwrite(zstd->output.dst, 1, zstd->output.pos, zstd->fp);
+		if (res != zstd->output.pos)
+		    error("fwrite error");
+	    }
+	} while (rem > 0);
+	/* technially, the output can be buffered, but in practice unlikely */
+	fflush(zstd->fp);
+    }
+    return 0;
+}
+
+static void zstdfile_close(Rconnection con)
+{
+    Rzstdfileconn zstd = con->private;
+
+    if(con->canwrite)
+	zstdfile_fflush(con);
+
+    if (con->canread)
+	ZSTD_freeDCtx(zstd->dc);
+    else
+	ZSTD_freeCCtx(zstd->cc);
+
+    free(zstd->inbuf);
+    zstd->inbuf = 0;
+    free(zstd->outbuf);
+    zstd->outbuf = 0;
+
+    fclose(zstd->fp);
+    con->isopen = FALSE;
+}
+
+static size_t zstdfile_read(void *ptr, size_t size, size_t nitems, Rconnection con)
+{
+    Rzstdfileconn zstd = con->private;
+    size_t s = size * nitems, ppos = 0, need = s;
+    unsigned char *p = ptr;
+
+    if (!s) return 0;
+
+    if (zstd->output.size > 0) { /* got something left over from last time? */
+	if (s <= zstd->output.size - zstd->output.pos) { /* can fulfill all? */
+	    memcpy(ptr, zstd->outbuf + zstd->output.pos, s);
+	    zstd->output.pos += s;
+	    return nitems;
+	}
+	/* copy what we have */
+	ppos = zstd->output.size - zstd->output.pos;
+	need -= ppos;
+	memcpy(ptr, zstd->outbuf + zstd->output.pos, ppos);
+	zstd->output.size = 0;
+    }
+    /* at this point the output buffer is empty */
+    while (1) {
+	/* have to read more? */
+	if (zstd->input.pos == zstd->input.size) {
+	    size_t n = fread(zstd->inbuf, 1, zstd->buf_size, zstd->fp);
+	    if (n > 0) {
+		zstd->input.size = n;
+		zstd->input.pos = 0;
+	    }
+	}
+	/* anything left to decompress? */
+	while (zstd->input.pos < zstd->input.size) {
+	    zstd->output.size = zstd->buf_size;
+	    zstd->output.pos  = 0;
+	    size_t const ret = ZSTD_decompressStream(zstd->dc, &zstd->output , &zstd->input);
+	    if (ZSTD_isError(ret))
+		error("decompress error: %s", ZSTD_getErrorName(ret));
+	    if (zstd->output.pos > need) { /* have more than what we need  - need to keep it */
+		zstd->output.size = zstd->output.pos;
+		zstd->output.pos = need;
+		memcpy(p + ppos, zstd->output.dst, need);
+		return nitems;
+	    }
+	    memcpy(p + ppos, zstd->output.dst, zstd->output.pos);
+	    ppos += zstd->output.pos;
+	    need -= zstd->output.pos;
+	    /* we used it all */
+	    zstd->output.size = 0;
+	    if (!need)
+		return nitems;
+	}
+	if (feof(zstd->fp)) /* no more input? */
+	    break;
+    }
+    return ppos / size;
+}
+
+static int zstdfile_fgetc_internal(Rconnection con)
+{
+    char buf[1];
+    size_t size = zstdfile_read(buf, 1, 1, con);
+
+    return (size < 1) ? R_EOF : (buf[0] % 256);
+}
+
+
+static size_t zstdfile_write(const void *ptr, size_t size, size_t nitems, Rconnection con)
+{
+    Rzstdfileconn zstd = con->private;
+    size_t s = size * nitems;
+    ZSTD_inBuffer input = { ptr, s, 0 };
+
+    if (!s) return 0;
+
+    do {
+	zstd->output.size = zstd->buf_size;
+	zstd->output.pos = 0;
+	/* we have no way of knowing if that's the only write, so we have to use ZSTD_e_continue */
+	/* size_t rem = (not used) */ ZSTD_compressStream2(zstd->cc, &zstd->output, &input, ZSTD_e_continue);
+	if (zstd->output.pos) {
+	    size_t res = fwrite(zstd->output.dst, 1, zstd->output.pos, zstd->fp);
+	    if (res != zstd->output.pos)
+		error("fwrite error");
+	}
+    } while (input.pos < input.size);
+    /* NB: there may be still remaining data in the internal buffers (rem > 0) until we flush which is ok */
+    return nitems;
+}
+
+static Rconnection
+newzstdfile(const char *description, const char *mode, int compress)
+{
+    Rconnection new;
+    new = (Rconnection) malloc(sizeof(struct Rconn));
+    if(!new) error(_("allocation of zstdfile connection failed"));
+    new->class = (char *) malloc(strlen("zstdfile") + 1);
+    if(!new->class) {
+	free(new);
+	error(_("allocation of zstdfile connection failed"));
+	new = NULL;
+    }
+    strcpy(new->class, "zstdfile");
+    new->description = (char *) malloc(strlen(description) + 1);
+    if(!new->description) {
+	free(new->class); free(new);
+	error(_("allocation of zstdfile connection failed"));
+	new = NULL;
+    }
+    init_con(new, description, CE_NATIVE, mode);
+
+    new->canseek = FALSE;
+    new->open = &zstdfile_open;
+    new->close = &zstdfile_close;
+    new->vfprintf = &dummy_vfprintf;
+    new->fgetc_internal = &zstdfile_fgetc_internal;
+    new->fgetc = &dummy_fgetc;
+    new->seek = &null_seek;
+    new->fflush = &zstdfile_fflush;
+    new->read = &zstdfile_read;
+    new->write = &zstdfile_write;
+    new->private = (void *) malloc(sizeof(struct zstdfileconn));
+    memset(new->private, 0, sizeof(struct zstdfileconn));
+    if(!new->private) {
+	free(new->description); free(new->class); free(new);
+	error(_("allocation of zstdfile connection failed"));
+	new = NULL;
+    }
+    ((Rzstdfileconn) new->private)->compress = compress;
+    return new;
+}
+
+#else
+static Rconnection
+newzstdfile(const char *description, const char *mode, int compress) {
+    error("Zstd compression support was not included in this R binary.");
+    /* unreachable */
+    return 0;
+}
+#endif
+
+typedef enum { COMP_UNKNOWN = 0, COMP_GZ, COMP_BZ, COMP_XZ, COMP_ZSTD } comp_type;
 
 static comp_type
 comp_type_from_memory(char *buf, size_t len, Rboolean with_zlib, int *subtype)
@@ -2421,6 +2692,8 @@ comp_type_from_memory(char *buf, size_t len, Rboolean with_zlib, int *subtype)
     } else if(len >= 4 && buf[0] == '\x89' && !strncmp(buf+1, "LZO", 3))
 	error(_("this is a %s-compressed file which this build of R does not support"),
 	        "lzop");
+    else if(len >= 4 && !memcmp(buf, "\x28\xb5\x2f\xfd", 4))
+	return COMP_ZSTD;
     return COMP_UNKNOWN; 
 }
 
@@ -2439,7 +2712,7 @@ comp_type_from_file(const char *name, Rboolean with_zlib, int *subtype)
     return COMP_UNKNOWN;
 }
 
-/* op 0 is gzfile, 1 is bzfile, 2 is xv/lzma */
+/* op 0 is gzfile, 1 is bzfile, 2 is xz/lzma, 3 is zstd */
 attribute_hidden SEXP do_gzfile(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP sfile, sopen, ans, class, enc;
@@ -2469,7 +2742,7 @@ attribute_hidden SEXP do_gzfile(SEXP call, SEXP op, SEXP args, SEXP env)
 	if(compress == NA_LOGICAL || compress < 0 || compress > 9)
 	    error(_("invalid '%s' argument"), "compress");
     }
-    if(type == 2) {
+    if(type == 2 || type == 3) {
 	compress = asInteger(CADDDR(args));
 	if(compress == NA_LOGICAL || abs(compress) > 9)
 	    error(_("invalid '%s' argument"), "compress");
@@ -2484,6 +2757,7 @@ attribute_hidden SEXP do_gzfile(SEXP call, SEXP op, SEXP args, SEXP env)
 	case COMP_UNKNOWN: type = 0; break;
 	case COMP_BZ: type = 1; break;
 	case COMP_XZ: type = 2; break;
+	case COMP_ZSTD: type = 3; break;
 	}
     }
     switch(type) {
@@ -2496,6 +2770,9 @@ attribute_hidden SEXP do_gzfile(SEXP call, SEXP op, SEXP args, SEXP env)
 	break;
     case 2:
 	con = newxzfile(file, strlen(open) ? open : "rb", subtype, compress);
+	break;
+    case 3:
+	con = newzstdfile(file, strlen(open) ? open : "rb", compress);
 	break;
     }
     ncon = NextConnection();
@@ -2524,6 +2801,9 @@ attribute_hidden SEXP do_gzfile(SEXP call, SEXP op, SEXP args, SEXP env)
 	break;
     case 2:
 	SET_STRING_ELT(class, 0, mkChar("xzfile"));
+	break;
+    case 3:
+	SET_STRING_ELT(class, 0, mkChar("zstdfile"));
 	break;
     }
     SET_STRING_ELT(class, 1, mkChar("connection"));
@@ -5791,6 +6071,9 @@ attribute_hidden SEXP do_url(SEXP call, SEXP op, SEXP args, SEXP env)
 			con = newxzfile(url, strlen(open) ? open : "rt", subtype,
 			                compress);
 			break;
+		    case COMP_ZSTD:
+			con = newzstdfile(url, strlen(open) ? open : "rt", compress);
+			break;
 		    }
 		} else
 		    con = newfile(url, ienc, strlen(open) ? open : "r", raw);
@@ -6642,6 +6925,22 @@ SEXP R_decompress3(SEXP in, Rboolean *err)
 	    return R_NilValue;
 	}
 	lzma_end(&strm);
+#if 0 /* not enabled - just ready if we ever want to allow zstd */
+    } else if (type == 'S') {
+#ifdef HAVE_ZSTD
+	unsigned long long sz = ZSTD_getFrameContentSize(p + 5, inlen - 5);
+	if (sz == ZSTD_CONTENTSIZE_UNKNOWN) /* possible streaming so no size in the header */
+	    sz = ZSTD_decompressBound(p + 5, inlen - 5);
+	if (sz == ZSTD_CONTENTSIZE_ERROR ||
+	    ZSTD_isError((outlen = ZSTD_decompress(buf, outlen, p + 5, inlen - 5)))) {
+	    warning("internal error in zstd R_decompress3");
+	    *err = TRUE;
+	    return R_NilValue;
+	}
+#else
+	error("Zstd compression support was not included in this R binary.");
+#endif
+#endif
     } else if (type == '2') {
 	int res;
 	res = BZ2_bzBuffToBuffDecompress((char *)buf, &outlen,
@@ -6774,6 +7073,23 @@ do_memCompress(SEXP call, SEXP op, SEXP args, SEXP env)
 	    memcpy(RAW(ans), buf, outlen);
 	break;
     }
+    case 5: /* zstd */
+#ifdef HAVE_ZSTD
+    {
+	size_t inlen = XLENGTH(from);
+	size_t outlen = ZSTD_compressBound(inlen);
+	Bytef *buf = (Bytef *) R_alloc(outlen, sizeof(Bytef));
+        size_t res = /* FIXME: what should be the compression level? 3 is undocumented "default" in zstd if 0 is used */
+	    ZSTD_compress(buf, outlen, RAW(from), inlen, 3);
+	if (ZSTD_isError(res))
+	    error("internal libzstd error (%s) in memCompress", ZSTD_getErrorName(res));
+	ans = allocVector(RAWSXP, res);
+	memcpy(RAW(ans), buf, res);
+	break;
+    }
+#else
+    error("Zstd compression support was not included in this R binary.");
+#endif
     default:
 	break;
     }
@@ -6812,6 +7128,7 @@ do_memDecompress(SEXP call, SEXP op, SEXP args, SEXP env)
 	case COMP_GZ: type = 2; break;
 	case COMP_BZ: type = 3; break;
 	case COMP_XZ: type = 4; break;
+	case COMP_ZSTD: type = 6; break;
 	case COMP_UNKNOWN:
 	    warning(_("unknown compression, assuming none"));
 	    type = 1;
@@ -6983,6 +7300,30 @@ do_memDecompress(SEXP call, SEXP op, SEXP args, SEXP env)
 	    memcpy(RAW(ans), buf, outlen);
 	break;
     }
+    case 6: /* zstd */
+#ifdef HAVE_ZSTD
+    {
+	size_t inlen = XLENGTH(from), res;
+	unsigned long long outlen;
+	Bytef *buf, *p = (Bytef *)RAW(from);
+
+	outlen = ZSTD_getFrameContentSize(p, inlen);
+	if (outlen == ZSTD_CONTENTSIZE_UNKNOWN)
+	    outlen = ZSTD_decompressBound(p, inlen);
+	if (outlen == ZSTD_CONTENTSIZE_ERROR)
+	    error("internal error in memDecompress(%s)", "type = \"zstd\"");
+	buf = (Bytef *) R_alloc(outlen, sizeof(Bytef));
+	res = ZSTD_decompress(buf, outlen, p, inlen);
+	if (ZSTD_isError(res))
+	    error("internal error in memDecompress(%s)", ZSTD_getErrorName(res));
+	ans = allocVector(RAWSXP, res);
+	if (res)
+	    memcpy(RAW(ans), buf, res);
+	break;
+    }
+#else
+    error("Zstd compression support was not included in this R binary.");
+#endif
     // case 5 is "unknown', covered above
     default:
 	break;

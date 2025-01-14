@@ -2581,6 +2581,9 @@ R_BZLIB
 ## LZMA headers and libraries from xz-utils
 R_LZMA
 
+## Zstd headers and libraries.
+R_ZSTD
+
 ## libdeflate headers and libraries.
 R_LIBDEFLATE
 

@@ -15,6 +15,7 @@
 \alias{unz}
 \alias{bzfile}
 \alias{xzfile}
+\alias{zstdfile}
 \alias{url}
 \alias{socketConnection}
 \alias{socketAccept}
@@ -60,6 +61,9 @@ bzfile(description, open = "", encoding = getOption("encoding"),
 
 xzfile(description, open = "", encoding = getOption("encoding"),
        compression = 6)
+
+zstdfile(description, open = "", encoding = getOption("encoding"),
+       compression = 9)
 
 unz(description, filename, open = "", encoding = getOption("encoding"))
 
@@ -118,8 +122,8 @@ socketTimeout(socket, timeout = -1)
     \code{\link{options}}) is used as the first header, automatically.}
   \item{compression}{integer in 0--9.  The amount of compression to be
     applied when writing, from none to maximal available.  For
-    \code{xzfile} can also be negative: see the \sQuote{Compression}
-    section.}
+    \code{xzfile} and \code{zstdfile} can also be negative: see the
+    \sQuote{Compression} section.}
   \item{timeout}{numeric: the timeout (in seconds) to be used for this
     connection.  Beware that some OSes may treat very large values as
     zero: however the POSIX standard requires values up to 31 days to be
@@ -180,6 +184,9 @@ socketTimeout(socket, timeout = -1)
   For \code{xzfile} the description is the path to a file compressed by
   \command{xz} (\url{https://en.wikipedia.org/wiki/Xz}) or (for reading
   only) \command{lzma} (\url{https://en.wikipedia.org/wiki/LZMA}).
+
+  For \code{zstdfile} the description is the path to a file compressed by
+  \command{zstd} (\url{https://en.wikipedia.org/wiki/Zstd}).
 
   \code{unz} reads (only) single files within zip files, in binary mode.
   The description is the full path to the zip file, with \file{.zip}
@@ -285,8 +292,8 @@ socketTimeout(socket, timeout = -1)
 
 \value{
   \code{file}, \code{pipe}, \code{fifo}, \code{url}, \code{gzfile},
-  \code{bzfile}, \code{xzfile}, \code{unz}, \code{socketConnection},
-  \code{socketAccept} and \code{serverSocket}
+  \code{bzfile}, \code{xzfile}, \code{zstdfile}, \code{unz},
+  \code{socketConnection}, \code{socketAccept} and \code{serverSocket}
   return a connection object which inherits from class
   \code{"connection"} and has a first more specific class.
 
@@ -368,9 +375,9 @@ socketTimeout(socket, timeout = -1)
 }
 
 \section{Compression}{
-  \R supports \command{gzip}, \command{bzip2} and \command{xz}
-  compression (also read-only support for its precursor, \code{lzma}
-  compression).
+  \R supports \command{gzip}, \command{bzip2}, \command{zstd} and
+  \command{xz} compression (also read-only support for its precursor,
+  \code{lzma} compression).
 
   For reading, the type of compression (if any) can be determined from
   the first few bytes of the file.  Thus for \code{file(raw = FALSE)}
@@ -398,6 +405,10 @@ socketTimeout(socket, timeout = -1)
   good compression and modest (100Mb memory) usage: but if you are using
   \code{xz} compression you are probably looking for high compression.
 
+  For \code{zstd} negative numbers correspond to the \option{--fast=}
+  compression levels which are faster but yield slightly worse
+  compression.
+
   Choosing the type of compression involves tradeoffs: \command{gzip},
   \command{bzip2} and \command{xz} are successively less widely supported,
   need more resources for both compression and decompression, and
@@ -410,6 +421,12 @@ socketTimeout(socket, timeout = -1)
   current computers decompression times even with \code{compress = 9}
   are typically modest and reading compressed files is usually faster
   than uncompressed ones because of the reduction in disc activity.
+
+  The \command{zstd} compression support is currently optional and
+  will be only included if the underlying library is present at build
+  time. All related functions will return an error if the support is
+  not present. It typically offers slightly worse compression than
+  \code{xz}, but is orders of magnitude faster to compress.
 }
 
 \section{Encoding}{

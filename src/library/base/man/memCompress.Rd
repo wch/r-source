@@ -14,11 +14,11 @@
   In-memory compression or decompression for raw vectors.
 }
 \usage{
-memCompress(from, type = c("gzip", "bzip2", "xz", "none"))
+memCompress(from, type = c("gzip", "bzip2", "xz", "zstd", "none"))
 
 memDecompress(from,
-              type = c("unknown", "gzip", "bzip2", "xz", "none"),
-              asChar = FALSE)
+              type = c("unknown", "gzip", "bzip2", "xz", "zstd",
+	               "none"), asChar = FALSE)
 }
 \arguments{
   \item{from}{raw vector.  For \code{memCompress}, a character vector
@@ -55,6 +55,10 @@ memDecompress(from,
   underlying library only supports in-memory (de)compression of up to
   \eqn{2^{31}-1}{2^31 - 1} elements.  Compression is equivalent to
   \command{bzip2 -9} (the default).
+
+  \command{zstd} compression is optional and currently uses compression
+  level 3 which gives a good compression ratio vs compression speed
+  trade-off.
 
   Compressing with \code{type = "xz"} is equivalent to compressing a
   file with \command{xz -9e} (including adding the \sQuote{magic}

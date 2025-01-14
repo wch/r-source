@@ -110,6 +110,10 @@ save <- function(..., list = character(),
 			      if (!missing(compression_level))
 				  gzfile(file, "wb", compression = compression_level)
 			      else gzfile(file, "wb")
+			  }, "zstd" = {
+			      if (!missing(compression_level))
+				  zstdfile(file, "wb", compression = compression_level)
+			      else zstdfile(file, "wb")
 			  },
 			  "no compression" = file(file, "wb"),
 
