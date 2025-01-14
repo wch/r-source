@@ -52677,6 +52677,165 @@ else
 fi
 
 
+## Zstd headers and libraries.
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for ZSTD_versionNumber in -lzstd" >&5
+printf %s "checking for ZSTD_versionNumber in -lzstd... " >&6; }
+if test ${ac_cv_lib_zstd_ZSTD_versionNumber+y}
+then :
+  printf %s "(cached) " >&6
+else case e in #(
+  e) ac_check_lib_save_LIBS=$LIBS
+LIBS="-lzstd  $LIBS"
+cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+/* Override any GCC internal prototype to avoid an error.
+   Use char because int might match the return type of a GCC
+   builtin and then its argument prototype would still apply.
+   The 'extern "C"' is for builds by C++ compilers;
+   although this is not generally supported in C code supporting it here
+   has little cost and some practical benefit (sr 110532).  */
+#ifdef __cplusplus
+extern "C"
+#endif
+char ZSTD_versionNumber (void);
+#ifdef FC_DUMMY_MAIN
+#ifndef FC_DUMMY_MAIN_EQ_F77
+#  ifdef __cplusplus
+     extern "C"
+#  endif
+   int FC_DUMMY_MAIN() { return 1; }
+#endif
+#endif
+int
+main (void)
+{
+return ZSTD_versionNumber ();
+  ;
+  return 0;
+}
+_ACEOF
+if ac_fn_c_try_link "$LINENO"
+then :
+  ac_cv_lib_zstd_ZSTD_versionNumber=yes
+else case e in #(
+  e) ac_cv_lib_zstd_ZSTD_versionNumber=no ;;
+esac
+fi
+rm -f core conftest.err conftest.$ac_objext conftest.beam \
+    conftest$ac_exeext conftest.$ac_ext
+LIBS=$ac_check_lib_save_LIBS ;;
+esac
+fi
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_zstd_ZSTD_versionNumber" >&5
+printf "%s\n" "$ac_cv_lib_zstd_ZSTD_versionNumber" >&6; }
+if test "x$ac_cv_lib_zstd_ZSTD_versionNumber" = xyes
+then :
+  have_zstd=yes
+else case e in #(
+  e) have_zstd=no ;;
+esac
+fi
+
+if test "${have_zstd}" = yes; then
+         for ac_header in zstd.h
+do :
+  ac_fn_c_check_header_compile "$LINENO" "zstd.h" "ac_cv_header_zstd_h" "$ac_includes_default"
+if test "x$ac_cv_header_zstd_h" = xyes
+then :
+  printf "%s\n" "#define HAVE_ZSTD_H 1" >>confdefs.h
+ have_zstd=yes
+else case e in #(
+  e) have_zstd=no ;;
+esac
+fi
+
+done
+fi
+if test "x${have_zstd}" = xyes; then
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking if zstd version >= 1.3.3" >&5
+printf %s "checking if zstd version >= 1.3.3... " >&6; }
+if test ${r_cv_have_zstd+y}
+then :
+  printf %s "(cached) " >&6
+else case e in #(
+  e) ac_ext=c
+ac_cpp='$CPP $CPPFLAGS'
+ac_compile='$CC -c $CFLAGS $CPPFLAGS conftest.$ac_ext >&5'
+ac_link='$CC -o conftest$ac_exeext $CFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
+ac_compiler_gnu=$ac_cv_c_compiler_gnu
+
+r_save_LIBS="${LIBS}"
+LIBS="-lzstd ${LIBS}"
+if test "$cross_compiling" = yes
+then :
+  r_cv_have_zstd=no
+else case e in #(
+  e) cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+#ifdef HAVE_ZSTD_H
+#include <zstd.h>
+#endif
+#include <stdlib.h>
+int main(void) {
+    exit(ZSTD_versionNumber() < 10303);
+}
+
+_ACEOF
+if ac_fn_c_try_run "$LINENO"
+then :
+  r_cv_have_zstd=yes
+else case e in #(
+  e) r_cv_have_zstd=no ;;
+esac
+fi
+rm -f core *.core core.conftest.* gmon.out bb.out conftest$ac_exeext \
+  conftest.$ac_objext conftest.beam conftest.$ac_ext ;;
+esac
+fi
+
+LIBS="${r_save_LIBS}"
+ac_ext=c
+ac_cpp='$CPP $CPPFLAGS'
+ac_compile='$CC -c $CFLAGS $CPPFLAGS conftest.$ac_ext >&5'
+ac_link='$CC -o conftest$ac_exeext $CFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
+ac_compiler_gnu=$ac_cv_c_compiler_gnu
+ ;;
+esac
+fi
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $r_cv_have_zstd" >&5
+printf "%s\n" "$r_cv_have_zstd" >&6; }
+fi
+if test "x${r_cv_have_zstd}" = xno; then
+  have_zstd=no
+fi
+if test "x${have_zstd}" = xyes; then
+
+printf "%s\n" "#define HAVE_ZSTD 1" >>confdefs.h
+
+  LIBS="-lzstd ${LIBS}"
+  # check if we can use single-shot decompression on stream-compressed files (was added as static in 1.4.0)
+  ac_fn_c_check_func "$LINENO" "ZSTD_decompressBound" "ac_cv_func_ZSTD_decompressBound"
+if test "x$ac_cv_func_ZSTD_decompressBound" = xyes
+then :
+  have_zstd_decompressbound=yes
+else case e in #(
+  e) have_zstd_decompressbound=no ;;
+esac
+fi
+
+  if test "x${have_zstd_decompressbound}" = xyes; then
+
+printf "%s\n" "#define HAVE_ZSTD_DECOMPRESSBOUND 1" >>confdefs.h
+
+  fi
+# so far we don't require it, but we might
+#else
+#  AC_MSG_ERROR("libzstd library and headers are required")
+fi
+
+
 ## libdeflate headers and libraries.
 
          for ac_header in libdeflate.h
