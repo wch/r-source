@@ -893,17 +893,23 @@ function(dir, predicate = NULL, recursive = FALSE, .worker = NULL,
     calls
 }
 
+### ** .predicate_for_calls_with_names
+
 .predicate_for_calls_with_names <-
-function(nms)
+function(funnames, pkgnames = character(), colons = c("::", ":::"))
 {
+    ## Use pkgnames = NA_character_ to match *any* PKG::FUN call with
+    ## FUN in funnames.  Strange but why not?  Or better to use "*"?
     function(e) {
-        (is.call(e) &&
+        (is.call(e) &&        
          ((is.name(x <- e[[1L]]) &&
-           as.character(x) %in% nms)) ||
+           as.character(x) %in% funnames)) ||
          ((is.call(x <- e[[1L]]) &&
            is.name(x[[1L]]) &&
-           (as.character(x[[1L]]) %in% c("::", ":::")) &&
-           as.character(x[[3L]]) %in% nms)))
+           (as.character(x[[1L]]) %in% colons) &&
+           (((length(pkgnames) == 1L) && is.na(pkgnames)) ||
+            as.character(x[[2L]]) %in% pkgnames) &&
+           as.character(x[[3L]]) %in% funnames)))
     }
 }
 
@@ -1502,6 +1508,22 @@ function(texi = NULL)
     lines <- readLines(texi)
     re <- "^@c DESCRIPTION field "
     sort(unique(sub(re, "", lines[grepl(re, lines)])))
+}
+
+### ** .get_top_call_in_fun
+
+.get_top_call_in_fun <-
+function(f)
+{
+    b <- body(f)
+    repeat {
+        if(!is.call(b)) return(NULL)
+        if((length(b) > 1L) && (b[[1L]] == as.name("{")))
+            b <- b[[2L]]
+        else
+            break
+    }
+    b
 }
 
 ### ** .gregexec_at_pos

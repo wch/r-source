@@ -770,15 +770,7 @@ function(package, dir, lib.loc = NULL,
             is_defunct <- function(f) {
                 f <- get(f, envir = code_env) # get is expensive
                 if(!is.function(f)) return(FALSE)
-                b <- body(f)
-                repeat {
-                    if(!is.call(b)) return(FALSE)
-                    if((length(b) > 1L) && (b[[1L]] == as.name("{")))
-                        b <- b[[2L]]
-                    else
-                        break
-                }
-                b[[1L]] == as.name(".Defunct")
+                .get_top_call_in_fun(f) == as.name(".Defunct")
             }
             functions[!vapply(functions, is_defunct, NA, USE.NAMES=FALSE)]
         }
@@ -2690,6 +2682,19 @@ function(package, dir, lib.loc = NULL)
                           lapply(gnm,
                                  function(e)
                                      do.call(check_args, e)))
+    ## Ignore methods which (likely) have their top call to .Defunct()
+    ## or .Deprecated() from base.
+    if(length(bad_methods)) {
+        predicate <- .predicate_for_calls_with_names(c(".Defunct",
+                                                       ".Deprecated"),
+                                                     "base")
+        defordep <- function(e) {
+            mname <- names(e)[2L]
+            mcode <- get0(mname, envir = code_env)
+            predicate(.get_top_call_in_fun(mcode))
+        }
+        bad_methods <- bad_methods[!vapply(bad_methods, defordep, NA)]
+    }
     if(length(bad_methods) && !is_base) {
         ## For now, split out the mismatches for GEN.CLS functions not
         ## registered as methods, split according to GEN a generic in
@@ -2706,18 +2711,9 @@ function(package, dir, lib.loc = NULL)
             ## calls to names of base generics, but these could be local
             ## functions ...
             p3 <- which(i3)
-            ## See .predicate_for_calls_with_names().
             gennames <- intersect(gen, generics_in_base)
-            predicate <- function(e) {
-                (is.call(e) &&
-                 ((is.name(x <- e[[1L]]) &&
-                   (as.character(x) %in% gennames)) ||
-                  (is.call(x <- e[[1L]]) &&
-                   is.name(x[[1L]]) &&
-                   (as.character(x[[1L]]) == "::") &&
-                   (as.character(x[[2L]]) == "base") &&
-                   (as.character(x[[3L]]) %in% gennames))))
-            }
+            predicate <- .predicate_for_calls_with_names(gennames,
+                                                         "base")
             calls <- lapply(code_env, .find_calls, predicate,
                             recursive = TRUE)
             used <- (gen[p3] %in% unique(.call_names(unlist(calls))))
