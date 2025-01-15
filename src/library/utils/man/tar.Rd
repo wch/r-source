@@ -1,6 +1,6 @@
 % File src/library/utils/man/tar.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2009-2024 R Core Team
+% Copyright 2009-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{tar}
@@ -53,10 +53,7 @@ tar(tarfile, files = NULL,
   (follow symbolic links, also \option{-L} on some platforms),
   \samp{--acls}, \option{--exclude-backups}, \option{--exclude-vcs} (and
   similar) and on Windows \option{--force-local} (so drives can be
-  included in filepaths). \command{Rtools} 4 and earlier included a
-  \command{tar} which used \option{--force-local}, but \command{Rtools}
-  >= 4.2 include the original GNU \command{tar}, which does not use it
-  by default.
+  included in filepaths: this used to be the defailt for \R on Windows).
 
   A convenient and robust way to set options for GNU \command{tar} is via
   environment variable \env{TAR_OPTIONS}.  Appending \option{--force-local}
@@ -71,7 +68,7 @@ tar(tarfile, files = NULL,
   set at compilation and will be shown at the end of the output from
   \command{tar --help}: for version 1.34 \sQuote{out-of-the-box} it is 
   \option{--format=gnu}, but the manual says the intention is to change
-  @c https://www.gnu.org/software/tar/manual/tar.html#Formats
+  %% https://www.gnu.org/software/tar/manual/tar.html#Formats
   to \option{--format=posix} which is the same as \code{pax} --
   it was never part of the POSIX standard for \command{tar} and should
   not be used.  However, the intention has been stated now for several
@@ -175,11 +172,13 @@ tar(tarfile, files = NULL,
   \option{-j} or \option{-J} flag, and may require the appropriate
   command (\command{gzip}, \command{bzip2} or \command{xz}) to be
   available.  For GNU \command{tar}, further compression programs can be
-  specified by e.g.\sspace{}\code{extra_flags = "-I lz4"}.
-  Some versions of \command{bsdtar} accept options such as
-  \option{--lz4}, \option{--lzop} and \option{--lrzip} or an external
-  compressor \emph{via} \option{--use-compress-program lz4}: these could
-  be supplied in \code{extra_flags}.
+  specified by e.g.\sspace{}\code{extra_flags = "-I lz4"} or
+  \code{"--zstd"}, \code{"--lzip"} or \code{"--lzop"} in argument
+  \code{extra_flags}. Some versions of \command{bsdtar} accept options
+  such as \option{--zstd}, \option{--lz4}, \option{--lzop} and
+  \option{--lrzip} or an external compressor \emph{via}
+  \option{--use-compress-program lz4}: these could be supplied in
+  \code{extra_flags}.
   
   \I{NetBSD} prior to 8.0 used flag \option{--xz} rather than \option{-J},
   so this should be used \emph{via} \code{extra_flags = "--xz"} rather
