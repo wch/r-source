@@ -767,10 +767,12 @@ function(package, dir, lib.loc = NULL,
                     setdiff(functions, names(.get_S4_generics(code_env)))
             }
             ## Drop the defunct functions.
+            predicate <-
+                .predicate_for_calls_with_names(".Defunct", "base")
             is_defunct <- function(f) {
                 f <- get(f, envir = code_env) # get is expensive
                 if(!is.function(f)) return(FALSE)
-                .get_top_call_in_fun(f) == as.name(".Defunct")
+                predicate(.get_top_call_in_fun(f))
             }
             functions[!vapply(functions, is_defunct, NA, USE.NAMES=FALSE)]
         }
