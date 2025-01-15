@@ -34,10 +34,14 @@ extern "C" {
 
 /* C23 has a [[noreturn]] attribute supported in GCC 13 and LLVM clang
  * 15 with -std=c2x but not Apple clang 14.  All have version 202000L.
+ * clang 19 has version 202301L
+ * gcc pre-15 supports -std=gnu23 with version 202301L but does not
+ * support (and barfs on) this attribute, so restrict to clang for now.
+ *
  * In C11 there is _Noreturn * (or noreturn in header <stdnoreturn.h>).
  */
 #if defined NORET
-#elif (defined(__STDC_VERSION__) && __STDC_VERSION__ >= 202301L)
+#elif (defined(__clang__) && defined(__STDC_VERSION__) && __STDC_VERSION__ >= 202301L)
 # define NORET [[noreturn]]
 #elif defined(__STDC_VERSION__) && __STDC_VERSION__ >= 201102L
 # define NORET _Noreturn
