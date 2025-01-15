@@ -31,8 +31,8 @@ saveRDS <-
 		   switch(compress,
 			  "bzip2" = bzfile(file, mode),
 			  "xz"    = xzfile(file, mode),
-			  "zstd"  = zstdfile(file, mode),
 			  "gzip"  = gzfile(file, mode),
+			  "zstd"  = zstdfile(file, mode),
 			  stop("invalid 'compress' argument: ", compress))
         on.exit(close(con))
     }
