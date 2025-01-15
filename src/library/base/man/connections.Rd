@@ -176,7 +176,8 @@ socketTimeout(socket, timeout = -1)
 
   For \code{gzfile} the description is the path to a file compressed by
   \command{gzip}: it can also open for reading uncompressed files and
-  those compressed by \command{bzip2}, \command{xz} or \command{lzma}.
+  those compressed by \command{bzip2}, \command{xz}, \command{lzma} or
+  \command{zstd}.
 
   For \code{bzfile} the description is the path to a file compressed by
   \command{bzip2}.
@@ -359,7 +360,7 @@ socketTimeout(socket, timeout = -1)
   deferred if \code{open = ""} is given (the default for all but socket
   connections).  An explicit call to \code{open} can specify the mode,
   but otherwise the mode will be \code{"r"}.  (\code{gzfile},
-  \code{bzfile} and \code{xzfile} connections are exceptions, as the
+  \code{bzfile}, \code{xzfile} and \code{zstdfile} connections are exceptions, as the
   compressed file always has to be opened in binary mode and no
   conversion of line-endings is done even on Windows, so the default
   mode is interpreted as \code{"rb"}.)  Most operations that need write
@@ -370,8 +371,8 @@ socketTimeout(socket, timeout = -1)
   connections.  They do \strong{not} produce a single compressed stream
   on the file, but rather append a new compressed stream to the file.
   Readers may or may not read beyond end of the first stream: currently
-  \R does so for \code{gzfile}, \code{bzfile} and \code{xzfile}
-  connections.
+  \R does so for \code{gzfile}, \code{bzfile}, \code{xzfile} and
+  \code{zstdfile} connections.
 }
 
 \section{Compression}{
@@ -628,8 +629,8 @@ socketTimeout(socket, timeout = -1)
 
   Windows has a default limit of 512 open C file streams: these are used
   by at least \code{file}, \code{gzfile}, \code{bzfile}, \code{xzfile},
-  \code{pipe}, \code{url} and \code{unz} connections applied to files
-  (rather than URLs).
+  \code{zstdfile}, \code{pipe}, \code{url} and \code{unz} connections
+  applied to files (rather than URLs).
   %% fifos on Windows use the Windows API for named pipes.
 
   Package \pkg{parallel}'s \code{\link{makeCluster}} uses socket
@@ -646,9 +647,9 @@ socketTimeout(socket, timeout = -1)
 
   On (historic) platforms where \code{vsnprintf} does not return the needed
   length of output there is a 100,000 byte output limit on the length of
-  a line for text output on \code{fifo}, \code{gzfile}, \code{bzfile} and
-  \code{xzfile} connections: longer lines will be truncated with a
-  warning.
+  a line for text output on \code{fifo}, \code{gzfile}, \code{bzfile},
+  \code{xzfile} and \code{zstdfile} connections: longer lines will be
+  truncated with a warning.
 }
 \references{
   Chambers, J. M. (1998)
