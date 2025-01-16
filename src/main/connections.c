@@ -1001,8 +1001,16 @@ static int file_fgetc_internal(Rconnection con)
     	}
     } else
 #endif
-    c =fgetc(fp);
-    return feof(fp) ? R_EOF : c;
+    c = fgetc(fp);
+    if (c == EOF && feof(fp)) {
+	/* Clear the end-of-file indicator on the stream so that additional
+	   data, if appended to the file, may be read by subsequent calls.
+	   This is needed according to the C standard and, at the time of this
+	   writing, required in practice on macOS. */
+	clearerr(fp);
+	return R_EOF;
+     } else
+	return c;
 }
 
 static double file_seek(Rconnection con, double where, int origin, int rw)
@@ -1091,7 +1099,11 @@ static size_t file_read(void *ptr, size_t size, size_t nitems,
 	this->last_was_write = FALSE;
 	f_seek(this->fp, this->rpos, SEEK_SET);
     }
-    return fread(ptr, size, nitems, fp);
+    size_t res = fread(ptr, size, nitems, fp);
+    if (res != nitems && feof(fp))
+	/* see comment in file_fgetc_internal */
+	clearerr(fp);
+    return res;
 }
 
 static size_t file_write(const void *ptr, size_t size, size_t nitems,
