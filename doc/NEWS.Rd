@@ -166,8 +166,8 @@
       Both methods return or keep internal type \code{"integer"} more
       consistently now.  Also, \code{as.POSIXct({})} is internally integer.
 
-      \code{as.roman(x)} now should work platform independently, also for, e.g.,
-      \code{x = "IIIII"} (= V) and \code{x = "IIIIII"} (= VI).
+      \code{duplicated()}, \code{unique()}, and \code{anyDuplicated()}
+      now also work for class \code{expression} vectors.
     }
   }
 
@@ -543,6 +543,9 @@
 
       \item \code{binomial(<link>)$linkinv(eta)} and \code{.. $mu.eta(eta)}
       now also work for \code{"logit"} link when \code{is.integer(eta)}.
+
+      \code{as.roman(x)} now should work platform independently, also for, e.g.,
+      \code{x = "IIIII"} (= V) and \code{x = "IIIIII"} (= VI).
     }
   }
 }

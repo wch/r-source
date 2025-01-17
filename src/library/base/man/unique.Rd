@@ -1,15 +1,15 @@
 % File src/library/base/man/unique.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2016 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{unique}
+\title{Extract Unique Elements}
 \alias{unique}
 \alias{unique.default}
 \alias{unique.data.frame}
 \alias{unique.matrix}
 \alias{unique.array}
-\title{Extract Unique Elements}
 \description{
   \code{unique} returns a vector, data frame or array like \code{x}
   but with duplicate elements/rows removed.
@@ -27,7 +27,8 @@ unique(x, incomparables = FALSE, \dots)
        fromLast = FALSE, \dots)
 }
 \arguments{
-  \item{x}{a vector or a data frame or an array or \code{NULL}.}
+  \item{x}{a (generalized, see \code{\link{is.vector}}) vector, a data
+    frame,  an array or \code{NULL}.}
   \item{incomparables}{a vector of values that cannot be compared.
     \code{FALSE} is a special value, meaning that all values can be
     compared, and may be the only value accepted for methods other than
@@ -43,8 +44,9 @@ unique(x, incomparables = FALSE, \dots)
   \item{MARGIN}{the array margin to be held fixed: a single integer.}
 }
 \details{
-  This is a generic function with methods for vectors, data frames and
-  arrays (including matrices).
+  This is a generic function with methods for generalized (in the sense of
+  \code{\link{is.vector}}) vectors, data frames and arrays (including
+  matrices).
 
   The array method calculates for each element of the dimension
   specified by \code{MARGIN} if the remaining dimensions are identical

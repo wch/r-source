@@ -1,6 +1,6 @@
 % File src/library/base/man/duplicated.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2021 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{duplicated}
@@ -41,7 +41,8 @@ anyDuplicated(x, incomparables = FALSE, \dots)
            MARGIN = 1, fromLast = FALSE, \dots)
 }
 \arguments{
-  \item{x}{a vector or a data frame or an array or \code{NULL}.}
+  \item{x}{a (generalized, see \code{\link{is.vector}}) vector, a data
+    frame,  an array or \code{NULL}.}
   \item{incomparables}{a vector of values that cannot be compared.
     \code{FALSE} is a special value, meaning that all values can be
     compared, and may be the only value accepted for methods other than
@@ -57,7 +58,7 @@ anyDuplicated(x, incomparables = FALSE, \dots)
 }
 \details{
   These are generic functions with methods for vectors (including
-  lists), data frames and arrays (including matrices).
+  lists and expressions), data frames and arrays (including matrices).
 
   For the default methods, and whenever there are equivalent method
   definitions for \code{duplicated} and \code{anyDuplicated},

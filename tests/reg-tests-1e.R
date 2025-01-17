@@ -1733,6 +1733,19 @@ stopifnot(identical(binImuEt(          0:3),
 ## integer type was not allowed for logit (only) in R <= 4.4.2
 
 
+## {any}duplicated(), unique() for expressions
+expr9 <- expression(1,0+1, x+1, x+2, x+1, (x)+1, 1, (1), (x+1))
+l9 <- as.list(expr9)
+ch9 <- vapply(l9, deparse, "")
+stopifnot(exprs = {
+    identical(anyDuplicated(l9), 5L)
+    identical(anyDuplicated(l9), anyDuplicated(expr9))
+    identical(duplicated(expr9), duplicated(ch9))
+    identical(unique(expr9), expr9[-c(5,7)])
+})
+## did not work for expressions in R < 4.5.0
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
