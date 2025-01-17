@@ -165,6 +165,9 @@
 
       Both methods return or keep internal type \code{"integer"} more
       consistently now.  Also, \code{as.POSIXct({})} is internally integer.
+
+      \code{as.roman(x)} now should work platform independently, also for, e.g.,
+      \code{x = "IIIII"} (= V) and \code{x = "IIIIII"} (= VI).
     }
   }
 
