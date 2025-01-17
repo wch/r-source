@@ -1080,7 +1080,8 @@ if you want to specify a non-default standard use something like
 
 Compiling @R{} requires C99 or later: C11 and C17 are minor updates, but
 the substantial update `C23' (finally published in October 2024) is also
-supported for current versions of GCC and @command{clang}.
+supported for current versions of GCC and @command{clang}.  The upcoming
+GCC@tie{}15 is expected to default to C23.
 
 As from @R{} 4.3.0 there is support for packages to indicate their
 preferred C version.  Macros @code{CC17}, @code{C17FLAGS}, @code{CC23}

@@ -474,6 +474,9 @@
       \command{clang} 17--19.  (\I{LLVM} \command{clang} 18 and 19 objected
       to apparently valid code using attributes accepted by all the
       other compilers.)
+
+      It can be installed with the upcoming (at the time of writing)
+      \command{gcc} 15, which defaults to C23.
     }
   }
 
