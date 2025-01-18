@@ -187,6 +187,11 @@ tar(tarfile, files = NULL,
 
   The \command{tar} programs in commercial Unixen such as \I{AIX} and
   Solaris do not support compression.
+
+  Neither the internal or the known external \command{tar} commands
+  support parallel compression --- but this function can be used to write
+  an uncompressed tarball which can then be compressed in paralllel, for
+  example with \command{zstd -T0}.
 }
 
 \note{
