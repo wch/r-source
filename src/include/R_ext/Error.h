@@ -39,11 +39,15 @@
 extern "C" {
 #endif
 
-/* C23 has a [[noreturn]] attribute supported in GCC 13 and LLVM clang
- * 15 with -std=c2x but not Apple clang 14.  All have version 202000L.
- * clang 19 has version 202301L
- * gcc pre-15 supports -std=gnu23 with version 202301L but does not
- * support (and barfs on) this attribute, so restrict to clang for now.
+/* C23 has a [[noreturn]] attribute supported in LLVM clang 15 with
+ * -std=c2x but not Apple clang 14.  That and GCC verisions 12-14 have
+ * version 202000L.
+ * clang 19 has version 202301L (and supports -std=gnu23).
+ * gcc pre-15 supports -std=gnu23 with version 202301L but barfs on
+ * this attribute, so restrict to clang for now.
+ *
+ * https://en.cppreference.com/w/c/compiler_support/23
+ * claims GCC 13 and LLVM clang 15 support [[noreturn]] ....
  *
  * In C11 there is _Noreturn * (or noreturn in header <stdnoreturn.h>).
  */

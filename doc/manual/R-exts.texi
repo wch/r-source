@@ -3196,12 +3196,15 @@ clarifying the formerly deprecated meaning of function declarations with
 an empty parameter list to mean zero parameters. (There are many other
 additions: see for example @uref{https://en.cppreference.com/w/c/23}.)
 
+@c GCC 14, LLVM clang 19 and Apple clang 16 default to C17
+@c In 2025-01 GCC pre=15 defaulted to C23 (but did not document so).
 The @command{configure} script in recent versions of @R{} aims to choose
 a C compiler which supports C11: as the default in recent versions of
 @command{gcc}, @I{LLVM} @command{clang} and Apple @command{clang} is C17,
 that is what is likely to be chosen.  On the other hand, until @R{} 4.3.0
 the makefiles for the Windows build specified C99.  They now use the
-compiler default which for the recommended compiler is C17.
+compiler default which for the recommended compiler is C17.  Future
+versions (including @command{gcc}@tie{}15) are likely to default to C23.
 
 Packages may want to either avoid or embrace the changes in C23, and can
 do so @emph{via} specifying @samp{USE_Cnn} for 17, 23, 90 or 99 in the
