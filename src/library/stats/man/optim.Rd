@@ -1,6 +1,6 @@
 % File src/library/stats/man/optim.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2021 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{optim}
@@ -102,7 +102,9 @@ optimHess(par, fn, gr = NULL, \dots, control = list())
   in getting to a good value on a very rough surface.
 
   Method \code{"Brent"} is for one-dimensional problems only, using
-  \code{\link{optimize}()}.  It can be useful in cases where
+  \code{\link{optimize}(<ff>, lower, upper, tol = control$reltol)} where
+  \code{<ff>} is \code{function(par) fn(par, ...)/control$fnscale}.  It can
+  be useful in cases when
   \code{optim()} is used inside other functions where only \code{method}
   can be specified, such as in \code{\link{mle}} from package \pkg{stats4}.
 
