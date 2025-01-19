@@ -3132,7 +3132,8 @@ if(FALSE) {
             if (!file_test("-f", ff) || file_test("-nt", f, ff)) {
                 showtype(type)
                 .convert(Rd2latex(Rd, ff, defines = NULL,
-                                  outputEncoding = outenc))
+                                  outputEncoding = outenc,
+                                  writeEncoding = (outenc != "UTF-8")))
             }
         }
         if ("example" %in% types) {
