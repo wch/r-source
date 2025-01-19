@@ -771,10 +771,12 @@ as.data.frame.difftime <- as.data.frame.vector
 
 format.difftime <- function(x,...)
 {
-    if(length(x))
+    y <- if(length(x))
         paste(format(unclass(x),...), units(x))
     else
         character()
+    names(y) <- names(x)
+    y
 }
 
 print.difftime <- function(x, digits = getOption("digits"), ...)
