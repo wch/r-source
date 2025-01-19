@@ -27,6 +27,7 @@
 \alias{units.difftime}
 \alias{units<-.difftime}
 \alias{time interval} % used by mean.Rd
+\alias{summary.difftime}
 \description{
   Time intervals creation, printing, and some arithmetic.  The
   \code{\link{print}()} method calls these \dQuote{time differences}.
