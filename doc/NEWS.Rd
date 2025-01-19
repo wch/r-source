@@ -166,8 +166,12 @@
       Both methods return or keep internal type \code{"integer"} more
       consistently now.  Also, \code{as.POSIXct({})} is internally integer.
 
-      \code{duplicated()}, \code{unique()}, and \code{anyDuplicated()}
+      \item \code{duplicated()}, \code{unique()}, and \code{anyDuplicated()}
       now also work for class \code{expression} vectors.
+
+      \item New function \code{use()} to use packages in R scripts with
+      full control over what gets added to the search path.  (Actually
+      already available since \R 4.4.0.)
     }
   }
 
