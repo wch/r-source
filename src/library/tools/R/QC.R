@@ -2519,6 +2519,9 @@ function(package, dir, lib.loc = NULL)
     S3_primitive_generics_env <-
         .make_S3_primitive_generic_env()
 
+    dod <- .predicate_for_calls_with_names(c(".Defunct", ".Deprecated"),
+                                           "base")
+
     nfg <- function(gname, env) {
         ## To correctly get the arguments of a "known" S3 generic, we
         ## must do the following.
@@ -2554,6 +2557,9 @@ function(package, dir, lib.loc = NULL)
                      get0(v, envir = code_env)
                  else
                      v
+        if(!is.null(mcode) &&
+           dod(.get_top_call_in_fun(mcode)))
+            mcode <- NULL
         margs <- if(!is.null(mcode)) nff(mcode) else NULL
         list(gname, gargs, mname, margs)
     }
@@ -2602,8 +2608,13 @@ function(package, dir, lib.loc = NULL)
                           entries <-
                               lapply(methods,
                                      function(m) {
-                                         list(g, gargs,
-                                              m, nff(code_env[[m]]))
+                                         mcode <- code_env[[m]]
+                                         margs <-
+                                             if(dod(.get_top_call_in_fun(mcode)))
+                                                 NULL
+                                             else
+                                                 nff(mcode)
+                                         list(g, gargs, m, margs)
                                      })
                           names(entries) <- methods
                           entries
@@ -2684,19 +2695,6 @@ function(package, dir, lib.loc = NULL)
                           lapply(gnm,
                                  function(e)
                                      do.call(check_args, e)))
-    ## Ignore methods which (likely) have their top call to .Defunct()
-    ## or .Deprecated() from base.
-    if(length(bad_methods)) {
-        predicate <- .predicate_for_calls_with_names(c(".Defunct",
-                                                       ".Deprecated"),
-                                                     "base")
-        defordep <- function(e) {
-            mname <- names(e)[2L]
-            mcode <- get0(mname, envir = code_env)
-            predicate(.get_top_call_in_fun(mcode))
-        }
-        bad_methods <- bad_methods[!vapply(bad_methods, defordep, NA)]
-    }
     if(length(bad_methods) && !is_base) {
         ## For now, split out the mismatches for GEN.CLS functions not
         ## registered as methods, split according to GEN a generic in
