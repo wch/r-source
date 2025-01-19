@@ -33,6 +33,28 @@
      !identical(class(tryCatch(y[0L], error = identity)), class(y)))
 }
 
+## <NOTE>
+## We tend to not add internal utility functions to base as these cannot
+## really be hidden.  Otherwise, we could do something like
+##    .is_vector_like <- function(x) {
+##         (length(dim(x)) < 2L) &&
+##          identical(class(tryCatch(x[0L], error = identity)),
+##                    class(x))
+##     }
+## (or perhaps even add a .is_vector_like() generic with the above as
+## default method, and
+##    .is_same_kind <- function(x, y) {
+##        isa(x, class(y)) || isa(y, class(x)
+## }
+## and finally
+##     .set_ops_need_as_vector <- function(x, y) {
+##          !.is_vector_like(x) ||
+##          !.is_vector_like(y) ||
+##          !.is_same_kind(x, y)
+## }
+## instead of putting everything into one function.
+## </NOTE>
+
 union <-
 function(x, y)
 {
