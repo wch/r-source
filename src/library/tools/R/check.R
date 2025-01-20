@@ -734,7 +734,7 @@ add_dummies <- function(dir, Log)
 
         ## Run the demos if requested (traditionally part of tests, as in base)
         if (dir.exists(file.path(pkgdir, "demo")))
-            run_tests("demo")
+            run_tests("demo", do_demo)
 
         ## Run the package-specific tests.
         tests_dir <- file.path(pkgdir, test_dir)
@@ -744,7 +744,7 @@ add_dummies <- function(dir, Log)
         }
         if (dir.exists(tests_dir) && # trackObjs has only *.Rin
             length(dir(tests_dir, pattern = "\\.(R|r|Rin)$")))
-            run_tests(test_dir)
+            run_tests(test_dir, do_tests)
 
         ## Check package vignettes.
         setwd(pkgoutdir)
@@ -4642,11 +4642,11 @@ add_dummies <- function(dir, Log)
     }
 
     ## this is also used for --run-demo
-    run_tests <- function(test_dir = "tests")
+    run_tests <- function(test_dir = "tests", run = TRUE)
     {
         is_demo <- test_dir == "demo"
         check_packages_used <- !is_demo ||
-            config_val_to_logical(Sys.getenv("_R_CHECK_PACKAGES_USED_IN_DEMO_", do_demo))
+            config_val_to_logical(Sys.getenv("_R_CHECK_PACKAGES_USED_IN_DEMO_", run))
         if (check_packages_used && !extra_arch && !is_base_pkg) {
             checkingLog(Log, "for unstated dependencies in ", sQuote(test_dir))
             Rcmd <- paste(opW_shE_F_str,
@@ -4661,9 +4661,8 @@ add_dummies <- function(dir, Log)
         }
 
         if (is_demo) {
-            if (do_demo) {
+            if (run) {
                 checkingLog(Log, "demos")
-                do_tests <- TRUE
             } else return()
         } else {
             if (test_dir == "tests")
@@ -4783,7 +4782,7 @@ add_dummies <- function(dir, Log)
             setwd(pkgoutdir)
             TRUE
         }
-        if (do_install && do_tests) {
+        if (do_install && run) {
             if (!this_multiarch) {
                 res <- run_one_arch()
             } else {
