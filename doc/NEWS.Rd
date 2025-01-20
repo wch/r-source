@@ -172,6 +172,10 @@
       \item New function \code{use()} to use packages in R scripts with
       full control over what gets added to the search path.  (Actually
       already available since \R 4.4.0.)
+
+      \item There is some support for \command{zstd} compression of
+      tarballs in \code{tar()} and \code{untar()}.  (This depends on OS
+      support of \code{libzstd} or by \command{tar}.)
     }
   }
 
@@ -358,8 +362,11 @@
 
       \item \code{R CMD check} with a true value for environment variable
       \env{_R_CHECK_BASHISMS_} checks more thoroughly, including for
-      \command{bash} scripts and components of
+      \command{bash} scripts and bashisms in components of
       \command{autoconf}-generated \command{configure} scripts.
+
+      \item \code{R CMD build} now supports \option{--compression =
+	zstd} on platforms with sufficient support for \command{zstd}.
     }
   }
 

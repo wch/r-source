@@ -153,7 +153,7 @@ inRbuildignore <- function(files, pkgdir) {
             '                        "no" (default), "qpdf", "gs", "gs+qpdf", "both"',
             "  --compact-vignettes   same as --compact-vignettes=qpdf",
             "  --compression=        type of compression to be used on tarball:",
-            '                        "gzip" (default), "none", "bzip2", "xz"',
+            '                        "gzip" (default), "none", "bzip2", "xz", "zstd"',
             "  --md5                 add MD5 sums",
             "  --log                 log to file 'pkg-00build.log' when processing ",
             "                        the pkgdir with basename 'pkg'",
@@ -930,7 +930,7 @@ inRbuildignore <- function(files, pkgdir) {
             install_dependencies <- "most"
         } else if (substr(a, 1, 14) == "--compression=") {
             compression <- match.arg(substr(a, 15, 1000),
-                                     c("none", "gzip", "bzip2", "xz"))
+                                     c("none", "gzip", "bzip2", "xz", "zstd"))
         } else if (substr(a, 1, 7) == "--user=") {
             user <- substr(a, 8, 64)
         } else if (startsWith(a, "-")) {
@@ -1206,7 +1206,8 @@ inRbuildignore <- function(files, pkgdir) {
 
         ## Finalize
         ext <- switch(compression,
-                      "none"="", "gzip"= ".gz", "bzip2" = ".bz2", "xz" = ".xz")
+                      "none"="", "gzip"= ".gz", "bzip2" = ".bz2",
+                      "xz" = ".xz", "zstd" = ".zst")
         filename <- paste0(pkgname, "_", desc["Version"], ".tar", ext)
         filepath <- file.path(startdir, filename)
         ## NB: ../../../../tests/reg-packages.R relies on this exact format!

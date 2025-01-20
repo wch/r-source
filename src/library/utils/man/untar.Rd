@@ -1,6 +1,6 @@
 % File src/library/utils/man/untar.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2009-2019 R Core Team
+% Copyright 2009-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{untar}
@@ -40,13 +40,14 @@ untar(tarfile, files = NULL, list = FALSE, exdir = ".",
 
   \item{compressed}{(Deprecated in favour of auto-detection, used only
     for an external \command{tar} command.)  Logical or character
-    string.  Values \code{"gzip"}, \code{"bzip2"} and \code{"xz"} select
-    that form of compression (and may be abbreviated to the first
-    letter).  \code{TRUE} indicates \command{gzip} compression,
-    \code{FALSE} no known compression, and \code{NA} (the default)
-    indicates that the type is to be inferred from the file header.
+    string.  Values \code{"gzip"}, \code{"bzip2"}, \code{"xz"} and
+    \code{"zstd"} select that form of compression (and may be
+    abbreviated to the first letter).  \code{TRUE} indicates
+    \command{gzip} compression, \code{FALSE} no known compression, and
+    \code{NA} (the default) indicates that the type is to be inferred
+    from the file header.
 
-    The external command may ignore the selected compression type but
+    The external command may ignore the selected compression type and
     detect a type automagically.
   }
 
@@ -85,9 +86,9 @@ untar(tarfile, files = NULL, list = FALSE, exdir = ".",
   }
 
   \item{tar}{character string: the path to the command to be used or
-    \code{"internal"}.  If the command itself contains spaces it needs
-    to be quoted -- but \code{tar} can also contain flags separated from
-    the command by spaces.}
+    \code{"internal"} or \code{""}.  If the command itself contains
+    spaces it needs to be quoted -- but \code{tar} can also contain
+    flags separated from the command by spaces.}
 }
 
 \details{
@@ -107,16 +108,24 @@ untar(tarfile, files = NULL, list = FALSE, exdir = ".",
     \item{GNU tar:}{Modern GNU \command{tar} versions support
       compressed archives and since 1.15 are able to detect the type of
       compression automatically: version 1.22 added support for
-      \command{xz} compression.
+      \command{xz} compression and version 1.31 for \command{zstd}
+      compression.
 
       On a Unix-alike, \command{configure} will set environment variable
       \env{TAR}, preferring GNU tar if found.}
 
     %% bsdtar had it in FreeBSB 5.3 (2004)
     \item{\code{bsdtar}:}{macOS 10.6 and later (and FreeBSD and some
-      other OSes) have a \command{tar}
-      from the \I{libarchive} project which detects all three forms
-      of compression automagically (even if undocumented in macOS).}
+      other OSes) have a \command{tar} from the \I{libarchive} project
+      which detects known-to-it forms of compression automagically.
+      However, this may rely on an external command being available: macOS
+      has a tar which knows about \code{zstd} compression, but relies
+      on a \command{zstd} command which it does not supply.
+
+      This added support for \command{xz} in 2019 and for \command{zstd}
+      in 2020 (if the appropriate library or external program is
+      available).
+    }
 
     \item{NetBSD:}{It is undocumented if \I{NetBSD}'s \command{tar} can
       detect compression automagically: for versions before 8 the flag
@@ -132,22 +141,23 @@ untar(tarfile, files = NULL, list = FALSE, exdir = ".",
 
     \item{Heirloom Toolchest:}{This \command{tar} does automagically
       detect \command{gzip} and \command{bzip2} compression (undocumented)
-      but has no support for \command{xz} compression.}
+      but had no support for \command{xz} nor \command{zstd} compression.}
 
     \item{Older support:}{Environment variable \env{R_GZIPCMD} gives the
       command to decompress \command{gzip} files, and
       \env{R_BZIPCMD} for \command{bzip2} files. (On Unix-alikes
-      these are set at installation if found.)  \command{xz} is used if
-      available: if not decompression is expected to fail.}
+      these are set at installation if found.)  An external program called
+      \command{xz} or \command{zstd} is used if available: if not
+      decompression is expected to fail.}
   }
 
   Arguments \code{compressed}, \code{extras} and \code{verbose} are only
   used when an external \command{tar} is used.
 
   Some external \command{tar} commands will detect some of
-  \command{lrzip}, \command{lzma}, \command{lz4}, \command{lzop} and
-  \command{zstd} compression in addition to \command{gzip},
-  \command{bzip2} and \command{xz}.  (For some external \command{tar}
+  \command{lrzip}, \command{lzma}, \command{lz4} and \command{lzop}
+  compression in addition to \command{gzip}, \command{bzip2},
+  \command{xz} and \command{zstd}.  (For some external \command{tar}
   commands, compressed tarfiles can only be read if the appropriate
   utility program is available.)  For GNU \command{tar}, further
   (de)compression programs can be specified by e.g.\sspace{}\code{extras
@@ -162,14 +172,14 @@ untar(tarfile, files = NULL, list = FALSE, exdir = ".",
   linking operation fails (as it may on a FAT file system), a file copy
   is tried.  Since it uses \code{\link{gzfile}} to read a file it can
   handle files compressed by any of the methods that function can
-  handle: at least \command{compress}, \command{gzip}, \command{bzip2}
-  and \command{xz} compression, and some types of \command{lzma}
-  compression.  It does not guard against restoring absolute file paths,
-  as some \command{tar} implementations do.  It will create the parent
-  directories for directories or files in the archive if necessary.  It
-  handles the \I{USTAR}/POSIX, GNU and \command{pax} ways of handling file
-  paths of more than 100 bytes, and the GNU way of handling link targets
-  of more than 100 bytes.
+  handle: at least \command{compress}, \command{gzip}, \command{bzip2},
+  \command{xz} and \command{zstd} compression, and some types of
+  \command{lzma} compression.  It does not guard against restoring
+  absolute file paths, as some \command{tar} implementations do.  It
+  will create the parent directories for directories or files in the
+  archive if necessary.  It handles the \I{USTAR}/POSIX, GNU and
+  \command{pax} ways of handling file paths of more than 100 bytes, and
+  the GNU way of handling link targets of more than 100 bytes.
 
   You may see warnings from the internal implementation such
   as \preformatted{    unsupported entry type 'x'}
