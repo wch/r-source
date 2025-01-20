@@ -2754,9 +2754,14 @@ attribute_hidden SEXP do_gzfile(SEXP call, SEXP op, SEXP args, SEXP env)
 	if(compress == NA_LOGICAL || compress < 0 || compress > 9)
 	    error(_("invalid '%s' argument"), "compress");
     }
-    if(type == 2 || type == 3) {
+    if(type == 2) {
 	compress = asInteger(CADDDR(args));
 	if(compress == NA_LOGICAL || abs(compress) > 9)
+	    error(_("invalid '%s' argument"), "compress");
+    }
+    if(type == 3) {
+	compress = asInteger(CADDDR(args));
+	if(compress == NA_LOGICAL || abs(compress) > 19)
 	    error(_("invalid '%s' argument"), "compress");
     }
     open = CHAR(STRING_ELT(sopen, 0)); /* ASCII */

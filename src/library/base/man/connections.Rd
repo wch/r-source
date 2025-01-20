@@ -120,10 +120,10 @@ socketTimeout(socket, timeout = -1)
     requests.  It is ignored for non-HTTP URLs.  The \code{User-Agent}
     header, coming from the \code{HTTPUserAgent} option (see
     \code{\link{options}}) is used as the first header, automatically.}
-  \item{compression}{integer in 0--9.  The amount of compression to be
-    applied when writing, from none to maximal available.  For
-    \code{xzfile} and \code{zstdfile} can also be negative: see the
-    \sQuote{Compression} section.}
+  \item{compression}{integer in 0--9 (1--19 for \code{zsdfile}).  The
+    amount of compression to be applied when writing, from minimal to
+    maximal available.  For \code{xzfile} and \code{zstdfile} can also
+    be negative: see the \sQuote{Compression} section.}
   \item{timeout}{numeric: the timeout (in seconds) to be used for this
     connection.  Beware that some OSes may treat very large values as
     zero: however the POSIX standard requires values up to 31 days to be
