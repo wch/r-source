@@ -53,7 +53,7 @@ tar(tarfile, files = NULL,
   (follow symbolic links, also \option{-L} on some platforms),
   \samp{--acls}, \option{--exclude-backups}, \option{--exclude-vcs} (and
   similar) and on Windows \option{--force-local} (so drives can be
-  included in filepaths: this used to be the defailt for \R on Windows).
+  included in filepaths: this used to be the default for \R on Windows).
 
   A convenient and robust way to set options for GNU \command{tar} is via
   environment variable \env{TAR_OPTIONS}.  Appending \option{--force-local}
@@ -190,7 +190,7 @@ tar(tarfile, files = NULL,
 
   Neither the internal or the known external \command{tar} commands
   support parallel compression --- but this function can be used to write
-  an uncompressed tarball which can then be compressed in paralllel, for
+  an uncompressed tarball which can then be compressed in parallel, for
   example with \command{zstd -T0}.
 }
 
