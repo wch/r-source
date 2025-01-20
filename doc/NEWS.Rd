@@ -365,6 +365,9 @@
       \command{bash} scripts and bashisms in components of
       \command{autoconf}-generated \command{configure} scripts.
 
+      \item \command{R CMD check} gains option \option{--run-demo} to
+      check demo scripts like tests.
+
       \item \code{R CMD build} now supports \option{--compression =
 	zstd} on platforms with sufficient support for \command{zstd}.
     }
