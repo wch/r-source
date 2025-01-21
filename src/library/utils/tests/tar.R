@@ -29,7 +29,11 @@ for(f in  c("none", "gzip", "bzip2", "xz", "zstd"))
     print(head(dir("utils"), 5))
 }
 
-## and external tar
+## and external tar : skip on Windows due to different handling of paths
+if(.Platform$OS.type == "windows") {
+    unlink("utils", recursive = TRUE)
+    quit("no")
+}
 TAR <- Sys.getenv("TAR", "tar")
 for(f in  c("none", "gzip", "bzip2", "xz", "zstd"))
 {
