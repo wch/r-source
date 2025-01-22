@@ -1165,11 +1165,13 @@ inRbuildignore <- function(files, pkgdir) {
         desc <- .read_description(file.path(pkgname, "DESCRIPTION"))
         Rdeps <- .split_description(desc)$Rdepends2
         hasDep350 <- FALSE
+        hasDep410 <- FALSE
         for(dep in Rdeps) {
             if(dep$op != '>=') next
             if(dep$version >= "3.5.0") hasDep350 <- TRUE
+            if(dep$version >= "4.1.0") hasDep410 <- TRUE
         }
-        if (!hasDep350) {
+        if(!hasDep350) {
             ## re-read files after exclusions have been applied
             allfiles <- dir(".", all.files = TRUE, recursive = TRUE,
                             full.names = TRUE)
@@ -1180,11 +1182,25 @@ inRbuildignore <- function(files, pkgdir) {
                 fixup_R_dep(pkgname, "3.5.0")
                 msg <- paste("WARNING: Added dependency on R >= 3.5.0 because",
                              "serialized objects in serialize/load version 3",
-                             "cannot be read in older versions of R. File(s)",
-                             "containing such objects:")
+                             "cannot be read in older versions of R.")
                 printLog(Log,
                          paste(c(strwrap(msg, indent = 2L, exdent = 2L),
+                                 "  File(s) containing such objects:",
                                  paste0("  ", .pretty_format(sort(toonew)))),
+                               collapse = "\n"),
+                         "\n")
+            }
+        }
+        if(!hasDep410) {
+            files <- names(.package_code_using_R_4.1_syntax(pkgname))
+            if(length(files)) {
+                fixup_R_dep(pkgname, "4.1.0")
+                msg <- paste("WARNING: Added dependency on R >= 4.1.0 because",
+                             "package code uses the pipe |> or function shorthand \\(...) syntax added in R 4.1.0.")
+                printLog(Log,
+                         paste(c(strwrap(msg, indent = 2L, exdent = 2L),
+                                 "  File(s) using such syntax:",
+                                 paste0("  ", .pretty_format(sort(files)))),
                                collapse = "\n"),
                          "\n")
             }
