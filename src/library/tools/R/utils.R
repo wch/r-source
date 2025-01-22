@@ -2112,6 +2112,48 @@ function(packages = NULL, FUN, ..., pattern = "*", verbose = TRUE,
     out
 }
 
+### ** .package_code_using_R_4.1_syntax
+
+.package_code_using_R_4.1_syntax <-
+function(dir)
+{
+    dir <- file_path_as_absolute(dir)
+    wrk <- function(f) {
+        x <- utils::getParseData(parse(f, keep.source = TRUE))
+        i <- x$token %in% c("PIPE", "'\\\\'")
+        utils::getParseText(x, x[i, "parent"])
+    }
+    one <- function(f)
+        tryCatch(wrk(file.path(dir, "R", f)), error = identity)
+
+    files <- list_files_with_type(file.path(dir, "R"), "code",
+                                  full.names = FALSE,
+                                  OS_subdirs = c("unix", "windows"))
+    out <- lapply(files, one)
+    names(out) <- files
+    Filter(length, out)
+}
+
+## ** .package_depends_on_R_at_least
+
+.package_depends_on_R_at_least <-
+function(dir, v)
+{
+    .package_metadata_has_depends_on_R_at_least(.get_package_metadata(dir),
+                                                v)
+}
+
+### ** .package_metadata_has_depends_on_R_at_least
+
+.package_metadata_has_depends_on_R_at_least <-
+function(meta, v)
+{
+    for(dep in .split_description(meta)$Rdepends2) {
+        if((dep$op == '>=') && (dep$version >= v)) return(TRUE)
+    }
+    FALSE
+}
+    
 ### ** .package_vignettes_via_call_to_R
 
 .package_vignettes_via_call_to_R <-
