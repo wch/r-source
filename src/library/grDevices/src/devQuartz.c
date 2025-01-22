@@ -1066,7 +1066,7 @@ static int QuartzCreateMask(SEXP mask,
             CGContextRef alpha_bitmap = quartz_bitmap;
 
             /* Create a new grayscale bitmap with no alpha channel */
-            int stride = CGBitmapContextGetBytesPerRow(alpha_bitmap);
+            size_t stride = CGBitmapContextGetBytesPerRow(alpha_bitmap);
             quartz_bitmap = CGBitmapContextCreate(NULL,
                                                   (size_t) devWidth,
                                                   (size_t) devHeight,
@@ -3071,7 +3071,7 @@ void RQuartz_glyph(int n, int *glyphs, double *x, double *y,
         CGContextSetFillColorWithColor(ctx, fillColorRef);
         int i;
         for (i=0; i<n; i++) {
-            CGGlyph glyph = glyphs[i];
+            CGGlyph glyph = (CGGlyph) glyphs[i];
             CGPoint loc = CGPointMake(x[i], y[i]);
             CTFontDrawGlyphs(ctFont, &glyph, &loc, 1, ctx);
         }
