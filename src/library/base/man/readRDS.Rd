@@ -1,6 +1,6 @@
 % File src/library/base/man/serialize.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2021 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{readRDS}
@@ -20,18 +20,18 @@ infoRDS(file)
 }
 \arguments{
   \item{object}{\R object to serialize.}
-  \item{file}{a \link{connection} or the name of the file where the \R object
-    is saved to or read from.}
+  \item{file}{a \link{connection} or the path name of the file where the
+    \R object is saved to or read from.}
   \item{ascii}{a logical.  If \code{TRUE} or \code{NA}, an ASCII
     representation is written; otherwise (default), a binary one is used.
     See the comments in the help for \code{\link{save}}.}
   \item{version}{the workspace format version to use.  \code{NULL}
-    specifies the current default version (3). The only other supported
+    specifies the current default version (3).  The only other supported
     value is 2, the default from \R 1.4.0 to \R 3.5.0.}
   \item{compress}{a logical specifying whether saving to a named file is
     to use \code{"gzip"} compression, or one of \code{"gzip"},
-    \code{"bzip2"} or \code{"xz"} to indicate the type of compression to
-    be used.  Ignored if \code{file} is a connection.}
+    \code{"bzip2"}, \code{"xz"} or \code{"zstd"} to indicate the type of
+    compression to be used.  Ignored if \code{file} is a connection.}
   \item{refhook}{a hook function for handling reference objects.}
 }
 \details{
@@ -97,6 +97,9 @@ infoRDS(file)
   machines, for example to download from a website. The
   files produced by \code{\link{save}} have a header identifying the
   file type and so are better protected against erroneous use.
+
+  \code{compress = "zstd"} was first supported in \R 4.5.0, and needs OS
+  support so is even less suited as an interchange format.
 }
 
 \seealso{

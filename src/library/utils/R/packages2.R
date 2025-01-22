@@ -194,7 +194,7 @@ install.packages <-
     get_package_name <- function(pkg) {
         ## Since the pkg argument can be the name of a file rather than
         ## a regular package name, we have to clean that up.
-        gsub("_[.](zip|tar[.]gz|tar[.]bzip2|tar[.]xz)", "",
+        gsub("_[.](zip|tar[.](gz|bzip2|bz2|xz|zstd|xst))", "",
              gsub(.standard_regexps()$valid_package_version, "",
                   basename(pkg)))
     }
@@ -399,7 +399,7 @@ install.packages <-
             df <- function(p, destfile, method, ...)
                 download.file(p, destfile, method, mode = "wb", ...)
             urls <- unique(pkgs[web])
-            
+
             if (missing(method) || method == "auto" || method == "libcurl") {
                 # bulk download using libcurl
                 destfiles <- file.path(tmpd, basename(urls))
@@ -417,7 +417,7 @@ install.packages <-
                     } else
                         pkgs[web] <- destfiles
                 } else
-                    pkgs[web] <- NA 
+                    pkgs[web] <- NA
             } else {
                 # serial download
                 for (p in urls) {

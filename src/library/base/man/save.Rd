@@ -1,6 +1,6 @@
 % File src/library/base/man/save.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2020 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{save}
@@ -50,7 +50,7 @@ save.image(file = ".RData", version = NULL, ascii = FALSE,
   \item{compress}{logical or character string specifying whether saving
     to a named file is to use compression.  \code{TRUE} corresponds to
     \command{gzip} compression, and character strings \code{"gzip"},
-    \code{"bzip2"} or \code{"xz"} specify the type of
+    \code{"bzip2"}, \code{"xz"} or \code{"zstd"} specify the type of
     compression.  Ignored when \code{file} is a connection and
     for workspace format version 1.}
   \item{compression_level}{integer: the level of compression to be
@@ -180,12 +180,16 @@ save.image(file = ".RData", version = NULL, ascii = FALSE,
   vectors, external pointers and some S4 objects).
 
   One such \sQuote{later addition} was \link{long vectors}, introduced in \R
-  3.0.0 and loadable only on 64-bit platforms.
+  3.0.0 and loadable only on 64-bit platforms (32-bit platforms are
+  dperecated but still supported).
 
   Loading files saved with \code{ASCII = NA} requires a C99-compliant C
-  function \code{sscanf}: this is a problem on Windows, first worked
+  function \code{sscanf}: this was a problem on Windows, first worked
   around in \R 3.1.2: version-2 files in that format should be readable
   in earlier versions of \R on all other platforms.
+
+  \code{compress = "zstd"} was first supported in \R 4.5.0 and needs
+  (optional) OS support so is not recommended as an interchange format.
 }
 \seealso{
   \code{\link{dput}}, \code{\link{dump}}, \code{\link{load}},

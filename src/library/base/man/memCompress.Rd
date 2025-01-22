@@ -1,6 +1,6 @@
 % File src/library/base/man/memCompress.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2009-2023 R Core Team
+% Copyright 2009-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{memCompress}
@@ -56,9 +56,9 @@ memDecompress(from,
   \eqn{2^{31}-1}{2^31 - 1} elements.  Compression is equivalent to
   \command{bzip2 -9} (the default).
 
-  \command{zstd} compression is optional and currently uses compression
-  level 3 which gives a good compression ratio vs compression speed
-  trade-off.
+  \command{zstd} compression was introduced in \R 4.5.0: it is an
+  optional part of the \R build and currently uses compression level 3
+  which gives a good compression ratio vs compression speed trade-off.
 
   Compressing with \code{type = "xz"} is equivalent to compressing a
   file with \command{xz -9e} (including adding the \sQuote{magic}
