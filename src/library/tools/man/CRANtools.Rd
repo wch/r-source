@@ -98,9 +98,9 @@ CRAN_authors_db()
   \code{CRAN_authors_db()} returns information on the authors of the
   current CRAN packages extracted from the \samp{Authors@R} fields in
   the package \file{DESCRIPTION} files, as a data frame with character
-  columns giving the given and family names, email addresses,
-  \abbr{ORCID} identifier, roles, and comments of the person entries,
-  and the corresponding package.
+  columns giving the given and family names, email addresses, roles, 
+  comments, \abbr{ORCID} and \abbr{ROR} identifiers of the person
+  entries, and the corresponding package.
 }
 
 \value{
