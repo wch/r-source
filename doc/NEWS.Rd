@@ -484,6 +484,10 @@
 
       \item \code{pwilcox()} and \code{qwilcox()} now check for user
       interrupt less frequently.
+
+      \item \code{summary(<stl>)} (which prints directly) finally gets the
+      same \code{digits} default as the formatting printing of default
+      \code{summary()} method results, and it is documented explicitly.
     }
   }
 }

@@ -1,7 +1,7 @@
 #  File src/library/stats/R/stl.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2025 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -103,7 +103,7 @@ print.stl <- function(x, ...)
     invisible(x)
 }
 
-summary.stl <- function(object, digits = getOption("digits"), ...)
+summary.stl <- function(object, digits = max(3L, getOption("digits") - 3L), ...)
 {
     cat(" Call:\n ")
     dput(object$call, control=NULL)
@@ -113,14 +113,14 @@ summary.stl <- function(object, digits = getOption("digits"), ...)
     iqr <- apply(cbind(STL = object$time.series,
                        data = object$time.series %*% rep(1,3)),
 		 2L, IQR)
-    print(rbind(format(iqr, digits = max(2L, digits - 3L)),
-		"   %"= format(round(100 * iqr / iqr["data"], 1))),
+    print(rbind(format(iqr, digits = max(2L, digits)),
+		"   %" = format(round(100 * iqr / iqr["data"], 1))),
 	  quote = FALSE)
     cat("\n Weights:")
     if(all(object$weights == 1)) cat(" all == 1\n")
     else { cat("\n"); print(summary(object$weights, digits = digits, ...)) }
     cat("\n Other components: ")
-    str(object[-(1L:3)], give.attr = FALSE)
+    str(object[-seq_len(3L)], give.attr = FALSE)
     invisible(object)
 }
 
