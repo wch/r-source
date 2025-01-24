@@ -1,7 +1,7 @@
 #  File src/library/base/R/summary.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2022 The R Core Team
+#  Copyright (C) 1995-2025 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -66,37 +66,37 @@ summary.default <- function(object, ..., digits, quantile.type = 7)
     value
 }
 
-format.summaryDefault <- function(x, digits = max(3L, getOption("digits") - 3L), ...)
+format.summaryDefault <- function(x, digits = max(3L, getOption("digits") - 3L), zdigits = 4L, ...)
 {
     xx <- x
     if(is.numeric(x) || is.complex(x)) {
       finite <- is.finite(x)
-      xx[finite] <- zapsmall(x[finite])
+      xx[finite] <- zapsmall(x[finite], digits = digits + zdigits)
     }
     class(xx) <- class(x)[-1]
     m <- match("NA's", names(x), 0)
     if(inherits(x, "Date") || inherits(x, "POSIXct")) {
         if(length(a <- attr(x, "NAs")))
             c(format(xx, digits=digits, ...), "NA's" = as.character(a))
-        else format(xx, digits=digits)
+        else  format(xx, digits=digits)
     } else if(m && !is.character(x))
-        xx <- c(format(xx[-m], digits=digits, ...), "NA's" = as.character(xx[m]))
-    else format(xx, digits=digits, ...)
+        c(format(xx[-m], digits=digits, ...), "NA's" = as.character(xx[m]))
+    else  format(xx,     digits=digits, ...)
 }
 
-print.summaryDefault <- function(x, digits = max(3L, getOption("digits") - 3L), ...)
+print.summaryDefault <- function(x, digits = max(3L, getOption("digits") - 3L), zdigits = 4, ...)
 {
     xx <- x
     if(is.numeric(x) || is.complex(x)) {
       finite <- is.finite(x)
-      xx[finite] <- zapsmall(x[finite])
+      xx[finite] <- zapsmall(x[finite], digits = digits + zdigits)
     }
     class(xx) <- class(x)[-1] # for format
     m <- match("NA's", names(xx), 0)
     if(inherits(x, "Date") || inherits(x, "POSIXct")) {
         xx <- if(length(a <- attr(x, "NAs")))
             c(format(xx, digits=digits), "NA's" = as.character(a))
-        else format(xx, digits=digits)
+        else  format(xx, digits=digits)
         print(xx, digits=digits, ...)
         return(invisible(x))
     } else if(m && !is.character(x))

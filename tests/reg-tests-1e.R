@@ -1698,7 +1698,7 @@ options(op) # return to sanity + warn=2
 
 ## sessionInfo() *prints*  La_version() when not empty
 si <- sessionInfo()
-str( osi <- capture.output(si)); hasLA <- nzchar(si$LAPACK); si$LAPACK <- ""
+str( osi <- capture.output(si)); si$LAPACK <- ""
 osi.noLA <- capture.output(si)
 if(any(gBL <- grepl("^BLAS/LAPACK:", osi))) {
     ##  *.noLA will have _2_ lines instead, as LAPACK != BLAS now
@@ -1754,6 +1754,26 @@ stopifnot(exprs = {
     identical(unique(expr9), expr9[-c(5,7)])
 })
 ## did not work for expressions in R < 4.5.0
+
+
+## print(summary.default()) should lose less accuracy; print(.) <=> format(.) :
+## Ex. from ISwR (PD), sort(hellung$conc) - "compacted"
+helconc <- as.integer(.5 + 1000 *
+   c(11, 11, 11.6, 13, 13.5, 14, 14.5, 16, 20, 21, 22, 24, 27, 28+(0:3)*2,
+     35, 38, 41,   46, 52, 55,  62, 66, 69,  70, 78, 90,  111, 129, 130, 137, 165,
+    175,195,199, 201, 285,302, 321,332,385, 416,461,475,  501, 563, 592, 630, 631))
+shN <- 100 * c(110, 275, 690, 1643.25, 2430, 6310)
+dput(shel <- summary(helconc))
+stopifnot(identical("164325", format(shel)[["Mean"]]),
+          identical(shN, scan(quiet=TRUE, text = capture.output(shel)[[2]])))
+## for all but *one*  `zdigits = <d>` the double-rounding works fine:
+names(shN) <- names(shel)
+shfmt <- sapply(setNames(, 3:6), simplify = "array", function(dig)
+    sapply(setNames(, -3:9), function(zd) format(shel, digits = dig, zdigits = zd)))
+str(ushfmt <- lapply(apply(aperm(shfmt, 3:1), 3L, unique), \(.) unique(as.numeric(.))))
+shN2 <- as.list(shN); shN2[["Mean"]] <- shN[["Mean"]] + 0:1
+stopifnot(identical(shN2, ushfmt))
+## Mean was wrongly double-rounded to "164326" for years in R < 4.5.0
 
 
 

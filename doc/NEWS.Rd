@@ -176,6 +176,12 @@
       \item There is some support for \command{zstd} compression of
       tarballs in \code{tar()} and \code{untar()}.  (This depends on OS
       support of \code{libzstd} or by \command{tar}.)
+
+      \item \code{print(summary(<numbers>))} gets new optional argument
+      \code{zdigits} to allow more flexible and consistent (double)
+      rounding.  The current default \code{zdigits = 4L} is somewhat
+      experimental.  Specifying both \code{digits = *, zdigits = *} allows
+      behaviour independent of the global \code{digits} option.
     }
   }
 

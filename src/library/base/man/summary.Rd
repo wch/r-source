@@ -1,6 +1,6 @@
 % File src/library/base/man/summary.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2016, 2018 R Core Team
+% Copyright 1995-2016, 2018, 2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{summary}
@@ -29,8 +29,8 @@ summary(object, \dots)
 
 \method{summary}{matrix}(object, \dots)
 
-\method{format}{summaryDefault}(x, digits = max(3L, getOption("digits") - 3L), \dots)
- \method{print}{summaryDefault}(x, digits = max(3L, getOption("digits") - 3L), \dots)
+\method{format}{summaryDefault}(x, digits = max(3L, getOption("digits") - 3L), zdigits = 4L, \dots)
+ \method{print}{summaryDefault}(x, digits = max(3L, getOption("digits") - 3L), zdigits = 4L, \dots)
 }
 \arguments{
   \item{object}{an object for which a summary is desired.}
@@ -44,6 +44,8 @@ summary(object, \dots)
     \code{\link{missing}(.)}), \code{signif()} will \emph{not} be called
     anymore (since \R >= 3.4.0, where the default has been changed to
     only round in the \code{print} and \code{format} methods).}% for "summaryDefault"
+  \item{zdigits}{integer, typically positive to be used in the internal
+    \code{\link{zapsmall}(*, digits = digits + zdigits)} call.}
   \item{quantile.type}{integer code used in \code{quantile(*, type=quantile.type)}
     for the default method.}
   \item{\dots}{additional arguments affecting the summary produced.}
@@ -90,5 +92,11 @@ lst <- unclass(attenu$station) > 20 # logical with NAs
 ## summary.default() for logicals -- different from *.factor:
 summary(lst)
 summary(as.factor(lst))
+
+## show the effect of zdigits for skewed data
+set.seed(17); x <- rlnorm(100, sdlog=2)
+dput(sx <- summary(x))
+sx # exponential format for this data
+print(sx, zdigits = 3) # fixed point: "more readable"
 }
 \keyword{methods}

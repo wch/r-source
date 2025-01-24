@@ -1,6 +1,6 @@
 
-R Under development (unstable) (2024-12-25 r87467) -- "Unsuffered Consequences"
-Copyright (C) 2024 The R Foundation for Statistical Computing
+R Under development (unstable) (2025-01-22 r87618) -- "Unsuffered Consequences"
+Copyright (C) 2025 The R Foundation for Statistical Computing
 Platform: aarch64-apple-darwin24.2.0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -5197,7 +5197,7 @@ attr(,"legend")
 0.00000 0.00000 0.04481 0.09573 0.15214 0.53941 
 > summary(abs(c(1 - Rc/R.)))
    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-0.00000 0.02021 0.08482 0.50675 0.16192 7.08509 
+0.00000 0.02020 0.08482 0.50675 0.16192 7.08509 
 > 
 > ## but "complete" is closer in Eigen space:
 > EV <- function(m) eigen(m, only.values=TRUE)$values
