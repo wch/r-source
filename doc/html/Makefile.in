@@ -20,7 +20,7 @@ INSTFILES = \
 	about.html packages-head-utf8.html  \
 	mathjax-config.js katex-config.js katex-check.js \
 	R-nav.css prism.css prism.js \
-	orcid.svg
+	orcid.svg ror.svg
 INSTDIRS = katex
 NON_SVN_INSTFILES = resources.html NEWS.html
 DISTFILES = Makefile.in $(INSTFILES) index-default.html Notes
