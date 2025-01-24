@@ -487,7 +487,7 @@
     \itemize{
       \item \R can be installed using C23 (for example with
       \option{-std=gnu23} or \option{-std=gnu2x}) with recent compilers
-      including \command{gcc} 14, Apple \command{clang} 16 and \I{LLVM}
+      including \command{gcc} 12--14, Apple \command{clang} 16 and \I{LLVM}
       \command{clang} 17--19.  (\I{LLVM} \command{clang} 18 and 19 objected
       to apparently valid code using attributes accepted by all the
       other compilers.)
