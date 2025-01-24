@@ -6983,7 +6983,7 @@ static SEXP R_findBCInterpreterLocation(RCNTXT *cptr, const char *iname)
 	/* location table not available */
 	return R_NilValue;
 
-    /* use relpc stored in the contect if available */
+    /* use relpc stored in the context if available */
     if (cptr && cptr->relpc > 0)
 	return getLocTableElt(cptr->relpc, ltable, constants);
 
