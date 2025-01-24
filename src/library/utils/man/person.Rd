@@ -171,7 +171,8 @@ as.person(x)
   taken to give \abbr{ORCID} identifiers (see \url{https://orcid.org/} for more
   information), and be displayed as the corresponding \abbr{URI}s by the
   \code{print()} and \code{format()} methods (see \bold{Examples}
-  below).
+  below).  Similarly, elements named \code{"ROR"} will be taken to give
+  \abbr{ROR} identifiers (see \url{https://ror.org/}).
 
   Where more than one entity is given a \code{"cph"} role, the
   \code{comment} field should be used to delimit who owns the copyright
@@ -221,4 +222,8 @@ toBibtex(b)
 ## ORCID identifiers.
 (p3 <- person("Achim", "Zeileis",
               comment = c(ORCID = "0000-0003-0918-3766")))
+
+## ROR identifiers.
+(p4 <- person("R Core Team",
+              comment = c(ROR = "02zz1nj61")))
 }

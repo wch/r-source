@@ -1625,24 +1625,33 @@ function(dir)
     ## achieve this by adding the canonicalized ORCID id (URL) to the
     ## 'family' element and simultaneously dropping the ORCID id from
     ## the 'comment' element, and then re-format.
-    .format_authors_at_R_field_with_expanded_ORCID_identifier <- function(a) {
+    ## See <https://ror.readme.io/docs/display> for ROR display
+    ## guidelines.
+    .format_authors_at_R_field_with_expanded_identifiers <- function(a) {
         x <- utils:::.read_authors_at_R_field(a)
         format_person1 <- function(e) {
-            comment <- e$comment
-            pos <- which((names(comment) == "ORCID") &
-                         grepl(.ORCID_iD_variants_regexp, comment))
-            if((len <- length(pos)) > 0L) {
+            cmt <- e$comment
+            pos <- which((names(cmt) == "ORCID") &
+                         grepl(.ORCID_iD_variants_regexp, cmt))
+            if(length(pos) == 1L) {
                 e$family <-
                     c(e$family,
-                      paste0("<",
-                             paste0("https://replace.me.by.orcid.org/",
-                                    .ORCID_iD_canonicalize(comment[pos])),
-                             ">"))
-                e$comment <- if(len < length(comment))
-                                 comment[-pos]
-                             else
-                                 NULL
+                      sprintf("<https://replace.me.by.orcid.org/%s>",
+                              .ORCID_iD_canonicalize(cmt[pos])))
+                cmt <- cmt[-pos]
             }
+            ## Of course, a person should not have both ORCID and ROR
+            ## identifiers: could check for that.
+            pos <- which((names(cmt) == "ROR") &
+                         grepl(.ROR_ID_variants_regexp, cmt))
+            if(length(pos) == 1L) {
+                e$family <-
+                    c(e$family,
+                      sprintf("<https://replace.me.by.ror.org/%s>",
+                              .ROR_ID_canonicalize(cmt[pos])))
+                cmt <- cmt[-pos]
+            }
+            e$comment <- if(length(cmt)) cmt else NULL
             e
         }
         x <- lapply(unclass(x), format_person1)
@@ -1675,7 +1684,7 @@ function(dir)
 
     if(!is.na(aatr))
         desc["Author"] <-
-            .format_authors_at_R_field_with_expanded_ORCID_identifier(aatr)
+            .format_authors_at_R_field_with_expanded_identifiers(aatr)
 
     ## Take only Title and Description as *text* fields.
     desc["Title"] <- htmlify_text(desc["Title"])
@@ -1721,6 +1730,18 @@ function(dir)
                         else
                             " src=\"https://cloud.R-project.org/web/orcid.svg\" ",
                         "style=\"width:16px; height:16px; margin-left:4px; margin-right:4px; vertical-align:middle\"",
+                        " /></a>"),
+                 desc["Author"])
+        desc["Author"] <-
+            gsub(sprintf("&lt;https://replace.me.by.ror.org/(%s)&gt;",
+                         .ROR_ID_regexp),
+                 paste0("<a href=\"https://ror.org/\\1\">",
+                        "<img alt=\"ROR ID\" ",
+                        if(dynamic)
+                            " src=\"/doc/html/ror.svg\" "
+                        else
+                            " src=\"https://cloud.R-project.org/web/ror.svg\" ",
+                        "style=\"width:20px; height:20px; margin-left:4px; margin-right:4px; vertical-align:middle\"",
                         " /></a>"),
                  desc["Author"])
     }

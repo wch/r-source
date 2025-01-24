@@ -140,6 +140,18 @@ function(given = NULL, family = NULL, middle = NULL,
                             domain = NA)
                 }
             }
+            if(any(ind <- (names(comment) == "ROR"))) {
+                ids <- comment[ind]
+                bad <- which(!tools:::.ROR_ID_is_valid(ids))
+                if(length(bad)) {
+                    warning(sprintf(ngettext(length(bad),
+                                             "Invalid ROR ID: %s.",
+                                             "Invalid ROR IDs: %s."),
+                                    paste(sQuote(ids[bad]),
+                                          collapse = ", ")),
+                            domain = NA)
+                }
+            }
         }
 
         rval <- list(given = given, family = family, role = role,
@@ -419,6 +431,12 @@ function(x)
                 names(chunks)[i] <- "ORCID"
                 comment <- chunks
             }
+            if(any(i <- grepl(tools:::.ROR_ID_variants_regexp,
+                              chunks))) {
+                chunks[i] <- tools:::.ROR_ID_canonicalize(chunks[i])
+                names(chunks)[i] <- "ROR"
+                comment <- chunks
+            }
         }
         x <- sub("[[:space:]]*\\([^)]*\\)", "", x)
         email <- if(grepl("<.*>", x))
@@ -538,7 +556,8 @@ function(x,
     if(any(include == "comment"))
         x <- lapply(x,
                     function(e) {
-                        u <- .expand_ORCID_identifier(e$comment, style)
+                        u <- .expand_person_comment_identifiers(e$comment,
+                                                                style)
                         if(!is.null(v <- names(u))) {
                             i <- which(nzchar(v))
                             if(length(i))
@@ -602,7 +621,7 @@ function(object, escape = FALSE, ...)
     y
 }
 
-.expand_ORCID_identifier <-
+.expand_person_comment_identifiers <-
 function(x, style = "text")
 {
     if(any(ind <- ((names(x) == "ORCID") &
@@ -613,6 +632,15 @@ function(x, style = "text")
                               oid, oid)
                   else
                       sprintf("<https://orcid.org/%s>", oid)
+    }
+    if(any(ind <- ((names(x) == "ROR") &
+                   grepl(tools:::.ROR_ID_variants_regexp, x)))) {
+        rid <- tools:::.ROR_ID_canonicalize(x[ind])
+        x[ind] <- if(style == "md")
+                      sprintf("[ROR %s](https://ror.org/%s)",
+                              rid, rid)
+                  else
+                      sprintf("<https://ror.org/%s>", rid)
     }
     x
 }
