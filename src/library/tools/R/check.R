@@ -1086,6 +1086,13 @@ add_dummies <- function(dir, Log)
                                y[1L], fixed = TRUE)
                     diff[1L] <- clean_up(y1) != yorig[1L]
                 }
+                if(diff[1L]
+                   && grepl("<https://ror.org/", y[1L], fixed = TRUE)) {
+                    y1 <- gsub("ROR: <https://ror.org/",
+                               "<https://ror.org/",
+                               y[1L], fixed = TRUE)
+                    diff[1L] <- clean_up(y1) != yorig[1L]
+                }
                 ## </FIXME>
                 ## <FIXME>
                 ## Remove eventually.
