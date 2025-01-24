@@ -123,8 +123,8 @@
       keep the previous data as \code{sunspot.m2014} for
       reproducibility.
 
-      \item The `quartz()` device now supports alpha masks.
-      Thanks to \I{George Stagg}, \I{Gwynn Gebeyhu}, \I{Heather Turner}, and
+      \item The \code{quartz()} device now supports alpha masks.  Thanks
+      to \I{George Stagg}, \I{Gwynn Gebeyhu}, \I{Heather Turner}, and
       \I{Tomek Gieorgijewski}.
 
       \item The \code{print()} method for date-time objects (\code{POSIX.t})
@@ -558,8 +558,9 @@
       \item \code{binomial(<link>)$linkinv(eta)} and \code{.. $mu.eta(eta)}
       now also work for \code{"logit"} link when \code{is.integer(eta)}.
 
-      \code{as.roman(x)} now should work platform independently, also for, e.g.,
-      \code{x = "IIIII"} (= V) and \code{x = "IIIIII"} (= VI).
+      \item \code{as.roman(x)} now should work platform independently,
+      also for, e.g., \code{x = "IIIII"} (= V) and \code{x = "IIIIII"}
+      (= VI).
     }
   }
 }
