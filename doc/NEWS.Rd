@@ -77,6 +77,9 @@
       \item \code{arima(.., seasonal = <wrong-vector>)} correctly errors
       now, ditto for \code{arima0()}, thanks to \I{Norbert Kuder}'s report
       on the R-devel list.
+
+      \item \code{binomial(<link>)$linkinv(eta)} and \code{.. $mu.eta(eta)}
+      now also work for \code{"logit"} link when \code{is.integer(eta)}.
     }
   }
 }
