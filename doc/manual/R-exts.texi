@@ -5878,15 +5878,16 @@ of your compiler diagnostics --- this typically means using flags
 @option{-Wstrict-prototypes} for C (on some platforms and compiler
 versions) these are part of @option{-Wall} or @option{-pedantic}).
 
-@strong{C++ standards}: From version 3.6.0 (3.6.2 on Windows), @R{}
-defaulted to C++11 where available@footnote{which it is on all known
-platforms, and is required as from @R{} 4.0.0}; from @R{} 4.1.0 to C++14
-and from @R{} 4.3.0 to C++17 (where available).  However, in earlier
-versions the default standard was that of the compiler used, often C++98
-or C++14, and the default is likely to change in future.  For maximal
-portability a package should either specify a standard (@pxref{Using C++
-code}) or be tested under all of C++11, C++98, C++14 and C++17.
-(Specifying C++14 or later will limit portability.)
+@strong{C++ standards}: From version 4.0.0 @R{} reauired and defaulted
+to C++11; from @R{} 4.1.0 in defaulted to C++14 and from @R{} 4.3.0 to
+C++17 (where available).  For maximal portability a package should
+either specify a standard (@pxref{Using C++ code}) or be tested under
+all of C++11, C++14 and C++17.
+
+Later C++ standards, notably C++17 remove features deprecated in earlier
+versions.  Unfortunately some compilers, notably @command{g++} have
+retained these features so if possible test under another compiler (such
+as that used on macOS).
 
 Note that the `TR1' C++ extensions are not part of any of these
 standards and the @code{<tr1/@var{name}>} headers are not supplied by some of
@@ -6451,13 +6452,24 @@ Some additional information for C++ is available at
 @uref{https://journal.r-project.org/archive/2011-2/RJournal_2011-2_Plummer.pdf}
 by @I{Martyn Plummer}.
 
+Seversl OSes have or currently do provide multiple C++ runtimes ---
+Solaris did and the LLVM @command{clang} compiler has a native C++
+runtime libreary @code{libc++} but is also used with GCC's
+@code{libstdc++} (by default on Debian/Ubuntu).  This makes it unsafe to
+assume that OS libraries with a C++ interface are compatible with the
+C++ compiler specified by @R{}.  Many of these system libraries also
+have C interfaces which should be used in preference to their C++
+interface.  Otherwise it is essential that a package checks
+compatibility in its @command{configure} script, including that C++ code
+using the library can both be linked @emph{and loaded}.
+
 
 @node Common symbols
 @subsubsection Common symbols
 
 Most OSes (including all those commonly used for @R{}) have the concept
 of `tentative definitions' where global C variables are defined without
-an initializer.  Traditionally the linker resolves all tentative
+an initializer.  Traditionally the linker resolved all tentative
 definitions of the same variable in different object files to the same
 object, or to a non-tentative definition.  However,
 @command{gcc}@tie{}10@footnote{see
