@@ -80,6 +80,10 @@
 
       \item \code{binomial(<link>)$linkinv(eta)} and \code{.. $mu.eta(eta)}
       now also work for \code{"logit"} link when \code{is.integer(eta)}.
+
+      \item \code{as.roman(x)} now should work platform independently,
+      also for, e.g., \code{x = "IIIII"} (= V) and \code{x = "IIIIII"}
+      (= VI).
     }
   }
 }
@@ -1198,7 +1202,7 @@
       again marks methods from package \pkg{base} as \code{visible}.
 
       Also, the visibility of non-\pkg{base} methods is again determined by
-      the method's presence in \code{\link{search}()}.
+      the method's presence in \code{search()}.
 
       \item \code{tools::Rdiff()} is now more robust against invalid
       strings, fixing installation tests on Windows without \I{Rtools}
@@ -4028,7 +4032,7 @@
 
       \item \code{sum(df)} and similar \code{"Summary"}- and
       \code{"Math"}-group member functions now work for data frames
-      \code{df} with \code{\link{logical}} columns, notably also of zero
+      \code{df} with \code{logical} columns, notably also of zero
       rows.  (Reported to R-devel by Martin \dQuote{b706}.)
 
       \item \code{unsplit()} had trouble with \I{tibble}s due to unsound use of

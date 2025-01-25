@@ -1,7 +1,7 @@
 #  File src/library/utils/R/roman.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2022 The R Core Team
+#  Copyright (C) 1995-2025 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -15,6 +15,11 @@
 #
 #  A copy of the GNU General Public License is available at
 #  https://www.R-project.org/Licenses/
+
+
+
+.max.roman <- 4999L # maximally allowed value for (default) check.range=TRUE
+## FIXME (?):  Users "cannot" set  check.range = FALSE  in as.roman(), print.roman(), ...
 
 .as.roman <- function(x, check.range=TRUE)
 {
@@ -34,7 +39,7 @@
     }
     else
         stop("cannot coerce 'x' to roman")
-    if(check.range) x[x <= 0L | x >= 4000L] <- NA
+    if(check.range) x[x <= 0L | x > .max.roman] <- NA
     class(x) <- "roman"
     x
 }
@@ -111,7 +116,7 @@ function(x) {
     }
 
     x <- as.integer(x)
-    ind <- is.na(x) | (x <= 0L) | (x >= 4000L)
+    ind <- is.na(x) | (x <= 0L) | (x > .max.roman)
     out <- character(length(x))
     out[ind] <- NA
     out[!ind] <- vapply(x[!ind], n2r, "")
@@ -130,7 +135,7 @@ function(x) {
         y <- gsub("XL", "XXXX", y)
         y <- gsub("IX", "VIIII", y)
         y <- gsub("IV", "IIII", y)
-        ok <- grepl("^M{,3}D?C{,4}L?X{,4}V?I{,4}$", y)
+        ok <- grepl("^M{0,9}D?C{0,6}L?X{0,6}V?I{0,6}$", y) # allow "...IIIIII"
         if(any(!ok)) {
             warning(sprintf(ngettext(sum(!ok),
                                      "invalid roman numeral: %s",

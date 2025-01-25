@@ -1,6 +1,6 @@
 % File src/library/utils/man/roman.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2019 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{roman}
@@ -37,7 +37,7 @@ sum(r2)
   and  (\code{"\link{Logic}"}), i.e., all \code{"\link{Ops}"} group
   operations work as for regular numbers via \R's integer functionality.
 
-  Only numbers between 1 and 3999 have a unique representation as roman
+  Only numbers between 1 and 4999 are \dQuote{well} representable as roman
   numbers, and hence others result in \code{as.roman(NA)}.
 
   \code{.romans} is the basic dictionary, a named \code{\link{character}} vector.
@@ -60,15 +60,15 @@ y - 10*c(0:3,10)
 \dontshow{stopifnot(identical(as.character(as.roman("2016") - 10*c(0:3,10)),
              c("MMXVI", "MMVI", "MCMXCVI", "MCMLXXXVI", "MCMXVI"))) }
 ## mixture of arabic and roman numbers :
-as.roman(c(NA, 1:3, "", strrep("I", 1:6))) # + NA with a warning for "IIIIII"
-cc <- c(NA, 1:3, strrep("I", 0:5))
+as.roman(c(NA, 1:3, "", strrep("I", 1:7))) # + NA with a warning for the last.
+cc <- c(NA, 1:3, strrep("I", 0:6)) # "IIIIII" is historical (Wikipedia)
 (rc <- as.roman(cc)) # two NAs: 0 is not "roman"
 (ic <- as.integer(rc)) # works automatically [without an explicit method]
 rNA <- as.roman(NA)
-## simple consistency checks -- arithmetic when result is in  {1,2,..,3999} :
+## simple consistency checks -- arithmetic when result is in  {1,2,..,4999} :
 stopifnot(identical(rc, as.roman(rc)), # as.roman(.) is "idempotent"
           identical(rc + rc + (3*rc), rc*5),
-          identical(ic, c(NA, 1:3, NA, 1:5)),
+          identical(ic, c(NA, 1:3, NA, 1:6)),
           identical(as.integer(5*rc), 5L*ic),
           identical(as.numeric(rc), as.numeric(ic)),
           identical(rc[1], rNA),
@@ -78,8 +78,8 @@ stopifnot(identical(rc, as.roman(rc)), # as.roman(.) is "idempotent"
 ## Non-Arithmetic 'Ops' :
 stopifnot(exprs = {
         # Comparisons :
-        identical(ic < 1:5, rc < 1:5)
-        identical(ic < 1:5, rc < as.roman(1:5))
+        identical(ic <= (ii <- c(0:4,1:6)), rc <= ii)
+        identical(ic == ii, rc == as.roman(ii))
         # Logic  [integers |-> logical] :
         identical(rc & TRUE , ic & TRUE)
         identical(rc & FALSE, ic & FALSE)
@@ -94,9 +94,10 @@ stopifnot(exprs = {
          as.roman(min(ic, na.rm=TRUE)))
         identical(range(rc.),
          as.roman(range(as.integer(rc.))))
-        identical(sum (rc, na.rm=TRUE), as.roman("XXI"))
-        identical(format(prod(rc, na.rm=TRUE)), "DCCXX")
-        format(prod(rc.)) == "DCCXX"
+        identical(sum (rc, na.rm=TRUE), as.roman("XXVII"))
+        identical(format(prod(rc, na.rm=TRUE)), "MMMMCCCXX")
+                  format(prod(rc.)) ==          "MMMMCCCXX"
+        identical(format(prod(rc[-11], na.rm=TRUE)), "DCCXX")
 })
 }
 \keyword{arith}
