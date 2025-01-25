@@ -1166,10 +1166,14 @@ inRbuildignore <- function(files, pkgdir) {
         Rdeps <- .split_description(desc)$Rdepends2
         hasDep350 <- FALSE
         hasDep410 <- FALSE
+        hasDep420 <- FALSE
+        hasDep430 <- FALSE
         for(dep in Rdeps) {
             if(dep$op != '>=') next
             if(dep$version >= "3.5.0") hasDep350 <- TRUE
             if(dep$version >= "4.1.0") hasDep410 <- TRUE
+            if(dep$version >= "4.2.0") hasDep420 <- TRUE
+            if(dep$version >= "4.3.0") hasDep430 <- TRUE
         }
         if(!hasDep350) {
             ## re-read files after exclusions have been applied
@@ -1191,12 +1195,26 @@ inRbuildignore <- function(files, pkgdir) {
                          "\n")
             }
         }
-        if(!hasDep410) {
-            files <- names(.package_code_using_R_4.1_syntax(pkgname))
-            if(length(files)) {
+        if(!hasDep430 &&
+           !is.null(tab <- .package_code_using_R_4.x_syntax(pkgname))) {
+            msg <- files <- NULL
+            if(length(i <- which(tab$needs == "4.3.0"))) {
+                fixup_R_dep(pkgname, "4.3.0")
+                msg <- paste("WARNING: Added dependency on R >= 4.3.0 because",
+                             "package code uses the pipe placeholder at the head of a chain of extractions syntax added in R 4.3.0.")
+                files <- unique(tab$file[i])
+            } else if(length(i <- which(tab$needs == "4.2.0"))) {
+                fixup_R_dep(pkgname, "4.2.0")
+                msg <- paste("WARNING: Added dependency on R >= 4.2.0 because",
+                             "package code uses the pipe placeholder syntax added in R 4.2.0")
+                files <- unique(tab$file[i])
+            } else if(length(i <- which(tab$needs == "4.1.0"))) {
                 fixup_R_dep(pkgname, "4.1.0")
                 msg <- paste("WARNING: Added dependency on R >= 4.1.0 because",
                              "package code uses the pipe |> or function shorthand \\(...) syntax added in R 4.1.0.")
+                files <- unique(tab$file[i])
+            }
+            if(length(msg)) {
                 printLog(Log,
                          paste(c(strwrap(msg, indent = 2L, exdent = 2L),
                                  "  File(s) using such syntax:",

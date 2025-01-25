@@ -2112,26 +2112,49 @@ function(packages = NULL, FUN, ..., pattern = "*", verbose = TRUE,
     out
 }
 
-### ** .package_code_using_R_4.1_syntax
+### ** .package_code_using_R_4.x_syntax
 
-.package_code_using_R_4.1_syntax <-
+.package_code_using_R_4.x_syntax <-
 function(dir)
 {
     dir <- file_path_as_absolute(dir)
     wrk <- function(f) {
-        x <- utils::getParseData(parse(f, keep.source = TRUE))
-        i <- x$token %in% c("PIPE", "'\\\\'")
-        utils::getParseText(x, x[i, "parent"])
+        p <- file.path(dir, "R", f)
+        x <- utils::getParseData(parse(p, keep.source = TRUE))
+        i1 <- which(x$token %in% c("PIPE", "'\\\\'"))
+        i2 <- which(x$token == "PLACEHOLDER")
+        if(length(i1) || length(i2)) {
+            xi <- x$id
+            xp <- x$parent
+            n1 <- rep_len("4.1.0", length(i1))
+            ## Detect experimental placeholder feature as the head of a
+            ## chain of extractions by looking at the first child of the
+            ## grandparent of the placeholder: if it is the placeholder
+            ## expression then we have the 4.3.0 syntax.
+            n2 <- ifelse(vapply(i2,
+                                function(j) {
+                                    u <- xp[j]
+                                    v <- xp[xi %in% u]
+                                    min(xi[xp %in% v]) == u
+                                },
+                                NA),
+                         "4.3.0",
+                         "4.2.0")
+            i <- c(i1, i2)
+            data.frame(token = x$token[i],
+                       needs = c(n1, n2),
+                       text = utils::getParseText(x, xp[i]),
+                       file = rep_len(f, length(i)))
+        } else
+            NULL
     }
     one <- function(f)
-        tryCatch(wrk(file.path(dir, "R", f)), error = identity)
+        tryCatch(wrk(f), error = function(e) NULL)
 
     files <- list_files_with_type(file.path(dir, "R"), "code",
                                   full.names = FALSE,
                                   OS_subdirs = c("unix", "windows"))
-    out <- lapply(files, one)
-    names(out) <- files
-    Filter(length, out)
+    do.call(rbind, lapply(files, one))
 }
 
 ## ** .package_depends_on_R_at_least

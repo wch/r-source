@@ -1259,13 +1259,27 @@ add_dummies <- function(dir, Log)
         }
 
         if(!is_base_pkg &&
-           !.package_metadata_has_depends_on_R_at_least(db, "4.1.0")) {
-            files <-
-                names(.package_code_using_R_4.1_syntax(dirname(dfile)))
-            if(length(files)) {
+           !.package_metadata_has_depends_on_R_at_least(db, "4.3.0") &&
+           !is.null(tab <-
+                      .package_code_using_R_4.x_syntax(dirname(dfile)))) {
+            msg <- files <- NULL
+            if(length(i <- which(tab$needs == "4.3.0"))) {
+                if(!any) noteLog(Log)
+                any <- TRUE
+                msg <- "Missing dependency on R >= 4.3.0 because package code uses the pipe placeholder at the head of a chain of extractions syntax added in R 4.3.0."
+                files <- unique(tab$file[i])
+            } else if(length(i <- which(tab$needs == "4.2.0"))) {
+                if(!any) noteLog(Log)
+                any <- TRUE
+                msg <- "Missing dependency on R >= 4.2.0 because package code uses the pipe placeholder syntax added in R 4.2.0."
+                files <- unique(tab$file[i])
+            } else if(length(i <- which(tab$needs == "4.1.0"))) {
                 if(!any) noteLog(Log)
                 any <- TRUE
                 msg <- "Missing dependency on R >= 4.1.0 because package code uses the pipe |> or function shorthand \\(...) syntax added in R 4.1.0."
+                files <- unique(tab$file[i])
+            }
+            if(length(msg)) {
                 printLog(Log,
                          paste(c(strwrap(msg, indent = 2L, exdent = 2L),
                                  "  File(s) using such syntax:",
