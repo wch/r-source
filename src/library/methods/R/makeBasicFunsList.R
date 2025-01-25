@@ -243,14 +243,8 @@ utils::globalVariables(".addBasicGeneric")
     setGenericImplicit("rowMeans", where, FALSE)
     setGenericImplicit("rowSums",  where, FALSE)
 
-    setGeneric("crossprod", function(x, y = NULL, ...) standardGeneric("crossprod"),
-	       useAsDefault = function(x, y = NULL, ...) base::crossprod(x, y),
-	       signature = c("x", "y"), where = where)
-    setGeneric("tcrossprod", function(x, y = NULL, ...) standardGeneric("tcrossprod"),
-	       useAsDefault = function(x, y = NULL, ...) base::tcrossprod(x, y),
-	       signature = c("x", "y"), where = where)
-    setGenericImplicit("crossprod",  where, FALSE)
-    setGenericImplicit("tcrossprod",  where, FALSE)
+    ## "crossprod"  and
+    ## "tcrossprod" have been made internal (S3 and) S4 generics see .BasicFunsList
 
     setGeneric("sample", function(x, size, replace = FALSE, prob = NULL, ...)
 			standardGeneric("sample"),
@@ -286,7 +280,6 @@ utils::globalVariables(".addBasicGeneric")
 	       useAsDefault= function(x, ...) base::svd(x, ...),
 	       signature = "x", where = where)
     setGenericImplicit("svd", where, FALSE)
-
 
     ## zapsmall(): signature  only  "x"
     setGeneric("zapsmall", function(x, digits = getOption("digits"),
