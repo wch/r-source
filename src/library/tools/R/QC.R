@@ -3899,7 +3899,7 @@ function(aar, strict = FALSE)
                             format(aar[pos])
                     ids <- ids[duplicated(ids)]
                     if(length(ids))
-                        out$bad_authors_at_R_field_has_persons_with_dup_ORCID_identifiers<-
+                        out$bad_authors_at_R_field_has_persons_with_dup_ORCID_identifiers <-
                             ids
                 }
                 if(strict >= 3L) {
@@ -8172,7 +8172,7 @@ function(dir, localOnly = FALSE, pkgSize = NA)
                     cbind(fpaths0[pos], parents[pos])
         }
         if(remote) {
-            ## Also check arXiv pseuso URIs not yet converted to arXiv
+            ## Also check arXiv pseudo URIs not yet converted to arXiv
             ## DOIs.
             pat <- "<(arXiv|arxiv):(([[:alpha:].-]+/)?[[:digit:].]+)(v[[:digit:]]+)?([[:space:]]*\\[[^]]+\\])?>"
             dsc <- meta["Description"]
