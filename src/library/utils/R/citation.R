@@ -428,12 +428,16 @@ function(x)
             if(any(i <- grepl(tools:::.ORCID_iD_variants_regexp,
                               chunks))) {
                 chunks[i] <- tools:::.ORCID_iD_canonicalize(chunks[i])
+                if(is.null(names(chunks)))
+                    names(chunks) <- rep_len("", length(chunks))
                 names(chunks)[i] <- "ORCID"
                 comment <- chunks
             }
             if(any(i <- grepl(tools:::.ROR_ID_variants_regexp,
                               chunks))) {
                 chunks[i] <- tools:::.ROR_ID_canonicalize(chunks[i])
+                if(is.null(names(chunks)))
+                    names(chunks) <- rep_len("", length(chunks))
                 names(chunks)[i] <- "ROR"
                 comment <- chunks
             }
