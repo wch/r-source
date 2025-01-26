@@ -1268,12 +1268,16 @@ add_dummies <- function(dir, Log)
                 any <- TRUE
                 msg <- "Missing dependency on R >= 4.3.0 because package code uses the pipe placeholder at the head of a chain of extractions syntax added in R 4.3.0."
                 files <- unique(tab$file[i])
-            } else if(length(i <- which(tab$needs == "4.2.0"))) {
+            } else if(length(i <- which(tab$needs == "4.2.0")) &&
+                      !.package_metadata_has_depends_on_R_at_least(db,
+                                                                   "4.2.0")) {
                 if(!any) noteLog(Log)
                 any <- TRUE
                 msg <- "Missing dependency on R >= 4.2.0 because package code uses the pipe placeholder syntax added in R 4.2.0."
                 files <- unique(tab$file[i])
-            } else if(length(i <- which(tab$needs == "4.1.0"))) {
+            } else if(length(i <- which(tab$needs == "4.1.0")) &&
+                      !.package_metadata_has_depends_on_R_at_least(db,
+                                                                   "4.1.0")) {
                 if(!any) noteLog(Log)
                 any <- TRUE
                 msg <- "Missing dependency on R >= 4.1.0 because package code uses the pipe |> or function shorthand \\(...) syntax added in R 4.1.0."

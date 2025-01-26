@@ -1203,12 +1203,14 @@ inRbuildignore <- function(files, pkgdir) {
                 msg <- paste("WARNING: Added dependency on R >= 4.3.0 because",
                              "package code uses the pipe placeholder at the head of a chain of extractions syntax added in R 4.3.0.")
                 files <- unique(tab$file[i])
-            } else if(length(i <- which(tab$needs == "4.2.0"))) {
+            } else if(!hasDep420 &&
+                      length(i <- which(tab$needs == "4.2.0"))) {
                 fixup_R_dep(pkgname, "4.2.0")
                 msg <- paste("WARNING: Added dependency on R >= 4.2.0 because",
                              "package code uses the pipe placeholder syntax added in R 4.2.0")
                 files <- unique(tab$file[i])
-            } else if(length(i <- which(tab$needs == "4.1.0"))) {
+            } else if(!hasDep410 &&
+                      length(i <- which(tab$needs == "4.1.0"))) {
                 fixup_R_dep(pkgname, "4.1.0")
                 msg <- paste("WARNING: Added dependency on R >= 4.1.0 because",
                              "package code uses the pipe |> or function shorthand \\(...) syntax added in R 4.1.0.")
