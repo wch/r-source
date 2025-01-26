@@ -5878,7 +5878,7 @@ of your compiler diagnostics --- this typically means using flags
 @option{-Wstrict-prototypes} for C (on some platforms and compiler
 versions) these are part of @option{-Wall} or @option{-pedantic}).
 
-@strong{C++ standards}: From version 4.0.0 @R{} reauired and defaulted
+@strong{C++ standards}: From version 4.0.0 @R{} required and defaulted
 to C++11; from @R{} 4.1.0 in defaulted to C++14 and from @R{} 4.3.0 to
 C++17 (where available).  For maximal portability a package should
 either specify a standard (@pxref{Using C++ code}) or be tested under
@@ -6452,9 +6452,9 @@ Some additional information for C++ is available at
 @uref{https://journal.r-project.org/archive/2011-2/RJournal_2011-2_Plummer.pdf}
 by @I{Martyn Plummer}.
 
-Seversl OSes have or currently do provide multiple C++ runtimes ---
-Solaris did and the LLVM @command{clang} compiler has a native C++
-runtime libreary @code{libc++} but is also used with GCC's
+Several OSes have or currently do provide multiple C++ runtimes ---
+Solaris did and the @I{LLVM} @command{clang} compiler has a native C++
+runtime library @code{libc++} but is also used with GCC's
 @code{libstdc++} (by default on Debian/Ubuntu).  This makes it unsafe to
 assume that OS libraries with a C++ interface are compatible with the
 C++ compiler specified by @R{}.  Many of these system libraries also
