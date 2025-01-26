@@ -888,8 +888,6 @@ C99FLAGS
 CC99
 C90FLAGS
 CC90
-C23FLAGS
-CC23
 C17FLAGS
 CC17
 R_DEFS
@@ -908,6 +906,8 @@ ac_ct_FC
 FCFLAGS
 FC
 CPP
+C23FLAGS
+CC23
 OBJEXT
 EXEEXT
 ac_ct_CC
@@ -1080,6 +1080,7 @@ enable_memory_profiling
 enable_R_framework
 enable_R_shlib
 enable_R_static_lib
+with_C23
 enable_BLAS_shlib
 enable_maintainer_mode
 enable_strict_barrier
@@ -1888,6 +1889,7 @@ Optional Features:
 Optional Packages:
   --with-PACKAGE[=ARG]    use PACKAGE [ARG=yes]
   --without-PACKAGE       do not use PACKAGE (same as --with-PACKAGE=no)
+  --with-C23              use C23 if available [no]
   --with-blas             use system BLAS library (if available), or specify
                           it [unset]
   --with-lapack           use system LAPACK library (if available), or specify
@@ -2240,6 +2242,50 @@ printf "%s\n" "$ac_res" >&6; }
 
 } # ac_fn_c_check_header_compile
 
+# ac_fn_c_try_run LINENO
+# ----------------------
+# Try to run conftest.$ac_ext, and return whether this succeeded. Assumes that
+# executables *can* be run.
+ac_fn_c_try_run ()
+{
+  as_lineno=${as_lineno-"$1"} as_lineno_stack=as_lineno_stack=$as_lineno_stack
+  if { { ac_try="$ac_link"
+case "(($ac_try" in
+  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
+  *) ac_try_echo=$ac_try;;
+esac
+eval ac_try_echo="\"\$as_me:${as_lineno-$LINENO}: $ac_try_echo\""
+printf "%s\n" "$ac_try_echo"; } >&5
+  (eval "$ac_link") 2>&5
+  ac_status=$?
+  printf "%s\n" "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
+  test $ac_status = 0; } && { ac_try='./conftest$ac_exeext'
+  { { case "(($ac_try" in
+  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
+  *) ac_try_echo=$ac_try;;
+esac
+eval ac_try_echo="\"\$as_me:${as_lineno-$LINENO}: $ac_try_echo\""
+printf "%s\n" "$ac_try_echo"; } >&5
+  (eval "$ac_try") 2>&5
+  ac_status=$?
+  printf "%s\n" "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
+  test $ac_status = 0; }; }
+then :
+  ac_retval=0
+else case e in #(
+  e) printf "%s\n" "$as_me: program exited with status $ac_status" >&5
+       printf "%s\n" "$as_me: failed program was:" >&5
+sed 's/^/| /' conftest.$ac_ext >&5
+
+       ac_retval=$ac_status ;;
+esac
+fi
+  rm -rf conftest.dSYM conftest_ipa8_conftest.oo
+  eval $as_lineno_stack; ${as_lineno_stack:+:} unset as_lineno
+  as_fn_set_status $ac_retval
+
+} # ac_fn_c_try_run
+
 # ac_fn_c_try_cpp LINENO
 # ----------------------
 # Try to preprocess conftest.$ac_ext, and return whether this succeeded.
@@ -2437,50 +2483,6 @@ fi
   as_fn_set_status $ac_retval
 
 } # ac_fn_objc_try_compile
-
-# ac_fn_c_try_run LINENO
-# ----------------------
-# Try to run conftest.$ac_ext, and return whether this succeeded. Assumes that
-# executables *can* be run.
-ac_fn_c_try_run ()
-{
-  as_lineno=${as_lineno-"$1"} as_lineno_stack=as_lineno_stack=$as_lineno_stack
-  if { { ac_try="$ac_link"
-case "(($ac_try" in
-  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
-  *) ac_try_echo=$ac_try;;
-esac
-eval ac_try_echo="\"\$as_me:${as_lineno-$LINENO}: $ac_try_echo\""
-printf "%s\n" "$ac_try_echo"; } >&5
-  (eval "$ac_link") 2>&5
-  ac_status=$?
-  printf "%s\n" "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
-  test $ac_status = 0; } && { ac_try='./conftest$ac_exeext'
-  { { case "(($ac_try" in
-  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
-  *) ac_try_echo=$ac_try;;
-esac
-eval ac_try_echo="\"\$as_me:${as_lineno-$LINENO}: $ac_try_echo\""
-printf "%s\n" "$ac_try_echo"; } >&5
-  (eval "$ac_try") 2>&5
-  ac_status=$?
-  printf "%s\n" "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
-  test $ac_status = 0; }; }
-then :
-  ac_retval=0
-else case e in #(
-  e) printf "%s\n" "$as_me: program exited with status $ac_status" >&5
-       printf "%s\n" "$as_me: failed program was:" >&5
-sed 's/^/| /' conftest.$ac_ext >&5
-
-       ac_retval=$ac_status ;;
-esac
-fi
-  rm -rf conftest.dSYM conftest_ipa8_conftest.oo
-  eval $as_lineno_stack; ${as_lineno_stack:+:} unset as_lineno
-  as_fn_set_status $ac_retval
-
-} # ac_fn_c_try_run
 
 # ac_fn_c_try_link LINENO
 # -----------------------
@@ -4595,6 +4597,22 @@ fi
 else
   WANT_R_STATIC_TRUE='#'
   WANT_R_STATIC_FALSE=
+fi
+
+
+
+# Check whether --with-C23 was given.
+if test ${with_C23+y}
+then :
+  withval=$with_C23; if test "${withval}" = no; then
+  use_C23=no
+else
+  use_C23=yes
+fi
+
+else case e in #(
+  e) use_C23=no ;;
+esac
 fi
 
 
@@ -8048,6 +8066,124 @@ then :
 fi
  ## see note above
 
+CC_save=${CC}
+CFLAGS_save=${CFLAGS}
+CC_SUB=`echo "${CC}" | sed 's/-std=[^ ]*//'`
+CFLAGS_SUB=`echo "${CFLAGS}" | sed -e 's/-std=[^ ]*//'`
+: ${CC23="${CC_SUB} -std=gnu23"}
+: ${C23FLAGS="${CFLAGS_SUB}"}
+CC=${CC23}
+CFLAGS=${C23FLAGS}
+unset r_cv_C23
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking whether ${CC} is a C23 compiler" >&5
+printf %s "checking whether ${CC} is a C23 compiler... " >&6; }
+if test ${r_cv_C23+y}
+then :
+  printf %s "(cached) " >&6
+else case e in #(
+  e) if test "$cross_compiling" = yes
+then :
+  r_cv_C23=no
+else case e in #(
+  e) cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+#ifdef __STDC_VERSION__
+# if __STDC_VERSION__ < 202000L
+#  error "Compiler does not claim C23 conformance"
+# endif
+#else
+# error "Compiler does not advertise ISO C conformance"
+#endif
+
+int main(void) {
+     return 0;
+}
+
+
+_ACEOF
+if ac_fn_c_try_run "$LINENO"
+then :
+  r_cv_C23=yes
+else case e in #(
+  e) r_cv_C23=no ;;
+esac
+fi
+rm -f core *.core core.conftest.* gmon.out bb.out conftest$ac_exeext \
+  conftest.$ac_objext conftest.beam conftest.$ac_ext ;;
+esac
+fi
+ ;;
+esac
+fi
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $r_cv_C23" >&5
+printf "%s\n" "$r_cv_C23" >&6; }
+
+if test x${r_cv_C23} = xno; then
+unset r_cv_C23
+CC23="${CC_SUB} -std=gnu2x"
+CC=${CC23}
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking whether ${CC} is a C23 compiler" >&5
+printf %s "checking whether ${CC} is a C23 compiler... " >&6; }
+if test ${r_cv_C23+y}
+then :
+  printf %s "(cached) " >&6
+else case e in #(
+  e) if test "$cross_compiling" = yes
+then :
+  r_cv_C23=no
+else case e in #(
+  e) cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+#ifdef __STDC_VERSION__
+# if __STDC_VERSION__ < 202000L
+#  error "Compiler does not claim C23 conformance"
+# endif
+#else
+# error "Compiler does not advertise ISO C conformance"
+#endif
+
+int main(void) {
+     return 0;
+}
+
+
+_ACEOF
+if ac_fn_c_try_run "$LINENO"
+then :
+  r_cv_C23=yes
+else case e in #(
+  e) r_cv_C23=no ;;
+esac
+fi
+rm -f core *.core core.conftest.* gmon.out bb.out conftest$ac_exeext \
+  conftest.$ac_objext conftest.beam conftest.$ac_ext ;;
+esac
+fi
+ ;;
+esac
+fi
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $r_cv_C23" >&5
+printf "%s\n" "$r_cv_C23" >&6; }
+
+fi
+if test x${r_cv_C23} = xno; then
+CC23=
+C23FLAGS=
+fi
+
+
+
+if test x$use_C23 = xyes; then
+  CC=${CC23}
+  CFLAGS=${C23FLAGS}
+else
+CC=${CC_save}
+CFLAGS=${CFLAGS_save}
+fi
+
+
 ac_ext=c
 ac_cpp='$CPP $CPPFLAGS'
 ac_compile='$CC -c $CFLAGS $CPPFLAGS conftest.$ac_ext >&5'
@@ -9569,10 +9705,7 @@ fi
 R_DEFS=${DEFS}
 
 
-CC_SUB=`echo "${CC}" | sed 's/-std=[^ ]*//'`
-CFLAGS_SUB=`echo "${CFLAGS}" | sed -e 's/-std=[^ ]*//'`
-
-## Other C standards
+## Other C standards -- C23 done higher up
 CC_save=${CC}
 CFLAGS_save=${CFLAGS}
 : ${CC17="${CC_SUB} -std=gnu17"}
@@ -9717,111 +9850,6 @@ fi
 if test x${r_cv_C17} = xno; then
 CC17=
 C17FLAGS=
-fi
-
-
-
-: ${CC23="${CC_SUB} -std=gnu23"}
-: ${C23FLAGS="${CFLAGS_SUB}"}
-CC=${CC23}
-CFLAGS=${C23FLAGS}
-unset r_cv_C23
-{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking whether ${CC} is a C23 compiler" >&5
-printf %s "checking whether ${CC} is a C23 compiler... " >&6; }
-if test ${r_cv_C23+y}
-then :
-  printf %s "(cached) " >&6
-else case e in #(
-  e) if test "$cross_compiling" = yes
-then :
-  r_cv_C23=no
-else case e in #(
-  e) cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
-
-#ifdef __STDC_VERSION__
-# if __STDC_VERSION__ < 202000L
-#  error "Compiler does not claim C23 conformance"
-# endif
-#else
-# error "Compiler does not advertise ISO C conformance"
-#endif
-
-int main(void) {
-     return 0;
-}
-
-
-_ACEOF
-if ac_fn_c_try_run "$LINENO"
-then :
-  r_cv_C23=yes
-else case e in #(
-  e) r_cv_C23=no ;;
-esac
-fi
-rm -f core *.core core.conftest.* gmon.out bb.out conftest$ac_exeext \
-  conftest.$ac_objext conftest.beam conftest.$ac_ext ;;
-esac
-fi
- ;;
-esac
-fi
-{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $r_cv_C23" >&5
-printf "%s\n" "$r_cv_C23" >&6; }
-
-if test x${r_cv_C23} = xno; then
-unset r_cv_C23
-CC23="${CC_SUB} -std=gnu2x"
-CC=${CC23}
-{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking whether ${CC} is a C23 compiler" >&5
-printf %s "checking whether ${CC} is a C23 compiler... " >&6; }
-if test ${r_cv_C23+y}
-then :
-  printf %s "(cached) " >&6
-else case e in #(
-  e) if test "$cross_compiling" = yes
-then :
-  r_cv_C23=no
-else case e in #(
-  e) cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
-
-#ifdef __STDC_VERSION__
-# if __STDC_VERSION__ < 202000L
-#  error "Compiler does not claim C23 conformance"
-# endif
-#else
-# error "Compiler does not advertise ISO C conformance"
-#endif
-
-int main(void) {
-     return 0;
-}
-
-
-_ACEOF
-if ac_fn_c_try_run "$LINENO"
-then :
-  r_cv_C23=yes
-else case e in #(
-  e) r_cv_C23=no ;;
-esac
-fi
-rm -f core *.core core.conftest.* gmon.out bb.out conftest$ac_exeext \
-  conftest.$ac_objext conftest.beam conftest.$ac_ext ;;
-esac
-fi
- ;;
-esac
-fi
-{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $r_cv_C23" >&5
-printf "%s\n" "$r_cv_C23" >&6; }
-
-fi
-if test x${r_cv_C23} = xno; then
-CC23=
-C23FLAGS=
 fi
 
 
@@ -27461,7 +27489,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_verb"
-(eval echo $as_me:27464: \"$ac_link\") >&5
+(eval echo $as_me:27492: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -27539,7 +27567,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_cv_prog_c_v"
-(eval echo $as_me:27542: \"$ac_link\") >&5
+(eval echo $as_me:27570: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS

@@ -187,6 +187,12 @@
 
   \subsection{INSTALLATION on a UNIX-ALIKE}{
     \itemize{
+      \item A C23 compiler (if available) can be selected for
+      compilation of \R and packages \emph{via} the \command{configure}
+      flag \option{--with-C23}.
+
+      It is intended that this will become the default before release.
+      
       \item The minimum \command{autoconf} requirement for a maintainer
       build has been increased to \command{autoconf}\sspace{}2.72.
 
