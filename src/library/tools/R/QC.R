@@ -3901,6 +3901,17 @@ function(aar, strict = FALSE)
                     if(length(ids))
                         out$bad_authors_at_R_field_has_persons_with_dup_ORCID_identifiers <-
                             ids
+                    ids <- .ROR_ID_from_person(aar)
+                    pos <- which(!is.na(ids))
+                    ids <- ids[pos]
+                    pos <- pos[!.ROR_ID_is_valid(ids)]
+                    if(length(pos))
+                        out$bad_authors_at_R_field_has_persons_with_bad_ROR_identifiers <-
+                            format(aar[pos])
+                    ids <- ids[duplicated(ids)]
+                    if(length(ids))
+                        out$bad_authors_at_R_field_has_persons_with_dup_ROR_identifiers <-
+                            ids
                 }
                 if(strict >= 3L) {
                     non_standard_roles <-
@@ -4007,7 +4018,15 @@ function(x)
       if(length(bad <- x[["bad_authors_at_R_field_has_persons_with_dup_ORCID_identifiers"]])) {
           c(gettext("Authors@R field gives persons with duplicated ORCID identifiers:"),
             paste0("  ", bad))
-      }
+      },
+      if(length(bad <- x[["bad_authors_at_R_field_has_persons_with_bad_ROR_identifiers"]])) {
+          c(gettext("Authors@R field gives persons with invalid ROR identifiers:"),
+            paste0("  ", bad))
+      },
+      if(length(bad <- x[["bad_authors_at_R_field_has_persons_with_dup_ROR_identifiers"]])) {
+          c(gettext("Authors@R field gives persons with duplicated ROR identifiers:"),
+            paste0("  ", bad))
+      }      
       )
 }
 
@@ -8203,6 +8222,20 @@ function(dir, localOnly = FALSE, pkgSize = NA)
                 if(length(pos))
                     out$bad_ORCID_iDs <- odb[pos, , drop = FALSE]
             }
+            ## Also check ROR IDs.
+            rdb <- .ROR_ID_db_from_package_sources(dir)
+            if(NROW(rdb)) {
+                ## Only look at things that may be valid: the others are
+                ## complained about elsewhere.
+                ind <- grepl(.ROR_ID_variants_regexp, rdb[, 1L])
+                rdb <- rdb[ind, , drop = FALSE]
+            }
+            if(NROW(rdb) && requireNamespace("curl", quietly = TRUE)) {
+                ids <- .ROR_ID_canonicalize(rdb[, 1L])
+                pos <- which(!.ROR_ID_is_alive(ids))
+                if(length(pos))
+                    out$bad_ROR_IDs <- rdb[pos, , drop = FALSE]
+            }
         }
     }
 
@@ -8979,6 +9012,17 @@ function(x, ...)
                       else
                           "Found the following (possibly) invalid ORCID iD:",
                       sprintf("  iD: %s\t(from: %s)",
+                              unlist(y[, 1L]),
+                              vapply(y[, 2L], paste, "",
+                                     collapse = ", "))),
+                    collapse = "\n")
+          }),
+      fmt(if(length(y <- x$bad_ROR_IDs)) {
+              paste(c(if(NROW(y) > 1L)
+                          "Found the following (possibly) invalid ROR IDs:"
+                      else
+                          "Found the following (possibly) invalid ROR IDs:",
+                      sprintf("  ID: %s\t(from: %s)",
                               unlist(y[, 1L]),
                               vapply(y[, 2L], paste, "",
                                      collapse = ", "))),

@@ -48,23 +48,31 @@
 
 ### ** .ROR_ID_is_alive
 
-## See <https://ror.readme.io/v2/docs/rest-api>
+.ROR_ID_is_alive <- function(x) {
+    ## For now use HEAD requests for the full ROR ID.
+    ## See <https://ror.readme.io/v2/docs/rest-api> for getting more
+    ## information.
+    ## Assume all given ids are canonical.
+    urls <- sprintf("https://ror.org/%s", x)
+    resp <- .curl_multi_run_worker(urls, nobody = TRUE)
+    vapply(resp, .curl_response_status_code, 0L) == 200L
+}
 
 ### ** ROR_ID_from_person
 
-ROR_ID_from_person <- function(x)
+.ROR_ID_from_person <- function(x)
     vapply(unclass(x),
            function(e) e$comment["ROR"] %||% NA_character_,
            "")
 
-### ** ROR_ID_db_from_package_sources
+### ** .ROR_ID_db_from_package_sources
 
-ROR_ID_db_from_package_sources <-
+.ROR_ID_db_from_package_sources <-
 function(dir, add = FALSE)
 {
-    ids1 <- ROR_ID_from_person(.persons_from_metadata(dir))
+    ids1 <- .ROR_ID_from_person(.persons_from_metadata(dir))
     ids1 <- ids1[!is.na(ids1)]
-    ids2 <- ROR_ID_from_person(.persons_from_citation(dir))
+    ids2 <- .ROR_ID_from_person(.persons_from_citation(dir))
     ids2 <- ids2[!is.na(ids2)]
     db  <- data.frame(ID = c(character(), ids1, ids2),
                       Parent = c(rep_len("DESCRIPTION",
