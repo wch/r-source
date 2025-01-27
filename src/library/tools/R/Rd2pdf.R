@@ -553,6 +553,7 @@ function(pkgdir, outfile, title, silent = FALSE,
     if (!nzchar(enc)) enc <- "unknown"
 
     desc <- NULL
+    preconverted <- FALSE
     if (file.exists(f <- file.path(pkgdir, "DESCRIPTION"))) {
         desc <- read.dcf(f)[1,]
         if (enc == "unknown") {
@@ -561,6 +562,10 @@ function(pkgdir, outfile, title, silent = FALSE,
             	enc <- pkg_enc
             }
         }
+        ## 'outputEncoding' is irrelevant when pkgdir contains a package
+        ## installed with --latex: tex files were written using pkg_enc
+        ## and specify their \inputencoding, so we need inputenc.
+        preconverted <- dir.exists(file.path(pkgdir, "latex"))
     }
 
     ## Rd2.tex part 1: header
@@ -575,7 +580,7 @@ function(pkgdir, outfile, title, silent = FALSE,
     latex_outputEncoding <- latex_canonical_encoding(outputEncoding)
     asUTF8 <- latex_outputEncoding == "utf8"
     setEncoding <-
-        if (asUTF8 && inputenc == "inputenc") {
+        if (!preconverted && asUTF8 && inputenc == "inputenc") {
             paste0("\\makeatletter\\@ifl@t@r\\fmtversion{2018/04/01}{}{",
                    "\\usepackage[utf8]{inputenc}}",
                    "\\makeatother")

@@ -603,6 +603,10 @@
       \item \code{as.roman(x)} now should work platform independently,
       also for, e.g., \code{x = "IIIII"} (= V) and \code{x = "IIIIII"}
       (= VI).
+
+      \item \command{R CMD Rd2pdf} works again on an installed package
+      directory containing \LaTeX help (from option \option{--latex}),
+      thanks to a report by \I{Peter Ruckdeschel}.
     }
   }
 }
