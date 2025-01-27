@@ -25,8 +25,9 @@
     coordinates is acceptable.  See the function \code{\link{xy.coords}}
     for details.  If supplied separately, they must be of the same length.}
   \item{type}{1-character string giving the type of plot desired.  The
-    following values are possible, for details, see \code{\link{plot}}:
-    \code{"p"} for points, \code{"l"} for lines,
+    following values are possible, for details, see \code{\link[base]{plot}}:
+    \code{"p"} for points,
+    \code{"l"} for lines,
     \code{"b"} for both points and lines,
     \code{"c"} for empty points joined by lines,
     \code{"o"} for overplotted points and lines,
@@ -129,7 +130,7 @@
   Murrell, P. (2005) \emph{R Graphics}. Chapman & Hall/CRC Press.
 }
 \seealso{
-  \code{\link{plot}}, \code{\link{plot.window}}, \code{\link{xy.coords}}.
+  \code{\link[base]{plot}}, \code{\link{plot.window}}, \code{\link{xy.coords}}.
   For thousands of points, consider using \code{\link{smoothScatter}}
   instead.
 }

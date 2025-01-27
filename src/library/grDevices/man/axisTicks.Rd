@@ -37,7 +37,7 @@ axisTicks(usr, log, axp = NULL, nint = 5)
   \code{axisTicks(usr, *)} calls \code{.axisPars(usr, ..)} to set
   \code{axp} when that is missing or \code{NULL}.
 
-  Apart from that, \code{\link{axisTicks}()} just calls the C function
+  Apart from that, \code{axisTicks()} just calls the C function
   \code{CreateAtVector()} in \file{\var{R}/src/main/plot.c} which is also
   called by the base \pkg{graphics} package function
   \code{\link[graphics]{axis}(side, *)} when its argument \code{at} is not

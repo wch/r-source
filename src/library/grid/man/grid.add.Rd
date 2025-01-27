@@ -65,6 +65,6 @@ setChildren(x, children)
 \author{Paul Murrell}
 \seealso{
   \code{\link{grob}}, \code{\link{getGrob}},
-  \code{\link{addGrob}}, \code{\link{removeGrob}}.
+  \code{\link{removeGrob}}.
 }
 \keyword{dplot}

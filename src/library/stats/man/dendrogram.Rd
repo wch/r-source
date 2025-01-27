@@ -192,7 +192,7 @@ is.leaf(object)
   dendrograms into a new one which has \code{x} and \code{y} (and
   optional further arguments) as branches.  Note that before \R 3.1.2,
   \code{adjust = "none"} was used implicitly, which is invalid when,
-  e.g., the dendrograms are from \code{\link{as.dendrogram}(hclust(..))}.
+  e.g., the dendrograms are from \code{as.dendrogram(hclust(..))}.
 
   \code{\link{nobs}(object)} returns the total number of leaves (the
   \code{members} attribute, see above).

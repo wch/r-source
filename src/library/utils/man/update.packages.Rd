@@ -52,7 +52,7 @@ new.packages(lib.loc = NULL, repos = getOption("repos"),
     Incompatible with \code{type = "both"}.
   }
   \item{method}{Download method, see \code{\link{download.file}}.
-    Unused by \code{\link{old.packages}} if a non-\code{NULL} \code{available}
+    Unused by \code{old.packages} if a non-\code{NULL} \code{available}
     is supplied.} 
   \item{instlib}{character string giving the library directory where to
     install the packages.}

@@ -74,7 +74,7 @@ is.numeric(x)
 %% keep next the same in double.Rd & numeric.Rd
 \section{Note on names}{
   It is a historical anomaly that \R has two names for its
-  floating-point vectors, \code{\link{double}} and \code{\link{numeric}}
+  floating-point vectors, \code{double} and \code{numeric}
   (and formerly had \code{real}).
 
   \code{double} is the name of the \link{type}.

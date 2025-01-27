@@ -80,7 +80,7 @@ as.stepfun(x, \dots)
     \item{"yleft", "yright"}{the function values \emph{outside} the knots}
     \item{"method"}{(always \code{== "constant"}, from
       \code{\link{approxfun}(.)}).}
-  The knots are also available via \code{\link{knots}(fn)}.
+  The knots are also available via \code{knots(fn)}.
 }
 \author{
   Martin Maechler, \email{maechler@stat.math.ethz.ch} with some basic

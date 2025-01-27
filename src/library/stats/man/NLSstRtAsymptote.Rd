@@ -29,7 +29,7 @@ NLSstRtAsymptote(xy)
 \seealso{
   \code{\link{sortedXyData}},
   \code{\link{NLSstClosestX}},
-  \code{\link{NLSstRtAsymptote}},
+  \code{\link{NLSstLfAsymptote}},
   \code{\link{selfStart}}
 }
 \examples{

@@ -63,6 +63,7 @@ removeGrob(gTree, gPath, strict = FALSE, grep = FALSE,
 }
 \author{Paul Murrell}
 \seealso{
-  \code{\link{grob}}, \code{\link{getGrob}}.
+  \code{\link{grob}}, \code{\link{getGrob}},
+  \code{\link{addGrob}}.
 }
 \keyword{dplot}

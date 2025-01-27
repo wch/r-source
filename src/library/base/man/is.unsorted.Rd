@@ -30,7 +30,7 @@ is.unsorted(x, na.rm = FALSE, strictly = FALSE)
   objects with an S3 class (where the \code{>=} or \code{>} method is
   used to compare \code{x[i]} with \code{x[i-1]} for \code{i} in
   \code{2:length(x)}) or with an S4 class where you have to provide a
-  method for \code{\link{is.unsorted}()}.
+  method for \code{is.unsorted()}.
 %% FIXME: rather want  '>' and '>=' methods for S4 classes be sufficient
 }
 \note{

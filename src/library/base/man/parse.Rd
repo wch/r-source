@@ -108,12 +108,12 @@ str2expression(text)
   }
     \item{\code{str2expression(s)}: }{for a \code{\link{character}} vector
       \code{s}, \code{str2expression(s)} corresponds to
-      \code{\link{parse}(text = s, keep.source=FALSE)}, which is always of
+      \code{parse(text = s, keep.source=FALSE)}, which is always of
       type (\code{\link{typeof}}) and \code{\link{class}} \code{expression}.
     }
     \item{\code{str2lang(s)}: }{for a \code{\link{character}} string
       \code{s}, \code{str2lang(s)} corresponds to
-      \code{\link{parse}(text = s, keep.source=FALSE)[[1]]} (plus a check
+      \code{parse(text = s, keep.source=FALSE)[[1]]} (plus a check
       that both \code{s} and the \code{parse(*)} result are of length one)
       which is typically a \code{call} but may also be a \code{symbol} aka
       \code{\link{name}}, \code{\link{NULL}} or an atomic constant such as

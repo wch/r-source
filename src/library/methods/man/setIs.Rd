@@ -102,7 +102,7 @@ setIs(class1, class2, test=NULL, coerce=NULL, replace=NULL,
       \code{\link{setAs}}.  The difference between the  two is simply
       that \code{\link{setAs}} will require a call to \code{\link{as}}
       for a conversion to take place, whereas after the call to
-      \code{\link{setIs}}, objects will be automatically converted to
+      \code{setIs}, objects will be automatically converted to
       the superclass.
 
       The automatic feature is the dangerous part, mainly because it

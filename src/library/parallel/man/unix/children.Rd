@@ -116,7 +116,7 @@ mckill(process, signal = 2L)
   \eqn{2^{31} - 1}{2^31 - 1} bytes (and still are on 32-bit platforms).
 }
 \seealso{
-  \code{\link{mcfork}}, \code{\link{sendMaster}}, \code{\link{mcparallel}}
+  \code{\link{mcfork}}, \code{\link{mcparallel}}
 }
 \examples{\dontrun{
 p  <- mcparallel(scan(n = 1, quiet = TRUE))

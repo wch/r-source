@@ -52,7 +52,7 @@ getGrob(gTree, gPath, strict = FALSE, grep = FALSE, global = FALSE)
 }
 \author{Paul Murrell}
 \seealso{
-  \code{\link{grob}}, \code{\link{getGrob}},
+  \code{\link{grob}},
   \code{\link{addGrob}}, \code{\link{removeGrob}}.
 }
 \examples{

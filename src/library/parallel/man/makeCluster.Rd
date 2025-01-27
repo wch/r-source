@@ -129,7 +129,7 @@ getDefaultCluster()
 #endif
 
   It is good practice to shut down the workers by calling
-  \code{\link{stopCluster}}: however the workers will terminate
+  \code{stopCluster}: however the workers will terminate
   themselves once the socket on which they are listening for commands
   becomes unavailable, which it should if the master \R session is
   completed (or its process dies).

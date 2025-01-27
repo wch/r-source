@@ -38,8 +38,8 @@ removeTaskCallback(id)
     internal callback list to be removed.
     Integer indices are 1-based, i.e the first element is 1.
     The names of currently registered handlers is available
-    using \code{\link{getTaskCallbackNames}}
-    and is also returned in a call to \code{\link{addTaskCallback}}.
+    using \code{\link{getTaskCallbackNames}()}
+    and is also returned in a call to \code{addTaskCallback}.
   }
   \item{name}{character: names to be used.}
 }

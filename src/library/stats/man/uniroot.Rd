@@ -30,8 +30,8 @@ uniroot(f, interval, \dots,
     when \code{f()} does not have differing signs at the endpoints.  The
     default, \code{"no"}, keeps the search interval and hence produces
     an error.  Can be abbreviated.}
-  \item{check.conv}{logical indicating whether a convergence warning of the
-    underlying \code{\link{uniroot}} should be caught as an error and if
+  \item{check.conv}{logical indicating whether a convergence warning
+    should be caught as an error and if
     non-convergence in \code{maxiter} iterations should be an error
     instead of a warning.}
   \item{tol}{the desired accuracy (convergence tolerance).}

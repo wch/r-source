@@ -57,8 +57,8 @@ as.call(x)
       If you think of using \code{as.call(\var{string})}, consider using
       \code{\link{str2lang}(\var{string})} which is an efficient version of
       \code{\link{parse}(text=\var{string})}.
-      Note that \code{\link{call}()} and \code{\link{as.call}()}, when
-      applicable, are much preferable to these \code{\link{parse}()} based
+      Note that \code{call()} and \code{as.call()}, when
+      applicable, are much preferable to these \code{parse()} based
       approaches.
     }
   }
@@ -80,7 +80,7 @@ as.call(x)
   \code{\link{expression}},
   \code{\link{function}}.
 
-  Producing \code{\link{call}}s etc from character: \code{\link{str2lang}} and
+  Producing \code{call}s etc from character: \code{\link{str2lang}} and
   \code{\link{parse}}.
 }
 \references{
