@@ -1,7 +1,7 @@
 #  File src/library/tools/R/Rd2pdf.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2023 The R Core Team
+#  Copyright (C) 1995-2025 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -369,11 +369,13 @@
     if (asChapter)
         cat("\n\\chapter{The \\texttt{", basename(pkgdir), "} package}\n",
             sep = "", file = outcon)
-    topics <- rep.int("", length(files)); names(topics) <- files
+
+    ## Extract (LaTeX-escaped, ASCII) \name for sorting.
+    topics <- rep("", length(files))
+    names(topics) <- files
     for (f in files) {
-        lines <- readLines(f)  # This reads as "unknown", no re-encoding done
-        hd <- grep("^\\\\HeaderA", lines, value = TRUE,
-                   perl = TRUE, useBytes = TRUE)
+        lines <- readLines(f, encoding = "bytes") # possibly latin1, still
+        hd <- lines[startsWith(lines, "\\HeaderA")]
         if (!length(hd)) {
             warning("file ", sQuote(f), " lacks a header: skipping",
                     domain = NA)
@@ -390,8 +392,9 @@
     ## <FIXME>
     ## these 'topics' come from Rd \name, not \alias entries, but we should
     ## (and WRE says) put the page aliased to the pkgname-package *topic* first
+    ## which for >1500 CRAN packages is in a differently named file (90% pkg.Rd)
     ## </FIXME>
-    summ <- grep("-package$", topics, perl = TRUE)
+    summ <- which(endsWith(topics, "-package"))
     topics <- if (length(summ)) c(topics[summ], re(topics[-summ])) else re(topics)
     for (f in names(topics)) writeLines(readLines(f), outcon)
 
