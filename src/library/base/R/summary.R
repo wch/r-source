@@ -71,7 +71,8 @@ format.summaryDefault <- function(x, digits = max(3L, getOption("digits") - 3L),
     xx <- x
     if(is.numeric(x) || is.complex(x)) {
       finite <- is.finite(x)
-      xx[finite] <- zapsmall(x[finite], digits = digits + zdigits)
+      digs <- digits %||% eval(formals()$digits) # use <default> if NULL
+      xx[finite] <- zapsmall(x[finite], digits = digs + zdigits)
     }
     class(xx) <- class(x)[-1]
     m <- match("NA's", names(x), 0)
@@ -137,7 +138,7 @@ summary.data.frame <-
         }
         z
     }
-    # compute results to full precision.
+    # compute results to "full" precision (FIXME: option full.digits = 12L )
     z <- lapply(X = as.list(object), FUN = summary,
                 maxsum = maxsum, digits = 12L, ...)
     nv <- length(object)

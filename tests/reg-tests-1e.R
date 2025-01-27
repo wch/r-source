@@ -1776,6 +1776,12 @@ stopifnot(identical(shN2, ushfmt))
 ## Mean was wrongly double-rounded to "164326" for years in R < 4.5.0
 
 
+## summary.data.frame(*, digits=NULL)
+(sdf <- summary(data.frame(x = seq_along(helconc), helconc), digits = NULL))
+stopifnot(is.table(sdf), is.matrix(sdf), identical(dim(sdf), c(6L, 2L)))
+## failed for a few days only
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

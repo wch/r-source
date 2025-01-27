@@ -37,7 +37,8 @@ summary(object, \dots)
   \item{x}{a result of the \emph{default} method of \code{summary()}.}
   \item{maxsum}{integer, indicating how many levels should be shown for
     \code{\link{factor}}s.}
-  \item{digits}{integer, used for number formatting with
+  \item{digits}{integer (or \code{\link{NULL}}, see \sQuote{Details}),
+    used for number formatting with
     \code{\link{signif}()} (for \code{summary.default}) or
     \code{\link{format}()} (for \code{summary.data.frame}).  In
     \code{summary.default}, if not specified (i.e.,
@@ -55,6 +56,10 @@ summary(object, \dots)
     most frequent levels is shown, and the less frequent levels are
     summarized in \code{"(Others)"} (resulting in at most \code{maxsum}
     frequencies).
+
+    The \code{digits} argument may be \code{\link{NULL}} for some methods
+    specifying to use the default value, e.g., for the
+    \code{"summaryDefault"} \code{format()} method.
 
     The functions \code{summary.lm} and \code{summary.glm} are examples
     of particular methods which summarize the results produced by
