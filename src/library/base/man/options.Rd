@@ -394,13 +394,7 @@ getOption(x, default = NULL)
     \item{\code{show.error.locations}:}{Should source locations of
       errors be printed?  If set to \code{TRUE} or \code{"top"}, the
       source location that is highest on the stack (the most recent
-      call) will be printed.  \code{"bottom"} will print the location
-      of the earliest call found on the stack.
-
-      Integer values can select other entries.  The value \code{0}
-      corresponds to \code{"top"} and positive values count down the
-      stack from there.  The value \code{-1} corresponds to
-      \code{"bottom"} and negative values count up from there.
+      code with source information) will be printed.  
       }
 
     \item{\code{show.error.messages}:}{a logical.  Should error messages

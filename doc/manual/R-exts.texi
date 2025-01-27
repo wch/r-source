@@ -14342,13 +14342,18 @@ make these available to debuggers running C code:
 SEXP R_GetCurrentSrcref(int skip);
 @end example
 
-This function checks @code{R_Srcref} and the current evaluation stack
-for entries that contain source reference information.  The
-@code{skip} argument tells how many source references to skip before
-returning the @code{SEXP} of the @code{srcref} object, counting from
-the top of the stack.  If @code{skip < 0}, @code{abs(skip)} locations
-are counted up from the bottom of the stack. If too few or no source
-references are found, @code{NULL} is returned.
+This function checks the current evaluation stack
+for entries that contain source reference information. There
+are two modes of operation.
+If @code{skip == NA_INTEGER}, the @code{R_Srcref} entry is checked
+followed by entries in the call stack, until a @code{srcref} 
+is found.  Otherwise, the @code{skip} argument tells how many
+calls to skip (counting from the top of the stack) before
+returning the @code{SEXP} of the call's @code{srcref} object or
+@code{NULL} if that call did not have one.  If @code{skip < 0}, 
+@code{abs(skip)} locations are counted up from the bottom of the
+stack. If too few or no source references are found, @code{NULL}
+is returned.  
 
 @example
 SEXP R_GetSrcFilename(SEXP srcref);

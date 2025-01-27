@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1995--2024  The R Core Team.
+ *  Copyright (C) 1995--2025  The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -795,22 +795,18 @@ verrorcall_dflt(SEXP call, const char *format, va_list ap)
 	char *head = _("Error in "), *tail = "\n  ";
 	SEXP srcloc = R_NilValue; // -Wall
 	size_t len = 0;	// indicates if srcloc has been set
-	int protected = 0, skip = NA_INTEGER;
+	int protected = 0, show = 0;
 	SEXP opt = GetOption1(install("show.error.locations"));
-	if (!isNull(opt)) {
-	    if (TYPEOF(opt) == STRSXP && length(opt) == 1) {
-		if (pmatch(ScalarString(mkChar("top")), opt, 0)) skip = 0;
-		else if (pmatch(ScalarString(mkChar("bottom")), opt, 0)) skip = -1;
-	    } else if (TYPEOF(opt) == LGLSXP)
-		skip = asLogical(opt) == 1 ? 0 : NA_INTEGER;
-	    else
-		skip = asInteger(opt);
-	}
+	if (length(opt) == 1 &&
+	    (asLogical(opt) == 1 ||
+	     (TYPEOF(opt) == STRSXP &&
+	      pmatch(ScalarString(mkChar("top")), opt, 0))))
+	    	show = 1;
 
 	const char *dcall = CHAR(STRING_ELT(deparse1s(call), 0));
 	Rsnprintf_mbcs(tmp2, BUFSIZE,  "%s", head);
-	if (skip != NA_INTEGER) {
-	    PROTECT(srcloc = GetSrcLoc(R_GetCurrentSrcref(skip)));
+	if (show) {
+	    PROTECT(srcloc = GetSrcLoc(R_GetCurrentSrcref(NA_INTEGER)));
 	    protected++;
 	    len = strlen(CHAR(STRING_ELT(srcloc, 0)));
 	    if (len)
@@ -1504,6 +1500,15 @@ static void R_PrintDeferredWarnings(void)
 	PrintWarnings();
     }
 }
+
+/* if srcref indicates it is in bytecode, it needs a fixup */
+static SEXP fixBCSrcref(SEXP srcref, RCNTXT *c)
+{
+    if (srcref == R_InBCInterpreter)
+	srcref = R_findBCInterpreterSrcref(c);
+    return srcref;
+}
+
 /*
  * Return the traceback without deparsing the calls
  */
@@ -2342,25 +2347,44 @@ SEXP
 R_GetCurrentSrcref(int skip)
 {
     RCNTXT *c = R_GlobalContext;
-    SEXP srcref = R_Srcref;
+    SEXP srcref;
+    int keep_looking = skip == NA_INTEGER;
+    if (keep_looking) skip = 0;
     if (skip < 0) { /* to count up from the bottom, we need to count them all first */
 	while (c) {
-	    if (srcref && srcref != R_NilValue)
+	    if (c->callflag & (CTXT_FUNCTION | CTXT_BUILTIN))
 		skip++;
-	    srcref = c->srcref;
 	    c = c->nextcontext;
 	};
 	if (skip < 0) return R_NilValue; /* not enough there */
 	c = R_GlobalContext;
-	srcref = R_Srcref;
     }
-    while (c && (skip || !srcref || srcref == R_NilValue)) {
-	if (srcref && srcref != R_NilValue)
+    	
+    /* If skip = NA, try current active srcref first. */
+    
+    if (keep_looking) {
+    	srcref = R_getCurrentSrcref();
+        if (srcref && !isNull(srcref))
+    	  return srcref;
+    }
+    
+    /* Go to the first call */
+    while (c && !(c->callflag & (CTXT_FUNCTION | CTXT_BUILTIN)))
+    	c = c->nextcontext;
+    
+    /* Now skip enough calls, regardless of srcref presence */
+    while (c && skip) {
+    	if (c->callflag & (CTXT_FUNCTION | CTXT_BUILTIN))
 	    skip--;
-	srcref = c->srcref;
 	c = c->nextcontext;
     }
-    if (skip || !srcref)
+    /* Now get the next srcref.  If skip was not NA, don't
+       keep looking. */
+    do {
+        srcref = fixBCSrcref(c->srcref, c);
+        c = c->nextcontext;
+    } while (keep_looking && c && !(srcref && !isNull(srcref)));
+    if (!srcref)
 	srcref = R_NilValue;
     return srcref;
 }
