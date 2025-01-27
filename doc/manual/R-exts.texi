@@ -2483,7 +2483,7 @@ PKG_LIBS = $(SHLIB_OPENMP_CFLAGS)
 @end example
 
 Note that the macro @code{SHLIB_OPENMP_CXXFLAGS} applies to the default
-C++ compiler and not necessarily to the C++17/20/23 compiler: users of the
+C++ compiler and not necessarily to the C++17/20/23/26 compiler: users of the
 latter should do their own @command{configure} checks.  If you do use
 your own checks, make sure that @abbr{OpenMP} support is complete by compiling
 and linking an @abbr{OpenMP}-using program: on some platforms the runtime
@@ -2956,11 +2956,11 @@ standard (`C++11').  A minor update@footnote{Some changes are linked
 from
 @uref{https://isocpp.org/std/standing-documents/sd-6-sg10-feature-test-recommendations}:
 there were also additional deprecations.} (`C++14') was published in
-December 2014 and was used by default as from @R{} 4.1.0 if
-supported.  Further revisions `C++17' (in December 2017) and `C++20'
-(with many new features in December 2020) have been published since.
-The next revision, `C++23', is expected in 2024 and several compilers
-already have extensive partial support for the final draft.
+December 2014 and was used by default as from @R{} 4.1.0 if supported.
+Further revisions `C++17' (in December 2017), `C++20' (with many new
+features in December 2020) and `C++23' (in October 2024) have been
+published since.  The next revision, `C++26', is expected in 2026/7 and
+several compilers already have considerable support for the current draft.
 
 The default standard for compiling @R{} packages was changed to C++17 in
 @R{} 4.3.0 if supported, and from @R{} 4.4.0 only a C++17 compiler will
@@ -2979,9 +2979,9 @@ Unix-alike @command{configure} will try to identify a compiler and flags
 for each of the standards: this relies heavily on the reported values of
 @code{__cplusplus}.
 
-@c Apple clang 14 defaults to C++98 (even 14.0.3)
-@c @I{LLVM} clang 14, 15 default to C++14, 16 to C++17
-@c g++ 11, 12, 13 default to C++17
+@c Apple clang 14 defaults to C++98 (even 16)
+@c @I{LLVM} clang 14, 15 default to C++14, 16-19 to C++17
+@c g++ 11-15 default to C++17
 
 The webpage
 @uref{https://en.cppreference.com/w/cpp/compiler_support} gives

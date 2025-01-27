@@ -239,6 +239,9 @@
   \subsection{PACKAGE INSTALLATION}{
     \itemize{
       \item Source installs now report the package version in the log.
+
+      \item There is preliminary support for C++26 in GCC >= 14, Apple
+      clang >= 16 and LLVM clang >= 17.
     }
   }
 

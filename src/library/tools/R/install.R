@@ -3285,7 +3285,7 @@ function()
     m
 }
 
-cxx_standards <- c("23", "20", "17", "14", "11", "98")
+cxx_standards <- c("26", "23", "20", "17", "14", "11", "98")
 
 ### Local variables: ***
 ### mode: outline-minor ***

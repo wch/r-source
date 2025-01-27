@@ -1923,6 +1923,7 @@ R_STDCXX([14], [CXX14], [CXX11])
 R_STDCXX([17], [CXX17], [CXX14])
 R_STDCXX([20], [CXX20], [CXX17])
 R_STDCXX([23], [CXX23], [CXX20])
+R_STDCXX([26], [CXX26], [CXX23])
 CXX=${save_CXX}
 
 ## Set default C++ compiler to C++17 if available, otherwise unset

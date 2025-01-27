@@ -63,6 +63,7 @@ AC_DEFUN([AX_CXX_COMPILE_STDCXX], [dnl
         [$1], [17], [ax_cxx_compile_alternatives="17 1z"],
         [$1], [20], [ax_cxx_compile_alternatives="20 2a"],
         [$1], [23], [ax_cxx_compile_alternatives="23 2b"],
+        [$1], [26], [ax_cxx_compile_alternatives="26 2"],
         [m4_fatal([invalid first argument `$1' to AX_CXX_COMPILE_STDCXX])])dnl
   m4_if([$2], [], [],
         [$2], [ext], [],
@@ -256,9 +257,24 @@ dnl Reject if value is that of C++20 or earlier
 #elif __cplusplus <= 202002L
 dnl 202302L is the value from N4950, the 'final draft', but defer
 dnl Apple Clang 15, LLVM clang 14, gcc 12-13 report 202101L, 202100L
-dnl LLVM clang 18 and gcc 14 report 202302L
+dnl LLVM clang 18, Apple clang 16 and gcc 14 report 202302L
 dnl #elif __cplusplus <= 202302L
 #error "This is not a C++23 compiler"
+#else
+  _AX_CXX_COMPILE_STDCXX_testbody_new_in_11
+  _AX_CXX_COMPILE_STDCXX_testbody_new_in_14
+  _AX_CXX_COMPILE_STDCXX_testbody_new_in_17
+#endif  
+)
+
+dnl  Test body for checking C++26 support: R modification
+m4_define([_AX_CXX_COMPILE_STDCXX_testbody_26],
+#ifndef __cplusplus
+#error "This is not a C++ compiler"
+dnl Reject if value is that of C++23 or earlier
+dnl Apple clang 16 and GCC 14,15 report 202400L
+#elif __cplusplus <= 202302L
+#error "This is not a C++26 compiler"
 #else
   _AX_CXX_COMPILE_STDCXX_testbody_new_in_11
   _AX_CXX_COMPILE_STDCXX_testbody_new_in_14
