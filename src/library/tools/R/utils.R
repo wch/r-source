@@ -2069,7 +2069,7 @@ function()
 ### ** .package_apply
 
 .package_apply <-
-function(packages = NULL, FUN, ..., pattern = "*", verbose = TRUE,
+function(packages = NULL, FUN, ..., pattern = NULL, verbose = TRUE,
          Ncpus = getOption("Ncpus", 1L))
 {
     ## Apply FUN and extra '...' args to all given packages.
@@ -2079,10 +2079,8 @@ function(packages = NULL, FUN, ..., pattern = "*", verbose = TRUE,
         packages <-
             unique(utils::installed.packages(priority = "high")[ , 1L])
 
-    ## For consistency with .unpacked_source_repository_apply(), take
-    ## 'pattern' as a wildcard pattern.
-    if(pattern != "*")
-        packages <- packages[grepl(utils::glob2rx(pattern), packages)]
+    if(!is.null(pattern))
+        packages <- grepv(pattern, packages)
 
     ## Keep in sync with .unpacked_source_repository_apply().
     ## <FIXME>
@@ -2629,12 +2627,14 @@ function(expr)
 ### ** .unpacked_source_repository_apply
 
 .unpacked_source_repository_apply <-
-function(dir, FUN, ..., pattern = "*", verbose = FALSE,
+function(dir, FUN, ..., pattern = NULL, verbose = FALSE,
          Ncpus = getOption("Ncpus", 1L))
 {
     dir <- file_path_as_absolute(dir)
 
-    dfiles <- Sys.glob(file.path(dir, pattern, "DESCRIPTION"))
+    dfiles <- Sys.glob(file.path(dir, "*", "DESCRIPTION"))
+    if(!is.null(pattern))
+        dfiles <- dfiles[grepl(pattern, basename(dirname(dfiles)))]
     paths <- dirname(dfiles)
 
     ## Keep in sync with .package_apply().
