@@ -1,6 +1,6 @@
 % File src/library/base/man/connections.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2023 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{connections}
@@ -38,6 +38,7 @@
 \concept{\I{gzip}}
 \concept{\I{bzip2}}
 \concept{\I{lzma}}
+\concept{\I{zstd}}
 \description{
   Functions to create, open and close connections, i.e.,
   \dQuote{generalized files}, such as possibly compressed files, URLs,
@@ -120,7 +121,7 @@ socketTimeout(socket, timeout = -1)
     requests.  It is ignored for non-HTTP URLs.  The \code{User-Agent}
     header, coming from the \code{HTTPUserAgent} option (see
     \code{\link{options}}) is used as the first header, automatically.}
-  \item{compression}{integer in 0--9 (1--19 for \code{zsdfile}).  The
+  \item{compression}{integer in 0--9 (1--19 for \code{zstdfile}).  The
     amount of compression to be applied when writing, from minimal to
     maximal available.  For \code{xzfile} and \code{zstdfile} can also
     be negative: see the \sQuote{Compression} section.}

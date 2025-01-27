@@ -42,11 +42,11 @@
     indicating that an intercept is to be fit.}
   \item{\code{order}}{A vector of the same length as \code{term.labels}
     indicating the order of interaction for each term.}
-  \item{\code{response}}{The index of the variable (in variables) of the
+  \item{\code{response}}{The index of the variable (in \code{variables}) of the
     response (the left hand side of the formula).  Zero, if there is no
     response.}
   \item{\code{offset}}{If the model contains \code{\link{offset}} terms there
-    is an \code{offset} attribute indicating which variable(s) are offsets}
+    is an \code{offset} attribute indicating which \code{variables} are offsets.}
   \item{\code{specials}}{If a \code{specials} argument was given to
     \code{\link{terms.formula}} there is a \code{specials} attribute, a
     pairlist of vectors (one for each specified special function) giving

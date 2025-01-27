@@ -33,7 +33,7 @@
 }
 \details{
   \code{.Library} is a character string giving the location of the
-  default library, the \file{library} subdirectory of \env{R_HOME}.
+  default library, the \file{library} subdirectory of \var{\link{R_HOME}}.
 
   \code{.Library.site} is a (possibly empty) character vector giving the
   locations of the site libraries.

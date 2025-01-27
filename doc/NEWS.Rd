@@ -391,8 +391,8 @@
       \item \command{R CMD check} gains option \option{--run-demo} to
       check demo scripts like tests.
 
-      \item \code{R CMD build} now supports \option{--compression =
-	zstd} on platforms with sufficient support for \command{zstd}.
+      \item \code{R CMD build} now supports \option{--compression=zstd}
+      on platforms with sufficient support for \command{zstd}.
     }
   }
 

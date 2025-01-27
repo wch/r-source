@@ -3139,7 +3139,7 @@ Installations of @code{zlib} (version 1.2.5 or later), @code{libbz2}
 @code{liblzma}@footnote{most often distributed as part of @code{xz}:
 possible names in Linux distributions include
 @code{xz-devel}/@code{xz-libs} and @code{liblzma-dev}.} version 5.0.3 or
-later are required.  Some software distribtutions@footnote{for example,
+later are required.  Some software distributions@footnote{for example,
 Fedora 40} replace @code{zlib} by
 @code{zlib-ng}@footnote{@uref{https://github.com/zlib-ng/zlib-ng}} which
 has an optional compatibility interface.
