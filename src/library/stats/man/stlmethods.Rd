@@ -5,6 +5,7 @@
 
 \name{stlmethods}
 \alias{plot.stl}
+\alias{summary.stl}
 \title{Methods for \abbr{STL} Objects}
 \description{
   Methods for objects of class \code{stl}, typically the result of
