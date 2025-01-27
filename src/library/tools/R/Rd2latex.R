@@ -1,7 +1,7 @@
 #  File src/library/tools/R/Rd2latex.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2024 The R Core Team
+#  Copyright (C) 1995-2025 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -341,6 +341,7 @@ Rd2latex <- function(Rd, out = "", defines = .Platform$OS.type,
             stop("alias:\n",
                  sQuote(paste(alias, collapse = "\n")),
                  "\nis not one line")
+        alias <- trim(alias)
         aa <- "\\aliasA{"
         ## Some versions of hyperref (from 6.79d) have trouble indexing these
         ## |, || in base, |.bit, %||% in ggplot2 ...

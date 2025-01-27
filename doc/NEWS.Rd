@@ -516,7 +516,11 @@
       returns \code{srcref} entries correctly.  (Note that there
       is also a change to the interpretation of \code{skip}; 
       see the C-LEVEL API entry above.)
-     }
+
+      \item \code{tools::Rd2latex()} now removes leading and trailing
+      spaces from \verb{\alias} entries as documented, fixing indexing
+      and linking hiccups in some PDF manuals.
+    }
   }
 }
 
