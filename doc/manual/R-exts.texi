@@ -5931,6 +5931,7 @@ so it is strongly recommended to check in a UTF-8 locale.
 @menu
 * Common symbols::
 * C++17 issues::
+* C23 changes::
 @end menu
 
 Writing portable C and C++ code is mainly a matter of observing the
@@ -6527,7 +6528,7 @@ compatibility in its @command{configure} script, including that C++ code
 using the library can both be linked @emph{and loaded}.
 
 
-@node Common symbols
+@node Common symbols, C++17 issues, Portable C and C++ code, Portable C and C++ code
 @subsubsection Common symbols
 
 Most OSes (including all those commonly used for @R{}) have the concept
@@ -6568,7 +6569,7 @@ versions of @command{gcc} and @command{clang}.
 
 This is not pertinent to C++ which does not permit tentative definitions.
 
-@node C++17 issues,  , Common symbols, Portable C and C++ code
+@node C++17 issues, C23 changes, Common symbols, Portable C and C++ code
 @subsubsection C++17 issues
 
 @R{} 4.3.0 and later default to C++17 when compiling C++, and that
@@ -6630,6 +6631,52 @@ in @file{~/.R/Makevars}.
 Another build for Windows which may be sufficiently compatible with
 @code{Rtools} can be found at
 @uref{https://github.com/mstorsjo/llvm-mingw}: this uses @code{libc++}.
+
+
+@node C23 changes,  , C++17 issues, Portable C and C++ code
+@subsubsection C23 changes
+
+Thw C23 standard was finally published in Oct 2024, by which time had
+been widely implemented for a least a couple of years.  It will become
+the default on GCC 15, and @R{} will use default to it if available from @R{}
+4.5.0.
+
+Some of the more significant changes are
+@c https://en.cppreference.com/w/c/23
+
+@itemize
+
+@item
+@code{bool}, @code{true} and @code{false} become keywords and so can no
+longer be used as identifiers.
+
+These have been available as a boolean type since C99 by including the
+header @file{stdbool.h}.  Both that and C23@footnote{but C23 declares
+that header and the macro to be obsolescent.} set the macro
+@code{__bool_true_false_are_defined} to @code{1} so this type can be
+used in all versions of C supported by @R{}.
+
+@item
+The meaning of an empty argument list has been changed to mean zero
+arguments --- however for clarity @code{fun(void)} is still preferred by
+many code readers and supported by all C standards.  (Compilers may warn
+about an empty argument list in C23 mode.)
+
+@item
+@code{INIINITY} and @code{NAN} are available via
+header @file{float.h} and deprecated in @file{math.h}.
+
+@item
+POSIC functions @code{memccpy}, @code{strdup} and @code{strndup} are
+part of C23.
+
+@item
+There are decimal floating-point types and functions and extended
+support of binary floating-point functions, including binary
+floating-point constants.
+@end itemize
+
+
 
 @node Portable Fortran code, Binary distribution, Portable C and C++ code, Writing portable packages
 @subsection Portable Fortran code
@@ -10316,7 +10363,7 @@ CXX="clang++ -fsanitize=address,undefined"
 @noindent
 and passed its checks.
 
-@node Other analyses with `clang'
+@node Other analyses with `clang', Other analyses with `gcc', Using Undefined Behaviour Sanitizer, Checking memory access
 @subsection Other analyses with `clang'
 
 Recent versions of LLVM @command{clang} on Linux have
@@ -15268,6 +15315,12 @@ vsom.f90:20:33: note: 'vsom' was previously declared here
 shows that a subroutine has been registered with 9 arguments (as that is
 what the @code{.Fortran} call used) but only has 8.
 
+
+@menu
+* Fortran character strings::
+* Fortran LOGICAL::
+* Passing functions::
+@end menu
 
 @node Fortran character strings, Fortran LOGICAL, Calling C from Fortran and vice versa, Calling C from Fortran and vice versa
 @subsection Fortran character strings
