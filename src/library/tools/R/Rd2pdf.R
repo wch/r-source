@@ -232,6 +232,7 @@
         outfile <- paste0(basename(pkgdir), "-pkg.tex")
 
     hasFigures <- FALSE
+    graphicspath <- NULL
 
     ## First check for a latex dir (from R CMD INSTALL --latex).
     ## Second guess is this is a >= 2.10.0 package with stored .rds files.
@@ -262,15 +263,10 @@
 				  outputEncoding = outputEncoding,
 				  defines = NULL, # already processed
 				  writeEncoding = FALSE)
-                if (attr(res, "hasFigures")) {
-                    lines <- readLines(outfilename)
-                    graphicspath <- file.path(pkgdir, "help", "figures")
-                    writeLines(c(.file_path_to_LaTeX_graphicspath(graphicspath),
-                                 lines),
-                               outfilename)
-                    hasFigures <- TRUE
-                }
+                hasFigures <- hasFigures || attr(res, "hasFigures")
             }
+            if (hasFigures)
+                graphicspath <- file.path(pkgdir, "help", "figures")
             if (!silent) message(domain = NA)
         } else {
             ## As from R 2.15.3, give priority to a man dir.
@@ -342,15 +338,10 @@
                                 outputEncoding = outputEncoding,
                                 writeEncoding = FALSE,
                                 macros = macros)
-                if (attr(res, "hasFigures")) {
-                    lines <- readLines(outfilename)
-                    graphicspath <- file.path(mandir, "figures")
-                    writeLines(c(.file_path_to_LaTeX_graphicspath(graphicspath),
-                                 lines),
-                               outfilename)
-                    hasFigures <- TRUE
-                }
+                hasFigures <- hasFigures || attr(res, "hasFigures")
             }
+            if (hasFigures)
+                graphicspath <- file.path(mandir, "figures")
             if (!silent) message(domain = NA)
         }
     }
@@ -369,6 +360,10 @@
 
     if (asChapter)
         cat("\n\\chapter{The \\texttt{", basename(pkgdir), "} package}\n",
+            sep = "", file = outcon)
+
+    if (!is.null(graphicspath))
+        cat(.file_path_to_LaTeX_graphicspath(graphicspath), "\n",
             sep = "", file = outcon)
 
     ## Extract (LaTeX-escaped, ASCII) \name for sorting.
