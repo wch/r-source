@@ -288,11 +288,12 @@
                          domain = NA)
                 macros <- loadPkgRdMacros(pkgdir)
                 macros <- initialRdMacros(pkglist, macros)
-           } else {
+            } else {
                 ## (Be nice and find Rd files & system macros also when 'pkgdir' is
                 ## not a package root directory.)
-                files <- c(Sys.glob(file.path(pkgdir, "*.Rd")),
-                           Sys.glob(file.path(pkgdir, "*.rd")))
+                mandir <- pkgdir
+                files <- c(Sys.glob(file.path(mandir, "*.Rd")),
+                           Sys.glob(file.path(mandir, "*.rd")))
                 if (!length(files))
                     stop("this package does not have either a ", sQuote("latex"),
                          " or a (source) ", sQuote("man"), " directory",
@@ -343,7 +344,7 @@
                                 macros = macros)
                 if (attr(res, "hasFigures")) {
                     lines <- readLines(outfilename)
-                    graphicspath <- file.path(dirname(paths[i]), "figures")
+                    graphicspath <- file.path(mandir, "figures")
                     writeLines(c(.file_path_to_LaTeX_graphicspath(graphicspath),
                                  lines),
                                outfilename)
