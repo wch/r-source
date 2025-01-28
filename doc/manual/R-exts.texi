@@ -6569,6 +6569,51 @@ Another build for Windows which may be sufficiently compatible with
 @uref{https://github.com/mstorsjo/llvm-mingw}: this uses @code{libc++}.
 
 
+@node C23 changes
+@subsubsection C23 changes
+
+Thw C23 standard was finally published in Oct 2024, by which time had
+been widely implemented for a least a couple of years.  It will become
+the default on GCC 15, and @R{} will use default to it if available from @R{}
+4.5.0.
+
+Some of the more significant changes are
+@c https://en.cppreference.com/w/c/23
+
+@itemize
+
+@item
+@code{bool}, @code{true} and @code{false} become keywords and so can no
+longer be used as identifiers.
+
+These have been available as a boolean type since C99 by including the
+header @file{stdbool.h}.  Both that and C23@footnote{but C23 declares
+that header and the macro to be obsolescent.} set the macro
+@code{__bool_true_false_are_defined} to @code{1} so this type can be
+used in all versions of C supported by @R{}.
+
+@item
+The meaning of an empty argument list has been changed to mean zero
+arguments --- however for clarity @code{fun(void)} is still preferred by
+many code readers and supported by all C standards.  (Compilers may warn
+about an empty argument list in C23 mode.)
+
+@item
+@code{INIINITY} and @code{NAN} are available via
+header @file{float.h} and deprecated in @file{math.h}.
+
+@item
+POSIC functions @code{memccpy}, @code{strdup} and @code{strndup} are
+part of C23.
+
+@item
+There are decimal floating-point types and functions and extended
+support of binary floating-point functions, including binary
+floating-point constants.
+@end itemize
+
+
+
 @node Portable Fortran code
 @subsection Portable Fortran code
 

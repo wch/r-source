@@ -281,6 +281,20 @@
       \item The deprecated and seemingly never-used S-compatibility
       macros \code{F77_COM} and \code{F77_COMDECL} have been removed
       from header \file{R_ext/RS.h}.
+
+      \item Header \file{R_ext/Rboolean.h} now defines the type
+      \code{Rboolean} as an alias of the standard C type \code{bool}.
+
+      Currently this is done from C (not C++) only if
+      \code{__bool_true_false_are_defined} is defined, which it is in
+      C23 mode or if the C99 header \file{stdbool.h} is included.
+      
+      Before release \file{stdbool.h} will be included from C if C23 mode is
+      not supported, and C++ \code{bool} will be used if called from
+      C++.
+
+      The macro \code{_R_RBOOLEAN_IS_BOOL_} is defined where
+      \code{Rboolean} is implemented \emph{via} \code{bool}.
     }
   }
 
@@ -603,10 +617,6 @@
       \item \code{as.roman(x)} now should work platform independently,
       also for, e.g., \code{x = "IIIII"} (= V) and \code{x = "IIIIII"}
       (= VI).
-
-      \item \command{R CMD Rd2pdf} works again on an installed package
-      directory containing \LaTeX help (from option \option{--latex}),
-      thanks to a report by \I{Peter Ruckdeschel}.
     }
   }
 }
