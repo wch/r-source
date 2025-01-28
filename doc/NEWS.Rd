@@ -534,6 +534,9 @@
       \item \code{tools::Rd2latex()} now removes leading and trailing
       spaces from \verb{\alias} entries as documented, fixing indexing
       and linking hiccups in some PDF manuals.
+
+      \item \command{R CMD Rd2pdf} can now render the package manual from
+      a \option{--latex} installation also when the help contains figures.
     }
   }
 }

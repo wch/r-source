@@ -344,6 +344,9 @@
                 graphicspath <- file.path(mandir, "figures")
             if (!silent) message(domain = NA)
         }
+    } else {
+        graphicspath <- file.path(pkgdir, "help", "figures")
+        hasFigures <- dir.exists(graphicspath)
     }
 
     ## There are some restrictions, but the former "[[:alnum:]]+\\.tex$" was
@@ -362,7 +365,7 @@
         cat("\n\\chapter{The \\texttt{", basename(pkgdir), "} package}\n",
             sep = "", file = outcon)
 
-    if (!is.null(graphicspath))
+    if (hasFigures && !is.null(graphicspath))
         cat(.file_path_to_LaTeX_graphicspath(graphicspath), "\n",
             sep = "", file = outcon)
 
