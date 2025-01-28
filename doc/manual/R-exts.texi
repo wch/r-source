@@ -6572,10 +6572,10 @@ Another build for Windows which may be sufficiently compatible with
 @node C23 changes
 @subsubsection C23 changes
 
-Thw C23 standard was finally published in Oct 2024, by which time had
+Thw C23 standard was finally published in Oct 2024, by which time it had
 been widely implemented for a least a couple of years.  It will become
-the default on GCC 15, and @R{} will use default to it if available from @R{}
-4.5.0.
+the default of GCC 15, and @R{} will default to it if available from
+@R{} 4.5.0.
 
 Some of the more significant changes are
 @c https://en.cppreference.com/w/c/23
@@ -6603,7 +6603,7 @@ about an empty argument list in C23 mode.)
 header @file{float.h} and deprecated in @file{math.h}.
 
 @item
-POSIC functions @code{memccpy}, @code{strdup} and @code{strndup} are
+POSIX functions @code{memccpy}, @code{strdup} and @code{strndup} are
 part of C23.
 
 @item
