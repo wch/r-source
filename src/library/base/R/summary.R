@@ -76,10 +76,9 @@ format.summaryDefault <- function(x, digits = max(3L, getOption("digits") - 3L),
     }
     class(xx) <- class(x)[-1]
     m <- match("NA's", names(x), 0)
-    if(inherits(x, "Date") || inherits(x, "POSIXct")) {
-        if(length(a <- attr(x, "NAs")))
-            c(format(xx, digits=digits, ...), "NA's" = as.character(a))
-        else  format(xx, digits=digits)
+    if((iD <- inherits(x, "Date")) | (iP <- inherits(x, "POSIXct")) || inherits(x, "difftime")) {
+        c(format(xx, digits = if(iP) 0L else digits),
+          "NA's" = if(length(a <- attr(x, "NAs"))) as.character(a))
     } else if(m && !is.character(x))
         c(format(xx[-m], digits=digits, ...), "NA's" = as.character(xx[m]))
     else  format(xx,     digits=digits, ...)
@@ -93,14 +92,20 @@ print.summaryDefault <- function(x, digits = max(3L, getOption("digits") - 3L), 
       xx[finite] <- zapsmall(x[finite], digits = digits + zdigits)
     }
     class(xx) <- class(x)[-1] # for format
-    m <- match("NA's", names(xx), 0)
-    if(inherits(x, "Date") || inherits(x, "POSIXct")) {
-        xx <- if(length(a <- attr(x, "NAs")))
-            c(format(xx, digits=digits), "NA's" = as.character(a))
-        else  format(xx, digits=digits)
-        print(xx, digits=digits, ...)
+    if((iD <- inherits(x, "Date")) | (iP <- inherits(x, "POSIXct")) || inherits(x, "difftime")) {
+        no.q <- is.na(match("quote", ...names())) # no 'quote = *' in  `...`
+        if(no.q) quote <- TRUE
+        if(iP)
+            digits <- 0L
+        else if(!iD) { # have difftime
+            cat("Time differences in ", attr(x, "units"), "\n", sep = "")
+            if(no.q) quote <- FALSE
+        }
+        xx <- c(format(xx, digits = digits, with.units = FALSE),
+                "NA's" = if(length(a <- attr(x, "NAs"))) as.character(a))
+        print(xx, quote = quote, ...)
         return(invisible(x))
-    } else if(m && !is.character(x))
+    } else if((m <- match("NA's", names(xx), 0L)) && !is.character(x))
         xx <- c(format(xx[-m], digits=digits), "NA's" = as.character(xx[m]))
     print.table(xx, digits=digits, ...)
     invisible(x)

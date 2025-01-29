@@ -1782,6 +1782,24 @@ stopifnot(is.table(sdf), is.matrix(sdf), identical(dim(sdf), c(6L, 2L)))
 ## failed for a few days only
 
 
+## summary(<difftime>) and its print()ing
+xt <- .POSIXct(1737745992 + 2/7 + 10000 * (0:7))
+(dt <- diff(xt)) # |--> diff.POSIXt()  -- perfect
+(sdt <- summary(dt))
+stopifnot(exprs = {
+    inherits(dt,  "difftime")
+    inherits(sdt, "difftime")
+    inherits(diff(sdt), "difftime")
+             diff(sdt) == 0
+    inherits(sdt, "summaryDefault")
+    identical(capture.output(sdt), c(
+       "Time differences in hours",
+       "   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. ",
+       strrep('  2.778 ', 6)))
+})
+## summary(<difftime>) was not useful in R < 4.5.0
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

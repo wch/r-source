@@ -465,7 +465,7 @@ summary.POSIXct <- function(object, digits = 15L, ...)
     }
     .POSIXct(x,
              tz = attr(object, "tzone"),
-             cl = c("summaryDefault", "table", oldClass(object)))
+             cl = c("summaryDefault", oldClass(object)))
 }
 
 summary.POSIXlt <- function(object, digits = 15, ...)
@@ -769,10 +769,10 @@ as.double.difftime <- function(x, units = "auto", ...)
 
 as.data.frame.difftime <- as.data.frame.vector
 
-format.difftime <- function(x,...)
+format.difftime <- function(x,..., with.units = TRUE)
 {
     y <- if(length(x))
-        paste(format(unclass(x),...), units(x))
+        paste0(format(unclass(x),...), if(with.units) paste0(" ",units(x)))
     else
         character()
     names(y) <- names(x)
@@ -786,7 +786,7 @@ print.difftime <- function(x, digits = getOption("digits"), ...)
     else if(is.array(x) || length(x) > 1L) {
         cat("Time differences in ", attr(x, "units"), "\n", sep = "")
         y <- unclass(x); attr(y, "units") <- NULL
-    print(y, digits=digits, ...)
+        print(y, digits=digits, ...)
     }
     else
         cat("Time difference of ", format(unclass(x), digits = digits), " ",
@@ -952,8 +952,9 @@ function(object, digits = getOption("digits"), ...)
         x <- x[-m]
         attr(x, "NAs") <- NAs
     }
-    .difftime(x, attr(object, "units"), oldClass(object))
-}    
+    .difftime(x, attr(object, "units"),
+              c("summaryDefault", oldClass(object)))
+}
 
 ## ----- convenience functions -----
 

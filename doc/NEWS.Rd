@@ -182,6 +182,12 @@
       rounding.  The current default \code{zdigits = 4L} is somewhat
       experimental.  Specifying both \code{digits = *, zdigits = *} allows
       behaviour independent of the global \code{digits} option.
+
+      \item The \code{format()} method for \code{"difftime"} objects gets a
+      new back compatible option \code{with.units}.
+
+      \item A \code{summary()} method for \code{"difftime"} objects which
+      prints nicely, similar to those for \code{"Date"} and \code{"POSIXct"}.
     }
   }
 
@@ -192,7 +198,7 @@
       flag \option{--with-C23}.
 
       It is intended that this will become the default before release.
-      
+
       \item The minimum \command{autoconf} requirement for a maintainer
       build has been increased to \command{autoconf}\sspace{}2.72.
 
@@ -356,7 +362,7 @@
       \code{Rf_*()} as has been documented in
       \sQuote{Writing R Extensions} for a while, fixing \PR{18800}
       thanks to \I{Mikael Jagan} and \I{Suharto Anggono}.
-      
+
       \item \code{R_GetCurrentSrcref(skip)} now skips calls rather
       than \code{srcref}s, consistent with counting items in the
       \code{traceback()} display.  If \code{skip == NA_INTEGER},
@@ -519,13 +525,13 @@
       \item \code{summary(<stl>)} (which prints directly) finally gets the
       same \code{digits} default as the formatting printing of default
       \code{summary()} method results, and it is documented explicitly.
-      
+
       \item \code{options(show.error.locations = TRUE)} once
       again shows the most recent known location when an 
       error is reported.  Setting its value to \code{"bottom"} 
       is no longer supported.  Numerical values are converted
       to logical.
-      
+
       \item C API function \code{R_GetCurrentSrcref(skip)} now
       returns \code{srcref} entries correctly.  (Note that there
       is also a change to the interpretation of \code{skip}; 
