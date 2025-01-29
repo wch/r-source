@@ -61,13 +61,13 @@ for (encoding in c("UTF-8", "latin1"))
             stop("failed to render from source directory of ", sQuote(pkgname))
 
         stopifnot(dir.exists("lib") || dir.create("lib"))
-        install.packages(pkgdir, lib = "lib", repos = NULL,
+        install.packages(pkgdir, lib = "lib", repos = NULL, type = "source",
                          INSTALL_opts = INSTALL_opts)
         Rcmd(c("Rd2pdf", Rd2pdf_opts, file.path("lib", pkgname))) == 0L ||
             stop("failed to render from installed ", sQuote(pkgname))
     }
     stopifnot(dir.exists("lib_latex") || dir.create("lib_latex"))
-    install.packages(pkgdir, lib = "lib_latex", repos = NULL,
+    install.packages(pkgdir, lib = "lib_latex", repos = NULL, type = "source",
                      INSTALL_opts = c(INSTALL_opts, "--latex"))
     Rcmd(c("Rd2pdf", Rd2pdf_opts, file.path("lib_latex", pkgname))) == 0L ||
         stop("failed to render preconverted LaTeX help for ", sQuote(pkgname))
