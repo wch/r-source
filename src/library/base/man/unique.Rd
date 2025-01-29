@@ -79,6 +79,8 @@ unique(x, incomparables = FALSE, \dots)
   For a vector, an object of the same type of \code{x}, but with only
   one copy of each duplicated element.  No attributes are copied (so
   the result has no names).
+  The default method also keeps (number-like) date-time vectors of classes
+  \code{"\link{POSIXct}"}, \code{"\link{Date}"}, and \code{"\link{difftime}"}.
 
   For a data frame, a data frame is returned with the same columns but
   possibly fewer rows (and with row names from the first occurrences of

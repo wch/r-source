@@ -1800,6 +1800,12 @@ stopifnot(exprs = {
 ## summary(<difftime>) was not useful in R < 4.5.0
 
 
+## unique(<difftime>)
+(unidt <- unique(dt))
+stopifnot(inherits(unidt, "difftime"), length(unidt) <= 2) # '2': allow "inaccuracy"
+## unique() lost the class  in R < 4.5.0
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

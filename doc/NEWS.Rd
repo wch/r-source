@@ -188,6 +188,9 @@
 
       \item A \code{summary()} method for \code{"difftime"} objects which
       prints nicely, similar to those for \code{"Date"} and \code{"POSIXct"}.
+
+      \item \code{unique()}'s default method now also deals with
+      \code{"difftime"} objects.
     }
   }
 

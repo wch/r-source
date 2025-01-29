@@ -1,7 +1,7 @@
 #  File src/library/base/R/duplicated.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2018 The R Core Team
+#  Copyright (C) 1995-2025 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -120,9 +120,11 @@ function(x, incomparables = FALSE, fromLast = FALSE, nmax = NA, ...)
     }
     z <- .Internal(unique(x, incomparables, fromLast, nmax))
     if(inherits(x, "POSIXct"))
-        structure(z, class = class(x), tzone = attr(x, "tzone"))
+        .POSIXct(z, attr(x, "tzone"), class(x))
     else if(inherits(x, "Date"))
-        structure(z, class = class(x))
+        .Date(z, class(x))
+    else if(inherits(x, "difftime"))
+        .difftime(z, attr(x,"units"), class(x))
     else z
 }
 
