@@ -869,7 +869,8 @@ function(urls, nobody = FALSE, verbose = FALSE, pool = NULL,
         curl::handle_setopt(h, .list = opts)
         if(length(hdrs))
             curl::handle_setheaders(h, .list = hdrs)
-        if(grepl("^https?://github[.]com", u) &&
+        if((startsWith(u, "https://github.com/") ||
+            (u == "https://github.com")) &&
            nzchar(a <- Sys.getenv("GITHUB_PAT", ""))) {
             curl::handle_setheaders(h, "Authorization" = paste("token", a))
         }
@@ -925,7 +926,8 @@ function(u, verbose = FALSE, opts = NULL, hdrs = NULL)
     curl::handle_setopt(h, .list = opts)
     if(length(hdrs))
         curl::handle_setheaders(h, .list = hdrs)
-    if(startsWith(u, "https://github.com") &&
+    if((startsWith(u, "https://github.com/") ||
+            (u == "https://github.com")) &&
        nzchar(a <- Sys.getenv("GITHUB_PAT", "")))
         curl::handle_setheaders(h, "Authorization" = paste("token", a))
     
