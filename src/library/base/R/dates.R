@@ -141,7 +141,7 @@ summary.Date <- function(object, digits = 12L, ...)
         x <- x[-m]
         attr(x, "NAs") <- NAs
     }
-    .Date(x, c("summaryDefault", "table", oldClass(object)))
+    .Date(x, c("summaryDefault", oldClass(object)))
 }
 
 `+.Date` <- function(e1, e2)
