@@ -1,6 +1,6 @@
 % File src/library/tools/man/texi2dvi.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2016 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{texi2dvi}
@@ -34,7 +34,7 @@ texi2pdf(file, clean = FALSE, quiet = TRUE,
     otherwise emulate the script with \code{system2} calls (which
     can be selected by the value \code{"emulation"}).  See also
     \sQuote{Details}.} 
-  \item{texinputs}{\code{NULL} or a character vector of paths to add to
+  \item{texinputs}{\code{NULL} or a character vector of paths to prepend to
     the LaTeX and BibTeX input search paths.}
   \item{index}{logical: should indices be prepared?}
 }
@@ -42,15 +42,15 @@ texi2pdf(file, clean = FALSE, quiet = TRUE,
   \code{texi2pdf} is a wrapper for the common case of
   \code{texi2dvi(pdf = TRUE)}.
 
-  Despite the name, this is used in \R to compile LaTeX files,
+  Despite the name, this is used in \R to compile \LaTeX files,
   specifically those generated from vignettes and by the
   \code{\link{Rd2pdf}} script (used for package reference manuals).  It
   ensures that the \file{\var{\link{R_HOME}}/share/texmf} directory is
   in the \env{TEXINPUTS} path, so \R style files such as \file{Sweave.sty}
   and \file{Rd.sty} will be found.  The TeX search path used is first the
+  elements of argument \code{texinputs}, then the
   existing \env{TEXINPUTS} setting (or the current directory if unset),
-  then elements of argument \code{texinputs}, then
-  \file{\var{R_HOME}/share/texmf} and finally the default path.
+  then \file{\var{R_HOME}/share/texmf} and finally the system paths.
   Analogous changes are made to \env{BIBINPUTS} and \env{BSTINPUTS}
   settings.
 

@@ -1,7 +1,7 @@
 #  File src/library/tools/R/utils.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2024 The R Core Team
+#  Copyright (C) 1995-2025 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -314,41 +314,34 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
         } # else the provided one should work
     }
 
-    envSep <- .Platform$path.sep
-    texinputs0 <- texinputs
-    Rtexmf <- file.path(R.home("share"), "texmf")
-    Rtexinputs <- file.path(Rtexmf, "tex", "latex")
-    ## "" forces use of default paths.
-    texinputs <- paste(c(texinputs0, Rtexinputs, ""),
-                       collapse = envSep)
+    paths2env <- function(x) paste(x, collapse = .Platform$path.sep)
     ## not clear if this is needed, but works
     if(.Platform$OS.type == "windows")
         texinputs <- gsub("\\", "/", texinputs, fixed = TRUE)
-    Rbibinputs <- file.path(Rtexmf, "bibtex", "bib")
-    bibinputs <- paste(c(texinputs0, Rbibinputs, ""),
-                       collapse = envSep)
-    Rbstinputs <- file.path(Rtexmf, "bibtex", "bst")
-    bstinputs <- paste(c(texinputs0, Rbstinputs, ""),
-                       collapse = envSep)
+    Rtexmf <- file.path(R.home("share"), "texmf", fsep = "/")
+    Rtexinputs <- file.path(Rtexmf, "tex", "latex", fsep = "/")
+    Rbibinputs <- file.path(Rtexmf, "bibtex", "bib", fsep = "/")
+    Rbstinputs <- file.path(Rtexmf, "bibtex", "bst", fsep = "/")
 
     otexinputs <- Sys.getenv("TEXINPUTS", unset = NA_character_)
     if(is.na(otexinputs)) {
         on.exit(Sys.unsetenv("TEXINPUTS"))
         otexinputs <- "."
     } else on.exit(Sys.setenv(TEXINPUTS = otexinputs))
-    Sys.setenv(TEXINPUTS = paste(otexinputs, texinputs, sep = envSep))
+    ## "" below represents system paths
+    Sys.setenv(TEXINPUTS = paths2env(c(texinputs, otexinputs, Rtexinputs, "")))
     obibinputs <- Sys.getenv("BIBINPUTS", unset = NA_character_)
     if(is.na(obibinputs)) {
         on.exit(Sys.unsetenv("BIBINPUTS"), add = TRUE)
         obibinputs <- "."
     } else on.exit(Sys.setenv(BIBINPUTS = obibinputs, add = TRUE))
-    Sys.setenv(BIBINPUTS = paste(obibinputs, bibinputs, sep = envSep))
+    Sys.setenv(BIBINPUTS = paths2env(c(texinputs, obibinputs, Rbibinputs, "")))
     obstinputs <- Sys.getenv("BSTINPUTS", unset = NA_character_)
     if(is.na(obstinputs)) {
         on.exit(Sys.unsetenv("BSTINPUTS"), add = TRUE)
         obstinputs <- "."
     } else on.exit(Sys.setenv(BSTINPUTS = obstinputs), add = TRUE)
-    Sys.setenv(BSTINPUTS = paste(obstinputs, bstinputs, sep = envSep))
+    Sys.setenv(BSTINPUTS = paths2env(c(texinputs, obstinputs, Rbstinputs, "")))
 
     if(index && nzchar(texi2dvi) && .Platform$OS.type != "windows") {
         ## switch off the use of texindy in texi2dvi >= 1.157
@@ -454,11 +447,11 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
         ## and set the path to R's style files.
         ## -I works in MiKTeX >= 2.4, at least
         ## http://docs.miktex.org/manual/texify.html
+        ## FIXME: is -I still needed? It documents EnvVars since at least 2016.
         ver <- system(paste(shQuote(texi2dvi), "--version"), intern = TRUE)
         if(length(grep("MiKTeX", ver[1L]))) {
             ## AFAICS need separate -I for each element of texinputs.
-            texinputs <- c(texinputs0, Rtexinputs, Rbstinputs)
-            texinputs <- gsub("\\", "/", texinputs, fixed = TRUE)
+            texinputs <- c(texinputs, Rtexinputs, Rbstinputs)
             paths <- paste ("-I", shQuote(texinputs))
             extra <- "--max-iterations=20"
             extra <- paste(extra, paste(paths, collapse = " "))

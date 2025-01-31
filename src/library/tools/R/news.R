@@ -1,7 +1,7 @@
 #  File src/library/tools/R/news.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2024 The R Core Team
+#  Copyright (C) 1995-2025 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -376,7 +376,9 @@ function(f, pdf_file)
     on.exit(setwd(od))
     ## avoid broken texi2pdf scripts: this is simple LaTeX
     ## and emulation suffices
-    texi2pdf("NEWS.tex", quiet = TRUE, texi2dvi = "emulation")
+    texi2pdf("NEWS.tex", quiet = TRUE, texi2dvi = "emulation",
+             ## ensure _this_ R's Rd.sty is found first:
+             texinputs = file.path(R.home("share"), "texmf", "tex", "latex"))
     setwd(od); on.exit()
     invisible(file.copy(file.path(dirname(f3), "NEWS.pdf"),
                         pdf_file, overwrite = TRUE))

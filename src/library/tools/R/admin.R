@@ -1,7 +1,7 @@
 #  File src/library/tools/R/admin.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2024 The R Core Team
+#  Copyright (C) 1995-2025 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -743,10 +743,12 @@ function(dir, outDir, keep.source = TRUE)
         })
         ## In case of an error, do not clean up: should we point to
         ## buildDir for possible inspection of results/problems?
-        ## We need to ensure that the src vignettes dir is in (TEX|BIB)INPUTS.
+        ## We need to ensure that the src vignettes dir is in (TEX|BIB)INPUTS
+        ## and this R's texmf is found (system TEXINPUTS could list another R).
         if (vignette_is_tex(output)) {
             tryCatch({
-                texi2pdf(file = output, quiet = TRUE, texinputs = vigns$dir)
+                texi2pdf(file = output, quiet = TRUE,
+                         texinputs = c(vigns$dir, paste0(R.home("share"), "/texmf//")))
                 output <- find_vignette_product(name, by = "texi2pdf", engine = engine)
             }, error = function(e) {
                 stop(gettextf("compiling TeX file %s failed with message:\n%s",
