@@ -29,25 +29,12 @@
 #undef FALSE
 #undef TRUE
 
-/* This can eventually be simplified to
-#if (!defined __cplusplus) && !(defined __STDC_VERSION__ && __STDC_VERSION__ > 201710L)
-# include <stdbool.h>
-#endif
 
-#ifdef  __cplusplus
-extern "C" {
-typedef bool Rboolean;
-#define FALSE false
-#define TRUE true
-}
-#define _R_RBOOLEAN_IS_BOOL_ 1
-#endif
-*/
 
 #ifdef  __cplusplus
 
 extern "C" {
-    /* once cp11 is soerted
+    /* once cpp11 is sorted
 typedef bool Rboolean;
 #define FALSE false
 #define TRUE true
