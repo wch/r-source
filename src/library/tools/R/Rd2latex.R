@@ -61,7 +61,7 @@ latex_canonical_encoding  <- function(encoding)
 Rd2latex <- function(Rd, out = "", defines = .Platform$OS.type,
                      stages = "render",
 		     outputEncoding = "UTF-8", fragment = FALSE, ...,
-                     writeEncoding = TRUE,
+                     writeEncoding = outputEncoding != "UTF-8",
 		     concordance = FALSE)
 {
     encode_warn <- FALSE

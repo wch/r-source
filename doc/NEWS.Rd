@@ -425,6 +425,10 @@
       or package manuals using \command{R CMD Rd2pdf}, it is ensured
       that this \R's \file{Rd.sty} takes precedence over any other
       (incompatible) versions in default \dQuote{texmf trees}.
+
+      \item \code{tools::Rd2latex()} no longer outputs an
+      \samp{\\inputencoding{utf8}} line by default;
+      such a declaration is obsolete since \LaTeX 2018-04-01.
     }
   }
 

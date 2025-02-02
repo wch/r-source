@@ -1,6 +1,6 @@
 % File src/library/tools/man/Rd2HTML.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2008-2022 R Core Team
+% Copyright 2008-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Rd2HTML}
@@ -34,7 +34,7 @@ Rd2txt(Rd, out = "", package = "", defines = .Platform$OS.type,
 
 Rd2latex(Rd, out = "", defines = .Platform$OS.type,
          stages = "render", outputEncoding = "UTF-8",
-         fragment = FALSE, ..., writeEncoding = TRUE,
+         fragment = FALSE, ..., writeEncoding = outputEncoding != "UTF-8",
          concordance = FALSE)
 
 Rd2ex(Rd, out = "", defines = .Platform$OS.type,
@@ -75,7 +75,7 @@ Rd2ex(Rd, out = "", defines = .Platform$OS.type,
     standalone HTML file. If \code{FALSE}, the header and footer are
     omitted, so that the output can be combined with other fragments.
   }
-  \item{hooks}{A list of functions controlling details of
+  \item{hooks}{a list of functions controlling details of
     output. Currently the only component used is \code{pkg_href}, which
     is used by \code{pkg2HTML} to determine the output HTML file path
     given a package name as input. }
@@ -86,15 +86,16 @@ Rd2ex(Rd, out = "", defines = .Platform$OS.type,
       examples section is wrapped inside a \code{rcode} block. }
   \item{Links, Links2}{\code{NULL} or a named (by topics) character vector of
     links, as returned by \code{\link{findHTMLlinks}}.}
-  \item{options}{An optional named list of options to pass to
+  \item{options}{an optional named list of options to pass to
     \code{\link{Rd2txt_options}}.}
   \item{...}{ additional parameters to pass to \code{\link{parse_Rd}} when
     \code{Rd} is a filename. }
-  \item{writeEncoding}{should \verb{\inputencoding} lines be written in
-      the file for non-ASCII encodings?}
-  \item{commentDontrun}{should \verb{\dontrun} sections be commented
+  \item{writeEncoding}{logical: should an \verb{\inputencoding} line be written
+      for non-ASCII encodings? \LaTeX release 2018-04-01 and later
+      default to UTF-8; the declaration is obsolete in that case.}
+  \item{commentDontrun}{logical: should \verb{\dontrun} sections be commented
       out?}
-  \item{commentDonttest}{should \verb{\donttest} sections be commented out?}
+  \item{commentDonttest}{logical: should \verb{\donttest} sections be commented out?}
 }
 \details{
   These functions convert help documents: \code{Rd2HTML} produces HTML,
