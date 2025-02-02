@@ -917,9 +917,12 @@ function(pkgdir, outfile, title, silent = FALSE,
     if (!quiet)  cat("Creating", out_ext, "output from LaTeX ...\n")
     setwd(build_dir)
 
-    res <- try(texi2pdf('Rd2.tex', quiet = quiet, index = index))
+    ## R CMD _appends_ R's texmf tree to environmental TEXINPUTS, which could
+    ## list another R version, so ensure Rd2pdf finds _this_ R's Rd.sty
+    texinputs <- file.path(R.home("share"), "texmf", "tex", "latex")
+    res <- try(texi2pdf('Rd2.tex', quiet = quiet, index = index, texinputs = texinputs))
     if(inherits(res, "try-error")) {
-        res <- try(texi2pdf('Rd2.tex', quiet = quiet, index = index))
+        res <- try(texi2pdf('Rd2.tex', quiet = quiet, index = index, texinputs = texinputs))
         if(inherits(res, "try-error")) {
             message("Error in running tools::texi2pdf()")
             do_cleanup()

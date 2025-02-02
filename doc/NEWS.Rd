@@ -421,8 +421,9 @@
 
       \item \code{tools::texi2pdf(..., texinputs=\var{paths})} now
       \emph{pre}pends the specified \var{paths} to \env{TEXINPUTS}.
-      When building \R (\file{doc/NEWS.pdf} and base vignettes), this
-      now ensures that its own \file{Rd.sty} takes precedence over
+      When building \R itself (\file{doc/NEWS.pdf} and base vignettes)
+      or package manuals using \command{R CMD Rd2pdf}, it is ensured
+      that this \R's \file{Rd.sty} takes precedence over any other
       (incompatible) versions in default \dQuote{texmf trees}.
     }
   }
