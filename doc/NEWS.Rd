@@ -202,7 +202,7 @@
 
       It is intended that this will become the default before release.
       Partial C23 support has been available since GCC\sspace{}9,  and
-      that in  GCC\space{}12 has been tested.
+      that in  GCC\sspace{}12 has been tested.
       % Fedora 36 had 12, 38 had 13, 40/4§ have 14 and 42 will haav 15.
       % RHEL 8 has 9 available, RHEL 9 has 11.
       % Ubuntu 22.04 defaulted to 11.
@@ -298,15 +298,11 @@
       from header \file{R_ext/RS.h}.
 
       \item Header \file{R_ext/Rboolean.h} now defines the type
-      \code{Rboolean} as an alias of the standard C type \code{bool}.
-
-      Currently this is done from C (not C++) only if
-      \code{__bool_true_false_are_defined} is defined, which it is in
-      C23 mode or if the C99 header \file{stdbool.h} is included.
-      
-      Before release \file{stdbool.h} will be included from C if C23 mode is
-      not supported, and C++ \code{bool} will be used if called from
-      C++.
+      \code{Rboolean} as an alias of the standard C type \code{bool} in
+      C23 mode.
+     
+      Before release C++ \code{bool} will be used if the header is
+      included from C++.
 
       The macro \code{_R_RBOOLEAN_IS_BOOL_} is defined where
       \code{Rboolean} is implemented \emph{via} \code{bool}.
