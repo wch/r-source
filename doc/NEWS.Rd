@@ -201,6 +201,12 @@
       flag \option{--with-C23}.
 
       It is intended that this will become the default before release.
+      Partial C23 support has been available since GCC\sspace{}9,  and
+      that in  GCC\space{}12 has been tested.
+      % Fedora 36 had 12, 38 had 13, 40/4§ have 14 and 42 will haav 15.
+      % RHEL 8 has 9 available, RHEL 9 has 11.
+      % Ubuntu 22.04 defaulted to 11.
+      % Debian stable (12, bookworm) has 12.
 
       \item The minimum \command{autoconf} requirement for a maintainer
       build has been increased to \command{autoconf}\sspace{}2.72.
