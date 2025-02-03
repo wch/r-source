@@ -8121,7 +8121,11 @@ else case e in #(
 # error "Compiler does not advertise ISO C conformance"
 #endif
 
+// Most new features have feature tests. but bool type is fundamental.
+
 int main(void) {
+     bool x = true;
+
      return 0;
 }
 
@@ -8169,7 +8173,11 @@ else case e in #(
 # error "Compiler does not advertise ISO C conformance"
 #endif
 
+// Most new features have feature tests. but bool type is fundamental.
+
 int main(void) {
+     bool x = true;
+
      return 0;
 }
 
@@ -8201,8 +8209,15 @@ fi
 
 
 if test x$use_C23 = xyes; then
-  CC=${CC23}
-  CFLAGS=${C23FLAGS}
+  if test x${r_cv_C23} = xyes; then
+    CC=${CC23}
+    CFLAGS=${C23FLAGS}
+  else
+    CC=${CC_save}
+    CFLAGS=${CFLAGS_save}
+    { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: C23 support is unavailable" >&5
+printf "%s\n" "$as_me: WARNING: C23 support is unavailable" >&2;}
+  fi
 else
 CC=${CC_save}
 CFLAGS=${CFLAGS_save}
@@ -27514,7 +27529,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_verb"
-(eval echo $as_me:27517: \"$ac_link\") >&5
+(eval echo $as_me:27532: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -27592,7 +27607,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_cv_prog_c_v"
-(eval echo $as_me:27595: \"$ac_link\") >&5
+(eval echo $as_me:27610: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS

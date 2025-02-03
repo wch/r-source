@@ -777,8 +777,14 @@ AC_SUBST(CC23)
 AC_SUBST(C23FLAGS)
 
 if test x$use_C23 = xyes; then
-  CC=${CC23}
-  CFLAGS=${C23FLAGS}
+  if test x${r_cv_C23} = xyes; then
+    CC=${CC23}
+    CFLAGS=${C23FLAGS}
+  else
+    CC=${CC_save}
+    CFLAGS=${CFLAGS_save}
+    AC_MSG_WARN([C23 support is unavailable])
+  fi
 else
 CC=${CC_save}
 CFLAGS=${CFLAGS_save}
