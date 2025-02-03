@@ -497,7 +497,8 @@ by @command{configure}) or @code{beramono}, which replace the Courier
 monospaced font by @I{Inconsolata} or @I{Bera Sans Mono} respectively.  (You
 will need the @LaTeX{} package @pkg{inconsolata}@footnote{Instructions
 on how to install the latest version are at
-@uref{https://www.ctan.org/tex-archive/fonts/inconsolata/}.} or
+@uref{https://www.ctan.org/tex-archive/fonts/inconsolata/}.
+TeX Live bundles @pkg{inconsolata} in @pkg{collection-fontsextra}.} or
 @pkg{bera} installed.)
 
 Note that in most @LaTeX{} installations this will not actually use the
@@ -508,11 +509,11 @@ This needs @LaTeX{} packages @pkg{times}, @pkg{helvetic} and (if used)
 @pkg{courier} installed.
 
 @item lm
-Using the @emph{Latin Modern} fonts.  These are not often installed as
-part of a @TeX{} distribution, but can obtained from
-@uref{https://www.ctan.org/tex-archive/fonts/ps-type1/lm/} and
-mirrors.  This uses fonts rather similar to Computer Modern, but is not
-so good on-screen as @code{times}.
+Using the @emph{Latin Modern} (@emph{aka} @pkg{lmodern}) fonts,
+usually installed even in basic @TeX{} distributions.
+@c E.g.: scheme-basic / collection-latex will have it installed.
+This uses fonts rather similar to Computer Modern, but is not
+so good on-screen as @code{times} and produces larger PDF files.
 
 @c @item cm-super
 @c Using type-1 versions of the Computer Modern fonts by Vladimir Volovich.
@@ -3242,11 +3243,10 @@ and @pkg{helvetic} and also @pkg{amsfonts}) and others such
 as @pkg{hyperref} and @pkg{inconsolata} are desirable (and without them
 you may need to change @R{}'s defaults: @pxref{Making the manuals}).
 Note that package @pkg{hyperref} (currently) requires packages
-@pkg{kvoptions}, @pkg{ltxcmds} and @pkg{refcount},
+@pkg{etoolbox}, @pkg{kvoptions}, @pkg{ltxcmds} and @pkg{refcount},
 and @pkg{inconsolata} requires @pkg{xkeyval}.
-Building the base vignettes requires @pkg{fancyvrb},
-@pkg{natbib}, @pkg{parskip} (which currently requires @pkg{etoolbox})
-and @pkg{listings}.
+Building the base vignettes requires @pkg{hyperref}, @pkg{fancyvrb},
+@pkg{natbib}, @pkg{parskip} and @pkg{listings}.
 For distributions
 based on TeX Live the simplest approach may be to install collections
 @pkg{collection-latex}, @pkg{collection-fontsrecommended},
