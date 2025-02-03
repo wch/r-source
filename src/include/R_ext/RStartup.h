@@ -73,8 +73,7 @@ typedef struct
     R_SIZE_T max_vsize;
     R_SIZE_T max_nsize;
     R_SIZE_T ppsize;
-    // This used to be Rboolean, but that is not guaraneteed to have >= 16 bits
-    int NoRenviron : 16;
+    Rboolean NoRenviron : 16;
 	/* RstartVersion has been added in R 4.2.0. Earlier, NoRenviron was an
 	   int (normally 32-bit like Rboolean), so on most machines the
 	   version would become 0 when setting NoRenviron to FALSE in
