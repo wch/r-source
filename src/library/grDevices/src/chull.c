@@ -433,7 +433,6 @@ SEXP chull(SEXP x)
     for (int i = 0; i < n; i++) in[i] = i+1;
     int *ih = (int*)R_alloc(4*n, sizeof(int));
     x = PROTECT(coerceVector(x, REALSXP));
-    if(TYPEOF(x) != REALSXP) error("'x' is not numeric");
     in_chull(&n, REAL(x), &n, in, ih+n, ih+2*n, ih, &nh, ih+3*n);
     SEXP ans = allocVector(INTSXP, nh);
     int *ians = INTEGER(ans);

@@ -151,8 +151,6 @@ attribute_hidden SEXP do_numToInts(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     checkArity(op, args);
     SEXP x = PROTECT(coerceVector(CAR(args), REALSXP));
-    if (!isReal(x))
-	error(_("argument 'x' must be a numeric vector"));
     SEXP ans = PROTECT(allocVector(INTSXP, 2*XLENGTH(x)));
     R_xlen_t i, j = 0;
     double *x_ = REAL(x);
@@ -169,13 +167,11 @@ attribute_hidden SEXP do_numToInts(SEXP call, SEXP op, SEXP args, SEXP env)
     UNPROTECT(2);
     return ans;
 }
-// split "real", i.e. = double = 64-bitd, to bits (<==> do_intToBits( do_numToInts(..) .. ))
+// split "real", i.e. = double = 64-bit, to bits (<==> do_intToBits( do_numToInts(..) .. ))
 attribute_hidden SEXP do_numToBits(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     checkArity(op, args);
     SEXP x = PROTECT(coerceVector(CAR(args), REALSXP));
-    if (!isReal(x))
-	error(_("argument 'x' must be a numeric vector"));
     SEXP ans = PROTECT(allocVector(RAWSXP, 64*XLENGTH(x)));
     R_xlen_t i, j = 0;
     double *x_ = REAL(x);

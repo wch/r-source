@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2005-2024   The R Core Team.
+ *  Copyright (C) 2005-2025   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -382,16 +382,15 @@ SEXP port_nlminb(SEXP fn, SEXP gr, SEXP hs, SEXP rho,
     if (isNull(rho)) {
 	error(_("use of NULL environment is defunct"));
 	rho = R_BaseEnv;
-    } else
-    if (!isEnvironment(rho))
+    } else if (!isEnvironment(rho))
 	error(_("'rho' must be an environment"));
     if (!isReal(d) || n < 1)
-	error(_("'d' must be a nonempty numeric vector"));
+	error(_("'d' must be a nonempty numeric (double) vector"));
     if (hs != R_NilValue && gr == R_NilValue)
 	error(_("When Hessian defined must also have gradient defined"));
     if (R_NilValue == (xpt = findVarInFrame(rho, dot_par_symbol)) ||
 	!isReal(xpt) || LENGTH(xpt) != n)
-	error(_("environment 'rho' must contain a numeric vector '.par' of length %d"),
+	error(_("environment 'rho' must contain a numeric (double) vector '.par' of length %d"),
 	      n);
     /* We are going to alter .par, so must duplicate it */
     defineVar(dot_par_symbol, duplicate(xpt), rho);
@@ -405,7 +404,7 @@ SEXP port_nlminb(SEXP fn, SEXP gr, SEXP hs, SEXP rho,
 		b[2*i] = rl[i];
 		b[2*i + 1] = ru[i];
 	    }
-	} else error(_("'lower' and 'upper' must be numeric vectors"));
+	} else error(_("'lower' and 'upper' must be numeric (double) vectors"));
     }
     if (gr != R_NilValue) {
 	g = (double *)R_alloc(n, sizeof(double));
@@ -552,7 +551,7 @@ SEXP port_nlsb(SEXP m, SEXP d, SEXP gg, SEXP iv, SEXP v,
 	*rd = (double *)R_alloc(nd, sizeof(double));
 
     if (!isReal(d) || n < 1)
-	error(_("'d' must be a nonempty numeric vector"));
+	error(_("'d' must be a nonempty numeric (double) vector"));
     if(!isNewList(m)) error(_("m must be a list"));
 				/* Initialize parameter vector */
     getPars = PROTECT(lang1(getFunc(m, "getPars", "m")));
