@@ -306,6 +306,8 @@
 
       The macro \code{_R_RBOOLEAN_IS_BOOL_} is defined where
       \code{Rboolean} is implemented \emph{via} \code{bool}.
+
+      [Deferred pending further testing.]
     }
   }
 
