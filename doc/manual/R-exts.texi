@@ -5894,14 +5894,17 @@ standards and the @code{<tr1/@var{name}>} headers are not supplied by some of
 the compilers used for @R{}, including on macOS.  (Use the C++11
 versions instead.)
 
-@c Centos had 10 years of support, for Centos 7 expiring in June 2024.
 @c RHEL has 10 years, with more extended support, up to 4 years.
 @c Ubuntu LTS has 5 years' general support and 8 extended support.
 @c Ubuntu 16.04 (EOL 2021-04) came with GCC 5.4 but 7 was available
 @c Ubuntu 18.04 came with GCC 7.3 or 7.4.
-@c RHEL/Centos 6 came with GCC 4.4.
-@c RHEL/Centos 7 came with GCC 4.8, with 4.4 available.
-@c RHEL/Centos 8 has GCC 8.
+@c Ubuntu 20.04 came with GCC 9.4
+@c Ubuntu 22.04 came with GCC 11
+@c RHEL 6 came with GCC 4.4.
+@c RHEL 7 came with GCC 4.8, with 4.4 available.
+@c RHEL 8 has GCC 8 with 9 available
+@c RHEL 9 has GCC 11
+@c All versions of Cwntos is now EOL.
 A common error is to assume recent versions of compilers or OSes.  In
 production environments `long term support' versions of OSes may be in
 use for many years,@footnote{Ubuntu provides 5 years of support (but

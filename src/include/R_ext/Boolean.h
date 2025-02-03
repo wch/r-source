@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000, 2001 The R Core Team.
+ *  Copyright (C) 2000, 2025 The R Core Team.
  *
  *  This header file is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -29,13 +29,22 @@
 #undef FALSE
 #undef TRUE
 
-#ifdef  __cplusplus
+// Fer now, only when the compiler claims to be a C23 compiler.
+
+#if defined __STDC_VERSION__ && __STDC_VERSION__ > 201710L
+typedef bool Rboolean;
+# define FALSE false
+# define TRUE true
+# define _R_RBOOLEAN_IS_BOOL_ 1
+#else
+#  ifdef  __cplusplus
 extern "C" {
-#endif
+# endif
 typedef enum { FALSE = 0, TRUE /*, MAYBE */ } Rboolean;
 
-#ifdef  __cplusplus
+# ifdef  __cplusplus
 }
+# endif
 #endif
 
 #endif /* R_EXT_BOOLEAN_H_ */
