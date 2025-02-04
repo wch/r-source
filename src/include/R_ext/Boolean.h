@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000, 2001 The R Core Team.
+ *  Copyright (C) 2000, 2025 The R Core Team.
  *
  *  This header file is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -32,8 +32,7 @@
 #ifdef  __cplusplus
 extern "C" {
 #endif
-typedef enum { FALSE = 0, TRUE /*, MAYBE */ } Rboolean;
-
+    typedef enum { FALSE = 0, TRUE } Rboolean;  // so NOT NA
 #ifdef  __cplusplus
 }
 #endif
