@@ -296,18 +296,6 @@
       \item The deprecated and seemingly never-used S-compatibility
       macros \code{F77_COM} and \code{F77_COMDECL} have been removed
       from header \file{R_ext/RS.h}.
-
-      \item Header \file{R_ext/Rboolean.h} now defines the type
-      \code{Rboolean} as an alias of the standard C type \code{bool} in
-      C23 mode.
-     
-      Before release C++ \code{bool} will be used if the header is
-      included from C++.
-
-      The macro \code{_R_RBOOLEAN_IS_BOOL_} is defined where
-      \code{Rboolean} is implemented \emph{via} \code{bool}.
-
-      [Deferred pending further testing.]
     }
   }
 
