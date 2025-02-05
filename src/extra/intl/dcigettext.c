@@ -123,7 +123,9 @@ extern int errno;
 #endif
 
 /* Alignment of types.  */
-#if defined __GNUC__ && __GNUC__ >= 2
+// R change: alignof is a keyword in C23
+#if defined __STDC_VERSION__ && __STDC_VERSION__ > 201710L
+#elif defined __GNUC__ && __GNUC__ >= 2
 # define alignof(TYPE) __alignof__ (TYPE)
 #else
 /* R change: was (int) */
