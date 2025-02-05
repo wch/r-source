@@ -16316,6 +16316,8 @@ constants @code{TRUE} and @code{FALSE} of type @code{Rboolean} in
 order to provide a way of using ``logical'' variables in C consistently.
 This can conflict with other software: for example it conflicts with the
 headers in @I{IJG}'s @code{jpeg-9} (but not earlier versions).
+@code{Rboolean} cannot represent @code{NA} and hence cannot be used for
+elements of R logical vectors.
 
 
 @node Optimization
