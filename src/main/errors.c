@@ -2361,7 +2361,6 @@ R_GetCurrentSrcref(int skip)
     }
     	
     /* If skip = NA, try current active srcref first. */
-    
     if (keep_looking) {
     	srcref = R_getCurrentSrcref();
         if (srcref && !isNull(srcref))
@@ -2381,9 +2380,10 @@ R_GetCurrentSrcref(int skip)
     /* Now get the next srcref.  If skip was not NA, don't
        keep looking. */
     do {
+	if (!c) break;
         srcref = fixBCSrcref(c->srcref, c);
         c = c->nextcontext;
-    } while (keep_looking && c && !(srcref && !isNull(srcref)));
+    } while (keep_looking && !(srcref && !isNull(srcref)));
     if (!srcref)
 	srcref = R_NilValue;
     return srcref;
