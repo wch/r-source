@@ -2347,7 +2347,7 @@ SEXP
 R_GetCurrentSrcref(int skip)
 {
     RCNTXT *c = R_GlobalContext;
-    SEXP srcref;
+    SEXP srcref = NULL;
     int keep_looking = skip == NA_INTEGER;
     if (keep_looking) skip = 0;
     if (skip < 0) { /* to count up from the bottom, we need to count them all first */
