@@ -260,7 +260,7 @@
       \item Source installs now report the package version in the log.
 
       \item There is preliminary support for C++26 in GCC >= 14, Apple
-      clang >= 16 and LLVM clang >= 17.
+      clang >= 16 and \I{LLVM} clang >= 17.
     }
   }
 
@@ -415,7 +415,7 @@
       When building \R itself (\file{doc/NEWS.pdf} and base vignettes)
       or package manuals using \command{R CMD Rd2pdf}, it is ensured
       that this \R's \file{Rd.sty} takes precedence over any other
-      (incompatible) versions in default \dQuote{texmf trees}.
+      (incompatible) versions in default \I{\dQuote{texmf trees}}.
 
       \item \code{tools::Rd2latex()} no longer outputs an
       \samp{\\inputencoding{utf8}} line by default;

@@ -6575,7 +6575,7 @@ Another build for Windows which may be sufficiently compatible with
 @node C23 changes
 @subsubsection C23 changes
 
-Thw C23 standard was finally published in Oct 2024, by which time it had
+The C23 standard was finally published in Oct 2024, by which time it had
 been widely implemented for a least a couple of years.  It will become
 the default of GCC 15, and @R{} will default to it if available from
 @R{} 4.5.0.
