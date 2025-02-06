@@ -444,17 +444,15 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
         extra <- ""
 
         ## look for MiKTeX (which this almost certainly is)
-        ## and set the path to R's style files.
-        ## -I works in MiKTeX >= 2.4, at least
         ## http://docs.miktex.org/manual/texify.html
-        ## FIXME: is -I still needed? It documents EnvVars since at least 2016.
         ver <- system(paste(shQuote(texi2dvi), "--version"), intern = TRUE)
         if(length(grep("MiKTeX", ver[1L]))) {
-            ## AFAICS need separate -I for each element of texinputs.
-            texinputs <- c(texinputs, Rtexinputs, Rbstinputs)
-            paths <- paste ("-I", shQuote(texinputs))
             extra <- "--max-iterations=20"
-            extra <- paste(extra, paste(paths, collapse = " "))
+            ## setting TEXINPUTS via -I is long obsolete, EnvVars are respected
+            ## (<https://docs.miktex.org/manual/localadditions.html>)
+            ##   texinputs <- c(texinputs, Rtexinputs, Rbstinputs)
+            ##   paths <- paste ("-I", shQuote(texinputs))
+            ##   extra <- paste(extra, paste(paths, collapse = " "))
         }
         ## 'file' could be a file path
         base <- basename(file_path_sans_ext(file))

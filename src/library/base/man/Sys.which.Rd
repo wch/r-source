@@ -48,7 +48,7 @@ Sys.which(names)
 }
 \examples{
 ## the first two are likely to exist everywhere
-## texi2dvi exists on most Unix-alikes and under MiKTeX
+## texi2dvi exists on most Unix-alikes but not under MiKTeX
 Sys.which(c("ftp", "ping", "texi2dvi", "this-does-not-exist"))
 }
 \keyword{ utilities }

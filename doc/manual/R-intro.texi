@@ -7220,9 +7220,9 @@ R CMD latex.exe mydoc
 @end example
 @noindent
 will run @LaTeX{} on @file{mydoc.tex}, with the path to @R{}'s
-@file{share/texmf} macros appended to @env{TEXINPUTS}.  (Unfortunately,
-this does not help with the @I{MiKTeX} build of @LaTeX{}, but
-@command{R CMD texify mydoc} will work in that case.)
+@file{share/texmf} macros appended to @env{TEXINPUTS}.
+(With the @I{MiKTeX} build of @LaTeX{}, using
+@command{R CMD texify mydoc} is often more convenient.)
 
 @node Invoking R under macOS
 @appendixsec Invoking R under macOS
