@@ -118,7 +118,9 @@ sunflowerplot(x, \dots)
   1989--1993.  Port to \R by Martin Maechler
   \email{maechler@stat.math.ethz.ch}.
 }
-\seealso{\code{\link{density}}, \code{\link{xyTable}}
+\seealso{\code{\link{density}}, \code{\link{xyTable}};
+  \code{\link{smoothScatter}()} is often preferable to
+  \code{sunflowerplot()} nowadays.
 }
 \examples{
 require(stats) # for rnorm
