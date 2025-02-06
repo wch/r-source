@@ -16,18 +16,17 @@
 
 ## Testing Sweave
 
-.proctime00 <- proc.time()
 library(utils)
 options(digits = 5) # to avoid trivial printed differences
 options(show.signif.stars = FALSE) # avoid fancy quotes in o/p
 
 SweaveTeX <- function(file, ...) {
     if(!file.exists(file))
-        stop("File", file, "does not exist in", getwd())
+        stop("File ", sQuote(file), " does not exist in ", getwd())
     texF <- sub("\\.[RSrs]nw$", ".tex", file)
     Sweave(file, ...)
     if(!file.exists(texF))
-        stop("File", texF, "does not exist in", getwd())
+        stop("File ", sQuote(texF), " does not exist in ", getwd())
     readLines(texF)
 }
 
@@ -80,5 +79,10 @@ Sweave("customgraphics.Rnw")
 Sweave(f <- "Sexpr-verb-ex.Rnw")
 tools::texi2pdf(sub("Rnw$","tex", f))# used to fail
 
-
-cat('Time elapsed: ', proc.time() - .proctime00,'\n')
+### ------------------------------------ 5 ----------------------------------
+## render the installed Rnw file from example(Sweave), using R CMD Sweave
+testfile <- system.file("Sweave", "Sweave-test-1.Rnw", package = "utils")
+stopifnot(exprs = {
+    tools::Rcmd(c("Sweave", "--help")) == 0L
+    tools::Rcmd(c("Sweave", "--pdf", testfile)) == 0L
+})
