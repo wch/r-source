@@ -191,6 +191,10 @@
 
       \item \code{unique()}'s default method now also deals with
       \code{"difftime"} objects.
+
+      \item \code{optimize(f, *)} when \code{f(x)} is not finite says
+      more about the value in its \code{warning} message.  It no longer
+      replaces \code{-Inf} by the largest \emph{positive} finite number.
     }
   }
 

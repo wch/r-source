@@ -1806,6 +1806,33 @@ stopifnot(inherits(unidt, "difftime"), length(unidt) <= 2) # '2': allow "inaccur
 ## unique() lost the class  in R < 4.5.0
 
 
+## optimize(f(x), *) message when f(x) is not finite
+ff <- function(x) ifelse(x < -10, (x+10)*exp(x^2),
+                     ifelse(x > 100, NaN,
+                        ifelse(x > 30, exp((x-20)^2),
+                               (4 - x)^2)))
+cf <- as.data.frame(curve(ff, -20, 120, ylim = c(-2,200)))
+str(ok <- optimize(ff, c(-10, 10)))
+stopifnot(all.equal(list(minimum = 4, objective = 0), ok))
+op <- options(warn=0)
+str(of2 <- optimize(ff, c(-140, 250))); summary(warnings()); uw2 <- unique(warnings())
+## NA/NaN  and -Inf  (no +Inf)
+str(of3 <- optimize(ff, c(-20, 120)));  summary(warnings()); uw3 <- unique(warnings())
+## only 1 Inf
+str(of4 <- optimize(ff, c(-10, 180)));  summary(warnings()); uw4 <- unique(warnings())
+## +Inf and many NA/NaN
+c(uw2, uw3, uw4)
+stopifnot(all.equal(of3, ok),
+          identical(c(2:1,2L), lengths(list(uw2, uw3, uw4))))
+if(englishMsgs)
+    stopifnot(identical(c("-Inf replaced by maximally negative value",
+                           "Inf replaced by maximum positive value",
+                        "NA/NaN replaced by maximum positive value"),
+                        sort(unique(c(names(uw2), names(uw3), names(uw4))))))
+options(op)# reverting
+## in R < 4.4.z  only *one* message .. "NA/Inf replaced by ...."
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

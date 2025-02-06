@@ -1,8 +1,8 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
+ *  Copyright (C) 1998--2025  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *  Copyright (C) 2003-2004  The R Foundation
- *  Copyright (C) 1998--2023  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -219,8 +219,13 @@ static double fcn1(double x, void *arg_info)
     case REALSXP:
 	if (length(s) != 1) goto badvalue;
 	if (!R_FINITE(REAL(s)[0])) {
-	    warning(_("NA/Inf replaced by maximum positive value"));
-	    return DBL_MAX;
+	    if(REAL(s)[0] == R_NegInf) { // keep sign for root finding !
+		warning(_("-Inf replaced by maximally negative value"));
+		return -DBL_MAX;
+	    } else {
+		warning(_("%s replaced by maximum positive value"), ISNAN(REAL(s)[0]) ? "NA/NaN" : "Inf");
+		return DBL_MAX;
+	    }
 	}
 	else return REAL(s)[0];
 	break;
@@ -232,33 +237,31 @@ static double fcn1(double x, void *arg_info)
     return 0;/* for -Wall */
 }
 
-/* fmin(f, xmin, xmax tol) */
+/* Called from optimize() as
+ * .External2(C_do_fmin,  function(arg) +/- f(arg, ...), lower, upper, tol)
+ * fmin(f, xmin, xmax tol) */
 SEXP do_fmin(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    double xmin, xmax, tol;
-    SEXP v, res;
-    struct callinfo info;
-
     args = CDR(args);
     PrintDefaults();
 
     /* the function to be minimized */
 
-    v = CAR(args);
+    SEXP v = CAR(args);
     if (!isFunction(v))
 	error(_("attempt to minimize non-function"));
     args = CDR(args);
 
     /* xmin */
 
-    xmin = asReal(CAR(args));
+    double xmin = asReal(CAR(args));
     if (!R_FINITE(xmin))
 	error(_("invalid '%s' value"), "xmin");
     args = CDR(args);
 
     /* xmax */
 
-    xmax = asReal(CAR(args));
+    double xmax = asReal(CAR(args));
     if (!R_FINITE(xmax))
 	error(_("invalid '%s' value"), "xmax");
     if (xmin >= xmax)
@@ -267,13 +270,14 @@ SEXP do_fmin(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     /* tol */
 
-    tol = asReal(CAR(args));
+    double tol = asReal(CAR(args));
     if (!R_FINITE(tol) || tol <= 0.0)
 	error(_("invalid '%s' value"), "tol");
 
+    struct callinfo info;
     info.R_env = rho;
     PROTECT(info.R_fcall = lang2(v, R_NilValue));
-    PROTECT(res = allocVector(REALSXP, 1));
+    SEXP res = PROTECT(allocVector(REALSXP, 1));
     REAL(res)[0] = Brent_fmin(xmin, xmax, fcn1, &info, tol);
     UNPROTECT(2);
     return res;
@@ -309,7 +313,7 @@ static double fcn2(double x, void *arg_info)
 		warning(_("-Inf replaced by maximally negative value"));
 		return -DBL_MAX;
 	    } else {
-		warning(_("NA/Inf replaced by maximum positive value"));
+		warning(_("%s replaced by maximum positive value"), ISNAN(REAL(s)[0]) ? "NA/NaN" : "Inf");
 		return DBL_MAX;
 	    }
 	}
@@ -527,8 +531,13 @@ static void fcn(int n, double *x, double *f, void *arg_state)
     case REALSXP:
 	if (length(s) != 1) goto badvalue;
 	if (!R_FINITE(REAL(s)[0])) {
-	    warning(_("NA/Inf replaced by maximum positive value"));
-	    *f = DBL_MAX;
+	    if(REAL(s)[0] == R_NegInf) { // keep sign for root finding !
+		warning(_("-Inf replaced by maximally negative value"));
+		*f = -DBL_MAX;
+	    } else {
+		warning(_("%s replaced by maximum positive value"), ISNAN(REAL(s)[0]) ? "NA/NaN" : "Inf");
+		*f = DBL_MAX;
+	    }
 	}
 	else *f = REAL(s)[0];
 	break;
