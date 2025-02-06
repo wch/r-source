@@ -374,11 +374,8 @@
 
   \subsection{UTILITIES}{
     \itemize{
-      \item \command{R CMD INSTALL} (and hence \command{check}) now by
-      default compile C++ code with \code{-DR_NO_REMAP}.  For the time
-      being this can be reverted by setting environment
-      variable \env{_R_CXX_USE_NO_REMAP_} to a false value (but that will
-      be removed in the near future).
+      \item \command{R CMD INSTALL} (and hence \command{check}) now
+      compile C++ code with \code{-DR_NO_REMAP}.
 
       \sQuote{Writing R Extensions} has been revised to describe the remapped
       entry points, for with the \code{Rf_} prefix remains optional when
