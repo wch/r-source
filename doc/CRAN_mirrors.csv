@@ -50,6 +50,7 @@ Name,Country,City,URL,Host,Maintainer,OK,CountryCode,Comment
 "Germany (Nürnberg) [https]",Germany,Nürnberg,https://mirror.clientvps.com/CRAN/,ClientVPS,"info # clientvps.com",1,de,"maintainer_address_bounces"
 "Germany (Oberhausen) [https]",Germany,Oberhausen,https://mirror.kamp.de/cran/,"KAMP Netzwerkdienste GmbH","support # kamp.de",1,de
 "Greece [https]",Greece,Crete,https://ftp.cc.uoc.gr/mirrors/CRAN/,"University of Crete","mirrors # Cc.uoc.gr",1,gr,"secure_mirror_from_master"
+"Hungary [https]",Hungary,Miskolc,https://cran.ddnss.org/,"Nandor Tamaskovics","vegaderhothe # googlemail.com",1,hu
 "Iceland [https]",Iceland,Reykjavik,https://cran.hafro.is/,"Marine Research Institute","cran # hafro.is",1,is,"secure_mirror_from_master"
 "India (Bengaluru) [https]",India,Bengaluru,https://cran.icts.res.in/,"International Centre for Theoretical Sciences","cran # icts.res.in",1,in,"secure_mirror_from_master"
 "India (Bhubaneswar) [https]",India,Bhubaneswar,https://mirror.niser.ac.in/cran/,"National Institute of Science Education and Research (NISER)","Subhankar Mishra <smishra # niser.ac.in>",1,in,"secure_mirror_from_master"
