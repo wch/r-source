@@ -267,7 +267,7 @@ toLatex.sessionInfo <-
 			    paste(sort(object$basePkgs), collapse = ", ")),
                       indent = 2, exdent = 4))
 
-    if(length(o.ver <- toLatexPDlist(object$otherPkg)))
+    if(length(o.ver <- toLatexPDlist(object$otherPkgs)))
         z <- c(z,
                strwrap(paste("  \\item Other packages: ", o.ver),
                        indent = 2, exdent = 4))
