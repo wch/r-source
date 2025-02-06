@@ -63,7 +63,7 @@ available in all these packages.
 However, calls from any package that imports the old version or just
 selects it from the search list will usually \emph{not} select methods.
 
-A an example, consider the function
+As an example, consider the function
 \code{\link{data.frame}()} in the base package.
 This function takes any number of objects as arguments and attempts to combine
 them as variables into a data frame object.
