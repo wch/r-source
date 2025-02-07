@@ -550,6 +550,10 @@
 
       \item \command{R CMD Rd2pdf} can now render the package manual from
       a \option{--latex} installation also when the help contains figures.
+
+      \item The argument of \code{as.environment()} is named \code{x} now,
+      not \code{object}, as it was always documented and shown when
+      printing it; thanks to \I{Gael Millot}'s \PR{18849}.
     }
   }
 }

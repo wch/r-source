@@ -1833,6 +1833,12 @@ options(op)# reverting
 ## in R < 4.4.z  only *one* message .. "NA/Inf replaced by ...."
 
 
+## as.environment(x = .)  should work
+ee <- as.environment(x = list(a = 1, bb = 2))
+stopifnot(is.environment(ee), length(ee) == 2L)
+## instead, for R <= 4.4.z,  no name or as.environment(object = .) was needed
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
