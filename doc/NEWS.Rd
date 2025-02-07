@@ -576,6 +576,16 @@
       their C99 versions (\PR{18805}).
     }
   }
+
+  \subsection{UTILITIES}{
+    \itemize{
+      \item \command{R CMD build} and \command{R CMD check} now allow
+      reference output for demo scripts (\file{demo/\var{demo}.Rout.save}
+      files) to be shipped with the package, as proposed by
+      \I{Torsten Hothorn} in \PR{18816}.
+    }
+  }
+
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{kappa(A, exact=TRUE)} for singular \code{A} returns
