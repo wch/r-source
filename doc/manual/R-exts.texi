@@ -6814,7 +6814,7 @@ To negotiate with @I{Uwe Ligges} to host the additional components on
 @end itemize
 
 @noindent
-Be aware that license requirements you may require you to supply the
+Be aware that license requirements may require you to supply the
 sources for the additional components (and will if your package has a
 GPL-like license).
 
