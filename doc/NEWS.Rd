@@ -104,16 +104,17 @@
       lead to faster execution in cases where \code{sort = TRUE} and
       \code{all.x} and/or \code{all.y} are set to \code{TRUE}.
 
-      \item \pkg{methods} package internal \code{.requirePackage()} now
-      calls \code{requireNamespace(p)} instead of \code{require(p)}, hence
-      no longer adding packages to the \code{search()} path in cases
-      methods or class definitions are needed.  Consequently, previous
-      workflows relying on the old behaviour will have to be amended by
-      adding corresponding \code{library(p)} calls.
+      \item The \pkg{methods} package internal function
+      \code{.requirePackage()} now calls \code{requireNamespace(p)}
+      instead of \code{require(p)}, hence no longer adding packages to
+      the \code{search()} path in cases methods or class definitions are
+      needed.  Consequently, previous workflows relying on the old
+      behaviour will have to be amended by adding corresponding
+      \code{library(p)} calls.
 
-      \item More R level messages use a common format containing
-      \code{"character string"} for more consistency and less translation
-      work.
+      \item More \R-level messages use a common format containing
+      \code{"character string"} for more consistency and less
+      translation work.
 
       \item \code{available.packages()} and \code{install.packages()} get
       an optional switch \code{cache_user_dir}, somewhat experimentally.
@@ -202,15 +203,18 @@
     \itemize{
       \item A C23 compiler (if available) can be selected for
       compilation of \R and packages \emph{via} the \command{configure}
-      flag \option{--with-C23}.
+      flag \option{--with-C23}.  The compliance test is of support of
+      new keywords: C23 does have feature-tests macros for many of
+      its new features.
 
-      It is intended that this will become the default before release.
-      Partial C23 support has been available since GCC\sspace{}9,  and
-      that in  GCC\sspace{}12 has been tested.
-      % Fedora 36 had 12, 38 had 13, 40/4§ have 14 and 42 will haav 15.
-      % RHEL 8 has 9 available, RHEL 9 has 11.
-      % Ubuntu 22.04 defaulted to 11.
-      % Debian stable (12, bookworm) has 12.
+      It is intended that this will become the default before release:
+      already \R's \command{configure} may select a compiler which
+      defaults to C23 (such as GCC 15).
+
+      When C23 is selected, packages using \R's compiler settings can
+      ask not to use C23 \emph{via} including \code{USE_C17} in
+      \code{SystemRequirements} or can be installed by \command{R CMD
+	INSTALL --use-C17}.
 
       \item The minimum \command{autoconf} requirement for a maintainer
       build has been increased to \command{autoconf}\sspace{}2.72.
@@ -510,8 +514,8 @@
       e.g., in case of an \code{NA}.
 
       \item \code{cbind()} could segfault with \code{NULL} inputs.
-      (Seen when \R was built with \command{gcc14}, \abbr{LTO} and C99 inlining
-      semantics.)
+      (Seen when \R was built with \command{gcc-14}, \abbr{LTO} and C99
+      inlining semantics.)
 
       \item Fix segfault on \code{quartz()} from \code{grid.glyph()}
       call with \code{glyphInfo()} that describes non-existent font
