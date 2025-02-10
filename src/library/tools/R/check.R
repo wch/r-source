@@ -521,6 +521,7 @@ add_dummies <- function(dir, Log)
             if(config_val_to_logical(Sys.getenv("_R_CHECK_SYSTEM_CLOCK_", "TRUE"))) {
                 ## First check time on system running 'check',
                 ## by reading an external source in UTC
+                notOK <- function(t) !length(t) || is.na(t[1]) # seen length > 1
                 now <- tryCatch({
                     foo <- suppressWarnings(readLines("https://worldtimeapi.org/api/timezone/etc/UTC",
                                                       warn = FALSE))
@@ -528,7 +529,7 @@ add_dummies <- function(dir, Log)
                     as.POSIXct(gsub(".*\"datetime\":\"([^Z]*).*", "\\1", foo),
                                "UTC", "%Y-%m-%dT%H:%M:%S")
                 }, error = function(e) NA)
-                if(identical(NA, now)) { # try http (no 's')
+                if(notOK(now)) { # try http (no 's')
                     now <- tryCatch({
                         foo <- suppressWarnings(readLines("http://worldtimeapi.org/api/timezone/etc/UTC",
                                                           warn = FALSE))
@@ -537,7 +538,7 @@ add_dummies <- function(dir, Log)
                                    "UTC", "%Y-%m-%dT%H:%M:%S")
                     }, error = function(e) NA)
                 }
-                if (FALSE && identical(NA, now)) { ## seems permanently stopped
+                if(notOK(now)) { ## seemed permanently stopped, yet works 2025-02-08 and *-*-09
                     now <- tryCatch({
                         foo <- suppressWarnings(readLines("http://worldclockapi.com/api/json/utc/now",
                                                           warn = FALSE))
@@ -546,7 +547,7 @@ add_dummies <- function(dir, Log)
                                    "UTC", "%Y-%m-%dT%H:%M")
                     }, error = function(e) NA)
                 }
-                if(identical(NA, now)) {
+                if(notOK(now)) {
                     any <- TRUE
                     noteLog(Log, "unable to verify current time")
                 } else {
@@ -1292,7 +1293,7 @@ add_dummies <- function(dir, Log)
                          "\n")
             }
         }
-        
+
         if (!any) resultLog(Log, "OK")
         ## return (<never used in caller>):
         db
