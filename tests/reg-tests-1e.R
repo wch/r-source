@@ -1839,6 +1839,12 @@ stopifnot(is.environment(ee), length(ee) == 2L)
 ## instead, for R <= 4.4.z,  no name or as.environment(object = .) was needed
 
 
+## tools::parseLatex issues -- PR#18855
+assertErrV(tools::parseLatex("{"))
+tools::parseLatex("\\begin{foo}\\end{foo}")
+tools::parseLatex("\\Sexpr{ 1 + {1} }")
+assertErrV(tools::parseLatex("\\begin{foo} abc \\end{bar}"))
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

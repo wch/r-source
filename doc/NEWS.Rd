@@ -562,6 +562,9 @@
       \item When \command{R CMD check} aims at getting the time+date from a
       world clock, it is more robust against unexpected non-error results,
       thanks to \I{Michael Chirico}'s \PR{18852}.
+
+      \item The \code{tools::parseLatex()} parser made several parsing
+      errors (\PR{18855}).
     }
   }
 }

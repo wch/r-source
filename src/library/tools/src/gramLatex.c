@@ -352,8 +352,8 @@ enum yysymbol_kind_t
   YYSYMBOL_Items = 18,                     /* Items  */
   YYSYMBOL_nonMath = 19,                   /* nonMath  */
   YYSYMBOL_Item = 20,                      /* Item  */
-  YYSYMBOL_environment = 21,               /* environment  */
-  YYSYMBOL_22_1 = 22,                      /* $@1  */
+  YYSYMBOL_begin = 21,                     /* begin  */
+  YYSYMBOL_environment = 22,               /* environment  */
   YYSYMBOL_math = 23,                      /* math  */
   YYSYMBOL_displaymath = 24,               /* displaymath  */
   YYSYMBOL_block = 25                      /* block  */
@@ -685,18 +685,18 @@ union yyalloc
 #endif /* !YYCOPY_NEEDED */
 
 /* YYFINAL -- State number of the termination state.  */
-#define YYFINAL  25
+#define YYFINAL  27
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   122
+#define YYLAST   131
 
 /* YYNTOKENS -- Number of terminals.  */
 #define YYNTOKENS  16
 /* YYNNTS -- Number of nonterminals.  */
 #define YYNNTS  10
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  25
+#define YYNRULES  27
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  42
+#define YYNSTATES  47
 
 /* YYMAXUTOK -- Last valid token kind.  */
 #define YYMAXUTOK   267
@@ -748,7 +748,7 @@ static const yytype_uint8 yyrline[] =
 {
        0,   183,   183,   184,   185,   188,   189,   190,   191,   192,
      193,   195,   196,   198,   199,   200,   201,   202,   203,   204,
-     206,   206,   210,   212,   214,   215
+     205,   207,   211,   215,   219,   221,   223,   224
 };
 #endif
 
@@ -767,7 +767,8 @@ static const char *const yytname[] =
   "\"end of file\"", "error", "\"invalid token\"", "END_OF_INPUT",
   "ERROR", "MACRO", "TEXT", "COMMENT", "BEGIN", "END", "VERB", "VERB2",
   "TWO_DOLLARS", "'{'", "'}'", "'$'", "$accept", "Init", "Items",
-  "nonMath", "Item", "environment", "$@1", "math", "displaymath", "block", YY_NULLPTR
+  "nonMath", "Item", "begin", "environment", "math", "displaymath",
+  "block", YY_NULLPTR
 };
 
 static const char *
@@ -791,11 +792,11 @@ yysymbol_name (yysymbol_kind_t yysymbol)
    STATE-NUM.  */
 static const yytype_int8 yypact[] =
 {
-      32,   -13,   -13,   -13,   -13,   -13,   -12,   -13,   -13,   109,
-      54,   109,     5,    43,   -13,   -13,   -13,   -13,   -13,     0,
-      14,   -13,   -13,    65,    98,   -13,   -13,   -13,   -13,   -13,
-      -4,   -13,   -13,   -13,   -13,   -13,    87,    76,    -1,     3,
-       2,   -13
+      23,   -13,   -13,   -13,   -13,   -13,   -13,   -12,   -13,   -13,
+     118,    48,   118,     7,    36,   -13,    60,   -13,   -13,   -13,
+     -13,     2,   108,   -13,   -13,    72,    96,   -13,   -13,   -13,
+     -13,   -13,    -4,    84,    -3,   -13,   -13,   -13,   -13,    12,
+       0,   -13,     5,    14,   -13,    18,   -13
 };
 
 /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -803,23 +804,23 @@ static const yytype_int8 yypact[] =
    means the default is an error.  */
 static const yytype_int8 yydefact[] =
 {
-       0,     4,     3,    15,    13,    14,     0,    16,    17,     0,
-       0,     0,     0,     0,     5,    18,     6,     7,    19,     0,
-       0,    11,    25,     0,     0,     1,     2,     8,     9,    10,
-       0,    23,    12,    24,    22,    20,     0,     0,     0,     0,
-       0,    21
+       0,     4,     3,    20,    15,    13,    14,     0,    16,    17,
+       0,     0,     0,     0,     0,     5,     0,    18,     6,     7,
+      19,     0,     0,    11,    27,     0,     0,     1,     2,     8,
+       9,    10,     0,     0,     0,    25,    12,    26,    24,     0,
+       0,    21,     0,     0,    23,     0,    22
 };
 
 /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-     -13,   -13,    -7,    12,    -9,   -13,   -13,    -6,    -5,   -13
+     -13,   -13,    -6,     9,   -10,   -13,   -13,   -11,    -8,   -13
 };
 
 /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
-       0,    12,    13,    20,    14,    15,    36,    16,    17,    18
+       0,    13,    14,    22,    15,    16,    17,    18,    19,    20
 };
 
 /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
@@ -827,47 +828,49 @@ static const yytype_int8 yydefgoto[] =
    number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_int8 yytable[] =
 {
-      21,    19,    21,    23,    27,    25,    30,    28,    29,    40,
-      35,    32,    39,     0,    27,    32,    41,    28,    29,     3,
-       4,     5,     6,    24,     7,     8,    31,    10,    27,    37,
-       0,    28,    29,     1,     0,     2,     0,     3,     4,     5,
-       6,     0,     7,     8,     9,    10,    26,    11,     3,     4,
-       5,     6,     0,     7,     8,     9,    10,     0,    11,     3,
-       4,     5,     6,     0,     7,     8,     9,    10,    22,    11,
-       3,     4,     5,     6,     0,     7,     8,     9,    10,    33,
-      11,     3,     4,     5,     6,    38,     7,     8,     9,    10,
-       0,    11,     3,     4,     5,     6,     0,     7,     8,     9,
-      10,     0,    11,     3,     4,     5,     6,     0,     7,     8,
-       0,    10,     0,    34,     3,     4,     5,     6,     0,     7,
-       8,     0,    10
+      23,    21,    23,    30,    29,    25,    31,    27,    34,    39,
+      33,    41,    36,    43,    30,    29,    36,    31,    42,    44,
+      45,    26,    30,    29,     1,    31,     2,     3,     4,     5,
+       6,     7,    46,     8,     9,    10,    11,     0,    12,    28,
+       3,     4,     5,     6,     7,     0,     8,     9,    10,    11,
+       0,    12,     3,     4,     5,     6,     7,     0,     8,     9,
+      10,    11,    24,    12,     3,     4,     5,     6,     7,    32,
+       8,     9,    10,    11,     0,    12,     3,     4,     5,     6,
+       7,     0,     8,     9,    10,    11,    37,    12,     3,     4,
+       5,     6,     7,    40,     8,     9,    10,    11,     0,    12,
+       3,     4,     5,     6,     7,     0,     8,     9,     0,    11,
+       0,    38,     3,     4,     5,     6,     7,     0,     8,     9,
+      35,    11,     3,     4,     5,     6,     7,     0,     8,     9,
+       0,    11
 };
 
 static const yytype_int8 yycheck[] =
 {
-       9,    13,    11,    10,    13,     0,     6,    13,    13,     6,
-      14,    20,    13,    -1,    23,    24,    14,    23,    23,     5,
-       6,     7,     8,    11,    10,    11,    12,    13,    37,    36,
-      -1,    37,    37,     1,    -1,     3,    -1,     5,     6,     7,
-       8,    -1,    10,    11,    12,    13,     3,    15,     5,     6,
-       7,     8,    -1,    10,    11,    12,    13,    -1,    15,     5,
-       6,     7,     8,    -1,    10,    11,    12,    13,    14,    15,
-       5,     6,     7,     8,    -1,    10,    11,    12,    13,    14,
-      15,     5,     6,     7,     8,     9,    10,    11,    12,    13,
-      -1,    15,     5,     6,     7,     8,    -1,    10,    11,    12,
-      13,    -1,    15,     5,     6,     7,     8,    -1,    10,    11,
-      -1,    13,    -1,    15,     5,     6,     7,     8,    -1,    10,
-      11,    -1,    13
+      10,    13,    12,    14,    14,    11,    14,     0,     6,    13,
+      16,    14,    22,    13,    25,    25,    26,    25,     6,    14,
+       6,    12,    33,    33,     1,    33,     3,     4,     5,     6,
+       7,     8,    14,    10,    11,    12,    13,    -1,    15,     3,
+       4,     5,     6,     7,     8,    -1,    10,    11,    12,    13,
+      -1,    15,     4,     5,     6,     7,     8,    -1,    10,    11,
+      12,    13,    14,    15,     4,     5,     6,     7,     8,     9,
+      10,    11,    12,    13,    -1,    15,     4,     5,     6,     7,
+       8,    -1,    10,    11,    12,    13,    14,    15,     4,     5,
+       6,     7,     8,     9,    10,    11,    12,    13,    -1,    15,
+       4,     5,     6,     7,     8,    -1,    10,    11,    -1,    13,
+      -1,    15,     4,     5,     6,     7,     8,    -1,    10,    11,
+      12,    13,     4,     5,     6,     7,     8,    -1,    10,    11,
+      -1,    13
 };
 
 /* YYSTOS[STATE-NUM] -- The symbol kind of the accessing symbol of
    state STATE-NUM.  */
 static const yytype_int8 yystos[] =
 {
-       0,     1,     3,     5,     6,     7,     8,    10,    11,    12,
-      13,    15,    17,    18,    20,    21,    23,    24,    25,    13,
-      19,    20,    14,    18,    19,     0,     3,    20,    23,    24,
-       6,    12,    20,    14,    15,    14,    22,    18,     9,    13,
-       6,    14
+       0,     1,     3,     4,     5,     6,     7,     8,    10,    11,
+      12,    13,    15,    17,    18,    20,    21,    22,    23,    24,
+      25,    13,    19,    20,    14,    18,    19,     0,     3,    20,
+      23,    24,     9,    18,     6,    12,    20,    14,    15,    13,
+       9,    14,     6,    13,    14,     6,    14
 };
 
 /* YYR1[RULE-NUM] -- Symbol kind of the left-hand side of rule RULE-NUM.  */
@@ -875,7 +878,7 @@ static const yytype_int8 yyr1[] =
 {
        0,    16,    17,    17,    17,    18,    18,    18,    18,    18,
       18,    19,    19,    20,    20,    20,    20,    20,    20,    20,
-      22,    21,    23,    24,    25,    25
+      20,    21,    22,    22,    23,    24,    25,    25
 };
 
 /* YYR2[RULE-NUM] -- Number of symbols on the right-hand side of rule RULE-NUM.  */
@@ -883,7 +886,7 @@ static const yytype_int8 yyr2[] =
 {
        0,     2,     2,     1,     1,     1,     1,     1,     2,     2,
        2,     1,     2,     1,     1,     1,     1,     1,     1,     1,
-       0,    10,     3,     3,     3,     2
+       1,     4,     6,     5,     3,     3,     3,     2
 };
 
 
@@ -1826,28 +1829,42 @@ yyreduce:
                                                 { yyval = yyvsp[0]; }
     break;
 
-  case 20: /* $@1: %empty  */
-                                   { xxSetInVerbEnv(yyvsp[-1]); }
+  case 20: /* Item: ERROR  */
+                                                { YYABORT; }
     break;
 
-  case 21: /* environment: BEGIN '{' TEXT '}' $@1 Items END '{' TEXT '}'  */
-                                        { yyval = xxenv(yyvsp[-7], yyvsp[-4], yyvsp[-1], &(yyloc));
-                                                  RELEASE_SV(yyvsp[-9]); RELEASE_SV(yyvsp[-3]); }
+  case 21: /* begin: BEGIN '{' TEXT '}'  */
+                                                { xxSetInVerbEnv(yyvsp[-1]); 
+						  yyval = yyvsp[-1];
+						  RELEASE_SV(yyvsp[-3]); }
     break;
 
-  case 22: /* math: '$' nonMath '$'  */
+  case 22: /* environment: begin Items END '{' TEXT '}'  */
+                                                { yyval = xxenv(yyvsp[-5], yyvsp[-4], yyvsp[-1], &(yyloc));
+						  if (!yyval) YYABORT;
+						  RELEASE_SV(yyvsp[-3]);
+						}
+    break;
+
+  case 23: /* environment: begin END '{' TEXT '}'  */
+                                                { yyval = xxenv(yyvsp[-4], NULL, yyvsp[-1], &(yyloc));
+						  if (!yyval) YYABORT;
+						  RELEASE_SV(yyvsp[-3]);}
+    break;
+
+  case 24: /* math: '$' nonMath '$'  */
                                                 { yyval = xxmath(yyvsp[-1], &(yyloc), FALSE); }
     break;
 
-  case 23: /* displaymath: TWO_DOLLARS nonMath TWO_DOLLARS  */
+  case 25: /* displaymath: TWO_DOLLARS nonMath TWO_DOLLARS  */
                                                 { yyval = xxmath(yyvsp[-1], &(yyloc), TRUE); }
     break;
 
-  case 24: /* block: '{' Items '}'  */
+  case 26: /* block: '{' Items '}'  */
                                                 { yyval = xxblock(yyvsp[-1], &(yyloc)); }
     break;
 
-  case 25: /* block: '{' '}'  */
+  case 27: /* block: '{' '}'  */
                                                 { yyval = xxblock(NULL, &(yyloc)); }
     break;
 
@@ -2118,14 +2135,23 @@ static SEXP xxenv(SEXP begin, SEXP body, SEXP end, YYLTYPE *lloc)
 #if DEBUGVALS
     Rprintf("xxenv(begin=%p, body=%p, end=%p)", begin, body, end);    
 #endif
+    if (strcmp(CHAR(STRING_ELT(begin, 0)),
+               CHAR(STRING_ELT(end, 0))) != 0) {
+        char buffer[PARSE_ERROR_SIZE];
+        snprintf(buffer, sizeof(buffer), "\\begin{%s} at %d:%d ended by \\end{%s}",
+          CHAR(STRING_ELT(begin, 0)), lloc->first_line, lloc->first_column,
+          CHAR(STRING_ELT(end, 0)));
+        yyerror(buffer);
+        return NULL;
+    }
+               
     PRESERVE_SV(ans = allocVector(VECSXP, 2));
     SET_VECTOR_ELT(ans, 0, begin);
     RELEASE_SV(begin);
-    if (!isNull(body)) {
+    if (body && !isNull(body)) {
 	SET_VECTOR_ELT(ans, 1, PairToVectorList(CDR(body)));
 	RELEASE_SV(body);
     }
-    /* FIXME:  check that begin and end match */
     setAttrib(ans, R_SrcrefSymbol, makeSrcref(lloc, parseState.SrcFile));
     setAttrib(ans, R_LatexTagSymbol, mkString("ENVIRONMENT"));
     if (!isNull(end)) 
@@ -2402,6 +2428,8 @@ static SEXP ParseLatex(ParseStatus *status, SEXP srcfile)
     npush = 0;
     
     parseState.Value = R_NilValue;
+    
+    PRESERVE_SV(yylval = mkString(""));
     
     if (yyparse()) *status = PARSE_ERROR;
     else *status = PARSE_OK;
@@ -2761,13 +2789,25 @@ static int mkVerb2(const char *s, int c)
     char *st1 = NULL;
     unsigned int nstext = INITBUFSIZE;
     char *stext = st0, *bp = st0;
-    int delim = '}';
+    int depth = 1;
+    const char *macro = s;
     
     while (*s) TEXT_PUSH(*s++);
     
-    TEXT_PUSH(c);
-    while (((c = xxgetc()) != delim) && c != R_EOF) TEXT_PUSH(c);
-    if (c != R_EOF) TEXT_PUSH(c);
+    do {
+	TEXT_PUSH(c);
+	c = xxgetc();
+	if (c == '{') depth++;
+	else if (c == '}') depth--;
+    } while (depth > 0 && c != R_EOF);
+
+    if (c == R_EOF) {
+	char buffer[256];
+	snprintf(buffer, sizeof(buffer), "unexpected END_OF_INPUT\n'%s' is still open", macro);
+	yyerror(buffer);
+	return ERROR;
+    } else
+	TEXT_PUSH(c);
     
     PRESERVE_SV(yylval = mkString2(stext, bp - stext));
     if(st1) free(st1);

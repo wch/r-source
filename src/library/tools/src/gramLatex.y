@@ -202,10 +202,19 @@ Item:		TEXT				{ $$ = xxtag($1, TEXT, &@$); }
 	|	VERB2				{ $$ = xxtag($1, VERB, &@$); }
 	|	environment			{ $$ = $1; }
 	|	block				{ $$ = $1; }
+	|	ERROR				{ YYABORT; }
 	
-environment:	BEGIN '{' TEXT '}' { xxSetInVerbEnv($3); } 
-                Items END '{' TEXT '}' 	{ $$ = xxenv($3, $6, $9, &@$);
-                                                  RELEASE_SV($1); RELEASE_SV($7); }
+begin:  	BEGIN '{' TEXT '}'              { xxSetInVerbEnv($3); 
+						  $$ = $3;
+						  RELEASE_SV($1); } 
+
+environment:	begin Items END '{' TEXT '}' 	{ $$ = xxenv($1, $2, $5, &@$);
+						  if (!$$) YYABORT;
+						  RELEASE_SV($3);
+						}
+	|	begin END '{' TEXT '}'		{ $$ = xxenv($1, NULL, $4, &@$);
+						  if (!$$) YYABORT;
+						  RELEASE_SV($2);}
 
 math:		'$' nonMath '$'			{ $$ = xxmath($2, &@$, FALSE); }
 
@@ -252,14 +261,23 @@ static SEXP xxenv(SEXP begin, SEXP body, SEXP end, YYLTYPE *lloc)
 #if DEBUGVALS
     Rprintf("xxenv(begin=%p, body=%p, end=%p)", begin, body, end);    
 #endif
+    if (strcmp(CHAR(STRING_ELT(begin, 0)),
+               CHAR(STRING_ELT(end, 0))) != 0) {
+        char buffer[PARSE_ERROR_SIZE];
+        snprintf(buffer, sizeof(buffer), "\\begin{%s} at %d:%d ended by \\end{%s}",
+          CHAR(STRING_ELT(begin, 0)), lloc->first_line, lloc->first_column,
+          CHAR(STRING_ELT(end, 0)));
+        yyerror(buffer);
+        return NULL;
+    }
+               
     PRESERVE_SV(ans = allocVector(VECSXP, 2));
     SET_VECTOR_ELT(ans, 0, begin);
     RELEASE_SV(begin);
-    if (!isNull(body)) {
+    if (body && !isNull(body)) {
 	SET_VECTOR_ELT(ans, 1, PairToVectorList(CDR(body)));
 	RELEASE_SV(body);
     }
-    /* FIXME:  check that begin and end match */
     setAttrib(ans, R_SrcrefSymbol, makeSrcref(lloc, parseState.SrcFile));
     setAttrib(ans, R_LatexTagSymbol, mkString("ENVIRONMENT"));
     if (!isNull(end)) 
@@ -536,6 +554,8 @@ static SEXP ParseLatex(ParseStatus *status, SEXP srcfile)
     npush = 0;
     
     parseState.Value = R_NilValue;
+    
+    PRESERVE_SV(yylval = mkString(""));
     
     if (yyparse()) *status = PARSE_ERROR;
     else *status = PARSE_OK;
@@ -895,13 +915,25 @@ static int mkVerb2(const char *s, int c)
     char *st1 = NULL;
     unsigned int nstext = INITBUFSIZE;
     char *stext = st0, *bp = st0;
-    int delim = '}';
+    int depth = 1;
+    const char *macro = s;
     
     while (*s) TEXT_PUSH(*s++);
     
-    TEXT_PUSH(c);
-    while (((c = xxgetc()) != delim) && c != R_EOF) TEXT_PUSH(c);
-    if (c != R_EOF) TEXT_PUSH(c);
+    do {
+	TEXT_PUSH(c);
+	c = xxgetc();
+	if (c == '{') depth++;
+	else if (c == '}') depth--;
+    } while (depth > 0 && c != R_EOF);
+
+    if (c == R_EOF) {
+	char buffer[256];
+	snprintf(buffer, sizeof(buffer), "unexpected END_OF_INPUT\n'%s' is still open", macro);
+	yyerror(buffer);
+	return ERROR;
+    } else
+	TEXT_PUSH(c);
     
     PRESERVE_SV(yylval = mkString2(stext, bp - stext));
     if(st1) free(st1);
