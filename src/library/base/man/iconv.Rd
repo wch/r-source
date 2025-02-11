@@ -46,7 +46,9 @@ iconvlist()
   Generally case is ignored when specifying an encoding.
 
   On most platforms \code{iconvlist} provides an alphabetical list of
-  the supported encodings.  On others, the information is on the man
+  the supported encodings (including aliases).  On \samp{musl} (as used
+  by Alpine Linux and other lightweight Linux distributions) the listing
+  is incomplete.  On others, the information is on the man
   page for \code{iconv(5)} or elsewhere in the man pages (but beware
   that the system command \code{iconv} may not support the same set of
   encodings as the C functions \R calls).  Unfortunately, the names are
@@ -62,7 +64,7 @@ iconvlist()
 
   Encoding \code{"ASCII"} is accepted, and on most systems \code{"C"}
   and \code{"POSIX"} are synonyms for ASCII.  Where
-  \code{"ASCII/TRANSLIT"} is unsupported by the OS, \code{"ASCII"} is
+  \code{"ASCII//TRANSLIT"} is unsupported by the OS, \code{"ASCII"} is
   used with \code{sub = "c99"} if from UTF-8, else \code{sub =
   "?"}. (However, \I{musl}'s version of \code{"ASCII"} substitutes
   \code{*}.)
@@ -177,10 +179,8 @@ iconvlist()
 \note{
   The most portable name for the ISO 8859-15 encoding, commonly known as
   \sQuote{Latin 9}, is \code{"iso885915"}: most platforms support both
-  \code{"latin-9"} and\code{"latin9"} but GNU \samp{libiconv} does not
-  support the latter. \samp{musl} (as used by Alpine Linux and other
-  lightweight Linux distributions) supports neither, but \R remaps there
-  to \code{"iso885915"}.
+  \code{"latin-9"} and \code{"latin9"} % (including \samp{musl})
+  but GNU \samp{libiconv} does not support the latter.
 
   Encoding names \code{"utf8"}, \code{"mac"} and \code{"macroman"} are
   not portable.  \code{"utf8"} is converted to \code{"UTF-8"} for

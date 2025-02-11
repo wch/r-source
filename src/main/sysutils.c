@@ -656,6 +656,7 @@ attribute_hidden SEXP do_iconv(SEXP call, SEXP op, SEXP args, SEXP env)
 	    from = "iso88592";
 	if(R_strieql(to, "latin-2") || R_strieql(to, "latin2") )
 	    to = "iso88592";
+	/* the following is redundant (musl does know about the latin9 alias) */
 	if(R_strieql(from, "latin-9") || R_strieql(from, "latin9") )
 	    from = "iso885915";
 	if(R_strieql(to, "latin-9") || R_strieql(to, "latin9") )
