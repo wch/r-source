@@ -196,6 +196,9 @@
       \item \code{optimize(f, *)} when \code{f(x)} is not finite says
       more about the value in its \code{warning} message.  It no longer
       replaces \code{-Inf} by the largest \emph{positive} finite number.
+
+      \item The documentation of \code{gamma} and \code{is.numeric} is more
+      specific, thanks to the contributors of \PR{18677}.
     }
   }
 

@@ -1,6 +1,6 @@
 % File src/library/base/man/Special.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2022 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Special}
@@ -62,7 +62,15 @@ lfactorial(x)
   gamma function.  The gamma function is defined by
   (\bibcite{Abramowitz and Stegun section 6.1.1, page 255})
   \deqn{\Gamma(x) = \int_0^\infty t^{x-1} e^{-t} dt}{\Gamma(x) = integral_0^Inf t^(x-1) exp(-t) dt}
-  for all real \code{x} except zero and negative integers (when
+  for all \eqn{x > 0}, from which the recursions \eqn{\Gamma(x+1) =
+  x\Gamma(x)} and then \eqn{\Gamma(x+n) = (x+n-1)(x+n-2)\cdots x \Gamma(x)}
+  for all non-negative integers \eqn{n}.  Solving  for \eqn{\Gamma(x)} and
+  analytic continuation leads to the expression for non-integer negative real numbers,
+  \deqn{\Gamma(x) = \frac{\Gamma(x + n)}{(x + n -1) \cdots (x + 1)x}, \ n \in \mathbb{Z}^{+}, -n < x < 0,%
+  }{\Gamma(x) = \Gamma(x + n)/((x + n -1) ... (x + 1)x), n in N, -n < x < 0,}
+  see \bibcite{Abramowitz and Stegun (6.1.16 or 6.1.22, page 256)}.
+  %
+  The gamma function is not defined for zero and negative integers (when
   \code{NaN} is returned).  There will be a warning on possible loss of
   precision for values which are too close (within about
   \eqn{10^{-8}}{1e-8}) to a negative integer less than \samp{-10}.
