@@ -565,6 +565,9 @@
 
       \item The \code{tools::parseLatex()} parser made several parsing
       errors (\PR{18855}).
+
+      \item Error messages produced by \code{tools::parseLatex()} are
+      now more readable (\PR{18855}).
     }
   }
 }

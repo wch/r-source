@@ -133,6 +133,7 @@ struct ParseState {
 
 static Rboolean busy = FALSE;
 static ParseState parseState;
+static char ParseErrorMsg[PARSE_ERROR_SIZE];
 
 #define PRESERVE_SV(x) R_PreserveInMSet((x), parseState.mset)
 #define RELEASE_SV(x)  R_ReleaseFromMSet((x), parseState.mset)
@@ -156,7 +157,7 @@ static int	mkVerb2(const char *, int);
 static int      mkVerbEnv(void);
 static int	mkDollar(int);
 
-static SEXP R_LatexTagSymbol = NULL;
+static SEXP LatexTagSymbol = NULL;
 
 #define YYSTYPE		SEXP
 
@@ -279,7 +280,7 @@ static SEXP xxenv(SEXP begin, SEXP body, SEXP end, YYLTYPE *lloc)
 	RELEASE_SV(body);
     }
     setAttrib(ans, R_SrcrefSymbol, makeSrcref(lloc, parseState.SrcFile));
-    setAttrib(ans, R_LatexTagSymbol, mkString("ENVIRONMENT"));
+    setAttrib(ans, LatexTagSymbol, mkString("ENVIRONMENT"));
     if (!isNull(end)) 
 	RELEASE_SV(end);
 #if DEBUGVALS
@@ -297,7 +298,7 @@ static SEXP xxmath(SEXP body, YYLTYPE *lloc, Rboolean display)
     PRESERVE_SV(ans = PairToVectorList(CDR(body)));
     RELEASE_SV(body);
     setAttrib(ans, R_SrcrefSymbol, makeSrcref(lloc, parseState.SrcFile));
-    setAttrib(ans, R_LatexTagSymbol, 
+    setAttrib(ans, LatexTagSymbol, 
         mkString(display ? "DISPLAYMATH" : "MATH"));
 #if DEBUGVALS
     Rprintf(" result: %p\n", ans);    
@@ -318,7 +319,7 @@ static SEXP xxblock(SEXP body, YYLTYPE *lloc)
 	RELEASE_SV(body);
     }
     setAttrib(ans, R_SrcrefSymbol, makeSrcref(lloc, parseState.SrcFile));
-    setAttrib(ans, R_LatexTagSymbol, mkString("BLOCK"));
+    setAttrib(ans, LatexTagSymbol, mkString("BLOCK"));
 
 #if DEBUGVALS
     Rprintf(" result: %p\n", ans);    
@@ -353,7 +354,7 @@ static void xxsavevalue(SEXP items, YYLTYPE *lloc)
     } else {
 	PRESERVE_SV(parseState.Value = allocVector(VECSXP, 1));
     	SET_VECTOR_ELT(parseState.Value, 0, ScalarString(mkChar("")));
-	setAttrib(VECTOR_ELT(parseState.Value, 0), R_LatexTagSymbol, mkString("TEXT"));
+	setAttrib(VECTOR_ELT(parseState.Value, 0), LatexTagSymbol, mkString("TEXT"));
     }	
     if (!isNull(parseState.Value)) {
     	setAttrib(parseState.Value, R_ClassSymbol, mkString("LaTeX"));
@@ -363,7 +364,7 @@ static void xxsavevalue(SEXP items, YYLTYPE *lloc)
 
 static SEXP xxtag(SEXP item, int type, YYLTYPE *lloc)
 {
-    setAttrib(item, R_LatexTagSymbol, mkString(yytname[YYTRANSLATE(type)]));
+    setAttrib(item, LatexTagSymbol, mkString(yytname[YYTRANSLATE(type)]));
     setAttrib(item, R_SrcrefSymbol, makeSrcref(lloc, parseState.SrcFile));
     return item;
 }
@@ -404,10 +405,7 @@ static int xxgetc(void)
     	prevcols[prevpos] = parseState.xxcolno;
     
     if (c == EOF) return R_EOF;
-    
-    R_ParseContextLast = (R_ParseContextLast + 1) % PARSE_CONTEXT_SIZE;
-    R_ParseContext[R_ParseContextLast] = (char) c;
-    
+
     if (c == '\n') {
     	parseState.xxlineno += 1;
     	parseState.xxcolno = 1;
@@ -418,8 +416,6 @@ static int xxgetc(void)
     }
 
     if (c == '\t') parseState.xxcolno = ((parseState.xxcolno + 6) & ~7) + 1;
-    
-    R_ParseContextLine = parseState.xxlineno;
     
     return c;
 }
@@ -432,12 +428,6 @@ static int xxungetc(int c)
     parseState.xxcolno  = prevcols[prevpos];
     prevpos = (prevpos + PUSHBACK_BUFSIZE - 1) % PUSHBACK_BUFSIZE;
     
-    R_ParseContextLine = parseState.xxlineno;
-    
-    R_ParseContext[R_ParseContextLast] = '\0';
-    /* macOS requires us to keep this non-negative */
-    R_ParseContextLast = (R_ParseContextLast + PARSE_CONTEXT_SIZE - 1) 
-	% PARSE_CONTEXT_SIZE;
     if(npush >= PUSHBACK_BUFSIZE - 2) return R_EOF;
     pushback[npush++] = c;
     return c;
@@ -528,18 +518,9 @@ static void UseState(ParseState *state) {
     parseState.prevState = state->prevState;
 }
 
-static void InitSymbols(void)
-{
-    if (!R_LatexTagSymbol)
-	R_LatexTagSymbol = install("latex_tag");
-}
-
 static SEXP ParseLatex(ParseStatus *status, SEXP srcfile)
 {
-    InitSymbols();
-
-    R_ParseContextLast = 0;
-    R_ParseContext[0] = '\0';
+    LatexTagSymbol = install("latex_tag");
     	
     parseState.xxInVerbEnv = NULL;
     
@@ -566,6 +547,9 @@ static SEXP ParseLatex(ParseStatus *status, SEXP srcfile)
 
     RELEASE_SV(parseState.Value);
     UNPROTECT(1); /* parseState.mset */
+    
+    if (*status == PARSE_ERROR)
+	error("%s", ParseErrorMsg);
 
     return parseState.Value;
 }
@@ -583,14 +567,6 @@ static int char_getc(void)
     	nextchar_parse--;
     }
     return (c);
-}
-
-static
-SEXP R_ParseLatex(SEXP text, ParseStatus *status, SEXP srcfile)
-{
-    nextchar_parse = translateCharUTF8(STRING_ELT(text, 0));
-    ptr_getc = char_getc;
-    return ParseLatex(status, srcfile);
 }
 
 /*----------------------------------------------------------------------------
@@ -663,10 +639,7 @@ static void yyerror(const char *s)
     static char const yyshortunexpected[] = "unexpected %s";
     static char const yylongunexpected[] = "unexpected %s '%s'";
     char *expecting;
-    char ParseErrorMsg[PARSE_ERROR_SIZE];
-    SEXP filename;
-    char ParseErrorFilename[PARSE_ERROR_SIZE];
-   
+    char ErrorTranslation[PARSE_ERROR_SIZE];
     if (!strncmp(s, yyunexpected, sizeof yyunexpected -1)) {
 	int i, translated = FALSE;
     	/* Edit the error message */    
@@ -674,13 +647,13 @@ static void yyerror(const char *s)
     	if (expecting) *expecting = '\0';
     	for (i = 0; yytname_translations[i]; i += 2) {
     	    if (!strcmp(s + sizeof yyunexpected - 1, yytname_translations[i])) {
-    	    	if (yychar < 256)
-    	    	    snprintf(ParseErrorMsg, PARSE_ERROR_SIZE,
+    	    	if (yychar < 256 || yychar == END_OF_INPUT)
+    	    	    snprintf(ErrorTranslation, sizeof(ErrorTranslation),
 			     _(yyshortunexpected), 
 			     i/2 < YYENGLISH ? _(yytname_translations[i+1])
 			     : yytname_translations[i+1]);
     	    	else
-    	    	    snprintf(ParseErrorMsg, PARSE_ERROR_SIZE,
+    	    	    snprintf(ErrorTranslation, sizeof(ErrorTranslation),
 			     _(yylongunexpected), 
 			     i/2 < YYENGLISH ? _(yytname_translations[i+1])
 			     : yytname_translations[i+1], 
@@ -690,12 +663,12 @@ static void yyerror(const char *s)
     	    }
     	}
     	if (!translated) {
-    	    if (yychar < 256) 
-    		snprintf(ParseErrorMsg, PARSE_ERROR_SIZE, 
+    	    if (yychar < 256 || yychar == END_OF_INPUT) 
+    		snprintf(ErrorTranslation, sizeof(ErrorTranslation), 
 			 _(yyshortunexpected),
 			 s + sizeof yyunexpected - 1);
     	    else
-    	    	snprintf(ParseErrorMsg, PARSE_ERROR_SIZE,
+    	    	snprintf(ErrorTranslation, sizeof(ErrorTranslation),
 			 _(yylongunexpected),
 			 s + sizeof yyunexpected - 1, CHAR(STRING_ELT(yylval, 0)));
     	}
@@ -703,35 +676,32 @@ static void yyerror(const char *s)
  	    translated = FALSE;
     	    for (i = 0; yytname_translations[i]; i += 2) {
     	    	if (!strcmp(expecting + sizeof yyexpecting - 1, yytname_translations[i])) {
-    	    	    strcat(ParseErrorMsg, _(yyexpecting));
-    	    	    strcat(ParseErrorMsg, i/2 < YYENGLISH ? _(yytname_translations[i+1])
-    	    	                    : yytname_translations[i+1]);
+    	    	    strncat(ErrorTranslation, _(yyexpecting), 
+    	    	            sizeof(ErrorTranslation) - strlen(ErrorTranslation) - 1);
+    	    	    strncat(ErrorTranslation, i/2 < YYENGLISH 
+                              ? _(yytname_translations[i+1]) 
+                              : yytname_translations[i+1],
+    	    	            sizeof(ErrorTranslation) - strlen(ErrorTranslation) - 1);
     	    	    translated = TRUE;
 		    break;
 		}
 	    }
 	    if (!translated) {
-	    	strcat(ParseErrorMsg, _(yyexpecting));
-	    	strcat(ParseErrorMsg, expecting + sizeof yyexpecting - 1);
+	    	strncat(ErrorTranslation, _(yyexpecting), 
+	    	        sizeof(ErrorTranslation) - strlen(ErrorTranslation) - 1);
+	    	strncat(ErrorTranslation, expecting + sizeof yyexpecting - 1, 
+	    	        sizeof(ErrorTranslation) - strlen(ErrorTranslation) - 1);
 	    }
 	}
     } else if (!strncmp(s, yyunknown, sizeof yyunknown-1)) {
-    	snprintf(ParseErrorMsg, PARSE_ERROR_SIZE, 
+    	snprintf(ErrorTranslation, sizeof(ErrorTranslation), 
 		 "%s '%s'", s, CHAR(STRING_ELT(yylval, 0)));
     } else {
-    	snprintf(ParseErrorMsg, PARSE_ERROR_SIZE,"%s", s);
+    	snprintf(ErrorTranslation, sizeof(ErrorTranslation), "%s", s);
     }
-    filename = findVar(install("filename"), parseState.SrcFile);
-    if (isString(filename) && LENGTH(filename))
-    	strncpy(ParseErrorFilename, CHAR(STRING_ELT(filename, 0)), PARSE_ERROR_SIZE - 1);
-    else
-        ParseErrorFilename[0] = '\0';
-    if (yylloc.first_line != yylloc.last_line)
-	warning("%s:%d-%d: %s", 
-		ParseErrorFilename, yylloc.first_line, yylloc.last_line, ParseErrorMsg);
-    else
-	warning("%s:%d: %s", 
-		ParseErrorFilename, yylloc.first_line, ParseErrorMsg);
+    snprintf(ParseErrorMsg, sizeof(ParseErrorMsg),
+             "Parse error at %d:%d: %s", yylloc.first_line, yylloc.first_column,
+             ErrorTranslation);
 }
 
 #define TEXT_PUSH(c) do {		    \
@@ -1003,7 +973,7 @@ static void PopState(void) {
     	busy = FALSE;
 }
 
-/* "do_parseLatex" 
+/* "parseLatex" 
 
  .External2("parseLatex", text, srcfile, verbose, verbatim, verb)
  If there is text then that is read and the other arguments are ignored.
@@ -1020,8 +990,7 @@ SEXP parseLatex(SEXP call, SEXP op, SEXP args, SEXP env)
     yydebug = 1;
 #endif 
 
-    R_ParseError = 0;
-    R_ParseErrorMsg[0] = '\0';
+    ParseErrorMsg[0] = '\0';
     
     PushState();
 
@@ -1034,10 +1003,13 @@ SEXP parseLatex(SEXP call, SEXP op, SEXP args, SEXP env)
     parseState.xxVerbatimList = CAR(args); 		args = CDR(args);
     parseState.xxVerbList = CAR(args);
 
-    s = R_ParseLatex(text, &status, source);
+    nextchar_parse = translateCharUTF8(STRING_ELT(text, 0));
+    ptr_getc = char_getc;
+    s = ParseLatex(&status, source);
     
     PopState();
     	
-    if (status != PARSE_OK) parseError(call, R_ParseError);
+    if (status != PARSE_OK) error("%s", ParseErrorMsg);
+    
     return s;
 }

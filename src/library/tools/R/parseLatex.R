@@ -16,13 +16,13 @@
 #  A copy of the GNU General Public License is available at
 #  https://www.R-project.org/Licenses/
 
-parseLatex <- function(text, filename = deparse1(substitute(text)),
+parseLatex <- function(text, filename = "text",
                      verbose = FALSE, verbatim = c("verbatim", "verbatim*",
                      "Sinput", "Soutput"),
 		     verb = "\\Sexpr")
 {
     ## the internal function must get some sort of srcfile
-    srcfile <- srcfilecopy(filename, text, file.mtime(filename))
+    srcfile <- srcfilecopy(filename, text)
     text <- paste(text, collapse="\n")
     .External2(C_parseLatex, text, srcfile, verbose, as.character(verbatim), as.character(verb))
 }

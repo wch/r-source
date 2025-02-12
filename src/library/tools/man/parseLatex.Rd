@@ -16,7 +16,7 @@
   characters.
 }
 \usage{
-parseLatex(text, filename = deparse1(substitute(text)),
+parseLatex(text, filename = "text",
            verbose = FALSE,
            verbatim = c("verbatim", "verbatim*",
                         "Sinput", "Soutput"),
@@ -29,7 +29,7 @@ latexToUtf8(x)
 A character vector containing LaTeX source code.
 }
   \item{filename}{
-A filename to use in syntax error messages.
+No longer used.
 }
   \item{verbose}{
 If \code{TRUE}, print debug error messages.
