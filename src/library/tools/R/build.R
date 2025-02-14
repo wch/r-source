@@ -1,7 +1,7 @@
 #  File src/library/tools/R/build.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2024 The R Core Team
+#  Copyright (C) 1995-2025 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -54,7 +54,7 @@ get_exclude_patterns <- function()
     c("^\\.Rbuildignore$",
       "(^|/)\\.DS_Store$",
       "^\\.(RData|Rhistory)$",
-      "~$", "\\.bak$", "\\.swp$",
+      "~$", "\\.bak$", "\\.sw.$",
       "(^|/)\\.#[^/]*$", "(^|/)#[^/]*#$",
       ## Outdated ...
       "^TITLE$", "^data/00Index$",
@@ -68,6 +68,8 @@ get_exclude_patterns <- function()
       "^src/so_locations$",
       ## Sweave detrius
       "^inst/doc/Rplots\\.(ps|pdf)$"
+      ## GNU Global
+    , "^(GPATH|GRTAGS|GTAGS)$"
       )
 
 
