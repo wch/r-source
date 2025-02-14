@@ -2878,6 +2878,49 @@ function(ch, default = TRUE, logical = TRUE, otherwise = default, n = 2L)
         ch
 }
 
+### **
+
+namespace_loads_from_file_load <-
+function(f, verbose = FALSE)
+{
+    if(verbose) message(sprintf("processing %s", f))
+
+    fun <- local({
+        make_namespace_load_tracer <- function() {
+            local({
+                .packages <- character()
+                .nframes <- integer()
+                function(p, n) {
+                    .packages <<- c(.packages, p)
+                    .nframes <<- c(.nframes, n)
+                }
+            })
+        }
+        trace_namespace_loads <- function(expr, tracer) {
+            ..namespace_load_tracer <- tracer
+            suppressMessages({
+                trace(base::loadNamespace,
+                      function() {
+                          pkg <- as.character(parent.frame()$package)
+                          dynGet("..namespace_load_tracer")(pkg[[1L]],
+                              sys.nframe())
+                      },
+                      print = FALSE)
+            })
+            on.exit(suppressMessages(untrace(base::loadNamespace)))
+            expr
+        }
+        function(file) {
+            tracer <- make_namespace_load_tracer()
+            tmpenv <- new.env()
+            trace_namespace_loads(load(file, tmpenv), tracer)
+            with(environment(tracer),
+                 .packages[.nframes == min(.nframes)])
+        }
+    })
+
+    R(fun, list(f))
+}
 
 ### Local variables: ***
 ### mode: outline-minor ***
