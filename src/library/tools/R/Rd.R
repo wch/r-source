@@ -1205,7 +1205,7 @@ function(x, kind)
 {
     wrk <- function(a, p) {
         cbind(unlist(a, use.names = FALSE),
-              rep.int(paste0(p, "::", names(a)), lengths(a)))
+              rep.int(sprintf("%s::%s", p, names(a)), lengths(a)))
     }
     y <- as.data.frame(do.call(rbind,
                                Map(wrk, x, names(x), USE.NAMES = FALSE)))
