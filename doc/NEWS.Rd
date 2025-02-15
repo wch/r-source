@@ -199,6 +199,8 @@
 
       \item The documentation of \code{gamma} and \code{is.numeric} is more
       specific, thanks to the contributors of \PR{18677}.
+
+      \item New dataset \code{gait} thanks to \I{Heather Turner} and \I{Ella Kaye}.
     }
   }
 

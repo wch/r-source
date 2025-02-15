@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2024-11-12 r87322) -- "Unsuffered Consequences"
-Copyright (C) 2024 The R Foundation for Statistical Computing
-Platform: aarch64-apple-darwin24.1.0
+R Under development (unstable) (2025-02-15 r87721) -- "Unsuffered Consequences"
+Copyright (C) 2025 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -2449,6 +2449,27 @@ F-statistic:  4354 on 4 and 34 DF,  p-value: < 2.2e-16
 > 
 > 
 > graphics::par(get("par.postscript", pos = 'CheckExEnv'))
+> cleanEx()
+> nameEx("gait")
+> ### * gait
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: gait
+> ### Title: Hip and Knee Angle while Walking
+> ### Aliases: gait
+> ### Keywords: datasets
+> 
+> ### ** Examples
+> 
+> plot(gait[, 1, ], type = "b",
++      xlim = range(gait[,,1]), ylim = range(gait[,,2]), 
++      xlab = "Hip Angle", ylab = "Knee Angle", main = "'gait' data : Boy 1")
+> mtext("all other boys", col = "thistle"); grid()
+> matlines(gait[, -1, 1], gait[, -1, 2], type = "l", lty = 1, col = adjustcolor("thistle", 1/3))
+> 
+> 
+> 
 > cleanEx()
 > nameEx("infert")
 > ### * infert

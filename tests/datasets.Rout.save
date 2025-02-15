@@ -1,6 +1,6 @@
 
-R Under development (unstable) (2024-11-12 r87322) -- "Unsuffered Consequences"
-Copyright (C) 2024 The R Foundation for Statistical Computing
+R Under development (unstable) (2025-02-15 r87721) -- "Unsuffered Consequences"
+Copyright (C) 2025 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -446,6 +446,13 @@ List of 3
 
 ** structure of dataset freeny.y
  Time-Series [1:39] from 1962 to 1972: 8.79 8.79 8.81 8.81 8.91 ...
+
+** structure of dataset gait
+ num [1:20, 1:39, 1:2] 37 36 33 29 23 18 15 12 9 6 ...
+ - attr(*, "dimnames")=List of 3
+  ..$ Time    : chr [1:20] "0.025" "0.075" "0.125" "0.175" ...
+  ..$ Subject : chr [1:39] "boy1" "boy2" "boy3" "boy4" ...
+  ..$ Variable: chr [1:2] "Hip Angle" "Knee Angle"
 
 ** structure of dataset infert
 'data.frame':	248 obs. of  8 variables:
