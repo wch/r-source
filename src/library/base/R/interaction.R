@@ -45,14 +45,16 @@ interaction <- function(..., drop = FALSE, sep = ".", lex.order = FALSE)
                 lvs <- paste(rep(l, length(lvs)),
                              rep(lvs, each = length(l)), sep=sep)
             }
-            if(anyDuplicated(lvs)) { ## fix them up
-                ulvs <- unique(lvs)
-                while((i <- anyDuplicated(flv <- match(lvs, ulvs)))) {
-                    lvs <- lvs[-i]
-                    ans[ans+1L == i] <- match(flv[i], flv[1:(i-1)]) - 1L
-                    ans[ans+1L > i] <- ans[ans+1L > i] - 1L
-                }
-                lvs <- ulvs
+            while(j <- anyDuplicated(lvs)) {
+                ## If levels at positions i and j > i are the same, we
+                ## need to drop the one at j, change the code for that
+                ## level to the code for level i, and decrease all codes
+                ## beyond the code for level j by one.
+                i <- match(lvs[j], lvs)
+                lvs <- lvs[-j]
+                j <- j - 1L
+                ans[ans == j] <- i - 1L
+                ans[ans > j] <- ans[ans > j] - 1L
             }
             if(drop) {
                 olvs <- lvs
