@@ -363,7 +363,8 @@ Version: 0.5-1
 Date: 2015-01-01
 Title: My First Collection of Functions
 Authors@@R: c(person("Joe", "Developer", role = c("aut", "cre"),
-                     email = "Joe.Developer@@some.domain.net"),
+                     email = "Joe.Developer@@some.domain.net",
+                     comment = c(ORCID = "nnnn-nnnn-nnnn-nnnn")),
               person("Pat", "Developer", role = "aut"),
               person("A.", "User", role = "ctb",
                      email = "A.User@@whereever.net"))
@@ -492,6 +493,10 @@ Auto-generated package citation information takes advantage of this
 specification. The @samp{Author} and @samp{Maintainer} fields are
 auto-generated from it if needed when building@footnote{at least if this
 is done in a locale which matches the package encoding.}  or installing.
+Note that for CRAN submissions, providing @samp{Authors@@R} is required,
+and providing @abbr{ORCID} or @abbr{ROR} identifiers (see
+@url{https://orcid.org/} and @url{https://ror.org/}) where possible is
+strongly encouraged.
 
 @findex COPYRIGHTS
 @c DESCRIPTION field Copyright
@@ -590,7 +595,7 @@ templated) C++ projects.
 The @samp{StagedInstall} logical field controls if package installation
 is `staged', that is done to a temporary location and moved to the final
 location when successfully completed.  This field was introduced in @R{}
-3.6.0 and it true by default: it is considered to be a temporary measure
+3.6.0 and is true by default: it is considered to be a temporary measure
 which may be withdrawn in future.
 
 @c DESCRIPTION field ZipData
@@ -1268,7 +1273,7 @@ which can used in C or C++.  On all Windows builds (even 64-bit ones)
 @samp{_WIN32} and @samp{__aarch64__}.  On macOS @samp{__APPLE__} is
 defined@footnote{There is also @samp{__APPLE_CC__}, but that indicates a
 compiler with Apple-specific features not the OS, although for
-historical reasons is is defined by @I{LLVM} @command{clang}.  It is
+historical reasons it is defined by @I{LLVM} @command{clang}.  It is
 used in @file{Rinlinedfuns.h}.}; for an `Apple Silicon' platform, test
 for both @samp{__APPLE__} and @samp{__arm64__}.
 
@@ -2991,10 +2996,9 @@ for each of the standards: this relies heavily on the reported values of
 @c @I{LLVM} clang 14, 15 default to C++14, 16-19 to C++17
 @c g++ 11-15 default to C++17
 
-The webpage
-@uref{https://en.cppreference.com/w/cpp/compiler_support} gives
-some information on which compilers are known to support recent C++
-features.
+The webpage @uref{https://en.cppreference.com/w/cpp/compiler_support}
+gives some information on which compiler versions are known to support
+recent C++ features.
 
 C++ standards have deprecated and later removed features.  Be aware that
 some current compilers still accept removed features in C++17 mode,
@@ -3088,8 +3092,8 @@ feature tests as well as resources such as
 @uref{https://clang.llvm.org/cxx_status.html} to see if the features you
 want to use are widely implemented.  In particular, for C++23 @R{}'s
 @command{configure} script only checks for a compiler claiming to be
-later than C++20.@footnote{The @code{__cplusplus} value for C++23 is not yet
-finalized and all but some of the latest compilers use values from earlier
+later than C++20.@footnote{The @code{__cplusplus} value for C++23 was not yet
+finalized and some of the current compilers use values from earlier
 drafts.}
 
 Attempts to specify an unknown C++ standard are silently ignored: recent
@@ -3137,8 +3141,8 @@ it will not apply to packages using @file{src/Makefile} or building in a
 subdirectory that do not set the C++ standard.  And compilers' default
 C++ standards varies widely and gets changed frequently by vendors --
 for example Apple clang up to at least 16 defaults to C++98, @I{LLVM}
-clang 14--15 to C++14, @I{LLVM} clang 16--18 to C++17 and @command{g++}
-11--14 to C++17.
+clang 14--15 to C++14, @I{LLVM} clang 16--20 and @command{g++}
+11--15 to C++17.
 
 For a package with a @file{src/Makefile} (or a Windows analogue),
 a non-default C++ compiler can be selected by including something like
@@ -3205,19 +3209,20 @@ some new features and made others optional, and C17 is a `bug-fix'
 update to C11.  On the other hand, C23 makes extensive changes,
 including making @code{bool}, @code{true} and @code{false} reserved
 words, finally disallowing K&R-style function declarations and
-clarifying the formerly deprecated meaning of function declarations with
-an empty parameter list to mean zero parameters. (There are many other
+changing the formerly deprecated meaning of function declarations with
+an empty parameter list to now mean no parameters. (There are many other
 additions: see for example @uref{https://en.cppreference.com/w/c/23}.)
 
-@c GCC 14, LLVM clang 19 and Apple clang 16 default to C17
-@c In 2025-01 GCC pre=15 defaulted to C23 (but did not document so).
+@c GCC 14, LLVM clang 18,19 and Apple clang 16 default to C17
+@c In 2025-01 GCC pre=15 defaulted to C23
 The @command{configure} script in recent versions of @R{} aims to choose
 a C compiler which supports C11: as the default in recent versions of
-@command{gcc}, @I{LLVM} @command{clang} and Apple @command{clang} is C17,
-that is what is likely to be chosen.  On the other hand, until @R{} 4.3.0
-the makefiles for the Windows build specified C99.  They now use the
-compiler default which for the recommended compiler is C17.  Future
-versions (including @command{gcc}@tie{}15) are likely to default to C23.
+@command{gcc} (prior to 15), @I{LLVM} @command{clang} and Apple
+@command{clang} is C17, that is what is likely to be chosen.  On the
+other hand, until @R{} 4.3.0 the makefiles for the Windows build
+specified C99.  They now use the compiler default which for the
+recommended compiler is C17.  Future compiler versions (including
+@command{gcc}@tie{}15) are likely to default to C23.
 
 Packages may want to either avoid or embrace the changes in C23, and can
 do so @emph{via} specifying @samp{USE_Cnn} for 17, 23, 90 or 99 in the
@@ -3232,6 +3237,8 @@ CPPFLAGS=`"$@{R_HOME@}/bin/R" CMD config CPPFLAGS`
 LDFLAGS=`"$@{R_HOME@}/bin/R" CMD config LDFLAGS`
 @end example
 @noindent
+However, not all platforms will have a C23 compiler: the first line here
+will give an empty value if no C23 compiler was found.
 @c The first two settings can also be used in a @file{src/Makefile.ucrt} or
 @c @file{src/Makefile.win} file.
 
@@ -3240,7 +3247,7 @@ The (claimed) C standard in use can be checked by the macro
 values @code{199901L}, @code{201112L} and @code{201710L} for C99, C11
 and C17.  The definitive value for C23 is @code{202311L} but some
 compilers@footnote{for example @command{gcc} 14 and Apple
-@command{clang} 16, but not LLVM @command{clang 18} and later.} are
+@command{clang} 16, but not GCC 15, LLVM @command{clang 18} and later.} are
 currently using @code{202000L} and requiring the standard to be
 specified as @code{c2x}.
 @c https://gustedt.gitlabpages.inria.fr/c23-library/
@@ -3253,9 +3260,9 @@ use than to condition on the value of @code{__STDC_VERSION__}.  In
 particular, C11 alignment functionality such as @code{_Alignas} and
 @code{aligned_alloc} is not implemented on Windows.
 
-End users can specify a standard by something like @command{R CMD
-INSTALL --use-C17}.  This overrides the @samp{SystemRequirements} field,
-but not for any @command{configure} file.
+End users installing a source package can specify a standard by
+something like @command{R CMD INSTALL --use-C17}.  This overrides the
+@samp{SystemRequirements} field, but not any @command{configure} file.
 
 @node Using @command{cmake},  , C standards, Configure and cleanup
 @subsection Using @command{cmake}
