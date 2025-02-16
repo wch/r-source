@@ -1236,12 +1236,12 @@ update to the compiler (e.g.@: from 13.1 to 13.2).
 @node LTO with LLVM, LTO for package checking, LTO with GCC, Link-Time Optimization
 @subsubsection @abbr{LTO} with @I{LLVM}
 
-@I{LLVM} supports another type of @abbr{LTO} called `Thin @abbr{LTO}' as well as a similar
-implementation to GCC, sometimes called `Full @abbr{LTO}'.  (See
-@uref{https://clang.llvm.org/docs/ThinLTO.html}.)  Currently the @I{LLVM}
-compilers relevant to @R{} are @command{clang} and @command{flang-new} for
-which this can be selected by setting macro @samp{LTO=-flto=thin}.  @I{LLVM}
-has
+@I{LLVM} supports another type of @abbr{LTO} called `Thin @abbr{LTO}' as
+well as a similar implementation to GCC, sometimes called `Full
+@abbr{LTO}'.  (See @uref{https://clang.llvm.org/docs/ThinLTO.html}.)
+Currently the @I{LLVM} compilers relevant to @R{} are @command{clang}
+and @command{flang} (formerly @command{flang-new}) for which this can
+be selected by setting macro @samp{LTO=-flto=thin}.  @I{LLVM} has
 @example
 AR=llvm-ar
 RANLIB=llvm-ranlib
@@ -1264,7 +1264,7 @@ code compiled with @command{gfortran}.
 It is said to be particularly beneficial to use @option{-O3} for
 @command{clang} in conjunction with @abbr{LTO}.
 
-It seems that @command{flang-new} may in future support @abbr{LTO}.
+It seems that @command{flang} may in future support @abbr{LTO}.
 
 The 2020s versions of Intel's C/C++ compilers are based on @I{LLVM} and as
 such support @I{LLVM}-style @abbr{LTO}, both `full' and `thin'.  This might use
@@ -2376,7 +2376,7 @@ problems} can be specified @emph{via} the environment variable
 Package developers are encouraged to use this mechanism to enable a
 reasonable amount of diagnostic messaging (``warnings'') when compiling,
 such as e.g.@: @option{-Wall -pedantic} for tools from GCC, the GNU
-Compiler Collection, and for LLVM (@command{clang} and @command{flang-new}).
+Compiler Collection, and for LLVM (@command{clang} and @command{flang}).
 
 Note that this mechanism can also be used when it is necessary to change
 the optimization level whilst installing a particular package.  For
@@ -4953,8 +4953,8 @@ unset.)
 
 The name @command{flang} has been used for two projects: this is about
 the sub-project of @I{LLVM} which builds a Fortran compiler and runtime
-libraries.  The compiler is currently named @command{flang-new} but has been
-announced to be renamed to @command{flang} when more nearly complete.
+libraries.  The compiler is currently named @command{flang} but was
+@command{flang-new} prior to version 20.
 
 The version in @I{LLVM} 16 and later was able to build @R{} on @cputype{x86_64} Linux
 with
