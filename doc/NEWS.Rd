@@ -5,7 +5,7 @@
 \title{R News}
 \encoding{UTF-8}
 
-\section{\Rlogo CHANGES IN R 4.4.2 patched}{
+\section{\Rlogo CHANGES IN R 4.4.3}{
   \subsection{INSTALLATION}{
     \itemize{
       \item \R can be installed using C23 (for example with
