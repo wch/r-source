@@ -38,7 +38,8 @@
 \note{
   This is the version of the data as in the \CRANpkg{fda} package and 
   corresponding textbooks, but with named dimensions. One record appears to be 
-  duplicated from the original paper, Olshen \emph{et al.} (1989), which 
+  duplicated from the original paper,
+  \bibcite{Olshen \abbr{et al.}\sspace(1989)}, which 
   analyses a sample of 38 boys. The \code{gait} dataset has 39 boys but 
   \code{boy19} and \code{boy26} have identical measurements.
 }
