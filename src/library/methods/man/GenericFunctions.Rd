@@ -1,6 +1,6 @@
 % File src/library/methods/man/GenericFunctions.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2016 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{GenericFunctions}
@@ -60,7 +60,7 @@ getGenerics(where, searchForm = FALSE)
       exist as formal generic function objects (for efficiency and
       historical reasons), regardless of whether methods have been
       defined for them.  For a primitive function, \code{isGeneric}
-      tests whether non-default methods have been defined, whereas
+      tests whether methods have been defined, whereas
       \code{\link{getGeneric}} returns what the formal generic function
       object would be, even if no methods have been defined.
     }
