@@ -3155,7 +3155,7 @@ an empty parameter list to now mean no parameters. (There are many other
 additions: see for example @uref{https://en.cppreference.com/w/c/23}.)
 
 As from @R{} 4.5.0, @R{}'s @command{configure} script chooses a compiler
-option which select C23 if one is available.  Some conpilers (including
+option which selects C23 if one is available.  Some conpilers (including
 @command{gcc}@tie{}15) default to C23 and most others from 2022/3 and
 later have such an option.
 
