@@ -133,13 +133,14 @@ x <- c(9:20, 1:5, 3:7, 0:8)
 stopifnot(identical(xu,  unique(x)),
           identical(xu2, unique(x, fromLast = TRUE)))
 
-duplicated(iris)[140:143]
+which(duplicated(warpbreaks))
 
-duplicated(iris3, MARGIN = c(1, 3))
-anyDuplicated(iris) ## 143
+## for 3d array, MARGIN = -1  <==>  MARGIN = 2:3
+duplicated(gait, MARGIN = -1) # boy26 duplicates boy19, see help(gait).
+anyDuplicated(warpbreaks) 
 \dontshow{% array & data.frame methods:
-stopifnot(identical(anyDuplicated(iris), 143L),
-          identical(anyDuplicated(iris3, MARGIN = c(1, 3)), 143L))
+stopifnot(identical(anyDuplicated(warpbreaks), 8L),
+          identical(anyDuplicated(gait, MARGIN = -1), 26L))
 }
 anyDuplicated(x)
 anyDuplicated(x, fromLast = TRUE)
