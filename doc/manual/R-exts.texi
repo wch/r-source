@@ -2884,14 +2884,15 @@ selected as @samp{FC}, so platforms might be encountered which only
 support Fortran 90.  However, Fortran 95 is supported on all known
 platforms.
 
-Most compilers specified by @samp{FC} will accept most Fortran 2003, 2008 or
-2018 code: such code should still use file extension @file{.f90}.  Most
-current platforms use @command{gfortran} where you might need to include
-@option{-std=f2003}, @option{-std=f2008} or (from version 8)
-@option{-std=f2018} in @code{PKG_FFLAGS} or @code{PKG_FCFLAGS}: the
-default is `GNU Fortran', currently Fortran 2018 (but Fortran 95 prior
-to @command{gfortran}@tie{}8) with non-standard extensions.  The other
-compilers in current use (@I{LLVM}'s @command{flang-new} and Intel's
+Most compilers specified by @samp{FC} will accept most Fortran 2003,
+2008 or 2018 code: such code should still use file extension
+@file{.f90}.  Most current platforms use @command{gfortran} where you
+might need to include @option{-std=f2003}, @option{-std=f2008} or (from
+version 8) @option{-std=f2018} in @code{PKG_FFLAGS} or
+@code{PKG_FCFLAGS}: the default is `GNU Fortran', currently Fortran 2018
+(but Fortran 95 prior to @command{gfortran}@tie{}8) with non-standard
+extensions.  The other compilers in current use (@I{LLVM}'s
+@command{flang} (called @command{flang-new} before version 20) and Intel's
 @command{ifx}) default to Fortran 2018@footnote{but was said to have
 complete support only from version 2023.0.0.}.
 
@@ -2905,7 +2906,7 @@ The Fortran 2023 released in Nov 2023: as usual compiler vendors are
 introducing support incrementally.
 For Intel's @command{ifx} see
 @uref{https://www.intel.com/content/www/us/en/developer/articles/technical/fortran-language-and-openmp-features-in-ifx.html#Fortran%20Standards}.
-For @I{LLVM}'s @command{flang-new} see
+For @I{LLVM}'s @command{flang} aka @command{flang-new} see
 @uref{https://flang.llvm.org/docs/F202X.html}.
 @code{gfortran} does not have complete support even for the 2008 and
 2018 standards, but the option @option{-std=f2023} is supported from
@@ -2960,7 +2961,12 @@ December 2014 and was used by default as from @R{} 4.1.0 if supported.
 Further revisions `C++17' (in December 2017), `C++20' (with many new
 features in December 2020) and `C++23' (in October 2024) have been
 published since.  The next revision, `C++26', is expected in 2026/7 and
-several compilers already have considerable support for the current draft.
+several compilers already have considerable support for the current
+draft.
+
+The support in @R{} for these standards has varied over the years: this
+version of the manual only describes @R{} 4.3.0 and later.  For details
+of earlier versions, see the corresponding section in their manuals.
 
 The default standard for compiling @R{} packages was changed to C++17 in
 @R{} 4.3.0 if supported, and from @R{} 4.4.0 only a C++17 compiler will
@@ -2980,60 +2986,37 @@ for each of the standards: this relies heavily on the reported values of
 @code{__cplusplus}.
 
 @c Apple clang 14 defaults to C++98 (even 16)
-@c @I{LLVM} clang 14, 15 default to C++14, 16-19 to C++17
+@c @I{LLVM} clang 14, 15 default to C++14, 16-20 to C++17
 @c g++ 11-15 default to C++17
 
-The webpage
-@uref{https://en.cppreference.com/w/cpp/compiler_support} gives
-some information on which compilers are known to support recent C++
-features.
+The webpage @uref{https://en.cppreference.com/w/cpp/compiler_support}
+gives some information on which compiler versions are known to support
+recent C++ features.
 
 C++ standards have deprecated and later removed features.  Be aware that
 some current compilers still accept removed features in C++17 mode,
 such as @code{std::unary_function} (deprecated in C++11, removed in C++17).
 
-Different versions of @R{} have used different default C++ standards, so
-for maximal portability a package should specify the standard it
-requires.  In order to specify C++14 code in a package with a
-@file{Makevars} file (or @file{Makevars.win} or @file{Makevars.ucrt} on
-Windows) should include the line
-
-@example
-CXX_STD = CXX14
-@end example
-@noindent
-Compilation and linking will then be done with the C++14 compiler (if
-any).  Analogously for other standards (details below).  On the other
-hand, specifying C++11@footnote{Often historically used to mean `not C++98'}
-when the code is valid under C++14 or C++17 reduces future portability.
-
-Packages without a @file{src/Makevars} or @file{src/Makefile} file may
-specify a C++ standard for code in the @file{src} directory by including
-something like @samp{C++14} in the @samp{SystemRequirements} field of
-the @file{DESCRIPTION} file, e.g.
+For maximal portability a package should specify the standard it
+requires for code in its @file{src} directory by including something
+like @samp{C++14} in the @samp{SystemRequirements} field of the
+@file{DESCRIPTION} file, e.g.
 
 @example
 SystemRequirements: C++14
 @end example
+@noindent
+If it has a @file{Makevars} file (or @file{Makevars.win} or
+@file{Makevars.ucrt} on Windows) this should include the line
+@example
+CXX_STD = CXX14
+@end example
+@noindent
+On the other hand, specifying C++11@footnote{Often historically
+used to mean `not C++98'} when the code is valid under C++14 or C++17
+reduces future portability.
 
-If a package does have a @file{src/Makevars[.win]} file then also
-setting the make variable @samp{CXX_STD} there is recommended, as it
-allows @command{R CMD SHLIB} to work correctly in the package's
-@file{src} directory.
-
-A requirement of C++17 or later should always be declared in the
-@samp{SystemRequirements} field (as well as in @file{src/Makevars} or
-@file{src/Makefile}) so this is shown on the package's summary pages on
-@acronym{CRAN} or similar.  This is also good practice for a requirement
-of C++14.  Note that support of C++14 or C++17 is only available from
-@R{} 3.4.0, so if the package has an @R{} version requirement it needs to
-take that into account.
-
-Essentially complete C++14 support is available from GCC 5, @I{LLVM}
-@command{clang} 3.4 and currently-used versions of Apple
-@command{clang}.
-
-Code needing C++14 features can check for their presence @emph{via}
+Code needing C++14 or later features can check for their presence @emph{via}
 `SD-6 feature tests'@footnote{See
 @uref{https://isocpp.org/std/standing-documents/sd-6-sg10-feature-test-recommendations}
 or
@@ -3063,26 +3046,16 @@ using std::make_unique;
 @c RHEL 7 (4.8, goes to 'extended life cycle' 2024-07 to 2028-06-30)
 @c RHEL 8 (8.x, 9.x available. full support 2024-05 + 8 more years)
 @c RHEL 9 (11.x available, full support 2027-05 + 8 more years)
-C++17 (as from @R{} 3.4.0), C++20 (as from @R{} 4.0.0) and C++23 (as
-from @R{} 4.3.0) can be specified in an analogous way (replacing
-@code{14} by @code{17}, @code{20} or @code{23}) but compiler/OS support
-is platform-dependent.  Some C++17 and C++20 support is available with
-the default builds of @R{} on macOS and Windows as from @R{} 4.0.0.
-Much of @command{g++}'s support for C++17 needs version 7 or later: that
-is more recent than some still-current Linux distributions but often
-packages for later compilers are available: for @I{RHEL}/@I{Centos} 7 look for
-`@I{devtoolset}'.
+
+C++17, C++20, C++23 and C++26 (from @R{} 4.5.0) can be specified in an
+analogous way.
 
 Note that C++17 or later `support' does not mean complete support: use
 feature tests as well as resources such as
 @uref{https://en.cppreference.com/w/cpp/compiler_support},
 @uref{https://gcc.gnu.org/projects/cxx-status.html} and
 @uref{https://clang.llvm.org/cxx_status.html} to see if the features you
-want to use are widely implemented.  In particular, for C++23 @R{}'s
-@command{configure} script only checks for a compiler claiming to be
-later than C++20.@footnote{The @code{__cplusplus} value for C++23 is not yet
-finalized and all but some of the latest compilers use values from earlier
-drafts.}
+want to use are widely implemented.
 
 Attempts to specify an unknown C++ standard are silently ignored: recent
 versions of @R{} throw an error for C++98 and for known standards for
@@ -3126,11 +3099,11 @@ sublibs:
 
 The discussion above is about the standard @R{} ways of compiling C++:
 it will not apply to packages using @file{src/Makefile} or building in a
-subdirectory that do not set the C++ standard.  And compilers' default
-C++ standards varies widely and gets changed frequently by vendors --
-for example Apple clang up to at least 16 defaults to C++98, @I{LLVM}
-clang 14--15 to C++14, @I{LLVM} clang 16--18 to C++17 and @command{g++}
-11--14 to C++17.
+subdirectory that do not set the C++ standard.  Do not rely on the
+compilers' default C++ standard, which varies widely and gets changed
+frequently by vendors -- for example Apple clang up to at least 16
+defaults to C++98, @I{LLVM} clang 14--15 to C++14, @I{LLVM} clang 16--20
+and @command{g++} 11--15 to C++17.
 
 For a package with a @file{src/Makefile} (or a Windows analogue),
 a non-default C++ compiler can be selected by including something like
@@ -3149,34 +3122,14 @@ checking they are non-empty.  A common use of @file{src/Makefile} is to
 compile an executable, when likely something like (for example for
 C++14)
 @example
-CXX14 = `"$@{R_HOME@}/bin/R" CMD config CXX14`
-CXX14STD = `"$@{R_HOME@}/bin/R" CMD config CXX14STD`
-CXX = $@{CXX14@} $@{CXX14STD@}
-CXXFLAGS = `"$@{R_HOME@}/bin/R" CMD config CXX14FLAGS`
-@end example
-@noindent
-suffices.  On Unix (and on Windows from @R{} 4.3.0) this can be simplified
-to
-@example
+if test -z "$CXX14"; then
+  AC_MSG_ERROR([No C++14 compiler is available])
+fi
 CXX = $@{CXX14@} $@{CXX14STD@}
 CXXFLAGS = $@{CXX14FLAGS@}
 @end example
-
-On a Unix-alike C++ compilation defaulted to C++11 from @R{} 3.6.0, to
-C++14 from @R{} 4.1.0 and to C++17 from @R{} 4.3.0. However, only `if
-available', so platforms using very old OSes might have used the
-previous default.  Even older versions of @R{} defaulted to the
-compiler's default, almost certainly C++98 for compilers of comparable
-vintage.
-
-On Windows the default was changed from C++98 to C++11 in @R{} 3.6.2, to
-C++14 in @R{} 4.2.3 and to C++17 in @R{} 4.3.0.
-
-The C++11 standard could be specified as from @R{} 3.1.0 and C++14 or
-C++17 as from @R{} 3.4.0, for C++20 from @R{} 4.0.0 and for C++23 from
-@R{} 4.3.0 (although they may not be supported by the compilers
-in use).  C++11 support became mandatory in @R{} 4.0.0 and C++17 support
-in @R{} 4.4.0.
+@noindent
+suffices.
 
 The @file{.so}/@file{.dll} in a package may need to be linked by the
 C++ compiler if it or any library it links to contains compiled C++
@@ -3197,19 +3150,24 @@ some new features and made others optional, and C17 is a `bug-fix'
 update to C11.  On the other hand, C23 makes extensive changes,
 including making @code{bool}, @code{true} and @code{false} reserved
 words, finally disallowing K&R-style function declarations and
-clarifying the formerly deprecated meaning of function declarations with
-an empty parameter list to mean zero parameters. (There are many other
+changing the formerly deprecated meaning of function declarations with
+an empty parameter list to now mean no parameters. (There are many other
 additions: see for example @uref{https://en.cppreference.com/w/c/23}.)
 
-@c GCC 14, LLVM clang 19 and Apple clang 16 default to C17
-@c In 2025-01 GCC pre=15 defaulted to C23 (but did not document so).
-The @command{configure} script in recent versions of @R{} aims to choose
-a C compiler which supports C11: as the default in recent versions of
-@command{gcc}, @I{LLVM} @command{clang} and Apple @command{clang} is C17,
-that is what is likely to be chosen.  On the other hand, until @R{} 4.3.0
-the makefiles for the Windows build specified C99.  They now use the
-compiler default which for the recommended compiler is C17.  Future
-versions (including @command{gcc}@tie{}15) are likely to default to C23.
+As from @R{} 4.5.0, @R{}'s @command{configure} script chooses a compiler
+option which select C23 if one is available.  Some conpilers (including
+@command{gcc}@tie{}15) default to C23 and most others from 2022/3 and
+later have such an option.
+
+@c GCC 14, LLVM clang 18,19 and Apple clang 16 default to C17
+@c In 2025-01 GCC pre=15 defaulted to C23 (and later documented so)
+The @command{configure} script in recent previous versions of @R{} aimed
+to choose a C compiler which supposrted C11: as the default in recent
+versions of @command{gcc} (prior to 15), @I{LLVM} @command{clang} and
+Apple @command{clang} is C17, that is what is likely to be chosen.  On
+the other hand, until @R{} 4.3.0 the makefiles for the Windows build
+specified C99 and up to @R{} 4.4.3 used the compiler default which for
+the recommended compiler was C17.
 
 Packages may want to either avoid or embrace the changes in C23, and can
 do so @emph{via} specifying @samp{USE_Cnn} for 17, 23, 90 or 99 in the
@@ -3224,17 +3182,17 @@ CPPFLAGS=`"$@{R_HOME@}/bin/R" CMD config CPPFLAGS`
 LDFLAGS=`"$@{R_HOME@}/bin/R" CMD config LDFLAGS`
 @end example
 @noindent
-@c The first two settings can also be used in a @file{src/Makefile.ucrt} or
-@c @file{src/Makefile.win} file.
+However, not all platforms will have a C23 compiler: the first line here
+will give an empty value if no C23 compiler was found.
 
 The (claimed) C standard in use can be checked by the macro
 @code{__STDC_VERSION__}. This is undefined in C89/C90 and should have
 values @code{199901L}, @code{201112L} and @code{201710L} for C99, C11
 and C17.  The definitive value for C23 is @code{202311L} but some
 compilers@footnote{for example @command{gcc} 14 and Apple
-@command{clang} 16, but not @I{LLVM} @command{clang 18} and later.} are
-currently using @code{202000L} and requiring the standard to be
-specified as @code{c2x}.
+@command{clang} 16, but not GCC 15, @I{LLVM} @command{clang 18} and
+later.} are currently using @code{202000L} and requiring the standard to
+be specified as @code{c2x}.
 @c https://gustedt.gitlabpages.inria.fr/c23-library/
 C23 has macros similar to C++ `feature tests' for many of its changes,
 for example @code{__STDC_VERSION_LIMITS_H__}.
@@ -3245,9 +3203,9 @@ use than to condition on the value of @code{__STDC_VERSION__}.  In
 particular, C11 alignment functionality such as @code{_Alignas} and
 @code{aligned_alloc} is not implemented on Windows.
 
-End users can specify a standard by something like @command{R CMD
-INSTALL --use-C17}.  This overrides the @samp{SystemRequirements} field,
-but not for any @command{configure} file.
+End users installing a source package can specify a standard by
+something like @command{R CMD INSTALL --use-C17}.  This overrides the
+@samp{SystemRequirements} field, but not any @command{configure} file.
 
 @node Using @command{cmake}
 @subsection Using @command{cmake}
@@ -5135,9 +5093,9 @@ only cancel built-in defines (not portable) and those defined earlier on
 the command line (@R{} does not use any).)
 
 The GNU option @option{-pipe} used to be widely accepted by
-C/C++/Fortran compilers, but has been removed in
-@w{@command{flang-new} 18}.  In any case, it should not be used in
-distributed code as it may lead to excessive memory use.
+C/C++/Fortran compilers, but was removed in @w{@command{flang-new} 18}.
+In any case, it should not be used in distributed code as it may lead to
+excessive memory use.
 
 People have used @command{configure} to customize @file{src/Makevars},
 including for specific compilers.  This is unsafe for several reasons.
@@ -5963,7 +5921,7 @@ functionality.
 Both the compiler and OS (@emph{via} system header files, which may
 differ by architecture even for nominally the same OS) affect the
 compilability of C/C++ code.  Compilers from the GCC, @I{LLVM}
-(@command{clang} and @command{flang-new}) Intel and Oracle Developer Studio
+(@command{clang} and @command{flang}) Intel and Oracle Developer Studio
 suites have been used with @R{}, and both @I{LLVM} @command{clang} and
 Oracle have more than one implementation of C++ headers and library.
 The range of possibilities makes comprehensive empirical checking
@@ -17084,7 +17042,7 @@ compiler for the default C++ dialect and not necessarily to other
 dialects.} and @samp{F_VISIBILITY} for C, C++ and Fortran
 compilers.@footnote{In many cases Fortran compilers accept the flag but
 do not actually hide their symbols: at the time of writing that was true
-of @command{gfortran}, @command{flang-new} and Intel's @command{ifx}.}
+of @command{gfortran}, @command{flang} and Intel's @command{ifx}.}
 These are defined in @file{etc/Makeconf} and so available for normal
 compilation of package code.  For example, @file{src/Makevars} could
 include some of

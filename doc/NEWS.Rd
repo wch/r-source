@@ -206,20 +206,21 @@
 
   \subsection{INSTALLATION on a UNIX-ALIKE}{
     \itemize{
-      \item A C23 compiler (if available) can be selected for
-      compilation of \R and packages \emph{via} the \command{configure}
-      flag \option{--with-C23}.  The compliance test is of support of
-      new keywords: C23 does have feature-tests macros for many of
-      its new features.
+      \item A C23 compiler (if available) is now selected by default for
+      compilation of \R and packages.  \R builds can opt out \emph{via} the
+      \command{configure} flag \option{--without-C23}, unless the
+      specified or default (usually \command{gcc}) compiler defaults to C23:
+      \command{gcc}sspace{}15 does.
 
-      It is intended that this will become the default before release:
-      already \R's \command{configure} may select a compiler which
-      defaults to C23 (such as GCC 15).
-
-      When C23 is selected, packages using \R's compiler settings can
-      ask not to use C23 \emph{via} including \code{USE_C17} in
-      \code{SystemRequirements} or can be installed by \command{R CMD
-	INSTALL --use-C17}.
+      %% GCC 13 was released in 2023-04, LLVM 18 was 2024-03, 15 was 2022-09
+      %% Apple clang 14.0.3 was too old: 15 is the earliest that can be
+      %%   installed on macOS 15.3
+      %% https://en.cppreference.com/w/c/23
+      A C23 compiler is known to be selected with
+      \command{gcc}\sspace{}13--15,
+      \I{LLVM} \command{clang}\sspace{}18--20 (and 15 should),
+      Apple \command{clang}\sspace{}15--16 and
+      Intel\sspace{}2024.2 (and 2022.2 should).
 
       \item The minimum \command{autoconf} requirement for a maintainer
       build has been increased to \command{autoconf}\sspace{}2.72.
@@ -230,9 +231,19 @@
       \item Failures in building the manuals under \file{doc} now abort
       the installation, removing any file which caused the failure.
 
+      \item Control of symbol visibility is now supported on macOS (the
+      previous check only worked on ELF platforms).
+
       \item There is now support for installing the debug symbols for
       recommended packages on macOS: see \samp{REC_INSTALL_OPT} in file
       \file{config.site}.
+    }
+  }
+
+  \subsection{INSTALLATION on WINDOWS}{
+    \itemize{
+      \item Both building \R and installing packages use the C compiler
+      in C23 mode. [In progress.]
     }
   }
 
@@ -257,19 +268,22 @@
     }
   }
 
-  \subsection{INSTALLATION}{
-    \itemize{
-      \item Control of symbol visibility is now supported on macOS (the
-      previous check only worked on ELF platforms).
-    }
-  }
-
   \subsection{PACKAGE INSTALLATION}{
     \itemize{
+      \item Packages are now installed using C23 where supported by the
+      OS and \R build.
+
+      Packages using \R's compiler settings can ask \strong{not} to use C23
+      \emph{via} including \code{USE_C17} in \code{SystemRequirements}
+      or can be installed by \command{R CMD INSTALL --use-C17}.
+      (Some packages ignore these settings in their \command{configure}
+      script or when compiling in sub-directiories af \file{src}, as
+      will those using a \file{src/Makefile}.)
+      
       \item Source installs now report the package version in the log.
 
-      \item There is preliminary support for C++26 in GCC >= 14, Apple
-      clang >= 16 and \I{LLVM} clang >= 17.
+      \item There is preliminary support for C++26 with GCC \eqn{>=} 14, Apple
+      \command{clang++} \eqn{>=} 16 and \I{LLVM} \command{clang++} \eqn{>=} 17.
     }
   }
 

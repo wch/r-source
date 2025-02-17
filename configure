@@ -1902,7 +1902,7 @@ Optional Features:
 Optional Packages:
   --with-PACKAGE[=ARG]    use PACKAGE [ARG=yes]
   --without-PACKAGE       do not use PACKAGE (same as --with-PACKAGE=no)
-  --with-C23              use C23 if available [no]
+  --with-C23              use C23 if available [yes]
   --with-blas             use system BLAS library (if available), or specify
                           it [unset]
   --with-lapack           use system LAPACK library (if available), or specify
@@ -4636,7 +4636,7 @@ else
 fi
 
 else case e in #(
-  e) use_C23=no ;;
+  e) use_C23=yes ;;
 esac
 fi
 

@@ -309,9 +309,9 @@ fi
 AM_CONDITIONAL(WANT_R_STATIC, [test "x${want_R_static}" = xyes])
 
 AC_ARG_WITH([C23],
-[AS_HELP_STRING([--with-C23],[use C23 if available @<:@no@:>@])],
+[AS_HELP_STRING([--with-C23],[use C23 if available @<:@yes@:>@])],
 [R_ARG_USE(C23)],
-[use_C23=no])
+[use_C23=yes])
 
 ## Build separate shared/dynamic library containing R's BLAS if desired 
 AC_ARG_ENABLE([BLAS-shlib],

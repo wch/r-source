@@ -251,13 +251,13 @@ temporary directory (one from which execution of scripts is allowed)
 which does not contain spaces.
 
 @findex R_HOME
-Choose a directory to install the @R{} tree (@R{} is not just a binary, but
-has additional data sets, help files, font metrics etc).  Let us call
-this place @var{R_HOME}.  Untar the source code.  This should create
-directories @file{src}, @file{doc}, and several more under a top-level
-directory: change to that top-level directory (At this point North
-American readers should consult @ref{Setting paper size}.)  Issue the
-following commands:
+Choose a directory to install the @R{} tree (@R{} is not just a binary,
+but has additional data sets, help files, font metrics etc).  Let us
+call this place @var{R_HOME}.  Untar the source code.  This should
+create directories @file{src}, @file{doc}, and several more under a
+top-level directory: change to that top-level directory (At this point
+readers in North American should consult @ref{Setting paper size}.)
+Issue the following commands:
 
 @findex configure
 
@@ -268,9 +268,9 @@ make
 
 @noindent
 (See @ref{Using make} if your make is not called @samp{make}.)  Users of
-Debian-based 64-bit systems@footnote{which use @file{lib} rather than
-@file{lib64} for their primary 64-bit library directories: attempts are
-made to detect such systems.} may need
+Debian-based 64-bit systems@footnote{such as Ubuntu. These use
+@file{lib} rather than @file{lib64} for their primary 64-bit library
+directories: attempts are made to detect such systems.} may need
 
 @example
 ./configure LIBnn=lib
@@ -307,12 +307,12 @@ make check-all
 @end example
 
 @noindent
-see @ref{Testing a Unix-alike Installation}
-for the possibilities of doing this in parallel.  Note that these checks
-are only run completely if the recommended packages are installed.  If
-you have a local CRAN mirror, these checks can be speeded up by either
-setting environment variable @env{R_CRAN_WEB} to its URL, or having a
-file @file{.R/repositories} specifying it (see @code{?setRepositories}).
+see @ref{Testing a Unix-alike Installation} for the possibilities of
+doing this in parallel.  Note that these checks are only run completely
+if the recommended packages are installed (the default) .  If you have a
+local CRAN mirror, these checks can be speeded up by either setting
+environment variable @env{R_CRAN_WEB} to its URL, or having a file
+@file{.R/repositories} specifying it (see @code{?setRepositories}).
 
 @command{make check-devel} checks the included packages' @file{tests}
 directories. For @pkg{grDevices} more complete checks will be run if
@@ -336,9 +336,8 @@ tree to, e.g., @file{/usr/local/lib/R}, see @ref{Installation}.  Note:
 you do not @emph{need} to install @R{}: you can run it from where it was
 built.
 
-You do not necessarily have to build @R{} in the top-level source
-directory (say, @file{@var{TOP_SRCDIR}}).  To build in
-@file{@var{BUILDDIR}}, run
+You do not have to build @R{} in the top-level source directory (say,
+@file{@var{TOP_SRCDIR}}).  To build in @file{@var{BUILDDIR}}, run
 
 @findex configure
 
@@ -385,8 +384,8 @@ Note: if you already have @R{} installed, check that where you installed
 @R{} replaces or comes earlier in your path than the previous
 installation.  Some systems are set up to have @file{/usr/bin} (the
 standard place for a system installation) ahead of @file{/usr/local/bin}
-(the default place for installation of @R{}) in their default path, and
-some do not have @file{/usr/local/bin} on the default path.
+(the default place for a source installation of @R{}) in their default
+path, and some do not have @file{/usr/local/bin} on the default path.
 
 
 @node Help options
@@ -399,7 +398,7 @@ HTML or PDF.
 By default @HTML{} help pages are created when needed rather than being
 built at install time.
 
-If you need to disable the server and want @HTML{} help, there is the
+If you need to disable its server and want @HTML{} help, there is the
 option to build @HTML{} pages when packages are installed
 (including those installed with @R{}).  This is enabled by the
 @command{configure} option @option{--enable-prebuilt-html}.  Whether
@@ -870,6 +869,16 @@ There are many other installation options, most of which are listed by
 this manual are either standard @command{autoconf} options not relevant
 to @R{} or intended for specialist uses by the @R{} developers.
 
+@command{configure} will select a C23 compiler if it finds one: to
+cicumvent this use option @option{--without-C23}.  This will only have
+an effect if the compiler in use does not default to C23: GCC 15 does
+and might be selected as @command{gcc} if macro @code{CC} is not
+specified in @file{config.site}.  (A compiler is considered to be a `C23
+compiler' if it supports C23 by default or if such support can be
+selected by a flag such as @option{-std=gnu23} or @option{-std=gnu2x}
+and it supports the new C23 keywords such as @code{bool}, @code{false}
+and @code{true}.)
+
 One that may be useful when working on @R{} itself is the option
 @option{--disable-byte-compiled-packages}, which ensures that the base
 and recommended packages are not byte-compiled.  (Alternatively the
@@ -883,9 +892,9 @@ involving times after 2037 or before 1916.  An alternative time-zone
 directory@footnote{How to prepare such a directory is described in file
 @file{src/extra/tzone/Notes} in the @R{} sources.} can be used, pointed
 to by environment variable @env{TZDIR}: this should contain files such
-as @file{Europe/London}.  On all tested OSes the system timezone was
-deduced correctly, but if necessary it can be set as the value of
-environment variable @env{TZ}.
+as @file{Europe/London}.  On all recently tested OSes the system
+timezone was deduced correctly, but if necessary it can be set as the
+value of environment variable @env{TZ}.
 
 Options @option{--with-internal-iswxxxxx},
 @option{--with-internal-towlower} and @option{--with-internal-wcwidth}
@@ -1012,21 +1021,27 @@ CXX23
 CXX23STD
 CXX23FLAGS
 CXX23PICFLAGS
+
+CXX26
+CXX26STD
+CXX26FLAGS
+CXX26PICFLAGS
 @end example
 @noindent
 The macros @code{CXX} etc are those used by default for C++ code.
 @command{configure} will attempt to set the rest suitably, choosing for
 @code{CXXSTD} and @code{CXX11STD} a suitable flag such as
-@option{-std=gnu++17} for C++17 support (which is required if C++ is to be
-supported by default).  Inferred values can be overridden in file
+@option{-std=gnu++17} for C++17 support (which is required if C++ is to
+be supported by default).  Inferred values can be overridden in file
 @file{config.site} or on the @command{configure} command line:
-user-supplied values will be tested by compiling some C++11/14/17/20/23
-code.
+user-supplied values will be tested by compiling some
+C++11/14/17/20/23/26 code.
 
-It may be that there is no suitable flag for C++14/17/20/23 support with
-the default compiler, in which case a different compiler could be
-selected for @code{CXX14}/@code{CXX17}/@code{CXX20}/@code{CXX23} with its
-corresponding flags.
+It may be that there is no suitable flag for C++14/17/20/23/26 support
+with the default compiler, in which case a different compiler could be
+selected for
+@code{CXX14}/@code{CXX17}/@code{CXX20}/@code{CXX23}/@code{CXX236} with
+its corresponding flags.
 
 If no suitable compiler/flag is found for the default C++ compiler, one
 can be set in file @file{config.site} @emph{via} macros @code{CXX}
@@ -1038,6 +1053,7 @@ Intel compilers.  Currently accepted values are (plus some synonyms)
 @example
 g++:     c++11 gnu+11 c++14 gnu++14 c++17 gnu++17 c++2a gnu++2a (from 8)
          c++20 gnu++20 (from 10) c++23 gnu++23 c++2b gnu++2b (from 11)
+         c++2c gnu++2c
 Intel:   c++11  gnu+11 c++14 gnu++14 c++17 gnu++17
          c++20 gnu++20 (from 2021.1) c++2b gnu++2b (from 2022.2)
          c++23 gnu++23 (at least from 2024.0)
@@ -1046,8 +1062,9 @@ Intel:   c++11  gnu+11 c++14 gnu++14 c++17 gnu++17
 (Those for @I{LLVM} @command{clang++} are documented at
 @uref{https://clang.llvm.org/cxx_status.html}, and follow @code{g++}:
 @code{-std=c++20} is supported from Clang 10, @code{-std=c++2b} from
-Clang 13 and @code{-std=c++23} from Clang 17.  Apple Clang supports
-@code{-std=c++2b} from 13.1.6 and @code{-std=c++23} from 16.0.0.)
+Clang 13 and @code{-std=c++23} and @code{-std=c++2c} from Clang 17.
+Apple Clang supports @code{-std=c++2b} from 13.1.6 and @code{-std=c++23}
+and @code{-std=c++2c} from 16.0.0.)
 
 @c c++1y does not pass the configure test in gcc 4.9.3
 @c , with @option{-std=c++1y} (introduced@footnote{See
@@ -1060,13 +1077,12 @@ extensions': what those are is hard to track down.
 
 For the use of C++ in @R{} packages,
 @pxref{, , , R-exts, Writing R Extensions}.
-Prior to @R{} 3.6.0 the default C++ standard was
-that of the compiler used: currently it is C++17.
+@c Prior to @R{} 3.6.0 the default C++ standard was
+@c that of the compiler used: currently it is C++17.
 
 @uref{https://en.cppreference.com/w/cpp/compiler_support} indicates
 which versions of common compilers support (parts of) which C++
-standards.  GCC introduced C++17 support gradually, but version 7 should
-suffice.
+standards.
 
 @node C standards
 @subsection C standards
@@ -1077,20 +1093,26 @@ not the compiler.} and the @code{ssize_t} type) not in the C
 standards. Typically compilers make these available, but @strong{not} if
 strict C compliance is specified by for example @option{-std=c17}.  So
 if you want to specify a non-default standard use something like
-@option{-std=gnu23}.
+@option{-std=gnu17}.
 
 Compiling @R{} requires C99 or later: C11 and C17 are minor updates, but
 the substantial update `C23' (finally published in October 2024) is also
-supported for current versions of GCC and @command{clang}.  The upcoming
-GCC@tie{}15 is expected to default to C23.
+supported for recent versions of GCC@footnote{At least 13--15: 15
+defaults to C23},  @command{clang}@footnote{including LLVM clang 18--20
+and Apple clang 15/16.} and Intel @command{icx}.  @R{} 4.5.0 defaults
+to C23 if supported by the chosen compiler.
 
 As from @R{} 4.3.0 there is support for packages to indicate their
 preferred C version.  Macros @code{CC17}, @code{C17FLAGS}, @code{CC23}
 and @code{C23FLAGS} can be set in @file{config.site} (there are examples
 there).  Those for C17 should support C17 or earlier and not allow C23
 additions so for example @code{bool}, @code{true} and @code{false} can
-be used as identifiers.  Those for C23 should support the new types such
-as @code{bool}.
+be used as identifiers.  Those for C23 should support the new keywords
+such as @code{bool}.
+
+There is also support for requesting earlier standards @emph{via}
+@code{CC99} and @code{CC90}: however these are very rarely needed as
+compilers accept legacy (even K&R) code in C17 mode (but not C23 mode).
 
 Some compilers warn enthusiastically about prototypes.  For most,
 omitting @option{-Wstrict-prototypes} in @code{C17FLAGS} suffices.
@@ -1167,7 +1189,7 @@ and @code{NM} may be needed to be set analogously. (If using an
 overriding that.} to @samp{gcc-nm}.)
 
 @c http://hubicka.blogspot.com/2019/05/gcc-9-link-time-and-inter-procedural.html
-With GCC 5 and later it is possible to parallelize parts of the @abbr{LTO}
+It is possible to parallelize parts of the @abbr{LTO}
 linking process: set the make macro @samp{LTO} to something like
 @samp{LTO=-flto=8} (to use 8 threads), for example in file
 @file{config.site}.
@@ -1197,7 +1219,8 @@ update to the compiler (e.g.@: from 13.1 to 13.2).
 @I{LLVM} supports another type of @abbr{LTO} called `Thin @abbr{LTO}' as well as a similar
 implementation to GCC, sometimes called `Full @abbr{LTO}'.  (See
 @uref{https://clang.llvm.org/docs/ThinLTO.html}.)  Currently the @I{LLVM}
-compilers relevant to @R{} are @command{clang} and @command{flang-new} for
+compilers relevant to @R{} are @command{clang} and @command{flang}
+(formerly @command{Flang-new}) for
 which this can be selected by setting macro @samp{LTO=-flto=thin}.  @I{LLVM}
 has
 @example
@@ -1222,7 +1245,7 @@ code compiled with @command{gfortran}.
 It is said to be particularly beneficial to use @option{-O3} for
 @command{clang} in conjunction with @abbr{LTO}.
 
-It seems that @command{flang-new} may in future support @abbr{LTO}.
+It seems that @command{flang} may in future support @abbr{LTO}.
 
 The 2020s versions of Intel's C/C++ compilers are based on @I{LLVM} and as
 such support @I{LLVM}-style @abbr{LTO}, both `full' and `thin'.  This might use
@@ -1410,9 +1433,10 @@ includes build tools from the @uref{https://www.msys2.org/, the 'MSYS2'
 project}.  Additional build tools packaged by 'MSYS2' may be installed
 via a package manager (@samp{pacman}).
 
-There is also an experimental variant of @I{Rtools44} with support for 64-bit
-ARM CPUs (@I{aarch64}) via @I{LLVM} 17 toolchain using @command{clang}/@command{flang-new} compilers,
-@command{lld} linker, and @I{libc++}. 
+There is also an experimental variant of @I{Rtools44} with support for
+64-bit ARM CPUs (@I{aarch64}) via @I{LLVM} 17 toolchain using
+@command{clang}/@command{flang} compilers, @command{lld} linker, and
+@I{libc++}.
 
 The toolsets used for 64-bit Windows from 2008 to 2022 were based on
 @I{MinGW-w64}.  The assistance of @I{Yu Gong} at a crucial step in
@@ -1812,9 +1836,9 @@ do, the final default is @file{/tmp} on Unix-alikes and the value of
 @enindex R_USER
 @env{R_USER} on Windows.  The path should be an absolute path not
 containing spaces@footnote{On Windows a path containing spaces will be
-replaced by the `short path' version if that does not contain spaces.}
-(and it is best to avoid non-alphanumeric characters such as @code{+} or
-quotes).
+replaced by the `short path' version if available and that does not
+contain spaces.}  (and it is best to avoid non-alphanumeric characters
+such as @code{+} or quotes).
 
 Some Unix-alike systems are set up to remove files and directories
 periodically from @file{/tmp}, for example by a @command{cron} job
@@ -1942,11 +1966,11 @@ absolute path to a valid temporary directory, not containing spaces.
 
 For most users it suffices to call
 @samp{install.packages(@var{pkgname})} or its GUI equivalent if the
-intention is to install a @acronym{CRAN} package and internet access is
+intention is to install a @acronym{CRAN} package and Internet access is
 available.@footnote{If a proxy needs to be set, see
 @command{?download.file}.}  On most systems @samp{install.packages()}
 will allow packages to be selected from a list box (typically with
-thousands of items).
+tens of thousands of items).
 
 To install packages from source on a Unix-alike use in a terminal
 
@@ -2217,10 +2241,10 @@ and for the current macOS distribution of @command{gfortran} at
 @example
 FC = /opt/gfortran/bin/gfortran
 (arm64)
-FLIBS =  -L/opt/gfortran/lib/gcc/aarch64-apple-darwin20.0/12.2.0
-  -L/opt/gfortran/lib -lgfortran -lemutls_w -lquadmath
+FLIBS =  -L/opt/gfortran/lib/gcc/aarch64-apple-darwin20.0/14.2.0
+  -L/opt/gfortran/lib -lgfortran -lemutls_w -lheapt_w -lquadmath
 (Intel)
-FLIBS =  -L/opt/gfortran/lib/gcc/x86_64-apple-darwin20.0/12.2.0
+FLIBS =  -L/opt/gfortran/lib/gcc/x86_64-apple-darwin20.0/14.2.0
   -L/opt/gfortran/lib -lgfortran -lquadmath
 @end example
 @noindent
@@ -2306,7 +2330,7 @@ problems} can be specified @emph{via} the environment variable
 Package developers are encouraged to use this mechanism to enable a
 reasonable amount of diagnostic messaging (``warnings'') when compiling,
 such as e.g.@: @option{-Wall -pedantic} for tools from GCC, the GNU
-Compiler Collection, and for @I{LLVM} (@command{clang} and @command{flang-new}).
+Compiler Collection, and for @I{LLVM} (@command{clang} and @command{flang}).
 
 Note that this mechanism can also be used when it is necessary to change
 the optimization level whilst installing a particular package.  For
@@ -2335,11 +2359,7 @@ For example, for the current distribution of @command{gfortran} at
 
 @example
 FC = /opt/gfortran/bin/gfortran
-(arm64)
-FLIBS =  -L/opt/gfortran/lib/gcc/aarch64-apple-darwin20.0/12.2.0
-  -L/opt/gfortran/lib -lgfortran -lemutls_w -lquadmath
-(Intel)
-FLIBS =  -L/opt/gfortran/lib/gcc/x86_64-apple-darwin20.0/12.2.0
+FLIBS =  -L/opt/gfortran/lib/gcc/x86_64-apple-darwin20.0/14.2.0
   -L/opt/gfortran/lib -lgfortran -lquadmath
 @end example
 
@@ -4844,13 +4864,13 @@ unset.)
 
 The name @command{flang} has been used for two projects: this is about
 the sub-project of @I{LLVM} which builds a Fortran compiler and runtime
-libraries.  The compiler is currently named @command{flang-new} but has been
-announced to be renamed to @command{flang} when more nearly complete.
+libraries.  The compiler command was @command{flang-new} prior to
+version 20.
 
 The version in @I{LLVM} 16 and later was able to build @R{} on @cputype{x86_64} Linux
 with
 @example
-FC=/path/to/flang-new
+FC=/path/to/flang
 @end example
 @noindent
 with the matching @command{clang} used as the C compiler, and the build
@@ -5074,10 +5094,10 @@ ones are for macOS 10.13--10.15.
 
 Or this can be done manually, by for example
 @example
-curl -OL https://mac.r-project.org/bin/darwin20/arm64/pcre2-10.42-darwin.20-arm64.tar.xz
-sudo tar -xvzf pcre2-10.42-darwin.20-arm64.tar.gz -C /
-curl -OL https://mac.r-project.org/bin/darwin20/arm64/xz-5.4.2-darwin.20-arm64.tar.xz
-sudo tar -xvzf xz-5.4.2-darwin.20-arm64.tar.xz -C /
+curl -OL https://mac.r-project.org/bin/darwin20/arm64/pcre2-10.44-darwin.20-arm64.tar.xz
+sudo tar -xvzf pcre2-10.44-darwin.20-arm64.tar.gz -C /
+curl -OL https://mac.r-project.org/bin/darwin20/arm64/xz-5.6.3-darwin.20-arm64.tar.xz
+sudo tar -xvzf xz-5.6.3-darwin.20-arm64.tar.xz -C /
 @end example
 @noindent
 (@command{sudo} is not needed if your account owns @file{/opt/R/arm64} or
@@ -5184,8 +5204,8 @@ FFLAGS="-g -O2 -mmacos-version-min=11.0"
 FCFLAGS="-g -O2 -mmacos-version-min=11.0"
 @end example
 @noindent
-where @code{11.0} can be replaced by @code{12.0}, @code{13.0} or
-@code{14.0} for macOS 12.x, 13.x and 14.x.
+where @code{11.0} can be replaced by @code{12.0}, @code{13.0},
+@code{14.0} or @code{15.0}
 
 To install packages using compiled code one needs the Command Line Tools
 (or @I{Xcode}) and appropriate compilers, e.g.@: the C/C++ compilers from
@@ -5197,16 +5217,16 @@ requirements such as component @command{pkgconfig} (and to set
 A subversion client can be obtained from
 @uref{https://mac.r-project.org/tools/}, for example by (Apple Silicon)
 @example
-curl -OL https://mac.r-project.org/tools/subversion-1.14.1-darwin.20-arm64.tar.gz
-tar xf subversion-1.14.1-darwin.20-arm64.tar.gz 
-sudo cp subversion-1.14.1-darwin-20-arm64/svn $LOCAL/bin
+curl -OL https://mac.r-project.org/tools/subversion-1.14.3-darwin.20-arm64.tar.gz
+tar xf subversion-1.14.3-darwin.20-arm64.tar.gz 
+sudo cp subversion-1.14.3-darwin-20-arm64/svn $LOCAL/bin
 @end example
 @noindent
 or (Intel)
 @example
-curl -OL https://mac.r-project.org/tools/subversion-1.14.0-darwin15.6.tar.gz
-tar xf subversion-1.14.0-darwin15.6.tar.gz
-sudo cp subversion-1.14.0-darwin15.6/svn $LOCAL/bin
+curl -OL https://mac.r-project.org/tools/subversion-1.14.3-darwin15.6.tar.gz
+tar xf subversion-1.14.3-darwin15.6.tar.gz
+sudo cp subversion-1.14.3-darwin15.6/svn $LOCAL/bin
 @end example
 
 If building software or installing source packages with @command{cmake}
@@ -5270,8 +5290,8 @@ contains the correct information.
 @subsection Fortran compiler
 
 There is a `universal' (@code{arm64} and Intel) build of
-@command{gfortran} 12.2 at
-@uref{https://mac.r-project.org/tools/gfortran-12.2-universal.pkg}.
+@command{gfortran} 14.2 at
+@uref{https://mac.r-project.org/tools/gfortran-14.2-universal.pkg}/
 This installs into @file{/opt/gfortran}.
 
 The @file{/opt/gfortran/SDK} symlink should point to the desired path to
@@ -5282,18 +5302,16 @@ symlink is broken, the driver will issue a warning and use @code{xcrun
 is used when using @command{gfortran} to link, so not when building @R{}
 but when installing a few packages.)
 
-Builds of @command{gfortran} 13.2 and 14.1 for @code{arm64} macOS 14 are
+Other builds of @command{gfortran} for @code{arm64} macOS 14 are
 available at
-@uref{https://github.com/fxcoudert/gfortran-for-macOS/releases}.  These
-can be built for Intel and older OSes from the sources at
-@uref{https://github.com/iains/gcc-13-branch/} and
-@code{gcc-14-branch/}.  To use one of the pre-built compilers with Apple
-@command{clang} needs something like
+@uref{https://github.com/fxcoudert/gfortran-for-macOS/releases}. To use
+one of the pre-built compilers with Apple @command{clang} needs
+something like
 @example
 LDFLAGS="-L/opt/R/arm64/lib -rpath /usr/local/gfortran/lib"
 @end example
 @noindent
-in @file{config.site} to ensure the Fortran run-time libraries are
+in @file{config.site} to ensure the matching Fortran run-time libraries are
 found.
 
 @node Cairo graphics
@@ -5374,8 +5392,7 @@ Other pre-compiled distributions of @command{clang} may be available
 from @uref{https://github.com/llvm/llvm-project/releases/} (recently
 only for @code{arm64} and usually unsigned/not notarized which makes
 them hard to use).  In particular, these include support for
-@abbr{OpenMP} which Apple @command{clang} does not.  Some of these have
-included support for the @abbr{ASan} and @abbr{UBSan} sanitizers.
+@abbr{OpenMP} which Apple @command{clang} does not.
 
 Suppose one of these distributions is installed under
 @file{$LOCAL/llvm}. Use a file @file{config.site} containing
@@ -5405,13 +5422,13 @@ from a @command{gfortran} distribution, from @I{Homebrew}, @dots{}).
 @c re-trested with GCC 14.1
 When last tested it was not possible to use @command{gcc} to build the
 @code{quartz()} device, so @command{configure --without-aqua} may be
-required.  @R{} was built and tested with the GCC 14.1 compilers in the
+required.  @R{} was built and tested with the GCC 14.2 compilers in the
 @code{arm64} @command{gfortran} distribution mentioned above using a
 @file{config.site} containing
 @example
-CC=/usr/local/gfortran/bin/gcc
-CXX=/usr/local/gfortran/bin/g++
-FC=/usr/local/gfortran/bin/gfortran
+CC=/opt/gfortran/bin/gcc
+CXX=/opt/gfortran/bin/g++
+FC=/opt/gfortran/bin/gfortran
 CFLAGS="-g -O2 -Wall -pedantic -Wstrict-prototypes"
 C17FLAGS="-g -O2 -Wall -pedantic -Wno-strict-prototypes"
 C90FLAGS=$C17FLAGS
@@ -5425,8 +5442,7 @@ It is usually possible to add some @abbr{OpenMP} support to the Apple
 @command{clang} compilers: see @uref{https://mac.r-project.org/openmp/}.
 Note that that approach is somewhat fragile as it needs a
 @file{libomp.dylib} library matching the version of the compiler
-used---and for example at the time of writing none was offered for the
-current compilers in @I{Xcode CLT} 14.3 nor 15.
+used.
 
 @node Other libraries
 @subsection Other libraries
@@ -5616,10 +5632,10 @@ installed at first use.  Check if a @abbr{JRE} is installed by running
 installed this may prompt you to install it from Oracle@footnote{Oracle
 Java has a restrictive licence, unlike distributions based on @I{OpenJDK}.}
 (but see the next paragraph).  We recommend you install a version with
-long-term support, e.g.@: 17 or 21@footnote{The planned @I{nextLTS}
+long-term support, e.g.@: 17 or 21@footnote{The planned next @I{LTS}
 release is 25 in September 2025.  Java 8 @emph{aka} 1.8.0 is still
 @I{LTS} but some packages require 11 or later.}  but not 18--20, 22--24
-with a 6-month lifetime.
+with a 6-month lifetime. 
 
 The currently simplest way to install Java is from
 @uref{https://adoptium.net, Adoptium}@footnote{which website works with
@@ -5781,12 +5797,12 @@ install_name_tool -change /usr/local/llvm/lib/libc++.1.dylib \
 @var{pkg}.so
 
 install_name_tool -change
-/opt/gfortran/lib/gcc/aarch64-apple-darwin20.0/12.2.0/libgfortran.5.dylib \
+/opt/gfortran/lib/gcc/aarch64-apple-darwin20.0/14.2.0/libgfortran.5.dylib \
 /Library/Frameworks/R.framework/Resources/lib/libgfortran.5.dylib \
 @var{pkg}.so
 
 install_name_tool -change
-/opt/gfortran/lib/gcc/aarch64-apple-darwin20.0/12.2.0/libquadmath.0.dylib \
+/opt/gfortran/lib/gcc/aarch64-apple-darwin20.0/14.2.0/libquadmath.0.dylib \
 /Library/Frameworks/R.framework/Resources/lib/libquadmath.0.dylib \
 @var{pkg}.so
 @end example
