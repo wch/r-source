@@ -71,7 +71,7 @@ logLik(object, \dots)
   the restrictions if \code{REML = TRUE}).
 }
 \seealso{
-  \code{\link[nlme:logLik.lme]{logLik.gls}}, \code{\link[nlme]{logLik.lme}}, in
+  \code{\link[nlme]{logLik.gls}}, \code{\link[nlme]{logLik.lme}}, in
   package \CRANpkg{nlme}, etc.
 
   \code{\link{AIC}}

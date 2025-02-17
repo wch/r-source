@@ -120,7 +120,7 @@ cov2cor(V)
   Some people have noted that the code for Kendall's tau is slow for
   very large datasets (many more than 1000 cases).  It rarely makes
   sense to do such a computation, but see function
-  \code{\link[pcaPP:cor.fk]{cor.fk}} in package \CRANpkg{pcaPP}.
+  \code{\link[pcaPP]{cor.fk}} in package \CRANpkg{pcaPP}.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988).

@@ -108,7 +108,7 @@ filled.contour(x = seq(0, 1, length.out = nrow(z)),
 \seealso{
   \code{\link{contour}}, \code{\link{image}},
   \code{\link{hcl.colors}}, \code{\link{gray.colors}},
-  \code{\link{palette}}; \code{\link[lattice:levelplot]{contourplot}}
+  \code{\link{palette}}; \code{\link[lattice]{contourplot}}
   and \code{\link[lattice]{levelplot}} from package \CRANpkg{lattice}.
 }
 \examples{

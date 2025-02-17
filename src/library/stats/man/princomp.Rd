@@ -44,8 +44,8 @@ princomp(x, \dots)
   \item{scores}{a logical value indicating whether the score on each
     principal component should be calculated.}
   \item{covmat}{a covariance matrix, or a covariance list as returned by
-    \code{\link{cov.wt}} (and \code{\link[MASS:cov.rob]{cov.mve}} or
-    \code{\link[MASS:cov.rob]{cov.mcd}} from package \CRANpkg{MASS}).
+    \code{\link{cov.wt}} (and \code{\link[MASS]{cov.mve}} or
+    \code{\link[MASS]{cov.mcd}} from package \CRANpkg{MASS}).
     If supplied, this is used rather than the covariance matrix of
     \code{x}.}
   \item{fix_sign}{Should the signs of the loadings and scores be chosen

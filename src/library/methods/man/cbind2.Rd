@@ -74,9 +74,9 @@ rbind2(x, y, ...)
   from deparsing argument names such as in \code{\link{cbind}(...,
     deparse.level = d)} for \eqn{d \ge 1}{d >= 1}).
 }
-\seealso{\code{\link{cbind}}, \code{\link{rbind}};
-  further, \code{\link[Matrix]{cBind}}, \code{\link[Matrix:cBind]{rBind}} in
-  the \CRANpkg{Matrix} package.
+\seealso{
+  \code{\link{cbind}},
+  \code{\link{rbind}}
 }
 \examples{
 cbind2(1:3, 4)
