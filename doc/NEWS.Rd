@@ -210,7 +210,7 @@
       compilation of \R and packages.  \R builds can opt out \emph{via} the
       \command{configure} flag \option{--without-C23}, unless the
       specified or default (usually \command{gcc}) compiler defaults to C23:
-      \command{gcc}sspace{}15 does.
+      \command{gcc}\sspace{}15 does.
 
       %% GCC 13 was released in 2023-04, LLVM 18 was 2024-03, 15 was 2022-09
       %% Apple clang 14.0.3 was too old: 15 is the earliest that can be
@@ -240,12 +240,12 @@
     }
   }
 
-  \subsection{INSTALLATION on WINDOWS}{
-    \itemize{
-      \item Both building \R and installing packages use the C compiler
-      in C23 mode. [In progress.]
-    }
-  }
+  %% \subsection{INSTALLATION on WINDOWS}{
+  %%   \itemize{
+  %%     \item Both building \R and installing packages use the C compiler
+  %%     in C23 mode. [In progress.]
+  %%   }
+  %% }
 
   \subsection{DEPRECATED AND DEFUNCT}{
     \itemize{
