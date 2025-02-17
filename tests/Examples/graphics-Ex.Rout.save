@@ -1,13 +1,11 @@
 
-R Under development (unstable) (2024-07-30 r86939) -- "Unsuffered Consequences"
-Copyright (C) 2024 The R Foundation for Statistical Computing
-Platform: aarch64-apple-darwin22.6.0
+R Under development (unstable) (2025-02-17 r87727) -- "Unsuffered Consequences"
+Copyright (C) 2025 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
 Type 'license()' or 'licence()' for distribution details.
-
-  Natural language support but running in an English locale
 
 R is a collaborative project with many contributors.
 Type 'contributors()' for more information and
@@ -1635,15 +1633,9 @@ List of 2
 +                "Versicolor Petals", "Versicolor Sepals"),
 +        pch = "sSvV", col = rep(c(2,4), 2))
 > 
-> nam.var <- colnames(iris)[-5]
-> nam.spec <- as.character(iris[1+50*0:2, "Species"])
-> iris.S <- array(NA, dim = c(50,4,3),
-+                 dimnames = list(NULL, nam.var, nam.spec))
-> for(i in 1:3) iris.S[,,i] <- data.matrix(iris[1:50+50*(i-1), -5])
-> 
-> matplot(iris.S[, "Petal.Length",], iris.S[, "Petal.Width",], pch = "SCV",
+> matplot(iris3[, "Petal L.",], iris3[, "Petal W.",], pch = "SCV",
 +         col = rainbow(3, start = 0.8, end = 0.1),
-+         sub = paste(c("S", "C", "V"), dimnames(iris.S)[[3]],
++         sub = paste(c("S", "C", "V"), dimnames(iris3)[[3]],
 +                     sep = "=", collapse= ",  "),
 +         main = "Fisher's Iris Data")
 > par(op)
@@ -1659,6 +1651,14 @@ List of 2
 > ## or the same with even more axis flexibility:
 > matplot(ct, mSC, type = "b", main = "matplot(<POSIXct>, y)", xaxt="n")
 > Axis(ct, side=1, at = ct[1+4*(0:24)])
+> 
+> iS <- 1:3 # indices of subset
+> matplot(gait[, iS, 1], gait[, iS, 2], pch = "123", type = "b",
++         col = rainbow(3, start = 0.8, end = 0.1),
++         sub = paste(iS, dimnames(gait)[[2]][iS],
++                     sep = "=", collapse= ",  "),
++         xlab = "Hip angle", ylab = "Knee angle",
++         main = "Hip and knee angle while walking")
 > 
 > ## Also works for data frame columns:
 > matplot(iris[1:50,1:4])

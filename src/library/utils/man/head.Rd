@@ -1,6 +1,6 @@
 % File src/library/utils/man/head.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2024 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{head}
@@ -21,7 +21,7 @@
 \alias{tail.array}
 \alias{.checkHT}
 \description{
-  Returns the first or last parts of a vector, matrix, table, data frame
+  Returns the first or last parts of a vector, matrix, array, table, data frame
   or function.  Since \code{head()} and \code{tail()} are generic
   functions, they have been extended to other classes, including
   \code{"\link[stats]{ts}"} from \pkg{stats}.
@@ -139,9 +139,9 @@ head(letters, n = -6L)
 head(freeny.x, n = 10L)
 head(freeny.y)
 
-head(iris3)
-head(iris3, c(6L, 2L))
-head(iris3, c(6L, -1L, 2L))
+head(gait) # 3d array
+head(gait, c(6L, 2L))
+head(gait, c(6L, 2L, -1L))
 
 tail(letters)
 tail(letters, n = -6L)
@@ -151,14 +151,14 @@ tail(freeny.x)
 tail(freeny.x, n = c(4, 2))
 tail(freeny.y)
 
-tail(iris3)
-tail(iris3, c(6L, 2L))
-tail(iris3, c(6L, -1L, 2L))
+tail(gait)
+tail(gait, c(6L, 2L))
+tail(gait, c(6L, 2L, -1L))
 
-## iris with dimnames stripped
-a3d <- iris3 ; dimnames(a3d) <- NULL
-tail(a3d, c(6, -1, 2)) # keepnums = TRUE is default here!
-tail(a3d, c(6, -1, 2), keepnums = FALSE)
+## gait without dimnames --> keepnums showing original row/col numbers
+a3 <- gait ; dimnames(a3) <- NULL
+tail(a3, c(6, 2, -1))# keepnums = TRUE is default here!
+tail(a3, c(6, 2, -1),  keepnums = FALSE)
 
 ## data frame w/ a (non-standard) attribute:
 treeS <- structure(trees, foo = "bar")
