@@ -3209,12 +3209,14 @@ C has had standards C89/C90, C99, C11, C17 (also known as C18), and C23
 some new features and made others optional, and C17 is a `bug-fix'
 update to C11.  On the other hand, C23 makes extensive changes,
 including making @code{bool}, @code{true} and @code{false} reserved
-words, finally disallowing K&R-style function declarations and
-changing the formerly deprecated meaning of function declarations with
-an empty parameter list to now mean no parameters. (There are many other
-additions: see for example @uref{https://en.cppreference.com/w/c/23}.)
+words, finally disallowing K&R-style function declarations and changing
+the formerly deprecated meaning of function declarations with an empty
+parameter list to now mean no parameters.@footnote{The latter has been
+implemented in @command{gcc} but not currently in @I{LLVM} nor Apple
+@command{clamg}.}(There are many other additions: see for example
+@uref{https://en.cppreference.com/w/c/23}.)
 
-@c GCC 14, LLVM clang 18,19 and Apple clang 16 default to C17
+@c GCC 14, LLVM clang 18-20 and Apple clang 16 default to C17
 @c In 2025-01 GCC pre=15 defaulted to C23
 The @command{configure} script in recent versions of @R{} aims to choose
 a C compiler which supports C11: as the default in recent versions of
@@ -3248,9 +3250,9 @@ The (claimed) C standard in use can be checked by the macro
 values @code{199901L}, @code{201112L} and @code{201710L} for C99, C11
 and C17.  The definitive value for C23 is @code{202311L} but some
 compilers@footnote{for example @command{gcc} 14 and Apple
-@command{clang} 16, but not GCC 15, LLVM @command{clang 18} and later.} are
-currently using @code{202000L} and requiring the standard to be
-specified as @code{c2x}.
+@command{clang} 16, but not @command{gcc} 15, @I{LLVM} @command{clang 18} and
+later.} are currently using @code{202000L} and requiring the standard to
+be specified as @code{c2x}.
 @c https://gustedt.gitlabpages.inria.fr/c23-library/
 C23 has macros similar to C++ `feature tests' for many of its changes,
 for example @code{__STDC_VERSION_LIMITS_H__}.
