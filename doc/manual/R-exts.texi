@@ -3149,17 +3149,19 @@ C has had standards C89/C90, C99, C11, C17 (also known as C18), and C23
 some new features and made others optional, and C17 is a `bug-fix'
 update to C11.  On the other hand, C23 makes extensive changes,
 including making @code{bool}, @code{true} and @code{false} reserved
-words, finally disallowing K&R-style function declarations and
-changing the formerly deprecated meaning of function declarations with
-an empty parameter list to now mean no parameters. (There are many other
-additions: see for example @uref{https://en.cppreference.com/w/c/23}.)
+words, finally disallowing K&R-style function declarations and changing
+the formerly deprecated meaning of function declarations with an empty
+parameter list to now mean no parameters.@footnote{The latter has been
+implemented in @command{gcc} but not currently in @I{LLVM} nor Apple
+@command{clamg}.}(There are many other additions: see for example
+@uref{https://en.cppreference.com/w/c/23}.)
 
 As from @R{} 4.5.0, @R{}'s @command{configure} script chooses a compiler
 option which selects C23 if one is available.  Some conpilers (including
 @command{gcc}@tie{}15) default to C23 and most others from 2022/3 and
 later have such an option.
 
-@c GCC 14, LLVM clang 18,19 and Apple clang 16 default to C17
+@c GCC 14, LLVM clang 18-20 and Apple clang 16 default to C17
 @c In 2025-01 GCC pre=15 defaulted to C23 (and later documented so)
 The @command{configure} script in recent previous versions of @R{} aimed
 to choose a C compiler which supposrted C11: as the default in recent
@@ -3190,7 +3192,7 @@ The (claimed) C standard in use can be checked by the macro
 values @code{199901L}, @code{201112L} and @code{201710L} for C99, C11
 and C17.  The definitive value for C23 is @code{202311L} but some
 compilers@footnote{for example @command{gcc} 14 and Apple
-@command{clang} 16, but not GCC 15, @I{LLVM} @command{clang 18} and
+@command{clang} 16, but not @command{gcc} 15, @I{LLVM} @command{clang 18} and
 later.} are currently using @code{202000L} and requiring the standard to
 be specified as @code{c2x}.
 @c https://gustedt.gitlabpages.inria.fr/c23-library/
