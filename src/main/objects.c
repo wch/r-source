@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1999-2024  The R Core Team.
+ *  Copyright (C) 1999-2025  The R Core Team.
  *  Copyright (C) 2002-2023  The R Foundation
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
@@ -536,7 +536,7 @@ int usemethod(const char *generic, SEXP obj, SEXP call, SEXP args,
 */
 
 /* This is a primitive SPECIALSXP */
-attribute_hidden NORET
+NORET attribute_hidden 
 SEXP do_usemethod(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     static SEXP do_usemethod_formals = NULL;

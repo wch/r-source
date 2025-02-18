@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998-2024   The R Core Team
+ *  Copyright (C) 1998-2025   The R Core Team
  *
  *  This header file is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -42,9 +42,8 @@ extern "C" {
 /* C23 has a [[noreturn]] attribute supported in LLVM clang 15 with
  * -std=c2x but not Apple clang 14.  That and GCC verisions 12-14 have
  * version 202000L.
- * clang 19 has version 202301L (and supports -std=gnu23).
- * gcc pre-15 supports -std=gnu23 with version 202301L but barfs on
- * this attribute, so restrict to clang for now.
+ * clang 19/20 have version 202301L (and support -std=gnu23).
+ * gcc pre-15 supports -std=gnu23 with version 202301L
  *
  * https://en.cppreference.com/w/c/compiler_support/23
  * claims GCC 13 and LLVM clang 15 support [[noreturn]] ....
@@ -52,7 +51,7 @@ extern "C" {
  * In C11 there is _Noreturn * (or noreturn in header <stdnoreturn.h>).
  */
 #if defined NORET
-#elif (defined(__clang__) && defined(__STDC_VERSION__) && __STDC_VERSION__ >= 202301L)
+#elif (defined(__STDC_VERSION__) && __STDC_VERSION__ >= 202301L)
 # define NORET [[noreturn]]
 #elif defined(__STDC_VERSION__) && __STDC_VERSION__ >= 201102L
 # define NORET _Noreturn

@@ -61,13 +61,13 @@ extern "C" {
 # include <stddef.h> // for FC_LEN_T, usually size_t
 attribute_hidden
 void F77_SUB(rwarnc)(char *msg, int *nchar, FC_LEN_T msg_len);
-attribute_hidden
-NORET void F77_SUB(rexitc)(char *msg, int *nchar, FC_LEN_T msg_len);
+NORET attribute_hidden
+void F77_SUB(rexitc)(char *msg, int *nchar, FC_LEN_T msg_len);
 #else
 attribute_hidden
 void F77_SUB(rwarnc)(char *msg, int *nchar);
-attribute_hidden
-NORET void F77_SUB(rexitc)(char *msg, int *nchar);
+NORET attribute_hidden
+void F77_SUB(rexitc)(char *msg, int *nchar);
 #endif
 
 #ifdef __cplusplus
@@ -372,7 +372,7 @@ NORET SEXP type2symbol(SEXPTYPE t)
 }
 #endif
 
-attribute_hidden NORET
+NORET attribute_hidden
 void UNIMPLEMENTED_TYPEt(const char *s, SEXPTYPE t)
 {
     int i;

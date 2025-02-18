@@ -923,8 +923,8 @@ NORET void errorcall(SEXP call, const char *format,...)
 
 /* Like errorcall, but copies all data for the error message into a buffer
    before doing anything else. */
-attribute_hidden
-NORET void errorcall_cpy(SEXP call, const char *format, ...)
+NORET attribute_hidden
+void errorcall_cpy(SEXP call, const char *format, ...)
 {
     char buf[BUFSIZE];
 
@@ -1342,7 +1342,7 @@ static SEXP findCall(void)
     return R_NilValue;
 }
 
-attribute_hidden NORET SEXP do_stop(SEXP call, SEXP op, SEXP args, SEXP rho)
+NORET attribute_hidden SEXP do_stop(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
 /* error(.) : really doesn't return anything; but all do_foo() must be SEXP */
     SEXP c_call;
@@ -1403,8 +1403,8 @@ attribute_hidden SEXP do_warning(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 /* Error recovery for incorrect argument count error. */
-attribute_hidden
-NORET void WrongArgCount(const char *s)
+NORET attribute_hidden
+void WrongArgCount(const char *s)
 {
     error(_("incorrect number of arguments to \"%s\""), s);
 }
@@ -1444,8 +1444,8 @@ WarningDB[] = {
 };
 
 
-attribute_hidden
-NORET void ErrorMessage(SEXP call, int which_error, ...)
+NORET attribute_hidden
+void ErrorMessage(SEXP call, int which_error, ...)
 {
     int i;
     char buf[BUFSIZE];
@@ -2035,7 +2035,7 @@ attribute_hidden SEXP do_dfltWarn(SEXP call, SEXP op, SEXP args, SEXP rho)
     return R_NilValue;
 }
 
-attribute_hidden NORET SEXP do_dfltStop(SEXP call, SEXP op, SEXP args, SEXP rho)
+NORET attribute_hidden SEXP do_dfltStop(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);
 
@@ -2117,7 +2117,7 @@ NORET static void invokeRestart(SEXP r, SEXP arglist)
     }
 }
 
-attribute_hidden NORET
+NORET attribute_hidden 
 SEXP do_invokeRestart(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);
@@ -2677,8 +2677,8 @@ static void R_signalCondition(SEXP cond, SEXP call,
     }
 }
 
-attribute_hidden /* for now */
-NORET void R_signalErrorConditionEx(SEXP cond, SEXP call, int exitOnly)
+NORET attribute_hidden /* for now */
+void R_signalErrorConditionEx(SEXP cond, SEXP call, int exitOnly)
 {
     /* caller must make sure that 'cond' and 'call' are protected. */
     R_signalCondition(cond, call, TRUE, exitOnly);
@@ -2694,8 +2694,8 @@ NORET void R_signalErrorConditionEx(SEXP cond, SEXP call, int exitOnly)
     errorcall_dflt(call, "%s", translateChar(STRING_ELT(elt, 0)));
 }
 
-attribute_hidden /* for now */
-NORET void R_signalErrorCondition(SEXP cond, SEXP call)
+NORET attribute_hidden /* for now */
+void R_signalErrorCondition(SEXP cond, SEXP call)
 {
     R_signalErrorConditionEx(cond, call, FALSE);
 }

@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998-2020   The R Core Team.
+ *  Copyright (C) 1998-2025   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -175,14 +175,14 @@ attribute_hidden SEXP do_untracemem(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 #else
 
-attribute_hidden NORET SEXP do_tracemem(SEXP call, SEXP op, SEXP args, SEXP rho)
+NORET attribute_hidden SEXP do_tracemem(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);
     check1arg(args, call, "x");
     errorcall(call, _("R was not compiled with support for memory profiling"));
 }
 
-attribute_hidden NORET SEXP do_untracemem(SEXP call, SEXP op, SEXP args, SEXP rho)
+NORET attribute_hidden SEXP do_untracemem(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);
     check1arg(args, call, "x");

@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998-2020   The R Core Team.
+ *  Copyright (C) 1998-2025   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -212,7 +212,7 @@ static RCNTXT *first_jump_target(RCNTXT *cptr, int mask)
 
 /* R_jumpctxt - jump to the named context */
 
-attribute_hidden NORET void R_jumpctxt(RCNTXT * targetcptr, int mask, SEXP val)
+NORET attribute_hidden void R_jumpctxt(RCNTXT * targetcptr, int mask, SEXP val)
 {
     Rboolean savevis = R_Visible;
     RCNTXT *cptr;
@@ -334,7 +334,7 @@ void endcontext(RCNTXT * cptr)
 
 /* findcontext - find the correct context */
 
-attribute_hidden NORET void findcontext(int mask, SEXP env, SEXP val)
+NORET attribute_hidden void findcontext(int mask, SEXP env, SEXP val)
 {
     RCNTXT *cptr;
     cptr = R_GlobalContext;
@@ -356,7 +356,7 @@ attribute_hidden NORET void findcontext(int mask, SEXP env, SEXP val)
     }
 }
 
-attribute_hidden NORET void R_JumpToContext(RCNTXT *target, int mask, SEXP val)
+NORET attribute_hidden void R_JumpToContext(RCNTXT *target, int mask, SEXP val)
 {
     RCNTXT *cptr;
     for (cptr = R_GlobalContext;
