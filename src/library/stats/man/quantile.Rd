@@ -1,6 +1,6 @@
 % File src/library/stats/man/quantile.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2020 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{quantile}
@@ -17,7 +17,9 @@
 quantile(x, \dots)
 
 \method{quantile}{default}(x, probs = seq(0, 1, 0.25), na.rm = FALSE,
-         names = TRUE, type = 7, digits = 7, \dots)
+         names = TRUE, type = 7, digits = 7,
+         fuzz = if(type == 7L) 0 else 4 * .Machine$double.eps,
+         \dots)
 }
 \arguments{
   \item{x}{numeric vector whose sample quantiles are wanted, or an
@@ -36,6 +38,9 @@ quantile(x, \dots)
   \item{digits}{used only when \code{names} is true: the precision to use
     when formatting the percentages.  In \R versions up to 4.0.x, this had
     been set to \code{max(2, getOption("digits"))}, internally.}
+  \item{fuzz}{small non-negative number to protect against rounding errors
+    when \code{j <- \link{floor}(np + m)}, (\eqn{np} \dQuote{a version of}
+    \code{n * probs}, see the formula below), is computed.}
   \item{\dots}{further arguments passed to or from other methods.}
 }
 \details{
@@ -57,6 +62,11 @@ quantile(x, \dots)
   There is a method for the date-time classes (see
   \code{"\link{POSIXt}"}).  Types 1 and 3 can be used for class
   \code{"\link{Date}"} and for ordered factors.
+
+  \code{fuzz := 4 * .Machine$double.eps} has been hard coded and used for
+  \code{type = 4,5,6, 8,9} since \code{type}s were introduced, % r30628, 2004-08-12
+  and is used, since \R 4.5.0, also for the other types (but with default
+  \code{0} for the default \code{type = 7} for back compatibility reasons).
 }
 \section{Types}{
   \code{quantile} returns estimates of underlying distribution quantiles
@@ -139,14 +149,16 @@ quantile(x, \dots)
     }
   }
   Further details are provided in \bibcite{Hyndman and Fan (1996)} who
-  recommended type 8. 
+  recommended type 8.
   The default method is type 7, as used by S and by \R < 2.0.0.
-  \I{Makkonen} argues for type 6, also as already proposed by Weibull in 1939.
+  \bibcite{Makkonen and Pajari (2014)} argue for type 6, also as already
+  proposed by Weibull in 1939.
   The Wikipedia page contains further information about availability of
   these 9 types in software.
 }
 \author{
-  of the version used in \R >= 2.0.0, Ivan Frohne and Rob J Hyndman.
+  of the version used in \R >= 2.0.0, Ivan Frohne and Rob J Hyndman;
+  tweaks, notably use of \code{fuzz}, by the R Core Team.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
@@ -157,13 +169,16 @@ quantile(x, \dots)
   packages, \emph{American Statistician} \bold{50}, 361--365.
   \doi{10.2307/2684934}.
 
+  Eric Langford (2006)  Quartiles in Elementary Statistics, \emph{Journal
+  of Statistics Education} \bold{14} 3; \doi{10.1080/10691898.2006.11910589}
+
+  Makkonen, L. and Pajari, M. (2014)  Defining Sample Quantiles by the True
+  Rank Probability, \emph{Journal of Probability and Statistics; Hindawi Publ.Corp.}
+  \doi{10.1155/2014/326579}
+
   Wicklin, R. (2017) Sample quantiles: A comparison of 9 definitions; SAS Blog.
   \url{https://blogs.sas.com/content/iml/2017/05/24/definitions-sample-quantiles.html}
 
-  %% Makkonen, L. and Pajari, M. (2014)  Defining Sample Quantiles by the True
-  %% Rank Probability. \emph{Journal of Probability and Statistics; Hindawi Publ.Corp.}
-  %% \doi{10.1155/2014/326579}
-  %%
   Wikipedia: \url{https://en.wikipedia.org/wiki/Quantile#Estimating_quantiles_from_a_sample}
 }
 \seealso{

@@ -1,7 +1,7 @@
 #  File src/library/stats/R/quantile.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2022 The R Core Team
+#  Copyright (C) 1995-2025 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -23,8 +23,11 @@ quantile.POSIXt <- function(x, ...)
 
 quantile.default <-
     function(x, probs = seq(0, 1, 0.25), na.rm = FALSE, names = TRUE,
-             type = 7, digits = 7, ...)
+             type = 7L, digits = 7,
+             fuzz = if(type == 7L) 0 else 4 * .Machine$double.eps, ...)
 {
+    if(length(type) != 1L || is.na(type) || !is.numeric(type) || !any(type == 1:9))
+        stop("'type' must be an integer in 1..9")
     if(is.factor(x)) {
 	if(is.ordered(x)) {
 	   if(!any(type == c(1L, 3L)))
@@ -41,16 +44,19 @@ quantile.default <-
 	x <- x[!is.na(x)]
     else if (anyNA(x))
 	stop("missing values and NaN's not allowed if 'na.rm' is FALSE")
-    eps <- 100*.Machine$double.eps
+    eps <- 100*.Machine$double.eps # allow for slight overshoot
     if (any((p.ok <- !is.na(probs)) & (probs < -eps | probs > 1+eps)))
 	stop("'probs' outside [0,1]")
+    probs <- pmax(0, pmin(1, probs))
+    stopifnot(is.finite(fuzz), fuzz >= 0, length(fuzz) == 1L)
+    ## need to watch for rounding errors --> use *relative* fuzz
+    floorF <- function(np) floor(np * (1+fuzz))
     n <- length(x)
-    probs <- pmax(0, pmin(1, probs)) # allow for slight overshoot
     np <- length(probs)
     {
-        if(type == 7) { # be completely back-compatible
+        if(type == 7) { # be completely back-compatible (=> default fuzz := 0)
             index <- 1 + max(n - 1, 0) * probs
-            lo <- floor(index)
+            lo <- floorF(index)
             hi <- ceiling(index)
             x <- sort(x, partial = if(n == 0) numeric() else unique(c(lo, hi)[p.ok]))
             qs <- x[lo]
@@ -60,28 +66,26 @@ quantile.default <-
 ##	    qs[i] <- ifelse(h == 0, qs[i], (1 - h) * qs[i] + h * x[hi[i]])
 	    qs[i] <- (1 - h) * qs[i] + h * x[hi[i]]
         } else {
-            if (type <= 3) {
+            if (type <= 3L) {
                 ## Types 1, 2 and 3 are discontinuous sample qs.
-                nppm <- if (type == 3) n * probs - .5 # n * probs + m; m = -0.5
-                        else n * probs          # m = 0
-                j <- floor(nppm)
+                nppm <- if (type == 3L) n * probs - .5 # n * probs + m; m = -0.5
+                        else            n * probs      #                m = 0
+                j <- floorF(nppm)
 		h <- switch(type,
 			    !p.ok | (nppm > j),	# type 1
 			    ((nppm > j) + 1)/2, # type 2
 			    !p.ok | (nppm != j) | ((j %% 2L) == 1L)) # type 3
             } else {
                 ## Types 4 through 9 are continuous sample qs.
-                switch(type - 3,
+                switch(type - 3L,
                    {a <- 0; b <- 1},    # type 4
                        a <- b <- 0.5,   # type 5
                        a <- b <- 0,     # type 6
                        a <- b <- 1,     # type 7 (unused here)
                        a <- b <- 1 / 3, # type 8
                        a <- b <- 3 / 8) # type 9
-                ## need to watch for rounding errors here
-                fuzz <- 4 * .Machine$double.eps
-                nppm <- a + probs * (n + 1 - a - b) # n*probs + m
-                j <- floor(nppm + fuzz) # m = a + probs*(1 - a - b)
+                nppm <- a + probs * (n + 1 - a - b) # n*probs + m; m:= a + probs*(1 - a - b)
+                j <- floorF(nppm)
                 h <- nppm - j
                 if(any(sml <- abs(h) < fuzz, na.rm = TRUE)) h[sml] <- 0
             }
@@ -112,7 +116,7 @@ quantile.default <-
 
 ##' Formatting() percentages the same way as quantile(*, names=TRUE).
 ##' Should be exported
-##' (and format.pval() moved to stats; both documented on same page)
+##' NB format.pval() in 'base', needed by print.summary.table() ...
 format_perc <- function(x, digits = max(2L, getOption("digits")),
 			probability = TRUE, use.fC = length(x) < 100, ...)
 {

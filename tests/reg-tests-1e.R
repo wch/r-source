@@ -1846,6 +1846,14 @@ tools::parseLatex("\\Sexpr{ 1 + {1} }")
 assertErrV(tools::parseLatex("\\begin{foo} abc \\end{bar}"))
 
 
+## quantile.default() needing fuzz PR#15811
+x <- 1:1390
+stopifnot(identical(print(quantile(x, 0.7, type=2)),
+                    c(`70%` = 973.5)))
+## was 973  in R <= 4.4.x
+
+
+
 ## keep at end
 rbind(last =  proc.time() - .pt,
       total = proc.time())

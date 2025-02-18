@@ -593,6 +593,10 @@
       when it tars the <pkg> directory, fixing both \PR{18432} and
       \PR{18434}, for \command{vim} and \command{GNU Global}
       \command{emacs} users, thanks to \I{Dirk Eddelbuettel}'s patch.
+
+      \item \code{quantile()}'s default method gets an option \code{fuzz}
+      to protect against floating point inaccuracy before rounding, thus
+      fixing \PR{15811} and, en passant, \PR{17683}.
     }
   }
 }
