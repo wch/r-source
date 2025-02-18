@@ -98,6 +98,7 @@ TEXI2DVI = env COMSPEC= texi2dvi
 MAKEINFO = texi2any
 EOPTS ?= $(if $(USE_LLVM),,-mfpmath=sse -msse2 -mstackrealign)
 SANOPTS ?=
+CSTD ?= -std=gnu2x
 OPENMP ?= -fopenmp
 PTHREAD ?= -pthread
 ISDIR ?= C:/Program Files (x86)/Inno Setup 6

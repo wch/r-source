@@ -149,6 +149,9 @@
 # if you do not have texinfo (default),
 # TEXI2ANY = missing
 
+# C standard to use by default (override the compiler default)
+# CSTD = -std=gnu2x
+
 # additional optimization flags (e.g. -mtune=native for a private build)
 #
 # -mstackrealign is used to avoid traps due to misaligned addresses with

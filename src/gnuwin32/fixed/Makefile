@@ -30,6 +30,7 @@ fixetc: $(ETC) ../MkRules Makefile
 	$(MKDIR) -p $(R_HOME)/etc/$(R_ARCH)
 	$(SED) -e 's/WIN = 64/WIN = $(WIN)/' \
 	  -e "s/-O3/-O2/" \
+	  -e "s/@CSTD@/$(CSTD)/" \
 	  -e "s/@EOPTS@/$(EOPTS)/" \
 	  -e "s/@SANOPTS@/$(SANOPTS)/" \
 	  -e "s|BINPREF =|BINPREF ?= $(BINPREF)|" \

@@ -59,7 +59,7 @@ MkRules: MkRules.rules
 	@cat MkRules.rules > MkRules
 endif
 
-CFLAGS = -O3 -Wall -pedantic $(EOPTS) $(SANOPTS) $(LTO)
+CFLAGS = -O3 -Wall -pedantic $(CSTD) $(EOPTS) $(SANOPTS) $(LTO)
 FFLAGS = -O3 $(EOPTS) $(LTO)
 
 ifdef DEBUG
@@ -104,7 +104,7 @@ Rpwd.exe: front-ends/Rpwd.exe
 	$(CP) $< $@
 
 front-ends/Rpwd.exe:
-	$(MK) -C front-ends Rpwd
+	$(MK) -C front-ends CSTD='$(CSTD)' Rpwd
 
 ## watch out: R.dll and Rblas.dll depend on each other.
 rbuild:
@@ -204,7 +204,7 @@ libRiconv.dll.a: unicode/iconv.def
 
 
 front-ends:
-	$(MK) -C front-ends
+	$(MK) -C front-ends CSTD='$(CSTD)'
 
 ../extra/tre/libtre.a:
 	$(MK) -C ../extra/tre -f Makefile.win

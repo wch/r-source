@@ -241,12 +241,12 @@
     }
   }
 
-  %% \subsection{INSTALLATION on WINDOWS}{
-  %%   \itemize{
-  %%     \item Both building \R and installing packages use the C compiler
-  %%     in C23 mode. [In progress.]
-  %%   }
-  %% }
+  \subsection{INSTALLATION on WINDOWS}{
+    \itemize{
+      \item Both building \R and installing packages use the C compiler
+      in C23 mode.
+    }
+  }
 
   \subsection{DEPRECATED AND DEFUNCT}{
     \itemize{
