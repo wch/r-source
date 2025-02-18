@@ -1,6 +1,6 @@
 % File src/library/stats/man/lmfit.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2023 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{lm.fit}
@@ -19,11 +19,16 @@ lm.wfit(x, y, w, offset = NULL, method = "qr", tol = 1e-7,
 \alias{.lm.fit}
 \description{
   These are the basic computing engines called by \code{\link{lm}} used
-  to fit linear models.  These should usually \emph{not} be used
-  directly unless by experienced users.  \code{.lm.fit()} is a bare-bones
-  wrapper to the innermost QR-based C code, on which
-  \code{\link{glm.fit}} and \code{\link{lsfit}} are also based, for
-  even more experienced users.
+  to fit linear models.  As they work directly with numeric matrices, they
+  may be more efficient, notably in the case of performing many similar
+  regressions or when inference is not of interest.
+
+  \code{\link{lm}} calls \code{lm.fit()} as a helper function.
+
+  \code{.lm.fit()} is a thin wrapper to the "innermost" C code performing
+  the QR decomposition without much checking and should hence be used with
+  care.  The same C code is called by \code{lm.fit()} and also by
+  \code{\link{glm.fit}()} and \code{\link{lsfit}()}.
 }
 \arguments{
   \item{x}{design matrix of dimension \code{n * p}.}
