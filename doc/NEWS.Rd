@@ -602,10 +602,8 @@
     \itemize{
       \item \R can be installed using C23 (for example with
       \option{-std=gnu23} or \option{-std=gnu2x}) with recent compilers
-      including \command{gcc} 12--14, Apple \command{clang} 16 and \I{LLVM}
-      \command{clang} 17--19.  (\I{LLVM} \command{clang} 18 and 19 objected
-      to apparently valid code using attributes accepted by all the
-      other compilers.)
+      including \command{gcc} 12--14, Apple \command{clang} 15--16, \I{LLVM}
+      \command{clang} 17--20 and Intel \command{icx} 2024.2.
 
       It can be installed with the upcoming (at the time of writing)
       \command{gcc} 15, which defaults to C23.
