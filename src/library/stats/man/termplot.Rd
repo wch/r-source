@@ -64,7 +64,7 @@ termplot(model, data = NULL, envir = environment(formula(model)),
      plotted against transformed values.
      The model response is then a straight line, allowing a
      ready comparison against the data or against the curve
-     obtained from \code{smooth-panel.smooth}.}
+     obtained from \code{smooth = panel.smooth}.}
    \item{\dots}{other graphical parameters.}
 }
 \details{

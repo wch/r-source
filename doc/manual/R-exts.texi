@@ -3153,7 +3153,7 @@ words, finally disallowing K&R-style function declarations and changing
 the formerly deprecated meaning of function declarations with an empty
 parameter list to now mean no parameters.@footnote{The latter has been
 implemented in @command{gcc} but not currently in @I{LLVM} nor Apple
-@command{clamg}.}(There are many other additions: see for example
+@command{clang}.}(There are many other additions: see for example
 @uref{https://en.cppreference.com/w/c/23}.)
 
 As from @R{} 4.5.0, @R{}'s @command{configure} script chooses a compiler
@@ -6702,7 +6702,7 @@ the Fortran standards committee has said it will only move them to
 `deleted' status when they are no longer much used.  These include
 @itemize
 @item
-@code{ENTTRY} statements.
+@code{ENTRY} statements.
 @item
 @code{FORALL} statements.
 @item
@@ -14189,7 +14189,7 @@ corresponding to the @I{@code{i}-th} element of the @code{STRSXP}
 @code{installChar()} installs the element as a name and @code{Rf_findVar}
 finds its value.
 @apifun CHAR
-@comment FIXME in packages CHAR is remapped to R_CHAR; menion that here?
+@comment FIXME in packages CHAR is remapped to R_CHAR; mention that here?
 @apifun R_CHAR
 
 @example
