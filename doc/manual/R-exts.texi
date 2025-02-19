@@ -3157,14 +3157,14 @@ implemented in @command{gcc} but not currently in @I{LLVM} nor Apple
 @uref{https://en.cppreference.com/w/c/23}.)
 
 As from @R{} 4.5.0, @R{}'s @command{configure} script chooses a compiler
-option which selects C23 if one is available.  Some conpilers (including
+option which selects C23 if one is available.  Some compilers (including
 @command{gcc}@tie{}15) default to C23 and most others from 2022/3 and
 later have such an option.
 
 @c GCC 14, LLVM clang 18-20 and Apple clang 16 default to C17
 @c In 2025-01 GCC pre=15 defaulted to C23 (and later documented so)
 The @command{configure} script in recent previous versions of @R{} aimed
-to choose a C compiler which supposrted C11: as the default in recent
+to choose a C compiler which supported C11: as the default in recent
 versions of @command{gcc} (prior to 15), @I{LLVM} @command{clang} and
 Apple @command{clang} is C17, that is what is likely to be chosen.  On
 the other hand, until @R{} 4.3.0 the makefiles for the Windows build

@@ -281,7 +281,7 @@
       \emph{via} including \code{USE_C17} in \code{SystemRequirements}
       or can be installed by \command{R CMD INSTALL --use-C17}.
       (Some packages ignore these settings in their \command{configure}
-      script or when compiling in sub-directiories af \file{src}, as
+      script or when compiling in sub-directories of \file{src}, as
       will those using a \file{src/Makefile}.)
       
       \item Source installs now report the package version in the log.
@@ -599,7 +599,7 @@
 
       \item \code{quantile()}'s default method gets an option \code{fuzz}
       to protect against floating point inaccuracy before rounding, thus
-      fixing \PR{15811} and, en passant, \PR{17683}.
+      fixing \PR{15811} and, \I{en passant}, \PR{17683}.
     }
   }
 }

@@ -870,7 +870,7 @@ this manual are either standard @command{autoconf} options not relevant
 to @R{} or intended for specialist uses by the @R{} developers.
 
 @command{configure} will select a C23 compiler if it finds one: to
-cicumvent this use option @option{--without-C23}.  This will only have
+circumvent this use option @option{--without-C23}.  This will only have
 an effect if the compiler in use does not default to C23: GCC 15 does
 and might be selected as @command{gcc} if macro @code{CC} is not
 specified in @file{config.site}.  (A compiler is considered to be a `C23
@@ -1098,7 +1098,7 @@ if you want to specify a non-default standard use something like
 Compiling @R{} requires C99 or later: C11 and C17 are minor updates, but
 the substantial update `C23' (finally published in October 2024) is also
 supported for recent versions of GCC@footnote{At least 13--15: 15
-defaults to C23},  @command{clang}@footnote{including LLVM clang 18--20
+defaults to C23},  @command{clang}@footnote{including @I{LLVM} clang 18--20
 and Apple clang 15/16.} and Intel @command{icx}.  @R{} 4.5.0 defaults
 to C23 if supported by the chosen compiler.
 
@@ -3442,7 +3442,7 @@ plus, preferably a TeX installation and Java.
 @subsection Tcl/Tk
 
 The @pkg{tcltk} package needs Tcl/Tk @geq{} 8.4 installed: the sources are
-available at @uref{https://www.tcl.tk/}.  To specify the locations of the
+available at @uref{https://www.tcl-lang.org/}.  To specify the locations of the
 Tcl/Tk files you may need the configuration options
 
 @table @option
