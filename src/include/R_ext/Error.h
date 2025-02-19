@@ -50,6 +50,13 @@ extern "C" {
  *
  * In C11 there is _Noreturn * (or noreturn in header <stdnoreturn.h>).
  */
+
+/*
+ * As this is sometimes an attribute, it should precede 'static' in a
+ * function declaration.
+ * gcc pre-15 requires it to precede 'attribute_hidden'.
+ * OTOH, '_Noreturn' is an obsolescent (in C23) function specifier.
+ */
 #if defined NORET
 #elif (defined(__STDC_VERSION__) && __STDC_VERSION__ >= 202301L)
 # define NORET [[noreturn]]

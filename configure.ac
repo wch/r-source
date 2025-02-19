@@ -756,18 +756,26 @@ CC_save=${CC}
 CFLAGS_save=${CFLAGS}
 CC_SUB=`echo "${CC}" | sed 's/-std=[[^ ]]*//'`
 CFLAGS_SUB=`echo "${CFLAGS}" | sed -e 's/-std=[[^ ]]*//'`
-dnl this is a hack until -std=gnu23 is widely accepted.
-: ${CC23="${CC_SUB} -std=gnu23"}
 : ${C23FLAGS="${CFLAGS_SUB}"}
+dnl first try without a flag for the likes of gcc15
+: ${CC23="${CC_SUB}"}
 CC=${CC23}
 CFLAGS=${C23FLAGS}
 unset r_cv_C23
 R_C23
 if test x${r_cv_C23} = xno; then
-unset r_cv_C23
-CC23="${CC_SUB} -std=gnu2x"
-CC=${CC23}
-R_C23
+  ${CC23="${CC_SUB} -std=gnu23"}
+  CC=${CC23}
+  CFLAGS=${C23FLAGS}
+  unset r_cv_C23
+  R_C23
+fi
+if test x${r_cv_C23} = xno; then
+dnl this is a hack until -std=gnu23 is widely accepted.
+  unset r_cv_C23
+  CC23="${CC_SUB} -std=gnu2x"
+  CC=${CC23}
+  R_C23
 fi
 if test x${r_cv_C23} = xno; then
 CC23=
