@@ -98,7 +98,7 @@ docs: html
 	  $(ECHO) "creating doc/manual/$@"; \
 	  $(TEXI2HTML) -I$(srcdir) \
 	    -c TOP_NODE_UP_URL=../html/index.html \
-	    `test $(TEXI2ANY_VERSION_MAJ) -ge 7 && $(ECHO) -c HTMLXREF_MODE=none` \
+	    `test $(TEXI2ANY_VERSION_MAJ) -ge 7 && $(ECHO) -c HTMLXREF_MODE=none -c CHECK_HTMLXREF=0` \
 	    $< -o $@.tmp || exit 1; \
 	  SED="$(SED)" $(SHELL) $(srcdir)/texi2html.sh \
 	    $(TEXI2ANY_VERSION_MAJ) $(TEXI2ANY_VERSION_MIN) $@; \
