@@ -223,6 +223,9 @@
       Apple \command{clang}\sspace{}15--16 and
       Intel\sspace{}2024.2 (and 2022.2 should).
 
+      Current binary distributions on macOS use Apple
+      \command{clang}\sspace{}14  and so do not use C23.
+
       \item The minimum \command{autoconf} requirement for a maintainer
       build has been increased to \command{autoconf}\sspace{}2.72.
 
