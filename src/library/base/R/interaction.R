@@ -17,7 +17,7 @@
 #  https://www.R-project.org/Licenses/
 
 ### This is almost like the Primitive ":" for factors
-### but with drop=TRUE, used in reshape
+### but with drop=TRUE, used in reshape and ave
 interaction <- function(..., drop = FALSE, sep = ".", lex.order = FALSE)
 {
     args <- list(...)

@@ -21,7 +21,7 @@ ave <- function (x, ..., FUN = mean)
     if(missing(...))
 	x[] <- FUN(x)
     else {
-	g <- interaction(...)
+	g <- interaction(..., drop = TRUE)
 	split(x,g) <- lapply(split(x, g), FUN)
     }
     x
