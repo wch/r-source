@@ -3213,7 +3213,7 @@ words, finally disallowing K&R-style function declarations and changing
 the formerly deprecated meaning of function declarations with an empty
 parameter list to now mean no parameters.@footnote{The latter has been
 implemented in @command{gcc} but not currently in @I{LLVM} nor Apple
-@command{clamg}.}(There are many other additions: see for example
+@command{clang}.}(There are many other additions: see for example
 @uref{https://en.cppreference.com/w/c/23}.)
 
 @c GCC 14, LLVM clang 18-20 and Apple clang 16 default to C17
@@ -6813,7 +6813,7 @@ the Fortran standards committee has said it will only move them to
 `deleted' status when they are no longer much used.  These include
 @itemize
 @item
-@code{ENTTRY} statements.
+@code{ENTRY} statements.
 @item
 @code{FORALL} statements.
 @item
