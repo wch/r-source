@@ -42,6 +42,9 @@ echo "${line}"
 echo "/* optional C99 type */"
 line=`grep "HAVE_UINTPTR_T" config.h`
 echo "${line}"
+echo "/* C23 (or clang) extension */"
+line=`grep "HAVE_ENUM_BASE_TYPE" config.h`
+echo "${line}"
 echo
 echo "#endif /* not R_CONFIG_H */"
 echo

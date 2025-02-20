@@ -29,6 +29,8 @@
 /* #undef HAVE_ALLOCA_H */
 /* optional C99 type */
 #define HAVE_UINTPTR_T 1
+/* C23 (or clang) extension */
+#define HAVE_ENUM_BASE_TYPE 1
 
 #endif /* not R_CONFIG_H */
 
