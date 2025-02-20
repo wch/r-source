@@ -796,14 +796,14 @@ attribute_hidden SEXP do_psort(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    if (!R_FINITE(rl[i])) error(_("NA or infinite index"));
 	    l[i] = (R_xlen_t) rl[i];
 	    if (l[i] < 1 || l[i] > n)
-		error(_("index %lld outside bounds"), (long long)l[i]);
+		error(_("'partail' index %lld outside bounds"), (long long)l[i]);
 	}
     } else {
 	int *il = INTEGER(p);
 	for (int i = 0; i < nind; i++) {
 	    if (il[i] == NA_INTEGER) error(_("NA index"));
 	    if (il[i] < 1 || il[i] > n)
-		error(_("index %d outside bounds"), il[i]);
+		error(_("'partial' index %d outside bounds"), il[i]);
 	    l[i] = il[i];
 	}
     }
@@ -816,7 +816,7 @@ attribute_hidden SEXP do_psort(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if (l[i] == NA_INTEGER)
 	    error(_("NA index"));
 	if (l[i] < 1 || l[i] > n)
-	    error(_("index %d outside bounds"), l[i]);
+	    error(_("'partial' index %d outside bounds"), l[i]);
     }
 #endif
     SETCAR(args, duplicate(x));
