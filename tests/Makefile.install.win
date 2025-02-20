@@ -16,6 +16,7 @@ check-all: check-devel test-Recommended
 include $(top_builddir)/etc$(R_ARCH)/Makeconf
 include Makefile.common
 
+
 ## GNU gettext disables LANGUAGE if LC_ALL=C, but other systems might not.
 R  = $(R_HOME)/$(BINDIR)/Rterm --vanilla LANGUAGE=en LC_ALL=C SRCDIR=. R_DEFAULT_PACKAGES=
 R2 = $(R_HOME)/$(BINDIR)/Rterm --vanilla SRCDIR=. R_DEFAULT_PACKAGES=
@@ -29,7 +30,8 @@ MK = $(MAKE)
 all-basic-tests = BasePackages Specific Reg Internet
 ## Keep in line with Makefile.common.
 ## not Docs Standalone Packages
-all-devel-tests = DateTime IsAs Random Demo Primitive Regexp Internet2 CRANtools Segfault Conditions Misc-dev
+all-devel-tests = DateTime IsAs Random Demo Primitive Regexp Translation \
+    Internet2 CRANtools Segfault Conditions Misc-dev
 
 
 ## <NOTE>
@@ -37,12 +39,7 @@ all-devel-tests = DateTime IsAs Random Demo Primitive Regexp Internet2 CRANtools
 ## So allow this to fail: it may be slow doing so.
 test-Internet:
 	@$(ECHO) "running tests of Internet functions"
-	@$(ECHO) "  expect some differences"
 	-@$(MAKE) $(test-out-internet) RVAL_IF_DIFF=0
-
-# test-Internet2:
-# 	@$(ECHO) "running more Internet and socket tests"
-# 	-@$(MK) $(test-out-internet2) RVAL_IF_DIFF=0
 ## </NOTE>
 
 test-BasePackages:

@@ -30,7 +30,8 @@ MK = $(MAKE)
 all-basic-tests = BasePackages Specific Reg Internet
 ## Keep in line with Makefile.common.
 ## not Docs Standalone Packages
-all-devel-tests = DateTime IsAs Random Demo Primitive Regexp Internet2 CRANtools Segfault Conditions Misc-dev
+all-devel-tests = DateTime IsAs Random Demo Primitive Regexp Translation \
+    Internet2 CRANtools Segfault Conditions Misc-dev
 
 
 ## <NOTE>
@@ -38,12 +39,7 @@ all-devel-tests = DateTime IsAs Random Demo Primitive Regexp Internet2 CRANtools
 ## So allow this to fail: it may be slow doing so.
 test-Internet:
 	@$(ECHO) "running tests of Internet functions"
-	@$(ECHO) "  expect some differences"
 	-@$(MAKE) $(test-out-internet) RVAL_IF_DIFF=0
-
-# test-Internet2:
-# 	@$(ECHO) "running more Internet and socket tests"
-# 	-@$(MK) $(test-out-internet2) RVAL_IF_DIFF=0
 ## </NOTE>
 
 test-BasePackages:
