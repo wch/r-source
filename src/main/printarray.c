@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000--2024	The R Core Team
+ *  Copyright (C) 2000--2025	The R Core Team
  *  Copyright (C) 2001--2012	The R Foundation
  *  Copyright (C) 1995, 1996	Robert Gentleman and Ross Ihaka
  *
@@ -409,7 +409,7 @@ void printArray(SEXP x, SEXP dim, int quote, int right, SEXP dimnames)
     else { /* ndim >= 3 */
 	SEXP dn, dnn, dn0, dn1;
 	const int *dims = INTEGER_RO(dim);
-	int i, j, nb, nb_pr, nr_last,
+	int i, j, nb, nb_pr, ne_last, nc_last, nr_last,
 	    nr = dims[0], nc = dims[1],
 	    b = nr * nc;
 	Rboolean max_reached, has_dimnames = (dimnames != R_NilValue),
@@ -443,16 +443,21 @@ void printArray(SEXP x, SEXP dim, int quote, int right, SEXP dimnames)
 	    nb_pr = ceil_DIV(R_print.max, b);
 	    /* for the last, (nb_pr)th matrix slice, use only nr_last rows;
 	     *  using floor(), not ceil(), since 'nc' could be huge: */
-	    nr_last = (R_print.max - b * (nb_pr - 1)) / nc;
-	    if(nr_last == 0) { nb_pr--; nr_last = nr; }
+	    ne_last = R_print.max - b * (nb_pr - 1);
+	    nc_last = (ne_last < nc) ? 0: nc;
+	    nr_last = (ne_last < nc) ? 0: ne_last / nc;
+	    if(nr_last == 0) { nb_pr--; nc_last = nc; nr_last = nr;} 
 	} else {
 	    nb_pr = (nb > 0) ? nb : 1; // do print *something* when dim = c(a,b,0)
+	    ne_last = b;
+	    nc_last = nc;
 	    nr_last = nr;
 	}
 	for (i = 0; i < nb_pr; i++) {
 	    Rboolean do_ij = nb > 0,
 		i_last = (i == nb_pr - 1); /* for the last slice */
-	    int use_nr = i_last ? nr_last : nr;
+	    int	use_nc = i_last ? nc_last : nc,
+		use_nr = i_last ? nr_last : nr;
 	    if(do_ij) {
 		int k = 1;
 		Rprintf(", ");
@@ -478,36 +483,44 @@ void printArray(SEXP x, SEXP dim, int quote, int right, SEXP dimnames)
 	    }
 	    switch (TYPEOF(x)) {
 	    case LGLSXP:
-		printLogicalMatrix(x, i * b, use_nr, nr, nc, dn0, dn1, rn, cn, do_ij);
+		printLogicalMatrix(x, i * b, use_nr, nr, use_nc, dn0, dn1, rn, cn, do_ij);
 		break;
 	    case INTSXP:
-		printIntegerMatrix(x, i * b, use_nr, nr, nc, dn0, dn1, rn, cn, do_ij);
+		printIntegerMatrix(x, i * b, use_nr, nr, use_nc, dn0, dn1, rn, cn, do_ij);
 		break;
 	    case REALSXP:
-		printRealMatrix   (x, i * b, use_nr, nr, nc, dn0, dn1, rn, cn, do_ij);
+		printRealMatrix   (x, i * b, use_nr, nr, use_nc, dn0, dn1, rn, cn, do_ij);
 		break;
 	    case CPLXSXP:
-		printComplexMatrix(x, i * b, use_nr, nr, nc, dn0, dn1, rn, cn, do_ij);
+		printComplexMatrix(x, i * b, use_nr, nr, use_nc, dn0, dn1, rn, cn, do_ij);
 		break;
 	    case STRSXP:
 		if (quote) quote = '"';
-		printStringMatrix (x, i * b, use_nr, nr, nc,
+		printStringMatrix (x, i * b, use_nr, nr, use_nc,
 				   quote, right, dn0, dn1, rn, cn, do_ij);
 		break;
 	    case RAWSXP:
-		printRawMatrix    (x, i * b, use_nr, nr, nc, dn0, dn1, rn, cn, do_ij);
+		printRawMatrix    (x, i * b, use_nr, nr, use_nc, dn0, dn1, rn, cn, do_ij);
 		break;
 	    }
 	    Rprintf("\n");
 	}
 
-	if(max_reached && nb_pr < nb) {
+	if (max_reached) {
 	    Rprintf(" [ reached 'max' / getOption(\"max.print\") -- omitted");
-	    if(nr_last < nr) Rprintf(" %d row(s) and", nr - nr_last);
-	    Rprintf(" %d matrix slice(s) ]\n", nb - nb_pr);
+	    if (nb_pr < nb)
+		Rprintf(ngettext(" %d slice", " %d slices", nb - nb_pr), nb - nb_pr);
+	    else if (nb_pr == nb) {
+		if(nr_last < nr) Rprintf(ngettext(" %d row",    " %d rows",    nr - nr_last), nr - nr_last);
+		if(nc_last < nc) Rprintf(ngettext(" %d column", " %d columns", nc - nc_last), nc - nc_last);
+/* == MM: replace the above with
+		if((nr -= nr_last) > 0) Rprintf(ngettext(" %d row",    " %d rows",    nr), nr);
+		if((nc -= nc_last) > 0) Rprintf(ngettext(" %d column", " %d columns", nc), nc);
+*/
+	    }
+	    Rprintf(" ] \n");
 	}
     }
     UNPROTECT(nprotect);
     vmaxset(vmax);
 }
-

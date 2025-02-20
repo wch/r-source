@@ -1,6 +1,6 @@
 
-R Under development (unstable) (2024-09-20 r87182) -- "Unsuffered Consequences"
-Copyright (C) 2024 The R Foundation for Statistical Computing
+R Under development (unstable) (2025-02-20 r87760) -- "Unsuffered Consequences"
+Copyright (C) 2025 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -969,22 +969,55 @@ NULL
  [1,]   NA   NA
  [2,]   NA   NA
  [ reached 'max' / getOption("max.print") -- omitted 8 rows ]
-> print(matrix(nrow =   1, ncol = 6), max = 5)    # omitting cols, at least one row prints
+> print(matrix(nrow =   1, ncol = 6), max = 5)    # omitting 1 col, at least one row prints
      [,1] [,2] [,3] [,4] [,5]
 [1,]   NA   NA   NA   NA   NA
  [ reached 'max' / getOption("max.print") -- omitted 1 column ]
 > ## ----- "higher" arrays ("rank >= 3"): --------
-> ## FIXME: in R 4.4.0 there should be a warning for omitted rows
-> print(array(dim = c(2, 2, 1)), max = 2)
+> print(array(dim = c(2, 2, 2)), max = 5) # omit 1 slice
+, , 1
+
+     [,1] [,2]
+[1,]   NA   NA
+[2,]   NA   NA
+
+ [ reached 'max' / getOption("max.print") -- omitted 1 slice ] 
+> print(array(dim = c(2, 2, 2)), max = 6) # omit 1 row
+, , 1
+
+     [,1] [,2]
+[1,]   NA   NA
+[2,]   NA   NA
+
+, , 2
+
+     [,1] [,2]
+[1,]   NA   NA
+
+ [ reached 'max' / getOption("max.print") -- omitted 1 row ] 
+> print(array(dim = c(2, 2, 2)), max = 7) # omit 1 row
+, , 1
+
+     [,1] [,2]
+[1,]   NA   NA
+[2,]   NA   NA
+
+, , 2
+
+     [,1] [,2]
+[1,]   NA   NA
+
+ [ reached 'max' / getOption("max.print") -- omitted 1 row ] 
+> #
+> print(array(dim = c(2, 2, 1)), max = 2) # omit 1 row
 , , 1
 
      [,1] [,2]
 [1,]   NA   NA
 
-> ## FIXME: this does not print anything but it should show
-> ##        at least one element according to the logic of max.print
-> print(array(dim = c(2, 2, 1)), max = 1)
- [ reached 'max' / getOption("max.print") -- omitted 1 matrix slice(s) ]
+ [ reached 'max' / getOption("max.print") -- omitted 1 row ] 
+> print(array(dim = c(2, 2, 1)), max = 1) # omit the only slice
+ [ reached 'max' / getOption("max.print") -- omitted 1 slice ] 
 > 
 > 
 > 

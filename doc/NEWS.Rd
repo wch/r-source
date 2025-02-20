@@ -283,7 +283,7 @@
       (Some packages ignore these settings in their \command{configure}
       script or when compiling in sub-directories of \file{src}, as
       will those using a \file{src/Makefile}.)
-      
+
       \item Source installs now report the package version in the log.
 
       \item There is preliminary support for C++26 with GCC \eqn{>=} 14, Apple
@@ -600,6 +600,11 @@
       \item \code{quantile()}'s default method gets an option \code{fuzz}
       to protect against floating point inaccuracy before rounding, thus
       fixing \PR{15811} and, \I{en passant}, \PR{17683}.
+
+      \item Printing arrays now also omits columns, rows and slices when
+      desirable according to option \code{max.print}, or argument
+      \code{max}, respectively, addressing most of the remaining part of
+      \PR{15027}, thanks to \I{Sherry Zhang}'s patch.
     }
   }
 }
