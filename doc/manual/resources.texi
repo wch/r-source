@@ -30,7 +30,7 @@
 @end html
 @end ifhtml
 
-@node Top, FAQ, (dir), (dir)
+@node Top
 
 @menu
 * FAQ::                         

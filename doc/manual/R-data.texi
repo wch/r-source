@@ -45,7 +45,7 @@ This manual is for R, version @value{VERSION}.
 @c @end ifnothtml
 
 @ifnottex
-@node Top, Acknowledgements, (dir), (dir)
+@node Top
 @top R Data Import/Export
 
 This is a guide to importing and exporting data to and from R.

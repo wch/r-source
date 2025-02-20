@@ -47,7 +47,7 @@ This manual is for R, version @value{VERSION}.
 @c @end ifnothtml
 
 @ifnottex
-@node Top, Obtaining R, (dir), (dir)
+@node Top
 @top R Installation and Administration
 
 This is a guide to installation and administration for R.

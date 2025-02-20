@@ -45,7 +45,7 @@ This manual is for R, version @value{VERSION}.
 @c @end ifnothtml
 
 @ifnottex
-@node Top, R Internal Structures, (dir), (dir)
+@node Top
 @top R Internals
 
 This is a guide to the internal structures of @R{} and coding standards for

@@ -49,7 +49,7 @@ This manual is for R, version @value{VERSION}.
 @c @end ifnothtml
 
 @ifnottex
-@node Top, Introduction, (dir), (dir)
+@node Top
 @top R Language Definition
 
 This is an introduction to the @R{} language, explaining evaluation,

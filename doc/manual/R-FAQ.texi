@@ -70,7 +70,7 @@ Frequently Asked Questions on R  @*
 @c @end ifnothtml
 
 @ifnottex
-@node Top, Introduction, (dir), (dir)
+@node Top
 @top R FAQ
 @c @ifhtml
 @c @html

@@ -47,7 +47,7 @@ This manual is for R, version @value{VERSION}.
 @c @end ifnothtml
 
 @ifnottex
-@node Top, Acknowledgements, (dir), (dir)
+@node Top
 @top Writing R Extensions
 
 This is a guide to extending @R{}, describing the process of creating
