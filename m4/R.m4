@@ -5437,6 +5437,25 @@ int main(void) {
                [r_cv_C99=no])])
 ])# R_C90
 
+AC_DEFUN([R_ENUM_BASE_TYPE],
+[AC_CACHE_CHECK([whether the base type of an enum can be specified], [r_cv_enum_type],
+[AC_RUN_IFELSE([AC_LANG_SOURCE([[
+
+typedef enum :int { FALSE = 0, TRUE } Rboolean;
+
+int main(void) {
+     return 0;
+}
+
+]])],
+               [r_cv_enum_type=yes],
+               [r_cv_enum_type=no],
+               [r_cv_enum_type=no])])
+if test "x${r_cv_enum_type}" = xyes; then
+  AC_DEFINE(HAVE_ENUM_BASE_TYPE, 1, [Define if enum can set its base type.])
+fi
+])# R_ENUM_BASE_TYPE
+
 ### Local variables: ***
 ### mode: outline-minor ***
 ### outline-regexp: "### [*]+" ***

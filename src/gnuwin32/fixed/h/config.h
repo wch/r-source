@@ -278,6 +278,9 @@
 /* Define to 1 if you have the <elf.h> header file. */
 /* #undef HAVE_ELF_H */
 
+/* Define if enum can set its base type. */
+#define HAVE_ENUM_BASE_TYPE 1
+
 /* Define to 1 if you have the <errno.h> header file. */
 #define HAVE_ERRNO_H 1
 

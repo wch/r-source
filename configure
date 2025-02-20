@@ -49635,6 +49635,51 @@ printf "%s\n" "#define HAVE_WORKING_SIGACTION 1" >>confdefs.h
   fi
 
 
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking whether the base type of an enum can be specified" >&5
+printf %s "checking whether the base type of an enum can be specified... " >&6; }
+if test ${r_cv_enum_type+y}
+then :
+  printf %s "(cached) " >&6
+else case e in #(
+  e) if test "$cross_compiling" = yes
+then :
+  r_cv_enum_type=no
+else case e in #(
+  e) cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+
+typedef enum :int { FALSE = 0, TRUE } Rboolean;
+
+int main(void) {
+     return 0;
+}
+
+
+_ACEOF
+if ac_fn_c_try_run "$LINENO"
+then :
+  r_cv_enum_type=yes
+else case e in #(
+  e) r_cv_enum_type=no ;;
+esac
+fi
+rm -f core *.core core.conftest.* gmon.out bb.out conftest$ac_exeext \
+  conftest.$ac_objext conftest.beam conftest.$ac_ext ;;
+esac
+fi
+ ;;
+esac
+fi
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $r_cv_enum_type" >&5
+printf "%s\n" "$r_cv_enum_type" >&6; }
+if test "x${r_cv_enum_type}" = xyes; then
+
+printf "%s\n" "#define HAVE_ENUM_BASE_TYPE 1" >>confdefs.h
+
+fi
+
+
 if test x${use_internal_tzcode} = xdefault; then
 case "${host_os}" in
    darwin*)

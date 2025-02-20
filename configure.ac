@@ -2273,6 +2273,11 @@ R_FUNC_LOG1P
 R_FUNC_FTELL
 R_FUNC_SIGACTION
 
+dnl setting the size of an 'enum' is a C23 addition,
+dnl also supported in some versions of clang.
+dnl GCC only supports it in a C23 mode.
+R_ENUM_BASE_TYPE
+
 if test x${use_internal_tzcode} = xdefault; then
 case "${host_os}" in
    darwin*)
