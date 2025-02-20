@@ -2286,10 +2286,10 @@ and for the current macOS distribution of @command{gfortran} at
 @example
 FC = /opt/gfortran/bin/gfortran
 (arm64)
-FLIBS =  -L/opt/gfortran/lib/gcc/aarch64-apple-darwin20.0/14.2.0
-  -L/opt/gfortran/lib -lgfortran -lemutls_w -lheapt_w -lquadmath
+FLIBS =  -L/opt/gfortran/lib/gcc/aarch64-apple-darwin20.0/12.2.0
+  -L/opt/gfortran/lib -lgfortran -lemutls_w -lquadmath
 (Intel)
-FLIBS =  -L/opt/gfortran/lib/gcc/x86_64-apple-darwin20.0/14.2.0
+FLIBS =  -L/opt/gfortran/lib/gcc/x86_64-apple-darwin20.0/12.2.0
   -L/opt/gfortran/lib -lgfortran -lquadmath
 @end example
 @noindent
@@ -2405,7 +2405,11 @@ For example, for the current distribution of @command{gfortran} at
 
 @example
 FC = /opt/gfortran/bin/gfortran
-FLIBS =  -L/opt/gfortran/lib/gcc/x86_64-apple-darwin20.0/14.2.0
+(arm64)
+FLIBS =  -L/opt/gfortran/lib/gcc/aarch64-apple-darwin20.0/12.2.0
+  -L/opt/gfortran/lib -lgfortran -lemutls_w -lquadmath
+(Intel)
+FLIBS =  -L/opt/gfortran/lib/gcc/x86_64-apple-darwin20.0/12.2.0
   -L/opt/gfortran/lib -lgfortran -lquadmath
 @end example
 
@@ -5393,8 +5397,8 @@ contains the correct information.
 @subsection Fortran compiler
 
 There is a `universal' (@code{arm64} and Intel) build of
-@command{gfortran} 14.2 at
-@uref{https://mac.r-project.org/tools/gfortran-14.2-universal.pkg}/
+@command{gfortran} 12.2 at
+@uref{https://mac.r-project.org/tools/gfortran-12.2-universal.pkg}.
 This installs into @file{/opt/gfortran}.
 
 The @file{/opt/gfortran/SDK} symlink should point to the desired path to
@@ -5522,16 +5526,16 @@ rather than the system ones.
 
 It is normally possible to build @R{} with GCC (built from the sources,
 from a @command{gfortran} distribution, from @I{Homebrew}, @dots{}).
-@c re-trested with GCC 14.1
+@c re-tested with GCC 14.1
 When last tested it was not possible to use @command{gcc} to build the
 @code{quartz()} device, so @command{configure --without-aqua} may be
 required.  @R{} was built and tested with the GCC 14.2 compilers in the
 @code{arm64} @command{gfortran} distribution mentioned above using a
 @file{config.site} containing
 @example
-CC=/opt/gfortran/bin/gcc
-CXX=/opt/gfortran/bin/g++
-FC=/opt/gfortran/bin/gfortran
+CC=/usr/local/gfortran/bin/gcc
+CXX=/usr/local/gfortran/bin/g++
+FC=/usr/local/gfortran/bin/gfortran
 CFLAGS="-g -O2 -Wall -pedantic -Wstrict-prototypes"
 C17FLAGS="-g -O2 -Wall -pedantic -Wno-strict-prototypes"
 C90FLAGS=$C17FLAGS
@@ -5903,12 +5907,12 @@ install_name_tool -change /usr/local/llvm/lib/libc++.1.dylib \
 @var{pkg}.so
 
 install_name_tool -change
-/opt/gfortran/lib/gcc/aarch64-apple-darwin20.0/14.2.0/libgfortran.5.dylib \
+/opt/gfortran/lib/gcc/aarch64-apple-darwin20.0/12.2.0/libgfortran.5.dylib \
 /Library/Frameworks/R.framework/Resources/lib/libgfortran.5.dylib \
 @var{pkg}.so
 
 install_name_tool -change
-/opt/gfortran/lib/gcc/aarch64-apple-darwin20.0/14.2.0/libquadmath.0.dylib \
+/opt/gfortran/lib/gcc/aarch64-apple-darwin20.0/12.2.0/libquadmath.0.dylib \
 /Library/Frameworks/R.framework/Resources/lib/libquadmath.0.dylib \
 @var{pkg}.so
 @end example
