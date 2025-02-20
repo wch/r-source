@@ -348,12 +348,13 @@ print(matrix(nrow =   0, ncol = 4), max = 3)    # omitting 1 column
 print(matrix(nrow =  10, ncol = 2), max = 5)    # omitting rows
 print(matrix(nrow =   1, ncol = 6), max = 5)    # omitting 1 col, at least one row prints
 ## ----- "higher" arrays ("rank >= 3"): --------
-print(array(dim = c(2, 2, 2)), max = 5) # omit 1 slice
+print(array(dim = c(2, 2, 2)), max = 4) # omit 1 slice
+print(array(dim = c(2, 2, 2)), max = 5) # omit 1 row + 1 column
 print(array(dim = c(2, 2, 2)), max = 6) # omit 1 row
 print(array(dim = c(2, 2, 2)), max = 7) # omit 1 row
 #
 print(array(dim = c(2, 2, 1)), max = 2) # omit 1 row
-print(array(dim = c(2, 2, 1)), max = 1) # omit the only slice
+print(array(dim = c(2, 2, 1)), max = 1) # omit 1 row + 1 column
 
 
 

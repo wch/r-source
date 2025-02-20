@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2025-02-20 r87760) -- "Unsuffered Consequences"
+R Under development (unstable) (2025-02-20 r87768) -- "Unsuffered Consequences"
 Copyright (C) 2025 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu
 
@@ -974,7 +974,7 @@ NULL
 [1,]   NA   NA   NA   NA   NA
  [ reached 'max' / getOption("max.print") -- omitted 1 column ]
 > ## ----- "higher" arrays ("rank >= 3"): --------
-> print(array(dim = c(2, 2, 2)), max = 5) # omit 1 slice
+> print(array(dim = c(2, 2, 2)), max = 4) # omit 1 slice
 , , 1
 
      [,1] [,2]
@@ -982,6 +982,19 @@ NULL
 [2,]   NA   NA
 
  [ reached 'max' / getOption("max.print") -- omitted 1 slice ] 
+> print(array(dim = c(2, 2, 2)), max = 5) # omit 1 row + 1 column
+, , 1
+
+     [,1] [,2]
+[1,]   NA   NA
+[2,]   NA   NA
+
+, , 2
+
+     [,1]
+[1,]   NA
+
+ [ reached 'max' / getOption("max.print") -- omitted 1 row 1 column ] 
 > print(array(dim = c(2, 2, 2)), max = 6) # omit 1 row
 , , 1
 
@@ -1016,8 +1029,13 @@ NULL
 [1,]   NA   NA
 
  [ reached 'max' / getOption("max.print") -- omitted 1 row ] 
-> print(array(dim = c(2, 2, 1)), max = 1) # omit the only slice
- [ reached 'max' / getOption("max.print") -- omitted 1 slice ] 
+> print(array(dim = c(2, 2, 1)), max = 1) # omit 1 row + 1 column
+, , 1
+
+     [,1]
+[1,]   NA
+
+ [ reached 'max' / getOption("max.print") -- omitted 1 row 1 column ] 
 > 
 > 
 > 

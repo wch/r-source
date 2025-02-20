@@ -444,8 +444,8 @@ void printArray(SEXP x, SEXP dim, int quote, int right, SEXP dimnames)
 	    /* for the last, (nb_pr)th matrix slice, use only nr_last rows;
 	     *  using floor(), not ceil(), since 'nc' could be huge: */
 	    ne_last = R_print.max - b * (nb_pr - 1);
-	    nc_last = (ne_last < nc) ? 0: nc;
-	    nr_last = (ne_last < nc) ? 0: ne_last / nc;
+	    nc_last = (ne_last < nc) ? ne_last : nc;
+	    nr_last = (ne_last < nc) ? 1 : ne_last / nc;
 	    if(nr_last == 0) { nb_pr--; nc_last = nc; nr_last = nr;} 
 	} else {
 	    nb_pr = (nb > 0) ? nb : 1; // do print *something* when dim = c(a,b,0)
@@ -511,12 +511,8 @@ void printArray(SEXP x, SEXP dim, int quote, int right, SEXP dimnames)
 	    if (nb_pr < nb)
 		Rprintf(ngettext(" %d slice", " %d slices", nb - nb_pr), nb - nb_pr);
 	    else if (nb_pr == nb) {
-		if(nr_last < nr) Rprintf(ngettext(" %d row",    " %d rows",    nr - nr_last), nr - nr_last);
-		if(nc_last < nc) Rprintf(ngettext(" %d column", " %d columns", nc - nc_last), nc - nc_last);
-/* == MM: replace the above with
 		if((nr -= nr_last) > 0) Rprintf(ngettext(" %d row",    " %d rows",    nr), nr);
 		if((nc -= nc_last) > 0) Rprintf(ngettext(" %d column", " %d columns", nc), nc);
-*/
 	    }
 	    Rprintf(" ] \n");
 	}
