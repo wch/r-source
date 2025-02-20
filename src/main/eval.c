@@ -2637,11 +2637,7 @@ static SEXP replaceCall(SEXP fun, SEXP val, SEXP args, SEXP rhs)
 }
 
 
-/* rho is only needed for _R_CHECK_LENGTH_1_CONDITION_=package:name and for
-     detecting the current package in related diagnostic messages; it should
-     be removed when length >1 condition is turned into an error
-*/
-static R_INLINE Rboolean asLogicalNoNA(SEXP s, SEXP call, SEXP rho)
+static R_INLINE Rboolean asLogicalNoNA(SEXP s, SEXP call)
 {
     Rboolean cond = NA_LOGICAL;
 
@@ -2706,7 +2702,7 @@ attribute_hidden SEXP do_if(SEXP call, SEXP op, SEXP args, SEXP rho)
     int vis=0;
 
     PROTECT(Cond = eval(CAR(args), rho));
-    if (asLogicalNoNA(Cond, call, rho))
+    if (asLogicalNoNA(Cond, call))
 	Stmt = CADR(args);
     else {
 	if (length(args) > 2)
@@ -2917,7 +2913,7 @@ attribute_hidden SEXP do_while(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (SETJMP(cntxt.cjmpbuf) != CTXT_BREAK) {
 	for(;;) {
 	    SEXP cond = PROTECT(eval(CAR(args), rho));
-	    int condl = asLogicalNoNA(cond, call, rho);
+	    int condl = asLogicalNoNA(cond, call);
 	    UNPROTECT(1);
 	    if (!condl) break;
 	    if (RDEBUG(rho) && !bgn && !R_GlobalContext->browserfinish) {
@@ -6918,7 +6914,7 @@ static R_INLINE Rboolean GETSTACK_LOGICAL_NO_NA_PTR(R_bcstack_t *s, int callidx,
     }
     SEXP call = GETCONST(constants, callidx);
     PROTECT(value);
-    Rboolean ans = asLogicalNoNA(value, call, rho);
+    Rboolean ans = asLogicalNoNA(value, call);
     UNPROTECT(1);
     return ans;
 }
