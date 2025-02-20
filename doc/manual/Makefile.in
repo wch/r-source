@@ -212,7 +212,7 @@ version.texi: Makefile $(top_srcdir)/VERSION $(SVN_REV)
 	  $(ECHO) "@set VERSION $${v}" >> $@; \
 	  rwv=`$(R_EXE) -f $(top_srcdir)/src/gnuwin32/fixed/rwver.R`; \
 	  $(ECHO) "@set RWVERSION $${rwv}" >> $@; \
-	  rwtv=`$(ECHO) $${rwv} | sed -e 's/\.[^.]\+$$//'` >> $@; \
+	  rwtv=`$(ECHO) $${rwv} | sed -e 's/\.[^.]*$$//'`; \
 	  $(ECHO) "@set RWTVERSION $${rwtv}" >> $@ )
 	@if test "$(R_PAPERSIZE)" = "a4"; then \
 	  $(ECHO) "@afourpaper" >> $@ ; \
