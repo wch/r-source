@@ -33,23 +33,10 @@
 #endif
 
 #include <R_ext/Print.h>
-#include <Rconfig.h>            /* for HAVE_F77_UNDERSCORE */
 
 #ifdef  __cplusplus
 extern "C" {
 #endif
-
-/* C23 has a [[noreturn]] attribute supported in LLVM clang 15 with
- * -std=c2x but not Apple clang 14.  That and GCC verisions 12-14 have
- * version 202000L.
- * clang 19/20 have version 202301L (and support -std=gnu23).
- * gcc pre-15 supports -std=gnu23 with version 202301L
- *
- * https://en.cppreference.com/w/c/compiler_support/23
- * claims GCC 13 and LLVM clang 15 support [[noreturn]] ....
- *
- * In C11 there is _Noreturn * (or noreturn in header <stdnoreturn.h>).
- */
 
 /*
  * As this is sometimes an attribute, it should precede 'static' in a
@@ -59,15 +46,15 @@ extern "C" {
  */
 #if defined NORET
 #elif (defined(__STDC_VERSION__) && __STDC_VERSION__ >= 202301L)
+// gcc 15 and clang 19/20
 # define NORET [[noreturn]]
 #elif defined(__STDC_VERSION__) && __STDC_VERSION__ >= 201102L
 # define NORET _Noreturn
 #elif defined(__GNUC__) && __GNUC__ >= 3
-// LLVM and Apple clang identify themselves as 4.
-// But Mandriva (or OpenMandriva) is said to patch clang to 11.
-// Boost also uses this for __SUNPRO_CC >= 0x590
+// All platforms these days should be using C >= 11 but perhaps used for C++
 # define NORET __attribute__((noreturn))
 #else
+// C++ and legacy
 # define NORET
 #endif
 
@@ -80,30 +67,11 @@ void Rf_warning(const char *, ...) R_PRINTF_FORMAT(1,2);
 
 void R_ShowMessage(const char *s);
 
-#if 0
 /* xerbla is a a C function intended to be called from Fortran.
+ * which forerly had a C declaration here.
+ *
  * It wraps Rf_error, so use that directtly from C/C++
 */
-#ifdef HAVE_F77_UNDERSCORE
-/* F77_NAME is in RS.h, but better not include it here (e.g. due to
- * previous name conflicts involving symbols defined with !STRICT_R_HEADERS) .
- * However, using a trailing underline is not universal, and print.c
- * uses F77_SUB.
- */
-# ifdef FC_LEN_T
-NORET void xerbla_(const char *srname, int *info, const FC_LEN_T srname_len);
-# else
-NORET void xerbla_(const char *srname, int *info);
-# endif
-#else
-# ifdef FC_LEN_T
-NORET void xerbla(const char *srname, int *info, const FC_LEN_T srname_len);
-# else
-NORET void xerbla(const char *srname, int *info);
-# endif
-#endif
-
-#endif
 
 #ifdef  __cplusplus
 }
