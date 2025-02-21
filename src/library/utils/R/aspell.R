@@ -110,6 +110,16 @@ function(files, filter, control = list(), encoding = "unknown",
             aspell_write_personal_dictionary_file(words, personal,
                                                   program = program)
             ## </FIXME>
+
+            ## For aspell (only!) on Windows, we need the special Unix path form 
+            ## such as /c/path/to/dictionary
+            ## known from, e.g., msys2 to specify the personal dictionary:
+            if(grepl("aspell", program)){
+                personal <- normalizePath(personal, winslash="/")
+                if(grepl("^.:", personal)) 
+                    personal <- gsub("^(.):(.*)$", "/\\1\\2", personal)
+            }
+
             control <- c(control, "-p", shQuote(personal))
         }
     }
@@ -1412,7 +1422,11 @@ function(x, out, language = "en", program = NULL)
         header <- NULL
     }
 
-    writeLines(c(header, x), out, useBytes = TRUE)
+    ## we need Unix line endings even on Windows 
+    ## (at least for aspell, and works for hunspell, too):
+    outfile <- file(out, open = "wb")
+    on.exit(close(outfile))
+    writeLines(c(header, x), outfile, useBytes = TRUE)
 }
 
 ## For reading package defaults:
