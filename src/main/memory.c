@@ -2358,7 +2358,9 @@ long double *R_allocLD(size_t nelem)
 #elif __GNUC__
     // This is C99, but do not rely on it.
     // Apple clang warns this is gnu extension.
+    #ifdef __clang__
     # pragma clang diagnostic ignored "-Wgnu-offsetof-extensions"
+    #endif
     size_t ld_align = offsetof(struct { char __a; long double __b; }, __b);
 #else
     size_t ld_align = 0x0F; // value of x86_64, known others are 4 or 8
