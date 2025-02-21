@@ -12,7 +12,7 @@ reformulate(termlabels, response = NULL, intercept = TRUE, env = parent.frame())
 
 drop.terms(termobj, dropx = NULL, keep.response = FALSE)
 
-termobj[i]
+\method{[}{terms}(termobj, i)
 }
 \alias{reformulate}
 \alias{drop.terms}
@@ -29,9 +29,10 @@ termobj[i]
     returned.}
   \item{dropx, i}{a numeric vector indexing \code{labels(termobj)}
     (that is, the \code{"term.labels"} attribute of \code{termobj}),
-    indicating terms to be dropped from the right-hand side of the
-    model, or \code{NULL} (default) to keep all terms.}
-  \item{keep.response}{Keep the response in the resulting object?}
+    indicating terms to drop (\code{dropx}) or select (\code{i}) from
+    the right-hand side of the model. The default \code{dropx=NULL}
+    means to keep all terms.}
+  \item{keep.response}{logical: keep the response in the resulting object?}
 }
 \description{
   \code{delete.response} returns a \code{terms} object for the same

@@ -130,7 +130,7 @@ if(interactive() && Sys.getenv("USER") == "maechler")
 ## SRCDIR not available on windows, so pkgSrcPath won't be populated
 ## if this happens non-interactively, cleanup and quit gracefully
 if(!file_test("-d", pkgSrcPath) && !interactive()) {
-    unlink("myTst", recursive=TRUE)
+    unlink(c("myTst", "myLib", "myTst2"), recursive=TRUE)
     showProc.time()
     q("no")
 }
