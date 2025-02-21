@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998--2022  The R Core Team
+ *  Copyright (C) 1998--2025  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *  based on code (C) 1979 and later Royal Statistical Society
  *
@@ -53,9 +53,11 @@
 
 //attribute_hidden
 static void
-qbeta_raw(double alpha, double p, double q, int lower_tail, int log_p,
+qbeta_raw(double alpha, double p, double q,
+	  Rboolean lower_tail, Rboolean log_p,
 	  int swap_01, double log_q_cut, int n_N, double* qb);
 
+/* This is the public interface in Rmath.h, so has to use 'int' */
 double qbeta(double alpha, double p, double q, int lower_tail, int log_p)
 {
 
@@ -109,8 +111,12 @@ static const double
 #define const4 0.04481
 
 // Returns both qbeta() and its "mirror" 1-qbeta(). Useful notably when qbeta() ~= 1
-attribute_hidden void
-qbeta_raw(double alpha, double p, double q, int lower_tail, int log_p,
+// This was hidden, but it is only used in this file so could be static
+// and be simplifed as swap_01 is always NA.
+// attribute_hidden void
+static void
+qbeta_raw(double alpha, double p, double q,
+	  Rboolean lower_tail, Rboolean log_p,
 	  int swap_01, // {TRUE, NA, FALSE}: if NA, algorithm decides swap_tail
 	  double log_q_cut, /* if == Inf: return log(qbeta(..));
 			       otherwise, if finite: the bound for
@@ -189,7 +195,8 @@ qbeta_raw(double alpha, double p, double q, int lower_tail, int log_p,
     // Conceptually,  0 < p_ < 1  (but can be 0 or 1 because of cancellation!)
     logbeta = lbeta(p, q);
 
-    swap_tail = (swap_choose) ? (p_ > 0.5) : swap_01;
+    // this is only ever called with swap_choose = TRUE
+    swap_tail = (swap_choose) ? (p_ > 0.5) : (Rboolean) swap_01;
 
     R_ifDEBUG_printf(
 	"qbeta(%g, %g, %g, lower_t=%d, log_p=%d, swap_01=%d, log_q_cut=%g, n_N=%d):%s\n"
@@ -402,7 +409,7 @@ maybe_swap:
 		tx   = 0.;
 		u_n  = ML_NEGINF;
 	    }
-	    use_log_x = log_p; add_N_step = FALSE; goto L_return;
+	    use_log_x = (Rboolean) log_p; add_N_step = FALSE; goto L_return;
 	}
 	else {
 	    R_ifDEBUG_printf(" pbeta(%g, %g, %g, T, log) = %g <= %g (= %s) --> continuing\n",

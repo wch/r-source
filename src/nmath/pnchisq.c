@@ -11,13 +11,13 @@
  *    distribution function. Appl.Statist., 41, 478-482.
 
  *  Other parts
- *  Copyright (C) 2000-2019  The R Core Team
+ *  Copyright (C) 2000-2025  The R Core Team
  *  Copyright (C) 2003-2015  The R Foundation
  */
 
 
 
-#include "nmath.h"
+#include "nmath.h" // declares pnchisq_raw
 #include "dpq.h"
 
 /*----------- DEBUGGING -------------
@@ -42,7 +42,7 @@
 static const double _dbl_min_exp = M_LN2 * DBL_MIN_EXP;
 /*= -708.3964 for IEEE double precision */
 
-
+/* This is the public interface in Rmath.h, so has to use 'int' */
 double pnchisq(double x, double df, double ncp, int lower_tail, int log_p)
 {
     double ans;
@@ -55,7 +55,8 @@ double pnchisq(double x, double df, double ncp, int lower_tail, int log_p)
 
     if (df < 0. || ncp < 0.) ML_WARN_return_NAN;
 
-    ans = pnchisq_raw(x, df, ncp, 1e-12, 8*DBL_EPSILON, 1000000, lower_tail, log_p);
+    ans = pnchisq_raw(x, df, ncp, 1e-12, 8*DBL_EPSILON, 1000000,
+		      (Rboolean) lower_tail, (Rboolean) log_p);
 
     if (x <= 0. || x == ML_POSINF)
 	return ans; // because it's perfect
@@ -86,6 +87,7 @@ double pnchisq(double x, double df, double ncp, int lower_tail, int log_p)
     }
 }
 
+// Used in this file and in qnchisq.c
 double attribute_hidden
 pnchisq_raw(double x, double f, double theta /* = ncp */,
 	    double errmax, double reltol, int itrmax,
