@@ -1,7 +1,7 @@
 #  File src/library/base/R/unlist.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2018 The R Core Team
+#  Copyright (C) 1995-2025 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -18,6 +18,8 @@
 
 unlist <- function(x, recursive=TRUE, use.names=TRUE)
 {
+    ## for better error messages (islistfactor is not viisble)
+    if(length(recursive) > 1L) stop("'recursive' must be of length 1")
     if(.Internal(islistfactor(x, recursive))) {
         URapply <-
             if(recursive) # use rapply()
