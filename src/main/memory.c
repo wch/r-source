@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998--2024  The R Core Team.
+ *  Copyright (C) 1998--2025  The R Core Team.
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -2040,7 +2040,7 @@ attribute_hidden SEXP do_gctorture(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
 
     if (isLogical(CAR(args))) {
-	Rboolean on = asLogical(CAR(args));
+	Rboolean on = asRbool(CAR(args), call);
 	if (on == NA_LOGICAL) gap = NA_INTEGER;
 	else if (on) gap = 1;
 	else gap = 0;
@@ -2358,6 +2358,7 @@ long double *R_allocLD(size_t nelem)
 #elif __GNUC__
     // This is C99, but do not rely on it.
     // Apple clang warns this is gnu extension.
+    # pragma clang diagnostic ignored "-Wgnu-offsetof-extensions"
     size_t ld_align = offsetof(struct { char __a; long double __b; }, __b);
 #else
     size_t ld_align = 0x0F; // value of x86_64, known others are 4 or 8

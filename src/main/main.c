@@ -1435,7 +1435,7 @@ attribute_hidden SEXP do_browser(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (TYPEOF(expr) == ENVSXP)
 	rho = expr;
 
-    Rboolean ignoreHook = asLogical(CAR(CDR(CDDDR(argList))));
+    Rboolean ignoreHook = asRbool(CAR(CDR(CDDDR(argList))), call);
     if (ignoreHook) {
         R_browserRepl(rho);
         UNPROTECT(1); /* argList */

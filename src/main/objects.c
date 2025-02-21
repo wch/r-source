@@ -1028,7 +1028,7 @@ static SEXP inherits3(SEXP x, SEXP what, SEXP which)
 
     if( !isLogical(which) || (LENGTH(which) != 1) )
 	error(_("'which' must be a length 1 logical vector"));
-    Rboolean isvec = asLogical(which);
+    Rboolean isvec = asRbool(which, R_NilValue);
 
     if(isvec)
 	PROTECT(rval = allocVector(INTSXP, nwhat));
@@ -1231,7 +1231,7 @@ static SEXP R_isMethodsDispatchOn(SEXP onOff)
     R_stdGen_ptr_t old = R_get_standardGeneric_ptr();
     int ival =  !NOT_METHODS_DISPATCH_PTR(old);
     if(length(onOff) > 0) {
-	Rboolean onOffValue = asLogical(onOff);
+	Rboolean onOffValue = asRbool(onOff, R_NilValue);
 	if(onOffValue == NA_INTEGER)
 	    error(_("'onOff' must be TRUE or FALSE"));
 	else if(onOffValue == FALSE)
