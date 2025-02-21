@@ -1824,6 +1824,14 @@ int asLogical(SEXP x)
     return asLogical2(x, /* checking = */ 0, R_NilValue);
 }
 
+Rboolean asRbool(SEXP x, SEXP call)
+{
+    int ans = asLogical2(x, 1, call);
+    if (ans == NA_LOGICAL)
+	errorcall(call, _("NA in coerciaon to Rboolean"));
+    return ans;
+}
+
 
 int asInteger(SEXP x)
 {

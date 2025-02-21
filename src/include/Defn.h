@@ -103,6 +103,9 @@ Rcomplex Rf_ComplexFromReal(double, int*);
 				  Memory.h, PrtUtil.h, Utils.h */
 #undef CALLED_FROM_DEFN_H
 
+Rboolean Rf_asRbool(SEXP x,SEXP call);
+
+
 /* UUID identifying the internals version -- packages using compiled
    code should be re-installed when this changes */
 #define R_INTERNALS_UUID "2fdf6c18-697a-4ba7-b8ef-11c0d92f1327"
@@ -1727,6 +1730,7 @@ int R_NaN_is_R_NA(double);
 void R_RestoreHashCount(SEXP rho);
 
 # define allocCharsxp		Rf_allocCharsxp
+# define asRbool		Rf_asRbool
 # define asVecSize		Rf_asVecSize
 # define asXLength		Rf_asXLength
 # define begincontext		Rf_begincontext
