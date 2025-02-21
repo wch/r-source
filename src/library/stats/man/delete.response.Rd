@@ -1,6 +1,6 @@
 % File src/library/stats/man/delete.response.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2024 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{delete.response}
@@ -11,6 +11,8 @@ delete.response(termobj)
 reformulate(termlabels, response = NULL, intercept = TRUE, env = parent.frame())
 
 drop.terms(termobj, dropx = NULL, keep.response = FALSE)
+
+termobj[i]
 }
 \alias{reformulate}
 \alias{drop.terms}
@@ -19,13 +21,13 @@ drop.terms(termobj, dropx = NULL, keep.response = FALSE)
 \arguments{
   \item{termobj}{a \code{\link[=terms.object]{terms}} object.}
   \item{termlabels}{character vector giving the right-hand side of a
-    model formula.  Cannot be zero-length.}
+    model formula.  May be zero-length.}
   \item{response}{a character string, symbol or call giving the left-hand
     side of a model formula, or \code{NULL}.}
   \item{intercept}{logical: should the formula have an intercept?}
   \item{env}{the \code{\link{environment}} of the \code{\link{formula}}
     returned.}
-  \item{dropx}{a numeric vector indexing \code{labels(termobj)}
+  \item{dropx, i}{a numeric vector indexing \code{labels(termobj)}
     (that is, the \code{"term.labels"} attribute of \code{termobj}),
     indicating terms to be dropped from the right-hand side of the
     model, or \code{NULL} (default) to keep all terms.}
@@ -48,10 +50,10 @@ drop.terms(termobj, dropx = NULL, keep.response = FALSE)
   back compatibly, with a deprecation warning.
 }
 \value{
-  \code{delete.response} and \code{drop.terms} return a \code{terms}
+  \code{delete.response} and \code{drop.terms} return a \code{\link{terms}}
   object.
 
-  \code{reformulate} returns a \code{formula}.
+  \code{reformulate} returns a \code{\link{formula}}.
 }
 \seealso{\code{\link{terms}}}
 

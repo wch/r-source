@@ -608,6 +608,10 @@
       desirable according to option \code{max.print}, or argument
       \code{max}, respectively, addressing most of the remaining part of
       \PR{15027}, thanks to \I{Sherry Zhang}'s patch.
+
+      \item \code{drop.terms(y ~ w, 1)} and similar now work, thanks to
+      \I{Benjamin Sommer}'s report in \PR{18861} and collaboration with
+      \I{Heather Turner} improving \code{reformulate()}.
     }
   }
 }

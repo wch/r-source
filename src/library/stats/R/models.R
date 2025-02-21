@@ -1,7 +1,7 @@
 #  File src/library/stats/R/models.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2024 The R Core Team
+#  Copyright (C) 1995-2025 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -183,8 +183,9 @@ delete.response <- function (termobj)
 reformulate <- function (termlabels, response=NULL, intercept = TRUE, env = parent.frame())
 {
     ## an extension of formula.character()
-    if(!is.character(termlabels) || !length(termlabels))
-        stop("'termlabels' must be a character vector of length at least one")
+    if(!is.character(termlabels))
+        stop("'termlabels' must be a character vector")
+    if(intercept && !length(termlabels)) termlabels <- "1"
     termtext <- paste(termlabels, collapse = "+")
     if(!intercept) termtext <- paste(termtext, "- 1")
     terms <- str2lang(termtext)

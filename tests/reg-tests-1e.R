@@ -1853,6 +1853,19 @@ stopifnot(identical(print(quantile(x, 0.7, type=2)),
 ## was 973  in R <= 4.4.x
 
 
+## drop.terms(<"one" term>, 1) should work, PR#18861
+stopifnot(exprs = {
+    identical( ~  1, reformulate(character()))
+    identical( ~ -1, reformulate(character(), intercept = FALSE))
+    identical(terms( ~ 1 ), drop.terms(terms(y ~ 1 + w), 1))
+    identical(terms( ~ 1 ), drop.terms(terms(y ~     w), 1))
+    identical(terms( ~ -1), drop.terms(terms(y ~ w - 1), 1))
+    identical(terms( ~ -1), drop.terms(terms(y ~ w + 0), 1))
+    identical(terms(y ~ 1), drop.terms(terms(y ~ w), 1, keep.response = TRUE))
+})
+## all these used to error in reformulate()  in R < 4.5.0
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
