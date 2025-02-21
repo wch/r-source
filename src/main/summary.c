@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997--2023  The R Core Team
+ *  Copyright (C) 1997--2025  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -579,7 +579,7 @@ attribute_hidden SEXP do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
 #endif
 
     ans = matchArgExact(R_NaRmSymbol, &args);
-    Rboolean narm = asLogical(ans);
+    Rboolean narm = asRbool(ans, call);
 
     if (ALTREP(CAR(args)) && CDDR(args) == R_NilValue &&
 	(CDR(args) == R_NilValue || TAG(CDR(args)) == R_NaRmSymbol)) {
