@@ -52,7 +52,7 @@ penguins_raw
   \describe{
     \item{\code{studyName}}{\code{character}, expedition during which the data was collected}
     \item{\code{Sample Number}}{\code{numeric}, continuous numbering sequence for each sample}
-    \item{\code{Region}}{\code{character}, the region of Palmer LTER sampling grid}
+    \item{\code{Region}}{\code{character}, the region of Palmer \acronym{LTER} sampling grid}
     \item{\code{Stage}}{\code{character}, denoting reproductive stage at sampling}
     \item{\code{Individual ID}}{\code{character}, unique ID for each individual in dataset}
     \item{\code{Clutch Completion}}{\code{character}, 
@@ -64,16 +64,16 @@ penguins_raw
 }
 \source{
   \describe{
-    \item{\enc{Adélie}{Adelie} penguins:}{Palmer Station Antarctica LTER and K. Gorman (2020).
+    \item{\enc{Adélie}{Adelie} penguins:}{Palmer Station Antarctica \acronym{LTER} and K. Gorman (2020).
       Structural size measurements and isotopic signatures of foraging
       among adult male and female \enc{Adélie}{Adelie} penguins (Pygoscelis adeliae)
       nesting along the Palmer Archipelago near Palmer Station, 2007-2009
       ver 5. Environmental Data Initiative, \doi{10.6073/pasta/98b16d7d563f265cb52372c8ca99e60f}.}
 
-    \item{Gentoo penguins:}{Palmer Station Antarctica LTER and K. Gorman (2020).
+    \item{Gentoo penguins:}{Palmer Station Antarctica \acronym{LTER} and K. Gorman (2020).
       \doi{10.6073/pasta/7fca67fb28d56ee2ffa3d9370ebda689}.}
 
-    \item{Chinstrap penguins:}{Palmer Station Antarctica LTER and K. Gorman (2020).
+    \item{Chinstrap penguins:}{Palmer Station Antarctica \acronym{LTER} and K. Gorman (2020).
       \doi{10.6073/pasta/c14dfcfada8ea13a17536e73eb6fbe9e}.}
   }
 
@@ -111,7 +111,7 @@ penguins_raw
   See the \href{https://allisonhorst.github.io/palmerpenguins/}{package website} 
   for further details and resources.
 
-  The \code{penguins} data has some shorter variable names than the \bold{palmerpenguins} version, 
+  The \code{penguins} data has some shorter variable names than the \pkg{palmerpenguins} version, 
   for compact code and data display. 
 }
 \examples{

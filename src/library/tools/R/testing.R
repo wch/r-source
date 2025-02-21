@@ -854,7 +854,7 @@ testInstalledBasic <- function(scope = c("basic", "devel", "both", "internet", "
         runone("isas-tests")
         message("running tests of random deviate generation (should no longer ever fail)")
         runone("p-r-random-tests", TRUE)
-        message("running miscellanous strict devel checks", domain = NA)
+        message("running miscellaneous strict devel checks", domain = NA)
         if (runone("misc-devel")) return(invisible(1L))
         message("running tests demos from base and stats", domain = NA)
         if (runone("demos")) return(invisible(1L))
