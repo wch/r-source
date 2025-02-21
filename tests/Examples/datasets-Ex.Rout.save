@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2025-02-15 r87721) -- "Unsuffered Consequences"
+R Under development (unstable) (2025-02-20 r87772) -- "Unsuffered Consequences"
 Copyright (C) 2025 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu
 
@@ -2968,6 +2968,187 @@ Warning: not plotting observations with leverage one:
 > 
 > 
 > cleanEx()
+> nameEx("penguins")
+> ### * penguins
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: penguins
+> ### Title: Measurements of Penguins near Palmer Station, Antarctica
+> ### Aliases: penguins penguins_raw
+> ### Keywords: datasets
+> 
+> ### ** Examples
+> 
+> ## view summaries
+> summary(penguins)
+      species          island       bill_len        bill_dep    
+ Adelie   :152   Biscoe   :168   Min.   :32.10   Min.   :13.10  
+ Chinstrap: 68   Dream    :124   1st Qu.:39.23   1st Qu.:15.60  
+ Gentoo   :124   Torgersen: 52   Median :44.45   Median :17.30  
+                                 Mean   :43.92   Mean   :17.15  
+                                 3rd Qu.:48.50   3rd Qu.:18.70  
+                                 Max.   :59.60   Max.   :21.50  
+                                 NA's   :2       NA's   :2      
+  flipper_len      body_mass        sex           year     
+ Min.   :172.0   Min.   :2700   female:165   Min.   :2007  
+ 1st Qu.:190.0   1st Qu.:3550   male  :168   1st Qu.:2007  
+ Median :197.0   Median :4050   NA's  : 11   Median :2008  
+ Mean   :200.9   Mean   :4202                Mean   :2008  
+ 3rd Qu.:213.0   3rd Qu.:4750                3rd Qu.:2009  
+ Max.   :231.0   Max.   :6300                Max.   :2009  
+ NA's   :2       NA's   :2                                 
+> summary(penguins_raw) # not useful for character vectors
+  studyName         Sample Number      Species             Region         
+ Length:344         Min.   :  1.00   Length:344         Length:344        
+ Class :character   1st Qu.: 29.00   Class :character   Class :character  
+ Mode  :character   Median : 58.00   Mode  :character   Mode  :character  
+                    Mean   : 63.15                                        
+                    3rd Qu.: 95.25                                        
+                    Max.   :152.00                                        
+                                                                          
+    Island             Stage           Individual ID      Clutch Completion 
+ Length:344         Length:344         Length:344         Length:344        
+ Class :character   Class :character   Class :character   Class :character  
+ Mode  :character   Mode  :character   Mode  :character   Mode  :character  
+                                                                            
+                                                                            
+                                                                            
+                                                                            
+    Date Egg          Culmen Length (mm) Culmen Depth (mm) Flipper Length (mm)
+ Min.   :2007-11-09   Min.   :32.10      Min.   :13.10     Min.   :172.0      
+ 1st Qu.:2007-11-28   1st Qu.:39.23      1st Qu.:15.60     1st Qu.:190.0      
+ Median :2008-11-09   Median :44.45      Median :17.30     Median :197.0      
+ Mean   :2008-11-27   Mean   :43.92      Mean   :17.15     Mean   :200.9      
+ 3rd Qu.:2009-11-16   3rd Qu.:48.50      3rd Qu.:18.70     3rd Qu.:213.0      
+ Max.   :2009-12-01   Max.   :59.60      Max.   :21.50     Max.   :231.0      
+                      NA's   :2          NA's   :2         NA's   :2          
+ Body Mass (g)      Sex            Delta 15 N (o/oo) Delta 13 C (o/oo)
+ Min.   :2700   Length:344         Min.   : 7.632    Min.   :-27.02   
+ 1st Qu.:3550   Class :character   1st Qu.: 8.300    1st Qu.:-26.32   
+ Median :4050   Mode  :character   Median : 8.652    Median :-25.83   
+ Mean   :4202                      Mean   : 8.733    Mean   :-25.69   
+ 3rd Qu.:4750                      3rd Qu.: 9.172    3rd Qu.:-25.06   
+ Max.   :6300                      Max.   :10.025    Max.   :-23.79   
+ NA's   :2                         NA's   :14        NA's   :13       
+   Comments        
+ Length:344        
+ Class :character  
+ Mode  :character  
+                   
+                   
+                   
+                   
+> ## convert character vectors to factors first
+> dFactor <- function(dat) {
++   dat[] <- lapply(dat, \(.) if (is.character(.)) as.factor(.) else .)
++   dat
++ }
+> summary(dFactor(penguins_raw))
+   studyName   Sample Number                                         Species   
+ PAL0708:110   Min.   :  1.00   Adelie Penguin (Pygoscelis adeliae)      :152  
+ PAL0809:114   1st Qu.: 29.00   Chinstrap penguin (Pygoscelis antarctica): 68  
+ PAL0910:120   Median : 58.00   Gentoo penguin (Pygoscelis papua)        :124  
+               Mean   : 63.15                                                  
+               3rd Qu.: 95.25                                                  
+               Max.   :152.00                                                  
+                                                                               
+    Region          Island                   Stage     Individual ID
+ Anvers:344   Biscoe   :168   Adult, 1 Egg Stage:344   N13A1  :  3  
+              Dream    :124                            N13A2  :  3  
+              Torgersen: 52                            N18A1  :  3  
+                                                       N18A2  :  3  
+                                                       N21A1  :  3  
+                                                       N21A2  :  3  
+                                                       (Other):326  
+ Clutch Completion    Date Egg          Culmen Length (mm) Culmen Depth (mm)
+ No : 36           Min.   :2007-11-09   Min.   :32.10      Min.   :13.10    
+ Yes:308           1st Qu.:2007-11-28   1st Qu.:39.23      1st Qu.:15.60    
+                   Median :2008-11-09   Median :44.45      Median :17.30    
+                   Mean   :2008-11-27   Mean   :43.92      Mean   :17.15    
+                   3rd Qu.:2009-11-16   3rd Qu.:48.50      3rd Qu.:18.70    
+                   Max.   :2009-12-01   Max.   :59.60      Max.   :21.50    
+                                        NA's   :2          NA's   :2        
+ Flipper Length (mm) Body Mass (g)      Sex      Delta 15 N (o/oo)
+ Min.   :172.0       Min.   :2700   FEMALE:165   Min.   : 7.632   
+ 1st Qu.:190.0       1st Qu.:3550   MALE  :168   1st Qu.: 8.300   
+ Median :197.0       Median :4050   NA's  : 11   Median : 8.652   
+ Mean   :200.9       Mean   :4202                Mean   : 8.733   
+ 3rd Qu.:213.0       3rd Qu.:4750                3rd Qu.: 9.172   
+ Max.   :231.0       Max.   :6300                Max.   :10.025   
+ NA's   :2           NA's   :2                   NA's   :14       
+ Delta 13 C (o/oo)                                  Comments  
+ Min.   :-27.02    Nest never observed with full clutch.: 34  
+ 1st Qu.:-26.32    Not enough blood for isotopes.       :  7  
+ Median :-25.83    Sexing primers did not amplify.      :  4  
+ Mean   :-25.69    No blood sample obtained for sexing. :  2  
+ 3rd Qu.:-25.06    No blood sample obtained.            :  2  
+ Max.   :-23.79    (Other)                              :  5  
+ NA's   :13        NA's                                 :290  
+> 
+> ## visualise distribution across factors
+> plot(island ~ species, data = penguins)
+> plot(sex ~ interaction(island, species, sep = "\n"), data = penguins)
+> 
+> ## bill depth vs. length by species (color) and sex (symbol):
+> ## positive correlations for all species, males tend to have bigger bills
+> sym <- c(1, 16)
+> pal <- c("darkorange","purple","cyan4")
+> plot(bill_dep ~ bill_len, data = penguins, pch = sym[sex], col = pal[species])
+> 
+> ## simplified sex dimorphism analysis for Adelie species:
+> ## proportion of males increases with several size measurements
+> adelie <- subset(penguins, species == "Adelie")
+> plot(sex ~ bill_len, data = adelie)
+> plot(sex ~ bill_dep, data = adelie)
+> plot(sex ~ body_mass, data = adelie)
+> m <- glm(sex ~ bill_len + bill_dep + body_mass, data = adelie, family = binomial)
+> summary(m)
+
+Call:
+glm(formula = sex ~ bill_len + bill_dep + body_mass, family = binomial, 
+    data = adelie)
+
+Coefficients:
+              Estimate Std. Error z value Pr(>|z|)    
+(Intercept) -85.088438  17.811711  -4.777 1.78e-06 ***
+bill_len      0.840401   0.237656   3.536 0.000406 ***
+bill_dep      1.305989   0.423911   3.081 0.002064 ** 
+body_mass     0.007790   0.001969   3.957 7.59e-05 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 202.399  on 145  degrees of freedom
+Residual deviance:  54.024  on 142  degrees of freedom
+  (6 observations deleted due to missingness)
+AIC: 62.024
+
+Number of Fisher Scoring iterations: 8
+
+> 
+> ## Produce the long variable names as from {palmerpenguins} pkg:
+> long_nms <- sub("len", "length_mm",
++                 sub("dep","depth_mm",
++                     sub("mass", "mass_g", colnames(penguins))))
+> ## compare long and short names:
+> noquote(rbind(long_nms, nms = colnames(penguins)))
+         [,1]    [,2]   [,3]           [,4]          [,5]             
+long_nms species island bill_length_mm bill_depth_mm flipper_length_mm
+nms      species island bill_len       bill_dep      flipper_len      
+         [,6]        [,7] [,8]
+long_nms body_mass_g sex  year
+nms      body_mass   sex  year
+> 
+> ## Not run: 
+> ##D  # << keeping shorter 'penguins' names in this example:
+> ##D     colnames(penguins) <- long_nms
+> ## End(Not run)
+> 
+> 
+> 
+> cleanEx()
 > nameEx("precip")
 > ### * precip
 > 
@@ -3813,7 +3994,7 @@ c0   -5.14
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  1.091 0.066 1.158 0 0 
+Time elapsed:  2.05 0.135 2.209 0 0 
 > grDevices::dev.off()
 null device 
           1 

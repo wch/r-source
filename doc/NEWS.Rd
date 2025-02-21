@@ -202,6 +202,9 @@
 
       \item New dataset \code{gait} thanks to \I{Heather Turner} and
       \I{Ella Kaye}, used in examples.
+
+      \item New datasets \code{penguins} and \code{penguins_raw} thanks to
+      \I{Ella Kaye}, \I{Heather Turner}, and \I{Kristen Gorman}.
     }
   }
 
