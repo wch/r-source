@@ -2200,7 +2200,7 @@ function(ifile, ofile)
 .parse_code_file <-
 function(file, encoding = NA, keep.source = getOption("keep.source"))
 {
-    if(!file.size(file)) return()
+    if(!file.exists(file) || !file.size(file)) return()
     suppressWarnings({
         if(!is.na(encoding) &&
            (encoding != "unknown") &&

@@ -1,7 +1,7 @@
 #  File src/library/tools/R/Rd.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2024 The R Core Team
+#  Copyright (C) 1995-2025 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -733,8 +733,9 @@ function(x)
     if(!length(x)) return(character())
 
     ## Need to remove everything inside \dontrun (and drop comments),
-    ## and "undefine" \dontshow and \testonly (which is achieved by
-    ## changing the Rd tag to "Rd").
+    ## and "undefine"
+    ##   \dontdiff \dontshow \donttest \testonly
+    ## (which is achieved by changing the Rd tag to "Rd").
 
     ## <FIXME>
     ## Remove eventually.
@@ -743,7 +744,8 @@ function(x)
 
     recurse <- function(e) {
         if(!is.null(tag <- attr(e, "Rd_tag"))
-           && tag %in% c("\\dontshow", "\\testonly"))
+           && tag %in% c("\\dontdiff", "\\dontshow", "\\donttest",
+                         "\\testonly"))
             attr(e, "Rd_tag") <- "Rd"
         if(is.list(e)) {
             structure(lapply(e[is.na(match(RdTags(e), "\\dontrun"))],
