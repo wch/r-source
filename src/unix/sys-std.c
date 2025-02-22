@@ -128,7 +128,7 @@ int R_SelectEx(int  n,  fd_set  *readfds,  fd_set  *writefds,
     else {
 	volatile sel_intr_handler_t myintr = intr != NULL ?
 	    intr : onintr;
-	volatile int old_interrupts_suspended = R_interrupts_suspended;
+	volatile Rboolean old_interrupts_suspended = R_interrupts_suspended;
 	volatile double base_time = currentTime();
 	struct timeval tm;
 	if (timeout != NULL)
