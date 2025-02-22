@@ -271,6 +271,10 @@ static SEXP xxenv(SEXP begin, SEXP body, SEXP end, YYLTYPE *lloc)
         yyerror(buffer);
         return NULL;
     }
+    
+    if (strcmp("document", CHAR(STRING_ELT(end, 0))) == 0) {
+      xxungetc(R_EOF);  /* Stop reading after \end{document} */
+    }
                
     PRESERVE_SV(ans = allocVector(VECSXP, 2));
     SET_VECTOR_ELT(ans, 0, begin);
