@@ -84,6 +84,7 @@ dialogs
 didactical
 differencing
 dimensioned
+dimorphism
 dispatchable
 dispersions
 dotplots
