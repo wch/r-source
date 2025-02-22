@@ -6163,12 +6163,18 @@ add_dummies <- function(dir, Log)
                              ## LLVM flang warnings:
                              ## Includes Hollerith constants
                              ## does not complain about 'Shared DO termination'
-                             "(portability: A DO loop should terminate with an END DO or CONTINUE|portability: deprecated usage|in the context: arithmetic IF statement)"
+                             "(portability: A DO loop should terminate with an END DO or CONTINUE|portability: deprecated usage|in the context: arithmetic IF statement)",
+                             ## LLVM >= 18 clang++
+                             ": warning: .* \\[-Wdeprecated-literal-operator\\]"
                              )
 
                 warn_re <- paste0("(", paste(warn_re, collapse = "|"), ")")
 
                 lines <- grep(warn_re, lines, value = TRUE, useBytes = TRUE)
+
+                ## Filter out BH header warnings
+                ex_re <- "BH/include/boost/.*\\[-Wdeprecated-literal-operator\\]"
+                lines <- filtergrep(ex_re, lines, useBytes = TRUE)
 
                 ## "gcc (even 9) seems not to know the size of pointers, so skip
                 ## some from -Walloc-size-larger-than= and -Wstringop-overflow="
