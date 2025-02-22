@@ -8539,7 +8539,7 @@ A package on CRAN
 @item \sspace
 A single space (used after a period that does not end a sentence).
 
-@item \doi@{@var{numbers}@}
+@item \doi@{@var{identifier}@}
 A digital object identifier (@abbr{DOI}).
 @end ftable
 See the @file{system.Rd} file in @file{share/Rd/macros} for more details
