@@ -614,7 +614,7 @@
       \I{Heather Turner} improving \code{reformulate()}.
 
       \item Arguments which should be length-1 logical,
-      e.g.\sspace{}\code{min(na.rm =)}, are checked more throroughly.
+      e.g.\sspace{}\code{min(na.rm =)}, are checked more thoroughly.
     }
   }
 }
