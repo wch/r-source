@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 1998--2023  The R Core Team
+ * Copyright (C) 1998--2025  The R Core Team
  *
  * The authors of this software are Cleveland, Grosse, and Shyu.
  * Copyright (c) 1989, 1992 by AT&T.
@@ -113,7 +113,7 @@ loess_raw(double *y, double *x, double *weights, double *robust, int *d,
 
     *trL = 0;
 
-    loess_workspace(*d, *n, *span, *degree, *nonparametric, drop_square, *sum_drop_sqr, *setLf);
+    loess_workspace(*d, *n, *span, *degree, *nonparametric, drop_square, *sum_drop_sqr, (Rboolean) *setLf);
     v[1] = *cell;/* = v(2) in Fortran (!) */
 
     /* NB:  surf_stat  =  (surface / statistics);
