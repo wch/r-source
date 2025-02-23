@@ -337,7 +337,8 @@
 
       This is a C23 feature (taken from C++11) and also supported in all
       C standards by some versions of \code{clang} (from \I{LLVM} and
-      Apple).
+      Apple) and (with a warning when using \option{-pedantic}) by GCC
+      when in C17 mode.
 
       A fair amount of code has assumed this: it may be changed to a
       smaller type in future.
@@ -628,10 +629,10 @@
       \I{Benjamin Sommer}'s report in \PR{18861} and collaboration with
       \I{Heather Turner} improving \code{reformulate()}.
 
-      \item Arguments which should be length-1 logical are checked more
-      thoroughly.  The most commonly seen errors are in \code{unlink(,
-      recursive)}, \code{tempdir()} and the \code{na.rm} argument of
-      \code{max()}, \code{min()}, \code{sum()}, \dots.
+      \item Many arguments which should be length-1 logical are checked
+      more thoroughly.  The most commonly seen errors are in
+      \code{unlink(, recursive)}, \code{tempdir()} and the \code{na.rm}
+      argument of \code{max()}, \code{min()}, \code{sum()}, \dots.
     }
   }
 }
