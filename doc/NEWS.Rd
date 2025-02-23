@@ -6,11 +6,11 @@
 \encoding{UTF-8}
 
 \section{\Rlogo CHANGES IN R-devel}{
-  \subsection{SIGNIFICANT USER-VISIBLE CHANGES}{
-    \itemize{
-      \item .
-    }
-  }
+  %% \subsection{SIGNIFICANT USER-VISIBLE CHANGES}{
+  %%   \itemize{
+  %%     \item .
+  %%   }
+  %% }
 
   \subsection{NEW FEATURES}{
     \itemize{
@@ -330,6 +330,21 @@
       \item The deprecated and seemingly never-used S-compatibility
       macros \code{F77_COM} and \code{F77_COMDECL} have been removed
       from header \file{R_ext/RS.h}.
+
+      \item The \code{enum} \code{Rboolean} defined in header
+      \file{R_ext/Boolean.h} now has a fixed underlying type of
+      \code{int} on platforms whose C compiler supports this.
+
+      This is a C23 feature (taken from C++11) and also supported in all
+      C standards by some versions of \code{clang} (from \I{LLVM} and
+      Apple).
+
+      A fair amount of code has assumed this: it may be changed to a
+      smaller type in future.
+
+      If there were a platform which used an underlying type of a
+      different size this would be an ABI-breaking change (but we are
+      unaware of any such platform).
     }
   }
 
@@ -613,8 +628,10 @@
       \I{Benjamin Sommer}'s report in \PR{18861} and collaboration with
       \I{Heather Turner} improving \code{reformulate()}.
 
-      \item Arguments which should be length-1 logical,
-      e.g.\sspace{}\code{min(na.rm =)}, are checked more thoroughly.
+      \item Arguments which should be length-1 logical are checked more
+      thoroughly.  The most commonly seen errors are in \code{unlink(,
+      recursive)}, \code{tempdir()} and the \code{na.rm} argument of
+      \code{max()}, \code{min()}, \code{sum()}, \dots.
     }
   }
 }
