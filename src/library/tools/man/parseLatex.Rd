@@ -20,7 +20,11 @@ parseLatex(text, filename = "text",
            verbose = FALSE,
            verbatim = c("verbatim", "verbatim*",
                         "Sinput", "Soutput"),
-           verb = "\\\\Sexpr")
+           verb = "\\\\Sexpr",
+           defcmd = c("\\\\newcommand", "\\\\renewcommand",
+                      "\\\\providecommand", "\\\\def", "\\\\let"),
+           defenv = c("\\\\newenvironment",
+                      "\\\\renewenvironment"))
 deparseLatex(x, dropBraces = FALSE)
 latexToUtf8(x)
 }
@@ -40,6 +44,10 @@ A character vector containing the names of LaTeX environments holding verbatim t
   \item{verb}{
 A character vector containing LaTeX macros that should be 
 assumed to hold verbatim text.
+}
+  \item{defcmd, defenv}{
+Character vectors containing LaTeX macros that should be assumed
+to define macros or environments respectively.
   }
   \item{x}{
 A \code{"LaTeX"} object.

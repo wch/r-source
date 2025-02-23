@@ -1844,6 +1844,7 @@ assertErrV(tools::parseLatex("{"))
 tools::parseLatex("\\begin{foo}\\end{foo}")
 tools::parseLatex("\\Sexpr{ 1 + {1} }")
 assertErrV(tools::parseLatex("\\begin{foo} abc \\end{bar}"))
+tools::parseLatex("\\newcommand{\\test}{\\begin{foo}}")
 
 
 ## quantile.default() needing fuzz PR#15811

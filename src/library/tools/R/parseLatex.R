@@ -2,6 +2,7 @@
 #  Part of the R package, https://www.R-project.org
 #
 #  Copyright (C) 1995-2023 The R Core Team
+#  Copyright (C) 2025 Duncan Murdoch
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -19,12 +20,23 @@
 parseLatex <- function(text, filename = "text",
                      verbose = FALSE, verbatim = c("verbatim", "verbatim*",
                      "Sinput", "Soutput"),
-		     verb = "\\Sexpr")
+		     verb = "\\Sexpr",
+		     defcmd = c("\\newcommand", "\\renewcommand",
+		     	   "\\providecommand", "\\def", "\\let"),
+		     defenv = c("\\newenvironment",
+		     	   "\\renewenvironment"))
 {
     ## the internal function must get some sort of srcfile
     srcfile <- srcfilecopy(filename, text)
     text <- paste(text, collapse="\n")
-    .External2(C_parseLatex, text, srcfile, verbose, as.character(verbatim), as.character(verb))
+    
+    keywords <- c(as.character(verb), as.character(defcmd),
+    	      as.character(defenv))
+    # types:  1=verb, 2=defcmd, 3=defenv
+    keywordtype <- rep(1:3, c(length(verb), length(defcmd),
+    			  length(defenv)))
+    
+    .External2(C_parseLatex, text, srcfile, verbose, as.character(verbatim), keywords, keywordtype)
 }
 
 
@@ -58,6 +70,7 @@ deparseLatex <- function(x, dropBraces = FALSE)
         	"\\end{", a[[1L]], "}"),
         MATH = c("$", Recall(a), "$"), # \( and \) parse as MACRO
         DISPLAYMATH = c("$$", Recall(a), "$$"),
+        DEFINITION = Recall(a),
         NULL = stop("Internal error, no tag", domain = NA)
         ))
         lastTag <- tag
