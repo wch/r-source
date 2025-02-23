@@ -19,7 +19,8 @@
 unlist <- function(x, recursive=TRUE, use.names=TRUE)
 {
     ## for better error messages (islistfactor is not viisble)
-    if(length(recursive) != 1L) stop("'recursive' must be of length 1")
+    if(is.function(recursive) || length(recursive) != 1L)
+        stop("'recursive' must be a length-1 vector")
     if(is.na(recursive)) stop("'recursive' is NA")
     if(.Internal(islistfactor(x, recursive))) {
         URapply <-
