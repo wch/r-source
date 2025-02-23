@@ -1,6 +1,6 @@
 % File src/library/base/man/tempfile.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2023 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{tempfile}
@@ -20,8 +20,9 @@ tempdir(check = FALSE)
     of the name.}
   \item{tmpdir}{a non-empty character vector giving the directory name.}
   \item{fileext}{a non-empty character vector giving the file extension.}
-  \item{check}{\code{\link{logical}} indicating if \code{tempdir()}
-    should be checked and recreated if no longer valid.}
+  \item{check}{\code{\link{logical}} (\code{TRUE} or \code{FALSE})
+    indicating if \code{tempdir()} should be checked and recreated if no
+    longer valid.}
 }
 \value{
   For \code{tempfile} a character vector giving the names of possible

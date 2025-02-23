@@ -1,6 +1,6 @@
 % File src/library/base/man/Extremes.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2016 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Extremes}
@@ -32,8 +32,8 @@ pmin.int(\dots, na.rm = FALSE)
 }
 \arguments{
   \item{\dots}{numeric or character arguments (see Note).}
-  \item{na.rm}{a logical indicating whether missing values should be
-    removed.}
+  \item{na.rm}{a logical (\code{TRUE} or \code{FALSE}) indicating
+    whether missing values should be removed.}
 }
 \details{
   \code{max} and \code{min} return the maximum or minimum of \emph{all}
