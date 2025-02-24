@@ -851,7 +851,7 @@ function(dir, predicate = NULL, recursive = FALSE, .worker = NULL,
 
     which <- match.arg(which,
                        c("code", "vignettes", "tests",
-                         "NAMESPACE", "CITATION"),
+                         "NAMESPACE", "CITATION", "docs"),
                        several.ok = TRUE)
     code_files <-
         c(character(),
@@ -881,6 +881,22 @@ function(dir, predicate = NULL, recursive = FALSE, .worker = NULL,
     names(calls) <-
         .file_path_relative_to_dir(code_files, dirname(dir))
 
+    if("docs" %in% which) {
+        db <- Rd_db(dir = dir)
+        names(db) <- file.path(basename(dir), "man", names(db))
+        calls <-
+            c(calls,
+              Filter(length,
+                     lapply(db,
+                            function(e) {
+                                f <- tempfile()
+                                on.exit(unlink(f))
+                                Rd2ex(e, f)
+                                if(file.exists(f))
+                                    .worker(f, "UTF-8")
+                            })))
+    }
+    
     calls
 }
 
@@ -2107,8 +2123,7 @@ function(packages = NULL, FUN, ..., pattern = NULL, verbose = TRUE,
 function(dir)
 {
     dir <- file_path_as_absolute(dir)
-    wrk <- function(f) {
-        p <- file.path(dir, "R", f)
+    wrk <- function(p, f) {
         x <- utils::getParseData(parse(p, keep.source = TRUE))
         i1 <- which(x$token %in% c("PIPE", "'\\\\'"))
         i2 <- which(x$token == "PLACEHOLDER")
@@ -2137,13 +2152,36 @@ function(dir)
         } else
             NULL
     }
-    one <- function(f)
-        tryCatch(wrk(f), error = function(e) NULL)
 
     files <- list_files_with_type(file.path(dir, "R"), "code",
                                   full.names = FALSE,
                                   OS_subdirs = c("unix", "windows"))
-    do.call(rbind, lapply(files, one))
+    db <- Rd_db(dir = dir)
+
+    do.call(rbind,
+            c(Map(function(u, v) {
+                      tryCatch({
+                          wrk(u, v)
+                      }, error = function(e) NULL)
+                  },
+                  file.path(dir, "R", files),
+                  files,
+                  USE.NAMES = FALSE),
+              Map(function(u, v) {
+                      tryCatch({
+                          p <- tempfile()
+                          on.exit(unlink(p))
+                          ## Need to extract the code in the examples.
+                          ## Rd2ex() does that and more, but provides no
+                          ## output if there are no examples ...
+                          Rd2ex(u, p)
+                          if(file.exists(p))
+                              wrk(p, v)
+                      }, error = function(e) NULL)
+                  },
+                  db,
+                  names(db),
+                  USE.NAMES = FALSE)))
 }
 
 ## ** .package_depends_on_R_at_least
