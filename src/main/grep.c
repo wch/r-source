@@ -2967,7 +2967,7 @@ attribute_hidden SEXP do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
     regex_t reg;
     regmatch_t regmatch[10];
     R_xlen_t i, n;
-    Rboolean rc, igcase_opt, perl_opt, fixed_opt, useBytes;
+    Rboolean igcase_opt, perl_opt, fixed_opt, useBytes;
     const char *spat = NULL; /* -Wall */
     const wchar_t *wpat = NULL;
     const char *s = NULL;
@@ -3096,7 +3096,7 @@ attribute_hidden SEXP do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 	    UNPROTECT(1);
 	}
     } else {
-	int cflags = REG_EXTENDED;
+	int rc, cflags = REG_EXTENDED;
 	if (igcase_opt) cflags |= REG_ICASE;
 	if (!use_WC)
 	    rc = tre_regcompb(&reg, spat, cflags);
@@ -3214,6 +3214,7 @@ attribute_hidden SEXP do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 			}
 		    }
 		} else {
+		    int rc;
 		    if (!use_WC)
 			rc = tre_regexecb(&reg, s, 1, regmatch, 0);
 		    else
