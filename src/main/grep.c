@@ -1254,7 +1254,7 @@ attribute_hidden SEXP do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
     regex_t reg;
     R_xlen_t i, j, n;
     int nmatches = 0, rc;
-    int igcase_opt, value_opt, perl_opt, fixed_opt, useBytes, invert;
+    Rboolean igcase_opt, value_opt, perl_opt, fixed_opt, useBytes, invert;
     const char *spat = NULL;
     const wchar_t *wpat = NULL;
     const unsigned char *tables = NULL /* -Wall */;
@@ -1276,18 +1276,12 @@ attribute_hidden SEXP do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
     pat = CAR(args); args = CDR(args);
     text = CAR(args); args = CDR(args);
-    igcase_opt = asLogical(CAR(args)); args = CDR(args);
-    value_opt = asLogical(CAR(args)); args = CDR(args);
-    perl_opt = asLogical(CAR(args)); args = CDR(args);
-    fixed_opt = asLogical(CAR(args)); args = CDR(args);
-    useBytes = asLogical(CAR(args)); args = CDR(args);
-    invert = asLogical(CAR(args));
-    if (igcase_opt == NA_INTEGER) igcase_opt = 0;
-    if (value_opt == NA_INTEGER) value_opt = 0;
-    if (perl_opt == NA_INTEGER) perl_opt = 0;
-    if (fixed_opt == NA_INTEGER) fixed_opt = 0;
-    if (useBytes == NA_INTEGER) useBytes = 0;
-    if (invert == NA_INTEGER) invert = 0;
+    igcase_opt = asRbool(CAR(args), call); args = CDR(args);
+    value_opt = asRbool(CAR(args), call); args = CDR(args);
+    perl_opt = asRbool(CAR(args), call); args = CDR(args);
+    fixed_opt = asRbool(CAR(args), call); args = CDR(args);
+    useBytes = asRbool(CAR(args), call); args = CDR(args);
+    invert = asRbool(CAR(args), call);
     if (fixed_opt && igcase_opt)
 	warning(_("argument '%s' will be ignored"), "ignore.case = TRUE");
     if (fixed_opt && perl_opt) {
@@ -1573,22 +1567,17 @@ attribute_hidden SEXP do_grepraw(SEXP call, SEXP op, SEXP args, SEXP env)
 			    offset+length it is the initial size of
 			    the integer vector of matches */
     R_size_t res_ptr, offset, i;
-    int igcase_opt, fixed_opt, all, value, invert;
+    Rboolean igcase_opt, fixed_opt, all, value, invert;
 
     checkArity(op, args);
     pat = CAR(args); args = CDR(args);
     text = CAR(args); args = CDR(args);
     offset = asInteger(CAR(args)); args = CDR(args);
-    igcase_opt = asLogical(CAR(args)); args = CDR(args);
-    fixed_opt = asLogical(CAR(args)); args = CDR(args);
-    value = asLogical(CAR(args)); args = CDR(args);
-    all = asLogical(CAR(args)); args = CDR(args);
-    invert = asLogical(CAR(args));
-    if (igcase_opt == NA_INTEGER) igcase_opt = 0;
-    if (fixed_opt == NA_INTEGER) fixed_opt = 0;
-    if (all == NA_INTEGER) all = 0;
-    if (value == NA_INTEGER) value = 0;
-    if (invert == NA_INTEGER) invert = 0;
+    igcase_opt = asRbool(CAR(args), call); args = CDR(args);
+    fixed_opt = asRbool(CAR(args), call); args = CDR(args);
+    value = asRbool(CAR(args), call); args = CDR(args);
+    all = asRbool(CAR(args), call); args = CDR(args);
+    invert = asRbool(CAR(args), call);
     if (fixed_opt && igcase_opt)
 	warning(_("argument '%s' will be ignored"), "ignore.case = TRUE");
 
@@ -2106,7 +2095,8 @@ attribute_hidden SEXP do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
     regmatch_t regmatch[10];
     R_xlen_t i, n;
     int j, ns, nns, nmatch, offset, rc;
-    int global, igcase_opt, perl_opt, fixed_opt, useBytes, eflags, last_end;
+    Rboolean global, igcase_opt, perl_opt, fixed_opt, useBytes;
+    int eflags, last_end;
     char *u, *cbuf;
     const char *spat = NULL, *srep = NULL, *s = NULL;
     size_t patlen = 0, replen = 0;
@@ -2134,14 +2124,10 @@ attribute_hidden SEXP do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
     pat = CAR(args); args = CDR(args);
     rep = CAR(args); args = CDR(args);
     text = CAR(args); args = CDR(args);
-    igcase_opt = asLogical(CAR(args)); args = CDR(args);
-    perl_opt = asLogical(CAR(args)); args = CDR(args);
-    fixed_opt = asLogical(CAR(args)); args = CDR(args);
-    useBytes = asLogical(CAR(args)); args = CDR(args);
-    if (igcase_opt == NA_INTEGER) igcase_opt = 0;
-    if (perl_opt == NA_INTEGER) perl_opt = 0;
-    if (fixed_opt == NA_INTEGER) fixed_opt = 0;
-    if (useBytes == NA_INTEGER) useBytes = 0;
+    igcase_opt = asRbool(CAR(args), call); args = CDR(args);
+    perl_opt = asRbool(CAR(args), call); args = CDR(args);
+    fixed_opt = asRbool(CAR(args), call); args = CDR(args);
+    useBytes = asRbool(CAR(args), call); args = CDR(args);
     if (fixed_opt && igcase_opt)
 	warning(_("argument '%s' will be ignored"), "ignore.case = TRUE");
     if (fixed_opt && perl_opt) {
