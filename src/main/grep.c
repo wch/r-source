@@ -550,7 +550,7 @@ attribute_hidden SEXP do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP args0 = args, ans, tok, x;
     R_xlen_t i, itok, len, tlen;
     size_t j, ntok;
-    int fixed_opt, perl_opt, useBytes;
+    Rboolean fixed_opt, perl_opt, useBytes;
     char *pt = NULL; wchar_t *wpt = NULL;
     const char *buf, *split = "", *bufp;
     const unsigned char *tables = NULL;
@@ -562,12 +562,9 @@ attribute_hidden SEXP do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
     x = CAR(args); args = CDR(args);
     tok = CAR(args); args = CDR(args);
-    fixed_opt = asLogical(CAR(args)); args = CDR(args);
-    perl_opt = asLogical(CAR(args)); args = CDR(args);
-    useBytes = asLogical(CAR(args));
-    if (fixed_opt == NA_INTEGER) fixed_opt = 0;
-    if (perl_opt == NA_INTEGER) perl_opt = 0;
-    if (useBytes == NA_INTEGER) useBytes = 0;
+    fixed_opt = asRbool(CAR(args), call); args = CDR(args);
+    perl_opt = asRbool(CAR(args), call); args = CDR(args);
+    useBytes = asRbool(CAR(args), call);
     if (fixed_opt && perl_opt) {
 	warning(_("argument '%s' will be ignored"), "perl = TRUE");
 	perl_opt = 0;
