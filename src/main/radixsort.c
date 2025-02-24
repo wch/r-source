@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2016-2024 The R Core Team
+ *  Copyright (C) 2016-2025 The R Core Team
  *
  *  Based on code donated from the data.table package
  *  (C) 2006-2015 Matt Dowle and Arun Srinivasan.
@@ -1566,14 +1566,14 @@ attribute_hidden SEXP do_radixsort(SEXP call, SEXP op, SEXP args, SEXP rho)
     args = CDR(args);
 
     /* If TRUE, return starts of runs of identical values + max group size. */
-    retGrp = asLogical(CAR(args));
+    retGrp = asRbool(CAR(args), call);
     args = CDR(args);
 
     /* If FALSE, get order of strings in appearance order. Essentially
        abuses the CHARSXP table to group strings without hashing
        them. Only makes sense when retGrp=TRUE.
     */
-    sortStr = asLogical(CAR(args));
+    sortStr = asRbool(CAR(args), call );
     args = CDR(args);
 
     /* When grouping, we round off doubles to account for imprecision */

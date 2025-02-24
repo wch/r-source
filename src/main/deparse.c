@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997--2023  The R Core Team
+ *  Copyright (C) 1997--2025  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -178,7 +178,7 @@ attribute_hidden SEXP do_deparse(SEXP call, SEXP op, SEXP args, SEXP rho)
 	}
     }
     args = CDR(args);
-    int backtick = isNull(CAR(args)) ? 0 : asLogical(CAR(args));
+    Rboolean backtick = isNull(CAR(args)) ? 0 : asRbool(CAR(args), call);
     args = CDR(args);
     int opts = isNull(CAR(args)) ? SHOWATTRIBUTES : asInteger(CAR(args));
     args = CDR(args);
@@ -734,7 +734,7 @@ static attr_type attr1(SEXP s, LocalParseData *d)
     SEXP a = ATTRIB(s), nm = getAttrib(s, R_NamesSymbol);
     attr_type attr = UNKNOWN;
     Rboolean
-	nice_names = d->opts & NICE_NAMES,
+	nice_names = (Rboolean) (d->opts & NICE_NAMES),
 	show_attr  = d->opts & SHOWATTRIBUTES,
 	has_names = !isNull(nm), ok_names;
 #ifdef DEBUG_DEPARSE
@@ -1633,7 +1633,7 @@ static void vector2buff(SEXP vector, LocalParseData *d)
     }
 
     SEXP nv = R_NilValue;
-    Rboolean do_names = d_opts_in & SHOW_ATTR_OR_NMS;// iff TRUE use '<tag_i> = <comp_i>'
+    Rboolean do_names = (Rboolean)(d_opts_in & SHOW_ATTR_OR_NMS);// iff TRUE use '<tag_i> = <comp_i>'
     if(do_names) {
 	nv = getAttrib(vector, R_NamesSymbol); // only "do names" if have names:
 	if(isNull(nv))

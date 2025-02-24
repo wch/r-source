@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1995--2024  The R Core Team
+ *  Copyright (C) 1995--2025  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -2608,9 +2608,10 @@ do_serializeToConn(SEXP call, SEXP op, SEXP args, SEXP env)
     object = CAR(args);
     con = getConnection(asInteger(CADR(args)));
 
-    if (TYPEOF(CADDR(args)) != LGLSXP)
+/*    if (TYPEOF(CADDR(args)) != LGLSXP)
 	error(_("'ascii' must be logical"));
-    ascii = INTEGER(CADDR(args))[0];
+	ascii = INTEGER(CADDR(args))[0]; */
+    ascii = asRbool(CADDR(args), call);
     if (ascii == NA_LOGICAL) type = R_pstream_asciihex_format;
     else if (ascii) type = R_pstream_ascii_format;
     else type = R_pstream_xdr_format;
@@ -3224,7 +3225,7 @@ static SEXP R_getVarsFromFrame(SEXP vars, SEXP env, SEXP forcesxp)
 	error(_("bad environment"));
     if (TYPEOF(vars) != STRSXP)
 	error(_("bad variable names"));
-    force = asLogical(forcesxp);
+    force = asRbool(forcesxp, R_NilValue);
 
     len = LENGTH(vars);
     PROTECT(val = allocVector(VECSXP, len));

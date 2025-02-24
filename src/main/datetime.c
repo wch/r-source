@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-2024  The R Core Team.
+ *  Copyright (C) 2000-2025  The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -1652,7 +1652,7 @@ attribute_hidden SEXP do_D2POSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
     for(R_xlen_t i = 0; i < n; i++) {
 	stm tm;
 	double x_i = REAL(x)[i];
-	Rboolean valid = R_FINITE(x_i);
+	Rboolean valid = R_FINITE(x_i) != 0;
 	if(valid) {
 	    /* every 400 years is exactly 146097 days long and the
 	       pattern is repeated */

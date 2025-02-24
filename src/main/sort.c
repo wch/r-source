@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998-2023   The R Core Team
+ *  Copyright (C) 1998-2025   The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *  Copyright (C) 2004        The R Foundation
  *
@@ -277,7 +277,7 @@ attribute_hidden SEXP do_isunsorted(SEXP call, SEXP op, SEXP args, SEXP rho)
     if(isVectorAtomic(x)) {
 	UNPROTECT(1);
 	return (xlength(x) < 2) ? ScalarLogical(FALSE) :
-	    ScalarLogical(isUnsorted(x, strictly));
+	    ScalarLogical(isUnsorted(x, (Rboolean)strictly));
     }
     if(isObject(x)) {
 	SEXP call;
@@ -415,7 +415,7 @@ attribute_hidden SEXP do_sort(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     checkArity(op, args);
 
-    decreasing = asLogical(CADR(args));
+    decreasing = asRbool(CADR(args), call);
     if(decreasing == NA_LOGICAL)
 	error(_("'decreasing' must be TRUE or FALSE"));
     if(CAR(args) == R_NilValue) return R_NilValue;
@@ -444,11 +444,11 @@ static Rboolean fastpass_sortcheck(SEXP x, int wanted) {
     switch(TYPEOF(x)) {
     case INTSXP:
 	sorted = INTEGER_IS_SORTED(x);
-	noNA = INTEGER_NO_NA(x);
+	noNA = (Rboolean)INTEGER_NO_NA(x);
 	break;
     case REALSXP:
 	sorted = REAL_IS_SORTED(x);
-	noNA = REAL_NO_NA(x);
+	noNA = (Rboolean)REAL_NO_NA(x);
 	break;
     default:
 	/* keep sorted == UNKNOWN_SORTEDNESS */
@@ -1421,15 +1421,16 @@ attribute_hidden SEXP do_order(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXP ap, ans = R_NilValue /* -Wall */;
     int narg = 0;
     R_xlen_t n = -1;
-    Rboolean nalast, decreasing;
 
-    nalast = asLogical(CAR(args));
-    if(nalast == NA_LOGICAL)
+    int nalast0 = asLogical(CAR(args));
+    if(nalast0 == NA_LOGICAL)
 	error(_("invalid '%s' value"), "na.last");
+    Rboolean nalast = (Rboolean) nalast0;
     args = CDR(args);
-    decreasing = asLogical(CAR(args));
-    if(decreasing == NA_LOGICAL)
+    int decreasing0 = asLogical(CAR(args));
+    if(decreasing0 == NA_LOGICAL)
 	error(_("'decreasing' must be TRUE or FALSE"));
+    Rboolean decreasing = (Rboolean) decreasing0;
     args = CDR(args);
     if (args == R_NilValue)
 	return R_NilValue;

@@ -105,8 +105,8 @@ attribute_hidden SEXP do_traceOnOff(SEXP call, SEXP op, SEXP args, SEXP rho)
     if(length(onOff) > 0) {
 	int _new = asLogical(onOff);
 	if(_new == TRUE || _new == FALSE)
-	    if(trace) SET_TRACE_STATE(_new);
-	    else      SET_DEBUG_STATE(_new);
+	    if(trace) SET_TRACE_STATE((Rboolean) _new);
+	    else      SET_DEBUG_STATE((Rboolean) _new);
 	else
 	    error(_("Value for '%s' must be TRUE or FALSE"),
 		  trace ? "tracingState" : "debuggingState");

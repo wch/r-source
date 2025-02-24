@@ -2119,7 +2119,7 @@ attribute_hidden SEXP do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 
     checkArity(op, args);
 
-    global = PRIMVAL(op);
+    global = (Rboolean) PRIMVAL(op);
 
     pat = CAR(args); args = CDR(args);
     rep = CAR(args); args = CDR(args);

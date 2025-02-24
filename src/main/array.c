@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998-2023   The R Core Team
+ *  Copyright (C) 1998-2025   The R Core Team
  *  Copyright (C) 2002-2015   The R Foundation
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
@@ -82,7 +82,7 @@ SEXP GetColNames(SEXP dimnames)
 attribute_hidden SEXP do_matrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP vals, ans, snr, snc, dimnames;
-    int nr = 1, nc = 1, byrow, miss_nr, miss_nc;
+    int nr = 1, nc = 1, byrow0, miss_nr, miss_nc;
     R_xlen_t lendat;
 
     checkArity(op, args);
@@ -104,9 +104,10 @@ attribute_hidden SEXP do_matrix(SEXP call, SEXP op, SEXP args, SEXP rho)
     lendat = XLENGTH(vals);
     snr = CAR(args); args = CDR(args);
     snc = CAR(args); args = CDR(args);
-    byrow = asLogical(CAR(args)); args = CDR(args);
-    if (byrow == NA_INTEGER)
+    byrow0 = asLogical(CAR(args)); args = CDR(args);
+    if (byrow0 == NA_INTEGER)
 	error(_("invalid '%s' argument"), "byrow");
+    Rboolean byrow = (Rboolean) byrow0;
     dimnames = CAR(args);
     args = CDR(args);
     miss_nr = asLogical(CAR(args)); args = CDR(args);
@@ -1898,19 +1899,18 @@ attribute_hidden SEXP do_colsum(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP x, ans = R_NilValue;
     int type;
-    Rboolean NaRm, keepNA;
 
     checkArity(op, args);
     x = CAR(args); args = CDR(args);
     R_xlen_t n = asVecSize(CAR(args)); args = CDR(args);
     R_xlen_t p = asVecSize(CAR(args)); args = CDR(args);
-    NaRm = asLogical(CAR(args));
+    int NaRm = asLogical(CAR(args));
     if (n == NA_INTEGER || n < 0)
 	error(_("invalid '%s' argument"), "n");
     if (p == NA_INTEGER || p < 0)
 	error(_("invalid '%s' argument"), "p");
     if (NaRm == NA_LOGICAL) error(_("invalid '%s' argument"), "na.rm");
-    keepNA = !NaRm;
+    Rboolean keepNA = !NaRm;
 
     switch (type = TYPEOF(x)) {
     case LGLSXP:

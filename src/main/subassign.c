@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997--2023  The R Core Team
+ *  Copyright (C) 1997--2025  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -305,7 +305,7 @@ static Rboolean dispatch_asvector(SEXP *x, SEXP call, SEXP rho) {
         op = INTERNAL(install("as.vector"));
     PROTECT(args = list2(*x, mkString("any")));
     /* DispatchOrEval internal generic: as.vector */
-    ans = DispatchOrEval(call, op, "as.vector", args, rho, x, 0, 1);
+    ans = (Rboolean) DispatchOrEval(call, op, "as.vector", args, rho, x, 0, 1);
     UNPROTECT(1);
     return ans;
 }

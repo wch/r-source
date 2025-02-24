@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1999-2024  The R Core Team.
+ *  Copyright (C) 1999-2025  The R Core Team.
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -334,11 +334,13 @@ INLINE_FUN R_xlen_t XTRUELENGTH(SEXP x)
     CHECK_STDVEC_LGL(x);
     return (int *) STDVEC_DATAPTR(x);
 }
-HIDDEN INLINE_FUN Rboolean SCALAR_LVAL(SEXP x) {
+/* This should not be Rboolean as could be NA_LOGICAL */
+HIDDEN INLINE_FUN int SCALAR_LVAL(SEXP x) {
     CHECK_SCALAR_LGL(x);
     return LOGICAL(x)[0];
 }
-HIDDEN INLINE_FUN void SET_SCALAR_LVAL(SEXP x, Rboolean v) {
+/* ditto */
+HIDDEN INLINE_FUN void SET_SCALAR_LVAL(SEXP x, int v) {
     CHECK_SCALAR_LGL(x);
     LOGICAL(x)[0] = v;
 }

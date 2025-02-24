@@ -891,7 +891,7 @@ attribute_hidden SEXP do_seq(SEXP call, SEXP op, SEXP args, SEXP rho)
 		ans = seq_colon(rfrom, rto, call);
 		goto done;
 	    }
-	    Rboolean finite_del = R_FINITE(del);
+	    Rboolean finite_del = R_FINITE(del) != 0;
 	    double n = (finite_del)
 		? del/rby
 		: rto/rby - rfrom/rby; /* overflow in  (to - from)  when both are finite */
@@ -965,7 +965,7 @@ attribute_hidden SEXP do_seq(SEXP call, SEXP op, SEXP args, SEXP rho)
 	Rboolean finite_del = 0;
 	if(lout > 2) { // only then, use 'by'
 	    double nint = (double)(lout - 1);
-	    if((finite_del = R_FINITE(rby = (rto - rfrom))))
+	    if((finite_del = (R_FINITE(rby = (rto - rfrom)) != 0)))
 		rby /= nint;
 	    else // overflow in (to - from), nint >= 2  => finite 'by'
 		rby = (rto/nint - rfrom/nint);

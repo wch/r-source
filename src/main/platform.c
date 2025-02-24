@@ -1572,21 +1572,21 @@ attribute_hidden SEXP do_listfiles(SEXP call, SEXP op, SEXP args, SEXP rho)
 	pattern = TRUE;
     else if (!isNull(p) && !(isString(p) && LENGTH(p) < 1))
 	error(_("invalid '%s' argument"), "pattern");
-    int allfiles = asLogical(CAR(args)); args = CDR(args);
-    if (allfiles == NA_LOGICAL)
-	error(_("invalid '%s' argument"), "all.files");
+    Rboolean allfiles = asRbool(CAR(args), call); args = CDR(args);
+//    if (allfiles == NA_LOGICAL)
+//	error(_("invalid '%s' argument"), "all.files");
     int fullnames = asLogical(CAR(args)); args = CDR(args);
     if (fullnames == NA_LOGICAL)
 	error(_("invalid '%s' argument"), "full.names");
-    int recursive = asLogical(CAR(args)); args = CDR(args);
-    if (recursive == NA_LOGICAL)
-	error(_("invalid '%s' argument"), "recursive");
+    Rboolean recursive = asRbool(CAR(args), call); args = CDR(args);
+//    if (recursive == NA_LOGICAL)
+//	error(_("invalid '%s' argument"), "recursive");
     int igcase = asLogical(CAR(args)); args = CDR(args);
     if (igcase == NA_LOGICAL)
 	error(_("invalid '%s' argument"), "ignore.case");
-    int idirs = asLogical(CAR(args)); args = CDR(args);
-    if (idirs == NA_LOGICAL)
-	error(_("invalid '%s' argument"), "include.dirs");
+    Rboolean idirs = asRbool(CAR(args), call); args = CDR(args);
+//    if (idirs == NA_LOGICAL)
+//	error(_("invalid '%s' argument"), "include.dirs");
     int nodots = asLogical(CAR(args));
     if (nodots == NA_LOGICAL)
 	error(_("invalid '%s' argument"), "no..");
@@ -1665,9 +1665,9 @@ attribute_hidden SEXP do_listdirs(SEXP call, SEXP op, SEXP args, SEXP rho)
     int fullnames = asLogical(CAR(args)); args = CDR(args);
     if (fullnames == NA_LOGICAL)
 	error(_("invalid '%s' argument"), "full.names");
-    int recursive = asLogical(CAR(args)); args = CDR(args);
-    if (recursive == NA_LOGICAL)
-	error(_("invalid '%s' argument"), "recursive");
+    Rboolean recursive = asRbool(CAR(args), call); args = CDR(args);
+//    if (recursive == NA_LOGICAL)
+//	error(_("invalid '%s' argument"), "recursive");
 
     PROTECT_INDEX idx;
     SEXP ans;

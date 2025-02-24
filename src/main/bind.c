@@ -738,7 +738,7 @@ static SEXP c_Extract_opt(SEXP ans, Rboolean *recurse, Rboolean *usenames,
 	    if (n_recurse++ == 1)
 		errorcall(call, _("repeated formal argument 'recursive'"));
 	    if ((v = asLogical(CAR(a))) != NA_INTEGER) {
-		*recurse = v;
+		*recurse = (Rboolean) v;
 	    }
 	    if (last == NULL)
 		ans = next;
@@ -749,7 +749,7 @@ static SEXP c_Extract_opt(SEXP ans, Rboolean *recurse, Rboolean *usenames,
 	    if (n_usenames++ == 1)
 		errorcall(call, _("repeated formal argument 'use.names'"));
 	    if ((v = asLogical(CAR(a))) != NA_INTEGER) {
-		*usenames = v;
+		*usenames = (Rboolean) v;
 	    }
 	    if (last == NULL)
 		ans = next;

@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997--2022  The R Core Team
+ *  Copyright (C) 1997--2025  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -2344,9 +2344,9 @@ attribute_hidden SEXP do_saveToConn(SEXP call, SEXP op, SEXP args, SEXP env)
 
     con = getConnection(asInteger(CADR(args)));
 
-    if (TYPEOF(CADDR(args)) != LGLSXP)
-	error(_("'ascii' must be logical"));
-    ascii = INTEGER(CADDR(args))[0];
+/*    if (TYPEOF(CADDR(args)) != LGLSXP)
+      error(_("'ascii' must be logical")); */
+    ascii = asRbool(CADDR(args), call);
 
     if (CADDDR(args) == R_NilValue)
 	version = defaultSaveVersion();
