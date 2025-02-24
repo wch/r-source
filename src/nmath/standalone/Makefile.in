@@ -94,7 +94,7 @@ check:
 	@if test -n "${TEST_MC_CORES}"; then \
 	  echo "using ${TEST_MC_CORES} cores" > check.log; \
 	  $(MAKE) -j  ${TEST_MC_CORES} all   >> check.log 2>&1; \
-	  $(MAKE) -f test >> check.log 2>&1; \
+	  $(MAKE) test >> check.log 2>&1; \
 	else \
 	  $(MAKE) all test > check.log 2>&1; \
 	fi || { \
