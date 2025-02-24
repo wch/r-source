@@ -2307,7 +2307,7 @@ attribute_hidden SEXP do_sample2(SEXP call, SEXP op, SEXP args, SEXP env)
  * Low Level Functions
  */
 
-static int hash_identical(SEXP x, int K, int useCloEnv)
+static int hash_identical(SEXP x, int K, Rboolean useCloEnv)
 {
     /* using 31 seems to work reasonably */
     if (K == 0 || K > 31) K = 31;
@@ -2649,7 +2649,8 @@ attribute_hidden SEXP do_vhash(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP sUseCloEnv = CADDR(args);
 
     int K = sK == R_NilValue ? 31 : asInteger(sK);
-    int useCloEnv = sUseCloEnv == R_NilValue ? TRUE : asLogical(sUseCloEnv);
+    Rboolean useCloEnv =
+	(sUseCloEnv == R_NilValue) ? TRUE : asRbool(sUseCloEnv,call);
 
     int val = hash_identical(x, K, useCloEnv);
     return ScalarInteger(val);

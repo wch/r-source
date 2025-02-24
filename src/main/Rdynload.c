@@ -1470,7 +1470,7 @@ R_getSymbolInfo(SEXP sname, SEXP spackage, SEXP withRegistrationInfo)
 
     if(f)
 	sym = createRSymbolObject(sname, f, &symbol,
-				  LOGICAL(withRegistrationInfo)[0]);
+				  asRbool(withRegistrationInfo, R_NilValue));
 
     vmaxset(vmax);
     return sym;

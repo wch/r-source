@@ -490,7 +490,7 @@ attribute_hidden SEXP do_adist(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP x, y;
     SEXP ans, counts, offsets, dimnames, names, elt;
     SEXP opt_costs;
-    int opt_fixed, opt_partial, opt_counts, opt_icase, useBytes;
+    Rboolean opt_fixed, opt_partial, opt_counts, opt_icase, useBytes;
     int i = 0, j = 0, m, nx, ny, nxy;
     const char *s, *t;
     const void *vmax = NULL;
@@ -509,11 +509,11 @@ attribute_hidden SEXP do_adist(SEXP call, SEXP op, SEXP args, SEXP env)
     x = CAR(args); args = CDR(args);
     y = CAR(args); args = CDR(args);
     opt_costs = CAR(args); args = CDR(args);
-    opt_counts = asLogical(CAR(args)); args = CDR(args);
-    opt_fixed = asInteger(CAR(args)); args = CDR(args);
-    opt_partial = asInteger(CAR(args)); args = CDR(args);
-    opt_icase = asLogical(CAR(args)); args = CDR(args);
-    useBytes = asLogical(CAR(args));
+    opt_counts = asRbool(CAR(args), call); args = CDR(args);
+    opt_fixed = asRbool(CAR(args), call); args = CDR(args);
+    opt_partial = asRbool(CAR(args), call); args = CDR(args);
+    opt_icase = asRbool(CAR(args), call); args = CDR(args);
+    useBytes = asRbool(CAR(args), call);
 
     if(opt_counts == NA_INTEGER) opt_counts = 0;
     if(opt_fixed == NA_INTEGER) opt_fixed = 1;

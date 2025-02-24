@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997--2024  The R Core Team
+ *  Copyright (C) 1997--2025  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -2967,7 +2967,7 @@ attribute_hidden SEXP do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
     regex_t reg;
     regmatch_t regmatch[10];
     R_xlen_t i, n;
-    int rc, igcase_opt, perl_opt, fixed_opt, useBytes;
+    Rboolean rc, igcase_opt, perl_opt, fixed_opt, useBytes;
     const char *spat = NULL; /* -Wall */
     const wchar_t *wpat = NULL;
     const char *s = NULL;
@@ -2994,14 +2994,10 @@ attribute_hidden SEXP do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
     pat = CAR(args); args = CDR(args);
     text = CAR(args); args = CDR(args);
-    igcase_opt = asLogical(CAR(args)); args = CDR(args);
-    perl_opt = asLogical(CAR(args)); args = CDR(args);
-    fixed_opt = asLogical(CAR(args)); args = CDR(args);
-    useBytes = asLogical(CAR(args)); args = CDR(args);
-    if (igcase_opt == NA_INTEGER) igcase_opt = 0;
-    if (perl_opt == NA_INTEGER) perl_opt = 0;
-    if (fixed_opt == NA_INTEGER) fixed_opt = 0;
-    if (useBytes == NA_INTEGER) useBytes = 0;
+    igcase_opt = asRbool(CAR(args), call); args = CDR(args);
+    perl_opt = asRbool(CAR(args), call); args = CDR(args);
+    fixed_opt = asRbool(CAR(args), call); args = CDR(args);
+    useBytes = asRbool(CAR(args), call); args = CDR(args);
     if (fixed_opt && igcase_opt)
 	warning(_("argument '%s' will be ignored"), "ignore.case = TRUE");
     if (fixed_opt && perl_opt) {

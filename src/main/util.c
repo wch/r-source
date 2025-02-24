@@ -2838,7 +2838,9 @@ attribute_hidden SEXP do_findinterval(SEXP call, SEXP op, SEXP args, SEXP rho)
     int n = LENGTH(xt);
     if (n == NA_INTEGER) error(_("invalid '%s' argument"), "vec");
     R_xlen_t nx = XLENGTH(x);
-    int sr = asLogical(right), si = asLogical(inside), lO = asLogical(leftOp);
+    Rboolean sr = asRbool(right, call),
+	si = asRbool(inside, call),
+	lO = asRbool(leftOp, call);
     if (sr == NA_INTEGER)
 	error(_("invalid '%s' argument"), "rightmost.closed");
     if (si == NA_INTEGER)

@@ -48,7 +48,7 @@
       respective metadata.
       (Thanks to \I{Edzer Pebesma}.)
 
-      \item \code{grDevices::glyphInfo()} gains \code{rot} argument
+      \item \code{grDevices::glyphInfo()} gains a \code{rot} argument
       to allow per-glyph rotation.
       (Thanks to \I{Daniel Sabanes Bove}.)
 
@@ -633,6 +633,11 @@
       more thoroughly.  The most commonly seen errors are in
       \code{unlink(, recursive)}, \code{tempdir()} and the \code{na.rm}
       argument of \code{max()}, \code{min()}, \code{sum()}, \dots.
+
+      \code{grep()} and similar took non-\code{TRUE} values of their logical
+      arguments as \code{FALSE}, but these were almost always coding
+      mistakes and are now reported as \code{NA}. [In progress, in place
+      for \code{regexpr()].]
     }
   }
 }
