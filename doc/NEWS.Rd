@@ -637,7 +637,7 @@
       \code{grep()} and similar took non-\code{TRUE} values of their logical
       arguments as \code{FALSE}, but these were almost always coding
       mistakes and are now reported as \code{NA}. [In progress, in place
-      for \code{regexpr()].]
+      for \code{regexpr()}.]
     }
   }
 }
