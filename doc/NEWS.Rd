@@ -346,6 +346,10 @@
       If there were a platform which used an underlying type of a
       different size this would be an ABI-breaking change (but we are
       unaware of any such platform).
+
+      \item There is a new function \code{asRboolean}, a variannt of
+      \code{asLogical} more suitable to converting logical arguments to
+      \code{Rboolean}.
     }
   }
 

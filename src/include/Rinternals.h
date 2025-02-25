@@ -487,6 +487,7 @@ int Rf_asLogical(SEXP x);
 int Rf_asInteger(SEXP x);
 double Rf_asReal(SEXP x);
 Rcomplex Rf_asComplex(SEXP x);
+Rboolean Rf_asRboolean(SEXP x);
 
 
 // also included in R_ext/Rallocators.h
@@ -900,6 +901,7 @@ void R_orderVector1(int *indx, int n, SEXP x,       Rboolean nalast, Rboolean de
 #define asInteger		Rf_asInteger
 #define asLogical		Rf_asLogical
 #define asLogical2		Rf_asLogical2
+#define asRboolean		Rf_asRboolean
 #define asReal			Rf_asReal
 #define asS4			Rf_asS4
 #define charIsASCII		Rf_charIsASCII
