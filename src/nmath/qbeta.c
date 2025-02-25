@@ -66,7 +66,7 @@ double qbeta(double alpha, double p, double q, int lower_tail, int log_p)
     // allowing p==0 and q==0  <==> treat as one- or two-point mass
 
     double qbet[2];// = { qbeta(), 1 - qbeta() }
-    qbeta_raw(alpha, p, q, lower_tail, log_p,
+    qbeta_raw(alpha, p, q, lower_tail != 0, log_p != 0,
 	      // log_q_cut ,      n_N
 	      USE_LOG_X_CUTOFF, n_NEWTON_FREE, qbet);
     return qbet[0];
