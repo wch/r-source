@@ -1810,7 +1810,8 @@ attribute_hidden SEXP do_setS4Object(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     checkArity(op, args);
     SEXP object = CAR(args);
-    int flag = asLogical(CADR(args)), complete = asInteger(CADDR(args));
+    Rboolean flag = asRbool(CADR(args), call);
+    int complete = asInteger(CADDR(args));
     if(length(CADR(args)) != 1 || flag == NA_INTEGER)
 	error("invalid '%s' argument", "flag");
     if(complete == NA_INTEGER)

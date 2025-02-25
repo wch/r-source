@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001--2022 The R Core Team
+ *  Copyright (C) 2001--2025 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Pulic License as published by
@@ -202,8 +202,8 @@ attribute_hidden SEXP do_packBits(SEXP call, SEXP op, SEXP args, SEXP env)
     if (!isString(stype)  || LENGTH(stype) != 1)
 	error(_("argument '%s' must be a character string"), "type");
     Rboolean
-	notI = strcmp(CHAR(STRING_ELT(stype, 0)), "integer"),
-	notR = strcmp(CHAR(STRING_ELT(stype, 0)), "raw"),
+	notI = strcmp(CHAR(STRING_ELT(stype, 0)), "integer") != 0,
+	notR = strcmp(CHAR(STRING_ELT(stype, 0)), "raw") != 0,
 	useRaw =  notI && !notR,
 	useInt = !notI &&  notR;
     int fac = useRaw ? 8 : (useInt ? 32 : 64);

@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001-2023  The R Core Team
+ *  Copyright (C) 2001-2025  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -118,7 +118,7 @@ R_compute_identical(SEXP x, SEXP y, int flags)
        -- such attributes are used for the cache.  */
     if(TYPEOF(x) == CHARSXP) {
 	/* This matches NAs */
-	return Seql(x, y);
+	return Seql(x, y) == 1;
     }
     SEXP ax, ay;
     if (IGNORE_SRCREF && TYPEOF(x) == CLOSXP) {
@@ -280,7 +280,7 @@ R_compute_identical(SEXP x, SEXP y, int flags)
     case CHARSXP: /* Probably unreachable, but better safe than sorry... */
     {
 	/* This matches NAs */
-	return Seql(x, y);
+	return Seql(x, y) == 1;
     }
     case VECSXP:
     case EXPRSXP:

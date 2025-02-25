@@ -1677,7 +1677,7 @@ void defineVar(SEXP symbol, SEXP value, SEXP rho)
 	    }
 	    hashcode = HASHVALUE(c) % HASHSIZE(HASHTAB(rho));
 	    R_HashSet(hashcode, symbol, HASHTAB(rho), value,
-		      FRAME_IS_LOCKED(rho));
+		      (Rboolean) FRAME_IS_LOCKED(rho));
 	    if (R_HashSizeCheck(HASHTAB(rho)))
 		SET_HASHTAB(rho, R_HashResize(HASHTAB(rho)));
 	}
@@ -2136,7 +2136,8 @@ attribute_hidden SEXP do_get(SEXP call, SEXP op, SEXP args, SEXP rho)
 	error(_("invalid '%s' argument"), "inherits");
 
     /* Search for the object */
-    rval = findVar1mode(t1, genv, gmode, wants_S4, ginherits, PRIMVAL(op));
+    rval = findVar1mode(t1, genv, gmode, wants_S4, ginherits,
+			(Rboolean) PRIMVAL(op));
     if (rval == R_MissingArg) { // signal a *classed* error:
 	R_MissingArgError(t1, call, "getMissingError");
     }
@@ -2391,7 +2392,7 @@ Rboolean R_isMissing(SEXP symbol, SEXP rho)
 		int oldseen = PRSEEN(CAR(vl));
 		SET_PRSEEN(CAR(vl), 1);
 		PROTECT(vl);
-		int val = R_isMissing(PREXPR(CAR(vl)), PRENV(CAR(vl)));
+		Rboolean val = R_isMissing(PREXPR(CAR(vl)), PRENV(CAR(vl)));
 		UNPROTECT(1); /* vl */
 		/* The oldseen value will usually be 0, but might be 2
 		   from an interrupted evaluation. LT */
@@ -2934,7 +2935,7 @@ attribute_hidden SEXP do_ls(SEXP call, SEXP op, SEXP args, SEXP rho)
     int sort_nms = asLogical(CADDR(args)); /* sorted = TRUE/FALSE */
     if (sort_nms == NA_LOGICAL) sort_nms = 0;
 
-    return R_lsInternal3(env, all, sort_nms);
+    return R_lsInternal3(env, (Rboolean) all, (Rboolean) sort_nms);
 }
 
 /* takes an environment, a boolean indicating whether to get all
@@ -3398,7 +3399,7 @@ attribute_hidden SEXP do_lockEnv(SEXP call, SEXP op, SEXP args, SEXP rho)
     Rboolean bindings;
     checkArity(op, args);
     frame = CAR(args);
-    bindings = asLogical(CADR(args));
+    bindings = asRbool(CADR(args), call);
     R_LockEnvironment(frame, bindings);
     return R_NilValue;
 }

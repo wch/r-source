@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997--2024  The R Core Team
+ *  Copyright (C) 1997--2025  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -120,12 +120,12 @@ attribute_hidden SEXP do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 	sepBytes = IS_BYTES(sep);
 	collapse = CADDR(args);
 	if(correct_nargs)
-	    recycle_0 = asLogical(CADDDR(args));
+	    recycle_0 = asRbool(CADDDR(args), call);
     } else { /* paste0(..., .) */
 	u_sepw = sepw = 0; sep = R_NilValue;/* -Wall */
 	collapse = CADR(args);
 	if(correct_nargs)
-	    recycle_0 = asLogical(CADDR(args));
+	    recycle_0 = asRbool(CADDR(args), call);
     }
     Rboolean do_collapse = (collapse != R_NilValue); // == !isNull(collapse)
     if (do_collapse)

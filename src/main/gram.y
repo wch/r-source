@@ -2,7 +2,7 @@
 %{
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997--2024  The R Core Team
+ *  Copyright (C) 1997--2025  The R Core Team
  *  Copyright (C) 2009--2011  Romain Francois
  *  Copyright (C) 1995--1997  Robert Gentleman and Ross Ihaka
  *
@@ -1816,11 +1816,11 @@ SEXP R_Parse1Buffer(IoBuffer *buffer, int gencode, ParseStatus *status)
 
     R_InitSrcRefState(&cntxt);
     if (gencode) {
-    	keepSource = asLogical(GetOption1(install("keep.source")));
+    	keepSource = asRbool(GetOption1(install("keep.source")), R_NilValue);
     	if (keepSource) {
     	    ParseState.keepSrcRefs = TRUE;
 	    ParseState.keepParseData =
-		asLogical(GetOption1(install("keep.parse.data")));
+		asRbool(GetOption1(install("keep.parse.data")), R_NilValue);
 	    PS_SET_SRCFILE(NewEnvironment(R_NilValue, R_NilValue, R_EmptyEnv));
 	    PS_SET_ORIGINAL(PS_SRCFILE);
 	    PS_SET_SRCREFS(R_NilValue);
@@ -1882,7 +1882,7 @@ static SEXP R_Parse(int n, ParseStatus *status, SEXP srcfile)
     if (isEnvironment(srcfile)) {
     	ParseState.keepSrcRefs = TRUE;
 	ParseState.keepParseData =
-	    asLogical(GetOption1(install("keep.parse.data")));
+	    asRbool(GetOption1(install("keep.parse.data")), R_NilValue);
 	PS_SET_SRCREFS(R_NilValue);
     }
     
@@ -2023,7 +2023,7 @@ SEXP R_ParseBuffer(IoBuffer *buffer, int n, ParseStatus *status, SEXP prompt,
     if (isEnvironment(srcfile)) {
     	ParseState.keepSrcRefs = TRUE;
 	ParseState.keepParseData =
-	    asLogical(GetOption1(install("keep.parse.data")));
+	    asRbool(GetOption1(install("keep.parse.data")), R_NilValue);
 	PS_SET_SRCREFS(R_NilValue);
     }
     

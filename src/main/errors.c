@@ -39,7 +39,7 @@
    in  more places. LT */
 static SEXP evalKeepVis(SEXP e, SEXP rho)
 {
-    int oldvis = R_Visible;
+    Rboolean oldvis = R_Visible;
     SEXP val = eval(e, rho);
     R_Visible = oldvis;
     return val;
@@ -1209,7 +1209,7 @@ attribute_hidden SEXP do_gettext(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    trim = TRUE;
 	else
 #endif
-	    trim = asLogical(CADDR(args));
+	    trim = asRbool(CADDR(args), call);
 	for(int i = 0; i < n; i++) {
 	    int ihead = 0, itail = 0;
 	    const char * This = translateChar(STRING_ELT(string, i));
@@ -2159,9 +2159,9 @@ do_printDeferredWarnings(SEXP call, SEXP op, SEXP args, SEXP env)
 attribute_hidden SEXP
 do_interruptsSuspended(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    int orig_value = R_interrupts_suspended;
+    Rboolean orig_value = R_interrupts_suspended;
     if (args != R_NilValue)
-	R_interrupts_suspended = asLogical(CAR(args));
+	R_interrupts_suspended = asRbool(CAR(args), call);
     return ScalarLogical(orig_value);
 }
 
@@ -2441,7 +2441,7 @@ typedef struct {
     void *hdata;
     void (*finally)(void *);
     void *fdata;
-    int suspended;
+    Rboolean suspended;
 } tryCatchData_t;
 
 static SEXP default_tryCatch_handler(SEXP cond, void *data)

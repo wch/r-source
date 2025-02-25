@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998-2024   The R Core Team.
+ *  Copyright (C) 1998-2025   The R Core Team.
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -635,7 +635,7 @@ attribute_hidden SEXP do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    else if (streql(CHAR(namei), "keep.source")) {
 		if (TYPEOF(argi) != LGLSXP || LENGTH(argi) != 1)
 		    error(_("invalid value for '%s'"), CHAR(namei));
-		int k = asLogical(argi);
+		Rboolean k = asRbool(argi, call);
 		R_KeepSource = k;
 		SET_VECTOR_ELT(value, i, SetOption(tag, ScalarLogical(k)));
 	    }
@@ -782,27 +782,27 @@ attribute_hidden SEXP do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    }
 	    else if (streql(CHAR(namei), "warnPartialMatchDollar")) {
 		check_TRUE_FALSE(argi, CHAR(namei));
-		R_warn_partial_match_dollar = LOGICAL(argi)[0];
+		R_warn_partial_match_dollar = asRbool(argi, call);
 		SET_VECTOR_ELT(value, i, SetOption(tag, argi));
 	    }
 	    else if (streql(CHAR(namei), "warnPartialMatchArgs")) {
 		check_TRUE_FALSE(argi, CHAR(namei));
-		R_warn_partial_match_args = LOGICAL(argi)[0];
+		R_warn_partial_match_args = asRbool(argi, call);
 		SET_VECTOR_ELT(value, i, SetOption(tag, argi));
 	    }
 	    else if (streql(CHAR(namei), "warnPartialMatchAttr")) {
 		check_TRUE_FALSE(argi, CHAR(namei));
-		R_warn_partial_match_attr = LOGICAL(argi)[0];
+		R_warn_partial_match_attr = asRbool(argi, call);
 		SET_VECTOR_ELT(value, i, SetOption(tag, argi));
 	    }
 	    else if (streql(CHAR(namei), "showWarnCalls")) {
 		check_TRUE_FALSE(argi, CHAR(namei));
-		R_ShowWarnCalls = LOGICAL(argi)[0];
+		R_ShowWarnCalls = asRbool(argi, call);
 		SET_VECTOR_ELT(value, i, SetOption(tag, argi));
 	    }
 	    else if (streql(CHAR(namei), "showErrorCalls")) {
 		check_TRUE_FALSE(argi, CHAR(namei));
-		R_ShowErrorCalls = LOGICAL(argi)[0];
+		R_ShowErrorCalls = asRbool(argi, call);
 		SET_VECTOR_ELT(value, i, SetOption(tag, argi));
 	    }
 	    else if (streql(CHAR(namei), "showNCalls")) {
@@ -817,12 +817,12 @@ attribute_hidden SEXP do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    }
 	    else if (streql(CHAR(namei), "browserNLdisabled")) {
 		check_TRUE_FALSE(argi, CHAR(namei));
-		R_DisableNLinBrowser = LOGICAL(argi)[0];
+		R_DisableNLinBrowser = asRbool(argi, call);
 		SET_VECTOR_ELT(value, i, SetOption(tag, argi));
 	    }
 	    else if (streql(CHAR(namei), "CBoundsCheck")) {
 		check_TRUE_FALSE(argi, CHAR(namei));
-		R_CBoundsCheck = LOGICAL(argi)[0];
+		R_CBoundsCheck = asRbool(argi, call);
 		SET_VECTOR_ELT(value, i, SetOption(tag, argi));
 	    }
 	    else if (streql(CHAR(namei), "matprod")) {
@@ -894,7 +894,7 @@ attribute_hidden SEXP do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    else if (streql(CHAR(namei), "verbose")) {
 		if (TYPEOF(argi) != LGLSXP || LENGTH(argi) != 1)
 		    error(_("invalid value for '%s'"), CHAR(namei));
-		int k = asLogical(argi);
+		Rboolean k = asRbool(argi, call);
 		R_Verbose = k;
 		SET_VECTOR_ELT(value, i, SetOption(tag, ScalarLogical(k)));
 	    }
