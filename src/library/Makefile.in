@@ -108,7 +108,7 @@ vignettes:
 	    ($(ECHO) "tools:::.install_package_vignettes(\"$(srcdir)/$${pkg}\", \"$(top_builddir)/library/$${pkg}\")") | \
 	        R_DEFAULT_PACKAGES="utils,tools" LC_ALL=C \
 		  R_LIBS_USER=NULL R_LIBS_SITE=NULL \
-	          $(R_EXE) > /dev/null; \
+	          $(R_EXE) > /dev/null || exit 1; \
 	  done \
 	fi
 
