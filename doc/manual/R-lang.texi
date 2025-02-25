@@ -4597,23 +4597,26 @@ diagnostic messages refer to the original file.
 
 
 
-@node Function and Variable Index
-@unnumbered Function and Variable Index
-
-@printindex vr
-
-@node Concept Index
-@unnumbered Concept Index
-
-@printindex cp
-
 @node References
-@appendix References
+@unnumbered References
 
 @I{Richard A.@: Becker}, @I{John M.@: Chambers} and @I{Allan R.@: Wilks} (1988),
 @emph{The New S Language.}
 Chapman & Hall, New York.
 This book is often called the ``@emph{Blue Book}''.
+
+
+@node Function and variable index
+@unnumbered Function and variable index
+
+@printindex vr
+
+
+@node Concept index
+@unnumbered Concept index
+
+@printindex cp
+
 
 @bye
 

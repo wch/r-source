@@ -18693,12 +18693,6 @@ use its value for @code{InstallPath}.
 @printindex vr
 
 
-@node Concept index
-@unnumbered Concept index
-
-@printindex cp
-
-
 @node API index
 @unnumbered API index
 
@@ -18737,6 +18731,12 @@ Functions, variables, and header files to support creating alternate
 front ends and other forms of embedding @R{}.
 
 @printindex em
+
+
+@node Concept index
+@unnumbered Concept index
+
+@printindex cp
 
 
 @bye

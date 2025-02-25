@@ -5977,16 +5977,16 @@ to do so.
 @printindex vr
 
 
-@node Concept index
-@unnumbered Concept index
-
-@printindex cp
-
-
 @node Environment variable index
 @unnumbered Environment variable index
 
 @printindex en
+
+
+@node Concept index
+@unnumbered Concept index
+
+@printindex cp
 
 
 @bye
