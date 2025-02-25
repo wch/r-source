@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2016--2024   The R Core Team
+ *  Copyright (C) 2016--2025   The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -1104,9 +1104,9 @@ static SEXP mmap_Unserialize(SEXP class, SEXP state)
 {
     SEXP file = MMAP_STATE_FILE(state);
     int type = MMAP_STATE_TYPE(state);
-    Rboolean ptrOK = MMAP_STATE_PTROK(state);
-    Rboolean wrtOK = MMAP_STATE_WRTOK(state);
-    Rboolean serOK = MMAP_STATE_SEROK(state);
+    Rboolean ptrOK = (Rboolean) MMAP_STATE_PTROK(state);
+    Rboolean wrtOK = (Rboolean) MMAP_STATE_WRTOK(state);
+    Rboolean serOK = (Rboolean) MMAP_STATE_SEROK(state);
 
     SEXP val = mmap_file(file, type, ptrOK, wrtOK, serOK, TRUE);
     if (val == NULL) {
@@ -1123,9 +1123,9 @@ static SEXP mmap_Unserialize(SEXP class, SEXP state)
 static Rboolean mmap_Inspect(SEXP x, int pre, int deep, int pvec,
 			     void (*inspect_subtree)(SEXP, int, int, int))
 {
-    Rboolean ptrOK = MMAP_PTROK(x);
-    Rboolean wrtOK = MMAP_WRTOK(x);
-    Rboolean serOK = MMAP_SEROK(x);
+    Rboolean ptrOK = (Rboolean) MMAP_PTROK(x);
+    Rboolean wrtOK = (Rboolean) MMAP_WRTOK(x);
+    Rboolean serOK = (Rboolean) MMAP_SEROK(x);
     Rprintf(" mmaped %s", R_typeToChar(x));
     Rprintf(" [ptr=%d,wrt=%d,ser=%d]\n", ptrOK, wrtOK, serOK);
     return TRUE;
@@ -1338,8 +1338,8 @@ static SEXP mmap_file(SEXP file, int type, Rboolean ptrOK, Rboolean wrtOK,
 
 static Rboolean asLogicalNA(SEXP x, Rboolean dflt)
 {
-    Rboolean val = asLogical(x);
-    return val == NA_LOGICAL ? dflt : val;
+    int val = asLogical(x);
+    return val == NA_LOGICAL ? dflt : (Rboolean) val;
 }
 
 #ifdef SIMPLEMMAP
@@ -1508,8 +1508,8 @@ static SEXP wrapper_Duplicate(SEXP x, Rboolean deep)
 static Rboolean wrapper_Inspect(SEXP x, int pre, int deep, int pvec,
 				void (*inspect_subtree)(SEXP, int, int, int))
 {
-    Rboolean srt = WRAPPER_SORTED(x);
-    Rboolean no_na = WRAPPER_NO_NA(x);
+    Rboolean srt = (Rboolean) WRAPPER_SORTED(x);
+    Rboolean no_na = (Rboolean) WRAPPER_NO_NA(x);
     Rprintf(" wrapper [srt=%d,no_na=%d]\n", srt, no_na);
     inspect_subtree(WRAPPER_WRAPPED(x), pre, deep, pvec);
     return TRUE;

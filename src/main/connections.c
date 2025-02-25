@@ -1121,7 +1121,7 @@ static size_t file_write(const void *ptr, size_t size, size_t nitems,
 }
 
 static Rconnection newfile(const char *description, int enc, const char *mode,
-			   int raw)
+			   Rboolean raw)
 {
     Rconnection new;
     new = (Rconnection) malloc(sizeof(struct Rconn));
@@ -1575,7 +1575,8 @@ attribute_hidden SEXP do_fifo(SEXP call, SEXP op, SEXP args, SEXP env)
 #if (defined(HAVE_MKFIFO) && defined(HAVE_FCNTL_H)) || defined(_WIN32)
     SEXP sfile, sopen, ans, class, enc;
     const char *file, *open;
-    int ncon, block;
+    int ncon;
+    Rboolean block;
     Rconnection con = NULL;
 
     checkArity(op, args);
@@ -1589,7 +1590,7 @@ attribute_hidden SEXP do_fifo(SEXP call, SEXP op, SEXP args, SEXP env)
     sopen = CADR(args);
     if(!isString(sopen) || LENGTH(sopen) != 1)
 	error(_("invalid '%s' argument"), "open");
-    block = asLogical(CADDR(args));
+    block = asRbool(CADDR(args), call);
     if(block == NA_LOGICAL)
 	error(_("invalid '%s' argument"), "block");
     enc = CADDDR(args);
@@ -3937,7 +3938,8 @@ attribute_hidden SEXP do_sockconn(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP scmd, sopen, ans, class, enc;
     const char *host, *open;
-    int ncon, port, server, blocking, timeout, serverfd, options = 0;
+    int ncon, port, server, timeout, serverfd, options = 0;
+    Rboolean blocking;
     Rconnection con = NULL;
     Rservsockconn scon = NULL;
 
@@ -3964,7 +3966,7 @@ attribute_hidden SEXP do_sockconn(SEXP call, SEXP op, SEXP args, SEXP env)
 	serverfd = scon->fd;
     }
     args = CDR(args);
-    blocking = asLogical(CAR(args));
+    blocking = asRbool(CAR(args), call);
     if(blocking == NA_LOGICAL)
 	error(_("invalid '%s' argument"), "blocking");
     args = CDR(args);
@@ -4070,11 +4072,11 @@ attribute_hidden SEXP do_unz(SEXP call, SEXP op, SEXP args, SEXP env)
 
 attribute_hidden SEXP do_open(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    int i, block;
+    int i;
     Rconnection con=NULL;
     SEXP sopen;
     const char *open;
-    Rboolean success;
+    Rboolean success, block;
 
     checkArity(op, args);
     if(!inherits(CAR(args), "connection"))
@@ -4089,7 +4091,7 @@ attribute_hidden SEXP do_open(SEXP call, SEXP op, SEXP args, SEXP env)
     sopen = CADR(args);
     if(!isString(sopen) || LENGTH(sopen) != 1)
 	error(_("invalid '%s' argument"), "open");
-    block = asLogical(CADDR(args));
+    block = asRbool(CADDR(args), call);
     if(block == NA_LOGICAL)
 	error(_("invalid '%s' argument"), "blocking");
     open = CHAR(STRING_ELT(sopen, 0)); /* ASCII */
@@ -5874,11 +5876,12 @@ attribute_hidden SEXP do_url(SEXP call, SEXP op, SEXP args, SEXP env)
 #endif
     char *class2 = "url";
     const char *url, *open;
-    int ncon, block, raw = 0, defmeth,
+    int ncon, block, defmeth,
 	meth = 0, // 0: "internal" | "wininet", 1: "libcurl"
 	winmeth = 0;  // 0: "internal", 1: "wininet" (Windows only)
     cetype_t ienc = CE_NATIVE;
     Rconnection con = NULL;
+    Rboolean raw = FALSE;
 
     checkArity(op, args);
     // --------- description
@@ -5966,7 +5969,7 @@ attribute_hidden SEXP do_url(SEXP call, SEXP op, SEXP args, SEXP env)
 
     // --------- raw, for file() only
     if(PRIMVAL(op) == 1) {
-	raw = asLogical(CAD5R(args));
+	raw = asRbool(CAD5R(args), call);
 	if(raw == NA_LOGICAL)
 	    error(_("invalid '%s' argument"), "raw");
     }
@@ -6102,7 +6105,7 @@ attribute_hidden SEXP do_url(SEXP call, SEXP op, SEXP args, SEXP env)
     }
 
     Connections[ncon] = con;
-    con->blocking = block;
+    con->blocking = (Rboolean) block;
     strncpy(con->encname, CHAR(STRING_ELT(enc, 0)), 100); /* ASCII */
     con->encname[100 - 1] = '\0';
 
@@ -6421,7 +6424,7 @@ attribute_hidden SEXP do_gzcon(SEXP call, SEXP op, SEXP args, SEXP rho)
     int icon, level, allow;
     Rconnection incon = NULL, new = NULL;
     char *m, *mode = NULL /* -Wall */,  description[1000];
-    Rboolean text;
+    int text;
 
     checkArity(op, args);
     if(!inherits(CAR(args), "connection"))
@@ -6469,7 +6472,7 @@ attribute_hidden SEXP do_gzcon(SEXP call, SEXP op, SEXP args, SEXP rho)
 	/* for Solaris 12.5 */ new = NULL;
     }
     init_con(new, description, CE_NATIVE, mode);
-    new->text = text;
+    new->text = (Rboolean) text;
     new->isGzcon = TRUE;
     new->open = &gzcon_open;
     new->close = &gzcon_close;
@@ -6486,7 +6489,7 @@ attribute_hidden SEXP do_gzcon(SEXP call, SEXP op, SEXP args, SEXP rho)
     ((Rgzconn)(new->private))->con = incon;
     ((Rgzconn)(new->private))->cp = level;
     ((Rgzconn)(new->private))->nsaved = -1;
-    ((Rgzconn)(new->private))->allow = allow;
+    ((Rgzconn)(new->private))->allow = (Rboolean) allow;
 
     /* as there might not be an R-level reference to the wrapped connection */
     R_PreserveObject(incon->ex_ptr);

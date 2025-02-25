@@ -1909,7 +1909,7 @@ R_taskCallbackRoutine(SEXP expr, SEXP value, Rboolean succeeded,
     SEXP f = (SEXP) userData;
     SEXP e, val, cur, rho;
     int errorOccurred;
-    Rboolean again, useData = LOGICAL(VECTOR_ELT(f, 2))[0];
+    Rboolean again, useData = (Rboolean)LOGICAL(VECTOR_ELT(f, 2))[0];
 
     /* create an environment with bindings for the function and arguments */
     PROTECT(rho = NewEnvironment(R_NilValue, R_NilValue, R_GlobalEnv));
@@ -1948,7 +1948,7 @@ R_taskCallbackRoutine(SEXP expr, SEXP value, Rboolean succeeded,
 	    /* It would be nice to identify the function. */
 	    warning(_("top-level task callback did not return a logical value"));
 	}
-	again = asLogical(val);
+	again = (Rboolean) asLogical(val);
     } else {
 	/* warning("error occurred in top-level task callback\n"); */
 	again = FALSE;
