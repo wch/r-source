@@ -560,7 +560,7 @@ double viewportFontSize(SEXP vp);
 double viewportLineHeight(SEXP vp);
 
 SEXP viewportClipSXP(SEXP vp);
-Rboolean viewportClip(SEXP vp);
+int viewportClip(SEXP vp);
 
 SEXP viewportMaskSXP(SEXP vp);
 Rboolean viewportMask(SEXP vp);

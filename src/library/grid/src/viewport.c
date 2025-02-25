@@ -42,7 +42,8 @@ SEXP viewportClipSXP(SEXP vp) {
     return VECTOR_ELT(vp, VP_CLIP);
 }
 
-Rboolean viewportClip(SEXP vp) {
+// This can be NA_LOGICAL, and it is tested for that in grd.c
+int viewportClip(SEXP vp) {
     return LOGICAL(VECTOR_ELT(vp, VP_CLIP))[0];
 }
 
@@ -54,7 +55,7 @@ Rboolean viewportMask(SEXP vp) {
     SEXP mask = viewportMaskSXP(vp);
     if (!isLogical(mask))
         error(_("Mask is not logical value ('none' or 'inherit')"));
-    return LOGICAL(VECTOR_ELT(vp, VP_MASK))[0];
+    return asRboolean(VECTOR_ELT(vp, VP_MASK));
 }
 
 double viewportXScaleMin(SEXP vp) {
