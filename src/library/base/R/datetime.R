@@ -91,9 +91,10 @@ Sys.timezone <- function(location = TRUE)
         } else tzdir <- ""
     }
 
-    ## First try timedatectl: should work on any modern Linux
-    ## as part of systemd (and probably nowhere else)
+    ## First try timedatectl: should work on any modern (post 2015)
+    ## glibc-based Linux as part of systemd (and probably nowhere else)
     ## https://www.freedesktop.org/software/systemd/man/sd_booted.html
+    ## systemd is (in 2025) an optional part of musl
     if (dir.exists("/run/systemd/system") && nzchar(Sys.which("timedatectl"))) {
         inf <- system("timedatectl", intern = TRUE)
         ## typical format:
