@@ -56,11 +56,13 @@ ifndef USE_PKG_CONFIG
   LIBBROTLI = $(or $(and $(wildcard $(EXT_LIBS)/lib/libbrotlidec.a),-lbrotlidec -lbrotlicommon),)
   ## support curl built with libpsl and without
   LIBPSL = $(or $(and $(wildcard $(EXT_LIBS)/lib/libpsl.a),-lpsl),)
+  ## support curl built with libnghttp2 and without
+  LIBH2 = $(or $(and $(wildcard $(EXT_LIBS)/lib/libnghttp2.a),-lnghttp2),)
   CAIRO_LIBS ?= "-lcairo -lfontconfig -lfreetype -lpng -lpixman-1 -lexpat -lharfbuzz \
                 -lbz2 -lintl -lz -liconv -luuid -lstdc++ -lgdi32 -lmsimg32 -lole32 \
                 $(LIBBROTLI)"
 
-  CURL_LIBS ?= -lcurl $(LIBPSL) -lbcrypt -lzstd -lrtmp -lssl -lssh2 -lbcrypt -lgcrypt \
+  CURL_LIBS ?= -lcurl $(LIBH2) $(LIBPSL) -lbcrypt -lzstd -lrtmp -lssl -lssh2 -lbcrypt -lgcrypt \
                -lcrypto -lgdi32 -lz \
                -lws2_32 -lgdi32 -lcrypt32 -lidn2 -lunistring -liconv -lgpg-error -lwldap32 \
                -lwinmm $(LIBBROTLI)
