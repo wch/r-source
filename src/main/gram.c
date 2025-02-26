@@ -70,7 +70,7 @@
 
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997--2024  The R Core Team
+ *  Copyright (C) 1997--2025  The R Core Team
  *  Copyright (C) 2009--2011  Romain Francois
  *  Copyright (C) 1995--1997  Robert Gentleman and Ross Ihaka
  *
