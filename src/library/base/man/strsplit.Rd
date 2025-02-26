@@ -1,6 +1,6 @@
 % File src/library/base/man/strsplit.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2024 R Core Team
+% Copyright 1995-2024=5 R Core Team
 % Distributed under GPL 2 or later
 
 \name{strsplit}
@@ -102,6 +102,13 @@ strsplit(x, split, fixed = FALSE, perl = FALSE, useBytes = FALSE)
   encodings is discouraged, but if still desired one may use
   \code{\link{iconv}} to re-encode the result e.g.  to UTF-8 with suitably
   substituted invalid bytes.
+}
+
+\section{Warning}{
+  An all too cmmmon mis-usage is to pass unnamed arguments which are then
+  matched to one or more of \code{fixed},
+  \code{perl} and \code{useBytes}.  So it is good
+  practice to name all  the arguments.
 }
 
 \seealso{

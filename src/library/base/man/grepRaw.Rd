@@ -1,6 +1,6 @@
 % File src/library/base/man/grepRaw.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2016 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{grepRaw}
@@ -72,6 +72,14 @@ grepRaw(pattern, x, offset = 1L, ignore.case = FALSE,
   The TRE library of Ville Laurikari (\url{https://github.com/laurikari/tre/})
   is used except for \code{fixed = TRUE}.
 }
+
+\section{Warning}{
+  An all too cmmmon mis-usage is to pass unnamed arguments which are then
+  matched to one or more of \code{ignore.case}, \code{value},
+  \code{fixed}, \code{all} or \code{invert}.  So it is good practice to
+  name all the arguments.
+}
+
 
 % the `aka' below is for ESS
 \seealso{

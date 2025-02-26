@@ -1,6 +1,6 @@
 % File src/library/base/man/grep.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2022 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{grep}
@@ -285,6 +285,13 @@ gregexec(pattern, text, ignore.case = FALSE, perl = FALSE,
   a circled capital letter alphabetic or a symbol?).  However, results
   in 8-bit encodings can differ considerably between platforms, modes
   and from the UTF-8 versions.
+}
+\section{Warning}{
+  An all too cmmmon mis-usage is to pass unnamed arguments which are then
+  matched to one or more of \code{ignore.case}, \code{perl}, \code{value},
+  \code{fixed}, \code{useBytes}  and \code{invert}.  So it is good
+  practice to name all  the arguments (especially as
+  \code{x}/\code{text} is not the first argument).
 }
 
 \references{
