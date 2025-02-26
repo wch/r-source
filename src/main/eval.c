@@ -7563,7 +7563,7 @@ static SEXP bcEval_loop(struct bcEval_locals *ploc)
     OP(PRINTVALUE, 0): PrintValue(BCNPOP()); NEXT();
     OP(STARTLOOPCNTXT, 2):
 	{
-	    Rboolean is_for_loop = GETOP();
+	    int is_for_loop = GETOP();
 	    R_bcstack_t *oldtop = R_BCNodeStackTop;
 	    RCNTXT *cntxt = BCNALLOC_CNTXT();
 	    int break_offset = GETOP();
@@ -7610,7 +7610,7 @@ static SEXP bcEval_loop(struct bcEval_locals *ploc)
 	}
     OP(ENDLOOPCNTXT, 1):
 	{
-	    Rboolean is_for_loop = GETOP();
+	    int is_for_loop = GETOP();
 	    if (is_for_loop) {
 		int offset = GET_FOR_LOOP_BCPROT_OFFSET();
 		DECLNK_stack(R_BCNodeStackBase + offset);
