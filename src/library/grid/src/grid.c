@@ -5119,12 +5119,13 @@ static SEXP gridPoints(SEXP x, SEXP y, SEXP pch, SEXP size,
 
 SEXP L_points(SEXP x, SEXP y, SEXP pch, SEXP size)
 {
-    return gridPoints(x, y, pch, size, TRUE, NA_LOGICAL);
+    return gridPoints(x, y, pch, size, TRUE, FALSE);
 }
 
 SEXP L_pointsPoints(SEXP x, SEXP y, SEXP pch, SEXP size, SEXP closed)
 {
-    return gridPoints(x, y, pch, size, FALSE, LOGICAL(closed)[0]);
+    /* 'closed' type checked in R code */
+    return gridPoints(x, y, pch, size, FALSE, asRboolean(closed));
 }
 
 SEXP L_clip(SEXP x, SEXP y, SEXP w, SEXP h, SEXP hjust, SEXP vjust) 

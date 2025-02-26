@@ -613,8 +613,8 @@ grobPoints.text <- function(x, closed=TRUE, ...) {
 
 grobPoints.points <- function(x, closed=TRUE, ...) {
     closed <- as.logical(closed)
-    if (is.na(closed)) 
-        stop("Closed must not be a missing value")
+    if (length(closed) != 1 || is.na(closed)) 
+        stop("Closed must be length 1 and must not be a missing value")
     pts <- grid.Call(C_pointsPoints, x$x, x$y, x$pch, x$size, closed)
     if (is.null(pts) ||
         all(sapply(pts, is.null))) {
