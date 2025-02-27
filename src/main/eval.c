@@ -6920,7 +6920,7 @@ static R_INLINE Rboolean GETSTACK_LOGICAL_NO_NA_PTR(R_bcstack_t *s, int callidx,
 }
 
 #define GETSTACK_LOGICAL(n) GETSTACK_LOGICAL_PTR(R_BCNodeStackTop + (n))
-static R_INLINE Rboolean GETSTACK_LOGICAL_PTR(R_bcstack_t *s)
+static R_INLINE int GETSTACK_LOGICAL_PTR(R_bcstack_t *s)
 {
     if (s->tag == LGLSXP) return s->u.ival;
     SEXP value = GETSTACK_PTR(s);
@@ -8348,7 +8348,7 @@ static SEXP bcEval_loop(struct bcEval_locals *ploc)
 	int callidx = GETOP();
 	int label = GETOP();
 	FIXUP_SCALAR_LOGICAL(rho, callidx, "'x'", "&&", warn_lev);
-	Rboolean val = GETSTACK_LOGICAL(-1);
+	int val = GETSTACK_LOGICAL(-1);
 	if (val == FALSE)
 	    pc = codebase + label;
 	R_Visible = TRUE;
@@ -8357,7 +8357,7 @@ static SEXP bcEval_loop(struct bcEval_locals *ploc)
     OP(AND2ND, 1): {
 	int callidx = GETOP();
 	FIXUP_SCALAR_LOGICAL(rho, callidx, "'y'", "&&", warn_lev);
-	Rboolean val = GETSTACK_LOGICAL(-1);
+	int val = GETSTACK_LOGICAL(-1);
 	/* The first argument is TRUE or NA. If the second argument is
 	   not TRUE then its value is the result. If the second
 	   argument is TRUE, then the first argument's value is the
@@ -8372,7 +8372,7 @@ static SEXP bcEval_loop(struct bcEval_locals *ploc)
 	int callidx = GETOP();
 	int label = GETOP();
 	FIXUP_SCALAR_LOGICAL(rho, callidx, "'x'", "||", warn_lev);
-	Rboolean val = GETSTACK_LOGICAL(-1);
+	int val = GETSTACK_LOGICAL(-1);
 	if (val != NA_LOGICAL &&
 	    val != FALSE) /* is true */
 	    pc = codebase + label;
@@ -8382,7 +8382,7 @@ static SEXP bcEval_loop(struct bcEval_locals *ploc)
     OP(OR2ND, 1):  {
 	int callidx = GETOP();
 	FIXUP_SCALAR_LOGICAL(rho, callidx, "'y'", "||", warn_lev);
-	Rboolean val = GETSTACK_LOGICAL(-1);
+	int val = GETSTACK_LOGICAL(-1);
 	/* The first argument is FALSE or NA. If the second argument is
 	   not FALSE then its value is the result. If the second
 	   argument is FALSE, then the first argument's value is the
