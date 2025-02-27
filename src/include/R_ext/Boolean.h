@@ -32,7 +32,7 @@
 #include <Rconfig.h> /* for HAVE_ENUM_BASE_TYPE */
 /*
   Setting the underlying aka base type is supported in C23, C++11 
-  and some C compilers based on clang.
+  and some C compilers based on clang and some versions of GCC.
   What matters here is the C compiler used to build R.
  */
 #ifdef  __cplusplus
@@ -40,7 +40,7 @@ extern "C" {
 #endif
 #ifdef HAVE_ENUM_BASE_TYPE
 // Apple clang warns even in C23 mode: gcc warns about #pragma clang
-// LLVM clang no linger warns: we have no good way to filter Apple clang.
+// LLVM clang no longer warns: we have no good way to filter Apple clang.
 # if defined  __APPLE__ && defined __clang__
 #  pragma clang diagnostic push
 #  pragma clang diagnostic ignored "-Wfixed-enum-extension"
