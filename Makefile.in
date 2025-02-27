@@ -194,7 +194,7 @@ dist-unix: distdir
 	  $(TAR) cf $${distname}.tar $${dirname} && $(R_GZIPCMD) $(GZIP) $${distname}.tar; \
 	  rm -Rf $${dirname}
 dist-win:
-distdir: $(DISTFILES) vignettes
+distdir: $(DISTFILES) docs vignettes
 	@rm -Rf $(distdir)
 	@mkdir $(distdir)
 	@-chmod 755 $(distdir)
@@ -219,7 +219,8 @@ distdir: $(DISTFILES) vignettes
 	      | (cd $(distdir); $(TAR) -x -f -)) \
 	    || exit 1; \
 	done
-	@for d in grid parallel utils; do \
+## ship vignette PDFs to speed up building from tarball (little gain nowadays)
+	@for d in grid parallel utils stats; do \
 	  mkdir -p $(distdir)/src/library/$${d}/inst/doc; \
 	  cp library/$${d}/doc/*.pdf $(distdir)/src/library/$${d}/inst/doc; \
 	done
