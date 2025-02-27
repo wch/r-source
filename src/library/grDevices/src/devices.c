@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2013  The R Core Team
+ *  Copyright (C) 1997--2025  The R Core Team
  *  Copyright (C) 2002--2005  The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -239,14 +239,13 @@ SEXP devcap(SEXP args)
 SEXP devcapture(SEXP args)
 {
     int i, col, row, nrow, ncol, size;
-    Rboolean native;
     pGEDevDesc gdd = GEcurrentDevice();
     int *rint;
     SEXP raster, image, idim;
     
     args = CDR(args);
 
-    native = asLogical(CAR(args));
+    int native = asLogical(CAR(args));
     if (native != TRUE) native = FALSE;
 
     raster = GECap(gdd);

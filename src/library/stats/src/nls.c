@@ -2,7 +2,7 @@
  *  Routines used in calculating least squares solutions in a
  *  nonlinear model in nls library for R.
  *
- *  Copyright 2005-2020 The R Core Team
+ *  Copyright 2005-2025 The R Core Team
  *  Copyright 2006      The R Foundation
  *  Copyright 1999-2001 Douglas M. Bates
  *                      Saikat DebRoy
@@ -123,7 +123,7 @@ nls_iter(SEXP m, SEXP control, SEXP doTraceArg)
     conv = getListElement(control, tmp, "printEval");
     if(conv == NULL || !isLogical(conv))
 	error(_("'%s' absent"), "control$printEval");
-    Rboolean printEval = asLogical(conv);
+    Rboolean printEval = asRboolean(conv);
 
     // now get parts from 'm'  ---------------------------------
     tmp = getAttrib(m, R_NamesSymbol);
@@ -295,7 +295,7 @@ numeric_deriv(SEXP expr, SEXP theta, SEXP rho, SEXP dir, SEXP eps_, SEXP centr)
     }
     if(LENGTH(dir) != LENGTH(theta))
 	error(_("'dir' is not a numeric vector of the correct length"));
-    Rboolean central = asLogical(centr);
+    Rboolean central = asRboolean(centr);
     if(central == NA_LOGICAL)
 	error(_("'central' is NA, but must be TRUE or FALSE"));
     SEXP rho1 = PROTECT(R_NewEnv(rho, FALSE, 0));

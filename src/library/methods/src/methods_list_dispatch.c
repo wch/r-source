@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001-2023   The R Core Team.
+ *  Copyright (C) 2001-2025   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -1169,7 +1169,7 @@ SEXP R_dispatchGeneric(SEXP fname, SEXP ev, SEXP fdef)
 
 SEXP R_set_method_dispatch(SEXP onOff)
 {
-    Rboolean prev = table_dispatch_on, value = asLogical(onOff);
+    Rboolean prev = table_dispatch_on, value = asRboolean(onOff);
     if(value == NA_LOGICAL) /*  just return previous*/
 	value = prev;
     table_dispatch_on = value;

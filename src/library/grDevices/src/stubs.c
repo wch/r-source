@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2012-2014     the R Core Team
+ *  Copyright (C) 2012-2025     the R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -102,7 +102,7 @@ SEXP devAskNewPage(SEXP call, SEXP op, SEXP args, SEXP env)
     if (!isNull(CAR(args))) {
 	ask = asLogical(CAR(args));
 	if (ask == NA_LOGICAL) error(_("invalid '%s' argument"), "ask");
-	gdd->ask = ask;
+	gdd->ask = (Rboolean) ask;
 	R_Visible = FALSE;
     } else R_Visible = TRUE;
 

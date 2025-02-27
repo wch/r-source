@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2004-2024  The R Core Team
+ *  Copyright (C) 2004-2025  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -60,7 +60,7 @@ PSDeviceDriver(pDevDesc, const char*, const char*, const char*,
 Rboolean
 PDFDeviceDriver(pDevDesc, const char *, const char *, const char *,
 		const char **, const char *, const char *, const char *,
-		double, double, double, int, int, const char*, SEXP,
+		double, double, double, Rboolean, Rboolean, const char*, SEXP,
 		int, int, const char *, int, int, Rboolean, Rboolean, 
 		Rboolean, Rboolean, const char *);
 

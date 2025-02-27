@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2002-2016   The R Core Team.
+ *  Copyright (C) 2002-2025   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -614,7 +614,7 @@ ARIMA_Like(SEXP sy, SEXP mod, SEXP sUP, SEXP giveResid)
     double *phi = REAL(sPhi), *theta = REAL(sTheta), *delta = REAL(sDelta);
     double sumlog = 0.0, ssq = 0, *anew, *mm = NULL, *M;
     int nu = 0;
-    Rboolean useResid = asLogical(giveResid);
+    Rboolean useResid = asRboolean(giveResid);
     double *rsResid = NULL /* -Wall */;
 
     anew = (double *) R_alloc(rd, sizeof(double));
@@ -759,7 +759,7 @@ ARIMA_CSS(SEXP sy, SEXP sarma, SEXP sPhi, SEXP sTheta,
     int n = LENGTH(sy), *arma = INTEGER(sarma), p = LENGTH(sPhi),
 	q = LENGTH(sTheta), ncond = asInteger(sncond);
     int ns, nu = 0;
-    Rboolean useResid = asLogical(giveResid);
+    Rboolean useResid = asRboolean(giveResid);
 
     w = (double *) R_alloc(n, sizeof(double));
     for (int l = 0; l < n; l++) w[l] = y[l];

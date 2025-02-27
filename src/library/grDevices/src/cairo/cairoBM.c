@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2023  The R Core Team
+ *  Copyright (C) 1997--2025  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -646,7 +646,7 @@ SEXP in_Cairo(SEXP args)
 	error(_("invalid '%s' argument"), "symbolfamily");
     symbolfamily = translateChar(STRING_ELT(CAR(args), 0));
     /* scsymbol forced to have "usePUA" attribute in R code */
-    usePUA = LOGICAL(getAttrib(CAR(args), install("usePUA")))[0];
+    usePUA = asRboolean(getAttrib(CAR(args), install("usePUA")));
 
     R_GE_checkVersionOrDie(R_GE_version);
     R_CheckDeviceAvailable();

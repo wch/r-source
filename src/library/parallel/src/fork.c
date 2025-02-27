@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  (C) Copyright 2008-2011 Simon Urbanek
- *      Copyright 2011-2023 R Core Team.
+ *      Copyright 2011-2025 R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -1220,9 +1220,10 @@ NORET SEXP mc_exit(SEXP sRes)
 
 /* NA = query, TRUE/FALSE = set R_Interactive accordingly */
 SEXP mc_interactive(SEXP sWhat) {
+    // maybe use asRboolean?
     int what = asInteger(sWhat);
     if (what != NA_INTEGER)
-	R_Interactive = what;
+	R_Interactive = (Rboolean) what;
     return ScalarLogical(R_Interactive);
 }
 

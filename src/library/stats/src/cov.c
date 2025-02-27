@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1995-2018	The R Core Team
+ *  Copyright (C) 1995-2025	The R Core Team
  *  Copyright (C) 2003		The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -687,7 +687,7 @@ static SEXP corcov(SEXP x, SEXP y, SEXP na_method, SEXP skendall, Rboolean cor)
     method = asInteger(na_method);
 
     /* Arg.4:  kendall */
-    kendall = asLogical(skendall);
+    kendall = asRboolean(skendall);
 
     /* "default: complete" (easier for -Wall) */
     na_fail = FALSE; everything = FALSE; empty_err = TRUE;

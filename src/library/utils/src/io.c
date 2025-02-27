@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998-2023  The R Core Team.
+ *  Copyright (C) 1998-2025  The R Core Team.
  *  Copyright (C) 1995,1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -381,7 +381,7 @@ SEXP countfields(SEXP args)
     data.save = 0;
 
     for (;;) {
-	c = scanchar(inquote, &data);
+	c = scanchar(inquote > 0, &data);
 	if (c == R_EOF)	 {
 	    if (nfields != 0)
 		INTEGER(ans)[nlines] = nfields;
@@ -428,7 +428,7 @@ SEXP countfields(SEXP args)
 	    if (strchr(data.quoteset, c)) {
 		quote = c;
 		inquote = nlines + 1;
-		while ((c = scanchar(inquote, &data)) != quote) {
+		while ((c = scanchar(inquote > 0, &data)) != quote) {
 		    if (c == R_EOF) {
 			if(!data.wasopen) data.con->close(data.con);
 		        error(_("quoted string on line %d terminated by EOF"), inquote);
@@ -603,9 +603,9 @@ SEXP typeconvert(SEXP call, SEXP op, SEXP args, SEXP env)
 	exact = FALSE;
     }
 
-    Rboolean tryLogical = asLogical(CAD5R(args));
+    int tryLogical = asLogical(CAD5R(args));
     if (tryLogical == NA_LOGICAL) tryLogical = FALSE;
-    typeInfo.islogical = tryLogical;
+    typeInfo.islogical = (Rboolean) tryLogical;
 
     cvec = CAR(args);
     len = length(cvec);
@@ -853,7 +853,7 @@ SEXP readtablehead(SEXP args)
 	/* gets compared to chars: bug prior to 1.7.0 */
     } else error(_("invalid '%s' argument"), "sep");
     if (skipNul == NA_LOGICAL) error(_("invalid '%s' argument"), "skipNul");
-    data.skipNul = skipNul;
+    data.skipNul = (Rboolean) skipNul;
 
     i = asInteger(file);
     data.con = getConnection(i);
@@ -1091,7 +1091,7 @@ SEXP writetable(SEXP call, SEXP op, SEXP args, SEXP env)
     na = CAR(args);		   args = CDR(args);
     dec = CAR(args);		   args = CDR(args);
     quote = CAR(args);		   args = CDR(args);
-    int qmethod = asLogical(CAR(args));
+    int qmethod0 = asLogical(CAR(args));
 
     if(nr == NA_INTEGER) error(_("invalid '%s' argument"), "nr");
     if(nc == NA_INTEGER) error(_("invalid '%s' argument"), "nc");
@@ -1101,7 +1101,8 @@ SEXP writetable(SEXP call, SEXP op, SEXP args, SEXP env)
     if(!isString(eol)) error(_("invalid '%s' argument"), "eol");
     if(!isString(na)) error(_("invalid '%s' argument"), "na");
     if(!isString(dec)) error(_("invalid '%s' argument"), "dec");
-    if(qmethod == NA_LOGICAL) error(_("invalid '%s' argument"), "qmethod");
+    if(qmethod0 == NA_LOGICAL) error(_("invalid '%s' argument"), "qmethod");
+    Rboolean qmethod = (Rboolean) qmethod0;
     csep = translateChar(STRING_ELT(sep, 0));
     ceol = translateChar(STRING_ELT(eol, 0));
     cna = translateChar(STRING_ELT(na, 0));

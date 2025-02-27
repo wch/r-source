@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2004-2021   The R Core Team.
+ *  Copyright (C) 2004-2025   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -30,7 +30,7 @@
 SEXP R_CreateAtVector(SEXP axp, SEXP usr, SEXP nint, SEXP is_log)
 {
     int nint_v = asInteger(nint);
-    Rboolean logflag = asLogical(is_log);
+    Rboolean logflag = asRboolean(is_log);
 
     PROTECT(axp = coerceVector(axp, REALSXP));
     PROTECT(usr = coerceVector(usr, REALSXP));
@@ -51,7 +51,7 @@ SEXP R_GAxisPars(SEXP usr, SEXP is_log, SEXP nintLog)
     double
 	min = REAL(usr)[0],
 	max = REAL(usr)[1];
-    Rboolean logflag = asLogical(is_log);
+    Rboolean logflag = asRboolean(is_log);
     int n = asInteger(nintLog);// will be changed on output ..
 
     GAxisPars(&min, &max, &n, logflag, 0);// axis = 0 :<==> do not warn

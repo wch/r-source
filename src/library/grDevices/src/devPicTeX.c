@@ -1,7 +1,7 @@
 /*
  *  A PicTeX device, (C) 1996 Valerio Aimale, for
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001--2020  The R Core Team
+ *  Copyright (C) 2001--2025  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -766,7 +766,7 @@ SEXP PicTeX(SEXP args)
     fg = CHAR(asChar(CAR(args)));   args = CDR(args);
     width = asReal(CAR(args));	     args = CDR(args);
     height = asReal(CAR(args));	     args = CDR(args);
-    debug = asLogical(CAR(args));    args = CDR(args);
+    debug = asRboolean(CAR(args));    args = CDR(args);
     if(debug == NA_LOGICAL) debug = FALSE;
 
     R_CheckDeviceAvailable();

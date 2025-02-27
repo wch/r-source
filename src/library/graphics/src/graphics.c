@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997--2023  The R Core Team
+ *  Copyright (C) 1997--2025  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *  Copyright (C) 2002--2011  The R Foundation
  *
@@ -2069,7 +2069,7 @@ void GScale(double min, double max, int axis, pGEDevDesc dd)
      */
 
     // Computation of [xy]axp[0:2] == (min,max,n) :
-    GAxisPars(&min, &max, &n, log, axis);
+    GAxisPars(&min, &max, &n, (Rboolean) log, axis);
 
 #define G_Store_AXP(is_X)				\
     if(is_X) {						\
@@ -2277,7 +2277,7 @@ void GRestore(pGEDevDesc dd)
 /*  graphics functions.	 */
 
 static double	adjsave;	/* adj */
-static int	annsave;	/* ann */
+static Rboolean	annsave;	/* ann */
 static char	btysave;	/* bty */
 static double	cexsave;	/* cex */
 static double   lheightsave;

@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997-2016   The R Core Team.
+ *  Copyright (C) 1997-2025   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -232,7 +232,7 @@ static int sm_3RSR(double *x, double *y, double *z, double *w, R_xlen_t n,
     do {
 	iter++;
 	chg = sm_split3(y, z, n, split_ends);
-	ch2 = sm_3R(z, y, w, n, end_rule);
+	ch2 = sm_3R(z, y, w, n, end_rule) != 0;
 	chg = chg || ch2;
 
 	if(!chg) break;

@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2003-2024   The R Core Team.
+ *  Copyright (C) 2003-2025   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -153,10 +153,10 @@ check_nonASCII(SEXP text, SEXP ignore_quotes)
     int i, nbslash = 0; /* number of preceding backslashes */
     const char *p;
     char quote= '\0';
-    Rboolean ign, inquote = FALSE;
+    Rboolean inquote = FALSE;
 
     if(TYPEOF(text) != STRSXP) error("invalid input");
-    ign = asLogical(ignore_quotes);
+    int ign = asLogical(ignore_quotes);
     if(ign == NA_LOGICAL) error("'ignore_quotes' must be TRUE or FALSE");
 
     for (i = 0; i < LENGTH(text); i++) {

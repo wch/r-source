@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2023  The R Core Team
+ *  Copyright (C) 1997--2025  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -3314,7 +3314,7 @@ static SEXP in_do_X11(SEXP call, SEXP op, SEXP args, SEXP env)
     symbolfamily = CHAR(STRING_ELT(scsymbol, 0));
     /* scsymbol forced to have "usePUA" attribute in R code */
     scusePUA = getAttrib(scsymbol, install("usePUA"));
-    usePUA = LOGICAL(scusePUA)[0];
+    usePUA = asRbool(scusePUA, call);
 
     if (!strncmp(display, "png::", 5)) devname = "PNG";
     else if (!strncmp(display, "jpeg::", 6)) devname = "JPEG";
