@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2007-2022  The R Foundation
+ *  Copyright (C) 2007-2025  The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -2646,7 +2646,7 @@ static Rboolean RQuartz_Locator(double *x, double *y, DEVDESC)
     ctx = NULL;
     if (!xd->locatePoint)
         return FALSE;
-    res = xd->locatePoint(xd, xd->userInfo, x, y);
+    res = (Rboolean) xd->locatePoint(xd, xd->userInfo, x, y);
     *x/=xd->scalex;
     *y/=xd->scaley;
     return res;
@@ -3183,7 +3183,7 @@ SEXP Quartz(SEXP args)
     height    = ARG(asReal,args);
     ps        = ARG(asReal,args);
     family    = CHAR(STRING_ELT(CAR(args), 0)); args = CDR(args);
-    antialias = ARG(asLogical,args);
+    antialias = ARG(asRboolean,args);
     title     = CHAR(STRING_ELT(CAR(args), 0)); args = CDR(args);
     bgs       = CAR(args); args = CDR(args);
     bg        = RGBpar(bgs, 0);
