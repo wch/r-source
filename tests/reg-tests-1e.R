@@ -1867,6 +1867,18 @@ stopifnot(exprs = {
 ## all these used to error in reformulate()  in R < 4.5.0
 
 
+## duplicated(<numeric_version>), especially for empty input
+options(warn = 2) # should already be set from the top
+x <- numeric_version("1")
+stopifnot(exprs = {
+    identical(duplicated(x[NULL]), logical(0L)) # should not warn
+    identical(duplicated(x), FALSE)
+    identical(duplicated(c(x,x)), c(FALSE, TRUE))
+})
+## only in R-devel with PR#18699, the first produced a warning
+## In max(lens) : no non-missing arguments to max; returning -Inf
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
