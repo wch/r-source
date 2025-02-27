@@ -1514,7 +1514,7 @@ void R_RunWeakRefFinalizer(SEXP w)
 	SET_READY_TO_FINALIZE(w); /* insures removal from list on next gc */
     PROTECT(key);
     PROTECT(fun);
-    int oldintrsusp = R_interrupts_suspended;
+    Rboolean oldintrsusp = R_interrupts_suspended;
     R_interrupts_suspended = TRUE;
     if (isCFinalizer(fun)) {
 	/* Must be a C finalizer. */
@@ -1662,7 +1662,7 @@ attribute_hidden SEXP do_regFinaliz(SEXP call, SEXP op, SEXP args, SEXP rho)
     if(onexit == NA_LOGICAL)
 	error(_("third argument must be 'TRUE' or 'FALSE'"));
 
-    R_RegisterFinalizerEx(CAR(args), CADR(args), onexit);
+    R_RegisterFinalizerEx(CAR(args), CADR(args), (Rboolean) onexit);
     return R_NilValue;
 }
 
@@ -2061,7 +2061,7 @@ attribute_hidden SEXP do_gctorture2(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
     gap = asInteger(CAR(args));
     wait = asInteger(CADR(args));
-    inhibit = asLogical(CADDR(args));
+    inhibit = asRbool(CADDR(args), call);
     R_gc_torture(gap, wait, inhibit);
 
     return ScalarInteger(old);
@@ -3120,7 +3120,7 @@ attribute_hidden SEXP do_gctime(SEXP call, SEXP op, SEXP args, SEXP env)
 	gctime_enabled = TRUE;
     else {
 	check1arg(args, call, "on");
-	gctime_enabled = asLogical(CAR(args));
+	gctime_enabled = asRbool(CAR(args), call);
     }
     ans = allocVector(REALSXP, 5);
     REAL(ans)[0] = gctimes[0];
@@ -4759,10 +4759,10 @@ Rboolean Rf_isString(SEXP s) { return isString(CHK(s)); }
 Rboolean Rf_isObject(SEXP s) { return isObject(CHK(s)); }
 
 /* Bindings accessors */
-Rboolean attribute_hidden
-(IS_ACTIVE_BINDING)(SEXP b) {return IS_ACTIVE_BINDING(CHK(b));}
-Rboolean attribute_hidden
-(BINDING_IS_LOCKED)(SEXP b) {return BINDING_IS_LOCKED(CHK(b));}
+attribute_hidden Rboolean
+(IS_ACTIVE_BINDING)(SEXP b) {return (Rboolean) IS_ACTIVE_BINDING(CHK(b));}
+attribute_hidden Rboolean
+(BINDING_IS_LOCKED)(SEXP b) {return (Rboolean) BINDING_IS_LOCKED(CHK(b));}
 attribute_hidden void
 (SET_ACTIVE_BINDING_BIT)(SEXP b) {SET_ACTIVE_BINDING_BIT(CHK(b));}
 attribute_hidden void (LOCK_BINDING)(SEXP b) {LOCK_BINDING(CHK(b));}
@@ -4773,20 +4773,20 @@ void (SET_BASE_SYM_CACHED)(SEXP b) { SET_BASE_SYM_CACHED(CHK(b)); }
 attribute_hidden
 void (UNSET_BASE_SYM_CACHED)(SEXP b) { UNSET_BASE_SYM_CACHED(CHK(b)); }
 attribute_hidden
-Rboolean (BASE_SYM_CACHED)(SEXP b) { return BASE_SYM_CACHED(CHK(b)); }
+Rboolean (BASE_SYM_CACHED)(SEXP b) { return (Rboolean) BASE_SYM_CACHED(CHK(b)); }
 
 attribute_hidden
 void (SET_SPECIAL_SYMBOL)(SEXP b) { SET_SPECIAL_SYMBOL(CHK(b)); }
 attribute_hidden
 void (UNSET_SPECIAL_SYMBOL)(SEXP b) { UNSET_SPECIAL_SYMBOL(CHK(b)); }
-attribute_hidden
-Rboolean (IS_SPECIAL_SYMBOL)(SEXP b) { return IS_SPECIAL_SYMBOL(CHK(b)); }
+attribute_hidden // this is a bit returned in an int, so really is Rboolean
+Rboolean (IS_SPECIAL_SYMBOL)(SEXP b) { return (Rboolean) IS_SPECIAL_SYMBOL(CHK(b)); }
 attribute_hidden
 void (SET_NO_SPECIAL_SYMBOLS)(SEXP b) { SET_NO_SPECIAL_SYMBOLS(CHK(b)); }
 attribute_hidden
 void (UNSET_NO_SPECIAL_SYMBOLS)(SEXP b) { UNSET_NO_SPECIAL_SYMBOLS(CHK(b)); }
-attribute_hidden
-Rboolean (NO_SPECIAL_SYMBOLS)(SEXP b) { return NO_SPECIAL_SYMBOLS(CHK(b)); }
+attribute_hidden // // this is a bit returned in an int,
+Rboolean (NO_SPECIAL_SYMBOLS)(SEXP b) { return (Rboolean) NO_SPECIAL_SYMBOLS(CHK(b)); }
 
 /* R_FunTab accessors, only needed when write barrier is on */
 /* Might want to not hide for experimentation without rebuilding R - LT */
