@@ -1425,7 +1425,7 @@ static void loadCompilerNamespace(void)
 
 static void checkCompilerOptions(int jitEnabled)
 {
-    int old_visible = R_Visible;
+    Rboolean old_visible = R_Visible;
     SEXP packsym, funsym, call, fcall, arg;
 
     packsym = install("compiler");
@@ -1825,7 +1825,7 @@ static R_INLINE Rboolean jit_srcref_match(SEXP cmpsrcref, SEXP srcref)
 
 attribute_hidden SEXP R_cmpfun1(SEXP fun)
 {
-    int old_visible = R_Visible;
+    Rboolean old_visible = R_Visible;
     SEXP packsym, funsym, call, fcall, val;
 
     packsym = install("compiler");
@@ -1911,7 +1911,7 @@ static void R_cmpfun(SEXP fun)
 
 static SEXP R_compileExpr(SEXP expr, SEXP rho)
 {
-    int old_visible = R_Visible;
+    Rboolean old_visible = R_Visible;
     SEXP packsym, funsym, quotesym;
     SEXP qexpr, call, fcall, val;
 
@@ -2677,7 +2677,7 @@ static R_INLINE Rboolean asLogicalNoNA(SEXP s, SEXP call)
 	    _("argument is of length zero");
 	errorcall(call, "%s", msg);
     }
-    return cond;
+    return (Rboolean) cond;
 }
 
 
@@ -4332,7 +4332,7 @@ static Rboolean R_chooseOpsMethod(SEXP x, SEXP y, SEXP mx, SEXP my,
 #endif
     UNPROTECT(1); /* newrho */
 
-    return ans == R_NilValue ? FALSE : asLogical(ans);
+    return ans == R_NilValue ? FALSE : asRbool(ans, call);
 }
 
 attribute_hidden
@@ -6904,7 +6904,7 @@ static R_INLINE Rboolean GETSTACK_LOGICAL_NO_NA_PTR(R_bcstack_t *s, int callidx,
 						    SEXP rho)
 {
     if (s->tag == LGLSXP && s->u.ival != NA_LOGICAL)
-	return s->u.ival;
+	return (Rboolean) s->u.ival;
 
     SEXP value = GETSTACK_PTR(s);
     if (IS_SCALAR(value, LGLSXP)) {
@@ -6924,7 +6924,7 @@ static R_INLINE int GETSTACK_LOGICAL_PTR(R_bcstack_t *s)
 {
     if (s->tag == LGLSXP) return s->u.ival;
     SEXP value = GETSTACK_PTR(s);
-    return SCALAR_LVAL(value); //what about NA_LOGICAL?
+    return SCALAR_LVAL(value);
 }
 
 /* Find locations table in the constant pool */

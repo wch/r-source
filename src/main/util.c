@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997--2024  The R Core Team
+ *  Copyright (C) 1997--2025  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -2841,10 +2841,10 @@ attribute_hidden SEXP do_findinterval(SEXP call, SEXP op, SEXP args, SEXP rho)
     Rboolean sr = asRbool(right, call),
 	si = asRbool(inside, call),
 	lO = asRbool(leftOp, call);
-    if (sr == NA_INTEGER)
+    /*   if (sr == NA_INTEGER)
 	error(_("invalid '%s' argument"), "rightmost.closed");
     if (si == NA_INTEGER)
-	error(_("invalid '%s' argument"), "all.inside");
+    error(_("invalid '%s' argument"), "all.inside"); */
     SEXP ans = allocVector(INTSXP, nx);
     double *rxt = REAL(xt), *rx = REAL(x);
     int ii = 1, mfl;
