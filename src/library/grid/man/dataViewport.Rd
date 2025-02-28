@@ -27,8 +27,8 @@ dataViewport(xData = NULL, yData = NULL, xscale = NULL,
     the \code{viewport()} function. }
 }
 \details{
-  If \code{xscale} is not specified then the values in \code{x} are
-  used to generate an x-scale based on the range of \code{x}, extended
+  If \code{xscale} is not specified then the values in \code{xData} are
+  used to generate an x-scale based on the range of \code{xData}, extended
   by the proportion specified in \code{extension}.  Similarly for the
   y-scale.
 }

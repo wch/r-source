@@ -454,12 +454,12 @@ dataViewport <- function(xData = NULL, yData = NULL,
     extension <- rep(extension, length.out = 2)
     if (is.null(xscale)) {
         if (is.null(xData))
-            stop("must specify at least one of 'x' or 'xscale'")
+            stop("must specify at least one of 'xData' or 'xscale'")
         xscale <- extendrange(xData, f = extension[1L])
     }
     if (is.null(yscale)) {
         if (is.null(yData))
-            stop("must specify at least one of 'y' or 'yscale'")
+            stop("must specify at least one of 'yData' or 'yscale'")
         yscale <- extendrange(yData, f = extension[2L])
     }
     viewport(xscale = xscale, yscale = yscale, ...)
