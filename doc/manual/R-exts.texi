@@ -13180,7 +13180,8 @@ first.
 @code{Rf_aaRboolean} is a stricter version of @code{Rf_asLogical}
 introduced in @R{}@tie{}4.5.0.  It returns type @code{Rboolean} and
 gives an error for an input of length other than one, and for
-coercion failure.
+coercion failure. @code{Rf_asBool} is a variant returning the
+C99/C23/C++ type @code{bool}.
 
 but gives an weeo
 @apifun Rf_asInteger
@@ -13189,6 +13190,7 @@ but gives an weeo
 @apifun Rf_asComplex
 @apifun Rf_asChar
 @apifun Rf_asRboolean
+@apifun Rf_asBbool
 The function @code{Rf_asCharacterFactor} converts a factor to a character
 vector.
 @apifun Rf_asCharacterFactor

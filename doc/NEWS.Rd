@@ -347,13 +347,14 @@
       different size this would be an ABI-breaking change (but we are
       unaware of any such platform).
 
-      \item There is a new function \code{asRboolean}, a variannt of
-      \code{asLogical} more suited to converting logical arguments to
-      \code{Rboolean}.
-
       \item Header \file{R_ext/Boolean.h} now ensures a \code{bool} type
       is available either as a keyword (C23 and C++) or by including the
-      C99 header \file{stdbool.h}.
+      C99 header \file{stdbool.h}.  This is used in places in \R itself
+      to replace \code{Rboolean} by \code{bool}.
+
+      \item There are a new functions \code{asRboolean} and
+      \code{asBool}, variannts of \code{asLogical} more suited to
+      converting logical arguments to \code{Rboolean} or to \code{bool}. 
     }
   }
 
