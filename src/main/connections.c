@@ -1591,8 +1591,8 @@ attribute_hidden SEXP do_fifo(SEXP call, SEXP op, SEXP args, SEXP env)
     if(!isString(sopen) || LENGTH(sopen) != 1)
 	error(_("invalid '%s' argument"), "open");
     block = asRbool(CADDR(args), call);
-    if(block == NA_LOGICAL)
-	error(_("invalid '%s' argument"), "block");
+//    if(block == NA_LOGICAL)
+//	error(_("invalid '%s' argument"), "block");
     enc = CADDDR(args);
     if(!isString(enc) || LENGTH(enc) != 1 ||
        strlen(CHAR(STRING_ELT(enc, 0))) > 100) /* ASCII */
