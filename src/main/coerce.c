@@ -1824,13 +1824,21 @@ int asLogical(SEXP x)
     return asLogical2(x, /* checking = */ 0, R_NilValue);
 }
 
-// private version
+// private versions
 Rboolean asRbool(SEXP x, SEXP call)
 {
     int ans = asLogical2(x, 1, call);
     if (ans == NA_LOGICAL)
 	errorcall(call, _("NA in coercion to Rboolean"));
     return (Rboolean) ans;
+}
+
+bool asBool2(SEXP x, SEXP call)
+{
+    int ans = asLogical2(x, 1, call);
+    if (ans == NA_LOGICAL)
+	errorcall(call, _("NA in coercion to Rboolean"));
+    return (bool) ans;
 }
 
 // public version
