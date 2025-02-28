@@ -348,8 +348,12 @@
       unaware of any such platform).
 
       \item There is a new function \code{asRboolean}, a variannt of
-      \code{asLogical} more suitable to converting logical arguments to
+      \code{asLogical} more suited to converting logical arguments to
       \code{Rboolean}.
+
+      \item Header \file{R_ext/Boolean.h} now ensures a \code{bool} type
+      is available either as a keyword (C23 and C++) or by including the
+      C99 header \file{stdbool.h}.
     }
   }
 

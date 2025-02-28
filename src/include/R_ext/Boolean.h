@@ -29,6 +29,19 @@
 #undef FALSE
 #undef TRUE
 
+/* Ensuure a 'bool' type is available.  We could use
+   __bool_true_false_are_defined, 
+   but that was declared obsolescent in C23.
+*/
+#if defined __STDC_VERSION__ && __STDC_VERSION__ > 202000L
+// C23 so bool is a keyword
+#elif defined __cplusplus
+// part of C++ >= 11, which is all R supports.
+#else
+# include <stdbool.h>
+// stdbool.h is C99, so available everywhere.
+#endif
+
 #include <Rconfig.h> /* for HAVE_ENUM_BASE_TYPE */
 /*
   Setting the underlying aka base type is supported in C23, C++11 
