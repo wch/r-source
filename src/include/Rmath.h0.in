@@ -189,7 +189,9 @@ double  Rlog1p(double);
 
 #ifdef MATHLIB_STANDALONE
 # ifndef R_EXT_BOOLEAN_H_
-/* "copy-paste" R_ext/Boolean.h if not already included: */
+/* "copy-paste" R_ext/Boolean.h if not already included: 
+   This is standalone, so we do not worry about the size
+*/
  #define R_EXT_BOOLEAN_H_
  #undef FALSE
  #undef TRUE
