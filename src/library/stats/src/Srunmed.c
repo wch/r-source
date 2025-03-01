@@ -229,10 +229,10 @@ SEXP runmed(SEXP sx, SEXP stype, SEXP sk, SEXP end, SEXP naAct, SEXP printLev)
 	Rprintf("firstNA = %lld%s.\n", (long long)firstNA,
 		(firstNA == 0) ? " <=> *no* NA/NaN" : "");
     if(firstNA) { // anyNA(x)
-	Rboolean NA_pos = TRUE;
+	bool NA_pos = true;
 	switch(na_action) {
         case NA_BIG_alternate_M:
-	    NA_pos = FALSE; // <<-- "M"inus: *not* positive
+	    NA_pos = false; // <<-- "M"inus: *not* positive
 	    // no break; --> continue
         case NA_BIG_alternate_P: {
 	    xx = (double *) R_alloc(n, sizeof(double));

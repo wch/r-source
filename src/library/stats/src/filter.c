@@ -108,7 +108,7 @@ SEXP rfilter(SEXP x, SEXP filter, SEXP out)
 
 /* now allows missing values */
 static void
-acf0(double *x, int n, int ns, int nl, Rboolean correlation, double *acf)
+acf0(double *x, int n, int ns, int nl, bool correlation, double *acf)
 {
     int d1 = nl+1, d2 = ns*d1;
 
@@ -144,7 +144,7 @@ acf0(double *x, int n, int ns, int nl, Rboolean correlation, double *acf)
 SEXP acf(SEXP x, SEXP lmax, SEXP sCor)
 {
     int nx = nrows(x), ns = ncols(x), lagmax = asInteger(lmax);
-    Rboolean cor = asRboolean(sCor);
+    bool cor = asBool(sCor);
     x = PROTECT(coerceVector(x, REALSXP));
     SEXP ans = PROTECT(allocVector(REALSXP, (lagmax + 1)*ns*ns));
     acf0(REAL(x), nx, ns, lagmax, cor, REAL(ans));

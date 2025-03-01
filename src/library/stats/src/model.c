@@ -29,14 +29,14 @@
 #include "statsErr.h"
 
 /* inline-able versions, used just once! */
-static R_INLINE Rboolean isUnordered_int(SEXP s)
+static R_INLINE bool isUnordered_int(SEXP s)
 {
     return (TYPEOF(s) == INTSXP
 	    && inherits(s, "factor")
 	    && !inherits(s, "ordered"));
 }
 
-static R_INLINE Rboolean isOrdered_int(SEXP s)
+static R_INLINE bool isOrdered_int(SEXP s)
 {
     return (TYPEOF(s) == INTSXP
 	    && inherits(s, "factor")
@@ -983,8 +983,8 @@ static void printPList(SEXP form)
     }
     return;
 }
-static Rboolean trace_GetBit = TRUE;
-static Rboolean trace_InstallVar = TRUE;
+static bool trace_GetBit = true;
+static bool trace_InstallVar = true;
 static int n_xVars; // nesting level: use for indentation
 #endif
 
@@ -1002,7 +1002,7 @@ static int nwords;		/* # of words (ints) to code a term */
 static SEXP varlist;		/* variables in the model */
 static PROTECT_INDEX vpi;
 static SEXP framenames;		/* variables names for specified frame */
-static Rboolean haveDot;	/* does RHS of formula contain `.'? */
+static bool haveDot;	/* does RHS of formula contain `.'? */
 
 static int isZeroOne(SEXP x)
 {
@@ -1163,7 +1163,7 @@ static void ExtractVars(SEXP formula)
 	Return;
     }
     if (isSymbol(formula)) {
-	if (formula == dotSymbol) haveDot = TRUE;
+	if (formula == dotSymbol) haveDot = true;
 	Prt_xtrVars(haveDot ? "isSym(<Dot>)" : "isSymbol()");
 	    if (haveDot && framenames != R_NilValue) {
 		// install variables of the data frame:
@@ -1774,11 +1774,11 @@ SEXP termsform(SEXP args)
 	(length(CAR(args)) != 2 && length(CAR(args)) != 3))
 	error(_("argument is not a valid model"));
 
-    haveDot = FALSE;
+    haveDot = false;
 
     SEXP ans = PROTECT(duplicate(CAR(args)));
 
-    /* The formula will be returned, modified if haveDot becomes TRUE */
+    /* The formula will be returned, modified if haveDot becomes true */
 
     SEXP specials = CADR(args);
     if(length(specials) && !isString(specials))
@@ -1796,9 +1796,9 @@ SEXP termsform(SEXP args)
 	error(_("'data' argument is of the wrong type"));
     PROTECT_WITH_INDEX(framenames, &vpi);
 
-    Rboolean hadFrameNames = FALSE;
+    bool hadFrameNames = false;
     if (framenames != R_NilValue) {
-	if(length(framenames)) hadFrameNames = TRUE;
+	if(length(framenames)) hadFrameNames = true;
 	if (length(CAR(args)) == 3)
 	    CheckRHS(CADR(CAR(args)));
     }
@@ -1898,7 +1898,7 @@ SEXP termsform(SEXP args)
 #ifdef DEBUG_terms
 	Rprintf(" step 2b: found k=%ld offset(.)s\n", k);
 #endif
-	Rboolean foundOne = FALSE; /* has there been a non-offset term? */
+	bool foundOne = false; /* has there been a non-offset term? */
 	/* allocate the "offsets" attribute */
 	SETCAR(a, v = allocVector(INTSXP, k));
 	for (int l = response, k = 0; l < nvar; l++)
@@ -1910,7 +1910,7 @@ SEXP termsform(SEXP args)
 	call = formula; /* call is to be the previous term once one is found */
 	while (1) {
 	    SEXP thisterm = foundOne ? CDR(call) : call;
-	    Rboolean have_offset = FALSE;
+	    bool have_offset = false;
 #ifdef DEBUG_terms
 	    Rprintf(" while (1) : foundOne = %d; length(thisterm) =%d; ",
 		   foundOne, length(thisterm));
@@ -1919,7 +1919,7 @@ SEXP termsform(SEXP args)
 	    for (int i = 1; i <= nvar; i++)
 		if (GetBit(CAR(thisterm), i) &&
 		    !strncmp(CHAR(STRING_ELT(varnames, i-1)), "offset(", 7)) {
-		    have_offset = TRUE;
+		    have_offset = true;
 #ifdef DEBUG_terms
 		    Rprintf(" i=%d: have_offset, ", i);
 #endif
@@ -1930,7 +1930,7 @@ SEXP termsform(SEXP args)
 		else SETCDR(call, CDR(thisterm));
 	    } else {
 		if (foundOne) call = CDR(call);
-		else foundOne = TRUE;
+		else foundOne = true;
 	    }
 	}
     }
@@ -2043,7 +2043,7 @@ SEXP termsform(SEXP args)
 #ifdef DEBUG_terms
 	Rprintf("  st.5: (bitpattern in int) term: "); printVector(CAR(call), 0, 0);
 	Rprintf("  ----  {not tracing GetBit() when determing 'cbuf' length}\n");
-	trace_GetBit = FALSE; // *not* tracing below
+	trace_GetBit = false; // *not* tracing below
 #endif
 	for (int i = 1; i <= nvar; i++) {
 	    if (GetBit(CAR(call), i)) {
@@ -2053,7 +2053,7 @@ SEXP termsform(SEXP args)
 	    }
 	}
 #ifdef DEBUG_terms
-	trace_GetBit = TRUE; // back to tracing
+	trace_GetBit = true; // back to tracing
 	Rprintf("     --> cbuf length %d (+1 for final \\0)\n", l);
 #endif
 	char cbuf[l+1];

@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2004   The R Core Team.
+ *  Copyright (C) 2004-2025   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -25,11 +25,11 @@ void kmeans_Lloyd(double *x, int *pn, int *pp, double *cen, int *pk, int *cl,
     int n = *pn, k = *pk, p = *pp, maxiter = *pmaxiter;
     int iter, i, j, c, it, inew = 0;
     double best, dd, tmp;
-    Rboolean updated;
+    bool updated;
 
     for(i = 0; i < n; i++) cl[i] = -1;
     for(iter = 0; iter < maxiter; iter++) {
-	updated = FALSE;
+	updated = false;
 	for(i = 0; i < n; i++) {
 	    /* find nearest centre for each point */
 	    best = R_PosInf;
@@ -45,7 +45,7 @@ void kmeans_Lloyd(double *x, int *pn, int *pp, double *cen, int *pk, int *cl,
 		}
 	    }
 	    if(cl[i] != inew) {
-		updated = TRUE;
+		updated = true;
 		cl[i] = inew;
 	    }
 	}
@@ -77,7 +77,7 @@ void kmeans_MacQueen(double *x, int *pn, int *pp, double *cen, int *pk,
     int n = *pn, k = *pk, p = *pp, maxiter = *pmaxiter;
     int iter, i, j, c, it, inew = 0, iold;
     double best, dd, tmp;
-    Rboolean updated;
+    bool updated;
 
     /* first assign each point to the nearest cluster centre */
     for(i = 0; i < n; i++) {
@@ -105,7 +105,7 @@ void kmeans_MacQueen(double *x, int *pn, int *pp, double *cen, int *pk,
     for(j = 0; j < k*p; j++) cen[j] /= nc[j % k];
 
     for(iter = 0; iter < maxiter; iter++) {
-	updated = FALSE;
+	updated = false;
 	for(i = 0; i < n; i++) {
 	    best = R_PosInf;
 	    for(j = 0; j < k; j++) {
@@ -120,7 +120,7 @@ void kmeans_MacQueen(double *x, int *pn, int *pp, double *cen, int *pk,
 		}
 	    }
 	    if((iold = cl[i] - 1) != inew) {
-		updated = TRUE;
+		updated = true;
 		cl[i] = inew + 1;
 		nc[iold]--; nc[inew]++;
 		/* update old and new cluster centres */

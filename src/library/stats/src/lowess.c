@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1999-2016 The R Core Team
+ *  Copyright (C) 1999-2025 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -45,7 +45,7 @@ static R_INLINE double fcube(double x)
 
 static void lowest(double *x, double *y, int n, double *xs, double *ys,
 	int nleft, int nright, double *w,
-	Rboolean userw, double *rw, Rboolean *ok)
+	bool userw, double *rw, bool *ok)
 {
     int nrt, j;
     double a, b, c, h, h1, h9, r, range;
@@ -90,9 +90,9 @@ static void lowest(double *x, double *y, int n, double *xs, double *ys,
 
     nrt = j-1;
     if (a <= 0.)
-	*ok = FALSE;
+	*ok = false;
     else {
-	*ok = TRUE;
+	*ok = true;
 
 	/* weighted least squares */
 	/* make sum of w[j] == 1 */
@@ -133,7 +133,7 @@ void clowess(double *x, double *y, int n,
 	     double *ys, double *rw, double *res)
 {
     int i, iter, j, last, m1, m2, nleft, nright, ns;
-    Rboolean ok;
+    bool ok;
     double alpha, c1, c9, cmad, cut, d1, d2, denom, r, sc;
 
     if (n < 2) {

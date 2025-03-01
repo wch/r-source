@@ -45,7 +45,7 @@ SEXP Cdqrls(SEXP x, SEXP y, SEXP tol, SEXP chk)
     SEXP qr, coefficients, residuals, effects, pivot, qraux;
     int n, ny = 0, p, rank, nprotect = 4, pivoted = 0;
     double rtol = asReal(tol), *work;
-    Rboolean check = asRboolean(chk);
+    bool check = asBool(chk);
 
     ans = getAttrib(x, R_DimSymbol);
     if(check && length(ans) != 2) error(_("'x' is not a matrix"));

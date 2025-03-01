@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
 
- *  Copyright (C) 1999-2014   The R Core Team
+ *  Copyright (C) 1999-2025   The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@ SEXP cutree(SEXP merge, SEXP which)
  * merge = (n-1) x 2  matrix, described in help(hclust) */
     SEXP ans;
     int n, k, l, nclust, m1, m2, j, mm = 0;
-    Rboolean found_j, *sing;
+    bool found_j, *sing;
     int *m_nr, *z, *i_merge, *i_which, *i_ans;
 
     PROTECT(merge = coerceVector(merge, INTSXP)); i_merge = INTEGER(merge);
@@ -37,14 +37,14 @@ SEXP cutree(SEXP merge, SEXP which)
 
     n = nrows(merge)+1;
     /* using 1-based indices ==> "--" */
-    sing = (Rboolean *) R_alloc(n, sizeof(Rboolean)); sing--;
+    sing = (bool *) R_alloc(n, sizeof(bool)); sing--;
     m_nr = (int *) R_alloc(n, sizeof(int)); m_nr--;
     z	 = (int *) R_alloc(n, sizeof(int)); z--;
     PROTECT(ans = allocMatrix(INTSXP, n, LENGTH(which)));
     i_ans = INTEGER(ans);
 
     for(k = 1; k <= n; k++) {
-	sing[k] = TRUE;/* is k-th obs. still alone in cluster ? */
+	sing[k] = true;/* is k-th obs. still alone in cluster ? */
 	m_nr[k] = 0;/* containing last merge-step number of k-th obs. */
     }
 
@@ -55,7 +55,7 @@ SEXP cutree(SEXP merge, SEXP which)
 
 	if(m1 < 0 && m2 < 0) {/* merging atoms [-m1] and [-m2] */
 	    m_nr[-m1] = m_nr[-m2] = k;
-	    sing[-m1] = sing[-m2] = FALSE;
+	    sing[-m1] = sing[-m2] = false;
 	}
 	else if(m1 < 0 || m2 < 0) {/* the other >= 0 */
 	    if(m1 < 0) { j = -m1; m1 = m2; } else j = -m2;
@@ -64,7 +64,7 @@ SEXP cutree(SEXP merge, SEXP which)
 		if (m_nr[l] == m1)
 		    m_nr[l] = k;
 	    m_nr[j] = k;
-	    sing[j] = FALSE;
+	    sing[j] = false;
 	}
 	else { /* both m1, m2 >= 0 */
 	    for(l=1; l <= n; l++) {
@@ -75,11 +75,11 @@ SEXP cutree(SEXP merge, SEXP which)
 
 	/* does this k-th merge belong to a desired group size which[j] ?
 	 * if yes, find j (maybe multiple ones): */
-	found_j = FALSE;
+	found_j = false;
 	for(j = 0; j < LENGTH(which); j++) {
 	    if(i_which[j] == n - k) {
 		if(!found_j) { /* first match (and usually only one) */
-		    found_j = TRUE;
+		    found_j = true;
 		    for(l = 1; l <= n; l++)
 			z[l] = 0;
 		    nclust = 0;

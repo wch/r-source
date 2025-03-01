@@ -111,7 +111,7 @@ void F77_SUB(sbart)
     double tol1, tol2;
 
     int i, maxit;
-    Rboolean Fparabol = FALSE, tracing = (*ispar < 0), spar_is_lambda = FALSE;
+    bool Fparabol = false, tracing = (*ispar < 0), spar_is_lambda = false;
 
     /* unnecessary initializations to keep  -Wall happy */
     d = 0.; fu = 0.; u = 0.;

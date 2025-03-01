@@ -13,7 +13,7 @@
 
 #include <math.h>
 
-#include <R_ext/Random.h>
+#include <R_ext/Random.h> // makes sure bool is available
 #include <R_ext/Applic.h>
 #include <R_ext/Boolean.h>
 #include <R_ext/Error.h>
@@ -82,7 +82,7 @@ rcont2(int nrow, int ncol,
 		    y = x;
 
 		int nll = nlm;
-		Rboolean lsp;
+		bool lsp;
 		do {
 		    /* Increment entry in row L, column M */
 		    double j = (id - nlm) * (double)(ia - nlm);
@@ -100,7 +100,7 @@ rcont2(int nrow, int ncol,
 			    goto L160;
 		    }
 
-		    Rboolean lsm;
+		    bool lsm;
 		    do {
 			R_CheckUserInterrupt();
 
