@@ -1829,7 +1829,7 @@ Rboolean asRbool(SEXP x, SEXP call)
 {
     int ans = asLogical2(x, 1, call);
     if (ans == NA_LOGICAL)
-	errorcall(call, _("NA in coercion to Rboolean"));
+	errorcall(call, _("NA in coercion to boolean"));
     return (Rboolean) ans;
 }
 
@@ -1837,7 +1837,7 @@ bool asBool2(SEXP x, SEXP call)
 {
     int ans = asLogical2(x, 1, call);
     if (ans == NA_LOGICAL)
-	errorcall(call, _("NA in coercion to bool"));
+	errorcall(call, _("NA in coercion to boolean"));
     return (bool) ans;
 }
 
@@ -1846,7 +1846,7 @@ Rboolean asRboolean(SEXP x)
 {
     int ans = asLogical2(x, 1, R_NilValue);
     if (ans == NA_LOGICAL)
-	error(_("NA in coercion to Rboolean"));
+	error(_("NA in coercion to boolean"));
     return (Rboolean) ans;
 }
 
@@ -1854,7 +1854,7 @@ bool asBool(SEXP x)
 {
     int ans = asLogical2(x, 1, R_NilValue);
     if (ans == NA_LOGICAL)
-	error(_("NA in coercion to bool"));
+	error(_("NA in coercion to boolean"));
     return (bool) ans;
 }
 
