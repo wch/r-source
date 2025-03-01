@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2005-2024  The R Core Team
+ *  Copyright (C) 2005-2025  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -54,6 +54,11 @@ void rcont2(int nrow, int ncol, const int nrowt[], const int ncolt[], int ntotal
 double R_zeroin2(double ax, double bx, double fa, double fb, 
 		 double (*f)(double x, void *info), void *info, 
 		 double *Tol, int *Maxit);
+
+/* from fft.c, formerly in fourier.c */
+void fft_factor(int n, int *pmaxf, int *pmaxp);
+bool fft_work(double *a, double *b, int nseg, int n, int nspn,
+	      int isn, double *work, int *iwork);
 
 
 #endif

@@ -27,12 +27,9 @@
 #include <Rinternals.h>
 #include "statsErr.h"
 
-// workhorse routines from fft.c
-void fft_factor(int n, int *pmaxf, int *pmaxp);
-Rboolean fft_work(double *a, double *b, int nseg, int n, int nspn,
-		  int isn, double *work, int *iwork);
 
 #include "statsR.h"
+#include "stats.h"
 
 /* Fourier Transform for Univariate Spatial and Time Series */
 
@@ -180,22 +177,22 @@ SEXP mvfft(SEXP z, SEXP inverse)
     return z;
 }
 
-static Rboolean ok_n(int n, const int f[], int nf)
+static bool ok_n(int n, const int f[], int nf)
 {
     for (int i = 0; i < nf; i++) {
 	while(n % f[i] == 0) {
 	    if ((n = n / f[i]) == 1)
-		return TRUE;
+		return true;
 	}
     }
     return n == 1;
 }
-static Rboolean ok_n_64(uint64_t n, const int f[], int nf)
+static bool ok_n_64(uint64_t n, const int f[], int nf)
 {
     for (int i = 0; i < nf; i++) {
 	while(n % f[i] == 0) {
 	    if ((n = n / f[i]) == 1)
-		return TRUE;
+		return true;
 	}
     }
     return n == 1;
@@ -240,7 +237,7 @@ SEXP nextn(SEXP n, SEXP f)
 	if (f_[i] == NA_INTEGER || f_[i] <= 1)
 	    error(_("invalid factors"));
 
-    Rboolean use_int = TYPEOF(n) == INTSXP;
+    bool use_int = TYPEOF(n) == INTSXP;
     if(!use_int && TYPEOF(n) != REALSXP)
 	error(_("'n' must have typeof(.) \"integer\" or \"double\""));
     R_xlen_t nn = XLENGTH(n);
@@ -250,7 +247,7 @@ SEXP nextn(SEXP n, SEXP f)
 	    if (!ISNAN(d_n[i]) && d_n[i] > n_max) n_max = d_n[i];
 	}
 	if(n_max <= INT_MAX / f_[0]) { // maximal n[] should not be too large to find "next n"
-	    use_int = TRUE;
+	    use_int = true;
 	    n = PROTECT(n = coerceVector(n, INTSXP)); nprot++;
 	}
     }
