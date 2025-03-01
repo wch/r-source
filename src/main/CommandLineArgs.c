@@ -165,10 +165,10 @@ R_common_command_line(int *pac, char **argv, Rstart Rp)
 	    else if (!strcmp(*av, "--no-init-file")) {
 		Rp->LoadInitFile = FALSE;
 	    }
-	    // Undocumented and unused.
-	    else if (!strcmp(*av, "--debug-init")) {
-		Rp->DebugInitFile = TRUE;
-	    }
+	    /* Undocumented and unused.
+	     else if (!strcmp(*av, "--debug-init")) {
+	    	Rp->DebugInitFile = TRUE;
+	     */
 	    else if (!strncmp(*av, "--encoding", 10)) {
 		if(strlen(*av) < 12) {
 		    if(ac > 1) {ac--; av++; p = *av;} else p = NULL;
