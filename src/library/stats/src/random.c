@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997--2020  The R Core Team
+ *  Copyright (C) 1997--2025  The R Core Team
  *  Copyright (C) 2003--2016  The R Foundation
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
@@ -19,11 +19,7 @@
  *  https://www.R-project.org/Licenses/
  */
 
-#ifdef HAVE_CONFIG_H
-# include <config.h>
-#endif
-
-#include <Defn.h>
+#include <Rinternals.h>
 #include <R_ext/Random.h>
 #include <Rmath.h>		/* for lgammafn, rmultinom */
 #include <errno.h>

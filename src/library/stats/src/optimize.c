@@ -24,7 +24,7 @@
 #endif
 
 #define NO_NLS
-#include <Defn.h>
+#include <Defn.h>               // for PrintDefaults
 #include <float.h>		/* for DBL_MAX */
 #include <R_ext/Applic.h>	/* for optif9, fdhess */
 #include <R_ext/RS.h>	       	/* for Memcpy */

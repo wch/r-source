@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998--2023  The R Core Team
+ *  Copyright (C) 1998--2025  The R Core Team
  *  Copyright (C) 1995--1997  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -24,11 +24,7 @@
 #include <inttypes.h>
 // for PRIu64
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
-
-#include <Defn.h>
+#include <Rinternals.h>
 #include "statsErr.h"
 
 // workhorse routines from fft.c

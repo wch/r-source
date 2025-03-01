@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997--2024  The R Core Team
+ *  Copyright (C) 1997--2025  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -22,6 +22,7 @@
 #include <config.h>
 #endif
 
+#include <string.h> // for memset, strcat, strlen, strncmp 
 #include <Defn.h>
 
 #include "statsR.h"

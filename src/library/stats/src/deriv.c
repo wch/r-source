@@ -26,7 +26,7 @@
 #include <config.h>
 #endif
 
-#include "Defn.h"
+#include <Defn.h>  // for deparse1
 #include "statsErr.h"
 
 static SEXP ParenSymbol;

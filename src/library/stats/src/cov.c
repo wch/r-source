@@ -28,7 +28,7 @@
 # define SQRTL sqrt
 #endif
 
-#include <Defn.h>
+#include <Defn.h> // for LDOUBLE
 #include <Rmath.h>
 
 #include "statsR.h"
