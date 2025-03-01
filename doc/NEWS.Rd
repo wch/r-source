@@ -344,7 +344,7 @@
       smaller type in future.
 
       If there were a platform which used an underlying type of a
-      different size this would be an ABI-breaking change (but we are
+      different size this would be an \abbr{ABI}-breaking change (but we are
       unaware of any such platform).
 
       \item Header \file{R_ext/Boolean.h} now ensures a \code{bool} type
@@ -353,7 +353,7 @@
       to replace \code{Rboolean} by \code{bool}.
 
       \item There are a new functions \code{asRboolean} and
-      \code{asBool}, variannts of \code{asLogical} more suited to
+      \code{asBool}, variants of \code{asLogical} more suited to
       converting logical arguments to \code{Rboolean} or to \code{bool}. 
     }
   }

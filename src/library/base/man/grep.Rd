@@ -287,7 +287,7 @@ gregexec(pattern, text, ignore.case = FALSE, perl = FALSE,
   and from the UTF-8 versions.
 }
 \section{Warning}{
-  An all too cmmmon mis-usage is to pass unnamed arguments which are then
+  An all too common mis-usage is to pass unnamed arguments which are then
   matched to one or more of \code{ignore.case}, \code{perl}, \code{value},
   \code{fixed}, \code{useBytes}  and \code{invert}.  So it is good
   practice to name all  the arguments (especially as
