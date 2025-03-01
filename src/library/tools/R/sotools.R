@@ -689,6 +689,17 @@ nonAPI <- c("chol_", "chol2inv_", "cg_", "ch_", "rg_",
             "XTRUELENGTH", "Rf_gsetVar",
             "Rf_isValidString", "Rf_isValidStringF",
             "R_shallow_duplicate_attr",
+            ## Documented in WRE in section "Some API replacements for
+            ## non-API entry points":
+            "EXTPTR_PROT", "EXTPTR_TAG", "EXTPTR_PTR",
+            "OBJECT", "IS_S4_OBJECT",
+            "GetOption", "R_lsInternal",
+            "REAL0", "COMPLEX0",
+            "STRING_PTR", "DATAPTR", "STDVEC_DATAPTR",
+            "Rf_allocSExp",
+            "isFrame",
+            "BODY", "FORMALS", "CLOENV", "ENCLOS",
+            "IS_ASCII", "IS_UTF8",
 ## in the non-API header R_ext/Connections.h
             "R_new_custom_connection", "R_ReadConnection",
             "R_WriteConnection", "R_GetConnection",
