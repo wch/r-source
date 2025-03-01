@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1999--2024  The R Core Team.
+ *  Copyright (C) 1999--2025  The R Core Team.
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This header file is free software; you can redistribute it and/or modify
@@ -896,7 +896,7 @@ void R_orderVector1(int *indx, int n, SEXP x,       Rboolean nalast, Rboolean de
 #define any_duplicated3		Rf_any_duplicated3
 #define applyClosure		Rf_applyClosure
 #define arraySubscript		Rf_arraySubscript
-#define asBool			Rf_asRool
+#define asBool			Rf_asBool
 #define asChar			Rf_asChar
 #define asCharacterFactor	Rf_asCharacterFactor
 #define asComplex		Rf_asComplex
