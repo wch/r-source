@@ -165,6 +165,7 @@ R_common_command_line(int *pac, char **argv, Rstart Rp)
 	    else if (!strcmp(*av, "--no-init-file")) {
 		Rp->LoadInitFile = FALSE;
 	    }
+	    // Undocumented and unused.
 	    else if (!strcmp(*av, "--debug-init")) {
 		Rp->DebugInitFile = TRUE;
 	    }
