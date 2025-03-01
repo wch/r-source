@@ -1553,7 +1553,7 @@ c lowesd() : Initialize iv(*) and v(1:4)
 c ------     called only by loess_workspace()  in ./loessc.c
       subroutine lowesd(iv, liv,lv, v, d,n,f,ideg,nf,nvmax, setlf)
       integer               liv,lv,    d,n,  ideg,nf,nvmax, setlf
-c           setlf {Rboolean}: if(true) need  L [nf x nvmax] matrices
+c           setlf if(true) need  L [nf x nvmax] matrices
       integer iv(liv)
       double precision f, v(lv)
 

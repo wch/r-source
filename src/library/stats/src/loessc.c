@@ -46,7 +46,7 @@
 static
 void loess_workspace(int D, int N, double span, int degree,
 		     int nonparametric, const int drop_square[],
-		     int sum_drop_sqr, Rboolean setLf);
+		     int sum_drop_sqr, bool setLf);
 
 static
 void loess_prune(int *parameter, int *a,
@@ -113,7 +113,7 @@ loess_raw(double *y, double *x, double *weights, double *robust, int *d,
 
     *trL = 0;
 
-    loess_workspace(*d, *n, *span, *degree, *nonparametric, drop_square, *sum_drop_sqr, (Rboolean) *setLf);
+    loess_workspace(*d, *n, *span, *degree, *nonparametric, drop_square, *sum_drop_sqr,  (bool)*setLf);
     v[1] = *cell;/* = v(2) in Fortran (!) */
 
     /* NB:  surf_stat  =  (surface / statistics);
@@ -235,7 +235,7 @@ loess_ise(double *y, double *x, double *x_evaluate, double *weights,
 void
 loess_workspace(int D, int N, double span, int degree,
 		int nonparametric, const int drop_square[],
-		int sum_drop_sqr, Rboolean setLf)
+		int sum_drop_sqr, bool setLf)
 {
     int nvmax = max(200, N),
 	nf = min(N, (int) floor(N * span + 1e-5));
@@ -261,8 +261,10 @@ loess_workspace(int D, int N, double span, int degree,
     iv = R_Calloc(liv, int);
     v  = R_Calloc(lv, double);
 
+    // Do the initialization in Fortran.
+    int isetLf = setLf;  // This is INTEGER in the Fortran routine
     F77_CALL(lowesd)(iv, &liv, &lv, v, &D, &N, &span,
-		     &degree, &nf, &nvmax, (int *) &setLf);
+		     &degree, &nf, &nvmax, &isetLf);
     iv[32] = nonparametric;
     for(int i = 0; i < D; i++)
 	iv[i + 40] = drop_square[i];
