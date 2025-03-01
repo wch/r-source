@@ -13183,7 +13183,6 @@ gives an error for an input of length other than one, and for
 coercion failure. @code{Rf_asBool} is a variant returning the
 C99/C23/C++ type @code{bool}.
 
-but gives an weeo
 @apifun Rf_asInteger
 @apifun Rf_asLogical
 @apifun Rf_asReal
