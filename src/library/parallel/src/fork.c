@@ -46,7 +46,7 @@
 #include <fcntl.h>
 #include <string.h>
 
-#include <Rinterface.h> /* for R_Interactive */
+//#include <Rinterface.h> /* for R_Interactive, but also in Defn.h */
 #include <R_ext/eventloop.h> /* for R_SelectEx */
 
 /* read()/write() on pipes may not support arbitrary lengths, so
