@@ -3303,11 +3303,12 @@ R is now configured for ${host}
   Fortran fixed-form compiler: ${r_f77_compiler}
 
   Default C++ compiler:        ${r_cxx_compiler}
-  C++11 compiler:              ${r_cxx11_compiler}
-  C++14 compiler:              ${r_cxx14_compiler}
-  C++17 compiler:              ${r_cxx17_compiler}
-  C++20 compiler:              ${r_cxx20_compiler}
-  C++23 compiler:              ${r_cxx23_compiler}
+dnl  C++11 compiler:              ${r_cxx11_compiler}
+dnl  C++14 compiler:              ${r_cxx14_compiler}
+dnl  C++17 compiler:              ${r_cxx17_compiler}
+dnl  C++20 compiler:              ${r_cxx20_compiler}
+dnl  C++23 compiler:              ${r_cxx23_compiler}
+dnl We never reported the C++26 compiler (nor C17, C99 ...)
   Fortran free-form compiler:  ${r_f95_compiler}
   Obj-C compiler:	       ${r_objc_compiler}
 
