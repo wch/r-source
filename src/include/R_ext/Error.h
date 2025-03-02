@@ -26,12 +26,6 @@
 #ifndef R_ERROR_H_
 #define R_ERROR_H_
 
-#if defined(__cplusplus) && !defined(DO_NOT_USE_CXX_HEADERS)
-# include <cstddef>
-#else
-# include <stddef.h> /* for size_t */
-#endif
-
 #include <R_ext/Print.h>
 
 #ifdef  __cplusplus
