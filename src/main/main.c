@@ -200,7 +200,7 @@ Rf_ReplIteration(SEXP rho, int savestack, int browselevel, R_ReplState *state)
 {
     int c, browsevalue;
     SEXP value, thisExpr;
-    Rboolean wasDisplayed = FALSE;
+    bool wasDisplayed = FALSE;
 
     /* clear warnings that might have accumulated during a jump to top level */
     if (R_CollectWarnings)
@@ -333,7 +333,7 @@ static void check_session_exit(void)
 	   error is signaled from one of the functions called. The
 	   'exiting' variable identifies this and results in
 	   R_Suicide. */
-	static Rboolean exiting = FALSE;
+	static bool exiting = FALSE;
 	if (exiting)
 	    R_Suicide(_("error during cleanup\n"));
 	else {
@@ -368,7 +368,7 @@ int R_ReplDLLdo1(void)
     int c;
     ParseStatus status;
     SEXP rho = R_GlobalEnv, lastExpr;
-    Rboolean wasDisplayed = FALSE;
+    bool wasDisplayed = FALSE;
 
     if(!*DLLbufp) {
 	R_Busy(0);
@@ -1355,7 +1355,7 @@ static SEXP callBrowserHook(void *data)
     return val;
 }
 
-static void restoreBrowserHookOption(void *data, Rboolean jump)
+static void restoreBrowserHookOption(void *data, bool jump)
 {
     struct callBrowserHookData *bhdata = data;
     SEXP hook = bhdata-> hook;
@@ -1435,7 +1435,7 @@ attribute_hidden SEXP do_browser(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (TYPEOF(expr) == ENVSXP)
 	rho = expr;
 
-    Rboolean ignoreHook = asRbool(CAR(CDR(CDDDR(argList))), call);
+    bool ignoreHook = asBool2(CAR(CDR(CDDDR(argList))), call);
     if (ignoreHook) {
         R_browserRepl(rho);
         UNPROTECT(1); /* argList */

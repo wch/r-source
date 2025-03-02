@@ -132,7 +132,7 @@ static SEXP Rf_MakeDLLInfo(DllInfo *info);
 
 static SEXP createRSymbolObject(SEXP sname, DL_FUNC f,
 				R_RegisteredNativeSymbol *symbol,
-				Rboolean withRegistrationInfo);
+				bool withRegistrationInfo);
 
 static DllInfo *R_RegisterDLL(HINSTANCE handle, const char *path);
 
@@ -672,7 +672,7 @@ Rf_freeDllInfo(DllInfo *info)
 typedef void (*DllInfoUnloadCall)(DllInfo *);
 typedef DllInfoUnloadCall DllInfoInitCall;
 
-static Rboolean
+static bool
 R_callDLLUnload(DllInfo *dllInfo)
 {
     char buf[1024];
@@ -1470,7 +1470,7 @@ R_getSymbolInfo(SEXP sname, SEXP spackage, SEXP withRegistrationInfo)
 
     if(f)
 	sym = createRSymbolObject(sname, f, &symbol,
-				  asRbool(withRegistrationInfo, R_NilValue));
+				  asBool2(withRegistrationInfo, R_NilValue));
 
     vmaxset(vmax);
     return sym;
@@ -1511,7 +1511,7 @@ R_getDllTable(void)
 
 static SEXP
 createRSymbolObject(SEXP sname, DL_FUNC f, R_RegisteredNativeSymbol *symbol,
-		    Rboolean withRegistrationInfo)
+		    bool withRegistrationInfo)
 {
     SEXP tmp, klass, sym, names;
     int n = (symbol->type != R_ANY_SYM) ? 4 : 3;

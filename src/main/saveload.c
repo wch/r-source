@@ -2328,7 +2328,7 @@ attribute_hidden SEXP do_saveToConn(SEXP call, SEXP op, SEXP args, SEXP env)
     /* saveToConn(list, conn, ascii, version, environment) */
 
     SEXP s, t, source, list, tmp;
-    Rboolean ascii, wasopen;
+    bool ascii, wasopen;
     int len, j, version, ep;
     Rconnection con;
     struct R_outpstream_st out;
@@ -2346,7 +2346,7 @@ attribute_hidden SEXP do_saveToConn(SEXP call, SEXP op, SEXP args, SEXP env)
 
 /*    if (TYPEOF(CADDR(args)) != LGLSXP)
       error(_("'ascii' must be logical")); */
-    ascii = asRbool(CADDR(args), call);
+    ascii = asBool2(CADDR(args), call);
 
     if (CADDDR(args) == R_NilValue)
 	version = defaultSaveVersion();
@@ -2441,7 +2441,7 @@ attribute_hidden SEXP do_loadFromConn2(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP aenv = R_NilValue, res = R_NilValue;
     unsigned char buf[6];
     size_t count;
-    Rboolean wasopen;
+    bool wasopen;
     RCNTXT cntxt;
 
     checkArity(op, args);

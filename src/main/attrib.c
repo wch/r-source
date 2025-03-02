@@ -56,17 +56,17 @@ static SEXP row_names_gets(SEXP vec, SEXP val)
 	return ans;
     }
     if(isInteger(val)) {
-	Rboolean OK_compact = TRUE;
+	bool OK_compact = TRUE;
 	int i, n = LENGTH(val);
 	if(n == 2 && INTEGER(val)[0] == NA_INTEGER) {
 	    n = INTEGER(val)[1];
 	} else if (n > 2) {
 	    for(i = 0; i < n; i++)
 		if(INTEGER(val)[i] != i+1) {
-		    OK_compact = FALSE;
+		    OK_compact = false;
 		    break;
 		}
-	} else OK_compact = FALSE;
+	} else OK_compact = false;
 	if(OK_compact) {
 	    /* we hide the length in an impossible integer vector */
 	    PROTECT(vec);
@@ -96,14 +96,14 @@ static SEXP stripAttrib(SEXP tag, SEXP lst)
     return lst;
 }
 
-static Rboolean isOneDimensionalArray(SEXP vec)
+static bool isOneDimensionalArray(SEXP vec)
 {
     if(isVector(vec) || isList(vec) || isLanguage(vec)) {
 	SEXP s = getAttrib(vec, R_DimSymbol);
 	if(TYPEOF(s) == INTSXP && LENGTH(s) == 1)
 	    return TRUE;
     }
-    return FALSE;
+    return false;
 }
 
 /* NOTE: For environments serialize.c calls this function to find if
@@ -127,7 +127,7 @@ attribute_hidden SEXP getAttrib0(SEXP vec, SEXP name)
 	    int len = length(vec);
 	    PROTECT(s = allocVector(STRSXP, len));
 	    int i = 0;
-	    Rboolean any = FALSE;
+	    bool any = false;
 	    for ( ; vec != R_NilValue; vec = CDR(vec), i++) {
 		if (TAG(vec) == R_NilValue)
 		{
@@ -320,7 +320,7 @@ void copyMostAttribNoTs(SEXP inp, SEXP ans)
 	} else if (TAG(s) == R_ClassSymbol) {
 	    SEXP cl = CAR(s);
 	    int i;
-	    Rboolean ists = FALSE;
+	    bool ists = false;
 	    for (i = 0; i < LENGTH(cl); i++)
 		if (strcmp(CHAR(STRING_ELT(cl, i)), "ts") == 0) { /* ASCII */
 		    ists = TRUE;
@@ -529,7 +529,7 @@ SEXP classgets(SEXP vec, SEXP klass)
 
 	    /* HOWEVER, it is the way that the object bit gets set/unset */
 
-	    Rboolean isfactor = FALSE;
+	    bool isfactor = false;
 
 	    if (vec == R_NilValue)
 		error(_("attempt to set an attribute on NULL"));
@@ -712,7 +712,7 @@ static SEXP cache_class(const char *class, SEXP klass)
     return klass;
 }
 
-static SEXP S4_extends(SEXP klass, Rboolean use_tab) {
+static SEXP S4_extends(SEXP klass, bool use_tab) {
     static SEXP s_extends = 0, s_extendsForS3;
     SEXP e, val; const char *class;
     const void *vmax;
@@ -746,7 +746,7 @@ static SEXP S4_extends(SEXP klass, Rboolean use_tab) {
 
 attribute_hidden SEXP R_S4_extends(SEXP klass, SEXP useTable)
 {
-    return S4_extends(klass, asRbool(useTable, R_NilValue));
+    return S4_extends(klass, asBool2(useTable, R_NilValue));
 }
 
 

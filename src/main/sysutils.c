@@ -242,7 +242,7 @@ attribute_hidden SEXP do_interactive(SEXP call, SEXP op, SEXP args, SEXP rho)
 attribute_hidden SEXP do_tempdir(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     checkArity(op, args);
-    Rboolean check = asRbool(CAR(args), call);
+    bool check = asBool2(CAR(args), call);
     if(check && !R_isWriteableDir(R_TempDir)) {
 	R_TempDir = NULL;
 	R_reInitTempDir(/* die_on_fail = */ FALSE);
