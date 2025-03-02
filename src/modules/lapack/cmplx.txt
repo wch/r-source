@@ -203,3 +203,6 @@ zunmql.f
 zunmqr.f
 zunmtr.f
 zupgtr.f
+zlarf1f.f
+zlarf1l.f
+zspmv.f

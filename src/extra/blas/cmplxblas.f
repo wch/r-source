@@ -1982,6 +1982,575 @@
 *     End of ZGEMM
 *
       END
+*> \brief \b ZGEMMTR
+*
+*  =========== DOCUMENTATION ===========
+*
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
+*
+*  Definition:
+*  ===========
+*
+*       SUBROUTINE ZGEMMTR(UPLO,TRANSA,TRANSB,N,K,ALPHA,A,LDA,B,LDB,BETA,
+*                         C,LDC)
+*
+*       .. Scalar Arguments ..
+*       DOUBLE COMPLEX ALPHA,BETA
+*       INTEGER K,LDA,LDB,LDC,N
+*       CHARACTER TRANSA,TRANSB, UPLO
+*       ..
+*       .. Array Arguments ..
+*       DOUBLE COMPLEX A(LDA,*),B(LDB,*),C(LDC,*)
+*       ..
+*
+*
+*> \par Purpose:
+*  =============
+*>
+*> \verbatim
+*>
+*> ZGEMMTR  performs one of the matrix-matrix operations
+*>
+*>    C := alpha*op( A )*op( B ) + beta*C,
+*>
+*> where  op( X ) is one of
+*>
+*>    op( X ) = X   or   op( X ) = X**T,
+*>
+*> alpha and beta are scalars, and A, B and C are matrices, with op( A )
+*> an n by k matrix,  op( B )  a  k by n matrix and  C an n by n matrix.
+*> Thereby, the routine only accesses and updates the upper or lower
+*> triangular part of the result matrix C. This behaviour can be used if
+*> the resulting matrix C is known to be Hermitian or symmetric.
+*> \endverbatim
+*
+*  Arguments:
+*  ==========
+*
+*> \param[in] UPLO
+*> \verbatim
+*>          UPLO is CHARACTER*1
+*>           On entry, UPLO specifies whether the lower or the upper
+*>           triangular part of C is access and updated.
+*>
+*>              UPLO = 'L' or 'l', the lower triangular part of C is used.
+*>
+*>              UPLO = 'U' or 'u', the upper triangular part of C is used.
+*> \endverbatim
+*
+*> \param[in] TRANSA
+*> \verbatim
+*>          TRANSA is CHARACTER*1
+*>           On entry, TRANSA specifies the form of op( A ) to be used in
+*>           the matrix multiplication as follows:
+*>
+*>              TRANSA = 'N' or 'n',  op( A ) = A.
+*>
+*>              TRANSA = 'T' or 't',  op( A ) = A**T.
+*>
+*>              TRANSA = 'C' or 'c',  op( A ) = A**H.
+*> \endverbatim
+*>
+*> \param[in] TRANSB
+*> \verbatim
+*>          TRANSB is CHARACTER*1
+*>           On entry, TRANSB specifies the form of op( B ) to be used in
+*>           the matrix multiplication as follows:
+*>
+*>              TRANSB = 'N' or 'n',  op( B ) = B.
+*>
+*>              TRANSB = 'T' or 't',  op( B ) = B**T.
+*>
+*>              TRANSB = 'C' or 'c',  op( B ) = B**H.
+*> \endverbatim
+*>
+*> \param[in] N
+*> \verbatim
+*>          N is INTEGER
+*>           On entry,  N specifies the number of rows and columns of
+*>           the matrix C, the number of columns of op(B) and the number
+*>           of rows of op(A).  N must be at least zero.
+*> \endverbatim
+*>
+*> \param[in] K
+*> \verbatim
+*>          K is INTEGER
+*>           On entry,  K  specifies  the number of columns of the matrix
+*>           op( A ) and the number of rows of the matrix op( B ). K must
+*>           be at least  zero.
+*> \endverbatim
+*>
+*> \param[in] ALPHA
+*> \verbatim
+*>          ALPHA is DOUBLE COMPLEX.
+*>           On entry, ALPHA specifies the scalar alpha.
+*> \endverbatim
+*>
+*> \param[in] A
+*> \verbatim
+*>          A is DOUBLE COMPLEX array, dimension ( LDA, ka ), where ka is
+*>           k  when  TRANSA = 'N' or 'n',  and is  n  otherwise.
+*>           Before entry with  TRANSA = 'N' or 'n',  the leading  n by k
+*>           part of the array  A  must contain the matrix  A,  otherwise
+*>           the leading  k by m  part of the array  A  must contain  the
+*>           matrix A.
+*> \endverbatim
+*>
+*> \param[in] LDA
+*> \verbatim
+*>          LDA is INTEGER
+*>           On entry, LDA specifies the first dimension of A as declared
+*>           in the calling (sub) program. When  TRANSA = 'N' or 'n' then
+*>           LDA must be at least  max( 1, n ), otherwise  LDA must be at
+*>           least  max( 1, k ).
+*> \endverbatim
+*>
+*> \param[in] B
+*> \verbatim
+*>          B is DOUBLE COMPLEX array, dimension ( LDB, kb ), where kb is
+*>           n  when  TRANSB = 'N' or 'n',  and is  k  otherwise.
+*>           Before entry with  TRANSB = 'N' or 'n',  the leading  k by n
+*>           part of the array  B  must contain the matrix  B,  otherwise
+*>           the leading  n by k  part of the array  B  must contain  the
+*>           matrix B.
+*> \endverbatim
+*>
+*> \param[in] LDB
+*> \verbatim
+*>          LDB is INTEGER
+*>           On entry, LDB specifies the first dimension of B as declared
+*>           in the calling (sub) program. When  TRANSB = 'N' or 'n' then
+*>           LDB must be at least  max( 1, k ), otherwise  LDB must be at
+*>           least  max( 1, n ).
+*> \endverbatim
+*>
+*> \param[in] BETA
+*> \verbatim
+*>          BETA is DOUBLE COMPLEX.
+*>           On entry,  BETA  specifies the scalar  beta.  When  BETA  is
+*>           supplied as zero then C need not be set on input.
+*> \endverbatim
+*>
+*> \param[in,out] C
+*> \verbatim
+*>          C is DOUBLE COMPLEX array, dimension ( LDC, N )
+*>           Before entry, the leading  n by n  part of the array  C must
+*>           contain the matrix  C,  except when  beta  is zero, in which
+*>           case C need not be set on entry.
+*>           On exit, the upper or lower triangular part of the matrix
+*>           C  is overwritten by the n by n matrix
+*>           ( alpha*op( A )*op( B ) + beta*C ).
+*> \endverbatim
+*>
+*> \param[in] LDC
+*> \verbatim
+*>          LDC is INTEGER
+*>           On entry, LDC specifies the first dimension of C as declared
+*>           in  the  calling  (sub)  program.   LDC  must  be  at  least
+*>           max( 1, n ).
+*> \endverbatim
+*
+*  Authors:
+*  ========
+*
+*> \author Martin Koehler
+*
+*> \ingroup gemmtr
+*
+*> \par Further Details:
+*  =====================
+*>
+*> \verbatim
+*>
+*>  Level 3 Blas routine.
+*>
+*>  -- Written on 19-July-2023.
+*>     Martin Koehler, MPI Magdeburg
+*> \endverbatim
+*>
+*  =====================================================================
+      SUBROUTINE ZGEMMTR(UPLO,TRANSA,TRANSB,N,K,ALPHA,A,LDA,B,LDB,
+     +         BETA,C,LDC)
+      IMPLICIT NONE
+*
+*  -- Reference BLAS level3 routine --
+*  -- Reference BLAS is a software package provided by Univ. of Tennessee,    --
+*  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
+*
+*     .. Scalar Arguments ..
+      DOUBLE COMPLEX ALPHA,BETA
+      INTEGER K,LDA,LDB,LDC,N
+      CHARACTER TRANSA,TRANSB,UPLO
+*     ..
+*     .. Array Arguments ..
+      DOUBLE COMPLEX A(LDA,*),B(LDB,*),C(LDC,*)
+*     ..
+*
+*  =====================================================================
+*
+*     .. External Functions ..
+      LOGICAL LSAME
+      EXTERNAL LSAME
+*     ..
+*     .. External Subroutines ..
+      EXTERNAL XERBLA
+*     ..
+*     .. Intrinsic Functions ..
+      INTRINSIC CONJG,MAX
+*     ..
+*     .. Local Scalars ..
+      DOUBLE COMPLEX TEMP
+      INTEGER I,INFO,J,L,NROWA,NROWB,ISTART, ISTOP
+      LOGICAL CONJA,CONJB,NOTA,NOTB,UPPER
+*     ..
+*     .. Parameters ..
+      DOUBLE COMPLEX ONE
+      PARAMETER (ONE= (1.0D+0,0.0D+0))
+      DOUBLE COMPLEX ZERO
+      PARAMETER (ZERO= (0.0D+0,0.0D+0))
+*     ..
+*
+*     Set  NOTA  and  NOTB  as  true if  A  and  B  respectively are not
+*     conjugated or transposed, set  CONJA and CONJB  as true if  A  and
+*     B  respectively are to be  transposed but  not conjugated  and set
+*     NROWA and  NROWB  as the number of rows of  A  and  B  respectively.
+*
+      NOTA = LSAME(TRANSA,'N')
+      NOTB = LSAME(TRANSB,'N')
+      CONJA = LSAME(TRANSA,'C')
+      CONJB = LSAME(TRANSB,'C')
+      IF (NOTA) THEN
+          NROWA = N
+      ELSE
+          NROWA = K
+      END IF
+      IF (NOTB) THEN
+          NROWB = K
+      ELSE
+          NROWB = N
+      END IF
+      UPPER = LSAME(UPLO, 'U')
+
+*
+*     Test the input parameters.
+*
+      INFO = 0
+      IF ((.NOT. UPPER) .AND. (.NOT. LSAME(UPLO, 'L'))) THEN
+          INFO = 1
+      ELSE IF ((.NOT.NOTA) .AND. (.NOT.CONJA) .AND.
+     +    (.NOT.LSAME(TRANSA,'T'))) THEN
+          INFO = 2
+      ELSE IF ((.NOT.NOTB) .AND. (.NOT.CONJB) .AND.
+     +         (.NOT.LSAME(TRANSB,'T'))) THEN
+          INFO = 3
+      ELSE IF (N.LT.0) THEN
+          INFO = 4
+      ELSE IF (K.LT.0) THEN
+          INFO = 5
+      ELSE IF (LDA.LT.MAX(1,NROWA)) THEN
+          INFO = 8
+      ELSE IF (LDB.LT.MAX(1,NROWB)) THEN
+          INFO = 10
+      ELSE IF (LDC.LT.MAX(1,N)) THEN
+          INFO = 13
+      END IF
+      IF (INFO.NE.0) THEN
+          CALL XERBLA('ZGEMMTR',INFO)
+          RETURN
+      END IF
+*
+*     Quick return if possible.
+*
+      IF (N.EQ.0) RETURN
+*
+*     And when  alpha.eq.zero.
+*
+      IF (ALPHA.EQ.ZERO) THEN
+          IF (BETA.EQ.ZERO) THEN
+              DO 20 J = 1,N
+                  IF (UPPER) THEN
+                      ISTART = 1
+                      ISTOP  = J
+                  ELSE
+                      ISTART = J
+                      ISTOP  = N
+                  END IF
+
+                  DO 10 I = ISTART, ISTOP
+                      C(I,J) = ZERO
+   10             CONTINUE
+   20         CONTINUE
+          ELSE
+              DO 40 J = 1,N
+                  IF (UPPER) THEN
+                      ISTART = 1
+                      ISTOP  = J
+                  ELSE
+                      ISTART = J
+                      ISTOP  = N
+                  END IF
+                  DO 30 I = ISTART, ISTOP
+                      C(I,J) = BETA*C(I,J)
+   30             CONTINUE
+   40         CONTINUE
+          END IF
+          RETURN
+      END IF
+*
+*     Start the operations.
+*
+      IF (NOTB) THEN
+          IF (NOTA) THEN
+*
+*           Form  C := alpha*A*B + beta*C.
+*
+              DO 90 J = 1,N
+                  IF (UPPER) THEN
+                      ISTART = 1
+                      ISTOP  = J
+                  ELSE
+                      ISTART = J
+                      ISTOP  = N
+                  END IF
+                  IF (BETA.EQ.ZERO) THEN
+                      DO 50 I = ISTART, ISTOP
+                          C(I,J) = ZERO
+   50                 CONTINUE
+                  ELSE IF (BETA.NE.ONE) THEN
+                      DO 60 I = ISTART, ISTOP
+                          C(I,J) = BETA*C(I,J)
+   60                 CONTINUE
+                  END IF
+                  DO 80 L = 1,K
+                      TEMP = ALPHA*B(L,J)
+                      DO 70 I = ISTART, ISTOP
+                          C(I,J) = C(I,J) + TEMP*A(I,L)
+   70                 CONTINUE
+   80             CONTINUE
+   90         CONTINUE
+          ELSE IF (CONJA) THEN
+*
+*           Form  C := alpha*A**H*B + beta*C.
+*
+              DO 120 J = 1,N
+                  IF (UPPER) THEN
+                      ISTART = 1
+                      ISTOP  = J
+                  ELSE
+                      ISTART = J
+                      ISTOP  = N
+                  END IF
+
+                  DO 110 I = ISTART, ISTOP
+                      TEMP = ZERO
+                      DO 100 L = 1,K
+                          TEMP = TEMP + CONJG(A(L,I))*B(L,J)
+  100                 CONTINUE
+                      IF (BETA.EQ.ZERO) THEN
+                          C(I,J) = ALPHA*TEMP
+                      ELSE
+                          C(I,J) = ALPHA*TEMP + BETA*C(I,J)
+                      END IF
+  110             CONTINUE
+  120         CONTINUE
+          ELSE
+*
+*           Form  C := alpha*A**T*B + beta*C
+*
+              DO 150 J = 1,N
+                  IF (UPPER) THEN
+                      ISTART = 1
+                      ISTOP  = J
+                  ELSE
+                      ISTART = J
+                      ISTOP  = N
+                  END IF
+
+                  DO 140 I = ISTART, ISTOP
+                      TEMP = ZERO
+                      DO 130 L = 1,K
+                          TEMP = TEMP + A(L,I)*B(L,J)
+  130                 CONTINUE
+                      IF (BETA.EQ.ZERO) THEN
+                          C(I,J) = ALPHA*TEMP
+                      ELSE
+                          C(I,J) = ALPHA*TEMP + BETA*C(I,J)
+                      END IF
+  140             CONTINUE
+  150         CONTINUE
+          END IF
+      ELSE IF (NOTA) THEN
+          IF (CONJB) THEN
+*
+*           Form  C := alpha*A*B**H + beta*C.
+*
+              DO 200 J = 1,N
+                  IF (UPPER) THEN
+                      ISTART = 1
+                      ISTOP  = J
+                  ELSE
+                      ISTART = J
+                      ISTOP  = N
+                  END IF
+
+                  IF (BETA.EQ.ZERO) THEN
+                      DO 160 I = ISTART,ISTOP
+                          C(I,J) = ZERO
+  160                 CONTINUE
+                  ELSE IF (BETA.NE.ONE) THEN
+                      DO 170 I = ISTART, ISTOP
+                          C(I,J) = BETA*C(I,J)
+  170                 CONTINUE
+                  END IF
+                  DO 190 L = 1,K
+                      TEMP = ALPHA*CONJG(B(J,L))
+                      DO 180 I = ISTART, ISTOP
+                          C(I,J) = C(I,J) + TEMP*A(I,L)
+  180                 CONTINUE
+  190             CONTINUE
+  200         CONTINUE
+          ELSE
+*
+*           Form  C := alpha*A*B**T + beta*C
+*
+              DO 250 J = 1,N
+                  IF (UPPER) THEN
+                      ISTART = 1
+                      ISTOP  = J
+                  ELSE
+                      ISTART = J
+                      ISTOP  = N
+                  END IF
+
+                  IF (BETA.EQ.ZERO) THEN
+                      DO 210 I = ISTART, ISTOP
+                          C(I,J) = ZERO
+  210                 CONTINUE
+                  ELSE IF (BETA.NE.ONE) THEN
+                      DO 220 I = ISTART, ISTOP
+                          C(I,J) = BETA*C(I,J)
+  220                 CONTINUE
+                  END IF
+                  DO 240 L = 1,K
+                      TEMP = ALPHA*B(J,L)
+                      DO 230 I = ISTART, ISTOP
+                          C(I,J) = C(I,J) + TEMP*A(I,L)
+  230                 CONTINUE
+  240             CONTINUE
+  250         CONTINUE
+          END IF
+      ELSE IF (CONJA) THEN
+          IF (CONJB) THEN
+*
+*           Form  C := alpha*A**H*B**H + beta*C.
+*
+              DO 280 J = 1,N
+                  IF (UPPER) THEN
+                      ISTART = 1
+                      ISTOP  = J
+                  ELSE
+                      ISTART = J
+                      ISTOP  = N
+                  END IF
+
+                  DO 270 I = ISTART, ISTOP
+                      TEMP = ZERO
+                      DO 260 L = 1,K
+                          TEMP = TEMP + CONJG(A(L,I))*CONJG(B(J,L))
+  260                 CONTINUE
+                      IF (BETA.EQ.ZERO) THEN
+                          C(I,J) = ALPHA*TEMP
+                      ELSE
+                          C(I,J) = ALPHA*TEMP + BETA*C(I,J)
+                      END IF
+  270             CONTINUE
+  280         CONTINUE
+          ELSE
+*
+*           Form  C := alpha*A**H*B**T + beta*C
+*
+              DO 310 J = 1,N
+                  IF (UPPER) THEN
+                      ISTART = 1
+                      ISTOP  = J
+                  ELSE
+                      ISTART = J
+                      ISTOP  = N
+                  END IF
+
+                  DO 300 I = ISTART, ISTOP
+                      TEMP = ZERO
+                      DO 290 L = 1,K
+                          TEMP = TEMP + CONJG(A(L,I))*B(J,L)
+  290                 CONTINUE
+                      IF (BETA.EQ.ZERO) THEN
+                          C(I,J) = ALPHA*TEMP
+                      ELSE
+                          C(I,J) = ALPHA*TEMP + BETA*C(I,J)
+                      END IF
+  300             CONTINUE
+  310         CONTINUE
+          END IF
+      ELSE
+          IF (CONJB) THEN
+*
+*           Form  C := alpha*A**T*B**H + beta*C
+*
+              DO 340 J = 1,N
+                  IF (UPPER) THEN
+                      ISTART = 1
+                      ISTOP  = J
+                  ELSE
+                      ISTART = J
+                      ISTOP  = N
+                  END IF
+
+                  DO 330 I = ISTART, ISTOP
+                      TEMP = ZERO
+                      DO 320 L = 1,K
+                          TEMP = TEMP + A(L,I)*CONJG(B(J,L))
+  320                 CONTINUE
+                      IF (BETA.EQ.ZERO) THEN
+                          C(I,J) = ALPHA*TEMP
+                      ELSE
+                          C(I,J) = ALPHA*TEMP + BETA*C(I,J)
+                      END IF
+  330             CONTINUE
+  340         CONTINUE
+          ELSE
+*
+*           Form  C := alpha*A**T*B**T + beta*C
+*
+              DO 370 J = 1,N
+                  IF (UPPER) THEN
+                      ISTART = 1
+                      ISTOP  = J
+                  ELSE
+                      ISTART = J
+                      ISTOP  = N
+                  END IF
+
+                  DO 360 I = ISTART, ISTOP
+                      TEMP = ZERO
+                      DO 350 L = 1,K
+                          TEMP = TEMP + A(L,I)*B(J,L)
+  350                 CONTINUE
+                      IF (BETA.EQ.ZERO) THEN
+                          C(I,J) = ALPHA*TEMP
+                      ELSE
+                          C(I,J) = ALPHA*TEMP + BETA*C(I,J)
+                      END IF
+  360             CONTINUE
+  370         CONTINUE
+          END IF
+      END IF
+*
+      RETURN
+*
+*     End of ZGEMMTR
+*
+      END
 *> \brief \b ZGEMV
 *
 *  =========== DOCUMENTATION ===========
@@ -2523,12 +3092,12 @@
       END IF
       IF (INCX.EQ.1) THEN
           DO 20 J = 1,N
-c              IF (Y(JY).NE.ZERO) THEN
+              IF (Y(JY).NE.ZERO) THEN
                   TEMP = ALPHA*DCONJG(Y(JY))
                   DO 10 I = 1,M
                       A(I,J) = A(I,J) + X(I)*TEMP
    10             CONTINUE
-c              END IF
+              END IF
               JY = JY + INCY
    20     CONTINUE
       ELSE
@@ -2538,14 +3107,14 @@ c              END IF
               KX = 1 - (M-1)*INCX
           END IF
           DO 40 J = 1,N
-c              IF (Y(JY).NE.ZERO) THEN
+              IF (Y(JY).NE.ZERO) THEN
                   TEMP = ALPHA*DCONJG(Y(JY))
                   IX = KX
                   DO 30 I = 1,M
                       A(I,J) = A(I,J) + X(IX)*TEMP
                       IX = IX + INCX
    30             CONTINUE
-c              END IF
+              END IF
               JY = JY + INCY
    40     CONTINUE
       END IF
@@ -2747,12 +3316,12 @@ c              END IF
       END IF
       IF (INCX.EQ.1) THEN
           DO 20 J = 1,N
-c              IF (Y(JY).NE.ZERO) THEN
+              IF (Y(JY).NE.ZERO) THEN
                   TEMP = ALPHA*Y(JY)
                   DO 10 I = 1,M
                       A(I,J) = A(I,J) + X(I)*TEMP
    10             CONTINUE
-c              END IF
+              END IF
               JY = JY + INCY
    20     CONTINUE
       ELSE
@@ -2762,14 +3331,14 @@ c              END IF
               KX = 1 - (M-1)*INCX
           END IF
           DO 40 J = 1,N
-c              IF (Y(JY).NE.ZERO) THEN
+              IF (Y(JY).NE.ZERO) THEN
                   TEMP = ALPHA*Y(JY)
                   IX = KX
                   DO 30 I = 1,M
                       A(I,J) = A(I,J) + X(IX)*TEMP
                       IX = IX + INCX
    30             CONTINUE
-c              END IF
+              END IF
               JY = JY + INCY
    40     CONTINUE
       END IF
@@ -4095,7 +4664,7 @@ c              END IF
 *
           IF ((INCX.EQ.1) .AND. (INCY.EQ.1)) THEN
               DO 20 J = 1,N
-c                  IF ((X(J).NE.ZERO) .OR. (Y(J).NE.ZERO)) THEN
+                  IF ((X(J).NE.ZERO) .OR. (Y(J).NE.ZERO)) THEN
                       TEMP1 = ALPHA*DCONJG(Y(J))
                       TEMP2 = DCONJG(ALPHA*X(J))
                       DO 10 I = 1,J - 1
@@ -4103,13 +4672,13 @@ c                  IF ((X(J).NE.ZERO) .OR. (Y(J).NE.ZERO)) THEN
    10                 CONTINUE
                       A(J,J) = DBLE(A(J,J)) +
      +                         DBLE(X(J)*TEMP1+Y(J)*TEMP2)
-c                  ELSE
-c                      A(J,J) = DBLE(A(J,J))
-c                  END IF
+                  ELSE
+                      A(J,J) = DBLE(A(J,J))
+                  END IF
    20         CONTINUE
           ELSE
               DO 40 J = 1,N
-c                  IF ((X(JX).NE.ZERO) .OR. (Y(JY).NE.ZERO)) THEN
+                  IF ((X(JX).NE.ZERO) .OR. (Y(JY).NE.ZERO)) THEN
                       TEMP1 = ALPHA*DCONJG(Y(JY))
                       TEMP2 = DCONJG(ALPHA*X(JX))
                       IX = KX
@@ -4121,9 +4690,9 @@ c                  IF ((X(JX).NE.ZERO) .OR. (Y(JY).NE.ZERO)) THEN
    30                 CONTINUE
                       A(J,J) = DBLE(A(J,J)) +
      +                         DBLE(X(JX)*TEMP1+Y(JY)*TEMP2)
-c                  ELSE
-c                      A(J,J) = DBLE(A(J,J))
-c                  END IF
+                  ELSE
+                      A(J,J) = DBLE(A(J,J))
+                  END IF
                   JX = JX + INCX
                   JY = JY + INCY
    40         CONTINUE
@@ -4134,7 +4703,7 @@ c                  END IF
 *
           IF ((INCX.EQ.1) .AND. (INCY.EQ.1)) THEN
               DO 60 J = 1,N
-c                  IF ((X(J).NE.ZERO) .OR. (Y(J).NE.ZERO)) THEN
+                  IF ((X(J).NE.ZERO) .OR. (Y(J).NE.ZERO)) THEN
                       TEMP1 = ALPHA*DCONJG(Y(J))
                       TEMP2 = DCONJG(ALPHA*X(J))
                       A(J,J) = DBLE(A(J,J)) +
@@ -4142,13 +4711,13 @@ c                  IF ((X(J).NE.ZERO) .OR. (Y(J).NE.ZERO)) THEN
                       DO 50 I = J + 1,N
                           A(I,J) = A(I,J) + X(I)*TEMP1 + Y(I)*TEMP2
    50                 CONTINUE
-c                  ELSE
-c                      A(J,J) = DBLE(A(J,J))
-c                  END IF
+                  ELSE
+                      A(J,J) = DBLE(A(J,J))
+                  END IF
    60         CONTINUE
           ELSE
               DO 80 J = 1,N
-c                  IF ((X(JX).NE.ZERO) .OR. (Y(JY).NE.ZERO)) THEN
+                  IF ((X(JX).NE.ZERO) .OR. (Y(JY).NE.ZERO)) THEN
                       TEMP1 = ALPHA*DCONJG(Y(JY))
                       TEMP2 = DCONJG(ALPHA*X(JX))
                       A(J,J) = DBLE(A(J,J)) +
@@ -4160,9 +4729,9 @@ c                  IF ((X(JX).NE.ZERO) .OR. (Y(JY).NE.ZERO)) THEN
                           IY = IY + INCY
                           A(I,J) = A(I,J) + X(IX)*TEMP1 + Y(IY)*TEMP2
    70                 CONTINUE
-c                  ELSE
-c                      A(J,J) = DBLE(A(J,J))
-c                  END IF
+                  ELSE
+                      A(J,J) = DBLE(A(J,J))
+                  END IF
                   JX = JX + INCX
                   JY = JY + INCY
    80         CONTINUE
@@ -4505,7 +5074,7 @@ c                  END IF
                       C(J,J) = DBLE(C(J,J))
                   END IF
                   DO 120 L = 1,K
-c                      IF ((A(J,L).NE.ZERO) .OR. (B(J,L).NE.ZERO)) THEN
+                      IF ((A(J,L).NE.ZERO) .OR. (B(J,L).NE.ZERO)) THEN
                           TEMP1 = ALPHA*DCONJG(B(J,L))
                           TEMP2 = DCONJG(ALPHA*A(J,L))
                           DO 110 I = 1,J - 1
@@ -4514,7 +5083,7 @@ c                      IF ((A(J,L).NE.ZERO) .OR. (B(J,L).NE.ZERO)) THEN
   110                     CONTINUE
                           C(J,J) = DBLE(C(J,J)) +
      +                             DBLE(A(J,L)*TEMP1+B(J,L)*TEMP2)
-c                      END IF
+                      END IF
   120             CONTINUE
   130         CONTINUE
           ELSE
@@ -4532,7 +5101,7 @@ c                      END IF
                       C(J,J) = DBLE(C(J,J))
                   END IF
                   DO 170 L = 1,K
-c                      IF ((A(J,L).NE.ZERO) .OR. (B(J,L).NE.ZERO)) THEN
+                      IF ((A(J,L).NE.ZERO) .OR. (B(J,L).NE.ZERO)) THEN
                           TEMP1 = ALPHA*DCONJG(B(J,L))
                           TEMP2 = DCONJG(ALPHA*A(J,L))
                           DO 160 I = J + 1,N
@@ -4541,7 +5110,7 @@ c                      IF ((A(J,L).NE.ZERO) .OR. (B(J,L).NE.ZERO)) THEN
   160                     CONTINUE
                           C(J,J) = DBLE(C(J,J)) +
      +                             DBLE(A(J,L)*TEMP1+B(J,L)*TEMP2)
-c                      END IF
+                      END IF
   170             CONTINUE
   180         CONTINUE
           END IF
@@ -4822,20 +5391,20 @@ c                      END IF
 *
           IF (INCX.EQ.1) THEN
               DO 20 J = 1,N
-c                  IF (X(J).NE.ZERO) THEN
+                  IF (X(J).NE.ZERO) THEN
                       TEMP = ALPHA*DCONJG(X(J))
                       DO 10 I = 1,J - 1
                           A(I,J) = A(I,J) + X(I)*TEMP
    10                 CONTINUE
                       A(J,J) = DBLE(A(J,J)) + DBLE(X(J)*TEMP)
-c                  ELSE
-c                      A(J,J) = DBLE(A(J,J))
-c                  END IF
+                  ELSE
+                      A(J,J) = DBLE(A(J,J))
+                  END IF
    20         CONTINUE
           ELSE
               JX = KX
               DO 40 J = 1,N
-c                  IF (X(JX).NE.ZERO) THEN
+                  IF (X(JX).NE.ZERO) THEN
                       TEMP = ALPHA*DCONJG(X(JX))
                       IX = KX
                       DO 30 I = 1,J - 1
@@ -4843,9 +5412,9 @@ c                  IF (X(JX).NE.ZERO) THEN
                           IX = IX + INCX
    30                 CONTINUE
                       A(J,J) = DBLE(A(J,J)) + DBLE(X(JX)*TEMP)
-c                  ELSE
-c                      A(J,J) = DBLE(A(J,J))
-c                  END IF
+                  ELSE
+                      A(J,J) = DBLE(A(J,J))
+                  END IF
                   JX = JX + INCX
    40         CONTINUE
           END IF
@@ -4855,20 +5424,20 @@ c                  END IF
 *
           IF (INCX.EQ.1) THEN
               DO 60 J = 1,N
-c                  IF (X(J).NE.ZERO) THEN
+                  IF (X(J).NE.ZERO) THEN
                       TEMP = ALPHA*DCONJG(X(J))
                       A(J,J) = DBLE(A(J,J)) + DBLE(TEMP*X(J))
                       DO 50 I = J + 1,N
                           A(I,J) = A(I,J) + X(I)*TEMP
    50                 CONTINUE
-c                  ELSE
-c                      A(J,J) = DBLE(A(J,J))
-c                  END IF
+                  ELSE
+                      A(J,J) = DBLE(A(J,J))
+                  END IF
    60         CONTINUE
           ELSE
               JX = KX
               DO 80 J = 1,N
-c                  IF (X(JX).NE.ZERO) THEN
+                  IF (X(JX).NE.ZERO) THEN
                       TEMP = ALPHA*DCONJG(X(JX))
                       A(J,J) = DBLE(A(J,J)) + DBLE(TEMP*X(JX))
                       IX = JX
@@ -4876,9 +5445,9 @@ c                  IF (X(JX).NE.ZERO) THEN
                           IX = IX + INCX
                           A(I,J) = A(I,J) + X(IX)*TEMP
    70                 CONTINUE
-c                  ELSE
-c                      A(J,J) = DBLE(A(J,J))
-c                  END IF
+                  ELSE
+                      A(J,J) = DBLE(A(J,J))
+                  END IF
                   JX = JX + INCX
    80         CONTINUE
           END IF
@@ -5845,7 +6414,7 @@ c                  END IF
 *
           IF ((INCX.EQ.1) .AND. (INCY.EQ.1)) THEN
               DO 20 J = 1,N
-c                  IF ((X(J).NE.ZERO) .OR. (Y(J).NE.ZERO)) THEN
+                  IF ((X(J).NE.ZERO) .OR. (Y(J).NE.ZERO)) THEN
                       TEMP1 = ALPHA*DCONJG(Y(J))
                       TEMP2 = DCONJG(ALPHA*X(J))
                       K = KK
@@ -5855,14 +6424,14 @@ c                  IF ((X(J).NE.ZERO) .OR. (Y(J).NE.ZERO)) THEN
    10                 CONTINUE
                       AP(KK+J-1) = DBLE(AP(KK+J-1)) +
      +                             DBLE(X(J)*TEMP1+Y(J)*TEMP2)
-c                  ELSE
-c                      AP(KK+J-1) = DBLE(AP(KK+J-1))
-c                  END IF
+                  ELSE
+                      AP(KK+J-1) = DBLE(AP(KK+J-1))
+                  END IF
                   KK = KK + J
    20         CONTINUE
           ELSE
               DO 40 J = 1,N
-c                  IF ((X(JX).NE.ZERO) .OR. (Y(JY).NE.ZERO)) THEN
+                  IF ((X(JX).NE.ZERO) .OR. (Y(JY).NE.ZERO)) THEN
                       TEMP1 = ALPHA*DCONJG(Y(JY))
                       TEMP2 = DCONJG(ALPHA*X(JX))
                       IX = KX
@@ -5874,9 +6443,9 @@ c                  IF ((X(JX).NE.ZERO) .OR. (Y(JY).NE.ZERO)) THEN
    30                 CONTINUE
                       AP(KK+J-1) = DBLE(AP(KK+J-1)) +
      +                             DBLE(X(JX)*TEMP1+Y(JY)*TEMP2)
-c                  ELSE
-c                      AP(KK+J-1) = DBLE(AP(KK+J-1))
-c                  END IF
+                  ELSE
+                      AP(KK+J-1) = DBLE(AP(KK+J-1))
+                  END IF
                   JX = JX + INCX
                   JY = JY + INCY
                   KK = KK + J
@@ -5888,7 +6457,7 @@ c                  END IF
 *
           IF ((INCX.EQ.1) .AND. (INCY.EQ.1)) THEN
               DO 60 J = 1,N
-c                  IF ((X(J).NE.ZERO) .OR. (Y(J).NE.ZERO)) THEN
+                  IF ((X(J).NE.ZERO) .OR. (Y(J).NE.ZERO)) THEN
                       TEMP1 = ALPHA*DCONJG(Y(J))
                       TEMP2 = DCONJG(ALPHA*X(J))
                       AP(KK) = DBLE(AP(KK)) +
@@ -5898,14 +6467,14 @@ c                  IF ((X(J).NE.ZERO) .OR. (Y(J).NE.ZERO)) THEN
                           AP(K) = AP(K) + X(I)*TEMP1 + Y(I)*TEMP2
                           K = K + 1
    50                 CONTINUE
-c                  ELSE
-c                      AP(KK) = DBLE(AP(KK))
-c                  END IF
+                  ELSE
+                      AP(KK) = DBLE(AP(KK))
+                  END IF
                   KK = KK + N - J + 1
    60         CONTINUE
           ELSE
               DO 80 J = 1,N
-c                  IF ((X(JX).NE.ZERO) .OR. (Y(JY).NE.ZERO)) THEN
+                  IF ((X(JX).NE.ZERO) .OR. (Y(JY).NE.ZERO)) THEN
                       TEMP1 = ALPHA*DCONJG(Y(JY))
                       TEMP2 = DCONJG(ALPHA*X(JX))
                       AP(KK) = DBLE(AP(KK)) +
@@ -5917,9 +6486,9 @@ c                  IF ((X(JX).NE.ZERO) .OR. (Y(JY).NE.ZERO)) THEN
                           IY = IY + INCY
                           AP(K) = AP(K) + X(IX)*TEMP1 + Y(IY)*TEMP2
    70                 CONTINUE
-c                  ELSE
-c                      AP(KK) = DBLE(AP(KK))
-c                  END IF
+                  ELSE
+                      AP(KK) = DBLE(AP(KK))
+                  END IF
                   JX = JX + INCX
                   JY = JY + INCY
                   KK = KK + N - J + 1
@@ -6133,7 +6702,7 @@ c                  END IF
 *
           IF (INCX.EQ.1) THEN
               DO 20 J = 1,N
-c                  IF (X(J).NE.ZERO) THEN
+                  IF (X(J).NE.ZERO) THEN
                       TEMP = ALPHA*DCONJG(X(J))
                       K = KK
                       DO 10 I = 1,J - 1
@@ -6141,15 +6710,15 @@ c                  IF (X(J).NE.ZERO) THEN
                           K = K + 1
    10                 CONTINUE
                       AP(KK+J-1) = DBLE(AP(KK+J-1)) + DBLE(X(J)*TEMP)
-c                  ELSE
-c                      AP(KK+J-1) = DBLE(AP(KK+J-1))
-c                  END IF
+                  ELSE
+                      AP(KK+J-1) = DBLE(AP(KK+J-1))
+                  END IF
                   KK = KK + J
    20         CONTINUE
           ELSE
               JX = KX
               DO 40 J = 1,N
-c                  IF (X(JX).NE.ZERO) THEN
+                  IF (X(JX).NE.ZERO) THEN
                       TEMP = ALPHA*DCONJG(X(JX))
                       IX = KX
                       DO 30 K = KK,KK + J - 2
@@ -6157,9 +6726,9 @@ c                  IF (X(JX).NE.ZERO) THEN
                           IX = IX + INCX
    30                 CONTINUE
                       AP(KK+J-1) = DBLE(AP(KK+J-1)) + DBLE(X(JX)*TEMP)
-c                  ELSE
-c                      AP(KK+J-1) = DBLE(AP(KK+J-1))
-c                  END IF
+                  ELSE
+                      AP(KK+J-1) = DBLE(AP(KK+J-1))
+                  END IF
                   JX = JX + INCX
                   KK = KK + J
    40         CONTINUE
@@ -6170,7 +6739,7 @@ c                  END IF
 *
           IF (INCX.EQ.1) THEN
               DO 60 J = 1,N
-c                  IF (X(J).NE.ZERO) THEN
+                  IF (X(J).NE.ZERO) THEN
                       TEMP = ALPHA*DCONJG(X(J))
                       AP(KK) = DBLE(AP(KK)) + DBLE(TEMP*X(J))
                       K = KK + 1
@@ -6178,15 +6747,15 @@ c                  IF (X(J).NE.ZERO) THEN
                           AP(K) = AP(K) + X(I)*TEMP
                           K = K + 1
    50                 CONTINUE
-c                  ELSE
-c                      AP(KK) = DBLE(AP(KK))
-c                  END IF
+                  ELSE
+                      AP(KK) = DBLE(AP(KK))
+                  END IF
                   KK = KK + N - J + 1
    60         CONTINUE
           ELSE
               JX = KX
               DO 80 J = 1,N
-c                  IF (X(JX).NE.ZERO) THEN
+                  IF (X(JX).NE.ZERO) THEN
                       TEMP = ALPHA*DCONJG(X(JX))
                       AP(KK) = DBLE(AP(KK)) + DBLE(TEMP*X(JX))
                       IX = JX
@@ -6194,9 +6763,9 @@ c                  IF (X(JX).NE.ZERO) THEN
                           IX = IX + INCX
                           AP(K) = AP(K) + X(IX)*TEMP
    70                 CONTINUE
-c                  ELSE
-c                      AP(KK) = DBLE(AP(KK))
-c                  END IF
+                  ELSE
+                      AP(KK) = DBLE(AP(KK))
+                  END IF
                   JX = JX + INCX
                   KK = KK + N - J + 1
    80         CONTINUE
@@ -6327,343 +6896,6 @@ c                  END IF
       RETURN
 *
 *     End of ZSCAL
-*
-      END
-*> \brief \b ZSPMV computes a matrix-vector product for complex vectors using a complex symmetric packed matrix
-*
-*  =========== DOCUMENTATION ===========
-*
-* Online html documentation available at
-*            http://www.netlib.org/lapack/explore-html/
-*
-*> \htmlonly
-*> Download ZSPMV + dependencies
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zspmv.f">
-*> [TGZ]</a>
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zspmv.f">
-*> [ZIP]</a>
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zspmv.f">
-*> [TXT]</a>
-*> \endhtmlonly
-*
-*  Definition:
-*  ===========
-*
-*       SUBROUTINE ZSPMV( UPLO, N, ALPHA, AP, X, INCX, BETA, Y, INCY )
-*
-*       .. Scalar Arguments ..
-*       CHARACTER          UPLO
-*       INTEGER            INCX, INCY, N
-*       COMPLEX*16         ALPHA, BETA
-*       ..
-*       .. Array Arguments ..
-*       COMPLEX*16         AP( * ), X( * ), Y( * )
-*       ..
-*
-*
-*> \par Purpose:
-*  =============
-*>
-*> \verbatim
-*>
-*> ZSPMV  performs the matrix-vector operation
-*>
-*>    y := alpha*A*x + beta*y,
-*>
-*> where alpha and beta are scalars, x and y are n element vectors and
-*> A is an n by n symmetric matrix, supplied in packed form.
-*> \endverbatim
-*
-*  Arguments:
-*  ==========
-*
-*> \param[in] UPLO
-*> \verbatim
-*>          UPLO is CHARACTER*1
-*>           On entry, UPLO specifies whether the upper or lower
-*>           triangular part of the matrix A is supplied in the packed
-*>           array AP as follows:
-*>
-*>              UPLO = 'U' or 'u'   The upper triangular part of A is
-*>                                  supplied in AP.
-*>
-*>              UPLO = 'L' or 'l'   The lower triangular part of A is
-*>                                  supplied in AP.
-*>
-*>           Unchanged on exit.
-*> \endverbatim
-*>
-*> \param[in] N
-*> \verbatim
-*>          N is INTEGER
-*>           On entry, N specifies the order of the matrix A.
-*>           N must be at least zero.
-*>           Unchanged on exit.
-*> \endverbatim
-*>
-*> \param[in] ALPHA
-*> \verbatim
-*>          ALPHA is COMPLEX*16
-*>           On entry, ALPHA specifies the scalar alpha.
-*>           Unchanged on exit.
-*> \endverbatim
-*>
-*> \param[in] AP
-*> \verbatim
-*>          AP is COMPLEX*16 array, dimension at least
-*>           ( ( N*( N + 1 ) )/2 ).
-*>           Before entry, with UPLO = 'U' or 'u', the array AP must
-*>           contain the upper triangular part of the symmetric matrix
-*>           packed sequentially, column by column, so that AP( 1 )
-*>           contains a( 1, 1 ), AP( 2 ) and AP( 3 ) contain a( 1, 2 )
-*>           and a( 2, 2 ) respectively, and so on.
-*>           Before entry, with UPLO = 'L' or 'l', the array AP must
-*>           contain the lower triangular part of the symmetric matrix
-*>           packed sequentially, column by column, so that AP( 1 )
-*>           contains a( 1, 1 ), AP( 2 ) and AP( 3 ) contain a( 2, 1 )
-*>           and a( 3, 1 ) respectively, and so on.
-*>           Unchanged on exit.
-*> \endverbatim
-*>
-*> \param[in] X
-*> \verbatim
-*>          X is COMPLEX*16 array, dimension at least
-*>           ( 1 + ( N - 1 )*abs( INCX ) ).
-*>           Before entry, the incremented array X must contain the N-
-*>           element vector x.
-*>           Unchanged on exit.
-*> \endverbatim
-*>
-*> \param[in] INCX
-*> \verbatim
-*>          INCX is INTEGER
-*>           On entry, INCX specifies the increment for the elements of
-*>           X. INCX must not be zero.
-*>           Unchanged on exit.
-*> \endverbatim
-*>
-*> \param[in] BETA
-*> \verbatim
-*>          BETA is COMPLEX*16
-*>           On entry, BETA specifies the scalar beta. When BETA is
-*>           supplied as zero then Y need not be set on input.
-*>           Unchanged on exit.
-*> \endverbatim
-*>
-*> \param[in,out] Y
-*> \verbatim
-*>          Y is COMPLEX*16 array, dimension at least
-*>           ( 1 + ( N - 1 )*abs( INCY ) ).
-*>           Before entry, the incremented array Y must contain the n
-*>           element vector y. On exit, Y is overwritten by the updated
-*>           vector y.
-*> \endverbatim
-*>
-*> \param[in] INCY
-*> \verbatim
-*>          INCY is INTEGER
-*>           On entry, INCY specifies the increment for the elements of
-*>           Y. INCY must not be zero.
-*>           Unchanged on exit.
-*> \endverbatim
-*
-*  Authors:
-*  ========
-*
-*> \author Univ. of Tennessee
-*> \author Univ. of California Berkeley
-*> \author Univ. of Colorado Denver
-*> \author NAG Ltd.
-*
-*> \ingroup hpmv
-*
-*  =====================================================================
-      SUBROUTINE ZSPMV( UPLO, N, ALPHA, AP, X, INCX, BETA, Y, INCY )
-*
-*  -- LAPACK auxiliary routine --
-*  -- LAPACK is a software package provided by Univ. of Tennessee,    --
-*  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*
-*     .. Scalar Arguments ..
-      CHARACTER          UPLO
-      INTEGER            INCX, INCY, N
-      COMPLEX*16         ALPHA, BETA
-*     ..
-*     .. Array Arguments ..
-      COMPLEX*16         AP( * ), X( * ), Y( * )
-*     ..
-*
-* =====================================================================
-*
-*     .. Parameters ..
-      COMPLEX*16         ONE
-      PARAMETER          ( ONE = ( 1.0D+0, 0.0D+0 ) )
-      COMPLEX*16         ZERO
-      PARAMETER          ( ZERO = ( 0.0D+0, 0.0D+0 ) )
-*     ..
-*     .. Local Scalars ..
-      INTEGER            I, INFO, IX, IY, J, JX, JY, K, KK, KX, KY
-      COMPLEX*16         TEMP1, TEMP2
-*     ..
-*     .. External Functions ..
-      LOGICAL            LSAME
-      EXTERNAL           LSAME
-*     ..
-*     .. External Subroutines ..
-      EXTERNAL           XERBLA
-*     ..
-*     .. Executable Statements ..
-*
-*     Test the input parameters.
-*
-      INFO = 0
-      IF( .NOT.LSAME( UPLO, 'U' ) .AND. .NOT.LSAME( UPLO, 'L' ) ) THEN
-         INFO = 1
-      ELSE IF( N.LT.0 ) THEN
-         INFO = 2
-      ELSE IF( INCX.EQ.0 ) THEN
-         INFO = 6
-      ELSE IF( INCY.EQ.0 ) THEN
-         INFO = 9
-      END IF
-      IF( INFO.NE.0 ) THEN
-         CALL XERBLA( 'ZSPMV ', INFO )
-         RETURN
-      END IF
-*
-*     Quick return if possible.
-*
-      IF( ( N.EQ.0 ) .OR. ( ( ALPHA.EQ.ZERO ) .AND. ( BETA.EQ.ONE ) ) )
-     $   RETURN
-*
-*     Set up the start points in  X  and  Y.
-*
-      IF( INCX.GT.0 ) THEN
-         KX = 1
-      ELSE
-         KX = 1 - ( N-1 )*INCX
-      END IF
-      IF( INCY.GT.0 ) THEN
-         KY = 1
-      ELSE
-         KY = 1 - ( N-1 )*INCY
-      END IF
-*
-*     Start the operations. In this version the elements of the array AP
-*     are accessed sequentially with one pass through AP.
-*
-*     First form  y := beta*y.
-*
-      IF( BETA.NE.ONE ) THEN
-         IF( INCY.EQ.1 ) THEN
-            IF( BETA.EQ.ZERO ) THEN
-               DO 10 I = 1, N
-                  Y( I ) = ZERO
-   10          CONTINUE
-            ELSE
-               DO 20 I = 1, N
-                  Y( I ) = BETA*Y( I )
-   20          CONTINUE
-            END IF
-         ELSE
-            IY = KY
-            IF( BETA.EQ.ZERO ) THEN
-               DO 30 I = 1, N
-                  Y( IY ) = ZERO
-                  IY = IY + INCY
-   30          CONTINUE
-            ELSE
-               DO 40 I = 1, N
-                  Y( IY ) = BETA*Y( IY )
-                  IY = IY + INCY
-   40          CONTINUE
-            END IF
-         END IF
-      END IF
-      IF( ALPHA.EQ.ZERO )
-     $   RETURN
-      KK = 1
-      IF( LSAME( UPLO, 'U' ) ) THEN
-*
-*        Form  y  when AP contains the upper triangle.
-*
-         IF( ( INCX.EQ.1 ) .AND. ( INCY.EQ.1 ) ) THEN
-            DO 60 J = 1, N
-               TEMP1 = ALPHA*X( J )
-               TEMP2 = ZERO
-               K = KK
-               DO 50 I = 1, J - 1
-                  Y( I ) = Y( I ) + TEMP1*AP( K )
-                  TEMP2 = TEMP2 + AP( K )*X( I )
-                  K = K + 1
-   50          CONTINUE
-               Y( J ) = Y( J ) + TEMP1*AP( KK+J-1 ) + ALPHA*TEMP2
-               KK = KK + J
-   60       CONTINUE
-         ELSE
-            JX = KX
-            JY = KY
-            DO 80 J = 1, N
-               TEMP1 = ALPHA*X( JX )
-               TEMP2 = ZERO
-               IX = KX
-               IY = KY
-               DO 70 K = KK, KK + J - 2
-                  Y( IY ) = Y( IY ) + TEMP1*AP( K )
-                  TEMP2 = TEMP2 + AP( K )*X( IX )
-                  IX = IX + INCX
-                  IY = IY + INCY
-   70          CONTINUE
-               Y( JY ) = Y( JY ) + TEMP1*AP( KK+J-1 ) + ALPHA*TEMP2
-               JX = JX + INCX
-               JY = JY + INCY
-               KK = KK + J
-   80       CONTINUE
-         END IF
-      ELSE
-*
-*        Form  y  when AP contains the lower triangle.
-*
-         IF( ( INCX.EQ.1 ) .AND. ( INCY.EQ.1 ) ) THEN
-            DO 100 J = 1, N
-               TEMP1 = ALPHA*X( J )
-               TEMP2 = ZERO
-               Y( J ) = Y( J ) + TEMP1*AP( KK )
-               K = KK + 1
-               DO 90 I = J + 1, N
-                  Y( I ) = Y( I ) + TEMP1*AP( K )
-                  TEMP2 = TEMP2 + AP( K )*X( I )
-                  K = K + 1
-   90          CONTINUE
-               Y( J ) = Y( J ) + ALPHA*TEMP2
-               KK = KK + ( N-J+1 )
-  100       CONTINUE
-         ELSE
-            JX = KX
-            JY = KY
-            DO 120 J = 1, N
-               TEMP1 = ALPHA*X( JX )
-               TEMP2 = ZERO
-               Y( JY ) = Y( JY ) + TEMP1*AP( KK )
-               IX = JX
-               IY = JY
-               DO 110 K = KK + 1, KK + N - J
-                  IX = IX + INCX
-                  IY = IY + INCY
-                  Y( IY ) = Y( IY ) + TEMP1*AP( K )
-                  TEMP2 = TEMP2 + AP( K )*X( IX )
-  110          CONTINUE
-               Y( JY ) = Y( JY ) + ALPHA*TEMP2
-               JX = JX + INCX
-               JY = JY + INCY
-               KK = KK + ( N-J+1 )
-  120       CONTINUE
-         END IF
-      END IF
-*
-      RETURN
-*
-*     End of ZSPMV
 *
       END
 *> \brief \b ZSWAP
@@ -7477,14 +7709,14 @@ c                  END IF
   100                 CONTINUE
                   END IF
                   DO 120 L = 1,K
-c                      IF ((A(J,L).NE.ZERO) .OR. (B(J,L).NE.ZERO)) THEN
+                      IF ((A(J,L).NE.ZERO) .OR. (B(J,L).NE.ZERO)) THEN
                           TEMP1 = ALPHA*B(J,L)
                           TEMP2 = ALPHA*A(J,L)
                           DO 110 I = 1,J
                               C(I,J) = C(I,J) + A(I,L)*TEMP1 +
      +                                 B(I,L)*TEMP2
   110                     CONTINUE
-c                      END IF
+                      END IF
   120             CONTINUE
   130         CONTINUE
           ELSE
@@ -7499,14 +7731,14 @@ c                      END IF
   150                 CONTINUE
                   END IF
                   DO 170 L = 1,K
-c                      IF ((A(J,L).NE.ZERO) .OR. (B(J,L).NE.ZERO)) THEN
+                      IF ((A(J,L).NE.ZERO) .OR. (B(J,L).NE.ZERO)) THEN
                           TEMP1 = ALPHA*B(J,L)
                           TEMP2 = ALPHA*A(J,L)
                           DO 160 I = J,N
                               C(I,J) = C(I,J) + A(I,L)*TEMP1 +
      +                                 B(I,L)*TEMP2
   160                     CONTINUE
-c                      END IF
+                      END IF
   170             CONTINUE
   180         CONTINUE
           END IF
@@ -7847,12 +8079,12 @@ c                      END IF
   100                 CONTINUE
                   END IF
                   DO 120 L = 1,K
-c                      IF (A(J,L).NE.ZERO) THEN
+                      IF (A(J,L).NE.ZERO) THEN
                           TEMP = ALPHA*A(J,L)
                           DO 110 I = 1,J
                               C(I,J) = C(I,J) + TEMP*A(I,L)
   110                     CONTINUE
-c                      END IF
+                      END IF
   120             CONTINUE
   130         CONTINUE
           ELSE
@@ -7867,12 +8099,12 @@ c                      END IF
   150                 CONTINUE
                   END IF
                   DO 170 L = 1,K
-c                      IF (A(J,L).NE.ZERO) THEN
+                      IF (A(J,L).NE.ZERO) THEN
                           TEMP = ALPHA*A(J,L)
                           DO 160 I = J,N
                               C(I,J) = C(I,J) + TEMP*A(I,L)
   160                     CONTINUE
-c                      END IF
+                      END IF
   170             CONTINUE
   180         CONTINUE
           END IF
@@ -8189,19 +8421,19 @@ c                      END IF
               KPLUS1 = K + 1
               IF (INCX.EQ.1) THEN
                   DO 20 J = 1,N
-c                      IF (X(J).NE.ZERO) THEN
+                      IF (X(J).NE.ZERO) THEN
                           TEMP = X(J)
                           L = KPLUS1 - J
                           DO 10 I = MAX(1,J-K),J - 1
                               X(I) = X(I) + TEMP*A(L+I,J)
    10                     CONTINUE
                           IF (NOUNIT) X(J) = X(J)*A(KPLUS1,J)
-c                      END IF
+                      END IF
    20             CONTINUE
               ELSE
                   JX = KX
                   DO 40 J = 1,N
-c                      IF (X(JX).NE.ZERO) THEN
+                      IF (X(JX).NE.ZERO) THEN
                           TEMP = X(JX)
                           IX = KX
                           L = KPLUS1 - J
@@ -8210,7 +8442,7 @@ c                      IF (X(JX).NE.ZERO) THEN
                               IX = IX + INCX
    30                     CONTINUE
                           IF (NOUNIT) X(JX) = X(JX)*A(KPLUS1,J)
-c                      END IF
+                      END IF
                       JX = JX + INCX
                       IF (J.GT.K) KX = KX + INCX
    40             CONTINUE
@@ -8218,20 +8450,20 @@ c                      END IF
           ELSE
               IF (INCX.EQ.1) THEN
                   DO 60 J = N,1,-1
-c                      IF (X(J).NE.ZERO) THEN
+                      IF (X(J).NE.ZERO) THEN
                           TEMP = X(J)
                           L = 1 - J
                           DO 50 I = MIN(N,J+K),J + 1,-1
                               X(I) = X(I) + TEMP*A(L+I,J)
    50                     CONTINUE
                           IF (NOUNIT) X(J) = X(J)*A(1,J)
-c                      END IF
+                      END IF
    60             CONTINUE
               ELSE
                   KX = KX + (N-1)*INCX
                   JX = KX
                   DO 80 J = N,1,-1
-c                      IF (X(JX).NE.ZERO) THEN
+                      IF (X(JX).NE.ZERO) THEN
                           TEMP = X(JX)
                           IX = KX
                           L = 1 - J
@@ -8240,7 +8472,7 @@ c                      IF (X(JX).NE.ZERO) THEN
                               IX = IX - INCX
    70                     CONTINUE
                           IF (NOUNIT) X(JX) = X(JX)*A(1,J)
-c                      END IF
+                      END IF
                       JX = JX - INCX
                       IF ((N-J).GE.K) KX = KX - INCX
    80             CONTINUE
@@ -8620,21 +8852,21 @@ c                      END IF
               KPLUS1 = K + 1
               IF (INCX.EQ.1) THEN
                   DO 20 J = N,1,-1
-c                      IF (X(J).NE.ZERO) THEN
+                      IF (X(J).NE.ZERO) THEN
                           L = KPLUS1 - J
                           IF (NOUNIT) X(J) = X(J)/A(KPLUS1,J)
                           TEMP = X(J)
                           DO 10 I = J - 1,MAX(1,J-K),-1
                               X(I) = X(I) - TEMP*A(L+I,J)
    10                     CONTINUE
-c                      END IF
+                      END IF
    20             CONTINUE
               ELSE
                   KX = KX + (N-1)*INCX
                   JX = KX
                   DO 40 J = N,1,-1
                       KX = KX - INCX
-c                      IF (X(JX).NE.ZERO) THEN
+                      IF (X(JX).NE.ZERO) THEN
                           IX = KX
                           L = KPLUS1 - J
                           IF (NOUNIT) X(JX) = X(JX)/A(KPLUS1,J)
@@ -8643,27 +8875,27 @@ c                      IF (X(JX).NE.ZERO) THEN
                               X(IX) = X(IX) - TEMP*A(L+I,J)
                               IX = IX - INCX
    30                     CONTINUE
-c                      END IF
+                      END IF
                       JX = JX - INCX
    40             CONTINUE
               END IF
           ELSE
               IF (INCX.EQ.1) THEN
                   DO 60 J = 1,N
-c                      IF (X(J).NE.ZERO) THEN
+                      IF (X(J).NE.ZERO) THEN
                           L = 1 - J
                           IF (NOUNIT) X(J) = X(J)/A(1,J)
                           TEMP = X(J)
                           DO 50 I = J + 1,MIN(N,J+K)
                               X(I) = X(I) - TEMP*A(L+I,J)
    50                     CONTINUE
-c                      END IF
+                      END IF
    60             CONTINUE
               ELSE
                   JX = KX
                   DO 80 J = 1,N
                       KX = KX + INCX
-c                      IF (X(JX).NE.ZERO) THEN
+                      IF (X(JX).NE.ZERO) THEN
                           IX = KX
                           L = 1 - J
                           IF (NOUNIT) X(JX) = X(JX)/A(1,J)
@@ -8672,7 +8904,7 @@ c                      IF (X(JX).NE.ZERO) THEN
                               X(IX) = X(IX) - TEMP*A(L+I,J)
                               IX = IX + INCX
    70                     CONTINUE
-c                      END IF
+                      END IF
                       JX = JX + INCX
    80             CONTINUE
               END IF
@@ -9000,7 +9232,7 @@ c                      END IF
               KK = 1
               IF (INCX.EQ.1) THEN
                   DO 20 J = 1,N
-c                      IF (X(J).NE.ZERO) THEN
+                      IF (X(J).NE.ZERO) THEN
                           TEMP = X(J)
                           K = KK
                           DO 10 I = 1,J - 1
@@ -9008,13 +9240,13 @@ c                      IF (X(J).NE.ZERO) THEN
                               K = K + 1
    10                     CONTINUE
                           IF (NOUNIT) X(J) = X(J)*AP(KK+J-1)
-c                      END IF
+                      END IF
                       KK = KK + J
    20             CONTINUE
               ELSE
                   JX = KX
                   DO 40 J = 1,N
-c                      IF (X(JX).NE.ZERO) THEN
+                      IF (X(JX).NE.ZERO) THEN
                           TEMP = X(JX)
                           IX = KX
                           DO 30 K = KK,KK + J - 2
@@ -9022,7 +9254,7 @@ c                      IF (X(JX).NE.ZERO) THEN
                               IX = IX + INCX
    30                     CONTINUE
                           IF (NOUNIT) X(JX) = X(JX)*AP(KK+J-1)
-c                      END IF
+                      END IF
                       JX = JX + INCX
                       KK = KK + J
    40             CONTINUE
@@ -9031,7 +9263,7 @@ c                      END IF
               KK = (N* (N+1))/2
               IF (INCX.EQ.1) THEN
                   DO 60 J = N,1,-1
-c                      IF (X(J).NE.ZERO) THEN
+                      IF (X(J).NE.ZERO) THEN
                           TEMP = X(J)
                           K = KK
                           DO 50 I = N,J + 1,-1
@@ -9039,14 +9271,14 @@ c                      IF (X(J).NE.ZERO) THEN
                               K = K - 1
    50                     CONTINUE
                           IF (NOUNIT) X(J) = X(J)*AP(KK-N+J)
-c                      END IF
+                      END IF
                       KK = KK - (N-J+1)
    60             CONTINUE
               ELSE
                   KX = KX + (N-1)*INCX
                   JX = KX
                   DO 80 J = N,1,-1
-c                      IF (X(JX).NE.ZERO) THEN
+                      IF (X(JX).NE.ZERO) THEN
                           TEMP = X(JX)
                           IX = KX
                           DO 70 K = KK,KK - (N- (J+1)),-1
@@ -9054,7 +9286,7 @@ c                      IF (X(JX).NE.ZERO) THEN
                               IX = IX - INCX
    70                     CONTINUE
                           IF (NOUNIT) X(JX) = X(JX)*AP(KK-N+J)
-c                      END IF
+                      END IF
                       JX = JX - INCX
                       KK = KK - (N-J+1)
    80             CONTINUE
@@ -9389,7 +9621,7 @@ c                      END IF
               KK = (N* (N+1))/2
               IF (INCX.EQ.1) THEN
                   DO 20 J = N,1,-1
-c                      IF (X(J).NE.ZERO) THEN
+                      IF (X(J).NE.ZERO) THEN
                           IF (NOUNIT) X(J) = X(J)/AP(KK)
                           TEMP = X(J)
                           K = KK - 1
@@ -9397,13 +9629,13 @@ c                      IF (X(J).NE.ZERO) THEN
                               X(I) = X(I) - TEMP*AP(K)
                               K = K - 1
    10                     CONTINUE
-c                      END IF
+                      END IF
                       KK = KK - J
    20             CONTINUE
               ELSE
                   JX = KX + (N-1)*INCX
                   DO 40 J = N,1,-1
-c                      IF (X(JX).NE.ZERO) THEN
+                      IF (X(JX).NE.ZERO) THEN
                           IF (NOUNIT) X(JX) = X(JX)/AP(KK)
                           TEMP = X(JX)
                           IX = JX
@@ -9411,7 +9643,7 @@ c                      IF (X(JX).NE.ZERO) THEN
                               IX = IX - INCX
                               X(IX) = X(IX) - TEMP*AP(K)
    30                     CONTINUE
-c                      END IF
+                      END IF
                       JX = JX - INCX
                       KK = KK - J
    40             CONTINUE
@@ -9420,7 +9652,7 @@ c                      END IF
               KK = 1
               IF (INCX.EQ.1) THEN
                   DO 60 J = 1,N
-c                      IF (X(J).NE.ZERO) THEN
+                      IF (X(J).NE.ZERO) THEN
                           IF (NOUNIT) X(J) = X(J)/AP(KK)
                           TEMP = X(J)
                           K = KK + 1
@@ -9428,13 +9660,13 @@ c                      IF (X(J).NE.ZERO) THEN
                               X(I) = X(I) - TEMP*AP(K)
                               K = K + 1
    50                     CONTINUE
-c                      END IF
+                      END IF
                       KK = KK + (N-J+1)
    60             CONTINUE
               ELSE
                   JX = KX
                   DO 80 J = 1,N
-c                      IF (X(JX).NE.ZERO) THEN
+                      IF (X(JX).NE.ZERO) THEN
                           IF (NOUNIT) X(JX) = X(JX)/AP(KK)
                           TEMP = X(JX)
                           IX = JX
@@ -9442,7 +9674,7 @@ c                      IF (X(JX).NE.ZERO) THEN
                               IX = IX + INCX
                               X(IX) = X(IX) - TEMP*AP(K)
    70                     CONTINUE
-c                      END IF
+                      END IF
                       JX = JX + INCX
                       KK = KK + (N-J+1)
    80             CONTINUE
@@ -9828,27 +10060,27 @@ c                      END IF
               IF (UPPER) THEN
                   DO 50 J = 1,N
                       DO 40 K = 1,M
-c                          IF (B(K,J).NE.ZERO) THEN
+                          IF (B(K,J).NE.ZERO) THEN
                               TEMP = ALPHA*B(K,J)
                               DO 30 I = 1,K - 1
                                   B(I,J) = B(I,J) + TEMP*A(I,K)
    30                         CONTINUE
                               IF (NOUNIT) TEMP = TEMP*A(K,K)
                               B(K,J) = TEMP
-c                          END IF
+                          END IF
    40                 CONTINUE
    50             CONTINUE
               ELSE
                   DO 80 J = 1,N
                       DO 70 K = M,1,-1
-c                          IF (B(K,J).NE.ZERO) THEN
+                          IF (B(K,J).NE.ZERO) THEN
                               TEMP = ALPHA*B(K,J)
                               B(K,J) = TEMP
                               IF (NOUNIT) B(K,J) = B(K,J)*A(K,K)
                               DO 60 I = K + 1,M
                                   B(I,J) = B(I,J) + TEMP*A(I,K)
    60                         CONTINUE
-c                          END IF
+                          END IF
    70                 CONTINUE
    80             CONTINUE
               END IF
@@ -9907,12 +10139,12 @@ c                          END IF
                           B(I,J) = TEMP*B(I,J)
   170                 CONTINUE
                       DO 190 K = 1,J - 1
-c                          IF (A(K,J).NE.ZERO) THEN
+                          IF (A(K,J).NE.ZERO) THEN
                               TEMP = ALPHA*A(K,J)
                               DO 180 I = 1,M
                                   B(I,J) = B(I,J) + TEMP*B(I,K)
   180                         CONTINUE
-c                          END IF
+                          END IF
   190                 CONTINUE
   200             CONTINUE
               ELSE
@@ -9923,12 +10155,12 @@ c                          END IF
                           B(I,J) = TEMP*B(I,J)
   210                 CONTINUE
                       DO 230 K = J + 1,N
-c                          IF (A(K,J).NE.ZERO) THEN
+                          IF (A(K,J).NE.ZERO) THEN
                               TEMP = ALPHA*A(K,J)
                               DO 220 I = 1,M
                                   B(I,J) = B(I,J) + TEMP*B(I,K)
   220                         CONTINUE
-c                          END IF
+                          END IF
   230                 CONTINUE
   240             CONTINUE
               END IF
@@ -9939,7 +10171,7 @@ c                          END IF
               IF (UPPER) THEN
                   DO 280 K = 1,N
                       DO 260 J = 1,K - 1
-c                          IF (A(J,K).NE.ZERO) THEN
+                          IF (A(J,K).NE.ZERO) THEN
                               IF (NOCONJ) THEN
                                   TEMP = ALPHA*A(J,K)
                               ELSE
@@ -9948,7 +10180,7 @@ c                          IF (A(J,K).NE.ZERO) THEN
                               DO 250 I = 1,M
                                   B(I,J) = B(I,J) + TEMP*B(I,K)
   250                         CONTINUE
-c                          END IF
+                          END IF
   260                 CONTINUE
                       TEMP = ALPHA
                       IF (NOUNIT) THEN
@@ -9967,7 +10199,7 @@ c                          END IF
               ELSE
                   DO 320 K = N,1,-1
                       DO 300 J = K + 1,N
-c                          IF (A(J,K).NE.ZERO) THEN
+                          IF (A(J,K).NE.ZERO) THEN
                               IF (NOCONJ) THEN
                                   TEMP = ALPHA*A(J,K)
                               ELSE
@@ -9976,7 +10208,7 @@ c                          IF (A(J,K).NE.ZERO) THEN
                               DO 290 I = 1,M
                                   B(I,J) = B(I,J) + TEMP*B(I,K)
   290                         CONTINUE
-c                          END IF
+                          END IF
   300                 CONTINUE
                       TEMP = ALPHA
                       IF (NOUNIT) THEN
@@ -10232,18 +10464,18 @@ c                          END IF
           IF (LSAME(UPLO,'U')) THEN
               IF (INCX.EQ.1) THEN
                   DO 20 J = 1,N
-c                      IF (X(J).NE.ZERO) THEN
+                      IF (X(J).NE.ZERO) THEN
                           TEMP = X(J)
                           DO 10 I = 1,J - 1
                               X(I) = X(I) + TEMP*A(I,J)
    10                     CONTINUE
                           IF (NOUNIT) X(J) = X(J)*A(J,J)
-c                      END IF
+                      END IF
    20             CONTINUE
               ELSE
                   JX = KX
                   DO 40 J = 1,N
-c                      IF (X(JX).NE.ZERO) THEN
+                      IF (X(JX).NE.ZERO) THEN
                           TEMP = X(JX)
                           IX = KX
                           DO 30 I = 1,J - 1
@@ -10251,26 +10483,26 @@ c                      IF (X(JX).NE.ZERO) THEN
                               IX = IX + INCX
    30                     CONTINUE
                           IF (NOUNIT) X(JX) = X(JX)*A(J,J)
-c                      END IF
+                      END IF
                       JX = JX + INCX
    40             CONTINUE
               END IF
           ELSE
               IF (INCX.EQ.1) THEN
                   DO 60 J = N,1,-1
-c                      IF (X(J).NE.ZERO) THEN
+                      IF (X(J).NE.ZERO) THEN
                           TEMP = X(J)
                           DO 50 I = N,J + 1,-1
                               X(I) = X(I) + TEMP*A(I,J)
    50                     CONTINUE
                           IF (NOUNIT) X(J) = X(J)*A(J,J)
-c                      END IF
+                      END IF
    60             CONTINUE
               ELSE
                   KX = KX + (N-1)*INCX
                   JX = KX
                   DO 80 J = N,1,-1
-c                      IF (X(JX).NE.ZERO) THEN
+                      IF (X(JX).NE.ZERO) THEN
                           TEMP = X(JX)
                           IX = KX
                           DO 70 I = N,J + 1,-1
@@ -10278,7 +10510,7 @@ c                      IF (X(JX).NE.ZERO) THEN
                               IX = IX - INCX
    70                     CONTINUE
                           IF (NOUNIT) X(JX) = X(JX)*A(J,J)
-c                      END IF
+                      END IF
                       JX = JX - INCX
    80             CONTINUE
               END IF
@@ -10658,12 +10890,12 @@ c                      END IF
    30                     CONTINUE
                       END IF
                       DO 50 K = M,1,-1
-c                          IF (B(K,J).NE.ZERO) THEN
+                          IF (B(K,J).NE.ZERO) THEN
                               IF (NOUNIT) B(K,J) = B(K,J)/A(K,K)
                               DO 40 I = 1,K - 1
                                   B(I,J) = B(I,J) - B(K,J)*A(I,K)
    40                         CONTINUE
-c                          END IF
+                          END IF
    50                 CONTINUE
    60             CONTINUE
               ELSE
@@ -10674,12 +10906,12 @@ c                          END IF
    70                     CONTINUE
                       END IF
                       DO 90 K = 1,M
-c                          IF (B(K,J).NE.ZERO) THEN
+                          IF (B(K,J).NE.ZERO) THEN
                               IF (NOUNIT) B(K,J) = B(K,J)/A(K,K)
                               DO 80 I = K + 1,M
                                   B(I,J) = B(I,J) - B(K,J)*A(I,K)
    80                         CONTINUE
-c                          END IF
+                          END IF
    90                 CONTINUE
   100             CONTINUE
               END IF
@@ -10739,11 +10971,11 @@ c                          END IF
   190                     CONTINUE
                       END IF
                       DO 210 K = 1,J - 1
-c                          IF (A(K,J).NE.ZERO) THEN
+                          IF (A(K,J).NE.ZERO) THEN
                               DO 200 I = 1,M
                                   B(I,J) = B(I,J) - A(K,J)*B(I,K)
   200                         CONTINUE
-c                          END IF
+                          END IF
   210                 CONTINUE
                       IF (NOUNIT) THEN
                           TEMP = ONE/A(J,J)
@@ -10760,11 +10992,11 @@ c                          END IF
   240                     CONTINUE
                       END IF
                       DO 260 K = J + 1,N
-c                          IF (A(K,J).NE.ZERO) THEN
+                          IF (A(K,J).NE.ZERO) THEN
                               DO 250 I = 1,M
                                   B(I,J) = B(I,J) - A(K,J)*B(I,K)
   250                         CONTINUE
-c                          END IF
+                          END IF
   260                 CONTINUE
                       IF (NOUNIT) THEN
                           TEMP = ONE/A(J,J)
@@ -10792,7 +11024,7 @@ c                          END IF
   290                     CONTINUE
                       END IF
                       DO 310 J = 1,K - 1
-c                          IF (A(J,K).NE.ZERO) THEN
+                          IF (A(J,K).NE.ZERO) THEN
                               IF (NOCONJ) THEN
                                   TEMP = A(J,K)
                               ELSE
@@ -10801,7 +11033,7 @@ c                          IF (A(J,K).NE.ZERO) THEN
                               DO 300 I = 1,M
                                   B(I,J) = B(I,J) - TEMP*B(I,K)
   300                         CONTINUE
-c                          END IF
+                          END IF
   310                 CONTINUE
                       IF (ALPHA.NE.ONE) THEN
                           DO 320 I = 1,M
@@ -10822,7 +11054,7 @@ c                          END IF
   340                     CONTINUE
                       END IF
                       DO 360 J = K + 1,N
-c                          IF (A(J,K).NE.ZERO) THEN
+                          IF (A(J,K).NE.ZERO) THEN
                               IF (NOCONJ) THEN
                                   TEMP = A(J,K)
                               ELSE
@@ -10831,7 +11063,7 @@ c                          IF (A(J,K).NE.ZERO) THEN
                               DO 350 I = 1,M
                                   B(I,J) = B(I,J) - TEMP*B(I,K)
   350                         CONTINUE
-c                          END IF
+                          END IF
   360                 CONTINUE
                       IF (ALPHA.NE.ONE) THEN
                           DO 370 I = 1,M
@@ -11081,18 +11313,18 @@ c                          END IF
           IF (LSAME(UPLO,'U')) THEN
               IF (INCX.EQ.1) THEN
                   DO 20 J = N,1,-1
-c                      IF (X(J).NE.ZERO) THEN
+                      IF (X(J).NE.ZERO) THEN
                           IF (NOUNIT) X(J) = X(J)/A(J,J)
                           TEMP = X(J)
                           DO 10 I = J - 1,1,-1
                               X(I) = X(I) - TEMP*A(I,J)
    10                     CONTINUE
-c                      END IF
+                      END IF
    20             CONTINUE
               ELSE
                   JX = KX + (N-1)*INCX
                   DO 40 J = N,1,-1
-c                      IF (X(JX).NE.ZERO) THEN
+                      IF (X(JX).NE.ZERO) THEN
                           IF (NOUNIT) X(JX) = X(JX)/A(J,J)
                           TEMP = X(JX)
                           IX = JX
@@ -11100,25 +11332,25 @@ c                      IF (X(JX).NE.ZERO) THEN
                               IX = IX - INCX
                               X(IX) = X(IX) - TEMP*A(I,J)
    30                     CONTINUE
-c                      END IF
+                      END IF
                       JX = JX - INCX
    40             CONTINUE
               END IF
           ELSE
               IF (INCX.EQ.1) THEN
                   DO 60 J = 1,N
-c                      IF (X(J).NE.ZERO) THEN
+                      IF (X(J).NE.ZERO) THEN
                           IF (NOUNIT) X(J) = X(J)/A(J,J)
                           TEMP = X(J)
                           DO 50 I = J + 1,N
                               X(I) = X(I) - TEMP*A(I,J)
    50                     CONTINUE
-c                      END IF
+                      END IF
    60             CONTINUE
               ELSE
                   JX = KX
                   DO 80 J = 1,N
-c                      IF (X(JX).NE.ZERO) THEN
+                      IF (X(JX).NE.ZERO) THEN
                           IF (NOUNIT) X(JX) = X(JX)/A(J,J)
                           TEMP = X(JX)
                           IX = JX
@@ -11126,7 +11358,7 @@ c                      IF (X(JX).NE.ZERO) THEN
                               IX = IX + INCX
                               X(IX) = X(IX) - TEMP*A(I,J)
    70                     CONTINUE
-c                      END IF
+                      END IF
                       JX = JX + INCX
    80             CONTINUE
               END IF

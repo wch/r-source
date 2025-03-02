@@ -674,7 +674,9 @@
 *>
 *> \param[out] RWORK
 *> \verbatim
-*>          RWORK is DOUBLE PRECISION array, dimension (4*N)
+*>          RWORK is DOUBLE PRECISION array, dimension (LRWORK)
+*>          LRWORK = 4*N, if NCVT = NRU = NCC = 0, and
+*>          LRWORK = 4*(N-1), otherwise
 *> \endverbatim
 *>
 *> \param[out] INFO
@@ -787,7 +789,8 @@
       EXTERNAL           LSAME, DLAMCH
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           DLARTG, DLAS2, DLASQ1, DLASV2, XERBLA, ZDROT,
+      EXTERNAL           DLARTG, DLAS2, DLASQ1, DLASV2, XERBLA,
+     $                   ZDROT,
      $                   ZDSCAL, ZLASR, ZSWAP
 *     ..
 *     .. Intrinsic Functions ..
@@ -868,10 +871,12 @@
 *        Update singular vectors if desired
 *
          IF( NRU.GT.0 )
-     $      CALL ZLASR( 'R', 'V', 'F', NRU, N, RWORK( 1 ), RWORK( N ),
+     $      CALL ZLASR( 'R', 'V', 'F', NRU, N, RWORK( 1 ),
+     $                  RWORK( N ),
      $                  U, LDU )
          IF( NCC.GT.0 )
-     $      CALL ZLASR( 'L', 'V', 'F', N, NCC, RWORK( 1 ), RWORK( N ),
+     $      CALL ZLASR( 'L', 'V', 'F', N, NCC, RWORK( 1 ),
+     $                  RWORK( N ),
      $                  C, LDC )
       END IF
 *
@@ -995,7 +1000,8 @@
      $      CALL ZDROT( NCVT, VT( M-1, 1 ), LDVT, VT( M, 1 ), LDVT,
      $                  COSR, SINR )
          IF( NRU.GT.0 )
-     $      CALL ZDROT( NRU, U( 1, M-1 ), 1, U( 1, M ), 1, COSL, SINL )
+     $      CALL ZDROT( NRU, U( 1, M-1 ), 1, U( 1, M ), 1, COSL,
+     $                  SINL )
          IF( NCC.GT.0 )
      $      CALL ZDROT( NCC, C( M-1, 1 ), LDC, C( M, 1 ), LDC, COSL,
      $                  SINL )
@@ -1128,7 +1134,8 @@
                CALL DLARTG( D( I )*CS, E( I ), CS, SN, R )
                IF( I.GT.LL )
      $            E( I-1 ) = OLDSN*R
-               CALL DLARTG( OLDCS*R, D( I+1 )*SN, OLDCS, OLDSN, D( I ) )
+               CALL DLARTG( OLDCS*R, D( I+1 )*SN, OLDCS, OLDSN,
+     $                      D( I ) )
                RWORK( I-LL+1 ) = CS
                RWORK( I-LL+1+NM1 ) = SN
                RWORK( I-LL+1+NM12 ) = OLDCS
@@ -1144,10 +1151,12 @@
      $         CALL ZLASR( 'L', 'V', 'F', M-LL+1, NCVT, RWORK( 1 ),
      $                     RWORK( N ), VT( LL, 1 ), LDVT )
             IF( NRU.GT.0 )
-     $         CALL ZLASR( 'R', 'V', 'F', NRU, M-LL+1, RWORK( NM12+1 ),
+     $         CALL ZLASR( 'R', 'V', 'F', NRU, M-LL+1,
+     $                     RWORK( NM12+1 ),
      $                     RWORK( NM13+1 ), U( 1, LL ), LDU )
             IF( NCC.GT.0 )
-     $         CALL ZLASR( 'L', 'V', 'F', M-LL+1, NCC, RWORK( NM12+1 ),
+     $         CALL ZLASR( 'L', 'V', 'F', M-LL+1, NCC,
+     $                     RWORK( NM12+1 ),
      $                     RWORK( NM13+1 ), C( LL, 1 ), LDC )
 *
 *           Test convergence
@@ -1166,7 +1175,8 @@
                CALL DLARTG( D( I )*CS, E( I-1 ), CS, SN, R )
                IF( I.LT.M )
      $            E( I ) = OLDSN*R
-               CALL DLARTG( OLDCS*R, D( I-1 )*SN, OLDCS, OLDSN, D( I ) )
+               CALL DLARTG( OLDCS*R, D( I-1 )*SN, OLDCS, OLDSN,
+     $                      D( I ) )
                RWORK( I-LL ) = CS
                RWORK( I-LL+NM1 ) = -SN
                RWORK( I-LL+NM12 ) = OLDCS
@@ -1179,7 +1189,8 @@
 *           Update singular vectors
 *
             IF( NCVT.GT.0 )
-     $         CALL ZLASR( 'L', 'V', 'B', M-LL+1, NCVT, RWORK( NM12+1 ),
+     $         CALL ZLASR( 'L', 'V', 'B', M-LL+1, NCVT,
+     $                     RWORK( NM12+1 ),
      $                     RWORK( NM13+1 ), VT( LL, 1 ), LDVT )
             IF( NRU.GT.0 )
      $         CALL ZLASR( 'R', 'V', 'B', NRU, M-LL+1, RWORK( 1 ),
@@ -1234,10 +1245,12 @@
      $         CALL ZLASR( 'L', 'V', 'F', M-LL+1, NCVT, RWORK( 1 ),
      $                     RWORK( N ), VT( LL, 1 ), LDVT )
             IF( NRU.GT.0 )
-     $         CALL ZLASR( 'R', 'V', 'F', NRU, M-LL+1, RWORK( NM12+1 ),
+     $         CALL ZLASR( 'R', 'V', 'F', NRU, M-LL+1,
+     $                     RWORK( NM12+1 ),
      $                     RWORK( NM13+1 ), U( 1, LL ), LDU )
             IF( NCC.GT.0 )
-     $         CALL ZLASR( 'L', 'V', 'F', M-LL+1, NCC, RWORK( NM12+1 ),
+     $         CALL ZLASR( 'L', 'V', 'F', M-LL+1, NCC,
+     $                     RWORK( NM12+1 ),
      $                     RWORK( NM13+1 ), C( LL, 1 ), LDC )
 *
 *           Test convergence
@@ -1284,7 +1297,8 @@
 *           Update singular vectors if desired
 *
             IF( NCVT.GT.0 )
-     $         CALL ZLASR( 'L', 'V', 'B', M-LL+1, NCVT, RWORK( NM12+1 ),
+     $         CALL ZLASR( 'L', 'V', 'B', M-LL+1, NCVT,
+     $                     RWORK( NM12+1 ),
      $                     RWORK( NM13+1 ), VT( LL, 1 ), LDVT )
             IF( NRU.GT.0 )
      $         CALL ZLASR( 'R', 'V', 'B', NRU, M-LL+1, RWORK( 1 ),
@@ -1303,6 +1317,12 @@
 *
   160 CONTINUE
       DO 170 I = 1, N
+         IF( D( I ).EQ.ZERO ) THEN
+*
+*           Avoid -ZERO
+*
+            D( I ) = ZERO
+         END IF
          IF( D( I ).LT.ZERO ) THEN
             D( I ) = -D( I )
 *
@@ -1340,7 +1360,8 @@
             IF( NRU.GT.0 )
      $         CALL ZSWAP( NRU, U( 1, ISUB ), 1, U( 1, N+1-I ), 1 )
             IF( NCC.GT.0 )
-     $         CALL ZSWAP( NCC, C( ISUB, 1 ), LDC, C( N+1-I, 1 ), LDC )
+     $         CALL ZSWAP( NCC, C( ISUB, 1 ), LDC, C( N+1-I, 1 ),
+     $                     LDC )
          END IF
   190 CONTINUE
       GO TO 220
@@ -1673,7 +1694,8 @@
 *> \ingroup gbcon
 *
 *  =====================================================================
-      SUBROUTINE ZGBCON( NORM, N, KL, KU, AB, LDAB, IPIV, ANORM, RCOND,
+      SUBROUTINE ZGBCON( NORM, N, KL, KU, AB, LDAB, IPIV, ANORM,
+     $                   RCOND,
      $                   WORK, RWORK, INFO )
 *
 *  -- LAPACK computational routine --
@@ -1715,7 +1737,8 @@
       EXTERNAL           LSAME, IZAMAX, DLAMCH, ZDOTC
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           XERBLA, ZAXPY, ZDRSCL, ZLACN2, ZLATBS
+      EXTERNAL           XERBLA, ZAXPY, ZDRSCL, ZLACN2,
+     $                   ZLATBS
 *     ..
 *     .. Intrinsic Functions ..
       INTRINSIC          ABS, DBLE, DIMAG, MIN
@@ -1790,13 +1813,15 @@
                      WORK( JP ) = WORK( J )
                      WORK( J ) = T
                   END IF
-                  CALL ZAXPY( LM, -T, AB( KD+1, J ), 1, WORK( J+1 ), 1 )
+                  CALL ZAXPY( LM, -T, AB( KD+1, J ), 1, WORK( J+1 ),
+     $                        1 )
    20          CONTINUE
             END IF
 *
 *           Multiply by inv(U).
 *
-            CALL ZLATBS( 'Upper', 'No transpose', 'Non-unit', NORMIN, N,
+            CALL ZLATBS( 'Upper', 'No transpose', 'Non-unit', NORMIN,
+     $                   N,
      $                   KL+KU, AB, LDAB, WORK, SCALE, RWORK, INFO )
          ELSE
 *
@@ -1811,7 +1836,8 @@
             IF( LNOTI ) THEN
                DO 30 J = N - 1, 1, -1
                   LM = MIN( KL, N-J )
-                  WORK( J ) = WORK( J ) - ZDOTC( LM, AB( KD+1, J ), 1,
+                  WORK( J ) = WORK( J ) - ZDOTC( LM, AB( KD+1, J ),
+     $                  1,
      $                        WORK( J+1 ), 1 )
                   JP = IPIV( J )
                   IF( JP.NE.J ) THEN
@@ -1997,7 +2023,8 @@
 *> \ingroup gbequ
 *
 *  =====================================================================
-      SUBROUTINE ZGBEQU( M, N, KL, KU, AB, LDAB, R, C, ROWCND, COLCND,
+      SUBROUTINE ZGBEQU( M, N, KL, KU, AB, LDAB, R, C, ROWCND,
+     $                   COLCND,
      $                   AMAX, INFO )
 *
 *  -- LAPACK computational routine --
@@ -2378,7 +2405,8 @@
 *> \ingroup gbrfs
 *
 *  =====================================================================
-      SUBROUTINE ZGBRFS( TRANS, N, KL, KU, NRHS, AB, LDAB, AFB, LDAFB,
+      SUBROUTINE ZGBRFS( TRANS, N, KL, KU, NRHS, AB, LDAB, AFB,
+     $                   LDAFB,
      $                   IPIV, B, LDB, X, LDX, FERR, BERR, WORK, RWORK,
      $                   INFO )
 *
@@ -2422,7 +2450,8 @@
       INTEGER            ISAVE( 3 )
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           XERBLA, ZAXPY, ZCOPY, ZGBMV, ZGBTRS, ZLACN2
+      EXTERNAL           XERBLA, ZAXPY, ZCOPY, ZGBMV, ZGBTRS,
+     $                   ZLACN2
 *     ..
 *     .. Intrinsic Functions ..
       INTRINSIC          ABS, DBLE, DIMAG, MAX, MIN
@@ -2509,7 +2538,8 @@
 *        where op(A) = A, A**T, or A**H, depending on TRANS.
 *
          CALL ZCOPY( N, B( 1, J ), 1, WORK, 1 )
-         CALL ZGBMV( TRANS, N, N, KL, KU, -CONE, AB, LDAB, X( 1, J ), 1,
+         CALL ZGBMV( TRANS, N, N, KL, KU, -CONE, AB, LDAB, X( 1, J ),
+     $               1,
      $               CONE, WORK, 1 )
 *
 *        Compute componentwise relative backward error from formula
@@ -2567,7 +2597,8 @@
 *
 *           Update solution and try again.
 *
-            CALL ZGBTRS( TRANS, N, KL, KU, 1, AFB, LDAFB, IPIV, WORK, N,
+            CALL ZGBTRS( TRANS, N, KL, KU, 1, AFB, LDAFB, IPIV, WORK,
+     $                   N,
      $                   INFO )
             CALL ZAXPY( N, CONE, WORK, 1, X( 1, J ), 1 )
             LSTRES = BERR( J )
@@ -2808,7 +2839,8 @@
 *> \endverbatim
 *>
 *  =====================================================================
-      SUBROUTINE ZGBSV( N, KL, KU, NRHS, AB, LDAB, IPIV, B, LDB, INFO )
+      SUBROUTINE ZGBSV( N, KL, KU, NRHS, AB, LDAB, IPIV, B, LDB,
+     $                  INFO )
 *
 *  -- LAPACK driver routine --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
@@ -2860,7 +2892,8 @@
 *
 *        Solve the system A*X = B, overwriting B with X.
 *
-         CALL ZGBTRS( 'No transpose', N, KL, KU, NRHS, AB, LDAB, IPIV,
+         CALL ZGBTRS( 'No transpose', N, KL, KU, NRHS, AB, LDAB,
+     $                IPIV,
      $                B, LDB, INFO )
       END IF
       RETURN
@@ -3277,7 +3310,8 @@
       EXTERNAL           LSAME, DLAMCH, ZLANGB, ZLANTB
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           XERBLA, ZCOPY, ZGBCON, ZGBEQU, ZGBRFS, ZGBTRF,
+      EXTERNAL           XERBLA, ZCOPY, ZGBCON, ZGBEQU, ZGBRFS,
+     $                   ZGBTRF,
      $                   ZGBTRS, ZLACPY, ZLAQGB
 *     ..
 *     .. Intrinsic Functions ..
@@ -3302,7 +3336,9 @@
 *
 *     Test the input parameters.
 *
-      IF( .NOT.NOFACT .AND. .NOT.EQUIL .AND. .NOT.LSAME( FACT, 'F' ) )
+      IF( .NOT.NOFACT .AND.
+     $    .NOT.EQUIL .AND.
+     $    .NOT.LSAME( FACT, 'F' ) )
      $     THEN
          INFO = -1
       ELSE IF( .NOT.NOTRAN .AND. .NOT.LSAME( TRANS, 'T' ) .AND. .NOT.
@@ -3378,7 +3414,8 @@
 *
 *           Equilibrate the matrix.
 *
-            CALL ZLAQGB( N, N, KL, KU, AB, LDAB, R, C, ROWCND, COLCND,
+            CALL ZLAQGB( N, N, KL, KU, AB, LDAB, R, C, ROWCND,
+     $                   COLCND,
      $                   AMAX, EQUED )
             ROWEQU = LSAME( EQUED, 'R' ) .OR. LSAME( EQUED, 'B' )
             COLEQU = LSAME( EQUED, 'C' ) .OR. LSAME( EQUED, 'B' )
@@ -3429,7 +3466,8 @@
                   ANORM = MAX( ANORM, ABS( AB( I, J ) ) )
    80          CONTINUE
    90       CONTINUE
-            RPVGRW = ZLANTB( 'M', 'U', 'N', INFO, MIN( INFO-1, KL+KU ),
+            RPVGRW = ZLANTB( 'M', 'U', 'N', INFO, MIN( INFO-1,
+     $                       KL+KU ),
      $                       AFB( MAX( 1, KL+KU+2-INFO ), 1 ), LDAFB,
      $                       RWORK )
             IF( RPVGRW.EQ.ZERO ) THEN
@@ -3473,7 +3511,8 @@
 *     Use iterative refinement to improve the computed solution and
 *     compute error bounds and backward error estimates for it.
 *
-      CALL ZGBRFS( TRANS, N, KL, KU, NRHS, AB, LDAB, AFB, LDAFB, IPIV,
+      CALL ZGBRFS( TRANS, N, KL, KU, NRHS, AB, LDAB, AFB, LDAFB,
+     $             IPIV,
      $             B, LDB, X, LDX, FERR, BERR, WORK, RWORK, INFO )
 *
 *     Transform the solution matrix X to a solution of the original
@@ -3763,7 +3802,8 @@
 *
 *              Compute multipliers.
 *
-               CALL ZSCAL( KM, ONE / AB( KV+1, J ), AB( KV+2, J ), 1 )
+               CALL ZSCAL( KM, ONE / AB( KV+1, J ), AB( KV+2, J ),
+     $                     1 )
 *
 *              Update trailing submatrix within the band.
 *
@@ -3965,7 +4005,8 @@
       EXTERNAL           ILAENV, IZAMAX
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           XERBLA, ZCOPY, ZGBTF2, ZGEMM, ZGERU, ZLASWP,
+      EXTERNAL           XERBLA, ZCOPY, ZGBTF2, ZGEMM, ZGERU,
+     $                   ZLASWP,
      $                   ZSCAL, ZSWAP, ZTRSM
 *     ..
 *     .. Intrinsic Functions ..
@@ -4113,7 +4154,8 @@
 *
 *                 Compute multipliers
 *
-                  CALL ZSCAL( KM, ONE / AB( KV+1, JJ ), AB( KV+2, JJ ),
+                  CALL ZSCAL( KM, ONE / AB( KV+1, JJ ), AB( KV+2,
+     $                        JJ ),
      $                        1 )
 *
 *                 Update trailing submatrix within the band and within
@@ -4182,7 +4224,8 @@
 *
 *                 Update A12
 *
-                  CALL ZTRSM( 'Left', 'Lower', 'No transpose', 'Unit',
+                  CALL ZTRSM( 'Left', 'Lower', 'No transpose',
+     $                        'Unit',
      $                        JB, J2, ONE, AB( KV+1, J ), LDAB-1,
      $                        AB( KV+1-JB, J+JB ), LDAB-1 )
 *
@@ -4190,7 +4233,8 @@
 *
 *                    Update A22
 *
-                     CALL ZGEMM( 'No transpose', 'No transpose', I2, J2,
+                     CALL ZGEMM( 'No transpose', 'No transpose', I2,
+     $                           J2,
      $                           JB, -ONE, AB( KV+1+JB, J ), LDAB-1,
      $                           AB( KV+1-JB, J+JB ), LDAB-1, ONE,
      $                           AB( KV+1, J+JB ), LDAB-1 )
@@ -4200,7 +4244,8 @@
 *
 *                    Update A32
 *
-                     CALL ZGEMM( 'No transpose', 'No transpose', I3, J2,
+                     CALL ZGEMM( 'No transpose', 'No transpose', I3,
+     $                           J2,
      $                           JB, -ONE, WORK31, LDWORK,
      $                           AB( KV+1-JB, J+JB ), LDAB-1, ONE,
      $                           AB( KV+KL+1-JB, J+JB ), LDAB-1 )
@@ -4220,7 +4265,8 @@
 *
 *                 Update A13 in the work array
 *
-                  CALL ZTRSM( 'Left', 'Lower', 'No transpose', 'Unit',
+                  CALL ZTRSM( 'Left', 'Lower', 'No transpose',
+     $                        'Unit',
      $                        JB, J3, ONE, AB( KV+1, J ), LDAB-1,
      $                        WORK13, LDWORK )
 *
@@ -4228,7 +4274,8 @@
 *
 *                    Update A23
 *
-                     CALL ZGEMM( 'No transpose', 'No transpose', I2, J3,
+                     CALL ZGEMM( 'No transpose', 'No transpose', I2,
+     $                           J3,
      $                           JB, -ONE, AB( KV+1+JB, J ), LDAB-1,
      $                           WORK13, LDWORK, ONE, AB( 1+JB, J+KV ),
      $                           LDAB-1 )
@@ -4238,7 +4285,8 @@
 *
 *                    Update A33
 *
-                     CALL ZGEMM( 'No transpose', 'No transpose', I3, J3,
+                     CALL ZGEMM( 'No transpose', 'No transpose', I3,
+     $                           J3,
      $                           JB, -ONE, WORK31, LDWORK, WORK13,
      $                           LDWORK, ONE, AB( 1+KL, J+KV ), LDAB-1 )
                   END IF
@@ -4435,7 +4483,8 @@
 *> \ingroup gbtrs
 *
 *  =====================================================================
-      SUBROUTINE ZGBTRS( TRANS, N, KL, KU, NRHS, AB, LDAB, IPIV, B, LDB,
+      SUBROUTINE ZGBTRS( TRANS, N, KL, KU, NRHS, AB, LDAB, IPIV, B,
+     $                   LDB,
      $                   INFO )
 *
 *  -- LAPACK computational routine --
@@ -4466,7 +4515,8 @@
       EXTERNAL           LSAME
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           XERBLA, ZGEMV, ZGERU, ZLACGV, ZSWAP, ZTBSV
+      EXTERNAL           XERBLA, ZGEMV, ZGERU, ZLACGV, ZSWAP,
+     $                   ZTBSV
 *     ..
 *     .. Intrinsic Functions ..
       INTRINSIC          MAX, MIN
@@ -4523,7 +4573,8 @@
                L = IPIV( J )
                IF( L.NE.J )
      $            CALL ZSWAP( NRHS, B( L, 1 ), LDB, B( J, 1 ), LDB )
-               CALL ZGERU( LM, NRHS, -ONE, AB( KD+1, J ), 1, B( J, 1 ),
+               CALL ZGERU( LM, NRHS, -ONE, AB( KD+1, J ), 1, B( J,
+     $                     1 ),
      $                     LDB, B( J+1, 1 ), LDB )
    10       CONTINUE
          END IF
@@ -4532,7 +4583,8 @@
 *
 *           Solve U*X = B, overwriting B with X.
 *
-            CALL ZTBSV( 'Upper', 'No transpose', 'Non-unit', N, KL+KU,
+            CALL ZTBSV( 'Upper', 'No transpose', 'Non-unit', N,
+     $                  KL+KU,
      $                  AB, LDAB, B( 1, I ), 1 )
    20    CONTINUE
 *
@@ -4544,7 +4596,8 @@
 *
 *           Solve U**T * X = B, overwriting B with X.
 *
-            CALL ZTBSV( 'Upper', 'Transpose', 'Non-unit', N, KL+KU, AB,
+            CALL ZTBSV( 'Upper', 'Transpose', 'Non-unit', N, KL+KU,
+     $                  AB,
      $                  LDAB, B( 1, I ), 1 )
    30    CONTINUE
 *
@@ -4569,7 +4622,8 @@
 *
 *           Solve U**H * X = B, overwriting B with X.
 *
-            CALL ZTBSV( 'Upper', 'Conjugate transpose', 'Non-unit', N,
+            CALL ZTBSV( 'Upper', 'Conjugate transpose', 'Non-unit',
+     $                  N,
      $                  KL+KU, AB, LDAB, B( 1, I ), 1 )
    50    CONTINUE
 *
@@ -4767,8 +4821,10 @@
       LEFTV = LSAME( SIDE, 'L' )
 *
       INFO = 0
-      IF( .NOT.LSAME( JOB, 'N' ) .AND. .NOT.LSAME( JOB, 'P' ) .AND.
-     $    .NOT.LSAME( JOB, 'S' ) .AND. .NOT.LSAME( JOB, 'B' ) ) THEN
+      IF( .NOT.LSAME( JOB, 'N' ) .AND.
+     $    .NOT.LSAME( JOB, 'P' ) .AND.
+     $    .NOT.LSAME( JOB, 'S' ) .AND.
+     $                .NOT.LSAME( JOB, 'B' ) ) THEN
          INFO = -1
       ELSE IF( .NOT.RIGHTV .AND. .NOT.LEFTV ) THEN
          INFO = -2
@@ -5059,7 +5115,8 @@
       LOGICAL            DISNAN, LSAME
       INTEGER            IZAMAX
       DOUBLE PRECISION   DLAMCH, DZNRM2
-      EXTERNAL           DISNAN, LSAME, IZAMAX, DLAMCH, DZNRM2
+      EXTERNAL           DISNAN, LSAME, IZAMAX, DLAMCH,
+     $                   DZNRM2
 *     ..
 *     .. External Subroutines ..
       EXTERNAL           XERBLA, ZDSCAL, ZSWAP
@@ -5070,8 +5127,10 @@
 *     Test the input parameters
 *
       INFO = 0
-      IF( .NOT.LSAME( JOB, 'N' ) .AND. .NOT.LSAME( JOB, 'P' ) .AND.
-     $    .NOT.LSAME( JOB, 'S' ) .AND. .NOT.LSAME( JOB, 'B' ) ) THEN
+      IF( .NOT.LSAME( JOB, 'N' ) .AND.
+     $    .NOT.LSAME( JOB, 'P' ) .AND.
+     $    .NOT.LSAME( JOB, 'S' ) .AND.
+     $                .NOT.LSAME( JOB, 'B' ) ) THEN
          INFO = -1
       ELSE IF( N.LT.0 ) THEN
          INFO = -2
@@ -5129,7 +5188,8 @@
                   SCALE( L ) = I
                   IF( I.NE.L ) THEN
                      CALL ZSWAP( L, A( 1, I ), 1, A( 1, L ), 1 )
-                     CALL ZSWAP( N-K+1, A( I, K ), LDA, A( L, K ), LDA )
+                     CALL ZSWAP( N-K+1, A( I, K ), LDA, A( L, K ),
+     $                           LDA )
                   END IF
                   NOCONV = .TRUE.
 *
@@ -5165,7 +5225,8 @@
                   SCALE( K ) = J
                   IF( J.NE.K ) THEN
                      CALL ZSWAP( L, A( 1, J ), 1, A( 1, K ), 1 )
-                     CALL ZSWAP( N-K+1, A( J, K ), LDA, A( K, K ), LDA )
+                     CALL ZSWAP( N-K+1, A( J, K ), LDA, A( K, K ),
+     $                           LDA )
                   END IF
                   NOCONV = .TRUE.
 *
@@ -5483,16 +5544,14 @@
 *  =====================================================================
 *
 *     .. Parameters ..
-      COMPLEX*16         ZERO, ONE
-      PARAMETER          ( ZERO = ( 0.0D+0, 0.0D+0 ),
-     $                   ONE = ( 1.0D+0, 0.0D+0 ) )
-*     ..
+      COMPLEX*16         ZERO
+      PARAMETER          ( ZERO = ( 0.0D+0, 0.0D+0 ) )
 *     .. Local Scalars ..
       INTEGER            I
       COMPLEX*16         ALPHA
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           XERBLA, ZLACGV, ZLARF, ZLARFG
+      EXTERNAL           XERBLA, ZLACGV, ZLARF1F, ZLARFG
 *     ..
 *     .. Intrinsic Functions ..
       INTRINSIC          DCONJG, MAX, MIN
@@ -5526,12 +5585,11 @@
             CALL ZLARFG( M-I+1, ALPHA, A( MIN( I+1, M ), I ), 1,
      $                   TAUQ( I ) )
             D( I ) = DBLE( ALPHA )
-            A( I, I ) = ONE
 *
 *           Apply H(i)**H to A(i:m,i+1:n) from the left
 *
             IF( I.LT.N )
-     $         CALL ZLARF( 'Left', M-I+1, N-I, A( I, I ), 1,
+     $         CALL ZLARF1F( 'Left', M-I+1, N-I, A( I, I ), 1,
      $                     DCONJG( TAUQ( I ) ), A( I, I+1 ), LDA, WORK )
             A( I, I ) = D( I )
 *
@@ -5545,11 +5603,10 @@
                CALL ZLARFG( N-I, ALPHA, A( I, MIN( I+2, N ) ), LDA,
      $                      TAUP( I ) )
                E( I ) = DBLE( ALPHA )
-               A( I, I+1 ) = ONE
 *
 *              Apply G(i) to A(i+1:m,i+1:n) from the right
 *
-               CALL ZLARF( 'Right', M-I, N-I, A( I, I+1 ), LDA,
+               CALL ZLARF1F( 'Right', M-I, N-I, A( I, I+1 ), LDA,
      $                     TAUP( I ), A( I+1, I+1 ), LDA, WORK )
                CALL ZLACGV( N-I, A( I, I+1 ), LDA )
                A( I, I+1 ) = E( I )
@@ -5570,12 +5627,11 @@
             CALL ZLARFG( N-I+1, ALPHA, A( I, MIN( I+1, N ) ), LDA,
      $                   TAUP( I ) )
             D( I ) = DBLE( ALPHA )
-            A( I, I ) = ONE
 *
 *           Apply G(i) to A(i+1:m,i:n) from the right
 *
             IF( I.LT.M )
-     $         CALL ZLARF( 'Right', M-I, N-I+1, A( I, I ), LDA,
+     $         CALL ZLARF1F( 'Right', M-I, N-I+1, A( I, I ), LDA,
      $                     TAUP( I ), A( I+1, I ), LDA, WORK )
             CALL ZLACGV( N-I+1, A( I, I ), LDA )
             A( I, I ) = D( I )
@@ -5589,11 +5645,10 @@
                CALL ZLARFG( M-I, ALPHA, A( MIN( I+2, M ), I ), 1,
      $                      TAUQ( I ) )
                E( I ) = DBLE( ALPHA )
-               A( I+1, I ) = ONE
 *
 *              Apply H(i)**H to A(i+1:m,i+1:n) from the left
 *
-               CALL ZLARF( 'Left', M-I, N-I, A( I+1, I ), 1,
+               CALL ZLARF1F( 'Left', M-I, N-I, A( I+1, I ), 1,
      $                     DCONJG( TAUQ( I ) ), A( I+1, I+1 ), LDA,
      $                     WORK )
                A( I+1, I ) = E( I )
@@ -5731,7 +5786,8 @@
 *> \param[in] LWORK
 *> \verbatim
 *>          LWORK is INTEGER
-*>          The length of the array WORK.  LWORK >= max(1,M,N).
+*>          The length of the array WORK.
+*>          LWORK >= 1, if MIN(M,N) = 0, and LWORK >= MAX(M,N), otherwise.
 *>          For optimum performance LWORK >= (M+N)*NB, where NB
 *>          is the optimal blocksize.
 *>
@@ -5832,8 +5888,8 @@
 *     ..
 *     .. Local Scalars ..
       LOGICAL            LQUERY
-      INTEGER            I, IINFO, J, LDWRKX, LDWRKY, LWKOPT, MINMN, NB,
-     $                   NBMIN, NX, WS
+      INTEGER            I, IINFO, J, LDWRKX, LDWRKY, LWKMIN, LWKOPT,
+     $                   MINMN, NB, NBMIN, NX, WS
 *     ..
 *     .. External Subroutines ..
       EXTERNAL           XERBLA, ZGEBD2, ZGEMM, ZLABRD
@@ -5850,9 +5906,17 @@
 *     Test the input parameters
 *
       INFO = 0
-      NB = MAX( 1, ILAENV( 1, 'ZGEBRD', ' ', M, N, -1, -1 ) )
-      LWKOPT = ( M+N )*NB
+      MINMN = MIN( M, N )
+      IF( MINMN.EQ.0 ) THEN
+         LWKMIN = 1
+         LWKOPT = 1
+      ELSE
+         LWKMIN = MAX( M, N )
+         NB = MAX( 1, ILAENV( 1, 'ZGEBRD', ' ', M, N, -1, -1 ) )
+         LWKOPT = ( M+N )*NB
+      END IF
       WORK( 1 ) = DBLE( LWKOPT )
+*
       LQUERY = ( LWORK.EQ.-1 )
       IF( M.LT.0 ) THEN
          INFO = -1
@@ -5860,7 +5924,7 @@
          INFO = -2
       ELSE IF( LDA.LT.MAX( 1, M ) ) THEN
          INFO = -4
-      ELSE IF( LWORK.LT.MAX( 1, M, N ) .AND. .NOT.LQUERY ) THEN
+      ELSE IF( LWORK.LT.LWKMIN .AND. .NOT.LQUERY ) THEN
          INFO = -10
       END IF
       IF( INFO.LT.0 ) THEN
@@ -5872,7 +5936,6 @@
 *
 *     Quick return if possible
 *
-      MINMN = MIN( M, N )
       IF( MINMN.EQ.0 ) THEN
          WORK( 1 ) = 1
          RETURN
@@ -5891,7 +5954,7 @@
 *        Determine when to switch from blocked to unblocked code.
 *
          IF( NX.LT.MINMN ) THEN
-            WS = ( M+N )*NB
+            WS = LWKOPT
             IF( LWORK.LT.WS ) THEN
 *
 *              Not enough work space for the optimal NB, consider using
@@ -5916,7 +5979,8 @@
 *        the matrices X and Y which are needed to update the unreduced
 *        part of the matrix
 *
-         CALL ZLABRD( M-I+1, N-I+1, NB, A( I, I ), LDA, D( I ), E( I ),
+         CALL ZLABRD( M-I+1, N-I+1, NB, A( I, I ), LDA, D( I ),
+     $                E( I ),
      $                TAUQ( I ), TAUP( I ), WORK, LDWRKX,
      $                WORK( LDWRKX*NB+1 ), LDWRKY )
 *
@@ -5927,7 +5991,8 @@
      $               N-I-NB+1, NB, -ONE, A( I+NB, I ), LDA,
      $               WORK( LDWRKX*NB+NB+1 ), LDWRKY, ONE,
      $               A( I+NB, I+NB ), LDA )
-         CALL ZGEMM( 'No transpose', 'No transpose', M-I-NB+1, N-I-NB+1,
+         CALL ZGEMM( 'No transpose', 'No transpose', M-I-NB+1,
+     $               N-I-NB+1,
      $               NB, -ONE, WORK( NB+1 ), LDWRKX, A( I, I+NB ), LDA,
      $               ONE, A( I+NB, I+NB ), LDA )
 *
@@ -6194,12 +6259,14 @@
 *
 *           Multiply by inv(L).
 *
-            CALL ZLATRS( 'Lower', 'No transpose', 'Unit', NORMIN, N, A,
+            CALL ZLATRS( 'Lower', 'No transpose', 'Unit', NORMIN, N,
+     $                   A,
      $                   LDA, WORK, SL, RWORK, INFO )
 *
 *           Multiply by inv(U).
 *
-            CALL ZLATRS( 'Upper', 'No transpose', 'Non-unit', NORMIN, N,
+            CALL ZLATRS( 'Upper', 'No transpose', 'Non-unit', NORMIN,
+     $                   N,
      $                   A, LDA, WORK, SU, RWORK( N+1 ), INFO )
          ELSE
 *
@@ -6211,7 +6278,8 @@
 *
 *           Multiply by inv(L**H).
 *
-            CALL ZLATRS( 'Lower', 'Conjugate transpose', 'Unit', NORMIN,
+            CALL ZLATRS( 'Lower', 'Conjugate transpose', 'Unit',
+     $                   NORMIN,
      $                   N, A, LDA, WORK, SL, RWORK, INFO )
          END IF
 *
@@ -6789,7 +6857,8 @@
       DOUBLE PRECISION   DUM( 1 )
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           XERBLA, ZCOPY, ZGEBAK, ZGEBAL, ZGEHRD,
+      EXTERNAL           XERBLA, ZCOPY, ZGEBAK, ZGEBAL,
+     $                   ZGEHRD,
      $                   ZHSEQR, ZLACPY, ZLASCL, ZTRSEN, ZUNGHR
 *     ..
 *     .. External Functions ..
@@ -6811,7 +6880,8 @@
       WANTST = LSAME( SORT, 'S' )
       IF( ( .NOT.WANTVS ) .AND. ( .NOT.LSAME( JOBVS, 'N' ) ) ) THEN
          INFO = -1
-      ELSE IF( ( .NOT.WANTST ) .AND. ( .NOT.LSAME( SORT, 'N' ) ) ) THEN
+      ELSE IF( ( .NOT.WANTST ) .AND.
+     $         ( .NOT.LSAME( SORT, 'N' ) ) ) THEN
          INFO = -2
       ELSE IF( N.LT.0 ) THEN
          INFO = -4
@@ -6847,7 +6917,8 @@
             IF( .NOT.WANTVS ) THEN
                MAXWRK = MAX( MAXWRK, HSWORK )
             ELSE
-               MAXWRK = MAX( MAXWRK, N + ( N - 1 )*ILAENV( 1, 'ZUNGHR',
+               MAXWRK = MAX( MAXWRK, N + ( N - 1 )*ILAENV( 1,
+     $                       'ZUNGHR',
      $                       ' ', N, 1, N, -1 ) )
                MAXWRK = MAX( MAXWRK, HSWORK )
             END IF
@@ -6921,7 +6992,8 @@
 *        (CWorkspace: need 2*N-1, prefer N+(N-1)*NB)
 *        (RWorkspace: none)
 *
-         CALL ZUNGHR( N, ILO, IHI, VS, LDVS, WORK( ITAU ), WORK( IWRK ),
+         CALL ZUNGHR( N, ILO, IHI, VS, LDVS, WORK( ITAU ),
+     $                WORK( IWRK ),
      $                LWORK-IWRK+1, IERR )
       END IF
 *
@@ -6950,7 +7022,8 @@
 *        (CWorkspace: none)
 *        (RWorkspace: none)
 *
-         CALL ZTRSEN( 'N', JOBVS, BWORK, N, A, LDA, VS, LDVS, W, SDIM,
+         CALL ZTRSEN( 'N', JOBVS, BWORK, N, A, LDA, VS, LDVS, W,
+     $                SDIM,
      $                S, SEP, WORK( IWRK ), LWORK-IWRK+1, ICOND )
       END IF
 *
@@ -6960,7 +7033,8 @@
 *        (CWorkspace: none)
 *        (RWorkspace: need N)
 *
-         CALL ZGEBAK( 'P', 'R', N, ILO, IHI, RWORK( IBAL ), N, VS, LDVS,
+         CALL ZGEBAK( 'P', 'R', N, ILO, IHI, RWORK( IBAL ), N, VS,
+     $                LDVS,
      $                IERR )
       END IF
 *
@@ -7155,7 +7229,8 @@
 *> \ingroup geev
 *
 *  =====================================================================
-      SUBROUTINE ZGEEV( JOBVL, JOBVR, N, A, LDA, W, VL, LDVL, VR, LDVR,
+      SUBROUTINE ZGEEV( JOBVL, JOBVR, N, A, LDA, W, VL, LDVL, VR,
+     $                  LDVR,
      $                  WORK, LWORK, RWORK, INFO )
       implicit none
 *
@@ -7192,14 +7267,16 @@
       DOUBLE PRECISION   DUM( 1 )
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           XERBLA, ZDSCAL, ZGEBAK, ZGEBAL, ZGEHRD, ZHSEQR,
+      EXTERNAL           XERBLA, ZDSCAL, ZGEBAK, ZGEBAL, ZGEHRD,
+     $                   ZHSEQR,
      $                   ZLACPY, ZLASCL, ZSCAL, ZTREVC3, ZUNGHR
 *     ..
 *     .. External Functions ..
       LOGICAL            LSAME
       INTEGER            IDAMAX, ILAENV
       DOUBLE PRECISION   DLAMCH, DZNRM2, ZLANGE
-      EXTERNAL           LSAME, IDAMAX, ILAENV, DLAMCH, DZNRM2, ZLANGE
+      EXTERNAL           LSAME, IDAMAX, ILAENV, DLAMCH, DZNRM2,
+     $                   ZLANGE
 *     ..
 *     .. Intrinsic Functions ..
       INTRINSIC          DBLE, DCMPLX, CONJG, AIMAG, MAX, SQRT
@@ -7214,7 +7291,8 @@
       WANTVR = LSAME( JOBVR, 'V' )
       IF( ( .NOT.WANTVL ) .AND. ( .NOT.LSAME( JOBVL, 'N' ) ) ) THEN
          INFO = -1
-      ELSE IF( ( .NOT.WANTVR ) .AND. ( .NOT.LSAME( JOBVR, 'N' ) ) ) THEN
+      ELSE IF( ( .NOT.WANTVR ) .AND.
+     $         ( .NOT.LSAME( JOBVR, 'N' ) ) ) THEN
          INFO = -2
       ELSE IF( N.LT.0 ) THEN
          INFO = -3
@@ -7245,7 +7323,8 @@
             MAXWRK = N + N*ILAENV( 1, 'ZGEHRD', ' ', N, 1, N, 0 )
             MINWRK = 2*N
             IF( WANTVL ) THEN
-               MAXWRK = MAX( MAXWRK, N + ( N - 1 )*ILAENV( 1, 'ZUNGHR',
+               MAXWRK = MAX( MAXWRK, N + ( N - 1 )*ILAENV( 1,
+     $                       'ZUNGHR',
      $                       ' ', N, 1, N, -1 ) )
                CALL ZTREVC3( 'L', 'B', SELECT, N, A, LDA,
      $                       VL, LDVL, VR, LDVR,
@@ -7255,7 +7334,8 @@
                CALL ZHSEQR( 'S', 'V', N, 1, N, A, LDA, W, VL, LDVL,
      $                      WORK, -1, INFO )
             ELSE IF( WANTVR ) THEN
-               MAXWRK = MAX( MAXWRK, N + ( N - 1 )*ILAENV( 1, 'ZUNGHR',
+               MAXWRK = MAX( MAXWRK, N + ( N - 1 )*ILAENV( 1,
+     $                       'ZUNGHR',
      $                       ' ', N, 1, N, -1 ) )
                CALL ZTREVC3( 'R', 'B', SELECT, N, A, LDA,
      $                       VL, LDVL, VR, LDVR,
@@ -7340,7 +7420,8 @@
 *        (CWorkspace: need 2*N-1, prefer N+(N-1)*NB)
 *        (RWorkspace: none)
 *
-         CALL ZUNGHR( N, ILO, IHI, VL, LDVL, WORK( ITAU ), WORK( IWRK ),
+         CALL ZUNGHR( N, ILO, IHI, VL, LDVL, WORK( ITAU ),
+     $                WORK( IWRK ),
      $                LWORK-IWRK+1, IERR )
 *
 *        Perform QR iteration, accumulating Schur vectors in VL
@@ -7372,7 +7453,8 @@
 *        (CWorkspace: need 2*N-1, prefer N+(N-1)*NB)
 *        (RWorkspace: none)
 *
-         CALL ZUNGHR( N, ILO, IHI, VR, LDVR, WORK( ITAU ), WORK( IWRK ),
+         CALL ZUNGHR( N, ILO, IHI, VR, LDVR, WORK( ITAU ),
+     $                WORK( IWRK ),
      $                LWORK-IWRK+1, IERR )
 *
 *        Perform QR iteration, accumulating Schur vectors in VR
@@ -7406,7 +7488,8 @@
 *        (RWorkspace: need 2*N)
 *
          IRWORK = IBAL + N
-         CALL ZTREVC3( SIDE, 'B', SELECT, N, A, LDA, VL, LDVL, VR, LDVR,
+         CALL ZTREVC3( SIDE, 'B', SELECT, N, A, LDA, VL, LDVL, VR,
+     $                 LDVR,
      $                 N, NOUT, WORK( IWRK ), LWORK-IWRK+1,
      $                 RWORK( IRWORK ), N, IERR )
       END IF
@@ -7417,7 +7500,8 @@
 *        (CWorkspace: none)
 *        (RWorkspace: need N)
 *
-         CALL ZGEBAK( 'B', 'L', N, ILO, IHI, RWORK( IBAL ), N, VL, LDVL,
+         CALL ZGEBAK( 'B', 'L', N, ILO, IHI, RWORK( IBAL ), N, VL,
+     $                LDVL,
      $                IERR )
 *
 *        Normalize left eigenvectors and make largest component real
@@ -7442,7 +7526,8 @@
 *        (CWorkspace: none)
 *        (RWorkspace: need N)
 *
-         CALL ZGEBAK( 'B', 'R', N, ILO, IHI, RWORK( IBAL ), N, VR, LDVR,
+         CALL ZGEBAK( 'B', 'R', N, ILO, IHI, RWORK( IBAL ), N, VR,
+     $                LDVR,
      $                IERR )
 *
 *        Normalize right eigenvectors and make largest component real
@@ -7465,10 +7550,12 @@
 *
    50 CONTINUE
       IF( SCALEA ) THEN
-         CALL ZLASCL( 'G', 0, 0, CSCALE, ANRM, N-INFO, 1, W( INFO+1 ),
+         CALL ZLASCL( 'G', 0, 0, CSCALE, ANRM, N-INFO, 1,
+     $                W( INFO+1 ),
      $                MAX( N-INFO, 1 ), IERR )
          IF( INFO.GT.0 ) THEN
-            CALL ZLASCL( 'G', 0, 0, CSCALE, ANRM, ILO-1, 1, W, N, IERR )
+            CALL ZLASCL( 'G', 0, 0, CSCALE, ANRM, ILO-1, 1, W, N,
+     $                   IERR )
          END IF
       END IF
 *
@@ -7762,7 +7849,8 @@
 *> \ingroup geevx
 *
 *  =====================================================================
-      SUBROUTINE ZGEEVX( BALANC, JOBVL, JOBVR, SENSE, N, A, LDA, W, VL,
+      SUBROUTINE ZGEEVX( BALANC, JOBVL, JOBVR, SENSE, N, A, LDA, W,
+     $                   VL,
      $                   LDVL, VR, LDVR, ILO, IHI, SCALE, ABNRM, RCONDE,
      $                   RCONDV, WORK, LWORK, RWORK, INFO )
       implicit none
@@ -7803,7 +7891,8 @@
       DOUBLE PRECISION   DUM( 1 )
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           DLASCL, XERBLA, ZDSCAL, ZGEBAK, ZGEBAL, ZGEHRD,
+      EXTERNAL           DLASCL, XERBLA, ZDSCAL, ZGEBAK, ZGEBAL,
+     $                   ZGEHRD,
      $                   ZHSEQR, ZLACPY, ZLASCL, ZSCAL, ZTREVC3, ZTRSNA,
      $                   ZUNGHR
 *     ..
@@ -7811,7 +7900,8 @@
       LOGICAL            LSAME
       INTEGER            IDAMAX, ILAENV
       DOUBLE PRECISION   DLAMCH, DZNRM2, ZLANGE
-      EXTERNAL           LSAME, IDAMAX, ILAENV, DLAMCH, DZNRM2, ZLANGE
+      EXTERNAL           LSAME, IDAMAX, ILAENV, DLAMCH, DZNRM2,
+     $                   ZLANGE
 *     ..
 *     .. Intrinsic Functions ..
       INTRINSIC          DBLE, DCMPLX, CONJG, AIMAG, MAX, SQRT
@@ -7828,12 +7918,15 @@
       WNTSNE = LSAME( SENSE, 'E' )
       WNTSNV = LSAME( SENSE, 'V' )
       WNTSNB = LSAME( SENSE, 'B' )
-      IF( .NOT.( LSAME( BALANC, 'N' ) .OR. LSAME( BALANC, 'S' ) .OR.
+      IF( .NOT.( LSAME( BALANC, 'N' ) .OR.
+     $    LSAME( BALANC, 'S' ) .OR.
      $    LSAME( BALANC, 'P' ) .OR. LSAME( BALANC, 'B' ) ) ) THEN
          INFO = -1
-      ELSE IF( ( .NOT.WANTVL ) .AND. ( .NOT.LSAME( JOBVL, 'N' ) ) ) THEN
+      ELSE IF( ( .NOT.WANTVL ) .AND.
+     $         ( .NOT.LSAME( JOBVL, 'N' ) ) ) THEN
          INFO = -2
-      ELSE IF( ( .NOT.WANTVR ) .AND. ( .NOT.LSAME( JOBVR, 'N' ) ) ) THEN
+      ELSE IF( ( .NOT.WANTVR ) .AND.
+     $         ( .NOT.LSAME( JOBVR, 'N' ) ) ) THEN
          INFO = -3
       ELSE IF( .NOT.( WNTSNN .OR. WNTSNE .OR. WNTSNB .OR. WNTSNV ) .OR.
      $         ( ( WNTSNE .OR. WNTSNB ) .AND. .NOT.( WANTVL .AND.
@@ -7885,10 +7978,12 @@
      $                WORK, -1, INFO )
             ELSE
                IF( WNTSNN ) THEN
-                  CALL ZHSEQR( 'E', 'N', N, 1, N, A, LDA, W, VR, LDVR,
+                  CALL ZHSEQR( 'E', 'N', N, 1, N, A, LDA, W, VR,
+     $                         LDVR,
      $                WORK, -1, INFO )
                ELSE
-                  CALL ZHSEQR( 'S', 'N', N, 1, N, A, LDA, W, VR, LDVR,
+                  CALL ZHSEQR( 'S', 'N', N, 1, N, A, LDA, W, VR,
+     $                         LDVR,
      $                WORK, -1, INFO )
                END IF
             END IF
@@ -7906,7 +8001,8 @@
                IF( .NOT.( WNTSNN .OR. WNTSNE ) )
      $            MINWRK = MAX( MINWRK, N*N + 2*N )
                MAXWRK = MAX( MAXWRK, HSWORK )
-               MAXWRK = MAX( MAXWRK, N + ( N - 1 )*ILAENV( 1, 'ZUNGHR',
+               MAXWRK = MAX( MAXWRK, N + ( N - 1 )*ILAENV( 1,
+     $                       'ZUNGHR',
      $                       ' ', N, 1, N, -1 ) )
                IF( .NOT.( WNTSNN .OR. WNTSNE ) )
      $            MAXWRK = MAX( MAXWRK, N*N + 2*N )
@@ -7987,7 +8083,8 @@
 *        (CWorkspace: need 2*N-1, prefer N+(N-1)*NB)
 *        (RWorkspace: none)
 *
-         CALL ZUNGHR( N, ILO, IHI, VL, LDVL, WORK( ITAU ), WORK( IWRK ),
+         CALL ZUNGHR( N, ILO, IHI, VL, LDVL, WORK( ITAU ),
+     $                WORK( IWRK ),
      $                LWORK-IWRK+1, IERR )
 *
 *        Perform QR iteration, accumulating Schur vectors in VL
@@ -8019,7 +8116,8 @@
 *        (CWorkspace: need 2*N-1, prefer N+(N-1)*NB)
 *        (RWorkspace: none)
 *
-         CALL ZUNGHR( N, ILO, IHI, VR, LDVR, WORK( ITAU ), WORK( IWRK ),
+         CALL ZUNGHR( N, ILO, IHI, VR, LDVR, WORK( ITAU ),
+     $                WORK( IWRK ),
      $                LWORK-IWRK+1, IERR )
 *
 *        Perform QR iteration, accumulating Schur vectors in VR
@@ -8060,7 +8158,8 @@
 *        (CWorkspace: need 2*N, prefer N + 2*N*NB)
 *        (RWorkspace: need N)
 *
-         CALL ZTREVC3( SIDE, 'B', SELECT, N, A, LDA, VL, LDVL, VR, LDVR,
+         CALL ZTREVC3( SIDE, 'B', SELECT, N, A, LDA, VL, LDVL, VR,
+     $                 LDVR,
      $                 N, NOUT, WORK( IWRK ), LWORK-IWRK+1,
      $                 RWORK, N, IERR )
       END IF
@@ -8070,7 +8169,8 @@
 *     (RWorkspace: need 2*N unless SENSE = 'E')
 *
       IF( .NOT.WNTSNN ) THEN
-         CALL ZTRSNA( SENSE, 'A', SELECT, N, A, LDA, VL, LDVL, VR, LDVR,
+         CALL ZTRSNA( SENSE, 'A', SELECT, N, A, LDA, VL, LDVL, VR,
+     $                LDVR,
      $                RCONDE, RCONDV, N, NOUT, WORK( IWRK ), N, RWORK,
      $                ICOND )
       END IF
@@ -8125,14 +8225,16 @@
 *
    50 CONTINUE
       IF( SCALEA ) THEN
-         CALL ZLASCL( 'G', 0, 0, CSCALE, ANRM, N-INFO, 1, W( INFO+1 ),
+         CALL ZLASCL( 'G', 0, 0, CSCALE, ANRM, N-INFO, 1,
+     $                W( INFO+1 ),
      $                MAX( N-INFO, 1 ), IERR )
          IF( INFO.EQ.0 ) THEN
             IF( ( WNTSNV .OR. WNTSNB ) .AND. ICOND.EQ.0 )
      $         CALL DLASCL( 'G', 0, 0, CSCALE, ANRM, N, 1, RCONDV, N,
      $                      IERR )
          ELSE
-            CALL ZLASCL( 'G', 0, 0, CSCALE, ANRM, ILO-1, 1, W, N, IERR )
+            CALL ZLASCL( 'G', 0, 0, CSCALE, ANRM, ILO-1, 1, W, N,
+     $                   IERR )
          END IF
       END IF
 *
@@ -8310,10 +8412,9 @@
 *     ..
 *     .. Local Scalars ..
       INTEGER            I
-      COMPLEX*16         ALPHA
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           XERBLA, ZLARF, ZLARFG
+      EXTERNAL           XERBLA, ZLARF1F, ZLARFG
 *     ..
 *     .. Intrinsic Functions ..
       INTRINSIC          DCONJG, MAX, MIN
@@ -8341,21 +8442,19 @@
 *
 *        Compute elementary reflector H(i) to annihilate A(i+2:ihi,i)
 *
-         ALPHA = A( I+1, I )
-         CALL ZLARFG( IHI-I, ALPHA, A( MIN( I+2, N ), I ), 1, TAU( I ) )
-         A( I+1, I ) = ONE
+         CALL ZLARFG( IHI-I, A( I+1, I ), A( MIN( I+2, N ), I ), 1,
+     $                TAU( I ) )
 *
 *        Apply H(i) to A(1:ihi,i+1:ihi) from the right
 *
-         CALL ZLARF( 'Right', IHI, IHI-I, A( I+1, I ), 1, TAU( I ),
-     $               A( 1, I+1 ), LDA, WORK )
+         CALL ZLARF1F( 'Right', IHI, IHI-I, A( I+1, I ), 1, TAU( I ),
+     $                 A( 1, I+1 ), LDA, WORK )
 *
 *        Apply H(i)**H to A(i+1:ihi,i+1:n) from the left
 *
-         CALL ZLARF( 'Left', IHI-I, N-I, A( I+1, I ), 1,
-     $               DCONJG( TAU( I ) ), A( I+1, I+1 ), LDA, WORK )
+         CALL ZLARF1F( 'Left', IHI-I, N-I, A( I+1, I ), 1,
+     $                 CONJG( TAU( I ) ), A( I+1, I+1 ), LDA, WORK )
 *
-         A( I+1, I ) = ALPHA
    10 CONTINUE
 *
       RETURN
@@ -8454,7 +8553,7 @@
 *>
 *> \param[out] WORK
 *> \verbatim
-*>          WORK is COMPLEX*16 array, dimension (LWORK)
+*>          WORK is COMPLEX*16 array, dimension (MAX(1,LWORK))
 *>          On exit, if INFO = 0, WORK(1) returns the optimal LWORK.
 *> \endverbatim
 *>
@@ -8528,7 +8627,8 @@
 *> \endverbatim
 *>
 *  =====================================================================
-      SUBROUTINE ZGEHRD( N, ILO, IHI, A, LDA, TAU, WORK, LWORK, INFO )
+      SUBROUTINE ZGEHRD( N, ILO, IHI, A, LDA, TAU, WORK, LWORK,
+     $                   INFO )
 *
 *  -- LAPACK computational routine --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
@@ -8538,7 +8638,7 @@
       INTEGER            IHI, ILO, INFO, LDA, LWORK, N
 *     ..
 *     .. Array Arguments ..
-      COMPLEX*16        A( LDA, * ), TAU( * ), WORK( * )
+      COMPLEX*16         A( LDA, * ), TAU( * ), WORK( * )
 *     ..
 *
 *  =====================================================================
@@ -8547,7 +8647,7 @@
       INTEGER            NBMAX, LDT, TSIZE
       PARAMETER          ( NBMAX = 64, LDT = NBMAX+1,
      $                     TSIZE = LDT*NBMAX )
-      COMPLEX*16        ZERO, ONE
+      COMPLEX*16         ZERO, ONE
       PARAMETER          ( ZERO = ( 0.0D+0, 0.0D+0 ),
      $                     ONE = ( 1.0D+0, 0.0D+0 ) )
 *     ..
@@ -8555,10 +8655,11 @@
       LOGICAL            LQUERY
       INTEGER            I, IB, IINFO, IWT, J, LDWORK, LWKOPT, NB,
      $                   NBMIN, NH, NX
-      COMPLEX*16        EI
+      COMPLEX*16         EI
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           ZAXPY, ZGEHD2, ZGEMM, ZLAHR2, ZLARFB, ZTRMM,
+      EXTERNAL           ZAXPY, ZGEHD2, ZGEMM, ZLAHR2, ZLARFB,
+     $                   ZTRMM,
      $                   XERBLA
 *     ..
 *     .. Intrinsic Functions ..
@@ -8586,12 +8687,18 @@
          INFO = -8
       END IF
 *
+      NH = IHI - ILO + 1
       IF( INFO.EQ.0 ) THEN
 *
 *        Compute the workspace requirements
 *
-         NB = MIN( NBMAX, ILAENV( 1, 'ZGEHRD', ' ', N, ILO, IHI, -1 ) )
-         LWKOPT = N*NB + TSIZE
+         IF( NH.LE.1 ) THEN
+            LWKOPT = 1
+         ELSE
+            NB = MIN( NBMAX, ILAENV( 1, 'ZGEHRD', ' ', N, ILO, IHI,
+     $                              -1 ) )
+            LWKOPT = N*NB + TSIZE
+         END IF
          WORK( 1 ) = LWKOPT
       ENDIF
 *
@@ -8613,7 +8720,6 @@
 *
 *     Quick return if possible
 *
-      NH = IHI - ILO + 1
       IF( NH.LE.1 ) THEN
          WORK( 1 ) = 1
          RETURN
@@ -8633,7 +8739,7 @@
 *
 *           Determine if workspace is large enough for blocked code
 *
-            IF( LWORK.LT.N*NB+TSIZE ) THEN
+            IF( LWORK.LT.LWKOPT ) THEN
 *
 *              Not enough workspace to use optimal NB:  determine the
 *              minimum value of NB, and reduce NB or force use of
@@ -8864,10 +8970,9 @@
 *     ..
 *     .. Local Scalars ..
       INTEGER            I, K
-      COMPLEX*16         ALPHA
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           XERBLA, ZLACGV, ZLARF, ZLARFG
+      EXTERNAL           XERBLA, ZLACGV, ZLARF1F, ZLARFG
 *     ..
 *     .. Intrinsic Functions ..
       INTRINSIC          MAX, MIN
@@ -8896,18 +9001,16 @@
 *        Generate elementary reflector H(i) to annihilate A(i,i+1:n)
 *
          CALL ZLACGV( N-I+1, A( I, I ), LDA )
-         ALPHA = A( I, I )
-         CALL ZLARFG( N-I+1, ALPHA, A( I, MIN( I+1, N ) ), LDA,
+         CALL ZLARFG( N-I+1, A( I, I ), A( I, MIN( I+1, N ) ), LDA,
      $                TAU( I ) )
          IF( I.LT.M ) THEN
 *
 *           Apply H(i) to A(i+1:m,i:n) from the right
 *
-            A( I, I ) = ONE
-            CALL ZLARF( 'Right', M-I, N-I+1, A( I, I ), LDA, TAU( I ),
-     $                  A( I+1, I ), LDA, WORK )
+            CALL ZLARF1F( 'Right', M-I, N-I+1, A( I, I ), LDA,
+     $                    TAU( I ),
+     $                    A( I+1, I ), LDA, WORK )
          END IF
-         A( I, I ) = ALPHA
          CALL ZLACGV( N-I+1, A( I, I ), LDA )
    10 CONTINUE
       RETURN
@@ -9010,7 +9113,8 @@
 *> \param[in] LWORK
 *> \verbatim
 *>          LWORK is INTEGER
-*>          The dimension of the array WORK.  LWORK >= max(1,M).
+*>          The dimension of the array WORK.
+*>          LWORK >= 1, if MIN(M,N) = 0, and LWORK >= M, otherwise.
 *>          For optimum performance LWORK >= M*NB, where NB is the
 *>          optimal blocksize.
 *>
@@ -9091,9 +9195,8 @@
 *     Test the input arguments
 *
       INFO = 0
+      K = MIN( M, N )
       NB = ILAENV( 1, 'ZGELQF', ' ', M, N, -1, -1 )
-      LWKOPT = M*NB
-      WORK( 1 ) = LWKOPT
       LQUERY = ( LWORK.EQ.-1 )
       IF( M.LT.0 ) THEN
          INFO = -1
@@ -9101,19 +9204,25 @@
          INFO = -2
       ELSE IF( LDA.LT.MAX( 1, M ) ) THEN
          INFO = -4
-      ELSE IF( LWORK.LT.MAX( 1, M ) .AND. .NOT.LQUERY ) THEN
-         INFO = -7
+      ELSE IF( .NOT.LQUERY ) THEN
+         IF( LWORK.LE.0 .OR. ( N.GT.0 .AND. LWORK.LT.MAX( 1, M ) ) )
+     $      INFO = -7
       END IF
       IF( INFO.NE.0 ) THEN
          CALL XERBLA( 'ZGELQF', -INFO )
          RETURN
       ELSE IF( LQUERY ) THEN
+         IF( K.EQ.0 ) THEN
+            LWKOPT = 1
+         ELSE
+            LWKOPT = M*NB
+         END IF
+         WORK( 1 ) = LWKOPT
          RETURN
       END IF
 *
 *     Quick return if possible
 *
-      K = MIN( M, N )
       IF( K.EQ.0 ) THEN
          WORK( 1 ) = 1
          RETURN
@@ -9162,7 +9271,8 @@
 *              Form the triangular factor of the block reflector
 *              H = H(i) H(i+1) . . . H(i+ib-1)
 *
-               CALL ZLARFT( 'Forward', 'Rowwise', N-I+1, IB, A( I, I ),
+               CALL ZLARFT( 'Forward', 'Rowwise', N-I+1, IB, A( I,
+     $                      I ),
      $                      LDA, TAU( I ), WORK, LDWORK )
 *
 *              Apply H to A(i+ib:m,i:n) from the right
@@ -9228,7 +9338,17 @@
 *>
 *> ZGELS solves overdetermined or underdetermined complex linear systems
 *> involving an M-by-N matrix A, or its conjugate-transpose, using a QR
-*> or LQ factorization of A.  It is assumed that A has full rank.
+*> or LQ factorization of A.
+*>
+*> It is assumed that A has full rank, and only a rudimentary protection
+*> against rank-deficient matrices is provided. This subroutine only detects
+*> exact rank-deficiency, where a diagonal element of the triangular factor
+*> of A is exactly zero.
+*>
+*> It is conceivable for one (or more) of the diagonal elements of the triangular
+*> factor of A to be subnormally tiny numbers without this subroutine signalling
+*> an error. The solutions computed for such almost-rank-deficient matrices may
+*> be less accurate due to a loss of numerical precision.
 *>
 *> The following options are provided:
 *>
@@ -9352,7 +9472,7 @@
 *>          = 0:  successful exit
 *>          < 0:  if INFO = -i, the i-th argument had an illegal value
 *>          > 0:  if INFO =  i, the i-th diagonal element of the
-*>                triangular factor of A is zero, so that A does not have
+*>                triangular factor of A is exactly zero, so that A does not have
 *>                full rank; the least squares solution could not be
 *>                computed.
 *> \endverbatim
@@ -9368,7 +9488,8 @@
 *> \ingroup gels
 *
 *  =====================================================================
-      SUBROUTINE ZGELS( TRANS, M, N, NRHS, A, LDA, B, LDB, WORK, LWORK,
+      SUBROUTINE ZGELS( TRANS, M, N, NRHS, A, LDA, B, LDB, WORK,
+     $                  LWORK,
      $                  INFO )
 *
 *  -- LAPACK driver routine --
@@ -9406,7 +9527,8 @@
       EXTERNAL           LSAME, ILAENV, DLAMCH, ZLANGE
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           XERBLA, ZGELQF, ZGEQRF, ZLASCL, ZLASET,
+      EXTERNAL           XERBLA, ZGELQF, ZGEQRF, ZLASCL,
+     $                   ZLASET,
      $                   ZTRTRS, ZUNMLQ, ZUNMQR
 *     ..
 *     .. Intrinsic Functions ..
@@ -9419,7 +9541,8 @@
       INFO = 0
       MN = MIN( M, N )
       LQUERY = ( LWORK.EQ.-1 )
-      IF( .NOT.( LSAME( TRANS, 'N' ) .OR. LSAME( TRANS, 'C' ) ) ) THEN
+      IF( .NOT.( LSAME( TRANS, 'N' ) .OR.
+     $    LSAME( TRANS, 'C' ) ) ) THEN
          INFO = -1
       ELSE IF( M.LT.0 ) THEN
          INFO = -2
@@ -9479,7 +9602,8 @@
 *     Quick return if possible
 *
       IF( MIN( M, N, NRHS ).EQ.0 ) THEN
-         CALL ZLASET( 'Full', MAX( M, N ), NRHS, CZERO, CZERO, B, LDB )
+         CALL ZLASET( 'Full', MAX( M, N ), NRHS, CZERO, CZERO, B,
+     $                LDB )
          RETURN
       END IF
 *
@@ -9537,7 +9661,8 @@
 *
 *        compute QR factorization of A
 *
-         CALL ZGEQRF( M, N, A, LDA, WORK( 1 ), WORK( MN+1 ), LWORK-MN,
+         CALL ZGEQRF( M, N, A, LDA, WORK( 1 ), WORK( MN+1 ),
+     $                LWORK-MN,
      $                INFO )
 *
 *        workspace at least N, optimally N*NB
@@ -9548,7 +9673,8 @@
 *
 *           B(1:M,1:NRHS) := Q**H * B(1:M,1:NRHS)
 *
-            CALL ZUNMQR( 'Left', 'Conjugate transpose', M, NRHS, N, A,
+            CALL ZUNMQR( 'Left', 'Conjugate transpose', M, NRHS, N,
+     $                   A,
      $                   LDA, WORK( 1 ), B, LDB, WORK( MN+1 ), LWORK-MN,
      $                   INFO )
 *
@@ -9556,7 +9682,8 @@
 *
 *           B(1:N,1:NRHS) := inv(R) * B(1:N,1:NRHS)
 *
-            CALL ZTRTRS( 'Upper', 'No transpose', 'Non-unit', N, NRHS,
+            CALL ZTRTRS( 'Upper', 'No transpose', 'Non-unit', N,
+     $                   NRHS,
      $                   A, LDA, B, LDB, INFO )
 *
             IF( INFO.GT.0 ) THEN
@@ -9602,7 +9729,8 @@
 *
 *        Compute LQ factorization of A
 *
-         CALL ZGELQF( M, N, A, LDA, WORK( 1 ), WORK( MN+1 ), LWORK-MN,
+         CALL ZGELQF( M, N, A, LDA, WORK( 1 ), WORK( MN+1 ),
+     $                LWORK-MN,
      $                INFO )
 *
 *        workspace at least M, optimally M*NB.
@@ -9613,7 +9741,8 @@
 *
 *           B(1:M,1:NRHS) := inv(L) * B(1:M,1:NRHS)
 *
-            CALL ZTRTRS( 'Lower', 'No transpose', 'Non-unit', M, NRHS,
+            CALL ZTRTRS( 'Lower', 'No transpose', 'Non-unit', M,
+     $                   NRHS,
      $                   A, LDA, B, LDB, INFO )
 *
             IF( INFO.GT.0 ) THEN
@@ -9630,7 +9759,8 @@
 *
 *           B(1:N,1:NRHS) := Q(1:N,:)**H * B(1:M,1:NRHS)
 *
-            CALL ZUNMLQ( 'Left', 'Conjugate transpose', N, NRHS, M, A,
+            CALL ZUNMLQ( 'Left', 'Conjugate transpose', N, NRHS, M,
+     $                   A,
      $                   LDA, WORK( 1 ), B, LDB, WORK( MN+1 ), LWORK-MN,
      $                   INFO )
 *
@@ -9939,7 +10069,8 @@
       DOUBLE PRECISION   ANRM, BIGNUM, BNRM, EPS, SFMIN, SMLNUM
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           DLASCL, DLASET, XERBLA, ZGEBRD, ZGELQF, ZGEQRF,
+      EXTERNAL           DLASCL, DLASET, XERBLA, ZGEBRD, ZGELQF,
+     $                   ZGEQRF,
      $                   ZLACPY, ZLALSD, ZLASCL, ZLASET, ZUNMBR, ZUNMLQ,
      $                   ZUNMQR
 *     ..
@@ -9996,9 +10127,11 @@
 *                        columns.
 *
                MM = N
-               MAXWRK = MAX( MAXWRK, N*ILAENV( 1, 'ZGEQRF', ' ', M, N,
+               MAXWRK = MAX( MAXWRK, N*ILAENV( 1, 'ZGEQRF', ' ', M,
+     $                       N,
      $                       -1, -1 ) )
-               MAXWRK = MAX( MAXWRK, NRHS*ILAENV( 1, 'ZUNMQR', 'LC', M,
+               MAXWRK = MAX( MAXWRK, NRHS*ILAENV( 1, 'ZUNMQR', 'LC',
+     $                       M,
      $                       NRHS, N, -1 ) )
             END IF
             IF( M.GE.N ) THEN
@@ -10030,7 +10163,8 @@
      $                          'ZGEBRD', ' ', M, M, -1, -1 ) )
                   MAXWRK = MAX( MAXWRK, M*M + 4*M + NRHS*ILAENV( 1,
      $                          'ZUNMBR', 'QLC', M, NRHS, M, -1 ) )
-                  MAXWRK = MAX( MAXWRK, M*M + 4*M + ( M - 1 )*ILAENV( 1,
+                  MAXWRK = MAX( MAXWRK,
+     $                          M*M + 4*M + ( M - 1 )*ILAENV( 1,
      $                          'ZUNMLQ', 'LC', N, NRHS, M, -1 ) )
                   IF( NRHS.GT.1 ) THEN
                      MAXWRK = MAX( MAXWRK, M*M + M + M*NRHS )
@@ -10046,9 +10180,11 @@
 *
 *                 Path 2 - underdetermined.
 *
-                  MAXWRK = 2*M + ( N + M )*ILAENV( 1, 'ZGEBRD', ' ', M,
+                  MAXWRK = 2*M + ( N + M )*ILAENV( 1, 'ZGEBRD', ' ',
+     $                             M,
      $                     N, -1, -1 )
-                  MAXWRK = MAX( MAXWRK, 2*M + NRHS*ILAENV( 1, 'ZUNMBR',
+                  MAXWRK = MAX( MAXWRK, 2*M + NRHS*ILAENV( 1,
+     $                          'ZUNMBR',
      $                          'QLC', M, NRHS, M, -1 ) )
                   MAXWRK = MAX( MAXWRK, 2*M + M*ILAENV( 1, 'ZUNMBR',
      $                          'PLN', N, NRHS, M, -1 ) )
@@ -10122,20 +10258,23 @@
 *
 *        Scale matrix norm up to SMLNUM.
 *
-         CALL ZLASCL( 'G', 0, 0, BNRM, SMLNUM, M, NRHS, B, LDB, INFO )
+         CALL ZLASCL( 'G', 0, 0, BNRM, SMLNUM, M, NRHS, B, LDB,
+     $                INFO )
          IBSCL = 1
       ELSE IF( BNRM.GT.BIGNUM ) THEN
 *
 *        Scale matrix norm down to BIGNUM.
 *
-         CALL ZLASCL( 'G', 0, 0, BNRM, BIGNUM, M, NRHS, B, LDB, INFO )
+         CALL ZLASCL( 'G', 0, 0, BNRM, BIGNUM, M, NRHS, B, LDB,
+     $                INFO )
          IBSCL = 2
       END IF
 *
 *     If M < N make sure B(M+1:N,:) = 0
 *
       IF( M.LT.N )
-     $   CALL ZLASET( 'F', N-M, NRHS, CZERO, CZERO, B( M+1, 1 ), LDB )
+     $   CALL ZLASET( 'F', N-M, NRHS, CZERO, CZERO, B( M+1, 1 ),
+     $                LDB )
 *
 *     Overdetermined case.
 *
@@ -10163,7 +10302,8 @@
 *           (RWorkspace: need N)
 *           (CWorkspace: need NRHS, prefer NRHS*NB)
 *
-            CALL ZUNMQR( 'L', 'C', M, NRHS, N, A, LDA, WORK( ITAU ), B,
+            CALL ZUNMQR( 'L', 'C', M, NRHS, N, A, LDA, WORK( ITAU ),
+     $                   B,
      $                   LDB, WORK( NWORK ), LWORK-NWORK+1, INFO )
 *
 *           Zero out below R.
@@ -10191,7 +10331,8 @@
 *        Multiply B by transpose of left bidiagonalizing vectors of R.
 *        (CWorkspace: need 2*N+NRHS, prefer 2*N+NRHS*NB)
 *
-         CALL ZUNMBR( 'Q', 'L', 'C', MM, NRHS, N, A, LDA, WORK( ITAUQ ),
+         CALL ZUNMBR( 'Q', 'L', 'C', MM, NRHS, N, A, LDA,
+     $                WORK( ITAUQ ),
      $                B, LDB, WORK( NWORK ), LWORK-NWORK+1, INFO )
 *
 *        Solve the bidiagonal least squares problem.
@@ -10205,7 +10346,8 @@
 *
 *        Multiply B by right bidiagonalizing vectors of R.
 *
-         CALL ZUNMBR( 'P', 'L', 'N', N, NRHS, N, A, LDA, WORK( ITAUP ),
+         CALL ZUNMBR( 'P', 'L', 'N', N, NRHS, N, A, LDA,
+     $                WORK( ITAUP ),
      $                B, LDB, WORK( NWORK ), LWORK-NWORK+1, INFO )
 *
       ELSE IF( N.GE.MNTHR .AND. LWORK.GE.4*M+M*M+
@@ -10270,7 +10412,8 @@
 *
 *        Zero out below first M rows of B.
 *
-         CALL ZLASET( 'F', N-M, NRHS, CZERO, CZERO, B( M+1, 1 ), LDB )
+         CALL ZLASET( 'F', N-M, NRHS, CZERO, CZERO, B( M+1, 1 ),
+     $                LDB )
          NWORK = ITAU + M
 *
 *        Multiply transpose(Q) by B.
@@ -10300,7 +10443,8 @@
 *        Multiply B by transpose of left bidiagonalizing vectors.
 *        (CWorkspace: need 2*M+NRHS, prefer 2*M+NRHS*NB)
 *
-         CALL ZUNMBR( 'Q', 'L', 'C', M, NRHS, N, A, LDA, WORK( ITAUQ ),
+         CALL ZUNMBR( 'Q', 'L', 'C', M, NRHS, N, A, LDA,
+     $                WORK( ITAUQ ),
      $                B, LDB, WORK( NWORK ), LWORK-NWORK+1, INFO )
 *
 *        Solve the bidiagonal least squares problem.
@@ -10314,7 +10458,8 @@
 *
 *        Multiply B by right bidiagonalizing vectors of A.
 *
-         CALL ZUNMBR( 'P', 'L', 'N', N, NRHS, M, A, LDA, WORK( ITAUP ),
+         CALL ZUNMBR( 'P', 'L', 'N', N, NRHS, M, A, LDA,
+     $                WORK( ITAUP ),
      $                B, LDB, WORK( NWORK ), LWORK-NWORK+1, INFO )
 *
       END IF
@@ -10322,18 +10467,22 @@
 *     Undo scaling.
 *
       IF( IASCL.EQ.1 ) THEN
-         CALL ZLASCL( 'G', 0, 0, ANRM, SMLNUM, N, NRHS, B, LDB, INFO )
+         CALL ZLASCL( 'G', 0, 0, ANRM, SMLNUM, N, NRHS, B, LDB,
+     $                INFO )
          CALL DLASCL( 'G', 0, 0, SMLNUM, ANRM, MINMN, 1, S, MINMN,
      $                INFO )
       ELSE IF( IASCL.EQ.2 ) THEN
-         CALL ZLASCL( 'G', 0, 0, ANRM, BIGNUM, N, NRHS, B, LDB, INFO )
+         CALL ZLASCL( 'G', 0, 0, ANRM, BIGNUM, N, NRHS, B, LDB,
+     $                INFO )
          CALL DLASCL( 'G', 0, 0, BIGNUM, ANRM, MINMN, 1, S, MINMN,
      $                INFO )
       END IF
       IF( IBSCL.EQ.1 ) THEN
-         CALL ZLASCL( 'G', 0, 0, SMLNUM, BNRM, N, NRHS, B, LDB, INFO )
+         CALL ZLASCL( 'G', 0, 0, SMLNUM, BNRM, N, NRHS, B, LDB,
+     $                INFO )
       ELSE IF( IBSCL.EQ.2 ) THEN
-         CALL ZLASCL( 'G', 0, 0, BIGNUM, BNRM, N, NRHS, B, LDB, INFO )
+         CALL ZLASCL( 'G', 0, 0, BIGNUM, BNRM, N, NRHS, B, LDB,
+     $                INFO )
       END IF
 *
    10 CONTINUE
@@ -10529,7 +10678,8 @@
      $                   NBMIN, NFXD, NX, SM, SMINMN, SN, TOPBMN
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           XERBLA, ZGEQRF, ZLAQP2, ZLAQPS, ZSWAP, ZUNMQR
+      EXTERNAL           XERBLA, ZGEQRF, ZLAQP2, ZLAQPS, ZSWAP,
+     $                   ZUNMQR
 *     ..
 *     .. External Functions ..
       INTEGER            ILAENV
@@ -10612,7 +10762,8 @@
 *CC         CALL ZUNM2R( 'Left', 'Conjugate Transpose', M, N-NA,
 *CC  $                   NA, A, LDA, TAU, A( 1, NA+1 ), LDA, WORK,
 *CC  $                   INFO )
-            CALL ZUNMQR( 'Left', 'Conjugate Transpose', M, N-NA, NA, A,
+            CALL ZUNMQR( 'Left', 'Conjugate Transpose', M, N-NA, NA,
+     $                   A,
      $                   LDA, TAU, A( 1, NA+1 ), LDA, WORK, LWORK,
      $                   INFO )
             IWS = MAX( IWS, INT( WORK( 1 ) ) )
@@ -10654,7 +10805,8 @@
 *                 determine the minimum value of NB.
 *
                   NB = LWORK / ( SN+1 )
-                  NBMIN = MAX( 2, ILAENV( INBMIN, 'ZGEQRF', ' ', SM, SN,
+                  NBMIN = MAX( 2, ILAENV( INBMIN, 'ZGEQRF', ' ', SM,
+     $                         SN,
      $                    -1, -1 ) )
 *
 *
@@ -10863,10 +11015,9 @@
 *     ..
 *     .. Local Scalars ..
       INTEGER            I, K
-      COMPLEX*16         ALPHA
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           XERBLA, ZLARF, ZLARFG
+      EXTERNAL           XERBLA, ZLARF1F, ZLARFG
 *     ..
 *     .. Intrinsic Functions ..
       INTRINSIC          DCONJG, MAX, MIN
@@ -10900,11 +11051,8 @@
 *
 *           Apply H(i)**H to A(i:m,i+1:n) from the left
 *
-            ALPHA = A( I, I )
-            A( I, I ) = ONE
-            CALL ZLARF( 'Left', M-I+1, N-I, A( I, I ), 1,
-     $                  DCONJG( TAU( I ) ), A( I, I+1 ), LDA, WORK )
-            A( I, I ) = ALPHA
+            CALL ZLARF1F( 'Left', M-I+1, N-I, A( I, I ), 1,
+     $                    CONJG( TAU( I ) ), A( I, I+1 ), LDA, WORK )
          END IF
    10 CONTINUE
       RETURN
@@ -11377,7 +11525,8 @@
 *> \ingroup gerfs
 *
 *  =====================================================================
-      SUBROUTINE ZGERFS( TRANS, N, NRHS, A, LDA, AF, LDAF, IPIV, B, LDB,
+      SUBROUTINE ZGERFS( TRANS, N, NRHS, A, LDA, AF, LDAF, IPIV, B,
+     $                   LDB,
      $                   X, LDX, FERR, BERR, WORK, RWORK, INFO )
 *
 *  -- LAPACK computational routine --
@@ -11425,7 +11574,8 @@
       EXTERNAL           LSAME, DLAMCH
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           XERBLA, ZAXPY, ZCOPY, ZGEMV, ZGETRS, ZLACN2
+      EXTERNAL           XERBLA, ZAXPY, ZCOPY, ZGEMV, ZGETRS,
+     $                   ZLACN2
 *     ..
 *     .. Intrinsic Functions ..
       INTRINSIC          ABS, DBLE, DIMAG, MAX
@@ -11503,7 +11653,8 @@
 *        where op(A) = A, A**T, or A**H, depending on TRANS.
 *
          CALL ZCOPY( N, B( 1, J ), 1, WORK, 1 )
-         CALL ZGEMV( TRANS, N, N, -ONE, A, LDA, X( 1, J ), 1, ONE, WORK,
+         CALL ZGEMV( TRANS, N, N, -ONE, A, LDA, X( 1, J ), 1, ONE,
+     $               WORK,
      $               1 )
 *
 *        Compute componentwise relative backward error from formula
@@ -12107,7 +12258,8 @@
       COMPLEX*16         CDUM( 1 )
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           DBDSDC, DLASCL, XERBLA, ZGEBRD, ZGELQF, ZGEMM,
+      EXTERNAL           DBDSDC, DLASCL, XERBLA, ZGEBRD, ZGELQF,
+     $                   ZGEMM,
      $                   ZGEQRF, ZLACP2, ZLACPY, ZLACRM, ZLARCM, ZLASCL,
      $                   ZLASET, ZUNGBR, ZUNGLQ, ZUNGQR, ZUNMBR
 *     ..
@@ -12182,7 +12334,8 @@
      $                   CDUM(1), CDUM(1), -1, IERR )
             LWORK_ZGEBRD_NN = INT( CDUM(1) )
 *
-            CALL ZGEQRF( M, N, CDUM(1), M, CDUM(1), CDUM(1), -1, IERR )
+            CALL ZGEQRF( M, N, CDUM(1), M, CDUM(1), CDUM(1), -1,
+     $                   IERR )
             LWORK_ZGEQRF_MN = INT( CDUM(1) )
 *
             CALL ZUNGBR( 'P', N, N, N, CDUM(1), N, CDUM(1), CDUM(1),
@@ -12323,7 +12476,8 @@
      $                   CDUM(1), CDUM(1), -1, IERR )
             LWORK_ZGEBRD_MM = INT( CDUM(1) )
 *
-            CALL ZGELQF( M, N, CDUM(1), M, CDUM(1), CDUM(1), -1, IERR )
+            CALL ZGELQF( M, N, CDUM(1), M, CDUM(1), CDUM(1), -1,
+     $                   IERR )
             LWORK_ZGELQF_MN = INT( CDUM(1) )
 *
             CALL ZUNGBR( 'P', M, N, M, CDUM(1), M, CDUM(1), CDUM(1),
@@ -12513,7 +12667,8 @@
 *              CWorkspace: prefer N [tau] + N*NB [work]
 *              RWorkspace: need   0
 *
-               CALL ZGEQRF( M, N, A, LDA, WORK( ITAU ), WORK( NWORK ),
+               CALL ZGEQRF( M, N, A, LDA, WORK( ITAU ),
+     $                      WORK( NWORK ),
      $                      LWORK-NWORK+1, IERR )
 *
 *              Zero out below R
@@ -12530,7 +12685,8 @@
 *              CWorkspace: prefer 2*N [tauq, taup] + 2*N*NB [work]
 *              RWorkspace: need   N [e]
 *
-               CALL ZGEBRD( N, N, A, LDA, S, RWORK( IE ), WORK( ITAUQ ),
+               CALL ZGEBRD( N, N, A, LDA, S, RWORK( IE ),
+     $                      WORK( ITAUQ ),
      $                      WORK( ITAUP ), WORK( NWORK ), LWORK-NWORK+1,
      $                      IERR )
                NRWORK = IE + N
@@ -12570,13 +12726,15 @@
 *              CWorkspace: prefer N*N [U] + N*N [R] + N [tau] + N*NB [work]
 *              RWorkspace: need   0
 *
-               CALL ZGEQRF( M, N, A, LDA, WORK( ITAU ), WORK( NWORK ),
+               CALL ZGEQRF( M, N, A, LDA, WORK( ITAU ),
+     $                      WORK( NWORK ),
      $                      LWORK-NWORK+1, IERR )
 *
 *              Copy R to WORK( IR ), zeroing out below it
 *
                CALL ZLACPY( 'U', N, N, A, LDA, WORK( IR ), LDWRKR )
-               CALL ZLASET( 'L', N-1, N-1, CZERO, CZERO, WORK( IR+1 ),
+               CALL ZLASET( 'L', N-1, N-1, CZERO, CZERO,
+     $                      WORK( IR+1 ),
      $                      LDWRKR )
 *
 *              Generate Q in A
@@ -12609,7 +12767,8 @@
                IRU = IE + N
                IRVT = IRU + N*N
                NRWORK = IRVT + N*N
-               CALL DBDSDC( 'U', 'I', N, S, RWORK( IE ), RWORK( IRU ),
+               CALL DBDSDC( 'U', 'I', N, S, RWORK( IE ),
+     $                      RWORK( IRU ),
      $                      N, RWORK( IRVT ), N, DUM, IDUM,
      $                      RWORK( NRWORK ), IWORK, INFO )
 *
@@ -12621,7 +12780,8 @@
 *
                CALL ZLACP2( 'F', N, N, RWORK( IRU ), N, WORK( IU ),
      $                      LDWRKU )
-               CALL ZUNMBR( 'Q', 'L', 'N', N, N, N, WORK( IR ), LDWRKR,
+               CALL ZUNMBR( 'Q', 'L', 'N', N, N, N, WORK( IR ),
+     $                      LDWRKR,
      $                      WORK( ITAUQ ), WORK( IU ), LDWRKU,
      $                      WORK( NWORK ), LWORK-NWORK+1, IERR )
 *
@@ -12632,7 +12792,8 @@
 *              RWorkspace: need   0
 *
                CALL ZLACP2( 'F', N, N, RWORK( IRVT ), N, VT, LDVT )
-               CALL ZUNMBR( 'P', 'R', 'C', N, N, N, WORK( IR ), LDWRKR,
+               CALL ZUNMBR( 'P', 'R', 'C', N, N, N, WORK( IR ),
+     $                      LDWRKR,
      $                      WORK( ITAUP ), VT, LDVT, WORK( NWORK ),
      $                      LWORK-NWORK+1, IERR )
 *
@@ -12670,13 +12831,15 @@
 *              CWorkspace: prefer N*N [R] + N [tau] + N*NB [work]
 *              RWorkspace: need   0
 *
-               CALL ZGEQRF( M, N, A, LDA, WORK( ITAU ), WORK( NWORK ),
+               CALL ZGEQRF( M, N, A, LDA, WORK( ITAU ),
+     $                      WORK( NWORK ),
      $                      LWORK-NWORK+1, IERR )
 *
 *              Copy R to WORK(IR), zeroing out below it
 *
                CALL ZLACPY( 'U', N, N, A, LDA, WORK( IR ), LDWRKR )
-               CALL ZLASET( 'L', N-1, N-1, CZERO, CZERO, WORK( IR+1 ),
+               CALL ZLASET( 'L', N-1, N-1, CZERO, CZERO,
+     $                      WORK( IR+1 ),
      $                      LDWRKR )
 *
 *              Generate Q in A
@@ -12709,7 +12872,8 @@
                IRU = IE + N
                IRVT = IRU + N*N
                NRWORK = IRVT + N*N
-               CALL DBDSDC( 'U', 'I', N, S, RWORK( IE ), RWORK( IRU ),
+               CALL DBDSDC( 'U', 'I', N, S, RWORK( IE ),
+     $                      RWORK( IRU ),
      $                      N, RWORK( IRVT ), N, DUM, IDUM,
      $                      RWORK( NRWORK ), IWORK, INFO )
 *
@@ -12720,7 +12884,8 @@
 *              RWorkspace: need   0
 *
                CALL ZLACP2( 'F', N, N, RWORK( IRU ), N, U, LDU )
-               CALL ZUNMBR( 'Q', 'L', 'N', N, N, N, WORK( IR ), LDWRKR,
+               CALL ZUNMBR( 'Q', 'L', 'N', N, N, N, WORK( IR ),
+     $                      LDWRKR,
      $                      WORK( ITAUQ ), U, LDU, WORK( NWORK ),
      $                      LWORK-NWORK+1, IERR )
 *
@@ -12731,7 +12896,8 @@
 *              RWorkspace: need   0
 *
                CALL ZLACP2( 'F', N, N, RWORK( IRVT ), N, VT, LDVT )
-               CALL ZUNMBR( 'P', 'R', 'C', N, N, N, WORK( IR ), LDWRKR,
+               CALL ZUNMBR( 'P', 'R', 'C', N, N, N, WORK( IR ),
+     $                      LDWRKR,
      $                      WORK( ITAUP ), VT, LDVT, WORK( NWORK ),
      $                      LWORK-NWORK+1, IERR )
 *
@@ -12741,7 +12907,8 @@
 *              RWorkspace: need   0
 *
                CALL ZLACPY( 'F', N, N, U, LDU, WORK( IR ), LDWRKR )
-               CALL ZGEMM( 'N', 'N', M, N, N, CONE, A, LDA, WORK( IR ),
+               CALL ZGEMM( 'N', 'N', M, N, N, CONE, A, LDA,
+     $                     WORK( IR ),
      $                     LDWRKR, CZERO, U, LDU )
 *
             ELSE IF( WNTQA ) THEN
@@ -12763,7 +12930,8 @@
 *              CWorkspace: prefer N*N [U] + N [tau] + N*NB [work]
 *              RWorkspace: need   0
 *
-               CALL ZGEQRF( M, N, A, LDA, WORK( ITAU ), WORK( NWORK ),
+               CALL ZGEQRF( M, N, A, LDA, WORK( ITAU ),
+     $                      WORK( NWORK ),
      $                      LWORK-NWORK+1, IERR )
                CALL ZLACPY( 'L', M, N, A, LDA, U, LDU )
 *
@@ -12789,7 +12957,8 @@
 *              CWorkspace: prefer N*N [U] + 2*N [tauq, taup] + 2*N*NB [work]
 *              RWorkspace: need   N [e]
 *
-               CALL ZGEBRD( N, N, A, LDA, S, RWORK( IE ), WORK( ITAUQ ),
+               CALL ZGEBRD( N, N, A, LDA, S, RWORK( IE ),
+     $                      WORK( ITAUQ ),
      $                      WORK( ITAUP ), WORK( NWORK ), LWORK-NWORK+1,
      $                      IERR )
                IRU = IE + N
@@ -12802,7 +12971,8 @@
 *              CWorkspace: need   0
 *              RWorkspace: need   N [e] + N*N [RU] + N*N [RVT] + BDSPAC
 *
-               CALL DBDSDC( 'U', 'I', N, S, RWORK( IE ), RWORK( IRU ),
+               CALL DBDSDC( 'U', 'I', N, S, RWORK( IE ),
+     $                      RWORK( IRU ),
      $                      N, RWORK( IRVT ), N, DUM, IDUM,
      $                      RWORK( NRWORK ), IWORK, INFO )
 *
@@ -12834,7 +13004,8 @@
 *              CWorkspace: need   N*N [U]
 *              RWorkspace: need   0
 *
-               CALL ZGEMM( 'N', 'N', M, N, N, CONE, U, LDU, WORK( IU ),
+               CALL ZGEMM( 'N', 'N', M, N, N, CONE, U, LDU,
+     $                     WORK( IU ),
      $                     LDWRKU, CZERO, A, LDA )
 *
 *              Copy left singular vectors of A from A to U
@@ -12872,7 +13043,8 @@
 *              CWorkspace: need   0
 *              RWorkspace: need   N [e] + BDSPAC
 *
-               CALL DBDSDC( 'U', 'N', N, S, RWORK( IE ), DUM, 1,DUM,1,
+               CALL DBDSDC( 'U', 'N', N, S, RWORK( IE ), DUM, 1,DUM,
+     $                      1,
      $                      DUM, IDUM, RWORK( NRWORK ), IWORK, INFO )
             ELSE IF( WNTQO ) THEN
                IU = NWORK
@@ -12917,7 +13089,8 @@
 *              CWorkspace: need   0
 *              RWorkspace: need   N [e] + N*N [RU] + N*N [RVT] + BDSPAC
 *
-               CALL DBDSDC( 'U', 'I', N, S, RWORK( IE ), RWORK( IRU ),
+               CALL DBDSDC( 'U', 'I', N, S, RWORK( IE ),
+     $                      RWORK( IRU ),
      $                      N, RWORK( IRVT ), N, DUM, IDUM,
      $                      RWORK( NRWORK ), IWORK, INFO )
 *
@@ -12940,7 +13113,8 @@
                NRWORK = IRVT
                DO 20 I = 1, M, LDWRKU
                   CHUNK = MIN( M-I+1, LDWRKU )
-                  CALL ZLACRM( CHUNK, N, A( I, 1 ), LDA, RWORK( IRU ),
+                  CALL ZLACRM( CHUNK, N, A( I, 1 ), LDA,
+     $                         RWORK( IRU ),
      $                         N, WORK( IU ), LDWRKU, RWORK( NRWORK ) )
                   CALL ZLACPY( 'F', CHUNK, N, WORK( IU ), LDWRKU,
      $                         A( I, 1 ), LDA )
@@ -12976,7 +13150,8 @@
                IRU = NRWORK
                IRVT = IRU + N*N
                NRWORK = IRVT + N*N
-               CALL DBDSDC( 'U', 'I', N, S, RWORK( IE ), RWORK( IRU ),
+               CALL DBDSDC( 'U', 'I', N, S, RWORK( IE ),
+     $                      RWORK( IRU ),
      $                      N, RWORK( IRVT ), N, DUM, IDUM,
      $                      RWORK( NRWORK ), IWORK, INFO )
 *
@@ -13028,7 +13203,8 @@
                IRU = NRWORK
                IRVT = IRU + N*N
                NRWORK = IRVT + N*N
-               CALL DBDSDC( 'U', 'I', N, S, RWORK( IE ), RWORK( IRU ),
+               CALL DBDSDC( 'U', 'I', N, S, RWORK( IE ),
+     $                      RWORK( IRU ),
      $                      N, RWORK( IRVT ), N, DUM, IDUM,
      $                      RWORK( NRWORK ), IWORK, INFO )
 *
@@ -13108,7 +13284,8 @@
 *              CWorkspace: need   0
 *              RWorkspace: need   N [e] + N*N [RU] + N*N [RVT] + BDSPAC
 *
-               CALL DBDSDC( 'U', 'I', N, S, RWORK( IE ), RWORK( IRU ),
+               CALL DBDSDC( 'U', 'I', N, S, RWORK( IE ),
+     $                      RWORK( IRU ),
      $                      N, RWORK( IRVT ), N, DUM, IDUM,
      $                      RWORK( NRWORK ), IWORK, INFO )
 *
@@ -13135,12 +13312,14 @@
 *
                   CALL ZLASET( 'F', M, N, CZERO, CZERO, WORK( IU ),
      $                         LDWRKU )
-                  CALL ZLACP2( 'F', N, N, RWORK( IRU ), N, WORK( IU ),
+                  CALL ZLACP2( 'F', N, N, RWORK( IRU ), N,
+     $                         WORK( IU ),
      $                         LDWRKU )
                   CALL ZUNMBR( 'Q', 'L', 'N', M, N, N, A, LDA,
      $                         WORK( ITAUQ ), WORK( IU ), LDWRKU,
      $                         WORK( NWORK ), LWORK-NWORK+1, IERR )
-                  CALL ZLACPY( 'F', M, N, WORK( IU ), LDWRKU, A, LDA )
+                  CALL ZLACPY( 'F', M, N, WORK( IU ), LDWRKU, A,
+     $                         LDA )
                ELSE
 *
 *                 Path 6o-slow
@@ -13182,7 +13361,8 @@
                IRU = NRWORK
                IRVT = IRU + N*N
                NRWORK = IRVT + N*N
-               CALL DBDSDC( 'U', 'I', N, S, RWORK( IE ), RWORK( IRU ),
+               CALL DBDSDC( 'U', 'I', N, S, RWORK( IE ),
+     $                      RWORK( IRU ),
      $                      N, RWORK( IRVT ), N, DUM, IDUM,
      $                      RWORK( NRWORK ), IWORK, INFO )
 *
@@ -13220,7 +13400,8 @@
                IRU = NRWORK
                IRVT = IRU + N*N
                NRWORK = IRVT + N*N
-               CALL DBDSDC( 'U', 'I', N, S, RWORK( IE ), RWORK( IRU ),
+               CALL DBDSDC( 'U', 'I', N, S, RWORK( IE ),
+     $                      RWORK( IRU ),
      $                      N, RWORK( IRVT ), N, DUM, IDUM,
      $                      RWORK( NRWORK ), IWORK, INFO )
 *
@@ -13278,7 +13459,8 @@
 *              CWorkspace: prefer M [tau] + M*NB [work]
 *              RWorkspace: need   0
 *
-               CALL ZGELQF( M, N, A, LDA, WORK( ITAU ), WORK( NWORK ),
+               CALL ZGELQF( M, N, A, LDA, WORK( ITAU ),
+     $                      WORK( NWORK ),
      $                      LWORK-NWORK+1, IERR )
 *
 *              Zero out above L
@@ -13295,7 +13477,8 @@
 *              CWorkspace: prefer 2*M [tauq, taup] + 2*M*NB [work]
 *              RWorkspace: need   M [e]
 *
-               CALL ZGEBRD( M, M, A, LDA, S, RWORK( IE ), WORK( ITAUQ ),
+               CALL ZGEBRD( M, M, A, LDA, S, RWORK( IE ),
+     $                      WORK( ITAUQ ),
      $                      WORK( ITAUP ), WORK( NWORK ), LWORK-NWORK+1,
      $                      IERR )
                NRWORK = IE + M
@@ -13340,7 +13523,8 @@
 *              CWorkspace: prefer M*M [VT] + M*M [L] + M [tau] + M*NB [work]
 *              RWorkspace: need   0
 *
-               CALL ZGELQF( M, N, A, LDA, WORK( ITAU ), WORK( NWORK ),
+               CALL ZGELQF( M, N, A, LDA, WORK( ITAU ),
+     $                      WORK( NWORK ),
      $                      LWORK-NWORK+1, IERR )
 *
 *              Copy L to WORK(IL), zeroing about above it
@@ -13379,7 +13563,8 @@
                IRU = IE + M
                IRVT = IRU + M*M
                NRWORK = IRVT + M*M
-               CALL DBDSDC( 'U', 'I', M, S, RWORK( IE ), RWORK( IRU ),
+               CALL DBDSDC( 'U', 'I', M, S, RWORK( IE ),
+     $                      RWORK( IRU ),
      $                      M, RWORK( IRVT ), M, DUM, IDUM,
      $                      RWORK( NRWORK ), IWORK, INFO )
 *
@@ -13390,7 +13575,8 @@
 *              RWorkspace: need   0
 *
                CALL ZLACP2( 'F', M, M, RWORK( IRU ), M, U, LDU )
-               CALL ZUNMBR( 'Q', 'L', 'N', M, M, M, WORK( IL ), LDWRKL,
+               CALL ZUNMBR( 'Q', 'L', 'N', M, M, M, WORK( IL ),
+     $                      LDWRKL,
      $                      WORK( ITAUQ ), U, LDU, WORK( NWORK ),
      $                      LWORK-NWORK+1, IERR )
 *
@@ -13402,7 +13588,8 @@
 *
                CALL ZLACP2( 'F', M, M, RWORK( IRVT ), M, WORK( IVT ),
      $                      LDWKVT )
-               CALL ZUNMBR( 'P', 'R', 'C', M, M, M, WORK( IL ), LDWRKL,
+               CALL ZUNMBR( 'P', 'R', 'C', M, M, M, WORK( IL ),
+     $                      LDWRKL,
      $                      WORK( ITAUP ), WORK( IVT ), LDWKVT,
      $                      WORK( NWORK ), LWORK-NWORK+1, IERR )
 *
@@ -13414,7 +13601,8 @@
 *
                DO 40 I = 1, N, CHUNK
                   BLK = MIN( N-I+1, CHUNK )
-                  CALL ZGEMM( 'N', 'N', M, BLK, M, CONE, WORK( IVT ), M,
+                  CALL ZGEMM( 'N', 'N', M, BLK, M, CONE, WORK( IVT ),
+     $                        M,
      $                        A( 1, I ), LDA, CZERO, WORK( IL ),
      $                        LDWRKL )
                   CALL ZLACPY( 'F', M, BLK, WORK( IL ), LDWRKL,
@@ -13440,7 +13628,8 @@
 *              CWorkspace: prefer M*M [L] + M [tau] + M*NB [work]
 *              RWorkspace: need   0
 *
-               CALL ZGELQF( M, N, A, LDA, WORK( ITAU ), WORK( NWORK ),
+               CALL ZGELQF( M, N, A, LDA, WORK( ITAU ),
+     $                      WORK( NWORK ),
      $                      LWORK-NWORK+1, IERR )
 *
 *              Copy L to WORK(IL), zeroing out above it
@@ -13479,7 +13668,8 @@
                IRU = IE + M
                IRVT = IRU + M*M
                NRWORK = IRVT + M*M
-               CALL DBDSDC( 'U', 'I', M, S, RWORK( IE ), RWORK( IRU ),
+               CALL DBDSDC( 'U', 'I', M, S, RWORK( IE ),
+     $                      RWORK( IRU ),
      $                      M, RWORK( IRVT ), M, DUM, IDUM,
      $                      RWORK( NRWORK ), IWORK, INFO )
 *
@@ -13490,7 +13680,8 @@
 *              RWorkspace: need   0
 *
                CALL ZLACP2( 'F', M, M, RWORK( IRU ), M, U, LDU )
-               CALL ZUNMBR( 'Q', 'L', 'N', M, M, M, WORK( IL ), LDWRKL,
+               CALL ZUNMBR( 'Q', 'L', 'N', M, M, M, WORK( IL ),
+     $                      LDWRKL,
      $                      WORK( ITAUQ ), U, LDU, WORK( NWORK ),
      $                      LWORK-NWORK+1, IERR )
 *
@@ -13501,7 +13692,8 @@
 *              RWorkspace: need   0
 *
                CALL ZLACP2( 'F', M, M, RWORK( IRVT ), M, VT, LDVT )
-               CALL ZUNMBR( 'P', 'R', 'C', M, M, M, WORK( IL ), LDWRKL,
+               CALL ZUNMBR( 'P', 'R', 'C', M, M, M, WORK( IL ),
+     $                      LDWRKL,
      $                      WORK( ITAUP ), VT, LDVT, WORK( NWORK ),
      $                      LWORK-NWORK+1, IERR )
 *
@@ -13511,7 +13703,8 @@
 *              RWorkspace: need   0
 *
                CALL ZLACPY( 'F', M, M, VT, LDVT, WORK( IL ), LDWRKL )
-               CALL ZGEMM( 'N', 'N', M, N, M, CONE, WORK( IL ), LDWRKL,
+               CALL ZGEMM( 'N', 'N', M, N, M, CONE, WORK( IL ),
+     $                     LDWRKL,
      $                     A, LDA, CZERO, VT, LDVT )
 *
             ELSE IF( WNTQA ) THEN
@@ -13533,7 +13726,8 @@
 *              CWorkspace: prefer M*M [VT] + M [tau] + M*NB [work]
 *              RWorkspace: need   0
 *
-               CALL ZGELQF( M, N, A, LDA, WORK( ITAU ), WORK( NWORK ),
+               CALL ZGELQF( M, N, A, LDA, WORK( ITAU ),
+     $                      WORK( NWORK ),
      $                      LWORK-NWORK+1, IERR )
                CALL ZLACPY( 'U', M, N, A, LDA, VT, LDVT )
 *
@@ -13559,7 +13753,8 @@
 *              CWorkspace: prefer M*M [VT] + 2*M [tauq, taup] + 2*M*NB [work]
 *              RWorkspace: need   M [e]
 *
-               CALL ZGEBRD( M, M, A, LDA, S, RWORK( IE ), WORK( ITAUQ ),
+               CALL ZGEBRD( M, M, A, LDA, S, RWORK( IE ),
+     $                      WORK( ITAUQ ),
      $                      WORK( ITAUP ), WORK( NWORK ), LWORK-NWORK+1,
      $                      IERR )
 *
@@ -13572,7 +13767,8 @@
                IRU = IE + M
                IRVT = IRU + M*M
                NRWORK = IRVT + M*M
-               CALL DBDSDC( 'U', 'I', M, S, RWORK( IE ), RWORK( IRU ),
+               CALL DBDSDC( 'U', 'I', M, S, RWORK( IE ),
+     $                      RWORK( IRU ),
      $                      M, RWORK( IRVT ), M, DUM, IDUM,
      $                      RWORK( NRWORK ), IWORK, INFO )
 *
@@ -13604,7 +13800,8 @@
 *              CWorkspace: need   M*M [VT]
 *              RWorkspace: need   0
 *
-               CALL ZGEMM( 'N', 'N', M, N, M, CONE, WORK( IVT ), LDWKVT,
+               CALL ZGEMM( 'N', 'N', M, N, M, CONE, WORK( IVT ),
+     $                     LDWKVT,
      $                     VT, LDVT, CZERO, A, LDA )
 *
 *              Copy right singular vectors of A from A to VT
@@ -13690,7 +13887,8 @@
 *              CWorkspace: need   0
 *              RWorkspace: need   M [e] + M*M [RVT] + M*M [RU] + BDSPAC
 *
-               CALL DBDSDC( 'L', 'I', M, S, RWORK( IE ), RWORK( IRU ),
+               CALL DBDSDC( 'L', 'I', M, S, RWORK( IE ),
+     $                      RWORK( IRU ),
      $                      M, RWORK( IRVT ), M, DUM, IDUM,
      $                      RWORK( NRWORK ), IWORK, INFO )
 *
@@ -13699,7 +13897,8 @@
 *              CWorkspace: need   2*M [tauq, taup] + M*M [VT]
 *              RWorkspace: need   M [e] + M*M [RVT] + M*M [RU] + 2*M*M [rwork]
 *
-               CALL ZLACRM( M, M, U, LDU, RWORK( IRU ), M, WORK( IVT ),
+               CALL ZLACRM( M, M, U, LDU, RWORK( IRU ), M,
+     $                      WORK( IVT ),
      $                      LDWKVT, RWORK( NRWORK ) )
                CALL ZLACPY( 'F', M, M, WORK( IVT ), LDWKVT, U, LDU )
 *
@@ -13713,7 +13912,8 @@
                NRWORK = IRU
                DO 50 I = 1, N, CHUNK
                   BLK = MIN( N-I+1, CHUNK )
-                  CALL ZLARCM( M, BLK, RWORK( IRVT ), M, A( 1, I ), LDA,
+                  CALL ZLARCM( M, BLK, RWORK( IRVT ), M, A( 1, I ),
+     $                         LDA,
      $                         WORK( IVT ), LDWKVT, RWORK( NRWORK ) )
                   CALL ZLACPY( 'F', M, BLK, WORK( IVT ), LDWKVT,
      $                         A( 1, I ), LDA )
@@ -13748,7 +13948,8 @@
                IRVT = NRWORK
                IRU = IRVT + M*M
                NRWORK = IRU + M*M
-               CALL DBDSDC( 'L', 'I', M, S, RWORK( IE ), RWORK( IRU ),
+               CALL DBDSDC( 'L', 'I', M, S, RWORK( IE ),
+     $                      RWORK( IRU ),
      $                      M, RWORK( IRVT ), M, DUM, IDUM,
      $                      RWORK( NRWORK ), IWORK, INFO )
 *
@@ -13800,7 +14001,8 @@
                IRVT = NRWORK
                IRU = IRVT + M*M
                NRWORK = IRU + M*M
-               CALL DBDSDC( 'L', 'I', M, S, RWORK( IE ), RWORK( IRU ),
+               CALL DBDSDC( 'L', 'I', M, S, RWORK( IE ),
+     $                      RWORK( IRU ),
      $                      M, RWORK( IRVT ), M, DUM, IDUM,
      $                      RWORK( NRWORK ), IWORK, INFO )
 *
@@ -13883,7 +14085,8 @@
                IRVT = NRWORK
                IRU = IRVT + M*M
                NRWORK = IRU + M*M
-               CALL DBDSDC( 'L', 'I', M, S, RWORK( IE ), RWORK( IRU ),
+               CALL DBDSDC( 'L', 'I', M, S, RWORK( IE ),
+     $                      RWORK( IRU ),
      $                      M, RWORK( IRVT ), M, DUM, IDUM,
      $                      RWORK( NRWORK ), IWORK, INFO )
 *
@@ -13908,12 +14111,14 @@
 *                 CWorkspace: prefer 2*M [tauq, taup] + M*N [VT] + M*NB [work]
 *                 RWorkspace: need   M [e] + M*M [RVT]
 *
-                  CALL ZLACP2( 'F', M, M, RWORK( IRVT ), M, WORK( IVT ),
+                  CALL ZLACP2( 'F', M, M, RWORK( IRVT ), M,
+     $                         WORK( IVT ),
      $                         LDWKVT )
                   CALL ZUNMBR( 'P', 'R', 'C', M, N, M, A, LDA,
      $                         WORK( ITAUP ), WORK( IVT ), LDWKVT,
      $                         WORK( NWORK ), LWORK-NWORK+1, IERR )
-                  CALL ZLACPY( 'F', M, N, WORK( IVT ), LDWKVT, A, LDA )
+                  CALL ZLACPY( 'F', M, N, WORK( IVT ), LDWKVT, A,
+     $                         LDA )
                ELSE
 *
 *                 Path 6to-slow
@@ -13935,7 +14140,8 @@
                   NRWORK = IRU
                   DO 60 I = 1, N, CHUNK
                      BLK = MIN( N-I+1, CHUNK )
-                     CALL ZLARCM( M, BLK, RWORK( IRVT ), M, A( 1, I ),
+                     CALL ZLARCM( M, BLK, RWORK( IRVT ), M, A( 1,
+     $                            I ),
      $                            LDA, WORK( IVT ), LDWKVT,
      $                            RWORK( NRWORK ) )
                      CALL ZLACPY( 'F', M, BLK, WORK( IVT ), LDWKVT,
@@ -13954,7 +14160,8 @@
                IRVT = NRWORK
                IRU = IRVT + M*M
                NRWORK = IRU + M*M
-               CALL DBDSDC( 'L', 'I', M, S, RWORK( IE ), RWORK( IRU ),
+               CALL DBDSDC( 'L', 'I', M, S, RWORK( IE ),
+     $                      RWORK( IRU ),
      $                      M, RWORK( IRVT ), M, DUM, IDUM,
      $                      RWORK( NRWORK ), IWORK, INFO )
 *
@@ -13993,7 +14200,8 @@
                IRU = IRVT + M*M
                NRWORK = IRU + M*M
 *
-               CALL DBDSDC( 'L', 'I', M, S, RWORK( IE ), RWORK( IRU ),
+               CALL DBDSDC( 'L', 'I', M, S, RWORK( IE ),
+     $                      RWORK( IRU ),
      $                      M, RWORK( IRVT ), M, DUM, IDUM,
      $                      RWORK( NRWORK ), IWORK, INFO )
 *
@@ -14486,7 +14694,8 @@
       COMPLEX*16         CDUM( 1 )
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           DLASCL, XERBLA, ZBDSQR, ZGEBRD, ZGELQF, ZGEMM,
+      EXTERNAL           DLASCL, XERBLA, ZBDSQR, ZGEBRD, ZGELQF,
+     $                   ZGEMM,
      $                   ZGEQRF, ZLACPY, ZLASCL, ZLASET, ZUNGBR, ZUNGLQ,
      $                   ZUNGQR, ZUNMBR
 *     ..
@@ -14555,9 +14764,11 @@
             CALL ZGEQRF( M, N, A, LDA, CDUM(1), CDUM(1), -1, IERR )
             LWORK_ZGEQRF = INT( CDUM(1) )
 *           Compute space needed for ZUNGQR
-            CALL ZUNGQR( M, N, N, A, LDA, CDUM(1), CDUM(1), -1, IERR )
+            CALL ZUNGQR( M, N, N, A, LDA, CDUM(1), CDUM(1), -1,
+     $                   IERR )
             LWORK_ZUNGQR_N = INT( CDUM(1) )
-            CALL ZUNGQR( M, M, N, A, LDA, CDUM(1), CDUM(1), -1, IERR )
+            CALL ZUNGQR( M, M, N, A, LDA, CDUM(1), CDUM(1), -1,
+     $                   IERR )
             LWORK_ZUNGQR_M = INT( CDUM(1) )
 *           Compute space needed for ZGEBRD
             CALL ZGEBRD( N, N, A, LDA, S, DUM(1), CDUM(1),
@@ -14707,7 +14918,8 @@
             CALL ZUNGLQ( N, N, M, CDUM(1), N, CDUM(1), CDUM(1), -1,
      $                   IERR )
             LWORK_ZUNGLQ_N = INT( CDUM(1) )
-            CALL ZUNGLQ( M, N, M, A, LDA, CDUM(1), CDUM(1), -1, IERR )
+            CALL ZUNGLQ( M, N, M, A, LDA, CDUM(1), CDUM(1), -1,
+     $                   IERR )
             LWORK_ZUNGLQ_M = INT( CDUM(1) )
 *           Compute space needed for ZGEBRD
             CALL ZGEBRD( M, M, A, LDA, S, DUM(1), CDUM(1),
@@ -14906,13 +15118,15 @@
 *              (CWorkspace: need 2*N, prefer N+N*NB)
 *              (RWorkspace: need 0)
 *
-               CALL ZGEQRF( M, N, A, LDA, WORK( ITAU ), WORK( IWORK ),
+               CALL ZGEQRF( M, N, A, LDA, WORK( ITAU ),
+     $                      WORK( IWORK ),
      $                      LWORK-IWORK+1, IERR )
 *
 *              Zero out below R
 *
                IF( N .GT. 1 ) THEN
-                  CALL ZLASET( 'L', N-1, N-1, CZERO, CZERO, A( 2, 1 ),
+                  CALL ZLASET( 'L', N-1, N-1, CZERO, CZERO, A( 2,
+     $                         1 ),
      $                         LDA )
                END IF
                IE = 1
@@ -14924,7 +15138,8 @@
 *              (CWorkspace: need 3*N, prefer 2*N+2*N*NB)
 *              (RWorkspace: need N)
 *
-               CALL ZGEBRD( N, N, A, LDA, S, RWORK( IE ), WORK( ITAUQ ),
+               CALL ZGEBRD( N, N, A, LDA, S, RWORK( IE ),
+     $                      WORK( ITAUQ ),
      $                      WORK( ITAUP ), WORK( IWORK ), LWORK-IWORK+1,
      $                      IERR )
                NCVT = 0
@@ -14945,7 +15160,8 @@
 *              (CWorkspace: 0)
 *              (RWorkspace: need BDSPAC)
 *
-               CALL ZBDSQR( 'U', N, NCVT, 0, 0, S, RWORK( IE ), A, LDA,
+               CALL ZBDSQR( 'U', N, NCVT, 0, 0, S, RWORK( IE ), A,
+     $                      LDA,
      $                      CDUM, 1, CDUM, 1, RWORK( IRWORK ), INFO )
 *
 *              If right singular vectors desired in VT, copy them there
@@ -14995,7 +15211,8 @@
 *
 *                 Copy R to WORK(IR) and zero out below it
 *
-                  CALL ZLACPY( 'U', N, N, A, LDA, WORK( IR ), LDWRKR )
+                  CALL ZLACPY( 'U', N, N, A, LDA, WORK( IR ),
+     $                         LDWRKR )
                   CALL ZLASET( 'L', N-1, N-1, CZERO, CZERO,
      $                         WORK( IR+1 ), LDWRKR )
 *
@@ -15014,7 +15231,8 @@
 *                 (CWorkspace: need N*N+3*N, prefer N*N+2*N+2*N*NB)
 *                 (RWorkspace: need N)
 *
-                  CALL ZGEBRD( N, N, WORK( IR ), LDWRKR, S, RWORK( IE ),
+                  CALL ZGEBRD( N, N, WORK( IR ), LDWRKR, S,
+     $                         RWORK( IE ),
      $                         WORK( ITAUQ ), WORK( ITAUP ),
      $                         WORK( IWORK ), LWORK-IWORK+1, IERR )
 *
@@ -15032,7 +15250,8 @@
 *                 (CWorkspace: need N*N)
 *                 (RWorkspace: need BDSPAC)
 *
-                  CALL ZBDSQR( 'U', N, 0, N, 0, S, RWORK( IE ), CDUM, 1,
+                  CALL ZBDSQR( 'U', N, 0, N, 0, S, RWORK( IE ), CDUM,
+     $                         1,
      $                         WORK( IR ), LDWRKR, CDUM, 1,
      $                         RWORK( IRWORK ), INFO )
                   IU = ITAUQ
@@ -15044,7 +15263,8 @@
 *
                   DO 10 I = 1, M, LDWRKU
                      CHUNK = MIN( M-I+1, LDWRKU )
-                     CALL ZGEMM( 'N', 'N', CHUNK, N, N, CONE, A( I, 1 ),
+                     CALL ZGEMM( 'N', 'N', CHUNK, N, N, CONE, A( I,
+     $                           1 ),
      $                           LDA, WORK( IR ), LDWRKR, CZERO,
      $                           WORK( IU ), LDWRKU )
                      CALL ZLACPY( 'F', CHUNK, N, WORK( IU ), LDWRKU,
@@ -15081,7 +15301,8 @@
 *                 (CWorkspace: need 0)
 *                 (RWorkspace: need BDSPAC)
 *
-                  CALL ZBDSQR( 'U', N, 0, M, 0, S, RWORK( IE ), CDUM, 1,
+                  CALL ZBDSQR( 'U', N, 0, M, 0, S, RWORK( IE ), CDUM,
+     $                         1,
      $                         A, LDA, CDUM, 1, RWORK( IRWORK ), INFO )
 *
                END IF
@@ -15151,7 +15372,8 @@
                   CALL ZGEBRD( N, N, VT, LDVT, S, RWORK( IE ),
      $                         WORK( ITAUQ ), WORK( ITAUP ),
      $                         WORK( IWORK ), LWORK-IWORK+1, IERR )
-                  CALL ZLACPY( 'L', N, N, VT, LDVT, WORK( IR ), LDWRKR )
+                  CALL ZLACPY( 'L', N, N, VT, LDVT, WORK( IR ),
+     $                         LDWRKR )
 *
 *                 Generate left vectors bidiagonalizing R in WORK(IR)
 *                 (CWorkspace: need N*N+3*N, prefer N*N+2*N+N*NB)
@@ -15187,7 +15409,8 @@
 *
                   DO 20 I = 1, M, LDWRKU
                      CHUNK = MIN( M-I+1, LDWRKU )
-                     CALL ZGEMM( 'N', 'N', CHUNK, N, N, CONE, A( I, 1 ),
+                     CALL ZGEMM( 'N', 'N', CHUNK, N, N, CONE, A( I,
+     $                           1 ),
      $                           LDA, WORK( IR ), LDWRKR, CZERO,
      $                           WORK( IU ), LDWRKU )
                      CALL ZLACPY( 'F', CHUNK, N, WORK( IU ), LDWRKU,
@@ -15337,7 +15560,8 @@
 *                    (CWorkspace: need N*N)
 *                    (RWorkspace: need BDSPAC)
 *
-                     CALL ZBDSQR( 'U', N, 0, N, 0, S, RWORK( IE ), CDUM,
+                     CALL ZBDSQR( 'U', N, 0, N, 0, S, RWORK( IE ),
+     $                            CDUM,
      $                            1, WORK( IR ), LDWRKR, CDUM, 1,
      $                            RWORK( IRWORK ), INFO )
 *
@@ -15404,7 +15628,8 @@
 *                    (CWorkspace: 0)
 *                    (RWorkspace: need BDSPAC)
 *
-                     CALL ZBDSQR( 'U', N, 0, M, 0, S, RWORK( IE ), CDUM,
+                     CALL ZBDSQR( 'U', N, 0, M, 0, S, RWORK( IE ),
+     $                            CDUM,
      $                            1, U, LDU, CDUM, 1, RWORK( IRWORK ),
      $                            INFO )
 *
@@ -15581,7 +15806,8 @@
 *                    (CWorkspace: need 3*N-1, prefer 2*N+(N-1)*NB)
 *                    (RWorkspace: 0)
 *
-                     CALL ZUNGBR( 'P', N, N, N, A, LDA, WORK( ITAUP ),
+                     CALL ZUNGBR( 'P', N, N, N, A, LDA,
+     $                            WORK( ITAUP ),
      $                            WORK( IWORK ), LWORK-IWORK+1, IERR )
                      IRWORK = IE + N
 *
@@ -15672,7 +15898,8 @@
 *                                 prefer N*N+2*N+(N-1)*NB)
 *                    (RWorkspace: 0)
 *
-                     CALL ZUNGBR( 'P', N, N, N, VT, LDVT, WORK( ITAUP ),
+                     CALL ZUNGBR( 'P', N, N, N, VT, LDVT,
+     $                            WORK( ITAUP ),
      $                            WORK( IWORK ), LWORK-IWORK+1, IERR )
                      IRWORK = IE + N
 *
@@ -15682,7 +15909,8 @@
 *                    (CWorkspace: need N*N)
 *                    (RWorkspace: need BDSPAC)
 *
-                     CALL ZBDSQR( 'U', N, N, N, 0, S, RWORK( IE ), VT,
+                     CALL ZBDSQR( 'U', N, N, N, 0, S, RWORK( IE ),
+     $                            VT,
      $                            LDVT, WORK( IU ), LDWRKU, CDUM, 1,
      $                            RWORK( IRWORK ), INFO )
 *
@@ -15748,7 +15976,8 @@
 *                    (CWorkspace: need 3*N-1, prefer 2*N+(N-1)*NB)
 *                    (RWorkspace: 0)
 *
-                     CALL ZUNGBR( 'P', N, N, N, VT, LDVT, WORK( ITAUP ),
+                     CALL ZUNGBR( 'P', N, N, N, VT, LDVT,
+     $                            WORK( ITAUP ),
      $                            WORK( IWORK ), LWORK-IWORK+1, IERR )
                      IRWORK = IE + N
 *
@@ -15758,7 +15987,8 @@
 *                    (CWorkspace: 0)
 *                    (RWorkspace: need BDSPAC)
 *
-                     CALL ZBDSQR( 'U', N, N, M, 0, S, RWORK( IE ), VT,
+                     CALL ZBDSQR( 'U', N, N, M, 0, S, RWORK( IE ),
+     $                            VT,
      $                            LDVT, U, LDU, CDUM, 1,
      $                            RWORK( IRWORK ), INFO )
 *
@@ -15842,7 +16072,8 @@
 *                    (CWorkspace: need N*N)
 *                    (RWorkspace: need BDSPAC)
 *
-                     CALL ZBDSQR( 'U', N, 0, N, 0, S, RWORK( IE ), CDUM,
+                     CALL ZBDSQR( 'U', N, 0, N, 0, S, RWORK( IE ),
+     $                            CDUM,
      $                            1, WORK( IR ), LDWRKR, CDUM, 1,
      $                            RWORK( IRWORK ), INFO )
 *
@@ -15914,7 +16145,8 @@
 *                    (CWorkspace: 0)
 *                    (RWorkspace: need BDSPAC)
 *
-                     CALL ZBDSQR( 'U', N, 0, M, 0, S, RWORK( IE ), CDUM,
+                     CALL ZBDSQR( 'U', N, 0, M, 0, S, RWORK( IE ),
+     $                            CDUM,
      $                            1, U, LDU, CDUM, 1, RWORK( IRWORK ),
      $                            INFO )
 *
@@ -16095,7 +16327,8 @@
 *                    (CWorkspace: need 3*N-1, prefer 2*N+(N-1)*NB)
 *                    (RWorkspace: 0)
 *
-                     CALL ZUNGBR( 'P', N, N, N, A, LDA, WORK( ITAUP ),
+                     CALL ZUNGBR( 'P', N, N, N, A, LDA,
+     $                            WORK( ITAUP ),
      $                            WORK( IWORK ), LWORK-IWORK+1, IERR )
                      IRWORK = IE + N
 *
@@ -16187,7 +16420,8 @@
 *                                 prefer N*N+2*N+(N-1)*NB)
 *                    (RWorkspace: need   0)
 *
-                     CALL ZUNGBR( 'P', N, N, N, VT, LDVT, WORK( ITAUP ),
+                     CALL ZUNGBR( 'P', N, N, N, VT, LDVT,
+     $                            WORK( ITAUP ),
      $                            WORK( IWORK ), LWORK-IWORK+1, IERR )
                      IRWORK = IE + N
 *
@@ -16197,7 +16431,8 @@
 *                    (CWorkspace: need N*N)
 *                    (RWorkspace: need BDSPAC)
 *
-                     CALL ZBDSQR( 'U', N, N, N, 0, S, RWORK( IE ), VT,
+                     CALL ZBDSQR( 'U', N, N, N, 0, S, RWORK( IE ),
+     $                            VT,
      $                            LDVT, WORK( IU ), LDWRKU, CDUM, 1,
      $                            RWORK( IRWORK ), INFO )
 *
@@ -16267,7 +16502,8 @@
 *                    (CWorkspace: need 3*N-1, prefer 2*N+(N-1)*NB)
 *                    (RWorkspace: 0)
 *
-                     CALL ZUNGBR( 'P', N, N, N, VT, LDVT, WORK( ITAUP ),
+                     CALL ZUNGBR( 'P', N, N, N, VT, LDVT,
+     $                            WORK( ITAUP ),
      $                            WORK( IWORK ), LWORK-IWORK+1, IERR )
                      IRWORK = IE + N
 *
@@ -16277,7 +16513,8 @@
 *                    (CWorkspace: 0)
 *                    (RWorkspace: need BDSPAC)
 *
-                     CALL ZBDSQR( 'U', N, N, M, 0, S, RWORK( IE ), VT,
+                     CALL ZBDSQR( 'U', N, N, M, 0, S, RWORK( IE ),
+     $                            VT,
      $                            LDVT, U, LDU, CDUM, 1,
      $                            RWORK( IRWORK ), INFO )
 *
@@ -16418,7 +16655,8 @@
 *              (CWorkspace: need 2*M, prefer M+M*NB)
 *              (RWorkspace: 0)
 *
-               CALL ZGELQF( M, N, A, LDA, WORK( ITAU ), WORK( IWORK ),
+               CALL ZGELQF( M, N, A, LDA, WORK( ITAU ),
+     $                      WORK( IWORK ),
      $                      LWORK-IWORK+1, IERR )
 *
 *              Zero out above L
@@ -16434,7 +16672,8 @@
 *              (CWorkspace: need 3*M, prefer 2*M+2*M*NB)
 *              (RWorkspace: need M)
 *
-               CALL ZGEBRD( M, M, A, LDA, S, RWORK( IE ), WORK( ITAUQ ),
+               CALL ZGEBRD( M, M, A, LDA, S, RWORK( IE ),
+     $                      WORK( ITAUQ ),
      $                      WORK( ITAUP ), WORK( IWORK ), LWORK-IWORK+1,
      $                      IERR )
                IF( WNTUO .OR. WNTUAS ) THEN
@@ -16456,7 +16695,8 @@
 *              (CWorkspace: 0)
 *              (RWorkspace: need BDSPAC)
 *
-               CALL ZBDSQR( 'U', M, 0, NRU, 0, S, RWORK( IE ), CDUM, 1,
+               CALL ZBDSQR( 'U', M, 0, NRU, 0, S, RWORK( IE ), CDUM,
+     $                      1,
      $                      A, LDA, CDUM, 1, RWORK( IRWORK ), INFO )
 *
 *              If left singular vectors desired in U, copy them there
@@ -16509,7 +16749,8 @@
 *
 *                 Copy L to WORK(IR) and zero out above it
 *
-                  CALL ZLACPY( 'L', M, M, A, LDA, WORK( IR ), LDWRKR )
+                  CALL ZLACPY( 'L', M, M, A, LDA, WORK( IR ),
+     $                         LDWRKR )
                   CALL ZLASET( 'U', M-1, M-1, CZERO, CZERO,
      $                         WORK( IR+LDWRKR ), LDWRKR )
 *
@@ -16528,7 +16769,8 @@
 *                 (CWorkspace: need M*M+3*M, prefer M*M+2*M+2*M*NB)
 *                 (RWorkspace: need M)
 *
-                  CALL ZGEBRD( M, M, WORK( IR ), LDWRKR, S, RWORK( IE ),
+                  CALL ZGEBRD( M, M, WORK( IR ), LDWRKR, S,
+     $                         RWORK( IE ),
      $                         WORK( ITAUQ ), WORK( ITAUP ),
      $                         WORK( IWORK ), LWORK-IWORK+1, IERR )
 *
@@ -16558,7 +16800,8 @@
 *
                   DO 30 I = 1, N, CHUNK
                      BLK = MIN( N-I+1, CHUNK )
-                     CALL ZGEMM( 'N', 'N', M, BLK, M, CONE, WORK( IR ),
+                     CALL ZGEMM( 'N', 'N', M, BLK, M, CONE,
+     $                           WORK( IR ),
      $                           LDWRKR, A( 1, I ), LDA, CZERO,
      $                           WORK( IU ), LDWRKU )
                      CALL ZLACPY( 'F', M, BLK, WORK( IU ), LDWRKU,
@@ -16595,7 +16838,8 @@
 *                 (CWorkspace: 0)
 *                 (RWorkspace: need BDSPAC)
 *
-                  CALL ZBDSQR( 'L', M, N, 0, 0, S, RWORK( IE ), A, LDA,
+                  CALL ZBDSQR( 'L', M, N, 0, 0, S, RWORK( IE ), A,
+     $                         LDA,
      $                         CDUM, 1, CDUM, 1, RWORK( IRWORK ), INFO )
 *
                END IF
@@ -16646,7 +16890,8 @@
 *                 Copy L to U, zeroing about above it
 *
                   CALL ZLACPY( 'L', M, M, A, LDA, U, LDU )
-                  CALL ZLASET( 'U', M-1, M-1, CZERO, CZERO, U( 1, 2 ),
+                  CALL ZLASET( 'U', M-1, M-1, CZERO, CZERO, U( 1,
+     $                         2 ),
      $                         LDU )
 *
 *                 Generate Q in A
@@ -16667,7 +16912,8 @@
                   CALL ZGEBRD( M, M, U, LDU, S, RWORK( IE ),
      $                         WORK( ITAUQ ), WORK( ITAUP ),
      $                         WORK( IWORK ), LWORK-IWORK+1, IERR )
-                  CALL ZLACPY( 'U', M, M, U, LDU, WORK( IR ), LDWRKR )
+                  CALL ZLACPY( 'U', M, M, U, LDU, WORK( IR ),
+     $                         LDWRKR )
 *
 *                 Generate right vectors bidiagonalizing L in WORK(IR)
 *                 (CWorkspace: need M*M+3*M-1, prefer M*M+2*M+(M-1)*NB)
@@ -16703,7 +16949,8 @@
 *
                   DO 40 I = 1, N, CHUNK
                      BLK = MIN( N-I+1, CHUNK )
-                     CALL ZGEMM( 'N', 'N', M, BLK, M, CONE, WORK( IR ),
+                     CALL ZGEMM( 'N', 'N', M, BLK, M, CONE,
+     $                           WORK( IR ),
      $                           LDWRKR, A( 1, I ), LDA, CZERO,
      $                           WORK( IU ), LDWRKU )
                      CALL ZLACPY( 'F', M, BLK, WORK( IU ), LDWRKU,
@@ -16727,7 +16974,8 @@
 *                 Copy L to U, zeroing out above it
 *
                   CALL ZLACPY( 'L', M, M, A, LDA, U, LDU )
-                  CALL ZLASET( 'U', M-1, M-1, CZERO, CZERO, U( 1, 2 ),
+                  CALL ZLASET( 'U', M-1, M-1, CZERO, CZERO, U( 1,
+     $                         2 ),
      $                         LDU )
 *
 *                 Generate Q in A
@@ -16771,7 +17019,8 @@
 *                 (CWorkspace: 0)
 *                 (RWorkspace: need BDSPAC)
 *
-                  CALL ZBDSQR( 'U', M, N, M, 0, S, RWORK( IE ), A, LDA,
+                  CALL ZBDSQR( 'U', M, N, M, 0, S, RWORK( IE ), A,
+     $                         LDA,
      $                         U, LDU, CDUM, 1, RWORK( IRWORK ), INFO )
 *
                END IF
@@ -16920,7 +17169,8 @@
 *                    (CWorkspace: 0)
 *                    (RWorkspace: need BDSPAC)
 *
-                     CALL ZBDSQR( 'U', M, N, 0, 0, S, RWORK( IE ), VT,
+                     CALL ZBDSQR( 'U', M, N, 0, 0, S, RWORK( IE ),
+     $                            VT,
      $                            LDVT, CDUM, 1, CDUM, 1,
      $                            RWORK( IRWORK ), INFO )
 *
@@ -17095,7 +17345,8 @@
 *                    (CWorkspace: need 3*M, prefer 2*M+M*NB)
 *                    (RWorkspace: 0)
 *
-                     CALL ZUNGBR( 'Q', M, M, M, A, LDA, WORK( ITAUQ ),
+                     CALL ZUNGBR( 'Q', M, M, M, A, LDA,
+     $                            WORK( ITAUQ ),
      $                            WORK( IWORK ), LWORK-IWORK+1, IERR )
                      IRWORK = IE + M
 *
@@ -17105,7 +17356,8 @@
 *                    (CWorkspace: 0)
 *                    (RWorkspace: need BDSPAC)
 *
-                     CALL ZBDSQR( 'U', M, N, M, 0, S, RWORK( IE ), VT,
+                     CALL ZBDSQR( 'U', M, N, M, 0, S, RWORK( IE ),
+     $                            VT,
      $                            LDVT, A, LDA, CDUM, 1,
      $                            RWORK( IRWORK ), INFO )
 *
@@ -17186,7 +17438,8 @@
 *                    (CWorkspace: need M*M+3*M, prefer M*M+2*M+M*NB)
 *                    (RWorkspace: 0)
 *
-                     CALL ZUNGBR( 'Q', M, M, M, U, LDU, WORK( ITAUQ ),
+                     CALL ZUNGBR( 'Q', M, M, M, U, LDU,
+     $                            WORK( ITAUQ ),
      $                            WORK( IWORK ), LWORK-IWORK+1, IERR )
                      IRWORK = IE + M
 *
@@ -17261,7 +17514,8 @@
 *                    (CWorkspace: need 3*M, prefer 2*M+M*NB)
 *                    (RWorkspace: 0)
 *
-                     CALL ZUNGBR( 'Q', M, M, M, U, LDU, WORK( ITAUQ ),
+                     CALL ZUNGBR( 'Q', M, M, M, U, LDU,
+     $                            WORK( ITAUQ ),
      $                            WORK( IWORK ), LWORK-IWORK+1, IERR )
                      IRWORK = IE + M
 *
@@ -17271,7 +17525,8 @@
 *                    (CWorkspace: 0)
 *                    (RWorkspace: need BDSPAC)
 *
-                     CALL ZBDSQR( 'U', M, N, M, 0, S, RWORK( IE ), VT,
+                     CALL ZBDSQR( 'U', M, N, M, 0, S, RWORK( IE ),
+     $                            VT,
      $                            LDVT, U, LDU, CDUM, 1,
      $                            RWORK( IRWORK ), INFO )
 *
@@ -17426,7 +17681,8 @@
 *                    (CWorkspace: 0)
 *                    (RWorkspace: need BDSPAC)
 *
-                     CALL ZBDSQR( 'U', M, N, 0, 0, S, RWORK( IE ), VT,
+                     CALL ZBDSQR( 'U', M, N, 0, 0, S, RWORK( IE ),
+     $                            VT,
      $                            LDVT, CDUM, 1, CDUM, 1,
      $                            RWORK( IRWORK ), INFO )
 *
@@ -17605,7 +17861,8 @@
 *                    (CWorkspace: need 3*M, prefer 2*M+M*NB)
 *                    (RWorkspace: 0)
 *
-                     CALL ZUNGBR( 'Q', M, M, M, A, LDA, WORK( ITAUQ ),
+                     CALL ZUNGBR( 'Q', M, M, M, A, LDA,
+     $                            WORK( ITAUQ ),
      $                            WORK( IWORK ), LWORK-IWORK+1, IERR )
                      IRWORK = IE + M
 *
@@ -17615,7 +17872,8 @@
 *                    (CWorkspace: 0)
 *                    (RWorkspace: need BDSPAC)
 *
-                     CALL ZBDSQR( 'U', M, N, M, 0, S, RWORK( IE ), VT,
+                     CALL ZBDSQR( 'U', M, N, M, 0, S, RWORK( IE ),
+     $                            VT,
      $                            LDVT, A, LDA, CDUM, 1,
      $                            RWORK( IRWORK ), INFO )
 *
@@ -17696,7 +17954,8 @@
 *                    (CWorkspace: need M*M+3*M, prefer M*M+2*M+M*NB)
 *                    (RWorkspace: 0)
 *
-                     CALL ZUNGBR( 'Q', M, M, M, U, LDU, WORK( ITAUQ ),
+                     CALL ZUNGBR( 'Q', M, M, M, U, LDU,
+     $                            WORK( ITAUQ ),
      $                            WORK( IWORK ), LWORK-IWORK+1, IERR )
                      IRWORK = IE + M
 *
@@ -17775,7 +18034,8 @@
 *                    (CWorkspace: need 3*M, prefer 2*M+M*NB)
 *                    (RWorkspace: 0)
 *
-                     CALL ZUNGBR( 'Q', M, M, M, U, LDU, WORK( ITAUQ ),
+                     CALL ZUNGBR( 'Q', M, M, M, U, LDU,
+     $                            WORK( ITAUQ ),
      $                            WORK( IWORK ), LWORK-IWORK+1, IERR )
                      IRWORK = IE + M
 *
@@ -17785,7 +18045,8 @@
 *                    (CWorkspace: 0)
 *                    (RWorkspace: need BDSPAC)
 *
-                     CALL ZBDSQR( 'U', M, N, M, 0, S, RWORK( IE ), VT,
+                     CALL ZBDSQR( 'U', M, N, M, 0, S, RWORK( IE ),
+     $                            VT,
      $                            LDVT, U, LDU, CDUM, 1,
      $                            RWORK( IRWORK ), INFO )
 *
@@ -18280,7 +18541,8 @@
 *> \ingroup gesvx
 *
 *  =====================================================================
-      SUBROUTINE ZGESVX( FACT, TRANS, N, NRHS, A, LDA, AF, LDAF, IPIV,
+      SUBROUTINE ZGESVX( FACT, TRANS, N, NRHS, A, LDA, AF, LDAF,
+     $                   IPIV,
      $                   EQUED, R, C, B, LDB, X, LDX, RCOND, FERR, BERR,
      $                   WORK, RWORK, INFO )
 *
@@ -18320,7 +18582,8 @@
       EXTERNAL           LSAME, DLAMCH, ZLANGE, ZLANTR
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           XERBLA, ZGECON, ZGEEQU, ZGERFS, ZGETRF, ZGETRS,
+      EXTERNAL           XERBLA, ZGECON, ZGEEQU, ZGERFS, ZGETRF,
+     $                   ZGETRS,
      $                   ZLACPY, ZLAQGE
 *     ..
 *     .. Intrinsic Functions ..
@@ -18345,7 +18608,9 @@
 *
 *     Test the input parameters.
 *
-      IF( .NOT.NOFACT .AND. .NOT.EQUIL .AND. .NOT.LSAME( FACT, 'F' ) )
+      IF( .NOT.NOFACT .AND.
+     $    .NOT.EQUIL .AND.
+     $    .NOT.LSAME( FACT, 'F' ) )
      $     THEN
          INFO = -1
       ELSE IF( .NOT.NOTRAN .AND. .NOT.LSAME( TRANS, 'T' ) .AND. .NOT.
@@ -18411,7 +18676,8 @@
 *
 *        Compute row and column scalings to equilibrate the matrix A.
 *
-         CALL ZGEEQU( N, N, A, LDA, R, C, ROWCND, COLCND, AMAX, INFEQU )
+         CALL ZGEEQU( N, N, A, LDA, R, C, ROWCND, COLCND, AMAX,
+     $                INFEQU )
          IF( INFEQU.EQ.0 ) THEN
 *
 *           Equilibrate the matrix.
@@ -18487,7 +18753,8 @@
 *
 *     Compute the reciprocal of the condition number of A.
 *
-      CALL ZGECON( NORM, N, AF, LDAF, ANORM, RCOND, WORK, RWORK, INFO )
+      CALL ZGECON( NORM, N, AF, LDAF, ANORM, RCOND, WORK, RWORK,
+     $             INFO )
 *
 *     Compute the solution matrix X.
 *
@@ -18714,8 +18981,8 @@
 *        Find max element in matrix A
 *
          XMAX = ZERO
-         DO 20 IP = I, N
-            DO 10 JP = I, N
+         DO 20 JP = I, N
+            DO 10 IP = I, N
                IF( ABS( A( IP, JP ) ).GE.XMAX ) THEN
                   XMAX = ABS( A( IP, JP ) )
                   IPV = IP
@@ -19100,7 +19367,8 @@
       INTEGER            I, IINFO, J, JB, NB
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           XERBLA, ZGEMM, ZGETRF2, ZLASWP, ZTRSM
+      EXTERNAL           XERBLA, ZGEMM, ZGETRF2, ZLASWP,
+     $                   ZTRSM
 *     ..
 *     .. External Functions ..
       INTEGER            ILAENV
@@ -19149,7 +19417,8 @@
 *           Factor diagonal and subdiagonal blocks and test for exact
 *           singularity.
 *
-            CALL ZGETRF2( M-J+1, JB, A( J, J ), LDA, IPIV( J ), IINFO )
+            CALL ZGETRF2( M-J+1, JB, A( J, J ), LDA, IPIV( J ),
+     $                    IINFO )
 *
 *           Adjust INFO and the pivot indices.
 *
@@ -19172,14 +19441,16 @@
 *
 *              Compute block row of U.
 *
-               CALL ZTRSM( 'Left', 'Lower', 'No transpose', 'Unit', JB,
+               CALL ZTRSM( 'Left', 'Lower', 'No transpose', 'Unit',
+     $                     JB,
      $                     N-J-JB+1, ONE, A( J, J ), LDA, A( J, J+JB ),
      $                     LDA )
                IF( J+JB.LE.M ) THEN
 *
 *                 Update trailing submatrix.
 *
-                  CALL ZGEMM( 'No transpose', 'No transpose', M-J-JB+1,
+                  CALL ZGEMM( 'No transpose', 'No transpose',
+     $                        M-J-JB+1,
      $                        N-J-JB+1, JB, -ONE, A( J+JB, J ), LDA,
      $                        A( J, J+JB ), LDA, ONE, A( J+JB, J+JB ),
      $                        LDA )
@@ -19606,7 +19877,8 @@
       EXTERNAL           ILAENV
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           XERBLA, ZGEMM, ZGEMV, ZSWAP, ZTRSM, ZTRTRI
+      EXTERNAL           XERBLA, ZGEMM, ZGEMV, ZSWAP, ZTRSM,
+     $                   ZTRTRI
 *     ..
 *     .. Intrinsic Functions ..
       INTRINSIC          MAX, MIN
@@ -19617,7 +19889,7 @@
 *
       INFO = 0
       NB = ILAENV( 1, 'ZGETRI', ' ', N, -1, -1, -1 )
-      LWKOPT = N*NB
+      LWKOPT = MAX( 1, N*NB )
       WORK( 1 ) = LWKOPT
       LQUERY = ( LWORK.EQ.-1 )
       IF( N.LT.0 ) THEN
@@ -19652,7 +19924,8 @@
          IWS = MAX( LDWORK*NB, 1 )
          IF( LWORK.LT.IWS ) THEN
             NB = LWORK / LDWORK
-            NBMIN = MAX( 2, ILAENV( 2, 'ZGETRI', ' ', N, -1, -1, -1 ) )
+            NBMIN = MAX( 2, ILAENV( 2, 'ZGETRI', ' ', N, -1, -1,
+     $                   -1 ) )
          END IF
       ELSE
          IWS = N
@@ -19703,7 +19976,8 @@
      $         CALL ZGEMM( 'No transpose', 'No transpose', N, JB,
      $                     N-J-JB+1, -ONE, A( 1, J+JB ), LDA,
      $                     WORK( J+JB ), LDWORK, ONE, A( 1, J ), LDA )
-            CALL ZTRSM( 'Right', 'Lower', 'No transpose', 'Unit', N, JB,
+            CALL ZTRSM( 'Right', 'Lower', 'No transpose', 'Unit', N,
+     $                  JB,
      $                  ONE, WORK( J ), LDWORK, A( 1, J ), LDA )
    50    CONTINUE
       END IF
@@ -19913,7 +20187,8 @@
 *
 *        Solve L*X = B, overwriting B with X.
 *
-         CALL ZTRSM( 'Left', 'Lower', 'No transpose', 'Unit', N, NRHS,
+         CALL ZTRSM( 'Left', 'Lower', 'No transpose', 'Unit', N,
+     $               NRHS,
      $               ONE, A, LDA, B, LDB )
 *
 *        Solve U*X = B, overwriting B with X.
@@ -19926,7 +20201,8 @@
 *
 *        Solve U**T *X = B or U**H *X = B, overwriting B with X.
 *
-         CALL ZTRSM( 'Left', 'Upper', TRANS, 'Non-unit', N, NRHS, ONE,
+         CALL ZTRSM( 'Left', 'Upper', TRANS, 'Non-unit', N, NRHS,
+     $               ONE,
      $               A, LDA, B, LDB )
 *
 *        Solve L**T *X = B, or L**H *X = B overwriting B with X.
@@ -20089,7 +20365,8 @@
 *> \endverbatim
 *>
 *  =====================================================================
-      SUBROUTINE ZGGBAK( JOB, SIDE, N, ILO, IHI, LSCALE, RSCALE, M, V,
+      SUBROUTINE ZGGBAK( JOB, SIDE, N, ILO, IHI, LSCALE, RSCALE, M,
+     $                   V,
      $                   LDV, INFO )
 *
 *  -- LAPACK computational routine --
@@ -20129,8 +20406,10 @@
       LEFTV = LSAME( SIDE, 'L' )
 *
       INFO = 0
-      IF( .NOT.LSAME( JOB, 'N' ) .AND. .NOT.LSAME( JOB, 'P' ) .AND.
-     $    .NOT.LSAME( JOB, 'S' ) .AND. .NOT.LSAME( JOB, 'B' ) ) THEN
+      IF( .NOT.LSAME( JOB, 'N' ) .AND.
+     $    .NOT.LSAME( JOB, 'P' ) .AND.
+     $    .NOT.LSAME( JOB, 'S' ) .AND.
+     $                .NOT.LSAME( JOB, 'B' ) ) THEN
          INFO = -1
       ELSE IF( .NOT.RIGHTV .AND. .NOT.LEFTV ) THEN
          INFO = -2
@@ -20480,8 +20759,10 @@
 *     Test the input parameters
 *
       INFO = 0
-      IF( .NOT.LSAME( JOB, 'N' ) .AND. .NOT.LSAME( JOB, 'P' ) .AND.
-     $    .NOT.LSAME( JOB, 'S' ) .AND. .NOT.LSAME( JOB, 'B' ) ) THEN
+      IF( .NOT.LSAME( JOB, 'N' ) .AND.
+     $    .NOT.LSAME( JOB, 'P' ) .AND.
+     $    .NOT.LSAME( JOB, 'S' ) .AND.
+     $                .NOT.LSAME( JOB, 'B' ) ) THEN
          INFO = -1
       ELSE IF( N.LT.0 ) THEN
          INFO = -2
@@ -20764,8 +21045,10 @@
       IF( CMAX.LT.HALF )
      $   GO TO 350
 *
-      CALL DAXPY( NR, -ALPHA, WORK( ILO+2*N ), 1, WORK( ILO+4*N ), 1 )
-      CALL DAXPY( NR, -ALPHA, WORK( ILO+3*N ), 1, WORK( ILO+5*N ), 1 )
+      CALL DAXPY( NR, -ALPHA, WORK( ILO+2*N ), 1, WORK( ILO+4*N ),
+     $            1 )
+      CALL DAXPY( NR, -ALPHA, WORK( ILO+3*N ), 1, WORK( ILO+5*N ),
+     $            1 )
 *
       PGAMMA = GAMMA
       IT = IT + 1
@@ -21083,7 +21366,8 @@
 *> \ingroup gges
 *
 *  =====================================================================
-      SUBROUTINE ZGGES( JOBVSL, JOBVSR, SORT, SELCTG, N, A, LDA, B, LDB,
+      SUBROUTINE ZGGES( JOBVSL, JOBVSR, SORT, SELCTG, N, A, LDA, B,
+     $                  LDB,
      $                  SDIM, ALPHA, BETA, VSL, LDVSL, VSR, LDVSR, WORK,
      $                  LWORK, RWORK, BWORK, INFO )
 *
@@ -21130,7 +21414,8 @@
       DOUBLE PRECISION   DIF( 2 )
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           XERBLA, ZGEQRF, ZGGBAK, ZGGBAL, ZGGHRD, ZHGEQZ,
+      EXTERNAL           XERBLA, ZGEQRF, ZGGBAK, ZGGBAL, ZGGHRD,
+     $                   ZHGEQZ,
      $                   ZLACPY, ZLASCL, ZLASET, ZTGSEN, ZUNGQR, ZUNMQR
 *     ..
 *     .. External Functions ..
@@ -21178,7 +21463,8 @@
          INFO = -1
       ELSE IF( IJOBVR.LE.0 ) THEN
          INFO = -2
-      ELSE IF( ( .NOT.WANTST ) .AND. ( .NOT.LSAME( SORT, 'N' ) ) ) THEN
+      ELSE IF( ( .NOT.WANTST ) .AND.
+     $         ( .NOT.LSAME( SORT, 'N' ) ) ) THEN
          INFO = -3
       ELSE IF( N.LT.0 ) THEN
          INFO = -5
@@ -21201,7 +21487,8 @@
 *
       IF( INFO.EQ.0 ) THEN
          LWKMIN = MAX( 1, 2*N )
-         LWKOPT = MAX( 1, N + N*ILAENV( 1, 'ZGEQRF', ' ', N, 1, N, 0 ) )
+         LWKOPT = MAX( 1, N + N*ILAENV( 1, 'ZGEQRF', ' ', N, 1, N,
+     $                 0 ) )
          LWKOPT = MAX( LWKOPT, N +
      $                 N*ILAENV( 1, 'ZUNMQR', ' ', N, 1, N, -1 ) )
          IF( ILVSL ) THEN
@@ -21345,9 +21632,11 @@
 *        Undo scaling on eigenvalues before selecting
 *
          IF( ILASCL )
-     $      CALL ZLASCL( 'G', 0, 0, ANRM, ANRMTO, N, 1, ALPHA, N, IERR )
+     $      CALL ZLASCL( 'G', 0, 0, ANRM, ANRMTO, N, 1, ALPHA, N,
+     $                   IERR )
          IF( ILBSCL )
-     $      CALL ZLASCL( 'G', 0, 0, BNRM, BNRMTO, N, 1, BETA, N, IERR )
+     $      CALL ZLASCL( 'G', 0, 0, BNRM, BNRMTO, N, 1, BETA, N,
+     $                   IERR )
 *
 *        Select eigenvalues
 *
@@ -21355,7 +21644,8 @@
             BWORK( I ) = SELCTG( ALPHA( I ), BETA( I ) )
    10    CONTINUE
 *
-         CALL ZTGSEN( 0, ILVSL, ILVSR, BWORK, N, A, LDA, B, LDB, ALPHA,
+         CALL ZTGSEN( 0, ILVSL, ILVSR, BWORK, N, A, LDA, B, LDB,
+     $                ALPHA,
      $                BETA, VSL, LDVSL, VSR, LDVSR, SDIM, PVSL, PVSR,
      $                DIF, WORK( IWRK ), LWORK-IWRK+1, IDUM, 1, IERR )
          IF( IERR.EQ.1 )
@@ -21666,7 +21956,8 @@
       LOGICAL            LDUMMA( 1 )
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           XERBLA, ZGEQRF, ZGGBAK, ZGGBAL, ZGGHRD, ZHGEQZ,
+      EXTERNAL           XERBLA, ZGEQRF, ZGGBAK, ZGGBAL, ZGGHRD,
+     $                   ZHGEQZ,
      $                   ZLACPY, ZLASCL, ZLASET, ZTGEVC, ZUNGQR, ZUNMQR
 *     ..
 *     .. External Functions ..
@@ -21741,7 +22032,8 @@
 *
       IF( INFO.EQ.0 ) THEN
          LWKMIN = MAX( 1, 2*N )
-         LWKOPT = MAX( 1, N + N*ILAENV( 1, 'ZGEQRF', ' ', N, 1, N, 0 ) )
+         LWKOPT = MAX( 1, N + N*ILAENV( 1, 'ZGEQRF', ' ', N, 1, N,
+     $                 0 ) )
          LWKOPT = MAX( LWKOPT, N +
      $                 N*ILAENV( 1, 'ZUNMQR', ' ', N, 1, N, 0 ) )
          IF( ILVL ) THEN
@@ -21903,7 +22195,8 @@
             CHTEMP = 'R'
          END IF
 *
-         CALL ZTGEVC( CHTEMP, 'B', LDUMMA, N, A, LDA, B, LDB, VL, LDVL,
+         CALL ZTGEVC( CHTEMP, 'B', LDUMMA, N, A, LDA, B, LDB, VL,
+     $                LDVL,
      $                VR, LDVR, N, IN, WORK( IWRK ), RWORK( IRWRK ),
      $                IERR )
          IF( IERR.NE.0 ) THEN
@@ -22165,7 +22458,8 @@
 *> \endverbatim
 *>
 *  =====================================================================
-      SUBROUTINE ZGGHRD( COMPQ, COMPZ, N, ILO, IHI, A, LDA, B, LDB, Q,
+      SUBROUTINE ZGGHRD( COMPQ, COMPZ, N, ILO, IHI, A, LDA, B, LDB,
+     $                   Q,
      $                   LDQ, Z, LDZ, INFO )
 *
 *  -- LAPACK computational routine --
@@ -22309,11 +22603,13 @@
             CALL ZLARTG( CTEMP, B( JROW, JROW-1 ), C, S,
      $                   B( JROW, JROW ) )
             B( JROW, JROW-1 ) = CZERO
-            CALL ZROT( IHI, A( 1, JROW ), 1, A( 1, JROW-1 ), 1, C, S )
+            CALL ZROT( IHI, A( 1, JROW ), 1, A( 1, JROW-1 ), 1, C,
+     $                 S )
             CALL ZROT( JROW-1, B( 1, JROW ), 1, B( 1, JROW-1 ), 1, C,
      $                 S )
             IF( ILZ )
-     $         CALL ZROT( N, Z( 1, JROW ), 1, Z( 1, JROW-1 ), 1, C, S )
+     $         CALL ZROT( N, Z( 1, JROW ), 1, Z( 1, JROW-1 ), 1, C,
+     $                    S )
    30    CONTINUE
    40 CONTINUE
 *
@@ -22778,7 +23074,8 @@
 *> \ingroup gtrfs
 *
 *  =====================================================================
-      SUBROUTINE ZGTRFS( TRANS, N, NRHS, DL, D, DU, DLF, DF, DUF, DU2,
+      SUBROUTINE ZGTRFS( TRANS, N, NRHS, DL, D, DU, DLF, DF, DUF,
+     $                   DU2,
      $                   IPIV, B, LDB, X, LDX, FERR, BERR, WORK, RWORK,
      $                   INFO )
 *
@@ -22821,7 +23118,8 @@
       INTEGER            ISAVE( 3 )
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           XERBLA, ZAXPY, ZCOPY, ZGTTRS, ZLACN2, ZLAGTM
+      EXTERNAL           XERBLA, ZAXPY, ZCOPY, ZGTTRS, ZLACN2,
+     $                   ZLAGTM
 *     ..
 *     .. Intrinsic Functions ..
       INTRINSIC          ABS, DBLE, DCMPLX, DIMAG, MAX
@@ -22900,7 +23198,8 @@
 *        where op(A) = A, A**T, or A**H, depending on TRANS.
 *
          CALL ZCOPY( N, B( 1, J ), 1, WORK, 1 )
-         CALL ZLAGTM( TRANS, N, 1, -ONE, DL, D, DU, X( 1, J ), LDX, ONE,
+         CALL ZLAGTM( TRANS, N, 1, -ONE, DL, D, DU, X( 1, J ), LDX,
+     $                ONE,
      $                WORK, N )
 *
 *        Compute abs(op(A))*abs(x) + abs(b) for use in the backward
@@ -22975,7 +23274,8 @@
 *
 *           Update solution and try again.
 *
-            CALL ZGTTRS( TRANS, N, 1, DLF, DF, DUF, DU2, IPIV, WORK, N,
+            CALL ZGTTRS( TRANS, N, 1, DLF, DF, DUF, DU2, IPIV, WORK,
+     $                   N,
      $                   INFO )
             CALL ZAXPY( N, DCMPLX( ONE ), WORK, 1, X( 1, J ), 1 )
             LSTRES = BERR( J )
@@ -23022,7 +23322,8 @@
 *
 *              Multiply by diag(W)*inv(op(A)**H).
 *
-               CALL ZGTTRS( TRANST, N, 1, DLF, DF, DUF, DU2, IPIV, WORK,
+               CALL ZGTTRS( TRANST, N, 1, DLF, DF, DUF, DU2, IPIV,
+     $                      WORK,
      $                      N, INFO )
                DO 80 I = 1, N
                   WORK( I ) = RWORK( I )*WORK( I )
@@ -23034,7 +23335,8 @@
                DO 90 I = 1, N
                   WORK( I ) = RWORK( I )*WORK( I )
    90          CONTINUE
-               CALL ZGTTRS( TRANSN, N, 1, DLF, DF, DUF, DU2, IPIV, WORK,
+               CALL ZGTTRS( TRANSN, N, 1, DLF, DF, DUF, DU2, IPIV,
+     $                      WORK,
      $                      N, INFO )
             END IF
             GO TO 70
@@ -23587,7 +23889,8 @@
 *> \ingroup gtsvx
 *
 *  =====================================================================
-      SUBROUTINE ZGTSVX( FACT, TRANS, N, NRHS, DL, D, DU, DLF, DF, DUF,
+      SUBROUTINE ZGTSVX( FACT, TRANS, N, NRHS, DL, D, DU, DLF, DF,
+     $                   DUF,
      $                   DU2, IPIV, B, LDB, X, LDX, RCOND, FERR, BERR,
      $                   WORK, RWORK, INFO )
 *
@@ -23625,7 +23928,8 @@
       EXTERNAL           LSAME, DLAMCH, ZLANGT
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           XERBLA, ZCOPY, ZGTCON, ZGTRFS, ZGTTRF, ZGTTRS,
+      EXTERNAL           XERBLA, ZCOPY, ZGTCON, ZGTRFS, ZGTTRF,
+     $                   ZGTTRS,
      $                   ZLACPY
 *     ..
 *     .. Intrinsic Functions ..
@@ -23685,7 +23989,8 @@
 *
 *     Compute the reciprocal of the condition number of A.
 *
-      CALL ZGTCON( NORM, N, DLF, DF, DUF, DU2, IPIV, ANORM, RCOND, WORK,
+      CALL ZGTCON( NORM, N, DLF, DF, DUF, DU2, IPIV, ANORM, RCOND,
+     $             WORK,
      $             INFO )
 *
 *     Compute the solution vectors X.
@@ -23697,7 +24002,8 @@
 *     Use iterative refinement to improve the computed solutions and
 *     compute error bounds and backward error estimates for them.
 *
-      CALL ZGTRFS( TRANS, N, NRHS, DL, D, DU, DLF, DF, DUF, DU2, IPIV,
+      CALL ZGTRFS( TRANS, N, NRHS, DL, D, DU, DLF, DF, DUF, DU2,
+     $             IPIV,
      $             B, LDB, X, LDX, FERR, BERR, WORK, RWORK, INFO )
 *
 *     Set INFO = N+1 if the matrix is singular to working precision.
@@ -24085,7 +24391,8 @@
 *> \ingroup gttrs
 *
 *  =====================================================================
-      SUBROUTINE ZGTTRS( TRANS, N, NRHS, DL, D, DU, DU2, IPIV, B, LDB,
+      SUBROUTINE ZGTTRS( TRANS, N, NRHS, DL, D, DU, DU2, IPIV, B,
+     $                   LDB,
      $                   INFO )
 *
 *  -- LAPACK computational routine --
@@ -24164,7 +24471,8 @@
       ELSE
          DO 10 J = 1, NRHS, NB
             JB = MIN( NRHS-J+1, NB )
-            CALL ZGTTS2( ITRANS, N, JB, DL, D, DU, DU2, IPIV, B( 1, J ),
+            CALL ZGTTS2( ITRANS, N, JB, DL, D, DU, DU2, IPIV, B( 1,
+     $                   J ),
      $                   LDB )
    10    CONTINUE
       END IF
@@ -24298,7 +24606,8 @@
 *> \ingroup gtts2
 *
 *  =====================================================================
-      SUBROUTINE ZGTTS2( ITRANS, N, NRHS, DL, D, DU, DU2, IPIV, B, LDB )
+      SUBROUTINE ZGTTS2( ITRANS, N, NRHS, DL, D, DU, DU2, IPIV, B,
+     $                   LDB )
 *
 *  -- LAPACK computational routine --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
@@ -24929,7 +25238,8 @@
       EXTERNAL           LSAME, ILAENV, DLAMCH, ZLANHE
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           DSCAL, DSTERF, XERBLA, ZHETRD, ZLASCL, ZSTEQR,
+      EXTERNAL           DSCAL, DSTERF, XERBLA, ZHETRD, ZLASCL,
+     $                   ZSTEQR,
      $                   ZUNGTR
 *     ..
 *     .. Intrinsic Functions ..
@@ -25022,7 +25332,8 @@
       IF( .NOT.WANTZ ) THEN
          CALL DSTERF( N, W, RWORK( INDE ), INFO )
       ELSE
-         CALL ZUNGTR( UPLO, N, A, LDA, WORK( INDTAU ), WORK( INDWRK ),
+         CALL ZUNGTR( UPLO, N, A, LDA, WORK( INDTAU ),
+     $                WORK( INDWRK ),
      $                LLWORK, IINFO )
          INDWRK = INDE + N
          CALL ZSTEQR( JOBZ, N, W, RWORK( INDE ), A, LDA,
@@ -25167,8 +25478,7 @@
 *>
 *> \param[out] RWORK
 *> \verbatim
-*>          RWORK is DOUBLE PRECISION array,
-*>                                         dimension (LRWORK)
+*>          RWORK is DOUBLE PRECISION array, dimension (MAX(1,LRWORK))
 *>          On exit, if INFO = 0, RWORK(1) returns the optimal LRWORK.
 *> \endverbatim
 *>
@@ -25245,7 +25555,8 @@
 *> at Berkeley, USA
 *>
 *  =====================================================================
-      SUBROUTINE ZHEEVD( JOBZ, UPLO, N, A, LDA, W, WORK, LWORK, RWORK,
+      SUBROUTINE ZHEEVD( JOBZ, UPLO, N, A, LDA, W, WORK, LWORK,
+     $                   RWORK,
      $                   LRWORK, IWORK, LIWORK, INFO )
 *
 *  -- LAPACK driver routine --
@@ -25285,7 +25596,8 @@
       EXTERNAL           LSAME, ILAENV, DLAMCH, ZLANHE
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           DSCAL, DSTERF, XERBLA, ZHETRD, ZLACPY, ZLASCL,
+      EXTERNAL           DSCAL, DSTERF, XERBLA, ZHETRD, ZLACPY,
+     $                   ZLASCL,
      $                   ZSTEDC, ZUNMTR
 *     ..
 *     .. Intrinsic Functions ..
@@ -25329,12 +25641,13 @@
                LIWMIN = 1
             END IF
             LOPT = MAX( LWMIN, N +
-     $                  N*ILAENV( 1, 'ZHETRD', UPLO, N, -1, -1, -1 ) )
+     $                  N*ILAENV( 1, 'ZHETRD', UPLO, N, -1, -1,
+     $                            -1 ) )
             LROPT = LRWMIN
             LIOPT = LIWMIN
          END IF
          WORK( 1 ) = LOPT
-         RWORK( 1 ) = LROPT
+         RWORK( 1 ) = REAL( LROPT )
          IWORK( 1 ) = LIOPT
 *
          IF( LWORK.LT.LWMIN .AND. .NOT.LQUERY ) THEN
@@ -25430,7 +25743,7 @@
       END IF
 *
       WORK( 1 ) = LOPT
-      RWORK( 1 ) = LROPT
+      RWORK( 1 ) = REAL( LROPT )
       IWORK( 1 ) = LIOPT
 *
       RETURN
@@ -25695,7 +26008,8 @@
 *
 *              Compute  x := tau * A * v  storing x in TAU(1:i)
 *
-               CALL ZHEMV( UPLO, I, TAUI, A, LDA, A( 1, I+1 ), 1, ZERO,
+               CALL ZHEMV( UPLO, I, TAUI, A, LDA, A( 1, I+1 ), 1,
+     $                     ZERO,
      $                     TAU, 1 )
 *
 *              Compute  w := x - 1/2 * tau * (x**H * v) * v
@@ -25744,14 +26058,16 @@
 *
 *              Compute  w := x - 1/2 * tau * (x**H * v) * v
 *
-               ALPHA = -HALF*TAUI*ZDOTC( N-I, TAU( I ), 1, A( I+1, I ),
+               ALPHA = -HALF*TAUI*ZDOTC( N-I, TAU( I ), 1, A( I+1,
+     $                                   I ),
      $                 1 )
                CALL ZAXPY( N-I, ALPHA, A( I+1, I ), 1, TAU( I ), 1 )
 *
 *              Apply the transformation as a rank-2 update:
 *                 A := A - v * w**H - w * v**H
 *
-               CALL ZHER2( UPLO, N-I, -ONE, A( I+1, I ), 1, TAU( I ), 1,
+               CALL ZHER2( UPLO, N-I, -ONE, A( I+1, I ), 1, TAU( I ),
+     $                     1,
      $                     A( I+1, I+1 ), LDA )
 *
             ELSE
@@ -26060,7 +26376,8 @@
             COLMAX = ZERO
          END IF
 *
-         IF( (MAX( ABSAKK, COLMAX ).EQ.ZERO) .OR. DISNAN(ABSAKK) ) THEN
+         IF( (MAX( ABSAKK, COLMAX ).EQ.ZERO) .OR.
+     $       DISNAN(ABSAKK) ) THEN
 *
 *           Column K is zero or underflow, or contains a NaN:
 *           set INFO and continue
@@ -26255,7 +26572,8 @@
             COLMAX = ZERO
          END IF
 *
-         IF( (MAX( ABSAKK, COLMAX ).EQ.ZERO) .OR. DISNAN(ABSAKK) ) THEN
+         IF( (MAX( ABSAKK, COLMAX ).EQ.ZERO) .OR.
+     $       DISNAN(ABSAKK) ) THEN
 *
 *           Column K is zero or underflow, or contains a NaN:
 *           set INFO and continue
@@ -26284,7 +26602,8 @@
                JMAX = K - 1 + IZAMAX( IMAX-K, A( IMAX, K ), LDA )
                ROWMAX = CABS1( A( IMAX, JMAX ) )
                IF( IMAX.LT.N ) THEN
-                  JMAX = IMAX + IZAMAX( N-IMAX, A( IMAX+1, IMAX ), 1 )
+                  JMAX = IMAX + IZAMAX( N-IMAX, A( IMAX+1, IMAX ),
+     $                                  1 )
                   ROWMAX = MAX( ROWMAX, CABS1( A( JMAX, IMAX ) ) )
                END IF
 *
@@ -26321,7 +26640,8 @@
 *              submatrix A(k:n,k:n)
 *
                IF( KP.LT.N )
-     $            CALL ZSWAP( N-KP, A( KP+1, KK ), 1, A( KP+1, KP ), 1 )
+     $            CALL ZSWAP( N-KP, A( KP+1, KK ), 1, A( KP+1, KP ),
+     $                        1 )
                DO 60 J = KK + 1, KP - 1
                   T = DCONJG( A( J, KK ) )
                   A( J, KK ) = DCONJG( A( KP, J ) )
@@ -26617,7 +26937,8 @@
 *> \endverbatim
 *>
 *  =====================================================================
-      SUBROUTINE ZHETRD( UPLO, N, A, LDA, D, E, TAU, WORK, LWORK, INFO )
+      SUBROUTINE ZHETRD( UPLO, N, A, LDA, D, E, TAU, WORK, LWORK,
+     $                   INFO )
 *
 *  -- LAPACK computational routine --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
@@ -26678,7 +26999,7 @@
 *        Determine the block size.
 *
          NB = ILAENV( 1, 'ZHETRD', UPLO, N, -1, -1, -1 )
-         LWKOPT = N*NB
+         LWKOPT = MAX( 1, N*NB )
          WORK( 1 ) = LWKOPT
       END IF
 *
@@ -26911,7 +27232,7 @@
 *> \param[in] LWORK
 *> \verbatim
 *>          LWORK is INTEGER
-*>          The length of WORK.  LWORK >=1.  For best performance
+*>          The length of WORK. LWORK >= 1. For best performance
 *>          LWORK >= N*NB, where NB is the block size returned by ILAENV.
 *> \endverbatim
 *>
@@ -27031,7 +27352,7 @@
 *        Determine the block size
 *
          NB = ILAENV( 1, 'ZHETRF', UPLO, N, -1, -1, -1 )
-         LWKOPT = N*NB
+         LWKOPT = MAX( 1, N*NB )
          WORK( 1 ) = LWKOPT
       END IF
 *
@@ -27048,7 +27369,8 @@
          IWS = LDWORK*NB
          IF( LWORK.LT.IWS ) THEN
             NB = MAX( LWORK / LDWORK, 1 )
-            NBMIN = MAX( 2, ILAENV( 2, 'ZHETRF', UPLO, N, -1, -1, -1 ) )
+            NBMIN = MAX( 2, ILAENV( 2, 'ZHETRF', UPLO, N, -1, -1,
+     $                   -1 ) )
          END IF
       ELSE
          IWS = 1
@@ -27077,7 +27399,8 @@
 *           Factorize columns k-kb+1:k of A and use blocked code to
 *           update columns 1:k-kb
 *
-            CALL ZLAHEF( UPLO, K, NB, KB, A, LDA, IPIV, WORK, N, IINFO )
+            CALL ZLAHEF( UPLO, K, NB, KB, A, LDA, IPIV, WORK, N,
+     $                   IINFO )
          ELSE
 *
 *           Use unblocked code to factorize columns 1:k of A
@@ -27117,13 +27440,15 @@
 *           Factorize columns k:k+kb-1 of A and use blocked code to
 *           update columns k+kb:n
 *
-            CALL ZLAHEF( UPLO, N-K+1, NB, KB, A( K, K ), LDA, IPIV( K ),
+            CALL ZLAHEF( UPLO, N-K+1, NB, KB, A( K, K ), LDA,
+     $                   IPIV( K ),
      $                   WORK, N, IINFO )
          ELSE
 *
 *           Use unblocked code to factorize columns k:n of A
 *
-            CALL ZHETF2( UPLO, N-K+1, A( K, K ), LDA, IPIV( K ), IINFO )
+            CALL ZHETF2( UPLO, N-K+1, A( K, K ), LDA, IPIV( K ),
+     $                   IINFO )
             KB = N - K + 1
          END IF
 *
@@ -27150,6 +27475,7 @@
       END IF
 *
    40 CONTINUE
+*
       WORK( 1 ) = LWKOPT
       RETURN
 *
@@ -27381,7 +27707,8 @@
                CALL ZCOPY( K-1, A( 1, K ), 1, WORK, 1 )
                CALL ZHEMV( UPLO, K-1, -CONE, A, LDA, WORK, 1, ZERO,
      $                     A( 1, K ), 1 )
-               A( K, K ) = A( K, K ) - DBLE( ZDOTC( K-1, WORK, 1, A( 1,
+               A( K, K ) = A( K, K ) - DBLE( ZDOTC( K-1, WORK, 1,
+     $            A( 1,
      $                     K ), 1 ) )
             END IF
             KSTEP = 1
@@ -27406,15 +27733,18 @@
                CALL ZCOPY( K-1, A( 1, K ), 1, WORK, 1 )
                CALL ZHEMV( UPLO, K-1, -CONE, A, LDA, WORK, 1, ZERO,
      $                     A( 1, K ), 1 )
-               A( K, K ) = A( K, K ) - DBLE( ZDOTC( K-1, WORK, 1, A( 1,
+               A( K, K ) = A( K, K ) - DBLE( ZDOTC( K-1, WORK, 1,
+     $            A( 1,
      $                     K ), 1 ) )
                A( K, K+1 ) = A( K, K+1 ) -
-     $                       ZDOTC( K-1, A( 1, K ), 1, A( 1, K+1 ), 1 )
+     $                       ZDOTC( K-1, A( 1, K ), 1, A( 1, K+1 ),
+     $                              1 )
                CALL ZCOPY( K-1, A( 1, K+1 ), 1, WORK, 1 )
                CALL ZHEMV( UPLO, K-1, -CONE, A, LDA, WORK, 1, ZERO,
      $                     A( 1, K+1 ), 1 )
                A( K+1, K+1 ) = A( K+1, K+1 ) -
-     $                         DBLE( ZDOTC( K-1, WORK, 1, A( 1, K+1 ),
+     $                         DBLE( ZDOTC( K-1, WORK, 1, A( 1,
+     $                               K+1 ),
      $                         1 ) )
             END IF
             KSTEP = 2
@@ -27474,7 +27804,8 @@
 *
             IF( K.LT.N ) THEN
                CALL ZCOPY( N-K, A( K+1, K ), 1, WORK, 1 )
-               CALL ZHEMV( UPLO, N-K, -CONE, A( K+1, K+1 ), LDA, WORK,
+               CALL ZHEMV( UPLO, N-K, -CONE, A( K+1, K+1 ), LDA,
+     $                     WORK,
      $                     1, ZERO, A( K+1, K ), 1 )
                A( K, K ) = A( K, K ) - DBLE( ZDOTC( N-K, WORK, 1,
      $                     A( K+1, K ), 1 ) )
@@ -27499,18 +27830,22 @@
 *
             IF( K.LT.N ) THEN
                CALL ZCOPY( N-K, A( K+1, K ), 1, WORK, 1 )
-               CALL ZHEMV( UPLO, N-K, -CONE, A( K+1, K+1 ), LDA, WORK,
+               CALL ZHEMV( UPLO, N-K, -CONE, A( K+1, K+1 ), LDA,
+     $                     WORK,
      $                     1, ZERO, A( K+1, K ), 1 )
                A( K, K ) = A( K, K ) - DBLE( ZDOTC( N-K, WORK, 1,
      $                     A( K+1, K ), 1 ) )
                A( K, K-1 ) = A( K, K-1 ) -
-     $                       ZDOTC( N-K, A( K+1, K ), 1, A( K+1, K-1 ),
+     $                       ZDOTC( N-K, A( K+1, K ), 1, A( K+1,
+     $                              K-1 ),
      $                       1 )
                CALL ZCOPY( N-K, A( K+1, K-1 ), 1, WORK, 1 )
-               CALL ZHEMV( UPLO, N-K, -CONE, A( K+1, K+1 ), LDA, WORK,
+               CALL ZHEMV( UPLO, N-K, -CONE, A( K+1, K+1 ), LDA,
+     $                     WORK,
      $                     1, ZERO, A( K+1, K-1 ), 1 )
                A( K-1, K-1 ) = A( K-1, K-1 ) -
-     $                         DBLE( ZDOTC( N-K, WORK, 1, A( K+1, K-1 ),
+     $                         DBLE( ZDOTC( N-K, WORK, 1, A( K+1,
+     $                               K-1 ),
      $                         1 ) )
             END IF
             KSTEP = 2
@@ -27700,7 +28035,8 @@
       EXTERNAL           LSAME
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           XERBLA, ZDSCAL, ZGEMV, ZGERU, ZLACGV, ZSWAP
+      EXTERNAL           XERBLA, ZDSCAL, ZGEMV, ZGERU, ZLACGV,
+     $                   ZSWAP
 *     ..
 *     .. Intrinsic Functions ..
       INTRINSIC          DBLE, DCONJG, MAX
@@ -27760,7 +28096,8 @@
 *           Multiply by inv(U(K)), where U(K) is the transformation
 *           stored in column K of A.
 *
-            CALL ZGERU( K-1, NRHS, -ONE, A( 1, K ), 1, B( K, 1 ), LDB,
+            CALL ZGERU( K-1, NRHS, -ONE, A( 1, K ), 1, B( K, 1 ),
+     $                  LDB,
      $                  B( 1, 1 ), LDB )
 *
 *           Multiply by the inverse of the diagonal block.
@@ -27781,7 +28118,8 @@
 *           Multiply by inv(U(K)), where U(K) is the transformation
 *           stored in columns K-1 and K of A.
 *
-            CALL ZGERU( K-2, NRHS, -ONE, A( 1, K ), 1, B( K, 1 ), LDB,
+            CALL ZGERU( K-2, NRHS, -ONE, A( 1, K ), 1, B( K, 1 ),
+     $                  LDB,
      $                  B( 1, 1 ), LDB )
             CALL ZGERU( K-2, NRHS, -ONE, A( 1, K-1 ), 1, B( K-1, 1 ),
      $                  LDB, B( 1, 1 ), LDB )
@@ -27898,7 +28236,8 @@
 *           stored in column K of A.
 *
             IF( K.LT.N )
-     $         CALL ZGERU( N-K, NRHS, -ONE, A( K+1, K ), 1, B( K, 1 ),
+     $         CALL ZGERU( N-K, NRHS, -ONE, A( K+1, K ), 1, B( K,
+     $                     1 ),
      $                     LDB, B( K+1, 1 ), LDB )
 *
 *           Multiply by the inverse of the diagonal block.
@@ -27920,7 +28259,8 @@
 *           stored in columns K and K+1 of A.
 *
             IF( K.LT.N-1 ) THEN
-               CALL ZGERU( N-K-1, NRHS, -ONE, A( K+2, K ), 1, B( K, 1 ),
+               CALL ZGERU( N-K-1, NRHS, -ONE, A( K+2, K ), 1, B( K,
+     $                     1 ),
      $                     LDB, B( K+2, 1 ), LDB )
                CALL ZGERU( N-K-1, NRHS, -ONE, A( K+2, K+1 ), 1,
      $                     B( K+1, 1 ), LDB, B( K+2, 1 ), LDB )
@@ -28296,7 +28636,8 @@
 *> \endverbatim
 *>
 *  =====================================================================
-      SUBROUTINE ZHGEQZ( JOB, COMPQ, COMPZ, N, ILO, IHI, H, LDH, T, LDT,
+      SUBROUTINE ZHGEQZ( JOB, COMPQ, COMPZ, N, ILO, IHI, H, LDH, T,
+     $                   LDT,
      $                   ALPHA, BETA, Q, LDQ, Z, LDZ, WORK, LWORK,
      $                   RWORK, INFO )
 *
@@ -28597,7 +28938,8 @@
                      CALL ZROT( ILASTM-JCH, T( JCH, JCH+1 ), LDT,
      $                          T( JCH+1, JCH+1 ), LDT, C, S )
                      IF( ILQ )
-     $                  CALL ZROT( N, Q( 1, JCH ), 1, Q( 1, JCH+1 ), 1,
+     $                  CALL ZROT( N, Q( 1, JCH ), 1, Q( 1, JCH+1 ),
+     $                             1,
      $                             C, DCONJG( S ) )
                      IF( ILAZR2 )
      $                  H( JCH, JCH-1 ) = H( JCH, JCH-1 )*C
@@ -28624,12 +28966,14 @@
      $                            T( JCH, JCH+1 ) )
                      T( JCH+1, JCH+1 ) = CZERO
                      IF( JCH.LT.ILASTM-1 )
-     $                  CALL ZROT( ILASTM-JCH-1, T( JCH, JCH+2 ), LDT,
+     $                  CALL ZROT( ILASTM-JCH-1, T( JCH, JCH+2 ),
+     $                             LDT,
      $                             T( JCH+1, JCH+2 ), LDT, C, S )
                      CALL ZROT( ILASTM-JCH+2, H( JCH, JCH-1 ), LDH,
      $                          H( JCH+1, JCH-1 ), LDH, C, S )
                      IF( ILQ )
-     $                  CALL ZROT( N, Q( 1, JCH ), 1, Q( 1, JCH+1 ), 1,
+     $                  CALL ZROT( N, Q( 1, JCH ), 1, Q( 1, JCH+1 ),
+     $                             1,
      $                             C, DCONJG( S ) )
                      CTEMP = H( JCH+1, JCH )
                      CALL ZLARTG( CTEMP, H( JCH+1, JCH-1 ), C, S,
@@ -28640,7 +28984,8 @@
                      CALL ZROT( JCH-IFRSTM, T( IFRSTM, JCH ), 1,
      $                          T( IFRSTM, JCH-1 ), 1, C, S )
                      IF( ILZ )
-     $                  CALL ZROT( N, Z( 1, JCH ), 1, Z( 1, JCH-1 ), 1,
+     $                  CALL ZROT( N, Z( 1, JCH ), 1, Z( 1, JCH-1 ),
+     $                             1,
      $                             C, S )
    30             CONTINUE
                   GO TO 50
@@ -28675,7 +29020,8 @@
          CALL ZROT( ILAST-IFRSTM, T( IFRSTM, ILAST ), 1,
      $              T( IFRSTM, ILAST-1 ), 1, C, S )
          IF( ILZ )
-     $      CALL ZROT( N, Z( 1, ILAST ), 1, Z( 1, ILAST-1 ), 1, C, S )
+     $      CALL ZROT( N, Z( 1, ILAST ), 1, Z( 1, ILAST-1 ), 1, C,
+     $                 S )
 *
 *        H(ILAST,ILAST-1)=0 -- Standardize B, set ALPHA and BETA
 *
@@ -28685,8 +29031,10 @@
             SIGNBC = DCONJG( T( ILAST, ILAST ) / ABSB )
             T( ILAST, ILAST ) = ABSB
             IF( ILSCHR ) THEN
-               CALL ZSCAL( ILAST-IFRSTM, SIGNBC, T( IFRSTM, ILAST ), 1 )
-               CALL ZSCAL( ILAST+1-IFRSTM, SIGNBC, H( IFRSTM, ILAST ),
+               CALL ZSCAL( ILAST-IFRSTM, SIGNBC, T( IFRSTM, ILAST ),
+     $                     1 )
+               CALL ZSCAL( ILAST+1-IFRSTM, SIGNBC, H( IFRSTM,
+     $                     ILAST ),
      $                     1 )
             ELSE
                CALL ZSCAL( 1, SIGNBC, H( ILAST, ILAST ), 1 )
@@ -29025,7 +29373,8 @@
 *> \ingroup hpcon
 *
 *  =====================================================================
-      SUBROUTINE ZHPCON( UPLO, N, AP, IPIV, ANORM, RCOND, WORK, INFO )
+      SUBROUTINE ZHPCON( UPLO, N, AP, IPIV, ANORM, RCOND, WORK,
+     $                   INFO )
 *
 *  -- LAPACK computational routine --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
@@ -29307,7 +29656,8 @@
       EXTERNAL           LSAME, DLAMCH, ZLANHP
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           DSCAL, DSTERF, XERBLA, ZDSCAL, ZHPTRD, ZSTEQR,
+      EXTERNAL           DSCAL, DSTERF, XERBLA, ZDSCAL, ZHPTRD,
+     $                   ZSTEQR,
      $                   ZUPGTR
 *     ..
 *     .. Intrinsic Functions ..
@@ -29322,7 +29672,8 @@
       INFO = 0
       IF( .NOT.( WANTZ .OR. LSAME( JOBZ, 'N' ) ) ) THEN
          INFO = -1
-      ELSE IF( .NOT.( LSAME( UPLO, 'L' ) .OR. LSAME( UPLO, 'U' ) ) )
+      ELSE IF( .NOT.( LSAME( UPLO, 'L' ) .OR.
+     $         LSAME( UPLO, 'U' ) ) )
      $          THEN
          INFO = -2
       ELSE IF( N.LT.0 ) THEN
@@ -29688,19 +30039,22 @@
 *
 *              Compute  y := tau * A * v  storing y in TAU(i:n-1)
 *
-               CALL ZHPMV( UPLO, N-I, TAUI, AP( I1I1 ), AP( II+1 ), 1,
+               CALL ZHPMV( UPLO, N-I, TAUI, AP( I1I1 ), AP( II+1 ),
+     $                     1,
      $                     ZERO, TAU( I ), 1 )
 *
 *              Compute  w := y - 1/2 * tau * (y**H *v) * v
 *
-               ALPHA = -HALF*TAUI*ZDOTC( N-I, TAU( I ), 1, AP( II+1 ),
+               ALPHA = -HALF*TAUI*ZDOTC( N-I, TAU( I ), 1,
+     $                                   AP( II+1 ),
      $                 1 )
                CALL ZAXPY( N-I, ALPHA, AP( II+1 ), 1, TAU( I ), 1 )
 *
 *              Apply the transformation as a rank-2 update:
 *                 A := A - v * w**H - w * v**H
 *
-               CALL ZHPR2( UPLO, N-I, -ONE, AP( II+1 ), 1, TAU( I ), 1,
+               CALL ZHPR2( UPLO, N-I, -ONE, AP( II+1 ), 1, TAU( I ),
+     $                     1,
      $                     AP( I1I1 ) )
 *
             END IF
@@ -30243,7 +30597,8 @@
 *              submatrix A(k:n,k:n)
 *
                IF( KP.LT.N )
-     $            CALL ZSWAP( N-KP, AP( KNC+KP-KK+1 ), 1, AP( KPC+1 ),
+     $            CALL ZSWAP( N-KP, AP( KNC+KP-KK+1 ), 1,
+     $                        AP( KPC+1 ),
      $                        1 )
                KX = KNC + KP - KK
                DO 80 J = KK + 1, KP - 1
@@ -30311,7 +30666,8 @@
 *                 where L(k) and L(k+1) are the k-th and (k+1)-th
 *                 columns of L
 *
-                  D = DLAPY2( DBLE( AP( K+1+( K-1 )*( 2*N-K ) / 2 ) ),
+                  D = DLAPY2(
+     $                DBLE( AP( K+1+( K-1 )*( 2*N-K ) / 2 ) ),
      $                DIMAG( AP( K+1+( K-1 )*( 2*N-K ) / 2 ) ) )
                   D11 = DBLE( AP( K+1+K*( 2*N-K-1 ) / 2 ) ) / D
                   D22 = DBLE( AP( K+( K-1 )*( 2*N-K ) / 2 ) ) / D
@@ -30589,7 +30945,8 @@
                CALL ZHPMV( UPLO, K-1, -CONE, AP, WORK, 1, ZERO,
      $                     AP( KC ), 1 )
                AP( KC+K-1 ) = AP( KC+K-1 ) -
-     $                        DBLE( ZDOTC( K-1, WORK, 1, AP( KC ), 1 ) )
+     $                        DBLE( ZDOTC( K-1, WORK, 1, AP( KC ),
+     $                              1 ) )
             END IF
             KSTEP = 1
          ELSE
@@ -30614,15 +30971,18 @@
                CALL ZHPMV( UPLO, K-1, -CONE, AP, WORK, 1, ZERO,
      $                     AP( KC ), 1 )
                AP( KC+K-1 ) = AP( KC+K-1 ) -
-     $                        DBLE( ZDOTC( K-1, WORK, 1, AP( KC ), 1 ) )
+     $                        DBLE( ZDOTC( K-1, WORK, 1, AP( KC ),
+     $                              1 ) )
                AP( KCNEXT+K-1 ) = AP( KCNEXT+K-1 ) -
-     $                            ZDOTC( K-1, AP( KC ), 1, AP( KCNEXT ),
+     $                            ZDOTC( K-1, AP( KC ), 1,
+     $                                   AP( KCNEXT ),
      $                            1 )
                CALL ZCOPY( K-1, AP( KCNEXT ), 1, WORK, 1 )
                CALL ZHPMV( UPLO, K-1, -CONE, AP, WORK, 1, ZERO,
      $                     AP( KCNEXT ), 1 )
                AP( KCNEXT+K ) = AP( KCNEXT+K ) -
-     $                          DBLE( ZDOTC( K-1, WORK, 1, AP( KCNEXT ),
+     $                          DBLE( ZDOTC( K-1, WORK, 1,
+     $                                AP( KCNEXT ),
      $                          1 ) )
             END IF
             KSTEP = 2
@@ -30715,7 +31075,8 @@
 *
             IF( K.LT.N ) THEN
                CALL ZCOPY( N-K, AP( KC+1 ), 1, WORK, 1 )
-               CALL ZHPMV( UPLO, N-K, -CONE, AP( KC+( N-K+1 ) ), WORK,
+               CALL ZHPMV( UPLO, N-K, -CONE, AP( KC+( N-K+1 ) ),
+     $                     WORK,
      $                     1, ZERO, AP( KC+1 ), 1 )
                AP( KC ) = AP( KC ) - DBLE( ZDOTC( N-K, WORK, 1,
      $                    AP( KC+1 ), 1 ) )
@@ -30723,10 +31084,12 @@
      $                          ZDOTC( N-K, AP( KC+1 ), 1,
      $                          AP( KCNEXT+2 ), 1 )
                CALL ZCOPY( N-K, AP( KCNEXT+2 ), 1, WORK, 1 )
-               CALL ZHPMV( UPLO, N-K, -CONE, AP( KC+( N-K+1 ) ), WORK,
+               CALL ZHPMV( UPLO, N-K, -CONE, AP( KC+( N-K+1 ) ),
+     $                     WORK,
      $                     1, ZERO, AP( KCNEXT+2 ), 1 )
                AP( KCNEXT ) = AP( KCNEXT ) -
-     $                        DBLE( ZDOTC( N-K, WORK, 1, AP( KCNEXT+2 ),
+     $                        DBLE( ZDOTC( N-K, WORK, 1,
+     $                              AP( KCNEXT+2 ),
      $                        1 ) )
             END IF
             KSTEP = 2
@@ -30916,7 +31279,8 @@
       EXTERNAL           LSAME
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           XERBLA, ZDSCAL, ZGEMV, ZGERU, ZLACGV, ZSWAP
+      EXTERNAL           XERBLA, ZDSCAL, ZGEMV, ZGERU, ZLACGV,
+     $                   ZSWAP
 *     ..
 *     .. Intrinsic Functions ..
       INTRINSIC          DBLE, DCONJG, MAX
@@ -31142,7 +31506,8 @@
 *           stored in columns K and K+1 of A.
 *
             IF( K.LT.N-1 ) THEN
-               CALL ZGERU( N-K-1, NRHS, -ONE, AP( KC+2 ), 1, B( K, 1 ),
+               CALL ZGERU( N-K-1, NRHS, -ONE, AP( KC+2 ), 1, B( K,
+     $                     1 ),
      $                     LDB, B( K+2, 1 ), LDB )
                CALL ZGERU( N-K-1, NRHS, -ONE, AP( KC+N-K+2 ), 1,
      $                     B( K+1, 1 ), LDB, B( K+2, 1 ), LDB )
@@ -31590,7 +31955,8 @@
       EXTERNAL           ILAENV, LSAME
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           XERBLA, ZCOPY, ZLACPY, ZLAHQR, ZLAQR0, ZLASET
+      EXTERNAL           XERBLA, ZCOPY, ZLACPY, ZLAHQR, ZLAQR0,
+     $                   ZLASET
 *     ..
 *     .. Intrinsic Functions ..
       INTRINSIC          DBLE, DCMPLX, MAX, MIN
@@ -31641,7 +32007,8 @@
 *
 *        ==== Quick return in case of a workspace query ====
 *
-         CALL ZLAQR0( WANTT, WANTZ, N, ILO, IHI, H, LDH, W, ILO, IHI, Z,
+         CALL ZLAQR0( WANTT, WANTZ, N, ILO, IHI, H, LDH, W, ILO, IHI,
+     $                Z,
      $                LDZ, WORK, LWORK, INFO )
 *        ==== Ensure reported workspace size is backward-compatible with
 *        .    previous LAPACK versions. ====
@@ -31656,7 +32023,8 @@
          IF( ILO.GT.1 )
      $      CALL ZCOPY( ILO-1, H, LDH+1, W, 1 )
          IF( IHI.LT.N )
-     $      CALL ZCOPY( N-IHI, H( IHI+1, IHI+1 ), LDH+1, W( IHI+1 ), 1 )
+     $      CALL ZCOPY( N-IHI, H( IHI+1, IHI+1 ), LDH+1, W( IHI+1 ),
+     $                  1 )
 *
 *        ==== Initialize Z, if requested ====
 *
@@ -31679,13 +32047,15 @@
 *        ==== ZLAQR0 for big matrices; ZLAHQR for small ones ====
 *
          IF( N.GT.NMIN ) THEN
-            CALL ZLAQR0( WANTT, WANTZ, N, ILO, IHI, H, LDH, W, ILO, IHI,
+            CALL ZLAQR0( WANTT, WANTZ, N, ILO, IHI, H, LDH, W, ILO,
+     $                   IHI,
      $                   Z, LDZ, WORK, LWORK, INFO )
          ELSE
 *
 *           ==== Small matrix ====
 *
-            CALL ZLAHQR( WANTT, WANTZ, N, ILO, IHI, H, LDH, W, ILO, IHI,
+            CALL ZLAHQR( WANTT, WANTZ, N, ILO, IHI, H, LDH, W, ILO,
+     $                   IHI,
      $                   Z, LDZ, INFO )
 *
             IF( INFO.GT.0 ) THEN
@@ -31712,9 +32082,11 @@
 *
                   CALL ZLACPY( 'A', N, N, H, LDH, HL, NL )
                   HL( N+1, N ) = ZERO
-                  CALL ZLASET( 'A', NL, NL-N, ZERO, ZERO, HL( 1, N+1 ),
+                  CALL ZLASET( 'A', NL, NL-N, ZERO, ZERO, HL( 1,
+     $                         N+1 ),
      $                         NL )
-                  CALL ZLAQR0( WANTT, WANTZ, NL, ILO, KBOT, HL, NL, W,
+                  CALL ZLAQR0( WANTT, WANTZ, NL, ILO, KBOT, HL, NL,
+     $                         W,
      $                         ILO, IHI, Z, LDZ, WORKL, NL, INFO )
                   IF( WANTT .OR. INFO.NE.0 )
      $               CALL ZLACPY( 'A', N, N, HL, NL, H, LDH )
@@ -31946,7 +32318,8 @@
 *> \endverbatim
 *>
 *  =====================================================================
-      SUBROUTINE ZLABRD( M, N, NB, A, LDA, D, E, TAUQ, TAUP, X, LDX, Y,
+      SUBROUTINE ZLABRD( M, N, NB, A, LDA, D, E, TAUQ, TAUP, X, LDX,
+     $                   Y,
      $                   LDY )
 *
 *  -- LAPACK auxiliary routine --
@@ -32018,7 +32391,8 @@
                CALL ZGEMV( 'Conjugate transpose', M-I+1, I-1, ONE,
      $                     A( I, 1 ), LDA, A( I, I ), 1, ZERO,
      $                     Y( 1, I ), 1 )
-               CALL ZGEMV( 'No transpose', N-I, I-1, -ONE, Y( I+1, 1 ),
+               CALL ZGEMV( 'No transpose', N-I, I-1, -ONE, Y( I+1,
+     $                     1 ),
      $                     LDY, Y( 1, I ), 1, ONE, Y( I+1, I ), 1 )
                CALL ZGEMV( 'Conjugate transpose', M-I+1, I-1, ONE,
      $                     X( I, 1 ), LDX, A( I, I ), 1, ZERO,
@@ -32051,16 +32425,19 @@
 *
 *              Compute X(i+1:m,i)
 *
-               CALL ZGEMV( 'No transpose', M-I, N-I, ONE, A( I+1, I+1 ),
+               CALL ZGEMV( 'No transpose', M-I, N-I, ONE, A( I+1,
+     $                     I+1 ),
      $                     LDA, A( I, I+1 ), LDA, ZERO, X( I+1, I ), 1 )
                CALL ZGEMV( 'Conjugate transpose', N-I, I, ONE,
      $                     Y( I+1, 1 ), LDY, A( I, I+1 ), LDA, ZERO,
      $                     X( 1, I ), 1 )
                CALL ZGEMV( 'No transpose', M-I, I, -ONE, A( I+1, 1 ),
      $                     LDA, X( 1, I ), 1, ONE, X( I+1, I ), 1 )
-               CALL ZGEMV( 'No transpose', I-1, N-I, ONE, A( 1, I+1 ),
+               CALL ZGEMV( 'No transpose', I-1, N-I, ONE, A( 1,
+     $                     I+1 ),
      $                     LDA, A( I, I+1 ), LDA, ZERO, X( 1, I ), 1 )
-               CALL ZGEMV( 'No transpose', M-I, I-1, -ONE, X( I+1, 1 ),
+               CALL ZGEMV( 'No transpose', M-I, I-1, -ONE, X( I+1,
+     $                     1 ),
      $                     LDX, X( 1, I ), 1, ONE, X( I+1, I ), 1 )
                CALL ZSCAL( M-I, TAUP( I ), X( I+1, I ), 1 )
                CALL ZLACGV( N-I, A( I, I+1 ), LDA )
@@ -32096,16 +32473,20 @@
 *
 *              Compute X(i+1:m,i)
 *
-               CALL ZGEMV( 'No transpose', M-I, N-I+1, ONE, A( I+1, I ),
+               CALL ZGEMV( 'No transpose', M-I, N-I+1, ONE, A( I+1,
+     $                     I ),
      $                     LDA, A( I, I ), LDA, ZERO, X( I+1, I ), 1 )
                CALL ZGEMV( 'Conjugate transpose', N-I+1, I-1, ONE,
      $                     Y( I, 1 ), LDY, A( I, I ), LDA, ZERO,
      $                     X( 1, I ), 1 )
-               CALL ZGEMV( 'No transpose', M-I, I-1, -ONE, A( I+1, 1 ),
+               CALL ZGEMV( 'No transpose', M-I, I-1, -ONE, A( I+1,
+     $                     1 ),
      $                     LDA, X( 1, I ), 1, ONE, X( I+1, I ), 1 )
-               CALL ZGEMV( 'No transpose', I-1, N-I+1, ONE, A( 1, I ),
+               CALL ZGEMV( 'No transpose', I-1, N-I+1, ONE, A( 1,
+     $                     I ),
      $                     LDA, A( I, I ), LDA, ZERO, X( 1, I ), 1 )
-               CALL ZGEMV( 'No transpose', M-I, I-1, -ONE, X( I+1, 1 ),
+               CALL ZGEMV( 'No transpose', M-I, I-1, -ONE, X( I+1,
+     $                     1 ),
      $                     LDX, X( 1, I ), 1, ONE, X( I+1, I ), 1 )
                CALL ZSCAL( M-I, TAUP( I ), X( I+1, I ), 1 )
                CALL ZLACGV( N-I+1, A( I, I ), LDA )
@@ -32113,7 +32494,8 @@
 *              Update A(i+1:m,i)
 *
                CALL ZLACGV( I-1, Y( I, 1 ), LDY )
-               CALL ZGEMV( 'No transpose', M-I, I-1, -ONE, A( I+1, 1 ),
+               CALL ZGEMV( 'No transpose', M-I, I-1, -ONE, A( I+1,
+     $                     1 ),
      $                     LDA, Y( I, 1 ), LDY, ONE, A( I+1, I ), 1 )
                CALL ZLACGV( I-1, Y( I, 1 ), LDY )
                CALL ZGEMV( 'No transpose', M-I, I, -ONE, X( I+1, 1 ),
@@ -32135,7 +32517,8 @@
                CALL ZGEMV( 'Conjugate transpose', M-I, I-1, ONE,
      $                     A( I+1, 1 ), LDA, A( I+1, I ), 1, ZERO,
      $                     Y( 1, I ), 1 )
-               CALL ZGEMV( 'No transpose', N-I, I-1, -ONE, Y( I+1, 1 ),
+               CALL ZGEMV( 'No transpose', N-I, I-1, -ONE, Y( I+1,
+     $                     1 ),
      $                     LDY, Y( 1, I ), 1, ONE, Y( I+1, I ), 1 )
                CALL ZGEMV( 'Conjugate transpose', M-I, I, ONE,
      $                     X( I+1, 1 ), LDX, A( I+1, I ), 1, ZERO,
@@ -33326,7 +33709,8 @@
       DOUBLE PRECISION   TEMP
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           DCOPY, DSTEQR, XERBLA, ZCOPY, ZLACRM, ZLAED7
+      EXTERNAL           DCOPY, DSTEQR, XERBLA, ZCOPY, ZLACRM,
+     $                   ZLAED7
 *     ..
 *     .. External Functions ..
       INTEGER            ILAENV
@@ -33764,7 +34148,8 @@
 *> \ingroup laed7
 *
 *  =====================================================================
-      SUBROUTINE ZLAED7( N, CUTPNT, QSIZ, TLVLS, CURLVL, CURPBM, D, Q,
+      SUBROUTINE ZLAED7( N, CUTPNT, QSIZ, TLVLS, CURLVL, CURPBM, D,
+     $                   Q,
      $                   LDQ, RHO, INDXQ, QSTORE, QPTR, PRMPTR, PERM,
      $                   GIVPTR, GIVCOL, GIVNUM, WORK, RWORK, IWORK,
      $                   INFO )
@@ -33792,7 +34177,8 @@
      $                   INDXC, INDXP, IQ, IW, IZ, K, N1, N2, PTR
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           DLAED9, DLAEDA, DLAMRG, XERBLA, ZLACRM, ZLAED8
+      EXTERNAL           DLAED9, DLAEDA, DLAMRG, XERBLA, ZLACRM,
+     $                   ZLAED8
 *     ..
 *     .. Intrinsic Functions ..
       INTRINSIC          MAX, MIN
@@ -33878,7 +34264,8 @@
          CALL DLAED9( K, 1, K, N, D, RWORK( IQ ), K, RHO,
      $                RWORK( IDLMDA ), RWORK( IW ),
      $                QSTORE( QPTR( CURR ) ), K, INFO )
-         CALL ZLACRM( QSIZ, K, WORK, QSIZ, QSTORE( QPTR( CURR ) ), K, Q,
+         CALL ZLACRM( QSIZ, K, WORK, QSIZ, QSTORE( QPTR( CURR ) ), K,
+     $                Q,
      $                LDQ, RWORK( IQ ) )
          QPTR( CURR+1 ) = QPTR( CURR ) + K**2
          IF( INFO.NE.0 ) THEN
@@ -34126,7 +34513,8 @@
 *> \ingroup laed8
 *
 *  =====================================================================
-      SUBROUTINE ZLAED8( K, N, QSIZ, Q, LDQ, D, RHO, CUTPNT, Z, DLAMBDA,
+      SUBROUTINE ZLAED8( K, N, QSIZ, Q, LDQ, D, RHO, CUTPNT, Z,
+     $                   DLAMBDA,
      $                   Q2, LDQ2, W, INDXP, INDX, INDXQ, PERM, GIVPTR,
      $                   GIVCOL, GIVNUM, INFO )
 *
@@ -34163,7 +34551,8 @@
       EXTERNAL           IDAMAX, DLAMCH, DLAPY2
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           DCOPY, DLAMRG, DSCAL, XERBLA, ZCOPY, ZDROT,
+      EXTERNAL           DCOPY, DLAMRG, DSCAL, XERBLA, ZCOPY,
+     $                   ZDROT,
      $                   ZLACPY
 *     ..
 *     .. Intrinsic Functions ..
@@ -34254,7 +34643,8 @@
             PERM( J ) = INDXQ( INDX( J ) )
             CALL ZCOPY( QSIZ, Q( 1, PERM( J ) ), 1, Q2( 1, J ), 1 )
    50    CONTINUE
-         CALL ZLACPY( 'A', QSIZ, N, Q2( 1, 1 ), LDQ2, Q( 1, 1 ), LDQ )
+         CALL ZLACPY( 'A', QSIZ, N, Q2( 1, 1 ), LDQ2, Q( 1, 1 ),
+     $                LDQ )
          RETURN
       END IF
 *
@@ -34376,7 +34766,8 @@
 *
       IF( K.LT.N ) THEN
          CALL DCOPY( N-K, DLAMBDA( K+1 ), 1, D( K+1 ), 1 )
-         CALL ZLACPY( 'A', QSIZ, N-K, Q2( 1, K+1 ), LDQ2, Q( 1, K+1 ),
+         CALL ZLACPY( 'A', QSIZ, N-K, Q2( 1, K+1 ), LDQ2, Q( 1,
+     $                K+1 ),
      $                LDQ )
       END IF
 *
@@ -34527,7 +34918,8 @@
 *> \ingroup lagtm
 *
 *  =====================================================================
-      SUBROUTINE ZLAGTM( TRANS, N, NRHS, ALPHA, DL, D, DU, X, LDX, BETA,
+      SUBROUTINE ZLAGTM( TRANS, N, NRHS, ALPHA, DL, D, DU, X, LDX,
+     $                   BETA,
      $                   B, LDB )
 *
 *  -- LAPACK auxiliary routine --
@@ -34878,7 +35270,8 @@
 *> \endverbatim
 *
 *  =====================================================================
-      SUBROUTINE ZLAHEF( UPLO, N, NB, KB, A, LDA, IPIV, W, LDW, INFO )
+      SUBROUTINE ZLAHEF( UPLO, N, NB, KB, A, LDA, IPIV, W, LDW,
+     $                   INFO )
 *
 *  -- LAPACK computational routine --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
@@ -34904,7 +35297,7 @@
       PARAMETER          ( EIGHT = 8.0D+0, SEVTEN = 17.0D+0 )
 *     ..
 *     .. Local Scalars ..
-      INTEGER            IMAX, J, JB, JJ, JMAX, JP, K, KK, KKW, KP,
+      INTEGER            IMAX, J, JJ, JMAX, JP, K, KK, KKW, KP,
      $                   KSTEP, KW
       DOUBLE PRECISION   ABSAKK, ALPHA, COLMAX, R1, ROWMAX, T
       COMPLEX*16         D11, D21, D22, Z
@@ -34915,7 +35308,8 @@
       EXTERNAL           LSAME, IZAMAX
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           ZCOPY, ZDSCAL, ZGEMM, ZGEMV, ZLACGV, ZSWAP
+      EXTERNAL           ZCOPY, ZDSCAL, ZGEMMTR, ZGEMV, ZLACGV,
+     $                   ZSWAP
 *     ..
 *     .. Intrinsic Functions ..
       INTRINSIC          ABS, DBLE, DCONJG, DIMAG, MAX, MIN, SQRT
@@ -34960,7 +35354,8 @@
          CALL ZCOPY( K-1, A( 1, K ), 1, W( 1, KW ), 1 )
          W( K, KW ) = DBLE( A( K, K ) )
          IF( K.LT.N ) THEN
-            CALL ZGEMV( 'No transpose', K, N-K, -CONE, A( 1, K+1 ), LDA,
+            CALL ZGEMV( 'No transpose', K, N-K, -CONE, A( 1, K+1 ),
+     $                  LDA,
      $                  W( K, KW+1 ), LDW, CONE, W( 1, KW ), 1 )
             W( K, KW ) = DBLE( W( K, KW ) )
          END IF
@@ -35253,28 +35648,11 @@
 *
 *        A11 := A11 - U12*D*U12**H = A11 - U12*W**H
 *
-*        computing blocks of NB columns at a time (note that conjg(W) is
-*        actually stored)
+*        (note that conjg(W) is actually stored)
 *
-         DO 50 J = ( ( K-1 ) / NB )*NB + 1, 1, -NB
-            JB = MIN( NB, K-J+1 )
-*
-*           Update the upper triangle of the diagonal block
-*
-            DO 40 JJ = J, J + JB - 1
-               A( JJ, JJ ) = DBLE( A( JJ, JJ ) )
-               CALL ZGEMV( 'No transpose', JJ-J+1, N-K, -CONE,
-     $                     A( J, K+1 ), LDA, W( JJ, KW+1 ), LDW, CONE,
-     $                     A( J, JJ ), 1 )
-               A( JJ, JJ ) = DBLE( A( JJ, JJ ) )
-   40       CONTINUE
-*
-*           Update the rectangular superdiagonal block
-*
-            CALL ZGEMM( 'No transpose', 'Transpose', J-1, JB, N-K,
-     $                  -CONE, A( 1, K+1 ), LDA, W( J, KW+1 ), LDW,
-     $                  CONE, A( 1, J ), LDA )
-   50    CONTINUE
+         CALL ZGEMMTR( 'Upper', 'No transpose', 'Transpose', K, N-K,
+     $                 -CONE, A( 1, K+1 ), LDA, W( 1, KW+1 ), LDW,
+     $                 CONE, A( 1, 1 ), LDA )
 *
 *        Put U12 in standard form by partially undoing the interchanges
 *        in columns k+1:n looping backwards from k+1 to n
@@ -35328,7 +35706,8 @@
          W( K, K ) = DBLE( A( K, K ) )
          IF( K.LT.N )
      $      CALL ZCOPY( N-K, A( K+1, K ), 1, W( K+1, K ), 1 )
-         CALL ZGEMV( 'No transpose', N-K+1, K-1, -CONE, A( K, 1 ), LDA,
+         CALL ZGEMV( 'No transpose', N-K+1, K-1, -CONE, A( K, 1 ),
+     $               LDA,
      $               W( K, 1 ), LDW, CONE, W( K, K ), 1 )
          W( K, K ) = DBLE( W( K, K ) )
 *
@@ -35375,13 +35754,15 @@
 *
 *              Copy column IMAX to column K+1 of W and update it
 *
-               CALL ZCOPY( IMAX-K, A( IMAX, K ), LDA, W( K, K+1 ), 1 )
+               CALL ZCOPY( IMAX-K, A( IMAX, K ), LDA, W( K, K+1 ),
+     $                     1 )
                CALL ZLACGV( IMAX-K, W( K, K+1 ), 1 )
                W( IMAX, K+1 ) = DBLE( A( IMAX, IMAX ) )
                IF( IMAX.LT.N )
      $            CALL ZCOPY( N-IMAX, A( IMAX+1, IMAX ), 1,
      $                        W( IMAX+1, K+1 ), 1 )
-               CALL ZGEMV( 'No transpose', N-K+1, K-1, -CONE, A( K, 1 ),
+               CALL ZGEMV( 'No transpose', N-K+1, K-1, -CONE, A( K,
+     $                     1 ),
      $                     LDA, W( IMAX, 1 ), LDW, CONE, W( K, K+1 ),
      $                     1 )
                W( IMAX, K+1 ) = DBLE( W( IMAX, K+1 ) )
@@ -35455,7 +35836,8 @@
      $                     LDA )
                CALL ZLACGV( KP-KK-1, A( KP, KK+1 ), LDA )
                IF( KP.LT.N )
-     $            CALL ZCOPY( N-KP, A( KP+1, KK ), 1, A( KP+1, KP ), 1 )
+     $            CALL ZCOPY( N-KP, A( KP+1, KK ), 1, A( KP+1, KP ),
+     $                        1 )
 *
 *              Interchange rows KK and KP in first K-1 columns of A
 *              (columns K (or K and K+1 for 2-by-2 pivot) of A will be
@@ -35613,29 +35995,11 @@
 *
 *        A22 := A22 - L21*D*L21**H = A22 - L21*W**H
 *
-*        computing blocks of NB columns at a time (note that conjg(W) is
-*        actually stored)
+*        (note that conjg(W) is actually stored)
 *
-         DO 110 J = K, N, NB
-            JB = MIN( NB, N-J+1 )
-*
-*           Update the lower triangle of the diagonal block
-*
-            DO 100 JJ = J, J + JB - 1
-               A( JJ, JJ ) = DBLE( A( JJ, JJ ) )
-               CALL ZGEMV( 'No transpose', J+JB-JJ, K-1, -CONE,
-     $                     A( JJ, 1 ), LDA, W( JJ, 1 ), LDW, CONE,
-     $                     A( JJ, JJ ), 1 )
-               A( JJ, JJ ) = DBLE( A( JJ, JJ ) )
-  100       CONTINUE
-*
-*           Update the rectangular subdiagonal block
-*
-            IF( J+JB.LE.N )
-     $         CALL ZGEMM( 'No transpose', 'Transpose', N-J-JB+1, JB,
-     $                     K-1, -CONE, A( J+JB, 1 ), LDA, W( J, 1 ),
-     $                     LDW, CONE, A( J+JB, J ), LDA )
-  110    CONTINUE
+         CALL ZGEMMTR( 'Lower', 'No transpose', 'Transpose', N-K+1,
+     $                 K-1, -CONE, A( K, 1 ), LDA, W( K, 1 ), LDW,
+     $                 CONE, A( K, K ), LDA )
 *
 *        Put L21 in standard form by partially undoing the interchanges
 *        of rows in columns 1:k-1 looping backwards from k-1 to 1
@@ -35961,7 +36325,8 @@
             CALL ZSCAL( MIN( JHI, I+1 )-JLO+1, DCONJG( SC ),
      $                  H( JLO, I ), 1 )
             IF( WANTZ )
-     $         CALL ZSCAL( IHIZ-ILOZ+1, DCONJG( SC ), Z( ILOZ, I ), 1 )
+     $         CALL ZSCAL( IHIZ-ILOZ+1, DCONJG( SC ), Z( ILOZ, I ),
+     $                     1 )
          END IF
    20 CONTINUE
 *
@@ -36198,7 +36563,8 @@
                   IF( J.NE.M+1 ) THEN
                      IF( I2.GT.J )
      $                  CALL ZSCAL( I2-J, TEMP, H( J, J+1 ), LDH )
-                     CALL ZSCAL( J-I1, DCONJG( TEMP ), H( I1, J ), 1 )
+                     CALL ZSCAL( J-I1, DCONJG( TEMP ), H( I1, J ),
+     $                           1 )
                      IF( WANTZ ) THEN
                         CALL ZSCAL( NZ, DCONJG( TEMP ), Z( ILOZ, J ),
      $                              1 )
@@ -36475,7 +36841,8 @@
 *           Update I-th column of A - Y * V**H
 *
             CALL ZLACGV( I-1, A( K+I-1, 1 ), LDA )
-            CALL ZGEMV( 'NO TRANSPOSE', N-K, I-1, -ONE, Y(K+1,1), LDY,
+            CALL ZGEMV( 'NO TRANSPOSE', N-K, I-1, -ONE, Y(K+1,1),
+     $                  LDY,
      $                  A( K+I-1, 1 ), LDA, ONE, A( K+1, I ), 1 )
             CALL ZLACGV( I-1, A( K+I-1, 1 ), LDA )
 *
@@ -36525,7 +36892,8 @@
 *        Generate the elementary reflector H(I) to annihilate
 *        A(K+I+1:N,I)
 *
-         CALL ZLARFG( N-K-I+1, A( K+I, I ), A( MIN( K+I+1, N ), I ), 1,
+         CALL ZLARFG( N-K-I+1, A( K+I, I ), A( MIN( K+I+1, N ), I ),
+     $                1,
      $                TAU( I ) )
          EI = A( K+I, I )
          A( K+I, I ) = ONE
@@ -36812,13 +37180,14 @@
 *
 *           w := T**H *w
 *
-            CALL ZTRMV( 'Upper', 'Conjugate transpose', 'Non-unit', I-1,
-     $                  T, LDT, T( 1, NB ), 1 )
+            CALL ZTRMV( 'Upper', 'Conjugate transpose', 'Non-unit',
+     $                  I-1, T, LDT, T( 1, NB ), 1 )
 *
 *           b2 := b2 - V2*w
 *
-            CALL ZGEMV( 'No transpose', N-K-I+1, I-1, -ONE, A( K+I, 1 ),
-     $                  LDA, T( 1, NB ), 1, ONE, A( K+I, I ), 1 )
+            CALL ZGEMV( 'No transpose', N-K-I+1, I-1, -ONE,
+     $                  A( K+I, 1 ), LDA, T( 1, NB ), 1, ONE,
+     $                  A( K+I, I ), 1 )
 *
 *           b1 := b1 - V1*w
 *
@@ -36839,20 +37208,20 @@
 *
 *        Compute  Y(1:n,i)
 *
-         CALL ZGEMV( 'No transpose', N, N-K-I+1, ONE, A( 1, I+1 ), LDA,
-     $               A( K+I, I ), 1, ZERO, Y( 1, I ), 1 )
+         CALL ZGEMV( 'No transpose', N, N-K-I+1, ONE, A( 1, I+1 ),
+     $               LDA, A( K+I, I ), 1, ZERO, Y( 1, I ), 1 )
          CALL ZGEMV( 'Conjugate transpose', N-K-I+1, I-1, ONE,
      $               A( K+I, 1 ), LDA, A( K+I, I ), 1, ZERO, T( 1, I ),
      $               1 )
-         CALL ZGEMV( 'No transpose', N, I-1, -ONE, Y, LDY, T( 1, I ), 1,
-     $               ONE, Y( 1, I ), 1 )
+         CALL ZGEMV( 'No transpose', N, I-1, -ONE, Y, LDY, T( 1, I ),
+     $               1, ONE, Y( 1, I ), 1 )
          CALL ZSCAL( N, TAU( I ), Y( 1, I ), 1 )
 *
 *        Compute T(1:i,i)
 *
          CALL ZSCAL( I-1, -TAU( I ), T( 1, I ), 1 )
-         CALL ZTRMV( 'Upper', 'No transpose', 'Non-unit', I-1, T, LDT,
-     $               T( 1, I ), 1 )
+         CALL ZTRMV( 'Upper', 'No transpose', 'Non-unit', I-1, T, 
+     $               LDT, T( 1, I ), 1 )
          T( I, I ) = TAU( I )
 *
    10 CONTINUE
@@ -37129,7 +37498,8 @@
 *>     Osni Marques, LBNL/NERSC, USA \n
 *
 *  =====================================================================
-      SUBROUTINE ZLALS0( ICOMPQ, NL, NR, SQRE, NRHS, B, LDB, BX, LDBX,
+      SUBROUTINE ZLALS0( ICOMPQ, NL, NR, SQRE, NRHS, B, LDB, BX,
+     $                   LDBX,
      $                   PERM, GIVPTR, GIVCOL, LDGCOL, GIVNUM, LDGNUM,
      $                   POLES, DIFL, DIFR, Z, K, C, S, RWORK, INFO )
 *
@@ -37161,7 +37531,8 @@
       DOUBLE PRECISION   DIFLJ, DIFRJ, DJ, DSIGJ, DSIGJP, TEMP
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           DGEMV, XERBLA, ZCOPY, ZDROT, ZDSCAL, ZLACPY,
+      EXTERNAL           DGEMV, XERBLA, ZCOPY, ZDROT, ZDSCAL,
+     $                   ZLACPY,
      $                   ZLASCL
 *     ..
 *     .. External Functions ..
@@ -37225,7 +37596,8 @@
 *
          CALL ZCOPY( NRHS, B( NLP1, 1 ), LDB, BX( 1, 1 ), LDBX )
          DO 20 I = 2, N
-            CALL ZCOPY( NRHS, B( PERM( I ), 1 ), LDB, BX( I, 1 ), LDBX )
+            CALL ZCOPY( NRHS, B( PERM( I ), 1 ), LDB, BX( I, 1 ),
+     $                  LDBX )
    20    CONTINUE
 *
 *        Step (3L): apply the inverse of the left singular vector
@@ -37345,7 +37717,8 @@
 *                    parentheses (x+y)+z. The goal is to prevent
 *                    optimizing compilers from doing x+(y+z).
 *
-                     RWORK( I ) = Z( J ) / ( DLAMC3( DSIGJ, -POLES( I+1,
+                     RWORK( I ) = Z( J ) / ( DLAMC3( DSIGJ,
+     $                      -POLES( I+1,
      $                            2 ) )-DIFR( I, 1 ) ) /
      $                            ( DSIGJ+POLES( I, 1 ) ) / DIFR( I, 2 )
                   END IF
@@ -37354,7 +37727,8 @@
                   IF( Z( J ).EQ.ZERO ) THEN
                      RWORK( I ) = ZERO
                   ELSE
-                     RWORK( I ) = Z( J ) / ( DLAMC3( DSIGJ, -POLES( I,
+                     RWORK( I ) = Z( J ) / ( DLAMC3( DSIGJ,
+     $                      -POLES( I,
      $                            2 ) )-DIFL( I ) ) /
      $                            ( DSIGJ+POLES( I, 1 ) ) / DIFR( I, 2 )
                   END IF
@@ -37396,10 +37770,12 @@
 *
          IF( SQRE.EQ.1 ) THEN
             CALL ZCOPY( NRHS, B( M, 1 ), LDB, BX( M, 1 ), LDBX )
-            CALL ZDROT( NRHS, BX( 1, 1 ), LDBX, BX( M, 1 ), LDBX, C, S )
+            CALL ZDROT( NRHS, BX( 1, 1 ), LDBX, BX( M, 1 ), LDBX, C,
+     $                  S )
          END IF
          IF( K.LT.MAX( M, N ) )
-     $      CALL ZLACPY( 'A', N-K, NRHS, B( K+1, 1 ), LDB, BX( K+1, 1 ),
+     $      CALL ZLACPY( 'A', N-K, NRHS, B( K+1, 1 ), LDB, BX( K+1,
+     $                   1 ),
      $                   LDBX )
 *
 *        Step (3R): permute rows of B.
@@ -37409,7 +37785,8 @@
             CALL ZCOPY( NRHS, BX( M, 1 ), LDBX, B( M, 1 ), LDB )
          END IF
          DO 190 I = 2, N
-            CALL ZCOPY( NRHS, BX( I, 1 ), LDBX, B( PERM( I ), 1 ), LDB )
+            CALL ZCOPY( NRHS, BX( I, 1 ), LDBX, B( PERM( I ), 1 ),
+     $                  LDB )
   190    CONTINUE
 *
 *        Step (4R): apply back the Givens rotations performed.
@@ -37688,7 +38065,8 @@
 *>     Osni Marques, LBNL/NERSC, USA \n
 *
 *  =====================================================================
-      SUBROUTINE ZLALSA( ICOMPQ, SMLSIZ, N, NRHS, B, LDB, BX, LDBX, U,
+      SUBROUTINE ZLALSA( ICOMPQ, SMLSIZ, N, NRHS, B, LDB, BX, LDBX,
+     $                   U,
      $                   LDU, VT, K, DIFL, DIFR, Z, POLES, GIVPTR,
      $                   GIVCOL, LDGCOL, PERM, GIVNUM, C, S, RWORK,
      $                   IWORK, INFO )
@@ -37722,7 +38100,8 @@
      $                   NDIMR, NL, NLF, NLP1, NLVL, NR, NRF, NRP1, SQRE
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           DGEMM, DLASDT, XERBLA, ZCOPY, ZLALS0
+      EXTERNAL           DGEMM, DLASDT, XERBLA, ZCOPY,
+     $                   ZLALS0
 *     ..
 *     .. Intrinsic Functions ..
       INTRINSIC          DBLE, DCMPLX, DIMAG
@@ -37901,7 +38280,8 @@
             NLF = IC - NL
             NRF = IC + 1
             J = J - 1
-            CALL ZLALS0( ICOMPQ, NL, NR, SQRE, NRHS, BX( NLF, 1 ), LDBX,
+            CALL ZLALS0( ICOMPQ, NL, NR, SQRE, NRHS, BX( NLF, 1 ),
+     $                   LDBX,
      $                   B( NLF, 1 ), LDB, PERM( NLF, LVL ),
      $                   GIVPTR( J ), GIVCOL( NLF, LVL2 ), LDGCOL,
      $                   GIVNUM( NLF, LVL2 ), LDU, POLES( NLF, LVL2 ),
@@ -37946,7 +38326,8 @@
                SQRE = 1
             END IF
             J = J + 1
-            CALL ZLALS0( ICOMPQ, NL, NR, SQRE, NRHS, B( NLF, 1 ), LDB,
+            CALL ZLALS0( ICOMPQ, NL, NR, SQRE, NRHS, B( NLF, 1 ),
+     $                   LDB,
      $                   BX( NLF, 1 ), LDBX, PERM( NLF, LVL ),
      $                   GIVPTR( J ), GIVCOL( NLF, LVL2 ), LDGCOL,
      $                   GIVNUM( NLF, LVL2 ), LDU, POLES( NLF, LVL2 ),
@@ -37988,7 +38369,8 @@
                RWORK( J ) = DBLE( B( JROW, JCOL ) )
   200       CONTINUE
   210    CONTINUE
-         CALL DGEMM( 'T', 'N', NLP1, NRHS, NLP1, ONE, VT( NLF, 1 ), LDU,
+         CALL DGEMM( 'T', 'N', NLP1, NRHS, NLP1, ONE, VT( NLF, 1 ),
+     $               LDU,
      $               RWORK( 1+NLP1*NRHS*2 ), NLP1, ZERO, RWORK( 1 ),
      $               NLP1 )
          J = NLP1*NRHS*2
@@ -37998,7 +38380,8 @@
                RWORK( J ) = DIMAG( B( JROW, JCOL ) )
   220       CONTINUE
   230    CONTINUE
-         CALL DGEMM( 'T', 'N', NLP1, NRHS, NLP1, ONE, VT( NLF, 1 ), LDU,
+         CALL DGEMM( 'T', 'N', NLP1, NRHS, NLP1, ONE, VT( NLF, 1 ),
+     $               LDU,
      $               RWORK( 1+NLP1*NRHS*2 ), NLP1, ZERO,
      $               RWORK( 1+NLP1*NRHS ), NLP1 )
          JREAL = 0
@@ -38025,7 +38408,8 @@
                RWORK( J ) = DBLE( B( JROW, JCOL ) )
   260       CONTINUE
   270    CONTINUE
-         CALL DGEMM( 'T', 'N', NRP1, NRHS, NRP1, ONE, VT( NRF, 1 ), LDU,
+         CALL DGEMM( 'T', 'N', NRP1, NRHS, NRP1, ONE, VT( NRF, 1 ),
+     $               LDU,
      $               RWORK( 1+NRP1*NRHS*2 ), NRP1, ZERO, RWORK( 1 ),
      $               NRP1 )
          J = NRP1*NRHS*2
@@ -38035,7 +38419,8 @@
                RWORK( J ) = DIMAG( B( JROW, JCOL ) )
   280       CONTINUE
   290    CONTINUE
-         CALL DGEMM( 'T', 'N', NRP1, NRHS, NRP1, ONE, VT( NRF, 1 ), LDU,
+         CALL DGEMM( 'T', 'N', NRP1, NRHS, NRP1, ONE, VT( NRF, 1 ),
+     $               LDU,
      $               RWORK( 1+NRP1*NRHS*2 ), NRP1, ZERO,
      $               RWORK( 1+NRP1*NRHS ), NRP1 )
          JREAL = 0
@@ -38277,7 +38662,8 @@
       EXTERNAL           IDAMAX, DLAMCH, DLANST
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           DGEMM, DLARTG, DLASCL, DLASDA, DLASDQ, DLASET,
+      EXTERNAL           DGEMM, DLARTG, DLASCL, DLASDA, DLASDQ,
+     $                   DLASET,
      $                   DLASRT, XERBLA, ZCOPY, ZDROT, ZLACPY, ZLALSA,
      $                   ZLASCL, ZLASET
 *     ..
@@ -38323,7 +38709,8 @@
             CALL ZLASET( 'A', 1, NRHS, CZERO, CZERO, B, LDB )
          ELSE
             RANK = 1
-            CALL ZLASCL( 'G', 0, 0, D( 1 ), ONE, 1, NRHS, B, LDB, INFO )
+            CALL ZLASCL( 'G', 0, 0, D( 1 ), ONE, 1, NRHS, B, LDB,
+     $                   INFO )
             D( 1 ) = ABS( D( 1 ) )
          END IF
          RETURN
@@ -38349,7 +38736,8 @@
                DO 20 J = 1, N - 1
                   CS = RWORK( J*2-1 )
                   SN = RWORK( J*2 )
-                  CALL ZDROT( 1, B( J, I ), 1, B( J+1, I ), 1, CS, SN )
+                  CALL ZDROT( 1, B( J, I ), 1, B( J+1, I ), 1, CS,
+     $                        SN )
    20          CONTINUE
    30       CONTINUE
          END IF
@@ -38422,9 +38810,11 @@
          TOL = RCND*ABS( D( IDAMAX( N, D, 1 ) ) )
          DO 100 I = 1, N
             IF( D( I ).LE.TOL ) THEN
-               CALL ZLASET( 'A', 1, NRHS, CZERO, CZERO, B( I, 1 ), LDB )
+               CALL ZLASET( 'A', 1, NRHS, CZERO, CZERO, B( I, 1 ),
+     $                      LDB )
             ELSE
-               CALL ZLASCL( 'G', 0, 0, D( I ), ONE, 1, NRHS, B( I, 1 ),
+               CALL ZLASCL( 'G', 0, 0, D( I ), ONE, 1, NRHS, B( I,
+     $                      1 ),
      $                      LDB, INFO )
                RANK = RANK + 1
             END IF
@@ -38653,7 +39043,8 @@
 *        subproblems were not solved explicitly.
 *
          IF( ABS( D( I ) ).LE.TOL ) THEN
-            CALL ZLASET( 'A', 1, NRHS, CZERO, CZERO, WORK( BX+I-1 ), N )
+            CALL ZLASET( 'A', 1, NRHS, CZERO, CZERO, WORK( BX+I-1 ),
+     $                   N )
          ELSE
             RANK = RANK + 1
             CALL ZLASCL( 'G', 0, 0, D( I ), ONE, 1, NRHS,
@@ -38716,7 +39107,8 @@
   300          CONTINUE
   310       CONTINUE
          ELSE
-            CALL ZLALSA( ICMPQ2, SMLSIZ, NSIZE, NRHS, WORK( BXST ), N,
+            CALL ZLALSA( ICMPQ2, SMLSIZ, NSIZE, NRHS, WORK( BXST ),
+     $                   N,
      $                   B( ST, 1 ), LDB, RWORK( U+ST1 ), N,
      $                   RWORK( VT+ST1 ), IWORK( K+ST1 ),
      $                   RWORK( DIFL+ST1 ), RWORK( DIFR+ST1 ),
@@ -38945,7 +39337,8 @@
             TEMP = WORK( I )
             IF( VALUE.LT.TEMP .OR. DISNAN( TEMP ) ) VALUE = TEMP
    80    CONTINUE
-      ELSE IF( ( LSAME( NORM, 'F' ) ) .OR. ( LSAME( NORM, 'E' ) ) ) THEN
+      ELSE IF( ( LSAME( NORM, 'F' ) ) .OR.
+     $         ( LSAME( NORM, 'E' ) ) ) THEN
 *
 *        Find normF(A).
 *
@@ -38954,7 +39347,8 @@
          DO 90 J = 1, N
             L = MAX( 1, J-KU )
             K = KU + 1 - J + L
-            CALL ZLASSQ( MIN( N, J+KL )-L+1, AB( K, J ), 1, SCALE, SUM )
+            CALL ZLASSQ( MIN( N, J+KL )-L+1, AB( K, J ), 1, SCALE,
+     $                   SUM )
    90    CONTINUE
          VALUE = SCALE*SQRT( SUM )
       END IF
@@ -39157,7 +39551,8 @@
             TEMP = WORK( I )
             IF( VALUE.LT.TEMP .OR. DISNAN( TEMP ) ) VALUE = TEMP
    80    CONTINUE
-      ELSE IF( ( LSAME( NORM, 'F' ) ) .OR. ( LSAME( NORM, 'E' ) ) ) THEN
+      ELSE IF( ( LSAME( NORM, 'F' ) ) .OR.
+     $         ( LSAME( NORM, 'E' ) ) ) THEN
 *
 *        Find normF(A).
 *
@@ -39323,11 +39718,13 @@
 *
          ANORM = ABS( D( N ) )
          DO 10 I = 1, N - 1
-            IF( ANORM.LT.ABS( DL( I ) ) .OR. DISNAN( ABS( DL( I ) ) ) )
+            IF( ANORM.LT.ABS( DL( I ) ) .OR.
+     $          DISNAN( ABS( DL( I ) ) ) )
      $           ANORM = ABS(DL(I))
             IF( ANORM.LT.ABS( D( I ) ) .OR. DISNAN( ABS( D( I ) ) ) )
      $           ANORM = ABS(D(I))
-            IF( ANORM.LT.ABS( DU( I ) ) .OR. DISNAN (ABS( DU( I ) ) ) )
+            IF( ANORM.LT.ABS( DU( I ) ) .OR.
+     $          DISNAN (ABS( DU( I ) ) ) )
      $           ANORM = ABS(DU(I))
    10    CONTINUE
       ELSE IF( LSAME( NORM, 'O' ) .OR. NORM.EQ.'1' ) THEN
@@ -39360,7 +39757,8 @@
                IF( ANORM .LT. TEMP .OR. DISNAN( TEMP ) ) ANORM = TEMP
    30       CONTINUE
          END IF
-      ELSE IF( ( LSAME( NORM, 'F' ) ) .OR. ( LSAME( NORM, 'E' ) ) ) THEN
+      ELSE IF( ( LSAME( NORM, 'F' ) ) .OR.
+     $         ( LSAME( NORM, 'E' ) ) ) THEN
 *
 *        Find normF(A).
 *
@@ -39565,7 +39963,8 @@
    30          CONTINUE
    40       CONTINUE
          END IF
-      ELSE IF( ( LSAME( NORM, 'I' ) ) .OR. ( LSAME( NORM, 'O' ) ) .OR.
+      ELSE IF( ( LSAME( NORM, 'I' ) ) .OR.
+     $         ( LSAME( NORM, 'O' ) ) .OR.
      $         ( NORM.EQ.'1' ) ) THEN
 *
 *        Find normI(A) ( = norm1(A), since A is hermitian).
@@ -39599,7 +39998,8 @@
                IF( VALUE .LT. SUM .OR. DISNAN( SUM ) ) VALUE = SUM
   100       CONTINUE
          END IF
-      ELSE IF( ( LSAME( NORM, 'F' ) ) .OR. ( LSAME( NORM, 'E' ) ) ) THEN
+      ELSE IF( ( LSAME( NORM, 'F' ) ) .OR.
+     $         ( LSAME( NORM, 'E' ) ) ) THEN
 *
 *        Find normF(A).
 *
@@ -39817,7 +40217,8 @@
                K = K + N - J + 1
    40       CONTINUE
          END IF
-      ELSE IF( ( LSAME( NORM, 'I' ) ) .OR. ( LSAME( NORM, 'O' ) ) .OR.
+      ELSE IF( ( LSAME( NORM, 'I' ) ) .OR.
+     $         ( LSAME( NORM, 'O' ) ) .OR.
      $         ( NORM.EQ.'1' ) ) THEN
 *
 *        Find normI(A) ( = norm1(A), since A is hermitian).
@@ -39856,7 +40257,8 @@
                IF( VALUE .LT. SUM .OR. DISNAN( SUM ) ) VALUE = SUM
   100       CONTINUE
          END IF
-      ELSE IF( ( LSAME( NORM, 'F' ) ) .OR. ( LSAME( NORM, 'E' ) ) ) THEN
+      ELSE IF( ( LSAME( NORM, 'F' ) ) .OR.
+     $         ( LSAME( NORM, 'E' ) ) ) THEN
 *
 *        Find normF(A).
 *
@@ -40087,7 +40489,8 @@
             SUM = WORK( I )
             IF( VALUE .LT. SUM .OR. DISNAN( SUM ) ) VALUE = SUM
    80    CONTINUE
-      ELSE IF( ( LSAME( NORM, 'F' ) ) .OR. ( LSAME( NORM, 'E' ) ) ) THEN
+      ELSE IF( ( LSAME( NORM, 'F' ) ) .OR.
+     $         ( LSAME( NORM, 'E' ) ) ) THEN
 *
 *        Find normF(A).
 *
@@ -40281,7 +40684,8 @@
                K = K + N - J + 1
    40       CONTINUE
          END IF
-      ELSE IF( ( LSAME( NORM, 'I' ) ) .OR. ( LSAME( NORM, 'O' ) ) .OR.
+      ELSE IF( ( LSAME( NORM, 'I' ) ) .OR.
+     $         ( LSAME( NORM, 'O' ) ) .OR.
      $         ( NORM.EQ.'1' ) ) THEN
 *
 *        Find normI(A) ( = norm1(A), since A is symmetric).
@@ -40320,7 +40724,8 @@
                IF( VALUE .LT. SUM .OR. DISNAN( SUM ) ) VALUE = SUM
   100       CONTINUE
          END IF
-      ELSE IF( ( LSAME( NORM, 'F' ) ) .OR. ( LSAME( NORM, 'E' ) ) ) THEN
+      ELSE IF( ( LSAME( NORM, 'F' ) ) .OR.
+     $         ( LSAME( NORM, 'E' ) ) ) THEN
 *
 *        Find normF(A).
 *
@@ -40554,7 +40959,8 @@
    30          CONTINUE
    40       CONTINUE
          END IF
-      ELSE IF( ( LSAME( NORM, 'I' ) ) .OR. ( LSAME( NORM, 'O' ) ) .OR.
+      ELSE IF( ( LSAME( NORM, 'I' ) ) .OR.
+     $         ( LSAME( NORM, 'O' ) ) .OR.
      $         ( NORM.EQ.'1' ) ) THEN
 *
 *        Find normI(A) ( = norm1(A), since A is symmetric).
@@ -40588,7 +40994,8 @@
                IF( VALUE .LT. SUM .OR. DISNAN( SUM ) ) VALUE = SUM
   100       CONTINUE
          END IF
-      ELSE IF( ( LSAME( NORM, 'F' ) ) .OR. ( LSAME( NORM, 'E' ) ) ) THEN
+      ELSE IF( ( LSAME( NORM, 'F' ) ) .OR.
+     $         ( LSAME( NORM, 'E' ) ) ) THEN
 *
 *        Find normF(A).
 *
@@ -40803,14 +41210,16 @@
                DO 20 J = 1, N
                   DO 10 I = MAX( K+2-J, 1 ), K
                      SUM = ABS( AB( I, J ) )
-                     IF( VALUE .LT. SUM .OR. DISNAN( SUM ) ) VALUE = SUM
+                     IF( VALUE .LT. SUM .OR.
+     $                   DISNAN( SUM ) ) VALUE = SUM
    10             CONTINUE
    20          CONTINUE
             ELSE
                DO 40 J = 1, N
                   DO 30 I = 2, MIN( N+1-J, K+1 )
                      SUM = ABS( AB( I, J ) )
-                     IF( VALUE .LT. SUM .OR. DISNAN( SUM ) ) VALUE = SUM
+                     IF( VALUE .LT. SUM .OR.
+     $                   DISNAN( SUM ) ) VALUE = SUM
    30             CONTINUE
    40          CONTINUE
             END IF
@@ -40820,14 +41229,16 @@
                DO 60 J = 1, N
                   DO 50 I = MAX( K+2-J, 1 ), K + 1
                      SUM = ABS( AB( I, J ) )
-                     IF( VALUE .LT. SUM .OR. DISNAN( SUM ) ) VALUE = SUM
+                     IF( VALUE .LT. SUM .OR.
+     $                   DISNAN( SUM ) ) VALUE = SUM
    50             CONTINUE
    60          CONTINUE
             ELSE
                DO 80 J = 1, N
                   DO 70 I = 1, MIN( N+1-J, K+1 )
                      SUM = ABS( AB( I, J ) )
-                     IF( VALUE .LT. SUM .OR. DISNAN( SUM ) ) VALUE = SUM
+                     IF( VALUE .LT. SUM .OR.
+     $                   DISNAN( SUM ) ) VALUE = SUM
    70             CONTINUE
    80          CONTINUE
             END IF
@@ -40923,7 +41334,8 @@
             SUM = WORK( I )
             IF( VALUE .LT. SUM .OR. DISNAN( SUM ) ) VALUE = SUM
   270    CONTINUE
-      ELSE IF( ( LSAME( NORM, 'F' ) ) .OR. ( LSAME( NORM, 'E' ) ) ) THEN
+      ELSE IF( ( LSAME( NORM, 'F' ) ) .OR.
+     $         ( LSAME( NORM, 'E' ) ) ) THEN
 *
 *        Find normF(A).
 *
@@ -40942,7 +41354,8 @@
                SCALE = ZERO
                SUM = ONE
                DO 290 J = 1, N
-                  CALL ZLASSQ( MIN( J, K+1 ), AB( MAX( K+2-J, 1 ), J ),
+                  CALL ZLASSQ( MIN( J, K+1 ), AB( MAX( K+2-J, 1 ),
+     $                         J ),
      $                         1, SCALE, SUM )
   290          CONTINUE
             END IF
@@ -40952,7 +41365,8 @@
                SUM = N
                IF( K.GT.0 ) THEN
                   DO 300 J = 1, N - 1
-                     CALL ZLASSQ( MIN( N-J, K ), AB( 2, J ), 1, SCALE,
+                     CALL ZLASSQ( MIN( N-J, K ), AB( 2, J ), 1,
+     $                            SCALE,
      $                            SUM )
   300             CONTINUE
                END IF
@@ -40960,7 +41374,8 @@
                SCALE = ZERO
                SUM = ONE
                DO 310 J = 1, N
-                  CALL ZLASSQ( MIN( N-J+1, K+1 ), AB( 1, J ), 1, SCALE,
+                  CALL ZLASSQ( MIN( N-J+1, K+1 ), AB( 1, J ), 1,
+     $                         SCALE,
      $                         SUM )
   310          CONTINUE
             END IF
@@ -41097,7 +41512,8 @@
 *> \ingroup lantp
 *
 *  =====================================================================
-      DOUBLE PRECISION FUNCTION ZLANTP( NORM, UPLO, DIAG, N, AP, WORK )
+      DOUBLE PRECISION FUNCTION ZLANTP( NORM, UPLO, DIAG, N, AP,
+     $                                  WORK )
 *
 *  -- LAPACK auxiliary routine --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
@@ -41148,7 +41564,8 @@
                DO 20 J = 1, N
                   DO 10 I = K, K + J - 2
                      SUM = ABS( AP( I ) )
-                     IF( VALUE .LT. SUM .OR. DISNAN( SUM ) ) VALUE = SUM
+                     IF( VALUE .LT. SUM .OR.
+     $                   DISNAN( SUM ) ) VALUE = SUM
    10             CONTINUE
                   K = K + J
    20          CONTINUE
@@ -41156,7 +41573,8 @@
                DO 40 J = 1, N
                   DO 30 I = K + 1, K + N - J
                      SUM = ABS( AP( I ) )
-                     IF( VALUE .LT. SUM .OR. DISNAN( SUM ) ) VALUE = SUM
+                     IF( VALUE .LT. SUM .OR.
+     $                   DISNAN( SUM ) ) VALUE = SUM
    30             CONTINUE
                   K = K + N - J + 1
    40          CONTINUE
@@ -41167,7 +41585,8 @@
                DO 60 J = 1, N
                   DO 50 I = K, K + J - 1
                      SUM = ABS( AP( I ) )
-                     IF( VALUE .LT. SUM .OR. DISNAN( SUM ) ) VALUE = SUM
+                     IF( VALUE .LT. SUM .OR.
+     $                   DISNAN( SUM ) ) VALUE = SUM
    50             CONTINUE
                   K = K + J
    60          CONTINUE
@@ -41175,7 +41594,8 @@
                DO 80 J = 1, N
                   DO 70 I = K, K + N - J
                      SUM = ABS( AP( I ) )
-                     IF( VALUE .LT. SUM .OR. DISNAN( SUM ) ) VALUE = SUM
+                     IF( VALUE .LT. SUM .OR.
+     $                   DISNAN( SUM ) ) VALUE = SUM
    70             CONTINUE
                   K = K + N - J + 1
    80          CONTINUE
@@ -41278,7 +41698,8 @@
             SUM = WORK( I )
             IF( VALUE .LT. SUM .OR. DISNAN( SUM ) ) VALUE = SUM
   270    CONTINUE
-      ELSE IF( ( LSAME( NORM, 'F' ) ) .OR. ( LSAME( NORM, 'E' ) ) ) THEN
+      ELSE IF( ( LSAME( NORM, 'F' ) ) .OR.
+     $         ( LSAME( NORM, 'E' ) ) ) THEN
 *
 *        Find normF(A).
 *
@@ -41467,7 +41888,8 @@
 *> \ingroup lantr
 *
 *  =====================================================================
-      DOUBLE PRECISION FUNCTION ZLANTR( NORM, UPLO, DIAG, M, N, A, LDA,
+      DOUBLE PRECISION FUNCTION ZLANTR( NORM, UPLO, DIAG, M, N, A,
+     $                                  LDA,
      $                 WORK )
 *
 *  -- LAPACK auxiliary routine --
@@ -41518,14 +41940,16 @@
                DO 20 J = 1, N
                   DO 10 I = 1, MIN( M, J-1 )
                      SUM = ABS( A( I, J ) )
-                     IF( VALUE .LT. SUM .OR. DISNAN( SUM ) ) VALUE = SUM
+                     IF( VALUE .LT. SUM .OR.
+     $                   DISNAN( SUM ) ) VALUE = SUM
    10             CONTINUE
    20          CONTINUE
             ELSE
                DO 40 J = 1, N
                   DO 30 I = J + 1, M
                      SUM = ABS( A( I, J ) )
-                     IF( VALUE .LT. SUM .OR. DISNAN( SUM ) ) VALUE = SUM
+                     IF( VALUE .LT. SUM .OR.
+     $                   DISNAN( SUM ) ) VALUE = SUM
    30             CONTINUE
    40          CONTINUE
             END IF
@@ -41535,14 +41959,16 @@
                DO 60 J = 1, N
                   DO 50 I = 1, MIN( M, J )
                      SUM = ABS( A( I, J ) )
-                     IF( VALUE .LT. SUM .OR. DISNAN( SUM ) ) VALUE = SUM
+                     IF( VALUE .LT. SUM .OR.
+     $                   DISNAN( SUM ) ) VALUE = SUM
    50             CONTINUE
    60          CONTINUE
             ELSE
                DO 80 J = 1, N
                   DO 70 I = J, M
                      SUM = ABS( A( I, J ) )
-                     IF( VALUE .LT. SUM .OR. DISNAN( SUM ) ) VALUE = SUM
+                     IF( VALUE .LT. SUM .OR.
+     $                   DISNAN( SUM ) ) VALUE = SUM
    70             CONTINUE
    80          CONTINUE
             END IF
@@ -41637,7 +42063,8 @@
             SUM = WORK( I )
             IF( VALUE .LT. SUM .OR. DISNAN( SUM ) ) VALUE = SUM
   280    CONTINUE
-      ELSE IF( ( LSAME( NORM, 'F' ) ) .OR. ( LSAME( NORM, 'E' ) ) ) THEN
+      ELSE IF( ( LSAME( NORM, 'F' ) ) .OR.
+     $         ( LSAME( NORM, 'E' ) ) ) THEN
 *
 *        Find normF(A).
 *
@@ -41646,13 +42073,15 @@
                SCALE = ONE
                SUM = MIN( M, N )
                DO 290 J = 2, N
-                  CALL ZLASSQ( MIN( M, J-1 ), A( 1, J ), 1, SCALE, SUM )
+                  CALL ZLASSQ( MIN( M, J-1 ), A( 1, J ), 1, SCALE,
+     $                         SUM )
   290          CONTINUE
             ELSE
                SCALE = ZERO
                SUM = ONE
                DO 300 J = 1, N
-                  CALL ZLASSQ( MIN( M, J ), A( 1, J ), 1, SCALE, SUM )
+                  CALL ZLASSQ( MIN( M, J ), A( 1, J ), 1, SCALE,
+     $                         SUM )
   300          CONTINUE
             END IF
          ELSE
@@ -41837,7 +42266,8 @@
 *> \ingroup laqgb
 *
 *  =====================================================================
-      SUBROUTINE ZLAQGB( M, N, KL, KU, AB, LDAB, R, C, ROWCND, COLCND,
+      SUBROUTINE ZLAQGB( M, N, KL, KU, AB, LDAB, R, C, ROWCND,
+     $                   COLCND,
      $                   AMAX, EQUED )
 *
 *  -- LAPACK auxiliary routine --
@@ -42563,10 +42993,9 @@
 *     .. Local Scalars ..
       INTEGER            I, ITEMP, J, MN, OFFPI, PVT
       DOUBLE PRECISION   TEMP, TEMP2, TOL3Z
-      COMPLEX*16         AII
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           ZLARF, ZLARFG, ZSWAP
+      EXTERNAL           ZLARF1F, ZLARFG, ZSWAP
 *     ..
 *     .. Intrinsic Functions ..
       INTRINSIC          ABS, DCONJG, MAX, MIN, SQRT
@@ -42603,7 +43032,8 @@
 *        Generate elementary reflector H(i).
 *
          IF( OFFPI.LT.M ) THEN
-            CALL ZLARFG( M-OFFPI+1, A( OFFPI, I ), A( OFFPI+1, I ), 1,
+            CALL ZLARFG( M-OFFPI+1, A( OFFPI, I ), A( OFFPI+1, I ),
+     $                   1,
      $                   TAU( I ) )
          ELSE
             CALL ZLARFG( 1, A( M, I ), A( M, I ), 1, TAU( I ) )
@@ -42613,12 +43043,9 @@
 *
 *           Apply H(i)**H to A(offset+i:m,i+1:n) from the left.
 *
-            AII = A( OFFPI, I )
-            A( OFFPI, I ) = CONE
-            CALL ZLARF( 'Left', M-OFFPI+1, N-I, A( OFFPI, I ), 1,
-     $                  DCONJG( TAU( I ) ), A( OFFPI, I+1 ), LDA,
-     $                  WORK( 1 ) )
-            A( OFFPI, I ) = AII
+            CALL ZLARF1F( 'Left', M-OFFPI+1, N-I, A( OFFPI, I ), 1,
+     $                    CONJG( TAU( I ) ), A( OFFPI, I+1 ), LDA,
+     $                    WORK( 1 ) )
          END IF
 *
 *        Update partial column norms.
@@ -42827,7 +43254,8 @@
 *> \endhtmlonly
 *
 *  =====================================================================
-      SUBROUTINE ZLAQPS( M, N, OFFSET, NB, KB, A, LDA, JPVT, TAU, VN1,
+      SUBROUTINE ZLAQPS( M, N, OFFSET, NB, KB, A, LDA, JPVT, TAU,
+     $                   VN1,
      $                   VN2, AUXV, F, LDF )
 *
 *  -- LAPACK auxiliary routine --
@@ -42902,7 +43330,8 @@
             DO 20 J = 1, K - 1
                F( K, J ) = DCONJG( F( K, J ) )
    20       CONTINUE
-            CALL ZGEMV( 'No transpose', M-RK+1, K-1, -CONE, A( RK, 1 ),
+            CALL ZGEMV( 'No transpose', M-RK+1, K-1, -CONE, A( RK,
+     $                  1 ),
      $                  LDA, F( K, 1 ), LDF, CONE, A( RK, K ), 1 )
             DO 30 J = 1, K - 1
                F( K, J ) = DCONJG( F( K, J ) )
@@ -42912,7 +43341,8 @@
 *        Generate elementary reflector H(k).
 *
          IF( RK.LT.M ) THEN
-            CALL ZLARFG( M-RK+1, A( RK, K ), A( RK+1, K ), 1, TAU( K ) )
+            CALL ZLARFG( M-RK+1, A( RK, K ), A( RK+1, K ), 1,
+     $                   TAU( K ) )
          ELSE
             CALL ZLARFG( 1, A( RK, K ), A( RK, K ), 1, TAU( K ) )
          END IF
@@ -42941,7 +43371,8 @@
 *                    *A(RK:M,K).
 *
          IF( K.GT.1 ) THEN
-            CALL ZGEMV( 'Conjugate transpose', M-RK+1, K-1, -TAU( K ),
+            CALL ZGEMV( 'Conjugate transpose', M-RK+1, K-1,
+     $                  -TAU( K ),
      $                  A( RK, 1 ), LDA, A( RK, K ), 1, CZERO,
      $                  AUXV( 1 ), 1 )
 *
@@ -42953,7 +43384,8 @@
 *        A(RK,K+1:N) := A(RK,K+1:N) - A(RK,1:K)*F(K+1:N,1:K)**H.
 *
          IF( K.LT.N ) THEN
-            CALL ZGEMM( 'No transpose', 'Conjugate transpose', 1, N-K,
+            CALL ZGEMM( 'No transpose', 'Conjugate transpose', 1,
+     $                  N-K,
      $                  K, -CONE, A( RK, 1 ), LDA, F( K+1, 1 ), LDF,
      $                  CONE, A( RK, K+1 ), LDA )
          END IF
@@ -42994,7 +43426,8 @@
 *                         A(OFFSET+KB+1:M,1:KB)*F(KB+1:N,1:KB)**H.
 *
       IF( KB.LT.MIN( N, M-OFFSET ) ) THEN
-         CALL ZGEMM( 'No transpose', 'Conjugate transpose', M-RK, N-KB,
+         CALL ZGEMM( 'No transpose', 'Conjugate transpose', M-RK,
+     $               N-KB,
      $               KB, -CONE, A( RK+1, 1 ), LDA, F( KB+1, 1 ), LDF,
      $               CONE, A( RK+1, KB+1 ), LDA )
       END IF
@@ -43323,7 +43756,8 @@
       COMPLEX*16         ZDUM( 1, 1 )
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           ZLACPY, ZLAHQR, ZLAQR3, ZLAQR4, ZLAQR5
+      EXTERNAL           ZLACPY, ZLAHQR, ZLAQR3, ZLAQR4,
+     $                   ZLAQR5
 *     ..
 *     .. Intrinsic Functions ..
       INTRINSIC          ABS, DBLE, DCMPLX, DIMAG, INT, MAX, MIN, MOD,
@@ -43533,7 +43967,8 @@
 *
 *           ==== Aggressive early deflation ====
 *
-            CALL ZLAQR3( WANTT, WANTZ, N, KTOP, KBOT, NW, H, LDH, ILOZ,
+            CALL ZLAQR3( WANTT, WANTZ, N, KTOP, KBOT, NW, H, LDH,
+     $                   ILOZ,
      $                   IHIZ, Z, LDZ, LS, LD, W, H( KV, 1 ), LDH, NHO,
      $                   H( KV, KT ), LDH, NVE, H( KWV, 1 ), LDH, WORK,
      $                   LWORK )
@@ -44162,7 +44597,8 @@
 *>       University of Kansas, USA
 *>
 *  =====================================================================
-      SUBROUTINE ZLAQR2( WANTT, WANTZ, N, KTOP, KBOT, NW, H, LDH, ILOZ,
+      SUBROUTINE ZLAQR2( WANTT, WANTZ, N, KTOP, KBOT, NW, H, LDH,
+     $                   ILOZ,
      $                   IHIZ, Z, LDZ, NS, ND, SH, V, LDV, NH, T, LDT,
      $                   NV, WV, LDWV, WORK, LWORK )
 *
@@ -44190,7 +44626,7 @@
       PARAMETER          ( RZERO = 0.0d0, RONE = 1.0d0 )
 *     ..
 *     .. Local Scalars ..
-      COMPLEX*16         BETA, CDUM, S, TAU
+      COMPLEX*16         CDUM, S, TAU
       DOUBLE PRECISION   FOO, SAFMAX, SAFMIN, SMLNUM, ULP
       INTEGER            I, IFST, ILST, INFO, INFQR, J, JW, KCOL, KLN,
      $                   KNT, KROW, KWTOP, LTOP, LWK1, LWK2, LWKOPT
@@ -44200,8 +44636,9 @@
       EXTERNAL           DLAMCH
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           ZCOPY, ZGEHRD, ZGEMM, ZLACPY, ZLAHQR,
-     $                   ZLARF, ZLARFG, ZLASET, ZTREXC, ZUNMHR
+      EXTERNAL           ZCOPY, ZGEHRD, ZGEMM, ZLACPY,
+     $                   ZLAHQR,
+     $                   ZLARF1F, ZLARFG, ZLASET, ZTREXC, ZUNMHR
 *     ..
 *     .. Intrinsic Functions ..
       INTRINSIC          ABS, DBLE, DCMPLX, DCONJG, DIMAG, INT, MAX, MIN
@@ -44228,7 +44665,8 @@
 *
 *        ==== Workspace query call to ZUNMHR ====
 *
-         CALL ZUNMHR( 'R', 'N', JW, JW, 1, JW-1, T, LDT, WORK, V, LDV,
+         CALL ZUNMHR( 'R', 'N', JW, JW, 1, JW-1, T, LDT, WORK, V,
+     $                LDV,
      $                WORK, -1, INFO )
          LWK2 = INT( WORK( 1 ) )
 *
@@ -44297,7 +44735,8 @@
 *     .    here and there to keep track.) ====
 *
       CALL ZLACPY( 'U', JW, JW, H( KWTOP, KWTOP ), LDH, T, LDT )
-      CALL ZCOPY( JW-1, H( KWTOP+1, KWTOP ), LDH+1, T( 2, 1 ), LDT+1 )
+      CALL ZCOPY( JW-1, H( KWTOP+1, KWTOP ), LDH+1, T( 2, 1 ),
+     $            LDT+1 )
 *
       CALL ZLASET( 'A', JW, JW, ZERO, ONE, V, LDV )
       CALL ZLAHQR( .true., .true., JW, 1, JW, T, LDT, SH( KWTOP ), 1,
@@ -44349,7 +44788,8 @@
    20       CONTINUE
             ILST = I
             IF( IFST.NE.ILST )
-     $         CALL ZTREXC( 'V', JW, T, LDT, V, LDV, IFST, ILST, INFO )
+     $         CALL ZTREXC( 'V', JW, T, LDT, V, LDV, IFST, ILST,
+     $                      INFO )
    30    CONTINUE
       END IF
 *
@@ -44369,18 +44809,17 @@
             DO 50 I = 1, NS
                WORK( I ) = DCONJG( WORK( I ) )
    50       CONTINUE
-            BETA = WORK( 1 )
-            CALL ZLARFG( NS, BETA, WORK( 2 ), 1, TAU )
-            WORK( 1 ) = ONE
+            CALL ZLARFG( NS, WORK( 1 ), WORK( 2 ), 1, TAU )
 *
-            CALL ZLASET( 'L', JW-2, JW-2, ZERO, ZERO, T( 3, 1 ), LDT )
+            CALL ZLASET( 'L', JW-2, JW-2, ZERO, ZERO, T( 3, 1 ),
+     $                   LDT )
 *
-            CALL ZLARF( 'L', NS, JW, WORK, 1, DCONJG( TAU ), T, LDT,
-     $                  WORK( JW+1 ) )
-            CALL ZLARF( 'R', NS, NS, WORK, 1, TAU, T, LDT,
-     $                  WORK( JW+1 ) )
-            CALL ZLARF( 'R', JW, NS, WORK, 1, TAU, V, LDV,
-     $                  WORK( JW+1 ) )
+            CALL ZLARF1F( 'L', NS, JW, WORK, 1, CONJG( TAU ), T, LDT,
+     $                    WORK( JW+1 ) )
+            CALL ZLARF1F( 'R', NS, NS, WORK, 1, TAU, T, LDT,
+     $                    WORK( JW+1 ) )
+            CALL ZLARF1F( 'R', JW, NS, WORK, 1, TAU, V, LDV,
+     $                    WORK( JW+1 ) )
 *
             CALL ZGEHRD( JW, 1, NS, T, LDT, WORK, WORK( JW+1 ),
      $                   LWORK-JW, INFO )
@@ -44398,7 +44837,8 @@
 *        .    H and Z, if requested.  ====
 *
          IF( NS.GT.1 .AND. S.NE.ZERO )
-     $      CALL ZUNMHR( 'R', 'N', JW, NS, 1, NS, T, LDT, WORK, V, LDV,
+     $      CALL ZUNMHR( 'R', 'N', JW, NS, 1, NS, T, LDT, WORK, V,
+     $                   LDV,
      $                   WORK( JW+1 ), LWORK-JW, INFO )
 *
 *        ==== Update vertical slab in H ====
@@ -44412,7 +44852,8 @@
             KLN = MIN( NV, KWTOP-KROW )
             CALL ZGEMM( 'N', 'N', KLN, JW, JW, ONE, H( KROW, KWTOP ),
      $                  LDH, V, LDV, ZERO, WV, LDWV )
-            CALL ZLACPY( 'A', KLN, JW, WV, LDWV, H( KROW, KWTOP ), LDH )
+            CALL ZLACPY( 'A', KLN, JW, WV, LDWV, H( KROW, KWTOP ),
+     $                   LDH )
    60    CONTINUE
 *
 *        ==== Update horizontal slab in H ====
@@ -44432,7 +44873,8 @@
          IF( WANTZ ) THEN
             DO 80 KROW = ILOZ, IHIZ, NV
                KLN = MIN( NV, IHIZ-KROW+1 )
-               CALL ZGEMM( 'N', 'N', KLN, JW, JW, ONE, Z( KROW, KWTOP ),
+               CALL ZGEMM( 'N', 'N', KLN, JW, JW, ONE, Z( KROW,
+     $                     KWTOP ),
      $                     LDZ, V, LDV, ZERO, WV, LDWV )
                CALL ZLACPY( 'A', KLN, JW, WV, LDWV, Z( KROW, KWTOP ),
      $                      LDZ )
@@ -44722,7 +45164,8 @@
 *>       University of Kansas, USA
 *>
 *  =====================================================================
-      SUBROUTINE ZLAQR3( WANTT, WANTZ, N, KTOP, KBOT, NW, H, LDH, ILOZ,
+      SUBROUTINE ZLAQR3( WANTT, WANTZ, N, KTOP, KBOT, NW, H, LDH,
+     $                   ILOZ,
      $                   IHIZ, Z, LDZ, NS, ND, SH, V, LDV, NH, T, LDT,
      $                   NV, WV, LDWV, WORK, LWORK )
 *
@@ -44750,7 +45193,7 @@
       PARAMETER          ( RZERO = 0.0d0, RONE = 1.0d0 )
 *     ..
 *     .. Local Scalars ..
-      COMPLEX*16         BETA, CDUM, S, TAU
+      COMPLEX*16         CDUM, S, TAU
       DOUBLE PRECISION   FOO, SAFMAX, SAFMIN, SMLNUM, ULP
       INTEGER            I, IFST, ILST, INFO, INFQR, J, JW, KCOL, KLN,
      $                   KNT, KROW, KWTOP, LTOP, LWK1, LWK2, LWK3,
@@ -44762,8 +45205,9 @@
       EXTERNAL           DLAMCH, ILAENV
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           ZCOPY, ZGEHRD, ZGEMM, ZLACPY, ZLAHQR, ZLAQR4,
-     $                   ZLARF, ZLARFG, ZLASET, ZTREXC, ZUNMHR
+      EXTERNAL           ZCOPY, ZGEHRD, ZGEMM, ZLACPY, ZLAHQR,
+     $                   ZLAQR4,
+     $                   ZLARF1F, ZLARFG, ZLASET, ZTREXC, ZUNMHR
 *     ..
 *     .. Intrinsic Functions ..
       INTRINSIC          ABS, DBLE, DCMPLX, DCONJG, DIMAG, INT, MAX, MIN
@@ -44790,13 +45234,15 @@
 *
 *        ==== Workspace query call to ZUNMHR ====
 *
-         CALL ZUNMHR( 'R', 'N', JW, JW, 1, JW-1, T, LDT, WORK, V, LDV,
+         CALL ZUNMHR( 'R', 'N', JW, JW, 1, JW-1, T, LDT, WORK, V,
+     $                LDV,
      $                WORK, -1, INFO )
          LWK2 = INT( WORK( 1 ) )
 *
 *        ==== Workspace query call to ZLAQR4 ====
 *
-         CALL ZLAQR4( .true., .true., JW, 1, JW, T, LDT, SH, 1, JW, V,
+         CALL ZLAQR4( .true., .true., JW, 1, JW, T, LDT, SH, 1, JW,
+     $                V,
      $                LDV, WORK, -1, INFQR )
          LWK3 = INT( WORK( 1 ) )
 *
@@ -44865,15 +45311,18 @@
 *     .    here and there to keep track.) ====
 *
       CALL ZLACPY( 'U', JW, JW, H( KWTOP, KWTOP ), LDH, T, LDT )
-      CALL ZCOPY( JW-1, H( KWTOP+1, KWTOP ), LDH+1, T( 2, 1 ), LDT+1 )
+      CALL ZCOPY( JW-1, H( KWTOP+1, KWTOP ), LDH+1, T( 2, 1 ),
+     $            LDT+1 )
 *
       CALL ZLASET( 'A', JW, JW, ZERO, ONE, V, LDV )
       NMIN = ILAENV( 12, 'ZLAQR3', 'SV', JW, 1, JW, LWORK )
       IF( JW.GT.NMIN ) THEN
-         CALL ZLAQR4( .true., .true., JW, 1, JW, T, LDT, SH( KWTOP ), 1,
+         CALL ZLAQR4( .true., .true., JW, 1, JW, T, LDT, SH( KWTOP ),
+     $                1,
      $                JW, V, LDV, WORK, LWORK, INFQR )
       ELSE
-         CALL ZLAHQR( .true., .true., JW, 1, JW, T, LDT, SH( KWTOP ), 1,
+         CALL ZLAHQR( .true., .true., JW, 1, JW, T, LDT, SH( KWTOP ),
+     $                1,
      $                JW, V, LDV, INFQR )
       END IF
 *
@@ -44923,7 +45372,8 @@
    20       CONTINUE
             ILST = I
             IF( IFST.NE.ILST )
-     $         CALL ZTREXC( 'V', JW, T, LDT, V, LDV, IFST, ILST, INFO )
+     $         CALL ZTREXC( 'V', JW, T, LDT, V, LDV, IFST, ILST,
+     $                      INFO )
    30    CONTINUE
       END IF
 *
@@ -44943,18 +45393,17 @@
             DO 50 I = 1, NS
                WORK( I ) = DCONJG( WORK( I ) )
    50       CONTINUE
-            BETA = WORK( 1 )
-            CALL ZLARFG( NS, BETA, WORK( 2 ), 1, TAU )
-            WORK( 1 ) = ONE
+            CALL ZLARFG( NS, WORK( 1 ), WORK( 2 ), 1, TAU )
 *
-            CALL ZLASET( 'L', JW-2, JW-2, ZERO, ZERO, T( 3, 1 ), LDT )
+            CALL ZLASET( 'L', JW-2, JW-2, ZERO, ZERO, T( 3, 1 ),
+     $                   LDT )
 *
-            CALL ZLARF( 'L', NS, JW, WORK, 1, DCONJG( TAU ), T, LDT,
-     $                  WORK( JW+1 ) )
-            CALL ZLARF( 'R', NS, NS, WORK, 1, TAU, T, LDT,
-     $                  WORK( JW+1 ) )
-            CALL ZLARF( 'R', JW, NS, WORK, 1, TAU, V, LDV,
-     $                  WORK( JW+1 ) )
+            CALL ZLARF1F( 'L', NS, JW, WORK, 1, CONJG( TAU ), T, LDT,
+     $                    WORK( JW+1 ) )
+            CALL ZLARF1F( 'R', NS, NS, WORK, 1, TAU, T, LDT,
+     $                    WORK( JW+1 ) )
+            CALL ZLARF1F( 'R', JW, NS, WORK, 1, TAU, V, LDV,
+     $                    WORK( JW+1 ) )
 *
             CALL ZGEHRD( JW, 1, NS, T, LDT, WORK, WORK( JW+1 ),
      $                   LWORK-JW, INFO )
@@ -44972,7 +45421,8 @@
 *        .    H and Z, if requested.  ====
 *
          IF( NS.GT.1 .AND. S.NE.ZERO )
-     $      CALL ZUNMHR( 'R', 'N', JW, NS, 1, NS, T, LDT, WORK, V, LDV,
+     $      CALL ZUNMHR( 'R', 'N', JW, NS, 1, NS, T, LDT, WORK, V,
+     $                   LDV,
      $                   WORK( JW+1 ), LWORK-JW, INFO )
 *
 *        ==== Update vertical slab in H ====
@@ -44986,7 +45436,8 @@
             KLN = MIN( NV, KWTOP-KROW )
             CALL ZGEMM( 'N', 'N', KLN, JW, JW, ONE, H( KROW, KWTOP ),
      $                  LDH, V, LDV, ZERO, WV, LDWV )
-            CALL ZLACPY( 'A', KLN, JW, WV, LDWV, H( KROW, KWTOP ), LDH )
+            CALL ZLACPY( 'A', KLN, JW, WV, LDWV, H( KROW, KWTOP ),
+     $                   LDH )
    60    CONTINUE
 *
 *        ==== Update horizontal slab in H ====
@@ -45006,7 +45457,8 @@
          IF( WANTZ ) THEN
             DO 80 KROW = ILOZ, IHIZ, NV
                KLN = MIN( NV, IHIZ-KROW+1 )
-               CALL ZGEMM( 'N', 'N', KLN, JW, JW, ONE, Z( KROW, KWTOP ),
+               CALL ZGEMM( 'N', 'N', KLN, JW, JW, ONE, Z( KROW,
+     $                     KWTOP ),
      $                     LDZ, V, LDV, ZERO, WV, LDWV )
                CALL ZLACPY( 'A', KLN, JW, WV, LDWV, Z( KROW, KWTOP ),
      $                      LDZ )
@@ -45552,7 +46004,8 @@
 *
 *           ==== Aggressive early deflation ====
 *
-            CALL ZLAQR2( WANTT, WANTZ, N, KTOP, KBOT, NW, H, LDH, ILOZ,
+            CALL ZLAQR2( WANTT, WANTZ, N, KTOP, KBOT, NW, H, LDH,
+     $                   ILOZ,
      $                   IHIZ, Z, LDZ, LS, LD, W, H( KV, 1 ), LDH, NHO,
      $                   H( KV, KT ), LDH, NVE, H( KWV, 1 ), LDH, WORK,
      $                   LWORK )
@@ -45986,7 +46439,8 @@
 *>       ACM Trans. Math. Softw. 40, 2, Article 12 (February 2014).
 *>
 *  =====================================================================
-      SUBROUTINE ZLAQR5( WANTT, WANTZ, KACC22, N, KTOP, KBOT, NSHFTS, S,
+      SUBROUTINE ZLAQR5( WANTT, WANTZ, KACC22, N, KTOP, KBOT, NSHFTS,
+     $                   S,
      $                   H, LDH, ILOZ, IHIZ, Z, LDZ, V, LDV, U, LDU, NV,
      $                   WV, LDWV, NH, WH, LDWH )
       IMPLICIT NONE
@@ -46035,7 +46489,8 @@
       COMPLEX*16         VT( 3 )
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           ZGEMM, ZLACPY, ZLAQR1, ZLARFG, ZLASET, ZTRMM
+      EXTERNAL           ZGEMM, ZLACPY, ZLAQR1, ZLARFG, ZLASET,
+     $                   ZTRMM
 *     ..
 *     .. Statement Functions ..
       DOUBLE PRECISION   CABS1
@@ -46934,7 +47389,8 @@
 *
 *           C(1:lastv,1:lastc) := C(...) - v(1:lastv,1) * w(1:lastc,1)**H
 *
-            CALL ZGERC( LASTV, LASTC, -TAU, V, INCV, WORK, 1, C, LDC )
+            CALL ZGERC( LASTV, LASTC, -TAU, V, INCV, WORK, 1, C,
+     $                  LDC )
          END IF
       ELSE
 *
@@ -46949,12 +47405,584 @@
 *
 *           C(1:lastc,1:lastv) := C(...) - w(1:lastc,1) * v(1:lastv,1)**H
 *
-            CALL ZGERC( LASTC, LASTV, -TAU, WORK, 1, V, INCV, C, LDC )
+            CALL ZGERC( LASTC, LASTV, -TAU, WORK, 1, V, INCV, C,
+     $                  LDC )
          END IF
       END IF
       RETURN
 *
 *     End of ZLARF
+*
+      END
+*> \brief \b ZLARF1F applies an elementary reflector to a general rectangular
+*              matrix assuming v(1) = 1.
+*
+*  =========== DOCUMENTATION ===========
+*
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
+*
+*> \htmlonly
+*> Download ZLARF1F + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zlarf1f.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zlarf1f.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zlarf1f.f">
+*> [TXT]</a>
+*> \endhtmlonly
+*
+*  Definition:
+*  ===========
+*
+*       SUBROUTINE ZLARF1F( SIDE, M, N, V, INCV, TAU, C, LDC, WORK )
+*
+*       .. Scalar Arguments ..
+*       CHARACTER          SIDE
+*       INTEGER            INCV, LDC, M, N
+*       COMPLEX*16         TAU
+*       ..
+*       .. Array Arguments ..
+*       COMPLEX*16         C( LDC, * ), V( * ), WORK( * )
+*       ..
+*
+*
+*> \par Purpose:
+*  =============
+*>
+*> \verbatim
+*>
+*> ZLARF1F applies a complex elementary reflector H to a real m by n matrix
+*> C, from either the left or the right. H is represented in the form
+*>
+*>       H = I - tau * v * v**H
+*>
+*> where tau is a complex scalar and v is a complex vector.
+*>
+*> If tau = 0, then H is taken to be the unit matrix.
+*>
+*> To apply H**H, supply conjg(tau) instead
+*> tau.
+*> \endverbatim
+*
+*  Arguments:
+*  ==========
+*
+*> \param[in] SIDE
+*> \verbatim
+*>          SIDE is CHARACTER*1
+*>          = 'L': form  H * C
+*>
+*> \param[in] M
+*> \verbatim
+*>          M is INTEGER
+*>          The number of rows of the matrix C.
+*> \endverbatim
+*>
+*> \param[in] N
+*> \verbatim
+*>          N is INTEGER
+*>          The number of columns of the matrix C.
+*> \endverbatim
+*>
+*> \param[in] V
+*> \verbatim
+*>          V is COMPLEX*16 array, dimension
+*>                     (1 + (M-1)*abs(INCV)) if SIDE = 'L'
+*>                  or (1 + (N-1)*abs(INCV)) if SIDE = 'R'
+*>          The vector v in the representation of H. V is not used if
+*>          TAU = 0. V(1) is not referenced or modified.
+*> \endverbatim
+*>
+*> \param[in] INCV
+*> \verbatim
+*>          INCV is INTEGER
+*>          The increment between elements of v. INCV <> 0.
+*> \endverbatim
+*>
+*> \param[in] TAU
+*> \verbatim
+*>          TAU is COMPLEX*16
+*>          The value tau in the representation of H.
+*> \endverbatim
+*>
+*> \param[in,out] C
+*> \verbatim
+*>          C is COMPLEX*16 array, dimension (LDC,N)
+*>          On entry, the m by n matrix C.
+*>          On exit, C is overwritten by the matrix H * C if SIDE = 'L',
+*>          or C * H if SIDE = 'R'.
+*> \endverbatim
+*>
+*> \param[in] LDC
+*> \verbatim
+*>          LDC is INTEGER
+*>          The leading dimension of the array C. LDC >= max(1,M).
+*> \endverbatim
+*>
+*> \param[out] WORK
+*> \verbatim
+*>          WORK is COMPLEX*16 array, dimension
+*>                         (N) if SIDE = 'L'
+*>                      or (M) if SIDE = 'R'
+*> \endverbatim
+*  To take advantage of the fact that v(1) = 1, we do the following
+*     v = [ 1 v_2 ]**T
+*     If SIDE='L'
+*           |-----|
+*           | C_1 |
+*        C =| C_2 |
+*           |-----|
+*        C_1\in\mathbb{C}^{1\times n}, C_2\in\mathbb{C}^{m-1\times n}
+*        So we compute:
+*        C = HC   = (I - \tau vv**T)C
+*                 = C - \tau vv**T C
+*        w = C**T v  = [ C_1**T C_2**T ] [ 1 v_2 ]**T
+*                    = C_1**T + C_2**T v ( ZGEMM then ZAXPYC-like )
+*        C  = C - \tau vv**T C
+*           = C - \tau vw**T
+*        Giving us   C_1 = C_1 - \tau w**T ( ZAXPYC-like )
+*                 and
+*                    C_2 = C_2 - \tau v_2w**T ( ZGERC )
+*     If SIDE='R'
+*
+*        C = [ C_1 C_2 ]
+*        C_1\in\mathbb{C}^{m\times 1}, C_2\in\mathbb{C}^{m\times n-1}
+*        So we compute: 
+*        C = CH   = C(I - \tau vv**T)
+*                 = C - \tau Cvv**T
+*
+*        w = Cv   = [ C_1 C_2 ] [ 1 v_2 ]**T
+*                 = C_1 + C_2v_2 ( ZGEMM then ZAXPYC-like )
+*        C  = C - \tau Cvv**T
+*           = C - \tau wv**T
+*        Giving us   C_1 = C_1 - \tau w ( ZAXPYC-like )
+*                 and
+*                    C_2 = C_2 - \tau wv_2**T ( ZGERC )
+*
+*  Authors:
+*  ========
+*
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
+*
+*> \ingroup larf
+*
+*  =====================================================================
+      SUBROUTINE ZLARF1F( SIDE, M, N, V, INCV, TAU, C, LDC, WORK )
+*
+*  -- LAPACK auxiliary routine --
+*  -- LAPACK is a software package provided by Univ. of Tennessee,    --
+*  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
+*
+*     .. Scalar Arguments ..
+      CHARACTER          SIDE
+      INTEGER            INCV, LDC, M, N
+      COMPLEX*16         TAU
+*     ..
+*     .. Array Arguments ..
+      COMPLEX*16         C( LDC, * ), V( * ), WORK( * )
+*     ..
+*
+*  =====================================================================
+*
+*     .. Parameters ..
+      COMPLEX*16         ONE, ZERO
+      PARAMETER          ( ONE = ( 1.0D+0, 0.0D+0 ),
+     $                   ZERO = ( 0.0D+0, 0.0D+0 ) )
+*     ..
+*     .. Local Scalars ..
+      LOGICAL            APPLYLEFT
+      INTEGER            I, LASTV, LASTC, J
+*     ..
+*     .. External Subroutines ..
+      EXTERNAL           ZGEMV, ZGERC, ZSCAL
+*     .. Intrinsic Functions ..
+      INTRINSIC          DCONJG
+*     ..
+*     .. External Functions ..
+      LOGICAL            LSAME
+      INTEGER            ILAZLR, ILAZLC
+      EXTERNAL           LSAME, ILAZLR, ILAZLC
+*     ..
+*     .. Executable Statements ..
+*
+      APPLYLEFT = LSAME( SIDE, 'L' )
+      LASTV = 1
+      LASTC = 0
+      IF( TAU.NE.ZERO ) THEN
+!     Set up variables for scanning V.  LASTV begins pointing to the end
+!     of V.
+         IF( APPLYLEFT ) THEN
+            LASTV = M
+         ELSE
+            LASTV = N
+         END IF
+         IF( INCV.GT.0 ) THEN
+            I = 1 + (LASTV-1) * INCV
+         ELSE
+            I = 1
+         END IF
+!     Look for the last non-zero row in V.
+!        Since we are assuming that V(1) = 1, and it is not stored, so we
+!        shouldn't access it.
+         DO WHILE( LASTV.GT.1 .AND. V( I ).EQ.ZERO )
+            LASTV = LASTV - 1
+            I = I - INCV
+         END DO
+         IF( APPLYLEFT ) THEN
+!     Scan for the last non-zero column in C(1:lastv,:).
+            LASTC = ILAZLC(LASTV, N, C, LDC)
+         ELSE
+!     Scan for the last non-zero row in C(:,1:lastv).
+            LASTC = ILAZLR(M, LASTV, C, LDC)
+         END IF
+      END IF
+      IF( LASTC.EQ.0 ) THEN
+         RETURN
+      END IF
+      IF( APPLYLEFT ) THEN
+*
+*        Form  H * C
+*
+            ! Check if m = 1. This means v = 1, So we just need to compute
+            ! C := HC = (1-\tau)C.
+            IF( LASTV.EQ.1 ) THEN
+               CALL ZSCAL(LASTC, ONE - TAU, C, LDC)
+            ELSE
+*
+*              w(1:lastc,1) := C(1:lastv,1:lastc)**H * v(1:lastv,1)
+*
+               ! (I - tvv**H)C = C - tvv**H C
+               ! First compute w**H = v**H c -> w = C**H v
+               ! C = [ C_1 C_2 ]**T, v = [1 v_2]**T
+               ! w = C_1**H + C_2**Hv_2
+               ! w = C_2**Hv_2
+               CALL ZGEMV( 'Conjugate transpose', LASTV - 1,
+     $               LASTC, ONE, C( 1+1, 1 ), LDC, V( 1 + INCV ),
+     $               INCV, ZERO, WORK, 1 )
+*
+*              w(1:lastc,1) += v(1,1) * C(1,1:lastc)**H
+*
+               DO I = 1, LASTC
+                  WORK( I ) = WORK( I ) + DCONJG( C( 1, I ) )
+               END DO
+*
+*           C(1:lastv,1:lastc) := C(...) - tau * v(1:lastv,1) * w(1:lastc,1)**H
+*
+            ! C(1, 1:lastc)   := C(...) - tau * v(1,1) * w(1:lastc,1)**H
+            !                  = C(...) - tau * Conj(w(1:lastc,1))
+            ! This is essentially a zaxpyc
+               DO I = 1, LASTC
+                  C( 1, I ) = C( 1, I ) - TAU * DCONJG( WORK( I ) )
+               END DO
+*
+*        C(2:lastv,1:lastc) += - tau * v(2:lastv,1) * w(1:lastc,1)**H
+*
+               CALL ZGERC( LASTV - 1, LASTC, -TAU, V( 1 + INCV ),
+     $               INCV, WORK, 1, C( 1+1, 1 ), LDC )
+            END IF
+      ELSE
+*
+*        Form  C * H
+*
+            ! Check if n = 1. This means v = 1, so we just need to compute
+            ! C := CH = C(1-\tau).
+            IF( LASTV.EQ.1 ) THEN
+               CALL ZSCAL(LASTC, ONE - TAU, C, 1)
+            ELSE
+*
+*              w(1:lastc,1) := C(1:lastc,1:lastv) * v(1:lastv,1)
+*
+               ! w(1:lastc,1) := C(1:lastc,2:lastv) * v(2:lastv,1)
+               CALL ZGEMV( 'No transpose', LASTC, LASTV-1, ONE, 
+     $            C(1,1+1), LDC, V(1+INCV), INCV, ZERO, WORK, 1 )
+               ! w(1:lastc,1) += C(1:lastc,1) v(1,1) = C(1:lastc,1)
+               CALL ZAXPY(LASTC, ONE, C, 1, WORK, 1)
+*
+*              C(1:lastc,1:lastv) := C(...) - tau * w(1:lastc,1) * v(1:lastv,1)**T
+*
+               ! C(1:lastc,1)     := C(...) - tau * w(1:lastc,1) * v(1,1)**T
+               !                   = C(...) - tau * w(1:lastc,1)
+               CALL ZAXPY(LASTC, -TAU, WORK, 1, C, 1)
+               ! C(1:lastc,2:lastv) := C(...) - tau * w(1:lastc,1) * v(2:lastv)**T
+               CALL ZGERC( LASTC, LASTV-1, -TAU, WORK, 1, V(1+INCV),
+     $                     INCV, C(1,1+1), LDC )
+            END IF
+      END IF
+      RETURN
+*
+*     End of ZLARF1F
+*
+      END
+*> \brief \b ZLARF1L applies an elementary reflector to a general rectangular
+*              matrix assuming v(lastv) = 1, where lastv is the last non-zero
+*
+*  =========== DOCUMENTATION ===========
+*
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
+*
+*> \htmlonly
+*> Download ZLARF1L + dependencies
+*> <a
+*href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zlarf1l.f">
+*> [TGZ]</a>
+*> <a
+*href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zlarf1l.f">
+*> [ZIP]</a>
+*> <a
+*href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zlarf1l.f">
+*> [TXT]</a>
+*> \endhtmlonly
+*
+*  Definition:
+*  ===========
+*
+*       SUBROUTINE ZLARF1L( SIDE, M, N, V, INCV, TAU, C, LDC, WORK )
+*
+*       .. Scalar Arguments ..
+*       CHARACTER          SIDE
+*       INTEGER            INCV, LDC, M, N
+*       COMPLEX*16         TAU
+*       ..
+*       .. Array Arguments ..
+*       COMPLEX*16         C( LDC, * ), V( * ), WORK( * )
+*       ..
+*
+*
+*> \par Purpose:
+*  =============
+*>
+*> \verbatim
+*>
+*> ZLARF1L applies a complex elementary reflector H to a complex m by n matrix
+*> C, from either the left or the right. H is represented in the form
+*>
+*>       H = I - tau * v * v**H
+*>
+*> where tau is a real scalar and v is a real vector assuming v(lastv) = 1,
+*> where lastv is the last non-zero element.
+*>
+*> If tau = 0, then H is taken to be the unit matrix.
+*>
+*> To apply H**H (the conjugate transpose of H), supply conjg(tau) instead
+*> tau.
+*> \endverbatim
+*
+*  Arguments:
+*  ==========
+*
+*> \param[in] SIDE
+*> \verbatim
+*>          SIDE is CHARACTER*1
+*>          = 'L': form  H * C
+*>          = 'R': form  C * H
+*> \endverbatim
+*>
+*> \param[in] M
+*> \verbatim
+*>          M is INTEGER
+*>          The number of rows of the matrix C.
+*> \endverbatim
+*>
+*> \param[in] N
+*> \verbatim
+*>          N is INTEGER
+*>          The number of columns of the matrix C.
+*> \endverbatim
+*>
+*> \param[in] V
+*> \verbatim
+*>          V is COMPLEX*16 array, dimension
+*>                     (1 + (M-1)*abs(INCV)) if SIDE = 'L'
+*>                  or (1 + (N-1)*abs(INCV)) if SIDE = 'R'
+*>          The vector v in the representation of H. V is not used if
+*>          TAU = 0.
+*> \endverbatim
+*>
+*> \param[in] INCV
+*> \verbatim
+*>          INCV is INTEGER
+*>          The increment between elements of v. INCV > 0.
+*> \endverbatim
+*>
+*> \param[in] TAU
+*> \verbatim
+*>          TAU is COMPLEX*16
+*>          The value tau in the representation of H.
+*> \endverbatim
+*>
+*> \param[in,out] C
+*> \verbatim
+*>          C is COMPLEX*16 array, dimension (LDC,N)
+*>          On entry, the m by n matrix C.
+*>          On exit, C is overwritten by the matrix H * C if SIDE = 'L',
+*>          or C * H if SIDE = 'R'.
+*> \endverbatim
+*>
+*> \param[in] LDC
+*> \verbatim
+*>          LDC is INTEGER
+*>          The leading dimension of the array C. LDC >= max(1,M).
+*> \endverbatim
+*>
+*> \param[out] WORK
+*> \verbatim
+*>          WORK is COMPLEX*16 array, dimension
+*>                         (N) if SIDE = 'L'
+*>                      or (M) if SIDE = 'R'
+*> \endverbatim
+*
+*  Authors:
+*  ========
+*
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
+*
+*> \ingroup larf1f
+*
+*  =====================================================================
+      SUBROUTINE ZLARF1L( SIDE, M, N, V, INCV, TAU, C, LDC, WORK )
+*
+*  -- LAPACK auxiliary routine --
+*  -- LAPACK is a software package provided by Univ. of Tennessee,    --
+*  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
+*
+*     .. Scalar Arguments ..
+      CHARACTER          SIDE
+      INTEGER            INCV, LDC, M, N
+      COMPLEX*16         TAU
+*     ..
+*     .. Array Arguments ..
+      COMPLEX*16         C( LDC, * ), V( * ), WORK( * )
+*     ..
+*
+*  =====================================================================
+*
+*     .. Parameters ..
+      COMPLEX*16         ONE, ZERO
+      PARAMETER          ( ONE = ( 1.0D+0, 0.0D+0 ),
+     $                   ZERO = ( 0.0D+0, 0.0D+0 ) )
+*     ..
+*     .. Local Scalars ..
+      LOGICAL            APPLYLEFT
+      INTEGER            I, J, LASTV, LASTC, FIRSTV
+*     ..
+*     .. External Subroutines ..
+      EXTERNAL           ZGEMV, ZGERC, ZSCAL
+*     ..
+*     .. Intrinsic Functions ..
+      INTRINSIC          DCONJG
+*     ..
+*     .. External Functions ..
+      LOGICAL            LSAME
+      INTEGER            ILAZLR, ILAZLC
+      EXTERNAL           LSAME, ILAZLR, ILAZLC
+*     ..
+*     .. Executable Statements ..
+*
+      APPLYLEFT = LSAME( SIDE, 'L' )
+      FIRSTV = 1
+      LASTC = 0
+      IF( TAU.NE.ZERO ) THEN
+!     Set up variables for scanning V.  LASTV begins pointing to the end
+!     of V up to V(1).
+         IF( APPLYLEFT ) THEN
+            LASTV = M
+         ELSE
+            LASTV = N
+         END IF
+         I = 1
+!     Look for the last non-zero row in V.
+         DO WHILE( LASTV.GT.FIRSTV .AND. V( I ).EQ.ZERO )
+            FIRSTV = FIRSTV + 1
+            I = I + INCV
+         END DO
+         IF( APPLYLEFT ) THEN
+!     Scan for the last non-zero column in C(1:lastv,:).
+            LASTC = ILAZLC(LASTV, N, C, LDC)
+         ELSE
+!     Scan for the last non-zero row in C(:,1:lastv).
+            LASTC = ILAZLR(M, LASTV, C, LDC)
+         END IF
+      END IF
+      IF( LASTC.EQ.0 ) THEN
+         RETURN
+      END IF
+      IF( APPLYLEFT ) THEN
+*
+*        Form  H * C
+*
+         IF( LASTV.EQ.FIRSTV ) THEN        
+*
+*           C(lastv,1:lastc) := ( 1 - tau ) * C(lastv,1:lastc)
+*
+            CALL ZSCAL( LASTC, ONE - TAU, C( LASTV, 1 ), LDC )
+         ELSE
+*
+*           w(1:lastc,1) := C(firstv:lastv-1,1:lastc)**T * v(firstv:lastv-1,1)
+*
+            CALL ZGEMV( 'Conjugate transpose', LASTV - FIRSTV, LASTC,
+     $                  ONE, C( FIRSTV, 1 ), LDC, V( I ), INCV, ZERO,
+     $                  WORK, 1 )
+*
+*           w(1:lastc,1) += C(lastv,1:lastc)**H * v(lastv,1)
+*
+            DO J = 1, LASTC
+               WORK( J ) = WORK( J ) + CONJG( C( LASTV, J ) )
+            END DO
+*
+*           C(lastv,1:lastc) += - tau * v(lastv,1) * w(1:lastc,1)**H
+*
+            DO J = 1, LASTC
+               C( LASTV, J ) = C( LASTV, J )
+     $                         - TAU * CONJG( WORK( J ) )
+            END DO
+*
+*           C(firstv:lastv-1,1:lastc) += - tau * v(firstv:lastv-1,1) * w(1:lastc,1)**H
+*
+            CALL ZGERC( LASTV - FIRSTV, LASTC, -TAU, V( I ), INCV,
+     $                  WORK, 1, C( FIRSTV, 1 ), LDC)
+         END IF
+      ELSE
+*
+*        Form  C * H
+*
+         IF( LASTV.EQ.FIRSTV ) THEN
+*
+*           C(1:lastc,lastv) := ( 1 - tau ) * C(1:lastc,lastv)
+*
+            CALL ZSCAL( LASTC, ONE - TAU, C( 1, LASTV ), 1 )
+         ELSE
+*
+*           w(1:lastc,1) := C(1:lastc,firstv:lastv-1) * v(firstv:lastv-1,1)
+*
+            CALL ZGEMV( 'No transpose', LASTC, LASTV - FIRSTV, ONE,
+     $                  C( 1, FIRSTV ), LDC, V( I ), INCV, ZERO,
+     $                  WORK, 1 )
+*
+*           w(1:lastc,1) += C(1:lastc,lastv) * v(lastv,1)
+*
+            CALL ZAXPY( LASTC, ONE, C( 1, LASTV ), 1, WORK, 1 )
+*
+*           C(1:lastc,lastv) += - tau * v(lastv,1) * w(1:lastc,1)
+*
+            CALL ZAXPY( LASTC, -TAU, WORK, 1, C( 1, LASTV ), 1 )
+*
+*           C(1:lastc,firstv:lastv-1) += - tau * w(1:lastc,1) * v(firstv:lastv-1)**H
+*
+            CALL ZGERC( LASTC, LASTV - FIRSTV, -TAU, WORK, 1, V( I ),
+     $                  INCV, C( 1, FIRSTV ), LDC )
+         END IF
+      END IF
+      RETURN
+*
+*     End of ZLARF1L
 *
       END
 *> \brief \b ZLARFB applies a block reflector or its conjugate-transpose to a general rectangular matrix.
@@ -47129,9 +48157,8 @@
 *>
 *>  The shape of the matrix V and the storage of the vectors which define
 *>  the H(i) is best illustrated by the following example with n = 5 and
-*>  k = 3. The elements equal to 1 are not stored; the corresponding
-*>  array elements are modified but restored on exit. The rest of the
-*>  array is not used.
+*>  k = 3. The triangular part of V (including its diagonal) is not
+*>  referenced.
 *>
 *>  DIRECT = 'F' and STOREV = 'C':         DIRECT = 'F' and STOREV = 'R':
 *>
@@ -47151,7 +48178,8 @@
 *> \endverbatim
 *>
 *  =====================================================================
-      SUBROUTINE ZLARFB( SIDE, TRANS, DIRECT, STOREV, M, N, K, V, LDV,
+      SUBROUTINE ZLARFB( SIDE, TRANS, DIRECT, STOREV, M, N, K, V,
+     $                   LDV,
      $                   T, LDT, C, LDC, WORK, LDWORK )
 *
 *  -- LAPACK auxiliary routine --
@@ -47224,20 +48252,23 @@
 *
 *              W := W * V1
 *
-               CALL ZTRMM( 'Right', 'Lower', 'No transpose', 'Unit', N,
+               CALL ZTRMM( 'Right', 'Lower', 'No transpose', 'Unit',
+     $                     N,
      $                     K, ONE, V, LDV, WORK, LDWORK )
                IF( M.GT.K ) THEN
 *
 *                 W := W + C2**H * V2
 *
-                  CALL ZGEMM( 'Conjugate transpose', 'No transpose', N,
+                  CALL ZGEMM( 'Conjugate transpose', 'No transpose',
+     $                        N,
      $                        K, M-K, ONE, C( K+1, 1 ), LDC,
      $                        V( K+1, 1 ), LDV, ONE, WORK, LDWORK )
                END IF
 *
 *              W := W * T**H  or  W * T
 *
-               CALL ZTRMM( 'Right', 'Upper', TRANST, 'Non-unit', N, K,
+               CALL ZTRMM( 'Right', 'Upper', TRANST, 'Non-unit', N,
+     $                     K,
      $                     ONE, T, LDT, WORK, LDWORK )
 *
 *              C := C - V * W**H
@@ -47278,13 +48309,15 @@
 *
 *              W := W * V1
 *
-               CALL ZTRMM( 'Right', 'Lower', 'No transpose', 'Unit', M,
+               CALL ZTRMM( 'Right', 'Lower', 'No transpose', 'Unit',
+     $                     M,
      $                     K, ONE, V, LDV, WORK, LDWORK )
                IF( N.GT.K ) THEN
 *
 *                 W := W + C2 * V2
 *
-                  CALL ZGEMM( 'No transpose', 'No transpose', M, K, N-K,
+                  CALL ZGEMM( 'No transpose', 'No transpose', M, K,
+     $                        N-K,
      $                        ONE, C( 1, K+1 ), LDC, V( K+1, 1 ), LDV,
      $                        ONE, WORK, LDWORK )
                END IF
@@ -47300,7 +48333,8 @@
 *
 *                 C2 := C2 - W * V2**H
 *
-                  CALL ZGEMM( 'No transpose', 'Conjugate transpose', M,
+                  CALL ZGEMM( 'No transpose', 'Conjugate transpose',
+     $                        M,
      $                        N-K, K, -ONE, WORK, LDWORK, V( K+1, 1 ),
      $                        LDV, ONE, C( 1, K+1 ), LDC )
                END IF
@@ -47335,26 +48369,30 @@
 *              W := C2**H
 *
                DO 70 J = 1, K
-                  CALL ZCOPY( N, C( M-K+J, 1 ), LDC, WORK( 1, J ), 1 )
+                  CALL ZCOPY( N, C( M-K+J, 1 ), LDC, WORK( 1, J ),
+     $                        1 )
                   CALL ZLACGV( N, WORK( 1, J ), 1 )
    70          CONTINUE
 *
 *              W := W * V2
 *
-               CALL ZTRMM( 'Right', 'Upper', 'No transpose', 'Unit', N,
+               CALL ZTRMM( 'Right', 'Upper', 'No transpose', 'Unit',
+     $                     N,
      $                     K, ONE, V( M-K+1, 1 ), LDV, WORK, LDWORK )
                IF( M.GT.K ) THEN
 *
 *                 W := W + C1**H * V1
 *
-                  CALL ZGEMM( 'Conjugate transpose', 'No transpose', N,
+                  CALL ZGEMM( 'Conjugate transpose', 'No transpose',
+     $                        N,
      $                        K, M-K, ONE, C, LDC, V, LDV, ONE, WORK,
      $                        LDWORK )
                END IF
 *
 *              W := W * T**H  or  W * T
 *
-               CALL ZTRMM( 'Right', 'Lower', TRANST, 'Non-unit', N, K,
+               CALL ZTRMM( 'Right', 'Lower', TRANST, 'Non-unit', N,
+     $                     K,
      $                     ONE, T, LDT, WORK, LDWORK )
 *
 *              C := C - V * W**H
@@ -47397,13 +48435,15 @@
 *
 *              W := W * V2
 *
-               CALL ZTRMM( 'Right', 'Upper', 'No transpose', 'Unit', M,
+               CALL ZTRMM( 'Right', 'Upper', 'No transpose', 'Unit',
+     $                     M,
      $                     K, ONE, V( N-K+1, 1 ), LDV, WORK, LDWORK )
                IF( N.GT.K ) THEN
 *
 *                 W := W + C1 * V1
 *
-                  CALL ZGEMM( 'No transpose', 'No transpose', M, K, N-K,
+                  CALL ZGEMM( 'No transpose', 'No transpose', M, K,
+     $                        N-K,
      $                        ONE, C, LDC, V, LDV, ONE, WORK, LDWORK )
                END IF
 *
@@ -47418,7 +48458,8 @@
 *
 *                 C1 := C1 - W * V1**H
 *
-                  CALL ZGEMM( 'No transpose', 'Conjugate transpose', M,
+                  CALL ZGEMM( 'No transpose', 'Conjugate transpose',
+     $                        M,
      $                        N-K, K, -ONE, WORK, LDWORK, V, LDV, ONE,
      $                        C, LDC )
                END IF
@@ -47476,7 +48517,8 @@
 *
 *              W := W * T**H  or  W * T
 *
-               CALL ZTRMM( 'Right', 'Upper', TRANST, 'Non-unit', N, K,
+               CALL ZTRMM( 'Right', 'Upper', TRANST, 'Non-unit', N,
+     $                     K,
      $                     ONE, T, LDT, WORK, LDWORK )
 *
 *              C := C - V**H * W**H
@@ -47493,7 +48535,8 @@
 *
 *              W := W * V1
 *
-               CALL ZTRMM( 'Right', 'Upper', 'No transpose', 'Unit', N,
+               CALL ZTRMM( 'Right', 'Upper', 'No transpose', 'Unit',
+     $                     N,
      $                     K, ONE, V, LDV, WORK, LDWORK )
 *
 *              C1 := C1 - W**H
@@ -47524,7 +48567,8 @@
 *
 *                 W := W + C2 * V2**H
 *
-                  CALL ZGEMM( 'No transpose', 'Conjugate transpose', M,
+                  CALL ZGEMM( 'No transpose', 'Conjugate transpose',
+     $                        M,
      $                        K, N-K, ONE, C( 1, K+1 ), LDC,
      $                        V( 1, K+1 ), LDV, ONE, WORK, LDWORK )
                END IF
@@ -47540,14 +48584,16 @@
 *
 *                 C2 := C2 - W * V2
 *
-                  CALL ZGEMM( 'No transpose', 'No transpose', M, N-K, K,
+                  CALL ZGEMM( 'No transpose', 'No transpose', M, N-K,
+     $                        K,
      $                        -ONE, WORK, LDWORK, V( 1, K+1 ), LDV, ONE,
      $                        C( 1, K+1 ), LDC )
                END IF
 *
 *              W := W * V1
 *
-               CALL ZTRMM( 'Right', 'Upper', 'No transpose', 'Unit', M,
+               CALL ZTRMM( 'Right', 'Upper', 'No transpose', 'Unit',
+     $                     M,
      $                     K, ONE, V, LDV, WORK, LDWORK )
 *
 *              C1 := C1 - W
@@ -47575,7 +48621,8 @@
 *              W := C2**H
 *
                DO 190 J = 1, K
-                  CALL ZCOPY( N, C( M-K+J, 1 ), LDC, WORK( 1, J ), 1 )
+                  CALL ZCOPY( N, C( M-K+J, 1 ), LDC, WORK( 1, J ),
+     $                        1 )
                   CALL ZLACGV( N, WORK( 1, J ), 1 )
   190          CONTINUE
 *
@@ -47595,7 +48642,8 @@
 *
 *              W := W * T**H  or  W * T
 *
-               CALL ZTRMM( 'Right', 'Lower', TRANST, 'Non-unit', N, K,
+               CALL ZTRMM( 'Right', 'Lower', TRANST, 'Non-unit', N,
+     $                     K,
      $                     ONE, T, LDT, WORK, LDWORK )
 *
 *              C := C - V**H * W**H
@@ -47611,7 +48659,8 @@
 *
 *              W := W * V2
 *
-               CALL ZTRMM( 'Right', 'Lower', 'No transpose', 'Unit', N,
+               CALL ZTRMM( 'Right', 'Lower', 'No transpose', 'Unit',
+     $                     N,
      $                     K, ONE, V( 1, M-K+1 ), LDV, WORK, LDWORK )
 *
 *              C2 := C2 - W**H
@@ -47644,7 +48693,8 @@
 *
 *                 W := W + C1 * V1**H
 *
-                  CALL ZGEMM( 'No transpose', 'Conjugate transpose', M,
+                  CALL ZGEMM( 'No transpose', 'Conjugate transpose',
+     $                        M,
      $                        K, N-K, ONE, C, LDC, V, LDV, ONE, WORK,
      $                        LDWORK )
                END IF
@@ -47660,13 +48710,15 @@
 *
 *                 C1 := C1 - W * V1
 *
-                  CALL ZGEMM( 'No transpose', 'No transpose', M, N-K, K,
+                  CALL ZGEMM( 'No transpose', 'No transpose', M, N-K,
+     $                        K,
      $                        -ONE, WORK, LDWORK, V, LDV, ONE, C, LDC )
                END IF
 *
 *              W := W * V2
 *
-               CALL ZTRMM( 'Right', 'Lower', 'No transpose', 'Unit', M,
+               CALL ZTRMM( 'Right', 'Lower', 'No transpose', 'Unit',
+     $                     M,
      $                     K, ONE, V( 1, N-K+1 ), LDV, WORK, LDWORK )
 *
 *              C1 := C1 - W
@@ -47907,7 +48959,7 @@
 *  Definition:
 *  ===========
 *
-*       SUBROUTINE ZLARFT( DIRECT, STOREV, N, K, V, LDV, TAU, T, LDT )
+*       RECURSIVE SUBROUTINE ZLARFT( DIRECT, STOREV, N, K, V, LDV, TAU, T, LDT )
 *
 *       .. Scalar Arguments ..
 *       CHARACTER          DIRECT, STOREV
@@ -48048,169 +49100,477 @@
 *> \endverbatim
 *>
 *  =====================================================================
-      SUBROUTINE ZLARFT( DIRECT, STOREV, N, K, V, LDV, TAU, T, LDT )
+      RECURSIVE SUBROUTINE ZLARFT( DIRECT, STOREV, N, K, V, LDV,
+     $                             TAU, T, LDT )
 *
 *  -- LAPACK auxiliary routine --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
 *
-*     .. Scalar Arguments ..
-      CHARACTER          DIRECT, STOREV
-      INTEGER            K, LDT, LDV, N
+*        .. Scalar Arguments
+*
+      CHARACTER         DIRECT, STOREV
+      INTEGER           K, LDT, LDV, N
 *     ..
 *     .. Array Arguments ..
-      COMPLEX*16         T( LDT, * ), TAU( * ), V( LDV, * )
-*     ..
 *
-*  =====================================================================
+      COMPLEX*16        T( LDT, * ), TAU( * ), V( LDV, * )
+*     ..
 *
 *     .. Parameters ..
-      COMPLEX*16         ONE, ZERO
-      PARAMETER          ( ONE = ( 1.0D+0, 0.0D+0 ),
-     $                   ZERO = ( 0.0D+0, 0.0D+0 ) )
-*     ..
+*
+      COMPLEX*16        ONE, NEG_ONE, ZERO
+      PARAMETER(ONE=1.0D+0, ZERO = 0.0D+0, NEG_ONE=-1.0D+0)
+*
 *     .. Local Scalars ..
-      INTEGER            I, J, PREVLASTV, LASTV
-*     ..
+*
+      INTEGER           I,J,L
+      LOGICAL           QR,LQ,QL,DIRF,COLV
+*
 *     .. External Subroutines ..
-      EXTERNAL           ZGEMV, ZTRMV, ZGEMM
-*     ..
-*     .. External Functions ..
-      LOGICAL            LSAME
-      EXTERNAL           LSAME
+*
+      EXTERNAL          ZTRMM,ZGEMM,ZLACPY
+*
+*     .. External Functions..
+*
+      LOGICAL           LSAME
+      EXTERNAL          LSAME
+*
+*     .. Intrinsic Functions..
+*
+      INTRINSIC         CONJG
+*     
+*     The general scheme used is inspired by the approach inside DGEQRT3
+*     which was (at the time of writing this code):
+*     Based on the algorithm of Elmroth and Gustavson,
+*     IBM J. Res. Develop. Vol 44 No. 4 July 2000.
 *     ..
 *     .. Executable Statements ..
 *
 *     Quick return if possible
 *
-      IF( N.EQ.0 )
-     $   RETURN
-*
-      IF( LSAME( DIRECT, 'F' ) ) THEN
-         PREVLASTV = N
-         DO I = 1, K
-            PREVLASTV = MAX( PREVLASTV, I )
-            IF( TAU( I ).EQ.ZERO ) THEN
-*
-*              H(i)  =  I
-*
-               DO J = 1, I
-                  T( J, I ) = ZERO
-               END DO
-            ELSE
-*
-*              general case
-*
-               IF( LSAME( STOREV, 'C' ) ) THEN
-*                 Skip any trailing zeros.
-                  DO LASTV = N, I+1, -1
-                     IF( V( LASTV, I ).NE.ZERO ) EXIT
-                  END DO
-                  DO J = 1, I-1
-                     T( J, I ) = -TAU( I ) * CONJG( V( I , J ) )
-                  END DO
-                  J = MIN( LASTV, PREVLASTV )
-*
-*                 T(1:i-1,i) := - tau(i) * V(i:j,1:i-1)**H * V(i:j,i)
-*
-                  CALL ZGEMV( 'Conjugate transpose', J-I, I-1,
-     $                        -TAU( I ), V( I+1, 1 ), LDV,
-     $                        V( I+1, I ), 1, ONE, T( 1, I ), 1 )
-               ELSE
-*                 Skip any trailing zeros.
-                  DO LASTV = N, I+1, -1
-                     IF( V( I, LASTV ).NE.ZERO ) EXIT
-                  END DO
-                  DO J = 1, I-1
-                     T( J, I ) = -TAU( I ) * V( J , I )
-                  END DO
-                  J = MIN( LASTV, PREVLASTV )
-*
-*                 T(1:i-1,i) := - tau(i) * V(1:i-1,i:j) * V(i,i:j)**H
-*
-                  CALL ZGEMM( 'N', 'C', I-1, 1, J-I, -TAU( I ),
-     $                        V( 1, I+1 ), LDV, V( I, I+1 ), LDV,
-     $                        ONE, T( 1, I ), LDT )
-               END IF
-*
-*              T(1:i-1,i) := T(1:i-1,1:i-1) * T(1:i-1,i)
-*
-               CALL ZTRMV( 'Upper', 'No transpose', 'Non-unit', I-1, T,
-     $                     LDT, T( 1, I ), 1 )
-               T( I, I ) = TAU( I )
-               IF( I.GT.1 ) THEN
-                  PREVLASTV = MAX( PREVLASTV, LASTV )
-               ELSE
-                  PREVLASTV = LASTV
-               END IF
-             END IF
-         END DO
-      ELSE
-         PREVLASTV = 1
-         DO I = K, 1, -1
-            IF( TAU( I ).EQ.ZERO ) THEN
-*
-*              H(i)  =  I
-*
-               DO J = I, K
-                  T( J, I ) = ZERO
-               END DO
-            ELSE
-*
-*              general case
-*
-               IF( I.LT.K ) THEN
-                  IF( LSAME( STOREV, 'C' ) ) THEN
-*                    Skip any leading zeros.
-                     DO LASTV = 1, I-1
-                        IF( V( LASTV, I ).NE.ZERO ) EXIT
-                     END DO
-                     DO J = I+1, K
-                        T( J, I ) = -TAU( I ) * CONJG( V( N-K+I , J ) )
-                     END DO
-                     J = MAX( LASTV, PREVLASTV )
-*
-*                    T(i+1:k,i) = -tau(i) * V(j:n-k+i,i+1:k)**H * V(j:n-k+i,i)
-*
-                     CALL ZGEMV( 'Conjugate transpose', N-K+I-J, K-I,
-     $                           -TAU( I ), V( J, I+1 ), LDV, V( J, I ),
-     $                           1, ONE, T( I+1, I ), 1 )
-                  ELSE
-*                    Skip any leading zeros.
-                     DO LASTV = 1, I-1
-                        IF( V( I, LASTV ).NE.ZERO ) EXIT
-                     END DO
-                     DO J = I+1, K
-                        T( J, I ) = -TAU( I ) * V( J, N-K+I )
-                     END DO
-                     J = MAX( LASTV, PREVLASTV )
-*
-*                    T(i+1:k,i) = -tau(i) * V(i+1:k,j:n-k+i) * V(i,j:n-k+i)**H
-*
-                     CALL ZGEMM( 'N', 'C', K-I, 1, N-K+I-J, -TAU( I ),
-     $                           V( I+1, J ), LDV, V( I, J ), LDV,
-     $                           ONE, T( I+1, I ), LDT )
-                  END IF
-*
-*                 T(i+1:k,i) := T(i+1:k,i+1:k) * T(i+1:k,i)
-*
-                  CALL ZTRMV( 'Lower', 'No transpose', 'Non-unit', K-I,
-     $                        T( I+1, I+1 ), LDT, T( I+1, I ), 1 )
-                  IF( I.GT.1 ) THEN
-                     PREVLASTV = MIN( PREVLASTV, LASTV )
-                  ELSE
-                     PREVLASTV = LASTV
-                  END IF
-               END IF
-               T( I, I ) = TAU( I )
-            END IF
-         END DO
+      IF(N.EQ.0.OR.K.EQ.0) THEN
+         RETURN
       END IF
-      RETURN
 *
-*     End of ZLARFT
+*     Base case
 *
-      END
+      IF(N.EQ.1.OR.K.EQ.1) THEN
+         T(1,1) = TAU(1)
+         RETURN
+      END IF
+*
+*     Beginning of executable statements
+*
+      L = K / 2
+*
+*     Determine what kind of Q we need to compute
+*     We assume that if the user doesn't provide 'F' for DIRECT,
+*     then they meant to provide 'B' and if they don't provide
+*     'C' for STOREV, then they meant to provide 'R'
+*
+      DIRF = LSAME(DIRECT,'F')
+      COLV = LSAME(STOREV,'C')
+*
+*     QR happens when we have forward direction in column storage
+*
+      QR = DIRF.AND.COLV
+*
+*     LQ happens when we have forward direction in row storage
+*
+      LQ = DIRF.AND.(.NOT.COLV)
+*
+*     QL happens when we have backward direction in column storage
+*
+      QL = (.NOT.DIRF).AND.COLV
+*
+*     The last case is RQ. Due to how we structured this, if the
+*     above 3 are false, then RQ must be true, so we never store 
+*     this
+*     RQ happens when we have backward direction in row storage
+*     RQ = (.NOT.DIRF).AND.(.NOT.COLV)
+*
+      IF(QR) THEN
+*
+*        Break V apart into 6 components
+*
+*        V = |---------------|
+*            |V_{1,1} 0      |
+*            |V_{2,1} V_{2,2}|
+*            |V_{3,1} V_{3,2}|
+*            |---------------|
+*
+*        V_{1,1}\in\C^{l,l}      unit lower triangular
+*        V_{2,1}\in\C^{k-l,l}    rectangular
+*        V_{3,1}\in\C^{n-k,l}    rectangular
+*        
+*        V_{2,2}\in\C^{k-l,k-l}  unit lower triangular
+*        V_{3,2}\in\C^{n-k,k-l}  rectangular
+*
+*        We will construct the T matrix 
+*        T = |---------------|
+*            |T_{1,1} T_{1,2}|
+*            |0       T_{2,2}|
+*            |---------------|
+*
+*        T is the triangular factor obtained from block reflectors. 
+*        To motivate the structure, assume we have already computed T_{1,1}
+*        and T_{2,2}. Then collect the associated reflectors in V_1 and V_2
+*
+*        T_{1,1}\in\C^{l, l}     upper triangular
+*        T_{2,2}\in\C^{k-l, k-l} upper triangular
+*        T_{1,2}\in\C^{l, k-l}   rectangular
+*
+*        Where l = floor(k/2)
+*
+*        Then, consider the product:
+*        
+*        (I - V_1*T_{1,1}*V_1')*(I - V_2*T_{2,2}*V_2')
+*        = I - V_1*T_{1,1}*V_1' - V_2*T_{2,2}*V_2' + V_1*T_{1,1}*V_1'*V_2*T_{2,2}*V_2'
+*        
+*        Define T_{1,2} = -T_{1,1}*V_1'*V_2*T_{2,2}
+*        
+*        Then, we can define the matrix V as 
+*        V = |-------|
+*            |V_1 V_2|
+*            |-------|
+*        
+*        So, our product is equivalent to the matrix product
+*        I - V*T*V'
+*        This means, we can compute T_{1,1} and T_{2,2}, then use this information
+*        to compute T_{1,2}
+*
+*        Compute T_{1,1} recursively
+*
+         CALL ZLARFT(DIRECT, STOREV, N, L, V, LDV, TAU, T, LDT)
+*
+*        Compute T_{2,2} recursively
+*
+         CALL ZLARFT(DIRECT, STOREV, N-L, K-L, V(L+1, L+1), LDV, 
+     $               TAU(L+1), T(L+1, L+1), LDT)
+*
+*        Compute T_{1,2} 
+*        T_{1,2} = V_{2,1}'
+*
+         DO J = 1, L
+            DO I = 1, K-L
+               T(J, L+I) = CONJG(V(L+I, J))
+            END DO
+         END DO
+*
+*        T_{1,2} = T_{1,2}*V_{2,2}
+*
+         CALL ZTRMM('Right', 'Lower', 'No transpose', 'Unit', L,
+     $               K-L, ONE, V(L+1, L+1), LDV, T(1, L+1), LDT)
+
+*
+*        T_{1,2} = V_{3,1}'*V_{3,2} + T_{1,2}
+*        Note: We assume K <= N, and GEMM will do nothing if N=K
+*
+         CALL ZGEMM('Conjugate', 'No transpose', L, K-L, N-K, ONE, 
+     $               V(K+1, 1), LDV, V(K+1, L+1), LDV, ONE, 
+     $               T(1, L+1), LDT)
+*
+*        At this point, we have that T_{1,2} = V_1'*V_2
+*        All that is left is to pre and post multiply by -T_{1,1} and T_{2,2}
+*        respectively.
+*
+*        T_{1,2} = -T_{1,1}*T_{1,2}
+*
+         CALL ZTRMM('Left', 'Upper', 'No transpose', 'Non-unit', L,
+     $               K-L, NEG_ONE, T, LDT, T(1, L+1), LDT)
+*
+*        T_{1,2} = T_{1,2}*T_{2,2}
+*
+         CALL ZTRMM('Right', 'Upper', 'No transpose', 'Non-unit', L, 
+     $               K-L, ONE, T(L+1, L+1), LDT, T(1, L+1), LDT)
+
+      ELSE IF(LQ) THEN
+*
+*        Break V apart into 6 components
+*
+*        V = |----------------------|
+*            |V_{1,1} V_{1,2} V{1,3}|
+*            |0       V_{2,2} V{2,3}|
+*            |----------------------|
+*
+*        V_{1,1}\in\C^{l,l}      unit upper triangular
+*        V_{1,2}\in\C^{l,k-l}    rectangular
+*        V_{1,3}\in\C^{l,n-k}    rectangular
+*        
+*        V_{2,2}\in\C^{k-l,k-l}  unit upper triangular
+*        V_{2,3}\in\C^{k-l,n-k}  rectangular
+*
+*        Where l = floor(k/2)
+*
+*        We will construct the T matrix 
+*        T = |---------------|
+*            |T_{1,1} T_{1,2}|
+*            |0       T_{2,2}|
+*            |---------------|
+*
+*        T is the triangular factor obtained from block reflectors. 
+*        To motivate the structure, assume we have already computed T_{1,1}
+*        and T_{2,2}. Then collect the associated reflectors in V_1 and V_2
+*
+*        T_{1,1}\in\C^{l, l}         upper triangular
+*        T_{2,2}\in\C^{k-l, k-l}     upper triangular
+*        T_{1,2}\in\C^{l, k-l}       rectangular
+*
+*        Then, consider the product:
+*        
+*        (I - V_1'*T_{1,1}*V_1)*(I - V_2'*T_{2,2}*V_2)
+*        = I - V_1'*T_{1,1}*V_1 - V_2'*T_{2,2}*V_2 + V_1'*T_{1,1}*V_1*V_2'*T_{2,2}*V_2
+*        
+*        Define T_{1,2} = -T_{1,1}*V_1*V_2'*T_{2,2}
+*        
+*        Then, we can define the matrix V as 
+*        V = |---|
+*            |V_1|
+*            |V_2|
+*            |---|
+*        
+*        So, our product is equivalent to the matrix product
+*        I - V'*T*V
+*        This means, we can compute T_{1,1} and T_{2,2}, then use this information
+*        to compute T_{1,2}
+*
+*        Compute T_{1,1} recursively
+*
+         CALL ZLARFT(DIRECT, STOREV, N, L, V, LDV, TAU, T, LDT)
+*
+*        Compute T_{2,2} recursively
+*
+         CALL ZLARFT(DIRECT, STOREV, N-L, K-L, V(L+1, L+1), LDV, 
+     $               TAU(L+1), T(L+1, L+1), LDT)
+
+*
+*        Compute T_{1,2}
+*        T_{1,2} = V_{1,2}
+*
+         CALL ZLACPY('All', L, K-L, V(1, L+1), LDV, T(1, L+1), LDT)
+*
+*        T_{1,2} = T_{1,2}*V_{2,2}'
+*
+         CALL ZTRMM('Right', 'Upper', 'Conjugate', 'Unit', L, K-L,
+     $               ONE, V(L+1, L+1), LDV, T(1, L+1), LDT)
+
+*
+*        T_{1,2} = V_{1,3}*V_{2,3}' + T_{1,2}
+*        Note: We assume K <= N, and GEMM will do nothing if N=K
+*
+         CALL ZGEMM('No transpose', 'Conjugate', L, K-L, N-K, ONE,
+     $               V(1, K+1), LDV, V(L+1, K+1), LDV, ONE,
+     $               T(1, L+1), LDT)
+*
+*        At this point, we have that T_{1,2} = V_1*V_2'
+*        All that is left is to pre and post multiply by -T_{1,1} and T_{2,2}
+*        respectively.
+*
+*        T_{1,2} = -T_{1,1}*T_{1,2}
+*
+         CALL ZTRMM('Left', 'Upper', 'No transpose', 'Non-unit', L,
+     $               K-L, NEG_ONE, T, LDT, T(1, L+1), LDT)
+
+*
+*        T_{1,2} = T_{1,2}*T_{2,2}
+*
+         CALL ZTRMM('Right', 'Upper', 'No transpose', 'Non-unit', L,
+     $               K-L, ONE, T(L+1, L+1), LDT, T(1, L+1), LDT)
+      ELSE IF(QL) THEN
+*
+*        Break V apart into 6 components
+*
+*        V = |---------------|
+*            |V_{1,1} V_{1,2}|
+*            |V_{2,1} V_{2,2}|
+*            |0       V_{3,2}|
+*            |---------------|
+*
+*        V_{1,1}\in\C^{n-k,k-l}  rectangular
+*        V_{2,1}\in\C^{k-l,k-l}  unit upper triangular
+*        
+*        V_{1,2}\in\C^{n-k,l}    rectangular
+*        V_{2,2}\in\C^{k-l,l}    rectangular
+*        V_{3,2}\in\C^{l,l}      unit upper triangular
+*
+*        We will construct the T matrix 
+*        T = |---------------|
+*            |T_{1,1} 0      |
+*            |T_{2,1} T_{2,2}|
+*            |---------------|
+*
+*        T is the triangular factor obtained from block reflectors. 
+*        To motivate the structure, assume we have already computed T_{1,1}
+*        and T_{2,2}. Then collect the associated reflectors in V_1 and V_2
+*
+*        T_{1,1}\in\C^{k-l, k-l} non-unit lower triangular
+*        T_{2,2}\in\C^{l, l}     non-unit lower triangular
+*        T_{2,1}\in\C^{k-l, l}   rectangular
+*
+*        Where l = floor(k/2)
+*
+*        Then, consider the product:
+*        
+*        (I - V_2*T_{2,2}*V_2')*(I - V_1*T_{1,1}*V_1')
+*        = I - V_2*T_{2,2}*V_2' - V_1*T_{1,1}*V_1' + V_2*T_{2,2}*V_2'*V_1*T_{1,1}*V_1'
+*        
+*        Define T_{2,1} = -T_{2,2}*V_2'*V_1*T_{1,1}
+*        
+*        Then, we can define the matrix V as 
+*        V = |-------|
+*            |V_1 V_2|
+*            |-------|
+*        
+*        So, our product is equivalent to the matrix product
+*        I - V*T*V'
+*        This means, we can compute T_{1,1} and T_{2,2}, then use this information
+*        to compute T_{2,1}
+*
+*        Compute T_{1,1} recursively
+*
+         CALL ZLARFT(DIRECT, STOREV, N-L, K-L, V, LDV, TAU, T, LDT)
+*
+*        Compute T_{2,2} recursively
+*
+         CALL ZLARFT(DIRECT, STOREV, N, L, V(1, K-L+1), LDV,
+     $               TAU(K-L+1), T(K-L+1, K-L+1), LDT)
+*
+*        Compute T_{2,1}
+*        T_{2,1} = V_{2,2}'
+*
+         DO J = 1, K-L
+            DO I = 1, L
+               T(K-L+I, J) = CONJG(V(N-K+J, K-L+I))
+            END DO
+         END DO
+*
+*        T_{2,1} = T_{2,1}*V_{2,1}
+*
+         CALL ZTRMM('Right', 'Upper', 'No transpose', 'Unit', L,
+     $               K-L, ONE, V(N-K+1, 1), LDV, T(K-L+1, 1), LDT)
+
+*
+*        T_{2,1} = V_{2,2}'*V_{2,1} + T_{2,1}
+*        Note: We assume K <= N, and GEMM will do nothing if N=K
+*
+         CALL ZGEMM('Conjugate', 'No transpose', L, K-L, N-K, ONE,
+     $               V(1, K-L+1), LDV, V, LDV, ONE, T(K-L+1, 1),
+     $               LDT)
+*
+*        At this point, we have that T_{2,1} = V_2'*V_1
+*        All that is left is to pre and post multiply by -T_{2,2} and T_{1,1}
+*        respectively.
+*
+*        T_{2,1} = -T_{2,2}*T_{2,1}
+*
+         CALL ZTRMM('Left', 'Lower', 'No transpose', 'Non-unit', L,
+     $               K-L, NEG_ONE, T(K-L+1, K-L+1), LDT,
+     $               T(K-L+1, 1), LDT)
+*
+*        T_{2,1} = T_{2,1}*T_{1,1}
+*
+         CALL ZTRMM('Right', 'Lower', 'No transpose', 'Non-unit', L,
+     $               K-L, ONE, T, LDT, T(K-L+1, 1), LDT)
+      ELSE
+*
+*        Else means RQ case
+*
+*        Break V apart into 6 components
+*
+*        V = |-----------------------|
+*            |V_{1,1} V_{1,2} 0      |
+*            |V_{2,1} V_{2,2} V_{2,3}|
+*            |-----------------------|
+*
+*        V_{1,1}\in\C^{k-l,n-k}  rectangular
+*        V_{1,2}\in\C^{k-l,k-l}  unit lower triangular
+*
+*        V_{2,1}\in\C^{l,n-k}    rectangular
+*        V_{2,2}\in\C^{l,k-l}    rectangular
+*        V_{2,3}\in\C^{l,l}      unit lower triangular
+*
+*        We will construct the T matrix 
+*        T = |---------------|
+*            |T_{1,1} 0      |
+*            |T_{2,1} T_{2,2}|
+*            |---------------|
+*
+*        T is the triangular factor obtained from block reflectors. 
+*        To motivate the structure, assume we have already computed T_{1,1}
+*        and T_{2,2}. Then collect the associated reflectors in V_1 and V_2
+*
+*        T_{1,1}\in\C^{k-l, k-l} non-unit lower triangular
+*        T_{2,2}\in\C^{l, l}     non-unit lower triangular
+*        T_{2,1}\in\C^{k-l, l}   rectangular
+*
+*        Where l = floor(k/2)
+*
+*        Then, consider the product:
+*        
+*        (I - V_2'*T_{2,2}*V_2)*(I - V_1'*T_{1,1}*V_1)
+*        = I - V_2'*T_{2,2}*V_2 - V_1'*T_{1,1}*V_1 + V_2'*T_{2,2}*V_2*V_1'*T_{1,1}*V_1
+*        
+*        Define T_{2,1} = -T_{2,2}*V_2*V_1'*T_{1,1}
+*        
+*        Then, we can define the matrix V as 
+*        V = |---|
+*            |V_1|
+*            |V_2|
+*            |---|
+*        
+*        So, our product is equivalent to the matrix product
+*        I - V'*T*V
+*        This means, we can compute T_{1,1} and T_{2,2}, then use this information
+*        to compute T_{2,1}
+*
+*        Compute T_{1,1} recursively
+*
+         CALL ZLARFT(DIRECT, STOREV, N-L, K-L, V, LDV, TAU, T, LDT)
+*
+*        Compute T_{2,2} recursively
+*
+         CALL ZLARFT(DIRECT, STOREV, N, L, V(K-L+1, 1), LDV,
+     $               TAU(K-L+1), T(K-L+1, K-L+1), LDT)
+*
+*        Compute T_{2,1}
+*        T_{2,1} = V_{2,2}
+*
+         CALL ZLACPY('All', L, K-L, V(K-L+1, N-K+1), LDV,
+     $               T(K-L+1, 1), LDT)
+
+*
+*        T_{2,1} = T_{2,1}*V_{1,2}'
+*
+         CALL ZTRMM('Right', 'Lower', 'Conjugate', 'Unit', L, K-L,
+     $               ONE, V(1, N-K+1), LDV, T(K-L+1, 1), LDT)
+
+*
+*        T_{2,1} = V_{2,1}*V_{1,1}' + T_{2,1} 
+*        Note: We assume K <= N, and GEMM will do nothing if N=K
+*
+         CALL ZGEMM('No transpose', 'Conjugate', L, K-L, N-K, ONE, 
+     $               V(K-L+1, 1), LDV, V, LDV, ONE, T(K-L+1, 1),
+     $               LDT)
+
+*
+*        At this point, we have that T_{2,1} = V_2*V_1'
+*        All that is left is to pre and post multiply by -T_{2,2} and T_{1,1}
+*        respectively.
+*
+*        T_{2,1} = -T_{2,2}*T_{2,1}
+*
+         CALL ZTRMM('Left', 'Lower', 'No tranpose', 'Non-unit', L,
+     $               K-L, NEG_ONE, T(K-L+1, K-L+1), LDT, 
+     $               T(K-L+1, 1), LDT)
+
+*
+*        T_{2,1} = T_{2,1}*T_{1,1}
+*
+         CALL ZTRMM('Right', 'Lower', 'No tranpose', 'Non-unit', L,
+     $               K-L, ONE, T, LDT, T(K-L+1, 1), LDT)
+      END IF
+      END SUBROUTINE
 *> \brief \b ZLARFX applies an elementary reflector to a general rectangular matrix, with loop unrolling when the reflector has order ≤ 10.
 *
 *  =========== DOCUMENTATION ===========
@@ -49049,7 +50409,8 @@
 *> \ingroup lascl
 *
 *  =====================================================================
-      SUBROUTINE ZLASCL( TYPE, KL, KU, CFROM, CTO, M, N, A, LDA, INFO )
+      SUBROUTINE ZLASCL( TYPE, KL, KU, CFROM, CTO, M, N, A, LDA,
+     $                   INFO )
 *
 *  -- LAPACK auxiliary routine --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
@@ -49695,12 +51056,14 @@
 *     Test the input parameters
 *
       INFO = 0
-      IF( .NOT.( LSAME( SIDE, 'L' ) .OR. LSAME( SIDE, 'R' ) ) ) THEN
+      IF( .NOT.( LSAME( SIDE, 'L' ) .OR.
+     $    LSAME( SIDE, 'R' ) ) ) THEN
          INFO = 1
       ELSE IF( .NOT.( LSAME( PIVOT, 'V' ) .OR. LSAME( PIVOT,
      $         'T' ) .OR. LSAME( PIVOT, 'B' ) ) ) THEN
          INFO = 2
-      ELSE IF( .NOT.( LSAME( DIRECT, 'F' ) .OR. LSAME( DIRECT, 'B' ) ) )
+      ELSE IF( .NOT.( LSAME( DIRECT, 'F' ) .OR.
+     $         LSAME( DIRECT, 'B' ) ) )
      $          THEN
          INFO = 3
       ELSE IF( M.LT.0 ) THEN
@@ -50257,7 +51620,8 @@
 *> \endverbatim
 *
 *  =====================================================================
-      SUBROUTINE ZLASYF( UPLO, N, NB, KB, A, LDA, IPIV, W, LDW, INFO )
+      SUBROUTINE ZLASYF( UPLO, N, NB, KB, A, LDA, IPIV, W, LDW,
+     $                   INFO )
 *
 *  -- LAPACK computational routine --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
@@ -50283,7 +51647,7 @@
       PARAMETER          ( CONE = ( 1.0D+0, 0.0D+0 ) )
 *     ..
 *     .. Local Scalars ..
-      INTEGER            IMAX, J, JB, JJ, JMAX, JP, K, KK, KKW, KP,
+      INTEGER            IMAX, J, JJ, JMAX, JP, K, KK, KKW, KP,
      $                   KSTEP, KW
       DOUBLE PRECISION   ABSAKK, ALPHA, COLMAX, ROWMAX
       COMPLEX*16         D11, D21, D22, R1, T, Z
@@ -50294,7 +51658,7 @@
       EXTERNAL           LSAME, IZAMAX
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           ZCOPY, ZGEMM, ZGEMV, ZSCAL, ZSWAP
+      EXTERNAL           ZCOPY, ZGEMMTR, ZGEMV, ZSCAL, ZSWAP
 *     ..
 *     .. Intrinsic Functions ..
       INTRINSIC          ABS, DBLE, DIMAG, MAX, MIN, SQRT
@@ -50336,7 +51700,8 @@
 *
          CALL ZCOPY( K, A( 1, K ), 1, W( 1, KW ), 1 )
          IF( K.LT.N )
-     $      CALL ZGEMV( 'No transpose', K, N-K, -CONE, A( 1, K+1 ), LDA,
+     $      CALL ZGEMV( 'No transpose', K, N-K, -CONE, A( 1, K+1 ),
+     $                  LDA,
      $                  W( K, KW+1 ), LDW, CONE, W( 1, KW ), 1 )
 *
          KSTEP = 1
@@ -50563,25 +51928,9 @@
 *
 *        A11 := A11 - U12*D*U12**T = A11 - U12*W**T
 *
-*        computing blocks of NB columns at a time
-*
-         DO 50 J = ( ( K-1 ) / NB )*NB + 1, 1, -NB
-            JB = MIN( NB, K-J+1 )
-*
-*           Update the upper triangle of the diagonal block
-*
-            DO 40 JJ = J, J + JB - 1
-               CALL ZGEMV( 'No transpose', JJ-J+1, N-K, -CONE,
-     $                     A( J, K+1 ), LDA, W( JJ, KW+1 ), LDW, CONE,
-     $                     A( J, JJ ), 1 )
-   40       CONTINUE
-*
-*           Update the rectangular superdiagonal block
-*
-            CALL ZGEMM( 'No transpose', 'Transpose', J-1, JB, N-K,
-     $                  -CONE, A( 1, K+1 ), LDA, W( J, KW+1 ), LDW,
-     $                  CONE, A( 1, J ), LDA )
-   50    CONTINUE
+         CALL ZGEMMTR( 'Upper', 'No transpose', 'Transpose', K, N-K,
+     $                 -CONE, A( 1, K+1 ), LDA, W( 1, KW+1 ), LDW,
+     $                 CONE, A( 1, 1 ), LDA )
 *
 *        Put U12 in standard form by partially undoing the interchanges
 *        in columns k+1:n looping backwards from k+1 to n
@@ -50631,7 +51980,8 @@
 *        Copy column K of A to column K of W and update it
 *
          CALL ZCOPY( N-K+1, A( K, K ), 1, W( K, K ), 1 )
-         CALL ZGEMV( 'No transpose', N-K+1, K-1, -CONE, A( K, 1 ), LDA,
+         CALL ZGEMV( 'No transpose', N-K+1, K-1, -CONE, A( K, 1 ),
+     $               LDA,
      $               W( K, 1 ), LDW, CONE, W( K, K ), 1 )
 *
          KSTEP = 1
@@ -50668,10 +52018,13 @@
 *
 *              Copy column IMAX to column K+1 of W and update it
 *
-               CALL ZCOPY( IMAX-K, A( IMAX, K ), LDA, W( K, K+1 ), 1 )
-               CALL ZCOPY( N-IMAX+1, A( IMAX, IMAX ), 1, W( IMAX, K+1 ),
+               CALL ZCOPY( IMAX-K, A( IMAX, K ), LDA, W( K, K+1 ),
      $                     1 )
-               CALL ZGEMV( 'No transpose', N-K+1, K-1, -CONE, A( K, 1 ),
+               CALL ZCOPY( N-IMAX+1, A( IMAX, IMAX ), 1, W( IMAX,
+     $                     K+1 ),
+     $                     1 )
+               CALL ZGEMV( 'No transpose', N-K+1, K-1, -CONE, A( K,
+     $                     1 ),
      $                     LDA, W( IMAX, 1 ), LDW, CONE, W( K, K+1 ),
      $                     1 )
 *
@@ -50730,7 +52083,8 @@
                CALL ZCOPY( KP-KK-1, A( KK+1, KK ), 1, A( KP, KK+1 ),
      $                     LDA )
                IF( KP.LT.N )
-     $            CALL ZCOPY( N-KP, A( KP+1, KK ), 1, A( KP+1, KP ), 1 )
+     $            CALL ZCOPY( N-KP, A( KP+1, KK ), 1, A( KP+1, KP ),
+     $                        1 )
 *
 *              Interchange rows KK and KP in first K-1 columns of A
 *              (columns K (or K and K+1 for 2-by-2 pivot) of A will be
@@ -50853,26 +52207,9 @@
 *
 *        A22 := A22 - L21*D*L21**T = A22 - L21*W**T
 *
-*        computing blocks of NB columns at a time
-*
-         DO 110 J = K, N, NB
-            JB = MIN( NB, N-J+1 )
-*
-*           Update the lower triangle of the diagonal block
-*
-            DO 100 JJ = J, J + JB - 1
-               CALL ZGEMV( 'No transpose', J+JB-JJ, K-1, -CONE,
-     $                     A( JJ, 1 ), LDA, W( JJ, 1 ), LDW, CONE,
-     $                     A( JJ, JJ ), 1 )
-  100       CONTINUE
-*
-*           Update the rectangular subdiagonal block
-*
-            IF( J+JB.LE.N )
-     $         CALL ZGEMM( 'No transpose', 'Transpose', N-J-JB+1, JB,
-     $                     K-1, -CONE, A( J+JB, 1 ), LDA, W( J, 1 ),
-     $                     LDW, CONE, A( J+JB, J ), LDA )
-  110    CONTINUE
+         CALL ZGEMMTR( 'Lower', 'No transpose', 'Transpose', N-K+1,
+     $                 K-1, -CONE, A( K, 1 ), LDA, W( K, 1 ), LDW,
+     $                 CONE, A( K, K ), LDA )
 *
 *        Put L21 in standard form by partially undoing the interchanges
 *        of rows in columns 1:k-1 looping backwards from k-1 to 1
@@ -51149,7 +52486,8 @@
 *> \endverbatim
 *>
 *  =====================================================================
-      SUBROUTINE ZLATBS( UPLO, TRANS, DIAG, NORMIN, N, KD, AB, LDAB, X,
+      SUBROUTINE ZLATBS( UPLO, TRANS, DIAG, NORMIN, N, KD, AB, LDAB,
+     $                   X,
      $                   SCALE, CNORM, INFO )
 *
 *  -- LAPACK auxiliary routine --
@@ -51185,7 +52523,8 @@
       INTEGER            IDAMAX, IZAMAX
       DOUBLE PRECISION   DLAMCH, DZASUM
       COMPLEX*16         ZDOTC, ZDOTU, ZLADIV
-      EXTERNAL           LSAME, IDAMAX, IZAMAX, DLAMCH, DZASUM, ZDOTC,
+      EXTERNAL           LSAME, IDAMAX, IZAMAX, DLAMCH, DZASUM,
+     $                   ZDOTC,
      $                   ZDOTU, ZLADIV
 *     ..
 *     .. External Subroutines ..
@@ -52103,7 +53442,8 @@
       COMPLEX*16         WORK( 4*MAXDIM ), XM( MAXDIM ), XP( MAXDIM )
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           ZAXPY, ZCOPY, ZGECON, ZGESC2, ZLASSQ, ZLASWP,
+      EXTERNAL           ZAXPY, ZCOPY, ZGECON, ZGESC2, ZLASSQ,
+     $                   ZLASWP,
      $                   ZSCAL
 *     ..
 *     .. External Functions ..
@@ -52135,7 +53475,8 @@
 *
             SPLUS = SPLUS + DBLE( ZDOTC( N-J, Z( J+1, J ), 1, Z( J+1,
      $              J ), 1 ) )
-            SMINU = DBLE( ZDOTC( N-J, Z( J+1, J ), 1, RHS( J+1 ), 1 ) )
+            SMINU = DBLE( ZDOTC( N-J, Z( J+1, J ), 1, RHS( J+1 ),
+     $                    1 ) )
             SPLUS = SPLUS*DBLE( RHS( J ) )
             IF( SPLUS.GT.SMINU ) THEN
                RHS( J ) = BP
@@ -52485,7 +53826,8 @@
       INTEGER            IDAMAX, IZAMAX
       DOUBLE PRECISION   DLAMCH, DZASUM
       COMPLEX*16         ZDOTC, ZDOTU, ZLADIV
-      EXTERNAL           LSAME, IDAMAX, IZAMAX, DLAMCH, DZASUM, ZDOTC,
+      EXTERNAL           LSAME, IDAMAX, IZAMAX, DLAMCH, DZASUM,
+     $                   ZDOTC,
      $                   ZDOTU, ZLADIV
 *     ..
 *     .. External Subroutines ..
@@ -52882,7 +54224,8 @@
 *                    Compute the update
 *                       x(1:j-1) := x(1:j-1) - x(j) * A(1:j-1,j)
 *
-                     CALL ZAXPY( J-1, -X( J )*TSCAL, AP( IP-J+1 ), 1, X,
+                     CALL ZAXPY( J-1, -X( J )*TSCAL, AP( IP-J+1 ), 1,
+     $                           X,
      $                           1 )
                      I = IZAMAX( J-1, X, 1 )
                      XMAX = CABS1( X( I ) )
@@ -53420,7 +54763,8 @@
       COMPLEX*16         ALPHA
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           ZAXPY, ZGEMV, ZHEMV, ZLACGV, ZLARFG, ZSCAL
+      EXTERNAL           ZAXPY, ZGEMV, ZHEMV, ZLACGV, ZLARFG,
+     $                   ZSCAL
 *     ..
 *     .. External Functions ..
       LOGICAL            LSAME
@@ -53453,7 +54797,8 @@
      $                     LDA, W( I, IW+1 ), LDW, ONE, A( 1, I ), 1 )
                CALL ZLACGV( N-I, W( I, IW+1 ), LDW )
                CALL ZLACGV( N-I, A( I, I+1 ), LDA )
-               CALL ZGEMV( 'No transpose', I, N-I, -ONE, W( 1, IW+1 ),
+               CALL ZGEMV( 'No transpose', I, N-I, -ONE, W( 1,
+     $                     IW+1 ),
      $                     LDW, A( I, I+1 ), LDA, ONE, A( 1, I ), 1 )
                CALL ZLACGV( N-I, A( I, I+1 ), LDA )
                A( I, I ) = DBLE( A( I, I ) )
@@ -53529,17 +54874,20 @@
                CALL ZGEMV( 'Conjugate transpose', N-I, I-1, ONE,
      $                     W( I+1, 1 ), LDW, A( I+1, I ), 1, ZERO,
      $                     W( 1, I ), 1 )
-               CALL ZGEMV( 'No transpose', N-I, I-1, -ONE, A( I+1, 1 ),
+               CALL ZGEMV( 'No transpose', N-I, I-1, -ONE, A( I+1,
+     $                     1 ),
      $                     LDA, W( 1, I ), 1, ONE, W( I+1, I ), 1 )
                CALL ZGEMV( 'Conjugate transpose', N-I, I-1, ONE,
      $                     A( I+1, 1 ), LDA, A( I+1, I ), 1, ZERO,
      $                     W( 1, I ), 1 )
-               CALL ZGEMV( 'No transpose', N-I, I-1, -ONE, W( I+1, 1 ),
+               CALL ZGEMV( 'No transpose', N-I, I-1, -ONE, W( I+1,
+     $                     1 ),
      $                     LDW, W( 1, I ), 1, ONE, W( I+1, I ), 1 )
                CALL ZSCAL( N-I, TAU( I ), W( I+1, I ), 1 )
                ALPHA = -HALF*TAU( I )*ZDOTC( N-I, W( I+1, I ), 1,
      $                 A( I+1, I ), 1 )
-               CALL ZAXPY( N-I, ALPHA, A( I+1, I ), 1, W( I+1, I ), 1 )
+               CALL ZAXPY( N-I, ALPHA, A( I+1, I ), 1, W( I+1, I ),
+     $                     1 )
             END IF
 *
    20    CONTINUE
@@ -53786,7 +55134,8 @@
 *> \endverbatim
 *>
 *  =====================================================================
-      SUBROUTINE ZLATRS( UPLO, TRANS, DIAG, NORMIN, N, A, LDA, X, SCALE,
+      SUBROUTINE ZLATRS( UPLO, TRANS, DIAG, NORMIN, N, A, LDA, X,
+     $                   SCALE,
      $                   CNORM, INFO )
 *
 *  -- LAPACK auxiliary routine --
@@ -53822,7 +55171,8 @@
       INTEGER            IDAMAX, IZAMAX
       DOUBLE PRECISION   DLAMCH, DZASUM
       COMPLEX*16         ZDOTC, ZDOTU, ZLADIV
-      EXTERNAL           LSAME, IDAMAX, IZAMAX, DLAMCH, DZASUM, ZDOTC,
+      EXTERNAL           LSAME, IDAMAX, IZAMAX, DLAMCH, DZASUM,
+     $                   ZDOTC,
      $                   ZDOTU, ZLADIV
 *     ..
 *     .. External Subroutines ..
@@ -54338,7 +55688,8 @@
                   IF( UPPER ) THEN
                      CSUMJ = ZDOTU( J-1, A( 1, J ), 1, X, 1 )
                   ELSE IF( J.LT.N ) THEN
-                     CSUMJ = ZDOTU( N-J, A( J+1, J ), 1, X( J+1 ), 1 )
+                     CSUMJ = ZDOTU( N-J, A( J+1, J ), 1, X( J+1 ),
+     $                              1 )
                   END IF
                ELSE
 *
@@ -54472,7 +55823,8 @@
                   IF( UPPER ) THEN
                      CSUMJ = ZDOTC( J-1, A( 1, J ), 1, X, 1 )
                   ELSE IF( J.LT.N ) THEN
-                     CSUMJ = ZDOTC( N-J, A( J+1, J ), 1, X( J+1 ), 1 )
+                     CSUMJ = ZDOTC( N-J, A( J+1, J ), 1, X( J+1 ),
+     $                              1 )
                   END IF
                ELSE
 *
@@ -54742,10 +56094,12 @@
          DO 10 I = 1, N
             AII = DBLE( A( I, I ) )
             IF( I.LT.N ) THEN
-               A( I, I ) = AII*AII + DBLE( ZDOTC( N-I, A( I, I+1 ), LDA,
+               A( I, I ) = AII*AII + DBLE( ZDOTC( N-I, A( I, I+1 ),
+     $            LDA,
      $                     A( I, I+1 ), LDA ) )
                CALL ZLACGV( N-I, A( I, I+1 ), LDA )
-               CALL ZGEMV( 'No transpose', I-1, N-I, ONE, A( 1, I+1 ),
+               CALL ZGEMV( 'No transpose', I-1, N-I, ONE, A( 1,
+     $                     I+1 ),
      $                     LDA, A( I, I+1 ), LDA, DCMPLX( AII ),
      $                     A( 1, I ), 1 )
                CALL ZLACGV( N-I, A( I, I+1 ), LDA )
@@ -54761,7 +56115,8 @@
          DO 20 I = 1, N
             AII = DBLE( A( I, I ) )
             IF( I.LT.N ) THEN
-               A( I, I ) = AII*AII + DBLE( ZDOTC( N-I, A( I+1, I ), 1,
+               A( I, I ) = AII*AII + DBLE( ZDOTC( N-I, A( I+1, I ),
+     $            1,
      $                     A( I+1, I ), 1 ) )
                CALL ZLACGV( I-1, A( I, 1 ), LDA )
                CALL ZGEMV( 'Conjugate transpose', N-I, I-1, ONE,
@@ -54983,7 +56338,8 @@
      $                     A( I, 1 ), LDA )
                CALL ZLAUU2( 'Lower', IB, A( I, I ), LDA, INFO )
                IF( I+IB.LE.N ) THEN
-                  CALL ZGEMM( 'Conjugate transpose', 'No transpose', IB,
+                  CALL ZGEMM( 'Conjugate transpose', 'No transpose',
+     $                        IB,
      $                        I-1, N-I-IB+1, CONE, A( I+IB, I ), LDA,
      $                        A( I+IB, 1 ), LDA, CONE, A( I, 1 ), LDA )
                   CALL ZHERK( 'Lower', 'Conjugate transpose', IB,
@@ -55441,7 +56797,8 @@
       EXTERNAL           LSAME, ILAENV
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           XERBLA, ZGEMM, ZHERK, ZPBTF2, ZPOTF2, ZTRSM
+      EXTERNAL           XERBLA, ZGEMM, ZHERK, ZPBTF2, ZPOTF2,
+     $                   ZTRSM
 *     ..
 *     .. Intrinsic Functions ..
       INTRINSIC          MIN
@@ -55538,14 +56895,16 @@
 *
 *                    Update A12
 *
-                     CALL ZTRSM( 'Left', 'Upper', 'Conjugate transpose',
+                     CALL ZTRSM( 'Left', 'Upper',
+     $                           'Conjugate transpose',
      $                           'Non-unit', IB, I2, CONE,
      $                           AB( KD+1, I ), LDAB-1,
      $                           AB( KD+1-IB, I+IB ), LDAB-1 )
 *
 *                    Update A22
 *
-                     CALL ZHERK( 'Upper', 'Conjugate transpose', I2, IB,
+                     CALL ZHERK( 'Upper', 'Conjugate transpose', I2,
+     $                           IB,
      $                           -ONE, AB( KD+1-IB, I+IB ), LDAB-1, ONE,
      $                           AB( KD+1, I+IB ), LDAB-1 )
                   END IF
@@ -55562,7 +56921,8 @@
 *
 *                    Update A13 (in the work array).
 *
-                     CALL ZTRSM( 'Left', 'Upper', 'Conjugate transpose',
+                     CALL ZTRSM( 'Left', 'Upper',
+     $                           'Conjugate transpose',
      $                           'Non-unit', IB, I3, CONE,
      $                           AB( KD+1, I ), LDAB-1, WORK, LDWORK )
 *
@@ -55577,7 +56937,8 @@
 *
 *                    Update A33
 *
-                     CALL ZHERK( 'Upper', 'Conjugate transpose', I3, IB,
+                     CALL ZHERK( 'Upper', 'Conjugate transpose', I3,
+     $                           IB,
      $                           -ONE, WORK, LDWORK, ONE,
      $                           AB( KD+1, I+KD ), LDAB-1 )
 *
@@ -55647,7 +57008,8 @@
 *
 *                    Update A22
 *
-                     CALL ZHERK( 'Lower', 'No transpose', I2, IB, -ONE,
+                     CALL ZHERK( 'Lower', 'No transpose', I2, IB,
+     $                           -ONE,
      $                           AB( 1+IB, I ), LDAB-1, ONE,
      $                           AB( 1, I+IB ), LDAB-1 )
                   END IF
@@ -55680,7 +57042,8 @@
 *
 *                    Update A33
 *
-                     CALL ZHERK( 'Lower', 'No transpose', I3, IB, -ONE,
+                     CALL ZHERK( 'Lower', 'No transpose', I3, IB,
+     $                           -ONE,
      $                           WORK, LDWORK, ONE, AB( 1, I+KD ),
      $                           LDAB-1 )
 *
@@ -55922,13 +57285,15 @@
 *
 *           Multiply by inv(U).
 *
-            CALL ZLATRS( 'Upper', 'No transpose', 'Non-unit', NORMIN, N,
+            CALL ZLATRS( 'Upper', 'No transpose', 'Non-unit', NORMIN,
+     $                   N,
      $                   A, LDA, WORK, SCALEU, RWORK, INFO )
          ELSE
 *
 *           Multiply by inv(L).
 *
-            CALL ZLATRS( 'Lower', 'No transpose', 'Non-unit', NORMIN, N,
+            CALL ZLATRS( 'Lower', 'No transpose', 'Non-unit', NORMIN,
+     $                   N,
      $                   A, LDA, WORK, SCALEL, RWORK, INFO )
             NORMIN = 'Y'
 *
@@ -56386,7 +57751,8 @@
       INTEGER            ISAVE( 3 )
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           XERBLA, ZAXPY, ZCOPY, ZHEMV, ZLACN2, ZPOTRS
+      EXTERNAL           XERBLA, ZAXPY, ZCOPY, ZHEMV, ZLACN2,
+     $                   ZPOTRS
 *     ..
 *     .. Intrinsic Functions ..
       INTRINSIC          ABS, DBLE, DIMAG, MAX
@@ -56459,7 +57825,8 @@
 *        Compute residual R = B - A * X
 *
          CALL ZCOPY( N, B( 1, J ), 1, WORK, 1 )
-         CALL ZHEMV( UPLO, N, -ONE, A, LDA, X( 1, J ), 1, ONE, WORK, 1 )
+         CALL ZHEMV( UPLO, N, -ONE, A, LDA, X( 1, J ), 1, ONE, WORK,
+     $               1 )
 *
 *        Compute componentwise relative backward error from formula
 *
@@ -56757,7 +58124,8 @@
 *     Test the input parameters.
 *
       INFO = 0
-      IF( .NOT.LSAME( UPLO, 'U' ) .AND. .NOT.LSAME( UPLO, 'L' ) ) THEN
+      IF( .NOT.LSAME( UPLO, 'U' ) .AND.
+     $    .NOT.LSAME( UPLO, 'L' ) ) THEN
          INFO = -1
       ELSE IF( N.LT.0 ) THEN
          INFO = -2
@@ -57090,7 +58458,8 @@
 *> \ingroup posvx
 *
 *  =====================================================================
-      SUBROUTINE ZPOSVX( FACT, UPLO, N, NRHS, A, LDA, AF, LDAF, EQUED,
+      SUBROUTINE ZPOSVX( FACT, UPLO, N, NRHS, A, LDA, AF, LDAF,
+     $                   EQUED,
      $                   S, B, LDB, X, LDX, RCOND, FERR, BERR, WORK,
      $                   RWORK, INFO )
 *
@@ -57126,7 +58495,8 @@
       EXTERNAL           LSAME, DLAMCH, ZLANHE
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           XERBLA, ZLACPY, ZLAQHE, ZPOCON, ZPOEQU, ZPORFS,
+      EXTERNAL           XERBLA, ZLACPY, ZLAQHE, ZPOCON, ZPOEQU,
+     $                   ZPORFS,
      $                   ZPOTRF, ZPOTRS
 *     ..
 *     .. Intrinsic Functions ..
@@ -57148,10 +58518,13 @@
 *
 *     Test the input parameters.
 *
-      IF( .NOT.NOFACT .AND. .NOT.EQUIL .AND. .NOT.LSAME( FACT, 'F' ) )
+      IF( .NOT.NOFACT .AND.
+     $    .NOT.EQUIL .AND.
+     $    .NOT.LSAME( FACT, 'F' ) )
      $     THEN
          INFO = -1
-      ELSE IF( .NOT.LSAME( UPLO, 'U' ) .AND. .NOT.LSAME( UPLO, 'L' ) )
+      ELSE IF( .NOT.LSAME( UPLO, 'U' ) .AND.
+     $         .NOT.LSAME( UPLO, 'L' ) )
      $          THEN
          INFO = -2
       ELSE IF( N.LT.0 ) THEN
@@ -57240,7 +58613,8 @@
 *
 *     Compute the reciprocal of the condition number of A.
 *
-      CALL ZPOCON( UPLO, N, AF, LDAF, ANORM, RCOND, WORK, RWORK, INFO )
+      CALL ZPOCON( UPLO, N, AF, LDAF, ANORM, RCOND, WORK, RWORK,
+     $             INFO )
 *
 *     Compute the solution matrix X.
 *
@@ -57480,7 +58854,8 @@
 *
 *           Compute L(J,J) and test for non-positive-definiteness.
 *
-            AJJ = DBLE( A( J, J ) ) - DBLE( ZDOTC( J-1, A( J, 1 ), LDA,
+            AJJ = DBLE( A( J, J ) ) - DBLE( ZDOTC( J-1, A( J, 1 ),
+     $                  LDA,
      $            A( J, 1 ), LDA ) )
             IF( AJJ.LE.ZERO.OR.DISNAN( AJJ ) ) THEN
                A( J, J ) = AJJ
@@ -57493,7 +58868,8 @@
 *
             IF( J.LT.N ) THEN
                CALL ZLACGV( J-1, A( J, 1 ), LDA )
-               CALL ZGEMV( 'No transpose', N-J, J-1, -CONE, A( J+1, 1 ),
+               CALL ZGEMV( 'No transpose', N-J, J-1, -CONE, A( J+1,
+     $                     1 ),
      $                     LDA, A( J, 1 ), LDA, CONE, A( J+1, J ), 1 )
                CALL ZLACGV( J-1, A( J, 1 ), LDA )
                CALL ZDSCAL( N-J, ONE / AJJ, A( J+1, J ), 1 )
@@ -57647,7 +59023,8 @@
       EXTERNAL           LSAME, ILAENV
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           XERBLA, ZGEMM, ZHERK, ZPOTRF2, ZTRSM
+      EXTERNAL           XERBLA, ZGEMM, ZHERK, ZPOTRF2,
+     $                   ZTRSM
 *     ..
 *     .. Intrinsic Functions ..
       INTRINSIC          MAX, MIN
@@ -57706,7 +59083,8 @@
 *
 *                 Compute the current block row.
 *
-                  CALL ZGEMM( 'Conjugate transpose', 'No transpose', JB,
+                  CALL ZGEMM( 'Conjugate transpose', 'No transpose',
+     $                        JB,
      $                        N-J-JB+1, J-1, -CONE, A( 1, J ), LDA,
      $                        A( 1, J+JB ), LDA, CONE, A( J, J+JB ),
      $                        LDA )
@@ -57739,7 +59117,8 @@
      $                        N-J-JB+1, JB, J-1, -CONE, A( J+JB, 1 ),
      $                        LDA, A( J, 1 ), LDA, CONE, A( J+JB, J ),
      $                        LDA )
-                  CALL ZTRSM( 'Right', 'Lower', 'Conjugate transpose',
+                  CALL ZTRSM( 'Right', 'Lower',
+     $                        'Conjugate transpose',
      $                        'Non-unit', N-J-JB+1, JB, CONE, A( J, J ),
      $                        LDA, A( J+JB, J ), LDA )
                END IF
@@ -58119,7 +59498,8 @@
 *     Test the input parameters.
 *
       INFO = 0
-      IF( .NOT.LSAME( UPLO, 'U' ) .AND. .NOT.LSAME( UPLO, 'L' ) ) THEN
+      IF( .NOT.LSAME( UPLO, 'U' ) .AND.
+     $    .NOT.LSAME( UPLO, 'L' ) ) THEN
          INFO = -1
       ELSE IF( N.LT.0 ) THEN
          INFO = -2
@@ -58325,7 +59705,8 @@
 *
 *        Solve U**H *X = B, overwriting B with X.
 *
-         CALL ZTRSM( 'Left', 'Upper', 'Conjugate transpose', 'Non-unit',
+         CALL ZTRSM( 'Left', 'Upper', 'Conjugate transpose',
+     $               'Non-unit',
      $               N, NRHS, ONE, A, LDA, B, LDB )
 *
 *        Solve U*X = B, overwriting B with X.
@@ -58343,7 +59724,8 @@
 *
 *        Solve L**H *X = B, overwriting B with X.
 *
-         CALL ZTRSM( 'Left', 'Lower', 'Conjugate transpose', 'Non-unit',
+         CALL ZTRSM( 'Left', 'Lower', 'Conjugate transpose',
+     $               'Non-unit',
      $               N, NRHS, ONE, A, LDA, B, LDB )
       END IF
 *
@@ -58468,7 +59850,8 @@
 *> \ingroup ppcon
 *
 *  =====================================================================
-      SUBROUTINE ZPPCON( UPLO, N, AP, ANORM, RCOND, WORK, RWORK, INFO )
+      SUBROUTINE ZPPCON( UPLO, N, AP, ANORM, RCOND, WORK, RWORK,
+     $                   INFO )
 *
 *  -- LAPACK computational routine --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
@@ -58565,13 +59948,15 @@
 *
 *           Multiply by inv(U).
 *
-            CALL ZLATPS( 'Upper', 'No transpose', 'Non-unit', NORMIN, N,
+            CALL ZLATPS( 'Upper', 'No transpose', 'Non-unit', NORMIN,
+     $                   N,
      $                   AP, WORK, SCALEU, RWORK, INFO )
          ELSE
 *
 *           Multiply by inv(L).
 *
-            CALL ZLATPS( 'Lower', 'No transpose', 'Non-unit', NORMIN, N,
+            CALL ZLATPS( 'Lower', 'No transpose', 'Non-unit', NORMIN,
+     $                   N,
      $                   AP, WORK, SCALEL, RWORK, INFO )
             NORMIN = 'Y'
 *
@@ -58790,7 +60175,8 @@
 *           Compute elements 1:J-1 of column J.
 *
             IF( J.GT.1 )
-     $         CALL ZTPSV( 'Upper', 'Conjugate transpose', 'Non-unit',
+     $         CALL ZTPSV( 'Upper', 'Conjugate transpose',
+     $                     'Non-unit',
      $                     J-1, AP, AP( JC ), 1 )
 *
 *           Compute U(J,J) and test for non-positive-definiteness.
@@ -59016,9 +60402,11 @@
          JJ = 1
          DO 20 J = 1, N
             JJN = JJ + N - J + 1
-            AP( JJ ) = DBLE( ZDOTC( N-J+1, AP( JJ ), 1, AP( JJ ), 1 ) )
+            AP( JJ ) = DBLE( ZDOTC( N-J+1, AP( JJ ), 1, AP( JJ ),
+     $          1 ) )
             IF( J.LT.N )
-     $         CALL ZTPMV( 'Lower', 'Conjugate transpose', 'Non-unit',
+     $         CALL ZTPMV( 'Lower', 'Conjugate transpose',
+     $                     'Non-unit',
      $                     N-J, AP( JJN ), AP( JJ+1 ), 1 )
             JJ = JJN
    20    CONTINUE
@@ -59198,7 +60586,8 @@
 *
 *           Solve U**H *X = B, overwriting B with X.
 *
-            CALL ZTPSV( 'Upper', 'Conjugate transpose', 'Non-unit', N,
+            CALL ZTPSV( 'Upper', 'Conjugate transpose', 'Non-unit',
+     $                  N,
      $                  AP, B( 1, I ), 1 )
 *
 *           Solve U*X = B, overwriting B with X.
@@ -59219,7 +60608,8 @@
 *
 *           Solve L**H *X = Y, overwriting B with X.
 *
-            CALL ZTPSV( 'Lower', 'Conjugate transpose', 'Non-unit', N,
+            CALL ZTPSV( 'Lower', 'Conjugate transpose', 'Non-unit',
+     $                  N,
      $                  AP, B( 1, I ), 1 )
    20    CONTINUE
       END IF
@@ -59369,7 +60759,8 @@
 *> \ingroup pstf2
 *
 *  =====================================================================
-      SUBROUTINE ZPSTF2( UPLO, N, A, LDA, PIV, RANK, TOL, WORK, INFO )
+      SUBROUTINE ZPSTF2( UPLO, N, A, LDA, PIV, RANK, TOL, WORK,
+     $                   INFO )
 *
 *  -- LAPACK computational routine --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
@@ -59406,7 +60797,8 @@
       EXTERNAL           DLAMCH, LSAME, DISNAN
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           ZDSCAL, ZGEMV, ZLACGV, ZSWAP, XERBLA
+      EXTERNAL           ZDSCAL, ZGEMV, ZLACGV, ZSWAP,
+     $                   XERBLA
 *     ..
 *     .. Intrinsic Functions ..
       INTRINSIC          DBLE, DCONJG, MAX, SQRT
@@ -59531,7 +60923,8 @@
 *
             IF( J.LT.N ) THEN
                CALL ZLACGV( J-1, A( 1, J ), 1 )
-               CALL ZGEMV( 'Trans', J-1, N-J, -CONE, A( 1, J+1 ), LDA,
+               CALL ZGEMV( 'Trans', J-1, N-J, -CONE, A( 1, J+1 ),
+     $                     LDA,
      $                     A( 1, J ), 1, CONE, A( J, J+1 ), LDA )
                CALL ZLACGV( J-1, A( 1, J ), 1 )
                CALL ZDSCAL( N-J, ONE / AJJ, A( J, J+1 ), LDA )
@@ -59577,7 +60970,8 @@
                A( PVT, PVT ) = A( J, J )
                CALL ZSWAP( J-1, A( J, 1 ), LDA, A( PVT, 1 ), LDA )
                IF( PVT.LT.N )
-     $            CALL ZSWAP( N-PVT, A( PVT+1, J ), 1, A( PVT+1, PVT ),
+     $            CALL ZSWAP( N-PVT, A( PVT+1, J ), 1, A( PVT+1,
+     $                        PVT ),
      $                        1 )
                DO 170 I = J + 1, PVT - 1
                   ZTEMP = DCONJG( A( I, J ) )
@@ -59772,7 +61166,8 @@
 *> \ingroup pstrf
 *
 *  =====================================================================
-      SUBROUTINE ZPSTRF( UPLO, N, A, LDA, PIV, RANK, TOL, WORK, INFO )
+      SUBROUTINE ZPSTRF( UPLO, N, A, LDA, PIV, RANK, TOL, WORK,
+     $                   INFO )
 *
 *  -- LAPACK computational routine --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
@@ -59810,7 +61205,8 @@
       EXTERNAL           DLAMCH, ILAENV, LSAME, DISNAN
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           ZDSCAL, ZGEMV, ZHERK, ZLACGV, ZPSTF2, ZSWAP,
+      EXTERNAL           ZDSCAL, ZGEMV, ZHERK, ZLACGV, ZPSTF2,
+     $                   ZSWAP,
      $                   XERBLA
 *     ..
 *     .. Intrinsic Functions ..
@@ -59957,7 +61353,8 @@
 *
                   IF( J.LT.N ) THEN
                      CALL ZLACGV( J-1, A( 1, J ), 1 )
-                     CALL ZGEMV( 'Trans', J-K, N-J, -CONE, A( K, J+1 ),
+                     CALL ZGEMV( 'Trans', J-K, N-J, -CONE, A( K,
+     $                           J+1 ),
      $                           LDA, A( K, J ), 1, CONE, A( J, J+1 ),
      $                           LDA )
                      CALL ZLACGV( J-1, A( 1, J ), 1 )
@@ -60024,7 +61421,8 @@
 *                    Pivot OK, so can now swap pivot rows and columns
 *
                      A( PVT, PVT ) = A( J, J )
-                     CALL ZSWAP( J-1, A( J, 1 ), LDA, A( PVT, 1 ), LDA )
+                     CALL ZSWAP( J-1, A( J, 1 ), LDA, A( PVT, 1 ),
+     $                           LDA )
                      IF( PVT.LT.N )
      $                  CALL ZSWAP( N-PVT, A( PVT+1, J ), 1,
      $                              A( PVT+1, PVT ), 1 )
@@ -60424,7 +61822,8 @@
          ELSE IF( (ABS( UR ).GT.SAFMAX).OR.(ABS( UI ).GT.SAFMAX) ) THEN
             IF( (ABSR.GT.OV).OR.(ABSI.GT.OV) ) THEN
 *              This means that a and b are both Inf. No need for scaling.
-               CALL ZSCAL( N, DCMPLX( ONE / UR, -ONE / UI ), X, INCX )
+               CALL ZSCAL( N, DCMPLX( ONE / UR, -ONE / UI ), X,
+     $                     INCX )
             ELSE
                CALL ZDSCAL( N, SAFMIN, X, INCX )
                IF( (ABS( UR ).GT.OV).OR.(ABS( UI ).GT.OV) ) THEN
@@ -60571,7 +61970,8 @@
 *> \ingroup hpcon
 *
 *  =====================================================================
-      SUBROUTINE ZSPCON( UPLO, N, AP, IPIV, ANORM, RCOND, WORK, INFO )
+      SUBROUTINE ZSPCON( UPLO, N, AP, IPIV, ANORM, RCOND, WORK,
+     $                   INFO )
 *
 *  -- LAPACK computational routine --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
@@ -60681,6 +62081,344 @@
       RETURN
 *
 *     End of ZSPCON
+*
+      END
+*> \brief \b ZSPMV computes a matrix-vector product for complex vectors using a complex symmetric packed matrix
+*
+*  =========== DOCUMENTATION ===========
+*
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
+*
+*> \htmlonly
+*> Download ZSPMV + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zspmv.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zspmv.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zspmv.f">
+*> [TXT]</a>
+*> \endhtmlonly
+*
+*  Definition:
+*  ===========
+*
+*       SUBROUTINE ZSPMV( UPLO, N, ALPHA, AP, X, INCX, BETA, Y, INCY )
+*
+*       .. Scalar Arguments ..
+*       CHARACTER          UPLO
+*       INTEGER            INCX, INCY, N
+*       COMPLEX*16         ALPHA, BETA
+*       ..
+*       .. Array Arguments ..
+*       COMPLEX*16         AP( * ), X( * ), Y( * )
+*       ..
+*
+*
+*> \par Purpose:
+*  =============
+*>
+*> \verbatim
+*>
+*> ZSPMV  performs the matrix-vector operation
+*>
+*>    y := alpha*A*x + beta*y,
+*>
+*> where alpha and beta are scalars, x and y are n element vectors and
+*> A is an n by n symmetric matrix, supplied in packed form.
+*> \endverbatim
+*
+*  Arguments:
+*  ==========
+*
+*> \param[in] UPLO
+*> \verbatim
+*>          UPLO is CHARACTER*1
+*>           On entry, UPLO specifies whether the upper or lower
+*>           triangular part of the matrix A is supplied in the packed
+*>           array AP as follows:
+*>
+*>              UPLO = 'U' or 'u'   The upper triangular part of A is
+*>                                  supplied in AP.
+*>
+*>              UPLO = 'L' or 'l'   The lower triangular part of A is
+*>                                  supplied in AP.
+*>
+*>           Unchanged on exit.
+*> \endverbatim
+*>
+*> \param[in] N
+*> \verbatim
+*>          N is INTEGER
+*>           On entry, N specifies the order of the matrix A.
+*>           N must be at least zero.
+*>           Unchanged on exit.
+*> \endverbatim
+*>
+*> \param[in] ALPHA
+*> \verbatim
+*>          ALPHA is COMPLEX*16
+*>           On entry, ALPHA specifies the scalar alpha.
+*>           Unchanged on exit.
+*> \endverbatim
+*>
+*> \param[in] AP
+*> \verbatim
+*>          AP is COMPLEX*16 array, dimension at least
+*>           ( ( N*( N + 1 ) )/2 ).
+*>           Before entry, with UPLO = 'U' or 'u', the array AP must
+*>           contain the upper triangular part of the symmetric matrix
+*>           packed sequentially, column by column, so that AP( 1 )
+*>           contains a( 1, 1 ), AP( 2 ) and AP( 3 ) contain a( 1, 2 )
+*>           and a( 2, 2 ) respectively, and so on.
+*>           Before entry, with UPLO = 'L' or 'l', the array AP must
+*>           contain the lower triangular part of the symmetric matrix
+*>           packed sequentially, column by column, so that AP( 1 )
+*>           contains a( 1, 1 ), AP( 2 ) and AP( 3 ) contain a( 2, 1 )
+*>           and a( 3, 1 ) respectively, and so on.
+*>           Unchanged on exit.
+*> \endverbatim
+*>
+*> \param[in] X
+*> \verbatim
+*>          X is COMPLEX*16 array, dimension at least
+*>           ( 1 + ( N - 1 )*abs( INCX ) ).
+*>           Before entry, the incremented array X must contain the N-
+*>           element vector x.
+*>           Unchanged on exit.
+*> \endverbatim
+*>
+*> \param[in] INCX
+*> \verbatim
+*>          INCX is INTEGER
+*>           On entry, INCX specifies the increment for the elements of
+*>           X. INCX must not be zero.
+*>           Unchanged on exit.
+*> \endverbatim
+*>
+*> \param[in] BETA
+*> \verbatim
+*>          BETA is COMPLEX*16
+*>           On entry, BETA specifies the scalar beta. When BETA is
+*>           supplied as zero then Y need not be set on input.
+*>           Unchanged on exit.
+*> \endverbatim
+*>
+*> \param[in,out] Y
+*> \verbatim
+*>          Y is COMPLEX*16 array, dimension at least
+*>           ( 1 + ( N - 1 )*abs( INCY ) ).
+*>           Before entry, the incremented array Y must contain the n
+*>           element vector y. On exit, Y is overwritten by the updated
+*>           vector y.
+*> \endverbatim
+*>
+*> \param[in] INCY
+*> \verbatim
+*>          INCY is INTEGER
+*>           On entry, INCY specifies the increment for the elements of
+*>           Y. INCY must not be zero.
+*>           Unchanged on exit.
+*> \endverbatim
+*
+*  Authors:
+*  ========
+*
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
+*
+*> \ingroup hpmv
+*
+*  =====================================================================
+      SUBROUTINE ZSPMV( UPLO, N, ALPHA, AP, X, INCX, BETA, Y, INCY )
+*
+*  -- LAPACK auxiliary routine --
+*  -- LAPACK is a software package provided by Univ. of Tennessee,    --
+*  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
+*
+*     .. Scalar Arguments ..
+      CHARACTER          UPLO
+      INTEGER            INCX, INCY, N
+      COMPLEX*16         ALPHA, BETA
+*     ..
+*     .. Array Arguments ..
+      COMPLEX*16         AP( * ), X( * ), Y( * )
+*     ..
+*
+* =====================================================================
+*
+*     .. Parameters ..
+      COMPLEX*16         ONE
+      PARAMETER          ( ONE = ( 1.0D+0, 0.0D+0 ) )
+      COMPLEX*16         ZERO
+      PARAMETER          ( ZERO = ( 0.0D+0, 0.0D+0 ) )
+*     ..
+*     .. Local Scalars ..
+      INTEGER            I, INFO, IX, IY, J, JX, JY, K, KK, KX, KY
+      COMPLEX*16         TEMP1, TEMP2
+*     ..
+*     .. External Functions ..
+      LOGICAL            LSAME
+      EXTERNAL           LSAME
+*     ..
+*     .. External Subroutines ..
+      EXTERNAL           XERBLA
+*     ..
+*     .. Executable Statements ..
+*
+*     Test the input parameters.
+*
+      INFO = 0
+      IF( .NOT.LSAME( UPLO, 'U' ) .AND.
+     $    .NOT.LSAME( UPLO, 'L' ) ) THEN
+         INFO = 1
+      ELSE IF( N.LT.0 ) THEN
+         INFO = 2
+      ELSE IF( INCX.EQ.0 ) THEN
+         INFO = 6
+      ELSE IF( INCY.EQ.0 ) THEN
+         INFO = 9
+      END IF
+      IF( INFO.NE.0 ) THEN
+         CALL XERBLA( 'ZSPMV ', INFO )
+         RETURN
+      END IF
+*
+*     Quick return if possible.
+*
+      IF( ( N.EQ.0 ) .OR. ( ( ALPHA.EQ.ZERO ) .AND. ( BETA.EQ.ONE ) ) )
+     $   RETURN
+*
+*     Set up the start points in  X  and  Y.
+*
+      IF( INCX.GT.0 ) THEN
+         KX = 1
+      ELSE
+         KX = 1 - ( N-1 )*INCX
+      END IF
+      IF( INCY.GT.0 ) THEN
+         KY = 1
+      ELSE
+         KY = 1 - ( N-1 )*INCY
+      END IF
+*
+*     Start the operations. In this version the elements of the array AP
+*     are accessed sequentially with one pass through AP.
+*
+*     First form  y := beta*y.
+*
+      IF( BETA.NE.ONE ) THEN
+         IF( INCY.EQ.1 ) THEN
+            IF( BETA.EQ.ZERO ) THEN
+               DO 10 I = 1, N
+                  Y( I ) = ZERO
+   10          CONTINUE
+            ELSE
+               DO 20 I = 1, N
+                  Y( I ) = BETA*Y( I )
+   20          CONTINUE
+            END IF
+         ELSE
+            IY = KY
+            IF( BETA.EQ.ZERO ) THEN
+               DO 30 I = 1, N
+                  Y( IY ) = ZERO
+                  IY = IY + INCY
+   30          CONTINUE
+            ELSE
+               DO 40 I = 1, N
+                  Y( IY ) = BETA*Y( IY )
+                  IY = IY + INCY
+   40          CONTINUE
+            END IF
+         END IF
+      END IF
+      IF( ALPHA.EQ.ZERO )
+     $   RETURN
+      KK = 1
+      IF( LSAME( UPLO, 'U' ) ) THEN
+*
+*        Form  y  when AP contains the upper triangle.
+*
+         IF( ( INCX.EQ.1 ) .AND. ( INCY.EQ.1 ) ) THEN
+            DO 60 J = 1, N
+               TEMP1 = ALPHA*X( J )
+               TEMP2 = ZERO
+               K = KK
+               DO 50 I = 1, J - 1
+                  Y( I ) = Y( I ) + TEMP1*AP( K )
+                  TEMP2 = TEMP2 + AP( K )*X( I )
+                  K = K + 1
+   50          CONTINUE
+               Y( J ) = Y( J ) + TEMP1*AP( KK+J-1 ) + ALPHA*TEMP2
+               KK = KK + J
+   60       CONTINUE
+         ELSE
+            JX = KX
+            JY = KY
+            DO 80 J = 1, N
+               TEMP1 = ALPHA*X( JX )
+               TEMP2 = ZERO
+               IX = KX
+               IY = KY
+               DO 70 K = KK, KK + J - 2
+                  Y( IY ) = Y( IY ) + TEMP1*AP( K )
+                  TEMP2 = TEMP2 + AP( K )*X( IX )
+                  IX = IX + INCX
+                  IY = IY + INCY
+   70          CONTINUE
+               Y( JY ) = Y( JY ) + TEMP1*AP( KK+J-1 ) + ALPHA*TEMP2
+               JX = JX + INCX
+               JY = JY + INCY
+               KK = KK + J
+   80       CONTINUE
+         END IF
+      ELSE
+*
+*        Form  y  when AP contains the lower triangle.
+*
+         IF( ( INCX.EQ.1 ) .AND. ( INCY.EQ.1 ) ) THEN
+            DO 100 J = 1, N
+               TEMP1 = ALPHA*X( J )
+               TEMP2 = ZERO
+               Y( J ) = Y( J ) + TEMP1*AP( KK )
+               K = KK + 1
+               DO 90 I = J + 1, N
+                  Y( I ) = Y( I ) + TEMP1*AP( K )
+                  TEMP2 = TEMP2 + AP( K )*X( I )
+                  K = K + 1
+   90          CONTINUE
+               Y( J ) = Y( J ) + ALPHA*TEMP2
+               KK = KK + ( N-J+1 )
+  100       CONTINUE
+         ELSE
+            JX = KX
+            JY = KY
+            DO 120 J = 1, N
+               TEMP1 = ALPHA*X( JX )
+               TEMP2 = ZERO
+               Y( JY ) = Y( JY ) + TEMP1*AP( KK )
+               IX = JX
+               IY = JY
+               DO 110 K = KK + 1, KK + N - J
+                  IX = IX + INCX
+                  IY = IY + INCY
+                  Y( IY ) = Y( IY ) + TEMP1*AP( K )
+                  TEMP2 = TEMP2 + AP( K )*X( IX )
+  110          CONTINUE
+               Y( JY ) = Y( JY ) + ALPHA*TEMP2
+               JX = JX + INCX
+               JY = JY + INCY
+               KK = KK + ( N-J+1 )
+  120       CONTINUE
+         END IF
+      END IF
+*
+      RETURN
+*
+*     End of ZSPMV
 *
       END
 *> \brief \b ZSPR performs the symmetrical rank-1 update of a complex symmetric packed matrix.
@@ -60850,7 +62588,8 @@
 *     Test the input parameters.
 *
       INFO = 0
-      IF( .NOT.LSAME( UPLO, 'U' ) .AND. .NOT.LSAME( UPLO, 'L' ) ) THEN
+      IF( .NOT.LSAME( UPLO, 'U' ) .AND.
+     $    .NOT.LSAME( UPLO, 'L' ) ) THEN
          INFO = 1
       ELSE IF( N.LT.0 ) THEN
          INFO = 2
@@ -61468,7 +63207,8 @@
 *              submatrix A(k:n,k:n)
 *
                IF( KP.LT.N )
-     $            CALL ZSWAP( N-KP, AP( KNC+KP-KK+1 ), 1, AP( KPC+1 ),
+     $            CALL ZSWAP( N-KP, AP( KNC+KP-KK+1 ), 1,
+     $                        AP( KPC+1 ),
      $                        1 )
                KX = KNC + KP - KK
                DO 80 J = KK + 1, KP - 1
@@ -61796,7 +63536,8 @@
 *
             IF( K.GT.1 ) THEN
                CALL ZCOPY( K-1, AP( KC ), 1, WORK, 1 )
-               CALL ZSPMV( UPLO, K-1, -ONE, AP, WORK, 1, ZERO, AP( KC ),
+               CALL ZSPMV( UPLO, K-1, -ONE, AP, WORK, 1, ZERO,
+     $                     AP( KC ),
      $                     1 )
                AP( KC+K-1 ) = AP( KC+K-1 ) -
      $                        ZDOTU( K-1, WORK, 1, AP( KC ), 1 )
@@ -61821,18 +63562,21 @@
 *
             IF( K.GT.1 ) THEN
                CALL ZCOPY( K-1, AP( KC ), 1, WORK, 1 )
-               CALL ZSPMV( UPLO, K-1, -ONE, AP, WORK, 1, ZERO, AP( KC ),
+               CALL ZSPMV( UPLO, K-1, -ONE, AP, WORK, 1, ZERO,
+     $                     AP( KC ),
      $                     1 )
                AP( KC+K-1 ) = AP( KC+K-1 ) -
      $                        ZDOTU( K-1, WORK, 1, AP( KC ), 1 )
                AP( KCNEXT+K-1 ) = AP( KCNEXT+K-1 ) -
-     $                            ZDOTU( K-1, AP( KC ), 1, AP( KCNEXT ),
+     $                            ZDOTU( K-1, AP( KC ), 1,
+     $                                   AP( KCNEXT ),
      $                            1 )
                CALL ZCOPY( K-1, AP( KCNEXT ), 1, WORK, 1 )
                CALL ZSPMV( UPLO, K-1, -ONE, AP, WORK, 1, ZERO,
      $                     AP( KCNEXT ), 1 )
                AP( KCNEXT+K ) = AP( KCNEXT+K ) -
-     $                          ZDOTU( K-1, WORK, 1, AP( KCNEXT ), 1 )
+     $                          ZDOTU( K-1, WORK, 1, AP( KCNEXT ),
+     $                                 1 )
             END IF
             KSTEP = 2
             KCNEXT = KCNEXT + K + 1
@@ -61923,7 +63667,8 @@
 *
             IF( K.LT.N ) THEN
                CALL ZCOPY( N-K, AP( KC+1 ), 1, WORK, 1 )
-               CALL ZSPMV( UPLO, N-K, -ONE, AP( KC+( N-K+1 ) ), WORK, 1,
+               CALL ZSPMV( UPLO, N-K, -ONE, AP( KC+( N-K+1 ) ), WORK,
+     $                     1,
      $                     ZERO, AP( KC+1 ), 1 )
                AP( KC ) = AP( KC ) - ZDOTU( N-K, WORK, 1, AP( KC+1 ),
      $                    1 )
@@ -61931,10 +63676,12 @@
      $                          ZDOTU( N-K, AP( KC+1 ), 1,
      $                          AP( KCNEXT+2 ), 1 )
                CALL ZCOPY( N-K, AP( KCNEXT+2 ), 1, WORK, 1 )
-               CALL ZSPMV( UPLO, N-K, -ONE, AP( KC+( N-K+1 ) ), WORK, 1,
+               CALL ZSPMV( UPLO, N-K, -ONE, AP( KC+( N-K+1 ) ), WORK,
+     $                     1,
      $                     ZERO, AP( KCNEXT+2 ), 1 )
                AP( KCNEXT ) = AP( KCNEXT ) -
-     $                        ZDOTU( N-K, WORK, 1, AP( KCNEXT+2 ), 1 )
+     $                        ZDOTU( N-K, WORK, 1, AP( KCNEXT+2 ),
+     $                               1 )
             END IF
             KSTEP = 2
             KCNEXT = KCNEXT - ( N-K+3 )
@@ -62246,7 +63993,8 @@
 *           Multiply by inv(U**T(K)), where U(K) is the transformation
 *           stored in column K of A.
 *
-            CALL ZGEMV( 'Transpose', K-1, NRHS, -ONE, B, LDB, AP( KC ),
+            CALL ZGEMV( 'Transpose', K-1, NRHS, -ONE, B, LDB,
+     $                  AP( KC ),
      $                  1, ONE, B( K, 1 ), LDB )
 *
 *           Interchange rows K and IPIV(K).
@@ -62263,7 +64011,8 @@
 *           Multiply by inv(U**T(K+1)), where U(K+1) is the transformation
 *           stored in columns K and K+1 of A.
 *
-            CALL ZGEMV( 'Transpose', K-1, NRHS, -ONE, B, LDB, AP( KC ),
+            CALL ZGEMV( 'Transpose', K-1, NRHS, -ONE, B, LDB,
+     $                  AP( KC ),
      $                  1, ONE, B( K, 1 ), LDB )
             CALL ZGEMV( 'Transpose', K-1, NRHS, -ONE, B, LDB,
      $                  AP( KC+K ), 1, ONE, B( K+1, 1 ), LDB )
@@ -62334,7 +64083,8 @@
 *           stored in columns K and K+1 of A.
 *
             IF( K.LT.N-1 ) THEN
-               CALL ZGERU( N-K-1, NRHS, -ONE, AP( KC+2 ), 1, B( K, 1 ),
+               CALL ZGERU( N-K-1, NRHS, -ONE, AP( KC+2 ), 1, B( K,
+     $                     1 ),
      $                     LDB, B( K+2, 1 ), LDB )
                CALL ZGERU( N-K-1, NRHS, -ONE, AP( KC+N-K+2 ), 1,
      $                     B( K+1, 1 ), LDB, B( K+2, 1 ), LDB )
@@ -62663,7 +64413,8 @@
       EXTERNAL           LSAME, ILAENV, DLAMCH, DLANST
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           DLASCL, DLASET, DSTEDC, DSTEQR, DSTERF, XERBLA,
+      EXTERNAL           DLASCL, DLASET, DSTEDC, DSTEQR, DSTERF,
+     $                   XERBLA,
      $                   ZLACPY, ZLACRM, ZLAED0, ZSTEQR, ZSWAP
 *     ..
 *     .. Intrinsic Functions ..
@@ -62722,7 +64473,7 @@
             LIWMIN = 3 + 5*N
          END IF
          WORK( 1 ) = LWMIN
-         RWORK( 1 ) = LRWMIN
+         RWORK( 1 ) = REAL( LRWMIN )
          IWORK( 1 ) = LIWMIN
 *
          IF( LWORK.LT.LWMIN .AND. .NOT.LQUERY ) THEN
@@ -62834,12 +64585,15 @@
 *              Scale.
 *
                ORGNRM = DLANST( 'M', M, D( START ), E( START ) )
-               CALL DLASCL( 'G', 0, 0, ORGNRM, ONE, M, 1, D( START ), M,
+               CALL DLASCL( 'G', 0, 0, ORGNRM, ONE, M, 1, D( START ),
+     $                      M,
      $                      INFO )
-               CALL DLASCL( 'G', 0, 0, ORGNRM, ONE, M-1, 1, E( START ),
+               CALL DLASCL( 'G', 0, 0, ORGNRM, ONE, M-1, 1,
+     $                      E( START ),
      $                      M-1, INFO )
 *
-               CALL ZLAED0( N, M, D( START ), E( START ), Z( 1, START ),
+               CALL ZLAED0( N, M, D( START ), E( START ), Z( 1,
+     $                      START ),
      $                      LDZ, WORK, N, RWORK, IWORK, INFO )
                IF( INFO.GT.0 ) THEN
                   INFO = ( INFO / ( M+1 )+START-1 )*( N+1 ) +
@@ -62849,13 +64603,15 @@
 *
 *              Scale back.
 *
-               CALL DLASCL( 'G', 0, 0, ONE, ORGNRM, M, 1, D( START ), M,
+               CALL DLASCL( 'G', 0, 0, ONE, ORGNRM, M, 1, D( START ),
+     $                      M,
      $                      INFO )
 *
             ELSE
                CALL DSTEQR( 'I', M, D( START ), E( START ), RWORK, M,
      $                      RWORK( M*M+1 ), INFO )
-               CALL ZLACRM( N, M, Z( 1, START ), LDZ, RWORK, M, WORK, N,
+               CALL ZLACRM( N, M, Z( 1, START ), LDZ, RWORK, M, WORK,
+     $                      N,
      $                      RWORK( M*M+1 ) )
                CALL ZLACPY( 'A', N, M, WORK, N, Z( 1, START ), LDZ )
                IF( INFO.GT.0 ) THEN
@@ -62893,7 +64649,7 @@
 *
    70 CONTINUE
       WORK( 1 ) = LWMIN
-      RWORK( 1 ) = LRWMIN
+      RWORK( 1 ) = REAL( LRWMIN )
       IWORK( 1 ) = LIWMIN
 *
       RETURN
@@ -63071,7 +64827,8 @@
       EXTERNAL           LSAME, DLAMCH, DLANST, DLAPY2
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           DLAE2, DLAEV2, DLARTG, DLASCL, DLASRT, XERBLA,
+      EXTERNAL           DLAE2, DLAEV2, DLARTG, DLASCL, DLASRT,
+     $                   XERBLA,
      $                   ZLASET, ZLASR, ZSWAP
 *     ..
 *     .. Intrinsic Functions ..
@@ -63177,13 +64934,15 @@
      $   GO TO 10
       IF( ANORM.GT.SSFMAX ) THEN
          ISCALE = 1
-         CALL DLASCL( 'G', 0, 0, ANORM, SSFMAX, LEND-L+1, 1, D( L ), N,
+         CALL DLASCL( 'G', 0, 0, ANORM, SSFMAX, LEND-L+1, 1, D( L ),
+     $                N,
      $                INFO )
          CALL DLASCL( 'G', 0, 0, ANORM, SSFMAX, LEND-L, 1, E( L ), N,
      $                INFO )
       ELSE IF( ANORM.LT.SSFMIN ) THEN
          ISCALE = 2
-         CALL DLASCL( 'G', 0, 0, ANORM, SSFMIN, LEND-L+1, 1, D( L ), N,
+         CALL DLASCL( 'G', 0, 0, ANORM, SSFMIN, LEND-L+1, 1, D( L ),
+     $                N,
      $                INFO )
          CALL DLASCL( 'G', 0, 0, ANORM, SSFMIN, LEND-L, 1, E( L ), N,
      $                INFO )
@@ -63226,7 +64985,8 @@
 *
          IF( M.EQ.L+1 ) THEN
             IF( ICOMPZ.GT.0 ) THEN
-               CALL DLAEV2( D( L ), E( L ), D( L+1 ), RT1, RT2, C, S )
+               CALL DLAEV2( D( L ), E( L ), D( L+1 ), RT1, RT2, C,
+     $                      S )
                WORK( L ) = C
                WORK( N-1+L ) = S
                CALL ZLASR( 'R', 'V', 'B', N, 2, WORK( L ),
@@ -63285,7 +65045,8 @@
 *
          IF( ICOMPZ.GT.0 ) THEN
             MM = M - L + 1
-            CALL ZLASR( 'R', 'V', 'B', N, MM, WORK( L ), WORK( N-1+L ),
+            CALL ZLASR( 'R', 'V', 'B', N, MM, WORK( L ),
+     $                  WORK( N-1+L ),
      $                  Z( 1, L ), LDZ )
          END IF
 *
@@ -63333,7 +65094,8 @@
 *
          IF( M.EQ.L-1 ) THEN
             IF( ICOMPZ.GT.0 ) THEN
-               CALL DLAEV2( D( L-1 ), E( L-1 ), D( L ), RT1, RT2, C, S )
+               CALL DLAEV2( D( L-1 ), E( L-1 ), D( L ), RT1, RT2, C,
+     $                      S )
                WORK( M ) = C
                WORK( N-1+M ) = S
                CALL ZLASR( 'R', 'V', 'F', N, 2, WORK( M ),
@@ -63392,7 +65154,8 @@
 *
          IF( ICOMPZ.GT.0 ) THEN
             MM = L - M + 1
-            CALL ZLASR( 'R', 'V', 'F', N, MM, WORK( M ), WORK( N-1+M ),
+            CALL ZLASR( 'R', 'V', 'F', N, MM, WORK( M ),
+     $                  WORK( N-1+M ),
      $                  Z( 1, M ), LDZ )
          END IF
 *
@@ -63418,12 +65181,14 @@
       IF( ISCALE.EQ.1 ) THEN
          CALL DLASCL( 'G', 0, 0, SSFMAX, ANORM, LENDSV-LSV+1, 1,
      $                D( LSV ), N, INFO )
-         CALL DLASCL( 'G', 0, 0, SSFMAX, ANORM, LENDSV-LSV, 1, E( LSV ),
+         CALL DLASCL( 'G', 0, 0, SSFMAX, ANORM, LENDSV-LSV, 1,
+     $                E( LSV ),
      $                N, INFO )
       ELSE IF( ISCALE.EQ.2 ) THEN
          CALL DLASCL( 'G', 0, 0, SSFMIN, ANORM, LENDSV-LSV+1, 1,
      $                D( LSV ), N, INFO )
-         CALL DLASCL( 'G', 0, 0, SSFMIN, ANORM, LENDSV-LSV, 1, E( LSV ),
+         CALL DLASCL( 'G', 0, 0, SSFMIN, ANORM, LENDSV-LSV, 1,
+     $                E( LSV ),
      $                N, INFO )
       END IF
 *
@@ -63865,7 +65630,8 @@
 *> \ingroup hemv
 *
 *  =====================================================================
-      SUBROUTINE ZSYMV( UPLO, N, ALPHA, A, LDA, X, INCX, BETA, Y, INCY )
+      SUBROUTINE ZSYMV( UPLO, N, ALPHA, A, LDA, X, INCX, BETA, Y,
+     $                  INCY )
 *
 *  -- LAPACK auxiliary routine --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
@@ -63907,7 +65673,8 @@
 *     Test the input parameters.
 *
       INFO = 0
-      IF( .NOT.LSAME( UPLO, 'U' ) .AND. .NOT.LSAME( UPLO, 'L' ) ) THEN
+      IF( .NOT.LSAME( UPLO, 'U' ) .AND.
+     $    .NOT.LSAME( UPLO, 'L' ) ) THEN
          INFO = 1
       ELSE IF( N.LT.0 ) THEN
          INFO = 2
@@ -64223,7 +65990,8 @@
 *     Test the input parameters.
 *
       INFO = 0
-      IF( .NOT.LSAME( UPLO, 'U' ) .AND. .NOT.LSAME( UPLO, 'L' ) ) THEN
+      IF( .NOT.LSAME( UPLO, 'U' ) .AND.
+     $    .NOT.LSAME( UPLO, 'L' ) ) THEN
          INFO = 1
       ELSE IF( N.LT.0 ) THEN
          INFO = 2
@@ -64798,7 +66566,8 @@
                JMAX = K - 1 + IZAMAX( IMAX-K, A( IMAX, K ), LDA )
                ROWMAX = CABS1( A( IMAX, JMAX ) )
                IF( IMAX.LT.N ) THEN
-                  JMAX = IMAX + IZAMAX( N-IMAX, A( IMAX+1, IMAX ), 1 )
+                  JMAX = IMAX + IZAMAX( N-IMAX, A( IMAX+1, IMAX ),
+     $                                  1 )
                   ROWMAX = MAX( ROWMAX, CABS1( A( JMAX, IMAX ) ) )
                END IF
 *
@@ -64830,7 +66599,8 @@
 *              submatrix A(k:n,k:n)
 *
                IF( KP.LT.N )
-     $            CALL ZSWAP( N-KP, A( KP+1, KK ), 1, A( KP+1, KP ), 1 )
+     $            CALL ZSWAP( N-KP, A( KP+1, KK ), 1, A( KP+1, KP ),
+     $                        1 )
                CALL ZSWAP( KP-KK-1, A( KK+1, KK ), 1, A( KP, KK+1 ),
      $                     LDA )
                T = A( KK, KK )
@@ -65174,7 +66944,8 @@
          IWS = LDWORK*NB
          IF( LWORK.LT.IWS ) THEN
             NB = MAX( LWORK / LDWORK, 1 )
-            NBMIN = MAX( 2, ILAENV( 2, 'ZSYTRF', UPLO, N, -1, -1, -1 ) )
+            NBMIN = MAX( 2, ILAENV( 2, 'ZSYTRF', UPLO, N, -1, -1,
+     $                   -1 ) )
          END IF
       ELSE
          IWS = 1
@@ -65203,7 +66974,8 @@
 *           Factorize columns k-kb+1:k of A and use blocked code to
 *           update columns 1:k-kb
 *
-            CALL ZLASYF( UPLO, K, NB, KB, A, LDA, IPIV, WORK, N, IINFO )
+            CALL ZLASYF( UPLO, K, NB, KB, A, LDA, IPIV, WORK, N,
+     $                   IINFO )
          ELSE
 *
 *           Use unblocked code to factorize columns 1:k of A
@@ -65243,13 +67015,15 @@
 *           Factorize columns k:k+kb-1 of A and use blocked code to
 *           update columns k+kb:n
 *
-            CALL ZLASYF( UPLO, N-K+1, NB, KB, A( K, K ), LDA, IPIV( K ),
+            CALL ZLASYF( UPLO, N-K+1, NB, KB, A( K, K ), LDA,
+     $                   IPIV( K ),
      $                   WORK, N, IINFO )
          ELSE
 *
 *           Use unblocked code to factorize columns k:n of A
 *
-            CALL ZSYTF2( UPLO, N-K+1, A( K, K ), LDA, IPIV( K ), IINFO )
+            CALL ZSYTF2( UPLO, N-K+1, A( K, K ), LDA, IPIV( K ),
+     $                   IINFO )
             KB = N - K + 1
          END IF
 *
@@ -65505,7 +67279,8 @@
                CALL ZCOPY( K-1, A( 1, K ), 1, WORK, 1 )
                CALL ZSYMV( UPLO, K-1, -ONE, A, LDA, WORK, 1, ZERO,
      $                     A( 1, K ), 1 )
-               A( K, K ) = A( K, K ) - ZDOTU( K-1, WORK, 1, A( 1, K ),
+               A( K, K ) = A( K, K ) - ZDOTU( K-1, WORK, 1, A( 1,
+     $            K ),
      $                     1 )
             END IF
             KSTEP = 1
@@ -65530,10 +67305,12 @@
                CALL ZCOPY( K-1, A( 1, K ), 1, WORK, 1 )
                CALL ZSYMV( UPLO, K-1, -ONE, A, LDA, WORK, 1, ZERO,
      $                     A( 1, K ), 1 )
-               A( K, K ) = A( K, K ) - ZDOTU( K-1, WORK, 1, A( 1, K ),
+               A( K, K ) = A( K, K ) - ZDOTU( K-1, WORK, 1, A( 1,
+     $            K ),
      $                     1 )
                A( K, K+1 ) = A( K, K+1 ) -
-     $                       ZDOTU( K-1, A( 1, K ), 1, A( 1, K+1 ), 1 )
+     $                       ZDOTU( K-1, A( 1, K ), 1, A( 1, K+1 ),
+     $                              1 )
                CALL ZCOPY( K-1, A( 1, K+1 ), 1, WORK, 1 )
                CALL ZSYMV( UPLO, K-1, -ONE, A, LDA, WORK, 1, ZERO,
      $                     A( 1, K+1 ), 1 )
@@ -65592,9 +67369,11 @@
 *
             IF( K.LT.N ) THEN
                CALL ZCOPY( N-K, A( K+1, K ), 1, WORK, 1 )
-               CALL ZSYMV( UPLO, N-K, -ONE, A( K+1, K+1 ), LDA, WORK, 1,
+               CALL ZSYMV( UPLO, N-K, -ONE, A( K+1, K+1 ), LDA, WORK,
+     $                     1,
      $                     ZERO, A( K+1, K ), 1 )
-               A( K, K ) = A( K, K ) - ZDOTU( N-K, WORK, 1, A( K+1, K ),
+               A( K, K ) = A( K, K ) - ZDOTU( N-K, WORK, 1, A( K+1,
+     $            K ),
      $                     1 )
             END IF
             KSTEP = 1
@@ -65617,18 +67396,23 @@
 *
             IF( K.LT.N ) THEN
                CALL ZCOPY( N-K, A( K+1, K ), 1, WORK, 1 )
-               CALL ZSYMV( UPLO, N-K, -ONE, A( K+1, K+1 ), LDA, WORK, 1,
+               CALL ZSYMV( UPLO, N-K, -ONE, A( K+1, K+1 ), LDA, WORK,
+     $                     1,
      $                     ZERO, A( K+1, K ), 1 )
-               A( K, K ) = A( K, K ) - ZDOTU( N-K, WORK, 1, A( K+1, K ),
+               A( K, K ) = A( K, K ) - ZDOTU( N-K, WORK, 1, A( K+1,
+     $            K ),
      $                     1 )
                A( K, K-1 ) = A( K, K-1 ) -
-     $                       ZDOTU( N-K, A( K+1, K ), 1, A( K+1, K-1 ),
+     $                       ZDOTU( N-K, A( K+1, K ), 1, A( K+1,
+     $                              K-1 ),
      $                       1 )
                CALL ZCOPY( N-K, A( K+1, K-1 ), 1, WORK, 1 )
-               CALL ZSYMV( UPLO, N-K, -ONE, A( K+1, K+1 ), LDA, WORK, 1,
+               CALL ZSYMV( UPLO, N-K, -ONE, A( K+1, K+1 ), LDA, WORK,
+     $                     1,
      $                     ZERO, A( K+1, K-1 ), 1 )
                A( K-1, K-1 ) = A( K-1, K-1 ) -
-     $                         ZDOTU( N-K, WORK, 1, A( K+1, K-1 ), 1 )
+     $                         ZDOTU( N-K, WORK, 1, A( K+1, K-1 ),
+     $                                1 )
             END IF
             KSTEP = 2
          END IF
@@ -65871,7 +67655,8 @@
 *           Multiply by inv(U(K)), where U(K) is the transformation
 *           stored in column K of A.
 *
-            CALL ZGERU( K-1, NRHS, -ONE, A( 1, K ), 1, B( K, 1 ), LDB,
+            CALL ZGERU( K-1, NRHS, -ONE, A( 1, K ), 1, B( K, 1 ),
+     $                  LDB,
      $                  B( 1, 1 ), LDB )
 *
 *           Multiply by the inverse of the diagonal block.
@@ -65891,7 +67676,8 @@
 *           Multiply by inv(U(K)), where U(K) is the transformation
 *           stored in columns K-1 and K of A.
 *
-            CALL ZGERU( K-2, NRHS, -ONE, A( 1, K ), 1, B( K, 1 ), LDB,
+            CALL ZGERU( K-2, NRHS, -ONE, A( 1, K ), 1, B( K, 1 ),
+     $                  LDB,
      $                  B( 1, 1 ), LDB )
             CALL ZGERU( K-2, NRHS, -ONE, A( 1, K-1 ), 1, B( K-1, 1 ),
      $                  LDB, B( 1, 1 ), LDB )
@@ -65934,7 +67720,8 @@
 *           Multiply by inv(U**T(K)), where U(K) is the transformation
 *           stored in column K of A.
 *
-            CALL ZGEMV( 'Transpose', K-1, NRHS, -ONE, B, LDB, A( 1, K ),
+            CALL ZGEMV( 'Transpose', K-1, NRHS, -ONE, B, LDB, A( 1,
+     $                  K ),
      $                  1, ONE, B( K, 1 ), LDB )
 *
 *           Interchange rows K and IPIV(K).
@@ -65950,7 +67737,8 @@
 *           Multiply by inv(U**T(K+1)), where U(K+1) is the transformation
 *           stored in columns K and K+1 of A.
 *
-            CALL ZGEMV( 'Transpose', K-1, NRHS, -ONE, B, LDB, A( 1, K ),
+            CALL ZGEMV( 'Transpose', K-1, NRHS, -ONE, B, LDB, A( 1,
+     $                  K ),
      $                  1, ONE, B( K, 1 ), LDB )
             CALL ZGEMV( 'Transpose', K-1, NRHS, -ONE, B, LDB,
      $                  A( 1, K+1 ), 1, ONE, B( K+1, 1 ), LDB )
@@ -65997,7 +67785,8 @@
 *           stored in column K of A.
 *
             IF( K.LT.N )
-     $         CALL ZGERU( N-K, NRHS, -ONE, A( K+1, K ), 1, B( K, 1 ),
+     $         CALL ZGERU( N-K, NRHS, -ONE, A( K+1, K ), 1, B( K,
+     $                     1 ),
      $                     LDB, B( K+1, 1 ), LDB )
 *
 *           Multiply by the inverse of the diagonal block.
@@ -66018,7 +67807,8 @@
 *           stored in columns K and K+1 of A.
 *
             IF( K.LT.N-1 ) THEN
-               CALL ZGERU( N-K-1, NRHS, -ONE, A( K+2, K ), 1, B( K, 1 ),
+               CALL ZGERU( N-K-1, NRHS, -ONE, A( K+2, K ), 1, B( K,
+     $                     1 ),
      $                     LDB, B( K+2, 1 ), LDB )
                CALL ZGERU( N-K-1, NRHS, -ONE, A( K+2, K+1 ), 1,
      $                     B( K+1, 1 ), LDB, B( K+2, 1 ), LDB )
@@ -66633,7 +68423,8 @@
 *              Back transform eigenvector if HOWMNY='B'.
 *
                IF( ILBACK ) THEN
-                  CALL ZGEMV( 'N', N, N+1-JE, CONE, VL( 1, JE ), LDVL,
+                  CALL ZGEMV( 'N', N, N+1-JE, CONE, VL( 1, JE ),
+     $                        LDVL,
      $                        WORK( JE ), 1, CZERO, WORK( N+1 ), 1 )
                   ISRC = 2
                   IBEG = 1
@@ -67154,7 +68945,8 @@
          CALL ZLACPY( 'Full', M, M, S, LDST, WORK, M )
          CALL ZLACPY( 'Full', M, M, T, LDST, WORK( M*M+1 ), M )
          CALL ZROT( 2, WORK, 1, WORK( 3 ), 1, CZ, -DCONJG( SZ ) )
-         CALL ZROT( 2, WORK( 5 ), 1, WORK( 7 ), 1, CZ, -DCONJG( SZ ) )
+         CALL ZROT( 2, WORK( 5 ), 1, WORK( 7 ), 1, CZ,
+     $              -DCONJG( SZ ) )
          CALL ZROT( 2, WORK, 2, WORK( 2 ), 2, CQ, -SQ )
          CALL ZROT( 2, WORK( 5 ), 2, WORK( 6 ), 2, CQ, -SQ )
          DO 10 I = 1, 2
@@ -67183,8 +68975,10 @@
      $           DCONJG( SZ ) )
       CALL ZROT( J1+1, B( 1, J1 ), 1, B( 1, J1+1 ), 1, CZ,
      $           DCONJG( SZ ) )
-      CALL ZROT( N-J1+1, A( J1, J1 ), LDA, A( J1+1, J1 ), LDA, CQ, SQ )
-      CALL ZROT( N-J1+1, B( J1, J1 ), LDB, B( J1+1, J1 ), LDB, CQ, SQ )
+      CALL ZROT( N-J1+1, A( J1, J1 ), LDA, A( J1+1, J1 ), LDA, CQ,
+     $           SQ )
+      CALL ZROT( N-J1+1, B( J1, J1 ), LDB, B( J1+1, J1 ), LDB, CQ,
+     $           SQ )
 *
 *     Set  N1 by N2 (2,1) blocks to 0
 *
@@ -67476,7 +69270,8 @@
 *
 *        Swap with next one below
 *
-         CALL ZTGEX2( WANTQ, WANTZ, N, A, LDA, B, LDB, Q, LDQ, Z, LDZ,
+         CALL ZTGEX2( WANTQ, WANTZ, N, A, LDA, B, LDB, Q, LDQ, Z,
+     $                LDZ,
      $                HERE, INFO )
          IF( INFO.NE.0 ) THEN
             ILST = HERE
@@ -67493,7 +69288,8 @@
 *
 *        Swap with next one above
 *
-         CALL ZTGEX2( WANTQ, WANTZ, N, A, LDA, B, LDB, Q, LDQ, Z, LDZ,
+         CALL ZTGEX2( WANTQ, WANTZ, N, A, LDA, B, LDB, Q, LDQ, Z,
+     $                LDZ,
      $                HERE, INFO )
          IF( INFO.NE.0 ) THEN
             ILST = HERE
@@ -67939,7 +69735,8 @@
 *>      1996.
 *>
 *  =====================================================================
-      SUBROUTINE ZTGSEN( IJOB, WANTQ, WANTZ, SELECT, N, A, LDA, B, LDB,
+      SUBROUTINE ZTGSEN( IJOB, WANTQ, WANTZ, SELECT, N, A, LDA, B,
+     $                   LDB,
      $                   ALPHA, BETA, Q, LDQ, Z, LDZ, M, PL, PR, DIF,
      $                   WORK, LWORK, IWORK, LIWORK, INFO )
 *
@@ -67980,7 +69777,8 @@
       INTEGER            ISAVE( 3 )
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           XERBLA, ZLACN2, ZLACPY, ZLASSQ, ZSCAL, ZTGEXC,
+      EXTERNAL           XERBLA, ZLACN2, ZLACPY, ZLASSQ, ZSCAL,
+     $                   ZTGEXC,
      $                   ZTGSYL
 *     ..
 *     .. Intrinsic Functions ..
@@ -68104,7 +69902,8 @@
 *           and Z that will swap adjacent diagonal blocks in (A, B).
 *
             IF( K.NE.KS )
-     $         CALL ZTGEXC( WANTQ, WANTZ, N, A, LDA, B, LDB, Q, LDQ, Z,
+     $         CALL ZTGEXC( WANTQ, WANTZ, N, A, LDA, B, LDB, Q, LDQ,
+     $                      Z,
      $                      LDZ, K, KS, IERR )
 *
             IF( IERR.GT.0 ) THEN
@@ -68134,7 +69933,8 @@
          N2 = N - M
          I = N1 + 1
          CALL ZLACPY( 'Full', N1, N2, A( 1, I ), LDA, WORK, N1 )
-         CALL ZLACPY( 'Full', N1, N2, B( 1, I ), LDB, WORK( N1*N2+1 ),
+         CALL ZLACPY( 'Full', N1, N2, B( 1, I ), LDB,
+     $                WORK( N1*N2+1 ),
      $                N1 )
          IJB = 0
          CALL ZTGSYL( 'N', IJB, N1, N2, A, LDA, A( I, I ), LDA, WORK,
@@ -68176,14 +69976,16 @@
 *
 *           Frobenius norm-based Difu estimate.
 *
-            CALL ZTGSYL( 'N', IJB, N1, N2, A, LDA, A( I, I ), LDA, WORK,
+            CALL ZTGSYL( 'N', IJB, N1, N2, A, LDA, A( I, I ), LDA,
+     $                   WORK,
      $                   N1, B, LDB, B( I, I ), LDB, WORK( N1*N2+1 ),
      $                   N1, DSCALE, DIF( 1 ), WORK( N1*N2*2+1 ),
      $                   LWORK-2*N1*N2, IWORK, IERR )
 *
 *           Frobenius norm-based Difl estimate.
 *
-            CALL ZTGSYL( 'N', IJB, N2, N1, A( I, I ), LDA, A, LDA, WORK,
+            CALL ZTGSYL( 'N', IJB, N2, N1, A( I, I ), LDA, A, LDA,
+     $                   WORK,
      $                   N2, B( I, I ), LDB, B, LDB, WORK( N1*N2+1 ),
      $                   N2, DSCALE, DIF( 2 ), WORK( N1*N2*2+1 ),
      $                   LWORK-2*N1*N2, IWORK, IERR )
@@ -68211,7 +70013,8 @@
 *
 *                 Solve generalized Sylvester equation
 *
-                  CALL ZTGSYL( 'N', IJB, N1, N2, A, LDA, A( I, I ), LDA,
+                  CALL ZTGSYL( 'N', IJB, N1, N2, A, LDA, A( I, I ),
+     $                         LDA,
      $                         WORK, N1, B, LDB, B( I, I ), LDB,
      $                         WORK( N1*N2+1 ), N1, DSCALE, DIF( 1 ),
      $                         WORK( N1*N2*2+1 ), LWORK-2*N1*N2, IWORK,
@@ -68220,7 +70023,8 @@
 *
 *                 Solve the transposed variant.
 *
-                  CALL ZTGSYL( 'C', IJB, N1, N2, A, LDA, A( I, I ), LDA,
+                  CALL ZTGSYL( 'C', IJB, N1, N2, A, LDA, A( I, I ),
+     $                         LDA,
      $                         WORK, N1, B, LDB, B( I, I ), LDB,
      $                         WORK( N1*N2+1 ), N1, DSCALE, DIF( 1 ),
      $                         WORK( N1*N2*2+1 ), LWORK-2*N1*N2, IWORK,
@@ -68240,7 +70044,8 @@
 *
 *                 Solve generalized Sylvester equation
 *
-                  CALL ZTGSYL( 'N', IJB, N2, N1, A( I, I ), LDA, A, LDA,
+                  CALL ZTGSYL( 'N', IJB, N2, N1, A( I, I ), LDA, A,
+     $                         LDA,
      $                         WORK, N2, B( I, I ), LDB, B, LDB,
      $                         WORK( N1*N2+1 ), N2, DSCALE, DIF( 2 ),
      $                         WORK( N1*N2*2+1 ), LWORK-2*N1*N2, IWORK,
@@ -68249,7 +70054,8 @@
 *
 *                 Solve the transposed variant.
 *
-                  CALL ZTGSYL( 'C', IJB, N2, N1, A( I, I ), LDA, A, LDA,
+                  CALL ZTGSYL( 'C', IJB, N2, N1, A( I, I ), LDA, A,
+     $                         LDA,
      $                         WORK, N2, B, LDB, B( I, I ), LDB,
      $                         WORK( N1*N2+1 ), N2, DSCALE, DIF( 2 ),
      $                         WORK( N1*N2*2+1 ), LWORK-2*N1*N2, IWORK,
@@ -68549,7 +70355,8 @@
 *>     Umea University, S-901 87 Umea, Sweden.
 *
 *  =====================================================================
-      SUBROUTINE ZTGSY2( TRANS, IJOB, M, N, A, LDA, B, LDB, C, LDC, D,
+      SUBROUTINE ZTGSY2( TRANS, IJOB, M, N, A, LDA, B, LDB, C, LDC,
+     $                   D,
      $                   LDD, E, LDE, F, LDF, SCALE, RDSUM, RDSCAL,
      $                   INFO )
 *
@@ -68589,7 +70396,8 @@
       EXTERNAL           LSAME
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           XERBLA, ZAXPY, ZGESC2, ZGETC2, ZLATDF, ZSCAL
+      EXTERNAL           XERBLA, ZAXPY, ZGESC2, ZGETC2, ZLATDF,
+     $                   ZSCAL
 *     ..
 *     .. Intrinsic Functions ..
       INTRINSIC          DCMPLX, DCONJG, MAX
@@ -68686,8 +70494,10 @@
 *
                IF( I.GT.1 ) THEN
                   ALPHA = -RHS( 1 )
-                  CALL ZAXPY( I-1, ALPHA, A( 1, I ), 1, C( 1, J ), 1 )
-                  CALL ZAXPY( I-1, ALPHA, D( 1, I ), 1, F( 1, J ), 1 )
+                  CALL ZAXPY( I-1, ALPHA, A( 1, I ), 1, C( 1, J ),
+     $                        1 )
+                  CALL ZAXPY( I-1, ALPHA, D( 1, I ), 1, F( 1, J ),
+     $                        1 )
                END IF
                IF( J.LT.N ) THEN
                   CALL ZAXPY( N-J, RHS( 2 ), B( J, J+1 ), LDB,
@@ -68731,9 +70541,11 @@
                CALL ZGESC2( LDZ, Z, LDZ, RHS, IPIV, JPIV, SCALOC )
                IF( SCALOC.NE.ONE ) THEN
                   DO 40 K = 1, N
-                     CALL ZSCAL( M, DCMPLX( SCALOC, ZERO ), C( 1, K ),
+                     CALL ZSCAL( M, DCMPLX( SCALOC, ZERO ), C( 1,
+     $                           K ),
      $                           1 )
-                     CALL ZSCAL( M, DCMPLX( SCALOC, ZERO ), F( 1, K ),
+                     CALL ZSCAL( M, DCMPLX( SCALOC, ZERO ), F( 1,
+     $                           K ),
      $                           1 )
    40             CONTINUE
                   SCALE = SCALE*SCALOC
@@ -69054,7 +70866,8 @@
 *>      July 1989, pp 745-751.
 *>
 *  =====================================================================
-      SUBROUTINE ZTGSYL( TRANS, IJOB, M, N, A, LDA, B, LDB, C, LDC, D,
+      SUBROUTINE ZTGSYL( TRANS, IJOB, M, N, A, LDA, B, LDB, C, LDC,
+     $                   D,
      $                   LDD, E, LDE, F, LDF, SCALE, DIF, WORK, LWORK,
      $                   IWORK, INFO )
 *
@@ -69097,7 +70910,8 @@
       EXTERNAL           LSAME, ILAENV
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           XERBLA, ZGEMM, ZLACPY, ZLASET, ZSCAL, ZTGSY2
+      EXTERNAL           XERBLA, ZGEMM, ZLACPY, ZLASET, ZSCAL,
+     $                   ZTGSY2
 *     ..
 *     .. Intrinsic Functions ..
       INTRINSIC          DBLE, DCMPLX, MAX, SQRT
@@ -69201,7 +71015,8 @@
             DSCALE = ZERO
             DSUM = ONE
             PQ = M*N
-            CALL ZTGSY2( TRANS, IFUNC, M, N, A, LDA, B, LDB, C, LDC, D,
+            CALL ZTGSY2( TRANS, IFUNC, M, N, A, LDA, B, LDB, C, LDC,
+     $                   D,
      $                   LDD, E, LDE, F, LDF, SCALE, DSUM, DSCALE,
      $                   INFO )
             IF( DSCALE.NE.ZERO ) THEN
@@ -69289,7 +71104,8 @@
                   IS = IWORK( I )
                   IE = IWORK( I+1 ) - 1
                   MB = IE - IS + 1
-                  CALL ZTGSY2( TRANS, IFUNC, MB, NB, A( IS, IS ), LDA,
+                  CALL ZTGSY2( TRANS, IFUNC, MB, NB, A( IS, IS ),
+     $                         LDA,
      $                         B( JS, JS ), LDB, C( IS, JS ), LDC,
      $                         D( IS, IS ), LDD, E( JS, JS ), LDE,
      $                         F( IS, JS ), LDF, SCALOC, DSUM, DSCALE,
@@ -69398,9 +71214,11 @@
      $            INFO = LINFO
                IF( SCALOC.NE.ONE ) THEN
                   DO 160 K = 1, JS - 1
-                     CALL ZSCAL( M, DCMPLX( SCALOC, ZERO ), C( 1, K ),
+                     CALL ZSCAL( M, DCMPLX( SCALOC, ZERO ), C( 1,
+     $                           K ),
      $                           1 )
-                     CALL ZSCAL( M, DCMPLX( SCALOC, ZERO ), F( 1, K ),
+                     CALL ZSCAL( M, DCMPLX( SCALOC, ZERO ), F( 1,
+     $                           K ),
      $                           1 )
   160             CONTINUE
                   DO 170 K = JS, JE
@@ -69416,9 +71234,11 @@
      $                           F( IE+1, K ), 1 )
   180             CONTINUE
                   DO 190 K = JE + 1, N
-                     CALL ZSCAL( M, DCMPLX( SCALOC, ZERO ), C( 1, K ),
+                     CALL ZSCAL( M, DCMPLX( SCALOC, ZERO ), C( 1,
+     $                           K ),
      $                           1 )
-                     CALL ZSCAL( M, DCMPLX( SCALOC, ZERO ), F( 1, K ),
+                     CALL ZSCAL( M, DCMPLX( SCALOC, ZERO ), F( 1,
+     $                           K ),
      $                           1 )
   190             CONTINUE
                   SCALE = SCALE*SCALOC
@@ -69693,13 +71513,15 @@
 *
 *              Multiply by inv(A).
 *
-               CALL ZLATPS( UPLO, 'No transpose', DIAG, NORMIN, N, AP,
+               CALL ZLATPS( UPLO, 'No transpose', DIAG, NORMIN, N,
+     $                      AP,
      $                      WORK, SCALE, RWORK, INFO )
             ELSE
 *
 *              Multiply by inv(A**H).
 *
-               CALL ZLATPS( UPLO, 'Conjugate transpose', DIAG, NORMIN,
+               CALL ZLATPS( UPLO, 'Conjugate transpose', DIAG,
+     $                      NORMIN,
      $                      N, AP, WORK, SCALE, RWORK, INFO )
             END IF
             NORMIN = 'Y'
@@ -70007,9 +71829,14 @@
 *>
 *>    A * X = B,  A**T * X = B,  or  A**H * X = B,
 *>
-*> where A is a triangular matrix of order N stored in packed format,
-*> and B is an N-by-NRHS matrix.  A check is made to verify that A is
-*> nonsingular.
+*> where A is a triangular matrix of order N stored in packed format, and B is an N-by-NRHS matrix.
+*>
+*> This subroutine verifies that A is nonsingular, but callers should note that only exact
+*> singularity is detected. It is conceivable for one or more diagonal elements of A to be
+*> subnormally tiny numbers without this subroutine signalling an error.
+*>
+*> If a possible loss of numerical precision due to near-singular matrices is a concern, the
+*> caller should verify that A is nonsingular within some tolerance before calling this subroutine.
 *> \endverbatim
 *
 *  Arguments:
@@ -70079,7 +71906,7 @@
 *>          INFO is INTEGER
 *>          = 0:  successful exit
 *>          < 0:  if INFO = -i, the i-th argument had an illegal value
-*>          > 0:  if INFO = i, the i-th diagonal element of A is zero,
+*>          > 0:  if INFO = i, the i-th diagonal element of A is exactly zero,
 *>                indicating that the matrix is singular and the
 *>                solutions X have not been computed.
 *> \endverbatim
@@ -70095,7 +71922,8 @@
 *> \ingroup tptrs
 *
 *  =====================================================================
-      SUBROUTINE ZTPTRS( UPLO, TRANS, DIAG, N, NRHS, AP, B, LDB, INFO )
+      SUBROUTINE ZTPTRS( UPLO, TRANS, DIAG, N, NRHS, AP, B, LDB,
+     $                   INFO )
 *
 *  -- LAPACK computational routine --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
@@ -70139,7 +71967,8 @@
       IF( .NOT.UPPER .AND. .NOT.LSAME( UPLO, 'L' ) ) THEN
          INFO = -1
       ELSE IF( .NOT.LSAME( TRANS, 'N' ) .AND. .NOT.
-     $         LSAME( TRANS, 'T' ) .AND. .NOT.LSAME( TRANS, 'C' ) ) THEN
+     $         LSAME( TRANS, 'T' ) .AND.
+     $                .NOT.LSAME( TRANS, 'C' ) ) THEN
          INFO = -2
       ELSE IF( .NOT.NOUNIT .AND. .NOT.LSAME( DIAG, 'U' ) ) THEN
          INFO = -3
@@ -70443,7 +72272,8 @@
 *
 *              Multiply by inv(A**H).
 *
-               CALL ZLATRS( UPLO, 'Conjugate transpose', DIAG, NORMIN,
+               CALL ZLATRS( UPLO, 'Conjugate transpose', DIAG,
+     $                      NORMIN,
      $                      N, A, LDA, WORK, SCALE, RWORK, INFO )
             END IF
             NORMIN = 'Y'
@@ -70687,7 +72517,8 @@
 *> \endverbatim
 *>
 *  =====================================================================
-      SUBROUTINE ZTREVC( SIDE, HOWMNY, SELECT, N, T, LDT, VL, LDVL, VR,
+      SUBROUTINE ZTREVC( SIDE, HOWMNY, SELECT, N, T, LDT, VL, LDVL,
+     $                   VR,
      $                   LDVR, MM, M, WORK, RWORK, INFO )
 *
 *  -- LAPACK computational routine --
@@ -70727,7 +72558,8 @@
       EXTERNAL           LSAME, IZAMAX, DLAMCH, DZASUM
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           XERBLA, ZCOPY, ZDSCAL, ZGEMV, ZLATRS
+      EXTERNAL           XERBLA, ZCOPY, ZDSCAL, ZGEMV,
+     $                   ZLATRS
 *     ..
 *     .. Intrinsic Functions ..
       INTRINSIC          ABS, DBLE, DCMPLX, DCONJG, DIMAG, MAX
@@ -70861,7 +72693,8 @@
    60          CONTINUE
             ELSE
                IF( KI.GT.1 )
-     $            CALL ZGEMV( 'N', N, KI-1, CMONE, VR, LDVR, WORK( 1 ),
+     $            CALL ZGEMV( 'N', N, KI-1, CMONE, VR, LDVR,
+     $                        WORK( 1 ),
      $                        1, DCMPLX( SCALE ), VR( 1, KI ), 1 )
 *
                II = IZAMAX( N, VR( 1, KI ), 1 )
@@ -70910,7 +72743,8 @@
   100       CONTINUE
 *
             IF( KI.LT.N ) THEN
-               CALL ZLATRS( 'Upper', 'Conjugate transpose', 'Non-unit',
+               CALL ZLATRS( 'Upper', 'Conjugate transpose',
+     $                      'Non-unit',
      $                      'Y', N-KI, T( KI+1, KI+1 ), LDT,
      $                      WORK( KI+1 ), SCALE, RWORK, INFO )
                WORK( KI ) = SCALE
@@ -70930,7 +72764,8 @@
   110          CONTINUE
             ELSE
                IF( KI.LT.N )
-     $            CALL ZGEMV( 'N', N, N-KI, CMONE, VL( 1, KI+1 ), LDVL,
+     $            CALL ZGEMV( 'N', N, N-KI, CMONE, VL( 1, KI+1 ),
+     $                        LDVL,
      $                        WORK( KI+1 ), 1, DCMPLX( SCALE ),
      $                        VL( 1, KI ), 1 )
 *
@@ -71195,7 +73030,8 @@
 *> \endverbatim
 *>
 *  =====================================================================
-      SUBROUTINE ZTREVC3( SIDE, HOWMNY, SELECT, N, T, LDT, VL, LDVL, VR,
+      SUBROUTINE ZTREVC3( SIDE, HOWMNY, SELECT, N, T, LDT, VL, LDVL,
+     $                    VR,
      $                    LDVR, MM, M, WORK, LWORK, RWORK, LRWORK, INFO)
       IMPLICIT NONE
 *
@@ -71235,10 +73071,12 @@
       LOGICAL            LSAME
       INTEGER            ILAENV, IZAMAX
       DOUBLE PRECISION   DLAMCH, DZASUM
-      EXTERNAL           LSAME, ILAENV, IZAMAX, DLAMCH, DZASUM
+      EXTERNAL           LSAME, ILAENV, IZAMAX, DLAMCH,
+     $                   DZASUM
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           XERBLA, ZCOPY, ZDSCAL, ZGEMV, ZLATRS,
+      EXTERNAL           XERBLA, ZCOPY, ZDSCAL, ZGEMV,
+     $                   ZLATRS,
      $                   ZGEMM, ZLASET, ZLACPY
 *     ..
 *     .. Intrinsic Functions ..
@@ -71498,7 +73336,8 @@
   100       CONTINUE
 *
             IF( KI.LT.N ) THEN
-               CALL ZLATRS( 'Upper', 'Conjugate transpose', 'Non-unit',
+               CALL ZLATRS( 'Upper', 'Conjugate transpose',
+     $                      'Non-unit',
      $                      'Y', N-KI, T( KI+1, KI+1 ), LDT,
      $                      WORK( KI+1 + IV*N ), SCALE, RWORK, INFO )
                WORK( KI + IV*N ) = SCALE
@@ -71509,7 +73348,8 @@
             IF( .NOT.OVER ) THEN
 *              ------------------------------
 *              no back-transform: copy x to VL and normalize.
-               CALL ZCOPY( N-KI+1, WORK( KI + IV*N ), 1, VL(KI,IS), 1 )
+               CALL ZCOPY( N-KI+1, WORK( KI + IV*N ), 1, VL(KI,IS),
+     $                     1 )
 *
                II = IZAMAX( N-KI+1, VL( KI, IS ), 1 ) + KI - 1
                REMAX = ONE / CABS1( VL( II, IS ) )
@@ -71523,7 +73363,8 @@
 *              ------------------------------
 *              version 1: back-transform each vector with GEMV, Q*x.
                IF( KI.LT.N )
-     $            CALL ZGEMV( 'N', N, N-KI, CONE, VL( 1, KI+1 ), LDVL,
+     $            CALL ZGEMV( 'N', N, N-KI, CONE, VL( 1, KI+1 ),
+     $                        LDVL,
      $                        WORK( KI+1 + IV*N ), 1, DCMPLX( SCALE ),
      $                        VL( 1, KI ), 1 )
 *
@@ -71794,7 +73635,8 @@
 *        Apply transformation to the matrix T.
 *
          IF( K+2.LE.N )
-     $      CALL ZROT( N-K-1, T( K, K+2 ), LDT, T( K+1, K+2 ), LDT, CS,
+     $      CALL ZROT( N-K-1, T( K, K+2 ), LDT, T( K+1, K+2 ), LDT,
+     $                 CS,
      $                 SN )
          CALL ZROT( K-1, T( 1, K ), 1, T( 1, K+1 ), 1, CS,
      $              DCONJG( SN ) )
@@ -72078,7 +73920,8 @@
 *> \endverbatim
 *>
 *  =====================================================================
-      SUBROUTINE ZTRSEN( JOB, COMPQ, SELECT, N, T, LDT, Q, LDQ, W, M, S,
+      SUBROUTINE ZTRSEN( JOB, COMPQ, SELECT, N, T, LDT, Q, LDQ, W, M,
+     $                   S,
      $                   SEP, WORK, LWORK, INFO )
 *
 *  -- LAPACK computational routine --
@@ -72116,7 +73959,8 @@
       EXTERNAL           LSAME, ZLANGE
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           XERBLA, ZLACN2, ZLACPY, ZTREXC, ZTRSYL
+      EXTERNAL           XERBLA, ZLACN2, ZLACPY, ZTREXC,
+     $                   ZTRSYL
 *     ..
 *     .. Intrinsic Functions ..
       INTRINSIC          MAX, SQRT
@@ -72515,7 +74359,8 @@
 *> \endverbatim
 *>
 *  =====================================================================
-      SUBROUTINE ZTRSNA( JOB, HOWMNY, SELECT, N, T, LDT, VL, LDVL, VR,
+      SUBROUTINE ZTRSNA( JOB, HOWMNY, SELECT, N, T, LDT, VL, LDVL,
+     $                   VR,
      $                   LDVR, S, SEP, MM, M, WORK, LDWORK, RWORK,
      $                   INFO )
 *
@@ -72557,10 +74402,12 @@
       INTEGER            IZAMAX
       DOUBLE PRECISION   DLAMCH, DZNRM2
       COMPLEX*16         ZDOTC
-      EXTERNAL           LSAME, IZAMAX, DLAMCH, DZNRM2, ZDOTC
+      EXTERNAL           LSAME, IZAMAX, DLAMCH, DZNRM2,
+     $                   ZDOTC
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           XERBLA, ZDRSCL, ZLACN2, ZLACPY, ZLATRS, ZTREXC
+      EXTERNAL           XERBLA, ZDRSCL, ZLACN2, ZLACPY, ZLATRS,
+     $                   ZTREXC
 *     ..
 *     .. Intrinsic Functions ..
       INTRINSIC          ABS, DBLE, DIMAG, MAX
@@ -72669,7 +74516,8 @@
 *           diagonal element to the (1,1) position.
 *
             CALL ZLACPY( 'Full', N, N, T, LDT, WORK, LDWORK )
-            CALL ZTREXC( 'No Q', N, WORK, LDWORK, DUMMY, 1, K, 1, IERR )
+            CALL ZTREXC( 'No Q', N, WORK, LDWORK, DUMMY, 1, K, 1,
+     $                   IERR )
 *
 *           Form  C = T22 - lambda*I in WORK(2:N,2:N).
 *
@@ -72685,7 +74533,8 @@
             KASE = 0
             NORMIN = 'N'
    30       CONTINUE
-            CALL ZLACN2( N-1, WORK( 1, N+1 ), WORK, EST, KASE, ISAVE )
+            CALL ZLACN2( N-1, WORK( 1, N+1 ), WORK, EST, KASE,
+     $                   ISAVE )
 *
             IF( KASE.NE.0 ) THEN
                IF( KASE.EQ.1 ) THEN
@@ -72919,7 +74768,8 @@
       LOGICAL            LSAME
       DOUBLE PRECISION   DLAMCH, ZLANGE
       COMPLEX*16         ZDOTC, ZDOTU, ZLADIV
-      EXTERNAL           LSAME, DLAMCH, ZLANGE, ZDOTC, ZDOTU, ZLADIV
+      EXTERNAL           LSAME, DLAMCH, ZLANGE, ZDOTC, ZDOTU,
+     $                   ZLADIV
 *     ..
 *     .. External Subroutines ..
       EXTERNAL           XERBLA, ZDSCAL
@@ -73588,9 +75438,11 @@
 *
 *              Compute rows 1:j-1 of current block column
 *
-               CALL ZTRMM( 'Left', 'Upper', 'No transpose', DIAG, J-1,
+               CALL ZTRMM( 'Left', 'Upper', 'No transpose', DIAG,
+     $                     J-1,
      $                     JB, ONE, A, LDA, A( 1, J ), LDA )
-               CALL ZTRSM( 'Right', 'Upper', 'No transpose', DIAG, J-1,
+               CALL ZTRSM( 'Right', 'Upper', 'No transpose', DIAG,
+     $                     J-1,
      $                     JB, -ONE, A( J, J ), LDA, A( 1, J ), LDA )
 *
 *              Compute inverse of current diagonal block
@@ -73669,8 +75521,14 @@
 *>
 *>    A * X = B,  A**T * X = B,  or  A**H * X = B,
 *>
-*> where A is a triangular matrix of order N, and B is an N-by-NRHS
-*> matrix.  A check is made to verify that A is nonsingular.
+*> where A is a triangular matrix of order N, and B is an N-by-NRHS matrix.
+*>
+*> This subroutine verifies that A is nonsingular, but callers should note that only exact
+*> singularity is detected. It is conceivable for one or more diagonal elements of A to be
+*> subnormally tiny numbers without this subroutine signalling an error.
+*>
+*> If a possible loss of numerical precision due to near-singular matrices is a concern, the
+*> caller should verify that A is nonsingular within some tolerance before calling this subroutine.
 *> \endverbatim
 *
 *  Arguments:
@@ -73749,7 +75607,7 @@
 *>          INFO is INTEGER
 *>          = 0:  successful exit
 *>          < 0: if INFO = -i, the i-th argument had an illegal value
-*>          > 0: if INFO = i, the i-th diagonal element of A is zero,
+*>          > 0:  if INFO = i, the i-th diagonal element of A is exactly zero,
 *>               indicating that the matrix is singular and the solutions
 *>               X have not been computed.
 *> \endverbatim
@@ -73806,10 +75664,12 @@
 *
       INFO = 0
       NOUNIT = LSAME( DIAG, 'N' )
-      IF( .NOT.LSAME( UPLO, 'U' ) .AND. .NOT.LSAME( UPLO, 'L' ) ) THEN
+      IF( .NOT.LSAME( UPLO, 'U' ) .AND.
+     $    .NOT.LSAME( UPLO, 'L' ) ) THEN
          INFO = -1
       ELSE IF( .NOT.LSAME( TRANS, 'N' ) .AND. .NOT.
-     $         LSAME( TRANS, 'T' ) .AND. .NOT.LSAME( TRANS, 'C' ) ) THEN
+     $         LSAME( TRANS, 'T' ) .AND.
+     $                .NOT.LSAME( TRANS, 'C' ) ) THEN
          INFO = -2
       ELSE IF( .NOT.NOUNIT .AND. .NOT.LSAME( DIAG, 'U' ) ) THEN
          INFO = -3
@@ -73988,7 +75848,7 @@
       INTEGER            I, II, J, L
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           XERBLA, ZLARF, ZSCAL
+      EXTERNAL           XERBLA, ZLARF1L, ZSCAL
 *     ..
 *     .. Intrinsic Functions ..
       INTRINSIC          MAX
@@ -74032,8 +75892,9 @@
 *        Apply H(i) to A(1:m-k+i,1:n-k+i) from the left
 *
          A( M-N+II, II ) = ONE
-         CALL ZLARF( 'Left', M-N+II, II-1, A( 1, II ), 1, TAU( I ), A,
-     $               LDA, WORK )
+         CALL ZLARF1L( 'Left', M-N+II, II-1, A( 1, II ), 1, TAU( I ),
+     $                 A,
+     $                 LDA, WORK )
          CALL ZSCAL( M-N+II-1, -TAU( I ), A( 1, II ), 1 )
          A( M-N+II, II ) = ONE - TAU( I )
 *
@@ -74184,7 +76045,7 @@
       INTEGER            I, J, L
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           XERBLA, ZLARF, ZSCAL
+      EXTERNAL           XERBLA, ZLARF1F, ZSCAL
 *     ..
 *     .. Intrinsic Functions ..
       INTRINSIC          MAX
@@ -74227,9 +76088,8 @@
 *        Apply H(i) to A(i:m,i:n) from the left
 *
          IF( I.LT.N ) THEN
-            A( I, I ) = ONE
-            CALL ZLARF( 'Left', M-I+1, N-I, A( I, I ), 1, TAU( I ),
-     $                  A( I, I+1 ), LDA, WORK )
+            CALL ZLARF1F( 'Left', M-I+1, N-I, A( I, I ), 1, TAU( I ),
+     $                    A( I, I+1 ), LDA, WORK )
          END IF
          IF( I.LT.M )
      $      CALL ZSCAL( M-I, -TAU( I ), A( I+1, I ), 1 )
@@ -74401,7 +76261,8 @@
 *> \ingroup ungbr
 *
 *  =====================================================================
-      SUBROUTINE ZUNGBR( VECT, M, N, K, A, LDA, TAU, WORK, LWORK, INFO )
+      SUBROUTINE ZUNGBR( VECT, M, N, K, A, LDA, TAU, WORK, LWORK,
+     $                   INFO )
 *
 *  -- LAPACK computational routine --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
@@ -74705,7 +76566,8 @@
 *> \ingroup unghr
 *
 *  =====================================================================
-      SUBROUTINE ZUNGHR( N, ILO, IHI, A, LDA, TAU, WORK, LWORK, INFO )
+      SUBROUTINE ZUNGHR( N, ILO, IHI, A, LDA, TAU, WORK, LWORK,
+     $                   INFO )
 *
 *  -- LAPACK computational routine --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
@@ -74954,7 +76816,7 @@
       INTEGER            I, J, L
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           XERBLA, ZLACGV, ZLARF, ZSCAL
+      EXTERNAL           XERBLA, ZLACGV, ZLARF1F, ZSCAL
 *     ..
 *     .. Intrinsic Functions ..
       INTRINSIC          DCONJG, MAX
@@ -75003,9 +76865,9 @@
          IF( I.LT.N ) THEN
             CALL ZLACGV( N-I, A( I, I+1 ), LDA )
             IF( I.LT.M ) THEN
-               A( I, I ) = ONE
-               CALL ZLARF( 'Right', M-I, N-I+1, A( I, I ), LDA,
-     $                     DCONJG( TAU( I ) ), A( I+1, I ), LDA, WORK )
+               CALL ZLARF1F( 'Right', M-I, N-I+1, A( I, I ), LDA,
+     $                       CONJG( TAU( I ) ), A( I+1, I ), LDA,
+     $                       WORK )
             END IF
             CALL ZSCAL( N-I, -TAU( I ), A( I, I+1 ), LDA )
             CALL ZLACGV( N-I, A( I, I+1 ), LDA )
@@ -75236,7 +77098,8 @@
 *              determine the minimum value of NB.
 *
                NB = LWORK / LDWORK
-               NBMIN = MAX( 2, ILAENV( 2, 'ZUNGLQ', ' ', M, N, K, -1 ) )
+               NBMIN = MAX( 2, ILAENV( 2, 'ZUNGLQ', ' ', M, N, K,
+     $                      -1 ) )
             END IF
          END IF
       END IF
@@ -75277,12 +77140,14 @@
 *              Form the triangular factor of the block reflector
 *              H = H(i) H(i+1) . . . H(i+ib-1)
 *
-               CALL ZLARFT( 'Forward', 'Rowwise', N-I+1, IB, A( I, I ),
+               CALL ZLARFT( 'Forward', 'Rowwise', N-I+1, IB, A( I,
+     $                      I ),
      $                      LDA, TAU( I ), WORK, LDWORK )
 *
 *              Apply H**H to A(i+ib:m,i:n) from the right
 *
-               CALL ZLARFB( 'Right', 'Conjugate transpose', 'Forward',
+               CALL ZLARFB( 'Right', 'Conjugate transpose',
+     $                      'Forward',
      $                      'Rowwise', M-I-IB+1, N-I+1, IB, A( I, I ),
      $                      LDA, WORK, LDWORK, A( I+IB, I ), LDA,
      $                      WORK( IB+1 ), LDWORK )
@@ -75290,7 +77155,8 @@
 *
 *           Apply H**H to columns i:n of current block
 *
-            CALL ZUNGL2( IB, N-I+1, IB, A( I, I ), LDA, TAU( I ), WORK,
+            CALL ZUNGL2( IB, N-I+1, IB, A( I, I ), LDA, TAU( I ),
+     $                   WORK,
      $                   IINFO )
 *
 *           Set columns 1:i-1 of current block to zero
@@ -75532,7 +77398,8 @@
 *              determine the minimum value of NB.
 *
                NB = LWORK / LDWORK
-               NBMIN = MAX( 2, ILAENV( 2, 'ZUNGQL', ' ', M, N, K, -1 ) )
+               NBMIN = MAX( 2, ILAENV( 2, 'ZUNGQL', ' ', M, N, K,
+     $                      -1 ) )
             END IF
          END IF
       END IF
@@ -75816,7 +77683,8 @@
 *              determine the minimum value of NB.
 *
                NB = LWORK / LDWORK
-               NBMIN = MAX( 2, ILAENV( 2, 'ZUNGQR', ' ', M, N, K, -1 ) )
+               NBMIN = MAX( 2, ILAENV( 2, 'ZUNGQR', ' ', M, N, K,
+     $                      -1 ) )
             END IF
          END IF
       END IF
@@ -75870,7 +77738,8 @@
 *
 *           Apply H to rows i:m of current block
 *
-            CALL ZUNG2R( M-I+1, IB, IB, A( I, I ), LDA, TAU( I ), WORK,
+            CALL ZUNG2R( M-I+1, IB, IB, A( I, I ), LDA, TAU( I ),
+     $                   WORK,
      $                   IINFO )
 *
 *           Set rows 1:i-1 of current block to zero
@@ -76025,7 +77894,7 @@
       INTEGER            I, II, J, L
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           XERBLA, ZLACGV, ZLARF, ZSCAL
+      EXTERNAL           XERBLA, ZLACGV, ZLARF1L, ZSCAL
 *     ..
 *     .. Intrinsic Functions ..
       INTRINSIC          DCONJG, MAX
@@ -76073,9 +77942,8 @@
 *        Apply H(i)**H to A(1:m-k+i,1:n-k+i) from the right
 *
          CALL ZLACGV( N-M+II-1, A( II, 1 ), LDA )
-         A( II, N-M+II ) = ONE
-         CALL ZLARF( 'Right', II-1, N-M+II, A( II, 1 ), LDA,
-     $               DCONJG( TAU( I ) ), A, LDA, WORK )
+         CALL ZLARF1L( 'Right', II-1, N-M+II, A( II, 1 ), LDA,
+     $                 CONJG( TAU( I ) ), A, LDA, WORK )
          CALL ZSCAL( N-M+II-1, -TAU( I ), A( II, 1 ), LDA )
          CALL ZLACGV( N-M+II-1, A( II, 1 ), LDA )
          A( II, N-M+II ) = ONE - DCONJG( TAU( I ) )
@@ -76314,7 +78182,8 @@
 *              determine the minimum value of NB.
 *
                NB = LWORK / LDWORK
-               NBMIN = MAX( 2, ILAENV( 2, 'ZUNGRQ', ' ', M, N, K, -1 ) )
+               NBMIN = MAX( 2, ILAENV( 2, 'ZUNGRQ', ' ', M, N, K,
+     $                      -1 ) )
             END IF
          END IF
       END IF
@@ -76358,7 +78227,8 @@
 *
 *              Apply H**H to A(1:m-k+i-1,1:n-k+i+ib-1) from the right
 *
-               CALL ZLARFB( 'Right', 'Conjugate transpose', 'Backward',
+               CALL ZLARFB( 'Right', 'Conjugate transpose',
+     $                      'Backward',
      $                      'Rowwise', II-1, N-K+I+IB-1, IB, A( II, 1 ),
      $                      LDA, WORK, LDWORK, A, LDA, WORK( IB+1 ),
      $                      LDWORK )
@@ -76366,7 +78236,8 @@
 *
 *           Apply H**H to columns 1:n-k+i+ib-1 of current block
 *
-            CALL ZUNGR2( IB, N-K+I+IB-1, IB, A( II, 1 ), LDA, TAU( I ),
+            CALL ZUNGR2( IB, N-K+I+IB-1, IB, A( II, 1 ), LDA,
+     $                   TAU( I ),
      $                   WORK, IINFO )
 *
 *           Set columns n-k+i+ib:n of current block to zero
@@ -76604,7 +78475,8 @@
 *
 *        Generate Q(1:n-1,1:n-1)
 *
-         CALL ZUNGQL( N-1, N-1, N-1, A, LDA, TAU, WORK, LWORK, IINFO )
+         CALL ZUNGQL( N-1, N-1, N-1, A, LDA, TAU, WORK, LWORK,
+     $                IINFO )
 *
       ELSE
 *
@@ -76818,14 +78690,14 @@
 *     .. Local Scalars ..
       LOGICAL            LEFT, NOTRAN
       INTEGER            I, I1, I2, I3, MI, NI, NQ
-      COMPLEX*16         AII, TAUI
+      COMPLEX*16         TAUI
 *     ..
 *     .. External Functions ..
       LOGICAL            LSAME
       EXTERNAL           LSAME
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           XERBLA, ZLARF
+      EXTERNAL           XERBLA, ZLARF1L
 *     ..
 *     .. Intrinsic Functions ..
       INTRINSIC          DCONJG, MAX
@@ -76906,10 +78778,8 @@
          ELSE
             TAUI = DCONJG( TAU( I ) )
          END IF
-         AII = A( NQ-K+I, I )
-         A( NQ-K+I, I ) = ONE
-         CALL ZLARF( SIDE, MI, NI, A( 1, I ), 1, TAUI, C, LDC, WORK )
-         A( NQ-K+I, I ) = AII
+         CALL ZLARF1L( SIDE, MI, NI, A( 1, I ), 1, TAUI, C, LDC,
+     $                 WORK )
    10 CONTINUE
       RETURN
 *
@@ -77096,14 +78966,14 @@
 *     .. Local Scalars ..
       LOGICAL            LEFT, NOTRAN
       INTEGER            I, I1, I2, I3, IC, JC, MI, NI, NQ
-      COMPLEX*16         AII, TAUI
+      COMPLEX*16         TAUI
 *     ..
 *     .. External Functions ..
       LOGICAL            LSAME
       EXTERNAL           LSAME
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           XERBLA, ZLARF
+      EXTERNAL           XERBLA, ZLARF1F
 *     ..
 *     .. Intrinsic Functions ..
       INTRINSIC          DCONJG, MAX
@@ -77188,11 +79058,9 @@
          ELSE
             TAUI = DCONJG( TAU( I ) )
          END IF
-         AII = A( I, I )
-         A( I, I ) = ONE
-         CALL ZLARF( SIDE, MI, NI, A( I, I ), 1, TAUI, C( IC, JC ), LDC,
+         CALL ZLARF1F( SIDE, MI, NI, A( I, I ), 1, TAUI, C( IC, JC ),
+     $               LDC,
      $               WORK )
-         A( I, I ) = AII
    10 CONTINUE
       RETURN
 *
@@ -77470,18 +79338,22 @@
          IF( M.GT.0 .AND. N.GT.0 ) THEN
             IF( APPLYQ ) THEN
                IF( LEFT ) THEN
-                  NB = ILAENV( 1, 'ZUNMQR', SIDE // TRANS, M-1, N, M-1,
+                  NB = ILAENV( 1, 'ZUNMQR', SIDE // TRANS, M-1, N,
+     $                         M-1,
      $                 -1 )
                ELSE
-                  NB = ILAENV( 1, 'ZUNMQR', SIDE // TRANS, M, N-1, N-1,
+                  NB = ILAENV( 1, 'ZUNMQR', SIDE // TRANS, M, N-1,
+     $                         N-1,
      $                 -1 )
                END IF
             ELSE
                IF( LEFT ) THEN
-                  NB = ILAENV( 1, 'ZUNMLQ', SIDE // TRANS, M-1, N, M-1,
+                  NB = ILAENV( 1, 'ZUNMLQ', SIDE // TRANS, M-1, N,
+     $                         M-1,
      $                 -1 )
                ELSE
-                  NB = ILAENV( 1, 'ZUNMLQ', SIDE // TRANS, M, N-1, N-1,
+                  NB = ILAENV( 1, 'ZUNMLQ', SIDE // TRANS, M, N-1,
+     $                         N-1,
      $                 -1 )
                END IF
             END IF
@@ -77529,7 +79401,8 @@
                I1 = 1
                I2 = 2
             END IF
-            CALL ZUNMQR( SIDE, TRANS, MI, NI, NQ-1, A( 2, 1 ), LDA, TAU,
+            CALL ZUNMQR( SIDE, TRANS, MI, NI, NQ-1, A( 2, 1 ), LDA,
+     $                   TAU,
      $                   C( I1, I2 ), LDC, WORK, LWORK, IINFO )
          END IF
       ELSE
@@ -77799,7 +79672,8 @@
       END IF
       IF( .NOT.LEFT .AND. .NOT.LSAME( SIDE, 'R' ) ) THEN
          INFO = -1
-      ELSE IF( .NOT.LSAME( TRANS, 'N' ) .AND. .NOT.LSAME( TRANS, 'C' ) )
+      ELSE IF( .NOT.LSAME( TRANS, 'N' ) .AND.
+     $         .NOT.LSAME( TRANS, 'C' ) )
      $          THEN
          INFO = -2
       ELSE IF( M.LT.0 ) THEN
@@ -78043,14 +79917,14 @@
 *     .. Local Scalars ..
       LOGICAL            LEFT, NOTRAN
       INTEGER            I, I1, I2, I3, IC, JC, MI, NI, NQ
-      COMPLEX*16         AII, TAUI
+      COMPLEX*16         TAUI
 *     ..
 *     .. External Functions ..
       LOGICAL            LSAME
       EXTERNAL           LSAME
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           XERBLA, ZLACGV, ZLARF
+      EXTERNAL           XERBLA, ZLACGV, ZLARF1F
 *     ..
 *     .. Intrinsic Functions ..
       INTRINSIC          DCONJG, MAX
@@ -78137,11 +80011,8 @@
          END IF
          IF( I.LT.NQ )
      $      CALL ZLACGV( NQ-I, A( I, I+1 ), LDA )
-         AII = A( I, I )
-         A( I, I ) = ONE
-         CALL ZLARF( SIDE, MI, NI, A( I, I ), LDA, TAUI, C( IC, JC ),
-     $               LDC, WORK )
-         A( I, I ) = AII
+         CALL ZLARF1F( SIDE, MI, NI, A( I, I ), LDA, TAUI, C( IC,
+     $                 JC ), LDC, WORK )
          IF( I.LT.NQ )
      $      CALL ZLACGV( NQ-I, A( I, I+1 ), LDA )
    10 CONTINUE
@@ -78393,7 +80264,8 @@
 *
 *        Compute the workspace requirements
 *
-         NB = MIN( NBMAX, ILAENV( 1, 'ZUNMLQ', SIDE // TRANS, M, N, K,
+         NB = MIN( NBMAX, ILAENV( 1, 'ZUNMLQ', SIDE // TRANS, M, N,
+     $             K,
      $        -1 ) )
          LWKOPT = NW*NB + TSIZE
          WORK( 1 ) = LWKOPT
@@ -78418,7 +80290,8 @@
       IF( NB.GT.1 .AND. NB.LT.K ) THEN
          IF( LWORK.LT.LWKOPT ) THEN
             NB = (LWORK-TSIZE) / LDWORK
-            NBMIN = MAX( 2, ILAENV( 2, 'ZUNMLQ', SIDE // TRANS, M, N, K,
+            NBMIN = MAX( 2, ILAENV( 2, 'ZUNMLQ', SIDE // TRANS, M, N,
+     $                   K,
      $              -1 ) )
          END IF
       END IF
@@ -78427,7 +80300,8 @@
 *
 *        Use unblocked code
 *
-         CALL ZUNML2( SIDE, TRANS, M, N, K, A, LDA, TAU, C, LDC, WORK,
+         CALL ZUNML2( SIDE, TRANS, M, N, K, A, LDA, TAU, C, LDC,
+     $                WORK,
      $                IINFO )
       ELSE
 *
@@ -78483,7 +80357,8 @@
 *
 *           Apply H or H**H
 *
-            CALL ZLARFB( SIDE, TRANST, 'Forward', 'Rowwise', MI, NI, IB,
+            CALL ZLARFB( SIDE, TRANST, 'Forward', 'Rowwise', MI, NI,
+     $                   IB,
      $                   A( I, I ), LDA, WORK( IWT ), LDT,
      $                   C( IC, JC ), LDC, WORK, LDWORK )
    10    CONTINUE
@@ -78739,7 +80614,8 @@
          IF( M.EQ.0 .OR. N.EQ.0 ) THEN
             LWKOPT = 1
          ELSE
-            NB = MIN( NBMAX, ILAENV( 1, 'ZUNMQL', SIDE // TRANS, M, N,
+            NB = MIN( NBMAX, ILAENV( 1, 'ZUNMQL', SIDE // TRANS, M,
+     $                N,
      $                               K, -1 ) )
             LWKOPT = NW*NB + TSIZE
          END IF
@@ -78764,7 +80640,8 @@
       IF( NB.GT.1 .AND. NB.LT.K ) THEN
          IF( LWORK.LT.LWKOPT ) THEN
             NB = (LWORK-TSIZE) / LDWORK
-            NBMIN = MAX( 2, ILAENV( 2, 'ZUNMQL', SIDE // TRANS, M, N, K,
+            NBMIN = MAX( 2, ILAENV( 2, 'ZUNMQL', SIDE // TRANS, M, N,
+     $                   K,
      $              -1 ) )
          END IF
       END IF
@@ -78773,7 +80650,8 @@
 *
 *        Use unblocked code
 *
-         CALL ZUNM2L( SIDE, TRANS, M, N, K, A, LDA, TAU, C, LDC, WORK,
+         CALL ZUNM2L( SIDE, TRANS, M, N, K, A, LDA, TAU, C, LDC,
+     $                WORK,
      $                IINFO )
       ELSE
 *
@@ -78819,7 +80697,8 @@
 *
 *           Apply H or H**H
 *
-            CALL ZLARFB( SIDE, TRANS, 'Backward', 'Columnwise', MI, NI,
+            CALL ZLARFB( SIDE, TRANS, 'Backward', 'Columnwise', MI,
+     $                   NI,
      $                   IB, A( 1, I ), LDA, WORK( IWT ), LDT, C, LDC,
      $                   WORK, LDWORK )
    10    CONTINUE
@@ -79072,7 +80951,8 @@
 *
 *        Compute the workspace requirements
 *
-         NB = MIN( NBMAX, ILAENV( 1, 'ZUNMQR', SIDE // TRANS, M, N, K,
+         NB = MIN( NBMAX, ILAENV( 1, 'ZUNMQR', SIDE // TRANS, M, N,
+     $             K,
      $        -1 ) )
          LWKOPT = NW*NB + TSIZE
          WORK( 1 ) = LWKOPT
@@ -79097,7 +80977,8 @@
       IF( NB.GT.1 .AND. NB.LT.K ) THEN
          IF( LWORK.LT.LWKOPT ) THEN
             NB = (LWORK-TSIZE) / LDWORK
-            NBMIN = MAX( 2, ILAENV( 2, 'ZUNMQR', SIDE // TRANS, M, N, K,
+            NBMIN = MAX( 2, ILAENV( 2, 'ZUNMQR', SIDE // TRANS, M, N,
+     $                   K,
      $              -1 ) )
          END IF
       END IF
@@ -79106,7 +80987,8 @@
 *
 *        Use unblocked code
 *
-         CALL ZUNM2R( SIDE, TRANS, M, N, K, A, LDA, TAU, C, LDC, WORK,
+         CALL ZUNM2R( SIDE, TRANS, M, N, K, A, LDA, TAU, C, LDC,
+     $                WORK,
      $                IINFO )
       ELSE
 *
@@ -79138,7 +81020,8 @@
 *           Form the triangular factor of the block reflector
 *           H = H(i) H(i+1) . . . H(i+ib-1)
 *
-            CALL ZLARFT( 'Forward', 'Columnwise', NQ-I+1, IB, A( I, I ),
+            CALL ZLARFT( 'Forward', 'Columnwise', NQ-I+1, IB, A( I,
+     $                   I ),
      $                   LDA, TAU( I ), WORK( IWT ), LDT )
             IF( LEFT ) THEN
 *
@@ -79156,7 +81039,8 @@
 *
 *           Apply H or H**H
 *
-            CALL ZLARFB( SIDE, TRANS, 'Forward', 'Columnwise', MI, NI,
+            CALL ZLARFB( SIDE, TRANS, 'Forward', 'Columnwise', MI,
+     $                   NI,
      $                   IB, A( I, I ), LDA, WORK( IWT ), LDT,
      $                   C( IC, JC ), LDC, WORK, LDWORK )
    10    CONTINUE
@@ -79335,7 +81219,8 @@
 *> \ingroup unmtr
 *
 *  =====================================================================
-      SUBROUTINE ZUNMTR( SIDE, UPLO, TRANS, M, N, A, LDA, TAU, C, LDC,
+      SUBROUTINE ZUNMTR( SIDE, UPLO, TRANS, M, N, A, LDA, TAU, C,
+     $                   LDC,
      $                   WORK, LWORK, INFO )
 *
 *  -- LAPACK computational routine --
@@ -79389,7 +81274,8 @@
          INFO = -1
       ELSE IF( .NOT.UPPER .AND. .NOT.LSAME( UPLO, 'L' ) ) THEN
          INFO = -2
-      ELSE IF( .NOT.LSAME( TRANS, 'N' ) .AND. .NOT.LSAME( TRANS, 'C' ) )
+      ELSE IF( .NOT.LSAME( TRANS, 'N' ) .AND.
+     $         .NOT.LSAME( TRANS, 'C' ) )
      $          THEN
          INFO = -3
       ELSE IF( M.LT.0 ) THEN
@@ -79452,7 +81338,8 @@
 *
 *        Q was determined by a call to ZHETRD with UPLO = 'U'
 *
-         CALL ZUNMQL( SIDE, TRANS, MI, NI, NQ-1, A( 1, 2 ), LDA, TAU, C,
+         CALL ZUNMQL( SIDE, TRANS, MI, NI, NQ-1, A( 1, 2 ), LDA, TAU,
+     $                C,
      $                LDC, WORK, LWORK, IINFO )
       ELSE
 *
