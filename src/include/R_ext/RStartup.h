@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1999-2022  The R Core Team
+ *  Copyright (C) 1999-2025  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -34,7 +34,7 @@
 # define R_SIZE_T size_t
 #endif
 
-#include <R_ext/Boolean.h>	/* TRUE/FALSE */
+//#include <R_ext/Boolean.h>	/* TRUE/FALSE and formerly for Rboolean */
 
 #ifdef __cplusplus
 extern "C" {
@@ -57,15 +57,23 @@ typedef enum {
     SA_SUICIDE
 } SA_TYPE;
 
+/* This is a public struct which is used by alternative front-ends
+ * which wish to to bw able to link to different versions of R.  So
+ * only change the layout if essential.
+ */
 typedef struct
 {
-    Rboolean R_Quiet;
-    Rboolean R_NoEcho;
-    Rboolean R_Interactive;
-    Rboolean R_Verbose;
-    Rboolean LoadSiteFile;
-    Rboolean LoadInitFile;
-    Rboolean DebugInitFile;
+    /* Some of thse were Rboolean, but if we change the size of
+     * that it would affect alignment and padding here.
+     * So changed to int in R 4.5.0.
+     */
+    int R_Quiet;
+    int R_NoEcho;
+    int R_Interactive;
+    int R_Verbose;
+    int LoadSiteFile;
+    int LoadInitFile;
+    int DebugInitFile; // unused
     SA_TYPE RestoreAction;
     SA_TYPE SaveAction;
     R_SIZE_T vsize;
@@ -73,7 +81,10 @@ typedef struct
     R_SIZE_T max_vsize;
     R_SIZE_T max_nsize;
     R_SIZE_T ppsize;
-    Rboolean NoRenviron : 16;
+    int NoRenviron : 16; /* was Rboolean, so assumed that had an 
+			    underlying type of at leat 16 bits.
+			    Only used for TRUE/FALSE so only one bit used.
+			 */
 	/* RstartVersion has been added in R 4.2.0. Earlier, NoRenviron was an
 	   int (normally 32-bit like Rboolean), so on most machines the
 	   version would become 0 when setting NoRenviron to FALSE in
@@ -104,7 +115,7 @@ typedef struct
 	/* used only if WriteConsole is NULL */
 
 	/* The following field has been added in R 4.0.0. */
-    Rboolean EmitEmbeddedUTF8;
+    int EmitEmbeddedUTF8;
 	/* R may embed UTF-8 sections into strings otherwise in current native
 	   encoding, escaped by UTF8in and UTF8out (rgui_UTF8.h). The setting
 	   has no effect in Rgui (escaping happens iff the system codepage is 

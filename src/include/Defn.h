@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998--2024  The R Core Team.
+ *  Copyright (C) 1998--2025  The R Core Team.
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -18,7 +18,7 @@
  *  https://www.R-project.org/Licenses/
  */
 
-/* Internal header, not installed */
+/* Internal header, not installed, usied in some standard packages */
 
 #ifndef DEFN_H_
 #define DEFN_H_
@@ -1521,10 +1521,12 @@ extern0 struct RPRSTACK *R_PendingPromises INI_as(NULL); /* Pending promise stac
 #endif
 
 /* File Input/Output */
+extern0 bool R_Quiet	INI_as(false);	/* Be as quiet as possible */
+extern0 bool R_Verbose	INI_as(false);	/* Be verbose */
+// Next two are duplicated in Rinterface.h
+// R_Interactive is accessed in parallel's fork.c and on Windows in util's stubs.c
 LibExtern Rboolean R_Interactive INI_as(TRUE);	/* TRUE during interactive use*/
-extern0 Rboolean R_Quiet	INI_as(FALSE);	/* Be as quiet as possible */
 extern Rboolean  R_NoEcho	INI_as(FALSE);	/* do not echo R code */
-extern0 Rboolean R_Verbose	INI_as(FALSE);	/* Be verbose */
 /* extern int	R_Console; */	    /* Console active flag */
 /* IoBuffer R_ConsoleIob; : --> ./IOStuff.h */
 /* R_Consolefile is used in the internet module */
@@ -2330,7 +2332,7 @@ void get_current_mem(size_t *,size_t *,size_t *); /* from memory.c */
 unsigned long get_duplicate_counter(void);  /* from duplicate.c */
 void reset_duplicate_counter(void);  /* from duplicate.c */
 void BindDomain(char *); /* from main.c */
-extern Rboolean LoadInitFile;  /* from startup.c */
+extern bool LoadInitFile;  /* from startup.c, uses in sys-*.c */
 
 // Unix and Windows versions
 double R_getClockIncrement(void);
