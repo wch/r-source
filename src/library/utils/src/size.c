@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-2014  The R Core Team
+ *  Copyright (C) 2000-2025  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -42,7 +42,7 @@ static R_size_t objectsize(SEXP s)
 {
     R_size_t cnt = 0, vcnt = 0;
     SEXP tmp, dup;
-    Rboolean isVec = FALSE;
+    bool isVec = false;
 
     switch (TYPEOF(s)) {
     case NILSXP:
@@ -55,7 +55,7 @@ static R_size_t objectsize(SEXP s)
     case BCODESXP:
     case DOTSXP:
 	R_CheckStack();
-	for (Rboolean done = FALSE; ! done; ) {
+	for (bool done = false; ! done; ) {
 	    cnt += objectsize(TAG(s));
 	    cnt += objectsize(CAR(s));
 	    cnt += sizeof(SEXPREC);
@@ -67,7 +67,7 @@ static R_size_t objectsize(SEXP s)
 	    case BCODESXP:
 	    case DOTSXP: break;
 	    case NILSXP: return cnt;
-	    default: done = TRUE;
+	    default: done = true;
 	    }
 	}
 	cnt += objectsize(s);
@@ -86,20 +86,20 @@ static R_size_t objectsize(SEXP s)
 	break;
     case CHARSXP:
 	vcnt = BYTE2VEC(length(s)+1);
-	isVec = TRUE;
+	isVec = true;
 	break;
     case LGLSXP:
     case INTSXP:
 	vcnt = INT2VEC(xlength(s));
-	isVec = TRUE;
+	isVec = true;
 	break;
     case REALSXP:
 	vcnt = FLOAT2VEC(xlength(s));
-	isVec = TRUE;
+	isVec = true;
 	break;
     case CPLXSXP:
 	vcnt = COMPLEX2VEC(xlength(s));
-	isVec = TRUE;
+	isVec = true;
 	break;
     case STRSXP:
 	R_CheckStack();
@@ -110,7 +110,7 @@ static R_size_t objectsize(SEXP s)
 	    if(tmp != NA_STRING && !LOGICAL(dup)[i])
 		cnt += objectsize(tmp);
 	}
-	isVec = TRUE;
+	isVec = true;
 	UNPROTECT(1);
 	break;
     case ANYSXP:
@@ -124,7 +124,7 @@ static R_size_t objectsize(SEXP s)
 	vcnt = PTR2VEC(xlength(s));
 	for (R_xlen_t i = 0; i < xlength(s); i++)
 	    cnt += objectsize(VECTOR_ELT(s, i));
-	isVec = TRUE;
+	isVec = true;
 	break;
     case EXTPTRSXP:
 	R_CheckStack();
@@ -134,7 +134,7 @@ static R_size_t objectsize(SEXP s)
 	break;
     case RAWSXP:
 	vcnt = BYTE2VEC(xlength(s));
-	isVec = TRUE;
+	isVec = true;
 	break;
     case OBJSXP:
 	/* Has TAG and ATRIB but no CAR nor CDR */

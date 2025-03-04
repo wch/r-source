@@ -71,7 +71,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996, 1997  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2024  The R Core Team
+ *  Copyright (C) 1997--2025  The R Core Team
  *  Copyright (C) 2010--2025  Duncan Murdoch
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -206,7 +206,7 @@ struct ParseState {
     ParseState *prevState;
 };
 
-static Rboolean busy = FALSE;
+static bool busy = false;
 static ParseState parseState;
 static char ParseErrorMsg[PARSE_ERROR_SIZE];
 
@@ -221,7 +221,7 @@ static void	xxsavevalue(SEXP, YYLTYPE *);
 static SEXP	xxtag(SEXP, int, YYLTYPE *);
 static SEXP 	xxenv(SEXP, SEXP, SEXP, YYLTYPE *);
 static SEXP     xxnewdef(SEXP, SEXP, YYLTYPE *);
-static SEXP	xxmath(SEXP, YYLTYPE *, Rboolean);
+static SEXP	xxmath(SEXP, YYLTYPE *, bool);
 static SEXP	xxblock(SEXP, YYLTYPE *);
 static void	xxSetInVerbEnv(SEXP);
 static SEXP	xxpushMode(int, int);
@@ -1936,11 +1936,11 @@ yyreduce:
     break;
 
   case 27: /* math: '$' nonMath '$'  */
-                                                { yyval = xxmath(yyvsp[-1], &(yyloc), FALSE); }
+                                                { yyval = xxmath(yyvsp[-1], &(yyloc), false); }
     break;
 
   case 28: /* displaymath: TWO_DOLLARS nonMath TWO_DOLLARS  */
-                                                { yyval = xxmath(yyvsp[-1], &(yyloc), TRUE); }
+                                                { yyval = xxmath(yyvsp[-1], &(yyloc), true); }
     break;
 
   case 29: /* block: '{' Items '}'  */
@@ -2329,7 +2329,7 @@ static void xxArg(void) {
     }
 }
 
-static SEXP xxmath(SEXP body, YYLTYPE *lloc, Rboolean display)
+static SEXP xxmath(SEXP body, YYLTYPE *lloc, bool display)
 {
     SEXP ans;
 #if DEBUGVALS
@@ -3022,7 +3022,7 @@ static void PushState(void) {
     	parseState.prevState = prev;
     } else 
         parseState.prevState = NULL;  
-    busy = TRUE;
+    busy = true;
 }
 
 static void PopState(void) {
@@ -3031,7 +3031,7 @@ static void PopState(void) {
     	UseState(prev);
     	free(prev);
     } else
-    	busy = FALSE;
+    	busy = false;
 }
 
 /* "parseLatex" 
