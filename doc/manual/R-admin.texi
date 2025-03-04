@@ -5582,7 +5582,7 @@ in the use of @code{NA} @emph{vs} @code{NaN} and a substantial number of
 @node OpenBLAS (macOS)
 @subsubsection @I{OpenBLAS}
 
-@R{} has been built on @cputype{arm64} using @I{OpenBLAS} 0.3.24 (sources
+@R{} has been built on @cputype{arm64} using @I{OpenBLAS} 0.3.29 (sources
 from @uref{https://github.com/OpenMathLib/OpenBLAS/releases}) by
 symlinking @file{/opt/OpenBLAS/lib/libopenblas.dylib} to
 @file{lib/libRblas.dylib} (see @ref{Shared BLAS}).

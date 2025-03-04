@@ -19,6 +19,9 @@ Preparation
 For 3.11.0 SRC/dlatrs.f needed patching for gfortran 12: see R.patch.
 No longer needed for 3.12.0.
 
+The original release of 3.12.1 had the wrong version in llaver.f and
+needs ediitng.
+
 dlapack.f and cmplx.f were created at the top level in the LAPACK
 3.x.y sources by copying {dble,cmplx}.txt there and running in R
 
