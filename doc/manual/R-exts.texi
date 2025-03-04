@@ -10440,7 +10440,6 @@ The key to inspecting @R{} objects from compiled code is the function
 mechanisms to print the @R{} object pointed to by @var{s}, or the safer
 version @code{R_PV(SEXP @var{s})} which will only print `objects'.
 @apifun Rf_PrintValue
-@apifun R_PV
 
 One way to make use of @code{PrintValue} is to insert suitable calls
 into the code to be debugged.
