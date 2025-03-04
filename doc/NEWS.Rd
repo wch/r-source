@@ -207,8 +207,11 @@
       \I{Ella Kaye}, \I{Heather Turner}, and \I{Kristen Gorman}.
 
       \item The bundled BLAS and LAPACK sources have been updated to
-      those shipped with LAPACK 3.12.1.  This is almost entirely bug
-      fixes, but includes a handful of new ancillary routines.
+      those shipped with LAPACK 3.12.1.  This is mainly bug fixes, but
+      includes a handful of new ancillary routines, including two new
+      BLAS routines \code{dgemmtr} and \code{zgemmtr} which are now used
+      by LAPACK routines. So an external BLAS to be used with the
+      internal LAPACK (unusual) needs to provide those routines.
     }
   }
 

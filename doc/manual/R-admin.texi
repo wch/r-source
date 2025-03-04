@@ -3634,6 +3634,14 @@ algebra libraries without explaining their downsides.
 An external BLAS library has to be explicitly requested at configure
 time.
 
+@strong{NB:} For decades@footnote{The level 3 rroutines were added in
+1988.  A 2001 `standard' is available at
+@uref{https://www.netlib.org/blas/blast-forum/blas-report.pdf}.} the set
+of BLAS routines was unchanged: this changed in Jan 2025 when routines
+such as @code{dgemmtr} were added as part of LAPACK 3.12.1 and used in
+some low-level LAPACK routines.  This complicates the idea of swapping
+external BLASes.
+
 You can specify a particular @acronym{BLAS} library @emph{via} a value
 for the configuration option @option{--with-blas}.  If this is given
 with no @code{=}, its value is taken from the
@@ -3758,6 +3766,9 @@ virtual core per physical CPU.  (For the Fedora libraries the
 compile-time flag specifies 4 threads.)
 @c https://math-atlas.sourceforge.net/atlas_install/node21.html
 
+ATLAS appears no longer to be under development: at the time of writing
+the latest release was from 2016,
+
 @node OpenBLAS and BLIS
 @subsubsection @I{OpenBLAS} and @I{BLIS}
 
@@ -3797,7 +3808,7 @@ second and third the number of threads is controlled by
 @abbr{OpenMP}) respectively.
 
 These and their Debian equivalents contain a complete LAPACK
-implementation.
+implementation: that is the default for a build from the sources.
 
 Note that building @R{} on Linux against distributed libraries may need
 @samp{-devel} or @samp{-dev} packages installed.
@@ -3806,6 +3817,8 @@ Note that building @R{} on Linux against distributed libraries may need
 For @cputype{ix86} and @cputype{x86_64} CPUs most distributed libraries
 contain several alternatives for different CPU microarchitectures with
 the choice being made at run time.
+
+@I{OpenBLAS} provides @code{dgemmtr} as from version 0.3.29.
 
 Another descendant project is @I{BLIS}
 (@uref{https://github.com/flame/blis}).  This has (in Fedora) shared
@@ -3818,7 +3831,15 @@ libbliso.so
 @noindent
 (@code{p} for `threads', @code{o} for @abbr{OpenMP} as for @I{OpenBLAS}) which can
 also be used as a shared BLAS.  The Fedora builds do not include LAPACK
-in the @I{BLIS} libraries.
+in the @I{BLIS} libraries and so cannot currently be used with internal
+LAPACK as they do not provide @code{dgemmtr}.
+
+AMD maintaint a branch of @I{BLIS} optimized for their CPUS called
+@I{AOCL}.
+@c https://www.amd.com/en/developer/aocl.html
+@c https://en.wikipedia.org/wiki/Basic_Linear_Algebra_Subprograms calls
+@c it a branch of BLIS.
+
 
 @node MKL
 @subsubsection Intel @I{MKL}
@@ -3962,6 +3983,10 @@ It is easy to change the @acronym{BLAS} without needing to re-install
 Note though that any dynamic libraries the replacement links to will
 need to be found by the linker: this may need the library path to be
 changed in @file{@var{R_HOME}/etc/ldpaths}.
+
+This becasme less easy in 2025: swapping the BLAS is only possible to
+one compatible with the LAPACK in use.  For the LAPACK shipped with @R{}
+4.5.0 that means one containing @code{dgemmtr} and @code{zgemmtr}.
 @end itemize
 
 Another option to change the @acronym{BLAS} in use is to symlink a
@@ -4094,7 +4119,7 @@ path if an enhanced BLAS is installed).
 As with all libraries, you need to ensure that they and @R{} were
 compiled with compatible compilers and flags.  For example, this has
 meant that on Sun @I{Sparc} using the Oracle compilers the flag
-@option{-dalign} is needed if @code{sunperf} is to be used.
+@option{-dalign} was needed if @code{sunperf} is to be used.
 
 On some systems it has been necessary that an external
 @acronym{BLAS}/LAPACK was built with the same Fortran compiler used to
