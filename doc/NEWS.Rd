@@ -206,9 +206,9 @@
       \item New datasets \code{penguins} and \code{penguins_raw} thanks to
       \I{Ella Kaye}, \I{Heather Turner}, and \I{Kristen Gorman}.
 
-      \item The bundled BLAS and LAPACK sources have been upadted to
-      those shipped with Lapack 3.12.1.  This is almost entirely bug
-      fixes, but includes a handful of new ancilliary routines.
+      \item The bundled BLAS and LAPACK sources have been updated to
+      those shipped with LAPACK 3.12.1.  This is almost entirely bug
+      fixes, but includes a handful of new ancillary routines.
     }
   }
 
