@@ -17431,7 +17431,7 @@ it is used correctly.
 Most code should be able to work with complete @code{CHARSXP}s and never look at
 the individual bytes.  When access to characters and bytes (of strings other
 than @code{CE_BYTES}) is needed, one would use @code{Rf_translateChar} or
-@code{RftranslateCharUTF8}.  These functions internally already check the
+@code{Rf_translateCharUTF8}.  These functions internally already check the
 encoding and whether the string is ASCII and only translate when needed,
 which should be rarely since @R{} >= 4.2.0 (UTF-8 is used as native encoding
 on most systems running R).
