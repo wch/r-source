@@ -693,11 +693,11 @@ nonAPI <- c("chol_", "chol2inv_", "cg_", "ch_", "rg_",
             ## non-API entry points":
             "EXTPTR_PROT", "EXTPTR_TAG", "EXTPTR_PTR",
             "OBJECT", "IS_S4_OBJECT",
-            "GetOption", "R_lsInternal",
+            "Rf_GetOption", "R_lsInternal",
             "REAL0", "COMPLEX0",
             "STRING_PTR", "DATAPTR", "STDVEC_DATAPTR",
             "Rf_allocSExp",
-            "isFrame",
+            "Rf_isFrame",
             "BODY", "FORMALS", "CLOENV", "ENCLOS",
             "IS_ASCII", "IS_UTF8",
 ## in the non-API header R_ext/Connections.h
