@@ -3834,7 +3834,7 @@ also be used as a shared BLAS.  The Fedora builds do not include LAPACK
 in the @I{BLIS} libraries and so cannot currently be used with internal
 LAPACK as they do not provide @code{dgemmtr}.
 
-AMD maintaint a branch of @I{BLIS} optimized for their CPUS called
+AMD maintain a branch of @I{BLIS} optimized for their CPUS called
 @I{AOCL}.
 @c https://www.amd.com/en/developer/aocl.html
 @c https://en.wikipedia.org/wiki/Basic_Linear_Algebra_Subprograms calls
@@ -3875,7 +3875,9 @@ MKL="-L$@{MKL_LIB_PATH@} -lmkl_gf_lp64 -lmkl_core -lmkl_sequential"
 @noindent
 The option @option{--with-lapack} is used since @I{MKL} contains a tuned
 copy of LAPACK (often older than the current version) as well as the
-@acronym{BLAS} (@pxref{LAPACK}), although this can be omitted.
+@acronym{BLAS} (@pxref{LAPACK}).  Also, it does not at the time of
+writing contain the BLAS functions such as @code{dgemmtr} and so cannot
+be used with LAPACK 3.12.1 included in @R{} 4.5.0 and later.
 
 Threaded @I{MKL} may be used by replacing the line defining the variable
 @code{MKL} by
@@ -4075,6 +4077,11 @@ practice its main uses are without a value,
 @item
 with an `enhanced' BLAS such as ATLAS, @I{FlexiBLAS}, @I{MKL} or @I{OpenBLAS} which
 contains a full LAPACK (to avoid possible conflicts), or
+
+@item
+When using an `enhanced' BLAS such as @I{BLIS} that does @strong{not}
+contain a full LAPACK and does not contain the LAPACK 3.12.1 additions
+to BLAS: then an external LAPACK version 3.12.0 or earlier is required.
 
 @item
 on Debian/Ubuntu systems to select the system @code{liblapack} which can
@@ -5568,6 +5575,11 @@ least macOS 13.3 and @abbr{SDK} 13.3 (from @I{Xcode CLT} 14.3).  To use it for b
 BLAS and LAPACK calls, configure with
 @option{--with-newAccelerate=lapack}.  These options cannot be used with
 others such as @option{--with-blas} and @option{--with-lapack}.
+
+Not that none of the Accelerate distributions contain the BLAS routines
+added in LAPACK 3.12.1 so cannot be used with the internal LAPACK as
+from @R{}@tie{}4.5.0.  They can be used with the (old) LAPACK they
+contain, or with an external LAPACK 3.12.0 or earlier.
 
 @c https://developer.apple.com/documentation/accelerate/veclib
 Threading in @I{Accelerate} is controlled by `Grand Central
