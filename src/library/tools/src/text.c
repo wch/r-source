@@ -30,7 +30,8 @@
 LibExtern Rboolean mbcslocale;
 LibExtern int R_MB_CUR_MAX;
 
-size_t Rf_mbrtowc(wchar_t *wc, const char *s, size_t n, mbstate_t *ps);
+// From Defn.h, rmapped from Mbrtowc in src/main/util.c
+extern size_t Rf_mbrtowc(wchar_t *wc, const char *s, size_t n, mbstate_t *ps);
 
 /* .Call, so manages R_alloc stack */
 SEXP
