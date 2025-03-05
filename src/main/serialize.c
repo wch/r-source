@@ -750,9 +750,9 @@ static void UnpackFlags(int flags, SEXPTYPE *ptype, int *plevs,
 {
     *ptype = DECODE_TYPE(flags);
     *plevs = DECODE_LEVELS(flags);
-    *pisobj = flags & IS_OBJECT_BIT_MASK ? TRUE : FALSE;
-    *phasattr = flags & HAS_ATTR_BIT_MASK ? TRUE : FALSE;
-    *phastag = flags & HAS_TAG_BIT_MASK ? TRUE : FALSE;
+    *pisobj = flags & IS_OBJECT_BIT_MASK ? true : FALSE;
+    *phasattr = flags & HAS_ATTR_BIT_MASK ? true : FALSE;
+    *phastag = flags & HAS_TAG_BIT_MASK ? true : FALSE;
 }
 
 
@@ -1040,7 +1040,7 @@ static void WriteItem (SEXP s, SEXP ref_table, R_outpstream_t stream)
 	PROTECT(new_s = R_cmpfun1(s));
 	WriteItem (new_s, ref_table, stream);
 	UNPROTECT(1);
-	R_compile_pkgs = TRUE;
+	R_compile_pkgs = true;
 	return;
     }
 
@@ -1121,8 +1121,8 @@ static void WriteItem (SEXP s, SEXP ref_table, R_outpstream_t stream)
 	case LANGSXP:
 	case PROMSXP:
 	case DOTSXP: hastag = TAG(s) != R_NilValue; break;
-	case CLOSXP: hastag = TRUE; break;
-	default: hastag = FALSE;
+	case CLOSXP: hastag = true; break;
+	default: hastag = false;
 	}
 	/* With the CHARSXP cache chains maintained through the ATTRIB
 	   field the content of that field must not be serialized, so
@@ -1257,7 +1257,7 @@ static SEXP MakeCircleHashTable(void)
     return CONS(R_NilValue, allocVector(VECSXP, HASHSIZE));
 }
 
-static Rboolean AddCircleHash(SEXP item, SEXP ct)
+static bool AddCircleHash(SEXP item, SEXP ct)
 {
     SEXP table, bucket, list;
 
@@ -1271,14 +1271,14 @@ static Rboolean AddCircleHash(SEXP item, SEXP ct)
 		SETCAR(list, R_UnboundValue); /* anything different will do */
 		SETCAR(ct, CONS(item, CAR(ct)));
 	    }
-	    return TRUE;
+	    return true;
 	}
 
     /* If we get here then this is a new item; enter in the table */
     bucket = CONS(R_NilValue, bucket);
     SET_TAG(bucket, item);
     SET_VECTOR_ELT(table, pos, bucket);
-    return FALSE;
+    return false;
 }
 
 static void ScanForCircles1(SEXP s, SEXP ct)
@@ -1343,7 +1343,7 @@ static void WriteBCLang(SEXP s, SEXP ref_table, SEXP reps,
 		/* we've seen it before, so just put out the index */
 		OutInteger(stream, BCREPREF);
 		OutInteger(stream, INTEGER(TAG(r))[0]);
-		output = FALSE;
+		output = false;
 	    }
 	}
 	if (output) {
@@ -1822,7 +1822,7 @@ static SEXP ReadItem_Iterative(int flags, SEXP ref_table, R_inpstream_t stream)
 	SETLEVELS(s, levs);
 	SET_OBJECT(s, objf);
 	R_ReadItemDepth++;
-	Rboolean set_lastname = FALSE;
+	bool set_lastname = false;
 	SET_ATTRIB(s, hasattr ? ReadItem(ref_table, stream) : R_NilValue);
 	SET_TAG(s, hastag ? ReadItem(ref_table, stream) : R_NilValue);
 	if (hastag && R_ReadItemDepth == R_InitReadItemDepth + 1 &&
@@ -2136,7 +2136,7 @@ static SEXP ReadBCLang(int type, SEXP ref_table, SEXP reps,
 	{
 	    SEXP ans;
 	    int pos = -1;
-	    int hasattr = FALSE;
+	    int hasattr = false;
 	    if (type == BCREPDEF) {
 		pos = InInteger(stream);
 		type = InInteger(stream);
@@ -2595,7 +2595,7 @@ do_serializeToConn(SEXP call, SEXP op, SEXP args, SEXP env)
     /* serializeToConn(object, conn, ascii, version, hook) */
 
     SEXP object, fun;
-    Rboolean ascii, wasopen;
+    bool ascii, wasopen;
     int version;
     Rconnection con;
     struct R_outpstream_st out;
@@ -2646,7 +2646,7 @@ do_serializeToConn(SEXP call, SEXP op, SEXP args, SEXP env)
 	cntxt.cenddata = con;
     }
     if (!ascii && con->text)
-	error(_("binary-mode connection required for ascii=FALSE"));
+	error(_("binary-mode connection required for ascii=false"));
     if(!con->canwrite)
 	error(_("connection not open for writing"));
 
@@ -2677,7 +2677,7 @@ do_unserializeFromConn(SEXP call, SEXP op, SEXP args, SEXP env)
     Rconnection con;
     SEXP fun, ans;
     SEXP (*hook)(SEXP, SEXP);
-    Rboolean wasopen;
+    bool wasopen;
     RCNTXT cntxt;
 
     checkArity(op, args);
@@ -3214,7 +3214,7 @@ static SEXP readRawFromFile(SEXP file, SEXP key)
 static SEXP R_getVarsFromFrame(SEXP vars, SEXP env, SEXP forcesxp)
 {
     SEXP val, tmp, sym;
-    Rboolean force;
+    bool force;
     int i, len;
 
     if (TYPEOF(env) == NILSXP) {

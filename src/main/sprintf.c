@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2002--2023     The R Core Team
+ *  Copyright (C) 2002--2025     The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -60,14 +60,14 @@ static const char *findspec(const char *str)
 }
 
 
-/*   FALSE is success, TRUE is an error: pattern *not* found . */
-static Rboolean checkfmt(const char *fmt, const char *pattern)
+/*   false is success, true is an error: pattern *not* found . */
+static bool checkfmt(const char *fmt, const char *pattern)
 {
     const char *p =fmt;
 
-    if(*p != '%') return TRUE;
+    if(*p != '%') return true;
     p = findspec(fmt);
-    return strcspn(p, pattern) ? TRUE : FALSE;
+    return strcspn(p, pattern) ? true : false;
 }
 
 #define TRANSLATE_CHAR(_STR_, _i_)  \
@@ -87,9 +87,9 @@ attribute_hidden SEXP do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 
     SEXP format, _this, a[MAXNARGS], ans /* -Wall */ = R_NilValue;
     int ns, maxlen, lens[MAXNARGS], nthis, nstar, star_arg = 0, nunused;
-    Rboolean used[MAXNARGS];
+    bool used[MAXNARGS];
     static R_StringBuffer outbuff = {NULL, 0, MAXELTSIZE};
-    Rboolean has_star, use_UTF8;
+    bool has_star, use_UTF8;
 
 #define _my_sprintf(_X_)						\
     {									\
@@ -114,7 +114,7 @@ attribute_hidden SEXP do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
     for(i = 0; i < nargs; i++, args = CDR(args)) {
 	SEXPTYPE t_ai;
 	a[i] = CAR(args);
-	used[i] = FALSE;
+	used[i] = false;
 	if((t_ai = TYPEOF(a[i])) == LANGSXP || t_ai == SYMSXP) /* << maybe add more .. */
 	    error(_("invalid type of argument[%d]: '%s'"),
 		  i+1, CHAR(type2str(t_ai)));
@@ -144,7 +144,7 @@ attribute_hidden SEXP do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 	    for(i = 0; i < nargs; i++) {
 		if (!isString(a[i])) continue;
 		if (getCharCE(STRING_ELT(a[i], ns % lens[i])) == CE_UTF8) {
-		    use_UTF8 = TRUE; break;
+		    use_UTF8 = true; break;
 		}
 	    }
 	}
@@ -223,7 +223,7 @@ attribute_hidden SEXP do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 			    error(_("at most one asterisk '*' is supported in each conversion specification"));
 
 			_this = a[nstar];
-			used[nstar] = TRUE;
+			used[nstar] = true;
 			if(ns == 0 && TYPEOF(_this) == REALSXP) {
 			    _this = coerceVector(_this, INTSXP);
 			    PROTECT(a[nstar] = _this);
@@ -233,10 +233,10 @@ attribute_hidden SEXP do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 			   INTEGER(_this)[ns % LENGTH(_this)] == NA_INTEGER)
 			    error(_("argument for '*' conversion specification must be a number"));
 			star_arg = INTEGER(_this)[ns % LENGTH(_this)];
-			has_star = TRUE;
+			has_star = true;
 		    }
 		    else
-			has_star = FALSE;
+			has_star = false;
 
 		    if (fmt[strlen(fmt) - 1] == '%') {
 			/* handle % with formatting options */
@@ -246,13 +246,13 @@ attribute_hidden SEXP do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 			    strcpy(bit, fmt);
 			/* was sprintf(..)  for which some compiler warn */
 		    } else {
-			Rboolean did_this = FALSE;
+			bool did_this = false;
 			if(nthis < 0) {
 			    if (cnt >= nargs) error(_("too few arguments"));
 			    nthis = cnt++;
 			}
 			_this = a[nthis];
-			used[nthis] = TRUE;
+			used[nthis] = true;
 			if (has_star) {
 			    size_t nf; char *p, *q = fmt2;
 			    for (p = fmt; *p; p++)
@@ -279,7 +279,8 @@ attribute_hidden SEXP do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 			/* Now let us see if some minimal coercion
 			   would be sensible, but only do so once, for ns = 0: */
 			if(ns == 0) {
-			    SEXP tmp; Rboolean do_check;
+			    SEXP tmp;
+			    bool do_check;
 			    switch(*findspec(fmtp)) {
 			    case 'd':
 			    case 'i':
@@ -288,14 +289,14 @@ attribute_hidden SEXP do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 			    case 'X':
 				if(TYPEOF(_this) == REALSXP) {
 				    // qdapTools manages to call this with NaN
-				    Rboolean exactlyInteger = TRUE;
+				    bool exactlyInteger = true;
 				    R_xlen_t i = 0;
 				    R_xlen_t n = XLENGTH(_this);
 				    for(i = 0; i < n; i++) {
 					double r = REAL(_this)[i];
 					if (R_IsNA(r)) continue; // NA_REAL is ok
 					if (!R_FINITE(r) || (double)((int) r) != r) {
-					    exactlyInteger = FALSE;
+					    exactlyInteger = false;
 					    break;
 					}
 				    } 
@@ -321,7 +322,7 @@ attribute_hidden SEXP do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 				    UNPROTECT(1);			\
 				    PROTECT(a[nthis] = _this);		\
 				    nprotect++;				\
-				    did_this = TRUE;			\
+				    did_this = true;			\
 				    CHECK_this_length;			\
 				    do_check = (lens[nthis] == maxlen);	\
 				    lens[nthis] = thislen; /* may have changed! */ \

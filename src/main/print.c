@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-2024	The R Core Team.
+ *  Copyright (C) 2000-2025	The R Core Team.
  *  Copyright (C) 1995-1998	Robert Gentleman and Ross Ihaka.
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -76,7 +76,7 @@
 /* Global print parameter struct: */
 R_PrintData R_print;
 
-static void printAttributes(SEXP, R_PrintData *, Rboolean);
+static void printAttributes(SEXP, R_PrintData *, bool);
 static void PrintObject(SEXP, R_PrintData *);
 
 
@@ -170,7 +170,7 @@ static void PrintLanguage(SEXP s, R_PrintData *data)
 {
     int i;
     SEXP t = getAttrib(s, R_SrcrefSymbol);
-    Rboolean useSrc = data->useSource && isInteger(t);
+    bool useSrc = data->useSource && isInteger(t);
     if (useSrc) {
 	PROTECT(t = lang2(R_AsCharacterSymbol, t));
 	t = eval(t, R_BaseEnv);
@@ -425,7 +425,7 @@ static void PrintGenericVector(SEXP s, R_PrintData *data)
 	    char pbuf[115];
 	    if(isObject(s_i)) {
 		const char *str;
-		Rboolean use_fmt = FALSE;
+		bool use_fmt = false;
 		SEXP fun = PROTECT(findFun(install("format"),
 					   R_BaseNamespace));
 		SEXP call = PROTECT(lang2(fun, s_i));
@@ -433,7 +433,7 @@ static void PrintGenericVector(SEXP s, R_PrintData *data)
 		if(TYPEOF(ans) == STRSXP && LENGTH(ans) == 1) {
 		    str = translateChar(STRING_ELT(ans, 0));
 		    if(strlen(str) < 100)
-			use_fmt = TRUE;
+			use_fmt = true;
 		}
 		if(use_fmt)
 		    snprintf(pbuf, 115, "%s", str);
@@ -634,7 +634,7 @@ static void PrintGenericVector(SEXP s, R_PrintData *data)
 	    if(className) {
 		Rprintf("An object of class \"%s\"\n", className);
 		UNPROTECT(1); /* names */
-		printAttributes(s, data, TRUE);
+		printAttributes(s, data, true);
 		vmaxset(vmax);
 		return;
 	    }
@@ -646,7 +646,7 @@ static void PrintGenericVector(SEXP s, R_PrintData *data)
 	}
 	UNPROTECT(1); /* names */
     }
-    printAttributes(s, data, FALSE);
+    printAttributes(s, data, false);
 } // PrintGenericVector
 
 
@@ -765,7 +765,7 @@ static void printList(SEXP s, R_PrintData *data)
 	}
 	Rprintf("\n");
     }
-    printAttributes(s, data, FALSE);
+    printAttributes(s, data, false);
 }
 
 static void PrintExpression(SEXP s, R_PrintData *data)
@@ -818,7 +818,7 @@ static void PrintSpecial(SEXP s, R_PrintData *data)
 #ifdef Win32
 static void print_cleanup(void *data)
 {
-    WinUTF8out = *(Rboolean *)data;
+    WinUTF8out = *(bool *)data;
 }
 #endif
 
@@ -832,7 +832,7 @@ attribute_hidden void PrintValueRec(SEXP s, R_PrintData *data)
 
 #ifdef Win32
     RCNTXT cntxt;
-    Rboolean havecontext = FALSE;
+    Rboolean havecontext = false;
     Rboolean saveWinUTF8out = WinUTF8out;
 
     WinCheckUTF8();
@@ -981,7 +981,7 @@ attribute_hidden void PrintValueRec(SEXP s, R_PrintData *data)
     default:
 	UNIMPLEMENTED_TYPE("PrintValueRec", s);
     }
-    printAttributes(s, data, FALSE);
+    printAttributes(s, data, false);
 
 done:
 
@@ -997,7 +997,7 @@ done:
    to avoid $a$battr("foo").  Need to save and restore, since
    attributes might be lists with attributes or just have attributes ...
  */
-static void printAttributes(SEXP s, R_PrintData *data, Rboolean useSlots)
+static void printAttributes(SEXP s, R_PrintData *data, bool useSlots)
 {
     SEXP a;
     char *ptag;

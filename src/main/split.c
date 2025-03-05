@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 2006-2016 The R Core Team
+ *  Copyright (C) 2006-2025 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -29,7 +29,6 @@
 attribute_hidden SEXP do_split(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP x, f, counts, vec, nm, nmj;
-    Rboolean have_names;
 
     checkArity(op, args);
 
@@ -47,7 +46,7 @@ attribute_hidden SEXP do_split(SEXP call, SEXP op, SEXP args, SEXP env)
     if (nfac > 0 && (nobs % nfac) != 0)
 	warning(_("data length is not a multiple of split variable"));
     nm = getAttrib(x, R_NamesSymbol);
-    have_names = nm != R_NilValue;
+    bool have_names = nm != R_NilValue;  // used in split-incl.c
 
 #ifdef LONG_VECTOR_SUPPORT
     if (IS_LONG_VEC(x))

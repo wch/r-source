@@ -559,7 +559,7 @@ SEXP nthcdr(SEXP s, int n)
 
 /* Destructively removes R_NilValue ('NULL') elements from a pairlist. */
 attribute_hidden /* would need to be in an installed header if not hidden */
-SEXP R_listCompact(SEXP s, Rboolean keep_initial) {
+SEXP R_listCompact(SEXP s, bool keep_initial) {
     if(!keep_initial)
     // skip initial NULL values
 	while (s != R_NilValue && CAR(s) == R_NilValue)
@@ -627,12 +627,12 @@ void setSVector(SEXP * vec, int len, SEXP val)
 */
 
 
-attribute_hidden Rboolean isFree(SEXP val)
+attribute_hidden bool isFree(SEXP val)
 {
     SEXP t;
     for (t = R_FreeSEXP; t != R_NilValue; t = CAR(t))
 	if (val == t)
-	    return TRUE;
+	    return true;
     return FALSE;
 }
 
@@ -1104,7 +1104,7 @@ attribute_hidden SEXP do_normalizepath(SEXP call, SEXP op, SEXP args, SEXP rho)
 	else SET_STRING_ELT(ans, i, elp);
     }
 #else
-    Rboolean OK;
+    bool OK;
     warning("this platform does not have realpath so the results may not be canonical");
     PROTECT(ans = allocVector(STRSXP, n));
     for (i = 0; i < n; i++) {
@@ -1190,7 +1190,6 @@ attribute_hidden SEXP do_encodeString(SEXP call, SEXP op, SEXP args, SEXP rho)
     R_xlen_t i, len;
     int w, quote = 0, justify, na;
     const char *cs;
-    Rboolean findWidth;
 
     checkArity(op, args);
     if (TYPEOF(x = CAR(args)) != STRSXP)
@@ -1201,7 +1200,6 @@ attribute_hidden SEXP do_encodeString(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if(w != NA_INTEGER && w < 0)
 	    error(_("invalid '%s' value"), "width");
     }
-    findWidth = (w == NA_INTEGER);
     s = CADDR(args);
     if(LENGTH(s) != 1 || TYPEOF(s) != STRSXP)
 	error(_("invalid '%s' value"), "quote");
@@ -1217,6 +1215,7 @@ attribute_hidden SEXP do_encodeString(SEXP call, SEXP op, SEXP args, SEXP rho)
     if(na == NA_LOGICAL) error(_("invalid '%s' value"), "na.encode");
 
     len = XLENGTH(x);
+    bool findWidth = (w == NA_INTEGER);
     if(findWidth && justify < 3) {
 	w  = 0;
 	for(i = 0; i < len; i++) {
@@ -1229,7 +1228,7 @@ attribute_hidden SEXP do_encodeString(SEXP call, SEXP op, SEXP args, SEXP rho)
     PROTECT(ans = duplicate(x));
 #ifdef Win32
     RCNTXT cntxt;
-    Rboolean havecontext = FALSE;
+    bool havecontext = FALSE;
     /* do_encodeString is not printing, but returning a string, it therefore
        must not produce Rgui escapes (do_encodeString may get called as part
        of print dispatch with WinUTF8out being already set to TRUE). */
@@ -1237,7 +1236,7 @@ attribute_hidden SEXP do_encodeString(SEXP call, SEXP op, SEXP args, SEXP rho)
 	begincontext(&cntxt, CTXT_CCODE, R_NilValue, R_BaseEnv, R_BaseEnv,
 		     R_NilValue, R_NilValue);
 	cntxt.cend = &encode_cleanup;
-	havecontext = TRUE;
+	havecontext = true;
 	WinUTF8out = FALSE;
     }
 #endif
@@ -1602,7 +1601,9 @@ size_t wcs4toutf8(char *s, const R_wchar_t *wc, size_t n)
     return res + 1;
 }
 
-/* A version that reports failure as an error */
+/* A version that reports failure as an error 
+ * Exported as Rf_mbrtowc
+ */
 size_t Mbrtowc(wchar_t *wc, const char *s, size_t n, mbstate_t *ps)
 {
     size_t used;
@@ -2313,7 +2314,7 @@ attribute_hidden SEXP do_enc2(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans, el;
     R_xlen_t i;
-    Rboolean duped = FALSE;
+    bool duped = false;
 
     checkArity(op, args);
     check1arg(args, call, "x");
@@ -2326,13 +2327,13 @@ attribute_hidden SEXP do_enc2(SEXP call, SEXP op, SEXP args, SEXP env)
 	if (el == NA_STRING) continue;
 	if (PRIMVAL(op) || known_to_be_utf8) { /* enc2utf8 */
 	    if (IS_UTF8(el) || IS_ASCII(el) || IS_BYTES(el)) continue;
-	    if (!duped) { ans = PROTECT(duplicate(ans)); duped = TRUE; }
+	    if (!duped) { ans = PROTECT(duplicate(ans)); duped = true; }
 	    SET_STRING_ELT(ans, i,
 			   mkCharCE(translateCharUTF8(el), CE_UTF8));
 	} else if (ENC_KNOWN(el)) { /* enc2native */
 	    if (IS_ASCII(el) || IS_BYTES(el)) continue;
 	    if (known_to_be_latin1 && IS_LATIN1(el)) continue;
-	    if (!duped) { PROTECT(ans = duplicate(ans)); duped = TRUE; }
+	    if (!duped) { PROTECT(ans = duplicate(ans)); duped = true; }
 	    if (known_to_be_latin1)
 		SET_STRING_ELT(ans, i, mkCharCE(translateChar(el), CE_LATIN1));
 	    else
@@ -2441,7 +2442,7 @@ static UCollator *collator = NULL;
 static int collationLocaleSet = 0;
 
 /* called from platform.c */
-attribute_hidden void resetICUcollator(Rboolean disable)
+attribute_hidden void resetICUcollator(bool disable)
 {
     if (collator) ucol_close(collator);
     collator = NULL;
@@ -2678,7 +2679,7 @@ attribute_hidden SEXP do_ICUget(SEXP call, SEXP op, SEXP args, SEXP rho)
     return mkString("ICU not in use");
 }
 
-attribute_hidden void resetICUcollator(Rboolean disable) {}
+attribute_hidden void resetICUcollator(bool disable) {}
 
 # ifdef Win32
 
@@ -3035,8 +3036,7 @@ void str_signif(void *x, R_xlen_t n, const char *type, int width, int digits,
 		const char *format, const char *flag, char **result)
 {
     int dig = abs(digits);
-    Rboolean rm_trailing_0 = digits >= 0;
-    Rboolean do_fg = !strcmp("fg", format); /* TRUE  iff  format == "fg" */
+    bool do_fg = !strcmp("fg", format); /* TRUE  iff  format == "fg" */
     double xx;
     int iex;
     size_t j, len_flag = strlen(flag);
@@ -3117,6 +3117,7 @@ void str_signif(void *x, R_xlen_t n, const char *type, int width, int digits,
 			    fprintf(stderr, "\tres. = '%s'; ", result[i]);
 #endif
 			    /* Remove trailing  "0"s __ IFF flag has no '#': */
+			    bool rm_trailing_0 = (digits >= 0);
 			    if(rm_trailing_0) {
 				j = strlen(result[i])-1;
 #ifdef DEBUG

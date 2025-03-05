@@ -139,7 +139,7 @@ static char *workspace_name = ".RData";
 attribute_hidden
 Rboolean set_workspace_name(const char *fn)
 {
-    static Rboolean previously_allocated = FALSE;
+    static bool previously_allocated = FALSE;
     size_t needed = strlen(fn) + 1;
     char *new_wsn = (char *)malloc(needed);
 
@@ -147,7 +147,7 @@ Rboolean set_workspace_name(const char *fn)
 	return FALSE;
     if (previously_allocated)
 	free(workspace_name);
-    previously_allocated = TRUE;
+    previously_allocated = true;
     strncpy(new_wsn, fn, needed);
     workspace_name = new_wsn;
     return TRUE;
@@ -300,7 +300,7 @@ void R_SizeFromEnv(Rstart Rp)
 static void SetSize(R_size_t vsize, R_size_t nsize)
 {
     char msg[1024];
-    Rboolean sml;
+    bool sml;
     /* vsize > 0 to catch long->int overflow */
     if (vsize < 1000 && vsize > 0) {
 	R_ShowMessage("WARNING: vsize ridiculously low, Megabytes assumed\n");

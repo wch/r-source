@@ -1714,7 +1714,7 @@ int Rf_FixupDigits(SEXP, warn_type);
 int Rf_FixupWidth (SEXP, warn_type);
 SEXP Rf_installDDVAL(int i);
 SEXP Rf_installS3Signature(const char *, const char *);
-Rboolean Rf_isFree(SEXP);
+bool Rf_isFree(SEXP);
 Rboolean Rf_isUnmodifiedSpecSym(SEXP sym, SEXP env);
 SEXP Rf_matchE(SEXP, SEXP, int, SEXP);
 // void Rf_setSVector(SEXP*, int, SEXP);
@@ -1914,8 +1914,8 @@ int	R_ShowFiles(int, const char **, const char **, const char *,
 int     R_EditFiles(int, const char **, const char **, const char *);
 int	R_ChooseFile(int, char *, int);
 char	*R_HomeDir(void);
-Rboolean R_FileExists(const char *);
-Rboolean R_HiddenFile(const char *);
+bool    R_FileExists(const char *);
+bool    R_HiddenFile(const char *);
 double	R_FileMtime(const char *);
 int	R_GetFDLimit(void);
 int	R_EnsureFDLimit(int);
@@ -2284,7 +2284,7 @@ int utf8clen(char c);
 int Rf_AdobeSymbol2ucs2(int n);
 double R_strtod5(const char *str, char **endptr, char dec,
 		 Rboolean NA, int exact);
-SEXP R_listCompact(SEXP s, Rboolean keep_initial);
+SEXP R_listCompact(SEXP s, bool keep_initial);
 
 typedef unsigned short R_ucs2_t;
 size_t mbcsToUcs2(const char *in, R_ucs2_t *out, int nout, int enc);
@@ -2321,7 +2321,7 @@ int Rasprintf_malloc(char **str, const char *fmt, ...)
 
 SEXP fixup_NaRm(SEXP args); /* summary.c */
 void invalidate_cached_recodings(void);  /* from sysutils.c */
-void resetICUcollator(Rboolean disable); /* from util.c */
+void resetICUcollator(bool disable); /* from util.c */
 void dt_invalidate_locale(void); /* from Rstrptime.h */
 extern int R_OutputCon; /* from connections.c */
 

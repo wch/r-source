@@ -201,7 +201,7 @@ attribute_hidden SEXP do_packBits(SEXP call, SEXP op, SEXP args, SEXP env)
 	error(_("argument 'x' must be raw, integer or logical"));
     if (!isString(stype)  || LENGTH(stype) != 1)
 	error(_("argument '%s' must be a character string"), "type");
-    Rboolean
+    bool
 	notI = strcmp(CHAR(STRING_ELT(stype, 0)), "integer") != 0,
 	notR = strcmp(CHAR(STRING_ELT(stype, 0)), "raw") != 0,
 	useRaw =  notI && !notR,
@@ -406,21 +406,21 @@ attribute_hidden SEXP do_intToUtf8(SEXP call, SEXP op, SEXP args, SEXP env)
 	/* do we want to copy e.g. names here? */
     } else {
 	int i, nc = LENGTH(x);
-	Rboolean haveNA = FALSE;
+	bool haveNA = false;
 	/* Note that this gives zero length for input '0', so it is omitted */
 	for (i = 0, len = 0; i < nc; i++) {
 	    int this = INTEGER(x)[i];
 	    if (this == NA_INTEGER
 		|| (this >= 0xDC00 && this <= 0xDFFF)
 		|| this > 0x10FFFF) {
-		haveNA = TRUE;
+		haveNA = true;
 		break;
 	    }
 	    else if (this >=  0xD800 && this <= 0xDBFF) {
-		if(!s_pair || i >= nc-1) {haveNA = TRUE; break;}
+		if(!s_pair || i >= nc-1) {haveNA = true; break;}
 		int next = INTEGER(x)[i+1];
 		if(next >= 0xDC00 && next <= 0xDFFF) i++;
-		else {haveNA = TRUE; break;}
+		else {haveNA = true; break;}
 		len += 4; // all points not in the basic plane have length 4
 	    }
 	    else

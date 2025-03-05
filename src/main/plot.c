@@ -86,7 +86,7 @@ SEXP CreateAtVector(double axp[], const double usr[], int nint, Rboolean logflag
 	}
     }
     else { /* ------ log axis ----- */
-	Rboolean reversed = FALSE;
+	bool reversed = false;
 	double
 	    umin = usr[0],
 	    umax = usr[1];

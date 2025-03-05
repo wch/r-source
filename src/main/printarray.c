@@ -118,7 +118,7 @@ static void MatrixRowLabel(SEXP rl, int i, int rlabw, int lbloff)
 */
 static void printLogicalMatrix(SEXP sx, int offset, int r_pr, int r, int c,
 			       SEXP rl, SEXP cl, const char *rn, const char *cn,
-			       Rboolean print_ij)
+			       bool print_ij)
 {
 /* initialization; particularly of row labels, rl= dimnames(.)[[1]] and
  * rn = names(dimnames(.))[1] : */
@@ -221,7 +221,7 @@ static void printLogicalMatrix(SEXP sx, int offset, int r_pr, int r, int c,
 
 static void printIntegerMatrix(SEXP sx, int offset, int r_pr, int r, int c,
 			       SEXP rl, SEXP cl, const char *rn, const char *cn,
-			       Rboolean print_ij)
+			       bool print_ij)
 {
     _PRINT_INIT_rl_rn;
     const int *x = INTEGER_RO(sx) + offset;
@@ -234,7 +234,7 @@ static void printIntegerMatrix(SEXP sx, int offset, int r_pr, int r, int c,
 
 static void printRealMatrix(SEXP sx, int offset, int r_pr, int r, int c,
 			    SEXP rl, SEXP cl, const char *rn, const char *cn,
-			    Rboolean print_ij)
+			    bool print_ij)
 {
     _PRINT_INIT_rl_rn;
     const double *x = REAL_RO(sx) + offset;
@@ -251,7 +251,7 @@ static void printRealMatrix(SEXP sx, int offset, int r_pr, int r, int c,
 
 static void printComplexMatrix(SEXP sx, int offset, int r_pr, int r, int c,
 			       SEXP rl, SEXP cl, const char *rn, const char *cn,
-			       Rboolean print_ij)
+			       bool print_ij)
 {
     _PRINT_INIT_rl_rn;
     const Rcomplex *x = COMPLEX_RO(sx) + offset;
@@ -284,7 +284,7 @@ static void printComplexMatrix(SEXP sx, int offset, int r_pr, int r, int c,
 
 static void printStringMatrix(SEXP sx, int offset, int r_pr, int r, int c,
 			      int quote, int right, SEXP rl, SEXP cl,
-			      const char *rn, const char *cn, Rboolean print_ij)
+			      const char *rn, const char *cn, bool print_ij)
 {
     _PRINT_INIT_rl_rn;
     const SEXP *x = STRING_PTR_RO(sx)+offset;
@@ -310,7 +310,7 @@ static void printStringMatrix(SEXP sx, int offset, int r_pr, int r, int c,
 
 static void printRawMatrix(SEXP sx, int offset, int r_pr, int r, int c,
 			   SEXP rl, SEXP cl, const char *rn, const char *cn,
-			   Rboolean print_ij)
+			   bool print_ij)
 {
     _PRINT_INIT_rl_rn;
     const Rbyte *x = RAW_RO(sx) + offset;
@@ -356,23 +356,23 @@ void printMatrix(SEXP x, int offset, SEXP dim, int quote, int right,
 	r_pr = 1;
     switch (TYPEOF(x)) {
     case LGLSXP:
-	printLogicalMatrix(x, offset, r_pr, r, c_pr, rl, cl, rn, cn, TRUE);
+	printLogicalMatrix(x, offset, r_pr, r, c_pr, rl, cl, rn, cn, true);
 	break;
     case INTSXP:
-	printIntegerMatrix(x, offset, r_pr, r, c_pr, rl, cl, rn, cn, TRUE);
+	printIntegerMatrix(x, offset, r_pr, r, c_pr, rl, cl, rn, cn, true);
 	break;
     case REALSXP:
-	printRealMatrix	  (x, offset, r_pr, r, c_pr, rl, cl, rn, cn, TRUE);
+	printRealMatrix	  (x, offset, r_pr, r, c_pr, rl, cl, rn, cn, true);
 	break;
     case CPLXSXP:
-	printComplexMatrix(x, offset, r_pr, r, c_pr, rl, cl, rn, cn, TRUE);
+	printComplexMatrix(x, offset, r_pr, r, c_pr, rl, cl, rn, cn, true);
 	break;
     case STRSXP:
 	if (quote) quote = '"';
-	printStringMatrix (x, offset, r_pr, r, c_pr, quote, right, rl, cl, rn, cn, TRUE);
+	printStringMatrix (x, offset, r_pr, r, c_pr, quote, right, rl, cl, rn, cn, true);
 	break;
     case RAWSXP:
-	printRawMatrix	  (x, offset, r_pr, r, c_pr, rl, cl, rn, cn, TRUE);
+	printRawMatrix	  (x, offset, r_pr, r, c_pr, rl, cl, rn, cn, true);
 	break;
     default:
 	UNIMPLEMENTED_TYPE("printMatrix", x);
@@ -412,7 +412,7 @@ void printArray(SEXP x, SEXP dim, int quote, int right, SEXP dimnames)
 	int i, j, nb, nb_pr, ne_last, nc_last, nr_last,
 	    nr = dims[0], nc = dims[1],
 	    b = nr * nc;
-	Rboolean max_reached, has_dimnames = (dimnames != R_NilValue),
+	bool max_reached, has_dimnames = (dimnames != R_NilValue),
 	    has_dnn = has_dimnames;
 
 	if (!has_dimnames) {
@@ -454,7 +454,7 @@ void printArray(SEXP x, SEXP dim, int quote, int right, SEXP dimnames)
 	    nr_last = nr;
 	}
 	for (i = 0; i < nb_pr; i++) {
-	    Rboolean do_ij = nb > 0,
+	    bool do_ij = nb > 0,
 		i_last = (i == nb_pr - 1); /* for the last slice */
 	    int	use_nc = i_last ? nc_last : nc,
 		use_nr = i_last ? nr_last : nr;

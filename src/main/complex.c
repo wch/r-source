@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-2022  The R Core Team
+ *  Copyright (C) 2000-2025  The R Core Team
  *  Copyright (C) 2005       The R Foundation
  *  Copyright (C) 1995-1997  Robert Gentleman and Ross Ihaka
  *
@@ -585,18 +585,18 @@ static double complex z_atanh(double complex z)
     return -I * z_atan(z * I);
 }
 
-static Rboolean cmath1(double complex (*f)(double complex),
+static bool cmath1(double complex (*f)(double complex),
 		       const Rcomplex *x, Rcomplex *y, R_xlen_t n)
 {
     R_xlen_t i;
-    Rboolean naflag = FALSE;
+    bool naflag = false;
     for (i = 0 ; i < n ; i++) {
 	if (ISNA(x[i].r) || ISNA(x[i].i)) {
 	    y[i].r = NA_REAL; y[i].i = NA_REAL;
 	} else {
 	    SET_C99_COMPLEX(y, i, f(toC99(x + i)));
 	    if ( (ISNAN(y[i].r) || ISNAN(y[i].i)) &&
-		!(ISNAN(x[i].r) || ISNAN(x[i].i)) ) naflag = TRUE;
+		!(ISNAN(x[i].r) || ISNAN(x[i].i)) ) naflag = true;
 	}
     }
     return naflag;
@@ -606,7 +606,7 @@ attribute_hidden SEXP complex_math1(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP x, y;
     R_xlen_t n;
-    Rboolean naflag = FALSE;
+    bool naflag = false;
 
     PROTECT(x = CAR(args));
     n = XLENGTH(x);
@@ -696,7 +696,7 @@ attribute_hidden SEXP complex_math2(SEXP call, SEXP op, SEXP args, SEXP env)
     Rcomplex ai, bi, *y;
     const Rcomplex *a, *b;
     SEXP sa, sb, sy;
-    Rboolean naflag = FALSE;
+    bool naflag = false;
     cm2_fun f;
 
     switch (PRIMVAL(op)) {
@@ -734,7 +734,7 @@ attribute_hidden SEXP complex_math2(SEXP call, SEXP op, SEXP args, SEXP env)
 	    f(&y[i], &ai, &bi);
 	    if ( (ISNAN(y[i].r) || ISNAN(y[i].i)) &&
 		 !(ISNAN(ai.r) || ISNAN(ai.i) || ISNAN(bi.r) || ISNAN(bi.i)) )
-		naflag = TRUE;
+		naflag = true;
 	}
     });
     if (naflag)
@@ -787,12 +787,12 @@ attribute_hidden SEXP do_complex(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 static void R_cpolyroot(double *opr, double *opi, int *degree,
-			double *zeror, double *zeroi, Rboolean *fail);
+			double *zeror, double *zeroi, bool *fail);
 
 attribute_hidden SEXP do_polyroot(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP z, zr, zi, r, rr, ri;
-    Rboolean fail;
+    bool fail;
     int degree, i, n;
 
     checkArity(op, args);
@@ -904,10 +904,10 @@ attribute_hidden SEXP do_polyroot(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 #include <Rmath.h> /* for R_pow_di */
 
-static void calct(Rboolean *);
-static Rboolean fxshft(int, double *, double *);
-static Rboolean vrshft(int, double *, double *);
-static void nexth(Rboolean);
+static void calct(bool *);
+static bool fxshft(int, double *, double *);
+static bool vrshft(int, double *, double *);
+static void nexth(bool);
 static void noshft(int);
 
 static void polyev(int, double, double,
@@ -931,14 +931,14 @@ static const double mre = 2. * M_SQRT2 * /* eta, i.e. */DBL_EPSILON;
 static const double infin = DBL_MAX;
 
 static void R_cpolyroot(double *opr, double *opi, int *degree,
-			double *zeror, double *zeroi, Rboolean *fail)
+			double *zeror, double *zeroi, bool *fail)
 {
     static const double smalno = DBL_MIN;
     static const double base = (double)FLT_RADIX;
     static int d_n, i, i1, i2;
     static double zi, zr, xx, yy;
     static double bnd, xxx;
-    Rboolean conv;
+    bool conv;
     int d1;
     double *tmp;
     static const double cosr =/* cos 94 */ -0.06975647374412529990;
@@ -946,7 +946,7 @@ static void R_cpolyroot(double *opr, double *opi, int *degree,
     xx = M_SQRT1_2;/* 1/sqrt(2) = 0.707.... */
 
     yy = -xx;
-    *fail = FALSE;
+    *fail = false;
 
     nn = *degree;
     d1 = nn - 1;
@@ -954,7 +954,7 @@ static void R_cpolyroot(double *opr, double *opi, int *degree,
     /* algorithm fails if the leading coefficient is zero. */
 
     if (opr[0] == 0. && opi[0] == 0.) {
-	*fail = TRUE;
+	*fail = true;
 	return;
     }
 
@@ -1037,7 +1037,7 @@ static void R_cpolyroot(double *opr, double *opi, int *degree,
 	/* the zerofinder has failed on two major passes */
 	/* return empty handed */
 
-	*fail = TRUE;
+	*fail = true;
 	vmaxset(vmax);
 	return;
 
@@ -1113,7 +1113,7 @@ static void noshft(int l1)
  *  initiates a variable-shift iteration and returns with the
  *  approximate zero if successful.
  */
-static Rboolean fxshft(int l2, double *zr, double *zi)
+static bool fxshft(int l2, double *zr, double *zi)
 {
 /*  l2	  - limit of fixed shift steps
  *  zr,zi - approximate zero if convergence (result TRUE)
@@ -1123,7 +1123,7 @@ static Rboolean fxshft(int l2, double *zr, double *zi)
  * Uses global (sr,si), nn, pr[], pi[], .. (all args of polyev() !)
 */
 
-    Rboolean pasd, h_s_0, test;
+    bool pasd, h_s_0, test;
     static double svsi, svsr;
     static int i, j, n;
     static double oti, otr;
@@ -1134,8 +1134,8 @@ static Rboolean fxshft(int l2, double *zr, double *zi)
 
     polyev(nn, sr, si, pr, pi, qpr, qpi, &pvr, &pvi);
 
-    test = TRUE;
-    pasd = FALSE;
+    test = true;
+    pasd = false;
 
     /* calculate first t = -p(s)/h(s). */
 
@@ -1160,10 +1160,10 @@ static Rboolean fxshft(int l2, double *zr, double *zi)
 
 	if (!h_s_0 && test && j != l2) {
 	    if (hypot(tr - otr, ti - oti) >= hypot(*zr, *zi) * 0.5) {
-		pasd = FALSE;
+		pasd = false;
 	    }
 	    else if (! pasd) {
-		pasd = TRUE;
+		pasd = true;
 	    }
 	    else {
 
@@ -1179,14 +1179,14 @@ static Rboolean fxshft(int l2, double *zr, double *zi)
 		svsr = sr;
 		svsi = si;
 		if (vrshft(10, zr, zi)) {
-		    return TRUE;
+		    return true;
 		}
 
 		/* the iteration failed to converge. */
 		/* turn off testing and restore */
 		/* h, s, pv and t. */
 
-		test = FALSE;
+		test = false;
 		for (i=1 ; i<=n ; i++) {
 		    hr[i-1] = shr[i-1];
 		    hi[i-1] = shi[i-1];
@@ -1208,7 +1208,7 @@ static Rboolean fxshft(int l2, double *zr, double *zi)
 
 /* carries out the third stage iteration.
  */
-static Rboolean vrshft(int l3, double *zr, double *zi)
+static bool vrshft(int l3, double *zr, double *zi)
 {
 /*  l3	    - limit of steps in stage 3.
  *  zr,zi   - on entry contains the initial iterate;
@@ -1218,12 +1218,12 @@ static Rboolean vrshft(int l3, double *zr, double *zi)
  *
  * Assign and uses  GLOBAL sr, si
 */
-    Rboolean h_s_0, b;
+    bool h_s_0, b;
     static int i, j;
     static double r1, r2, mp, ms, tp, relstp;
     static double omp;
 
-    b = FALSE;
+    b = false;
     sr = *zr;
     si = *zi;
 
@@ -1254,7 +1254,7 @@ static Rboolean vrshft(int l3, double *zr, double *zi)
 		/* one zero to dominate. */
 
 		tp = relstp;
-		b = TRUE;
+		b = true;
 		if (relstp < eta)
 		    tp = eta;
 		r1 = sqrt(tp);
@@ -1275,7 +1275,7 @@ static Rboolean vrshft(int l3, double *zr, double *zi)
 		/* increases significantly. */
 
 		if (mp * .1 > omp)
-		    return FALSE;
+		    return false;
 	    }
 	}
 	omp = mp;
@@ -1292,15 +1292,15 @@ static Rboolean vrshft(int l3, double *zr, double *zi)
 	    si += ti;
 	}
     }
-    return FALSE;
+    return false;
 
 L_conv:
     *zr = sr;
     *zi = si;
-    return TRUE;
+    return true;
 }
 
-static void calct(Rboolean *h_s_0)
+static void calct(bool *h_s_0)
 {
     /* computes	 t = -p(s)/h(s).
      * h_s_0   - logical, set true if h(s) is essentially zero.	*/
@@ -1322,7 +1322,7 @@ static void calct(Rboolean *h_s_0)
     }
 }
 
-static void nexth(Rboolean h_s_0)
+static void nexth(bool h_s_0)
 {
     /* calculates the next shifted h polynomial.
      * h_s_0 :	if TRUE  h(s) is essentially zero

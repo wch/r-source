@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997--2024  The R Core Team
+ *  Copyright (C) 1997--2025  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -749,20 +749,19 @@ integerSubscript(SEXP s, R_xlen_t ns, R_xlen_t nx, R_xlen_t *stretch,
 		 SEXP call, SEXP x)
 {
     R_xlen_t i;
-    int ii, neg, max, canstretch;
-    Rboolean isna = FALSE;
+    int ii, max, canstretch;
+    bool isna = false, neg = false;
     canstretch = *stretch > 0;
     *stretch = 0;
-    neg = FALSE;
     max = 0;
     const int *ps = INTEGER_RO(s);
     for (i = 0; i < ns; i++) {
 	ii = ps[i];
 	if (ii < 0) {
 	    if (ii == NA_INTEGER)
-		isna = TRUE;
+		isna = true;
 	    else
-		neg = TRUE;
+		neg = true;
 	}
 	else if (ii > max)
 	    max = ii;
@@ -791,13 +790,13 @@ realSubscript(SEXP s, R_xlen_t ns, R_xlen_t nx, R_xlen_t *stretch,
     *stretch = 0;
     double min = 0, max = 0;
     const double *ps = REAL_RO(s);
-    Rboolean isna = FALSE;
+    bool isna = false;
     for (R_xlen_t i = 0; i < ns; i++) {
 	double ii = ps[i];
 	if (R_FINITE(ii)) {
 	    if (ii < min) min = ii;
 	    if (ii > max) max = ii;
-	} else isna = TRUE;
+	} else isna = true;
     }
     if (max >= (double)nx+1.) {
 #ifndef LONG_VECTOR_SUPPORT
@@ -833,18 +832,18 @@ realSubscript(SEXP s, R_xlen_t ns, R_xlen_t nx, R_xlen_t *stretch,
 	/* Only return a REALSXP index if we need to */
 	SEXP indx;
 	R_xlen_t i, cnt = 0;
-	Rboolean int_ok = TRUE;
+	bool int_ok = true;
 	/* NB, indices will be truncated eventually,
 	   so need to do that to take '0' into account */
 	for (i = 0; i < ns; i++) {
 	    double ds = ps[i];
 #ifdef OLDCODE_LONG_VECTOR
 	    if (!R_FINITE(ds)) {
-		if (ds > INT_MAX) int_ok = FALSE;
+		if (ds > INT_MAX) int_ok = false;
 		cnt++;
 	    } else if ((R_xlen_t) ds != 0) cnt++;
 #else
-	    if (R_FINITE(ds) && ds > INT_MAX) int_ok = FALSE;
+	    if (R_FINITE(ds) && ds > INT_MAX) int_ok = false;
 	    if (!R_FINITE(ds) || (R_xlen_t) ds != 0) cnt++;
 #endif
 	}
@@ -894,7 +893,7 @@ stringSubscript(SEXP s, R_xlen_t ns, R_xlen_t nx, SEXP names,
     R_xlen_t i, j, nnames, extra, sub;
     int canstretch = *stretch > 0;
     /* product may overflow, so check factors as well. */
-    Rboolean usehashing = ( ((ns > 1000 && nx) || (nx > 1000 && ns)) || (ns * nx > 15*nx + ns) );
+    bool usehashing = ( ((ns > 1000 && nx) || (nx > 1000 && ns)) || (ns * nx > 15*nx + ns) );
     int nprotect = 0;
 
     PROTECT(s);

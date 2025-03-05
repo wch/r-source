@@ -78,7 +78,7 @@ attribute_hidden SEXP do_relop(SEXP call, SEXP op, SEXP args, SEXP env)
     (isSymbol(x) && IS_SCALAR_STRING(y) && Seql(PRINTNAME(x), STRING_ELT(y, 0)))
 
 
-static R_INLINE Rboolean compute_lang_equal(SEXP x, SEXP y)
+static R_INLINE bool compute_lang_equal(SEXP x, SEXP y)
 {
     if (isSymbol(x))
 	return y == x ||
@@ -94,7 +94,7 @@ static R_INLINE Rboolean compute_lang_equal(SEXP x, SEXP y)
 	y = LCONS(CAR(y), CDR(y));
     PROTECT(y);
 
-    Rboolean val = R_compute_identical(x, y, 16);
+    bool val = R_compute_identical(x, y, 16);
     UNPROTECT(2);
     return val;
 }
@@ -265,7 +265,7 @@ attribute_hidden SEXP do_relop_dflt(SEXP call, SEXP op, SEXP x, SEXP y)
 	}
     }
 
-    Rboolean iS;
+    bool iS;
     /* That symbols and calls were allowed was undocumented prior to
        R 2.5.0.  We deparse them as deparse() would, minus attributes */
     if ((iS = isSymbol(x)) || TYPEOF(x) == LANGSXP) {
@@ -305,7 +305,7 @@ attribute_hidden SEXP do_relop_dflt(SEXP call, SEXP op, SEXP x, SEXP y)
 
     /* ELSE :  x and y are both atomic or list */
 
-    Rboolean
+    bool
 	xarray = isArray(x),
 	yarray = isArray(y),
 	xts = isTs(x),

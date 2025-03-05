@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1999--2024  The R Core Team
+ *  Copyright (C) 1999--2025  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -416,7 +416,7 @@ int Rstrwid(const char *str, int slen, cetype_t ienc, int quote)
     if(ienc > 2) // CE_NATIVE, CE_UTF8, CE_BYTES are supported
 	warning("unsupported encoding (%d) in Rstrwid", ienc);
     if(mbcslocale || ienc == CE_UTF8) {
-	Rboolean useUTF8 = (ienc == CE_UTF8);
+	bool useUTF8 = (ienc == CE_UTF8);
 	mbstate_t mb_st;
 
 	if(!useUTF8)  mbs_init(&mb_st);
@@ -558,7 +558,7 @@ const char *EncodeString(SEXP s, int w, int quote, Rprt_adj justify)
     int i, cnt;
     const char *p; char *q, buf[13];
     cetype_t ienc = getCharCE(s);
-    Rboolean useUTF8 = w < 0;
+    bool useUTF8 = w < 0;
     const void *vmax = vmaxget();
 
     if (w < 0) w = w + 1000000;
@@ -665,11 +665,11 @@ const char *EncodeString(SEXP s, int w, int quote, Rprt_adj justify)
     }
     if(quote) *q++ = (char) quote;
     if(mbcslocale || ienc == CE_UTF8) {
-	Rboolean useUTF8 = (ienc == CE_UTF8);
-	Rboolean wchar_is_ucs_or_utf16 = TRUE;
+	bool useUTF8 = (ienc == CE_UTF8);
+	bool wchar_is_ucs_or_utf16 = TRUE;
 	mbstate_t mb_st;
 #ifndef __STDC_ISO_10646__
-	Rboolean Unicode_warning = FALSE;
+	bool Unicode_warning = FALSE;
 #endif
 # if !defined (__STDC_ISO_10646__) && !defined (Win32)
 	wchar_is_ucs_or_utf16 = FALSE;
@@ -1035,7 +1035,7 @@ int REvprintf_internal(const char *format, va_list arg)
 	    res = vfprintf(R_Consolefile, format, arg);
     } else {
 	char buf[BUFSIZE];
-	Rboolean printed = FALSE;
+	bool printed = false;
 	va_list aq;
 
 	va_copy(aq, arg);
@@ -1053,7 +1053,7 @@ int REvprintf_internal(const char *format, va_list arg)
 		res = vsnprintf(malloc_buf, size, format, arg);
 		if (res == size - 1) {
 		    R_WriteConsoleEx(malloc_buf, res, 1);
-		    printed = TRUE;
+		    printed = true;
 		}
 		char *tmp = malloc_buf;
 		malloc_buf = NULL;

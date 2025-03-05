@@ -115,7 +115,7 @@ static SEXP seq_colon(double n1, double n2, SEXP call)
 	    /* r := " the effective 'to' "  of  from:to */
 	    double dn = (double) n;
 	    r = n1 + ((n1 <= n2) ? dn-1 : -(dn-1));
-	    if(r <= INT_MIN || r > INT_MAX) useInt = FALSE;
+	    if(r <= INT_MIN || r > INT_MAX) useInt = false;
 	}
     }
     if (useInt) {
@@ -153,7 +153,7 @@ attribute_hidden SEXP do_colon(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if (n1 == 0 || n2 == 0)
 	    errorcall(call, _("argument of length 0"));
 	char *check = getenv("_R_CHECK_LENGTH_COLON_");
-	if (check ? StringTrue(check) : FALSE) // warn by default
+	if (check ? StringTrue(check) : false) // warn by default
 	    errorcall(call, _("numerical expression has length > 1"));
 	else
 	    warningcall(call, _("numerical expression has %d elements: only the first used"),
@@ -800,7 +800,7 @@ attribute_hidden SEXP do_seq(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans = R_NilValue /* -Wall */, from, to, by, len, along;
     R_xlen_t i, lout = NA_INTEGER;
-    Rboolean One = (length(args) == 1); // *before* messing with args ..
+    bool One = (length(args) == 1); // *before* messing with args ..
 
     /* DispatchOrEval internal generic: seq.int */
     if (DispatchOrEval(call, op, "seq", args, rho, &ans, 0, 1))
@@ -822,7 +822,7 @@ attribute_hidden SEXP do_seq(SEXP call, SEXP op, SEXP args, SEXP rho)
     by   = CAR(args); args = CDR(args);
     len  = CAR(args); args = CDR(args);
     along= CAR(args);
-    Rboolean
+    bool
 	miss_from = (from == R_MissingArg),
 	miss_to   = (to   == R_MissingArg);
     if(One && !miss_from) {
@@ -891,7 +891,7 @@ attribute_hidden SEXP do_seq(SEXP call, SEXP op, SEXP args, SEXP rho)
 		ans = seq_colon(rfrom, rto, call);
 		goto done;
 	    }
-	    Rboolean finite_del = R_FINITE(del) != 0;
+	    bool finite_del = R_FINITE(del) != 0;
 	    double n = (finite_del)
 		? del/rby
 		: rto/rby - rfrom/rby; /* overflow in  (to - from)  when both are finite */
@@ -962,7 +962,7 @@ attribute_hidden SEXP do_seq(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if(miss_from) rfrom = rto   - (double)lout + 1;
 	if(!R_FINITE(rfrom)) errorcall(call, _("'%s' must be a finite number"), "from");
 	if(!R_FINITE(rto))   errorcall(call, _("'%s' must be a finite number"), "to");
-	Rboolean finite_del = 0;
+	bool finite_del = 0;
 	if(lout > 2) { // only then, use 'by'
 	    double nint = (double)(lout - 1);
 	    if((finite_del = (R_FINITE(rby = (rto - rfrom)) != 0)))

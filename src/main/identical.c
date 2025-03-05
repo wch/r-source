@@ -103,7 +103,7 @@ attribute_hidden SEXP do_identical(SEXP call, SEXP op, SEXP args, SEXP env)
 #define EXTPTR_AS_REF   (flags & IDENT_EXTPTR_AS_REF)
 
 /* do the two objects compute as identical?
-   Also used in unique.c */
+   Also used in unique.c, eval.c, relop.c, dotcode.c, and exported */
 Rboolean
 R_compute_identical(SEXP x, SEXP y, int flags)
 {
