@@ -64,7 +64,8 @@
         fout <- system(
                     paste("file", shQuote(file.path(srcdir, "bin", "R.exe"))),
                     intern=TRUE)
-        if (grepl("Aarch64", fout, fixed = TRUE))
+        if (grepl("Aarch64", fout, fixed = TRUE)
+            || grepl("ARM64", fout, fixed = TRUE))
             aarch64 <- TRUE
     }
 

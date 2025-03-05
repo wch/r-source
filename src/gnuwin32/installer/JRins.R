@@ -54,7 +54,8 @@
                     intern=TRUE)
         if (grepl("x86-64", fout, fixed = TRUE))
             cat("ArchitecturesInstallIn64BitMode=x64 arm64\n", file = con)
-        else if (grepl("Aarch64", fout, fixed = TRUE)) {
+        else if (grepl("Aarch64", fout, fixed = TRUE)
+                 || grepl("ARM64", fout, fixed = TRUE)) {
             cat("ArchitecturesInstallIn64BitMode=arm64\n", file = con)
             cat("ArchitecturesAllowed=arm64\n", file = con)
             aarch64 <- TRUE
