@@ -58,10 +58,9 @@ delim_match(SEXP x, SEXP delims)
     */
 
     char c;
-    const char *s, *delim_start, *delim_end;
-    int n, i, pos, start, end, delim_depth;
+    const char *delim_start, *delim_end;
+    int n, i, start, end;
     int lstart, lend;
-    bool is_escaped, equal_start_and_end_delims;
     SEXP ans, matchlen;
     mbstate_t mb_st; int used;
 
@@ -71,7 +70,7 @@ delim_match(SEXP x, SEXP delims)
     delim_start = translateChar(STRING_ELT(delims, 0));
     delim_end = translateChar(STRING_ELT(delims, 1));
     lstart = (int) strlen(delim_start); lend = (int) strlen(delim_end);
-    equal_start_and_end_delims = strcmp(delim_start, delim_end) == 0;
+    bool equal_start_and_end_delims = strcmp(delim_start, delim_end) == 0;
 
     n = length(x);
     PROTECT(ans = allocVector(INTSXP, n));
@@ -80,8 +79,9 @@ delim_match(SEXP x, SEXP delims)
     for(i = 0; i < n; i++) {
 	memset(&mb_st, 0, sizeof(mbstate_t));
 	start = end = -1;
-	s = translateChar(STRING_ELT(x, i));
-	pos = is_escaped = delim_depth = 0;
+	const char *s = translateChar(STRING_ELT(x, i));
+	int pos = 0, delim_depth = 0;
+	bool is_escaped = false;
 	while((c = *s) != '\0') {
 	    if(c == '\n') {
 		is_escaped = false;
