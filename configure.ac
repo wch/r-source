@@ -426,6 +426,11 @@ AC_ARG_WITH([lapack],
 [R_ARG_USE(lapack)],
 [use_lapack=unset])
 
+AC_ARG_WITH([2025blas],
+[AS_HELP_STRING([--with-2025blas],[compile 2025 BLAS additions into Rlapack @<:@no@:>@])],
+[R_ARG_USE(2025blas)],
+[use_2025blas=no])
+
 ## Readline.
 AC_ARG_WITH([readline],
 [AS_HELP_STRING([--with-readline],[use readline library @<:@yes@:>@])],
@@ -2402,6 +2407,13 @@ if test "${acx_blas_ok}" != "yes"; then
       ;;
   esac
 fi
+
+if test "${use_2025blas}" = yes; then
+   if test "${acx_lapack_ok}" = "yes"; then
+     AC_MSG_ERROR([--with-2025blas cannot be used with --with-lapack])
+  fi
+fi
+AM_CONDITIONAL(BUILD_2025BLAS, [test "${use_2025blas}" = yes])
 
 AM_CONDITIONAL(BLAS_SHLIB, [test "x${use_blas_shlib}" = xyes])
 

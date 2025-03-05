@@ -207,11 +207,14 @@
       \I{Ella Kaye}, \I{Heather Turner}, and \I{Kristen Gorman}.
 
       \item The bundled BLAS and LAPACK sources have been updated to
-      those shipped with LAPACK 3.12.1.  This is mainly bug fixes, but
-      includes a handful of new ancillary routines, including two new
-      BLAS routines \code{dgemmtr} and \code{zgemmtr} which are now used
-      by LAPACK routines. So an external BLAS to be used with the
-      internal LAPACK (unusual) needs to provide those routines.
+      those shipped with LAPACK 3.12.1.
+
+      This is mainly bug fixes, but includes a handful of new ancillary
+      routines, including two new BLAS routines \code{dgemmtr} and
+      \code{zgemmtr} which are now used by LAPACK routines.  So an
+      external BLAS to be used with the internal LAPACK (unusual) needs
+      to provide those routines, and if an external LAPACK is 3.12.1 or
+      later, the BLAS used must contain the 2025 additions.
     }
   }
 
@@ -251,6 +254,11 @@
       \item There is now support for installing the debug symbols for
       recommended packages on macOS: see \samp{REC_INSTALL_OPT} in file
       \file{config.site}.
+
+      \item There is a new \command{configure} option
+      \option{--with-2025blas} which will compile the 2025 BLAS
+      additions in the internal LAPACK to allow an external BLAS which
+      lacks them to be used.
     }
   }
 

@@ -775,6 +775,8 @@ LIBR1
 LIBR0
 BLAS_SHLIB_FALSE
 BLAS_SHLIB_TRUE
+BUILD_2025BLAS_FALSE
+BUILD_2025BLAS_TRUE
 RMATH_HAVE_WORKING_LOG1P
 LIBOBJS
 ALLOCA
@@ -1096,6 +1098,7 @@ enable_lto
 enable_java
 with_blas
 with_lapack
+with_2025blas
 with_readline
 with_pcre2
 with_pcre1
@@ -1907,6 +1910,7 @@ Optional Packages:
                           it [unset]
   --with-lapack           use system LAPACK library (if available), or specify
                           it [unset]
+  --with-2025blas         compile 2025 BLAS additions into Rlapack [no]
   --with-readline         use readline library [yes]
   --with-pcre2            use PCRE2 library (if available) [yes]
   --with-pcre1            use PCRE1 library (if available and PCRE2 is not)
@@ -4835,6 +4839,22 @@ fi
 
 else case e in #(
   e) use_lapack=unset ;;
+esac
+fi
+
+
+
+# Check whether --with-2025blas was given.
+if test ${with_2025blas+y}
+then :
+  withval=$with_2025blas; if test "${withval}" = no; then
+  use_2025blas=no
+else
+  use_2025blas=yes
+fi
+
+else case e in #(
+  e) use_2025blas=no ;;
 esac
 fi
 
@@ -27529,7 +27549,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_verb"
-(eval echo $as_me:27532: \"$ac_link\") >&5
+(eval echo $as_me:27552: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -27607,7 +27627,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_cv_prog_c_v"
-(eval echo $as_me:27610: \"$ac_link\") >&5
+(eval echo $as_me:27630: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -51532,6 +51552,20 @@ if test "${acx_blas_ok}" != "yes"; then
   esac
 fi
 
+if test "${use_2025blas}" = yes; then
+   if test "${acx_lapack_ok}" = "yes"; then
+     as_fn_error $? "--with-2025blas cannot be used with --with-lapack" "$LINENO" 5
+  fi
+fi
+ if test "${use_2025blas}" = yes; then
+  BUILD_2025BLAS_TRUE=
+  BUILD_2025BLAS_FALSE='#'
+else
+  BUILD_2025BLAS_TRUE='#'
+  BUILD_2025BLAS_FALSE=
+fi
+
+
  if test "x${use_blas_shlib}" = xyes; then
   BLAS_SHLIB_TRUE=
   BLAS_SHLIB_FALSE='#'
@@ -64095,6 +64129,10 @@ Usually this means the macro was only invoked conditionally." "$LINENO" 5
 fi
 if test -z "${USE_EXPORTFILES_TRUE}" && test -z "${USE_EXPORTFILES_FALSE}"; then
   as_fn_error $? "conditional \"USE_EXPORTFILES\" was never defined.
+Usually this means the macro was only invoked conditionally." "$LINENO" 5
+fi
+if test -z "${BUILD_2025BLAS_TRUE}" && test -z "${BUILD_2025BLAS_FALSE}"; then
+  as_fn_error $? "conditional \"BUILD_2025BLAS\" was never defined.
 Usually this means the macro was only invoked conditionally." "$LINENO" 5
 fi
 if test -z "${BLAS_SHLIB_TRUE}" && test -z "${BLAS_SHLIB_FALSE}"; then

@@ -23,6 +23,8 @@ SOURCES = $(SOURCES_C) $(SOURCES_F) $(SOURCES_F90)
 OBJECTS = $(SOURCES_C:.c=.o) $(SOURCES_F:.f=.o) flexiblas.o
 HEADERS = Lapack.h
 
+@BUILD_2025BLAS_TRUE@2025OBJECTS = dgemmtr.o \
+  @COMPILE_FORTRAN_DOUBLE_COMPLEX_FALSE@ zgemmtr.o
 ## Sources for -lRlapack.
 ## On macOS this will be linked directly to the vecLib/Accelerate
 ## framework if --with-blas=Acceleraate --with-lapack is used, so
@@ -32,6 +34,7 @@ LIBSOURCES = dlamch.f dlapack.f \
 LIBSOURCES90 = dlartg.f90 dlassq.f90 la_constants.f90 la_xisnan.f90 \
   @COMPILE_FORTRAN_DOUBLE_COMPLEX_FALSE@ zlartg.f90 zlassq.f90
 LIBOBJECTS = $(LIBSOURCES:.f=.o) $(LIBSOURCES90:.f90=.o) \
+  $(2025OBJECTS) \
   @USE_VECLIB_G95FIX_TRUE@ vecLibg95f.o vecLibg95c.o
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
@@ -43,7 +46,8 @@ DISTFILES = \
 	cmplx.f dlapack.f dlamch.f \
 	dlartg.f90 dlassq.f90 la_constants.f90 la_xisnan.f90 \
 	zlartg.f90 zlassq.f90 \
-	dble.txt cmplx.txt R.patch
+	dble.txt cmplx.txt R.patch \
+	dgemmtr.f zgemmtr.f
 
 lapack_la = lapack$(SHLIB_EXT)
 lapack_la_OBJECTS = $(OBJECTS)
