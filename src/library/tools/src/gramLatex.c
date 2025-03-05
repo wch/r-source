@@ -1936,11 +1936,11 @@ yyreduce:
     break;
 
   case 27: /* math: '$' nonMath '$'  */
-                                                { yyval = xxmath(yyvsp[-1], &(yyloc), false); }
+                                                { yyval = xxmath(yyvsp[-1], &(yyloc), FALSE); }
     break;
 
   case 28: /* displaymath: TWO_DOLLARS nonMath TWO_DOLLARS  */
-                                                { yyval = xxmath(yyvsp[-1], &(yyloc), true); }
+                                                { yyval = xxmath(yyvsp[-1], &(yyloc), TRUE); }
     break;
 
   case 29: /* block: '{' Items '}'  */
