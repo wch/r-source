@@ -40,18 +40,18 @@ SHARE_DIRS = R dictionaries encodings licenses make Rd texmf zoneinfo
 all: $(RPREFIX)-win.exe
 msi: $(RPREFIX)-$(SUFF).msi
 
-RBUILD := $(if $(findstring Aarch64,\
-                            $(subst ARM64,Aarch64,$(shell file "$(R_HOME)/bin/R.exe"))),\
-               aarch64,x86_64)
+RBUILD := $(strip $(if $(findstring Aarch64,\
+                                    $(subst ARM64,Aarch64,$(shell file "$(R_HOME)/bin/R.exe"))),\
+               aarch64,x86_64))
 
 ifeq ($(CROSS_BUILD),)
   RTARGET := $(RBUILD)
   R_ARCH_TARGET := $(R_ARCH)
 else
   R_HOME_CROSS = $(CROSS_BUILD)
-  RTARGET := $(if $(findstring Aarch64,\
-                               $(subst ARM64,Aarch64,$(shell file "$(R_HOME_CROSS)/bin/R.exe"))),\
-                  aarch64,x86_64)
+  RTARGET := $(strip $(if $(findstring Aarch64,\
+                                       $(subst ARM64,Aarch64,$(shell file "$(R_HOME_CROSS)/bin/R.exe"))),\
+                       aarch64,x86_64))
   R_ARCH_TARGET := $(shell $(FIND) $(R_HOME_CROSS)/bin -name $R.dll | $(SED) -e  's!.*/bin\(.*\)/R.dll!\1!g')
 endif
 
