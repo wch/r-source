@@ -4124,9 +4124,16 @@ target, but file @file{build/install_manifest.txt} lists the files
 installed, so you can remove them @emph{via} shell commands or from
 @R{}.
 
+The originql release of LAPCK 3.12.1 identifies itself as 3.12.0 (a
+bug).
+
 If using @option{--with-lapack} to get a reference (`generic') LAPACK
 (or allowing the default to select one), consider also using
 @option{--with-blas} (with a path if an enhanced BLAS is installed).
+
+There is also `RecursiveLAPACK'
+(@uref{https://github.com/HPAC/ReLAPACK?tab=readme-ov-file}) which
+replaces some LAPACK routines.  (This is optionally used by @I{OpenBLAS}.)
 
 
 @node Caveats

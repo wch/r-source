@@ -225,10 +225,10 @@
       \code{zgemmtr} which are now used by LAPACK routines.  This means
       that BLAS implementations are no longer interchangeable.
 
-      \item To work aorund this, \R can be configured with option
-      \option{--with-2025blas} which arranges for the 2025 additions to
-      be compiled into \code{libRlapack} (the internal LAPACK, not built
-      if an external LAPACK is used).
+      \item To work around this, \R can be configured with option
+      \option{--with-2025blas} which arranges for the 2025 BLAS
+      additions to be compiled into \code{libRlapack} (the internal
+      LAPACK, not built if an external LAPACK is used).
 
       This option allows the continuation of swapping the BLAS in use by
       symlinking \file{lib/libRblas.*}.  It has the disadvantage of
@@ -237,8 +237,8 @@
       from version 0.3.29).
 
       \item Windows builds use the internal LAPACK and by default the
-      internal BLAS: notes on how to swap the latter in \file{Rblas.dll}
-      are in file \file{src/extra/blas/Makefile.win}.
+      internal BLAS: notes on how to swap the latter \emph{via}
+      \file{Rblas.dll} are in file \file{src/extra/blas/Makefile.win}.
     }
   }
 
@@ -255,7 +255,7 @@
       %%   installed on macOS 15.3
       %% https://en.cppreference.com/w/c/23
       A C23 compiler is known to be selected with
-      \command{gcc}\sspace{}13--15,
+      \command{gcc}\sspace{}13--15 (as used on Windows),
       \I{LLVM} \command{clang}\sspace{}18--20 (and 15 should),
       Apple \command{clang}\sspace{}15--16 and
       Intel\sspace{}2024.2 (and 2022.2 should).
