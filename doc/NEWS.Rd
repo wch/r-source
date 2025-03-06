@@ -205,16 +205,40 @@
 
       \item New datasets \code{penguins} and \code{penguins_raw} thanks to
       \I{Ella Kaye}, \I{Heather Turner}, and \I{Kristen Gorman}.
+    }
+  }
 
+  \subsection{BLAS and LAPACK}{
+    \itemize{
       \item The bundled BLAS and LAPACK sources have been updated to
-      those shipped with LAPACK 3.12.1.
+      those shipped as part of january 2025's LAPACK 3.12.1.
+      
+      \item It is intended that this will be the last update to BLAS and
+      LAPACK in the \R sources.  Those building \R from source are
+      encouraged to use external BLAS and LAPACK and this will be required in
+      future.
 
-      This is mainly bug fixes, but includes a handful of new ancillary
-      routines, including two new BLAS routines \code{dgemmtr} and
-      \code{zgemmtr} which are now used by LAPACK routines.  So an
-      external BLAS to be used with the internal LAPACK (unusual) needs
-      to provide those routines, and if an external LAPACK is 3.12.1 or
-      later, the BLAS used must contain the 2025 additions.
+      \item This update was mainly bug fixes but contained a barely
+      documented major change.  The set of BLAS routines has been
+      unchanged since 1988, so throughout \R's history.  This update
+      introduced two new BLAS routines \code{dgemmtr} and
+      \code{zgemmtr} which are now used by LAPACK routines.  This means
+      that BLAS implementations are no longer interchangeable.
+
+      \item To work aorund this, \R can be configured with option
+      \option{--with-2025blas} which arranges for the 2025 additions to
+      be compiled into \code{libRlapack} (the internal LAPACK, not built
+      if an external LAPACK is used).
+
+      This option allows the continuation of swapping the BLAS in use by
+      symlinking \file{lib/libRblas.*}.  It has the disadvantage of
+      using the reference BLAS version of the 2025 routines whereas an
+      enhanced BLAS might have an optimized version (\I{OpenBLAS} does as
+      from version 0.3.29).
+
+      \item Windows builds use the internal LAPACK and by default the
+      internal BLAS: notes on how to swap the latter in \file{Rblas.dll}
+      are in file \file{src/extra/blas/Makefile.win}.
     }
   }
 
@@ -237,7 +261,7 @@
       Intel\sspace{}2024.2 (and 2022.2 should).
 
       Current binary distributions on macOS use Apple
-      \command{clang}\sspace{}14  and so do not use C23.
+      \command{clang}\sspace{}14 and so do not use C23.
 
       \item The minimum \command{autoconf} requirement for a maintainer
       build has been increased to \command{autoconf}\sspace{}2.72.
@@ -254,11 +278,6 @@
       \item There is now support for installing the debug symbols for
       recommended packages on macOS: see \samp{REC_INSTALL_OPT} in file
       \file{config.site}.
-
-      \item There is a new \command{configure} option
-      \option{--with-2025blas} which will compile the 2025 BLAS
-      additions in the internal LAPACK to allow an external BLAS which
-      lacks them to be used.
     }
   }
 
@@ -656,9 +675,10 @@
       \item Many arguments which should be length-1 logical are checked
       more thoroughly.  The most commonly seen errors are in
       \code{unlink(, recursive)}, \code{tempdir()} and the \code{na.rm}
-      argument of \code{max()}, \code{min()}, \code{sum()}, \dots.
+      arguments of \code{max()}, \code{min()}, \code{sum()}, \dots.
 
-      \code{grep()}, \code{strsplit()} and similar took non-\code{TRUE}
+      \code{grep()}, \code{strsplit()} and similar took
+      non-\code{TRUE}/\code{FALSE}
       values of their logical arguments as \code{FALSE}, but these were
       almost always mistakes and are now reported as \code{NA}.
     }

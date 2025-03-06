@@ -3581,24 +3581,24 @@ these variables.
 The linear algebra routines in @R{} make use of @acronym{BLAS} (Basic
 Linear Algebra Subprograms, @uref{https://netlib.org/blas/faq.html})
 routines, and most make use of routines from @acronym{LAPACK} (@I{Linear
-Algebra PACKage}, @uref{https://netlib.org/lapack/}).  The @R{}
-sources contain reference (Fortran) implementations of these, but they
-can be replaced by external libraries, usually those tuned for speed on
-specific CPUs.  These libraries normally contain all of the BLAS
-routines and some tuned LAPACK routines and perhaps the rest of LAPACK
-from the reference implementation.  Because of the way linking works,
-using an external BLAS library may necessitate using the version of
-LAPACK it contains.
+Algebra PACKage}, @uref{https://netlib.org/lapack/}).  The @R{} sources
+contain reference (Fortran) implementations of these, but they can be
+replaced by external libraries, usually those tuned for speed on
+specific CPUs.  These libraries normally contain all of the pre-2025
+ BLAS routines and some tuned LAPACK routines and perhaps the rest of
+LAPACK from the reference implementation.  Because of the way linking
+works, using an external BLAS library may necessitate using the version
+of LAPACK it contains.
 
 Note that the alternative implementations will not give identical
-numeric results.  Some differences may be benign (such the signs of @abbr{SVD}s
-and eigenvectors), but the optimized routines can be less accurate and
-(particularly for LAPACK) can be from older versions with fewer
-corrections.  However, @R{} relies on
+numeric results.  Some differences may be benign (such the signs of
+@abbr{SVD}s and eigenvectors), but the optimized routines can be less
+accurate and (particularly for LAPACK) can be from older versions with
+fewer corrections.  Moreover, @R{} relies on
 @acronym{ISO}/@acronym{IEC}@tie{}60559 compliance.  This can be broken
 if for example the code assumes that terms with a zero factor are always
 zero and do not need to be computed---whereas @code{x*0} can be
-@code{NaN}.  The internal BLAS has been extensively patched to avoid
+@code{NaN}.  The internal BLAS used to be extensively patched to avoid
 this whereas @I{MKL}'s documentation has warned
 @quotation
 LAPACK routines assume that input matrices do not contain IEEE 754
@@ -3627,6 +3627,10 @@ results or segfaults.
 There is a tendency for re-distributors of @R{} to use `enhanced' linear
 algebra libraries without explaining their downsides.
 
+@R{} is moving away from bundling the reference (`netlib')
+implementations of LAPACK and BLAS (which is nowadays distributed as
+part of LAPACK): it has been announced that version 3.12.1 included in
+@R{}@tie{}4.5.0 is expected to be the last update.
 
 @node BLAS
 @subsection BLAS
@@ -3671,12 +3675,12 @@ checked.  Also, the BLAS can be switched after configure is run, either
 as a symbolic link or by the mechanisms mentioned below, and this can
 defeat the completeness check.
 
-Some enhanced @acronym{BLAS}es are compiler-system-specific
-(@code{Accelerate} on macOS, @code{sunperf} on Solaris@footnote{Using
-the Oracle Developer Studio @command{cc} and @command{f95} compilers},
-@code{libessl} on IBM).  The correct incantation for these is often
-found @emph{via} @option{--with-blas} with no value on the appropriate
-platforms.
+@c Some enhanced @acronym{BLAS}es are compiler-system-specific
+@c (@code{Accelerate} on macOS, @code{sunperf} on Solaris@footnote{Using
+@c the Oracle Developer Studio @command{cc} and @command{f95} compilers},
+@c @code{libessl} on IBM).  The correct incantation for these is often
+@c found @emph{via} @option{--with-blas} with no value on the appropriate
+@c platforms.
 
 Note that under Unix (but not under Windows) if @R{} is compiled against
 a non-default @acronym{BLAS} and @option{--enable-BLAS-shlib} is
@@ -3690,16 +3694,17 @@ in use: Build @R{} with @option{--with-blas} to select the OS version of
 the reference BLAS, and then use @command{update-alternatives} to switch
 between the available BLAS libraries.  See
 @uref{https://wiki.debian.org/DebianScience/LinearAlgebraLibraries}.
+(ATLAS, MKL and OpenBLAS alternatives are currently available.)
 
-Fedora 33 and later offer `@I{FlexiBLAS}', a similar mechanism for switching
-the BLAS in use
-(@uref{https://www.mpi-magdeburg.mpg.de/projects/flexiblas}).  However,
-rather than overriding @code{libblas}, this requires configuring @R{}
-with option @option{--with-blas=flexiblas}.  `Backend' wrappers are
-available for the reference BLAS, ATLAS and serial, threaded and @abbr{OpenMP}
-builds of @I{OpenBLAS} and @I{BLIS}, and perhaps others@footnote{for example,
-Intel @I{MKL} not packaged by Fedora.}.  This can be controlled from a
-running @R{} session by package @CRANpkg{flexiblas}.
+Fedora 33 and later offer `@I{FlexiBLAS}', a similar mechanism for
+switching the BLAS in use
+(@uref{https://www.mpi-magdeburg.mpg.de/projects/flexiblas}).  Rather
+than overriding @code{libblas}, this requires configuring @R{} with
+option @option{--with-blas=flexiblas}.  `Backend' wrappers are available
+for the reference BLAS, ATLAS and serial, threaded and @abbr{OpenMP}
+builds of @I{OpenBLAS} and @I{BLIS}, and perhaps others@footnote{for
+example, Intel @I{MKL} not packaged by Fedora.}.  This can be controlled
+from a running @R{} session by package @CRANpkg{flexiblas}.
 
 BLAS implementations which use parallel computations can be
 non-deterministic: this is known for ATLAS.
@@ -3709,7 +3714,11 @@ non-deterministic: this is known for ATLAS.
 @subsubsection ATLAS
 
 ATLAS (@uref{https://math-atlas.sourceforge.net/}) is a ``tuned''
-@acronym{BLAS} that runs on a wide range of Unix-alike platforms.
+@acronym{BLAS} that runs on a wide range of Unix-alike Intel platforms and can
+be used on Windows.  At the time of writing it had last been updated in
+2018 (in an unreleased `developer (unstable)' branch).
+@c https://sourceforge.net/p/math-atlas/mailman/math-atlas-announce/?viewmonth=201810
+
 Unfortunately it is built by default as a static library that on some
 platforms may not be able to be used with shared objects such as are
 used in @R{} packages.  Be careful when using pre-built versions of
@@ -3735,11 +3744,11 @@ or, as on @cputype{x86_64} Fedora where a path needs to be specified,
 @end example
 @noindent
 Distributed ATLAS libraries cannot be tuned to your machine and so are a
-compromise: for example Fedora tunes@footnote{The only way to see
-exactly which CPUs the distributed libraries have been tuned for is to
-read the @file{atlas.spec} file.} @cputype{x86_64} @abbr{RPM}s for CPUs with
-SSE3 extensions, and separate @abbr{RPM}s may be available for specific CPU
-families.
+compromise: for example, when checked Fedora tuned@footnote{The only way
+to see exactly which CPUs the distributed libraries have been tuned for
+is to read the @file{atlas.spec} file.} @cputype{x86_64} @abbr{RPM}s for
+CPUs with SSE3 extensions, and separate @abbr{RPM}s may be available for
+specific CPU families.
 
 Note that building @R{} on Linux against distributed shared libraries
 may need @samp{-devel} or @samp{-dev} packages installed.
@@ -3766,16 +3775,14 @@ virtual core per physical CPU.  (For the Fedora libraries the
 compile-time flag specifies 4 threads.)
 @c https://math-atlas.sourceforge.net/atlas_install/node21.html
 
-ATLAS appears no longer to be under development: at the time of writing
-the latest release was from 2016,
-
 @node OpenBLAS and BLIS
 @subsubsection @I{OpenBLAS} and @I{BLIS}
 
-@I{Dr Kazushige Goto} wrote a tuned @acronym{BLAS} for several processors
-and OSes, which was frozen in 2010.  @I{OpenBLAS}
-(@uref{https://www.openblas.net/}) is a descendant project with support
-for some later CPUs.
+@I{Dr Kazushige Goto} wrote a tuned @acronym{BLAS} for several
+processors and OSes, which was frozen in 2010.  @I{OpenBLAS}
+(@uref{http://www.openmathlib.org/OpenBLAS/}) is a descendant project
+with support for some later CPUs, covering some from Intel/AMD, Arm,
+MIPS and RISC-V.
 
 This can be used by configuring @R{} with something like
 
@@ -3785,7 +3792,7 @@ This can be used by configuring @R{} with something like
 
 @noindent
 See @pxref{Shared BLAS} for an alternative (and in many ways preferable)
-way to use them.
+way to use it.
 
 Some platforms provide multiple builds of @I{OpenBLAS}: for example Fedora
 has @abbr{RPM}s@footnote{(and more, e.g.@: for 64-bit ints and static versions).}
@@ -3876,8 +3883,9 @@ MKL="-L$@{MKL_LIB_PATH@} -lmkl_gf_lp64 -lmkl_core -lmkl_sequential"
 The option @option{--with-lapack} is used since @I{MKL} contains a tuned
 copy of LAPACK (often older than the current version) as well as the
 @acronym{BLAS} (@pxref{LAPACK}).  Also, it does not at the time of
-writing contain the BLAS functions such as @code{dgemmtr} and so cannot
-be used with LAPACK 3.12.1 included in @R{} 4.5.0 and later.
+writing contain the BLAS functions such as @code{dgemmtr} and so to
+be used with LAPACK 3.12.1 included in @R{} 4.5.0 and later needs @R{}
+configured with @option{--with-2025blas}.
 
 Threaded @I{MKL} may be used by replacing the line defining the variable
 @code{MKL} by
@@ -3988,7 +3996,8 @@ changed in @file{@var{R_HOME}/etc/ldpaths}.
 
 This becasme less easy in 2025: swapping the BLAS is only possible to
 one compatible with the LAPACK in use.  For the LAPACK shipped with @R{}
-4.5.0 that means one containing @code{dgemmtr} and @code{zgemmtr}.
+4.5.0 that means one containing @code{dgemmtr} and @code{zgemmtr}, or
+configuring @R{} with @option{--with-2025blas}.
 @end itemize
 
 Another option to change the @acronym{BLAS} in use is to symlink a
@@ -4038,7 +4047,7 @@ It is assumed that @code{-llapack} is the reference LAPACK library but
 on Debian/Ubuntu it can be switched, including after @R{} is installed.
 On such a platform it is better to use @option{--without-lapack} or
 @option{--with-blas --with-lapack} (see below) explicitly.  The known
-examples@footnote{ATLAS, @I{OpenBLAS} and @I{Accelerate}.} of a
+examples@footnote{ATLAS, @I{MKL}, @I{OpenBLAS} and @I{Accelerate}.} of a
 non-reference LAPACK library found at installation all contain BLAS
 routines so are not used by a default @command{configure} run.
 
@@ -4075,7 +4084,7 @@ practice its main uses are without a value,
 
 @itemize
 @item
-with an `enhanced' BLAS such as ATLAS, @I{FlexiBLAS}, @I{MKL} or @I{OpenBLAS} which
+with an `enhanced' BLAS such as ATLAS, @I{MKL} or @I{OpenBLAS} which
 contains a full LAPACK (to avoid possible conflicts), or
 
 @item
@@ -4092,7 +4101,7 @@ If building LAPACK from its @I{Netlib} sources, be aware that @command{make}
 with its supplied @file{Makefile} will make a @emph{static} library and
 @R{} requires a shared/dynamic one.  To get one, use @command{cmake} as
 documented briefly in @file{README.md}.  Something like (to build only
-the double and double complex subroutines with 32-bit array indices),
+the double and double complex subroutines with 32-bit array indices):
 
 @example
 mkdir build
@@ -4111,13 +4120,13 @@ make -j10
 This builds the reference BLAS and the reference LAPACK linked to it.
 
 Note that @command{cmake} files do not provide an @code{uninstall}
-target, but @file{build/install_manifest.txt} is a list of the files
+target, but file @file{build/install_manifest.txt} lists the files
 installed, so you can remove them @emph{via} shell commands or from
 @R{}.
 
-If using @option{--with-lapack} to get a generic LAPACK (or allowing the
-default to select one), consider also using @option{--with-blas} (with a
-path if an enhanced BLAS is installed).
+If using @option{--with-lapack} to get a reference (`generic') LAPACK
+(or allowing the default to select one), consider also using
+@option{--with-blas} (with a path if an enhanced BLAS is installed).
 
 
 @node Caveats
@@ -5551,7 +5560,7 @@ can be used @emph{via} the configuration option
 @end example
 
 @noindent
-@c LAPACK in Accelerate was still 3.2.1 in macOS 13.6 and 14
+@c LAPACK in Accelerate was still 3.2.1 in macOS 15
 to provide potentially higher-performance versions of the @acronym{BLAS}
 and LAPACK routines.@footnote{It has been reported that for some
 non-Apple toolchains @code{CPPFLAGS} needed to contain
@@ -5576,10 +5585,9 @@ BLAS and LAPACK calls, configure with
 @option{--with-newAccelerate=lapack}.  These options cannot be used with
 others such as @option{--with-blas} and @option{--with-lapack}.
 
-Not that none of the Accelerate distributions contain the BLAS routines
-added in LAPACK 3.12.1 so cannot be used with the internal LAPACK as
-from @R{}@tie{}4.5.0.  They can be used with the (old) LAPACK they
-contain, or with an external LAPACK 3.12.0 or earlier.
+As from @R{}@tie{}4.5.0, specifying @option{--with-newAccelerate} also
+requires the option @option{--with-2025blas}.  (Using
+@option{--with-newAccelerate=lapack} does not.)
 
 @c https://developer.apple.com/documentation/accelerate/veclib
 Threading in @I{Accelerate} is controlled by `Grand Central
