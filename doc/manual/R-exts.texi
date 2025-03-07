@@ -8935,7 +8935,7 @@ print.svycoxph <- function (x, ...)
 It may not be obvious that the assignment to @code{x$call} will cause
 the entire object @code{x} to be copied.  This copying to preserve the
 call-by-value illusion is usually done by the internal C function
-@code{duplicate}.
+@code{Rf_duplicate}.
 
 The main reason that memory-use profiling is difficult is garbage
 collection. Memory is allocated at well-defined times in an @R{}
@@ -8951,7 +8951,7 @@ The sampling profiler @code{Rprof} described in the previous section can
 be given the option @code{memory.profiling=TRUE}. It then writes out the
 total @R{} memory allocation in small vectors, large vectors, and cons
 cells or nodes at each sampling interval. It also writes out the number
-of calls to the internal function @code{duplicate}, which is called to
+of calls to the internal function @code{Rf_duplicate}, which is called to
 copy @R{} objects. @code{summaryRprof} provides summaries of this
 information.  The main reason that this can be misleading is that the
 memory use is attributed to the function running at the end of the
@@ -8992,7 +8992,7 @@ are no vector allocations over 1000 bytes.
 The third method of memory profiling involves tracing copies made of a
 specific (presumably large) @R{} object. Calling @code{tracemem} on an
 object marks it so that a message is printed to standard output when
-the object is copied @emph{via} @code{duplicate} or coercion to another type,
+the object is copied @emph{via} @code{Rf_duplicate} or coercion to another type,
 or when a new object of the same size is created in arithmetic
 operations. The main reason that this can be misleading is that
 copying of subsets or components of an object is not tracked. It may
@@ -12701,7 +12701,7 @@ object, you can change the type by using
 @noindent
 Protection is needed as a new @emph{object} is created; the object
 formerly pointed to by the @code{SEXP} is still protected but now
-unused.@footnote{If no coercion was required, @code{coerceVector} would
+unused.@footnote{If no coercion was required, @code{Rf_coerceVector} would
 have passed the old object through unchanged.}
 
 All the coercion functions do their own error-checking, and generate
@@ -12814,8 +12814,8 @@ functions get and set individual attributes.  Their second argument is a
 want; these and many such symbols are defined in the header file
 @file{Rinternals.h}.
 
-There are shortcuts here too: the functions @code{namesgets},
-@code{dimgets} and @code{dimnamesgets} are the internal versions of the
+There are shortcuts here too: the functions @code{Rf_namesgets},
+@code{Rf_dimgets} and @code{Rf_dimnamesgets} are the internal versions of the
 default methods of @code{names<-}, @code{dim<-} and @code{dimnames<-}
 (for vectors and arrays), and there are functions such as
 @code{Rf_GetColNames}, @code{Rf_GetRowNames}, @code{Rf_GetMatrixDimnames} and
@@ -12916,7 +12916,7 @@ We can use
 @noindent
 As the value is a character vector, we have to know how to create that
 from a C character array, which we do using the function
-@code{mkChar}.
+@code{Rf_mkChar}.
 
 @node S4 objects
 @subsection S4 objects
@@ -13129,14 +13129,14 @@ void Rf_setVar(SEXP symbol, SEXP value, SEXP rho)
 @apifun Rf_setVar
 
 @noindent
-can be used to assign values to @R{} variables.  @code{defineVar}
+can be used to assign values to @R{} variables.  @code{Rf_defineVar}
 creates a new binding or changes the value of an existing binding in the
 specified environment frame; it is the analogue of @code{assign(symbol,
 value, envir = rho, inherits = FALSE)}, but unlike @code{assign},
-@code{defineVar} does not make a copy of the object
+@code{Rf_defineVar} does not make a copy of the object
 @code{value}.@footnote{You can assign a @emph{copy} of the object in the
 environment frame @code{rho} using @code{defineVar(symbol,
-duplicate(value), rho)}).}  @code{setVar} searches for an existing
+duplicate(value), rho)}).}  @code{Rf_setVar} searches for an existing
 binding for @code{symbol} in @code{rho} or its enclosing environments.
 If a binding is found, its value is changed to @code{value}.  Otherwise,
 a new binding with the specified value is created in the global
@@ -13493,7 +13493,7 @@ counting and there may currently be fewer bindings.
 
 It is safe to modify the value of any @code{SEXP} for which
 @code{NAMED(foo)} is zero, and if @code{NAMED(foo)} is two or more, the
-value should be duplicated (@emph{via} a call to @code{duplicate})
+value should be duplicated (@emph{via} a call to @code{Rf_duplicate})
 before any modification.  Note that it is the responsibility of the
 author of the code making the modification to do the duplication, even
 if it is @code{x} whose value is being modified after @code{y <- x}.
@@ -14722,7 +14722,7 @@ function is rarely needed and specifically is not needed with
 when needed, it is better to use it in preference of @code{Rf_getCharCE}, as it
 is safer against future changes in the semantics of encoding marks and
 covers strings internally represented in the native encoding.  Note
-that @code{charIsUTF8()} is not equivalent to @code{getCharCE() == CE_UTF8}.
+that @code{Rf_charIsUTF8()} is not equivalent to @code{getCharCE() == CE_UTF8}.
 
 Similarly, function
 
@@ -17285,9 +17285,9 @@ functions that should be used instead:
       @code{R_ExternalPtrAddr}.
 @item OBJECT
 @itemx IS_S4_OBJECT
-       Use @code{isObject} and @code{isS4}.
+       Use @code{Rf_isObject} and @code{Rf_isS4}.
 @item GetOption
-      Use @code{GetOption1}.
+      Use @code{Rf_GetOption1}.
 @item R_lsInternal
       Use @code{R_lsInternal3}.
 @item REAL0
@@ -17300,7 +17300,7 @@ functions that should be used instead:
         writable pointers to these data can violate the memory manager's
         integrity assumptions and is not supported.
 @item isFrame
-      Use @code{isDataFrame}, added in @R{} 4.5.0.
+      Use @code{Rf_isDataFrame}, added in @R{} 4.5.0.
 @item BODY
 @itemx FORMALS
 @itemx CLOENV
@@ -17309,7 +17309,7 @@ functions that should be used instead:
 @item ENCLOS
       Use @code{R_ParentEnv}, added in @R{} 4.5.0.
 @item IS_ASCII
-      Use @code{charIsASCII}, added in @R{} 4.5.0.
+      Use @code{Rf_charIsASCII}, added in @R{} 4.5.0.
 @item IS_UTF8
       Use @code{charIsUTF8}, added in @R{} 4.5.0, or avoid completely.
 @item Rf_allocSExp
@@ -17321,12 +17321,12 @@ functions that should be used instead:
        Use @code{R_getVar} or @code{R_getVarEx}, added in @R{} 4.5.0.
        In some cases using @code{eval} may suffice.
 @item ATTRIB
-      Use @code{getAttrib} for individual attributes. To test whether
+      Use @code{Rf_getAttrib} for individual attributes. To test whether
       there are any attributes use @code{ANY_ATTRIB}, added in @R{}
       4.5.0.
 @item SET_ATTRIB
 @itemx SET_OBJECT
-       Use @code{setAttrib} for individual attributes,
+       Use @code{Rf_setAttrib} for individual attributes,
        @code{DUPLICATE_ATTRIB} or @code{SHALLOW_DUPLICATE_ATTRIB} for
        copying attributes from one object to another. Use
        @code{CLEAR_ATTRIB} for removing all attributes, added in @R{}
@@ -17419,7 +17419,7 @@ have been copying their definition and directly accessing the bits in
 memory. The structure of the object header is, however, internal to @R{} and
 may have to change in the future.
 
-@code{IS_ASCII} can be replaced by @code{charIsASCII}, added in @R{} 4.5.0.
+@code{IS_ASCII} can be replaced by @code{Rf_charIsASCII}, added in @R{} 4.5.0.
 It can also be replaced by code that checks individual characters (bytes).
 
 Information provided by the other macros is available via function
@@ -17462,7 +17462,7 @@ char *asutf8(SEXP c)
 @}
 @end example
 @noindent
-as the encoding flags are already checked in @code{translateCharUTF8}. Also
+as the encoding flags are already checked in @code{Rf_translateCharUTF8}. Also
 note the non-compliant check does not handle native encoding.
 
 @node Working with attributes
