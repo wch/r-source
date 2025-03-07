@@ -745,8 +745,12 @@ function(x)
     recurse <- function(e) {
         if(!is.null(tag <- attr(e, "Rd_tag"))
            && tag %in% c("\\dontdiff", "\\dontshow", "\\donttest",
-                         "\\testonly"))
+                         "\\testonly")) {
+            e <- c(list(tagged("\n", "RCODE")),
+                   e,
+                   list(tagged("\n", "RCODE")))
             attr(e, "Rd_tag") <- "Rd"
+        }
         if(is.list(e)) {
             structure(lapply(e[is.na(match(RdTags(e), "\\dontrun"))],
                              recurse),
@@ -755,7 +759,12 @@ function(x)
         else e
     }
 
-    .Rd_deparse(recurse(x), tag = FALSE)
+    y <- recurse(x)
+    attr(y, "Rd_tag") <- "Rd"
+    y <- as.character.Rd(y)
+    y[y %in% c("\\dots", "\\ldots")] <- "..."
+    y <- psub("(?<!\\\\)\\\\([%{])", "\\1", y)
+    paste(y, collapse = "")
 }
 
 ### * .Rd_get_methods_description_table
