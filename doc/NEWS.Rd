@@ -211,7 +211,7 @@
   \subsection{BLAS and LAPACK}{
     \itemize{
       \item The bundled BLAS and LAPACK sources have been updated to
-      those shipped as part of january 2025's LAPACK 3.12.1.
+      those shipped as part of January 2025's LAPACK 3.12.1.
       
       \item It is intended that this will be the last update to BLAS and
       LAPACK in the \R sources.  Those building \R from source are
@@ -231,7 +231,7 @@
       LAPACK, not built if an external LAPACK is used).
 
       This option allows the continuation of swapping the BLAS in use by
-      symlinking \file{lib/libRblas.*}.  It has the disadvantage of
+      \I{symlinking} \file{lib/libRblas.*}.  It has the disadvantage of
       using the reference BLAS version of the 2025 routines whereas an
       enhanced BLAS might have an optimized version (\I{OpenBLAS} does as
       from version 0.3.29).

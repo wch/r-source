@@ -3627,7 +3627,7 @@ results or segfaults.
 There is a tendency for re-distributors of @R{} to use `enhanced' linear
 algebra libraries without explaining their downsides.
 
-@R{} is moving away from bundling the reference (`netlib')
+@R{} is moving away from bundling the reference (@I{Netlib})
 implementations of LAPACK and BLAS (which is nowadays distributed as
 part of LAPACK): it has been announced that version 3.12.1 included in
 @R{}@tie{}4.5.0 is expected to be the last update.
@@ -3638,13 +3638,13 @@ part of LAPACK): it has been announced that version 3.12.1 included in
 An external BLAS library has to be explicitly requested at configure
 time.
 
-@strong{NB:} For decades@footnote{The level 3 rroutines were added in
+@strong{NB:} For decades@footnote{The level 3 routines were added in
 1988.  A 2001 `standard' is available at
 @uref{https://www.netlib.org/blas/blast-forum/blas-report.pdf}.} the set
 of BLAS routines was unchanged: this changed in Jan 2025 when routines
 such as @code{dgemmtr} were added as part of LAPACK 3.12.1 and used in
 some low-level LAPACK routines.  This complicates the idea of swapping
-external BLASes.
+external @acronym{BLAS}es.
 
 You can specify a particular @acronym{BLAS} library @emph{via} a value
 for the configuration option @option{--with-blas}.  If this is given
@@ -3694,7 +3694,7 @@ in use: Build @R{} with @option{--with-blas} to select the OS version of
 the reference BLAS, and then use @command{update-alternatives} to switch
 between the available BLAS libraries.  See
 @uref{https://wiki.debian.org/DebianScience/LinearAlgebraLibraries}.
-(ATLAS, MKL and OpenBLAS alternatives are currently available.)
+(ATLAS, @I{MKL} and @I{OpenBLAS} alternatives are currently available.)
 
 Fedora 33 and later offer `@I{FlexiBLAS}', a similar mechanism for
 switching the BLAS in use
@@ -3994,7 +3994,7 @@ Note though that any dynamic libraries the replacement links to will
 need to be found by the linker: this may need the library path to be
 changed in @file{@var{R_HOME}/etc/ldpaths}.
 
-This becasme less easy in 2025: swapping the BLAS is only possible to
+This because less easy in 2025: swapping the BLAS is only possible to
 one compatible with the LAPACK in use.  For the LAPACK shipped with @R{}
 4.5.0 that means one containing @code{dgemmtr} and @code{zgemmtr}, or
 configuring @R{} with @option{--with-2025blas}.
@@ -4124,14 +4124,14 @@ target, but file @file{build/install_manifest.txt} lists the files
 installed, so you can remove them @emph{via} shell commands or from
 @R{}.
 
-The originql release of LAPCK 3.12.1 identifies itself as 3.12.0 (a
+The original release of LAPACK 3.12.1 identifies itself as 3.12.0 (a
 bug).
 
 If using @option{--with-lapack} to get a reference (`generic') LAPACK
 (or allowing the default to select one), consider also using
 @option{--with-blas} (with a path if an enhanced BLAS is installed).
 
-There is also `RecursiveLAPACK'
+There is also `@I{RecursiveLAPACK}'
 (@uref{https://github.com/HPAC/ReLAPACK?tab=readme-ov-file}) which
 replaces some LAPACK routines.  (This is optionally used by @I{OpenBLAS}.)
 
