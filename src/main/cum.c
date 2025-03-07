@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997--2023  The R Core Team
+ *  Copyright (C) 1997--2025  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -29,8 +29,8 @@
    distinction between NA and NaN. */
 static SEXP handleNaN(SEXP x, SEXP s)
 {
-    Rboolean hasNA = FALSE;
-    Rboolean hasNaN = FALSE;
+    bool hasNA = false;
+    bool hasNaN = false;
     double *rx = REAL(x), *rs = REAL(s);
 
     for (R_xlen_t i = 0 ; i < XLENGTH(x) ; i++) {
@@ -75,10 +75,10 @@ static SEXP icumsum(SEXP x, SEXP s)
 
 /* For complex result: recompute once we know one of the result's {re, im} fulfills  ISNAN(.),
    (speed optimized for the case of *no* NA|NaN) : */
-static SEXP chandleNaN(SEXP x, SEXP s, Rboolean r_isN, Rboolean i_isN)
+static SEXP chandleNaN(SEXP x, SEXP s, bool r_isN, bool i_isN)
 {
-    Rboolean hasNA = FALSE;
-    Rboolean hasNaN = FALSE;
+    bool hasNA = false;
+    bool hasNaN = false;
 
     for (R_xlen_t i = 0 ; i < XLENGTH(x) ; i++) {
 	hasNaN = hasNaN || ISNAN(COMPLEX(x)[i].r) || ISNAN(COMPLEX(x)[i].i);

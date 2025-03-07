@@ -107,7 +107,7 @@ attribute_hidden SEXP do_matrix(SEXP call, SEXP op, SEXP args, SEXP rho)
     byrow0 = asLogical(CAR(args)); args = CDR(args);
     if (byrow0 == NA_INTEGER)
 	error(_("invalid '%s' argument"), "byrow");
-    Rboolean byrow = (Rboolean) byrow0;
+    bool byrow = (bool) byrow0;
     dimnames = CAR(args);
     args = CDR(args);
     miss_nr = asLogical(CAR(args)); args = CDR(args);
@@ -396,12 +396,12 @@ attribute_hidden SEXP DropDims(SEXP x)
 	    setAttrib(newdims, R_NamesSymbol, new_nms);
 	    UNPROTECT(1);
 	}
-	Rboolean havenames = FALSE;
+	bool havenames = false;
 	if (!isNull(dimnames)) {
 	    for (i = 0; i < ndims; i++)
 		if (dim[i] != 1 &&
 		    VECTOR_ELT(dimnames, i) != R_NilValue)
-		    havenames = TRUE;
+		    havenames = true;
 	    if (havenames) {
 		PROTECT(newnames = allocVector(VECSXP, n));
 		PROTECT(newnamesnames = allocVector(STRSXP, n));
@@ -551,7 +551,7 @@ attribute_hidden SEXP do_lengths(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (DispatchOrEval(call, op, "lengths", args, rho, &ans, 0, 1))
       return(ans);
 
-    Rboolean isList = isVectorList(x) || isS4(x);
+    bool isList = isVectorList(x) || isS4(x);
     if(!isList) switch(TYPEOF(x)) {
 	case NILSXP:
 	case CHARSXP:
@@ -640,14 +640,14 @@ attribute_hidden SEXP do_rowscols(SEXP call, SEXP op, SEXP args, SEXP rho)
 
        for (R_xlen_t i = 0; i < n; i++)
            if (!R_FINITE(x[i])) return TRUE;
-       return FALSE;
+       return false;
 
  The present version is imprecise, but faster.
 */
-static Rboolean mayHaveNaNOrInf(double *x, R_xlen_t n)
+static bool mayHaveNaNOrInf(double *x, R_xlen_t n)
 {
     if ((n&1) != 0 && !R_FINITE(x[0]))
-	return TRUE;
+	return true;
     for (R_xlen_t i = n&1; i < n; i += 2)
 	/* A precise version could use this condition:
 	 *
@@ -661,8 +661,8 @@ static Rboolean mayHaveNaNOrInf(double *x, R_xlen_t n)
 	 * large finite values (e.g. 1e308) may be infinite.
 	 */
 	if (!R_FINITE(x[i]+x[i+1]))
-	    return TRUE;
-    return FALSE;
+	    return true;
+    return false;
 }
 
 /*
@@ -672,7 +672,7 @@ static Rboolean mayHaveNaNOrInf(double *x, R_xlen_t n)
  safe here, because the result is only used for an imprecise test for
  the presence of NaN and Inf values.
 */
-static Rboolean mayHaveNaNOrInf_simd(double *x, R_xlen_t n)
+static bool mayHaveNaNOrInf_simd(double *x, R_xlen_t n)
 {
     double s = 0;
     /* SIMD reduction is supported since OpenMP 4.0. The value of _OPENMP is
@@ -687,21 +687,21 @@ static Rboolean mayHaveNaNOrInf_simd(double *x, R_xlen_t n)
     return !R_FINITE(s);
 }
 
-static Rboolean cmayHaveNaNOrInf(Rcomplex *x, R_xlen_t n)
+static bool cmayHaveNaNOrInf(Rcomplex *x, R_xlen_t n)
 {
     /* With HAVE_FORTRAN_DOUBLE_COMPLEX set, it should be clear that
        Rcomplex has no padding, so we could probably use mayHaveNaNOrInf,
        but better safe than sorry... */
     if ((n&1) != 0 && (!R_FINITE(x[0].r) || !R_FINITE(x[0].i)))
-	return TRUE;
+	return true;
     for (R_xlen_t i = n&1; i < n; i += 2)
 	if (!R_FINITE(x[i].r+x[i].i+x[i+1].r+x[i+1].i))
-	    return TRUE;
-    return FALSE;
+	    return true;
+    return false;
 }
 
 /* experimental version for SIMD hardware (see also mayHaveNaNOrInf_simd) */
-static Rboolean cmayHaveNaNOrInf_simd(Rcomplex *x, R_xlen_t n)
+static bool cmayHaveNaNOrInf_simd(Rcomplex *x, R_xlen_t n)
 {
     double s = 0;
     /* _OPENMP >= 201307 - see mayHaveNaNOrInf_simd */
@@ -1254,7 +1254,7 @@ static void tccrossprod(Rcomplex *x, int nrx, int ncx,
 attribute_hidden SEXP do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     // .Primitive() ; may have 1 or 2 args, but some methods have more
-    Rboolean cross = PRIMVAL(op) != 0;
+    bool cross = PRIMVAL(op) != 0;
     int nargs, min_nargs = cross ? 1 : 2;
     if (args == R_NilValue)
 	nargs = 0;
@@ -1285,7 +1285,7 @@ attribute_hidden SEXP do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (CDDR(args) != R_NilValue)
 	warningcall(call, _("more than 2 arguments passed to default method of '%s'"),
 		    PRIMNAME(op));
-    Rboolean sym = isNull(y);
+    bool sym = isNull(y);
     if (sym && (PRIMVAL(op) > 0)) y = x;
     if ( !(isNumeric(x) || isComplex(x)) || !(isNumeric(y) || isComplex(y)) )
 	errorcall(call, _("requires numeric/complex matrix/vector arguments"));
@@ -1910,7 +1910,7 @@ attribute_hidden SEXP do_colsum(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (p == NA_INTEGER || p < 0)
 	error(_("invalid '%s' argument"), "p");
     if (NaRm == NA_LOGICAL) error(_("invalid '%s' argument"), "na.rm");
-    Rboolean keepNA = !NaRm;
+    bool keepNA = !NaRm;
 
     switch (type = TYPEOF(x)) {
     case LGLSXP:
@@ -2158,7 +2158,7 @@ attribute_hidden SEXP do_array(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    /* Need to guard against possible sharing of values under
 	       NAMED.  This is not needed with reference
 	       coutning. (PR#15919) */
-	    Rboolean needsmark = (lendat < nans || MAYBE_REFERENCED(vals));
+	    bool needsmark = (lendat < nans || MAYBE_REFERENCED(vals));
 	    for (i = 0; i < nans; i++) {
 		SEXP elt = VECTOR_ELT(vals, i % lendat);
 		if (needsmark || MAYBE_REFERENCED(elt))
@@ -2366,7 +2366,7 @@ attribute_hidden SEXP do_asplit(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXP drop = CAR(args);
     SEXP y, e;
     int i, j, k, n1, n2;
-    Rboolean havednc, keepdim;
+    bool havednc, keepdim;
     n1 = asInteger(d1);
     n2 = asInteger(d2);
     havednc = (!isNull(dnc) && length(dnc) > 0);

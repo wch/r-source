@@ -183,7 +183,7 @@ attribute_hidden SEXP matchArgExact(SEXP tag, SEXP * list)
 
 attribute_hidden SEXP matchArgs_NR(SEXP formals, SEXP supplied, SEXP call)
 {
-    Rboolean seendots;
+    bool seendots;
     int i, arg_i = 0;
     SEXP f, a, b, dots, actuals;
 

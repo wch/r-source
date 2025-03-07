@@ -106,11 +106,11 @@ do_getGraphicsEventEnv(SEXP call, SEXP op, SEXP args, SEXP env)
     return gdd->dev->eventEnv;
 }
 
-/* helper function to check if there is at least one open graphics device listening for events. Returns TRUE if so, FALSE if no listening devices are found */
+/* helper function to check if there is at least one open graphics device listening for events. Returns true if so, false if no listening devices are found */
 
-static Rboolean haveListeningDev(void)
+static bool haveListeningDev(void)
 {
-    Rboolean ret = FALSE;
+    bool ret = false;
     pDevDesc dd;
     pGEDevDesc gd;
     if(!NoDevices())
@@ -119,7 +119,7 @@ static Rboolean haveListeningDev(void)
 	{
 	    if ((gd = GEgetDevice(i)) && (dd = gd->dev)
 		 && dd->gettingEvent){
-		ret = TRUE;
+		ret = true;
 		break;
 	    }
 	}
@@ -153,7 +153,7 @@ do_getGraphicsEvent(SEXP call, SEXP op, SEXP args, SEXP env)
 		    error(_("recursive use of 'getGraphicsEvent' not supported"));
 		if (dd->eventEnv != R_NilValue) {
 		    if (dd->eventHelper) dd->eventHelper(dd, 1);
-		    dd->gettingEvent = TRUE;
+		    dd->gettingEvent = true;
 		    defineVar(install("result"), R_NilValue, dd->eventEnv);
 		    count++;
 		}
@@ -198,7 +198,7 @@ do_getGraphicsEvent(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if ((gd = GEgetDevice(devNum)) && (dd = gd->dev)) {
 		if (dd->eventEnv != R_NilValue) {
 		    if (dd->eventHelper) dd->eventHelper(dd, 0);
-		    dd->gettingEvent = FALSE;
+		    dd->gettingEvent = false;
 		}
 	    }
 	    devNum = nextDevice(devNum);
@@ -215,7 +215,7 @@ void doMouseEvent(pDevDesc dd, R_MouseEvent event,
     int i;
     SEXP handler, bvec, sx, sy, temp, result;
 
-    dd->gettingEvent = FALSE; /* avoid recursive calls */
+    dd->gettingEvent = false; /* avoid recursive calls */
 
     PROTECT(handler = R_findVar(install(mouseHandlers[event]), dd->eventEnv));
     if (TYPEOF(handler) == PROMSXP) {
@@ -246,7 +246,7 @@ void doMouseEvent(pDevDesc dd, R_MouseEvent event,
 	R_FlushConsole();
     }
     UNPROTECT(1); /* handler */
-    dd->gettingEvent = TRUE;
+    dd->gettingEvent = true;
     return;
 }
 
@@ -261,7 +261,7 @@ void doKeybd(pDevDesc dd, R_KeyName rkey,
 {
     SEXP handler, skey, temp, result;
 
-    dd->gettingEvent = FALSE; /* avoid recursive calls */
+    dd->gettingEvent = false; /* avoid recursive calls */
 
     PROTECT(handler = R_findVar(install(keybdHandler), dd->eventEnv));
     if (TYPEOF(handler) == PROMSXP) {
@@ -281,7 +281,7 @@ void doKeybd(pDevDesc dd, R_KeyName rkey,
 	R_FlushConsole();
     }
     UNPROTECT(1); /* handler */
-    dd->gettingEvent = TRUE;
+    dd->gettingEvent = true;
     return;
 }
 
@@ -295,7 +295,7 @@ void doIdle(pDevDesc dd)
 {
     SEXP handler, temp, result;
 
-    dd->gettingEvent = FALSE; /* avoid recursive calls */
+    dd->gettingEvent = false; /* avoid recursive calls */
 
     PROTECT(handler = R_findVar(install(idleHandler), dd->eventEnv));
     if (TYPEOF(handler) == PROMSXP) {
@@ -314,7 +314,7 @@ void doIdle(pDevDesc dd)
 	R_FlushConsole();
     }
     UNPROTECT(1); /* handler */
-    dd->gettingEvent = TRUE;
+    dd->gettingEvent = true;
     return;
 }
 

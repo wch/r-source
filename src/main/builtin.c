@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1999-2023  The R Core Team
+ *  Copyright (C) 1999-2025  The R Core Team
  *  Copyright (C) 1995-1998  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -376,22 +376,22 @@ attribute_hidden SEXP do_parentenv(SEXP call, SEXP op, SEXP args, SEXP rho)
     return( ENCLOS(arg) );
 }
 
-static Rboolean R_IsImportsEnv(SEXP env)
+static bool R_IsImportsEnv(SEXP env)
 {
     if (isNull(env) || !isEnvironment(env))
-	return FALSE;
+	return false;
     if (ENCLOS(env) != R_BaseNamespace)
-	return FALSE;
+	return false;
     SEXP name = getAttrib(env, R_NameSymbol);
     if (!isString(name) || LENGTH(name) != 1)
-	return FALSE;
+	return false;
 
     const char *imports_prefix = "imports:";
     const char *name_string = CHAR(STRING_ELT(name, 0));
     if (!strncmp(name_string, imports_prefix, strlen(imports_prefix)))
 	return TRUE;
     else
-	return FALSE;
+	return false;
 }
 
 attribute_hidden SEXP do_parentenvgets(SEXP call, SEXP op, SEXP args, SEXP rho)
@@ -518,7 +518,7 @@ static void cat_printsep(SEXP sep, int ntot)
 }
 
 typedef struct cat_info {
-    Rboolean wasopen;
+    bool wasopen;
     int changedcon;
     Rconnection con;
 #ifdef Win32
@@ -530,7 +530,7 @@ static void cat_cleanup(void *data)
 {
     cat_info *pci = (cat_info *) data;
     Rconnection con = pci->con;
-    Rboolean wasopen = pci->wasopen;
+    bool wasopen = pci->wasopen;
     int changedcon = pci->changedcon;
 
     con->fflush(con);

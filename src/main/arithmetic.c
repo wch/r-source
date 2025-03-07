@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998--2024 The R Core Team.
+ *  Copyright (C) 1998--2025 The R Core Team.
  *  Copyright (C) 2003--2023 The R Foundation
  *  Copyright (C) 1995--1997 Robert Gentleman and Ross Ihaka
  *
@@ -256,7 +256,7 @@ double R_pow_di(double x, int n)
     if (n != 0) {
 	if (!R_FINITE(x)) return R_POW(x, (double)n);
 
-	Rboolean is_neg = (n < 0);
+	bool is_neg = (n < 0);
 	if(is_neg) n = -n;
 	for(;;) {
 	    if(n & 01) xn *= x;
@@ -314,7 +314,7 @@ static SEXP lcall;
 #define R_INT_MIN -INT_MAX
 // .. relying on fact that NA_INTEGER is outside of these
 
-static R_INLINE int R_integer_plus(int x, int y, Rboolean *pnaflag)
+static R_INLINE int R_integer_plus(int x, int y, bool *pnaflag)
 {
     if (x == NA_INTEGER || y == NA_INTEGER)
 	return NA_INTEGER;
@@ -322,13 +322,13 @@ static R_INLINE int R_integer_plus(int x, int y, Rboolean *pnaflag)
     if (((y > 0) && (x > (R_INT_MAX - y))) ||
 	((y < 0) && (x < (R_INT_MIN - y)))) {
 	if (pnaflag != NULL)
-	    *pnaflag = TRUE;
+	    *pnaflag = true;
 	return NA_INTEGER;
     }
     return x + y;
 }
 
-static R_INLINE int R_integer_minus(int x, int y, Rboolean *pnaflag)
+static R_INLINE int R_integer_minus(int x, int y, bool *pnaflag)
 {
     if (x == NA_INTEGER || y == NA_INTEGER)
 	return NA_INTEGER;
@@ -336,14 +336,14 @@ static R_INLINE int R_integer_minus(int x, int y, Rboolean *pnaflag)
     if (((y < 0) && (x > (R_INT_MAX + y))) ||
 	((y > 0) && (x < (R_INT_MIN + y)))) {
 	if (pnaflag != NULL)
-	    *pnaflag = TRUE;
+	    *pnaflag = true;
 	return NA_INTEGER;
     }
     return x - y;
 }
 
 #define GOODIPROD(x, y, z) ((double) (x) * (double) (y) == (z))
-static R_INLINE int R_integer_times(int x, int y, Rboolean *pnaflag)
+static R_INLINE int R_integer_times(int x, int y, bool *pnaflag)
 {
     if (x == NA_INTEGER || y == NA_INTEGER)
 	return NA_INTEGER;
@@ -353,7 +353,7 @@ static R_INLINE int R_integer_times(int x, int y, Rboolean *pnaflag)
 	    return z;
 	else {
 	    if (pnaflag != NULL)
-		*pnaflag = TRUE;
+		*pnaflag = true;
 	    return NA_INTEGER;
 	}
     }
@@ -446,7 +446,7 @@ attribute_hidden SEXP do_arith(SEXP call, SEXP op, SEXP args, SEXP env)
 		}
 	    }
 	    else if (IS_SCALAR(arg2, INTSXP)) {
-		Rboolean naflag = FALSE;
+		bool naflag = false;
 		int i2 = SCALAR_IVAL(arg2);
 		switch (PRIMVAL(op)) {
 		case PLUSOP:
@@ -520,7 +520,7 @@ attribute_hidden SEXP do_arith(SEXP call, SEXP op, SEXP args, SEXP env)
 
 attribute_hidden SEXP R_binary(SEXP call, SEXP op, SEXP x, SEXP y)
 {
-    Rboolean xattr, yattr, xarray, yarray, xts, yts, xS4, yS4;
+    bool xattr, yattr, xarray, yarray, xts, yts, xS4, yS4;
     PROTECT_INDEX xpi, ypi;
     ARITHOP_TYPE oper = (ARITHOP_TYPE) PRIMVAL(op);
     int nprotect = 2; /* x and y */
@@ -536,19 +536,19 @@ attribute_hidden SEXP R_binary(SEXP call, SEXP op, SEXP x, SEXP y)
 	nx = XLENGTH(x),
 	ny = XLENGTH(y);
     if (ATTRIB(x) != R_NilValue) {
-	xattr = TRUE;
+	xattr = true;
 	xarray = isArray(x);
 	xts = isTs(x);
 	xS4 = isS4(x);
     }
-    else xattr = xarray = xts = xS4 = FALSE;
+    else xattr = xarray = xts = xS4 = false;
     if (ATTRIB(y) != R_NilValue) {
-	yattr = TRUE;
+	yattr = true;
 	yarray = isArray(y);
 	yts = isTs(y);
 	yS4 = isS4(y);
     }
-    else yattr = yarray = yts = yS4 = FALSE;
+    else yattr = yarray = yts = yS4 = false;
 
 #define R_ARITHMETIC_ARRAY_1_SPECIAL
 
@@ -698,7 +698,7 @@ attribute_hidden SEXP R_binary(SEXP call, SEXP op, SEXP x, SEXP y)
     }
 
     if(xS4 || yS4) {   /* Only set the bit:  no method defined! */
-	val = asS4(val, TRUE, TRUE);
+	val = asS4(val, TRUE, TRUE); // from objects.c
     }
     UNPROTECT(nprotect);
     return val;
@@ -806,7 +806,7 @@ static SEXP integer_binary(ARITHOP_TYPE code, SEXP s1, SEXP s2, SEXP lcall)
     R_xlen_t i, i1, i2, n, n1, n2;
     int x1, x2;
     SEXP ans;
-    Rboolean naflag = FALSE;
+    bool naflag = false;
 
     n1 = XLENGTH(s1);
     n2 = XLENGTH(s2);
@@ -1652,7 +1652,7 @@ static R_INLINE SEXP match_Math2_dflt_args(SEXP args, SEXP call)
 attribute_hidden SEXP do_Math2(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP res, call2;
-    int is_signif = (PRIMVAL(op) == 10004) ? TRUE : FALSE;
+    int is_signif = (PRIMVAL(op) == 10004) ? true : false;
     double dflt_digits = is_signif ? 6.0 : 0.;
 
     PROTECT_INDEX api;

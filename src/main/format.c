@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997--2023  The R Core Team
+ *  Copyright (C) 1997--2025  The R Core Team
  *  Copyright (C) 2003--2016  The R Foundation
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
@@ -310,13 +310,13 @@ static const double tbl[] =
 #endif
 
 static void
-scientific(const double *x, int *neg, int *kpower, int *nsig, Rboolean *roundingwidens)
+scientific(const double *x, int *neg, int *kpower, int *nsig, bool *roundingwidens)
 {
     /* for a number x , determine
      *	neg    = 1_{x < 0}  {0/1}
      *	kpower = Exponent of 10;
      *	nsig   = min(R_print.digits, #{significant digits of alpha})
-     *  roundingwidens = TRUE iff rounding causes x to increase in width
+     *  roundingwidens = true iff rounding causes x to increase in width
      *
      * where  |x| = alpha * 10^kpower	and	 1 <= alpha < 10
      */
@@ -329,7 +329,7 @@ scientific(const double *x, int *neg, int *kpower, int *nsig, Rboolean *rounding
 	*kpower = 0;
 	*nsig = 1;
 	*neg = 0;
-	*roundingwidens = FALSE;
+	*roundingwidens = false;
     } else {
 	if(*x < 0.0) {
 	    *neg = 1; r = -*x;
@@ -338,7 +338,7 @@ scientific(const double *x, int *neg, int *kpower, int *nsig, Rboolean *rounding
 	}
         if (R_print.digits >= DBL_DIG + 1) {
             format_via_sprintf(r, R_print.digits, kpower, nsig);
-	    *roundingwidens = FALSE;
+	    *roundingwidens = false;
             return;
         }
         kp = (int) floor(log10(r)) - R_print.digits + 1;/* r = |x|; 10^(kp + digits - 1) <= r */
@@ -433,9 +433,9 @@ scientific(const double *x, int *neg, int *kpower, int *nsig, Rboolean *rounding
 /* not hidden: used in graphics/src/plot.c */
 void formatReal(const double *x, R_xlen_t n, int *w, int *d, int *e, int nsmall)
 {
-    Rboolean
-	naflag = FALSE, nanflag = FALSE,
-	posinf = FALSE, neginf = FALSE;
+    bool
+	naflag = false, nanflag = false,
+	posinf = false, neginf = false;
     int neg = 0;
     int mnl = INT_MAX,
 	mxl, rgt, mxsl, mxns;
@@ -443,13 +443,13 @@ void formatReal(const double *x, R_xlen_t n, int *w, int *d, int *e, int nsmall)
 
     for (R_xlen_t i = 0; i < n; i++) {
 	if (!R_FINITE(x[i])) {
-	    if(ISNA(x[i])) naflag = TRUE;
-	    else if(ISNAN(x[i])) nanflag = TRUE;
-	    else if(x[i] > 0) posinf = TRUE;
-	    else neginf = TRUE;
+	    if(ISNA(x[i])) naflag = true;
+	    else if(ISNAN(x[i])) nanflag = true;
+	    else if(x[i] > 0) posinf = true;
+	    else neginf = true;
 	} else {
 	    int neg_i, kpower, nsig;
-	    Rboolean roundingwidens;
+	    bool roundingwidens;
 	    scientific(&x[i], &neg_i, &kpower, &nsig, &roundingwidens);
 
 	    int left = kpower + 1;
@@ -550,10 +550,10 @@ void formatComplex(const Rcomplex *x, R_xlen_t n,
 {
 /* format.info() for  x[1..n] for both Re & Im */
 #ifdef formatComplex_tricky // R 4.3.z and earlier
-    Rboolean all_re_zero = TRUE, all_im_zero = TRUE,
-	naflag = FALSE,
-	rnan = FALSE, rposinf = FALSE, rneginf = FALSE,
-	inan = FALSE, iposinf = FALSE;
+    bool all_re_zero = true, all_im_zero = true,
+	naflag = false,
+	rnan = false, rposinf = false, rneginf = false,
+	inan = false, iposinf = false;
     int neg = 0;
     int rt, mnl, mxl, mxsl, mxns, wF, i_wF;
     int i_rt, i_mnl, i_mxl, i_mxsl, i_mxns;
@@ -571,20 +571,20 @@ void formatComplex(const Rcomplex *x, R_xlen_t n,
  	tmp.i = x[i].i;
 #endif
 	if(ISNA(tmp.r) || ISNA(tmp.i)) {
-	    naflag = TRUE;
+	    naflag = true;
 	} else {
-	    Rboolean roundingwidens;
+	    bool roundingwidens;
 	    int left, right, sleft,
 		neg_i, kpower, nsig;
 
 	    /* real part */
 
 	    if(!R_FINITE(tmp.r)) {
-		if (ISNAN(tmp.r)) rnan = TRUE;
-		else if (tmp.r > 0) rposinf = TRUE;
-		else rneginf = TRUE;
+		if (ISNAN(tmp.r)) rnan = true;
+		else if (tmp.r > 0) rposinf = true;
+		else rneginf = true;
 	    } else {
-		if(x[i].r != 0) all_re_zero = FALSE;
+		if(x[i].r != 0) all_re_zero = false;
 		scientific(&(tmp.r), &neg_i, &kpower, &nsig, &roundingwidens);
 
 		left = kpower + 1;
@@ -606,10 +606,10 @@ void formatComplex(const Rcomplex *x, R_xlen_t n,
 	    /* we explicitly put the sign in when we print */
 
 	    if(!R_FINITE(tmp.i)) {
-		if (ISNAN(tmp.i)) inan = TRUE;
-		else iposinf = TRUE;
+		if (ISNAN(tmp.i)) inan = true;
+		else iposinf = true;
 	    } else {
-		if(x[i].i != 0) all_im_zero = FALSE;
+		if(x[i].i != 0) all_im_zero = false;
 		scientific(&(tmp.i), &neg_i, &kpower, &nsig, &roundingwidens);
 
 		left = kpower + 1;
@@ -714,11 +714,11 @@ void formatComplex(const Rcomplex *x, R_xlen_t n,
 	*Im = (double *) R_alloc(n, sizeof(double));
 
 # ifdef formatComplex_NA_give_NA // as previously in all S and R versions:
-    Rboolean naflag = FALSE;
+    bool naflag = false;
     R_xlen_t i1 = 0;
     for (R_xlen_t i = 0; i < n; i++) {
 	if(ISNA(x[i].r) || ISNA(x[i].i)) {
-	    naflag |= TRUE;
+	    naflag |= true;
 	} else {
 	    Re[i1] =      x[i].r;
 	    Im[i1] = fabs(x[i].i); // in "Re +/- Im", the '-' does not take more space

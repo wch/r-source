@@ -35,7 +35,7 @@ typedef enum {
 } ne_strictness_type;
 /* NOTE:  ne_strict = NUM_EQ + (SINGLE_NA * 2)  = NUM_EQ | (SINGLE_NA << 1)   */
 
-static Rboolean neWithNaN(double x, double y, ne_strictness_type str);
+static bool neWithNaN(double x, double y, ne_strictness_type str);
 
 
 static R_INLINE int asFlag(SEXP x, const char *name)
@@ -269,7 +269,7 @@ R_compute_identical(SEXP x, SEXP y, int flags)
 	if(n != XLENGTH(y)) return FALSE;
 	for(i = 0; i < n; i++) {
 	    /* This special-casing for NAs is not needed */
-	    Rboolean na1 = (STRING_ELT(x, i) == NA_STRING),
+	    bool na1 = (STRING_ELT(x, i) == NA_STRING),
 		na2 = (STRING_ELT(y, i) == NA_STRING);
 	    if(na1 ^ na2) return FALSE;
 	    if(na1 && na2) continue;
@@ -387,7 +387,7 @@ R_compute_identical(SEXP x, SEXP y, int flags)
  *
  * @return FALSE or TRUE indicating if x or y differ
  */
-static Rboolean neWithNaN(double x, double y, ne_strictness_type str)
+static bool neWithNaN(double x, double y, ne_strictness_type str)
 {
     switch (str) {
     case single_NA__num_eq:

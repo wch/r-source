@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2003-2021  The R Core Team
+ *  Copyright (C) 2003-2025  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -70,7 +70,7 @@ do_mapply(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXP mindex = PROTECT(allocVector(VECSXP, m));
     SEXP nindex = PROTECT(allocVector(VECSXP, m));
     nprot += 3;
-    Rboolean named = vnames != R_NilValue;
+    bool named = vnames != R_NilValue;
 
     /* build a call like
        f(dots[[1]][[4]], dots[[2]][[4]], dots[[3]][[4]], d=7)
@@ -85,7 +85,7 @@ do_mapply(SEXP call, SEXP op, SEXP args, SEXP rho)
     PROTECT_INDEX fi;
     PROTECT_WITH_INDEX(fcall, &fi); nprot++;
 
-    Rboolean realIndx = longest > INT_MAX;
+    bool realIndx = longest > INT_MAX;
     SEXP Dots = install("dots");
     for (int j = m - 1; j >= 0; j--) {
 	SET_VECTOR_ELT(mindex, j, ScalarInteger(j + 1));
