@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1995-2021  The R Core Team
+ *  Copyright (C) 1995-2025  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -63,11 +63,14 @@
 # include <R_ext/Print.h>
 #endif
 
+#include <R_ext/Visibility.h>
+/*
 #ifdef HAVE_VISIBILITY_ATTRIBUTE
 # define attribute_hidden __attribute__ ((visibility ("hidden")))
 #else
 # define attribute_hidden
 #endif
+*/
 
 attribute_hidden
 double R_pretty(double *lo, double *up, int *ndiv, int min_n,

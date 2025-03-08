@@ -26,13 +26,16 @@
 #include <Rconfig.h>
 #include <Rinternals.h>
 #include <R_ext/Rdynload.h>
+#include <R_ext/Visibility.h>
 #include <R_ext/stats_package.h>
 
+/*
 #ifdef HAVE_VISIBILITY_ATTRIBUTE
 # define attribute_hidden __attribute__ ((visibility ("hidden")))
 #else
 # define attribute_hidden
 #endif
+*/
 
 attribute_hidden void
 S_Rf_divset(int alg, int iv[], int liv, int lv, double v[])

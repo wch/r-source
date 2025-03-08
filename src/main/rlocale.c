@@ -39,11 +39,14 @@
 #include <config.h>
 #endif
 
+#include <R_ext/Visibility.h>
+/*
 #ifdef HAVE_VISIBILITY_ATTRIBUTE
 # define attribute_hidden __attribute__ ((visibility ("hidden")))
 #else
 # define attribute_hidden
 #endif
+*/
 
 #include <string.h>
 #include <stdlib.h>

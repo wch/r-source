@@ -26,12 +26,15 @@
 #ifndef R_STATS_PACKAGE_H
 #define R_STATS_PACKAGE_H
 #include <Rconfig.h>
+#include <R_ext/Visibility.h>
 
+/*
 #ifdef HAVE_VISIBILITY_ATTRIBUTE
 # define attribute_hidden __attribute__ ((visibility ("hidden")))
 #else
 # define attribute_hidden
 #endif
+*/
 
 enum AlgType {NREG = 1, OPT = 2};
 				/* 0-based indices into v */
@@ -52,7 +55,7 @@ enum IVPos {AI = 90, AM = 94, ALGSAV = 50, COVMAT = 25,
 attribute_hidden void
 S_Rf_divset(int alg, int iv[], int liv, int lv, double v[]);
 
-attribute_hidden
+attribute_hidden void
 S_nlsb_iterate(double b[], double d[], double dr[], int iv[],
 	       int liv, int lv, int n, int nd, int p,
 	       double r[], double rd[], double v[], double x[]);
