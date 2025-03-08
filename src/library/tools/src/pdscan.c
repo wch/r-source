@@ -42,36 +42,42 @@ static SEXP package_dependencies_scan_one(SEXP this) {
     s = CHAR(this);
     i = 0;
     save = FALSE;
-    skip = FALSE;
+    /* A package dependency spec is a comma-separated list of package
+       names optionally followed by a comment in parentheses specifying
+       a version requirement (see "Package Dependencies" in WRE).
+       The package name can be 'R' or a valid package names matching
+       "[[:alpha:]][[:alnum:].]*[[:alnum:]]".
+       So for valid package dependency specs we can simply iteratively
+       "save" from the first alpha until the next not-alnum-or-period
+       (and ignore if this gave 'R'): this will also skip the field
+       separators and optional comments.
+       One could arrange to skip from the end of package names until the
+       next comma, but that still would assume valid package names.
+    */
     while((c = *s++) != '\0') {
-	if(skip) {
-	    if(c == ',')
-		skip = FALSE;
+	if(save) {
+	    if(!isalnum(c) && (c != '.')) {
+		save = FALSE;
+		if((q == 'R') && (beg[ne] == (i - 1)))
+		    nb--;
+		else {
+		    end[ne] = i - 1;
+		    ne++;
+		}
+	    }
 	} else {
-	    if(save) {
-		if(!isalnum(c) && (c != '.')) {
-		    save = FALSE;
-		    if((q == 'R') && (beg[ne] == (i - 1)))
-			nb--;
-		    else {
-			end[ne] = i - 1;
-			ne++;
-		    }
+	    if(isalpha(c)) {
+		save = TRUE;
+		q = c;
+		if(nb >= size) {
+		    if(size > INT_MAX / 2)
+			error(_("too many items"));
+		    size *= 2;
+		    beg = R_Realloc(beg, size, int);
+		    end = R_Realloc(end, size, int);
 		}
-	    } else {
-		if(isalpha(c)) {
-		    save = TRUE;
-		    q = c;
-		    if(nb >= size) {
-			if(size > INT_MAX / 2)
-			    error(_("too many items"));
-			size *= 2;
-			beg = R_Realloc(beg, size, int);
-			end = R_Realloc(end, size, int);
-		    }
-		    beg[nb] = i;
-		    nb++;
-		}
+		beg[nb] = i;
+		nb++;
 	    }
 	}
 	i++;
