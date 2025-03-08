@@ -514,7 +514,7 @@ attribute_hidden SEXP do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 	SEXP sind = PROTECT(allocVector(INTSXP, n));
 	int *indx = INTEGER(sind);
 	for (int i = 0; i < n; i++) indx[i] = i;
-	orderVector1(indx, n, names, TRUE, FALSE, R_NilValue);
+	orderVector1(indx, n, names, true, false, R_NilValue);
 	SEXP value2 = PROTECT(allocVector(VECSXP, n));
 	SEXP names2 = PROTECT(allocVector(STRSXP, n));
 	for(int i = 0; i < n; i++) {

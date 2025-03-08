@@ -3048,7 +3048,7 @@ attribute_hidden SEXP do_env2list(SEXP call, SEXP op, SEXP args, SEXP rho)
 	SEXP sind = PROTECT(allocVector(INTSXP, k));
 	int *indx = INTEGER(sind);
 	for (int i = 0; i < k; i++) indx[i] = i;
-	orderVector1(indx, k, names, /* nalast */ TRUE, /* decreasing */ FALSE,
+	orderVector1(indx, k, names, /* nalast */ true, /* decreasing */ false,
 		     R_NilValue);
 	SEXP ans2   = PROTECT(allocVector(VECSXP, k));
 	SEXP names2 = PROTECT(allocVector(STRSXP, k));

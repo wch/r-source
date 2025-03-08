@@ -2146,7 +2146,7 @@ void R_getProcTime(double *data);
 Rboolean R_isMissing(SEXP symbol, SEXP rho);
 Rboolean R_missing(SEXP symbol, SEXP rho);
 const char *sexptype2char(SEXPTYPE type);
-void sortVector(SEXP, Rboolean);
+void sortVector(SEXP, bool);
 void SrcrefPrompt(const char *, SEXP);
 void ssort(SEXP*,int);
 int StrToInternal(const char *);
@@ -2265,8 +2265,8 @@ const char *EncodeChar(SEXP);
 int mbrtoint(int *w, const char *s);
 
 /* main/sort.c */
-void orderVector1(int *indx, int n, SEXP key, Rboolean nalast,
-		  Rboolean decreasing, SEXP rho);
+void orderVector1(int *indx, int n, SEXP key, bool nalast,
+		  bool decreasing, SEXP rho);
 
 /* main/subset.c */
 SEXP R_subset3_dflt(SEXP, SEXP, SEXP);
@@ -2428,6 +2428,7 @@ extern void *alloca(size_t);
 
 /* int_fast64_t is required by C99/C11
    Alternative would be to use intmax_t.
+   Used in summary.c
  */
 #ifdef HAVE_INT64_T
 # define LONG_INT int64_t
