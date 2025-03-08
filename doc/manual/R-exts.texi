@@ -16287,13 +16287,20 @@ C++ header @file{cfloat}, which provide constants such as
 @apivar TRUE
 @apivar FALSE
 @apihdr R_ext/Boolean.h
-Further, the included header @file{R_ext/Boolean.h} has enumeration
+The included header @file{R_ext/Boolean.h} has enumeration
 constants @code{TRUE} and @code{FALSE} of type @code{Rboolean} in
 order to provide a way of using ``logical'' variables in C consistently.
 This can conflict with other software: for example it conflicts with the
 headers in @I{IJG}'s @code{jpeg-9} (but not earlier versions).
 @code{Rboolean} cannot represent @code{NA} and hence cannot be used for
 elements of R logical vectors.
+
+Type @code{Rboolean} is being phased out: as from @R{}@tie{}4.5.0 the
+header also makes available the type @code{bool} and values @code{true}
+and @code{false}.  These are reserved words in C23 and C++11 and
+available @emph{via} header @file{stdbool.h} as from C99.  (@code{bool}
+is not a drop-in replacement for @code{Rboolean} as it is usually stored
+in a byte and @code{Raoolean} in an @code{int}, hence 4 bytes.)
 
 
 @node Optimization
