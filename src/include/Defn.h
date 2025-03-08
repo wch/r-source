@@ -51,6 +51,7 @@
 # define USE_RINTERNALS
 #endif
 
+// should really include R_ext/Visibility.h
 #ifdef HAVE_VISIBILITY_ATTRIBUTE
 # define attribute_visible __attribute__ ((visibility ("default")))
 # define attribute_hidden __attribute__ ((visibility ("hidden")))
