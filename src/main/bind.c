@@ -1467,7 +1467,7 @@ static SEXP cbind(SEXP call, SEXP args, SEXPTYPE mode, SEXP rho,
 		    else if (deparse_level == 2) {
 			PROTECT(expr);
 			SET_STRING_ELT(nam, j++,
-				       STRING_ELT(deparse1line(expr, TRUE), 0));
+				       STRING_ELT(deparse1line(expr, true), 0));
 			UNPROTECT(1); /* expr */
 		    } else if (have_cnames)
 			SET_STRING_ELT(nam, j++, R_BlankString);
@@ -1709,7 +1709,7 @@ static SEXP rbind(SEXP call, SEXP args, SEXPTYPE mode, SEXP rho,
 		    else if (deparse_level == 2) {
 			PROTECT(expr);
 			SET_STRING_ELT(nam, j++,
-				       STRING_ELT(deparse1line(expr, TRUE), 0));
+				       STRING_ELT(deparse1line(expr, true), 0));
 			UNPROTECT(1); /* expr */
 		    } else if (have_rnames)
 			SET_STRING_ELT(nam, j++, R_BlankString);
