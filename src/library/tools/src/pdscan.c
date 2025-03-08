@@ -24,7 +24,7 @@
 
 static SEXP package_dependencies_scan_one(SEXP this) {
     SEXP y;
-    Rboolean save;
+    bool save;
     int size = 256, i, j, nb = 0, ne = 0, u, v, w;
     int *beg, *end;
     const char *s;
@@ -41,7 +41,7 @@ static SEXP package_dependencies_scan_one(SEXP this) {
     e = getCharCE(this);
     s = CHAR(this);
     i = 0;
-    save = FALSE;
+    save = false;
     /* A package dependency spec is a comma-separated list of package
        names optionally followed by a comment in parentheses specifying
        a version requirement (see "Package Dependencies" in WRE).
@@ -57,7 +57,7 @@ static SEXP package_dependencies_scan_one(SEXP this) {
     while((c = *s++) != '\0') {
 	if(save) {
 	    if(!isalnum(c) && (c != '.')) {
-		save = FALSE;
+		save = false;
 		if((q == 'R') && (beg[ne] == (i - 1)))
 		    nb--;
 		else {
@@ -67,7 +67,7 @@ static SEXP package_dependencies_scan_one(SEXP this) {
 	    }
 	} else {
 	    if(isalpha(c)) {
-		save = TRUE;
+		save = true;
 		q = c;
 		if(nb >= size) {
 		    if(size > INT_MAX / 2)
