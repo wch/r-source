@@ -45,7 +45,7 @@
 /* NaNs propagated correctly */
 
 
-int attribute_hidden chebyshev_init(double *dos, int nos, double eta)
+attribute_hidden int chebyshev_init(double *dos, int nos, double eta)
 {
     int i, ii;
     double err;
@@ -66,7 +66,7 @@ int attribute_hidden chebyshev_init(double *dos, int nos, double eta)
 }
 
 
-double attribute_hidden chebyshev_eval(double x, const double *a, const int n)
+attribute_hidden double chebyshev_eval(double x, const double *a, const int n)
 {
     double b0, b1, b2, twox;
     int i;

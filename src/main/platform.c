@@ -1733,7 +1733,7 @@ attribute_hidden SEXP do_Rhome(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 #ifdef Win32
-static bool /*attribute_hidden*/ R_WFileExists(const wchar_t *path)
+static /*attribute_hidden*/ bool R_WFileExists(const wchar_t *path)
 {
     struct _stati64 sb;
     return _wstati64(path, &sb) == 0;

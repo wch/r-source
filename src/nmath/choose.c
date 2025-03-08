@@ -1,6 +1,6 @@
 /*
  *  Mathlib : A C Library of Special Functions
- *  Copyright (C) 2004-2024 The R Foundation
+ *  Copyright (C) 2004-2025 The R Foundation
  *  Copyright (C) 1998      Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -46,7 +46,7 @@
 void R_CheckStack(void);
 #endif
 
-double attribute_hidden lfastchoose(double n, double k)
+attribute_hidden double lfastchoose(double n, double k)
 {
     return -log(n + 1.) - lbeta(n - k + 1., k + 1.);
 }

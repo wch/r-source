@@ -4,7 +4,7 @@
  *    October 23, 2000.
  *
  *  Merge in to R:
- *	Copyright (C) 2000-2024, The R Core Team
+ *	Copyright (C) 2000-2025, The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -50,7 +50,7 @@
  *     stirlerr(n), stirlerr(x), stirlerr(n-x) from binom_raw(x, n, ..) for all possible 0 < x < n
  */
 
-double attribute_hidden stirlerr(double n)
+attribute_hidden double stirlerr(double n)
 {
 
 #define S0 0.083333333333333333333       /* 1/12 */

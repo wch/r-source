@@ -45,7 +45,7 @@
  */
 #include "nmath.h"
 
-double attribute_hidden bd0(double x, double np)
+attribute_hidden double bd0(double x, double np)
 {
     if(!R_FINITE(x) || !R_FINITE(np) || np == 0.0) ML_WARN_return_NAN;
 
@@ -227,7 +227,7 @@ static const float bd0_scale[128 + 1][4] = {
  *
  * Deliver the result back in two parts, *yh and *yl.
  */
-void attribute_hidden ebd0(double x, double M, double *yh, double *yl)
+attribute_hidden void ebd0(double x, double M, double *yh, double *yl)
 {
 	const int Sb = 10;
 	const double S = 1u << Sb; // = 2^10 = 1024

@@ -1,7 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
- *  Copyright (C) 1999-2000  The R Core Team
+ *  Copyright (C) 1999-2025  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -36,7 +36,7 @@
 
 #include "nmath.h"
 
-void attribute_hidden gammalims(double *xmin, double *xmax)
+attribute_hidden void gammalims(double *xmin, double *xmax)
 {
 /* FIXME: Even better: If IEEE, #define these in nmath.h
 	  and don't call gammalims() at all

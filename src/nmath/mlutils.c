@@ -1,6 +1,6 @@
 /*
  *  Mathlib : A C Library of Special Functions
- *  Copyright (C) 1998-2024 The R Core Team
+ *  Copyright (C) 1998-2025 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -110,7 +110,7 @@ double R_PosInf = ML_POSINF, R_NegInf = ML_NEGINF;
 
 #include <stdio.h>
 #include <stdarg.h>
-void attribute_hidden REprintf(const char *format, ...)
+attribute_hidden void REprintf(const char *format, ...)
 {
     va_list(ap);
     va_start(ap, format);

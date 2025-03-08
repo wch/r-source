@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2007--2024  The R Core Team.
+ *  Copyright (C) 2007--2025  The R Core Team.
  *
  *  This header file is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -49,20 +49,20 @@ enum IVPos {AI = 90, AM = 94, ALGSAV = 50, COVMAT = 25,
 	    STATPR = 22, TOOBIG = 1, VNEED = 3, VSAVE = 59,
 	    X0PRT = 23};
 
-void attribute_hidden
+attribute_hidden void
 S_Rf_divset(int alg, int iv[], int liv, int lv, double v[]);
 
-void attribute_hidden
+attribute_hidden
 S_nlsb_iterate(double b[], double d[], double dr[], int iv[],
 	       int liv, int lv, int n, int nd, int p,
 	       double r[], double rd[], double v[], double x[]);
 
-void attribute_hidden
+attribute_hidden void
 S_nlminb_iterate(double b[], double d[], double fx, double g[],
 		 double h[], int iv[], int liv, int lv, int n,
 		 double v[], double x[]);
 
-void attribute_hidden
+attribute_hidden void
 S_rcont2(int nrow, int ncol, const int nrowt[], const int ncolt[],
          int ntotal, const double fact[],
 	 int jwork[], int matrix[]);

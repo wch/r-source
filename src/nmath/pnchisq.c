@@ -88,7 +88,7 @@ double pnchisq(double x, double df, double ncp, int lower_tail, int log_p)
 }
 
 // Used in this file and in qnchisq.c
-double attribute_hidden
+attribute_hidden double
 pnchisq_raw(double x, double f, double theta /* = ncp */,
 	    double errmax, double reltol, int itrmax,
 	    Rboolean lower_tail, Rboolean log_p)

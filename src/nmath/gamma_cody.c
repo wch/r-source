@@ -9,7 +9,7 @@
 
 #include "nmath.h"
 
-double attribute_hidden Rf_gamma_cody(double x)
+attribute_hidden double Rf_gamma_cody(double x)
 {
 /* ----------------------------------------------------------------------
 
