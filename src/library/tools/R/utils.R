@@ -2156,7 +2156,13 @@ function(dir)
     files <- list_files_with_type(file.path(dir, "R"), "code",
                                   full.names = FALSE,
                                   OS_subdirs = c("unix", "windows"))
-    db <- Rd_db(dir = dir)
+    ## As of 2025-03, packages
+    ##   gmailr httr2 purrr
+    ## use configure code to drop the pipe using examples for R < 4.1.
+    db <- if(basename(dir) %in% c("gmailr", "httr2", "purrr"))
+              list()
+          else
+              Rd_db(dir = dir)
 
     do.call(rbind,
             c(Map(function(u, v) {
