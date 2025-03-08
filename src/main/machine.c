@@ -57,7 +57,7 @@
 # include <time.h>
 #endif
 
-void attribute_hidden Init_R_Machine(SEXP rho)
+attribute_hidden void Init_R_Machine(SEXP rho)
 {
     machar(&R_AccuracyInfo.ibeta,
 	   &R_AccuracyInfo.it,

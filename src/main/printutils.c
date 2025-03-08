@@ -1073,7 +1073,7 @@ void REvprintf(const char *format, va_list arg)
     REvprintf_internal(format, arg);
 }
 
-int attribute_hidden IndexWidth(R_xlen_t n)
+attribute_hidden int IndexWidth(R_xlen_t n)
 {
     return (int) (log10((double)n + 0.5) + 1);
 }

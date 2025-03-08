@@ -155,7 +155,7 @@ int static R_strieql(const char *a, const char *b)
 #endif
 
 static char native_enc[R_CODESET_MAX + 1];
-const char attribute_hidden *R_nativeEncoding(void)
+attribute_hidden const char *R_nativeEncoding(void)
 {
     return native_enc;
 }
@@ -1733,7 +1733,7 @@ attribute_hidden SEXP do_Rhome(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 #ifdef Win32
-static bool attribute_hidden R_WFileExists(const wchar_t *path)
+static bool /*attribute_hidden*/ R_WFileExists(const wchar_t *path)
 {
     struct _stati64 sb;
     return _wstati64(path, &sb) == 0;

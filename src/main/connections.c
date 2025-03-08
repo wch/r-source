@@ -124,7 +124,7 @@
 #include <trioremap.h>
 #endif
 
-int attribute_hidden R_OutputCon; /* used in printutils.c */
+attribute_hidden int R_OutputCon; /* used in printutils.c */
 
 static void con_destroy(int i);
 
@@ -5691,7 +5691,7 @@ switch_or_tee_stdout(int icon, int closeOnExit, int tee)
 }
 
 /* This is only used by cat() */
-Rboolean attribute_hidden switch_stdout(int icon, int closeOnExit)
+attribute_hidden Rboolean switch_stdout(int icon, int closeOnExit)
 {
   return switch_or_tee_stdout(icon, closeOnExit, 0);
 }

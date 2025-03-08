@@ -55,7 +55,7 @@
 # include <sys/stat.h>
 #endif
 
-int attribute_hidden R_isWriteableDir(char *path);
+attribute_hidden int R_isWriteableDir(char *path);
 
 #ifdef HAVE_AQUA
 int (*ptr_CocoaSystem)(const char*);
@@ -68,7 +68,7 @@ bool R_FileExists(const char *path)
     return _stati64(R_ExpandFileName(path), &sb) == 0;
 }
 
-double attribute_hidden R_FileMtime(const char *path)
+attribute_hidden double R_FileMtime(const char *path)
 {
     struct _stati64 sb;
     if (_stati64(R_ExpandFileName(path), &sb) != 0)
@@ -83,7 +83,7 @@ bool R_FileExists(const char *path)
     return stat(R_ExpandFileName(path), &sb) == 0;
 }
 
-double attribute_hidden R_FileMtime(const char *path)
+attribute_hidden double R_FileMtime(const char *path)
 {
     struct stat sb;
     if (stat(R_ExpandFileName(path), &sb) != 0)
@@ -96,7 +96,7 @@ double attribute_hidden R_FileMtime(const char *path)
      *  Unix file names which begin with "." are invisible.
      */
 
-bool attribute_hidden R_HiddenFile(const char *name)
+attribute_hidden bool R_HiddenFile(const char *name)
 {
     if (name && name[0] != '.') return 0;
     else return 1;
@@ -2486,7 +2486,7 @@ size_t ucstomb(char *s, const unsigned int wc)
 }
 
 /* used in engine.c for non-UTF-8 MBCS */
-size_t attribute_hidden
+attribute_hidden size_t
 mbtoucs(unsigned int *wc, const char *s, size_t n)
 {
     unsigned int  wcs[2];
@@ -2584,7 +2584,7 @@ size_t ucstoutf8(char *s, const unsigned int wc)
 # define S_IFDIR __S_IFDIR
 #endif
 
-int attribute_hidden R_isWriteableDir(char *path)
+attribute_hidden int R_isWriteableDir(char *path)
 {
 #ifdef Win32
     struct _stati64 sb;
@@ -2608,7 +2608,7 @@ int attribute_hidden R_isWriteableDir(char *path)
     return isdir;
 }
 #else
-int attribute_hidden R_isWriteableDir(char *path)
+attribute_hidden int R_isWriteableDir(char *path)
 {
     return 1;
 }
@@ -3028,7 +3028,7 @@ attribute_hidden SEXP do_glob(SEXP call, SEXP op, SEXP args, SEXP env)
 
 #ifdef Win32
 
-int attribute_hidden R_is_redirection_tty(int fd)
+attribute_hidden int R_is_redirection_tty(int fd)
 {
     /* for now detects only msys/cygwin redirection tty */
     HANDLE h = (HANDLE) _get_osfhandle(fd);
@@ -3068,7 +3068,7 @@ int attribute_hidden R_is_redirection_tty(int fd)
 }
 #endif
 
-int attribute_hidden R_isatty(int fd)
+attribute_hidden int R_isatty(int fd)
 {
 #ifdef Win32
     if (R_is_redirection_tty(fd))

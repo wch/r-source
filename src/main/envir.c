@@ -224,7 +224,7 @@ attribute_hidden Rboolean R_envHasNoSpecialSymbols (SEXP env)
    and hash tables get saved as part of environments so changing it
    is a major decision.
  */
-int attribute_hidden R_Newhashpjw(const char *s)
+attribute_hidden int R_Newhashpjw(const char *s)
 {
     char *p;
     unsigned h = 0, g;

@@ -980,7 +980,7 @@ attribute_hidden SEXP do_unclass(SEXP call, SEXP op, SEXP args, SEXP env)
     except there is no translation.
 */
 
-Rboolean attribute_hidden inherits2(SEXP x, const char *what) {
+attribute_hidden Rboolean inherits2(SEXP x, const char *what) {
     if (OBJECT(x)) {
 	SEXP klass;
 
@@ -1795,7 +1795,7 @@ SEXP R_do_new_object(SEXP class_def)
     return value;
 }
 
-Rboolean attribute_hidden R_seemsOldStyleS4Object(SEXP object)
+attribute_hidden Rboolean R_seemsOldStyleS4Object(SEXP object)
 {
     SEXP klass;
     if(!isObject(object) || IS_S4_OBJECT(object)) return FALSE;

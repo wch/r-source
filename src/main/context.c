@@ -416,7 +416,7 @@ attribute_hidden SEXP R_sysframe(int n, RCNTXT *cptr)
 /* It would be much simpler if sysparent just returned cptr->sysparent */
 /* but then we wouldn't be compatible with S. */
 
-int attribute_hidden R_sysparent(int n, RCNTXT *cptr)
+attribute_hidden int R_sysparent(int n, RCNTXT *cptr)
 {
     int j;
     SEXP s;
@@ -449,7 +449,7 @@ int attribute_hidden R_sysparent(int n, RCNTXT *cptr)
     return n;
 }
 
-int attribute_hidden framedepth(RCNTXT *cptr)
+attribute_hidden int framedepth(RCNTXT *cptr)
 {
     int nframe = 0;
     while (cptr->nextcontext != NULL) {

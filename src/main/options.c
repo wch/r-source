@@ -275,7 +275,7 @@ attribute_hidden SEXP R_SetOption(SEXP tag, SEXP value)
 /* Set the width of lines for printing i.e. like options(width=...) */
 /* Returns the previous value for the options. */
 
-int attribute_hidden R_SetOptionWidth(int w)
+attribute_hidden int R_SetOptionWidth(int w)
 {
     SEXP t, v;
     if (w < R_MIN_WIDTH_OPT) w = R_MIN_WIDTH_OPT;
@@ -287,7 +287,7 @@ int attribute_hidden R_SetOptionWidth(int w)
     return INTEGER(v)[0];
 }
 
-int attribute_hidden R_SetOptionWarn(int w)
+attribute_hidden int R_SetOptionWarn(int w)
 {
     SEXP t, v;
 

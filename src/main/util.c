@@ -1373,7 +1373,7 @@ utf8toutf16low(const char *s)
     return (unsigned int) LOW_SURROGATE_START | ((s[2] & 0x0F) << 6) | (s[3] & 0x3F);
 }
 
-R_wchar_t attribute_hidden
+attribute_hidden R_wchar_t
 utf8toucs32(wchar_t high, const char *s)
 {
     return utf16toucs(high, utf8toutf16low(s));
@@ -2076,7 +2076,7 @@ const char* Rf_utf8ToLatin1AdobeSymbol2utf8(const char *in, Rboolean usePUA)
   return utf8str;
 }
 
-int attribute_hidden Rf_AdobeSymbol2ucs2(int n)
+attribute_hidden int Rf_AdobeSymbol2ucs2(int n)
 {
     if(n >= 32 && n < 256) return s2u[n-32];
     else return 0;

@@ -503,7 +503,7 @@ static int null_fflush(Rconnection con)
     return 0;
 }
 
-Rconnection attribute_hidden
+attribute_hidden Rconnection
 R_newunz(const char *description, const char *const mode)
 {
     Rconnection new;

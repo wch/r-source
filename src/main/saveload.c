@@ -2212,7 +2212,7 @@ attribute_hidden void R_XDREncodeDouble(double d, void *buf)
 	error(_("XDR write failed"));
 }
 
-double attribute_hidden R_XDRDecodeDouble(void *buf)
+attribute_hidden double R_XDRDecodeDouble(void *buf)
 {
     XDR xdrs;
     double d;
@@ -2238,7 +2238,7 @@ attribute_hidden void R_XDREncodeInteger(int i, void *buf)
 	error(_("XDR write failed"));
 }
 
-int attribute_hidden R_XDRDecodeInteger(void *buf)
+attribute_hidden int R_XDRDecodeInteger(void *buf)
 {
     XDR xdrs;
     int i, success;

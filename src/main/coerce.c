@@ -72,7 +72,7 @@
   } \
 } while (0)
 
-void attribute_hidden CoercionWarning(int warn)
+attribute_hidden void CoercionWarning(int warn)
 {
 /* FIXME: Use
    =====
@@ -88,29 +88,25 @@ void attribute_hidden CoercionWarning(int warn)
 	warning(_("out-of-range values treated as 0 in coercion to raw"));
 }
 
-int attribute_hidden
-LogicalFromInteger(int x, int *warn)
+attribute_hidden int LogicalFromInteger(int x, int *warn)
 {
     return (x == NA_INTEGER) ?
 	NA_LOGICAL : (x != 0);
 }
 
-int attribute_hidden
-LogicalFromReal(double x, int *warn)
+attribute_hidden int LogicalFromReal(double x, int *warn)
 {
     return ISNAN(x) ?
 	NA_LOGICAL : (x != 0);
 }
 
-int attribute_hidden
-LogicalFromComplex(Rcomplex x, int *warn)
+attribute_hidden int LogicalFromComplex(Rcomplex x, int *warn)
 {
     return (ISNAN(x.r) || ISNAN(x.i)) ?
 	NA_LOGICAL : (x.r != 0 || x.i != 0);
 }
 
-int attribute_hidden
-LogicalFromString(SEXP x, int *warn)
+attribute_hidden int LogicalFromString(SEXP x, int *warn)
 {
     if (x != R_NaString) {
 	if (StringTrue(CHAR(x))) return 1;
@@ -119,15 +115,13 @@ LogicalFromString(SEXP x, int *warn)
     return NA_LOGICAL;
 }
 
-int attribute_hidden
-IntegerFromLogical(int x, int *warn)
+attribute_hidden int IntegerFromLogical(int x, int *warn)
 {
     return (x == NA_LOGICAL) ?
 	NA_INTEGER : x;
 }
 
-int attribute_hidden
-IntegerFromReal(double x, int *warn)
+attribute_hidden int IntegerFromReal(double x, int *warn)
 {
     if (ISNAN(x))
 	return NA_INTEGER;
@@ -138,8 +132,7 @@ IntegerFromReal(double x, int *warn)
     return (int) x;
 }
 
-int attribute_hidden
-IntegerFromComplex(Rcomplex x, int *warn)
+attribute_hidden int IntegerFromComplex(Rcomplex x, int *warn)
 {
     if (ISNAN(x.r) || ISNAN(x.i))
 	return NA_INTEGER;
@@ -153,8 +146,7 @@ IntegerFromComplex(Rcomplex x, int *warn)
 }
 
 
-int attribute_hidden
-IntegerFromString(SEXP x, int *warn)
+attribute_hidden int IntegerFromString(SEXP x, int *warn)
 {
     if (x != R_NaString && !isBlankString(CHAR(x))) { /* ASCII */
 	char *endp;
@@ -184,21 +176,18 @@ IntegerFromString(SEXP x, int *warn)
     return NA_INTEGER;
 }
 
-double attribute_hidden
-RealFromLogical(int x, int *warn)
+attribute_hidden double RealFromLogical(int x, int *warn)
 {
     return (x == NA_LOGICAL) ?
 	NA_REAL : x;
 }
 
-double attribute_hidden
-RealFromInteger(int x, int *warn)
+attribute_hidden double RealFromInteger(int x, int *warn)
 {
     return (x == NA_INTEGER) ? NA_REAL : x;
 }
 
-double attribute_hidden
-RealFromComplex(Rcomplex x, int *warn)
+attribute_hidden double RealFromComplex(Rcomplex x, int *warn)
 {
     if (ISNAN(x.r) || ISNAN(x.i))
 	return NA_REAL;
@@ -207,8 +196,7 @@ RealFromComplex(Rcomplex x, int *warn)
     return x.r;
 }
 
-double attribute_hidden
-RealFromString(SEXP x, int *warn)
+attribute_hidden double RealFromString(SEXP x, int *warn)
 {
     double xdouble;
     char *endp;
@@ -226,8 +214,7 @@ RealFromString(SEXP x, int *warn)
 	_Z_.r = NA_REAL;	\
 	_Z_.i = NA_REAL
 
-Rcomplex attribute_hidden
-ComplexFromLogical(int x, int *warn)
+attribute_hidden Rcomplex ComplexFromLogical(int x, int *warn)
 {
     Rcomplex z;
     if (x == NA_LOGICAL) {
@@ -245,8 +232,7 @@ ComplexFromLogical(int x, int *warn)
     return z;
 }
 
-Rcomplex attribute_hidden
-ComplexFromInteger(int x, int *warn)
+attribute_hidden Rcomplex ComplexFromInteger(int x, int *warn)
 {
     Rcomplex z;
     if (x == NA_INTEGER) {
@@ -264,8 +250,7 @@ ComplexFromInteger(int x, int *warn)
     return z;
 }
 
-Rcomplex attribute_hidden
-ComplexFromReal(double x, int *warn)
+attribute_hidden Rcomplex ComplexFromReal(double x, int *warn)
 {
     Rcomplex z;
 #ifdef NA_TO_COMPLEX_NA
@@ -282,8 +267,7 @@ ComplexFromReal(double x, int *warn)
     return z;
 }
 
-Rcomplex attribute_hidden
-ComplexFromString(SEXP x, int *warn)
+attribute_hidden Rcomplex ComplexFromString(SEXP x, int *warn)
 {
     const char *xx = CHAR(x); /* ASCII */
     char *endp;

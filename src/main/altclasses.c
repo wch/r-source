@@ -2011,7 +2011,7 @@ attribute_hidden SEXP do_wrap_meta(SEXP call, SEXP op, SEXP args, SEXP env)
     return wrap_meta(x, srt, no_na);
 }
 
-SEXP /*attribute_hidden*/ R_tryWrap(SEXP x)
+/*attribute_hidden*/ SEXP R_tryWrap(SEXP x)
 {
     return wrap_meta(x, UNKNOWN_SORTEDNESS, FALSE);
 }
