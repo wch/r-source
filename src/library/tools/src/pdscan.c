@@ -24,7 +24,7 @@
 
 static SEXP package_dependencies_scan_one(SEXP this) {
     SEXP y;
-    Rboolean save, skip;
+    Rboolean save;
     int size = 256, i, j, nb = 0, ne = 0, u, v, w;
     int *beg, *end;
     const char *s;
