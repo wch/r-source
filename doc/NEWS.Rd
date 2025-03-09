@@ -37,7 +37,7 @@
       Bioconductor packages.
 
       \item New function \code{grepv()} identical to \code{grep()} except
-      with the default \code{value = TRUE}.
+      for the default \code{value = TRUE}.
 
       \item \code{methods(<pkg>:::<genfun>)} now does report methods when
       neither the generic nor the methods have been exported.
@@ -74,9 +74,9 @@
 
       \item \code{Sys.info()} on Windows now provides current user domain.
 
-      \item \code{findInterval()} gets new options \code{checkSorted} and
-      \code{checkNA} which allow to skip relatively costly checks; related
-      to \PR{16567}.
+      \item \code{findInterval()} gets new arguments \code{checkSorted}
+      and \code{checkNA} which allow skipling relatively costly checks;
+      related to \PR{16567}.
 
       \item \code{pnorm(x)} underflows more gracefully.
 
@@ -140,7 +140,7 @@
       packages.
 
       \item Status reporting in \code{download.file()} has been extended to
-      report the outcome for individual files in simultaneous download.
+      report the outcome for individual files in simultaneous downloads.
 
       \item The Rd \verb{\link} macro now allows markup in the link text
       when the topic is given by the optional argument, e.g.,
@@ -230,15 +230,16 @@
       additions to be compiled into \code{libRlapack} (the internal
       LAPACK, not built if an external LAPACK is used).
 
-      This option allows the continuation of swapping the BLAS in use by
-      \I{symlinking} \file{lib/libRblas.*}.  It has the disadvantage of
-      using the reference BLAS version of the 2025 routines whereas an
-      enhanced BLAS might have an optimized version (\I{OpenBLAS} does as
-      from version 0.3.29).
+      This option allows the continuation of the practice of swapping
+      the BLAS in use by \I{symlinking} \file{lib/libRblas.*}.  It has
+      the disadvantage of using the reference BLAS version of the 2025
+      routines whereas an enhanced BLAS might have an optimized version
+      (\I{OpenBLAS} does as from version 0.3.29).
 
-      \item Windows builds use the internal LAPACK and by default the
-      internal BLAS: notes on how to swap the latter \emph{via}
-      \file{Rblas.dll} are in file \file{src/extra/blas/Makefile.win}.
+      \item Windows builds currently use the internal LAPACK and by
+      default the internal BLAS: notes on how to swap the latter
+      \emph{via} \file{Rblas.dll} are in file
+      \file{src/extra/blas/Makefile.win}. 
     }
   }
 
@@ -266,7 +267,7 @@
       \item The minimum \command{autoconf} requirement for a maintainer
       build has been increased to \command{autoconf}\sspace{}2.72.
 
-      \item Building the HTML (and Info) versions of the R manuals now
+      \item Building the HTML and Info versions of the R manuals now
       requires \command{texi2any} from \I{Texinfo} 6.1 or later.
 
       \item Failures in building the manuals under \file{doc} now abort
@@ -343,9 +344,9 @@
       deprecated in the near future. It is better to allocate an object
       of the desired type in the first place.
 
-      \item The set of LAPACK (double and complex) routines in headers
-      \file{R_ext/Lapack.h} and \file{R_ext/Applic.h} has been extended,
-      mostly to routines actually in use by packages.
+      \item The set of LAPACK (double and complex) routines declared in
+      the headers \file{R_ext/Lapack.h} and \file{R_ext/Applic.h} has
+      been extended, mostly to routines actually in use by packages.
 
       \item Memory allocation messages now use the (non-SI notation)
       \code{"Mb"}, \code{"Gb"} , \dots, and \code{"Mbytes"} strings as
@@ -388,14 +389,16 @@
       different size this would be an \abbr{ABI}-breaking change (but we are
       unaware of any such platform).
 
-      \item Header \file{R_ext/Boolean.h} now ensures a \code{bool} type
-      is available either as a keyword (C23 and C++) or by including the
-      C99 header \file{stdbool.h}.  This is bwing used internally in \R
-      to replace \code{Rboolean} by \code{bool}.
+      \item Header \file{R_ext/Boolean.h} now ensures that a \code{bool}
+      type is available either as a keyword (C23 and C++) or by
+      including the C99 header \file{stdbool.h}.  This is being used
+      internally in \R to replace \code{Rboolean} by \code{bool}.
 
       \item There are a new functions \code{asRboolean} and
       \code{asBool}, variants of \code{asLogical} more suited to
-      converting logical arguments to \code{Rboolean} or to \code{bool}. 
+      converting logical arguments to \code{Rboolean} or to
+      \code{bool}. They require a length-one input and thow an error if
+      that evaluates to \code{NA}.
 
       \item Header \file{R_exts/Error.h} now ensures that
       \code{Rf_error} and similar are given a \code{noreturn}
@@ -586,7 +589,7 @@
       \PR{18782}.
 
       \item \code{axisTicks(usr, ...)} documentation clarification for
-      \code{log=TRUE}, fixing bug \PR{18821} thanks to \I{Duncan Murdoch}.
+      \code{log = TRUE}, fixing bug \PR{18821} thanks to \I{Duncan Murdoch}.
 
       \item \code{debug()} and \code{debugonce(fun)} now also accept a
       string \code{fun} when it names an S4 generic, fixing \PR{18822}
@@ -605,9 +608,9 @@
 
       \item \code{options(scipen = NULL)} and other invalid values now
       signal an error instead of invalidating ops relying on a finite
-      integer value.  Newly values outside the range -9 .. 9999 are warned
-      about and set to a respective boundary or to the default \code{0},
-      e.g., in case of an \code{NA}.
+      integer value.  Values outside the range -9 .. 9999 are now warned
+      about and set to a boundary or to the default \code{0}, e.g., in
+      case of an \code{NA}.
 
       \item \code{cbind()} could segfault with \code{NULL} inputs.
       (Seen when \R was built with \command{gcc-14}, \abbr{LTO} and C99
@@ -618,8 +621,8 @@
       (\PR{18784}).  Thanks to \I{Tomek Gieorgijewski}.
 
       \item \code{format()} etc, using \code{decimal.mark = s}, by default
-      getting \code{s <- getOption("OutDec")}, signals a warning to become
-      an error in the future, when \code{s} is not a string with exactly
+      getting \code{s <- getOption("OutDec")}, signals a warning (to become
+      an error in the future) when \code{s} is not a string with exactly
       one character.
 
       \item When \code{s <- getOption("OutDec")} is not a string of one
@@ -651,8 +654,8 @@
       \item \command{R CMD Rd2pdf} can now render the package manual from
       a \option{--latex} installation also when the help contains figures.
 
-      \item The argument of \code{as.environment()} is named \code{x} now,
-      not \code{object}, as it was always documented and shown when
+      \item The argument of \code{as.environment()} is now named \code{x},
+      not \code{object}, as was always documented and shown when
       printing it; thanks to \I{Gael Millot}'s \PR{18849}.
 
       \item When \command{R CMD check} aims at getting the time+date from a
@@ -691,7 +694,7 @@
       \code{grep()}, \code{strsplit()} and similar took
       non-\code{TRUE}/\code{FALSE}
       values of their logical arguments as \code{FALSE}, but these were
-      almost always nismatches of unnamed arguments and are now reported
+      almost always nismatches to unnamed arguments and are now reported
       as \code{NA}.
     }
   }
