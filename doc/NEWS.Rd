@@ -197,8 +197,8 @@
       more about the value in its \code{warning} message.  It no longer
       replaces \code{-Inf} by the largest \emph{positive} finite number.
 
-      \item The documentation of \code{gamma} and \code{is.numeric} is more
-      specific, thanks to the contributors of \PR{18677}.
+      \item The documentation of \code{gamma()} and \code{is.numeric()}
+      is more specific, thanks to the contributors of \PR{18677}.
 
       \item New dataset \code{gait} thanks to \I{Heather Turner} and
       \I{Ella Kaye}, used in examples.
@@ -221,9 +221,9 @@
       \item This update was mainly bug fixes but contained a barely
       documented major change.  The set of BLAS routines has been
       unchanged since 1988, so throughout \R's history.  This update
-      introduced two new BLAS routines \code{dgemmtr} and
-      \code{zgemmtr} which are now used by LAPACK routines.  This means
-      that BLAS implementations are no longer interchangeable.
+      introduced new BLAS routines \code{dgemmtr} and \code{zgemmtr}
+      which are now used by LAPACK routines.  This means that BLAS
+      implementations are no longer interchangeable.
 
       \item To work around this, \R can be configured with option
       \option{--with-2025blas} which arranges for the 2025 BLAS
@@ -375,7 +375,14 @@
       when in C17 mode.
 
       A fair amount of code has assumed this: it may be changed to a
-      smaller type in future.
+      smaller type in future.  In particular, as standard compilers do
+      not check the validity of assignment to an \code{enum}, it has been
+      possible to assign \code{NA_INTEGER} to an \code{Rboolean}
+      variable, coerce it to \code{int} and recover the value.
+      %% There are claims that the Green Hills compiler can.
+      %% In C++ rhis was confirmed as undefined behaviour in
+      %% https://cplusplus.github.io/CWG/issues/1766.html
+      %% Some versiins of UBSAN caan check it with -fsanitize=enum
 
       If there were a platform which used an underlying type of a
       different size this would be an \abbr{ABI}-breaking change (but we are
@@ -383,7 +390,7 @@
 
       \item Header \file{R_ext/Boolean.h} now ensures a \code{bool} type
       is available either as a keyword (C23 and C++) or by including the
-      C99 header \file{stdbool.h}.  This is used in places in \R itself
+      C99 header \file{stdbool.h}.  This is bwing used internally in \R
       to replace \code{Rboolean} by \code{bool}.
 
       \item There are a new functions \code{asRboolean} and
@@ -391,8 +398,8 @@
       converting logical arguments to \code{Rboolean} or to \code{bool}. 
 
       \item Header \file{R_exts/Error.h} now ensures that
-      \code{Rf_error} and similar are maeked with the \code{noreturn}
-      attribute from C++ under all compilers.
+      \code{Rf_error} and similar are given a \code{noreturn}
+      attribute when uased from C++ under all compilers.
     }
   }
 
@@ -498,7 +505,7 @@
       \command{autoconf}-generated \command{configure} scripts.
 
       \item \command{R CMD check} gains option \option{--run-demo} to
-      check demo scripts like tests.
+      check demo scripts analogously to tests.
 
       \item \code{R CMD build} now supports \option{--compression=zstd}
       on platforms with sufficient support for \command{zstd}.
@@ -684,7 +691,8 @@
       \code{grep()}, \code{strsplit()} and similar took
       non-\code{TRUE}/\code{FALSE}
       values of their logical arguments as \code{FALSE}, but these were
-      almost always mistakes and are now reported as \code{NA}.
+      almost always nismatches of unnamed arguments and are now reported
+      as \code{NA}.
     }
   }
 }
