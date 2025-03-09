@@ -26,7 +26,7 @@
 #ifndef R_ERROR_H_
 #define R_ERROR_H_
 
-#include <R_ext/Print.h>
+#include <R_ext/Print.h> // for R_PRINTF_FORMAT
 
 #ifdef  __cplusplus
 extern "C" {
@@ -40,7 +40,7 @@ extern "C" {
  */
 #if defined NORET
 #elif (defined(__STDC_VERSION__) && __STDC_VERSION__ >= 202301L)
-// gcc 15 and clang 19/20
+// gcc 15 and clang 19-
 # define NORET [[noreturn]]
 #elif defined(__STDC_VERSION__) && __STDC_VERSION__ >= 201102L
 # define NORET _Noreturn
@@ -52,10 +52,19 @@ extern "C" {
 # define NORET
 #endif
 
+#ifdef  __cplusplus
+// Only supported in C++ >= 11, but that is all current R supports
+// Defining NORET caused conflict in many C++-using packages
+[[noreturn]] void Rf_error(const char *, ...) R_PRINTF_FORMAT(1, 2);
+
+[[noreturn]] void UNIMPLEMENTED(const char *);
+[[noreturn]] void WrongArgCount(const char *);
+#else
 NORET void Rf_error(const char *, ...) R_PRINTF_FORMAT(1, 2);
 
 NORET void UNIMPLEMENTED(const char *);
 NORET void WrongArgCount(const char *);
+#endif
 
 void Rf_warning(const char *, ...) R_PRINTF_FORMAT(1,2);
 

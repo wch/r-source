@@ -389,6 +389,10 @@
       \item There are a new functions \code{asRboolean} and
       \code{asBool}, variants of \code{asLogical} more suited to
       converting logical arguments to \code{Rboolean} or to \code{bool}. 
+
+      \item Header \file{R_exts/Error.h} now ensures that
+      \code{Rf_error} and similar are maeked with the \code{noreturn}
+      attribute from C++ under all compilers.
     }
   }
 
