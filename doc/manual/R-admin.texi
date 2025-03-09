@@ -5171,6 +5171,13 @@ the full range of bitmapped graphics devices.  (Some builds of
 @code{tiff} may require @code{libwebp} and/or @code{openjpeg}.)
 
 @item
+Component @code{libdeflate} for faster internal (de)compression.
+
+@c @item
+@c Component @code{gettext} for @code{libintl}, an updated version of that
+@c in the @R{} sources.
+
+@item
 An X sub-system unless configuring using @option{--without-x}: see
 @uref{https://www.xquartz.org/}. @R{}'s @command{configure}
 script can be told to look for @code{X11} in @I{XQuartz}'s main
