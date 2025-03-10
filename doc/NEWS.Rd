@@ -279,6 +279,10 @@
       \item There is now support for installing the debug symbols for
       recommended packages on macOS: see \samp{REC_INSTALL_OPT} in file
       \file{config.site}.
+
+      \item \command{configure} is now able to find an external
+      \code{libintl} on macOS (it failed to try linking with the macOS
+      Core Foundation framework).
     }
   }
 

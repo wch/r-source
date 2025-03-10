@@ -63493,8 +63493,10 @@ esac
 fi
 rm -f core conftest.err conftest.$ac_objext conftest.beam \
     conftest$ac_exeext conftest.$ac_ext
-                        if { eval "gt_val=\$$gt_func_gnugettext_libintl"; test "$gt_val" != yes; } && test -n "$LIBICONV"; then
-              LIBS="$LIBS $LIBICONV"
+                                    gt_LIBINTL_EXTRA="$INTL_MACOSX_LIBS"
+            if { eval "gt_val=\$$gt_func_gnugettext_libintl"; test "$gt_val" != yes; } \
+               && { test -n "$LIBICONV" || test -n "$gt_LIBINTL_EXTRA"; }; then
+              LIBS="$LIBS $LIBICONV $gt_LIBINTL_EXTRA"
               cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 /* end confdefs.h.  */
 #include <libintl.h>

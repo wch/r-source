@@ -18,11 +18,16 @@ Various small changes were made to avoid warnings.
 
 BDR
 
-One more change for macOS: the locale detection is simply off-loaded
+One more change for macOS: the charset detection is simply off-loaded
 to locale2charset, because the built-in detection in gettext doesn't work.
 This also ensures that R and gettext are in sync wrt the charset used.
 
 SU
+
+2025-03-09: m4/gattext.m4 was modified using ideas from gettext-0.24
+  to correctly detected an external libintl on macOS.
+langorefs.c updated to that from gettext-0.24 for allegedly improved
+  behaviour on macOS.
 
 diff -ru intl/dcigettext.c ../extra/intl/dcigettext.c
 --- intl/dcigettext.c	2007-10-21 19:41:41.000000000 +0100

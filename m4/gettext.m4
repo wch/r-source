@@ -6,6 +6,7 @@
 ## wchar_t.m4 wint_t.m4 xsize.m4 > .../m4/gettext.m4
 
 ## 2022-09-28 modify to have prototypes, for clang 15.
+## 2025-03-09 test with macOS libs for external libiconv too.
 
 ## Then disable testing for libiconv prefix
 
@@ -199,8 +200,11 @@ extern
 const char *_nl_expand_alias (const char *);]], [[bindtextdomain ("", "");
 return * gettext ("")$gt_expression_test_code + _nl_msg_cat_cntr + *_nl_expand_alias ("")]])],[eval "$gt_func_gnugettext_libintl=yes"],[eval "$gt_func_gnugettext_libintl=no"])
             dnl Now see whether libintl exists and depends on libiconv.
-            if { eval "gt_val=\$$gt_func_gnugettext_libintl"; test "$gt_val" != yes; } && test -n "$LIBICONV"; then
-              LIBS="$LIBS $LIBICONV"
+            dnl OS dependent libraries, specifically on macOS.
+            gt_LIBINTL_EXTRA="$INTL_MACOSX_LIBS"
+            if { eval "gt_val=\$$gt_func_gnugettext_libintl"; test "$gt_val" != yes; } \
+               && { test -n "$LIBICONV" || test -n "$gt_LIBINTL_EXTRA"; }; then
+              LIBS="$LIBS $LIBICONV $gt_LIBINTL_EXTRA"
               AC_LINK_IFELSE([AC_LANG_PROGRAM([[#include <libintl.h>
 $gt_revision_test_code
 extern int _nl_msg_cat_cntr;

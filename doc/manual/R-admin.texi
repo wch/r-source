@@ -3296,11 +3296,12 @@ Those distributing binary versions of @R{} may need to be aware of the
 licences of the external libraries it is linked to (including `useful'
 libraries from the next section).  The @code{liblzma} library is in the
 public domain and X11, @code{libbzip2}, @code{libcurl} and @code{zlib}
-have MIT-style licences. PCRE and PCRE2 have a BSD-style licence which
+have MIT-style licences. PCRE1 and PCRE2 have a BSD-style licence which
 requires distribution of the licence (included in @R{}'s
 @file{COPYRIGHTS} file) in binary distributions.  GNU @code{readline} is
 licensed under GPL (which version(s) of GPL depends on the
-@code{readline} version).
+@code{readline} version). @code{libzstd} is dual-licensed with either a
+BSD or GPL licence and used in @R{} under the latter.
 
 
 @node Useful libraries and programs
@@ -3398,8 +3399,17 @@ headers@footnote{@R{} uses @file{rpc/xdr.h} but that includes
 @file{netconfig.h} from the top @file{tirpc} directory.} need to be on
 the C include path or under @file{/usr/include/tirpc}.
 
+Thr @R{} sources contain an older copy of @code{libintl} from GNU
+@code{gettext} which is used if this is not part of @code{libc} (as it is
+when using @code{glibc}) nor found as an external library.  This is
+desirable and is planned to be required in future.
+
 Library @code{libdeflate} (@url{https://github.com/ebiggers/libdeflate})
 is used by @code{memCompress()} and @code{memDecompress()} if available.
+
+The compresson library for @code{zstd} is used if available.  It might
+be named @code{libzstd} or be part of a package including the
+@command{zstd} utilities.
 
 Use of the X11 clipboard selection requires the @code{Xmu} headers and
 libraries.  These are normally part of an X11 installation (e.g.@: the
@@ -3407,16 +3417,16 @@ Debian meta-package @samp{xorg-dev}), but some distributions have split
 this into smaller parts, so for example recent versions of Fedora
 require the @samp{libXmu} and @samp{libXmu-devel} @abbr{RPM}s.
 
-Some systems (notably macOS and at least some FreeBSD systems) have
+Some systems (notably macOS and some FreeBSD systems) have had
 inadequate support for collation in multibyte locales.  It is possible
 to replace the OS's collation support by that from ICU (International
 Components for Unicode, @uref{https://icu.unicode.org/}), and this
 provides much more precise control over collation on all systems.  ICU
 is available as sources and as binary distributions for (at least) most
-Linux distributions, FreeBSD, macOS and @abbr{AIX}, usually as @code{libicu} or
-@code{icu4c}.  It will be used by default where available: should a very
-old or broken version of ICU be found this can be suppressed by
-@option{--without-ICU}.
+Linux distributions, FreeBSD, macOS and @abbr{AIX}, usually as
+@code{libicu} or @code{icu4c}.  It will be used by default where
+available: should a very old or broken version of ICU be found this can
+be suppressed by @option{--without-ICU}.
 
 The @code{bitmap} and @code{dev2bitmap} devices and function
 @code{embedFonts()} use @I{Ghostscript}
@@ -3431,7 +3441,7 @@ a useful checklist for other systems:
 @example
 bzip2 cairo fontconfig freetype fribidi gcc gcc-gfortran gcc-c++ glib2
 glibc harfbuzz lapack libX11 libXext libXt libcurl libdeflate libicu
-libjpeg libpng libtiff libtirpc libxcrypt ncurses pango
+libjpeg libpng libtiff libtirpc libxcrypt libzstd ncurses pango
 pkgconf-pkg-config pcre2 readline tcl tk xz zlib
 @end example
 @noindent
@@ -5171,11 +5181,12 @@ the full range of bitmapped graphics devices.  (Some builds of
 @code{tiff} may require @code{libwebp} and/or @code{openjpeg}.)
 
 @item
-Component @code{libdeflate} for faster internal (de)compression.
+Component @code{libdeflate} for faster internal (de)compression and
+@code{zstd} for support for that type of compression.
 
-@c @item
-@c Component @code{gettext} for @code{libintl}, an updated version of that
-@c in the @R{} sources.
+@item
+Component @code{gettext} for @code{libintl}, an updated version of that
+in the @R{} sources.
 
 @item
 An X sub-system unless configuring using @option{--without-x}: see
