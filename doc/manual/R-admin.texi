@@ -3401,8 +3401,9 @@ the C include path or under @file{/usr/include/tirpc}.
 
 Thr @R{} sources contain an older copy of @code{libintl} from GNU
 @code{gettext} which is used if this is not part of @code{libc} (as it is
-when using @code{glibc}) nor found as an external library.  This is
-desirable and is planned to be required in future.
+when using @code{glibc}) nor found as an external library.  The internal
+copy is deprecated and may be removed in the near
+future---@command{configure} warns when it is used.
 
 Library @code{libdeflate} (@url{https://github.com/ebiggers/libdeflate})
 is used by @code{memCompress()} and @code{memDecompress()} if available.

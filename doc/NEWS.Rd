@@ -310,7 +310,13 @@
       \code{"MethodsList"} branches of functions \code{assignMethodsMetaData},
       \code{finalDefaultMethod}, and \code{MethodAddCoerce}.
 
-      \item \code{getMethods(*, table=TRUE)} is also deprecated.
+      \item \code{getMethods(*, table = TRUE)} is deprecated.
+
+      \item Bulding with the bundled (and old) version of \code{libintl}
+      is deprecated and gives a \command{configure warning}.  Use
+      \code{libintl} from a recent version of GNU gettext instead.  (If
+      the OS's \code{libc} includes \code{libintl} that will be chosen
+      by \command{configure} -- \code{glibc} does.)
     }
   }
 

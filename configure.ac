@@ -3382,6 +3382,10 @@ fi
 if test "${ac_cv_sizeof_size_t}" = 4; then
   AC_MSG_WARN([32-bit build -- this is little tested])
 fi
+if test "${USE_INCLUDED_LIBINT}" = "yes"; then
+  AC_MSG_WARN([Using the bundled libintl is deprecated.])
+fi
+
 
 ### Local variables: ***
 ### mode: outline-minor ***

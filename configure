@@ -67322,6 +67322,11 @@ if test "${ac_cv_sizeof_size_t}" = 4; then
   { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: 32-bit build -- this is little tested" >&5
 printf "%s\n" "$as_me: WARNING: 32-bit build -- this is little tested" >&2;}
 fi
+if test "${USE_INCLUDED_LIBINT}" = "yes"; then
+  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: Using the bundled libintl is deprecated." >&5
+printf "%s\n" "$as_me: WARNING: Using the bundled libintl is deprecated." >&2;}
+fi
+
 
 ### Local variables: ***
 ### mode: outline-minor ***
