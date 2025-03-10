@@ -16,7 +16,7 @@ Name,Country,City,URL,Host,Maintainer,OK,CountryCode,Comment
 "Canada (ON 1) [https]",Canada,Waterloo,https://mirror.csclub.uwaterloo.ca/CRAN/,"University of Waterloo","syscom # csclub.uwaterloo.ca",1,ca,"secure_mirror_from_master"
 "Canada (ON 2) [https]",Canada,Hamilton,https://cran.mirror.rafal.ca/,"Rafal Rzeczkowski","Rafal Rzeczkowski <mirror-CRAN # mail.rafal.ca>",1,ca,"secure_mirror_from_master"
 "Chile (Santiago) [https]",Chile,Santiago,https://cran.dcc.uchile.cl/,"Departamento de Ciencias de la Computación, Universidad de Chile","Mauricio Vargas <mvargas # dcc.uchile.cl>",1,cl,"secure_mirror_from_master"
-"China (Beijing 1) [https]",China,Beijing,https://mirrors.tuna.tsinghua.edu.cn/CRAN/,"TUNA Team, Tsinghua University","Justin Wong <justin.w.xd # gmail.com>",1,cn,
+"China (Beijing 1) [https]",China,Beijing,https://mirrors.tuna.tsinghua.edu.cn/CRAN/,"TUNA Team, Tsinghua University","Justin Wong <justin.w.xd # gmail.com>",1,cn,"secure_mirror_from_master"
 "China (Beijing 2) [https]",China,Beijing,https://mirrors.bfsu.edu.cn/CRAN/,"Beijing Foreign Studies University","Aron Xu <aron # bfsu.edu.cn>",1,cn,"secure_mirror_from_master"
 "China (Beijing 3) [https]",China,Beijing,https://mirrors.pku.edu.cn/CRAN/,"Peking University","mirror # pku.edu.cn",1,cn,"secure_mirror_from_master"
 "China (Hefei) [https]",China,Hefei,https://mirrors.ustc.edu.cn/CRAN/,"University of Science and Technology of China","mirrors # Ustc.edu.cn",1,cn,"secure_mirror_from_master"
@@ -36,7 +36,7 @@ Name,Country,City,URL,Host,Maintainer,OK,CountryCode,Comment
 "Denmark [https]",Denmark,Aalborg,https://mirrors.dotsrc.org/cran/,"Aalborg University","staff # dotsrc.org",1,dk,"secure_mirror_from_master"
 "East Asia [https]",0-Cloud-East-Asia,0-Cloud-East-Asia,"https://cran.asia/","Personnel Psychology Laboratory, Kwangwoon University (sites: Seoul, Tokyo, Singapore, Manila, Bangalore)","admin # cran.asia",1,asia,"secure_mirror_from_master,maintainer_address_bounces"
 "Ecuador (Cuenca) [https]",Ecuador,Cuenca,https://mirror.cedia.org.ec/CRAN/,CEDIA,"mirror # cedia.org.ec",1,ec,"secure_mirror_from_master"
-"Finland (Helsinki) [https]",Finland,Helsinki,https://cran.030-datenrettung.de/,"030 Datenrettung Berlin GmbH (@Hetzner)","kontakt # 030-datenrettung.de",1,fi
+"Finland (Helsinki) [https]",Finland,Helsinki,https://cran.030-datenrettung.de/,"030 Datenrettung Berlin GmbH (@Hetzner)","kontakt # 030-datenrettung.de",1,fi,"secure_mirror_from_master"
 "France (Lyon 1) [https]",France,Lyon,https://pbil.univ-lyon1.fr/CRAN/,"Dept. of Biometry & Evol. Biology, University of Lyon","Jean Thioulouse <Jean.Thioulouse # univ-lyon1.fr>",1,fr,"secure_mirror_from_master"
 "France (Lyon 2) [https]",France,Lyon,https://mirror.ibcp.fr/pub/CRAN/,"CNRS IBCP, Lyon","alexis.michon # ibcp.fr",1,fr,"secure_mirror_from_master"
 "France (Marseille) [https]",France,Marseille,https://cran.biotools.fr/,"IBDM, Marseille","andrew.saurin # univ-amu.fr",0,fr,"secure_mirror_from_master"
@@ -67,7 +67,7 @@ Name,Country,City,URL,Host,Maintainer,OK,CountryCode,Comment
 "Netherlands (Dronten) [https]","Netherlands",Dronten,https://mirror.lyrahosting.com/CRAN/,"Lyra Hosting","admin # lyrahosting.com",1,nl,"secure_mirror_from_master"
 "New Zealand [https]","New Zealand",Auckland,https://cran.stat.auckland.ac.nz/,"University of Auckland","s.urbanek # auckland.ac.nz",1,nz,"secure_mirror_from_master"
 "Norway [https]",Norway,Bergen,https://cran.uib.no/,"University of Bergen","sundrift # It.uib.no",1,no,"secure_mirror_from_master,maintainer_address_bounces"
-"Poland [https]",Poland,Warsaw,https://cran.mi2.ai/,"MI2.ai, Warsaw University of Technology","przemyslaw.biecek # gmail.com",1,pl
+"Poland [https]",Poland,Warsaw,https://cran.mi2.ai/,"MI2.ai, Warsaw University of Technology","przemyslaw.biecek # gmail.com",1,pl,"secure_mirror_from_master"
 "Portugal (Lisbon) [https]",Portugal,Lisbon,https://cran.radicaldevelop.com/,"RadicalDevelop, Lda","geral # radicaldevelop.com",1,pt
 "Russia (Novosibirsk) [https]",Russia,Novosibirsk,https://mirror.truenetwork.ru/CRAN/,"Truenetwork","mirror # truenetwork.ru",1,ru
 "South Africa (Johannesburg) [https]","South Africa",Johannesburg,https://cran.mirror.ac.za/,"TENET, Johannesburg","mirroradmin # tenet.ac.za",1,za,"secure_mirror_from_master"
