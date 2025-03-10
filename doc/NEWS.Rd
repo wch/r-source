@@ -75,7 +75,7 @@
       \item \code{Sys.info()} on Windows now provides current user domain.
 
       \item \code{findInterval()} gets new arguments \code{checkSorted}
-      and \code{checkNA} which allow skipling relatively costly checks;
+      and \code{checkNA} which allow skipping relatively costly checks;
       related to \PR{16567}.
 
       \item \code{pnorm(x)} underflows more gracefully.
@@ -312,9 +312,9 @@
 
       \item \code{getMethods(*, table = TRUE)} is deprecated.
 
-      \item Bulding with the bundled (and old) version of \code{libintl}
+      \item Building with the bundled (and old) version of \code{libintl}
       is deprecated and gives a \command{configure warning}.  Use
-      \code{libintl} from a recent version of GNU gettext instead.  (If
+      \code{libintl} from a recent version of GNU \I{gettext} instead.  (If
       the OS's \code{libc} includes \code{libintl} that will be chosen
       by \command{configure} -- \code{glibc} does.)
     }
@@ -407,12 +407,12 @@
       \item There are a new functions \code{asRboolean} and
       \code{asBool}, variants of \code{asLogical} more suited to
       converting logical arguments to \code{Rboolean} or to
-      \code{bool}. They require a length-one input and thow an error if
+      \code{bool}. They require a length-one input and throw an error if
       that evaluates to \code{NA}.
 
       \item Header \file{R_exts/Error.h} now ensures that
       \code{Rf_error} and similar are given a \code{noreturn}
-      attribute when uased from C++ under all compilers.
+      attribute when used from C++ under all compilers.
     }
   }
 
@@ -704,7 +704,7 @@
       \code{grep()}, \code{strsplit()} and similar took
       non-\code{TRUE}/\code{FALSE}
       values of their logical arguments as \code{FALSE}, but these were
-      almost always nismatches to unnamed arguments and are now reported
+      almost always mismatches to unnamed arguments and are now reported
       as \code{NA}.
     }
   }

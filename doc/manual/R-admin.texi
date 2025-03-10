@@ -3399,7 +3399,7 @@ headers@footnote{@R{} uses @file{rpc/xdr.h} but that includes
 @file{netconfig.h} from the top @file{tirpc} directory.} need to be on
 the C include path or under @file{/usr/include/tirpc}.
 
-Thr @R{} sources contain an older copy of @code{libintl} from GNU
+The @R{} sources contain an older copy of @code{libintl} from GNU
 @code{gettext} which is used if this is not part of @code{libc} (as it is
 when using @code{glibc}) nor found as an external library.  The internal
 copy is deprecated and may be removed in the near
@@ -3408,7 +3408,7 @@ future---@command{configure} warns when it is used.
 Library @code{libdeflate} (@url{https://github.com/ebiggers/libdeflate})
 is used by @code{memCompress()} and @code{memDecompress()} if available.
 
-The compresson library for @code{zstd} is used if available.  It might
+The compression library for @code{zstd} is used if available.  It might
 be named @code{libzstd} or be part of a package including the
 @command{zstd} utilities.
 
@@ -5182,7 +5182,7 @@ the full range of bitmapped graphics devices.  (Some builds of
 @code{tiff} may require @code{libwebp} and/or @code{openjpeg}.)
 
 @item
-Component @code{libdeflate} for faster internal (de)compression and
+Component @code{libdeflate} for faster internal @I{(de)compression} and
 @code{zstd} for support for that type of compression.
 
 @item
