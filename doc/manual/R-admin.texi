@@ -1447,7 +1447,7 @@ and from @I{Martin Storsjo}.
 @node LaTeX on Windows
 @subsection @LaTeX{}
 
-Both building @R{} and checking packages need a distribution of @LaTeX{}
+Building PDF vignettes and manuals needs a distribution of @LaTeX{}
 installed, with the directory containing @command{pdflatex} on the path.
 
 The @samp{MiKTeX} (@uref{https://miktex.org/}) distribution of

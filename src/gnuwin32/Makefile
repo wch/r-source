@@ -338,9 +338,7 @@ pdfdocs manuals:
 	@$(MK) -C ../../doc/manual -f Makefile.win clean
 	@$(MK) -C ../../doc/manual -f Makefile.win
 
-R_EXE = ../../$(BINDIR)/Rterm.exe --vanilla --no-echo
-
-## must come after recommended
+## currently only run for 'distribution', not 'all' (unlike on Unix-alikes)
 vignettes:
 	@$(MK) -C ../library -f Makefile.win vignettes
 
