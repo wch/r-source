@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
 
- *  Copyright (C) 2007-2021  The R Core Team
+ *  Copyright (C) 2007-2025  The R Core Team
  *  Copyright (C) 1994-9 W. N. Venables and B. D. Ripley
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -44,16 +44,16 @@ void R_max_col(double *matrix, int *nr, int *nc, int *maxes, int *ties_meth)
     int	 c, m;
     size_t  n_r = *nr; // for indexing like r + c * n_r
     double a, b, large;
-    Rboolean isna, used_random = FALSE, do_rand = *ties_meth == 1;
+    bool isna, used_random = false, do_rand = *ties_meth == 1;
 
     for (size_t r = 0; r < n_r; r++) {
 	/* first check row for any NAs and find the largest abs(entry) */
 	large = 0.0;
-	isna = TRUE;
+	isna = true;
 	for (c = 0; c < *nc; c++) {
 	    a = matrix[r + c * n_r];
-	    if (ISNAN(a)) { isna = TRUE; break; }
-	    else if(isna) isna = FALSE;
+	    if (ISNAN(a)) { isna = true; break; }
+	    else if(isna) isna = false;
 	    if (!R_FINITE(a)) continue;
 	    if (do_rand) large = fmax2(large, fabs(a));
 	}
@@ -71,7 +71,7 @@ void R_max_col(double *matrix, int *nr, int *nc, int *maxes, int *ties_meth)
 		    ntie = 1;
 		} else if (b >= a - tol) { /* b ~= current max. a */
 		    ntie++;
-		    if (!used_random) { GetRNGstate(); used_random = TRUE; }
+		    if (!used_random) { GetRNGstate(); used_random = true; }
 		    if (ntie * unif_rand() < 1.) m = c;
 		}
 	    }

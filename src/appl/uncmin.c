@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1999-2023   The R Core Team
+ *  Copyright (C) 1999-2025   The R Core Team
  *  Copyright (C) 2003-2017   The R Foundation
  *  Copyright (C) 1997-1999   Saikat DebRoy
  *
@@ -442,10 +442,10 @@ qrupdt(int nr, int n, double *a, double *u, double *v)
 
 static void
 tregup(int nr, int n, double *x, double f, double *g, double *a, fcn_p fcn,
-       void *state, double *sc, double *sx, Rboolean nwtake,
+       void *state, double *sc, double *sx, bool nwtake,
        double stepmx, double steptl, double *dlt, int *iretcd,
        double *xplsp, double *fplsp, double *xpls, double *fpls,
-       Rboolean *mxtake,
+       bool *mxtake,
        int method, double *udiag)
 {
 /* TRust REGion UPdating
@@ -504,7 +504,7 @@ tregup(int nr, int n, double *x, double f, double *g, double *a, fcn_p fcn,
     double dltfp, dltmp;
     double rln, slp;
 
-    *mxtake = FALSE;
+    *mxtake = false;
     for (i = 0; i < n; ++i)
 	xpls[i] = x[i] + sc[i];
 
@@ -592,7 +592,7 @@ tregup(int nr, int n, double *x, double f, double *g, double *a, fcn_p fcn,
 
 		*iretcd = 0;
 		if (*dlt > stepmx * .99)
-		    *mxtake = TRUE;
+		    *mxtake = true;
 		if (dltf >= dltfp * .1) {
 		    /* decrease trust region for next iteration */
 
@@ -612,7 +612,7 @@ tregup(int nr, int n, double *x, double f, double *g, double *a, fcn_p fcn,
 
 static void
 lnsrch(int n, double *x, double f, double *g, double *p, double *xpls,
-       double *fpls, fcn_p fcn, void *state, Rboolean *mxtake, int *iretcd,
+       double *fpls, fcn_p fcn, void *state, bool *mxtake, int *iretcd,
        double stepmx, double steptl, double *sx)
 {
 /* Find a next newton iterate by line search.  (iff  method == 1)
@@ -644,7 +644,7 @@ lnsrch(int n, double *x, double f, double *g, double *p, double *xpls,
 */
 
     int i, one = 1;
-    Rboolean firstback = TRUE;
+    bool firstback = true;
     double disc;
     double a3, b;
     double t1, t2, t3, lambda, tlmbda, rmnlmb;
@@ -673,7 +673,7 @@ lnsrch(int n, double *x, double f, double *g, double *p, double *xpls,
 
     /*	check if new iterate satisfactory.  generate new lambda if necessary. */
 
-    *mxtake = FALSE;
+    *mxtake = false;
     *iretcd = 2;
     do {
 	for (i = 0; i < n; ++i)
@@ -682,7 +682,7 @@ lnsrch(int n, double *x, double f, double *g, double *p, double *xpls,
 	if (*fpls <= f + slp * 1e-4 * lambda) { /* solution found */
 
 	    *iretcd = 0;
-	    if (lambda == 1. && sln > stepmx * .99) *mxtake = TRUE;
+	    if (lambda == 1. && sln > stepmx * .99) *mxtake = true;
 	    return;
 	}
 	/* else : solution not (yet) found */
@@ -701,12 +701,12 @@ lnsrch(int n, double *x, double f, double *g, double *p, double *xpls,
 	     * ">=" instead of "==" :  MM 2001/07/24 */
 	    if (*fpls >= DBL_MAX) {
 		lambda *= 0.1;
-		firstback = TRUE;
+		firstback = true;
 	    }
 	    else {
 		if (firstback) { /*	first backtrack: quadratic fit */
 		    tlmbda = -lambda * slp / ((*fpls - f - slp) * 2.);
-		    firstback = FALSE;
+		    firstback = false;
 		}
 		else { /*	all subsequent backtracks: cubic fit */
 		    t1 = *fpls - f - lambda * slp;
@@ -740,7 +740,7 @@ lnsrch(int n, double *x, double f, double *g, double *p, double *xpls,
 
 static void
 dog_1step(int nr, int n, double *g, double *a, double *p, double *sx,
-       double rnwtln, double *dlt, Rboolean *nwtake, Rboolean *fstdog,
+       double rnwtln, double *dlt, bool *nwtake, bool *fstdog,
        double *ssd, double *v, double *cln, double *eta, double *sc,
        double stepmx)
 {
@@ -788,12 +788,12 @@ dog_1step(int nr, int n, double *g, double *a, double *p, double *sx,
 	return;
     }
 
-    /* else *nwtake = FALSE :
+    /* else *nwtake = false :
      * newton step too long -- cauchy step is on double dogleg curve */
 
     if (*fstdog) {
 	/*	  calculate double dogleg curve (ssd) */
-	*fstdog = FALSE;
+	*fstdog = false;
 	alpha = 0.;
 	for (i = 0; i < n; ++i)
 	    alpha += g[i] * g[i] / (sx[i] * sx[i]);
@@ -839,7 +839,7 @@ dog_1step(int nr, int n, double *g, double *a, double *p, double *sx,
 static void
 dogdrv(int nr, int n, double *x, double f, double *g, double *a, double *p,
        double *xpls, double *fpls, fcn_p fcn, void *state, double *sx,
-       double stepmx, double steptl, double *dlt, int *iretcd, Rboolean *mxtake,
+       double stepmx, double steptl, double *dlt, int *iretcd, bool *mxtake,
        double *sc, double *wrk1, double *wrk2, double *wrk3, int *itncnt)
 {
 /* Find a next newton iterate (xpls) by the double dogleg method
@@ -878,7 +878,7 @@ dogdrv(int nr, int n, double *x, double f, double *g, double *a, double *p,
  *	wrk3(n)	     --> workspace
  *	ipr	     --> device to which to send output */
 
-    Rboolean fstdog, nwtake;
+    bool fstdog, nwtake;
     int i;
     double fplsp = 0.0, rnwtln, eta = 0.0, cln = 0.0, tmp; /* -Wall */
 
@@ -888,7 +888,7 @@ dogdrv(int nr, int n, double *x, double f, double *g, double *a, double *p,
     rnwtln = sqrt(tmp);
 
     *iretcd = 4;
-    fstdog = TRUE;
+    fstdog = true;
     do {
 	/*	find new step by double dogleg algorithm */
 
@@ -907,8 +907,8 @@ dogdrv(int nr, int n, double *x, double f, double *g, double *a, double *p,
 static void
 hook_1step(int nr, int n, double *g, double *a, double *udiag, double *p,
        double *sx, double rnwtln, double *dlt, double *amu, double dltp,
-       double *phi, double *phip0, Rboolean *fstime, double *sc,
-       Rboolean *nwtake, double *wrk0, double epsm)
+       double *phi, double *phip0, bool *fstime, double *sc,
+       bool *nwtake, double *wrk0, double epsm)
 {
 /* Find new step by more-hebdon algorithm  (iff	 method == 3);
  * repeatedly called by hookdrv() only.
@@ -958,7 +958,7 @@ hook_1step(int nr, int n, double *g, double *a, double *udiag, double *p,
 	return;
     }
 
-    /* else *nwtake = FALSE :	newton step not taken */
+    /* else *nwtake = false :	newton step not taken */
     if (*amu > 0.)
 	*amu -= (*phi + dltp) * (dltp - *dlt + *phi) / (*dlt * *phip0);
 
@@ -971,7 +971,7 @@ hook_1step(int nr, int n, double *g, double *a, double *udiag, double *p,
 	/* Computing 2nd power */
 	temp1 = F77_CALL(dnrm2)(&n, wrk0, &one);
 	*phip0 = -(temp1 * temp1) / rnwtln;
-	*fstime = FALSE;
+	*fstime = false;
     }
     phip = *phip0;
     amulo = -(*phi) / phip;
@@ -1047,7 +1047,7 @@ static void
 hookdrv(int nr, int n, double *x, double f, double *g, double *a,
 	double *udiag, double *p, double *xpls, double *fpls, fcn_p fcn,
 	void *state, double *sx, double stepmx, double steptl, double *dlt,
-	int *iretcd, Rboolean *mxtake, double *amu, double *dltp,
+	int *iretcd, bool *mxtake, double *amu, double *dltp,
 	double *phi, double *phip0, double *sc, double *xplsp,
 	double *wrk0, double epsm, int itncnt)
 {
@@ -1094,7 +1094,7 @@ hookdrv(int nr, int n, double *x, double f, double *g, double *a,
  *	ipr	     --> device to which to send output
  */
 
-    Rboolean fstime, nwtake;
+    bool fstime, nwtake;
     int i, j;
     double bet, alpha, fplsp = 0.0 /* -Wall */, rnwtln, tmp;
 
@@ -1127,7 +1127,7 @@ hookdrv(int nr, int n, double *x, double f, double *g, double *a,
 	}
     }
     *iretcd = 4;
-    fstime = TRUE;
+    fstime = true;
     do {
 	/*	find new step by more-hebdon algorithm */
 
@@ -1146,7 +1146,7 @@ hookdrv(int nr, int n, double *x, double f, double *g, double *a,
 static void
 secunf(int nr, int n, double *x, double *g, double *a, double *udiag,
        double *xpls, double *gpls, double epsm, int itncnt, double rnf,
-       int iagflg, Rboolean *noupdt, double *s, double *y, double *t)
+       int iagflg, bool *noupdt, double *s, double *y, double *t)
 {
 /* Update hessian by the bfgs unfactored method	 (only when  method == 3)
 
@@ -1177,7 +1177,7 @@ secunf(int nr, int n, double *x, double *g, double *a, double *udiag,
 
     double ynrm2, snorm2;
     int i, j, one = 1;
-    Rboolean skpupd;
+    bool skpupd;
     double gam, tol, den1, den2;
 
 
@@ -1212,9 +1212,9 @@ secunf(int nr, int n, double *x, double *g, double *a, double *udiag,
 	    for (i = j; i < n; ++i)
 		a[i + j * nr] *= gam;
 	}
-	*noupdt = FALSE;
+	*noupdt = false;
     }
-    skpupd = TRUE;
+    skpupd = true;
 
     /*	check update condition on row i */
 
@@ -1223,7 +1223,7 @@ secunf(int nr, int n, double *x, double *g, double *a, double *udiag,
 	if (iagflg == 0)
 	    tol /= sqrt(rnf);
 	if (fabs(y[i] - t[i]) >= tol) {
-	    skpupd = FALSE;
+	    skpupd = false;
 	    break;
 	}
     }
@@ -1240,7 +1240,7 @@ secunf(int nr, int n, double *x, double *g, double *a, double *udiag,
 static void
 secfac(int nr, int n, double *x, double *g, double *a, double *xpls,
        double *gpls, double epsm, int itncnt, double rnf, int iagflg,
-       Rboolean *noupdt, double *s, double *y, double *u, double *w)
+       bool *noupdt, double *s, double *y, double *u, double *w)
 {
 /* Update hessian by the bfgs factored method  (only when  method == 1 or 2)
 
@@ -1269,7 +1269,7 @@ secfac(int nr, int n, double *x, double *g, double *a, double *xpls,
 
     double ynrm2;
     int i, j, one = 1;
-    Rboolean skpupd;
+    bool skpupd;
     double snorm2, reltol;
     double alp, den1, den2;
 
@@ -1299,7 +1299,7 @@ secfac(int nr, int n, double *x, double *g, double *a, double *xpls,
 		a[i + j * nr] *= alp;
 	    }
 	}
-	*noupdt = FALSE;
+	*noupdt = false;
 	den2 = den1;
 	alp = 1.;
     }
@@ -1311,7 +1311,7 @@ secfac(int nr, int n, double *x, double *g, double *a, double *xpls,
     else
 	reltol = rnf;
 
-    skpupd = TRUE;
+    skpupd = true;
     for (i = 0; i < n; ++i) {
 	skpupd = (fabs(y[i] - w[i]) <
 		  reltol * fmax2(fabs(g[i]), fabs(gpls[i])));
@@ -1883,7 +1883,7 @@ static
 int opt_stop(int n, double *xpls, double fpls, double *gpls, double *x,
 	     int itncnt, int *icscmx, double gradtl, double steptl,
 	     double *sx, double fscale, int itnlim,
-	     int iretcd, Rboolean mxtake, int *msg)
+	     int iretcd, bool mxtake, int *msg)
 {
 /* Unconstrained minimization stopping criteria :
 
@@ -2239,7 +2239,7 @@ optdrv(int nr, int n, double *x, fcn_p fcn, fcn_p d1fcn, d2fcn_p d2fcn,
  *	rnf		 relative noise in optimization function fcn.
  *			      noise=10.**(-ndigit)
  */
-    Rboolean mxtake = FALSE, noupdt;
+    bool mxtake = false, noupdt;
     int i, iretcd = 0, icscmx = 0;
     double dltp = 0., epsm, phip0 = 0., f, analtl;
     double dlpsav = 0., phisav = 0., dltsav = 0.;/* -Wall */
@@ -2281,7 +2281,7 @@ optdrv(int nr, int n, double *x, fcn_p fcn, fcn_p d1fcn, d2fcn_p d2fcn,
     iretcd = -1;
     *itrmcd = opt_stop(n, x, f, g, wrk1, *itncnt, &icscmx,
 		       gradtl, steptl, sx, fscale, itnlim, iretcd,
-		       /* mxtake = */FALSE, msg);
+		       /* mxtake = */false, msg);
     if (*itrmcd != 0) {
 	optdrv_end(nr, n, xpls, x, gpls, g, fpls, f, a, p, *itncnt,
 		   3, msg, prt_result);

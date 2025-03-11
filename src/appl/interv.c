@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2002--2016 The R Core Team
+ *  Copyright (C) 2002--2025 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -27,7 +27,9 @@
 #include <R_ext/Boolean.h>
 #include <R_ext/Utils.h>
 
-/* This is called from stats/src/bvalue.f, 3 x stats/src/s*.f for smooth.spline()
+/* In API headers R_ext/Applic.h and R_ext/Utils.h
+
+   This is called from stats/src/bvalue.f, 3 x stats/src/s*.f for smooth.spline()
    and packages gam and mda */
 int F77_SUB(interv)(double *xt, int *n, double *x,
 		    Rboolean *rightmost_closed, Rboolean *all_inside,
@@ -36,6 +38,7 @@ int F77_SUB(interv)(double *xt, int *n, double *x,
   return findInterval(xt, *n, *x, *rightmost_closed, *all_inside, *ilo, mflag);
 }
 
+/* In API header R_ext/Utils.h */
 int findInterval2(double *xt, int n, double x,
 		  Rboolean rightmost_closed, Rboolean all_inside,
 		  Rboolean left_open, // <- new in findInterval2()

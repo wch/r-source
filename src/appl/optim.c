@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1999-2014  The R Core Team
+ *  Copyright (C) 1999-2025  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -116,7 +116,7 @@ vmmin(int n0, double *b, double *Fmin, optimfn fminfn, optimgr fmingr,
       double abstol, double reltol, int nREPORT, void *ex,
       int *fncount, int *grcount, int *fail)
 {
-    Rboolean accpoint, enough;
+    bool accpoint, enough;
     double *g, *t, *X, *c, **B;
     int   count, funcount, gradcount;
     double f, gradproj;
@@ -174,7 +174,7 @@ vmmin(int n0, double *b, double *Fmin, optimfn fminfn, optimgr fmingr,
 
 	if (gradproj < 0.0) {	/* search direction is downhill */
 	    steplength = 1.0;
-	    accpoint = FALSE;
+	    accpoint = false;
 	    do {
 		count = 0;
 		for (i = 0; i < n; i++) {
@@ -272,7 +272,7 @@ void nmmin(int n, double *Bvec, double *X, double *Fmin, optimfn fminfn,
 {
     char action[50];
     int C;
-    Rboolean calcvert;
+    bool calcvert;
     double convtol, f;
     int funcount=0, H, i, j, L=0;
     int n1=0;
@@ -291,11 +291,11 @@ void nmmin(int n, double *Bvec, double *X, double *Fmin, optimfn fminfn,
     if (trace)
 	Rprintf("  Nelder-Mead direct search function minimizer\n");
     P = matrix(n, n+1);
-    *fail = FALSE;
+    *fail = false;
     f = fminfn(n, Bvec, ex);
     if (!R_FINITE(f)) {
 	error(_("function cannot be evaluated at initial parameters"));
-	*fail = TRUE;
+	*fail = true;
     } else {
 	if (trace) Rprintf("function value for initial parameters = %f\n", f);
 	funcount = 1;
@@ -330,7 +330,7 @@ void nmmin(int n, double *Bvec, double *X, double *Fmin, optimfn fminfn,
 	    size += trystep;
 	}
 	oldsize = size;
-	calcvert = TRUE;
+	calcvert = true;
 	do {
 	    if (calcvert) {
 		for (j = 0; j < n1; j++) {
@@ -343,7 +343,7 @@ void nmmin(int n, double *Bvec, double *X, double *Fmin, optimfn fminfn,
 			P[n1 - 1][j] = f;
 		    }
 		}
-		calcvert = FALSE;
+		calcvert = false;
 	    }
 
 	    VL = P[n1 - 1][L - 1];
@@ -427,7 +427,7 @@ void nmmin(int n, double *Bvec, double *X, double *Fmin, optimfn fminfn,
 		} else {
 		    if (VR >= VH) {
 			strcpy(action, "SHRINK         ");
-			calcvert = TRUE;
+			calcvert = true;
 			size = 0.0;
 			for (j = 0; j < n1; j++) {
 			    if (j + 1 != L) {
@@ -472,7 +472,7 @@ void cgmin(int n, double *Bvec, double *X, double *Fmin,
 	   double abstol, double intol, void *ex, int type, int trace,
 	   int *fncount, int *grcount, int maxit)
 {
-    Rboolean accpoint;
+    bool accpoint;
     double *c, *g, *t;
     int count, cycle, cyclimit;
     double f;
@@ -484,7 +484,7 @@ void cgmin(int n, double *Bvec, double *X, double *Fmin,
     if (maxit <= 0) {
 	*Fmin = fminfn(n, Bvec, ex);
 	*fncount = *grcount = 0;
-	*fail = FALSE;
+	*fail = false;
 	return;
     }
     if (trace) {
@@ -578,7 +578,7 @@ void cgmin(int n, double *Bvec, double *X, double *Fmin,
 		    }
 		    steplength = oldstep;
 
-		    accpoint = FALSE;
+		    accpoint = false;
 		    do {
 			count = 0;
 			for (i = 0; i < n; i++) {
