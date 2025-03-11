@@ -3311,7 +3311,9 @@ The ability to use translated messages makes use of @code{gettext} and
 most likely needs @acronym{GNU} @code{gettext}: you do need this to work
 with new translations, but otherwise the version of the @code{gettext}
 runtime contained in the R sources will be used if no suitable external
-@code{gettext} is found.
+@code{gettext} is found (possibly from @code{libc}) and @R{} was not
+configured with @option{--disable-nls}.  Use of the bundled
+@code{gettext} runtime is deprecated and will be reoved soon.
 
 @cindex Cairo
 @cindex @I{Pango}

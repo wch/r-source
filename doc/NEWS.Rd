@@ -313,11 +313,15 @@
 
       \item \code{getMethods(*, table = TRUE)} is deprecated.
 
-      \item Building with the bundled (and old) version of \code{libintl}
-      is deprecated and gives a \command{configure warning}.  Use
-      \code{libintl} from a recent version of GNU \I{gettext} instead.  (If
-      the OS's \code{libc} includes \code{libintl} that will be chosen
-      by \command{configure} -- \code{glibc} does.)
+      \item Building with the bundled (and old) version of
+      \code{libintl} is deprecated and now gives a \command{configure
+      warning}.  This should be selected only if neither the OS's
+      \code{libc} nor an external \code{libintl} library provide
+      suitable functions.
+
+      Instead install \code{libintl} from a recent version of GNU
+      \I{gettext} or use \command{configure} option
+      \option{--disable-nls}.
     }
   }
 
