@@ -1120,7 +1120,7 @@ GREATER_2_SUB_DEF(intdbl2greater,    int, double, icmp, rcmp)
  * to the API */
 
 // Usage:  R_orderVector(indx, n,  Rf_lang2(x,y),  nalast, decreasing)
-// API
+// In Rinternals.h
 void R_orderVector(int *indx, // must be pre-allocated to length >= n
 		   int n,
 		   SEXP arglist, // <- e.g.  Rf_lang2(x,y)
@@ -1133,7 +1133,7 @@ void R_orderVector(int *indx, // must be pre-allocated to length >= n
 }
 
 // Fast version of 1-argument case of R_orderVector()
-// API
+// In Rinternals.h
 void R_orderVector1(int *indx, int n, SEXP x,
 		    Rboolean nalast, Rboolean decreasing)
 {

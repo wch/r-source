@@ -991,6 +991,7 @@ void R_SetVarLocValue(R_varloc_t vl, SEXP value)
   symbol in this frame (FALSE).  This is used for get() and exists().
 */
 
+// In Rinternals.h
 SEXP findVarInFrame3(SEXP rho, SEXP symbol, Rboolean doGet)
 {
     int hashcode;
@@ -2280,6 +2281,7 @@ attribute_hidden SEXP do_mget(SEXP call, SEXP op, SEXP args, SEXP rho)
     return(ans);
 }
 
+// In Rinternals.h
 SEXP R_getVarEx(SEXP sym, SEXP rho, Rboolean inherits, SEXP ifnotfound)
 {
     if (TYPEOF(sym) != SYMSXP)
@@ -2300,6 +2302,7 @@ SEXP R_getVarEx(SEXP sym, SEXP rho, Rboolean inherits, SEXP ifnotfound)
     return val;
 }
 
+// In Rinternals.h
 SEXP R_getVar(SEXP sym, SEXP rho, Rboolean inherits)
 {
     SEXP val = R_getVarEx(sym, rho, inherits, R_UnboundValue);
@@ -2940,6 +2943,7 @@ attribute_hidden SEXP do_ls(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 /* takes an environment, a boolean indicating whether to get all
    names and a boolean if sorted is desired */
+// In Rinternals.h
 SEXP R_lsInternal3(SEXP env, Rboolean all, Rboolean sorted)
 {
     if(IS_USER_DATABASE(env)) {
@@ -2980,6 +2984,7 @@ SEXP R_lsInternal3(SEXP env, Rboolean all, Rboolean sorted)
 }
 
 /* non-API version used in several packages */
+// in Rinternals.h
 SEXP R_lsInternal(SEXP env, Rboolean all)
 {
     return R_lsInternal3(env, all, TRUE);

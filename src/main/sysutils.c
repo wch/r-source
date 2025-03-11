@@ -951,12 +951,14 @@ cetype_t getCharCE(SEXP x)
     else return CE_NATIVE;
 }
 
+// In Rinternals.h
 Rboolean charIsASCII(SEXP x)
 {
     CHECK_CHARSXP(x);
     return IS_ASCII(x) ? TRUE : FALSE;
 }
 
+// In Rinternals.h
 Rboolean charIsUTF8(SEXP x)
 {
     CHECK_CHARSXP(x);
@@ -966,6 +968,7 @@ Rboolean charIsUTF8(SEXP x)
     return TRUE;
 }
 
+// In Rinternals.h
 Rboolean charIsLatin1(SEXP x)
 {
     CHECK_CHARSXP(x);

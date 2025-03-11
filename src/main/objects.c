@@ -1835,12 +1835,13 @@ SEXP R_get_primname(SEXP object)
 }
 #endif
 
-
+// in Rinternals.h
 Rboolean isS4(SEXP s)
 {
     return IS_S4_OBJECT(s);
 }
 
+// in Rinternals.h
 SEXP asS4(SEXP s, Rboolean flag, int complete)
 {
     if(flag == IS_S4_OBJECT(s))

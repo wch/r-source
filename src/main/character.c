@@ -157,6 +157,7 @@ attribute_hidden SEXP do_nzchar(SEXP call, SEXP op, SEXP args, SEXP env)
        -2 ... the quantity is not computable (bytes encoding)
      semi-internal buffer cbuff is never freed, should be freed by caller
 */
+// in Rinternals.h
 int R_nchar(SEXP string, nchar_type type_,
 	    Rboolean allowNA, Rboolean keepNA, const char* msg_name)
 {

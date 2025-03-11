@@ -861,6 +861,7 @@ static SEXP Duplicated(SEXP x, Rboolean from_last, int nmax)
     return ans;
 }
 
+//In Rinternals.h
 attribute_hidden R_xlen_t sorted_any_duplicated(SEXP x, Rboolean from_last) {
     int itmp, sorted;
     double rtmp;
@@ -977,6 +978,7 @@ attribute_hidden R_xlen_t sorted_any_duplicated(SEXP x, Rboolean from_last) {
 #undef SORTED_ANYDUP_NANS
 
 /* simpler version of the above : return 1-based index of first, or 0 : */
+// In Rinternals.h
 R_xlen_t any_duplicated(SEXP x, Rboolean from_last)
 {
     R_xlen_t result = 0;

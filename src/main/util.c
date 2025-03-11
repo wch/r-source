@@ -181,6 +181,7 @@ SEXP asChar(SEXP x)
     return NA_STRING;
 }
 
+// In Rinternals.h
 Rboolean isUnordered(SEXP s)
 {
     return (TYPEOF(s) == INTSXP
@@ -188,6 +189,7 @@ Rboolean isUnordered(SEXP s)
 	    && !inherits(s, "ordered"));
 }
 
+// In Rinternals.h
 Rboolean isOrdered(SEXP s)
 {
     return (TYPEOF(s) == INTSXP
@@ -195,6 +197,7 @@ Rboolean isOrdered(SEXP s)
 	    && inherits(s, "ordered"));
 }
 
+// In Rinternals.h
 Rboolean R_isTRUE(SEXP x)
 {
     if (TYPEOF(x) == LGLSXP && XLENGTH(x) == 1) {
@@ -448,7 +451,7 @@ size_t mbcsToUcs2(const char *in, R_ucs2_t *out, int nout, int enc)
 
 #include <wctype.h>
 
-// non-API put used in the internet module and in packages
+// non-API but used in the internet module and in packages
 Rboolean isBlankString(const char *s)
 {
     if(mbcslocale) {
@@ -465,6 +468,7 @@ Rboolean isBlankString(const char *s)
     return TRUE;
 }
 
+// in Rinternals.h
 Rboolean StringBlank(SEXP x)
 {
     if (x == R_NilValue) return TRUE;

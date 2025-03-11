@@ -46,6 +46,7 @@
 
 
 /* used in subscript.c and subassign.c */
+// In Rinternals.h
 Rboolean NonNullStringMatch(SEXP s, SEXP t)
 {
     /* "" or NA string matches nothing */
