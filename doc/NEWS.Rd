@@ -715,6 +715,8 @@
       values of their logical arguments as \code{FALSE}, but these were
       almost always mismatches to unnamed arguments and are now reported
       as \code{NA}.
+
+      \item \code{vignette("reshape")} is now also available on Windows.
     }
   }
 }
