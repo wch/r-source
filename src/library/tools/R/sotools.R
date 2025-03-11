@@ -965,6 +965,16 @@ if(.Platform$OS.type == "windows") {
         if(!length(so_files)) return(invisible(NULL)) # typically a fake install
 
         bad <- Filter(length, lapply(so_files, check_so_symbols))
+        ## Allow experimenting with finding bad symbols not in
+        ## symbols.rds, likely from following the "best approach" from
+        ## section "Compiling in sub-directories" of WRE and compiling
+        ## code in subdirs into static libraries instead of adding to
+        ## OBJECTS. 
+        ## See PR#18789 <https://bugs.r-project.org/show_bug.cgi?id=18789>,
+        ## "R CMD check does not check symbol tables of linked static
+        ## libraries".
+        if(config_val_to_logical(Sys.getenv("_R_CHECK_COMPILED_CODE_USE_OBJECTS_SYMBOL_TABLES_",
+                                    "TRUE"))) {
         objects_symbol_tables_file <- if(nzchar(r_arch))
             file.path(dir, "libs", r_arch, "symbols.rds")
         else file.path(dir, "libs", "symbols.rds")
@@ -973,6 +983,7 @@ if(.Platform$OS.type == "windows") {
             bad <- Filter(length, lapply(bad, compare))
         } else if(useST)
             cat("Note: information on .o files is not available\n")
+        }
         nAPIs <- lapply(lapply(so_files, check_so_symbols),
                         function(x) if(length(z <- attr(x, "nonAPI")))
                         structure(z,
