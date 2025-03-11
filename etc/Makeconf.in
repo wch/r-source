@@ -99,9 +99,7 @@ LIBM = @LIBM@
 LIBR0 = @LIBR0@
 LIBR1 = @LIBR1@
 LIBR = @LIBR0@ @LIBR1@
-## FIXME: LIBS is approporiate for building R,
-## but not for packages if static libs are used.
-LIBS = @LIBS@
+LIBS = @LIBS_PKGS@
 ## needed by R CMD config
 LIBnn = @LIBnn@
 LIBTOOL = $(SHELL) "$(R_HOME)/bin/libtool"

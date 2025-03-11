@@ -2928,8 +2928,8 @@ if test "${USE_NLS}" = "yes"; then
   if test -n "$INTL_MACOSX_LIBS"; then
 dnl This is no longer valid (if it ever was)
 dnl    XTRA_INTL_CPPFLAGS=-I/System/Library/Frameworks/CoreFoundation.framework/Headers
-dnl On a macOS build which uses static libraries, libintk_dgettext
-dnl etc are provided by libR.dylib
+dnl On a macOS build which uses static libraries, libintl_dgettext
+dnl etc are provided by libR.dylib.
      LIBINTL_PKGS=
    else
      LIBINTL_PKGS=${LIBINTL}
@@ -3161,6 +3161,18 @@ CPPFLAGS=${CPPFLAGS_KEEP}
 CFLAGS=${CFLAGS_KEEP}
 FFLAGS=${FFLAGS_KEEP}
 CXXFLAGS=${CXXFLAGS_KEEP}
+
+## allow different LIBS in etc/Makeconf
+   LIBS_PKGS=${LIBS}
+case "${host_os}" in
+   darwin*)
+   ## This will usually include -lpcre2-8 -ldeflate -lzstd -llzma all
+   ## of which are static and not part of a binary distribution, so we
+   ## strip them.  This is macOS, so could use sed -E (which is POSIX)
+   LIBS_PKGS=`echo ${LIBS} | sed s/\ -lpcre2-8// | sed s/\ -ldeflate// | sed s/\ -lzstd// | sed s/\ -llzma//`
+   ;;
+esac
+AC_SUBST(LIBS_PKGS)
 
 AC_OUTPUT
 

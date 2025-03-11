@@ -656,6 +656,7 @@ gt_needs=
 ac_func_c_list=
 enable_year2038=no
 ac_subst_vars='LTLIBOBJS
+LIBS_PKGS
 FC_VER
 REC_INSTALL_OPT
 CC_VER
@@ -27549,7 +27550,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_verb"
-(eval echo $as_me:27552: \"$ac_link\") >&5
+(eval echo $as_me:27553: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -27627,7 +27628,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_cv_prog_c_v"
-(eval echo $as_me:27630: \"$ac_link\") >&5
+(eval echo $as_me:27631: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -63977,6 +63978,18 @@ CPPFLAGS=${CPPFLAGS_KEEP}
 CFLAGS=${CFLAGS_KEEP}
 FFLAGS=${FFLAGS_KEEP}
 CXXFLAGS=${CXXFLAGS_KEEP}
+
+## allow different LIBS in etc/Makeconf
+   LIBS_PKGS=${LIBS}
+case "${host_os}" in
+   darwin*)
+   ## This will usually include -lpcre2-8 -ldeflate -lzstd -llzma all
+   ## of which are static and not part of a binary distribution, so we
+   ## strip them.  This is macOS, so could use sed -E (which is POSIX)
+   LIBS_PKGS=`echo ${LIBS} | sed s/\ -lpcre2-8// | sed s/\ -ldeflate// | sed s/\ -lzstd// | sed s/\ -llzma//`
+   ;;
+esac
+
 
 cat >confcache <<\_ACEOF
 # This file is a shell script that caches the results of configure
