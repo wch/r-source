@@ -448,7 +448,7 @@ size_t mbcsToUcs2(const char *in, R_ucs2_t *out, int nout, int enc)
 
 #include <wctype.h>
 
-/* This one is not in Rinternals.h, but is used in internet module */
+// non-API put used in the internet module and in packages
 Rboolean isBlankString(const char *s)
 {
     if(mbcslocale) {
@@ -473,6 +473,7 @@ Rboolean StringBlank(SEXP x)
 
 /* Function to test whether a string is a true value */
 
+// non-API but used in packages
 Rboolean StringTrue(const char *name)
 {
     int i;
@@ -482,6 +483,7 @@ Rboolean StringTrue(const char *name)
     return FALSE;
 }
 
+// non-API but used in packages
 Rboolean StringFalse(const char *name)
 {
     int i;
