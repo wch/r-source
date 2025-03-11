@@ -281,8 +281,9 @@
       \file{config.site}.
 
       \item \command{configure} is now able to find an external
-      \code{libintl} on macOS (it failed to try linking with the macOS
-      Core Foundation framework).
+      \code{libintl} on macOS (the code from an older GNU gettext
+      distribution failed to try linking with the macOS Core Foundation
+      framework).
     }
   }
 
