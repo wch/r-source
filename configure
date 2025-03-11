@@ -63698,7 +63698,7 @@ printf "%s\n" "#define HAVE_DCGETTEXT 1" >>confdefs.h
   if test -n "$INTL_MACOSX_LIBS"; then
      LIBINTL_PKGS=
    else
-     LIBINTL_PKGS=$(LIBINTL)
+     LIBINTL_PKGS=${LIBINTL}
   fi
   echo "Finished configuring src/extra/intl directory"
   echo

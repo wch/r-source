@@ -2932,7 +2932,7 @@ dnl On a macOS build which uses static libraries, libintk_dgettext
 dnl etc are provided by libR.dylib
      LIBINTL_PKGS=
    else
-     LIBINTL_PKGS=$(LIBINTL)
+     LIBINTL_PKGS=${LIBINTL}
   fi
   echo "Finished configuring src/extra/intl directory"
   echo
