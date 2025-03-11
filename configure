@@ -667,7 +667,7 @@ BUILD_LIBINTL_FALSE
 BUILD_LIBINTL_TRUE
 USE_NLS_FALSE
 USE_NLS_TRUE
-LIBINTL_PKGS
+XTRA_INTL_CPPFLAGS
 POSUB
 LTLIBINTL
 LIBINTL
@@ -63696,9 +63696,7 @@ printf "%s\n" "#define HAVE_DCGETTEXT 1" >>confdefs.h
 
 
   if test -n "$INTL_MACOSX_LIBS"; then
-     LIBINTL_PKGS =
-   else
-     LIBINTL_PKGS = $(LIBINTL)
+    XTRA_INTL_CPPFLAGS=-I/System/Library/Frameworks/CoreFoundation.framework/Headers
   fi
   echo "Finished configuring src/extra/intl directory"
   echo
