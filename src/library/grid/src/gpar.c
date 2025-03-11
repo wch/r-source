@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 2001-3 Paul Murrell
- *                2003-2014 The R Core Team
+ *                2003-2025 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -300,7 +300,7 @@ static SEXP unresolveFill(SEXP pattern)
     return result;
 }
 
-SEXP resolveGPar(SEXP gp, Rboolean byName) 
+SEXP resolveGPar(SEXP gp, bool byName) 
 {
     SEXP result = R_NilValue;
     SEXP fill;

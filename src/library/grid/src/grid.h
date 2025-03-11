@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 2001-3 Paul Murrell
- *                2003-2019 The R Core Team
+ *                2003-2025 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -520,7 +520,7 @@ SEXP gpFontSizeSXP(SEXP gp);
 
 SEXP gpLineHeightSXP(SEXP gp);
 
-SEXP resolveGPar(SEXP gp, Rboolean byName);
+SEXP resolveGPar(SEXP gp, bool byName);
 
 void gcontextFromgpar(SEXP gp, int i, const pGEcontext gc, pGEDevDesc dd);
 void initGContext(SEXP gp, const pGEcontext gc, pGEDevDesc dd, int* gpIsScalar, 
@@ -531,12 +531,12 @@ void updateGContext(SEXP gp, int i, const pGEcontext gc, pGEDevDesc dd,
 void initGPar(pGEDevDesc dd);
 
 /* From clippath.c */
-Rboolean isClipPath(SEXP clip);
+bool isClipPath(SEXP clip);
 
 SEXP resolveClipPath(SEXP path, pGEDevDesc dd);
 
 /* From mask.c */
-Rboolean isMask(SEXP mask);
+bool isMask(SEXP mask);
 
 SEXP resolveMask(SEXP mask, pGEDevDesc dd);
 
@@ -563,7 +563,7 @@ SEXP viewportClipSXP(SEXP vp);
 int viewportClip(SEXP vp);
 
 SEXP viewportMaskSXP(SEXP vp);
-Rboolean viewportMask(SEXP vp);
+bool viewportMask(SEXP vp);
 
 SEXP viewportClipRect(SEXP vp);
 
@@ -613,13 +613,13 @@ void copyViewportContext(LViewportContext vpc1, LViewportContext *vpc2);
 
 void gcontextFromViewport(SEXP vp, const pGEcontext gc, pGEDevDesc dd);
 
-void calcViewportTransform(SEXP vp, SEXP parent, Rboolean incremental,
+void calcViewportTransform(SEXP vp, SEXP parent, bool incremental,
 			   pGEDevDesc dd);
 
 void initVP(pGEDevDesc dd);
 
 /* From layout.c */
-Rboolean checkPosRowPosCol(SEXP viewport, SEXP parent);
+bool checkPosRowPosCol(SEXP viewport, SEXP parent);
 
 void calcViewportLayout(SEXP viewport,
 			double parentWidthCM,
@@ -647,8 +647,8 @@ extern int gridRegisterIndex;
 
 /* From grid.c */
 SEXP doSetViewport(SEXP vp, 
-		   Rboolean topLevelVP,
-		   Rboolean pushing,
+		   bool topLevelVP,
+		   bool pushing,
 		   pGEDevDesc dd);
 
 void getDeviceSize(pGEDevDesc dd, double *devWidthCM, double *devHeightCM); 

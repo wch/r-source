@@ -55,9 +55,9 @@ double layoutVJust(SEXP l) {
     return REAL(VECTOR_ELT(l, LAYOUT_VJUST))[1];
 }
 
-Rboolean relativeUnit(SEXP unit, int index,
+bool relativeUnit(SEXP unit, int index,
 		   pGEDevDesc dd) {
-    return (Rboolean) pureNullUnit(unit, index, dd);
+    return (bool) pureNullUnit(unit, index, dd);
 }
 
 void findRelWidths(SEXP layout, int *relativeWidths,
@@ -478,7 +478,7 @@ static void subRegion(SEXP layout,
     */
 }
 
-Rboolean allocationRemaining(double initial, double remaining)
+bool allocationRemaining(double initial, double remaining)
 {
     if (initial == 0) {
         return TRUE;
@@ -590,7 +590,7 @@ void calcViewportLayout(SEXP viewport,
     UNPROTECT(2);
 }
 
-Rboolean checkPosRowPosCol(SEXP vp, SEXP parent) 
+bool checkPosRowPosCol(SEXP vp, SEXP parent) 
 {
     int ncol = layoutNCol(viewportLayout(parent));
     int nrow = layoutNRow(viewportLayout(parent));

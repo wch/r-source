@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001-2022 The R Core Team
+ *  Copyright (C) 2001-2025 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
  * info is a "RGlyphInfo"
  */
 static void renderGlyphs(SEXP runs, SEXP glyphInfo, SEXP x, SEXP y, 
-                         Rboolean draw) 
+                         bool draw) 
 {
     int i, n, nruns = LENGTH(runs);
     double *gx, *gy;

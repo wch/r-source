@@ -344,7 +344,7 @@ double evaluateGrobUnit(double value, SEXP grob,
     SEXP savedgpar, savedgrob, updatedgrob;
     SEXP unitx = R_NilValue, unity = R_NilValue;
     double result = 0.0;
-    Rboolean protectedGrob = FALSE;
+    bool protectedGrob = false;
     /*
      * We are just doing calculations, not drawing, so
      * we don't want anything recorded on the graphics engine DL
