@@ -875,7 +875,7 @@ attribute_hidden void unbindVar(SEXP symbol, SEXP rho)
   Callers set *canCache = TRUE or NULL
 */
 
-static SEXP findVarLocInFrame(SEXP rho, SEXP symbol, Rboolean *canCache)
+static SEXP findVarLocInFrame(SEXP rho, SEXP symbol, bool *canCache)
 {
     int hashcode;
     SEXP frame, c;
@@ -1183,7 +1183,7 @@ slowpath:
 static SEXP findGlobalVarLoc(SEXP symbol)
 {
     SEXP vl, rho;
-    Rboolean canCache = TRUE;
+    bool canCache = TRUE;
     vl = R_GetGlobalCacheLoc(symbol);
     if (vl != R_UnboundValue)
 	return vl;
