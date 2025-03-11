@@ -100,7 +100,7 @@ LIBR0 = @LIBR0@
 LIBR1 = @LIBR1@
 LIBR = @LIBR0@ @LIBR1@
 ## FIXME: LIBS is approporiate for building R,
-## but not for packages if static libse are used.
+## but not for packages if static libs are used.
 LIBS = @LIBS@
 ## needed by R CMD config
 LIBnn = @LIBnn@

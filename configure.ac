@@ -2930,9 +2930,9 @@ dnl This is no longer valid (if it ever was)
 dnl    XTRA_INTL_CPPFLAGS=-I/System/Library/Frameworks/CoreFoundation.framework/Headers
 dnl On a macOS build which uses static libraries, libintk_dgettext
 dnl etc are provided by libR.dylib
-     LIBINTL_PKGS =
+     LIBINTL_PKGS=
    else
-     LIBINTL_PKGS = $(LIBINTL)
+     LIBINTL_PKGS=$(LIBINTL)
   fi
   echo "Finished configuring src/extra/intl directory"
   echo
