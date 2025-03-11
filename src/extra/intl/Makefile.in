@@ -39,7 +39,7 @@ noinst_LIBRARIES = libintl.a
 # and unused in R.
 DEFS=-DLOCALEDIR=\"\" -DLOCALEALIAS_PATH=\"\" -DIN_LIBINTL @DEFS@
 
-ALL_CPPFLAGS=$(R_XTRA_CPPFLAGS) -I$(srcdir) $(CPPFLAGS) $(DEFS) @XTRA_INTL_CPPFLAGS@
+ALL_CPPFLAGS=$(R_XTRA_CPPFLAGS) -I$(srcdir) $(CPPFLAGS) $(DEFS)
 
 R all: all-@USE_INCLUDED_LIBINTL@
 all-yes: Makefile 
