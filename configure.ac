@@ -2926,14 +2926,21 @@ if test "${USE_NLS}" = "yes"; then
   AM_GNU_GETTEXT_VERSION(0.16.1)
   AM_GNU_GETTEXT([no-libtool], [need-ngettext], [../extra/intl])
   if test -n "$INTL_MACOSX_LIBS"; then
-    XTRA_INTL_CPPFLAGS=-I/System/Library/Frameworks/CoreFoundation.framework/Headers
+dnl This is no longer valid (if it ever was)
+dnl    XTRA_INTL_CPPFLAGS=-I/System/Library/Frameworks/CoreFoundation.framework/Headers
+dnl On a macOS build which uses static libraries, libintk_dgettext
+dnl etc are provided by libR.dylib
+     LIBINTL_PKGS =
+   else
+     LIBINTL_PKGS = $(LIBINTL)
   fi
   echo "Finished configuring src/extra/intl directory"
   echo
 else
   USE_INCLUDED_LIBINTL=no
 fi
-AC_SUBST(XTRA_INTL_CPPFLAGS)
+dnl AC_SUBST(XTRA_INTL_CPPFLAGS)
+AC_SUBST(LIBINTL_PKGS)
 
 AM_CONDITIONAL(USE_NLS, [test "x${USE_NLS}" = xyes])
 AM_CONDITIONAL(BUILD_LIBINTL, [test "x${USE_INCLUDED_LIBINTL}" = xyes])

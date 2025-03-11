@@ -92,12 +92,15 @@ JAVA_LIBS = @JAVA_LIBS0@
 JAVA_LD_LIBRARY_PATH = @JAVA_LD_LIBRARY_PATH@
 LAPACK_LIBS = @LAPACK_LIBS@
 LDFLAGS = @LDFLAGS@
-## we only need this is if it is external, as otherwise link to R
-LIBINTL= @LIBINTL@
+## We only need this is if it is external, as otherwise link to R
+## Oo macOS, where libintl is static and so compiled in, can still link to R
+LIBINTL = @LIBINTL_PKGS@
 LIBM = @LIBM@
 LIBR0 = @LIBR0@
 LIBR1 = @LIBR1@
 LIBR = @LIBR0@ @LIBR1@
+## FIXME: LIBS is approporiate for building R,
+## but not for packages if static libse are used.
 LIBS = @LIBS@
 ## needed by R CMD config
 LIBnn = @LIBnn@
