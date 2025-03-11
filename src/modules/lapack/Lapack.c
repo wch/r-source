@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001--2023  The R Core Team.
+ *  Copyright (C) 2001--2025  The R Core Team.
  *  Copyright (C) 2003--2010  The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -263,7 +263,7 @@ static SEXP unscramble(const double* imaginary, int n,
 /* Real, general case of eigen */
 static SEXP La_rg(SEXP x, SEXP only_values)
 {
-    Rboolean vectors, complexValues;
+    bool vectors, complexValues;
     int i, n, lwork, info, *xdims, ov;
     double *work, *wR, *wI, *left, *right, *xvals, tmp;
     char jobVL[2] = "N", jobVR[2] = "N";
@@ -306,11 +306,11 @@ static SEXP La_rg(SEXP x, SEXP only_values)
     if (info != 0)
 	error(_("error code %d from Lapack routine '%s'"), info, "dgeev");
 
-    complexValues = FALSE;
+    complexValues = false;
     for (i = 0; i < n; i++)
 	/* This test used to be !=0 for R < 2.3.0.  This is OK for 0+0i */
 	if (fabs(wI[i]) >  10 * R_AccuracyInfo.eps * fabs(wR[i])) {
-	    complexValues = TRUE;
+	    complexValues = true;
 	    break;
 	}
     SEXP ret = PROTECT(allocVector(VECSXP, 2));
