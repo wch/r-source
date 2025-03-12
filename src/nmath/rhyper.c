@@ -86,7 +86,7 @@ double rhyper(double nn1in, double nn2in, double kkin)
 
     int nn1, nn2, kk;
     int ix; // return value (coerced to double at the very end)
-    Rboolean setup1, setup2;
+    bool setup1, setup2;
 
     /* These should become 'thread_local globals' : */
     static int ks = -1, n1s = -1, n2s = -1;
@@ -120,8 +120,8 @@ double rhyper(double nn1in, double nn2in, double kkin)
 	}
 	// Slow, but safe: return  F^{-1}(U)  where F(.) = phyper(.) and  U ~ U[0,1]
 	return qhyper(unif_rand(), nn1in, nn2in, kkin,
-		      /*lower_tail =*/ FALSE, /*log_p = */ FALSE);
-	// lower_tail=FALSE: a thinko, is still "correct" as equiv. to  U <--> 1-U
+		      /*lower_tail =*/ false, /*log_p = */ false);
+	// lower_tail=false: a thinko, is still "correct" as equiv. to  U <--> 1-U
     }
     nn1 = (int)nn1in;
     nn2 = (int)nn2in;
@@ -129,11 +129,11 @@ double rhyper(double nn1in, double nn2in, double kkin)
 
     /* if new parameter values, initialize */
     if (nn1 != n1s || nn2 != n2s) { // n1 | n2 is changed: setup all
-	setup1 = TRUE;	setup2 = TRUE;
+	setup1 = true;	setup2 = true;
     } else if (kk != ks) { // n1 & n2 are unchanged: setup 'k' only
-	setup1 = FALSE;	setup2 = TRUE;
+	setup1 = false;	setup2 = true;
     } else { // all three unchanged ==> no setup
-	setup1 = FALSE;	setup2 = FALSE;
+	setup1 = false;	setup2 = false;
     }
     if (setup1) { // n1 & n2
 	n1s = nn1; n2s = nn2; // save
@@ -269,7 +269,7 @@ double rhyper(double nn1in, double nn2in, double kkin)
 	}
 
 	/* acceptance/rejection test */
-	Rboolean reject = TRUE;
+	bool reject = true;
 
 	if (m < 100 || ix <= 50) {
 	    /* explicit evaluation */
@@ -288,7 +288,7 @@ double rhyper(double nn1in, double nn2in, double kkin)
 		    f = f * i * (n2 - k + i) / (n1 - i + 1) / (k - i + 1);
 	    }
 	    if (v <= f) {
-		reject = FALSE;
+		reject = false;
 	    }
 	} else {
 
@@ -331,7 +331,7 @@ double rhyper(double nn1in, double nn2in, double kkin)
 	    /* test against upper bound */
 	    alv = log(v);
 	    if (alv > ub) {
-		reject = TRUE;
+		reject = true;
 	    } else {
 				/* test against lower bound */
 		dr = xm * (r * r * r * r);
@@ -348,16 +348,16 @@ double rhyper(double nn1in, double nn2in, double kkin)
 		    de /= (1.0 + e);
 		if (alv < ub - 0.25 * (dr + ds + dt + de)
 		    + (y + m) * (gl - gu) - deltal) {
-		    reject = FALSE;
+		    reject = false;
 		}
 		else {
 		    /* * Stirling's formula to machine accuracy
 		     */
 		    if (alv <= (a - afc(ix) - afc(n1 - ix)
 				- afc(k - ix) - afc(n2 - k + ix))) {
-			reject = FALSE;
+			reject = false;
 		    } else {
-			reject = TRUE;
+			reject = true;
 		    }
 		}
 	    }

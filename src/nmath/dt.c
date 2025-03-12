@@ -51,7 +51,7 @@ double dt(double x, double n, int give_log)
 	x2n = x*x/n, // in  [0, Inf]
 	ax = 0., // <- -Wpedantic
 	l_x2n; // := log(sqrt(1 + x2n)) = log(1 + x2n)/2
-    Rboolean lrg_x2n =  (x2n > 1./DBL_EPSILON);
+    bool lrg_x2n =  (x2n > 1./DBL_EPSILON);
     if (lrg_x2n) { // large x^2/n :
 	ax = fabs(x);
 	l_x2n = log(ax) - log(n)/2.; // = log(x2n)/2 = 1/2 * log(x^2 / n)

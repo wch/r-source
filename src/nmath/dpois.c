@@ -59,7 +59,7 @@ double dpois_raw(double x, double lambda, int give_log)
     double yh, yl;
     ebd0 (x, lambda, &yh, &yl);
     yl += stirlerr(x);
-    Rboolean Lrg_x = (x >= x_LRG); //really large x  <==>  2*pi*x  overflows
+    bool Lrg_x = (x >= x_LRG); //really large x  <==>  2*pi*x  overflows
     double r = Lrg_x
 	? M_SQRT_2PI * sqrt(x) // sqrt(.): avoid overflow for very large x
 	: M_2PI * x;

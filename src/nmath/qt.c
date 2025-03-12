@@ -101,7 +101,7 @@ double qt(double p, double ndf, int lower_tail, int log_p)
 
     P = R_D_qIv(p); /* if exp(p) underflows, we fix below */
 
-    Rboolean neg = (!lower_tail || P < 0.5) && (lower_tail || P > 0.5),
+    bool neg = (!lower_tail || P < 0.5) && (lower_tail || P > 0.5),
 	is_neg_lower = (lower_tail == neg); /* both TRUE or FALSE == !xor */
     if(neg)
 	P = 2 * (log_p ? (lower_tail ? P : -expm1(p)) : R_D_Lval(p));
@@ -143,7 +143,7 @@ double qt(double p, double ndf, int lower_tail, int log_p)
 	    b = 48 / (a * a),
 	    c = ((20700 * a / b - 98) * a - 16) * a + 96.36,
 	    d = ((94.5 / (b + c) - 3) / b + 1) * sqrt(a * M_PI_2) * ndf;
-	Rboolean
+	bool
 	    P_ok1 = P > DBL_MIN || !log_p,
 	    P_ok  = P_ok1; // when true (after check below), use "normal scale": log_p=FALSE
 	if(P_ok1) {

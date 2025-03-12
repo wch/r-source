@@ -60,7 +60,7 @@
 
 static double DO_SEARCH_FUN(_dist_PARS_DECL_)
 {
-    Rboolean left = (lower_tail ? (*z >= p) : (*z < p));
+    bool left = (lower_tail ? (*z >= p) : (*z < p));
     R_DBG_printf(" do_search(y=%g, z=%15.10g %s p = %15.10g) --> search to %s",
 		 y, *z, (lower_tail ? ">=" : "<"), p, (left ? "left" : "right"));
     if(incr > 1)
