@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997--2024  The R Core Team
+ *  Copyright (C) 1997--2025  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -81,7 +81,7 @@ static FILE *ifp = NULL;
 static char *ifile = NULL;
 
 UImode  CharacterMode = RGui; /* some compilers want initialized for export */
-Rboolean EmitEmbeddedUTF8 = FALSE;
+int EmitEmbeddedUTF8 = FALSE;
 int ConsoleAcceptCmd;
 Rboolean set_workspace_name(const char *fn); /* ../main/startup.c */
 
