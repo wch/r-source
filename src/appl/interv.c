@@ -40,7 +40,11 @@ int F77_SUB(interv)(double *xt, int *n, double *x,
 		    int *rightmost_closed, int *all_inside,
 		    int *ilo, int *mflag)
 {
-  return findInterval(xt, *n, *x, *rightmost_closed, *all_inside, *ilo, mflag);
+    // This has an int return value which is ignored here
+    return findInterval(xt, *n, *x,
+			(Rboolean) *rightmost_closed,
+			(Rboolean) *all_inside,
+			*ilo, mflag);
 }
 
 /* In API header R_ext/Utils.h */
