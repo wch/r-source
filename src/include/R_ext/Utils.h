@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998-2024    The R Core Team
+ *  Copyright (C) 1998-2025    The R Core Team
  *
  *  This header file is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -107,7 +107,7 @@ void R_CheckStack(void);
 void R_CheckStack2(R_SIZE_T);
 
 
-/* ../../appl/interv.c: first also in Applic.h 
+/* ../../appl/interv.c: first and also in Applic.h 
    Both are API
 */
 int findInterval(double *xt, int n, double x,
@@ -116,11 +116,15 @@ int findInterval(double *xt, int n, double x,
 int findInterval2(double *xt, int n, double x,
 		  Rboolean rightmost_closed,  Rboolean all_inside, Rboolean left_open,
 		  int ilo, int *mflag);
+/* Removed in 4.5.0
 #ifdef R_RS_H
+// Was Rboolean*, but that is not possible in Fortran.
 int F77_SUB(interv)(double *xt, int *n, double *x,
-		    Rboolean *rightmost_closed, Rboolean *all_inside,
+		    int *rightmost_closed, int *all_inside,
 		    int *ilo, int *mflag);
 #endif
+*/
+ 
 /* not API, no longer in R
 void find_interv_vec(double *xt, int *n,	double *x,   int *nx,
 		     int *rightmost_closed, int *all_inside, int *indx);

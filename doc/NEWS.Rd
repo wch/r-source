@@ -418,6 +418,11 @@
       \item Header \file{R_exts/Error.h} now ensures that
       \code{Rf_error} and similar are given a \code{noreturn}
       attribute when used from C++ under all compilers.
+
+      \item Header \file{R_exts/Utils.h} no longer contains a
+      declaration for \code{77_SUB(interv)}.  This is intended to be
+      called from Fortran and was wrongly declared: \code{LOGICAL} in
+      Fortran corresponds to \code{int *} not \code{Rboolean *}.
     }
   }
 
