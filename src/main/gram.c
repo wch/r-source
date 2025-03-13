@@ -111,7 +111,7 @@
 #define PARSE_ERROR_SIZE 256	    /* Parse error messages saved here */
 #define PARSE_CONTEXT_SIZE 256	    /* Recent parse context kept in a circular buffer */
 
-static bool busy = false;
+static Rboolean busy = FALSE;
 static SEXP R_NullSymbol = NULL;
 
 static int identifier ;
@@ -254,12 +254,12 @@ static SEXP	NewList(void);
 static void	NextArg(SEXP, SEXP, SEXP); /* add named element to list end */
 static SEXP	TagArg(SEXP, SEXP, YYLTYPE *);
 static int 	processLineDirective(int *);
-static bool     checkForPlaceholder(SEXP placeholder, SEXP arg);
+static bool      checkForPlaceholder(SEXP placeholder, SEXP arg);
 
-static int HavePlaceholder = FALSE; // could be bool
+static int HavePlaceholder = FALSE; 
 attribute_hidden SEXP R_PlaceholderToken = NULL;
 
-static int HavePipeBind = FALSE; // could be bool
+static int HavePipeBind = FALSE; 
 static SEXP R_PipeBindSymbol = NULL;
 
 /* These routines allocate constants */

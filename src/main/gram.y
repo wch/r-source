@@ -186,7 +186,7 @@ static SEXP	NewList(void);
 static void	NextArg(SEXP, SEXP, SEXP); /* add named element to list end */
 static SEXP	TagArg(SEXP, SEXP, YYLTYPE *);
 static int 	processLineDirective(int *);
-static int      checkForPlaceholder(SEXP placeholder, SEXP arg);
+static bool      checkForPlaceholder(SEXP placeholder, SEXP arg);
 
 static int HavePlaceholder = FALSE; 
 attribute_hidden SEXP R_PlaceholderToken = NULL;
