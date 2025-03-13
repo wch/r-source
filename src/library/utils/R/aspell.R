@@ -1285,7 +1285,7 @@ function(x, vrbs = c("verbatim", "verbatim*", "Sinput", "Soutput"),
                        
     recurse <- function(e) {
         tag <- ltxtag(e)
-        if((tag == "VERB") ||
+        if((tag == "VERB") || (tag == "DEFINITION") ||
            ((tag == "ENVIRONMENT") && e[[1L]] %in% envs))
             ranges <<- c(ranges, list(chrran(e)))
         else if(is.list(e)) {
