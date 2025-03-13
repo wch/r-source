@@ -316,12 +316,14 @@
       \item Building with the bundled (and old) version of
       \code{libintl} is deprecated and now gives a \command{configure
       warning}.  This should be selected only if neither the OS's
-      \code{libc} nor an external \code{libintl} library provide
-      suitable functions.
+      \code{libc} (as on GNU Linux) nor an external \code{libintl}
+      library (as on Alpine Linux) provide suitable functions.
 
       Instead install \code{libintl} from a recent version of GNU
       \I{gettext} or use \command{configure} option
       \option{--disable-nls}.
+
+      \item The deprecated \code{xfig()} graphics device has been removed.
     }
   }
 

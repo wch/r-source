@@ -277,29 +277,6 @@ postscript <- function(file = if(onefile) "Rplots.ps" else "Rplot%03d.ps",
     invisible()
 }
 
-xfig <- function (file = if(onefile) "Rplots.fig" else "Rplot%03d.fig",
-                  onefile = FALSE, encoding = "none",
-                  paper = "default", horizontal = TRUE,
-                  width = 0, height = 0, family = "Helvetica",
-                  pointsize = 12, bg = "transparent", fg = "black",
-                  pagecentre = TRUE,
-                  defaultfont = FALSE, textspecial = FALSE)
-{
-    msg <- gettextf("'%s' is deprecated.\n", "xfig")
-    msg <- paste(msg, "Consider an SVG device instead.")
-    .Deprecated(msg = msg)
-
-    ## do initialization if needed
-    initPSandPDFfonts()
-
-    if(!checkIntFormat(file))
-        stop(gettextf("invalid 'file' argument '%s'", file), domain = NA)
-    .External(C_XFig, file, paper, family, bg, fg,
-              width, height, horizontal, pointsize,
-              onefile, pagecentre, defaultfont, textspecial, encoding)
-    invisible()
-}
-
 pdf <- function(file = if(onefile) "Rplots.pdf" else "Rplot%03d.pdf",
                 width, height, onefile, family, title, fonts, version,
                 paper, encoding, bg, fg, pointsize, pagecentre, colormodel,

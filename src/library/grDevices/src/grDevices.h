@@ -35,7 +35,6 @@ SEXP R_GAxisPars(SEXP usr, SEXP is_log, SEXP nintLog);
 SEXP PicTeX(SEXP);
 
 SEXP PostScript(SEXP);
-SEXP XFig(SEXP);
 SEXP PDF(SEXP);
 SEXP Type1FontInUse(SEXP, SEXP);
 SEXP CIDFontInUse(SEXP, SEXP);

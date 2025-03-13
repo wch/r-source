@@ -91,7 +91,6 @@ static const R_CallMethodDef CallEntries[] = {
 static const R_ExternalMethodDef ExtEntries[] = {
     EXTDEF(PicTeX, 6),
     EXTDEF(PostScript, 19),
-    EXTDEF(XFig, 14),
     EXTDEF(PDF, 23),
     EXTDEF(devCairo, 12),
     EXTDEF(devcap, 1),
