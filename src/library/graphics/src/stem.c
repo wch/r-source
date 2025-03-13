@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997--2024  The R Core Team
+ *  Copyright (C) 1997--2025  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -52,7 +52,7 @@ static double rnd(double u, double c)
     return ((u < 0) ? (u*c - .5) : (u*c + .5));
 }
 
-static Rboolean
+static void // was Rboolean but return value is discarded
 stem_leaf(double *x, int n, double scale, int width, double atom)
 {
     double r, c, x1, x2;
@@ -64,7 +64,7 @@ stem_leaf(double *x, int n, double scale, int width, double atom)
 
 #if 0
     if(n <= 1)
-	return FALSE;
+	return;
 #endif
 
     Rprintf("\n");
@@ -149,7 +149,7 @@ stem_leaf(double *x, int n, double scale, int width, double atom)
 	lo += mu;
     } while(1);
     Rprintf("\n");
-    return TRUE;
+    return;
 }
 
 /* The R wrapper has removed NAs from x */
