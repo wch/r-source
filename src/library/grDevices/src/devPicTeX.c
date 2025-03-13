@@ -41,7 +41,7 @@ typedef struct {
     FILE *texfp;
     char filename[128];
     int pageno;
-    int landscape;
+    int landscape; // unused
     double width;
     double height;
     double pagewidth;
@@ -55,7 +55,7 @@ typedef struct {
     rcolor fill;
     int fontsize;
     int fontface;
-    Rboolean debug;
+    bool debug;
 } picTeXDesc;
 
 
@@ -631,10 +631,10 @@ static void PicTeX_releaseMask(SEXP ref, pDevDesc dd) {}
 
 
 static
-Rboolean PicTeXDeviceDriver(pDevDesc dd, const char *filename, 
-			    const char *bg, const char *fg,
-			    double width, double height, 
-			    Rboolean debug)
+bool PicTeXDeviceDriver(pDevDesc dd, const char *filename, 
+			const char *bg, const char *fg,
+			double width, double height, 
+			bool debug)
 {
     picTeXDesc *ptd;
 
@@ -642,7 +642,7 @@ Rboolean PicTeXDeviceDriver(pDevDesc dd, const char *filename,
 	return FALSE;
     if (!(ptd->texfp = R_fopen(R_ExpandFileName(filename), "w"))) {
 	free(ptd);
-	return FALSE;
+	return false;
     }
 
     strcpy(ptd->filename, filename);
@@ -745,7 +745,7 @@ Rboolean PicTeXDeviceDriver(pDevDesc dd, const char *filename,
  *  fg	    = foreground color
  *  width   = width in inches
  *  height  = height in inches
- *  debug   = Rboolean; if TRUE, write TeX-Comments into output.
+ *  debug   = if TRUE, write TeX-Comments into output.
  */
 
 SEXP PicTeX(SEXP args)
@@ -753,7 +753,7 @@ SEXP PicTeX(SEXP args)
     pGEDevDesc dd;
     const char *file, *bg, *fg;
     double height, width;
-    Rboolean debug;
+    int debug;
 
     const void *vmax = vmaxget();
     args = CDR(args); /* skip entry point name */
@@ -766,15 +766,17 @@ SEXP PicTeX(SEXP args)
     fg = CHAR(asChar(CAR(args)));   args = CDR(args);
     width = asReal(CAR(args));	     args = CDR(args);
     height = asReal(CAR(args));	     args = CDR(args);
-    debug = asRboolean(CAR(args));    args = CDR(args);
+    debug = asLogical(CAR(args));    args = CDR(args);
     if(debug == NA_LOGICAL) debug = FALSE;
 
     R_CheckDeviceAvailable();
     BEGIN_SUSPEND_INTERRUPTS {
 	pDevDesc dev;
 	if (!(dev = (pDevDesc) calloc(1, sizeof(DevDesc))))
-	    return 0;
-	if(!PicTeXDeviceDriver(dev, file, bg, fg, width, height, debug)) {
+	    error(_("unable to start %s() device"), "pictex");
+//	    return 0; // that is not a SEXP
+	if(!PicTeXDeviceDriver(dev, file, bg, fg, width, height,
+			       (bool) debug)) {
 	    free(dev);
 	    error(_("unable to start %s() device"), "pictex");
 	}

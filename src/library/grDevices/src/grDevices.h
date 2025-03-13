@@ -50,19 +50,19 @@ SEXP savePlot(SEXP call, SEXP op, SEXP args, SEXP rho);
 
 SEXP devCairo(SEXP);
 
-Rboolean
+bool
 PSDeviceDriver(pDevDesc, const char*, const char*, const char*,
 	       const char **, const char*, const char*, const char*,
-	       double, double, Rboolean, double, Rboolean, Rboolean,
-	       Rboolean, const char*, const char*, SEXP, const char*, int,
-	       Rboolean);
+	       double, double, bool, double, bool, bool,
+	       bool, const char*, const char*, SEXP, const char*, int,
+	       bool);
 
-Rboolean
+bool
 PDFDeviceDriver(pDevDesc, const char *, const char *, const char *,
 		const char **, const char *, const char *, const char *,
-		double, double, double, Rboolean, Rboolean, const char*, SEXP,
-		int, int, const char *, int, int, Rboolean, Rboolean, 
-		Rboolean, Rboolean, const char *);
+		double, double, double, bool, bool, const char*, SEXP,
+		int, int, const char *, int, int, bool, bool, 
+		bool, bool, const char *);
 
 #ifdef _WIN32
 SEXP devga(SEXP);

@@ -556,9 +556,9 @@ static int QuartzNewPatternIndex(QuartzDesc *xd)
     return -1;
 }
 
-static Rboolean QuartzGradientFill(SEXP pattern, QuartzDesc *xd) {
+static bool QuartzGradientFill(SEXP pattern, QuartzDesc *xd) {
     if (pattern == R_NilValue) {
-        return FALSE;
+        return false;
     } else {
         int index = INTEGER(pattern)[0];
         QGradientRef quartz_gradient = xd->gradients[index];
@@ -568,9 +568,9 @@ static Rboolean QuartzGradientFill(SEXP pattern, QuartzDesc *xd) {
     }
 }
 
-static Rboolean QuartzPatternFill(SEXP pattern, QuartzDesc *xd) {
+static bool QuartzPatternFill(SEXP pattern, QuartzDesc *xd) {
     if (pattern == R_NilValue) {
-        return FALSE;
+        return false;
     } else {
         int index = INTEGER(pattern)[0];
         QPatternRef quartz_pattern = xd->patterns[index];
@@ -1278,11 +1278,11 @@ static SEXP QuartzCreateGroup(SEXP src, int op, SEXP dst,
     return result;
 }
 
-static Rboolean QuartzBegin(CGContextRef *ctx,
-                            CGLayerRef *layer,
-                            QuartzDesc *xd);
+static bool QuartzBegin(CGContextRef *ctx,
+			CGLayerRef *layer,
+			QuartzDesc *xd);
 
-static void QuartzEnd(Rboolean grouping,
+static void QuartzEnd(bool grouping,
                       CGLayerRef layer,
                       CGContextRef ctx,
                       CGContextRef savedCTX,
@@ -1304,7 +1304,7 @@ static void QuartzUseGroup(SEXP ref, SEXP trans,
 
     CGLayerRef layer = xd->groups[index];
     CGPoint contextOrigin = CGPointMake(0 ,0);
-    Rboolean grouping = FALSE;
+    bool grouping = false;
     CGContextRef savedCTX = ctx;
     CGLayerRef implicitLayer;
 
@@ -1862,8 +1862,9 @@ static void RQuartz_Size(double *left, double *right, double *bottom, double *to
 static void RQuartz_NewPage(CTXDESC)
 {
     {
-        DRAWSPEC;
-        ctx = NULL;
+//        DRAWSPEC; // otherwise an unused warning
+	QuartzDesc *xd = (QuartzDesc*) dd->deviceSpecific;
+	xd->dirty = 1; // needed?
         if (xd->newPage) xd->newPage(xd, xd->userInfo, xd->redraw ? QNPF_REDRAW : 0);
     }
     { /* we have to re-fetch the status *after* newPage since it may have changed it */
@@ -2015,7 +2016,7 @@ static void RQuartz_Text(double x, double y, const char *text, double rot, doubl
     if (xd->appending) 
         return;
 
-    Rboolean grouping = QuartzBegin(&ctx, &layer, xd);
+    bool grouping = QuartzBegin(&ctx, &layer, xd);
 
     /* A stupid hack because R isn't consistent. */
     int fill = gc->fill;
@@ -2054,7 +2055,7 @@ static void RQuartz_Text(double x, double y, const char *text, double rot, doubl
     /*      double h  = CGFontGetXHeight(CGContextGetFont(ctx))*aScale; */
     CGContextSetTextPosition(ctx, x - ax, y - ay);
     /*      Rprintf("%s,%.2f %.2f (%.2f,%.2f) (%d,%f)\n",text,hadj,width,ax,ay,CGFontGetUnitsPerEm(CGContextGetFont(ctx)),CGContextGetFontSize(ctx));       */
-    CGContextShowGlyphsWithAdvances(ctx,glyphs, g_adv, len);
+    CGContextShowGlyphsWithAdvances(ctx,glyphs, g_adv, len); // deprecated in 10.9
 
     QuartzEnd(grouping, layer, ctx, savedCTX, xd);
 
@@ -2064,7 +2065,7 @@ static void RQuartz_Text(double x, double y, const char *text, double rot, doubl
     CFRelease(str);
 }
 
-static Rboolean implicitGroup(QuartzDesc *xd) {
+static bool implicitGroup(QuartzDesc *xd) {
     int op = xd->blendMode;
     return xd->appendingGroup >= 0 &&
         (op == R_GE_compositeClear ||
@@ -2075,12 +2076,12 @@ static Rboolean implicitGroup(QuartzDesc *xd) {
          op == R_GE_compositeDestAtop);
 }
 
-static Rboolean QuartzBegin(CGContextRef *ctx,
-                            CGLayerRef *layer,
-                            QuartzDesc *xd)
+static bool QuartzBegin(CGContextRef *ctx,
+			CGLayerRef *layer,
+			QuartzDesc *xd)
 {
     double devWidth, devHeight;
-    Rboolean grouping = implicitGroup(xd);
+    bool grouping = implicitGroup(xd);
     if (grouping) {
         devWidth = QuartzDevice_GetScaledWidth(xd);
         devHeight = QuartzDevice_GetScaledHeight(xd);
@@ -2100,7 +2101,7 @@ static Rboolean QuartzBegin(CGContextRef *ctx,
     return grouping;
 }
 
-static void QuartzEnd(Rboolean grouping,
+static void QuartzEnd(bool grouping,
                       CGLayerRef layer,
                       CGContextRef ctx,
                       CGContextRef savedCTX,
@@ -2167,11 +2168,10 @@ static void QuartzRect(double x0, double y0, double x1, double y1,
                        CGContextRef ctx, const pGEcontext gc, 
                        QuartzDesc *xd, int op)
 {
-    Rboolean grouping;
     CGContextRef savedCTX = ctx;
     CGLayerRef layer;
 
-    grouping = QuartzBegin(&ctx, &layer, xd);
+    bool grouping = QuartzBegin(&ctx, &layer, xd);
     CGContextBeginPath(ctx);
     QuartzRectPath(x0, y0, x1, y1, ctx);
     if (op) {
@@ -2209,9 +2209,9 @@ static void RQuartz_Rect(double x0, double y0, double x1, double y1, CTXDESC)
     if (xd->appending) {
         QuartzRectPath(x0, y0, x1, y1, ctx);
     } else {
-        Rboolean fill = (gc->patternFill != R_NilValue) || 
+        bool fill = (gc->patternFill != R_NilValue) || 
             (R_ALPHA(gc->fill) > 0);
-        Rboolean stroke = (R_ALPHA(gc->col) > 0 && gc->lty != -1);
+        bool stroke = (R_ALPHA(gc->col) > 0 && gc->lty != -1);
         if (fill && stroke) {
             QuartzRect(x0, y0, x1, y1, ctx, gc, xd, 1); /* fill */
             QuartzRect(x0, y0, x1, y1, ctx, gc, xd, 0); /* stroke */
@@ -2271,7 +2271,7 @@ static void RQuartz_Raster(unsigned int *raster, int w, int h,
         height = -height;
     }
 
-    Rboolean grouping = QuartzBegin(&ctx, &layer, xd);
+    bool grouping = QuartzBegin(&ctx, &layer, xd);
 
     CGContextSaveGState(ctx);
     /* Translate by height of image */
@@ -2322,11 +2322,10 @@ static void QuartzCircle(double x, double y, double r,
                          CGContextRef ctx, const pGEcontext gc, 
                          QuartzDesc *xd, int op)
 {
-    Rboolean grouping;
     CGContextRef savedCTX = ctx;
     CGLayerRef layer;
 
-    grouping = QuartzBegin(&ctx, &layer, xd);
+    bool grouping = QuartzBegin(&ctx, &layer, xd);
     CGContextBeginPath(ctx);
     QuartzCirclePath(x, y, r, ctx);
     if (op) {
@@ -2345,9 +2344,9 @@ static void RQuartz_Circle(double x, double y, double r, CTXDESC)
     if (xd->appending) {
         QuartzCirclePath(x, y, r, ctx);
     } else {
-        Rboolean fill = (gc->patternFill != R_NilValue) || 
+        bool fill = (gc->patternFill != R_NilValue) || 
             (R_ALPHA(gc->fill) > 0);
-        Rboolean stroke = (R_ALPHA(gc->col) > 0 && gc->lty != -1);
+        bool stroke = (R_ALPHA(gc->col) > 0 && gc->lty != -1);
         if (fill && stroke) {
             QuartzCircle(x, y, r, ctx, gc, xd, 1); /* fill */
             QuartzCircle(x, y, r, ctx, gc, xd, 0); /* stroke */
@@ -2370,11 +2369,10 @@ static void QuartzLine(double x1, double y1, double x2, double y2,
                        CGContextRef ctx, const pGEcontext gc, 
                        QuartzDesc *xd)
 {
-    Rboolean grouping;
     CGContextRef savedCTX = ctx;
     CGLayerRef layer;
 
-    grouping = QuartzBegin(&ctx, &layer, xd);
+    bool grouping = QuartzBegin(&ctx, &layer, xd);
     CGContextBeginPath(ctx);
     QuartzLinePath(x1, y1, x2, y2, ctx);
     QuartzStroke(ctx, gc, xd);
@@ -2389,7 +2387,7 @@ static void RQuartz_Line(double x1, double y1, double x2, double y2, CTXDESC)
     if (xd->appending) {
         QuartzLinePath(x1, y1, x2, y2, ctx);
     } else {
-        Rboolean stroke = (R_ALPHA(gc->col) > 0 && gc->lty != -1);
+        bool stroke = (R_ALPHA(gc->col) > 0 && gc->lty != -1);
         if (stroke) {
             QuartzLine(x1, y1, x2, y2, ctx, gc, xd);
         }        
@@ -2417,11 +2415,10 @@ static void QuartzPolyline(int n, double *x, double *y,
                            CGContextRef ctx, const pGEcontext gc, 
                            QuartzDesc *xd)
 {
-    Rboolean grouping;
     CGContextRef savedCTX = ctx;
     CGLayerRef layer;
 
-    grouping = QuartzBegin(&ctx, &layer, xd);
+    bool grouping = QuartzBegin(&ctx, &layer, xd);
     CGContextBeginPath(ctx);
     QuartzPolylinePath(n, x, y, ctx);
     QuartzStroke(ctx, gc, xd);
@@ -2437,7 +2434,7 @@ static void RQuartz_Polyline(int n, double *x, double *y, CTXDESC)
     if (xd->appending) {
         QuartzPolylinePath(n, x, y, ctx);
     } else {
-        Rboolean stroke = (R_ALPHA(gc->col) > 0 && gc->lty != -1);
+        bool stroke = (R_ALPHA(gc->col) > 0 && gc->lty != -1);
         if (stroke) {
             QuartzPolyline(n, x, y, ctx, gc, xd);
         }        
@@ -2458,11 +2455,10 @@ static void QuartzPolygon(int n, double *x, double *y,
                           CGContextRef ctx, const pGEcontext gc, 
                           QuartzDesc *xd, int op)
 {
-    Rboolean grouping;
     CGContextRef savedCTX = ctx;
     CGLayerRef layer;
 
-    grouping = QuartzBegin(&ctx, &layer, xd);
+    bool grouping = QuartzBegin(&ctx, &layer, xd);
     CGContextBeginPath(ctx);
     QuartzPolygonPath(n, x, y, ctx);
     if (op) {
@@ -2482,9 +2478,9 @@ static void RQuartz_Polygon(int n, double *x, double *y, CTXDESC)
     if (xd->appending) {
         QuartzPolygonPath(n, x, y, ctx);
     } else {
-        Rboolean fill = (gc->patternFill != R_NilValue) || 
+        bool fill = (gc->patternFill != R_NilValue) || 
             (R_ALPHA(gc->fill) > 0);
-        Rboolean stroke = (R_ALPHA(gc->col) > 0 && gc->lty != -1);
+        bool stroke = (R_ALPHA(gc->col) > 0 && gc->lty != -1);
         if (fill && stroke) {
             QuartzPolygon(n, x, y, ctx, gc, xd, 1); /* fill */
             QuartzPolygon(n, x, y, ctx, gc, xd, 0); /* stroke */
@@ -2519,11 +2515,10 @@ static void QuartzPath(double *x, double *y,
                        CGContextRef ctx, const pGEcontext gc, 
                        QuartzDesc *xd, int op)
 {
-    Rboolean grouping;
     CGContextRef savedCTX = ctx;
     CGLayerRef layer;
 
-    grouping = QuartzBegin(&ctx, &layer, xd);
+    bool grouping = QuartzBegin(&ctx, &layer, xd);
     CGContextBeginPath(ctx);
     QuartzPathPath(x, y, npoly, nper, ctx);
     if (op) {
@@ -2549,9 +2544,9 @@ static void RQuartz_Path(double *x, double *y,
     if (xd->appending) {
         QuartzPathPath(x, y, npoly, nper, ctx);
     } else {
-        Rboolean fill = (gc->patternFill != R_NilValue) || 
+        bool fill = (gc->patternFill != R_NilValue) || 
             (R_ALPHA(gc->fill) > 0);
-        Rboolean stroke = (R_ALPHA(gc->col) > 0 && gc->lty != -1);
+        bool stroke = (R_ALPHA(gc->col) > 0 && gc->lty != -1);
         if (fill && stroke) {
             QuartzPath(x, y, npoly, nper, winding, ctx, gc, xd, 1); /* fill */
             QuartzPath(x, y, npoly, nper, winding, ctx, gc, xd, 0); /* stroke */
@@ -2641,12 +2636,11 @@ RQuartz_MetricInfo(int c, const pGEcontext gc,
 
 static Rboolean RQuartz_Locator(double *x, double *y, DEVDESC)
 {
-    Rboolean res;
-    DEVSPEC;
-    ctx = NULL;
+    // DEVSPEC; // otherwise an unused warning
+    QuartzDesc *xd = (QuartzDesc*) dd->deviceSpecific;
     if (!xd->locatePoint)
         return FALSE;
-    res = (Rboolean) xd->locatePoint(xd, xd->userInfo, x, y);
+    Rboolean res = (Rboolean) xd->locatePoint(xd, xd->userInfo, x, y);
     *x/=xd->scalex;
     *y/=xd->scaley;
     return res;
@@ -2834,9 +2828,9 @@ static void RQuartz_stroke(SEXP path, const pGEcontext gc, pDevDesc dd)
     SEXP R_fcall;
     CGContextRef savedCTX = ctx;
     CGLayerRef layer;
-    Rboolean grouping;
+    bool grouping = false;
 
-    Rboolean stroke = (R_ALPHA(gc->col) > 0 && gc->lty != -1);
+    bool stroke = (R_ALPHA(gc->col) > 0 && gc->lty != -1);
     if (!stroke) 
         return;
 
@@ -2870,9 +2864,9 @@ static void RQuartz_fill(SEXP path, int rule, const pGEcontext gc,
     SEXP R_fcall;
     CGContextRef savedCTX = ctx;
     CGLayerRef layer;
-    Rboolean grouping;
+    bool grouping = false;
 
-    Rboolean fill = (gc->patternFill != R_NilValue) || (R_ALPHA(gc->fill) > 0);
+    bool fill = (gc->patternFill != R_NilValue) || (R_ALPHA(gc->fill) > 0);
     if (!fill)
         return;
 
@@ -2923,9 +2917,8 @@ static void QuartzFillStroke(SEXP path, int rule, const pGEcontext gc,
 {
     CGContextRef savedCTX = ctx;
     CGLayerRef layer;
-    Rboolean grouping;
 
-    grouping = QuartzBegin(&ctx, &layer, xd);
+    bool grouping = QuartzBegin(&ctx, &layer, xd);
     QuartzFillStrokePath(path, ctx, xd);
     if (op) { /* fill */
         switch(rule) {
@@ -2946,8 +2939,8 @@ static void RQuartz_fillStroke(SEXP path, int rule, const pGEcontext gc,
     DRAWSPEC;
     if (!ctx) NOCTX;
 
-    Rboolean fill = (gc->patternFill != R_NilValue) || (R_ALPHA(gc->fill) > 0);
-    Rboolean stroke = (R_ALPHA(gc->col) > 0 && gc->lty != -1);
+    bool fill = (gc->patternFill != R_NilValue) || (R_ALPHA(gc->fill) > 0);
+    bool stroke = (R_ALPHA(gc->col) > 0 && gc->lty != -1);
     if (!(stroke || fill))
         return;
 
@@ -3044,7 +3037,7 @@ void RQuartz_glyph(int n, int *glyphs, double *x, double *y,
     if (xd->appending) 
         return;
 
-    Rboolean grouping = QuartzBegin(&ctx, &layer, xd);
+    bool grouping = QuartzBegin(&ctx, &layer, xd);
 
     const char* path = R_GE_glyphFontFile(font);
     CFURLRef cfFontURL = CFURLCreateFromFileSystemRepresentation(NULL, (const UInt8*)path, strlen(path), false);
@@ -3151,7 +3144,7 @@ SEXP Quartz(SEXP args)
 {
     SEXP tmps, bgs, canvass;
     double   width, height, ps;
-    Rboolean antialias;
+    bool antialias;
     int      bg, canvas, module = 0;
     double   mydpi[2], *dpi = 0;
     const char *type, *mtype = 0, *family, *title;
@@ -3183,7 +3176,7 @@ SEXP Quartz(SEXP args)
     height    = ARG(asReal,args);
     ps        = ARG(asReal,args);
     family    = CHAR(STRING_ELT(CAR(args), 0)); args = CDR(args);
-    antialias = ARG(asRboolean,args);
+    antialias = ARG(asBool,args);
     title     = CHAR(STRING_ELT(CAR(args), 0)); args = CDR(args);
     bgs       = CAR(args); args = CDR(args);
     bg        = RGBpar(bgs, 0);
