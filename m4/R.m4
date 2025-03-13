@@ -4579,6 +4579,7 @@ LIBS="${r_save_LIBS}"
 if test "x${r_cv_icu}" = xyes; then
   AC_DEFINE(USE_ICU, 1, [Define to use ICU for collation.])
   LIBS="${LIBS} -licuuc -licui18n"
+dnl why does this append when everything else prepends?  Including on macOS
 else
   use_ICU=no
 fi

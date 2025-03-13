@@ -89,6 +89,9 @@ inc: Makefile
 
 # check: clean  -- takes ~ 5 sec --> just  'rm test':
 #      : all  -- not as dependency, but directly, possibly parallelized:
+### NB: we only test the static library, unlike Windows.
+### This is becuse of the platform-specific and ever-changing ways
+### of finding the just-built DSO/dylib at run time.
 check:
 	@rm -f check.log test
 	@if test -n "${TEST_MC_CORES}"; then \

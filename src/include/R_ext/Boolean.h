@@ -26,6 +26,8 @@
 #ifndef R_EXT_BOOLEAN_H_
 #define R_EXT_BOOLEAN_H_
 
+// NB: there is a version of this in Rmath.h0[.in]
+
 #undef FALSE
 #undef TRUE
 
