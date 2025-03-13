@@ -62,11 +62,11 @@ besselY(x, nu)
   \dQuote{Acknowledgement} and \dQuote{References}, a short summary of
   which is
   \describe{
-    \item{besselI}{based on (code) by David J. Sookne, see Sookne (1973)\dots
+    \item{\code{besselI}}{based on (code by) David J. Sookne, see Sookne (1973)\dots
       Modifications\dots An earlier version was published in Cody (1983).}
-    \item{besselJ}{as \code{besselI}}
-    \item{besselK}{based on (code) by J. B. Campbell (1980)\dots Modifications\dots}
-    \item{besselY}{draws heavily on Temme's Algol program for
+    \item{\code{besselJ}}{as \code{besselI}}
+    \item{\code{besselK}}{based on (code by) J. B. Campbell (1980)\dots Modifications\dots}
+    \item{\code{besselY}}{draws heavily on Temme's Algol program for
       \eqn{Y}\dots and on Campbell's programs for \eqn{Y_\nu(x)}
       \dots. \dots heavily modified.}
   }

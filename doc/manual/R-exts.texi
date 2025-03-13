@@ -1481,7 +1481,7 @@ the seed to obtain reproducible results (and it can be helpful to do so
 in all cases, to avoid occasional failures when tests are run).
 
 If directory @file{tests} has a subdirectory @file{Examples} containing
-a file @code{@var{pkg}-Ex.Rout.save}, this is compared to the output
+a file @file{@var{pkg}-Ex.Rout.save}, this is compared to the output
 file for running the examples when the latter are checked.  Reference
 output should be produced without having the @option{--timings} option
 set (and note that @option{--as-cran} sets it).

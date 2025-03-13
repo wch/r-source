@@ -3313,7 +3313,7 @@ with new translations, but otherwise the version of the @code{gettext}
 runtime contained in the R sources will be used if no suitable external
 @code{gettext} is found (possibly from @code{libc}) and @R{} was not
 configured with @option{--disable-nls}.  Use of the bundled
-@code{gettext} runtime is deprecated and will be reoved soon.
+@code{gettext} runtime is deprecated and will be removed soon.
 
 @cindex Cairo
 @cindex @I{Pango}

@@ -90,7 +90,7 @@ Duncan Murdoch
     \item The \code{id} values are not attached to the elements of the parse
     tree, they are only retained in the table returned by \code{getParseData}.
     \item \verb{#line} directives are identified, but other comment
-    markup (e.g., \CRANpkg{roxygen} comments) are not.
+    markup (e.g., \CRANpkg{roxygen2} comments) are not.
   }
 
   Parse data by design explore details of the parser implementation, which

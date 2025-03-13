@@ -314,8 +314,8 @@
       \item \code{getMethods(*, table = TRUE)} is deprecated.
 
       \item Building with the bundled (and old) version of
-      \code{libintl} is deprecated and now gives a \command{configure
-      warning}.  This should be selected only if neither the OS's
+      \code{libintl} is deprecated and now gives a \command{configure}
+      warning.  This should be selected only if neither the OS's
       \code{libc} (as on GNU Linux) nor an external \code{libintl}
       library (as on Alpine Linux) provide suitable functions.
 
@@ -430,7 +430,7 @@
 
   \subsection{C-LEVEL API}{
     \itemize{
-      \item The \sQuote{Writing R Extensions} \I{TexInfo} source now
+      \item The \sQuote{Writing R Extensions} \I{Texinfo} source now
       contains very experimental annotations for more clearly
       identifying the API status of C entry points. These annotations
       are used to produce indices for API, experimental API, and

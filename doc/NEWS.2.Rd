@@ -971,7 +971,7 @@
 
       \item \code{plot(<lm>, which=5)} now correctly labels the factor
       level combinations for the special case where all
-      \eqn{h_ii}{h[i,i]} are the same. (\PR{14837})
+      \eqn{h_{ii}}{h[i,i]} are the same. (\PR{14837})
 
       \item \code{Sys.glob()} caused a segfault if the first element of
       \code{path} was \code{NA_character}. (\PR{14990})
@@ -4464,8 +4464,8 @@
       \item \code{tools::texi2dvi()} gains an \code{index} argument,
        mainly for use by \command{R CMD Rd2pdf}.
 
-       It avoids the use of \command{texindy} by \command{texinfo}'s
-       \command{texi2dvi >= 1.157}, since that does not emulate
+       It avoids the use of \command{texindy} by Texinfo's
+       \command{texi2dvi} >= 1.157, since that does not emulate
        'makeindex' well enough to avoid problems with special characters
        (such as \samp{(}, \samp{\{}, \samp{!}) in indices. % )
 
@@ -5479,7 +5479,7 @@
 
       \item The \code{readline} completion backend no longer sorts
        possible completions alphabetically (e.g., function argument
-       names) if \R was built with \code{readline >= 6}.
+       names) if \R was built with \code{readline} >= 6.
 
       \item \code{select.list()} gains a \code{graphics} argument to
        allow Windows/Mac users to choose the text interface.  This

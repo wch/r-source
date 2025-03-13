@@ -348,7 +348,7 @@ install.packages(pkgs, lib, repos = getOption("repos"),
   For non-parallel installs this is implemented \emph{via} the
   \code{timeout} argument of \code{\link{system2}}: for parallel
   installs \emph{via} the OS's \command{timeout} command.  (The one
-  tested is from GNU \pkg{coreutils}, commonly available on Linux but
+  tested is from GNU \I{coreutils}, commonly available on Linux but
   not other Unix-alikes.  If no such command is available the timeout
   request is ignored, with a warning. On Windows, one needs to specify
   a suitable \command{timeout} command via environment variable

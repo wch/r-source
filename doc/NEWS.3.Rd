@@ -827,7 +827,7 @@
 
       It now checks for duplicated vignette titles (also known as
       \sQuote{index entries}): they are used as hyperlinks on
-      \abbr{CRAN} package pages and so do need to be unique.
+      CRAN package pages and so do need to be unique.
 
       \item \command{R CMD check} has more comprehensive checks on the
       \file{data} directory and the functioning of \code{data()} in a
@@ -1784,7 +1784,7 @@
       possibility to set a \sQuote{timeout} (elapsed-time limit).  For
       serial installs this uses the \code{timeout} argument of
       \code{system2()}: for parallel installs it requires the
-      \command{timeout} utility command from GNU \pkg{coreutils}.
+      \command{timeout} utility command from GNU coreutils.
 
       \item It is now possible to set \sQuote{timeouts} (elapsed-time
       limits) for most parts of \command{R CMD check} \emph{via}
@@ -2008,7 +2008,7 @@
       \item Subassignment with zero length vectors now coerces as
       documented (\PR{17344}).\cr
       Further, \code{x <- numeric(); x[1] <- character()} now signals
-      an error \sQuote{\verb{replacement has length zero}} (or a
+      an error \samp{replacement has length zero} (or a
       translation of that) instead of doing nothing.
 
       \item (Package \pkg{parallel}.)  \code{mclapply()}, \code{pvec()}
@@ -2200,7 +2200,7 @@
 
       \item The default for \code{tools::write_PACKAGES(rds_compress=)}
       has been changed to \code{"xz"} to match the compression used by
-      \abbr{CRAN}.
+      CRAN.
 
       \item \code{c()} and \code{unlist()} are now more efficient in
       constructing the \code{names(.)} of their return value, thanks to
@@ -2685,7 +2685,7 @@
 
       \item Package \pkg{tools} now exports function
       \code{CRAN_package_db()} for obtaining information about current
-      packages in the \abbr{CRAN} package repository, and several
+      packages in the CRAN package repository, and several
       functions for obtaining the check status of these packages.
 
       \item The (default) Stangle driver \code{Rtangle} allows
@@ -2735,7 +2735,7 @@
       is unset.
 
       NB: This can break reproducibility of output, and did for a
-      \abbr{CRAN} package.
+      CRAN package.
 
       \item Methods \code{"wget"} and \code{"curl"} for
       \code{download.file()} now give an \R error rather than a non-zero
@@ -2743,7 +2743,7 @@
 
       \item Encoding name \code{"utf8"} is mapped to \code{"UTF-8"}.
       Many implementations of \code{iconv} accept \code{"utf8"}, but not
-      GNU \pkg{libiconv} (including the late 2016 version 1.15).
+      GNU \samp{libiconv} (including the late 2016 version 1.15).
 
       \item \code{sessionInfo()} shows the full paths to the library or
       executable files providing the BLAS/LAPACK implementations
@@ -2872,7 +2872,7 @@
       adding native-symbol registration to a package.  See its help and
       §5.4.1 of \sQuote{Writing R Extensions} for how to use it.  (At
       the time it was added it successfully automated adding
-      registration to over 90\% of \abbr{CRAN} packages which lacked
+      registration to over 90\% of CRAN packages which lacked
       it.  Many of the failures were newly-detected bugs in the
       packages, e.g.\sspace50 packages called entry points with varying
       numbers of arguments and 65 packages called entry points not in
@@ -3353,7 +3353,7 @@
 
       \item \code{findMethod()} failed if the active signature had
       expanded beyond what a particular package used. (Example with
-      packages \CRANpkg{XR} and \CRANpkg{XRJulia} on \abbr{CRAN}.)
+      packages \CRANpkg{XR} and \CRANpkg{XRJulia} on CRAN.)
 
       \item \code{qbeta()} underflowed too early in some very asymmetric
       cases.  (\PR{17178})
@@ -4208,7 +4208,7 @@
       \item \code{smooth(x, *)} now also works for long vectors.
 
       \item \code{tools::texi2dvi()} has a workaround for problems with
-      the \command{texi2dvi} script supplied by \pkg{texinfo 6.1}.
+      the \command{texi2dvi} script supplied by Texinfo 6.1.
 
       It extracts more error messages from the LaTeX logs when in
       emulation mode.
@@ -4574,7 +4574,7 @@
       \item \code{cmdscale()} gets new option \code{list.} for increased
       flexibility when a list should be returned.
 
-      \item \command{configure} now supports \code{texinfo} version 6.0,
+      \item \command{configure} now supports Texinfo version 6.0,
       which (unlike the change from 4.x to 5.0) is a minor update.
       (Wish of \PR{16456}.)
 
@@ -5205,15 +5205,15 @@
        versions included in the \R sources if no system versions are
        found or (unlikely) if they are too old.
 
-       Linux users should check that the \code{-devel} or \code{-dev}
-       versions of packages \pkg{zlib}, \pkg{bzip2}/\pkg{libbz2} and
-       \pkg{pcre} as well as \pkg{xz-devel}/\pkg{liblzma-dev} (or
+       Linux users should check that the \samp{-devel} or \samp{-dev}
+       versions of packages \samp{zlib}, \samp{bzip2}/\samp{libbz2} and
+       \samp{pcre} as well as \samp{xz-devel}/\samp{liblzma-dev} (or
        similar names) are installed.
 
        \item \command{configure} by default looks for the
-       \command{texi2any} script from \pkg{texinfo} 5.1 or later, rather
+       \command{texi2any} script from Texinfo 5.1 or later, rather
        than the \command{makeinfo} program.  (\command{makeinfo} is a
-       link to the Perl script \command{texi2any} in \pkg{texinfo} 5.x.)
+       link to the Perl script \command{texi2any} in Texinfo 5.x.)
 
        \item \command{R CMD INSTALL} gains an  option
        \option{--built-timestamp=STAMP} allowing 100\% reproducible
@@ -5311,18 +5311,18 @@
     The following are currently in place.
     \itemize{
       \item Installation using external binary distributions
-      of \pkg{zlib}, \pkg{bzip2}, \pkg{liblzma}, \pkg{pcre},
-      \pkg{libpng}, \pkg{jpeglib} and \pkg{libtiff} is now required,
+      of \samp{zlib}, \samp{bzip2}, \samp{liblzma}, \samp{pcre},
+      \samp{libpng}, \samp{jpeglib} and \samp{libtiff} is now required,
       and the build instructions have been revised.
 
       \item A new \command{make} target \code{rsync-extsoft} has been
       added to obtain copies of the external libraries from
-      \abbr{CRAN}.
+      CRAN.
 
       \item Building the manuals now requires \command{texi2any} from
-      \pkg{texinfo} 5.1 or later.  \abbr{CRAN} binary builds include
+      Texinfo 5.1 or later.  CRAN binary builds include
       the manuals, but by default builds from source will not, and they
-      will be accessed from \abbr{CRAN}.  See the comments in
+      will be accessed from CRAN.  See the comments in
       \file{src/gnuwin32/MkRules.dist} for how to specify the location
       of \command{texi2any}.
 
@@ -5499,7 +5499,7 @@
       \item The included version of PCRE has been updated to 8.36.
 
       \item \command{configure} accepts \samp{MAKEINFO=texi2any} as
-      another way to ensure \pkg{texinfo} 5.x is used when both 5.x and
+      another way to ensure Texinfo 5.x is used when both 5.x and
       4.x are installed.
     }
   }
@@ -5718,8 +5718,8 @@
       \env{LDFLAGS} (and not in \sQuote{your system's library directory}
       as documented). (Wish of \PR{15790}.)
 
-      \item LaTeX package \pkg{upquote} is no longer required for \R's
-      use of \pkg{inconsolata}.
+      \item LaTeX package \samp{upquote} is no longer required for \R's
+      use of \samp{inconsolata}.
 
       \item (Windows only) If both 32- and 64-bit versions of \R are
       installed, the \file{bin/R.exe} and \file{bin/Rscript.exe} executables
@@ -6457,7 +6457,7 @@
       the default in the future.
 
       \item There is a new option \option{--use-system-tre} to use a
-      suitable system \pkg{tre} library: at present this means a version
+      suitable system TRE library: at present this means a version
       from their \command{git} repository, after corrections.
       (Wish of \PR{15660}.)
     }
@@ -6760,10 +6760,10 @@
   \subsection{NEW FEATURES}{
     \itemize{
       \item On Windows there is support for making \file{.texi} manuals
-      using \command{texinfo} 5.0 or later: the setting is in file
+      using Texinfo 5.0 or later: the setting is in file
       \file{src/gnuwin32/MkRules.dist}.
 
-      A packaging of the Perl script and modules for \command{texinfo}
+      A packaging of the Perl script and modules for Texinfo
       5.2 has been made available at
       \url{http://www.stats.ox.ac.uk/pub/Rtools/}.
 
@@ -6812,7 +6812,7 @@
       UTF-8 French month names to be read on (French) Windows.
 
       \item \code{iconv(to = "utf8")} is now accepted on all platforms
-      (some implementations did already, but GNU \pkg{libiconv} did not:
+      (some implementations did already, but GNU \samp{libiconv} did not:
       however converted strings were not marked as being in UTF-8).  The
       official name, \code{"UTF-8"} is still preferred.
 
@@ -7252,9 +7252,8 @@
 
   \subsection{INSTALLATION and INCLUDED SOFTWARE}{
     \itemize{
-      \item The macros used for the texinfo manuals have been changed to
-      work better with the incompatible changes made in \command{texinfo
-      5.x}.
+      \item The macros used for the Texinfo manuals have been changed to
+      work better with the incompatible changes made in Texinfo 5.x.
 
       \item The minimum version for a system \code{xz} library is now
       5.0.3 (was 4.999).  This is in part to avoid 5.0.2, which can
@@ -8071,7 +8070,7 @@
       \item \code{untar()} has a new argument \code{restore_times} which
       if false (not the default) discards the times in the tarball.
       This is useful if they are incorrect (some tarballs submitted to
-      \abbr{CRAN} have times in a local time zone or many years in the
+      CRAN have times in a local time zone or many years in the
       past even though the standard required them to be in UTC).
 
       \item \code{replayplot()} cannot (and will not attempt to) replay
@@ -8313,7 +8312,7 @@
       \samp{universal} or \samp{leopard}): it looks in
       \file{bin/macosx/contrib/3.0} rather than
       \file{bin/macosx/leopard/contrib/2.15}).  This is the type used
-      for the \abbr{CRAN} binary distribution for OS X as from \R
+      for the CRAN binary distribution for OS X as from \R
       3.0.0.
 
       \item File \file{etc/Makeconf} makes more use of the macros

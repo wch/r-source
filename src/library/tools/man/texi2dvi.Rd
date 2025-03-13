@@ -62,7 +62,7 @@ texi2pdf(file, clean = FALSE, quiet = TRUE,
   
   %% issues included not re-running latex in texinfo 6.1 and bashisms in
   %% the /bin/sh script in <= 6.0.
-  A shell script \command{texi2dvi} is part of GNU's \pkg{texinfo}.
+  A shell script \command{texi2dvi} is part of GNU \I{Texinfo}.
   Several issues have been seen with released versions, so if yours does
   not work correctly try \env{R_TEXI2DVICMD=emulation}.
 #endif

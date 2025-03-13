@@ -11,7 +11,7 @@
 
 \description{
   The functions or variables listed here are no longer part of \R as
-  they are no loinger supported.
+  they are no longer supported.
 }
 \usage{
 # Defunct in R 4.5.0

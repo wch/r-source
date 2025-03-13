@@ -60,10 +60,10 @@ xgettext2pot(dir, potFile, name = "R", version, bugs)
   if \code{asCall} is false.
 
   \code{xgettext2pot} calls \code{xgettext} and then \code{xngettext},
-  and writes a PO template file (to \code{potFile}) for use with the \pkg{GNU Gettext}
+  and writes a PO template file (to \code{potFile}) for use with the GNU gettext
   tools.  This ensures that the strings for simple translation are
-  unique in the file (as \pkg{GNU Gettext} requires), but does not do so
-  for \code{ngettext} calls (and the rules are not stated in the \I{Gettext}
+  unique in the file (as GNU gettext requires), but does not do so
+  for \code{ngettext} calls (and the rules are not stated in the GNU gettext
   manual, but \command{msgfmt} complains if there is duplication between
   the sets.).
 

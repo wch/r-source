@@ -12,7 +12,7 @@ Cite a \code{bibentry} object in text.  The \code{cite()} function
 uses the \code{cite()} function from the default
 \code{\link{bibstyle}} if present, or \code{citeNatbib()} if not.
 \code{citeNatbib()} uses a style similar to that used by the LaTeX
-package \pkg{natbib}.
+package \samp{natbib}.
 }
 \usage{
 cite(keys, bib, ...)
@@ -54,7 +54,7 @@ Whether to abbreviate long author lists.
 If \code{abbreviate == TRUE}, whether to leave the first citation long.
 }
   \item{bibpunct}{
-A vector of punctuation to use in the citation, as used in \pkg{natbib}.  See
+A vector of punctuation to use in the citation, as used in \samp{natbib}.  See
 the Details section.
 }
   \item{previous}{
@@ -63,7 +63,7 @@ A list of keys that have been previously cited, to be used when
 }
 }
 \details{
-Argument names are chosen based on the documentation for the LaTeX \pkg{natbib}
+Argument names are chosen based on the documentation for the LaTeX \samp{natbib}
 package.  See that documentation for the interpretation of the
 \code{bibpunct} entries.
 

@@ -93,7 +93,7 @@ Sys.setLanguage(lang, unset = "en", C.vs.en = c("msg", "warn", "silent"),
 
   \code{ngettext} is used where the message needs to vary by a single
   integer.  Translating such messages is subject to very specific rules
-  for different languages: see the GNU \I{Gettext} Manual.  The string
+  for different languages: see the GNU \verb{gettext} manual.  The string
   will often contain a single instance of \code{\%d} to be used in
   \code{\link{sprintf}}.  If English is used, \code{msg1} is returned if
   \code{n == 1} and \code{msg2} in all other cases.
