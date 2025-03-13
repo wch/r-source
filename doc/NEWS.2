@@ -84,7 +84,7 @@ CHANGES IN R VERSION 2.15.3:
       Mac OS 10.8 with Xcode 4.5.2 (PR#15107).
 
     • The cairo-based versions of X11() now work with current versions
-      of cairographics (e.g. 1.12.10).  (PR#15168)
+      of cairographics (e.g., 1.12.10).  (PR#15168)
 
       A workaround for earlier versions of R is to use X11.options(type
       = "nbcairo").
@@ -229,7 +229,7 @@ CHANGES IN R VERSION 2.15.2:
       less trivial formulae produce.  (Wish of PR#14992, changes the
       output of several packages.)
 
-    • Misuse of rep() on undocumented types of objects (e.g. calls) is
+    • Misuse of rep() on undocumented types of objects (e.g., calls) is
       now reported as an error.
 
     • The included LAPACK has been updated to 3.4.1, with some patches
@@ -300,7 +300,7 @@ CHANGES IN R VERSION 2.15.2:
       will have no class to be used by rep()).
 
     • rep() is faster and uses less memory, substantially so in some
-      common cases (e.g. if times is of length one or length.out is
+      common cases (e.g., if times is of length one or length.out is
       given, and each = 1).
 
     • findInterval(), tabulate(), cut(), hist() and image.default() all
@@ -413,7 +413,7 @@ CHANGES IN R VERSION 2.15.2:
       interactive use it will ask whether to choose the source version
       of a package if the binary version is older and contains compiled
       code, and also asks if source packages with no binary version
-      should be installed).
+      should be installed.
 
   INSTALLATION:
 
@@ -469,7 +469,7 @@ CHANGES IN R VERSION 2.15.2:
       process for dimensions of several hundreds or more.  (Reported by
       Michael Braun on R-sig-mac.)
 
-    • Base package vignettes (e.g. vignette("Sweave")) were not fully
+    • Base package vignettes (e.g., vignette("Sweave")) were not fully
       installed in builds of R from the tarball.
 
     • lchoose() and choose() could overflow the C stack and crash R.
@@ -542,7 +542,7 @@ CHANGES IN R VERSION 2.15.2:
     • A malformed package name could cause R CMD INSTALL to write
       outside the target library.
 
-    • Some of the quality control functions (e.g. tools::checkFF())
+    • Some of the quality control functions (e.g., tools::checkFF())
       were wrongly identifying the source of S4 methods in a package
       and so not checking them.
 
@@ -603,7 +603,7 @@ CHANGES IN R VERSION 2.15.1:
     • norm() now allows type = "2" (the ‘spectral’ or 2-norm) as well,
       mainly for didactical completeness.
 
-    • pmin() and pmax()) now also work when one of the inputs is of
+    • pmin() and pmax() now also work when one of the inputs is of
       length zero and others are not, returning a zero-length vector,
       analogously to, say, +.
 
@@ -672,7 +672,7 @@ CHANGES IN R VERSION 2.15.1:
       junctions on Windows (although they were tested on Windows 7, XP
       and Server 2008 machines and it is unknown under what
       circumstances the problems occur).  Setting the environment
-      variable R_WIN_NO_JUNCTIONS to a non-empty value (e.g. in
+      variable R_WIN_NO_JUNCTIONS to a non-empty value (e.g., in
       ~/.R/check.Renviron) will force copies to be used instead.
 
   INSTALLATION:
@@ -791,7 +791,7 @@ CHANGES IN R VERSION 2.15.1:
       byte-compiled code was on the stack.
 
     • plogis(x, lower = FALSE, log.p = TRUE) no longer underflows early
-      for large x (e.g. 800).
+      for large x (e.g., 800).
 
     • ?Arithmetic's “1 ^ y and y ^ 0 are 1, _always_” now also applies
       for integer vectors y.
@@ -829,7 +829,7 @@ CHANGES IN R VERSION 2.15.1:
       the R process.
 
     • getMethod(f, sig) produced an incorrect error message in some
-      cases when f was not a string).
+      cases when f was not a string.
 
     • Using a string as a “call” in an error condition with
       options(showErrorCalls=TRUE) could cause a segfault.  (PR#14931)
@@ -929,8 +929,8 @@ CHANGES IN R VERSION 2.15.0:
 
     • bxp(), the work horse of boxplot(), now uses a more sensible
       default xlim in the case where at is specified differently from
-      1:n, see the discussion on R-devel, <URL:
-      https://stat.ethz.ch/pipermail/r-devel/2011-November/062586.html>.
+      1:n, see the discussion on R-devel,
+      <https://stat.ethz.ch/pipermail/r-devel/2011-November/062586.html>.
 
     • New function paste0(), an efficient version of paste(*, sep=""),
       to be used in many places for more concise (and slightly more
@@ -1369,7 +1369,7 @@ CHANGES IN R VERSION 2.14.2:
     • There is a partial workaround for errors in the TRE
       regular-expressions engine with named classes and repeat counts
       of at least 2 in a MBCS locale (PR#14408): these are avoided when
-      TRE is in 8-bit mode (e.g. for useBytes = TRUE and when all the
+      TRE is in 8-bit mode (e.g., for useBytes = TRUE and when all the
       data are ASCII).
 
     • The C function R_ReplDLLdo1() did not call top-level handlers.
@@ -1430,7 +1430,7 @@ CHANGES IN R VERSION 2.14.1:
       object by calling show() rather than print()).
 
     • filled.contour() now accepts infinite values: previously it might
-      have generated invalid graphics files (e.g. containing NaN
+      have generated invalid graphics files (e.g., containing NaN
       values).
 
   INSTALLATION:
@@ -1474,13 +1474,13 @@ CHANGES IN R VERSION 2.14.1:
     • tools::deparseLatex(dropBraces=TRUE) could drop text as well as
       braces.
 
-    • colormodel = "grey" (new in R 2.14.0)) did not always work in
+    • colormodel = "grey" (new in R 2.14.0) did not always work in
       postscript() and pdf().
 
     • file.append() could return TRUE for failures.  (PR#14727)
 
     • gzcon() connections are no longer subject to garbage collection:
-      it was possible for this to happen when unintended (e.g. when
+      it was possible for this to happen when unintended (e.g., when
       calling load()).
 
     • nobs() does not count zero-weight observations for glm() fits,
@@ -1555,7 +1555,7 @@ CHANGES IN R VERSION 2.14.0:
       reproduce output from earlier versions of R.
 
     • Labeling of the p-values in various anova tables has been
-      rationalized to be either "Pr(>F)" or "Pr(>Chi)" (i.e. the
+      rationalized to be either "Pr(>F)" or "Pr(>Chi)" (i.e., the
       "Pr(F)", "Pr(Chi)" and "P(>|Chi|)" variants have been
       eliminated).  Code which extracts the p value _via_ indexing by
       name may need adjustment.
@@ -1668,7 +1668,7 @@ CHANGES IN R VERSION 2.14.0:
       Specifically, the add1, drop1, and anova methods now allow test =
       "Rao".
 
-    • If a saved workspace (e.g. .RData) contains objects that cannot
+    • If a saved workspace (e.g., .RData) contains objects that cannot
       be loaded, R will now start with an warning message and an empty
       workspace, rather than failing to start.
 
@@ -1760,11 +1760,11 @@ CHANGES IN R VERSION 2.14.0:
       directory on the httpd server.
 
     • Development versions of R are no longer referred to by the number
-      under which they might be released, e.g. in the startup banner, R
-      --version and sessionUtils().  The correct way to refer to a
+      under which they might be released, e.g., in the startup banner,
+      R --version and sessionUtils().  The correct way to refer to a
       development version of R is ‘R-devel’, preferably with the date
       and SVN version number.
-      E.g. R-devel (2011-07-04 r56266)
+      E.g., R-devel (2011-07-04 r56266)
 
     • There is a new function texi2pdf() in package tools, currently a
       convenience wrapper for texi2dvi(pdf = TRUE).
@@ -2062,9 +2062,9 @@ CHANGES IN R VERSION 2.14.0:
     • The Rtangle() driver allows output = "stdout" or output =
       "stderr" to select the output or message connection.  This is
       convenient for scripting using something like
-      
-          R CMD Stangle --options='output="stdout"' foo.Rnw > foo2.R
 
+          R CMD Stangle --options='output="stdout"' foo.Rnw > foo2.R
+      
     • There is a new option pdf.compress controlling whether PDF
       figures are generated using Flate compression (they are by
       default).
@@ -2073,7 +2073,7 @@ CHANGES IN R VERSION 2.14.0:
       the processed Sweave document.
 
     • It is no longer allowed to have two vignettes with the same
-      vignette basename (e.g. vig.Rnw and vig.Snw).  (Previously one
+      vignette basename (e.g., vig.Rnw and vig.Snw).  (Previously one
       vignette hid the other in the vignette() function.)
 
   C-LEVEL FACILITIES:
@@ -2548,8 +2548,8 @@ CHANGES IN R VERSION 2.13.1:
     • cairo_ps(onefile = TRUE) generates encapsulated EPS on platforms
       with cairo >= 1.6.
 
-    • Binary reads (e.g. by readChar() and readBin()) are now supported
-      on clipboard connections.  (Wish of PR#14593.)
+    • Binary reads (e.g., by readChar() and readBin()) are now
+      supported on clipboard connections.  (Wish of PR#14593.)
 
     • as.POSIXlt.factor() now passes ... to the character method
       (suggestion of Joshua Ulrich).  [Intended for R 2.13.0 but
@@ -2674,7 +2674,7 @@ CHANGES IN R VERSION 2.13.1:
 
     • The fonts argument to X11(type = "Xlib") was being ignored.
 
-    • Reading (e.g. with readBin()) from a raw connection was not
+    • Reading (e.g., with readBin()) from a raw connection was not
       advancing the pointer, so successive reads would read the same
       value.  (Spotted by Bill Dunlap.)
 
@@ -2795,7 +2795,7 @@ CHANGES IN R VERSION 2.13.0:
       Pearson residuals).
 
     • write.table() and friends gain a fileEncoding argument, to
-      simplify writing files for use on other OSes (e.g. a spreadsheet
+      simplify writing files for use on other OSes (e.g., a spreadsheet
       intended for Windows or Mac OS X Excel).
 
     • Assignment expressions of the form foo::bar(x) <- y and
@@ -2849,7 +2849,7 @@ CHANGES IN R VERSION 2.13.0:
       dimnames<-().  (Related to PR#14469.)
 
     • There is a new option "browserNLdisabled" to disable the use of
-      an empty (e.g. via the ‘Return’ key) as a synonym for c in
+      an empty (e.g., via the ‘Return’ key) as a synonym for c in
       browser() or n under debug().  (Wish of PR#14472.)
 
     • example() gains optional new arguments character.only and
@@ -3198,7 +3198,7 @@ CHANGES IN R VERSION 2.13.0:
 
       After re-building vignettes the default clean-up operation will
       remove any directories (and not just files) created during the
-      process: e.g. one package created a .R_cache directory.
+      process: e.g., one package created a .R_cache directory.
 
       Empty directories are now removed unless the option
       --keep-empty-dirs is given (and a few packages do deliberately
@@ -3374,7 +3374,7 @@ CHANGES IN R VERSION 2.13.0:
     • drop.terms and the [ method for class "terms" no longer add back
       an intercept.  (Reported by Niels Hansen.)
 
-    • aggregate preserves the class of a column (e.g. a date) under
+    • aggregate preserves the class of a column (e.g., a date) under
       some circumstances where it discarded the class previously.
 
     • p.adjust() now always returns a vector result, as documented.  In
@@ -3616,7 +3616,7 @@ CHANGES IN R VERSION 2.12.2:
     • combn(n, m) now behaves more regularly for the border case m = 0.
       (PR#14473)
 
-    • The rendering of numbers in plotmath expressions (e.g.
+    • The rendering of numbers in plotmath expressions (e.g.,
       expression(10^2)) used the current settings for conversion to
       strings rather than setting the defaults, and so could be
       affected by what has been done before.  (PR#14477)
@@ -3627,7 +3627,7 @@ CHANGES IN R VERSION 2.12.2:
       Wood.)
 
     • weighted.residuals(drop0=TRUE) returned a vector when the
-      residuals were a matrix (e.g. those of class "mlm").  (Reported
+      residuals were a matrix (e.g., those of class "mlm").  (Reported
       by Bill Dunlap.)
 
     • Package HTML index files <pkg>/html/00Index.html were generated
@@ -3661,7 +3661,7 @@ CHANGES IN R VERSION 2.12.2:
       without C99 complex support.
 
     • library() failed to cache S4 metadata (unlike loadNamespace())
-      causing failures in S4-using packages without a namespace (e.g.
+      causing failures in S4-using packages without a namespace (e.g.,
       those using reference classes).
 
     • The function qlogis(lp, log.p=TRUE) no longer prematurely
@@ -3698,7 +3698,7 @@ CHANGES IN R VERSION 2.12.1:
       the standard packages: splines, stats4 and tcltk were previously
       omitted (intentionally).
 
-    • <URL: http://www.rforge.net> has been added to the default set of
+    • <http://www.rforge.net> has been added to the default set of
       repositories known to setRepositories().
 
     • xz-utils has been updated to version 5.0.0.
@@ -3912,8 +3912,8 @@ CHANGES IN R VERSION 2.12.0:
 
       The ordering of the classes has been changed, so "POSIXt" is now
       the second class.  See the document ‘Updating packages for
-      changes in R 2.12.x’ on <URL: http://developer.r-project.org> for
-      the consequences for a handful of CRAN packages.
+      changes in R 2.12.x’ on <http://developer.r-project.org> for the
+      consequences for a handful of CRAN packages.
 
     • The "POSIXct" method of as.Date() allows a timezone to be
       specified (but still defaults to UTC).
@@ -3958,7 +3958,7 @@ CHANGES IN R VERSION 2.12.0:
     • tools::texi2dvi() gains an index argument, mainly for use by R
       CMD Rd2pdf.
 
-      It avoids the use of texindy by texinfo's texi2dvi >= 1.157,
+      It avoids the use of texindy by Texinfo's texi2dvi >= 1.157,
       since that does not emulate 'makeindex' well enough to avoid
       problems with special characters (such as (, {, !) in indices.
 
@@ -4120,9 +4120,9 @@ CHANGES IN R VERSION 2.12.0:
       a "tzone" attribute with "%Z" and "%z" formats, but it is not
       always possible.  (Wish of PR#14358.)
 
-    • tools::texi2dvi(file, clean = TRUE) now works in more cases (e.g.
-      where emulation is used and when file is not in the current
-      directory).
+    • tools::texi2dvi(file, clean = TRUE) now works in more cases
+      (e.g., where emulation is used and when file is not in the
+      current directory).
 
     • New function droplevels() to remove unused factor levels.
 
@@ -4691,7 +4691,7 @@ CHANGES IN R VERSION 2.11.1:
       using LazyData.  (PR#14273)
 
     • textConnection() did an unnecessary translation on strings in a
-      foreign encoding (e.g. UTF-8 strings on Windows) and so was
+      foreign encoding (e.g., UTF-8 strings on Windows) and so was
       slower than it could have been on very long input strings.
       (PR#14286)
 
@@ -4723,11 +4723,8 @@ CHANGES IN R VERSION 2.11.0:
       way as for interpreted functions except for the deliberate
       exceptions
 
-      
-      
                call switch .C .Fortran .Call .External
-             
-
+      
       all of which use positional matching for their first argument,
       and also some internal-use-only primitives.
 
@@ -4916,7 +4913,7 @@ CHANGES IN R VERSION 2.11.0:
 
     • In Rd, \eqn and \deqn will render in HTML (and convert to text)
       upper- and lower-case Greek letters (entered as \alpha ...),
-      \ldots, ..., \ge and \le.
+      \ldots, \dots, \ge and \le.
 
     • utf8ToInt() and intToUtf8() now map NA inputs to NA outputs.
 
@@ -4997,7 +4994,7 @@ CHANGES IN R VERSION 2.11.0:
       such as the non-bug report PR#14207.
 
     • pchisq(ncp =, log.p = TRUE) is more accurate for probabilities
-      near one.  E.g. pchisq(80, 4, ncp=1, log.p=TRUE).  (Maybe what
+      near one.  E.g., pchisq(80, 4, ncp=1, log.p=TRUE).  (Maybe what
       was meant in PR#14216.)
 
     • maintainer() has been added, to give convenient access to the
@@ -5275,8 +5272,8 @@ CHANGES IN R VERSION 2.10.1 patched:
       analogously to lfactorial().
 
     • Although \eqn{} in Rd files is defined as a ‘verbatim’ macro,
-      many packages expected ... and \ldots to be interpreted there (as
-      was the case in R < 2.10.0), so this is now done (using an
+      many packages expected \dots and \ldots to be interpreted there
+      (as was the case in R < 2.10.0), so this is now done (using an
       ellipsis in HTML rendering).
 
     • Escaping of braces in quoted strings in R-code sections of Rd
@@ -5300,9 +5297,10 @@ CHANGES IN R VERSION 2.10.1 patched:
     • qpois(p = 1, lambda = 0) now gives 0 as for all other p.
       (PR#14135)
 
-    • Functions related to string comparison (e.g. unique(), match())
+    • Functions related to string comparison (e.g., unique(), match())
       could cause crashes when used with strings not in the native
-      encoding, e.g. UTF-8 strings on Windows.  (PR#14114 and PR#14125)
+      encoding, e.g., UTF-8 strings on Windows.  (PR#14114 and
+      PR#14125)
 
     • x[ , drop=TRUE] dropped an NA level even if it was in use.
 
@@ -5312,7 +5310,7 @@ CHANGES IN R VERSION 2.10.1 patched:
     • tools::codoc() (used by R CMD check) was missing cases where the
       function had no arguments but was documented to have some.
 
-    • Help links containing special characters (e.g. "?") were not
+    • Help links containing special characters (e.g., "?") were not
       generated correctly when rendered in HTML.  (PR#14155)
 
     • lchoose(a, k) no longer wrongly gives NaN for negative a.
@@ -5395,7 +5393,7 @@ CHANGES IN R VERSION 2.10.1:
     • R CMD INSTALL has new options --no-R, --no-libs, --no-data,
       --no-help, --no-demo, --no-exec, and --no-inst to suppress
       installation of the specified part of the package.  These are
-      intended for special purposes (e.g. building a database of help
+      intended for special purposes (e.g., building a database of help
       pages without fully installing all packages).
 
     • The documented line-length limit of 4095 bytes when reading from
@@ -5684,7 +5682,7 @@ CHANGES IN R VERSION 2.10.0:
     • weighted.mean() is now generic and has "Date", "POSIXct" and
       "POSIXlt" methods.
 
-    • Naming subscripts (e.g. x[i=1, j=2]) in data.frame methods for [
+    • Naming subscripts (e.g., x[i=1, j=2]) in data.frame methods for [
       and [[ now gives a warning.  (Names are ignored in the default
       method, but could have odd semantics for other methods, and do
       for the data.frame ones.)

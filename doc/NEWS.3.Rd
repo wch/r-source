@@ -2008,7 +2008,7 @@
       \item Subassignment with zero length vectors now coerces as
       documented (\PR{17344}).\cr
       Further, \code{x <- numeric(); x[1] <- character()} now signals
-      an error \samp{replacement has length zero} (or a
+      an error \dQuote{replacement has length zero} (or a
       translation of that) instead of doing nothing.
 
       \item (Package \pkg{parallel}.)  \code{mclapply()}, \code{pvec()}
@@ -5206,8 +5206,8 @@
        found or (unlikely) if they are too old.
 
        Linux users should check that the \samp{-devel} or \samp{-dev}
-       versions of packages \samp{zlib}, \samp{bzip2}/\samp{libbz2} and
-       \samp{pcre} as well as \samp{xz-devel}/\samp{liblzma-dev} (or
+       versions of packages \verb{zlib}, \verb{bzip2}/\verb{libbz2} and
+       \verb{pcre} as well as \verb{xz-devel}/\verb{liblzma-dev} (or
        similar names) are installed.
 
        \item \command{configure} by default looks for the
@@ -5311,8 +5311,8 @@
     The following are currently in place.
     \itemize{
       \item Installation using external binary distributions
-      of \samp{zlib}, \samp{bzip2}, \samp{liblzma}, \samp{pcre},
-      \samp{libpng}, \samp{jpeglib} and \samp{libtiff} is now required,
+      of \verb{zlib}, \verb{bzip2}, \verb{liblzma}, \verb{pcre},
+      \verb{libpng}, \verb{jpeglib} and \verb{libtiff} is now required,
       and the build instructions have been revised.
 
       \item A new \command{make} target \code{rsync-extsoft} has been

@@ -450,8 +450,8 @@ CHANGES IN R 3.6.0:
       "double".
 
     • sQuote() and dQuote() get an explicit q argument with obvious
-      default instead of using getOption("fancyQuotes") implicitly and
-      unconditionally.
+      default instead of using getOption("useFancyQuotes") implicitly
+      and unconditionally.
 
     • unzip() can list archives with comments and with spaces in file
       names even using an external unzip command.
@@ -1569,8 +1569,8 @@ CHANGES IN R 3.5.0:
       alternate representations of basic R objects (ALTREP).  The
       framework is still experimental and may undergo changes in future
       R releases as more experience is gained. For now, documentation
-      is provided in <URL:
-      https://svn.r-project.org/R/branches/ALTREP/ALTREP.html>.
+      is provided in
+      <https://svn.r-project.org/R/branches/ALTREP/ALTREP.html>.
 
   UTILITIES:
 
@@ -1777,7 +1777,7 @@ CHANGES IN R 3.5.0:
     • Subassignment with zero length vectors now coerces as documented
       (PR#17344).
       Further, x <- numeric(); x[1] <- character() now signals an error
-      ‘replacement has length zero’ (or a translation of that) instead
+      “replacement has length zero” (or a translation of that) instead
       of doing nothing.
 
     • (Package parallel.)  mclapply(), pvec() and mcparallel() (when
@@ -1981,8 +1981,8 @@ CHANGES IN R 3.4.2:
       getOption("width")-line no longer erroneously repeats choices.
       (PR#17312)
 
-    • length()<- on a pairlist succeeds.  (<URL:
-      https://stat.ethz.ch/pipermail/r-devel/2017-July/074680.html>)
+    • length()<- on a pairlist succeeds.
+      (<https://stat.ethz.ch/pipermail/r-devel/2017-July/074680.html>)
 
     • Language objects such as quote(("\n")) or R functions are
       correctly printed again, where R 3.4.1 accidentally duplicated
@@ -2618,7 +2618,7 @@ CHANGES IN R 3.4.0:
 
     • (Windows only) Tcl/Tk version 8.6.4 is now included in the binary
       builds.  The tcltk*.chm help file is no longer included; please
-      consult the online help at <URL: http://www.tcl.tk/man/> instead.
+      consult the online help at <http://www.tcl.tk/man/> instead.
 
     • The version of LAPACK included in the sources has been updated to
       3.7.0: no new routines have been added to R.
@@ -2804,16 +2804,16 @@ CHANGES IN R 3.4.0:
 
     • Reading from file("stdin") now also closes the connection and
       hence no longer leaks memory when reading from a full pipe,
-      thanks to Gábor Csárdi, see thread starting at <URL:
-      https://stat.ethz.ch/pipermail/r-devel/2016-November/073360.html>.
+      thanks to Gábor Csárdi, see thread starting at
+      <https://stat.ethz.ch/pipermail/r-devel/2016-November/073360.html>.
 
     • Failure to create file in tempdir() for compressed pdf() graphics
       device no longer errors (then later segfaults).  There is now a
       warning instead of error and compression is turned off for the
       device.  Thanks to Alec Wysoker (PR#17191).
 
-    • Asking for methods() on "|" returns only S3 methods. See <URL:
-      https://stat.ethz.ch/pipermail/r-devel/2016-December/073476.html>.
+    • Asking for methods() on "|" returns only S3 methods. See
+      <https://stat.ethz.ch/pipermail/r-devel/2016-December/073476.html>.
 
     • dev.capture() using Quartz Cocoa device (macOS) returned invalid
       components if the back-end chose to use ARGB instead of RGBA
@@ -3301,8 +3301,8 @@ CHANGES IN R 3.3.0:
       Code for restoring snapshots was contributed by Jeroen Ooms and
       JJ Allaire.
 
-      Some testing code is available at <URL:
-      https://github.com/pmur002/R-display-list>.
+      Some testing code is available at
+      <https://github.com/pmur002/R-display-list>.
 
     • tools::undoc(dir = D) and codoc(dir = D) now also work when D is
       a directory whose normalizePath()ed version does not end in the
@@ -3729,7 +3729,7 @@ CHANGES IN R 3.2.4:
     • smooth(x, *) now also works for long vectors.
 
     • tools::texi2dvi() has a workaround for problems with the texi2dvi
-      script supplied by texinfo 6.1.
+      script supplied by Texinfo 6.1.
 
       It extracts more error messages from the LaTeX logs when in
       emulation mode.
@@ -4054,7 +4054,7 @@ CHANGES IN R 3.2.2:
     • cmdscale() gets new option list. for increased flexibility when a
       list should be returned.
 
-    • configure now supports texinfo version 6.0, which (unlike the
+    • configure now supports Texinfo version 6.0, which (unlike the
       change from 4.x to 5.0) is a minor update.  (Wish of PR#16456.)
 
     • (Non-Windows only) download.file() with default method = "auto"
@@ -4618,9 +4618,9 @@ CHANGES IN R 3.2.0:
       packages zlib, bzip2/libbz2 and pcre as well as
       xz-devel/liblzma-dev (or similar names) are installed.
 
-    • configure by default looks for the texi2any script from texinfo
+    • configure by default looks for the texi2any script from Texinfo
       5.1 or later, rather than the makeinfo program.  (makeinfo is a
-      link to the Perl script texi2any in texinfo 5.x.)
+      link to the Perl script texi2any in Texinfo 5.x.)
 
     • R CMD INSTALL gains an option --built-timestamp=STAMP allowing
       100% reproducible package building, thanks to Dirk Eddelbuettel.
@@ -4712,7 +4712,7 @@ CHANGES IN R 3.2.0:
     • A new make target rsync-extsoft has been added to obtain copies
       of the external libraries from CRAN.
 
-    • Building the manuals now requires texi2any from texinfo 5.1 or
+    • Building the manuals now requires texi2any from Texinfo 5.1 or
       later.  CRAN binary builds include the manuals, but by default
       builds from source will not, and they will be accessed from CRAN.
       See the comments in src/gnuwin32/MkRules.dist for how to specify
@@ -4869,7 +4869,7 @@ CHANGES IN R 3.1.3:
     • The included version of PCRE has been updated to 8.36.
 
     • configure accepts MAKEINFO=texi2any as another way to ensure
-      texinfo 5.x is used when both 5.x and 4.x are installed.
+      Texinfo 5.x is used when both 5.x and 4.x are installed.
 
   UTILITIES:
 
@@ -5036,8 +5036,8 @@ CHANGES IN R 3.1.2:
       locale in use (if any).
 
     • utils::URLencode() was updated to use unreserved and reserved
-      characters from RFC 3986 (<URL:
-      http://tools.ietf.org/html/rfc3986>) instead of RFC 1738.
+      characters from RFC 3986
+      (<https://www.rfc-editor.org/rfc/rfc3986>) instead of RFC 1738.
 
     • unique(warnings()) and c(warnings()) are now supported.
 
@@ -5083,7 +5083,7 @@ CHANGES IN R 3.1.2:
 
     • R CMD check now reports empty importFrom declarations in a
       NAMESPACE file, as these are common errors (writing
-      importFrom(Pkg) where import(Pkg) was intended).
+      importFrom(<Pkg>) where import(<Pkg>) was intended).
 
     • R CMD check now by default checks code usage directly on the
       package namespace without loading and attaching the package and
@@ -5703,7 +5703,7 @@ CHANGES IN R 3.1.0:
       the maximum number of cores to be used in parallel. (It is worth
       specifying at least 8 cores if available.)  Most of these require
       a make program (such as GNU make and dmake) which supports the
-      $MAKE -j nproc syntax.
+      ${MAKE} -j nproc syntax.
 
       Except on Windows: the tests of standard package examples in make
       check are done in parallel.  This also applies to running
@@ -5745,7 +5745,7 @@ CHANGES IN R 3.1.0:
       Rinternals.h. This may become the default in the future.
 
     • There is a new option --use-system-tre to use a suitable system
-      tre library: at present this means a version from their git
+      TRE library: at present this means a version from their git
       repository, after corrections.  (Wish of PR#15660.)
 
   PACKAGE INSTALLATION:
@@ -6022,12 +6022,11 @@ CHANGES IN R 3.0.3:
   NEW FEATURES:
 
     • On Windows there is support for making .texi manuals using
-      texinfo 5.0 or later: the setting is in file
+      Texinfo 5.0 or later: the setting is in file
       src/gnuwin32/MkRules.dist.
 
-      A packaging of the Perl script and modules for texinfo 5.2 has
-      been made available at <URL:
-      http://www.stats.ox.ac.uk/pub/Rtools/>.
+      A packaging of the Perl script and modules for Texinfo 5.2 has
+      been made available at <http://www.stats.ox.ac.uk/pub/Rtools/>.
 
     • write.table() now handles matrices of 2^31 or more elements, for
       those with large amounts of patience and disc space.
@@ -6480,8 +6479,8 @@ CHANGES IN R 3.0.2:
 
   INSTALLATION and INCLUDED SOFTWARE:
 
-    • The macros used for the texinfo manuals have been changed to work
-      better with the incompatible changes made in texinfo 5.x.
+    • The macros used for the Texinfo manuals have been changed to work
+      better with the incompatible changes made in Texinfo 5.x.
 
     • The minimum version for a system xz library is now 5.0.3 (was
       4.999).  This is in part to avoid 5.0.2, which can compress in
