@@ -567,7 +567,7 @@ getOption(x, default = NULL)
       and \code{identify} be confirmed by a bell?  Default \code{TRUE}.
       Honoured at least on \code{X11} and \code{windows} devices.}
 
-    \item{\code{windowsTimeout}:}{(Windows-only) integer vector of length 2
+    \item{\code{windowsTimeouts}:}{(Windows-only) integer vector of length 2
       representing two times in milliseconds.  These control the
       double-buffering of \code{\link{windows}} devices when that is
       enabled: the first is the delay after plotting finishes
