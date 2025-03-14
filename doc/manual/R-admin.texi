@@ -4439,7 +4439,8 @@ To build in a separate directory you need a @command{make} that supports
 the @code{VPATH} variable, for example @acronym{GNU} @command{make} and
 @command{dmake}.
 
-If you want to use a @command{make} by another name, for example if your
+If you want to use a @command{make} by another name, for example
+@command{bmake} (a port of @I{NetBSD} make) on Linux or if your
 @acronym{GNU} @command{make} is called @samp{gmake}, you need to set the
 variable @code{MAKE} at configure time, for example
 
