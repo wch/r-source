@@ -13176,7 +13176,7 @@ failed.  There are also @code{Rf_asInteger}, @code{Rf_asReal} and
 All of these functions ignore any elements of an input vector after the
 first.
 
-@code{Rf_aaRboolean} is a stricter version of @code{Rf_asLogical}
+@code{Rf_asRboolean} is a stricter version of @code{Rf_asLogical}
 introduced in @R{}@tie{}4.5.0.  It returns type @code{Rboolean} and
 gives an error for an input of length other than one, and for
 coercion failure. @code{Rf_asBool} is a variant returning the

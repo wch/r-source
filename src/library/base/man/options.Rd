@@ -1,6 +1,6 @@
 % File src/library/base/man/options.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2024 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{options}
@@ -567,7 +567,7 @@ getOption(x, default = NULL)
       and \code{identify} be confirmed by a bell?  Default \code{TRUE}.
       Honoured at least on \code{X11} and \code{windows} devices.}
 
-    \item{\code{windowsTimeout}:}{(Windows-only) integer vector of length 2
+    \item{\code{windowsTimeouts}:}{(Windows-only) integer vector of length 2
       representing two times in milliseconds.  These control the
       double-buffering of \code{\link{windows}} devices when that is
       enabled: the first is the delay after plotting finishes
@@ -576,7 +576,7 @@ getOption(x, default = NULL)
       device is opened are used.}
   }
 }
-\section{Other options used by package graphics}{
+\section{Other options used by package \pkg{graphics}}{
   \describe{
     \item{\code{max.contour.segments}:}{positive integer, defaulting to
       \code{25000} if not set.  A limit on the number of
@@ -584,8 +584,8 @@ getOption(x, default = NULL)
       \code{\link{contourLines}}.}
   }
 }
-\section{Options set in package stats}{
-  These will be set when package \pkg{stats} (or its namespace)
+\section{Options set (or used) in package \pkg{stats}}{
+  Most of these will be set when package \pkg{stats} (or its namespace)
   is loaded if not already set.
   \describe{
     \item{\code{contrasts}:}{the default \code{\link{contrasts}} used in
@@ -604,10 +604,13 @@ getOption(x, default = NULL)
       \code{\link{printCoefmat}}.}
 
     \item{\code{show.nls.convergence}:}{logical, should \code{\link{nls}}
-      convergence messages be printed for successful fits?}
+      convergence messages be printed for successful fits?
+      Initially unset, which means \code{TRUE}.}
 
     \item{\code{show.signif.stars}:}{logical, should stars be printed on
       summary tables of coefficients?  See \code{\link{printCoefmat}}.}
+
+    \item{\code{str.dendrogram.last}:}{see \code{\link{str.dendrogram}}.}
 
     \item{\code{ts.eps}:}{the relative tolerance for certain time series
       (\code{\link{ts}}) computations.  Default \code{1e-05}.}
@@ -617,9 +620,11 @@ getOption(x, default = NULL)
       \code{log} in \code{\link{plot.spec}}.}
   }
 }
-\section{Options set (or used) in package utils}{
-  These will be set (apart from \code{Ncpus}) when package \pkg{utils}
-  (or its namespace) is loaded if not already set.
+\section{Options set (or used) in package \pkg{utils}}{
+  Many of these will be set when package \pkg{utils} (or its namespace)
+  is loaded if not already set.
+  % apart from, e.g., "ccaddress", "help.ports", "help_type",
+  % "help.htmlmath", "help.htmltoc", "install.lock", "Ncpus"
   \describe{
     \item{\code{BioC_mirror}:}{The URL of a Bioconductor mirror
       for use by \code{\link{setRepositories}},
@@ -786,8 +791,6 @@ local({
     \item{\code{str}:}{a list of options controlling the default
       \code{\link{str}} display. Defaults to \code{\link{strOptions}()}.}
 
-    \item{\code{str.dendrogram.last}:}{see \code{\link{str.dendrogram}}.}
-
     \item{\code{SweaveHooks}, \code{SweaveSyntax}:}{
       see \code{\link{Sweave}}.
     }
@@ -806,7 +809,7 @@ local({
 
   }
 }
-\section{Options set in package parallel}{
+\section{Options set in package \pkg{parallel}}{
   These will be set when package \pkg{parallel} (or its namespace)
   is loaded if not already set.
   \describe{
