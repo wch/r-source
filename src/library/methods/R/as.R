@@ -1,7 +1,7 @@
 #  File src/library/methods/R/as.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2019 The R Core Team
+#  Copyright (C) 1995-2025 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -91,6 +91,9 @@ as <-
 	    }
         }
     }
+    environment(asMethod) <- asMethodEnv <- new.env(parent = environment(asMethod))
+    loadMethod(asMethod, envir = asMethodEnv)
+    assign(".Generic", asMethod@generic, envir = asMethodEnv)
     if(strict)
         asMethod(object)
     else
