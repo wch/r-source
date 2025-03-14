@@ -32,7 +32,14 @@
 
   \subsection{C-LEVEL FACILITIES}{
     \itemize{
-      \item .
+      \item \code{Rboolean} has been replaced by \code{bool} in header
+      \file{R_ext/Boolean.h}.  As \code{bool} is usually stored in one
+      byte and \code{Rboolean} in four, this is likely to necessitate a
+      complete re-install (of \R, packages with compiled code and
+      alternative front-ends).
+
+      To ease detection of which version is in use, this one defines
+      \code{R_NEW-RBOOLEAN}.
     }
   }
 }
