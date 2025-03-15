@@ -1,6 +1,6 @@
 /*
  *  Mathlib : A C Library of Special Functions
- *  Copyright (C) 2000-2020 The R Core Team
+ *  Copyright (C) 2000-2025 The R Core Team
  *  Copyright (C) 2005-2020 The R Foundation
  *  Copyright (C) 1998 Ross Ihaka
  *
@@ -84,21 +84,6 @@ double rhyper(double nn1in, double nn2in, double kkin)
 {
     /* extern double afc(int); */
 
-    int nn1, nn2, kk;
-    int ix; // return value (coerced to double at the very end)
-    bool setup1, setup2;
-
-    /* These should become 'thread_local globals' : */
-    static int ks = -1, n1s = -1, n2s = -1;
-    static int m, minjx, maxjx;
-    static int k, n1, n2; // <- not allowing larger integer par
-    static double N;
-
-    // II :
-    static double w;
-    // III:
-    static double a, d, s, xl, xr, kl, kr, lamdl, lamdr, p1, p2, p3;
-
     /* check parameter validity */
 
     if(!R_FINITE(nn1in) || !R_FINITE(nn2in) || !R_FINITE(kkin))
@@ -113,6 +98,9 @@ double rhyper(double nn1in, double nn2in, double kkin)
     if (nn1in >= INT_MAX || nn2in >= INT_MAX || kkin >= INT_MAX) {
 	/* large n -- evade integer overflow (and inappropriate algorithms)
 	   -------- */
+#ifdef DEBUG_rhyper
+	REprintf("rhyper(nn1=%.0f, nn2=%.0f, kk=%.0f): 'large n' case\n", nn1in, nn2in, kkin);
+#endif
         // FIXME: Much faster to give rbinom() approx when appropriate; -> see Kuensch(1989)
 	// Johnson, Kotz,.. p.258 (top) mention the *four* different binomial approximations
 	if(kkin == 1.) { // Bernoulli
@@ -123,10 +111,19 @@ double rhyper(double nn1in, double nn2in, double kkin)
 		      /*lower_tail =*/ false, /*log_p = */ false);
 	// lower_tail=false: a thinko, is still "correct" as equiv. to  U <--> 1-U
     }
-    nn1 = (int)nn1in;
-    nn2 = (int)nn2in;
-    kk  = (int)kkin;
 
+    int
+	nn1 = (int)nn1in,
+	nn2 = (int)nn2in,
+	kk  = (int)kkin;
+
+    /* These should become 'thread_local globals' : */
+    static int ks = -1, n1s = -1, n2s = -1;
+    static int m, minjx, maxjx;
+    static int k, n1, n2; // <- not allowing larger integer par
+    static double N;
+
+    bool setup1, setup2;
     /* if new parameter values, initialize */
     if (nn1 != n1s || nn2 != n2s) { // n1 | n2 is changed: setup all
 	setup1 = true;	setup2 = true;
@@ -152,6 +149,7 @@ double rhyper(double nn1in, double nn2in, double kkin)
 	} else {
 	    k = kk;
 	}
+	// now have  k < N/2 = (n1+n2)/2
     }
     if (setup1 || setup2) {
 	m = (int) ((k + 1.) * (n1 + 1.) / (N + 2.)); // m := floor(adjusted mean E[.])
@@ -162,7 +160,14 @@ double rhyper(double nn1in, double nn2in, double kkin)
 		 nn1, nn2, kk, m, minjx, maxjx);
 #endif
     }
-    /* generate random variate --- Three basic cases */
+#ifdef DEBUG_rhyper
+    else
+	REprintf("rhyper(n1=%d, n2=%d, k=%d); setup UNchanged\n", nn1, nn2, kk);
+#endif
+
+    // generate random variate --- Three basic cases ---------------------------
+
+    int ix; // return value (coerced to double at the very end) .. FIXME?? what if overflows
 
     if (minjx == maxjx) { /* I: degenerate distribution ---------------- */
 #ifdef DEBUG_rhyper
@@ -174,9 +179,11 @@ double rhyper(double nn1in, double nn2in, double kkin)
     } else if (m - minjx < 10) { // II: (Scaled) algorithm HIN (inverse transformation) ----
 	const static double scale = 1e25; // scaling factor against (early) underflow
 	const static double con = 57.5646273248511421;
-					  // 25*log(10) = log(scale) { <==> exp(con) == scale }
+	          // 25*log(10) = log(scale) { <==> exp(con) == scale }
+	static double w,
+	    lw; // = log(w);  w = exp(lw) * scale = exp(lw + log(scale)) = exp(lw + con)
 	if (setup1 || setup2) {
-	    double lw; // log(w);  w = exp(lw) * scale = exp(lw + log(scale)) = exp(lw + con)
+	    // NB:  n1 <= n2  here
 	    if (k < n2) {
 		lw = afc(n2) + afc(n1 + n2 - k) - afc(n2 - k) - afc(n1 + n2);
 	    } else {
@@ -184,10 +191,16 @@ double rhyper(double nn1in, double nn2in, double kkin)
 	    }
 	    w = exp(lw + con);
 	}
-	double p, u;
+
 #ifdef DEBUG_rhyper
-	REprintf("rhyper(), branch II; w = %g > 0\n", w);
+	REprintf("  branch II; w = %g %s\n", w,
+		 (w > 0) ? "> 0" : "= 0 <==> Underflow __NOT GOOD__");
 #endif
+	if(w <= 0.)
+	    MATHLIB_ERROR(_("w = %g <= 0: Underflow in rhyper()  SHOULD NOT HAPPEN!"), w);
+	// FIXME: MM has code "rhyper.c+M3" for switching to log space if w == 0
+
+	double p, u;
       L10:
 	p = w;
 	ix = minjx;
@@ -210,40 +223,49 @@ double rhyper(double nn1in, double nn2in, double kkin)
 
     } else { /* III : H2PE Algorithm --------------------------------------- */
 
-	double u,v;
-
+	static double a, xl, xr, lamdl, lamdr, p1, p2, p3;
 	if (setup1 || setup2) {
-	    s = sqrt((N - k) * k * n1 * n2 / (N - 1) / N / N);
+	    double
+		s = sqrt((N - k) * k * n1 * n2 / (N - 1) / N / N),
 
-	    /* remark: d is defined in reference without int. */
-	    /* the truncation centers the cell boundaries at 0.5 */
-
-	    d = (int) (1.5 * s) + .5;
+		/* remark: d is defined in reference without int. */
+		/* the truncation centers the cell boundaries at 0.5 */
+		d = (int) (1.5 * s) + .5;
 	    xl = m - d + .5;
 	    xr = m + d + .5;
 	    a = afc(m) + afc(n1 - m) + afc(k - m) + afc(n2 - k + m);
-	    kl = exp(a - afc((int) (xl)) - afc((int) (n1 - xl))
-		     - afc((int) (k - xl))
-		     - afc((int) (n2 - k + xl)));
-	    kr = exp(a - afc((int) (xr - 1))
-		     - afc((int) (n1 - xr + 1))
-		     - afc((int) (k - xr + 1))
-		     - afc((int) (n2 - k + xr - 1)));
+	    double
+		kl = exp(a - afc((int) (xl)) - afc((int) (n1 - xl))
+			 - afc((int) (k - xl))
+			 - afc((int) (n2 - k + xl))),
+		kr = exp(a - afc((int) (xr - 1))
+			 - afc((int) (n1 - xr + 1))
+			 - afc((int) (k - xr + 1))
+			 - afc((int) (n2 - k + xr - 1)));
 	    lamdl = -log(xl * (n2 - k + xl) / (n1 - xl + 1) / (k - xl + 1));
 	    lamdr = -log((n1 - xr + 1) * (k - xr + 1) / xr / (n2 - k + xr));
 	    p1 = d + d;
 	    p2 = p1 + kl / lamdl;
 	    p3 = p2 + kr / lamdr;
-	}
 #ifdef DEBUG_rhyper
-	REprintf("rhyper(), branch III {accept/reject}: (xl,xr)= (%g,%g); (lamdl,lamdr)= (%g,%g)\n",
-		 xl, xr, lamdl,lamdr);
-	REprintf("-------- p123= c(%g,%g,%g)\n", p1,p2, p3);
+	    REprintf("rhyper(), branch III {accept/reject}: (xl,xr)= (%g,%g); lamdl,r = (%g,%g)\n",
+		     xl, xr, lamdl, lamdr);
+	    REprintf(" --------> (p1,p2,p3) = (%g,%g,%g)\n", p1,p2,p3);
+	}
+	else
+	    REprintf("rhyper(), branch III {accept/reject}: NO setup needed; lamdl,r = (%g,%g)\n",
+		     lamdl, lamdr);
+#else
+        }
 #endif
-	int n_uv = 0;
-      L30:
-	u = unif_rand() * p3;
-	v = unif_rand();
+
+	/* acceptance/rejection test */
+	bool reject = true;
+        int n_uv = 0;
+    do { // L30: -------------- acceptance / rejection : loop while reject=true -------------
+	double
+	    u = unif_rand() * p3,
+	    v = unif_rand();
 	n_uv++;
 	if(n_uv >= 10000) {
 	    REprintf("rhyper(*, n1=%d, n2=%d, k=%d): branch III: giving up after %d rejections\n",
@@ -256,20 +278,29 @@ double rhyper(double nn1in, double nn2in, double kkin)
 
 	if (u < p1) {		/* rectangular region */
 	    ix = (int) (xl + u);
+#ifdef DEBUG_rhyper
+	    REprintf(" rectangular: ix=%d\n", ix);
+#endif
 	} else if (u <= p2) {	/* left tail */
 	    ix = (int) (xl + log(v) / lamdl);
+#ifdef DEBUG_rhyper
+	    REprintf(" left tail: ix=%d %s", ix, (ix < minjx)? "< minjx (=> L30)\n" : ">= minjx;");
+#endif
 	    if (ix < minjx)
-		goto L30;
+		continue; // goto L30
 	    v = v * (u - p1) * lamdl;
 	} else {		/* right tail */
 	    ix = (int) (xr - log(v) / lamdr);
+#ifdef DEBUG_rhyper
+	    REprintf(" right tail: ix=%d %s", ix, (ix > maxjx)? "> maxjx (=> L30)\n" : "< maxjx;");
+#endif
 	    if (ix > maxjx)
-		goto L30;
+		continue; // goto L30
 	    v = v * (u - p2) * lamdr;
 	}
-
-	/* acceptance/rejection test */
-	bool reject = true;
+#ifdef DEBUG_rhyper
+	if(u >= p1) REprintf(" new v = %g\n", v);
+#endif
 
 	if (m < 100 || ix <= 50) {
 	    /* explicit evaluation */
@@ -278,15 +309,17 @@ double rhyper(double nn1in, double nn2in, double kkin)
 	       in the (m > ix) case, but the definition of the
 	       recurrence relation on p134 shows that the +1 is
 	       needed. */
-	    int i;
 	    double f = 1.0;
 	    if (m < ix) {
-		for (i = m + 1; i <= ix; i++)
+		for (int i = m + 1; i <= ix; i++)
 		    f = f * (n1 - i + 1) * (k - i + 1) / (n2 - k + i) / i;
 	    } else if (m > ix) {
-		for (i = ix + 1; i <= m; i++)
+		for (int i = ix + 1; i <= m; i++)
 		    f = f * i * (n2 - k + i) / (n1 - i + 1) / (k - i + 1);
 	    }
+#ifdef DEBUG_rhyper
+	    REprintf(" small m or ix: f = %g\n", f);
+#endif
 	    if (v <= f) {
 		reject = false;
 	    }
@@ -295,55 +328,50 @@ double rhyper(double nn1in, double nn2in, double kkin)
 	    const static double deltal = 0.0078;
 	    const static double deltau = 0.0034;
 
-	    double e, g, r, t, y;
-	    double de, dg, dr, ds, dt, gl, gu, nk, nm, ub;
-	    double xk, xm, xn, y1, ym, yn, yk, alv;
-
 #ifdef DEBUG_rhyper
 	    REprintf(" ... accept/reject 'large' case v=%g\n", v);
 #endif
 	    /* squeeze using upper and lower bounds */
-	    y = ix;
-	    y1 = y + 1.0;
-	    ym = y - m;
-	    yn = n1 - y + 1.0;
-	    yk = k - y + 1.0;
-	    nk = n2 - k + y1;
-	    r = -ym / y1;
-	    s = ym / yn;
-	    t = ym / yk;
-	    e = -ym / nk;
-	    g = yn * yk / (y1 * nk) - 1.0;
-	    dg = 1.0;
-	    if (g < 0.0)
-		dg = 1.0 + g;
-	    gu = g * (1.0 + g * (-0.5 + g / 3.0));
-	    gl = gu - .25 * (g * g * g * g) / dg;
-	    xm = m + 0.5;
-	    xn = n1 - m + 0.5;
-	    xk = k - m + 0.5;
-	    nm = n2 - k + xm;
-	    ub = y * gu - m * gl + deltau
+	    double
+		y = ix,
+		y1 = y + 1.0,
+		ym = y - m,
+		yn = n1 - y + 1.0,
+		yk = k  - y + 1.0,
+		nk = n2 - k + y1,
+		r = -ym / y1,
+		s =  ym / yn,
+		t =  ym / yk,
+		e = -ym / nk,
+		g = yn * yk / (y1 * nk) - 1.0,
+		dg = (g < 0.0) ? 1. + g : 1.,
+		gu = g * (1.0 + g * (-0.5 + g / 3.0)),
+		gl = gu - .25 * (g * g * g * g) / dg,
+		xm = m + 0.5,
+		xn = n1 - m + 0.5,
+		xk = k - m + 0.5,
+		nm = n2 - k + xm,
+		ub = y * gu - m * gl + deltau
 		+ xm * r * (1. + r * (-0.5 + r / 3.0))
 		+ xn * s * (1. + s * (-0.5 + s / 3.0))
 		+ xk * t * (1. + t * (-0.5 + t / 3.0))
 		+ nm * e * (1. + e * (-0.5 + e / 3.0));
 	    /* test against upper bound */
-	    alv = log(v);
+	    double alv = log(v);
 	    if (alv > ub) {
 		reject = true;
 	    } else {
-				/* test against lower bound */
-		dr = xm * (r * r * r * r);
-		if (r < 0.0)
+		/* test against lower bound */
+		double dr = xm * (r * r * r * r);
+		if (r < 0.)
 		    dr /= (1.0 + r);
-		ds = xn * (s * s * s * s);
+		double ds = xn * (s * s * s * s);
 		if (s < 0.0)
 		    ds /= (1.0 + s);
-		dt = xk * (t * t * t * t);
+		double dt = xk * (t * t * t * t);
 		if (t < 0.0)
 		    dt /= (1.0 + t);
-		de = nm * (e * e * e * e);
+		double de = nm * (e * e * e * e);
 		if (e < 0.0)
 		    de /= (1.0 + e);
 		if (alv < ub - 0.25 * (dr + ds + dt + de)
@@ -361,9 +389,9 @@ double rhyper(double nn1in, double nn2in, double kkin)
 		    }
 		}
 	    }
-	} // else
-	if (reject)
-	    goto L30;
+	} // end{ III "large" }
+
+    } while (reject);
 
     } // end{branch III}
 
