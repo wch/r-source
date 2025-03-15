@@ -212,6 +212,6 @@ kappa(A, exact=TRUE) # 8.675057e+15 ( 2-norm )
 
 ## now for the 1-norm :
 try(kappa(A, exact=TRUE, norm = "1")) #-> Error: computationally singular
-    kappa(A, exact=TRUE, norm = "1", inv_z = solve(A, tol = 1e-19)) ## 5.22057e16
+try(kappa(A, exact=TRUE, norm = "1", inv_z = solve(A, tol = 1e-19))) ## 5.22057e16 on x86_64 Linux with GCC
 }
 \keyword{math}
