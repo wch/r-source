@@ -10436,17 +10436,16 @@ more complicated.  See the @I{rw-FAQ}.
 @cindex Inspecting R objects when debugging
 
 The key to inspecting @R{} objects from compiled code is the function
-@code{PrintValue(SEXP @var{s})} which uses the normal @R{} printing
-mechanisms to print the @R{} object pointed to by @var{s}, or the safer
-version @code{R_PV(SEXP @var{s})} which will only print `objects'.
+@code{Rf_PrintValue(SEXP @var{s})} which uses the normal @R{} printing
+mechanisms to print the @R{} object pointed to by @var{s}, or
+@code{R_PV(SEXP @var{s})} which will only print `objects'.
 @apifun Rf_PrintValue
 
-One way to make use of @code{PrintValue} is to insert suitable calls
+One way to make use of @code{Rf_PrintValue} is to insert suitable calls 
 into the code to be debugged.
 
 Another way is to call @code{R_PV} from the symbolic debugger.
-(@code{PrintValue} is hidden as @code{Rf_PrintValue}.)  For example,
-from @code{gdb} we can use
+For example, from @code{gdb} we can use
 
 @example
 (gdb) p R_PV(ab)
