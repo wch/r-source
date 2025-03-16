@@ -431,7 +431,7 @@ loadNamespace <- function (package, lib.loc = NULL,
         ## moved from library() in R 3.4.0
         checkLicense <- function(pkg, pkgInfo, pkgPath)
         {
-            L <- tools:::analyze_license(pkgInfo$DESCRIPTION["License"])
+            L <- tools::analyze_license(pkgInfo$DESCRIPTION["License"])
             if(!L$is_empty && !L$is_verified) {
                 site_file <-
                     path.expand(file.path(R.home("etc"), "licensed.site"))

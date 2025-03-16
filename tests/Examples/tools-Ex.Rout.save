@@ -1,6 +1,6 @@
 
-R Under development (unstable) (2024-09-20 r87182) -- "Unsuffered Consequences"
-Copyright (C) 2024 The R Foundation for Statistical Computing
+R Under development (unstable) (2025-03-15 r87978) -- "Unsuffered Consequences"
+Copyright (C) 2025 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -96,8 +96,8 @@ $status
 
 $stdout
  [1] ""                                                                                 
- [2] "R Under development (unstable) (2024-09-20 r87182) -- \"Unsuffered Consequences\""
- [3] "Copyright (C) 2024 The R Foundation for Statistical Computing"                    
+ [2] "R Under development (unstable) (2025-03-15 r87978) -- \"Unsuffered Consequences\""
+ [3] "Copyright (C) 2025 The R Foundation for Statistical Computing"                    
  [4] "Platform: x86_64-pc-linux-gnu"                                                    
  [5] ""                                                                                 
  [6] "R is free software and comes with ABSOLUTELY NO WARRANTY."                        
@@ -112,10 +112,10 @@ $stdout
 [15] "'help.start()' for an HTML browser interface to help."                            
 [16] "Type 'q()' to quit R."                                                            
 [17] ""                                                                                 
-[18] "> x <- readRDS(\"/tmp/RtmppU3jOk/runri1222936a0e6877\")"                          
+[18] "> x <- readRDS(\"/tmp/RtmpdMEyMD/runri27c6bb59ea22a0\")"                          
 [19] "> options(repos = x$repos)"                                                       
 [20] "> y <- tryCatch(list(do.call(x$fun, x$args, quote = TRUE)), error = identity)"    
-[21] "> saveRDS(y, \"/tmp/RtmppU3jOk/runro1222932d23e62e\")"                            
+[21] "> saveRDS(y, \"/tmp/RtmpdMEyMD/runro27c6bb1ae7e9dc\")"                            
 [22] "> "                                                                               
 
 $stderr
@@ -280,7 +280,7 @@ Error in assertWarning(ff()) :
 > bibstyle("unsorted", sortKeys = function(refs) seq_along(refs),
 +     fmtPrefix = function(paper) paste0("[", paper$.index, "]"),
 +        .init = TRUE)
-<environment: 0x55a55e43e3c0>
+<environment: 0x55cb7849ff00>
 > print(refs, .bibstyle = "unsorted")
 [1] R Core Team (2013). _R: A Language and Environment for Statistical
 Computing_. R Foundation for Statistical Computing, Vienna, Austria.
@@ -723,6 +723,231 @@ attr(,"match.length")
 > 
 > ### ** Examples
 > 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("licensetools")
+> ### * licensetools
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: licensetools
+> ### Title: License Tools
+> ### Aliases: analyze_license
+> 
+> ### ** Examples
+> 
+> ## Examples from section 'Licenses' of 'Writing R Extensions':
+> analyze_license("GPL-2")
+$is_empty
+[1] FALSE
+
+$is_canonical
+[1] TRUE
+
+$bad_components
+character(0)
+
+$is_standardizable
+[1] TRUE
+
+$is_verified
+[1] TRUE
+
+$standardization
+[1] "GPL-2"
+
+$components
+[1] "GPL-2"
+
+$expansions
+$expansions[[1]]
+[1] "GPL-2"
+
+
+$extensions
+NULL
+
+$pointers
+NULL
+
+$is_FOSS
+[1] TRUE
+
+$restricts_use
+[1] FALSE
+
+> analyze_license("LGPL (>= 2.0, < 3) | Mozilla Public License")
+$is_empty
+[1] FALSE
+
+$is_canonical
+[1] TRUE
+
+$bad_components
+character(0)
+
+$is_standardizable
+[1] TRUE
+
+$is_verified
+[1] TRUE
+
+$standardization
+[1] "LGPL (>= 2.0, < 3) | Mozilla Public License"
+
+$components
+[1] "LGPL (>= 2.0, < 3)"     "Mozilla Public License"
+
+$expansions
+$expansions[[1]]
+[1] "LGPL-2"   "LGPL-2.1"
+
+$expansions[[2]]
+[1] "MPL version 1.0" "MPL version 1.1" "MPL version 2.0"
+
+
+$extensions
+NULL
+
+$pointers
+NULL
+
+$is_FOSS
+[1] TRUE
+
+$restricts_use
+[1] FALSE
+
+> analyze_license("GPL-2 | file LICENCE")
+$is_empty
+[1] FALSE
+
+$is_canonical
+[1] TRUE
+
+$bad_components
+character(0)
+
+$is_standardizable
+[1] TRUE
+
+$is_verified
+[1] TRUE
+
+$standardization
+[1] "GPL-2 | file LICENCE"
+
+$components
+[1] "GPL-2"        "file LICENCE"
+
+$expansions
+$expansions[[1]]
+[1] "GPL-2"
+
+$expansions[[2]]
+[1] "file LICENCE"
+
+
+$extensions
+NULL
+
+$pointers
+[1] "LICENCE"
+
+$is_FOSS
+[1] TRUE
+
+$restricts_use
+[1] FALSE
+
+> analyze_license("GPL (>= 2) | BSD_3_clause + file LICENSE")
+$is_empty
+[1] FALSE
+
+$is_canonical
+[1] TRUE
+
+$bad_components
+character(0)
+
+$is_standardizable
+[1] TRUE
+
+$is_verified
+[1] TRUE
+
+$standardization
+[1] "GPL (>= 2) | BSD_3_clause + file LICENSE"
+
+$components
+[1] "GPL (>= 2)"                  "BSD_3_clause + file LICENSE"
+
+$expansions
+$expansions[[1]]
+[1] "GPL-2" "GPL-3"
+
+$expansions[[2]]
+[1] "BSD_3_clause + file LICENSE"
+
+
+$extensions
+                   components extensible
+1 BSD_3_clause + file LICENSE       TRUE
+
+$pointers
+[1] "LICENSE"
+
+$is_FOSS
+[1] TRUE
+
+$restricts_use
+[1] FALSE
+
+> analyze_license("Artistic-2.0 | AGPL-3 + file LICENSE")
+$is_empty
+[1] FALSE
+
+$is_canonical
+[1] TRUE
+
+$bad_components
+character(0)
+
+$is_standardizable
+[1] TRUE
+
+$is_verified
+[1] TRUE
+
+$standardization
+[1] "Artistic-2.0 | AGPL-3 + file LICENSE"
+
+$components
+[1] "Artistic-2.0"          "AGPL-3 + file LICENSE"
+
+$expansions
+$expansions[[1]]
+[1] "Artistic-2.0"
+
+$expansions[[2]]
+[1] "AGPL-3 + file LICENSE"
+
+
+$extensions
+             components extensible
+1 AGPL-3 + file LICENSE       TRUE
+
+$pointers
+[1] "LICENSE"
+
+$is_FOSS
+[1] TRUE
+
+$restricts_use
+[1] FALSE
+
 > 
 > 
 > 
@@ -1353,7 +1578,7 @@ needs Deep Thought
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  0.333 0.016 0.729 0.293 0.082 
+Time elapsed:  0.389 0 0.763 0.293 0.075 
 > grDevices::dev.off()
 null device 
           1 
