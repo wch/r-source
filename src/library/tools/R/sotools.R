@@ -1064,7 +1064,7 @@ function(file = "symbols.rds")
     ## sub-directories" of WRE.
     if(length(pkglibs)) {
         files <- list.files("..", recursive = TRUE, pattern = "[.]a$",
-                            full.names = TRUE)
+                            all.files = TRUE, full.names = TRUE)
         if(any(ind <- startsWith(files, "../src/")))
             files[ind] <- substring(files[ind], 8L)
         ## Case A: local static libs given via their path.
