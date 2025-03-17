@@ -71,6 +71,8 @@ export("check_package_urls",
 
 export("R")
 
+export("analyze_license")
+
 exportPattern("^SIG.+")
 
 S3method("[", "check_details_changes")
