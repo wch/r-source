@@ -1262,8 +1262,7 @@ function(ifile, encoding = "unknown", ...)
     aspell_filter_LaTeX_worker(readLines(ifile, encoding = encoding),
                                ...)
 aspell_filter_LaTeX_worker <-
-function(x, vrbs = c("verbatim", "verbatim*", "Sinput", "Soutput"),
-         cmds = NULL, envs = NULL)
+function(x, cmds = NULL, envs = NULL, parser = tools::parseLatex, ...)
 {
     ranges <- list()
     chrran <- function(e) getSrcref(e)[c(1L, 5L, 3L, 6L)]
@@ -1316,7 +1315,7 @@ function(x, vrbs = c("verbatim", "verbatim*", "Sinput", "Soutput"),
         }
     }
 
-    recurse(tools::parseLatex(x, verbatim = vrbs))
+    recurse(parser(x, ...))
     blank_out_character_ranges(x, ranges)
 }
 
