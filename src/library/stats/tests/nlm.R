@@ -17,6 +17,7 @@
 ## nlm()  testing  ---- partly same as in ../demo/nlm.R
 ## NB: Strict regression tests -- output not "looked at"
 library(stats)
+str <- utils::str
 
 ## "truly 64 bit platform"
 ##  {have seen "x86-64" (instead of "x86_64") on Windows 2008 server}
@@ -53,7 +54,7 @@ nlm3 <- function(x0, ...) {
          nl.fgh= nlm(fgh, x0, ...))
 }
 
-utils::str(l3.0 <- nlm3(x0 = c(-1.2, 1)))
+str(l3.0 <- nlm3(x0 = c(-1.2, 1)))
 
 chkNlm <- function(nlL, estimate, tols, codes.wanted = 1:2)
 {
@@ -65,16 +66,17 @@ chkNlm <- function(nlL, estimate, tols, codes.wanted = 1:2)
     p <- length(estimate)
     n <- length(nlL)
     tols <- lapply(tols, rep_len, length.out = n)
-    cat("delta.estim.:\n")
-    print(d.est <- abs(vapply(nlL, `[[`, estimate, "estimate") - estimate))
-    stopifnot(
-        vapply(nlL, `[[`, pi, "minimum") <= tols$min,
-        ##----
-        d.est <= rep(tols$est, each=p),
-        ##----
-        abs(vapply(nlL, `[[`, c(0,0), "gradient")) <= rep(tols$grad, each=p),
-        ##----
-        vapply(nlL, `[[`, 0L, "code") %in% codes.wanted)
+    myPrt <- function(x, digits = 3, ...) print(x, digits=digits, ...)
+    cat("delta(estim.) :\n");  myPrt(d.est <- abs(vapply(nlL, `[[`, estimate, "estimate") - estimate))
+    cat('return "code"s:\n');  myPrt(codes <-     vapply(nlL, `[[`, 0L, "code"))
+    cat('"minimum"s:\n'    );  myPrt(mins  <-     vapply(nlL, `[[`, .5, "minimum"))
+    cat('|"gradient"|s:\n' );  myPrt(grads <- abs(vapply(nlL, `[[`, c(0,0), "gradient")))
+    stopifnot(mins  <= tols$min
+            , d.est <= rep(tols$est, each=p)
+            , grads <= rep(tols$grad, each=p)
+              ##----
+            , codes %in% codes.wanted
+              )
 }
 
 chkNlm(l3.0, estimate = c(1,1),
@@ -84,12 +86,11 @@ chkNlm(l3.0, estimate = c(1,1),
                    grad= c(1e-6, 9e-9, 7e-7)))
 
 
-
 ## nl.fgh, the one with the Hessian had failed in R <= 3.4.0
 ## ------- and still is less accurate here than the gradient-only version
 
 ## all converge here, too,  fgh now being best
-utils::str(l3.10 <- nlm3(x0 = c(-10, 10), ndigit = 14, gradtol = 1e-8))
+str(l3.10 <- nlm3(x0 = c(-10, 10), ndigit = 14, gradtol = 1e-8))
 
 ## Tolerances loosened for 32-bit Linux and 64-bit Ubuntu 22.04.1 LTS :
 chkNlm(l3.10, estimate = c(1,1), # lower tolerances now, notably for fgh:
@@ -100,7 +101,7 @@ chkNlm(l3.10, estimate = c(1,1), # lower tolerances now, notably for fgh:
        codes.wanted = if(Lb64) 1:2 else 1:3)
 
 ## all 3 fail to converge here
-utils::str(l3.1c <- nlm3(x0 = c(-100, 100), iterlim = 1000))
+str(l3.1c <- nlm3(x0 = c(-100, 100), iterlim = 1000))
 ## i.e., all convergence codes > 1:
 sapply(l3.1c, `[[`, "code")
 ## nl.f  nl.fg nl.fgh  (seen on 32-bit and 64-bit)
