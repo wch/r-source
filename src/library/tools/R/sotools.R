@@ -1048,7 +1048,36 @@ function(x, ...)
 .shlib_objects_symbol_tables <-
 function(file = "symbols.rds")
 {
-    objects <- commandArgs(trailingOnly = TRUE)
+    args <- commandArgs(trailingOnly = TRUE)
+    ## <FIXME WINDOWS>
+    if(.Platform$OS.type != "windows") {
+        pos <- which(args == "--pkglibs")[1L]
+        objects <- args[seq_len(pos - 1L)]
+        pkglibs <- args[-seq_len(pos)]
+    } else {
+        objects <- args
+        pkglibs <- character()
+    }
+    ## </FIXME>
+    ## Also determine the local static libraries linked against by
+    ## following the approach suggested in section "Compiling in
+    ## sub-directories" of WRE.
+    if(length(pkglibs)) {
+        files <- list.files("..", recursive = TRUE, pattern = "[.]a$",
+                            all.files = TRUE, full.names = TRUE)
+        if(any(ind <- startsWith(files, "../src/")))
+            files[ind] <- substring(files[ind], 8L)
+        ## Case A: local static libs given via their path.
+        libpaths <- pkglibs[file.exists(pkglibs)]
+        ## Case B: local static libs given as '-lfoo'.
+        libnames <- pkglibs[startsWith(pkglibs, "-l")]
+        libnames <- sprintf("lib%s.a", substring(libnames, 3L))
+        objects <- c(objects,
+                     files[normalizePath(files) %in%
+                           normalizePath(libpaths)],
+                     files[basename(files) %in% libnames])
+        objects <- unique(objects)
+    }
     tables <- lapply(objects, read_symbols_from_object_file)
     names(tables) <- objects
     saveRDS(tables, file = file, version = 2)
