@@ -109,7 +109,7 @@ Windows 10 and Windows Server 2016 or newer. On earlier versions of Windows,
 @abbr{UCRT} has to be installed before installing R.  @abbr{UCRT} is available for Windows since
 Windows Vista SP2 and Windows Server 2008 SP2. 
 
-@I{Rtools44} as of update 6335 requires at least Windows 8.1.  This
+@I{Rtools45} requires at least Windows 8.1.  This
 requirement comes from @I{Msys2}, so it might still be possible to use build
 tools from an older version of @I{Rtools} or @I{Msys2} with the current
 toolchain and libraries from @I{Rtools}.

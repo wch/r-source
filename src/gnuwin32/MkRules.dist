@@ -4,10 +4,10 @@
 ## etc/*/Makeconf: see fixed/Makefile
 
 ## Customize by copying to MkRules.local and uncommenting and editing 
-## some of the definitions there. The values are tailored to Rtools44, the
-## currently recommended toolchain using gcc 13, MinGW-w64 11, 64-bit only,
+## some of the definitions there. The values are tailored to Rtools45, the
+## currently recommended toolchain using gcc 14, MinGW-w64 11, 64-bit only,
 ## UCRT. R is only intended to be built for 64-bit UCRT as of R 4.2. The
-## values also work with Rtools44 on aarch64 (LLVM 17, clang/flang-new, lld,
+## values also work with Rtools45 on aarch64 (LLVM 19, clang/flang-new, lld,
 ## libc++) via USE_LLVM=1 and WIN=.
 
 ## =========== configuration macros for building packages ================
@@ -34,7 +34,7 @@
 # collection via LOCAL_SOFT, so LOCAL_SOFT is set up by default to also
 # point to the Rtools software. This may be changed in the future.
 #
-# To build R from source with Rtools44 (installed from installer as well as
+# To build R from source with Rtools45 (installed from installer as well as
 # tarball), gcc has to be on PATH and LOCAL_SOFT can be computed as follows:
 #
 # LOCAL_SOFT ?= $(shell which `echo $(CC) | sed -e 's/ .*//g'` | sed -e 's!/bin/[^/]\+!!g')

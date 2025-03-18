@@ -1418,12 +1418,12 @@ toolchains, makefiles of @R{} and packages may need to be adapted.
 
 The binary distribution of @R{} is currently built with tools
 from
-@uref{https://CRAN.R-project.org/bin/windows/Rtools/rtools44/rtools.html,Rtools44
+@uref{https://CRAN.R-project.org/bin/windows/Rtools/rtools45/rtools.html,Rtools45
 for Windows}. See 
 @uref{https://CRAN.R-project.org/bin/windows/base/howto-@value{RWTVERSION}.html,
 Building @value{RWTVERSION} and packages on Windows} for more details on how to use it.
 
-The toolset includes compilers (currently GCC version 13.2.0 with
+The toolset includes compilers (currently GCC version 14.2.0 with
 selected additional patches) and runtime libraries from
 @uref{http://mingw-w64.org/,the `@I{MinGW-w64}' project} and a number of
 pre-compiled static libraries and headers used by @R{} and @R{}
@@ -1433,8 +1433,8 @@ includes build tools from the @uref{https://www.msys2.org/, the 'MSYS2'
 project}.  Additional build tools packaged by 'MSYS2' may be installed
 via a package manager (@samp{pacman}).
 
-There is also an experimental variant of @I{Rtools44} with support for
-64-bit ARM CPUs (@I{aarch64}) via @I{LLVM} 17 toolchain using
+There is also an experimental variant of @I{Rtools45} with support for
+64-bit ARM CPUs (@I{aarch64}) via @I{LLVM} 19 toolchain using
 @command{clang}/@command{flang} compilers, @command{lld} linker, and
 @I{libc++}.
 
