@@ -732,6 +732,9 @@
       as \code{NA}.
 
       \item \code{vignette("reshape")} is now also available on Windows.
+
+      \item \code{trace(coerce, ..)} now works correctly, fixing \PR{18823}
+      thanks to \I{Mikael Jagan}.
     }
   }
 }
