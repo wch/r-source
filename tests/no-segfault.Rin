@@ -15,81 +15,78 @@ core.pkgs <- c(core.pkgs, "methods", "stats4")
 stop.list <- vector("list", length(core.pkgs))
 names(stop.list) <- core.pkgs
 
-## -- Stop List for base/graphics/utils:
-edit.int <- c("fix", "edit", "edit.data.frame", "edit.matrix",
-              "edit.default", "vi", "file.edit",
-              "emacs", "pico", "xemacs", "xedit", "RSiteSearch", "help.request")
-
+## -- Stop List for base/grDevices/utils:
 ## warning: readLines will work, but read all the rest of the script
 ## warning: trace will load methods.
 ## warning: rm and remove zap c0, l0, m0, df0
 ## warning: parent.env(NULL) <- NULL creates a loop
-## warning: browseVignettes launches many browser processes.
-## news, readNEWS, rtags are slow, and R-only code.
-misc.int <- c("browser", "browseVignettes", "bug.report", "checkCRAN",
-              "getCRANmirrors", "lazyLoad", "menu", "repeat",
+## warning: browseVignettes/RSiteSearch/help.start launch many browser processes
+## news, rtags are slow, and R-only code.
+misc.int <- c("browser", "browseVignettes", "RSiteSearch", "help.start",
+              "checkCRAN", "lazyLoad", "menu", "q", "quit", "repeat",
               "readLines", "package.skeleton", "trace", "recover",
               "rm", "remove", "parent.env<-",
-              "builtins", "data", "help", "news", "rtags", "vignette",
-              "installed.packages")
-inet.list <- c(apropos("download\\."),
-               apropos("^url\\."), apropos("\\.url"),
-               apropos("packageStatus"),
-               paste(c("CRAN", "install", "update", "old"), "packages", sep="."))
+              "builtins", "data", "help", "news", "rtags", "vignette")
 socket.fun <- apropos("socket")
 ## "Interactive" ones:
 dev.int <- c("X11", "x11", "pdf", "postscript",
-             "xfig", "jpeg", "png", "pictex", "quartz",
+             "bmp", "jpeg", "png", "pictex", "quartz",
              "svg", "tiff", "cairo_pdf", "cairo_ps",
              "getGraphicsEvent")
-misc.2 <- c("asS4", "help.start", "browseEnv", "make.packages.html",
-            "gctorture", "q", "quit", "restart", "try",
+misc.2 <- c("asS4", "browseEnv", "make.packages.html",
+            "gctorture", "try",
             "read.fwf", "source",## << MM thinks "FIXME"
             "data.entry", "dataentry", "de", apropos("^de\\."),
-            "chooseCRANmirror", "setRepositories", "select.list", "View")
+            "setRepositories", "select.list", "View")
 if(.Platform$OS.type == "windows") {
-    dev.int <- c(dev.int, "bmp", "windows", "win.graph", "win.print",
+    dev.int <- c(dev.int, "windows", "win.graph", "win.print",
                 "win.metafile")
     misc.2 <- c(misc.2, "file.choose", "choose.files", "choose.dir",
-    		"setWindowTitle", "loadRconsole",
+    		"setWindowTitle", "loadRconsole", "winProgressBar",
                 "arrangeWindows", "getWindowsHandles")
 }
 
 stop.list[["base"]] <-
     if(nchar(Sys.getenv("R_TESTLOTS"))) {## SEVERE TESTING, try almost ALL
-	c(edit.int, misc.int)
+	c(misc.int)
     } else {
-	c(inet.list, socket.fun, edit.int, misc.int, misc.2)
+	c(socket.fun, misc.int, misc.2)
     }
 
+stop.list[["grDevices"]] <- dev.int
+
+edit.int <- c("fix", "edit", "vi", "file.edit",
+              "emacs", "pico", "xemacs", "xedit",
+              "bug.report", "help.request", "create.post")
+inet.list <- c(apropos("download\\."),
+               apropos("^url\\."),
+               "packageStatus", apropos("mirror"),
+               paste(c("available", "install", "update", "old", "new"),
+                     "packages", sep = "."))
+
+stop.list[["utils"]] <- c("Rprof", "aspell", # hangs on Windows
+                          edit.int, misc.int,
+                          if (!nzchar(Sys.getenv("R_TESTLOTS")))
+                              c(inet.list, socket.fun, misc.2))
+
+## -- Stop List for methods:
 ## S4 group generics should not be called directly
 ## and doing so sometimes leads to infinite recursion
 s4.group.generics <- c("Arith", "Compare", "Ops", "Logic", "Math", "Math2", "Summary", "Complex")
+stop.list[["methods"]] <- c(s4.group.generics)
 
-## warning: browseAll will tend to read all the script and/or loop forever
-stop.list[["methods"]] <- c("browseAll", "recover", s4.group.generics)
-stop.list[["tools"]] <- c("write_PACKAGES", # problems with Packages/PACKAGES
-                          "update_PACKAGES",
-                          "dependsOnPkgs", # call to installed.packages() slow w/ large library
-                          "testInstalledBasic",
-                          "testInstalledPackages", # runs whole suite
-                          "readNEWS",              # slow, pure R code
-                          "findHTMLlinks", "pskill",
-                          "texi2dvi", "texi2pdf",  # hang on Windows
-                          "getVignetteInfo",       # very slow on large installation
-                          "CRAN_package_db",       # slow, pure R code
-                          "CRAN_check_results",
-                          "CRAN_check_details",
-                          "CRAN_memtest_notes",
-                          "summarize_CRAN_check_status",
-                          "startDynamicHelp"       # makes R hang on exit
-                                                   # on Windows
-                          )
-stop.list[["grDevices"]] <- dev.int
-stop.list[["utils"]] <- c("Rprof", "aspell", # hangs on Windows
-                          "winProgressBar",
-                          "chooseBioCmirror",# too slow, R code 
-                          inet.list, socket.fun, edit.int, misc.int, misc.2)
+## -- Stop List for tools:
+stop.list[["tools"]] <- c(
+    "write_PACKAGES", "update_PACKAGES", # problems with Packages/PACKAGES
+    "testInstalledBasic", "testInstalledPackages", # runs whole suite
+    "findHTMLlinks", "base_aliases_db", "base_rdxrefs_db", # slow, R code
+    "make_translations_pkg", "R", "pskill",
+    "texi2dvi", "texi2pdf",  # hang on Windows
+    grepv("^CRAN_", getNamespaceExports("tools")), # slow / downloads
+    "summarize_CRAN_check_status", "package_dependencies",
+    "startDynamicHelp"       # makes R hang on exit on Windows
+)
+
 
 sink("no-segfault.R")
 
@@ -98,8 +95,10 @@ if(.Platform$OS.type == "windows") cat('options(pager = "console")\n')
 cat("options(catch.script.errors = TRUE)",
     "# don't stop on error in batch\n##~~~~~~~~~~~~~~\n")
 
-cat(".libPaths(tail(.libPaths(), 1), include.site=FALSE) # no extra libraries (w/ many pkgs)\n")
+cat(".libPaths(.Library, include.site=FALSE) # no extra libraries (w/ many pkgs)\n")
 
+do_timings <- nzchar(Sys.getenv("R_TESTS_NOSEGFAULT_TIMINGS"))
+if (do_timings) cat("unlink('no-segfault.timings')\n")
 cat(".proctime00 <- proc.time()\n")
 
 for (pkg in core.pkgs) {
@@ -125,11 +124,15 @@ for (pkg in core.pkgs) {
 	      "df0 <- as.data.frame(c0)\n", sep="")
 
 	  cat("f <- get(\"",nm,"\", pos = '", pkgname, "')\n", sep="")
+	  if (do_timings) cat(".pt <- proc.time()\n")
 	  cat("f()\nf(NULL)\nf(,NULL)\nf(NULL,NULL)\n",
 	      "f(list())\nf(l0)\nf(c0)\nf(m0)\nf(df0)\nf(FALSE)\n",
 	      "f(list(),list())\nf(l0,l0)\nf(c0,c0)\n",
               "f(df0,df0)\nf(FALSE,FALSE)\n",
 	      sep="")
+          if (do_timings)
+              cat("cat('", pkg, "', '", nm, "', (proc.time() - .pt)[[3L]], '\\n',\n",
+                  "    file = 'no-segfault.timings', append = TRUE)\n", sep = "")
       }
   }
   if(lib.not.loaded) {
