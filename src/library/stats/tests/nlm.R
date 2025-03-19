@@ -98,7 +98,9 @@ chkNlm(l3.10, estimate = c(1,1), # lower tolerances now, notably for fgh:
        tols = list(min = c(1e-9, 1e-20, 1e-16),
                    est = c(1e-4, 1e-10, 1e-14),
                    grad= c(1e-3,  6e-9, 1e-12)),
-       codes.wanted = if(Lb64) 1:2 else 1:3)
+       codes.wanted = 1:3) # was  if(Lb64) 1:2 else 1:3
+       ## but Intel (2025.0.4) compilers returned (3 1 1)
+
 
 ## all 3 fail to converge here
 str(l3.1c <- nlm3(x0 = c(-100, 100), iterlim = 1000))
