@@ -236,6 +236,10 @@
 
       \item New datasets \code{penguins} and \code{penguins_raw} thanks to
       \I{Ella Kaye}, \I{Heather Turner}, and \I{Kristen Gorman}.
+
+      \item \code{isSymmetric(<matrix>)} gains a new option \code{trans = "C"};
+      when set to non-default, it tests for \dQuote{simple} symmetry of
+      complex matrices.
     }
   }
 
@@ -243,7 +247,7 @@
     \itemize{
       \item The bundled BLAS and LAPACK sources have been updated to
       those shipped as part of January 2025's LAPACK 3.12.1.
-      
+
       \item It is intended that this will be the last update to BLAS and
       LAPACK in the \R sources.  Those building \R from source are
       encouraged to use external BLAS and LAPACK and this will be required in
@@ -270,7 +274,7 @@
       \item Windows builds currently use the internal LAPACK and by
       default the internal BLAS: notes on how to swap the latter
       \emph{via} \file{Rblas.dll} are in file
-      \file{src/extra/blas/Makefile.win}. 
+      \file{src/extra/blas/Makefile.win}.
     }
   }
 
