@@ -2775,8 +2775,9 @@ This can be overridden first by the setting of the environment variable
 @enindex LC_ALL
 @enindex LC_MESSAGES
 @enindex LANG
-@env{LANGUAGE} and then@footnote{On some systems setting
-@env{LC_ALL} or @env{LC_MESSAGES} to @samp{C} disables @env{LANGUAGE}.}
+@env{LANGUAGE} and then@footnote{On most systems setting
+@env{LC_ALL} or @env{LC_MESSAGES} to @samp{C} disables
+@env{LANGUAGE}. This is allowed but not required by POSIX.}
 by the environment variables @env{LC_ALL}, @env{LC_MESSAGES} and
 @env{LANG}. (The last three are normally used to set the locale and so
 should not be needed, but the first is only used to select the language
@@ -2786,6 +2787,9 @@ environment variable @env{LC_ALL} do not all correspond to @abbr{XPG} language
 names and so @env{LANGUAGE} may need to be set.  (One example is
 @samp{LC_ALL=es} on Windows which sets the locale to Estonian and the
 language to Spanish.)
+
+Environment variable @env{LANGUAGE} can be used to specify more than one
+language (and optionally territory) separated by colons.
 
 It is usually possible to change the language once @R{} is running
 @emph{via} (not Windows) @code{Sys.setlocale("LC_MESSAGES",
@@ -2857,6 +2861,15 @@ quotes.
 If no suitable translation catalogue is found or a particular message is
 not translated in any suitable catalogue, `English'@footnote{with
 Americanisms.} is used.
+
+Note that there are several implementations of the @code{libintl}
+library used to manage message translations, includong in @code{libc}
+on GNU and Alpine Linux, and as part of GNU @code{gettext} usually used
+on macOS and Windows.
+@c https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/V1_chap08.html#tag_08_02
+The description here follows the POSIX standard, but implementations may
+not.
+
 
 See @uref{https://developer.r-project.org/Translations30.html} for how to
 prepare and install translation catalogues.
