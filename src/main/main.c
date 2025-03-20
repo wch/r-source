@@ -927,8 +927,25 @@ void setup_Rmainloop(void)
 	putenv(Rarch);
     }
 #else /* not Win32 */
+
+{  /* Avoid annoying warnings if LANG and LC_ALL are unset or empty.
+      This happens e.g. on Mac when primary language clash with region,
+      like English in Denmark or Germany. Use LANG, not LC_ALL in case
+      some of the other LC_* variables are set - Apple Terminal can e.g. 
+      set LC_CTYPE=UTF-8.
+
+      If LANG or LC_ALL has been set to a non-existing locale, we assume
+      that the user wants to ne informed. */
+
+    char *s;	
+
+    if (!(s = getenv("LANG") && *s) && !(s = getenv("LC_ALL") && *s))
+        setenv("LANG", "C", 1);
+}
+
     if(!setlocale(LC_CTYPE, ""))
 	snprintf(deferred_warnings[ndeferred_warnings++], 250,
+
 		 "Setting LC_CTYPE failed, using \"C\"\n");
     if(!setlocale(LC_COLLATE, ""))
 	snprintf(deferred_warnings[ndeferred_warnings++], 250,
