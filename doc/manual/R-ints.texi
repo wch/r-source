@@ -4264,7 +4264,8 @@ Default: false (but true for CRAN submission checks).
 @item _R_CHECK_PACKAGES_USED_IN_DEMO_
 Control whether R scripts in the @file{demo} directory should be checked
 for packages used but not declared in the @file{DESCRIPTION} file.
-Default: false unless command-line option @option{--run-demo} is specified.
+Default: false unless command-line option @option{--run-demo} is
+specified (but true for CRAN submission checks).
 
 @item _R_CHECK_SHLIB_OPENMP_FLAGS_
 Check correct and portable use of @code{SHLIB_OPENMP_*FLAGS} in
@@ -4637,6 +4638,7 @@ _R_CHECK_UNDOC_USE_ALL_NAMES_=true
 _R_CHECK_S3_METHODS_SHOW_POSSIBLE_ISSUES_=true
 _R_CHECK_RD_NOTE_LOST_BRACES_=true
 _R_CHECK_XREFS_NOTE_MISSING_PACKAGE_ANCHORS_=true
+_R_CHECK_PACKAGES_USED_IN_DEMO_=true
 @end example
 
 @noindent

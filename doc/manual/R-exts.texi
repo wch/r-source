@@ -921,12 +921,12 @@ checked when the namespace is loaded.
 @c DESCRIPTION field Suggests
 The @samp{Suggests} field uses the same syntax as @samp{Depends} and
 lists packages that are not necessarily needed.  This includes packages
-used only in examples, tests or vignettes (@pxref{Writing package
+used only in examples, demos, tests or vignettes (@pxref{Writing package
 vignettes}), and packages loaded in the body of functions.  E.g.,
-suppose an example@footnote{even one wrapped in @code{\donttest}.} from
+suppose an example@footnote{even one wrapped in @code{\donttest}, or a demo script.} from
 package @pkg{foo} uses a dataset from package @pkg{bar}. Then it is not
-necessary to have @pkg{bar} use @pkg{foo} unless one wants to execute
-all the examples/tests/vignettes: it is useful to have @pkg{bar}, but
+necessary to have @pkg{bar} to use @pkg{foo} unless one wants to execute
+all the examples: it is useful to have @pkg{bar}, but
 not necessary.  Version requirements can be specified but should be
 checked by the code which uses the package.
 
@@ -981,7 +981,7 @@ Packages needed to use datasets from the package should be in
 @end itemize
 
 @noindent
-In particular, packages providing ``only'' data for examples or
+In particular, packages providing ``only'' data for examples, demos or
 vignettes should be listed in @samp{Suggests} rather than @samp{Depends}
 in order to make lean installations possible.
 
@@ -1400,8 +1400,8 @@ The @file{demo} subdirectory is for @R{} scripts (for running @emph{via}
 @code{demo()}) that demonstrate some of the functionality of the
 package.  Demos may be interactive and are not checked
 automatically@footnote{As from @R{} 4.5.0, @code{R CMD check} can be
-invoked with option @option{--run-demo} to check demos like @file{tests},
-including comparisons with optional reference outputs in
+invoked with option @option{--run-demo} to check demos analogously to
+@file{tests}, including comparisons with optional reference outputs in
 @file{.Rout.save} files.}, so
 if testing is desired use code in the @file{tests} directory to achieve
 this.  The script files must start with a (lower or upper case) letter
@@ -1486,7 +1486,7 @@ file for running the examples when the latter are checked.  Reference
 output should be produced without having the @option{--timings} option
 set (and note that @option{--as-cran} sets it).
 
-If reference output is included for examples, tests or vignettes do make
+If reference output is included for examples, demos, tests or vignettes do make
 sure that it is fully reproducible, as it will be compared verbatim to
 that produced in a check run, unless the @samp{IGNORE_RDIFF} markup is
 used.  Things which trip up maintainers include displayed version
@@ -5717,8 +5717,8 @@ provided you have Ghostscript available (see the help for
 There are several ways to find out where time is being spent in the
 check process.  Start by setting the environment variable
 @env{_R_CHECK_TIMINGS_} to @samp{0}.  This will report the total CPU
-times (not Windows) and elapsed times for installation and running
-examples, tests and vignettes, under each sub-architecture if
+times (not Windows) and elapsed times for installation and several checks,
+including for running examples, tests and vignettes, under each sub-architecture if
 appropriate.  For tests and vignettes, it reports the time for each as
 well as the total.
 
