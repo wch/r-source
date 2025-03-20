@@ -1,6 +1,6 @@
 % File src/library/base/man/gettext.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2024 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{gettext}
@@ -98,7 +98,7 @@ Sys.setLanguage(lang, unset = "en", C.vs.en = c("msg", "warn", "silent"),
   \code{\link{sprintf}}.  If English is used, \code{msg1} is returned if
   \code{n == 1} and \code{msg2} in all other cases.
 
-  \code{bindtextdomain} is typically wrapper for the C function of the same
+  \code{bindtextdomain} is typically a wrapper for the C function of the same
   name: your system may have a \command{man} page for it.  With a
   non-\code{NULL} \code{dirname} it specifies where to look for message
   catalogues: with \code{dirname = NULL} it returns the current location.
@@ -130,6 +130,15 @@ Sys.setLanguage(lang, unset = "en", C.vs.en = c("msg", "warn", "silent"),
   Note that currently, using a non-existing language \code{lang} is still
   set and no translation will happen, without any \code{\link{message}}.
 }
+\section{Warning}{
+  These functions were written assuming that environment variable
+  \env{LANGUAGE} is supported by the implemantation of \code{libintl}.
+  For a long time that as universally true and it is now part of the
+  2024 POSIX specification.  But in 2025 it was ignored by the
+  implementation in \code{musl} (one of the implementations available on
+  Alpine Linux).
+}
+
 \seealso{
   \code{\link{stop}} and \code{\link{warning}} make use of \code{gettext} to
   translate messages.

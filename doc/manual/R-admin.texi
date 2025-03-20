@@ -2789,7 +2789,7 @@ names and so @env{LANGUAGE} may need to be set.  (One example is
 language to Spanish.)
 
 Environment variable @env{LANGUAGE} can be used to specify more than one
-language (and optionally territory) separated by colons.
+language (and optionally territory): see below.
 
 It is usually possible to change the language once @R{} is running
 @emph{via} (not Windows) @code{Sys.setlocale("LC_MESSAGES",
@@ -2800,7 +2800,7 @@ English.} the language you are changing to can be output in the current
 character set.  But this is OS-specific, and has been known to stop
 working on an OS upgrade.  Note that translated messages may be cached,
 so attempting to change the language of an error that has already been
-output in another language may not work.
+output in another language may not work.  See also @code{Sys.setlanguage()}.
 
 Messages are divided into @emph{domains}, and translations may be
 available for some or all messages in a domain.  @R{} makes use of the
@@ -2851,12 +2851,12 @@ locales specifying Portugal.
 
 Translations in the right language but the wrong charset are made use of
 @enindex LANGUAGE
-by on-the-fly re-encoding.  The @env{LANGUAGE} variable (only) can be a
-colon-separated list, for example @samp{se:de}, giving a set of
-languages in decreasing order of preference.  One special value is
-@samp{en@@quot}, which can be used in a UTF-8 locale to have American
-error messages with pairs of single quotes translated to Unicode directional
-quotes.
+by on-the-fly re-encoding.  The @env{LANGUAGE} variable can be a
+colon-separated list, for example @samp{se:de} or @samp{es_MX:es},
+giving a set of languages/territories in decreasing order of preference.
+One special value is @samp{en@@quot}, which can be used in a UTF-8
+locale to have American error messages with pairs of single quotes
+translated to Unicode directional quotes.
 
 If no suitable translation catalogue is found or a particular message is
 not translated in any suitable catalogue, `English'@footnote{with
@@ -2867,8 +2867,8 @@ library used to manage message translations, includong in @code{libc}
 on GNU and Alpine Linux, and as part of GNU @code{gettext} usually used
 on macOS and Windows.
 @c https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/V1_chap08.html#tag_08_02
-The description here follows the POSIX standard, but implementations may
-not.
+The description here follows the POSIX 2024 standard, but implementations may
+not (and apparently @code{musl}'s does not support @env{LANGUAGE}).
 
 
 See @uref{https://developer.r-project.org/Translations30.html} for how to
