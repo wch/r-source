@@ -364,11 +364,14 @@
       \code{libintl} is deprecated and now gives a \command{configure}
       warning.  This should be selected only if neither the OS's
       \code{libc} (as on GNU Linux) nor an external \code{libintl}
-      library (as on Alpine Linux) provide suitable functions.
+      library provide suitable functions.
 
       Instead install \code{libintl} from a recent version of GNU
-      \I{gettext} or use \command{configure} option
+      \I{gettext} (available for macOS) or use \command{configure} option
       \option{--disable-nls}.
+
+      The ability to use the bundled version may be removed as soon as
+      \R\sspace{}4.5.1.
 
       \item The deprecated \code{xfig()} graphics device has been removed.
     }

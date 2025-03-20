@@ -5202,8 +5202,7 @@ Component @code{libdeflate} for faster internal @I{(de)compression} and
 @code{zstd} for support for that type of compression.
 
 @item
-Component @code{gettext} for @code{libintl}, an updated version of that
-in the @R{} sources.
+Component @code{gettext} for @code{libintl}.
 
 @item
 An X sub-system unless configuring using @option{--without-x}: see
