@@ -937,9 +937,9 @@ void setup_Rmainloop(void)
       If LANG or LC_ALL has been set to a non-existing locale, we assume
       that the user wants to ne informed. */
 
-    char *s;	
+    const char *s;	
 
-    if (!(s = getenv("LANG") && *s) && !(s = getenv("LC_ALL") && *s))
+    if (!( (s = getenv("LANG")) && *s) && !( (s = getenv("LC_ALL")) && *s))
         setenv("LANG", "C", 1);
 }
 
