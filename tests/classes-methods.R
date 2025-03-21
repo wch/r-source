@@ -208,6 +208,16 @@ stopifnot( is(m0, "MethodDefinition"),
            is(m1, "MethodDefinitionWithTrace"),
           identical(m0, m2), identical(a0, a1))
 
+## Checking that "simple" as() still works:
+setClass("A", slots = c(x = "NULL"))
+setClass("B", slots = c(x = "NULL"))
+setIs("A", "B",
+      test = function(.) { TRUE },
+      coerce = function(.) new("B"),
+      replace = function(., value) new("B"))
+B <- as(new("A"), "B") ## gave  Error in asMethod@generic :  ... `@` applied to ... "function"
+stopifnot(identical(B, new("B")))
+
 
 
 cat('Time elapsed: ', proc.time(),'\n')
