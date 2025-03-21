@@ -30,7 +30,7 @@ analyze_license(x)
   If standardizable, it extracts the individual components and where
   these give version ranges the corresponding expansions into components
   with fixed versions.  It also indicates whether the license can be
-  verified to be FOSS
+  verified to be \abbr{FOSS}
   (\url{https://en.wikipedia.org/wiki/Free_and_open-source_software})
   licenses.
 }
@@ -41,13 +41,13 @@ analyze_license(x)
   \item{is_standardizable}{a logical indicating whether the given string
     is a standardized license spec, or can be transformed to one.}
   \item{standardization}{a character string giving the standardized
-    license spec correponding to the given string if this is
+    license spec corresponding to the given string if this is
   standardizable.}
   \item{components}{the components of the standardized license spec.}
   \item{expansions}{the expansions of the components of the standardized
     license spec.}
   \item{is_verified}{a logical indicating whether the given string can
-    be verified to specify a FOSS license.}
+    be verified to specify a \abbr{FOSS} license.}
 }
 \examples{
 ## Examples from section 'Licenses' of 'Writing R Extensions':

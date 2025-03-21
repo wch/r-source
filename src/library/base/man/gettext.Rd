@@ -132,7 +132,7 @@ Sys.setLanguage(lang, unset = "en", C.vs.en = c("msg", "warn", "silent"),
 }
 \section{Warning}{
   These functions were written assuming that environment variable
-  \env{LANGUAGE} is supported by the implemantation of \code{libintl}.
+  \env{LANGUAGE} is supported by the implementation of \code{libintl}.
   For a long time that as universally true and it is now part of the
   2024 POSIX specification.  But in 2025 it was ignored by the
   implementation in \code{musl} (one of the implementations available on
