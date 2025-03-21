@@ -93,7 +93,6 @@ as <-
     }
     environment(asMethod) <- asMethodEnv <- new.env(parent = environment(asMethod))
     loadMethod(asMethod, envir = asMethodEnv)
-    assign(".Generic", asMethod@generic, envir = asMethodEnv)
     if(strict)
         asMethod(object)
     else

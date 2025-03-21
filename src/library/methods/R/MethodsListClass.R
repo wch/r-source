@@ -1,7 +1,7 @@
 #  File src/library/methods/R/MethodsListClass.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2024 The R Core Team
+#  Copyright (C) 1995-2025 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -123,9 +123,10 @@ loadMethod <- function(method, fname, envir) method
     setGeneric("loadMethod", where = envir)
     setMethod("loadMethod", "MethodDefinition",
               function(method, fname, envir) {
-                  assign(".target", method@target, envir = envir)
+                  assign(".target",  method@target,  envir = envir)
                   assign(".defined", method@defined, envir = envir)
-                  assign(".Method", method, envir = envir)
+                  assign(".Generic", method@generic, envir = envir)
+                  assign(".Method",  method, envir = envir)
                   method
               }, where = envir)
     setMethod("loadMethod", "MethodWithNext",
