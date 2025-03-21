@@ -333,15 +333,15 @@
 
       \item R on Windows by default uses pkg-config for linking against
       external libraries.  This makes it easier to test R and packages with
-      alternative toolchains (such as from Msys2, e.g.  testing with LLVM
-      and possibly with sanitizers). It also allows more significant Rtools
+      alternative toolchains (such as from \I{Msys2}, e.g., testing with \I{LLVM}
+      and possibly with sanitizers). It also allows more significant \I{Rtools}
       updates within a single R minor release.
 
       \item The installer scripts for Windows have been tailored to
       \I{Rtools45}, an update of the \I{Rtools44} toolchain.  It is based on
-      GCC 14.  The experimental support for 64-bit ARM (aarch64) CPUs is
-      based on LLVM 19.  R-devel is no longer maintained to be buildable
-      using \I{Rtools44} and it is advised to switch to Rtools45.
+      GCC 14.  The experimental support for 64-bit ARM (\code{aarch64}) CPUs is
+      based on \I{LLVM} 19.  R-devel is no longer maintained to be \I{buildable}
+      using \I{Rtools44} and it is advised to switch to \I{Rtools45}.
     }
   }
 
