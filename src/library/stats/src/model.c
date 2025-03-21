@@ -136,7 +136,6 @@ SEXP modelframe(SEXP call, SEXP op, SEXP args, SEXP rho)
     nc = length(data);
     nr = 0;			/* -Wall */
     if (nc > 0) {
-	nr = nrows(VECTOR_ELT(data, 0));
 	for (i = 0; i < nc; i++) {
 	    ans = VECTOR_ELT(data, i);
 	    switch(TYPEOF(ans)) {
@@ -152,6 +151,7 @@ SEXP modelframe(SEXP call, SEXP op, SEXP args, SEXP rho)
 		      R_typeToChar(ans),
 		      translateChar(STRING_ELT(names, i)));
 	    }
+	    nr = nrows(VECTOR_ELT(data, 0));
 	    if (nrows(ans) != nr)
 		error(_("variable lengths differ (found for '%s')"),
 		      translateChar(STRING_ELT(names, i)));

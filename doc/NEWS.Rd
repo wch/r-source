@@ -240,6 +240,10 @@
       \item \code{isSymmetric(<matrix>)} gains a new option \code{trans = "C"};
       when set to non-default, it tests for \dQuote{simple} symmetry of
       complex matrices.
+
+      \item \code{model.frame()} produces more informative error messages
+      in some cases when variables in the formula are not found, thanks to
+      \I{Ben Bolker}'s \PR{18860}.
     }
   }
 
