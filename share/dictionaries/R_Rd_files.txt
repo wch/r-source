@@ -263,6 +263,7 @@ sortable
 spectrophotometer
 sphericity
 spooler
+standardizable
 stateful
 stderr
 stdout
