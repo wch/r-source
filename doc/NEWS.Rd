@@ -742,6 +742,10 @@
 
       \item \code{trace(coerce, ..)} now works correctly, fixing \PR{18823}
       thanks to \I{Mikael Jagan}.
+      
+      \item \command{R CMD check} now also reports bad symbols in
+      package shared objects linked in from local static libraries
+      (\PR{18789}).
     }
   }
 }
