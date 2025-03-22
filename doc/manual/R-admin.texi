@@ -2863,7 +2863,7 @@ not translated in any suitable catalogue, `English'@footnote{with
 Americanisms.} is used.
 
 Note that there are several implementations of the @code{libintl}
-library used to manage message translations, includong in @code{libc}
+library used to manage message translations, including in @code{libc}
 on GNU and Alpine Linux, and as part of GNU @code{gettext} usually used
 on macOS and Windows.
 @c https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/V1_chap08.html#tag_08_02
