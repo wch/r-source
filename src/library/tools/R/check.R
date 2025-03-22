@@ -6131,6 +6131,7 @@ add_dummies <- function(dir, Log)
                              "warning: .* \\[-Wc\\+\\+20-extensions\\]",
                              "warning: .* \\[-Wc\\+\\+23-extensions\\]",
                              "warning: .* \\[-Wc\\+\\+2b-extensions\\]",
+                             ## in clang and in Wextra for recent gcc
                              "warning: .* \\[-Wenum-conversion\\]",
                              ## LLVM clang 15 versions
                              "warning: .* \\[-Wc\\+\\+14-attribute-extensions\\]",
@@ -6156,6 +6157,7 @@ add_dummies <- function(dir, Log)
                              " warning: switch condition has boolean value \\[-Wswitch-bool\\]",
                              " warning: .* \\[-Wembedded-directive\\]",
                              " warning: using directive refers to implicitly-defined namespace",
+                             " warning: .* \\[-Wkeyword-macro\\]",
                              ## same flag but different wording for clang++ 19
                              ## C99 and C++11 require at least one argument:
                              ## this is relaxed in C23 and C++20.
