@@ -1,7 +1,7 @@
 #  File src/library/tools/R/sotools.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 2011-2024 The R Core Team
+#  Copyright (C) 2011-2025 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -49,7 +49,12 @@ if(.Platform$OS.type == "windows") {
         l2 <- grep("^The Export Tables", s0)
         if (!length(l1) || !length(l2)) return()
         s1 <- s0[(l1[1L] + 2L):(l2 - 4L)]
-        s2 <- grep("\t[0-9a-f]+\t +[0-9]+", s1, value = TRUE)
+
+        # The format of the dump of import tables changed in Rtools45
+        # (binutils 2.43.1).  Previously, there was a joint column
+        # "Hint/Ord".  Newly these are split ("Ordinal" and "Hint").  The
+        # regex below has been relaxed to match both.
+        s2 <- grep("\t[0-9a-f]+[\t ]+", s1, value = TRUE)
         sub(".* ([_A-Za-z0-9]+)$", "\\1", s2)
     }
 }
@@ -1049,16 +1054,9 @@ function(x, ...)
 function(file = "symbols.rds")
 {
     args <- commandArgs(trailingOnly = TRUE)
-    ## <FIXME WINDOWS>
-    if(.Platform$OS.type != "windows") {
-        pos <- which(args == "--pkglibs")[1L]
-        objects <- args[seq_len(pos - 1L)]
-        pkglibs <- args[-seq_len(pos)]
-    } else {
-        objects <- args
-        pkglibs <- character()
-    }
-    ## </FIXME>
+    pos <- which(args == "--pkglibs")[1L]
+    objects <- args[seq_len(pos - 1L)]
+    pkglibs <- args[-seq_len(pos)]
     ## Also determine the local static libraries linked against by
     ## following the approach suggested in section "Compiling in
     ## sub-directories" of WRE.
