@@ -35,6 +35,15 @@
       \item .
     }
   }
+
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item Setting \code{\link{attributes}} on primitive functions is an
+      error now; previously, it modified without copying, as noticed by
+      \I{Henrik Bengtsson} on the R-devel mailing list.
+    }
+  }
+
 }
 \section{\Rlogo CHANGES IN R 4.5.0}{
   %% \subsection{SIGNIFICANT USER-VISIBLE CHANGES}{
@@ -781,7 +790,7 @@
 
       \item \code{trace(coerce, ..)} now works correctly, fixing \PR{18823}
       thanks to \I{Mikael Jagan}.
-      
+
       \item \command{R CMD check} now also reports bad symbols in
       package shared objects linked in from local static libraries
       (\PR{18789}).

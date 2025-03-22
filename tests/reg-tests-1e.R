@@ -1908,7 +1908,16 @@ if(englishMsgs)
           "invalid type (list) for variable 'mpg'",
           "object 'count' not found",
           "invalid type (closure) for variable 'count'")))
-## the last one differed 
+## the last one differed
+
+
+## Setting attributes on primitive functions .. [Henrik Bengtsson, R-devel]
+stopifnot(is.primitive(sum))
+msum <- sum
+assertErrV(void <- structure(sum, foo = TRUE))
+assertErrV(attributes(msum) <- list(foo = NA))
+## both examples, the first a special case of the 2nd, did not error, but *modified* the base::sum primitive
+
 
 
 ## keep at end

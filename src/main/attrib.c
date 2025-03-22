@@ -1071,15 +1071,14 @@ static SEXP as_char_simpl(SEXP val1)
 
     if (inherits(val1, "factor"))  /* mimic as.character.factor */
 	return asCharacterFactor(val1);
-
-    if (!isString(val1)) { /* mimic as.character.default */
+    if (isString(val1))
+	return val1;
+    // else  mimic as.character.default :
 	SEXP this2 = PROTECT(coerceVector(val1, STRSXP));
 	SET_ATTRIB(this2, R_NilValue);
 	SET_OBJECT(this2, 0);
 	UNPROTECT(1);
 	return this2;
-    }
-    return val1;
 }
 
 
@@ -1349,6 +1348,8 @@ attribute_hidden SEXP do_attributesgets(SEXP call, SEXP op, SEXP args, SEXP env)
     /* Do checks before duplication */
     if (!isNewList(attrs))
 	error(_("attributes must be a list or NULL"));
+    if (isPrimitive(object))
+	error(_("Cannot modify attributes on primitive functions"));
     int i, nattrs = length(attrs);
     if (nattrs > 0) {
 	names = getAttrib(attrs, R_NamesSymbol);

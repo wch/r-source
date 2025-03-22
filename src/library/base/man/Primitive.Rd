@@ -1,6 +1,6 @@
 % File src/library/base/man/Primitive.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2018 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Primitive}
@@ -25,6 +25,8 @@
   manual.
 
   All primitive functions are in the base namespace.
+
+  You cannot set \code{\link{attributes}} on primitive functions.
 
   This function is almost never used: \code{`name`} or, more carefully,
   \code{\link{get}(name, envir = baseenv())} work equally well and do
