@@ -255,7 +255,7 @@
       \I{Ben Bolker}'s \PR{18860}.
 
       \item \code{selectMethod(f, ..)} now keeps the function name if the
-      function belongs to of a group generic and the method is for the
+      function belongs to a group generic and the method is for the
       generic.
     }
   }
