@@ -1,7 +1,7 @@
 #  File src/library/methods/R/show.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2024 The R Core Team
+#  Copyright (C) 1995-2025 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -80,8 +80,13 @@ show <- function(object) showDefault(object)
 			  "" else paste0(" (Class ", classLabel(cl),")")
                   cat("Method Definition",nonStandard,":\n\n", sep = "")
                   show(object@.Data)
+                  cat("\n") # in both cases
+                  if(isGroup(g <- object@generic) &&
+                     !is.null(og <- c(attr(g,"orig"))) && (g <- c(g)) != og)
+                      cat(sprintf("Generic:  target: \"%s\", defined: \"%s\"\n", og, g))
+                  ## e.g., Generic: target: "-", defined: "Arith"
                   mm <- methodSignatureMatrix(object)
-                  cat("\nSignatures:\n")
+                  cat("Signatures:\n")
                   print(mm)
               },
               where = envir)

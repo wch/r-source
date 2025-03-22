@@ -6,7 +6,13 @@ a <- new("A")
 setMethod("Logic", c("A", "A"), function(e1, e2) FALSE)
 res0 <- a & a                           # inherit &,A,A-method
 setMethod("Logic", c("A", "A"), function(e1, e2) TRUE)
-stopifnot(a & a)
+stopifnot(!res0, a & a)
+## feature in R >= 4.5.0: these get same method, but slightly differing result:
+(sa <- selectMethod("&",     c("A", "A"))) # printing "Generic: ..."
+(sL <- selectMethod("Logic", c("A", "A"))) # 
+stopifnot(identical(sa@generic,
+                    structure("Logic", package = "base",
+                              orig = structure("&", package = "base"))))
 
 removeMethod("Logic", c("A", "A"))
 stopifnot(logical() == a & a)

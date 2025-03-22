@@ -253,6 +253,10 @@
       \item \code{model.frame()} produces more informative error messages
       in some cases when variables in the formula are not found, thanks to
       \I{Ben Bolker}'s \PR{18860}.
+
+      \item \code{selectMethod(f, ..)} now keeps the function name if the
+      function belongs to of a group generic and the method is for the
+      generic.
     }
   }
 
