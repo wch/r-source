@@ -2560,19 +2560,6 @@ add_dummies <- function(dir, Log)
 
         ## Check cross-references in R documentation files.
 
-        ## <NOTE>
-        ## Installing a package warns about missing links (and hence R CMD
-        ## check knows about this too provided an install log is used).
-        ## However, under Windows the install-time check verifies the links
-        ## against what is available in the default library, which might be
-        ## considerably more than what can be assumed to be available.
-        ##
-        ## The formulations in section "Cross-references" of R-exts are not
-        ## quite clear about this, but CRAN policy has for a long time
-        ## enforced anchoring links to targets (aliases) from non-base
-        ## packages.
-        ## </NOTE>
-
         if (dir.exists("man") && R_check_Rd_xrefs) {
             checkingLog(Log, "Rd cross-references")
             Rcmd <- paste(opWarn_string, "\n",
@@ -5818,8 +5805,9 @@ add_dummies <- function(dir, Log)
                 (startsWith(install, "check") || R_check_use_install_log
                  || !isatty(stdout()))
             INSTALL_opts <- install_args
-            ## don't use HTML, checkRd goes over the same ground.
-            INSTALL_opts <- c(INSTALL_opts,  "--no-html")
+            ## Don't use HTML, checkRd goes over the same ground.
+            ## Not quite for static HTML, so just use the R default.
+            ##   INSTALL_opts <- c(INSTALL_opts,  "--no-html")
             if (install == "fake")
                 INSTALL_opts <- c(INSTALL_opts,  "--fake")
             else if (!multiarch)
@@ -5950,7 +5938,7 @@ add_dummies <- function(dir, Log)
                              "^ *# *warning",
                              ## Solaris cc has
                              "Warning: # *warning",
-                             # these are from era of static HTML
+                             ## these are from era of static HTML
                              "missing links?:",
                              ## From the byte compiler's 'warn' methods
                              "^Note: possible error in",
@@ -6385,6 +6373,21 @@ add_dummies <- function(dir, Log)
                     lines <- filtergrep("Warning: ignoring .First.lib()", lines,
                                         fixed = TRUE)
 
+                ## <FIXME>
+                ## Building with --enable-prebuilt-html warns about
+                ## missing links for Rd xrefs with missing package
+                ## anchors (unless in recommended packages).  For now,
+                ## filter these out when noting the missing anchors.
+                ## Remove eventually ...
+                ## Note also that further above we explicitly arrange to
+                ## get these Rd warnings from the install log ...
+                if(config_val_to_logical(Sys.getenv("_R_CHECK_XREFS_NOTE_MISSING_PACKAGE_ANCHORS_",
+                                                    "FALSE"))) {
+                    lines <- filtergrep("Rd warning:.*: missing link",
+                                        lines, useBytes = TRUE)
+                }
+                ## </FIXME>
+                
                 lines <- unique(lines)
 
                 ## Can get reports like
