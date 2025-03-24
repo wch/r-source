@@ -47,7 +47,7 @@
       results in confusing-to-read code.
     }
   }
-  
+
   \subsection{BUG FIXES}{
     \itemize{
       \item Setting \code{\link{attributes}} on primitive functions is an
@@ -810,6 +810,10 @@
       \item \command{R CMD check} now also reports bad symbols in
       package shared objects linked in from local static libraries
       (\PR{18789}).
+
+      \item \code{factanal()} now works correctly also, e.g., for
+      \pkg{GPArotation}, \code{oblimin()} rotations, fixing \PR{18417},
+      thanks to \I{Coen Bernaards} and others.
     }
   }
 }

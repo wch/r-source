@@ -1,6 +1,6 @@
 % File src/library/stats/man/factanal.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2018 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{factanal}
@@ -18,44 +18,46 @@ factanal(x, factors, data = NULL, covmat = NULL, n.obs = NA,
          rotation = "varimax", control = NULL, \dots)
 }
 \arguments{
-  \item{x}{A formula or a numeric matrix or an object that can be
+  \item{x}{\code{\link{formula}} or a numeric matrix or an object that can be
     coerced to a numeric matrix.}
-  \item{factors}{The number of factors to be fitted.}
-  \item{data}{An optional data frame (or similar: see
+  \item{factors}{integer number of factors to be fitted.}
+  \item{data}{an optional data frame (or similar: see
     \code{\link{model.frame}}), used only if \code{x} is a formula.  By
     default the variables are taken from \code{environment(formula)}.}
-  \item{covmat}{A covariance matrix, or a covariance list as returned by
+  \item{covmat}{covariance matrix or a covariance list as returned by
     \code{\link{cov.wt}}.  Of course, correlation matrices are covariance
     matrices.}
-  \item{n.obs}{The number of observations, used if \code{covmat} is a
+  \item{n.obs}{the number of observations, used if \code{covmat} is a
     covariance matrix.}
-  \item{subset}{A specification of the cases to be used, if \code{x} is
+  \item{subset}{a specification of the cases to be used, if \code{x} is
     used as a matrix or formula.}
-  \item{na.action}{The \code{na.action} to be used if \code{x} is
-    used as a formula.}
+  \item{na.action}{the \code{\link{na.action}} to be used if \code{x} is
+    used as a formula, in which case \code{\link{model.frame}()} is
+    called.}
   \item{start}{\code{NULL} or a matrix of starting values, each column
     giving an initial set of uniquenesses.}
   \item{scores}{Type of scores to produce, if any.  The default is none,
     \code{"regression"} gives Thompson's scores, \code{"Bartlett"} given
     Bartlett's weighted least-squares scores. Partial matching allows
     these names to be abbreviated.}
-  \item{rotation}{character. \code{"none"} or the name of a function
+  \item{rotation}{a \code{\link{function}} or \code{\link{character}}
+    string.  In the latter case, \code{"none"} or the name of a function
     to be used to rotate the factors: it will be called with first
     argument the loadings matrix, and should return a list with component
     \code{loadings} giving the rotated loadings, or just the rotated loadings.}
-  \item{control}{A list of control values,
+  \item{control}{a \code{\link{list}} of control values with components
     \describe{
-      \item{nstart}{The number of starting values to be tried if
+      \item{\code{nstart}}{The number of starting values to be tried if
         \code{start = NULL}. Default 1.}
-      \item{trace}{logical. Output tracing information? Default \code{FALSE}.}
-      \item{lower}{The lower bound for uniquenesses during
+      \item{\code{trace}}{logical. Output tracing information? Default \code{FALSE}.}
+      \item{\code{lower}}{The lower bound for uniquenesses during
         optimization. Should be > 0. Default 0.005.}
-      \item{opt}{A list of control values to be passed to
-        \code{\link{optim}}'s \code{control} argument.}
-      \item{rotate}{a list of additional arguments for the rotation function.}
+      \item{\code{opt}}{a list of control values to be passed to
+	\code{\link{optim}}'s \code{control} argument.}
+      \item{\code{rotate}}{a list of additional arguments for the rotation function.}
     }
   }
-  \item{\dots}{Components of \code{control} can also be supplied as
+  \item{\dots}{components of \code{control} can also be supplied directly as
     named arguments to \code{factanal}.}
 }
 \details{
@@ -128,7 +130,8 @@ factanal(x, factors, data = NULL, covmat = NULL, n.obs = NA,
   \item{loadings}{A matrix of loadings, one column for each factor.  The
     factors are ordered in decreasing order of sums of squares of
     loadings, and given the sign that will make the sum of the loadings
-    positive.  This is of class \code{"loadings"}: see
+    positive. For correlated factors, the correlation matrix is
+    stored as an attribute labeled "covariance". This is of class \code{"loadings"}: see
     \code{\link{loadings}} for its \code{print} method.}
   \item{uniquenesses}{The uniquenesses computed.}
   \item{correlation}{The correlation matrix used.}
