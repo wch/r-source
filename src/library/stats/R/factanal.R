@@ -107,7 +107,9 @@ factanal <-
 
     cn <- list(nstart = 1, trace = FALSE, lower = 0.005)
     cn[names(control)] <- control
-    more <- list(...)[c("nstart", "trace", "lower", "opt", "rotate")]
+    more <- if(...length())
+                Filter(length, # drop NULL components in
+                       list(...)[c("nstart", "trace", "lower", "opt", "rotate")])
     if(length(more)) cn[names(more)] <- more
 
     if(is.null(start)) {
