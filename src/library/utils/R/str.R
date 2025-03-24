@@ -1,7 +1,7 @@
 #  File src/library/utils/R/str.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2024 The R Core Team
+#  Copyright (C) 1995-2025 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -470,14 +470,14 @@ str.default <-
 			       paste("		#>#>", mod, NULL)
 			       )
 	    }
-	} else if(typeof(object) %in%
-		  c("externalptr", "weakref", "environment", "bytecode", "object")) {
+	} else if((typ <- typeof(object)) %in%
+                  c("externalptr", "weakref", "environment", "bytecode", "object")) {
 	    ## Careful here, we don't want to change pointer objects
 	    if(has.class)
                 cat(pClass(cl))
 	    le <- v.len <- 0
-	    str1 <-
-		if(is.environment(object)) format(object)
+	    str1 <- ## FIXME?: ideally use format() for all
+		if(typ %in% c("externalptr", "environment")) format(object)
 		else paste0("<", typeof(object), ">")
 	    has.class <- TRUE # fake for later
 	    std.attr <- "class"

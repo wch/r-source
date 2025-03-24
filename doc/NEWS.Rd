@@ -14,7 +14,7 @@
 
   \subsection{NEW FEATURES}{
     \itemize{
-      \item .
+      \item \code{str()} now shows more via \code{format()} for external pointers.
     }
   }
 
