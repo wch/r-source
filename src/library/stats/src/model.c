@@ -22,7 +22,7 @@
 #include <config.h>
 #endif
 
-#include <string.h> // for memset, strcat, strlen, strncmp 
+#include <string.h> // for memset, strcat, strlen, strncmp
 #include <Defn.h>
 
 #include "statsR.h"
@@ -994,10 +994,10 @@ static int n_xVars; // nesting level: use for indentation
 //  Global "State" Variables for terms() computation :
 //  -------------------------------------------------
 
-static int // 0/1 (Boolean) :
-    intercept,		//  1: have intercept term in the model
-    parity,		//  +/- parity
-    response;		//  1: response term in the model
+static bool
+    intercept,		//  have intercept term in the model
+    parity,		//  true if "positive parity"
+    response;		//  response term in the model
 static int nwords;		/* # of words (ints) to code a term */
 static SEXP varlist;		/* variables in the model */
 static PROTECT_INDEX vpi;
@@ -1181,12 +1181,12 @@ static void ExtractVars(SEXP formula)
 		error(_("invalid model formula")); // more than one '~'
 	    if (isNull(CDDR(formula))) {
 		Prt_xtrVars("isLanguage, tilde, *not* response");
-		response = 0;
+		response = false;
 		ExtractVars(CADR(formula));
 	    }
 	    else {
 		Prt_xtrVars("isLanguage, tilde, *response*");
-		response = 1;
+		response = true;
 		InstallVar(CADR(formula));
 		ExtractVars(CADDR(formula));
 	    }
@@ -1391,7 +1391,7 @@ static SEXP StripTerm(SEXP term, SEXP list)
 {
     SEXP root = R_NilValue, prev = R_NilValue;
     if (TermZero(term))
-	intercept = 0;
+	intercept = false;
     while (list != R_NilValue) {
 	if (TermEqual(term, CAR(list))) {
 	    if (prev != R_NilValue)
@@ -1592,8 +1592,8 @@ static SEXP NestTerms(SEXP left, SEXP right)
 
 static SEXP DeleteTerms(SEXP left, SEXP right)
 {
-    PROTECT(left  = EncodeVars(left));	parity = 1-parity;
-    PROTECT(right = EncodeVars(right)); parity = 1-parity;
+    PROTECT(left  = EncodeVars(left));	parity = !parity;
+    PROTECT(right = EncodeVars(right)); parity = !parity;
     for (SEXP t = right; t != R_NilValue; t = CDR(t))
 	left = StripTerm(CAR(t), left);
     UNPROTECT(2);
@@ -1608,12 +1608,12 @@ static SEXP DeleteTerms(SEXP left, SEXP right)
  */
 static SEXP EncodeVars(SEXP formula)
 {
-    if (isNull(formula))		return R_NilValue;
+    if (isNull(formula))	return R_NilValue;
     else if (isOne(formula)) {
-	intercept = (parity) ? 1 : 0;	return R_NilValue;
+	intercept = parity;	return R_NilValue;
     }
     else if (isZero(formula)) {
-	intercept = (parity) ? 0 : 1;	return R_NilValue;
+	intercept = !parity;	return R_NilValue;
     }
     // else :
     SEXP term;
@@ -1720,22 +1720,21 @@ static int TermCode(SEXP termlist, SEXP thisterm, int whichbit, SEXP term)
     /* Search preceding terms for a match */
     /* Zero is a possibility - it is a special case */
 
-    int allzero = 1;
+    bool allzero = true;
     for (int i = 0; i < nwords; i++) {
 	if (term_[i]) {
-	    allzero = 0;
-	    break;
+	    allzero = false; break;
 	}
     }
     if (allzero)
 	return 1;
 
     for (SEXP t = termlist; t != thisterm; t = CDR(t)) {
-	allzero = 1;
+	allzero = true;
 	int *ct = INTEGER(CAR(t));
 	for (int i = 0; i < nwords; i++)
 	    if (term_[i] & ~ct[i]) {
-		allzero = 0; break;
+		allzero = false; break;
 	    }
 	if (allzero)
 	    return 1;
@@ -1804,13 +1803,12 @@ SEXP termsform(SEXP args)
     }
 
     /* Preserve term order? */
-    int keepOrder = asLogical(CAR(a));
-    if (keepOrder == NA_LOGICAL)
-	keepOrder = 0;
+    int aLog = asLogical(CAR(a));
+    bool keepOrder = (aLog == NA_LOGICAL) ? 0 : (bool) aLog;
 
     a = CDR(a);
-    int allowDot = asLogical(CAR(a));
-    if (allowDot == NA_LOGICAL) allowDot = 0;
+    aLog = asLogical(CAR(a));
+    bool allowDot = (aLog == NA_LOGICAL) ? 0 : (bool) aLog;
 
     // a := attributes(<answer>)
     a = allocList((specials == R_NilValue) ? 8 : 9);
@@ -1821,9 +1819,9 @@ SEXP termsform(SEXP args)
      * You can evaluate it to get the model variables or use substitute
      * and then pull the result apart to get the variable names. */
 
-    intercept = 1;
-    parity = 1;
-    response = 0;
+    intercept = true;
+    parity = true;
+    response = false;
     PROTECT(varlist = LCONS(install("list"), R_NilValue));
 #ifdef DEBUG_terms
     n_xVars = 0; // the nesting level of ExtractVars()
@@ -1892,7 +1890,7 @@ SEXP termsform(SEXP args)
 
     /* first see if any of the variables are offsets */
     R_xlen_t k = 0;
-    for (R_xlen_t l = response; l < nvar; l++)
+    for (R_xlen_t l = (R_xlen_t)response; l < nvar; l++)
 	if (!strncmp(CHAR(STRING_ELT(varnames, l)), "offset(", 7)) k++;
     if (k > 0) {
 #ifdef DEBUG_terms
@@ -1901,6 +1899,7 @@ SEXP termsform(SEXP args)
 	bool foundOne = false; /* has there been a non-offset term? */
 	/* allocate the "offsets" attribute */
 	SETCAR(a, v = allocVector(INTSXP, k));
+	// FIXME: using R_xlen_t above but int here, as we assign to INTEGER(v)
 	for (int l = response, k = 0; l < nvar; l++)
 	    if (!strncmp(CHAR(STRING_ELT(varnames, l)), "offset(", 7))
 		INTEGER(v)[k++] = l + 1;
@@ -2164,11 +2163,11 @@ SEXP termsform(SEXP args)
     SET_TAG(a, install("order"));
     a = CDR(a);
 
-    SETCAR(a, ScalarInteger(intercept != 0));
+    SETCAR(a, ScalarInteger((int)intercept));
     SET_TAG(a, install("intercept"));
     a = CDR(a);
 
-    SETCAR(a, ScalarInteger(response != 0));
+    SETCAR(a, ScalarInteger((int)response));
     SET_TAG(a, install("response"));
     a = CDR(a);
 
