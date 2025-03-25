@@ -31,7 +31,7 @@ rotmat <- resO100 $ rotmat
 # no longer can the unrotated matrix be recreated. the max abs diff between
 # unrotated and recreated unrotated loadings should be near zero but is not:
 print.default(dev <- ldns %*% solve(rotmat) - oriL)
-stopifnot(max(abs(dev)) < 1e-14) # max|dev| was 2.000982 (R <= 4.4.x), now 2.22e-16 [Lnx x86_64, gcc]
+stopifnot(max(abs(dev)) < 1e-9) # max|dev| was 2.000982 (R <= 4.4.x), now 2.22e-16 [Lnx x86_64, gcc]; 6e-12 on M1mac
 
 ldns # prints loadings too
 ## check the "SS loadings .... " line
