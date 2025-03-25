@@ -6155,6 +6155,8 @@ add_dummies <- function(dir, Log)
                              ## Includes Hollerith constants
                              ## does not complain about 'Shared DO termination'
                              "(portability: A DO loop should terminate with an END DO or CONTINUE|portability: deprecated usage|in the context: arithmetic IF statement)",
+                             ## selected re-defining of macros": clang
+                             ": warning: .*(M_PI|INT_MIN|FCONE).* \\[-Wmacro-redefined\\]",
                              ## LLVM >= 18 clang++
                              ": warning: .* \\[-Wdeprecated-literal-operator\\]"
                              )
@@ -6387,7 +6389,7 @@ add_dummies <- function(dir, Log)
                                         lines, useBytes = TRUE)
                 }
                 ## </FIXME>
-                
+
                 lines <- unique(lines)
 
                 ## Can get reports like
