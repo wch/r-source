@@ -353,10 +353,18 @@ static SEXP installAttrib(SEXP vec, SEXP name, SEXP val)
 {
     SEXP t = R_NilValue; /* -Wall */
 
-    if(TYPEOF(vec) == CHARSXP)
+    switch(TYPEOF(vec)) {
+    case CHARSXP:
 	error("cannot set attribute on a CHARSXP");
-    if (TYPEOF(vec) == SYMSXP)
-	error(_("cannot set attribute on a symbol"));
+	break;
+    case SYMSXP:
+    case BUILTINSXP:
+    case SPECIALSXP:
+	error(_("cannot set attribute on a '%s'"), R_typeToChar(vec));
+    default:
+	break;
+    }
+
     /* this does no allocation */
     for (SEXP s = ATTRIB(vec); s != R_NilValue; s = CDR(s)) {
 	if (TAG(s) == name) {
@@ -1348,8 +1356,6 @@ attribute_hidden SEXP do_attributesgets(SEXP call, SEXP op, SEXP args, SEXP env)
     /* Do checks before duplication */
     if (!isNewList(attrs))
 	error(_("attributes must be a list or NULL"));
-    if (isPrimitive(object))
-	error(_("Cannot modify attributes on primitive functions"));
     int i, nattrs = length(attrs);
     if (nattrs > 0) {
 	names = getAttrib(attrs, R_NamesSymbol);

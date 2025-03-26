@@ -1916,7 +1916,10 @@ stopifnot(is.primitive(sum))
 msum <- sum
 assertErrV(void <- structure(sum, foo = TRUE))
 assertErrV(attributes(msum) <- list(foo = NA))
-## both examples, the first a special case of the 2nd, did not error, but *modified* the base::sum primitive
+## a few days later:  Disable working via  attr(*, "<name>") <- value  as well:
+assertErrV( attr(msum, "foo") <- NA )
+stopifnot(identical(sum, msum), is.null(attributes(msum)))
+## all 3 examples, the first a special case of the 2nd, did not error, but *modified* the base::sum primitive
 
 
 
