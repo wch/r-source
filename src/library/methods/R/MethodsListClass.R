@@ -125,7 +125,7 @@ loadMethod <- function(method, fname, envir) method
               function(method, fname, envir) {
                   assign(".target",  method@target,  envir = envir)
                   assign(".defined", method@defined, envir = envir)
-                  assign(".Generic", method@generic, envir = envir)
+                  assign(".Generic", if(missing(fname)) method@generic else fname, envir = envir)
                   assign(".Method",  method, envir = envir)
                   method
               }, where = envir)
