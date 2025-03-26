@@ -1879,6 +1879,37 @@ stopifnot(exprs = {
 ## In max(lens) : no non-missing arguments to max; returning -Inf
 
 
+## better error messages when not finding variables in  model.frame() -- PR#18860
+dd  <- mtcars ; m <- model.matrix(mpg ~ wt, data = dd) # fine
+dd2 <- dd[-match("mpg", names(dd))]
+if(exists("mpg")) rm(mpg)
+getErrMsg <- function(expr) conditionMessage(assertErrV( expr )[[1L]])
+eee <- c(
+    getErrMsg(m <- model.matrix(mpg ~ wt, data = dd2))
+    ,
+    getErrMsg(local({
+        mpg <- USJudgeRatings
+        model.matrix(mpg ~ wt, data = dd2) # still useful
+    }))
+    ,
+    getErrMsg(local({
+        model.matrix(count ~ wt, data = dd)
+    })) ## OK (i.e. useful error message, "object 'count' not found")
+    ,
+    getErrMsg(local({
+        count <- function(x, ..., wt = NULL) { UseMethod("count") }
+        model.matrix(count ~ wt, data = dd)
+    }))
+)
+if(englishMsgs)
+    stopifnot(identical(
+        eee,
+        c("object 'mpg' not found",
+          "invalid type (list) for variable 'mpg'",
+          "object 'count' not found",
+          "invalid type (closure) for variable 'count'")))
+## the last one differed 
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
