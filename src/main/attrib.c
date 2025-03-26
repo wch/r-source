@@ -1349,6 +1349,8 @@ attribute_hidden SEXP do_attributesgets(SEXP call, SEXP op, SEXP args, SEXP env)
     /* Do checks before duplication */
     if (!isNewList(attrs))
 	error(_("attributes must be a list or NULL"));
+    if (isPrimitive(object))
+	warning(_("Modifying attributes on primitive functions is deprecated and will be disabled"));// in R 4.6.0
     int i, nattrs = length(attrs);
     if (nattrs > 0) {
 	names = getAttrib(attrs, R_NamesSymbol);

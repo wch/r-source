@@ -1,6 +1,6 @@
 % File src/library/base/man/Primitive.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2018 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Primitive}
@@ -26,6 +26,9 @@
 
   All primitive functions are in the base namespace.
 
+  You should not set \code{\link{attributes}} on primitive functions.
+  This now signals a deprecation \code{\link{warning}} and will become illegal (via error), soon.
+
   This function is almost never used: \code{`name`} or, more carefully,
   \code{\link{get}(name, envir = baseenv())} work equally well and do
   not depend on knowing which functions are primitive (which does change
@@ -38,7 +41,9 @@
 }
 \examples{
 mysqrt <- .Primitive("sqrt")
-c
+\donttest{ ## be careful, this changes base R's sqrt() {until restarting R} !
+try(structure(mysqrt, comment = "primitive function")) # deprecation warning; soon an error
+}
 .Internal # this one *must* be primitive!
 `if` # need backticks
 }
