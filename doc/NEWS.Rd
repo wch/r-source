@@ -510,8 +510,8 @@
       including headers \file{R.h} or \file{Rinternals.h} (or any other
       header which includes \file{R_ext/Boolean.h}) stops the inclusion
       of header \code{R_ext/Boolean.h} which `defines' constants
-      \code{TRUE}, \code{true}, \code{false} and the type \code{bool}
-      which some package maintainers wish to avoid.
+      \code{TRUE}, \code{FALSE}, \code{true}, \code{false} and the type
+      \code{bool} which some package maintainers wish to avoid.
 
       Note that the last three are keywords in C23 and C++11 so cannot be
       avoided entirely.  However, with commonly-used compilers they can be
