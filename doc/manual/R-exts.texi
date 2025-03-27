@@ -2906,7 +2906,7 @@ The Fortran 2023 released in Nov 2023: as usual compiler vendors are
 introducing support incrementally.
 For Intel's @command{ifx} see
 @uref{https://www.intel.com/content/www/us/en/developer/articles/technical/fortran-language-and-openmp-features-in-ifx.html#Fortran%20Standards}.
-For @I{LLVM}'s @command{flang} aka @command{flang-new} see
+For @I{LLVM}'s @command{flang} see
 @uref{https://flang.llvm.org/docs/F202X.html}.
 @code{gfortran} does not have complete support even for the 2008 and
 2018 standards, but the option @option{-std=f2023} is supported from
@@ -16286,21 +16286,31 @@ C++ header @file{cfloat}, which provide constants such as
 @apivar TRUE
 @apivar FALSE
 @apihdr R_ext/Boolean.h
-The included header @file{R_ext/Boolean.h} has enumeration
-constants @code{TRUE} and @code{FALSE} of type @code{Rboolean} in
-order to provide a way of using ``logical'' variables in C consistently.
-This can conflict with other software: for example it conflicts with the
-headers in @I{IJG}'s @code{jpeg-9} (but not earlier versions).
-@code{Rboolean} cannot represent @code{NA} and hence cannot be used for
-elements of R logical vectors.
+The included header @file{R_ext/Boolean.h} has enumeration constants
+@code{TRUE} and @code{FALSE} of type @code{Rboolean} in order to provide
+a way of using ``logical'' variables in C consistently.  This can
+conflict with other software: for example it conflicts with the headers
+in @I{IJG}'s @code{jpeg-9} (but not earlier versions).  @code{Rboolean}
+cannot represent @code{NA}@footnote{Most compilers do not check values
+when assigning to an @code{enum} and store this type as an @code{int},
+so this may appear to work now but it likely to fail in future.} and
+hence cannot be used for elements of R logical vectors.
 
 Type @code{Rboolean} is being phased out: as from @R{}@tie{}4.5.0 the
 header also makes available the type @code{bool} and values @code{true}
 and @code{false}.  These are reserved words in C23 and C++11 and
-available @emph{via} header @file{stdbool.h} as from C99.  (@code{bool}
-is not a drop-in replacement for @code{Rboolean} as it is usually stored
-in a byte and @code{Raoolean} in an @code{int}, hence 4 bytes.)
+available @emph{via} header @file{stdbool.h} as from C99.  (Type
+@code{bool} is not a drop-in replacement for @code{Rboolean} as it is
+usually stored in a byte and @code{Rboolean} in an @code{int}, hence 4
+bytes.)
 
+Some package maintainers may want to exclude the provision of
+@code{TRUE}, @code{FALSE}, @code{true}, @code{false} and @code{bool} to
+avoid clashes with other headers such as the IJG ones mentioned above.
+This cannot be done entirely (the last three are keywords in C23 and
+C++11) but as from @R{}@tie{}4.5.0 defining @code{R_INCLUDE_BOOLEAN_H}
+to @code{0} before including any header which includes this one (such as
+@file{R.h} and @file{Rinternals.h}) skips its body.
 
 @node Optimization
 @section Optimization
