@@ -1941,6 +1941,12 @@ stopifnot(identical(attr(t3, "specials"),
 ## was unchanged  y ~ x1 + (x2 | f) + (x3 | g)
 
 
+## setting environment(<primitive>) -- was mutilating the base object (in R <= 4.4.x)
+s <- sum   ; assertWarnV(environment(s) <- baseenv())
+environment(s) <- NULL # no warning (and no effect)
+r <- return; assertWarnV(environment(r) <- baseenv())
+## then an error for about one day; now is deprecated (and no longer mutating).
+
 
 
 ## keep at end

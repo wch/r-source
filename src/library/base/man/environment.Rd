@@ -1,6 +1,6 @@
 % File src/library/base/man/environment.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2012, 2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{environment}
@@ -67,6 +67,8 @@ env.profile(env)
 
   The replacement form sets the environment of the function or formula
   \code{fun} to the \code{value} given.
+  Note that \code{\link{primitive}} functions \code{fun} have no environment and
+  trying to set it to a non-\code{NULL} value is deprecated.
 
   \code{is.environment(obj)} returns \code{TRUE} if and only if
   \code{obj} is an \code{environment}.
