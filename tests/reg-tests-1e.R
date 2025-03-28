@@ -1922,6 +1922,26 @@ stopifnot(identical(sum, msum), is.null(attributes(msum)))
 ## all 3 examples, the first a special case of the 2nd, did not error, but *modified* the base::sum primitive
 
 
+## terms.formula(*, specials="<non-syntactic>") -- PR#18568
+f1 <- y ~ x1 + `|`(x2, f)
+t1 <- terms(f1, specials = "|")
+(cs <- colSums(attr(t1, "factors")[attr(t1, "specials")[["|"]], , drop=FALSE]))
+(drp <- which(as.logical(cs))) # 2
+(dt1 <- drop.terms(t1, drp, keep.response = TRUE))
+stopifnot(identical(attr(t1, "specials"), pairlist(`|` = 3L)),
+          inherits(dt1, "terms"), dt1 == (y ~ x1))
+f3 <- y ~ x1 + (x2 | f) + (x3 | g)
+t3 <- terms(f3, specials = "|")
+str(t3)
+dropx <- which(as.logical(colSums(attr(t3, "factors")[attr(t3, "specials")[["|"]], ])))
+dt3 <- drop.terms(t3, dropx, keep.response = as.logical(attr(t3, "response")))
+stopifnot(identical(attr(t3, "specials"),
+                    pairlist(`|` = 3:4)),
+          dt3 == (y ~ x1))
+## was unchanged  y ~ x1 + (x2 | f) + (x3 | g)
+
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

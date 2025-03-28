@@ -51,7 +51,7 @@
 
   \subsection{BUG FIXES}{
     \itemize{
-      \item Setting \code{\link{attributes}} on primitive functions is an
+      \item Setting \code{attributes} on primitive functions is an
       error now; previously, it modified without copying, as noticed by
       \I{Henrik Bengtsson} on the R-devel mailing list.
     }
@@ -270,6 +270,9 @@
       \item \code{selectMethod(f, ..)} now keeps the function name if the
       function belongs to a group generic and the method is for the
       generic.
+
+      \item \code{terms(<formula>, specials = *)} now treats non-syntactic
+      specials more gracefully, thanks to \I{Mikael Jagan}'s \PR{18568}.
     }
   }
 
