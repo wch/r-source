@@ -10,19 +10,19 @@ stopifnot(is(c2, "dtrMatrix"),
           all.equal(as.matrix(c2), tol = 7e-7, # see 2.7e-7
                     matrix(c(3.74166, 0, 8.55236, 1.96396), 2))
           )
-clM <- getClass("Cholesky")
+clM <- getClass("pMatrix")
 cM <- new(clM)
 
-## an*other* "Cholesky" class:
-setClass("Cholesky", contains = "numeric", representation(size = "integer"))
+## an*other* "pMatrix" class:
+setClass("pMatrix", contains = "numeric", representation(size = "integer"))
 
-clG <- getClass("Cholesky", where = .GlobalEnv)
+clG <- getClass("pMatrix", where = .GlobalEnv)
 
 stopifnot(exprs = {
-    identical(clM, getClass("Cholesky", where = asNamespace("Matrix")))
-    identical(evalq(getClass("Cholesky"), asNamespace("Matrix")), clM)
+    identical(clM, getClass("pMatrix", where = asNamespace("Matrix")))
+    identical(evalq(getClass("pMatrix"), asNamespace("Matrix")), clM)
     identical(getClass(class(cM)),  clM)
-    identical(getClass("Cholesky"), clG)
+    identical(getClass("pMatrix"), clG)
 })
 
 ## Second:  tests of methods defined for the same generic
