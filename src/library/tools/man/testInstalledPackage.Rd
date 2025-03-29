@@ -1,6 +1,6 @@
 % File src/library/tools/man/testInstalledPackage.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2009-2023 R Core Team
+% Copyright 2009-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{testInstalledPackage}
@@ -79,17 +79,12 @@ standard_package_names()
   run the package tests in parallel using its value as the maximum
   number of parallel processes.
 
-#ifdef unix
   The package-specific tests for the base and recommended packages are
-  not normally installed, but \command{make install-tests} is provided
-  to do so (as well as the basic tests).
-#endif
-#ifdef windows
-  The package-specific tests for the base and recommended packages are
-  an optional part of the install.
-  Currently testing requires a Unix-like \code{diff} for a full report
-  if more than simple differences are found.
-#endif
+  an optional part of the install, where on unix-alikes, i.e., not on Windows,
+  \command{make install-tests} is provided to do so (as well as the basic tests).
+
+  On Windows, currently testing requires a Unix-like \command{diff} for a
+  full report if more than simple differences are found.
 }
 \value{
   Invisibly \code{0L} for success, \code{1L} for failure.
