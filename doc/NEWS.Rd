@@ -326,8 +326,8 @@
       A C23 compiler is known to be selected with
       \command{gcc}\sspace{}13--15 (as used on Windows),
       \I{LLVM} \command{clang}\sspace{}18--20 (and 15 should),
-      Apple \command{clang}\sspace{}15--16 and
-      Intel\sspace{}2024.2 (and 2022.2 should).
+      Apple \command{clang}\sspace{}15--17 and
+      Intel\sspace{}2024.2--2025.0 (and 2022.2 should).
 
       Current binary distributions on macOS use Apple
       \command{clang}\sspace{}14 and so do not use C23.

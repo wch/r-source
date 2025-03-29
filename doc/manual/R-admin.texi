@@ -1099,7 +1099,7 @@ Compiling @R{} requires C99 or later: C11 and C17 are minor updates, but
 the substantial update `C23' (finally published in October 2024) is also
 supported for recent versions of GCC@footnote{At least 13--15: 15
 defaults to C23},  @command{clang}@footnote{including @I{LLVM} clang 18--20
-and Apple clang 15/16.} and Intel @command{icx}.  @R{} 4.5.0 defaults
+and Apple clang 15--17.} and Intel @command{icx}.  @R{} 4.5.0 defaults
 to C23 if supported by the chosen compiler.
 
 As from @R{} 4.3.0 there is support for packages to indicate their
