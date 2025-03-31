@@ -1,14 +1,14 @@
 # German translation of src/library/tools/po/tools.pot
-# Copyright (C) 2008-2022 The R Foundation
+# Copyright (C) 2008-2025 The R Foundation
 # This file is distributed under the same license as the R package.
-# Detlef Steuer <steuer@hsu-hh.de>, 2008-2022.
+# Detlef Steuer <steuer@hsu-hh.de>, 2008-2025.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R-4.2.0\n"
+"Project-Id-Version: R-4.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2024-10-25 14:49-0700\n"
-"PO-Revision-Date: 2022-04-13 12:00+0200\n"
+"POT-Creation-Date: 2025-03-31 11:51+0200\n"
+"PO-Revision-Date: 2025-03-18 10:54+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
 "Language: de\n"
@@ -32,122 +32,122 @@ msgid "md5 failed on file '%s'"
 msgstr "md5 für Datei '%s' fehlgeschlagen"
 
 #: Rsha256.c:86
-#, fuzzy, c-format
+#, c-format
 msgid "sha256 failed on file '%ls'"
-msgstr "md5 für Datei '%ls' fehlgeschlagen"
+msgstr "sha256 für Datei '%ls' fehlgeschlagen"
 
 #: Rsha256.c:88
-#, fuzzy, c-format
+#, c-format
 msgid "sha256 failed on file '%s'"
-msgstr "md5 für Datei '%s' fehlgeschlagen"
+msgstr "sha256 für Datei '%s' fehlgeschlagen"
 
-#: getfmts.c:61
+#: getfmts.c:60
 #, c-format
 msgid "only %d arguments are allowed"
 msgstr "nur %d Argumente erlaubt"
 
-#: getfmts.c:66
+#: getfmts.c:65
 msgid "'fmt' is not a character vector"
 msgstr "'fmt' ist kein Zeichenkettenvektor"
 
-#: getfmts.c:69
+#: getfmts.c:68
 msgid "'fmt' must be length 1"
 msgstr "'fmt' muss Länge 1 haben"
 
-#: getfmts.c:75
+#: getfmts.c:74
 #, c-format
 msgid "'fmt' length exceeds maximal format length %d"
 msgstr "Länge von 'fmt' überschreitet maximale Formatlänge %d"
 
-#: getfmts.c:96
+#: getfmts.c:95
 #, c-format
 msgid "unrecognised format specification '%s'"
 msgstr "nicht erkannte Formatspezifikation '%s'"
 
-#: getfmts.c:136
+#: getfmts.c:135
 msgid "at most one asterisk '*' is supported in each conversion specification"
 msgstr "höchstens ein Stern '*' in jeder Konversionsspezifikation unterstützt"
 
-#: gramLatex.c:2592 gramRd.c:3971
+#: gramLatex.c:2763 gramRd.c:3968
 #, c-format
 msgid "unable to allocate buffer for long string at line %d"
 msgstr "kann keinen Buffer für lange Zeichenkette in Zeile %d allokieren"
 
-#: gramLatex.c:2869 gramRd.c:4524 gramRd.c:4530
+#: gramLatex.c:3062 gramRd.c:4521 gramRd.c:4527
 #, c-format
 msgid "invalid '%s' value"
 msgstr "unzulässiger '%s' Wert"
 
-#: gramRd.c:2581 gramRd.c:2584
+#: gramRd.c:2578 gramRd.c:2581
 #, c-format
 msgid "bad markup (extra space?) at %s:%d:%d"
 msgstr "schlechte Auszeichnung (Leerstelle zuviel?) bei %s:%d:%d"
 
-#: gramRd.c:3117
+#: gramRd.c:3114
 #, c-format
 msgid "Macro '%s' previously defined."
 msgstr "Makro '%s' bereits definiert."
 
-#: gramRd.c:3127
+#: gramRd.c:3124
 #, c-format
 msgid "At most 4 arguments are allowed for user defined macros."
 msgstr "Höchstens 4 Argumente für benutzerdefinierte Makros erlaubt."
 
-#: gramRd.c:3169
+#: gramRd.c:3166
 #, c-format
 msgid "No macro definition for '%s'."
 msgstr "Keine Makrodefinition für '%s'."
 
-#: gramRd.c:3232
+#: gramRd.c:3229
 #, c-format
 msgid "Not enough arguments passed to user macro '%s'"
 msgstr "Nicht genügend Argumente an benutzerdefiniertes Makro '%s' übergeben"
 
-#: gramRd.c:3372 gramRd.c:3376
+#: gramRd.c:3369 gramRd.c:3373
 #, c-format
 msgid "newline within quoted string at %s:%d"
 msgstr "Zeilenumbruch innerhalb einer Zeichenkette bei %s:%d"
 
-#: gramRd.c:3395
+#: gramRd.c:3392
 #, c-format
 msgid "unable to allocate buffer for long macro at line %d"
 msgstr "kann keinen Buffer für langes Makro in Zeile %d allokieren"
 
-#: gramRd.c:3425
+#: gramRd.c:3422
 msgid "macros nested too deeply: infinite recursion?"
 msgstr "Makros zu tief verschachtelt: unendliche Rekursion?"
 
-#: gramRd.c:3833
+#: gramRd.c:3830
 #, c-format
 msgid "Unable to find macro %s"
 msgstr "Kann Makro %s nicht finden"
 
-#: gramRd.c:4032
+#: gramRd.c:4029
 #, c-format
 msgid "Unexpected end of input (in %c quoted string opened at %s:%d:%d)"
 msgstr "Unerwartetes Ende der Eingabe (in %c Zeichenkette bei %s:%d:%d)"
 
-#: gramRd.c:4537
+#: gramRd.c:4534
 msgid "cannot open the connection"
 msgstr "kann Verbindung nicht öffnen"
 
-#: gramRd.c:4544
+#: gramRd.c:4541
 msgid "cannot read from this connection"
 msgstr "kann aus dieser Verbindung nicht lesen"
 
-#: gramRd.c:4552
+#: gramRd.c:4549
 msgid "invalid Rd file"
 msgstr "ungültige Rd Datei"
 
-#: gramRd.c:4571
+#: gramRd.c:4569
 msgid "'deparseRd' only supports deparsing character elements"
 msgstr "'deparseRd' unterstützt nur das Deparsing von Zeichenkettenelementen"
 
-#: gramRd.c:4574
+#: gramRd.c:4572
 msgid "bad state"
 msgstr "schlechter Zustand"
 
-#: gramRd.c:4587
+#: gramRd.c:4585
 #, c-format
 msgid "bad text mode %d in 'deparseRd'"
 msgstr "schlechter Textmode %d in 'deparseRd'"
@@ -159,7 +159,7 @@ msgstr "unzulässige Bindungsadressenspezifikation"
 #: http.c:37
 #, c-format
 msgid "Invalid port number %d: should be in 0:65535, typically above 1024"
-msgstr ""
+msgstr "Ungültige Portnummer %d: sollte in 0:65535 liegen, typischerweise über 1024"
 
 #: install.c:95
 msgid "path too long"
@@ -174,11 +174,11 @@ msgstr "unzulässiges '%s' Argument"
 msgid "write error during file append"
 msgstr "Schreibfehler während Anhängen an Datei"
 
-#: pdscan.c:67
+#: pdscan.c:74
 msgid "too many items"
 msgstr "zu viele Elemente"
 
-#: pdscan.c:115
+#: pdscan.c:121
 msgid "non-character argument"
 msgstr "nicht-zeichenketten Argument"
 
@@ -194,6 +194,6 @@ msgstr "psnice() auf dieser Plattform nicht unterstützt"
 msgid "invalid argument type"
 msgstr "unzulässiger Argumenttyp"
 
-#: text.c:225 text.c:247
+#: text.c:227 text.c:249
 msgid "out of memory"
 msgstr "zu wenig Hauptspeicher"

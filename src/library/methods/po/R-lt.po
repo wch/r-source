@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: methods 4.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2024-10-25 14:49\n"
+"POT-Creation-Date: 2025-03-31 11:51\n"
 "PO-Revision-Date: 2021-11-06 17:41+0100\n"
 "Last-Translator: r.zakauskas@gmail.com;gabriele.dauksaite@gmail.com\n"
 "Language-Team: Lithuanian\n"
@@ -812,9 +812,6 @@ msgstr "neapibrėžtas 'coerce' metodas"
 msgid "methods currently exist for coercing from %s to %s; they will be replaced."
 msgstr "šiuo metu egzistuoja metodai perversti iš %s į %s, jie bus pakeisti."
 
-msgid "Function must be an S4 generic"
-msgstr "Funkcija turi būti S4 bendrinė"
-
 msgid "method is not being debugged"
 msgstr "metodas nėra derinamas"
 
@@ -1339,6 +1336,9 @@ msgid_plural "no definition of class %s in the specified position, %s, definitio
 msgstr[0] "klasė %s nurodytoje pozicijoje neturi apibrėžties, %s, apibrėžimas : %s"
 msgstr[1] "klasė %s nurodytoje pozicijoje neturi apibrėžties, %s, apibrėžimai : %s"
 msgstr[2] "klasė %s nurodytoje pozicijoje neturi apibrėžties, %s, apibrėžimų : %s"
+
+#~ msgid "Function must be an S4 generic"
+#~ msgstr "Funkcija turi būti S4 bendrinė"
 
 #~ msgid "invalid method sublist"
 #~ msgstr "neteisingas metodo posąrašis"

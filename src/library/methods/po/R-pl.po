@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2024-10-25 14:49\n"
+"POT-Creation-Date: 2025-03-31 11:51\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -815,9 +815,6 @@ msgstr "nieokreślona metoda 'coerce'"
 msgid "methods currently exist for coercing from %s to %s; they will be replaced."
 msgstr "metody aktualnie istnieją dla przekształcenia z %s w %s; będą zastąpione."
 
-msgid "Function must be an S4 generic"
-msgstr "Funkcja musi być generyczną funkcją klasy S4"
-
 msgid "method is not being debugged"
 msgstr "metoda nie jest debugowana"
 
@@ -1343,6 +1340,9 @@ msgid_plural "no definition of class %s in the specified position, %s, definitio
 msgstr[0] "brak definicji klasy %s we wskazanym położeniu, %s, definicja: %s"
 msgstr[1] "brak definicji klasy %s we wskazanym położeniu, %s, definicje: %s"
 msgstr[2] "brak definicji klasy %s we wskazanym położeniu, %s, definicje: %s"
+
+#~ msgid "Function must be an S4 generic"
+#~ msgstr "Funkcja musi być generyczną funkcją klasy S4"
 
 #~ msgid "invalid method sublist"
 #~ msgstr "niepoprawne podlista metod"

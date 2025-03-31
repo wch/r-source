@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: R 4.5.0\n"
+"Project-Id-Version: R 4.6.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2024-10-25 14:49\n"
+"POT-Creation-Date: 2025-03-31 11:51\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -304,6 +304,12 @@ msgid "'seasonal' must be a list with component 'order'"
 msgstr ""
 
 msgid "'seasonal$order' must be a non-negative numeric vector of length 3"
+msgstr ""
+
+msgid "if not a list, 'seasonal' must be a non-negative numeric vector of length 3"
+msgstr ""
+
+msgid "'seasonal' is neither a list with component 'order' nor a numeric vector of length 3"
 msgstr ""
 
 msgid "lengths of 'x' and 'xreg' do not match"
@@ -1539,7 +1545,7 @@ msgstr ""
 msgid "no terms component nor attribute"
 msgstr ""
 
-msgid "'termlabels' must be a character vector of length at least one"
+msgid "'termlabels' must be a character vector"
 msgstr ""
 
 msgid "'%s' must be a character string"
@@ -1824,6 +1830,9 @@ msgstr ""
 msgid "mismatched 'x' and 'y'"
 msgstr ""
 
+msgid "mismatched 'x' and 'weights'"
+msgstr ""
+
 msgid "wrong number of columns in 'x'"
 msgstr ""
 
@@ -1888,6 +1897,9 @@ msgid "'conf.level' is not a probability"
 msgstr ""
 
 msgid "'formula' missing"
+msgstr ""
+
+msgid "'type' must be an integer in 1..9"
 msgstr ""
 
 msgid "'type' must be 1 or 3 for ordered factors"
@@ -2053,6 +2065,12 @@ msgid "must not specify both 'spar' and 'lambda'"
 msgstr ""
 
 msgid "'spar' must be of length 1"
+msgstr ""
+
+msgid "df.offset must be numeric and >= 0"
+msgstr ""
+
+msgid "penalty must be numeric and > 0"
 msgstr ""
 
 msgid "not using invalid df; must have 1 < df <= n := #{unique x} ="

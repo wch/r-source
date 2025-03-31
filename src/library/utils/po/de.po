@@ -1,15 +1,15 @@
 # Translation of src/library/utils/po/utils.pot to German.
-# Copyright (C) 2014-2022 The R Foundation
+# Copyright (C) 2014-2025 The R Foundation
 # This file is distributed under the same license as the R package.
-# Detlef Steuer <steuer@hsu-hh.de>, 2014-2023.
+# Detlef Steuer <steuer@hsu-hh.de>, 2014-2025.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 4.2.0\n"
+"Project-Id-Version: R 4.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2024-10-25 14:50-0700\n"
-"PO-Revision-Date: 2023-02-22 13:05+0000\n"
-"Last-Translator: Martin Mächler <maechler@stat.math.ethz.ch>\n"
+"POT-Creation-Date: 2025-03-31 11:51+0200\n"
+"PO-Revision-Date: 2025-03-18 12:17+0100\n"
+"Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -24,23 +24,21 @@ msgstr ""
 #: windows/dialogs.c:278 windows/dialogs.c:289 windows/dialogs.c:313
 #: windows/dialogs.c:321 windows/util.c:127 windows/widgets.c:80
 #: windows/widgets.c:83 windows/widgets.c:88
-#, fuzzy, c-format
+#, c-format
 msgid "invalid '%s' argument"
 msgstr "ungültiges '%s' Argument"
 
 #: io.c:350 io.c:841
-#, fuzzy
 msgid "invalid quote symbol set"
-msgstr "ungültiges quote Symbol gesetzt"
+msgstr "ungültige Menge von quote Symbolen"
 
 #: io.c:362 io.c:864 io.c:1084
 msgid "cannot open the connection"
 msgstr "kann die Verbindung nicht öffnen"
 
 #: io.c:365 io.c:369
-#, fuzzy
 msgid "cannot read from this connection"
-msgstr "kann in diese Verbindung nicht schreiben"
+msgstr "kann aus dieser Verbindung nicht lesen"
 
 #: io.c:416 io.c:434
 #, c-format
@@ -52,7 +50,7 @@ msgid "the first argument must be of mode character"
 msgstr "das erste Argument muss vom Modus character sein"
 
 #: io.c:599
-#, fuzzy, c-format
+#, c-format
 msgid "invalid 'numerals' string: \"%s\""
 msgstr "unzulässige 'numerals' Zeichenkette \"%s\""
 
@@ -88,7 +86,6 @@ msgid "Problem closing connection"
 msgstr "Problem beim Schließen der Verbindung"
 
 #: io.c:1077
-#, fuzzy
 msgid "'file' is not a connection"
 msgstr "'file' ist keine Verbindung"
 
@@ -96,22 +93,21 @@ msgstr "'file' ist keine Verbindung"
 msgid "cannot write to this connection"
 msgstr "kann in diese Verbindung nicht schreiben"
 
-#: io.c:1110
-#, fuzzy
+#: io.c:1111
 msgid "'dec' must be a single character"
-msgstr "Argument 'x'  muss Zeichenkettenvektor der Länge 1 sein"
+msgstr "'dec' muss ein einzelnes Zeichen sein"
 
-#: io.c:1137
+#: io.c:1138
 #, c-format
 msgid "corrupt data frame -- length of column %d does not match nrows"
 msgstr "beschädigter Dataframe -- Länge der Spalte %d entspricht nicht der Anzahl Zeilen"
 
-#: io.c:1171
-#, fuzzy, c-format
+#: io.c:1172
+#, c-format
 msgid "column %d claims to be a factor but does not have numeric codes"
-msgstr "Spalte %d behauptet Faktor zu sein, hat aber keine numerischen Kodes"
+msgstr "Spalte %d behauptet ein Faktor zu sein, hat aber keine numerischen Kodes"
 
-#: io.c:1189
+#: io.c:1190
 msgid "corrupt matrix -- dims do not match length"
 msgstr "beschädigte Matrix -- Dimensionen entsprechen nicht der Länge"
 
@@ -124,7 +120,6 @@ msgid "'loadhistory' can only be used in Rgui and Rterm"
 msgstr "'loadhistory' kann nur in Rgui und Rterm genutzt werden"
 
 #: stubs.c:85
-#, fuzzy
 msgid "invalid timestamp"
 msgstr "ungültiger Zeitstempel"
 
@@ -133,12 +128,11 @@ msgid "X11 dataentry cannot be loaded"
 msgstr "X11 Dateneintrag kann nicht geladen werden"
 
 #: stubs.c:155 stubs.c:184 stubs.c:190
-#, fuzzy
 msgid "X11 is not available"
 msgstr "X11 nicht verfügbar"
 
 #: stubs.c:248 stubs.c:251
-#, fuzzy, c-format
+#, c-format
 msgid "invalid '%s' specification"
 msgstr "ungültige '%s' Spezifikation"
 
@@ -148,12 +142,10 @@ msgid "'%s' contains missing values"
 msgstr "'%s' enthält fehlende Werte"
 
 #: utils.c:68
-#, fuzzy
 msgid "argument 'class' must be a character string"
 msgstr "Argument 'class' muss eine Zeichenkette sein"
 
 #: utils.c:78
-#, fuzzy
 msgid "argument 'x' must be a length-1 character vector"
 msgstr "Argument 'x'  muss Zeichenkettenvektor der Länge 1 sein"
 
@@ -162,7 +154,6 @@ msgid "argument 'x' must be UTF-8 encoded (including ASCII)"
 msgstr "Argument 'x' muss UTF-8 kodiert sein (inkl. ASCII)"
 
 #: utils.c:147
-#, fuzzy
 msgid "'hostname' must be a character vector of length 1"
 msgstr "'hostname' muss ein Zeichenkettenvektor der Länge 1 sein"
 
@@ -176,7 +167,6 @@ msgid "unknown format returned by 'gethostbyname'"
 msgstr "unbekanntes Format von 'gethostbyname' zurückgegeben"
 
 #: utils.c:169
-#, fuzzy
 msgid "nsl() is not supported on this platform"
 msgstr "nsl() ist auf dieser Plattform nicht unterstützt"
 
@@ -190,14 +180,14 @@ msgid "menu functions can only be used in the GUI"
 msgstr "Menüfunktionen können nur im GUI genutzt werden"
 
 #: windows/dialogs.c:245
-#, fuzzy, c-format
+#, c-format
 msgid "unable to retrieve items for %s (%s)"
-msgstr "kann Menüeintrag nicht entfernen (%s)"
+msgstr "kann Einträge für %snicht abrufen (%s)"
 
 #: windows/dialogs.c:283
-#, fuzzy, c-format
+#, c-format
 msgid "unable to add menu (%s)"
-msgstr "kann Menüeintrag nicht hinzufügen (%s)"
+msgstr "kann Menü nicht hinzufügen (%s)"
 
 #: windows/dialogs.c:295
 #, c-format
@@ -220,7 +210,7 @@ msgid "invalid '%s' value"
 msgstr "ungültiger '%s' Wert"
 
 #: windows/registry.c:260
-#, fuzzy, c-format
+#, c-format
 msgid "Registry key '%ls' not found"
 msgstr "Registryeintrag '%ls' nicht gefunden"
 
@@ -229,9 +219,8 @@ msgid "unsupported version of Windows"
 msgstr "nicht unterstützte Version von Windows"
 
 #: windows/util.c:291
-#, fuzzy
 msgid "argument must be a character vector or a raw vector"
-msgstr "'hostname' muss ein Zeichenkettenvektor der Länge 1 sein"
+msgstr "Argument muss ein Zeichenkettenvektor oder ein raw Vektor sein"
 
 #: windows/util.c:332
 msgid "unable to open the clipboard"
@@ -242,28 +231,26 @@ msgid "unable to write to the clipboard"
 msgstr "kann nicht in die Zwischenablage schreiben"
 
 #: windows/util.c:416
-#, fuzzy
 msgid "'title' must be a character string"
-msgstr "'text' muss eine Zeichenkette sein"
+msgstr "'title' muss eine Zeichenkette sein"
 
 #: windows/util.c:425
-#, fuzzy
 msgid "'text' must be a character string"
 msgstr "'text' muss eine Zeichenkette sein"
 
 #: windows/util.c:464
-#, fuzzy, c-format
+#, c-format
 msgid "'%s' must be length 1"
 msgstr "'%s' muss Länge 1 haben"
 
 #: windows/util.c:577
-#, fuzzy, c-format
+#, c-format
 msgid "'%s' must be a list"
 msgstr "'%s' muss eine Liste sein"
 
 # +
 #: windows/util.c:581
-#, fuzzy, c-format
+#, c-format
 msgid "'%s' element %d is not a window handle"
 msgstr "'%s' Element %d ist keine Fenster-Handle"
 
@@ -276,18 +263,16 @@ msgid "Select one"
 msgstr "Wähle eins"
 
 #: windows/widgets.c:196 windows/widgets.c:266
-#, fuzzy
 msgid "'default' must be a character string"
-msgstr "'text' muss eine Zeichenkette sein"
+msgstr "'default' muss eine Zeichenkette sein"
 
 #: windows/widgets.c:198
 msgid "'default' is overlong"
 msgstr "'default' ist überlang"
 
 #: windows/widgets.c:202 windows/widgets.c:272
-#, fuzzy
 msgid "'caption' must be a character string"
-msgstr "'text' muss eine Zeichenkette sein"
+msgstr "'caption' muss eine Zeichenkette sein"
 
 #: windows/widgets.c:204
 msgid "'multi' must be a logical value"

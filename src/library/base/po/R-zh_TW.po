@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.5.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2024-10-25 14:49\n"
+"POT-Creation-Date: 2025-03-31 11:50\n"
 "PO-Revision-Date: 2021-01-27 10:34+0100\n"
 "Last-Translator: Wei-Lun Chao <bluebat@member.fsf.org>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -213,10 +213,6 @@ msgstr "只能寫字元物件"
 msgid "'headers' must have names and must not be NA"
 msgstr "'X' 必須有帶名稱的維名稱"
 
-#, fuzzy
-msgid "'name' must be a single character string"
-msgstr "引數 'object' 必須解析成單一個字串"
-
 msgid "'origin' must be one of 'start', 'current' or 'end'"
 msgstr "'origin' 引數的值必須是 'start'，'current' 或 'end' 中的一個"
 
@@ -414,29 +410,20 @@ msgstr "一元 %s 對\"Date\"物件不適用"
 msgid "%s not defined for \"Date\" objects"
 msgstr "%s 對\"Date\"沒有定義"
 
-msgid "'from' must be specified"
-msgstr "'from' 一定得給值"
-
-msgid "'from' must be a \"Date\" object"
-msgstr "'from' 一定得是\"Date\"物件"
-
-msgid "'from' must be of length 1"
-msgstr "'from' 的長度必須為一"
-
-msgid "'to' must be a \"Date\" object"
-msgstr "'to' 一定得是\"Date\"物件"
-
-msgid "'to' must be of length 1"
+#, fuzzy
+msgid "'%s' must be of length 1"
 msgstr "'to' 的長度必須為一"
 
-msgid "'length.out' must be of length 1"
-msgstr "'length.out' 的長度必須為一"
+msgid "without 'by', at least one of 'to' and 'from' must be specified"
+msgstr ""
 
-msgid "exactly two of 'to', 'by' and 'length.out' / 'along.with' must be specified"
+#, fuzzy
+msgid "without 'by', when one of 'to', 'from' is missing, 'length.out' / 'along.with' must be specified"
 msgstr "'to'，'by'，'length.out'/'along.with' 中四個只能同時選兩個"
 
-msgid "'by' must be of length 1"
-msgstr "'by' 的長度必須為一"
+#, fuzzy
+msgid "given 'by', exactly two of 'to', 'from' and 'length.out' / 'along.with' must be specified"
+msgstr "'to'，'by'，'length.out'/'along.with' 中四個只能同時選兩個"
 
 msgid "invalid 'by' string"
 msgstr "'by' 字串不正確"
@@ -455,9 +442,6 @@ msgstr "'x' 必須是 date-time 物件"
 
 msgid "invalid specification of 'breaks'"
 msgstr "'breaks' 的值不正確"
-
-msgid "'origin' must be of length one"
-msgstr "'origin' 的長度必須為一"
 
 msgid "'lag' and 'differences' must be integers >= 1"
 msgstr "'lag' 和 'differences' 的值必須為大於等於一的整數"
@@ -517,11 +501,13 @@ msgstr "* 法的兩個引數不能同時都是\"difftime\" 物件"
 msgid "second argument of / cannot be a \"difftime\" object"
 msgstr "/法的第二個引數不能是\"difftime\" 物件"
 
-msgid "'from' must be a \"POSIXt\" object"
-msgstr "'from' 一定得是\"POSIXt\"物件"
+#, fuzzy
+msgid "exactly three of 'to', 'from', 'by' and 'length.out' / 'along.with' must be specified"
+msgstr "'to'，'by'，'length.out'/'along.with' 中四個只能同時選兩個"
 
-msgid "'to' must be a \"POSIXt\" object"
-msgstr "'to' 一定得是\"POSIXt\"物件"
+#, fuzzy
+msgid "'%s' must be a \"%s\" object"
+msgstr "'to' 一定得是\"Date\"物件"
 
 #, fuzzy
 msgid "component subscript must be a character string"
@@ -669,9 +655,6 @@ msgstr "鏈結時沒有可以寫的檔案/目錄"
 
 msgid "no files to link to"
 msgstr "沒有可以鏈結上的檔案"
-
-msgid "'package' must be of length 1"
-msgstr "'package' 的長度必須為一"
 
 msgid "no file found"
 msgstr "找不到檔案"
@@ -1009,9 +992,6 @@ msgstr "可能無法具有所稱的引數"
 
 msgid "'arg' must be NULL or a character vector"
 msgstr "'arg' 要麼是 NULL，要麼是字元向量。"
-
-msgid "'arg' must be of length 1"
-msgstr "'arg' 的長度必須為一"
 
 msgid "'arg' must be of length >= 1"
 msgstr "'arg' 的長度必須大於等於一"
@@ -1418,9 +1398,6 @@ msgstr "'nmax' 和 'n' 兩者只能有一個設定"
 msgid "'from' must be a finite number"
 msgstr "'from' 必須是有限數值"
 
-msgid "argument 'length.out' must be of length 1"
-msgstr "'length.out' 引數的長度必須為一"
-
 msgid "first element used of 'length.out' argument"
 msgstr "用了 'length.out' 引數裡的第一個元素"
 
@@ -1595,12 +1572,8 @@ msgstr ""
 msgid "Sys.setenv(LANGUAGE=\"%s\") may have failed"
 msgstr ""
 
-msgid ""
-"Calling 'structure(NULL, *)' is deprecated, as NULL cannot have attributes.\n"
-"  Consider 'structure(list(), *)' instead."
+msgid "attempt to set an attribute on NULL"
 msgstr ""
-"呼叫 'structure(NULL, *)' 已過時，因為空值無法具有屬性。\n"
-"  考慮以 'structure(list(), *)' 做為替代。"
 
 msgid "incorrect value for 'x'"
 msgstr "'x' 的值無效"
@@ -1665,10 +1638,6 @@ msgstr "層次總數 >= 2^31"
 msgid "handler must be a function"
 msgstr "處理常式必須是函式"
 
-#, fuzzy
-msgid "'which' must be of length 1"
-msgstr "'to' 的長度必須為一"
-
 msgid "no such element '%s'"
 msgstr "不明的單元 '%s'"
 
@@ -1703,6 +1672,13 @@ msgstr "'width' 必須為正數"
 
 msgid "No traceback available"
 msgstr "無 traceback"
+
+#, fuzzy
+msgid "'recursive' must be a length-1 vector"
+msgstr "'origin' 的長度必須為一"
+
+msgid "'recursive' is NA"
+msgstr ""
 
 #, fuzzy
 msgid "invalid non-character version specification 'x' (type: %s)"
@@ -1943,6 +1919,51 @@ msgid_plural ""
 msgstr[0] ""
 "於 %s：\n"
 " 額外引數 %s 忽略不用"
+
+#, fuzzy
+#~ msgid "'name' must be a single character string"
+#~ msgstr "引數 'object' 必須解析成單一個字串"
+
+#~ msgid "'from' must be specified"
+#~ msgstr "'from' 一定得給值"
+
+#~ msgid "'from' must be a \"Date\" object"
+#~ msgstr "'from' 一定得是\"Date\"物件"
+
+#~ msgid "'from' must be of length 1"
+#~ msgstr "'from' 的長度必須為一"
+
+#~ msgid "'length.out' must be of length 1"
+#~ msgstr "'length.out' 的長度必須為一"
+
+#~ msgid "'by' must be of length 1"
+#~ msgstr "'by' 的長度必須為一"
+
+#~ msgid "'from' must be a \"POSIXt\" object"
+#~ msgstr "'from' 一定得是\"POSIXt\"物件"
+
+#~ msgid "'to' must be a \"POSIXt\" object"
+#~ msgstr "'to' 一定得是\"POSIXt\"物件"
+
+#~ msgid "'package' must be of length 1"
+#~ msgstr "'package' 的長度必須為一"
+
+#~ msgid "'arg' must be of length 1"
+#~ msgstr "'arg' 的長度必須為一"
+
+#~ msgid "argument 'length.out' must be of length 1"
+#~ msgstr "'length.out' 引數的長度必須為一"
+
+#~ msgid ""
+#~ "Calling 'structure(NULL, *)' is deprecated, as NULL cannot have attributes.\n"
+#~ "  Consider 'structure(list(), *)' instead."
+#~ msgstr ""
+#~ "呼叫 'structure(NULL, *)' 已過時，因為空值無法具有屬性。\n"
+#~ "  考慮以 'structure(list(), *)' 做為替代。"
+
+#, fuzzy
+#~ msgid "'which' must be of length 1"
+#~ msgstr "'to' 的長度必須為一"
 
 #~ msgid "'normal.kind' must be a character string of length 1"
 #~ msgstr "'normal.kind' 必須是字串，而且其長度只能為一。"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-07-31 14:59\n"
+"POT-Creation-Date: 2025-03-31 11:51\n"
 "PO-Revision-Date: 2024-03-19 12:53+0000\n"
 "Last-Translator: Michael Chirico <michaelchirico4@gmail.com>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -40,7 +40,7 @@ msgstr "Nome(s) de 'grob' inválido(s)"
 msgid "Invalid gTree coordinates"
 msgstr "Classe 'gTree' inválida"
 
-msgid "Closed must not be a missing value"
+msgid "Closed must be length 1 and must not be a missing value"
 msgstr ""
 
 #, fuzzy
@@ -693,11 +693,11 @@ msgid "a viewport path must contain at least one viewport name"
 msgstr "Um caminho vista deve conter pelo menos um nome de vista"
 
 #, fuzzy
-msgid "must specify at least one of 'x' or 'xscale'"
+msgid "must specify at least one of 'xData' or 'xscale'"
 msgstr "Deve especificar pelo menos um de 'x' ou 'xscale'"
 
 #, fuzzy
-msgid "must specify at least one of 'y' or 'yscale'"
+msgid "must specify at least one of 'yData' or 'yscale'"
 msgstr "Deve especificar pelo menos um de 'y' ou 'yscale'"
 
 #, fuzzy

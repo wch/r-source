@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2024-10-25 14:49\n"
+"POT-Creation-Date: 2025-03-31 11:51\n"
 "PO-Revision-Date: 2023-10-21 03:05+0000\n"
 "Last-Translator: Natalia Labadie <nlabadie.fbioyf@gmail.com>\n"
 "Language-Team: none\n"
@@ -314,6 +314,12 @@ msgid "'seasonal' must be a list with component 'order'"
 msgstr ""
 
 msgid "'seasonal$order' must be a non-negative numeric vector of length 3"
+msgstr ""
+
+msgid "if not a list, 'seasonal' must be a non-negative numeric vector of length 3"
+msgstr ""
+
+msgid "'seasonal' is neither a list with component 'order' nor a numeric vector of length 3"
 msgstr ""
 
 msgid "lengths of 'x' and 'xreg' do not match"
@@ -1557,8 +1563,9 @@ msgstr ""
 msgid "no terms component nor attribute"
 msgstr ""
 
-msgid "'termlabels' must be a character vector of length at least one"
-msgstr ""
+#, fuzzy
+msgid "'termlabels' must be a character vector"
+msgstr "'file' debe ser una conexión o cadena de caracteres"
 
 msgid "'%s' must be a character string"
 msgstr ""
@@ -1848,6 +1855,9 @@ msgstr ""
 msgid "mismatched 'x' and 'y'"
 msgstr ""
 
+msgid "mismatched 'x' and 'weights'"
+msgstr ""
+
 msgid "wrong number of columns in 'x'"
 msgstr ""
 
@@ -1913,6 +1923,10 @@ msgstr ""
 
 msgid "'formula' missing"
 msgstr ""
+
+#, fuzzy
+msgid "'type' must be an integer in 1..9"
+msgstr "'by' debe ser una lista"
 
 msgid "'type' must be 1 or 3 for ordered factors"
 msgstr ""
@@ -2078,6 +2092,14 @@ msgstr ""
 
 msgid "'spar' must be of length 1"
 msgstr ""
+
+#, fuzzy
+msgid "df.offset must be numeric and >= 0"
+msgstr "'x' debe ser numérico"
+
+#, fuzzy
+msgid "penalty must be numeric and > 0"
+msgstr "'x' debe ser numérico"
 
 msgid "not using invalid df; must have 1 < df <= n := #{unique x} ="
 msgstr ""

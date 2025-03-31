@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-4-3-BRANCH\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2024-10-25 14:49\n"
+"POT-Creation-Date: 2025-03-31 11:51\n"
 "PO-Revision-Date: 2023-01-04 14:29+0100\n"
 "Last-Translator: Daniele Medri <dmedri@gmail.com>\n"
 "Language-Team: Italian https://github.com/dmedri/R-italian-lang\n"
@@ -279,6 +279,14 @@ msgstr "Il campo Authors@R indica persone con identificativi ORCID non validi:"
 msgid "Authors@R field gives persons with duplicated ORCID identifiers:"
 msgstr "Il campo Authors@R indica persone con identificativi ORCID non validi:"
 
+#, fuzzy
+msgid "Authors@R field gives persons with invalid ROR identifiers:"
+msgstr "Il campo Authors@R indica persone con identificativi ORCID non validi:"
+
+#, fuzzy
+msgid "Authors@R field gives persons with duplicated ROR identifiers:"
+msgstr "Il campo Authors@R indica persone con identificativi ORCID non validi:"
+
 msgid "Encoding '%s' is not portable"
 msgstr "La codifica '%s' non è portabile"
 
@@ -332,11 +340,11 @@ msgid "invalid 'OS.type' \"%s\".  Should not happen"
 msgstr "'OS.type' \"%s\" non valido.  Non dovrebbe accadere"
 
 #, fuzzy
-msgid "Missing link or links in Rd file '%s':"
+msgid "Missing link(s) in Rd file '%s':"
 msgstr "Collegamenti assenti nell'oggetto documentazione '%s':"
 
 #, fuzzy
-msgid "Non-file package-anchored link(s) in Rd file '%s':"
+msgid "Non-topic package-anchored link(s) in Rd file '%s':"
 msgstr "Collegamenti a file pacchetto assenti nell'oggetto documentazione '%s':"
 
 msgid "See section 'Cross-references' in the 'Writing R Extensions' manual."
@@ -1511,7 +1519,8 @@ msgid_plural "Found .Internal calls in the following functions:"
 msgstr[0] "Trovata una chiamata .Internal nella seguente funzione:"
 msgstr[1] "Trovate chiamate .Internal nelle seguenti funzioni:"
 
-msgid "Found a.Internal call in methods for the following S4 generic:"
+#, fuzzy
+msgid "Found a .Internal call in methods for the following S4 generic:"
 msgid_plural "Found .Internal calls in methods for the following S4 generics:"
 msgstr[0] "Trovata una chiamata .Internal nei metodi del seguente generico S4:"
 msgstr[1] "Trovate chiamate .Internal nei metodi dei seguenti generici S4:"

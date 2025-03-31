@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2024-10-25 14:49\n"
+"POT-Creation-Date: 2025-03-31 11:51\n"
 "PO-Revision-Date: 2024-03-20 03:05+0000\n"
 "Last-Translator: Joan Maspons <joanmaspons@gmail.com>\n"
 "Language-Team: none\n"
@@ -278,6 +278,9 @@ msgstr "Hi ha d'haver àncores anomenades \"esquerra\" i \"inferior\""
 #, fuzzy
 msgid "Invalid glyph info"
 msgstr "Informació del glif no vàlida"
+
+msgid "'%s' was removed in R 4.5.0."
+msgstr ""
 
 #, fuzzy
 msgid "Invalid compositing operator"

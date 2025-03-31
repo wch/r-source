@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2024-10-25 14:49\n"
+"POT-Creation-Date: 2025-03-31 11:50\n"
 "PO-Revision-Date: 2012-11-27 01:11+0330\n"
 "Last-Translator: Seyed Mahmood Taghavi Shahri <taghavi_m@razi.tums.ac.ir>\n"
 "Language-Team: Persian\n"
@@ -199,9 +199,6 @@ msgstr ""
 msgid "'headers' must have names and must not be NA"
 msgstr ""
 
-msgid "'name' must be a single character string"
-msgstr ""
-
 msgid "'origin' must be one of 'start', 'current' or 'end'"
 msgstr ""
 
@@ -391,28 +388,16 @@ msgstr ""
 msgid "%s not defined for \"Date\" objects"
 msgstr ""
 
-msgid "'from' must be specified"
+msgid "'%s' must be of length 1"
 msgstr ""
 
-msgid "'from' must be a \"Date\" object"
+msgid "without 'by', at least one of 'to' and 'from' must be specified"
 msgstr ""
 
-msgid "'from' must be of length 1"
+msgid "without 'by', when one of 'to', 'from' is missing, 'length.out' / 'along.with' must be specified"
 msgstr ""
 
-msgid "'to' must be a \"Date\" object"
-msgstr ""
-
-msgid "'to' must be of length 1"
-msgstr ""
-
-msgid "'length.out' must be of length 1"
-msgstr ""
-
-msgid "exactly two of 'to', 'by' and 'length.out' / 'along.with' must be specified"
-msgstr ""
-
-msgid "'by' must be of length 1"
+msgid "given 'by', exactly two of 'to', 'from' and 'length.out' / 'along.with' must be specified"
 msgstr ""
 
 msgid "invalid 'by' string"
@@ -431,9 +416,6 @@ msgid "'x' must be a date-time object"
 msgstr ""
 
 msgid "invalid specification of 'breaks'"
-msgstr ""
-
-msgid "'origin' must be of length one"
 msgstr ""
 
 msgid "'lag' and 'differences' must be integers >= 1"
@@ -493,10 +475,10 @@ msgstr ""
 msgid "second argument of / cannot be a \"difftime\" object"
 msgstr ""
 
-msgid "'from' must be a \"POSIXt\" object"
+msgid "exactly three of 'to', 'from', 'by' and 'length.out' / 'along.with' must be specified"
 msgstr ""
 
-msgid "'to' must be a \"POSIXt\" object"
+msgid "'%s' must be a \"%s\" object"
 msgstr ""
 
 msgid "component subscript must be a character string"
@@ -634,9 +616,6 @@ msgid "no files/directory to link to"
 msgstr ""
 
 msgid "no files to link to"
-msgstr ""
-
-msgid "'package' must be of length 1"
 msgstr ""
 
 msgid "no file found"
@@ -963,9 +942,6 @@ msgid "may not have argument(s) named"
 msgstr ""
 
 msgid "'arg' must be NULL or a character vector"
-msgstr ""
-
-msgid "'arg' must be of length 1"
 msgstr ""
 
 msgid "'arg' must be of length >= 1"
@@ -1363,9 +1339,6 @@ msgstr ""
 msgid "'from' must be a finite number"
 msgstr ""
 
-msgid "argument 'length.out' must be of length 1"
-msgstr ""
-
 msgid "first element used of 'length.out' argument"
 msgstr ""
 
@@ -1534,9 +1507,7 @@ msgstr ""
 msgid "Sys.setenv(LANGUAGE=\"%s\") may have failed"
 msgstr ""
 
-msgid ""
-"Calling 'structure(NULL, *)' is deprecated, as NULL cannot have attributes.\n"
-"  Consider 'structure(list(), *)' instead."
+msgid "attempt to set an attribute on NULL"
 msgstr ""
 
 msgid "incorrect value for 'x'"
@@ -1602,9 +1573,6 @@ msgstr ""
 msgid "handler must be a function"
 msgstr ""
 
-msgid "'which' must be of length 1"
-msgstr ""
-
 msgid "no such element '%s'"
 msgstr ""
 
@@ -1636,6 +1604,12 @@ msgid "'width' must be positive"
 msgstr ""
 
 msgid "No traceback available"
+msgstr ""
+
+msgid "'recursive' must be a length-1 vector"
+msgstr ""
+
+msgid "'recursive' is NA"
 msgstr ""
 
 msgid "invalid non-character version specification 'x' (type: %s)"

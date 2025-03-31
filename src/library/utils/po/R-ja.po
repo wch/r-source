@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2024-10-25 14:50\n"
+"POT-Creation-Date: 2025-03-31 11:51\n"
 "PO-Revision-Date: 2024-03-18 21:18+0000\n"
 "Last-Translator: Michael Chirico <michaelchirico4@gmail.com>\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -1071,6 +1071,9 @@ msgstr ""
 msgid "xz"
 msgstr ""
 
+msgid "zstd"
+msgstr ""
+
 msgid "failed to create directory %s"
 msgstr "ディレクトリ %s を作ることが出来ません"
 
@@ -1320,6 +1323,10 @@ msgstr[0] "role の指定が不正です: %s。"
 
 msgid "Invalid ORCID iD: %s."
 msgid_plural "Invalid ORCID iDs: %s."
+msgstr[0] ""
+
+msgid "Invalid ROR ID: %s."
+msgid_plural "Invalid ROR IDs: %s."
 msgstr[0] ""
 
 msgid "A bibentry of bibtype %s has to specify the field: %s"

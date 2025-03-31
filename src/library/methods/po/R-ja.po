@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2024-10-25 14:49\n"
+"POT-Creation-Date: 2025-03-31 11:51\n"
 "PO-Revision-Date: 2015-03-27 14:52+0900 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -820,10 +820,6 @@ msgstr "未定義の 'coerce' メソッド"
 msgid "methods currently exist for coercing from %s to %s; they will be replaced."
 msgstr "%s から %s への強制変換のためのメソッドが現在存在します; これらを交換します。"
 
-#, fuzzy
-msgid "Function must be an S4 generic"
-msgstr ".getGeneric の中に空の関数名"
-
 msgid "method is not being debugged"
 msgstr ""
 
@@ -1313,6 +1309,10 @@ msgstr[0] "メソッド %s を選択 (%d 個の曖昧な可能性から)"
 msgid "no definition of class %s in the specified position, %s, definition on : %s"
 msgid_plural "no definition of class %s in the specified position, %s, definitions on : %s"
 msgstr[0] "クラス %s の定義は指定された位置 %s にありません、以下に関する定義です: %s"
+
+#, fuzzy
+#~ msgid "Function must be an S4 generic"
+#~ msgstr ".getGeneric の中に空の関数名"
 
 #~ msgid "invalid method sublist"
 #~ msgstr "不正なメソッドサブリスト"

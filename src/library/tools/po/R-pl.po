@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2024-10-25 14:49\n"
+"POT-Creation-Date: 2025-03-31 11:51\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -278,6 +278,14 @@ msgstr "Pole 'Authors@R' wskazuje na osoby beż żadnych imion:"
 msgid "Authors@R field gives persons with duplicated ORCID identifiers:"
 msgstr "Pole 'Authors@R' wskazuje na osoby beż żadnych imion:"
 
+#, fuzzy
+msgid "Authors@R field gives persons with invalid ROR identifiers:"
+msgstr "Pole 'Authors@R' wskazuje na osoby beż żadnych imion:"
+
+#, fuzzy
+msgid "Authors@R field gives persons with duplicated ROR identifiers:"
+msgstr "Pole 'Authors@R' wskazuje na osoby beż żadnych imion:"
+
 msgid "Encoding '%s' is not portable"
 msgstr "Strona kodowa '%s' nie jest przenośna"
 
@@ -332,11 +340,11 @@ msgid "invalid 'OS.type' \"%s\".  Should not happen"
 msgstr ""
 
 #, fuzzy
-msgid "Missing link or links in Rd file '%s':"
+msgid "Missing link(s) in Rd file '%s':"
 msgstr "Brakujący link lub linki w obiekcie dokumentacji '%s':"
 
 #, fuzzy
-msgid "Non-file package-anchored link(s) in Rd file '%s':"
+msgid "Non-topic package-anchored link(s) in Rd file '%s':"
 msgstr "Brakujący link lub linki w obiekcie dokumentacji '%s':"
 
 msgid "See section 'Cross-references' in the 'Writing R Extensions' manual."
@@ -1535,7 +1543,8 @@ msgstr[0] "Znaleziono wywołanie '.Internal' w następującej funkcji:"
 msgstr[1] "Znaleziono wywołania '.Internal' w następujących funkcjach:"
 msgstr[2] "Znaleziono wywołania '.Internal' w następujących funkcjach:"
 
-msgid "Found a.Internal call in methods for the following S4 generic:"
+#, fuzzy
+msgid "Found a .Internal call in methods for the following S4 generic:"
 msgid_plural "Found .Internal calls in methods for the following S4 generics:"
 msgstr[0] "Znaleziono wywołanie '.Internal' w metodach w następującej funkcji ogólnej S4:"
 msgstr[1] "Znaleziono wywołania '.Internal' w metodach w następujących funkcjach ogólnych S4:"

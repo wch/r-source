@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2024-10-25 14:49\n"
+"POT-Creation-Date: 2025-03-31 11:51\n"
 "PO-Revision-Date: 2023-09-01 11:37+0000\n"
 "Last-Translator: Caio Lente <lente@ime.usp.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -274,6 +274,14 @@ msgstr "Campo Authors@R fornece pessoas com identificadores ORCID inválidos:"
 msgid "Authors@R field gives persons with duplicated ORCID identifiers:"
 msgstr "Campo Authors@R fornece pessoas com identificadores ORCID inválidos:"
 
+#, fuzzy
+msgid "Authors@R field gives persons with invalid ROR identifiers:"
+msgstr "Campo Authors@R fornece pessoas com identificadores ORCID inválidos:"
+
+#, fuzzy
+msgid "Authors@R field gives persons with duplicated ROR identifiers:"
+msgstr "Campo Authors@R fornece pessoas com identificadores ORCID inválidos:"
+
 msgid "Encoding '%s' is not portable"
 msgstr "Codificação '%s' não é portável"
 
@@ -327,11 +335,11 @@ msgid "invalid 'OS.type' \"%s\".  Should not happen"
 msgstr "'OS.type' \"%s\" inválido.  Não deveria acontecer"
 
 #, fuzzy
-msgid "Missing link or links in Rd file '%s':"
+msgid "Missing link(s) in Rd file '%s':"
 msgstr "Link(s) ausente(s) no objeto de documentação '%s':"
 
 #, fuzzy
-msgid "Non-file package-anchored link(s) in Rd file '%s':"
+msgid "Non-topic package-anchored link(s) in Rd file '%s':"
 msgstr "Flags não portáveis no arquivo '%s':"
 
 msgid "See section 'Cross-references' in the 'Writing R Extensions' manual."
@@ -1512,7 +1520,8 @@ msgid_plural "Found .Internal calls in the following functions:"
 msgstr[0] "Uma chamada .Internal foi encontrada na seguinte função:"
 msgstr[1] "Chamadas .Internal foram encontradas nas seguintes funções:"
 
-msgid "Found a.Internal call in methods for the following S4 generic:"
+#, fuzzy
+msgid "Found a .Internal call in methods for the following S4 generic:"
 msgid_plural "Found .Internal calls in methods for the following S4 generics:"
 msgstr[0] "Uma chamada .Internal foi encontrada nos métodos da seguinte genérica S4:"
 msgstr[1] "Chamadas .Internal foram encontradas nos métodos das seguintes genéricas S4:"

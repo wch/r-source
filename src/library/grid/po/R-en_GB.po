@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-07-31 14:59\n"
+"POT-Creation-Date: 2025-03-31 11:51\n"
 "PO-Revision-Date: 2024-01-29 03:05+0000\n"
 "Last-Translator: Heather Turner <ht@heatherturner.net>\n"
 "Language-Team: none\n"
@@ -34,7 +34,8 @@ msgstr "Invalid grob coordinates"
 msgid "Invalid gTree coordinates"
 msgstr "Invalid gTree coordinates"
 
-msgid "Closed must not be a missing value"
+#, fuzzy
+msgid "Closed must be length 1 and must not be a missing value"
 msgstr "Closed must not be a missing value"
 
 msgid "end points must not be identical"
@@ -86,14 +87,10 @@ msgid "invalid 'row' specification"
 msgstr "invalid 'row' specification"
 
 msgid "cannot specify more than one of 'side=[\"left\", \"right\"]', 'col', 'col.before', or 'col.after'"
-msgstr ""
-"cannot specify more than one of 'side=[\"left\", \"right\"]', 'col', "
-"'col.before', or 'col.after'"
+msgstr "cannot specify more than one of 'side=[\"left\", \"right\"]', 'col', 'col.before', or 'col.after'"
 
 msgid "must specify exactly one of 'side=[\"top\", \"bottom\"]', 'row', 'row.before', or 'row.after'"
-msgstr ""
-"must specify exactly one of 'side=[\"top\", \"bottom\"]', 'row', "
-"'row.before', or 'row.after'"
+msgstr "must specify exactly one of 'side=[\"top\", \"bottom\"]', 'row', 'row.before', or 'row.after'"
 
 msgid "invalid 'n'"
 msgstr "invalid 'n'"
@@ -135,16 +132,13 @@ msgid "invalid display list element"
 msgstr "invalid display list element"
 
 msgid "one or more grobs overwritten (grab WILL not be faithful; try 'wrap.grobs = TRUE')"
-msgstr ""
-"one or more grobs overwritten (grab WILL not be faithful; try 'wrap.grobs = "
-"TRUE')"
+msgstr "one or more grobs overwritten (grab WILL not be faithful; try 'wrap.grobs = TRUE')"
 
 msgid "viewport overwritten (grab MAY not be faithful)"
 msgstr "viewport overwritten (grab MAY not be faithful)"
 
 msgid "grob pushed viewports and did not pop/up them (grab MAY not be faithful)"
-msgstr ""
-"grob pushed viewports and did not pop/up them (grab MAY not be faithful)"
+msgstr "grob pushed viewports and did not pop/up them (grab MAY not be faithful)"
 
 msgid "only valid to push viewports"
 msgstr "only valid to push viewports"
@@ -374,7 +368,9 @@ msgstr "Pattern must be based on grob"
 msgid "Missing pattern fill has been set to transparent"
 msgstr "Missing pattern fill has been set to transparent"
 
-msgid "grob drawing produces more shapes than grob coords\n(recycling coords)"
+msgid ""
+"grob drawing produces more shapes than grob coords\n"
+"(recycling coords)"
 msgstr ""
 "grob drawing produces more shapes than grob coords\n"
 "(recycling coords)"
@@ -572,16 +568,17 @@ msgid "only viewports allowed in 'vpStack'"
 msgstr "only viewports allowed in 'vpStack'"
 
 msgid "'parent' must be a viewport and 'children' must be a 'vpList' in 'vpTree'"
-msgstr ""
-"'parent' must be a viewport and 'children' must be a 'vpList' in 'vpTree'"
+msgstr "'parent' must be a viewport and 'children' must be a 'vpList' in 'vpTree'"
 
 msgid "a viewport path must contain at least one viewport name"
 msgstr "a viewport path must contain at least one viewport name"
 
-msgid "must specify at least one of 'x' or 'xscale'"
+#, fuzzy
+msgid "must specify at least one of 'xData' or 'xscale'"
 msgstr "must specify at least one of 'x' or 'xscale'"
 
-msgid "must specify at least one of 'y' or 'yscale'"
+#, fuzzy
+msgid "must specify at least one of 'yData' or 'yscale'"
 msgstr "must specify at least one of 'y' or 'yscale'"
 
 msgid "shutting down all devices when unloading 'grid' namespace"

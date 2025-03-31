@@ -1,13 +1,13 @@
 # Translation of src/library/parallel/po/R-parallel.pot to German
-# Copyright (C) 2011-2022 The R Foundation
+# Copyright (C) 2011-2025 The R Foundation
 # This file is distributed under the same license as the R package.
-# Detlef Steuer <steuer@hsu-hh.de>, 2011-2022.
+# Detlef Steuer <steuer@hsu-hh.de>, 2011-2025.
 msgid ""
 msgstr ""
-"Project-Id-Version: R 4.2.0\n"
+"Project-Id-Version: R 4.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2024-10-25 14:49\n"
-"PO-Revision-Date: 2024-03-19 12:53+0000\n"
+"PO-Revision-Date: 2025-03-18 11:31+0100\n"
 "Last-Translator: Michael Chirico <michaelchirico4@gmail.com>\n"
 "Language-Team: R-Core <r-core@r-project.org>\n"
 "Language: de\n"
@@ -42,11 +42,10 @@ msgid "not a valid cluster"
 msgstr "kein zulässiger Cluster"
 
 msgid "replacing registration for cluster type '%s'"
-msgstr ""
+msgstr "ersetze Registrierung für Clustertyp '%s'"
 
-#, fuzzy
 msgid "unknown cluster type: '%s'"
-msgstr "unbekannter Clustertyp"
+msgstr "unbekannter Clustertyp: '%s'"
 
 msgid "numeric 'names' must be >= 1"
 msgstr "numerisches 'names' muss >= 1 sein"

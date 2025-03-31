@@ -1,14 +1,14 @@
 # German translation of 
 # src/library/graphics/po/grid.pot
-# Copyright (C) 2009-2022 The R Foundation
+# Copyright (C) 2009-2025 The R Foundation
 # This file is distributed under the same license as the R package.
-# Detlef Steuer <steuer@hsu-hh.de>, 2009-2022.
+# Detlef Steuer <steuer@hsu-hh.de>, 2009-2025.
 msgid ""
 msgstr ""
-"Project-Id-Version: R-4.2.0\n"
+"Project-Id-Version: R-4.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2024-04-01 10:33-0700\n"
-"PO-Revision-Date: 2022-04-13 16:49+0200\n"
+"POT-Creation-Date: 2025-03-31 11:51+0200\n"
+"PO-Revision-Date: 2025-03-11 11:48+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team:  <R-core@r-project.org>\n"
 "Language: de\n"
@@ -40,7 +40,7 @@ msgstr "Masken innerhalb eines (Clipping)-Pfades werden nicht beachtet"
 #: grid.c:699 grid.c:877
 #, c-format
 msgid "Viewport '%s' was not found"
-msgstr ""
+msgstr "Viewport '%s' nicht gefunden"
 
 #: grid.c:909 grid.c:914 grid.c:1035 grid.c:1040
 msgid "cannot pop the top-level viewport ('grid' and 'graphics' output mixed?)"
@@ -50,23 +50,23 @@ msgstr "kann den obersten viewport nicht vom Stack werfen ('grid' und 'graphics'
 msgid "attempt to plot on null device"
 msgstr "Versuch in das Null-Device zu zeichnen"
 
-#: grid.c:1711
+#: grid.c:1710
 msgid "there is no layout defined"
 msgstr "kein Layout definiert"
 
-#: grid.c:1933
+#: grid.c:1932
 msgid "polygon edge not found (zero-width or zero-height?)"
 msgstr "Polygonkante nicht gefunden (Breite oder Länge 0?)"
 
-#: grid.c:1942
+#: grid.c:1941
 msgid "polygon edge not found"
 msgstr "Polygonkante nicht gefunden"
 
-#: grid.c:2096
+#: grid.c:2095
 msgid "require at least two points to draw arrow"
 msgstr "mindestens zwei Punkte nötig, um einen Pfeil zu zeichnen"
 
-#: grid.c:2467
+#: grid.c:2466
 msgid "non-finite control point in Xspline"
 msgstr "nicht-endlicher Kontrollpunkt in Xspline"
 
@@ -80,23 +80,23 @@ msgstr "Leeres Raster"
 
 #: grid.c:4038 grid.c:4094
 msgid "Coordinates for text pch not yet supported"
-msgstr ""
+msgstr "Koordinaten für textliche pch noch nicht unterstützt"
 
 #: grid.c:4099
 #, c-format
 msgid "pch value '%d' is invalid in this locale"
-msgstr ""
+msgstr "pch Wert '%d' ist in dieser Lokalisation ungültig"
 
 #: grid.c:4920
 #, c-format
 msgid "unimplemented pch value '%d'"
-msgstr ""
+msgstr "nicht implementierter Wert für pch '%d'"
 
 #: grid.c:5079
 msgid "invalid plotting symbol"
 msgstr "unzulässiges Plotsymbol"
 
-#: grid.c:5197
+#: grid.c:5198
 msgid "unable to clip to rotated rectangle"
 msgstr "kann nicht auf das rotierte Rechteck zurechtschneiden"
 
@@ -182,13 +182,13 @@ msgstr "Einheiten können nur mit numerischen oder integer Werten multipliziert 
 
 #: util.c:216
 msgid "Unable to calculate text width/height (using zero)"
-msgstr ""
+msgstr "Kann Texthöhe/-breite nicht berechnen (nutze Null)"
 
-#: viewport.c:56
+#: viewport.c:57
 msgid "Mask is not logical value ('none' or 'inherit')"
 msgstr "Maske ist kein logischer Wert ('none' oder 'inherit')"
 
-#: viewport.c:330
+#: viewport.c:331
 msgid "non-finite location and/or size for viewport"
 msgstr "nicht-endlicher Ort oder/und Größe des Viewports"
 

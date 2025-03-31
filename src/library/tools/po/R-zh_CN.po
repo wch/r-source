@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2024-10-25 14:49\n"
+"POT-Creation-Date: 2025-03-31 11:51\n"
 "PO-Revision-Date: 2024-03-19 12:53+0000\n"
 "Last-Translator: Michael Chirico <michaelchirico4@gmail.com>\n"
 "Language-Team: Chinese\n"
@@ -288,6 +288,14 @@ msgstr "Authors@R领域里没有有效作用的人"
 msgid "Authors@R field gives persons with duplicated ORCID identifiers:"
 msgstr "Authors@R领域里没有有效作用的人"
 
+#, fuzzy
+msgid "Authors@R field gives persons with invalid ROR identifiers:"
+msgstr "Authors@R领域里没有有效作用的人"
+
+#, fuzzy
+msgid "Authors@R field gives persons with duplicated ROR identifiers:"
+msgstr "Authors@R领域里没有有效作用的人"
+
 msgid "Encoding '%s' is not portable"
 msgstr "编码'%s'不可便携"
 
@@ -344,11 +352,11 @@ msgid "invalid 'OS.type' \"%s\".  Should not happen"
 msgstr ""
 
 #, fuzzy
-msgid "Missing link or links in Rd file '%s':"
+msgid "Missing link(s) in Rd file '%s':"
 msgstr "使用文档对象'%s'缺少联结:"
 
 #, fuzzy
-msgid "Non-file package-anchored link(s) in Rd file '%s':"
+msgid "Non-topic package-anchored link(s) in Rd file '%s':"
 msgstr "使用文档对象'%s'联结可能不对:"
 
 #, fuzzy
@@ -1554,7 +1562,8 @@ msgid "Found a .Internal call in the following function:"
 msgid_plural "Found .Internal calls in the following functions:"
 msgstr[0] "下面的函数调用了.Internal:"
 
-msgid "Found a.Internal call in methods for the following S4 generic:"
+#, fuzzy
+msgid "Found a .Internal call in methods for the following S4 generic:"
 msgid_plural "Found .Internal calls in methods for the following S4 generics:"
 msgstr[0] "下面的S4泛型函数的方法调用了.Internal:"
 

@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: R 4.5.0\n"
+"Project-Id-Version: R 4.6.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2024-04-01 10:33-0700\n"
+"POT-Creation-Date: 2025-03-31 11:51+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -50,23 +50,23 @@ msgstr ""
 msgid "attempt to plot on null device"
 msgstr ""
 
-#: grid.c:1711
+#: grid.c:1710
 msgid "there is no layout defined"
 msgstr ""
 
-#: grid.c:1933
+#: grid.c:1932
 msgid "polygon edge not found (zero-width or zero-height?)"
 msgstr ""
 
-#: grid.c:1942
+#: grid.c:1941
 msgid "polygon edge not found"
 msgstr ""
 
-#: grid.c:2096
+#: grid.c:2095
 msgid "require at least two points to draw arrow"
 msgstr ""
 
-#: grid.c:2467
+#: grid.c:2466
 msgid "non-finite control point in Xspline"
 msgstr ""
 
@@ -96,7 +96,7 @@ msgstr ""
 msgid "invalid plotting symbol"
 msgstr ""
 
-#: grid.c:5197
+#: grid.c:5198
 msgid "unable to clip to rotated rectangle"
 msgstr ""
 
@@ -186,10 +186,10 @@ msgstr ""
 msgid "Unable to calculate text width/height (using zero)"
 msgstr ""
 
-#: viewport.c:56
+#: viewport.c:57
 msgid "Mask is not logical value ('none' or 'inherit')"
 msgstr ""
 
-#: viewport.c:330
+#: viewport.c:331
 msgid "non-finite location and/or size for viewport"
 msgstr ""

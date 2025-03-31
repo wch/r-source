@@ -1,15 +1,15 @@
 # Translation of src/library/base/po/R-base.pot to German
-# Copyright (C) 2005-2022 The R Foundation
+# Copyright (C) 2005-2025 The R Foundation
 # This file is distributed under the same license as the R package.
-# Detlef Steuer <detlef.steuer@hsu-hh.de>, 2007-2023.
+# Detlef Steuer <detlef.steuer@hsu-hh.de>, 2007-2025.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 4.2.0\n"
+"Project-Id-Version: R 4.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2024-10-25 14:49\n"
-"PO-Revision-Date: 2024-03-19 12:53+0000\n"
-"Last-Translator: Michael Chirico <michaelchirico4@gmail.com>\n"
+"POT-Creation-Date: 2025-03-31 11:50\n"
+"PO-Revision-Date: 2025-03-24 14:45+0100\n"
+"Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <r-core@r-project.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -61,16 +61,14 @@ msgstr "das zweite Argument muss eine Liste sein"
 msgid "'iconvlist' is not available on this system"
 msgstr "'iconvlist' steht auf diesem System nicht zur Verfügung"
 
-#, fuzzy
 msgid "'kind' must be a character string (RNG to be used)."
-msgstr "'kind' muss eine Zeichenkette der Länge 1 sein (zu nutzender RNG)."
+msgstr "'kind' muss eine Zeichenkette sein (zu nutzender RNG)."
 
 msgid "'%s' is not a valid abbreviation of an RNG"
 msgstr "'%s' ist keine gültige Abkürzung für einen RNG"
 
-#, fuzzy
 msgid "'%s' must be a character string"
-msgstr "'name' muss eine einzelne Zeichenkette sein"
+msgstr "'%s' muss eine Zeichenkette sein"
 
 msgid "'%s' is not a valid choice"
 msgstr "'%s' ist keine gültige Wahl"
@@ -207,9 +205,6 @@ msgstr "kann nur Zeichenketten-Objekte schreiben"
 msgid "'headers' must have names and must not be NA"
 msgstr "'headers' müssen Namen haben und dürfen nicht NA sein"
 
-msgid "'name' must be a single character string"
-msgstr "'name' muss eine einzelne Zeichenkette sein"
-
 msgid "'origin' must be one of 'start', 'current' or 'end'"
 msgstr "'origin' muss entweder 'start', 'current' oder 'end' sein"
 
@@ -237,9 +232,8 @@ msgstr "ungültige Anzahl von Intervallen"
 msgid "'breaks' are not unique"
 msgstr "'breaks' sind nicht eindeutig"
 
-#, fuzzy
 msgid "number of intervals and length of 'labels' differ"
-msgstr "Längen von 'breaks' und 'labels' unterschiedlich"
+msgstr "Anzahl der Intervalle und Länge von 'labels' unterschiedlich"
 
 msgid "invalid 'row.names' length"
 msgstr "ungültige 'row.names' Länge"
@@ -259,9 +253,8 @@ msgstr "ungültige 'dimnames' für data frame gegeben"
 msgid "cannot coerce class %s to a data.frame"
 msgstr "kann Klasse %s nicht in data.frame umwandeln"
 
-#, fuzzy
 msgid "'row.names' is not a character or integer vector of length %d"
-msgstr "'row.names' ist kein Zeichenkettenvektor der Länge %d -- wird ausgelassen. Wird einen Fehler ergeben!"
+msgstr "'row.names' ist kein Zeichenketten- oder Ganzahlvektor der Länge %d"
 
 msgid "mismatch of row names in arguments of 'data.frame', item %d"
 msgstr "Zeilennamen passen nicht zu den Argumenten für 'data.frame', Element %d"
@@ -347,9 +340,8 @@ msgstr "Anzahl der Spalten der Argumente unterschiedlich"
 msgid "invalid list argument: all variables should have the same length"
 msgstr "ungültiges list Argument: alle Variablen sollten dieselbe Länge haben"
 
-#, fuzzy
 msgid "number of columns of result, %d, is not a multiple of vector length %d of arg %d"
-msgstr "Anzahl der zu erseztenden Elemente ist kein Vielfaches der Ersetzungslänge"
+msgstr "Anzahl der Spalten des Ergebnisses, %d, ist kein Vielfaches der Vektorlänge %d des Arguments %d"
 
 msgid "<0 rows> (or 0-length row.names)"
 msgstr "<0 Zeilen> (oder row.names mit Länge 0)"
@@ -402,29 +394,20 @@ msgstr "unäres %s ist für \"Date\" Objekte nicht definiert"
 msgid "%s not defined for \"Date\" objects"
 msgstr "%s nicht definiert für \"Date\" Objekte"
 
-msgid "'from' must be specified"
-msgstr "'from' muss angegeben werden"
-
-msgid "'from' must be a \"Date\" object"
-msgstr "'from' muss \"Date\" Objekt sein"
-
-msgid "'from' must be of length 1"
-msgstr "'from' muss Länge 1 haben"
-
-msgid "'to' must be a \"Date\" object"
-msgstr "'to' muss \"Date\" Objekt sein"
-
-msgid "'to' must be of length 1"
+#, fuzzy
+msgid "'%s' must be of length 1"
 msgstr "'to' muss Länge 1 haben"
 
-msgid "'length.out' must be of length 1"
-msgstr "'length.out' muss Länge 1 haben"
+msgid "without 'by', at least one of 'to' and 'from' must be specified"
+msgstr ""
 
-msgid "exactly two of 'to', 'by' and 'length.out' / 'along.with' must be specified"
+#, fuzzy
+msgid "without 'by', when one of 'to', 'from' is missing, 'length.out' / 'along.with' must be specified"
 msgstr "genau zwei aus 'to', 'by' und 'length.out' / 'along.with' müssen angegeben sein"
 
-msgid "'by' must be of length 1"
-msgstr "'by' muss Länge 1 haben"
+#, fuzzy
+msgid "given 'by', exactly two of 'to', 'from' and 'length.out' / 'along.with' must be specified"
+msgstr "genau zwei aus 'to', 'by' und 'length.out' / 'along.with' müssen angegeben sein"
 
 msgid "invalid 'by' string"
 msgstr "ungültige 'by' Zeichenkette"
@@ -443,9 +426,6 @@ msgstr "'x' muss ein date-time Objekt sein"
 
 msgid "invalid specification of 'breaks'"
 msgstr "ungültige Spezifikation von 'breaks'"
-
-msgid "'origin' must be of length one"
-msgstr "'origin' muss Länge 1 haben"
 
 msgid "'lag' and 'differences' must be integers >= 1"
 msgstr "'lag' and 'differences' müssen ganze Zahlen >=1 sein"
@@ -478,11 +458,10 @@ msgid "'tzone' attributes are inconsistent"
 msgstr "'tzone' Attribute sind inkonsistent"
 
 msgid "as.character(td, ..) no longer obeys a 'format' argument; use format(td, ..) ?"
-msgstr ""
+msgstr "as.character(td, ..) gehorcht keinem 'format' Argument mehr; nutze format(td, ..) ?"
 
-#, fuzzy
 msgid "'digits' must be numeric, integer valued"
-msgstr "'trim' muss numerisch sein und Länge 1 haben"
+msgstr "'digits' muss nummerisch ganzzahlig sein"
 
 msgid "'tim' is not character or numeric"
 msgstr "'tim' ist weder Zeichenkette noch numerisch"
@@ -505,11 +484,13 @@ msgstr "es können nicht beide Argumente von * \"difftime\" Objekte sein"
 msgid "second argument of / cannot be a \"difftime\" object"
 msgstr "das zweite Argument von / kann kein \"difftime\" Objekt sein"
 
-msgid "'from' must be a \"POSIXt\" object"
-msgstr "'from' muss ein \"POSIXt\" Objekt sein"
+#, fuzzy
+msgid "exactly three of 'to', 'from', 'by' and 'length.out' / 'along.with' must be specified"
+msgstr "genau zwei aus 'to', 'by' und 'length.out' / 'along.with' müssen angegeben sein"
 
-msgid "'to' must be a \"POSIXt\" object"
-msgstr "'to' muss ein \"POSIXt\" Objekt sein"
+#, fuzzy
+msgid "'%s' must be a \"%s\" object"
+msgstr "'to' muss \"Date\" Objekt sein"
 
 msgid "component subscript must be a character string"
 msgstr "Komponenten-Index muss eine Zeichenkette sein"
@@ -518,7 +499,7 @@ msgid "no Olson database found"
 msgstr "keine Olson Datenbank gefunden"
 
 msgid "No element named \"%s\" found in x, did you mean x[, \"%1$s\"] instead?"
-msgstr ""
+msgstr "Kein Element namens %s in x gefunden, meinten Sie x[, \"51$s\"] stattdessen?"
 
 msgid "'file' must be a character string or connection"
 msgstr "'file' muss eine Zeichenkette oder eine Verbindung sein"
@@ -644,7 +625,7 @@ msgid "cannot overwrite a non-directory with a directory"
 msgstr "kann kein Nicht-Verzeichnis mit Verzeichnis überschreiben"
 
 msgid "directories are omitted unless 'recursive = TRUE'"
-msgstr ""
+msgstr "Verzeichnisse werden ausgelassen, wenn nicht 'recursive = TRUE'"
 
 msgid "file can not be copied both 'from' and 'to'"
 msgstr "Datei kann nicht sowohl 'from' als auch 'to' der Kopie sein"
@@ -657,9 +638,6 @@ msgstr "keine Dateien/Verzeichnis, um dorthin zu linken"
 
 msgid "no files to link to"
 msgstr "keine Dateien, um dorthin zu linken"
-
-msgid "'package' must be of length 1"
-msgstr "'package' muss Länge 1 haben"
 
 msgid "no file found"
 msgstr "keine Datei gefunden"
@@ -766,26 +744,23 @@ msgstr "benötige Ersetzungswerte für Treffer"
 msgid "No factors specified"
 msgstr "Keine Faktoren angegeben"
 
-#, fuzzy
 msgid "invalid '%s': type \"%s\""
-msgstr "ungültiger Wert für 'n'"
+msgstr "ungültiges '%s': Typ \"%s\""
 
-#, fuzzy
 msgid "'uplo' must be \"U\" or \"L\""
-msgstr "'wait' muss TRUE oder FALSE sein"
+msgstr "'uplo' muss \"U\" oder \"L\" sein"
 
-#, fuzzy
 msgid "invalid nrow(z)"
-msgstr "ungültige nrow(x)"
+msgstr "ungültige nrow(z)"
 
 msgid "triangular matrix should be square"
 msgstr "Dreiecks-Matrix sollte quadratisch sein"
 
 msgid "using 1-norm approximation for approximate 2-norm"
-msgstr ""
+msgstr "nutze die 1-Norm Approximation um die 2-Norm zu approximieren"
 
 msgid "norm=\"%s\" not available here; using norm=\"1\""
-msgstr ""
+msgstr "norm=%s hier nicht verfügbar; nutze norm=\"1\""
 
 msgid "unknown conflict policy: %s"
 msgstr "unbekannte Konfliktpolicy: %s"
@@ -956,9 +931,8 @@ msgstr "'file' muss angegeben werden"
 msgid "nothing specified to be save()d"
 msgstr "keine Argumente für save() angegeben"
 
-#, fuzzy
 msgid "'%s' must be a non-empty character string"
-msgstr "'file' muss nicht-leere Zeichenkette sein"
+msgstr "'%s' muss nicht-leere Zeichenkette sein"
 
 msgid "'compress' must be logical or character"
 msgstr "'compress' muss logical oder character sein"
@@ -998,9 +972,6 @@ msgstr "Argument(e) dürfen nicht benannt sein"
 
 msgid "'arg' must be NULL or a character vector"
 msgstr "'arg' muss NULL oder ein Zeichenkettenvektor sein"
-
-msgid "'arg' must be of length 1"
-msgstr "'arg' muss Länge 1 haben"
 
 msgid "'arg' must be of length >= 1"
 msgstr "'arg' muss Länge >=1 haben"
@@ -1380,9 +1351,8 @@ msgstr "ungültige 'rle' Struktur"
 msgid "... must contain names or character strings"
 msgstr "... muss Namen oder Zeichenketten enthalten"
 
-#, fuzzy
 msgid "invalid 'x'"
-msgstr "ungültige 'dims'"
+msgstr "ungültige 'x'"
 
 msgid "incorrect length for 'group'"
 msgstr "falsche Länge für 'group'"
@@ -1404,9 +1374,6 @@ msgstr "entweder 'nmax' oder 'n' angeben, aber nicht beide"
 
 msgid "'from' must be a finite number"
 msgstr "'from' muss endliche Zahl sein"
-
-msgid "argument 'length.out' must be of length 1"
-msgstr "Argument 'length.out' muss Länge 1 haben"
 
 msgid "first element used of 'length.out' argument"
 msgstr "erstes Element von 'length.out' Argument benutzt"
@@ -1488,7 +1455,7 @@ msgid "non-finite 'partial'"
 msgstr "nicht endliches 'partial'"
 
 msgid "'decreasing' of length > 1 is only for method = \"radix\""
-msgstr ""
+msgstr "'decreasing' mit Länge > 1 ist nur für method = \"radix\""
 
 msgid "argument lengths differ"
 msgstr "Argumentlängen unterschiedlich"
@@ -1516,7 +1483,7 @@ msgid "'verbose' is TRUE, 'echo' not; ... coercing 'echo <- TRUE'"
 msgstr "'verbose' ist TRUE, 'echo' nicht; ... erzwinge 'echo <- TRUE'"
 
 msgid "empty file/url name"
-msgstr ""
+msgstr "leerer Datei/URL Name"
 
 msgid "unable to find a plausible encoding"
 msgstr "kann keine plausible Kodierung finden"
@@ -1539,15 +1506,14 @@ msgstr "entweder 'file' oder 'exprs' spezifizieren, aber nicht beide"
 msgid "'%s' is not an existing file"
 msgstr "'%s' ist keine existierende Datei"
 
-#, fuzzy
 msgid "'formula' must be a formula"
-msgstr "'from' muss entweder raw oder character sein"
+msgstr "'formula' muss eine Formel sein"
 
 msgid "Unexpected LHS in 'formula' has been ignored."
-msgstr ""
+msgstr "Unerwartete LHS in 'formula' wurde ignoriert"
 
 msgid "Unexpected LHS in 'formula' has been combined with RHS."
-msgstr ""
+msgstr "Unerwartete LHS in 'formula' wurde mit der RHS kombiniert"
 
 msgid "Timestamp of %s has changed"
 msgstr "Zeitstempel von %s hat sich geändert"
@@ -1572,23 +1538,19 @@ msgid "additional arguments ignored in warning()"
 msgstr "zusätzliche Argumente in warning() ignoriert"
 
 msgid "no natural language support or missing translations"
-msgstr ""
+msgstr "keine Unterstützung für natürliche Sprache oder fehlende Übersetzung"
 
 msgid "In bare C locale: LANGUAGE reset, but message language may be unchanged"
-msgstr ""
+msgstr "In reiner C Lokalisierung: LANGUAGE reset, aber Sprache der Nachricht vielleicht unverändert"
 
 msgid "In bare C locale, not forcing locale; possibly use 'force = TRUE'?"
-msgstr ""
+msgstr "In reiner C Lokalisierung, keine Erzwingen der Lokalisierung; evtl nutze 'force = TRUE'?"
 
 msgid "Sys.setenv(LANGUAGE=\"%s\") may have failed"
 msgstr "Sys.setenv(LANGUAGE=\"%s\") evtl. fehlgeschlagen"
 
-msgid ""
-"Calling 'structure(NULL, *)' is deprecated, as NULL cannot have attributes.\n"
-"  Consider 'structure(list(), *)' instead."
+msgid "attempt to set an attribute on NULL"
 msgstr ""
-"Der Aufruf 'struture(NULL, *)' ist veraltet, da NULL keine Attribute haben kann.\n"
-" Evtl. geht stattdessen 'structure(list(), *)."
 
 msgid "incorrect value for 'x'"
 msgstr "falscher Wert für 'x'"
@@ -1639,7 +1601,7 @@ msgid "invalid value of %s"
 msgstr "ungültiger Wert für %s"
 
 msgid "'X' must be a data frame when 'INDEX' is a formula"
-msgstr ""
+msgstr "'X' muss ein data frame sein, wenn 'INDEX' eine Formel ist"
 
 msgid "'INDEX' is of length zero"
 msgstr "'INDEX' hat Länge 0"
@@ -1652,9 +1614,6 @@ msgstr "Gesamtzahl der Stufen >= 2^31"
 
 msgid "handler must be a function"
 msgstr "Handler muss eine Funktion sein"
-
-msgid "'which' must be of length 1"
-msgstr "'which' muss Länge 1 haben"
 
 msgid "no such element '%s'"
 msgstr "kein solches Element '%s'"
@@ -1690,8 +1649,14 @@ msgid "No traceback available"
 msgstr "Kein traceback vefügbar"
 
 #, fuzzy
+msgid "'recursive' must be a length-1 vector"
+msgstr "'origin' muss Länge 1 haben"
+
+msgid "'recursive' is NA"
+msgstr ""
+
 msgid "invalid non-character version specification 'x' (type: %s)"
-msgstr "ungültige Versionsspezifikation %s"
+msgstr "ungültige, nicht-zeichenketten Versionsspezifikation 'x' (Typ %s)"
 
 msgid "invalid version specification %s"
 msgstr "ungültige Versionsspezifikation %s"
@@ -1721,7 +1686,7 @@ msgid "invalid 'digits'"
 msgstr "ungültige 'digits'"
 
 msgid "Direct call of '%s()' is deprecated.  Use '%s()' or '%s()' instead"
-msgstr ""
+msgstr "Direkter Aufruf von '%s()' ist veraltet.  Nutze '%s()' oder '%s()' stattdessen"
 
 msgid "arguments 'show.output.on.console', 'minimized' and 'invisible' are for Windows only"
 msgstr "Argumente 'show.output.on.console', 'minimized' und 'invisible' sind nur für Windows"
@@ -1738,9 +1703,8 @@ msgstr "'ignore.stderr' muss TRUE oder FALSE sein"
 msgid "'wait' must be TRUE or FALSE"
 msgstr "'wait' muss TRUE oder FALSE sein"
 
-#, fuzzy
 msgid "'receive.console.signals' must be TRUE or FALSE"
-msgstr "'intern' muss TRUE oder FALSE sein"
+msgstr "'receive.console.signals' muss TRUE oder FALSE sein"
 
 msgid "'input' must be a character vector or 'NULL'"
 msgstr "'input'  muss ein Zeichenkettenvektor oder 'NULL' sein"
@@ -1963,6 +1927,49 @@ msgstr[0] ""
 msgstr[1] ""
 "In %s :\n"
 "zusätzliche Argumente %s werden verworfen"
+
+#~ msgid "'name' must be a single character string"
+#~ msgstr "'name' muss eine einzelne Zeichenkette sein"
+
+#~ msgid "'from' must be specified"
+#~ msgstr "'from' muss angegeben werden"
+
+#~ msgid "'from' must be a \"Date\" object"
+#~ msgstr "'from' muss \"Date\" Objekt sein"
+
+#~ msgid "'from' must be of length 1"
+#~ msgstr "'from' muss Länge 1 haben"
+
+#~ msgid "'length.out' must be of length 1"
+#~ msgstr "'length.out' muss Länge 1 haben"
+
+#~ msgid "'by' must be of length 1"
+#~ msgstr "'by' muss Länge 1 haben"
+
+#~ msgid "'from' must be a \"POSIXt\" object"
+#~ msgstr "'from' muss ein \"POSIXt\" Objekt sein"
+
+#~ msgid "'to' must be a \"POSIXt\" object"
+#~ msgstr "'to' muss ein \"POSIXt\" Objekt sein"
+
+#~ msgid "'package' must be of length 1"
+#~ msgstr "'package' muss Länge 1 haben"
+
+#~ msgid "'arg' must be of length 1"
+#~ msgstr "'arg' muss Länge 1 haben"
+
+#~ msgid "argument 'length.out' must be of length 1"
+#~ msgstr "Argument 'length.out' muss Länge 1 haben"
+
+#~ msgid ""
+#~ "Calling 'structure(NULL, *)' is deprecated, as NULL cannot have attributes.\n"
+#~ "  Consider 'structure(list(), *)' instead."
+#~ msgstr ""
+#~ "Der Aufruf 'struture(NULL, *)' ist veraltet, da NULL keine Attribute haben kann.\n"
+#~ " Evtl. geht stattdessen 'structure(list(), *)."
+
+#~ msgid "'which' must be of length 1"
+#~ msgstr "'which' muss Länge 1 haben"
 
 #~ msgid "'normal.kind' must be a character string of length 1"
 #~ msgstr "'normal.kind' muss eine Zeichenkette der Länge 1 sein."

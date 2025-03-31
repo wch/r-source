@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2024-10-25 14:49\n"
+"POT-Creation-Date: 2025-03-31 11:51\n"
 "PO-Revision-Date: 2018-04-09 12:10-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team: \n"
@@ -317,6 +317,14 @@ msgstr "'seasonal'은 반드시 'order'라는 요소를 함께 가지는 리스�
 
 msgid "'seasonal$order' must be a non-negative numeric vector of length 3"
 msgstr "'seasonal$order'는 반드시 길이가 3이며 음의 값을 가지지 않는 수치형 벡터이어야 합니다"
+
+#, fuzzy
+msgid "if not a list, 'seasonal' must be a non-negative numeric vector of length 3"
+msgstr "'seasonal$order'는 반드시 길이가 3이며 음의 값을 가지지 않는 수치형 벡터이어야 합니다"
+
+#, fuzzy
+msgid "'seasonal' is neither a list with component 'order' nor a numeric vector of length 3"
+msgstr "'seasonal'은 반드시 'order'라는 요소를 함께 가지는 리스트이어야 합니다"
 
 msgid "lengths of 'x' and 'xreg' do not match"
 msgstr "'x'와 'xreg'의 길이가 일치하지 않습니다"
@@ -1583,7 +1591,8 @@ msgstr "유효하지 않은 formula입니다"
 msgid "no terms component nor attribute"
 msgstr ""
 
-msgid "'termlabels' must be a character vector of length at least one"
+#, fuzzy
+msgid "'termlabels' must be a character vector"
 msgstr "'termlabels'는 반드시 적어도 길이가 1인 문자형 벡터이어야 합니다"
 
 #, fuzzy
@@ -1883,6 +1892,9 @@ msgstr "'ppr'은 오로지 수치형 변수들에만 적용합니다"
 msgid "mismatched 'x' and 'y'"
 msgstr ""
 
+msgid "mismatched 'x' and 'weights'"
+msgstr ""
+
 msgid "wrong number of columns in 'x'"
 msgstr "'x'에 있는 열의 개수가 잘못되었습니다"
 
@@ -1948,6 +1960,10 @@ msgstr ""
 
 msgid "'formula' missing"
 msgstr "'formula'가 없습니다"
+
+#, fuzzy
+msgid "'type' must be an integer in 1..9"
+msgstr "'y'는 반드시 'x'보다 길어야 합니다."
 
 msgid "'type' must be 1 or 3 for ordered factors"
 msgstr ""
@@ -2115,6 +2131,14 @@ msgstr ""
 
 msgid "'spar' must be of length 1"
 msgstr "'spar'은 반드시 길이가 1 이어야 합니다"
+
+#, fuzzy
+msgid "df.offset must be numeric and >= 0"
+msgstr "'offset'은 반드시 수치형이어야 합니다"
+
+#, fuzzy
+msgid "penalty must be numeric and > 0"
+msgstr "'y'는 반드시 수치형이어야 합니다"
 
 msgid "not using invalid df; must have 1 < df <= n := #{unique x} ="
 msgstr ""

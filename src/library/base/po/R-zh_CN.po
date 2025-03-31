@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2024-10-25 14:49\n"
+"POT-Creation-Date: 2025-03-31 11:50\n"
 "PO-Revision-Date: 2023-12-20 13:03+0000\n"
 "Last-Translator: Shun Wang <shuonwang@gmail.com>\n"
 "Language-Team: Chinese\n"
@@ -206,9 +206,6 @@ msgstr "只能写字符对象"
 msgid "'headers' must have names and must not be NA"
 msgstr "“headers”必须有名称，并且不能是 NA"
 
-msgid "'name' must be a single character string"
-msgstr "“name”必须是单个字符串"
-
 msgid "'origin' must be one of 'start', 'current' or 'end'"
 msgstr "'origin'参数的值必需是'start'，'current'或'end'中的一个"
 
@@ -398,29 +395,20 @@ msgstr "一进列%s对\"Date\"对象不适用"
 msgid "%s not defined for \"Date\" objects"
 msgstr "%s对\"Date\"没有定义"
 
-msgid "'from' must be specified"
-msgstr "'from'一定得给值"
-
-msgid "'from' must be a \"Date\" object"
-msgstr "'from'一定得是\"Date\"对象"
-
-msgid "'from' must be of length 1"
-msgstr "'from'的长度必需为一"
-
-msgid "'to' must be a \"Date\" object"
-msgstr "'to'一定得是\"Date\"对象"
-
-msgid "'to' must be of length 1"
+#, fuzzy
+msgid "'%s' must be of length 1"
 msgstr "'to'的长度必需为一"
 
-msgid "'length.out' must be of length 1"
-msgstr "'length.out'的长度必需为一"
+msgid "without 'by', at least one of 'to' and 'from' must be specified"
+msgstr ""
 
-msgid "exactly two of 'to', 'by' and 'length.out' / 'along.with' must be specified"
+#, fuzzy
+msgid "without 'by', when one of 'to', 'from' is missing, 'length.out' / 'along.with' must be specified"
 msgstr "'to'，'by'，'length.out'/'along.with'中四个只能同时选两个"
 
-msgid "'by' must be of length 1"
-msgstr "'by'的长度必需为一"
+#, fuzzy
+msgid "given 'by', exactly two of 'to', 'from' and 'length.out' / 'along.with' must be specified"
+msgstr "'to'，'by'，'length.out'/'along.with'中四个只能同时选两个"
 
 msgid "invalid 'by' string"
 msgstr "'by'字符串有错误"
@@ -439,9 +427,6 @@ msgstr "'x'必需是date-time对象"
 
 msgid "invalid specification of 'breaks'"
 msgstr "'breaks'的值有错误"
-
-msgid "'origin' must be of length one"
-msgstr "'origin'的长度必需为一"
 
 msgid "'lag' and 'differences' must be integers >= 1"
 msgstr "'lag'和'differences'的值必需为大于等于一的整数"
@@ -500,11 +485,13 @@ msgstr "*法的两个参数不能同时都是\"difftime\" 对象"
 msgid "second argument of / cannot be a \"difftime\" object"
 msgstr "/法的第二个参数不能是\"difftime\" 对象"
 
-msgid "'from' must be a \"POSIXt\" object"
-msgstr "'from'一定得是\"POSIXt\"对象"
+#, fuzzy
+msgid "exactly three of 'to', 'from', 'by' and 'length.out' / 'along.with' must be specified"
+msgstr "'to'，'by'，'length.out'/'along.with'中四个只能同时选两个"
 
-msgid "'to' must be a \"POSIXt\" object"
-msgstr "'to'一定得是\"POSIXt\"对象"
+#, fuzzy
+msgid "'%s' must be a \"%s\" object"
+msgstr "'to'一定得是\"Date\"对象"
 
 msgid "component subscript must be a character string"
 msgstr "组件下标必须是字符串"
@@ -650,9 +637,6 @@ msgstr "鏈結时没有可以写的文件/目錄"
 
 msgid "no files to link to"
 msgstr "没有可以鏈結上的文件"
-
-msgid "'package' must be of length 1"
-msgstr "'package'的长度必需为一"
 
 msgid "no file found"
 msgstr "找不到文件"
@@ -989,9 +973,6 @@ msgstr ""
 
 msgid "'arg' must be NULL or a character vector"
 msgstr "'arg'要么是NULL，要么是字符向量。"
-
-msgid "'arg' must be of length 1"
-msgstr "'arg'的长度必需为一"
 
 msgid "'arg' must be of length >= 1"
 msgstr "'arg'的长度必需大于等于一"
@@ -1406,9 +1387,6 @@ msgstr "'nmax'和'n'两者只能有一个指定"
 msgid "'from' must be a finite number"
 msgstr "'from'一定得是\"Date\"对象"
 
-msgid "argument 'length.out' must be of length 1"
-msgstr "'length.out'参数的长度必需为一"
-
 msgid "first element used of 'length.out' argument"
 msgstr "用了'length.out'参数里的第一个元素"
 
@@ -1587,9 +1565,7 @@ msgstr ""
 msgid "Sys.setenv(LANGUAGE=\"%s\") may have failed"
 msgstr ""
 
-msgid ""
-"Calling 'structure(NULL, *)' is deprecated, as NULL cannot have attributes.\n"
-"  Consider 'structure(list(), *)' instead."
+msgid "attempt to set an attribute on NULL"
 msgstr ""
 
 msgid "incorrect value for 'x'"
@@ -1657,10 +1633,6 @@ msgstr "水平数目不同"
 msgid "handler must be a function"
 msgstr "处理程序必需是函数"
 
-#, fuzzy
-msgid "'which' must be of length 1"
-msgstr "'to'的长度必需为一"
-
 msgid "no such element '%s'"
 msgstr "没有这样的单元'%s'"
 
@@ -1695,6 +1667,13 @@ msgstr "'width'必需为正数"
 
 msgid "No traceback available"
 msgstr "无traceback"
+
+#, fuzzy
+msgid "'recursive' must be a length-1 vector"
+msgstr "'origin'的长度必需为一"
+
+msgid "'recursive' is NA"
+msgstr ""
 
 #, fuzzy
 msgid "invalid non-character version specification 'x' (type: %s)"
@@ -1940,6 +1919,43 @@ msgid_plural ""
 "In %s :\n"
 " extra arguments %s will be disregarded"
 msgstr[0] "额外参数%s忽略不用"
+
+#~ msgid "'name' must be a single character string"
+#~ msgstr "“name”必须是单个字符串"
+
+#~ msgid "'from' must be specified"
+#~ msgstr "'from'一定得给值"
+
+#~ msgid "'from' must be a \"Date\" object"
+#~ msgstr "'from'一定得是\"Date\"对象"
+
+#~ msgid "'from' must be of length 1"
+#~ msgstr "'from'的长度必需为一"
+
+#~ msgid "'length.out' must be of length 1"
+#~ msgstr "'length.out'的长度必需为一"
+
+#~ msgid "'by' must be of length 1"
+#~ msgstr "'by'的长度必需为一"
+
+#~ msgid "'from' must be a \"POSIXt\" object"
+#~ msgstr "'from'一定得是\"POSIXt\"对象"
+
+#~ msgid "'to' must be a \"POSIXt\" object"
+#~ msgstr "'to'一定得是\"POSIXt\"对象"
+
+#~ msgid "'package' must be of length 1"
+#~ msgstr "'package'的长度必需为一"
+
+#~ msgid "'arg' must be of length 1"
+#~ msgstr "'arg'的长度必需为一"
+
+#~ msgid "argument 'length.out' must be of length 1"
+#~ msgstr "'length.out'参数的长度必需为一"
+
+#, fuzzy
+#~ msgid "'which' must be of length 1"
+#~ msgstr "'to'的长度必需为一"
 
 #~ msgid "'normal.kind' must be a character string of length 1"
 #~ msgstr "“normal.kind”必须是长度为 1 的字符串"

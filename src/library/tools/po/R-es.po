@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2024-10-25 14:49\n"
+"POT-Creation-Date: 2025-03-31 11:51\n"
 "PO-Revision-Date: 2023-11-25 03:05+0000\n"
 "Last-Translator: Mara Geraldina Destefanis <maragdestefanis@gmail.com>\n"
 "Language-Team: none\n"
@@ -257,6 +257,12 @@ msgstr ""
 msgid "Authors@R field gives persons with duplicated ORCID identifiers:"
 msgstr ""
 
+msgid "Authors@R field gives persons with invalid ROR identifiers:"
+msgstr ""
+
+msgid "Authors@R field gives persons with duplicated ROR identifiers:"
+msgstr ""
+
 msgid "Encoding '%s' is not portable"
 msgstr ""
 
@@ -308,10 +314,10 @@ msgstr ""
 msgid "invalid 'OS.type' \"%s\".  Should not happen"
 msgstr ""
 
-msgid "Missing link or links in Rd file '%s':"
+msgid "Missing link(s) in Rd file '%s':"
 msgstr ""
 
-msgid "Non-file package-anchored link(s) in Rd file '%s':"
+msgid "Non-topic package-anchored link(s) in Rd file '%s':"
 msgstr ""
 
 msgid "See section 'Cross-references' in the 'Writing R Extensions' manual."
@@ -1434,7 +1440,7 @@ msgid_plural "Found .Internal calls in the following functions:"
 msgstr[0] ""
 msgstr[1] ""
 
-msgid "Found a.Internal call in methods for the following S4 generic:"
+msgid "Found a .Internal call in methods for the following S4 generic:"
 msgid_plural "Found .Internal calls in methods for the following S4 generics:"
 msgstr[0] ""
 msgstr[1] ""

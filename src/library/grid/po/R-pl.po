@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-07-31 14:59\n"
+"POT-Creation-Date: 2025-03-31 11:51\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -39,7 +39,7 @@ msgstr "niepoprawna nazwa 'grob'"
 msgid "Invalid gTree coordinates"
 msgstr "niepoprawna klasa \"gTree\""
 
-msgid "Closed must not be a missing value"
+msgid "Closed must be length 1 and must not be a missing value"
 msgstr ""
 
 msgid "end points must not be identical"
@@ -596,10 +596,12 @@ msgstr "argument 'parent' musi być oknem ekranu oraz argument 'children' musi b
 msgid "a viewport path must contain at least one viewport name"
 msgstr "ścieżka okna ekranu musi zawierać przynajmniej jedną nazwę okna ekranu"
 
-msgid "must specify at least one of 'x' or 'xscale'"
+#, fuzzy
+msgid "must specify at least one of 'xData' or 'xscale'"
 msgstr "przynajmniej jeden z 'x' oraz 'xscale' musi być określony"
 
-msgid "must specify at least one of 'y' or 'yscale'"
+#, fuzzy
+msgid "must specify at least one of 'yData' or 'yscale'"
 msgstr "tylko jeden z 'font' oraz 'fontface' może być określony"
 
 msgid "shutting down all devices when unloading 'grid' namespace"

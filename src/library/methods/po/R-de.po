@@ -1,13 +1,13 @@
 # Translation of src/library/methods/po/R-methods.pot to German
-# Copyright (C) 2005-2022 The R Foundation
+# Copyright (C) 2005-2025 The R Foundation
 # This file is distributed under the same license as the R package.
-# Detlef Steuer <steuer@hsu-hh.de>, 2007-2022.
+# Detlef Steuer <steuer@hsu-hh.de>, 2007-2025.
 msgid ""
 msgstr ""
-"Project-Id-Version: R-4.2.0\n"
+"Project-Id-Version: R-4.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2024-10-25 14:49\n"
-"PO-Revision-Date: 2024-03-19 12:53+0000\n"
+"POT-Creation-Date: 2025-03-31 11:51\n"
+"PO-Revision-Date: 2025-03-18 11:30+0100\n"
 "Last-Translator: Michael Chirico <michaelchirico4@gmail.com>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
 "Language: de\n"
@@ -121,9 +121,8 @@ msgstr ""
 "generische Version von %s für Paket %s ist nicht erlaubt; \n"
 "  eine neue Generische wird für %s zugewiesen"
 
-#, fuzzy
 msgid "fdef appears to be a generic function, but with generic name %s instead of %s"
-msgstr "Funktion %s scheint eine generische Funktion zu sein, aber mit dem generischen Namen %s"
+msgstr "fdef scheint eine generische Funktion zu sein, aber mit dem generischen Namen %s anstelle von %s"
 
 msgid "generic function %s not found for removal"
 msgstr "generische Funktion %s nicht gefunden, um sie zu entfernen"
@@ -490,9 +489,8 @@ msgstr "Eine Klasse kann nicht sowohl einen gewöhnlichen und einen versteckten 
 msgid "a validity method must be a function of one argument, got an object of class %s"
 msgstr "eine Validierungsmethode muss eine Funktion mit einem Argument sein, bekam Objekt der Klasse %s"
 
-#, fuzzy
 msgid "unable to load required package %s"
-msgstr "kann benötigtes Paket %s nicht finden"
+msgstr "kann benötigtes Paket %s nicht laden"
 
 msgid "unable to find an environment containing class %s"
 msgstr "kann keine Umgebung mit einer Klasse %s finden"
@@ -516,10 +514,10 @@ msgid "no definition of inheritance from %s to %s, though the relation was impli
 msgstr "Keine Definition der Vererbung von %s nach %s; aber die Relation wurde von setIs() aus \"%s\" impliziert"
 
 msgid "Debugging .checkSubclasses(): assignClassDef(what=\"%s\", *, where=%s, force=TRUE);"
-msgstr ""
+msgstr "Debuggen von .checkSubclasses(): assignClassDef(what=\\\"%s\\\", *, where=%s, force=TRUE);"
 
 msgid "E := environment(): %s; parent.env(E): %s"
-msgstr ""
+msgstr "E := environment(): %s; parent.env(E): %s"
 
 msgid "argument 'includeSubclasses' must be a logical, either one value or a vector of the same length as argument 'classes'"
 msgstr "Argument 'includeSubclasses' muss boolesch sein, entweder ein Wert oder ein Vektor der Länge der Argumentklassen"
@@ -772,9 +770,8 @@ msgstr ""
 msgid "argument %s must be a list or a character vector; got an object of class %s"
 msgstr "Argument %s muss eine Liste oder eine Zeichenkette sein; bekam ein Objekt aus Klasse %s"
 
-#, fuzzy
 msgid "expected a non-empty character string for argument 'name'"
-msgstr "erwarte nicht-leere Zeichenkette als Argumentnamen"
+msgstr "erwarte nicht-leere Zeichenkette als Argument 'name'"
 
 msgid "no function %s found"
 msgstr "keine Funktion %s gefunden"
@@ -821,9 +818,6 @@ msgstr "nicht definierte 'coerce'-Methode"
 
 msgid "methods currently exist for coercing from %s to %s; they will be replaced."
 msgstr "momentan existieren Methoden zur Umwandlung von %s nach %s; diese werden ersetzt"
-
-msgid "Function must be an S4 generic"
-msgstr "Funktion muss eine S4 Generische sein"
 
 msgid "method is not being debugged"
 msgstr "Methode wird nicht ge-debugged"
@@ -879,9 +873,8 @@ msgstr "Skelett der Methode geschrieben in %s"
 msgid "invalid object in meta table of methods for %s, label %s, had class %s"
 msgstr "ungültiges Objekt im Metatable der Methoden für %s, Label %s, hatte Klasse %s"
 
-#, fuzzy
 msgid "invalid method element for signature %s at level %d (should be MethodDefinition or .Primitive, had class %s)"
-msgstr "ungültiges mlist Element für die Signatur %s auf Stufe %d (sollte MethodDefinition oder .Primitive sein, hat Klasse %s)"
+msgstr "ungültiges method Element für die Signatur %s auf Stufe %d (sollte MethodDefinition oder .Primitive sein, hat Klasse %s)"
 
 msgid "bad method object stored in method table, class %s"
 msgstr "ungültiges Methodenobjekt in der Methodentabelle, Klasse %s"
@@ -1330,6 +1323,9 @@ msgid "no definition of class %s in the specified position, %s, definition on : 
 msgid_plural "no definition of class %s in the specified position, %s, definitions on : %s"
 msgstr[0] "keine Definiton der Klasse %s an der angegebenen Position, %s, Definition bei: %s"
 msgstr[1] "keine Definiton der Klasse %s an der angegebenen Position, %s, Definitionen bei: %s"
+
+#~ msgid "Function must be an S4 generic"
+#~ msgstr "Funktion muss eine S4 Generische sein"
 
 #~ msgid "invalid method sublist"
 #~ msgstr "unzulässige Methodenteilliste"

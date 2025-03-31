@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-07-31 14:59\n"
+"POT-Creation-Date: 2025-03-31 11:51\n"
 "PO-Revision-Date: 2023-08-31 20:16+0000\n"
 "Last-Translator: Geraldine Gomez Millan <geralidine.gomez@javeriana.edu.co>\n"
 "Language-Team: none\n"
@@ -34,7 +34,8 @@ msgstr "coordenadas grob invalidas"
 msgid "Invalid gTree coordinates"
 msgstr "coordenadas gTree invalidas"
 
-msgid "Closed must not be a missing value"
+#, fuzzy
+msgid "Closed must be length 1 and must not be a missing value"
 msgstr "Closed no debería tener un valor no informado"
 
 msgid "end points must not be identical"
@@ -71,8 +72,7 @@ msgid "invalid 'grob'"
 msgstr "'grob' es invalido"
 
 msgid "invalid 'row' and/or 'col' (no such cell in frame layout)"
-msgstr ""
-"'row' y/or 'col' no validas (no existe esa celda en el diseño del layout)"
+msgstr "'row' y/or 'col' no validas (no existe esa celda en el diseño del layout)"
 
 msgid "'col' can only be a range of existing columns"
 msgstr "'col' puede estar solamente en un rango de las columnas existentes"
@@ -87,14 +87,10 @@ msgid "invalid 'row' specification"
 msgstr "especificación de 'row' no valida"
 
 msgid "cannot specify more than one of 'side=[\"left\", \"right\"]', 'col', 'col.before', or 'col.after'"
-msgstr ""
-"no se puede especificar más de uno de 'side=[\"left\", \"right\"]', 'col', "
-"'col.before' o 'col.after'"
+msgstr "no se puede especificar más de uno de 'side=[\"left\", \"right\"]', 'col', 'col.before' o 'col.after'"
 
 msgid "must specify exactly one of 'side=[\"top\", \"bottom\"]', 'row', 'row.before', or 'row.after'"
-msgstr ""
-"se debe especificar exactamente uno de 'side=[\"left\", \"right\"]', 'col', "
-"'col.before' o 'col.after'"
+msgstr "se debe especificar exactamente uno de 'side=[\"left\", \"right\"]', 'col', 'col.before' o 'col.after'"
 
 msgid "invalid 'n'"
 msgstr "'n' no valida"
@@ -136,9 +132,7 @@ msgid "invalid display list element"
 msgstr "elemento de lista de visualización no válido"
 
 msgid "one or more grobs overwritten (grab WILL not be faithful; try 'wrap.grobs = TRUE')"
-msgstr ""
-"uno o más grobs sobrescritos (grab NO SERÁ confiable; pruebe con 'wrap.grobs "
-"= TRUE')"
+msgstr "uno o más grobs sobrescritos (grab NO SERÁ confiable; pruebe con 'wrap.grobs = TRUE')"
 
 msgid "viewport overwritten (grab MAY not be faithful)"
 msgstr "ventana gráfica sobrescrita (la captura PUEDE no ser confiable)"
@@ -156,8 +150,7 @@ msgid "Down viewport failed to record on display list"
 msgstr ""
 
 msgid "Down viewport incorrectly recorded on display list"
-msgstr ""
-"La ventana inferior grabada incorrectamente en la lista de visualizaciones"
+msgstr "La ventana inferior grabada incorrectamente en la lista de visualizaciones"
 
 msgid "must pop at least one viewport"
 msgstr "se debe abrir al menos una ventana"
@@ -256,8 +249,7 @@ msgid "it is only valid to edit a child of a \"gTree\""
 msgstr "solamente es válido editar un hijo de un \"gTree\""
 
 msgid "it is invalid to directly edit the 'children' or 'childrenOrder' slot"
-msgstr ""
-"no es válido editar directamente la ranura 'children' or 'childrenOrder'"
+msgstr "no es válido editar directamente la ranura 'children' or 'childrenOrder'"
 
 msgid "invalid 'result'"
 msgstr "'result' no válido"
@@ -377,7 +369,9 @@ msgstr "El patrón debe estar basados en grob"
 msgid "Missing pattern fill has been set to transparent"
 msgstr ""
 
-msgid "grob drawing produces more shapes than grob coords\n(recycling coords)"
+msgid ""
+"grob drawing produces more shapes than grob coords\n"
+"(recycling coords)"
 msgstr ""
 
 msgid "Pattern fill applied to object with no inside"
@@ -578,11 +572,13 @@ msgstr ""
 msgid "a viewport path must contain at least one viewport name"
 msgstr ""
 
-msgid "must specify at least one of 'x' or 'xscale'"
-msgstr ""
+#, fuzzy
+msgid "must specify at least one of 'xData' or 'xscale'"
+msgstr "se debe especificar al menos una ventana"
 
-msgid "must specify at least one of 'y' or 'yscale'"
-msgstr ""
+#, fuzzy
+msgid "must specify at least one of 'yData' or 'yscale'"
+msgstr "se debe especificar al menos una ventana"
 
 msgid "shutting down all devices when unloading 'grid' namespace"
 msgstr ""

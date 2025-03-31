@@ -1,13 +1,13 @@
 # Translation of po/R.pot to German.
-# Copyright (C) 2005-2022 The R Foundation
+# Copyright (C) 2005-2025 The R Foundation
 # This file is distributed under the same license as the R package.
-# Detlef Steuer <steuer@hsu-hh.de>, 2005-2022.
+# Detlef Steuer <steuer@hsu-hh.de>, 2005-2025.
 msgid ""
 msgstr ""
-"Project-Id-Version: R-4.2.0\n"
+"Project-Id-Version: R-4.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2024-10-25 14:49-0700\n"
-"PO-Revision-Date: 2022-04-13 12:31+0200\n"
+"POT-Creation-Date: 2025-03-31 11:51+0200\n"
+"PO-Revision-Date: 2025-03-18 11:24+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
 "Language: de\n"
@@ -75,28 +75,28 @@ msgstr "plot.new wurde noch nicht aufgerufen"
 msgid "invalid graphics state"
 msgstr "ungültiger Grafikzustand"
 
-#: graphics.c:2619
+#: graphics.c:2618
 msgid "graphics device closed during call to locator or identify"
 msgstr "Grafikdevice während eines Aufrufs von locator oder identify geschlossen"
 
-#: graphics.c:2669
+#: graphics.c:2668
 msgid "No graphics device is active"
 msgstr "kein aktives Grafikdevice"
 
-#: graphics.c:3127
+#: graphics.c:3126
 msgid "zero-length arrow is of indeterminate angle and so skipped"
 msgstr "Pfeil ohne Länge hat keine Richtung und wird ignoriert"
 
-#: graphics.c:3208
+#: graphics.c:3207
 #, c-format
 msgid "invalid par(\"bty\") = '%c'; no box() drawn"
 msgstr "ungültiger par(\"bty\") = '%c': keine box() gezeichnet"
 
-#: graphics.c:3225
+#: graphics.c:3224
 msgid "invalid argument to GBox"
 msgstr "ungültiges Argument für GBox"
 
-#: graphics.c:3432
+#: graphics.c:3431
 msgid "metric information not available for this device"
 msgstr "Metrikinformation für dieses Device nicht verfügbar"
 
@@ -154,9 +154,9 @@ msgid "\"%s\" is not a graphical parameter"
 msgstr "\"%s\" ist kein Grafikparameter"
 
 #: par.c:1109
-#, fuzzy, c-format
+#, c-format
 msgid "argument %d does not name a graphical parameter"
-msgstr "\"%s\" ist kein Grafikparameter"
+msgstr "Argument %d bezeichnet keinen grafikpararmeter"
 
 #: par.c:1117
 msgid "invalid argument passed to par()"

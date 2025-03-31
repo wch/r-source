@@ -1,14 +1,13 @@
 # Translation of src/library/utils/po/R-utils.pot to German.
-# Copyright (C) 2008-2022 The R Foundation
+# Copyright (C) 2008-2025 The R Foundation
 # This file is distributed under the same license as the R package.
-# Detlef Steuer <steuer@hsu-hh.de>, 2008-2022.
-#
+# Detlef Steuer <steuer@hsu-hh.de>, 2008-2025.
 msgid ""
 msgstr ""
-"Project-Id-Version: R 4.2.0\n"
+"Project-Id-Version: R 4.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2024-10-25 14:50\n"
-"PO-Revision-Date: 2024-03-19 12:53+0000\n"
+"POT-Creation-Date: 2025-03-31 11:51\n"
+"PO-Revision-Date: 2025-03-18 11:57+0100\n"
 "Last-Translator: Michael Chirico <michaelchirico4@gmail.com>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
 "Language: de\n"
@@ -32,10 +31,10 @@ msgid "document not found"
 msgstr "Dokument nicht gefunden"
 
 msgid "some options in argument 'restrict' were not recognized and hence ignored"
-msgstr ""
+msgstr "einige Optionen im Argument 'restrict' wurden nicht erkannt und deshalb ignoriert"
 
 msgid "argument 'format' is deprecated and has no affect on search results"
-msgstr ""
+msgstr "Argument 'format' ist veraltet und hat keinen Einfluss auf Suchergebnisse"
 
 msgid "A search query has been submitted to %s"
 msgstr "Eine Suchanfrage wurde gesendet an %s"
@@ -146,7 +145,7 @@ msgid "No suitable spell check program found."
 msgstr "Keine passende Rechtschreibprüfung gefunden."
 
 msgid "Performing query %s"
-msgstr ""
+msgstr "Ausführen von Anfrage %s"
 
 msgid ""
 "Use <code> %s </code> \n"
@@ -184,15 +183,14 @@ msgstr "Es ist empfohlen %s anstelle von %s zu nutzen."
 msgid "Use either %s or %s but not both."
 msgstr "Nutze entweder %s oder %s, aber nicht beide."
 
-#, fuzzy
 msgid "Arguments of person() should be character or NULL"
-msgstr "'priority' muss eine Zeichenkette oder NULL sein"
+msgstr "Die Argumente zu person() sollten eine Zeichenkette oder NULL sein"
 
 msgid "subscript out of bounds"
 msgstr "Index außerhalb der Grenzen"
 
 msgid "must have some non-empty fields"
-msgstr ""
+msgstr "muss nicht leere Felder haben"
 
 msgid "method is only applicable to %s objects"
 msgstr "Methode kann nicht auf %s Objekte angewendet werden"
@@ -223,7 +221,7 @@ msgstr ""
 "%s"
 
 msgid "package %s has no %s file: only auto-generation is possible"
-msgstr ""
+msgstr "Paket %s hat keine %s Datei: nur Autogenerierung möglich"
 
 msgid "could not determine year for %s from package DESCRIPTION file"
 msgstr "konnte das Jahr für %s aus der DESCRIPTION des Paketes nicht bestimmen"
@@ -239,9 +237,8 @@ msgstr "'FUN' muss eine Funktion oder NULL sein"
 msgid "cannot handle S4 methods yet"
 msgstr "kann noch nicht mit S4-Methoden umgehen"
 
-#, fuzzy
 msgid "'package' must be a character vector or NULL"
-msgstr "'package' muss eine Zeichenkette oder NULL sein"
+msgstr "'package' muss ein Zeichenkettenvektor oder NULL sein"
 
 msgid "data index for package %s is invalid and will be ignored"
 msgstr "Datenindex für Paket %s ist ungültig und wird ignoriert"
@@ -382,16 +379,14 @@ msgstr "'form' muss eine zweiseitige Formel sein"
 msgid "'form' must be a two-sided formula with one term on each side"
 msgstr "'form' muss eine zweiseitige Formel mit einem Term auf jeder Seite sein"
 
-#, fuzzy
 msgid "invalid object for 'as.environment'"
-msgstr "ungültiges 'socket' Argument"
+msgstr "ungültiges Objekt für 'as.environment'"
 
-#, fuzzy
 msgid "invalid 'n' - must contain at least one non-missing element, got none."
 msgstr "ungültiges 'n' - muss mindestens ein nicht-fehlendes Element enthalten, hat keines"
 
 msgid "invalid 'n' - must be numeric, possibly NA."
-msgstr ""
+msgstr "ungültiges 'n' - muss numerisch sein, möglicherweise NA"
 
 msgid "invalid 'n' - must have length one when dim(x) is NULL, got %d"
 msgstr "ungültiges 'n' - muss Länge 1 haben, wenn dim(x) NULL ist, hat %d"
@@ -476,9 +471,8 @@ msgstr "Von Benutzer abgebrochen"
 msgid "Unable to connect to CRAN to check R version."
 msgstr "Kann nicht mit CRAN verbinden, um R Version zu checken."
 
-#, fuzzy
 msgid "'%s' must be a character string"
-msgstr "'unzip' muss eine einzelne Zeichenkette sein"
+msgstr "'%s' muss eine einzelne Zeichenkette sein"
 
 msgid "incorrect field specification"
 msgstr "falsche Feldspezifikation"
@@ -521,9 +515,8 @@ msgstr "Wenn der Browser '%s' bereits ausgeführt wird, wird er nicht neu gestar
 msgid "Otherwise, be patient ..."
 msgstr "Ansonsten: Geduld ..."
 
-#, fuzzy
 msgid "'%s' must be a non-empty character string"
-msgstr "'url' muss eine nicht-leere Zeichenkette sein"
+msgstr "'%s' muss eine nicht-leere Zeichenkette sein"
 
 msgid "no package '%s' was found"
 msgstr "kein Paket '%s' gefunden"
@@ -549,9 +542,8 @@ msgstr "kann HTML-Paketindex nicht aktualisieren"
 msgid "done"
 msgstr "fertig"
 
-#, fuzzy
 msgid "Source must be a seekable connection"
-msgstr "'file' muss eine Zeichenkette oder eine Verbindung sein"
+msgstr "Die Quelle muss eine suchbare Verbindung sein"
 
 msgid "menu() cannot be used non-interactively"
 msgstr "menu() kann nicht nicht-interaktiv genutzt werden"
@@ -575,7 +567,7 @@ msgid "'%s' is a formal generic function; S3 methods will not likely be found"
 msgstr "'%s' ist eine formale generische Funktion: S3 Methoden werden vermutlich nicht gefunden"
 
 msgid "some methods may be unavailable outside of their namespace"
-msgstr ""
+msgstr "einige Methoden sind eventuell niccht außerhalb ihres Namensraums verfügbar"
 
 msgid "no function '%s' is visible"
 msgstr "keine Funktion '%s' sichtbar"
@@ -711,7 +703,7 @@ msgid "invalid options(\"pkgType\"); must be a character string"
 msgstr "ungültige options(\"pkgType\"); muss eine Zeichenkette sein"
 
 msgid "No matching repositories found for"
-msgstr ""
+msgstr "Keine passenden Repositories gefunden für"
 
 msgid ","
 msgstr ","
@@ -804,28 +796,23 @@ msgid "files: %s"
 msgstr "files: %s"
 
 msgid "Windows default 'timeout' command is not usable for parallel installs"
-msgstr ""
+msgstr "Das Windows standard 'timout' Kommando kann nicht in parallels Installationen genutzt werden"
 
 msgid "timeouts for parallel installs require the 'timeout' command"
 msgstr "Zeitgrenzen für parallele Installationen benötigen ein 'timeout' Kommando"
 
-#, fuzzy
 msgid "installation of package %s failed"
-msgstr "Download von Paket %s fehlgeschlagen"
+msgstr "Installation von Paket %s fehlgeschlagen"
 
-#, fuzzy
 msgid "installation of %d packages failed:  %s"
-msgstr ""
-"Installation eines oder mehrerer Pakete schlug fehl,\n"
-" vermutlich %s"
+msgstr "Installation von %d Paketen schlug fehl: %s"
 
-#, fuzzy
 msgid ""
 "installation of %d packages failed:\n"
 "  %s"
 msgstr ""
-"Installation eines oder mehrerer Pakete schlug fehl,\n"
-" vermutlich %s"
+"Installation von %d Paketen schlug fehl:\n"
+" %s"
 
 msgid ""
 "The downloaded source packages are in\n"
@@ -1037,9 +1024,8 @@ msgstr "Die Anzahl von Tokens != 'length(proto)'"
 msgid "The number of tokens is not consistent across 'x'"
 msgstr "Die Zahl der Token ist nicht konsistent in 'x'"
 
-#, fuzzy
 msgid "cannot coerce %s to TRUE or FALSE"
-msgstr "kann %s nicht in booleschen Wert unwandeln"
+msgstr "kann %s nicht in TRUE oder FALSE umwandeln"
 
 msgid "no lines found in %s"
 msgstr "keine Zeilen in '%s'"
@@ -1073,6 +1059,9 @@ msgstr "bzip2"
 
 msgid "xz"
 msgstr "xz"
+
+msgid "zstd"
+msgstr ""
 
 msgid "failed to create directory %s"
 msgstr "kann Verzeichnis '%s' nicht erzeugen"
@@ -1213,9 +1202,8 @@ msgstr "Aufruf von 'wget' hatte Exit-Status ungleich 0"
 msgid "'curl' call had nonzero exit status"
 msgstr "Aufruf von 'curl' hatte Exit-Status ungleich 0"
 
-#, fuzzy
 msgid "invalid method:"
-msgstr "unzulässiges Format"
+msgstr "unzulässige Methode:"
 
 msgid "download had nonzero exit status"
 msgstr "Download hatte Exit-Status ungleich 0"
@@ -1316,8 +1304,14 @@ msgstr[1] "unzulässige Spezifikationen für role: %s."
 
 msgid "Invalid ORCID iD: %s."
 msgid_plural "Invalid ORCID iDs: %s."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Ungültige ORCID ID: %s."
+msgstr[1] "Ungültige ORCID IDs: %s."
+
+#, fuzzy
+msgid "Invalid ROR ID: %s."
+msgid_plural "Invalid ROR IDs: %s."
+msgstr[0] "Ungültige ORCID ID: %s."
+msgstr[1] "Ungültige ORCID IDs: %s."
 
 msgid "A bibentry of bibtype %s has to specify the field: %s"
 msgid_plural "A bibentry of bibtype %s has to specify the fields: %s"
@@ -1344,11 +1338,10 @@ msgid_plural "objects '%s' not found"
 msgstr[0] "Objekt '%s' nicht gefunden"
 msgstr[1] "Objekte '%s' nicht gefunden"
 
-#, fuzzy
 msgid "package %s is a base package, and cannot be removed"
 msgid_plural "packages %s are base packages, and cannot be removed"
-msgstr[0] "Paket %s ist ein Basispaket und sollte nicht aktualisiert werden"
-msgstr[1] "Pakete %s sind Basispakete und sollten nicht aktualisiert werden"
+msgstr[0] "Paket %s ist ein Basispaket und kann nicht entfernt werden"
+msgstr[1] "Pakete %s sind Basispakete und können nicht entfernt werden"
 
 msgid ""
 "Removing package from %s\n"

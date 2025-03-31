@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-4-3-BRANCH\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2024-10-25 14:49\n"
+"POT-Creation-Date: 2025-03-31 11:51\n"
 "PO-Revision-Date: 2022-10-14 10:31+0200\n"
 "Last-Translator: Daniele Medri <dmedri@gmail.com>\n"
 "Language-Team: Italian https://github.com/dmedri/R-italian-lang\n"
@@ -815,9 +815,6 @@ msgstr "metodo 'coerce' non definito"
 msgid "methods currently exist for coercing from %s to %s; they will be replaced."
 msgstr "esistono attualmente metodi per convertire da %s a %s; saranno sostituiti."
 
-msgid "Function must be an S4 generic"
-msgstr "La funzione dev'essere un S4 generico"
-
 msgid "method is not being debugged"
 msgstr "il metodo non è a punto (debugged)"
 
@@ -1323,6 +1320,9 @@ msgid "no definition of class %s in the specified position, %s, definition on : 
 msgid_plural "no definition of class %s in the specified position, %s, definitions on : %s"
 msgstr[0] "non è stata trovata alcuna definizione per la classe %s nella posizione specificata, %s, definizione su: %s"
 msgstr[1] "non è stata trovata alcuna definizione per la classe %s nella posizione specificata, %s, definizioni su: %s"
+
+#~ msgid "Function must be an S4 generic"
+#~ msgstr "La funzione dev'essere un S4 generico"
 
 #~ msgid "invalid method sublist"
 #~ msgstr "elenco secondario metodo non valido"

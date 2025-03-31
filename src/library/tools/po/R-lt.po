@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tools 4.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2024-10-25 14:49\n"
+"POT-Creation-Date: 2025-03-31 11:51\n"
 "PO-Revision-Date: 2021-11-08 10:33+0100\n"
 "Last-Translator: r.zakauskas@gmail.com;gabriele.dauksaite@gmail.com\n"
 "Language-Team: Lithuanian\n"
@@ -274,6 +274,14 @@ msgstr "Authors@R laukelyje pateikiami asmenys, turintys negaliojančius ORCID i
 msgid "Authors@R field gives persons with duplicated ORCID identifiers:"
 msgstr "Authors@R laukelyje pateikiami asmenys, turintys negaliojančius ORCID identifikatorius:"
 
+#, fuzzy
+msgid "Authors@R field gives persons with invalid ROR identifiers:"
+msgstr "Authors@R laukelyje pateikiami asmenys, turintys negaliojančius ORCID identifikatorius:"
+
+#, fuzzy
+msgid "Authors@R field gives persons with duplicated ROR identifiers:"
+msgstr "Authors@R laukelyje pateikiami asmenys, turintys negaliojančius ORCID identifikatorius:"
+
 msgid "Encoding '%s' is not portable"
 msgstr "Kodavimas '%s' yra ne perkeliamas"
 
@@ -327,11 +335,11 @@ msgid "invalid 'OS.type' \"%s\".  Should not happen"
 msgstr "netinkamas OS.type' \"%s\".  Neturėtų atsitikti"
 
 #, fuzzy
-msgid "Missing link or links in Rd file '%s':"
+msgid "Missing link(s) in Rd file '%s':"
 msgstr "Trūkstama nuoroda arba nuorodos, esančios dokumentacijos objekte '%s':"
 
 #, fuzzy
-msgid "Non-file package-anchored link(s) in Rd file '%s':"
+msgid "Non-topic package-anchored link(s) in Rd file '%s':"
 msgstr "Ne failo pakete įtvirtinta nuoroda(-os) dokumentacijos objekte '%s':"
 
 msgid "See section 'Cross-references' in the 'Writing R Extensions' manual."
@@ -1521,7 +1529,8 @@ msgstr[0] "Surastas .Internal iškvietimas šioje funkcijoje:"
 msgstr[1] "Surasti .Internal iškvietimai šiose funkcijose:"
 msgstr[2] "Surasta .Internal iškvietimų šiose funkcijose:"
 
-msgid "Found a.Internal call in methods for the following S4 generic:"
+#, fuzzy
+msgid "Found a .Internal call in methods for the following S4 generic:"
 msgid_plural "Found .Internal calls in methods for the following S4 generics:"
 msgstr[0] "Surastas .Internal iškvietimas į metodus šiai S4 bendrinei:"
 msgstr[1] "Surasti .Internal iškvietimai į metodus šioms S4 bendrinėms:"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: stats 4.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2024-10-25 14:49\n"
+"POT-Creation-Date: 2025-03-31 11:51\n"
 "PO-Revision-Date: 2021-10-15 18:44+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -312,6 +312,14 @@ msgstr "'seasonal' turi būti sąrašas su komponentu 'order'"
 
 msgid "'seasonal$order' must be a non-negative numeric vector of length 3"
 msgstr "'seasonal$order' turi būti neneigiamas skaitinis vektorius, kurio ilgis 3"
+
+#, fuzzy
+msgid "if not a list, 'seasonal' must be a non-negative numeric vector of length 3"
+msgstr "'seasonal$order' turi būti neneigiamas skaitinis vektorius, kurio ilgis 3"
+
+#, fuzzy
+msgid "'seasonal' is neither a list with component 'order' nor a numeric vector of length 3"
+msgstr "'seasonal' turi būti sąrašas su komponentu 'order'"
 
 msgid "lengths of 'x' and 'xreg' do not match"
 msgstr "nesutampa 'x' ir 'xreg' ilgiai"
@@ -1569,7 +1577,8 @@ msgstr "neleistina formulė %s"
 msgid "no terms component nor attribute"
 msgstr "nėra termų komponento nei atributo"
 
-msgid "'termlabels' must be a character vector of length at least one"
+#, fuzzy
+msgid "'termlabels' must be a character vector"
 msgstr "'termlabels' turi būti tekstinis vektorius, kurio ilgis bent 1"
 
 #, fuzzy
@@ -1871,6 +1880,10 @@ msgstr "'ppr' naudojama tik skaitiniams kintamiesiems"
 msgid "mismatched 'x' and 'y'"
 msgstr "'x' ir 'y' nesutampa"
 
+#, fuzzy
+msgid "mismatched 'x' and 'weights'"
+msgstr "'x' ir 'y' nesutampa"
+
 msgid "wrong number of columns in 'x'"
 msgstr "blogas stulpelių skaičius, esantis 'x'"
 
@@ -1936,6 +1949,10 @@ msgstr ""
 
 msgid "'formula' missing"
 msgstr "trūksta 'formula'"
+
+#, fuzzy
+msgid "'type' must be an integer in 1..9"
+msgstr "'y' turi būti vienetu ilgesnis negu 'x'"
 
 msgid "'type' must be 1 or 3 for ordered factors"
 msgstr "'type' turi būti 1 arba 3 sutvarkytiems faktoriams"
@@ -2103,6 +2120,14 @@ msgstr "neturi nurodyti abiejų 'spar' ir 'lambda'"
 
 msgid "'spar' must be of length 1"
 msgstr "'spar' ilgis turi būti 1"
+
+#, fuzzy
+msgid "df.offset must be numeric and >= 0"
+msgstr "'offset' turi būti skaitinis"
+
+#, fuzzy
+msgid "penalty must be numeric and > 0"
+msgstr "'y' turi būti skaitinis"
 
 msgid "not using invalid df; must have 1 < df <= n := #{unique x} ="
 msgstr "nenaudojate negaliojančių df; turite pateikti 1 < df <= n, n = #{unique x} ="

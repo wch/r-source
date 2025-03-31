@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2024-10-25 14:49\n"
+"POT-Creation-Date: 2025-03-31 11:51\n"
 "PO-Revision-Date: 2024-03-25 14:29+0300\n"
 "Last-Translator: Ivan Krylov <ikrylov@disroot.org>\n"
 "Language-Team: Russian\n"
@@ -223,6 +223,9 @@ msgstr "Должны быть якори с именами \"left\" и \"bottom\""
 
 msgid "Invalid glyph info"
 msgstr "Некорректная информация о глифе"
+
+msgid "'%s' was removed in R 4.5.0."
+msgstr ""
 
 msgid "Invalid compositing operator"
 msgstr "Неправильный оператор композиции"

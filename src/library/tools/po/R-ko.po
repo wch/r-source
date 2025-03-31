@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2024-10-25 14:49\n"
+"POT-Creation-Date: 2025-03-31 11:51\n"
 "PO-Revision-Date: 2018-04-09 12:11-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team: \n"
@@ -280,6 +280,14 @@ msgstr "Authors@R 항목에서 메인테이너의 역할을 담당하는 저자�
 msgid "Authors@R field gives persons with duplicated ORCID identifiers:"
 msgstr "Authors@R 항목에서 메인테이너의 역할을 담당하는 저자의 수가 한명이상임을 확인하게 되었습니다:"
 
+#, fuzzy
+msgid "Authors@R field gives persons with invalid ROR identifiers:"
+msgstr "Authors@R 항목에서 메인테이너의 역할을 담당하는 저자의 수가 한명이상임을 확인하게 되었습니다:"
+
+#, fuzzy
+msgid "Authors@R field gives persons with duplicated ROR identifiers:"
+msgstr "Authors@R 항목에서 메인테이너의 역할을 담당하는 저자의 수가 한명이상임을 확인하게 되었습니다:"
+
 msgid "Encoding '%s' is not portable"
 msgstr "인코딩 '%s'은 포터블(portable)하지 않습니다."
 
@@ -334,11 +342,11 @@ msgid "invalid 'OS.type' \"%s\".  Should not happen"
 msgstr ""
 
 #, fuzzy
-msgid "Missing link or links in Rd file '%s':"
+msgid "Missing link(s) in Rd file '%s':"
 msgstr "다큐멘테이션 객체 '%s'내에서 빠져있는 링크(들)은 다음과 같습니다:"
 
 #, fuzzy
-msgid "Non-file package-anchored link(s) in Rd file '%s':"
+msgid "Non-topic package-anchored link(s) in Rd file '%s':"
 msgstr "다큐멘테이션 객체 '%s'내에서 빠져있는 링크(들)은 다음과 같습니다:"
 
 msgid "See section 'Cross-references' in the 'Writing R Extensions' manual."
@@ -1486,7 +1494,8 @@ msgid "Found a .Internal call in the following function:"
 msgid_plural "Found .Internal calls in the following functions:"
 msgstr[0] "다음의 함수로부터 .Internal 호출을 찾았습니다:"
 
-msgid "Found a.Internal call in methods for the following S4 generic:"
+#, fuzzy
+msgid "Found a .Internal call in methods for the following S4 generic:"
 msgid_plural "Found .Internal calls in methods for the following S4 generics:"
 msgstr[0] "다음의 S4 제네릭에 대하여 메소드로부터 .Internal 호출을 찾았습니다:"
 

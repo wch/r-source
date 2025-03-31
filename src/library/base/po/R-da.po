@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2024-10-25 14:49\n"
+"POT-Creation-Date: 2025-03-31 11:50\n"
 "PO-Revision-Date: 2015-03-25 14:20+0200\n"
 "Last-Translator: Joe Hansen <joedalton2@yahoo.dk>\n"
 "Language-Team: Danish <debian-l10n-danish@lists.debian.org>\n"
@@ -221,10 +221,6 @@ msgstr "kan kun skrive tegnobjekter"
 msgid "'headers' must have names and must not be NA"
 msgstr "'X' skal have navngivne dimnavne"
 
-#, fuzzy
-msgid "'name' must be a single character string"
-msgstr "argument 'object' skal deparse til en enkel tegnstreng"
-
 msgid "'origin' must be one of 'start', 'current' or 'end'"
 msgstr "'origin' skal være en af 'start', 'current' eller 'end'"
 
@@ -424,29 +420,20 @@ msgstr "unær %s er ikke defineret for »Date«-objekter"
 msgid "%s not defined for \"Date\" objects"
 msgstr "%s er ikke defineret for »Date«-objekter"
 
-msgid "'from' must be specified"
-msgstr "'from' skal angives"
-
-msgid "'from' must be a \"Date\" object"
-msgstr "'from' skal være et »Date«-objekt"
-
-msgid "'from' must be of length 1"
-msgstr "'from' skal være af længde 1"
-
-msgid "'to' must be a \"Date\" object"
-msgstr "'to' skal være et »Date«-objekt"
-
-msgid "'to' must be of length 1"
+#, fuzzy
+msgid "'%s' must be of length 1"
 msgstr "'to' skal være af længde 1"
 
-msgid "'length.out' must be of length 1"
-msgstr "'length.out' skal være af længde 1"
+msgid "without 'by', at least one of 'to' and 'from' must be specified"
+msgstr ""
 
-msgid "exactly two of 'to', 'by' and 'length.out' / 'along.with' must be specified"
+#, fuzzy
+msgid "without 'by', when one of 'to', 'from' is missing, 'length.out' / 'along.with' must be specified"
 msgstr "præcist to af 'to', 'by' og 'length.out' / 'along.with' skal være angivet"
 
-msgid "'by' must be of length 1"
-msgstr "'by' skal være af længde 1"
+#, fuzzy
+msgid "given 'by', exactly two of 'to', 'from' and 'length.out' / 'along.with' must be specified"
+msgstr "præcist to af 'to', 'by' og 'length.out' / 'along.with' skal være angivet"
 
 msgid "invalid 'by' string"
 msgstr "ugyldig 'by'-streng"
@@ -465,9 +452,6 @@ msgstr "'x' skal være et datotidsobjekt"
 
 msgid "invalid specification of 'breaks'"
 msgstr "ugyldig specifikation for 'breaks'"
-
-msgid "'origin' must be of length one"
-msgstr "'origin' skal være af længde en"
 
 msgid "'lag' and 'differences' must be integers >= 1"
 msgstr "'lag' og 'differences' skal være heltal >=1"
@@ -527,11 +511,13 @@ msgstr "begge argumenter for * kan ikke være »difftime«-objekter"
 msgid "second argument of / cannot be a \"difftime\" object"
 msgstr "andet argument af / kan ikke være et »difftime«-objekt"
 
-msgid "'from' must be a \"POSIXt\" object"
-msgstr "'from' skal være et »POSIXt«-objekt"
+#, fuzzy
+msgid "exactly three of 'to', 'from', 'by' and 'length.out' / 'along.with' must be specified"
+msgstr "præcist to af 'to', 'by' og 'length.out' / 'along.with' skal være angivet"
 
-msgid "'to' must be a \"POSIXt\" object"
-msgstr "'to' skal være et »POSIXt«-objekt"
+#, fuzzy
+msgid "'%s' must be a \"%s\" object"
+msgstr "'to' skal være et »Date«-objekt"
 
 #, fuzzy
 msgid "component subscript must be a character string"
@@ -679,9 +665,6 @@ msgstr "ingen filer/mappe at henvise til"
 
 msgid "no files to link to"
 msgstr "ingen filer at henvise til"
-
-msgid "'package' must be of length 1"
-msgstr "'package' skal være på længde 1"
 
 msgid "no file found"
 msgstr "ingen fil fundet"
@@ -1022,9 +1005,6 @@ msgstr ""
 
 msgid "'arg' must be NULL or a character vector"
 msgstr "'arg' skal være NULL eller en tegnvektor"
-
-msgid "'arg' must be of length 1"
-msgstr "'arg' skal have længden 1"
 
 msgid "'arg' must be of length >= 1"
 msgstr "'arg' skal have længden >= 1"
@@ -1438,9 +1418,6 @@ msgstr "angiv enten 'nmax' eller 'n', men ikke begge."
 msgid "'from' must be a finite number"
 msgstr "'from' skal være et »Date«-objekt"
 
-msgid "argument 'length.out' must be of length 1"
-msgstr "argument 'length.out' skal have længden 1"
-
 msgid "first element used of 'length.out' argument"
 msgstr "første element brugt af 'length-out'-argument"
 
@@ -1621,9 +1598,7 @@ msgstr ""
 msgid "Sys.setenv(LANGUAGE=\"%s\") may have failed"
 msgstr ""
 
-msgid ""
-"Calling 'structure(NULL, *)' is deprecated, as NULL cannot have attributes.\n"
-"  Consider 'structure(list(), *)' instead."
+msgid "attempt to set an attribute on NULL"
 msgstr ""
 
 msgid "incorrect value for 'x'"
@@ -1691,10 +1666,6 @@ msgstr "niveauantal er forskelligt"
 msgid "handler must be a function"
 msgstr "håndtag skal være en funktion"
 
-#, fuzzy
-msgid "'which' must be of length 1"
-msgstr "'to' skal være af længde 1"
-
 msgid "no such element '%s'"
 msgstr "intet sådant element '%s'"
 
@@ -1729,6 +1700,13 @@ msgstr "'width' skal være positiv"
 
 msgid "No traceback available"
 msgstr "Ingen tilbagesporing tilgængelig"
+
+#, fuzzy
+msgid "'recursive' must be a length-1 vector"
+msgstr "'origin' skal være af længde en"
+
+msgid "'recursive' is NA"
+msgstr ""
 
 #, fuzzy
 msgid "invalid non-character version specification 'x' (type: %s)"
@@ -2001,6 +1979,44 @@ msgid_plural ""
 " extra arguments %s will be disregarded"
 msgstr[0] "ekstra argument %s vil blive ignoreret"
 msgstr[1] "ekstra argumentet %s vil blive ignoreret"
+
+#, fuzzy
+#~ msgid "'name' must be a single character string"
+#~ msgstr "argument 'object' skal deparse til en enkel tegnstreng"
+
+#~ msgid "'from' must be specified"
+#~ msgstr "'from' skal angives"
+
+#~ msgid "'from' must be a \"Date\" object"
+#~ msgstr "'from' skal være et »Date«-objekt"
+
+#~ msgid "'from' must be of length 1"
+#~ msgstr "'from' skal være af længde 1"
+
+#~ msgid "'length.out' must be of length 1"
+#~ msgstr "'length.out' skal være af længde 1"
+
+#~ msgid "'by' must be of length 1"
+#~ msgstr "'by' skal være af længde 1"
+
+#~ msgid "'from' must be a \"POSIXt\" object"
+#~ msgstr "'from' skal være et »POSIXt«-objekt"
+
+#~ msgid "'to' must be a \"POSIXt\" object"
+#~ msgstr "'to' skal være et »POSIXt«-objekt"
+
+#~ msgid "'package' must be of length 1"
+#~ msgstr "'package' skal være på længde 1"
+
+#~ msgid "'arg' must be of length 1"
+#~ msgstr "'arg' skal have længden 1"
+
+#~ msgid "argument 'length.out' must be of length 1"
+#~ msgstr "argument 'length.out' skal have længden 1"
+
+#, fuzzy
+#~ msgid "'which' must be of length 1"
+#~ msgstr "'to' skal være af længde 1"
 
 #~ msgid "'normal.kind' must be a character string of length 1"
 #~ msgstr "'normal.kind' skal være en tegnstreng af længde 1"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2024-10-25 14:49\n"
+"POT-Creation-Date: 2025-03-31 11:50\n"
 "PO-Revision-Date: 2024-03-19 03:05+0000\n"
 "Last-Translator: Michael Chirico <michaelchirico4@gmail.com>\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -210,10 +210,6 @@ msgstr "文字オブジェクトしか書き込めません"
 msgid "'headers' must have names and must not be NA"
 msgstr "'x' は名前付きの次元名を持たなければなりません"
 
-#, fuzzy
-msgid "'name' must be a single character string"
-msgstr "引数 'object' は空でない単一の文字列でなければなりません"
-
 msgid "'origin' must be one of 'start', 'current' or 'end'"
 msgstr "'origin' は 'start', 'current' または 'end' のいずれかでなければなりません"
 
@@ -413,29 +409,20 @@ msgstr "単項演算 %s は \"Date\" オブジェクトに対しては定義さ�
 msgid "%s not defined for \"Date\" objects"
 msgstr "%s は \"Date\" オブジェクトに対して定義されていません"
 
-msgid "'from' must be specified"
-msgstr "'from' を指定しなければなりません"
-
-msgid "'from' must be a \"Date\" object"
-msgstr "'from' は \"Date\" オブジェクトでなければなりません"
-
-msgid "'from' must be of length 1"
-msgstr "'from' は長さ 1 でなければなりません"
-
-msgid "'to' must be a \"Date\" object"
-msgstr "'to' は \"Date\" オブジェクトでなければなりません"
-
-msgid "'to' must be of length 1"
+#, fuzzy
+msgid "'%s' must be of length 1"
 msgstr "'to' は長さ 1 でなければなりません"
 
-msgid "'length.out' must be of length 1"
-msgstr "'length.out' は長さ 1 でなければなりません"
+msgid "without 'by', at least one of 'to' and 'from' must be specified"
+msgstr ""
 
-msgid "exactly two of 'to', 'by' and 'length.out' / 'along.with' must be specified"
+#, fuzzy
+msgid "without 'by', when one of 'to', 'from' is missing, 'length.out' / 'along.with' must be specified"
 msgstr "'to', 'by', 'length.out' かまたは 'along.with' の内丁度二つを指定しなければなりません"
 
-msgid "'by' must be of length 1"
-msgstr "'by' は長さ 1 でなければなりません"
+#, fuzzy
+msgid "given 'by', exactly two of 'to', 'from' and 'length.out' / 'along.with' must be specified"
+msgstr "'to', 'by', 'length.out' かまたは 'along.with' の内丁度二つを指定しなければなりません"
 
 msgid "invalid 'by' string"
 msgstr "無効な文字列 'by' です"
@@ -454,9 +441,6 @@ msgstr "'x' は date-time オブジェクトでなければなりません"
 
 msgid "invalid specification of 'breaks'"
 msgstr "'breaks' の無効な指定です"
-
-msgid "'origin' must be of length one"
-msgstr "'origin' は長さ 1 でなければなりません"
 
 msgid "'lag' and 'differences' must be integers >= 1"
 msgstr "'lag' そして 'differences' は 1 以上の整数でなければなりません"
@@ -516,11 +500,13 @@ msgstr "掛け算 * の引数は両方とも \"difftime\" オブジェクトで�
 msgid "second argument of / cannot be a \"difftime\" object"
 msgstr "割り算 / の第二引数は \"difftime\" オブジェクトであることができません"
 
-msgid "'from' must be a \"POSIXt\" object"
-msgstr "'from' は \"POSIXt\" オブジェクトでなければなりません"
+#, fuzzy
+msgid "exactly three of 'to', 'from', 'by' and 'length.out' / 'along.with' must be specified"
+msgstr "'to', 'by', 'length.out' かまたは 'along.with' の内丁度二つを指定しなければなりません"
 
-msgid "'to' must be a \"POSIXt\" object"
-msgstr "'to' は \"POSIXt\" のオブジェクトでなければなりません"
+#, fuzzy
+msgid "'%s' must be a \"%s\" object"
+msgstr "'to' は \"Date\" オブジェクトでなければなりません"
 
 #, fuzzy
 msgid "component subscript must be a character string"
@@ -668,9 +654,6 @@ msgstr "リンクすべきファイルもしくはディレクトリがありま
 
 msgid "no files to link to"
 msgstr "リンクするためのファイルがありません"
-
-msgid "'package' must be of length 1"
-msgstr "'package' は長さ 1 でなければなりません"
 
 msgid "no file found"
 msgstr "ファイルが見つかりません"
@@ -1012,9 +995,6 @@ msgstr ""
 
 msgid "'arg' must be NULL or a character vector"
 msgstr "'arg' は、NULL かひとつの文字ベクトルでなければなりません"
-
-msgid "'arg' must be of length 1"
-msgstr "'arg' は長さ 1 でなければなりません"
 
 msgid "'arg' must be of length >= 1"
 msgstr "'arg' は長さ 1 以上でなければなりません"
@@ -1423,9 +1403,6 @@ msgstr "'nmax' か 'n' を指定して下さい。しかし両方はだめです
 msgid "'from' must be a finite number"
 msgstr "'from' は \"Date\" オブジェクトでなければなりません"
 
-msgid "argument 'length.out' must be of length 1"
-msgstr "引数 'length.out' は長さ 1 でなければなりません"
-
 msgid "first element used of 'length.out' argument"
 msgstr "最初の要素は 引数 'length.out' として使われます"
 
@@ -1606,9 +1583,7 @@ msgstr ""
 msgid "Sys.setenv(LANGUAGE=\"%s\") may have failed"
 msgstr ""
 
-msgid ""
-"Calling 'structure(NULL, *)' is deprecated, as NULL cannot have attributes.\n"
-"  Consider 'structure(list(), *)' instead."
+msgid "attempt to set an attribute on NULL"
 msgstr ""
 
 msgid "incorrect value for 'x'"
@@ -1675,10 +1650,6 @@ msgstr "水準の数が異なります"
 msgid "handler must be a function"
 msgstr "ハンドラーは関数でなければなりません"
 
-#, fuzzy
-msgid "'which' must be of length 1"
-msgstr "'to' は長さ 1 でなければなりません"
-
 msgid "no such element '%s'"
 msgstr "そのような要素 '%s' はありません"
 
@@ -1713,6 +1684,13 @@ msgstr "'width' は正でなければなりません"
 
 msgid "No traceback available"
 msgstr "利用できる traceback がありません"
+
+#, fuzzy
+msgid "'recursive' must be a length-1 vector"
+msgstr "'origin' は長さ 1 でなければなりません"
+
+msgid "'recursive' is NA"
+msgstr ""
 
 #, fuzzy
 msgid "invalid non-character version specification 'x' (type: %s)"
@@ -1953,6 +1931,44 @@ msgid_plural ""
 msgstr[0] ""
 "%s中:\n"
 " 余分な引数 %s は無視されます"
+
+#, fuzzy
+#~ msgid "'name' must be a single character string"
+#~ msgstr "引数 'object' は空でない単一の文字列でなければなりません"
+
+#~ msgid "'from' must be specified"
+#~ msgstr "'from' を指定しなければなりません"
+
+#~ msgid "'from' must be a \"Date\" object"
+#~ msgstr "'from' は \"Date\" オブジェクトでなければなりません"
+
+#~ msgid "'from' must be of length 1"
+#~ msgstr "'from' は長さ 1 でなければなりません"
+
+#~ msgid "'length.out' must be of length 1"
+#~ msgstr "'length.out' は長さ 1 でなければなりません"
+
+#~ msgid "'by' must be of length 1"
+#~ msgstr "'by' は長さ 1 でなければなりません"
+
+#~ msgid "'from' must be a \"POSIXt\" object"
+#~ msgstr "'from' は \"POSIXt\" オブジェクトでなければなりません"
+
+#~ msgid "'to' must be a \"POSIXt\" object"
+#~ msgstr "'to' は \"POSIXt\" のオブジェクトでなければなりません"
+
+#~ msgid "'package' must be of length 1"
+#~ msgstr "'package' は長さ 1 でなければなりません"
+
+#~ msgid "'arg' must be of length 1"
+#~ msgstr "'arg' は長さ 1 でなければなりません"
+
+#~ msgid "argument 'length.out' must be of length 1"
+#~ msgstr "引数 'length.out' は長さ 1 でなければなりません"
+
+#, fuzzy
+#~ msgid "'which' must be of length 1"
+#~ msgstr "'to' は長さ 1 でなければなりません"
 
 #~ msgid "'normal.kind' must be a character string of length 1"
 #~ msgstr "'normal.kind' は長さ 1 の文字列でなければなりません"

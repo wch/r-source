@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: R 4.5.0\n"
+"Project-Id-Version: R 4.6.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2024-04-01 10:33\n"
+"POT-Creation-Date: 2025-03-31 11:51\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -33,7 +33,7 @@ msgstr ""
 msgid "Invalid gTree coordinates"
 msgstr ""
 
-msgid "Closed must not be a missing value"
+msgid "Closed must be length 1 and must not be a missing value"
 msgstr ""
 
 msgid "end points must not be identical"
@@ -567,10 +567,10 @@ msgstr ""
 msgid "a viewport path must contain at least one viewport name"
 msgstr ""
 
-msgid "must specify at least one of 'x' or 'xscale'"
+msgid "must specify at least one of 'xData' or 'xscale'"
 msgstr ""
 
-msgid "must specify at least one of 'y' or 'yscale'"
+msgid "must specify at least one of 'yData' or 'yscale'"
 msgstr ""
 
 msgid "shutting down all devices when unloading 'grid' namespace"

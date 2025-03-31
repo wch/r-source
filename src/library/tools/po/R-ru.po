@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2024-10-25 14:49\n"
+"POT-Creation-Date: 2025-03-31 11:51\n"
 "PO-Revision-Date: 2024-03-25 14:56+0300\n"
 "Last-Translator: Ivan Krylov <ikrylov@disroot.org>\n"
 "Language-Team: Russian\n"
@@ -269,6 +269,14 @@ msgstr "В поле Authors@R есть люди с неправильными идентификаторами ORCID:"
 msgid "Authors@R field gives persons with duplicated ORCID identifiers:"
 msgstr "В поле Authors@R есть люди с неправильными идентификаторами ORCID:"
 
+#, fuzzy
+msgid "Authors@R field gives persons with invalid ROR identifiers:"
+msgstr "В поле Authors@R есть люди с неправильными идентификаторами ORCID:"
+
+#, fuzzy
+msgid "Authors@R field gives persons with duplicated ROR identifiers:"
+msgstr "В поле Authors@R есть люди с неправильными идентификаторами ORCID:"
+
 msgid "Encoding '%s' is not portable"
 msgstr "Кодировка '%s' не переносима"
 
@@ -320,10 +328,12 @@ msgstr "Переменные переписывают пользовательские установки:"
 msgid "invalid 'OS.type' \"%s\".  Should not happen"
 msgstr "неправильный 'OS.type' \"%s\".  Такого быть не должно"
 
-msgid "Missing link or links in Rd file '%s':"
+#, fuzzy
+msgid "Missing link(s) in Rd file '%s':"
 msgstr "Пропущенная ссылка или ссылки с в Rd файле '%s':"
 
-msgid "Non-file package-anchored link(s) in Rd file '%s':"
+#, fuzzy
+msgid "Non-topic package-anchored link(s) in Rd file '%s':"
 msgstr "В Rd файле '%s' есть ссылки на \\alias но не файл документации конкретного пакета:"
 
 msgid "See section 'Cross-references' in the 'Writing R Extensions' manual."
@@ -1505,7 +1515,8 @@ msgstr[0] "Найден вызов .Internal в следующей функции:"
 msgstr[1] "Найдены вызовы .Internal в следующих функциях:"
 msgstr[2] "Найдены вызовы .Internal в следующих функциях:"
 
-msgid "Found a.Internal call in methods for the following S4 generic:"
+#, fuzzy
+msgid "Found a .Internal call in methods for the following S4 generic:"
 msgid_plural "Found .Internal calls in methods for the following S4 generics:"
 msgstr[0] "Найден вызов .Internal в методах следующей S4-общей функции:"
 msgstr[1] "Найдены вызовы .Internal в методах следующих S4-общих функций:"

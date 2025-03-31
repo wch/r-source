@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2024-10-25 14:49\n"
+"POT-Creation-Date: 2025-03-31 11:51\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -313,6 +313,14 @@ msgstr "'seasonal' musi być listą z komponentem 'order'"
 
 msgid "'seasonal$order' must be a non-negative numeric vector of length 3"
 msgstr "'seasonal$order' musi być nieujemnym wektorem liczbowym o długości 3"
+
+#, fuzzy
+msgid "if not a list, 'seasonal' must be a non-negative numeric vector of length 3"
+msgstr "'seasonal$order' musi być nieujemnym wektorem liczbowym o długości 3"
+
+#, fuzzy
+msgid "'seasonal' is neither a list with component 'order' nor a numeric vector of length 3"
+msgstr "'seasonal' musi być listą z komponentem 'order'"
 
 msgid "lengths of 'x' and 'xreg' do not match"
 msgstr "długości argumentów 'x' oraz 'xreg' muszą się zgadzać"
@@ -1577,7 +1585,8 @@ msgstr "niepoprawna formuła"
 msgid "no terms component nor attribute"
 msgstr "brak komponentu 'terms' oraz atrybutu"
 
-msgid "'termlabels' must be a character vector of length at least one"
+#, fuzzy
+msgid "'termlabels' must be a character vector"
 msgstr "argument 'termlabels' musi być wektorem tekstowym o długości co najmniej 1"
 
 #, fuzzy
@@ -1883,6 +1892,10 @@ msgstr "'ppr' stosuje się jedynie do zmiennych liczbowych"
 msgid "mismatched 'x' and 'y'"
 msgstr "niezgodne 'x' oraz 'y'"
 
+#, fuzzy
+msgid "mismatched 'x' and 'weights'"
+msgstr "niezgodne 'x' oraz 'y'"
+
 msgid "wrong number of columns in 'x'"
 msgstr "niepoprawna liczba kolumn w 'x'"
 
@@ -1948,6 +1961,10 @@ msgstr ""
 
 msgid "'formula' missing"
 msgstr "brakuje argumentu 'formula'"
+
+#, fuzzy
+msgid "'type' must be an integer in 1..9"
+msgstr "'y' musi być o jeden dłuższy niż 'x'"
 
 msgid "'type' must be 1 or 3 for ordered factors"
 msgstr "argument 'type' musi mieć wartość 1 lub 3 dla uporządkowanych czynników"
@@ -2115,6 +2132,14 @@ msgstr "nie wolno określać równocześnie argumentu 'spar' oraz 'lambda'"
 
 msgid "'spar' must be of length 1"
 msgstr "argument 'spar' musi mieć długość 1"
+
+#, fuzzy
+msgid "df.offset must be numeric and >= 0"
+msgstr "argument 'offset' musi być liczbą"
+
+#, fuzzy
+msgid "penalty must be numeric and > 0"
+msgstr "argument 'y' musi być liczbą"
 
 msgid "not using invalid df; must have 1 < df <= n := #{unique x} ="
 msgstr "ignorowanie niepoprawnej wartości stopni swodoby; wartość musi spełniać warunek: 1 < df <= n, n = #{unikalne x} ="

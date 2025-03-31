@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.0.4\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-07-31 14:59\n"
+"POT-Creation-Date: 2025-03-31 11:51\n"
 "PO-Revision-Date: 2022-08-31 15:04+0000\n"
 "Last-Translator: Marcel Ramos <marcel.ramos@sph.cuny.edu>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -42,7 +42,7 @@ msgstr "nom de 'grob' incorrect"
 msgid "Invalid gTree coordinates"
 msgstr "classe \"gTree\" incorrecte"
 
-msgid "Closed must not be a missing value"
+msgid "Closed must be length 1 and must not be a missing value"
 msgstr ""
 
 msgid "end points must not be identical"
@@ -591,10 +591,12 @@ msgstr "'parent' doit être une vue et 'children' doit être une 'vpList' dans '
 msgid "a viewport path must contain at least one viewport name"
 msgstr "un chemin de vue doit contenir au moins un nom de vue"
 
-msgid "must specify at least one of 'x' or 'xscale'"
+#, fuzzy
+msgid "must specify at least one of 'xData' or 'xscale'"
 msgstr "il faut spécifier au moins 'x' ou 'xscale'"
 
-msgid "must specify at least one of 'y' or 'yscale'"
+#, fuzzy
+msgid "must specify at least one of 'yData' or 'yscale'"
 msgstr "il faut spécifier au moins 'y' ou 'yscale'"
 
 msgid "shutting down all devices when unloading 'grid' namespace"

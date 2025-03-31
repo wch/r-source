@@ -1,15 +1,15 @@
 # Translation of /src/library/stats/po/R-stats.pot to German
-# Copyright (C) 2008-2022 The R Foundation
+# Copyright (C) 2008-2025 The R Foundation
 # This file is distributed under the same license as the R package.
-# Detlef Steuer <steuer@hsu-hh.de>, 2008-2023.
+# Detlef Steuer <steuer@hsu-hh.de>, 2008-2025.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R-4.2.0\n"
+"Project-Id-Version: R-4.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2024-10-25 14:49\n"
-"PO-Revision-Date: 2024-03-19 12:53+0000\n"
-"Last-Translator: Michael Chirico <michaelchirico4@gmail.com>\n"
+"POT-Creation-Date: 2025-03-31 11:51\n"
+"PO-Revision-Date: 2025-03-28 15:38+0100\n"
+"Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -161,15 +161,13 @@ msgid "arguments must have same length"
 msgstr "Argumente müssen dieselbe Länge haben"
 
 msgid "argument 'x' is  missing -- it has been renamed from 'formula'"
-msgstr ""
+msgstr "Argument 'x' fehlt -- es ist in 'formula' umbenannt worden"
 
-#, fuzzy
 msgid "argument 'x' must be a formula"
-msgstr "Argument 'x' muss numerisch sein"
+msgstr "Argument 'x' muss eine Formal sein"
 
-#, fuzzy
 msgid "formula 'x' must have both left and right hand sides"
-msgstr "'formula' benötigt sowohl eine linke als auch eine rechte Seite"
+msgstr "Formel 'x'' benötigt sowohl eine linke als auch eine rechte Seite"
 
 msgid "cannot change frequency from %g to %g"
 msgstr "kann die Frequenz nicht von %g nach %g ändern"
@@ -217,7 +215,7 @@ msgid "cannot compute exact p-value with ties"
 msgstr "kann bei Bindungen keinen exakten p-Wert Berechnen"
 
 msgid "cannot compute exact confidence intervals with ties"
-msgstr "Kann kein exaktes Konfidenzinterval bei Bindungen berechnen"
+msgstr "Kann kein exaktes Konfidenzintervall bei Bindungen berechnen"
 
 msgid "'formula' missing or incorrect"
 msgstr "'formula' fehlt oder ist falsch"
@@ -317,6 +315,14 @@ msgstr "'seasonal' muss eine Liste mit einer Komponenete 'order' sein"
 
 msgid "'seasonal$order' must be a non-negative numeric vector of length 3"
 msgstr "'seasonal$order' muss ein nicht-negativer numerischer Vektor der Länge 3 sein"
+
+#, fuzzy
+msgid "if not a list, 'seasonal' must be a non-negative numeric vector of length 3"
+msgstr "'seasonal$order' muss ein nicht-negativer numerischer Vektor der Länge 3 sein"
+
+#, fuzzy
+msgid "'seasonal' is neither a list with component 'order' nor a numeric vector of length 3"
+msgstr "'seasonal' muss eine Liste mit einer Komponenete 'order' sein"
 
 msgid "lengths of 'x' and 'xreg' do not match"
 msgstr "Längen von 'x' und 'xreg' stimmen nicht überein"
@@ -499,13 +505,13 @@ msgid "only %d of the first %d eigenvalues are > 0"
 msgstr "nur %d der ersten %d Eigenwerte sind > 0"
 
 msgid "Waiting for profiling to be done..."
-msgstr ""
+msgstr "Warte auf das Profiling ..."
 
 msgid "Reprofiling for"
-msgstr ""
+msgstr "Re-Profiling für"
 
 msgid "statistic. Waiting..."
-msgstr ""
+msgstr "statistic. Waiting..."
 
 msgid "initial value is not in the interior of the feasible region"
 msgstr "Startwert nicht im Inneren der zulässigen Region"
@@ -594,9 +600,8 @@ msgstr "kann 'pairwise.complete.obs' nicht behandeln"
 msgid "'V' is not a square numeric matrix"
 msgstr "'V' ist keine quadratische, numerische Matrix"
 
-#, fuzzy
 msgid "diag(V) had non-positive or NA entries; the non-finite result may be dubious"
-msgstr "Einträge 0 oder NA in diag(.): nicht-endliches Ergebniss zweifelhaft"
+msgstr "diag(V) hat nicht-positive oder NA Einträge; das nicht-endliche Ergebnis ist vielleicht zweifelhaft"
 
 msgid "'x' must be a numeric vector"
 msgstr "'x' muss ein numerischer Vektor sein"
@@ -719,7 +724,7 @@ msgid "need at least 2 points to select a bandwidth automatically"
 msgstr "benötige zumindest 2 Punkte, um die Bandbreite automatisch zu wählen"
 
 msgid "Selecting bandwidth *not* using 'weights'"
-msgstr ""
+msgstr "Auswählen der Bandbreite *ohne* 'weights' zu nutzen"
 
 msgid "unknown bandwidth rule"
 msgstr "unbekannte Bandbreitenregel"
@@ -755,7 +760,7 @@ msgid "'x' is not a vector or matrix"
 msgstr "'x' ist weder Vektor noch Matrix"
 
 msgid "x[1] != r[1]; using x[1] for diagonal"
-msgstr ""
+msgstr "x[1] != r[1]; nutze x[1] als Diagonale"
 
 msgid "invalid distance method"
 msgstr "unzulässige Distanzmethode"
@@ -995,16 +1000,16 @@ msgid "'col.vars' missing or incorrect"
 msgstr "'col.vars' fehlt oder falsch"
 
 msgid "Parameter:"
-msgstr ""
+msgstr "Parameter:"
 
 msgid "down"
-msgstr ""
+msgstr "abwärts"
 
 msgid "up"
-msgstr ""
+msgstr "aufwärts"
 
 msgid "profiling has found a better solution, so original fit had not converged"
-msgstr ""
+msgstr "Profiling hat eine bessere Lösung gefunden, also war der originale Fit nicht konvergiert"
 
 msgid "'family' not recognized"
 msgstr "'family' nicht erkannt"
@@ -1240,13 +1245,11 @@ msgstr "einige Elemente von 'x' sind nicht numerisch und werden nach numerisch g
 msgid "not enough 'x' data"
 msgstr "zu wenig 'x' Daten"
 
-#, fuzzy
 msgid "Parameter(s)"
-msgstr "passe Parameter an"
+msgstr "Parameter(s)"
 
-#, fuzzy
 msgid "ignored"
-msgstr "' ignoriert"
+msgstr "ignoriert"
 
 msgid "not enough 'y' data"
 msgstr "zu wenig 'y' Daten"
@@ -1257,28 +1260,23 @@ msgstr "im Falle von Bindungen sind die p-Werte approximativ"
 msgid "'y' must be numeric or a function or a string naming a valid function"
 msgstr "'y' muss entweder numerisch oder eine Funktion oder Name einer zulässigen Funktion sein"
 
-#, fuzzy
 msgid "ties should not be present for the one-sample Kolmogorov-Smirnov test"
-msgstr "für den Komogorov-Smirnov-Test sollten keine Bindungen vorhanden sein"
+msgstr "für den einstichproben Komogorov-Smirnov-Test sollten keine Bindungen vorhanden sein"
 
-#, fuzzy
 msgid "invalid arguments"
-msgstr "unzulässiges Argument 'n'"
+msgstr "unzulässige Argumente"
 
-#, fuzzy
 msgid "argument 'sizes' must be a vector of length 2"
-msgstr "'interval' muss ein Vektor der Länge 2 sein"
+msgstr "Argument 'sizes' muss ein Vektor der Länge 2 sein"
 
-#, fuzzy
 msgid "argument 'q' must be numeric"
-msgstr "Argument 'x' muss numerisch sein"
+msgstr "Argument 'q' muss numerisch sein"
 
 msgid "computation of exact probability failed, returning Monte Carlo approximation"
-msgstr ""
+msgstr "Berechnung der exakten Wahrscheinlichkeit fehlgeschlagen, gebe Monte-Carlo Approximation zurück"
 
-#, fuzzy
 msgid "argument 'p' must be numeric"
-msgstr "Argument 'x' muss numerisch sein"
+msgstr "Argument 'p' muss numerisch sein"
 
 msgid ""
 "numeric y must be supplied.\n"
@@ -1342,21 +1340,20 @@ msgstr "ANOVA F-Tests auf einem im Wesentlichen perfekten Fit sind unzuverlässi
 msgid "calling predict.lm(<fake-lm-object>) ..."
 msgstr "Aufruf von predict.lm(<fake-lm-object>)..."
 
-#, fuzzy
 msgid "prediction from rank-deficient fit"
-msgstr "Vorhersage durch Fit ohne vollen Rang mag täuschen"
+msgstr "Vorhersage durch Fit ohne vollen Rang"
 
 msgid "%s; consider predict(., rankdeficient=\"NA\")"
-msgstr ""
+msgstr "%s; überlege predict(., rankdeficient=\\\"NA\\\")"
 
 msgid "lower-rank qr: determining non-estimable cases"
-msgstr ""
+msgstr "nieder-rangige qr: Bestimme die nicht-schätzbaren Fälle"
 
 msgid "%s; attr(*, \"non-estim\") has doubtful cases"
-msgstr ""
+msgstr "%s; attr(*, \"non-estim\") hat zweifelhafte Fälle"
 
 msgid "%s: NAs produced for non-estimable cases"
-msgstr ""
+msgstr "%s: NAs für nicht-schätzbare Fälle erzeugt"
 
 msgid "predictions on current data refer to _future_ responses"
 msgstr "Vorhersagen auf aktuellen Daten beziehen sich auf zukünftige Daten"
@@ -1578,12 +1575,12 @@ msgstr "unzulässige Formel %s"
 msgid "no terms component nor attribute"
 msgstr "weder terms Komponente noch Attribut"
 
-msgid "'termlabels' must be a character vector of length at least one"
+#, fuzzy
+msgid "'termlabels' must be a character vector"
 msgstr "'termlabels' muss ein Zeichenkettenvektor mit Länge >= 1 sein"
 
-#, fuzzy
 msgid "'%s' must be a character string"
-msgstr "'sep' muss eine Zeichenkette sein"
+msgstr "'%s' muss eine Zeichenkette sein"
 
 msgid "Unparseable 'response' \"%s\"; use is deprecated.  Use as.name(.) or `..`!"
 msgstr "Nicht zu parsende 'response' \"%s\"; Nutzung ist veraltet.  Nutze as.name(.) oder `..`!"
@@ -1592,7 +1589,7 @@ msgid "'termobj' must be a object of class %s"
 msgstr "'termobj' muss ein Objekt aus der Klasse %s sein"
 
 msgid "setting '%s' in terms.formula() is deprecated"
-msgstr ""
+msgstr "'%s' in terms.formula() zu setzen ist veraltet"
 
 msgid "variable '%s' was fitted with type \"%s\" but type \"%s\" was supplied"
 msgstr "Variable '%s' wurde mit Typ \"%s\" gefitted, angegeben wurde aber Typ \"%s\""
@@ -1609,13 +1606,11 @@ msgstr "'data' muss data.frame, Umgebung oder Liste sein"
 msgid "variable '%s' is not a factor"
 msgstr "Variable '%s' is kein Faktor"
 
-#, fuzzy
 msgid "contrasts dropped from factor %s"
-msgstr "Kontraste arbeiten nur auf Faktoren"
+msgstr "Kontraste weggelassen von Faktor %s"
 
-#, fuzzy
 msgid "contrasts dropped from factor %s due to missing levels"
-msgstr "Kontraste können nur auf Faktoren mit 2 oder mehr Stufen angewendet werden"
+msgstr "Kontraste bei Faktor %s weggelassen, da Stufen fehlen"
 
 msgid "'offset' must be numeric"
 msgstr "'offset' muss numerisch sein"
@@ -1878,6 +1873,10 @@ msgstr "'ppr' lässt sich nur auf numerische Vawriablen anwenden"
 msgid "mismatched 'x' and 'y'"
 msgstr "'x' und 'y' passen nicht"
 
+#, fuzzy
+msgid "mismatched 'x' and 'weights'"
+msgstr "'x' und 'y' passen nicht"
+
 msgid "wrong number of columns in 'x'"
 msgstr "falsche Spaltenanzahl in 'x'"
 
@@ -1939,10 +1938,14 @@ msgid "elements of 'p' must be in (0,1)"
 msgstr "Elemente von 'p' müssen in (0, 1) liegen"
 
 msgid "'conf.level' is not a probability"
-msgstr ""
+msgstr "'conf.level' ist keine Wahrscheinlichkeit"
 
 msgid "'formula' missing"
 msgstr "'formula' fehlt"
+
+#, fuzzy
+msgid "'type' must be an integer in 1..9"
+msgstr "'y' muss einen länger sein als 'x'"
 
 msgid "'type' must be 1 or 3 for ordered factors"
 msgstr "'type' muss für geordnete Faktoren 1 oder 3 sein"
@@ -2028,9 +2031,8 @@ msgstr "Bandbreite 'k' muss >= 1 und ungerade sein"
 msgid "argument 'object' has an impossible length"
 msgstr "Argument 'object' hat unmögliche Länge"
 
-#, fuzzy
 msgid "right-hand side of formula is not a call"
-msgstr "unzulässige Formel %s: ist kein Aufruf"
+msgstr "rechte Seite der Formel ist kein Aufruf"
 
 msgid "no 'getInitial' method found for \"%s\" objects"
 msgstr "keine 'getInitial' Methode für \"%s\" Objekte gefunden"
@@ -2109,6 +2111,14 @@ msgstr "es dürfen nicht sowohl 'spar' als auch 'lambda' angegeben werden"
 
 msgid "'spar' must be of length 1"
 msgstr "'spar' muss Länge eins haben"
+
+#, fuzzy
+msgid "df.offset must be numeric and >= 0"
+msgstr "'offset' muss numerisch sein"
+
+#, fuzzy
+msgid "penalty must be numeric and > 0"
+msgstr "'y' muss numerisch sein"
 
 msgid "not using invalid df; must have 1 < df <= n := #{unique x} ="
 msgstr "unzulässige df nicht benutzt; es muss gelten 1 < df <= n := #{verschiedene x} ="
@@ -2242,9 +2252,8 @@ msgstr "'y' für den paarweisen Test fehlt"
 msgid "data are essentially constant"
 msgstr "Daten sind praktisch konstant"
 
-#, fuzzy
 msgid "cannot use 'paired' in formula method"
-msgstr "kann mit den gegebenen Daten '...' in der Formel nicht nutzen"
+msgstr "kann 'paired' nicht in der Formelmethode nutzen"
 
 msgid "'main' must be TRUE, FALSE, NULL or character (vector)."
 msgstr "'main' muss entweder TRUE, FALSE, NULL oder Zeichen(kette) sein"
@@ -2376,24 +2385,23 @@ msgid "requested conf.level not achievable"
 msgstr "gefordertes conf.level nicht erreichbar"
 
 msgid "cannot compute confidence interval when all observations are zero or tied"
-msgstr "kann kein Konfidenzinterval berechnen, wenn alle Beobachtungen 0 oder gebunden sind"
+msgstr "kann kein Konfidenzintervall berechnen, wenn alle Beobachtungen 0 oder gebunden sind"
 
 msgid "cannot compute exact confidence interval with ties"
-msgstr "kann bei Bindungen das exakte Konfidenzinterval nicht berechnen"
+msgstr "kann bei Bindungen das exakte Konfidenzintervall nicht berechnen"
 
 msgid "cannot compute exact p-value with zeroes"
 msgstr "kann den exakten p-Wert bei Nullen nicht berechnen"
 
 msgid "cannot compute exact confidence interval with zeroes"
-msgstr "kann das exakte Konfidenzinterval bei Nullen nicht berechnen"
+msgstr "kann das exakte Konfidenzintervall bei Nullen nicht berechnen"
 
 msgid "Requested conf.level not achievable"
 msgstr "gefordertes conf.level nicht erreichbar"
 
 msgid "cannot compute confidence interval when all observations are tied"
-msgstr "kann kein Konfidenzinterval berechnen, wenn alle Beobachtungen gebunden sind"
+msgstr "kann kein Konfidenzintervall berechnen, wenn alle Beobachtungen gebunden sind"
 
-#, fuzzy
 msgid "must supply 'formula' or 'data'"
 msgstr "entweder 'formula' oder 'data' müssen angegeben werden"
 
@@ -2467,7 +2475,6 @@ msgid_plural "unknown names %s in the 'split' list"
 msgstr[0] "unbekannter Name %s in der 'split' Liste"
 msgstr[1] "unbekannte Namen %s in der 'split' Liste"
 
-#, fuzzy
 msgid "extra argument %s is not of class \"%s\""
 msgid_plural "extra arguments %s are not of class \"%s\""
 msgstr[0] "zusätzliches Argument %s ist nicht aus Klasse \"%s\""

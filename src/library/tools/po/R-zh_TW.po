@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2024-10-25 14:49\n"
+"POT-Creation-Date: 2025-03-31 11:51\n"
 "PO-Revision-Date: 2021-11-06 22:40+0100\n"
 "Last-Translator: Wei-Lun Chao <bluebat@member.fsf.org>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -280,6 +280,14 @@ msgstr "Authors@R 欄位沒有提供作者姓名："
 msgid "Authors@R field gives persons with duplicated ORCID identifiers:"
 msgstr "Authors@R 欄位沒有提供作者姓名："
 
+#, fuzzy
+msgid "Authors@R field gives persons with invalid ROR identifiers:"
+msgstr "Authors@R 欄位沒有提供作者姓名："
+
+#, fuzzy
+msgid "Authors@R field gives persons with duplicated ROR identifiers:"
+msgstr "Authors@R 欄位沒有提供作者姓名："
+
 msgid "Encoding '%s' is not portable"
 msgstr "編碼 '%s' 不可攜"
 
@@ -334,11 +342,11 @@ msgid "invalid 'OS.type' \"%s\".  Should not happen"
 msgstr ""
 
 #, fuzzy
-msgid "Missing link or links in Rd file '%s':"
+msgid "Missing link(s) in Rd file '%s':"
 msgstr "使用手冊物件 '%s' 缺少聯結："
 
 #, fuzzy
-msgid "Non-file package-anchored link(s) in Rd file '%s':"
+msgid "Non-topic package-anchored link(s) in Rd file '%s':"
 msgstr "使用手冊物件 '%s' 缺少聯結："
 
 msgid "See section 'Cross-references' in the 'Writing R Extensions' manual."
@@ -1514,7 +1522,8 @@ msgid "Found a .Internal call in the following function:"
 msgid_plural "Found .Internal calls in the following functions:"
 msgstr[0] "下面的函式呼叫了.Internal:"
 
-msgid "Found a.Internal call in methods for the following S4 generic:"
+#, fuzzy
+msgid "Found a .Internal call in methods for the following S4 generic:"
 msgid_plural "Found .Internal calls in methods for the following S4 generics:"
 msgstr[0] "下面的 S4 泛型函式的方法呼叫了.Internal:"
 

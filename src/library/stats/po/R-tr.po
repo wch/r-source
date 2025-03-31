@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2024-10-25 14:49\n"
+"POT-Creation-Date: 2025-03-31 11:51\n"
 "PO-Revision-Date: 2011-04-02 \n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -322,6 +322,14 @@ msgstr "'seasonal' 'order' bileşeni içeren bir liste olmalı"
 
 msgid "'seasonal$order' must be a non-negative numeric vector of length 3"
 msgstr "'seasonal$order' negatif olmayan 3 uzunluğunda bir vektör olmalı"
+
+#, fuzzy
+msgid "if not a list, 'seasonal' must be a non-negative numeric vector of length 3"
+msgstr "'seasonal$order' negatif olmayan 3 uzunluğunda bir vektör olmalı"
+
+#, fuzzy
+msgid "'seasonal' is neither a list with component 'order' nor a numeric vector of length 3"
+msgstr "'seasonal' 'order' bileşeni içeren bir liste olmalı"
 
 msgid "lengths of 'x' and 'xreg' do not match"
 msgstr "'x' ve 'xreg' uzunlukları eşleşmiyor"
@@ -1621,7 +1629,8 @@ msgstr "geçersiz formül"
 msgid "no terms component nor attribute"
 msgstr ""
 
-msgid "'termlabels' must be a character vector of length at least one"
+#, fuzzy
+msgid "'termlabels' must be a character vector"
 msgstr "'termlabels' en az bir uzunluğunda bir karakter vektörü olmalı"
 
 #, fuzzy
@@ -1927,6 +1936,10 @@ msgstr ""
 msgid "mismatched 'x' and 'y'"
 msgstr "uyuşmayan 'x' ve 'y'"
 
+#, fuzzy
+msgid "mismatched 'x' and 'weights'"
+msgstr "uyuşmayan 'x' ve 'y'"
+
 msgid "wrong number of columns in 'x'"
 msgstr "'x'de hatalı sütun sayısı"
 
@@ -1992,6 +2005,10 @@ msgstr ""
 
 msgid "'formula' missing"
 msgstr "'formula' eksik"
+
+#, fuzzy
+msgid "'type' must be an integer in 1..9"
+msgstr "'y' 'x' den bir daha uzun olmalı"
 
 msgid "'type' must be 1 or 3 for ordered factors"
 msgstr ""
@@ -2170,6 +2187,14 @@ msgstr ""
 #, fuzzy
 msgid "'spar' must be of length 1"
 msgstr "'model$order' 3 uzunluğunda olmalı"
+
+#, fuzzy
+msgid "df.offset must be numeric and >= 0"
+msgstr "'offset' sayısal olmalı"
+
+#, fuzzy
+msgid "penalty must be numeric and > 0"
+msgstr "'y' sayısal olmalı"
 
 msgid "not using invalid df; must have 1 < df <= n := #{unique x} ="
 msgstr ""

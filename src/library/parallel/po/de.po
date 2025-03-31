@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.4.4\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2024-04-01 10:34-0700\n"
+"POT-Creation-Date: 2025-03-31 11:51+0200\n"
 "PO-Revision-Date: 2018-04-06 09:33+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
@@ -101,14 +101,14 @@ msgstr "'mcexit' kann nur von Kindprozessen genutzt werden"
 msgid "'mcexit' failed"
 msgstr "'mcexit' fehlgeschlagen"
 
-#: fork.c:1247 fork.c:1256
+#: fork.c:1248 fork.c:1257
 msgid "invalid CPU affinity specification"
 msgstr "unzulässige CPU-Affinitätsspezifikation"
 
-#: fork.c:1267
+#: fork.c:1268
 msgid "requested CPU set is too large for this system"
 msgstr "angeforderte CPU Menge ist für dieses System zu groß"
 
-#: fork.c:1290
+#: fork.c:1291
 msgid "retrieving CPU affinity set failed"
 msgstr "anfordern einer CPU-Affinitätsmenge fehlgeschlagen"

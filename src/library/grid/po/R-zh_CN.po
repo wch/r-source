@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-07-31 14:59\n"
+"POT-Creation-Date: 2025-03-31 11:51\n"
 "PO-Revision-Date: 2023-12-20 13:03+0000\n"
 "Last-Translator: Shun Wang <shuonwang@gmail.com>\n"
 "Language-Team: Chinese\n"
@@ -41,7 +41,7 @@ msgstr "无效的grob坐标"
 msgid "Invalid gTree coordinates"
 msgstr "\"gTree\"的类别无效"
 
-msgid "Closed must not be a missing value"
+msgid "Closed must be length 1 and must not be a missing value"
 msgstr ""
 
 msgid "end points must not be identical"
@@ -605,10 +605,12 @@ msgstr "'parent'的值必需为视口，'children'的值必需是'vpTree'里的'
 msgid "a viewport path must contain at least one viewport name"
 msgstr "视口路径至少要有一个视口的名称"
 
-msgid "must specify at least one of 'x' or 'xscale'"
+#, fuzzy
+msgid "must specify at least one of 'xData' or 'xscale'"
 msgstr "至少要指定'x'或'xscale'两个中的一个"
 
-msgid "must specify at least one of 'y' or 'yscale'"
+#, fuzzy
+msgid "must specify at least one of 'yData' or 'yscale'"
 msgstr "至少要指定'y'或'yscale'两个中的一个"
 
 msgid "shutting down all devices when unloading 'grid' namespace"

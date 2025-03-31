@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2024-10-25 14:50\n"
+"POT-Creation-Date: 2025-03-31 11:51\n"
 "PO-Revision-Date: 2011-04-02 \n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -1025,6 +1025,9 @@ msgstr ""
 msgid "xz"
 msgstr ""
 
+msgid "zstd"
+msgstr ""
+
 msgid "failed to create directory %s"
 msgstr ""
 
@@ -1262,6 +1265,11 @@ msgstr[1] ""
 
 msgid "Invalid ORCID iD: %s."
 msgid_plural "Invalid ORCID iDs: %s."
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "Invalid ROR ID: %s."
+msgid_plural "Invalid ROR IDs: %s."
 msgstr[0] ""
 msgstr[1] ""
 

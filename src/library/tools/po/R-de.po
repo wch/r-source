@@ -1,14 +1,14 @@
 # Translation of src/library/tools/po/R-tools.pot to German.
-# Copyright (C) 2008-2022 The R Foundation
+# Copyright (C) 2008-2025 The R Foundation
 # This file is distributed under the same license as the R package.
-# Detlef Steuer <steuer@hsu-hh.de>, 2008-2023.
+# Detlef Steuer <steuer@hsu-hh.de>, 2008-2025.
 msgid ""
 msgstr ""
-"Project-Id-Version: R-4.2.0\n"
+"Project-Id-Version: R-4.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2024-10-25 14:49\n"
-"PO-Revision-Date: 2024-03-19 12:53+0000\n"
-"Last-Translator: Michael Chirico <michaelchirico4@gmail.com>\n"
+"POT-Creation-Date: 2025-03-31 11:51\n"
+"PO-Revision-Date: 2025-03-24 13:42+0100\n"
+"Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -59,17 +59,14 @@ msgstr "Verzeichnis '%s' enthält keinen R Code"
 msgid "directory '%s' does not contain Rd objects"
 msgstr "Verzeichnis '%s' enthält keine Rd-Objekte"
 
-#, fuzzy
 msgid "Functions or methods with usage in Rd file '%s' but not in code:"
-msgstr "Funktionen bzw. Methoden mit Anleitung im Dokumentations-Objekt '%s' jedoch nicht im Code"
+msgstr "Funktionen bzw. Methoden mit Anleitung in Rd Datei '%s' jedoch nicht im Code"
 
-#, fuzzy
 msgid "Data with usage in Rd file '%s' but not in code:"
-msgstr "Datensätze mit Anleitung im Dokumentations-Objekt '%s', jedoch nicht im Code"
+msgstr "Datensätze mit Anleitung in Rd Datei '%s', jedoch nicht im Code"
 
-#, fuzzy
 msgid "Variables with usage in Rd file '%s' but not in code:"
-msgstr "Variablen mit Nutzung im Dokumentations-Objekt '%s', jedoch nicht im Code:"
+msgstr "Variablen mit Anleitung in der Rd Datei '%s', jedoch nicht im Code:"
 
 msgid "Argument names in code not in docs:"
 msgstr "Argumentnamen im Code (nicht in der Dokumentation):"
@@ -89,9 +86,8 @@ msgstr "Unpassende Standardargumente (die ersten 3):"
 msgid "Mismatches in argument default values:"
 msgstr "Unpassende Standardargumente"
 
-#, fuzzy
 msgid "Codoc mismatches from Rd file '%s':"
-msgstr "Unpassende Kodierung aus dem Dokumentations-Objekt '%s'"
+msgstr "Unpassende Kodierung aus der Rd Datei '%s'"
 
 msgid "Code: %s"
 msgstr "Code: %s"
@@ -99,47 +95,38 @@ msgstr "Code: %s"
 msgid "Docs: %s"
 msgstr "Dokumentation: %s"
 
-#, fuzzy
 msgid "S4 class codoc mismatches from Rd file '%s':"
-msgstr "S4 Klassendokumentation passt nicht zum Dokumentations-Objekt '%s':"
+msgstr "S4 Klassendokumentation passt nicht zur Rd Datei '%s':"
 
 msgid "Slots for class '%s'"
 msgstr "Slots für Klasse '%s'"
 
-#, fuzzy
 msgid "Data codoc mismatches from Rd file '%s':"
-msgstr "Daten \"codoc\" passt nicht zum Dokumentations-Objekt '%s':"
+msgstr "Daten \"codoc\" passt nicht zur Rd Datei '%s':"
 
 msgid "Variables in data frame '%s'"
 msgstr "Variablen im Dataframe '%s'"
 
-#, fuzzy
 msgid "Undocumented arguments in Rd file '%s'"
-msgstr "Undokumentierte Argumente im Dokumentations-Objekt '%s'"
+msgstr "Undokumentierte Argumente iRd Datei '%s'"
 
-#, fuzzy
 msgid "Duplicated \\argument entries in Rd file '%s':"
-msgstr "Doppelte Einträge zu \\argument im Dokumentations-Objekt '%s'"
+msgstr "Doppelte Einträge zu \\argument in Rd Datei '%s'"
 
-#, fuzzy
 msgid "Documented arguments not in \\usage in Rd file '%s':"
-msgstr "Dokumentierte Objekte kommen in \\usage des Dokuobjekts '%s' nicht vor"
+msgstr "Dokumentierte Argumente nicht in \\usage der Rd Datei '%s':"
 
-#, fuzzy
 msgid "Objects in \\usage without \\alias in Rd file '%s':"
-msgstr "Objekte kommen bei \\usage, aber nicht unter \\alias im Dokumentations-Objekt '%s' vor"
+msgstr "Objekte kommen bei \\usage, aber nicht unter \\alias in der Rd Datei '%s' vor"
 
-#, fuzzy
 msgid "Assignments in \\usage in Rd file '%s':"
-msgstr "Zuweisungen in \\usage im Dokumentations-Objekt '%s':"
+msgstr "Zuweisungen in \\usage der Rd Datei '%s':"
 
-#, fuzzy
 msgid "Bad \\usage lines found in Rd file '%s':"
-msgstr "Ungültige \\usage Zeile im Dokumentations-Objekt '%s' gefunden:"
+msgstr "Ungültige \\usage Zeilen in Rd Datei '%s':"
 
-#, fuzzy
 msgid "S3 methods shown with full name in Rd file '%s':"
-msgstr "S3 Methoden mit vollem Namen im Dokumentations-Objekt '%s' gezeigt:"
+msgstr "S3 Methoden mit vollem Namen in der Rd Datei '%s' angezeigt:"
 
 msgid "you must specify 'package', 'dir' or 'file'"
 msgstr "sie müssen 'package', 'dir' oder 'file' angeben"
@@ -157,11 +144,12 @@ msgstr ""
 msgid "cannot check R code installed as image"
 msgstr "kann R-Code, der als Image installiert ist, nicht überprüfen"
 
-#, fuzzy
 msgid ""
 "parse error in examples from file '%s':\n"
 "%s"
-msgstr "Parse-Fehler bei den Beispielen aus Datei '%s'"
+msgstr ""
+"Parse-Fehler bei den Beispielen aus Datei '%s'\n"
+"%s"
 
 msgid "File '%s':"
 msgstr "Datei '%s':"
@@ -276,9 +264,16 @@ msgstr ""
 msgid "Authors@R field gives persons with invalid ORCID identifiers:"
 msgstr "Das Authors@R Feld enthält Personen mit ungültigen ORCID IDs:"
 
-#, fuzzy
 msgid "Authors@R field gives persons with duplicated ORCID identifiers:"
+msgstr "Das Authors@R Feld enthält Personen mit doppelten ORCID IDs:"
+
+#, fuzzy
+msgid "Authors@R field gives persons with invalid ROR identifiers:"
 msgstr "Das Authors@R Feld enthält Personen mit ungültigen ORCID IDs:"
+
+#, fuzzy
+msgid "Authors@R field gives persons with duplicated ROR identifiers:"
+msgstr "Das Authors@R Feld enthält Personen mit doppelten ORCID IDs:"
 
 msgid "Encoding '%s' is not portable"
 msgstr "Kodierung '%s' ist nicht portabel"
@@ -287,7 +282,7 @@ msgid "Unknown encoding with non-ASCII data"
 msgstr "Unbekannte Kodierung mit nicht-ASCII Daten"
 
 msgid "Record: %d Field(s): %s"
-msgstr ""
+msgstr "Rekord: %d Feld(er): %s"
 
 msgid "Non-standard license specification:"
 msgstr "Nicht-Standard Lizenzspezifikation:"
@@ -311,14 +306,13 @@ msgid "License components which are templates and need '+ file LICENSE':"
 msgstr "Lizenzkomponenten, die Templates sind und '+ file LICENCE' benötigen:"
 
 msgid "License stub is invalid DCF."
-msgstr ""
+msgstr "Lizenzkürzel ist unzulässig laut DCF."
 
-#, fuzzy
 msgid "License stub records with missing/empty fields:"
-msgstr "kann mit Rd Objekten mit fehlendem bzw. leerem Namen nicht umgehen"
+msgstr "Lizenzkürzel Eintrag mit fehlenden/leeren Einträgen:"
 
 msgid "Uses ACM license: only appropriate for pre-2013 ACM TOMS code"
-msgstr ""
+msgstr "Benutzt die ACM Lizenz: nur zulässig für ACM TOMS Kode vor 2013"
 
 msgid "Non-portable flags in variable '%s':"
 msgstr "Nicht portierbare Flags in der Variablen '%s'"
@@ -333,12 +327,12 @@ msgid "invalid 'OS.type' \"%s\".  Should not happen"
 msgstr "unzulässiger 'OS.type' \"%s\". Sollte nicht passieren"
 
 #, fuzzy
-msgid "Missing link or links in Rd file '%s':"
-msgstr "Fehlende(r) Link(s) im Dokumentations-Objekt '%s':"
+msgid "Missing link(s) in Rd file '%s':"
+msgstr "Fehlende(r) Link(s) in Rd Datei '%s':"
 
 #, fuzzy
-msgid "Non-file package-anchored link(s) in Rd file '%s':"
-msgstr "Nicht-Datei paketverankerte/r Link(s) im Dokumentations-Objekt '%s':"
+msgid "Non-topic package-anchored link(s) in Rd file '%s':"
+msgstr "Nicht-Datei paketverankerte/r Link(s) in Rd Datei '%s':"
 
 msgid "See section 'Cross-references' in the 'Writing R Extensions' manual."
 msgstr "Bitte im Abschnitt \"Cross-references\" im 'Writing R Extensions' Handbuch nachsehen!"
@@ -486,25 +480,20 @@ msgstr "Rd-Dateien mit doppeltem Namen '%s':"
 msgid "Rd files with duplicated alias '%s':"
 msgstr "Rd-Dateien mit doppeltem Alias '%s':"
 
-#, fuzzy
 msgid "Rd files without \\alias:"
-msgstr "Rd-Dateien ohne '%s':"
+msgstr "Rd Dateien ohne \\alias:"
 
-#, fuzzy
 msgid "Invalid package aliases in Rd file '%s':"
-msgstr "Nicht-portierbare Flags in Datei '%s':"
+msgstr "Unzulässige Paketaliase in Rd Datei '%s':"
 
-#, fuzzy
 msgid "Argument items with no description in Rd file '%s':"
-msgstr "Argumente ohne Beschreibung im Rd Objekt '%s':"
+msgstr "Argumenteinträge ohne Beschreibung im Rd Datei '%s':"
 
-#, fuzzy
 msgid "Auto-generated content requiring editing in Rd file '%s':"
-msgstr "Automatisch generierter Inhalt benötigt noch Nacharbeit in Rd Objekt '%s':"
+msgstr "Automatisch generierter Inhalt benötigt noch Bearbeitung in Rd Datei '%s':"
 
-#, fuzzy
 msgid "Rd files without \\description:"
-msgstr "Rd-Dateien mit leeren Abschnitten:"
+msgstr "Rd Dateien ohne \\description"
 
 msgid "no Rd sections specified"
 msgstr "kein Rd Abschnitt angegeben"
@@ -523,7 +512,7 @@ msgstr ""
 "in NAMESPACE."
 
 msgid "concordance is not valid"
-msgstr ""
+msgstr "Konkordanz ist nicht zulässig"
 
 msgid "Rd object required"
 msgstr "Rd Objekt nötig"
@@ -568,17 +557,16 @@ msgid "No Rd macros in package '%s'."
 msgstr "Keine Rd Makros in Paket '%s'"
 
 msgid "links not supported for 'standalone = FALSE' when _R_HELP_LINKS_TO_TOPICS_=false"
-msgstr ""
+msgstr "Links werden für 'standalone = FALSE' nicht unterstützt, wenn _R_HELP_LINKS_TO_TOPICS=false"
 
 msgid "more than one \\examples section, using the first"
 msgstr "mehr als eine \\examples section, benutze die erste"
 
 msgid "alias:"
-msgstr ""
+msgstr "Alias:"
 
-#, fuzzy
 msgid "is not one line"
-msgstr "ist nicht registriert"
+msgstr "ist nicht eine Zeile"
 
 msgid "Converting Rd files to LaTeX ..."
 msgstr "Konvertiere RD Dateien nach LaTeX"
@@ -646,9 +634,8 @@ msgstr "Vignette %s überschreibt die folgende %s Ausgabe von Vignette %s: %s"
 msgid "Detected vignette source files (%s) with shared names (%s) and therefore risking overwriting each other's output files"
 msgstr "Vignetten-Quelldateien (%s) mit gemeinsamen Namen (%s) entdeckt, weshalb die Gefahr gegenseitigen Überschreibens der Ausgabedateien besteht"
 
-#, fuzzy
 msgid "Note: skipping %s"
-msgstr "bearbeite %s'"
+msgstr "Hinweis: Überspringe %s"
 
 msgid "Error: Vignette '%s' is non-ASCII but has no declared encoding"
 msgstr "Fehler: Vignette '%s' ist nicht ASCII aber deklariert keine Kodierung"
@@ -784,10 +771,10 @@ msgid "loading failed"
 msgstr "Laden fehlgeschlagen"
 
 msgid "'cc' is not on the path"
-msgstr ""
+msgstr "'cc' ist kein Pfad"
 
 msgid "'objdump' is not on the path"
-msgstr ""
+msgstr "'objdump' ist kein Pfad"
 
 msgid "Got %s in evaluating %s; wanted %s"
 msgstr "Erhielt %s bei der Auswertung von %s: wollte %s"
@@ -874,16 +861,16 @@ msgid "non-ASCII input in a CITATION file without a declared encoding"
 msgstr "nicht-ASCII Zeichen in CITATION Datei, ohne eine Zeichenkodierung anzugeben"
 
 msgid "<p><code class='language-R'>%s</code> was run in the console.</p>"
-msgstr ""
+msgstr "<p><code class='language-R'>%s</code> wurde in der Konsole ausgeführt</p>"
 
 msgid "<p>To view output in the browser, the <a href='https://CRAN.R-project.org/package=knitr'>knitr</a> package must be installed.</p>"
-msgstr ""
+msgstr "<p>Um die Ausgabe im Browser zu sehen, muss <a href='https://CRAN.R-project.org/package=knitr'>knitr</a> installiert sein</p>"
 
 msgid "<p>To view output in the browser, the <a href='https://CRAN.R-project.org/package=knitr'>knitr</a> package must be installed and the environment variable <code>_R_HELP_ENABLE_ENHANCED_HTML_</code> must be set to TRUE.</p>"
-msgstr ""
+msgstr "<p>Um die Ausgabe im Browser zu sehen, muss  <a href='https://CRAN.R-project.org/package=knitr'>knitr</a> installiert und die Umgebungsvariable <code>_R_HELP_ENABLE_ENHANCED_HTML_</code> auf TRUE gesetzt sein.</p>"
 
 msgid "HTTPD-REQUEST %s%s"
-msgstr ""
+msgstr "HTTPD-REQUEST %s%s"
 
 msgid "="
 msgstr "="
@@ -904,7 +891,7 @@ msgid "Help pages:"
 msgstr "Hilfeseiten:"
 
 msgid "HTTPD-ERROR %s %s"
-msgstr ""
+msgstr "HTTPD-ERROR %s %s"
 
 msgid "No package named %s could be found"
 msgstr "Kein Paket mit Namen %s gefunden"
@@ -928,14 +915,13 @@ msgid "URL %s was not found"
 msgstr "URL '%s' nicht gefunden"
 
 msgid "HTTPD-DEMO %s::%s"
-msgstr ""
+msgstr "HTTPD-DEMO %s::%s"
 
 msgid "HTTPD-EXAMPLE %s::%s"
-msgstr ""
+msgstr "HTTPD-EXAMPLE %s::%s"
 
-#, fuzzy
 msgid "No NEWS found for package %s"
-msgstr "Keine Hilfe zum Paket %s gefunden"
+msgstr "Keine NEWS zum Paket %s gefunden"
 
 msgid "Only help files, %s, %s and files under %s and %s in a package can be viewed"
 msgstr "Nur Hilfeseiten, %s, %s und Dateien unter %s und %s in einem Paket können angeschaut werden"
@@ -965,7 +951,7 @@ msgid "failed to start the httpd server"
 msgstr "Starten des httpd Servers fehlgeschlagen"
 
 msgid "* Package: %s"
-msgstr ""
+msgstr "* Paket: %s"
 
 msgid "cannot read index information in file '%s'"
 msgstr "kann die Indexinformation in Datei '%s' nicht lesen"
@@ -1022,31 +1008,28 @@ msgid "staged installation is only possible with locking"
 msgstr "staged install ist nur mit locking möglich"
 
 msgid "WARNING: installation-time patches will not be applied, could not get the patches index"
-msgstr ""
+msgstr "Warnung: Patches zur Installationszeit werden nicht angewandt, konnte nicht auf den Patchindex zugreifen"
 
 msgid "patch utility is needed for installation-time patching"
-msgstr ""
+msgstr "Das patch Utility wird für Installationszeit Patches benötigt"
 
 msgid "NOTE: Skipping installation-time patch"
-msgstr ""
+msgstr "Bemerkung: Überspringe Installationszeit-Patch"
 
-#, fuzzy
 msgid "which seems to be already applied."
-msgstr "sieht aus wie ein Bundle -- und diese funktionieren nicht mehr"
+msgstr "welches anscheinend schon angewendet wurde"
 
 msgid "WARNING: failed to apply patch"
-msgstr ""
+msgstr "Warnung: Anwenden des Patches fehlgeschlagen"
 
-#, fuzzy
 msgid "Applied installation-time patch"
-msgstr "gepackte Installation von"
+msgstr "Installations-Zeit Patch angewendet"
 
 msgid "and saved it as"
-msgstr ""
+msgstr "und gespeichert als"
 
-#, fuzzy
 msgid "in package installation"
-msgstr "gepackte Installation von"
+msgstr "in Paketinstallation"
 
 msgid "R include directory is empty -- perhaps need to install R-devel.rpm or similar"
 msgstr "Das R include Verzeichnis ist leer -- evtl. muss das R-devel Paket installiert werden"
@@ -1088,25 +1071,25 @@ msgid "building a fake installation is disallowed"
 msgstr "eine Scheininstallation ist nicht erlaubt"
 
 msgid "using C compiler:"
-msgstr ""
+msgstr "nutze C Compiler:"
 
 msgid "using Fortran compiler:"
-msgstr ""
+msgstr "nutze Fortran Compiler:"
 
 msgid "using C++ compiler:"
-msgstr ""
+msgstr "nutze C++ Compiler:"
 
 msgid "using C++"
-msgstr ""
+msgstr "nuzte C++"
 
 msgid "using SDK:"
-msgstr ""
+msgstr "nutze SDK:"
 
 msgid "WARNING: failed to revert patch"
-msgstr ""
+msgstr "Warnung: Reverting Patch fehlgeschlagen"
 
 msgid "Reverted installation-time patch"
-msgstr ""
+msgstr "Kehre Installations-Zeit Patch um"
 
 msgid ""
 "See\n"
@@ -1141,11 +1124,10 @@ msgid "package seems to be using lazy loading already"
 msgstr "Paket nutzt lazy loading anscheinend bereits"
 
 msgid "'files' and 'bytes' are mutually exclusive"
-msgstr ""
+msgstr "'files' und 'bytes' schliessen sich gegenseitig aus"
 
-#, fuzzy
 msgid "'bytes' must be a raw vector"
-msgstr "'text' muss ein Zeichenkettenvektor sein"
+msgstr "'bytes' muss ein raw Vektor sein"
 
 msgid ""
 "Cannot process chunk/lines:\n"
@@ -1173,11 +1155,12 @@ msgstr ""
 "Chunk %s:\n"
 "\"%s\""
 
-#, fuzzy
 msgid ""
 "Cannot extract version info from the following section titles:\n"
 "%s"
-msgstr "Kann aus den folgenden Abschnittsüberschriften keine Versioninformation extrahieren<:"
+msgstr ""
+"Kann aus den folgenden Abschnittsüberschriften keine Versioninformation extrahieren:\n"
+"%s"
 
 msgid ""
 "Malformed NEWS.Rd file:\n"
@@ -1227,12 +1210,11 @@ msgstr ""
 "Einlesen der DESCRIPTION für Paket %s fehlgeschlagen mit Nachricht:\n"
 " %s"
 
-#, fuzzy
 msgid "unable to create temporary directory %s"
 msgstr "kann temporäres Verzeichnis %s nicht erzeugen"
 
 msgid "expected one package directory, found %d."
-msgstr ""
+msgstr "erwartete ein Paket Verzeichnis, fand %d."
 
 msgid "argument '%s' must be a character string or connection"
 msgstr "Argument '%s' muss eine Zeichenkette oder eine Verbindung sein"
@@ -1240,12 +1222,11 @@ msgstr "Argument '%s' muss eine Zeichenkette oder eine Verbindung sein"
 msgid "unimplemented encoding"
 msgstr "nicht implementierte Kodierung"
 
-#, fuzzy
 msgid "x must be a single string"
-msgstr "'x' muss eine Zeichenkette sein"
+msgstr "x muss eine einzelne Zeichenkette sein"
 
 msgid "invalid hex string"
-msgstr ""
+msgstr "ungültige hex Zeichenkette"
 
 msgid "this requires 'objdump.exe' to be on the PATH"
 msgstr "hiefür muss 'objdump.exe' im PATH sein"
@@ -1260,10 +1241,10 @@ msgid "no native symbols were extracted"
 msgstr "keine nativen Symbole extrahiert"
 
 msgid "not a PDF file"
-msgstr ""
+msgstr "keine PDF Datei"
 
 msgid "'diff' is not available so useDiff = FALSE will be used"
-msgstr ""
+msgstr "'diff' nicht verfügbar, nutze deswegen useDiff = FALSE"
 
 msgid "testing '%s' failed"
 msgstr "Test von '%s' fehlgeschlagen"
@@ -1271,9 +1252,8 @@ msgstr "Test von '%s' fehlgeschlagen"
 msgid "Testing examples for package %s"
 msgstr "Teste die Beispiele für Paket %s"
 
-#, fuzzy
 msgid "Error: running examples in %s failed"
-msgstr "Ausführen der Beispiele im Paket "
+msgstr "Fehler: Ausführen der Beispiele in %s fehlgeschlagen"
 
 msgid "comparing %s to %s ..."
 msgstr "vergleiche %s mit %s ..."
@@ -1282,7 +1262,7 @@ msgid "ERROR"
 msgstr "FEHLER"
 
 msgid "NOTE"
-msgstr "BEMERKUNG"
+msgstr "HINWEIS"
 
 msgid "results differ from reference results"
 msgstr "Ergebnisse unterscheiden sich von den Referenzergebnissen"
@@ -1299,9 +1279,8 @@ msgstr "Ausführen spezifischer Tests für das Paket %s"
 msgid "Running %s"
 msgstr "Ausführen von %s"
 
-#, fuzzy
 msgid "Error: running the tests in %s failed"
-msgstr "Ausführen von 'texi2dvi' für '%s' fehlgeschlagen"
+msgstr "Fehler: Ausführen der Tests in %s fehlgeschlagen"
 
 msgid "Running vignettes for package %s"
 msgstr "Ausführen der Vignetten für das Paket %s"
@@ -1315,16 +1294,14 @@ msgstr "keine geparsten Dateien gefunden"
 msgid "FAILED"
 msgstr "fehlgeschlagen"
 
-#, fuzzy
 msgid "directory %s is not writeable"
-msgstr "Verzeichnis '%s' existiert nicht"
+msgstr "Verzeichnis %s ist nicht schreibbar"
 
 msgid "DIFFERED"
 msgstr "unterschieden sich"
 
-#, fuzzy
 msgid "running tests of random deviate generation (should no longer ever fail)"
-msgstr "Ausführen von Tests zur Zufallszahlenerzeugung -- schlägt manchmal fehl"
+msgstr "Ausführen von Tests zur Zufallszahlenerzeugung (sollte niemals mehr fehlschlagen)"
 
 msgid "unknown header specification"
 msgstr "Unbekannte Header-Spezifikation"
@@ -1396,9 +1373,8 @@ msgstr "Schreibe finale, aktualisierte PACKAGES Dateien."
 msgid "update_PACKAGES complete."
 msgstr "update_PACKAGES abgeschlossen."
 
-#, fuzzy
 msgid "'%s' must be a character string"
-msgstr "'x' muss eine Zeichenkette sein"
+msgstr "'%s' muss eine Zeichenkette sein"
 
 msgid "test '%s' is not available"
 msgstr "Test '%s' nicht verfügbar"
@@ -1437,7 +1413,7 @@ msgid "invalid package layout"
 msgstr "ungültige Paketstruktur"
 
 msgid "*not* using 'C' for LC_COLLATE locale"
-msgstr ""
+msgstr "nutzt *nicht* 'C' für LC_COLLATE Lokalisiserung"
 
 msgid "file '%s' is not in valid DCF format"
 msgstr "Datei '%s' liegt nicht in gültigem DCF Format vor"
@@ -1451,12 +1427,11 @@ msgstr "Unbekannte Kodierung mit nicht-ASCII Daten: konvertiere nach ASCII"
 msgid "cannot source package code:"
 msgstr "kann Paketquelltext nicht einlesen:"
 
-#, fuzzy
 msgid "inferiorCallError"
-msgstr "interner Fehler"
+msgstr "inferiorCallError"
 
 msgid "inferior call failed"
-msgstr ""
+msgstr "untergeordneter Aufruf fehlgeschlagen"
 
 msgid "'text' must be a character vector"
 msgstr "'text' muss ein Zeichenkettenvektor sein"
@@ -1519,7 +1494,8 @@ msgid_plural "Found .Internal calls in the following functions:"
 msgstr[0] ".Internal Aufruf in folgender Funktion gefunden:"
 msgstr[1] ".Internal Aufrufe in folgenden Funktionen gefunden:"
 
-msgid "Found a.Internal call in methods for the following S4 generic:"
+#, fuzzy
+msgid "Found a .Internal call in methods for the following S4 generic:"
 msgid_plural "Found .Internal calls in methods for the following S4 generics:"
 msgstr[0] ".Internal Aufruf in Methoden für folgende S4 Generischer gefunden:"
 msgstr[1] ".Internal Aufrufe in Methoden folgende S4 Generische gefunden:"
@@ -1582,10 +1558,9 @@ msgid_plural "SUMMARY: processing the following files failed:"
 msgstr[0] "Zusammenfassung: Verarbeitung folgender Datei fehlgeschlagen:"
 msgstr[1] "Zusammenfassung: Verarbeitung folgender Dateien fehlgeschlagen:"
 
-#, fuzzy
 msgid "Package %s does not have a registered vignette engine"
 msgid_plural "None of packages %s have registered vignette engines"
-msgstr[0] "Keines der Pakete %s hat Vignetten-Treiber registriert"
+msgstr[0] "Paket %s hat keinen Vignetten-Treiber registriert"
 msgstr[1] "Keines der Pakete %s hat Vignetten-Treiber registriert"
 
 msgid "unable to re-encode %s line %s"

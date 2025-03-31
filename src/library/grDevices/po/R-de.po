@@ -1,13 +1,13 @@
 # Translation of  src/library/grDevices/po/R-grDevices.pot to German.
-# Copyright (C) 2005-2022 The R Foundation
+# Copyright (C) 2005-2025 The R Foundation
 # This file is distributed under the same license as the R package.
-# Detlef Steuer <steuer@hsu-hh.de>, 2007-2022.
+# Detlef Steuer <steuer@hsu-hh.de>, 2007-2025.
 msgid ""
 msgstr ""
-"Project-Id-Version: R 4.2.0\n"
+"Project-Id-Version: R 4.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2024-10-25 14:49\n"
-"PO-Revision-Date: 2022-04-13 13:19+0200\n"
+"POT-Creation-Date: 2025-03-31 11:51\n"
+"PO-Revision-Date: 2025-03-24 14:59+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-Core <R-core@r-project.org>\n"
 "Language: de\n"
@@ -161,79 +161,76 @@ msgid "dev.new(): using postscript(file=\"%s\")"
 msgstr "dev.new(): nutze postscript(file=\"%s\")"
 
 msgid "Invalid capabilities - alert the device maintainer"
-msgstr ""
+msgstr "Ugültige Fähigkeiten - benachrichtige den Maintainer des Gerätes"
 
-#, fuzzy
 msgid "Invalid span weight"
-msgstr "ungültiger Patterntyp"
+msgstr "ungültiges span Gewicht"
 
 msgid "length of arguments must match (and be greater than 0)"
-msgstr ""
+msgstr "Länge der Argumente muss passen (und größer 0 sein)"
 
 msgid "Invalid glyph width(s)"
-msgstr ""
+msgstr "ungültige Glyph-Breite(n)"
 
 msgid "Invalid glyph width"
-msgstr ""
+msgstr "ungültige Glyph-Breite"
 
 msgid "Unknown width; using left anchor"
-msgstr ""
+msgstr "Unbekannte Breite; nutze linken Anker"
 
 msgid "Invalid glyph height(s)"
-msgstr ""
+msgstr "Ungültige Glyph-Höhe(n)"
 
 msgid "Invalid glyph height"
-msgstr ""
+msgstr "Ungültige Glyph-Höhe"
 
 msgid "Unknown height; using bottom anchor"
-msgstr ""
+msgstr "Unbekannte Höhe; nutze unteren Anker"
 
 msgid "Invalid glyph anchor"
-msgstr ""
+msgstr "Ungültiger Glyh-Anker"
 
 msgid "Font file longer than 500 will be truncated"
-msgstr ""
+msgstr "Zeichensatz Datei länger als 500 wird abgeschnitten"
 
 msgid "Font family longer than 200 will be truncated"
-msgstr ""
+msgstr "Zeichensatzfamilie länger als 200 wird abgeschnitten"
 
 msgid "PostScript font name longer than 200 will be truncated"
-msgstr ""
+msgstr "PostScript Zeichensatzname länger als 200 wird abgeschnitten"
 
 msgid "Font information is inconsistent"
-msgstr ""
+msgstr "Zeichensatzinformation ist inkonsistent"
 
 msgid "List must include at least one font"
-msgstr ""
+msgstr "Liste muss mindestens einen Zeichensatz enthalten"
 
-#, fuzzy
 msgid "Invalid glyph font"
-msgstr "ungültiger Zeichensatztyp"
+msgstr "ungültiger Glyph-Zeichensatz"
 
-#, fuzzy
 msgid "Invalid font list"
-msgstr "ungültiger Zeichensatztyp"
+msgstr "ungültige Zeichensatzliste"
 
-#, fuzzy
 msgid "Unknown font"
 msgstr "unbekannter Zeichensatz"
 
 msgid "There must be anchors named \"left\" and \"bottom\""
-msgstr ""
+msgstr "Es muss Anker namens \"left\" und \"right\" geben"
 
 msgid "Invalid glyph info"
+msgstr "Ungültige Glyph-Info"
+
+msgid "'%s' was removed in R 4.5.0."
 msgstr ""
 
-#, fuzzy
 msgid "Invalid compositing operator"
-msgstr "ungültiges Ausgabeformat"
+msgstr "ungültige compositing Operator"
 
 msgid "wrong 'type'; should never happen, please report!"
 msgstr "falscher 'type'; sollte nie passieren, bitte melden!"
 
-#, fuzzy
 msgid "Invalid mask type"
-msgstr "ungültiger Zeichensatztyp"
+msgstr "ungültiger Maskentyp"
 
 msgid "Invalid fill rule"
 msgstr "ungültige 'fill' Regel"
@@ -245,7 +242,7 @@ msgid "Invalid 'extend' value"
 msgstr "unzulässiger 'extend' Wert"
 
 msgid "'%s' is deprecated."
-msgstr ""
+msgstr "'%s' ist veraltet"
 
 msgid "invalid arguments in '%s' (need named args)"
 msgstr "unzulässige Argumente in '%s' (benannte Argumente benötigt)"
@@ -319,9 +316,8 @@ msgstr "unbekannter Zeichensatz"
 msgid "font encoding mismatch '%s'/'%s'"
 msgstr "Zeichenkodierungen passen nicht '%s'/'%s'"
 
-#, fuzzy
 msgid "'%s' must be a non-empty character string"
-msgstr "'file' muss eine nicht-leere Zeichenkette sein"
+msgstr "'%s' muss eine nicht-leere Zeichenkette sein"
 
 msgid "GhostScript was not found"
 msgstr "GhostScript nicht gefunden"
@@ -332,9 +328,8 @@ msgstr "ungültiges Ausgabeformat"
 msgid "status %d in running command '%s'"
 msgstr "Status %d im laufenden Kommando '%s'"
 
-#, fuzzy
 msgid "Invalid 'glyphInfo'"
-msgstr "ungültiges 'file' Argument"
+msgstr "ungültige 'glyphInfo'"
 
 msgid "failed to add more ticks; 'min.n' too large?"
 msgstr "Hinzufügen weiterer ticks Fehlgeschlagen; 'min.n' zu groß?"
@@ -397,7 +392,7 @@ msgid "'r' must be a \"range\", hence of length 2"
 msgstr "'r' muss ein \"range\" sein, deshalb von Länge 2"
 
 msgid "points cut off after point[%d]"
-msgstr ""
+msgstr "Punkte naxh point[%d] abgeschnitten"
 
 msgid "invalid first argument"
 msgstr "ungültiges erstes Argument"
@@ -439,20 +434,17 @@ msgstr ""
 "Verfügbare Devices sind:\n"
 "%s"
 
-#, fuzzy
 msgid "invalid width"
-msgstr "unzulässiger 'title'"
+msgstr "unzulässiger Breite"
 
-#, fuzzy
 msgid "invalid height"
-msgstr "unzulässiger 'title'"
+msgstr "unzulässiger Höhe"
 
 msgid "'res' must be specified unless 'units = \"px\"'"
 msgstr "'res' muss angegeben werden, außer 'units = \"px\"'"
 
-#, fuzzy
 msgid "'filename' must be a non-empty character string"
-msgstr "'file' muss eine nicht-leere Zeichenkette sein"
+msgstr "'filename' muss eine nicht-leere Zeichenkette sein"
 
 msgid "type = \"quartz\" is unavailable. trying \"Xlib\""
 msgstr "type = \"quartz\" nicht verfügbar. Probiere \"Xlib\""
@@ -464,7 +456,7 @@ msgid "type = \"cairo-png\" is unavailable. trying \"Xlib\""
 msgstr "type = \"cairo-png\" nicht verfügbar. Probiere \"Xlib\""
 
 msgid "compression is not supported for type = \"quartz\""
-msgstr ""
+msgstr "Kompression ist für type = \"quartz\" nicht unterstützt"
 
 msgid "invalid 'title'"
 msgstr "unzulässiger 'title'"
@@ -544,11 +536,10 @@ msgid_plural "differ between new and previous"
 msgstr[0] "unterscheidet sich zwischen neu und vorhergehend"
 msgstr[1] "unterscheiden sich zwischen neu und vorhergehend"
 
-#, fuzzy
 msgid "%d %s value <= 0 omitted from logarithmic plot"
 msgid_plural "%d %s values <= 0 omitted from logarithmic plot"
-msgstr[0] "%d x Wert <= 0 ausgelassen in logarithmischem Plot"
-msgstr[1] "%d x Werte <= 0 ausgelassen in logarithmischem Plot"
+msgstr[0] "%d %s Wert <= 0 ausgelassen in logarithmischem Plot"
+msgstr[1] "%d %s Werte <= 0 ausgelassen in logarithmischem Plot"
 
 #~ msgid "%d y value <= 0 omitted from logarithmic plot"
 #~ msgid_plural "%d y values <= 0 omitted from logarithmic plot"

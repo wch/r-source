@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-07-31 14:59\n"
+"POT-Creation-Date: 2025-03-31 11:51\n"
 "PO-Revision-Date: 2024-03-19 03:05+0000\n"
 "Last-Translator: Michael Chirico <michaelchirico4@gmail.com>\n"
 "Language-Team: none\n"
@@ -41,7 +41,7 @@ msgid "Invalid gTree coordinates"
 msgstr "Coordenades gTree no vàlides"
 
 #, fuzzy
-msgid "Closed must not be a missing value"
+msgid "Closed must be length 1 and must not be a missing value"
 msgstr "El tancat no pot ser un valor perdut"
 
 #, fuzzy
@@ -90,9 +90,7 @@ msgstr "«grob» no vàlid"
 
 #, fuzzy
 msgid "invalid 'row' and/or 'col' (no such cell in frame layout)"
-msgstr ""
-"«row» i/o «col» no vàlids (no existeix aquesta cel·la a la disposició del "
-"marc)"
+msgstr "«row» i/o «col» no vàlids (no existeix aquesta cel·la a la disposició del marc)"
 
 #, fuzzy
 msgid "'col' can only be a range of existing columns"
@@ -112,15 +110,11 @@ msgstr "especificació «row» no vàlida"
 
 #, fuzzy
 msgid "cannot specify more than one of 'side=[\"left\", \"right\"]', 'col', 'col.before', or 'col.after'"
-msgstr ""
-"no es pot especificar més d'una de 'side=[\"left\", \"right\"]', 'col', "
-"'col.before' o 'col.after'"
+msgstr "no es pot especificar més d'una de 'side=[\"left\", \"right\"]', 'col', 'col.before' o 'col.after'"
 
 #, fuzzy
 msgid "must specify exactly one of 'side=[\"top\", \"bottom\"]', 'row', 'row.before', or 'row.after'"
-msgstr ""
-"s'ha d'especificar exactament un de 'side=[\"top\", \"bottom\"]', 'row', "
-"'row.before' o 'row.after'"
+msgstr "s'ha d'especificar exactament un de 'side=[\"top\", \"bottom\"]', 'row', 'row.before' o 'row.after'"
 
 #, fuzzy
 msgid "invalid 'n'"
@@ -176,9 +170,7 @@ msgstr "element de llista de visualització no vàlid"
 
 #, fuzzy
 msgid "one or more grobs overwritten (grab WILL not be faithful; try 'wrap.grobs = TRUE')"
-msgstr ""
-"se sobreescriurà un o més «grobs» (la grab no serà fidel; proveu «wrap.grobs "
-"= TRUE»)"
+msgstr "se sobreescriurà un o més «grobs» (la grab no serà fidel; proveu «wrap.grobs = TRUE»)"
 
 #, fuzzy
 msgid "viewport overwritten (grab MAY not be faithful)"
@@ -186,9 +178,7 @@ msgstr "s'ha sobreescrit l'àrea de visualització (pot no ser fidel)"
 
 #, fuzzy
 msgid "grob pushed viewports and did not pop/up them (grab MAY not be faithful)"
-msgstr ""
-"grob va empènyer les àrees de visualització i no les va fer emergir/amunt ("
-"pot ser que el gra no sigui fidel)"
+msgstr "grob va empènyer les àrees de visualització i no les va fer emergir/amunt (pot ser que el gra no sigui fidel)"
 
 #, fuzzy
 msgid "only valid to push viewports"
@@ -204,9 +194,7 @@ msgstr "No s'ha pogut registrar a la llista de visualització baixa"
 
 #, fuzzy
 msgid "Down viewport incorrectly recorded on display list"
-msgstr ""
-"La subàrea de visualització registrada incorrectament a la llista de "
-"visualització"
+msgstr "La subàrea de visualització registrada incorrectament a la llista de visualització"
 
 #, fuzzy
 msgid "must pop at least one viewport"
@@ -497,10 +485,11 @@ msgid "Missing pattern fill has been set to transparent"
 msgstr "L'emplenat del patró que manca s'ha establert a transparent"
 
 #, fuzzy
-msgid "grob drawing produces more shapes than grob coords\n(recycling coords)"
+msgid ""
+"grob drawing produces more shapes than grob coords\n"
+"(recycling coords)"
 msgstr ""
-"El dibuix de l'objecte gràfic produeix més formes que els acords de "
-"l'objecte gràfic\n"
+"El dibuix de l'objecte gràfic produeix més formes que els acords de l'objecte gràfic\n"
 "(coords de reciclatge)"
 
 #, fuzzy
@@ -557,8 +546,7 @@ msgstr "objecte «arrows» corrupte"
 
 #, fuzzy
 msgid "'x' and 'y' and 'pathId.lengths' must specify same overall length"
-msgstr ""
-"«x» i «y» i «pathId.lengths» han d'especificar la mateixa longitud global"
+msgstr "«x» i «y» i «pathId.lengths» han d'especificar la mateixa longitud global"
 
 #, fuzzy
 msgid "x and y must be units"
@@ -696,8 +684,7 @@ msgstr "índex fora dels límits (\"unitat\" subajust)"
 
 #, fuzzy
 msgid "Cannot create zero-length unit vector (\"unit\" subsetting)"
-msgstr ""
-"No es pot crear un vector unitari de longitud zero (\"unitat\" subajust)"
+msgstr "No es pot crear un vector unitari de longitud zero (\"unitat\" subajust)"
 
 #, fuzzy
 msgid "index must be of length 1"
@@ -761,28 +748,23 @@ msgstr "només es permeten vistes a «vpStack»"
 
 #, fuzzy
 msgid "'parent' must be a viewport and 'children' must be a 'vpList' in 'vpTree'"
-msgstr ""
-"\"pare\" ha de ser una àrea de visualització i \"nens\" ha de ser una "
-"\"vpList\" a \"vpTree\""
+msgstr "\"pare\" ha de ser una àrea de visualització i \"nens\" ha de ser una \"vpList\" a \"vpTree\""
 
 #, fuzzy
 msgid "a viewport path must contain at least one viewport name"
-msgstr ""
-"un camí de l'àrea de visualització ha de contenir almenys un nom d'àrea de "
-"visualització"
+msgstr "un camí de l'àrea de visualització ha de contenir almenys un nom d'àrea de visualització"
 
 #, fuzzy
-msgid "must specify at least one of 'x' or 'xscale'"
+msgid "must specify at least one of 'xData' or 'xscale'"
 msgstr "s'ha d'especificar com a mínim un dels «x» o «xscale»"
 
 #, fuzzy
-msgid "must specify at least one of 'y' or 'yscale'"
+msgid "must specify at least one of 'yData' or 'yscale'"
 msgstr "ha d'especificar com a mínim un de «y» o «yscale»"
 
 #, fuzzy
 msgid "shutting down all devices when unloading 'grid' namespace"
-msgstr ""
-"S'estan aturant tots els dispositius en descarregar l'espai de noms «grid»"
+msgstr "S'estan aturant tots els dispositius en descarregar l'espai de noms «grid»"
 
 #, fuzzy
 msgid "invalid grob name"

@@ -1,13 +1,13 @@
 # Translation of src/library/graphics/po/R-graphics.pot to German.
-# Copyright (C) 2005-2022 The R Foundation
+# Copyright (C) 2005-2025 The R Foundation
 # This file is distributed under the same license as the R package.
-# Detlef Steuer <steuer@hsu-hh.de>, 2007-2022.
+# Detlef Steuer <steuer@hsu-hh.de>, 2007-2025.
 msgid ""
 msgstr ""
-"Project-Id-Version: R 4.2.0\n"
+"Project-Id-Version: R 4.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2024-10-25 14:49\n"
-"PO-Revision-Date: 2022-04-13 12:29+0200\n"
+"PO-Revision-Date: 2025-03-18 11:23+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-Core <R-core@r-project.org>\n"
 "Language: de\n"
@@ -293,9 +293,8 @@ msgstr "unzulässige Koordinatenlängen"
 msgid "horizontal specification overrides: Number of columns := %d"
 msgstr "horizontale Spezifikation überschreibt Anzahl der Spalten := %d"
 
-#, fuzzy
 msgid "'text.width' must be numeric, >= 0, or a scalar NA"
-msgstr "'text.width' muss numerisch >= 0 sein"
+msgstr "'text.width' muss numerisch >= 0  oder ein Skalar sein"
 
 msgid "'merge = TRUE' has no effect when no line segments are drawn"
 msgstr "'merge = TRUE' hat keine Effekt, wenn keine Liniensegmente gezeichnent werden"
@@ -421,7 +420,7 @@ msgid "a 2-way table has to be specified"
 msgstr "eine 2-Wege-Tafel muss angegeben werden"
 
 msgid "weights are not supported for 2-way table specification"
-msgstr ""
+msgstr "Gewichte werden für die 2-Wege-Tafel Spezifikation nicht unterstützt"
 
 msgid "x axis is on a cumulative probability scale, 'xlim' must be in [0,1]"
 msgstr "x-Achse ist eine kumulative Wahrscheinlichkeitsskala, 'xlim' muss in [0, 1] liegen"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2024-10-25 14:49\n"
+"POT-Creation-Date: 2025-03-31 11:51\n"
 "PO-Revision-Date: 2021-11-06 17:51+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -817,9 +817,6 @@ msgstr "méthode de conversion automatique 'coerce' non définie"
 msgid "methods currently exist for coercing from %s to %s; they will be replaced."
 msgstr "des méthodes existent actuellement pour convertir automatiquement de %s vers %s ; Elles seront remplacées."
 
-msgid "Function must be an S4 generic"
-msgstr "La fonction doit être un générique S4"
-
 msgid "method is not being debugged"
 msgstr "la méthode n’est pas déboguée"
 
@@ -1325,6 +1322,9 @@ msgid "no definition of class %s in the specified position, %s, definition on : 
 msgid_plural "no definition of class %s in the specified position, %s, definitions on : %s"
 msgstr[0] "aucune définition de la classe %s n'existe à la position spécifiée, %s, définition dans : %s"
 msgstr[1] "aucune définition de la classe %s n'existe à la position spécifiée, %s, définitions dans : %s"
+
+#~ msgid "Function must be an S4 generic"
+#~ msgstr "La fonction doit être un générique S4"
 
 #~ msgid "invalid method sublist"
 #~ msgstr "liste de méthodes incorrecte"

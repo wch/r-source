@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.5.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2024-10-25 14:49\n"
+"POT-Creation-Date: 2025-03-31 11:51\n"
 "PO-Revision-Date: 2018-09-16 23:38+0800\n"
 "Last-Translator: Wei-Lun Chao <bluebat@member.fsf.org>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -224,6 +224,9 @@ msgid "There must be anchors named \"left\" and \"bottom\""
 msgstr ""
 
 msgid "Invalid glyph info"
+msgstr ""
+
+msgid "'%s' was removed in R 4.5.0."
 msgstr ""
 
 #, fuzzy

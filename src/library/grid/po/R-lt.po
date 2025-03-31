@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grid 4.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-07-31 14:59\n"
+"POT-Creation-Date: 2025-03-31 11:51\n"
 "PO-Revision-Date: 2020-12-09 13:08+0200\n"
 "Last-Translator: r.zakauskas@gmail.com;gabriele.dauksaite@gmail.com\n"
 "Language-Team: Lithuanian\n"
@@ -37,7 +37,7 @@ msgstr "neleistinas grob pavadinimas"
 msgid "Invalid gTree coordinates"
 msgstr "netinkama \"gTree\" klasė"
 
-msgid "Closed must not be a missing value"
+msgid "Closed must be length 1 and must not be a missing value"
 msgstr ""
 
 msgid "end points must not be identical"
@@ -588,10 +588,12 @@ msgstr "'parent' turi būti peržiūros sritis ir 'children' turi būti 'vpList'
 msgid "a viewport path must contain at least one viewport name"
 msgstr "peržiūros srities kelyje turi būti bent vienas peržiūros srities pavadinimas"
 
-msgid "must specify at least one of 'x' or 'xscale'"
+#, fuzzy
+msgid "must specify at least one of 'xData' or 'xscale'"
 msgstr "turi nurodyti bent vieną iš 'x' arba 'xscale'"
 
-msgid "must specify at least one of 'y' or 'yscale'"
+#, fuzzy
+msgid "must specify at least one of 'yData' or 'yscale'"
 msgstr "turi nurodyti bent vieną iš 'y' arba 'yscale'"
 
 msgid "shutting down all devices when unloading 'grid' namespace"

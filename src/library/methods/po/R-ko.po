@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2024-10-25 14:49\n"
+"POT-Creation-Date: 2025-03-31 11:51\n"
 "PO-Revision-Date: 2018-04-09 12:09-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team: \n"
@@ -818,9 +818,6 @@ msgstr "정의되지 않은 'coerce' 메소드입니다"
 
 msgid "methods currently exist for coercing from %s to %s; they will be replaced."
 msgstr "%1$s에서 %2$s로의 강제로 변환하는 메소드는 현재 존재하지 않습니다; 이것들은 대체되어질 것입니다."
-
-msgid "Function must be an S4 generic"
-msgstr ""
 
 msgid "method is not being debugged"
 msgstr ""

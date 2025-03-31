@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-07-31 14:59\n"
+"POT-Creation-Date: 2025-03-31 11:51\n"
 "PO-Revision-Date: 2018-04-09 12:06-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team: \n"
@@ -42,7 +42,7 @@ msgstr "유효하지 않은 'grob' 클래스입니다"
 msgid "Invalid gTree coordinates"
 msgstr "유효하지 않은 \"gTree\" 클래스 입니다"
 
-msgid "Closed must not be a missing value"
+msgid "Closed must be length 1 and must not be a missing value"
 msgstr ""
 
 msgid "end points must not be identical"
@@ -596,10 +596,12 @@ msgstr "'vpTree'에서 'parent'는 반드시 뷰포트이고 'children'은 반�
 msgid "a viewport path must contain at least one viewport name"
 msgstr "뷰포트 패스는 적어도 뷰포트 이름을 포함하고 있어야 합니다"
 
-msgid "must specify at least one of 'x' or 'xscale'"
+#, fuzzy
+msgid "must specify at least one of 'xData' or 'xscale'"
 msgstr "'x' 또는 'xscale' 중 적어도 하나는 지정해야 합니다"
 
-msgid "must specify at least one of 'y' or 'yscale'"
+#, fuzzy
+msgid "must specify at least one of 'yData' or 'yscale'"
 msgstr "'y' 또는 'yscale' 중 적어도 하나는 지정해야 합니다"
 
 msgid "shutting down all devices when unloading 'grid' namespace"

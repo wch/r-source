@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: R 4.5.0\n"
+"Project-Id-Version: R 4.6.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2024-10-25 14:49-0700\n"
+"POT-Creation-Date: 2025-03-31 11:51+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -148,7 +148,7 @@ msgstr ""
 msgid "unknown AFM entity encountered"
 msgstr ""
 
-#: devPS.c:774 devPS.c:777 devPS.c:4758 devPS.c:10268 devPicTeX.c:477
+#: devPS.c:774 devPS.c:777 devPS.c:4758 devPS.c:9350 devPicTeX.c:477
 #: devPicTeX.c:479
 #, c-format
 msgid "invalid string in '%s'"
@@ -159,76 +159,76 @@ msgstr ""
 msgid "font width unknown for character 0x%02x in encoding %s"
 msgstr ""
 
-#: devPS.c:872
+#: devPS.c:871
 #, c-format
 msgid "font metrics unknown for Unicode character U+%04X"
 msgstr ""
 
-#: devPS.c:883
+#: devPS.c:882
 #, c-format
 msgid "unknown encoding '%s' in 'PostScriptMetricInfo'"
 msgstr ""
 
-#: devPS.c:900
+#: devPS.c:899
 #, c-format
 msgid "Unicode character %lc (U+%04X) cannot be converted"
 msgstr ""
 
-#: devPS.c:919 devPS.c:973
+#: devPS.c:918 devPS.c:972
 #, c-format
 msgid "font metrics unknown for character 0x%02x in encoding %s"
 msgstr ""
 
-#: devPS.c:988
+#: devPS.c:987
 #, c-format
 msgid ""
 "invalid character (%04X) sent to 'PostScriptCIDMetricInfo' in a single-byte "
 "locale"
 msgstr ""
 
-#: devPS.c:996
+#: devPS.c:995
 msgid ""
 "invalid character sent to 'PostScriptCIDMetricInfo' in a single-byte locale"
 msgstr ""
 
-#: devPS.c:1108
+#: devPS.c:1107
 msgid "failed to allocate CID font info"
 msgstr ""
 
-#: devPS.c:1124
+#: devPS.c:1123
 msgid "failed to allocate Type 1 font info"
 msgstr ""
 
-#: devPS.c:1144
+#: devPS.c:1143
 msgid "failed to allocate encoding info"
 msgstr ""
 
-#: devPS.c:1162
+#: devPS.c:1161
 msgid "failed to allocate CID font family"
 msgstr ""
 
-#: devPS.c:1175
+#: devPS.c:1174
 msgid "failed to allocate Type 1 font family"
 msgstr ""
 
-#: devPS.c:1214 devPS.c:1225
+#: devPS.c:1213 devPS.c:1224
 msgid "failed to allocate font list"
 msgstr ""
 
-#: devPS.c:1276
+#: devPS.c:1275
 msgid "failed to allocated encoding list"
 msgstr ""
 
-#: devPS.c:1425
+#: devPS.c:1424
 msgid "truncated string which was too long for copy"
 msgstr ""
 
-#: devPS.c:1465
+#: devPS.c:1464
 #, c-format
 msgid "failed to load encoding file '%s'"
 msgstr ""
 
-#: devPS.c:1564 devPS.c:1597
+#: devPS.c:1563 devPS.c:1597
 msgid "invalid font name or more than one font name"
 msgstr ""
 
@@ -247,62 +247,62 @@ msgstr ""
 msgid "font CMap for family '%s' not found in font database"
 msgstr ""
 
-#: devPS.c:2086 devPS.c:2166 devPS.c:2234
+#: devPS.c:2085 devPS.c:2165 devPS.c:2233
 #, c-format
 msgid "cannot load afm file '%s'"
 msgstr ""
 
-#: devPS.c:2522
+#: devPS.c:2521
 msgid "corrupt loaded encodings;  encoding not recorded"
 msgstr ""
 
-#: devPS.c:2533
+#: devPS.c:2532
 msgid "failed to record device encoding"
 msgstr ""
 
-#: devPS.c:2704
+#: devPS.c:2703
 msgid "object '.ps.prolog' is not a character vector"
 msgstr ""
 
-#: devPS.c:2779 devPS.c:8389 devWindows.c:799
+#: devPS.c:2778 devPS.c:7471 devWindows.c:799
 msgid "invalid line end"
 msgstr ""
 
-#: devPS.c:2798 devPS.c:8409 devWindows.c:812
+#: devPS.c:2797 devPS.c:7491 devWindows.c:812
 msgid "invalid line join"
 msgstr ""
 
-#: devPS.c:2806
+#: devPS.c:2805
 msgid "invalid line mitre"
 msgstr ""
 
-#: devPS.c:3011 devPS.c:3947 devPS.c:4396 devPS.c:4423 devPS.c:5648
-#: devPS.c:10072 devPS.c:10143
+#: devPS.c:3010 devPS.c:3947 devPS.c:4396 devPS.c:4423 devPS.c:9154
+#: devPS.c:9225
 #, c-format
 msgid "attempt to use invalid font %d replaced by font 1"
 msgstr ""
 
-#: devPS.c:3248 devPS.c:5101 devPS.c:7793
+#: devPS.c:3248 devPS.c:6875
 #, c-format
 msgid "filename too long in %s()"
 msgstr ""
 
-#: devPS.c:3254 devPS.c:5107 devPS.c:7799
+#: devPS.c:3254 devPS.c:6881
 #, c-format
 msgid "memory allocation problem in %s()"
 msgstr ""
 
-#: devPS.c:3272 devPS.c:7866
+#: devPS.c:3272 devPS.c:6948
 #, c-format
 msgid "encoding path is too long in %s()"
 msgstr ""
 
-#: devPS.c:3286 devPS.c:5147
+#: devPS.c:3286
 #, c-format
 msgid "failed to load encoding file in %s()"
 msgstr ""
 
-#: devPS.c:3331 devPS.c:3394 devPS.c:7925 devPS.c:7981 devPS.c:9871
+#: devPS.c:3331 devPS.c:3394 devPS.c:7007 devPS.c:7063 devPS.c:8953
 msgid "invalid font type"
 msgstr ""
 
@@ -331,7 +331,7 @@ msgstr ""
 msgid "invalid page type '%s' (postscript)"
 msgstr ""
 
-#: devPS.c:3627 devPS.c:4945 devWindows.c:2349
+#: devPS.c:3627 devWindows.c:2349
 msgid ""
 "semi-transparency is not supported on this device: reported only once per "
 "page"
@@ -342,7 +342,7 @@ msgstr ""
 msgid "cannot open 'postscript' pipe to '%s'"
 msgstr ""
 
-#: devPS.c:3760 devPS.c:5366 devPS.c:5379 devPS.c:9132 qdPDF.c:98
+#: devPS.c:3760 devPS.c:8214 qdPDF.c:98
 #, c-format
 msgid "cannot open file '%s'"
 msgstr ""
@@ -384,236 +384,191 @@ msgstr ""
 msgid "failed open converter to encoding '%s'"
 msgstr ""
 
-#: devPS.c:4744 devPS.c:5693 devPS.c:10243
+#: devPS.c:4744 devPS.c:9325
 #, c-format
 msgid "failed in text conversion to encoding '%s'"
 msgstr ""
 
-#: devPS.c:4959
-msgid "ran out of colors in xfig()"
-msgstr ""
-
-#: devPS.c:4988
-#, c-format
-msgid "unimplemented line texture %08x: using Dash-double-dotted"
-msgstr ""
-
-#: devPS.c:5060
-#, c-format
-msgid "unknown postscript font family '%s', using Helvetica"
-msgstr ""
-
-#: devPS.c:5132
-msgid "invalid foreground/background color (xfig)"
-msgstr ""
-
-#: devPS.c:5165
-msgid "only Type 1 fonts supported for XFig"
-msgstr ""
-
-#: devPS.c:5178
-msgid "failed to initialise default XFig font"
-msgstr ""
-
-#: devPS.c:5217
-#, c-format
-msgid "invalid page type '%s' (xfig)"
-msgstr ""
-
-#: devPS.c:5225
-#, c-format
-msgid "xfig(%s, onefile=FALSE) will only return the last plot"
-msgstr ""
-
-#: devPS.c:5358
-msgid "empty file name"
-msgstr ""
-
-#: devPS.c:5425 devPS.c:5477 devPS.c:7616 devPS.c:7660 devPS.c:9193
-msgid "write failed"
-msgstr ""
-
-#: devPS.c:5682
-#, c-format
-msgid "unable to use encoding '%s'"
-msgstr ""
-
-#: devPS.c:6048
+#: devPS.c:5130
 msgid "Failed to allocate PDF definition string"
 msgstr ""
 
-#: devPS.c:6070
+#: devPS.c:5152
 msgid "failed to increase definition string (shut down PDF device)"
 msgstr ""
 
-#: devPS.c:6120
+#: devPS.c:5202
 msgid "failed to increase 'maxDefns'"
 msgstr ""
 
-#: devPS.c:6752
+#: devPS.c:5834
 msgid "Drawing not appended to path (contains text)"
 msgstr ""
 
-#: devPS.c:6981
+#: devPS.c:6063
 msgid ""
 "Compositing operator has no corresponding blend mode; defaulting to Normal"
 msgstr ""
 
-#: devPS.c:7254
+#: devPS.c:6336
 msgid "Failed to write PDF clipping path"
 msgstr ""
 
-#: devPS.c:7279
+#: devPS.c:6361
 msgid "Failed to write PDF stroke"
 msgstr ""
 
-#: devPS.c:7300
+#: devPS.c:6382
 msgid "Failed to write PDF fill"
 msgstr ""
 
-#: devPS.c:7321
+#: devPS.c:6403
 msgid "Failed to write PDF fillStroke"
 msgstr ""
 
-#: devPS.c:7367
+#: devPS.c:6449
 msgid "Glyph ID larger than 0xFFFF; output will be incorrect"
 msgstr ""
 
-#: devPS.c:7390
+#: devPS.c:6472
 msgid "invalid 'alpha' value in PDF"
 msgstr ""
 
-#: devPS.c:7504 devPS.c:7507
+#: devPS.c:6586 devPS.c:6589
 msgid "failed to increase 'maxRaster'"
 msgstr ""
 
-#: devPS.c:7519
+#: devPS.c:6601
 msgid "unable to allocate raster image"
 msgstr ""
 
-#: devPS.c:7720
+#: devPS.c:6698 devPS.c:6742 devPS.c:8275
+msgid "write failed"
+msgstr ""
+
+#: devPS.c:6802
 msgid "corrupt loaded encodings;  font not added"
 msgstr ""
 
-#: devPS.c:7730
+#: devPS.c:6812
 msgid "failed to record device encoding; font not added"
 msgstr ""
 
-#: devPS.c:7852
+#: devPS.c:6934
 msgid "increasing the PDF version to 1.2"
 msgstr ""
 
-#: devPS.c:7882
+#: devPS.c:6964
 msgid "failed to load default encoding"
 msgstr ""
 
-#: devPS.c:7949
+#: devPS.c:7031
 msgid "failed to initialise default PDF font"
 msgstr ""
 
-#: devPS.c:8004
+#: devPS.c:7086
 msgid "failed to initialise additional PDF fonts"
 msgstr ""
 
-#: devPS.c:8017
+#: devPS.c:7099
 msgid "failed to allocate rasters"
 msgstr ""
 
-#: devPS.c:8024
+#: devPS.c:7106
 msgid "failed to allocate masks"
 msgstr ""
 
-#: devPS.c:8034
+#: devPS.c:7116
 msgid "failed to allocate definitions"
 msgstr ""
 
-#: devPS.c:8107
+#: devPS.c:7189
 #, c-format
 msgid "invalid paper type '%s' (pdf)"
 msgstr ""
 
-#: devPS.c:8131
+#: devPS.c:7213
 msgid "invalid foreground/background color (pdf)"
 msgstr ""
 
-#: devPS.c:8238
+#: devPS.c:7320
 msgid "increasing the PDF version to 1.4"
 msgstr ""
 
-#: devPS.c:8282 devPS.c:8330
+#: devPS.c:7364 devPS.c:7412
 msgid "unknown 'colormodel', using 'srgb'"
 msgstr ""
 
-#: devPS.c:8554
+#: devPS.c:7636
 msgid "failed to load sRGB colorspace file"
 msgstr ""
 
-#: devPS.c:8893
+#: devPS.c:7975
 msgid "corrupt encodings in PDF device"
 msgstr ""
 
-#: devPS.c:8974
+#: devPS.c:8056
 msgid "increasing the PDF version to 1.3"
 msgstr ""
 
-#: devPS.c:9116
+#: devPS.c:8198
 #, c-format
 msgid "cannot open 'pdf' pipe to '%s'"
 msgstr ""
 
-#: devPS.c:9122
+#: devPS.c:8204
 msgid "file = \"|cmd\" implies 'onefile = TRUE'"
 msgstr ""
 
-#: devPS.c:9266
+#: devPS.c:8348
 #, c-format
 msgid ""
 "cannot open 'pdf' file argument '%s'\n"
 "  please shut down the PDF device"
 msgstr ""
 
-#: devPS.c:9287
+#: devPS.c:8369
 #, c-format
 msgid ""
 "Cannot open temporary file '%s' for compression (reason: %s); compression "
 "has been turned off for this device"
 msgstr ""
 
-#: devPS.c:9896 devPS.c:10400 devPS.c:10447
+#: devPS.c:8978 devPS.c:9482 devPS.c:9529
 msgid "failed to find or load PDF font"
 msgstr ""
 
-#: devPS.c:10079 devPS.c:10138
+#: devPS.c:9161 devPS.c:9220
 msgid "Text not added to path containing other drawing"
 msgstr ""
 
-#: devPS.c:10188 devPS.c:10355
+#: devPS.c:9270 devPS.c:9437
 msgid "failed to find or load PDF CID font"
 msgstr ""
 
-#: devPS.c:10853 devPS.c:10945 devPicTeX.c:763
+#: devPS.c:9936 devPicTeX.c:763
 #, c-format
 msgid "invalid 'file' parameter in %s"
 msgstr ""
 
-#: devPS.c:10862 devPS.c:10866 devPS.c:11033 devPS.c:11037
+#: devPS.c:9945 devPS.c:9949 devPS.c:10047 devPS.c:10051
 #, c-format
 msgid "invalid 'family' parameter in %s"
 msgstr ""
 
-#: devPS.c:10884 devPS.c:11049
+#: devPS.c:9967 devPS.c:10063
 #, c-format
 msgid "invalid 'fonts' parameter in %s"
 msgstr ""
 
-#: devPS.c:10890 devPS.c:11059 devPS.c:11062 devPS.c:11065 devPS.c:11068
+#: devPS.c:9973 devPS.c:10073 devPS.c:10076 devPS.c:10079 devPS.c:10082
 #: devWindows.c:3765 devWindows.c:3769 devWindows.c:3777 devWindows.c:3788
 #: devWindows.c:3794 devWindows.c:3801 devWindows.c:3808 devWindows.c:3812
 #, c-format
 msgid "invalid value of '%s'"
 msgstr ""
 
-#: devPS.c:10903 devPS.c:10973 devPS.c:11083 devPicTeX.c:779 devWindows.c:3853
+#: devPS.c:9986 devPS.c:10097 devPicTeX.c:776 devPicTeX.c:781 devWindows.c:3853
 #, c-format
 msgid "unable to start %s() device"
 msgstr ""
@@ -675,83 +630,79 @@ msgstr ""
 msgid "Failed to create Quartz mask"
 msgstr ""
 
-#: devQuartz.c:1100
+#: devQuartz.c:1131
 msgid "Quartz groups exhausted (failed to increase maxGroups)"
 msgstr ""
 
-#: devQuartz.c:1128 cairo/cairoFns.c:920
+#: devQuartz.c:1159 cairo/cairoFns.c:920
 msgid "Attempt to release non-existent group"
 msgstr ""
 
-#: devQuartz.c:1157
+#: devQuartz.c:1188
 msgid "Quartz groups exhausted"
 msgstr ""
 
-#: devQuartz.c:1177
+#: devQuartz.c:1208
 msgid "Add compositing operator not supported; falling back to over"
 msgstr ""
 
-#: devQuartz.c:1265 cairo/cairoFns.c:877
+#: devQuartz.c:1296 cairo/cairoFns.c:877
 msgid "Groups exhausted"
 msgstr ""
 
-#: devQuartz.c:1655
+#: devQuartz.c:1686
 #, c-format
 msgid "font \"%s\" could not be found for family \"%s\""
 msgstr ""
 
-#: devQuartz.c:1673
+#: devQuartz.c:1704
 msgid "font family name is too long"
 msgstr ""
 
-#: devQuartz.c:1712
+#: devQuartz.c:1743
 #, c-format
 msgid "no font could be found for family \"%s\""
 msgstr ""
 
-#: devQuartz.c:2697 cairo/cairoFns.c:528
+#: devQuartz.c:2722 cairo/cairoFns.c:528
 msgid "Attempt to reuse non-existent clipping path"
 msgstr ""
 
-#: devQuartz.c:2718 cairo/cairoFns.c:541
+#: devQuartz.c:2743 cairo/cairoFns.c:541
 msgid "Attempt to release non-existent clipping path"
 msgstr ""
 
-#: devQuartz.c:2734
-msgid "Ignored alpha mask (not supported on this device)"
-msgstr ""
-
-#: devQuartz.c:2773 cairo/cairoFns.c:688
+#: devQuartz.c:2794 cairo/cairoFns.c:688
 msgid "Attempt to release non-existent mask"
 msgstr ""
 
-#: devQuartz.c:3023
+#: devQuartz.c:3045
 #, c-format
 msgid "Invalid font path: \"%s\""
 msgstr ""
 
-#: devQuartz.c:3053
+#: devQuartz.c:3075
 msgid "Failed to load font"
 msgstr ""
 
-#: devQuartz.c:3148 devQuartz.c:3153
+#: devQuartz.c:3169 devQuartz.c:3174
 msgid "invalid 'file' argument"
 msgstr ""
 
-#: devQuartz.c:3180
+#: devQuartz.c:3201
 msgid "invalid quartz() device size"
 msgstr ""
 
-#: devQuartz.c:3208
+#: devQuartz.c:3229
 msgid "unable to create device description"
 msgstr ""
 
-#: devQuartz.c:3258
+#: devQuartz.c:3279
 msgid ""
 "unable to create quartz() device target, given type may not be supported"
 msgstr ""
 
-#: devQuartz.c:3388
+#: devQuartz.c:3409
 msgid "Quartz device is not available on this platform"
 msgstr ""
 

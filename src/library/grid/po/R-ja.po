@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-07-31 14:59\n"
+"POT-Creation-Date: 2025-03-31 11:51\n"
 "PO-Revision-Date: 2024-03-18 21:18+0000\n"
 "Last-Translator: Michael Chirico <michaelchirico4@gmail.com>\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -37,7 +37,7 @@ msgstr "不正な grob 名です"
 msgid "Invalid gTree coordinates"
 msgstr "不正な \"gTree\" クラスです"
 
-msgid "Closed must not be a missing value"
+msgid "Closed must be length 1 and must not be a missing value"
 msgstr ""
 
 msgid "end points must not be identical"
@@ -594,10 +594,12 @@ msgstr "'parent' は viewport でなければならず、'children' は 'vpTree'
 msgid "a viewport path must contain at least one viewport name"
 msgstr "viewport のパスは少なくとも一つの viewport 名を含んでいる必要があります"
 
-msgid "must specify at least one of 'x' or 'xscale'"
+#, fuzzy
+msgid "must specify at least one of 'xData' or 'xscale'"
 msgstr "'x' または 'xscale' のうち少なくとも 1 つを指定しなければなりません"
 
-msgid "must specify at least one of 'y' or 'yscale'"
+#, fuzzy
+msgid "must specify at least one of 'yData' or 'yscale'"
 msgstr "'y' または 'yscale' のうち少なくとも 1 つを指定しなければなりません"
 
 msgid "shutting down all devices when unloading 'grid' namespace"

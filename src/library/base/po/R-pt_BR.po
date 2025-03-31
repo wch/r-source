@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2024-10-25 14:49\n"
+"POT-Creation-Date: 2025-03-31 11:50\n"
 "PO-Revision-Date: 2024-03-19 12:53+0000\n"
 "Last-Translator: Michael Chirico <michaelchirico4@gmail.com>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -205,9 +205,6 @@ msgstr "só é possível escrever objetos do tipo caracter"
 msgid "'headers' must have names and must not be NA"
 msgstr "'headers' deve ter nomes e não deve ser NA"
 
-msgid "'name' must be a single character string"
-msgstr "'name' deve ser uma única string de caracteres"
-
 msgid "'origin' must be one of 'start', 'current' or 'end'"
 msgstr "'origin' deve ser um dentre 'start', 'current' ou 'end'"
 
@@ -398,29 +395,20 @@ msgstr "%s unário não está definido para objetos \"Date\""
 msgid "%s not defined for \"Date\" objects"
 msgstr "%s não definido para objetos \"Date\""
 
-msgid "'from' must be specified"
-msgstr "'from' deve ser especificado"
-
-msgid "'from' must be a \"Date\" object"
-msgstr "'from' deve ser um objeto \"Date\""
-
-msgid "'from' must be of length 1"
-msgstr "'from' deve ter comprimento 1"
-
-msgid "'to' must be a \"Date\" object"
-msgstr "'to' deve ser um objeto \"Date\""
-
-msgid "'to' must be of length 1"
+#, fuzzy
+msgid "'%s' must be of length 1"
 msgstr "'to' deve ter comprimento 1"
 
-msgid "'length.out' must be of length 1"
-msgstr "'length.out' deve ter comprimento 1"
+msgid "without 'by', at least one of 'to' and 'from' must be specified"
+msgstr ""
 
-msgid "exactly two of 'to', 'by' and 'length.out' / 'along.with' must be specified"
+#, fuzzy
+msgid "without 'by', when one of 'to', 'from' is missing, 'length.out' / 'along.with' must be specified"
 msgstr "exatamente dois de 'to', 'by' e 'length.out' / 'along.width' devem ser especificados"
 
-msgid "'by' must be of length 1"
-msgstr "'by' deve ter comprimento 1"
+#, fuzzy
+msgid "given 'by', exactly two of 'to', 'from' and 'length.out' / 'along.with' must be specified"
+msgstr "exatamente dois de 'to', 'by' e 'length.out' / 'along.width' devem ser especificados"
 
 msgid "invalid 'by' string"
 msgstr "string 'by' inválida"
@@ -439,9 +427,6 @@ msgstr "'x' deve ser um objeto date-time"
 
 msgid "invalid specification of 'breaks'"
 msgstr "especificação de 'breaks' inválida"
-
-msgid "'origin' must be of length one"
-msgstr "'origin' deve ter comprimento 1"
 
 msgid "'lag' and 'differences' must be integers >= 1"
 msgstr "'lag' e differences' devem ser inteiros >= 1"
@@ -501,11 +486,13 @@ msgstr "ambos os argumentos de * não podem ser objetos \"difftime\""
 msgid "second argument of / cannot be a \"difftime\" object"
 msgstr "segundo argumento de / não pode ser um objeto \"difftime\""
 
-msgid "'from' must be a \"POSIXt\" object"
-msgstr "'from' deve ser um objeto \"POSIXt\""
+#, fuzzy
+msgid "exactly three of 'to', 'from', 'by' and 'length.out' / 'along.with' must be specified"
+msgstr "exatamente dois de 'to', 'by' e 'length.out' / 'along.width' devem ser especificados"
 
-msgid "'to' must be a \"POSIXt\" object"
-msgstr "'to' deve ser um objeto \"POSIXt\""
+#, fuzzy
+msgid "'%s' must be a \"%s\" object"
+msgstr "'to' deve ser um objeto \"Date\""
 
 msgid "component subscript must be a character string"
 msgstr "componente subscrito deve ser uma string de caracteres"
@@ -651,9 +638,6 @@ msgstr "nenhum arquivo/diretório para onde fazer a vinculação"
 
 msgid "no files to link to"
 msgstr "nenhum arquivo para vincular"
-
-msgid "'package' must be of length 1"
-msgstr "'package' deve ter comprimento 1"
 
 msgid "no file found"
 msgstr "nenhum arquivo encontrado"
@@ -992,9 +976,6 @@ msgstr "não pode haver argumento(s) nomeado(s)"
 
 msgid "'arg' must be NULL or a character vector"
 msgstr "'arg' deve ser NULL ou um vetor caractere"
-
-msgid "'arg' must be of length 1"
-msgstr "'arg' deve ter comprimento 1"
 
 msgid "'arg' must be of length >= 1"
 msgstr "'arg' deve ter comprimento >= 1"
@@ -1397,9 +1378,6 @@ msgstr "especifique 'nmax' ou 'n', mas não ambos."
 msgid "'from' must be a finite number"
 msgstr "'from' deve ser um número finito"
 
-msgid "argument 'length.out' must be of length 1"
-msgstr "argumento 'length.out' deve ter comprimento 1"
-
 msgid "first element used of 'length.out' argument"
 msgstr "primeiro elemento do argumento 'length.out' utilizado"
 
@@ -1575,12 +1553,8 @@ msgstr ""
 msgid "Sys.setenv(LANGUAGE=\"%s\") may have failed"
 msgstr "Sys.setenv(LANGUAGE=\"%s\") pode ter falhado"
 
-msgid ""
-"Calling 'structure(NULL, *)' is deprecated, as NULL cannot have attributes.\n"
-"  Consider 'structure(list(), *)' instead."
+msgid "attempt to set an attribute on NULL"
 msgstr ""
-"Chamar 'structure(NULL, *)' ficou obsoleto já que NULL não pode ter atributos.\n"
-"  Considere 'structure(list(), *)' em seu lugar."
 
 msgid "incorrect value for 'x'"
 msgstr "valor incorreto para 'x'"
@@ -1645,9 +1619,6 @@ msgstr "número total de níveis >= 2^31"
 msgid "handler must be a function"
 msgstr "manipulador deve ser uma função"
 
-msgid "'which' must be of length 1"
-msgstr "'which' deve ter comprimento 1"
-
 msgid "no such element '%s'"
 msgstr "nenhum elemento '%s'"
 
@@ -1680,6 +1651,13 @@ msgstr "'width' deve ser positivo"
 
 msgid "No traceback available"
 msgstr "Nenhum rastreamento disponível"
+
+#, fuzzy
+msgid "'recursive' must be a length-1 vector"
+msgstr "'origin' deve ter comprimento 1"
+
+msgid "'recursive' is NA"
+msgstr ""
 
 #, fuzzy
 msgid "invalid non-character version specification 'x' (type: %s)"
@@ -1951,6 +1929,49 @@ msgstr[0] ""
 msgstr[1] ""
 "Em %s :\n"
 " argumentos extras %s serão ignorados"
+
+#~ msgid "'name' must be a single character string"
+#~ msgstr "'name' deve ser uma única string de caracteres"
+
+#~ msgid "'from' must be specified"
+#~ msgstr "'from' deve ser especificado"
+
+#~ msgid "'from' must be a \"Date\" object"
+#~ msgstr "'from' deve ser um objeto \"Date\""
+
+#~ msgid "'from' must be of length 1"
+#~ msgstr "'from' deve ter comprimento 1"
+
+#~ msgid "'length.out' must be of length 1"
+#~ msgstr "'length.out' deve ter comprimento 1"
+
+#~ msgid "'by' must be of length 1"
+#~ msgstr "'by' deve ter comprimento 1"
+
+#~ msgid "'from' must be a \"POSIXt\" object"
+#~ msgstr "'from' deve ser um objeto \"POSIXt\""
+
+#~ msgid "'to' must be a \"POSIXt\" object"
+#~ msgstr "'to' deve ser um objeto \"POSIXt\""
+
+#~ msgid "'package' must be of length 1"
+#~ msgstr "'package' deve ter comprimento 1"
+
+#~ msgid "'arg' must be of length 1"
+#~ msgstr "'arg' deve ter comprimento 1"
+
+#~ msgid "argument 'length.out' must be of length 1"
+#~ msgstr "argumento 'length.out' deve ter comprimento 1"
+
+#~ msgid ""
+#~ "Calling 'structure(NULL, *)' is deprecated, as NULL cannot have attributes.\n"
+#~ "  Consider 'structure(list(), *)' instead."
+#~ msgstr ""
+#~ "Chamar 'structure(NULL, *)' ficou obsoleto já que NULL não pode ter atributos.\n"
+#~ "  Considere 'structure(list(), *)' em seu lugar."
+
+#~ msgid "'which' must be of length 1"
+#~ msgstr "'which' deve ter comprimento 1"
 
 #~ msgid "'normal.kind' must be a character string of length 1"
 #~ msgstr "'normal.kind' deve ser uma string de tamanho 1"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2024-10-25 14:49\n"
+"POT-Creation-Date: 2025-03-31 11:51\n"
 "PO-Revision-Date: 2024-03-18 21:18+0000\n"
 "Last-Translator: Michael Chirico <michaelchirico4@gmail.com>\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -282,6 +282,14 @@ msgstr "Authors@Rフィールドに役割が明示されていない人がいま
 msgid "Authors@R field gives persons with duplicated ORCID identifiers:"
 msgstr "Authors@Rフィールドに役割が明示されていない人がいます"
 
+#, fuzzy
+msgid "Authors@R field gives persons with invalid ROR identifiers:"
+msgstr "Authors@Rフィールドに役割が明示されていない人がいます"
+
+#, fuzzy
+msgid "Authors@R field gives persons with duplicated ROR identifiers:"
+msgstr "Authors@Rフィールドに役割が明示されていない人がいます"
+
 msgid "Encoding '%s' is not portable"
 msgstr "エンコーディング '%s' は移植出来ません"
 
@@ -336,11 +344,11 @@ msgid "invalid 'OS.type' \"%s\".  Should not happen"
 msgstr ""
 
 #, fuzzy
-msgid "Missing link or links in Rd file '%s':"
+msgid "Missing link(s) in Rd file '%s':"
 msgstr "ドキュメントオブジェクト '%s' 中に欠損したリンクが見つかりました:"
 
 #, fuzzy
-msgid "Non-file package-anchored link(s) in Rd file '%s':"
+msgid "Non-topic package-anchored link(s) in Rd file '%s':"
 msgstr "ドキュメントオブジェクト '%s' 中に疑わしいリンクが見つかりました:"
 
 msgid "See section 'Cross-references' in the 'Writing R Extensions' manual."
@@ -1523,7 +1531,8 @@ msgid "Found a .Internal call in the following function:"
 msgid_plural "Found .Internal calls in the following functions:"
 msgstr[0] "以下の関数中に .internal 呼び出しが見つかりました:"
 
-msgid "Found a.Internal call in methods for the following S4 generic:"
+#, fuzzy
+msgid "Found a .Internal call in methods for the following S4 generic:"
 msgid_plural "Found .Internal calls in methods for the following S4 generics:"
 msgstr[0] "以下の S4 関数に対するメソッド中に .Internal 呼び出しが見つかりました:"
 

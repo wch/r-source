@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2024-10-25 14:50\n"
+"POT-Creation-Date: 2025-03-31 11:51\n"
 "PO-Revision-Date: 2024-03-18 21:18+0000\n"
 "Last-Translator: Michael Chirico <michaelchirico4@gmail.com>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -1053,6 +1053,9 @@ msgstr "bzip2"
 msgid "xz"
 msgstr "xz"
 
+msgid "zstd"
+msgstr ""
+
 msgid "failed to create directory %s"
 msgstr "falha em criar o diretório %s"
 
@@ -1294,6 +1297,11 @@ msgstr[1] "Especificações inválidas de papéis: %s."
 
 msgid "Invalid ORCID iD: %s."
 msgid_plural "Invalid ORCID iDs: %s."
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "Invalid ROR ID: %s."
+msgid_plural "Invalid ROR IDs: %s."
 msgstr[0] ""
 msgstr[1] ""
 

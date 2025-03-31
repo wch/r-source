@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.0.4\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2024-10-25 14:49\n"
+"POT-Creation-Date: 2025-03-31 11:51\n"
 "PO-Revision-Date: 2023-04-14 03:05+0000\n"
 "Last-Translator: Hugo Gruson <hugo.gruson@normalesup.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -317,6 +317,14 @@ msgstr "'seasonal' doit être une liste possédant une composante 'order'"
 
 msgid "'seasonal$order' must be a non-negative numeric vector of length 3"
 msgstr "'seasonal$order' doit être un vecteur numérique positif ou nul de longueur 3"
+
+#, fuzzy
+msgid "if not a list, 'seasonal' must be a non-negative numeric vector of length 3"
+msgstr "'seasonal$order' doit être un vecteur numérique positif ou nul de longueur 3"
+
+#, fuzzy
+msgid "'seasonal' is neither a list with component 'order' nor a numeric vector of length 3"
+msgstr "'seasonal' doit être une liste possédant une composante 'order'"
 
 msgid "lengths of 'x' and 'xreg' do not match"
 msgstr "les longueurs de 'x' et de 'xreg' ne correspondent pas"
@@ -1576,7 +1584,8 @@ msgstr "formule %s incorrecte"
 msgid "no terms component nor attribute"
 msgstr "pas de composante 'terms' ni d'attribut"
 
-msgid "'termlabels' must be a character vector of length at least one"
+#, fuzzy
+msgid "'termlabels' must be a character vector"
 msgstr "'termlabels' doit être un vecteur de caractères de longueur >= 1"
 
 #, fuzzy
@@ -1877,6 +1886,10 @@ msgstr "'ppr' ne s'applique qu'aux variables numériques"
 msgid "mismatched 'x' and 'y'"
 msgstr "'x' et 'y' ne correspondent pas"
 
+#, fuzzy
+msgid "mismatched 'x' and 'weights'"
+msgstr "'x' et 'y' ne correspondent pas"
+
 msgid "wrong number of columns in 'x'"
 msgstr "le nombre de colonnes de 'x' est incorrect"
 
@@ -1942,6 +1955,10 @@ msgstr ""
 
 msgid "'formula' missing"
 msgstr "'formula' manquante"
+
+#, fuzzy
+msgid "'type' must be an integer in 1..9"
+msgstr "'y' doit être plus long que 'x' de un"
 
 msgid "'type' must be 1 or 3 for ordered factors"
 msgstr "'type' doit être 1 ou 3 pour les facteurs ordonnés"
@@ -2108,6 +2125,14 @@ msgstr "il faut spécifier à la fois 'spar' et 'lambda'"
 
 msgid "'spar' must be of length 1"
 msgstr "'spar' doit être de longueur 1"
+
+#, fuzzy
+msgid "df.offset must be numeric and >= 0"
+msgstr "'offset' doit être numérique"
+
+#, fuzzy
+msgid "penalty must be numeric and > 0"
+msgstr "'y' doit être numérique"
 
 msgid "not using invalid df; must have 1 < df <= n := #{unique x} ="
 msgstr "n’utilise pas un df correct ; il faut fournir 1 < df <= n := #{unique x} ="

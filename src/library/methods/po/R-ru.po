@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2024-10-25 14:49\n"
+"POT-Creation-Date: 2025-03-31 11:51\n"
 "PO-Revision-Date: 2024-03-25 14:47+0300\n"
 "Last-Translator: Ivan Krylov <ikrylov@disroot.org>\n"
 "Language-Team: Russian <ru@li.org>\n"
@@ -818,9 +818,6 @@ msgstr "метод \"coerce' не определен"
 msgid "methods currently exist for coercing from %s to %s; they will be replaced."
 msgstr "методы для приведения %s к %s уже существуют; они будут заменены."
 
-msgid "Function must be an S4 generic"
-msgstr "Функция должна быть S4 общей"
-
 msgid "method is not being debugged"
 msgstr "метод не проверен"
 
@@ -1345,6 +1342,9 @@ msgid_plural "no definition of class %s in the specified position, %s, definitio
 msgstr[0] "нет определения класса %s в указанной позиции, %s, определение: %s"
 msgstr[1] "нет определения класса %s в указанной позиции, %s, определения: %s"
 msgstr[2] "нет определения класса %s в указанной позиции, %s, определения: %s"
+
+#~ msgid "Function must be an S4 generic"
+#~ msgstr "Функция должна быть S4 общей"
 
 #~ msgid "invalid method sublist"
 #~ msgstr "неверный подсписок методов"
