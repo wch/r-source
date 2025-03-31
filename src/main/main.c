@@ -930,50 +930,48 @@ void setup_Rmainloop(void)
 
 {  /* Avoid annoying warnings if LANG and LC_ALL are unset or empty.
       This happens e.g. on Mac when primary language clash with region,
-      like English in Denmark or Germany. Use LANG, not LC_ALL in case
-      some of the other LC_* variables are set - Apple Terminal can e.g. 
-      set LC_CTYPE=UTF-8.
+      like English in Denmark or Germany.
 
       If LANG or LC_ALL has been set to a non-existing locale, we assume
       that the user wants to ne informed. */
 
     const char *s;	
+    int quiet;
 
-    if (!( (s = getenv("LANG")) && *s) && !( (s = getenv("LC_ALL")) && *s))
-        setenv("LANG", "C", 1);
-}
+    quiet = !( ((s = getenv("LANG")) && *s) || ((s = getenv("LC_ALL")) && *s) );
 
-    if(!setlocale(LC_CTYPE, ""))
+    if(!setlocale(LC_CTYPE, "") && !quiet)
 	snprintf(deferred_warnings[ndeferred_warnings++], 250,
 
 		 "Setting LC_CTYPE failed, using \"C\"\n");
-    if(!setlocale(LC_COLLATE, ""))
+    if(!setlocale(LC_COLLATE, "") && !quiet)
 	snprintf(deferred_warnings[ndeferred_warnings++], 250,
 		 "Setting LC_COLLATE failed, using \"C\"\n");
-    if(!setlocale(LC_TIME, ""))
+    if(!setlocale(LC_TIME, "") && !quiet)
 	snprintf(deferred_warnings[ndeferred_warnings++], 250,
 		 "Setting LC_TIME failed, using \"C\"\n");
 # if defined(ENABLE_NLS) && defined(LC_MESSAGES)
-    if(!setlocale(LC_MESSAGES, ""))
+    if(!setlocale(LC_MESSAGES, "") && !quiet)
 	snprintf(deferred_warnings[ndeferred_warnings++], 250,
 		 "Setting LC_MESSAGES failed, using \"C\"\n");
 # endif
     /* NB: we do not set LC_NUMERIC */
 # ifdef LC_MONETARY
-    if(!setlocale(LC_MONETARY, ""))
+    if(!setlocale(LC_MONETARY, "") && !quiet)
 	snprintf(deferred_warnings[ndeferred_warnings++], 250,
 		 "Setting LC_MONETARY failed, using \"C\"\n");
 # endif
 # ifdef LC_PAPER
-    if(!setlocale(LC_PAPER, ""))
+    if(!setlocale(LC_PAPER, "") && !quiet)
 	snprintf(deferred_warnings[ndeferred_warnings++], 250,
 		 "Setting LC_PAPER failed, using \"C\"\n");
 # endif
 # ifdef LC_MEASUREMENT
-    if(!setlocale(LC_MEASUREMENT, ""))
+    if(!setlocale(LC_MEASUREMENT, "") && !quiet)
 	snprintf(deferred_warnings[ndeferred_warnings++], 250,
 		 "Setting LC_MEASUREMENT failed, using \"C\"\n");
 # endif
+}
 #endif /* not Win32 */
 #endif
 
