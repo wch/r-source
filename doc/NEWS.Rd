@@ -60,6 +60,9 @@
       \item Setting \code{attributes} on primitive functions is an
       error now; previously, it modified without copying, as noticed by
       \I{Henrik Bengtsson} on the R-devel mailing list.
+
+      Relatedly, changing the \code{environment()} of a primitive function
+      does no longer happen and gives a warning (to become an error, later).
     }
   }
 
@@ -835,6 +838,9 @@
       \item \code{factanal()} now works correctly also, e.g., for
       \pkg{GPArotation}, \code{oblimin()} rotations, fixing \PR{18417},
       thanks to \I{Coen Bernaards} and others.
+
+      \item Setting \code{attributes} on primitive functions is
+      deprecated now and already an error in the development version of \R.
     }
   }
 }
