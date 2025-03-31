@@ -1,6 +1,6 @@
 % File src/library/base/man/structure.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{structure}
@@ -11,7 +11,9 @@ structure(.Data, \dots)
 \alias{structure}
 \arguments{
   \item{.Data}{an object which will have
-    various attributes attached to it.}
+    various attributes attached to it.  From \R 4.6.0, this must not be
+    \code{\link{NULL}} (previously deprecated for years), nor any
+    \code{\link{symbol}} or \code{\link{primitive}} function.}
   \item{\dots}{attributes, specified in \code{tag = value}
     form, which will be attached to data.}
 }

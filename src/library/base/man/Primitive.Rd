@@ -40,6 +40,7 @@
 }
 \examples{
 mysqrt <- .Primitive("sqrt")
+try(structure(mysqrt, comment = "primitive function")) # no more possible
 c
 .Internal # this one *must* be primitive!
 `if` # need backticks

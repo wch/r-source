@@ -49,6 +49,12 @@
     }
   }
 
+  \subsection{DEPRECATED AND DEFUNCT}{
+    \itemize{
+      \item \code{structure(NULL, <name> = <val>)} is now defunct.% deprecated r71841, 2016-12-27
+    }
+  }
+
   \subsection{BUG FIXES}{
     \itemize{
       \item Setting \code{attributes} on primitive functions is an
