@@ -773,6 +773,9 @@
       \item \code{factanal()} now works correctly also, e.g., for
       \pkg{GPArotation}, \code{oblimin()} rotations, fixing \PR{18417},
       thanks to \I{Coen Bernaards} and others.
+
+      \item Setting \code{attributes} on primitive functions is
+      deprecated now and already an error in the development version of \R.
     }
   }
 }
@@ -868,9 +871,6 @@
       \item \command{R CMD Rd2pdf} works again on an installed package
       directory containing \LaTeX help (from option \option{--latex}),
       thanks to a report by \I{Peter Ruckdeschel}.
-
-      \item Setting \code{\link{attributes}} on primitive functions is
-      deprecated now and already an error in the development version of \R.
     }
   }
 }
