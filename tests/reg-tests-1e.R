@@ -1471,8 +1471,9 @@ if(inherits(oL, "warning")) {
 if(attr(oL, "ok") && capabilities("NLS") && !is.na(.popath)
    && !grepl("macOS", osVersion) # macOS fails currently
    ) {
+    ## .+ to work with multi-byte characters in C encoding
     stopifnot(is.character(print("checking 'out' : ")),
-              grepl("^argument non num.rique pour un ", out))
+              grepl("^argument non num.+rique pour un ", out))
     ## was *not* switched to French (when this was run via 'make ..')
     ## reset {just in case}:
     Sys.setLanguage("en")
