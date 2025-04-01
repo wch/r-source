@@ -68,10 +68,10 @@ that version.  The main R FAQ can be found at
 @uref{https://CRAN.R-project.org/doc/FAQ/R-FAQ.html}.
 @end display
 
-The information here applies only to recent versions of R for Windows.
-It is biased towards users of 64-bit Windows and since R 4.2.0, only 64-bit
-builds of R are provided. R 4.4.0 has experimental native support for Windows
-on 64-bit ARM.
+The information here applies only to recent versions of R for Windows.  It
+is biased towards users of 64-bit Windows and since R 4.2.0, only 64-bit
+builds of R are provided.  R since version 4.4.0 has experimental native
+support for Windows on 64-bit ARM.
 
 
 
@@ -100,9 +100,9 @@ bugs, be careful if you use it.
 @node How do I install R for Windows?
 @section How do I install R for Windows?
 
-Current binary versions of R are known to run on Windows 7 or later. R 4.1
+Current binary versions of R are known to run on Windows 10 or later. R 4.1
 is the last version that supported 32-bit versions: @xref{Can I use R on 64-bit Windows?}.
-Windows Vista is no longer supported.
+Windows Vista, 7 and 8 are no longer supported. 
 
 R 4.2.0 and later require the Universal C Runtime (@abbr{UCRT}), which is included in
 Windows 10 and Windows Server 2016 or newer. On earlier versions of Windows,
@@ -112,7 +112,8 @@ Windows Vista SP2 and Windows Server 2008 SP2.
 @I{Rtools45} requires at least Windows 8.1.  This
 requirement comes from @I{Msys2}, so it might still be possible to use build
 tools from an older version of @I{Rtools} or @I{Msys2} with the current
-toolchain and libraries from @I{Rtools}.
+toolchain and libraries from @I{Rtools}, but R 4.5.0 is no longer supported
+there, anyway.
 
 @c 2000 went end-of-life 2010-07-13
 @c XP SP3 went end of life 2014-04-08
@@ -123,25 +124,26 @@ toolchain and libraries from @I{Rtools}.
 
 We primarily test on versions of Windows currently supported by Microsoft,
 recently mainly Windows 10, Windows Server 2022 and sometimes on Windows 11. 
-The most thorough testing is done via CRAN packages checks: for R 4.3-4.4
-this has been on Windows Server 2022.  R 4.3-4.4.0 has been tested to install, start
-and pass its own checks also on Windows 7 and Windows 8.1, but it has not
-been tested with contributed packages.
+The most thorough testing is done via CRAN packages checks: for R 4.3-4.5
+this has been on Windows Server 2022.  R 4.3-4.4.0 has been tested to
+install, start and pass its own checks also on Windows 7 and Windows 8.1,
+but it has not been tested with contributed packages.  Since version 4.5.0,
+R is no longer tested on these systems (note MiKTeX no longer supports them).
 
 For UTF-8 to be the native encoding, you need R at least 4.2 and at least
 Windows 10 (version 1903) on desktop systems, Windows Server 2022 on
 long-term support server systems or Windows Server 1903 from the semi-annual
 channel.
 
-R 4.4 has experimental native support for Windows on ARM, which requires at
-least Windows 11.  The testing of native builds of R on Windows on ARM has
-been limited.  R was tested to install, start and pass its own checks, but
-there were no regular CRAN package checks and the number of installable CRAN
-packages was lower than on Intel.  One can also install R 4.4 for Intel on
-Windows on ARM and use it via emulation, but numerical differences have been
-observed.  The native build on R for Windows on ARM installs into a
-different directory by default and uses a different library, so it can
-coexist with an installation of the Intel build.
+Since version 4.4.0, R has experimental native support for Windows on ARM,
+which requires at least Windows 11.  The testing of native builds of R on
+Windows on ARM has been limited.  R was tested to install, start and pass
+its own checks, but there were no regular CRAN package checks and the number
+of installable CRAN packages was lower than on Intel.  One can also install
+R for Intel on Windows on ARM and use it via emulation, but numerical
+differences have been observed.  The native build on R for Windows on ARM
+installs into a different directory by default and uses a different library,
+so it can coexist with an installation of the Intel build.
 
 Your file system must allow case-honouring long file names (as is likely
 except perhaps for some network-mounted systems).  An installation takes
@@ -675,9 +677,9 @@ use multiple CPUs or multiple threads.
 @node Does R run under Windows 7?
 @section Does R run under Windows 7/8/10/11/Server 2012/2016/2022?
 
-R 4.4 code base still conservatively uses features of Windows 7 and
+R 4.5 code base still conservatively uses features of Windows 7 and
 later only when available, and otherwise falls back to older features, so it
-might still run on 7, but this is minimally tested (see Q2.2), and the code
+might still run on 7, but this is no longer tested (see Q2.2), and the code
 is tuned for newer systems.  Some performance @I{work-arounds} for old Windows
 systems past their end of support may be removed, such as a custom memory
 allocator removed in R 4.2.
@@ -945,7 +947,7 @@ edit the @env{PATH}.
 The element you want to add to the path is something like
 
 @example
-c:\Program Files\R\R-4.4.0\bin\x64
+c:\Program Files\R\R-4.5.0\bin\x64
 @end example
 
 @noindent
@@ -1169,7 +1171,7 @@ CRAN or from a local @code{.zip} file by using @code{install.packages}:
 see its help page.  There are menu items on the @code{Packages} menu to
 provide a point-and-click interface to package installation.  The
 packages for each minor (4.x.?) version will be stored in a separate area,
-so for R 4.4.? the files are in @file{bin/windows/contrib/4.4}.
+so for R 4.5.? the files are in @file{bin/windows/contrib/4.5}.
 
 @c Note that the binary versions on CRAN are unsupported: see
 @c @uref{https://CRAN.R-project.org/@/bin/@/windows/@/contrib/@/4.3/@/ReadMe},
@@ -1201,7 +1203,7 @@ If you have a source package that is known to work on a Unix-alike
 system, you can try the automated Windows binary package builder
 documented at @url{https://win-builder.R-project.org}.
 
-The native (default) builds of R 4.4.0 for Windows on ARM only install
+The native (default) builds of R 4.5.0 for Windows on ARM only install
 packages from source. This may be changed in the future.
 
 
@@ -1281,7 +1283,7 @@ You can tell the version the package was compiled for by looking at the
 For a small number of binary packages you need to install additional
 software and have its DLLs in your @code{PATH}.  Windows will normally
 give an informative message about a certain DLL not being found. See
-@uref{https://CRAN.R-project.org/@/bin/@/windows/@/contrib/@/4.4/@/ReadMe} for a
+@uref{https://CRAN.R-project.org/@/bin/@/windows/@/contrib/@/4.5/@/ReadMe} for a
 listing of some of these packages (notably @code{RGtk2}, @code{cairoDevice},
 @code{rggobi}, @code{rJava}, @code{rjags} and some of the packages connecting to databases).
 
