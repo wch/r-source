@@ -50,9 +50,10 @@ Since mid-1997 there has been a core group who can modify the R source
 code archive, listed in file doc/AUTHORS.
 
 R 1.0.0 was released on 29 February 2000 and 2.0.0 on 4 October 2004.
-R 3.0.0 came out on 3 April 2013.
+R 3.0.0 came out on 3 April 2013 and 4.0.0 on 24 April 2020.
 
 This file has been minimally revised since the release of R 1.0.0.
+
 
 3. PRESENT STATUS
 
@@ -64,12 +65,12 @@ Book") and the 1998 book "Programming with Data" (the "Green Book").
 
 All the R functions have been documented in the form of help pages in
 an "output independent" form which can be used to create versions for
-HTML, PDF, text etc.  A 1900+ page Reference Index (a collection of
-most of the help pages: there is also a 3300+ page version with all
+HTML, PDF, text etc.  A 2300+ page Reference Index (a collection of
+most of the help pages: there is also a 3900+ page version with all
 the help pages, including recommended packages) can be obtained in
 PDF.  The manual `An Introduction to R' provides a more user-friendly
 starting point, and there is an FAQ, a draft `R Language Definition'
-manual and more specialized manuals on admininstration, data
+manual and more specialized manuals on administration, data
 import/export and extending R.  See INSTALL for instructions on how to
 generate these documents.
 
