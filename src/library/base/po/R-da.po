@@ -1963,7 +1963,7 @@ msgstr[1] "S3-metoder %s blev deklareret i NAMESPACE men ikke fundet"
 msgid "%s is not TRUE"
 msgid_plural "%s are not all TRUE"
 msgstr[0] "%s er ikke TRUE"
-msgstr[1] "%s er overhovedet ikke TRUE"
+msgstr[1] "%s er ikke alle TRUE"
 
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
