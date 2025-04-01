@@ -296,7 +296,7 @@
       future.
 
       \item This update was mainly bug fixes but contained a barely
-      documented major change.  The set of BLAS routines has been
+      documented major change.  The set of BLAS routines had been
       unchanged since 1988, so throughout \R's history.  This update
       introduced new BLAS routines \code{dgemmtr} and \code{zgemmtr}
       which are now used by LAPACK routines.  This means that BLAS
@@ -326,14 +326,14 @@
       compilation of \R and packages.  \R builds can opt out \emph{via} the
       \command{configure} flag \option{--without-C23}, unless the
       specified or default (usually \command{gcc}) compiler defaults to C23:
-      \command{gcc}\sspace{}15 does.
+      \command{gcc}\sspace{}15 will.
 
       %% GCC 13 was released in 2023-04, LLVM 18 was 2024-03, 15 was 2022-09
       %% Apple clang 14.0.3 was too old: 15 is the earliest that can be
       %%   installed on macOS 15.3
       %% https://en.cppreference.com/w/c/23
       A C23 compiler is known to be selected with
-      \command{gcc}\sspace{}13--15 (as used on Windows),
+      \command{gcc}\sspace{}13--15,
       \I{LLVM} \command{clang}\sspace{}18--20 (and 15 should),
       Apple \command{clang}\sspace{}15--17 and
       Intel\sspace{}2024.2--2025.0 (and 2022.2 should).
@@ -503,7 +503,7 @@
       including the C99 header \file{stdbool.h}.  This is being used
       internally in \R to replace \code{Rboolean} by \code{bool}.
 
-      \item There are a new functions \code{asRboolean} and
+      \item There are new functions \code{asRboolean} and
       \code{asBool}, variants of \code{asLogical} more suited to
       converting logical arguments to \code{Rboolean} or to
       \code{bool}. They require a length-one input and throw an error if
