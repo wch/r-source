@@ -81,7 +81,7 @@
     ## obtained directly from the db, which is useful for non-installed packages.
     Links0 <- .build_links_index(Rd_contents(db), basename(pkgdir))
     Links <- c(Links0, findHTMLlinks(pkgdir, level = 1))
-    Links2 <- if (length(xLinks)) xLinks else findHTMLlinks(level = 2) 
+    Links2 <- xLinks
     
     rd2lines <- function(Rd, ...) {
         ## Rd2HTML() returns output location, which is not useful
