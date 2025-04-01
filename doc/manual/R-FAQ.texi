@@ -429,7 +429,7 @@ respectively.
 
 The @file{bin/windows} directory of a @CRAN{} site contains binaries for
 a base distribution and add-on packages from @CRAN{} to run on 64-bit
-versions of Windows 7 and later on x86_64 chips (R 4.1.3 was the last
+versions of Windows 10 and later on x86_64 chips (R 4.1.3 was the last
 version of R to support 32-bit Windows).  The Windows version of R was
 created by @I{Robert Gentleman} and @I{Guido Masarotto}; @I{Brian
 Ripley} and @I{Duncan Murdoch} made substantial contributions and it is
