@@ -4,7 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{loadings}
-\title{Print Factor Analysis 'factanal()', Notably Loadings}
+\title{Print Factor Analysis \code{factanal()}, Notably Loadings}
 \alias{loadings}
 \alias{print.loadings}
 \alias{print.factanal}

@@ -61,7 +61,7 @@
       error now; previously, it modified without copying, as noticed by
       \I{Henrik Bengtsson} on the R-devel mailing list.
 
-      Relatedly, changing the \code{environment()} of a primitive function
+      \I{Relatedly}, changing the \code{environment()} of a primitive function
       does no longer happen and gives a warning (to become an error, later).
     }
   }

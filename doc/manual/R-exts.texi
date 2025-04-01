@@ -16306,7 +16306,7 @@ bytes.)
 
 Some package maintainers may want to exclude the provision of
 @code{TRUE}, @code{FALSE}, @code{true}, @code{false} and @code{bool} to
-avoid clashes with other headers such as the IJG ones mentioned above.
+avoid clashes with other headers such as the @I{IJG} ones mentioned above.
 This cannot be done entirely (the last three are keywords in C23 and
 C++11) but as from @R{}@tie{}4.5.0 defining @code{R_INCLUDE_BOOLEAN_H}
 to @code{0} before including any header which includes this one (such as
