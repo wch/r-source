@@ -3072,13 +3072,7 @@ if(FALSE) {
         if (!silent) message("    finding HTML links ...", appendLF = FALSE, domain = NA)
         Links <- findHTMLlinks(outDir, level = 0:1)
         if (!silent) message(" done")
-        .Links2 <- function() {
-            message("\n    finding level-2 HTML links ...", appendLF = FALSE, domain = NA)
-            Links2 <- findHTMLlinks(level = 2)
-            message(" done", domain = NA)
-            Links2
-        }
-        delayedAssign("Links2", .Links2())
+        Links2 <- character()
     }
 
     ## Rd objects may already have been installed.
