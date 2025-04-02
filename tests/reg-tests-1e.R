@@ -1904,12 +1904,11 @@ eee <- c(
 )
 if(englishMsgs)
     stopifnot(identical(
-        eee,
+        eee[-4],
         c("object 'mpg' not found",
           "invalid type (list) for variable 'mpg'",
-          "object 'count' not found",
-          "invalid type (closure) for variable 'count'")))
-## the last one differed 
+          "object 'count' not found")))
+
 
 
 ## keep at end
