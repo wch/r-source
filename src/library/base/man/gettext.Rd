@@ -27,7 +27,7 @@ ngettext(n, msg1, msg2, domain = NULL)
 
 bindtextdomain(domain, dirname = NULL)
 
-Sys.setLanguage(lang, unset = "en", force = FALSE)
+Sys.setLanguage(lang, unset = "en") %, force = FALSE
 }
 \arguments{
   \item{\dots}{one or more character vectors.}
@@ -46,11 +46,11 @@ Sys.setLanguage(lang, unset = "en", force = FALSE)
   \item{unset}{a string, specifying the default language assumed to be
     current in the case \code{\link{Sys.getenv}("LANGUAGE")} is unset or
     empty.}
-  \item{force}{logical indicating if in case of a \dQuote{hard} set
-    \code{"C"} locale, \code{Sys.setLanguage()} should try modifying the
-    locale (to \code{"en"}) in order to subsequently set the desired language
-    \code{lang}, currently only when \code{\link{.Platform}[["OS.type"]]}
-    is \code{"unix"}.}
+% \item{force}{logical indicating if in case of a \dQuote{hard} set
+%   \code{"C"} locale, \code{Sys.setLanguage()} should try modifying the
+%   locale (to \code{"en"}) in order to subsequently set the desired language
+%   \code{lang}, currently only when \code{\link{.Platform}[["OS.type"]]}
+%   is \code{"unix"}.}
 }
 \details{
   If \code{domain} is \code{NULL} (the default) in \code{gettext}

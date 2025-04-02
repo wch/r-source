@@ -124,9 +124,7 @@ ngettext <- function(n, msg1, msg2, domain = NULL)
 gettextf <- function(fmt, ..., domain = NULL, trim = TRUE)
     sprintf(gettext(fmt, domain=domain, trim=trim), ...)
 
-## Could think of using *several* domains, i.e. domain = vector; but seems complicated;
-## the default domain="R"  seems to work for all of base R: {"R", "R-base", "RGui"}
-Sys.setLanguage <- function(lang, unset = "en", force = FALSE)
+Sys.setLanguage <- function(lang, unset = "en") #, force = FALSE
 {
     stopifnot(is.character(lang), length(lang) == 1L, # e.g., "es" , "fr_CA"
               lang == "C" || grepl("^[a-z][a-z]", lang))
@@ -134,26 +132,31 @@ Sys.setLanguage <- function(lang, unset = "en", force = FALSE)
     if(is.na(curLang) || !nzchar(curLang))
         curLang <- unset # "factory" default
     if (!capabilities("NLS") || is.na(.popath)) {
-        warning("no natural language support or missing translations")
+        warning("no natural language support or missing translations",
+                domain = NA)
         return(invisible(structure(curLang, ok = FALSE)))
     }
-    if(identical("C", Sys.getlocale()) && lang != "C") { ## e.g. LC_ALL=C R  on Linux
-      if(force) {
-        lcSet <- if(.Platform[["OS.type"]] == "unix") # works to "undo LC_ALL=C"
-                     paste0(collapse="", vapply(c("LC_ALL", "LC_MESSAGES"),
-                                                \(a) Sys.setlocale(a, "en_US.UTF-8"), ""))
-        ## TODOs: 1) we assume   en_US.UTF-8  exists on all "unix"
-        ##        2) How to deal w/ Windows ? {can set things but with *no* effect}
-        ok.lc <- !is.null(lcSet) && nzchar(lcSet) # NULL or ""  are not ok
-        if(!ok.lc)
-            warning(gettextf(
-                "In bare C locale: LANGUAGE reset, but message language may be unchanged"),
-                domain=NA)
-      } else { # !force (default) :
-          warning(gettextf("In bare C locale, not forcing locale; possibly use 'force = TRUE'?"),
-                  domain=NA)
-          return(invisible(structure(curLang, ok = FALSE)))
-      }
+    if (Sys.getlocale("LC_CTYPE") %in% c("C", "POSIX") && # e.g. LC_ALL=C
+        lang != "C") {
+        ## POSIX 1003.1-2024 specifies that LANGUAGE shall not override
+        ## a C locale (GNU gettext also ignores LANGUAGE in C.UTF-8),
+        ## and Sys.setLanguage() shouldn't try that either (by default).
+        ## Most languages need non-ASCII characters, but those would get
+        ## displayed as ? or * (or worse) in a C locale and attempts to
+        ## change the session charset are known to be fragile.
+#     if(force) {
+#       lcSet <- if(.Platform[["OS.type"]] == "unix") # works to "undo LC_ALL=C"
+#                    paste0(collapse="", vapply(c("LC_ALL", "LC_MESSAGES"),
+#                                               \(a) Sys.setlocale(a, "en_US.UTF-8"), ""))
+#       ## TODOs: 1) we assume   en_US.UTF-8  exists on all "unix"
+#       ##        2) How to deal w/ Windows ? {can set things but with *no* effect}
+#       ok.lc <- !is.null(lcSet) && nzchar(lcSet) # NULL or ""  are not ok
+#       if(!ok.lc)
+#           warning("in a C locale: LANGUAGE reset, but message language may be unchanged")
+#     } else { # !force (default) :
+        warning("in a C locale: cannot set language", domain = NA)
+        return(invisible(structure(curLang, ok = FALSE)))
+#     }
     } else ok.lc <- TRUE
     ok <- Sys.setenv(LANGUAGE=lang)
     if(!ok)
