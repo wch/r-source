@@ -1,7 +1,7 @@
 #  File src/library/base/R/stop.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2024 The R Core Team
+#  Copyright (C) 1995-2025 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -126,8 +126,7 @@ gettextf <- function(fmt, ..., domain = NULL, trim = TRUE)
 
 ## Could think of using *several* domains, i.e. domain = vector; but seems complicated;
 ## the default domain="R"  seems to work for all of base R: {"R", "R-base", "RGui"}
-Sys.setLanguage <- function(lang, unset = "en",
-                            C.vs.en = c("msg", "warn", "silent"), force = FALSE)
+Sys.setLanguage <- function(lang, unset = "en", force = FALSE)
 {
     stopifnot(is.character(lang), length(lang) == 1L, # e.g., "es" , "fr_CA"
               lang == "C" || grepl("^[a-z][a-z]", lang))
@@ -135,15 +134,9 @@ Sys.setLanguage <- function(lang, unset = "en",
     if(is.na(curLang) || !nzchar(curLang))
         curLang <- unset # "factory" default
     if (!capabilities("NLS") || is.na(.popath)) {
-        warning(gettextf("no natural language support or missing translations"), domain=NA)
+        warning("no natural language support or missing translations")
         return(invisible(structure(curLang, ok = FALSE)))
     }
-    Warning <- if(startsWith(lang, "en"))
-                   switch(match.arg(C.vs.en),
-                          silent = function(...){},
-                          msg  = message,
-                          warn = warning)
-               else warning
     if(identical("C", Sys.getlocale()) && lang != "C") { ## e.g. LC_ALL=C R  on Linux
       if(force) {
         lcSet <- if(.Platform[["OS.type"]] == "unix") # works to "undo LC_ALL=C"
@@ -153,11 +146,11 @@ Sys.setLanguage <- function(lang, unset = "en",
         ##        2) How to deal w/ Windows ? {can set things but with *no* effect}
         ok.lc <- !is.null(lcSet) && nzchar(lcSet) # NULL or ""  are not ok
         if(!ok.lc)
-            Warning(gettextf(
+            warning(gettextf(
                 "In bare C locale: LANGUAGE reset, but message language may be unchanged"),
                 domain=NA)
       } else { # !force (default) :
-          Warning(gettextf("In bare C locale, not forcing locale; possibly use 'force = TRUE'?"),
+          warning(gettextf("In bare C locale, not forcing locale; possibly use 'force = TRUE'?"),
                   domain=NA)
           return(invisible(structure(curLang, ok = FALSE)))
       }
@@ -165,7 +158,7 @@ Sys.setLanguage <- function(lang, unset = "en",
     ok <- Sys.setenv(LANGUAGE=lang)
     if(!ok)
         warning(gettextf('Sys.setenv(LANGUAGE="%s") may have failed', lang), domain=NA)
-    ok. <- capabilities("NLS") &&
+    ok. <- #capabilities("NLS") && # asserted above
         isTRUE(bindtextdomain(NULL)) # only flush the cache (of already translated strings)
     invisible(structure(curLang, ok = ok && ok.lc && ok.))
 }
