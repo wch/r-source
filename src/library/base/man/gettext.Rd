@@ -127,8 +127,9 @@ Sys.setLanguage(lang, unset = "en", force = FALSE)
 \section{Warning}{
   These functions were written assuming that environment variable
   \env{LANGUAGE} is supported by the implementation of \code{libintl}.
-  For a long time that as universally true and it is now part of the
-  2024 POSIX specification.  But in 2025 it was ignored by the
+  This is almost universally true and (along with \command{gettext}
+  \abbr{et al.}) became part of the 2024 POSIX specification.
+  In 2025, however, it was still ignored by the
   implementation in \code{musl} (one of the implementations available on
   Alpine Linux).
 }
