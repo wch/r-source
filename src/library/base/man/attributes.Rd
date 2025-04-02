@@ -1,6 +1,6 @@
 % File src/library/base/man/attributes.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2018 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{attributes}
@@ -20,13 +20,15 @@ attributes(x) <- value
 mostattributes(x) <- value
 }
 \arguments{
-  \item{x}{any \R object.}
+  \item{x}{any \R object; for the replacement functions, not a
+    \code{\link{symbol}} (aka \sQuote{\code{name}}) nor a \code{\link{primitive}} function.}
   \item{value}{an appropriate named \code{\link{list}} of attributes, or
     \code{NULL}.}
 }
 \details{
-  Unlike \code{\link{attr}} it is not an error to set attributes on a
-  \code{NULL} object: it will first be coerced to an empty list.
+  Unlike \code{\link{attr}} it is currently not an error to set attributes
+  on a \code{NULL} object: it will first be coerced to an empty
+  \code{\link{list}}.
 
   Note that some attributes (namely \code{\link{class}},
   \code{\link{comment}}, \code{\link{dim}}, \code{\link{dimnames}},

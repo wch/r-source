@@ -353,10 +353,20 @@ static SEXP installAttrib(SEXP vec, SEXP name, SEXP val)
 {
     SEXP t = R_NilValue; /* -Wall */
 
-    if(TYPEOF(vec) == CHARSXP)
+    switch(TYPEOF(vec)) {
+    case CHARSXP:
 	error("cannot set attribute on a CHARSXP");
-    if (TYPEOF(vec) == SYMSXP)
-	error(_("cannot set attribute on a symbol"));
+	break;
+    case SYMSXP:
+#ifdef R_future_version
+    case BUILTINSXP:
+    case SPECIALSXP:
+#endif
+	error(_("cannot set attribute on a '%s'"), R_typeToChar(vec));
+    default:
+	break;
+    }
+
     /* this does no allocation */
     for (SEXP s = ATTRIB(vec); s != R_NilValue; s = CDR(s)) {
 	if (TAG(s) == name) {
@@ -1349,10 +1359,10 @@ attribute_hidden SEXP do_attributesgets(SEXP call, SEXP op, SEXP args, SEXP env)
     /* Do checks before duplication */
     if (!isNewList(attrs))
 	error(_("attributes must be a list or NULL"));
-    if (isPrimitive(object))
-	warning(_("Modifying attributes on primitive functions is deprecated and will be disabled"));// in R 4.6.0
     int i, nattrs = length(attrs);
     if (nattrs > 0) {
+	if (isPrimitive(object))
+	    warning(_("Setting attributes on primitive functions is deprecated and will be disabled"));// in R 4.6.0
 	names = getAttrib(attrs, R_NamesSymbol);
 	if (names == R_NilValue)
 	    error(_("attributes must be named"));
@@ -1659,6 +1669,8 @@ attribute_hidden SEXP do_attrgets(SEXP call, SEXP op, SEXP args, SEXP env)
 	 * ---         if(any_duplicated(val))
 	 *                  error(.....)
 	 */
+	if (isPrimitive(obj) && val != R_NilValue)
+	    warning(_("Setting attributes on primitive functions is deprecated and will be disabled"));// in R 4.6.0
 	setAttrib(obj, name, val);
 	UNPROTECT(2);
 	SETTER_CLEAR_NAMED(obj);
