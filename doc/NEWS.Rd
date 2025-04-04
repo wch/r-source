@@ -369,17 +369,18 @@
       \item Both building \R and installing packages use the C compiler
       in C23 mode.
 
-      \item R on Windows by default uses pkg-config for linking against
+      \item R on Windows by default uses \command{pkg-config} for linking against
       external libraries.  This makes it easier to test R and packages with
       alternative toolchains (such as from \I{Msys2}, e.g., testing with \I{LLVM}
       and possibly with sanitizers). It also allows more significant \I{Rtools}
       updates within a single R minor release.
 
       \item The installer scripts for Windows have been tailored to
-      \I{Rtools45}, an update of the \I{Rtools44} toolchain.  It is based on
-      GCC 14.  The experimental support for 64-bit ARM (\code{aarch64}) CPUs is
-      based on \I{LLVM} 19.  R-devel is no longer maintained to be \I{buildable}
-      using \I{Rtools44} and it is advised to switch to \I{Rtools45}.
+      \I{Rtools45}, an update of the \I{Rtools44} toolchain.  It is
+      based on GCC 14.  The experimental support for 64-bit ARM
+      (\code{aarch64}) CPUs is based on \I{LLVM} 19.  R-devel and \R
+      4.5.x arw no longer maintained to be \I{buildable} using
+      \I{Rtools44} and it is advised to switch to \I{Rtools45}.
     }
   }
 
@@ -540,7 +541,7 @@
       embedded API entry points in the rendered versions.  This is very
       preliminary and may be dropped if a better approach emerges.
 
-      Also now for Fortran-callable entry points which are part of the API.
+      Also for Fortran-callable entry points which are part of the API.
 
       \item \sQuote{Writing R Extensions} has a new section
       \sQuote{Moving into C API compliance} to help package authors move
