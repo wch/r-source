@@ -1,7 +1,7 @@
 #  File src/library/tools/R/translations.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2023 The R Core Team
+#  Copyright (C) 1995-2025 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -17,6 +17,48 @@
 #  https://www.R-project.org/Licenses/
 
 #### R based engine for managing translations
+
+processPoFile <- function (f, potfile,
+                           localedir = file.path("inst", "po"),
+                           mergeOpts = "", # in addition to --update
+                           verbose = getOption("verbose"))
+{
+    poname <- sub("[.]po$", "", basename(f))
+    lang <- sub("^(R|RGui)-", "", poname)
+    dom <- sub("[.]pot$", "", basename(potfile))
+    mo_make <- !is.null(localedir)
+
+    ## Will not update PO file if already in sync; keeps PO-Revision-Date.
+    cmd <- paste("msgmerge",
+                 if (is.character(mergeOpts)) paste("--update", mergeOpts),
+                 shQuote(f), shQuote(potfile))
+    if (verbose) cat("Running cmd", cmd, ":\n")
+    else message("  ", poname, ":", appendLF = FALSE, domain = NA)
+    if (system(cmd) != 0L)
+        return(warning(sprintf("running msgmerge on %s failed", sQuote(f)),
+                       call. = FALSE, domain = NA))
+
+    res <- checkPoFile(f, TRUE)
+    if (nrow(res)) {
+        print(res)
+        if (mo_make) message("not installing", domain = NA)
+        ## the msgfmt -c step below would also fail (includes --check-format)
+        return(warning(sprintf("inconsistent format strings in %s", sQuote(f)),
+                       call. = FALSE, domain = NA))
+    }
+
+    if (!mo_make) return(invisible())
+    dest <- file.path(localedir, lang, "LC_MESSAGES")
+    dir.create(dest, FALSE, TRUE)
+    dest <- file.path(dest, sprintf("%s.mo", dom))
+    ## Skip compilation if PO is unchanged since last run / checkout?
+    #if (file.exists(dest) && file_test("-ot", f, dest)) return(invisible())
+    cmd <- paste("msgfmt -c --statistics -o", shQuote(dest), shQuote(f))
+    if (verbose) cat("Running cmd", cmd, ":\n")
+    if (system(cmd) != 0L)
+        return(warning(sprintf("running msgfmt on %s failed", sQuote(f)),
+                       call. = FALSE, domain = NA))
+}
 
 ## This only works in a UTF-8 locale: specifically substr needs to count
 ## UTF-8 chars
@@ -116,7 +158,6 @@ update_pkg_po <- function(pkgdir, pkg = NULL, version = NULL,
     ## The interpreter is 'src' for the base package.
     is_base <- (pkg == "base")
     have_src <- paste0(pkg, ".pot") %in% files
-    mergeCmd <- paste("msgmerge", if(is.character(mergeOpts)) paste("--update", mergeOpts))
 
     ## do R-pkg domain first
   if(pot_make) {
@@ -136,33 +177,9 @@ update_pkg_po <- function(pkgdir, pkg = NULL, version = NULL,
     }
     pofiles <- dir("po", pattern = "R-.*[.]po$", full.names = TRUE)
     pofiles <- pofiles[pofiles != "po/R-en@quot.po"]
-    ## .po file might be newer than .mo
     for (f in pofiles) {
-        lang <- sub("^R-(.*)[.]po$", "\\1", basename(f))
-        ## Interestingly does *not* update the file dates
-        cmd <- paste(mergeCmd, f, shQuote(potfile))
-        if(verbose) cat("Running cmd", cmd, ":\n") else
-        message("  R-", lang, ":", appendLF = FALSE, domain = NA)
-        if(system(cmd) != 0L) {
-            warning("running msgmerge on ", sQuote(f), " failed", domain = NA)
-            next
-        }
-        res <- checkPoFile(f, TRUE)
-        if(nrow(res)) {
-            print(res)
-            message("not installing", domain = NA)
-            next
-        }
-        if(!mo_make) next
-        dest <- file.path(stem, lang, "LC_MESSAGES")
-        dir.create(dest, FALSE, TRUE)
-        dest <- file.path(dest, sprintf("R-%s.mo", pkg))
- #       if(file_test("-ot", f, dest)) next
-        cmd <- paste("msgfmt -c --statistics -o", shQuote(dest), shQuote(f))
-        if(verbose) cat("Running cmd", cmd, ":\n")
-        if(system(cmd) != 0L)
-            warning(sprintf("running msgfmt on %s failed", basename(f)),
-                    domain = NA, immediate. = TRUE)
+        processPoFile(f, potfile, localedir = if(mo_make) stem,
+                      mergeOpts = mergeOpts, verbose = verbose)
     }
 
     ## do en@quot
@@ -179,7 +196,7 @@ update_pkg_po <- function(pkgdir, pkg = NULL, version = NULL,
         if(verbose) cat("Running cmd", cmd, ":\n")
         if(system(cmd) != 0L)
             warning(sprintf("running msgfmt on %s failed", basename(f)),
-                    domain = NA, immediate. = TRUE)
+                    domain = NA)
     }
 
     if(!(is_base || have_src)) return(invisible())
@@ -227,30 +244,8 @@ update_pkg_po <- function(pkgdir, pkg = NULL, version = NULL,
     pofiles <- dir("po", pattern = "^[^R].*[.]po$", full.names = TRUE)
     pofiles <- pofiles[pofiles != "po/en@quot.po"]
     for (f in pofiles) {
-        lang <- sub("[.]po", "", basename(f))
-        cmd <- paste(mergeCmd, shQuote(f), shQuote(potfile))
-        if(verbose) cat("Running cmd", cmd, ":\n") else
-        message("  ", lang, ":", appendLF = FALSE, domain = NA)
-        if(system(cmd) != 0L) {
-            warning("running msgmerge on ",  f, " failed", domain = NA)
-            next
-        }
-        res <- checkPoFile(f, TRUE)
-        if(nrow(res)) {
-            print(res)
-            message("not installing", domain = NA)
-            next
-        }
-        if(!mo_make) next
-        dest <- file.path(stem, lang, "LC_MESSAGES")
-        dir.create(dest, FALSE, TRUE)
-        dest <- file.path(dest, sprintf("%s.mo", dom))
-#        if(file_test("-ot", f, dest)) next
-        cmd <- paste("msgfmt -c --statistics -o", shQuote(dest), shQuote(f))
-        if(verbose) cat("Running cmd", cmd, ":\n")
-        if(system(cmd) != 0L)
-            warning(sprintf("running msgfmt on %s failed", basename(f)),
-                    domain = NA)
+        processPoFile(f, potfile, localedir = if(mo_make) stem,
+                      mergeOpts = mergeOpts, verbose = verbose)
     }
     ## do en@quot
     if (l10n_info()[["UTF-8"]] && mo_make) {
@@ -314,28 +309,9 @@ update_RGui_po <- function(srcdir,
   }
     pofiles <- dir("src/library/base/po", pattern = "^RGui-.*[.]po$", full.names = TRUE)
     for (f in pofiles) {
-        lang <- sub("^RGui-(.*)[.]po$", "\\1", basename(f))
-        lang2 <- sub("[.]po", "", basename(f))
-        message("  ", lang2, ":", appendLF = FALSE, domain = NA)
-        cmd <- paste("msgmerge --update", mergeOpts, f, potfile)
-        if(system(cmd) != 0L) {
-            warning("running msgmerge failed", domain = NA)
-            next
-        }
-        res <- checkPoFile(f, FALSE)
-        if(nrow(res)) {
-            print(res)
-            next
-        }
-        if(!mo_make) next
-        dest <- file.path("src/library/translations/inst", lang, "LC_MESSAGES")
-        dir.create(dest, FALSE, TRUE)
-        dest <- file.path(dest, "RGui.mo")
-        if (file_test("-ot", f, dest)) next
-        cmd <- paste("msgfmt -c --statistics -o", dest, f)
-        if(system(cmd) != 0L)
-            warning(sprintf("running msgfmt on %s failed", basename(f)),
-                    domain = NA)
+        processPoFile(f, potfile,
+                      localedir = if(mo_make) "src/library/translations/inst",
+                      mergeOpts = mergeOpts)
     }
 
     invisible()
