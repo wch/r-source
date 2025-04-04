@@ -379,7 +379,7 @@
       \I{Rtools45}, an update of the \I{Rtools44} toolchain.  It is
       based on GCC 14.  The experimental support for 64-bit ARM
       (\code{aarch64}) CPUs is based on \I{LLVM} 19.  R-devel and \R
-      4.5.x arw no longer maintained to be \I{buildable} using
+      4.5.x are no longer maintained to be \I{buildable} using
       \I{Rtools44} and it is advised to switch to \I{Rtools45}.
     }
   }
