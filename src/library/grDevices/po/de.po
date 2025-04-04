@@ -177,7 +177,7 @@ msgstr "Unicode Zeichen %lc (U+%04X) kann nicht konvertiert werden"
 #: devPS.c:918 devPS.c:972
 #, c-format
 msgid "font metrics unknown for character 0x%02x in encoding %s"
-msgstr "Fontmetrik für das Zeichen 0x%02x unbekannt"
+msgstr "Fontmetrik unbekannt für das Zeichen 0x%02x in Kodierung %s"
 
 #: devPS.c:987
 #, c-format

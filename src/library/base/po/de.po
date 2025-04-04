@@ -4239,8 +4239,8 @@ msgid ""
 "string containing Unicode escapes not in this locale\n"
 "is too long (max 10000 chars) (%s:%d:%d)"
 msgstr ""
-"Zeichenkette in Zeile %d mit Unicode-Escapecodes nicht aus dieser Lokalisierung\n"
-"ist zu lang (max. 1000 Zeichen) (%s:%d:%d)"
+"Zeichenkette mit Unicode-Escapecodes nicht aus dieser Lokalisierung\n"
+"ist zu lang (max. 10000 Zeichen) (%s:%d:%d)"
 
 #: src/main/gram.y:3224
 #, c-format
@@ -5625,7 +5625,7 @@ msgstr "Argument 'allow_surrogate_pairs' muss TRUE oder FALSE sein"
 #: src/main/relop.c:185
 #, c-format
 msgid "comparison (%s) is not possible for language types"
-msgstr "Vergleich (%d) ist für Sprachtypen nicht möglich"
+msgstr "Vergleich (%s) ist für Sprachtypen nicht möglich"
 
 #: src/main/relop.c:177
 msgid "comparing this symbol and string pair is not supported"
