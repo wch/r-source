@@ -2800,7 +2800,7 @@ English.} the language you are changing to can be output in the current
 character set.  But this is OS-specific, and has been known to stop
 working on an OS upgrade.  Note that translated messages may be cached,
 so attempting to change the language of an error that has already been
-output in another language may not work.  See also @code{Sys.setlanguage()}.
+output in another language may not work.  See also @code{Sys.setLanguage()}.
 
 Messages are divided into @emph{domains}, and translations may be
 available for some or all messages in a domain.  @R{} makes use of the

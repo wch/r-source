@@ -128,7 +128,7 @@ The most thorough testing is done via CRAN packages checks: for R 4.3-4.5
 this has been on Windows Server 2022.  R 4.3-4.4.0 has been tested to
 install, start and pass its own checks also on Windows 7 and Windows 8.1,
 but it has not been tested with contributed packages.  Since version 4.5.0,
-R is no longer tested on these systems (note MiKTeX no longer supports them).
+R is no longer tested on these systems (note @I{MiKTeX} no longer supports them).
 
 For UTF-8 to be the native encoding, you need R at least 4.2 and at least
 Windows 10 (version 1903) on desktop systems, Windows Server 2022 on
