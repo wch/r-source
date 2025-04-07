@@ -4334,14 +4334,14 @@ Default: false (but true for CRAN submission checks).
 @item _R_CHECK_THINGS_IN_TEMP_DIR_
 Check and report at the end of the check run if files would have been
 left in the temporary directory (usually @file{/tmp} on a Unix-alike).
-It does this by setting the environment variable @env{TEMPDIR} to a
+It does this by setting the environment variable @env{TMPDIR} to a
 subdirectory of the @R{} session directory for the @code{check} process:
 if any files or directories are left there they are removed.  Since some
 of these might be out of the user's control, environment variable
 @env{_R_CHECK_THINGS_IN_TEMP_DIR_EXCLUDE_} can specify an (extended
 regex) pattern of file paths not to be reported -- CRAN uses
 @samp{^ompi.} for directories left behind by @I{OpenMPI}.  There are rare
-instances where @env{TEMPDIR} is not respected and so files are left in
+instances where @env{TMPDIR} is not respected and so files are left in
 @file{/tmp} (and not reported, but see the next item): one example is
 @file{/tmp/boost_interprocess} on some OSes.
 @c macOS is one.
