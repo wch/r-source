@@ -1,6 +1,6 @@
 % File src/library/base/man/strptime.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2024 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{strptime}
@@ -105,14 +105,18 @@ strptime(x, format, tz = "")
   \describe{
     \item{\code{\%a}}{Abbreviated weekday name in the current
       locale on this platform.  (Also matches full name on input:
-      in some locales there are no abbreviations of names.)}
+      in some locales there are no abbreviations of names.)
+      Case-insensitive on input.}
     \item{\code{\%A}}{Full weekday name in the current locale.  (Also
-      matches abbreviated name on input.)}
+      matches abbreviated name on input.)
+      Case-insensitive on input.}
     \item{\code{\%b}}{Abbreviated month name in the current locale on
       this platform.  (Also matches full name on input: in
-      some locales there are no abbreviations of names.)}
+      some locales there are no abbreviations of names.)
+    Case-insensitive on input.}
     \item{\code{\%B}}{Full month name in the current locale.  (Also
-      matches abbreviated name on input.)}
+      matches abbreviated name on input.)
+      Case-insensitive on input.}
     \item{\code{\%c}}{Date and time.   Locale-specific on output,
       \code{"\%a \%b \%e \%H:\%M:\%S \%Y"} on input.}
     \item{\code{\%C}}{Century (00--99): the integer part of the year
@@ -144,6 +148,10 @@ strptime(x, format, tz = "")
       empty string in some locales (for example on some OSes,
       non-English European locales including Russia). The behaviour is
       undefined if used for input in such a locale.
+
+      For input the match is case-insensitive.  Note that
+      English locales do not necessarily use \code{AM/PM}: for eacmple,
+      \code{a.m./p.m.} has been encountered.
 
       Some platforms accept \code{\%P} for output, which uses a lower-case
       version (\code{\%p} may also use lower case): others will output
