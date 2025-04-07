@@ -13791,6 +13791,10 @@ or @code{convolveE}:
 
 @apifun ISNA
 @apifun ISNAN
+@apivar NA_REAL
+@apivar NA_LOGICAL
+@apivar NA_INTEGER
+@apivar NA_STRING
 
 Note that the @code{ISNA} macro, and the similar macros @code{ISNAN}
 (which checks for @code{NaN} or @code{NA}) and @code{R_FINITE} (which is
