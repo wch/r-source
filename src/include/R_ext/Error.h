@@ -70,7 +70,7 @@ void Rf_warning(const char *, ...) R_PRINTF_FORMAT(1,2);
 
 void R_ShowMessage(const char *s);
 
-/* xerbla is a a C function intended to be called from Fortran.
+/* xerbla is a C function intended to be called from Fortran.
  * which forerly had a C declaration here.
  *
  * It wraps Rf_error, so use that directtly from C/C++
