@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: R-4.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2025-03-31 11:51+0200\n"
-"PO-Revision-Date: 2025-03-26 22:51+0100\n"
+"PO-Revision-Date: 2025-04-08 17:03+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
 "Language: de\n"
@@ -650,7 +650,7 @@ msgstr "R_RegisterRoutines mit ungültigem DllInfo-Objekt."
 
 #: src/main/Rdynload.c:422
 msgid "Invalid object."
-msgstr "Ungültige Objekt."
+msgstr "Ungültiges Objekt."
 
 #: src/main/Rdynload.c:429
 #, c-format
@@ -664,7 +664,7 @@ msgstr "Komponente '%s' fehlt in einem Symbol Objekt"
 
 #: src/main/Rdynload.c:447
 msgid "Invalid symbol list."
-msgstr "Ungültiger Symbolliste."
+msgstr "Ungültige Symbolliste."
 
 #: src/main/Rdynload.c:461
 #, c-format
@@ -4694,9 +4694,9 @@ msgid "'R_Realloc' could not re-allocate memory (%llu bytes)"
 msgstr "'R_Realloc' konnte keinen Speicher re-allozieren (%llu Bytes)"
 
 #: src/main/memory.c:3578 src/main/memory.c:3585
-#, fuzzy, c-format
+#, c-format
 msgid "object is too large (%llu bytes)"
-msgstr "Vektor ist zu groß"
+msgstr "Vektor ist zu groß (%llu Bytes)"
 
 #: src/main/memory.c:3818
 #, c-format
