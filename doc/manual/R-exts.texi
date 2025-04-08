@@ -5541,6 +5541,18 @@ printed may not be.  Objects of class @code{"POSIXlt"} should have a
 @code{"tzone"} attribute.  Dates (e.g,@: birthdays) are conventionally
 considered independently of time zone.
 
+If input of date-times involves words not just numbers (day and month
+names, the am/pm indicator) consider if the local category
+@code{LC_TIME} needs to be set.  The am/pm indicator in the C/POSIX
+locale is @code{AM/PM}, but this need not be the case in other English
+locales. Worse, the OS has been known to change this at an update.
+This applies also to testing output.
+@c from "am" to "a.m." in en_GB in macOS 15.4
+
+Day and month names (and especially their abbreviations) in non-English
+languages may differ between OSes.
+@c seen in French
+
 @item
 If at all possible avoid any Internet access during package
 installation.  Installation and use may well be on different
