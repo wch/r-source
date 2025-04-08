@@ -618,7 +618,7 @@ nonAPI <- c("chol_", "chol2inv_", "cg_", "ch_", "rg_",
             "Rsockconnect", "Rsocklisten", "Rsockopen", "Rsockread",
             "Rsockwrite", "Runzip", "UNIMPLEMENTED_TYPE",
             "baseRegisterIndex", "Rf_csduplicated", "Rf_currentTime",
-            "dcar", "dcdr", "do_Rprof", "do_Rprofmem", "do_X11",
+            "dcar", "dcdr", "dchdc_", "do_Rprof", "do_Rprofmem", "do_X11",
             "do_contourLines", "do_edit", "do_getGraphicsEventEnv",
             "do_getSnapshot", "do_playSnapshot", "do_saveplot",
             "do_set_prim_method", "dqrrsd_","dqrxb_", "dtype",
@@ -974,7 +974,7 @@ if(.Platform$OS.type == "windows") {
         ## symbols.rds, likely from following the "best approach" from
         ## section "Compiling in sub-directories" of WRE and compiling
         ## code in subdirs into static libraries instead of adding to
-        ## OBJECTS. 
+        ## OBJECTS.
         ## See PR#18789 <https://bugs.r-project.org/show_bug.cgi?id=18789>,
         ## "R CMD check does not check symbol tables of linked static
         ## libraries".
