@@ -6390,7 +6390,7 @@ warning: argument 1 value '18446744073709551615' exceeds maximum object
 @item
 Some authors feel the need to print (using @code{Rprintf} or
 similar) vector lengths or indices which are of type @code{R_xlen_t}.
-That may be a 32-bit or (most commonly) 64-bit type but which integer
+That is (almost always) a 64-bit type but which integer
 type it is mapped to is platform-specific.  The safest way is to cast
 the length to double and use a double format.  So one could use
 something like
@@ -6419,7 +6419,7 @@ So the values will need to be cast to the type assumed by the format
 @I{Variadic} macros in C or C++ only portably allow a non-zero number of
 arguments, although some compilers have allowed zero, often with a
 warning. The latter was standardized in C++20 using the @code{__VA_OPT__}
-macro.  C23 also allows zero arguments in a similar way.
+macro.  C23 allows zero arguments in a similar way.
 
 @end itemize
 
@@ -6430,10 +6430,10 @@ by @I{Martyn Plummer}.
 Several OSes have or currently do provide multiple C++ runtimes ---
 Solaris did and the @I{LLVM} @command{clang} compiler has a native C++
 runtime library @code{libc++} but is also used with GCC's
-@code{libstdc++} (by default on Debian/Ubuntu).  This makes it unsafe to
-assume that OS libraries with a C++ interface are compatible with the
-C++ compiler specified by @R{}.  Many of these system libraries also
-have C interfaces which should be used in preference to their C++
+@code{libstdc++} (by default on Debian/Ubuntu/Fedora).  This makes it
+unsafe to assume that OS libraries with a C++ interface are compatible
+with the C++ compiler specified by @R{}.  Many of these system libraries
+also have C interfaces which should be used in preference to their C++
 interface.  Otherwise it is essential that a package checks
 compatibility in its @command{configure} script, including that C++ code
 using the library can both be linked @emph{and loaded}.
@@ -15737,8 +15737,8 @@ Cdgemm(const char *transa, const char *transb, const int *m,
 @end example
 
 @noindent
-Alternatively, do as @R{} does as from version 3.6.2 and pass
-the character length(s) from C to Fortran. A portable way to do this is
+Alternatively, do as @R{} does and pass the character length(s) from C
+to Fortran. A portable way to do this is
 @example
 // before any R headers, or define in PKG_CPPFLAGS
 #ifndef  USE_FC_LEN_T
@@ -15755,9 +15755,9 @@ the character length(s) from C to Fortran. A portable way to do this is
 @end example
 @noindent
 (Note there is no comma before or between the @code{FCONE} invocations.)
-It is strongly recommended that packages which call from C/C++
-BLAS/LAPACK routines with character arguments adopt this approach:
-packages not using it will fail to install as from @R{} 4.3.0.
+Packages which call from C/C++ BLAS/LAPACK routines with character
+arguments must adopt this approach: packages not using it will now fail
+to install.
 
 @node Fortran LOGICAL
 @subsection Fortran LOGICAL
@@ -16695,6 +16695,59 @@ the original functions by Fox, Hall and @I{Schryer} on @I{Netlib} at
 (required by @R{}).
 @apifun d1mach
 @apifun i1mach
+
+@node Linear algebra
+@section Linear algebra
+
+The preferred way to do numerical linear algebra from C/Fortran code is
+to use BLAS/LAPACK@footnote{The distinction is increasing blurred, with
+the reference BLAS being distributed as part of the LAPACK sources.}
+Declarations callable from C/C++ are provided in headers
+@file{R_ext/BLAS.h} and @file{R_ext/LAPACK.h}.
+
+However, a number of Fortran routines are included in @R{} and underlie
+@code{lm.fit()}, @code{lm.wfit()} and @code{qr(LAPACK = FALSE)} and its
+helper functions.  These remain available to packages which wish to
+emulate what @R{} does, and are declared as a C/C++ interface in header
+@file{R_ext/Applic.h}.  But they are also often called @emph{via}
+@code{.Fortran()} and from Fortran code.
+
+@apifun dqrqty
+@apifun dqrqy
+@apifun dqrcf
+@apifun dqrrsd
+@apifun dqrxb
+@apifun dqrls
+@apifun dqrdc2
+@example
+void F77_NAME(dqrqty)(double *x, int *n, int *k, double *qraux,
+                      double *y, int *ny, double *qty);
+void F77_NAME(dqrqy)(double *x, int *n, int *k, double *qraux,
+                     double *y, int *ny, double *qy);
+void F77_NAME(dqrcf)(double *x, int *n, int *k, double *qraux,
+                     double *y, int *ny, double *b, int *info);
+void F77_NAME(dqrrsd)(double *x, int *n, int *k, double *qraux,
+                     double *y, int *ny, double *rsd);
+void F77_NAME(dqrxb)(double *x, int *n, int *k, double *qraux,
+                     double *y, int *ny, double *xb);
+void F77_NAME(dqrls)(double *x, int *n, int *p, double *y, int *ny,
+                     double *tol, double *b, double *rsd,
+                     double *qty, int *k,
+                     int *jpvt, double *qraux, double *work);
+void F77_NAME(dqrdc2)(double *x, int *ldx, int *n, int *p,
+                      double *tol, int *rank,
+                      double *qraux, int *pivot, double *work);
+@end example
+@noindent
+For further datails see their source files in directory @file{src/Appl}
+in the @R{} sources or @uref{https://netlib.org/linpack/}.
+@code{dqrdc2} is an extensive @R{} modification to LINPACK's
+@code{dqrdc} which uses column pivoting and computes the (numerical)
+rank.
+
+These are for the time being regarded as part of the API but may in
+future be supplemented or replaced by interfaces using Fortran 2003's
+@code{bind(C)}.
 
 
 @node Re-encoding

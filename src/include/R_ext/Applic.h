@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998-2024   The R Core Team
+ *  Copyright (C) 1998-2025   The R Core Team
  *
  *  This header file is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -89,7 +89,7 @@ int findInterval(double *xt, int n, double x,
 		 int *mflag);
 // findInterval2() is only in Utils.h (and hence Rinternals.h)
 
-/* The following are registered for use in .C/.Fortran */
+/* The following are registered for use in .Fortran */
 
 /* ../../appl/dqrutl.f: interfaces to dqrsl */
 void F77_NAME(dqrqty)(double *x, int *n, int *k, double *qraux,
@@ -102,18 +102,18 @@ void F77_NAME(dqrrsd)(double *x, int *n, int *k, double *qraux,
 		     double *y, int *ny, double *rsd);
 void F77_NAME(dqrxb)(double *x, int *n, int *k, double *qraux,
 		     double *y, int *ny, double *xb);
-/* end of registered */
-
 /* find qr decomposition, dqrdc2() is basis of R's qr(),
    also used by nlme and many other packages. */
 void F77_NAME(dqrdc2)(double *x, int *ldx, int *n, int *p,
 		      double *tol, int *rank,
 		      double *qraux, int *pivot, double *work);
+/* end of registered */
 void F77_NAME(dqrls)(double *x, int *n, int *p, double *y, int *ny,
 		     double *tol, double *b, double *rsd,
 		     double *qty, int *k,
 		     int *jpvt, double *qraux, double *work);
-
+/* dtrco (for .kappa.tri) is registered but not in the API */
+    
 /* ------------------ Entry points NOT in the R API --------------- */
 
 /* hidden, for use in R.bin/R.dll/libR.so */
