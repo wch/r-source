@@ -139,7 +139,7 @@ void fdhess(int n, double *x, double fval, fcn_p fun, void *state,
 	    double *h, int nfd, double *step, double *f, int ndigit,
 	    double *typx);
 
-/* Formerly used in package nlme, still used by pcaPP */
+/* Also used in packages nlme, pcaPP */
 void optif9(int nr, int n, double *x,
 	    fcn_p fcn, fcn_p d1fcn, d2fcn_p d2fcn,
 	    void *state, double *typsiz, double fscale, int method,
