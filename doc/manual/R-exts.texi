@@ -17205,10 +17205,13 @@ functions documented in @file{Rmath.h}, as a standalone library
 functions documented in @ref{Numerical analysis subroutines} as from
 that header file.)
 
-The library is not built automatically when @R{} is installed, but can
-be built in the directory @file{src/nmath/standalone} in the @R{}
-sources: see the file @file{README} there.  To use the code in your own
-C program include
+The library is not built automatically when @R{} is installed.  For
+further deataila including how to build it, see
+@ref{The standalone Rmath library, , ,
+R-admin, R Installation and Administration}.
+
+
+To use the code in your own C program include
 
 @example
 @group
