@@ -124,6 +124,14 @@ R_size_t R_Decode2Long(char *p, int *ierr)
 #define NB 1000
 const char *EncodeLogical(int x, int w)
 {
+    /* fast path when 'w' fits exactly */
+    if(x == NA_LOGICAL) {
+	if(w == R_print.na_width) return CHAR(R_print.na_string);
+    } else if(x) {
+	if(w == 4) return "TRUE";
+    } else
+	if(w == 5) return "FALSE";
+    /* general case */
     static char buff[NB];
     if(x == NA_LOGICAL) snprintf(buff, NB, "%*s", min(w, (NB-1)), CHAR(R_print.na_string));
     else if(x) snprintf(buff, NB, "%*s", min(w, (NB-1)), "TRUE");
