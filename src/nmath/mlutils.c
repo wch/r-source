@@ -108,7 +108,7 @@ double R_pow_di(double x, int n)
 /* It is not clear why these are being defined in standalone nmath:
  * but that they are is stated in the R-admin manual.
  *
- * In R NA_AREAL is a specific NaN computed during initialization.
+ * In R NA_REAL is a specific NaN computed during initialization.
  */
 #if defined(__clang__) && defined(NAN)
 // C99 (optionally) has NAN, which is a float but will coerce to double.

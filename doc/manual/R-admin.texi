@@ -2899,7 +2899,7 @@ is the current working directory (in the build directory tree on a
 Unix-alike if that is separate from the sources).
 
 @file{Rmath.h} contains @samp{R_VERSION_STRING}, which is a character
-string containing the current @R{} version, for example @code{"4.4.0"}.
+string containing the current @R{} version, for example @code{"4.5.0"}.
 
 There is full access to @R{}'s handling of @code{NaN}, @code{Inf} and
 @code{-Inf} via special versions of the macros and functions
@@ -2932,7 +2932,14 @@ an entry point
 @end example
 
 @noindent
-to set its seeds).
+to set its seeds and
+
+@example
+get_seed(unsigned int *, unsigned int *)
+@end example
+
+@noindent
+to read the seeds).
 
 The facilities to change the normal random number generator are
 available through the constant @code{N01_kind}. This takes values
