@@ -1177,7 +1177,7 @@ msgstr ""
 
 #: src/main/attrib.c:363
 #, c-format
-msgid "cannot set attribute on a '%s'"
+msgid "cannot set an attribute on a '%s'"
 msgstr ""
 
 #: src/main/attrib.c:415

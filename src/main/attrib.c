@@ -355,12 +355,12 @@ static SEXP installAttrib(SEXP vec, SEXP name, SEXP val)
 
     switch(TYPEOF(vec)) {
     case CHARSXP:
-	error("cannot set attribute on a CHARSXP");
+	error("cannot set an attribute on a CHARSXP");
 	break;
     case SYMSXP:
     case BUILTINSXP:
     case SPECIALSXP:
-	error(_("cannot set attribute on a '%s'"), R_typeToChar(vec));
+	error(_("cannot set an attribute on a '%s'"), R_typeToChar(vec));
     default:
 	break;
     }
@@ -392,7 +392,7 @@ static SEXP removeAttrib(SEXP vec, SEXP name)
 {
     SEXP t;
     if(TYPEOF(vec) == CHARSXP)
-	error("cannot set attribute on a CHARSXP");
+	error("cannot set an attribute on a CHARSXP");
     if (name == R_NamesSymbol && isPairList(vec)) {
 	for (t = vec; t != R_NilValue; t = CDR(t))
 	    SET_TAG(t, R_NilValue);
@@ -1639,9 +1639,7 @@ attribute_hidden SEXP do_attrgets(SEXP call, SEXP op, SEXP args, SEXP env)
 	return obj;
     }
     else { // attr(obj, "name") <- value :
-	SEXP argList;
 	static SEXP do_attrgets_formals = NULL;
-
 	obj = CAR(args);
 	if (MAYBE_SHARED(obj) ||
 	    ((! IS_ASSIGNMENT_CALL(call)) && MAYBE_REFERENCED(obj)))
@@ -1653,9 +1651,8 @@ attribute_hidden SEXP do_attrgets(SEXP call, SEXP op, SEXP args, SEXP env)
 	if (do_attrgets_formals == NULL)
 	    do_attrgets_formals = allocFormalsList3(install("x"), install("which"),
 						    install("value"));
-	argList = matchArgs_NR(do_attrgets_formals, args, call);
+	SEXP argList = matchArgs_NR(do_attrgets_formals, args, call);
 	PROTECT(argList);
-
 	SEXP name = CADR(argList);
 	SEXP val = CADDR(argList);
 	if (!isValidString(name) || STRING_ELT(name, 0) == NA_STRING)
