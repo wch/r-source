@@ -17206,49 +17206,8 @@ functions documented in @ref{Numerical analysis subroutines} as from
 that header file.)
 
 The library is not built automatically when @R{} is installed.  For
-further deataila including how to build it, see
-@ref{The standalone Rmath library, , ,
-R-admin, R Installation and Administration}.
-
-
-To use the code in your own C program include
-
-@example
-@group
-#define MATHLIB_STANDALONE
-#include <Rmath.h>
-@end group
-@end example
-
-@noindent
-and link against @samp{-lRmath} (and perhaps @samp{-lm}).  There is an
-example file @file{test.c}.
-
-A little care is needed to use the random-number routines. You will
-need to supply the uniform random number generator
-
-@example
-double unif_rand(void)
-@end example
-
-@noindent
-or use the one supplied (and with a dynamic library or DLL you will have
-to use the one supplied, which is the @I{Marsaglia}-@I{multicarry} with an entry
-points
-
-@example
-set_seed(unsigned int, unsigned int)
-@end example
-
-@noindent
-to set its seeds and
-
-@example
-get_seed(unsigned int *, unsigned int *)
-@end example
-
-@noindent
-to read the seeds).
+further details see @ref{The standalone Rmath library, , , R-admin, R
+Installation and Administration}.
 
 
 @node Organization of header files
