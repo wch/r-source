@@ -298,14 +298,18 @@ attribute_hidden Rcomplex ComplexFromString(SEXP x, int *warn)
 
 attribute_hidden SEXP StringFromLogical(int x, int *warn)
 {
-    static SEXP TrueCh = NULL, FalseCh = NULL; /* constants, initialized when first used */
+    static SEXP lglcache = NULL;
     if (x == NA_LOGICAL) return NA_STRING;
-    else if (x)
-	 return TrueCh != NULL ? TrueCh  : (TrueCh  = mkChar("TRUE"));
-    else return FalseCh!= NULL ? FalseCh : (FalseCh = mkChar("FALSE"));
+    if (lglcache == NULL) {
+	lglcache = allocVector(STRSXP, 2);
+	R_PreserveObject(lglcache);
+	SET_STRING_ELT(lglcache, 0, mkChar("FALSE"));
+	SET_STRING_ELT(lglcache, 1, mkChar("TRUE"));
+    }
+    return STRING_ELT(lglcache, x ? 1 : 0);
 }
 
-/* The conversions for small non-negative integers are saved in a chache. */
+/* The conversions for small non-negative integers are saved in a cache. */
 #define SFI_CACHE_SIZE 512
 static SEXP sficache = NULL;
 
