@@ -505,10 +505,10 @@ installed file: the convention is to use file @file{inst/COPYRIGHTS}.
 
 @c DESCRIPTION field Date
 The optional @samp{Date} field gives the @emph{release date} of the
-current version of the package.  It is strongly recommended@footnote{and
-required by @acronym{CRAN}, so checked by @command{R CMD check
---as-cran}.} to use the @samp{yyyy-mm-dd} format conforming to the ISO
-8601 standard.
+current version of the package.  Using the @samp{yyyy-mm-dd} format of
+the ISO 8601 standard is strongly recommended@footnote{and this format
+is required by @acronym{CRAN}, so checked by @command{R CMD check
+--as-cran} if a @samp{Date} is provided}.
 
 The @samp{Depends}, @samp{Imports}, @samp{Suggests}, @samp{Enhances},
 @samp{LinkingTo} and @samp{Additional_repositories} fields are discussed
@@ -6390,7 +6390,7 @@ warning: argument 1 value '18446744073709551615' exceeds maximum object
 @item
 Some authors feel the need to print (using @code{Rprintf} or
 similar) vector lengths or indices which are of type @code{R_xlen_t}.
-That may be a 32-bit or (most commonly) 64-bit type but which integer
+That is (almost always) a 64-bit type but which integer
 type it is mapped to is platform-specific.  The safest way is to cast
 the length to double and use a double format.  So one could use
 something like
@@ -6419,7 +6419,7 @@ So the values will need to be cast to the type assumed by the format
 @I{Variadic} macros in C or C++ only portably allow a non-zero number of
 arguments, although some compilers have allowed zero, often with a
 warning. The latter was standardized in C++20 using the @code{__VA_OPT__}
-macro.  C23 also allows zero arguments in a similar way.
+macro.  C23 allows zero arguments in a similar way.
 
 @end itemize
 
@@ -6430,10 +6430,10 @@ by @I{Martyn Plummer}.
 Several OSes have or currently do provide multiple C++ runtimes ---
 Solaris did and the @I{LLVM} @command{clang} compiler has a native C++
 runtime library @code{libc++} but is also used with GCC's
-@code{libstdc++} (by default on Debian/Ubuntu).  This makes it unsafe to
-assume that OS libraries with a C++ interface are compatible with the
-C++ compiler specified by @R{}.  Many of these system libraries also
-have C interfaces which should be used in preference to their C++
+@code{libstdc++} (by default on Debian/Ubuntu/Fedora).  This makes it
+unsafe to assume that OS libraries with a C++ interface are compatible
+with the C++ compiler specified by @R{}.  Many of these system libraries
+also have C interfaces which should be used in preference to their C++
 interface.  Otherwise it is essential that a package checks
 compatibility in its @command{configure} script, including that C++ code
 using the library can both be linked @emph{and loaded}.
@@ -15733,8 +15733,8 @@ Cdgemm(const char *transa, const char *transb, const int *m,
 @end example
 
 @noindent
-Alternatively, do as @R{} does as from version 3.6.2 and pass
-the character length(s) from C to Fortran. A portable way to do this is
+Alternatively, do as @R{} does and pass the character length(s) from C
+to Fortran. A portable way to do this is
 @example
 // before any R headers, or define in PKG_CPPFLAGS
 #ifndef  USE_FC_LEN_T
@@ -15751,9 +15751,9 @@ the character length(s) from C to Fortran. A portable way to do this is
 @end example
 @noindent
 (Note there is no comma before or between the @code{FCONE} invocations.)
-It is strongly recommended that packages which call from C/C++
-BLAS/LAPACK routines with character arguments adopt this approach:
-packages not using it will fail to install as from @R{} 4.3.0.
+Packages which call from C/C++ BLAS/LAPACK routines with character
+arguments must adopt this approach: packages not using it will now fail
+to install.
 
 @node Fortran LOGICAL
 @subsection Fortran LOGICAL
@@ -16318,7 +16318,7 @@ bytes.)
 
 Some package maintainers may want to exclude the provision of
 @code{TRUE}, @code{FALSE}, @code{true}, @code{false} and @code{bool} to
-avoid clashes with other headers such as the IJG ones mentioned above.
+avoid clashes with other headers such as the @I{IJG} ones mentioned above.
 This cannot be done entirely (the last three are keywords in C23 and
 C++11) but as from @R{}@tie{}4.5.0 defining @code{R_INCLUDE_BOOLEAN_H}
 to @code{0} before including any header which includes this one (such as
@@ -17183,7 +17183,7 @@ points
 set_seed(unsigned int, unsigned int)
 @end example
 
-@noindent
+y@noindent
 to set its seeds and
 
 @example

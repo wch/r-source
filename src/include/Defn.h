@@ -2371,8 +2371,10 @@ extern const char *locale2charset(const char *);
 
 #ifndef NO_NLS
 # ifdef ENABLE_NLS
+// libintl.h might remap these to libintl_XXXX and normally does in GNU gettext
 #  include <libintl.h>
 #  ifdef Win32
+// assumes Windows is using GNU gettext with remapping.
 #   define _(String) libintl_gettext (String)
 #   undef gettext /* needed for graphapp */
 #  else
