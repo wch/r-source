@@ -1246,15 +1246,15 @@ void R_clrhash(R_hashtab_type h);
 void (SET_TYPEOF)(SEXP x, int v); // used by Rcpp and much more
 // used by Rcpp (not?), Matrix and more and in an example in R-exts.
 void (SET_OBJECT)(SEXP x, int v); // used by Rcpp (not?), Matrix and more
-void (SET_S4_OBJECT)(SEXP x); // used by Rcpp (not?) RTMB RcppInt64 data.table fstcore nanotime qs redland tau this.path tiblle
-void (UNSET_S4_OBJECT)(SEXP x); // used by Rcpp (not?) collapse data.table essentials slam vctrs
-const char *R_curErrorBuf(void); // used by Rserve gert unix
-int (IS_SCALAR)(SEXP x, int type); // used by rbedrock symengine this.path
-Rboolean Rf_psmatch(const char *, const char *, Rboolean); // match.c,  used by rgl
+void (SET_S4_OBJECT)(SEXP x); // used by essentials qs redland tibble vectrs
+void (UNSET_S4_OBJECT)(SEXP x); // used by essentials vectrs
+const char *R_curErrorBuf(void); // used by Rserve
+int (IS_SCALAR)(SEXP x, int type);
+Rboolean Rf_psmatch(const char *, const char *, Rboolean); // match.c,  used by rgl and in WRE
 
 /* used in a couple of packages but should probably be dropped 
-   error_return: grr nanonext rJava rbedrock
-   errorcall_return: Runuran(with call=NULL)
+   error_return: grr rJava rbedrock
+   errorcall_return: formerly Runuran(with call=NULL)
 */
 				/* match(.) NOT reached : for -Wall */
 #define error_return(msg)	{ Rf_error(msg);	   return R_NilValue; }
@@ -1266,29 +1266,29 @@ int  (SETLEVELS)(SEXP x, int v); // used by qs quotedargs
 
 // used by admisc arcpbf b64 box clarabel collapse declared drake fcl rlang this.path
 void (SET_ENVFLAGS)(SEXP x, int v);
-void SET_FRAME(SEXP x, SEXP v); // used by cli mmap qs webfakes
-void SET_ENCLOS(SEXP x, SEXP v); // used by arcpbf b64 clarabel cli fcl magrittr mmap qs rlang  webfakes
-void SET_HASHTAB(SEXP x, SEXP v); // used by cli mmap qs webfakes
+void SET_FRAME(SEXP x, SEXP v); // used by mmap qs
+void SET_ENCLOS(SEXP x, SEXP v); // used by magrittr mmap qs rlang vecrs
+void SET_HASHTAB(SEXP x, SEXP v); // used mmap qs
 
-// used by S7 arcpbf b64 clarabel dplyr fcl magrittr nseval quotedargs this.path
+// used by dplyr magrittr quotedargs
 void SET_PRENV(SEXP x, SEXP v); 
 void SET_PRVALUE(SEXP x, SEXP v);
 void SET_PRCODE(SEXP x, SEXP v); 
 
-void *(STDVEC_DATAPTR)(SEXP x); // used by vctrs vroom
+void *(STDVEC_DATAPTR)(SEXP x); // used by stringfish vctrs vroom
 
-/* Growable vector support */ // used by multbxxc
+/* Growable vector support */ // formerly used by multbxxc
 int (IS_GROWABLE)(SEXP x);
 void (SET_GROWABLE_BIT)(SEXP x);
 
-// used in quotedargs
+// no longer used
 #define BCODE_CONSTS(x) CDR(x) // re-enable in Defn.h after removing here
 void (SET_NAMED)(SEXP x, int v); // used by fastmatch quotedargs
 
-// used in igraph lazyeval nseval rlang
+// R_PromiseExp used in lazyeval precondition rlang tibblify vctrs
 #define PREXPR(e) R_PromiseExpr(e)
 
-// used in rlang
+// foremerly used in rlang
 #define BODY_EXPR(e) R_ClosureExpr(e)
 
 // used by BioC::matter; might be reasonable to include in API

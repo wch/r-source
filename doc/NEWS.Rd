@@ -5,6 +5,18 @@
 \title{R News}
 \encoding{UTF-8}
 
+
+\section{\Rlogo CHANGES IN R 4.5.0 patched}{
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item Standalone \code{nmath} can be built with early-2025
+      versions of \command{clang}-based compilers such as LLVM
+      \command{clang}\sspace{}20, Apple \command{clang}\sspace{}17 and Intel
+      \command{icx}\sspace{}2025.0.
+    }
+  }
+}
+
 \section{\Rlogo CHANGES IN R 4.5.0}{
   %% \subsection{SIGNIFICANT USER-VISIBLE CHANGES}{
   %%   \itemize{
