@@ -233,7 +233,6 @@ print.help_files_with_topic <- function(x, ...) # ...  may contain  msg=FALSE
                 else ""
     texfile <- paste0(topic, ".tex")
     if(nzchar(opt <- Sys.getenv("R_RD4PDF"))) opt else "times,inconsolata"
-    has_figure <- any(grepl("\\Figure", lines))
     cat("\\documentclass[", getOption("papersize"), "paper]{article}\n",
         "\\usepackage[", opt, "]{Rd}\n",
         if(nzchar(encoding)) sprintf("\\usepackage[%s]{inputenc}\n", encoding),
@@ -243,7 +242,7 @@ print.help_files_with_topic <- function(x, ...) # ...  may contain  msg=FALSE
         file = texfile, sep = "")
     file.append(texfile, file)
     cat("\\end{document}\n", file = texfile, append = TRUE)
-    texfile
+    structure(texfile, has_figure = any(grepl("\\Figure", lines)))
 }
 
 ## "static": _only_ called once above for type == "pdf" : currently  "offline" <==> {latex -> pdf}
@@ -253,7 +252,7 @@ print.help_files_with_topic <- function(x, ...) # ...  may contain  msg=FALSE
     texfile <- .help_topic_latex(file, topic)
     on.exit(unlink(texfile)) ## ? leave to helper
     helper <- get0("offline_help_helper", envir = .GlobalEnv) %||% offline_help_helper # <-> below
-    if (has_figure)
+    if (attr(texfile, "has_figure"))
          helper(texfile, type, texinputs=texinputs, msg=msg)
     else helper(texfile, type,                      msg=msg)
     invisible()
