@@ -150,7 +150,7 @@ strptime(x, format, tz = "")
       undefined if used for input in such a locale.
 
       For input the match is case-insensitive.  Note that
-      English locales do not necessarily use \code{AM/PM}: for eacmple,
+      English locales do not necessarily use \code{AM/PM}: for example,
       \code{a.m./p.m.} has been encountered.
 
       Some platforms accept \code{\%P} for output, which uses a lower-case
@@ -421,8 +421,9 @@ format(Sys.time(), "\%a \%b \%d \%X \%Y \%Z")
 format(Sys.time(), "\%H:\%M:\%OS3")
 }% \dont.. %
 ## read in date info in format 'ddmmmyyyy'
-## This will give NA(s) in some non-English locales; setting the C locale
-## as in the commented lines will overcome this on most systems.
+## This will give NA(s) in some locales (especially non-English ones);
+## setting the C locale as in the commented lines will overcome this on
+## most systems.
 ## lct <- Sys.getlocale("LC_TIME"); Sys.setlocale("LC_TIME", "C")
 x <- c("1jan1960", "2jan1960", "31mar1960", "30jul1960")
 z <- strptime(x, "\%d\%b\%Y")
