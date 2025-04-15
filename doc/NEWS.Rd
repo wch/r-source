@@ -72,7 +72,7 @@
   \subsection{BUG FIXES}{
     \itemize{
       \item Standalone \code{nmath} can be built with early-2025
-      versions of \command{clang}-based compilers such as LLVM
+      versions of \command{clang}-based compilers such as \I{LLVM}
       \command{clang}\sspace{}20, Apple \command{clang}\sspace{}17 and Intel
       \command{icx}\sspace{}2025.0.
     }

@@ -16739,7 +16739,7 @@ void F77_NAME(dqrdc2)(double *x, int *ldx, int *n, int *p,
                       double *qraux, int *pivot, double *work);
 @end example
 @noindent
-For further datails see their source files in directory @file{src/Appl}
+For further details see their source files in directory @file{src/Appl}
 in the @R{} sources or @uref{https://netlib.org/linpack/}.
 @code{dqrdc2} is an extensive @R{} modification to LINPACK's
 @code{dqrdc} which uses column pivoting and computes the (numerical)
