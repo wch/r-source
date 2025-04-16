@@ -296,7 +296,7 @@ attribute_hidden Rcomplex ComplexFromString(SEXP x, int *warn)
 }
 
 
-attribute_hidden SEXP StringFromLogical(int x, int *warn)
+attribute_hidden SEXP StringFromLogical(int x)
 {
     static SEXP lglcache = NULL;
     if (x == NA_LOGICAL) return NA_STRING;
@@ -423,7 +423,7 @@ static SEXP coerceToSymbol(SEXP v)
     PROTECT(v);
     switch(TYPEOF(v)) {
     case LGLSXP:
-	ans = StringFromLogical(LOGICAL_ELT(v, 0), &warn);
+	ans = StringFromLogical(LOGICAL_ELT(v, 0));
 	break;
     case INTSXP:
 	ans = StringFromInteger(INTEGER_ELT(v, 0), &warn);
@@ -759,7 +759,7 @@ static SEXP coerceToString(SEXP v)
     case LGLSXP:
 	for (i = 0; i < n; i++) {
 //	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
-	    SET_STRING_ELT(ans, i, StringFromLogical(LOGICAL_ELT(v, i), &warn));
+	    SET_STRING_ELT(ans, i, StringFromLogical(LOGICAL_ELT(v, i)));
 	}
 	break;
     case INTSXP:

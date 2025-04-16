@@ -1957,7 +1957,7 @@ int Rf_LogicalFromString(SEXP, int*);
 int Rf_IntegerFromString(SEXP, int*);
 double Rf_RealFromString(SEXP, int*);
 Rcomplex Rf_ComplexFromString(SEXP, int*);
-SEXP Rf_StringFromLogical(int, int*);
+SEXP Rf_StringFromLogical(int);
 SEXP Rf_StringFromInteger(int, int*);
 SEXP Rf_StringFromReal(double, int*);
 SEXP Rf_StringFromComplex(Rcomplex, int*);
