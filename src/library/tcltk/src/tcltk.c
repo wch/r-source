@@ -346,9 +346,11 @@ SEXP RTcl_ObjAsCharVector(SEXP args)
     obj = (Tcl_Obj *) R_ExternalPtrAddr(CADR(args));
     if (!obj) error(_("invalid tclObj -- perhaps saved from another session?"));
     ret = Tcl_ListObjGetElements(RTcl_interp, obj, &count, &elem);
-    if (ret != TCL_OK || count > R_XLEN_T_MAX)
+    if (ret != TCL_OK)
 	return RTcl_StringFromObj(args);
-	
+    if (sizeof(Tcl_Size) > sizeof(R_xlen_t) && count > R_XLEN_T_MAX)
+	return RTcl_StringFromObj(args);
+    
     PROTECT(ans = allocVector(STRSXP, (R_xlen_t) count));
     for (i = 0 ; i < count ; i++) {
 	char *s;
@@ -427,9 +429,11 @@ SEXP RTcl_ObjAsDoubleVector(SEXP args)
 
     /* Then try as list */
     ret = Tcl_ListObjGetElements(RTcl_interp, obj, &count, &elem);
-    if (ret != TCL_OK || count > R_XLEN_T_MAX) /* didn't work, return NULL */
+    if (ret != TCL_OK) /* didn't work, return NULL */
 	return R_NilValue;
-	
+    if (sizeof(Tcl_Size) > sizeof(R_xlen_t) && count > R_XLEN_T_MAX)
+	return R_NilValue;
+
     ans = allocVector(REALSXP, (R_xlen_t) count);
     for (i = 0 ; i < count ; i++){
 	ret = Tcl_GetDoubleFromObj(RTcl_interp, elem[i], &x);
@@ -492,9 +496,11 @@ SEXP RTcl_ObjAsIntVector(SEXP args)
 
     /* Then try as list */
     ret = Tcl_ListObjGetElements(RTcl_interp, obj, &count, &elem);
-    if (ret != TCL_OK || count > R_XLEN_T_MAX) /* didn't work, return NULL */
+    if (ret != TCL_OK) /* didn't work, return NULL */
 	return R_NilValue;
-    
+    if (sizeof(Tcl_Size) > sizeof(R_xlen_t) && count > R_XLEN_T_MAX)
+	return R_NilValue;
+
     ans = allocVector(INTSXP, (R_xlen_t) count);
     for (i = 0 ; i < count ; i++){
 	ret = Tcl_GetIntFromObj(RTcl_interp, elem[i], &x);
@@ -549,7 +555,8 @@ SEXP RTcl_ObjAsRawVector(SEXP args)
     /* Then try as list */
     if (Tcl_ListObjGetElements(RTcl_interp, obj, &count, &elem)
 	!= TCL_OK) return R_NilValue;
-    if (count > R_XLEN_T_MAX) return R_NilValue;
+    if (sizeof(Tcl_Size) > sizeof(R_xlen_t) && count > R_XLEN_T_MAX)
+	return R_NilValue;
     
     PROTECT(ans = allocVector(VECSXP, (R_xlen_t) count));
     for (i = 0 ; i < count ; i++) {
