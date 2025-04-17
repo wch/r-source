@@ -3495,8 +3495,9 @@ the Tcl and Tk libraries and for finding the @file{tcl.h} and
 versions of Tcl/Tk installed, specifying the paths to the correct config
 files may be necessary to avoid confusion between them.
 
-Versions of Tcl/Tk up to 8.5.19 and 8.6.12 have been tested (including
-most versions of 8.4.x, but not recently).
+Versions of Tcl/Tk up to 8.5.19 and 8.6.13 have been tested (including
+most versions of 8.4.x, but not recently). Tcl/Tk 9 is supported as from
+@R{} 4.5.1.
 
 Note that the @file{tk.h} header includes@footnote{This is true even for
 the `Aqua' version of Tk on macOS, but distributions of that include a
