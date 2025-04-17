@@ -1,7 +1,7 @@
 #  File src/library/base/baseloader.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2020 The R Core Team
+#  Copyright (C) 1995-2025 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -107,8 +107,7 @@ is.name <- is.symbol
 ## populate C/Fortran symbols
 local({
     routines <- getDLLRegisteredRoutines("base")
-    for (i in c("dchdc", # chol, deprecated
-                "dqrcf", "dqrdc2", "dqrqty", "dqrqy", "dqrrsd", "dqrxb", # qr
+    for (i in c("dqrcf", "dqrdc2", "dqrqty", "dqrqy", "dqrrsd", "dqrxb", # qr
                 "dtrco")) # .kappa_tri
         assign(paste0(".F_", i), routines[[3]][[i]], envir = .BaseNamespaceEnv)
     for(i in 1:2)

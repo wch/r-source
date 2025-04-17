@@ -1,6 +1,6 @@
 % File src/library/base/man/base-internal.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2023 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{base-internal}
@@ -38,7 +38,7 @@
 \alias{.C_R_addTaskCallback}
 \alias{.C_R_getTaskCallbackNames}
 \alias{.C_R_removeTaskCallback}
-\alias{.F_dchdc}
+%\alias{.F_dchdc} long defunct, removed in R 4.6.0
 \alias{.F_dqrcf}
 \alias{.F_dqrdc2}
 \alias{.F_dqrqty}
