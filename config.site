@@ -71,9 +71,9 @@
 ## Ditto for a compiler that supports C23 features.
 ## For example 'CC23=clang-15 -std=gnu2x'
 ## This is the default for GCC >= 15.
-## -std=gnu23 is addeds where supported
-## (it is by GCC >= 14, LLVM clang >= 18 and Apple Clang >= 17).
-## -std=gnu2x is supported by at least GCC 12-14, LLVM clang >= 15 and Apple clang >= 16 
+## Otherwise -std=gnu23 is added where supported
+## (it is by GCC 14, LLVM clang >= 18 and Apple Clang >= 17).
+## -std=gnu2x is supported by at least GCC 12-13, LLVM clang >= 15 and Apple clang >= 16 
 ## Default to CC and CFLAGS with any -std options removed, then with
 ## -std=gmu23 then -std=gmu2x appended to CC
 ## CC23=
