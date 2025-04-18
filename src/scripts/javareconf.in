@@ -222,20 +222,23 @@ if test "${JAVA_LIBS}" = '~autodetect~'; then
 		break
 	    fi
 	done
+	IFS=${save_IFS}
 	# Then try some heuristics using sun.boot.library.path
 	if test ${has_libjvm} = no; then
 	    boot_path=`"$JAVA" -classpath "${tools_classpath}" getsp sun.boot.library.path| ${SED-sed} -e 's/:$//' -e 's/^://'`
 	    if test -n "${boot_path}"; then
-		for dir in "${boot_path}" "${boot_path}/client" "${boot_path}/server"; do
-		    if test -f "$dir/libjvm${DYLIB_EXT}"; then
+		# libjvm is typically in the variant subdirectory. For variants
+		# see make/autoconf/hotspot.m4 in JDK sources:
+		VALID_JVM_VARIANTS="server client minimal core zero custom"
+		for dir in '' ${VALID_JVM_VARIANTS}; do
+		    if test -f "${boot_path}/$dir/libjvm${DYLIB_EXT}"; then
 			has_libjvm=yes
-			java_library_path="${dir}"
+			java_library_path="${boot_path}/$dir"
 			break
 		    fi
 		done
 	    fi
 	fi	
-	IFS=${save_IFS}
 	# replace occurrences of JAVA_HOME with $(JAVA_HOME)
 	# If JAVA_HOME was a link, it will be the canonical path we
 	# want to replace.  We need working realpath to determine what that is.
