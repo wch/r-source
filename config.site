@@ -44,6 +44,7 @@
 ## which runs the compiler, for example 'c99'.
 ## It is also necessary to set the architecture here, e.g. 'gcc -m32'.
 ## If this is a wrapper it should pass on --version to the real compiler.
+## This will be replaced by CC23 (see below) if a C23 compiler is found.
 ## CC=
 
 ## Debugging and optimization options for the C compiler.
@@ -69,11 +70,12 @@
 
 ## Ditto for a compiler that supports C23 features.
 ## For example 'CC23=clang-15 -std=gnu2x'
-## -std=gnu2x is supported by at least GCC >= 12, LLVM clang >= 15 and Apple clang >= 16 
-## Eventually -std=gnu23 will be supported and preferred
-## (and is by GCC >= 14 and LLVM >= 18).
-## Default to CC and CFLAGS with any -std options removed, then
-## -std=gmu2x appended to CC.
+## This is the default for GCC >= 15.
+## -std=gnu23 is addeds where supported
+## (it is by GCC >= 14, LLVM clang >= 18 and Apple Clang >= 17).
+## -std=gnu2x is supported by at least GCC 12-14, LLVM clang >= 15 and Apple clang >= 16 
+## Default to CC and CFLAGS with any -std options removed, then with
+## -std=gmu23 then -std=gmu2x appended to CC
 ## CC23=
 ## C23FLAGS=
 
