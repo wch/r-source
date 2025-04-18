@@ -75,6 +75,10 @@
       versions of \command{clang}-based compilers such as \I{LLVM}
       \command{clang}\sspace{}20, Apple \command{clang}\sspace{}17 and Intel
       \command{icx}\sspace{}2025.0.
+
+      \item Java detection in \code{javareconf} could not detect
+      \file{libjvm.*} in the \code{zero} variant of the JDK (\PR{18884}).
+      All valid variants as of JDK 24u are now supported.
     }
   }
 }
