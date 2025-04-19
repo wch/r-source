@@ -82,6 +82,13 @@ rownames(attr(tf, "factors"))[attr(tf, "specials")$s]
 
 ## we can keep the order by
 terms(y ~ x + x:z + s(x), specials = "s", keep.order = TRUE)
+
+## use of '::' in terms to be marked as special is *wrong*
+ff <- list(y ~        offset(w) + x1 +       s(x2),
+           y ~ stats::offset(w) + x1 + mgcv::s(x2))
+tt <- lapply(ff, terms, specials = c("s", "mgcv::s"))
+lapply(tt, attr, "offset")
+lapply(tt, attr, "specials")
 }
 %%--- MM: I would really like instructive examples here...
 \keyword{models}

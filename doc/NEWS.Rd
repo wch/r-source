@@ -15,6 +15,9 @@
   \subsection{NEW FEATURES}{
     \itemize{
       \item \code{str()} now shows more via \code{format()} for external pointers.
+
+      \item \code{terms(<formula>, specials = *)} now treats non-syntactic
+      specials more gracefully, thanks to \I{Mikael Jagan}'s \PR{18568}.
     }
   }
 
@@ -302,9 +305,6 @@
       \item \code{selectMethod(f, ..)} now keeps the function name if the
       function belongs to a group generic and the method is for the
       generic.
-
-      \item \code{terms(<formula>, specials = *)} now treats non-syntactic
-      specials more gracefully, thanks to \I{Mikael Jagan}'s \PR{18568}.
     }
   }
 

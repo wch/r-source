@@ -18,8 +18,9 @@
 }
 \arguments{
   \item{x}{a \code{\link{formula}}.}
-  \item{specials}{which functions in the formula should be marked as
-    special in the \code{terms} object?  A character vector or \code{NULL}.}
+  \item{specials}{an optional character vector listing names of
+    functions.  Calls to these functions in the formula are marked as
+    special in the \code{terms} object.}
   \item{abb}{Not implemented in \R; deprecated.}
   \item{data}{a data frame from which the meaning of the special symbol
     \code{.} can be inferred.  It is used only if there is a \code{.} in
@@ -36,6 +37,13 @@
   \item{allowDotAsName}{normally \code{.} in a formula refers to the
     remaining variables contained in \code{data}.  Exceptionally,
     \code{.} can be treated as a name for non-standard uses of formulae.}
+}
+\details{
+  Non-syntactic \code{specials} are supported since \R{} 4.6.0.
+  \code{specials="\var{pkg}::\var{name}"} marks as special calls
+  \code{`\var{pkg}::\var{name}`(\dots)} (note backticks) and \emph{not}
+  calls \code{\var{pkg}::\var{name}(\dots)}.  The reverse was true prior
+  to \R{} 4.6.0, but that was undocumented and accidental.
 }
 %% \note{
 %%   Not all of the options work in the same way that they did in S and not
