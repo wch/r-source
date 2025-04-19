@@ -11,7 +11,7 @@
 .rimage img { /* from knitr - for examples and demos */
     width: 96%;
     margin-left: 2%;
-} 	
+}
 
 .katex { font-size: 1.1em; }
 
@@ -78,6 +78,15 @@ h6 {
     color: rgb(40%, 40%, 40%);
     font-family: monospace;
     font-style: italic;
+}
+
+/* want small paragraph margins when used _inside_ *.Rd \item <......>
+   i.e.,   <dd> ... </dd>  and and <li> .... </li> : */
+dd p, li p {
+    margin-top:    0px;
+    margin-bottom: 0px;
+    padding-top:    0.4ex;
+    padding-bottom: 0.4ex;
 }
 
 img.toplogo {
