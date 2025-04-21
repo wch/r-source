@@ -253,8 +253,8 @@ print.help_files_with_topic <- function(x, ...) # ...  may contain  msg=FALSE
     on.exit(unlink(texfile)) ## ? leave to helper
     helper <- get0("offline_help_helper", envir = .GlobalEnv) %||% offline_help_helper # <-> below
     if (attr(texfile, "has_figure"))
-         helper(texfile, type, texinputs=texinputs, msg=msg)
-    else helper(texfile, type,                      msg=msg)
+         helper(texfile, type, msg=msg, texinputs=texinputs)
+    else helper(texfile, type, msg=msg)
     invisible()
 }
 
@@ -273,7 +273,7 @@ print.help_files_with_topic <- function(x, ...) # ...  may contain  msg=FALSE
 }
 
 
-offline_help_helper <- function(texfile, type, texinputs = NULL, msg = TRUE)
+offline_help_helper <- function(texfile, type, msg = TRUE, texinputs = NULL)
 {
     ## Some systems have problems with texfile names like ".C.tex"
     tf <- tempfile("tex", tmpdir = ".", fileext = ".tex"); on.exit(unlink(tf))
