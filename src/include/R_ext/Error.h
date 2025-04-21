@@ -35,12 +35,12 @@ extern "C" {
 /*
  * As this is sometimes an attribute, it should precede 'static' in a
  * function declaration.
- * gcc pre-15 requires it to precede 'attribute_hidden'.
+ * gcc 15 requires it to precede 'attribute_hidden'.
  * OTOH, '_Noreturn' is an obsolescent (in C23) function specifier.
  */
 #if defined NORET
 #elif (defined(__STDC_VERSION__) && __STDC_VERSION__ >= 202301L)
-// gcc 15 and clang 19-
+// gcc 15 LLVM clang 19- and Apple clang 17
 # define NORET [[noreturn]]
 #elif defined(__STDC_VERSION__) && __STDC_VERSION__ >= 201102L
 # define NORET _Noreturn
