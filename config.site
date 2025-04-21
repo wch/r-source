@@ -97,8 +97,7 @@
 ## no-return flag
 ## Header R-exts/Error.h contains alternaive definitions for the NORET
 ## macro, depending on the C standard found.  If the compiler does not
-## comply (and GCC pre=15 did not in 2024-12), use this to pick one of the
-## others, or even define to be empty.
+## comply, use this to pick one of the others, or even define to be empty.
 ## NORET=
 
 ## The following additional CFLAGS to be used only in the main

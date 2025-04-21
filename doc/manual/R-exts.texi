@@ -3162,7 +3162,7 @@ option which selects C23 if one is available.  Some compilers (including
 later have such an option.
 
 @c GCC 14, LLVM clang 18-20 and Apple clang 16 default to C17
-@c In 2025-01 GCC pre=15 defaulted to C23 (and later documented so)
+@c In 2025-01 GCC pre-15 defaulted to C23 (and later was documented so)
 The @command{configure} script in recent previous versions of @R{} aimed
 to choose a C compiler which supported C11: as the default in recent
 versions of @command{gcc} (prior to 15), @I{LLVM} @command{clang} and
@@ -6526,7 +6526,7 @@ to @code{PKG_CXXFLAGS} will allow this, but that flag is only accepted
 by recent versions of @I{LLVM} @command{clang} (and will not be in future)
 so needs a @command{configure} test.
 
-Pre=built versions of current @command{clang}/@code{libc++} are
+Pre-built versions of current @command{clang}/@code{libc++} are
 usually available from
 @uref{https://github.com/llvm/llvm-project/releases} for a wide range of
 platforms (but the Windows builds there are not compatible with
