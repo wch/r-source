@@ -1,7 +1,7 @@
 #  File src/library/utils/R/help.start.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2022 The R Core Team
+#  Copyright (C) 1995-2025 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -18,19 +18,24 @@
 
 help.start <-
     function (update = FALSE, gui = "irrelevant",
-              browser = getOption("browser"), remote = NULL)
+              lib.loc = .libPaths(),
+              browser = getOption("browser"), remote = NULL,
+              verbose = getOption("verbose"))
 {
     WINDOWS <- .Platform$OS.type == "windows"
     if (!WINDOWS) {
         ## should always be set, but might be empty
         if (!is.function(browser) &&
             (length(browser) != 1L || !is.character(browser) || !nzchar(browser)))
+
             stop("invalid browser name, check options(\"browser\").")
     }
+    if(!missing(lib.loc)) # --> default for make.packages.html(lib.loc = *), as called from httpd()
+        options(html_lib.loc = lib.loc)
     home <- if (is.null(remote)) {
         port <- tools::startDynamicHelp(NA)
         if (port > 0L) {
-            if (update) make.packages.html(temp = TRUE)
+            if (update) make.packages.html(lib.loc = lib.loc, temp = TRUE)
             paste0("http://127.0.0.1:", port)
         } else stop("help.start() requires the HTTP server to be running",
                     call. = FALSE)
@@ -46,11 +51,12 @@ help.start <-
                            exdent = 4L))
         writeLines(gettext("Otherwise, be patient ..."))
     }
-    browseURL(url, browser = browser)
+    browseURL(url, browser=browser, verbose=verbose)
     invisible()
 }
 
-browseURL <- function(url, browser = getOption("browser"), encodeIfNeeded=FALSE)
+browseURL <- function(url, browser = getOption("browser"), encodeIfNeeded=FALSE,
+                      verbose = getOption("verbose"))
 {
     WINDOWS <- .Platform$OS.type == "windows"
 
@@ -78,7 +84,9 @@ browseURL <- function(url, browser = getOption("browser"), encodeIfNeeded=FALSE)
       isLocal <- TRUE
     else
       isLocal <- FALSE
-
+    if(verbose)
+        cat(sprintf("browseURL() on unix-alike: browser='%s', isLocal=%s:\n",
+                    browser, as.character(isLocal)))
     ## escape characters.  ' can occur in URLs, so we must use " to
     ## delimit the URL.  We need to escape $, but "`\ do not occur in
     ## valid URLs (RFC 2396, on the W3C site).
@@ -96,6 +104,8 @@ browseURL <- function(url, browser = getOption("browser"), encodeIfNeeded=FALSE)
                          gsub("([,)$])", "%\\1", url), ")\"")
                }, quotedUrl)
     else quotedUrl
-    system(paste(browser, remoteCmd, "> /dev/null 2>&1 ||",
-                 browser, quotedUrl, "&"))
+    cmd <- paste(browser, remoteCmd, "> /dev/null 2>&1 ||",
+                 browser, quotedUrl, "&")
+    if(verbose) cat(sprintf("system(<cmd>), <cmd> := '%s'", cmd))
+    system(cmd)
 }

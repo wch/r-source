@@ -1,6 +1,6 @@
 % File src/library/utils/man/browseURL.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2022 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{browseURL}
@@ -11,7 +11,8 @@
 }
 \usage{
 browseURL(url, browser = getOption("browser"),
-          encodeIfNeeded = FALSE)
+          encodeIfNeeded = FALSE,
+          verbose = getOption("verbose"))
 }
 \arguments{
   \item{url}{a non-empty character string giving the URL to be loaded.
@@ -31,6 +32,8 @@ browseURL(url, browser = getOption("browser"),
     itself does encoding, and can be harmful for \samp{file://} URLs on some
     systems and for \samp{http://} URLs passed to some CGI applications.
     Fortunately, most URLs do not need encoding.}
+  \item{verbose}{logical indicating if information about the system
+    interface should be printed to the console.}
 }
 \details{
   \describe{
@@ -41,12 +44,12 @@ browseURL(url, browser = getOption("browser"),
   made manually or automatically when \R was configured.  (See
   \code{\link{Startup}} for where to override that default value.)
   To suppress showing URLs altogether, use the value \code{"false"}.
-  
+
   On many platforms it is best to set option \code{"browser"} to a
   generic program/script and let that invoke the user's choice of
   browser.  For example, on macOS use \command{open} and on many other
   Unix-alikes use \command{xdg-open}.
-  
+
   If \code{browser} supports remote control and \R knows how to perform
   it, the URL is opened in any already-running browser or a new one if
   necessary.  This mechanism currently is available for browsers which
@@ -67,7 +70,7 @@ browseURL(url, browser = getOption("browser"),
   (see \code{\link{URLencode}}).
 
   To suppress showing URLs altogether, set \code{browser = "false"}.
-  
+
   The behaviour for arguments \code{url} which are not URLs is
   platform-dependent.  Some platforms accept absolute file paths; fewer
   accept relative file paths.
@@ -106,7 +109,7 @@ browseURL("file://d:/R/R-2.5.1/doc/html/index.html",
   \samp{mailto:} may or may not (and if it does may not use the user's
   preferred email client).  However, modern browsers are unlikely to handle
   \samp{ftp://}.
-  
+
   For the \samp{file://} scheme the format accepted (if any) can depend on
   both browser and OS.
 }

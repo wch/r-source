@@ -18,6 +18,11 @@
 
       \item \code{terms(<formula>, specials = *)} now treats non-syntactic
       specials more gracefully, thanks to \I{Mikael Jagan}'s \PR{18568}.
+
+      \item \code{help.start()} gets a \code{lib.loc} option and its
+      default for \code{make.packages.html()} is enhanced to allow, e.g.,
+      fast access to \code{.Library} when that contains only base and
+      recommended packages.
     }
   }
 
@@ -41,7 +46,6 @@
 
   \subsection{UTILITIES}{
     \itemize{
-      % this will not be ported to R 4.5.0.
       \item \command{R CMD check} now reports further \command{clang} warnings
       including \code{-Wkeyword-macro}.  This is most commonly seen for
       the C23 keywords \code{bool}, \code{true} and \code{false}, but is
