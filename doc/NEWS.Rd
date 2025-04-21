@@ -89,6 +89,9 @@
       \item Java detection in \code{javareconf} could not detect
       \file{libjvm.*} in the \code{zero} variant of the JDK (\PR{18884}).
       All valid variants as of JDK 24u are now supported.
+
+      \item \code{factanal(.., rotation=*)} now correctly updates
+      \code{rotmat}, fixing \PR{18886}.
     }
   }
 }
