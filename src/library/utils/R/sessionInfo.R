@@ -1,7 +1,7 @@
 #  File src/library/utils/R/sessionInfo.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2024 The R Core Team
+#  Copyright (C) 1995-2025 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -165,10 +165,8 @@ print.sessionInfo <- function(x, locale = TRUE, tzone = locale,
     if (!is.null(x$running)) cat("Running under: ",  x$running, "\n", sep = "")
     cat("\n")
     cat("Matrix products: ", x$matprod, "\n", sep = "")
-    blas <- x$BLAS
-    if (is.null(blas)) blas <- ""
-    lapack <- x$LAPACK
-    if (is.null(lapack)) lapack <- ""
+    blas   <- x$BLAS   %||% ""
+    lapack <- x$LAPACK %||% ""
     if (blas == lapack && nzchar(blas))
         cat("BLAS/LAPACK:", blas)
     else {

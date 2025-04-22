@@ -1,7 +1,7 @@
 #  File src/library/utils/R/databrowser.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2020 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -199,7 +199,7 @@ wsbrowser <- function(IDS, IsRoot, IsContainer, ItemsPerContainer,
     entry <- function(ch) paste0("<td>",ch,"</td>")
     Par	<- function(ch) paste0("<P>",ch,"</P>")
     Trow <- function(N, ...) {
-	if(length(list(...)) != N) stop("wrong number of table row entries")
+	if(...length() != N) stop("wrong number of table row entries")
 	paste("<tr>", ..., "</tr>\n")
     }
     catRow <- function(...) cat(Trow(nCol, ...), file = Hfile)
