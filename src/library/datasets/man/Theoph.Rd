@@ -16,22 +16,22 @@
   \code{c("nfnGroupedData", "nfGroupedData", "groupedData", "data.frame")}
   containing the following columns:
   \describe{
-    \item{Subject}{
+    \item{\code{Subject}}{
       an ordered factor with levels \code{1}, \dots, \code{12}
       identifying the subject on whom the observation was made.  The
       ordering is by increasing maximum concentration of theophylline
       observed.
     }
-    \item{Wt}{
+    \item{\code{Wt}}{
       weight of the subject (kg).
     }
-    \item{Dose}{
+    \item{\code{Dose}}{
       dose of theophylline administered orally to the subject (mg/kg).
     }
-    \item{Time}{
+    \item{\code{Time}}{
       time since drug administration when the sample was drawn (hr).
     }
-    \item{conc}{
+    \item{\code{conc}}{
       theophylline concentration in the sample (mg/L).
     }
   }

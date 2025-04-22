@@ -29,13 +29,13 @@ beaver2
 
   The variables are as follows:
   \describe{
-    \item{day}{Day of observation (in days since the beginning of
+    \item{\code{day}}{Day of observation (in days since the beginning of
       1990), December 12--13 (\code{beaver1}) and November 3--4
       (\code{beaver2}).}
-    \item{time}{Time of observation, in the form \code{0330} for
+    \item{\code{time}}{Time of observation, in the form \code{0330} for
       3:30am}
-    \item{temp}{Measured body temperature in degrees Celsius.}
-    \item{activ}{Indicator of activity outside the retreat.}
+    \item{\code{temp}}{Measured body temperature in degrees Celsius.}
+    \item{\code{activ}}{Indicator of activity outside the retreat.}
   }
 }
 \note{

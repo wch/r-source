@@ -17,14 +17,14 @@
   \code{c("nfnGroupedData", "nfGroupedData", "groupedData", "data.frame")}
   containing the following columns:
   \describe{
-    \item{Tree}{
+    \item{\code{Tree}}{
       an ordered factor indicating the tree on which the measurement is
       made.  The ordering is according to increasing maximum diameter.
     }
-    \item{age}{
+    \item{\code{age}}{
       a numeric vector giving the age of the tree (days since 1968/12/31)
     }
-    \item{circumference}{
+    \item{\code{circumference}}{
       a numeric vector of trunk circumferences (mm).  This is probably
       \dQuote{circumference at breast height}, a standard measurement in
       forestry.

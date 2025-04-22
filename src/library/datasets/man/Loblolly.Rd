@@ -17,13 +17,13 @@
   \code{c("nfnGroupedData", "nfGroupedData", "groupedData", "data.frame")}
   containing the following columns:
   \describe{
-    \item{height}{
+    \item{\code{height}}{
       a numeric vector of tree heights (ft).
     }
-    \item{age}{
+    \item{\code{age}}{
       a numeric vector of tree ages (yr).
     }
-    \item{Seed}{
+    \item{\code{Seed}}{
       an ordered factor indicating the seed source for the tree.
       The ordering is according to increasing maximum height.
     }

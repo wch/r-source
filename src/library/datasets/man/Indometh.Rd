@@ -18,14 +18,14 @@
   \code{c("nfnGroupedData", "nfGroupedData", "groupedData", "data.frame")}
   containing the following columns:
  \describe{
-    \item{Subject}{
+    \item{\code{Subject}}{
       an ordered factor with containing the subject codes.  The
       ordering is according to increasing maximum response.
     }
-    \item{time}{
+    \item{\code{time}}{
       a numeric vector of times at which blood samples were drawn (hr).
     }
-    \item{conc}{
+    \item{\code{conc}}{
       a numeric vector of plasma concentrations of indometacin (\abbr{mcg}/ml).
     }
   }
