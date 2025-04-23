@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2025-01-24 r87624) -- "Unsuffered Consequences"
+R Under development (unstable) (2025-04-22 r88173) -- "Unsuffered Consequences"
 Copyright (C) 2025 The R Foundation for Statistical Computing
 Platform: aarch64-apple-darwin24.2.0
 
@@ -17986,6 +17986,35 @@ attr(,"response")
 [1] 1
 attr(,".Environment")
 <environment: R_GlobalEnv>
+> 
+> ## use of '::' in terms to be marked as special is *wrong*
+> ff <- list(y ~        offset(w) + x1 +       s(x2),
++            y ~ stats::offset(w) + x1 + mgcv::s(x2))
+> tt <- lapply(ff, terms, specials = c("s", "mgcv::s"))
+> lapply(tt, attr, "offset")
+[[1]]
+[1] 2
+
+[[2]]
+NULL
+
+> lapply(tt, attr, "specials")
+[[1]]
+[[1]]$s
+[1] 4
+
+[[1]]$`mgcv::s`
+NULL
+
+
+[[2]]
+[[2]]$s
+NULL
+
+[[2]]$`mgcv::s`
+NULL
+
+
 > 
 > 
 > 
