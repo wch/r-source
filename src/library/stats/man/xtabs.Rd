@@ -1,6 +1,6 @@
 % File src/library/stats/man/xtabs.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2024 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{xtabs}
@@ -35,7 +35,7 @@ xtabs(formula = ~., data = parent.frame(), subset, sparse = FALSE,
     to be used.}
   \item{sparse}{logical specifying if the result should be a
     \emph{sparse} matrix, i.e., inheriting from
-    \code{\link[Matrix:sparseMatrix-class]{sparseMatrix}}%\linkS4class{sparseMatrix}.
+    \code{\linkS4class[Matrix]{sparseMatrix}}.
     Only works for two factors (since there
     are no higher-order sparse array classes yet).
   }
@@ -92,8 +92,7 @@ xtabs(formula = ~., data = parent.frame(), subset, sparse = FALSE,
     "table")}, with a \code{"call"} attribute storing the matched call.
 
   When \code{sparse = TRUE}, a sparse numeric matrix, specifically an
-  object of S4 class %\linkS4class{dgTMatrix}
-  \code{\link[Matrix:dgTMatrix-class]{dgTMatrix}} from package
+  object of S4 class \linkS4class[Matrix]{dgTMatrix} from package
   \CRANpkg{Matrix}.
 }
 \seealso{
@@ -101,8 +100,8 @@ xtabs(formula = ~., data = parent.frame(), subset, sparse = FALSE,
   \code{\link{as.data.frame.table}} which is the inverse operation of
   \code{xtabs} (see the \code{DF} example below).
 
-  \code{\link[Matrix:sparseMatrix-class]{sparseMatrix}} on sparse
-  matrices in package \CRANpkg{Matrix}.
+  \code{\linkS4class[Matrix]{sparseMatrix}} on sparse matrices in package
+  \CRANpkg{Matrix}.
 }
 \examples{
 ## 'esoph' has the frequencies of cases and controls for all levels of

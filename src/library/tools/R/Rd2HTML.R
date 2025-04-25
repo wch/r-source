@@ -35,6 +35,8 @@ get_link <- function(arg, tag, Rdfile) {
     option <- attr(arg, "Rd_option")
 
     topic <- dest <- paste(unlist(arg), collapse = "")
+    if (tag == "\\linkS4class") dest <- paste0(dest, "-class")
+
     targetfile <- NULL
     pkg <- NULL
     if (!is.null(option)) {
@@ -55,7 +57,6 @@ get_link <- function(arg, tag, Rdfile) {
     } else if (!isTEXT)
         stopRd(arg, Rdfile, "Bad \\link topic -- must be text")
 
-    if (tag == "\\linkS4class") dest <- paste0(dest, "-class")
     list(topic = topic, dest = dest, pkg = pkg, targetfile = targetfile)
 }
 

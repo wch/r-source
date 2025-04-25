@@ -23,6 +23,14 @@
       default for \code{make.packages.html()} is enhanced to allow, e.g.,
       fast access to \code{.Library} when that contains only base and
       recommended packages.
+
+      \item In \file{*.Rd} help files, the \verb{\linkS4class} macro now
+      also works for links to other packages via
+      \verb{\linkS4class[<pkg>]{<myClass>}}, much nicer than the \dQuote{workaround}
+      \verb{\link[<pkg>:<myClass>-class]{<myClass>}} necessary in earlier
+      versions of \R.
+
+      Packages with the new syntax need to formally depend on \samp{R >= 4.6.0}.
     }
   }
 

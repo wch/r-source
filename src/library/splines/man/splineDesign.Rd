@@ -35,8 +35,7 @@ spline.des  (knots, x, ord = 4, derivs, outer.ok = FALSE,
   \item{outer.ok}{logical indicating if \code{x} should be allowed
     outside the \emph{inner} knots, see the \code{x} argument.}
   \item{sparse}{logical indicating if the result should inherit from class
-    \code{"\link[Matrix:sparseMatrix-class]{sparseMatrix}"} (from package \CRANpkg{Matrix}).}
-%    \code{\linkS4class{sparseMatrix}} (from package \CRANpkg{Matrix}).}
+    \code{"\linkS4class[Matrix]{sparseMatrix}"} (from package \CRANpkg{Matrix}).}
 }
 \value{
   A matrix with \code{length(x)} rows and \code{length(knots) - ord}

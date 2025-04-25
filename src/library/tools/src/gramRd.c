@@ -3706,7 +3706,6 @@ static keywords[] = {
     
     { "\\emph",    LATEXMACRO },    
     { "\\file",    LATEXMACRO },
-    { "\\linkS4class", LATEXMACRO },
     { "\\pkg",	   LATEXMACRO },
     { "\\sQuote",  LATEXMACRO },
     
@@ -3747,6 +3746,7 @@ static keywords[] = {
        one LaTeX-like argument */
        
     { "\\link",    OPTMACRO },
+    { "\\linkS4class", OPTMACRO },
        
     /* These markup macros require an R-like text argument */
     
