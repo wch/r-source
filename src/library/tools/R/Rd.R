@@ -868,7 +868,12 @@ function(x)
             out <<- rbind(out, val)
         } else if(identical(tag, "\\linkS4class")) {
             arg <- as.character(e[[1L]])
-            val <- c(arg, sprintf("=%s-class", arg))
+            opt <- attr(e, "Rd_option")
+            val <- if(is.null(opt))
+                       c(arg, sprintf("=%s-class", arg))
+                   else
+                       c(sprintf("%s-class", arg),
+                         as.character(opt))
             out <<- rbind(out, val)
         }
         if(is.list(e)) lapply(e, recurse)
