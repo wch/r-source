@@ -8239,6 +8239,24 @@ function(dir, localOnly = FALSE, pkgSize = NA)
         }
     }
 
+    ## When running the incoming check code as part of the regular
+    ## checks we need to drop the parts which are really specific for
+    ## submission checks.  (Of course, ideally we would have skipped
+    ## them above.)
+    if(config_val_to_logical(Sys.getenv("_R_CHECK_CRAN_INCOMING_DROP_SUBMISSION_ONLY_",
+                                        "FALSE"))) {
+        out[c("descr_bad_initial",
+              "descr_bad_start", 
+              "title_includes_name",
+              "title_case",
+              "extensions",
+              "pointers",
+              "fields",
+              "BUGS",
+              "version_with_leading_zeroes",
+              "version_with_large_components")] <- NULL
+    }
+
     ## Checks from here down require Internet access, so drop out now if we
     ## don't want that.
     if (localOnly)
