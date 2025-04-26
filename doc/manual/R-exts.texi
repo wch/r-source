@@ -17285,6 +17285,7 @@ use.
 @eapihdr R_ext/QuartzDevice.h
 @eapihdr R_ext/GraphicsEngine.h
 @eapihdr R_ext/GraphicsDevice.h
+@eapihdr R_ext/Connections.h
 
 Let us re-iterate the advice to include in C++ code system headers
 before the @R{} header files, especially @file{Rinternals.h} (included

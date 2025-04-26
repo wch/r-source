@@ -705,9 +705,9 @@ nonAPI <- c("chol_", "chol2inv_", "cg_", "ch_", "rg_",
             "Rf_isFrame",
             "BODY", "FORMALS", "CLOENV", "ENCLOS",
             "IS_ASCII", "IS_UTF8",
-## in the non-API header R_ext/Connections.h
-            "R_new_custom_connection", "R_ReadConnection",
-            "R_WriteConnection", "R_GetConnection",
+## in the experimental API header R_ext/Connections.h
+##            "R_new_custom_connection", "R_ReadConnection",
+##            "R_WriteConnection", "R_GetConnection",
 
 ## in ../../../include/R_ext/Applic.h -- these are API now:
 ## 	"dqrcf_", "dqrqty_", "dqrqy_", "dqrrsd_", "dqrxb_",
