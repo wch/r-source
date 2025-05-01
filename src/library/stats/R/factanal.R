@@ -38,7 +38,7 @@ factanal <-
             unit <- c(1, -1)[neg+1L] # = ifelse(neg, -1, 1)
         ## FIXME:  <M>  %*%  diag(unit)  can be made faster (for non-small cases) below
         if(has.rot)
-            rotm <- rotm %*% diag(unit)[, io.ssq]
+            rotm <- rotm[, io.ssq] %*% diag(unit)
         if (has.Ph) {
             attr(Lambda, "covariance") <-
                 diag(unit) %*% Phi[io.ssq, io.ssq] %*% diag(unit)
