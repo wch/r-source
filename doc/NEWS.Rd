@@ -104,6 +104,9 @@
 
       \item \code{factanal(.., rotation=*)} now correctly updates
       \code{rotmat}, fixing \PR{18886}.
+
+      \item \code{dnbinom(<large>, <muchlarger>, ..)} now is \code{0}
+      correctly, instead of \code{NaN} or \code{Inf} sometimes.
     }
   }
 }

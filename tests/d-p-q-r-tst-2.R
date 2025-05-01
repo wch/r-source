@@ -571,19 +571,19 @@ stopifnot(is.nan(p) || p == 1)
 L <- 1e308; mu <- 5
 x <- c(0:3, 1e10, 1e100, L, Inf)
 MxM <- .Machine$double.xmax
-xL <- c(2^(1000+ c(1:23, 23.5, 23.9, 24-1e-13)), MxM, Inf)
+xL <- c(2^(1000+ c(1:23, 23.5, 23.9, 24-1e-13)), L, MxM, Inf)
 (dP <- dpois(xL, mu)) # all 0
 (pP <- ppois(xL, mu)) # all 1
 stopifnot(dP == 0, pP == 1, identical(pP, pgamma(mu, xL + 1, 1., lower.tail=FALSE)))
 ## cbind(xL, dP, pP)
 
 (dLmI <- dnbinom(xL, mu = 1, size = Inf))  # all ==  0
-## FIXME ?!:  MxM/2 seems +- ok ??
+## FIXME (boundary case, still!);  MxM/2 seems +- ok ??
 (dLmM <- dnbinom(xL, mu = 1, size = MxM))  # all NaN but the last
 (dLpI <- dnbinom(xL, prob=1/2, size = Inf))#  ditto
 (dLpM <- dnbinom(xL, prob=1/2, size = MxM))#  ditto
 
-d <- dnbinom(x,  mu = mu, size = Inf) # gave NaN (for 0 and L), now all 0
+d <- dnbinom(x,  mu = mu, size = Inf) # gave NaN (for 0 and L), now 0 for large x
 p <- pnbinom(x,  mu = mu, size = Inf) # gave all NaN, now uses ppois(x, mu)
 pp <- (0:16)/16
 q <- qnbinom(pp, mu = mu, size = Inf) # gave all NaN
@@ -597,6 +597,15 @@ stopifnot(exprs = {
     q == c(0, 2, 3, 3, 3, 4, 4, 4, 5, 5, 6, 6, 6, 7, 8, 9, Inf)
     q == qpois(pp, mu)
     identical(NI, N2)
+})
+(sz <- outer(outer(c(1,2,5), 10^(0:3)), c(1e172, 1e176, 1e180)))
+stopifnot( exprs = {# the  x < 1e-10*size case; "easily" fixed now
+    dnbinom(x=1e295, size = 1e306*(1:100), mu = 5)    == 0 # had many Inf + some NaN
+    dnbinom(x=1e295, size = 1e306*(1:100), prob= .99) == 0 #  "   "    "     "
+    dnbinom(x=1e160, size = sz, mu = 5)     == 0 # gave all Inf
+    dnbinom(x=1e160, size = sz, prob = .99) == 0 #  (ditto)
+    ## size = Inf (and not so large x
+    dnbinom(x=10^(0:298), size=Inf, prob=.999) == 0 # had NaN from 10^155 on
 })
 options(op)
 ## size = Inf -- mostly gave NaN  in R <= 3.2.3
