@@ -576,12 +576,15 @@ xL <- c(2^(1000+ c(1:23, 23.5, 23.9, 24-1e-13)), L, MxM, Inf)
 (pP <- ppois(xL, mu)) # all 1
 stopifnot(dP == 0, pP == 1, identical(pP, pgamma(mu, xL + 1, 1., lower.tail=FALSE)))
 ## cbind(xL, dP, pP)
-
+## dbinom(*, size=Inf, ..):
+stopifnot(dbinom(2^c(0:1023, 1023.999), size=Inf, prob = .1) == 0) # were all  NaN
 (dLmI <- dnbinom(xL, mu = 1, size = Inf))  # all ==  0
-## FIXME (boundary case, still!);  MxM/2 seems +- ok ??
-(dLmM <- dnbinom(xL, mu = 1, size = MxM))  # all NaN but the last
-(dLpI <- dnbinom(xL, prob=1/2, size = Inf))#  ditto
-(dLpM <- dnbinom(xL, prob=1/2, size = MxM))#  ditto
+stopifnot(exprs = { ## boundary case, had  all NaN  (but the last one)
+    dLmI == 0
+    dnbinom(xL, mu =  1,  size = MxM) == 0
+    dnbinom(xL, prob=1/2, size = Inf) == 0
+    dnbinom(xL, prob=1/2, size = MxM) == 0
+})
 
 d <- dnbinom(x,  mu = mu, size = Inf) # gave NaN (for 0 and L), now 0 for large x
 p <- pnbinom(x,  mu = mu, size = Inf) # gave all NaN, now uses ppois(x, mu)
@@ -607,6 +610,25 @@ stopifnot( exprs = {# the  x < 1e-10*size case; "easily" fixed now
     ## size = Inf (and not so large x
     dnbinom(x=10^(0:298), size=Inf, prob=.999) == 0 # had NaN from 10^155 on
 })
+## Now, more  size=<Large> (normal case, mostly x >= 1e-10*size)
+prob <- 0.999
+mu <- 5
+str(x <- MxM*2^seq(-4, 0, by = 1/8))# MxM/16 .... MxM
+cat(format(head(log2(x), 4)), " .. ", format(tail(log2(x), 3)),"\n")
+head(x. <- outer(x, 2^-c(8, 4, 0))); tail(x., 3)
+stopifnot( exprs = {# the  x < 1e-10*size case; "easily" fixed now
+    dnbinom(x, prob=prob, size =  Inf  ) == 0 # was all NaN
+    dnbinom(x, prob=prob, size =  MxM  ) == 0 #  "  "
+    dnbinom(x, prob=prob, size =  MxM/4) == 0 # was 0 ... 0 NaN NaN NaN NaN
+    dnbinom(x, prob=prob, size =  MxM/8) == 0 # was 0 ... 0  0  0   NaN NaN
+    ## the "same" with   mu
+    dnbinom(x., mu=mu, size =  Inf  ) == 0  # (already)
+    dnbinom(x., mu=mu, size =  MxM  ) == 0  # was  NaN
+    dnbinom(x., mu=mu, size =  MxM/2) == 0  # most 0, some NaN
+    dnbinom(x., mu=mu, size =  MxM/4) == 0  # 0 0 ... 0 NaN NaN NaN NaN
+    dnbinom(x., mu=mu, size =  MxM/8) == 0  # 0 0 ... 0  0  0   NaN NaN
+})
+
 options(op)
 ## size = Inf -- mostly gave NaN  in R <= 3.2.3
 
