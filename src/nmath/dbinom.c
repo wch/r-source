@@ -63,9 +63,10 @@ double pow1p(double x, double y)
     volatile double xp1 = x + 1., x_ = xp1 - 1.; // compiler should *not* optimize these
     if (x_ == x || fabs(x) > 0.5 || isnan(x)) {
 	return pow(xp1, y);
-    else /* not perfect, e.g., for small |x|, non-huge y, use
+    } else { /* not perfect, e.g., for small |x|, non-huge y, use
 	    binom expansion 1 + y*x + y(y-1)/2 x^2 + .. */
 	return exp(y * log1p(x));
+    }
 }
 
 double dbinom_raw(double x, double n, double p, double q, int give_log)
