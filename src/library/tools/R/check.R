@@ -3901,7 +3901,7 @@ add_dummies <- function(dir, Log)
                 ## -Werror is not compiler independent
                 ##   (as what is a warning is not)
                 ## -Wno-dev is from qt, not a compiler flag.
-                ## -Wstrict-prototypea is long supported by gcc and LLVM/Apple clang.
+                ## -Wstrict-prototypes is long supported by gcc and LLVM/Apple clang.
                 except <- Sys.getenv("_R_CHECK_COMPILATION_FLAGS_KNOWN_", "")
                 except <- unlist(strsplit(except, "\\s", perl = TRUE))
                 warns <- setdiff(warns,
@@ -6054,6 +6054,7 @@ add_dummies <- function(dir, Log)
                              "\\[-Warray-parameter=\\]",
                              ## GCC 14's C++ stdlib (as seen for TMB headers)
                              "\\[-Wtemplate-id-cdtor\\]",
+                             "\\[-Warray-bounds\\]",
                              ## clang version (not Apple clang)
                              "\\[-Warray-parameter\\]",
                              "\\[-Wuse-after-free\\]",
