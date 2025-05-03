@@ -6054,7 +6054,7 @@ add_dummies <- function(dir, Log)
                              "\\[-Warray-parameter=\\]",
                              ## GCC 14's C++ stdlib (as seen for TMB headers)
                              "\\[-Wtemplate-id-cdtor\\]",
-                             "\\[-Warray-bounds\\]",
+                             "\\[-Warray-bounds=\\]",
                              ## clang version (not Apple clang)
                              "\\[-Warray-parameter\\]",
                              "\\[-Wuse-after-free\\]",
