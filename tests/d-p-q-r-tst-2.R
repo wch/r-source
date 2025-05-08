@@ -5,7 +5,7 @@
 ####
 ####	Functions for  ``d/p/q/r'' === "regression" tests  (no *.Rout.save)
 
-options(warn = 2)
+options(warn = 2, warnPartialMatchArgs = FALSE)
 ##      ======== No warnings, unless explicitly asserted via
 assertWarning <- tools::assertWarning
 
@@ -561,7 +561,6 @@ stopifnot(all.equal(pp, -th/2, tol=1e-15))
 ## underflowed at about th ~= 60  in R <= 3.2.2
 
 ## pnbinom (-> C's bratio())
-op <- options(warn = 1)# -- NaN's giving warnings
 L <- 1e308; p <- suppressWarnings(pnbinom(L, L, mu = 5)) # NaN or 1 (for 64 / 32 bit)
 stopifnot(is.nan(p) || p == 1)
 ## gave infinite loop on some 64b platforms in R <= 3.2.3
@@ -610,6 +609,7 @@ stopifnot( exprs = {# the  x < 1e-10*size case; "easily" fixed now
     ## size = Inf (and not so large x
     dnbinom(x=10^(0:298), size=Inf, prob=.999) == 0 # had NaN from 10^155 on
 })
+
 ## Now, more  size=<Large> (normal case, mostly x >= 1e-10*size)
 prob <- 0.999
 mu <- 5
@@ -628,9 +628,32 @@ stopifnot( exprs = {# the  x < 1e-10*size case; "easily" fixed now
     dnbinom(x., mu=mu, size =  MxM/4) == 0  # 0 0 ... 0 NaN NaN NaN NaN
     dnbinom(x., mu=mu, size =  MxM/8) == 0  # 0 0 ... 0  0  0   NaN NaN
 })
-
-options(op)
 ## size = Inf -- mostly gave NaN  in R <= 3.2.3
+
+## even more:
+xx <- 7e307 ; sz <- 1e308 ; prb <- c(seq(4, 58, by=6), 63)/64
+(dnb  <- dnbinom(xx, sz, prob=prb, log = TRUE))
+## require(Rmpfr)
+## dnbM <- dnbinom(mpfr(xx, 256), sz, prob=prb, log = TRUE)
+## asNumeric(1- dnbM/dnb)
+## dput(signif(-asNumeric(dnbM)/2^1015, 13))
+stopifnot(all.equal(tolerance = 1e-12,
+    -2^1015 * c(474.4997272272, 234.5368339268, 124.1573623994, 60.0804312579,
+                22.12769721389, 3.17906088758, 1.379508422751, 18.92818770446,
+                64.84609451174, 171.9355127741, 505.6011554949),
+    dnb))
+## similar, manifesting in dbinom() already:
+x. <- 1.20e308; N <-  1.72e308
+prb <- print(seq(13, 127, by = 6))/128
+(db  <- dbinom( x., N, prob = prb, log = TRUE))
+## dbM <- dbinom(mpfr(x., 256), N, prob=prb, log = TRUE)
+## asNumeric(1- dbM/db)
+## dput(signif(-asNumeric(dbM)/2^1012, 12))
+stopifnot(all.equal(tolerance = 1e-11,
+    -2^1012 * c(3978.52477729, 3004.42235841, 2321.14764068, 1804.10617471, 1395.99909831,
+                1065.91552786, 795.509574314, 573.263664821, 391.782927199, 246.423578896,
+                134.598198071, 55.4909088367, 10.1000515546, 1.6625043907, 36.710476479,
+                127.476528317, 297.82558994, 600.93919587, 1195.32578926, 3368.52998705), db))
 
 ## qpois(p, *) for invalid 'p' should give NaN -- PR#16972
 stopifnot(is.nan(suppressWarnings(c(qpois(c(-2,3, NaN), 3), qpois(1, 3, log.p=TRUE),

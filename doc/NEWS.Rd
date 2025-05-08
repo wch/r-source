@@ -111,6 +111,13 @@
       \item \code{dbinom(<large>, n=Inf, ..)} is \code{0} now correctly,
       instead of \code{NaN} which also fixes many \code{dnbinom()} cases,
       notably those mentioned in \PR{16727} comment #5.
+
+      \item Fixing C level \dQuote{binomial deviance} \code{bd0()} for
+      extreme arguments (preventing under-/overflow) solves more \PR{16727}
+      cases and also prevents some full accuracy loss in such cases for
+      \code{dbinom()}, \code{dnbinom()}, and via \code{dbinom_raw()}
+      potentially \code{dgeom()}, \code{dhyper()}, \code{dbeta()}, and
+      \code{df()}.
     }
   }
 }

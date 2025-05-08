@@ -4,8 +4,8 @@
  *	Morten Welinder, see Bugzilla PR#15628, 2014                          [ebd0() ]
  *
  *  Merge in to R (and much more):
-
- *	Copyright (C) 2000-2022 The R Core Team
+ *
+ *	Copyright (C) 2000-2025 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -50,11 +50,17 @@ attribute_hidden double bd0(double x, double np)
     if(!R_FINITE(x) || !R_FINITE(np) || np == 0.0) ML_WARN_return_NAN;
 
     if (fabs(x-np) < 0.1*(x+np)) {
-	double
-	    v = (x-np)/(x+np),  // might underflow to 0
-	    s = (x-np)*v;
+    	double d = x - np,
+	    v = d/(x+np);
+	if(d && !v) {  // v has underflown to 0 (as  x+np = inf)
+	    double
+		x_ = ldexp(x, -2),
+		n_ = ldexp(np,-2);
+	    v = (x_ - n_)/(x_ + n_);
+	}
+	double s = d * v;
 	if(fabs(s) < DBL_MIN) return s;
-	double ej = 2*x*v;
+	double ej = x * ldexp(v, 1); // = 2*x*v;
 	v *= v; // "v = v^2"
 	for (int j = 1; j < 1000; j++) { /* Taylor series; 1000: no infinite loop
 					as |v| < .1,  v^2000 is "zero" */
@@ -68,11 +74,13 @@ attribute_hidden double bd0(double x, double np)
 		return s;
 	    }
 	}
+	/* ---- the following should _never_ happen ------------ */
 	MATHLIB_WARNING4("bd0(%g, %g): T.series failed to converge in 1000 it.; s=%g, ej/(2j+1)=%g\n",
 			 x, np, s, ej/((1000<<1)+1));
     }
     /* else:  | x - np |  is not too small */
-    return(x*log(x/np)+np-x);
+    return (x > np) ? x*(log(x/np) -1.) + np
+	            : x* log(x/np) + np -x;
 }
 
 
