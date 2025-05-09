@@ -52,7 +52,7 @@ attribute_hidden double bd0(double x, double np)
     if (fabs(x-np) < 0.1*(x+np)) {
     	double d = x - np,
 	    v = d/(x+np);
-	if(d && !v) {  // v has underflown to 0 (as  x+np = inf)
+	if((d != 0.0)  && (v == 0.0)) {  // v has underflown to 0 (as  x+np = inf)
 	    double
 		x_ = ldexp(x, -2),
 		n_ = ldexp(np,-2);
