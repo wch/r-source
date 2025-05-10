@@ -1949,6 +1949,11 @@ r <- return; assertWarnV(environment(r) <- baseenv())
 ## then an error for about one day; now is deprecated (and no longer mutating).
 
 
+## signif(<LRG>, dig) -- PR#18889
+stopifnot(all.equal(1.1e308,  signif(1.06e308,   2)),
+          all.equal(1.01e308, signif(1.0055e308, 3)))
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

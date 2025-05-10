@@ -118,6 +118,9 @@
       \code{dbinom()}, \code{dnbinom()}, and via \code{dbinom_raw()}
       potentially \code{dgeom()}, \code{dhyper()}, \code{dbeta()}, and
       \code{df()}.
+
+      \item \code{signif(1.**e308, digits)} no longer truncates unnecessarily
+      (but still to prevent overflow to \code{Inf}), fixing \PR{18889}.
     }
   }
 }
