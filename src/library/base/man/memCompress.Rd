@@ -84,7 +84,10 @@ memDecompress(from,
   The headers and sources can be downloaded from
   \url{https://github.com/ebiggers/libdeflate} and pre-built versions
   are available for most Linux distributions.  It is used for binary
-  Windows distributions.
+  Windows and macOS distributions.
+
+  If it is used by an \R{} build and if so which version can be seen
+  from \code{\link{extSoftVersion}()}.
 }
 
 \value{
