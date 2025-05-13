@@ -134,7 +134,7 @@ if (UTF8) {
     ## not work with call set, and multibyte characters could be mangled by
     ## the `...`.
     ##
-    ## We assume getttext strings are not translated (or are translated
+    ## We assume gettext strings are not translated (or are translated
     ## to the same byte-length as the ones in source).
 
     ## We cannot use `tryCatch` as we're testing the C-level error construction
@@ -193,7 +193,7 @@ if (UTF8) {
         long_error(utf8.test, overflow=0)
 
         overflow <- c(
-             -6,   # Buffer unambiguosly unfilled for MB_CUR_MAX=6
+             -6,   # Buffer unambiguously unfilled for MB_CUR_MAX=6
              -5,   # Buffer maybe filled for MB_CUR_MAX=6
              -4,   # Buffer full with '...\n\0'
              -3,   # Lose 4 byte UTF-8 char

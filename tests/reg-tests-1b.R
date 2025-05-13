@@ -426,7 +426,7 @@ barplot(dat, beside = TRUE, log = "y")
 ## related to PR#12551
 unique("a", c("a", "b"))
 unique(1, 1:2)
-# could seqfault in 2.7.1 on some platforms
+# could segfault in 2.7.1 on some platforms
 stopifnot(!duplicated(rep("a", 3), "a"))
 ## wrong answer in 2.7.1
 
@@ -589,7 +589,7 @@ lines(y ~ x, subset = !is.na(y), col="red")
 ## error in 2.8.0
 
 
-## prettyNum(*, drop0trailing) erronously dropped 0 in '1e10':
+## prettyNum(*, drop0trailing) erroneously dropped 0 in '1e10':
 cn <- c("1.107", "2.3120", "3.14e+0", "4.2305400", "120.0",
         "5.31e-01", "6.3333e-20", "8.1e100", "9.9e+00", "10.1e-0")
 d <- cn != (pcn <- prettyNum(cn, drop0trailing=TRUE))
@@ -682,7 +682,7 @@ stopifnot(identical(r[,1:3], r[,4:6]))
 ## suffered from sin(n * pi) imprecision in R <= 2.8.1
 
 
-## Large sanples in mood.test
+## Large samples in mood.test
 ## https://stat.ethz.ch/pipermail/r-help/2009-March/190479.html
 set.seed(123)
 x <- rnorm(50, 10, 5)
@@ -925,15 +925,15 @@ for(compress in c("bzip2", "xz"))
 mor <- system.file("data/morley.tab", package="datasets")
 ll <- readLines(mor)
 tf <- tempfile()
-## gzip copression
+## gzip compression
 writeLines(ll, con <- gzfile(tf)); close(con)
 file.info(tf)$size
 stopifnot(identical(read.table(tf), morley))
-## bzip2 copression
+## bzip2 compression
 writeLines(ll, con <- bzfile(tf)); close(con)
 file.info(tf)$size
 stopifnot(identical(read.table(tf), morley))
-## xz copression
+## xz compression
 writeLines(ll, con <- xzfile(tf, compression = -9)); close(con)
 file.info(tf)$size
 stopifnot(identical(read.table(tf), morley))
@@ -1043,7 +1043,7 @@ E2 <- sapply(alt, function(a.)
 			 alternative = a., exact = FALSE)$estimate)
 stopifnot(E1[-1] == E1[1],
 	  E2[-1] == E2[1])
-## was continiuity corrected, dependent on 'alternative', prior to 2.10.1
+## was continuity corrected, dependent on 'alternative', prior to 2.10.1
 
 
 ## read.table with embedded newlines in header (PR#14103)
@@ -1150,7 +1150,7 @@ lapply("forward", switch, forward = "posS", reverse = "negS")
 
 ## evaluation of arguments of log2
 assertError(tryCatch(log2(quote(1:10))))
-## 'worked' in 2.10.x by evaluting the arg twice.
+## 'worked' in 2.10.x by evaluating the arg twice.
 
 
 ## mean with NAs and trim (Bill Dunlap,
@@ -1187,7 +1187,7 @@ y <- c(-12, -10, 3.5, 4.45, 4.5, 140, 142)
 Smon <- splinefun(x, y, method = "monoH.FC")
 stopifnot(0 <= min(Smon(xx, deriv=1)))
 ## slopes in [4.4, 4.66] were slightly negative, because m[] adjustments
-## could be sightly off in cases of adjacency, for  R <= 2.11.0
+## could be slightly off in cases of adjacency, for  R <= 2.11.0
 
 
 ## prettyDate( <Date> )
@@ -1426,7 +1426,7 @@ try(regexpr("a{2-}", ""))
 ## ! on zero-length objects (PR#14244)
 M <- matrix(FALSE, 0, 2)
 stopifnot(identical(attributes(!M), attributes(M)))
-# and for back compatibiility
+# and for back compatibility
 !list() # logical(0)
 ## dropped all attributes in 2.12.0
 
@@ -1920,7 +1920,7 @@ a.factor <- as.factor(rep(letters[1:2], 2))
 b.factor <- as.factor(rep(c(1:2), each = 2))
 y <- cbind(aa = as.character(a.factor), bb = b.factor)
 data1 <- data.frame(a.factor, b.factor, y = NA)
-data1$y <- y # inserts a matric
+data1$y <- y # inserts a matrix
 data1 <- subset(data1, !((a.factor == "b") & (b.factor == 2))) # Delete row
 factorial.data <- data.frame(a.factor, b.factor, row = 1:length(b.factor))
 ans <- merge(factorial.data, data1, by = c("a.factor", "b.factor"),

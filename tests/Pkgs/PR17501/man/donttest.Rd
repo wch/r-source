@@ -1,7 +1,7 @@
 \name{donttest}
 \alias{donttest}
 \title{donttest}
-\description{Syntax error in \code{\\donttest} snipppet.}
+\description{Syntax error in \code{\\donttest} snippet.}
 \examples{
 ## the snippet below will be commented by .createExdotR()
 ## and then also removed by massageExamples(), which seems obsolete

@@ -70,8 +70,8 @@ untar(tarfile, files = NULL, list = FALSE, exdir = ".",
   }
   
   %% even RHEL6 had GNU tar 1.23, Ububtu 14.04 has 1.27
-  %% macOS has bsdtar from 2010: this supports xz but does not docuemnt it.
-  %% bsdtar had lzma/xz supoort before April 2009 when it added
+  %% macOS has bsdtar from 2010: this supports xz but does not document it.
+  %% bsdtar had lzma/xz support before April 2009 when it added
   %% support for command-line unxz etc, not just libraries.
   \item{support_old_tars}{logical.  If false (the default), the external
     \command{tar} command is assumed to be able handle compressed

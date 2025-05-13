@@ -1802,7 +1802,7 @@ Summary of (a total of 27) warning messages:
  1x : glm.fit: algorithm stopped at boundary value
 > 
 > 
-> ## extending char arrrays
+> ## extending char arrays
 > x <- y <- LETTERS[1:2]
 > x[5] <- "C"
 > length(y) <- 5
@@ -6618,7 +6618,7 @@ Error in `[[<-.data.frame`(`*tmp*`, "NewCol", value = integer(0)) :
      [,1]            [,2]           
 [1,] <missing value> "A string"     
 [2,] 3               <missing value>
-> ## used uninitialized variable in C, noticably Windows, for R <= 2.9.0
+> ## used uninitialized variable in C, noticeably Windows, for R <= 2.9.0
 > 
 > 
 > ## non-standard variable names in update etc
@@ -6674,7 +6674,7 @@ NULL
 > switch("a", a=, b=, c=, invisible(4))
 > .Last.value
 [1] 4
-> ## visiblilty changed in 2.11.0
+> ## visibility changed in 2.11.0
 > 
 > 
 > ## rounding error in aggregate.ts
@@ -8142,7 +8142,7 @@ mean of x
 [1,]        0  0 NaN      NaN
 > 
 > 
-> ## deparse() wraps cflow bodies when deeply burried through a LHS (PR#18232)
+> ## deparse() wraps cflow bodies when deeply buried through a LHS (PR#18232)
 > ##
 > ## These didn't print the same before fix, the bquote() expression
 > ## missed parentheses
@@ -8188,7 +8188,7 @@ A + ~B + C ~ D
 > ## 'simple' binary op
 > quote(a$"b")
 a$b
-> ## When cflow body is burried deeply through the right, don't rewrap
+> ## When cflow body is buried deeply through the right, don't rewrap
 > ## unnecessarily. There should be only one set of parentheses.
 > ## Cases where R-devel 81211 still gave unneeded parens:
 > quote(`^`(1 + if(L) 2, 3))

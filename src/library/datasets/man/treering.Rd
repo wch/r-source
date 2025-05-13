@@ -30,7 +30,7 @@ treering
   \url{https://robjhyndman.com/TSDL/},
   series \file{CA535.DAT}
   %% now pointing to  \url{http://datamarket.com/data/list/?q=provider:tsdl}
-  %% or specifially to
+  %% or specifically to
   %% \url{https://datamarket.com/data/set/22oy/} ==> short \url{http://data.is/2iSo2j1}
 }
 \references{

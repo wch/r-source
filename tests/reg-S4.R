@@ -146,7 +146,7 @@ stopifnot(identical(d2[-1,], d2[2:3,]))
 ## failed in R <= 2.1.x
 
 
-## Fritz' S4 "odditiy"
+## Fritz' S4 "oddity"
 setClass("X", representation(bar="numeric"))
 setClass("Y", contains="X")
 ## Now we define a generic foo() and two different methods for "X" and

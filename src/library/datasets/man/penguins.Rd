@@ -24,7 +24,7 @@ penguins_raw
     \item{\code{species}}{\code{\link{factor}}, with levels 
       \code{Adelie}, \code{Chinstrap}, and \code{Gentoo}}
     \item{\code{island}}{\code{factor}, 
-      with levels \code{Biscoe}, \code{Dream}, and \code{Torgersen})}
+      with levels \code{Biscoe}, \code{Dream}, and \code{Torgersen}}
     \item{\code{bill_len}}{\code{\link{numeric}}, bill length (millimeters)}
     \item{\code{bill_dep}}{\code{numeric}, bill depth (millimeters)}
     \item{\code{flipper_len}}{\code{\link{integer}}, flipper length (millimeters)}

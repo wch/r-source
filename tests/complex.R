@@ -1,4 +1,4 @@
-### Tests of complex arithemetic.
+### Tests of complex arithmetic.
 
 Meps <- .Machine$double.eps
 ## complex

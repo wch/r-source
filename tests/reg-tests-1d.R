@@ -1425,7 +1425,7 @@ testfN <- removeSource(testf)
 stopifnot(identical(body(testf )[[2]], bod)
         , identical(body(testfN)[[2]], bod)
 )
-## erronously changed  '(x, NULL)'  to  '(x)'  in R version <= 3.4.3
+## erroneously changed  '(x, NULL)'  to  '(x)'  in R version <= 3.4.3
 ##
 ## 2) source *should* be kept:
 f <- function(x=1) { # 'x' not really needed
@@ -1754,7 +1754,7 @@ stopifnot(all.equal(
 ## gave integer overflow and error in R <= 3.4.x
 
 
-## check for incorect inlining of named logicals
+## check for incorrect inlining of named logicals
 foo <- compiler::cmpfun(function() c("bar" = TRUE),
                         options = list(optimize = 3))
 stopifnot(identical(names(foo()), "bar"))
@@ -1869,7 +1869,7 @@ stopifnot(grepl(" [*]{3}$", cc[2]),
 ## gave Error: 'formal argument "right" matched by multiple actual arguments'
 
 
-## print.noquote() w/ unusual argument -- inspite of user error, be forgiving:
+## print.noquote() w/ unusual argument -- in spite of user error, be forgiving:
 print(structure("foo bar", class="noquote"), quote=FALSE)
 ## gave Error: 'formal argument "quote" matched by multiple actual arguments'
 
@@ -2293,7 +2293,7 @@ stopifnot(exprs = {
 ## returned integer sequences in all R versions <= 3.5.1
 
 
-## Check for modififation of arguments
+## Check for modification of arguments
 ## Issue originally reported by Lukas Stadler
 x <- 1+0
 stopifnot(x + (x[] <- 2) == 3)
@@ -4442,7 +4442,7 @@ stopifnot(identical(RN,    rownames      (dfcars1)) ,
 ## dfcarsN == dfcars1  in  R <= 4.0.3
 
 
-## str(x) when x has "unusal" length() semantics such that lapply() / vapply() fails:
+## str(x) when x has "unusual" length() semantics such that lapply() / vapply() fails:
 length.Strange4 <- function(x) 4
 `[[.Strange4` <- function(x, i) {
     stopifnot(length(i) == 1)
@@ -5311,7 +5311,7 @@ options(op)# revert to sanity.  Then:
 h2 <- globalCallingHandlers()
 globalCallingHandlers(NULL)# unregister all
 stopifnot(identical(h1, h2))
-## h2 was empty list() erronously in R versions <= 4.1.x
+## h2 was empty list() erroneously in R versions <= 4.1.x
 
 
 ## PR#18246: par() should warn about invalid/unused arguments
@@ -5486,7 +5486,7 @@ plot(lm(y~    c, dd), which = 5)  # gave empty plot, noting missing factors
 stopifnot("plot(<lm>, which=5) gave message and no plot" = is.null(r))
 ## failed for character predictors in R <= 4.1.x
 
-### contined in reg-tests-1e.R for R >- 4.3.0
+### continued in reg-tests-1e.R for R >- 4.3.0
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

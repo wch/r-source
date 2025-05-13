@@ -126,7 +126,7 @@ Type 'q()' to quit R.
 > 
 > 
 > ## R-0.50: switches to NON-exp at 14, but should only at 15...
-> ## R-0.61++: doesn' switch at all (or at 20 only)
+> ## R-0.61++: doesn't switch at all (or at 20 only)
 > ## S-plus: does not switch at all..
 > for(i in digs1) { cat(i,":");  print(v1, digits=i) }
 1 :[1] 2e-04 4e-03 2e-02 6e-02 8e+00 6e+01 5e+02

@@ -59,7 +59,7 @@ as.POSIXlt(z)$year == 5879680L
 
 ## ------------- Tests of far-distant dates -----------
 Sys.setenv(TZ = "Europe/London")
-## the pre-1902 POSIXct values wil be 75s out on platdorm that do not
+## the pre-1902 POSIXct values will be 75s out on platforms that do not
 ## know about UK changes prior to 1902 (in fact in 1847-12-01: see below).
 as.POSIXct("4000-07-01")
 as.Date("4000-07-01")

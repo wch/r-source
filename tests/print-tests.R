@@ -68,7 +68,7 @@ for(i in digs1) { DIG(i); cat(i,":", formatC(v3, digits=i, width=8),"\n") }
 
 
 ## R-0.50: switches to NON-exp at 14, but should only at 15...
-## R-0.61++: doesn' switch at all (or at 20 only)
+## R-0.61++: doesn't switch at all (or at 20 only)
 ## S-plus: does not switch at all..
 for(i in digs1) { cat(i,":");  print(v1, digits=i) }
 

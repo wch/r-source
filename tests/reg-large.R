@@ -412,7 +412,7 @@ stopifnot(r[1:6] == 1:6)
 rm(r,x)
 
 ## rank(<largish) -- PR#18630
-vals <- 1:1475000000 # (immedate, thanks to ALTREP)
+vals <- 1:1475000000 # (immediate, thanks to ALTREP)
 system.time( ranks <- rank(vals) ) # ~ 130 sec
 head(ranks, 11)
 stopifnot(ranks[1:11] == 1:11, min(ranks) == 1)

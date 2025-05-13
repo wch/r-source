@@ -14883,7 +14883,7 @@ be changed with considerable notice.
 
 As explained elsewhere in this manual, these functions should only be
 called from the main thread of the @R{} process.  (Doing otherwise can
-result in memory corruption and very hard-to-debug seqfaults.)
+result in memory corruption and very hard-to-debug segfaults.)
 
 The recommended procedure to use these is to include the header file
 @file{R.h} in your C code by

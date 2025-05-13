@@ -221,7 +221,7 @@ from="ANY", to="numeric"
 > ## failed in R <= 2.1.x
 > 
 > 
-> ## Fritz' S4 "odditiy"
+> ## Fritz' S4 "oddity"
 > setClass("X", representation(bar="numeric"))
 > setClass("Y", contains="X")
 > ## Now we define a generic foo() and two different methods for "X" and

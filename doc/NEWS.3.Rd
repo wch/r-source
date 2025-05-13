@@ -8092,7 +8092,7 @@
       information at the statement level, not just the function level.
 
       \item The \code{Rprof()} function now quotes function names in
-      in its output file on Windows, to be consistent with the quoting
+      its output file on Windows, to be consistent with the quoting
       in Unix.
 
       \item Profiling \emph{via} \code{Rprof()} now optionally records

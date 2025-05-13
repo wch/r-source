@@ -690,7 +690,7 @@ substr(s0, 6, 7) <- "cc"
 s0 ; nchar(s0) # {"12345c", 6}: all fine: no overrun, silent truncation
 (s1 <- intToUtf8(c(23383, 97, 97, 97, 97, 97))); nchar(s1)  # "字aaaaa" , 6
 substr(s1, 6, 7) <- "cc"
-# Now s1 should be "字aaaac", but  actually did overrunn nchar(s1);
+# Now s1 should be "字aaaac", but actually did overrun nchar(s1);
 s1; nchar(s1) ## was "字aaaacc", nchar  = 7
 (s2 <- intToUtf8(c(23383, 98, 98))); nchar(s2)  # "字bb" 3
 substr(s2, 4, 5) <- "dd" # should silently truncate as with s0:
@@ -1554,7 +1554,7 @@ for(x in list(x3 = {n <- 3L; x <- diag(n); x[n,n] <- 0; x},
 ## kappa(..)  returned 1 or {0 with a warning} in R <= 4.4.2
 
 
-## hexadecimal contants with and without exponent.
+## hexadecimal constants with and without exponent.
 0x1.234p0
 0x1.234p7
 0x1.234p-7
@@ -1634,7 +1634,7 @@ stopifnot(
 )
 
 
-## [cr]bind had segfaults when R was bui;t for LTO and C99 inlining sematics
+## [cr]bind had segfaults when R was built for LTO and C99 inlining semantics
 ## The semantics (inherited from S) are that zero-length inputs
 ## (including NULL) are ignored unless all inputs are zero-length.
 ## next four segafaulted

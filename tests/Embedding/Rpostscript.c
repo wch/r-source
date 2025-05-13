@@ -1,5 +1,5 @@
 /*
-  Tests using the postcript device from within 
+  Tests using the postscript device from within 
   an application that embeds the R interpreter.
   Equivalent of evaluating the expressions:
     postscript()

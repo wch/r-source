@@ -1,6 +1,6 @@
 % File src/library/datasets/man/zCO2.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-20011 R Core Team
+% Copyright 1995-2011 R Core Team
 % Distributed under GPL 2 or later
 
 \name{CO2}

@@ -3325,7 +3325,7 @@ stopifnot(labels(lm.D9) == "group")
 a <- matrix (ncol=100, nrow=100, data=c(1,2,3,4,5))
 a.serial <- rawToChar(serialize(a, NULL, ascii=TRUE))
 try(sprintf('foo: %s\n', a.serial))
-## seqfaulted in 2.0.1
+## segfaulted in 2.0.1
 
 
 ## all/any did not coerce as the Blue Book described.
@@ -3367,7 +3367,7 @@ a1 <- m1; dim(a1) <- length(a1); dimnames(a1) <- dimnames(m1)[2]; a1 # named dn
 a2 <- a1; names(dimnames(a2)) <- NULL ; a2 # unnamed dn
 a3 <- a1; dimnames(a3) <- NULL ; a3 # no dn
 stopifnot(identical(dimnames(t(a1))[2], dimnames(a1)))
-## in version <= 2.0.1,  t(.) was loosing names of dimnames()
+## in version <= 2.0.1,  t(.) was losing names of dimnames()
 tst1(a1)# failed in 2.0.1 ("twice")
 tst1(a2)# failed in 2.0.1
 tst1(a3)# ok
@@ -3421,7 +3421,7 @@ f <- factor(1:3)
 contrasts(f, 1) <- c
 x <- model.matrix(~f)
 stopifnot(x == c(1,1,1,0,1,2))
-## gave machine-dependendent silly numbers in 2.0.1
+## gave machine-dependent silly numbers in 2.0.1
 
 
 ## extreme (de-normalized) axis range
@@ -4027,7 +4027,7 @@ stopifnot(nchar(ff) == 12)
 ## small marks test
 f2 <- format(x, big.mark = "'", small.mark="_", small.interval = 2)
 nc <- nchar(f2)
-stopifnot(substring(f2, nc,nc) != "_", # no traling small mark
+stopifnot(substring(f2, nc,nc) != "_", # no trailing small mark
           nc == nc[1])# all the same
 fc <- formatC(1.234 + 10^(0:8), format="fg", width=11, big.mark = "'")
 stopifnot(nchar(fc) == 11)
@@ -4683,7 +4683,7 @@ mosaicplot(x, sort = seq_len(dim(x)))
 ## failed in 2.4.1, fixed in 2.5.0
 
 
-## jitter failed in wierd case (PR#9580)
+## jitter failed in weird case (PR#9580)
 stopifnot(is.finite( jitter(c(-1, 3)) ))
 ## was repeated NaN in 2.4.1
 
@@ -4767,7 +4767,7 @@ stopifnot(inherits(try(seq.int(1.2, 1, by=1)), "try-error"))
 ## subassignment on pairlists: Uwe Ligges on R-help, 2007-05-29
 Call <- call("round", 10.5)
 try({Call[] <- NULL; Call})
-## seqgfaulted in 2.5.0
+## segfaulted in 2.5.0
 
 
 ## Bessel bugs for nu < 0:
