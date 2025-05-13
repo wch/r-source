@@ -1698,6 +1698,7 @@ options(op) # return to sanity + warn=2
 
 
 ## sessionInfo() *prints*  La_version() when not empty
+op <- options(warn = 1) # possible warning from Sys.timezone() --> timezone.R
 si <- sessionInfo()
 str( osi <- capture.output(si)); si$LAPACK <- ""
 osi.noLA <- capture.output(si)
@@ -1719,6 +1720,7 @@ if(length(iLA) && nzchar(La_version())) { cat("sessionInfo - La_* checking: ")
     cat("ok\n")
 }
 ## the "LAPACK: .." was entirely empty when  si$LAPACK was ""
+options(op)
 
 
 ## arima(*, seasonal = <numeric>)
