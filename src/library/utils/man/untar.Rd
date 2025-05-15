@@ -69,7 +69,7 @@ untar(tarfile, files = NULL, list = FALSE, exdir = ".",
     file system (which on a FAT system is 2 seconds).
   }
   
-  %% even RHEL6 had GNU tar 1.23, Ububtu 14.04 has 1.27
+  %% even RHEL6 had GNU tar 1.23, Ubuntu 14.04 has 1.27
   %% macOS has bsdtar from 2010: this supports xz but does not document it.
   %% bsdtar had lzma/xz support before April 2009 when it added
   %% support for command-line unxz etc, not just libraries.

@@ -1044,7 +1044,7 @@ fileCompletions <- function(token)
             ## re-use that here.  The problem is that for other
             ## backends a token may already have been determined, and
             ## that's what we will need to use.  We can still fake it
-            ## by using the correct token but substracting the extra
+            ## by using the correct token but subtracting the extra
             ## part when providing completions, but that will need
             ## some work.
 

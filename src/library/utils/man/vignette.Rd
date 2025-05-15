@@ -75,7 +75,7 @@ vignette(all = TRUE)
 
 ## The grid intro vignette -- open it
 \dontrun{vignette("grid") # calling print()}
-## The same (conditional on existence of the vignettte).
+## The same (conditional on existence of the vignette).
 ## Note that 'package = *' is much faster in the case of many installed packages:
 if(!is.null(v1 <- vignette("grid", package="grid"))) {
 \dontrun{v1 # calling print(.)}

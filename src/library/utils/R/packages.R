@@ -229,7 +229,7 @@ function(db)
     end <- 3L + (substring(x, 4L, 4L) == "=")
     ## Extract ops.
     ops <- substring(x, 3L, end)
-    ## Split target versions accordings to ops.
+    ## Split target versions according to ops.
     v_t <- split(substring(x, end + 1L, nchar(x) - 1L), ops)
     ## Current R version.
     v_c <- getRversion()

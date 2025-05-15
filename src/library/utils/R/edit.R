@@ -210,7 +210,7 @@ edit.matrix <-
     if(!is.null(dn[[2L]])) names(datalist) <- dn[[2L]]
     else names(datalist) <- paste0("col", 1L:ncol(name))
     modes <- as.list(rep.int(mode(name), ncol(name)))
-    ## guard aginst user error (PR#10500)
+    ## guard against user error (PR#10500)
     if(edit.row.names && is.null(dn[[1L]]))
         stop("cannot edit NULL row names")
     if (edit.row.names) {
