@@ -123,9 +123,6 @@ function(..., list = character(), package = NULL, lib.loc = NULL,
                     if (verbose)
                         message(sprintf("name=%s:\t found in Rdata.rds", name),
                                 domain=NA)
-                    thispkg <- sub(".*/([^/]*)/data$", "\\1", p)
-                    thispkg <- sub("_.*$", "", thispkg) # versioned installs.
-                    thispkg <- paste0("package:", thispkg)
                     objs <- rds[[name]] # guaranteed an exact match
                     lazyLoad(file.path(p, "Rdata"), envir = tmp_env,
                              filter = function(x) x %in% objs)
