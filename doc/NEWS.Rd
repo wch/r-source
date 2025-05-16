@@ -91,13 +91,23 @@
 }
 
 \section{\Rlogo CHANGES IN R 4.5.0 patched}{
-  \subsection{BUG FIXES}{
+  \subsection{INSTALLATION}{
     \itemize{
       \item Standalone \code{nmath} can be built with early-2025
       versions of \command{clang}-based compilers such as \I{LLVM}
       \command{clang}\sspace{}20, Apple \command{clang}\sspace{}17 and Intel
       \command{icx}\sspace{}2025.0.
 
+      \item Tcl/Tk\sspace{}9 can be used to build package \code{tcltk}:
+      this has become the default in some Linux distributions.
+      \strong{N.B.}  several third-party packages currently require
+      Tcl/Tk\sspace{}8 or even 8.6 without declaring so.
+      %% including tkrplot, loon and tcltk2
+    }
+  }
+  
+  \subsection{BUG FIXES}{
+    \itemize{
       \item Java detection in \code{javareconf} could not detect
       \file{libjvm.*} in the \code{zero} variant of the \abbr{JDK} (\PR{18884}).
       All valid variants as of \abbr{JDK} 24u are now supported.
