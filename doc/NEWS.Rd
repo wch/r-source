@@ -27,6 +27,9 @@
       \item \code{dbinom(<large>, n=Inf, ..)} is \code{0} now correctly,
       instead of \code{NaN} which also fixes many \code{dnbinom()} cases,
       notably those mentioned in \PR{16727} comment #5.
+
+      \item \code{signif(1.**e308, digits)} no longer truncates unnecessarily
+      (but still to prevent overflow to \code{Inf}), fixing \PR{18889}.
     }
   }
 }
