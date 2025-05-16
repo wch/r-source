@@ -896,6 +896,8 @@
 
       \item Setting \code{attributes} on primitive functions is
       deprecated now and already an error in the development version of \R.
+      Changing the \code{environment} of a primitive does no longer happen
+      and signals a warning.
     }
   }
 }

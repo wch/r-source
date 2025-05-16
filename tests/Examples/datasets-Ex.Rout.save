@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2025-02-20 r87772) -- "Unsuffered Consequences"
+R Under development (unstable) (2025-05-15 r88204) -- "Unsuffered Consequences"
 Copyright (C) 2025 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu
 
@@ -3155,7 +3155,7 @@ nms      body_mass   sex  year
 > flush(stderr()); flush(stdout())
 > 
 > ### Name: precip
-> ### Title: Annual Precipitation in US Cities
+> ### Title: Annual Precipitation in Selected US Cities
 > ### Aliases: precip
 > ### Keywords: datasets
 > 
