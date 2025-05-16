@@ -59,7 +59,7 @@ attribute_hidden double bd0(double x, double np)
 	    v = (x_ - n_)/(x_ + n_);
 	}
 	double s = ldexp(d, -1) * v; // was d * v
-	if(fabs(s) < DBL_MIN*0.5) return ldexp(s, 1);// CARE: assumes subnormal numbers
+	if(fabs(ldexp(s, 1)) < DBL_MIN) return ldexp(s, 1);
 	double ej = x * v; // as 2*x*v could overflow:  v > 1/2  <==> ej = 2xv > x
 	v *= v; // "v = v^2"
 	for (int j = 1; j < 1000; j++) { /* Taylor series; 1000: no infinite loop
@@ -79,8 +79,11 @@ attribute_hidden double bd0(double x, double np)
 			 x, np, s, ej/((1000<<1)+1));
     }
     /* else:  | x - np |  is not too small */
-    return (x > np) ? x*(log(x/np) -1.) + np
-	            : x* log(x/np) + np -x;
+    /* NB: x/np |--> inf (overflow)  doesn't happen when called from rpois_raw() */
+#define lg_x_n (R_FINITE(x/np) ? log(x/np) : (log(x) - log(np)))
+    return (x > np) ? x*(lg_x_n -1.) + np
+	            : x* lg_x_n + np -x;
+#undef lg_x_n
 }
 
 
