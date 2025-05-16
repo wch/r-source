@@ -10,16 +10,23 @@
   \subsection{BUG FIXES}{
     \itemize{
       \item Standalone \code{nmath} can be built with early-2025
-      versions of \command{clang}-based compilers such as LLVM
+      versions of \command{clang}-based compilers such as \I{LLVM}
       \command{clang}\sspace{}20, Apple \command{clang}\sspace{}17 and Intel
       \command{icx}\sspace{}2025.0.
 
       \item Java detection in \code{javareconf} could not detect
-      \file{libjvm.*} in the \code{zero} variant of the JDK (\PR{18884}).
-      All valid variants as of JDK 24u are now supported.
+      \file{libjvm.*} in the \code{zero} variant of the \abbr{JDK} (\PR{18884}).
+      All valid variants as of \abbr{JDK} 24u are now supported.
 
       \item \code{factanal(.., rotation=*)} now correctly updates
       \code{rotmat}, fixing \PR{18886}.
+
+      \item \code{dnbinom(<large>, <muchlarger>, ..)} now is \code{0}
+      correctly, instead of \code{NaN} or \code{Inf} sometimes.
+
+      \item \code{dbinom(<large>, n=Inf, ..)} is \code{0} now correctly,
+      instead of \code{NaN} which also fixes many \code{dnbinom()} cases,
+      notably those mentioned in \PR{16727} comment #5.
     }
   }
 }

@@ -6,7 +6,7 @@
  *    dnbinom_mu(): Martin Maechler, June 2008
  *
  *  Merge in to R and improvements notably for |x| << size :
- *	Copyright (C) 2000--2021, The R Core Team
+ *	Copyright (C) 2000--2025, The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -55,8 +55,10 @@ double dnbinom(double x, double size, double prob, int give_log)
     if(!R_FINITE(size)) size = DBL_MAX;
 
     if(x < 1e-10 * size) { // instead of dbinom_raw(), use 2 terms of Abramowitz & Stegun (6.1.47)
+	double xx2s =  /* x(x-1)/(2*size)  robustly */
+	    (x < sqrt(DBL_MAX)) ? ldexp(x*(x-1), -1)/size : x*(ldexp(x,-1)/size);
 	return R_D_exp(size * log(prob) + x * (log(size) + log1p(-prob))
-		       - lgamma1p(x) + log1p(x*(x-1)/(2*size)));
+		       - lgamma1p(x) + log1p(xx2s));
     } else {
 	/* log( size/(size+x) ) is much less accurate than log1p(- x/(size+x))
 	   for |x| << size (and actually when x < size): */
@@ -96,8 +98,9 @@ double dnbinom_mu(double x, double size, double mu, int give_log)
     if(x < 1e-10 * size) { /* don't use dbinom_raw() but MM's formula: */
 	/* FIXME --- 1e-8 shows problem; rather use algdiv() from ./toms708.c */
 	double p = (size < mu ? log(size/(1 + size/mu)) : log(mu / (1 + mu/size)));
-	return R_D_exp(x * p - mu - lgamma1p(x) +
-		       log1p(x*(x-1)/(2*size)));
+	double xx2s =  /* x(x-1)/(2*size)  robustly */
+	    (x < sqrt(DBL_MAX)) ? ldexp(x*(x-1), -1)/size : x*(ldexp(x,-1)/size);
+	return R_D_exp(x * p - mu - lgamma1p(x) + log1p(xx2s));
     } else {
 	/* no unnecessary cancellation inside dbinom_raw, when
 	  x_ = size and n_ = x+size are so close that n_ - x_ loses accuracy
