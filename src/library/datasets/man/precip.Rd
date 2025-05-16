@@ -1,14 +1,15 @@
 % File src/library/datasets/man/precip.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2016 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{precip}
 \docType{data}
 \alias{precip}
-\title{Annual Precipitation in US Cities}
+\title{Annual Precipitation in Selected US Cities}
 \description{
-  The average amount of precipitation (rainfall) in inches for each of
+  The yearly amount of precipitation (rainfall) in inches,
+  averaged over the 30-year period 1941--1970, for each of
   70 United States (and Puerto Rico) cities.
 }
 \usage{precip}
@@ -16,7 +17,7 @@
   A named vector of length 70.
 }
 \source{
-  Statistical Abstracts of the United States, 1975.
+  Statistical Abstracts of the United States, 1975, p. 192.
 }
 \references{
   McNeil, D. R. (1977)
