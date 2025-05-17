@@ -1522,6 +1522,10 @@ case "${host_os}" in
     darwin_pic="-fPIC"
     dylib_undefined_allowed=no
     darwin_dylib_ldflags="-dynamiclib"
+    ## Xcode 16.3 (Apple clang-17000) injects a section right behind
+    ## the header (unnecessarily), and thus requires this in order to
+    ## allow absolute paths to R libraries (e.g., for the framework)
+    main_ldflags="-Wl,-headerpad_max_install_names"
     ##  -single_module is default and -multiply_defined is obsolete
     ## at least since macOS 11 (darwin 20)
     case "${host_os}" in
