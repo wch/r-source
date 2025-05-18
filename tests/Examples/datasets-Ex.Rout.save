@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2025-05-15 r88204) -- "Unsuffered Consequences"
+R Under development (unstable) (2025-05-18 r88215) -- "Unsuffered Consequences"
 Copyright (C) 2025 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu
 
@@ -895,6 +895,11 @@ Residual standard error: 3.803 on 45 degrees of freedom
 Multiple R-squared:  0.3385,	Adjusted R-squared:  0.2797 
 F-statistic: 5.756 on 4 and 45 DF,  p-value: 0.0007904
 
+> 
+> ## recreate pre-4.6 dataset with a misspelled row name
+> idx <- which(row.names(LifeCycleSavings) == "Guatemala")
+> stopifnot(length(idx) == 1)
+> LCS <- LifeCycleSavings; row.names(LCS)[idx] <- "Guatamala" # sic!
 > 
 > 
 > 
@@ -3994,7 +3999,7 @@ c0   -5.14
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  2.05 0.135 2.209 0 0 
+Time elapsed:  2.798 0.094 2.893 0 0 
 > grDevices::dev.off()
 null device 
           1 

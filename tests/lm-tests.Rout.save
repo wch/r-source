@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2022-12-20 r83481) -- "Unsuffered Consequences"
-Copyright (C) 2022 The R Foundation for Statistical Computing
-Platform: x86_64-pc-linux-gnu (64-bit)
+R Under development (unstable) (2025-05-18 r88215) -- "Unsuffered Consequences"
+Copyright (C) 2025 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -131,7 +131,7 @@ Finland        -0.11350  0.11133  0.11695 -0.04364 -0.017132 -0.1464 1.203
 France         -0.16600  0.14705  0.21900 -0.02942  0.023952  0.2765 1.226
 Germany        -0.00802  0.00822  0.00835 -0.00697 -0.000293 -0.0152 1.226
 Greece         -0.14820  0.16394  0.02861  0.15713 -0.059599 -0.2811 1.140
-Guatamala       0.01552 -0.05485  0.00614  0.00585  0.097217 -0.2305 1.085
+Guatemala       0.01552 -0.05485  0.00614  0.00585  0.097217 -0.2305 1.085
 Honduras       -0.00226  0.00984 -0.01020  0.00812 -0.001887  0.0482 1.186
 Iceland         0.24789 -0.27355 -0.23265 -0.12555  0.184698 -0.4768 0.866
 India           0.02105 -0.01577 -0.01439 -0.01374 -0.018958  0.0381 1.202
@@ -182,7 +182,7 @@ Finland        4.36e-03 0.0920
 France         1.55e-02 0.1362    
 Germany        4.74e-05 0.0874    
 Greece         1.59e-02 0.0966    
-Guatamala      1.07e-02 0.0605    
+Guatemala      1.07e-02 0.0605    
 Honduras       4.74e-04 0.0601    
 Iceland        4.35e-02 0.0705    
 India          2.97e-04 0.0715    
@@ -253,7 +253,7 @@ Finland            -0.8420  1.62e-02  0.12800 -4.10e-05 -3.39e-03
 France             -1.2300  2.14e-02  0.23900 -2.76e-05  4.73e-03
 Germany            -0.0597  1.20e-03  0.00915 -6.56e-06 -5.82e-05
 Greece             -1.0900  2.38e-02  0.03110  1.47e-04 -1.17e-02
-Guatamala           0.1140 -7.95e-03  0.00667  5.46e-06  1.91e-02
+Guatemala           0.1140 -7.95e-03  0.00667  5.46e-06  1.91e-02
 Honduras           -0.0168  1.44e-03 -0.01120  7.64e-06 -3.74e-04
 Iceland             1.7800 -3.87e-02 -0.24700 -1.14e-04  3.55e-02
 India               0.1560 -2.31e-03 -0.01580 -1.29e-05 -3.76e-03
@@ -294,7 +294,7 @@ Malaysia            0.2720 -8.88e-03  0.03520 -4.63e-05 -1.42e-02
      1.3283009      0.6547098      1.1498637      1.1666845      0.9681384 
        Denmark        Ecuador        Finland         France        Germany 
      0.9344047      1.1393880      1.2031561      1.2262654      1.2256855 
-        Greece      Guatamala       Honduras        Iceland          India 
+        Greece      Guatemala       Honduras        Iceland          India 
      1.1396174      1.0852720      1.1855450      0.8658808      1.2024438 
        Ireland          Italy          Japan          Korea     Luxembourg 
      1.2680432      1.1624611      1.0845999      0.8695843      1.1961844 
