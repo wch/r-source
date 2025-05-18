@@ -1,6 +1,6 @@
 % File src/library/datasets/man/LifeCycleSavings.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{LifeCycleSavings}
@@ -23,7 +23,7 @@
   }
 }
 \source{
-  The data were obtained from Belsley, Kuh and Welsch (1980).
+  The data were obtained from Belsley, Kuh and Welsch (1980, pp.\sspace{}41--42).
   They in turn obtained the data from Sterling (1977).
 }
 \details{
@@ -35,6 +35,10 @@
   years old and the percentage of the population over 75 years old.
   The data are averaged over the decade 1960--1970 to remove the
   business cycle or other short-term fluctuations.
+}
+\note{
+  The dataset in \R < 4.6.0 had a typo in the row name \code{"Guatemala"}.
+  The examples show how to recreate that version.
 }
 \references{
   Sterling, Arnie (1977) Unpublished BS Thesis.
@@ -50,5 +54,10 @@ pairs(LifeCycleSavings, panel = panel.smooth,
       main = "LifeCycleSavings data")
 fm1 <- lm(sr ~ pop15 + pop75 + dpi + ddpi, data = LifeCycleSavings)
 summary(fm1)
+
+## recreate pre-4.6 dataset with a misspelled row name
+idx <- which(row.names(LifeCycleSavings) == "Guatemala")
+stopifnot(length(idx) == 1)
+LCS <- LifeCycleSavings; row.names(LCS)[idx] <- "Guatamala" # sic!
 }
 \keyword{datasets}

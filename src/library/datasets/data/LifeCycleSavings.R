@@ -30,7 +30,7 @@ LifeCycleSavings <-
                row.names = c("Australia", "Austria",
 "Belgium", "Bolivia", "Brazil", "Canada", "Chile", "China", "Colombia",
 "Costa Rica", "Denmark", "Ecuador", "Finland", "France", "Germany", "Greece",
-"Guatamala", "Honduras", "Iceland", "India", "Ireland", "Italy", "Japan",
+"Guatemala", "Honduras", "Iceland", "India", "Ireland", "Italy", "Japan",
 "Korea", "Luxembourg", "Malta", "Norway", "Netherlands", "New Zealand",
 "Nicaragua", "Panama", "Paraguay", "Peru", "Philippines", "Portugal",
 "South Africa", "South Rhodesia", "Spain", "Sweden", "Switzerland",

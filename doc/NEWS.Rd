@@ -85,6 +85,9 @@
 
       \I{Relatedly}, changing the \code{environment()} of a primitive function
       does no longer happen and gives a warning (to become an error, later).
+
+      \item Dataset \code{LifeCycleSavings} had a misspelled row name:
+      \code{"Guatamala"} was corrected to \code{"Guatemala"}.
     }
   }
 
