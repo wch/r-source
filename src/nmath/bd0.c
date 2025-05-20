@@ -58,20 +58,20 @@ attribute_hidden double bd0(double x, double np)
 		n_ = ldexp(np,-2);
 	    v = (x_ - n_)/(x_ + n_);
 	}
-	double s = d * v;
-	if(fabs(s) < DBL_MIN) return s;
-	double ej = x * ldexp(v, 1); // = 2*x*v;
+	double s = ldexp(d, -1) * v; // was d * v
+	if(fabs(s) < DBL_MIN*0.5) return ldexp(s, 1);// CARE: assumes subnormal numbers
+	double ej = x * v; // as 2*x*v could overflow:  v > 1/2  <==> ej = 2xv > x
 	v *= v; // "v = v^2"
 	for (int j = 1; j < 1000; j++) { /* Taylor series; 1000: no infinite loop
-					as |v| < .1,  v^2000 is "zero" */
-	    ej *= v;// = 2 x v^(2j+1)
+					    as |v| < .1,  v^2000 is "zero" */
+	    ej *= v;// = x v^(2j+1)
 	    double s_ = s;
 	    s += ej/((j<<1)+1);
 	    if (s == s_) { /* last term was effectively 0 */
 #ifdef DEBUG_bd0
-		REprintf("bd0(%g, %g): T.series w/ %d terms -> bd0=%g\n", x, np, j, s);
+		REprintf("bd0(%g, %g): T.series w/ %d terms -> bd0=%g\n", x, np, j, ldexp(s, 1));
 #endif
-		return s;
+		return ldexp(s, 1); // 2*s ; as we dropped '2 *' above
 	    }
 	}
 	/* ---- the following should _never_ happen ------------ */
