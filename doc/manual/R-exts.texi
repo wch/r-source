@@ -17301,6 +17301,10 @@ use.
 @eapihdr R_ext/GraphicsEngine.h
 @eapihdr R_ext/GraphicsDevice.h
 @eapihdr R_ext/Connections.h
+@eapifun R_new_custom_connection
+@eapifun R_ReadConnection
+@eapifun R_WriteConnection
+@eapifun R_GetConnection
 
 Let us re-iterate the advice to include in C++ code system headers
 before the @R{} header files, especially @file{Rinternals.h} (included
