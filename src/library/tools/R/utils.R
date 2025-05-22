@@ -2668,6 +2668,14 @@ function(dir, FUN, ..., pattern = NULL, verbose = FALSE,
     dir <- file_path_as_absolute(dir)
 
     dfiles <- Sys.glob(file.path(dir, "*", "DESCRIPTION"))
+    ## Hack to allow using also for base package sources.
+    if(!length(dfiles)) {
+        dfiles <- Sys.glob(file.path(dir, "*", "DESCRIPTION.in"))
+        ## Need to exclude 'translations', so simply match against the
+        ## known base package names.
+        dfiles <- dfiles[basename(dirname(dfiles)) %in%
+                         .get_standard_package_names()$base]
+    }
     if(!is.null(pattern))
         dfiles <- dfiles[grepl(pattern, basename(dirname(dfiles)))]
     paths <- dirname(dfiles)
