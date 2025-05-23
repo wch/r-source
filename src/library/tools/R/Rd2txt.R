@@ -1,7 +1,7 @@
 #  File src/library/tools/R/Rd2txt.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2024 The R Core Team
+#  Copyright (C) 1995-2025 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -37,7 +37,8 @@ Rd2txt_options <- local({
     	         sectionExtra = 2L,
     	         itemBullet = "* ",
     	         enumFormat = function(n) sprintf("%d. ", n),
-    	         showURLs = FALSE,
+                 ## descStyle = "none",
+                 showURLs = FALSE,
                  code_quote = TRUE,
                  underline_titles = TRUE)
     function(...) {
@@ -516,6 +517,7 @@ Rd2txt <-
         strip
     }
     ## Strip pending blank lines, then add n new ones.
+    ## (Currently not used with n > 1, which only works if not 'wrapping'.)
     blankLine <- function(n = 1L) {
     	while (stripBlankLine()) NULL
 	flushBuffer()
@@ -891,9 +893,12 @@ Rd2txt <-
                                   indent <<- max(opts$minIndent,
                                                  indent + opts$extraIndent)
                                   keepFirstIndent <<- TRUE
-                                  putw(strrep(" ", indent0),
-                                       DLlab,
-                                       " ")
+                                  linebreak <- identical(opts$descStyle, "linebreak")
+                                  suffix <- if (identical(opts$descStyle, "colon")
+                                                && !endsWith(DLlab, ":")) ": "
+                                            else if (!linebreak) " "
+                                  putw(strrep(" ", indent0), DLlab, suffix)
+                                  if (linebreak) blankLine(0L)
                                   writeContent(block[[2L]], tag)
 			  	  blankLine(0L)
                                   indent <<- indent0
