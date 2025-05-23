@@ -1231,40 +1231,6 @@ Rd2HTML <-
     doTexMath <- enhancedHTML && !uses_mathjaxr(Rd) &&
         texmath %in% c("katex", "mathjax")
 
-    ## KaTeX / Mathjax resources (if they are used)
-    if (doTexMath && texmath == "katex") {
-        KATEX_JS <-
-            if (dynamic) "/doc/html/katex/katex.js"
-            else "https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.js"
-        KATEX_CSS <- if (dynamic) "/doc/html/katex/katex.css"
-                     else "https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.css"
-        KATEX_CONFIG <-
-            if (dynamic) "/doc/html/katex-config.js"
-            else c("const macros = { \"\\\\R\": \"\\\\textsf{R}\", \"\\\\code\": \"\\\\texttt\"};", 
-                   "function processMathHTML() {",
-                   "    var l = document.getElementsByClassName('reqn');", 
-                   "    for (let e of l) { katex.render(e.textContent, e, { throwOnError: false, macros }); }", 
-                   "    return;",
-                   "}")
-    }
-    if (doTexMath && texmath == "mathjax") {
-        MATHJAX_JS <-
-            if (dynamic && requireNamespace("mathjaxr", quietly = TRUE))
-                "/library/mathjaxr/doc/mathjax/es5/tex-chtml-full.js"
-            else
-                "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
-        MATHJAX_CONFIG <-
-            if (dynamic) "/doc/html/mathjax-config.js"
-            else "../../../doc/html/mathjax-config.js"
-    }
-    if (enhancedHTML) {
-        PRISM_JS <- 
-            if (dynamic) "/doc/html/prism.js"
-            else NULL # "../../../doc/html/prism.js"
-        PRISM_CSS <- 
-            if (dynamic) "/doc/html/prism.css"
-            else NULL # "../../../doc/html/prism.css"
-    }
     Rdfile <- attr(Rd, "Rdfile")
     sections <- RdTags(Rd)
     if (fragment) {
