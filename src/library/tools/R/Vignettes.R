@@ -1073,7 +1073,7 @@ function(pkg, con, vignetteIndex = NULL)
               else {
                   vignetteIndex <- cbind(Package = pkg,
                                          as.matrix(vignetteIndex[, c("File", "Title", "PDF", "R")]))
-                  makeVignetteTable(vignetteIndex, depth = 3L)
+                  makeVignetteTable(vignetteIndex, depth = NULL)
               })
     otherfiles <- list.files(system.file("doc", package = pkg))
     if(NROW(vignetteIndex))
