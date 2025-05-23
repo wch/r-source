@@ -40,6 +40,14 @@
     }
   }
 
+  \subsection{INSTALLATION on a UNIX-ALIKE}{
+    \itemize{
+      \item Failures in building the documentation for the base packages,
+      including from parsing their Rd files, are no longer ignored by
+      \command{make docs}.
+    }
+  }
+
   \subsection{PACKAGE INSTALLATION}{
     \itemize{
       \item .

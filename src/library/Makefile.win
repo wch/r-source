@@ -72,7 +72,7 @@ RD-TS = base.Rdts stats.Rdts utils.Rdts methods.Rdts graphics.Rdts grDevices.Rdt
 Rd-ts: $(RD-TS)
 
 %.Rdts:
-	@$(ECHO) "options(warn=1);tools:::.install_package_Rd_objects(\"$(srcdir)/$*\", \"$(top_builddir)/library/$*\")" | R_DEFAULT_PACKAGES=NULL $(R_EXE) || exit 1
+	@$(ECHO) "options(warn=2);tools:::.install_package_Rd_objects(\"$(srcdir)/$*\", \"$(top_builddir)/library/$*\")" | R_DEFAULT_PACKAGES=NULL $(R_EXE) || exit 1
 	@$(ECHO) -n " $*$(ECHO_C)"
 
 Rdobjects:
