@@ -1956,6 +1956,18 @@ stopifnot(all.equal(1.1e308,  signif(1.06e308,   2)),
           all.equal(1.01e308, signif(1.0055e308, 3)))
 
 
+## prettyNum(.., zero.print = <2-or-more-char>, replace.zero=TRUE) --
+zp <- "--"; num <- -1:2
+assertWarnV(
+p1 <- prettyNum(num, zero.print = zp) )
+p2 <- prettyNum(num, zero.print = zp, replace.zero=TRUE) # was Error (converted from warning)
+stopifnot(identical(p1[2], substr(zp,1,1)),
+          identical(p2[2], zp),
+          identical(p1[num != 0], p2[num != 0]),
+          identical(p2, local({ p <- as.character(num); p[p == 0] <- zp; p })))
+## p2 gave warning too, and was the same as p1, erronously in  R <= 4.5.0
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

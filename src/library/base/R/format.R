@@ -1,7 +1,7 @@
 #  File src/library/base/R/format.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2024 The R Core Team
+#  Copyright (C) 1995-2025 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -73,7 +73,7 @@ format.default <-
 			     decimal.mark = decimal.mark, input.d.mark = decimal.mark,
 			     zero.print = zero.print, drop0trailing = drop0trailing,
 			     is.cmplx = is.complex(x),
-			     preserve.width = if (trim) "individual" else "common"),
+			     preserve.width = if (trim) "individual" else "common", ...),
 	       ## all others (for now):
 	       stop(gettextf("Found no format() method for class \"%s\"",
 			     class(x)), domain = NA))
@@ -338,7 +338,7 @@ prettyNum <-
 		    big.mark=big.mark, big.interval=big.interval,
 		    small.mark=small.mark, small.interval=small.interval,
 		    decimal.mark=decimal.mark, zero.print=zero.print,
-		    drop0trailing=drop0trailing, ...)
+		    drop0trailing=drop0trailing, replace.zero=replace.zero, ...)
     }
     ## be fast in trivial case, when all options have their default, or "match"
     nMark <- big.mark == "" && small.mark == "" && (notChar || decimal.mark == input.d.mark)
