@@ -153,6 +153,7 @@ standardizable
 stderr
 stdout
 structs
+stylesheet
 subclasses
 suboptions
 subscripted
