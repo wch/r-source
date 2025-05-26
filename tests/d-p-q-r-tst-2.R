@@ -665,11 +665,19 @@ dbArg <- cbind(
 (db <- apply(dbArg, 1, \(v3) do.call(dbinom, c(v3, list(log=TRUE))))) ## was all  -Inf !
 ## dput(signif(db, 6))
 stopifnot(
-    all.equal(db,
-              c(-1.73031e+308, -1.76399e+308, -1.73534e+308, -1.74653e+308, -1.7615e+308,
-                -1.79181e+308, -1.7259e+308,  -1.77688e+308, -1.77981e+308, -1.74055e+308,
-                -1.70236e+308, -1.76548e+308, -1.79598e+308, -1.79126e+308, -1.79514e+308), tolerance = 1e-5))
-## all == -Inf previously
+    all.equal(db, tolerance = 1e-5,
+	      c(-1.73031e+308, -1.76399e+308, -1.73534e+308, -1.74653e+308, -1.7615e+308,
+		-1.79181e+308, -1.7259e+308,  -1.77688e+308, -1.77981e+308, -1.74055e+308,
+		-1.70236e+308, -1.76548e+308, -1.79598e+308, -1.79126e+308, -1.79514e+308)))
+## all == -Inf   in R <= 4.5.0
+
+x <- c(12:20, 100*c(1,3,10,20,50)) # dbinom for very small prob (did overflow in bd0())
+(db <- dbinom(x, size=x+1, prob = 2^-1024.1, log = TRUE))
+stopifnot(
+    all.equal(c(-8515.66, -9225.44, -9935.22, -10645, -11354.8, -12064.6, -12774.4,
+                -13484.2, -14194, -70980.6, -212950, -709845, -1419700, -3549250),
+              db, tolerance = 1e-5))
+## all but the first two where -Inf in R <= 4.5.0
 
 
 ## qpois(p, *) for invalid 'p' should give NaN -- PR#16972
