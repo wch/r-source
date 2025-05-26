@@ -895,7 +895,7 @@ Rd2txt <-
                                   keepFirstIndent <<- TRUE
                                   linebreak <- identical(opts$descStyle, "linebreak")
                                   suffix <- if (identical(opts$descStyle, "colon")
-                                                && !endsWith(DLlab, ":")) ": "
+                                                && !endsWith(DLlab[length(DLlab)], ":")) ": "
                                             else if (!linebreak) " "
                                   putw(strrep(" ", indent0), DLlab, suffix)
                                   if (linebreak) blankLine(0L)
