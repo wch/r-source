@@ -7,6 +7,7 @@ FSF: free (https://www.gnu.org/licenses/license-list.html#GPLv2)
 File: share/licenses/GPL-2
 URL: https://www.r-project.org/Licenses/GPL-2
 FOSS: yes
+SPDX: GPL-2.0-only
 
 Name: GNU General Public License
 Abbrev: GPL
@@ -18,16 +19,18 @@ File: share/licenses/GPL-3
 URL: https://www.r-project.org/Licenses/GPL-3
 FOSS: yes
 Extensible: yes
+SPDX: GPL-3.0-only
 
 Name: GNU Library General Public License
 Abbrev: LGPL
 Version: 2
 SSS: LGPL-2
-OSI: open 
+OSI: open (https://opensource.org/license/lgpl-2-0)
 FSF: free
 File: share/licenses/LGPL-2
 URL: https://www.r-project.org/Licenses/LGPL-2
 FOSS: yes
+SPDX: LGPL-2.0-only
 
 Name: GNU Lesser General Public License
 Abbrev: LGPL
@@ -38,6 +41,7 @@ FSF: free (https://www.gnu.org/licenses/license-list.html#LGPLv2.1)
 File: share/licenses/LGPL-2.1
 URL: https://www.r-project.org/Licenses/LGPL-2.1
 FOSS: yes
+SPDX: LGPL-2.1-only
 
 Name: GNU Lesser General Public License
 Abbrev: LGPL
@@ -49,6 +53,7 @@ File: share/licenses/LGPL-3
 URL: https://www.r-project.org/Licenses/LGPL-3
 FOSS: yes
 Extensible: yes
+SPDX: LGPL-3.0-only
 
 Name: GNU Affero General Public License
 Abbrev: AGPL
@@ -60,6 +65,7 @@ File: share/licenses/AGPL-3
 URL: https://www.r-project.org/Licenses/AGPL-3
 FOSS: yes
 Extensible: yes
+SPDX: AGPL-3.0-only
 
 Name: Apache License
 Version: 1.1
@@ -67,6 +73,7 @@ OSI: open but superseded (https://opensource.org/licenses/apachepl-1.1)
 FSF: free (https://www.gnu.org/licenses/license-list.html#apache1.1)
 URL: https://www.apache.org/LICENSE-1.1
 FOSS: yes
+SPDX: Apache-1.1
 
 Name: Apache License
 Version: 2.0
@@ -74,6 +81,7 @@ OSI: open (https://opensource.org/licenses/Apache-2.0)
 FSF: free (https://www.gnu.org/licenses/license-list.html#apache2)
 URL: https://www.apache.org/licenses/LICENSE-2.0
 FOSS: yes
+SPDX: Apache-2.0
 
 Name: Artistic License
 Version: 1.0
@@ -83,6 +91,7 @@ FSF: non_free (https://www.gnu.org/licenses/license-list.html#ArtisticLicense)
 URL: https://www.r-project.org/Licenses/Artistic-1.0
 FOSS: no
 Restricts_use: no
+SPDX: Artistic-1.0
 
 Name: Artistic License
 Version: 2.0
@@ -92,6 +101,7 @@ FSF: free (https://www.gnu.org/licenses/license-list.html#ArtisticLicense2)
 File: share/licenses/Artistic-2.0
 URL: https://www.r-project.org/Licenses/Artistic-2.0
 FOSS: yes
+SPDX: Artistic-2.0
 
 Name: CeCILL
 Abbrev: CeCILL
@@ -99,6 +109,7 @@ Version: 2
 FSF: free (https://www.gnu.org/licenses/license-list.html#CeCILL)
 URL: https://www.cecill.info/licences/Licence_CeCILL_V2-en.txt
 FOSS: yes
+SPDX: CECILL-2.0
 
 Name: CeCILL
 Abbrev: CeCILL
@@ -107,6 +118,7 @@ SSS: CECILL-2.1
 OSI: open (https://opensource.org/license/cecill-2-1/)
 URL: https://www.cecill.info/licences/Licence_CeCILL_V2.1-en.txt
 FOSS: yes
+SPDX: CECILL-2.1
 
 Name: FreeBSD License
 Abbrev: FreeBSD
@@ -114,6 +126,7 @@ OSI: open (https://opensource.org/licenses/BSD-2-Clause)
 FSF: free (https://www.gnu.org/licenses/license-list.html#FreeBSD)
 URL: https://www.freebsd.org/copyright/freebsd-license.html
 FOSS: yes
+SPDX: BSD-2-Clause-FreeBSD
 
 Name: MIT License
 Abbrev: MIT
@@ -123,6 +136,7 @@ URL: https://opensource.org/licenses/mit-license.php
 FOSS: yes
 Extensible: yes
 Note: this is a template, needs + file LICENSE
+SPDX: MIT
 
 Name: Modified BSD License
 Abbrev: BSD
@@ -130,7 +144,8 @@ OSI: open (https://opensource.org/licenses/BSD-3-Clause)
 FSF: free (https://www.gnu.org/licenses/license-list.html#ModifiedBSD)
 URL: https://opensource.org/licenses/BSD-3-Clause
 FOSS: yes
-Note: do not use: use BSD_2_clause or BSD_3_clause instead 
+Note: do not use: use BSD_2_clause or BSD_3_clause instead
+SPDX: BSD-3-Clause
 
 Name: BSD 2-clause License
 Abbrev: BSD_2_clause
@@ -141,6 +156,7 @@ URL: https://opensource.org/licenses/BSD-2-Clause
 FOSS: yes
 Extensible: yes
 Note: this is a template, needs + file LICENSE
+SPDX: BSD-2-Clause
 
 Name: BSD 3-clause License
 Abbrev: BSD_3_clause
@@ -151,6 +167,7 @@ URL: https://opensource.org/licenses/BSD-3-Clause
 FOSS: yes
 Extensible: yes
 Note: this is a template, needs + file LICENSE
+SPDX: BSD-3-Clause
 
 Name: Mozilla Public License
 Abbrev: MPL
@@ -159,6 +176,7 @@ OSI: open but superseded (https://opensource.org/licenses/mozilla1.0)
 FSF: free
 URL: http://website-archive.mozilla.org/www.mozilla.org/mpl/MPL/1.0/
 FOSS: yes
+SPDX: MPL-1.0
 
 Name: Mozilla Public License
 Abbrev: MPL
@@ -167,6 +185,7 @@ OSI: open but superseded (https://opensource.org/licenses/MPL-1.1)
 FSF: free (https://www.gnu.org/licenses/license-list.html#MPL)
 URL: https://www.mozilla.org/en-US/MPL/1.1/
 FOSS: yes
+SPDX: MPL-1.1
 
 Name: Mozilla Public License
 Abbrev: MPL
@@ -175,6 +194,7 @@ OSI: open (https://opensource.org/licenses/MPL-2.0)
 FSF: free (https://www.gnu.org/licenses/license-list.html#MPL-2.0)
 URL: https://www.mozilla.org/en-US/MPL/2.0/
 FOSS: yes
+SPDX: MPL-2.0
 
 Name: Common Public License
 Abbrev: CPL
@@ -183,6 +203,7 @@ FSF: free (https://www.gnu.org/licenses/license-list.html#CommonPublicLicense10)
 OSI: open but superseded (https://opensource.org/licenses/cpl1.0)
 URL: https://www.eclipse.org/legal/cpl-v10.html
 FOSS: yes
+SPDX: CPL-1.0
 
 Name: Eclipse Public License
 Version: 1.0
@@ -191,6 +212,7 @@ FSF: free (https://www.gnu.org/licenses/license-list.html#EPL)
 OSI: open (https://opensource.org/licenses/EPL-1.0)
 URL: https://www.eclipse.org/legal/epl-v10.html
 FOSS: yes
+SPDX: EPL-1.0
 
 Name: Lucent Public License
 Version: 1.02
@@ -198,6 +220,7 @@ FSF: free (https://www.gnu.org/licenses/license-list.html#lucent102)
 OSI: open (https://opensource.org/licenses/LPL-1.02)
 URL: https://opensource.org/licenses/lucent1.02.php
 FOSS: yes
+SPDX: LPL-1.02
 
 Name: European Union Public License
 Version: 1.1
@@ -206,6 +229,7 @@ FSF: free (https://www.gnu.org/licenses/license-list.html#EUPL)
 OSI: open but superseded (https://opensource.org/licenses/EUPL-1.1)
 URL: https://joinup.ec.europa.eu/software/page/eupl
 FOSS: yes
+SPDX: EUPL-1.1
 
 Name: European Union Public License
 Version: 1.2
@@ -214,6 +238,7 @@ FSF: free (https://www.gnu.org/licenses/license-list.html#EUPL)
 OSI: open (https://opensource.org/licenses/EUPL-1.2)
 URL: https://joinup.ec.europa.eu/software/page/eupl
 FOSS: yes
+SPDX: EUPL-1.2
 
 Name: Creative Commons Attribution 4.0 International License
 Abbrev: CC BY 4.0
@@ -221,6 +246,7 @@ FSF: free (https://www.gnu.org/licenses/license-list.html#ccby)
 URL: https://creativecommons.org/licenses/by/4.0
 FOSS: yes
 Extensible: yes
+SPDX: CC-BY-4.0
 
 Name: Creative Commons Attribution-ShareAlike 4.0 International License
 Abbrev: CC BY-SA 4.0
@@ -228,6 +254,7 @@ FSF: free (https://www.gnu.org/licenses/license-list.html#ccbysa)
 URL: https://creativecommons.org/licenses/by-sa/4.0
 FOSS: yes
 Extensible: yes
+SPDX: CC-BY-SA-4.0
 
 Name: Creative Commons Attribution-NonCommercial 4.0 International License
 Abbrev: CC BY-NC 4.0
@@ -236,6 +263,7 @@ URL: https://creativecommons.org/licenses/by-nc/4.0
 FOSS: no
 Extensible: yes
 Restricts_use: yes
+SPDX: CC-BY-NC-4.0
 
 Name: Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License
 Abbrev: CC BY-NC-SA 4.0
@@ -244,6 +272,7 @@ URL: https://creativecommons.org/licenses/by-nc-sa/4.0
 FOSS: no
 Extensible: yes
 Restricts_use: yes
+SPDX: CC-BY-NC-SA-4.0
 
 Name: Creative Commons Attribution-NonCommercial-NoDerivs 4.0 International License
 Abbrev: CC BY-NC-ND 4.0
@@ -252,12 +281,14 @@ URL: https://creativecommons.org/licenses/by-nc-nd/4.0
 FOSS: no
 Extensible: yes
 Restricts_use: yes
+SPDX: CC-BY-NC-ND-4.0
 
 Name: CC0
 FSF: free (https://www.gnu.org/licenses/license-list.html#CC0)
 OSI: NA (https://opensource.org/faq#cc-zero)
 URL: https://creativecommons.org/publicdomain/zero/1.0/legalcode
 FOSS: yes
+SPDX: CC0-1.0
 
 Name: zlib License
 Abbrev: Zlib
@@ -265,6 +296,7 @@ FSF: free (https://www.gnu.org/licenses/license-list.html#ZLib)
 OSI: open (https://opensource.org/licenses/Zlib)
 URL: http://www.gzip.org/zlib/zlib_license.html
 FOSS: yes
+SPDX: Zlib
 
 Name: Boost Software License
 Version: 1.0
@@ -273,6 +305,7 @@ FSF: free (https://www.gnu.org/licenses/license-list.html#boost)
 OSI: open (https://opensource.org/licenses/BSL-1.0)
 URL: http://www.boost.org/LICENSE_1_0.txt
 FOSS: yes
+SPDX: BSL-1.0
 
 Name: ACM Software License Agreement
 Version: 1998
