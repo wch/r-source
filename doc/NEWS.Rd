@@ -149,10 +149,9 @@
       \item \code{signif(1.**e308, digits)} no longer truncates unnecessarily
       (but still to prevent overflow to \code{Inf}), fixing \PR{18889}.
 
-      \code{pbeta(x, a,b, ..)} for very large \code{a,b} no longer returns
-      \code{NaN} but the correct values (0 or 1, or their logs for \code{log.p = TRUE}).
-      This improves Mathlib's C level \code{bratio()} and hence also
-      \code{pnbinom()}, etc..
+      \item \code{prettyNum(*, zero.print={>=1-char}, replace.zero=TRUE)}
+      now works as documented, thanks to Marttila Mikko and Ivan Krylov's
+      messages on R-devel.
     }
   }
 }
