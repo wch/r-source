@@ -648,44 +648,43 @@ setCacheOnAssign <- function(env, onOff = cacheOnAssign(env))
 }
 
 
-utils::globalVariables("fdef")
-.dummySetMethod <- function(f, signature = character(), definition,
-	     where = topenv(parent.frame()), valueClass = NULL,
-	     sealed = FALSE)
-{
-    if(is.function(f) && is(f, "genericFunction"))
-        f <- fdef@generic
-    else if(is.function(f)) {
-        if(is.primitive(f))
-            f <- .primname(f)
-        else
-            stop("a function for argument 'f' must be a generic function")
-    } else
-        f <- switch(f, "as.double" = "as.numeric", f)
-    assign(.dummyMethodName(f, signature), definition, envir = where)
-}
+## utils::globalVariables("fdef")
+## .dummySetMethod <- function(f, signature = character(), definition,
+## 	     where = topenv(parent.frame()), valueClass = NULL,
+## 	     sealed = FALSE)
+## {
+##     if(is.function(f) && is(f, "genericFunction"))
+##         f <- fdef@generic
+##     else if(is.function(f)) {
+##         if(is.primitive(f))
+##             f <- .primname(f)
+##         else
+##             stop("a function for argument 'f' must be a generic function")
+##     } else
+##         f <- switch(f, "as.double" = "as.numeric", f)
+##     assign(.dummyMethodName(f, signature), definition, envir = where)
+## }
 
-.functionsOverriden <- c("setClass", "setClassUnion", "setGeneric", "setIs", "setMethod", "setValidity")
+## .functionsOverriden <- c("setClass", "setClassUnion", "setGeneric", "setIs", "setMethod", "setValidity")
 
-.setEnvForSource <- function(env) {
-    doNothing <- function(x, ...)x
-    ## establish some dummy definitions & a special setMethod()
-    for(f in .functionsOverriden)
-        assign(f, switch(f, setMethod = .dummySetMethod, doNothing),
-               envir = env)
-    env
-}
+## .setEnvForSource <- function(env) {
+##     doNothing <- function(x, ...)x
+##     ## establish some dummy definitions & a special setMethod()
+##     for(f in .functionsOverriden)
+##         assign(f, switch(f, setMethod = .dummySetMethod, doNothing),
+##                envir = env)
+##     env
+## }
 
 .dummyMethodName <- function(f, signature)
     paste(c(f,signature), collapse="#")
 
 .guessPackageName <- function(env) {
     allObjects <- names(env)
-    allObjects <- allObjects[is.na(match(allObjects, .functionsOverriden))]
-    ## counts of packaages containing objects; objects not found don't count
+    ##allObjects <- allObjects[is.na(match(allObjects, .functionsOverriden))]
+    ## counts of packages containing objects; objects not found don't count
     possible <- sort(table(unlist(lapply(allObjects, utils::find))),
                      decreasing = TRUE)
-##    message <- ""
     if(length(possible) == 0)
         stop("none of the objects in the source code could be found:  need to attach or specify the package")
     else if(length(possible) > 1L) {
