@@ -1103,7 +1103,7 @@
     cat("\n", file = printTo)
 }
 
-## temporary switch for tables
+## temporary switch for tables (not used anywhere; for debugging)
 useMTable <- function(onOff = NA)
   .Call(C_R_set_method_dispatch, as.logical(onOff))
 

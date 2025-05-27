@@ -54,7 +54,7 @@ static SEXP s_dot_Methods, s_skeleton, s_expression, s_function,
     s_missing, s_generic_dot_skeleton, s_subset_gets, s_element_gets,
     s_argument, s_allMethods, s_base;
 static SEXP R_FALSE, R_TRUE;
-static bool table_dispatch_on = 1;
+static bool table_dispatch_on = true;
 
 /* precomputed skeletons for special primitive calls */
 static SEXP R_short_skeletons, R_empty_skeletons;
@@ -1172,11 +1172,13 @@ SEXP R_dispatchGeneric(SEXP fname, SEXP ev, SEXP fdef)
 
 SEXP R_set_method_dispatch(SEXP onOff)
 {
-    bool prev = table_dispatch_on, value = asBool(onOff);
+    int value = asLogical(onOff);
     if(value == NA_LOGICAL) /*  just return previous*/
-	value = prev;
-    table_dispatch_on = value;
-    if(value != prev) {
+	return ScalarLogical(table_dispatch_on);
+    // else
+    bool prev = table_dispatch_on;
+    table_dispatch_on = (bool)value;
+    if(table_dispatch_on != prev) {
 	R_set_standardGeneric_ptr(
 	    (table_dispatch_on ? R_dispatchGeneric : R_standardGeneric),
 	    Methods_Namespace);
