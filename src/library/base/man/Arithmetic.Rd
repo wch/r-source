@@ -58,9 +58,8 @@ x \%/\% y
   integer division, i.e., \code{q <- x \%/\% y := floor(x/y)}, as promoted
   by Donald Knuth, see the Wikipedia page on \sQuote{Modulo operation},
   and hence \code{sign(r) == sign(y)}.  It is guaranteed that
-  \describe{
-    \item{\code{ x == (x \%\% y) + y * (x \%/\% y) }}{\sspace (up to rounding error)}
-  }
+  (up to rounding error)
+  \preformatted{    x == (x \%\% y) + y * (x \%/\% y)    }
   unless \code{y == 0} where the result of \code{\%\%} is
   \code{\link{NA_integer_}} or \code{\link{NaN}} (depending on the
   \code{\link{typeof}} of the arguments) or for some non-\link{finite}

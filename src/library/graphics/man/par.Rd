@@ -347,10 +347,10 @@ par(\dots, no.readonly = FALSE)
     \item{\code{lend}}{The line end style.  This can be specified as an
       integer or string:
       \describe{
-        \item{\code{0}}{and \code{"round"} mean rounded line caps
+        \item{\code{0} and \code{"round"}}{mean rounded line caps
           [\emph{default}];}
-        \item{\code{1}}{and \code{"butt"} mean butt line caps;}
-        \item{\code{2}}{and \code{"square"} mean square line caps.}
+        \item{\code{1} and \code{"butt"}}{mean butt line caps;}
+        \item{\code{2} and \code{"square"}}{mean square line caps.}
       }
     }
     \item{\code{lheight}}{The line height multiplier.
@@ -362,10 +362,10 @@ par(\dots, no.readonly = FALSE)
     \item{\code{ljoin}}{The line join style.
       This can be specified as an integer or string:
       \describe{
-        \item{\code{0}}{and \code{"round"} mean rounded line joins
+        \item{\code{0} and \code{"round"}}{mean rounded line joins
           [\emph{default}];}
-        \item{\code{1}}{and \code{"mitre"} mean mitred line joins;}
-        \item{\code{2}}{and \code{"bevel"} mean bevelled line joins.}
+        \item{\code{1} and \code{"mitre"}}{mean mitred line joins;}
+        \item{\code{2} and \code{"bevel"}}{mean bevelled line joins.}
       }
     }
     \item{\code{lmitre}}{The line mitre limit.  This controls when

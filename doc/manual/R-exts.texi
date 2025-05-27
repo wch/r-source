@@ -7385,7 +7385,8 @@ E.g., @file{abline.Rd} contains
 @group
 \details@{
   Typical usages are
-\preformatted@{abline(a, b, ...)
+\preformatted@{
+abline(a, b, ...)
 ......
 @}
 @end group

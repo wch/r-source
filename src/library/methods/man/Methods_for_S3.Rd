@@ -44,9 +44,9 @@ For details, see \link{S3Methods}.
 In modern \R, a function \code{meth} in a package is registered as an S3 method
 for function \code{fun} and class \code{Class} by
 including in the package's \code{NAMESPACE} file the directive
-
-\code{S3method(fun, Class, meth)}
-
+\preformatted{
+    S3method(fun, Class, meth)
+}
 By default (and traditionally), the third argument is taken to be the
 function \code{fun.Class}; that is,
 the name of the
@@ -63,9 +63,9 @@ register S3 methods rather than requiring the package to be attached.
 
 \section{Methods for S4 Classes}{
 
-Two possible mechanisms for implementing a method  corresponding to an
-S4 class, there are two possibilities are to register it as an S3 method with the
-S4 class name or to define and set an S4 method, which will have the
+There are two possible mechanisms for implementing a method
+corresponding to an S4 class: register it as an S3 method with the
+S4 class name or define and set an S4 method, which will have the
 side effect of creating an S4 generic version of this function.
 
 For most situations either works, but
@@ -79,20 +79,17 @@ extending \code{"character"} and intending to ignore upper- and
 lower-case.
 The base function \code{\link{unique}} dispatches S3 methods.
 To define the class and a method for this function:
-
-\code{setClass("uncased", contains = "character")}
-
-\code{unique.uncased <- function(x, incomparables = FALSE, ...)
-  nextMethod(tolower(x))}
-
-\code{setMethod("unique", "uncased", unique.uncased)}
-
+\preformatted{
+    setClass("uncased", contains = "character")
+    unique.uncased <- function(x, incomparables = FALSE, ...)
+        NextMethod(tolower(x))
+    setMethod("unique", "uncased", unique.uncased)
+}
 In addition, the \code{NAMESPACE} for the package should contain:
-
-\code{S3method(unique, uncased)}
-
-\code{exportMethods(unique)}
-
+\preformatted{
+    S3method(unique, uncased)
+    exportMethods(unique)
+}
 The result is to define identical S3 and S4 methods and ensure that all
 calls to \code{unique} will dispatch that method when appropriate.
 }
