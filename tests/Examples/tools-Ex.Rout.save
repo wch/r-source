@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2025-03-15 r87978) -- "Unsuffered Consequences"
+R Under development (unstable) (2025-05-23 r88232) -- "Unsuffered Consequences"
 Copyright (C) 2025 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu
 
@@ -96,7 +96,7 @@ $status
 
 $stdout
  [1] ""                                                                                 
- [2] "R Under development (unstable) (2025-03-15 r87978) -- \"Unsuffered Consequences\""
+ [2] "R Under development (unstable) (2025-05-23 r88232) -- \"Unsuffered Consequences\""
  [3] "Copyright (C) 2025 The R Foundation for Statistical Computing"                    
  [4] "Platform: x86_64-pc-linux-gnu"                                                    
  [5] ""                                                                                 
@@ -112,10 +112,10 @@ $stdout
 [15] "'help.start()' for an HTML browser interface to help."                            
 [16] "Type 'q()' to quit R."                                                            
 [17] ""                                                                                 
-[18] "> x <- readRDS(\"/tmp/RtmpdMEyMD/runri27c6bb59ea22a0\")"                          
+[18] "> x <- readRDS(\"/tmp/Rtmp0ux66Z/runri5637d2aafeee6\")"                           
 [19] "> options(repos = x$repos)"                                                       
 [20] "> y <- tryCatch(list(do.call(x$fun, x$args, quote = TRUE)), error = identity)"    
-[21] "> saveRDS(y, \"/tmp/RtmpdMEyMD/runro27c6bb1ae7e9dc\")"                            
+[21] "> saveRDS(y, \"/tmp/Rtmp0ux66Z/runro5637d2df4941c\")"                             
 [22] "> "                                                                               
 
 $stderr
@@ -280,7 +280,7 @@ Error in assertWarning(ff()) :
 > bibstyle("unsorted", sortKeys = function(refs) seq_along(refs),
 +     fmtPrefix = function(paper) paste0("[", paper$.index, "]"),
 +        .init = TRUE)
-<environment: 0x55cb7849ff00>
+<environment: 0x55e2213e0fe0>
 > print(refs, .bibstyle = "unsorted")
 [1] R Core Team (2013). _R: A Language and Environment for Statistical
 Computing_. R Foundation for Statistical Computing, Vienna, Austria.
@@ -778,6 +778,9 @@ $is_FOSS
 $restricts_use
 [1] FALSE
 
+$spdx
+[1] "GPL-2.0-only"
+
 > analyze_license("LGPL (>= 2.0, < 3) | Mozilla Public License")
 $is_empty
 [1] FALSE
@@ -820,6 +823,9 @@ $is_FOSS
 $restricts_use
 [1] FALSE
 
+$spdx
+[1] "LGPL-2.0-only OR LGPL-2.1-only OR MPL-1.0 OR MPL-1.1 OR MPL-2.0"
+
 > analyze_license("GPL-2 | file LICENCE")
 $is_empty
 [1] FALSE
@@ -861,6 +867,9 @@ $is_FOSS
 
 $restricts_use
 [1] FALSE
+
+$spdx
+[1] "GPL-2.0-only"
 
 > analyze_license("GPL (>= 2) | BSD_3_clause + file LICENSE")
 $is_empty
@@ -905,6 +914,9 @@ $is_FOSS
 $restricts_use
 [1] FALSE
 
+$spdx
+[1] "GPL-2.0-only OR GPL-3.0-only OR BSD-3-Clause"
+
 > analyze_license("Artistic-2.0 | AGPL-3 + file LICENSE")
 $is_empty
 [1] FALSE
@@ -947,6 +959,9 @@ $is_FOSS
 
 $restricts_use
 [1] FALSE
+
+$spdx
+[1] "Artistic-2.0 OR AGPL-3.0-only"
 
 > 
 > 
@@ -1578,7 +1593,7 @@ needs Deep Thought
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  0.389 0 0.763 0.293 0.075 
+Time elapsed:  0.455 0.02 0.941 0.409 0.052 
 > grDevices::dev.off()
 null device 
           1 
