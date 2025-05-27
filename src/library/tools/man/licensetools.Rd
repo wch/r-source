@@ -32,7 +32,10 @@ analyze_license(x)
   with fixed versions.  It also indicates whether the license can be
   verified to be \abbr{FOSS}
   (\url{https://en.wikipedia.org/wiki/Free_and_open-source_software})
-  licenses.
+  licenses and where possible computes an
+  \href{https://spdx.dev/learn/handling-license-info/}{SPDX license
+    identifier}
+  for the license.
 }
 \value{
   a list with elements including
@@ -48,6 +51,7 @@ analyze_license(x)
     license spec.}
   \item{is_verified}{a logical indicating whether the given string can
     be verified to specify a \abbr{FOSS} license.}
+  \item{spdx}{an SPDX license identifier for the license spec.}
 }
 \examples{
 ## Examples from section 'Licenses' of 'Writing R Extensions':

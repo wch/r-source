@@ -30,7 +30,13 @@
       \verb{\link[<pkg>:<myClass>-class]{<myClass>}} necessary in earlier
       versions of \R.
 
-      Packages with the new syntax need to formally depend on \samp{R >= 4.6.0}.
+      Packages with the new syntax need to formally depend on
+      \samp{R >= 4.6.0}.
+
+      \item \code{tools::analyze_license()} now also computes
+      \href{https://spdx.dev/learn/handling-license-info/}{SPDX license
+	identifiers},
+      thanks to \I{Thierry Onkelinx} and \I{LLuís Revilla}.
     }
   }
 
