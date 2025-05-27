@@ -748,7 +748,7 @@ insertSource <- function(source, package = "",
     MPattern <- .TableMetaPattern()
     CPattern <- .ClassMetaPattern()
     allPlainObjects <- function()
-        allObjects[!(grepl(MPattern, allObjects) | grepl(CPattern, allObjects) | ".cacheOnAssign" == allObjects)]
+        allObjects[!(grepl(MPattern, allObjects) | grepl(CPattern, allObjects))]
     allMethodTables <- function()
         allObjects[grepl(MPattern, allObjects)]
 ##    allClassDefs <- function()
@@ -802,6 +802,7 @@ insertSource <- function(source, package = "",
     ## at this point, envp is the target environment (package or other)
     ## and envns is the corresponding namespace if any, or NULL
     allObjects <- names(env)
+    allObjects <- allObjects[!(allObjects %in% c(".cacheOnAssign", ".packageName"))]
     ## Figure out what to trace.
     if(!missing(functions)) {
         notThere <- is.na(match(functions, allObjects))
