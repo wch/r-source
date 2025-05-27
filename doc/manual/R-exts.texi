@@ -7894,9 +7894,7 @@ where possible.  Macros @code{\var} and @code{\link} are interpreted within
 @findex \preformatted
 Indicate text that is a literal example of a piece of a program.  Text
 is displayed using @code{typewriter} font where possible.  Formatting,
-e.g.@: line breaks, is preserved.  (Note that this includes a line break
-after the initial @{, so typically text should start on the same line as
-the command.)
+e.g.@: line breaks, is preserved.  Displayed in a separate paragraph.
 
 Due to limitations in @LaTeX{} as of this writing, this macro may not be
 nested within other markup macros other than @code{\dQuote} and
