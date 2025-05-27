@@ -614,7 +614,9 @@ function(x)
                                stringsAsFactors = FALSE)
         }
 
-        spdx <- paste(unique(unlist(lapply(expansions, `[[`, "SPDX"),
+        spdx <- paste(unique(unlist(lapply(expansions,
+                                           function(e)
+                                               sort(e[["SPDX"]])),
                                     use.names = FALSE)),
                       collapse = " OR ")
         ## Replace expansions by their labels from the license db.
