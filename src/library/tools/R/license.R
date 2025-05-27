@@ -631,6 +631,19 @@ function(x)
         ind <- (m > -1L)
         expansions[ind] <-
             Map(paste, expansions[ind], regmatches(components, m))
+        ## Components without expansions should now be invalid, e.g.
+        ##   License: GPL (> 3)
+        if(any(ind <- (lengths(expansions) == 0L))) {
+            bad_components <- components[ind]
+            is_canonical <- is_standardizable <- is_verified <- FALSE
+            standardization <- spdx <- NA_character_
+            is_FOSS <- restricts_use <- NA
+        }
+        ## Finally, only give empty SPDX license identifiers for icenses
+        ## where one component is 'Unlimited'.
+        if(!nzchar(spdx) &&
+           !any(unlist(expansions, use.names = FALSE) == "Unlimited"))
+            spdx <- NA_character_
     }
 
     if(any(startsWith(components, "Part of R"))) { # base package
