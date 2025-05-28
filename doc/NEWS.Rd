@@ -102,6 +102,10 @@
 
       \item Dataset \code{LifeCycleSavings} had a misspelled row name:
       \code{"Guatamala"} was corrected to \code{"Guatemala"}.
+
+      \item The \code{Pair(x,y)} construction in the formula interface to
+      paired tests did not work with the \code{subset} argument, due to the
+      absence of a \code{[.Pair} method, which has now been added.
     }
   }
 

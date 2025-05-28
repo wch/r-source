@@ -8,3 +8,16 @@ Pair <- function(x,y) {
   class(pp) <- "Pair"
   pp
 }
+`[.Pair` <- function (x, i, j, drop = FALSE) 
+{
+    if (missing(j)) {
+        x <- unclass(x)[i, , drop = FALSE]
+        class(x) <- "Pair"
+        x
+    }
+    else {
+        class(x) <- "matrix"
+        NextMethod("[")
+    }
+}
+
