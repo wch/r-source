@@ -1267,7 +1267,7 @@ getCompilerOption <- function(name, options = NULL) {
 @ %def getCompilerOption
 
 The [[suppressAll]] function determines whether a context has its
-[[supressAll]] property set to [[TRUE]].
+[[suppressAll]] property set to [[TRUE]].
 <<[[suppressAll]] function>>=
 suppressAll <- function(cntxt)
     identical(cntxt$suppressAll, TRUE)
@@ -1504,7 +1504,7 @@ carry at least some runtime penalty. The approach taken here is
 therefore to permit the compiler to inline some functions when they
 are not visibly shadowed in the compiled code.  What the compiler is
 permitted to do is determined by the setting of an optimization level.
-The details are desctibed in Section \ref{sec:inlining}.
+The details are described in Section \ref{sec:inlining}.
 
 For the compiler to be able to decide whether is can inline a function
 it needs to be able to determine whether there are any local variable
@@ -1814,7 +1814,7 @@ surrounding function.  To allow for this we can add an optional
 variable [[shadowed]] for providing a character vector of names of
 variables with shadowing local definitions.
 
-The more sophisticated implementaiton is also slightly optimized to avoid
+The more sophisticated implementation is also slightly optimized to avoid
 recursive calls. [[findLocals1]] now, instead of searching through the full
 transitive closure of language objects, only searches from the first, but
 returns what remains to be searched. The variables found are stored into an
@@ -2772,7 +2772,7 @@ not.  [[ENDLOOPCNTXT]] terminates the context established by
 data is stored on the byte code interpreter stack; in the case of a
 [[for]] loop some loop state information is duplicated on the stack by
 [[STARTLOOPCNTXT]] and removed again by [[ENDLOOPCNTXT]]. The byte
-code intepreter stores the [[pc]] in a slot in the [[RCNTXT]]
+code interpreter stores the [[pc]] in a slot in the [[RCNTXT]]
 structure so it is available after a [[longjmp]] triggered by a
 [[break]] for retrieving the label on the [[ENDLOOPCNTXT]]
 instruction.  An alternative would be to add separate
@@ -3240,7 +3240,7 @@ cmpPrim2 <- function(e, cb, op, cntxt) {
 @ %def cmpPrim2
 
 The [[INCLNK]] and [[DECLNK]] instructions are used to protect
-evaluated arguents on the stack from modifications during evaluation
+evaluated arguments on the stack from modifications during evaluation
 of subsequent arguments. These instructions can be omitted if the
 subsequent argument evaluations cannot modify values on the stack.
 With changes to stack protection this is mechanism is no longer
@@ -3305,7 +3305,7 @@ setInlineHandler("log", function(e, cb, cntxt) {
 
 A number of one argument math functions are handled by the interpreter
 using the function [[math1]] in [[arithmetic.c]]. The [[MATH1.OP]]
-instruction handles these for compuled code. The instruction takes two
+instruction handles these for compiled code. The instruction takes two
 operands, an index for the call expression in the constant table, and
 an index for the function to be called in a table of function
 pointers. The table of names in the byte code compiler has to match
@@ -4326,7 +4326,7 @@ f(g(x, print(y)), y) <- 3
 \end{itemize}
 
 Because of these issues the compiler implements slightly different
-semantics for complex assignment than the current intepreter.
+semantics for complex assignment than the current interpreter.
 \emph{Evaluation} semantics should be identical; the difference arises
 in how intermediate values are managed and has some effect on results
 produced by [[substitute]].  In particular, no intermediate [[*tmp*]]
@@ -5349,7 +5349,7 @@ optimization level to be specified using environment variables.
 
 When [[enableJIT]] is set to 3, loops should be compiled before executing. 
 However, if the [[optimize]] option is set to 0 or 1, a compiled loop will
-call to the same primitive function as is used by the AST interpretter (e.g. 
+call to the same primitive function as is used by the AST interpreter (e.g. 
 [[do_for]]), and the compilation would run into infinite recursion. 
 [[checkCompilerOptions]] will detect invalid combinations of [[enableJIT]]
 and [[optimize]] and report a warning.
@@ -5724,7 +5724,7 @@ representations and more efficient calling conventions.
 This appendix provides a few general utility functions.
 
 The utility function [[pasteExpr]] is used in the error messages.
-%% **** use elipsis instead of collapse??
+%% **** use ellipsis instead of collapse??
 %% **** use error context or catch errors?
 %% **** maybe don't need expression if we catch errors?
 <<[[pasteExpr]] function>>=
@@ -5981,7 +5981,7 @@ nsName <- function(ns) {
 
 \section{Experimental utilities}
 
-This section presents two experimental utililities that, for now, are
+This section presents two experimental utilities that, for now, are
 not exported. The first is a simple byte code profiler. This requires
 that the file [[eval.c]] be compiled with [[BC_PROFILING]] enabled,
 which on [[gcc]]-compatible compilers will disable threaded code. The
