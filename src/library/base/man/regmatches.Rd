@@ -123,7 +123,7 @@ z
 
 ## With `perl = TRUE` and `invert = FALSE` capture group names
 ## are preserved.  Collect functions and arguments in calls:
-NEWS <- head(readLines(file.path(R.home(), 'doc', 'NEWS.2')), 100)
+NEWS <- head(readLines(file.path(R.home("doc"), "NEWS.2")), 100)
 m <- gregexec("(?<fun>\\\\w+)\\\\((?<args>[^)]*)\\\\)", NEWS, perl = TRUE)
 y <- regmatches(NEWS, m)
 y[[16]]
