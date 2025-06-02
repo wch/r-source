@@ -6,7 +6,7 @@
 \encoding{UTF-8}
 
 
-\section{\Rlogo CHANGES IN R 4.5.0 patched}{
+\section{\Rlogo CHANGES IN R 4.5.1}{
   \subsection{INSTALLATION}{
     \itemize{
       \item Standalone \code{nmath} can be built with early-2025
