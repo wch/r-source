@@ -1038,7 +1038,7 @@ static int QuartzCreateMask(SEXP mask,
             bitmapInfo = kCGImageAlphaOnly;
         }
 
-        /* Create bitmap grahics context 
+        /* Create bitmap graphics context 
          * drawing is redirected to this context */
         quartz_bitmap = CGBitmapContextCreate(NULL,
                                               (size_t) devWidth,
@@ -1581,7 +1581,7 @@ extern CGFontRef CGContextGetFont(CGContextRef);
 
 #pragma mark Quartz Font Cache
 
-/* Font lookup is expesive yet frequent. Therefore we cache all used CG fonts (which are global to the app). */
+/* Font lookup is expensive yet frequent. Therefore we cache all used CG fonts (which are global to the app). */
 
 typedef struct font_cache_entry_s {
     CGFontRef font;
@@ -3311,14 +3311,14 @@ static double darwin_version(void) {
 #include <mach/mach.h>
 #include <servers/bootstrap.h>
 
-/* even as of Darwin 9 there is no entry for bootstrap_info in bootrap headers */
+/* even as of Darwin 9 there is no entry for bootstrap_info in bootstrap headers */
 extern kern_return_t bootstrap_info(mach_port_t , /* bootstrap port */
                                     name_array_t*, mach_msg_type_number_t*,  /* service */
                                     name_array_t*, mach_msg_type_number_t*,  /* server */
                                     bool_array_t*, mach_msg_type_number_t*); /* active */
 
 /* returns 1 if window server session service
-   (com.apple.windowserver.session) is present in the boostrap
+   (com.apple.windowserver.session) is present in the bootstrap
    namespace (pre-Lion) or when a current session is present, active
    and there is no SSH_CONNECTION (Lion and later).
    returns 0 if an error occurred or the service is not

@@ -23,7 +23,7 @@
 #include <R.h>
 #include <R_ext/QuartzDevice.h>
 
-/* inofficial API that can be used by other applications */
+/* unofficial API that can be used by other applications */
 
 #define QCF_SET_PEPTR  1  /* set ProcessEvents function pointer */
 #define QCF_SET_FRONT  2  /* set application mode to front */

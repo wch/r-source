@@ -48,7 +48,7 @@ struct sQuartzCocoaDevice {
     BOOL            closing;
     BOOL            pdfMode; /* this flag is set when printing, bypassing CGLayer to avoid rasterization */
     int             inLocator;
-    double          locator[2]; /* locaton click position (x,y) */
+    double          locator[2]; /* locator click position (x,y) */
     BOOL            inHistoryRecall;
     int             inHistory;
     SEXP            history[histsize];
@@ -86,7 +86,7 @@ static QuartzFunctions_t *qf;
     NSColor* canvasColor = nil;
 
     /* do everything in a try block -- this is not merely theoretical,
-       for example NSWindow will throw an expection when the supplied
+       for example NSWindow will throw an exception when the supplied
        rect is too big */
     @try {
 	view = [[QuartzCocoaView alloc] initWithFrame: rect andInfo: info];
@@ -102,7 +102,7 @@ static QuartzFunctions_t *qf;
 	[window setDelegate: view];
 	[window setContentView: view];
 	[window setInitialFirstResponder: view];
-	/* [window setAcceptsMouseMovedEvents:YES]; not neeed now, maybe later */
+	/* [window setAcceptsMouseMovedEvents:YES]; not needed now, maybe later */
 	[window setTitle: [NSString stringWithUTF8String: ((QuartzCocoaDevice*)info)->title]];
 
         NSMenu *menu, *mainMenu;
@@ -353,7 +353,7 @@ static int has_sonoma_bug() {
 {
     CGRect rect;
     CGContextRef ctx = [[NSGraphicsContext currentContext] graphicsPort];
-    /* we have to retain our copy, beause we may need to create a layer
+    /* we have to retain our copy, because we may need to create a layer
        based on the context in NewPage outside of drawRect: */
     if (ci->context != ctx) {
         if (ci->context)

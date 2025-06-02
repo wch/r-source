@@ -693,7 +693,7 @@ static void SetFont(pGEcontext gc, double rot, gadesc *xd)
 	 * that family (mapped through WindowsFonts()) and face.
 	 *
 	 * If specify face > 4 then get font from face via Rdevga
-	 * (whether specifed family or not).
+	 * (whether specified family or not).
 	 */
 	char * fm = gc->fontfamily;
 	if (!fm[0]) fm = xd->basefontfamily;
@@ -3537,7 +3537,7 @@ SEXP savePlot(SEXP args)
     filename = CADR(args);
     if (!isString(filename) || LENGTH(filename) != 1)
 	error(_("invalid filename argument in 'savePlot'"));
-    /* in 2.8.0 this will always be passed as native, but be conserative */
+    /* in 2.8.0 this will always be passed as native, but be conservative */
     fn = translateCharFP(STRING_ELT(filename, 0));
     type = CADDR(args);
     if (!isString(type) || LENGTH(type) != 1)

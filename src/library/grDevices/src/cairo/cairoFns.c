@@ -1446,7 +1446,7 @@ static SEXP Cairo_Cap(pDevDesc dd)
 
     /* Copy each byte of screen to an R matrix. 
      * The Cairo RGB24 needs to be converted to an R ABGR32.
-     * Cairo uses native endiannes (A=msb,R,G,B=lsb) so use int* instead of char* */
+     * Cairo uses native endianness (A=msb,R,G,B=lsb) so use int* instead of char* */
     rint = (unsigned int *) INTEGER(raster);
     for (i = 0; i < size; i++)
         rint[i] = R_RGB((screenData[i] >> 16) & 255, (screenData[i] >> 8) & 255, screenData[i] & 255);
@@ -1895,7 +1895,7 @@ static void FT_getFont(pGEcontext gc, pDevDesc dd, double fs)
     if (face == 3 || face == 4) slant = CAIRO_FONT_SLANT_ITALIC;
     if (face != 5) {
 	/* This is a 'toy', remember?
-	   The manual recommnends the CSS2 names "serif", "sans-serif",
+	   The manual recommends the CSS2 names "serif", "sans-serif",
 	   "monospace" */
 	char *fm = gc->fontfamily;
 	if (!fm[0]) fm = xd->basefontfamily;

@@ -924,10 +924,10 @@ PostScriptMetricInfo(int c, double *ascent, double *descent, double *width,
 	       and these values are not considered when computing the FontBBox.
 
  	       Also NBSP and Euro in some fonts.  Should that be
- 	       skipped for acent and descent?  However:
+ 	       skipped for ascent and descent?  However:
 	       1) There are currently no transliterations including 
 	       space/NBSP (although macOS did at one point).
-	       2) The graphivs engine does not do this.
+	       2) The graphics engine does not do this.
 	    else if
 	       (metrics->CharInfo[c].BBox[0] == 0 &&
 		metrics->CharInfo[c].BBox[1] == 0 &&
@@ -1722,7 +1722,7 @@ static SEXP getFont(const char *family, const char *fontdbname) {
 }
 
 /*
- * Get the path to the afm file for a user-specifed font
+ * Get the path to the afm file for a user-specified font
  * given a graphics engine font family and the face
  * index (0..4)
  *
@@ -5690,7 +5690,7 @@ static int newTiling(SEXP pattern, PDFDesc *pd)
     PDF_Invalidate(pd);
 
     /* Some finalisation that endpage does
-     * (to match the newpage initilisation)
+     * (to match the newpage initialisation)
      */
     catDefn("Q\n", contentDefn, pd);
     /* Cannot discard temporary definition because there may have been
@@ -5925,7 +5925,7 @@ static int newMask(SEXP mask, PDFDesc *pd)
     PDF_Invalidate(pd);
 
     /* Some finalisation that endpage does
-     * (to match the newpage initilisation)
+     * (to match the newpage initialisation)
      */
     catDefn("Q\n", tempDefn, pd);
     /* Cannot discard temporary definition because there may have been
@@ -6123,7 +6123,7 @@ static int newGroup(SEXP source, int op, SEXP destination, PDFDesc *pd)
     UNPROTECT(1);
 
     /* Some finalisation that endpage does
-     * (to match the newpage initilisation)
+     * (to match the newpage initialisation)
      */
     catDefn("Q\n", tempDefn, pd);
     /* Cannot discard temporary definition because there may have been
@@ -7875,7 +7875,7 @@ static int PDFwriteResourceDictionary(int objOffset, bool endpage,
     }
 
     if (streql(pd->colormodel, "srgb")) {
-	/* Ojects 5 and 6 are the sRGB color space, if required */
+	/* Objects 5 and 6 are the sRGB color space, if required */
 	PDFwrite(buf, 100, "/ColorSpace << /sRGB 5 0 R >>\n", pd);
     }
     PDFwrite(buf, 100, ">>\n", pd);
