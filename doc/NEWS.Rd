@@ -34,8 +34,8 @@
       \samp{R >= 4.6.0}.
 
       \item \code{tools::analyze_license()} now also computes
-      \href{https://spdx.dev/learn/handling-license-info/}{SPDX license
-	identifiers},
+      \href{https://spdx.dev/learn/handling-license-info/}{\abbr{SPDX}
+	license identifiers},
       thanks to \I{Thierry Onkelinx} and \I{LLuís Revilla}.
     }
   }
@@ -154,12 +154,12 @@
       (but still to prevent overflow to \code{Inf}), fixing \PR{18889}.
 
       \item \code{prettyNum(*, zero.print={>=1-char}, replace.zero=TRUE)}
-      now works as documented, thanks to Marttila Mikko and Ivan Krylov's
-      messages on R-devel.
+      now works as documented, thanks to \I{Marttila Mikko} and
+      \I{Ivan Krylov}'s messages on R-devel.
 
       \code{pbeta(x, a,b, ..)} for very large \code{a,b} no longer returns
       \code{NaN} but the correct values (0 or 1, or their logs for \code{log.p = TRUE}).
-      This improves Mathlib's C level \code{bratio()} and hence also
+      This improves \I{Mathlib}'s C level \code{bratio()} and hence also
       \code{pnbinom()}, etc..
     }
   }

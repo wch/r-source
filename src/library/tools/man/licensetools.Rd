@@ -33,8 +33,8 @@ analyze_license(x)
   verified to be \abbr{FOSS}
   (\url{https://en.wikipedia.org/wiki/Free_and_open-source_software})
   licenses and where possible computes an
-  \href{https://spdx.dev/learn/handling-license-info/}{SPDX license
-    identifier}
+  \href{https://spdx.dev/learn/handling-license-info/}{\abbr{SPDX}
+    license identifier}
   for the license.
 }
 \value{
@@ -51,7 +51,7 @@ analyze_license(x)
     license spec.}
   \item{is_verified}{a logical indicating whether the given string can
     be verified to specify a \abbr{FOSS} license.}
-  \item{spdx}{an SPDX license identifier for the license spec.}
+  \item{spdx}{an \abbr{SPDX} license identifier for the license spec.}
 }
 \examples{
 ## Examples from section 'Licenses' of 'Writing R Extensions':
