@@ -235,7 +235,7 @@ stopifnot(All.eq(pt(2^-30, df=10),
 
 ## rbinom(*, size) gave NaN for large size up to R <= 2.6.1
 M <- .Machine$integer.max
-set.seed(7) # as M is large, now "basically" rbinom(n, *) := qbinom(runif(n), *) :
+set.seed(7) # as M is large, now <==>  rbinom(n, *) := qbinom(runif(n), *) :
 (tt <- table(rbinom(100,    M, pr = 1e-9 )) ) # had values in {0,2} only
 (t2 <- table(rbinom(100, 10*M, pr = 1e-10)) )
 stopifnot(0:6 %in% names(tt), sum(tt) == 100, sum(t2) == 100) ## no NaN there
@@ -970,6 +970,21 @@ stopifnot(exprs = {
     0.05 > pqb6_1 & pqb6_1 >= 0.035# "
 })
 ## was wrong for R versions in [4.1.1, 4.4.0]
+
+
+## pnbinom() -> pbeta() for very large (a,b)
+xlx <- c(-1/16, -1e-4, c(- 10^-(11:16), 0, 0.5, .999999))
+str(L <- 2^(1023+xlx))
+stopifnot(exprs = {
+    print(pnbinom(L,L, mu = 0.7 )) == 1
+    print(pnbinom(L,L, prob= 1/4)) == 0
+    print(  pbeta(1/4, L, L)) == 0
+    ## and also on log scale (where continued fraction iterations are used
+    print(pnbinom(L,L, mu = 0.7,  log.p = TRUE)) == 0
+    print(pnbinom(L,L, prob= 1/4, log.p = TRUE)) == -Inf
+    print(  pbeta(1/4, L, L, log.p = TRUE)) == -Inf
+})
+## the last 6 values each were  NaN  in  R <= 4.5.0
 
 
 
