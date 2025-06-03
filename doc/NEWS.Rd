@@ -49,8 +49,8 @@
       (but still to prevent overflow to \code{Inf}), fixing \PR{18889}.
 
       \item \code{prettyNum(*, zero.print={>=1-char}, replace.zero=TRUE)}
-      now works as documented, thanks to Marttila Mikko and Ivan Krylov's
-      messages on R-devel.
+      now works as documented, thanks to \I{Marttila Mikko} and
+      \I{Ivan Krylov}'s messages on R-devel.
 
       \item \code{pbeta(x, a,b, ..)} for very large \code{a,b} no longer returns
       \code{NaN} but the correct values (0 or 1, or their logs for \code{log.p = TRUE}).
