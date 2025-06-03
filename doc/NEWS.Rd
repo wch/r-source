@@ -108,7 +108,6 @@
       absence of a \code{[.Pair} method, which has now been added.
     }
   }
-
 }
 
 \section{\Rlogo CHANGES IN R 4.5.1}{
@@ -157,7 +156,7 @@
       now works as documented, thanks to \I{Marttila Mikko} and
       \I{Ivan Krylov}'s messages on R-devel.
 
-      \code{pbeta(x, a,b, ..)} for very large \code{a,b} no longer returns
+      \item \code{pbeta(x, a,b, ..)} for very large \code{a,b} no longer returns
       \code{NaN} but the correct values (0 or 1, or their logs for \code{log.p = TRUE}).
       This improves \I{Mathlib}'s C level \code{bratio()} and hence also
       \code{pnbinom()}, etc..
@@ -3424,7 +3423,6 @@
       \code{diff(ylim)} is infinite.
 
       \item \code{nclass.FD()} gains a \code{digits} option.
-
 
       \item The R \I{Mathlib} internal C function \code{bd0()} (called
       indirectly from a dozen probability density and distribution
