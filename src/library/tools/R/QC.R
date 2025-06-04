@@ -2247,7 +2247,7 @@ function(package, dir, file, lib.loc = NULL,
                      error = function(e)
                      stop(gettextf("parse error in file '%s':\n%s",
                                    file,
-                                   .massage_file_parse_error_message(conditionMessage(e))),
+                                   .massage_file_parse_error(e)),
                           domain = NA, call. = FALSE))
     }
     for(i in seq_along(exprs)) {
@@ -3036,7 +3036,7 @@ function(package, dir, file, lib.loc = NULL)
                      error = function(e)
                      stop(gettextf("parse error in file '%s':\n%s",
                                    file,
-                                   .massage_file_parse_error_message(conditionMessage(e))),
+                                   .massage_file_parse_error(e)),
                           domain = NA, call. = FALSE))
         else
             tryCatch(str2expression(txt),
@@ -6169,7 +6169,7 @@ function(package, dir, lib.loc = NULL)
                      error = function(e)
                      stop(gettextf("parse error in file '%s':\n%s",
                                    file,
-                                   .massage_file_parse_error_message(conditionMessage(e))),
+                                   .massage_file_parse_error(e)),
                                domain = NA, call. = FALSE))
     }
     for(i in seq_along(exprs)) find_bad_exprs(exprs[[i]])
@@ -6601,7 +6601,7 @@ function(db, files)
                  error = function(e)
                  warning(gettextf("parse error in file '%s':\n%s",
                                   summary(files)$description,
-                                  .massage_file_parse_error_message(conditionMessage(e))),
+                                  .massage_file_parse_error(e)),
                          domain = NA, call. = FALSE))
     }
 
