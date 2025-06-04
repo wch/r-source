@@ -1,6 +1,6 @@
 % File src/library/tcltk/man/TclInterface.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2020 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{TclInterface}
@@ -257,13 +257,17 @@ system is active; if \code{FALSE}, only the Tcl interpreter is available.
   to add the directory where they are found to the Tcl search path with
   \code{addTclPath}.  The return value is a class \code{"tclObj"} object
   if it succeeds, or \code{FALSE} if it fails (when a warning is
-  issued).  To see the current search path as an \R character vector,
+  issued unless \code{warn} is false).  To see the current search path
+  as an \R character vector, 
   use: \preformatted{
     strsplit(tclvalue('auto_path'), " ")[[1]]
 }
+  Note that a report of \sQuote{not found} will be given if the package is
+  found but is not compatible with the Tcl/Tk version in use.
 
-  The Tcl version (including patch level) is returned as a character
-  string (such as \code{"8.6.3"}).
+  \code{tclVersion} returns the Tcl version as a character string such
+  as \code{"8.6.16"} or \code{"9.0.1"}). (This uses the Tcl command
+  \code{info patchlevel} and so includes the patch level.)
 }
 \note{
   Strings containing unbalanced braces are currently not handled
