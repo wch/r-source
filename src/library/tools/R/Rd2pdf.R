@@ -413,27 +413,27 @@
     Usage <- function() {
         cat("Usage: R CMD Rdconv [options] FILE",
             "",
-            "Convert R documentation in FILE to other formats such as plain text,",
+            "Convert an R documentation (Rd) FILE to other formats such as plain text,",
             "HTML or LaTeX.",
             "",
             "Options:",
-            "  -h, --help		print short help message and exit",
-            "  -v, --version		print version info and exit",
-            "  -t, --type=TYPE	convert to format TYPE",
-            "  --encoding=enc        use 'enc' as the output encoding",
-            "  --package=pkg         use 'pkg' as the package name",
-            "  -o, --output=OUT	use 'OUT' as the output file",
-            "      --os=NAME		assume OS 'NAME' (unix or windows)",
-            "      --OS=NAME		the same as '--os'",
-            "  --RdMacros=pkglist",
-            "             		packages from which to get Rd macros",
+            "  -h, --help              print short help message and exit",
+            "  -v, --version           print version info and exit",
+            "  -t, --type=TYPE         convert to format TYPE",
+            "      --encoding=enc      use 'enc' as the output encoding",
+            "      --package=pkg       use 'pkg' as the package name",
+            "  -o, --output=OUT        use 'OUT' as the output file",
+            "      --os=NAME           assume OS 'NAME' (unix or windows)",
+            "      --OS=NAME           the same as '--os'",
+            "      --RdMacros=pkglist  packages from which to get Rd macros",
             "",
             "Possible format specifications are 'txt' (plain text), 'html', 'latex',",
             "and 'example' (extract R code in the examples).",
             "",
             "The default is to send output to stdout, which is also given by '-o -'.",
-            "Using '-o \"\"' will choose an output filename by removing a '.Rd'",
-            "extension from FILE and adding a suitable extension.",
+            ## Long-documented but never worked post-Perl (script args end at ""):
+            ## "Using '-o \"\"' will choose an output filename by removing a '.Rd'",
+            ## "extension from FILE and adding a suitable extension.",
             "",
             "Report bugs at <https://bugs.R-project.org>.", sep = "\n")
     }
@@ -495,12 +495,13 @@
     }
     if (length(files) != 1L)
         stop("exactly one Rd file must be specified", call. = FALSE)
-    if (is.character(out) && !nzchar(out)) {
-        ## choose 'out' from filename
-        bf <- sub("\\.[Rr]d$", "", file)
-        exts <- c(txt=".txt", html=".html", latex=".tex", example=".R")
-        out <- paste0(bf,  exts[type])
-    } else if (is.null(out)) out <- ""
+    ## if (is.character(out) && !nzchar(out)) {
+    ##     ## choose 'out' from filename
+    ##     bf <- sub("\\.[Rr]d$", "", files)
+    ##     exts <- c(txt=".txt", html=".html", latex=".tex", example=".R")
+    ##     out <- paste0(bf, exts[type])
+    ## } else
+    if (is.null(out) || out == "-") out <- ""
     if (!nzchar(os)) os <- .Platform$OS.type
     macros <- initialRdMacros(pkglist = pkglist)
     switch(type,
