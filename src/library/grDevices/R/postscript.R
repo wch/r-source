@@ -767,7 +767,7 @@ postscriptFonts(# Default Serif font is Times
                   c("n021003l.afm", "n021004l.afm",
                     "n021023l.afm", "n021024l.afm",
                     "s050000l.afm")),
-                ## URW 2.0 ewuivalents
+                ## URW 2.0 equivalents
                 URW2Helvetica = Type1Font("URW2Helvetica",
                   c("NimbusSans-Regular.afm", "NimbusSans-Bold.afm",
                     "NimbusSans-Oblique.afm", "NimbusSans-BoldOblique.afm",

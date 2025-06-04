@@ -33,7 +33,7 @@ path <- circleGrob(gp=gpar(fill=pat))
 pushViewport(viewport(clip=path))
 grid.rect(gp=gpar(fill="grey"))
 HersheyLabel("clipping path is based on circle
-circle has gradeint fill
+circle has gradient fill
 result is grey circle")
 
 grid.newpage()

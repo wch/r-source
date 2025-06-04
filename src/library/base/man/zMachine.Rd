@@ -91,7 +91,7 @@
     (CPUs such as ARM where for most compilers \samp{long double} is
     identical to \code{double}).}
     % 64-bit ARM Linux compilers have a software-implemented
-    % quad-precison as long double
+    % quad-precision as long double
   \item{sizeof.pointer}{the number of bytes in the C \code{SEXP}
     type.  Will be \code{4} on 32-bit builds and \code{8} on 64-bit
     builds of \R.}

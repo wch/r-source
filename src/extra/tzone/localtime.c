@@ -26,7 +26,7 @@ Some updates in 2013
 Some changes mergged from tzcode2015f to avoid clang warnings.
 Lots of casts (even 2022f needs casts).
 
-The orginal version of this file stated
+The original version of this file stated
 
 ** This file is in the public domain, so clarified as of
 ** 1996-06-05 by Arthur David Olson.

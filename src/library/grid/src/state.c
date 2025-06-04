@@ -77,7 +77,7 @@ void initDL(pGEDevDesc dd)
 
 /*
  * This is used to init some bits of the system state
- * Called when a grahpics engine redraw is about to occur
+ * Called when a graphics engine redraw is about to occur
  * NOTE that it does not init all of the state, in particular,
  * the display list is not initialised here (see initDL), 
  * nor is the ROOT viewport (see initVP),

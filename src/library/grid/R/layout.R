@@ -99,7 +99,7 @@ layout.torture <- function() {
 # Return the region allocated by the layout of the current viewport
 layoutRegion <- function(layout.pos.row=1, layout.pos.col=1) {
   region <- grid.Call(C_layoutRegion,
-                      # This conversion matches the vailidity check in
+                      # This conversion matches the validity check in
                       # valid.viewport()
                       if (is.null(layout.pos.row)) layout.pos.row
                       else as.integer(rep(layout.pos.row, length.out=2)),

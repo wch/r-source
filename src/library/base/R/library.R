@@ -401,7 +401,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                         !.isMethodsDispatchOn() || checkNoGenerics(env, package)
                     if (isFALSE(conf.ctrl$generics.ok) ||
                         (stopOnConflict && ! isTRUE(conf.ctrl$generics.ok)))
-                        nogenerics <- TRUE ## no silent masking for genrics
+                        nogenerics <- TRUE ## no silent masking for generics
                     if(stopOnConflict ||
                        (warn.conflicts && # never will with a namespace
                         !exists(".conflicts.OK", envir = env,

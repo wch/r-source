@@ -1128,7 +1128,7 @@ SEXP C_par(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 /*
  *  Layout was written by Paul Murrell during 1997-1998 as a partial
- *  implementation of ideas in his PhD thesis.	The orginal
+ *  implementation of ideas in his PhD thesis.	The original
  *  written in common lisp provides rather more general capabilities.
  *
  *  layout(

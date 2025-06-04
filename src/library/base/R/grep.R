@@ -308,7 +308,7 @@ function(x = 0.1)
     ## for the TRE regaparams struct.
 
     ## Note that TRE allows for possibly different (integer) costs for
-    ## insertions, deletions and substitions, and allows for specifying
+    ## insertions, deletions and substitutions, and allows for specifying
     ## separate bounds for these numbers as well as the total number of
     ## "errors" (transformations) and the total cost.
     ##

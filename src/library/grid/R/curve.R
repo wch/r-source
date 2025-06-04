@@ -107,7 +107,7 @@ calcSquareControlPoints <- function(x1, y1, x2, y2,
                              curvature, angle, ncp,
                              debug)
 
-    # Intereave control points and extra "square" control points
+    # Interleave control points and extra "square" control points
     ncurve <- length(x1)
     cps$x <- interleave(ncp, ncurve, cps$x, startx, endx, end)
     cps$y <- interleave(ncp, ncurve, cps$y, starty, endy, end)

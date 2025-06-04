@@ -145,7 +145,7 @@ detach <- function(name, pos = 2L, unload = FALSE, character.only = FALSE,
     libpath <- attr(env, "path")
     hook <- getHook(packageEvent(pkgname, "detach")) # might be a list
     for(fun in rev(hook)) try(fun(pkgname, libpath))
-    ## some people, e.g. package g.data, have faked pakages without namespaces
+    ## some people, e.g. package g.data, have faked packages without namespaces
     ns <- .getNamespace(pkgname)
     if(!is.null(ns) &&
        exists(".onDetach", mode = "function", where = ns, inherits = FALSE)) {

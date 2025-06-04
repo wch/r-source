@@ -187,7 +187,7 @@ function(x, y, style = c("table", "list"),
 
     if(is.null(indent))
         indent <- switch(style, table = width / 3, list = width / 9)
-    ## change 2017-03-12 suggeested by Bill Dunlap
+    ## change 2017-03-12 suggested by Bill Dunlap
     ## https://stat.ethz.ch/pipermail/r-devel/2017-March/073873.html
     ## if(indent > 0.5 * width)
     ##    warning("'indent' is too large for 'width' and will be reduced")

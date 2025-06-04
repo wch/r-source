@@ -60,7 +60,7 @@ if (grepl("^darwin", R.version$os)) local({
         env <- dupes[1]
         value <- Sys.getenv(env)
         Sys.unsetenv(env)             ## removes the dupes, good
-        .Internal(Sys.setenv(env, value)) ## wrapper requries named vector, a pain, hence internal
+        .Internal(Sys.setenv(env, value)) ## wrapper requires named vector, a pain, hence internal
     }
 })
 

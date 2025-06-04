@@ -131,7 +131,7 @@ table(ind)
 tapply(1:3, ind) #-> the split vector
 tapply(1:3, ind, sum)
 
-## Some assertions (not held by all patch propsals):
+## Some assertions (not held by all patch proposals):
 nq <- names(quantile(1:5))
 stopifnot(
   identical(tapply(1:3, ind), c(1L, 2L, 4L)),

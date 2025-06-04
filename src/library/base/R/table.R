@@ -78,7 +78,7 @@ table <- function (..., exclude = if (useNA=="no") c(NA, NaN),
             ## excluded levels to missing, which is different
             ## from the <NA> factor level, but these
             ## excluded levels must NOT EVER be tabulated.
-            op <- options(warn = 2) ## prevent non-sensical factor() creation: turn warnings into errors
+            op <- options(warn = 2) ## prevent nonsensical factor() creation: turn warnings into errors
             on.exit(options(op))
             a <- # NB: this excludes first, unlike the is.factor() case
                 factor(a, exclude = exclude)

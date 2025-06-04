@@ -22,7 +22,7 @@
 
 /* Modify a location for the correct justification */
 
-/* These tranformations assume that x and width are in the same units */
+/* These transformations assume that x and width are in the same units */
 /* FIXME:  I don't think we check anywhere that a horizontal justification
  * is not L_BOTTOM or L_TOP (i.e., meaningless).  Ditto for checking
  * vertical justification.

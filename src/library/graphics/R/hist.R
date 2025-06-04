@@ -145,7 +145,7 @@ hist.default <-
     }
     else { ## plot is FALSE
     	if (warn.unused) {
-	    ## make an effort to warn about "non sensical" arguments:
+	    ## make an effort to warn about "nonsensical" arguments:
 	    nf <- names(formals()) ## all formals but those:
 	    nf <- nf[is.na(match(nf, c("x", "breaks", "nclass", "plot",
 				       "include.lowest", "right", "fuzz")))]

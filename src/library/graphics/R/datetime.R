@@ -87,7 +87,7 @@ axis.POSIXct <- function(side, x, at, format, labels = TRUE, ...)
         # find format if missing:
         if(missing(format)){
 #            format <- if(!missing(x)) attr(grDevices:::prettyDate(x), "format") else attr(grDevices:::prettyDate(rangeTime), "format")
-#        }else if(is.null(format)){ # exdend format if needed for proper representation of at
+#        }else if(is.null(format)){ # extend format if needed for proper representation of at
             format <- extendDateTimeFormat(if(!missing(x)) x else rangeTime, z)
         }
     } else {
@@ -257,7 +257,7 @@ axis.Date <- function(side, x, at, format, labels = TRUE, ...)
         # find format if missing:
         if(missing(format)){
 #            format <- if(!missing(x)) attr(grDevices:::prettyDate(x), "format") else attr(grDevices:::prettyDate(rangeDate), "format")
-#        }else if(is.null(format)){ # exdend format if needed for proper representation of at
+#        }else if(is.null(format)){ # extend format if needed for proper representation of at
             format <- if(!missing(x)) extendDateTimeFormat(x, z) else extendDateTimeFormat(rangeDate, z)
             }
     } else {

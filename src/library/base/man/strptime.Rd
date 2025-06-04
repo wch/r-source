@@ -203,7 +203,7 @@ strptime(x, format, tz = "")
       \code{-0800} is 8 hours behind UTC.  (Standard only for output.  For
       input \R currently supports it on all platforms -- values from
       \code{-1400} to \code{+1400} are accepted.)}
-    %% Nowehere currently uses less than -1200 nor more than 1400.
+    %% Nowhere currently uses less than -1200 nor more than 1400.
     \item{\code{\%Z}}{(Output only.)  Time zone abbreviation as a
       character string (empty if not available).  This may not be reliable
       when a time zone has changed abbreviations over the years.}
