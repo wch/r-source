@@ -37,6 +37,10 @@
       \href{https://spdx.dev/learn/handling-license-info/}{\abbr{SPDX}
 	license identifiers},
       thanks to \I{Thierry Onkelinx} and \I{LLuís Revilla}.
+
+      \item \code{read.dcf} now recognizes lines starting with \samp{#}
+      as comment lines.  By \I{Dirk Eddelbuettel}, \I{Laurent Gatto} and
+      \I{Hugo Gruson}.
     }
   }
 
