@@ -1099,7 +1099,7 @@ inRbuildignore <- function(files, pkgdir) {
         ## Fix permissions for all files to be at least 644, and dirs 755
         ## Not restricted by umask.
 	if (!WINDOWS) .Call(C_dirchmod, pkgname, group.writable=FALSE)
-        ## Add build stamp *and* expaned R fields to the DESCRIPTION file:
+        ## Add build stamp *and* expanded R fields to the DESCRIPTION file:
         add_build_stamp_to_description_file(file.path(pkgname, "DESCRIPTION"),
                                             pkgdir, user)
         messageLog(Log,
