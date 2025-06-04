@@ -26,7 +26,7 @@
 .traceTraceState <- FALSE
 
 ## the internal functions in the evaluator.  These are all prohibited,
-## although some of them could just barely be accomodated, with some
+## although some of them could just barely be accommodated, with some
 ## specially designed new definitions (not using ..., for example).
 ## The gain does not seem worth the inconsistencies; and "if" can
 ## never be traced, since it has to be used to determine if tracing is
@@ -890,7 +890,7 @@ insertSource <- function(source, package = "",
     ##     .copyClass(class, env, envwhere)
     ## }
     ## return the environment, after cleaning up the dummy functions and
-    ## adding a time stamp, if the source was parssed on this call
+    ## adding a time stamp, if the source was parsed on this call
     if(!is.environment(source)) {
         lockEnvironment(env, bindings = TRUE) # no further changes allowed
         invisible(env)

@@ -196,7 +196,7 @@ setIs <-
             classDef2@prototype <-
                 if(classDef@virtual)
                     classDef@prototype
-                else # new(), but without intialize(), which may require an arg.
+                else # new(), but without initialize(), which may require an arg.
                     .Call(C_new_object, classDef)
         }
     }

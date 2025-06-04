@@ -140,7 +140,7 @@
     unlockBinding(".BasicFunsList", env)
     if(.hasS4MetaData(.GlobalEnv)) {
         result <- try(cacheMetaData(.GlobalEnv, TRUE))
-        ## still attach  methods package if global env has bad objets
+        ## still attach  methods package if global env has bad objects
         if(inherits(result, "try-error"))
           warning("apparently bad method or class metadata in saved environment;\n",
                   "move the file or remove the class/method")

@@ -39,7 +39,7 @@
 ## Defunct in 4.5.0
 MethodsListSelect <-
   ## select the element of a MethodsList object corresponding to the
-  ## actual arguments (as defined in the suppled environment),
+  ## actual arguments (as defined in the supplied environment),
   ## and return the object, extended to include that method if necessary.
   ##
   ## Works recursively.  At each level finds an argument name from the current `mlist'

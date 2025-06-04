@@ -27,7 +27,7 @@ if(require(Matrix)) { ## , lib.loc = .Library
 }
 ## was not ok in R 2.14.x
 
-## some tests of callGeneric().  It's reccommended for use with group generics
+## some tests of callGeneric().  It's recommended for use with group generics
 setGeneric("f1", signature=c("a"),
            function(..., a) standardGeneric("f1"))
 setMethod("f1", c(a="ANY"), function(..., a) list(a=a, ...))

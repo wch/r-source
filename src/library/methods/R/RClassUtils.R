@@ -419,7 +419,7 @@ superClassDepth <-
             more <- Recall(superClass, soFar)
             whatMore <- more$label
             if(!all(is.na(match(whatMore, soFar)))) {
-                ## elminate classes reachable by more than one path
+                ## eliminate classes reachable by more than one path
                 ## (This is allowed in the model, however)
                 ok <- is.na(match(whatMore, soFar))
                 more$depth <- more$depth[ok]
@@ -1229,7 +1229,7 @@ completeSubclasses <-
       what2 <- what[affected]
       dups <- unique(what2[duplicated(what2)])
       if(length(dups) == 0) {
-        ##  eliminating conditonal relations removed duplicates
+        ##  eliminating conditional relations removed duplicates
         if(length(conflicts) > 0)
           attr(ext, "conflicts") <- unique(c(conflicts, attr(ext, "conflicts")))
         return(ext)
@@ -2032,7 +2032,7 @@ assign("#HAS_DUPLICATE_CLASS_NAMES", FALSE, envir = .classTable)
         i <- match(newpkg, names(prev))
         if(!is.na(i))
             prev[[i]] <- NULL
-        else # we might warn about unchaching more than once
+        else # we might warn about uncaching more than once
             return()
         if(length(prev) == 0L)
             return(remove(list = name, envir = .classTable))

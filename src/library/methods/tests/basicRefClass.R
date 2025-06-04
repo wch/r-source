@@ -498,7 +498,7 @@ yy <- mEditor(data = xMat+1)
 yy$change(xx)
 stopifnot(identical(yy$data, xx$data), identical(yy$edits, xx$edits))
 
-## but don't allow assigment
+## but don't allow assignment
 if(methods:::.hasCodeTools())
         stopifnot(is(tryCatch(yy$.self$data <- xMat, error = function(e)e), "error"))
 

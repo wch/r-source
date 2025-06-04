@@ -299,7 +299,7 @@ S3Class <- function(object) {
     object
 }
 
-## rename a class definition:  needs to change if any additional occurences of class
+## rename a class definition:  needs to change if any additional occurrences of class
 ## name are added, other than the className slot and the super/sub class names
 ## in the contains, subclasses slots respectively.
 .renameClassDef <- function(def, className) {

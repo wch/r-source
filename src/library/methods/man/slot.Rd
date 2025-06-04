@@ -30,7 +30,7 @@ getSlots(x)
 }
 %% .slotNames(x)
 %%
-%% NOTA BENE: We shouldn't advertize .slotNames() --
+%% NOTA BENE: We shouldn't advertise .slotNames() --
 %% - - - - -  rather  slotNames() should be changed {and getSlots() too}
 %%   such that it doesn't special-case class representations!
 %%

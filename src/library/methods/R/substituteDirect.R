@@ -17,7 +17,7 @@
 #  https://www.R-project.org/Licenses/
 
 substituteDirect <-
-  ## subsitute the for the variables named in the second argument the corresponding
+  ## substitute the for the variables named in the second argument the corresponding
   ## objects, substituting into `object'.
   ##
   ## This function differs from the ordinary `substitute' in that it treats its first argument

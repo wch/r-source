@@ -577,7 +577,7 @@ getGeneric <-
         i <- match(newpkg, names(prev))
         if(!is.na(i))
             prev[[i]] <- NULL
-        else           # we might warn about unchaching more than once
+        else           # we might warn about uncaching more than once
             return()
         if(length(prev) == 0L)
             return(remove(list = name, envir = table))
@@ -1430,7 +1430,7 @@ metaNameUndo <- function(strings, prefix, searchForm = FALSE)
 
 .identC <- function(c1 = NULL, c2 = NULL)
 {
-    ## are the two objects identical class or genric function string names?
+    ## are the two objects identical class or generic function string names?
     .Call(C_R_identC, c1, c2)
 }
 
@@ -1451,7 +1451,7 @@ matchDefaults <- function(method, generic)
         garg <- gargs[[arg]]
         if(missing(marg) && !missing(garg)) {
             changes <- TRUE
-            margs[arg] <- gargs[arg] # NOT  [[]], which woud fail for NULL element
+            margs[arg] <- gargs[arg] # NOT  [[]], which would fail for NULL element
         }
     }
     if(changes)
@@ -1712,7 +1712,7 @@ utils::globalVariables(c(".MTable", ".AllMTable", ".dotsCall"))
 
 if(FALSE) {
 ## Defined but not currently used:
-## utilitity to test well-defined classes in signature,
+## utility to test well-defined classes in signature,
 ## for setMethod(), setAs() [etc.?], the result to be
 ## assigned in package where=
 ## Returns a list of signature, messages and level of error

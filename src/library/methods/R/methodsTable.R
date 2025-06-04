@@ -685,7 +685,7 @@
 }
 
 .newSignature <- function(classes, names) {
-  ## a simple version to deal with boostrapping stage, used in new() etc
+  ## a simple version to deal with bootstrapping stage, used in new() etc
     n <- min(length(classes), length(names))
   i <- seq_len(n)
     ## a corresponding set of package names
@@ -1124,7 +1124,7 @@ useMTable <- function(onOff = NA)
                              f
                            }))
     }
-    ## now the next generations recusively
+    ## now the next generations recursively
     if(length(funs) > start) {
       nmore <- length(funs) - start
       more <- Recall(funs[(start+1):length(funs)])

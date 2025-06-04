@@ -144,7 +144,7 @@ insertMethod <-
         length(sigArgs) <- n
         if(is.na(match(nextArg, sigArgs))) {
             n <- match(nextArg, args) - n
-            if(is.na(n)) { ## not in args eitiher
+            if(is.na(n)) { ## not in args either
                 n <- 1
                 args <- c(args, nextArg)
             }

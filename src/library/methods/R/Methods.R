@@ -1343,7 +1343,7 @@ implicitGeneric <- function(...) NULL
 ### Add the named function to the table of implicit generics in environment where.
 ###
 ### If there is a generic function of this name, it is saved to the
-### table.  This is the reccomended approach and is required if you
+### table.  This is the recommended approach and is required if you
 ### want the saved generic to include any non-default methods.
 ###
   {

@@ -92,7 +92,7 @@ loadMethod <- function(method, fname, envir) method
     assign("asMethodDefinition",
            function(def, signature = list(.anyClassName), sealed = FALSE, fdef = def) {
         ## primitives can't take slots, but they are only legal as default methods
-        ## and the code will just have to accomodate them in that role, w/o the
+        ## and the code will just have to accommodate them in that role, w/o the
         ## MethodDefinition information.
         ## NULL is a valid def, used to remove methods.
         switch(typeof(def),

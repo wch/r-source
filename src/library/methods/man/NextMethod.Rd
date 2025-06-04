@@ -169,7 +169,7 @@ setMethod("Compare", c(e2 = "rnum"),
 
 ## similarly to the Arith case, the method for two "rnum" objects
 ## can not unambiguously use callNextMethod().  Instead, we rely on
-## The rnum() method inhertited from Math2 to return plain vectors.
+## The rnum() method inherited from Math2 to return plain vectors.
 setMethod("Compare", c(e1 ="rnum", e2 = "rnum"),
           function(e1, e2) {
               d <- min(e1@d, e2@d)

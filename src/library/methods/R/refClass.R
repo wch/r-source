@@ -190,7 +190,7 @@ envRefSetField <- function(object, field,
     selfEnv$.refClassDef <- classDef
     if(is.function(classDef@refMethods$initialize)) {
         .Object$initialize(...)
-        ## intialize methods are allowed to change .self
+        ## initialize methods are allowed to change .self
         .Object <- selfEnv$.self
     }
     else {
@@ -316,7 +316,7 @@ Imports value, replacing the part of the current object
 corresponding to Class (if argument Class is missing
 it is taken to be class(value)).  The Class must be one
 of the reference superclasses of the current class (or
-that class itself, but then you could just overrwite the object).
+that class itself, but then you could just overwrite the object).
 '
              if(!missing(Class))
                  value <- value$export(Class)
@@ -406,7 +406,7 @@ that class itself, but then you could just overrwite the object).
          usingMethods = function(...) {
              ' Reference methods used by this method are named as the arguments
  either quoted or unquoted.  In the code analysis phase of installing the
- the present method, the declared methods will be included.  It is essntial
+ the present method, the declared methods will be included.  It is essential
  to declare any methods used in a nonstandard way (e.g., via an apply function).
  Methods called directly do not need to be declared, but it is harmless to do so.
  $usingMethods() does nothing at run time.
@@ -997,7 +997,7 @@ setRefClass <- function(Class, fields = character(),
     ## Note:  the classGeneratorFunction has the class name, not the explicit definition
     classFun <- setClass(Class, contains = superClasses,
              where = where, ...)
-    ## now, override the class definiton with the complete definition
+    ## now, override the class definition with the complete definition
     classDef <- new("refClassRepresentation",
                     getClassDef(Class, where = where),
                     fieldClasses = fieldClasses,
