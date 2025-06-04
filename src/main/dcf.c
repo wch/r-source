@@ -149,6 +149,8 @@ attribute_hidden SEXP do_readDCF(SEXP call, SEXP op, SEXP args, SEXP env)
 		field_fold = true;
 		n_eblanklines = 0;
 	    }
+	} else if(line[0] == '#') {
+	    /* Ignore comment lines */
 	} else {
 	    blank_skip = false;
 	    if(tre_regexecb(&contline, line, 1, regmatch, 0) == 0) {
