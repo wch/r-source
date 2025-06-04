@@ -2041,7 +2041,7 @@ SEXP termsform(SEXP args)
 	R_xlen_t l = 0;
 #ifdef DEBUG_terms
 	Rprintf("  st.5: (bitpattern in int) term: "); printVector(CAR(call), 0, 0);
-	Rprintf("  ----  {not tracing GetBit() when determing 'cbuf' length}\n");
+	Rprintf("  ----  {not tracing GetBit() when determining 'cbuf' length}\n");
 	trace_GetBit = false; // *not* tracing below
 #endif
 	for (int i = 1; i <= nvar; i++) {

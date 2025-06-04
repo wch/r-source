@@ -134,7 +134,7 @@ natural_spline(R_xlen_t n, double *x, double *y, double *b, double *c, double *d
  *	---------------------------------------
  *	In this case the end-conditions are determined by fitting
  *	cubic polynomials to the first and last 4 points and matching
- *	the third derivitives of the spline at the end-points to the
+ *	the third derivatives of the spline at the end-points to the
  *	third derivatives of these cubics at the end-points.
  */
 

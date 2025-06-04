@@ -136,7 +136,7 @@ confint.profile.nls <-
   ncoefs <- length(coef(attr(object, "original.fit")))
   of <- attr(object, "original.fit")
   if(is.numeric(parm))  parm <- pnames[parm]
-  ## drop any plinear paramaters
+  ## drop any plinear parameters
   parm <- parm[parm %in% pnames]
   n <- length(fitted(of)) - length(of$m$getPars())
   a <- (1-level)/2

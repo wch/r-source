@@ -726,7 +726,7 @@ SEXP nlm(SEXP call, SEXP op, SEXP args, SEXP rho)
     PROTECT(state->R_fcall = lang2(v, R_NilValue));
     args = CDR(args);
 
-    /* `p' : inital parameter value */
+    /* `p' : initial parameter value */
 
     n = 0;
     x = fixparam(CAR(args), &n);

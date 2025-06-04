@@ -194,7 +194,7 @@ optimHess(par, fn, gr = NULL, \dots, control = list())
   be shared between calls: the function should not change or copy it.
 }
 %% when numerical derivatives are used, fn is called repeatedly with
-%% modified copies of the same objet.
+%% modified copies of the same object.
 
 \value{
   For \code{optim}, a list with components:

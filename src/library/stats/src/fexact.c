@@ -455,7 +455,7 @@ f2xact(int nrow, int ncol, const int table[], int ldtabl,
     } else
 	nro = nrow;
 
-    /* Get multiplers for stack */
+    /* Get multipliers for stack */
     kyy[1] = 1;
     for (i = 1; i < nro; ++i) {
 	/* Hash table multipliers */
@@ -1508,7 +1508,7 @@ f6xact(int nrow, int *irow, const int kyy[], int *key, int ldkey, int *last, int
     NROW    - The number of rows in the table.			(Input)
     IROW    - Vector of length nrow containing the row sums on
 	      output.						(Output)
-    KYY     - Constant mutlipliers used in forming the hash
+    KYY     - Constant multipliers used in forming the hash
 	      table key.					(Input)
     KEY     - Vector of length LDKEY containing the hash table
 	      keys.						(in/output)

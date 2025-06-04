@@ -48,7 +48,7 @@ void monoFC_mod(double *m, double S[], int n)
 	    if((a2b3 = 2*alpha + beta - 3) > 0 &&
 	       (ab23 = alpha + 2*beta - 3) > 0 &&
 	       alpha * (a2b3 + ab23) < a2b3*a2b3) {
-		/* we are outside the monotonocity region ==> fix slopes */
+		/* we are outside the monotonicity region ==> fix slopes */
 		double tauS = 3*Sk / sqrt(alpha*alpha + beta*beta);
 		m[k ] = tauS * alpha;
 		m[k1] = tauS * beta;

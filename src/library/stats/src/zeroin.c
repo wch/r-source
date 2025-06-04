@@ -52,7 +52,7 @@
  *	computations. M., Mir, 1980, p.180 of the Russian edition
  *
  *	The function makes use of the bisection procedure combined with
- *	the linear or quadric inverse interpolation.
+ *	the linear or quadratic inverse interpolation.
  *	At every step program operates on three abscissae - a, b, and c.
  *	b - the last and the best approximation to the root
  *	a - the last but one approximation
@@ -63,7 +63,7 @@
  *	At every step Zeroin selects one of the two new approximations, the
  *	former being obtained by the bisection procedure and the latter
  *	resulting in the interpolation (if a,b, and c are all different
- *	the quadric interpolation is utilized, otherwise the linear one).
+ *	the quadratic interpolation is utilized, otherwise the linear one).
  *	If the latter (i.e. obtained by the interpolation) point is
  *	reasonable (i.e. lies within the current interval [b,c] not being
  *	too close to the boundaries) it is accepted. The bisection result

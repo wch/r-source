@@ -44,7 +44,7 @@
  *	maxf and maxp which determine the amount of scratch storage
  *	required by the algorithm.
  *
- *	If maxf is zero on return, an error occured during factorization.
+ *	If maxf is zero on return, an error occurred during factorization.
  *	The nature of the error can be determined from the value of maxp.
  *	If maxp is zero, an invalid (zero) parameter was passed and
  *	if maxp is one,	 the internal nfac array was too small.	 This can only

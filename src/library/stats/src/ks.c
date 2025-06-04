@@ -172,7 +172,7 @@ K2l(double x, int lower, double tol)
 
    for i + j < m + n.
 
-   We actually recusively compute
+   We actually recursively compute
 
      p_{i,j} = A_{i,j} / choose(i + n, i)
 
@@ -216,7 +216,7 @@ SEXP psmirnov_exact(SEXP sq, SEXP sm, SEXP sn, SEXP sz,
     for(i = 0; i < LENGTH(sq); i++) {
 	q = REAL(sq)[i];
 	/*
-	  q has about 0.5/mn substracted to ensure that rounding error
+	  q has about 0.5/mn subtracted to ensure that rounding error
 	  doesn't turn an equality into an inequality.
 	*/
 	q = (0.5 + floor(q * md * nd - 1e-7)) / (md * nd);

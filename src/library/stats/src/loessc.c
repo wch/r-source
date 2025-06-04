@@ -388,7 +388,7 @@ switch(*i){
  case 180:MSG("nv>nvmax in cpvert.")
  case 181:MSG("nt>20 in eval.")
  case 182:MSG("svddc failed in l2fit.")
- case 183:MSG("didnt find edge in vleaf.")
+ case 183:MSG("didn't find edge in vleaf.")
  case 184:MSG("zero-width cell found in vleaf.")
  case 185:MSG("trouble descending to leaf in vleaf.")
  case 186:MSG("insufficient workspace for lowesf.")

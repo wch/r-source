@@ -711,7 +711,7 @@ summary.glm <- function(object, dispersion = NULL,
     if (p > 0) {
         p1 <- 1L:p
 	Qr <- qr.lm(object)
-        ## WATCHIT! doesn't this rely on pivoting not permuting 1L:p? -- that's quaranteed
+        ## WATCHIT! doesn't this rely on pivoting not permuting 1L:p? -- that's guaranteed
         coef.p <- object$coefficients[Qr$pivot[p1]]
         covmat.unscaled <- chol2inv(Qr$qr[p1,p1,drop=FALSE])
         dimnames(covmat.unscaled) <- list(names(coef.p),names(coef.p))
