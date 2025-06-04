@@ -419,7 +419,7 @@ function(file, out = stdout(), codify = FALSE)
         }
     }
 
-    ## No longer support taking NEWS files without correponding
+    ## No longer support taking NEWS files without corresponding
     ## DESCRIPTION file as being from R itself (PR #16556).
 
     meta <- .read_description(dfile)

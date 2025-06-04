@@ -29,7 +29,7 @@ stopifnot(identical(sha256sum(bytes=rep(charToRaw("a"),1e6)),
 ## let's see if there are hidden HMAC functions - if so, test them
 if (!is.null(environment(tools::sha256sum)[["hmac"]])) { 
 
-## [[ we have not expoorted HMAC functions yet ]]
+## [[ we have not exported HMAC functions yet ]]
 hmac.md5 <- tools:::hmac.md5
 hmac.sha256 <- tools:::hmac.sha256
 

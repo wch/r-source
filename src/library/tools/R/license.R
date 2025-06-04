@@ -33,7 +33,7 @@
 ##    * The name of abbreviation of a versioned license, optionally
 ##      followed by a version spec
 ##    * The name of a versioned license followed by the version
-##    * The abbrevation of a versioned license combined with '-',
+##    * The abbreviation of a versioned license combined with '-',
 ##   optionally followed by an extension spec as in B (in principle,
 ##   only if the base license is extensible).
 ##
@@ -89,7 +89,7 @@ function(paths = NULL)
     ldb[is.na(ldb)] <- ""
     ## (Could also keep NAs and filter on is.finite() in subsequent
     ## computations.)
-    ## FOSS == "yes" implues Restricts_use = "no":
+    ## FOSS == "yes" implies Restricts_use = "no":
     ldb[ldb[, "FOSS"] == "yes", "Restricts_use"] <- "no"
     ldb <- data.frame(ldb, stringsAsFactors = FALSE)
     ldb$Labels <- R_license_db_labels(ldb)

@@ -41,7 +41,7 @@ static void *Rsha256_buffer (const void *buffer, size_t len, void *resblock)
   return Rsha256_finish_ctx(&ctx, resblock);
 }
 
-/* This is essentailly identical to Rmd5 */
+/* This is essentially identical to Rmd5 */
 
 /* .Call so manages R_alloc stack */
 SEXP Rsha256(SEXP files)

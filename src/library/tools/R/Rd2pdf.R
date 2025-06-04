@@ -498,7 +498,7 @@
     if (is.character(out) && !nzchar(out)) {
         ## choose 'out' from filename
         bf <- sub("\\.[Rr]d$", "", file)
-        exts <- c(txt=".txt", html=".html", latex=".tex", exmaple=".R")
+        exts <- c(txt=".txt", html=".html", latex=".tex", example=".R")
         out <- paste0(bf,  exts[type])
     } else if (is.null(out)) out <- ""
     if (!nzchar(os)) os <- .Platform$OS.type

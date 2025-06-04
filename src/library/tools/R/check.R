@@ -4044,7 +4044,7 @@ add_dummies <- function(dir, Log)
 
     check_rust <- function()
     {
-        ## It is impossible to tell definiitively if a package
+        ## It is impossible to tell definitively if a package
         ## compiles rust code.  SystemRequirements in DESCRIPTION is
         ## fres-format, and only advisory.  So we look at the
         ## installation log, which we found in check_src()
@@ -5679,7 +5679,7 @@ add_dummies <- function(dir, Log)
             ## <https://bugs.astron.com/view.php?id=316>
             pretest <- function(f)
             {
-                ## The format is (in bytes) the version mumber,
+                ## The format is (in bytes) the version number,
                 ## year-1900 of last change, month#, day, ...
                 z <-  readBin(f, raw(), 2L)
                 identical(z, as.raw(c(3, 122)))
@@ -7208,7 +7208,7 @@ add_dummies <- function(dir, Log)
         if (WINDOWS) {
             ## always has sub-archs as from R 2.12.0.
             ## usually if two are installed, it was done on a 64-bit OS,
-            ## but the filesystem might be shared betweeen OSes.
+            ## but the filesystem might be shared between OSes.
             f <- dir(file.path(R.home(), "bin"))
             archs <- f[f %in% c("i386", "x64")]
             ## if we have x64, can only run it on a 64-bit OS
@@ -7684,7 +7684,7 @@ add_dummies <- function(dir, Log)
         ## have a 'DESCRIPTION.in' file (instead of 'DESCRIPTION'),
         ## with Version and License fields containing '@VERSION@' for
         ## substitution by configure.  Earlier bundles had packages
-        ## containing DESCRIPTIION.in, hence the extra check for
+        ## containing DESCRIPTION.in, hence the extra check for
         ## Makefile.in.
 
         is_base_pkg <- is_rec_pkg <- FALSE
@@ -7758,7 +7758,7 @@ add_dummies <- function(dir, Log)
                 resultLog(Log, "OK")
             else  if (file.exists(file.path(pkgdir, "NAMESPACE"))) {
                 errorLog(Log,
-                       "File NAMESPACE does not exist but there is a case-insenstiive match.")
+                       "File NAMESPACE does not exist but there is a case-insensitive match.")
                 summaryLog(Log)
                 do_exit(1L)
             } else if (dir.exists(file.path(pkgdir, "R"))) {

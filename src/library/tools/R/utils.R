@@ -232,7 +232,7 @@ function(x)
     if(any(ind)) {
         message(paste0(which(ind), ": ",
                        ## iconv will usually substitute,
-                       ## but inplementations including macOS 14
+                       ## but implementations including macOS 14
                        ## may translate to ASCII.
                        iconv(x[ind], "", "ASCII", sub = "byte"),
                        collapse = "\n"), domain = NA)
@@ -1020,7 +1020,7 @@ function(con, n = 4L)
     ## Try matching both the regular error indicator ('!') as well as
     ## the file line error indicator ('file:line:').
     pos <- grep("(^! |^!pdfTeX error:|:[0123456789]+:.*[Ee]rror)", lines)
-    ## unforunately that was too general and caught false positives
+    ## unfortunately that was too general and caught false positives
     ## Errors are typically of the form
     ## ! LaTeX Error:
     ## !pdfTeX error:

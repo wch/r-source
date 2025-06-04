@@ -1526,7 +1526,7 @@ if(FALSE) {
 		    ## Tweak fake installation to provide an 'empty'
 		    ## useDynLib() for the time being.  Completely
 		    ## removing the directive results in checkFF()
-		    ## being too aggresive in the case where the
+		    ## being too aggressive in the case where the
 		    ## presence of the directive enables unambiguous
 		    ## symbol resolution w/out 'PACKAGE' arguments.
 		    ## However, empty directives are not really meant

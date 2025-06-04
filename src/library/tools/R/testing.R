@@ -145,7 +145,7 @@ massageExamples <-
 ## compares 2 files
 ## 2022-07: it is reasonable to assume that almost all users will
 ## have diff (it is part of Rtools), and currently only GNU diff
-## (from 2022 on macOS) and FreeBSD versions semm to be in use.
+## (from 2022 on macOS) and FreeBSD versions seem to be in use.
 ## So the support without diff is minimal.
 Rdiff <- function(from, to, useDiff = FALSE, forEx = FALSE,
                   nullPointers = TRUE, Log = FALSE)
