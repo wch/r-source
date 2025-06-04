@@ -2778,8 +2778,7 @@ function(fun, args = list(), opts = "--no-save --no-restore",
         if (inherits(val, "condition")) {
             ## maybe wrap in a classed error and include some of res
             msg <- gettextf("error in inferior call:\n  %s",
-                            conditionMessage(val),
-                            domain = NA)
+                            conditionMessage(val))
             stop(do.call(errorCondition,
                          c(list(message = msg, 
                                 class = "inferiorCallError",
@@ -2798,8 +2797,7 @@ function(fun, args = list(), opts = "--no-save --no-restore",
         ## again maybe wrap in a classed error  and include some of res
         ## might want to distinguish two errors by sub-classes
         stop(do.call(errorCondition,
-                     c(list(message = gettext("inferior call failed",
-                                              domain = NA),
+                     c(list(message = gettext("inferior call failed"),
                             class = "inferiorCallError"),
                        res = res)))
 }
