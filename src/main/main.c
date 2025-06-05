@@ -198,10 +198,6 @@ typedef struct {
 attribute_hidden int
 Rf_ReplIteration(SEXP rho, int savestack, int browselevel, R_ReplState *state)
 {
-    int c, browsevalue;
-    SEXP value, thisExpr;
-    bool wasDisplayed = FALSE;
-
     /* clear warnings that might have accumulated during a jump to top level */
     if (R_CollectWarnings)
 	PrintWarnings();
@@ -221,6 +217,7 @@ Rf_ReplIteration(SEXP rho, int savestack, int browselevel, R_ReplState *state)
 	    return(0);
     }
 #endif /* SHELL_ESCAPE */
+    int c;
     while((c = *state->bufp)) {
 	    state->bufp++;
 	    R_IoBufferPutc(c, &R_ConsoleIob);
@@ -243,9 +240,10 @@ Rf_ReplIteration(SEXP rho, int savestack, int browselevel, R_ReplState *state)
 	return 1;
 
     case PARSE_OK:
-
+    {
 	R_IoBufferReadReset(&R_ConsoleIob);
 	R_CurrentExpr = R_Parse1Buffer(&R_ConsoleIob, 1, &state->status);
+	int browsevalue = 0; /* -Wmaybe-uninit.. */
 	if (browselevel) {
 	    browsevalue = ParseBrowser(R_CurrentExpr, rho);
 	    if(browsevalue == 1) return -1;
@@ -254,19 +252,20 @@ Rf_ReplIteration(SEXP rho, int savestack, int browselevel, R_ReplState *state)
 		return 0;
 	    }
 	    /* PR#15770 We don't want to step into expressions entered at the debug prompt.
-	       The 'S' will be changed back to 's' after the next eval. */
-	    if (R_BrowserLastCommand == 's') R_BrowserLastCommand = 'S';
+	     + PR#18885  Disable debugging of this environment for the duration of the call. */
+	    browsevalue = -RDEBUG(rho);
+	    SET_RDEBUG(rho, 0);
 	}
 	R_Visible = FALSE;
 	R_EvalDepth = 0;
 	resetTimeLimits();
-	PROTECT(thisExpr = R_CurrentExpr);
+	SEXP thisExpr = PROTECT(R_CurrentExpr);
 	R_Busy(1);
-	PROTECT(value = eval(thisExpr, rho));
+	SEXP value = PROTECT(eval(thisExpr, rho));
 	SET_SYMVALUE(R_LastvalueSymbol, value);
 	if (NO_REFERENCES(value))
 	    INCREMENT_REFCNT(value);
-	wasDisplayed = R_Visible;
+	bool wasDisplayed = R_Visible;
 	if (R_Visible)
 	    PrintValueEnv(value, rho);
 	if (R_CollectWarnings)
@@ -274,11 +273,13 @@ Rf_ReplIteration(SEXP rho, int savestack, int browselevel, R_ReplState *state)
 	Rf_callToplevelHandlers(thisExpr, value, TRUE, wasDisplayed);
 	R_CurrentExpr = value; /* Necessary? Doubt it. */
 	UNPROTECT(2); /* thisExpr, value */
-	if (R_BrowserLastCommand == 'S') R_BrowserLastCommand = 's';
+	if (browselevel && browsevalue < 0)
+	    /* Done evaluating REPL expression, continue stepping. */
+	    SET_RDEBUG(rho, 1);
 	R_IoBufferWriteReset(&R_ConsoleIob);
 	state->prompt_type = 1;
 	return(1);
-
+    }
     case PARSE_ERROR:
 
 	state->prompt_type = 1;
@@ -368,7 +369,6 @@ int R_ReplDLLdo1(void)
     int c;
     ParseStatus status;
     SEXP rho = R_GlobalEnv, lastExpr;
-    bool wasDisplayed = FALSE;
 
     if(!*DLLbufp) {
 	R_Busy(0);
@@ -390,6 +390,7 @@ int R_ReplDLLdo1(void)
 	prompt_type = 1;
 	break;
     case PARSE_OK:
+    {
 	R_IoBufferReadReset(&R_ConsoleIob);
 	R_CurrentExpr = R_Parse1Buffer(&R_ConsoleIob, 1, &status);
 	R_Visible = FALSE;
@@ -400,7 +401,7 @@ int R_ReplDLLdo1(void)
 	lastExpr = R_CurrentExpr;
 	R_CurrentExpr = eval(R_CurrentExpr, rho);
 	SET_SYMVALUE(R_LastvalueSymbol, R_CurrentExpr);
-	wasDisplayed = R_Visible;
+	bool wasDisplayed = R_Visible;
 	if (R_Visible)
 	    PrintValueEnv(R_CurrentExpr, rho);
 	if (R_CollectWarnings)
@@ -411,6 +412,7 @@ int R_ReplDLLdo1(void)
 	R_Busy(0);
 	prompt_type = 1;
 	break;
+    }
     case PARSE_ERROR:
 	parseError(R_NilValue, 0);
 	R_IoBufferWriteReset(&R_ConsoleIob);
@@ -812,7 +814,7 @@ static void invalid_parameter_handler_watson(
     unsigned int line,
     uintptr_t reserved)
 {
-    _invoke_watson(expression, function, file, line, reserved);    
+    _invoke_watson(expression, function, file, line, reserved);
 }
 #endif
 
