@@ -1968,6 +1968,19 @@ stopifnot(identical(p1[2], substr(zp,1,1)),
 ## p2 gave warning too, and was the same as p1, erronously in  R <= 4.5.0
 
 
+## `[.table` consistency, PR#18845
+T <- table(c(0:3,3:1,1:0), c(0:4,3:0)) ; class(T) <- c("myT", class(T))
+T1 <- T[,3 , drop=FALSE]; dim(T1) <- length(T1); str(T1) # 1d table
+stopifnot(exprs = {
+    identical(T, T[TRUE,]) # [..]  had lost "myT" class
+    identical(T, T[,TRUE])
+    identical(T1, T1[TRUE]) # (worked before)
+    identical(class(T1), class(T)) # failed
+    identical(T1, T1[TRUE])
+})
+## subsetting only kept "table" class in R <= 4.5.x
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

@@ -110,6 +110,9 @@
       \item The \code{Pair(x,y)} construction in the formula interface to
       paired tests did not work with the \code{subset} argument, due to the
       absence of a \code{[.Pair} method, which has now been added.
+
+      \item Subsetting \code{"table"} objects keeps S3 classes more
+      consistently, fixing \PR{18845}.
     }
   }
 }
