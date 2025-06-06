@@ -265,9 +265,14 @@ system is active; if \code{FALSE}, only the Tcl interpreter is available.
   Note that a report of \sQuote{not found} will be given if the package is
   found but is not compatible with the Tcl/Tk version in use.
 
-  \code{tclVersion} returns the Tcl version as a character string such
+  \code{tclVersion} returns the full Tcl version as a character string such
   as \code{"8.6.16"} or \code{"9.0.1"}). (This uses the Tcl command
-  \code{info patchlevel} and so includes the patch level.)
+  \code{info patchlevel} and so includes the patch level.)  An
+  alternative is use \preformatted{
+      as.character(tcl('info', 'tclversion'))
+}
+  which does not include the patchlevel.  (This is also available as the
+  Tcl variable \code{tcl_version}.)
 }
 \note{
   Strings containing unbalanced braces are currently not handled
