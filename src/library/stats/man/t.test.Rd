@@ -1,6 +1,6 @@
 % File src/library/stats/man/t.test.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2023 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{t.test}
@@ -69,6 +69,11 @@ t.test(x, \dots)
 
   If the input data are effectively constant (compared to the larger of the
   two means) an error is generated.
+
+  If the data contain infinite values, \code{t.test()} no longer errors and
+  returns a still not very useful result.  Note that
+  \code{\link{wilcox.test()}} is \emph{robust} against outliers and hence
+  deals more usefully with such \code{Inf} values in \code{x} or \code{y}.
 }
 \value{
   A list with class \code{"htest"} containing the following components:

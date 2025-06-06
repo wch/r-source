@@ -118,6 +118,10 @@
       such as \code{if(TRUE)} now longer triggers a new browser level, fixing
       \PR{18885} (differently than the fix for \PR{15770}), with thanks to
       \I{Ivan Krylov}.
+
+      \item \code{t.test(c(1:3, Inf))} and similar no longer produce an error but
+      return a (still not so useful) \code{"htest"} result, fixing
+      \PR{18901}, thanks to \I{Jesse Alderliesten}.
     }
   }
 }

@@ -1981,6 +1981,21 @@ stopifnot(exprs = {
 ## subsetting only kept "table" class in R <= 4.5.x
 
 
+## t.test(<Inf>...) -- PR#18901
+x <- c(1:6,Inf); y <- c(1:20, Inf); yN <- c(-Inf, 1:20)
+(tt1 <- t.test(x))
+tt2. <- t.test(x, y)
+(tt2N <- t.test(x, yN))
+stopifnot(exprs = {
+    inherits(tt1,  "htest"); is.na(c(tt1 $p.value, tt1 $conf.int))
+    inherits(tt2., "htest"); is.na(c(tt2.$p.value, tt2.$conf.int))
+    inherits(tt2N, "htest"); is.na(c(tt2N$p.value, tt2N$conf.int))
+    tt1$estimate == Inf
+    tt2N$estimate == c(Inf, -Inf)
+})
+## The t.test() calls errored all in R <= 4.5.1
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
