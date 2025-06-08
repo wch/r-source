@@ -271,7 +271,7 @@ system is active; if \code{FALSE}, only the Tcl interpreter is available.
   alternative is use \preformatted{
       as.character(tcl('info', 'tclversion'))
 }
-  which does not include the patchlevel.  (This is also available as the
+  which does not include the patch level.  (This is also available as the
   Tcl variable \code{tcl_version}.)
 }
 \note{
