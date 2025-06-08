@@ -39,7 +39,7 @@ function(formula, data, weights, subset, na.action, model = FALSE,
     w <- model.weights(mf) %||% rep_len(1, length(y))
     nmx <- as.character(attr(mt, "variables"))[-(1L:2)]
     x <- mf[, nmx, drop=FALSE]
-    if(any(sapply(x, is.factor))) stop("predictors must all be numeric")
+    if(any(vapply(x, is.factor, NA))) stop("predictors must all be numeric")
     x <- as.matrix(x)
     D <- ncol(x)
     nmx <- setNames(nm = colnames(x))

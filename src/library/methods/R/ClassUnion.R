@@ -34,7 +34,7 @@
 
 setClassUnion <- function(name, members = character(), where = topenv(parent.frame())) {
     if(length(members)>0) {
-        membersDefined <- sapply(members, isClass, where = as.environment(where))
+        membersDefined <- vapply(members, isClass, NA, where = as.environment(where))
         if(!all(membersDefined))
             stop(gettextf("the member classes must be defined: not true of %s",
                           paste(.dQ(as(members[!membersDefined], "character")), collapse=", ")), domain = NA)

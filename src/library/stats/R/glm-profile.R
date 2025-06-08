@@ -130,7 +130,7 @@ plot.profile <-
   ## R version: non-Trellis-based replacement for plot.profile
   function(x, ...)
 {
-    nulls <- sapply(x, is.null)
+    nulls <- vapply(x, is.null, NA)
     if (all(nulls)) return(NULL)
     x <- x[!nulls]
     nm <- names(x)

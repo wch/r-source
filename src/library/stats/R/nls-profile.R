@@ -86,7 +86,7 @@ profiler.nls <- function(fitted, ...)
                  } else {
                      if(length(args) == 1 && is.list(args[[1L]])) {
                          params <- unlist(args[[1L]])
-                     } else if(all(sapply(args, is.numeric))) {
+                     } else if(all(vapply(args, is.numeric, NA))) {
                          params <- unlist(args)
                      } else stop("invalid argument to 'getProfile'")
                      if(!all(names(params) %in% names(fittedPars)))

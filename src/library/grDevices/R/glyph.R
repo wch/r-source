@@ -168,7 +168,7 @@ glyphFontList <- function(...) {
     fonts <- list(...)
     if (!length(fonts))
         stop("List must include at least one font")
-    if (!all(sapply(fonts, function(x) inherits(x, "RGlyphFont"))))
+    if (!all(vapply(fonts, inherits, NA, "RGlyphFont")))
         stop("Invalid glyph font")
     class(fonts) <- "RGlyphFontList"
     fonts

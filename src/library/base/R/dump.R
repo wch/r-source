@@ -22,7 +22,7 @@ dump <- function (list, file = "dumpdata.R", append = FALSE,
 {
     if(is.character(file)) {
 	## avoid opening a file if there is nothing to dump
-	ex <- sapply(list, exists, envir=envir)
+	ex <- vapply(list, exists, NA, envir = envir)
 	if(!any(ex)) return(invisible(character()))
 	if(nzchar(file)) {
 	    file <- file(file, if(append) "a" else "w")

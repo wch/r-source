@@ -164,7 +164,7 @@ summary.data.frame <-
                 tmp <- rbind(tmp, matrix("", nr - nrow(sms), ncol(sms)))
             sms <- apply(tmp, 1L, function(x) paste(x, collapse="  "))
             ## produce a suitable colname: undoing padding
-            wid <- sapply(tmp[1L, ], nchar, type="w") # might be NA
+            wid <- vapply(tmp[1L, ], nchar, 0, type = "w") # might be NA
             blanks <- paste(character(max(wid)), collapse = " ")
             wcn <- ncw(cn)
             pad0 <- floor((wid - wcn)/2)

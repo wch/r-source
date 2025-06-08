@@ -65,7 +65,7 @@ function(x, color = c("#99CCFF", "#6699CC"), conf.level = 0.95,
     dnx <- dimnames(x)
     if(is.null(dnx))
         dnx <- vector("list", 3L)
-    for(i in which(sapply(dnx, is.null)))
+    for(i in which(vapply(dnx, is.null, NA)))
         dnx[[i]] <- LETTERS[seq_len(dim(x)[i])]
     if(is.null(names(dnx)))
         i <- 1L : 3L

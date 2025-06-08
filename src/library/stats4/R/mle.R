@@ -55,7 +55,7 @@ mle <- function(minuslogl, start, optim = stats::optim,
         )
 
     nf <- names(fullcoef)
-    signature <- list(lengths = sapply(fullcoef, length),
+    signature <- list(lengths = lengths(fullcoef),
                       names = lapply(fullcoef, names))
     sigindex <- factor(rep(nf, signature$lengths), levels=nf)
     npars <- sum(signature$lengths)

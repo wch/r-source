@@ -98,7 +98,7 @@ validGP <- function(gpars) {
           ## OR a "GridPattern" OR a list of "GridPattern"s
           if (!is.pattern(gpars$fill)) {
               if (is.list(gpars$fill)) {
-                  if (!all(sapply(gpars$fill, is.pattern)))
+                  if (!all(vapply(gpars$fill, is.pattern, NA)))
                       stop("'fill' gpar list components must all be patterns")
                   class(gpars$fill) <- "GridPatternList"
               }

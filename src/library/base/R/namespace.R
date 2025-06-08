@@ -1056,7 +1056,7 @@ namespaceImportFrom <- function(self, ns, vars, generics, packages,
                 ## and is in order of adding.
                 current <- getNamespaceInfo(self, "imports")
                 poss <- lapply(rev(current), `[`, n)
-                poss <- poss[!sapply(poss, is.na)]
+                poss <- poss[!vapply(poss, is.na, NA)]
                 if(length(poss) >= 1L) {
                     prev <- names(poss)[1L]
                     warning(sprintf(gettext("replacing previous import %s by %s when loading %s"),

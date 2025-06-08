@@ -1908,7 +1908,9 @@ getLoadActions <- function(where = topenv(parent.frame())) {
         return(list())
     actions <- get(actionListName, envir = where)
     if(length(actions)) {
-        allExists <- sapply(actions, function(what) exists(.actionMetaName(what), envir = where, inherits = FALSE))
+        allExists <- vapply(actions,
+                            function(what) exists(.actionMetaName(what), envir = where, inherits = FALSE),
+                            NA)
         if(!all(allExists)) {
             warning(gettextf("some actions are missing: %s",
                              paste(actions[!allExists], collapse =", ")),

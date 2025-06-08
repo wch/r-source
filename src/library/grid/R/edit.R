@@ -46,7 +46,7 @@ applyEdit <- function(x, edit) {
 # A list of gEdit's to apply to the same grob
 gEditList <- function(...) {
   edits <- list(...)
-  if (!all(sapply(edits, is.gEdit)))
+  if (!all(vapply(edits, is.gEdit, NA)))
     stop("'gEditList' can only contain 'gEdit' objects")
   class(edits) <- "gEditList"
   edits

@@ -62,7 +62,8 @@ abbreviate <-
 	if(method == "both.sides")
 	    ## string reversion: FIXME reverse .Internal(abbreviate(.))
 	    chRev <- function(x)
-		sapply(lapply(strsplit(x, NULL), rev), paste, collapse="")
+		vapply(lapply(strsplit(x, NULL), rev),
+                       paste, "", collapse = "")
 	dup2 <- rep.int(TRUE, length(names.arg))
 	these <- names.arg
 	repeat {

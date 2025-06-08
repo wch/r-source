@@ -314,7 +314,7 @@ replications <- function(formula, data = NULL, na.action)
     z <- setNames(vector("list", n), labels)
     dummy <- numeric(.row_names_info(data, 2L))
     data <- lapply(data, function(x) if (is.character(x)) as.factor(x) else x)
-    notfactor <- !sapply(data, function(x) inherits(x, "factor"))
+    notfactor <- !vapply(data, inherits, NA, "factor")
     balance <- TRUE
     for(i in seq_len(n)) {
 	l <- labels[i]
@@ -421,7 +421,7 @@ eff.aovlist <- function(aovlist)
 {
     Terms <- terms(aovlist)
     if(names(aovlist)[[1L]] == "(Intercept)") aovlist <- aovlist[-1L]
-    pure.error.strata <- sapply(aovlist, function(x) is.null(x$qr))
+    pure.error.strata <- vapply(aovlist, function(x) is.null(x$qr), NA)
     aovlist <- aovlist[!pure.error.strata]
     s.labs <- names(aovlist)
     ## find which terms are in which strata

@@ -524,7 +524,7 @@ postscriptFonts <- function(...)
         fontNames <- names(fonts)
         nnames <- length(fontNames)
         if (nnames == 0L) {
-            if (!all(sapply(fonts, is.character)))
+            if (!all(vapply(fonts, is.character, NA)))
                 stop(gettextf("invalid arguments in '%s' (must be font names)",
                               "postscriptFonts"), domain = NA)
             else
@@ -578,7 +578,7 @@ pdfFonts <- function(...)
         fontNames <- names(fonts)
         nnames <- length(fontNames)
         if (nnames == 0L) {
-            if (!all(sapply(fonts, is.character)))
+            if (!all(vapply(fonts, is.character, NA)))
                 stop(gettextf("invalid arguments in '%s' (must be font names)",
                               "pdfFonts"), domain = NA)
             else
@@ -1009,7 +1009,7 @@ embedGlyphs <- function(file, glyphInfo, outfile = file,
     infoList <- FALSE
     if (!inherits(glyphInfo, "RGlyphInfo")) {
         if (is.list(glyphInfo)) {
-            if (!all(sapply(glyphInfo, inherits, "RGlyphInfo"))) {
+            if (!all(vapply(glyphInfo, inherits, NA, "RGlyphInfo"))) {
                 stop("Invalid 'glyphInfo'")
             } else {
                 infoList <- TRUE

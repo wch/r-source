@@ -274,7 +274,7 @@ summary.aov <- function(object, intercept = FALSE, split,
                     tmp <- apply(tmp, 1L, function(x) paste(x, collapse="."))
                     new <- lapply(splitnames, function(x) match(x, tmp))
                     split[[ names[i+1L] ]] <-
-                        new[sapply(new, function(x) length(x) > 0L)]
+                        new[lengths(new) > 0L]
                 } else {
                     old <- split[[ f[sp] ]]
                     marg.coefs <- df.names[asgn == (match(f[sp], names) - 1L)]

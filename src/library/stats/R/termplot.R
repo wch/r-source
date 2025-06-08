@@ -78,7 +78,9 @@ termplot <- function(model, data = NULL, envir = environment(formula(model)),
     }
 
     in.mf <- nmt %in% names(mf)
-    is.fac <- sapply(nmt, function(i) i %in% names(mf) && is.factor(mf[, i]))
+    is.fac <- vapply(nmt,
+                     function(i) i %in% names(mf) && is.factor(mf[, i]),
+                     NA)
 
     if (!plot) {
         outlist <- vector("list", sum(in.mf))

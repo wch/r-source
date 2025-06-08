@@ -922,7 +922,7 @@ function(..., recursive = FALSE)
     }
     args <- list(...)
     if(!length(args)) return(.difftime(double(), "secs"))
-    ind <- sapply(args, inherits, "difftime")
+    ind <- vapply(args, inherits, NA, "difftime")
     pos <- which(!ind)
     units <- sapply(args[ind], attr, "units")
     if(all(units == (un1 <- units[1L]))) {

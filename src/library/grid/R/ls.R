@@ -693,7 +693,7 @@ nestedListing <- function(x, gindent="  ", vpindent=gindent) {
     makePrefix <- function(indent, depth) {
         indents <- rep(indent, length(depth))
         indents <- mapply(rep, indents, depth)
-        sapply(indents, paste, collapse="")
+        vapply(indents, paste, "", collapse = "")
     }
 
     if (!inherits(x, "flatGridListing"))

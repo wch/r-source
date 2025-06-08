@@ -1630,7 +1630,7 @@ testInheritedMethods <- function(f, signatures, test = TRUE,  virtual = FALSE,
     }
     signatures <- lapply(signatures, doSelect)
   }
-  signatures <- sapply(signatures, paste0, collapse = "#")
+  signatures <- vapply(signatures, paste0, "", collapse = "#")
   names(signatures) <- sigLabels
 
   new("MethodSelectionReport", generic = fname, allSelections = signatures,

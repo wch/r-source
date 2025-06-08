@@ -26,7 +26,7 @@ function(x, g, ...)
         if (length(x) < 2L)
             stop("'x' must be a list with at least 2 elements")
         DNAME <- deparse1(substitute(x))
-        if (all(sapply(x, function(obj) inherits(obj, "lm"))))
+        if (all(vapply(x, inherits, NA, "lm")))
             LM <- TRUE
         else
             x <- lapply(x, function(x) x <- x[is.finite(x)])

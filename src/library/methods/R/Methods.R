@@ -1062,9 +1062,11 @@ showMethods <-
     geom <- vapply(signatures, Negate(is.null), logical(1))
     packages <- packages[geom]
     methods <- methods[geom]
-    signatures <- sapply(signatures[geom], function(elt) {
-        paste0(as.vector(elt), collapse=",")
-    })
+    signatures <- vapply(signatures[geom],
+                         function(elt) {
+                             paste0(as.vector(elt), collapse=",")
+                         },
+                         "")
 
     .methods_info(generic=rep(generic.function, length(packages)), from=packages,
                   signature=signatures)
