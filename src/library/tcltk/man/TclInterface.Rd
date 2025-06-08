@@ -268,11 +268,12 @@ system is active; if \code{FALSE}, only the Tcl interpreter is available.
   \code{tclVersion} returns the full Tcl version as a character string such
   as \code{"8.6.16"} or \code{"9.0.1"}). (This uses the Tcl command
   \code{info patchlevel} and so includes the patch level.)  An
-  alternative is use \preformatted{
+  alternative is to use \preformatted{
       as.character(tcl('info', 'tclversion'))
 }
   which does not include the patch level.  (This is also available as the
-  Tcl variable \code{tcl_version}.)
+  Tcl variable \code{tcl_version}.)  NB: the \sQuote{patch level} is not
+  necessarily numeric, e.g. \code{9.0b1}.
 }
 \note{
   Strings containing unbalanced braces are currently not handled
