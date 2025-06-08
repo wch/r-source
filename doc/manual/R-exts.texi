@@ -2989,7 +2989,7 @@ for each of the standards: this relies heavily on the reported values of
 @c @I{LLVM} clang 14, 15 default to C++14, 16-20 to C++17
 @c g++ 11-15 default to C++17
 
-The webpage @uref{https://en.cppreference.com/w/cpp/compiler_support}
+The webpage @uref{https://en.cppreference.com/w/cpp/compiler_support.html}
 gives some information on which compiler versions are known to support
 recent C++ features.
 
@@ -3020,7 +3020,7 @@ Code needing C++14 or later features can check for their presence @emph{via}
 `SD-6 feature tests'@footnote{See
 @uref{https://isocpp.org/std/standing-documents/sd-6-sg10-feature-test-recommendations}
 or
-@uref{https://en.cppreference.com/w/cpp/experimental/feature_test}.
+@uref{https://en.cppreference.com/w/cpp/experimental/feature_test.html}.
 It seems a reasonable assumption that any compiler promising some C++14
 conformance will provide these---e.g.@: @command{g++} 4.9.x did but
 4.8.5 did not.}.  Such a check could be
@@ -3052,7 +3052,7 @@ analogous way.
 
 Note that C++17 or later `support' does not mean complete support: use
 feature tests as well as resources such as
-@uref{https://en.cppreference.com/w/cpp/compiler_support},
+@uref{https://en.cppreference.com/w/cpp/compiler_support.html},
 @uref{https://gcc.gnu.org/projects/cxx-status.html} and
 @uref{https://clang.llvm.org/cxx_status.html} to see if the features you
 want to use are widely implemented.
@@ -3154,7 +3154,7 @@ the formerly deprecated meaning of function declarations with an empty
 parameter list to now mean no parameters.@footnote{The latter has been
 implemented in @command{gcc} but not currently in @I{LLVM} nor Apple
 @command{clang}.}(There are many other additions: see for example
-@uref{https://en.cppreference.com/w/c/23}.)
+@uref{https://en.cppreference.com/w/c/23.html}.)
 
 As from @R{} 4.5.0, @R{}'s @command{configure} script chooses a compiler
 option which selects C23 if one is available.  Some compilers (including
@@ -6552,8 +6552,8 @@ been widely implemented for a least a couple of years.  It will become
 the default of GCC 15, and @R{} will default to it if available from
 @R{} 4.5.0.
 
-Some of the more significant changes are
-@c https://en.cppreference.com/w/c/23
+@c Some of the more significant changes are
+@c https://en.cppreference.com/w/c/23.html
 
 @itemize
 

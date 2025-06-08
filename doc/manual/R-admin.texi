@@ -1080,7 +1080,7 @@ For the use of C++ in @R{} packages,
 @c Prior to @R{} 3.6.0 the default C++ standard was
 @c that of the compiler used: currently it is C++17.
 
-@uref{https://en.cppreference.com/w/cpp/compiler_support} indicates
+@uref{https://en.cppreference.com/w/cpp/compiler_support.html} indicates
 which versions of common compilers support (parts of) which C++
 standards.
 
