@@ -172,8 +172,9 @@ add1.lm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
     class(z) <- "lm" # needed as deviance.lm calls generic residuals()
     RSS[1L] <- deviance(z)
     ## workaround for PR#7842. terms.formula may have flipped interactions
-    sTerms <- sapply(strsplit(Terms, ":", fixed=TRUE),
-                     function(x) paste(sort(x), collapse=":"))
+    sTerms <- vapply(strsplit(Terms, ":", fixed=TRUE),
+                     function(x) paste(sort(x), collapse=":"),
+                     "")
     for(tt in scope) {
         stt <- paste(sort(strsplit(tt, ":")[[1L]]), collapse=":")
 	usex <- match(asgn, match(stt, sTerms), 0L) > 0L
@@ -291,8 +292,9 @@ add1.glm <- function(object, scope, scale = 0,
     r <- z$residuals
     w <- z$weights
     ## workaround for PR#7842. terms.formula may have flipped interactions
-    sTerms <- sapply(strsplit(Terms, ":", fixed=TRUE),
-                     function(x) paste(sort(x), collapse=":"))
+    sTerms <- vapply(strsplit(Terms, ":", fixed=TRUE),
+                     function(x) paste(sort(x), collapse=":"),
+                     "")
     for(tt in scope) {
         stt <- paste(sort(strsplit(tt, ":")[[1L]]), collapse=":")
 	usex <- match(asgn, match(stt, sTerms), 0L) > 0L
@@ -623,10 +625,12 @@ factor.scope <- function(factor, scope)
 	    nmfac <- colnames(factor)
             ## workaround as in PR#7842.
             ## terms.formula may have flipped interactions
-            nmfac0 <- sapply(strsplit(nmfac, ":", fixed=TRUE),
-                             function(x) paste(sort(x), collapse=":"))
-            nmdrop0 <- sapply(strsplit(nmdrop, ":", fixed=TRUE),
-                             function(x) paste(sort(x), collapse=":"))
+            nmfac0 <- vapply(strsplit(nmfac, ":", fixed=TRUE),
+                             function(x) paste(sort(x), collapse=":"),
+                             "")
+            nmdrop0 <- vapply(strsplit(nmdrop, ":", fixed=TRUE),
+                              function(x) paste(sort(x), collapse=":"),
+                              "")
 	    where <- match(nmdrop0, nmfac0, 0L)
 	    if(any(!where))
                 stop(sprintf(ngettext(sum(where==0),
@@ -653,10 +657,12 @@ factor.scope <- function(factor, scope)
 	if(!is.null(nmfac)) {
             ## workaround as in PR#7842.
             ## terms.formula may have flipped interactions
-            nmfac0 <- sapply(strsplit(nmfac, ":", fixed=TRUE),
-                             function(x) paste(sort(x), collapse=":"))
-            nmadd0 <- sapply(strsplit(nmadd, ":", fixed=TRUE),
-                             function(x) paste(sort(x), collapse=":"))
+            nmfac0 <- vapply(strsplit(nmfac, ":", fixed=TRUE),
+                             function(x) paste(sort(x), collapse=":"),
+                             "")
+            nmadd0 <- vapply(strsplit(nmadd, ":", fixed=TRUE),
+                             function(x) paste(sort(x), collapse=":"),
+                             "")
 	    where <- match(nmfac0, nmadd0, 0L)
 	    if(any(!where))
                 stop(sprintf(ngettext(sum(where==0),

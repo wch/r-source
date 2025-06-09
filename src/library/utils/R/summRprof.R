@@ -232,26 +232,30 @@ Rprof_memory_summary <- function(con, chunksize = 5000,
                                 if (label[i] == 1)
                                     newfirsts
                                 else if(label[i] > 1)
-                                    sapply(chunk,
+                                    vapply(chunk,
                                            function(line)
                                                paste(rev(line)[1L:min(label[i], length(line))],
-                                                     collapse = ":"))
+                                                     collapse = ":"),
+                                           "")
                                 else # label[i] < 1
-                                    sapply(chunk,
+                                    vapply(chunk,
                                            function(line)
                                                paste(line[1L:min(-label[i], length(line))],
-                                                     collapse = ":")))
+                                                     collapse = ":"),
+                                           "")
+                                )
            }
        } else if (aggregate) {
            index <- c(index,
-                      sapply(chunk,
+                      vapply(chunk,
                              if(aggregate > 0)
                                  function(line)
                                      paste(rev(line)[1L:min(aggregate, length(line))], collapse = ":")
 
                              else # aggregate < 0
                                  function(line)
-                                     paste(line[1L:min(-aggregate, length(line))],     collapse = ":")))
+                                     paste(line[1L:min(-aggregate, length(line))],     collapse = ":"),
+                             ""))
        }
 
        if (length(chunk) < chunksize)

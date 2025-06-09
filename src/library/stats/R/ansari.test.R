@@ -115,8 +115,10 @@ function(x, y, alternative = c("two.sided", "less", "greater"),
                 ## Compute statistics directly: computing the steps is
                 ## not faster.
                 absigma <-
-                    sapply(sigma + c(diff(sigma)/2,
-                                     sigma[length(sigma)]*1.01), ab)
+                    vapply(sigma + c(diff(sigma)/2,
+                                     sigma[length(sigma)]*1.01),
+                           ab,
+                           0)
                 switch(alternative, two.sided = cci(alpha),
                        greater = c(cci(alpha*2)[1L], Inf),
                        less    = c(0, cci(alpha*2)[2L]))

@@ -542,7 +542,7 @@ model.frame.default <-
     }
     if(possible_newdata && length(variables)) {
         ## need to do this before subsetting and na.action
-        nr2 <- max(sapply(variables, NROW))
+        nr2 <- max(vapply(variables, NROW, 0L))
         if(nr2 != nr)
             warning(sprintf(paste0(ngettext(nr,
                                             "'newdata' had %d row",

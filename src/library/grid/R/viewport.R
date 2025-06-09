@@ -308,7 +308,7 @@ viewportorpath <- function(x) {
 }
 
 vpListFromList <- function(vps) {
-  if (all(sapply(vps, viewportorpath, simplify=TRUE))) {
+  if (all(vapply(vps, viewportorpath, NA))) {
     class(vps) <- c("vpList", "viewport")
     vps
   } else {
@@ -325,7 +325,7 @@ vpList <- function(...) {
 # Viewports will be pushed in series
 vpStack <- function(...) {
   vps <- list(...)
-  if (all(sapply(vps, viewportorpath, simplify=TRUE))) {
+  if (all(vapply(vps, viewportorpath, NA))) {
     class(vps) <- c("vpStack", "viewport")
     vps
   } else {
