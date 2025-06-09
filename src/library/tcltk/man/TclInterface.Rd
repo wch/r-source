@@ -113,7 +113,7 @@ is.tclObj(x)
 
 addTclPath(path = ".")
 tclRequire(package, warn = TRUE)
-tclVersion()
+tclVersion(with_parselevel = FALSE)
 }
 \arguments{
   \item{objv}{a named vector of Tcl objects}
@@ -131,6 +131,7 @@ tclVersion()
   \item{warn}{logical. Warn if not found?}
   \item{...}{Additional arguments. See below.}
   \item{init}{initialization value}
+  \item{with_parselevel}{logical: should the \sQuote{parse level} be included?}
 }
 \details{
   Many of these functions are not intended for general use but are used
@@ -265,15 +266,11 @@ system is active; if \code{FALSE}, only the Tcl interpreter is available.
   Note that a report of \sQuote{not found} will be given if the package is
   found but is not compatible with the Tcl/Tk version in use.
 
-  \code{tclVersion} returns the full Tcl version as a character string such
-  as \code{"8.6.16"} or \code{"9.0.1"}). (This uses the Tcl command
-  \code{info patchlevel} and so includes the patch level.)  An
-  alternative is to use \preformatted{
-      as.character(tcl('info', 'tclversion'))
-}
-  which does not include the patch level.  (This is also available as the
-  Tcl variable \code{tcl_version}.)  NB: the \sQuote{patch level} is not
-  necessarily numeric, e.g. \code{9.0b1}.
+  \code{tclVersion} optionally returns the full Tcl version as a
+  character string such as \code{"8.6.16"} or \code{"9.0.1"}). NB: the
+  \sQuote{patch level} is not necessarily numeric, e.g. \code{9.0b1}.
+  (\R{} versions before 8.6.0 reported the full version including the
+  \sQuote{patch level}.)
 }
 \note{
   Strings containing unbalanced braces are currently not handled
@@ -289,6 +286,7 @@ system is active; if \code{FALSE}, only the Tcl interpreter is available.
 }
 \examples{
 tclVersion()
+tclVersion(TRUE)
 
 .Tcl("format \"\%s\\n\" \"Hello, World!\"")
 \dontdiff{
@@ -306,7 +304,7 @@ tcl("set", as.character(xyzzy))
 \dontrun{
 ## These cannot be run by example() but should be OK when pasted
 ## into an interactive R session with the tcltk package loaded
-top <- tktoplevel() # a Tk widget, see Tk-widgets
+top <- tktoplevel() # a Tk widget, see ?Tkwidgets
 ls(envir = top$env, all.names = TRUE)
 }
 \dontdiff{

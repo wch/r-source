@@ -226,4 +226,11 @@ tk_messageBox <-
     tclvalue(do.call("tcl", args))
 }
 
-tclVersion <- function() as.character(tcl("info", "patchlevel"))
+## aadded for R 3.2.0, enhanced for R 4.6.0
+##tclVersion <- function() as.character(tcl("info", "patchlevel"))
+
+tclVersion <- function(with_parselevel = FALSE)
+{
+    if(isTRUE(with_parselevel)) as.character(tcl("info", "patchlevel"))
+    else as.character(tcl("info", "tclversion"))
+}

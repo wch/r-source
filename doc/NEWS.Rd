@@ -14,7 +14,8 @@
 
   \subsection{NEW FEATURES}{
     \itemize{
-      \item \code{str()} now shows more via \code{format()} for external pointers.
+      \item \code{str()} now shows more via \code{format()} for external
+      pointers.
 
       \item \code{terms(<formula>, specials = *)} now treats non-syntactic
       specials more gracefully, thanks to \I{Mikael Jagan}'s \PR{18568}.
@@ -38,9 +39,13 @@
 	license identifiers},
       thanks to \I{Thierry Onkelinx} and \I{LLuís Revilla}.
 
-      \item \code{read.dcf} now recognizes lines starting with \samp{#}
-      as comment lines.  By \I{Dirk Eddelbuettel}, \I{Laurent Gatto} and
-      \I{Hugo Gruson}.
+      \item \code{read.dcf()} now recognizes lines starting with
+      \samp{#} as comment lines.  By \I{Dirk Eddelbuettel}, \I{Laurent
+      Gatto} and \I{Hugo Gruson}.
+
+      \item \code{tcltk::tclVersion()} now only optionally includes the
+      \sQuote{patch level}, as Tcl full versions can be of the the form
+      \code{8.7a5} or \code{9.0b1} without three clear components.
     }
   }
 
