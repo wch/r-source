@@ -204,10 +204,10 @@ function(file)
             ire <- sprintf("^[[:space:]]*([%s])[[:space:]]+", sep)
             ind <- grepl(ire, lines)
             list(entries =
-                 sapply(split(lines, cumsum(ind)),
+                 vapply(split(lines, cumsum(ind)),
                         function(s)
-                        sub(ire, "", .collapse(sub("^\t?", "", s)))
-                        ),
+                            sub(ire, "", .collapse(sub("^\t?", "", s))),
+                        ""),
                  header = header,
                  chunk = chunk,
                  date = date)
@@ -577,7 +577,7 @@ function(file)
 function(x)
 {
     get_section_names <- function(x)
-        sapply(x, function(e) .Rd_get_text(e[[1L]]))
+        vapply(x, function(e) .Rd_get_text(e[[1L]]), "")
 
     get_item_texts <- function(x) {
         ## Currently, chunks should consist of a single \itemize list

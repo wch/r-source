@@ -1255,20 +1255,16 @@ function(x, collapse = FALSE)
                     ind <- !is.na(match(names(e),
                                        c(anames, manames, "other")))
                     if(any(ind)) {
-                        other <- paste(names(e[ind]),
-                                       sapply(e[ind], f),
-                                       sep = " = ")
-
                         other <- Map(g,
                                      names(e[ind]),
-                                     sapply(e[ind], f))
+                                     lapply(e[ind], f))
                         other <- .format_call_RR("list", other)
                         e <- e[!ind]
                     } else {
                         other <- NULL
                     }
-                    c(Map(g, names(a), sapply(a, deparse)),
-                      Map(g, names(e), sapply(e, f)),
+                    c(Map(g, names(a), lapply(a, deparse)),
+                      Map(g, names(e), lapply(e, f)),
                       if(length(other)) list(g("other", other)))
 
                 })
@@ -1294,8 +1290,9 @@ function(x)
     s <- lapply(unclass(x),
                 function(e) {
                     e <- e[!vapply(e, is.null, NA)]
-                    cargs <-
-                        sprintf("%s = %s", names(e), sapply(e, deparse1))
+                    cargs <- sprintf("%s = %s",
+                                     names(e),
+                                     vapply(e, deparse1, ""))
                     .format_call_RR("person", cargs)
                 })
     if(length(s) > 1L)

@@ -1304,20 +1304,26 @@ function(nrdb, align = TRUE, include_declarations = FALSE)
             "   Check these declarations against the C/Fortran source code.",
             "*/",
             if(NROW(y <- nrdb$.C)) {
-                 args <- sapply(y$n, function(n) if(n >= 0) prepare(n)
-                                else "/* FIXME */")
+                args <- vapply(y$n,
+                               function(n) if(n >= 0) prepare(n)
+                                           else "/* FIXME */",
+                                "")
                 c("", "/* .C calls */",
                   paste0("extern void ", y$s, "(", args, ");"))
            },
             if(NROW(y <- nrdb$.Call)) {
-                args <- sapply(y$n, function(n) if(n >= 0) prepare(n, "SEXP")
-                               else "/* FIXME */")
+                args <- vapply(y$n,
+                               function(n) if(n >= 0) prepare(n, "SEXP")
+                                           else "/* FIXME */",
+                               "")
                c("", "/* .Call calls */",
                   paste0("extern SEXP ", y$s, "(", args, ");"))
             },
             if(NROW(y <- nrdb$.Fortran)) {
-                 args <- sapply(y$n, function(n) if(n >= 0) prepare(n)
-                                else "/* FIXME */")
+                args <- vapply(y$n,
+                               function(n) if(n >= 0) prepare(n)
+                                           else "/* FIXME */",
+                               "")
                 c("", "/* .Fortran calls */",
                   paste0("extern void F77_NAME(", y$s, ")(", args, ");"))
             },

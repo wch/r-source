@@ -52,11 +52,11 @@ encoded_text_to_latex <-
         paste(y, collapse="")
     }
     as.vector(switch(encoding,
-                     "latin1" = sapply(x, do_latin1),
-                     "latin2" = sapply(x, do_latin2),
-                     "latin9" = sapply(x, do_latin9),
-                     "UTF-8"  = sapply(x, do_utf8),
-                     "utf8"   = sapply(x, do_utf8),
+                     "latin1" = vapply(x, do_latin1, ""),
+                     "latin2" = vapply(x, do_latin2, ""),
+                     "latin9" = vapply(x, do_latin9, ""),
+                     "UTF-8"  = vapply(x, do_utf8, ""),
+                     "utf8"   = vapply(x, do_utf8, ""),
                      stop("unimplemented encoding")
                         ))
 }

@@ -564,7 +564,9 @@ function(x, m, invert = FALSE, value)
             value <- rep_len(value, np)
         }
         y <- y[pos]
-        x[pos] <- paste0(sapply(y, `[`, 1L), value, sapply(y, `[`, 2L))
+        x[pos] <- paste0(vapply(y, `[`, "", 1L),
+                         value,
+                         vapply(y, `[`, "", 2L))
         return(x)
     }
 

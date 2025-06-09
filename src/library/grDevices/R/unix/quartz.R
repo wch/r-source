@@ -122,7 +122,7 @@ quartzFonts <- function(...) {
         fontNames <- names(fonts)
         nnames <- length(fontNames)
         if (nnames == 0L) {
-            if (!all(sapply(fonts, is.character)))
+            if (!all(vapply(fonts, is.character, NA)))
                 stop("invalid arguments in 'quartzFonts' (must be font names)")
             else
                 get(".Quartz.Fonts", envir=.Quartzenv)[unlist(fonts)]

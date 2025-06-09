@@ -218,7 +218,7 @@ print.SavedPlots <- function(x, ...)
     }
     cat("Saved Plots from R version 1.4.0 or later\n\n")
     cat("  Contains", x[[2L]], "out of a maximum", x[[3L]], "plots\n")
-    lens <- sapply(x[[5L]], length)[1L:x[[2L]]]
+    lens <- lengths(x[[5L]])[1L:x[[2L]]]
     cat("  #plot calls are", paste(lens, collapse=", "), "\n")
     cat("  Current position is plot", 1L + x[[4L]], "\n")
     invisible(x)
@@ -283,7 +283,7 @@ windowsFonts <- function(...)
         fontNames <- names(fonts)
         nnames <- length(fontNames)
         if (nnames == 0) {
-            if (!all(sapply(fonts, is.character)))
+            if (!all(vapply(fonts, is.character, NA)))
                 stop("invalid arguments in 'windowsFonts' (must be font names)")
             else
                 get(".Windows.Fonts", envir=.WindowsEnv)[unlist(fonts)]

@@ -173,7 +173,7 @@ X11Fonts <- function(...)
         fontNames <- names(fonts)
         nnames <- length(fontNames)
         if (nnames == 0) {
-            if (!all(sapply(fonts, is.character)))
+            if (!all(vapply(fonts, is.character, NA)))
                 stop("invalid arguments in 'X11Fonts' (must be font names)")
             else
                 get(".X11.Fonts", envir=.X11env)[unlist(fonts)]

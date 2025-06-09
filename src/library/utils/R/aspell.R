@@ -219,8 +219,8 @@ function(files, filter, control = list(), encoding = "unknown",
 
 	if(any(ind <- startsWith(lines, "&"))) {
 	    info <- strsplit(lines[ind], ": ", fixed = TRUE)
-	    one <- strsplit(sapply(info, `[`, 1L), " ",  fixed = TRUE)
-	    two <- strsplit(sapply(info, `[`, 2L), ", ", fixed = TRUE)
+	    one <- strsplit(vapply(info, `[`, "", 1L), " ",  fixed = TRUE)
+	    two <- strsplit(vapply(info, `[`, "", 2L), ", ", fixed = TRUE)
 	    db1 <- list2DF(list(Original = vapply(one, `[`, "", 2L),
                                 File = rep_len(fname, length(one)),
                                 Line = pos[ind],
