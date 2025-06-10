@@ -113,9 +113,72 @@ glyphJust.numeric <- function(just, which=NULL, ...) {
 
 ################################################################################
 ## glyph font
+
+standardAxes <- c("wght", "wdth", "ital", "slnt", "opsz")
+standardAxisMin <- c(wght=1, wdth=0, ital=0, slnt=-90, opsz=0)
+standardAxisMax <- c(wght=1000, wdth=Inf, ital=1, slnt=90, opsz=Inf)
+
+checkAxisCase <- function(axis, registered) {
+    if (any(registered) &&
+        (!all(tolower(axis[registered]) == axis[registered]))) {
+        warning("Registered axis names must be lower case")
+    }
+    if (any(!registered) &&
+        (!all(toupper(axis[!registered]) == axis[!registered]))) {
+        warning("Custom axis names must be upper case")
+    }
+}
+
+checkAxisRange <- function(axis, value) {
+    low <- value < standardAxisMin[axis]
+    high <- value > standardAxisMax[axis] 
+    if (any(low) || any(high)) {
+        warning("Axis value(s) out of range: ",
+                paste(paste0(axis[low|high], "=", value[low|high]),
+                      collapse="; "))
+    }
+}
+
+fontVariation <- function(axis, value) {
+    if (!length(axis)) {
+        stop("No axes specified")
+    }
+    if (!is.character(axis) || any(is.na(axis)) || any(nchar(axis) != 4)||
+        any(grepl("[^a-zA-Z]", axis))) {
+        stop("Axis names must 4 ASCII letters long")
+    }
+    if (!is.numeric(value) || any(is.na(value))) {
+        stop("Axis values must be numeric")
+    }
+    registered <- tolower(axis) %in% standardAxes
+    checkAxisCase(axis, registered)
+    if (any(registered)) {
+        checkAxisRange(tolower(axis[registered]), value[registered])
+    }
+    variant <- value
+    names(variant) <- axis
+    attr(variant, "formatted") <- paste(axis, value, sep="=")
+    attr(variant, "registered") <- registered
+    class(variant) <- "FontVariation"
+    variant
+}
+
+glyphFontVariation <- function(...) {
+    values <- c(...)
+    axes <- names(values)
+    fontVariation(axes, values)
+}
+
+print.FontVariation <- function(x, ...) {
+    names <- names(x)
+    attributes(x) <- NULL
+    names(x) <- names
+    print(unclass(x))
+}
+
 glyphFont <- function(file, index,
                       family, weight, style,
-                      PSname=NA) {
+                      PSname=NA, variations=NULL) {
     file <- as.character(file)
     nafile <- is.na(file)
     if (any(nchar(file[!nafile], "bytes") > 500))
@@ -151,17 +214,31 @@ glyphFont <- function(file, index,
     names <- rle(PSname)$lengths
     if (!(all(families == files) && all(files == names)))
         stop("Font information is inconsistent")
-    
+    if (!is.null(variations)) {
+        if (!inherits(variations, "FontVariation")) {
+            variations <- do.call(glyphFontVariation, as.list(variations))
+        }
+    }
+
     font <- list(file=file, index=index,
                  family=family, weight=weight, style=style,
-                 PSname=PSname)
+                 PSname=PSname, variations=variations)
     class(font) <- "RGlyphFont"
     font
 }
 
 print.RGlyphFont <- function(x, ...) {
-    cat(paste0(x$family, " wgt: ", x$weight, " style: ", invertStyle(x$style),
-               "\n  (", x$file, " [", x$index, "])\n"))
+    format <- paste0(x$family, " wgt: ", x$weight,
+                     " style: ", invertStyle(x$style),
+                     "\n  (", x$file, " [", x$index, "]")
+    if (!is.null(x$variations)) {
+        format <- paste0(format,
+                        " [",
+                        paste(paste0(names(x$variations), "=", x$variations),
+                              collapse="; "),
+                        "]")
+    }
+    cat(format, ")\n")
 }
 
 glyphFontList <- function(...) {

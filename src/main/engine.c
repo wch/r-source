@@ -3878,6 +3878,7 @@ Rboolean R_GE_hasGlyphRotation(SEXP glyphs) {
 #define glyph_font_weight   3
 #define glyph_font_style    4
 #define glyph_font_PSname   5
+#define glyph_font_var      6
 
 const char* R_GE_glyphFontFile(SEXP glyphFont) {
     return CHAR(STRING_ELT(VECTOR_ELT(glyphFont, glyph_font_file), 0));
@@ -3896,6 +3897,67 @@ int R_GE_glyphFontStyle(SEXP glyphFont) {
 }
 const char* R_GE_glyphFontPSname(SEXP glyphFont) {
     return CHAR(STRING_ELT(VECTOR_ELT(glyphFont, glyph_font_PSname), 0));
+}
+
+int R_GE_glyphFontNumVar(SEXP glyphFont) {
+    return LENGTH(VECTOR_ELT(glyphFont, glyph_font_var));
+}
+
+/* Existence of names(glyphFont$fontVar) and 
+ * length(names) == length(glyphFont$fontVar) 
+ * should be guaranteed by R code
+ */
+const char* R_GE_glyphFontVarAxis(SEXP glyphFont, int index) {
+    int n;
+    SEXP fontVar, names;
+    const char* result;
+    PROTECT(fontVar = VECTOR_ELT(glyphFont, glyph_font_var));
+    /* Device should be calling R_GE_glyphFontNumVar() and therefore
+     * not asking for dumb stuff, but just in case.
+     */
+    n = LENGTH(fontVar);
+    if (index < 0 || index >= n) {
+        error(_("Index out of bounds"));
+    }
+    PROTECT(names = getAttrib(fontVar, R_NamesSymbol));
+    result = CHAR(STRING_ELT(names, index));
+    UNPROTECT(2);
+    return result;
+}
+
+double R_GE_glyphFontVarValue(SEXP glyphFont, int index) {
+    int n;
+    SEXP fontVar;
+    double result;
+    PROTECT(fontVar = VECTOR_ELT(glyphFont, glyph_font_var));
+    /* Device should be calling R_GE_glyphFontNumVar() and therefore
+     * not asking for dumb stuff, but just in case.
+     */
+    n = LENGTH(fontVar);
+    if (index < 0 || index >= n) {
+        error(_("Index out of bounds"));
+    }
+    result = REAL(fontVar)[index];
+    UNPROTECT(1);
+    return result;
+}
+
+const char* R_GE_glyphFontVarFormatted(SEXP glyphFont, int index) {
+    int n;
+    SEXP fontVar, varFormatted;
+    const char* result;
+    PROTECT(fontVar = VECTOR_ELT(glyphFont, glyph_font_var));
+    /* Device should be calling R_GE_glyphFontNumVar() and therefore
+     * not asking for dumb stuff, but just in case.
+     */
+    n = LENGTH(fontVar);
+    if (index < 0 || index >= n) {
+        error(_("Index out of bounds"));
+    }
+    PROTECT(varFormatted = getAttrib(fontVar, install("formatted")));
+    result = CHAR(STRING_ELT(varFormatted, index));
+    UNPROTECT(2);
+    return result;
 }
 
 void GEGlyph(int n, int *glyphs, double *x, double *y,

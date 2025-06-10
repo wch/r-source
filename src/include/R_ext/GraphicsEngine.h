@@ -88,13 +88,16 @@ extern "C" {
  * Version 16: For R 4.3.0
  *             Added more advanced typesetting
  *             - glyphs
+ * Version 17: For R 4.6.0
+ *             - variable fonts
  */
 #define R_GE_definitions 13
 #define R_GE_deviceClip  14
 #define R_GE_group       15
 #define R_GE_glyphs      16
+#define R_GE_fontVar     17
 
-#define R_GE_version R_GE_glyphs
+#define R_GE_version R_GE_fontVar
 
 int R_GE_getVersion(void);
 
@@ -662,6 +665,7 @@ int R_GE_maskType(SEXP mask);
 #define R_GE_capability_transformations      10
 #define R_GE_capability_paths                11 
 #define R_GE_capability_glyphs               12 
+#define R_GE_capability_variableFonts        13 
 
 /* Must match order in ../library/grDevices/R/glyph.R */
 #define R_GE_text_style_normal  1
@@ -686,6 +690,10 @@ const char* R_GE_glyphFontFamily(SEXP glyphFont);
 double R_GE_glyphFontWeight(SEXP glyphFont);
 int R_GE_glyphFontStyle(SEXP glyphFont);
 const char* R_GE_glyphFontPSname(SEXP glyphFont);
+int R_GE_glyphFontNumVar(SEXP glyphFont);
+const char* R_GE_glyphFontVarAxis(SEXP glyphFont, int index);
+double R_GE_glyphFontVarValue(SEXP glyphFont, int index);
+const char* R_GE_glyphFontVarFormatted(SEXP glyphFont, int index);
 
 void GEGlyph(int n, int *glyphs, double *x, double *y, 
              SEXP font, double size, 

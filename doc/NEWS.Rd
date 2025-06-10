@@ -49,6 +49,21 @@
     }
   }
 
+  \subsection{GRAPHICS}{
+    \itemize{
+      \item The graphics engine version, \code{R_GE_version}, has been
+      bumped to \code{17} and so packages that provide graphics devices
+      should be reinstalled.
+
+      The \code{glyphFont()} function gains a \code{variations}
+      argument, which allows variable font axes to be specified,
+      e.g., \code{c(wght=100)}.
+
+      Only Cairo-based graphics devices (but not \code{cairo_pdf()})
+      support variable font axes so far.
+    }
+  }
+  
   \subsection{INSTALLATION}{
     \itemize{
       \item .

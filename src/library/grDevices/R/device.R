@@ -358,7 +358,7 @@ dev.capture <- function(native = FALSE) .External(C_devcapture, native)
 
 dev.capabilities <- function(what = NULL)
 {
-    ncap <- 13
+    ncap <- 14
     template <- vector("list", ncap)
     capabilities <- .External(C_devcap, template)
     ## The device may have filled in some capabilities so check it is still
@@ -381,7 +381,8 @@ dev.capabilities <- function(what = NULL)
                   "compositing",
                   "transformations",
                   "paths",
-                  "glyphs")
+                  "glyphs",
+                  "variableFonts")
     z[[1L]] <- c(NA, FALSE, TRUE)[capabilities[[1L]] + 1L]
     z[[2L]] <- c(NA, "no", "fully", "semi")[capabilities[[2L]] + 1L]
     z[[3L]] <- c(NA, "no", "yes", "non-missing")[capabilities[[3L]] + 1L]
@@ -439,6 +440,11 @@ dev.capabilities <- function(what = NULL)
         z[[13]] <- NA
     else 
         z[[13]] <- as.logical(capabilities[[13]])
+    ## VariableFonts
+    if (is.na(capabilities[[14]]))
+        z[[14]] <- NA
+    else 
+        z[[14]] <- as.logical(capabilities[[14]])
 
     if (!is.null(what)) z[charmatch(what, names(z), 0L)] else z
 }

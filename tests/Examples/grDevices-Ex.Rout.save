@@ -1,13 +1,11 @@
 
-R Under development (unstable) (2024-11-18 r87340) -- "Unsuffered Consequences"
-Copyright (C) 2024 The R Foundation for Statistical Computing
+R Under development (unstable) (2025-06-09 r88292) -- "Unsuffered Consequences"
+Copyright (C) 2025 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
 Type 'license()' or 'licence()' for distribution details.
-
-  Natural language support but running in an English locale
 
 R is a collaborative project with many contributors.
 Type 'contributors()' for more information and
@@ -2083,6 +2081,9 @@ $paths
 $glyphs
 [1] TRUE
 
+$variableFonts
+[1] FALSE
+
 > 
 > 
 > 
@@ -3661,15 +3662,15 @@ attr(,"class")
 > 
 > ## IGNORE_RDIFF_BEGIN
 > pretty(Sys.Date())
-[1] "2024-08-28" "2024-08-29" "2024-08-30" "2024-08-31" "2024-09-01"
-[6] "2024-09-02"
+[1] "2025-06-08" "2025-06-09" "2025-06-10" "2025-06-11" "2025-06-12"
+[6] "2025-06-13"
 > pretty(Sys.time(), n = 10)
- [1] "2024-08-30 15:57:05 NZST" "2024-08-30 15:57:06 NZST"
- [3] "2024-08-30 15:57:07 NZST" "2024-08-30 15:57:08 NZST"
- [5] "2024-08-30 15:57:09 NZST" "2024-08-30 15:57:10 NZST"
- [7] "2024-08-30 15:57:11 NZST" "2024-08-30 15:57:12 NZST"
- [9] "2024-08-30 15:57:13 NZST" "2024-08-30 15:57:14 NZST"
-[11] "2024-08-30 15:57:15 NZST"
+ [1] "2025-06-10 09:12:42 NZST" "2025-06-10 09:12:43 NZST"
+ [3] "2025-06-10 09:12:44 NZST" "2025-06-10 09:12:45 NZST"
+ [5] "2025-06-10 09:12:46 NZST" "2025-06-10 09:12:47 NZST"
+ [7] "2025-06-10 09:12:48 NZST" "2025-06-10 09:12:49 NZST"
+ [9] "2025-06-10 09:12:50 NZST" "2025-06-10 09:12:51 NZST"
+[11] "2025-06-10 09:12:52 NZST"
 > ## IGNORE_RDIFF_END
 > pretty(as.Date("2000-03-01")) # R 1.0.0 came in a leap year
 [1] "2000-02-28" "2000-02-29" "2000-03-01" "2000-03-02" "2000-03-03"
@@ -4419,7 +4420,7 @@ NULL
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  29.539 0.389 31.994 0 0 
+Time elapsed:  35.674 0.408 36.103 0 0 
 > grDevices::dev.off()
 null device 
           1 

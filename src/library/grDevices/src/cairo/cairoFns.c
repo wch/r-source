@@ -2274,7 +2274,8 @@ static void Cairo_FillStroke(SEXP path, int rule,
  */
 
 static SEXP Cairo_Capabilities(SEXP capabilities) {
-    SEXP patterns, clippingPaths, masks, compositing, transforms, paths, glyphs;
+    SEXP patterns, clippingPaths, masks, compositing, transforms, paths, 
+        glyphs, variableFonts;
 
     PROTECT(patterns = allocVector(INTSXP, 3));
     INTEGER(patterns)[0] = R_GE_linearGradientPattern;
@@ -2337,6 +2338,11 @@ static SEXP Cairo_Capabilities(SEXP capabilities) {
     SET_VECTOR_ELT(capabilities, R_GE_capability_glyphs, glyphs);
     UNPROTECT(1);
 
+    PROTECT(variableFonts = allocVector(INTSXP, 1));
+    INTEGER(variableFonts)[0] = 1;
+    SET_VECTOR_ELT(capabilities, R_GE_capability_variableFonts, variableFonts);
+    UNPROTECT(1);
+
     return capabilities;
 }
 
@@ -2349,6 +2355,87 @@ static SEXP Cairo_Capabilities(SEXP capabilities) {
 #if CAIRO_HAS_FT_FONT
 #include <cairo-ft.h>
 #endif
+
+static void applyFontVar(cairo_font_face_t *cairo_face, 
+                         SEXP font, int numVar,
+                         pX11Desc xd)
+{
+    int i;
+    int success = 0;
+    cairo_scaled_font_t *scaled_font;
+    cairo_matrix_t font_matrix; 
+    cairo_matrix_t ctm;
+    cairo_font_options_t *options;
+    cairo_get_font_matrix(xd->cc, &font_matrix);
+    cairo_get_matrix(xd->cc, &ctm);
+    options = cairo_font_options_create();
+    if (cairo_font_options_status(options) == CAIRO_STATUS_SUCCESS) {
+        char variations[1024];
+        int written, offset = 0;
+        if (FALSE) {                            
+            /* Use var axis and var value */
+            const char* format1 = "%s=%f";
+            const char* format2 = ",%s=%f";
+            const char* format;
+            for (i = 0; i < numVar; i++) {
+                if (i == 0) {
+                    format = format1;
+                } else {
+                    format = format2;
+                }
+                /* Axis names guaranteed to be ASCII letters in R code */
+                written = snprintf(variations + offset, 
+                                   1024 - offset, 
+                                   format,
+                                   R_GE_glyphFontVarAxis(font, i),
+                                   R_GE_glyphFontVarValue(font, i));
+                if (written < 0 || written > 1024 - offset) {
+                    warning(_("Font variations too long"));
+                    i = numVar;
+                } else {
+                    offset = offset + written - 1;
+                }
+            }
+        } else {
+            /* use formatted var */
+            const char* format1 = "%s";
+            const char* format2 = ",%s";
+            const char* format;
+            for (i = 0; i < numVar; i++) {
+                if (i == 0) {
+                    format = format1;
+                } else {
+                    format = format2;
+                }
+                /* Axis names guaranteed to be ASCII letters in R code */
+                written = snprintf(variations + offset, 
+                                   1024 - offset, 
+                                   format,
+                                   R_GE_glyphFontVarFormatted(font, i));
+                if (written < 0 || written > 1024 - offset) {
+                    warning(_("Font variations too long"));
+                    i = numVar;
+                } else {
+                    offset = offset + written;
+                }
+            }
+        }
+        cairo_font_options_set_variations(options, variations);
+        scaled_font = cairo_scaled_font_create(cairo_face,
+                                               &font_matrix,
+                                               &ctm,
+                                               options);
+        if (scaled_font &&
+            cairo_scaled_font_status(scaled_font) == CAIRO_STATUS_SUCCESS) {
+            cairo_set_scaled_font(xd->cc, scaled_font);
+            cairo_scaled_font_destroy(scaled_font);
+            success = 1;
+        } 
+    }
+    if (!success) {
+        warning(_("Failed to apply font variations"));
+    }
+}
 
 static void Cairo_Glyph(int n, int *glyphs, double *x, double *y, 
                         SEXP font, double size, 
@@ -2399,6 +2486,12 @@ static void Cairo_Glyph(int n, int *glyphs, double *x, double *y,
      * location (in "bigpts").  The latter depends on device dpi.
      */
     cairo_set_font_size(xd->cc, size / (72*dd->ipr[0]));
+
+    /* Apply font variations, if any */
+    int numVar = R_GE_glyphFontNumVar(font);
+    if (numVar > 0) {
+        applyFontVar(cairo_face, font, numVar, xd);
+    }
 
     for (i=0; i<n; i++) {
         
