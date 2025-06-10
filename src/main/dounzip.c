@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  file dounzip.c
- *  first part Copyright (C) 2002-2023  The R Core Team
+ *  first part Copyright (C) 2002-2025  The R Core Team
  *  second part Copyright (C) 1998-2010 Gilles Vollant
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -33,6 +33,7 @@
 #endif
 #include <errno.h>
 #include <stdlib.h>
+#include <string.h>
 
 #ifdef Win32
 #include <io.h> /* for mkdir */
@@ -149,6 +150,7 @@ extract_one(unzFile uf, const char *const dest, const char * const filename,
     R_fixslash(outname); /* ensure path separator is / */
 #endif
     p = outname + strlen(outname) - 1;
+    bool warned = FALSE;
     if (*p == '/') { /* Directories are stored with trailing slash */
 	if (!junk) {
 	    *p = '\0';
@@ -156,10 +158,20 @@ extract_one(unzFile uf, const char *const dest, const char * const filename,
 		/* make parents as required: have already checked dest exists */
 		pp = outname + strlen(dest) + 1;
 		while((p = Rf_strchr(pp, '/'))) {
-		    strcpy(dirs, outname);
-		    dirs[p - outname] = '\0';
-		    if (!R_FileExists(dirs)) R_mkdir(dirs);
-		    pp = p + 1;
+		    if (p - pp == 2 && !strncmp(pp, "..", 2)) {
+			if (!warned) {
+			    warning(
+			      _("skipped \"../\" path component(s) in '%s'"),
+			      fn);
+			    warned = true;
+			}
+			memmove(pp, p + 1, strlen(p + 1) + 1);
+		    } else {
+			strcpy(dirs, outname);
+			dirs[p - outname] = '\0';
+			if (!R_FileExists(dirs)) R_mkdir(dirs);
+			pp = p + 1;
+		    }
 		}
 		err = R_mkdir(outname);
 	    }
@@ -168,11 +180,21 @@ extract_one(unzFile uf, const char *const dest, const char * const filename,
 	/* make parents as required: have already checked dest exists */
 	pp = outname + strlen(dest) + 1;
 	while((p = Rf_strchr(pp, '/'))) {
-	    strcpy(dirs, outname);
-	    dirs[p - outname] = '\0';
-	    /* Rprintf("dirs is %s\n", dirs); */
-	    if (!R_FileExists(dirs)) R_mkdir(dirs);
-	    pp = p + 1;
+	    if (p - pp == 2 && !strncmp(pp, "..", 2)) {
+		if (!warned) {
+		    warning(
+		      _("skipped \"../\" path component(s) in '%s'"),
+		      fn);
+		    warned = true;
+		}
+		memmove(pp, p + 1, strlen(p + 1) + 1);
+	    } else {
+		strcpy(dirs, outname);
+		dirs[p - outname] = '\0';
+		/* Rprintf("dirs is %s\n", dirs); */
+		if (!R_FileExists(dirs)) R_mkdir(dirs);
+		pp = p + 1;
+	    }
 	}
 	/* Rprintf("extracting %s\n", outname); */
 	if (!overwrite && R_FileExists(outname)) {
