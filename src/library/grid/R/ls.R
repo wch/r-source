@@ -756,7 +756,7 @@ grobPathListing <- function(x, ...) {
 
 # Tidy up the vpPath from grid.ls() to remove ROOT if it is there
 clean <- function(paths) {
-    sapply(lapply(paths,
+    vapply(lapply(paths,
                   function(x) {
                       pieces <- explode(x)
                       if (length(pieces) && pieces[1] == "ROOT")
@@ -767,7 +767,8 @@ clean <- function(paths) {
                if (length(x))
                    as.character(vpPath(x))
                else ""
-           })
+           },
+           "")
 }
 
 # Given a gPath, return complete grob paths that match from the display list

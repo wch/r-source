@@ -264,7 +264,7 @@ setChildren <- function(x, children) {
   }
   if (length(children)) {
     x$children <- children
-    childNames <- sapply(children, childName)
+    childNames <- vapply(children, childName, "")
     names(x$children) <- childNames
     x$childrenOrder <- childNames
   } else {
@@ -331,7 +331,7 @@ getName <- function(elt) {
 
 getNames <- function() {
   dl <- grid.Call(C_getDisplayList)[1L:grid.Call(C_getDLindex)]
-  names <- sapply(dl, getName)
+  names <- vapply(dl, getName, "")
   names[nzchar(names)]
 }
 

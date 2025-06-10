@@ -233,7 +233,7 @@ depth.vpList <- function(x, ...) {
 depth.vpStack <- function(x, ...) {
   # Elements in the stack may be vpStacks or vpLists or vpTrees
   # so need to sum all the depths
-  sum(sapply(x, depth, ..., simplify=TRUE))
+  sum(vapply(x, depth, 0, ...))
 }
 
 depth.vpTree <- function(x, ...) {
