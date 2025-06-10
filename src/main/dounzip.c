@@ -122,7 +122,7 @@ extract_one(unzFile uf, const char *const dest, const char * const filename,
 
     err = unzOpenCurrentFile(uf);
     if (err != UNZ_OK) return err;
-    if (strlen(dest) > R_PATH_MAX - 1) return 1;
+    if (strlen(dest) > R_PATH_MAX - 2) return 1;
     strcpy(outname, dest);
     strcat(outname, FILESEP);
     unz_file_info64 file_info;
@@ -131,9 +131,8 @@ extract_one(unzFile uf, const char *const dest, const char * const filename,
 				  sizeof(filename_inzip), NULL, 0, NULL, 0);
     fn = filename_inzip; /* might be UTF-8 ... */
     if (filename) {
-	if (strlen(dest) + strlen(filename) > R_PATH_MAX - 2) return 1;
-	strncpy(fn0, filename, R_PATH_MAX);
-	fn0[R_PATH_MAX - 1] = '\0';
+	if (strlen(filename) > R_PATH_MAX - 1) return 1;
+	strcpy(fn0, filename);
 	fn = fn0;
     }
 #ifdef Win32
@@ -143,6 +142,7 @@ extract_one(unzFile uf, const char *const dest, const char * const filename,
 	p = Rf_strrchr(fn, '/');
 	if (p) fn = p+1;
     }
+    if (strlen(outname) + strlen(fn) > R_PATH_MAX - 1) return 1;
     strcat(outname, fn);
 
 #ifdef Win32
