@@ -217,33 +217,27 @@ package.skeleton <-
 		      file.path(docs_dir,
 				sprintf("%s-package.Rd", name)),
 		      lib.loc = path)
-	vapply(list,
-	       function(item) {
-		   prompt(get(item, envir = environment),
-			  name = item,
-			  filename =
-			  file.path(docs_dir,
-				    sprintf("%s.Rd", list0[item])))
-	       },
-               "")
-	vapply(classesList,
-	       function(item) {
-		   methods::promptClass(item,
-					filename =
-					file.path(docs_dir,
-						  sprintf("%s-class.Rd", classes0[item])),
-					where = environment)
-	       },
-               "")
-	vapply(methodsList,
-	       function(item) {
-		   methods::promptMethods(item,
-					  filename =
-					  file.path(docs_dir,
-						    sprintf("%s-methods.Rd", methods0[item])),
-					  methods::findMethods(item, where = environment))
-	       },
-               "")
+        for(item in list) {
+            prompt(get(item, envir = environment),
+                   name = item,
+                   filename =
+                       file.path(docs_dir,
+                                 sprintf("%s.Rd", list0[item])))
+        }
+        for(item in classesList) {
+            methods::promptClass(item,
+                                 filename =
+                                     file.path(docs_dir,
+                                               sprintf("%s-class.Rd", classes0[item])),
+                                 where = environment)
+        }
+        for(item in methodsList) {
+            methods::promptMethods(item,
+                                   filename =
+                                       file.path(docs_dir,
+                                                 sprintf("%s-methods.Rd", methods0[item])),
+                                   methods::findMethods(item, where = environment))
+        }
     }))
     ## don't document generic functions from other packages
     for(item in methodsList) {

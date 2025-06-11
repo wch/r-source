@@ -3190,7 +3190,7 @@ function(dir, force_suggests = TRUE, check_incoming = FALSE,
             installed_in <- c(installed_in, rep.int(lib, length(pkgs)))
         }
         if (length(lreqs)) {
-            reqs <- unique(sapply(lreqs, `[[`, 1L))
+            reqs <- unique(vapply(lreqs, `[[`, "", 1L))
             bad <- setdiff(reqs, installed)
             if(length(bad)) {
                 ## EDanalysis has a package in all of Depends, Imports, Suggests.
@@ -3226,12 +3226,12 @@ function(dir, force_suggests = TRUE, check_incoming = FALSE,
         if (length(lenhances) &&
             !config_val_to_logical(Sys.getenv("_R_CHECK_PACKAGE_DEPENDS_IGNORE_MISSING_ENHANCES_",
                                              "FALSE"))) {
-            m <- setdiff(sapply(lenhances, `[[`, 1L), installed)
+            m <- setdiff(vapply(lenhances, `[[`, "", 1L), installed)
             if(length(m))
                 bad_depends$enhances_but_not_installed <- m
         }
         if (!force_suggests && length(lsuggests)) {
-            m <- setdiff(sapply(lsuggests, `[[`, 1L), installed)
+            m <- setdiff(vapply(lsuggests, `[[`, "", 1L), installed)
             if(length(m))
                 bad_depends$suggests_but_not_installed <- m
         }
@@ -3345,12 +3345,12 @@ function(dir, force_suggests = TRUE, check_incoming = FALSE,
         ## First use dependencies which are installed: strict dependencies
         ## need to be for a full check.
         ## Suggests might not even exist, so we suppress warnings.
-        mt <- utils::maintainer
-        strict2 <- sapply(strict, function(x) suppressWarnings(mt(x)))
+        mt <- function(x) suppressWarnings(utils::maintainer(x))
+        strict2 <- vapply(strict, mt, "")
         miss1 <- is.na(strict2)
         weak <- setdiff(as.character(suggests),
                         bad_depends$suggested_but_not_installed)
-        weak2 <- sapply(weak, function(x) suppressWarnings(mt(x)))
+        weak2 <- vapply(weak, mt, "")
         miss2 <- is.na(weak2)
         if((any(miss1) || any(miss2)) &&
            !inherits(tryCatch(db <- CRAN_package_db()[, c("Package",

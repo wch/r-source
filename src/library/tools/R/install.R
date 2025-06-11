@@ -1222,9 +1222,12 @@ if(FALSE) {
                     if (!is.na(use_C))
                         ev1 <- c(sprintf(c("CC%s", "C%sFLAGS"), use_C),
                                  ev[-(1:2)])
-                    ev2 <- sapply(ev1, function(x)
-                        system2(file.path(R.home("bin"), "R"), c("CMD", "config", x),
-                                stdout = TRUE))
+                    ev2 <- vapply(ev1,
+                                  function(x)
+                                      system2(file.path(R.home("bin"), "R"),
+                                              c("CMD", "config", x),
+                                              stdout = TRUE),
+                                  "")
                     ev3 <- paste0(ev, "=", shQuote(ev2))
                     ## skip any which are empty, possible for CXX)
                     ev3 <- ev3[nzchar(ev2)]

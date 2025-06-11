@@ -151,16 +151,15 @@ function(x, ...)
     x <- x[n > 0]
     n <- max(n)
     d <- list()
-    sapply(names(x),
-             function(id) {
-		d[[id]] <<- rep.int("", n)
-		names <- vapply(x[[id]], `[[`, "", "name")
-                if(length(names)) d[[id]][seq_along(names)] <<- names
-                d[[paste(id, "numParameters")]] <<- rep.int("", n)
-                names <- vapply(x[[id]], `[[`, 0L, "numParameters")
-                if(length(names))
-                    d[[paste(id, "numParameters")]][seq_along(names)] <<- names
-             })
+    for(id in names(x)) {
+        d[[id]] <- rep.int("", n)
+        names <- vapply(x[[id]], `[[`, "", "name")
+        if(length(names)) d[[id]][seq_along(names)] <- names
+        d[[paste(id, "numParameters")]] <- rep.int("", n)
+        names <- vapply(x[[id]], `[[`, 0L, "numParameters")
+        if(length(names))
+            d[[paste(id, "numParameters")]][seq_along(names)] <- names
+    }
     print(as.data.frame(d), ...)
     invisible(x)
 }

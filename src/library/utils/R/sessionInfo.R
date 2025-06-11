@@ -157,9 +157,9 @@ print.sessionInfo <- function(x, locale = TRUE, tzone = locale,
 			      ...)
 {
     mkLabel <- function(L, n) {
-        vers <- sapply(L[[n]], function(x) x[["Version"]])
-        pkg <-  sapply(L[[n]], function(x) x[["Package"]])
-        paste(pkg, vers, sep = "_")
+        paste(vapply(L[[n]], `[[`, "", "Package"),
+              vapply(L[[n]], `[[`, "", "Version"),
+              sep = "_")
     }
 
     cat(x$R.version$version.string, "\n", sep = "")
