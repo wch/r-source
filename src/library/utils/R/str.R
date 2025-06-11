@@ -345,10 +345,11 @@ str.default <-
 		std.attr <- c(std.attr, "class")
 	    }
 	    if(no.list || (has.class &&
-			   any(sapply(paste0("str.", cl),
+			   any(vapply(paste0("str.", cl),
 					#use sys.function(.) ..
 				      function(ob)exists(ob, mode= "function",
-							 inherits= TRUE))))) {
+							 inherits= TRUE),
+                                      NA)))) {
 		## str.default is a 'NextMethod' : omit the 'List of ..'
 		std.attr <- c(std.attr, "class", if(is.d.f) "row.names")
 	    } else { # need as.character here for double lengths.

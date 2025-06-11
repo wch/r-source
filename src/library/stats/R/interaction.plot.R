@@ -42,7 +42,7 @@ interaction.plot <-
     }
     xlabs <- rownames(cells)
     ylabs <- colnames(cells)
-    nch <- max(sapply(ylabs, nchar, type="width"))
+    nch <- max(vapply(ylabs, nchar, 0, type="width"))
     if(is.null(xlabs)) xlabs <- as.character(xvals)
     if(is.null(ylabs)) ylabs <- as.character(1L:nc)
     xlim <- range(xvals)

@@ -642,7 +642,7 @@ normalCompletions <-
                         dot_internals = TRUE)
         if (.CompletionEnv$settings[["func"]] && check.mode && !is.null(add.fun))
         {
-            which.function <- sapply(comps, function(s) exists(s, mode = "function"))
+            which.function <- vapply(comps, exists, NA, mode = "function")
             if (any(which.function))
                 comps[which.function] <-
                     sprintf("%s%s", comps[which.function], add.fun)

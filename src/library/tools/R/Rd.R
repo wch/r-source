@@ -513,7 +513,11 @@ function(x, which, predefined = TRUE)
         ## the elements the title and the body, respectively.
         x <- x[RdTags(x) == "\\section"]
         if(length(x)) {
-            ind <- sapply(x, function(e) .Rd_get_text(e[[1L]])) == which
+            ind <- vapply(x,
+                          function(e)
+                              paste(.Rd_get_text(e[[1L]]),
+                                    collapse = " ") == which,
+                          NA)
             x <- lapply(x[ind], `[[`, 2L)
         }
     }
@@ -779,7 +783,7 @@ function(x)
     if(!length(x)) return(y)
     x <- x[RdTags(x) == "\\item"]
     if(!length(x)) return(y)
-    x <- lapply(x[lengths(x) == 2L], sapply, .Rd_deparse)
+    x <- lapply(x[lengths(x) == 2L], vapply, .Rd_deparse, "")
     matrix(unlist(x), ncol = 2L, byrow = TRUE)
 }
 

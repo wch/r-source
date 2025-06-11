@@ -589,7 +589,7 @@ anova.glmlist <- function(object, ..., dispersion=NULL, test=NULL)
                 domain = NA)
     }
 
-    ns <- sapply(object, function(x) length(x$residuals))
+    ns <- vapply(object, function(x) length(x$residuals), 0)
     if(any(ns != ns[1L]))
 	stop("models were not all fitted to the same size of dataset")
 

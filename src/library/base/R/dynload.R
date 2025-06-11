@@ -127,9 +127,9 @@ function(x, ...)
 {
     if(length(x)) {    
         m <- data.frame(numParameters =
-                            sapply(x, function(x) x$numParameters),
+                            vapply(x, `[[`, 0L, "numParameters"),
                         row.names =
-                            sapply(x, function(x) x$name))
+                            vapply(x, `[[`, "", "name"))
         print(m, ...)
     }
     invisible(x)
@@ -154,10 +154,10 @@ function(x, ...)
     sapply(names(x),
              function(id) {
 		d[[id]] <<- rep.int("", n)
-		names <- vapply(x[[id]], function(x) x$name, "")
+		names <- vapply(x[[id]], `[[`, "", "name")
                 if(length(names)) d[[id]][seq_along(names)] <<- names
                 d[[paste(id, "numParameters")]] <<- rep.int("", n)
-                names <- sapply(x[[id]], function(x) x$numParameters)
+                names <- vapply(x[[id]], `[[`, 0L, "numParameters")
                 if(length(names))
                     d[[paste(id, "numParameters")]][seq_along(names)] <<- names
              })
@@ -201,9 +201,9 @@ print.DLLInfo <- function(x, ...)
 print.DLLInfoList <- function(x, ...)
 {
     if(length(x)) {
-        m <- data.frame(Filename = sapply(x, function(x) x[["path"]]),
+        m <- data.frame(Filename = vapply(x, `[[`, "", "path"),
                         "Dynamic Lookup" =
-                        sapply(x, function(x) x[["dynamicLookup"]]))
+                        vapply(x, `[[`, NA, "dynamicLookup"))
         print(m, ...)
     }
     invisible(x)

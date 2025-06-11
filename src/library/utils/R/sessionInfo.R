@@ -122,8 +122,9 @@ sessionInfo <- function(package = NULL)
     ## no need to re-encode given what we extract.
     pkgDesc <- lapply(package, packageDescription, encoding = NA)
     if(length(package) == 0) stop("no valid packages were specified")
-    basePkgs <- sapply(pkgDesc,
-                       function(x) !is.null(x$Priority) && x$Priority=="base")
+    basePkgs <- vapply(pkgDesc,
+                       function(x) !is.null(x$Priority) && x$Priority=="base",
+                       NA)
     ## Hmm, see tools:::.get_standard_package_names()$base
     z$basePkgs <- package[basePkgs]
     if(any(!basePkgs)){
