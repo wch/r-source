@@ -1,6 +1,6 @@
 % File src/library/utils/man/unzip.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2018 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{unzip}
@@ -65,6 +65,9 @@ unzip(zipfile, files = NULL, list = FALSE, overwrite = TRUE,
   to an accuracy of 2 seconds.  This is not very useful when
   transferring zip files between machines (even across continents), so
   we chose not to restore them by default.
+
+  The internal method now follows \code{unzip 6.00} in how it handles
+  extracted file paths which contain \code{"../"}.
 }
 
 \value{

@@ -147,6 +147,15 @@
 }
 
 \section{\Rlogo CHANGES IN R 4.5.1}{
+
+  \subsection{NEW FEATURES}{
+    \itemize{
+      \item The internal method of \code{unzip()} now follows \code{unzip 6.00}
+      in how it handles extracted file paths which contain \code{"../"}.
+      With thanks to \I{Ivan Krylov}.
+    }
+  }
+
   \subsection{INSTALLATION}{
     \itemize{
       \item Standalone \code{nmath} can be built with early-2025
