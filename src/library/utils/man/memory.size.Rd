@@ -20,5 +20,15 @@ memory.size(max = FALSE)
 
 memory.limit(size = NA)
 }
+\arguments{
+  \item{max}{unused.}
+  % Was
+  % \item{max}{logical. If true the maximum amount of memory obtained from
+  %   the OS is reported, otherwise the amount currently in use.}
+  \item{size}{unused.}
+  % Was
+  % \item{size}{numeric. If \code{NA} report the memory size, otherwise
+  %   request a new limit, in Mb.}
+}
 \keyword{utilities}
 \keyword{internal}
