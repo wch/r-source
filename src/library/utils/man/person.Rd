@@ -226,4 +226,8 @@ toBibtex(b)
 ## ROR identifiers.
 (p4 <- person("R Core Team",
               comment = c(ROR = "02zz1nj61")))
+
+## Example for a contributor whose real name is unknown and cannot be
+## determined:
+person(given = "@zeileis", role = "ctb", comment = "GitHub user")
 }
