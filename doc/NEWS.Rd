@@ -142,6 +142,10 @@
       \item \code{t.test(c(1:3, Inf))} and similar no longer produce an error but
       return a (still not so useful) \code{"htest"} result, fixing
       \PR{18901}, thanks to \I{Jesse Alderliesten}.
+
+      \item \code{text()} now truncates \code{labels} to maximum length
+      of \code{x} and \code{y} (if it is longer), fixing \PR{7084}.
+      Thanks to \I{Heather Turner} and \I{Ella Kaye}.
     }
   }
 }

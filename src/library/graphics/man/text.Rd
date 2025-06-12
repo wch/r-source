@@ -24,7 +24,7 @@ text(x, \dots)
     language objects (names and calls) to expressions, and vectors and
     other classed objects to character vectors by \code{\link{as.character}}.
     If \code{labels} is longer than \code{x} and
-    \code{y}, the coordinates are recycled to the length of \code{labels}.}
+    \code{y}, \code{labels} is truncated to \code{max(length(x), length(y))}.}
   \item{adj}{one or two values in \eqn{[0, 1]} which specify the x
     (and optionally y) adjustment (\sQuote{justification}) of the
     labels, with 0 for left/bottom, 1 for right/top, and 0.5 for

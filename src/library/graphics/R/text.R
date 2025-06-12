@@ -26,7 +26,18 @@ function(x, y = NULL, labels = seq_along(x$x),
     if (!missing(y) && (is.character(y) || is.expression(y))) {
 	labels <- y; y <- NULL
     }
+
     x <- xy.coords(x,y, recycle = TRUE, setLab = FALSE)
+    
+    if (is.language(labels)) {
+        labels <- as.expression(labels)
+    }
+
+    if (length(labels) > (n <- length(x$x)) && n >= 1) {
+        labels <- labels[1:n]
+        warning("length(labels) > max(length(x), length(y)). labels truncated to length ", n, ".")
+    }
+
     labels <- as.graphicsAnnot(labels)
     if (!is.null(vfont))
         vfont <- c(typeface = pmatch(vfont[1L], Hershey$typeface),
