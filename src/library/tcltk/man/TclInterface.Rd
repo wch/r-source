@@ -268,7 +268,8 @@ system is active; if \code{FALSE}, only the Tcl interpreter is available.
 
   \code{tclVersion} optionally returns the full Tcl version as a
   character string such as \code{"8.6.16"} or \code{"9.0.1"}). NB: the
-  \sQuote{patch level} is not necessarily numeric, e.g. \code{9.0b1}.
+  \sQuote{patch level} is not necessarily numeric, e.g.\sspace{}for
+  version \code{9.0b1}.
   (\R{} versions before 8.6.0 reported the full version including the
   \sQuote{patch level}.)
 }

@@ -169,9 +169,6 @@
 
       \item Tcl/Tk\sspace{}9 can be used to build package \code{tcltk}:
       this has become the default in some Linux distributions.
-      \strong{N.B.}  several third-party packages currently require
-      Tcl/Tk\sspace{}8 or even 8.6 without declaring so.
-      %% including tkrplot, loon and tcltk2
     }
   }
 
