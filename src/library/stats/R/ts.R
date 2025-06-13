@@ -1,7 +1,7 @@
 #  File src/library/stats/R/ts.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2024 The R Core Team
+#  Copyright (C) 1995-2025 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -86,8 +86,10 @@ ts <- function(data = NA, start = 1, end = numeric(), frequency = 1,
 		if(ndata < nobs) data[rep_len(1L:ndata, nobs), ]
 		else if(ndata > nobs) data[1L:nobs, ]
 	    }
-    ## FIXME: The following "attr<-"() calls C tspgets() which uses a
-    ##  	fixed equivalent of ts.eps := 1e-5
+    ## attr(data, "tsp") <- .. below calls C tspgets() which uses getOption("ts.eps"):
+    if(doEps <- !missing(ts.eps) && ts.eps != getOption("ts.eps")) {
+        op <- options(ts.eps = ts.eps); on.exit(options(op))
+    }
     attr(data, "tsp") <- c(start, end, frequency) #-- order is fixed
     if(!is.null(class) && class[[1]] != "none") attr(data, "class") <- class
     ## if you alter the return structure, you also need to alter
@@ -400,7 +402,7 @@ print.ts <- function(x, calendar, ...)
     invisible(x)
 }
 
-## To be used in a  format.ts():
+## used in print.ts(), and to be used in a (future / other pkg) format.ts()
 .preformat.ts <- function(x, calendar, ...)
 {
     fr.x <- frequency(x)
@@ -456,7 +458,7 @@ print.ts <- function(x, calendar, ...)
 		    paste(month.abb[t2], p1)
 		else
 		    paste(p1, if(fr.x == 4) c("Q1", "Q2", "Q3", "Q4")[t2]
-			  else format(t2))
+			      else format(t2))
 	    } else
 		format(time(x))
         attr(x, "class") <- attr(x, "tsp") <- attr(x, "na.action") <- NULL

@@ -1195,7 +1195,7 @@ msgid "names() applied to a non-vector"
 msgstr ""
 
 #: src/main/attrib.c:432
-msgid "invalid time series parameters specified"
+msgid "invalid time series parameters specified (%d)"
 msgstr ""
 
 #: src/main/attrib.c:446

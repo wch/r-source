@@ -63,7 +63,7 @@
       support variable font axes so far.
     }
   }
-  
+
   \subsection{INSTALLATION}{
     \itemize{
       \item .
@@ -146,6 +146,11 @@
       \item \code{text()} now truncates \code{labels} to maximum length
       of \code{x} and \code{y} (if it is longer), fixing \PR{7084}.
       Thanks to \I{Heather Turner} and \I{Ella Kaye}.
+
+      \item \code{attr(., "tsp") <- val} now uses \code{getOption("ts.eps")}
+      instead of hardwired \code{1e-5}; consequently, \code{ts(.., ts.eps=*)}
+      now passes \code{ts.eps} to the \code{"tsp"} setting C code;
+      both fixing a long-standing \sQuote{\I{FIXME}}.
     }
   }
 }
@@ -3551,7 +3556,7 @@
       patch by \I{Thomas Soeiro} in \PR{18243}.
 
       \item \code{as.vector()} gains a \code{data.frame} method which
-      returns a simple named list, also clearing a long standing
+      returns a simple named list, also clearing a long-standing
       \sQuote{\I{FIXME}} to enable \code{as.vector(<data.frame>,
       mode="list")}.  This breaks code relying on
       \code{as.vector(<data.frame>)} to return the unchanged data frame.

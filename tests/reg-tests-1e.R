@@ -1996,6 +1996,12 @@ stopifnot(exprs = {
 ## The t.test() calls errored all in R <= 4.5.1
 
 
+## long standing "FIXME" fixed:
+stopifnot(is.ts(ts(1:711, frequency=2*pi, start = 1, end = 114)))
+assertErrV(     ts(1:711, frequency=2*pi, start = 1, end = 114, ts.eps = 1e-6) )
+## did *not* error in R <= 4.5.1, as 'ts.eps' was *not* passed to C code
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
