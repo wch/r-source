@@ -5,6 +5,14 @@
 \title{R News}
 \encoding{UTF-8}
 
+\section{\Rlogo CHANGES IN R 4.5.1 patched}{
+
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item .
+    }
+  }
+}
 
 \section{\Rlogo CHANGES IN R 4.5.1}{
 
