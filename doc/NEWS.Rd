@@ -44,7 +44,7 @@
       Gatto} and \I{Hugo Gruson}.
 
       \item \code{tcltk::tclVersion()} now only optionally includes the
-      \sQuote{patch level}, as Tcl full versions can be of the the form
+      \sQuote{patch level}, as Tcl full versions can be of the form
       \code{8.7a5} or \code{9.0b1} without three clear components.
     }
   }
@@ -57,7 +57,7 @@
 
       The \code{glyphFont()} function gains a \code{variations}
       argument, which allows variable font axes to be specified,
-      e.g., \code{c(wght=100)}.
+      e.g., \code{c(wght = 100)}.
 
       Only Cairo-based graphics devices (but not \code{cairo_pdf()})
       support variable font axes so far.
