@@ -145,7 +145,8 @@
 
       \item \code{text()} now truncates \code{labels} to maximum length
       of \code{x} and \code{y} (if it is longer), fixing \PR{7084}.
-      Thanks to \I{Heather Turner} and \I{Ella Kaye}.
+      Thanks to \I{Heather Turner}, \I{Ella Kaye}, and
+      \I{Philippe Grosjean}.
 
       \item \code{attr(., "tsp") <- val} now uses \code{getOption("ts.eps")}
       instead of hardwired \code{1e-5}; consequently, \code{ts(.., ts.eps=*)}
