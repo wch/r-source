@@ -2950,8 +2950,10 @@ if(FALSE) {
         ## should be valid in UTF-8, might be invalid in declared encoding
         desc <- iconv(desc, enc, "UTF-8", sub = "byte")
     }
-    ## drop internal entries
-    M <- M[!M[, 4L], ]
+    ## drop internal entries (by default)
+    if(!config_val_to_logical(Sys.getenv("_R_INSTALL_HTML_INDEX_INTERNAL_TOO_",
+                                         "FALSE")))
+        M <- M[!M[, 4L], ]
     if (desc["Package"] %in% c("base", "graphics", "stats", "utils")) {
         for(pass in 1:2) {
             ## we skip method aliases
