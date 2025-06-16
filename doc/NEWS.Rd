@@ -59,8 +59,8 @@
       argument, which allows variable font axes to be specified,
       e.g., \code{c(wght = 100)}.
 
-      Only Cairo-based graphics devices (but not \code{cairo_pdf()})
-      support variable font axes so far.
+      Only the \code{quartz()} device and Cairo-based graphics devices
+      (but not \code{cairo_pdf()}) support variable font axes so far.
     }
   }
 

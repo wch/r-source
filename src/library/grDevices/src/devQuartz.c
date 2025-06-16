@@ -1451,7 +1451,7 @@ void* QuartzDevice_Create(void *_dev, QuartzBackend_t *def)
     dev->fillStroke      = RQuartz_fillStroke;
     dev->capabilities    = RQuartz_capabilities;
     dev->glyph           = RQuartz_glyph;
-    dev->deviceVersion   = R_GE_glyphs;
+    dev->deviceVersion   = R_GE_fontVar;
 
     QuartzDesc *qd = calloc(1, sizeof(QuartzDesc));
     qd->width      = def->width;
@@ -2959,7 +2959,8 @@ static void RQuartz_fillStroke(SEXP path, int rule, const pGEcontext gc,
 }
 
 static SEXP RQuartz_capabilities(SEXP capabilities) { 
-    SEXP patterns, clippingPaths, masks, compositing, transforms, paths;
+    SEXP patterns, clippingPaths, masks, compositing, transforms, paths,
+        glyphs, variableFonts;
 
     PROTECT(patterns = allocVector(INTSXP, 3));
     INTEGER(patterns)[0] = R_GE_linearGradientPattern;
@@ -3018,7 +3019,113 @@ static SEXP RQuartz_capabilities(SEXP capabilities) {
     SET_VECTOR_ELT(capabilities, R_GE_capability_paths, paths);
     UNPROTECT(1);
 
+    PROTECT(glyphs = allocVector(INTSXP, 1));
+    INTEGER(glyphs)[0] = 1;
+    SET_VECTOR_ELT(capabilities, R_GE_capability_glyphs, glyphs);
+    UNPROTECT(1);
+
+    PROTECT(variableFonts = allocVector(INTSXP, 1));
+    INTEGER(variableFonts)[0] = 1;
+    SET_VECTOR_ELT(capabilities, R_GE_capability_variableFonts, variableFonts);
+    UNPROTECT(1);
+
     return capabilities; 
+}
+
+/* Core Text appears to localize variable font axis names (?!)
+ * e.g., 'wght' -> "Weight"
+ * So we need to do the same in order to perform comparisons.
+ * Although there are calls for localizing various font names
+ * and attribute names (e.g., CTFontCopyLocalizedName), I could
+ * not see a call for localizing font axis names, so will just
+ * use the registered names
+ * https://learn.microsoft.com/en-us/typography/opentype/spec/dvaraxisreg#registered-axis-tags
+ * This may fail on non-english locales.
+ * For non-registered axes, it appears we get first char uppercase, but
+ * remainder lower case (!), so we ignore case in the comparison.
+ */
+const char *registeredAxisNames[5] = { "ital", "opsz", "slnt", "wdth", "wght" };
+const char *localAxisNames[5] = { "Italic", "Optical Size", "Slant", "Width", "Weight" };
+static int axisNameMatch(const char* axisName, CFStringRef axisDictName)
+{
+    int i, j, axisIndex = -1, axisDictIndex = -1;
+    for (i = 0; i < 5; i++) {
+        if (!strcmp(axisName, registeredAxisNames[i])) 
+            axisIndex = i;
+    }
+    if (axisIndex < 0) {
+        /* Custom axis */
+        CFStringRef axisNameRef = 
+            CFStringCreateWithCString(NULL, axisName, 
+                                      kCFStringEncodingASCII);
+        return CFStringCompare(axisNameRef, axisDictName, 
+                               kCFCompareCaseInsensitive) == 
+            kCFCompareEqualTo;
+    } else {
+        /* Registered axis */
+        for (j = 0; j < 5; j++) {
+            CFStringRef localNameRef = 
+                CFStringCreateWithCString(NULL, localAxisNames[j], 
+                                          kCFStringEncodingASCII);
+            if (CFStringCompare(localNameRef, axisDictName, 0) == 
+                kCFCompareEqualTo) 
+                axisDictIndex = j;
+        }
+        return axisIndex == axisDictIndex;
+    }
+}
+
+static CTFontDescriptorRef applyFontVar(CTFontRef ctFont,
+                                        CTFontDescriptorRef ctFontDescriptor,
+                                        SEXP font,
+                                        int numVar) 
+{
+    int i, j;
+    CTFontDescriptorRef curFontDescriptor, newFontDescriptor;
+    curFontDescriptor = ctFontDescriptor;
+    newFontDescriptor = ctFontDescriptor;
+    /* Get the variation axis dictionary from the font */
+    CFArrayRef ctFontVariationAxes = CTFontCopyVariationAxes(ctFont);
+    if (ctFontVariationAxes) {
+        CFIndex numAxes = CFArrayGetCount(ctFontVariationAxes);
+        for (i = 0; i < numVar; i++) {
+            /* Find the relevant variation axis identifier from 
+               the dictionary */
+            const char* axisName = R_GE_glyphFontVarAxis(font, i);
+            CFNumberRef axisID;
+            int found = 0;
+            for (j = 0; j < numAxes; j++) {
+                CFDictionaryRef axisDict = 
+                    CFArrayGetValueAtIndex(ctFontVariationAxes, j);
+                CFStringRef axisDictName = 
+                    CFDictionaryGetValue(axisDict, 
+                                         kCTFontVariationAxisNameKey);
+                if (axisNameMatch(axisName, axisDictName)) {
+                    axisID = 
+                        CFDictionaryGetValue(axisDict, 
+                                             kCTFontVariationAxisIdentifierKey);
+                    found = 1;
+                }
+            }
+            if (found) {
+                CGFloat axisValue = R_GE_glyphFontVarValue(font, i);
+                /* Set the variation axis */
+                newFontDescriptor = 
+                    CTFontDescriptorCreateCopyWithVariation(curFontDescriptor,
+                                                            axisID,
+                                                            axisValue);
+                /* If we did not just modify the original font descriptor,
+                 * release the font descriptor that we just modified.
+                 */
+                if (curFontDescriptor != ctFontDescriptor) {
+                    CFRelease(curFontDescriptor);
+                }
+                curFontDescriptor = newFontDescriptor;
+            }
+        }
+        CFRelease(ctFontVariationAxes);
+    }
+    return newFontDescriptor;
 }
 
 void RQuartz_glyph(int n, int *glyphs, double *x, double *y, 
@@ -3047,13 +3154,26 @@ void RQuartz_glyph(int n, int *glyphs, double *x, double *y,
         CTFontManagerCreateFontDescriptorsFromURL(cfFontURL);
     CFRelease(cfFontURL);
     if (cfFontDescriptors) {
+        CTFontDescriptorRef ctFontDescriptor;
+        ctFontDescriptor = 
+            (CTFontDescriptorRef) CFArrayGetValueAtIndex(cfFontDescriptors, 0);
         /* NOTE: that the font needs an inversion (in y) matrix
            because the device has an inversion in user space 
            (for bitmap devices anyway) */
         CGAffineTransform trans = CGAffineTransformMakeScale(1.0, -1.0);
         if (rot != 0.0) trans = CGAffineTransformRotate(trans, rot/180.*M_PI);
         CTFontRef ctFont = 
-            CTFontCreateWithFontDescriptor((CTFontDescriptorRef) CFArrayGetValueAtIndex(cfFontDescriptors, 0), size, &trans);
+            CTFontCreateWithFontDescriptor(ctFontDescriptor, size, &trans);
+
+        /* Apply font variations, if any */
+        int numVar = R_GE_glyphFontNumVar(font);
+        if (numVar > 0) {
+            ctFontDescriptor = applyFontVar(ctFont, ctFontDescriptor, 
+                                            font, numVar);
+            CFRelease(ctFont);
+            ctFont = CTFontCreateWithFontDescriptor(ctFontDescriptor, 
+                                                    size, &trans);
+        }
 
         CGColorSpaceRef cs = CGColorSpaceCreateWithName(kCGColorSpaceSRGB);
         CGFloat fillColor[] = { R_RED(colour)/255.0, 
