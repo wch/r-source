@@ -577,7 +577,10 @@ function(file)
 function(x)
 {
     get_section_names <- function(x)
-        vapply(x, function(e) .Rd_get_text(e[[1L]]), "")
+        vapply(x,
+               function(e)
+                   paste(.Rd_get_text(e[[1L]]), collapse = " "),
+               "")
 
     get_item_texts <- function(x) {
         ## Currently, chunks should consist of a single \itemize list
