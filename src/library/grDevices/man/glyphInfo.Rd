@@ -142,7 +142,7 @@ glyphJust(just, ...)
   \code{glyphFontVariation()} accepts arguments of the form \code{wght=100}.
   Every argument should be named, each name should be 4 ASCII characters
   long, each name should be either one of the standard axes
-  (wght, slnt, wdth, ital, opsz), in lowercase, otherwise (if a
+  (\I{wght}, \I{slnt}, \I{wdth}, \I{ital}, \I{opsz}), in lowercase, otherwise (if a
   custom axis) in uppercase.  Every argument value should be numeric.
 }
 \section{Warning}{
