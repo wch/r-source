@@ -1408,7 +1408,10 @@ function(package, dir, lib.loc = NULL, chkInternal = NULL)
     db_argument_names <- lapply(db, .Rd_get_argument_names)
 
     bad_doc_objects <- list()
-    all_special <- (length(bad_lines) == 0L)
+    all_internal <- (length(bad_lines) == 0L)
+
+    if(missing(package))
+        package <- .get_package_metadata(dir)["Package"]
 
     for(nm in names(db)) {
         ## <FIXME>
@@ -1426,7 +1429,13 @@ function(package, dir, lib.loc = NULL, chkInternal = NULL)
         ## ignore arguments in \usage but not in \arguments.
         internal <- "internal" %in% db_keywords[[nm]]
         if(internal && !chkInternal) next
-        special <- (internal && check_internal_specially)
+        special <-
+            (internal &&
+             (check_internal_specially ||
+              (package == "base") ||
+              nm %in% paste0(package,
+                             c("-defunct", "-deprecated", "-internal"),
+                             ".Rd")))
 
         aliases <- db_aliases[[nm]]
         arg_names_in_arg_list <- db_argument_names[[nm]]
@@ -1553,14 +1562,14 @@ function(package, dir, lib.loc = NULL, chkInternal = NULL)
                      overdoc = arg_names_in_arg_list_missing_in_usage,
                      unaliased = functions_not_in_aliases,
                      assignments = assignments)
-            if(!special)
-                all_special <- FALSE
+            if(!internal)
+                all_internal <- FALSE
         }
     } # for(..)
 
     structure(bad_doc_objects, class = "checkDocFiles",
               "bad_lines" = bad_lines,
-              "all_special" = all_special)
+              "all_internal" = all_internal)
 }
 
 format.checkDocFiles <-
@@ -1615,14 +1624,14 @@ function(x, ...)
 
     ## <NOTE>
     ## Terrible hack, see comments on
-    ##    __R_CHECK_DOC_FILES_NOTE_IF_ALL_SPECIAL__
+    ##    __R_CHECK_DOC_FILES_NOTE_IF_ALL_INTERNAL__
     ## in check.R
     if(length(y) &&
        !length(bad_lines) &&
-       (Sys.getenv("__R_CHECK_DOC_FILES_NOTE_IF_ALL_SPECIAL__",
+       (Sys.getenv("__R_CHECK_DOC_FILES_NOTE_IF_ALL_INTERNAL__",
                    "FALSE") == "TRUE") &&
-       isTRUE(attr(x, "all_special")))
-        y <- c(y, "All issues in internal Rd files checked specially.")
+       isTRUE(attr(x, "all_internal")))
+        y <- c(y, "All issues in internal Rd files.")
     ## </NOTE>
 
     y

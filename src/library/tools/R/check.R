@@ -2748,7 +2748,7 @@ add_dummies <- function(dir, Log)
             ## checked specially and only give a NOTE in this case.
             ## Ideally, we would use R() to get the check object and be
             ## able to compute on it, but that is not so simple ...
-            Sys.setenv("__R_CHECK_DOC_FILES_NOTE_IF_ALL_SPECIAL__" =
+            Sys.setenv("__R_CHECK_DOC_FILES_NOTE_IF_ALL_INTERNAL__" =
                            "TRUE")
             Rcmd <- paste(opWarn_string, "\n",
                           sprintf("tools::checkDocFiles(%s, chkInternal=%s)\n",
@@ -2758,8 +2758,7 @@ add_dummies <- function(dir, Log)
             out <- R_runR2(Rcmd)
             if (length(out)) {
                 any <- TRUE
-                pos <- which(out ==
-                             "All issues in internal Rd files checked specially.")
+                pos <- which(out == "All issues in internal Rd files.")
                 if(length(pos)) {
                     noteLog(Log)
                     out <- out[-pos]
