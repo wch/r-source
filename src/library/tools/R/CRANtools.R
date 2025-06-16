@@ -757,7 +757,7 @@ CRAN_package_check_URL <- function(p)
             p)
 
 BioC_package_db <-
-function()
+function(remap = TRUE)
 {
     urls <- .get_standard_repository_URLs()
     urls <- urls[startsWith(names(urls), "BioC")]
@@ -767,8 +767,18 @@ function()
                        on.exit(close(con))
                        read.dcf(con)
                    })
-    Reduce(function(u, v) merge(u, v, all = TRUE),
-           lapply(info,
-                  as.data.frame,
-                  stringsAsFactors = FALSE))
+    db <- Reduce(function(u, v) merge(u, v, all = TRUE),
+                 lapply(info,
+                        as.data.frame,
+                        stringsAsFactors = FALSE))
+    if(remap) {
+        ## Map BioC reverse dependency names to CRAN ones.
+        biocrevnames <- c(dependsOnMe = "Reverse depends",
+                          importsMe = "Reverse imports",
+                          linksToMe = "Reverse linking to",
+                          suggestsMe = "Reverse suggests")
+        pos <- match(colnames(db), names(biocrevnames), nomatch = 0L)
+        colnames(db)[pos > 0] <- biocrevnames[pos]
+    }
+    db
 }
