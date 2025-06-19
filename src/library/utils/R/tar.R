@@ -124,11 +124,12 @@ untar <- function(tarfile, files = NULL, list = FALSE, exdir = ".",
     }
 }
 
+##' R's "internal" untar() -- called from of untar(), *not* exported
 untar2 <- function(tarfile, files = NULL, list = FALSE, exdir = ".",
                    restore_times = TRUE)
 {
     ## might be used with len = 12, so result of more than max int
-    getOctD <- function(x, offset, len)
+    getOctD <- function(block, offset, len)
     {
         x <- 0.0
         for(i in offset + seq_len(len)) {
