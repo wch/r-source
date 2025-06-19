@@ -52,8 +52,8 @@ untar(tarfile, files = NULL, list = FALSE, exdir = ".",
   }
 
   \item{extras}{\code{NULL} or a character string: further command-line
-    flags such as \option{-p} to be passed to an external \command{tar}
-    program.}
+    flags such as \option{-p} or \option{-P} to be passed to an external
+    \command{tar} program.}
 
   \item{verbose}{logical: if true echo the command used for an external
     \command{tar} program.}
@@ -200,6 +200,13 @@ untar(tarfile, files = NULL, list = FALSE, exdir = ".",
   The internal implementation does not special-case \sQuote{resource
   forks} in macOS: that system's \command{tar} command does. This may
   lead to unexpected files with names with prefix \file{._}.
+
+  Some external commands have \sQuote{security} measures to change the
+  extracted file paths.  For example, GNU \code{tar} and
+  \command{bsdtar} remove the leading slash on absolute filepaths:
+  specify \code{extras = "-P"} to override this. \command{bsdtar}
+  refuses to exract paths containing \code{".."}  with the same
+  workaround.
 }
 
 \value{
