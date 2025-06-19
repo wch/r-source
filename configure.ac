@@ -705,7 +705,7 @@ AC_SUBST(MAKE)
 ## Pager
 R_PROG_PAGER
 ## Tar -- we prefer a GNU version
-AC_PATH_PROGS(TAR, [${TAR} gtar gnutar tar], "")
+AC_PATH_PROGS(TAR, [${TAR} gtar gnutar tar bsdtar], "")
 ## TeXMF stuff
 R_PROG_TEXMF
 ## Unzip & zip & gzip & bip2

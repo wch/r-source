@@ -66,7 +66,8 @@
 
   \subsection{INSTALLATION}{
     \itemize{
-      \item .
+      \item \command{configure} appends \command{bsdtar} to the list of
+      command names it tries when finding a default for \env{TAR}.
     }
   }
 
