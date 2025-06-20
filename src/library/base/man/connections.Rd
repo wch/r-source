@@ -178,7 +178,7 @@ socketTimeout(socket, timeout = -1)
   For \code{gzfile} the description is the path to a file compressed by
   \command{gzip}: it can also open for reading uncompressed files and
   those compressed by \command{bzip2}, \command{xz}, \command{lzma} or
-  \command{zstd}.
+  (if \R{} was built to support it) \command{zstd}.
 
   For \code{bzfile} the description is the path to a file compressed by
   \command{bzip2}.
@@ -188,7 +188,8 @@ socketTimeout(socket, timeout = -1)
   only) \command{lzma} (\url{https://en.wikipedia.org/wiki/LZMA}).
 
   For \code{zstdfile} the description is the path to a file compressed by
-  \command{zstd} (\url{https://en.wikipedia.org/wiki/Zstd}).
+  \command{zstd} (\url{https://en.wikipedia.org/wiki/Zstd}): support is
+  optional when \R is built.
 
   \code{unz} reads (only) single files within zip files, in binary mode.
   The description is the full path to the zip file, with \file{.zip}
