@@ -148,16 +148,23 @@ untar2 <- function(tarfile, files = NULL, list = FALSE, exdir = ".",
         as.integer(getOctD(x, offset, len))
     checkPath <- function(path) {
         if (.Platform$OS.type == "windows") {
-            if (grepl("^[a-zA-Z]:", path)) {
-                drv <- sub("^([a-zA-Z]:).*", "\\1", path)
-                warning(sprintf("removing drive '%s'", drv))
-                path <- sub("^([a-zA-Z]:)", "", path)
-            }
             path <- gsub("\\\\", "/", path)
-        }
-        if (grepl("^/", path)) {
-            warning("removing leading '/'")
-            path <- sub("^/+", "", path)
+            while(grepl("^/", path) || grepl("^[a-zA-Z]:", path)) {
+                if (grepl("^/", path)) {
+                    warning("removing leading '/'")
+                    path <- sub("^/+", "", path)
+                }
+                if (grepl("^[a-zA-Z]:", path)) {
+                    drv <- sub("^([a-zA-Z]:).*", "\\1", path)
+                    warning(sprintf("removing drive '%s'", drv))
+                    path <- sub("^[a-zA-Z]:", "", path)
+                }
+            }
+        } else {
+            if (grepl("^/", path)) {
+                warning("removing leading '/'")
+                path <- sub("^/+", "", path)
+            }
         }
         if (grepl("^~", path))
             stop("path starts with '~'")
