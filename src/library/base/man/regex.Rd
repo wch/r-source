@@ -359,7 +359,7 @@
   \code{\link{glob2rx}}, \code{\link{help.search}}, \code{\link{list.files}},
   \code{\link{ls}}, \code{\link{strsplit}} and \code{\link{agrep}}.
 
-  The \href{https://htmlpreview.github.io/?https://raw.githubusercontent.com/laurikari/tre/master/doc/tre-syntax.html}{\I{TRE} regexp syntax}.
+  The \href{https://html-preview.github.io/?url=https://raw.githubusercontent.com/laurikari/tre/master/doc/tre-syntax.html}{\I{TRE} regexp syntax}.
 
   The POSIX 1003.2 standard at
   \url{https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap09.html}.
