@@ -1,6 +1,6 @@
 % File src/library/utils/man/PkgUtils.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2023 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{PkgUtils}
@@ -18,8 +18,9 @@
 \arguments{
   \item{pkgdirs}{a list of names of directories with sources of \R
     add-on packages.  For \code{check} these can also be the filenames of
-    compressed \command{tar} archives with extension \file{.tar.gz},
-    \file{.tgz}, \file{.tar.bz2} or \file{.tar.xz}.}
+    (possibly compressed) \command{tar} archives with extension
+    \file{.tar}, \file{.tar.gz}, \file{.tgz}, \file{.tar.bz2} or
+    \file{.tar.xz}.}
   \item{options}{further options to control the processing, or for
     obtaining information about usage and version of the utility.}
 }
@@ -30,7 +31,7 @@
 
   \command{R CMD build} builds \R source tarballs.  The name(s) of the
   packages are taken from the \file{DESCRIPTION} files and not from the
-  directory names. This works entirely on a copy of the supplied source
+  directory names.  This works entirely on a copy of the supplied source
   directories.
 
   Use \command{R CMD \var{foo} --help} to obtain usage information on
@@ -59,7 +60,7 @@
   tarballs containing invalid or unsupported sections, and can be faster
   on very large tarballs.  Setting \env{R_INSTALL_TAR} to \samp{tar.exe}
   has been needed to overcome permissions issues on some Windows
-  systems.)
+  systems.  For further details see the help for \code{\link{INSTALL}}.)
 }
 \note{
   Only on Windows:
