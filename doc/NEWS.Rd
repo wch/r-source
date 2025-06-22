@@ -159,6 +159,14 @@
 
 \section{\Rlogo CHANGES IN R 4.5.1 patched}{
 
+  \subsection{UTILITIES}{
+    \itemize{
+      \item \command{R CMD check} now handles archives with extension
+      \file{.tar} and \file{.tar.zstd} (where \command{zstd} compression
+      is supported by the \R build).
+    }
+  }
+
   \subsection{BUG FIXES}{
     \itemize{
       \item .
