@@ -214,7 +214,7 @@ tar(tarfile, files = NULL,
 \note{
   For users of macOS.  Apple's legacy file systems had a concept of
   \sQuote{resource forks} dating from classic Mac OS and rarely used
-  nowadays (and only partially supported in APFS).  Apple's version of
+  nowadays (and only partially supported in \abbr{APFS}).  Apple's version of
   \command{tar} stored these as separate files in the tarball with names
   prefixed by \file{._}, and unpacks such files into resource forks (if
   possible): other ways of unpacking (including \code{\link{untar}} in

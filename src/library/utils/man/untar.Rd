@@ -205,7 +205,7 @@ untar(tarfile, files = NULL, list = FALSE, exdir = ".",
   extracted file paths.  For example, GNU \code{tar} and
   \command{bsdtar} remove the leading slash on absolute filepaths:
   specify \code{extras = "-P"} to override this. \command{bsdtar}
-  refuses to exract paths containing \code{".."}  with the same
+  refuses to extract paths containing \code{".."}  with the same
   workaround.
 }
 
