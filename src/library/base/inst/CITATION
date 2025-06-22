@@ -4,6 +4,7 @@ bibentry("Manual",
          organization = "R Foundation for Statistical Computing",
          address      = "Vienna, Austria",
          year         = version$year,
+         doi          = "10.32614/R.manuals",
          url          = "https://www.R-project.org/",
          
          mheader = "To cite R in publications use:",
