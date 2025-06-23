@@ -107,6 +107,10 @@
 
       Where \R is used via extensive \abbr{IDE}s such as \command{RStudio},
       their maintainers may need to adapt \file{R.css} files accordingly.
+
+      \command{R CMD check} when passed a tarballl looks at its contents
+      and so no longer derives the package name from the tarball name
+      (which can now be arbitrary).
     }
   }
 
@@ -162,7 +166,7 @@
   \subsection{UTILITIES}{
     \itemize{
       \item \command{R CMD check} now handles archives with extension
-      \file{.tar} and \file{.tar.zstd} (where \command{zstd} compression
+      \file{.tar} or \file{.tar.zstd} (where \command{zstd} compression
       is supported by the \R build).
     }
   }

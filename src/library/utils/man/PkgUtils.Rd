@@ -17,10 +17,8 @@
 }
 \arguments{
   \item{pkgdirs}{a list of names of directories with sources of \R
-    add-on packages.  For \code{check} these can also be the filenames of
-    (possibly compressed) \command{tar} archives with extension
-    \file{.tar}, \file{.tar.gz}, \file{.tgz}, \file{.tar.bz2},
-    \file{.tar.xz} or \file{.tar.zstd}.}
+    add-on packages.  For \code{check} these can also be the filepaths of
+    (possibly compressed) \command{tar} archives.}
   \item{options}{further options to control the processing, or for
     obtaining information about usage and version of the utility.}
 }
