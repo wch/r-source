@@ -305,6 +305,27 @@ extern int yydebug;
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
+/* Token kinds.  */
+#define YYEMPTY -2
+#define YYEOF 0
+#define YYerror 256
+#define YYUNDEF 257
+#define END_OF_INPUT 258
+#define ERROR 259
+#define MACRO 260
+#define TEXT 261
+#define COMMENT 262
+#define BEGIN 263
+#define END 264
+#define VERB 265
+#define VERB2 266
+#define NEWENV 267
+#define NEWCMD 268
+#define END_OF_ARGS 269
+#define TWO_DOLLARS 270
+#define LBRACKET 271
+#define RBRACKET 272
+#define LET_OR_DEF 273
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
@@ -2307,12 +2328,13 @@ static SEXP xxnewdef(SEXP cmd, SEXP items,
 
 static SEXP xxenterMathMode(void) {
     SEXP ans;
-    PRESERVE_SV(ans = allocVector(INTSXP, 5));
+    PRESERVE_SV(ans = allocVector(INTSXP, 6));
     INTEGER(ans)[0] = parseState.xxGetArgs;
     INTEGER(ans)[1] = parseState.xxIgnoreKeywords;
     INTEGER(ans)[2] = parseState.xxBraceDepth;
     INTEGER(ans)[3] = parseState.xxBracketDepth;
     INTEGER(ans)[4] = parseState.xxMathMode;
+    INTEGER(ans)[5] = parseState.xxOptionalEquals;
     parseState.xxBraceDepth = 0;
     parseState.xxBracketDepth = 0;
     parseState.xxMathMode = 1;
