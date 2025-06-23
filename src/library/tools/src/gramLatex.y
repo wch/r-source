@@ -132,6 +132,8 @@ struct ParseState {
     int   xxBraceDepth;		/* Brace depth important while
 				   collecting args */
     int   xxBracketDepth;	/* So is bracket depth */
+    int   xxMathMode;           /* In single $ mode */ 
+    int   xxOptionalEquals; /* Looking for = in \let or \def */
 
     SEXP     SrcFile;		/* parseLatex will *always* supply a srcfile */
     SEXP mset;			/* precious mset for protecting parser semantic values */
@@ -154,11 +156,12 @@ static SEXP	xxtag(SEXP, int, YYLTYPE *);
 static SEXP 	xxenv(SEXP, SEXP, SEXP, YYLTYPE *);
 static SEXP     xxnewdef(SEXP, SEXP, YYLTYPE *);
 static SEXP	xxmath(SEXP, YYLTYPE *, bool);
+static SEXP	xxenterMathMode(void);
 static SEXP	xxblock(SEXP, YYLTYPE *);
 static void	xxSetInVerbEnv(SEXP);
-static SEXP	xxpushMode(int, int);
+static SEXP	xxpushMode(int, int, int, int);
 static void	xxpopMode(SEXP);
-static void	xxArg(void);
+static void	xxArg(SEXP);
 
 #define END_OF_ARGS_CHAR 0xFFFE /* not a legal character */
 
@@ -183,6 +186,7 @@ static SEXP LatexTagSymbol = NULL;
 %token		TEXT COMMENT
 %token          BEGIN END VERB VERB2 NEWENV NEWCMD END_OF_ARGS
 %token          TWO_DOLLARS LBRACKET RBRACKET
+%token		LET_OR_DEF
 
 /* Recent bison has <> to represent all of the destructors below, but we don't assume it */
 
@@ -209,16 +213,16 @@ Items:		Item				{ $$ = xxnewlist($1); }
 nonMath:	Item				{ $$ = xxnewlist($1); }
 	|	nonMath Item			{ $$ = xxlist($1, $2); }
 	
-Item:		TEXT				{ xxArg(); $$ = xxtag($1, TEXT, &@$); }
+Item:		TEXT				{ xxArg($1); $$ = xxtag($1, TEXT, &@$); }
 	|	'['				{ $$ = xxtag(mkString("["), TEXT, &@$); }
 	|	']'				{ $$ = xxtag(mkString("]"), TEXT, &@$); }
 	|	COMMENT				{ $$ = xxtag($1, COMMENT, &@$); }
-	|	MACRO				{ xxArg();
+	|	MACRO				{ xxArg(NULL);
 						  $$ = xxtag($1, MACRO, &@$); }
 	|	VERB				{ $$ = xxtag($1, VERB, &@$); }
 	|	VERB2				{ $$ = xxtag($1, VERB, &@$); }
 	|	environment			{ $$ = $1; }
-	|	block				{ xxArg(); $$ = $1; }
+	|	block				{ xxArg(NULL); $$ = $1; }
 	|	ERROR				{ YYABORT; }
 	|	newdefine			{ $$ = $1; }
 	
@@ -234,22 +238,28 @@ environment:	begin Items END '{' TEXT '}' 	{ $$ = xxenv($1, $2, $5, &@$);
 						  if (!$$) YYABORT;
 						  RELEASE_SV($2);}
 
-math:		'$' nonMath '$'			{ $$ = xxmath($2, &@$, FALSE); }
+math:   	'$'             		{ $$ = xxenterMathMode(); }
+		nonMath '$'			{ xxpopMode($2);
+						  $$ = xxmath($3, &@$, FALSE); }
 
 displaymath:    TWO_DOLLARS nonMath TWO_DOLLARS { $$ = xxmath($2, &@$, TRUE); }
 
 block:		'{' Items  '}'			{ $$ = xxblock($2, &@$); }
 	|	'{' '}'				{ $$ = xxblock(NULL, &@$); }
 
-newdefine:	NEWCMD  			{ $$ = xxpushMode(2, 1); }
+newdefine:	NEWCMD  			{ $$ = xxpushMode(2, 1, 0, 0); }
 	        Items END_OF_ARGS		{ xxpopMode($2);
 						  $$ = xxnewdef(xxtag($1, MACRO, &@1),
 								$3, &@$); }
-	|	NEWENV  			{ $$ = xxpushMode(3, 1); }
+	|	NEWENV  			{ $$ = xxpushMode(3, 1, 0, 0); }
                 Items END_OF_ARGS		{ xxpopMode($2);
 						  $$ = xxnewdef(xxtag($1, MACRO, &@1),
 								$3, &@$); }
-
+	|	LET_OR_DEF			{ $$ = xxpushMode(2, 1, 0, 1); }
+		Items END_OF_ARGS
+						{  xxpopMode($2);
+						  $$ = xxnewdef(xxtag($1, MACRO, &@1),
+							$3, &@$); }
 %%
 
 static SEXP xxnewlist(SEXP item)
@@ -342,19 +352,41 @@ static SEXP xxnewdef(SEXP cmd, SEXP items,
     return ans;
 }
 
-static SEXP xxpushMode(int getArgs,
-                       int ignoreKeywords) {
+static SEXP xxenterMathMode(void) {
     SEXP ans;
-
-    PRESERVE_SV(ans = allocVector(INTSXP, 4));
+    PRESERVE_SV(ans = allocVector(INTSXP, 6));
     INTEGER(ans)[0] = parseState.xxGetArgs;
     INTEGER(ans)[1] = parseState.xxIgnoreKeywords;
     INTEGER(ans)[2] = parseState.xxBraceDepth;
     INTEGER(ans)[3] = parseState.xxBracketDepth;
+    INTEGER(ans)[4] = parseState.xxMathMode;
+    INTEGER(ans)[5] = parseState.xxOptionalEquals;
+    parseState.xxBraceDepth = 0;
+    parseState.xxBracketDepth = 0;
+    parseState.xxMathMode = 1;
+    return ans;
+
+}
+
+static SEXP xxpushMode(int getArgs,
+                       int ignoreKeywords,
+                       int mathMode,
+                       int optionalEquals) {
+    SEXP ans;
+
+    PRESERVE_SV(ans = allocVector(INTSXP, 6));
+    INTEGER(ans)[0] = parseState.xxGetArgs;
+    INTEGER(ans)[1] = parseState.xxIgnoreKeywords;
+    INTEGER(ans)[2] = parseState.xxBraceDepth;
+    INTEGER(ans)[3] = parseState.xxBracketDepth;
+    INTEGER(ans)[4] = parseState.xxMathMode;
+    INTEGER(ans)[5] = parseState.xxOptionalEquals;
     parseState.xxGetArgs = getArgs;
     parseState.xxIgnoreKeywords = ignoreKeywords;
     parseState.xxBraceDepth = 0;
     parseState.xxBracketDepth = 0;
+    parseState.xxMathMode = mathMode;
+    parseState.xxOptionalEquals = optionalEquals;
     return ans;
 }
 
@@ -363,15 +395,37 @@ static void xxpopMode(SEXP oldmode) {
     parseState.xxIgnoreKeywords = INTEGER(oldmode)[1];
     parseState.xxBraceDepth = INTEGER(oldmode)[2];
     parseState.xxBracketDepth = INTEGER(oldmode)[3];
+    parseState.xxMathMode = INTEGER(oldmode)[4];
+    parseState.xxOptionalEquals = INTEGER(oldmode)[5];
     RELEASE_SV(oldmode);
 }
 
-static void xxArg(void) {
+static void xxArg(SEXP arg) {
     if (parseState.xxGetArgs == 0 ||
 	parseState.xxBraceDepth > 0 ||
 	parseState.xxBracketDepth > 0) return;
-
-    parseState.xxGetArgs--;
+    /* arg is only non-NULL for TEXT, looking for = */
+    if (arg) {    
+        /* ignore whitespace and
+           also = in \let or \def syntax */
+    	const char *str = CHAR(STRING_ELT(arg, 0));
+    	for (int i = 0; str[i] != '\0'; i++) {
+            if (str[i] == ' ' || 
+                str[i] == '\t'||
+                str[i] == '\n') {
+	        /* ignore it */
+	    } else if (parseState.xxOptionalEquals && 
+	        	parseState.xxGetArgs == 1 &&
+	        	str[i] == '=')
+		parseState.xxOptionalEquals = 0;
+	    else {
+	        /* it's an arg */
+		parseState.xxGetArgs--;
+		break;
+	    }
+	}
+    } else
+	parseState.xxGetArgs--;
 
     if (parseState.xxGetArgs == 0) {
 	/* We've just completed the final arg we were waiting for */
@@ -591,6 +645,12 @@ static void PutState(ParseState *state) {
     state->xxVerbatimList = parseState.xxVerbatimList;
     state->xxKwdList = parseState.xxKwdList;
     state->xxKwdType = parseState.xxKwdType;
+    state->xxGetArgs = parseState.xxGetArgs;
+    state->xxIgnoreKeywords = parseState.xxIgnoreKeywords;
+    state->xxOptionalEquals = parseState.xxOptionalEquals;
+    state->xxBraceDepth = parseState.xxBraceDepth;
+    state->xxBracketDepth = parseState.xxBracketDepth;
+    state->xxMathMode = parseState.xxMathMode;
     state->SrcFile = parseState.SrcFile; 
     state->prevState = parseState.prevState;
 }
@@ -616,6 +676,13 @@ static SEXP ParseLatex(ParseStatus *status, SEXP srcfile)
     	
     parseState.xxInVerbEnv = NULL;
     
+    parseState.xxGetArgs = 0;
+    parseState.xxIgnoreKeywords = 0;
+    parseState.xxBraceDepth = 0;
+    parseState.xxBracketDepth = 0;
+    parseState.xxMathMode = 0;
+    parseState.xxOptionalEquals = 0;
+
     parseState.xxlineno = 1;
     parseState.xxcolno = 1; 
     parseState.xxbyteno = 1;
@@ -687,7 +754,9 @@ static keywords[] = {
     { "\\begin",  BEGIN },
     { "\\end",    END },
     { "\\verb",   VERB },
-    { 0,	   0	      }
+    { "\\let",    LET_OR_DEF },
+    { "\\def",    LET_OR_DEF },
+    { 0,     0        }
     /* All other markup macros are rejected. */
 };
 
@@ -931,11 +1000,18 @@ static int mkComment(int c)
 static int mkDollar(int c)
 {
     int retval = c;
-    
-    if ((c = xxgetc()) == '$')
-        retval = TWO_DOLLARS;
-    else
-        xxungetc(c);
+    if (parseState.xxGetArgs > 0) {
+	char stext = (char)c;
+	PRESERVE_SV(yylval = mkString2(&stext, 1));
+	return TEXT;
+    }
+    if (parseState.xxMathMode != 1) {
+        c = xxgetc();
+	if (c == '$')
+            retval = TWO_DOLLARS;
+	else
+            xxungetc(c);
+    }
 
     return retval;
 }
@@ -1001,6 +1077,11 @@ static int mkVerb2(const char *s, int c)
     
     while (*s) TEXT_PUSH(*s++);
     
+    while (c == ' ' || c == '\t' || c == '\n') {
+      TEXT_PUSH(c);
+      c = xxgetc();
+    }
+      
     do {
 	TEXT_PUSH(c);
 	c = xxgetc();
