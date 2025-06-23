@@ -41,11 +41,12 @@ untar <- function(tarfile, files = NULL, list = FALSE, exdir = ".",
 
     ## The ability of external tar commands to handle compressed tarfiles
     ## automagically varies and is poorly documented.
-    ## E.g. macOS says its tar handles bzip2 but does not mention xz nor lzma.
-    ## (And it supports -J and --lzma flags not mentioned by man tar.)
+    ## E.g. macOS used to say its tar handles bzip2 but did not mention xz nor lzma.
     ##
     ## But as all commonly-used tars do (some commercial Unix do not,
     ## but GNU tar is commonly used there).
+    ##
+    ## OTOH some (e.g. macOS) need external commands which may not be present.
     cflag <- ""
     if (!missing(compressed))
         warning("untar(compressed=) is deprecated", call. = FALSE, domain = NA)
@@ -124,7 +125,7 @@ untar <- function(tarfile, files = NULL, list = FALSE, exdir = ".",
     }
 }
 
-##' R's "internal" untar() -- called from of untar(), *not* exported
+##' R's "internal" untar() -- called from untar(), *not* exported
 untar2 <- function(tarfile, files = NULL, list = FALSE, exdir = ".",
                    restore_times = TRUE)
 {
@@ -151,7 +152,8 @@ untar2 <- function(tarfile, files = NULL, list = FALSE, exdir = ".",
             path <- gsub("\\\\", "/", path)
             while(grepl("^/", path) || grepl("^[a-zA-Z]:", path)) {
                 if (grepl("^/", path)) {
-                    warning("removing leading '/'")
+                    warning(gettextf("removing leading '/' from '%s'", path),
+                            call. = FALSE, domain = NA)
                     path <- sub("^/+", "", path)
                 }
                 if (grepl("^[a-zA-Z]:", path)) {
@@ -162,7 +164,8 @@ untar2 <- function(tarfile, files = NULL, list = FALSE, exdir = ".",
             }
         } else {
             if (grepl("^/", path)) {
-                warning("removing leading '/'")
+                warning(gettextf("removing leading '/' from '%s'", path),
+                        call. = FALSE, domain = NA)
                 path <- sub("^/+", "", path)
             }
         }
@@ -175,11 +178,8 @@ untar2 <- function(tarfile, files = NULL, list = FALSE, exdir = ".",
             return(".")
         p <- ""
         for(el in parts) {
-            if (nzchar(p))
-                p <- file.path(p, el)
-            else
-                p <- el
-            if(isTRUE(nzchar(Sys.readlink(p), keepNA=TRUE)))
+            p <- if (nzchar(p)) file.path(p, el) else el
+            if(isTRUE(nzchar(Sys.readlink(p), keepNA = TRUE)))
                 stop("cannot extract through symlink")
         }
         p
@@ -433,7 +433,7 @@ tar <- function(tarfile, files = NULL,
             ## Could pipe through gzip etc: might be safer for xz
             ## as -J was lzma in GNU tar 1.20:21
             ## NetBSD < 8 used --xz not -J
-            ## OpenBSD and Heirloom Toolchest have no support for xz
+            ## OpenBSD and Heirloom Toolchest had no support for xz
             flags <- switch(match.arg(compression),
                             "none" = "-cf",
                             "gzip" = "-zcf",
@@ -449,7 +449,7 @@ tar <- function(tarfile, files = NULL,
             if (is.null(extra_flags)) extra_flags <- ""
             ## precaution added in R 3.5.0 for over-long command lines
             nc <- nchar(ff <- paste(shQuote(files), collapse=" "))
-            ## -T is not supported by Solaris nor Heirloom Toolchest's tar
+            ## -T was not supported by Solaris nor Heirloom Toolchest's tar
             if(nc > 1000 &&
                any(grepl("(GNU tar|libarchive)",
                          tryCatch(system(paste(tar, "--version"), intern = TRUE),

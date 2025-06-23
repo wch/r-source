@@ -52,8 +52,8 @@ untar(tarfile, files = NULL, list = FALSE, exdir = ".",
   }
 
   \item{extras}{\code{NULL} or a character string: further command-line
-    flags such as \option{-p} or \option{-P} to be passed to an external
-    \command{tar} program.}
+    flags such as \option{-p}, \option{-P} or \option{-k} to be passed
+    to an external \command{tar} program.}
 
   \item{verbose}{logical: if true echo the command used for an external
     \command{tar} program.}
@@ -112,26 +112,26 @@ untar(tarfile, files = NULL, list = FALSE, exdir = ".",
       compression.
 
       On a Unix-alike, \command{configure} will set environment variable
-      \env{TAR}, preferring GNU tar if found.}
+      \env{TAR}, preferring GNU tar if found as \command{gtar} or
+      \command{gnutar}.}
 
     %% bsdtar had it in FreeBSB 5.3 (2004)
-    \item{\code{bsdtar}:}{macOS 10.6 and later (and FreeBSD and some
-      other OSes) have a \command{tar} from the \I{libarchive} project
-      which detects known-to-it forms of compression automagically.
-      However, this may rely on an external command being available: macOS
-      has a tar which knows about \code{zstd} compression, but relies
-      on a \command{zstd} command which it does not supply.
+    \item{\code{bsdtar}:}{macOS 10.6 and later (and FreeBSD, NetBSD >= 9
+      and some other OSes) have a \command{tar} from the \I{libarchive}
+      project which detects known-to-it forms of compression
+      automagically.  However, this may rely on an external command
+      being available: macOS has a tar which knows about \code{zstd}
+      compression, but relies on a \command{zstd} command which it does
+      not supply.
 
       This added support for \command{xz} in 2019 and for \command{zstd}
       in 2020 (if the appropriate library or external program is
       available).
-    }
 
-    \item{NetBSD:}{It is undocumented if \I{NetBSD}'s \command{tar} can
-      detect compression automagically: for versions before 8 the flag
-      for \command{xz} compression was \option{--xz} not \option{-J}.
-      So \code{support_old_tars = TRUE} is recommended (or use
-      \command{bsdtar} if installed).}
+      Recent versions of Windows supply a build of \code{bsdtar} as
+      \code{tar.exe}, but with compiled-in support only for \code{gzip}
+      compresssion.
+    }
 
     %% https://news.ycombinator.com/item?id=10722697
     \item{OpenBSD:}{\I{OpenBSD}'s \command{tar} does not detect compression
@@ -139,9 +139,9 @@ untar(tarfile, files = NULL, list = FALSE, exdir = ".",
       that the file is \command{xz}-compressed.  So \code{support_old_tars
 	= TRUE} is recommended.}
 
-    \item{Heirloom Toolchest:}{This \command{tar} does automagically
-      detect \command{gzip} and \command{bzip2} compression (undocumented)
-      but had no support for \command{xz} nor \command{zstd} compression.}
+    %% \item{Heirloom Toolchest:}{This \command{tar} does automagically
+    %%   detect \command{gzip} and \command{bzip2} compression (undocumented)
+    %%   but had no support for \command{xz} nor \command{zstd} compression.}
 
     \item{Older support:}{Environment variable \env{R_GZIPCMD} gives the
       command to decompress \command{gzip} files, and
@@ -151,8 +151,8 @@ untar(tarfile, files = NULL, list = FALSE, exdir = ".",
       decompression is expected to fail.}
   }
 
-  Arguments \code{compressed}, \code{extras} and \code{verbose} are only
-  used when an external \command{tar} is used.
+  Arguments \code{compressed} and \code{verbose} are only used for an
+  external \command{tar}.
 
   Some external \command{tar} commands will detect some of
   \command{lrzip}, \command{lzma}, \command{lz4} and \command{lzop}
@@ -174,12 +174,11 @@ untar(tarfile, files = NULL, list = FALSE, exdir = ".",
   handle files compressed by any of the methods that function can
   handle: at least \command{compress}, \command{gzip}, \command{bzip2},
   \command{xz} and \command{zstd} compression, and some types of
-  \command{lzma} compression.  It does not guard against restoring
-  absolute file paths, as some \command{tar} implementations do.  It
-  will create the parent directories for directories or files in the
-  archive if necessary.  It handles the \I{USTAR}/POSIX, GNU and
-  \command{pax} ways of handling file paths of more than 100 bytes, and
-  the GNU way of handling link targets of more than 100 bytes.
+  \command{lzma} compression.  It will create the parent directories for
+  directories or files in the archive if necessary.  It handles the
+  \I{USTAR}/POSIX, GNU and \command{pax} ways of handling file paths of
+  more than 100 bytes, and the GNU way of handling link targets of more
+  than 100 bytes.
 
   You may see warnings from the internal implementation such
   as \preformatted{    unsupported entry type 'x'}
@@ -206,7 +205,12 @@ untar(tarfile, files = NULL, list = FALSE, exdir = ".",
   \command{bsdtar} remove the leading slash on absolute filepaths:
   specify \code{extras = "-P"} to override this. \command{bsdtar}
   refuses to extract paths containing \code{".."}  with the same
-  workaround.
+  workaround.  The internal implementation removes leading slashes (with
+  a warning) and stops with an error for paths starting with \code{"~"}
+  or containing \code{".."}.
+  
+  Extracted files will overwrite any existing file unless flag \option{-k}
+  is included in \code{extras}.
 }
 
 \value{
