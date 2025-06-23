@@ -7563,12 +7563,14 @@ add_dummies <- function(dir, Log)
                         domain = NA, call. = FALSE, immediate. = TRUE)
                 next
             }
-            if (length(contents) < 1 || !endsWith(contents[1], "/")) {
+            if (length(contents) < 1L) {
               warning(sQuote(pkg), " does not contain a directory, skipping\n",
                       domain = NA, call. = FALSE, immediate. = TRUE)
               next
+            } else {
+                ## some people omit the directory itself from the tarball
+                pkgname0 <- sub("/.*", "",  contents[1L])
             }
-            pkgname0 <- sub("/$", "",  contents[1])
         } else {
             warning(sQuote(pkg), " is neither a file nor directory, skipping\n",
                     domain = NA, call. = FALSE, immediate. = TRUE)
