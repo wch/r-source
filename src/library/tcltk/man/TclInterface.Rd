@@ -113,7 +113,7 @@ is.tclObj(x)
 
 addTclPath(path = ".")
 tclRequire(package, warn = TRUE)
-tclVersion(with_parselevel = FALSE)
+tclVersion(with_patchlevel = FALSE)
 }
 \arguments{
   \item{objv}{a named vector of Tcl objects}
@@ -131,7 +131,7 @@ tclVersion(with_parselevel = FALSE)
   \item{warn}{logical. Warn if not found?}
   \item{...}{Additional arguments. See below.}
   \item{init}{initialization value}
-  \item{with_parselevel}{logical: should the \sQuote{parse level} be included?}
+  \item{with_patchlevel}{logical: should the \sQuote{patch level} be included?}
 }
 \details{
   Many of these functions are not intended for general use but are used
