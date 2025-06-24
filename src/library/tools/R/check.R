@@ -7551,7 +7551,7 @@ add_dummies <- function(dir, Log)
             if (thispkg_subdirs == "default") thispkg_subdirs <- "no"
         } else if (file.exists(pkg)) {
             is_tar <- TRUE
-            ## if (thispkg_subdirs == "default") thispkg_subdirs <- "yes-maybe"
+            if (thispkg_subdirs == "default") thispkg_subdirs <- "yes-maybe"
             ## pkgname0 <- sub("\\.(tar|tar\\.gz|tgz|tar\\.bz2|tar\\.xz|tar\\.zstd)$", "", pkgname0)
             ## pkgname0 <- sub("_[0-9.-]*$", "", pkgname0)
             ## look at the contents to find the package name
