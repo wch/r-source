@@ -4108,9 +4108,12 @@ TRIO_ARGS2((self, output),
 
   if (self->error == 0)
     {
-      trio_xstring_append_char((trio_string_t *)self->location,
-			       (char)output);
-      self->committed++;
+      if (trio_xstring_append_char((trio_string_t *)self->location,
+	  		           (char)output)) {
+          self->committed++;
+      } else {
+          self->error = TRIO_ERROR_RETURN(TRIO_ENOMEM, 0);
+      }
     }
   /* The processed variable must always be increased */
   self->processed++;
