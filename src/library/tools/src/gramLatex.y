@@ -142,7 +142,7 @@ struct ParseState {
 
 static bool busy = false;
 static ParseState parseState;
-static char ParseErrorMsg[PARSE_ERROR_SIZE];
+static char ParseErrorMsg[PARSE_ERROR_SIZE + 64];
 
 #define PRESERVE_SV(x) R_PreserveInMSet((x), parseState.mset)
 #define RELEASE_SV(x)  R_ReleaseFromMSet((x), parseState.mset)
