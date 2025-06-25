@@ -1,12 +1,13 @@
 % File src/library/base/man/mtfrm.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2021-2023 R Core Team
+% Copyright 2021-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{mtfrm}
 \title{Auxiliary Function for Matching}
 \alias{mtfrm}
 \alias{mtfrm.default}
+\alias{mtfrm.Date}
 \alias{mtfrm.POSIXct}
 \alias{mtfrm.POSIXlt}
 \description{

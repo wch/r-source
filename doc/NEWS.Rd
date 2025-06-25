@@ -157,6 +157,9 @@
       instead of hardwired \code{1e-5}; consequently, \code{ts(.., ts.eps=*)}
       now passes \code{ts.eps} to the \code{"tsp"} setting C code;
       both fixing a long-standing \sQuote{\I{FIXME}}.
+
+      \item \code{<Date> \%in\% set} has become as fast again, as it was
+      before \R 4.3.0, via new S3 method \code{mtfrm.Date}.
     }
   }
 }

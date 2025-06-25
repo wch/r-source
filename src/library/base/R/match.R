@@ -85,12 +85,12 @@ char.expand <- function(input, target, nomatch = stop("no match"))
 mtfrm <- function(x)
     UseMethod("mtfrm")
 
-# also for "Date"
 mtfrm.default <- function(x) {
     if(length(y <- as.character(x)) != length(x))
         stop("cannot mtfrm")
     y
 }
 
+mtfrm.Date <- # <- for speed
 mtfrm.POSIXct <-
 mtfrm.POSIXlt <- function(x) as.vector(x, "any")
