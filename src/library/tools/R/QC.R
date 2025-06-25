@@ -4186,11 +4186,6 @@ function(dfile, dir)
             }
         }
 
-        if(any(ind <- status$components %in% "ACM") &&
-           !(db["Package"] %in% c("akima", "tripack"))) {
-            status$ACM <- status$components[ind]
-            ok <- FALSE
-        }
         ## Could always return the analysis results and not print them
         ## if ok, but it seems more standard to only return trouble.
         if(!ok)
@@ -4250,9 +4245,6 @@ function(x, ...)
       if(length(y <- x$license_stub_fields_not_complete)) {
           c(gettext("License stub records with missing/empty fields:",
                     paste0("  ", y)))
-      },
-      if(length(y <- x$ACM)) {
-          gettext("Uses ACM license: only appropriate for pre-2013 ACM TOMS code")
       }
       )
 }
@@ -7549,7 +7541,7 @@ function(dir, localOnly = FALSE, pkgSize = NA)
         out$fields <- nms
 
 
-    uses <-  BUGS <- ACM <- character()
+    uses <- BUGS <- character()
     for (field in c("Depends", "Imports", "Suggests")) {
         p <- strsplit(meta[field], " *, *")[[1L]]
         ## multicore has been superseded by parallel.  Almost all of
@@ -7573,15 +7565,11 @@ function(dir, localOnly = FALSE, pkgSize = NA)
         p2 <- grep("^(BRugs|R2OpenBUGS|mzR|xcms|MSnbase)( |\\(|$)",
                    p, value = TRUE)
         BUGS <- c(BUGS, p2)
-        p2 <- grep("^(Akima|tripack)( |\\(|$)", p, value = TRUE)
-        ACM <- c(ACM, p2)
     }
     if (length(uses))
         out$uses <- sort(unique(gsub("[[:space:]]+", " ", uses)))
     if (length(BUGS)) ## and other non-portable packages
         out$BUGS <- sort(unique(gsub("[[:space:]]+", " ", BUGS)))
-    if (length(ACM))
-        out$ACM <- sort(unique(gsub("[[:space:]]+", " ", ACM)))
 
     ## Check for non-Sweave vignettes (as indicated by the presence of a
     ## 'VignetteBuilder' field in DESCRIPTION) without
@@ -8835,12 +8823,6 @@ function(x, ...)
           paste(if(length(y) > 1L)
                 "Uses the non-portable packages:" else
                 "Uses the non-portable package:",
-                paste(sQuote(y), collapse = ", "))
-      },
-      if(length(y <- x$ACM)) {
-          paste(if(length(y) > 1L)
-                "Uses the ACM-licensed packages:" else
-                "Uses the ACM-licensed package:",
                 paste(sQuote(y), collapse = ", "))
       },
       if(length(y <- x$authors_at_R_calls)) {
