@@ -116,7 +116,7 @@ untar(tarfile, files = NULL, list = FALSE, exdir = ".",
       \command{gnutar}.}
 
     %% bsdtar had it in FreeBSB 5.3 (2004)
-    \item{\code{bsdtar}:}{macOS 10.6 and later (and FreeBSD, NetBSD >= 9
+    \item{\code{bsdtar}:}{macOS 10.6 and later (and FreeBSD, \I{NetBSD} >= 9
       and some other OSes) have a \command{tar} from the \I{libarchive}
       project which detects known-to-it forms of compression
       automagically.  However, this may rely on an external command
@@ -130,7 +130,7 @@ untar(tarfile, files = NULL, list = FALSE, exdir = ".",
 
       Recent versions of Windows supply a build of \code{bsdtar} as
       \code{tar.exe}, but with compiled-in support only for \code{gzip}
-      compresssion.
+      compression.
     }
 
     %% https://news.ycombinator.com/item?id=10722697

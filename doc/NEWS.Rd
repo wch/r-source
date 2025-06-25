@@ -108,7 +108,7 @@
       Where \R is used via extensive \abbr{IDE}s such as \command{RStudio},
       their maintainers may need to adapt \file{R.css} files accordingly.
 
-      \command{R CMD check} when passed a tarballl looks at its contents
+      \command{R CMD check} when passed a tarball looks at its contents
       and so no longer derives the package name from the tarball name
       (which can now be arbitrary).
     }
