@@ -1,6 +1,6 @@
 % File src/library/stats/man/ts.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2024 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{ts}
@@ -49,7 +49,8 @@ is.mts(x)
     \code{frequency} or \code{deltat} should be provided.}
   \item{ts.eps}{time series comparison tolerance.  Frequencies are
     considered equal if their absolute difference is less than
-    \code{ts.eps}.}
+    \code{ts.eps}.  It is also used to check consistency of \code{end - start},
+    \code{frequency}, and the length of the time-series.}
   \item{class}{class to be given to the result, or none if \code{NULL}
     or \code{"none"}.  The default is \code{"ts"} for a single series, or
     \code{c("mts", "ts", "matrix", "array")} for multiple series.}

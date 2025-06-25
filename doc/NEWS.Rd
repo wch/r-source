@@ -20,6 +20,11 @@
       \item \code{t.test(c(1:3, Inf))} and similar no longer produce an error but
       return a (still not so useful) \code{"htest"} result, fixing
       \PR{18901}, thanks to \I{Jesse Alderliesten}.
+
+      \item \code{attr(., "tsp") <- val} now uses \code{getOption("ts.eps")}
+      instead of hardwired \code{1e-5}; consequently, \code{ts(.., ts.eps=*)}
+      now passes \code{ts.eps} to the \code{"tsp"} setting C code;
+      both fixing a long-standing \sQuote{\I{FIXME}}.
     }
   }
 }
