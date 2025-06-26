@@ -10281,7 +10281,6 @@ function(package, lib.loc = NULL)
     packages <- rep.int(suggests, lengths(generics))
     generics <- unlist(generics, use.names = FALSE)
 
-    code_env <- .package_env(package)
     objects_in_code <- sort(names(code_env))
     functions_in_code <-
         Filter(function(f) is.function(code_env[[f]]),
