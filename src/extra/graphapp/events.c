@@ -530,8 +530,10 @@ static long handle_message(HWND hwnd, UINT message,
     {
     case WM_MOUSEWHEEL:  /* convert MOUSEWHEEL messages to VSCROLL. Scroll by pairs of lines   */
 	upDown = (short)HIWORD(wParam) > 0 ? SB_LINEUP : SB_LINEDOWN;
-	PostMessage(hwnd, WM_VSCROLL, upDown, 0);
-	PostMessage(hwnd, WM_VSCROLL, upDown, 0);
+	if (GetWindowLong(hwnd, GWL_STYLE) & WS_VSCROLL) {
+	    PostMessage(hwnd, WM_VSCROLL, upDown, 0);
+	    PostMessage(hwnd, WM_VSCROLL, upDown, 0);
+	}
 	break;
 
     case WM_SYSKEYDOWN:
