@@ -144,22 +144,17 @@
       \PR{18885} (differently than the fix for \PR{15770}), with thanks to
       \I{Ivan Krylov}.
 
-      \item \code{t.test(c(1:3, Inf))} and similar no longer produce an error but
-      return a (still not so useful) \code{"htest"} result, fixing
-      \PR{18901}, thanks to \I{Jesse Alderliesten}.
-
       \item \code{text()} now truncates \code{labels} to maximum length
       of \code{x} and \code{y} (if it is longer), fixing \PR{7084}.
       Thanks to \I{Heather Turner}, \I{Ella Kaye}, and
       \I{Philippe Grosjean}.
 
-      \item \code{attr(., "tsp") <- val} now uses \code{getOption("ts.eps")}
-      instead of hardwired \code{1e-5}; consequently, \code{ts(.., ts.eps=*)}
-      now passes \code{ts.eps} to the \code{"tsp"} setting C code;
-      both fixing a long-standing \sQuote{\I{FIXME}}.
-
       \item \code{<Date> \%in\% set} has become as fast again, as it was
       before \R 4.3.0, via new S3 method \code{mtfrm.Date}.
+      Additionally, \code{<character> \%in\% <Date>} and vice versa are
+      documented to work in concordance with \code{==} and as an exception
+      to the typical \code{match()} behaviour which relies on
+      \dQuote{univariate} \code{mtfrm()} alone.
     }
   }
 }
@@ -176,7 +171,14 @@
 
   \subsection{BUG FIXES}{
     \itemize{
-      \item .
+      \item \code{t.test(c(1:3, Inf))} and similar no longer produce an error but
+      return a (still not so useful) \code{"htest"} result, fixing
+      \PR{18901}, thanks to \I{Jesse Alderliesten}.
+
+      \item \code{attr(., "tsp") <- val} now uses \code{getOption("ts.eps")}
+      instead of hardwired \code{1e-5}; consequently, \code{ts(.., ts.eps=*)}
+      now passes \code{ts.eps} to the \code{"tsp"} setting C code;
+      both fixing a long-standing \sQuote{\I{FIXME}}.
     }
   }
 }

@@ -2002,6 +2002,25 @@ assertErrV(     ts(1:711, frequency=2*pi, start = 1, end = 114, ts.eps = 1e-6) )
 ## did *not* error in R <= 4.5.1, as 'ts.eps' was *not* passed to C code
 
 
+## match(<Date>, <character>) and vice versa
+date_seq <- seq(as.Date("1705-01-01"), as.Date("2024-12-31"), by="days")
+dt1 <- as.Date("2024-05-01")
+dt3 <- c(dt1, as.Date(c("1800-01-01", "2025-02-02")))
+system.time({
+ tmp <- dt1 %in% date_seq
+ tm3 <- dt3 %in% date_seq
+})# 0.260 in R 4.3.0 ff
+##  0.003 or so after fixing
+stopifnot(tmp, identical(tm3, c(TRUE, TRUE, FALSE)))
+## The 1-1 case (fast branch in C's match5()):
+ch <- "2025-05-05" ; D <- as.Date(ch)
+c2 <- "1925-05-05"
+c(cDT = ch %in% D, DcT = D %in% ch,
+  cDF = c2 %in% D, DcF = D %in% c2)
+stopifnot(ch %in% D, D %in% ch, !(c2 %in% D), !(D %in% c2))
+## had failed in R-devel around 2025-06-26 (and before R 4.3.0)
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

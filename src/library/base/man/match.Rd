@@ -1,6 +1,6 @@
 % File src/library/base/man/match.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2017 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{match}
@@ -57,6 +57,12 @@ x \%in\% table
   of the two types in \R's ordering, logical < integer < numeric <
   complex < character) before matching.  If \code{incomparables} has
   positive length it is coerced to the common type.
+
+  One exception to the above happens when \code{match()}ing
+  \code{\link{Date}} objects and \code{\link{character}}s.  There, the
+  character argument is coerced to \code{"Date"} (via
+  \code{\link{as.Date.character}()}) before the above \code{mtfrm()} is
+  applied.
 
   Matching for lists is potentially very slow and best avoided except in
   simple cases.
