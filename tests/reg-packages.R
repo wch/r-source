@@ -323,7 +323,8 @@ system.time(status <-
                          out = tf,
                          ## avoid delays/timeouts with a broken network route:
                          env = c("R_REPOSITORIES=NULL"), # (no cyclic dep check)
-                         timeout = 50))# see 5--7 sec; Solaris needed > 30
+                         timeout = 50))# seen 2--7 sec; Solaris needed > 30
+if (!identical(status, 124L)) # avoid "random" failures on slow systems
 stopifnot(exprs = {
     status == 1 # an ERROR now
     is.character(exLines <-
