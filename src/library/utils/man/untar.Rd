@@ -207,9 +207,9 @@ untar(tarfile, files = NULL, list = FALSE, exdir = ".",
   refuses to extract paths containing \code{".."}  with the same
   workaround.  The internal implementation removes leading slashes (with
   a warning) and stops with an error for paths starting with \code{"~"}
-  or containing \code{".."}.
-  
-  Extracted files will overwrite any existing file unless flag \option{-k}
+  or containing \code{".."}, again unless \code{extras = "-P"} is specified.
+
+  Extracted files will overwrite existing file unless flag \option{-k}
   is included in \code{extras}.
 }
 

@@ -22,10 +22,11 @@ untar <- function(tarfile, files = NULL, list = FALSE, exdir = ".",
                   support_old_tars = Sys.getenv("R_SUPPORT_OLD_TARS", FALSE),
                   tar = Sys.getenv("TAR"))
 {
+    allow_all <- isTRUE(grepl("-P", extras))
     if (inherits(tarfile, "connection") || identical(tar, "internal")) {
         if (!missing(compressed))
             warning("argument 'compressed' is ignored for the internal method")
-        return(untar2(tarfile, files, list, exdir, restore_times))
+        return(untar2(tarfile, files, list, exdir, restore_times, allow_all))
     }
 
     if (!(is.character(tarfile) && length(tarfile) == 1L))
@@ -37,7 +38,7 @@ untar <- function(tarfile, files = NULL, list = FALSE, exdir = ".",
     if (!nzchar(TAR) && .Platform$OS.type == "windows" &&
         nzchar(Sys.which("tar.exe"))) TAR <- "tar.exe"
     if (!nzchar(TAR) || TAR == "internal")
-        return(untar2(tarfile, files, list, exdir))
+        return(untar2(tarfile, files, list, exdir, restore_times, allow_all))
 
     ## The ability of external tar commands to handle compressed tarfiles
     ## automagically varies and is poorly documented.
@@ -127,7 +128,7 @@ untar <- function(tarfile, files = NULL, list = FALSE, exdir = ".",
 
 ##' R's "internal" untar() -- called from untar(), *not* exported
 untar2 <- function(tarfile, files = NULL, list = FALSE, exdir = ".",
-                   restore_times = TRUE)
+                   restore_times = TRUE, allow_all_paths = FALSE)
 {
     ## might be used with len = 12, so result of more than max int
     getOctD <- function(block, offset, len)

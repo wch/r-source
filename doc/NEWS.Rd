@@ -46,6 +46,10 @@
       \item \code{tcltk::tclVersion()} now only optionally includes the
       \sQuote{patch level}, as Tcl full versions can be of the form
       \code{8.7a5} or \code{9.0b1} without three clear components.
+
+      \item \code{untar(tar = "internal")} supports \code{extras =
+	"-P"} to use unchanged the recorded file paths (as many external
+      \command{tar} programs do).
     }
   }
 
@@ -64,15 +68,11 @@
     }
   }
 
-  \subsection{INSTALLATION}{
+  \subsection{INSTALLATION on a UNIX-ALIKE}{
     \itemize{
       \item \command{configure} appends \command{bsdtar} to the list of
       command names it tries when finding a default for \env{TAR}.
-    }
-  }
 
-  \subsection{INSTALLATION on a UNIX-ALIKE}{
-    \itemize{
       \item Failures in building the documentation for the base packages,
       including from parsing their Rd files, are no longer ignored by
       \command{make docs}.
@@ -149,9 +149,10 @@
       Thanks to \I{Heather Turner}, \I{Ella Kaye}, and
       \I{Philippe Grosjean}.
 
-      \item \code{<Date> \%in\% set} has become as fast again, as it was
-      before \R 4.3.0, via new S3 method \code{mtfrm.Date}.
-      Additionally, \code{<character> \%in\% <Date>} and vice versa are
+      \item \code{<Date> \%in\% set} has become as fast  as it was
+      before \R 4.3.0, \emph{via} a new S3 method \code{mtfrm.Date}.
+      
+      \code{<character> \%in\% <Date>} and vice versa are now
       documented to work in concordance with \code{==} and as an exception
       to the typical \code{match()} behaviour which relies on
       \dQuote{univariate} \code{mtfrm()} alone.
