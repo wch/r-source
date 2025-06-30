@@ -108,7 +108,7 @@
       Where \R is used via extensive \abbr{IDE}s such as \command{RStudio},
       their maintainers may need to adapt \file{R.css} files accordingly.
 
-      \command{R CMD check} when passed a tarball looks at its contents
+      \item \command{R CMD check} when passed a tarball looks at its contents
       and so no longer derives the package name from the tarball name
       (which can now be arbitrary).
     }
@@ -122,9 +122,9 @@
 
   \subsection{BUG FIXES}{
     \itemize{
-      \item Setting \code{attributes} on primitive functions is an
-      error now; previously, it modified without copying, as noticed by
-      \I{Henrik Bengtsson} on the R-devel mailing list.
+      \item Setting \code{attributes} on primitive functions is now an
+      error; previously it modified without copying (as noticed by
+      \I{Henrik Bengtsson} on the R-devel mailing list).
 
       \I{Relatedly}, changing the \code{environment()} of a primitive function
       does no longer happen and gives a warning (to become an error, later).
