@@ -149,7 +149,7 @@
       Thanks to \I{Heather Turner}, \I{Ella Kaye}, and
       \I{Philippe Grosjean}.
 
-      \item \code{<Date> \%in\% set} has become as fast  as it was
+      \item \code{<Date> \%in\% set} is again as fast as it was
       before \R 4.3.0, \emph{via} a new S3 method \code{mtfrm.Date}.
       
       \code{<character> \%in\% <Date>} and vice versa are now
