@@ -7005,6 +7005,7 @@ value accepted is 100000.
 Do not print out the initial copyright and welcome messages.
 
 @item --no-echo
+@itemx -s
 Make @R{} run as quietly as possible.  This option is intended to
 support programs which use @R{} to compute results for them.  It implies
 @option{--quiet} and @option{--no-save}.
