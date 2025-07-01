@@ -50,6 +50,10 @@
       \item \code{untar(tar = "internal")} supports \code{extras =
 	"-P"} to use unchanged the recorded file paths (as many external
       \command{tar} programs do).
+
+      \item \code{extSoftVersion()[["zstd"]]} now reports the version of
+      the \command{zstd} compression library if available, thanks to
+      \I{Trevor Davis}' patch proposal in \PR{18914}.
     }
   }
 
@@ -151,7 +155,7 @@
 
       \item \code{<Date> \%in\% set} is again as fast as it was
       before \R 4.3.0, \emph{via} a new S3 method \code{mtfrm.Date}.
-      
+
       \code{<character> \%in\% <Date>} and vice versa are now
       documented to work in concordance with \code{==} and as an exception
       to the typical \code{match()} behaviour which relies on

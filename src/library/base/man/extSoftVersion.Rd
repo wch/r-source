@@ -1,6 +1,6 @@
 % File src/library/base/man/extSoftVersion.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2014-2023 R Core Team
+% Copyright 2014-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{extSoftVersion}
@@ -30,7 +30,7 @@ extSoftVersion()
   \item{libdeflate}{The version of \code{libdeflate} (if any otherwise
     \code{""}) used when \R was built.}
   \item{PCRE}{The version of \code{PCRE} in use. PCRE1 has versions < 10.00,
-  PCRE2 has versions >= 10.00.}
+    PCRE2 has versions >= 10.00.}
   \item{ICU}{The version of \code{ICU} in use (if any, otherwise \code{""}).}
   \item{TRE}{The version of \code{libtre} in use.}
   \item{iconv}{The implementation and version of the \code{iconv}
@@ -42,7 +42,9 @@ extSoftVersion()
     seen on macOS.
   }
   \item{BLAS}{Name of the binary/executable file with the implementation of
-  \code{BLAS} in use (if known, otherwise \code{""}).}
+    \code{BLAS} in use (if known, otherwise \code{""}).}
+  \item{zstd}{The version of \code{zstd} (from \command{zstd}) in use (if
+    any, otherwise \code{""}).}
 
   Note that the values for \code{bzlib} and \code{pcre} normally contain
   a date as well as the version number, and that for \code{tre} includes
@@ -68,7 +70,7 @@ extSoftVersion()
 }
 \seealso{
   \code{\link{libcurlVersion}} for the version of \code{libCurl}.
-  
+
   \code{\link{La_version}} for the version of LAPACK in use.
 
   \code{\link{La_library}} for binary/executable file with LAPACK in use.
@@ -76,8 +78,12 @@ extSoftVersion()
   \code{\link{grSoftVersion}} for third-party graphics software.
 
   \code{\link{tclVersion}} in package \pkg{tcltk} for the version of Tcl/Tk.
-  
+
   \code{\link{pcre_config}} for PCRE configuration options.
+
+  \code{\link{connection}} for how to use the file and connection
+  compression methods \code{"zlib"}, \code{"bzlib"}, \code{"xz"},
+  \code{"libdeflate"}, and \code{"zstd"}.
 }
 \examples{
 extSoftVersion()
