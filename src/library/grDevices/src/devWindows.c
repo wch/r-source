@@ -685,7 +685,8 @@ static void SetFont(pGEcontext gc, double rot, gadesc *xd)
     if (size != xd->fontsize || face != xd->fontface ||
 	 rot != xd->fontangle || strcmp(gc->fontfamily, xd->fontfamily)) {
 	if(xd->font) del(xd->font);
-	doevent();
+	/* do not call doevent(); here, as it could cause destruction
+	   of the device specific information and a crash below */
 	/*
 	 * If specify family = "", get family from face via Rdevga
 	 *
