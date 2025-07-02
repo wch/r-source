@@ -29,12 +29,14 @@ extSoftVersion()
   \item{xz}{The version of \code{liblzma} (from \command{xz}) in use.}
   \item{libdeflate}{The version of \code{libdeflate} (if any otherwise
     \code{""}) used when \R was built.}
+  \item{zstd}{The version of \code{zstd} (from \command{zstd}) in use (if
+    any, otherwise \code{""}).}
   \item{PCRE}{The version of \code{PCRE} in use. PCRE1 has versions < 10.00,
     PCRE2 has versions >= 10.00.}
   \item{ICU}{The version of \code{ICU} in use (if any, otherwise \code{""}).}
   \item{TRE}{The version of \code{libtre} in use.}
   \item{iconv}{The implementation and version of the \code{iconv}
-  library in use (if known).}
+    library in use (if known).}
   \item{readline}{The version of \code{readline} in use (if any,
     otherwise \code{""}).  If using the emulation by \code{libedit} aka
     \code{editline} this will be \code{"EditLine wrapper"} preceded by
@@ -43,8 +45,6 @@ extSoftVersion()
   }
   \item{BLAS}{Name of the binary/executable file with the implementation of
     \code{BLAS} in use (if known, otherwise \code{""}).}
-  \item{zstd}{The version of \code{zstd} (from \command{zstd}) in use (if
-    any, otherwise \code{""}).}
 
   Note that the values for \code{bzlib} and \code{pcre} normally contain
   a date as well as the version number, and that for \code{tre} includes
