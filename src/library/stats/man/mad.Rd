@@ -12,19 +12,20 @@ mad(x, center = median(x), constant = 1.4826, na.rm = FALSE,
 \alias{mad}
 \arguments{
   \item{x}{a numeric vector.}
-  \item{center}{Optionally, the centre: defaults to the median.}
+  \item{center}{optionally, a number, the centre: defaults to the median.}
   \item{constant}{scale factor.}
   \item{na.rm}{if \code{TRUE} then \code{NA} values are stripped
     from \code{x} before computation takes place.}
-  \item{low}{if \code{TRUE}, compute the \sQuote{lo-median}, i.e., for even
-    sample size, do not average the two middle values, but take the
-    smaller one.}
-  \item{high}{if \code{TRUE}, compute the \sQuote{hi-median}, i.e., take the
+  \item{low}{if \code{TRUE}, compute the \sQuote{lo-median} of the absolute
+    deviations, i.e., for even sample size, do not average the two middle
+    values, but take the smaller one.}
+
+  \item{high}{if \code{TRUE}, compute the \sQuote{hi-median} of \eqn{|x - <center>|}, i.e., take the
     larger of the two middle values for even sample size.}
 }
 \description{
   Compute the median absolute deviation, i.e., the (lo-/hi-) median of
-  the absolute deviations from the median, and (by default) adjust by a
+  the absolute deviations from the median (or another \code{center}), and (by default) adjust by a
   factor for asymptotically normal consistency.
 }
 \details{
