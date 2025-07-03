@@ -150,7 +150,6 @@ abline(h = 0, v = 0, col = "blue", lty = 3)
 points(zz.shift, col = "orange")
 
 ## as.complex(<some NA>): numbers keep Im = 0:
-stopifnot(identical(as.complex(NA_real_), NA_real_ + 0i)) # has always been true
 NAs <- vapply(list(NA, NA_integer_, NA_real_, NA_character_, NA_complex_),
               as.complex, 0+0i)
 stopifnot(is.na(NAs), is.na(Re(NAs))) # has always been true
@@ -158,6 +157,7 @@ showC <- function(z) noquote(paste0("(", Re(z), ",", Im(z), ")"))
 showC(NAs)
 Im(NAs) # [0 0 0 NA NA]  \\\\ in R <= 4.3.x was [NA NA 0 NA NA]
 stopifnot(Im(NAs)[1:3] == 0)
+stopifnot(Im(NA_real_ + 0i) == 0) # has always been true
 
 
 ## The exact result of this *depends* on the platform, compiler, math-library:
