@@ -1465,8 +1465,8 @@ with the strangest arguments).  The results of running a @file{.R} file
 are written to a @file{.Rout} file.  If there is a
 corresponding@footnote{The best way to generate such a file is to copy
 the @file{.Rout} from a successful run of @command{R CMD check}.  If you
-want to generate it separately, do run @R{} with options
-@option{--vanilla --no-echo} and with environment variable
+want to generate it separately, do run @R{} with option
+@option{--vanilla} and with environment variable
 @env{LANGUAGE=en} set to get messages in English.  Be careful not to use
 output with the option @option{--timings} (and note that
 @option{--as-cran} sets it).} @file{.Rout.save} file, these two are
