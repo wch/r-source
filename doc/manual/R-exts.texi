@@ -1467,9 +1467,8 @@ corresponding@footnote{The best way to generate such a file is to copy
 the @file{.Rout} from a successful run of @command{R CMD check}.  If you
 want to generate it separately, do run @R{} with option
 @option{--vanilla} and with environment variable
-@env{LANGUAGE=en} set to get messages in English.  Be careful not to use
-output with the option @option{--timings} (and note that
-@option{--as-cran} sets it).} @file{.Rout.save} file, these two are
+@env{LANGUAGE=en} set to get messages in English.
+} @file{.Rout.save} file, these two are
 compared, with differences being reported but not causing an error.  The
 directory @file{tests} is copied to the check area, and the tests are
 run with the copy as the working directory and with @code{R_LIBS} set to
