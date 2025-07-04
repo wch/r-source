@@ -151,7 +151,7 @@ tclVersion(with_patchlevel = FALSE)
   character mode and inserted in the command string, but window objects
   are passed using their ID string, and callbacks are passed via the
   result of \code{.Tcl.callback}. Tags are converted to option flags
-  simply by prepending a \code{-}
+  simply by prepending a \samp{-}.
 
   \code{.Tcl.args.objv} serves a similar purpose as \code{.Tcl.args} but
   produces a list of \code{tclObj} objects suitable for passing to
@@ -267,10 +267,10 @@ system is active; if \code{FALSE}, only the Tcl interpreter is available.
   found but is not compatible with the Tcl/Tk version in use.
 
   \code{tclVersion} optionally returns the full Tcl version as a
-  character string such as \code{"8.6.16"} or \code{"9.0.1"}). NB: the
+  character string such as \code{"8.6.16"} or \code{"9.0.1"}. NB: the
   \sQuote{patch level} is not necessarily numeric, e.g.\sspace{}for
   version \code{9.0b1}.
-  (\R{} versions before 8.6.0 reported the full version including the
+  (\R{} versions before 4.6.0 reported the full version including the
   \sQuote{patch level}.)
 }
 \note{

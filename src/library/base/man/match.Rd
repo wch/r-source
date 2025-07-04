@@ -58,7 +58,7 @@ x \%in\% table
   complex < character) before matching.  If \code{incomparables} has
   positive length it is coerced to the common type.
 
-  One exception to the above happens when \code{match()}ing
+  One exception to the above happens when \I{\code{match()}ing}
   \code{\link{Date}} objects and \code{\link{character}}s.  There, the
   character argument is coerced to \code{"Date"} (via
   \code{\link{as.Date.character}()}) before the above \code{mtfrm()} is

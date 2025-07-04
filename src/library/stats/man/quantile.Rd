@@ -86,7 +86,7 @@ quantile(x, \dots)
   \eqn{j = \lfloor np + m\rfloor}{j = floor(np + m)} and \eqn{g = np + m - j},
   and \eqn{m} is a constant determined by the sample quantile type.
 
-  \strong{Discontinuous sample quantile types 1, 2, and 3}
+\subsection{Discontinuous sample quantile types 1, 2, and 3}{
 
   For types 1, 2 and 3, \eqn{Q_i(p)}{Q[i](p)} is a discontinuous
   function of \eqn{p}, with \eqn{m = 0} when \eqn{i = 1} and \eqn{i =
@@ -103,7 +103,8 @@ quantile(x, \dots)
       and 1 otherwise.}
   }
 
-  \strong{Continuous sample quantile types 4 through 9}
+}
+\subsection{Continuous sample quantile types 4 through 9}{
 
   For types 4 through 9, \eqn{Q_i(p)}{Q[i](p)} is a continuous function
   of \eqn{p}, with \eqn{\gamma = g}{gamma = g} and \eqn{m} given below. The
@@ -148,6 +149,8 @@ quantile(x, \dots)
       the expected order statistics if \code{x} is normally distributed.
     }
   }
+}
+
   Further details are provided in \bibcite{Hyndman and Fan (1996)} who
   recommended type 8.
   The default method is type 7, as used by S and by \R < 2.0.0.
