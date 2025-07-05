@@ -2820,11 +2820,11 @@ if(FALSE) {
         }
         if (Sys.info()["sysname"] == "Darwin" &&
             (with_c|| with_f77 || with_f9x || with_cxx)) {
-            ## report the SDK in use: we want to know what it is symlinked to
-            sdk <- try(system2("xcrun", "--show-sdk-path", TRUE, TRUE), silent = TRUE)
+            ## report the SDK in use: this changed at Xcode/CLT 26
+            sdk <- try(system2("xcrun", "--show-sdk-version", TRUE, TRUE), silent = TRUE)
             if(!inherits(sdk, "try-error")) {
                 sdk <- if (length(attr(sdk, "status"))) NA_character_
-                       else Sys.readlink(sdk)
+                       else paste0("MacOSX", sdk, ".sdk")
                 message("using SDK: ", sQuote(sdk))
             }
         }
