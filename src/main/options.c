@@ -52,6 +52,7 @@
  *	"width"
  *	"digits"
  *	"echo"
+ *	"quiet"
  *	"verbose"
  *	"keep.source"
  *	"keep.source.pkgs"
@@ -308,9 +309,9 @@ attribute_hidden void InitOptions(void)
 
     /* options set here should be included into mandatory[] in do_options */
 #ifdef HAVE_RL_COMPLETION_MATCHES
-    PROTECT(v = val = allocList(30));
+    PROTECT(v = val = allocList(31));
 #else
-    PROTECT(v = val = allocList(29));
+    PROTECT(v = val = allocList(30));
 #endif
 
     SET_TAG(v, install("prompt"));
@@ -339,6 +340,10 @@ attribute_hidden void InitOptions(void)
 
     SET_TAG(v, install("echo"));
     SETCAR(v, ScalarLogical(!R_NoEcho));
+    v = CDR(v);
+
+    SET_TAG(v, install("quiet"));
+    SETCAR(v, ScalarLogical(R_Quiet));
     v = CDR(v);
 
     SET_TAG(v, install("verbose"));
@@ -587,7 +592,7 @@ attribute_hidden SEXP do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 		   at startup, because otherwise one could not reliably restore
 		   previously saved options (see also PR#18372).*/
 		const char *mandatory[] = {"prompt", "continue", "expressions",
-		  "width", "deparse.cutoff", "digits", "echo", "verbose",
+		  "width", "deparse.cutoff", "digits", "echo", "quiet", "verbose",
 		  "check.bounds", "keep.source", "keep.source.pkgs",
 		  "keep.parse.data", "keep.parse.data.pkgs", "warning.length",
 		  "nwarnings", "OutDec", "CBoundsCheck",
@@ -891,10 +896,21 @@ attribute_hidden SEXP do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 		SET_VECTOR_ELT(value, i,
 			       SetOption(tag, ScalarLogical(strings_as_fact)));
 	    }
+	    else if (streql(CHAR(namei), "quiet")) {
+		if (TYPEOF(argi) != LGLSXP || LENGTH(argi) != 1)
+		    error(_("invalid value for '%s'"), CHAR(namei));
+		Rboolean k = asRbool(argi, call);
+		if(k && R_Verbose)
+		    error(_("cannot set both options 'quiet' and 'verbose' to TRUE"));
+		R_Quiet = k;
+		SET_VECTOR_ELT(value, i, SetOption(tag, ScalarLogical(k)));
+	    }
 	    else if (streql(CHAR(namei), "verbose")) {
 		if (TYPEOF(argi) != LGLSXP || LENGTH(argi) != 1)
 		    error(_("invalid value for '%s'"), CHAR(namei));
 		Rboolean k = asRbool(argi, call);
+		if(k && R_Quiet)
+		    error(_("cannot set both options 'quiet' and 'verbose' to TRUE"));
 		R_Verbose = k;
 		SET_VECTOR_ELT(value, i, SetOption(tag, ScalarLogical(k)));
 	    }

@@ -54,6 +54,11 @@
       \item \code{extSoftVersion()[["zstd"]]} now reports the version of
       the \command{zstd} compression library if available, thanks to
       \I{Trevor Davis}' patch proposal in \PR{18914}.
+
+      \item New logical \code{option()} \code{quiet}, defaulting to
+      false, set to \code{TRUE} by \R's command-line option
+      \option{--quiet} (and similar), now can be switched during an \R
+      session.  Prompted by \I{Dirk Eddelbuettel}'s proposal in \PR{18913}.
     }
   }
 
@@ -917,7 +922,7 @@
       signal an error instead of invalidating ops relying on a finite
       integer value.  Values outside the range -9 .. 9999 are now warned
       about and set to a boundary or to the default \code{0}, e.g., in
-      case of an \code{NA}.
+      case of an \code{NA}.  This also fixes \PR{16322}.
 
       \item \code{cbind()} could segfault with \code{NULL} inputs.
       (Seen when \R was built with \command{gcc-14}, \abbr{LTO} and C99

@@ -394,7 +394,7 @@ getOption(x, default = NULL)
     \item{\code{show.error.locations}:}{Should source locations of
       errors be printed?  If set to \code{TRUE} or \code{"top"}, the
       source location that is highest on the stack (the most recent
-      code with source information) will be printed.  
+      code with source information) will be printed.
       }
 
     \item{\code{show.error.messages}:}{a logical.  Should error messages
@@ -443,6 +443,11 @@ getOption(x, default = NULL)
     \item{\code{verbose}:}{logical.  Should \R report extra information
       on progress?  Set to \code{TRUE} by the command-line option
       \option{--verbose}.}
+
+    \item{\code{quiet}:}{logical.  Should \R be (more) \dQuote{quiet},
+      notably on startup report?  Set to \code{TRUE} by the command-line
+      option \option{--quiet}.  \code{quiet} and \code{verbose} cannot both
+      be true.}
 
     \item{\code{warn}:}{integer value to set the handling of warning
       messages by the default warning handler.  If
@@ -520,6 +525,7 @@ getOption(x, default = NULL)
     \code{scipen} \tab \code{0} \cr
     \code{show.error.messages} \tab \code{TRUE}\cr
     \code{timeout} \tab \code{60}\cr
+    \code{quiet}   \tab \code{FALSE}\cr
     \code{verbose} \tab \code{FALSE}\cr
     \code{warn} \tab \code{0}\cr
     \code{warning.length} \tab \code{1000}\cr
