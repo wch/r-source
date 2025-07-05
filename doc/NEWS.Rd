@@ -165,6 +165,10 @@
       documented to work in concordance with \code{==} and as an exception
       to the typical \code{match()} behaviour which relies on
       \dQuote{univariate} \code{mtfrm()} alone.
+
+      \item It is now possible to convert \emph{to} \code{"snpc"} units
+      via, e.g., \code{grid::convertWidth()}, fixing \PR{18915}. Thanks to
+      \I{Trevor Davis}.
     }
   }
 }

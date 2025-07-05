@@ -1255,6 +1255,17 @@ double transformFromINCHES(double value, int unit,
     case L_LINES:
 	result = (result*72)/(gc->ps*gc->cex*gc->lineheight);
 	break;
+    case L_SNPC:        
+	if (thisCM < 1e-6 || otherCM < 1e-6) {
+            if (result != 0)
+                error(_("Viewport has zero dimension(s)"));
+        } else {
+            if (thisCM <= otherCM)
+                result = result/(thisCM/2.54);
+            else
+                result = result/(otherCM/2.54);
+        }
+        break;
     case L_MM:
 	result = result*2.54*10;
 	break;
@@ -1282,7 +1293,6 @@ double transformFromINCHES(double value, int unit,
 	 * I'm not sure the remaining ones makes any sense.
 	 * For simplicity, these are just forbidden for now.
 	 */
-    case L_SNPC:        
     case L_MYCHAR:
     case L_MYLINES:
     case L_STRINGWIDTH:

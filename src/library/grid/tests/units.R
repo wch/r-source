@@ -178,3 +178,24 @@ unitCheck(sum(u1, u2),
           sum(unit(c(0.4, .4, .1, .1), c("in", "mm", "in", "mm"))))
 unitCheck(sum(unit.c(u1, u2)),
           sum(unit(c(0.4, .4, .1, .1), c("in", "mm", "in", "mm"))))
+
+# Convert to snpc units
+pushViewport(viewport(width = unit(1, "inch"), height = unit(2, "inch")))
+unitCheck(unit(1, "inch") |> convertWidth("snpc") |> convertWidth("inch"),
+          unit(1, "inch"))
+unitCheck(unit(0.5, "npc") |> convertY("snpc") |> convertY("npc"),
+          unit(0.5, "npc"))
+popViewport()
+# Zero-dimension viewport edge cases
+pushViewport(viewport(width = unit(1, "inch"), height = unit(0, "inch")))
+unitCheck(unit(0, "cm") |> convertX("snpc") |> convertX("cm"),
+          unit(0, "cm"))
+unitCheck(unit(0, "npc") |> convertHeight("snpc") |> convertHeight("npc"),
+          unit(0, "npc"))
+uw <- try(unit(1, "in") |> convertWidth("snpc"),
+          silent = TRUE)
+stopifnot(inherits(uw, "try-error"))
+uh <- try(unit(1, "in") |> convertHeight("snpc"),
+          silent = TRUE)
+stopifnot(inherits(uh, "try-error"))
+popViewport()
