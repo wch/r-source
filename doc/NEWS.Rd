@@ -169,6 +169,9 @@
       \item It is now possible to convert \emph{to} \code{"snpc"} units
       via, e.g., \code{grid::convertWidth()}, fixing \PR{18915}. Thanks to
       \I{Trevor Davis}.
+
+      \item The \code{precip} dataset had typos in the names
+      \code{"Bismarck"} and \code{"Pittsburgh"} (\PR{18895}).
     }
   }
 }

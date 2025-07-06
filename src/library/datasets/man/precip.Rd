@@ -25,19 +25,31 @@
   New York: Wiley.
 }
 \note{
-  The dataset version up to Nov.16, 2016 had a typo in \code{"Cincinnati"}'s
-  name.  The examples show how to recreate that version.
+  The dataset version before \R 4.6.0 had typos in the names
+  \code{"Pittsburgh"} and \code{"Bismarck"}, and before \R 3.3.3 also in
+  \code{"Cincinnati"}.  The examples show how to recreate these versions.
 }
 \examples{
-require(graphics)
+require(stats); require(graphics)
 dotchart(precip[order(precip)], main = "precip data")
 title(sub = "Average annual precipitation (in.)")
 
-## Old ("wrong") version of dataset (just name change):
-precip.O <- local({
-   p <- precip; names(p)[names(p) == "Cincinnati"] <- "Cincinati" ; p })
-stopifnot(all(precip == precip.O),
-	  match("Cincinnati", names(precip)) == 46,
-	  identical(names(precip)[-46], names(precip.O)[-46]))
+## Recreate pre-4.6.0 version of the dataset with typos in 2 names
+precip.2 <- setNames(precip, local({
+    nms <- names(precip)
+    nms[nms == "Pittsburgh"] <- "Pittsburg"
+    nms[nms == "Bismarck"] <- "Bismark"
+    nms
+}))
+## Recreate original, pre-3.3.3 version of the dataset with one more typo
+precip.O <- setNames(precip.2,
+    replace(names(precip.2), names(precip.2) == "Cincinnati", "Cincinati"))
+
+stopifnot(
+    all(precip == precip.2), all(precip == precip.O), # just name changes
+    setequal(match(c("Bismarck", "Cincinnati", "Pittsburgh"), names(precip)),
+             c(45, 46, 52)),
+    identical(names(precip)[-c(45, 46, 52)], names(precip.O)[-c(45, 46, 52)])
+)
 }
 \keyword{datasets}
