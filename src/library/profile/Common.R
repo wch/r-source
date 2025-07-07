@@ -2,7 +2,7 @@
 ### Additional commands can be placed in site or user Rprofile files
 ### (see ?Rprofile).
 
-### Copyright (C) 1995-2023 The R Core Team
+### Copyright (C) 1995-2025 The R Core Team
 
 ### Notice that it is a bad idea to use this file as a template for
 ### personal startup files, since things will be executed twice and in
@@ -32,6 +32,10 @@ options(warn = 0)
 local({to <- as.integer(Sys.getenv("R_DEFAULT_INTERNET_TIMEOUT", 60))
     if (is.na(to) || to <= 0) to <- 60L
     options(timeout = to)
+})
+local({
+    if(nzchar(nr <- Sys.getenv("R_DEFAULT_NETRC")))
+        options(netrc = nr)
 })
 options(encoding = "native.enc")
 options(show.error.messages = TRUE)

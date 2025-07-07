@@ -172,8 +172,8 @@ socketTimeout(socket, timeout = -1)
   \code{"libcurl"} for all others.  Which methods support which schemes
   has varied by \R version -- currently \code{"internal"} supports only
   \samp{file://}; \code{"wininet"} supports \samp{file://},
-  \samp{http://} and \samp{https://}.  Proxies can be specified: see
-  \code{\link{download.file}}.
+  \samp{http://} and \samp{https://}.  Proxies and user credentials can
+  be specified: see \code{\link{download.file}}.
 
   For \code{gzfile} the description is the path to a file compressed by
   \command{gzip}: it can also open for reading uncompressed files and
@@ -681,8 +681,9 @@ socketTimeout(socket, timeout = -1)
   \code{\link{gzcon}} to wrap \command{gzip} (de)compression around a
   connection.
 
-  \code{\link{options}} \code{HTTPUserAgent}, \code{internet.info} and
-  \code{timeout} are used by some of the methods for URL connections.
+  \code{\link{options}} \code{HTTPUserAgent}, \code{internet.info},
+  \code{netrc} and \code{timeout} are used by some of the methods for URL
+  connections.
 
   \code{\link{memCompress}} for more ways to (de)compress and references
   on data compression.

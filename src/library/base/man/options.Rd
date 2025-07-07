@@ -1,6 +1,6 @@
 % File src/library/base/man/options.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2025 R Core Team
+% Copyright 1995-2026 R Core Team
 % Distributed under GPL 2 or later
 
 \name{options}
@@ -263,6 +263,12 @@ getOption(x, default = NULL)
       this option, to limit the amount of information that is printed,
       to something in the order of (and typically slightly less than)
       \code{max.print} \emph{entries}.}
+
+    \item{\code{netrc}:}{character string. Path to netrc file with
+      user credentials for URLs requiring authentication.  The file, if it
+      exists, will be used by \samp{libcurl} in \code{\link{download.file}},
+      \code{\link{url}} and \code{\link{curlGetHeaders}}.  By default unset,
+      but can be set from environment variable \env{R_DEFAULT_NETRC}.}
 
     \item{\code{OutDec}:}{character string containing a single
       character.  The preferred character to be used as the decimal
