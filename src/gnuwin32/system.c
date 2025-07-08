@@ -120,30 +120,9 @@ void unset_R_Tcldo(DO_FUNC ptr)
     return;
 }
 
-static int pedepth = 0;
-
-static void depth_cleanup(void *data)
-{
-    pedepth = *(int *)data;
-}
-
 void R_ProcessEvents(void)
 {
-    int old_depth = pedepth;
-    RCNTXT cntxt;
-
-    /* do not enter the graphapp message loop recursively */
-    if (!pedepth && peekevent()) {
-	pedepth++;
-	cntxt.cend = &depth_cleanup;
-	cntxt.cenddata = &old_depth;
-	begincontext(&cntxt, CTXT_CCODE, R_NilValue, R_BaseEnv, R_BaseEnv,
-	             R_NilValue, R_NilValue);
-	while (peekevent()) doevent();
-	endcontext(&cntxt);
-	depth_cleanup(&old_depth);
-    }
-	
+    while (peekevent()) doevent();
     if (cpuLimit > 0.0 || elapsedLimit > 0.0) {
 #ifdef HAVE_CHECK_TIME_LIMITS
 	/* switch to using R_CheckTimeLimits after testing on Windows */
