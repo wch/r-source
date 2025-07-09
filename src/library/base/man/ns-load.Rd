@@ -1,6 +1,6 @@
 % File src/library/base/man/ns-load.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2022 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{ns-load}
@@ -15,7 +15,9 @@
 \alias{isNamespaceLoaded}
 
 \description{
-  Functions to load and unload name spaces.
+  Functions to load and unload name spaces explicitly.  Loading namespaces typically
+  happens automatically, often from \code{\link{library}()} or also when
+  other packages import their dependent package namespaces.
 }
 \usage{
 attachNamespace(ns, pos = 2L, depends = NULL, exclude, include.only)
@@ -39,8 +41,10 @@ isNamespaceLoaded(name)
   \item{keep.source}{now ignored except during package installation.}
   \item{keep.parse.data}{ignored except during package installation.}
   \item{partial}{logical; if true, stop just after loading code.}
-  \item{versionCheck}{\code{NULL} or a version specification (a list
-    with components \code{op} and \code{version}).}
+  \item{versionCheck}{\code{NULL} or a version specification, i.e., a
+    \code{\link{list}} with components \code{op} and \code{version} where
+    \code{op} is a string denoting a \code{\link{Comparison}} operator such
+    as \code{">="}, \code{"=="}, \code{"<"}, etc.}
   \item{quietly}{logical: should progress and error messages be suppressed?}
   \item{name}{string or \sQuote{name}, see \code{\link{as.symbol}},
     of a package, e.g., \code{"stats"}.}
@@ -55,7 +59,13 @@ isNamespaceLoaded(name)
 
   \code{loadNamespace} loads the specified name space and registers it in
   an internal data base.  A request to load a name space when one of that
-  name is already loaded has no effect.  The arguments have the same
+  name is already loaded has no effect.  \code{versionCheck} allows to
+  require a namespace with restricted (e.g., minimal or maximal) package
+  version (\code{\link{packageVersion}()}).  If the version check fails,
+  \code{loadNamespace()} signals an error, whereas \code{requireNamespace()}
+  returns \code{FALSE} after showing \code{loadNamespace}'s error message.
+
+  Further arguments have the same
   meaning as the corresponding arguments to \code{\link{library}}, whose
   help page explains the details of how a particular installed package
   comes to be chosen.  After loading, \code{loadNamespace} looks for a
