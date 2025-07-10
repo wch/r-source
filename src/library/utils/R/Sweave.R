@@ -1,7 +1,7 @@
 #   File src/library/utils/R/Sweave.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2024 The R Core Team
+#  Copyright (C) 1995-2025 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -527,7 +527,8 @@ SweaveHooks <- function(options, run = FALSE, envir = .GlobalEnv)
     }
     if(verbose) { cat("Calling tools::buildVignette()  with args\n"); str(args) }
     output <- do.call(tools::buildVignette, args)
-    message("Output file:  ", output)
+    message(ngettext(length(output), "Output file:  ", "Output files:  "),
+            paste(output, collapse = ", "), domain = NA)
     if (toPDF && compact != "no"
         && length(output) == 1 && grepl(".pdf$", output, ignore.case=TRUE)) {
 	## <NOTE>
@@ -569,8 +570,8 @@ SweaveHooks <- function(options, run = FALSE, envir = .GlobalEnv)
             "A front-end for Stangle and other vignette engines",
             "",
             "Options:",
-            "  -h, --help     print this help message and exit",
-            "  -v, --version  print version info and exit",
+            "  -h, --help      print this help message and exit",
+            "  -v, --version   print version info and exit",
 	    "  --engine=pkg::engine  use named vignette engine",
             "  --encoding=enc  assume encoding 'enc' for file",
             "  --options=      comma-separated list of Stangle options",
