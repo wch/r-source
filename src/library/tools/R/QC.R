@@ -2462,7 +2462,7 @@ function(package, dir, lib.loc = NULL)
 
         code_env <- asNamespace(package)
         if(!is_base) {
-            S3_methods_info <- getNamespaceInfo(code_env, "S3methods")
+            S3_methods_info <- .getNamespaceInfo(code_env, "S3methods")
             exports <- getNamespaceExports(code_env)
         }
     }
@@ -2897,26 +2897,28 @@ function(package, dir, lib.loc = NULL)
     if(!is.null(ns_S3_methods_db)) {
         ns_S3_generics <- as.character(ns_S3_methods_db[, 1L])
         ns_S3_methods <- ns_S3_methods_db[, 3L]
-        if(!is.character(ns_S3_methods)) {
-            ## As of 2018-07, direct calls to registerS3method()
-            ## could have registered a function object (not name).
-            ind <- vapply(ns_S3_methods, is.character, NA)
-            ns_S3_methods[!ind] <- ""
+        if(has_S3_fun_obj <- !is.character(ns_S3_methods)) {
+            ## registerS3method() may have registered a function object (not name), e.g. in S7
+            nonCh <- !vapply(ns_S3_methods, is.character, NA)
+            ## keep these to check for <last argument name> == 'value', below:
+            S3_fun_obj <- ns_S3_methods[nonCh]
+            ns_S3_methods[nonCh] <- ""
             ns_S3_methods <- as.character(ns_S3_methods)
         }
         ## S3 replacement methods from namespace registration?
         replace_funs <- ns_S3_methods[endsWith(ns_S3_generics, "<-")]
         ## Now remove the functions registered as S3 methods.
         objects_in_code <- setdiff(objects_in_code, ns_S3_methods)
-    }
+    } else
+        has_S3_fun_obj <- FALSE
 
     replace_funs <-
-        c(replace_funs, grep("<-", objects_in_code, value = TRUE))
+        c(replace_funs, grep("<-$", objects_in_code, value = TRUE))
     ## Drop %xxx% binops.
     ## Spotted by Hugh Parsonage <hugh.parsonage@gmail.com>.
     replace_funs <-
         replace_funs[!(startsWith(replace_funs, "%") &
-                       endsWith(replace_funs, "%"))]
+                       endsWith  (replace_funs, "%"))]
 
     .check_last_formal_arg <- function(f) {
         arg_names <- names(formals(f))
@@ -2929,7 +2931,7 @@ function(package, dir, lib.loc = NULL)
     ## Find the replacement functions (which have formal arguments) with
     ## last arg not named 'value'.
     bad_replace_funs <- if(length(replace_funs)) {
-        Filter(function(f) {
+        Filter(function(f) nzchar(f) && {
                    ## Always get the functions from code_env ...
                    ## Should maybe get S3 methods from the registry ...
                    f <- get(f, envir = code_env)  # get is expensive
@@ -2938,6 +2940,12 @@ function(package, dir, lib.loc = NULL)
                replace_funs)
     } else character()
 
+    if(has_S3_fun_obj) {
+        if(!all(ok_lastArg <- vapply(S3_fun_obj, .check_last_formal_arg, NA)))
+            bad_replace_funs <-
+                c(bad_replace_funs, paste0(ns_S3_generics [nonCh], ".:.", # not "." on purpose
+                                           ns_S3_methods_db[nonCh, 2L]))
+    }
     if(.isMethodsDispatchOn()) {
         S4_generics <- .get_S4_generics(code_env)
         ## Assume that the ones with names ending in '<-' are always
@@ -4035,7 +4043,7 @@ function(x)
       if(length(bad <- x[["bad_authors_at_R_field_has_persons_with_dup_ROR_identifiers"]])) {
           c(gettext("Authors@R field gives persons with duplicated ROR identifiers:"),
             paste0("  ", bad))
-      }      
+      }
       )
 }
 
@@ -5240,7 +5248,7 @@ function(dir, doDelete = FALSE)
         all_files <- mydir(demo_dir)
         demo_files <- list_files_with_type(demo_dir, "demo",
                                            full.names = FALSE)
-	save_files <- paste0(sub("r$", "R", demo_files), "out.save")        
+	save_files <- paste0(sub("r$", "R", demo_files), "out.save")
         wrong <- setdiff(all_files,
                          c("00Index", demo_files, save_files))
         if(length(wrong)) {
@@ -8243,7 +8251,7 @@ function(dir, localOnly = FALSE, pkgSize = NA)
     if(config_val_to_logical(Sys.getenv("_R_CHECK_CRAN_INCOMING_DROP_SUBMISSION_ONLY_",
                                         "FALSE"))) {
         out[c("descr_bad_initial",
-              "descr_bad_start", 
+              "descr_bad_start",
               "title_includes_name",
               "title_case",
               "extensions",
@@ -9267,6 +9275,7 @@ function(package, dir, lib.loc = NULL, chkInternal = NULL)
     out <- list()
     class(out) <- "checkRdContents" # was "check_Rd_contents"
 
+ ### FIXME?  much of the following copy-pasted from checkDocFiles() above
     ## Argument handling.
     if(!missing(package)) {
         if(length(package) != 1L)

@@ -172,6 +172,10 @@
 
       \item The \code{precip} dataset had typos in the names
       \code{"Bismarck"} and \code{"Pittsburgh"} (\PR{18895}).
+
+      \item \code{tools::checkReplaceFuns()} now deals better with
+      replacement methods \emph{not} available as regular functions in the
+      namespace.
     }
   }
 }
