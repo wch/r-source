@@ -406,7 +406,7 @@ in_do_curlGetHeaders(SEXP call, SEXP op, SEXP args, SEXP rho)
     curl_easy_setopt(hnd, CURLOPT_WRITEFUNCTION, &rcvBody);
     curlCommon(hnd, redirect, verify);
     if (timeout > 0) {
-	curl_easy_setopt(hnd, CURLOPT_TIMEOUT, timeout);
+	curl_easy_setopt(hnd, CURLOPT_TIMEOUT, (long)timeout);
 	current_timeout = timeout;
     }
     if (!streql(TLS, "")) {
