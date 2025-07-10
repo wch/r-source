@@ -264,7 +264,7 @@ getOption(x, default = NULL)
       to something in the order of (and typically slightly less than)
       \code{max.print} \emph{entries}.}
 
-    \item{\code{netrc}:}{character string. Path to netrc file with
+    \item{\code{netrc}:}{character string. Path to \I{netrc} file with
       user credentials for URLs requiring authentication.  The file, if it
       exists, will be used by \samp{libcurl} in \code{\link{download.file}},
       \code{\link{url}} and \code{\link{curlGetHeaders}}.  By default unset,

@@ -136,13 +136,13 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   A HTTP[S] URL may require authentication.  One may specify a username and
   password as part of the URL, i.e. 
   \code{"https://username:password@machine/..."}.  This is not recommended
-  with HTTP as the credentials will be sent in plaintext.  With HTTPS, they
+  with HTTP as the credentials will be sent in plaintext.  With \abbr{HTTPS}, they
   will be encrypted, but still may appear in plaintext e.g.  in server logs. 
   Alternatively, the credentials may be specified via \code{Authorization}
   in argument \code{headers}, but that is more involved for the user and
   wouldn't allow simultaneous download from different URLs requiring
   authentication.  With \code{"libcurl"}, it is possible to have the
-  credentials in a netrc file which can be specified by the option
+  credentials in a \I{netrc} file which can be specified by the option
   \code{netrc} and the default may be set by the environment variable
   \env{R_DEFAULT_NETRC}.  The file should not be readable by other users. 
   See \url{https://everything.curl.dev/usingcurl/netrc.html} for further
