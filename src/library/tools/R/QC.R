@@ -2906,7 +2906,7 @@ function(package, dir, lib.loc = NULL)
             ns_S3_methods <- as.character(ns_S3_methods)
         }
         ## S3 replacement methods from namespace registration?
-        replace_funs <- ns_S3_methods[endsWith(ns_S3_generics, "<-")]
+        replace_funs <- ns_S3_methods[ns_S3_genRepl <- endsWith(ns_S3_generics, "<-")]
         ## Now remove the functions registered as S3 methods.
         objects_in_code <- setdiff(objects_in_code, ns_S3_methods)
     } else
@@ -2941,10 +2941,13 @@ function(package, dir, lib.loc = NULL)
     } else character()
 
     if(has_S3_fun_obj) {
-        if(!all(ok_lastArg <- vapply(S3_fun_obj, .check_last_formal_arg, NA)))
+        ## S3 replacement generic/methods
+        isRepl <- ns_S3_genRepl[nonCh]
+        if(any(isRepl) && any(bad_last <- !vapply(S3_fun_obj[isRepl], .check_last_formal_arg, NA)))
             bad_replace_funs <-
-                c(bad_replace_funs, paste0(ns_S3_generics [nonCh], ".:.", # not "." on purpose
-                                           ns_S3_methods_db[nonCh, 2L]))
+                c(bad_replace_funs, paste0(ns_S3_generics [nonCh][isRepl][bad_last],
+                                           " . ", # not "." on purpose, but similar
+                                           ns_S3_methods_db[nonCh, 2L][isRepl][bad_last]))
     }
     if(.isMethodsDispatchOn()) {
         S4_generics <- .get_S4_generics(code_env)
