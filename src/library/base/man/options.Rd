@@ -70,7 +70,7 @@ getOption(x, default = NULL)
   a list with the previous values of the options changed (returned
   invisibly).
 }
-\section{Options used in base \R}{
+\section{Options used in base \R}{% --- sorted *alphabetically* --
   \describe{
     \item{\code{add.smooth}:}{typically logical, defaulting to
       \code{TRUE}.  Could also be set to an integer for specifying how
@@ -355,6 +355,11 @@ getOption(x, default = NULL)
     \item{\code{prompt}:}{a non-empty string to be used for \R's prompt;
       should usually end in a blank (\code{" "}).}
 
+    \item{\code{quiet}:}{logical.  Should \R be (more) \dQuote{quiet},
+      notably on startup report?  Set to \code{TRUE} by the command-line
+      option \option{--quiet}.  Note that \code{quiet} and \code{verbose}
+      \emph{can} both be true.}
+
       % verbatim, for checking " \t\n\"\\'`><=%;,|&{()}"
     \item{\code{rl_word_breaks}:}{(Unix only:) Used for the \I{readline}-based terminal
       interface.  Default value \code{" \\t\\n\\"\\\\'`><=\%;,|&{()}"}.%"
@@ -450,10 +455,6 @@ getOption(x, default = NULL)
       on progress?  Set to \code{TRUE} by the command-line option
       \option{--verbose}.}
 
-    \item{\code{quiet}:}{logical.  Should \R be (more) \dQuote{quiet},
-      notably on startup report?  Set to \code{TRUE} by the command-line
-      option \option{--quiet}.% \code{quiet} and \code{verbose} cannot both be true.
-    }
     \item{\code{warn}:}{integer value to set the handling of warning
       messages by the default warning handler.  If
       \code{warn} is negative all warnings are ignored.  If \code{warn}
@@ -512,7 +513,7 @@ getOption(x, default = NULL)
     }
  }
 
-  The \sQuote{factory-fresh} default settings of some of these options are
+  The \sQuote{factory-fresh} default settings of some of these options are (alphabetically)
   \tabular{ll}{
     \code{add.smooth} \tab \code{TRUE}\cr
     \code{check.bounds} \tab \code{FALSE}\cr
@@ -527,10 +528,10 @@ getOption(x, default = NULL)
     \code{max.print} \tab \code{99999}\cr
     \code{OutDec} \tab \code{"."}\cr
     \code{prompt} \tab \code{"> "}\cr
+    \code{quiet}   \tab \code{FALSE}\cr
     \code{scipen} \tab \code{0} \cr
     \code{show.error.messages} \tab \code{TRUE}\cr
     \code{timeout} \tab \code{60}\cr
-    \code{quiet}   \tab \code{FALSE}\cr
     \code{verbose} \tab \code{FALSE}\cr
     \code{warn} \tab \code{0}\cr
     \code{warning.length} \tab \code{1000}\cr
@@ -538,6 +539,7 @@ getOption(x, default = NULL)
   }
   Others are set from environment variables or are platform-dependent.
 }
+
 \section{Options set in package \pkg{grDevices}}{
   These will be set when package \pkg{grDevices} (or its namespace)
   is loaded if not already set.
@@ -820,6 +822,7 @@ local({
 
   }
 }
+
 \section{Options set in package \pkg{parallel}}{
   These will be set when package \pkg{parallel} (or its namespace)
   is loaded if not already set.
