@@ -70,8 +70,8 @@ debugger <- function(dump = last.dump)
     repeat {
         cat(gettext("Available environments had calls:\n"))
         cat(paste0(1L:n, ": ", calls), sep = "\n")
-        cat(gettext("\nEnter an environment number, or 0 to exit  "))
         repeat {
+            cat(gettext("\nEnter an environment number, or 0 to exit  "), "\n")
             ind <- .Call(C_menu, as.character(calls))
             if(ind <= n) break
         }
@@ -142,7 +142,7 @@ recover <-
         calls <- limitedLabels(calls[1L:from])
         repeat {
             which <- menu(calls,
-                          title="\nEnter a frame number, or 0 to exit  ")
+                          title=gettext("\nEnter a frame number, or 0 to exit"))
             if(which)
                 eval(substitute(browser(skipCalls=skip),
                                 list(skip=7-which)), envir = sys.frame(which))
