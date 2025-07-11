@@ -62,6 +62,8 @@ double dnchisq(double x, double df, double ncp, int give_log)
 
     if(mid == 0) {
 	/* underflow to 0 -- maybe numerically correct; maybe can be more accurate,
+	 * TODO: above log(.):  logmid =  dpois_raw(imax, ncp2, TRUE) +  dchisq(x, dfmid, TRUE);
+	 * ----  and switch to complete log-scale summation of logterm += log(q) {etc} below
 	 * particularly when  give_log = TRUE */
 	/* Use  central-chisq approximation formula when appropriate;
 	 * ((FIXME: the optimal cutoff also depends on (x,df);  use always here? )) */

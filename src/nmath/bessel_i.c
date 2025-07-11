@@ -231,12 +231,12 @@ static void I_bessel(double *x, double *alpha, int *nb,
     /* Local variables */
     int nend, intx, nbmx, k, l, n, nstart;
     double pold, test,	p, em, en, empal, emp2al, halfx,
-	aa, bb, cc, psave, plast, tover, psavel, sum, nu, twonu;
+	aa, bb, cc, psave, plast, tover, psavel, sum,
 
-    /*Parameter adjustments */
-    --bi;
-    nu = *alpha;
-    twonu = nu + nu;
+	nu = *alpha,
+	twonu = ldexp(nu, 1); // = 2*nu
+
+    --bi; // use 1-indexing below
 
     /*-------------------------------------------------------------------
       Check for X, NB, OR IZE out of range.
@@ -486,7 +486,7 @@ L230:
 	    empal = 1. + nu;
 #ifdef IEEE_754
 	    /* No need to check for underflow */
-	    halfx = .5 * *x;
+	    halfx = ldexp(*x, -1); // = *x / 2 = .5 * *x
 #else
 	    if (*x > enmten_BESS) */
 		halfx = .5 * *x;

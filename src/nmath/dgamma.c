@@ -41,7 +41,6 @@
 
 double dgamma(double x, double shape, double scale, int give_log)
 {
-    double pr;
 #ifdef IEEE_754
     if (ISNAN(x) || ISNAN(shape) || ISNAN(scale))
         return x + shape + scale;
@@ -58,6 +57,7 @@ double dgamma(double x, double shape, double scale, int give_log)
 	return give_log ? -log(scale) : 1 / scale;
     }
 
+    double pr;
     if (shape < 1) {
 	pr = dpois_raw(shape, x/scale, give_log);
 	return (

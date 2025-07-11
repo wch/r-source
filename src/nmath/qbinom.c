@@ -1,6 +1,6 @@
 /*
  *  Mathlib : A C Library of Special Functions
- *  Copyright (C) 1999-2021 The R Core Team
+ *  Copyright (C) 1999-2025 The R Core Team
  *  Copyright (C) 2003-2021 The R Foundation
  *  Copyright (C) 1998 Ross Ihaka
  *
@@ -33,6 +33,7 @@
 #include "nmath.h"
 #include "dpq.h"
 
+// notably used in  " ./qDiscrete_search.h ":
 #ifdef DEBUG_qbinom
 # define R_DBG_printf(...) REprintf(__VA_ARGS__)
 #else

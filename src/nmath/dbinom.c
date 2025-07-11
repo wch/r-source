@@ -30,7 +30,8 @@
  *   This checks for argument validity, and calls dbinom_raw().
  *
  *   dbinom_raw() does the actual computation; note this is called by
- *   other functions in addition to dbinom().
+ *   many other functions in addition to dbinom():
+ *   dnbinom(), dbeta(), df(), dgeom(), dhyper()
  *     (1) dbinom_raw() has both p and q arguments, when one may be represented
  *         more accurately than the other (in particular, in df()).
  *     (2) dbinom_raw() does NOT check that inputs x and n are integers. This

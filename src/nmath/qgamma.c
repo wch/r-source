@@ -1,9 +1,9 @@
 /*
  *  Mathlib : A C Library of Special Functions
- *  Copyright (C) 1998 Ross Ihaka
  *  Copyright (C) 2000--2015 The R Core Team
+ *  Copyright (C) 1998 Ross Ihaka
  *  Copyright (C) 2004--2015 The R Foundation
- *  based on AS 91 (C) 1979 Royal Statistical Society
+ *  originally based on AS 91 (C) 1979 Royal Statistical Society
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -26,7 +26,7 @@
  *  NOTES
  *
  *	This function is based on the Applied Statistics
- *	Algorithm AS 91 ("ppchi2") and via pgamma(.) AS 239.
+ *	Algorithm AS 91 ("ppchi2") and originally (no longer since 2005) via pgamma(.) AS 239.
  *
  *	R core improvements:
  *	o  lower_tail, log_p
@@ -119,7 +119,7 @@ double qgamma(double p, double alpha, double scale, int lower_tail, int log_p)
 #define EPS1 1e-2
 #define EPS2 5e-7/* final precision of AS 91 */
 #define EPS_N 1e-15/* precision of Newton step / iterations */
-#define LN_EPS -36.043653389117156 /* = log(.Machine$double.eps) iff IEEE_754 */
+//define LN_EPS -36.043653389117156 /* = log(.Machine$double.eps) iff IEEE_754 */
 
 #define MAXIT 1000/* was 20 */
 

@@ -1,7 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
+ *  Copyright (C) 2000--2024 The R Core Team
  *  Copyright (C) 1998 Ross Ihaka
- *  Copyright (C) 2000--2016 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -102,8 +102,8 @@ double rgamma(double a, double scale)
 		x = -log((e - p) / a);
 		if (exp_rand() >= (1.0 - a) * log(x))
 		    break;
-	    } else {
-		x = exp(log(p) / a);
+	    } else { /* p < 1  <==>  log(p) < 0 */
+		x = exp(log(p) / a); // exp(*) "often" underflows to 0 for small a (e.g. a = 1/1000)
 		if (exp_rand() >= x)
 		    break;
 	    }

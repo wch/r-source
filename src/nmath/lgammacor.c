@@ -68,6 +68,11 @@ attribute_hidden double lgammacor(double x)
  *   xbig = 2 ^ 26.5
  *   xmax = DBL_MAX / 48 =  2^1020 / 3 */
 #define nalgm 5
+/*        NB: -- we'd need nalgm = 6 terms for full precision, but the result is
+	  ==     always used in +/- terms of considerably larger size ~ x*log(x)
+   (we could even *decrease* nalgm for larger y)
+*/
+
 #define xbig  94906265.62425156
 
     if (x < 10) // possibly consider stirlerr()

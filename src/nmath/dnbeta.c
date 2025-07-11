@@ -1,7 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
+ *  Copyright (C) 2000-2021 The R Core Team
  *  Copyright (C) 1998 Ross Ihaka
- *  Copyright (C) 2000-12 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -56,10 +56,6 @@ double dnbeta(double x, double a, double b, double ncp, int give_log)
 {
     const static double eps = 1.e-15;
 
-    int kMax;
-    double k, ncp2, dx2, d, D;
-    LDOUBLE sum, term, p_k, q;
-
 #ifdef IEEE_754
     if (ISNAN(x) || ISNAN(a) || ISNAN(b) || ISNAN(ncp))
 	return x + a + b + ncp;
@@ -74,11 +70,13 @@ double dnbeta(double x, double a, double b, double ncp, int give_log)
     if(ncp == 0)
 	return dbeta(x, a, b, give_log);
 
-    /* New algorithm, starting with *largest* term : */
-    ncp2 = 0.5 * ncp;
-    dx2 = ncp2*x;
-    d = (dx2 - a - 1)/2;
-    D = d*d + dx2 * (a + b) - a;
+    /* Non-central Beta:  New algorithm, starting with *largest* term : */
+    double
+	ncp2 = ldexp(ncp, -1), // = 0.5 * ncp
+	dx2 = ncp2*x,
+	d = ldexp(dx2 - a - 1, -1), // = (...)/2
+	D = d*d + dx2 * (a + b) - a;
+    int kMax;
     if(D <= 0) {
 	kMax = 0;
     } else {
@@ -86,6 +84,7 @@ double dnbeta(double x, double a, double b, double ncp, int give_log)
 	kMax = (D > 0) ? (int)D : 0;
     }
 
+    LDOUBLE sum, term, p_k, q;
     /* The starting "middle term" --- first look at it's log scale: */
     term = dbeta(x, a + kMax, b, /* log = */ TRUE);
     p_k = dpois_raw(kMax, ncp2,              TRUE);
@@ -101,7 +100,7 @@ double dnbeta(double x, double a, double b, double ncp, int give_log)
     /* Now sum from the inside out */
     sum = term = 1. /* = mid term */;
     /* middle to the left */
-    k = kMax;
+    double k = kMax;
     while(k > 0 && term > sum * eps) {
 	k--;
 	q = /* 1 / r_k = */ (k+1)*(k+a) / (k+a+b) / dx2;

@@ -81,15 +81,15 @@ double dnt(double x, double df, double ncp, int give_log)
 
     /* If infinite df then the density is identical to a
        normal distribution with mean = ncp.  However, the formula
-       loses a lot of accuracy around df=1e9
+       loses a lot of accuracy around df=1e9 // FIXME?
     */
-    if(!R_FINITE(df) || df > 1e8)
+    if(!R_FINITE(df) || df > 1e8) 
 	return dnorm(x, ncp, 1., give_log);
 
     /* Do calculations on log scale to stabilize */
 
     /* Consider two cases: x ~= 0 or not */
-    if (fabs(x) > sqrt(df * DBL_EPSILON)) {
+    if (fabs(x) > sqrt(df * DBL_EPSILON)) { // |x| > eps * sqrt(df)
 	u = log(df) - log(fabs(x)) +
 	    log(fabs(pnt(x*sqrt((df+2)/df), df+2, ncp, 1, 0) -
 		     pnt(x, df, ncp, 1, 0)));
