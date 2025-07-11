@@ -1,6 +1,6 @@
 % File src/library/stats/man/Chisquare.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2019 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Chisquare}
@@ -31,7 +31,10 @@ rchisq(n, df, ncp = 0)
   \item{ncp}{non-centrality parameter (non-negative).}
   \item{log, log.p}{logical; if TRUE, probabilities p are given as log(p).}
   \item{lower.tail}{logical; if TRUE (default), probabilities are
-    \eqn{P[X \le x]}, otherwise, \eqn{P[X > x]}.}
+    \eqn{P[X \le x]}, otherwise, \eqn{P[X > x]}, unless for \code{df=0} and
+    when \code{ncp} is missing, where the central chi-square cdf is based
+    on \code{\link{pgamma}()}; in this case, probabilities are
+    \eqn{P[X < x]} when \code{lower.tail} is true, and \eqn{P[X \ge x]}, otherwise.}
 }
 \value{
   \code{dchisq} gives the density, \code{pchisq} gives the distribution
