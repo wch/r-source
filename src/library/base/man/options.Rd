@@ -1,6 +1,6 @@
 % File src/library/base/man/options.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2026 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{options}
@@ -452,9 +452,8 @@ getOption(x, default = NULL)
 
     \item{\code{quiet}:}{logical.  Should \R be (more) \dQuote{quiet},
       notably on startup report?  Set to \code{TRUE} by the command-line
-      option \option{--quiet}.  \code{quiet} and \code{verbose} cannot both
-      be true.}
-
+      option \option{--quiet}.% \code{quiet} and \code{verbose} cannot both be true.
+    }
     \item{\code{warn}:}{integer value to set the handling of warning
       messages by the default warning handler.  If
       \code{warn} is negative all warnings are ignored.  If \code{warn}
