@@ -5658,6 +5658,15 @@ More extreme examples are @samp{Africa/Conakry} (permanent UTC),
 @samp{Asia/Calcutta} (no DST, permanent half-hour offset)
 and @samp{Pacific/Kiritimati}(no DST, more than 12 hours ahead of UTC).
 
+@item
+It is possible for a package to add values to @code{options} but usually
+inadvisable as the same option name might be used in current or future
+versions of other packages or @R{} itself.  It would be usually be
+better to store package-specific options in an environment in the
+package, but if the global options registry is to be used, choose option
+names that are unambiguously linked to the package (and not just the
+package name if that is an English word).
+
 @end itemize
 
 
