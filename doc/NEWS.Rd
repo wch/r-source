@@ -176,6 +176,11 @@
       \item \code{tools::checkReplaceFuns()} now deals better with
       replacement methods \emph{not} available as regular functions in the
       namespace.
+
+      \item \code{length(xpr) <- n} now also works for \code{expression}
+      vectors, the same as for \code{list}s, i.e., padding with \code{NULL}
+      entries if the length is increased.  Thanks to \I{Mikael Jagan}'s
+      \PR{18917}.
     }
   }
 }

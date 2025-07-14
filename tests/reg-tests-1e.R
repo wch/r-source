@@ -2021,6 +2021,13 @@ stopifnot(ch %in% D, D %in% ch, !(c2 %in% D), !(D %in% c2))
 ## had failed in R-devel around 2025-06-26 (and before R 4.3.0)
 
 
+## length(<expression>) <- value
+x <- expression(.)
+length(x) <- 0L
+stopifnot(identical(x, expression()),
+          identical(`length<-`(x, 2L), expression(NULL, NULL)))
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

@@ -1,6 +1,6 @@
 % File src/library/base/man/length.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2017 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{length}
@@ -27,8 +27,11 @@ length(x) <- value
 
   The replacement form can be used to reset the length of a vector.  If
   a vector is shortened, extra values are discarded and when a vector is
-  lengthened, it is padded out to its new length with \code{\link{NA}}s
-  (\code{nul} for raw vectors).
+  lengthened, it is padded out to its new length with \code{\link{NA}}s for
+  atomic vectors but by \code{nul}, i.e., \code{as.raw(0)} for
+  \code{\link{raw}} vectors, whereas \code{\link{list}} and
+  \code{\link{expression}} vectors use \code{\link{NULL}}, the latter three
+  cases in line with vector creation by \code{\link{vector}("<mode>", length)}.
 
   Both are \link{primitive} functions.
 }
@@ -38,7 +41,8 @@ length(x) <- value
   \code{\link{integer}} of length 1, except for vectors of more than
   \eqn{2^{31}-1}{2^31 - 1} elements, when it returns a double.
 
-  For vectors (including lists) and factors the length is the number of
+  For vectors (including lists and expressions) and factors the length is
+  the number of
   elements.  For an environment it is the number of objects in the
   environment, and \code{NULL} has length 0.  For expressions and
   pairlists (including \link{language objects} and dot-dot-dot lists) it is the

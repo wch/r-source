@@ -904,6 +904,7 @@ SEXP xlengthgets(SEXP x, R_xlen_t len)
 	}
 	break;
     case VECSXP:
+    case EXPRSXP:
 	for (i = 0; i < len; i++)
 	    if (i < lenx) {
 		SET_VECTOR_ELT(rval, i, VECTOR_ELT(x, i));
@@ -940,12 +941,10 @@ SEXP lengthgets(SEXP x, R_len_t len)
 
 attribute_hidden SEXP do_lengthgets(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP x, ans;
-
     checkArity(op, args);
     check1arg(args, call, "x");
 
-    x = CAR(args);
+    SEXP ans, x = CAR(args);
 
     /* DispatchOrEval internal generic: length<- */
     if(isObject(x) && DispatchOrEval(call, op, "length<-", args,
