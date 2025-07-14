@@ -1,6 +1,6 @@
 % File src/library/base/man/length.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2017 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{length}
@@ -28,7 +28,7 @@ length(x) <- value
   The replacement form can be used to reset the length of a vector.  If
   a vector is shortened, extra values are discarded and when a vector is
   lengthened, it is padded out to its new length with \code{\link{NA}}s
-  (\code{nul} for raw vectors).
+  (\code{nul} for raw vectors, \code{NULL} for lists).
 
   Both are \link{primitive} functions.
 }
