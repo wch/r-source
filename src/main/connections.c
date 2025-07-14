@@ -6159,8 +6159,23 @@ Rconnection R_GetConnection(SEXP sConn) {
 /* ------------------- (de)compression functions  --------------------- */
 
 /* Code for gzcon connections is modelled on gzio.c from zlib 1.2.3 */
+static int gzcon_byte(Rgzconn priv)
+{
+    Rconnection icon = priv->con;
 
-#define get_byte() (icon->read(&ccc, 1, 1, icon), ccc)
+    if (priv->z_eof) return EOF;
+    if (priv->s.avail_in == 0) {
+	priv->s.avail_in = (uInt) icon->read(priv->buffer, 1, Z_BUFSIZE, icon);
+	if (priv->s.avail_in == 0) {
+	    priv->z_eof = 1;
+	    return EOF;
+	} else if ((int)priv->s.avail_in < 0)
+	    error("error reading from the connection");
+	priv->s.next_in = priv->buffer;
+    }
+    priv->s.avail_in--;
+    return *(priv->s.next_in)++;
+}
 
 static Rboolean gzcon_open(Rconnection con)
 {
@@ -6185,44 +6200,53 @@ static Rboolean gzcon_open(Rconnection con)
 
     if(con->canread) {
 	/* read header */
-	char c, ccc, method, flags, dummy[6];
+	char c, method, flags;
 	unsigned char head[2];
 	uInt len;
 
-	icon->read(head, 1, 2, icon);
-	if(head[0] != gz_magic[0] || head[1] != gz_magic[1]) {
+	len = (uInt) icon->read(head, 1, 2, icon);
+	if ((int)len < 0)
+	    error("error reading from the connection");
+	if(len < 2 || head[0] != gz_magic[0] || head[1] != gz_magic[1]) {
 	    if(!priv->allow) {
 		warning(_("file stream does not have gzip magic number"));
 		return FALSE;
 	    }
-	    priv->nsaved = 2;
-	    priv->saved[0] = head[0];
-	    priv->saved[1] = head[1];
+	    priv->nsaved = 0;
+	    if (len >= 1) {
+		priv->nsaved++;
+		priv->saved[0] = head[0];
+	    }
+	    if (len == 2) {
+		priv->nsaved++;
+		priv->saved[1] = head[1];
+	    }
 	    return TRUE;
 	}
-	icon->read(&method, 1, 1, icon);
-	icon->read(&flags, 1, 1, icon);
+	method = gzcon_byte(priv);
+	flags = gzcon_byte(priv);
 	if (method != Z_DEFLATED || (flags & RESERVED) != 0) {
 	    warning(_("file stream does not have valid gzip header"));
 	    return FALSE;
 	}
-	icon->read(dummy, 1, 6, icon);
+	/* Discard time, xflags and OS code: */
+	for (len = 0; len < 6; len++) (void) gzcon_byte(priv);
+
 	if ((flags & EXTRA_FIELD) != 0) { /* skip the extra field */
-	    len  =  (uInt) get_byte();
-	    len += ((uInt) get_byte()) << 8;
+	    len  =  (uInt) gzcon_byte(priv);
+	    len += ((uInt) gzcon_byte(priv)) << 8;
 	    /* len is garbage if EOF but the loop below will quit anyway */
-	    while (len-- != 0 && get_byte() != EOF) ;
+	    while (len-- != 0 && gzcon_byte(priv) != EOF) ;
 	}
 	if ((flags & ORIG_NAME) != 0) { /* skip the original file name */
-	    while ((c = get_byte()) != 0 && c != EOF) ;
+	    while ((c = gzcon_byte(priv)) != 0 && c != EOF) ;
 	}
 	if ((flags & COMMENT) != 0) {   /* skip the .gz file comment */
-	    while ((c = get_byte()) != 0 && c != EOF) ;
+	    while ((c = gzcon_byte(priv)) != 0 && c != EOF) ;
 	}
 	if ((flags & HEAD_CRC) != 0) {  /* skip the header crc */
-	    for (len = 0; len < 2; len++) (void) get_byte();
+	    for (len = 0; len < 2; len++) (void) gzcon_byte(priv);
 	}
-	priv->s.next_in  = priv->buffer;
 	inflateInit2(&(priv->s), -MAX_WBITS);
     } else {
 	/* write a header */
@@ -6293,23 +6317,6 @@ static void gzcon_close(Rconnection con)
     con->isopen = FALSE;
 }
 
-static int gzcon_byte(Rgzconn priv)
-{
-    Rconnection icon = priv->con;
-
-    if (priv->z_eof) return EOF;
-    if (priv->s.avail_in == 0) {
-	priv->s.avail_in = (uInt) icon->read(priv->buffer, 1, Z_BUFSIZE, icon);
-	if (priv->s.avail_in == 0) {
-	    priv->z_eof = 1;
-	    return EOF;
-	}
-	priv->s.next_in = priv->buffer;
-    }
-    priv->s.avail_in--;
-    return *(priv->s.next_in)++;
-}
-
 
 static size_t gzcon_read(void *ptr, size_t size, size_t nitems,
 			 Rconnection con)
@@ -6319,6 +6326,7 @@ static size_t gzcon_read(void *ptr, size_t size, size_t nitems,
     Bytef *start = (Bytef*) ptr;
     uLong crc;
     int n;
+    size_t icread;
 
     if (priv->z_err == Z_STREAM_END) return 0;  /* EOF */
 
@@ -6333,8 +6341,12 @@ static size_t gzcon_read(void *ptr, size_t size, size_t nitems,
 	    for(i = 0; i < priv->nsaved; i++)
 		((char *)ptr)[i] = priv->saved[i];
 	    priv->nsaved = 0;
-	    return (nsaved + icon->read((char *) ptr+nsaved, 1, len - nsaved,
-					icon))/size;
+	    icread = icon->read((char *) ptr+nsaved, 1, len - nsaved,
+				icon)/size;
+	    if ((int)icread < 0)
+		return icread;
+	    else
+		return nsaved + icread;
 	}
 	if (len == 1) { /* size must be one */
 	    if (nsaved > 0) {
@@ -6354,6 +6366,8 @@ static size_t gzcon_read(void *ptr, size_t size, size_t nitems,
 	if (priv->s.avail_in == 0 && !priv->z_eof) {
 	    priv->s.avail_in = (uInt)icon->read(priv->buffer, 1, Z_BUFSIZE, icon);
 	    if (priv->s.avail_in == 0) priv->z_eof = 1;
+	    if ((int)priv->s.avail_in < 0)
+		return priv->s.avail_in;
 	    priv->s.next_in = priv->buffer;
 	}
 	priv->z_err = inflate(&(priv->s), Z_NO_FLUSH);
