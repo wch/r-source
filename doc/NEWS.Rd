@@ -181,6 +181,12 @@
       vectors, the same as for \code{list}s, i.e., padding with \code{NULL}
       entries if the length is increased.  Thanks to \I{Mikael Jagan}'s
       \PR{18917}.
+
+      \item Fix for glyph rendering on the \code{quartz()} device when
+      there is other (\dQuote{normal}) text drawn on the device.  The
+      problem was that the text transformation matrix was not reset
+      so glyphs would be rendered incorrectly (often completely outside
+      the device, i.e., not visible).
     }
   }
 }

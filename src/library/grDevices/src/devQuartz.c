@@ -3160,6 +3160,7 @@ void RQuartz_glyph(int n, int *glyphs, double *x, double *y,
         /* NOTE: that the font needs an inversion (in y) matrix
            because the device has an inversion in user space 
            (for bitmap devices anyway) */
+        CGContextSetTextMatrix(ctx, CGAffineTransformIdentity);
         CGAffineTransform trans = CGAffineTransformMakeScale(1.0, -1.0);
         if (rot != 0.0) trans = CGAffineTransformRotate(trans, rot/180.*M_PI);
         CTFontRef ctFont = 
