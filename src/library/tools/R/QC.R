@@ -2945,9 +2945,9 @@ function(package, dir, lib.loc = NULL)
         isRepl <- ns_S3_genRepl[nonCh]
         if(any(isRepl) && any(bad_last <- !vapply(S3_fun_obj[isRepl], .check_last_formal_arg, NA)))
             bad_replace_funs <-
-                c(bad_replace_funs, paste0(ns_S3_generics [nonCh][isRepl][bad_last],
-                                           " . ", # not "." on purpose, but similar
-                                           ns_S3_methods_db[nonCh, 2L][isRepl][bad_last]))
+                c(bad_replace_funs, sprintf("\\S3method{%s}{%s}",
+                                            ns_S3_generics  [nonCh]    [isRepl][bad_last],
+                                            ns_S3_methods_db[nonCh, 2L][isRepl][bad_last]))
     }
     if(.isMethodsDispatchOn()) {
         S4_generics <- .get_S4_generics(code_env)
