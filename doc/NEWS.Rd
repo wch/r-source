@@ -59,6 +59,10 @@
       false, set to \code{TRUE} by \R's command-line option
       \option{--quiet} (and similar), now can be switched during an \R
       session.  Prompted by \I{Dirk Eddelbuettel}'s proposal in \PR{18913}.
+
+      \item Credentials for basic HTTP authentication with download method
+      \code{"libcurl"} can now be provided in a \command{netrc} file.  Path
+      to the file can be specified by \code{option()} \code{netrc}.
     }
   }
 
