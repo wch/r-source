@@ -88,6 +88,24 @@ tests <- function() {
   stopifnot(any(grepl("authenticated.*true", h)))
 
   if (getOption("download.file.method") == "libcurl") {
+    cat("- Basic auth using .netrc (libcurl only)\n")
+    fnetrc <- tempfile(tmpdir = getwd())
+    writeLines(c("machine developer.R-project.org",
+                 "login Aladdin",
+                 "password OpenSesame"),
+               fnetrc)
+    with_options(list(netrc = fnetrc), {
+      ret <- tryCatch({
+        h <- suppressWarnings(get_headers(
+          "basic-auth/Aladdin/OpenSesame"))
+        TRUE
+      }, error = function(e) FALSE)
+      stopifnot(ret && any(grepl("authenticated.*true", h)))
+    })
+    unlink(fnetrc)
+  }
+
+  if (getOption("download.file.method") == "libcurl") {
     cat("- Multiple urls (libcurl only)\n")
     urls <- get_path(c("anything", "headers"))
     tmp1 <- tempfile()
