@@ -211,6 +211,9 @@
       instead of hardwired \code{1e-5}; consequently, \code{ts(.., ts.eps=*)}
       now passes \code{ts.eps} to the \code{"tsp"} setting C code;
       both fixing a long-standing \sQuote{\I{FIXME}}.
+
+      \item \code{insertSource()} now ignores the internal
+      \code{.packageName} object, avoiding a superfluous message.
     }
   }
 }
