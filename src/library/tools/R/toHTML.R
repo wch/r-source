@@ -1,7 +1,7 @@
 #  File src/library/tools/R/toHTML.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2024 The R Core Team
+#  Copyright (C) 1995-2025 The R Core Team
 
 toHTML <- function(x, ...) UseMethod("toHTML")
 
@@ -187,6 +187,7 @@ function(x, ...)
 # Argument "depth" below says how far down in the hierarchy
 # we are starting from, e.g. /library/stats/html/mean.html
 # is depth 3
+# .writeVignetteHtmlIndex() uses depth=NULL to omit the directory prefix.
 
 makeVignetteTable <- function(vignettes, depth=2) {
     out <- c('<table style="width: 100%;">',
@@ -203,7 +204,8 @@ makeVignetteTable <- function(vignettes, depth=2) {
 	File  <- vignettes[i, "File"]
 	R     <- vignettes[i, "R"]
 	pkg   <- vignettes[i, "Package"]
-        root <- c(rep.int("../", depth), "library/", pkg, "/doc/")
+        root <- if (!is.null(depth))
+                    c(rep.int("../", depth), "library/", pkg, "/doc/")
 	link  <- c('<a href="', root,
 		  if (nchar(Outfile)) Outfile else File, '">',
 		  pkg, "::", topic, '</a>')

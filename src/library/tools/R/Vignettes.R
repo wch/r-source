@@ -1,7 +1,7 @@
 #  File src/library/tools/R/Vignettes.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2024 The R Core Team
+#  Copyright (C) 1995-2025 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -1058,19 +1058,22 @@ function(x, ...)
 
 ### * .writeVignetteHtmlIndex
 
-## NB SamplerCompare has a .Rnw file which produces no R code.
 .writeVignetteHtmlIndex <-
 function(pkg, con, vignetteIndex = NULL)
 {
-    ## FIXME: in principle we could need to set an encoding here
-    html <- c(HTMLheader("Vignettes and other documentation"),
+    html <- c(HTMLheader("Vignettes and other documentation",
+                         up = "../html/00Index.html",
+                         css = "../html/R.css", # installed since R 2.13.0
+                         ## relative paths to 'top' and 'logo' will only work
+                         ## for the (site-)library in RHOME (or dynamic help)
+                         Rhome = "../../.."),
               paste0("<h2>Vignettes from package '", pkg,"'</h2>"),
               if(NROW(vignetteIndex) == 0L) ## NROW(NULL) = 0
                   "The package contains no vignette meta-information."
               else {
                   vignetteIndex <- cbind(Package = pkg,
                                          as.matrix(vignetteIndex[, c("File", "Title", "PDF", "R")]))
-                  makeVignetteTable(vignetteIndex, depth = 3L)
+                  makeVignetteTable(vignetteIndex, depth = NULL)
               })
     otherfiles <- list.files(system.file("doc", package = pkg))
     if(NROW(vignetteIndex))
