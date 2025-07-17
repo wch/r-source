@@ -443,7 +443,7 @@ function(x, value, ns, pos = -1, envir = as.environment(pos))
         ns <- asNamespace(substring(nm, 9L))
     } else ns <- asNamespace(ns)
     ns_name <- getNamespaceName(ns)
-    if (nf > 1L) {
+    if (nf > 1L && !identical(sys.function(1), fixInNamespace)) {
         if(ns_name %in% tools:::.get_standard_package_names()$base)
             stop("locked binding of ", sQuote(x), " cannot be changed",
                  domain = NA)

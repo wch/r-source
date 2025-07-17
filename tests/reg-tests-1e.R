@@ -2040,8 +2040,9 @@ omethod <- tools:::toRd.default
 assignInNamespace("toRd.default", `body<-`(omethod, value = ""), "tools")
 ## R <= 4.5.1 gave Error: object 'toRd' of mode 'function' was not found
 assertValueIs("")  # failed for tools::toRd(1): S3 table was not updated
-## now restore the original definition:
-assignInNamespace("toRd.default", omethod, "tools")
+## now restore the original definition, testing fixInNamespace():
+fixInNamespace("toRd.default", "tools", editor = function (...) omethod)
+## failed in R <= 4.5.1
 assertValueIs("1")
 
 
