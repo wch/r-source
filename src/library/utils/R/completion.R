@@ -1385,7 +1385,7 @@ fileCompletions <- function(token)
         "help.htmlmath", "help.htmltoc", "help.ports", "help_type", "install.lock",
         "install.packages.check.source",
         "install.packages.compile.from.source",
-        "interrupt", "Ncpus", "save.defaults", "save.image.defaults",
+        "interrupt", "Ncpus", "netrc", "save.defaults", "save.image.defaults",
         "setWidthOnResize", "show.error.locations", "show.nls.convergence",
         "SweaveHooks", "SweaveSyntax", "topLevelEnvironment",
         "traceback.max.lines", "url.method", "warning.expression"

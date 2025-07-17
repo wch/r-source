@@ -61,8 +61,8 @@
       session.  Prompted by \I{Dirk Eddelbuettel}'s proposal in \PR{18913}.
 
       \item Credentials for basic HTTP authentication with download method
-      \code{"libcurl"} can now be provided in a \command{netrc} file.  Path
-      to the file can be specified by \code{option()} \code{netrc}.
+      \code{"libcurl"} can now be provided in a \file{netrc} file.  The
+      path to the file can be specified in \code{options("netrc")}.
     }
   }
 
