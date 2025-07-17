@@ -223,6 +223,10 @@
       \file{doc/index.html} page now also work for packages not installed
       in the default \code{.Library},
       thanks to a report by \I{Patrice Kiener}.
+
+      \item %\code{assignInNamespace("\var{S3method}")} and thus
+      \code{fixInNamespace("\var{S3method}")} failed to update the S3
+      methods table when the generic was not on the search path.
     }
   }
 }

@@ -1,7 +1,7 @@
 #  File src/library/utils/R/objects.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2024 The R Core Team
+#  Copyright (C) 1995-2025 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -419,7 +419,7 @@ function(x, value)
         S3names <- S3[, 3L]
         if(x %in% S3names) {
             i <- match(x, S3names)
-            genfun <- get(S3[i, 1L], mode = "function", envir = parent.frame())
+            genfun <- get(S3[i, 1L], mode = "function", envir = ns)
             if(.isMethodsDispatchOn() && methods::is(genfun, "genericFunction"))
                 genfun <- methods::slot(genfun, "default")@methods$ANY
             defenv <- .defenv_for_S3_registry(genfun)
@@ -479,7 +479,7 @@ function(x, value, ns, pos = -1, envir = as.environment(pos))
         S3names <- S3[, 3L]
         if(x %in% S3names) {
             i <- match(x, S3names)
-            genfun <- get(S3[i, 1L], mode = "function", envir = parent.frame())
+            genfun <- get(S3[i, 1L], mode = "function", envir = ns)
             if(.isMethodsDispatchOn() && methods::is(genfun, "genericFunction"))
                 genfun <- methods::slot(genfun, "default")@methods$ANY
             defenv <- .defenv_for_S3_registry(genfun)
