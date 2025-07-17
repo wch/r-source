@@ -218,6 +218,11 @@
 
       \item \code{insertSource()} now ignores the internal
       \code{.packageName} object, avoiding a superfluous message.
+
+      \item In static HTML help, links to vignette files from the default
+      \file{doc/index.html} page now also work for packages not installed
+      in the default \code{.Library},
+      thanks to a report by \I{Patrice Kiener}.
     }
   }
 }
