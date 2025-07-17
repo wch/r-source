@@ -72,7 +72,7 @@ t.test(x, \dots)
 
   If the data contain infinite values, \code{t.test()} no longer errors and
   returns a still not very useful result.  Note that
-  \code{\link{wilcox.test()}} is \emph{robust} against outliers and hence
+  \code{\link{wilcox.test}()} is \emph{robust} against outliers and hence
   deals more usefully with such \code{Inf} values in \code{x} or \code{y}.
 }
 \value{
