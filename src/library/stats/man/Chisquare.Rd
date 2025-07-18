@@ -32,7 +32,8 @@ rchisq(n, df, ncp = 0)
   \item{log, log.p}{logical; if TRUE, probabilities p are given as log(p).}
   \item{lower.tail}{logical; if TRUE (default), probabilities are
     \eqn{P[X \le x]}, otherwise, \eqn{P[X > x]}, unless for \code{df=0} and
-    when \code{ncp} is missing, where the central chi-square cdf is based
+    when \code{ncp} is missing, where the central chi-squared
+    distribution function is based
     on \code{\link{pgamma}()}; in this case, probabilities are
     \eqn{P[X < x]} when \code{lower.tail} is true, and \eqn{P[X \ge x]}, otherwise.}
 }
