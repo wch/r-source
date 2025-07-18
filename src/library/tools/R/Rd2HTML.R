@@ -1695,7 +1695,7 @@ function(dir)
                         if(dynamic)
                             " src=\"/doc/html/orcid.svg\" "
                         else
-                            " src=\"https://cloud.R-project.org/web/orcid.svg\" ",
+                            " src=\"https://cloud.R-project.org/web/resources/orcid.svg\" ",
                         "style=\"width:16px; height:16px; margin-left:4px; margin-right:4px; vertical-align:middle\"",
                         " /></a>"),
                  desc["Author"])
@@ -1707,7 +1707,7 @@ function(dir)
                         if(dynamic)
                             " src=\"/doc/html/ror.svg\" "
                         else
-                            " src=\"https://cloud.R-project.org/web/ror.svg\" ",
+                            " src=\"https://cloud.R-project.org/web/resources/ror.svg\" ",
                         "style=\"width:20px; height:20px; margin-left:4px; margin-right:4px; vertical-align:middle\"",
                         " /></a>"),
                  desc["Author"])
