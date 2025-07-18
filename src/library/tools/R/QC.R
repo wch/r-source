@@ -8145,6 +8145,18 @@ function(dir, localOnly = FALSE, pkgSize = NA)
                 if(any(ind))
                     bad <- bad[!ind, ]
             }
+            if(NROW(bad) &&
+               config_val_to_logical(Sys.getenv("_R_CHECK_URLS_TAKE_403_STATUS_AS_OK_",
+                                                "TRUE"))) {
+                ## Unfortunately, web servers increasingly use 403s for
+                ## "non-browser" accesses (and issue captcha challenges
+                ## otherwise), which seems strange for HEAD requests.
+                ## Arguably, the 403s could be taken to indicate that
+                ## the resource exists but access was not permitted, and
+                ## hence (for now by default, could be changed to only
+                ## optionally) take these as "OK".
+                bad <- bad[bad$Status != "403", ]
+            }
             if(NROW(bad))
                 out$bad_urls <- bad
         }
@@ -8580,11 +8592,9 @@ function(dir, localOnly = FALSE, pkgSize = NA)
     ## this can have multiple entries, e.g. for recommended packages.
     meta0 <- unlist(meta1[1L, ])
     m_m <- as.vector(meta["Maintainer"]) # drop name
-    m_d <- meta0["Maintainer"]
-    # There may be white space differences here
-    m_m_1 <- gsub("[[:space:]]+", " ", m_m)
-    m_d_1 <- gsub("[[:space:]]+", " ", m_d)
-    if(!all(m_m_1 == m_d_1)) {
+    m_d <- as.vector(meta0["Maintainer"])
+    if(tolower(sub("[^<]*<(.*)>.*", "\\1", m_m)) !=
+       tolower(sub("[^<]*<(.*)>.*", "\\1", m_d))) {
         ## strwrap is used below, so we need to worry about encodings.
         ## m_d is in UTF-8 already
         if(Encoding(m_m) == "latin1") m_m <- iconv(m_m, "latin1")
