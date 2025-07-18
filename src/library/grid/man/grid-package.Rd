@@ -20,19 +20,19 @@ S-style graphics (see the \pkg{graphics} package).
 Further information is available in the following
 \link{vignettes}:
 \tabular{ll}{
-\code{grid} \tab Introduction to \code{grid} (\url{../doc/grid.pdf})\cr
-\code{displaylist} \tab Display Lists in \code{grid} (\url{../doc/displaylist.pdf})\cr
-\code{frame} \tab Frames and packing grobs (\url{../doc/frame.pdf})\cr
-\code{grobs} \tab Working with \code{grid} grobs (\url{../doc/grobs.pdf})\cr
-\code{interactive} \tab Editing \code{grid} Graphics (\url{../doc/interactive.pdf})\cr
-\code{locndimn} \tab Locations versus Dimensions (\url{../doc/locndimn.pdf})\cr
-\code{moveline} \tab Demonstrating move-to and line-to (\url{../doc/moveline.pdf})\cr
-\code{nonfinite} \tab How \code{grid} responds to non-finite values (\url{../doc/nonfinite.pdf})\cr
-\code{plotexample} \tab Writing \code{grid} Code (\url{../doc/plotexample.pdf})\cr
-\code{rotated} \tab Rotated Viewports (\url{../doc/rotated.pdf})\cr
-\code{saveload} \tab Persistent representations (\url{../doc/saveload.pdf})\cr
-\code{sharing} \tab Modifying multiple grobs simultaneously (\url{../doc/sharing.pdf})\cr
-\code{viewports} \tab Working with \code{grid} viewports (\url{../doc/viewports.pdf})\cr
+\code{grid} \tab \href{../doc/grid.pdf}{Introduction to \pkg{grid}} \cr
+\code{displaylist} \tab \href{../doc/displaylist.pdf}{Display Lists in \pkg{grid}} \cr
+\code{frame} \tab \href{../doc/frame.pdf}{Frames and packing grobs} \cr
+\code{grobs} \tab \href{../doc/grobs.pdf}{Working with \pkg{grid} grobs} \cr
+\code{interactive} \tab \href{../doc/interactive.pdf}{Editing \pkg{grid} Graphics} \cr
+\code{locndimn} \tab \href{../doc/locndimn.pdf}{Locations versus Dimensions} \cr
+\code{moveline} \tab \href{../doc/moveline.pdf}{Demonstrating move-to and line-to} \cr
+\code{nonfinite} \tab \href{../doc/nonfinite.pdf}{How \pkg{grid} responds to non-finite values} \cr
+\code{plotexample} \tab \href{../doc/plotexample.pdf}{Writing \pkg{grid} Code} \cr
+\code{rotated} \tab \href{../doc/rotated.pdf}{Rotated Viewports} \cr
+\code{saveload} \tab \href{../doc/saveload.pdf}{Persistent representations} \cr
+\code{sharing} \tab \href{../doc/sharing.pdf}{Modifying multiple grobs simultaneously} \cr
+\code{viewports} \tab \href{../doc/viewports.pdf}{Working with \pkg{grid} viewports} \cr
 }
 
 For a complete list of functions with individual help pages,
