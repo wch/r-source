@@ -1,7 +1,7 @@
 #  File src/library/tools/R/CRANtools.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 2014-2022 The R Core Team
+#  Copyright (C) 2014-2025 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -782,3 +782,23 @@ function(remap = TRUE)
     }
     db
 }
+
+.get_BioC_repository_URL <-
+function(which = "BioCsoft")
+{
+    which <- match.arg(which)
+    repos <- getOption("repos")
+    if(!is.null(repos) && !is.na(u <- repos[which]))
+        return(u)
+    utils:::.get_repositories()[which, "URL"]
+}
+
+BioC_aliases_db <-
+function()
+    read_CRAN_object(.get_BioC_repository_URL(),
+                     "src/contrib/Meta/aliases.rds")
+
+BioC_rdxrefs_db <- 
+function()
+    read_CRAN_object(.get_BioC_repository_URL(),
+                     "src/contrib/Meta/rdxrefs.rds")
