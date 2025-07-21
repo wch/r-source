@@ -79,7 +79,8 @@ Name: Apache License
 Version: 2.0
 OSI: open (https://opensource.org/licenses/Apache-2.0)
 FSF: free (https://www.gnu.org/licenses/license-list.html#apache2)
-URL: https://www.apache.org/licenses/LICENSE-2.0
+File: share/licenses/Apache-2.0
+URL: https://www.r-project.org/Licenses/Apache-2.0
 FOSS: yes
 SPDX: Apache-2.0
 
@@ -286,7 +287,8 @@ SPDX: CC-BY-NC-ND-4.0
 Name: CC0
 FSF: free (https://www.gnu.org/licenses/license-list.html#CC0)
 OSI: NA (https://opensource.org/faq#cc-zero)
-URL: https://creativecommons.org/publicdomain/zero/1.0/legalcode
+File: CC0-1.0
+URL: https://www.r-project.org/Licenses/CC0-1.0
 FOSS: yes
 SPDX: CC0-1.0
 
