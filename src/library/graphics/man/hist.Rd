@@ -70,7 +70,6 @@ hist(x, \dots)
   \item{xlim, ylim}{the range of x and y values with sensible defaults.
     Note that \code{xlim} is \emph{not} used to define the histogram (breaks),
     but only for plotting (when \code{plot = TRUE}).}
-  \item{log}{a string, by default \code{""}, otherwise typically \code{"x"}.}
   \item{axes}{logical.  If \code{TRUE} (default), axes are drawn when the plot is.}
   \item{plot}{logical.  If \code{TRUE} (default), a histogram is
     plotted, otherwise a list of breaks and counts is returned.  In the
