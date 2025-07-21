@@ -696,6 +696,7 @@ Rd2txt <-
                    ## FIXME: treat 2 of 2 differently?
                    inEqn0 <- inEqn
                    inEqn <<- TRUE
+                   dropBlank <<- TRUE
                    writeContent(block, tag)
                    inEqn <<- inEqn0
                },
