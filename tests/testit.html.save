@@ -129,6 +129,13 @@ output
 
 
 
+<h3><code style="white-space: pre;">&#8288;\eqn&#8288;</code></h3>
+
+<p>This should not start a new paragraph:
+<code class="reqn">\frac{1}{n-1}</code>.
+</p>
+
+
 <h3><code style="white-space: pre;">&#8288;\deqn&#8288;</code></h3>
 
 <p>1-arg form, centered also in text conversion:

@@ -78,6 +78,11 @@ foo(\var{x}, \var{y}, ...)
     row\tab % nothing here
   }
 }
+\section{\verb{\eqn}}{
+  This should not start a new paragraph:
+  \eqn{\frac{1}{n-1}}{
+             1/(n-1)}.
+}
 \section{\verb{\deqn}}{
   1-arg form, centered also in text conversion:
   \deqn{
