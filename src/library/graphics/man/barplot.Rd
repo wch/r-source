@@ -1,6 +1,6 @@
 % File src/library/graphics/man/barplot.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2021 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{barplot}
@@ -184,12 +184,14 @@ par(op)
 # Default method
 require(grDevices) # for colours
 tN <- table(Ni <- stats::rpois(100, lambda = 5))
+## barplot() returns x-locations:
 r <- barplot(tN, col = rainbow(20))
-#- type = "h" plotting *is* 'bar'plot
-lines(r, tN, type = "h", col = "red", lwd = 2)
+lines(r, tN, type = "h", col = 2, lwd = 7) # type "h" plot *is* 'bar'plot
 
+## draw axis separately  using x-locations from barplot():
 barplot(tN, space = 1.5, axisnames = FALSE,
-        sub = "barplot(..., space= 1.5, axisnames = FALSE)")
+        sub = "barplot(..., space= 1.5, axisnames = FALSE)"
+       ) |> axis(1, at = _, labels = paste("# :", tN), cex.axis = 3/4)
 
 barplot(VADeaths, plot = FALSE)
 barplot(VADeaths, plot = FALSE, beside = TRUE)

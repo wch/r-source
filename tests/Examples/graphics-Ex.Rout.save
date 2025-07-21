@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2025-02-17 r87727) -- "Unsuffered Consequences"
+R Under development (unstable) (2025-07-21 r88434) -- "Unsuffered Consequences"
 Copyright (C) 2025 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu
 
@@ -383,12 +383,14 @@ Survived 1st 2nd 3rd Crew
 > # Default method
 > require(grDevices) # for colours
 > tN <- table(Ni <- stats::rpois(100, lambda = 5))
+> ## barplot() returns x-locations:
 > r <- barplot(tN, col = rainbow(20))
-> #- type = "h" plotting *is* 'bar'plot
-> lines(r, tN, type = "h", col = "red", lwd = 2)
+> lines(r, tN, type = "h", col = 2, lwd = 7) # type "h" plot *is* 'bar'plot
 > 
+> ## draw axis separately  using x-locations from barplot():
 > barplot(tN, space = 1.5, axisnames = FALSE,
-+         sub = "barplot(..., space= 1.5, axisnames = FALSE)")
++         sub = "barplot(..., space= 1.5, axisnames = FALSE)"
++        ) |> axis(1, at = _, labels = paste("# :", tN), cex.axis = 3/4)
 > 
 > barplot(VADeaths, plot = FALSE)
 [1] 0.7 1.9 3.1 4.3
