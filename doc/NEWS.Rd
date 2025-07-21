@@ -231,6 +231,9 @@
 
       \item An initial newline inside an Rd inline \verb{\eqn} no longer
       breaks the paragraph in plain-text help (\code{tools::Rd2txt}).
+
+      \item \code{hist(*, log = "x")} now works without a warning, thanks
+      to \I{Martin Smith}'s \PR{18921}.
     }
   }
 }

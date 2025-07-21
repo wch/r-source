@@ -2046,6 +2046,13 @@ fixInNamespace("toRd.default", "tools", editor = function (...) omethod)
 assertValueIs("1")
 
 
+## No warnings for hist(.., log="x") -- PR#18921
+op <- options(warn = 2)
+hist(1:100, breaks = 2^(0:8), log = "x")
+options(op)
+## used to signal 3 warnings
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

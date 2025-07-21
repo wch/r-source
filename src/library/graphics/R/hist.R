@@ -1,7 +1,7 @@
 #  File src/library/graphics/R/hist.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2021 The R Core Team
+#  Copyright (C) 1995-2025 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -169,7 +169,7 @@ plot.histogram <-
 	      main = paste("Histogram of", paste(x$xname, collapse="\n")),
               sub = NULL,
 	      xlab = x$xname, ylab,
-	      xlim = range(x$breaks), ylim = NULL,
+	      xlim = range(x$breaks), ylim = NULL, log = "",
 	      axes = TRUE, labels = FALSE, add = FALSE, ann = TRUE, ...)
 {
     equidist <-
@@ -189,7 +189,7 @@ plot.histogram <-
 	if (missing(ylab))
 	    ylab <- if (!freq) "Density" else "Frequency"
 	plot.new()
-	plot.window(xlim, ylim, "", ...)	#-> ylim's default from 'y'
+	plot.window(xlim, ylim, log, ...)	#-> ylim's default from 'y'
 	if(ann) title(main = main, sub = sub, xlab = xlab, ylab = ylab, ...)
 	if(axes) {
 	    axis(1, ...)
