@@ -8,7 +8,8 @@
 \section{\Rlogo CHANGES IN R-devel}{
   \subsection{SIGNIFICANT USER-VISIBLE CHANGES}{
     \itemize{
-      \item The R citation now provides a \abbr{DOI}: please update your
+      \item The R citation now provides a \abbr{DOI}
+      (\I{10.32614/R.manuals}): please update your 
       bibliographies accordingly.
     }
   }
