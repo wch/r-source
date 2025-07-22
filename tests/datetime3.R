@@ -763,6 +763,21 @@ assertErrV(seq(to=to, by=by))
 assertErrV(seq(from, to, by=by, length.out=length.out))
 
 
+## subassignment to POSIXlt must reconcile time zones - PR#18919
+tz <- "America/Toronto"
+if(!tz %in% OlsonNames()) {
+    cat(sprintf("%s not in time zone data base\n", tz))
+} else withAutoprint({
+    (x <- x1 <- x2 <- as.POSIXlt(.POSIXct(0, tz = "UTC")))
+    (y <- as.POSIXlt(.POSIXct(0, tz = tz)))
+    x1[1L] <- x2[[1L]] <- y
+    x1; x2
+    stopifnot(identical(x1, x), identical(x2, x))
+})
+## x1, x2 were identical but differing from x
+
+
+
 ## keep at end
 rbind(last =  proc.time() - .pt,
       total = proc.time())
