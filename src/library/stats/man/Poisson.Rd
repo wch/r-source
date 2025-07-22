@@ -53,7 +53,9 @@ rpois(n, lambda)
 \details{
   The Poisson distribution has density
 %-- please leave the linebreaking for the next two ! --
-  \deqn{p(x) = \frac{\lambda^x e^{-\lambda}}{x!}}{p(x) = \lambda^x exp(-\lambda)/x!}
+%-- keep in sync with R-exts#Mathematics --
+  \deqn{p(x) = \frac{\lambda^x e^{-\lambda}}{x!}}{
+        p(x) = \lambda^x exp(-\lambda)/x!}
   for \eqn{x = 0, 1, 2, \ldots} .
   The mean and variance are \eqn{E(X) = Var(X) = \lambda}.
 

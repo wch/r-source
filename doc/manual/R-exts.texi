@@ -8154,20 +8154,21 @@ The following example is from @file{Poisson.Rd}:
 
 @example
 @group
-  \deqn@{p(x) = \frac@{\lambda^x e^@{-\lambda@}@}@{x!@}@}@{%
+  \deqn@{p(x) = \frac@{\lambda^x e^@{-\lambda@}@}@{x!@}@}@{
         p(x) = \lambda^x exp(-\lambda)/x!@}
-  for \eqn@{x = 0, 1, 2, \ldots@}.
+  for \eqn@{x = 0, 1, 2, \ldots@} .
 @end group
 @end example
 
 @iftex
 For the @LaTeX{} manual and in enhanced @HTML{} help, this becomes
 @c: this is TeXinfo markup, not the result of the conversions.
+@c FIXME: switch to @displaymath when we require Texinfo 6.8 or later
 @quotation
 @cartouche
 @tex
 $$ p(x) = {\lambda^x e^{-\lambda} \over x!} $$
-for $x = 0, 1, 2, \ldots$.
+for $x = 0, 1, 2, \ldots$ .
 @end tex
 @end cartouche
 @end quotation
@@ -8180,7 +8181,7 @@ In plain-text help we get
 @example
     p(x) = lambda^x exp(-lambda)/x!
 
-for x = 0, 1, 2, ....
+for x = 0, 1, 2, ... .
 @end example
 @end cartouche
 @end quotation
