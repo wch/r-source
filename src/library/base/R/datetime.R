@@ -1566,7 +1566,7 @@ as.list.POSIXlt <- function(x, ...)
 `[[<-.POSIXlt` <- function(x, i, value)
 {
     cl <- oldClass(x)
-    class(x) <- unCfillPOSIXlt(x)
+    x <- unCfillPOSIXlt(x)
 
     if(!missing(i) && is.character(i)) {
         nms <- names(x$year)
