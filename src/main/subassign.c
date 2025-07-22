@@ -753,7 +753,7 @@ static SEXP VectorAssign(SEXP call, SEXP rho, SEXP x, SEXP s, SEXP y)
 		    int iy = INTEGER_ELT(y, iny);
 		    if (iy == NA_INTEGER) {
 			px[ii].r = NA_REAL;
-			px[ii].i = NA_REAL;
+			px[ii].i = 0.0;
 		    }
 		    else {
 			px[ii].r = iy;
@@ -771,7 +771,7 @@ static SEXP VectorAssign(SEXP call, SEXP rho, SEXP x, SEXP s, SEXP y)
 		    double ry = REAL_ELT(y, iny);
 		    if (ISNA(ry)) {
 			px[ii].r = NA_REAL;
-			px[ii].i = NA_REAL;
+			px[ii].i = 0.0;
 		    }
 		    else {
 			px[ii].r = ry;
@@ -1064,7 +1064,7 @@ static SEXP MatrixAssign(SEXP call, SEXP rho, SEXP x, SEXP s, SEXP y)
 		    int iy = INTEGER_ELT(y, k);
 		    if (iy == NA_INTEGER) {
 			px[ij].r = NA_REAL;
-			px[ij].i = NA_REAL;
+			px[ij].i = 0.0;
 		    }
 		    else {
 			px[ij].r = iy;
@@ -1082,7 +1082,7 @@ static SEXP MatrixAssign(SEXP call, SEXP rho, SEXP x, SEXP s, SEXP y)
 		    double ry = REAL_ELT(y, k);
 		    if (ISNA(ry)) {
 			px[ij].r = NA_REAL;
-			px[ij].i = NA_REAL;
+			px[ij].i = 0.0;
 		    }
 		    else {
 			px[ij].r = ry;
@@ -1297,7 +1297,7 @@ static SEXP ArrayAssign(SEXP call, SEXP rho, SEXP x, SEXP s, SEXP y)
 		    int iy = INTEGER_ELT(y, iny);
 		    if (iy == NA_INTEGER) {
 			px[ii].r = NA_REAL;
-			px[ii].i = NA_REAL;
+			px[ii].i = 0.0;
 		    }
 		    else {
 			px[ii].r = iy;
@@ -1315,7 +1315,7 @@ static SEXP ArrayAssign(SEXP call, SEXP rho, SEXP x, SEXP s, SEXP y)
 		    double ry = REAL_ELT(y, iny);
 		    if (ISNA(ry)) {
 			px[ii].r = NA_REAL;
-			px[ii].i = NA_REAL;
+			px[ii].i = 0.0;
 		    }
 		    else {
 			px[ii].r = ry;
@@ -1590,6 +1590,7 @@ NORET static void errorNotSubsettable(SEXP x)
 {
     SEXP call = R_CurrentExpression; /* behave like error() */
     SEXP cond = R_makeNotSubsettableError(x, call);
+    PROTECT(cond);
     R_signalErrorCondition(cond, call);
     UNPROTECT(1); /* cond; not reached */
 }
@@ -1598,6 +1599,7 @@ NORET static void errorMissingSubscript(SEXP x)
 {
     SEXP call = R_CurrentExpression; /* behave like error() */
     SEXP cond = R_makeMissingSubscriptError(x, call);
+    PROTECT(cond);
     R_signalErrorCondition(cond, call);
     UNPROTECT(1); /* cond; not reached */
 }
@@ -1637,7 +1639,7 @@ attribute_hidden SEXP do_subassign_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
     oldtype = 0;
     if (TYPEOF(x) == LISTSXP || TYPEOF(x) == LANGSXP) {
 	oldtype = TYPEOF(x);
-	PROTECT(x = PairToVectorList(x));
+	x = PairToVectorList(x);
     }
     else if (xlength(x) == 0) {
 	if (xlength(y) == 0 && (isNull(x) || TYPEOF(x) == TYPEOF(y) ||
@@ -1648,13 +1650,10 @@ attribute_hidden SEXP do_subassign_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	}
 	else {
 	    /* bug PR#2590 coerce only if null */
-	    if(isNull(x)) PROTECT(x = coerceVector(x, TYPEOF(y)));
-	    else PROTECT(x);
+	    if(isNull(x)) x = coerceVector(x, TYPEOF(y));
 	}
     }
-    else {
-	PROTECT(x);
-    }
+    PROTECT(x);
 
     switch (TYPEOF(x)) {
     case LGLSXP:
@@ -1946,7 +1945,7 @@ do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 	    if (INTEGER_ELT(y, 0) == NA_INTEGER) {
 		COMPLEX(x)[offset].r = NA_REAL;
-		COMPLEX(x)[offset].i = NA_REAL;
+		COMPLEX(x)[offset].i = 0.0;
 	    }
 	    else {
 		COMPLEX(x)[offset].r = INTEGER_ELT(y, 0);
@@ -1958,7 +1957,7 @@ do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 	    if (ISNA(REAL_ELT(y, 0))) {
 		COMPLEX(x)[offset].r = NA_REAL;
-		COMPLEX(x)[offset].i = NA_REAL;
+		COMPLEX(x)[offset].i = 0.0;
 	    }
 	    else {
 		COMPLEX(x)[offset].r = REAL_ELT(y, 0);

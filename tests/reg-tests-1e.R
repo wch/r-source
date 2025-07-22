@@ -2053,6 +2053,29 @@ options(op)
 ## used to signal 3 warnings
 
 
+## subassigning from real to complex keeping zero imaginary part
+ll <- list(NA, 0L, NA_integer_, 0, NA_real_, NaN, -Inf, Inf,
+           0i, NA_complex_)
+rr <- vapply(ll, Re, 0)
+ii <- vapply(ll, Im, 0) # all 0, but the very last
+chk <- function (x, y = as.vector(x)) stopifnot(identical(Re(y), rr),
+                                                identical(Im(y), ii))
+chk(unlist(ll))
+a1 <- a2 <- complex(m <- length(ll))
+for (i in seq_len(m)) a1[i] <- a2[[i]] <- ll[[i]]
+chk(a1); chk(a2)
+a1 <- a2 <- array(0i, c(m))
+for (i in seq_len(m)) a1[i] <- a2[[i]] <- ll[[i]]
+chk(a1); chk(a2)
+a1 <- a2 <- array(0i, c(m, 1L))
+for (i in seq_len(m)) a1[i, 1L] <- a2[[i, 1L]] <- ll[[i]]
+chk(a1); chk(a2)
+a1 <- a2 <- array(0i, c(m, 1L, 1L))
+for (i in seq_len(m)) a1[i, 1L, 1L] <- a2[[i, 1L, 1L]] <- ll[[i]]
+chk(a1); chk(a2)
+## Im(.)s had more NA's than just at the end, in R <= 4.5.z
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

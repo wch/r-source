@@ -193,6 +193,11 @@
       problem was that the text transformation matrix was not reset
       so glyphs would be rendered incorrectly (often completely outside
       the device, i.e., not visible).
+
+      \item \code{<complex>[i] <- NA} now only sets the \emph{real} part to
+      \code{NA}, consistently with the \code{as.complex(NA)} behaviour
+      since \R 4.4.0; thanks to \I{Mikael Jagan}'s \PR{18918}.
+
     }
   }
 }
