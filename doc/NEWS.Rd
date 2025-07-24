@@ -235,8 +235,8 @@
       \code{fixInNamespace("\var{S3method}")} failed to update the S3
       methods table when the generic was not on the search path.
 
-      \item An initial newline inside an Rd inline \verb{\eqn} no longer
-      breaks the paragraph in plain-text help (\code{tools::Rd2txt}).
+      \item In plain-text help (\code{Rd2txt}), an initial newline from
+      an Rd inline \verb{\eqn} no longer breaks the paragraph.
 
       \item \code{hist(*, log = "x")} now works without a warning, thanks
       to \I{Martin Smith}'s \PR{18921}.
