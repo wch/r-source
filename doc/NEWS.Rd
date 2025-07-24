@@ -37,6 +37,9 @@
       \item %\code{assignInNamespace("\var{S3method}")} and thus
       \code{fixInNamespace("\var{S3method}")} failed to update the S3
       methods table when the generic was not on the search path.
+
+      \item In plain-text help (\code{Rd2txt}), an initial newline from
+      an Rd inline \verb{\eqn} no longer breaks the paragraph.
     }
   }
 }
@@ -770,7 +773,7 @@
       signal an error instead of invalidating ops relying on a finite
       integer value.  Values outside the range -9 .. 9999 are now warned
       about and set to a boundary or to the default \code{0}, e.g., in
-      case of an \code{NA}.
+      case of an \code{NA}.  This also fixes \PR{16322}.
 
       \item \code{cbind()} could segfault with \code{NULL} inputs.
       (Seen when \R was built with \command{gcc-14}, \abbr{LTO} and C99

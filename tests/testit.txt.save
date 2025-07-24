@@ -70,6 +70,10 @@ _V_a_l_u_e:
        -3-                               third                              
                                            row                              
       
+\_e_q_n:
+
+     This should not start a new paragraph: 1/(n-1).
+
 \_d_e_q_n:
 
      1-arg form, centered also in text conversion:

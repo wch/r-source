@@ -86,6 +86,11 @@ row&
 }
 \end{Section}
 %
+\begin{Section}{\AsIs{\texttt{\bsl{}eqn}}}
+This should not start a new paragraph:
+\eqn{\frac{1}{n-1}}{}.
+\end{Section}
+%
 \begin{Section}{\AsIs{\texttt{\bsl{}deqn}}}
 1-arg form, centered also in text conversion:
 \deqn{
