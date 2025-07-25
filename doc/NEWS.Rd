@@ -198,6 +198,9 @@
       \code{NA}, consistently with the \code{as.complex(NA)} behaviour
       since \R 4.4.0; thanks to \I{Mikael Jagan}'s \PR{18918}.
 
+      \item \code{format(<list>)} calling \code{format.default()} now calls
+      generic \code{format()} on each list element (rather than
+      \code{format.default()}).
     }
   }
 }
