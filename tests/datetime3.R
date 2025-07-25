@@ -775,6 +775,16 @@ if(!tz %in% OlsonNames()) {
     stopifnot(identical(x1, x), identical(x2, x))
 })
 ## x1, x2 were identical but differing from x
+n <- 4L # >= 3 for NA-filling in subassignment
+z1 <- z2 <- `attr<-`(z <- as.POSIXlt(.POSIXct(double(n), "UTC")),
+                     "balanced", NULL)
+z1$year <- z2$year <- z$year[1L] # "un"balance
+z1[n] <- z2[[n]] <- z[[1L]]      # check `[<-` and `[[<-`
+stopifnot(z2[,"year"] == 70) # was (70 NA NA 70) previously
+identicalPlt <- function(x, y, ...)
+    identical(balancePOSIXlt(x), balancePOSIXlt(y), ...)
+stopifnot(identicalPlt(z1, z), identicalPlt(z2, z))
+## failed previously, incl in rev 88441
 
 
 

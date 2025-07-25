@@ -9,7 +9,7 @@
   \subsection{SIGNIFICANT USER-VISIBLE CHANGES}{
     \itemize{
       \item The R citation now provides a \abbr{DOI}
-      (\I{10.32614/R.manuals}): please update your 
+      (\I{10.32614/R.manuals}): please update your
       bibliographies accordingly.
     }
   }
@@ -247,6 +247,9 @@
       \item Subassigning \code{"POSIXlt"}, i.e., \code{<tdat>[i] <- val}
       and \code{<tdat>[[i]] <- val} now rebalance as they should,
       thanks to \I{Mikael Jagan}'s \PR{18919}.
+
+      \item \code{<POSIXlt>[*]} (re-)setting \code{"balanced"}, fixing
+      \PR{18681} comment #7, thanks to \I{Mikael Jagan}.
     }
   }
 }

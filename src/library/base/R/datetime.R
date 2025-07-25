@@ -1547,8 +1547,9 @@ OlsonNames <- function(tzdir = NULL)
                 domain = NA)
         i <- idx
     }
-    .POSIXlt(lapply(unCfillPOSIXlt(x), `[[`, i, drop = drop),
-             attr(x, "tzone"), oldClass(x))
+    `attr<-`(.POSIXlt(lapply(unCfillPOSIXlt(x), `[[`, i, drop = drop),
+                      attr(x, "tzone"), oldClass(x)),
+             "balanced", if(isTRUE(attr(x, "balanced"))) TRUE else NA)
 }
 
 as.list.POSIXlt <- function(x, ...)
