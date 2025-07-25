@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: R-4.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2025-03-31 11:51\n"
-"PO-Revision-Date: 2025-03-24 13:42+0100\n"
+"PO-Revision-Date: 2025-07-10 15:25+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
 "Language: de\n"
@@ -108,7 +108,7 @@ msgid "Variables in data frame '%s'"
 msgstr "Variablen im Dataframe '%s'"
 
 msgid "Undocumented arguments in Rd file '%s'"
-msgstr "Undokumentierte Argumente iRd Datei '%s'"
+msgstr "Undokumentierte Argumente in Rd Datei '%s'"
 
 msgid "Duplicated \\argument entries in Rd file '%s':"
 msgstr "Doppelte Einträge zu \\argument in Rd Datei '%s'"
@@ -215,7 +215,7 @@ msgid "Invalid VignetteBuilder field."
 msgstr "Unzulässiges Feld für VignetteBuilder"
 
 msgid "This field must contain one or more packages (and no version requirement)."
-msgstr "Dieses Feld muss ein oder mehrer Pakete enthalten (und keine Versionsanforderungen)."
+msgstr "Dieses Feld muss ein oder mehrere Pakete enthalten (und keine Versionsanforderungen)."
 
 msgid "Invalid Priority field."
 msgstr "Unzulässiges Feld für 'Priority'"
@@ -230,7 +230,7 @@ msgid "Malformed Description field: should contain one or more complete sentence
 msgstr "Schlecht formatiertes Description Feld: sollte einen oder mehrere vollständige Sätze enthalten."
 
 msgid "See section 'The DESCRIPTION file' in the 'Writing R Extensions' manual."
-msgstr "Bitte im Abschnitt 'The DESCRIPTION file' im 'Writing R Extension' Handbuch nachlesen"
+msgstr "Bitte im Abschnitt 'The DESCRIPTION file' im 'Writing R Extensions' Handbuch nachlesen."
 
 msgid "Malformed Authors@R field:"
 msgstr "Falsch formatiertes Authors@R Feld:"
@@ -487,7 +487,7 @@ msgid "Invalid package aliases in Rd file '%s':"
 msgstr "Unzulässige Paketaliase in Rd Datei '%s':"
 
 msgid "Argument items with no description in Rd file '%s':"
-msgstr "Argumenteinträge ohne Beschreibung im Rd Datei '%s':"
+msgstr "Argumenteinträge ohne Beschreibung in Rd Datei '%s':"
 
 msgid "Auto-generated content requiring editing in Rd file '%s':"
 msgstr "Automatisch generierter Inhalt benötigt noch Bearbeitung in Rd Datei '%s':"
@@ -685,7 +685,7 @@ msgid "Unsupported engine name"
 msgstr "nicht unterstützter Engine Name"
 
 msgid "Vignette engine %s is not registered"
-msgstr "Vignetten-Treiber %s ist nicht registiert"
+msgstr "Vignetten-Treiber %s ist nicht registriert"
 
 msgid "Vignette engine %s is not registered by any of the packages %s"
 msgstr "Vignetten-Treiber %s ist nicht von irgendeinem der Pakete %s registriert"
@@ -810,7 +810,7 @@ msgid "invalid value for '--compact-vignettes', assuming %s"
 msgstr "unzulässiger Wert für '--compact-vignettes', nehme %s an"
 
 msgid "Error: cannot rename directory to %s"
-msgstr "Fehler: kann  Verzeichnis nicht in %s umbennen"
+msgstr "Fehler: kann Verzeichnis nicht in %s umbenennen"
 
 msgid "elapsed-time limit of %g %s reached for sub-process"
 msgstr "Grenze für Zeitverbrauch von %g %s für Subprozess erreicht"
@@ -846,7 +846,7 @@ msgid "'reverse$repos' should be a subset of getOption(\"repos\")"
 msgstr "'reverse$repos' sollte eine Teilmenge von getOption(\"repos\") sein"
 
 msgid "downloading reverse dependencies ..."
-msgstr "lade umgekehrte Abhängikeiten herunter ..."
+msgstr "lade umgekehrte Abhängigkeiten herunter ..."
 
 msgid "downloading %s ..."
 msgstr "Herunterladen von %s ..."
@@ -1229,10 +1229,10 @@ msgid "invalid hex string"
 msgstr "ungültige hex Zeichenkette"
 
 msgid "this requires 'objdump.exe' to be on the PATH"
-msgstr "hiefür muss 'objdump.exe' im PATH sein"
+msgstr "hierfür muss 'objdump.exe' im PATH sein"
 
 msgid "this requires 'nm' to be on the PATH"
-msgstr "hiefür muss 'nm' im PATH sein"
+msgstr "hierfür muss 'nm' im PATH sein"
 
 msgid "Found %s, possibly from %s"
 msgstr "%s gefunden, vielleicht aus %s"
@@ -1307,7 +1307,7 @@ msgid "unknown header specification"
 msgstr "Unbekannte Header-Spezifikation"
 
 msgid "R CMD build failed"
-msgstr "R CMD buils fehlgeschlagen"
+msgstr "R CMD build fehlgeschlagen"
 
 msgid "PACKAGES files do not include MD5 sums in the win.binary case"
 msgstr "PACKAGES Dateien enthalten im win.binary Fall keine MD5 Summen"
@@ -1413,7 +1413,7 @@ msgid "invalid package layout"
 msgstr "ungültige Paketstruktur"
 
 msgid "*not* using 'C' for LC_COLLATE locale"
-msgstr "nutzt *nicht* 'C' für LC_COLLATE Lokalisiserung"
+msgstr "nutzt *nicht* 'C' für LC_COLLATE Lokalisierung"
 
 msgid "file '%s' is not in valid DCF format"
 msgstr "Datei '%s' liegt nicht in gültigem DCF Format vor"
@@ -1590,7 +1590,7 @@ msgstr[1] "Objekt(e) %s werden durch mehr als einen Datenaufruf erzeugt"
 
 msgid "%d of the package tests failed"
 msgid_plural "%d of the package tests failed"
-msgstr[0] "%d der Pakettest fehlgeschlage"
+msgstr[0] "%d der Pakettests fehlgeschlagen"
 msgstr[1] "%d der Pakettests fehlgeschlagen"
 
 msgid "Corresponding BibTeX entry:"
