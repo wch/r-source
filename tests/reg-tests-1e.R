@@ -2076,6 +2076,14 @@ chk(a1); chk(a2)
 ## Im(.)s had more NA's than just at the end, in R <= 4.5.z
 
 
+## format(<list of objects>) -- now dispatches correctly
+dts <- seq(.Date(11100), .Date(11111))
+(fD <- format(Ldt <- as.list(dts)))
+stopifnot(is.list(Ldt), vapply(Ldt, inherits, NA, "Date"),
+          identical(fD, format.Date(dts)))
+# fD  was "11100" "11101" .... "11111" in R <= 4.5.z
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

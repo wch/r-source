@@ -33,7 +33,7 @@ format.default <-
 	if(missing(trim)) trim <- TRUE
 	if(missing(justify)) justify <- "none"
 	res <- lapply(X = x,
-                      FUN = function(xx, ...) format.default(unlist(xx),...),
+                      FUN = function(xx, ...) format(unlist(xx), ...),
 		      trim = trim, digits = digits, nsmall = nsmall,
 		      justify = justify, width = width, na.encode = na.encode,
 		      scientific = scientific,
@@ -41,7 +41,7 @@ format.default <-
 		      small.mark = small.mark, small.interval = small.interval,
 		      decimal.mark = decimal.mark, zero.print = zero.print,
 		      drop0trailing = drop0trailing, ...)
-	vapply(res, paste, "", collapse = ", ")
+	vapply(res, paste0, "", collapse = ", ")
     } else {
 	switch(mode(x),
 	       NULL = "NULL",
