@@ -9361,6 +9361,7 @@ suite.
 > glm(resp ~ 0+predictor, family = binomial(link="log"))
 Error: no valid set of coefficients has been found: please supply starting values
 > traceback()
+@c FIXME: the call stack here and below is actually much longer since r50688
 3: stop("no valid set of coefficients has been found: please supply
          starting values", call. = FALSE)
 2: glm.fit(x = X, y = Y, weights = weights, start = start, etastart = etastart,
@@ -9434,7 +9435,8 @@ which does not help much, as there is no call to @code{as.environment}
 in @code{initialize} (and the note ``called from internal dispatch''
 tells us so).  In this case we searched the @R{} sources for the quoted
 call, which occurred in only one place,
-@code{methods:::.asEnvironmentPackage}.  So now we knew where the
+@c @code{methods:::.asEnvironmentPackage}  @c long removed (c76155)
+so now we knew where the
 error was occurring.  (This was an unusually opaque example.)
 
 The error message
@@ -9455,13 +9457,13 @@ options(expressions=500)
 @noindent
 and re-run the example showing the error.
 
-Sometimes there is warning that clearly is the precursor to some later
+Sometimes there is a warning that clearly is the precursor to some later
 error, but it is not obvious where it is coming from.  Setting
 @command{options(warn = 2)} (which turns warnings into errors) can help here.
 
 Once we have located the error, we have some choices.  One way to proceed
 is to find out more about what was happening at the time of the crash by
-looking a @emph{@I{post-mortem}} dump.  To do so, set
+looking at a @emph{@I{post-mortem}} dump.  To do so, set
 @findex dump.frames
 @command{options(error=dump.frames)} and run the code again.  Then invoke
 @command{debugger()} and explore the dump.  Continuing our example:
@@ -9486,7 +9488,8 @@ Available environments had calls:
 1: glm(resp ~ 0 + predictor, family = binomial(link = "log"))
 2: glm.fit(x = X, y = Y, weights = weights, start = start, etastart = etastart, mus
 3: stop("no valid set of coefficients has been found: please supply starting values
-Enter an environment number, or 0 to exit  Selection:
+Enter an environment number, or 0 to exit
+Selection:
 @end smallexample
 
 @noindent
@@ -9499,7 +9502,7 @@ error message, and explore some of the variables (and execute two
 function calls).
 
 @smallexample
-Enter an environment number, or 0 to exit  Selection: 2
+Selection: 2
 Browsing in the environment with call:
    glm.fit(x = X, y = Y, weights = weights, start = start, etas
 Called from: debugger.look(ind)
@@ -9532,7 +9535,8 @@ Available environments had calls:
 2: glm.fit(x = X, y = Y, weights = weights, start = start, etastart = etastart
 3: stop("no valid set of coefficients has been found: please supply starting v
 
-Enter an environment number, or 0 to exit  Selection: 0
+Enter an environment number, or 0 to exit
+Selection: 0
 > rm(last.dump)
 @end smallexample
 
@@ -9570,7 +9574,7 @@ Selection:
 which is very similar to @code{dump.frames}.  However, we can examine
 the state of the program directly, without dumping and re-loading the
 dump.  As its help page says, @code{recover} can be routinely used as
-the error action in place of @code{dump.calls} and @code{dump.frames},
+the error action in place of @code{dump.frames},
 since it behaves like @code{dump.frames} in non-interactive use.
 
 
@@ -9591,7 +9595,7 @@ debugging in: glm.fit(x = X, y = Y, weights = weights, start = start, etastart =
 debug: @{
 ## lists the whole function
 Browse[1]>
-debug: x <- as.matrix(x)
+debug: control <- do.call("glm.control", control)
 ...
 Browse[1]> start
 [1] -2.235357e-06
@@ -9619,7 +9623,7 @@ being debugged or contains a call to @code{browser()}.)
 e.g.@: @code{debug(stats:::predict.Arima)}.  (It cannot be used for S4
 methods, but an alternative is given on the help page for @code{debug}.)
 Sometimes you want to debug a function defined inside another function,
-e.g.@: the function @code{arimafn} defined inside @code{arima}.  To do so,
+e.g.@: the function @code{armafn} defined inside @code{arima}.  To do so,
 set @code{debug} on the outer function (here @code{arima}) and
 step through it until the inner function has been defined.  Then
 call @code{debug} on the inner function (and use @code{c} to get out of
