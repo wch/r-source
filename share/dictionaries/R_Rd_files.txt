@@ -227,6 +227,7 @@ quaternary
 quicksort
 radix
 rasters
+rebalance
 recalibration
 recombinant
 recurse
