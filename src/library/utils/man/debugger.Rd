@@ -1,6 +1,6 @@
 % File src/library/utils/man/debugger.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2023 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{debugger}
@@ -40,7 +40,7 @@ limitedLabels(value, maxwidth = getOption("width") - 5L)
   to \code{dump.frames}.  By default this dumps to an \R object
   \code{last.dump} in the workspace, but it can be set to dump to a
   file (a dump of the object produced by a call to \code{\link{save}}).
-  The dumped object contain the call stack, the active environments and
+  The dumped object contains the call stack, the active environments and
   the last error message as returned by \code{\link{geterrmessage}}.
 
   When dumping to file, \code{dumpto} gives the name of the dumped
@@ -92,19 +92,21 @@ limitedLabels(value, maxwidth = getOption("width") - 5L)
   \code{debugger} but directly after the error occurs.
 }
 \examples{
-\dontrun{
-options(error = quote(dump.frames("testdump", TRUE)))
+op <- options(error = dump.frames)
 
 f <- function() {
     g <- function() stop("test dump.frames")
     g()
 }
-f()   # will generate a dump on file "testdump.rda"
-options(error = NULL)
+f()   # will generate a dump in object "last.dump"
+str(last.dump)
 
-## possibly in another R session
-load("testdump.rda")
-debugger(testdump)
+options(op)  # reset (error = NULL)
+
+\dontrun{
+### Example of debugger() interaction with 'last.dump'
+
+> debugger()
 Available environments had calls:
 1: f()
 2: g()
@@ -113,7 +115,7 @@ Available environments had calls:
 Enter an environment number, or 0 to exit
 Selection: 1
 Browsing in the environment with call:
-f()
+   f()
 Called from: debugger.look(ind)
 Browse[1]> ls()
 [1] "g"
@@ -128,9 +130,15 @@ Available environments had calls:
 
 Enter an environment number, or 0 to exit
 Selection: 0
+}
 
+\dontrun{
 ## A possible setting for non-interactive sessions
 options(error = quote({dump.frames(to.file = TRUE); q(status = 1)}))
+f()   # will generate a dump on file "last.dump.rda" and exit
+## then, in another R session
+load("last.dump.rda")
+debugger()
 }}
 \keyword{utilities}
 \keyword{error}
