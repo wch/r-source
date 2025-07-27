@@ -31,14 +31,15 @@ rhyper(nn, m, n, k)
   \item{p}{probability, it must be between 0 and 1.}
   \item{nn}{number of observations.  If \code{length(nn) > 1}, the length
     is taken to be the number required.}
-  \item{log, log.p}{logical; if TRUE, probabilities p are given as log(p).}
-  \item{lower.tail}{logical; if TRUE (default), probabilities are
+  \item{log, log.p}{logical; if \code{TRUE}, probabilities
+    are given as logarithms.}
+  \item{lower.tail}{logical; if \code{TRUE} (default), probabilities are
     \eqn{P[X \le x]}, otherwise, \eqn{P[X > x]}.}
 }
 \value{
   \code{dhyper} gives the density,
-  \code{phyper} gives the distribution function,
-  \code{qhyper} gives the quantile function, and
+  \code{phyper} is the cumulative distribution function, and
+  \code{qhyper} is the quantile function of the hypergeometric distribution.
   \code{rhyper} generates random deviates.
 
   Invalid arguments will result in return value \code{NaN}, with a warning.

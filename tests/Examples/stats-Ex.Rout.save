@@ -629,7 +629,7 @@ $se
 > flush(stderr()); flush(stdout())
 > 
 > ### Name: Lognormal
-> ### Title: The Log Normal Distribution
+> ### Title: The Log-Normal Distribution
 > ### Aliases: Lognormal dlnorm plnorm qlnorm rlnorm
 > ### Keywords: distribution
 > 

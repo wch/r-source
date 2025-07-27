@@ -11,7 +11,8 @@
 \title{Distribution of the Smirnov Statistic}
 \description{
   Distribution function, quantile function and random generation for the
-  distribution of the Smirnov statistic.}
+  distribution of the Smirnov statistic.
+}
 \usage{
 psmirnov(q, sizes, z = NULL,
          alternative = c("two.sided", "less", "greater"),
@@ -41,15 +42,15 @@ rsmirnov(n, sizes, z = NULL,
     distribution function by Monte Carlo simulation.}
   \item{B}{an integer specifying the number of replicates used in the
     Monte Carlo test.}
-  \item{lower.tail}{a logical, if \code{TRUE} (default), probabilities are
+  \item{lower.tail}{a logical; if \code{TRUE} (default), probabilities are
     \eqn{P[D < q]}, otherwise, \eqn{P[D \ge q]}.}
-  \item{log.p}{a logical, if \code{TRUE} (default), probabilities are given
-    as log-probabilities.}
+  \item{log.p}{a logical; if \code{TRUE}, probabilities
+    are given as logarithms.}
   \item{n}{an integer giving number of observations.}
 }
 \value{
-  \code{psmirnov} gives the distribution function,
-  \code{qsmirnov} gives the quantile function, and
+  \code{psmirnov} is the cumulative distribution function,
+  \code{qsmirnov} is the quantile function, and
   \code{rsmirnov} generates random deviates.
 }
 \details{
@@ -80,3 +81,4 @@ rsmirnov(n, sizes, z = NULL,
   \code{\link{ks.test}} for references on the algorithms used for
   computing exact distributions.
 }
+\keyword{distribution}

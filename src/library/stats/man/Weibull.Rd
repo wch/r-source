@@ -27,22 +27,23 @@ rweibull(n, shape, scale = 1)
   \item{n}{number of observations. If \code{length(n) > 1}, the length
     is taken to be the number required.}
   \item{shape, scale}{shape and scale parameters, the latter defaulting to 1.}
-  \item{log, log.p}{logical; if TRUE, probabilities p are given as log(p).}
-  \item{lower.tail}{logical; if TRUE (default), probabilities are
+  \item{log, log.p}{logical; if \code{TRUE}, probabilities/densities
+    are given as logarithms.}
+  \item{lower.tail}{logical; if \code{TRUE} (default), probabilities are
     \eqn{P[X \le x]}, otherwise, \eqn{P[X > x]}.}
 }
 \value{
   \code{dweibull} gives the density,
-  \code{pweibull} gives the distribution function,
-  \code{qweibull} gives the quantile function, and
+  \code{pweibull} is the cumulative distribution function, and
+  \code{qweibull} is the quantile function of the Weibull distribution.
   \code{rweibull} generates random deviates.
 
   Invalid arguments will result in return value \code{NaN}, with a warning.
 
   The length of the result is determined by \code{n} for
   \code{rweibull}, and is the maximum of the lengths of the
-  numerical arguments for the other functions.  
-  
+  numerical arguments for the other functions.
+
   The numerical arguments other than \code{n} are recycled to the
   length of the result.  Only the first elements of the logical
   arguments are used.
@@ -50,17 +51,21 @@ rweibull(n, shape, scale = 1)
 \details{
   The Weibull distribution with \code{shape} parameter \eqn{a} and
   \code{scale} parameter \eqn{\sigma}{b} has density given by
-  \deqn{f(x) = (a/\sigma) {(x/\sigma)}^{a-1} \exp (-{(x/\sigma)}^{a})}{f(x) = (a/b) (x/b)^(a-1) exp(- (x/b)^a)} for \eqn{x > 0}.
+  \deqn{f(x) = (a/\sigma) {(x/\sigma)}^{a-1} \exp (-{(x/\sigma)}^{a})}{
+        f(x) = (a/b) (x/b)^(a-1) exp(- (x/b)^a)}
+  for \eqn{x > 0}.
   The cumulative distribution function is
   \eqn{F(x) = 1 - \exp(-{(x/\sigma)}^a)}{F(x) = 1 - exp(- (x/b)^a)}
   on \eqn{x > 0}, the
   mean is \eqn{E(X) = \sigma \Gamma(1 + 1/a)}{E(X) = b \Gamma(1 + 1/a)}, and
-  the \eqn{Var(X) = \sigma^2(\Gamma(1 + 2/a)-(\Gamma(1 + 1/a))^2)}{Var(X) = b^2 * (\Gamma(1 + 2/a) - (\Gamma(1 + 1/a))^2)}.
+  the variance is \eqn{Var(X) = \sigma^2(\Gamma(1 + 2/a)-(\Gamma(1 + 1/a))^2)}{
+                       Var(X) = b^2 * (\Gamma(1 + 2/a) - (\Gamma(1 + 1/a))^2)}.
 }
 \note{
   The cumulative hazard \eqn{H(t) = - \log(1 - F(t))}{H(t) = - log(1 - F(t))}
   is
-\preformatted{-pweibull(t, a, b, lower = FALSE, log = TRUE)
+\preformatted{
+    -pweibull(t, a, b, lower = FALSE, log = TRUE)
 }
   which is just \eqn{H(t) = {(t/b)}^a}{H(t) = (t/b)^a}.
 }

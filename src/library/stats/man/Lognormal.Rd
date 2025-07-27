@@ -9,10 +9,10 @@
 \alias{plnorm}
 \alias{qlnorm}
 \alias{rlnorm}
-\title{The Log Normal Distribution}
+\title{The Log-Normal Distribution}
 \description{
   Density, distribution function, quantile function and random
-  generation for the log normal distribution whose logarithm has mean
+  generation for the log-normal distribution whose logarithm has mean
   equal to \code{meanlog} and standard deviation equal to \code{sdlog}.
 }
 \usage{
@@ -28,14 +28,15 @@ rlnorm(n, meanlog = 0, sdlog = 1)
     is taken to be the number required.}
   \item{meanlog, sdlog}{mean and standard deviation of the distribution
     on the log scale with default values of \code{0} and \code{1} respectively.}
-  \item{log, log.p}{logical; if TRUE, probabilities p are given as log(p).}
-  \item{lower.tail}{logical; if TRUE (default), probabilities are
+  \item{log, log.p}{logical; if \code{TRUE}, probabilities/densities
+    are given as logarithms.}
+  \item{lower.tail}{logical; if \code{TRUE} (default), probabilities are
     \eqn{P[X \le x]}, otherwise, \eqn{P[X > x]}.}
 }
 \value{
   \code{dlnorm} gives the density,
-  \code{plnorm} gives the distribution function,
-  \code{qlnorm} gives the quantile function, and
+  \code{plnorm} is the cumulative distribution function, and
+  \code{qlnorm} is the quantile function of the log-normal distribution.
   \code{rlnorm} generates random deviates.
 
   The length of the result is determined by \code{n} for
@@ -54,7 +55,7 @@ rlnorm(n, meanlog = 0, sdlog = 1)
   for the boundary case \code{sdlog = 0}.
 }
 \details{
-  The log normal distribution has density
+  The log-normal distribution has density
   \deqn{
     f(x) = \frac{1}{\sqrt{2\pi}\sigma x} e^{-(\log(x) - \mu)^2/2 \sigma^2}%
   }{f(x) = 1/(\sqrt(2 \pi) \sigma x) e^-((log x - \mu)^2 / (2 \sigma^2))}

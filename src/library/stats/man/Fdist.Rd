@@ -28,14 +28,15 @@ rf(n, df1, df2, ncp)
     is taken to be the number required.}
   \item{df1, df2}{degrees of freedom.  \code{Inf} is allowed.}
   \item{ncp}{non-centrality parameter. If omitted the central F is assumed.}
-  \item{log, log.p}{logical; if TRUE, probabilities p are given as log(p).}
-  \item{lower.tail}{logical; if TRUE (default), probabilities are
+  \item{log, log.p}{logical; if \code{TRUE}, probabilities/densities
+    are given as logarithms.}
+  \item{lower.tail}{logical; if \code{TRUE} (default), probabilities are
     \eqn{P[X \le x]}, otherwise, \eqn{P[X > x]}.}
 }
 \value{
   \code{df} gives the density,
-  \code{pf} gives the distribution function
-  \code{qf} gives the quantile function, and
+  \code{pf} is the cumulative distribution function, and
+  \code{qf} is the quantile function of the F distribution.
   \code{rf} generates random deviates.
 
   Invalid arguments will result in return value \code{NaN}, with a warning.
@@ -115,7 +116,7 @@ rf(n, df1, df2, ncp)
 \seealso{
   \link{Distributions} for other standard distributions, including
   \code{\link{dchisq}} for chi-squared and \code{\link{dt}} for Student's
-  t distributions.
+  \eqn{t} distributions.
 }
 \examples{
 ## Equivalence of pt(.,nu) with pf(.^2, 1,nu):

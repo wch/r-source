@@ -27,23 +27,24 @@ rcauchy(n, location = 0, scale = 1)
   \item{n}{number of observations. If \code{length(n) > 1}, the length
     is taken to be the number required.}
   \item{location, scale}{location and scale parameters.}
-  \item{log, log.p}{logical; if TRUE, probabilities p are given as log(p).}
-  \item{lower.tail}{logical; if TRUE (default), probabilities are
+  \item{log, log.p}{logical; if \code{TRUE}, probabilities/densities
+    are given as logarithms.}
+  \item{lower.tail}{logical; if \code{TRUE} (default), probabilities are
     \eqn{P[X \le x]}, otherwise, \eqn{P[X > x]}.}
 }
 \value{
-  \code{dcauchy}, \code{pcauchy}, and \code{qcauchy} are respectively
-  the density, distribution function and quantile function of the Cauchy
-  distribution.  \code{rcauchy} generates random deviates from the
-  Cauchy.
-  
+  \code{dcauchy} gives the density,
+  \code{pcauchy} is the cumulative distribution function, and
+  \code{qcauchy} is the quantile function of the Cauchy distribution.
+  \code{rcauchy} generates random deviates.
+
   The length of the result is determined by \code{n} for
   \code{rcauchy}, and is the maximum of the lengths of the
-  numerical arguments for the other functions.  
-  
+  numerical arguments for the other functions.
+
   The numerical arguments other than \code{n} are recycled to the
   length of the result.  Only the first elements of the logical
-  arguments are used.    
+  arguments are used.
 }
 \details{
   If \code{location} or \code{scale} are not specified, they assume
@@ -73,7 +74,7 @@ rcauchy(n, location = 0, scale = 1)
 }
 \seealso{
   \link{Distributions} for other standard distributions, including
-  \code{\link{dt}} for the t distribution which generalizes
+  \code{\link{dt}} for the \eqn{t} distribution which generalizes
   \code{dcauchy(*, l = 0, s = 1)}.
 }
 \examples{

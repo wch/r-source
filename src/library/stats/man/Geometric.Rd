@@ -27,8 +27,9 @@ rgeom(n, prob)
   \item{n}{number of observations. If \code{length(n) > 1}, the length
     is taken to be the number required.}
   \item{prob}{probability of success in each trial. \code{0 < prob <= 1}.}
-  \item{log, log.p}{logical; if TRUE, probabilities p are given as log(p).}
-  \item{lower.tail}{logical; if TRUE (default), probabilities are
+  \item{log, log.p}{logical; if \code{TRUE}, probabilities
+    are given as logarithms.}
+  \item{lower.tail}{logical; if \code{TRUE} (default), probabilities are
     \eqn{P[X \le x]}, otherwise, \eqn{P[X > x]}.}
 }
 \details{
@@ -44,8 +45,8 @@ rgeom(n, prob)
 }
 \value{
   \code{dgeom} gives the density,
-  \code{pgeom} gives the distribution function,
-  \code{qgeom} gives the quantile function, and
+  \code{pgeom} is the cumulative distribution function, and
+  \code{qgeom} is the quantile function of the geometric distribution.
   \code{rgeom} generates random deviates.
 
   Invalid \code{prob} will result in return value \code{NaN}, with a warning.

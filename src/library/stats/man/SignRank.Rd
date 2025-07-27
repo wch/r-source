@@ -28,20 +28,21 @@ rsignrank(nn, n)
     is taken to be the number required.}
   \item{n}{number(s) of observations in the sample(s).  A positive
     integer, or a vector of such integers.}
-  \item{log, log.p}{logical; if TRUE, probabilities p are given as log(p).}
-  \item{lower.tail}{logical; if TRUE (default), probabilities are
+  \item{log, log.p}{logical; if \code{TRUE}, probabilities
+    are given as logarithms.}
+  \item{lower.tail}{logical; if \code{TRUE} (default), probabilities are
     \eqn{P[X \le x]}, otherwise, \eqn{P[X > x]}.}
 }
 \value{
   \code{dsignrank} gives the density,
-  \code{psignrank} gives the distribution function,
-  \code{qsignrank} gives the quantile function, and
+  \code{psignrank} is the cumulative distribution function,
+  \code{qsignrank} is the quantile function, and
   \code{rsignrank} generates random deviates.
 
   The length of the result is determined by \code{nn} for
   \code{rsignrank}, and is the maximum of the lengths of the
-  numerical arguments for the other functions.  
-  
+  numerical arguments for the other functions.
+
   The numerical arguments other than \code{nn} are recycled to the
   length of the result.  Only the first elements of the logical
   arguments are used.
@@ -65,7 +66,7 @@ rsignrank(nn, n)
   values and so on.
 
   \link{Distributions} for standard distributions, including
-  \code{\link{dwilcox}} for the distribution of \emph{two-sample}
+  \code{\link{dwilcox}} for the distribution of the \emph{two-sample}
   Wilcoxon rank sum statistic.
 }
 \examples{

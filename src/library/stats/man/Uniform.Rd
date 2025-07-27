@@ -5,33 +5,32 @@
 
 \name{Uniform}
 \alias{Uniform}
+\alias{dunif}
+\alias{punif}
+\alias{qunif}
+\alias{runif}
 \title{The Uniform Distribution}
+\description{
+  Density, distribution function, quantile function and random
+  generation for the uniform distribution on the interval from
+  \code{min} to \code{max}.
+}
 \usage{
 dunif(x, min = 0, max = 1, log = FALSE)
 punif(q, min = 0, max = 1, lower.tail = TRUE, log.p = FALSE)
 qunif(p, min = 0, max = 1, lower.tail = TRUE, log.p = FALSE)
 runif(n, min = 0, max = 1)
 }
-\alias{dunif}
-\alias{punif}
-\alias{qunif}
-\alias{runif}
 \arguments{
   \item{x, q}{vector of quantiles.}
   \item{p}{vector of probabilities.}
   \item{n}{number of observations. If \code{length(n) > 1}, the length
     is taken to be the number required.}
   \item{min, max}{lower and upper limits of the distribution.  Must be finite.}
-  \item{log, log.p}{logical; if TRUE, probabilities p are given as log(p).}
-  \item{lower.tail}{logical; if TRUE (default), probabilities are
+  \item{log, log.p}{logical; if \code{TRUE}, probabilities/densities
+    are given as logarithms.}
+  \item{lower.tail}{logical; if \code{TRUE} (default), probabilities are
     \eqn{P[X \le x]}, otherwise, \eqn{P[X > x]}.}
-}
-\description{
-  These functions provide information about the uniform distribution
-  on the interval from \code{min} to \code{max}.  \code{dunif} gives the
-  density, \code{punif} gives the distribution function \code{qunif}
-  gives the quantile function and \code{runif} generates random
-  deviates.
 }
 \details{
   If \code{min} or \code{max} are not specified they assume the default
@@ -51,19 +50,20 @@ runif(n, min = 0, max = 1)
 }
 \value{
   \code{dunif} gives the density,
-  \code{punif} gives the distribution function,
-  \code{qunif} gives the quantile function, and
+  \code{punif} is the cumulative distribution function, and
+  \code{qunif} is the quantile function of the uniform distribution.
   \code{runif} generates random deviates.
-  
+
   The length of the result is determined by \code{n} for
   \code{runif}, and is the maximum of the lengths of the
-  numerical arguments for the other functions.  
-  
+  numerical arguments for the other functions.
+
   The numerical arguments other than \code{n} are recycled to the
   length of the result.  Only the first elements of the logical
   arguments are used.
 }
-\note{The characteristics of output from pseudo-random number generators
+\note{
+  The characteristics of output from pseudo-random number generators
   (such as precision and periodicity) vary widely.  See
   \code{\link{.Random.seed}} for more information on \R's random number
   generation algorithms.

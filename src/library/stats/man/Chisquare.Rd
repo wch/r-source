@@ -29,8 +29,9 @@ rchisq(n, df, ncp = 0)
     is taken to be the number required.}
   \item{df}{degrees of freedom (non-negative, but can be non-integer).}
   \item{ncp}{non-centrality parameter (non-negative).}
-  \item{log, log.p}{logical; if TRUE, probabilities p are given as log(p).}
-  \item{lower.tail}{logical; if TRUE (default), probabilities are
+  \item{log, log.p}{logical; if \code{TRUE}, probabilities/densities
+    are given as logarithms.}
+  \item{lower.tail}{logical; if \code{TRUE} (default), probabilities are
     \eqn{P[X \le x]}, otherwise, \eqn{P[X > x]}, unless for \code{df=0} and
     when \code{ncp} is missing, where the central chi-squared
     distribution function is based
@@ -38,9 +39,10 @@ rchisq(n, df, ncp = 0)
     \eqn{P[X < x]} when \code{lower.tail} is true, and \eqn{P[X \ge x]}, otherwise.}
 }
 \value{
-  \code{dchisq} gives the density, \code{pchisq} gives the distribution
-  function, \code{qchisq} gives the quantile function, and \code{rchisq}
-  generates random deviates.
+  \code{dchisq} gives the density,
+  \code{pchisq} is the cumulative distribution function, and
+  \code{qchisq} is the quantile function of the chi-squared distribution.
+  \code{rchisq} generates random deviates.
 
   Invalid arguments will result in return value \code{NaN}, with a warning.
 

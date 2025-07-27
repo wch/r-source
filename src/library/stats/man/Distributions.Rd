@@ -1,13 +1,13 @@
 % File src/library/stats/man/Distributions.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2010-2011 R Core Team
+% Copyright 2010-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Distributions}
 \alias{distribution}
 \alias{distributions}
 \alias{Distributions}
-\title{Distributions in the stats package}
+\title{Distributions in the \pkg{stats} Package}
 \description{
   Density, cumulative distribution function, quantile function and random
   variate generation for many standard probability distributions are
@@ -40,6 +40,8 @@
 
   For the log-normal distribution see \code{\link{dlnorm}}.
 
+  For the logistic distribution see \code{\link{dlogis}}.
+
   For the multinomial distribution see \code{\link{dmultinom}}.
 
   For the negative binomial distribution see \code{\link{dnbinom}}.
@@ -48,22 +50,22 @@
 
   For the Poisson distribution see \code{\link{dpois}}.
 
-  For the Student's t distribution see \code{\link{dt}}.
+  For the Student's \eqn{t} distribution see \code{\link{dt}}.
 
   For the uniform distribution see \code{\link{dunif}}.
 
   For the Weibull distribution see \code{\link{dweibull}}.
 
   For less common distributions of test statistics see
-  \code{\link{pbirthday}}, \code{\link{dsignrank}},
+  \code{\link{pbirthday}}, \code{\link{dsignrank}}, \code{\link{psmirnov}},
   \code{\link{ptukey}} and \code{\link{dwilcox}} (and see the
   \sQuote{See Also} section of \code{\link{cor.test}}).
 }
 \seealso{
   \code{\link{RNG}} about random number generation in \R.
 
-  The CRAN task view on distributions,
+  The CRAN task view on probability distributions,
   \url{https://CRAN.R-project.org/view=Distributions},
-  mentioning several CRAN packages for additional distributions.
+  lists \R packages that provide additional distributions.
 }
 \keyword{distribution}

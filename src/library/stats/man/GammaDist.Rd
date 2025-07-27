@@ -32,16 +32,16 @@ rgamma(n, shape, rate = 1, scale = 1/rate)
   \item{rate}{an alternative way to specify the scale.}
   \item{shape, scale}{shape and scale parameters.  Must be positive,
     \code{scale} strictly.}
-  \item{log, log.p}{logical; if \code{TRUE}, probabilities/densities \eqn{p}
-    are returned as \eqn{log(p)}.}
-  \item{lower.tail}{logical; if TRUE (default), probabilities are
+  \item{log, log.p}{logical; if \code{TRUE}, probabilities/densities
+    are given as logarithms.}
+  \item{lower.tail}{logical; if \code{TRUE} (default), probabilities are
     \eqn{P[X < x]}, otherwise, \eqn{P[X \ge x]} (exceptionally not
     \emph{cadlag} here, to ensure, e.g., \code{pgamma(0, shape=0)} remains zero).}
 }
 \value{
   \code{dgamma} gives the density,
-  \code{pgamma} gives the distribution function,
-  \code{qgamma} gives the quantile function, and
+  \code{pgamma} is the cumulative distribution function, and
+  \code{qgamma} is the quantile function of the Gamma distribution.
   \code{rgamma} generates random deviates.
 
   Invalid arguments will result in return value \code{NaN}, with a warning.
@@ -73,7 +73,8 @@ rgamma(n, shape, rate = 1, scale = 1/rate)
 
   The cumulative hazard \eqn{H(t) = - \log(1 - F(t))}{H(t) = - log(1 - F(t))}
   is
-\preformatted{-pgamma(t, ..., lower = FALSE, log = TRUE)
+\preformatted{
+    -pgamma(t, ..., lower = FALSE, log = TRUE)
 }
 
   Note that for smallish values of \code{shape} (and moderate

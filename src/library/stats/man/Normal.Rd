@@ -34,14 +34,15 @@ rnorm(n, mean = 0, sd = 1)
     is taken to be the number required.}
   \item{mean}{vector of means.}
   \item{sd}{vector of standard deviations.}
-  \item{log, log.p}{logical; if TRUE, probabilities p are given as log(p).}
-  \item{lower.tail}{logical; if TRUE (default), probabilities are
-    \eqn{P[X \le x]} otherwise, \eqn{P[X > x]}.}
+  \item{log, log.p}{logical; if \code{TRUE}, probabilities/densities
+    are given as logarithms.}
+  \item{lower.tail}{logical; if \code{TRUE} (default), probabilities are
+    \eqn{P[X \le x]}, otherwise, \eqn{P[X > x]}.}
 }
 \value{
   \code{dnorm} gives the density,
-  \code{pnorm} gives the distribution function,
-  \code{qnorm} gives the quantile function, and
+  \code{pnorm} is the cumulative distribution function, and
+  \code{qnorm} is the quantile function of the normal distribution.
   \code{rnorm} generates random deviates.
 
   The length of the result is determined by \code{n} for
@@ -71,7 +72,7 @@ rnorm(n, mean = 0, sd = 1)
 }
 \seealso{
   \link{Distributions} for other standard distributions, including
-  \code{\link{dlnorm}} for the \emph{Log}normal distribution.
+  \code{\link{dlnorm}} for the \emph{log}-normal distribution.
 }
 \source{
   For \code{pnorm}, based on
