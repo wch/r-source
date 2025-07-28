@@ -144,3 +144,100 @@ function(x)
                     u, x)
             )
 }
+
+R_bibliographies_dir <- 
+function()
+    file.path(R.home("share"), "bibliographies")
+
+R_bibentries <-
+function()
+{
+    bib <- readRDS(file.path(R_bibliographies_dir(), "R.rds"))
+    bib[lengths(bib$key) > 0L]
+}
+
+update_R_bibentries <-
+function(dir = NULL)
+{
+    if(is.null(dir))
+        dir <- file.path(.R_top_srcdir_from_Rd(), 
+                         "share", "bibliographies")
+    bibfiles <- Sys.glob(file.path(dir, "*.R"))
+    bibentries <-
+        do.call(c, lapply(bibfiles,
+                          utils::readCitationFile,
+                          list(Encoding = "UTF-8")))
+    saveRDS(bibentries, file.path(dir, "R.rds"))
+}
+
+Rd_expr_bibshow <-
+function(x)
+{
+    x <- trimws(x)
+    if(!nzchar(x)) {
+        ## Provide a way to clear the keys cited cache.
+        Rd_expr_bibcite_keys_cited(NULL)
+        return(x)
+    }
+    bib <- R_bibentries()
+    ## <FIXME>
+    ## Would be nice to have a common reader for possibly multi-line
+    ## comma separated values ...
+    keys <- strsplit(x, ",[[:space:]]*")[[1L]]
+    if(any(keys == "*")) {
+        keys <- c(keys, Rd_expr_bibcite_keys_cited())
+        Rd_expr_bibcite_keys_cited(NULL)
+    }
+    y <- sort(unique(bib[bib$key %in% keys]))
+    paste(sprintf("\\if{html}{\\out{<span id=\"reference+%s\">}}%s\\if{html}{\\out{</span>}}",
+                  string2id(unlist(y$key, use.names = FALSE)),
+                  toRd(y)),
+          collapse =
+              "\\if{html}{\\out{</p>}}\n\n\\if{html}{\\out{<p>}}")
+}
+
+Rd_expr_bibcite_keys_cited <- local({
+    .keys <- NULL
+    function(new, add = FALSE) {
+        if(!missing(new)) 
+            .keys <<- unique(c(if(add) .keys, new))
+        else
+            .keys
+    }
+})
+
+Rd_expr_bibcite <-
+function(x, textual = FALSE)
+{
+    x <- trimws(x)
+    bib <- R_bibentries()
+    keys <- strsplit(x, ",[[:space:]]*")[[1L]]
+    ## Allow b<k>a to specify before b and after a.
+    ## Could also use
+    ##   regmatches(keys, regexec("(.*<)?(.*)(>.*)?", keys))
+    before <- after <- rep_len("", length(keys))
+    if(any(ind <- grepl("<", keys))) {
+        before[ind] <- sub("<.*", "", keys[ind])
+        keys[ind] <- sub(".*<", "", keys[ind])
+    }
+    if(any(ind <- grepl(">", keys))) {
+        after[ind] <- sub(".*>", "", keys[ind])
+        keys[ind] <- sub(">.*", "", keys[ind])
+    }
+    ind <- keys %in% unlist(bib$key)
+    if(!all(ind)) {
+        ## <FIXME>
+        ## Should warn about keys not in the bibentries
+        before <- before[ind]
+        after <- after[ind]
+        keys <- keys[ind]
+    }
+    Rd_expr_bibcite_keys_cited(keys, TRUE)
+    ## <FIXME>
+    ## This really needs a vectorized version of cite() ...
+    before <- sprintf("\\if{html}{\\out{<a href=\"#reference+%s\">}}%s",
+                      string2id(keys), before)
+    after <- sprintf("%s\\if{html}{\\out{</a>}}", after)
+    utils::cite(keys, bib, textual, before, after)
+}
+

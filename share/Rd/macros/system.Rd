@@ -58,4 +58,7 @@
 
 % Experimental:
 \newcommand{\bibcite}{#1}
-\newcommand{\bibshow}{#1}
+% \newcommand{\bibshow}{#1}
+\newcommand{\bibcitep}{\Sexpr[results=rd,stage=build]{tools:::Rd_expr_bibcite("#1", FALSE)}}
+\newcommand{\bibcitet}{\Sexpr[results=rd,stage=build]{tools:::Rd_expr_bibcite("#1", TRUE)}}
+\newcommand{\bibshow}{\Sexpr[results=rd,stage=build]{tools:::Rd_expr_bibshow("#1")}}
