@@ -243,10 +243,11 @@ bibentry(bibtype, textVersion = NULL, header = NULL, footer = NULL,
 rref <- bibentry(
    bibtype = "Manual",
    title = "R: A Language and Environment for Statistical Computing",
-   author = person("R Core Team"),
+   author = person("R Core Team", comment = c(ROR = "02zz1nj61")),
    organization = "R Foundation for Statistical Computing",
    address = "Vienna, Austria",
-   year = 2014,
+   year = 2025,
+   doi = "10.32614/R.manuals",
    url = "https://www.R-project.org/")
 
 ## Different printing styles
