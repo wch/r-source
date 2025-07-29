@@ -7,3 +7,10 @@ EXPORTS
  libintl_dgettext
  libintl_gettext
  Rprintf
+ R_UnwindProtect
+ R_MakeUnwindCont
+ R_ContinueUnwind
+ Rf_protect
+ Rf_unprotect
+ R_NilValue
+

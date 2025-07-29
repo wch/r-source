@@ -37,6 +37,7 @@
    Allow to leave a dropfield (combo box) with TAB key
    Allow navigating to previous controls with Shift+TAB key
    Path length limitations
+   Propagation of R errors from window procedures
  */
 
 #include "internal.h"
@@ -240,12 +241,12 @@ static int showMDIToolbar = 1;
 void toolbar_show(void)
 {
     showMDIToolbar = 1;
-    SendMessage(hwndFrame,WM_PAINT, (WPARAM) 0, (LPARAM) 0);
+    sendmessage(hwndFrame,WM_PAINT, (WPARAM) 0, (LPARAM) 0);
 }
 void toolbar_hide(void)
 {
     showMDIToolbar = 0;
-    SendMessage(hwndFrame,WM_PAINT, (WPARAM) 0, (LPARAM) 0);
+    sendmessage(hwndFrame,WM_PAINT, (WPARAM) 0, (LPARAM) 0);
 }
 
 static void handle_mdiframesize(void)
@@ -274,7 +275,7 @@ static void handle_mdiframesize(void)
     if (status) {
 	MoveWindow(status,1,fh-sh,fw-2,sh,TRUE);
     }
-    SetFocus((HWND)SendMessage(hwndClient,
+    SetFocus((HWND)sendmessage(hwndClient,
 			       WM_MDIGETACTIVE,(WPARAM)0,(LPARAM) 0));
 }
 
@@ -843,20 +844,121 @@ static long handle_message(HWND hwnd, UINT message,
  *  for a window from just knowing the hwnd (which may or may not
  *  belong to us).
  */
+
+/* R modification: propagation of R errors from window procedures.
+   R errors are implemented using long jumps, but Windows API and
+   specifically window procedures don't work with them (e.g. causing
+   a crash). This uses R_UnwindProtect to catch errors still inside
+   a window procedure and propagate it via global variables to the
+   call sites of Windows API calls that may end up calling a window
+   procedure. */
+
+#include <setjmp.h>
+
+typedef void *SEXP;
+typedef bool Rboolean;
+
+SEXP R_UnwindProtect(SEXP (*fun)(void *data), void *data,
+                     void (*clean)(void *data, Rboolean jump), void *cdata,
+                     SEXP cont);
+SEXP R_MakeUnwindCont(void);
+SEXP Rf_protect(SEXP);
+void Rf_unprotect(int);
+void R_ContinueUnwind(SEXP cont);
+extern LibImport SEXP R_NilValue;
+
+static SEXP wndproc_cont_token;
+
+static void wndproc_rethrow_error(void)
+{
+    if (wndproc_cont_token) {
+	SEXP token = wndproc_cont_token;
+	wndproc_cont_token = NULL;
+	R_ContinueUnwind(token);
+    }
+}
+
+typedef struct {
+    WNDPROC proc_real;
+    HWND hwnd;
+    UINT message;
+    WPARAM wParam;
+    LPARAM lParam;
+    LRESULT res;
+} wndproc_call;
+
+SEXP wndproc_unwind_fun(void *data)
+{
+    wndproc_call *w = data;
+    w->res = w->proc_real(w->hwnd, w->message, w->wParam, w->lParam);
+    return NULL;
+}
+
+void wndproc_unwind_clean(void *data, Rboolean jump)
+{
+    if (jump) 
+	longjmp(*(jmp_buf *)data, 1);
+}
+
+LRESULT WINAPI wndproc_unwind (WNDPROC proc_real, HWND hwnd, UINT message,
+                               WPARAM wParam, LPARAM lParam)
+{
+    jmp_buf jmpbuf;
+    wndproc_call w;
+    volatile SEXP token;
+
+    if (R_NilValue == NULL) {
+	/* when R heap hasn't been initialized yet */
+	wndproc_cont_token = NULL;
+	return proc_real(hwnd, message, wParam, lParam);
+    }
+    if (setjmp(jmpbuf) == 1) {
+	/* long jump */
+	wndproc_cont_token = token;
+	return 0;
+    }
+    w.hwnd = hwnd;
+    w.message = message;
+    w.wParam = wParam;
+    w.lParam = lParam;
+    w.proc_real = proc_real;
+    SEXP saved_token = wndproc_cont_token;
+    token = Rf_protect(R_MakeUnwindCont());
+    R_UnwindProtect(wndproc_unwind_fun, &w, wndproc_unwind_clean, jmpbuf, token);
+    Rf_unprotect(1);
+    wndproc_cont_token = saved_token;
+    return w.res;
+}
+
+/* end of R modification */
+
 LRESULT WINAPI
-app_win_proc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
+app_win_proc_real (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
     long result;
     int pass = 0;
 
     result = handle_message(hwnd, message, wParam, lParam, &pass);
-    if (pass)
+    if (pass) {
 	result = DefWindowProc(hwnd, message, wParam, lParam);
+	wndproc_rethrow_error();
+    }
     return result;
 }
 
+/* R modification: propagation of R errors from window procedures. */
+
 LRESULT WINAPI
-app_doc_proc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
+app_win_proc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
+{
+    return wndproc_unwind(app_win_proc_real, hwnd, message, wParam, lParam);
+}
+
+/* end of R modification */
+
+
+LRESULT WINAPI
+app_doc_proc_real (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
     long result;
     int pass = 0;
@@ -868,7 +970,7 @@ app_doc_proc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 	handle_mdiframesize();
 	if (obj && obj->menubar) {
 	    menu mdi = (obj->menubar)->menubar;
-	    SendMessage(hwndClient, WM_MDISETMENU,
+	    sendmessage(hwndClient, WM_MDISETMENU,
 			(WPARAM)obj->menubar->handle,
 			(LPARAM)(mdi?(mdi->handle):0));
 	    DrawMenuBar(hwndFrame);
@@ -880,13 +982,25 @@ app_doc_proc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 	return 1;
     }
     result = handle_message(hwnd, message, wParam, lParam, &pass);
-    if (pass)
+    if (pass) {
 	result = DefMDIChildProc(hwnd, message, wParam, lParam);
+	wndproc_rethrow_error();
+    }
     return result;
 }
 
+/* R modification: propagation of R errors from window procedures. */
+
 LRESULT WINAPI
-app_work_proc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
+app_doc_proc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
+{
+    return wndproc_unwind(app_doc_proc_real, hwnd, message, wParam, lParam);
+}
+
+/* end of R modification */
+
+LRESULT WINAPI
+app_work_proc_real (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
     long result;
     int pass = 0;
@@ -895,6 +1009,17 @@ app_work_proc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 	result = DefFrameProc(hwnd, hwndClient, message, wParam, lParam);
     return result;
 }
+
+/* R modification: propagation of R errors from window procedures. */
+
+LRESULT WINAPI
+app_work_proc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
+{
+    return wndproc_unwind(app_work_proc_real, hwnd, message, wParam, lParam);
+}
+
+/* end of R modification */
+
 
 /*
  *  To handle controls correctly, we replace each control's event
@@ -923,8 +1048,8 @@ static void send_char(object obj, int ch)
     keystate = 0;
 }
 
-long WINAPI
-app_control_procedure (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT WINAPI
+app_control_procedure_real (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
     int prevent_activation = 0;
     int key;
@@ -1034,6 +1159,7 @@ app_control_procedure (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
     }
 
     result = CallWindowProc((obj->winproc), hwnd, message, wParam, lParam);
+    wndproc_rethrow_error();
 
     /* Re-activate the control if necessary. */
     if (prevent_activation)
@@ -1041,12 +1167,23 @@ app_control_procedure (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
     return result;
 }
 
-long WINAPI
-edit_control_procedure (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
+/* R modification: propagation of R errors from window procedures. */
+
+LRESULT WINAPI
+app_control_procedure (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
+{
+    return wndproc_unwind(app_control_procedure_real, hwnd, message, wParam, lParam);
+}
+
+/* end of R modification */
+
+LRESULT WINAPI
+edit_control_procedure_real (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
     int key;
     object obj, next, prev;
     HANDLE hwndCombo;
+    long result;
 
     /* Find the library (dropfield/combo box) object associated
        with the hwnd. */
@@ -1088,8 +1225,21 @@ edit_control_procedure (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 	break;
     }
 
-    return CallWindowProc((obj->edit_winproc), hwnd, message, wParam, lParam);
+    result = CallWindowProc((obj->edit_winproc), hwnd, message, wParam, lParam);
+    wndproc_rethrow_error();
+    return result;
 }
+
+/* R modification: propagation of R errors from window procedures. */
+
+LRESULT WINAPI
+edit_control_procedure (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
+{
+    return wndproc_unwind(edit_control_procedure_real, hwnd, message, wParam, lParam);
+}
+
+/* end of R modification */
+
 
 /*
  *  Timer functions use a timer procedure not associated with a window.
@@ -1277,6 +1427,7 @@ int doevent(void)
 	    return result;
 	TranslateMessage(&msg);
 	DispatchMessage(&msg);
+	wndproc_rethrow_error();
     }
     deletion_traversal();
     if ((active_windows <= 0) || (msg.message == WM_QUIT))
@@ -1331,3 +1482,15 @@ void finish_events(void)
     settimer(0);
     setmousetimer(0);
 }
+
+/* R modification: propagation of R errors from window procedures. */
+
+PROTECTED LRESULT
+sendmessage_unwind(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam)
+{
+    LRESULT result = SendMessage(hWnd, Msg, wParam, lParam);
+    wndproc_rethrow_error();
+    return result;
+}
+
+/* end of R modification */

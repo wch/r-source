@@ -45,12 +45,12 @@ int addstatusbar(void)
 	intMDIStatus = CreateStatusWindow(WS_CHILD|SBARS_SIZEGRIP|WS_VISIBLE,
 					  "", hwndFrame, 121);
 	if (!intMDIStatus) return 0;
-	SendMessage(intMDIStatus,SB_SETPARTS,(WPARAM)1,(LPARAM)a);
-	SendMessage(intMDIStatus,SB_SETTEXT,
+	sendmessage(intMDIStatus,SB_SETPARTS,(WPARAM)1,(LPARAM)a);
+	sendmessage(intMDIStatus,SB_SETTEXT,
 		    (WPARAM) 0|0, (LPARAM)MDIStatusText);
     }
     MDIStatus = intMDIStatus;
-    SendMessage(hwndFrame,WM_PAINT,(WPARAM) 0,(LPARAM) 0);
+    sendmessage(hwndFrame,WM_PAINT,(WPARAM) 0,(LPARAM) 0);
     return 1;
 }
 
@@ -58,7 +58,7 @@ int delstatusbar(void)
 {
     if (!MDIFrame) return 0;
     MDIStatus = 0; /* handle_mdiframeresize notices this */
-    SendMessage(hwndFrame,WM_PAINT,(WPARAM) 0,(LPARAM) 0);
+    sendmessage(hwndFrame,WM_PAINT,(WPARAM) 0,(LPARAM) 0);
     return 1;
 }
 
@@ -66,9 +66,9 @@ PROTECTED void updatestatus(const char *text)
 {
     /* strncpy(MDIStatusText, text, 255); */
     if (!MDIStatus) return;
-    SendMessage(MDIStatus,SB_SETTEXT,
+    sendmessage(MDIStatus,SB_SETTEXT,
 		(WPARAM) 0|0, (LPARAM)MDIStatusText);
-    SendMessage(MDIStatus, WM_PAINT, (WPARAM)0, (LPARAM)0);
+    sendmessage(MDIStatus, WM_PAINT, (WPARAM)0, (LPARAM)0);
 }
 
 void setstatus(const char *text)

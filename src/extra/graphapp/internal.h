@@ -285,7 +285,10 @@ struct callinfo
 #define MinChildID 0x6000
 #define MinDocID   0xE000
 
-#define sendmessage(a,b,c,d) SendMessage((HWND)(a),(UINT)(b),(WPARAM)c,(LPARAM)d)
+PROTECTED LRESULT
+sendmessage_unwind(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam);
+
+#define sendmessage(a,b,c,d) sendmessage_unwind((HWND)(a),(UINT)(b),(WPARAM)c,(LPARAM)d)
 
 /*
  *  Function prototypes.
@@ -445,10 +448,10 @@ extern HWND hwndClient;
   LRESULT WINAPI app_win_proc (HWND, UINT, WPARAM, LPARAM);
   LRESULT WINAPI app_doc_proc (HWND, UINT, WPARAM, LPARAM);
   LRESULT WINAPI app_work_proc (HWND, UINT, WPARAM, LPARAM);
-  long WINAPI app_control_procedure (HWND, UINT, WPARAM, LPARAM);
+  LRESULT WINAPI app_control_procedure (HWND, UINT, WPARAM, LPARAM);
   UINT WINAPI app_timer_procedure(HWND, UINT, UINT, DWORD);
   extern WNDPROC app_control_proc;
-  long WINAPI edit_control_procedure (HWND, UINT, WPARAM, LPARAM);
+  LRESULT WINAPI edit_control_procedure (HWND, UINT, WPARAM, LPARAM);
   extern WNDPROC edit_control_proc;
 
   extern int	menus_active;

@@ -6,7 +6,7 @@
  *  This header file is designed to be platform-independent.
  *
  *  Copyright 2006-8	The R Foundation
- *  Copyright 2013-24	The R Core Team
+ *  Copyright 2013-25	The R Core Team
  *
  */
 
@@ -542,6 +542,7 @@ typedef void (*imfn)(control c, font *f, point *xy);
 #define scrolltext		GA_scrolltext
 #define selecttext		GA_selecttext
 #define selecttextex		GA_selecttextex
+#define sendmessage_unwind	GAI_sendmessage_unwind
 #define setaction		GA_setaction
 #define setbackground		GA_setbackground
 #define setbitmapdata		GA_setbitmapdata

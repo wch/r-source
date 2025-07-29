@@ -76,6 +76,7 @@
  GAI_protect_object
  GAI_remove_context
  GAI_save_gif
+ GAI_sendmessage_unwind
  GAI_show_window
  GAI_simple_window
  GAI_string_diff

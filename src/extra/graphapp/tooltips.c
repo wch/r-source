@@ -52,7 +52,7 @@ int addtooltip(control c, const char *tp)
     ti.uId = (UINT_PTR) c->handle;
     ti.lpszText = (LPSTR) tp;
     return
-    (((BOOL)SendMessage(hwndToolTip, TTM_ADDTOOL, 0, (LPARAM)&ti))==TRUE)?
+    (((BOOL)sendmessage(hwndToolTip, TTM_ADDTOOL, 0, (LPARAM)&ti))==TRUE)?
       1:0;
 }
 
