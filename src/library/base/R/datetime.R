@@ -1326,7 +1326,11 @@ function(x, units = c("secs", "mins", "hours", "days", "months", "years"))
         ici <- is.character(i)
         nms <- names(x$year)
         if(mj) {
-            value <- unclass(as.POSIXlt(value))
+            tz <- attr(x, "tzone")
+            value <- unCfillPOSIXlt(
+                if(inherits(value, "POSIXlt") && identical(tz, attr(value, "tzone")))
+                    value
+                else as.POSIXlt(as.POSIXct(value), tz = tz[1L]))
             if(ici) {
                 for(n in names(x))
                     names(x[[n]]) <- nms
@@ -1541,8 +1545,9 @@ OlsonNames <- function(tzdir = NULL)
                 domain = NA)
         i <- idx
     }
-    .POSIXlt(lapply(unCfillPOSIXlt(x), `[[`, i, drop = drop),
-             attr(x, "tzone"), oldClass(x))
+    `attr<-`(.POSIXlt(lapply(unCfillPOSIXlt(x), `[[`, i, drop = drop),
+                      attr(x, "tzone"), oldClass(x)),
+             "balanced", if(isTRUE(attr(x, "balanced"))) TRUE else NA)
 }
 
 as.list.POSIXlt <- function(x, ...)
@@ -1560,7 +1565,7 @@ as.list.POSIXlt <- function(x, ...)
 `[[<-.POSIXlt` <- function(x, i, value)
 {
     cl <- oldClass(x)
-    class(x) <- NULL
+    x <- unCfillPOSIXlt(x)
 
     if(!missing(i) && is.character(i)) {
         nms <- names(x$year)
@@ -1568,7 +1573,11 @@ as.list.POSIXlt <- function(x, ...)
             names(x[[n]]) <- nms
     }
 
-    value <- unCfillPOSIXlt(as.POSIXlt(value))
+    tz <- attr(x, "tzone")
+    value <- unCfillPOSIXlt(
+        if(inherits(value, "POSIXlt") && identical(tz, attr(value, "tzone")))
+            value
+        else as.POSIXlt(as.POSIXct(value), tz = tz[1L]))
     for(n in names(x))
         x[[n]][[i]] <- value[[n]]
 
