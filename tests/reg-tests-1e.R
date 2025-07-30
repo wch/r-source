@@ -1610,6 +1610,7 @@ assertWarnV(options(scipen = -100))# warns and sets to min = -9
 stopifnot(identical(getOption("scipen"), -9L))
 assertWarnV(options(scipen = 100000))# warns and sets to max = 9999
 stopifnot(identical(getOption("scipen"), 9999L))
+options(scipen=scipenO) # revert
 ## setting to NULL  would invalidate as.character(Sys.time())
 
 
@@ -2047,9 +2048,7 @@ assertValueIs("1")
 
 
 ## No warnings for hist(.., log="x") -- PR#18921
-op <- options(warn = 2)
 hist(1:100, breaks = 2^(0:8), log = "x")
-options(op)
 ## used to signal 3 warnings
 
 
@@ -2082,6 +2081,18 @@ dts <- seq(.Date(11100), .Date(11111))
 stopifnot(is.list(Ldt), vapply(Ldt, inherits, NA, "Date"),
           identical(fD, format.Date(dts)))
 # fD  was "11100" "11101" .... "11111" in R <= 4.5.z
+
+
+## hist(*, plot=FALSE) warning about "nonsensical" arguments
+hiW <- getVaW(hist(1:22, log = "x", plot = FALSE))
+hi. <- hist(1:22, log = "x", plot = FALSE, warn.unused = FALSE) # no warning
+noA <- \(x) `attributes<-`(x, NULL)
+stopifnot(exprs = {
+    nzchar(print(wmsg <- attr(hiW,"warning")))
+    grepl(sQuote("log"), wmsg)
+    identical(noA(hiW), noA(hi.))
+})
+## warning msg confusingly had '...' instead of 'log'
 
 
 

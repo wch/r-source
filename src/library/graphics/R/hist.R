@@ -97,7 +97,7 @@ hist.default <-
     nB <- as.integer(nB)
     if(is.na(nB)) stop("invalid length(breaks)")
 
-    ## Do this *before* adding fuzz or logic breaks down...
+    ## Do this *before* adding fuzz or logic breaks down ..
 
     h <- as.double(diff(breaks))
     equidist <- !use.br || diff(range(h)) < 1e-7 * mean(h)
@@ -145,18 +145,25 @@ hist.default <-
     }
     else { ## plot is FALSE
     	if (warn.unused) {
-	    ## make an effort to warn about "nonsensical" arguments:
+	    ## make an effort to warn about "nonsensical" arguments, notably those only in plot(.) above
 	    nf <- names(formals()) ## all formals but those:
 	    nf <- nf[is.na(match(nf, c("x", "breaks", "nclass", "plot",
 				       "include.lowest", "right", "fuzz")))]
 	    missE <- lapply(nf, function(n)
 			    substitute(missing(.), list(. = as.name(n))))
 	    not.miss <- ! vapply(missE, eval, NA, envir = environment())
+	    nf <- nf[not.miss]
+	    nnmiss <- sum(not.miss)
+	    if(any(iM <- nf == "...")) { # replace "..." with arg names in `...`
+		dnms <- ...names()
+		nf     <- c(nf[!iM], dnms)
+		nnmiss <- nnmiss -1L + length(dnms)
+	    }
 	    if(any(not.miss))
-		warning(sprintf(ngettext(sum(not.miss),
+		warning(sprintf(ngettext(nnmiss,
 					 "argument %s is not made use of",
 					 "arguments %s are not made use of"),
-				paste(sQuote(nf[not.miss]), collapse=", ")),
+				paste(sQuote(nf), collapse=", ")),
 			domain = NA)
 	}
         r
