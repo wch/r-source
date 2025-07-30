@@ -41,15 +41,15 @@
       \item In plain-text help (\code{Rd2txt}), an initial newline from
       an Rd inline \verb{\eqn} no longer breaks the paragraph.
 
+      \item \code{hist(*, log = "x")} now works without a warning, thanks
+      to \I{Martin Smith}'s \PR{18921}.
+
       \item \I{Subassigning} \code{"POSIXlt"}, i.e., \code{<tdat>[i] <- val}
       and \code{<tdat>[[i]] <- val} now rebalance as they should,
       thanks to \I{Mikael Jagan}'s \PR{18919}.
 
       \item \code{<POSIXlt>[*]} (re-)setting \code{"balanced"}, fixing
       \PR{18681} comment #7, thanks to \I{Mikael Jagan}.
-
-      \item \code{hist(*, log = "x")} now works without a warning, thanks
-      to \I{Martin Smith}'s \PR{18921}.
     }
   }
 }
