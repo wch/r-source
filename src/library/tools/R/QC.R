@@ -7177,11 +7177,9 @@ function(cfile, dir = NULL)
 .check_package_parseRd <-
 function(dir, silent = FALSE, def_enc = FALSE, minlevel = -1)
 {
-    if(file.exists(dfile <- file.path(dir, "DESCRIPTION"))) {
-        enc <- read.dcf(dfile)[1L, ]["Encoding"]
-        if(is.na(enc)) enc <- "ASCII"
-        else def_enc <- TRUE
-    } else enc <- "ASCII"
+    enc <- .get_package_metadata(dir)["Encoding"]
+    if(is.na(enc)) enc <- "ASCII"
+    else def_enc <- TRUE
     macros <- loadPkgRdMacros(dir)
     ## UGLY! FIXME: add (something like) 'dir' as argument to checkRd() below!
     oenv <- Sys.getenv("_R_RD_MACROS_PACKAGE_DIR_", unset = NA)
