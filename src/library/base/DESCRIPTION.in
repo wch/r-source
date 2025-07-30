@@ -9,3 +9,4 @@ Description: Base R functions.
 License: Part of R @VERSION@
 Suggests: methods
 Enhances: chron, date, round
+Encoding: UTF-8
