@@ -3110,7 +3110,7 @@ attribute_hidden SEXP do_tailcall(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    fun = eval(fun, env);
 
 	/* allocating a vector result could be avoided by passing expr,
-	   env, and fun in some in globals or on the byte code stack */
+	   env, and fun in some globals or on the byte code stack */
 	PROTECT(fun);
 	SEXP val = allocVector(VECSXP, 4);
 	UNPROTECT(1); /* fun */

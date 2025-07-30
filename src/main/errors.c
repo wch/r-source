@@ -189,7 +189,7 @@ static void onintrEx(Rboolean resumeOK)
     else signalInterrupt();
 
     /* Interrupts do not inherit from error, so we should not run the
-       user erro handler. But we have been, so as a transition,
+       user error handler. But we have been, so as a transition,
        continue to use options('error') if options('interrupt') is not
        set */
     Rboolean tryUserError = GetOption1(install("interrupt")) == R_NilValue;
