@@ -23,6 +23,7 @@ paragraph
 \begin{Details}
 Included
 conditional content.
+End(\AsIs{\texttt{\#ifdef}}).
 
 Escaped backslash \code{\bsl{}x}.
 

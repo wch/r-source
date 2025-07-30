@@ -16,7 +16,7 @@ _A_r_g_u_m_e_n_t_s:
 
 _D_e_t_a_i_l_s:
 
-     Included conditional content.
+     Included conditional content.  End(#ifdef).
 
      Escaped backslash '\x'.
 

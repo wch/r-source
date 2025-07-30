@@ -28,6 +28,7 @@ foo(\var{x}, \var{y}, ...)
 #ifdef nonexistent
   This is not included.
 #endif
+  End(\verb{#ifdef}).
 
   Escaped backslash \code{\\x}.
 
