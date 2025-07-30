@@ -1,6 +1,6 @@
 % File src/library/graphics/man/plothistogram.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2022 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{plot.histogram}
@@ -16,7 +16,7 @@
                col = "lightgray", border = NULL, lty = NULL,
                main = paste("Histogram of", paste(x$xname, collapse = "\n")),
                sub = NULL, xlab = x$xname, ylab,
-               xlim = range(x$breaks), ylim = NULL,
+               xlim = range(x$breaks), ylim = NULL, log = "",
                axes = TRUE, labels = FALSE, add = FALSE,
                ann = TRUE, \dots)
 
@@ -40,6 +40,7 @@
   \item{main, sub, xlab, ylab}{these arguments to \code{title} have useful
     defaults here.}
   \item{xlim, ylim}{the range of x and y values with sensible defaults.}
+  \item{log}{a string, by default \code{""}, otherwise typically \code{"x"}.}
   \item{axes}{logical, indicating if axes should be drawn.}
   \item{labels}{logical or character.  Additionally draw labels on top of bars,
     if not \code{FALSE}; if \code{TRUE}, draw the counts or rounded

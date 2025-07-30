@@ -47,6 +47,9 @@
 
       \item \code{<POSIXlt>[*]} (re-)setting \code{"balanced"}, fixing
       \PR{18681} comment #7, thanks to \I{Mikael Jagan}.
+
+      \item \code{hist(*, log = "x")} now works without a warning, thanks
+      to \I{Martin Smith}'s \PR{18921}.
     }
   }
 }
