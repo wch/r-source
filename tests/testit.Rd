@@ -63,6 +63,9 @@ foo(\var{x}, \var{y}, ...)
   --
 
   \Sexpr[echo=TRUE,results=verbatim,keep.source=TRUE]{x<-007}
+
+  Georgi Boshnakov's example of generated paragraphs:
+  \Sexpr[results=rd]{paste(letters[1:3], collapse="\n\n")}
 }
 \value{
   [NULL]\cr\cr\dots

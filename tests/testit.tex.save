@@ -71,6 +71,13 @@ output
 \AsIs{\texttt{
 > x<-007
 }}
+
+Georgi Boshnakov's example of generated paragraphs:
+a
+
+b
+
+c
 \end{Section}
 %
 \begin{Section}{\AsIs{\texttt{\bsl{}tabular}}}
