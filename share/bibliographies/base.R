@@ -41,6 +41,42 @@ bibentry(bibtype = "Article",
          month = "sep",
          pages = "133--142")
 
+bibentry(bibtype = "Book",
+         key = "R:Chambers+Hastie:1992",
+         author = c(person(given = c("John", "M."),
+                           family = "Chambers"),
+                    person(given = c("Trevor", "J."),
+                           family = "Hastie")),
+         title = "Statistical Models in {S}",
+         publisher = "Chapman \\& Hall",
+         year = "1992",
+         address = "London",
+         isbn = "9780412830402",
+         publisherurl = "http://www.crcpress.com/product/isbn/9780412830402")
+
+bibentry(bibtype = "Book",
+         key = "R:Chambers:1998",
+         author = person(given = c("John", "M."),
+                         family = "Chambers"),
+         title = "Programming with Data",
+         publisher = "Springer",
+         year = "1998",
+         address = "New York",
+         isbn = "978-0-387-98503-9",
+         publisherurl = "https://www.springer.com/978-0-387-98503-9")
+
+bibentry(bibtype = "Book",
+         key = "R:Chambers:2008",
+         author = person(given = c("John", "M."),
+                         family = "Chambers"),
+         title = "Software for Data Analysis: Programming with {R}",
+         publisher = "Springer",
+         year = "2008",
+         address = "New York",
+         isbn = "978-0-387-75935-7",
+         url = "http://statweb.stanford.edu/~jmc4/Rbook/",
+         publisherurl = "https://www.springer.com/book/978-0-387-75935-7")
+
 bibentry(bibtype = "Article",
          key = "R:Cody:1983",
          title = "Algorithm 597: sequence of modified Bessel functions of the first kind",
