@@ -189,11 +189,10 @@ function(x)
         Rd_expr_bibcite_keys_cited(NULL)
     }
     y <- sort(unique(bib[bib$key %in% keys]))
-    paste(sprintf("\\if{html}{\\out{<span id=\"reference+%s\">}}%s\\if{html}{\\out{</span>}}",
+    paste(sprintf("\\if{html}{\u2060\\out{<span id=\"reference+%s\">}}%s\\if{html}{\\out{</span>}}",
                   string2id(unlist(y$key, use.names = FALSE)),
                   toRd(y)),
-          collapse =
-              "\\if{html}{\\out{</p>}}\n\n\\if{html}{\\out{<p>}}")
+          collapse = "\\if{html}{\\out{</p>}}\n\n\\if{html}{\\out{<p>}}")
 }
 
 Rd_expr_bibcite_keys_cited <- local({
