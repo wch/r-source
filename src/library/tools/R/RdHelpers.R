@@ -192,7 +192,7 @@ function(x)
     paste(sprintf("\\if{html}{\u2060\\out{<span id=\"reference+%s\">}}%s\\if{html}{\\out{</span>}}",
                   string2id(unlist(y$key, use.names = FALSE)),
                   toRd(y)),
-          collapse = "\\if{html}{\\out{</p>}}\n\n\\if{html}{\\out{<p>}}")
+          collapse = "\n\n")
 }
 
 Rd_expr_bibcite_keys_cited <- local({

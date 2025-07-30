@@ -1,6 +1,6 @@
 #  File src/library/tools/R/Rd2HTML.R
 #
-#  Copyright (C) 1995-2024 The R Core Team
+#  Copyright (C) 1995-2025 The R Core Team
 #  Part of the R package, https://www.R-project.org
 #
 #  This program is free software; you can redistribute it and/or modify
@@ -452,9 +452,11 @@ Rd2HTML <-
     }
 
     skipNewline <- FALSE
+    linestart <- TRUE
     of0 <- function(...)
         of1(paste0(...))
     of1 <- function(text) {
+        force(text) # use skipNewline
         if (skipNewline) {
             skipNewline <<- FALSE
             if (text == "\n") return()
@@ -462,6 +464,7 @@ Rd2HTML <-
     	if (concordance)
     	    conc$addToConcordance(text)
         writeLinesUTF8(text, con, outputEncoding, sep = "")
+        linestart <<- endsWith(text, "\n")
     }
 
     pendingClose <- pendingOpen <- character()  # Used for infix methods
@@ -513,13 +516,14 @@ Rd2HTML <-
                    "\\verb"="&#8288;</code>")
 
     addParaBreaks <- function(x) {
-	if (isBlankLineRd(x) && isTRUE(inPara)) {
+	if (isTRUE(inPara) && #isBlankLineRd(x)
+	    linestart && grepl("^[[:blank:]]*\n", x)) {
 	    inPara <<- FALSE
 	    return("</p>\n")
 	}
-	## TODO: can we get 'start col' if no srcref ?
+	## remove indentation (for cleaner/smaller output)
 	if (utils:::getSrcByte(x) == 1L) x <- psub("^\\s+", "", x)
-	if (isFALSE(inPara) && !all(grepl("^[[:blank:]\n]*$", x, perl = TRUE))) {
+	if (isFALSE(inPara) && !isBlankRd(x)) {
 	    x <- paste0("<p>", x)
 	    inPara <<- TRUE
 	}
@@ -753,7 +757,8 @@ Rd2HTML <-
                VERB = if (Rhtml && blocktag == "\\dontrun") of1(block)
                       else of1(vhtmlify(block, inEqn)),
                RCODE = if (Rhtml) of1(block) else of1(vhtmlify(block)),
-               TEXT = of1(if(doParas && !inAsIs) addParaBreaks(htmlify(block)) else vhtmlify(block)),
+               TEXT = of1(if (doParas && !inAsIs && !skipNewline) addParaBreaks(htmlify(block))
+                          else vhtmlify(block)),
                USERMACRO =,
                "\\newcommand" =,
                "\\renewcommand" = {},
@@ -807,7 +812,7 @@ Rd2HTML <-
                	   of0(closing)
                	   inPara <<- savePara
                },
-               "\\Sexpr"= of0(as.character.Rd(block, deparse=TRUE)),
+               "\\Sexpr"= of1(paste(as.character.Rd(block, deparse=TRUE), collapse="")),
                "\\cr" =,
                "\\dots" =,
                "\\ldots" =,

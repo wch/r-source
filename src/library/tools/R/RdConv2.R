@@ -25,6 +25,7 @@ RdTags <- function(Rd) {
 isBlankRd <- function(x)
     length(grep("^[[:blank:]]*\n?$", x, perl = TRUE)) == length(x) # newline optional
 
+## not suitable for \Sexpr-generated Rd where the srcref refers to the \Sexpr
 isBlankLineRd <- function(x) {
     utils:::getSrcByte(x) == 1L &&
     length(grep("^[[:blank:]]*\n", x, perl = TRUE)) == length(x)   # newline required
