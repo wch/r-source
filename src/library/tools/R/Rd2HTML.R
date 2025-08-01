@@ -794,6 +794,9 @@ Rd2HTML <-
                ## watch out for empty URLs (TeachingDemos had one)
                "\\url" = if(length(block)) {
                    url <- lines2str(as.character(block))
+                   if(startsWith(url, "doi:"))
+                       url <- paste0("https://doi.org/",
+                                     substring(url, 5L))
                    enterPara(doParas)
                    of0('<a href="', urlify(url), '">', htmlify(url), '</a>')
                },
@@ -801,6 +804,9 @@ Rd2HTML <-
                    closing <-
                        if(length(block[[1L]])) {
                            url <- lines2str(as.character(block[[1L]]))
+                           if(startsWith(url, "doi:"))
+                               url <- paste0("https://doi.org/",
+                                             substring(url, 5L))
                            enterPara(doParas)
                            of0('<a href="', urlify(url), '">')
                            "</a>"
