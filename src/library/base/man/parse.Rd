@@ -47,9 +47,10 @@ str2expression(text)
     to re-encode the input.  To do the latter, specify the encoding as
     part of the connection \code{con} or \emph{via}
     \code{\link{options}(encoding=)}: see the example under
-    \code{\link{file}}. Arguments \code{encoding = "latin1"} and 
-    \code{encoding = "UTF-8"} are ignored with a warning when running
-    in a \abbr{MBCS} locale.}
+    \code{\link{file}}.
+    Arguments \code{encoding = "UTF-8"} and \code{encoding = "latin1"} 
+    are ignored with a warning when running, respectively, in a
+    non-UTF-8 \abbr{MBCS} locale or in an \abbr{MBCS} locale.}
   \item{s}{a \code{\link{character}} vector of length \code{1}, i.e., a
     \dQuote{string}.}
 }
