@@ -96,10 +96,11 @@ Duncan Murdoch
 rref <- bibentry(
    bibtype = "Manual",
    title = "R: A Language and Environment for Statistical Computing",
-   author = person("R Core Team"),
+   author = person("R Core Team", comment = c(ROR = "02zz1nj61")),
    organization = "R Foundation for Statistical Computing",
    address = "Vienna, Austria",
-   year = 2013,
+   year = 2025,
+   doi = "10.32614/R.manuals",
    url = "https://www.R-project.org/",
    key = "R")
 
@@ -129,6 +130,7 @@ bref <- c(
      publisher = "Cambridge University Press",
      address = "Cambridge",
      isbn = "0-521-57391-2",
+     doi = "10.1017/CBO9780511802843",
      url = "http://statwww.epfl.ch/davison/BMA/",
      key = "boot-book"
    )

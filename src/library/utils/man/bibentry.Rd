@@ -32,7 +32,7 @@ bibentry(bibtype, textVersion = NULL, header = NULL, footer = NULL,
 
 \method{sort}{bibentry}(x, decreasing = FALSE, .bibstyle = NULL, drop = FALSE, \dots)
 
-\method{print}{citation} (x, style = "citation", \dots)
+\method{print}{citation}(x, style = "citation", \dots)
 \method{format}{citation}(x, style = "citation", \dots)
 
 \method{toBibtex}{bibentry}(object, escape = FALSE, ...)
@@ -216,6 +216,9 @@ bibentry(bibtype, textVersion = NULL, header = NULL, footer = NULL,
     \item{number:}{The number of a journal, magazine, technical report,
       or of a work in a series.}
 
+    \item{organization:}{The publishing institution of a manual or
+      proceedings.}
+
     \item{pages:}{One or more page numbers or range of numbers.}
 
     \item{publisher:}{The publisher's name.}
@@ -284,6 +287,7 @@ bref <- c(
      publisher = "Cambridge University Press",
      address = "Cambridge",
      isbn = "0-521-57391-2",
+     doi = "10.1017/CBO9780511802843",
      url = "http://statwww.epfl.ch/davison/BMA/",
      key = "boot-book"
    )
