@@ -201,6 +201,11 @@
       \item \code{format(<list>)} calling \code{format.default()} now calls
       generic \code{format()} on each list element (rather than
       \code{format.default()}).
+
+      \item \code{tools::Rd2HTML()} detects paragraphs in more cases of
+      \verb{\Sexpr}-generated Rd code, fixing a regression in \R 3.6.0
+      originally reported by Georgi Boshnakov and later also in \PR{18470}.
+      An inactive \verb{#ifdef} block no longer breaks the paragraph.
     }
   }
 }
