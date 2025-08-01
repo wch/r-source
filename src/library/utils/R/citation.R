@@ -2009,26 +2009,52 @@ local({
                 year <- year[-suppressauth]
             }
         }
-        if (!is.null(before))
-            before <- paste0(before, " ")
-        if (!is.null(after))
-            after <- paste0(" ", after)
+
+        n <- length(year)
+        before <- if(!any(ind <- nzchar(before)))
+                      rep_len("", n)
+                  else {
+                      before[ind] <- paste0(before[ind], " ")
+                      if(length(before) == 1L)
+                          c(before, rep_len("", n - 1L))
+                      else
+                          rep_len(before, n)
+                  }
+        after <- if(!any(ind <- nzchar(after)))
+                     rep_len("", n)
+                 else {
+                     after[ind] <- paste0(", ", after[ind])
+                     if(length(after) == 1L)
+                         c(rep_len("", n - 1L), after)
+                     else
+                         rep_len(after, n)
+                 }
+        citesep <- paste0(bibpunct[3L], " ")
         if (textual) {
-            result <- paste0(bibpunct[1L], before, year, after, bibpunct[2L])
+            result <- paste0(bibpunct[1L],
+                             before, year, after,
+                             bibpunct[2L])
             if (mode == "super")
             	result <- paste0(auth, "^{", result, "}")
             else
             	result <- paste0(auth, " ", result)
-            result <- paste(result, collapse = paste0(bibpunct[3L], " "))
+            result <- paste(result, collapse = citesep)
         } else if (numeric) {
-            result <- paste(year, collapse=paste0(bibpunct[3L], " "))
-            result <- paste0(bibpunct[1L], before, result, after, bibpunct[2L])
+            result <- paste0(bibpunct[1L],
+                             paste0(before,
+                                    year,
+                                    after,
+                                    collapse = citesep),
+                             bibpunct[2L])
             if (mode == "super")
             	result <- paste0("^{", result, "}")
         } else {
-            result <- paste0(auth, bibpunct[5L], " ", year)
-            result <- paste(result, collapse = paste0(bibpunct[3L], " "))
-            result <- paste0(bibpunct[1L], before, result, after, bibpunct[2L])
+            result <- paste0(bibpunct[1L],
+                             paste0(before,
+                                    auth, bibpunct[5L], " ", year,
+                                    after,
+                                    collapse = citesep),
+                             bibpunct[2L])
         }
         result
     }
