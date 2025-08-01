@@ -376,9 +376,6 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                     }
                 }
 		tt <- tryCatch({
-                    ## <FIXME c68715>
-                    ## attr(package, "LibPath") <- which.lib.loc
-                    ## </FIXME>
                     ns <- loadNamespace(package, lib.loc)
                     env <- attachNamespace(ns, pos = pos, deps,
                                            exclude, include.only)
@@ -394,9 +391,6 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
 		if(logical.return && is.null(tt))
 		    return(FALSE)
 
-                ## <FIXME c68715>
-                ## attr(package, "LibPath") <- NULL
-                ##
                 {
                     on.exit(detach(pos = pos))
                     ## If there are S4 generics then the package should

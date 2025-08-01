@@ -184,9 +184,6 @@ loadNamespace <- function (package, lib.loc = NULL,
                            partial = FALSE, versionCheck = NULL,
                            keep.parse.data = getOption("keep.parse.data.pkgs"))
 {
-    ## <FIXME c68715> 
-    ## libpath <- attr(package, "LibPath")
-    ## </FIXME>
     package <- as.character(package)[[1L]]
 
     loading <- dynGet("__NameSpacesLoading__", NULL)
@@ -362,10 +359,7 @@ loadNamespace <- function (package, lib.loc = NULL,
 
         ## find package, allowing a calling handler to retry if not found.
         ## could move the retry functionality into find.package.
-        ## <FIXME c68715>
-        ## fp.lib.loc <- c(libpath, lib.loc)
         fp.lib.loc <- lib.loc
-        ## </FIXME>
         pkgpath <- find.package(package, fp.lib.loc, quiet = TRUE)
         if (length(pkgpath) == 0L) {
             cond <- packageNotFoundError(package, fp.lib.loc, sys.call())
