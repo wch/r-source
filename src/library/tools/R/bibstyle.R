@@ -128,17 +128,18 @@ makeJSS <- function() {
             result <- cleanupLatex(person$family)
             if (length(person$given))
                 paste(result,
-                      paste(substr(sapply(person$given, cleanupLatex),
-                                   1, 1), collapse=""))
+                      paste(substr(vapply(person$given, cleanupLatex, ""),
+                                   1L, 1L),
+                            collapse = ""))
             else result
         }
         else
-            paste(cleanupLatex(person$given), collapse=" ")
+            paste(cleanupLatex(person$given), collapse = " ")
     }
 
     # Format all authors for one paper
     authorList <- function(paper) {
-        names <- sapply(paper$author, shortName)
+        names <- vapply(paper$author, shortName, "")
         if (length(names) > 1L)
             result <- paste(names, collapse = ", ")
         else
@@ -148,7 +149,7 @@ makeJSS <- function() {
 
     # Format all editors for one paper
     editorList <- function(paper) {
-        names <- sapply(paper$editor, shortName)
+        names <- vapply(paper$editor, shortName, "")
         if (length(names) > 1L)
             result <- paste(paste(names, collapse = ", "), "(eds.)")
         else if (length(names))
