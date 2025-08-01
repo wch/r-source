@@ -3208,7 +3208,7 @@ End users installing a source package can specify a standard by
 something like @command{R CMD INSTALL --use-C17}.  This overrides the
 @samp{SystemRequirements} field, but not any @command{configure} file.
 
-@node Using @command{cmake}
+@node Using cmake
 @subsection Using @command{cmake}
 
 Packages often wish to include the sources of other software and compile

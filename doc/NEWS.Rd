@@ -204,7 +204,7 @@
 
       \item \code{tools::Rd2HTML()} detects paragraphs in more cases of
       \verb{\Sexpr}-generated Rd code, fixing a regression in \R 3.6.0
-      originally reported by Georgi Boshnakov and later also in \PR{18470}.
+      originally reported by \I{Georgi Boshnakov} and later also in \PR{18470}.
       An inactive \verb{#ifdef} block no longer breaks the paragraph.
     }
   }

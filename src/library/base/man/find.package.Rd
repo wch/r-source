@@ -41,7 +41,7 @@ packageNotFoundError(package, lib.loc, call = NULL)
   TRUE} a warning will be given about the named packages which are not
   found, and an error if none are.  If \code{verbose} is true, warnings
   about packages found more than once are given.  For a package to be
-  returned it must contain a either a \file{Meta} subdirectory or a
+  returned it must contain either a \file{Meta} subdirectory or a
   \file{DESCRIPTION} file containing a valid \code{version} field, but
   it need not be installed (it could be a source package if
   \code{lib.loc} was set suitably).

@@ -6,8 +6,9 @@
 \name{file.show}
 \alias{file.show}
 \title{Display One or More Text Files}
-\description{Display one or more (plain) text files, in a platform
-  specific way, typically via a \sQuote{pager}.
+\description{
+  Display one or more (plain) text files, in a platform-specific way,
+  typically via a \sQuote{pager}.
 }
 \usage{
 file.show(\dots, header = rep("", nfiles),
@@ -17,7 +18,7 @@ file.show(\dots, header = rep("", nfiles),
 }
 \arguments{
   \item{\dots}{one or more character vectors containing the names of the
-    files to be displayed.  Paths with have \link{tilde expansion}.}
+    files to be displayed.  Paths will undergo \link{tilde expansion}.}
   \item{header}{character vector (of the same length as the number of files
     specified in \code{\dots}) giving a header for each file being
     displayed.  Defaults to empty strings.}
