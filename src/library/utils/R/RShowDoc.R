@@ -37,7 +37,13 @@ RShowDoc <- function(what, type = c("pdf", "html", "txt"), package)
         else browseURL(paste0("file://", URLencode(path)))
     }
 
-    type <- match.arg(type)
+    type <- if(interactive()) {
+                if(missing(type))
+                    "html"
+                else
+                    match.arg(type, c("html", "pdf", "txt"))
+            } else
+                match.arg(type)
     if(missing(what) || length(what) != 1L || !is.character(what)) {
         message("   RShowDoc() should be used with a character string argument specifying\n   a documentation file")
         return(invisible())
@@ -115,10 +121,11 @@ RShowDoc <- function(what, type = c("pdf", "html", "txt"), package)
         path <- file.path(R.home("share"), "licenses", what)
         file.show(path)
         return(invisible(path))
-    } else if(what %in% c("R-admin", "R-data", "R-exts", "R-FAQ", "R-intro",
-                          "R-ints", "R-lang")) {
+    } else if((what0 <- sub("#.*", "", what)) %in%
+              c("R-admin", "R-data", "R-exts", "R-FAQ", "R-intro",
+                "R-ints", "R-lang")) {
         if(type == "pdf") {
-            path <- file.path(R.home("doc"), "manual", paste.(what, "pdf"))
+            path <- file.path(R.home("doc"), "manual", paste.(what0, "pdf"))
             if(file.exists(path)) {
                 pdf_viewer(path)
                 return(invisible(path))
@@ -126,9 +133,9 @@ RShowDoc <- function(what, type = c("pdf", "html", "txt"), package)
             type <- "html"
         }
         if(type == "html") {
-            path <- file.path(R.home("doc"), "manual", paste.(what, "html"))
+            path <- file.path(R.home("doc"), "manual", paste.(what0, "html"))
             if(file.exists(path)) {
-                html_viewer(path)
+                html_viewer(paste0(path, "#", sub(".*#", "", what)))
                 return(invisible(path))
             }
         }
