@@ -81,7 +81,7 @@ b
 c
 
 \AsIs{\texttt{
-[1] "a\bsl{}n\bsl{}n    b\bsl{}n    c"
+[1] "a\bsl{}n    b\bsl{}n    c"
 }}
 \end{Section}
 %

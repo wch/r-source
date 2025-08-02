@@ -321,7 +321,7 @@ function(key, field, value)
 {
     Rd_expr_bibinfo_data_store(list(trimws(key),
                                     trimws(field),
-                                    gsub("\n\n", "\n", trimws(value))),
+                                    trimws(value)),
                                add = TRUE)
 }
 

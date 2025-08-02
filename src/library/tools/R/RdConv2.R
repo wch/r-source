@@ -1,7 +1,7 @@
 #  File src/library/tools/R/RdConv2.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2024 The R Core Team
+#  Copyright (C) 1995-2025 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -221,7 +221,8 @@ processRdChunk <- function(code, stage, options, env, macros)
 	code <- structure(code[tags != "COMMENT"],
 	                  srcref = codesrcref) # retain for error locations
 	chunkexps <- tryCatch(
-	    parse(text = as.character(code), keep.source = options$keep.source),
+	    parse(text = sub("\n$", "", as.character(code)),
+	          keep.source = options$keep.source),
 	    error = function (e) stopRd(code, Rdfile, conditionMessage(e))
 	)
 
