@@ -109,6 +109,10 @@ a
 </p>
 <p>c
 </p>
+<p><code style="white-space: pre;">&#8288;
+[1] "a\n\n    b\n    c"
+&#8288;</code>
+</p>
 
 
 <h3><code style="white-space: pre;">&#8288;\tabular&#8288;</code></h3>

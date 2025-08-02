@@ -67,6 +67,9 @@ foo(\var{x}, \var{y}, ...)
 
   Georgi Boshnakov's example of generated paragraphs:
   \Sexpr[results=rd]{paste(letters[1:3], collapse="\n\n")}
+
+  \Sexpr[results=verbatim]{"a
+    b\n    c"}
 }
 \value{
   [NULL]\cr\cr\dots
