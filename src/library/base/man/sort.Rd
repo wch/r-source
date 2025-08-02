@@ -158,7 +158,7 @@ sort.int(x, partial = NULL, na.last = NA, decreasing = FALSE,
   All attributes are removed from the return value
   %% <FIXME bibcite>
   %% (see Becker \abbr{et al.}, 1988, p.146)
-  \bibcitep{R:Becker+Chambers+Wilks:1988>p.146}
+  \bibcitep{|R:Becker+Chambers+Wilks:1988|p.\\\\\\sspace{}146}
   %% </FIXME>
   except names, which are sorted.  (If
   \code{partial} is specified even the names are removed.)  Note that

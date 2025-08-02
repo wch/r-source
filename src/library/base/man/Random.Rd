@@ -297,16 +297,23 @@ set.seed(seed, kind = NULL, normal.kind = NULL, sample.kind = NULL)
   \emph{Operations Research}, \bold{47}, 159--164.
   \doi{10.1287/opre.47.1.159}.
 
-  \I{L'Ecuyer}, P. and Simard, R. (2007).
-  \I{TestU01}: A C Library for Empirical Testing of Random Number Generators
-  \emph{ACM Transactions on Mathematical Software}, \bold{33}, Article 22.
-  \doi{10.1145/1268776.1268777}.
-  \cr The \I{TestU01} C library is available from
-  \url{https://simul.iro.umontreal.ca/testu01/tu01.html} or also
-  \url{https://github.com/umontreal-simul/TestU01-2009}.
-
+  %% <FIXME bibcite>  
+  %% \I{L'Ecuyer}, P. and Simard, R. (2007).
+  %% \I{TestU01}: A C Library for Empirical Testing of Random Number Generators
+  %% \emph{ACM Transactions on Mathematical Software}, \bold{33}, Article 22.
+  %% \doi{10.1145/1268776.1268777}.
+  %% \cr The \I{TestU01} C library is available from
+  %% \url{https://simul.iro.umontreal.ca/testu01/tu01.html} or also
+  %% \url{https://github.com/umontreal-simul/TestU01-2009}.
+  %% </FIXME>
+  
   %% <FIXME bibcite>
-  %% \bibshow{R:Simard+L_Ecuyer:2007}
+  \bibinfo{R:Simard+L_Ecuyer:2007}{footer}{
+    The \\\\\\I{TestU01} C library is available from
+    \\\\\\url{https://simul.iro.umontreal.ca/testu01/tu01.html} or also
+    \\\\\\url{https://github.com/umontreal-simul/TestU01-2009}.
+  }
+  \bibshow{R:Simard+L_Ecuyer:2007}
   %% </FIXME>
 
   Marsaglia, G. (1997).
