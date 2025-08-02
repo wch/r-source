@@ -1,6 +1,6 @@
 % File src/library/utils/man/cite.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2012-2015 R Core Team
+% Copyright 2012-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{cite}
@@ -108,30 +108,33 @@ rref <- bibentry(
 bref <- c(
    bibentry(
      bibtype = "Manual",
-     title = "boot: Bootstrap R (S-PLUS) Functions",
+     title = "boot: Bootstrap Functions",
      author = c(
        person("Angelo", "Canty", role = "aut",
+         email = "cantya@mcmaster.ca",
          comment = "S original"),
-       person(c("Brian", "D."), "Ripley", role = c("aut", "trl", "cre"),
-         comment = "R port, author of parallel support",
-         email = "ripley@stats.ox.ac.uk")
+       person(c("Brian", "D."), "Ripley", role = c("aut", "trl"),
+         comment = "R port, author of parallel support, maintainer 1999--2022",
+         email = "Brian.Ripley@R-project.org")
      ),
-     year = "2012",
-     note = "R package version 1.3-4",
+     year = "2024",
+     note = "R package version 1.3-31",
      url = "https://CRAN.R-project.org/package=boot",
+     doi = "10.32614/CRAN.package.boot",
      key = "boot-package"
    ),
 
    bibentry(
      bibtype = "Book",
      title = "Bootstrap Methods and Their Applications",
-     author = as.person("Anthony C. Davison [aut], David V. Hinkley [aut]"),
+     author = c(person("Anthony Christopher", "Davison",
+                        comment = c(ORCID = "0000-0002-8537-6191")),
+                person("David Victor", "Hinkley")),
      year = "1997",
      publisher = "Cambridge University Press",
      address = "Cambridge",
      isbn = "0-521-57391-2",
      doi = "10.1017/CBO9780511802843",
-     url = "http://statwww.epfl.ch/davison/BMA/",
      key = "boot-book"
    )
 )
