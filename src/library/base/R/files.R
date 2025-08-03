@@ -50,10 +50,13 @@ file.show <-
         for(i in seq_along(files)) {
             f <- files[i]
             tf <- tempfile()
-            tmp <- readLines(f, warn = FALSE)
+            tmp <- list(readBin(f, "raw", file.size(f)))
             tmp2 <- try(iconv(tmp, encoding, "", "byte"))
             if(inherits(tmp2, "try-error")) file.copy(f, tf)
-            else writeLines(tmp2, tf)
+            else {
+                tmp2 <- strsplit(tmp2, "\r\n?|\n", perl = TRUE)[[1L]]
+                writeLines(tmp2, tf)
+            }
             files[i] <- tf
             if(delete.file) unlink(f)
         }
