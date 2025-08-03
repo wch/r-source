@@ -1,7 +1,7 @@
 #  File src/library/stats/R/nafns.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2018 The R Core Team
+#  Copyright (C) 1995-2025 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -75,14 +75,15 @@ na.omit.data.frame <- function(object, ...)
 	    for(ii in 1L:d[2L])
 		omit <- omit | x[, ii]
     }
-    xx <- object[!omit, , drop = FALSE]
     if (any(omit > 0L)) {
+	xx <- object[!omit, , drop = FALSE]
 	temp <- setNames(seq(omit)[omit],
 			 attr(object, "row.names")[omit])
 	attr(temp, "class") <- "omit"
 	attr(xx, "na.action") <- temp
+	object <- xx
     }
-    xx
+    object
 }
 
 na.exclude <- function(object, ...) UseMethod("na.exclude")
@@ -129,14 +130,15 @@ na.exclude.data.frame <- function(object, ...)
 	    for(ii in 1L:d[2L])
 		omit <- omit | x[, ii]
     }
-    xx <- object[!omit, , drop = FALSE]
     if (any(omit > 0L)) {
+	xx <- object[!omit, , drop = FALSE]
 	temp <- setNames(seq(omit)[omit],
 			 attr(object, "row.names")[omit])
 	attr(temp, "class") <- "exclude"
 	attr(xx, "na.action") <- temp
+	object <- xx
     }
-    xx
+    object
 }
 
 naresid <- function(omit, x, ...) UseMethod("naresid")
