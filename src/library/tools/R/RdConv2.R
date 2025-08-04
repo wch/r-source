@@ -206,6 +206,14 @@ processRdChunk <- function(code, stage, options, env, macros)
     if (is.null(opts <- attr(code, "Rd_option"))) opts <- ""
     codesrcref <- attr(code, "srcref")
     Rdfile <- attr(codesrcref, "srcfile")$filename
+    ## Provide Rdfile for easy access to Sexpr code (instead of having
+    ## to look in the call stack for the call to processRdChunk() and
+    ## get Rdfile from the correspnding frame.
+    ## We may want to provide Rdfile and other information for the whole
+    ## prepare_Rd() processing, but that recalls itself so dropping the
+    ## information on exit is not straightforward.
+    processRdChunk_data_store(list(Rdfile = Rdfile))
+    on.exit(processRdChunk_data_store(NULL))
     options <- utils:::SweaveParseOptions(opts, options, RweaveRdOptions)
     if (stage == options$stage) {
         #  The code below is very similar to RWeaveLatexRuncode, but simplified
@@ -362,6 +370,16 @@ processRdChunk <- function(code, stage, options, env, macros)
     replaceRdSrcrefs(res, codesrcref)
 }
 
+processRdChunk_data_store <- local({
+    .store <- NULL
+    function(new) {
+        if(!missing(new))
+            .store <<- new
+        else
+            .store
+    }
+})
+
 processRdIfdefs <- function(blocks, defines)
 {
     recurse <- function(block) {
@@ -470,6 +488,10 @@ prepare_Rd <-
     srcref <- attr(Rd, "srcref")
     if (is.null(Rdfile) && !is.null(srcref))
     	Rdfile <- attr(srcref, "srcfile")$filename
+    ## prepare_Rd_data_store(list(Rdfile = Rdfile))
+    ## prepare_Rd_data_store(Rdfile)
+    ## saveRDS(prepare_Rd_data_store(), file = "~/tmp/yyy2.rds")
+    ## on.exit(prepare_Rd_data_store(NULL))
     if (fragment) meta <- NULL
     else {
 	pratt <- attr(Rd, "prepared")

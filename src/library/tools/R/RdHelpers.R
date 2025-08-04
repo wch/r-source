@@ -210,8 +210,11 @@ function(x)
                       use.names = FALSE)
     if(any(ind <- nzchar(footers)))
         footers[ind] <- paste("\\cr", footers[ind])
-    paste(sprintf("%s\\if{html}{\u2060\\out{<span id=\"reference+%s\">}}%s\\if{html}{\\out{</span>}}%s",
+    rdfile <- processRdChunk_data_store()$Rdfile
+    rdpath <- if(length(rdfile)) basename(rdfile) else ""
+    paste(sprintf("%s\\if{html}{\u2060\\out{<span id=\"reference+%s+%s\">}}%s\\if{html}{\\out{</span>}}%s",
                   headers,
+                  rdpath,
                   string2id(.bibentry_get_key(y)),
                   toRd(y),
                   footers),
@@ -258,6 +261,8 @@ function(x, textual = FALSE)
         return("")
     y <- character(n)
     prev <- Rd_expr_bibcite_keys_cited()
+    rdfile <- processRdChunk_data_store()$Rdfile
+    rdpath <- if(length(rdfile)) basename(rdfile) else ""
     if(textual) {
         for(i in seq_len(n)) {
             key <- keys[i]
@@ -268,7 +273,8 @@ function(x, textual = FALSE)
         if(any(ind <- nzchar(before)))
             before[ind] <- paste0(before[ind], " ")
         y <- paste0(before,
-                    sprintf("\\if{html}{\\out{<a href=\"#reference+%s\">}}",
+                    sprintf("\\if{html}{\\out{<a href=\"#reference+%s+%s\">}}",
+                            rdpath,
                             string2id(keys)),
                     y,
                     rep_len("\\if{html}{\\out{</a>}}", n),
@@ -288,7 +294,8 @@ function(x, textual = FALSE)
             after[ind] <- paste0(", ", after[ind])
         y <- paste0("(",
                     paste0(before,
-                           sprintf("\\if{html}{\\out{<a href=\"#reference+%s\">}}",
+                           sprintf("\\if{html}{\\out{<a href=\"#reference+%s+%s\">}}",
+                                   rdpath,
                                    string2id(keys)),
                            y,
                            rep_len("\\if{html}{\\out{</a>}}", n),
