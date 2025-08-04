@@ -1,6 +1,6 @@
 % File src/library/base/man/Random.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2024 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Random}
@@ -65,14 +65,16 @@ set.seed(seed, kind = NULL, normal.kind = NULL, sample.kind = NULL)
       30323)}.
     The \I{Wichmann}--\I{Hill} generator has a cycle length of
     \eqn{6.9536 \times 10^{12}}{6.9536e12} (=
-    \code{prod(p-1)/4}, see \emph{Applied Statistics} (1984)
-    \bold{33}, 123 which corrects the original article).
+    \code{prod(p-1)/4}, see
+    \bibcitet{R:Wichmann+Hill:1984}
+    which corrects the original article).
     It exhibits 12 clear failures in the \I{TestU01} Crush suite and 22
-    in the \I{BigCrush} suite (\bibcite{L'Ecuyer, 2007}).}
+    in the \I{BigCrush} suite \bibcitep{R:L_Ecuyer+Simard:2007}.}
 
     \item{\code{"Marsaglia-Multicarry"}:}{
     A \emph{multiply-with-carry} RNG is used, as recommended by George
-    \I{Marsaglia} in his post to the mailing list \file{sci.stat.math}.
+    \I{Marsaglia} in his post to the mailing list \file{sci.stat.math}
+    \bibcitep{R:Marsaglia:1997}.
     It has a period of more than \eqn{2^{60}}{2^60}.
 
     It exhibits 40 clear failures in \I{L'Ecuyer}'s \I{TestU01} Crush suite.
@@ -89,17 +91,17 @@ set.seed(seed, kind = NULL, normal.kind = NULL, sample.kind = NULL)
       4.6*10^18} for most initial seeds.  The seed is two integers (all
     values allowed for the first seed: the second must be odd).
 
-    We use the implementation by Reeds \abbr{et al.}\sspace(1982--84).
+    We use the implementation by \bibcitet{R:Reeds+Hubert+Abrahams:1982-4}.
 
     The two seeds are the \I{Tausworthe} and congruence long integers,
     respectively.
 
     It exhibits 25 clear failures in the \I{TestU01} Crush suite
-    (\bibcite{L'Ecuyer, 2007}). 
+    \bibcitep{R:L_Ecuyer+Simard:2007}. 
     }
 
     \item{\code{"Mersenne-Twister"}:}{
-      From \bibcite{Matsumoto and Nishimura (1998)}; code updated in 2002.
+      From \bibcitet{R:Matsumoto+Nishimura:1998}; code updated in 2002.
       A twisted \abbr{GFSR} with period
       \eqn{2^{19937} - 1}{2^19937 - 1} and equidistribution in 623
       consecutive dimensions (over the whole period).  The \sQuote{seed} is a
@@ -110,8 +112,8 @@ set.seed(seed, kind = NULL, normal.kind = NULL, sample.kind = NULL)
       not affected by the initialization issue in the 1998 code of
       \I{Matsumoto} and \I{Nishimura} addressed in a 2002 update.
 
-      It exhibits 2 clear failures in each of the \I{TestU01} Crush and the
-      \I{BigCrush} suite (\bibcite{L'Ecuyer, 2007}).
+      It exhibits 2 clear failures in each of the \I{TestU01} Crush and
+      the \I{BigCrush} suite \bibcitep{R:L_Ecuyer+Simard:2007}.
     }
 
     \item{\code{"Knuth-TAOCP-2002"}:}{
@@ -125,7 +127,7 @@ set.seed(seed, kind = NULL, normal.kind = NULL, sample.kind = NULL)
     }
 
     \item{\code{"Knuth-TAOCP"}:}{
-      An earlier version from Knuth (1997).
+      An earlier version from \bibcitet{R:Knuth:1997}.
 
       The 2002 version was not backwards compatible with the earlier
       version: the initialization of the \abbr{GFSR} from the seed was altered.
@@ -139,14 +141,11 @@ set.seed(seed, kind = NULL, normal.kind = NULL, sample.kind = NULL)
 
       It exhibits 3 clear failure in the \I{TestU01} Crush suite and
       4 clear failures in the \I{BigCrush} suite
-      (\emph{\I{L'Ecuyer}}, 2007).
+      \bibcitep{R:L_Ecuyer+Simard:2007}.
     }
     \item{\code{"L'Ecuyer-CMRG"}:}{
       A \sQuote{combined multiple-recursive generator} from
-      %% <FIXME: bibcite>
-      %% \I{L'Ecuyer} (1999),
       \bibcitet{R:L_Ecuyer:1999},
-      %% </FIXME>
       each element of which is a feedback multiplicative
       generator with three integer elements: thus the seed is a (signed)
       integer vector of length 6. The period is around
@@ -161,8 +160,8 @@ set.seed(seed, kind = NULL, normal.kind = NULL, sample.kind = NULL)
       basis for the multiple streams used in package \pkg{parallel}.
       % See \code{\link{RngStream}}.
 
-      It exhibits 6 clear failures in each of the \I{TestU01} Crush and the
-      \I{BigCrush} suite (\emph{\I{L'Ecuyer}}, 2007).
+      It exhibits 6 clear failures in each of the \I{TestU01} Crush and
+      the \I{BigCrush} suite \bibcitep{R:L_Ecuyer+Simard:2007}.
     }
 
     \item{\code{"user-supplied"}:}{
@@ -255,99 +254,30 @@ set.seed(seed, kind = NULL, normal.kind = NULL, sample.kind = NULL)
   \code{set.seed} returns \code{NULL}, invisibly.
 }
 \references{
-  Ahrens, J. H. and Dieter, U. (1973).
-  Extensions of Forsythe's method for random sampling from the normal
-  distribution.
-  \emph{Mathematics of Computation}, \bold{27}, 927--937.
-
-  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988).
-  \emph{The New S Language}.
-  Wadsworth & Brooks/Cole.
-  (\code{set.seed}, storing in \code{.Random.seed}.)
-
-  Box, G. E. P. and Muller, M. E. (1958).
-  A note on the generation of normal random deviates.
-  \emph{Annals of Mathematical Statistics}, \bold{29}, 610--611.
-  \doi{10.1214/aoms/1177706645}.
-
-  De Matteis, A. and Pagnutti, S. (1993).
-  Long-range Correlation Analysis of the Wichmann-Hill Random Number
-  Generator.
-  \emph{Statistics and Computing}, \bold{3}, 67--70.
-  \doi{10.1007/BF00153065}.
-
-  Kinderman, A. J. and Ramage, J. G. (1976).
-  Computer generation of normal random variables.
-  \emph{Journal of the American Statistical Association}, \bold{71},
-  893--896.
-  \doi{10.2307/2286857}.
-
-  Knuth, D. E. (1997).
-  \emph{The Art of Computer Programming}.
-  Volume 2, third edition.\cr
-  Source code at \url{https://www-cs-faculty.stanford.edu/~knuth/taocp.html}.
-
-  Knuth, D. E. (2002).
-  \emph{The Art of Computer Programming}.
-  Volume 2, third edition, ninth printing.
-
-  \I{L'Ecuyer}, P. (1999).
-  Good parameters and implementations for combined multiple recursive
-  random number generators.
-  \emph{Operations Research}, \bold{47}, 159--164.
-  \doi{10.1287/opre.47.1.159}.
-
-  %% <FIXME bibcite>  
-  %% \I{L'Ecuyer}, P. and Simard, R. (2007).
-  %% \I{TestU01}: A C Library for Empirical Testing of Random Number Generators
-  %% \emph{ACM Transactions on Mathematical Software}, \bold{33}, Article 22.
-  %% \doi{10.1145/1268776.1268777}.
-  %% \cr The \I{TestU01} C library is available from
-  %% \url{https://simul.iro.umontreal.ca/testu01/tu01.html} or also
-  %% \url{https://github.com/umontreal-simul/TestU01-2009}.
-  %% </FIXME>
-  
-  %% <FIXME bibcite>
-  \bibinfo{R:Simard+L_Ecuyer:2007}{footer}{
+  \bibinfo{R:Becker+Chambers+Wilks:1988}{footer}{
+    (\\\\\\code{set.seed}, storing in \\\\\\code{.Random.seed}.)}
+  \bibinfo{R:Knuth:1997}{footer}{
+    Source code at \\\\\\url{https://www-cs-faculty.stanford.edu/~knuth/taocp.html}.}
+  \bibinfo{R:L_Ecuyer+Simard:2007}{footer}{
     The \\\\\\I{TestU01} C library is available from
     \\\\\\url{https://simul.iro.umontreal.ca/testu01/tu01.html} or also
     \\\\\\url{https://github.com/umontreal-simul/TestU01-2009}.
   }
-  \bibshow{R:Simard+L_Ecuyer:2007}
-  %% </FIXME>
+  \bibinfo{R:Matsumoto+Nishimura:1998}{footer}{
+    Source code formerly at \\\\\\code{http://www.math.keio.ac.jp/~matumoto/emt.html}.
+    Now see \\\\\\url{https://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/VERSIONS/C-LANG/c-lang.html}.}
+  \bibinfo{R:Wichmann+Hill:1982}{note}{Remarks:
+    \\\\\\bold{34}, 198 and \\\\\\bold{35}, 89.}
 
-  Marsaglia, G. (1997).
-  \emph{A random number generator for C}.
-  Discussion paper, posting on Usenet newsgroup \code{sci.stat.math} on
-  September 29, 1997.
-
-  Marsaglia, G. and Zaman, A. (1994).
-  Some portable very-long-period random number generators.
-  \emph{Computers in Physics}, \bold{8}, 117--121.
-  \doi{10.1063/1.168514}.
-
-  Matsumoto, M. and Nishimura, T. (1998).
-  Mersenne Twister: A 623-dimensionally equidistributed uniform
-  pseudo-random number generator,
-  \emph{ACM Transactions on Modeling and Computer Simulation},
-  \bold{8}, 3--30.\cr
-  Source code formerly at \code{http://www.math.keio.ac.jp/~matumoto/emt.html}.\cr
-  Now see \url{https://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/VERSIONS/C-LANG/c-lang.html}.
-
-  Reeds, J., Hubert, S. and Abrahams, M. (1982--4).
-  C implementation of SuperDuper, University of California at Berkeley.
-  (Personal communication from Jim Reeds to Ross Ihaka.)
-
-  Wichmann, B. A.  and Hill, I. D. (1982).
-  Algorithm AS 183: An Efficient and Portable Pseudo-random Number
-  Generator.
-  \emph{Applied Statistics}, \bold{31}, 188--190; Remarks:
-  \bold{34}, 198 and \bold{35}, 89.
-  \doi{10.2307/2347988}.
-
-  %% <FIXME bibcite>
-  \bibshow{*}
-  %% </FIXME>
+  \bibshow{*,
+    R:Ahrens+Dieter:1973,
+    R:Becker+Chambers+Wilks:1988,
+    R:Box+Muller:1958,
+    R:De_Matteis+Pagnutti:1993,
+    R:Kinderman+Ramage:1976,
+    R:Knuth:2002,
+    R:Marsaglia+Zaman:1994,
+    R:Wichmann+Hill:1982}
 }
 \author{of RNGkind: Martin Maechler. Current implementation, B. D. Ripley
   with modifications by Duncan Murdoch.}

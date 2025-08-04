@@ -1,6 +1,6 @@
 % File src/library/base/man/sort.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2022 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{sort}
@@ -78,20 +78,13 @@ sort.int(x, partial = NULL, na.last = NA, decreasing = FALSE,
   are more than 10.)  Names are discarded for partial sorting.
 
   Method \code{"shell"} uses Shellsort (an \eqn{O(n^{4/3})} variant from
-  %% <FIXME bibcite>
-  %% \bibcite{Sedgewick (1986)}).
-  \bibcitet{R:Sedgewick:1986}.
-  %% </FIXME>
-  If \code{x} has names a stable modification is
+  \bibcitet{R:Sedgewick:1986}.  If \code{x} has names a stable modification is
   used, so ties are not reordered.  (This only matters if names are
   present.)
 
   Method \code{"quick"} uses
-  %% FIXME bibcite
-  %% Singleton (1969)'s implementation of \I{Hoare}'s Quicksort method
   the implementation of \I{Hoare}'s Quicksort method from
   \bibcitet{R:Singleton:1969}
-  %% </FIXME>  
   and is only available when \code{x} is
   numeric (double or integer) and \code{partial} is \code{NULL}.  (For
   other types of \code{x} Shellsort is used, silently.)  It is normally
@@ -156,10 +149,7 @@ sort.int(x, partial = NULL, na.last = NA, decreasing = FALSE,
   \code{\link{order}} if you want the original element numbers.
 
   All attributes are removed from the return value
-  %% <FIXME bibcite>
-  %% (see Becker \abbr{et al.}, 1988, p.146)
   \bibcitep{|R:Becker+Chambers+Wilks:1988|p.\\\\\\sspace{}146}
-  %% </FIXME>
   except names, which are sorted.  (If
   \code{partial} is specified even the names are removed.)  Note that
   this means that the returned value has no class, except for factors
@@ -168,36 +158,7 @@ sort.int(x, partial = NULL, na.last = NA, decreasing = FALSE,
 }
 
 \references{
-  %% <FIXME bibcite>
   \bibshow{*, R:Knuth:1998}
-  %% </FIXME>
-  
-  %% <FIXME bibcite>  
-  %% Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988).
-  %% \emph{The New S Language}.
-  %% Wadsworth & Brooks/Cole.
-  %% </FIXME>
-  
-  %% <FIXME bibcite>    
-  %% Knuth, D. E. (1998).
-  %% \emph{The Art of Computer Programming, Volume 3: Sorting and
-  %%   Searching}, 2nd ed.
-  %% Addison-Wesley.
-  %% </FIXME>
-
-  %% <FIXME bibcite>
-  %% Sedgewick, R. (1986).
-  %% A new upper bound for Shellsort.
-  %% \emph{Journal of Algorithms}, \bold{7}, 159--173.
-  %% \doi{10.1016/0196-6774(86)90001-5}.
-  %% </FIXME>
-
-  %% <FIXME bibcite>
-  %% Singleton, R. C. (1969).
-  %% Algorithm 347: an efficient algorithm for sorting with minimal storage.
-  %% \emph{Communications of the ACM}, \bold{12}, 185--186.
-  %% \doi{10.1145/362875.362901}.
-  %% </FIXME>
 }
 \seealso{
   \sQuote{\link{Comparison}} for how character strings are collated.
