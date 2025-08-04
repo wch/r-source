@@ -13,3 +13,4 @@ References: John M. Chambers (2008)
 License: Part of R @VERSION@
 Suggests: codetools
 NeedsCompilation: yes
+Encoding: UTF-8

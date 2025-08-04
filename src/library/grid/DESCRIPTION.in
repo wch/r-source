@@ -10,3 +10,4 @@ Description: A rewrite of the graphics layout capabilities, plus some
 Imports: grDevices, utils
 License: Part of R @VERSION@
 NeedsCompilation: yes
+Encoding: UTF-8

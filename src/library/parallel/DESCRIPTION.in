@@ -13,3 +13,4 @@ Imports: tools, compiler
 Suggests: methods
 Enhances: snow, Rmpi, mirai
 NeedsCompilation: yes
+Encoding: UTF-8

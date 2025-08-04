@@ -11,3 +11,4 @@ Description: Regression spline functions and classes.
 License: Part of R @VERSION@
 Suggests: Matrix, methods
 NeedsCompilation: yes
+Encoding: UTF-8
