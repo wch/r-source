@@ -1,7 +1,7 @@
 #  File src/library/utils/R/windows/install.packages.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2022 The R Core Team
+#  Copyright (C) 1995-2025 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -18,7 +18,8 @@
 
 ## Unexported helper
 unpackPkgZip <- function(pkg, pkgname, lib, libs_only = FALSE,
-                         lock = FALSE, quiet = FALSE, reuse_lockdir = FALSE)
+                         lock = FALSE, quiet = FALSE, reuse_lockdir = FALSE,
+                         name_from_dir = FALSE)
 {
     .zip.unpack <- function(zipname, dest)
     {
@@ -46,6 +47,12 @@ unpackPkgZip <- function(pkg, pkgname, lib, libs_only = FALSE,
     on.exit(unlink(tmpDir, recursive=TRUE), add = TRUE)
     res <- .zip.unpack(pkg, tmpDir)
     setwd(tmpDir)
+    if (name_from_dir) {
+        pkgname <- dir(".")
+        if (length(pkgname) != 1)
+            stop(gettextf("cannot extract package from %s", sQuote(pkg)),
+                 domain = NA, call. = FALSE)
+    }
     res <- tools::checkMD5sums(pkgname, file.path(tmpDir, pkgname))
     if(!quiet && !is.na(res) && res) {
         cat(gettextf("package %s successfully unpacked and MD5 sums checked\n",

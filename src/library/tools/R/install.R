@@ -333,7 +333,8 @@ if(FALSE) {
             if (pkglock)
                 lock <- "pkglock"
             utils:::unpackPkgZip(pkg, pkg_name, lib, libs_only, lock,
-                                 reuse_lockdir = reuse_lockdir)
+                                 reuse_lockdir = reuse_lockdir,
+                                 name_from_dir = TRUE)
             return()
         }
 
