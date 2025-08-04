@@ -69,6 +69,6 @@
 \seealso{
   The sections on \sQuote{Checking and building packages} and
   \sQuote{Processing documentation files} in \sQuote{Writing R Extensions}:
-  \code{\link{RShowDoc}("R-exts")}.
+  \code{\link{RShowDoc}("R-exts#Checking-and-building-packages")}.
 }
 \keyword{utilities}

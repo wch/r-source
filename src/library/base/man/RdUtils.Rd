@@ -56,6 +56,7 @@
 }
 \seealso{
   The section \sQuote{Processing documentation files} in the
-  \sQuote{Writing R Extensions} manual: \code{\link{RShowDoc}("R-exts")}.
+  \sQuote{Writing R Extensions} manual:
+  \code{\link{RShowDoc}("R-exts#Processing-documentation-files")}.
 }
 \keyword{utilities}

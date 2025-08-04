@@ -1,6 +1,6 @@
 % File src/library/utils/man/RShowDoc.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{RShowDoc}
@@ -35,7 +35,8 @@ RShowDoc(what, type = c("pdf", "html", "txt"), package)
   If \code{what} is missing a brief usage message is printed.
 
   The documentation types are tried in turn starting with the first
-  specified in \code{type} (or \code{"pdf"} if none is specified).
+  specified in \code{type} (or if none is specified, \code{"html"} if \R
+  is being using interactively and \code{"pdf"} otherwise).
 }
 \seealso{
   For displaying regular help files, \code{\link{help}} (or
