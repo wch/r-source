@@ -6094,6 +6094,7 @@ function(package, dir, lib.loc = NULL)
                     ## and is in e.g. R.oo
                     if(!dunno) {
                         pkg <- as.character(pkg)
+                        all_imports <<- c(all_imports, pkg)
                         if(Call %in% c("loadNamespace",
                                        "requireNamespace")) {
                             if(pkg %notin%
