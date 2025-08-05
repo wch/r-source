@@ -87,8 +87,8 @@ fisher.test(x, y = NULL, workspace = 200000, hybrid = FALSE,
   using the (central or non-central) hypergeometric
   distribution. Otherwise, computations are based on a C version of the
   FORTRAN subroutine \code{FEXACT} which implements the network developed by
-  \bibcitet{R:Mehta+Patel:1983, R:Patel+Mehta:1986} and improved by
-  \bibcitet{R:Clarkson+Joe+Fan:1993}.
+  \bibcitet{R:Mehta+Patel:1983, R:Mehta+Patel:1986} and improved by
+  \bibcitet{R:Clarkson+Fan+Joe:1993}.
   The FORTRAN code can be obtained from
   \url{https://netlib.org/toms/643}.  Note this fails (with an error
   message) when the entries of the table are too large.  (It transposes
