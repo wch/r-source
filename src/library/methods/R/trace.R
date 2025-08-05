@@ -1,7 +1,7 @@
 #  File src/library/methods/R/trace.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2016, 2022 The R Core Team
+#  Copyright (C) 1995-2016, 2022-2025 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -124,11 +124,31 @@
     else {
         what <- as(what, "character")
         if(length(what) != 1) {
+            if (nargs() != 1) {
+                if(!is.null(exit)) {
+                    if(is.function(exit)) {
+                        tname <- substitute(exit)
+                        if(is.name(tname))
+                            exit <- tname
+                        exit <- substitute(TRACE(), list(TRACE=exit))
+                    }
+                }
+                if(!is.null(tracer)) {
+                    if(is.function(tracer)) {
+                        tname <- substitute(tracer)
+                        if(is.name(tname))
+                            tracer <- tname
+                        tracer <- substitute(TRACE(), list(TRACE=tracer))
+                    }
+                }
+            }
             for(f in what) {
                 if(nargs() == 1)
                     trace(f)
-                else
-                    Recall(f, tracer, exit, at, print, signature, where, edit, from, untrace)
+                else {
+                    Recall(f, tracer, exit, at, print, signature, where, edit, from,
+                           untrace, classMethod)
+                }
             }
             return(what)
         }
