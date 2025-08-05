@@ -1,0 +1,17 @@
+bibentry(bibtype = "Article",
+         key = "R:Murdoch+Hornik:2011",
+         title = "Watch Your Spelling!",
+         volume = "3",
+         .issn = "2073-4859",
+         doi = "10.32614/RJ-2011-014",
+         number = "2",
+         journal = "The R Journal",
+         publisher = "The R Foundation",
+         author = c(person(given = "Duncan",
+                           family = "Murdoch"),
+                    person(given = "Kurt",
+                           family = "Hornik",
+                           comment = c(ORCID = "0000-0003-4198-9911"))),
+         year = "2011",
+         pages = "22")
+
