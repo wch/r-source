@@ -813,6 +813,17 @@ function(dir, packages)
     invisible()
 }
 
+### * .install_R_bibliographies_as_RDS
+
+.install_R_bibliographies_as_RDS <- 
+function(dir) {
+    bibfiles <- Sys.glob(file.path(dir, "*.R"))
+    bibentries <- do.call(c, lapply(bibfiles,
+                                    utils::readCitationFile, 
+                                    list(Encoding = "UTF-8")))
+    saveRDS(bibentries, file.path(dir, "R.rds"))
+}
+
 ### * .install_package_Rd_objects
 
 ## called from src/library/Makefile
