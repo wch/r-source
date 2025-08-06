@@ -1086,6 +1086,7 @@ EOF
 /* A C function calling a Fortran subroutine which calls xerbla
    written in C, emulating how R calls BLAS/LAPACK routines */
 #include <stdlib.h>
+#include <stddef.h>
 #include <stdio.h>
 #include <string.h>
 #include "confdefs.h"
@@ -4364,6 +4365,7 @@ AC_DEFUN([R_KERN_USRSTACK],
 #include "confdefs.h"
 #include <unistd.h>
 #include <stdlib.h>
+#include <stddef.h>
 #include <sys/types.h>
 #include <sys/sysctl.h>
 
