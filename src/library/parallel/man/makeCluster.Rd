@@ -90,7 +90,8 @@ registerClusterType(type, starter, make.default = FALSE)
     \item{\code{outfile}}{Where to direct the \code{\link{stdout}} and
       \code{\link{stderr}} connection output from the workers.
       \code{""} indicates no redirection (which may only be useful for
-      workers on the local machine).
+      workers on the local machine; output from workers will not be
+      displayed on the \code{Rgui} console in Windows).
       Defaults to \file{/dev/null} (\file{nul:} on Windows).  The other
       possibility is a file path on the worker's host.
       Files will be opened in append mode, as all workers log to the
