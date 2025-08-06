@@ -871,7 +871,7 @@ function(x)
             } else c("", "")
             out <<- rbind(out, val)
         } else if(identical(tag, "\\linkS4class")) {
-            arg <- as.character(e[[1L]])
+            arg <- if (length(e)) as.character(e[[1L]]) else ""
             opt <- attr(e, "Rd_option")
             val <- if(is.null(opt))
                        c(arg, sprintf("=%s-class", arg))
