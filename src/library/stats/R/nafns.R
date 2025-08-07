@@ -63,9 +63,14 @@ na.omit.data.frame <- function(object, ...)
     n <- length(object)
     omit <- logical(nrow(object))
     vars <- seq_len(n)
+    update <- FALSE
     for(j in vars) {
 	x <- object[[j]]
-	if(!is.atomic(x)) next
+	update <- update || !is.null(attributes(x))
+	if(!is.atomic(x)) {
+	    update <- TRUE
+	    next
+	}
 	## variables are assumed to be either some sort of matrix, numeric,...
 	x <- is.na(x)
 	d <- dim(x)
@@ -82,7 +87,8 @@ na.omit.data.frame <- function(object, ...)
 	attr(temp, "class") <- "omit"
 	attr(xx, "na.action") <- temp
 	object <- xx
-    }
+    } else if (update) ## for now preserve previous behavior
+	object <- object[!omit, , drop = FALSE]
     object
 }
 
@@ -118,9 +124,14 @@ na.exclude.data.frame <- function(object, ...)
     n <- length(object)
     omit <- logical(nrow(object))
     vars <- seq_len(n)
+    update <- FALSE
     for(j in vars) {
 	x <- object[[j]]
-	if(!is.atomic(x)) next
+	update <- update || !is.null(attributes(x))
+	if(!is.atomic(x)) {
+	    update <- TRUE
+	    next
+	}
 	## variables are assumed to be either some sort of matrix, numeric,...
 	x <- is.na(x)
 	d <- dim(x)
@@ -137,7 +148,8 @@ na.exclude.data.frame <- function(object, ...)
 	attr(temp, "class") <- "exclude"
 	attr(xx, "na.action") <- temp
 	object <- xx
-    }
+    } else if (update) ## for now preserve previous behavior
+	object <- object[!omit, , drop = FALSE]
     object
 }
 
