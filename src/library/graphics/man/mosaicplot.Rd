@@ -110,7 +110,7 @@ mosaicplot(x, \dots)
   variables given in \code{formula}, and a mosaic is produced from
   this.
 
-  See Emerson (1998) for more information and a case study with
+  See \bibcitet{R:Emerson:1998} for more information and a case study with
   television viewer data from Nielsen Media Research.
 
   Missing values are not supported except via an \code{na.action}
@@ -119,34 +119,14 @@ mosaicplot(x, \dots)
   A more flexible and extensible implementation of mosaic plots written
   in the grid graphics system is provided in the function
   \code{\link[vcd]{mosaic}} in the contributed package \CRANpkg{vcd}
-  (\bibcite{Meyer, Zeileis and Hornik, 2006}).
+  \bibcitep{R:Meyer+Zeileis+Hornik:2006}.
 }
 \author{
   S-PLUS original by John Emerson \email{john.emerson@yale.edu}.
   Originally modified and enhanced for \R by Kurt Hornik.
 }
 \references{
-  Hartigan, J.A., and Kleiner, B. (1984).
-  A mosaic of television ratings.
-  \emph{The American Statistician}, \bold{38}, 32--35.
-  \doi{10.2307/2683556}.
-
-  Emerson, J. W. (1998).
-  Mosaic displays in S-PLUS: A general implementation and a case study.
-  \emph{Statistical Computing and Graphics Newsletter (ASA)},
-  \bold{9}, 1, 17--23.
-
-  Friendly, M. (1994).
-  Mosaic displays for multi-way contingency tables.
-  \emph{Journal of the American Statistical Association}, \bold{89},
-  190--200.
-  \doi{10.2307/2291215}.
-
-  Meyer, D., Zeileis, A., and Hornik, K. (2006)  
-  The strucplot Framework: Visualizing Multi-Way Contingency Tables with
-  \pkg{vcd}.
-  \emph{Journal of Statistical Software}, \bold{17(3)}, 1--48.
-  \doi{10.18637/jss.v017.i03}.
+  \bibshow{*, R:Hartigan+Kleiner:1984, R:Friendly:1994}
 }
 \seealso{
   \code{\link{assocplot}},

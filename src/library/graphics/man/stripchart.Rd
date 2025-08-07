@@ -1,6 +1,6 @@
 % File src/library/graphics/man/stripchart.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{stripchart}
@@ -75,8 +75,7 @@ stripchart(x, \dots)
 }
 \details{
   Extensive examples of the use of this kind of plot can be found in
-  \bibcite{Box, Hunter and Hunter (2005)} or
-  \bibcite{Wild and Seber (2000)}.
+  \bibcitet{R:Box+Hunter+Hunter:2005} or \bibcitet{R:Wild+Seber:1999}.
 
   The \code{dlab} and \code{glab} labels may be used instead of \code{xlab}
   and \code{ylab} if those are not specified.  \code{dlab} applies to the
@@ -84,17 +83,7 @@ stripchart(x, \dots)
   \code{glab} to the group axis.
 }
 \references{
-  Box G., Hunter, J. S. and Hunter, W. C. (2005). 
-  \emph{Statistics for Experimenters: Design, Innovation, and Discovery},
-  second edition.
-  New York: Wiley.
-  ISBN: 978-0-471-71813-0.
-  
-  Wild, C. and Seber, G. (2000).
-  \emph{Chance Encounters: A First Course in Data Analysis and
-    Inference}.
-  John Wiley and Sons.
-  ISBN 0-471-32936-3.
+  \bibshow{*}
 }
 
 \examples{

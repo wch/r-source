@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/boxplot.stats.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2023 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{boxplot.stats}
@@ -57,8 +57,8 @@ boxplot.stats(x, coef = 1.5, do.conf = TRUE, do.out = TRUE)
 
   The notches (if requested) extend to \code{+/-1.58 IQR/sqrt(n)}.
   This seems to be based on the same calculations as the formula with 1.57 in
-  \bibcite{Chambers \abbr{et al.}\sspace(1983, p.\sspace{}62)}, given in
-  \bibcite{McGill \abbr{et al.}\sspace(1978, p.\sspace{}16)}.
+  \bibcitet{|R:Chambers+Cleveland+Kleiner:1983|p.\\\\\\sspace{}62)}, given in
+  \bibcitet{|R:Mcgill+Tukey+Larsen:1978|p.\\\\\\sspace{}16)}.
   They are based on asymptotic normality of the median
   and roughly equal sample sizes for the two medians being compared, and
   are said to be rather insensitive to the underlying distributions of
@@ -66,27 +66,12 @@ boxplot.stats(x, coef = 1.5, do.conf = TRUE, do.out = TRUE)
   interval for the difference in two medians.
 }
 \references{
-  Tukey, J. W. (1977).
-  \emph{Exploratory Data Analysis}.
-  Section 2C.
-
-  McGill, R., Tukey, J. W. and Larsen, W. A. (1978).
-  Variations of box plots.
-  \emph{The American Statistician}, \bold{32}, 12--16.
-  \doi{10.2307/2683468}.
-
-  Velleman, P. F. and Hoaglin, D. C. (1981).
-  \emph{Applications, Basics and Computing of Exploratory Data Analysis}.
-  Duxbury Press.
-
-  Emerson, J. D and Strenio, J. (1983).
-  Boxplots and batch comparison.
-  Chapter 3 of \emph{Understanding Robust and Exploratory Data
-    Analysis}, eds. D. C. Hoaglin, F. Mosteller and J. W. Tukey.  Wiley.
-
-  Chambers, J. M., Cleveland, W. S., Kleiner, B. and Tukey, P. A. (1983).
-  \emph{Graphical Methods for Data Analysis}.
-  Wadsworth & Brooks/Cole.
+  \bibinfo{R:Tukey:1977}{footer}{Section 2C}
+  
+  \bibshow{*,
+    R:Emerson+Strenio:1983,
+    R:Tukey:1977,
+    R:Velleman+Hoaglin:1981}
 }
 \seealso{
   \code{\link{fivenum}},

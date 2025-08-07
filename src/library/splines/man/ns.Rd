@@ -1,6 +1,6 @@
 % File src/library/splines/man/ns.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2018 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{ns}
@@ -58,10 +58,7 @@ ns(x, df = NULL, knots = NULL, intercept = FALSE,
   \code{\link{bs}}, \code{\link{predict.ns}}, \code{\link{SafePrediction}}
 }
 \references{
-  Hastie, T. J. (1992)
-  Generalized additive models.
-  Chapter 7 of \emph{Statistical Models in S}
-  eds J. M. Chambers and T. J. Hastie, Wadsworth & Brooks/Cole.
+  \bibshow{R:Hastie:1992}
 }
 \examples{
 require(stats); require(graphics)

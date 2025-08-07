@@ -1,6 +1,6 @@
 % File src/library/graphics/man/assocplot.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2018 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{assocplot}
@@ -49,30 +49,13 @@ assocplot(x, col = c("black", "red"), space = 0.3,
   A more flexible and extensible implementation of association plots
   written in the grid graphics system is provided in the function
   \code{\link[vcd]{assoc}} in the contributed package \CRANpkg{vcd}
-  (\bibcite{Meyer, Zeileis and Hornik, 2006}).
+  \bibcitep{R:Meyer+Zeileis+Hornik:2006}.
 }
 \seealso{
   \code{\link{mosaicplot}}, \code{\link{chisq.test}}.
 }
 \references{
-  Cohen, A. (1980),
-  On the graphical display of the significant components in a two-way
-  contingency table.
-  \emph{Communications in Statistics---Theory and Methods}, \bold{9},
-  1025--1041.
-  \doi{10.1080/03610928008827940}.
-
-  Friendly, M. (1992),
-  Graphical methods for categorical data.
-  \emph{SAS User Group International Conference Proceedings}, \bold{17},
-  190--200.
-  \url{http://datavis.ca/papers/sugi/sugi17.pdf}
-
-  Meyer, D., Zeileis, A., and Hornik, K. (2006)  
-  The strucplot Framework: Visualizing Multi-Way Contingency Tables with
-  \pkg{vcd}.
-  \emph{Journal of Statistical Software}, \bold{17(3)}, 1--48.
-  \doi{10.18637/jss.v017.i03}.
+  \bibshow{*, R:Cohen:1980, R:Friendly:1992}
 }
 \examples{
 ## Aggregate over sex:
