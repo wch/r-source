@@ -265,6 +265,22 @@ bibentry(bibtype = "Article",
          pages = "54")
 
 bibentry(bibtype = "Article",
+         key = "R:Cleveland+Cleveland+McRae:1990",
+         author = c(person(given = c("Robert", "B."),
+                           family = "Cleveland"),
+                    person(given = c("William", "S."),
+                           family = "Cleveland"),
+                    person(given = c("Jean", "E."),
+                           family = "McRae"),
+                    person(given = "Irma",
+                           family = "Terpenning")),
+         journal = "Journal of Official Statistics",
+         pages = "3--73",
+         title = "{STL}: A Seasonal-Trend Decomposition Procedure Based on {Loess}",
+         volume = "6",
+         year = "1990")
+
+bibentry(bibtype = "Article",
          key = "R:Clopper+Pearson:1934",
          title = "The Use of Confidence or Fiducial Limits Illustrated in the Case of the Binomial",
          volume = "26",
@@ -475,6 +491,16 @@ bibentry(bibtype = "Article",
          year = "1964",
          month = "feb",
          pages = "149--154")
+
+bibentry(bibtype = "Article",
+         key = "R:Forgy:1965",
+         author = person(given = c("E.", "W."),
+                         family = "Forgy"),
+         title = "Cluster Analysis of Multivariate Data: Efficiency vs Interpretability of Classifications",
+         journal = "Biometrics",
+         year = "1965",
+         volume = "12",
+         pages = "768--769")
 
 bibentry(bibtype = "Article",
          key = "R:Frick:1990",
@@ -727,6 +753,17 @@ bibentry(bibtype = "Article",
          year = "1988",
          pages = "800--802",
          .doi = "10.2307/2336325")
+
+bibentry(bibtype = "Article",
+         key = "R:Holm:1979",
+         author = person(given = "Sture",
+                         family = "Holm"),
+         title = "A Simple Sequentially Rejective Multiple Test Procedure",
+         journal = "Scandinavian Journal of Statistics",
+         year = "1979",
+         volume = "6",
+         pages = "65--70",
+         url = "https://www.jstor.org/stable/4615733")
 
 bibentry(bibtype = "Article",
          key = "R:Holt:2004",
@@ -1205,6 +1242,19 @@ bibentry(bibtype = "Article",
          year = "1988",
          month = "jun",
          pages = "297--332")
+
+bibentry(bibtype = "Article",
+         key = "R:Ripley:2002",
+         author = person(given = c("Brian", "D."),
+                         family = "Ripley"),
+         title = "Time Series in {R} 1.5.0",
+         journal = "R News",
+         year = "2002",
+         volume = "2",
+         number = "2",
+         pages = "2--7",
+         month = "June",
+         url = "https://CRAN.R-project.org/doc/Rnews/Rnews_2002-1.pdf")
 
 bibentry(bibtype = "Article",
          key = "R:Royston:1982a",

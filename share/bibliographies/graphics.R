@@ -13,6 +13,29 @@ bibentry(bibtype = "Article",
          pages = "1025--1041")
 
 bibentry(bibtype = "Article",
+         key = "R:Emerson:1998",
+         author = person(given = c("J.", "W."),
+                         family = "Emerson"),
+         title = "Mosaic Displays in {S-PLUS}: A General Implementation and a Case Study",
+         journal = "ASA Statistical Computing and Statistical Graphics Newsletter",
+         year = "1998",
+         volume = "9",
+         number = "1",
+         pages = "17--23")
+
+bibentry(bibtype = "InProceedings",
+         key = "R:Friendly:1992",
+         author = person(given = "Michael",
+                         family = "Friendly"),
+         title = "Graphical Methods for Categorical Data",
+         booktitle = "Proceedings of the Seventeenth Annual SAS User's Group International Conference",
+         year = "1992",
+         pages = "1367--1373",
+         publisher = "SAS Publishing",
+         url = "http://datavis.ca/papers/sugi/sugi17.pdf",
+         publisherurl = "https://support.sas.com/resources/papers/proceedings-archive/SUGI92/Sugi-92-233\\%20Friendly.pdf")
+
+bibentry(bibtype = "Article",
          key = "R:Friendly:1994",
          title = "Mosaic Displays for Multi-Way Contingency Tables",
          volume = "89",
@@ -45,6 +68,16 @@ bibentry(bibtype = "Article",
          month = "feb",
          pages = "32--35",
          .doi = "10.2307/2683556")
+
+bibentry(bibtype = "Article",
+         key = "R:Hummel:1996",
+         author = person(given = "J.",
+                         family = "Hummel"),
+         title = "Linked Bar Charts: Analysing Categorical Data Graphically",
+         journal = "Computational Statistics",
+         year = "1996",
+         volume = "11",
+         pages = "23--33")
 
 bibentry(bibtype = "Article",
          key = "R:Meyer+Zeileis+Hornik:2006",
