@@ -1,6 +1,6 @@
 % File src/library/grid/man/grid.xspline.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2020 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{grid.xspline}
@@ -97,10 +97,7 @@ xsplineGrob(x = c(0, 0.5, 1, 0.5), y = c(0.5, 1, 0.5, 0),
   between the final control point and the initial control point.
 }
 \references{
-  Blanc, C. and Schlick, C. (1995),
-  "X-splines : A Spline Model Designed for the End User",
-  in \emph{Proceedings of SIGGRAPH 95}, pp.\sspace{}377--386.
-  \url{https://dept-info.labri.fr/~schlick/DOC/sig1.html}
+  \bibshow{R:Blanc+Schlick:1995}
 }
 \seealso{
   \link{Grid},

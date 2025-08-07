@@ -1,6 +1,6 @@
 % File src/library/grid/man/grid-package.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2018 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{grid-package}
@@ -46,8 +46,6 @@ Maintainer: R Core Team \email{R-core@r-project.org}
 
 }
 \references{
-  Murrell, P. (2005).
-  \emph{R Graphics}.
-  Chapman & Hall/CRC Press.
+  \bibshow{R:Murrell:2005}
 }
 \keyword{package}

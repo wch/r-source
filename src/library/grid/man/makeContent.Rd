@@ -1,6 +1,6 @@
 % File src/library/grid/man/makeContent.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{makeContent}
@@ -62,7 +62,8 @@ makeContent(x)
   (a modified version of \code{x}).
 }
 \author{ Paul Murrell }
-\references{ "Changes to grid for R 3.0.0",
-Paul Murrell, \emph{The R Journal} (2013) 5:2, pages 148-160. }
+\references{
+  \bibshow{R:Murrell:2013}
+}
 \seealso{ \code{\link{grid.draw}} }
 \keyword{ dplot }

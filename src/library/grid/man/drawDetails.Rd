@@ -1,6 +1,6 @@
 % File src/library/grid/man/drawDetails.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{drawDetails}
@@ -57,7 +57,8 @@ postDrawDetails(x)
   None of these functions are expected to return a value.
 }
 \author{ Paul Murrell }
-\references{ "Changes to grid for R 3.0.0",
-Paul Murrell, \emph{The R Journal} (2013) 5:2, pages 148-160. }
+\references{
+  \bibshow{R:Murrell:2013}
+}
 \seealso{ \code{\link{grid.draw}} and \code{\link{makeContent}} }
 \keyword{ dplot }
