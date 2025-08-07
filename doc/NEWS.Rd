@@ -137,6 +137,10 @@
 
   \subsection{BUG FIXES}{
     \itemize{
+      \item Profiling \code("mle") objects (\code{stats4} package) could fail 
+      because profile MLE used starting value from full MLE. Now starts from profile MLE
+      from previous step. 
+ 
       \item Setting \code{attributes} on primitive functions is now an
       error; previously it modified without copying (as noticed by
       \I{Henrik Bengtsson} on the R-devel mailing list).
