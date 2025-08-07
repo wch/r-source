@@ -32,7 +32,7 @@ mle(minuslogl, start,
   The \code{optim} optimizer is used to find the minimum of the
   negative log-likelihood.  An approximate covariance matrix for the
   parameters is obtained by inverting the Hessian matrix at the optimum.
-  By default,  \code{\link{optim}} from the \code{stats} package is used; other
+  By default,  \code{\link{optim}} from the \pkg{stats} package is used; other
   optimizers need to be plug-compatible, both with respect to arguments
   and return values.
 

@@ -46,8 +46,8 @@ expand.grid(\dots, KEEP.OUT.ATTRS = TRUE, stringsAsFactors = TRUE)
 }
 % there is a 'combn' in package combinat
 \seealso{
-  \code{\link[utils]{combn}} (package \code{utils}) for the generation
-  of all combinations of n elements, taken m at a time.
+  \code{\link[utils]{combn}(n, m)} for the generation
+  of all combinations of \code{n} elements, taken \code{m} at a time.
 }
 \examples{
 require(utils)

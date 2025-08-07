@@ -95,15 +95,15 @@ should be exported if any of the classes involved are exported; in
 other words, if someone using the package might expect these methods
 to be called.
 Methods are exported by including an \code{exportMethods()} directive
-in the \code{NAMESPACE} file for the package, with the arguments to
+in the \file{NAMESPACE} file for the package, with the arguments to
 the directive being the names of the generic functions for which
 methods have been defined.
 
 Exporting methods is always desirable in the sense of declaring what
 you want to happen, in that you do expect users to find such methods.
 It can be essential in the case that the method was defined for a
-function that is not originally a generic function in its own package
-(for example, \code{plot()} in the \code{graphics} package).  In this
+function that is not originally a formal generic function in its own package
+(for example, \code{plot()} in the \pkg{base} package).  In this
 case it may be that the version of the function in the \R session is
 not generic, and your methods will not be called.
 
