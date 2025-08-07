@@ -1466,7 +1466,6 @@ bibentry(bibtype = "Book",
          isbn = "9780201076165",
          lccn = "76005080",
          series = "Addison-Wesley series in behavioral science",
-         url = "https://books.google.at/books?id=UT9dAAAAIAAJ",
          year = "1977",
          publisher = "Addison-Wesley Publishing Company")
 
@@ -1480,7 +1479,6 @@ bibentry(bibtype = "Book",
          isbn = "9780878722730",
          lccn = "80016193",
          series = "Duxbury series in statistics and decision sciences",
-         url = "https://books.google.at/books?id=HJ_8nAWLfPgC",
          year = "1981",
          publisher = "Duxbury Press")
 

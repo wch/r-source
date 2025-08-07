@@ -10,7 +10,6 @@ bibentry(bibtype = "Book",
          isbn = "978-0-471-71813-0",
          lccn = "2004063780",
          series = "Wiley Series in Probability and Statistics",
-         url = "https://books.google.at/books?id=oYUpAQAAMAAJ",
          year = "2005",
          publisher = "Wiley")
 
@@ -131,6 +130,18 @@ bibentry(bibtype = "Article",
          month = "mar",
          pages = "121--134",
          .doi = "10.2307/1390924")
+
+bibentry(bibtype = "Book",
+         key = "R:Murrell:2005",
+         title = "{R} Graphics",
+         author = person(given = "Paul",
+                         family = "Murrell",
+                         comment = c(ORCID = "0000-0002-3224-8858")),
+         isbn = "9781420035025",
+         lccn = "2005046278",
+         series = "Chapman & Hall/CRC The R Series",
+         year = "2005",
+         publisher = "CRC Press")
 
 bibentry(bibtype = "Article",
          key = "R:Schilling+Watkins:1994",
