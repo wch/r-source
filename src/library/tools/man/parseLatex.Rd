@@ -85,9 +85,9 @@ The \code{latexToUtf8()} function returns a modified version of the
 \author{
 Duncan Murdoch
 }
-\examples{\donttest{
-latex <- parseLatex("fran\\\\c{c}ais")
-deparseLatex(latexToUtf8(latex))
-}}
+\examples{
+latex <- parseLatex("fran\\\\c{c}ais", verbose = TRUE)
+\dontdiff{deparseLatex(latexToUtf8(latex))}% possibly "....<U+00E7>..."
+}
 \keyword{ utilities }
 \keyword{ documentation }

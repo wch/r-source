@@ -1115,6 +1115,20 @@ character(0)
 > 
 > ### ** Examples
 > 
+> latex <- parseLatex("fran\\c{c}ais", verbose = TRUE)
+1:1: TEXT: fran
+1:5: MACRO: \c
+1:7: '{'
+1:8: TEXT: c
+1:9: '}'
+1:10: TEXT: ais
+1:13: END_OF_INPUT
+> ## IGNORE_RDIFF_BEGIN
+> deparseLatex(latexToUtf8(latex))
+[1] "français"
+> ## IGNORE_RDIFF_END
+> 
+> 
 > 
 > cleanEx()
 > nameEx("pkg2HTML")

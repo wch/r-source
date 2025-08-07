@@ -66,7 +66,6 @@ library(tools)
 example(Rd_db, run.donttest = TRUE) # Rdutils.Rd
 example(file_ext, run.donttest = TRUE) # fileutils.Rd
 example(getVignetteInfo, run.donttest = TRUE)
-example(parseLatex, run.donttest = TRUE) # charset-specific
 
 ## part of example(buildVignettes) at one time
 gVigns <- pkgVignettes("grid")
