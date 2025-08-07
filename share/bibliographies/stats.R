@@ -1457,6 +1457,33 @@ bibentry(bibtype = "Article",
          author = person(given = c("David", "J."),
                          family = "Thomson"))
 
+bibentry(bibtype = "Book",
+         key = "R:Tukey:1977",
+         title = "Exploratory Data Analysis",
+         author = person(given = c("John", "Wilder"),
+                         family = "Tukey"),
+         number = "2",
+         isbn = "9780201076165",
+         lccn = "76005080",
+         series = "Addison-Wesley series in behavioral science",
+         url = "https://books.google.at/books?id=UT9dAAAAIAAJ",
+         year = "1977",
+         publisher = "Addison-Wesley Publishing Company")
+
+bibentry(bibtype = "Book",
+         key = "R:Velleman+Hoaglin:1981",
+         title = "Applications, Basics, and Computing of Exploratory Data Analysis",
+         author = c(person(given = c("Paul", "F."),
+                           family = "Velleman"),
+                    person(given = c("David", "Caster"),
+                           family = "Hoaglin")),
+         isbn = "9780878722730",
+         lccn = "80016193",
+         series = "Duxbury series in statistics and decision sciences",
+         url = "https://books.google.at/books?id=HJ_8nAWLfPgC",
+         year = "1981",
+         publisher = "Duxbury Press")
+
 bibentry(bibtype = "Article",
          key = "R:Welch:1951",
          title = "On the Comparison of Several Mean Values: An Alternative Approach",

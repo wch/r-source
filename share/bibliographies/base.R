@@ -73,6 +73,20 @@ bibentry(bibtype = "Article",
          pages = "581--586")
 
 bibentry(bibtype = "Book",
+         key = "R:Chambers+Cleveland+Kleiner:1983",
+         title = "Graphical Methods for Data Analysis",
+         author = c(person(given = c("John", "M."),
+                           family = "Chambers"),
+                    person(given = c("William", "S."),
+                           family = "Cleveland"),
+                    person(given = "Beat",
+                           family = "Kleiner"),
+                    person(given = c("Paul", "A."),
+                           family = "Tukey")),
+         year = "1983",
+         publisher = "Wadsworth & Brooks/Cole")
+
+bibentry(bibtype = "Book",
          key = "R:Chambers+Hastie:1992",
          author = c(person(given = c("John", "M."),
                            family = "Chambers"),
