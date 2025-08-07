@@ -1,0 +1,13 @@
+bibentry(bibtype = "InCollection",
+         key = "R:Hastie:1992",
+         author = person(given = c("Trevor", "J."),
+                         family = "Hastie"),
+         title = "Generalized additive models",
+         booktitle = "Statistical Models in S",
+         publisher = "Wadsworth & Brooks/Cole",
+         year = "1992",
+         editor = c(person(given = c("John", "M."),
+                           family = "Chambers"),
+                    person(given = c("Trevor", "J."),
+                           family = "Hastie")),
+         chapter = "7")
