@@ -1,0 +1,12 @@
+bibentry(bibtype = "Article",
+         key = "R:Murrell:2013",
+         author = person(given = "Paul",
+                         family = "Murrell",
+                         comment = c(ORCID = "0000-0002-3224-8858")),
+         title = "Changes to {grid} for R 3.0.0",
+         year = "2013",
+         journal = "The R Journal",
+         pages = "148--160",
+         volume = "5",
+         number = "2",
+         doi = "10.32614/RJ-2013-035")
