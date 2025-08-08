@@ -1,7 +1,7 @@
 #  File src/library/base/R/all.equal.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2024 The R Core Team
+#  Copyright (C) 1995-2025 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -466,7 +466,9 @@ attr.all.equal <- function(target, current, ...,
     if(check.names) {
         nx <- names(target)
         ny <- names(current)
-        if((lx <- length(nx)) | (ly <- length(ny))) {
+        lx <- length(nx)
+        ly <- length(ny)
+        if(lx || ly) {
             ## names() treated now; hence NOT with attributes()
             ax$names <- ay$names <- NULL
             if(lx && ly) {

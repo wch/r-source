@@ -1,7 +1,7 @@
 #  File src/library/graphics/R/plot.design.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2019 The R Core Team
+#  Copyright (C) 1995-2025 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -65,7 +65,7 @@ plot.design <-
     ## 'fun' dealing
     fname <- deparse1(substitute(fun))
     fun <- match.fun(fun)
-    if (!(is.data.frame(x) | inherits(x,"formula")))
+    if (!(is.data.frame(x) || inherits(x,"formula")))
 	stop("'x' must be a dataframe or a formula")
 
     ## case 'switch' :

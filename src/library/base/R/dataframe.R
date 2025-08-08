@@ -15,7 +15,7 @@
 #  https://www.R-project.org/Licenses/
 
 # Statlib code by John Chambers, Bell Labs, 1994
-# Changes Copyright (C) 1998-2024 The R Core Team
+# Changes Copyright (C) 1998-2025 The R Core Team
 
 
 ## As from R 2.4.0, row.names can be either character or integer.
@@ -725,7 +725,9 @@ data.frame <-
         ## row names might have NAs.
         if(is.null(rows)) rows <- attr(xx, "row.names")
         rows <- rows[i]
-	if((ina <- anyNA(rows)) | (dup <- anyDuplicated(rows))) {
+        ina <- anyNA(rows)
+        dup <- anyDuplicated(rows)
+	if(ina || dup) {
 	    ## both will coerce integer 'rows' to character:
 	    if (!dup && is.character(rows)) dup <- "NA" %in% rows
 	    if(ina)
