@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2009-2023 The R Core Team.
+ *  Copyright (C) 2009-2025 The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -135,7 +135,7 @@ static void inspect_tree(int pre, SEXP v, int deep, int pvec) {
     switch (TYPEOF(v)) {
     case VECSXP: case STRSXP: case LGLSXP: case INTSXP: case RAWSXP:
     case REALSXP: case CPLXSXP: case EXPRSXP:
-	Rprintf("(len=%ld, tl=%ld)", (long)XLENGTH(v), (long)XTRUELENGTH(v));
+	Rprintf("(len=%lld, tl=%lld)", (long long)XLENGTH(v), (long long)XTRUELENGTH(v));
     }
     if (TYPEOF(v) == ENVSXP) /* NOTE: this is not a trivial OP since it involves looking up things
 				in the environment, so for a low-level debugging we may want to

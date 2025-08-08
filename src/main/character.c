@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997--2023  The R Core Team
+ *  Copyright (C) 1997--2025  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -345,14 +345,14 @@ attribute_hidden SEXP do_nchar(SEXP call, SEXP op, SEXP args, SEXP env)
 			  (Rboolean) allowNA, (Rboolean) keepNA, NULL);
 	switch(res) {
 	case -1:
-	    error(_("invalid multibyte string, element %ld"), (long)i+1);
+	    error(_("invalid multibyte string, element %lld"), (long long)i+1);
 	case -2: 
 	    if (type_ == Chars)
-		error(_("number of characters is not computable in \"bytes\" encoding, element %ld"),
-		      (long)i+1);
+		error(_("number of characters is not computable in \"bytes\" encoding, element %lld"),
+		      (long long)i+1);
 	    else /* type_ == Width */
-		error(_("width is not computable in \"bytes\" encoding, element %ld"),
-		      (long)i+1);
+		error(_("width is not computable in \"bytes\" encoding, element %lld"),
+		      (long long)i+1);
 	default:
 	    s_[i] = res;
 	    break;
@@ -387,7 +387,7 @@ static void substr(const char *str, int len, int ienc, int sa, int so,
     if (ienc == CE_UTF8) {
 	if (!assumevalid && !utf8Valid(str)) {
 	    char msg[40];
-	    snprintf(msg, 40, "element %ld", (long)idx+1);
+	    snprintf(msg, 40, "element %lld", (long long)idx+1);
 	    error(_("invalid multibyte string, %s"), msg);
 	}
 	for (i = 0; i < sa - 1 && str < end; i++)
@@ -592,12 +592,12 @@ substrset(char *buf, const char *const str, cetype_t ienc, int sa, int so,
     if (ienc == CE_UTF8) {
 	if (!utf8Valid(buf)) {
 	    char msg[40];
-	    snprintf(msg, 40, "element %ld", (long)xidx+1);
+	    snprintf(msg, 40, "element %lld", (long long)xidx+1);
 	    error(_("invalid multibyte string, %s"), msg);
 	}
 	if (!utf8Valid(str)) {
 	    char msg[40];
-	    snprintf(msg, 40, "value element %ld", (long)vidx+1);
+	    snprintf(msg, 40, "value element %lld", (long long)vidx+1);
 	    error(_("invalid multibyte string, %s"), msg);
 	}
 	for (i = 1; i < sa; i++) buf += utf8clen(*buf);
