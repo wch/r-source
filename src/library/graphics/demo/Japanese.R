@@ -1,4 +1,4 @@
-#  Copyright (C) 2003-2009 The R Core Team
+#  Copyright (C) 2003-2025 The R Core Team
 
 require(grDevices); require(graphics)
 
@@ -16,7 +16,7 @@ make.table <- function(nr, nc) {
 
 get.r <- function(i, nr)   i %% nr + 1
 get.c <- function(i, nr)   i %/% nr + 1
-Esc2 <- function(str)	   paste("\\", str, sep="")
+Esc2 <- function(str)	   paste0("\\", str)
 
 draw.title <- function(title, nc)
     text((nc*(10%/%nc) + 1)/2, 0, title, font=2)
@@ -52,7 +52,7 @@ draw.title("Hiragana : \\\\#J24nn", nc)
 for (i in 2:7) {
     for (j in 1:16) {
 	if (!((i == 2 && j == 1) || (i == 7 && j > 4))) {
-	    draw.vf.cell(tf, fi, paste("\\#J24", i, digits[j], sep=""),
+	    draw.vf.cell(tf, fi, paste0("\\#J24", i, digits[j]),
 	                 index, nr)
             index <- index + 1
 	}
@@ -68,7 +68,7 @@ draw.title("Katakana : \\\\#J25nn", nc)
 for (i in 2:7) {
     for (j in 1:16) {
 	if (!((i == 2 && j == 1) || (i == 7 && j > 7))) {
-	    draw.vf.cell(tf, fi, paste("\\#J25", i, digits[j], sep=""),
+	    draw.vf.cell(tf, fi, paste0("\\#J25", i, digits[j]),
 	                 index, nr)
             index <- index + 1
 	}

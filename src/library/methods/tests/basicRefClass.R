@@ -464,7 +464,7 @@ TestClass <- setRefClass ("TestClass",
      fields = list (text = "character"),
      methods = list(
        print = function ()  {cat(text)},
-       initialize = function(text = "", ...) callSuper(text = paste(text, ":", sep=""),...)
+       initialize = function(text = "", ...) callSuper(text = paste0(text, ":"),...)
   ))
 tt <- TestClass("hello world")
 stopifnot(identical(tt$text, "hello world:"))

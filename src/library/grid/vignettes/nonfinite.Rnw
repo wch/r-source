@@ -1,6 +1,6 @@
 % File src/library/grid/vignettes/nonfinite.Rnw
 % Part of the R package, https://www.R-project.org
-% Copyright 2001-13 Paul Murrell and the R Core Team
+% Copyright 2001-25 Paul Murrell and the R Core Team
 % Distributed under GPL 2 or later
 
 \documentclass[a4paper]{article}
@@ -108,7 +108,7 @@ primtest2 <- function(nas, na) {
     y <- 0.5 + 0.4*sin(t)
     x <- 0.5 + 0.4*cos(t)
     if (any(nas))
-        grid.text(paste("NA", (1:n)[nas], sep = ""),
+        grid.text(paste0("NA", (1:n)[nas]),
                   x[nas], y[nas], gp = gpar(col = "grey"))
     x[nas] <- na
     y[nas] <- na

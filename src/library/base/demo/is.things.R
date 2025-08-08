@@ -1,4 +1,4 @@
-#  Copyright (C) 1997-2018 The R Core Team
+#  Copyright (C) 1997-2025 The R Core Team
 
 ### The Base package has a couple of non-functions:
 ##
@@ -133,11 +133,11 @@ is.ALL(numeric(0), true=TRUE)
 is.ALL(array(1,1:3), true=TRUE)
 is.ALL(cbind(1:3), true=TRUE)
 
-is.ALL(structure(1:7, names = paste("a",1:7,sep="")))
-is.ALL(structure(1:7, names = paste("a",1:7,sep="")), true.only = TRUE)
+is.ALL(structure(1:7, names = paste0("a",1:7)))
+is.ALL(structure(1:7, names = paste0("a",1:7)), true.only = TRUE)
 
 x <- 1:20 ; y <- 5 + 6*x + rnorm(20)
 lm.xy <- lm(y ~ x)
 is.ALL(lm.xy)
-is.ALL(structure(1:7, names = paste("a",1:7,sep="")))
-is.ALL(structure(1:7, names = paste("a",1:7,sep="")), true.only = TRUE)
+is.ALL(structure(1:7, names = paste0("a",1:7)))
+is.ALL(structure(1:7, names = paste0("a",1:7)), true.only = TRUE)
