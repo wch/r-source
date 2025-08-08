@@ -342,9 +342,10 @@ Rd2txt <-
     }
 
     ## for efficiency
+    li <- l10n_info()
     WriteLines <-
         if(outputEncoding == "UTF-8" ||
-           (outputEncoding == "" && l10n_info()[["UTF-8"]])) {
+           (outputEncoding == "" && li[["UTF-8"]])) {
         function(x, con, outputEncoding, ...)
             writeLines(x, con, useBytes = TRUE, ...)
     } else {
@@ -459,9 +460,6 @@ Rd2txt <-
     	linestart <<- TRUE
     }
 
-    encoding <- "unknown"
-
-    li <- l10n_info()
     ## See the comment in ?Rd2txt as to why we do not attempt fancy quotes
     ## in Windows CJK locales -- and in any case they would need more work
     ## This covers the common single-byte locales and Thai (874)
@@ -555,18 +553,10 @@ Rd2txt <-
 
     writeQ <- function(block, tag, quote=tag)
     {
-        if (use_fancy_quotes) {
-            if (quote == "\\sQuote") {
-                put(LSQM); writeContent(block, tag); put(RSQM)
-            } else {
-                put(LDQM); writeContent(block, tag); put(RDQM)
-            }
+        if (quote == "\\sQuote") {
+            put(LSQM); writeContent(block, tag); put(RSQM)
         } else {
-            if (quote == "\\sQuote") {
-                put("'"); writeContent(block, tag); put("'")
-            } else {
-                put("\""); writeContent(block,tag); put("\"")
-            }
+            put(LDQM); writeContent(block, tag); put(RDQM)
         }
     }
 
@@ -1045,8 +1035,6 @@ Rd2txt <-
 	    left <- name
 	    mid <- if(nzchar(package)) paste0("package:", package) else ""
 	    right <- "R Documentation"
-	    if(encoding != "unknown")
-		right <- paste0(right, "(", encoding, ")")
 	    pad <- max(HDR_WIDTH - nchar(left, "w") - nchar(mid, "w") - nchar(right, "w"), 0)
 	    pad0 <- pad %/% 2L
 	    pad1 <- strrep(" ", pad0)
