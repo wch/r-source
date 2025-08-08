@@ -9,3 +9,4 @@ Description: R utility functions.
 License: Part of R @VERSION@
 Suggests: methods, xml2, commonmark, knitr, jsonlite
 NeedsCompilation: yes
+Encoding: UTF-8
