@@ -7271,7 +7271,7 @@ is @LaTeX{}-like, with the backslash used as a prefix on markup
 (e.g.@: @code{@{load@}}).  The least common type of text is `verbatim'
 text, where no markup other than the comment marker (@code{%}) is
 processed.  There is also a rare variant of `verbatim' text
-(used in @code{\eqn}, @code{\deqn}, @code{\figure},
+(used in the first argument of @code{\eqn}, @code{\deqn}, @code{\figure},
 and @code{\newcommand}) where comment markers need not be escaped.
 The final type is @R{}-like, intended for @R{} code, but allowing some
 embedded macros.  Quoted strings within @R{}-like text are handled
