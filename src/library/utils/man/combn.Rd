@@ -1,6 +1,6 @@
 % File src/library/utils/man/combn.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2017 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{combn}
@@ -44,9 +44,7 @@ combn(x, m, FUN = NULL, simplify = TRUE, \dots)
   \code{dim(combn(n, m)) == c(m, choose(n, m))} holds.
 }
 \references{
-  Nijenhuis, A. and Wilf, H.S. (1978)
-  \emph{Combinatorial Algorithms for Computers and Calculators};
-  Academic Press, NY.
+  \bibshow{R:Nijenhuis+Wilf:1978}
 }
 \author{Scott Chasalow wrote the original in 1994 for S;
   R package \CRANpkg{combinat} and documentation by Vince Carey

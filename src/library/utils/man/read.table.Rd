@@ -1,6 +1,6 @@
 % File src/library/utils/man/read.table.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2023 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{read.table}
@@ -337,10 +337,7 @@ read.delim2(file, header = TRUE, sep = "\t", quote = "\"",
 }
 
 \references{
-  Chambers, J. M. (1992)
-  \emph{Data for models.}
-  Chapter 3 of \emph{Statistical Models in S}
-  eds J. M. Chambers and T. J. Hastie, Wadsworth & Brooks/Cole.
+  \bibshow{R:Chambers:1992a}
 }
 
 \examples{

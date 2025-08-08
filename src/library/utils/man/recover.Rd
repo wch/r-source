@@ -1,6 +1,6 @@
 % File src/library/utils/man/recover.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{recover}
@@ -53,9 +53,8 @@ recover()
   another frame.
 }
 \references{
-  John M. Chambers (1998).
-  \emph{Programming with Data}; Springer. \cr
-  See the compatibility note above, however.
+  \bibinfo{R:Chambers:1998}{footer}{See the compatibility note above, however.}
+  \bibshow{R:Chambers:1998}
 }
 \seealso{
   \code{\link{browser}} for details about the interactive computations;

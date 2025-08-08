@@ -1,6 +1,6 @@
 % File src/library/utils/man/Sweave.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2022 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Sweave}
@@ -95,11 +95,7 @@ Stangle(file, driver = Rtangle(),
 }
 
 \references{
-  Friedrich Leisch (2002)
-  Dynamic generation of statistical reports using literate data analysis.
-  In W. \enc{Härdle}{Haerdle} and B. \enc{Rönz}{Roenz}, editors,
-  \emph{Compstat 2002 - Proceedings in Computational Statistics},
-  pages 575--580. Physika Verlag, Heidelberg, Germany, ISBN 3-7908-1517-9.
+  \bibshow{R:Leisch:2002}
 }
 
 \seealso{

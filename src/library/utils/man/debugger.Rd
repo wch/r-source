@@ -79,9 +79,7 @@ limitedLabels(value, maxwidth = getOption("width") - 5L)
   produce and save the dump, for example if it has run out of workspace.
 }
 \references{
-  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
-  \emph{The New S Language}.
-  Wadsworth & Brooks/Cole.
+  \bibshow{R:Becker+Chambers+Wilks:1988}
 }
 \seealso{
   \code{\link{browser}} for the actions available at the \code{Browse}

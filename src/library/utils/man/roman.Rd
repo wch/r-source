@@ -43,10 +43,7 @@ sum(r2)
   \code{.romans} is the basic dictionary, a named \code{\link{character}} vector.
 }
 \references{
-  Wikipedia contributors (2024). Roman numerals.
-  Wikipedia, The Free Encyclopedia.
-  \url{https://en.wikipedia.org/w/index.php?title=Roman_numerals&oldid=1188781837}.
-  Accessed February 22, 2024.
+  \bibshow{R:Wikipedia_contributors:2024}
 }
 \examples{
 ## First five roman 'numbers'.

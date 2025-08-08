@@ -1,6 +1,6 @@
 % File src/library/utils/man/getParseData.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2012-2021 R Core Team
+% Copyright 2012-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{getParseData}
@@ -73,8 +73,7 @@ getParseText(parseData, id)
   retrieved from the original file.
 }
 \references{
-  Romain Francois (2012). parser: Detailed R source code parser. R
-  package version 0.0-16. \url{https://github.com/halpo/parser}.
+  \bibshow{R:Francois:2012}
 }
 \author{
 Duncan Murdoch
