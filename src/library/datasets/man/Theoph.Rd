@@ -44,7 +44,7 @@
   next 25 hours.
 
   These data are analyzed in \bibcitet{R:Davidian+Giltinan:1995} and
-  \bibcite{R:Pinheiro+Bates:2000} using a two-compartment open pharmacokinetic model,
+  \bibcitet{R:Pinheiro+Bates:2000} using a two-compartment open pharmacokinetic model,
   for which a self-starting model function, \code{SSfol}, is available.
 
   This dataset was originally part of package \CRANpkg{nlme}, and that has
