@@ -72,7 +72,7 @@ tanpi(x)
 
 \section{Complex values}{
    For the inverse trigonometric functions, branch cuts are defined as in
-   \bibcite{Abramowitz and Stegun, figure 4.4, page 79}.
+   \bibcitet{|R:Abramowitz+Stegun:1972|figure 4.4\\\\\\, page 79}.
 
    For \code{asin} and \code{acos}, there are two cuts, both along
    the real axis: \eqn{\left(-\infty, -1\right]}{(-Inf, -1]} and
@@ -97,19 +97,14 @@ tanpi(x)
   \code{\link[=S4groupGeneric]{Math}} group generic.
 }
 \references{
-  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
-  \emph{The New S Language}.
-  Wadsworth & Brooks/Cole.
-
-  Abramowitz, M. and Stegun, I. A. (1972). \emph{Handbook of
-    Mathematical Functions}. New York: Dover.\cr
-  Chapter 4. Elementary Transcendental Functions: Logarithmic,
-  Exponential, Circular and Hyperbolic Functions
+  \bibinfo{R:Abramowitz+Stegun:1972}{footer}{Chapter 4. Elementary
+    Transcendental Functions: Logarithmic, Exponential, Circular and
+    Hyperbolic Functions}
+  \bibshow{*, R:Becker+Chambers+Wilks:1988}
 
   For \code{cospi}, \code{sinpi}, and \code{tanpi} the C11 extension
   ISO/IEC TS 18661-4:2015 (draft at
   \url{https://www.open-std.org/jtc1/sc22/wg14/www/docs/n1950.pdf}).
-  
 }
 \examples{
 x <- seq(-3, 7, by = 1/8)

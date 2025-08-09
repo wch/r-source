@@ -41,7 +41,7 @@ gettextf(fmt, \dots, domain = NULL, trim = TRUE)
   \dQuote{skip} an argument.)
 
   The following is abstracted from
-  \bibcite{Kernighan and Ritchie (1988)}:
+  \bibcitet{R:Kernighan+Ritchie:1988}:
   however the actual implementation will follow the C99
   standard and fine details (especially the behaviour under user error)
   may depend on the platform. References to numbered arguments come from
@@ -185,9 +185,9 @@ gettextf(fmt, \dots, domain = NULL, trim = TRUE)
 }
 
 \references{
-  Kernighan, B. W. and Ritchie, D. M. (1988)
-  \emph{The C Programming Language.} Second edition, Prentice Hall.
-  Describes the format options in table B-1 in the Appendix.
+  \bibinfo{R:Kernighan+Ritchie:1988}{footer}{Describes the format
+    options in table B-1 in the Appendix.}
+  \bibshow{*}
 
   The C Standards, especially ISO/IEC 9899:1999 for \sQuote{C99}.  Links
   can be found at

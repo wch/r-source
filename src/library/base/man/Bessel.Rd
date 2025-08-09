@@ -46,7 +46,7 @@ besselY(x, nu)
   or \eqn{e^{x} K_{\nu}(x)}{exp(x) K(x;nu)} are returned.
 
   For \eqn{\nu < 0}{nu < 0}, formulae 9.1.2 and 9.6.2 from
-  \bibcite{Abramowitz & Stegun}
+  \bibcitet{R:Abramowitz+Stegun:1972}
   are applied (which is probably suboptimal), except for
   \code{besselK} which is symmetric in \code{nu}.
 
@@ -72,10 +72,8 @@ besselY(x, nu)
   }
 }
 \references{
-  Abramowitz, M. and Stegun, I. A. (1972).
-  \emph{Handbook of Mathematical Functions}.
-  Dover, New York;
-  Chapter 9: Bessel Functions of Integer Order.
+  \bibinfo{R:Abramowitz+Stegun:1972}{footer}{Chapter 9: Bessel Functions of Integer Order.}
+  \bibshow{*}
 
   In order of \dQuote{Source} citation above:
 
