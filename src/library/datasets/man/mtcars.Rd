@@ -1,6 +1,6 @@
 % File src/library/datasets/man/mtcars.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2018 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{mtcars}
@@ -31,12 +31,10 @@
   }
 }
 \source{
-  Henderson and Velleman (1981),
-  Building multiple regression models interactively.
-  \emph{Biometrics}, \bold{37}, 391--411.
+  \bibshow{R:Henderson+Velleman:1981}
 }
 \note{
-  \bibcite{Henderson and Velleman (1981)} comment in a footnote to Table 1:
+  \bibcitet{R:Henderson+Velleman:1981} comment in a footnote to Table 1:
   \sQuote{Hocking [original transcriber]'s noncrucial coding of the
     Mazda's rotary engine as a straight six-cylinder engine and the
     Porsche's flat engine as a V engine, as well as the inclusion of the

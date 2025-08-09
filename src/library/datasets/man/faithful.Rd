@@ -1,6 +1,6 @@
 % File src/library/datasets/man/faithful.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2018 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{faithful}
@@ -22,14 +22,7 @@
 }
 \source{W. Härdle.}
 \references{
-  \enc{Härdle}{Haerdle}, W. (1991).
-  \emph{Smoothing Techniques with Implementation in S}.
-  New York: Springer.
-
-  Azzalini, A. and Bowman, A. W. (1990).
-  A look at some data on the Old Faithful geyser.
-  \emph{Applied Statistics}, \bold{39}, 357--365.
-  \doi{10.2307/2347385}.
+  \bibshow{*, R:Härdle:1991}
 }
 \details{
   A closer look at \code{faithful$eruptions} reveals that these are
@@ -38,7 +31,7 @@
   better version of the eruption times, see the example below.
 
   There are many versions of this dataset around:
-  \bibcite{Azzalini and Bowman (1990)} use a more complete version.
+  \bibcitet{R:Azzalini+Bowman:1990} use a more complete version.
 }
 \seealso{
   \code{geyser} in package \CRANpkg{MASS} for the \I{Azzalini}--\I{Bowman} version.

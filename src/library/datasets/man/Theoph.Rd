@@ -1,6 +1,6 @@
 % File src/library/datasets/man/Theoph.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Theoph}
@@ -37,14 +37,14 @@
   }
 }
 \details{
-  \bibcite{Boeckmann, Sheiner and Beal (1994)} report data from a study by
+  \bibcitet{R:Boeckmann+Sheiner+Beal:1994} report data from a study by
   Dr. Robert Upton of the kinetics of the anti-asthmatic drug
   theophylline.  Twelve subjects were given oral doses of theophylline
   then serum concentrations were measured at 11 time points over the
   next 25 hours.
 
-  These data are analyzed in \bibcite{Davidian and Giltinan (1995)} and
-  \bibcite{Pinheiro and Bates (2000)} using a two-compartment open pharmacokinetic model,
+  These data are analyzed in \bibcitet{R:Davidian+Giltinan:1995} and
+  \bibcite{R:Pinheiro+Bates:2000} using a two-compartment open pharmacokinetic model,
   for which a self-starting model function, \code{SSfol}, is available.
 
   This dataset was originally part of package \CRANpkg{nlme}, and that has
@@ -52,17 +52,10 @@
   \code{print}) for its grouped-data classes.
 }
 \source{
-  Boeckmann, A. J., Sheiner, L. B. and Beal, S. L. (1994), \emph{NONMEM
-    Users Guide: Part V}, NONMEM Project Group, University of
-  California, San Francisco.
-
-  Davidian, M. and Giltinan, D. M. (1995)
-  \emph{Nonlinear Models for Repeated Measurement Data},
-  Chapman & Hall
-  (section 5.5, p.\sspace{}145 and section 6.6, p.\sspace{}176)
-
-  Pinheiro, J. C. and Bates, D. M. (2000) \emph{Mixed-effects Models in
-    S and S-PLUS}, Springer (Appendix A.29)
+  \bibinfo{R:Davidian+Giltinan:1995}{footer}{
+    (section 5.5, p.\\\\\\sspace{}145 and section 6.6, p.\\\\\\sspace{}176)}
+  \bibinfo{R:Pinheiro+Bates:2000}{footer}{(Appendix A.29)}
+  \bibshow{*}
 }
 \seealso{\code{\link{SSfol}}}
 \examples{

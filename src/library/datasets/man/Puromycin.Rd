@@ -1,6 +1,6 @@
 % File src/library/datasets/man/Puromycin.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Puromycin}
@@ -31,7 +31,7 @@
 }
 \details{
   Data on the velocity of an enzymatic reaction were obtained
-  by \bibcite{Treloar (1974)}.  The number of counts per minute of radioactive
+  by \bibcitet{R:Treloar:1974}.  The number of counts per minute of radioactive
   product from the reaction was measured as a function of substrate
   concentration in parts per million (ppm) and from these counts the
   initial rate (or velocity) of the reaction was calculated
@@ -39,13 +39,8 @@
   treated with \I{Puromycin}, and once with the enzyme untreated.
 }
 \source{
-  Bates, D.M. and Watts, D.G. (1988),
-  \emph{Nonlinear Regression Analysis and Its Applications},
-  Wiley, Appendix A1.3.
-
-  Treloar, M. A. (1974), \emph{Effects of Puromycin on
-    Galactosyltransferase in Golgi Membranes}, M.Sc. Thesis, U. of
-  Toronto.
+  \bibinfo{R:Bates+Watts:1988}{note}{Appendix A1.3}
+  \bibshow{*, R:Bates+Watts:1988}
 }
 
 \seealso{

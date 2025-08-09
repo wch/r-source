@@ -19,18 +19,6 @@
      \item{\code{Variable}}{\code{"Hip Angle"} and \code{"Knee Angle"}}
   }
 }
-\references{
-  Olshen, R. A., Biden, E. N., Wyatt, M. P., and Sutherland, D. (1989)
-  Gait Analysis and the Bootstrap.
-  \emph{Annals of Statistics} \bold{17}, 4, 1419--1440.
-  \doi{10.1214/AOS/1176347372}
-
-  Ramsay, J. O., and Silverman, B. W. (2006)
-  \emph{Functional Data Analysis}, 2nd ed., New York: Springer.
-
-  Ramsay, J. (2023)  \emph{fda: Functional Data Analysis}.
-  R package version 6.1.4, \url{https://CRAN.R-project.org/package=fda}.
-}
 \source{
   In the FDA book (2006), p.8, \emph{\dQuote{The Motion Analysis Laboratory at
   Children's Hospital, San Diego, collected these data}}.
@@ -39,9 +27,12 @@
   This is the version of the data as in the \CRANpkg{fda} package and 
   corresponding textbooks, but with named dimensions. One record appears to be 
   duplicated from the original paper,
-  \bibcite{Olshen \abbr{et al.}\sspace(1989)}, which 
+  \bibcitet{R:Olshen+Biden+Wyatt:1989}, which 
   analyses a sample of 38 boys. The \code{gait} dataset has 39 boys but 
   \code{boy19} and \code{boy26} have identical measurements.
+}
+\references{
+  \bibshow{*, R:Ramsay+Silverman:2005, R:Ramsay:2023}
 }
 \examples{
 plot(gait[, 1, ], type = "b",
