@@ -39,7 +39,7 @@ bibentry(bibtype = "Article",
          pages = "17--23")
 
 bibentry(bibtype = "InProceedings",
-         key = "R:Friendly:1992",
+         key = "R:Friendly:1992a",
          author = person(given = "Michael",
                          family = "Friendly"),
          title = "Graphical Methods for Categorical Data",

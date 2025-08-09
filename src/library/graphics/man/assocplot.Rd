@@ -55,7 +55,7 @@ assocplot(x, col = c("black", "red"), space = 0.3,
   \code{\link{mosaicplot}}, \code{\link{chisq.test}}.
 }
 \references{
-  \bibshow{*, R:Cohen:1980, R:Friendly:1992}
+  \bibshow{*, R:Cohen:1980, R:Friendly:1992a}
 }
 \examples{
 ## Aggregate over sex:
