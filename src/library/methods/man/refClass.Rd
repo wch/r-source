@@ -1,6 +1,6 @@
 % File src/library/methods/man/refClass.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2010-2014 R Core Team
+% Copyright 2010-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{ReferenceClasses}
@@ -818,10 +818,8 @@ reference method interactively.
 }
 
 \references{
- Chambers, John M. (2016)
- \emph{Extending R},
-  Chapman & Hall.
-(Chapters 9 and 11.)
+  \bibinfo{R:Chambers:2016}{footer}{(Chapters 9 and 11.)}
+  \bibshow{R:Chambers:2016}
 }
 
 

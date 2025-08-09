@@ -1,6 +1,6 @@
 % File src/library/methods/man/StructureClasses.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{StructureClasses}
@@ -148,17 +148,13 @@
   extending one of the basic classes.
 }
 \references{
- Chambers, John M. (2008)
- \emph{Software for Data Analysis: Programming with R}
-  Springer.  (For the R version.)
-
- Chambers, John M. (1998)
- \emph{Programming with Data}
- Springer (For the original S4 version.)
-
-  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
-  \emph{The New S Language}.
-  Wadsworth & Brooks/Cole (for the original vector structures).
+  \bibinfo{R:Becker+Chambers+Wilks:1988}{footer}{For the original vector
+    structures.)}
+  \bibinfo{R:Chambers:1998}{footer}{(For the original S4 version.)}
+  \bibinfo{R:Chambers:2008}{footer}{(For the R version.)}
+  \bibshow{R:Becker+Chambers+Wilks:1988,
+    R:Chambers:1998,
+    R:Chambers:2008}
 }
 \examples{
 showClass("structure")

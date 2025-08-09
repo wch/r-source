@@ -1,6 +1,6 @@
 % File src/library/methods/man/setOldClass.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2010, 2016 R Core Team
+% Copyright 1995-2025, 2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{setOldClass}
@@ -209,10 +209,9 @@ setOldClass(Classes, prototype, where, test = FALSE, S4Class)
 
 
 \references{
- Chambers, John M. (2016)
- \emph{Extending R},
-  Chapman & Hall.
-(Chapters 9 and 10, particularly Section 10.8)
+  \bibinfo{R:Chambers:2016}{footer}{(Chapters 9 and 10, particularly
+    Section 10.8)}
+  \bibshow{R:Chambers:2016}
 }
 
 
