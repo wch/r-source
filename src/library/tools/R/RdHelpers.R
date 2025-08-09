@@ -243,7 +243,7 @@ function(x, textual = FALSE)
 {
     x <- trimws(x)
     bib <- R_bibentries()
-    given <- strsplit(x, ",[[:space:]]*")[[1L]]
+    given <- strsplit(x, "[^\\],[[:space:]]*")[[1L]]
     parts <- strsplit(given, "|", fixed = TRUE)
     parts <- parts[lengths(parts) %in% c(1L, 3L)]
     ## Could complain about the others ...?
@@ -253,8 +253,12 @@ function(x, textual = FALSE)
     }
     if(any(ind <- (lengths(parts) == 3L))) {
         keys[ind] <- vapply(parts, `[`, "", 2L)
-        after[ind] <- vapply(parts, `[`, "", 3L)
-        before[ind] <- vapply(parts, `[`, "", 1L)
+        after[ind] <- gsub("\\,", ",",
+                           vapply(parts, `[`, "", 3L),
+                           fixed = TRUE)
+        before[ind] <- gsub("\\,", ",",
+                            vapply(parts, `[`, "", 1L),
+                            fixed = TRUE)
     }
     ind <- keys %in% .bibentry_get_key(bib)
     if(!all(ind)) {
