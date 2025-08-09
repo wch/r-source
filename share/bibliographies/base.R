@@ -1,3 +1,14 @@
+bibentry(bibtype = "Book",
+         key = "R:Abramowitz+Stegun:1972",
+         author = c(person(given = "Milton",
+                           family = "Abramowitz"),
+                    person(given = c("Irene", "A."),
+                           family = "Stegun")),
+         title = "Handbook of Mathematical Functions with Formulas, Graphs, and Mathematical Tables",
+         publisher = "Dover",
+         year = "1972",
+         address = "New York")
+
 bibentry(bibtype = "Article",
          key = "R:Ahrens+Dieter:1973",
          author = c(person(given = c("Joachim", "H."),
@@ -184,6 +195,19 @@ bibentry(bibtype = "Article",
          year = "1991",
          month = "mar",
          pages = "5--48")
+
+bibentry(bibtype = "Book",
+         key = "R:Kernighan+Ritchie:1988",
+         title = "The {C} Programming Language",
+         author = c(person(given = c("Brian", "W."),
+                           family = "Kernighan"),
+                    person(given = c("Dennis", "M."),
+                           family = "Ritchie")),
+         isbn = "9789688802052",
+         lccn = "77028983",
+         series = "Prentice-Hall software series",
+         year = "1988",
+         publisher = "Prentice Hall")
 
 bibentry(bibtype = "Article",
          key = "R:Kinderman+Ramage:1976",
