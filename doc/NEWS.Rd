@@ -213,6 +213,11 @@
 
       \item Parsing a multi-line string from Rd \verb{\Sexpr} code no
       longer doubles the newlines.
+
+      \item \code{loadNamespace(.., versionCheck = *)} and hence
+      \code{requireNamespace(..)} now show an error and/or return
+      \code{FALSE} when the package version check is not fulfilled, thanks
+      to \I{Michael Chirico}'s \PR{18522}.
     }
   }
 }

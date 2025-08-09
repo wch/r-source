@@ -1,11 +1,11 @@
 #  File src/library/base/R/namespace.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2023 The R Core Team
+#  Copyright (C) 1995-2025 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
-#  the Free Software Foundation; either version 3 of the License, or
+#  the Free Software Foundation; either version 2 of the License, or
 #  (at your option) any later version.
 #
 #  This program is distributed in the hope that it will be useful,
@@ -196,7 +196,7 @@ loadNamespace <- function (package, lib.loc = NULL,
 
     ns <- .Internal(getRegisteredNamespace(package))
     if (! is.null(ns)) {
-        if(!is.null(zop <- versionCheck[["op"]]) &&
+        if(!is.null(zop      <- versionCheck[["op"]]) &&
            !is.null(zversion <- versionCheck[["version"]])) {
             current <- getNamespaceVersion(ns)
             if(!do.call(zop, list(as.numeric_version(current), zversion)))
@@ -282,7 +282,7 @@ loadNamespace <- function (package, lib.loc = NULL,
         bindTranslations <- function(pkgname, pkgpath)
         {
             ## standard packages are treated differently
-            std <- c("compiler", "grDevices", "graphics", "grid",
+            std <- c("compiler", "foreign", "grDevices", "graphics", "grid",
                      "methods", "parallel", "splines", "stats", "stats4",
                      "tcltk", "tools", "utils")
             popath <- if (pkgname %in% std) .popath else file.path(pkgpath, "po")
@@ -826,11 +826,12 @@ requireNamespace <- function (package, ..., quietly = FALSE)
 {
     package <- as.character(package)[[1L]] # like loadNamespace
     ns <- .Internal(getRegisteredNamespace(package))
+    if (is.null(ns) && !quietly) {
+        packageStartupMessage(gettextf("Loading required namespace: %s",
+                                       package), domain = NA)
+    }
     res <- TRUE
-    if (is.null(ns)) {
-        if(!quietly)
-            packageStartupMessage(gettextf("Loading required namespace: %s",
-                                           package), domain = NA)
+    if (is.null(ns) || ...length()) {
         value <- tryCatch(loadNamespace(package, ...), error = function(e) e)
         if (inherits(value, "error")) {
             if (!quietly) {

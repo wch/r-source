@@ -2095,6 +2095,13 @@ stopifnot(exprs = {
 ## warning msg confusingly had '...' instead of 'log'
 
 
+## requireNamespace(versionCheck) for loaded namespace #PR18255
+versionCheck <- list(op = ">", version = getRversion())
+           requireNamespace("stats", versionCheck = versionCheck) # did not show error
+stopifnot(!requireNamespace("stats", versionCheck = versionCheck, quietly = TRUE))
+## *not* successful, when versionCheck fails
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
