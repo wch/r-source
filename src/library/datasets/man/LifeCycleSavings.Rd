@@ -23,8 +23,9 @@
   }
 }
 \source{
-  The data were obtained from Belsley, Kuh and Welsch (1980, pp.\sspace{}41--42).
-  They in turn obtained the data from Sterling (1977).
+  The data were obtained from
+  \bibcitet{|R:Belsley+Kuh+Welsch:1980|pp.\\\\\\sspace{}41--42}.
+  They in turn obtained the data from \bibcitet{R:Sterling:1977}.
 }
 \details{
   Under the life-cycle savings hypothesis as developed by Franco
@@ -41,12 +42,7 @@
   The examples show how to recreate that version.
 }
 \references{
-  Sterling, Arnie (1977) Unpublished BS Thesis.
-  Massachusetts Institute of Technology.
-
-  Belsley, D. A., Kuh. E. and Welsch, R. E. (1980)
-  \emph{Regression Diagnostics}.
-  New York: Wiley.
+  \bibshow{*}
 }
 \examples{
 require(stats); require(graphics)

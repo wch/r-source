@@ -1,6 +1,6 @@
 % File src/library/datasets/man/BJsales.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{BJsales}
@@ -18,17 +18,12 @@ BJsales
 BJsales.lead
 }
 \source{
-  The data are given in Box & Jenkins (1976).
+  The data are given in \bibcitet{|R:Box+Jenkins:1976|p.\\\\\\sspace{}537}.
   Obtained from the Time Series Data Library at
   \url{https://robjhyndman.com/TSDL/}
 }
 \references{
-  G. E. P. Box and G. M. Jenkins (1976):
-  \emph{Time Series Analysis, Forecasting and Control},
-  Holden-Day, San Francisco, p.\sspace{}537.
-
-  P. J. Brockwell and R. A. Davis (1991):
-  \emph{Time Series: Theory and Methods},
-  Second edition, Springer Verlag, NY, pp.\sspace{}414.
+  \bibinfo{R:Brockwell+Davis:1991}{footer}{Page 414.}
+  \bibcite{*, R:Brockwell+Davis:1991}
 }
 \keyword{datasets}

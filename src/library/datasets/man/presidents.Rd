@@ -1,6 +1,6 @@
 % File src/library/datasets/man/presidents.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{presidents}
@@ -24,9 +24,7 @@
   McNeil's book for details.
 }
 \references{
-  McNeil, D. R. (1977)
-  \emph{Interactive Data Analysis}.
-  New York: Wiley.
+  \bibshow{R:McNeil:1977}
 }
 \examples{
 require(stats); require(graphics)

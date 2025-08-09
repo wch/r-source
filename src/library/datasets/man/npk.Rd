@@ -42,8 +42,7 @@ npk
   Imperial College, London, M.Sc. exercise sheet.
 }
 \references{
-  Venables, W. N. and Ripley, B. D. (2002)
-  \emph{Modern Applied Statistics with S.} Fourth edition.  Springer.
+  \bibshow{R:Venables+Ripley:2002}
 }
 % This gets different roundings
 \examples{\donttest{

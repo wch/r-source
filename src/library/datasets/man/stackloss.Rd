@@ -1,6 +1,6 @@
 % File src/library/datasets/man/stackloss.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2024 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{stackloss}
@@ -59,15 +59,7 @@ stack.loss
   efficiency of the plant.
 }
 \references{
-  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
-  \emph{The New S Language}.
-  Wadsworth & Brooks/Cole.
-
-  Dodge, Y. (1996)
-  The guinea pig of multiple regression. In:
-  \emph{Robust Statistics, Data Analysis, and Computer Intensive
-    Methods; In Honor of Peter Huber's 60th Birthday}, 1996,
-  \emph{Lecture Notes in Statistics} \bold{109}, Springer-Verlag, New York.
+  \bibshow{R:Becker+Chambers+Wilks:1988, R:Dodge:1996}
 }
 \examples{
 require(stats)

@@ -1,6 +1,6 @@
 % File src/library/datasets/man/airquality.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{airquality}
@@ -45,9 +45,7 @@
   (meteorological data).
 }
 \references{
-  Chambers, J. M., Cleveland, W. S., Kleiner, B. and Tukey, P. A. (1983)
-  \emph{Graphical Methods for Data Analysis}.
-  Belmont, CA: Wadsworth.
+  \bibshow{R:Chambers+Cleveland+Kleiner:1983}
 }
 \examples{
 require(graphics)

@@ -1,6 +1,6 @@
 % File src/library/datasets/man/airmiles.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{airmiles}
@@ -17,9 +17,7 @@
 }
 \source{F.A.A. Statistical Handbook of Aviation.}
 \references{
-  Brown, R. G. (1963)
-  \emph{Smoothing, Forecasting and Prediction of Discrete Time Series}.
-  Prentice-Hall.
+  \bibshow{R:Brown:1963}
 }
 \examples{
 require(graphics)

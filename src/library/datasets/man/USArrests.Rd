@@ -1,6 +1,6 @@
 % File src/library/datasets/man/USArrests.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2016 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{USArrests}
@@ -42,9 +42,7 @@
 }
 \seealso{The \code{\link{state}} data sets.}
 \references{
-  McNeil, D. R. (1977)
-  \emph{Interactive Data Analysis}.
-  New York: Wiley.
+  \bibshow{R:McNeil:1977}
 }
 \examples{
 summary(USArrests)

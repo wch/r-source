@@ -1,6 +1,6 @@
 % File src/library/datasets/man/iris.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2024 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{iris}
@@ -44,9 +44,8 @@ iris3
   \bold{59}, 2--5.
 }
 \references{
-  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
-  \emph{The New S Language}.
-  Wadsworth & Brooks/Cole. (has \code{iris3} as \code{iris}.)
+  \bibinfo{R:Becker+Chambers+Wilks}{footer}{(Has \\\\\\code{iris3} as \\\\\\code{iris}.)}
+  \bibshow{R:Becker+Chambers+Wilks:1988}
 }
 \seealso{
   \code{\link{matplot}} some examples of which use

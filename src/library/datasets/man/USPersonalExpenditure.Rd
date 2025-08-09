@@ -1,6 +1,6 @@
 % File src/library/datasets/man/USPersonalExpenditure.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{USPersonalExpenditure}
@@ -17,13 +17,7 @@
 \format{A matrix with 5 rows and 5 columns.}
 \source{The World Almanac and Book of Facts, 1962, page 756.}
 \references{
-  Tukey, J. W. (1977)
-  \emph{Exploratory Data Analysis}.
-  Addison-Wesley.
-
-  McNeil, D. R. (1977)
-  \emph{Interactive Data Analysis}.
-  Wiley.
+  \bibshow{R:McNeil:1977, R:Tukey:1977}
 }
 \examples{
 require(stats) # for medpolish

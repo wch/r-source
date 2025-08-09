@@ -27,9 +27,7 @@
   The action of optical isomers: II hyoscines.
   \emph{The Journal of Physiology} \bold{32}, 501--510.
 
-  Student (1908)
-  The probable error of the mean.
-  \emph{Biometrika}, \bold{6}, 20.
+  \bibshow{R:Student:1908}
 }
 \details{
   The \code{group} variable name may be misleading about the data:
@@ -37,9 +35,7 @@
   %% But we keep it (as [,2]) for back compatibility.
 }
 \references{
-  \enc{Scheffé}{Scheffe}, Henry (1959)
-  \emph{The Analysis of Variance}.
-  New York, NY: Wiley.
+  \bibshow{R:Scheffé:1959}
 }
 \examples{
 require(stats)

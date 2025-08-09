@@ -20,9 +20,7 @@
   Statistical Abstracts of the United States, 1975, p. 192.
 }
 \references{
-  McNeil, D. R. (1977)
-  \emph{Interactive Data Analysis}.
-  New York: Wiley.
+  \bibshow{R:McNeil:1977}
 }
 \note{
   The dataset version before \R 4.6.0 had typos in the names

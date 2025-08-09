@@ -1,6 +1,6 @@
 % File src/library/datasets/man/rivers.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{rivers}
@@ -15,7 +15,6 @@
 \format{A vector containing 141 observations.}
 \source{World Almanac and Book of Facts, 1975, page 406.}
 \references{
-  McNeil, D. R. (1977) \emph{Interactive Data Analysis}.
-  New York: Wiley.
+  \bibshow{R:McNeil:1977}
 }
 \keyword{datasets}

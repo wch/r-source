@@ -1,6 +1,6 @@
 % File src/library/datasets/man/women.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{women}
@@ -28,9 +28,7 @@
     ordinary indoor clothing and shoes, and heights with shoes}.
 }
 \references{
-  McNeil, D. R. (1977)
-  \emph{Interactive Data Analysis}.
-  Wiley.
+  \bibshow{R:McNeil:1977}
 }
 \examples{
 require(graphics)
