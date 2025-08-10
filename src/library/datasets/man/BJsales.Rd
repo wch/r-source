@@ -24,6 +24,6 @@ BJsales.lead
 }
 \references{
   \bibinfo{R:Brockwell+Davis:1991}{footer}{Page 414.}
-  \bibcite{*, R:Brockwell+Davis:1991}
+  \bibshow{*, R:Brockwell+Davis:1991}
 }
 \keyword{datasets}
