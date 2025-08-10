@@ -65,6 +65,10 @@
       \item Credentials for basic HTTP authentication with download method
       \code{"libcurl"} can now be provided in a \file{netrc} file.  The
       path to the file can be specified in \code{options("netrc")}.
+
+      \item \code{tools::deparseLatex()} gains a \code{math} argument,
+      now used by the default \code{bibstyle} to format \code{bibentry()} 
+      fields with \samp{$...$} syntax via Rd \verb{\eqn} markup.
     }
   }
 

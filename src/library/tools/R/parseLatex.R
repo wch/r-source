@@ -1,7 +1,7 @@
 #  File src/library/tools/R/parseLatex.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2023 The R Core Team
+#  Copyright (C) 1995-2025 The R Core Team
 #  Copyright (C) 2025 Duncan Murdoch
 #
 #  This program is free software; you can redistribute it and/or modify
@@ -41,8 +41,9 @@ parseLatex <- function(text, filename = "text",
 
 
 # This converts a latex object into a single element character vector
-deparseLatex <- function(x, dropBraces = FALSE)
+deparseLatex <- function(x, dropBraces = FALSE, math = c("$", "$"))
 {
+    stopifnot(length(math) == 2, is.character(math))
     specials <- c("\\", "#", "$", "%", "&", "~", "_", "^", "{", "}")
     result <- character()
     lastTag <- "TEXT"
@@ -68,7 +69,7 @@ deparseLatex <- function(x, dropBraces = FALSE)
         	"\\begin{", a[[1L]], "}",
         	Recall(a[[2L]]),
         	"\\end{", a[[1L]], "}"),
-        MATH = c("$", Recall(a), "$"), # \( and \) parse as MACRO
+        MATH = c(math[1L], Recall(a), math[2L]),
         DISPLAYMATH = c("$$", Recall(a), "$$"),
         DEFINITION = Recall(a),
         NULL = stop("Internal error, no tag", domain = NA)

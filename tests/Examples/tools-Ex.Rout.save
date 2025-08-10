@@ -1125,6 +1125,9 @@ character(0)
 [1] "français"
 > ## IGNORE_RDIFF_END
 > 
+> deparseLatex(parseLatex("$t$"), math = c("\\eqn{", "}"))
+[1] "\\eqn{t}"
+> 
 > 
 > 
 > cleanEx()

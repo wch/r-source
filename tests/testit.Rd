@@ -70,6 +70,8 @@ foo(\var{x}, \var{y}, ...)
 
   \Sexpr[results=verbatim]{"a
     b\n    c"}
+
+  \Sexpr[results=rd]{tools::toRd(bibentry("Misc", author="R", year=2025, title="$t$"))}
 }
 \value{
   [NULL]\cr\cr\dots

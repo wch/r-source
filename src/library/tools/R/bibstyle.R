@@ -1,7 +1,7 @@
 #  File src/library/tools/R/bibstyle.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2019 The R Core Team
+#  Copyright (C) 1995-2025 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -25,7 +25,7 @@ cleanupLatex <- function(x) {
     if (inherits(latex, "error")) {
     	x
     } else {
-    	deparseLatex(latexToUtf8(latex), dropBraces=TRUE)
+    	deparseLatex(latexToUtf8(latex), dropBraces=TRUE, math=c("\\eqn{", "}"))
     }
 }
 

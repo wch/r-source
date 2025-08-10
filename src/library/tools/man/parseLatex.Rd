@@ -1,6 +1,6 @@
 % File src/library/tools/man/parseLatex.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2023 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{parseLatex}
@@ -25,7 +25,8 @@ parseLatex(text, filename = "text",
                       "\\\\providecommand", "\\\\def", "\\\\let"),
            defenv = c("\\\\newenvironment",
                       "\\\\renewenvironment"))
-deparseLatex(x, dropBraces = FALSE)
+
+deparseLatex(x, dropBraces = FALSE, math = c("$", "$"))
 latexToUtf8(x)
 }
 \arguments{
@@ -56,6 +57,12 @@ A \code{"LaTeX"} object.
 \item{dropBraces}{
 Drop unnecessary braces when displaying a \code{"LaTeX"} object.
 }
+\item{math}{
+A character vector of length 2 containing \LaTeX code that opens and
+closes a \verb{MATH} block. Note that \code{parseLatex} currently
+only tags \samp{$...$} as \code{"MATH"}, but not \samp{\\(...\\)}
+nor \LaTeX's \samp{math} environment.
+}
 }
 \details{
 The parser does not recognize all legal \LaTeX code, only relatively
@@ -83,11 +90,13 @@ The \code{latexToUtf8()} function returns a modified version of the
 \code{"LaTeX"} object that was passed to it.
 }
 \author{
-Duncan Murdoch
+Duncan Murdoch and the R Core Team
 }
 \examples{
 latex <- parseLatex("fran\\\\c{c}ais", verbose = TRUE)
 \dontdiff{deparseLatex(latexToUtf8(latex))}% possibly "....<U+00E7>..."
+
+deparseLatex(parseLatex("$t$"), math = c("\\\\eqn{", "}"))
 }
 \keyword{ utilities }
 \keyword{ documentation }

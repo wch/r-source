@@ -83,6 +83,9 @@ c
 \AsIs{\texttt{
 [1] "a\bsl{}n    b\bsl{}n    c"
 }}
+
+R (2025).
+``\eqn{t}{}.''
 \end{Section}
 %
 \begin{Section}{\AsIs{\texttt{\bsl{}tabular}}}
