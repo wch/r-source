@@ -99,7 +99,6 @@ getBibstyle(all = FALSE)
   \code{\link{bibentry}}
 }
 \examples{
-\dontshow{options(useFancyQuotes = FALSE)}
 refs <-
 c(bibentry(bibtype = "manual",
     title = "R: A Language and Environment for Statistical Computing",

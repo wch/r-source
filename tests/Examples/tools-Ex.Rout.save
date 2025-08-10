@@ -257,9 +257,6 @@ Error in assertWarning(ff()) :
 > 
 > ### ** Examples
 > 
-> ## Don't show: 
-> options(useFancyQuotes = FALSE)
-> ## End(Don't show)
 > refs <-
 + c(bibentry(bibtype = "manual",
 +     title = "R: A Language and Environment for Statistical Computing",
@@ -286,7 +283,7 @@ Error in assertWarning(ff()) :
 Computing_. R Foundation for Statistical Computing, Vienna, Austria.
 <https://www.R-project.org>.
 
-[2] Box GEP, Cox DR (1964). "An Analysis of Transformations." _Journal
+[2] Box GEP, Cox DR (1964). “An Analysis of Transformations.” _Journal
 of the Royal Statistical Society, Series B_, *26*(2), 211-243.
 doi:10.1111/j.2517-6161.1964.tb00553.x
 <https://doi.org/10.1111/j.2517-6161.1964.tb00553.x>.
