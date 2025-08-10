@@ -1709,15 +1709,14 @@ bibentry(bibtype = "Book",
          isbn = "978-0340593264")
 
 bibentry(bibtype = "Book",
-         key = "R:Krzanowski:2000",
+         key = "R:Krzanowski:1988",
          author = person(given = c("W.", "J."),
                          family = "Krzanowski"),
          title = "Principles of Multivariate Analysis: A User’s Perspective",
          publisher = "Oxford University Press",
-         year = "2000",
+         year = "1988",
          month = "sep",
-         isbn = "9780198507086",
-         doi = "10.1093/oso/9780198507086.001.0001")
+         isbn = "978-0198522119")
 
 bibentry(bibtype = "Book",
          key = "R:Percival+Walden:1998",
