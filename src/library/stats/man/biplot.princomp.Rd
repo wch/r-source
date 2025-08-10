@@ -1,6 +1,6 @@
 % File src/library/stats/man/biplot.princomp.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2018 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{biplot.princomp}
@@ -32,8 +32,9 @@ Biplot for Principal Components
     will be issued if the specified \code{scale} is outside this range.
   }
   \item{pc.biplot}{
-    If true, use what Gabriel (1971) refers to as a "principal component
-    biplot", with \code{lambda = 1} and observations scaled up by sqrt(n) and
+    If true, use what \bibcitet{R:Gabriel:1971} refers to as a
+    \dQuote{principal component biplot},
+    with \code{lambda = 1} and observations scaled up by sqrt(n) and
     variables scaled down by sqrt(n).  Then inner products between
     variables approximate covariances and distances between observations
     approximate Mahalanobis distance.
@@ -42,26 +43,17 @@ Biplot for Principal Components
     \code{\link{biplot.default}}.}
 }
 \section{Side Effects}{
-    a plot is produced on the current graphics device.
+  a plot is produced on the current graphics device.
 }
 \details{
-    This is a method for the generic function \code{biplot}.  There is
-    considerable confusion over the precise definitions: those of the
-    original paper, Gabriel (1971), are followed here.  Gabriel and
-    \bibcite{Odoroff (1990)} use the same definitions, but their plots actually
-    correspond to \code{pc.biplot = TRUE}.
+  This is a method for the generic function \code{biplot}.  There is
+  considerable confusion over the precise definitions: those of the
+  original paper, \bibcitet{R:Gabriel:1971}, are followed here.
+  \bibcitet{R:Gabriel+Odoroff:1990} use the same definitions, but their
+  plots actually correspond to \code{pc.biplot = TRUE}.
 }
 \references{
-    Gabriel, K. R. (1971).
-    The biplot graphical display of matrices with applications to
-    principal component analysis.
-    \emph{Biometrika}, \bold{58}, 453--467.
-    \doi{10.2307/2334381}.
-
-    Gabriel, K. R. and Odoroff, C. L. (1990).
-    Biplots in biomedical research.
-    \emph{Statistics in Medicine}, \bold{9}, 469--485.
-    \doi{10.1002/sim.4780090502}.
+  \bibshow{*}
 }
 \seealso{
     \code{\link{biplot}},

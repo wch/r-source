@@ -1,6 +1,6 @@
 % File src/library/stats/man/StructTS.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2009 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{StructTS}
@@ -98,11 +98,17 @@ StructTS(x, type = c("level", "trend", "BSM"), init = NULL,
     initial state of the filter, \code{model} its final state.}
   \item{xtsp}{the \code{tsp} attributes of \code{x}.}
 }
+\note{
+  Optimization of structural models is a lot harder than many of the
+  references admit.  For example, the \code{\link{AirPassengers}} data
+  are considered in \bibcitet{R:Brockwell+Davis:1996}: their solution appears to
+  be a local maximum, but nowhere near as good a fit as that produced by
+  \code{StructTS}.  It is quite common to find fits with one or more
+  variances zero, and this can include \eqn{\sigma^2_\epsilon}{sigma^2_eps}.
+}
 \references{
-  Brockwell, P. J. & Davis, R. A. (1996).
-  \emph{Introduction to Time Series and Forecasting}.
-  Springer, New York.
-  Sections 8.2 and 8.5.
+  \bibinfo{R:Brockwell+Davis:1996}{footer}{Sections 8.2 and 8.5.}
+  \bibshow{*}
 
   Durbin, J. and Koopman, S. J. (2001) \emph{Time Series Analysis by
     State Space Methods.}  Oxford University Press.
@@ -113,14 +119,6 @@ StructTS(x, type = c("level", "trend", "BSM"), init = NULL,
 
   Harvey, A. C. (1993) \emph{Time Series Models}.
   2nd Edition, Harvester Wheatsheaf.
-}
-\note{
-  Optimization of structural models is a lot harder than many of the
-  references admit.  For example, the \code{\link{AirPassengers}} data
-  are considered in \bibcite{Brockwell & Davis (1996)}: their solution appears to
-  be a local maximum, but nowhere near as good a fit as that produced by
-  \code{StructTS}.  It is quite common to find fits with one or more
-  variances zero, and this can include \eqn{\sigma^2_\epsilon}{sigma^2_eps}.
 }
 
 \seealso{

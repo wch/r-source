@@ -1,6 +1,6 @@
 % File src/library/stats/man/summary.manova.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2008 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{summary.manova}
@@ -29,15 +29,15 @@
 \details{
   The \code{summary.manova} method uses a multivariate test statistic
   for the summary table.  \I{Wilks}' statistic is most popular in the
-  literature, but the default \I{Pillai}--\I{Bartlett} statistic is recommended
-  by Hand and Taylor (1987).
+  literature, but the default \I{Pillai}--\I{Bartlett} statistic is
+  recommended by \bibcitet{R:Hand+Taylor:1987}.
 
   The table gives a transformation of the test statistic which has
   approximately an F distribution.  The approximations used follow
   S-PLUS and SAS (the latter apart from some cases of the
   \I{Hotelling}--\I{Lawley} statistic), but many other distributional
   approximations exist: see Anderson (1984) and
-  \bibcite{Krzanowski and Marriott (1994)} for further references.  All four approximate F statistics are
+  \bibcitet{R:Krzanowski+Marriott:1994} for further references.  All four approximate F statistics are
   the same when the term being tested has one degree of freedom, but in
   other cases that for the Roy statistic is an upper bound.
 
@@ -61,18 +61,10 @@
   (degrees of freedom) for the terms (and not the residuals).
 }
 \references{
+  \bibshow{*, R:Krzanowski:1988}
+  
   Anderson, T. W. (1994) \emph{An Introduction to Multivariate
     Statistical Analysis.} Wiley.
-
-  Hand, D. J. and Taylor, C. C.  (1987)
-  \emph{Multivariate Analysis of Variance and Repeated Measures.}
-  Chapman and Hall.
-
-  Krzanowski, W. J. (1988) \emph{Principles of Multivariate Analysis. A
-    User's Perspective.} Oxford.
-
-  Krzanowski, W. J. and Marriott, F. H. C. (1994) \emph{Multivariate
-    Analysis. Part I: Distributions, Ordination and Inference.} Edward Arnold.
 }
 \seealso{
   \code{\link{manova}}, \code{\link{aov}}

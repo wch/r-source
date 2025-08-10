@@ -1,6 +1,6 @@
 % File src/library/stats/man/ARMAacf.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{ARMAacf}
@@ -23,7 +23,7 @@ ARMAacf(ar = numeric(), ma = numeric(), lag.max = r, pacf = FALSE)
 }
 \details{
   The methods used follow
-  \bibcite{Brockwell & Davis (1991, section 3.3)}.  Their
+  \bibcitet{|R:Brockwell+Davis:1991|section 3.3}.  Their
   equations (3.3.8) are solved for the autocovariances at lags
   \eqn{0, \dots, \max(p, q+1)}{0, \dots, max(p, q+1)},
   and the remaining autocorrelations are given by a recursive filter.
@@ -33,8 +33,7 @@ ARMAacf(ar = numeric(), ma = numeric(), lag.max = r, pacf = FALSE)
 }
 
 \references{
-  Brockwell, P. J. and Davis, R. A. (1991) \emph{Time Series: Theory and
-    Methods}, Second Edition.  Springer.
+  \bibshow{*}
 }
 \seealso{\code{\link{arima}}, \code{\link{ARMAtoMA}},
   \code{\link{acf2AR}} for inverting part of \code{ARMAacf}; further

@@ -1,6 +1,6 @@
 % File src/library/stats/man/bandwidth.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2018 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{bandwidth}
@@ -49,7 +49,8 @@ bw.SJ(x, nb = 1000, lower = 0.1 * hmax, upper = hmax,
   It defaults to 0.9 times the
   minimum of the standard deviation and the interquartile range divided by
   1.34 times the sample size to the negative one-fifth power
-  (= \I{Silverman}'s \sQuote{rule of thumb}, \bibcite{Silverman (1986, page 48, \abbr{eqn} (3.31))})
+  (= \I{Silverman}'s \sQuote{rule of thumb},
+  \bibcitet{|R:Silverman:1986|page 48\\\\\\, \\\\\\abbr{eqn} (3.31)})
   \emph{unless} the quartiles coincide when a positive result
   will be guaranteed.
 
@@ -59,7 +60,7 @@ bw.SJ(x, nb = 1000, lower = 0.1 * hmax, upper = hmax,
   \code{bw.ucv} and \code{bw.bcv} implement unbiased and
   biased cross-validation respectively.
 
-  \code{bw.SJ} implements the methods of \bibcite{Sheather & Jones (1991)}
+  \code{bw.SJ} implements the methods of \bibcitet{R:Sheather+Jones:1991}
   to select the bandwidth using pilot estimation of derivatives.\cr
   The algorithm for method \code{"ste"} solves an equation (via
   \code{\link{uniroot}}) and because of that, enlarges the interval
@@ -92,26 +93,12 @@ bw.SJ(x, nb = 1000, lower = 0.1 * hmax, upper = hmax,
   of \code{density} and so give answers four times as large.
 }
 \references{
+  \bibshow{*, R:Venables+Ripley:2002}
+  
   Scott, D. W. (1992)
   \emph{Multivariate Density Estimation: Theory, Practice, and
     Visualization.}
   New York: Wiley.
-
-  Sheather, S. J. and Jones, M. C. (1991).
-  A reliable data-based bandwidth selection method for kernel density
-  estimation.
-  \emph{Journal of the Royal Statistical Society Series B},
-  \bold{53}, 683--690.
-  \doi{10.1111/j.2517-6161.1991.tb01857.x}.
-  %% \url{https://www.jstor.org/stable/2345597}.
-
-  Silverman, B. W. (1986).
-  \emph{Density Estimation}.
-  London: Chapman and Hall.
-
-  Venables, W. N. and Ripley, B. D. (2002).
-  \emph{Modern Applied Statistics with S}.
-  Springer.
 }
 \examples{
 require(graphics)
