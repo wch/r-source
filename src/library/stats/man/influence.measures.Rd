@@ -1,6 +1,6 @@
 % File src/library/stats/man/influence.measures.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2022 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{influence.measures}
@@ -99,7 +99,7 @@ hat(x, intercept = TRUE)
 \description{
   This suite of functions can be used to compute some of the regression
   (leave-one-out deletion) diagnostics for linear and generalized linear
-  models discussed in \bibcite{Belsley, Kuh and Welsch (1980)},
+  models discussed in \bibcitet{R:Belsley+Kuh+Welsch:1980},
   \bibcite{Cook and Weisberg (1982)}, etc.
 }
 \details{
@@ -122,7 +122,7 @@ hat(x, intercept = TRUE)
   or matrices instead of vectors.
 
   Values for generalized linear models are approximations, as described
-  in Williams (1987) (except that Cook's distances are scaled as
+  in \bibcitet{R:Williams:1987} (except that Cook's distances are scaled as
   \eqn{F} rather than as chi-square values).  The approximations can be
   poor when some cases have large influence.
 
@@ -154,19 +154,11 @@ hat(x, intercept = TRUE)
   package.
 }
 \references{
-  Belsley, D. A., Kuh, E. and Welsch, R. E. (1980).
-  \emph{Regression Diagnostics}.
-  New York: Wiley.
-
+  \bibshow{*}
+  
   Cook, R. D. and Weisberg, S. (1982).
   \emph{Residuals and Influence in Regression}.
   London: Chapman and Hall.
-
-  Williams, D. A. (1987).
-  Generalized linear model diagnostics using the deviance and single
-  case deletions.
-  \emph{Applied Statistics}, \bold{36}, 181--191.
-  \doi{10.2307/2347550}.
 
   Fox, J. (1997).
   \emph{Applied Regression, Linear Models, and Related Methods}.

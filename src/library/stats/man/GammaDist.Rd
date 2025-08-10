@@ -94,9 +94,9 @@ rgamma(n, shape, rate = 1, scale = 1/rate)
   and \code{rate}: S had no \code{scale} parameter. It is an error
   to supply both \code{scale} and \code{rate}.
 
-  \code{pgamma} is closely related to the incomplete gamma function.  As
-  defined by \bibcite{Abramowitz and Stegun 6.5.1} (and by \sQuote{Numerical
-    Recipes}) this is
+  \code{pgamma} is closely related to the incomplete gamma function.
+  As defined by \bibcitet{|R:Abramowitz+Stegun:1972|section 6.5.1}
+  (and by \sQuote{Numerical Recipes}) this is
   \deqn{P(a,x) = \frac{1}{\Gamma(a)} \int_0^x t^{a-1} e^{-t} dt}{P(a,x) = 1/Gamma(a) integral_0^x t^(a-1) exp(-t) dt}
   \eqn{P(a, x)} is \code{pgamma(x, a)}.  Other authors (for example
   Karl Pearson in his 1922 tables) omit the normalizing factor,
@@ -125,12 +125,8 @@ rgamma(n, shape, rate = 1, scale = 1/rate)
   algorithm \sQuote{mainly by Morten Welinder}.
 
   \code{qgamma} is based on a C translation of
-
-  Best, D. J. and D. E. Roberts (1975).
-  Algorithm AS91. Percentage points of the chi-squared distribution.
-  \emph{Applied Statistics},  \bold{24}, 385--388.
-
-  plus a final Newton step to improve the approximation.
+  \bibcitet{R:Best+Roberts:1975} plus a final Newton step to improve the
+  approximation.
 
   \code{rgamma} for \code{shape >= 1} uses
 
@@ -145,18 +141,10 @@ rgamma(n, shape, rate = 1, scale = 1/rate)
   distributions. \emph{Computing}, \bold{12}, 223--246.
 }
 \references{
-  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988).
-  \emph{The New S Language}.
-  Wadsworth & Brooks/Cole.
-
-  Shea, B. L. (1988).
-  Algorithm AS 239: Chi-squared and incomplete Gamma integral,
-  \emph{Applied Statistics (JRSS C)}, \bold{37}, 466--473.
-  \doi{10.2307/2347328}.
-
-  Abramowitz, M. and Stegun, I. A. (1972)
-  \emph{Handbook of Mathematical Functions.} New York: Dover.
-  Chapter 6: Gamma and Related Functions.
+  \bibinfo{R:Abramowitz+Stegun:1972}{footer}{Chapter 6: Gamma and Related Functions.}
+  \bibshow{*,
+    R:Becker+Chambers+Wilks:1988,
+    R:Shea:1988}
 
   NIST Digital Library of Mathematical Functions.
   \url{https://dlmf.nist.gov/}, section 8.2.
