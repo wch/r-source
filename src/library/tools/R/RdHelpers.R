@@ -179,7 +179,6 @@ function(x)
         Rd_expr_bibcite_keys_cited(NULL)
         return(x)
     }
-    bib <- R_bibentries()
     cited <- Rd_expr_bibcite_keys_cited()    
     ## Would be nice to have a common reader for possibly multi-line
     ## comma separated values ...
@@ -187,14 +186,7 @@ function(x)
     if(any(given == "*"))
         given <- c(given[given != "*"], cited)
     Rd_expr_bibcite_keys_cited(setdiff(cited, given))
-    pos <- match(given, .bibentry_get_key(bib), nomatch = 0L)
-    if(any(ind <- (pos == 0L))) {
-        msg <-
-            sprintf("Could not find bibentries for the following keys:\n%s",
-                    .strwrap22(sQuote(given[ind])))
-        warning(msg)
-    }
-    y <- sort(unique(bib[pos]))
+    y <- sort(unique(.bibentries_from_keys(given)))
     ## Merge bibinfo data.
     keys <- .bibentry_get_key(y)
     store <- Rd_expr_bibinfo_data_store()
@@ -242,8 +234,7 @@ Rd_expr_bibcite <-
 function(x, textual = FALSE)
 {
     x <- trimws(x)
-    bib <- R_bibentries()
-    given <- strsplit(x, "[^\\],[[:space:]]*")[[1L]]
+    given <- strsplit(x, "(?<!\\\\),[[:space:]]*", perl = TRUE)[[1L]]
     parts <- strsplit(given, "|", fixed = TRUE)
     parts <- parts[lengths(parts) %in% c(1L, 3L)]
     ## Could complain about the others ...?
@@ -260,9 +251,9 @@ function(x, textual = FALSE)
                             vapply(parts, `[`, "", 1L),
                             fixed = TRUE)
     }
+    bib <- .bibentries_from_keys(keys)
     ind <- keys %in% .bibentry_get_key(bib)
     if(!all(ind)) {
-        ## Could complain about keys not in the bibentries ...?
         keys <- keys[ind]
         after <- after[ind]
         before <- before[ind]
@@ -354,3 +345,57 @@ function (x)
     unlist(keys, use.names = FALSE)
 }
 
+.bibentries_from_keys <-
+function(keys)
+{
+    keys <- keys[nzchar(keys)]
+    bad <- character()
+    if(!any(ind <- grepl("::", keys, fixed = TRUE))) {
+        ## Special-case for efficiency.
+        bib <- R_bibentries()
+        pos <- match(keys, .bibentry_get_key(bib),
+                     nomatch = 0L)
+        bad <- keys[pos == 0L]
+        y <- bib[pos]
+    } else {
+        n <- length(keys)
+        pkgs <- character(n)
+        pkgs[ind] <- sub("::.*", "", keys[ind])
+        i <- split(seq_len(n), pkgs)
+        y <- vector("list", length(i))
+        for(j in seq_along(i)) {
+            pj <- names(i)[j]
+            bib <- if(!nzchar(pj))
+                       R_bibentries()
+                   else if(nzchar(path <- system.file("REFERENCES.rds",
+                                                      package = pj)))
+                       readRDS(path)
+                   else if(nzchar(path <- system.file("REFERENCES.R",
+                                                      package = pj)))
+                       utils::readCitationFile(path,
+                                               list(Encoding = "UTF-8"))
+                   else if(nzchar(path <- system.file("REFERENCES.bib",
+                                                      package = pj)))
+                       `names<-`(bibtex::read.bib(path), NULL)
+                   else
+                       utils::bibentry()
+            kj <- keys[i[[j]]]
+            pos <- match(sub(".*::", "", kj),
+                         .bibentry_get_key(bib),
+                         nomatch = 0L)
+            bib <- bib[pos]
+            bib$key <- as.list(kj[pos > 0L])
+            y[[j]] <- bib
+        }
+        y <- do.call(c, y)
+        pos <- match(keys, .bibentry_get_key(y), nomatch = 0L)
+        bad <- keys[pos == 0L]
+        y <- y[pos]
+    }
+    if(length(bad)) {
+        msg <- sprintf("Could not find bibentries for the following keys:\n%s", 
+                       .strwrap22(sQuote(bad)))
+        warning(msg, call. = FALSE)
+    }
+    y
+}
