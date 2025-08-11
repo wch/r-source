@@ -1115,7 +1115,7 @@
       \code{"glm"} method for \code{profile()} and the \code{plot()}
       and \code{pairs()} methods for class \code{"profile"} have been
       copied from \pkg{MASS} to \pkg{stats}.  (\code{profile.nls()} and
-      \code{plot.profile.nls()} were already in \code{stats}.)
+      \code{plot.profile.nls()} were already in \pkg{stats}.)
 
       \item The \code{confint()} and \code{profile} methods for
       \code{"glm"} objects have gained a possibility to do profiling
@@ -5598,7 +5598,7 @@
       wildcard and tilde expansion.  Elements of \code{x} of value
       \code{"~"} are now ignored.
 
-      \item \code{mle()} in the \code{stats4} package has had its
+      \item \code{mle()} in the \pkg{stats4} package has had its
       interface extended so that arguments to the negative
       log-likelihood function can be one or more vectors, with similar
       conventions applying to bounds, start values, and parameter values
@@ -5980,7 +5980,7 @@
       \code{n - k} for \code{k} and \code{n} was only \emph{nearly} integer
       (report from Erik Scott Wright).
 
-      \item \code{mle()} in the \code{stats4} package had problems
+      \item \code{mle()} in the \pkg{stats4} package had problems
       combining use of box constraints and fixed starting values (in
       particular, confidence intervals were affected).
 

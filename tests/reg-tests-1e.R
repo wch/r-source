@@ -1610,6 +1610,7 @@ assertWarnV(options(scipen = -100))# warns and sets to min = -9
 stopifnot(identical(getOption("scipen"), -9L))
 assertWarnV(options(scipen = 100000))# warns and sets to max = 9999
 stopifnot(identical(getOption("scipen"), 9999L))
+options(scipen=scipenO) # revert
 ## setting to NULL  would invalidate as.character(Sys.time())
 
 
@@ -1971,11 +1972,12 @@ assertValueIs("1")
 
 
 ## No warnings for hist(.., log="x") -- PR#18921
-op <- options(warn = 2)
 hist(1:100, breaks = 2^(0:8), log = "x")
-options(op)
 ## used to signal 3 warnings
 
+
+
+## keep at end
 
 
 ## keep at end
