@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2025-05-18 r88215) -- "Unsuffered Consequences"
+R Under development (unstable) (2025-08-11 r88568) -- "Unsuffered Consequences"
 Copyright (C) 2025 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu
 
@@ -3366,7 +3366,6 @@ F-statistic:  59.9 on 3 and 17 DF,  p-value: 3.016e-09
 > 
 > flush(stderr()); flush(stdout())
 > 
-> ### Encoding: UTF-8
 > ### Name: state
 > ### Title: US State Facts and Figures
 > ### Aliases: state state.abb state.area state.center state.division
@@ -4010,7 +4009,7 @@ c0   -5.14
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  2.798 0.094 2.893 0 0 
+Time elapsed:  2.575 0.072 2.649 0 0 
 > grDevices::dev.off()
 null device 
           1 
