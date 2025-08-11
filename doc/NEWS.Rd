@@ -69,6 +69,9 @@
       \item \code{tools::deparseLatex()} gains a \code{math} argument,
       now used by the default \code{bibstyle} to format \code{bibentry()} 
       fields with \samp{$...$} syntax via Rd \verb{\eqn} markup.
+
+      \item \code{gzcon()} can now decompress a concatenation of compressed
+      streams \PR{18887}.
     }
   }
 

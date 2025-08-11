@@ -2101,7 +2101,36 @@ versionCheck <- list(op = ">", version = getRversion())
 stopifnot(!requireNamespace("stats", versionCheck = versionCheck, quietly = TRUE))
 ## *not* successful, when versionCheck fails
 
+## reading an empty file via gzcon() returned non-deterministic non-empty
+## content (PR#18887)
+fempty <- tempfile(tmpdir = getwd())
+cat("", file=fempty)
+gcon <- gzcon(file(fempty, "rb"))
+lines2 <- readLines(gcon)
+close(gcon)
+stopifnot(identical(lines2, character(0)))
+gcon <- gzfile(fempty, "rb") ## also test gzfile
+lines <- readLines(gcon)
+close(gcon)
+stopifnot(identical(lines, character(0)))
+unlink(fempty)
 
+## concatenated gzipped streams were not supported by gzcon
+fconcat <- tempfile(tmpdir = getwd())
+gcon <- gzfile(fconcat, "w")
+cat("Hello ", file=gcon)
+close(gcon)
+gcon <- gzfile(fconcat, "a")
+cat("World\n", file=gcon)
+close(gcon)
+gcon <- gzcon(file(fconcat, "rb"))
+lines2 <- readLines(gcon)
+close(gcon)
+stopifnot(identical(lines2, "Hello World"))
+gcon <- gzfile(fconcat, "rb") ## also test gzfile
+lines <- readLines(gcon)
+close(gcon)
+stopifnot(identical(lines, "Hello World"))
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

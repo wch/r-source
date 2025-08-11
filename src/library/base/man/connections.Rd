@@ -373,8 +373,8 @@ socketTimeout(socket, timeout = -1)
   connections.  They do \strong{not} produce a single compressed stream
   on the file, but rather append a new compressed stream to the file.
   Readers may or may not read beyond end of the first stream: currently
-  \R does so for \code{gzfile}, \code{bzfile}, \code{xzfile} and
-  \code{zstdfile} connections.
+  \R does so for \code{gzfile}, \code{bzfile}, \code{xzfile},
+  \code{zstdfile} and \code{\link{gzcon}} connections.
 }
 
 \section{Compression}{
