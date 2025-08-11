@@ -100,7 +100,7 @@ hat(x, intercept = TRUE)
   This suite of functions can be used to compute some of the regression
   (leave-one-out deletion) diagnostics for linear and generalized linear
   models discussed in \bibcitet{R:Belsley+Kuh+Welsch:1980},
-  \bibcite{Cook and Weisberg (1982)}, etc.
+  \bibcitet{R:Cook+Weisberg:1982}, etc.
 }
 \details{
   The primary high-level function is \code{influence.measures} which produces a
@@ -155,10 +155,6 @@ hat(x, intercept = TRUE)
 }
 \references{
   \bibshow{*}
-  
-  Cook, R. D. and Weisberg, S. (1982).
-  \emph{Residuals and Influence in Regression}.
-  London: Chapman and Hall.
 
   Fox, J. (1997).
   \emph{Applied Regression, Linear Models, and Related Methods}.

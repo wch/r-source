@@ -1,6 +1,6 @@
 % File src/library/stats/man/ppoints.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2017 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{ppoints}
@@ -30,8 +30,8 @@ ppoints(n, a = if(n <= 10) 3/8 else 1/2)
   the set of probabilities at which to evaluate the inverse distribution.
 
   The choice of \code{a} follows the documentation of the function of the
-  same name in \bibcite{Becker \abbr{et al.}\sspace(1988)}, and appears to have been
-  motivated by results from \bibcite{Blom (1958)} on approximations to expect normal
+  same name in \bibcitet{R:Becker+Chambers+Wilks:1988}, and appears to have been
+  motivated by results from \bibcitet{R:Blom:1958} on approximations to expect normal
   order statistics (see also \code{\link{quantile}}).
 
   The probability points for the continuous sample quantile types 5 to 9
@@ -39,13 +39,7 @@ ppoints(n, a = if(n <= 10) 3/8 else 1/2)
   respectively, 1/2, 0, 1, 1/3, and 3/8.
 }
 \references{
-  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
-  \emph{The New S Language}.
-  Wadsworth & Brooks/Cole.
-
-  Blom, G. (1958)
-  \emph{Statistical Estimates and Transformed Beta Variables.}
-  Wiley
+  \bibshow{*}
 }
 \seealso{
   \code{\link{qqplot}}, \code{\link{qqnorm}}.

@@ -1,6 +1,6 @@
 % File src/library/stats/man/loglin.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2024 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{loglin}
@@ -65,7 +65,7 @@ loglin(table, margin, start = rep(1, length(table)), fit = FALSE,
 }
 \details{
   The Iterative Proportional Fitting algorithm as presented in
-  \bibcite{Haberman (1972)} is used for fitting the model.  At most \code{iter}
+  \bibcitet{R:Haberman:1972} is used for fitting the model.  At most \code{iter}
   iterations are performed, convergence is taken to occur when the
   maximum deviation between observed and fitted margins is less than
   \code{eps}.  All internal computations are done in double precision;
@@ -88,18 +88,9 @@ loglin(table, margin, start = rep(1, length(table)), fit = FALSE,
 }
 
 \references{
-  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988).
-  \emph{The New S Language}.
-  Wadsworth & Brooks/Cole.
-
-  Haberman, S. J. (1972).
-  Algorithm AS 51: Log-linear fit for contingency tables.
-  \emph{Applied Statistics}, \bold{21}, 218--225.
-  \doi{10.2307/2346506}.
-
-  Agresti, A. (1990).
-  \emph{Categorical data analysis}.
-  New York: Wiley.
+  \bibshow{*,
+    R:Agresti:1990,
+    R:Becker+Chambers+Wilks:1988}
 }
 \author{Kurt Hornik}
 \seealso{

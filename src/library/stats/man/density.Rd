@@ -1,6 +1,6 @@
 % File src/library/stats/man/density.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2024 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{density}
@@ -34,7 +34,7 @@ density(x, \dots)
     \code{"nrd0"}, has remained the default for historical and
     compatibility reasons, rather than as a general recommendation,
     where e.g., \code{"SJ"} would rather fit, see also
-    \bibcite{Venables and Ripley (2002)}.
+    \bibcitet{R:Venables+Ripley:2002}.
 
     The specified (or computed) value of \code{bw} is multiplied by
     \code{adjust}.
@@ -162,29 +162,11 @@ density(x, \dots)
   \code{x} and \code{y} components.
 }
 \references{
-  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988).
-  \emph{The New S Language}.
-  Wadsworth & Brooks/Cole (for S version).
-
-  Scott, D. W. (1992).
-  \emph{Multivariate Density Estimation. Theory, Practice and Visualization}.
-  New York: Wiley.
-
-  Sheather, S. J. and Jones, M. C. (1991).
-  A reliable data-based bandwidth selection method for kernel density
-  estimation.
-  \emph{Journal of the Royal Statistical Society Series B},
-  \bold{53}, 683--690.
-  \doi{10.1111/j.2517-6161.1991.tb01857.x}.
-  %% \url{https://www.jstor.org/stable/2345597}.
-
-  Silverman, B. W. (1986).
-  \emph{Density Estimation}.
-  London: Chapman and Hall.
-
-  Venables, W. N. and Ripley, B. D. (2002).
-  \emph{Modern Applied Statistics with S}.
-  New York: Springer.
+  \bibshow{*,
+    R:Becker+Chambers+Wilks:1988,
+    R:Scott:1992,
+    R:Sheather+Jones:1991,
+    R:Silverman:1986}
 }
 \seealso{
   \code{\link{bw.nrd}},

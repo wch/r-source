@@ -1,6 +1,6 @@
 % File src/library/stats/man/cmdscale.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2018 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{cmdscale}
@@ -14,7 +14,8 @@ cmdscale(d, k = 2, eig = FALSE, add = FALSE, x.ret = FALSE,
 }
 \description{
   Classical multidimensional scaling (\abbr{MDS}) of a data matrix.
-  Also known as \emph{principal coordinates analysis} (\bibcite{Gower, 1966}).
+  Also known as \emph{principal coordinates analysis}
+  \bibcitep{R:Gower:1966}.
 }
 \arguments{
   \item{d}{a distance structure such as that returned by \code{dist}
@@ -38,7 +39,7 @@ cmdscale(d, k = 2, eig = FALSE, add = FALSE, x.ret = FALSE,
 
   A set of Euclidean distances on \eqn{n} points can be represented
   exactly in at most \eqn{n - 1} dimensions.  \code{cmdscale} follows
-  the analysis of \bibcite{Mardia (1978)}, and returns the best-fitting
+  the analysis of \bibcitet{R:Mardia:1978}, and returns the best-fitting
   \eqn{k}-dimensional representation, where \eqn{k} may be less than the
   argument \code{k}.
 
@@ -53,7 +54,7 @@ cmdscale(d, k = 2, eig = FALSE, add = FALSE, x.ret = FALSE,
   c*} are Euclidean and hence can be represented in \code{n - 1}
   dimensions.  Whereas S (Becker \abbr{et al.}, 1988) computes this
   constant using an approximation suggested by \I{Torgerson}, \R uses the
-  analytical solution of \bibcite{Cailliez (1983)}, see also Cox and Cox (2001).
+  analytical solution of \bibcitet{R:Cailliez:1983}, see also Cox and Cox (2001).
   Note that because of numerical errors the computed eigenvalues need
   not all be non-negative, and even theoretically the representation
   could be in fewer than \code{n - 1} dimensions.
@@ -81,36 +82,14 @@ cmdscale(d, k = 2, eig = FALSE, add = FALSE, x.ret = FALSE,
   }
 }
 \references{
-  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988).
-  \emph{The New S Language}.
-  Wadsworth & Brooks/Cole.
-
-  Cailliez, F. (1983).
-  The analytical solution of the additive constant problem.
-  \emph{Psychometrika}, \bold{48}, 343--349.
-  \doi{10.1007/BF02294026}.
-
+  \bibinfo{R:Krzanowski+Marriott:1994}{footer}{(Especially pages 108--111.)}
+  \bibshow{*,
+    R:Becker+Chambers+Wilks:1988,
+    R:Krzanowski+Marriott:1994}
+  
   Cox, T. F. and Cox, M. A. A. (2001).
   \emph{Multidimensional Scaling}.  Second edition.
   Chapman and Hall.
-
-  Gower, J. C. (1966).
-  Some distance properties of latent root and vector
-  methods used in multivariate analysis.
-  \emph{Biometrika}, \bold{53}, 325--328.
-  \doi{10.2307/2333639}.
-
-  Krzanowski, W. J. and Marriott, F. H. C. (1994).
-  \emph{Multivariate Analysis. Part I. Distributions, Ordination and
-    Inference.}
-  London: Edward Arnold.
-  (Especially pp.\sspace{}108--111.)
-
-  Mardia, K.V. (1978).
-  Some properties of classical multidimensional scaling.
-  \emph{Communications on Statistics -- Theory and Methods}, \bold{A7},
-  1233--41.
-  \doi{10.1080/03610927808827707}
 
   Mardia, K. V., Kent, J. T. and Bibby, J. M. (1979).
   Chapter 14 of \emph{Multivariate Analysis}, London: Academic Press.

@@ -1,6 +1,6 @@
 % File src/library/stats/man/family.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2023 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{family}
@@ -96,7 +96,7 @@ quasipoisson(link = "log")
   the \code{binomial} and \code{poisson} families only in that the
   dispersion parameter is not fixed at one, so they can model
   over-dispersion.  For the binomial case see
-  \bibcite{McCullagh and Nelder (1989, pp.\sspace{}124--8)}.
+  \bibcitet{|R:McCullagh+Nelder:1989|pages 124--8}.
   Although they show that there is (under some
   restrictions) a model with
   variance proportional to mean as in the quasi-binomial model, note
@@ -165,9 +165,7 @@ quasipoisson(link = "log")
     dispersion parameter, if fixed, or \code{NA_real_} if free.}
 }
 \references{
-  McCullagh P. and Nelder, J. A. (1989)
-  \emph{Generalized Linear Models.}
-  London: Chapman and Hall.
+  \bibshow{*}
 
   Dobson, A. J. (1983)
   \emph{An Introduction to Statistical Modelling.}

@@ -93,22 +93,24 @@ factanal(x, factors, data = NULL, covmat = NULL, n.obs = NA,
   The fit is done by optimizing the log likelihood assuming multivariate
   normality over the uniquenesses.  (The maximizing loadings for given
   uniquenesses can be found analytically:
-  \bibcite{Lawley & Maxwell (1971, p.\sspace{}27)}.)
+  \bibcitet{|R:Lawley+Maxwell:1971|page 27}.)
   All the starting values supplied in \code{start} are tried
   in turn and the best fit obtained is used.  If \code{start = NULL}
   then the first fit is started at the value suggested by
-  \bibcite{\enc{Jöreskog}{Joreskog} (1963)} and given by
-  \bibcite{Lawley & Maxwell (1971, p.\sspace{}31)}, and then \code{control$nstart - 1} other values are
+  \bibcitet{R:Jöreskog:1963} and given by
+  \bibcitet{|R:Lawley+Maxwell:1971|page 31)},
+  and then \code{control$nstart - 1} other values are
   tried, randomly selected as equal values of the uniquenesses.
 
   The uniquenesses are technically constrained to lie in \eqn{[0, 1]},
   but near-zero values are problematical, and the optimization is
   done with a lower bound of \code{control$lower}, default 0.005
-  (\bibcite{Lawley & Maxwell, 1971, p.\sspace{}32}).
+  \bibcitep{|R:Lawley+Maxwell:1971|page 32}.
 
   Scores can only be produced if a data matrix is supplied and used.
   The first method is the regression method of Thomson (1951), the
-  second the weighted least squares method of Bartlett (1937, 8).
+  second the weighted least squares method of \bibcitet{R:Bartlett:1937a,
+  R:Thomson:1938}.
   Both are estimates of the unobserved scores \eqn{f}.  Thomson's method
   regresses (in the population) the unknown \eqn{f} on \eqn{x} to yield
   \deqn{\hat f = \Lambda^\prime \Sigma^{-1} x}{hat f = \Lambda' \Sigma^-1 x}
@@ -161,24 +163,8 @@ factanal(x, factors, data = NULL, covmat = NULL, n.obs = NA,
 }
 
 \references{
-  Bartlett, M. S. (1937).
-  The statistical conception of mental factors.
-  \emph{British Journal of Psychology}, \bold{28}, 97--104.
-  \doi{10.1111/j.2044-8295.1937.tb00863.x}.
-
-  Bartlett, M. S. (1938).
-  Methods of estimating mental factors.
-  \emph{Nature}, \bold{141}, 609--610.
-  \doi{10.1038/141246a0}.
-
-  \enc{Jöreskog}{Joreskog}, K. G. (1963).
-  \emph{Statistical Estimation in Factor Analysis}.
-  Almqvist and Wicksell.
-
-  Lawley, D. N. and Maxwell, A. E. (1971).
-  \emph{Factor Analysis as a Statistical Method}. Second edition.
-  Butterworths.
-
+  \bibshow{*}
+  
   Thomson, G. H. (1951).
   \emph{The Factorial Analysis of Human Ability}.
   London University Press.

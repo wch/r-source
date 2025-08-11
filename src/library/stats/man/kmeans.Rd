@@ -1,6 +1,6 @@
 % File src/library/stats/man/kmeans.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2023 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{kmeans}
@@ -51,11 +51,11 @@ kmeans(x, centers, iter.max = 10, nstart = 1,
   At the minimum, all cluster centres are at the mean of their \I{Voronoi}
   sets (the set of data points which are nearest to the cluster centre).
 
-  The algorithm of \bibcite{Hartigan and Wong (1979)} is used by
+  The algorithm of \bibcitet{R:Hartigan+Wong:1979} is used by
   default.  Note that some authors use \eqn{k}-means to refer to a
   specific algorithm rather than the general method: most commonly the
-  algorithm given by \bibcite{MacQueen (1967)} but sometimes that given
-  by \bibcite{Lloyd (1957)} and \bibcite{Forgy (1965)}.
+  algorithm given by \bibcitet{R:MacQueen:1967} but sometimes that given
+  by \bibcitet{R:Lloyd:1957, R:Lloyd:1982} and \bibcitet{R:Forgy:1965}.
   The \I{Hartigan}--\I{Wong} algorithm generally does a better job than
   either of those, but trying several random starts (\code{nstart}\eqn{>
   1}) is often recommended.  In rare cases, when some of the points
@@ -100,30 +100,7 @@ kmeans(x, centers, iter.max = 10, nstart = 1,
     -- for experts.}
 }
 \references{
-  Forgy, E. W. (1965).
-  Cluster analysis of multivariate data: efficiency vs interpretability
-  of classifications. 
-  \emph{Biometrics}, \bold{21}, 768--769.
-
-  Hartigan, J. A. and Wong, M. A. (1979).
-  Algorithm AS 136: A K-means clustering algorithm.
-  \emph{Applied Statistics}, \bold{28}, 100--108.
-  \doi{10.2307/2346830}.
-
-  Lloyd, S. P. (1957, 1982).
-  Least squares quantization in PCM.
-  Technical Note, Bell Laboratories.
-  Published in 1982 in \emph{IEEE Transactions on Information Theory},
-  \bold{28}, 128--137. 
-
-  MacQueen, J. (1967).
-  Some methods for classification and analysis of multivariate
-  observations.
-  In \emph{Proceedings of the Fifth Berkeley Symposium on  Mathematical
-    Statistics and Probability}, 
-  eds L. M. Le Cam & J. Neyman,
-  \bold{1}, pp.\sspace{}281--297.
-  Berkeley, CA: University of California Press.
+  \bibshow{*}
 }
 \examples{
 require(graphics)

@@ -1,6 +1,6 @@
 % File src/library/stats/man/hclust.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2018 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{hclust}
@@ -124,7 +124,7 @@ hclust(d, method = "complete", members = NULL)
   The one used by option \code{"ward.D"} (equivalent to the only Ward
   option \code{"ward"} in \R versions \eqn{\le}{<=} 3.0.3) \emph{does not} implement
   Ward's (1963) clustering criterion, whereas option \code{"ward.D2"} implements
-  that criterion (\bibcite{Murtagh and Legendre 2014}).  With the latter, the
+  that criterion \bibcitep{R:Murtagh+Legendre:2014}.  With the latter, the
   dissimilarities are \emph{squared} before cluster updating.
   Note that \code{\link[cluster]{agnes}(*, method="ward")} corresponds
   to \code{hclust(*, "ward.D2")}.
@@ -160,6 +160,8 @@ hclust(d, method = "complete", members = NULL)
   \emph{squared} Euclidean distances.
 }
 \references{
+  \bibshow{*}
+  
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988).
   \emph{The New S Language}.
   Wadsworth & Brooks/Cole. (S version.)
@@ -199,12 +201,6 @@ hclust(d, method = "complete", members = NULL)
   Legendre, P. and L. Legendre (2012).
   \emph{Numerical Ecology},
   3rd English ed. Amsterdam: Elsevier Science BV.
-
-  Murtagh, Fionn and Legendre, Pierre (2014).
-  Ward's hierarchical agglomerative clustering method: which algorithms
-  implement Ward's criterion?
-  \emph{Journal of Classification}, \bold{31}, 274--295.
-  \doi{10.1007/s00357-014-9161-z}.
 }
 \author{
   The \code{hclust} function is based on Fortran code

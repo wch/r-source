@@ -72,7 +72,7 @@ quantile(x, \dots)
   \code{quantile} returns estimates of underlying distribution quantiles
   based on one or two order statistics from the supplied elements in
   \code{x} at probabilities in \code{probs}.  One of the nine quantile
-  algorithms discussed in \bibcite{Hyndman and Fan (1996)}, selected by
+  algorithms discussed in \bibcitet{R:Hyndman+Fan:1996}, selected by
   \code{type}, is employed.
 
   All sample quantiles are defined as weighted averages of
@@ -97,7 +97,7 @@ quantile(x, \dots)
       \eqn{\gamma = 0} if \eqn{g = 0}, and 1 otherwise.}
     \item{Type 2}{Similar to type 1 but with averaging at discontinuities.
       \eqn{\gamma = 0.5} if \eqn{g = 0}, and 1 otherwise (SAS default, see
-      \bibcite{Wicklin (2017)}).}
+      \bibcitet{R:Wicklin:2017}).}
     \item{Type 3}{Nearest even order statistic (SAS default till ca. 2010).
       \eqn{\gamma = 0} if \eqn{g = 0} and \eqn{j} is even,
       and 1 otherwise.}
@@ -151,10 +151,10 @@ quantile(x, \dots)
   }
 }
 
-  Further details are provided in \bibcite{Hyndman and Fan (1996)} who
+  Further details are provided in \bibcitet{R:Hyndman+Fan:1996} who
   recommended type 8.
   The default method is type 7, as used by S and by \R < 2.0.0.
-  \bibcite{Makkonen and Pajari (2014)} argue for type 6, also as already
+  \bibcitet{R:Makkonen+Pajari:2014} argue for type 6, also as already
   proposed by Weibull in 1939.
   The Wikipedia page contains further information about availability of
   these 9 types in software.
@@ -164,23 +164,9 @@ quantile(x, \dots)
   tweaks, notably use of \code{fuzz}, by the R Core Team.
 }
 \references{
-  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
-  \emph{The New S Language}.
-  Wadsworth & Brooks/Cole.
-
-  Hyndman, R. J. and Fan, Y. (1996) Sample quantiles in statistical
-  packages, \emph{American Statistician} \bold{50}, 361--365.
-  \doi{10.2307/2684934}.
-
-  Eric Langford (2006)  Quartiles in Elementary Statistics, \emph{Journal
-  of Statistics Education} \bold{14} 3; \doi{10.1080/10691898.2006.11910589}
-
-  Makkonen, L. and Pajari, M. (2014)  Defining Sample Quantiles by the True
-  Rank Probability, \emph{Journal of Probability and Statistics; Hindawi Publ.Corp.}
-  \doi{10.1155/2014/326579}
-
-  Wicklin, R. (2017) Sample quantiles: A comparison of 9 definitions; SAS Blog.
-  \url{https://blogs.sas.com/content/iml/2017/05/24/definitions-sample-quantiles.html}
+  \bibshow{*,
+    R:Becker+Chambers+Wilks:1988,
+    R:Langford:2006}
 
   Wikipedia: \url{https://en.wikipedia.org/wiki/Quantile#Estimating_quantiles_from_a_sample}
 }

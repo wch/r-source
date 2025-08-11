@@ -1,6 +1,6 @@
 % File src/library/stats/man/ks.test.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2023 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{ks.test}
@@ -94,23 +94,23 @@ ks.test(x, \dots)
   one-sample case \emph{and there are no ties}, and if the product of
   the sample sizes is less than 10000 in the two-sample case, with or
   without ties (using the algorithm described in
-  \bibcite{Schröer and Trenkler (1995)}).
+  \bibcitet{R:Schröer+Trenkler:1995}).
   Otherwise, the p-value is computed via Monte Carlo simulation in the
   two-sample case if \code{simulate.p.value} is \code{TRUE}, or else
   asymptotic distributions are used whose approximations may
   be inaccurate in small samples.  In the one-sample two-sided case,
   exact p-values are obtained as described in
-  \bibcite{Marsaglia, Tsang & Wang (2003)}
+  \bibcitet{R:Marsaglia+Tsang+Wang:2003}
   (but not using the optional approximation in the right tail, so
   this can be slow for small p-values).  The formula of
-  \bibcite{Birnbaum & Tingey (1951)} is used for the one-sample
+  \bibcitet{R:Birnbaum+Tingey:1951} is used for the one-sample
   one-sided case. 
 
   If a one-sample test is used, the parameters specified in
   \code{\dots} must be pre-specified and not estimated from the data.
   There is some more refined distribution theory for the KS test with
-  estimated parameters (see \bibcite{Durbin, 1973}), but that is not implemented
-  in \code{ks.test}.
+  estimated parameters \bibcitep{see|R:Durbin:1973|}, but that is not
+  implemented in \code{ks.test}.
 }
 \value{
   A list inheriting from classes \code{"ks.test"} and \code{"htest"}
@@ -125,55 +125,21 @@ ks.test(x, \dots)
 }
 \source{
   The two-sided one-sample distribution comes \emph{via}
-  Marsaglia, Tsang and Wang (2003).
+  \bibcitet{R:Marsaglia+Tsang+Wang:2003}.
 
   Exact distributions for the two-sample (Smirnov) test are computed
-  by the algorithm proposed by Schröer (1991) and Schröer & Trenkler (1995)
-  using numerical improvements along the lines of Viehmann (2021).
+  by the algorithm proposed by \bibcitet{R:Schröer:1991} and
+  \bibcitet{R:Schröer+Trenkler:1995} using numerical improvements along
+  the lines of \bibcitet{R:Viehmann:2021}. 
 }
 \references{
-  Z. W. Birnbaum and Fred H. Tingey (1951).
-  One-sided confidence contours for probability distribution functions.
-  \emph{The Annals of Mathematical Statistics}, \bold{22}/4, 592--596.
-  \doi{10.1214/aoms/1177729550}.
-
-  William J. Conover (1971).
-  \emph{Practical Nonparametric Statistics}.
-  New York: John Wiley & Sons.
-  Pages 295--301 (one-sample Kolmogorov test),
-  309--314 (two-sample Smirnov test).
-
-  Durbin, J. (1973).
-  \emph{Distribution theory for tests based on the sample distribution
-    function}.
-  SIAM.
-
-  W. Feller (1948).
-  On the Kolmogorov-Smirnov limit theorems for empirical distributions.
-  \emph{The Annals of Mathematical Statistics}, \bold{19}(2), 177--189.
-  \doi{10.1214/aoms/1177730243}.
-
-  George Marsaglia, Wai Wan Tsang and Jingbo Wang (2003).
-  Evaluating Kolmogorov's distribution.
-  \emph{Journal of Statistical Software}, \bold{8}/18.
-  \doi{10.18637/jss.v008.i18}.
-
-  Gunar Schröer (1991).
-  Computergestützte statistische Inferenz am Beispiel der
-  Kolmogorov-Smirnov Tests.
-  Diplomarbeit Universität Osnabrück.
-
-  Gunar Schröer and Dietrich Trenkler (1995).
-  Exact and Randomization Distributions of Kolmogorov-Smirnov Tests for
-  Two or Three Samples.
-  \emph{Computational Statistics & Data Analysis}, \bold{20}(2),
-  185--202.
-  \doi{10.1016/0167-9473(94)00040-P}.
-
-  Thomas Viehmann (2021).
-  Numerically more stable computation of the p-values for the two-sample
-  Kolmogorov-Smirnov test.
-  \url{https://arxiv.org/abs/2102.08037}.
+  \bibinfo{R:Conover:1971}{footer}{
+    Pages 295--301 (one-sample Kolmogorov test),
+    309--314 (two-sample Smirnov test).}
+  \bibshow{*,
+    R:Conover:1971,
+    R:Feller:1948
+  }
 }
 \seealso{
   \code{\link{psmirnov}}.

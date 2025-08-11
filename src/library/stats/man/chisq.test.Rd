@@ -1,6 +1,6 @@
 % File src/library/stats/man/chisq.test.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2022 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{chisq.test}
@@ -59,7 +59,7 @@ chisq.test(x, y = NULL, correct = TRUE,
   from the asymptotic chi-squared distribution of the test statistic;
   continuity correction is only used in the 2-by-2 case (if \code{correct}
   is \code{TRUE}, the default).  Otherwise the p-value is computed for a
-  Monte Carlo test (Hope, 1968) with \code{B} replicates. The default
+  Monte Carlo test \bibcitep{R:Hope:1968} with \code{B} replicates. The default
   \code{B = 2000} implies a minimum p-value of about 0.0005 (\eqn{1/(B+1)}).
 
   In the contingency table case, simulation is done by random sampling
@@ -92,7 +92,7 @@ chisq.test(x, y = NULL, correct = TRUE,
     \code{(observed - expected) / sqrt(expected)}.}
   \item{stdres}{standardized residuals,
     \code{(observed - expected) / sqrt(V)}, where \code{V} is the
-    residual cell variance (\bibcite{Agresti, 2007, section 2.4.5}
+    residual cell variance \bibcitep{|R:Agresti:2007|section 2.4.5}
     for the case where \code{x} is a matrix, \code{n * p * (1 - p)} otherwise).}
 }
 \seealso{
@@ -101,27 +101,12 @@ chisq.test(x, y = NULL, correct = TRUE,
 }
 \source{
   The code for Monte Carlo simulation is a C translation of the Fortran
-  algorithm of Patefield (1981).
+  algorithm of \bibcitet{R:Patefield:1981}.
 }
 
 \references{
-  Hope, A. C. A. (1968).
-  A simplified Monte Carlo significance test procedure.
-  \emph{Journal of the Royal Statistical Society Series B}, \bold{30},
-  582--598.
-  \doi{10.1111/j.2517-6161.1968.tb00759.x}.
-  %% \url{https://www.jstor.org/stable/2984263}.
-
-  Patefield, W. M. (1981).
-  Algorithm AS 159: An efficient method of generating r x c tables
-  with given row and column totals.
-  \emph{Applied Statistics}, \bold{30}, 91--97.
-  \doi{10.2307/2346669}.
-
-  Agresti, A. (2007).
-  \emph{An Introduction to Categorical Data Analysis}, 2nd ed.
-  New York: John Wiley & Sons.
-  Page 38.
+  \bibinfo{R:Agresti:2007}{footer}{Page 38.}
+  \bibshow{*}
 }
 \examples{
 

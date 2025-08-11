@@ -1,6 +1,6 @@
 % File src/library/stats/man/glm.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2019 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{glm}
@@ -173,7 +173,7 @@ glm.fit(x, y, weights = rep.int(1, nobs),
   For the background to warning messages about
   \sQuote{\I{fitted probabilities numerically 0 or 1 occurred}}
   for binomial GLMs, see
-  \bibcite{Venables & Ripley (2002, pp.\sspace{}197--8)}.
+  \bibcitet{|R:Venables+Ripley:2002|pp.\\\\\\sspace{}197--8}.
 }
 
 \section{Fitting functions}{

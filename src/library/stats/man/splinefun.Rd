@@ -1,6 +1,6 @@
 % File src/library/stats/man/splinefun.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2020 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{splinefun}
@@ -54,7 +54,7 @@ splinefunH(x, y, m)
   The inputs can contain missing values which are deleted, so at least
   one complete \code{(x, y)} pair is required.
   If \code{method = "fmm"}, the spline used is that of
-  \bibcite{Forsythe, Malcolm and Moler}
+  \bibcitet{R:Forsythe+Malcolm+Moler:1977}
   (an exact cubic is fitted through the four points at each
   end of the data, and this is used to determine the end conditions).
   Natural splines are used when \code{method = "natural"}, and periodic
@@ -95,30 +95,12 @@ splinefunH(x, y, m)
   loaded into a different \R session.  This is safer in \R >= 3.0.0.
 }
 \references{
-  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988).
-  \emph{The New S Language}.
-  Wadsworth & Brooks/Cole.
-
-  Dougherty, R. L., Edelman, A. and Hyman, J. M. (1989)
-  Positivity-, monotonicity-, or convexity-preserving cubic and quintic
-  Hermite interpolation.
-  \emph{Mathematics of Computation}, \bold{52}, 471--494.
-  \doi{10.1090/S0025-5718-1989-0962209-1}.
-
-  Forsythe, G. E., Malcolm, M. A. and Moler, C. B. (1977).
-  \emph{Computer Methods for Mathematical Computations}.
-  Wiley.
-
-  Fritsch, F. N. and Carlson, R. E. (1980).
-  Monotone piecewise cubic interpolation.
-  \emph{SIAM Journal on Numerical Analysis}, \bold{17}, 238--246.
-  \doi{10.1137/0717021}.
-
-  Hyman, J. M. (1983).
-  Accurate monotonicity preserving cubic interpolation.
-  \emph{SIAM Journal on Scientific and Statistical Computing}, \bold{4},
-  645--654.
-  \doi{10.1137/0904045}.
+  \bibshow{*,
+    R:Becker+Chambers+Wilks:1988,
+    R:Dougherty+Edelman+Hyman:1989,
+    R:Fritsch+Carlson:1980,
+    R:Hyman:1983
+  }
 }
 \seealso{
   \code{\link{approx}} and \code{\link{approxfun}} for constant and

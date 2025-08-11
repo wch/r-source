@@ -1,6 +1,6 @@
 % File src/library/stats/man/kernel.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2024 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{kernel}
@@ -53,9 +53,9 @@ is.tskernel(k)
 
   \code{df.kernel} returns the \sQuote{equivalent degrees of freedom} of
   a smoothing kernel as defined in
-  \bibcite{Brockwell and Davis (1991), page 362},
+  \bibcitet{|R:Brockwell+Davis:1991|page 362},
   and \code{bandwidth.kernel} returns the equivalent bandwidth as
-  defined in \bibcite{Bloomfield (1976), p.\sspace{}201},
+  defined in \bibcitet{|R:Bloomfield:1976|page 201},
   with a continuity correction.
 }
 \value{
@@ -68,13 +68,7 @@ is.tskernel(k)
     \code{\link{kernapply}}
 }
 \references{
-  Bloomfield, P. (1976)
-  \emph{Fourier Analysis of Time Series: An Introduction.}
-  Wiley.
-
-  Brockwell, P.J. and Davis, R.A. (1991)
-  \emph{Time Series: Theory and Methods.}
-  Second edition. Springer, pp.\sspace{}350--365.
+  \bibshow{*}
 }
 \examples{
 require(graphics)

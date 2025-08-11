@@ -54,7 +54,7 @@ optimHess(par, fn, gr = NULL, \dots, control = list())
   \code{hessian = TRUE} was forgotten.
 
   The default method is an implementation of that of
-  \bibcite{Nelder and Mead (1965)},
+  \bibcitet{R:Nelder+Mead:1965},
   that uses only function values and is robust but relatively slow.
   It will work reasonably well for non-differentiable functions.
 
@@ -65,24 +65,24 @@ optimHess(par, fn, gr = NULL, \dots, control = list())
   and gradients to build up a picture of the surface to be optimized.
 
   Method \code{"CG"} is a conjugate gradients method based on that by
-  \bibcite{Fletcher and Reeves (1964)} (but with the option of
+  \bibcitet{R:Fletcher+Reeves:1964} (but with the option of
   \I{Polak}--\I{Ribiere} or \I{Beale}--\I{Sorenson} updates).
   Conjugate gradient methods will generally
   be more fragile than the BFGS method, but as they do not store a
   matrix they may be successful in much larger optimization problems.
 
-  Method \code{"L-BFGS-B"} is that of Byrd \abbr{et al.}\sspace(1995) which
+  Method \code{"L-BFGS-B"} is that of \bibcitet{R:Byrd+Lu+Nocedal:1995} which
   allows \emph{box constraints}, that is each variable can be given a lower
   and/or upper bound. The initial value must satisfy the constraints.
   This uses a limited-memory modification of the BFGS quasi-Newton
   method.  If non-trivial bounds are supplied, this method will be
   selected, with a warning.
 
-  \bibcite{Nocedal and Wright (1999)} is a comprehensive reference for the
+  \bibcitet{R:Nocedal+Wright:1999} is a comprehensive reference for the
   previous three methods.
 
   Method \code{"SANN"} is by default a variant of simulated annealing
-  given in \bibcite{Belisle (1992)}. Simulated-annealing belongs to the class of
+  given in \bibcitet{R:Bélisle:1992}. Simulated-annealing belongs to the class of
   stochastic global optimization methods. It uses only function values
   but is relatively slow. It will also work for non-differentiable
   functions. This implementation uses the Metropolis function for the
@@ -92,7 +92,7 @@ optimHess(par, fn, gr = NULL, \dots, control = list())
   given, method \code{"SANN"} can also be used to solve combinatorial
   optimization problems. Temperatures are decreased according to the
   logarithmic cooling schedule as given in
-  \bibcite{Belisle (1992, p.\sspace{}890)};
+  \bibcitet{|R:Bélisle:1992|page 890};
   specifically, the temperature is set to
   \code{temp / log(((t-1) \%/\% tmax)*tmax + exp(1))}, where \code{t} is
   the current iteration step and \code{temp} and \code{tmax} are
@@ -235,7 +235,7 @@ optimHess(par, fn, gr = NULL, \dots, control = list())
 }
 \source{
   The code for methods \code{"Nelder-Mead"}, \code{"BFGS"} and
-  \code{"CG"} was based originally on Pascal code in Nash (1990) that was
+  \code{"CG"} was based originally on Pascal code in \bibcitet{R:Nash:1990} that was
   translated by \code{p2c} and then hand-optimized.  Dr Nash has agreed
   that the code can be made freely available.
 
@@ -246,35 +246,7 @@ optimHess(par, fn, gr = NULL, \dots, control = list())
   The code for method \code{"SANN"} was contributed by A. Trapletti.
 }
 \references{
-  Belisle, C. J. P. (1992).
-  Convergence theorems for a class of simulated annealing algorithms on
-  \eqn{R^d}{Rd}.
-  \emph{Journal of Applied Probability}, \bold{29}, 885--895.
-  \doi{10.2307/3214721}.
-
-  Byrd, R. H., Lu, P., Nocedal, J. and Zhu, C. (1995).
-  A limited memory algorithm for bound constrained optimization.
-  \emph{SIAM Journal on Scientific Computing}, \bold{16}, 1190--1208.
-  \doi{10.1137/0916069}.
-
-  Fletcher, R. and Reeves, C. M. (1964).
-  Function minimization by conjugate gradients.
-  \emph{Computer Journal} \bold{7}, 148--154.
-  \doi{10.1093/comjnl/7.2.149}.
-
-  Nash, J. C. (1990).
-  \emph{Compact Numerical Methods for Computers. Linear Algebra and
-    Function Minimisation}.
-  Adam Hilger.
-
-  Nelder, J. A. and Mead, R. (1965).
-  A simplex algorithm for function minimization.
-  \emph{Computer Journal}, \bold{7}, 308--313.
-  \doi{10.1093/comjnl/7.4.308}.
-
-  Nocedal, J. and Wright, S. J. (1999).
-  \emph{Numerical Optimization}.
-  Springer.
+  \bibshow{*}
 }
 
 \seealso{
