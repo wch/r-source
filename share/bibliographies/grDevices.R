@@ -48,7 +48,7 @@ bibentry(bibtype = "InCollection",
 
 bibentry(bibtype = "Article",
          key = "R:Freedman+Diaconis:1981",
-         title = "On the Histogram as a Density Estimator: \\eqn{L_2}{L_2} theory",
+         title = "On the Histogram as a Density Estimator: $L_2$ theory",
          volume = "57",
          .issn = "1432-2064",
          doi = "10.1007/BF01025868",
