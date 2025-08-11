@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{logLik}
-\encoding{UTF-8}
 \alias{logLik}
 %\alias{print.logLik}
 %\alias{str.logLik}

@@ -5,7 +5,6 @@
 
 \name{pdf}
 \alias{pdf}
-\encoding{UTF-8}
 
 \title{PDF Graphics Device}
 %% The definitive doc is the source :-)

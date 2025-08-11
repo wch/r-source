@@ -6,7 +6,6 @@
 \name{faithful}
 \docType{data}
 \alias{faithful}
-\encoding{UTF-8}
 \title{Old Faithful Geyser Data}
 \description{
   Waiting time between eruptions and the duration of the eruption for

@@ -7,7 +7,6 @@
 \alias{nclass.Sturges}
 \alias{nclass.scott}
 \alias{nclass.FD}
-\encoding{UTF-8}
 \title{Compute the Number of Classes for a Histogram}
 \description{
   Compute the number of classes for a histogram, notably \code{\link{hist}()}.

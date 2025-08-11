@@ -12,7 +12,6 @@
 \alias{hcl.colors}
 \alias{hcl.pals}
 \title{Color Palettes}
-\encoding{UTF-8}
 \description{
   Create a vector of \code{n} contiguous colors.
 }

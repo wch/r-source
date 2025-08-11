@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{sortedXyData}
-\encoding{UTF-8}
 \title{Create a \code{sortedXyData} Object}
 \alias{sortedXyData}
 \alias{sortedXyData.default}

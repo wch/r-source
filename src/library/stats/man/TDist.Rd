@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{TDist}
-\encoding{UTF-8}
 \alias{TDist}
 \alias{dt}
 \alias{pt}

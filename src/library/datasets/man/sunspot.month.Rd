@@ -6,7 +6,6 @@
 \name{sunspot.month}
 \title{Monthly Sunspot Data, from 1749 to "Present"}
 \docType{data}
-\encoding{UTF-8}
 \alias{sunspot.m2014}
 \alias{sunspot.month}
 \description{

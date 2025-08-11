@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{base-deprecated}
-\encoding{UTF-8}
 \alias{base-deprecated}
 %------ Eventually move entries to ---->> ./base-defunct.Rd
 %------ NOTE:  ../R/Deprecated.R   must be synchronized with this!

@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{formula.nls}
-\encoding{UTF-8}
 \alias{formula.nls}
 \title{Extract Model Formula from \code{nls} Object}
 \usage{

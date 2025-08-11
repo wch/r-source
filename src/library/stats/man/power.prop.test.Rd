@@ -5,7 +5,6 @@
 
 \name{power.prop.test}
 \alias{power.prop.test}
-\encoding{UTF-8}
 \title{Power Calculations for Two-Sample Test for Proportions}
 \description{
   Compute the power of the two-sample test for proportions, or determine

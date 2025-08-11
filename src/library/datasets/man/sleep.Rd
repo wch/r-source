@@ -6,7 +6,6 @@
 
 \name{sleep}
 \docType{data}
-\encoding{UTF-8}
 \alias{sleep}
 \title{Student's Sleep Data}
 \description{

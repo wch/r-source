@@ -42,7 +42,6 @@ startsWith(x, prefix)
   matching functions \code{\link{charmatch}} and \code{\link{pmatch}}
   solve a different task.
 }
-\encoding{UTF-8}
 \examples{
 startsWith(search(), "package:") # typically at least two FALSE, nowadays often three
 

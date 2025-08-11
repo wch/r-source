@@ -6,7 +6,6 @@
 \name{state}
 \title{US State Facts and Figures}
 \docType{data}
-\encoding{UTF-8}
 \alias{state}
 \alias{state.abb}
 \alias{state.area}

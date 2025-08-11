@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{NLSstRtAsymptote}
-\encoding{UTF-8}
 \title{Horizontal Asymptote on the Right Side}
 \alias{NLSstRtAsymptote}
 \alias{NLSstRtAsymptote.sortedXyData}

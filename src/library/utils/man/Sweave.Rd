@@ -8,7 +8,6 @@
 \alias{Stangle}
 \alias{SweaveSyntaxLatex}
 \alias{SweaveSyntaxNoweb}
-\encoding{UTF-8}
 \title{Automatic Generation of Reports}
 \description{
   \code{Sweave} provides a flexible framework for mixing text and R/S code

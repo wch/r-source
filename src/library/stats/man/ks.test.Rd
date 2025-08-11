@@ -7,7 +7,6 @@
 \alias{ks.test}
 \alias{ks.test.default}
 \alias{ks.test.formula}
-\encoding{UTF-8}
 \title{Kolmogorov-Smirnov Tests}
 \description{
   Perform a one- or two-sample Kolmogorov-Smirnov test.

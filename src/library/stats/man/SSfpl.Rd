@@ -6,7 +6,6 @@
 \name{SSfpl}
 \title{Self-Starting \code{nls} Four-Parameter Logistic Model}
 \alias{SSfpl}
-\encoding{UTF-8}
 \usage{
 SSfpl(input, A, B, xmid, scal)
 }

@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{SSmicmen}
-\encoding{UTF-8}
 \title{Self-Starting \code{nls} \I{Michaelis}-\I{Menten} Model}
 \usage{
 SSmicmen(input, Vm, K)

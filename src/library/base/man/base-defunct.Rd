@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{base-defunct}
-\encoding{UTF-8}
 \alias{base-defunct}
 \title{Defunct Functions in Package \pkg{base}}
 %------ PLEASE: put \alias{.} here for  EACH !

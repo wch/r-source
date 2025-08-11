@@ -5,7 +5,6 @@
 
 \name{factanal}
 \alias{factanal}
-\encoding{UTF-8}
 \title{Factor Analysis}
 \description{
   Perform maximum-likelihood factor analysis on a covariance matrix or

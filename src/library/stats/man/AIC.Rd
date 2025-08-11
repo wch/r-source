@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{AIC}
-\encoding{UTF-8}
 \alias{AIC}
 \alias{BIC}
 \title{Akaike's An Information Criterion}

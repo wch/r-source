@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{SSasymp}
-\encoding{UTF-8}
 \title{Self-Starting \code{nls} Asymptotic Model}
 \usage{
 SSasymp(input, Asym, R0, lrc)

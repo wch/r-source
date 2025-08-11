@@ -6,7 +6,6 @@
 \name{crimtab}
 \alias{crimtab}
 \docType{data}
-\encoding{UTF-8}
 \title{Student's 3000 Criminals Data}
 \description{
   Data of 3000 male criminals over 20 years old undergoing their

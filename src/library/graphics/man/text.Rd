@@ -5,7 +5,6 @@
 
 \name{text}
 \title{Add Text to a Plot}
-\encoding{UTF-8}
 \usage{
 text(x, \dots)
 

@@ -5,7 +5,6 @@
 
 \name{assocplot}
 \alias{assocplot}
-\encoding{UTF-8}
 \title{Association Plots}
 \description{
   Produce a Cohen-Friendly association plot indicating deviations from

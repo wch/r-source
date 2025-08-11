@@ -7,7 +7,6 @@
 \alias{mosaicplot}
 \alias{mosaicplot.default}
 \alias{mosaicplot.formula}
-\encoding{UTF-8}
 \title{Mosaic Plots}
 \description{Plots a mosaic on the current graphics device.}
 \usage{

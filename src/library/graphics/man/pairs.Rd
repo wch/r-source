@@ -3,7 +3,6 @@
 % Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
-\encoding{UTF-8}
 \name{pairs}
 \alias{pairs}
 \alias{pairs.default}

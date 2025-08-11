@@ -6,7 +6,6 @@
 \name{lengths}
 \alias{lengths}
 \title{Lengths of List or Vector Elements}
-\encoding{UTF-8}
 \description{
   Get the length of each element of a \code{\link{list}} or atomic
   vector (\code{\link{is.atomic}}) as an integer or numeric vector.

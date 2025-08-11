@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{SSfol}
-\encoding{UTF-8}
 \title{Self-Starting \code{nls} First-order Compartment Model}
 \usage{
 SSfol(Dose, input, lKe, lKa, lCl)

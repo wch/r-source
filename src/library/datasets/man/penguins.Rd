@@ -1,5 +1,4 @@
 \name{penguins}
-\encoding{UTF-8}
 \docType{data}
 \title{Measurements of Penguins near Palmer Station, Antarctica}
 \alias{penguins}
