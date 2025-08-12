@@ -51,7 +51,7 @@ bibentry(bibtype = "InProceedings",
          publisherurl = "https://support.sas.com/resources/papers/proceedings-archive/SUGI92/Sugi-92-233\\%20Friendly.pdf")
 
 bibentry(bibtype = "Article",
-         key = "R:Friendly:1994",
+         key = "R:Friendly:1994a",
          title = "Mosaic Displays for Multi-Way Contingency Tables",
          volume = "89",
          .issn = "1537-274X",
@@ -65,6 +65,16 @@ bibentry(bibtype = "Article",
          month = "mar",
          pages = "190--200",
          .doi = "10.2307/2291215")
+
+bibentry(bibtype = "TechReport",
+         key = "R:Friendly:1994b",
+         author = person(given = "Michael",
+                         family = "Friendly"),
+         title = "A Fourfold Display for 2 by 2 by $k$ Tables",
+         institution = "York University, Psychology Department",
+         year = "1994",
+         number = "217",
+         url = "http://datavis.ca/papers/4fold/4fold.pdf")
 
 bibentry(bibtype = "Article",
          key = "R:Hartigan+Kleiner:1984",
