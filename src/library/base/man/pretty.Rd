@@ -95,9 +95,7 @@ pretty(x, \dots)
   locations in plots, particularly on the log scale.
 }
 \references{
-  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
-  \emph{The New S Language}.
-  Wadsworth & Brooks/Cole.
+  \bibshow{R:Becker+Chambers+Wilks:1988}
 }
 \examples{
 pretty(1:15)                    # 0  2  4  6  8 10 12 14 16

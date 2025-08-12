@@ -101,9 +101,7 @@ contour(x, \dots)
   add contours to a plot, or add axes and frame to a contour plot.
 }
 \references{
-  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
-  \emph{The New S Language}.
-  Wadsworth & Brooks/Cole.
+  \bibshow{R:Becker+Chambers+Wilks:1988}
 }
 \seealso{
   \code{\link{options}("max.contour.segments")} for the maximal

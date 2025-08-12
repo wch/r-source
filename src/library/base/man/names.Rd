@@ -79,9 +79,7 @@ names(x) <- value
   \code{\link{slotNames}}, \code{\link{dimnames}}.
 }
 \references{
-  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
-  \emph{The New S Language}.
-  Wadsworth & Brooks/Cole.
+  \bibshow{R:Becker+Chambers+Wilks:1988}
 }
 \examples{
 # print the names attribute of the islands data set

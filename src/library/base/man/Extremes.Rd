@@ -108,9 +108,7 @@ pmin.int(\dots, na.rm = FALSE)
   for them must use the signature \code{x, \dots, na.rm}.
 }
 \references{
-  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
-  \emph{The New S Language}.
-  Wadsworth & Brooks/Cole.
+  \bibshow{R:Becker+Chambers+Wilks:1988}
 }
 \note{
   \sQuote{Numeric} arguments are vectors of type integer and numeric,

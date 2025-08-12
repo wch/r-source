@@ -56,9 +56,7 @@ scale(x, center = TRUE, scale = TRUE)
   \code{scale(x, center = FALSE, scale = apply(x, 2, sd, na.rm = TRUE))}.)
 }
 \references{
-  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
-  \emph{The New S Language}.
-  Wadsworth & Brooks/Cole.
+  \bibshow{R:Becker+Chambers+Wilks:1988}
 }
 \seealso{
   \code{\link{sweep}} which allows centering (and scaling) with

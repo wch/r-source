@@ -115,9 +115,7 @@ stars(x, full = TRUE, scale = TRUE, radius = TRUE,
   \code{\link{symbols}} for another way to draw stars and other symbols.
 }
 \references{
-  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
-  \emph{The New S Language}.
-  Wadsworth & Brooks/Cole.
+  \bibshow{R:Becker+Chambers+Wilks:1988}
 }
 \note{
   This code started life as spatial star plots by David A. Andrews.

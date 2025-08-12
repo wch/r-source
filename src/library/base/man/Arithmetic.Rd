@@ -172,9 +172,7 @@ x \%/\% y
   deprecated in S for 20 years, it was still accepted in \R in 2008.
 }
 \references{
-  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
-  \emph{The New S Language}.
-  Wadsworth & Brooks/Cole.
+  \bibshow{R:Becker+Chambers+Wilks:1988}
 
   D. Goldberg (1991).
   What Every Computer Scientist Should Know about Floating-Point

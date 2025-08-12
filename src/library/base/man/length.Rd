@@ -67,9 +67,7 @@ length(x) <- value
   in a list.
 }
 \references{
-  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
-  \emph{The New S Language}.
-  Wadsworth & Brooks/Cole.
+  \bibshow{R:Becker+Chambers+Wilks:1988}
 }
 \examples{
 length(diag(4))  # = 16 (4 x 4)

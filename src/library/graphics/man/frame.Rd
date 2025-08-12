@@ -33,9 +33,7 @@ frame()
   \code{get} is called on it from within the \pkg{graphics} namespace.)
 }
 \references{
-  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
-  \emph{The New S Language}.
-  Wadsworth & Brooks/Cole. (\code{frame}.)
+  \bibshow{R:Becker+Chambers+Wilks:1988} (\code{frame}.)
 }
 \seealso{
   \code{\link{plot.window}}, \code{\link{plot.default}}.

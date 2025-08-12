@@ -46,9 +46,7 @@ cummin(x)
   \code{cummax} and \code{cummin} are individually S4 generic functions.
 }
 \references{
-  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
-  \emph{The New S Language}.
-  Wadsworth & Brooks/Cole. (\code{cumsum} only.)
+  \bibshow{R:Becker+Chambers+Wilks:1988} (\code{cumsum} only.)
 }
 \examples{
 cumsum(1:10)

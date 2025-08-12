@@ -88,9 +88,7 @@ tapply(X, INDEX, FUN = NULL, \dots, default = NA, simplify = TRUE)
   \code{X}.
 }
 \references{
-  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
-  \emph{The New S Language}.
-  Wadsworth & Brooks/Cole.
+  \bibshow{R:Becker+Chambers+Wilks:1988}
 }
 \seealso{
   the convenience functions \code{\link{by}} and

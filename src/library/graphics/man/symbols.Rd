@@ -96,9 +96,7 @@ symbols(x, y = NULL, circles, squares, rectangles, stars,
   pixel as some Windows versions omit smaller circles.
 }
 \references{
-  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
-  \emph{The New S Language}.
-  Wadsworth & Brooks/Cole.
+  \bibshow{R:Becker+Chambers+Wilks:1988}
 
   W. S. Cleveland (1985)
   \emph{The Elements of Graphing Data.}

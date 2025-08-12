@@ -23,9 +23,7 @@ If necessary, the values in \code{values} are recycled.
   A vector with the values replaced.
 }
 \references{
-  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
-  \emph{The New S Language}.
-  Wadsworth & Brooks/Cole.
+  \bibshow{R:Becker+Chambers+Wilks:1988}
 }
 \note{
   \code{x} is unchanged: remember to assign the result.

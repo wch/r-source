@@ -130,9 +130,7 @@ persp(x, \dots)
   is within the box, and the function will warn if this is not the case.
 }
 \references{
-  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
-  \emph{The New S Language}.
-  Wadsworth & Brooks/Cole.
+  \bibshow{R:Becker+Chambers+Wilks:1988}
 }
 \seealso{
   \code{\link{contour}} and \code{\link{image}}; \code{\link{trans3d}}.

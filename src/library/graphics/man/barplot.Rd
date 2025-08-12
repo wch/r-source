@@ -151,9 +151,7 @@ barplot(height, \dots)
 }
 \author{R Core, with a contribution by Arni Magnusson.}
 \references{
-  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
-  \emph{The New S Language}.
-  Wadsworth & Brooks/Cole.
+  \bibshow{R:Becker+Chambers+Wilks:1988}
 
   Murrell, P. (2005) \emph{R Graphics}. Chapman & Hall/CRC Press.
 }

@@ -86,9 +86,7 @@ cat(\dots , file = "", sep = " ", fill = FALSE, labels = NULL,
   None (invisible \code{NULL}).
 }
 \references{
-  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
-  \emph{The New S Language}.
-  Wadsworth & Brooks/Cole.
+  \bibshow{R:Becker+Chambers+Wilks:1988}
 }
 \seealso{
   \code{\link{print}}, \code{\link{format}}, and \code{\link{paste}}

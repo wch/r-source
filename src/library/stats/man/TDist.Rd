@@ -135,9 +135,7 @@ rt(n, df, ncp)
   The non-central case is done by inversion.
 }
 \references{
-  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
-  \emph{The New S Language}.
-  Wadsworth & Brooks/Cole. (Except non-central versions.)
+  \bibshow{R:Becker+Chambers+Wilks:1988} (Except non-central versions.)
 
   Johnson, N. L., Kotz, S. and Balakrishnan, N. (1995)
   \emph{Continuous Univariate Distributions}, volume 2, chapters 28 and 31.

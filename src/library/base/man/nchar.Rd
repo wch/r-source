@@ -133,9 +133,7 @@ nzchar(x, keepNA = FALSE)
   should be avoided (and may depend on the OS and \R version).
 }
 \references{
-  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
-  \emph{The New S Language}.
-  Wadsworth & Brooks/Cole.
+  \bibshow{R:Becker+Chambers+Wilks:1988}
 
   Unicode Standard Annex #11: \emph{East Asian Width.}
   \url{https://www.unicode.org/reports/tr11/}

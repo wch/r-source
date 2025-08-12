@@ -121,9 +121,7 @@ pairs(x, \dots)
   \enc{Oehlschlägel-Akiyoshi}{Oehlschlaegel-Akiyoshi} and R-core members.
 }
 \references{
-  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
-  \emph{The New S Language}.
-  Wadsworth & Brooks/Cole.
+  \bibshow{R:Becker+Chambers+Wilks:1988}
 }
 \examples{
 pairs(iris[1:4], main = "Anderson's Iris Data -- 3 species",

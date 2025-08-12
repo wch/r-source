@@ -22,9 +22,7 @@ append(x, values, after = length(x))
   \code{values} appended after the specified element of \code{x}.
 }
 \references{
-  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
-  \emph{The New S Language}.
-  Wadsworth & Brooks/Cole.
+  \bibshow{R:Becker+Chambers+Wilks:1988}
 }
 \examples{
 append(1:5, 0:1, after = 3)

@@ -54,9 +54,7 @@ range(\dots, na.rm = FALSE)
   \code{x, \dots, na.rm}.
 }
 \references{
-  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
-  \emph{The New S Language}.
-  Wadsworth & Brooks/Cole.
+  \bibshow{R:Becker+Chambers+Wilks:1988}
 }
 \seealso{
   \code{\link{min}}, \code{\link{max}}.

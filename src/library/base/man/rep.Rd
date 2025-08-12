@@ -111,9 +111,7 @@ rep_len(x, length.out)
   worked on \link{expression} vectors.
 }
 \references{
-  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
-  \emph{The New S Language}.
-  Wadsworth & Brooks/Cole.
+  \bibshow{R:Becker+Chambers+Wilks:1988}
 }
 \seealso{
   \code{\link{seq}}, \code{\link{sequence}}, \code{\link{replicate}}.

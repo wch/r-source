@@ -102,9 +102,7 @@ as.single(x, \dots)
   coerces to the class.
 }
 \references{
-  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
-  \emph{The New S Language}.
-  Wadsworth & Brooks/Cole.
+  \bibshow{R:Becker+Chambers+Wilks:1988}
 
   \url{https://en.wikipedia.org/wiki/IEEE_754-1985},
   \url{https://en.wikipedia.org/wiki/IEEE_754-2008},

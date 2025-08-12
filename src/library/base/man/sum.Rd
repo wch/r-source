@@ -59,9 +59,7 @@ sum(\dots, na.rm = FALSE)
   \code{\link{colSums}} for row and column sums.
 }
 \references{
-  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
-  \emph{The New S Language}.
-  Wadsworth & Brooks/Cole.
+  \bibshow{R:Becker+Chambers+Wilks:1988}
 }
 \examples{% for beginners
 ## Pass a vector to sum, and it will add the elements together.

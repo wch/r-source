@@ -59,9 +59,7 @@ rm    (\dots, list = character(), pos = -1,
   argument to specify objects \emph{via} a character vector.
 }
 \references{
-  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
-  \emph{The New S Language}.
-  Wadsworth & Brooks/Cole.
+  \bibshow{R:Becker+Chambers+Wilks:1988}
 }
 \seealso{
   \code{\link{ls}}, \code{\link{objects}}

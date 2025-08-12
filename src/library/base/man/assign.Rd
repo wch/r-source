@@ -65,9 +65,7 @@ assign(x, value, pos = -1, envir = as.environment(pos),
   error is signaled).
 }
 \references{
-  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
-  \emph{The New S Language}.
-  Wadsworth & Brooks/Cole.
+  \bibshow{R:Becker+Chambers+Wilks:1988}
 }
 
 \seealso{

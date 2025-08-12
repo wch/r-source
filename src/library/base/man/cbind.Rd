@@ -165,9 +165,7 @@ rbind(\dots, deparse.level = 1)
   the coercion of character vectors to factors.)
 }
 \references{
-  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
-  \emph{The New S Language}.
-  Wadsworth & Brooks/Cole.
+  \bibshow{R:Becker+Chambers+Wilks:1988}
 }
 \seealso{
   \code{\link{c}} to combine vectors (and lists) as vectors,

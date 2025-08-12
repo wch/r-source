@@ -111,9 +111,7 @@ rchisq(n, df, ncp = 0)
   The non-central \code{qchisq} is based on inversion of \code{pchisq}.
 }
 \references{
-  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
-  \emph{The New S Language}.
-  Wadsworth & Brooks/Cole.
+  \bibshow{R:Becker+Chambers+Wilks:1988}
 
   Johnson, N. L., Kotz, S. and Balakrishnan, N. (1995)
   \emph{Continuous Univariate Distributions}, chapters 18 (volume 1)

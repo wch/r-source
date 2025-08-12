@@ -122,9 +122,7 @@ bxp(z, notch = FALSE, width = NULL, varwidth = FALSE,
   box*, med*, whisk*, staple*, and out* arguments.
 }
 \references{
-  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
-  \emph{The New S Language}.
-  Wadsworth & Brooks/Cole.
+  \bibshow{R:Becker+Chambers+Wilks:1988}
 }
 \examples{
 require(stats)

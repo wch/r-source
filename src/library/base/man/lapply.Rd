@@ -170,9 +170,7 @@ simplify2array(x, higher = TRUE, except = c(0L, 1L))
   additional named arguments to \code{replicate}: see \sQuote{Examples}.
 }
 \references{
-  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
-  \emph{The New S Language}.
-  Wadsworth & Brooks/Cole.
+  \bibshow{R:Becker+Chambers+Wilks:1988}
 }
 \seealso{
   \code{\link{apply}}, \code{\link{tapply}},

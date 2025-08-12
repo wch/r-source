@@ -86,9 +86,7 @@ sample.int(n, size = n, replace = FALSE, prob = NULL,
 }
 
 \references{
-  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
-  \emph{The New S Language}.
-  Wadsworth & Brooks/Cole.
+  \bibshow{R:Becker+Chambers+Wilks:1988}
 
   Ripley, B. D. (1987) \emph{Stochastic Simulation}. Wiley.
 }
