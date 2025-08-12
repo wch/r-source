@@ -81,19 +81,26 @@ makeJSS <- function() {
     fmtAddress <- plainclean
     fmtBook <- emphclean
     fmtBtitle <- emphclean
-    fmtChapter <- labelclean(prefix="chapter ")
-    fmtDOI <- label(prefix="\\doi{", suffix="}")
+    fmtChapter <- labelclean(prefix = "chapter ")
+    fmtDOI <- function(doi) {
+        ## PR#17725: DOIs can contain % signs, and need multiple levels
+        ## of escaping when translated to Rd. 
+        .escape <- function(s)
+            gsub("%", paste0(strrep("\\", 11L), "%"), s, fixed = TRUE)
+        .fmtDOI <- label(prefix = "\\doi{", suffix = "}")
+        .fmtDOI(.escape(doi))
+    }
     fmtEdition <- labelclean(suffix=" edition")
     fmtEprint <- plain
     fmtHowpublished <- plainclean
     fmtISBN <- label(prefix = "ISBN ")
-    fmtISSN <- label(prefix="ISSN ")
+    fmtISSN <- label(prefix = "ISSN ")
     fmtInstitution <- plainclean
     fmtNote <- plainclean
     fmtPages <- plain
     fmtSchool <- plainclean
     ## fmtTechreportnumber <- labelclean(prefix="Technical Report ")
-    fmtUrl <- label(prefix="\\url{", suffix="}")
+    fmtUrl <- label(prefix = "\\url{", suffix="}")
     fmtTitle <- function(title) 
         if (length(title)) {
             title <- gsub("%", "\\\\\\%", title)
@@ -160,15 +167,10 @@ makeJSS <- function() {
     }
 
     extraInfo <- function(paper) {
-    	# PR#17725:  DOIs can contain % signs, and need multiple 
-    	#            levels of escaping when translated to Rd.
-    	escapeDOIPercent <- function(s) gsub("%", 
-    					  paste0(strrep("\\", 11L), "%"),
-    					  fixed = TRUE,
-    					  s)
-        result <- paste(c(fmtDOI(escapeDOIPercent(paper$doi)), fmtNote(paper$note),
-                          fmtEprint(paper$eprint), fmtUrl(paper$url)),
-                        collapse=", ")
+        result <- paste(c(fmtNote(paper$note),
+                          fmtEprint(paper$eprint),
+                          fmtUrl(paper$url)),
+                        collapse = ", ")
         if (nzchar(result)) result
     }
 
@@ -214,7 +216,9 @@ makeJSS <- function() {
                    fmtTitle(paper$title),
                    sentence(fmtBook(paper$journal), volNum(paper),
                             fmtPages(paper$pages)),
-                   sentence(fmtISSN(paper$issn), extraInfo(paper))))
+                   sentence(fmtISSN(paper$issn)),
+                   sentence(fmtDOI(paper$doi)),
+                   sentence(extraInfo(paper))))
     }
 
     formatBook <- function(book) {
@@ -227,7 +231,9 @@ makeJSS <- function() {
                    sentence(fmtBtitle(book$title), bookVolume(book),
                             fmtEdition(book$edition)),
                    sentence(bookPublisher(book)),
-                   sentence(fmtISBN(book$isbn), extraInfo(book))))
+                   sentence(fmtISBN(book$isbn)),
+                   sentence(fmtDOI(book$doi)),
+                   sentence(extraInfo(book))))
     }
 
     formatInbook <- function(paper) {
@@ -246,7 +252,9 @@ makeJSS <- function() {
                                         fmtPages(paper$pages),
                                         fmtEdition(paper$edition))),
                    sentence(bookPublisher(paper)),
-                   sentence(fmtISBN(paper$isbn), extraInfo(paper))))
+                   sentence(fmtISBN(paper$isbn)),
+                   sentence(fmtDOI(paper$doi)),
+                   sentence(extraInfo(paper))))
     }
 
     formatIncollection <- function(paper) {
@@ -260,7 +268,9 @@ makeJSS <- function() {
                                         fmtChapter(paper$chapter),
                                         fmtPages(paper$pages))),
                    sentence(bookPublisher(paper)),
-                   sentence(fmtISBN(paper$isbn), extraInfo(paper))))
+                   sentence(fmtISBN(paper$isbn)),
+                   sentence(fmtDOI(paper$doi)),
+                   sentence(extraInfo(paper))))
     }
 
     formatInProceedings <- function(paper)
@@ -273,7 +283,9 @@ makeJSS <- function() {
                                         fmtEdition(paper$edition),
                                         fmtPages(paper$pages))),
                    sentence(procOrganization(paper)),
-                   sentence(fmtISBN(paper$isbn), extraInfo(paper))))
+                   sentence(fmtISBN(paper$isbn)),
+                   sentence(fmtDOI(paper$doi)),
+                   sentence(extraInfo(paper))))
 
     formatManual <- function(paper) {
         collapse(c(fmtPrefix(paper),
@@ -281,7 +293,9 @@ makeJSS <- function() {
                    sentence(fmtBtitle(paper$title), bookVolume(paper),
                             fmtEdition(paper$edition)),
                    sentence(procOrganization(paper)),
-                   sentence(fmtISBN(paper$isbn), extraInfo(paper))))
+                   sentence(fmtISBN(paper$isbn)),
+                   sentence(fmtDOI(paper$doi)),
+                   sentence(extraInfo(paper))))
     }
 
     formatMastersthesis <- function(paper) {
@@ -291,6 +305,7 @@ makeJSS <- function() {
                    sentence(fmtType(paper$type, "Master's thesis"),
                             fmtSchool(paper$school),
                             fmtAddress(paper$address)),
+                   sentence(fmtDOI(paper$doi)),
                    sentence(extraInfo(paper))))
     }
 
@@ -301,6 +316,7 @@ makeJSS <- function() {
                    sentence(fmtType(paper$type, "Ph.D. thesis"),
                             fmtSchool(paper$school),
                             fmtAddress(paper$address)),
+                   sentence(fmtDOI(paper$doi)),
                    sentence(extraInfo(paper))))
     }
 
@@ -309,6 +325,7 @@ makeJSS <- function() {
                    sentence(authorList(paper), fmtYear(paper$year), sep = " "),
                    fmtTitle(paper$title),
                    sentence(fmtHowpublished(paper$howpublished)),
+                   sentence(fmtDOI(paper$doi)),
                    sentence(extraInfo(paper))))
     }
 
@@ -319,8 +336,10 @@ makeJSS <- function() {
                    sentence(editor, fmtYear(book$year), sep = " "),
                    sentence(fmtBtitle(book$title), bookVolume(book)),
                    sentence(procOrganization(book)),
-                   sentence(fmtISBN(book$isbn), fmtISSN(book$issn),
-                            extraInfo(book))))
+                   sentence(fmtISBN(book$isbn)),
+                   sentence(fmtISSN(book$issn)),
+                   sentence(fmtDOI(book$doi)),
+                   sentence(extraInfo(book))))
     }
 
     formatTechreport <- function(paper) {
@@ -330,6 +349,7 @@ makeJSS <- function() {
                    sentence(fmtTechreportnumber(paper),
                             fmtInstitution(paper$institution),
                             fmtAddress(paper$address)),
+                   sentence(fmtDOI(paper$doi)),
                    sentence(extraInfo(paper))))
     }
 
@@ -337,6 +357,7 @@ makeJSS <- function() {
         collapse(c(fmtPrefix(paper),
                    sentence(authorList(paper), fmtYear(paper$year), sep = " "),
                    fmtTitle(paper$title),
+                   sentence(fmtDOI(paper$doi)),
                    sentence(extraInfo(paper))))
     }
 
