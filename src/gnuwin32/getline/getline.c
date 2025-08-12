@@ -17,7 +17,7 @@
  *   Edin Hodzic, Eric J Bivona, Kai Uwe Rommel, Danny Quah, Ulrich Betzler
  */
 
- /* Copyright (C) 2018-2024 The R Core Team */
+ /* Copyright (C) 2018-2025 The R Core Team */
 
 #include       "getline.h"
 
@@ -213,7 +213,14 @@ gl_getc(void)
          would only generate one event with the first byte in AsciiChar.
          The bug still exists in Windows 10, and thus we now call
          GetConsoleInputW to get uchar.UnicodeChar. */
-      ReadConsoleInputW(Win32InputStream, &r, 1, &a);
+      for(;;) {
+	ReadConsoleInputW(Win32InputStream, &r, 1, &a);
+	if (r.EventType != FOCUS_EVENT && r.EventType != MENU_EVENT)
+	    /* PR#17295 */
+	    /* according to MSDN, these events are used internally and should
+	       be ignored */
+	    break;
+      }
       if (!(r.EventType == KEY_EVENT)) break;
       st = r.Event.KeyEvent.dwControlKeyState;
       vk = r.Event.KeyEvent.wVirtualKeyCode;
