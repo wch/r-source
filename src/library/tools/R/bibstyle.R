@@ -243,8 +243,8 @@ makeJSS <- function() {
                    paste("In", sentence(editors, fmtBtitle(paper$booktitle),
                                         bookVolume(paper),
                                         fmtChapter(paper$chapter),
-                                        fmtEdition(paper$edition),
-                                        fmtPages(paper$pages))),
+                                        fmtPages(paper$pages),
+                                        fmtEdition(paper$edition))),
                    sentence(bookPublisher(paper)),
                    sentence(fmtISBN(paper$isbn), extraInfo(paper))))
     }
@@ -257,6 +257,7 @@ makeJSS <- function() {
                                         fmtBtitle(paper$booktitle),
                                         bookVolume(paper),
                                         fmtEdition(paper$edition),
+                                        fmtChapter(paper$chapter),
                                         fmtPages(paper$pages))),
                    sentence(bookPublisher(paper)),
                    sentence(fmtISBN(paper$isbn), extraInfo(paper))))
