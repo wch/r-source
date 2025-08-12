@@ -137,3 +137,7 @@ span.rlang {
     color: #666666;
 }
 
+span.citation {
+    color: rgb(10%, 40%, 10%);
+    text-decoration: underline;
+}

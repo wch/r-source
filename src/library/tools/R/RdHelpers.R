@@ -275,11 +275,11 @@ function(x, textual = FALSE)
         if(any(ind <- nzchar(before)))
             before[ind] <- paste0(before[ind], " ")
         y <- paste0(before,
-                    sprintf("\\if{html}{\u2060\\out{<a href=\"#reference+%s+%s\">}}",
+                    sprintf("\\if{html}{\u2060\\out{<a href=\"#reference+%s+%s\"><span class=\"citation\">}}",
                             rdpath,
                             string2id(keys)),
                     y,
-                    rep_len("\\if{html}{\\out{</a>}}", n),
+                    rep_len("\\if{html}{\\out{</span></a>}}", n),
                     collapse = "; ")
     } else {
         bibp <- c("", "", ";", "a", "",  ",")
