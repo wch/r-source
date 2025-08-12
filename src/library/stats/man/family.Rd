@@ -40,7 +40,7 @@ quasipoisson(link = "log")
     \code{identity}, \code{log} and \code{inverse};
     the \code{binomial} family the links \code{logit},
     \code{probit}, \code{cauchit}, (corresponding to logistic,
-    normal and Cauchy CDFs respectively) \code{log} and
+    normal and Cauchy CDFs respectively) \code{log}, \code{identity} and
     \code{cloglog} (complementary log-log);
     the \code{Gamma} family the links \code{inverse}, \code{identity}
      and \code{log};

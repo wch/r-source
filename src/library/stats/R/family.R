@@ -332,7 +332,7 @@ binomial <- function (link = "logit")
 {
     linktemp <- substitute(link)
     if (!is.character(linktemp)) linktemp <- deparse(linktemp)
-    okLinks <- c("logit", "probit", "cloglog", "cauchit", "log")
+    okLinks <- c("logit", "probit", "cloglog", "cauchit", "log", "identity")
     family <- "binomial"
     if (linktemp %in% okLinks)
         stats <- make.link(linktemp)
@@ -407,7 +407,7 @@ quasibinomial <- function (link = "logit")
 {
     linktemp <- substitute(link)
     if (!is.character(linktemp)) linktemp <- deparse(linktemp)
-    okLinks <- c("logit", "probit", "cloglog", "cauchit", "log")
+    okLinks <- c("logit", "probit", "cloglog", "cauchit", "log", "identity")
     family <- "quasibinomial"
     if (linktemp %in% okLinks)
         stats <- make.link(linktemp)

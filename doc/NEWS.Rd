@@ -16,6 +16,9 @@
 
   \subsection{NEW FEATURES}{
     \itemize{
+      \item \code{binomial(identity)} and \code{quasibinomial(identity)} now work 
+      without having to quote the argument.
+
       \item \code{str()} now shows more via \code{format()} for external
       pointers.
 
