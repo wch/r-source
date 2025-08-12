@@ -1001,7 +1001,7 @@ temperature no yes
 > 
 > ### ** Examples
 > 
-> ## Use the Berkeley admission data as in Friendly (1995).
+> ## Use the Berkeley admission data as in Friendly (1994).
 > x <- aperm(UCBAdmissions, c(2, 1, 3))
 > dimnames(x)[[2]] <- c("Yes", "No")
 > names(dimnames(x)) <- c("Sex", "Admit?", "Department")
