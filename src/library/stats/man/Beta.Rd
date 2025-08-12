@@ -98,20 +98,9 @@ rbeta(n, shape1, shape2, ncp = 0)
   mixture of betas (Johnson \abbr{et al.}, 1995, pp.\sspace{}502--3).
 
   \item The central \code{pbeta} for the default (\code{log_p = FALSE})
-  uses a C translation based on
-
-  Didonato, A. and Morris, A., Jr, (1992)
-  Algorithm 708: Significant digit computation of the incomplete beta
-  function ratios,
-  \emph{ACM Transactions on Mathematical Software}, \bold{18}, 360--373,
-  \doi{10.1145/131766.131776}.
-  (See also\cr
-  Brown, B. and Lawrence Levy, L. (1994)
-  Certification of algorithm 708: Significant digit computation of the
-  incomplete beta,
-  \emph{ACM Transactions on Mathematical Software}, \bold{20}, 393--397,
-  \doi{10.1145/192115.192155}.)
-  \cr %%
+  uses a C translation based on \bibcitep{R:Didonato+Morris:1992}.
+  (See also \bibcitet{R:Brown+Levy:1994}.)
+  
   We have slightly tweaked the original \dQuote{TOMS 708} algorithm, and
   enhanced for \code{log.p = TRUE}.  For that (log-scale) case,
   underflow to \code{-Inf} (i.e., \eqn{P = 0}) or \code{0}, (i.e.,
@@ -120,37 +109,22 @@ rbeta(n, shape1, shape2, ncp = 0)
   typically signals a \code{\link{warning}}.
 
   \item The non-central \code{pbeta} uses a C translation of
-
-  Lenth, R. V. (1987) Algorithm AS 226: Computing noncentral beta
-  probabilities. \emph{Applied Statistics}, \bold{36}, 241--244,
-  \doi{10.2307/2347558}, 
-  incorporating\cr
-  Frick, H. (1990)'s AS R84, \emph{Applied Statistics}, \bold{39},
-  311--2, \doi{10.2307/2347780}
-  and\cr
-  Lam, M.L. (1995)'s AS R95, \emph{Applied Statistics}, \bold{44},
-  551--2, \doi{10.2307/2986147}.
+  \bibcitet{R:Lenth:1987} incorporating \bibcitet{R:Frick:1990} and
+  \bibcitet{R:Lam:1995}.
 
   This computes the lower tail only, so the upper tail suffers from
   cancellation and a warning will be given when this is likely to be
   significant.
 
   \item The central case of \code{qbeta} is based on a C translation of
-
-  Cran, G. W., K. J. Martin and G. E. Thomas (1977).
-  Remark AS R19 and Algorithm AS 109,
-  \emph{Applied Statistics},  \bold{26}, 111--114,
-  \doi{10.2307/2346887},
-  and subsequent remarks (AS83 and correction).
+  \bibcitet{R:Cran+Martin+Thomas:1977} and subsequent remarks (AS83 and
+  correction).
 
   Enhancements, notably for starting values and switching to a log-scale
   Newton search, by R Core.
 
   \item  The central case of \code{rbeta} is based on a C translation of
-
-  R. C. H. Cheng (1978).
-  Generating beta variates with nonintegral shape parameters.
-  \emph{Communications of the ACM}, \bold{21}, 317--322.
+  \bibcitet{R:Cheng:1978}.
  }
 }
 \references{

@@ -1,6 +1,6 @@
 % File src/library/graphics/man/mosaicplot.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2021 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{mosaicplot}
@@ -125,7 +125,7 @@ mosaicplot(x, \dots)
   Originally modified and enhanced for \R by Kurt Hornik.
 }
 \references{
-  \bibshow{*, R:Hartigan+Kleiner:1984, R:Friendly:1994}
+  \bibshow{*, R:Hartigan+Kleiner:1984, R:Friendly:1994a}
 }
 \seealso{
   \code{\link{assocplot}},

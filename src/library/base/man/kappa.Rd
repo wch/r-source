@@ -117,18 +117,9 @@ rcond(x, norm = c("O","I","1"), triangular = FALSE, uplo = "U", \dots)
   in the references.
 }
 \references{
-  Anderson. E. and ten others (1999)
-  \emph{LAPACK Users' Guide}. Third Edition. SIAM.\cr
-  Available on-line at
-  \url{https://netlib.org/lapack/lug/lapack_lug.html}.
-
- Chambers, J. M. (1992)
-  \emph{Linear models.}
-  Chapter 4 of \emph{Statistical Models in S}
-  eds J. M. Chambers and T. J. Hastie, Wadsworth & Brooks/Cole.
-
-  Dongarra, J. J., Bunch, J. R., Moler, C. B. and Stewart, G. W. (1978)
-  \emph{LINPACK Users Guide.}  Philadelphia: SIAM Publications.
+  \bibshow{R:Anderson+Bai+Bischof:1999,
+    R:Chambers:1992b,
+    R:Dongarra+Bunch+Moler:1979}
 }
 \author{
   The design was inspired by (but differs considerably from)

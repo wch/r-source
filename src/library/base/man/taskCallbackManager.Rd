@@ -1,6 +1,6 @@
 % File src/library/base/man/taskCallbackManager.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2020 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{taskCallbackManager}
@@ -78,9 +78,7 @@ taskCallbackManager(handlers = list(), registered = FALSE,
   \code{\link{getTaskCallbackNames}} and the reference.
 }
 \references{
-  Duncan Temple Lang (2001)
-  \emph{Top-level Task Callbacks in R}, % TaskHandlers.tex is in R-dev-web svn
-  \url{https://developer.r-project.org/TaskHandlers.pdf}
+  \bibshow{R:Temple_Lang:2001b}
 }
 \examples{
 # create the manager

@@ -121,7 +121,7 @@
 }
 
 \references{
-  \bibshow{R:Chambers:1992b}
+  \bibshow{R:Chambers:1992c}
 }
 \examples{
 methods(class = "MethodsFunction") # format and print

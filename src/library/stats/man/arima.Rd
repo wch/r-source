@@ -211,27 +211,14 @@ arima(x, order = c(0L, 0L, 0L),
   \emph{Time Series Analysis by State Space Methods}.
   Oxford University Press.
 
-  Gardner, G, Harvey, A. C. and Phillips, G. D. A. (1980).
-  Algorithm AS 154: An algorithm for exact maximum likelihood estimation
-  of autoregressive-moving average models by means of Kalman filtering.
-  \emph{Applied Statistics}, \bold{29}, 311--322.
-  \doi{10.2307/2346910}.
-
   Harvey, A. C. (1993).
   \emph{Time Series Models}. 2nd Edition.
   Harvester Wheatsheaf.
   Sections 3.3 and 4.4.
 
-  Jones, R. H. (1980).
-  Maximum likelihood fitting of ARMA models to time series with missing
-  observations.
-  \emph{Technometrics}, \bold{22}, 389--395.
-  \doi{10.2307/1268324}.
-
-  Ripley, B. D. (2002).
-  \dQuote{Time series in \R 1.5.0}.
-  \emph{R News}, \bold{2}(2), 2--7.
-  \url{https://www.r-project.org/doc/Rnews/Rnews_2002-2.pdf}
+  \bibshow{R:Gardner+Harvey+Phillips:1980,
+    R:Jones:1980,
+    R:Ripley:2002}
 }
 
 \note{

@@ -1,6 +1,6 @@
 % File src/library/stats/man/stl.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2024 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{stl}
@@ -27,9 +27,11 @@ stl(x, s.window, s.degree = 0,
   \item{x}{univariate time series to be decomposed.
     This should be an object of class \code{"ts"} with a frequency
     greater than one.}
-  \item{s.window}{either the character string \code{"periodic"} or the span (in
-    lags) of the \I{loess} window for seasonal extraction, which should
-    be odd and at least 7, according to Cleveland \abbr{et al.}  This has no default.}
+  \item{s.window}{either the character string \code{"periodic"} or the
+    span (in lags) of the \I{loess} window for seasonal extraction,
+    which should be odd and at least 7, according to
+    \bibcitet{R:Cleveland+Cleveland+McRae:1990}.
+    This has no default.}
   \item{s.degree}{degree of locally-fitted polynomial in seasonal
     extraction.  Should be zero or one.}
   \item{t.window}{the span (in lags) of the \I{loess} window for trend
@@ -85,14 +87,12 @@ stl(x, s.window, s.degree = 0,
   \item{ni}{number of \bold{i}nner iterations}
   \item{no}{number of \bold{o}uter robustness iterations}
 }
-\references{
-  R. B. Cleveland, W. S. Cleveland, J.E.  McRae, and I. Terpenning (1990)
-  STL:  A  Seasonal-Trend  Decomposition  Procedure Based on Loess.
-  \emph{Journal of Official Statistics}, \bold{6}, 3--73.
-}
-\author{B.D. Ripley; Fortran code by Cleveland \abbr{et al.}\sspace(1990) from
+\author{B.D. Ripley;
+  Fortran code by \bibcitet{R:Cleveland+Cleveland+McRae:1990} from
   \file{netlib}.}
-
+\references{
+  \bibshow{*}
+}
 \seealso{
   \code{\link{plot.stl}} for \code{stl} methods;
   \code{\link{loess}} in package \pkg{stats} (which is not actually

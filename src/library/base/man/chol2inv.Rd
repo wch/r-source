@@ -1,6 +1,6 @@
 % File src/library/base/man/chol2inv.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2020 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{chol2inv}
@@ -35,15 +35,8 @@ chol2inv(x, size = NCOL(x), LINPACK = FALSE)
   in the references.
 }
 \references{
-  Anderson. E. and ten others (1999)
-  \emph{LAPACK Users' Guide}. Third Edition.
-  SIAM.
-  Available on-line at
-  \url{https://netlib.org/lapack/lug/lapack_lug.html}.
-
-  Dongarra, J. J., Bunch, J. R., Moler, C. B. and Stewart, G. W. (1978)
-  \emph{LINPACK Users Guide}.
-  Philadelphia: SIAM Publications.
+  \bibshow{R:Anderson+Bai+Bischof:1999,
+    R:Dongarra+Bunch+Moler:1979}
 }
 \seealso{
   \code{\link{chol}}, \code{\link{solve}}.

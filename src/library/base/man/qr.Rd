@@ -136,17 +136,9 @@ as.qr(x)
   in the references.
 }
 \references{
-  Anderson. E. and ten others (1999)
-  \emph{LAPACK Users' Guide}. Third Edition. SIAM.\cr
-  Available on-line at
-  \url{https://netlib.org/lapack/lug/lapack_lug.html}.
-
-  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
-  \emph{The New S Language}.
-  Wadsworth & Brooks/Cole.
-
-  Dongarra, J. J., Bunch, J. R., Moler, C. B. and Stewart, G. W. (1978)
-  \emph{LINPACK Users Guide.}  Philadelphia: SIAM Publications.
+  \bibshow{R:Anderson+Bai+Bischof:1999,
+    R:Becker+Chambers+Wilks:1988,
+    R:Dongarra+Bunch+Moler:1979}
 }
 \seealso{
   \code{\link{qr.Q}},  \code{\link{qr.R}},  \code{\link{qr.X}} for

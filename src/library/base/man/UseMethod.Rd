@@ -165,7 +165,7 @@ NextMethod(generic = NULL, object = NULL, \dots)
   method.  It is possible to change the method that \code{NextMethod}
   would dispatch by manipulating \code{.Class}, but \sQuote{this is not
     recommended unless you understand the inheritance mechanism
-    thoroughly} \bibcitep{|R:Chambers:1992b|page 469}.
+    thoroughly} \bibcitep{|R:Chambers:1992c|page 469}.
 }
 \note{
   This scheme is called \emph{S3} (S version 3).  For new projects,

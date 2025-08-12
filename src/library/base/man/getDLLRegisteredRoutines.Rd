@@ -1,6 +1,6 @@
 % File src/library/base/man/getDLLRegisteredRoutines.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{getDLLRegisteredRoutines}
@@ -81,10 +81,7 @@ getDLLRegisteredRoutines(dll, addNames = TRUE)
 \references{
   \sQuote{Writing R Extensions} manual for symbol registration.
 
-  Duncan Temple Lang (2001).
-  \dQuote{In Search of C/C++ & FORTRAN Routines}.
-  \emph{R News}, \bold{1}(3), 20--23.
-  \url{https://www.r-project.org/doc/Rnews/Rnews_2001-3.pdf}.
+  \bibshow{R:Temple_Lang:2001a}
 }
 \author{Duncan Temple Lang \email{duncan@wald.ucdavis.edu}}
 

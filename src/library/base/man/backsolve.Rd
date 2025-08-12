@@ -1,6 +1,6 @@
 % File src/library/base/man/backsolve.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{backsolve}
@@ -46,12 +46,8 @@ forwardsolve(l, x, k = ncol(l), upper.tri = FALSE,
   \code{x} is a vector and a matrix if \code{x} is a matrix.
 }
 \references{
-  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
-  \emph{The New S Language}.
-  Wadsworth & Brooks/Cole.
-
-  Dongarra, J. J., Bunch, J. R.,  Moler, C. B. and  Stewart, G. W. (1978)
-  \emph{LINPACK Users Guide}.  Philadelphia: SIAM Publications.
+  \bibshow{R:Becker+Chambers+Wilks:1988,
+    R:Dongarra+Bunch+Moler:1979}
 }
 \seealso{
   \code{\link{chol}},
