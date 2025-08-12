@@ -23,16 +23,16 @@ distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in Makefile.win $(SCRIPTS_S) $(SCRIPTS_B_IN) R.sh.in
 
 CLEANFILES =
-DISTCLEANFILES = Makefile R.fe R.sh $(SCRIPTS_B)
+DISTCLEANFILES = Makefile R.sh $(SCRIPTS_B)
 
 all: Makefile R
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 
-R: $(SCRIPTS_B) R.fe
+R: $(SCRIPTS_B) R.sh
 	@$(MAKE) DESTDIR="" rhome=$(top_builddir) install-cmds
-	@$(INSTALL_SCRIPT) R.fe $(top_builddir)/bin/R
+	@$(INSTALL_SCRIPT) R.sh $(top_builddir)/bin/R
 
 ## <NOTE>
 ## Seems we need target rules for creating FOO from FOO.in: pattern
@@ -60,27 +60,9 @@ Makerules:
 	  done)
 ## </NOTE>
 
-## <NOTE>
-## The front-end shell script now (2000-08-02) also contains the version
-## information.  As we keep this information outside configure (as
-## otherwise developers would have to reconfigure and hence rebuild
-## every day), we now first create 'R.sh' from 'R.sh.in' via configure,
-## and then use sed to create the front end ('R.fe') which gets
-## installed as 'R'.
 R.sh: $(srcdir)/R.sh.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
-R.fe: R.sh $(top_srcdir)/VERSION $(top_builddir)/SVN-REVISION
-	@$(ECHO) "creating $(subdir)/$@"
-	@(v=`cat $(top_srcdir)/VERSION`; \
-	  dat=`sed -e 1d -e 's/^Last Changed Date: //' $(top_builddir)/SVN-REVISION`; \
-	  v="$${v} ($${dat})"; \
-	  y=`$(ECHO) $${dat} | cut -d- -f1`; \
-	  d=`$(ECHO) "$(abs_top_builddir)" | sed 's,/,\\\/,g'`; \
-	  sed "1,/R_HOME_DIR/s/\\(R_HOME_DIR=\\).*/\\1\"$${d}\"/; \
-	       s@REPLACE_BY_VERSION@$${v}@; \
-	       s@REPLACE_BY_YEAR@$${y}@" < R.sh > $@)
 	@chmod +x $@
-## </NOTE>
 
 $(top_builddir)/libtool:
 	@(cd $(@D); $(MAKE) $(@F))
@@ -91,8 +73,8 @@ install: installdirs install-cmds
 	  d2=`$(ECHO) '$(rsharedir)' | sed 's,/,\\\/,g';`; \
 	  d3=`$(ECHO) '$(rincludedir)' | sed 's,/,\\\/,g';`; \
 	  d4=`$(ECHO) '$(rdocdir)' | sed 's,/,\\\/,g';`; \
-	  sed -e "1,/R_HOME_DIR=/s/\\(R_HOME_DIR=\\).*/\\1$${d}/;" -e "s/\\(R_SHARE_DIR=\\).*/\\1$${d2}/;" -e  "s/\\(R_INCLUDE_DIR=\\).*/\\1$${d3}/;" -e "s/\\(R_DOC_DIR=\\).*/\\1$${d4}/;"\
-	  < R.fe > "$(DESTDIR)$(Rexecbindir)/R")
+	  sed -e "1,/R_HOME_DIR=/s/\\(R_HOME_DIR=\\).*/\\1\"$${d}\"/;" -e "s/\\(R_SHARE_DIR=\\).*/\\1\"$${d2}\"/;" -e  "s/\\(R_INCLUDE_DIR=\\).*/\\1\"$${d3}\"/;" -e "s/\\(R_DOC_DIR=\\).*/\\1\"$${d4}\"/;"\
+	  < R.sh > "$(DESTDIR)$(Rexecbindir)/R")
 	@$(INSTALL_SCRIPT)  "$(DESTDIR)$(Rexecbindir)/R" "$(DESTDIR)$(bindir)/R"
 	@chmod 755 "$(DESTDIR)$(bindir)/R" "$(DESTDIR)$(Rexecbindir)/R"
 ## why of all the scripts does this alone chmod just one copy?

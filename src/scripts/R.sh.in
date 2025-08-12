@@ -1,7 +1,7 @@
 #!@R_SHELL@
 # Shell wrapper for R executable.
 
-R_HOME_DIR=
+R_HOME_DIR="@abs_top_builddir@"
 if test "${R_HOME_DIR}" = "@prefix@/@LIBnn@/R"; then
    case "@R_OS@" in
    linux*)
