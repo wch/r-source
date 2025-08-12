@@ -2221,18 +2221,18 @@ So for example you could select a specific @I{LLVM}
 SDK=/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk
 CC = /usr/local/clang/bin/clang -isysroot $(SDK)
 CXX = /usr/local/clang/bin/clang++ -isysroot $(SDK)
-CXX11 = $CXX
-CXX14 = $CXX
-CXX17 = $CXX
-CXX20 = $CXX
-CXX23 = $CXX
+CXX11 = $(CXX)
+CXX14 = $(CXX)
+CXX17 = $(CXX)
+CXX20 = $(CXX)
+CXX23 = $(CXX)
 CFLAGS = -g -O2 -Wall -pedantic -Wconversion -Wno-sign-conversion
 CXXFLAGS = -g -O2 -Wall -pedantic -Wconversion -Wno-sign-conversion
-CXX11FLAGS = $CXXFLAGS
-CXX14FLAGS = $CXXFLAGS
-CXX17FLAGS = $CXXFLAGS
-CXX20FLAGS = $CXXFLAGS
-CXX23FLAGS = $CXXFLAGS
+CXX11FLAGS = $(CXXFLAGS)
+CXX14FLAGS = $(CXXFLAGS)
+CXX17FLAGS = $(CXXFLAGS)
+CXX20FLAGS = $(CXXFLAGS)
+CXX23FLAGS = $(CXXFLAGS)
 @end example
 @noindent
 (the current @I{SDK} can be found by running @command{xcrun -show-sdk-path})
