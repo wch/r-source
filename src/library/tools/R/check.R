@@ -681,11 +681,7 @@ add_dummies <- function(dir, Log)
                      paste("  file", paste(sQuote(miss[f]), collapse = ", "),
                            "will not be installed: please remove it\n"))
         }
-        if (dir.exists("inst/doc")) {
-            if (R_check_doc_sizes) check_doc_size()
-            else if (as_cran)
-                warningLog(Log, "'qpdf' is needed for checks on size reduction of PDFs")
-        }
+        if (R_check_doc_sizes && dir.exists("inst/doc")) check_doc_size()
         if (dir.exists("inst/doc") && do_install) check_doc_contents()
         if (dir.exists("vignettes")) check_vign_contents(ignore_vignettes)
         ## R 4.5.0: remove this long-obsolete check
@@ -3297,12 +3293,18 @@ add_dummies <- function(dir, Log)
 
     check_doc_size <- function()
     {
-        ## Have already checked that inst/doc exists and qpdf can be found
+        ## Have already checked that inst/doc exists
         pdfs <- dir('inst/doc', pattern="\\.pdf",
                     recursive = TRUE, full.names = TRUE)
         pdfs <- setdiff(pdfs, "inst/doc/Rplots.pdf")
         if (length(pdfs)) {
             checkingLog(Log, "sizes of PDF files under 'inst/doc'")
+            if (!nzchar(Sys.which(Sys.getenv("R_QPDF", "qpdf")))) {
+                if (as_cran)
+                    warningLog(Log, "'qpdf' is needed for checks on size reduction of PDFs")
+                return()
+            }
+
             any <- FALSE
             td <- tempfile('pdf')
             dir.create(td)
@@ -7288,8 +7290,7 @@ add_dummies <- function(dir, Log)
         config_val_to_logical(Sys.getenv("_R_CHECK_PKG_SIZES_", "TRUE")) &&
         nzchar(Sys.which("du"))
     R_check_doc_sizes <-
-        config_val_to_logical(Sys.getenv("_R_CHECK_DOC_SIZES_", "TRUE")) &&
-        nzchar(Sys.which(Sys.getenv("R_QPDF", "qpdf")))
+        config_val_to_logical(Sys.getenv("_R_CHECK_DOC_SIZES_", "TRUE"))
     R_check_doc_sizes2 <-
         config_val_to_logical(Sys.getenv("_R_CHECK_DOC_SIZES2_", "FALSE"))
     R_check_code_assign_to_globalenv <-
