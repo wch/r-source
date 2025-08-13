@@ -124,9 +124,8 @@ There are also
   \bibshow{R:Chambers:2016}
   (Chapters 9 and 10.)
 
- Chambers, John M. (2008)
- \emph{Software for Data Analysis: Programming with R}
-  Springer. (Section 10.5)
+  \bibshow{R:Chambers:2008}
+  (Section 10.5)
 }
 \seealso{ The function \code{\link{callGeneric}} is nearly always
   relevant when writing a method for a group generic.  See the

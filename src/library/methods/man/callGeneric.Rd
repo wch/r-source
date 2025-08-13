@@ -51,10 +51,8 @@ callGeneric(...)
   \bibshow{R:Chambers:2016}
   (Chapters 9 and 10.)
 
- Chambers, John M. (2008)
- \emph{Software for Data Analysis: Programming with R}
-  Springer. (Section 10.4 for some details.)
-
+  \bibshow{R:Chambers:2008}
+  (Section 10.4 for some details.)
 }
 \seealso{\code{\link{GroupGenericFunctions}} for other information
   about group generic functions; \link{Methods_Details} for the general behavior

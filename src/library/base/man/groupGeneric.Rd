@@ -201,10 +201,7 @@
   for that package.
 }
 \references{
-  Appendix A, \emph{Classes and Methods} of\cr
-  Chambers, J. M.  and Hastie, T. J. eds (1992)
-  \emph{Statistical Models in S.}
-  Wadsworth & Brooks/Cole.
+  \bibshow{R:Chambers:1992:aa}
 }
 \seealso{
   \code{\link{methods}} for methods of non-internal generic functions.

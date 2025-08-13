@@ -119,9 +119,8 @@ sealClass(Class, where)
   \bibshow{R:Chambers:2016}
   (Chapters 9 and 10.)
 
- Chambers, John M. (2008)
- \emph{Software for Data Analysis: Programming with R}
-  Springer. (Chapter 9 has some details not in the later reference.)
+  \bibshow{R:Chambers:2008}
+  (Chapter 9 has some details not in the later reference.)
 }
 
 \seealso{

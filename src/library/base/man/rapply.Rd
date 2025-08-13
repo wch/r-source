@@ -53,10 +53,9 @@ rapply(object, f, classes = "ANY", deflt = NULL,
   \code{\link{lapply}}, \code{\link{dendrapply}}.
 }
 \references{
-  Chambers, J. A. (1998)
-  \emph{Programming with Data}.
-  Springer.\cr
-  (\code{rapply} is only described briefly there.)
+  \bibinfo{R:Chambers:1998}{footer}{(\\\\\\code{rapply} is only
+    described briefly there.)}
+  \bibshow{R:Chambers:1998}
 }
 \examples{
 X <- list(list(a = pi, b = list(c = 1L)), d = "a test")
