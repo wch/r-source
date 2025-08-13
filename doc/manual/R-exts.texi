@@ -17078,12 +17078,11 @@ Header file @file{Rversion.h} (@strong{not} included by @file{R.h})
 defines a macro @code{R_VERSION} giving the version number encoded as an
 integer, plus a macro @code{R_Version} to do the encoding.  This can be
 used to test if the version of @R{} is late enough, or to include
-back-compatibility features.  For protection against very old versions
-of @R{} which did not have this macro, use a construction such as
+back-compatibility features, such as
 
 @example
 @group
-#if defined(R_VERSION) && R_VERSION >= R_Version(3, 1, 0)
+#if R_VERSION >= R_Version(3, 1, 0)
   ...
 #endif
 @end group
