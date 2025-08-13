@@ -184,9 +184,10 @@ x \%/\% y
   \url{https://en.wikipedia.org/wiki/IEEE_754}.
 
   On the integer division and remainder (modulo) computations, \code{\%\%}
-  and \code{\%/\%}:  \url{https://en.wikipedia.org/wiki/Modulo_operation}, and
-  Donald Knuth (1972)
-  \emph{The Art of Computer Programming}, Vol.1.
+  and \code{\%/\%}:
+  \url{https://en.wikipedia.org/wiki/Modulo_operation}, and
+
+  \bibshow{R:Knuth:1972:v1}
 }
 \seealso{
   \code{\link{sqrt}} for miscellaneous and \code{\link{Special}} for special

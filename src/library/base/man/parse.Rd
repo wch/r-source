@@ -55,13 +55,7 @@ str2expression(text)
     \dQuote{string}.}
 }
 \references{
-  \bibshow{R:Becker+Chambers+Wilks:1988}
-
-  Murdoch, D. (2010).
-  \dQuote{Source References}.
-  %% \href{https://journal.r-project.org/archive/2010-2/RJournal_2010-2_Murdoch.pdf}{Source References}.
-  \emph{The R Journal}, \bold{2}(2), 16--19.
-  \doi{10.32614/RJ-2010-010}.
+  \bibshow{R:Becker+Chambers+Wilks:1988, R:Murdoch:2010}
 }
 \seealso{
   \code{\link{scan}}, \code{\link{source}}, \code{\link{eval}},

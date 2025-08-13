@@ -127,7 +127,7 @@ set.seed(seed, kind = NULL, normal.kind = NULL, sample.kind = NULL)
     }
 
     \item{\code{"Knuth-TAOCP"}:}{
-      An earlier version from \bibcitet{R:Knuth:1997}.
+      An earlier version from \bibcitet{R:Knuth:1997:v2}.
 
       The 2002 version was not backwards compatible with the earlier
       version: the initialization of the \abbr{GFSR} from the seed was altered.
@@ -256,7 +256,7 @@ set.seed(seed, kind = NULL, normal.kind = NULL, sample.kind = NULL)
 \references{
   \bibinfo{R:Becker+Chambers+Wilks:1988}{footer}{
     (\\\\\\code{set.seed}, storing in \\\\\\code{.Random.seed}.)}
-  \bibinfo{R:Knuth:1997}{footer}{
+  \bibinfo{R:Knuth:1997:v2}{footer}{
     Source code at \\\\\\url{https://www-cs-faculty.stanford.edu/~knuth/taocp.html}.}
   \bibinfo{R:L_Ecuyer+Simard:2007}{footer}{
     The \\\\\\I{TestU01} C library is available from
@@ -275,7 +275,7 @@ set.seed(seed, kind = NULL, normal.kind = NULL, sample.kind = NULL)
     R:Box+Muller:1958,
     R:De_Matteis+Pagnutti:1993,
     R:Kinderman+Ramage:1976,
-    R:Knuth:2002,
+    R:Knuth:2002:v3,
     R:Marsaglia+Zaman:1994,
     R:Wichmann+Hill:1982}
 }

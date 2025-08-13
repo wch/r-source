@@ -97,11 +97,7 @@ NaN
 
   \url{https://en.wikipedia.org/wiki/NaN}.
 
-  D. Goldberg (1991).
-  What Every Computer Scientist Should Know about Floating-Point
-  Arithmetic.
-  \emph{ACM Computing Surveys}, \bold{23}(1), 5--48.
-  \doi{10.1145/103162.103163}.
+  \bibshow{R:Goldberg:1991}
   \cr
   %% As of 2020-09-25, www.validlab.com redirects to https without valid
   %% certificate ...

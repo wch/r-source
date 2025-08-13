@@ -158,7 +158,7 @@ sort.int(x, partial = NULL, na.last = NA, decreasing = FALSE,
 }
 
 \references{
-  \bibshow{*, R:Knuth:1998}
+  \bibshow{*, R:Knuth:1998:v3}
 }
 \seealso{
   \sQuote{\link{Comparison}} for how character strings are collated.
