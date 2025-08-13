@@ -1,17 +1,3 @@
-bibentry(bibtype = "InCollection",
-         key = "R:Chambers:1992a",
-         author = person(given = c("John", "M."),
-                           family = "Chambers"),
-         title = "Data for Models",
-         booktitle = "Statistical Models in {S}",
-         publisher = "Wadsworth & Brooks/Cole",
-         year = "1992",
-         editor = c(person(given = c("John", "M."),
-                           family = "Chambers"),
-                    person(given = c("Trevor", "J."),
-                           family = "Hastie")),
-         chapter = "3")
-
 bibentry(bibtype = "Manual",
          key = "R:Francois:2012",
          title = "parser: Detailed {R} source code parser",
