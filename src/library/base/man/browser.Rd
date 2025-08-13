@@ -129,11 +129,7 @@ readEvalPrint <- function(env = parent.frame()) {
   debugger.
 }
 \references{
-  \bibshow{R:Becker+Chambers+Wilks:1988}
-
-  Chambers, J. M. (1998)
-  \emph{Programming with Data. A Guide to the S Language}.
-  Springer.
+  \bibshow{R:Becker+Chambers+Wilks:1988, R:Chambers:1998}
 }
 \seealso{
   \code{\link{debug}}, and

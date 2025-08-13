@@ -102,7 +102,7 @@ symbols(x, y = NULL, circles, squares, rectangles, stars,
   \emph{The Elements of Graphing Data.}
   Monterey, California: Wadsworth.
 
-  Murrell, P. (2005) \emph{R Graphics}. Chapman & Hall/CRC Press.
+  \bibshow{R:Murrell:2005}
 }
 \seealso{
   \code{\link{stars}} for drawing \emph{stars} with a bit more

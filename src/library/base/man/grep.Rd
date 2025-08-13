@@ -295,9 +295,8 @@ gregexec(pattern, text, ignore.case = FALSE, perl = FALSE,
 }
 
 \references{
-  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
-  \emph{The New S Language}.
-  Wadsworth & Brooks/Cole (\code{grep})
+  \bibshow{R:Becker+Chambers+Wilks:1988}
+  (\code{grep})
 }
 
 % the `aka' below is for ESS

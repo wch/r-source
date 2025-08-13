@@ -90,7 +90,8 @@ NextMethod(generic = NULL, object = NULL, \dots)
 }
 \section{Technical Details}{
   Now for some obscure details that need to appear somewhere.  These
-  comments will be slightly different than those in Chambers(1992).
+  comments will be slightly different than those in
+  \bibcitet{R:Chambers:1992:aa}.
   (See also the draft \sQuote{R Language Definition}.)
   \code{UseMethod} creates a new function call with
   arguments matched as they came in to the generic.  [Previously local
@@ -165,7 +166,7 @@ NextMethod(generic = NULL, object = NULL, \dots)
   method.  It is possible to change the method that \code{NextMethod}
   would dispatch by manipulating \code{.Class}, but \sQuote{this is not
     recommended unless you understand the inheritance mechanism
-    thoroughly} \bibcitep{|R:Chambers:1992c|page 469}.
+    thoroughly} \bibcitep{|R:Chambers:1992:aa|page 469}.
 }
 \note{
   This scheme is called \emph{S3} (S version 3).  For new projects,

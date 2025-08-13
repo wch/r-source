@@ -59,9 +59,7 @@ predict(object, ...)
   \code{\link{predict.StructTS}}.
 }
 \references{
-  Chambers, J. M. and Hastie, T. J. (1992)
-  \emph{Statistical Models in S}.
-  Wadsworth & Brooks/Cole.
+  \bibshow{R:Chambers+Hastie:1992}
 }
 \examples{
 \dontshow{old <- Sys.getlocale("LC_COLLATE")

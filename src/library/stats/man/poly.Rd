@@ -78,9 +78,7 @@ polym  (\dots, degree = 1, coefs = NULL, raw = FALSE)
   improvements for correct prediction on subsets.
 }
 \references{
-  Chambers, J. M. and Hastie, T. J. (1992)
-  \emph{Statistical Models in S}.
-  Wadsworth & Brooks/Cole.
+  \bibshow{R:Chambers+Hastie:1992}
 
   Kennedy, W. J. Jr and Gentle, J. E. (1980)
   \emph{Statistical Computing} Marcel Dekker.

@@ -79,10 +79,8 @@ you should include  \code{\dots} as a formal argument, and your method should pa
   concatenated into the resulting vector.
 }
 \references{
- Chambers, John M. (2016)
- \emph{Extending R},
-  Chapman & Hall.
-(Chapters 9 and 10.)
+  \bibshow{R:Chambers:2016}
+  (Chapters 9 and 10.)
 }
 \seealso{ \link{Classes_Details} for details of class definitions, and
   \code{\link{setOldClass}} for the relation to S3 classes. }

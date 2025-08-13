@@ -214,11 +214,7 @@ lm(formula, data, subset, weights, na.action,
   cases).
 }
 \references{
-  Chambers, J. M. (1992)
-  \emph{Linear models.}
-  Chapter 4 of \emph{Statistical Models in S}
-  eds J. M. Chambers and T. J. Hastie, Wadsworth & Brooks/Cole.
-
+  \bibshow{R:Chambers:1992:c4}
   Wilkinson, G. N. and Rogers, C. E. (1973).
   Symbolic descriptions of factorial models for analysis of variance.
   \emph{Applied Statistics}, \bold{22}, 392--399.

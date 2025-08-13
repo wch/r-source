@@ -29,11 +29,7 @@ stat.anova(table, test = c("Rao","LRT", "Chisq", "F", "Cp"),
   of test statistics, depending on the \code{test} argument.
 }
 \references{
-  Hastie, T. J. and Pregibon, D. (1992)
-  \emph{Generalized linear models.}
-  Chapter 6 of \emph{Statistical Models in S}
-  eds J. M. Chambers and T. J. Hastie, Wadsworth & Brooks/Cole.
-}
+  \bibshow{R:Hastie+Pregibon:1992}}
 \seealso{\code{\link{anova.lm}}, \code{\link{anova.glm}}.}
 \examples{
 ##-- Continued from '?glm':

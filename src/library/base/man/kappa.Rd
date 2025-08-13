@@ -118,7 +118,7 @@ rcond(x, norm = c("O","I","1"), triangular = FALSE, uplo = "U", \dots)
 }
 \references{
   \bibshow{R:Anderson+Bai+Bischof:1999,
-    R:Chambers:1992b,
+    R:Chambers:1992:c4,
     R:Dongarra+Bunch+Moler:1979}
 }
 \author{

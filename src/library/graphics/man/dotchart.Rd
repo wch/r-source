@@ -79,7 +79,7 @@ dotchart(x, labels = NULL, groups = NULL, gdata = NULL, offset = 1/8,
   \emph{The Elements of Graphing Data.}
   Monterey, CA: Wadsworth.
 
-  Murrell, P. (2005) \emph{R Graphics}. Chapman & Hall/CRC Press.
+  \bibshow{R:Murrell:2005}
 }
 \examples{
 dotchart(VADeaths, main = "Death Rates in Virginia - 1940")

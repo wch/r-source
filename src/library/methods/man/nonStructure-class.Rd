@@ -35,12 +35,10 @@
  all cases the result is an ordinary vector of the appropriate type.
 }
 \references{
- Chambers, John M. (2008)
- \emph{Software for Data Analysis: Programming with R}
-  Springer.
+  \bibshow{R:Chambers:2008}
 }
 \seealso{
-         \code{\linkS4class{structure}}
+  \code{\linkS4class{structure}}
 }
 \examples{
 setClass("NumericNotStructure", contains = c("numeric","nonStructure"))

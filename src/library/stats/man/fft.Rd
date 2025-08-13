@@ -52,9 +52,7 @@ mvfft(z, inverse = FALSE)
   Uses C translation of Fortran code in Singleton (1979).
 }
 \references{
-  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988).
-  \emph{The New S Language}.
-  Wadsworth & Brooks/Cole.
+  \bibshow{R:Becker+Chambers+Wilks:1988}
 
   Singleton, R. C. (1979).
   Mixed Radix Fast Fourier Transforms,

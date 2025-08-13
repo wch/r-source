@@ -77,13 +77,11 @@ showMethods(f = character(), where = topenv(parent.frame()),
   or filename, via \code{\link{invisible}}.
 }
 \references{
- Chambers, John M. (2008)
- \emph{Software for Data Analysis: Programming with R}
-  Springer.  (For the R version.)
+  \bibshow{R:Chambers:2008}
+  (For the R version.)
 
- Chambers, John M. (1998)
- \emph{Programming with Data}
- Springer (For the original S4 version.)
+  \bibshow{R:Chambers:1998}
+  (For the original S4 version.)
 }
 \seealso{
   \code{\link{setMethod}}, and \code{\link{GenericFunctions}}

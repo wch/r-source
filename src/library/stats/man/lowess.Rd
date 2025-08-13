@@ -58,9 +58,7 @@ lowess(x, y = NULL, f = 2/3, iter = 3, delta = 0.01 * diff(range(x)))
   points with the function \code{lines}: see the examples.
 }
 \references{
-  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988).
-  \emph{The New S Language}.
-  Wadsworth & Brooks/Cole.
+  \bibshow{R:Becker+Chambers+Wilks:1988}
 
   Cleveland, W. S. (1979).
   Robust locally weighted regression and smoothing scatterplots.

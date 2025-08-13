@@ -159,9 +159,8 @@ attr.all.equal(target, current, \dots,
   between \code{target} and \code{current}.
 }
 \references{
-  Chambers, J. M. (1998)
-  \emph{Programming with Data. A Guide to the S Language}.
-  Springer (for \code{=}).
+  \bibshow{R:Chambers:1998}
+  (for \code{=}).
 }
 \seealso{\code{\link{identical}}, \code{\link{isTRUE}}, \code{\link{==}}, and
   \code{\link{all}} for exact equality testing.

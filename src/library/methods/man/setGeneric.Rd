@@ -301,15 +301,11 @@ setGeneric(name, def= , group=list(), valueClass=character(),
   \code{name}.
 }
 \references{
- Chambers, John M. (2016)
- \emph{Extending R},
-  Chapman & Hall.
-(Chapters 9 and 10.)
+  \bibshow{R:Chambers:2016}
+  (Chapters 9 and 10.)
 
- Chambers, John M. (2008)
- \emph{Software for Data Analysis: Programming with R}
-  Springer. (Section 10.5 for some details.)
-
+  \bibshow{R:Chambers:2008}
+  (Section 10.5 for some details.)
 }
 \examples{
 

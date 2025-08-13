@@ -124,10 +124,7 @@ is.data.frame(x)
   Names are removed from vector columns unless \code{\link{I}}.
 }
 \references{
-  Chambers, J. M. (1992)
-  \emph{Data for models.}
-  Chapter 3 of \emph{Statistical Models in S}
-  eds J. M. Chambers and T. J. Hastie, Wadsworth & Brooks/Cole.
+  \bibshow{R:Chambers:1992:c3}
 }
 \seealso{
   \code{\link{data.frame}} and  \code{\link{make.names}};

@@ -36,9 +36,7 @@ interaction(\dots, drop = FALSE, sep = ".", lex.order = FALSE)
   \code{\link{:}}.  (It is done this way for compatibility with S.)
 }
 \references{
-  Chambers, J. M. and Hastie, T. J. (1992)
-  \emph{Statistical Models in S}.
-  Wadsworth & Brooks/Cole.
+  \bibshow{R:Chambers+Hastie:1992}
 }
 \seealso{
   \code{\link{factor}};

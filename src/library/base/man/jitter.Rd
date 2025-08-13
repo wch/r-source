@@ -47,9 +47,7 @@ jitter(x, factor = 1, amount = NULL)
   \emph{Graphical Methods for Data Analysis.} Wadsworth; figures 2.8,
   4.22, 5.4.
 
-  Chambers, J. M. and Hastie, T. J. (1992)
-  \emph{Statistical Models in S.}
-  Wadsworth & Brooks/Cole.
+  \bibshow{R:Chambers+Hastie:1992}
 }
 \author{Werner Stahel and Martin Maechler, ETH Zurich}
 \seealso{

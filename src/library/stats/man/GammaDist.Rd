@@ -90,7 +90,7 @@ rgamma(n, shape, rate = 1, scale = 1/rate)
 %   small \code{scale}, and warns of potential unreliability for
 %   \code{scale < 1e-10}.
 \note{
-  The S (Becker \abbr{et al.}, 1988) parametrization was via \code{shape}
+  The S \bibcitep{R:Becker+Chambers+Wilks:1988} parametrization was via \code{shape}
   and \code{rate}: S had no \code{scale} parameter. It is an error
   to supply both \code{scale} and \code{rate}.
 
@@ -143,7 +143,6 @@ rgamma(n, shape, rate = 1, scale = 1/rate)
 \references{
   \bibinfo{R:Abramowitz+Stegun:1972}{footer}{Chapter 6: Gamma and Related Functions.}
   \bibshow{*,
-    R:Becker+Chambers+Wilks:1988,
     R:Shea:1988}
 
   NIST Digital Library of Mathematical Functions.

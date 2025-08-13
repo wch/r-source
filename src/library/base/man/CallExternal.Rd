@@ -78,9 +78,7 @@
 }
 
 \references{
-  Chambers, J. M. (1998)
-  \emph{Programming with Data.  A Guide to the S Language}.
-  Springer. (\code{.Call}.)
+  \bibshow{R:Chambers:1998} (\code{.Call}.)
 }
 \seealso{
   \code{\link{dyn.load}}, \code{\link{.C}}, \code{\link{.Fortran}}.

@@ -211,10 +211,8 @@ As with the \code{coerce} method, the first two arguments are
   \code{\link{canCoerce}(x, cl)} instead.
 }
 \references{
- Chambers, John M. (2016)
- \emph{Extending R},
-  Chapman & Hall.
-(Chapters 9 and 10.)
+  \bibshow{R:Chambers:2016}
+  (Chapters 9 and 10.)
 }
 
 \examples{

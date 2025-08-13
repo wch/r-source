@@ -241,7 +241,8 @@ x$name <- value
   (so the two interpretations would have the same outcome).
   (The documented behaviour of S was that an \code{NA} replacement index
   \sQuote{goes nowhere} but uses up an element of \code{value}:
-  Becker \abbr{et al.}\sspace{}p.\sspace{}359.  However, that has not been true of
+  \bibcitet{|R:Becker+Chambers+Wilks:1988|page 359}.
+  However, that has not been true of
   other implementations.)
 }
 
@@ -281,8 +282,8 @@ x$name <- value
   Character indices can in some circumstances be partially matched (see
   \code{\link{pmatch}}) to the names or dimnames of the object being
   subsetted (but never for \I{subassignment}).
-  Unlike S (Becker \abbr{et al.}\sspace{}p.\sspace{}358), \R never uses partial
-  matching when extracting by 
+  Unlike S \bibcitep{|R:Becker+Chambers+Wilks:1988|page 358},
+  \R never uses partial matching when extracting by 
   \code{[}, and partial matching is not by default used by \code{[[}
   (see argument \code{exact}).
 

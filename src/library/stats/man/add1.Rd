@@ -106,11 +106,7 @@ drop1(object, scope, \dots)
   in Chambers (1992).
 }
 \references{
-  Chambers, J. M. (1992)
-  \emph{Linear models.}
-  Chapter 4 of \emph{Statistical Models in S}
-  eds J. M. Chambers and T. J. Hastie, Wadsworth & Brooks/Cole.
-}
+  \bibshow{R:Chambers:1992:c4}}
 \note{
   These are not fully equivalent to the functions in S.  There is no
   \code{keep} argument, and the methods used are not quite so

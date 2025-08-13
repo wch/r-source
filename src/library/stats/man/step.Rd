@@ -126,23 +126,17 @@ step(object, scope, scale = 0,
   \code{\link[MASS]{stepAIC}} in \CRANpkg{MASS}, \code{\link{add1}},
   \code{\link{drop1}}
 }
-\references{
-  Hastie, T. J. and Pregibon, D. (1992)
-  \emph{Generalized linear models.}
-  Chapter 6 of \emph{Statistical Models in S}
-  eds J. M. Chambers and T. J. Hastie, Wadsworth & Brooks/Cole.
-
-  Venables, W. N. and Ripley, B. D. (2002)
-  \emph{Modern Applied Statistics with S.}
-  New York: Springer (4th ed).
-}
 \author{
   B. D. Ripley: \code{step} is a slightly simplified version of
   \code{\link[MASS]{stepAIC}} in package \CRANpkg{MASS} (Venables &
   Ripley, 2002 and earlier editions).
 
-  The idea of a \code{step} function follows that described in Hastie &
-  Pregibon (1992); but the implementation in \R is more general.
+  The idea of a \code{step} function follows that described in
+  \bibcitet{R:Hastie+Pregibon:1992}; but the implementation in \R is
+  more general. 
+}
+\references{
+  \bibshow{*, R:Venables+Ripley:2002}
 }
 \examples{\donttest{
 ## following on from example(lm)

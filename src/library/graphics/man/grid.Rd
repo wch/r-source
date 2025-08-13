@@ -44,7 +44,7 @@ grid(nx = NULL, ny = nx, col = "lightgray", lty = "dotted",
   \code{\link{points}}.
 }
 \references{
-  Murrell, P. (2005) \emph{R Graphics}. Chapman & Hall/CRC Press.
+  \bibshow{R:Murrell:2005}
 }
 \examples{
 plot(1:3)

@@ -69,9 +69,7 @@ lcm(x)
 
   Chapter 5 of Paul Murrell's Ph.D. thesis.
 
-  Murrell, P. (2005).
-  \emph{R Graphics}.
-  Chapman & Hall/CRC Press.
+  \bibshow{R:Murrell:2005}
 }
 \seealso{
   \code{\link{par}} with arguments \code{mfrow}, \code{mfcol}, or

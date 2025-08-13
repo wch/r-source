@@ -26,9 +26,8 @@ NROW(x)
   \code{\link{as.matrix}()} or \code{\link{cbind}()}, see the example.
 }
 \references{
-  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
-  \emph{The New S Language}.
-  Wadsworth & Brooks/Cole (\code{ncol} and \code{nrow}.)
+  \bibshow{R:Becker+Chambers+Wilks:1988}
+  (\code{ncol} and \code{nrow}.)
 }
 \seealso{
   \code{\link{dim}} which returns \emph{all} dimensions, and

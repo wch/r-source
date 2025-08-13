@@ -88,9 +88,7 @@ sink.number(type = c("output", "message"))
 \references{
   \bibshow{R:Becker+Chambers+Wilks:1988}
 
-  Chambers, J. M. (1998)
-  \emph{Programming with Data.  A Guide to the S Language}.
-  Springer.
+  \bibshow{R:Chambers:1998}
 }
 \seealso{\code{\link{capture.output}}}
 \examples{

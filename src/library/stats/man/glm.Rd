@@ -310,25 +310,18 @@ glm.fit(x, y, weights = rep.int(1, nobs),
   since been extensively re-written by members of the R Core team.
 
   The design was inspired by the S function of the same name described
-  in Hastie & Pregibon (1992).
+  in \bibcitet{R:Hastie+Pregibon:1992}.
 }
 \references{
+  \bibshow{*}
+  
   Dobson, A. J. (1990)
   \emph{An Introduction to Generalized Linear Models.}
   London: Chapman and Hall.
 
-  Hastie, T. J. and Pregibon, D. (1992)
-  \emph{Generalized linear models.}
-  Chapter 6 of \emph{Statistical Models in S}
-  eds J. M. Chambers and T. J. Hastie, Wadsworth & Brooks/Cole.
-
   McCullagh P. and Nelder, J. A. (1989)
   \emph{Generalized Linear Models.}
   London: Chapman and Hall.
-
-  Venables, W. N. and Ripley, B. D. (2002)
-  \emph{Modern Applied Statistics with S.}
-  New York: Springer.
 }
 
 \examples{

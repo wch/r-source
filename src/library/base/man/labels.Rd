@@ -24,9 +24,7 @@ labels(object, \dots)
   is the dimnames (with \code{NULL} expanded to \code{seq_len(d[i])}).
 }
 \references{
-  Chambers, J. M. and Hastie, T. J. (1992)
-  \emph{Statistical Models in S.}
-  Wadsworth & Brooks/Cole.
+  \bibshow{R:Chambers+Hastie:1992}
 }
 \keyword{print}
 \keyword{models}

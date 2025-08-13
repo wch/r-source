@@ -164,6 +164,11 @@ quasipoisson(link = "log")
   \item{dispersion}{(optional since \R version 4.3.0) numeric: value of the
     dispersion parameter, if fixed, or \code{NA_real_} if free.}
 }
+\author{
+  The design was inspired by S functions of the same names described
+  in \bibcitet{R:Hastie+Pregibon:1992} (except \code{quasibinomial} and
+  \code{quasipoisson}).
+}
 \references{
   \bibshow{*}
 
@@ -174,16 +179,6 @@ quasipoisson(link = "log")
   Cox, D. R. and  Snell, E. J. (1981).
   \emph{Applied Statistics; Principles and Examples.}
   London: Chapman and Hall.
-
-  Hastie, T. J. and Pregibon, D. (1992)
-  \emph{Generalized linear models.}
-  Chapter 6 of \emph{Statistical Models in S}
-  eds J. M. Chambers and T. J. Hastie, Wadsworth & Brooks/Cole.
-}
-\author{
-  The design was inspired by S functions of the same names described
-  in Hastie & Pregibon (1992) (except \code{quasibinomial} and
-  \code{quasipoisson}).
 }
 \seealso{
   \code{\link{glm}}, \code{\link{power}}, \code{\link{make.link}}.

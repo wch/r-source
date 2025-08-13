@@ -29,6 +29,6 @@ R functions for base graphics
 \references{
   \bibshow{R:Becker+Chambers+Wilks:1988}
 
-  Murrell, P. (2005) \emph{R Graphics}. Chapman & Hall/CRC Press.
+  \bibshow{R:Murrell:2005}
 }
 \keyword{ package }

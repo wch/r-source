@@ -95,9 +95,8 @@ testInheritedMethods(f, signatures, test = TRUE, virtual = FALSE,
   the signatures tested.
 }
 \references{
-  Chambers, John M. (2008)
-  \emph{Software for Data Analysis: Programming with R}
-  Springer.  (Section 10.6 for basics of method selection.)
+  \bibshow{R:Chambers:2008}
+  (Section 10.6 for basics of method selection.)
 
   Chambers, John M. (2009)
   \emph{Class Inheritance in R}

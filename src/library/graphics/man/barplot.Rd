@@ -153,7 +153,7 @@ barplot(height, \dots)
 \references{
   \bibshow{R:Becker+Chambers+Wilks:1988}
 
-  Murrell, P. (2005) \emph{R Graphics}. Chapman & Hall/CRC Press.
+  \bibshow{R:Murrell:2005}
 }
 \seealso{
   \code{\link{plot}(\dots, type = "h")}, \code{\link{dotchart}};

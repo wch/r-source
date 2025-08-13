@@ -125,7 +125,7 @@
   \emph{The Elements of Graphing Data.}
   Monterey, CA: Wadsworth.
 
-  Murrell, P. (2005) \emph{R Graphics}. Chapman & Hall/CRC Press.
+  \bibshow{R:Murrell:2005}
 }
 \seealso{
   \code{\link[base]{plot}}, \code{\link{plot.window}}, \code{\link{xy.coords}}.

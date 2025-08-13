@@ -109,9 +109,7 @@ sunflowerplot(x, \dots)
   \emph{The American Statistician}, \bold{48}, 303--305.
   \doi{10.2307/2684839}.
 
-  Murrell, P. (2005).
-  \emph{R Graphics}.
-  Chapman & Hall/CRC Press.
+  \bibshow{R:Murrell:2005}
 }
 \author{
   Andreas Ruckstuhl, Werner Stahel, Martin Maechler, Tim Hesterberg,

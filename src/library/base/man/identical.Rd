@@ -114,9 +114,7 @@ identical(x, y, num.eq = TRUE, single.NA = TRUE, attrib.as.set = TRUE,
 \author{John Chambers and R Core}
 
 \references{
-  Chambers, J. M. (1998)
-  \emph{Programming with Data.  A Guide to the S Language}.
-  Springer.
+  \bibshow{R:Chambers:1998}
 }
 \seealso{
   \code{\link{all.equal}} for descriptions of how two objects differ;

@@ -85,9 +85,7 @@ summary(object, \dots)
   \code{\link{summary.lm}}.
 }
 \references{
-  Chambers, J. M. and Hastie, T. J. (1992)
-  \emph{Statistical Models in S}.
-  Wadsworth & Brooks/Cole.
+  \bibshow{R:Chambers+Hastie:1992}
 }
 \examples{
 summary(attenu, digits = 4) #-> summary.data.frame(...), default precision

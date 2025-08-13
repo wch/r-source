@@ -40,11 +40,7 @@ glm.control(epsilon = 1e-8, maxit = 25, trace = FALSE)
   A list with components named as the arguments.
 }
 \references{
-  Hastie, T. J. and Pregibon, D. (1992)
-  \emph{Generalized linear models.}
-  Chapter 6 of \emph{Statistical Models in S}
-  eds J. M. Chambers and T. J. Hastie, Wadsworth & Brooks/Cole.
-}
+  \bibshow{R:Hastie+Pregibon:1992}}
 \seealso{
   \code{\link{glm.fit}}, the fitting procedure used by \code{\link{glm}}.
 }

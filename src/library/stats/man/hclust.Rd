@@ -162,9 +162,7 @@ hclust(d, method = "complete", members = NULL)
 \references{
   \bibshow{*}
   
-  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988).
-  \emph{The New S Language}.
-  Wadsworth & Brooks/Cole. (S version.)
+  \bibshow{R:Becker+Chambers+Wilks:1988} (S version.)
 
   Everitt, B. (1974).
   \emph{Cluster Analysis}.

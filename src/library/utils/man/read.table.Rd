@@ -337,7 +337,7 @@ read.delim2(file, header = TRUE, sep = "\t", quote = "\"",
 }
 
 \references{
-  \bibshow{R:Chambers:1992a}
+  \bibshow{R:Chambers:1992:c3}
 }
 
 \examples{

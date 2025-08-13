@@ -60,9 +60,7 @@
 \references{
   \bibshow{R:Becker+Chambers+Wilks:1988}
 
-  Chambers, J. M. (1998)
-  \emph{Programming with Data.  A Guide to the S Language}.
-  Springer (for \code{=}).
+  \bibshow{R:Chambers:1998} (for \code{=}).
 }
 
 \seealso{

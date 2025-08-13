@@ -123,9 +123,7 @@ cov2cor(V)
   \code{\link[pcaPP]{cor.fk}} in package \CRANpkg{pcaPP}.
 }
 \references{
-  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988).
-  \emph{The New S Language}.
-  Wadsworth & Brooks/Cole.
+  \bibshow{R:Becker+Chambers+Wilks:1988}
 
   Kendall, M. G. (1938).
   A new measure of rank correlation,

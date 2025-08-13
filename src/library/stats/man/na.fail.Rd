@@ -48,9 +48,7 @@ na.pass(object, \dots)
   \code{na.exclude}.
 }
 \references{
-  Chambers, J. M. and Hastie, T. J. (1992)
-  \emph{Statistical Models in S.}
-  Wadsworth & Brooks/Cole.
+  \bibshow{R:Chambers+Hastie:1992}
 }
 \seealso{
   \code{\link{na.action}};

@@ -31,9 +31,7 @@ zapsmall(x, digits = getOption("digits"),
     the resulting \code{\link{round}(x, digits=*)} call when \code{mFUN(*) > 0}.}
 }
 \references{
-  Chambers, J. M. (1998)
-  \emph{Programming with Data.  A Guide to the S Language}.
-  Springer.
+  \bibshow{R:Chambers:1998}
 }
 \examples{
 x2 <- pi * 100^(-2:2)/10

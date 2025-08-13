@@ -61,10 +61,7 @@ alias(object, \dots)
   The defaults are different from those in S.
 }
 \references{
-  Chambers, J. M., Freeny, A and Heiberger, R. M. (1992)
-  \emph{Analysis of variance; designed experiments.}
-  Chapter 5 of \emph{Statistical Models in S}
-  eds J. M. Chambers and T. J. Hastie, Wadsworth & Brooks/Cole.
+  \bibshow{R:Chambers+Freeny+Heiberger:1992}
 }
 \author{
   The design was inspired by the S function of the same name described

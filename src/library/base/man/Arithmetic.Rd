@@ -166,29 +166,18 @@ x \%/\% y
   argument-matching is done in \code{\link[base:groupGeneric]{Ops}}.
 
   \code{**} is translated in the parser to \code{^}, but this was
-  undocumented for many years.  It appears as an index entry in Becker
-  \abbr{et al.}\sspace(1988), pointing to the help for \code{Deprecated} but
+  undocumented for many years.  It appears as an index entry in
+  \bibcitet{R:Becker+Chambers+Wilks:1988},
+  pointing to the help for \code{Deprecated} but
   is not actually mentioned on that page.  Even though it had been
   deprecated in S for 20 years, it was still accepted in \R in 2008.
 }
 \references{
-  \bibshow{R:Becker+Chambers+Wilks:1988}
-
-  D. Goldberg (1991).
-  What Every Computer Scientist Should Know about Floating-Point
-  Arithmetic.
-  \emph{ACM Computing Surveys}, \bold{23}(1), 5--48.
-  \doi{10.1145/103162.103163}.
-  \cr
-  %% As of 2020-09-25, www.validlab.com redirects to https without valid
-  %% certificate ...
-  %%   Postscript version available at
-  %%   \url{http://www.validlab.com/goldberg/paper.ps}.
-  %%   Extended PDF version at
-  %%   \url{http://www.validlab.com/goldberg/paper.pdf}.
-  %% See <https://en.wikipedia.org/wiki/IEEE_754>:
-  Also available at
-  \url{https://docs.oracle.com/cd/E19957-01/806-3568/ncg_goldberg.html}.
+  \bibinfo{R:Goldberg:1991}{footer}{Also available at
+    \\\\\\url{https://docs.oracle.com/cd/E19957-01/806-3568/ncg_goldberg.html}.}
+  
+  \bibshow{R:Becker+Chambers+Wilks:1988,
+    R:Goldberg:1991}
 
   For the \abbr{IEC} 60559 (aka IEEE 754) standard:
   \url{https://www.iso.org/standard/57469.html} and

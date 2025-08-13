@@ -91,9 +91,8 @@ textConnectionValue(con)
 }
 
 \references{
-  Chambers, J. M. (1998)
-  \emph{Programming with Data.  A Guide to the S Language.} Springer.\cr
-[S has input text connections only.]
+  \bibinfo{R:Chambers:1998}{footer}{[S has input text connections only.]}
+  \bibshow{R:Chambers:1998}
 }
 
 \seealso{

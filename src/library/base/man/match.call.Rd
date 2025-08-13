@@ -54,9 +54,7 @@ match.call(definition = sys.function(sys.parent()),
   An object of class \code{call}.
 }
 \references{
-  Chambers, J. M. (1998)
-  \emph{Programming with Data. A Guide to the S Language}.
-  Springer.
+  \bibshow{R:Chambers:1998}
 }
 \seealso{
   \code{\link{sys.call}()} is similar, but does \emph{not} expand the
