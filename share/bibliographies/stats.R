@@ -47,6 +47,22 @@ bibentry(bibtype = "Article",
          author = person(given = c("Maurice", "Stevenson"),
                          family = "Bartlett"))
 
+bibentry(bibtype = "InCollection",
+         key = "R:Bates+Chambers:1992",
+         author = c(person(given = c("Douglas", "M."),
+                           family = "Bates"),
+                    person(given = c("John", "M."),
+                           family = "Chambers")),
+         title = "Nonlinear Models",
+         booktitle = "Statistical Models in {S}",
+         publisher = "Wadsworth & Brooks/Cole",
+         year = "1992",
+         editor = c(person(given = c("John", "M."),
+                           family = "Chambers"),
+                    person(given = c("Trevor", "J."),
+                           family = "Hastie")),
+         chapter = "10")
+
 bibentry(bibtype = "Article",
          key = "R:Bauer:1972",
          title = "Constructing Confidence Sets Using Rank Statistics",

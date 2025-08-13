@@ -1,3 +1,11 @@
+bibentry(bibtype = "Misc",
+         key = "R:Chambers:2009",
+         author = person(given = c("John", "M."),
+                         family = "Chambers"),
+         title = "Class Inheritance in {R}",
+         year = "2009",
+         url = "https://johnmchambers.su.domains/classInheritance.pdf")
+
 bibentry(bibtype = "Book",
          key = "R:Chambers:2016",
          title = "Extending {R}",
