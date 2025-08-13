@@ -2101,6 +2101,7 @@ versionCheck <- list(op = ">", version = getRversion())
 stopifnot(!requireNamespace("stats", versionCheck = versionCheck, quietly = TRUE))
 ## *not* successful, when versionCheck fails
 
+
 ## reading an empty file via gzcon() returned non-deterministic non-empty
 ## content (PR#18887)
 fempty <- tempfile(tmpdir = getwd())
@@ -2114,6 +2115,7 @@ lines <- readLines(gcon)
 close(gcon)
 stopifnot(identical(lines, character(0)))
 unlink(fempty)
+
 
 ## concatenated gzipped streams were not supported by gzcon
 fconcat <- tempfile(tmpdir = getwd())
@@ -2131,6 +2133,22 @@ gcon <- gzfile(fconcat, "rb") ## also test gzfile
 lines <- readLines(gcon)
 close(gcon)
 stopifnot(identical(lines, "Hello World"))
+
+
+## Fading out "slave" terminology in {tcltk} -- PR#17835
+if(require("tcltk")) withAutoprint({ # some setups may lack tcltk (right ?)
+  tclServiceMode(FALSE) # no display
+  top <- tktoplevel()
+  (ww <- tryCatch(tkpack.slaves(top), warning=identity))
+  if(package_version(tcltk::tclVersion()) >= "8.6")
+      stopifnot(exprs = {
+          inherits(ww, "deprecatedWarning")
+          identical(ww$new, "tkpack.child")
+      })
+})
+## three tk*.slaves() should be substituted by tk*.child()
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

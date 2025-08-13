@@ -16,7 +16,7 @@
 
   \subsection{NEW FEATURES}{
     \itemize{
-      \item \code{binomial(identity)} and \code{quasibinomial(identity)} now work 
+      \item \code{binomial(identity)} and \code{quasibinomial(identity)} now work
       without having to quote the argument.
 
       \item \code{str()} now shows more via \code{format()} for external
@@ -70,7 +70,7 @@
       path to the file can be specified in \code{options("netrc")}.
 
       \item \code{tools::deparseLatex()} gains a \code{math} argument,
-      now used by the default \code{bibstyle} to format \code{bibentry()} 
+      now used by the default \code{bibstyle} to format \code{bibentry()}
       fields with \samp{$...$} syntax via Rd \verb{\eqn} markup.
 
       \item \code{gzcon()} can now decompress a concatenation of compressed
@@ -142,6 +142,8 @@
   \subsection{DEPRECATED AND DEFUNCT}{
     \itemize{
       \item \code{structure(NULL, <name> = <val>)} is now defunct.% deprecated r71841, 2016-12-27
+      \item Three \code{tk*.slaves()} functions were deprecated in favor of
+      \code{tk*.child()} which do need Tcl/Tk version \code{8.6} or higher.
     }
   }
 

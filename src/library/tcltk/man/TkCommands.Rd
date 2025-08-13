@@ -1,6 +1,6 @@
 % File src/library/tcltk/man/TkCommands.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{TkCommands}
@@ -88,17 +88,20 @@
 \alias{tkgrid.remove}
 \alias{tkgrid.size}
 \alias{tkgrid.slaves}
+\alias{tkgrid.child}
 \alias{tkpack}
 \alias{tkpack.configure}
 \alias{tkpack.forget}
 \alias{tkpack.info}
 \alias{tkpack.propagate}
 \alias{tkpack.slaves}
+\alias{tkpack.child}
 \alias{tkplace}
 \alias{tkplace.configure}
 \alias{tkplace.forget}
 \alias{tkplace.info}
 \alias{tkplace.slaves}
+\alias{tkplace.child}
 \alias{tkgetOpenFile}
 \alias{tkgetSaveFile}
 \alias{tkchooseDirectory}
@@ -224,20 +227,23 @@ tkgrid.propagate(...)
 tkgrid.rowconfigure(...)
 tkgrid.remove(...)
 tkgrid.size(...)
-tkgrid.slaves(...)
+tkgrid.slaves(...) # deprecated (when Tcl/Tk >= 8.6)
+tkgrid.child(...)
 
 tkpack(...)
 tkpack.configure(...)
 tkpack.forget(...)
 tkpack.info(...)
 tkpack.propagate(...)
-tkpack.slaves(...)
+tkpack.slaves(...) # deprecated (when Tcl/Tk >= 8.6)
+tkpack.child(...)
 
 tkplace(...)
 tkplace.configure(...)
 tkplace.forget(...)
 tkplace.info(...)
-tkplace.slaves(...)
+tkplace.slaves(...) # deprecated (when Tcl/Tk >= 8.6)
+tkplace.child(...)
 
 ## Standard dialogs
 tkgetOpenFile(...)
