@@ -32,7 +32,8 @@ infoRDS(file)
     to use \code{"gzip"} compression, or one of \code{"gzip"},
     \code{"bzip2"}, \code{"xz"} or \code{"zstd"} to indicate the type of
     compression to be used.  Ignored if \code{file} is a connection.}
-  \item{refhook}{a hook function for handling reference objects.}
+  \item{refhook}{a hook function for handling reference objects.
+                 See \code{\link{unserialize}}.}
 }
 \details{
   \code{saveRDS} and \code{readRDS} provide the means to save a single \R
