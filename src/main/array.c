@@ -87,20 +87,9 @@ attribute_hidden SEXP do_matrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     checkArity(op, args);
     vals = CAR(args); args = CDR(args);
-    switch(TYPEOF(vals)) {
-	case LGLSXP:
-	case INTSXP:
-	case REALSXP:
-	case CPLXSXP:
-	case STRSXP:
-	case RAWSXP:
-	case EXPRSXP:
-	case VECSXP:
-	    break;
-	default:
-	    error(_("'data' must be of a vector type, was '%s'"),
-		R_typeToChar(vals));
-    }
+    if (!isVector(vals))
+	error(_("'data' must be of a vector type, was '%s'"),
+	    R_typeToChar(vals));
     lendat = XLENGTH(vals);
     snr = CAR(args); args = CDR(args);
     snc = CAR(args); args = CDR(args);
@@ -181,12 +170,9 @@ attribute_hidden SEXP do_matrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 #endif
 
     PROTECT(ans = allocMatrix(TYPEOF(vals), nr, nc));
-    if(lendat) {
-	if (isVector(vals))
-	    copyMatrix(ans, vals, byrow);
-	else
-	    copyListMatrix(ans, vals, byrow);
-    } else if (isVector(vals)) { /* fill with NAs */
+    if(lendat)
+	copyMatrix(ans, vals, byrow);
+    else { /* fill with NAs */
 	R_xlen_t N = (R_xlen_t) nr * nc, i;
 	switch(TYPEOF(vals)) {
 	case STRSXP:
