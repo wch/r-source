@@ -11,7 +11,8 @@
 \description{
   Measurements of the annual flow of the river Nile at Aswan (formerly
   \code{Assuan}), 1871--1970, in \eqn{10^8 m^3},
-  \dQuote{with apparent changepoint near 1898} (Cobb(1978), Table 1, p.249).
+  \dQuote{with apparent changepoint near 1898}
+  \bibcitep{|R:Cobb:1978|Table 1\\\\\\, page 249}.
 }
 \format{
   A time series of length 100.
@@ -23,16 +24,7 @@
   %% \url{http://www.ssfpack.com/DKbook.html}
 }
 \references{
-  Balke, N. S. (1993).
-  Detecting level shifts in time series.
-  \emph{Journal of Business and Economic Statistics}, \bold{11}, 81--92.
-  \doi{10.2307/1391308}.
-
-  Cobb, G. W. (1978).
-  The problem of the Nile: conditional solution to a change-point
-  problem.
-  \emph{Biometrika} \bold{65}, 243--51.
-  \doi{10.2307/2335202}.
+  \bibshow{*, R:Balke:1993}
 }
 \examples{
 require(stats); require(graphics)

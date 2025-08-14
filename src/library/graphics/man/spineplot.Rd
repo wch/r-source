@@ -102,24 +102,13 @@ spineplot(x, \dots)
   \code{\link{mosaicplot}}, \code{\link{hist}}, \code{\link{cdplot}}
 }
 \references{
-  Friendly, M. (1994).
-  Mosaic displays for multi-way contingency tables.
-  \emph{Journal of the American Statistical Association}, \bold{89},
-  190--200.
-  \doi{10.2307/2291215}.
-
-  Hartigan, J.A., and Kleiner, B. (1984).
-  A mosaic of television ratings.
-  \emph{The American Statistician}, \bold{38}, 32--35.
-  \doi{10.2307/2683556}.
+  \bibshow{R:Friendly:1994a,
+    R:Hartigan+Kleiner:1984,
+    R:Hummel:1996}
 
   Hofmann, H., Theus, M. (2005),
   \emph{Interactive graphics for visualizing conditional distributions}.
   Unpublished Manuscript.
-
-  Hummel, J. (1996).
-  Linked bar charts: Analysing categorical data graphically.
-  \emph{Computational Statistics}, \bold{11}, 23--33.
 }
 \author{
   \I{Achim Zeileis} \email{Achim.Zeileis@R-project.org}

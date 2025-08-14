@@ -27,11 +27,7 @@
   Graphics Press.
 }
 \references{
-  Anscombe, Francis J. (1973).
-  Graphs in statistical analysis.
-  \emph{The American Statistician}, \bold{27}, 17--21.
-  \doi{10.2307/2682899}.
-  
+  \bibshow{R:Anscombe:1973}
 }
 \examples{
 require(stats); require(graphics)

@@ -100,16 +100,9 @@ sunflowerplot(x, \dots)
   \pkg{grDevices}) if you are only interested in this return value.
 }
 \references{
-  Chambers, J. M., Cleveland, W. S., Kleiner, B. and Tukey, P. A. (1983).
-  \emph{Graphical Methods for Data Analysis}.
-  Wadsworth.
-
-  Schilling, M. F. and Watkins, A. E. (1994).
-  A suggestion for sunflower plots.
-  \emph{The American Statistician}, \bold{48}, 303--305.
-  \doi{10.2307/2684839}.
-
-  \bibshow{R:Murrell:2005}
+  \bibshow{R:Chambers+Cleveland+Kleiner:1983,
+    R:Schilling+Watkins:1994,
+    R:Murrell:2005}
 }
 \author{
   Andreas Ruckstuhl, Werner Stahel, Martin Maechler, Tim Hesterberg,

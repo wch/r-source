@@ -26,7 +26,8 @@
 }
 \details{
   This data set is frequently used for illustrating Simpson's paradox,
-  see \I{Bickel} \abbr{et al.}\sspace(1975).  At issue is whether the data show evidence
+  see \bibcitet{R:Bickel+Hammel+O_Connell:1975}.
+  At issue is whether the data show evidence
   of sex bias in admission practices.  There were 2691 male applicants,
   of whom 1198 (44.5\%) were admitted, compared with 1835 female
   applicants of whom 557 (30.4\%) were admitted.  This gives a sample
@@ -42,11 +43,7 @@
   or the \link{fourfoldplot} for 2-by-2-by-\eqn{k} tables.
 }
 \references{
-  Bickel, P. J., Hammel, E. A., and O'Connell, J. W. (1975).
-  Sex bias in graduate admissions: Data from Berkeley.
-  \emph{Science}, \bold{187}, 398--403.
-  \doi{10.1126/science.187.4175.398}.
-  %% \url{https://www.jstor.org/stable/1739581}.
+  \bibshow{*}
 }
 \examples{
 require(graphics)

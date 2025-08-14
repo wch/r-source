@@ -247,11 +247,7 @@
  }
 }
 \references{
-  Murrell, P. and Ihaka, R. (2000).
-  An approach to providing mathematical annotation in plots.
-  \emph{Journal of Computational and Graphical Statistics},
-  \bold{9}, 582--599.
-  \doi{10.2307/1390947}.
+  \bibshow{R:Murrell+Ihaka:2000}
 
   A list of
   the symbol codes can be found in decimal, octal and hex at

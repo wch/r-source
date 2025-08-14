@@ -22,7 +22,7 @@ chull(x, y = NULL)
   \code{\link{xy.coords}} is used to interpret the specification of the
   points. Infinite, missing and \code{NaN} values are not allowed.
 
-  The algorithm is that given by Eddy (1977).
+  The algorithm is that given by \bibcitet{R:Eddy:1977a, R:Eddy:1977b}.
 }
 \value{
   An integer vector giving the indices of the unique points lying on the
@@ -30,17 +30,7 @@ chull(x, y = NULL)
   duplicate points.)
 }
 \references{
-  \bibshow{R:Becker+Chambers+Wilks:1988}
-
-  Eddy, W. F. (1977).
-  A new convex hull algorithm for planar sets.
-  \emph{ACM Transactions on Mathematical Software}, \bold{3}, 398--403.
-  \doi{10.1145/355759.355766}.
-
-  Eddy, W. F. (1977).
-  Algorithm 523: CONVEX, A new convex hull algorithm for planar sets [Z].
-  \emph{ACM Transactions on Mathematical Software}, \bold{3}, 411--412.
-  \doi{10.1145/355759.355768}.
+  \bibshow{*, R:Becker+Chambers+Wilks:1988}
 }
 \seealso{
   \code{\link{xy.coords}},

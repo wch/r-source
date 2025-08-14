@@ -138,10 +138,7 @@ suitable palette from \code{hcl.colors} instead of
   \url{https://en.wikipedia.org/w/index.php?title=HCL_color_space&oldid=883465135}.
   Accessed March 26, 2019.
 
-  Zeileis, A., Fisher, J. C., Hornik, K., Ihaka, R., McWhite, C. D., Murrell, P., Stauffer, R. and Wilke, C. O. (2020).
-  \dQuote{colorspace: A toolbox for manipulating and assessing colors and palettes.}
-  \emph{Journal of Statistical Software}, \bold{96}(1), 1--49.
-  \doi{10.18637/jss.v096.i01}
+  \bibshow{R:Zeileis+Fisher+Hornik:2020}
 
   Ihaka, R. (2003).
   \dQuote{Colour for presentation graphics.}
@@ -149,10 +146,7 @@ suitable palette from \code{hcl.colors} instead of
   March 20-22, 2003, Technische Universität Wien, Vienna, Austria.
   \url{https://www.R-project.org/conferences/DSC-2003/}.
 
-  Zeileis, A., Hornik, K. and Murrell, P. (2009).
-  Escaping RGBland: Selecting colors for statistical graphics.
-  \emph{Computational Statistics & Data Analysis}, \bold{53}, 3259--3270.
-  \doi{10.1016/j.csda.2008.11.033}.
+  \bibshow{R:Zeileis+Hornik+Murrell:2009}
 }
 \seealso{
   \code{\link{colors}}, \code{\link{palette}},

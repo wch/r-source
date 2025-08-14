@@ -61,11 +61,7 @@ lcm(x)
   \code{layout} returns the number of figures, \eqn{N}, see above.
 }
 \references{
-  Murrell, P. R. (1999).
-  Layouts: A mechanism for arranging plots on a page.
-  \emph{Journal of Computational and Graphical Statistics},
-  \bold{8}, 121--134.
-  \doi{10.2307/1390924}.
+  \bibshow{R:Murrell:1999}
 
   Chapter 5 of Paul Murrell's Ph.D. thesis.
 

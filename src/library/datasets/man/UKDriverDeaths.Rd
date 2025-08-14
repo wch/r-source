@@ -47,12 +47,7 @@ Seatbelts
   %% \url{http://www.ssfpack.com/dkbook/}
 }
 \references{
-  Harvey, A. C. and Durbin, J. (1986).
-  The effects of seat belt legislation on British road casualties: A
-  case study in structural time series modelling.
-  \emph{Journal of the Royal Statistical Society} series A, \bold{149},
-  187--227.
-  \doi{10.2307/2981553}.
+  \bibshow{R:Harvey+Durbin:1986}
 }
 \examples{
 require(stats); require(graphics)

@@ -40,31 +40,12 @@ nclass.FD(x, digits = 5)
   experiments, but may be too low for some situations, see \PR{17274}.
 }
 \references{
-  Venables, W. N. and Ripley, B. D. (2002)
-  \emph{Modern Applied Statistics with S-PLUS.}
-  Springer, page 112.
-
-  Freedman, D. and Diaconis, P. (1981).
-  On the histogram as a density estimator: \eqn{L_2} theory.
-  \emph{Zeitschrift \enc{für}{fuer} Wahrscheinlichkeitstheorie
-    und verwandte Gebiete}, \bold{57}, 453--476.
-  \doi{10.1007/BF01025868}.
-
-  Scott, D. W. (1979).
-  On optimal and data-based histograms.
-  \emph{Biometrika}, \bold{66}, 605--610.
-  \doi{10.2307/2335182}.
-
-  Scott, D. W. (1992)
-  \emph{Multivariate Density Estimation. Theory, Practice, and
-    Visualization}. Wiley.
-
-  Sturges, H. A. (1926).
-  The choice of a class interval.
-  \emph{Journal of the American Statistical Association}, \bold{21},
-  65--66.
-  \doi{10.1080/01621459.1926.10502161}.
-
+  \bibinfo{R:Venables+Ripley:2002}{note}{Page 112}.
+  \bibshow{R:Venables+Ripley:2002,
+    R:Freedman+Diaconis:1981,
+    R:Scott:1979,
+    R:Scott:1992,
+    R:Sturges:1926}
 }
 \seealso{
   \code{\link{hist}} and \code{\link[MASS]{truehist}} (package

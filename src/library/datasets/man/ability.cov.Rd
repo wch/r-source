@@ -37,11 +37,7 @@
   Second Edition, Arnold.
 }
 \references{
-  Smith, G. A. and Stanley G. (1983).
-  Clocking \eqn{g}: relating intelligence and measures of timed
-  performance.
-  \emph{Intelligence}, \bold{7}, 353--368.
-  \doi{10.1016/0160-2896(83)90010-7}.
+  \bibshow{R:Smith+Stanley:1983}
 }
 \examples{\donttest{
 require(stats)

@@ -50,13 +50,7 @@ sunspot.m2014
   may well change by the next release of \R.
 }
 \references{
-  Clette, \enc{Frédéric}{Frederic} and \enc{Lefèvre}{Lefevre}, Laure (2016)
-  The New Sunspot Number: Assembling All Corrections.
-  \emph{Solar Physics} \bold{291}, 2629--2651. \doi{10.1007/s11207-016-1014-y}
-
-  Clette, F.,  \enc{Lefèvre}{Lef`evre}, L.,  Chatzistergos, T. et al. (2023)
-  Recalibration of the Sunspot-Number: Status Report.
-  \emph{Solar Physics} \bold{298}: 44.  \doi{10.1007/s11207-023-02136-3}
+  \bibshow{R:Clette+Lefèvre:2016, R:Clette+Lefèvre+Chatzistergos:2023}
 }
 \author{
   R Core Team.
