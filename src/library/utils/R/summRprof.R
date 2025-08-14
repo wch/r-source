@@ -167,7 +167,7 @@ summaryRprof <-
     firstnum  <- round(firstnum,  digits)
     uniquenum <- round(uniquenum, digits)
 
-    if (memory == "both") memtotal <-  round(umem/1048576, 1)     ## 0.1MB
+    if (memory == "both") memtotal <-  round(umem/1048576, 1)     ## Mb (MiB)
 
     rval <- data.frame(firstnum, firstpct, uniquenum, uniquepct)
     names(rval) <- c("self.time", "self.pct", "total.time", "total.pct")
