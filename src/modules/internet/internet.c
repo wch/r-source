@@ -541,6 +541,9 @@ static void *in_R_HTTPOpen2(const char *url, const char *agent, const char *head
     char buf[101], *p;
 
     wictxt = (WIctxt) malloc(sizeof(wIctxt));
+    if (!wictxt)
+	return NULL;
+
     wictxt->length = -1;
     wictxt->type = NULL;
     wictxt->hand =
@@ -651,6 +654,8 @@ static void *in_R_FTPOpen2(const char *url)
     WIctxt  wictxt;
 
     wictxt = (WIctxt) malloc(sizeof(wIctxt));
+    if (!wictxt)
+	return NULL;
     wictxt->length = -1;
     wictxt->type = NULL;
 
