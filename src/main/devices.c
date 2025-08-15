@@ -39,14 +39,6 @@
 
 int baseRegisterIndex = -1;
 
-attribute_hidden
-GPar* dpptr(pGEDevDesc dd) {
-    if (baseRegisterIndex == -1)
-	error(_("the base graphics system is not registered"));
-    baseSystemState *bss = dd->gesd[baseRegisterIndex]->systemSpecific;
-    return &(bss->dp);
-}
-
 static SEXP R_INLINE getSymbolValue(SEXP symbol)
 {
     if (TYPEOF(symbol) != SYMSXP)
