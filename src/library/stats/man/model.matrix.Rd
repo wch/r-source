@@ -79,10 +79,7 @@ model.matrix(object, \dots)
   either as a character vector naming a function or as a numeric matrix.
 }
 \references{
-  Chambers, J. M. (1992)
-  \emph{Data for models.}
-  Chapter 3 of \emph{Statistical Models in S}
-  eds J. M. Chambers and T. J. Hastie, Wadsworth & Brooks/Cole.
+  \bibshow{R:Chambers:1992:c3}  
 }
 \seealso{
   \code{\link{model.frame}}, \code{\link{model.extract}},

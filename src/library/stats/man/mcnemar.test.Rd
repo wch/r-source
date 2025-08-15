@@ -44,10 +44,8 @@ mcnemar.test(x, y = NULL, correct = TRUE)
   \code{correct} is \code{TRUE}.
 }
 \references{
-  Alan Agresti (1990).
-  \emph{Categorical data analysis}.
-  New York: Wiley.
-  Pages 350--354.
+  \bibinfo{R:Agresti:1990}{footer}{Pages 350--354.}
+  \bibshow{R:Agresti:1990}
 }
 \examples{
 ## Agresti (1990), p. 350.

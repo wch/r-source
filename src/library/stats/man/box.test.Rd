@@ -43,21 +43,10 @@ Box.test(x, lag = 1, type = c("Box-Pierce", "Ljung-Box"), fitdf = 0)
   \item{data.name}{a character string giving the name of the data.}
 }
 \references{
-  Box, G. E. P. and Pierce, D. A. (1970),
-  Distribution of residual correlations in autoregressive-integrated
-  moving average time series models.
-  \emph{Journal of the American Statistical Association}, \bold{65},
-  1509--1526.
-  \doi{10.2307/2284333}.
-
-  Ljung, G. M. and Box, G. E. P. (1978),
-  On a measure of lack of fit in time series models.
-  \emph{Biometrika}, \bold{65}, 297--303.
-  \doi{10.2307/2335207}.
-
-  Harvey, A. C. (1993)
-  \emph{Time Series Models}.
-  2nd Edition, Harvester Wheatsheaf, NY, pp.\sspace{}44, 45.
+  \bibinfo{R:Harvey:1993}{note}{Pages 44--45}
+  \bibshow{R:Harvey:1993,
+    R:Box+Pierce:1970,
+    R:Ljung+Box:1978}
 }
 \author{A. Trapletti}
 \examples{

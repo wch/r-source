@@ -110,7 +110,8 @@ arima0(x, order = c(0, 0, 0),
 \section{Fitting methods}{
   The exact likelihood is computed via a state-space representation of
   the ARMA process, and the innovations and their variance found by a
-  \I{Kalman} filter based on Gardner \abbr{et al.}\sspace(1980).  This has
+  \I{Kalman} filter based on \bibcitet{R:Gardner+Harvey+Phillips:1980}.
+  This has
   the option to switch to \sQuote{fast recursions} (assume an
   effectively infinite past) if the innovations variance is close
   enough to its asymptotic bound. The argument \code{delta} sets the
@@ -187,35 +188,14 @@ arima0(x, order = c(0, 0, 0),
   components are time series.
 }
 \references{
-  Brockwell, P. J. and Davis, R. A. (1996).
-  \emph{Introduction to Time Series and Forecasting}.
-  Springer, New York.
-  Sections 3.3 and 8.3.
-
-  Gardner, G, Harvey, A. C. and Phillips, G. D. A. (1980).
-  Algorithm AS 154: An algorithm for exact maximum likelihood estimation
-  of autoregressive-moving average models by means of Kalman filtering.
-  \emph{Applied Statistics}, \bold{29}, 311--322.
-  \doi{10.2307/2346910}.
-
-  Harvey, A. C. (1993).
-  \emph{Time Series Models}. 2nd Edition.
-  Harvester Wheatsheaf.
-  Sections 3.3 and 4.4.
-
-  Harvey, A. C. and McKenzie, C. R. (1982).
-  Algorithm AS 182: An algorithm for finite sample prediction from ARIMA
-  processes.
-  \emph{Applied Statistics}, \bold{31}, 180--187.
-  \doi{10.2307/2347987}.
-
-  Jones, R. H. (1980).
-  Maximum likelihood fitting of ARMA models to time series with missing
-  observations.
-  \emph{Technometrics}, \bold{22}, 389--395.
-  \doi{10.2307/1268324}.
+  \bibinfo{R:Brockwell+Davis:1996}{note}{Sections 3.3 and 8.3}
+  \bibinfo{R:Harvey:1993}{note}{Sections 3.3 and 4.4}
+  \bibshow{*,
+    R:Brockwell+Davis:1996,
+    R:Harvey:1993,
+    R:Harvey+McKenzie:1982,
+    R:Jones:1980}
 }
-
 \note{
   This has been a preliminary version, and is mostly replaced by
   \code{\link{arima}}, notably in the presence of missing values.

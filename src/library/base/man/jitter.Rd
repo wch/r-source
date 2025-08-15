@@ -43,11 +43,8 @@ jitter(x, factor = 1, amount = NULL)
   difference between adjacent unique (apart from fuzz) \code{x} values.
 }
 \references{
-  Chambers, J. M., Cleveland, W. S., Kleiner, B. and Tukey, P.A. (1983)
-  \emph{Graphical Methods for Data Analysis.} Wadsworth; figures 2.8,
-  4.22, 5.4.
-
-  \bibshow{R:Chambers+Hastie:1992}
+  \bibinfo{R:Chambers+Cleveland+Kleiner:1983}{note}{(Figures 2.8, 4.22, 5.4.)}
+  \bibshow{R:Chambers+Cleveland+Kleiner:1983, R:Chambers+Hastie:1992}
 }
 \author{Werner Stahel and Martin Maechler, ETH Zurich}
 \seealso{

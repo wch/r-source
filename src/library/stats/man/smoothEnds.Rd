@@ -31,12 +31,8 @@ smoothEnds(y, k = 3)
   \code{\link{median}(*, na.rm=TRUE)} is used.
 }
 \references{
-  John W. Tukey (1977)
-  \emph{Exploratory Data Analysis}, Addison.
-
-  Velleman, P.F., and Hoaglin, D.C. (1981)
-  \emph{ABC of EDA (Applications, Basics, and Computing of Exploratory
-    Data Analysis)}; Duxbury.
+  \bibshow{R:Tukey:1977,
+    R:Velleman+Hoaglin:1981}
 }
 \author{Martin Maechler}
 \seealso{

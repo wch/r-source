@@ -96,13 +96,9 @@ symbols(x, y = NULL, circles, squares, rectangles, stars,
   pixel as some Windows versions omit smaller circles.
 }
 \references{
-  \bibshow{R:Becker+Chambers+Wilks:1988}
-
-  W. S. Cleveland (1985)
-  \emph{The Elements of Graphing Data.}
-  Monterey, California: Wadsworth.
-
-  \bibshow{R:Murrell:2005}
+  \bibshow{R:Becker+Chambers+Wilks:1988,
+    R:Cleveland:1985,
+    R:Murrell:2005}
 }
 \seealso{
   \code{\link{stars}} for drawing \emph{stars} with a bit more

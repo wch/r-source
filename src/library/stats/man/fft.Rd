@@ -52,18 +52,14 @@ mvfft(z, inverse = FALSE)
   Uses C translation of Fortran code in Singleton (1979).
 }
 \references{
-  \bibshow{R:Becker+Chambers+Wilks:1988}
+  \bibshow{R:Becker+Chambers+Wilks:1988,
+    R:Cooley+Tukey:1965}
 
   Singleton, R. C. (1979).
   Mixed Radix Fast Fourier Transforms,
   in \emph{Programs for Digital Signal Processing},
   IEEE Digital Signal Processing Committee eds.
   IEEE Press.
-
-  Cooley, James W., and Tukey, John W. (1965).
-  An algorithm for the machine calculation of complex Fourier series,
-  \emph{Mathematics of Computation}, \bold{19}(90), 297--301.
-  \doi{10.2307/2003354}.
 }
 \seealso{
   \code{\link{convolve}}, \code{\link{nextn}}.

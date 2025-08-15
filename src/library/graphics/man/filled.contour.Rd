@@ -88,9 +88,7 @@ filled.contour(x = seq(0, 1, length.out = nrow(z)),
   responsible for checking the conditions on the arguments.
 }
 \references{
-  Cleveland, W. S. (1993)
-  \emph{Visualizing Data}.
-  Summit, New Jersey: Hobart.
+  \bibshow{R:Cleveland:1993}
 }
 \author{Ross Ihaka and R Core Team}
 \note{

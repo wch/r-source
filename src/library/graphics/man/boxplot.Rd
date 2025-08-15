@@ -134,13 +134,9 @@ boxplot(x, \dots)
   \item{names}{a vector of names for the groups.}
 }
 \references{
-  \bibshow{R:Becker+Chambers+Wilks:1988}
-
-  Chambers, J. M., Cleveland, W. S., Kleiner, B. and Tukey, P. A. (1983).
-  \emph{Graphical Methods for Data Analysis}.
-  Wadsworth & Brooks/Cole.
-
-  \bibshow{R:Murrell:2005}
+  \bibshow{R:Becker+Chambers+Wilks:1988,
+    R:Chambers+Cleveland+Kleiner:1983,
+    R:Murrell:2005}
 
   See also \code{\link{boxplot.stats}}.
 }

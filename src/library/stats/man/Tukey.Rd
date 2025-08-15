@@ -52,21 +52,11 @@ qtukey(p, nmeans, df, nranges = 1, lower.tail = TRUE, log.p = FALSE)
   \code{qtukey} will be accurate to the 4th decimal place.
 }
 \source{
-  \code{qtukey} is in part adapted from Odeh and Evans (1974).
+  \code{qtukey} is in part adapted from \bibcitet{R:Odeh+Evans:1974}.
 }
 \references{
-  Copenhaver, Margaret Diponzio and Holland, Burt S. (1988).
-  Computation of the distribution of the maximum studentized range
-  statistic with application to multiple significance testing of simple
-  effects.
-  \emph{Journal of Statistical Computation and Simulation}, \bold{30},
-  1--15.
-  \doi{10.1080/00949658808811082}.
-
-  Odeh, R. E.  and  Evans, J. O. (1974).
-  Algorithm AS 70: Percentage Points of the Normal Distribution.
-  \emph{Applied Statistics}, \bold{23}, 96--97.
-  \doi{10.2307/2347061}.
+  \bibshow{R:Copenhaver+Holland:1988,
+    R:Odeh+Evans:1974}
 }
 \seealso{
   \link{Distributions} for standard distributions, including

@@ -119,13 +119,9 @@
 }
 
 \references{
-  \bibshow{R:Becker+Chambers+Wilks:1988}
-
-  Cleveland, W. S. (1985)
-  \emph{The Elements of Graphing Data.}
-  Monterey, CA: Wadsworth.
-
-  \bibshow{R:Murrell:2005}
+  \bibshow{R:Becker+Chambers+Wilks:1988,
+    R:Cleveland:1985,
+    R:Murrell:2005}
 }
 \seealso{
   \code{\link[base]{plot}}, \code{\link{plot.window}}, \code{\link{xy.coords}}.

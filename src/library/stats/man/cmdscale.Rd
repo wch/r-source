@@ -83,16 +83,15 @@ cmdscale(d, k = 2, eig = FALSE, add = FALSE, x.ret = FALSE,
 }
 \references{
   \bibinfo{R:Krzanowski+Marriott:1994}{footer}{(Especially pages 108--111.)}
+  \bibinfo{R:Mardia+Kent+Bibby:1979}{footer}{Chapter 14}
   \bibshow{*,
     R:Becker+Chambers+Wilks:1988,
-    R:Krzanowski+Marriott:1994}
+    R:Krzanowski+Marriott:1994,
+    R:Mardia+Kent+Bibby:1979}
   
   Cox, T. F. and Cox, M. A. A. (2001).
   \emph{Multidimensional Scaling}.  Second edition.
   Chapman and Hall.
-
-  Mardia, K. V., Kent, J. T. and Bibby, J. M. (1979).
-  Chapter 14 of \emph{Multivariate Analysis}, London: Academic Press.
 
   Seber, G. A. F. (1984).
   \emph{Multivariate Observations}.

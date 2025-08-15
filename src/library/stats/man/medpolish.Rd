@@ -47,12 +47,13 @@ medpolish(x, eps = 0.01, maxiter = 10, trace.iter = TRUE,
   \item{residuals}{the residuals.}
   \item{name}{the name of the dataset.}
 }
-\seealso{\code{\link{median}}; \code{\link{aov}} for a \emph{mean}
-  instead of \emph{median} decomposition.}
+\seealso{
+  \code{\link{median}};
+  \code{\link{aov}} for a \emph{mean} instead of \emph{median}
+  decomposition.
+}
 \references{
-  Tukey, J. W. (1977).
-  \emph{Exploratory Data Analysis},
-  Reading Massachusetts: Addison-Wesley.
+  \bibshow{R:Tukey:1977}
 }
 \examples{
 require(graphics)

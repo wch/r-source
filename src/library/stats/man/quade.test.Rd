@@ -71,10 +71,8 @@ quade.test(y, \dots)
   \emph{Journal of the American Statistical Association} \bold{74},
   680--683.
 
-  William J. Conover (1999),
-  \emph{Practical nonparametric statistics}.
-  New York: John Wiley & Sons.
-  Pages 373--380.
+  \bibinfo{R:Conover:1971}{footer}{Pages 373--380.}
+  \bibshow{R:Conover:1971}
 }
 \seealso{
   \code{\link{friedman.test}}.

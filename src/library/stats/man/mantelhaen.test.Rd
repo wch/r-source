@@ -83,14 +83,8 @@ mantelhaen.test(x, y = NULL, z = NULL,
   See also the example below.
 }
 \references{
-  Alan Agresti (1990).
-  \emph{Categorical data analysis}.
-  New York: Wiley.
-  Pages 230--235.
-
-  Alan Agresti (2002).
-  \emph{Categorical data analysis} (second edition).
-  New York: Wiley.
+  \bibinfo{R:Agresti:1990}{footer}{Pages 230--235.}
+  \bibshow{R:Agresti:1990, R:Agresti:2002}
 }
 \examples{
 ## Agresti (1990), pages 231--237, Penicillin and Rabbits

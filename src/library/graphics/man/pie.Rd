@@ -56,7 +56,7 @@ pie(x, labels = names(x), edges = 200, radius = 0.8,
   relative areas.  A bar chart or dot chart is a preferable way of
   displaying this type of data.
 
-  Cleveland (1985), page 264: \dQuote{Data that can be shown by pie charts
+  \bibcitet{|R:Cleveland:1985|page 264}: \dQuote{Data that can be shown by pie charts
     always can be shown by a dot chart.  This means that judgements of
     position along a common scale can be made instead of the less
     accurate angle judgements.}
@@ -64,11 +64,8 @@ pie(x, labels = names(x), edges = 200, radius = 0.8,
   and \I{McGill} as well as investigations by perceptual psychologists.
 }
 \references{
-  \bibshow{R:Becker+Chambers+Wilks:1988}
-
-  Cleveland, W. S. (1985)
-  \emph{The Elements of Graphing Data}.
-  Wadsworth: Monterey, CA, USA.
+  \bibshow{R:Becker+Chambers+Wilks:1988,
+    R:Cleveland:1985}
 }
 \seealso{
   \code{\link{dotchart}}.

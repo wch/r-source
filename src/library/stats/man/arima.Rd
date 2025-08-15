@@ -202,23 +202,16 @@ arima(x, order = c(0L, 0L, 0L),
     fitting.  See \code{\link{KalmanLike}}.}
 }
 \references{
-  Brockwell, P. J. and Davis, R. A. (1996).
-  \emph{Introduction to Time Series and Forecasting}.
-  Springer, New York.
-  Sections 3.3 and 8.3.
-
+  \bibinfo{R:Brockwell+Davis:1996}{note}{Sections 3.3 and 8.3}
+  \bibshow{R:Brockwell+Davis:1996,
+    R:Gardner+Harvey+Phillips:1980,
+    R:Harvey:1993,
+    R:Jones:1980,
+    R:Ripley:2002}
+  
   Durbin, J. and Koopman, S. J. (2001).
   \emph{Time Series Analysis by State Space Methods}.
   Oxford University Press.
-
-  Harvey, A. C. (1993).
-  \emph{Time Series Models}. 2nd Edition.
-  Harvester Wheatsheaf.
-  Sections 3.3 and 4.4.
-
-  \bibshow{R:Gardner+Harvey+Phillips:1980,
-    R:Jones:1980,
-    R:Ripley:2002}
 }
 
 \note{

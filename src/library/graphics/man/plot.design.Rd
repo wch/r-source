@@ -46,9 +46,8 @@ plot.design(x, y = NULL, fun = mean, data = NULL, \dots,
   horizontal line.
 }
 \references{
-  Chambers, J. M. and Hastie, T. J. eds (1992)
-  \emph{Statistical Models in S}.
-  Chapman & Hall, London, \bold{the} \emph{white book}, pp.\sspace{}546--7 (and 163--4).
+  \bibshow{R:Chambers+Hastie:1992}
+  Pages 546--7 (and 163--4).
 
   Freeny, A. E. and Landwehr, J. M. (1990)
   Displays for data from large designed experiments;

@@ -66,11 +66,7 @@ biplot(x, \dots)
   a plot is produced on the current graphics device.
 }
 \references{
-  K. R. Gabriel (1971).
-  The biplot graphical display of matrices with application to principal
-  component analysis.
-  \emph{Biometrika}, \bold{58}, 453--467.
-  \doi{10.2307/2334381}.
+  \bibshow{R:Gabriel:1971}
 
   J.C. Gower and D. J. Hand (1996).
   \emph{Biplots}.

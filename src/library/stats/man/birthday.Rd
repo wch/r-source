@@ -44,11 +44,7 @@ pbirthday(n, classes = 365, coincident = 2)
  good for very small probabilities.
 }
 \references{
-  Diaconis, P. and Mosteller F. (1989).
-  Methods for studying coincidences.
-  \emph{Journal of the American Statistical Association}, \bold{84},
-  853--861.
-  \doi{10.1080/01621459.1989.10478847}.
+  \bibshow{R:Diaconis+Mosteller:1989}
 }
 \examples{
 require(graphics)

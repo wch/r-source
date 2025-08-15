@@ -255,8 +255,7 @@ smooth.spline(x, y = NULL, w = NULL, df, spar = NULL, lambda = NULL, cv = FALSE,
   \code{\link{hatvalues}()} method based on the \code{lev} vector above.
 }
 \references{
-  Chambers, J. M. and Hastie, T. J. (1992)
-  \emph{Statistical Models in S}, Wadsworth & Brooks/Cole.
+  \bibshow{R:Chambers+Hastie:1992}
 
   Green, P. J. and Silverman, B. W. (1994)
   \emph{Nonparametric Regression and Generalized Linear Models:

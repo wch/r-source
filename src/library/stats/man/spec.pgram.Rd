@@ -80,9 +80,8 @@ spec.pgram(x, spans = NULL, kernel, taper = 0.1,
   Brockwell, P.J. and Davis, R.A. (1991) \emph{Time Series: Theory and
     Methods.} Second edition. Springer.
 
-  Venables, W.N. and Ripley, B.D. (2002) \emph{Modern Applied
-    Statistics with S.} Fourth edition. Springer.
-  (Especially pp.\sspace{}392--7.)
+  \bibinfo{R:Venables+Ripley:2002}{footer}{(Especially pages 392--7.)}
+  \bibshow{R:Venables+Ripley:2002}
 }
 \author{
   Originally Martyn Plummer; kernel smoothing by Adrian Trapletti,

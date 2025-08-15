@@ -117,13 +117,9 @@ prcomp(x, \dots)
   different builds of \R.
 }
 \references{
-  \bibshow{R:Becker+Chambers+Wilks:1988}
-
-  Mardia, K. V., J. T. Kent, and J. M. Bibby (1979)
-  \emph{Multivariate Analysis}, London: Academic Press.
-
-  Venables, W. N. and B. D. Ripley (2002)
-  \emph{Modern Applied Statistics with S}, Springer-Verlag.
+  \bibshow{R:Becker+Chambers+Wilks:1988,
+    R:Mardia+Kent+Bibby:1979,
+    R:Venables+Ripley:2002}
 }
 \seealso{
   \code{\link{biplot.prcomp}}, \code{\link{screeplot}},

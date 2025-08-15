@@ -68,18 +68,14 @@ dotchart(x, labels = NULL, groups = NULL, gdata = NULL, offset = 1/8,
 }
 \value{
   This function is invoked for its side effect, which is to produce two
-  variants of dotplots as described in Cleveland (1985).
+  variants of dotplots as described in \bibcitet{R:Cleveland:1985}.
 
   Dot plots are a reasonable substitute for bar plots.
 }
 \references{
-  \bibshow{R:Becker+Chambers+Wilks:1988}
-
-  Cleveland, W. S. (1985)
-  \emph{The Elements of Graphing Data.}
-  Monterey, CA: Wadsworth.
-
-  \bibshow{R:Murrell:2005}
+  \bibshow{R:Becker+Chambers+Wilks:1988,
+    R:Cleveland:1985,
+    R:Murrell:2005}
 }
 \examples{
 dotchart(VADeaths, main = "Death Rates in Virginia - 1940")

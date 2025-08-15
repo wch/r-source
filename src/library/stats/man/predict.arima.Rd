@@ -29,7 +29,7 @@
 
   The standard errors of prediction exclude the uncertainty in the
   estimation of the ARMA model and the regression coefficients.
-  According to Harvey (1993, pp.\sspace{}58--9) the effect is small.
+  According to \bibcitet{|R:Harvey:1993|pages 58--9} the effect is small.
 }
 \value{
   A time series of predictions, or if \code{se.fit = TRUE}, a list
@@ -37,20 +37,8 @@
   the estimated standard errors.  Both components are time series.
 }
 \references{
-  Durbin, J. and Koopman, S. J. (2001).
-  \emph{Time Series Analysis by State Space Methods}.
-  Oxford University Press.
-
-  Harvey, A. C. and McKenzie, C. R. (1982).
-  Algorithm AS 182: An algorithm for finite sample prediction from ARIMA
-  processes. 
-  \emph{Applied Statistics}, \bold{31}, 180--187.
-  \doi{10.2307/2347987}.
-
-  Harvey, A. C. (1993).
-  \emph{Time Series Models}, 2nd Edition.
-  Harvester Wheatsheaf.
-  Sections 3.3 and 4.4.
+  \bibinfo{R:Harvey:1993}{note}{Sections 3.3 and 4.4}
+  \bibshow{*, R:Durbin+Koopman:2001, R:Harvey+McKenzie:1982}
 }
 
 \seealso{

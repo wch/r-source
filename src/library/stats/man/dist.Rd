@@ -133,10 +133,8 @@ as.dist(m, diag = FALSE, upper = FALSE)
     argument.}
 }
 \references{
-  \bibshow{R:Becker+Chambers+Wilks:1988}
-
-  Mardia, K. V., Kent, J. T. and Bibby, J. M. (1979)
-  \emph{Multivariate Analysis.} Academic Press.
+  \bibshow{R:Becker+Chambers+Wilks:1988,
+    R:Mardia+Kent+Bibby:1979}
 
   Borg, I. and Groenen, P. (1997)
   \emph{Modern Multidimensional Scaling.  Theory and Applications.}

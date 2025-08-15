@@ -119,10 +119,7 @@ nlm(f, p, \dots, hessian = FALSE, typsize = rep(1, length(p)),
     Equations}.
   Prentice-Hall, Englewood Cliffs, NJ.
 
-  Schnabel, R. B., Koontz, J. E. and Weiss, B. E. (1985).
-  A modular system of algorithms for unconstrained minimization.
-  \emph{ACM Transactions on Mathematical Software}, \bold{11}, 419--440.
-  \doi{10.1145/6187.6192}.
+  \bibshow{R:Schnabel+Koonatz+Weiss:1985}
 }
 \seealso{
   \code{\link{optim}} and \code{\link{nlminb}}.

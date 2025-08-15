@@ -38,27 +38,22 @@ promax(x, m = 4)
   \item{rotmat}{The \sQuote{rotation} matrix.}
 }
 \references{
-  Hendrickson, A. E. and White, P. O. (1964).
-  Promax: a quick method for rotation to orthogonal oblique structure.
-  \emph{British Journal of Statistical Psychology}, \bold{17}, 65--70.
-  \doi{10.1111/j.2044-8317.1964.tb00244.x}.
+  \bibshow{R:Hendrickson+White:1964,
+    R:Kaiser:1958}
 
   Horst, P. (1965).
   \emph{Factor Analysis of Data Matrices}.
   Holt, Rinehart and Winston.
   Chapter 10.
 
-  Kaiser, H. F. (1958).
-  The varimax criterion for analytic rotation in factor analysis.
-  \emph{Psychometrika}, \bold{23}, 187--200.
-  \doi{10.1007/BF02289233}.
-
   Lawley, D. N. and Maxwell, A. E. (1971).
   \emph{Factor Analysis as a Statistical Method}, second edition.
   Butterworths.
 }
-\seealso{\code{\link{factanal}}, \code{\link{Harman74.cor}}.}
-
+\seealso{
+  \code{\link{factanal}},
+  \code{\link{Harman74.cor}}.
+}
 \examples{
 ## varimax with normalize = TRUE is the default
 fa <- factanal( ~., 2, data = swiss)

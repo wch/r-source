@@ -65,10 +65,8 @@ kruskal.test(x, \dots)
   \item{data.name}{a character string giving the names of the data.}
 }
 \references{
-  Myles Hollander and Douglas A. Wolfe (1973),
-  \emph{Nonparametric Statistical Methods.}
-  New York: John Wiley & Sons.
-  Pages 115--120.
+  \bibinfo{R:Hollander+Wolfe:1973}{footer}{Pages 115--120.}
+  \bibshow{R:Hollander+Wolfe:1973}
 }
 \seealso{
   The Wilcoxon rank sum test (\code{\link{wilcox.test}}) as the special

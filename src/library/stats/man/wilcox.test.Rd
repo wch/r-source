@@ -98,15 +98,16 @@ wilcox.test(x, \dots)
   computed.  (The pseudomedian of a distribution \eqn{F} is the median
   of the distribution of \eqn{(u+v)/2}, where \eqn{u} and \eqn{v} are
   independent, each with distribution \eqn{F}.  If \eqn{F} is symmetric,
-  then the pseudomedian and median coincide.  See Hollander & Wolfe
-  (1973), page 34.)  Note that in the two-sample case the estimator for
+  then the pseudomedian and median coincide.
+  See \bibcitet{|R:Hollander+Wolfe:1973|page 34}.)
+  Note that in the two-sample case the estimator for
   the difference in location parameters does \bold{not} estimate the
   difference in medians (a common misconception) but rather the median
   of the difference between a sample from \code{x} and a sample from
   \code{y}.
 
   If exact p-values are available, an exact confidence interval is
-  obtained by the algorithm described in Bauer (1972), and the
+  obtained by the algorithm described in \bibcitet{R:Bauer:1972}, and the
   \I{Hodges}-\I{Lehmann} estimator is employed.  Otherwise, the returned
   confidence interval and point estimate are based on normal
   approximations.  These are continuity-corrected for the interval but
@@ -159,17 +160,9 @@ wilcox.test(x, \dots)
   one sample is large (several thousands or more).
 }
 \references{
-  David F. Bauer (1972).
-  Constructing confidence sets using rank statistics.
-  \emph{Journal of the American Statistical Association}
-  \bold{67}, 687--690.
-  \doi{10.1080/01621459.1972.10481279}.
-
-  Myles Hollander and Douglas A. Wolfe (1973).
-  \emph{Nonparametric Statistical Methods}.
-  New York: John Wiley & Sons.
-  Pages 27--33 (one-sample), 68--75 (two-sample).\cr
-  Or second edition (1999).
+  \bibinfo{R:Hollander+Wolfe:1973}{footer}{Pages 27--33 (one-sample),
+    68--75 (two-sample)}
+  \bibshow{*}
 }
 \seealso{
   \code{\link{psignrank}}, \code{\link{pwilcox}}.

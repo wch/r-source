@@ -107,7 +107,7 @@ cov2cor(V)
   reranking for each pair.
 
   When there are ties, Kendall's \eqn{\tau_b}{tau_b} is computed, as
-  proposed by Kendall (1945).
+  proposed by \bibcitet{R:Kendall:1945}.
 
   Scaling a covariance matrix into a correlation one can be achieved in
   many ways, mathematically most appealing by multiplication with a
@@ -123,17 +123,9 @@ cov2cor(V)
   \code{\link[pcaPP]{cor.fk}} in package \CRANpkg{pcaPP}.
 }
 \references{
-  \bibshow{R:Becker+Chambers+Wilks:1988}
-
-  Kendall, M. G. (1938).
-  A new measure of rank correlation,
-  \emph{Biometrika}, \bold{30}, 81--93.
-  \doi{10.1093/biomet/30.1-2.81}.
-
-  Kendall, M. G. (1945).
-  The treatment of ties in rank problems.
-  \emph{Biometrika}, \bold{33} 239--251.
-  \doi{10.1093/biomet/33.3.239}
+  \bibshow{R:Becker+Chambers+Wilks:1988,
+    R:Kendall:1938,
+    R:Kendall:1945}
 }
 \seealso{
   \code{\link{cor.test}} for confidence intervals (and tests).

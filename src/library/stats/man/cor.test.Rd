@@ -117,15 +117,10 @@ cor.test(x, \dots)
   sizes (the cutoff has been changed from the original paper).
 }
 \references{
-  D. J. Best & D. E. Roberts (1975).
-  Algorithm AS 89: The Upper Tail Probabilities of Spearman's \eqn{\rho}{rho}.
-  \emph{Applied Statistics}, \bold{24}, 377--379.
-  \doi{10.2307/2347111}.
-
-  Myles Hollander & Douglas A. Wolfe (1973),
-  \emph{Nonparametric Statistical Methods.}
-  New York: John Wiley & Sons.
-  Pages 185--194 (Kendall and Spearman tests).
+  \bibinfo{R:Hollander+Wolfe:1973}{footer}{Pages 185--194 (Kendall and
+    Spearman tests)} 
+  \bibshow{R:Hollander+Wolfe:1973,
+    R:Best+Roberts:1975}
 }
 
 \seealso{

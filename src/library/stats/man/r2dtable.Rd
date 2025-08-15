@@ -27,11 +27,7 @@ r2dtable(n, r, c)
   components.
 }
 \references{
-  Patefield, W. M. (1981).
-  Algorithm AS 159: An efficient method of generating r x c tables
-  with given row and column totals.
-  \emph{Applied Statistics}, \bold{30}, 91--97.
-  \doi{10.2307/2346669}.
+  \bibshow{R:Patefield:1981}
 }
 \examples{
 ## Fisher's Tea Drinker data.

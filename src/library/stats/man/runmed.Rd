@@ -107,10 +107,7 @@ runmed(x, k, endrule = c("median", "keep", "constant"),
   Currently \link{long vectors} are only supported for \code{algorithm = "Stuetzle"}.
 }
 \references{
-  \enc{Härdle}{Haerdle}, W. and Steiger, W. (1995)
-  Algorithm AS 296: Optimal median smoothing,
-  \emph{Applied Statistics} \bold{44}, 258--264.
-  \doi{10.2307/2986349}.
+  \bibshow{R:Härdle+Steiger:1995}
 
   Jerome H. Friedman and Werner Stuetzle (1982)
   \emph{Smoothing of Scatterplots};

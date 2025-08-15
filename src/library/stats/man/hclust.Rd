@@ -160,9 +160,10 @@ hclust(d, method = "complete", members = NULL)
   \emph{squared} Euclidean distances.
 }
 \references{
-  \bibshow{*}
-  
-  \bibshow{R:Becker+Chambers+Wilks:1988} (S version.)
+  \bibinfo{R:Becker+Chambers+Wilks:1988}{note}{(S version)}
+  \bibshow{*,
+    R:Becker+Chambers+Wilks:1988,
+    R:McQuitty:1966}
 
   Everitt, B. (1974).
   \emph{Cluster Analysis}.
@@ -189,12 +190,6 @@ hclust(d, method = "complete", members = NULL)
   \emph{COMPSTAT Lectures 4}.
   Wuerzburg: Physica-Verlag
   (for algorithmic details of algorithms used).
-
-  McQuitty, L.L. (1966).
-  Similarity Analysis by Reciprocal Pairs for Discrete and Continuous
-  Data.
-  \emph{Educational and Psychological Measurement}, \bold{26}, 825--831.
-  \doi{10.1177/001316446602600402}.
 
   Legendre, P. and L. Legendre (2012).
   \emph{Numerical Ecology},

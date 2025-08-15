@@ -147,10 +147,8 @@ hist(x, \dots)
 }
 
 \references{
-  \bibshow{R:Becker+Chambers+Wilks:1988}
-
-  Venables, W. N. and Ripley. B. D. (2002)
-  \emph{Modern Applied Statistics with S}.  Springer.
+  \bibshow{R:Becker+Chambers+Wilks:1988,
+    R:Venables+Ripley:2002}
 }
 
 \seealso{

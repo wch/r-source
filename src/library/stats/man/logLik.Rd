@@ -78,10 +78,7 @@ logLik(object, \dots)
 \references{
   For \code{logLik.lm}:
 
-  Harville, D.A. (1974).
-  Bayesian inference for variance components using only error contrasts.
-  \emph{Biometrika}, \bold{61}, 383--385.
-  \doi{10.2307/2334370}.
+  \bibshow{R:Harville:1974}
 }
 \author{
   \enc{José}{Jose} Pinheiro and Douglas Bates

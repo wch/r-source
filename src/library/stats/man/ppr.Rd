@@ -165,20 +165,13 @@ method functions.
 }
 
 \references{
-  Friedman, J. H. and Stuetzle, W. (1981).
-  Projection pursuit regression.
-  \emph{Journal of the American Statistical Association},
-  \bold{76}, 817--823.
-  \doi{10.2307/2287576}.
+  \bibshow{R:Friedman+Stuetzle:1981,
+    R:Venables+Ripley:2002}
 
   Friedman, J. H. (1984).
   SMART User's Guide.
   Laboratory for Computational Statistics, Stanford University Technical
   Report No.\sspace{}1.
-
-  Venables, W. N. and Ripley, B. D. (2002).
-  \emph{Modern Applied Statistics with S}.
-  Springer.
 }
 \seealso{
   \code{\link{plot.ppr}}, \code{\link{supsmu}}, \code{\link{smooth.spline}}

@@ -29,6 +29,10 @@ spec.ar(x, n.freq, order = NULL, plot = TRUE, na.action = na.fail,
   An object of class \code{"spec"}.
   The result is returned invisibly if \code{plot} is true.
 }
+\section{Warning}{
+  Some authors, for example Thomson (1990), warn strongly
+  that AR spectra can be misleading.
+}
 \references{
   Thompson, D.J. (1990).
   Time series analysis of Holocene climate data.
@@ -36,14 +40,9 @@ spec.ar(x, n.freq, order = NULL, plot = TRUE, na.action = na.fail,
     A}, \bold{330}, 601--616.
   \doi{10.1098/rsta.1990.0041}.
   %% \url{https://www.jstor.org/stable/53609}.
-  
-  Venables, W.N. and Ripley, B.D. (2002) \emph{Modern Applied
-    Statistics with S.} Fourth edition. Springer. (Especially
-  page 402.)
-}
-\section{Warning}{
-  Some authors, for example Thomson (1990), warn strongly
-  that AR spectra can be misleading.
+
+  \bibinfo{R:Venables+Ripley:2002}{footer}{(Especially page 402.)}
+  \bibshow{R:Venables+Ripley:2002}
 }
 
 \seealso{\code{\link{ar}}, \code{\link{spectrum}}.}
