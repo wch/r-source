@@ -13,6 +13,15 @@ bibentry(bibtype = "Book",
          year = "2005",
          publisher = "Wiley")
 
+bibentry(bibtype = "Book",
+         key = "R:Cleveland:1985",
+         author = person(given = c("William", "S."),
+                         family = "Cleveland"),
+         title = "The Elements of Graphing Data",
+         publisher = "Wadsworth",
+         year = "1985",
+         address = "Monterey, CA")
+
 bibentry(bibtype = "Article",
          key = "R:Cohen:1980",
          title = "On the Graphical Display of the Significant Components in Two-way Contingency Tables",
