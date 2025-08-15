@@ -235,7 +235,15 @@ function(x, textual = FALSE)
 {
     x <- trimws(x)
     given <- strsplit(x, "(?<!\\\\),[[:space:]]*", perl = TRUE)[[1L]]
-    parts <- strsplit(given, "|", fixed = TRUE)
+    ## We used to extract parts based on
+    ##   parts <- strsplit(given, "|", fixed = TRUE)
+    ## but that does not work as per ?strsplit
+    ##   if there is a match at the end of the string, the output is the
+    ##   same as with the match removed.
+    ## Argh.
+    parts <- regmatches(given,
+                        gregexpr("|", given, fixed = TRUE),
+                        invert = TRUE)
     parts <- parts[lengths(parts) %in% c(1L, 3L)]
     ## Could complain about the others ...?
     keys <- after <- before <- rep_len("", length(parts))
@@ -243,6 +251,7 @@ function(x, textual = FALSE)
         keys[ind] <- unlist(parts[ind], use.names = FALSE)
     }
     if(any(ind <- (lengths(parts) == 3L))) {
+        parts <- parts[ind]
         keys[ind] <- vapply(parts, `[`, "", 2L)
         after[ind] <- gsub("\\,", ",",
                            vapply(parts, `[`, "", 3L),
