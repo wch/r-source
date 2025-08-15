@@ -1,6 +1,6 @@
 % File src/library/base/man/search.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2020 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{search}
@@ -22,8 +22,8 @@ searchpaths()
   required always.
 
   \code{searchpaths} gives a similar character vector, with the
-  entries for packages being the path to the package used to load the
-  code.
+  entries for packages being the path to the directory from which the
+  namespace was loaded.
 }
 \references{
   \bibshow{R:Becker+Chambers+Wilks:1988}  (\code{search}.)
@@ -31,7 +31,8 @@ searchpaths()
   \bibshow{R:Chambers:1998}  (\code{searchpaths}.)
 }
 \seealso{
-  \code{\link{.packages}} to list just the packages on search path.
+  \code{\link{.packages}} to list just the packages on the search path,
+  and \code{\link{path.package}} for the associated directories.
 
   \code{\link{loadedNamespaces}} to list loaded namespaces.
 
