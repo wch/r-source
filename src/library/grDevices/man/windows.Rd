@@ -146,7 +146,7 @@ win.print(width = 7, height = 7, pointsize = 12, printer = "",
   When a screen device is double-buffered (the default) the
   screen is updated 100ms after last plotting call or every 500ms during
   continuous plotting.  These times can be altered by setting
-  \code{options("windowsTimeout")} to a vector of two integers before
+  \code{options("windowsTimeouts")} to a vector of two integers before
   opening the device.
 
   Line widths as controlled by \code{par(lwd =)} are in multiples of
