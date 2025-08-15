@@ -497,7 +497,11 @@ compute_open_spline(int n, double *x, double *y, double *s,
       }
 
       /* last control point is needed twice for the last segment */
-      COPY_CONTROL_POINT(0, n - 3, n);
+      if (n == 2) {
+	COPY_CONTROL_POINT(0, n - 2, n);
+      } else {
+	COPY_CONTROL_POINT(0, n - 3, n);
+      }
       COPY_CONTROL_POINT(1, n - 2, n);
       COPY_CONTROL_POINT(2, n - 1, n);
       COPY_CONTROL_POINT(3, n - 1, n);
