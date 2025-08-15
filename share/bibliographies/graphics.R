@@ -103,6 +103,16 @@ bibentry(bibtype = "Article",
          pages = "32--35",
          .doi = "10.2307/2683556")
 
+bibentry(bibtype = "Unpublished",
+         key = "R:Hofmann+Theus:2005",
+         author = c(person(given = "Heike",
+                           family = "Hofmann"),
+                    person(given = "Martin",
+                           family = "Theus")),
+         title = "Interactive Graphics for Visualizing Conditional Distributions",
+         note = "Unpublished manuscript",
+         year = "2005")
+
 bibentry(bibtype = "Article",
          key = "R:Hummel:1996",
          author = person(given = "J.",

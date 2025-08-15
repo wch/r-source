@@ -23,6 +23,21 @@ bibentry(bibtype = "Article",
          publisher = "American Mathematical Society (AMS)",
          doi = "10.1090/S0025-5718-1973-0329190-8")
 
+bibentry(bibtype = "Article",
+         key = "R:Amos:1983",
+         title = "{Algorithm 610}: A Portable {FORTRAN} Subroutine for Derivatives of the Psi Function",
+         volume = "9",
+         .issn = "1557-7295",
+         doi = "10.1145/356056.356065",
+         number = "4",
+         journal = "ACM Transactions on Mathematical Software",
+         publisher = "Association for Computing Machinery (ACM)",
+         author = person(given = c("D.", "E."),
+                         family = "Amos"),
+         year = "1983",
+         month = "dec",
+         pages = "494--502")
+
 bibentry(bibtype = "Book",
          key = "R:Becker+Chambers+Wilks:1988",
          author = c(person(given = c("Richard", "A."),

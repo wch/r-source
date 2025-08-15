@@ -64,6 +64,18 @@ bibentry(bibtype = "Article",
          pages = "453--476",
          .doi = "10.1007/bf01025868")
 
+bibentry(bibtype = "InProceedings",
+         key = "R:Ihaka:2003",
+         author = person(given = "Ross",
+                         family = "Ihaka"),
+         title = "Colour for Presentation Graphics",
+         booktitle = "Proceedings of the 3rd International Workshop on Distributed Statistical Computing (DSC 2003)",
+         year = "2003",
+         month = "March",
+         address = "Vienna, Austria",
+         organization = "Technische Universität Wien",
+         url = "https://www.R-project.org/conferences/DSC-2003")
+
 bibentry(bibtype = "Article",
          key = "R:Mcgill+Tukey+Larsen:1978",
          title = "Variations of Box Plots",
@@ -102,6 +114,19 @@ bibentry(bibtype = "Article",
          month = "sep",
          pages = "582--599",
          .doi = "10.2307/1390947")
+
+bibentry(bibtype = "Misc",
+         key = "R:Murrell+Ooms+Allaire:2015",
+         author = c(person(given = "Paul",
+                           family = "Murrell",
+                           comment = c(ORCID = "0000-0002-3224-8858")),
+                    person(given = "Jeroen",
+                           family = "Ooms"),
+                    person(given = c("J.", "J."),
+                           family = "Allaire")),
+         title = "Recording and Replaying the Graphics Engine Display List",
+         year = "2015",
+         url = "https://stattech.wordpress.fos.auckland.ac.nz/2015/12/21/2015-07-recording-and-replaying-the-graphics-engine-display-list")
 
 bibentry(bibtype = "Article",
          key = "R:Murrell+Ripley:2006",
