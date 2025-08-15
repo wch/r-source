@@ -1,7 +1,7 @@
 #  File src/library/parallel/R/clusterApply.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2020 The R Core Team
+#  Copyright (C) 1995-2025 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -207,19 +207,19 @@ parRapply <- function(cl = NULL, x, FUN, ..., chunk.size = NULL)
 {
     cl <- defaultCluster(cl)
     nchunks <- staticNChunks(nrow(x), length(cl), chunk.size)
-    do.call(c,
-            clusterApply(cl = cl, x = splitRows(x, nchunks),
-                         fun = apply, MARGIN = 1L, FUN = FUN, ...),
-            quote = TRUE)
+    xsplit <- splitRows(x, nchunks)
+    clres <- clusterApply(cl = cl, x = xsplit, fun = apply, MARGIN = 1L,
+                          FUN = FUN, simplify = FALSE, ...)
+    unlist(unlist(clres, recursive=FALSE), recursive=FALSE)
 }
 
 parCapply <- function(cl = NULL, x, FUN, ..., chunk.size = NULL) {
     cl <- defaultCluster(cl)
     nchunks <- staticNChunks(ncol(x), length(cl), chunk.size)
-    do.call(c,
-            clusterApply(cl = cl, x = splitCols(x, nchunks),
-                         fun = apply, MARGIN = 2L, FUN = FUN, ...),
-            quote = TRUE)
+    xsplit <- splitCols(x, nchunks)
+    clres <- clusterApply(cl = cl, x = xsplit, fun = apply, MARGIN = 2L,
+                          FUN = FUN, simplify = FALSE, ...)
+    unlist(unlist(clres, recursive=FALSE), recursive=FALSE)
 }
 
 
