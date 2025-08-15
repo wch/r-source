@@ -64,11 +64,9 @@ rcauchy(n, location = 0, scale = 1)
   \code{rcauchy} uses inversion.
 }
 \references{
-  \bibshow{R:Becker+Chambers+Wilks:1988}
-
-  Johnson, N. L., Kotz, S. and Balakrishnan, N. (1995)
-  \emph{Continuous Univariate Distributions}, volume 1, chapter 16.
-  Wiley, New York.
+  \bibinfo{R:Johnson+Kotz+Balakrishnan:1994}{footer}{Chapter 16.}
+  \bibshow{R:Becker+Chambers+Wilks:1988,
+    R:Johnson+Kotz+Balakrishnan:1994}
 }
 \seealso{
   \link{Distributions} for other standard distributions, including

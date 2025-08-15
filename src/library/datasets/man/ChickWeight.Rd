@@ -54,8 +54,7 @@
   Hand, D. and Crowder, M. (1996), \emph{Practical Longitudinal Data
     Analysis}, Chapman and Hall (table A.2)
 
-  Pinheiro, J. C. and Bates, D. M. (2000) \emph{Mixed-effects Models in
-    S and S-PLUS}, Springer.
+  \bibshow{R:Pinheiro+Bates:2000}
 }
 \seealso{
   \code{\link{SSlogis}} for models fitted to this dataset.

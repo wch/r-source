@@ -65,14 +65,8 @@ quade.test(y, \dots)
   \item{data.name}{a character string giving the names of the data.}
 }
 \references{
-  D. Quade (1979),
-  Using weighted rankings in the analysis of complete blocks with
-  additive block effects.
-  \emph{Journal of the American Statistical Association} \bold{74},
-  680--683.
-
-  \bibinfo{R:Conover:1971}{footer}{Pages 373--380.}
-  \bibshow{R:Conover:1971}
+  \bibinfo{R:Conover:1999}{footer}{Pages 373--380.}
+  \bibshow{R:Conover:1999, R:Quade:1979}
 }
 \seealso{
   \code{\link{friedman.test}}.

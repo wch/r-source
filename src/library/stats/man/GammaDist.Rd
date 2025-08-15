@@ -129,16 +129,9 @@ rgamma(n, shape, rate = 1, scale = 1/rate)
   approximation.
 
   \code{rgamma} for \code{shape >= 1} uses
-
-  Ahrens, J. H. and Dieter, U. (1982).
-  Generating gamma variates by a modified rejection technique.
-  \emph{Communications of the ACM}, \bold{25}, 47--54,
-
+  \bibcitet{R:Ahrens+Dieter:1982} 
   and for \code{0 < shape < 1} uses
-
-  Ahrens, J. H. and Dieter, U. (1974).
-  Computer methods for sampling from gamma, beta, Poisson and binomial
-  distributions. \emph{Computing}, \bold{12}, 223--246.
+  \bibcitet{R:Ahrens+Dieter:1974}.
 }
 \references{
   \bibinfo{R:Abramowitz+Stegun:1972}{footer}{Chapter 6: Gamma and Related Functions.}

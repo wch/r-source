@@ -35,13 +35,8 @@
   \code{print}) for its grouped-data classes.
 }
 \source{
-  Kung, F. H. (1986),
-  Fitting logistic growth curve with predetermined carrying capacity,
-  in \emph{Proceedings of the Statistical Computing Section,
-    American Statistical Association}, 340--343.
-
-  Pinheiro, J. C. and Bates, D. M. (2000)
-  \emph{Mixed-effects Models in S and S-PLUS}, Springer.
+  \bibshow{R:Kung:1986,
+    R:Pinheiro+Bates:2000}
 }
 \examples{
 require(stats); require(graphics)

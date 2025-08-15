@@ -103,10 +103,10 @@ rnbinom(n, size, prob, mu)
   correction to a normal approximation, followed by a search.
 
   \code{rnbinom} uses the derivation as a gamma mixture of Poisson
-  distributions, see
-
-  Devroye, L. (1986) \emph{Non-Uniform Random Variate Generation.}
-  Springer-Verlag, New York. Page 480.
+  distributions, see \bibcitet{|R:Devroye:1986|page 480}.
+}
+\references{
+  \bibshow{*}
 }
 \seealso{
   \link{Distributions} for standard distributions, including

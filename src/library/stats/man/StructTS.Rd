@@ -108,10 +108,9 @@ StructTS(x, type = c("level", "trend", "BSM"), init = NULL,
 }
 \references{
   \bibinfo{R:Brockwell+Davis:1996}{footer}{Sections 8.2 and 8.5.}
-  \bibshow{*, R:Harvey:1993}
-
-  Durbin, J. and Koopman, S. J. (2001) \emph{Time Series Analysis by
-    State Space Methods.}  Oxford University Press.
+  \bibshow{*,
+    R:Durbin+Koopman:2001,
+    R:Harvey:1993}
 
   Harvey, A. C. (1989)
   \emph{Forecasting, Structural Time Series Models and the Kalman Filter}.

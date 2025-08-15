@@ -58,10 +58,13 @@ spectrum(x, \dots, method = c("pgram", "ar"))
   \code{\link{spec.pgram}} and \code{\link{spec.ar}}.
 
   The spectrum here is defined (for historical compatibility) with
-  scaling \code{1/\link{frequency}(x)}.  This makes the spectral density
-  a density over the range \code{(-frequency(x)/2, +frequency(x)/2]},
-  whereas a more common scaling is \eqn{2\pi}{2pi} and range \eqn{(-0.5,
-  0.5]} (e.g., Bloomfield) or 1 and range \eqn{(-\pi, \pi]}{(-pi, pi]}.
+  scaling \code{1/\link{frequency}(x)}.
+  This makes the spectral density a density over the range
+  \code{(-frequency(x)/2, +frequency(x)/2]},
+  whereas a more common scaling is \eqn{2\pi}{2pi} and range
+  \eqn{(-0.5, 0.5]}
+  \bibcitep{e.g.\\\\\\,|R:Bloomfield:1976|} or 1 and range
+  \eqn{(-\pi, \pi]}{(-pi, pi]}.
 
   If available, a confidence interval will be plotted by
   \code{plot.spec}: this is asymmetric, and the width of the centre
@@ -74,15 +77,11 @@ spectrum(x, \dots, method = c("pgram", "ar"))
   appropriate graphical parameters.
 }
 \references{
-  Bloomfield, P. (1976) \emph{Fourier Analysis of Time Series: An
-    Introduction.} Wiley.
-
-  Brockwell, P. J. and Davis, R. A. (1991) \emph{Time Series: Theory and
-    Methods.} Second edition. Springer.
-
-  Venables, W. N. and Ripley, B. D. (2002) \emph{Modern Applied
-    Statistics with S-PLUS.} Fourth edition. Springer. (Especially
-  pages 392--7.)
+  \bibinfo{R:Venables+Ripley:2002}{footer}{(Especially
+    pages 392--7.)}
+  \bibshow{R:Bloomfield:1976,
+    R:Brockwell+Davis:1991,
+    R:Venables+Ripley:2002}
 }
 \author{Martyn Plummer, B.D. Ripley}
 \seealso{

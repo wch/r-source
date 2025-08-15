@@ -76,10 +76,7 @@ rbinom(n, size, prob)
 }
 \source{
   For \code{dbinom} a saddle-point expansion is used: see
-
-  Catherine Loader (2000). \emph{Fast and Accurate Computation of
-    Binomial Probabilities}; available as
-  \url{https://www.r-project.org/doc/reports/CLoader-dbinom-2002.pdf}
+  \bibcitet{R:Loader:2000}.
 
   \code{pbinom} uses \code{\link{pbeta}}.
 
@@ -87,12 +84,11 @@ rbinom(n, size, prob)
   correction to a normal approximation, followed by a search.
 
   \code{rbinom} (for \code{size < .Machine$integer.max}) is based on
-
-  Kachitvichyanukul, V. and Schmeiser, B. W. (1988)
-  Binomial random variate generation.
-  \emph{Communications of the ACM}, \bold{31}, 216--222.
-
+  \bibcitet{R:Kachitvichyanukul+Schmeiser:1988}.
   For larger values it uses inversion.
+}
+\references{
+  \bibshow{*}
 }
 \examples{
 require(graphics)

@@ -41,13 +41,10 @@ Seatbelts
   \emph{Forecasting, Structural Time Series Models and the Kalman Filter}.
   Cambridge University Press, pp.\sspace{}519--523.
 
-  Durbin, J. and Koopman, S. J. (2001).
-  \emph{Time Series Analysis by State Space Methods}.
-  Oxford University Press.
-  %% \url{http://www.ssfpack.com/dkbook/}
+  \bibcitet{R:Durbin+Koopman:2001}
 }
 \references{
-  \bibshow{R:Harvey+Durbin:1986}
+  \bibshow{*, R:Harvey+Durbin:1986}
 }
 \examples{
 require(stats); require(graphics)

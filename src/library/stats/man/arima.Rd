@@ -204,14 +204,11 @@ arima(x, order = c(0L, 0L, 0L),
 \references{
   \bibinfo{R:Brockwell+Davis:1996}{note}{Sections 3.3 and 8.3}
   \bibshow{R:Brockwell+Davis:1996,
+    R:Durbin+Koopman:2001,
     R:Gardner+Harvey+Phillips:1980,
     R:Harvey:1993,
     R:Jones:1980,
     R:Ripley:2002}
-  
-  Durbin, J. and Koopman, S. J. (2001).
-  \emph{Time Series Analysis by State Space Methods}.
-  Oxford University Press.
 }
 
 \note{

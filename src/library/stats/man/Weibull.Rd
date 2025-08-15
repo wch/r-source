@@ -74,9 +74,8 @@ rweibull(n, shape, scale = 1)
   \code{rweibull} uses inversion.
 }
 \references{
-  Johnson, N. L., Kotz, S. and Balakrishnan, N. (1995)
-  \emph{Continuous Univariate Distributions}, volume 1, chapter 21.
-  Wiley, New York.
+  \bibinfo{R:Johnson+Kotz+Balakrishnan:1994}{footer}{Chapter 21.}
+  \bibshow{R:Johnson+Kotz+Balakrishnan:1994}
 }
 \seealso{
   \link{Distributions} for other standard distributions, including

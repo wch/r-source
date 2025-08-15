@@ -39,13 +39,9 @@
   \code{print}) for its grouped-data classes.
 }
 \source{
-  Davidian, M. and Giltinan, D. M. (1995)
-  \emph{Nonlinear Models for Repeated Measurement Data},
-  Chapman & Hall
-  (section 5.2.4, p.\sspace{}134)
-
-  Pinheiro, J. C. and Bates, D. M. (2000) \emph{Mixed-effects Models in
-    S and S-PLUS}, Springer.
+  \bibinfo{R:Davidian+Giltinan:1995}{footer}{(Section 5.2.4, page 134.)}
+  \bibshow{R:Davidian+Giltinan:1995,
+    R:Pinheiro+Bates:2000}
 }
 \examples{
 require(stats); require(graphics)

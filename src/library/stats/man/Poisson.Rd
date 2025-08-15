@@ -84,11 +84,10 @@ rpois(n, lambda)
   \code{qpois} uses the Cornish--Fisher Expansion to include a skewness
   correction to a normal approximation, followed by a search.
 
-  \code{rpois} uses
-
-   Ahrens, J. H. and Dieter, U. (1982).
-   Computer generation of Poisson deviates from modified normal distributions.
-   \emph{ACM Transactions on Mathematical Software}, \bold{8}, 163--179.
+  \code{rpois} uses \bibcitet{R:Ahrens+Dieter:1982}
+}
+\references{
+  \bibshow{*}
 }
 \seealso{
   \link{Distributions} for other standard distributions, including

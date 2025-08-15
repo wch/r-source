@@ -57,18 +57,13 @@ rexp(n, rate = 1)
   \code{dexp}, \code{pexp} and \code{qexp} are all calculated
   from numerically stable versions of the definitions.
 
-  \code{rexp} uses
-
-  Ahrens, J. H. and Dieter, U. (1972).
-  Computer methods for sampling from the exponential and normal distributions.
-  \emph{Communications of the ACM}, \bold{15}, 873--882.
+  \code{rexp} uses \bibcitet{R:Ahrens+Dieter:1972}.
 }
 \references{
-  \bibshow{R:Becker+Chambers+Wilks:1988}
-
-  Johnson, N. L., Kotz, S. and Balakrishnan, N. (1995)
-  \emph{Continuous Univariate Distributions}, volume 1, chapter 19.
-  Wiley, New York.
+  \bibinfo{R:Johnson+Kotz+Balakrishnan:1994}{footer}{Chapter 19.}  
+  \bibshow{*,
+    R:Becker+Chambers+Wilks:1988,
+    R:Johnson+Kotz+Balakrishnan:1994}
 }
 \seealso{
   \code{\link{exp}} for the exponential function.

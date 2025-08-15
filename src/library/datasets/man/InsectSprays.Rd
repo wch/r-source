@@ -20,12 +20,10 @@
   }
 }
 \source{
-  Beall, G., (1942)
-  The Transformation of data from entomological field experiments,
-  \emph{Biometrika}, \bold{29}, 243--262.
+  \bibcitet{R:Beall:1942}.
 }
 \references{
-  \bibshow{R:McNeil:1977}
+  \bibshow{*, R:McNeil:1977}
 }
 \examples{
 require(stats); require(graphics)

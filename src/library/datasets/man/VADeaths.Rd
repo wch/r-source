@@ -22,13 +22,10 @@
   This provides a rather nice 3-way analysis of variance example.
 }
 \source{
-  Molyneaux, L.,  Gilliam, S. K., and  Florant, L. C.(1947)
-  Differences in Virginia death rates by color, sex, age,
-  and rural or urban residence.
-  \emph{American Sociological Review}, \bold{12}, 525--535.
+  \bibcitet{R:Molyneaux+Gilliam+Florant:1947}.
 }
 \references{
-  \bibshow{R:McNeil:1977}
+  \bibshow{*, R:McNeil:1977}
 }
 \examples{
 require(stats); require(graphics)

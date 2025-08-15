@@ -15,8 +15,6 @@
 }
 \usage{austres}
 \source{
-  P. J. Brockwell and R. A. Davis (1996)
-  \emph{Introduction to Time Series and Forecasting.}
-  Springer
+  \bibshow{R:Brockwell+Davis:1996}
 }
 \keyword{datasets}

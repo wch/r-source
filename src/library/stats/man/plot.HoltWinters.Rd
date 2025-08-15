@@ -40,12 +40,7 @@
   \item{\dots}{Other graphics parameters.}
 }
 \references{
-  C. C. Holt (1957)
-  Forecasting trends and seasonals by exponentially weighted
-  moving averages,
-  \emph{ONR Research Memorandum, Carnegie Institute of Technology} \bold{52}.
-
-  \bibshow{R:Winters:1960}
+  \bibshow{R:Holt:1957, R:Holt:2004, R:Winters:1960}
 }
 \author{
   David Meyer \email{David.Meyer@wu.ac.at}

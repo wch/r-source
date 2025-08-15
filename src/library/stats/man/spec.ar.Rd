@@ -30,19 +30,12 @@ spec.ar(x, n.freq, order = NULL, plot = TRUE, na.action = na.fail,
   The result is returned invisibly if \code{plot} is true.
 }
 \section{Warning}{
-  Some authors, for example Thomson (1990), warn strongly
+  Some authors, for example \bibcitet{R:Thomson:1990}, warn strongly
   that AR spectra can be misleading.
 }
 \references{
-  Thompson, D.J. (1990).
-  Time series analysis of Holocene climate data.
-  \emph{Philosophical Transactions of the Royal Society of London Series
-    A}, \bold{330}, 601--616.
-  \doi{10.1098/rsta.1990.0041}.
-  %% \url{https://www.jstor.org/stable/53609}.
-
   \bibinfo{R:Venables+Ripley:2002}{footer}{(Especially page 402.)}
-  \bibshow{R:Venables+Ripley:2002}
+  \bibshow{*, R:Venables+Ripley:2002}
 }
 
 \seealso{\code{\link{ar}}, \code{\link{spectrum}}.}

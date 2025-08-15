@@ -133,20 +133,14 @@ suitable palette from \code{hcl.colors} instead of
   in graphics functions or in \code{par}.
 }
 \references{
+  \bibshow{R:Ihaka:2003,
+    R:Zeileis+Fisher+Hornik:2020,
+    R:Zeileis+Hornik+Murrell:2009}
+  
   Wikipedia (2019).
   \abbr{HCL} color space -- Wikipedia, The Free Encyclopedia.
   \url{https://en.wikipedia.org/w/index.php?title=HCL_color_space&oldid=883465135}.
   Accessed March 26, 2019.
-
-  \bibshow{R:Zeileis+Fisher+Hornik:2020}
-
-  Ihaka, R. (2003).
-  \dQuote{Colour for presentation graphics.}
-  Proceedings of the 3rd International Workshop on Distributed Statistical Computing (DSC 2003),
-  March 20-22, 2003, Technische Universität Wien, Vienna, Austria.
-  \url{https://www.R-project.org/conferences/DSC-2003/}.
-
-  \bibshow{R:Zeileis+Hornik+Murrell:2009}
 }
 \seealso{
   \code{\link{colors}}, \code{\link{palette}},

@@ -22,11 +22,7 @@
   }
 }
 \source{
-  Cushny, A. R. and Peebles, A. R. (1905)
-  The action of optical isomers: II hyoscines.
-  \emph{The Journal of Physiology} \bold{32}, 501--510.
-
-  \bibshow{R:Student:1908}
+  \bibcitet{R:Cushny+Peebles:1905, R:Student:1908}.
 }
 \details{
   The \code{group} variable name may be misleading about the data:
@@ -34,7 +30,7 @@
   %% But we keep it (as [,2]) for back compatibility.
 }
 \references{
-  \bibshow{R:Scheffé:1959}
+  \bibshow{*, R:Scheffé:1959}
 }
 \examples{
 require(stats)

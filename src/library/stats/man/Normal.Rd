@@ -75,19 +75,10 @@ rnorm(n, mean = 0, sd = 1)
   \code{\link{dlnorm}} for the \emph{log}-normal distribution.
 }
 \source{
-  For \code{pnorm}, based on
-
-  Cody, W. D. (1993)
-  Algorithm 715: SPECFUN -- A portable FORTRAN package of special
-  function routines and test drivers.
-  \emph{ACM Transactions on Mathematical Software} \bold{19}, 22--32.
+  For \code{pnorm}, based on \bibcitet{R:Cody:1993}.
 
   For \code{qnorm}, the code is based on a C translation of
-
-  Wichura, M. J. (1988)
-  Algorithm AS 241: The percentage points of the normal distribution.
-  \emph{Applied Statistics}, \bold{37}, 477--484; \doi{10.2307/2347330}.
-
+  \bibcitet{R:Wichura:1988}
   which provides precise results up to about 16 digits for
   \code{log.p=FALSE}.  For log scale probabilities in the extreme tails,
   since \R version 4.1.0, extensively since 4.3.0, asymptotic expansions
@@ -101,11 +92,10 @@ rnorm(n, mean = 0, sd = 1)
   for references to the supplied methods.
 }
 \references{
-  \bibshow{R:Becker+Chambers+Wilks:1988}
-
-  Johnson, N. L., Kotz, S. and Balakrishnan, N. (1995)
-  \emph{Continuous Univariate Distributions}, volume 1, chapter 13.
-  Wiley, New York.
+  \bibinfo{R:Johnson+Kotz+Balakrishnan:1994}{footer}{Chapter 13.}
+  \bibshow{*,
+    R:Becker+Chambers+Wilks:1988,
+    R:Johnson+Kotz+Balakrishnan:1994}
 }
 \examples{
 require(graphics)

@@ -18,10 +18,7 @@
   A time series of length 100.
 }
 \source{
-  Durbin, J. and Koopman, S. J. (2001).
-  \emph{Time Series Analysis by State Space Methods}.
-  Oxford University Press.
-  %% \url{http://www.ssfpack.com/DKbook.html}
+  \bibcitet{R:Durbin+Koopman:2001}
 }
 \references{
   \bibshow{*, R:Balke:1993}

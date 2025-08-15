@@ -15,10 +15,7 @@
   A quarterly time series of length 108.
 }
 \source{
-  Durbin, J. and Koopman, S. J. (2001).
-  \emph{Time Series Analysis by State Space Methods}.
-  Oxford University Press.
-  %% \url{http://www.ssfpack.com/dkbook/}
+  \bibshow{R:Durbin+Koopman:2001}
 }
 \examples{
 ## maybe str(UKgas) ; plot(UKgas) ...

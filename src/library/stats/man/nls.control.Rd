@@ -57,8 +57,7 @@ nls.control(maxiter = 50, tol = 1e-05, minFactor = 1/1024,
   with meanings as explained under \sQuote{Arguments}.
 }
 \references{
-  Bates, D. M. and Watts, D. G. (1988),
-  \emph{Nonlinear Regression Analysis and Its Applications}, Wiley.
+  \bibshow{R:Bates+Watts:1988}
 }
 \author{Douglas Bates and Saikat DebRoy; John C. Nash for part of the
   \code{scaleOffset} option.}

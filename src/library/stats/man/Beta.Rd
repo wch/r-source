@@ -130,11 +130,11 @@ rbeta(n, shape1, shape2, ncp = 0)
 \references{
   \bibinfo{R:Abramowitz+Stegun:1972}{footer}{Chapter 6: Gamma and
     Related Functions.}
-  \bibshow{*, R:Becker+Chambers+Wilks:1988}
-
-  Johnson, N. L., Kotz, S. and Balakrishnan, N. (1995)
-  \emph{Continuous Univariate Distributions}, volume 2, especially
-  chapter 25. Wiley, New York.
+  \bibinfo{R:Johnson+Kotz+Balakrishnan:1995}{footer}{Especially
+    chapter 25.}
+  \bibshow{*,
+    R:Becker+Chambers+Wilks:1988,
+    R:Johnson+Kotz+Balakrishnan:1995}
 }
 \seealso{
   \link{Distributions} for other standard distributions.

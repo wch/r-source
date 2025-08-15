@@ -30,14 +30,10 @@
   collinear.
 }
 \source{
-  J. W. Longley (1967)
-  An appraisal of least-squares programs from the point of view of the
-  user.
-  \emph{Journal of the American Statistical Association} \bold{62},
-  819--841.
+  \bibcitet{R:Longley:1967}.
 }
 \references{
-  \bibshow{R:Becker+Chambers+Wilks:1988}
+  \bibshow{*, R:Becker+Chambers+Wilks:1988}
 }
 \examples{
 require(stats); require(graphics)

@@ -54,13 +54,11 @@
   \code{print}) for its grouped-data classes.
 }
 \source{
-  Potvin, C., Lechowicz, M. J. and Tardif, S. (1990)
-  \dQuote{The statistical analysis of ecophysiological response curves
-  obtained from experiments involving repeated measures}, \emph{Ecology},
-  \bold{71}, 1389--1400.
-
-  Pinheiro, J. C. and Bates, D. M. (2000)
-  \emph{Mixed-effects Models in S and S-PLUS}, Springer.
+  \bibcitet{R:Potvin+Lechowicz+Tardif:1990,
+    R:Pinheiro+Bates:2000}
+}
+\references{
+  \bibshow{*}
 }
 \examples{
 require(stats); require(graphics)

@@ -47,10 +47,7 @@
   (\url{https://www.encyclopedia-titanica.org/}).
 }
 \source{
-  Dawson, Robert J. MacG. (1995),
-  The \sQuote{Unusual Episode} Data Revisited.
-  \emph{Journal of Statistics Education}, \bold{3}.
-  \doi{10.1080/10691898.1995.11910499}.
+  \bibshow{R:Dawson:1995}.
 
   The source provides a data set recording class, sex, age, and survival
   status for each person on board of the Titanic, and is based on data

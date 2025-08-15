@@ -79,11 +79,9 @@ rlogis(n, location = 0, scale = 1)
   \code{rlogis} uses inversion.
 }
 \references{
-  \bibshow{R:Becker+Chambers+Wilks:1988}
-
-  Johnson, N. L., Kotz, S. and Balakrishnan, N. (1995)
-  \emph{Continuous Univariate Distributions}, volume 2, chapter 23.
-  Wiley, New York.
+  \bibinfo{R:Johnson+Kotz+Balakrishnan:1995}{footer}{Chapter 23.}
+  \bibshow{R:Becker+Chambers+Wilks:1988,
+    R:Johnson+Kotz+Balakrishnan:1995}
 }
 \seealso{
   \link{Distributions} for other standard distributions.

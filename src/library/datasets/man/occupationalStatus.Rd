@@ -18,10 +18,7 @@
    and \code{destination} (son's occupational status; levels \code{1:8}).
 }
 \source{
-  Goodman, L. A. (1979)
-  Simple Models for the Analysis of Association in Cross-Classifications
-  having Ordered Categories.
-  \emph{J. Am. Stat. Assoc.}, \bold{74} (367), 537--552.
+  \bibshow{R:Goodman:1979}
 
   The data set has been in package \CRANpkg{gnm} and been provided by the
   package authors.

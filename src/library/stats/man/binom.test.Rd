@@ -48,13 +48,9 @@ binom.test(x, n, p = 0.5,
   \item{data.name}{a character string giving the names of the data.}
 }
 \references{
+  \bibinfo{R:Conover:1971}{footer}{Pages 97--104.}
   \bibinfo{R:Hollander+Wolfe:1973}{footer}{Pages 15--22.}
-  \bibshow{*, R:Hollander+Wolfe:1973}
-
-  William J. Conover (1971),
-  \emph{Practical nonparametric statistics}.
-  New York: John Wiley & Sons.
-  Pages 97--104.
+  \bibshow{*, R:Conover:1971, R:Hollander+Wolfe:1973}
 }
 \seealso{
   \code{\link{prop.test}} for a general (approximate) test for equal or

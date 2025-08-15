@@ -68,9 +68,7 @@ replayPlot(x, reloadPkgs=FALSE)
   \code{replayPlot} has no return value.
 }
 \references{
-  Murrell, P., Ooms, J., Allaire, J.J. (2015),
-  "Recording and Replaying the Graphics Engine Display List",
-  \url{https://stattech.wordpress.fos.auckland.ac.nz/2015/12/21/2015-07-recording-and-replaying-the-graphics-engine-display-list/}
+  \bibshow{R:Murrell+Ooms+Allaire:2015}
 }
 \seealso{
   The display list can be turned on and off using \code{\link{dev.control}}.

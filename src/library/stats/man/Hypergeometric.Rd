@@ -93,16 +93,10 @@ rhyper(nn, m, n, k)
   \code{qhyper} is based on inversion (of an earlier \code{phyper()} algorithm).
 
   \code{rhyper} is based on a corrected version of
-
-  Kachitvichyanukul, V. and Schmeiser, B. (1985).
-  Computer generation of hypergeometric random variates.
-  \emph{Journal of Statistical Computation and Simulation},
-  \bold{22}, 127--145.
+  \bibcitet{R:Kachitvichyanukul+Schmeiser:1985}.
 }
 \references{
-  Johnson, N. L., Kotz, S., and Kemp, A. W. (1992)
-  \emph{Univariate Discrete Distributions},
-  Second Edition. New York: Wiley.
+  \bibshow{*, R:Johnson+Kotz+Kemp:1993}
 }
 \seealso{
   \link{Distributions} for other standard distributions.

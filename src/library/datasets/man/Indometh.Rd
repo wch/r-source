@@ -39,18 +39,12 @@
   \code{print}) for its grouped-data classes.
 }
 \source{
-  Kwan, Breault, Umbenhauer, McMahon and Duggan (1976)
-  Kinetics of Indomethacin absorption, elimination, and
-    enterohepatic circulation in man.
-  \emph{Journal of Pharmacokinetics and Biopharmaceutics} \bold{4},
-  255--280.
-
-  Davidian, M. and Giltinan, D. M. (1995)
-  \emph{Nonlinear Models for Repeated Measurement Data},
-  Chapman & Hall (section 5.2.4, p.\sspace{}129)
-
-  Pinheiro, J. C. and Bates, D. M. (2000) \emph{Mixed-effects Models in
-    S and S-PLUS}, Springer.
+  \bibcitet{R:Kwan+Breault+Umbenhauer:1976,
+    |R:Davidian+Giltinan:1995|page 129,
+    R:Pinheiro+Bates:2000}
+}
+\references{
+  \bibshow{*}
 }
 \seealso{
   \code{\link{SSbiexp}} for models fitted to this dataset.

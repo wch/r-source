@@ -106,12 +106,7 @@ HoltWinters(x, alpha = NULL, beta = NULL, gamma = NULL,
   \item{call}{The call used}
 }
 \references{
-  C. C. Holt (1957)
-  Forecasting seasonals and trends by exponentially weighted moving averages,
-  \emph{ONR Research Memorandum, Carnegie Institute of Technology} \bold{52}.
-  (reprint at \doi{10.1016/j.ijforecast.2003.09.015}).
-
-  \bibshow{R:Winters:1960}
+  \bibshow{R:Holt:1957, R:Holt:2004, R:Winters:1960}
 }
 \author{
   David Meyer \email{David.Meyer@wu.ac.at}

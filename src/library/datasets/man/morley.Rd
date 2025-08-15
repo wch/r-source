@@ -41,9 +41,8 @@ morley
   \emph{A Genstat Primer}.
   London: Edward Arnold.
 
-  S. M. Stigler (1977)
-  Do robust estimators work with real data?
-  \emph{Annals of Statistics} \bold{5}, 1055--1098. (See Table 6.)
+  \bibinfo{R:Stigler:1977}{footer}{(See Table 6.)}
+  \bibshow{R:Stigler:1977}
 
   A. A. Michelson (1882)
   Experimental determination of the velocity of light made at the United

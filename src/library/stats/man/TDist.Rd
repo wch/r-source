@@ -112,34 +112,24 @@ rt(n, df, ncp)
   tails, otherwise via \code{\link{pbeta}}.
 
   For the non-central case of \code{pt} based on a C translation of
+  \bibcitet{R:Lenth:1989}.  
+  This computes the lower tail only, so the upper tail currently suffers
+  from cancellation and a warning will be given when this is likely to
+  be significant.
 
-  Lenth, R. V. (1989). \emph{Algorithm AS 243} ---
-  Cumulative distribution function of the non-central \eqn{t} distribution,
-  \emph{Applied Statistics} \bold{38}, 185--189; \doi{10.2307/2347693} .
-
-  This computes the lower tail only, so the upper tail currently suffers from
-  cancellation and a warning will be given when this is likely to be
-  significant.
-
-  For central \code{qt}, a C translation of
-
-  Hill, G. W. (1970) Algorithm 396: Student's \eqn{t}-quantiles.
-  \emph{Communications of the ACM}, \bold{13}(10), 619--620;
-  \doi{10.1145/355598.362776}.
-
-  altered to take account of
-
-  Hill, G. W. (1981) Remark on Algorithm 396, \emph{ACM Transactions on
-    Mathematical Software}, \bold{7}, 250--1; \doi{10.1145/355945.355956} .
+  For central \code{qt}, a C translation of \bibcitet{R:Hill:1970} 
+  altered to take account of \bibcitet{R:Hill:1981}.
 
   The non-central case is done by inversion.
 }
 \references{
-  \bibshow{R:Becker+Chambers+Wilks:1988} (Except non-central versions.)
-
-  Johnson, N. L., Kotz, S. and Balakrishnan, N. (1995)
-  \emph{Continuous Univariate Distributions}, volume 2, chapters 28 and 31.
-  Wiley, New York.
+  \bibinfo{R:Johnson+Kotz+Balakrishnan:1995}{footer}{Chapters 28 and
+    31.}
+  \bibinfo{R:Becker+Chambers+Wilks:1988}{footer}{(Except non-central
+    versions.)}
+  \bibshow{*,
+    R:Becker+Chambers+Wilks:1988,
+    R:Johnson+Kotz+Balakrishnan:1995}
 }
 \seealso{
   \link{Distributions} for other standard distributions, including

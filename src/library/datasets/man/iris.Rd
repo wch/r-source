@@ -31,21 +31,14 @@ iris3
   \code{Petal L.}, and \code{Petal W.}, and the third the species.
 }
 \source{
-  Fisher, R. A. (1936)
-  The use of multiple measurements in taxonomic problems.
-  \emph{Annals of Eugenics},
-  \bold{7}, Part II, 179--188.
-  \doi{10.1111/j.1469-1809.1936.tb02137.x}.
+  \bibcitet{R:Fisher:1936}.
 
-  The data were collected by
-  Anderson, Edgar (1935).
-  The irises of the Gaspe Peninsula,
-  \emph{Bulletin of the American Iris Society},
-  \bold{59}, 2--5.
+  The data were collected by \bibcitet{R:Anderson:1935}.
 }
 \references{
   \bibinfo{R:Becker+Chambers+Wilks}{footer}{(Has \\\\\\code{iris3} as \\\\\\code{iris}.)}
-  \bibshow{R:Becker+Chambers+Wilks:1988}
+  \bibshow{*,
+    R:Becker+Chambers+Wilks:1988}
 }
 \seealso{
   \code{\link{matplot}} some examples of which use

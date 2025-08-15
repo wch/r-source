@@ -80,7 +80,7 @@ rchisq(n, df, ncp = 0)
   Note that the degrees of freedom \code{df}\eqn{= n}, can be
   non-integer, and also \eqn{n = 0} which is relevant for
   non-centrality \eqn{\lambda > 0},
-  see Johnson \abbr{et al.}\sspace(1995, chapter 29).
+  see \bibcitet{|R:Johnson+Kotz+Balakrishnan:1995|chapter 29}.
   In that (noncentral, zero \abbr{df}) case, the distribution is a mixture of a
   point mass at \eqn{x = 0} (of size \code{pchisq(0, df=0, ncp=ncp)}) and
   a continuous part, and \code{dchisq()} is \emph{not} a density with
@@ -98,12 +98,7 @@ rchisq(n, df, ncp = 0)
 
   The non-central \code{pchisq} is for \code{ncp < 80} computed from
   the Poisson mixture of central chi-squares and for larger \code{ncp}
-  \emph{via} a C translation of
-
-  Ding, C. G. (1992)
-  Algorithm AS275: Computing the non-central chi-squared
-  distribution function. \emph{Applied Statistics}, \bold{41} 478--482.
-
+  \emph{via} a C translation of \bibcitep{R:Ding:1992}
   which computes the lower tail only (so the upper tail suffers from
   cancellation and a warning will be given when this is likely to be
   significant).
@@ -111,11 +106,12 @@ rchisq(n, df, ncp = 0)
   The non-central \code{qchisq} is based on inversion of \code{pchisq}.
 }
 \references{
-  \bibshow{R:Becker+Chambers+Wilks:1988}
-
-  Johnson, N. L., Kotz, S. and Balakrishnan, N. (1995)
-  \emph{Continuous Univariate Distributions}, chapters 18 (volume 1)
-  and 29 (volume 2). Wiley, New York.
+  \bibinfo{R:Johnson+Kotz+Balakrishnan:1994}{footer}{Chapter 18.}
+  \bibinfo{R:Johnson+Kotz+Balakrishnan:1995}{footer}{Chapter 29.}
+  \bibshow{*,
+    R:Becker+Chambers+Wilks:1988,
+    R:Johnson+Kotz+Balakrishnan:1994,
+    R:Johnson+Kotz+Balakrishnan:1995}
 }
 \note{
   Supplying \code{ncp = 0} uses the algorithm for the non-central

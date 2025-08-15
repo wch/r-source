@@ -123,11 +123,8 @@ makeARIMA(phi, theta, Delta, kappa = 1e6,
 
 \references{
   \bibshow{*,
+    R:Durbin+Koopman:2001,
     R:Gardner+Harvey+Phillips:1980}
-  
-  Durbin, J. and Koopman, S. J. (2001).
-  \emph{Time Series Analysis by State Space Methods}.
-  Oxford University Press.
 
   R bug report PR#14682 (2011-2013)
   \url{https://bugs.r-project.org/show_bug.cgi?id=14682}.

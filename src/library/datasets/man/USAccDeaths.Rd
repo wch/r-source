@@ -16,8 +16,6 @@
 }
 \usage{USAccDeaths}
 \source{
-  P. J. Brockwell and R. A. Davis (1991)
-  \emph{Time Series: Theory and Methods.}
-  Springer, New York.
+  \bibshow{R:Brockwell+Davis:1991}
 }
 \keyword{datasets}

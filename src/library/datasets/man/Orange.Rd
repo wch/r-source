@@ -40,8 +40,7 @@
   Draper, N. R. and Smith, H. (1998), \emph{Applied Regression Analysis
     (3rd ed)}, Wiley (exercise 24.N).
 
-  Pinheiro, J. C. and Bates, D. M. (2000) \emph{Mixed-effects Models
-    in S and S-PLUS}, Springer.
+  \bibshow{R:Pinheiro+Bates:2000}
 }
 \examples{
 require(stats); require(graphics)

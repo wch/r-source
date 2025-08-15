@@ -55,8 +55,7 @@ confint(object, parm, level = 0.95, \dots)
   as the main argument rather than the fitted model object itself.
 }
 \references{
-  Venables, W. N. and Ripley, B. D. (2002)
-  \emph{Modern Applied Statistics with S.} Fourth edition.  Springer.
+  \bibshow{R:Venables+Ripley:2002}
 }
 \seealso{
   Original versions: \code{\link[MASS]{confint.glm}} and

@@ -104,10 +104,7 @@ ccf(x, y, lag.max = NULL, type = c("correlation", "covariance"),
   B. D. Ripley.
 }
 \references{
-  Venables, W. N. and Ripley, B. D. (2002)
-  \emph{Modern Applied Statistics with S}.  Fourth Edition.
-  Springer-Verlag.
-
+  \bibshow{R:Venables+Ripley:2002}
   (This contains the exact definitions used.)
 }
 

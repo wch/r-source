@@ -104,11 +104,8 @@ spineplot(x, \dots)
 \references{
   \bibshow{R:Friendly:1994a,
     R:Hartigan+Kleiner:1984,
+    R:Hofmann+Theus:2005,
     R:Hummel:1996}
-
-  Hofmann, H., Theus, M. (2005),
-  \emph{Interactive graphics for visualizing conditional distributions}.
-  Unpublished Manuscript.
 }
 \author{
   \I{Achim Zeileis} \email{Achim.Zeileis@R-project.org}
