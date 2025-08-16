@@ -87,16 +87,10 @@ loess(formula, data, weights, subset, na.action, model = FALSE,
   with \code{print()}, \code{\link{summary}()}, \code{\link{predict}} and
   \code{\link{anova}} methods.
 }
-\references{
-  W. S. Cleveland, E. Grosse and W. M. Shyu (1992) Local regression
-  models. Chapter 8 of \emph{Statistical Models in S} eds J.M. Chambers
-  and T.J. Hastie, Wadsworth & Brooks/Cole.
-}
 \author{
   B. D. Ripley, based on the \code{cloess} package of Cleveland,
   Grosse and Shyu.
 }
-
 \source{
   The 1998 version of \code{cloess} package of Cleveland,
   Grosse and Shyu.  A later version is available as \code{dloess} at
@@ -113,6 +107,9 @@ loess(formula, data, weights, subset, na.action, model = FALSE,
   \code{degree = 0}, local constant fitting, is allowed in this
   implementation but not documented in the reference.  It seems very little
   tested, so use with caution.
+}
+\references{
+  \bibshow{R:Cleveland+Grosse+Shyu:1992}
 }
 \seealso{
   \code{\link{loess.control}},

@@ -87,15 +87,12 @@ cmdscale(d, k = 2, eig = FALSE, add = FALSE, x.ret = FALSE,
   \bibshow{*,
     R:Becker+Chambers+Wilks:1988,
     R:Krzanowski+Marriott:1994,
-    R:Mardia+Kent+Bibby:1979}
+    R:Mardia+Kent+Bibby:1979,
+    R:Seber:1984}
   
   Cox, T. F. and Cox, M. A. A. (2001).
   \emph{Multidimensional Scaling}.  Second edition.
   Chapman and Hall.
-
-  Seber, G. A. F. (1984).
-  \emph{Multivariate Observations}.
-  New York: Wiley.
 
   Torgerson, W. S. (1958).
   \emph{Theory and Methods of Scaling}.

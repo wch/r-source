@@ -166,12 +166,8 @@ method functions.
 
 \references{
   \bibshow{R:Friedman+Stuetzle:1981,
+    R:Friedman:1984a,
     R:Venables+Ripley:2002}
-
-  Friedman, J. H. (1984).
-  SMART User's Guide.
-  Laboratory for Computational Statistics, Stanford University Technical
-  Report No.\sspace{}1.
 }
 \seealso{
   \code{\link{plot.ppr}}, \code{\link{supsmu}}, \code{\link{smooth.spline}}

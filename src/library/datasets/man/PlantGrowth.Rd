@@ -33,8 +33,6 @@ boxplot(weight ~ group, data = PlantGrowth, main = "PlantGrowth data",
 anova(lm(weight ~ group, data = PlantGrowth))
 }
 \source{
-  Dobson, A. J. (1983)
-  \emph{An Introduction to Statistical Modelling}.
-  London: Chapman and Hall.
+  \bibshow{R:Dobson:1983}
 }
 \keyword{datasets}

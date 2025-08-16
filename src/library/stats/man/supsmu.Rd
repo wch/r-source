@@ -52,15 +52,8 @@ supsmu(x, y, wt =, span = "cv", periodic = FALSE, bass = 0, trace = FALSE)
   \item{y}{the corresponding y values on the fitted curve.}
 }
 \references{
-  Friedman, J. H. (1984)
-  SMART User's Guide.
-  Laboratory for Computational Statistics, Stanford University Technical
-  Report No.\sspace{}1.
-
-  Friedman, J. H. (1984)
-  A variable span scatterplot smoother.
-  Laboratory for Computational Statistics, Stanford University Technical
-  Report No.\sspace{}5.
+  \bibshow{R:Friedman:1984a,
+    R:Friedman:1984b}
 }
 \seealso{\code{\link{ppr}}}
 

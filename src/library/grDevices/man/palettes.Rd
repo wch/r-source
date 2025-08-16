@@ -134,13 +134,9 @@ suitable palette from \code{hcl.colors} instead of
 }
 \references{
   \bibshow{R:Ihaka:2003,
+    R:Wikipedia_contributors:2019,
     R:Zeileis+Fisher+Hornik:2020,
     R:Zeileis+Hornik+Murrell:2009}
-  
-  Wikipedia (2019).
-  \abbr{HCL} color space -- Wikipedia, The Free Encyclopedia.
-  \url{https://en.wikipedia.org/w/index.php?title=HCL_color_space&oldid=883465135}.
-  Accessed March 26, 2019.
 }
 \seealso{
   \code{\link{colors}}, \code{\link{palette}},

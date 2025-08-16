@@ -110,9 +110,7 @@ uniroot(f, interval, \dots,
   Based on \file{zeroin.c} in \url{https://netlib.org/c/brent.shar}.
 }
 \references{
-  Brent, R. (1973)
-  \emph{Algorithms for Minimization without Derivatives.}
-  Englewood Cliffs, NJ: Prentice-Hall.
+  \bibshow{R:Brent:1973}  
 }
 \seealso{
   \code{\link{polyroot}} for all complex roots of a polynomial;

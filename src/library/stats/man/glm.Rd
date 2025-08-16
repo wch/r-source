@@ -314,11 +314,8 @@ glm.fit(x, y, weights = rep.int(1, nobs),
 }
 \references{
   \bibshow{*,
+    R:Dobson:1990,
     R:McCullagh+Nelder:1989}
-  
-  Dobson, A. J. (1990)
-  \emph{An Introduction to Generalized Linear Models.}
-  London: Chapman and Hall.
 }
 
 \examples{

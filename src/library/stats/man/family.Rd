@@ -170,11 +170,8 @@ quasipoisson(link = "log")
   \code{quasipoisson}).
 }
 \references{
-  \bibshow{*}
-
-  Dobson, A. J. (1983)
-  \emph{An Introduction to Statistical Modelling.}
-  London: Chapman and Hall.
+  \bibshow{*,
+    R:Dobson:1983}
 
   Cox, D. R. and  Snell, E. J. (1981).
   \emph{Applied Statistics; Principles and Examples.}
