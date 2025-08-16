@@ -7,6 +7,8 @@ automagically
 backported
 backports
 basenames
+bibentries
+bibentry
 bitmapped
 bugfix
 builtins
