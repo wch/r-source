@@ -6158,7 +6158,7 @@ Rconnection R_GetConnection(SEXP sConn) {
 /* ------------------- (de)compression functions  --------------------- */
 
 /* Code for gzcon connections is modelled on gzio.c from zlib 1.2.3 */
-static int gzcon_byte(Rgzconn priv)
+static char gzcon_byte(Rgzconn priv)
 {
     Rconnection icon = priv->con;
 
