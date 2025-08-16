@@ -22,6 +22,9 @@ chull(x, y = NULL)
   \code{\link{xy.coords}} is used to interpret the specification of the
   points. Infinite, missing and \code{NaN} values are not allowed.
 
+  \bibinfo{R:Eddy:1977a}{year}{1977a}
+  \bibinfo{R:Eddy:1977b}{year}{1977b}
+
   The algorithm is that given by \bibcitet{R:Eddy:1977a, R:Eddy:1977b}.
 }
 \value{
