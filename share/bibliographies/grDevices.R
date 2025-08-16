@@ -142,7 +142,7 @@ bibentry(bibtype = "Article",
          number = "2",
          pages = "41--47",
          month = "May",
-         url = "https://www.r-project.org/doc/Rnews/Rnews_2006-2.pdf")
+         url = "https://journal.r-project.org/articles/RN-2006-016/")
 
 bibentry(bibtype = "Article",
          key = "R:Scott:1979",
@@ -173,6 +173,14 @@ bibentry(bibtype = "Article",
          year = "1926",
          month = "mar",
          pages = "65--66")
+
+bibentry(bibtype = "Misc",
+         key = "R:Wikipedia_contributors:2019",
+         author = person(given = "Wikipedia contributors"),
+         title = "{HCL} Color Space --- {Wikipedia}{,} The Free Encyclopedia",
+         year = "2019",
+         url = "https://en.wikipedia.org/w/index.php?title=HCL_color_space&oldid=883465135",
+         note = "Accessed 2019-03-26")
 
 bibentry(bibtype = "Article",
          key = "R:Zeileis+Fisher+Hornik:2020",

@@ -54,7 +54,7 @@ bibentry(bibtype = "Book",
 
 bibentry(bibtype = "Misc",
          key = "R:Wikipedia_contributors:2024",
-         author = person(family = "Wikipedia contributors"),
+         author = person(given = "Wikipedia contributors"),
          title = "Roman numerals --- {Wikipedia}{,} The Free Encyclopedia",
          year = "2024",
          url = "https://en.wikipedia.org/w/index.php?title=Roman_numerals&oldid=1188781837",
