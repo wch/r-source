@@ -8647,6 +8647,96 @@ and environment variable @env{_R_CYRILLIC_TEX_} being set.)
 Note that this mechanism works best with Latin letters: the coverage of
 UTF-8 in @LaTeX{} is quite low.
 
+@node Bibliographic citations and references
+@section Bibliographic citations and references
+
+For R at least 4.6.0 one can auto-generate bibliographic citations and
+references from bibentries in bibliographic databases in R or Bib@TeX{}
+formats.  This is implemented via build stage @code{\Sexpr} macros
+(@pxref{Dynamic pages}) in the file @file{share/Rd/macros/system.Rd} of
+the @R{} source or home directory.  For @HTML{} output, the citations
+are conveniently hyperlinked to the corresponding references.
+
+Textual and parenthetical citations are obtained via, respectively,
+@code{\bibcitet} and @code{\bibcitep} (the naming follows that of
+@code{\citet} and @code{\citep} in the @LaTeX{} @code{natbib} package
+(@uref{https://mirrors.ctan.org/macros/latex/contrib/natbib, Daly
+2010}).  These macros both take a comma separated @var{citespec} list as
+argument, where a @var{citespec} can be a @var{keyspec} or of the form
+@code{@var{before}|@var{keyspec}|@var{after}} with both @samp{|}
+mandatory and @var{before} and @var{after} possibly empty text to be
+inserted before and after the citation if not empty.  If these texts
+contain commas, these can be backslash-escaped: due to the way Rd macros
+are processed, this needs 6 (!) backslashes, see the examples below.
+(This is clearly inconvenient, but most likely too late to change.)
+
+A @var{keyspec} is either a simple @var{key} or of the form
+@code{@var{pkg}::@var{key}}.  In the former case, @var{key} is taken as
+the key of a bibentry in R's system bibentry data base (available via
+the currently unexported @code{tools:::R_bibentries()} with sources in
+the @file{.R} files in the @file{share/bibentries} directory of the R
+sources).  In the latter case, @var{key} is looked up in the bibentry
+data base of package @var{pkg}, made available in the packages sources
+either as @file{inst/REFERENCES.R} in R format (an R code file encoded
+in UTF-8 with calls to @code{bibentry()}, as for the
+@file{inst/CITATION} file) or as @file{inst/REFERENCES.bib} in Bib@TeX{}
+format (this needs @CRANpkg{bibtex} to be installed).
+
+References (usually in the @code{\references} section) are obtained via
+@code{\bibshow}, which takes a comma-separated @var{keyspec} list as
+argument.  The special @I{keyspec} @samp{*} indicates the list of ``all
+references cited so far'', using an empty @I{keyspec} list clears that
+list. 
+
+Finally, @code{\bibinfo} allows to modify bibentries.  Using
+@example
+\bibinfo@{@var{keyspec}@}@{@var{field}@}@{@var{value}@}
+@end example
+will set the @var{field} of the bibentry corresponding to @var{keyspec}
+to @var{value}.  This can be used in particular to ``annotate'' the
+bibentry, by adding @samp{note}, @samp{footer} or @samp{header} fields.
+
+For example, 
+@example
+\bibcitet@{R:Becker+Chambers+Wilks:1988@}
+@end example
+gives a textual citation of the ``@emph{Blue Book}'' 
+(`Becker, Chambers, and Wilks (1988)' when first encountered), 
+@example
+\bibcitep@{e.g.\\\\\\,|R:Chambers+Hastie:1992|page 123@}
+@end example
+gives a parenthetical citation of a page in the ``@emph{White Book}'' 
+(`(e.g., Chambers and Hastie 1992, page 123)' when first encountered).
+An Rd file having cited the above two and also wanting to include the
+``@emph{Green Book}'' in its references could use
+@example
+\references@{
+  \bibshow@{*, R:Chambers:1998@}
+@}
+@end example
+If one wanted to highlight a particular page range for the last
+reference, one could use one of
+@example
+\bibinfo@{R:Chambers:1998@}@{note@}@{Pages 23--45@}
+\bibinfo@{R:Chambers:1998@}@{footer@}@{Pages 23--45.@}
+@end example
+before the @code{\bibshow} (the note will be added in-line, the footer
+on a new line).
+
+The @code{\bibinfo} mechanism can also be employed to disambiguate
+citations for bibentries which are different but have the same
+author-year citation, which is typically done by adding a letter suffix
+to the year (e.g., `Eddy (1973a)' and `Eddy (1973b)').  Getting the `a'
+automatically is not possible with the current implementation (this
+would need to have all @I{keyspec}s used in the Rd file before
+generating the citations).  In @HTML{} output, one can disambiguate by
+simply following the hyperlinks to the references.  One can fully
+disambiguate by manually adding the suffixes to the year fields, e.g.
+@example
+\bibinfo@{R:Eddy:1977a@}@{year@}@{1977a@}
+\bibinfo@{R:Eddy:1977b@}@{year@}@{1977b@}
+@end example
+(see file @file{src/library/grDevices/man/chull.Rd} in the R sources).
 
 @node Processing documentation files
 @section Processing documentation files
