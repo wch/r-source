@@ -152,8 +152,7 @@ function()
 R_bibentries <-
 function()
 {
-    bib <- readRDS(file.path(R_bibliographies_dir(), "R.rds"))
-    bib[lengths(bib$key) > 0L]
+    readRDS(file.path(R_bibliographies_dir(), "R.rds"))
 }
 
 update_R_bibentries <-
@@ -244,8 +243,13 @@ function(x, textual = FALSE)
     parts <- regmatches(given,
                         gregexpr("|", given, fixed = TRUE),
                         invert = TRUE)
-    parts <- parts[lengths(parts) %in% c(1L, 3L)]
-    ## Could complain about the others ...?
+    if(!all(ind <- (lengths(parts) %in% c(1L, 3L)))) {
+        msg <- paste(c("Found the following invalid citespecs:", 
+                       .strwrap22(sQuote(given[!ind]))),
+                     collapse = "\n")
+        warning(msg, call. = FALSE)
+        parts <- parts[ind]
+    }
     keys <- after <- before <- rep_len("", length(parts))
     if(any(ind <- (lengths(parts) == 1L))) {
         keys[ind] <- unlist(parts[ind], use.names = FALSE)
@@ -266,6 +270,11 @@ function(x, textual = FALSE)
         keys <- keys[ind]
         after <- after[ind]
         before <- before[ind]
+    }
+    store <- Rd_expr_bibinfo_data_store()
+    for(k in intersect(keys, names(store))) {
+        entry <- store[[k]]
+        for(f in names(entry)) bib[k, f] <- entry[[f]]
     }
     n <- length(keys)
     if(n == 0L)
@@ -402,8 +411,9 @@ function(keys)
         y <- y[pos]
     }
     if(length(bad)) {
-        msg <- sprintf("Could not find bibentries for the following keys:\n%s", 
-                       .strwrap22(sQuote(bad)))
+        msg <- paste(c("Could not find bibentries for the following keys:\n%s", 
+                       .strwrap22(sQuote(bad))),
+                     collapse = "\n")
         warning(msg, call. = FALSE)
     }
     y
