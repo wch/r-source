@@ -2147,8 +2147,14 @@ if(require("tcltk")) withAutoprint({ # some setups may lack tcltk (right ?)
           inherits(ww, "deprecatedWarning")
           identical(ww$new, "tkpack.child")
       })
+  detach("package:tcltk", unload=TRUE)
 })
 ## three tk*.slaves() should be substituted by tk*.child()
+
+
+## invalid `versionCheck` should error even when `quietly`
+assertErrV( requireNamespace("tcltk", quietly = TRUE, versionCheck = "999.0") )
+## silently returned FALSE previously, leading to further confusion
 
 
 

@@ -195,9 +195,12 @@ loadNamespace <- function (package, lib.loc = NULL,
     "__NameSpacesLoading__" <- c(package, loading)
 
     ns <- .Internal(getRegisteredNamespace(package))
+    if(!is.null(versionCheck) && !is.list(versionCheck))
+        stop("'versionCheck' must be NULL or list with components 'op' and 'version'")
+    checkVer <- !is.null(zop      <- versionCheck[["op"]]) &&
+                !is.null(zversion <- versionCheck[["version"]])
     if (! is.null(ns)) {
-        if(!is.null(zop      <- versionCheck[["op"]]) &&
-           !is.null(zversion <- versionCheck[["version"]])) {
+        if(checkVer) {
             current <- getNamespaceVersion(ns)
             if(!do.call(zop, list(as.numeric_version(current), zversion)))
                 stop(gettextf("namespace %s %s is already loaded, but %s %s is required",
@@ -413,8 +416,7 @@ loadNamespace <- function (package, lib.loc = NULL,
             ## will require it, or the exports will be incomplete.
             dependsMethods <- "methods" %in% c(names(pkgInfo$Depends), names(vI))
             if(dependsMethods) loadNamespace("methods")
-            if(!is.null(zop <- versionCheck[["op"]]) &&
-               !is.null(zversion <- versionCheck[["version"]]) &&
+            if(checkVer &&
                !do.call(zop, list(as.numeric_version(version), zversion)))
                 stop(gettextf("namespace %s %s is being loaded, but %s %s is required",
                               sQuote(package), version, zop, zversion),
@@ -834,7 +836,11 @@ requireNamespace <- function (package, ..., quietly = FALSE)
     if (is.null(ns) || ...length()) {
         value <- tryCatch(loadNamespace(package, ...), error = function(e) e)
         if (inherits(value, "error")) {
-            if (!quietly) {
+            if(quietly) { # invalid 'versionCheck' error should signal
+                if(any("versionCheck" == ...names()) &&
+                   grepl("versionCheck", conditionMessage(value), fixed=TRUE))
+                    stop(value)
+            } else {
                 msg <- conditionMessage(value)
                 cat("Failed with error:  ",
                     sQuote(msg), "\n", file = stderr(), sep = "")

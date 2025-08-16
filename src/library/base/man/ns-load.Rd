@@ -61,6 +61,10 @@ isNamespaceLoaded(name)
   an internal data base.  A request to load a name space when one of that
   name is already loaded has no effect and all other arguments
   except \code{versionCheck} are ignored.
+  In \R <= 4.5.z, an invalid version specification, e.g.,
+  \code{versionCheck = "0.3.0"} would often pass unnoticed and be
+  misinterpreted as non-availability of the \code{package}; now an error is
+  signalled.
 
   Argument \code{versionCheck} allows to require a namespace with
   restricted (e.g., minimal or maximal) package version
