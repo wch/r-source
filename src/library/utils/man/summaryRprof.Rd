@@ -103,8 +103,8 @@ summaryRprof(filename = "Rprof.out", chunksize = 5000,
   If \code{lines = "show"}, an additional component is added to the list:
   \item{by.line}{A data frame of timings sorted by source location.}
 
-  If \code{memory = "both"} the same list but with memory consumption in MiB
-  in addition to the timings.
+  If \code{memory = "both"} the same list but with memory consumption in
+  \abbr{MiB} in addition to the timings.
 
   If \code{memory = "tseries"} a data frame giving memory statistics over
   time. Memory usage is in bytes.

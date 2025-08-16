@@ -8701,12 +8701,12 @@ For example,
 \bibcitet@{R:Becker+Chambers+Wilks:1988@}
 @end example
 gives a textual citation of the ``@emph{Blue Book}'' 
-(`Becker, Chambers, and Wilks (1988)' when first encountered), 
+(`@I{Becker, Chambers, and Wilks (1988)}' when first encountered), 
 @example
 \bibcitep@{e.g.\\\\\\,|R:Chambers+Hastie:1992|page 123@}
 @end example
 gives a parenthetical citation of a page in the ``@emph{White Book}'' 
-(`(e.g., Chambers and Hastie 1992, page 123)' when first encountered).
+(`@I{(e.g., Chambers and Hastie 1992, page 123)}' when first encountered).
 An Rd file having cited the above two and also wanting to include the
 ``@emph{Green Book}'' in its references could use
 @example
