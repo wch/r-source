@@ -84,7 +84,7 @@ rpois(n, lambda)
   \code{qpois} uses the Cornish--Fisher Expansion to include a skewness
   correction to a normal approximation, followed by a search.
 
-  \code{rpois} uses \bibcitet{R:Ahrens+Dieter:1982}
+  \code{rpois} uses \bibcitet{R:Ahrens+Dieter:1982b}
 }
 \references{
   \bibshow{*}

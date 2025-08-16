@@ -129,7 +129,7 @@ rgamma(n, shape, rate = 1, scale = 1/rate)
   approximation.
 
   \code{rgamma} for \code{shape >= 1} uses
-  \bibcitet{R:Ahrens+Dieter:1982} 
+  \bibcitet{R:Ahrens+Dieter:1982a}
   and for \code{0 < shape < 1} uses
   \bibcitet{R:Ahrens+Dieter:1974}.
 }
