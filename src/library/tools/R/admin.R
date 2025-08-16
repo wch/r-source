@@ -821,6 +821,20 @@ function(dir) {
     bibentries <- do.call(c, lapply(bibfiles,
                                     utils::readCitationFile, 
                                     list(Encoding = "UTF-8")))
+    keys <- .bibentry_get_key(bibentries)
+    if(any(ind <- !nzchar(keys))) {
+        msg <- paste(c("Found the following bibentries with no key:",
+                       strwrap(format(bibentries[ind]),
+                               indent = 2L, exdent = 4L)),
+                     collapse = "\n")
+        stop(msg, call. = FALSE)
+    }
+    if(any(ind <- duplicated(keys))) {
+        msg <- paste(c("Found the following duplicated keys:", 
+                       .strwrap22(sQuote(keys[ind]))),
+                     collapse = "\n")
+        stop(msg, call. = FALSE)
+    }
     saveRDS(bibentries, file.path(dir, "R.rds"))
 }
 
