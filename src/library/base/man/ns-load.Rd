@@ -59,11 +59,15 @@ isNamespaceLoaded(name)
 
   \code{loadNamespace} loads the specified name space and registers it in
   an internal data base.  A request to load a name space when one of that
-  name is already loaded has no effect.  \code{versionCheck} allows to
-  require a namespace with restricted (e.g., minimal or maximal) package
-  version (\code{\link{packageVersion}()}).  If the version check fails,
-  \code{loadNamespace()} signals an error, whereas \code{requireNamespace()}
-  returns \code{FALSE} after showing \code{loadNamespace}'s error message.
+  name is already loaded has no effect and all other arguments
+  except \code{versionCheck} are ignored.
+
+  Argument \code{versionCheck} allows to require a namespace with
+  restricted (e.g., minimal or maximal) package version
+  (\code{\link{packageVersion}()}).  If the version check fails,
+  \code{loadNamespace()} signals an error, whereas
+  \code{requireNamespace()} returns \code{FALSE} after showing
+  \code{loadNamespace}'s error message.
 
   Further arguments have the same
   meaning as the corresponding arguments to \code{\link{library}}, whose

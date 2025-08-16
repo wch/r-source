@@ -231,10 +231,11 @@
       fulfilled, thanks to \I{Iris Simmons} and \I{Trevor Davis}'s
       \PR{18255}.
 
-      \item \code{requireNamespace()} now throws an error if
-      it is called with an unmatched argument such as
-      \code{quitely = TRUE} or \code{quiet = TRUE} (arguemnt \code{quietly}
-      cannot be abbreviated as it follows \code{\dots}).
+      \item \code{requireNamespace()} now throws an error even if the
+      name space is already loaded if it is called with an unmatched
+      argument such as \code{quitely = TRUE} or \code{quiet = TRUE}
+      (arguemnt \code{quietly} cannot be abbreviated as it follows
+      \code{\dots}).
       %% side effect of c88540
     }
   }
