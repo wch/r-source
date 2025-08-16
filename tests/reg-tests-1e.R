@@ -2004,7 +2004,9 @@ assertErrV(     ts(1:711, frequency=2*pi, start = 1, end = 114, ts.eps = 1e-6) )
 
 
 ## match(<Date>, <character>) and vice versa
+op <- options(warn = 1)# PR#18931 - does warn for 32-bit time_t
 date_seq <- seq(as.Date("1705-01-01"), as.Date("2024-12-31"), by="days")
+options(op)
 dt1 <- as.Date("2024-05-01")
 dt3 <- c(dt1, as.Date(c("1800-01-01", "2025-02-02")))
 system.time({
