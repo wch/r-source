@@ -5535,7 +5535,8 @@ add_dummies <- function(dir, Log)
         db <- if(installed)
                   Rd_db(basename(dir), lib.loc = dirname(dir))
               else
-                  Rd_db(dir = dir)
+                  Rd_db(dir = dir,
+                        stages = c("build", "later", "install"))
         if(!length(db))
             return()
 

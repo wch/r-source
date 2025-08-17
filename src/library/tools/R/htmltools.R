@@ -153,7 +153,8 @@ tidy_validate_package_Rd_files_from_dir <- function(dir, auto = NA, verbose) {
     one <- function(d) {
         if(verbose)
             message(sprintf("* Package: %s", basename(d)))
-        db <- Rd_db(dir = d)
+        db <- Rd_db(dir = d,
+                    stages = c("build", "later", "install"))
         if(!is.na(auto)) {
             is <- vapply(db,
                          function(e) {
@@ -166,14 +167,17 @@ tidy_validate_package_Rd_files_from_dir <- function(dir, auto = NA, verbose) {
             db <- db[if(auto) is else !is]
         }
         results <-
-            lapply(db,
-                   function(x) {
-                       tryCatch({
-                           Rd2HTML(x, out, concordance = TRUE)
-                           tidy_validate(out)
-                       },
-                       error = identity)
-                   })
+            Map(function(x, f) {
+                    if(verbose) 
+                        message(sprintf("Processing %s ...", f))
+                    tryCatch({
+                        Rd2HTML(x, out, concordance = TRUE)
+                        tidy_validate(out)
+                    },
+                    error = identity)
+                },
+                db,
+                sub("[Rr]d$", "html", basename(names(db))))                
         tidy_validate_db(results,
                          sprintf("%s::%s", basename(d), names(db)))
     }
