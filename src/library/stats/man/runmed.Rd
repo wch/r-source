@@ -79,7 +79,8 @@ runmed(x, k, endrule = c("median", "keep", "constant"),
   The two algorithms are internally entirely different:
   \describe{
     \item{\code{"Turlach"}}{is the \I{\enc{Härdle}{Haerdle}}--\I{Steiger}
-      algorithm (see Ref.) as implemented by \I{Berwin Turlach}.
+      algorithm \bibcitep{R:Haerdle+Steiger:1995} as implemented by
+      \I{Berwin Turlach}.
       A tree algorithm is used, ensuring performance \eqn{O(n \log
         k)}{O(n * log(k))} where \code{n = length(x)} which is
       asymptotically optimal.}
@@ -107,11 +108,8 @@ runmed(x, k, endrule = c("median", "keep", "constant"),
   Currently \link{long vectors} are only supported for \code{algorithm = "Stuetzle"}.
 }
 \references{
-  \bibshow{R:Haerdle+Steiger:1995}
-
-  Jerome H. Friedman and Werner Stuetzle (1982)
-  \emph{Smoothing of Scatterplots};
-  Report, Dep. Statistics, Stanford U., Project Orion 003.
+  \bibshow{R:Haerdle+Steiger:1995,
+    R:Friedman+Stuetzle:1982}
 %%
 %% Martin Maechler (2003)
 %% Fast Running Medians: Finite Sample and Asymptotic Optimality;
