@@ -2382,3 +2382,15 @@ bibentry(bibtype = "InCollection",
                     person(given = c("Trevor", "J."),
                            family = "Hastie")),
          chapter = "8")
+
+bibentry(bibtype = "TechReport",
+         key = "R:Friedman+Stuetzle:1982",
+         author = c(person(given = c("Jerome", "H."),
+                           family = "Friedman"),
+                    person(given = "Werner",
+                           family = "Stuetzle")),
+         title = "Smoothing of Scatterplots",
+         institution = "Department of Statistics, Stanford University",
+         year = "1982",
+         number = "Project ORION 003",
+         url = "https://purl.stanford.edu/rk479vx9002")
