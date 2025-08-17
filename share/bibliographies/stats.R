@@ -1745,6 +1745,7 @@ bibentry(bibtype = "Book",
          title = "Nonparametric Statistical Methods",
          publisher = "John Wiley & Sons",
          year = "1973",
+         isbn = "9780471406358",
          address = "New York")
 
 bibentry(bibtype = "Book",
