@@ -83,7 +83,7 @@ rnorm(n, mean = 0, sd = 1)
   \code{log.p=FALSE}.  For log scale probabilities in the extreme tails,
   since \R version 4.1.0, extensively since 4.3.0, asymptotic expansions
   are used which have been derived and explored in
-  \bibcitet{R:Mächler:2022}.
+  \bibcitet{R:Maechler:2022}.
 
   For \code{rnorm}, see \link{RNG} for how to select the algorithm and
   for references to the supplied methods.

@@ -82,7 +82,7 @@ optimHess(par, fn, gr = NULL, \dots, control = list())
   previous three methods.
 
   Method \code{"SANN"} is by default a variant of simulated annealing
-  given in \bibcitet{R:Bélisle:1992}. Simulated-annealing belongs to the class of
+  given in \bibcitet{R:Belisle:1992}. Simulated-annealing belongs to the class of
   stochastic global optimization methods. It uses only function values
   but is relatively slow. It will also work for non-differentiable
   functions. This implementation uses the Metropolis function for the
@@ -92,7 +92,7 @@ optimHess(par, fn, gr = NULL, \dots, control = list())
   given, method \code{"SANN"} can also be used to solve combinatorial
   optimization problems. Temperatures are decreased according to the
   logarithmic cooling schedule as given in
-  \bibcitet{|R:Bélisle:1992|page 890};
+  \bibcitet{|R:Belisle:1992|page 890};
   specifically, the temperature is set to
   \code{temp / log(((t-1) \%/\% tmax)*tmax + exp(1))}, where \code{t} is
   the current iteration step and \code{temp} and \code{tmax} are

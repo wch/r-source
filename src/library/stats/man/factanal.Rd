@@ -96,7 +96,7 @@ factanal(x, factors, data = NULL, covmat = NULL, n.obs = NA,
   All the starting values supplied in \code{start} are tried
   in turn and the best fit obtained is used.  If \code{start = NULL}
   then the first fit is started at the value suggested by
-  \bibcitet{R:Jöreskog:1963} and given by
+  \bibcitet{R:Joereskog:1963} and given by
   \bibcitet{|R:Lawley+Maxwell:1971|page 31)},
   and then \code{control$nstart - 1} other values are
   tried, randomly selected as equal values of the uniquenesses.

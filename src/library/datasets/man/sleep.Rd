@@ -30,7 +30,7 @@
   %% But we keep it (as [,2]) for back compatibility.
 }
 \references{
-  \bibshow{*, R:Scheffé:1959}
+  \bibshow{*, R:Scheffe:1959}
 }
 \examples{
 require(stats)

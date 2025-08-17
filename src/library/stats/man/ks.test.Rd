@@ -93,7 +93,7 @@ ks.test(x, \dots)
   one-sample case \emph{and there are no ties}, and if the product of
   the sample sizes is less than 10000 in the two-sample case, with or
   without ties (using the algorithm described in
-  \bibcitet{R:Schröer+Trenkler:1995}).
+  \bibcitet{R:Schroeer+Trenkler:1995}).
   Otherwise, the p-value is computed via Monte Carlo simulation in the
   two-sample case if \code{simulate.p.value} is \code{TRUE}, or else
   asymptotic distributions are used whose approximations may
@@ -127,8 +127,8 @@ ks.test(x, \dots)
   \bibcitet{R:Marsaglia+Tsang+Wang:2003}.
 
   Exact distributions for the two-sample (Smirnov) test are computed
-  by the algorithm proposed by \bibcitet{R:Schröer:1991} and
-  \bibcitet{R:Schröer+Trenkler:1995} using numerical improvements along
+  by the algorithm proposed by \bibcitet{R:Schroeer:1991} and
+  \bibcitet{R:Schroeer+Trenkler:1995} using numerical improvements along
   the lines of \bibcitet{R:Viehmann:2021}. 
 }
 \references{

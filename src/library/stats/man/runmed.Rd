@@ -107,7 +107,7 @@ runmed(x, k, endrule = c("median", "keep", "constant"),
   Currently \link{long vectors} are only supported for \code{algorithm = "Stuetzle"}.
 }
 \references{
-  \bibshow{R:Härdle+Steiger:1995}
+  \bibshow{R:Haerdle+Steiger:1995}
 
   Jerome H. Friedman and Werner Stuetzle (1982)
   \emph{Smoothing of Scatterplots};

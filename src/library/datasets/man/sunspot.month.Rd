@@ -50,7 +50,7 @@ sunspot.m2014
   may well change by the next release of \R.
 }
 \references{
-  \bibshow{R:Clette+Lefèvre:2016, R:Clette+Lefèvre+Chatzistergos:2023}
+  \bibshow{R:Clette+Lefevre:2016, R:Clette+Lefevre+Chatzistergos:2023}
 }
 \author{
   R Core Team.

@@ -190,7 +190,7 @@ bibentry(bibtype = "Article",
          pages = "411")
 
 bibentry(bibtype = "Article",
-         key = "R:Clette+Lefèvre+Chatzistergos:2023",
+         key = "R:Clette+Lefevre+Chatzistergos:2023",
          title = "Recalibration of the Sunspot-Number: Status Report",
          volume = "298",
          .issn = "1573-093X",
@@ -262,7 +262,7 @@ bibentry(bibtype = "Article",
          month = "mar")
 
 bibentry(bibtype = "Article",
-         key = "R:Clette+Lefèvre:2016",
+         key = "R:Clette+Lefevre:2016",
          title = "The New Sunspot Number: Assembling All Corrections",
          volume = "291",
          .issn = "1573-093X",
@@ -465,7 +465,7 @@ bibentry(bibtype = "Article",
          .doi = "10.32614/rj-2022-020")
 
 bibentry(bibtype = "Book",
-         key = "R:Härdle:1991",
+         key = "R:Haerdle:1991",
          title = "Smoothing Techniques: With Implementation in {S}",
          author = person(given = c("Wolfgang", "H."),
                          family = "Härdle"),
@@ -779,7 +779,7 @@ bibentry(bibtype = "InCollection",
          doi = "10.1007/978-1-4612-2380-1_7")
 
 bibentry(bibtype = "Book",
-         key = "R:Scheffé:1959",
+         key = "R:Scheffe:1959",
          author = person(given = "Henry",
                          family = "Scheffé"),
          title = "The Analysis of Variance",

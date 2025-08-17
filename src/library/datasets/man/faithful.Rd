@@ -21,7 +21,7 @@
 }
 \source{W. Härdle.}
 \references{
-  \bibshow{*, R:Härdle:1991}
+  \bibshow{*, R:Haerdle:1991}
 }
 \details{
   A closer look at \code{faithful$eruptions} reveals that these are

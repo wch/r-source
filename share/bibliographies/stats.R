@@ -214,7 +214,7 @@ bibentry(bibtype = "Article",
          pages = "1190--1208")
 
 bibentry(bibtype = "Article",
-         key = "R:Bélisle:1992",
+         key = "R:Belisle:1992",
          title = "Convergence Theorems for a Class of Simulated Annealing Algorithms on $\\mathbb{R}^d$",
          volume = "29",
          .issn = "1475-6072",
@@ -922,7 +922,7 @@ bibentry(bibtype = "Article",
          .doi = "10.2307/2684934")
 
 bibentry(bibtype = "Article",
-         key = "R:Härdle+Steiger:1995",
+         key = "R:Haerdle+Steiger:1995",
          title = "{Algorithm AS 296}: Optimal Median Smoothing",
          volume = "44",
          .issn = "0035-9254",
@@ -1413,7 +1413,7 @@ bibentry(bibtype = "Article",
          pages = "419--440")
 
 bibentry(bibtype = "Article",
-         key = "R:Schröer+Trenkler:1995",
+         key = "R:Schroeer+Trenkler:1995",
          title = "Exact and Randomization Distributions of {Kolmogorov}-{Smirnov} Tests Two or Three Samples",
          volume = "20",
          .issn = "0167-9473",
@@ -1891,7 +1891,7 @@ bibentry(bibtype = "Book",
          doi = "10.1137/1.9781611970586")
 
 bibentry(bibtype = "MastersThesis",
-         key = "R:Schröer:1991",
+         key = "R:Schroeer:1991",
          author = person(given = "Gunar",
                          family = "Schröer"),
          title = "{Computergestützte statistische Inferenz am Beispiel der Kolmogorov-Smirnov Tests}",
@@ -2009,7 +2009,7 @@ bibentry(bibtype = "InCollection",
                            family = "Snell")))
 
 bibentry(bibtype = "Book",
-         key = "R:Jöreskog:1963",
+         key = "R:Joereskog:1963",
          author = person(given = c("Karl", "G."),
                          family = "Jöreskog"),
          title = "Statistical Estimation in Factor Analysis",
@@ -2297,7 +2297,7 @@ bibentry(bibtype = "TechReport",
          note = "Reprinted in Holt (2004)")
 
 bibentry(bibtype = "Manual",
-         key = "R:Mächler:2022",
+         key = "R:Maechler:2022",
          title = "Asymptotic Tail Formulas for Gaussian Quantiles",
          author = person(given = "Martin",
                          family = "Mächler",
