@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2007-2023  The R Foundation
+ *  Copyright (C) 2007-2025  The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -30,6 +30,7 @@
 #include <Defn.h>
 
 #include "qdBitmap.h"
+#include <string.h>
 
 #include <R.h>
 #include <Rinternals.h>
@@ -80,7 +81,9 @@ void QuartzBitmap_Output(QuartzDesc_t dev, QuartzBitmapDevice *qbd)
 		CGImageDestinationAddImage(dest, image, NULL);
 		CGImageDestinationFinalize(dest);
 		CFRelease(dest);
-	    } else 
+	    } else if (strcmp(buf, "/dev/null"))
+		/* CGImageDestinationCreateWithURL does not support /dev/null
+		   PR#17733, so do nothing; otherwise, report error */
 		error(_("QuartzBitmap_Output - unable to open file '%s'"), buf);
         } else if(CFStringCompare(scheme, CFSTR("clipboard"), 0) == 0) { /* clipboard output */
             CFMutableDataRef      data = CFDataCreateMutable(kCFAllocatorDefault, 0);
