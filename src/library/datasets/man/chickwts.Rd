@@ -20,8 +20,7 @@
   }
 }
 \source{
-  Anonymous (1948)
-  \emph{Biometrika}, \bold{35}, 214.
+  \bibcitet{R:Anonymous:1948}.
 }
 \details{
   Newly hatched chicks were randomly allocated into six groups, and each
@@ -29,7 +28,7 @@
   after six weeks are given along with feed types.
 }
 \references{
-  \bibshow{R:McNeil:1977}
+  \bibshow{*, R:McNeil:1977}
 }
 \examples{
 require(stats); require(graphics)

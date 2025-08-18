@@ -61,11 +61,10 @@ lcm(x)
   \code{layout} returns the number of figures, \eqn{N}, see above.
 }
 \references{
-  \bibshow{R:Murrell:1999}
-
-  Chapter 5 of Paul Murrell's Ph.D. thesis.
-
-  \bibshow{R:Murrell:2005}
+  \bibinfo{R:Murrell:1998}{note}{Chapter 5}
+  \bibshow{R:Murrell:1998,
+    R:Murrell:1999,
+    R:Murrell:2005}
 }
 \seealso{
   \code{\link{par}} with arguments \code{mfrow}, \code{mfcol}, or

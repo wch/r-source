@@ -42,13 +42,9 @@ morley
   London: Edward Arnold.
 
   \bibinfo{R:Stigler:1977}{footer}{(See Table 6.)}
-  \bibshow{R:Stigler:1977}
-
-  A. A. Michelson (1882)
-  Experimental determination of the velocity of light made at the United
-  States Naval Academy, Annapolis.
-  \emph{Astronomic Papers} \bold{1} 135--8.
-  U.S. Nautical Almanac Office.  (See Table 24.)
+  \bibinfo{R:Michelson:1882}{footer}{(See Table 24.)}  
+  \bibshow{R:Michelson:1882,
+    R:Stigler:1977}
 }
 \examples{
 require(stats); require(graphics)
