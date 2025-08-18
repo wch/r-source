@@ -2739,7 +2739,7 @@ SEXP allocVector3(SEXPTYPE type, R_xlen_t length, R_allocator_t *allocator)
     }
 
     if (length > R_XLEN_T_MAX)
-	error(_("vector is too large")); /**** put length into message */
+	error(_("cannot allocate vector of length %lld"), (long long)length);
     else if (length < 0 )
 	error(_("negative length vectors are not allowed"));
     /* number of vector cells to allocate */
