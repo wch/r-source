@@ -1,6 +1,6 @@
 % File src/library/tools/man/startDynamicHelp.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2009-2015 R Core Team
+% Copyright 2009-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{startDynamicHelp}
@@ -27,7 +27,9 @@ startDynamicHelp(start = TRUE)
   those ports in order; otherwise, it tries up to 10 random ports to
   find one not in use.  It can be disabled by setting the environment
   variable \env{R_DISABLE_HTTPD} to a non-empty value or \code{options("help.ports")}
-  to \code{0}.
+  to \code{0}.  If the server could not be started (including when disabled by
+  the environment variable), it is permanently disabled for the rest of the
+  R session.
 
   \code{startDynamicHelp} is called by functions that need to use the
   server, so would rarely be called directly by a user.
