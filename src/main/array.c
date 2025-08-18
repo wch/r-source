@@ -165,6 +165,9 @@ attribute_hidden SEXP do_matrix(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
 
 #ifndef LONG_VECTOR_SUPPORT
+    if ((double)nr * (double)nc > R_XLEN_T_MAX)
+	error(_("too many elements specified"));
+#else
     if ((double)nr * (double)nc > INT_MAX)
 	error(_("too many elements specified"));
 #endif
@@ -222,7 +225,10 @@ SEXP allocMatrix(SEXPTYPE mode, int nrow, int ncol)
 
     if (nrow < 0 || ncol < 0)
 	error(_("negative extents to matrix"));
-#ifndef LONG_VECTOR_SUPPORT
+#ifdef LONG_VECTOR_SUPPORT
+    if ((double)nrow * (double)ncol > R_XLEN_T_MAX)
+	error(_("allocMatrix: too many elements specified"));
+#else
     if ((double)nrow * (double)ncol > INT_MAX)
 	error(_("allocMatrix: too many elements specified"));
 #endif
@@ -253,7 +259,10 @@ SEXP alloc3DArray(SEXPTYPE mode, int nrow, int ncol, int nface)
 
     if (nrow < 0 || ncol < 0 || nface < 0)
 	error(_("negative extents to 3D array"));
-#ifndef LONG_VECTOR_SUPPORT
+#ifdef LONG_VECTOR_SUPPORT
+    if ((double)nrow * (double)ncol * (double)nface > R_XLEN_T_MAX)
+	error(_("'alloc3DArray': too many elements specified"));
+#else
     if ((double)nrow * (double)ncol * (double)nface > INT_MAX)
 	error(_("'alloc3DArray': too many elements specified"));
 #endif
@@ -274,13 +283,14 @@ SEXP allocArray(SEXPTYPE mode, SEXP dims)
     SEXP array;
     int i;
     R_xlen_t n = 1;
-#ifndef LONG_VECTOR_SUPPORT
     double dn = 1;
-#endif
 
     for (i = 0; i < LENGTH(dims); i++) {
-#ifndef LONG_VECTOR_SUPPORT
 	dn *= INTEGER(dims)[i];
+#ifdef LONG_VECTOR_SUPPORT
+	if(dn > R_XLEN_T_MAX)
+	    error(_("'allocArray': too many elements specified by 'dims'"));
+#else
 	if(dn > INT_MAX)
 	    error(_("'allocArray': too many elements specified by 'dims'"));
 #endif
@@ -2083,7 +2093,9 @@ attribute_hidden SEXP do_array(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (nd == 0) error(_("'dims' cannot be of length 0"));
     double d = 1.0;
     for (int j = 0; j < nd; j++) d *= INTEGER(dims)[j];
-#ifndef LONG_VECTOR_SUPPORT
+#ifdef LONG_VECTOR_SUPPORT
+    if (d > R_XLEN_T_MAX) error(_("too many elements specified"));
+#else
     if (d > INT_MAX) error(_("too many elements specified"));
 #endif
     nans = (R_xlen_t) d;
@@ -2190,7 +2202,10 @@ attribute_hidden SEXP do_diag(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (mn > 0 && length(x) == 0)
 	error(_("'x' must have positive length"));
 
-#ifndef LONG_VECTOR_SUPPORT
+#ifdef LONG_VECTOR_SUPPORT
+   if ((double)nr * (double)nc > R_XLEN_T_MAX)
+	error(_("too many elements specified"));
+#else
    if ((double)nr * (double)nc > INT_MAX)
 	error(_("too many elements specified"));
 #endif
