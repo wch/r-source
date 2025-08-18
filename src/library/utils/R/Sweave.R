@@ -69,6 +69,7 @@ Sweave <- function(file, driver = RweaveLatex(),
     if (.Platform$OS.type == "windows") file <- chartr("\\", "/", file)
 
     text <- SweaveReadFile(file, syntax, encoding = encoding)
+    file <- attr(text, "files")[1L]
     attr(file, "encoding") <- encoding <- attr(text, "encoding")
     srcFilenames <- attr(text, "files")
     srcFilenum <- attr(text, "srcFilenum")
