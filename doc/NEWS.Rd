@@ -78,7 +78,7 @@
 
       \item Bibliographic citations and references in Rd files can now
       be auto-generated from bibentries in bibliographic databases in R
-      or BibTeX formats. 
+      or BibTeX formats.
       See
       \code{\link{RShowDoc}("R-exts#Bibliographic-citations-and-references")}
       for more information.
@@ -247,6 +247,10 @@
       (argument \code{quietly} cannot be abbreviated as it follows
       \code{\dots}).
       %% side effect of c88540
+      \item \code{rep()} signals more specific error messages, notably when
+      using both \code{times} and \code{each} optional arguments.  Fixes
+      \PR{18926}, thanks to \I{Ella Kaye} and collaborators at \I{useR! 2025}'s
+      \sQuote{\I{R Dev Day}}.
     }
   }
 }

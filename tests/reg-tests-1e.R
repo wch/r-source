@@ -2157,6 +2157,34 @@ assertErrV( requireNamespace("tcltk", quietly = TRUE, versionCheck = "999.0") )
 ## silently returned FALSE previously, leading to further confusion
 
 
+## rep() error messages -- PR#18926
+repXerr <- quote({
+    rep(1,   times = 4503599627370496, each = 2)
+    rep(1:2, times = 4503599627370496)
+    rep(1:2^30,                         each = 2^31+2)
+    rep(1:(2^31+1),                     each = 2^31+2)
+
+    rep(1:(2^31+1), times = 1:(2^31+3), each = 2^31+2)
+    rep(1:3, times = 1:3, each = 0)
+    rep(1:3, times = 1:3, each = 2)
+
+    rep(1, times = -1)
+    rep(1, times = NA)
+    rep(1:3, times = 1:4)
+    rep(1:(2^31+1), times = 1:(2^31+3))
+})
+writeLines(repE <- vapply(repXerr[-1L], \(xpr) tryCatch(eval(xpr), error=conditionMessage), "<err>"))
+stopifnot(identical(repE,
+                    c(rep(repE[[1]], 4), rep(repE[[5]], 3), rep(repE[[8]], 4))))
+if(englishMsgs)
+    stopifnot(exprs = {
+        identical(repE[[1]], "length(x) * 'times' * 'each' is too large")
+        identical(repE[[5]], "invalid 'times' argument, given the value of 'each'")
+        identical(repE[[8]], "invalid 'times' argument")
+    })
+## in all cases, msg was " invalid 'times' argument "; in some cases, misleadingly
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

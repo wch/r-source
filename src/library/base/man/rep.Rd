@@ -37,7 +37,7 @@ rep_len(x, length.out)
     \describe{
       \item{\code{times}}{an integer-valued vector giving the
 	(non-negative) number of times to repeat each element if of
-	length \code{length(x)}, or to repeat the whole vector if of
+	length \code{length(x) * each}, or to repeat the whole vector if of
 	length 1.  Negative or \code{NA} values are an error.  A
 	\code{double} vector is accepted, other inputs being coerced to
 	an integer or double vector.}
@@ -56,7 +56,7 @@ rep_len(x, length.out)
 \details{
   The default behaviour is as if the call was
 \preformatted{  rep(x, times = 1, length.out = NA, each = 1)
-}.  Normally just one of the additional
+} Normally just one of the additional
   arguments is specified, but if \code{each} is specified with either
   of the other two, its replication is performed first, and then that
   implied by \code{times} or \code{length.out}.
