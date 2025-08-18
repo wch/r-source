@@ -139,15 +139,6 @@ Extensible: yes
 Note: this is a template, needs + file LICENSE
 SPDX: MIT
 
-Name: Modified BSD License
-Abbrev: BSD
-OSI: open (https://opensource.org/licenses/BSD-3-Clause)
-FSF: free (https://www.gnu.org/licenses/license-list.html#ModifiedBSD)
-URL: https://opensource.org/licenses/BSD-3-Clause
-FOSS: yes
-Note: do not use: use BSD_2_clause or BSD_3_clause instead
-SPDX: BSD-3-Clause
-
 Name: BSD 2-clause License
 Abbrev: BSD_2_clause
 OSI: open (https://opensource.org/licenses/BSD-2-Clause)
