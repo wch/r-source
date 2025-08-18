@@ -774,9 +774,7 @@ loadNamespace <- function (package, lib.loc = NULL,
                 for(i in seq_along(expMethods)) {
                     mi <- expMethods[[i]]
                     if(lev > 3L) message("---- export method ", sQuote(mi))
-                    if(!(mi %in% exports) &&
-                       exists(mi, envir = ns, mode = "function",
-                              inherits = FALSE))
+                    if(!(mi %in% exports) && is.function(ns[[mi]]))
                         exports <- c(exports, mi)
                     pattern <- paste0(tPrefix, mi, ":")
                     ii <- grep(pattern, allMethodTables, fixed = TRUE)
