@@ -31,7 +31,7 @@ Name,Country,City,URL,Host,Maintainer,OK,CountryCode,Comment
 "Colombia (Cali) [https]",Colombia,Cali,https://www.icesi.edu.co/CRAN/,"Icesi University","adminred # Icesi.edu.co",1,co,"secure_mirror_from_master"
 "Costa Rica [https]","Costa Rica","San José",https://mirror.uned.ac.cr/cran/,"Distance State University (UNED)","rherrerav # uned.ac.cr",0,cr,"secure_mirror_from_master"
 "Cyprus [https]",Cyprus,Nicosia,https://mirror.library.ucy.ac.cy/cran/,"University of Cyprus","mirror # ucy.ac.cy",1,cy,"secure_mirror_from_master"
-"Czech Republic [https]","Czech Republic","Prague",https://mirrors.nic.cz/R/,"CZ.NIC, Prague","mirrors # nic.cz",1,cz,"secure_mirror_from_master"
+"Czech Republic [https]","Czech Republic","Prague",https://cran.nic.cz/R/,"CZ.NIC, Prague","mirrors # nic.cz",1,cz,"secure_mirror_from_master"
 "Denmark [https]",Denmark,Aalborg,https://mirrors.dotsrc.org/cran/,"Aalborg University","staff # dotsrc.org",1,dk,"secure_mirror_from_master"
 "East Asia [https]",0-Cloud-East-Asia,0-Cloud-East-Asia,"https://cran.asia/","Personnel Psychology Laboratory, Kwangwoon University (sites: Seoul, Tokyo, Singapore, Manila, Bangalore)","admin # cran.asia",1,asia,"secure_mirror_from_master,maintainer_address_bounces"
 "Ecuador (Cuenca) [https]",Ecuador,Cuenca,https://mirror.cedia.org.ec/CRAN/,CEDIA,"mirror # cedia.org.ec",1,ec,"secure_mirror_from_master"
@@ -87,7 +87,7 @@ Name,Country,City,URL,Host,Maintainer,OK,CountryCode,Comment
 "USA (OH) [https]",USA,Cleveland,https://cran.case.edu/,"Case Western Reserve University, Cleveland, OH","""Alberto H. Santana"" <ahs4 # case.edu>",1,us,"secure_mirror_from_master"
 "USA (OR) [https]",USA,Corvallis,https://ftp.osuosl.org/pub/cran/,"Oregon State University","support # Osuosl.org",1,us,"secure_mirror_from_master"
 "USA (PA 1) [https]",USA,Pittsburgh,https://lib.stat.cmu.edu/R/CRAN/,"Statlib, Carnegie Mellon University, Pittsburgh, PA","Jacob Gordon <remarks # stat.cmu.edu>",1,us,"secure_mirror_from_master"
-"USA (PA 2) [https]",USA,Pittsburgh,https://cran.mirrors.hoobly.com/,"Hoobly Classifieds, Pittsburgh, PA","Peter Grigor <pgrigor # hoobly.com>",1,us
+"USA (PA 2) [https]",USA,Pittsburgh,https://cran.mirrors.hoobly.com/,"Hoobly Classifieds, Pittsburgh, PA","Peter Grigor <pgrigor # hoobly.com>",0,us
 "USA (TN) [https]",USA,"Oak Ridge",https://mirrors.nics.utk.edu/cran/,"National Institute for Computational Sciences, Oak Ridge, TN","help # nics.utk.edu",1,us,"secure_mirror_from_master"
 "USA (UT) [https]",USA,"Salt Lake City",https://mirror.chpc.utah.edu/pub/cran/,"University of Utah","helpdesk # chpc.utah.edu",1,us,"secure_mirror_from_master"
 "United Arab Emirates [https]","United Arab Emirates","Abu Dhabi",https://cran.nyuad.nyu.edu/,"New York University in Abu Dhabi","nyuad.cran # nyu.edu",1,ae,"secure_mirror_from_master"
