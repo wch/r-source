@@ -14,11 +14,10 @@
 \usage{nhtemp}
 \format{A time series of 60 observations.}
 \source{
-  Vaux, J. E. and Brinker, N. B. (1972)
-  \emph{Cycles}, \bold{1972}, 117--121.
+  \bibcitet{R:Vaux+Brinker:1972}.
 }
 \references{
-  \bibshow{R:McNeil:1977}
+  \bibshow{*, R:McNeil:1977}
 }
 \examples{
 require(stats); require(graphics)

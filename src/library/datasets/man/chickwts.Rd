@@ -20,7 +20,7 @@
   }
 }
 \source{
-  \bibcitet{R:Anonymous:1948}.
+  \bibcitet{R:Snedecor:1948}.
 }
 \details{
   Newly hatched chicks were randomly allocated into six groups, and each
