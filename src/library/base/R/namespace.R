@@ -199,7 +199,7 @@ loadNamespace <- function (package, lib.loc = NULL,
         stop("'versionCheck' must be NULL or list with components 'op' and 'version'")
     checkVer <- !is.null(zop      <- versionCheck[["op"]]) &&
                 !is.null(zversion <- versionCheck[["version"]])
-    if (! is.null(ns)) {
+    if (! is.null(ns)) { ## already loaded
         if(checkVer) {
             current <- getNamespaceVersion(ns)
             if(!do.call(zop, list(as.numeric_version(current), zversion)))
@@ -207,6 +207,7 @@ loadNamespace <- function (package, lib.loc = NULL,
                               sQuote(package), current, zop, zversion),
                      domain = NA)
         }
+        ## silently ignore all other arguments.
         ## return
         ns
     } else {
@@ -832,6 +833,9 @@ requireNamespace <- function (package, ..., quietly = FALSE)
     }
     res <- TRUE
     if (is.null(ns) || ...length()) {
+        ## not already loaded or ... is non-ecmpty
+        ## (LoadNamepace will only look at versionCheck, but this catches
+        ## misspelled arguments.)
         value <- tryCatch(loadNamespace(package, ...), error = function(e) e)
         if (inherits(value, "error")) {
             if(quietly) { # invalid 'versionCheck' error should signal
