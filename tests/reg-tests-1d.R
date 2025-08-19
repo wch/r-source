@@ -5438,7 +5438,7 @@ stopifnot(exprs = {
 stopifnot(!grepl(dQuote(""), m1), !grepl(dQuote(""), m2))
 if(englishMsgs)
     stopifnot(grepl("'arg' should be ", m1),
-              grepl("'arg' should be one ", m2))
+              grepl("'arg' should be one ", c(m1, m2)) |> identical( c(FALSE,TRUE) ))
 ## was  'arg' should be one of “”, “a” ( , “b” )
 
 
