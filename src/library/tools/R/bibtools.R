@@ -107,3 +107,30 @@ function(keys)
     y
 }
 
+.bibentries_from_bibtex_file <-
+function(file, text)
+{
+    if(missing(file)) {
+        tf <- tempfile()
+        on.exit(unlink(tf))
+        writeLines(enc2utf8(text), tf, useBytes = TRUE)
+        file <- tf
+    }
+    bib <- bibtex::read.bib(file, encoding = "UTF-8")
+    key <- lapply(bib,
+                  function(e) {
+                      a <- e$author
+                      a <- a[seq_len(min(length(a), 3L))]
+                      sprintf("R:%s:%s",
+                              paste(gsub("[^[:alpha:]-]", "_",
+                                         unlist(a$family)),
+                                    collapse = "+"),
+                              e$year)
+                  })
+    do.call(c, Map(function(u, v) { u$key <- v; u }, bib, key))
+}
+
+.dump_bibentries <-
+function(bib, con = stdout())
+    writeLines(paste(format(bib, "R"), collapse = "\n\n"), con,
+               useBytes = TRUE)
