@@ -1,6 +1,6 @@
 % File src/library/graphics/man/layout.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2018 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{layout}
@@ -8,7 +8,7 @@
 \alias{layout.show}
 \alias{lcm}
 \title{Specifying Complex Plot Arrangements}
-\author{Paul R. Murrell}
+\author{Paul Murrell}
 \description{
   \code{layout} divides the device up into as many rows and columns as
   there are in matrix \code{mat}, with the column-widths and the
