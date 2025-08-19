@@ -69,7 +69,6 @@ Name,Country,City,URL,Host,Maintainer,OK,CountryCode,Comment
 "Portugal (Lisbon) [https]",Portugal,Lisbon,https://cran.radicaldevelop.com/,"RadicalDevelop, Lda","geral # radicaldevelop.com",1,pt
 "Russia (Novosibirsk) [https]",Russia,Novosibirsk,https://mirror.truenetwork.ru/CRAN/,"Truenetwork","mirror # truenetwork.ru",1,ru
 "Saudi Arabia (Riyadh) [https]","Saudi Arabia",Riyadh,https://mirror.maeen.sa/cran/,"Maeen Network","mirrors # isu.net.sa",1,sa,"secure_mirror_from_master"
-"South Africa (Johannesburg) [https]","South Africa",Johannesburg,https://cran.mirror.ac.za/,"TENET, Johannesburg","mirroradmin # tenet.ac.za",1,za,"secure_mirror_from_master"
 "Spain (A Coruña) [https]","Spain","A Coruña",https://ftp.cixug.es/CRAN/,"Oficina de software libre (CIXUG)","<osl # cixug.es>",1,es,"secure_mirror_from_master"
 "Spain (Madrid) [https]",Spain,Madrid,https://cran.rediris.es/,"Spanish National Research Network, Madrid","Jose Manuel Macias <jmanuel.macias # rediris.es>",1,es,"secure_mirror_from_master"
 "Sweden (Umeå) [https]",Sweden,Umeå,https://mirror.accum.se/mirror/CRAN/,"Academic Computer Club in Umeå, Sweden","<ftp-adm # accum.se>",1,se,"secure_mirror_from_master"
