@@ -164,7 +164,7 @@ attribute_hidden SEXP do_matrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    warning(_("non-empty data for zero-extent matrix"));
     }
 
-#ifndef LONG_VECTOR_SUPPORT
+#ifdef LONG_VECTOR_SUPPORT
     if ((double)nr * (double)nc > R_XLEN_T_MAX)
 	error(_("too many elements specified"));
 #else
