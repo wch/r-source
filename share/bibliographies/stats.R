@@ -2395,3 +2395,18 @@ bibentry(bibtype = "TechReport",
          year = "1982",
          number = "Project ORION 003",
          url = "https://purl.stanford.edu/rk479vx9002")
+
+
+bibentry(bibtype = "InCollection",
+         key = "R:Singleton:1979",
+         author = person(given = c("R.", "C."),
+                         family = "Singleton"),
+         title = "Mixed Radix Fast Fourier Transforms",
+         booktitle = "Programs for Digital Signal Processing",
+         publisher = "IEEE Press",
+         year = "1979",
+         editor = person(given = "IEEE Digital Signal Processing Committee"),
+         chapter = "1.4.1",
+         address = "New York",
+         isbn = "0-87942-128-2",
+         url = "https://archive.org/details/programsfordigit0000unse/")
