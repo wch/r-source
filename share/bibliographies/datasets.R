@@ -983,3 +983,23 @@ bibentry(bibtype = "Article",
          journal = "Cycles",
          year = "1972",
          url = "https://cycles.org/cycles/library/")
+
+bibentry(bibtype = "Book",
+         key = "R:Harman:1976",
+         author = person(given = c("Harry", "Horace"),
+                         family = "Harman"),
+         title = "Modern Factor Analysis",
+         publisher = "University of Chicago Press",
+         year = "1976",
+         address = "Chicago",
+         edition = "Third",
+         isbn = "9780226316529")
+
+bibentry(bibtype = "Book",
+         key = "R:Bartholomew:1987",
+         author = person(given = c("David", "J."),
+                         family = "Bartholomew"),
+         title = "Latent Variable Models and Factor Analysis",
+         publisher = "Griffin",
+         year = "1987",
+         isbn = "9780195206159")
