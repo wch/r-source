@@ -13,9 +13,8 @@
 }
 \usage{Harman74.cor}
 \source{
-  Harman, H. H. (1976)
-  \emph{Modern Factor Analysis}, Third Edition Revised,
-  University of Chicago Press, Table 7.4.
+  \bibinfo{R:Harman:1976}{note}{Table 7.4}
+  \bibshow{R:Harman:1976}
 }
 \examples{
 require(stats)

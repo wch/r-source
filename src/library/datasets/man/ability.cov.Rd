@@ -28,9 +28,7 @@
 }
 \usage{ability.cov}
 \source{
-  Bartholomew, D. J. (1987).
-  \emph{Latent Variable Analysis and Factor Analysis}.
-  Griffin.
+  \bibshow{R:Bartholomew:1987}
 
   Bartholomew, D. J. and Knott, M. (1990).
   \emph{Latent Variable Analysis and Factor Analysis}.
