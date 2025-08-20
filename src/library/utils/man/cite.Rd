@@ -97,9 +97,10 @@ rref <- bibentry(
    bibtype = "Manual",
    title = "R: A Language and Environment for Statistical Computing",
    author = person("R Core Team", comment = c(ROR = "02zz1nj61")),
-   organization = "R Foundation for Statistical Computing",
+   organization = person("R Foundation for Statistical Computing",
+                          comment = c(ROR = "05qewa988")),
    address = "Vienna, Austria",
-   year = 2025,
+   year = version$year,
    doi = "10.32614/R.manuals",
    url = "https://www.R-project.org/",
    key = "R")

@@ -222,7 +222,7 @@ bibentry(bibtype, textVersion = NULL, header = NULL, footer = NULL,
     \item{pages:}{One or more page numbers or range of numbers.}
 
     \item{publisher:}{The publisher's name.}
-
+ 
     \item{school:}{The name of the school where a thesis was written.}
 
     \item{series:}{The name of a series or set of books.}
@@ -237,6 +237,11 @@ bibentry(bibtype, textVersion = NULL, header = NULL, footer = NULL,
 
     \item{year:}{The year of publication.}
   }
+
+  The organization-like fields
+  \sQuote{institution}. \sQuote{organization}, \sQuote{publisher} and
+  \sQuote{school} can also be \code{\link{person}} objects with a given
+  name but no family name.
 }
 \seealso{
   \code{\link{person}}
@@ -247,9 +252,10 @@ rref <- bibentry(
    bibtype = "Manual",
    title = "R: A Language and Environment for Statistical Computing",
    author = person("R Core Team", comment = c(ROR = "02zz1nj61")),
-   organization = "R Foundation for Statistical Computing",
+   organization = person("R Foundation for Statistical Computing",
+                          comment = c(ROR = "05qewa988")),
    address = "Vienna, Austria",
-   year = 2025,
+   year = version$year,
    doi = "10.32614/R.manuals",
    url = "https://www.R-project.org/")
 

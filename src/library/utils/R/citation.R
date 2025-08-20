@@ -737,6 +737,10 @@ function(bibtype, textVersion = NULL, header = NULL, footer = NULL, key = NULL,
 	}
 	if(any(!pos)) {
             for(i in which(!pos)) {
+                if((fields[i] %in%
+                    bibentry_field_names_organization_like) &&
+                   inherits(rval[[i]], "person"))
+                    next
                 s <- trimws(as.character(rval[[i]]))
                 ## <NOTE>
                 ## Further above we did
@@ -810,6 +814,9 @@ bibentry_attribute_names <-
 
 bibentry_list_attribute_names <-
     c("mheader", "mfooter")
+
+bibentry_field_names_organization_like <-
+    c("institution", "organization", "publisher", "school")
 
 .bibentry_get_key <-
 function(x)
@@ -952,6 +959,9 @@ function(x, i = NULL)
                 NULL
             else if(j %in% c("author", "editor"))
                 as.person(v)
+            else if((j %in% bibentry_field_names_organization_like) &&
+                    inherits(v, "person"))
+                v
             else
                 paste(v)
     }
@@ -1406,6 +1416,12 @@ function(object, escape = FALSE, ...)
             object$author <- format_author(object$author)
         if("editor" %in% names(object))
             object$editor <- format_author(object$editor)
+
+        for(n in intersect(names(object),
+                           bibentry_field_names_organization_like)) {
+            if(inherits(o <- object[[n]], "person"))
+                object[[n]] <- o$given
+        }
 
         rval <- c(rval,
                   vapply(names(object),

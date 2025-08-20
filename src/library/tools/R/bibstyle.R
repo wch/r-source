@@ -95,10 +95,14 @@ makeJSS <- function() {
     fmtHowpublished <- plainclean
     fmtISBN <- label(prefix = "ISBN ")
     fmtISSN <- label(prefix = "ISSN ")
-    fmtInstitution <- plainclean
+    fmtInstitution <- function(s) {
+        if(inherits(s, "person"))
+            s <- s$given
+        plainclean(s)
+    }
     fmtNote <- plainclean
     fmtPages <- plain
-    fmtSchool <- plainclean
+    fmtSchool <- fmtInstitution
     ## fmtTechreportnumber <- labelclean(prefix="Technical Report ")
     fmtUrl <- label(prefix = "\\url{", suffix="}")
     fmtTitle <- function(title) 
@@ -186,19 +190,27 @@ makeJSS <- function() {
     }
 
     bookPublisher <- function(book) {
-        if (length(book$publisher)) {
-            result <- collapse(book$publisher)
-            if (length(book$address))
-                result <- paste(result, collapse(book$address), sep = ", ")
+        if(length(p <- book$publisher)) {
+            if(inherits(p, "person"))
+                p <- p$given
+            result <- collapse(p)
+            if(length(book$address))
+                result <- paste(result,
+                                collapse(book$address),
+                                sep = ", ")
             result
         }
     }
 
     procOrganization <- function(paper) {
-        if (length(paper$organization)) {
-            result <- collapse(cleanupLatex(paper$organization))
-            if (length(paper$address))
-                result <- paste(result, collapse(cleanupLatex(paper$address)), sep =", ")
+        if(length(o <- paper$organization)) {
+            if(inherits(o, "person"))
+                o <- o$given
+            result <- collapse(cleanupLatex(o))
+            if(length(paper$address))
+                result <- paste(result,
+                                collapse(cleanupLatex(paper$address)),
+                                sep = ", ")
             result
         }
     }
