@@ -677,6 +677,8 @@ struct _DevDesc {
     int haveRaster; /* 1 = no, 2 = yes, 3 = except for missing values */
     int haveCapture, haveLocator;  /* 1 = no, 2 = yes */
 
+    /* === Since R_GE_version R_GE_definitions */
+
 #if R_USE_PROTOTYPES
     SEXP (*setPattern)(SEXP pattern, pDevDesc dd);
 #else
@@ -721,10 +723,14 @@ struct _DevDesc {
      */
     int deviceVersion;
 
+    /* === Since R_GE_version R_GE_deviceClip */
+
     /* This can be used to OVERRIDE canClip so that graphics engine
      * leaves ALL clipping to the graphics device 
      */
     Rboolean deviceClip;
+
+    /* === Since R_GE_version R_GE_group */
 
     /* Define a group of shapes that will be drawn together.
      * 
@@ -789,6 +795,9 @@ struct _DevDesc {
 #else
     SEXP (*capabilities)();
 #endif
+
+    /* === Since R_GE_version R_GE_glyphs */
+
 #if R_USE_PROTOTYPES
     void (*glyph)(int n, int *glyphs, double *x, double *y, 
                   SEXP font, double size,
