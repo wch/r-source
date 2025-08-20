@@ -37,7 +37,8 @@ isNamespaceLoaded(name)
     recorded in object \code{.Depends} in the package.}
   \item{package}{string naming the package/name space to load.}
   \item{lib.loc}{character vector specifying library search path (the location
-    of \R library trees to search through.}
+    of \R library trees to search through. Only used if the name space
+    is not already loaded.}
   \item{keep.source}{now ignored except during package installation.}
   \item{keep.parse.data}{ignored except during package installation.}
   \item{partial}{logical; if true, stop just after loading code.}

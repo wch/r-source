@@ -82,6 +82,9 @@
       See
       \code{\link{RShowDoc}("R-exts#Bibliographic-citations-and-references")}
       for more information.
+
+      \item Arguments to \code{loadNamespace()} which will be ignored
+      because the namespace is already loaded are now noted.
     }
   }
 
