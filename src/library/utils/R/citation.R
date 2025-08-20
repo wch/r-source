@@ -268,8 +268,10 @@ function(x, i, j, value)
         value <- rep_len(value, length(p))
         if(j == "role")
             value <- lapply(value, .canonicalize_person_role)
-        for(i in p)
-            y[[i]] <- .person_elt_fld_gets(y[[i]], j, value[[i]])            
+        for(i in seq_along(p)) {
+            k <- p[i]
+            y[[k]] <- .person_elt_fld_gets(y[[k]], j, value[[i]])
+        }
     }
     class(y) <- class(x)
     y
@@ -898,14 +900,15 @@ function(x, i, j, value)
         if(j == "bibtype")
             value <- .bibentry_canonicalize_bibtype_value(value)
         a <- (j %in% bibentry_attribute_names)
-        for(i in p) {
-            y[[i]] <- .bibentry_elt_fld_gets(y[[i]], j, value[[i]], a)
+        for(i in seq_along(p)) {
+            k <- p[i]
+            y[[k]] <- .bibentry_elt_fld_gets(y[[k]], j, value[[i]], a)
         }
     }
     class(y) <- class(x)
     y
 }
-    
+
 `[[<-.bibentry` <-
 function(x, i, j, value)
 {
