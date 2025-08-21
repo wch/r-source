@@ -215,7 +215,7 @@ loadNamespace <- function (package, lib.loc = NULL,
             message(gettextf("namespace '%s' is already loaded so argument '%s' will b ignored.",
                              package, "partial"))
         if(!missing(keep.parse.data))
-            message(gettextf("namespace '%s' is already loaded so argument '%s' will be ignored/",
+            message(gettextf("namespace '%s' is already loaded so argument '%s' will be ignored.",
                              package, "keep.parse.data"))
         ## return
         ns
