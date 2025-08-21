@@ -44,9 +44,9 @@ Comparison is done directly unless you happen to be comparing the same
 string in different encodings.
 
 nzchar and nchar(, "bytes") are independent of the encoding
-nchar(, "char") nchar(, "width") handle UTF-8 and Latin-1 directly 
+nchar(, "char") nchar(, "width") handle UTF-8 and Latin-1 directly
 substr substr<-  handle UTF-8 and Latin-1 directly
-tolower toupper chartr  translate UTF-8 and Latin-1 to wchar (which needs 
+tolower toupper chartr  translate UTF-8 and Latin-1 to wchar (which needs
   Unicode wide characters), rest to current charset
 abbreviate translates non-ASCII inputs to UTF-8 then wchar_t*.
 strtrim translates to the native encoding
@@ -346,7 +346,7 @@ attribute_hidden SEXP do_nchar(SEXP call, SEXP op, SEXP args, SEXP env)
 	switch(res) {
 	case -1:
 	    error(_("invalid multibyte string, element %lld"), (long long)i+1);
-	case -2: 
+	case -2:
 	    if (type_ == Chars)
 		error(_("number of characters is not computable in \"bytes\" encoding, element %lld"),
 		      (long long)i+1);
@@ -425,14 +425,13 @@ static void substr(const char *str, int len, int ienc, int sa, int so,
 attribute_hidden SEXP
 do_substr(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP s, x;
     checkArity(op, args);
-    x = CAR(args);
+    SEXP x = CAR(args);
     if (!isString(x))
 	error(_("extracting substrings from a non-character object"));
     R_xlen_t len = XLENGTH(x);
-    PROTECT(s = allocVector(STRSXP, len));
-    SEXP lastel = NULL;
+    SEXP s = PROTECT(allocVector(STRSXP, len)),
+	lastel = NULL;
     if (len > 0) {
 	SEXP sa = CADR(args),
 	    so = CADDR(args);
@@ -825,7 +824,7 @@ donesc:
 // lower-case vowels in English plus accented versions
 static int vowels[] = {
     0x61, 0x65, 0x69, 0x6f, 0x75,
-    0xe0, 0xe1, 0x2e, 0xe3, 0xe4, 0xe5,
+    0xe0, 0xe1, 0xe2, 0xe3, 0xe4, 0xe5,
     0xe8, 0xe9, 0xea, 0xeb, 0xec, 0xed, 0xee, 0xef,
     0xf2, 0xf3, 0xf4, 0xf5, 0xf6, 0xf8, 0xf9, 0xfa, 0xfb, 0xfc,
     0x101, 0x103, 0x105, 0x113, 0x115, 0x117, 0x118, 0x11b,
@@ -1155,7 +1154,7 @@ attribute_hidden SEXP do_tolower(SEXP call, SEXP op, SEXP args, SEXP env)
 				wc[j] = Ri18n_towlower(wc[j]);
 #else
 			/* This cannot cope with surrogate pairs,
-			   if mbstowcs can make them. */ 
+			   if mbstowcs can make them. */
 			for (j = 0; j < nc; j++) wc[j] = towctrans(wc[j], tr);
 #endif
 			nb = (int) wcstombs(NULL, wc, 0);
