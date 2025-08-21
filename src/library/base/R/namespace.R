@@ -209,13 +209,13 @@ loadNamespace <- function (package, lib.loc = NULL,
         }
         ## used to silently ignore all other arguments. Still ignore 'lib.loc'
         if(!missing(keep.source))
-            message(gettextf("namespace '%s' is already loaded so argument '%s' will bw ignored.",
+            message(gettextf("namespace '%s' is already loaded so argument '%s' will be ignored.",
                              package, "keep.source"))
         if(!missing(partial))
-            message(gettextf("namespace '%s' is already loaded so argument '%s' will bw ignored.",
+            message(gettextf("namespace '%s' is already loaded so argument '%s' will b ignored.",
                              package, "partial"))
         if(!missing(keep.parse.data))
-            message(gettextf("namespace '%s' is already loaded so argument '%s' will bw ignored/",
+            message(gettextf("namespace '%s' is already loaded so argument '%s' will be ignored/",
                              package, "keep.parse.data"))
         ## return
         ns
