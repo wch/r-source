@@ -99,15 +99,23 @@ print.summary.warnings <- function(x, ...) {
 ##' @param ...
 ##' @param which.call passed to sys.call().  A caller may use -2 if the message should
 ##' mention *its* caller
-##' @param allowed not yet implemented: character vector of *named* elements in '...'
+##' @param allowed character vector of *named* elements in '...'
 ##' which are \dQuote{allowed} and hence not warned about
 chkDots <- function(..., which.call = -1, allowed = character(0)) {
-    if(nx <- ...length())
-	warning(sprintf(ngettext(nx,
+    if(nx <- ...length()) {
+        if (!is.null(nms <- ...names())) { # otherwise ... all positional args
+            stopifnot(is.character(allowed))
+            nms <- nms[!(nms %in% allowed)]
+            nx <- length(nms)
+            if (nx == 0L) return(invisible(NULL))
+        }
+        msg <- sprintf(ngettext(nx,
 				 "In %s :\n extra argument %s will be disregarded",
 				 "In %s :\n extra arguments %s will be disregarded"),
 			paste(deparse(sys.call(which.call), control=c()), collapse="\n"),
 			## sub(")$", '', sub("^list\\(", '', deparse(list(...), control=c())))
-			paste(sQuote(...names()), collapse = ", ")),
-		call. = FALSE, domain=NA)
+			paste(sQuote(nms), collapse = ", "))
+        warning(warningCondition(msg, class = c("chkDotsWarning", "simpleWarning")))
+    }
+    invisible(NULL)
 }

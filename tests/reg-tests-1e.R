@@ -7,13 +7,13 @@ assertErrV  <- function(...) tools::assertError  (..., verbose=TRUE)
 assertWarnV <- function(...) tools::assertWarning(..., verbose=TRUE)
 `%||%` <- function (L, R)  if(is.null(L)) R else L
 ##' get value of `expr` and keep warning as attribute (if there is one)
-getVaW <- function(expr) {
+getVaW <- function(expr, obj=FALSE) {
     W <- NULL
     withCallingHandlers(val <- expr,
                         warning = function(w) {
-                            W <<- conditionMessage(w)
+                            W <<- if(obj) w else conditionMessage(w)
                             invokeRestart("muffleWarning") })
-    structure(val, warning = W)
+    structure(val %||% quote(._NULL_()), warning = W) # NULL cannot have attr.
 }
 options(nwarnings = 10000, # (rather than just 50)
         warn = 2, # only caught or asserted warnings
@@ -2183,6 +2183,19 @@ if(englishMsgs)
         identical(repE[[8]], "invalid 'times' argument")
     })
 ## in all cases, msg was " invalid 'times' argument "; in some cases, misleadingly
+
+
+## implement chkDots's  `allowed` argument -- PR#18936
+f <- function(...) chkDots(..., allowed = "foo")
+stopifnot(is.null(f()),
+          is.null(f(foo = 1))) # NB  warn = 2
+assertWarnV(f(bar = "foo"))
+assertWarnV(f(bar = "foo", foo = 2))
+assertWarnV(f(1, 2))
+r <- getVaW(f(1, foo=2), TRUE)
+stopifnot(r == quote(._NULL_()),
+          inherits(print(attr(r, "warning")), "chkDotsWarning"))
+## _classed_ warning
 
 
 

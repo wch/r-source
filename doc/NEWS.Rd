@@ -85,6 +85,9 @@
 
       \item Arguments to \code{loadNamespace()} which will be ignored
       because the namespace is already loaded are now noted.
+
+      \item \code{chkDots()}' optional argument \code{allowed} has been
+      implemented thanks to \I{Trevor Davis}' proposal in \PR{18936}.
     }
   }
 

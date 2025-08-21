@@ -15,7 +15,7 @@ chkDots(..., which.call = -1, allowed = character(0))
   \item{...}{\dQuote{the dots}, as passed from the caller.}
   \item{which.call}{passed to \code{\link{sys.call}()}.  A caller may
     use -2 if the message should mention \emph{its} caller.}
-  \item{allowed}{not yet implemented: character vector of \emph{named}
+  \item{allowed}{character vector of \emph{named}
     elements in \code{...} which are \dQuote{allowed} and hence not
     warned about.}
 }
