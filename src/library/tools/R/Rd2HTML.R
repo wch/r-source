@@ -237,7 +237,13 @@ topic2href <- function(x, destpkg = NULL, hooks = list())
     else {
         FUN <- hooks$pkg_href
         if (is.null(FUN)) FUN <- function(pkg) sprintf("%s.html", pkg)
-        sprintf("%s#%s", FUN(destpkg), topic2id(x))
+        ## Need a way to turn links to unavailable packages into
+        ## "nothing", e.g. when building package HTML refmans.
+        ## We do so if FUN() gave "nothing" or the special '#'.
+        if(!length(s <- FUN(destpkg)) || (s == "#"))
+            "#"
+        else
+            sprintf("%s#%s", s, topic2id(x))
     }
 }
 
