@@ -78,15 +78,11 @@ function(x, paths = NULL, ignore = character()) {
 }
 
 tidy_validate_files <-
-function(files, verbose = interactive()) {
-    tidy_validate_db(lapply(files,
-                            function(f) {
-                                if(verbose)
-                                    message(sprintf("Processing %s ...",
-                                                    f))
-                                tidy_validate(f)
-                            }),
-                     files)
+function(files, verbose = interactive(), Ncpus = .Ncpus_default()) {
+    
+    results <- .parLapply_on_strings(files, tidy_validate,
+                                     verbose = verbose, Ncpus = Ncpus)
+    tidy_validate_db(results, files)
 }
 
 tidy_validate_R_httpd_path <-
@@ -187,17 +183,14 @@ tidy_validate_package_Rd_files_from_dir <- function(dir, auto = NA, verbose) {
 
 
 tidy_validate_urls <-
-function(urls, verbose = interactive()) {
-    destfile <- tempfile("tidy_validate")
-    on.exit(unlink(destfile))
-    tidy_validate_db(lapply(urls,
-                            function(u) {
-                                if(verbose)
-                                    message(sprintf("Processing %s ...",
-                                                    u))
-                                utils::download.file(u, destfile,
-                                                     quiet = TRUE)
-                                tidy_validate(destfile)
-                            }),
-                     urls)
+function(urls, verbose = interactive(), Ncpus = .Ncpus_default()) {
+    one <- function(u) {
+        d <- tempfile("tidy_validate_urls")
+        on.exit(unlink(d))
+        utils::download.file(u, d, quiet = TRUE)
+        tidy_validate(d)
+    }
+    results <- .parLapply_on_strings(urls, one,
+                                     verbose = verbose, Ncpus = Ncpus)
+    tidy_validate_db(results, urls)
 }

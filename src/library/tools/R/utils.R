@@ -2076,8 +2076,8 @@ function()
 ### ** .package_apply
 
 .package_apply <-
-function(packages = NULL, FUN, ..., pattern = NULL, verbose = TRUE,
-         Ncpus = getOption("Ncpus", 1L))
+function(packages = NULL, FUN, ..., pattern = NULL, 
+         verbose = interactive(), Ncpus = .Ncpus_default())
 {
     ## Apply FUN and extra '...' args to all given packages.
     ## The default corresponds to all installed packages with high
@@ -2089,30 +2089,8 @@ function(packages = NULL, FUN, ..., pattern = NULL, verbose = TRUE,
     if(!is.null(pattern))
         packages <- grepv(pattern, packages)
 
-    ## Keep in sync with .unpacked_source_repository_apply().
-    ## <FIXME>
-    ## Should we really catch errors?
-    one <- function(p) {
-        if(verbose)
-            message(sprintf("processing %s", p))
-        tryCatch(FUN(p, ...), error = identity)
-    }
-    ## </FIXME>
-
-    ## Would be good to have a common wrapper ...
-    if(Ncpus > 1L) {
-        if(.Platform$OS.type != "windows") {
-            out <- parallel::mclapply(packages, one, mc.cores = Ncpus)
-        } else {
-            cl <- parallel::makeCluster(Ncpus)
-            args <- list(FUN, ...)      # Eval promises.
-            out <- parallel::parLapply(cl, packages, one)
-            parallel::stopCluster(cl)
-        }
-    } else {
-        out <- lapply(packages, one)
-    }
-
+    out <- .parLapply_on_strings(packages, FUN, ...,
+                                 verbose = verbose, Ncpus = Ncpus)
     names(out) <- packages
     out
 }
@@ -2238,6 +2216,39 @@ function(ifile, ofile)
                                "--email-obfuscation=references",
                                "-o", shQuote(ofile)))
 }
+
+### ** .parLapply_on_strings
+
+.parLapply_on_strings <-
+function(X, FUN, ..., 
+         verbose = interactive(), Ncpus = .Ncpus_default(),
+         trafo = identity)
+{
+    one <- function(e) {
+        if(verbose)
+            message(sprintf("processing %s", trafo(e)))
+        tryCatch(FUN(e, ...), error = identity)
+    }
+
+    if(Ncpus > 1L) {
+        if(.Platform$OS.type != "windows") {
+            out <- parallel::mclapply(X, one, mc.cores = Ncpus)
+        } else {
+            cl <- parallel::makeCluster(Ncpus)
+            args <- list(FUN, ...)      # Eval promises.
+            out <- parallel::parLapply(cl, X, one)
+            parallel::stopCluster(cl)
+        }
+    } else {
+        out <- lapply(X, one)
+    }
+
+    out
+}
+    
+.Ncpus_default <-
+function()
+    getOption("Ncpus", 1L)
 
 ### ** .parse_code_file
 
@@ -2662,8 +2673,8 @@ function(expr)
 ### ** .unpacked_source_repository_apply
 
 .unpacked_source_repository_apply <-
-function(dir, FUN, ..., pattern = NULL, verbose = FALSE,
-         Ncpus = getOption("Ncpus", 1L))
+function(dir, FUN, ..., pattern = NULL, 
+         verbose = interactive(), Ncpus = .Ncpus_default())
 {
     dir <- file_path_as_absolute(dir)
 
@@ -2680,29 +2691,9 @@ function(dir, FUN, ..., pattern = NULL, verbose = FALSE,
         dfiles <- dfiles[grepl(pattern, basename(dirname(dfiles)))]
     paths <- dirname(dfiles)
 
-    ## Keep in sync with .package_apply().
-    ## <FIXME>
-    ## Should we really catch errors?
-    one <- function(p) {
-        if(verbose)
-            message(sprintf("processing %s", basename(p)))
-        tryCatch(FUN(p, ...), error = identity)
-    }
-    ## </FIXME>
-
-    ## Would be good to have a common wrapper ...
-    if(Ncpus > 1L) {
-        if(.Platform$OS.type != "windows") {
-            out <- parallel::mclapply(paths, one, mc.cores = Ncpus)
-        } else {
-            cl <- parallel::makeCluster(Ncpus)
-            args <- list(FUN, ...)      # Eval promises.
-            out <- parallel::parLapply(cl, paths, one)
-            parallel::stopCluster(cl)
-        }
-    } else {
-        out <- lapply(paths, one)
-    }
+    out <- .parLapply_on_strings(paths, FUN, ...,
+                                 verbose = verbose, Ncpus = Ncpus,
+                                 trafo = basename)
 
     names(out) <- basename(paths)
     out
