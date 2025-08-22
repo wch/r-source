@@ -1,13 +1,11 @@
 
-R Under development (unstable) (2023-04-13 r84246) -- "Unsuffered Consequences"
-Copyright (C) 2023 The R Foundation for Statistical Computing
-Platform: x86_64-pc-linux-gnu (64-bit)
+R Under development (unstable) (2025-08-22 r88671) -- "Unsuffered Consequences"
+Copyright (C) 2025 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
 Type 'license()' or 'licence()' for distribution details.
-
-  Natural language support but running in an English locale
 
 R is a collaborative project with many contributors.
 Type 'contributors()' for more information and
@@ -159,6 +157,7 @@ Warning in bs(height, degree = 3L, knots = c(62.6666666666667, 67.3333333333333 
 +           !is.null(kk <- attr(bs(x), "knots")), # not true till 1.5.1
 +           length(kk) == 0)
 > ## End(Don't show)
+> 
 > 
 > 
 > cleanEx()
@@ -587,7 +586,7 @@ attr(,"class")
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  0.129 0.023 0.168 0 0 
+Time elapsed:  0.152 0.012 0.164 0 0 
 > grDevices::dev.off()
 null device 
           1 

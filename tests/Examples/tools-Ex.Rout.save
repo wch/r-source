@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2025-05-23 r88232) -- "Unsuffered Consequences"
+R Under development (unstable) (2025-08-22 r88671) -- "Unsuffered Consequences"
 Copyright (C) 2025 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu
 
@@ -55,16 +55,16 @@ Type 'q()' to quit R.
 <!DOCTYPE html>
 <html>
 <head><title>R: This is a sample header</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-<link rel="stylesheet" type="text/css" href="/doc/html/R.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<link rel="stylesheet" type="text/css" href="/doc/html/R.css">
 </head><body><div class="container">
 <h1> This is a sample header
-<img class="toplogo" src="/doc/html/Rlogo.svg" alt="[R logo]" />
+<img class="toplogo" src="/doc/html/Rlogo.svg" alt="[R logo]">
 </h1>
-<hr/>
+<hr>
 <div style="text-align: center;">
-<a href="/doc/html/index.html"><img class="arrow" src="/doc/html/up.jpg" alt="[Top]" /></a>
+<a href="/doc/html/index.html"><img class="arrow" src="/doc/html/up.jpg" alt="[Top]"></a>
 </div>
 > 
 > 
@@ -96,7 +96,7 @@ $status
 
 $stdout
  [1] ""                                                                                 
- [2] "R Under development (unstable) (2025-05-23 r88232) -- \"Unsuffered Consequences\""
+ [2] "R Under development (unstable) (2025-08-22 r88671) -- \"Unsuffered Consequences\""
  [3] "Copyright (C) 2025 The R Foundation for Statistical Computing"                    
  [4] "Platform: x86_64-pc-linux-gnu"                                                    
  [5] ""                                                                                 
@@ -112,10 +112,10 @@ $stdout
 [15] "'help.start()' for an HTML browser interface to help."                            
 [16] "Type 'q()' to quit R."                                                            
 [17] ""                                                                                 
-[18] "> x <- readRDS(\"/tmp/Rtmp0ux66Z/runri5637d2aafeee6\")"                           
+[18] "> x <- readRDS(\"/tmp/RtmpT3CdWm/runri110c511b9e01c4\")"                          
 [19] "> options(repos = x$repos)"                                                       
 [20] "> y <- tryCatch(list(do.call(x$fun, x$args, quote = TRUE)), error = identity)"    
-[21] "> saveRDS(y, \"/tmp/Rtmp0ux66Z/runro5637d2df4941c\")"                             
+[21] "> saveRDS(y, \"/tmp/RtmpT3CdWm/runro110c5145a81969\")"                            
 [22] "> "                                                                               
 
 $stderr
@@ -277,7 +277,7 @@ Error in assertWarning(ff()) :
 > bibstyle("unsorted", sortKeys = function(refs) seq_along(refs),
 +     fmtPrefix = function(paper) paste0("[", paper$.index, "]"),
 +        .init = TRUE)
-<environment: 0x55e2213e0fe0>
+<environment: 0x5569adf24600>
 > print(refs, .bibstyle = "unsorted")
 [1] R Core Team (2013). _R: A Language and Environment for Statistical
 Computing_. R Foundation for Statistical Computing, Vienna, Austria.
@@ -1284,16 +1284,16 @@ List of 2
 <!DOCTYPE html>
 <html>
 <head><title>R: R</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-<link rel="stylesheet" type="text/css" href="/doc/html/R.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<link rel="stylesheet" type="text/css" href="/doc/html/R.css">
 </head><body><div class="container">
 <h1> R
-<img class="toplogo" src="/doc/html/Rlogo.svg" alt="[R logo]" />
+<img class="toplogo" src="/doc/html/Rlogo.svg" alt="[R logo]">
 </h1>
-<hr/>
+<hr>
 <div style="text-align: center;">
-<a href="/doc/html/index.html"><img class="arrow" src="/doc/html/up.jpg" alt="[Top]" /></a>
+<a href="/doc/html/index.html"><img class="arrow" src="/doc/html/up.jpg" alt="[Top]"></a>
 </div>
 <h2>Demos in package &lsquo;base&rsquo;</h2>
 <table cols="2" style="width: 100%;">
@@ -1607,7 +1607,7 @@ needs Deep Thought
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  0.455 0.02 0.941 0.409 0.052 
+Time elapsed:  0.422 0.013 0.866 0.349 0.07 
 > grDevices::dev.off()
 null device 
           1 
