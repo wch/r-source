@@ -276,7 +276,7 @@ tag2id <- function(tag, name = NULL, tagid = section2id[tag])
           "\\value"       = "_sec_value")
     if (anyNA(tagid)) return(NULL) # or "" ?
     id <- if (is.null(name)) tagid
-          else paste(name2id(name), tolower(tagid), sep = "_:_")
+          else paste(name2id(name), tagid, sep = "_:_")
     string2id(gsub("[[:space:]]+", "-", id))
 }
 
