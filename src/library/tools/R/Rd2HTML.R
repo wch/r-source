@@ -949,6 +949,23 @@ Rd2HTML <-
 	    conc$saveSrcref(table)
         newrow <- TRUE
         newcol <- TRUE
+        ## Argh.  As of 2025-08, about 3000 CRAN packages have \\tabular
+        ## with a trailing \cr ending the last row, which is invalid as
+        ## per R-exts (the \cr starts another row which has a different
+        ## number of fields than the other rows), and when processed
+        ## results in bad HTML (spotted by v.NU but not HTML Tidy).  We
+        ## could have checkRd() complain, but given the number of
+        ## offenders let's drop such trainling \cr before processing, at
+        ## least for the time being. 
+        if(any(ind <- (tags == "\\cr"))) {
+            i <- max(which(ind))
+            j <- seq.int(i + 1L, length.out = length(content) - i)
+            if(all(grepl("^[[:space:]]*$",
+                         vapply(content[j], .Rd_deparse, "")))) {
+                content <- content[-i]
+                tags <- tags[-i]
+            }
+        }
         for (i in seq_along(tags)) {
             if (concordance)
                 conc$saveSrcref(content[[i]])
