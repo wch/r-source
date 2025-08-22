@@ -54,7 +54,7 @@ getDepList <- function(depMtrx, instPkgs, recursive=TRUE,
 installFoundDepends <- function(depPkgList, ...) {
     .Defunct()
 }
-## <entry/>
+## </entry>
 
 ## <entry>
 ## Deprecated in 3.6.0 (r75... (12 Sep 2018)) -- should have belonged to prev.
