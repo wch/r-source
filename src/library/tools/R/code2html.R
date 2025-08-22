@@ -70,7 +70,7 @@
     ## Not really important, but to be consistent with help pages
     pkgversion <- utils::packageDescription(package, fields = "Version")
     footer.lines <-
-        sprintf('<hr /><div style="text-align: center;">[Package <em>%s</em> version %s <a href="../html/00Index.html">Index</a>]</div>', package, pkgversion)
+        sprintf('<hr><div style="text-align: center;">[Package <em>%s</em> version %s <a href="../html/00Index.html">Index</a>]</div>', package, pkgversion)
     rhtml <-
         c(HTMLheader(title = sprintf("%s '%s::%s'",
                                      switch(type, demo = "Demo for", example = "Examples for"),
