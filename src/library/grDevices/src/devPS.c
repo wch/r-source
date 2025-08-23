@@ -5533,9 +5533,9 @@ static int addShadingSoftMask(SEXP pattern, PDFDesc *pd)
     }
     catDefn(">>\n/ExtGState << /G0 << /CA 1 /ca 1 >> >>\n",
             xobjDefn, pd);
-    char buf[30];
+    char buf[60];
     snprintf(buf, 
-             30,
+             60,
              ">>\n/BBox [0 0 %d %d]\n",
              (int) (0.5 + pd->paperwidth), (int) (0.5 + pd->paperheight));
     catDefn(buf, xobjDefn, pd);
