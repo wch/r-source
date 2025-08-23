@@ -77,8 +77,8 @@
       streams \PR{18887}.
 
       \item Bibliographic citations and references in Rd files can now
-      be auto-generated from bibentries in bibliographic databases in R
-      or BibTeX formats.
+      be auto-generated from \I{bibentries} in bibliographic databases
+      in R or BibTeX formats.
       See
       \code{\link{RShowDoc}("R-exts#Bibliographic-citations-and-references")}
       for more information.
