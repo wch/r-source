@@ -501,13 +501,13 @@ HTMLcomponents <- function(title = "R", logo = FALSE,
     if (doTexMath) {
         if (texmath == "katex") {
             addh('<link rel="stylesheet" href="', urlify(KATEX_CSS), '">\n',
-                if (dynamic) paste0('<script type="text/javascript" src="', urlify(KATEX_CONFIG), '"></script>\n')
-                else paste0('<script type="text/javascript">\n', paste(KATEX_CONFIG, collapse = "\n"), '</script>\n'),
+                if (dynamic) paste0('<script src="', urlify(KATEX_CONFIG), '"></script>\n')
+                else paste0('<script>\n', paste(KATEX_CONFIG, collapse = "\n"), '</script>\n'),
                 '<script defer src="', urlify(KATEX_JS), '"\n    onload="processMathHTML();"></script>\n')
         }
         else if (texmath == "mathjax") {
-            addh('<script type="text/javascript" src="', urlify(MATHJAX_CONFIG), '"></script>\n',
-                '<script type="text/javascript" async src="', urlify(MATHJAX_JS), '"></script>\n')
+            addh('<script src="', urlify(MATHJAX_CONFIG), '"></script>\n',
+                 '<script async src="', urlify(MATHJAX_JS), '"></script>\n')
         }
     }
     addh(paste0('<link rel="stylesheet" type="text/css" href="', css, '" />\n'),
