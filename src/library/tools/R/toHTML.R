@@ -19,29 +19,29 @@ function(title="R", logo=TRUE,
           "<html>",
           paste0('<head><title>', headerTitle, '</title>'),
           paste0('<meta http-equiv="Content-Type" content="text/html; charset=',
-                 mime_canonical_encoding(outputEncoding), '" />'),
-          '<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />',
-          paste0('<link rel="stylesheet" type="text/css" href="', css, '" />'),
+                 mime_canonical_encoding(outputEncoding), '">'),
+          '<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">',
+          paste0('<link rel="stylesheet" type="text/css" href="', css, '">'),
           '</head><body><div class="container">',
           paste('<h1>', title))
     if (logo)
     	result <- c(result,
                     paste0('<img class="toplogo" src="',
                            file.path(Rhome, 'doc/html/Rlogo.svg'),
-                           '" alt="[R logo]" />'))
-    result <- c(result, '</h1>', '<hr/>')
+                           '" alt="[R logo]">'))
+    result <- c(result, '</h1>', '<hr>')
     if (!is.null(up) || !is.null(top)) {
     	result <- c(result, '<div style="text-align: center;">')
     	if (!is.null(up))
     	    result <- c(result,
     	        paste0('<a href="', up, '"><img class="arrow" src="',
                        file.path(Rhome, 'doc/html/left.jpg'),
-                       '" alt="[Up]" /></a>'))
+                       '" alt="[Up]"></a>'))
     	if (!is.null(top))
     	    result <- c(result,
     	    	paste0('<a href="', top, '"><img class="arrow" src="',
     	    	      file.path(Rhome, 'doc/html/up.jpg'),
-    	    	      '" alt="[Top]" /></a>'))
+    	    	      '" alt="[Top]"></a>'))
     	result <- c(result, '</div>')
     }
     result
@@ -191,12 +191,12 @@ function(x, ...)
 
 makeVignetteTable <- function(vignettes, depth=2) {
     out <- c('<table style="width: 100%;">',
-             '<col style="width: 22%;" />',
-             '<col style="width:  2%;" />',
-             '<col style="width: 50%;" />',
-             '<col style="width:  8%;" />',
-             '<col style="width:  8%;" />',
-             '<col style="width:  8%;" />')
+             '<col style="width: 22%;">',
+             '<col style="width:  2%;">',
+             '<col style="width: 50%;">',
+             '<col style="width:  8%;">',
+             '<col style="width:  8%;">',
+             '<col style="width:  8%;">')
     for (i in seq_len(nrow(vignettes))) {
 	Outfile <- vignettes[i, "PDF"]
 	topic <- file_path_sans_ext(Outfile)
@@ -227,10 +227,10 @@ makeVignetteTable <- function(vignettes, depth=2) {
 
 makeDemoTable <- function(demos, depth=2) {
     out <- c('<table style="width: 100%;">',
-             '<col style="width: 22%;" />',
-             '<col style="width:  2%;" />',
-             '<col style="width: 54%;" />',
-             '<col style="width: 20%;" />')
+             '<col style="width: 22%;">',
+             '<col style="width:  2%;">',
+             '<col style="width: 54%;">',
+             '<col style="width: 20%;">')
     for (i in seq_len(nrow(demos))) {
 	topic <- demos[i, "Topic"]
 	pkg <- demos[i, "Package"]
@@ -259,9 +259,9 @@ makeDemoTable <- function(demos, depth=2) {
 
 makeHelpTable <- function(help, depth=2) {
     out <- c('<table style="width: 100%;">',
-             '<col style="width: 22%;" />',
-             '<col style="width:  2%;" />',
-             '<col style="width: 74%;" />')
+             '<col style="width: 22%;">',
+             '<col style="width:  2%;">',
+             '<col style="width: 74%;">')
     pkg <- help[, "Package"]
     ## Target could be ../library/pkg/help/topic or ../library/pkg/html/filename.html
     ## We only have topic, so can only do the former. Topics may contain
@@ -384,8 +384,8 @@ function(x, header = TRUE, ...)
                   else
                       sprintf("<title>%s citation information</title>",
                               package),
-                  "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />",
-                  '<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />',
+                  "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">",
+                  '<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">',
                   "</head>")
         header <- c("<!DOCTYPE html>",
                   "<html>",
@@ -493,11 +493,11 @@ HTMLcomponents <- function(title = "R", logo = FALSE,
     addh('</title>\n',
          '<meta http-equiv="Content-Type" content="text/html; charset=',
          mime_canonical_encoding(outputEncoding),
-         '" />\n')
-    addh('<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />\n')
+         '">\n')
+    addh('<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">\n')
     ## include CSS from prismjs.com for code highlighting
     if (prism && length(PRISM_CSS) == 1L)
-        addh('<link href="', urlify(PRISM_CSS), '" rel="stylesheet" />\n')
+        addh('<link href="', urlify(PRISM_CSS), '" rel="stylesheet">\n')
     if (doTexMath) {
         if (texmath == "katex") {
             addh('<link rel="stylesheet" href="', urlify(KATEX_CSS), '">\n',
@@ -510,7 +510,7 @@ HTMLcomponents <- function(title = "R", logo = FALSE,
                  '<script async src="', urlify(MATHJAX_JS), '"></script>\n')
         }
     }
-    addh(paste0('<link rel="stylesheet" type="text/css" href="', css, '" />\n'),
+    addh(paste0('<link rel="stylesheet" type="text/css" href="', css, '">\n'),
          '</head><body>',
          '<div class="container">')
 
@@ -530,19 +530,19 @@ HTMLcomponents <- function(title = "R", logo = FALSE,
         if (logo)
             addh(paste0('<img class="toplogo" src="',
                         file.path(Rhome, 'doc/html/Rlogo.svg'),
-                        '" alt="[R logo]" />'))
-        addh('</h1>', '<hr/>')
+                        '" alt="[R logo]">'))
+        addh('</h1>', '<hr>')
     }
     if (!is.null(up) || !is.null(top)) {
     	addh('<div style="text-align: center;">')
     	if (!is.null(up))
     	    addh(paste0('<a href="', up, '"><img class="arrow" src="',
                         file.path(Rhome, 'doc/html/left.jpg'),
-                        '" alt="[Up]" /></a>'))
+                        '" alt="[Up]"></a>'))
     	if (!is.null(top))
     	    addh(paste0('<a href="', top, '"><img class="arrow" src="',
                         file.path(Rhome, 'doc/html/up.jpg'),
-                        '" alt="[Top]" /></a>'))
+                        '" alt="[Top]"></a>'))
     	addh('</div>')
     }
 

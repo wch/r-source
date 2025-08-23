@@ -484,7 +484,7 @@ Rd2HTML <-
                   "\\var"="var")
     # These have simple substitutions
     HTMLEscapes <- c("\\R"='<span class="rlang"><b>R</b></span>',
-    		     "\\cr"="<br />",
+    		     "\\cr"="<br>",
     		     "\\dots"="...",
     		     "\\ldots"="...")
     ## These correspond to idiosyncratic wrappers
@@ -889,7 +889,7 @@ Rd2HTML <-
 		       writeContent(block[[length(block)]], tag)
 		       of1('"')
                    }
-                   of1(' />')
+                   of1('>')
                },
                "\\dontshow" =,
                "\\testonly" = {}, # do nothing
@@ -1339,7 +1339,7 @@ Rd2HTML <-
 	of1('\n')
         if (standalone) {
             if(nzchar(version))
-                of0('<hr /><div style="text-align: center;">[', version,
+                of0('<hr><div style="text-align: center;">[', version,
                     if (!no_links) '<a href="00Index.html">Index</a>',
                     ']</div>')
             of1('</main>\n')
@@ -1730,7 +1730,7 @@ function(dir)
                         else
                             " src=\"https://cloud.R-project.org/web/orcid.svg\" ",
                         "style=\"width:16px; height:16px; margin-left:4px; margin-right:4px; vertical-align:middle\"",
-                        " /></a>"),
+                        "></a>"),
                  desc["Author"])
         desc["Author"] <-
             gsub(sprintf("&lt;https://replace.me.by.ror.org/(%s)&gt;",
@@ -1742,7 +1742,7 @@ function(dir)
                         else
                             " src=\"https://cloud.R-project.org/web/ror.svg\" ",
                         "style=\"width:20px; height:20px; margin-left:4px; margin-right:4px; vertical-align:middle\"",
-                        " /></a>"),
+                        "></a>"),
                  desc["Author"])
     }
 
