@@ -975,13 +975,14 @@ bibentry(bibtype = "Article",
 
 bibentry(bibtype = "Article",
          key = "R:Vaux+Brinker:1972",
-         author = c(person(given = c("J.", "E."),
+         author = c(person(given = c("James", "E."),
                            family = "Vaux"),
-                    person(given = c("N.", "B."),
+                    person(given = c("Nancy", "B."),
                            family = "Brinker")),
-         title = "Unknown Title",
+         title = "Cotton Acreage Harvested, {U.S.A.}: The 12-Year Cycle",
          journal = "Cycles",
          year = "1972",
+         pages = "6--7",
          url = "https://cycles.org/cycles/library/")
 
 bibentry(bibtype = "Book",
