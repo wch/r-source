@@ -707,7 +707,10 @@ getOption(x, default = NULL)
       be made without a user agent header.  The default is
       \code{"R (\var{version} \var{platform} \var{arch} \var{os})"}
       except when \samp{libcurl} is used when it is
-      \code{"libcurl/\var{version}"} for the \samp{libcurl} version in use.}
+      \code{"libcurl/\var{version}"} for the \samp{libcurl} version in use.
+      With \samp{libcurl}, the \code{"R "} prefix is reserved:
+      \code{HTTPUserAgent} with the prefix will be ignored and the default will
+      be used.}
 
     \item{\code{install.lock}:}{logical: should per-directory package
       locking be used by \code{\link{install.packages}}?  Most useful
