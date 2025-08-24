@@ -1004,3 +1004,18 @@ bibentry(bibtype = "Book",
          publisher = "Griffin",
          year = "1987",
          isbn = "9780195206159")
+
+bibentry(bibtype = "Book",
+         key = "R:Box+Jenkins+Reinsel:1994",
+         author = c(person(given = c("George", "Edward", "Pelham"),
+                           family = "Box"),
+                    person(given = c("Gwilym", "M."),
+                           family = "Jenkins"),
+                    person(given = c("Gregory", "C."),
+                           family = "Reinsel")),
+         title = "Time Series Analysis: Forecasting and Control",
+         edition = "Third",
+         isbn = "978-0130607744",
+         year = "1994",
+         publisher = "Prentice Hall",
+         pointers = "https://permalink.obvsg.at/AC01651302, https://search.worldcat.org/de/title/28888762")
