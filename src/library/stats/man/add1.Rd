@@ -103,7 +103,7 @@ drop1(object, scope, \dots)
 }
 \author{
   The design was inspired by the S functions of the same names described
-  in Chambers (1992).
+  in \bibcitet{R:Chambers:1992:c4}.
 }
 \references{
   \bibshow{R:Chambers:1992:c4}}

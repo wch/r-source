@@ -41,7 +41,7 @@
 
   For the multivariate test, \I{Wilks}' statistic is most popular in the
   literature, but the default \I{Pillai}--\I{Bartlett} statistic is
-  recommended by Hand and Taylor (1987).  See
+  recommended by \bibcitet{R:Hand+Taylor:1987}.  See
   \code{\link{summary.manova}} for further details.
 
   For the \code{"Spherical"} test, proportionality is usually with the
@@ -79,9 +79,7 @@
 }
 
 \references{
-  Hand, D. J. and Taylor, C. C.  (1987)
-  \emph{Multivariate Analysis of Variance and Repeated Measures.}
-  Chapman and Hall.
+  \bibshow{R:Hand+Taylor:1987}
 }
 
 %% Probably use example from Baron/Li

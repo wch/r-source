@@ -137,8 +137,8 @@ method functions.
 \item{model}{(only if \code{model = TRUE}) the model frame.}
 }
 \details{
-  The basic method is given by Friedman (1984) and based on his
-  code. This code has been shown to be extremely sensitive to the
+  The basic method is given by \bibcitet{R:Friedman:1984a} and based on
+  his code.  This code has been shown to be extremely sensitive to the
   Fortran compiler used.
 
   The algorithm first adds up to \code{max.terms} ridge terms one at a
@@ -159,9 +159,9 @@ method functions.
   converge to a saddle point of the sum of squares criterion.
 }
 \source{
-  Friedman (1984): converted to double precision and added interface to
-  smoothing splines by B. D. Ripley, originally for the \CRANpkg{MASS}
-  package.
+  \bibcitet{R:Friedman:1984a}: converted to double precision and added
+  interface to smoothing splines by B. D. Ripley, originally for the
+  \CRANpkg{MASS} package.
 }
 
 \references{

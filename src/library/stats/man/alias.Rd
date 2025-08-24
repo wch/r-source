@@ -60,12 +60,12 @@ alias(object, \dots)
 
   The defaults are different from those in S.
 }
-\references{
-  \bibshow{R:Chambers+Freeny+Heiberger:1992}
-}
 \author{
   The design was inspired by the S function of the same name described
-  in Chambers \abbr{et al.}\sspace(1992).
+  in \bibcitet{R:Chambers+Freeny+Heiberger:1992}..
+}
+\references{
+  \bibshow{R:Chambers+Freeny+Heiberger:1992}
 }
 \examples{\donttest{% as it loads  MASS
 op <- options(contrasts = c("contr.helmert", "contr.poly"))

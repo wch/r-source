@@ -216,17 +216,15 @@ lm(formula, data, subset, weights, na.action,
   way to fit linear models to large datasets (especially those with many
   cases).
 }
-\references{
-  \bibshow{R:Chambers:1992:c4}
-  Wilkinson, G. N. and Rogers, C. E. (1973).
-  Symbolic descriptions of factorial models for analysis of variance.
-  \emph{Applied Statistics}, \bold{22}, 392--399.
-  \doi{10.2307/2346786}.
-}
 \author{
   The design was inspired by the S function of the same name described
-  in Chambers (1992).  The implementation of model formula by Ross Ihaka
-  was based on Wilkinson & Rogers (1973).
+  in \bibcitet{R:Chambers:1992:c4}.
+  The implementation of model formula by Ross Ihaka was based on
+  \bibcitet{R:Wilkinson+Rogers:1973}.
+}
+\references{
+  \bibshow{R:Chambers:1992:c4,
+    R:Wilkinson+Rogers:1973}
 }
 \examples{
 require(graphics)

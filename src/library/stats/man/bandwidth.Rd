@@ -54,8 +54,8 @@ bw.SJ(x, nb = 1000, lower = 0.1 * hmax, upper = hmax,
   \emph{unless} the quartiles coincide when a positive result
   will be guaranteed.
 
-  \code{bw.nrd} is the more common variation given by Scott (1992),
-  using factor 1.06.
+  \code{bw.nrd} is the more common variation given by
+  \bibcitet{R:Scott:1992}, using factor 1.06.
 
   \code{bw.ucv} and \code{bw.bcv} implement unbiased and
   biased cross-validation respectively.
@@ -93,12 +93,7 @@ bw.SJ(x, nb = 1000, lower = 0.1 * hmax, upper = hmax,
   of \code{density} and so give answers four times as large.
 }
 \references{
-  \bibshow{*, R:Venables+Ripley:2002}
-  
-  Scott, D. W. (1992)
-  \emph{Multivariate Density Estimation: Theory, Practice, and
-    Visualization.}
-  New York: Wiley.
+  \bibshow{*, R:Scott:1992, R:Venables+Ripley:2002}
 }
 \examples{
 require(graphics)

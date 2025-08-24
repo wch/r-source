@@ -116,16 +116,16 @@ rcond(x, norm = c("O","I","1"), triangular = FALSE, uplo = "U", \dots)
   \url{https://netlib.org/linpack/} and their guides are listed
   in the references.
 }
+\author{
+  The design was inspired by (but differs considerably from)
+  the S function of the same name described in
+  \bibcitet{R:Chambers:1992:c4}.
+}
 \references{
   \bibshow{R:Anderson+Bai+Bischof:1999,
     R:Chambers:1992:c4,
     R:Dongarra+Bunch+Moler:1979}
 }
-\author{
-  The design was inspired by (but differs considerably from)
-  the S function of the same name described in Chambers (1992).
-}
-
 \seealso{
   \code{\link{norm}};
   \code{\link{svd}} for the singular value decomposition and

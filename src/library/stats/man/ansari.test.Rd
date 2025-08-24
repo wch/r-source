@@ -64,10 +64,10 @@ ansari.test(x, \dots)
 
   Optionally, a nonparametric confidence interval and an estimator for
   \eqn{s} are computed.  If exact p-values are available, an exact
-  confidence interval is obtained by the algorithm described in Bauer
-  (1972), and the \I{Hodges}-\I{Lehmann} estimator is employed.  Otherwise, the
-  returned confidence interval and point estimate are based on normal
-  approximations.
+  confidence interval is obtained by the algorithm described in
+  \bibcitet{R:Bauer:1972}, and the \I{Hodges}-\I{Lehmann} estimator is
+  employed.  Otherwise, the returned confidence interval and point
+  estimate are based on normal approximations.
 
   Note that mid-ranks are used in the case of ties rather than average
   scores as employed in \bibcitet{R:Hollander+Wolfe:1973}.

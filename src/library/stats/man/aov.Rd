@@ -70,12 +70,12 @@ aov(formula, data = NULL, projections = FALSE, qr = TRUE,
   strata of class \code{c("aovlist", "\link{listof}")}.  There are
   \code{\link{print}} and \code{\link{summary}} methods available for these.
 }
-\references{
-  \bibshow{R:Chambers+Freeny+Heiberger:1992}
-}
 \author{
   The design was inspired by the S function of the same name described
-  in Chambers \abbr{et al.}\sspace(1992).
+  in \bibcitet{R:Chambers+Freeny+Heiberger:1992}.
+}
+\references{
+  \bibshow{R:Chambers+Freeny+Heiberger:1992}
 }
 \seealso{
   \code{\link{lm}}, \code{\link{summary.aov}},

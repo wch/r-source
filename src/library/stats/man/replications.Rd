@@ -36,14 +36,13 @@ replications(formula, data = NULL, na.action)
 
   A test for balance is \code{!is.list(replications(formula,data))}.
 }
+\author{
+  The design was inspired by the S function of the same name described
+  in \bibcitet{R:Chambers+Freeny+Heiberger:1992}.
+}
 \references{
   \bibshow{R:Chambers+Freeny+Heiberger:1992}
 }
-\author{
-  The design was inspired by the S function of the same name described
-  in Chambers \abbr{et al.}\sspace(1992).
-}
-
 \seealso{\code{\link{model.tables}}}
 
 \examples{

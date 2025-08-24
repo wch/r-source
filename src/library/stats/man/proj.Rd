@@ -65,12 +65,12 @@ proj(object, \dots)
   model matrix corresponding to that term. In this case the matrix does
   not depend on the coding used.
 }
-\references{
-  \bibshow{R:Chambers+Freeny+Heiberger:1992}
-}
 \author{
   The design was inspired by the S function of the same name described
-  in Chambers \abbr{et al.}\sspace(1992).
+  in \bibcitet{R:Chambers+Freeny+Heiberger:1992}.
+}
+\references{
+  \bibshow{R:Chambers+Freeny+Heiberger:1992}
 }
 \seealso{\code{\link{aov}}, \code{\link{lm}}, \code{\link{model.tables}}
 }
