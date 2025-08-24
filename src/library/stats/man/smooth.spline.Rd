@@ -254,26 +254,22 @@ smooth.spline(x, y = NULL, w = NULL, df, spar = NULL, lambda = NULL, cv = FALSE,
   \code{method(class = "smooth.spline")} shows a
   \code{\link{hatvalues}()} method based on the \code{lev} vector above.
 }
+\source{
+  This function is based on code in the \code{GAMFIT} Fortran program by
+  \bibcitet{R:Hastie+Tibshirani:1990} (originally taken from
+  \url{https://lib.stat.cmu.edu/general/gamfit})
+  which makes use of spline code by Finbarr O'Sullivan.
+  Its design parallels the \code{smooth.spline} function of
+  \bibcitet{R:Chambers+Hastie:1992}.
+}
 \references{
-  \bibshow{R:Chambers+Hastie:1992}
-
-  Green, P. J. and Silverman, B. W. (1994)
-  \emph{Nonparametric Regression and Generalized Linear Models:
-    A Roughness Penalty Approach.} Chapman and Hall.
-
-  Hastie, T. J. and Tibshirani, R. J. (1990)
-  \emph{Generalized Additive Models.}  Chapman and Hall.
+  \bibshow{R:Chambers+Hastie:1992,
+    R:Green+Silverman:1994,
+    R:Hastie+Tibshirani:1990}
 }
 \author{
   \R implementation by B. D. Ripley and Martin Maechler
   (\code{spar/lambda}, etc).
-}
-\source{
-  This function is based on code in the \code{GAMFIT} Fortran program by
-  T. Hastie and R. Tibshirani (originally taken from
-  \url{https://lib.stat.cmu.edu/general/gamfit})
-   which makes use of spline code by Finbarr O'Sullivan.  Its design
-  parallels the \code{smooth.spline} function of Chambers & Hastie (1992).
 }
 \seealso{
   \code{\link{predict.smooth.spline}} for evaluating the spline

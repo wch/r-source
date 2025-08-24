@@ -37,7 +37,7 @@ eigen(x, symmetric, only.values = FALSE, EISPACK = FALSE)
   Computing the eigenvectors is the slow part for large matrices.
 
   Computing the eigendecomposition of a matrix is subject to errors on a
-  real-world computer: the definitive analysis is Wilkinson (1965).  All
+  real-world computer: the definitive analysis is \bibcitet{R:Wilkinson:1965}.  All
   you can hope for is a solution to a problem suitably close to
   \code{x}.  So even though a real asymmetric \code{x} may have an
   algebraic solution with repeated real eigenvalues, the computed
@@ -86,10 +86,8 @@ eigen(x, symmetric, only.values = FALSE, EISPACK = FALSE)
 }
 \references{
   \bibshow{R:Anderson+Bai+Bischof:1999,
-    R:Becker+Chambers+Wilks:1988}
-
-  Wilkinson, J. H. (1965) \emph{The Algebraic Eigenvalue Problem.}
-  Clarendon Press, Oxford.
+    R:Becker+Chambers+Wilks:1988,
+    R:Wilkinson:1965}
 }
 
 \seealso{

@@ -60,8 +60,9 @@ shQuote(string, type = c("sh", "csh", "cmd", "cmd2"))
 \value{
   A character vector of the same length as \code{string}.
 }
-\references{ Loukides, M. \emph{et al} (2002) \emph{Unix Power Tools}
-  Third Edition. O'Reilly.  Section 27.12.
+\references{
+  \bibinfo{R:Powers+Peek+O_Reilly:2002}{note}{Section 27.12}
+  \bibshow{R:Powers+Peek+O_Reilly:2002}
   
   Discussion in \PR{16636}.
 

@@ -58,7 +58,7 @@ sample.int(n, size = n, replace = FALSE, prob = NULL,
   The optional \code{prob} argument can be used to give a vector of
   weights for obtaining the elements of the vector being sampled.  They
   need not sum to one, but they should be non-negative and not all zero.
-  If \code{replace} is true, Walker's alias method (Ripley, 1987) is
+  If \code{replace} is true, Walker's alias method \bibcitep{R:Ripley:1987} is
   used when there are more than 200 reasonably probable values: this
   gives results incompatible with those from \R < 2.2.0.
 
@@ -86,9 +86,8 @@ sample.int(n, size = n, replace = FALSE, prob = NULL,
 }
 
 \references{
-  \bibshow{R:Becker+Chambers+Wilks:1988}
-
-  Ripley, B. D. (1987) \emph{Stochastic Simulation}. Wiley.
+  \bibshow{R:Becker+Chambers+Wilks:1988,
+    R:Ripley:1987}
 }
 \seealso{
   \code{\link{RNGkind}(sample.kind = ..)} about random number generation,

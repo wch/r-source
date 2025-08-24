@@ -45,17 +45,9 @@ pictex(file = "Rplots.tex", width = 5, height = 4, debug = FALSE,
   Multiple plots will be placed as separate environments in the output file.
 }
 \references{
-  Knuth, D. E. (1984)
-  \emph{The TeXbook.}
-  Reading, MA: Addison-Wesley.
-
-  Lamport, L. (1994)
-  \emph{LATEX: A Document Preparation System.}
-  Reading, MA: Addison-Wesley.
-
-  Goossens, M., Mittelbach, F. and Samarin, A. (1994)
-  \emph{The LATEX Companion.}
-  Reading, MA: Addison-Wesley.
+  \bibshow{R:Knuth:1984,
+    R:Lamport:1994,
+    R:Goossens+Mittelbach+Samarin:1994}
 }
 \author{
   This driver was provided around 1996--7 by Valerio Aimale

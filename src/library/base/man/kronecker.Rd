@@ -46,8 +46,7 @@ X \%x\% Y
 }
 
 \references{
-  Shayle R. Searle (1982)
-  \emph{Matrix Algebra Useful for Statistics.} John Wiley and Sons.
+  \bibshow{R:Searle:1982}
 }
 
 \author{Jonathan Rougier}
