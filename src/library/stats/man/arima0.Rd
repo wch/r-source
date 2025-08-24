@@ -121,7 +121,8 @@ arima0(x, order = c(0, 0, 0),
 
   If \code{transform.pars} is true, the optimization is done using an
   alternative parametrization which is a variation on that suggested by
-  Jones (1980) and ensures that the model is stationary.  For an AR(p)
+  \bibcitet{R:Jones:1980} and ensures that the model is stationary.
+  For an AR(p)
   model the parametrization is via the inverse tanh of the partial
   autocorrelations: the same procedure is applied (separately) to the
   AR and seasonal AR terms.  The MA terms are also constrained to be
