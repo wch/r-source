@@ -578,6 +578,34 @@ function(x, predicate)
     recurse(x)
 }
 
+### * .Rd_drop_nodes_from_macros
+
+.Rd_drop_nodes_from_macros <-
+function(x, macros)
+{
+    recurse <- function(e) {
+        if(is.list(e)) {
+            i <- vapply(e,
+                        function(z) {
+                            (!is.null(a <- attr(z, "Rd_tag")) &&
+                             (a == "USERMACRO") &&
+                             !is.null(a <- attr(z, "macro")) &&
+                             (a %in% macros))
+                        },
+                        NA)
+            if(any(i)) {
+                i <- which(i)
+                e <- e[-c(i, i + 1L)]
+            }
+            a <- attributes(e)
+            e <- lapply(e, recurse)
+            attributes(e) <- a
+        }
+        e
+    }
+    recurse(x)
+}
+    
 ### * .Rd_find_nodes_with_tags
 
 .Rd_find_nodes_with_tags <-
