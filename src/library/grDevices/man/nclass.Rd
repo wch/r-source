@@ -39,18 +39,20 @@ nclass.FD(x, digits = 5)
   Scott's choice.  The default of \code{digits = 5} was chosen after a few
   experiments, but may be too low for some situations, see \PR{17274}.
 }
+\seealso{
+  \code{\link{hist}} and \code{\link[MASS]{truehist}} (package
+  \CRANpkg{MASS});  \code{\link[KernSmooth]{dpih}} (package
+  \CRANpkg{KernSmooth}) for a plugin bandwidth proposed by
+  \bibcitet{R:Wand:1997}.
+}
 \references{
   \bibinfo{R:Venables+Ripley:2002}{note}{Page 112}.
   \bibshow{R:Venables+Ripley:2002,
     R:Freedman+Diaconis:1981,
     R:Scott:1979,
     R:Scott:1992,
-    R:Sturges:1926}
-}
-\seealso{
-  \code{\link{hist}} and \code{\link[MASS]{truehist}} (package
-  \CRANpkg{MASS});  \code{\link[KernSmooth]{dpih}} (package
-  \CRANpkg{KernSmooth}) for a plugin bandwidth proposed by Wand(1995).
+    R:Sturges:1926,
+    R:Wand:1997}
 }
 \examples{
 set.seed(1)

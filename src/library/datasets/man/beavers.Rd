@@ -14,7 +14,7 @@ beaver1
 beaver2
 }
 \description{
-  Reynolds (1994) describes a small part of a study of the long-term
+  \bibcitet{R:Reynolds:1994} describes a small part of a study of the long-term
   temperature dynamics of beaver \emph{\I{Castor canadensis}} in
   north-central Wisconsin.  Body temperature was measured by telemetry
   every 10 minutes for four females, but data from a one period of
@@ -42,11 +42,10 @@ beaver2
   The observation at 22:20 is missing in \code{beaver1}.
 }
 \source{
-  P. S. Reynolds (1994) Time-series analyses of beaver body
-  temperatures.  Chapter 11 of Lange, N., Ryan, L., Billard, L.,
-  Brillinger, D., Conquest, L. and Greenhouse, J. eds (1994)
-  \emph{Case Studies in Biometry.}
-  New York: John Wiley and Sons.
+  \bibcitet{R:Reynolds:1994}
+}
+\references{
+  \bibshow{R:Reynolds:1994}
 }
 %% consider converting times to POSIXct (using 'yday' ?)
 \examples{

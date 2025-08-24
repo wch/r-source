@@ -39,16 +39,9 @@ promax(x, m = 4)
 }
 \references{
   \bibshow{R:Hendrickson+White:1964,
-    R:Kaiser:1958}
-
-  Horst, P. (1965).
-  \emph{Factor Analysis of Data Matrices}.
-  Holt, Rinehart and Winston.
-  Chapter 10.
-
-  Lawley, D. N. and Maxwell, A. E. (1971).
-  \emph{Factor Analysis as a Statistical Method}, second edition.
-  Butterworths.
+    R:Horst:1965,
+    R:Kaiser:1958,
+    R:Lawley+Maxwell:1971}
 }
 \seealso{
   \code{\link{factanal}},

@@ -46,13 +46,9 @@ plot.design(x, y = NULL, fun = mean, data = NULL, \dots,
   horizontal line.
 }
 \references{
-  \bibshow{R:Chambers+Hastie:1992}
-  Pages 546--7 (and 163--4).
-
-  Freeny, A. E. and Landwehr, J. M. (1990)
-  Displays for data from large designed experiments;
-  Computer Science and Statistics: Proc.\ 22nd Symp\. Interface, 117--126,
-  Springer Verlag.
+  \bibinfo{R:Chambers+Hastie:1992}{footer}{Pages 546--7 (and 163--4).}
+  \bibshow{R:Chambers+Hastie:1992,
+    R:Freeny+Landwehr:1992}
 }
 \author{Roberto Frisullo and Martin Maechler}
 \note{

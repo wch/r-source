@@ -77,9 +77,7 @@ BIC(object, \dots)
   parameters in the model (\code{df}) and the AIC or BIC.
 }
 \references{
-  Sakamoto, Y., Ishiguro, M., and Kitagawa G. (1986).
-  \emph{Akaike Information Criterion Statistics}.
-  D. Reidel Publishing Company.
+  \bibshow{R:Sakamoto+Ishiguro+Kitagawa:1986}
 }
 \author{
   Originally by \enc{José}{Jose} Pinheiro and Douglas Bates,

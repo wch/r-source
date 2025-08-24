@@ -75,12 +75,8 @@ TukeyHSD(x, which, ordered = FALSE, conf.level = 0.95, \dots)
   values for each plot.
 }
 \references{
-  Miller, R. G. (1981)
-  \emph{Simultaneous Statistical Inference}. Springer.
-
-  Yandell, B. S. (1997)
-  \emph{Practical Data Analysis for Designed Experiments}.
-  Chapman & Hall.
+  \bibshow{R:Miller:1981,
+    R:Yandell:1997}
 }
 \author{
   Douglas Bates
