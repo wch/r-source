@@ -1019,3 +1019,16 @@ bibentry(bibtype = "Book",
          year = "1994",
          publisher = "Prentice Hall",
          pointers = "https://permalink.obvsg.at/AC01651302, https://search.worldcat.org/de/title/28888762")
+
+bibentry(bibtype = "InCollection",
+         key = "R:Reynolds:1994",
+         author = person(given = c("P.", "S."),
+                         family = "Reynolds"),
+         title = "Time-series Analyses of Beaver Body Temperatures",
+         booktitle = "Case Studies in Biometry",
+         publisher = "Wiley",
+         year = "1994",
+         editor = person(given = "Nicholas",
+                         family = "Lange"),
+         chapter = "11",
+         address = "New York")

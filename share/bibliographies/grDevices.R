@@ -211,6 +211,18 @@ bibentry(bibtype = "Article",
          month = "mar",
          pages = "65--66")
 
+bibentry(bibtype = "Article",
+         key = "R:Wand:1997",
+         author = person(given = c("Matt", "P."),
+                         family = "Wand"),
+         title = "Data-Based Choice of Histogram Bin Width",
+         journal = "The American Statistician",
+         volume = "51",
+         number = "1",
+         pages = "59--64",
+         year = "1997",
+         doi = "10.1080/00031305.1997.10473591")
+
 bibentry(bibtype = "Misc",
          key = "R:Wikipedia_contributors:2019",
          author = person(given = "Wikipedia contributors"),
