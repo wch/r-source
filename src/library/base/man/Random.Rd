@@ -238,7 +238,8 @@ set.seed(seed, kind = NULL, normal.kind = NULL, sample.kind = NULL)
   the ten thousands represent the type of discrete uniform sampler.
 
   In the underlying C, \code{.Random.seed[-1]} is \code{unsigned};
-  therefore in \R \code{.Random.seed[-1]} can be negative, due to
+  therefore in \R \code{.Random.seed[-1]} can be negative or perhaps
+  \code{\link{NA_integer_}}, due to
   the representation of an unsigned integer by a signed integer.
 
   \code{RNGkind} returns a three-element character vector of the RNG,
