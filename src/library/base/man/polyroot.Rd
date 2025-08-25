@@ -44,8 +44,7 @@ polyroot(z)
 \seealso{
   \code{\link{uniroot}} for numerical root finding of arbitrary
   functions;
-  \code{\link{complex}} and the \code{zero} example in the demos
-  directory.
+  \code{\link{complex}}.
 }
 \examples{
 polyroot(c(1, 2, 1))
