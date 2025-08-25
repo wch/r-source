@@ -120,10 +120,11 @@ hclust(d, method = "complete", members = NULL)
   \emph{inversions} or \emph{reversals} which are hard to interpret,
   but note the trichotomies in Legendre and Legendre (2012).
 
-  Two different algorithms are found in the literature for Ward clustering.
-  The one used by option \code{"ward.D"} (equivalent to the only Ward
-  option \code{"ward"} in \R versions \eqn{\le}{<=} 3.0.3) \emph{does not} implement
-  Ward's (1963) clustering criterion, whereas option \code{"ward.D2"} implements
+  Two different algorithms are found in the literature for Ward
+  clustering.  The one used by option \code{"ward.D"} (equivalent to the
+  only Ward option \code{"ward"} in \R versions \eqn{\le}{<=} 3.0.3)
+  \emph{does not} implement the clustering criterion of
+  \bibcitet{R:Ward:1963}, whereas option \code{"ward.D2"} implements
   that criterion \bibcitep{R:Murtagh+Legendre:2014}.  With the latter, the
   dissimilarities are \emph{squared} before cluster updating.
   Note that \code{\link[cluster]{agnes}(*, method="ward")} corresponds
@@ -161,39 +162,18 @@ hclust(d, method = "complete", members = NULL)
 }
 \references{
   \bibinfo{R:Becker+Chambers+Wilks:1988}{note}{(S version)}
+  \bibinfo{R:Murtagh:1985}{note}{(For algorithmic details of algorithms used)}
   \bibshow{*,
+    R:Anderberg:1973,
     R:Becker+Chambers+Wilks:1988,
-    R:McQuitty:1966}
-
-  Everitt, B. (1974).
-  \emph{Cluster Analysis}.
-  London: Heinemann Educ. Books.
-
-  Hartigan, J.A. (1975).
-  \emph{Clustering  Algorithms}.
-  New York: Wiley.
-
-  Sneath, P. H. A. and R. R. Sokal (1973).
-  \emph{Numerical Taxonomy}.
-  San Francisco: Freeman.
-
-  Anderberg, M. R. (1973).
-  \emph{Cluster Analysis for Applications}.
-  Academic Press: New York.
-
-  Gordon, A. D. (1999).
-  \emph{Classification}. Second Edition.
-  London: Chapman and Hall / CRC
-
-  Murtagh, F. (1985).
-  \dQuote{Multidimensional Clustering Algorithms}, in
-  \emph{COMPSTAT Lectures 4}.
-  Wuerzburg: Physica-Verlag
-  (for algorithmic details of algorithms used).
-
-  Legendre, P. and L. Legendre (2012).
-  \emph{Numerical Ecology},
-  3rd English ed. Amsterdam: Elsevier Science BV.
+    R:Everitt:1974,
+    R:Gordon:1999,
+    R:Hartigan:1975,
+    R:Legendre+Legendre:2012,
+    R:McQuitty:1966,
+    R:Murtagh:1985,
+    R:Sneath+Sokal:1973,
+    R:Ward:1963}
 }
 \author{
   The \code{hclust} function is based on Fortran code

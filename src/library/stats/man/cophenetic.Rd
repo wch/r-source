@@ -45,10 +45,8 @@ cophenetic(x)
   An object of class \code{"dist"}.
 }
 \references{
-  Sneath, P.H.A. and Sokal, R.R. (1973)
-  \emph{Numerical Taxonomy: The Principles and Practice of Numerical
-    Classification}, p.\sspace{}278 ff;
-  Freeman, San Francisco.
+  \bibinfo{R:Sneath+Sokal:1973}{note}{Pages 278 ff}
+  \bibshow{R:Sneath+Sokal:1973}
 }
 \author{Robert Gentleman}
 \seealso{
