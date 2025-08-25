@@ -115,9 +115,12 @@ function(contriburl = contrib.url(repos, type), method,
                 need_dest <- FALSE
                 op <- options(warn = -1L)
                 z <- tryCatch({
-                    download.file(url = paste0(repos, "/PACKAGES.rds"),
-                                  destfile = dest, method = method,
-                                  cacheOK = FALSE, quiet = quiet, mode = "wb", ...)
+                    z <- download.file(url = paste0(repos, "/PACKAGES.rds"),
+                                       destfile = dest, method = method,
+                                       cacheOK = FALSE, quiet = quiet,
+                                       mode = "wb", ...)
+                    if(z != 0L)
+                        stop(gettextf("'download.file()' error code '%d'", z))
                 }, error = identity)
                 options(op)
                 if(!inherits(z, "error")) {
@@ -135,17 +138,23 @@ function(contriburl = contrib.url(repos, type), method,
                     ## FIXME: this should check the return value == 0L
                     z <- tryCatch({
                         ## This is a binary file
-                        download.file(url = paste0(repos, "/PACKAGES.gz"),
-                                      destfile = tmpf, method = method,
-                                      cacheOK = FALSE, quiet = quiet, mode = "wb", ...)
+                        z <- download.file(url = paste0(repos, "/PACKAGES.gz"),
+                                           destfile = tmpf, method = method,
+                                           cacheOK = FALSE, quiet = quiet,
+                                           mode = "wb", ...)
+                        if(z != 0L)
+                            stop(gettextf("'download.file()' error code '%d'", z))
                     }, error = identity)
                     if(inherits(z, "error"))
                         z <- tryCatch({
                             ## read.dcf is going to interpret CRLF as
                             ## LF, so use binary mode to avoid CRLF.
-                            download.file(url = paste0(repos, "/PACKAGES"),
+                            z <- download.file(url = paste0(repos, "/PACKAGES"),
                                           destfile = tmpf, method = method,
-                                          cacheOK = FALSE, quiet = quiet, mode = "wb", ...)
+                                          cacheOK = FALSE, quiet = quiet,
+                                          mode = "wb", ...)
+                            if(z != 0L)
+                                stop(gettextf("'download.file()' error code '%d'", z))
                         }, error = identity)
                     options(op)
 
