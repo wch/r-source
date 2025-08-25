@@ -108,6 +108,10 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   (For method \code{"libcurl"}, messages will quote the endpoint of
   redirections.)
 
+  When the file is not found on the server, the \code{"curl"} method will
+  typically download a HTML file stating that and report success. To
+  instead get an error in that case, use argument \code{extra = "-f"}.
+
   See \code{\link{url}} for how \samp{file://} URLs are interpreted,
   especially on Windows.  The \code{"internal"} and \code{"wininet"}
   methods do not percent-decode, but the \code{"libcurl"} and
