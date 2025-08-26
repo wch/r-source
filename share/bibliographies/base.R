@@ -707,3 +707,43 @@ bibentry(bibtype = "Book",
          edition = "Third",
          isbn = "0596003307",
          pointers = "https://www.oreilly.com/library/view/unix-power-tools/0596003307/")
+
+bibentry(bibtype = "Manual",
+         key = "R:International_Organization_for_Standardization:2000",
+         title = "Data Elements and Interchange Formats --- Information Interchange --- Representation of Dates and Times",
+         author = person(given = "International Organization for Standardization"),
+         organization = "International Organization for Standardization",
+         address = "Geneva, Switzerland",
+         year = "2000",
+         edition = "ISO 8601:2000",
+         url = "https://www.iso.org/standard/26780.html")
+
+bibentry(bibtype = "Manual",
+         key = "R:International_Organization_for_Standardization:2004",
+         title = "Data Elements and Interchange Formats --- Information Interchange --- Representation of Dates and Times",
+         author = person(given = "International Organization for Standardization"),
+         organization = "International Organization for Standardization",
+         address = "Geneva, Switzerland",
+         year = "2004",
+         edition = "ISO 8601:2004",
+         url = "https://www.iso.org/standard/40874.html")
+
+bibentry(bibtype = "Manual",
+         key = "R:International_Organization_for_Standardization:2019",
+         title = "Date and Time --- Representations for Information Interchange Part 1: Basic Rules",
+         author = person(given = "International Organization for Standardization"),
+         organization = "International Organization for Standardization",
+         address = "Geneva, Switzerland",
+         edition = "ISO 8601-1:2019",
+         year = "2019",
+         url = "https://www.iso.org/standard/70907.html")
+
+bibentry(bibtype = "Manual",
+         key = "R:International_Organization_for_Standardization:2022",
+         title = "Date and Time --- Representations for Information Interchange Part 1: Basic Rules Amendment 1: Technical Corrections",
+         author = person(given = "International Organization for Standardization"),
+         organization = "International Organization for Standardization",
+         address = "Geneva, Switzerland",
+         edition = "ISO 8601-1:2019/Amd 1",
+         year = "2022",
+         url = "https://www.iso.org/standard/81801.html")

@@ -30,7 +30,7 @@ bibentry(bibtype = "Article",
 
 bibentry(bibtype = "InCollection",
          key = "R:Emerson+Strenio:1983",
-         author = c(person(given = c("J.", "D"),
+         author = c(person(given = c("J.", "D."),
                            family = "Emerson"),
                     person(given = "J.",
                            family = "Strenio")),
