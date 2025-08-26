@@ -154,7 +154,7 @@ bibentry(bibtype = "Article",
          year = "1982",
          month = "12",
          .issn = "0037-1106",
-         .doi = "10.1785/BSSA07206B0043",
+         doi = "10.1785/BSSA07206B0043",
          url = "https://pubs.geoscienceworld.org/ssa/bssa/article-pdf/72/6B/S43/5330804/bssa07206b0043.pdf")
 
 bibentry(bibtype = "Article",
@@ -171,7 +171,7 @@ bibentry(bibtype = "Article",
          year = "1984",
          month = "08",
          .issn = "0037-1106",
-         .doi = "10.1785/BSSA0740041441",
+         doi = "10.1785/BSSA0740041441",
          url = "https://pubs.geoscienceworld.org/ssa/bssa/article-pdf/74/4/1441/5332305/bssa0740041441.pdf")
 
 bibentry(bibtype = "Article",
