@@ -53,10 +53,7 @@
   status for each person on board of the Titanic, and is based on data
   originally collected by the British Board of Trade and reprinted in:
 
-  British Board of Trade (1990),
-  \emph{Report on the Loss of the \sQuote{Titanic} (S.S.)}.
-  British Board of Trade Inquiry Report (reprint).
-  Gloucester, UK: Allan Sutton Publishing.
+  \bibshow{R:British_Government:1990}
 }
 \examples{
 require(graphics)

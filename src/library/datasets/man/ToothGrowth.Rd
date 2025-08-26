@@ -24,9 +24,7 @@
   }
 }
 \source{
-  C. I. Bliss (1952).
-  \emph{The Statistics of Bioassay}.
-  Academic Press.
+  \bibshow{R:Bliss:1952}
 }
 \references{
   \bibshow{R:Crampton:1947, R:McNeil:1977}

@@ -46,9 +46,7 @@
   }
 }
 \source{
-  Finney, D. J. (1947)
-  \emph{Probit Analysis}.
-  Cambridge.
+  \bibshow{R:Finney:1947}
 }
 \references{
   \bibshow{R:McNeil:1977}

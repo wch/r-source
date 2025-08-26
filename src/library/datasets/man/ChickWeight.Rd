@@ -48,13 +48,11 @@
   \code{print}) for its grouped-data classes.
 }
 \source{
-  Crowder, M. and Hand, D. (1990), \emph{Analysis of Repeated Measures},
-  Chapman and Hall (example 5.3)
-
-  Hand, D. and Crowder, M. (1996), \emph{Practical Longitudinal Data
-    Analysis}, Chapman and Hall (table A.2)
-
-  \bibshow{R:Pinheiro+Bates:2000}
+  \bibinfo{R:Crowder+Hand:1990}{note}{Example 5.3}
+  \bibinfo{R:Hand+Crowder:1996}{note}{Table A.2}
+  \bibshow{R:Crowder+Hand:1990,
+    R:Hand+Crowder:1996,
+    R:Pinheiro+Bates:2000}
 }
 \seealso{
   \code{\link{SSlogis}} for models fitted to this dataset.

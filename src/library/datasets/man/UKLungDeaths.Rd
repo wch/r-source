@@ -24,9 +24,8 @@ mdeaths
     females (\code{fdeaths}).
 }
 \source{
-P. J. Diggle (1990)
-\emph{Time Series: A Biostatistical Introduction.}
-Oxford, table A.3
+  \bibinfo{R:Diggle:1991}{note}{Table A.3}
+  \bibshow{R:Diggle:1991}
 }
 \examples{
 require(stats); require(graphics) # for time

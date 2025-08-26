@@ -15,9 +15,8 @@
   A quarterly time series
 }
 \source{
-  Shumway, R. H. and Stoffer, D. S. (2000)
-  \emph{Time Series Analysis and its Applications}.
-  Second Edition.  Springer.  Example 1.1.
+  \bibinfo{R:Shumway+Stoffer:2000}{note}{Example 1.1}
+  \bibshow{R:Shumway+Stoffer:2000}
 }
 \examples{\donttest{
 require(stats); require(graphics)

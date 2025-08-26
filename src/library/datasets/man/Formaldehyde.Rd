@@ -22,9 +22,7 @@
   }
 }
 \source{
-  Bennett, N. A. and N. L. Franklin (1954)
-  \emph{Statistical Analysis in Chemistry and the Chemical Industry}.
-  New York: Wiley.
+  \bibshow{R:Bennett+Franklin:1954}
 }
 \references{
   \bibshow{R:McNeil:1977}

@@ -37,10 +37,9 @@
   \code{print}) for its grouped-data classes.
 }
 \source{
-  Draper, N. R. and Smith, H. (1998), \emph{Applied Regression Analysis
-    (3rd ed)}, Wiley (exercise 24.N).
-
-  \bibshow{R:Pinheiro+Bates:2000}
+  \bibinfo{R:Draper+Smith:1998}{note}{Exercise 24.N}
+  \bibshow{R:Draper+Smith:1998,
+    R:Pinheiro+Bates:2000}
 }
 \examples{
 require(stats); require(graphics)

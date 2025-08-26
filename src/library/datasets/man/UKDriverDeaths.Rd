@@ -37,11 +37,7 @@ Seatbelts
   }
 }
 \source{
-  Harvey, A.C. (1989).
-  \emph{Forecasting, Structural Time Series Models and the Kalman Filter}.
-  Cambridge University Press, pp.\sspace{}519--523.
-
-  \bibcitet{R:Durbin+Koopman:2001}
+  \bibcitet{|R:Harvey:1989|pages 519--523, R:Durbin+Koopman:2001}.
 }
 \references{
   \bibshow{*, R:Harvey+Durbin:1986}
