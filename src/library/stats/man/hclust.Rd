@@ -118,7 +118,7 @@ hclust(d, method = "complete", members = NULL)
   \code{"centroid"} are \emph{not} leading to a \emph{monotone distance}
   measure, or equivalently the resulting dendrograms can have so called
   \emph{inversions} or \emph{reversals} which are hard to interpret,
-  but note the trichotomies in Legendre and Legendre (2012).
+  but note the trichotomies in \bibcitet{R:Legendre+Legendre:2012}.
 
   Two different algorithms are found in the literature for Ward
   clustering.  The one used by option \code{"ward.D"} (equivalent to the

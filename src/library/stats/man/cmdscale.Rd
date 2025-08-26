@@ -54,7 +54,8 @@ cmdscale(d, k = 2, eig = FALSE, add = FALSE, x.ret = FALSE,
   c*} are Euclidean and hence can be represented in \code{n - 1}
   dimensions.  Whereas S (Becker \abbr{et al.}, 1988) computes this
   constant using an approximation suggested by \I{Torgerson}, \R uses the
-  analytical solution of \bibcitet{R:Cailliez:1983}, see also Cox and Cox (2001).
+  analytical solution of \bibcitet{R:Cailliez:1983}, see also
+  \bibcitet{R:Cox+Cox:2001}.
   Note that because of numerical errors the computed eigenvalues need
   not all be non-negative, and even theoretically the representation
   could be in fewer than \code{n - 1} dimensions.
